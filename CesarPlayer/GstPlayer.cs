@@ -1,4 +1,4 @@
-// GSTPayer.cs
+﻿// GSTPayer.cs
 //
 //  Copyright (C) 2007 [name of author]
 //
