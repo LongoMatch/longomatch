@@ -108,6 +108,7 @@ namespace CesarPlayer
 			IntPtr error_ptr;
 			//Create the player
 			bacon_video_widget_init_backend(IntPtr.Zero,IntPtr.Zero);
+			
 			Raw = bacon_video_widget_new (width,heigth,type, out error_ptr);
 			
 			//Create the widget 

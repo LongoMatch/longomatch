@@ -1,4 +1,4 @@
-// PlayerBin.cs created with MonoDevelop
+﻿// PlayerBin.cs created with MonoDevelop
 // User: ando at 7:05 25/11/2007
 //
 // To change standard headers go to Edit->Preferences->Coding->Standard Headers
@@ -51,6 +51,7 @@ namespace CesarPlayer
 		private void PlayerInit(){
 			PlayerMaker pMaker = new PlayerMaker();
 			player = pMaker.getPlayer(320,280);
+	
 			tickEventHandler = new TickEventHandler(OnTick);
 			player.TickEvent += tickEventHandler;
 			player.StateChanged += new StateChangedHandler(OnStateChanged);

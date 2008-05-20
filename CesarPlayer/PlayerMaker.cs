@@ -1,4 +1,4 @@
-// PlayerMaker.cs created with MonoDevelop
+﻿// PlayerMaker.cs created with MonoDevelop
 // User: ando at 3:13 25/11/2007
 //
 // To change standard headers go to Edit->Preferences->Coding->Standard Headers
@@ -27,10 +27,13 @@ namespace CesarPlayer
 			 case PlatformID.Unix:
 				return new GstPlayer(width,height,BvwUseType.BVW_USE_TYPE_VIDEO);
 				
+			case PlatformID.Win32NT:
+				return new GstPlayer(width,height,BvwUseType.BVW_USE_TYPE_VIDEO);
+				
 
 				
 			 default:
-				return null;
+				return new GstPlayer(width,height,BvwUseType.BVW_USE_TYPE_VIDEO);
 				
 				
 			}
