@@ -1,0 +1,9 @@
+<CombineEntry name="LongoMatchTranslation" fileversion="2.0" outputType="RelativeToOutput" ctype="TranslationProject">
+  <Configurations active="Release">
+    <Configuration name="Debug" ctype="TranslationProjectConfiguration" />
+    <Configuration name="Release" ctype="TranslationProjectConfiguration" />
+  </Configurations>
+  <translations>
+    <Translation isoCode="es" />
+  </translations>
+</CombineEntry>

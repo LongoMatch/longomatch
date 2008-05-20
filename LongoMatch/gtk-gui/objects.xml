@@ -1,0 +1,124 @@
+<objects>
+  <object type="LongoMatch.FileDescriptionWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="FileDescriptionWidget Properties">
+        <property name="LocalName" />
+        <property name="VisitorName" />
+        <property name="LocalGoals" />
+        <property name="VisitorGoals" />
+        <property name="Filename" />
+        <property name="Date" />
+        <property name="VisibleSections" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
+  </object>
+  <object type="LongoMatch.FileDataListWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="FileDataListWidget Signals">
+        <signal name="FileDataSelectedEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.TreeWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="TreeWidget Signals">
+        <signal name="TimeNodeSelected" />
+        <signal name="TimeNodeChanged" />
+        <signal name="TimeNodeDeleted" />
+        <signal name="PlayListNodeAdded" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.TreeViewPopup" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Widget">
+    <itemgroups />
+    <signals>
+      <itemgroup label="TreeViewPopup Signals">
+        <signal name="TimeNodeChanged" />
+        <signal name="TimeNodeSelected" />
+        <signal name="TimeNodeDeleted" />
+        <signal name="PlayListNodeAdded" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.ButtonsWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="ButtonsWidget Signals">
+        <signal name="NewMarkEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.TimeAdjustWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.PrecisionWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="PrecisionWidget Signals">
+        <signal name="PositionAdjusted" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.TimePrecisionAdjustWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="TimePrecisionAdjustWidget Signals">
+        <signal name="TimeNodeChanged" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.SectionsPropertiesWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.TimeNodeProperties" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.PlayListWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="PlayListWidget Signals">
+        <signal name="PlayListNodeSelected" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.PlayListTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
+    <itemgroups />
+    <signals>
+    </signals>
+  </object>
+  <object type="LongoMatch.TimeLine" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="TimeLine Properties">
+        <property name="Enabled" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="TimeLine Signals">
+        <signal name="PosValueChanged" />
+        <signal name="StartValueChanged" />
+        <signal name="StopValueChanged" />
+        <signal name="TimeNodeChanged" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.TimeScale" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="TimeScale Signals">
+        <signal name="PosValueChanged" />
+        <signal name="StartValueChanged" />
+        <signal name="StopValueChanged" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.CapturePropertiesWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+</objects>

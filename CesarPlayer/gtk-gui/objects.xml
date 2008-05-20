@@ -1,0 +1,16 @@
+<objects>
+  <object type="CesarPlayer.PlayerBin" allow-children="false" base-type="Gtk.Bin" palette-category="CesarPlayer">
+    <itemgroups />
+    <signals>
+      <itemgroup label="PlayerBin Signals">
+        <signal name="PlayListSegmentDoneEvent" />
+        <signal name="TickEvent" />
+        <signal name="SegmentClosedEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="CesarPlayer.TimeLine" palette-category="CesarPlayer" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+</objects>

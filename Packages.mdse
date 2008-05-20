@@ -1,0 +1,48 @@
+<CombineEntry name="Packages" fileversion="2.0" ctype="PackagingProject">
+  <Packages>
+    <Package name="Linux binarios">
+      <Builder rootEntry="LongoMatch.mds" targetFile="UnixLongoMatch.tar.gz" platform="Linux" ctype="BinariesZipPackageBuilder">
+        <ChildEntries>
+          <Entry>LongoMatch/LongoMatch.mdp</Entry>
+          <Entry>CesarPlayer/CesarPlayer/CesarPlayer.mdp</Entry>
+          <Entry>liblongomatch/liblongomatch.mdp</Entry>
+          <Entry>LongoMatchTranslation/LongoMatchTranslation.mdse</Entry>
+        </ChildEntries>
+        <ExcludedFiles>
+          <File>cesarplayer,ProgramFiles,DirectShowLib-2005.dll</File>
+          <File>LongoMatch,ProgramFiles,DirectShowLib-2005.dll</File>
+        </ExcludedFiles>
+      </Builder>
+    </Package>
+    <Package name="Windows binarios">
+      <Builder rootEntry="LongoMatch.mds" targetFile="LongoMatchWin32.zip" platform="Windows" ctype="BinariesZipPackageBuilder">
+        <ChildEntries>
+          <Entry>LongoMatchTranslation/LongoMatchTranslation.mdse</Entry>
+          <Entry>LongoMatch/LongoMatch.mdp</Entry>
+          <Entry>CesarPlayer/CesarPlayer/CesarPlayer.mdp</Entry>
+          <Entry>GtkEnhancedScale/GtkEnhancedScale.mdp</Entry>
+        </ChildEntries>
+      </Builder>
+    </Package>
+    <Package name="MonoDevelop Project Model fuentes">
+      <Builder rootEntry="LongoMatch.mds" targetFile="UnixLongoMatch.tar.gz" format="MonoDevelop.Projects.MonoDevelopFileFormat" ctype="SourcesZipPackageBuilder">
+        <ChildEntries>
+          <Entry>Packages.mdse</Entry>
+          <Entry>LongoMatch/LongoMatch.mdp</Entry>
+          <Entry>CesarPlayer/CesarPlayer/CesarPlayer.mdp</Entry>
+          <Entry>liblongomatch/liblongomatch.mdp</Entry>
+          <Entry>LongoMatchTranslation/LongoMatchTranslation.mdse</Entry>
+        </ChildEntries>
+      </Builder>
+    </Package>
+    <Package name="Tarball">
+      <Builder rootEntry="LongoMatch.mds" TargetDirectory="/home/ando/Proyectos/UnixLongoMatch" DefaultConfiguration="Release" ctype="TarballDeployTarget">
+        <ChildEntries>
+          <Entry>LongoMatch/LongoMatch.mdp</Entry>
+          <Entry>CesarPlayer/CesarPlayer/CesarPlayer.mdp</Entry>
+          <Entry>LongoMatchTranslation/LongoMatchTranslation.mdse</Entry>
+        </ChildEntries>
+      </Builder>
+    </Package>
+  </Packages>
+</CombineEntry>
