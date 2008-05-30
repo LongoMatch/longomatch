@@ -30,6 +30,7 @@
     <Execute type="None" entry="liblongomatch" />
     <Execute type="None" entry="CesarPlayer" />
   </StartMode>
+  <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="UpdateNearestChangeLog" />
   <Entries>
     <Entry filename="LongoMatch/LongoMatch.mdp" />
     <Entry filename="Packages.mdse" />
