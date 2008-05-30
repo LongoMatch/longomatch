@@ -39,7 +39,7 @@ namespace CesarPlayer
 		// Methods :: Public
 		// Methods :: Public :: SignalConnect
 		// Methods :: Public :: SignalConnect :: Plain
-		[DllImport ("libgobject-2.0")]
+		[DllImport ("libgobject-2.0-0")]
 		private static extern uint g_signal_connect_data
 		  (IntPtr obj, string name, SignalDelegate cb, IntPtr data, IntPtr p,
 		   int flags);
@@ -58,7 +58,7 @@ namespace CesarPlayer
 		}
 
 		// Methods :: Public :: SignalConnect :: Ptr
-		[DllImport ("libgobject-2.0.so")]
+		[DllImport ("libgobject-2.0-0")]
 		private static extern uint g_signal_connect_data
 		  (IntPtr obj, string name, SignalDelegatePtr cb, IntPtr data, 
 		   IntPtr p, int flags);
@@ -77,7 +77,7 @@ namespace CesarPlayer
 		}
 
 		// Methods :: Public :: SignalConnect :: Int
-		[DllImport ("libgobject-2.0.so")]
+		[DllImport ("libgobject-2.0-0")]
 		private static extern uint g_signal_connect_data
 		  (IntPtr obj, string name, SignalDelegateInt cb, IntPtr data,
 		   IntPtr p, int flags);
@@ -96,7 +96,7 @@ namespace CesarPlayer
 		}
 		
 		// Methods :: Public :: SignalConnect :: Double
-		[DllImport ("libgobject-2.0.so")]
+		[DllImport ("libgobject-2.0-0")]
 		private static extern uint g_signal_connect_data
 		  (IntPtr obj, string name, SignalDelegateDouble cb, IntPtr data,
 		   IntPtr p, int flags);
@@ -115,7 +115,7 @@ namespace CesarPlayer
 		}
 		
 		// Methods :: Public :: SignalConnect :: Bool
-		[DllImport ("libgobject-2.0.so")]
+		[DllImport ("libgobject-2.0-0")]
 		private static extern uint g_signal_connect_data
 		  (IntPtr obj, string name, SignalDelegateBool cb, IntPtr data,
 		   IntPtr p, int flags);
@@ -134,7 +134,7 @@ namespace CesarPlayer
 		}
 
 		// Methods :: Public :: SignalConnect :: Str
-		[DllImport ("libgobject-2.0.so")]
+		[DllImport ("libgobject-2.0-0")]
 		private static extern uint g_signal_connect_data
 		  (IntPtr obj, string name, SignalDelegateStr cb, IntPtr data,
 		   IntPtr p, int flags);
@@ -153,7 +153,7 @@ namespace CesarPlayer
 		}
 		
 				// Methods :: Public :: SignalConnect :: Str
-		[DllImport ("libgobject-2.0.so")]
+		[DllImport ("libgobject-2.0-0")]
 		private static extern uint g_signal_connect_data
 		  (IntPtr obj, string name, SignalDelegateTick cb, IntPtr data,
 		   IntPtr p, int flags);
