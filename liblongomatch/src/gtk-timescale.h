@@ -25,11 +25,11 @@
 #ifndef _GTK_TIMESCALE_H_
 #define _GTK_TIMESCALE_H_
 
-#if BUILDING_DLL
-# define DLLIMPORT __declspec (dllexport)
-#else /* Not BUILDING_DLL */
-# define DLLIMPORT __declspec (dllimport)
-#endif /* Not BUILDING_DLL */
+#ifdef WIN32
+	#define EXPORT __declspec (dllexport)
+#else
+	#define EXPORT
+#endif
 
 #include <glib-object.h>
 #include <gtk/gtk.h>
@@ -69,10 +69,10 @@ struct _GtkTimescale
 };
 
 GType gtk_timescale_get_type (void) G_GNUC_CONST;
-GtkWidget *gtk_timescale_new(gint32 upper);
-void gtk_timescale_set_bounds(GtkTimescale *gts,gdouble lower, gdouble upper);
-void gtk_timescale_adjust_position(GtkTimescale *gts,gdouble val, gint adj); 
-void gtk_timescale_set_segment(GtkTimescale *gts, gdouble in, gdouble out);
+EXPORT GtkWidget *gtk_timescale_new(gint32 upper);
+EXPORT void gtk_timescale_set_bounds(GtkTimescale *gts,gdouble lower, gdouble upper);
+EXPORT void gtk_timescale_adjust_position(GtkTimescale *gts,gdouble val, gint adj); 
+EXPORT void gtk_timescale_set_segment(GtkTimescale *gts, gdouble in, gdouble out);
 
 
 G_END_DECLS

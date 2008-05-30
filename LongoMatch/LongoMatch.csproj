@@ -94,6 +94,12 @@
     <Compile Include="TimeString.cs" />
     <Compile Include="TreeViewPopup.cs" />
     <Compile Include="TreeWidget.cs" />
+    <None Include="background.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="lgmlogo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
