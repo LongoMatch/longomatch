@@ -1,0 +1,121 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{7E0B7A64-8FC4-4AD1-9B5E-5FB024A2A3C4}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>LongoMatch</RootNamespace>
+    <AssemblyName>LongoMatch</AssemblyName>
+    <TargetFrameworkVersion>Mono v2.0</TargetFrameworkVersion>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="ButtonsWidget.cs" />
+    <Compile Include="CalendarPopup.cs" />
+    <Compile Include="CapturePropertiesWidget.cs" />
+    <Compile Include="DB.cs" />
+    <Compile Include="DBManager.cs" />
+    <Compile Include="FileData.cs" />
+    <Compile Include="FileDataListWidget.cs" />
+    <Compile Include="FileDescriptionWidget.cs" />
+    <Compile Include="gtk-gui\generated.cs" />
+    <Compile Include="gtk-gui\LongoMatch.ButtonsWidget.cs" />
+    <Compile Include="gtk-gui\LongoMatch.CalendarPopup.cs" />
+    <Compile Include="gtk-gui\LongoMatch.CapturePropertiesWidget.cs" />
+    <Compile Include="gtk-gui\LongoMatch.DBManager.cs" />
+    <Compile Include="gtk-gui\LongoMatch.FileDataListWidget.cs" />
+    <Compile Include="gtk-gui\LongoMatch.FileDescriptionWidget.cs" />
+    <Compile Include="gtk-gui\LongoMatch.MainWindow.cs" />
+    <Compile Include="gtk-gui\LongoMatch.NewProjectDialog.cs" />
+    <Compile Include="gtk-gui\LongoMatch.NewSectionsTemplatesFiles.cs" />
+    <Compile Include="gtk-gui\LongoMatch.OpenProjectDialog.cs" />
+    <Compile Include="gtk-gui\LongoMatch.PlayListWidget.cs" />
+    <Compile Include="gtk-gui\LongoMatch.PrecisionWidget.cs" />
+    <Compile Include="gtk-gui\LongoMatch.SectionsPropertiesWidget.cs" />
+    <Compile Include="gtk-gui\LongoMatch.SectionsTemplates.cs" />
+    <Compile Include="gtk-gui\LongoMatch.TemplateEditorDialog.cs" />
+    <Compile Include="gtk-gui\LongoMatch.TimeAdjustWidget.cs" />
+    <Compile Include="gtk-gui\LongoMatch.TimeLine.cs" />
+    <Compile Include="gtk-gui\LongoMatch.TimeNodeProperties.cs" />
+    <Compile Include="gtk-gui\LongoMatch.TimePrecisionAdjustWidget.cs" />
+    <Compile Include="gtk-gui\LongoMatch.TimeScale.cs" />
+    <Compile Include="gtk-gui\LongoMatch.TreeWidget.cs" />
+    <Compile Include="Handlers.cs" />
+    <Compile Include="Main.cs" />
+    <Compile Include="MainWindow.cs" />
+    <Compile Include="NewProjectDialog.cs" />
+    <Compile Include="NewSectionsTemplatesFiles.cs" />
+    <Compile Include="OpenProjectDialog.cs" />
+    <Compile Include="PlayListNode.cs" />
+    <Compile Include="PlayListTreeView.cs" />
+    <Compile Include="PlayListWidget.cs" />
+    <Compile Include="PrecisionWidget.cs" />
+    <Compile Include="Sections.cs" />
+    <Compile Include="SectionsPropertiesWidget.cs" />
+    <Compile Include="SectionsReader.cs" />
+    <Compile Include="SectionsTemplates.cs" />
+    <Compile Include="SectionsWriter.cs" />
+    <Compile Include="SignalUtils.cs" />
+    <Compile Include="TemplateEditorDialog.cs" />
+    <Compile Include="TimeAdjustWidget.cs" />
+    <Compile Include="TimeLine.cs" />
+    <Compile Include="TimeNode.cs" />
+    <Compile Include="TimeNodeProperties.cs" />
+    <Compile Include="TimePrecisionAdjustWidget.cs" />
+    <Compile Include="TimeScale.cs" />
+    <Compile Include="TimeString.cs" />
+    <Compile Include="TreeViewPopup.cs" />
+    <Compile Include="TreeWidget.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="gtk-gui" />
+    <ProjectReference Include="..\CesarPlayer\CesarPlayer.csproj">
+      <Project>{BDDC0EC4-BAC3-4E42-BB44-E905C9F9BBD7}</Project>
+      <Name>CesarPlayer</Name>
+    </ProjectReference>
+    <Reference Include="atk-sharp">
+      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\atk-sharp\2.10.0.0__35e10195dab3c99f\atk-sharp.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="gdk-sharp">
+      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\gdk-sharp\2.10.0.0__35e10195dab3c99f\gdk-sharp.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="gtk-sharp">
+      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\gtk-sharp\2.10.0.0__35e10195dab3c99f\gtk-sharp.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Mono.Posix">
+      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\Mono.Posix\2.0.0.0__0738eb9f132ed756\Mono.Posix.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(SharpDevelopBinPath)\SharpDevelop.Build.CSharp.targets" />
+</Project>
