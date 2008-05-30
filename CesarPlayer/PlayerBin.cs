@@ -24,15 +24,15 @@ using System.Runtime.InteropServices;
 
 namespace CesarPlayer
 {
-	public delegate void PlayListSegmentDoneHandler ();
-	public delegate void SegmentClosedHandler();
+	
 	
 	public partial class PlayerBin : Gtk.Bin
 	{
 		
-		public event CesarPlayer.PlayListSegmentDoneHandler PlayListSegmentDoneEvent;
+		public event PlayListSegmentDoneHandler PlayListSegmentDoneEvent;
 		public event SegmentClosedHandler SegmentClosedEvent;
 		public event TickEventHandler TickEvent;
+		public event ErrorEventHandler ErrorEvent;
 		
 		private TickEventHandler tickEventHandler;
 		private IPlayer player;
@@ -56,7 +56,7 @@ namespace CesarPlayer
 			this.UnSensitive();
 			this.PlayerInit();
 			vwin = new VolumeWindow();
-			vwin.VolumeChanged += new VolumeWindow.VolumeChangedHandler(OnVolumeChanged);
+			vwin.VolumeChanged += new VolumeChangedHandler(OnVolumeChanged);
 			
 			
 		}
@@ -70,6 +70,7 @@ namespace CesarPlayer
 			player.StateChanged += new StateChangedHandler(OnStateChanged);
 			player.EndOfStreamEvent += new EndOfStreamEventHandler (OnEndOfStream);
 			player.SegmentDoneEvent += new SegmentDoneHandler (OnSegmentDone);
+			player.ErrorEvent += new ErrorEventHandler (OnError);
 			Widget _videoscreen = player.Window;
 			videobox.Add(_videoscreen);
 			_videoscreen.Show();
@@ -235,6 +236,11 @@ namespace CesarPlayer
 			if (this.hasNext && this.PlayListSegmentDoneEvent != null )
 				PlayListSegmentDoneEvent();
 				
+		}
+		
+		protected virtual void OnError (String error){
+			if(this.ErrorEvent != null)
+				this.ErrorEvent(error);
 		}
 
 		protected virtual void OnClosebuttonClicked (object sender, System.EventArgs e)

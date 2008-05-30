@@ -29,6 +29,12 @@
             <property name="RowSpacing">6</property>
             <property name="ColumnSpacing">6</property>
             <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
               <widget class="Gtk.SpinButton" id="dataSpinButton">
                 <property name="MemberName">dataSpinButton</property>
                 <property name="CanFocus">True</property>
@@ -53,58 +59,6 @@
                 <property name="XShrink">False</property>
                 <property name="YExpand">True</property>
                 <property name="YFill">False</property>
-                <property name="YShrink">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.HBox" id="hbox1">
-                <property name="MemberName" />
-                <property name="Spacing">6</property>
-                <child>
-                  <widget class="Gtk.RadioButton" id="radiobuttonyes">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Label" translatable="yes">Yes</property>
-                    <property name="Active">True</property>
-                    <property name="DrawIndicator">True</property>
-                    <property name="HasLabel">True</property>
-                    <property name="UseUnderline">True</property>
-                    <property name="Group">group1</property>
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">True</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.RadioButton" id="radiobuttonno">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Label" translatable="yes">No</property>
-                    <property name="DrawIndicator">True</property>
-                    <property name="HasLabel">True</property>
-                    <property name="UseUnderline">True</property>
-                    <property name="Group">group1</property>
-                  </widget>
-                  <packing>
-                    <property name="Position">1</property>
-                    <property name="AutoSize">True</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="TopAttach">10</property>
-                <property name="BottomAttach">11</property>
-                <property name="LeftAttach">1</property>
-                <property name="RightAttach">2</property>
-                <property name="AutoSize">True</property>
-                <property name="XOptions">Fill</property>
-                <property name="YOptions">Fill</property>
-                <property name="XExpand">False</property>
-                <property name="XFill">True</property>
-                <property name="XShrink">False</property>
-                <property name="YExpand">False</property>
-                <property name="YFill">True</property>
                 <property name="YShrink">False</property>
               </packing>
             </child>
@@ -334,25 +288,6 @@
                 <property name="BottomAttach">5</property>
                 <property name="LeftAttach">1</property>
                 <property name="RightAttach">2</property>
-                <property name="AutoSize">True</property>
-                <property name="XOptions">Fill</property>
-                <property name="YOptions">Fill</property>
-                <property name="XExpand">False</property>
-                <property name="XFill">True</property>
-                <property name="XShrink">False</property>
-                <property name="YExpand">False</property>
-                <property name="YFill">True</property>
-                <property name="YShrink">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.Label" id="label1">
-                <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">label1</property>
-              </widget>
-              <packing>
-                <property name="TopAttach">10</property>
-                <property name="BottomAttach">11</property>
                 <property name="AutoSize">True</property>
                 <property name="XOptions">Fill</property>
                 <property name="YOptions">Fill</property>
@@ -610,32 +545,6 @@
           </widget>
           <packing>
             <property name="Position">0</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Expander" id="expander1">
-            <property name="MemberName" />
-            <property name="CanFocus">True</property>
-            <property name="Expanded">True</property>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <widget class="Gtk.Label" id="GtkLabel3">
-                <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">expander1</property>
-                <property name="UseUnderline">True</property>
-              </widget>
-              <packing>
-                <property name="type">label_item</property>
-              </packing>
-            </child>
-          </widget>
-          <packing>
-            <property name="Position">1</property>
             <property name="AutoSize">True</property>
           </packing>
         </child>
@@ -1455,7 +1364,6 @@
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
-    <property name="HasSeparator">False</property>
     <child internal-child="VBox">
       <widget class="Gtk.VBox" id="dialog1_VBox">
         <property name="MemberName" />
@@ -1776,7 +1684,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.TimePrecisionAdjustWidget" design-size="130 30">
+  <widget class="Gtk.Bin" id="LongoMatch.TimePrecisionAdjustWidget" design-size="241 54">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.HBox" id="hbox2">
@@ -1813,12 +1721,17 @@
               <widget class="Gtk.VBox" id="vbox2">
                 <property name="MemberName" />
                 <child>
-                  <widget class="Gtk.Arrow" id="arrow1">
+                  <widget class="Gtk.Button" id="button286">
                     <property name="MemberName" />
-                    <property name="ArrowType">Up</property>
-                    <property name="ShadowType">EtchedIn</property>
-                    <signal name="KeyPressEvent" handler="OnArrow1KeyPressEvent" />
-                    <signal name="ButtonPressEvent" handler="OnArrow1ButtonPressEvent" />
+                    <property name="CanFocus">True</property>
+                    <property name="Type">Custom</property>
+                    <property name="Relief">Half</property>
+                    <child>
+                      <widget class="Gtk.Arrow" id="arrow3">
+                        <property name="MemberName" />
+                        <property name="ArrowType">Up</property>
+                      </widget>
+                    </child>
                   </widget>
                   <packing>
                     <property name="Position">0</property>
@@ -1828,10 +1741,16 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="Gtk.Arrow" id="arrow2">
+                  <widget class="Gtk.Button" id="button287">
                     <property name="MemberName" />
-                    <property name="ArrowType">Down</property>
-                    <property name="ShadowType">EtchedOut</property>
+                    <property name="CanFocus">True</property>
+                    <property name="Type">Custom</property>
+                    <child>
+                      <widget class="Gtk.Arrow" id="arrow5">
+                        <property name="MemberName" />
+                        <property name="ArrowType">Down</property>
+                      </widget>
+                    </child>
                   </widget>
                   <packing>
                     <property name="Position">1</property>
@@ -1886,9 +1805,16 @@
               <widget class="Gtk.VBox" id="vbox3">
                 <property name="MemberName" />
                 <child>
-                  <widget class="Gtk.Arrow" id="arrow3">
+                  <widget class="Gtk.Button" id="button285">
                     <property name="MemberName" />
-                    <property name="ArrowType">Up</property>
+                    <property name="CanFocus">True</property>
+                    <property name="Type">Custom</property>
+                    <child>
+                      <widget class="Gtk.Arrow" id="arrow2">
+                        <property name="MemberName" />
+                        <property name="ArrowType">Up</property>
+                      </widget>
+                    </child>
                   </widget>
                   <packing>
                     <property name="Position">0</property>
@@ -1898,10 +1824,16 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="Gtk.Arrow" id="arrow4">
+                  <widget class="Gtk.Button" id="button284">
                     <property name="MemberName" />
-                    <property name="ArrowType">Down</property>
-                    <property name="ShadowType">In</property>
+                    <property name="CanFocus">True</property>
+                    <property name="Type">Custom</property>
+                    <child>
+                      <widget class="Gtk.Arrow" id="arrow4">
+                        <property name="MemberName" />
+                        <property name="ArrowType">Down</property>
+                      </widget>
+                    </child>
                   </widget>
                   <packing>
                     <property name="Position">1</property>
@@ -2546,7 +2478,8 @@
     <property name="MemberName" />
     <property name="Title" translatable="yes">LongoMatch</property>
     <property name="Icon">file:./bin/Release/logo.png</property>
-    <property name="WindowPosition">CenterOnParent</property>
+    <property name="WindowPosition">CenterAlways</property>
+    <property name="Gravity">Center</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
     <child>
       <widget class="Gtk.VBox" id="vbox1">
@@ -2612,6 +2545,7 @@
                         <property name="Events">ButtonPressMask</property>
                         <signal name="TickEvent" handler="OnPlayerbin1TickEvent" />
                         <signal name="SegmentClosedEvent" handler="OnPlayerbin1SegmentClosedEvent" />
+                        <signal name="ErrorEvent" handler="OnPlayerbin1ErrorEvent" />
                       </widget>
                       <packing>
                         <property name="Position">0</property>

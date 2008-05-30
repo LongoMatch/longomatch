@@ -1017,6 +1017,10 @@ static void gtk_enhanced_scale_motion_x( GtkEnhancedScale *enhanced_scale, gint 
 	g_return_if_fail ( i >= 0 );
 	g_return_if_fail ( i < enhanced_scale->num_adjustments );
 
+	// We don't want the position slider to move
+	if (i == 0)
+		return;
+		
 	gdk_window_get_position ( enhanced_scale->slider[ i ], &slider_x, &slider_y );
 	gtk_enhanced_scale_trough_hdims ( enhanced_scale, &left, &right, i );
 #ifdef DEBUG

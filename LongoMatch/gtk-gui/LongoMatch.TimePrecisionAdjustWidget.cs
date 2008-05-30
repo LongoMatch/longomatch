@@ -23,9 +23,13 @@ namespace LongoMatch {
         
         private Gtk.VBox vbox2;
         
-        private Gtk.Arrow arrow1;
+        private Gtk.Button button286;
         
-        private Gtk.Arrow arrow2;
+        private Gtk.Arrow arrow3;
+        
+        private Gtk.Button button287;
+        
+        private Gtk.Arrow arrow5;
         
         private Gtk.HBox hbox4;
         
@@ -35,7 +39,11 @@ namespace LongoMatch {
         
         private Gtk.VBox vbox3;
         
-        private Gtk.Arrow arrow3;
+        private Gtk.Button button285;
+        
+        private Gtk.Arrow arrow2;
+        
+        private Gtk.Button button284;
         
         private Gtk.Arrow arrow4;
         
@@ -73,30 +81,43 @@ namespace LongoMatch {
             this.vbox2 = new Gtk.VBox();
             this.vbox2.Name = "vbox2";
             // Container child vbox2.Gtk.Box+BoxChild
-            this.arrow1 = new Gtk.Arrow(((Gtk.ArrowType)(0)), ((Gtk.ShadowType)(3)));
-            this.arrow1.Name = "arrow1";
-            this.vbox2.Add(this.arrow1);
-            Gtk.Box.BoxChild w3 = ((Gtk.Box.BoxChild)(this.vbox2[this.arrow1]));
-            w3.Position = 0;
-            w3.Expand = false;
-            w3.Fill = false;
-            // Container child vbox2.Gtk.Box+BoxChild
-            this.arrow2 = new Gtk.Arrow(((Gtk.ArrowType)(1)), ((Gtk.ShadowType)(4)));
-            this.arrow2.Name = "arrow2";
-            this.vbox2.Add(this.arrow2);
-            Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(this.vbox2[this.arrow2]));
-            w4.Position = 1;
+            this.button286 = new Gtk.Button();
+            this.button286.CanFocus = true;
+            this.button286.Name = "button286";
+            this.button286.Relief = ((Gtk.ReliefStyle)(1));
+            // Container child button286.Gtk.Container+ContainerChild
+            this.arrow3 = new Gtk.Arrow(((Gtk.ArrowType)(0)), ((Gtk.ShadowType)(2)));
+            this.arrow3.Name = "arrow3";
+            this.button286.Add(this.arrow3);
+            this.button286.Label = null;
+            this.vbox2.Add(this.button286);
+            Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(this.vbox2[this.button286]));
+            w4.Position = 0;
             w4.Expand = false;
             w4.Fill = false;
-            this.hbox3.Add(this.vbox2);
-            Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(this.hbox3[this.vbox2]));
-            w5.Position = 2;
-            w5.Expand = false;
-            w5.Fill = false;
-            this.hbox2.Add(this.hbox3);
-            Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(this.hbox2[this.hbox3]));
-            w6.Position = 0;
+            // Container child vbox2.Gtk.Box+BoxChild
+            this.button287 = new Gtk.Button();
+            this.button287.CanFocus = true;
+            this.button287.Name = "button287";
+            // Container child button287.Gtk.Container+ContainerChild
+            this.arrow5 = new Gtk.Arrow(((Gtk.ArrowType)(1)), ((Gtk.ShadowType)(2)));
+            this.arrow5.Name = "arrow5";
+            this.button287.Add(this.arrow5);
+            this.button287.Label = null;
+            this.vbox2.Add(this.button287);
+            Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(this.vbox2[this.button287]));
+            w6.Position = 1;
+            w6.Expand = false;
             w6.Fill = false;
+            this.hbox3.Add(this.vbox2);
+            Gtk.Box.BoxChild w7 = ((Gtk.Box.BoxChild)(this.hbox3[this.vbox2]));
+            w7.Position = 2;
+            w7.Expand = false;
+            w7.Fill = false;
+            this.hbox2.Add(this.hbox3);
+            Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(this.hbox2[this.hbox3]));
+            w8.Position = 0;
+            w8.Fill = false;
             // Container child hbox2.Gtk.Box+BoxChild
             this.hbox4 = new Gtk.HBox();
             this.hbox4.Name = "hbox4";
@@ -106,53 +127,63 @@ namespace LongoMatch {
             this.label2.Name = "label2";
             this.label2.LabelProp = Mono.Unix.Catalog.GetString("Stop:");
             this.hbox4.Add(this.label2);
-            Gtk.Box.BoxChild w7 = ((Gtk.Box.BoxChild)(this.hbox4[this.label2]));
-            w7.Position = 0;
-            w7.Fill = false;
+            Gtk.Box.BoxChild w9 = ((Gtk.Box.BoxChild)(this.hbox4[this.label2]));
+            w9.Position = 0;
+            w9.Fill = false;
             // Container child hbox4.Gtk.Box+BoxChild
             this.stoplabel = new Gtk.Label();
             this.stoplabel.Name = "stoplabel";
             this.stoplabel.LabelProp = "";
             this.hbox4.Add(this.stoplabel);
-            Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(this.hbox4[this.stoplabel]));
-            w8.Position = 1;
-            w8.Expand = false;
-            w8.Fill = false;
+            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.hbox4[this.stoplabel]));
+            w10.Position = 1;
+            w10.Expand = false;
+            w10.Fill = false;
             // Container child hbox4.Gtk.Box+BoxChild
             this.vbox3 = new Gtk.VBox();
             this.vbox3.Name = "vbox3";
             // Container child vbox3.Gtk.Box+BoxChild
-            this.arrow3 = new Gtk.Arrow(((Gtk.ArrowType)(0)), ((Gtk.ShadowType)(2)));
-            this.arrow3.Name = "arrow3";
-            this.vbox3.Add(this.arrow3);
-            Gtk.Box.BoxChild w9 = ((Gtk.Box.BoxChild)(this.vbox3[this.arrow3]));
-            w9.Position = 0;
-            w9.Expand = false;
-            w9.Fill = false;
-            // Container child vbox3.Gtk.Box+BoxChild
-            this.arrow4 = new Gtk.Arrow(((Gtk.ArrowType)(1)), ((Gtk.ShadowType)(1)));
-            this.arrow4.Name = "arrow4";
-            this.vbox3.Add(this.arrow4);
-            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.vbox3[this.arrow4]));
-            w10.Position = 1;
-            w10.Expand = false;
-            w10.Fill = false;
-            this.hbox4.Add(this.vbox3);
-            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.hbox4[this.vbox3]));
-            w11.Position = 2;
-            w11.Expand = false;
-            w11.Fill = false;
-            this.hbox2.Add(this.hbox4);
-            Gtk.Box.BoxChild w12 = ((Gtk.Box.BoxChild)(this.hbox2[this.hbox4]));
-            w12.Position = 1;
+            this.button285 = new Gtk.Button();
+            this.button285.CanFocus = true;
+            this.button285.Name = "button285";
+            // Container child button285.Gtk.Container+ContainerChild
+            this.arrow2 = new Gtk.Arrow(((Gtk.ArrowType)(0)), ((Gtk.ShadowType)(2)));
+            this.arrow2.Name = "arrow2";
+            this.button285.Add(this.arrow2);
+            this.button285.Label = null;
+            this.vbox3.Add(this.button285);
+            Gtk.Box.BoxChild w12 = ((Gtk.Box.BoxChild)(this.vbox3[this.button285]));
+            w12.Position = 0;
+            w12.Expand = false;
             w12.Fill = false;
+            // Container child vbox3.Gtk.Box+BoxChild
+            this.button284 = new Gtk.Button();
+            this.button284.CanFocus = true;
+            this.button284.Name = "button284";
+            // Container child button284.Gtk.Container+ContainerChild
+            this.arrow4 = new Gtk.Arrow(((Gtk.ArrowType)(1)), ((Gtk.ShadowType)(2)));
+            this.arrow4.Name = "arrow4";
+            this.button284.Add(this.arrow4);
+            this.button284.Label = null;
+            this.vbox3.Add(this.button284);
+            Gtk.Box.BoxChild w14 = ((Gtk.Box.BoxChild)(this.vbox3[this.button284]));
+            w14.Position = 1;
+            w14.Expand = false;
+            w14.Fill = false;
+            this.hbox4.Add(this.vbox3);
+            Gtk.Box.BoxChild w15 = ((Gtk.Box.BoxChild)(this.hbox4[this.vbox3]));
+            w15.Position = 2;
+            w15.Expand = false;
+            w15.Fill = false;
+            this.hbox2.Add(this.hbox4);
+            Gtk.Box.BoxChild w16 = ((Gtk.Box.BoxChild)(this.hbox2[this.hbox4]));
+            w16.Position = 1;
+            w16.Fill = false;
             this.Add(this.hbox2);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
             this.Show();
-            this.arrow1.KeyPressEvent += new Gtk.KeyPressEventHandler(this.OnArrow1KeyPressEvent);
-            this.arrow1.ButtonPressEvent += new Gtk.ButtonPressEventHandler(this.OnArrow1ButtonPressEvent);
         }
     }
 }

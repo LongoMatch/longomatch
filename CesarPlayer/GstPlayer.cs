@@ -58,6 +58,8 @@ namespace CesarPlayer
 		public event         InvalidVideoFileHandler InvalidVideoFile;
 		
 		public event         SegmentDoneHandler SegmentDoneEvent;
+		
+		public event         ErrorEventHandler ErrorEvent;
 
 
 		// Callbacks
@@ -407,9 +409,9 @@ namespace CesarPlayer
 		// Handlers :: OnError
 		private void OnError (IntPtr obj, string error)
 		{
-			MessageDialog errorDialog = new MessageDialog (null,DialogFlags.Modal,MessageType.Error,ButtonsType.Ok,Catalog.GetString("Player error:\n") +error);
-			errorDialog.Run();
-			errorDialog.Destroy();	
+			if (ErrorEvent !=null)
+				this.ErrorEvent(error);
+
 		}
 	}
 }

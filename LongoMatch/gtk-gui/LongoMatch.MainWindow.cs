@@ -47,7 +47,8 @@ namespace LongoMatch {
             this.Name = "LongoMatch.MainWindow";
             this.Title = Mono.Unix.Catalog.GetString("LongoMatch");
             this.Icon = new Gdk.Pixbuf(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "./bin/Release/logo.png"));
-            this.WindowPosition = ((Gtk.WindowPosition)(4));
+            this.WindowPosition = ((Gtk.WindowPosition)(3));
+            this.Gravity = ((Gdk.Gravity)(5));
             // Container child LongoMatch.MainWindow.Gtk.Container+ContainerChild
             this.vbox1 = new Gtk.VBox();
             this.vbox1.Name = "vbox1";
@@ -159,6 +160,7 @@ namespace LongoMatch {
             this.treewidget1.PlayListNodeAdded += new LongoMatch.PlayListNodeAddedHandler(this.OnPlayListNodeAdded);
             this.playerbin1.TickEvent += new CesarPlayer.TickEventHandler(this.OnPlayerbin1TickEvent);
             this.playerbin1.SegmentClosedEvent += new CesarPlayer.SegmentClosedHandler(this.OnPlayerbin1SegmentClosedEvent);
+            this.playerbin1.ErrorEvent += new CesarPlayer.ErrorEventHandler(this.OnPlayerbin1ErrorEvent);
             this.timeline2.TimeNodeChanged += new LongoMatch.TimeNodeChangedHandler(this.OnTimeScaleTimeNodeChanged);
             this.timeline2.PositionChanged += new LongoMatch.PositionChangedHandler(this.OnTimeline2PositionChanged);
             this.buttonswidget1.NewMarkEvent += new LongoMatch.NewMarkEventHandler(this.OnNewMark);

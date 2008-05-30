@@ -27,7 +27,7 @@ namespace CesarPlayer
 	{
 
 	
-		public delegate void VolumeChangedHandler (int level);
+		
 		public event         VolumeChangedHandler VolumeChanged;
 		
 		

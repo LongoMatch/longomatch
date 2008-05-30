@@ -25,11 +25,7 @@ using Gdk;
 namespace CesarPlayer
 {
 	
-	public delegate void StateChangedHandler (bool playing);
-	public delegate void TickEventHandler (long currentTime, long streamLength, float position, bool seekable);
-	public delegate void EndOfStreamEventHandler ();
-	public delegate void SegmentDoneHandler();
-	public delegate void InvalidVideoFileHandler (string videoFile);
+	
 
 
 	public interface IPlayer
@@ -43,6 +39,7 @@ namespace CesarPlayer
 		event         EndOfStreamEventHandler EndOfStreamEvent;
 		event         InvalidVideoFileHandler InvalidVideoFile;
 		event         SegmentDoneHandler SegmentDoneEvent;
+		event         ErrorEventHandler ErrorEvent;
 
 		string FilePath{
 			get;

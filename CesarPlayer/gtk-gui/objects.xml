@@ -6,6 +6,7 @@
         <signal name="PlayListSegmentDoneEvent" />
         <signal name="TickEvent" />
         <signal name="SegmentClosedEvent" />
+        <signal name="ErrorEvent" />
       </itemgroup>
     </signals>
   </object>

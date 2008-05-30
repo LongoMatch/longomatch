@@ -56,14 +56,24 @@ namespace LongoMatch
 
 		private void SetFileData(FileData fData){			
 			openedFileData = fData;
-			if (fData!=null){				
-				this.Title = System.IO.Path.GetFileNameWithoutExtension(fData.Filename) + " - LongoMatch";
-				this.ShowWidgets();
-			    playerbin1.SetFile(fData.Filename);				
-				buttonswidget1.SetSections(fData.Sections);
-				treewidget1.Model=fData.GetModel();	
-				//timeprecisionadjustwidget1.Reset();
-				player.LogoMode = false;
+			
+			
+			if (fData!=null){		
+				if(!File.Exists(fData.Filename)){
+					MessageDialog infoDialog = new MessageDialog (this,DialogFlags.Modal,MessageType.Warning,ButtonsType.Ok,Catalog.GetString("The file associated to this proyect doesn't exits.\n If the location of the file has changed try to change it with de DataBase Manager.") );
+					infoDialog.Run();
+					infoDialog.Destroy();
+					
+				}
+				else {
+					this.Title = System.IO.Path.GetFileNameWithoutExtension(fData.Filename) + " - LongoMatch";
+					this.ShowWidgets();
+					playerbin1.SetFile(fData.Filename);				
+					buttonswidget1.SetSections(fData.Sections);
+					treewidget1.Model=fData.GetModel();	
+					//timeprecisionadjustwidget1.Reset();
+					player.LogoMode = false;
+				}
 			}			
 		}
 		
@@ -81,7 +91,15 @@ namespace LongoMatch
 			this.leftbox.Hide();			
 		}
 				
-			
+	    private void CloseActualProyect(){
+			this.Title = "LongoMatch";
+			this.HideWidgets();
+			this.player.Close();
+			this.playerbin1.UnSensitive();
+			this.player.LogoMode = true;
+			openedFileData = null;			
+		}
+		
 		private void PopulateMenuBar(){
 
             Gtk.UIManager w1 = new Gtk.UIManager();
@@ -231,11 +249,7 @@ namespace LongoMatch
 
 		protected virtual void OnCloseActivated (object sender, System.EventArgs e)
 		{
-			this.HideWidgets();
-			this.player.Close();
-			this.playerbin1.UnSensitive();
-			this.player.LogoMode = true;
-			openedFileData = null;
+			this.CloseActualProyect();
 			
 		}
 
@@ -258,6 +272,7 @@ namespace LongoMatch
 			
 			//this.timeprecisionadjustwidget1.Show();
 			//this.timeprecisionadjustwidget1.SetTimeNode(tNode);
+			//this.selectedTimeNode = tNode;
 			this.buttonswidget1.Hide();
 			this.timeline2.Enabled = false;
 			this.timeline2.SetTimeNode(tNode,25);
@@ -367,6 +382,14 @@ namespace LongoMatch
 		protected virtual void OnTimeline2PositionChanged (long pos)
 		{
 			this.player.SeekInSegment(pos);
+		}
+
+		protected virtual void OnPlayerbin1ErrorEvent (string error)
+		{
+			MessageDialog errorDialog = new MessageDialog (this,DialogFlags.Modal,MessageType.Error,ButtonsType.Ok,Catalog.GetString("The actual Proyect will bo closed due to this error on the media player:\n") +error);
+			errorDialog.Run();
+			errorDialog.Destroy();	
+			this.CloseActualProyect();
 		}
 
 	
