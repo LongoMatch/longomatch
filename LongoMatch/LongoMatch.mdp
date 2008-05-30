@@ -12,11 +12,6 @@
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="LongoMatch.MainClass" generatexmldocumentation="False" win32Icon="." ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
-      <CustomCommands>
-        <Command type="BeforeBuild" command="/bin/mkdir -p &quot;./templates&quot;" workingdir="${TargetDir}" />
-        <Command type="BeforeBuild" command="/bin/mkdir -p &quot;./images&quot;" workingdir="${TargetDir}" />
-        <Command type="BeforeBuild" command="/bin/mkdir -p &quot;./db&quot;" workingdir="${TargetDir}" />
-      </CustomCommands>
       <Output directory="bin/Release" assemblyKeyFile="." assembly="LongoMatch" />
       <Build debugmode="False" target="WinExe" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />

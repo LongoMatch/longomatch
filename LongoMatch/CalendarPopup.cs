@@ -1,6 +1,6 @@
 // CalendarPopup.cs
 //
-//  Copyright (C) 2007 [name of author]
+//  Copyright (C) 2007 Andoni Morales Alastruey
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ using System;
 namespace LongoMatch
 {
 	
-	public delegate void DateSelectedHandler (DateTime selectedDate);
+
 	public partial class CalendarPopup : Gtk.Window
 	{
  

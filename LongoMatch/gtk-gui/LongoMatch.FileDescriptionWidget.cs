@@ -121,7 +121,6 @@ namespace LongoMatch {
             this.radiobuttonyes = new Gtk.RadioButton(Mono.Unix.Catalog.GetString("Yes"));
             this.radiobuttonyes.CanFocus = true;
             this.radiobuttonyes.Name = "radiobuttonyes";
-            this.radiobuttonyes.Active = true;
             this.radiobuttonyes.DrawIndicator = true;
             this.radiobuttonyes.UseUnderline = true;
             this.radiobuttonyes.Group = new GLib.SList(System.IntPtr.Zero);
