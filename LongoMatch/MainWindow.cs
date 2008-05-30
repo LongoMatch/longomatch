@@ -28,27 +28,15 @@ using GLib;
 namespace LongoMatch
 {
 	
-    //Manejador para el evento producido al seleccionar un nodo en el árbol
-	public delegate void TimeNodeSelectedHandler (TimeNode tNode);
-	//Manejador para el evento producido al pulsar un botón de selección de nuava marca
-	public delegate void NewMarkEventHandler (int i, int start, int stop);
-	//Manejador para el evento producido cuando se edita un nodo
-	public delegate void TimeNodeChangedHandler (TimeNode tNode, object val);
-	//Manejador para el evento producido al eliminar un TimeNode
-	public delegate void TimeNodeDeletedHandler (TimeNode tNode);
-	//Manejador para el evento producido al inserir un TimeNode en la lista de reproducción
-	public delegate void PlayListNodeAddedHandler(TimeNode tNode);
-	//Manejador para el evento producido al selecionar un nodo en la lista de reproducción
-	public delegate void PlayListNodeSelectedHandler (PlayListNode plNode, bool hasNext);
-	
-	//public delegate void PlayListSegmentDoneHandler ();
+   
+ 
 	
 	public partial class MainWindow : Gtk.Window
 	{
 
 		private static FileData openedFileData;
 		private CesarPlayer.IPlayer player;
-    	private uint timer;
+
 	
  
 		
@@ -358,16 +346,9 @@ namespace LongoMatch
 		protected virtual void OnViewPlaylistActivated (object sender, System.EventArgs e){
 			this.playlistwidget2.Visible = !this.playlistwidget2.Visible;
 		}
-		protected virtual void OnTimeOut(object o){
-			playlistwidget2.playNext();
-			GLib.Source.Remove(timer);			
-				
-		}
+		
 
-		protected virtual void OnTimeline2PosValueChanged (double pos)
-		{
-			
-		}
+		
 
 		protected virtual void OnPlayerbin1TickEvent (long currentTime, long streamLength, float position, bool seekable)
 		{
@@ -381,6 +362,11 @@ namespace LongoMatch
 		    //this.timeprecisionadjustwidget1.Hide();
 			this.buttonswidget1.Show();
 			this.timeline2.Enabled = false;
+		}
+
+		protected virtual void OnTimeline2PositionChanged (long pos)
+		{
+			this.player.SeekInSegment(pos);
 		}
 
 	

@@ -24,10 +24,9 @@ namespace LongoMatch
 		private TimeNode tNode;
 		private bool enabled = false;
 		
-		public event PosValueChangedHandler PosValueChanged;
-		public event StartValueChangedHandler StartValueChanged;
-		public event StopValueChangedHandler StopValueChanged;		
+			
 		public event TimeNodeChangedHandler TimeNodeChanged;
+		public event PositionChangedHandler PositionChanged;
 		
 		public TimeLine()
 		{
@@ -112,8 +111,8 @@ namespace LongoMatch
 
 		protected virtual void OnTimescale1PosValueChanged (double pos)
 		{
-			if (PosValueChanged  != null && pos >startFrame && pos < stopFrame)
-				this.PosValueChanged(pos);
+			if (PositionChanged  != null && pos >startFrame && pos < stopFrame)
+				this.PositionChanged((long)pos*MS/framerate);
 		}
 
 		protected virtual void OnTimescale1StartValueChanged (double pos)

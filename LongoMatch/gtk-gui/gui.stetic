@@ -5,7 +5,7 @@
     <target-gtk-version>2.12.0</target-gtk-version>
   </configuration>
   <import>
-    <widget-library name="../../CesarPlayer/CesarPlayer/bin/Release/CesarPlayer.dll" />
+    <widget-library name="../../CesarPlayer/bin/Release/CesarPlayer.dll" />
     <widget-library name="../bin/Release/LongoMatch.exe" internal="true" />
   </import>
   <icon-factory>
@@ -65,6 +65,7 @@
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
                     <property name="Label" translatable="yes">Yes</property>
+                    <property name="Active">True</property>
                     <property name="DrawIndicator">True</property>
                     <property name="HasLabel">True</property>
                     <property name="UseUnderline">True</property>
@@ -2623,8 +2624,8 @@
                         <property name="Visible">False</property>
                         <property name="Events">ButtonPressMask</property>
                         <property name="Enabled">False</property>
-                        <signal name="PosValueChanged" handler="OnTimeline2PosValueChanged" />
                         <signal name="TimeNodeChanged" handler="OnTimeScaleTimeNodeChanged" />
+                        <signal name="PositionChanged" handler="OnTimeline2PositionChanged" />
                       </widget>
                       <packing>
                         <property name="Position">1</property>

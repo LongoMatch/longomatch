@@ -100,10 +100,8 @@
     </itemgroups>
     <signals>
       <itemgroup label="TimeLine Signals">
-        <signal name="PosValueChanged" />
-        <signal name="StartValueChanged" />
-        <signal name="StopValueChanged" />
         <signal name="TimeNodeChanged" />
+        <signal name="PositionChanged" />
       </itemgroup>
     </signals>
   </object>

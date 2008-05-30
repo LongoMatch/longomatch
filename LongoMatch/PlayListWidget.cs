@@ -53,8 +53,6 @@ namespace LongoMatch
 		
 		public void playNext(){
 			TreePath path;
-			TreeIter iter;
-			PlayListNode plNode;
 			
 			path = (this.playlisttreeview1.Selection.GetSelectedRows())[0];
 			path.Next();

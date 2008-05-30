@@ -29,8 +29,6 @@ namespace LongoMatch
 	
 	public class SectionsWriter
 	{
-		private XmlDocument configXml;
-		private string fConfig;
 		
 
 		
