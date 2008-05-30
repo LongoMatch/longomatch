@@ -2,11 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 # SharpDevelop 2.2.1.2648
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch", "LongoMatch\LongoMatch.csproj", "{BB4F34C1-5E4E-4F32-9060-1E1B6A09E410}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CesarPlayer", "CesarPlayer\CesarPlayer.csproj", "{BDDC0EC4-BAC3-4E42-BB44-E905C9F9BBD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CesarPlayer", "CesarPlayer\CesarPlayer.csproj", "{BC0EADD8-CBBA-4897-9786-08215C53C182}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{8DF34896-9966-494E-AA63-DD36E4CEA25A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch", "LongoMatch\LongoMatch.csproj", "{7E0B7A64-8FC4-4AD1-9B5E-5FB024A2A3C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,5 +24,13 @@ Global
 		{8DF34896-9966-494E-AA63-DD36E4CEA25A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8DF34896-9966-494E-AA63-DD36E4CEA25A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8DF34896-9966-494E-AA63-DD36E4CEA25A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDDC0EC4-BAC3-4E42-BB44-E905C9F9BBD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDDC0EC4-BAC3-4E42-BB44-E905C9F9BBD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDDC0EC4-BAC3-4E42-BB44-E905C9F9BBD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDDC0EC4-BAC3-4E42-BB44-E905C9F9BBD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E0B7A64-8FC4-4AD1-9B5E-5FB024A2A3C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E0B7A64-8FC4-4AD1-9B5E-5FB024A2A3C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E0B7A64-8FC4-4AD1-9B5E-5FB024A2A3C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E0B7A64-8FC4-4AD1-9B5E-5FB024A2A3C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 EndGlobal
