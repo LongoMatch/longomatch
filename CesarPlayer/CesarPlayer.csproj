@@ -3,7 +3,7 @@
     <ProjectGuid>{BDDC0EC4-BAC3-4E42-BB44-E905C9F9BBD7}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <OutputType>Module</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>CesarPlayer</RootNamespace>
     <AssemblyName>CesarPlayer</AssemblyName>
     <TargetFrameworkVersion>Mono v2.0</TargetFrameworkVersion>
