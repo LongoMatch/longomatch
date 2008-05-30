@@ -57,7 +57,11 @@
 #include <stdio.h>
 
 /* gtk+/gnome */
-#include <gdk/gdkx.h>
+#ifdef WIN32
+	#include <gdk/gdkwin32.h>
+#else
+	#include <gdk/gdkx.h>
+#endif
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 //#include <gconf/gconf-client.h>
@@ -546,59 +550,6 @@ bacon_video_widget_configure_event (GtkWidget *widget, GdkEventConfigure *event,
 
 
 
-static gboolean
-bacon_video_widget_expose_cb (GtkWidget *widget,  GdkEventExpose *event, gpointer data)
-{
-
-  BaconVideoWidget *bvw;
-  GstXOverlay *xoverlay = NULL;
-  GdkWindow *window;
-  g_return_val_if_fail (data != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (data), FALSE);
-  
-  bvw=BACON_VIDEO_WIDGET(data);
-  xoverlay = bvw->priv->xoverlay;
-  window =  gst_video_widget_get_video_window (GST_VIDEO_WIDGET(bvw->priv->video_window));
-  
-  if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay)) {
-	  g_print("Expose\n");
-   	  gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay, GDK_WINDOW_XID (window));
-
-  }
-  
-  return TRUE;
- /* g_return_val_if_fail (data != NULL,TRUE);
-  g_return_val_if_fail ( BACON_VIDEO_WIDGET (data),TRUE);
-  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (data);
-  GstXOverlay *xoverlay;
-  GdkWindow *window;
-
-
-
-  g_mutex_lock (bvw->priv->lock);
-  xoverlay = bvw->priv->xoverlay;
-  if (xoverlay == NULL) {
-    bvw_update_interface_implementations (bvw);
-    xoverlay = bvw->priv->xoverlay;
-  }
-  if (xoverlay != NULL)
-    gst_object_ref (xoverlay);
-
-  g_mutex_unlock (bvw->priv->lock);
-
-
-  window =  gst_video_widget_get_video_window (GST_VIDEO_WIDGET(bvw->priv->video_window));
-    
-
-  if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay)){
-
-    gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay, GDK_WINDOW_XID (window));
-   	 gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay, GDK_WINDOW_XID (window));
-    gst_object_unref (xoverlay);
-  }
-
-  return TRUE;*/
-}
 
 
 
@@ -824,6 +775,8 @@ static void
 bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
 {
   const gchar *msg_name;
+  gint h;
+  gint w;
 
   msg_name = gst_structure_get_name (msg->structure);
   g_return_if_fail (msg_name != NULL);
@@ -840,10 +793,6 @@ bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
         bvw->priv->use_type == BVW_USE_TYPE_AUDIO) {
       g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
     }
-
-
-	  int h;
-	  int w;
 
       get_media_size (bvw, &w, &h);
       gst_video_widget_set_source_size (GST_VIDEO_WIDGET(bvw->priv->video_window), w, h);
@@ -3405,7 +3354,11 @@ bvw_element_msg_sync (GstBus *bus, GstMessage *msg, gpointer data)
     g_return_if_fail (bvw->priv->video_window != NULL);
 
     window = gst_video_widget_get_video_window (GST_VIDEO_WIDGET(bvw->priv->video_window));
-    gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay,GDK_WINDOW_XID (window));
+    #ifdef WIN32
+   	  gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay, GDK_WINDOW_HWND(window));
+	#else
+	  gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay, GDK_WINDOW_XID (window));
+	#endif
 
   }
 }
@@ -3542,7 +3495,7 @@ bacon_video_widget_new (int width, int height,
                _("Failed to open video output. It may not be available. "
                  "Please select another video output in the Multimedia "
                  "Systems Selector."));
-        } else if (err) {
+        } else if (err_msg) {
           err = bvw_error_from_gst_error (bvw, err_msg);
           gst_message_unref (err_msg);
         }

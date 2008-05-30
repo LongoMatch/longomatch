@@ -183,9 +183,7 @@ on_trim_value_changed_event ( GtkAdjustment * adj, gpointer user_data )
 GtkWidget *
 gtk_timescale_new (gint32 upper)
 {
-	g_return_val_if_fail ( upper >= 0, NULL );
-	
- 	GtkTimescale *widget = g_object_new (GTK_TYPE_TIMESCALE , NULL);
+	GtkTimescale *widget = g_object_new (GTK_TYPE_TIMESCALE , NULL);
  	widget->adjustment[ADJ_POS]->upper = upper;
 	widget->adjustment[ADJ_IN]->upper = upper;
 	widget->adjustment[ADJ_OUT]->upper = upper;

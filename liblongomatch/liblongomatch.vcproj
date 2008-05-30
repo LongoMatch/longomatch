@@ -43,7 +43,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;C:\Program Files\Mono-1.9.1\include&quot;;&quot;C:\Program Files\Mono-1.9.1\include\libxml2&quot;;&quot;C:\Program Files\Common Files\GStreamer\0.10\include&quot;;&quot;C:\Program Files\Mono-1.9.1\include\atk-1.0&quot;;&quot;C:\Program Files\Mono-1.9.1\lib\gtk-2.0\include&quot;;&quot;C:\Program Files\Mono-1.9.1\lib\glib-2.0\include&quot;;&quot;C:\Program Files\Mono-1.9.1\include\pango-1.0&quot;;&quot;C:\Program Files\Mono-1.9.1\include\cairo&quot;;&quot;C:\Program Files\Mono-1.9.1\include\glib-2.0&quot;;&quot;C:\Program Files\Mono-1.9.1\include\gtk-2.0&quot;"
+				AdditionalIncludeDirectories="&quot;C:\Archivos de programa\Mono-1.9.1\include&quot;;&quot;C:\Archivos de programa\Mono-1.9.1\include\libxml2&quot;;&quot;C:\Archivos de programa\Archivos comunes\GStreamer\0.10\include&quot;;&quot;C:\Archivos de programa\Mono-1.9.1\include\atk-1.0&quot;;&quot;C:\Archivos de programa\Mono-1.9.1\lib\gtk-2.0\include&quot;;&quot;C:\Archivos de programa\Mono-1.9.1\lib\glib-2.0\include&quot;;&quot;C:\Archivos de programa\Mono-1.9.1\include\pango-1.0&quot;;&quot;C:\Archivos de programa\Mono-1.9.1\include\cairo&quot;;&quot;C:\Archivos de programa\Mono-1.9.1\include\glib-2.0&quot;;&quot;C:\Archivos de programa\Mono-1.9.1\include\gtk-2.0&quot;"
+				AdditionalUsingDirectories=""
 				PreprocessorDefinitions="WIN32;_DEBUG"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
@@ -63,7 +64,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="cairo.lib atk-1.0.lib iconv.lib intl.lib gdk-win32-2.0.lib gtk-win32-2.0.lib gdk_pixbuf-2.0.lib glib-2.0.lib gobject-2.0.lib libgstaudio-0.10.lib libgstreamer-0.10.lib libgstbase-0.10.lib libgstvideo-0.10.lib libgstinterfaces-0.10.lib libgstpbutils-0.10.lib $(NOINHERIT)"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;C:\Program Files\Mono-1.9.1\lib&quot;;&quot;C:\Program Files\Common Files\GStreamer\0.10\lib&quot;"
+				AdditionalLibraryDirectories="&quot;C:\Archivos de programa\Mono-1.9.1\lib&quot;;&quot;C:\Archivos de programa\Archivos comunes\GStreamer\0.10\lib&quot;"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
 				TargetMachine="1"
@@ -185,15 +186,15 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\src\bacon-video-widget-common.c"
-				>
-			</File>
-			<File
 				RelativePath=".\src\bacon-video-widget-gst-0.10.c"
 				>
 			</File>
 			<File
 				RelativePath=".\src\baconvideowidget-marshal.c"
+				>
+			</File>
+			<File
+				RelativePath=".\src\gst-video-capturer.c"
 				>
 			</File>
 			<File
@@ -213,19 +214,21 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\Main.cpp"
+				RelativePath=".\src\video-utils.c"
 				>
 			</File>
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
+			>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath=".\src\bacon-video-widget-common.h"
-				>
-			</File>
 			<File
 				RelativePath=".\src\bacon-video-widget.h"
 				>
@@ -235,7 +238,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\gst-video-capturer.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\gstscreenshot.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\gstvideowidget.h"
 				>
 			</File>
 			<File
@@ -250,18 +261,8 @@
 				RelativePath=".\src\macros.h"
 				>
 			</File>
-		</Filter>
-		<Filter
-			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
-			>
 			<File
-				RelativePath=".\src\app.ico"
-				>
-			</File>
-			<File
-				RelativePath=".\src\app.rc"
+				RelativePath=".\src\video-utils.h"
 				>
 			</File>
 		</Filter>

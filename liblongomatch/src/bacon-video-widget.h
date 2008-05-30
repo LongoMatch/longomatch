@@ -28,11 +28,11 @@
 #ifndef HAVE_BACON_VIDEO_WIDGET_H
 #define HAVE_BACON_VIDEO_WIDGET_H
 
-#if BUILDING_DLL
-# define DLLIMPORT __declspec (dllexport)
-#else /* Not BUILDING_DLL */
-# define DLLIMPORT __declspec (dllimport)
-#endif /* Not BUILDING_DLL */
+#ifdef WIN32
+	#define EXPORT __declspec (dllexport)
+#else
+	#define EXPORT
+#endif
 
 #include <gtk/gtkbox.h>
 #include <gst/gst.h>
@@ -108,7 +108,7 @@ GQuark bacon_video_widget_error_quark		 (void) G_GNUC_CONST;
 GType bacon_video_widget_get_type                (void);
 GOptionGroup* bacon_video_widget_get_option_group (void);
 /* This can be used if the app does not use popt */
-void bacon_video_widget_init_backend		 (int *argc, char ***argv);
+EXPORT void bacon_video_widget_init_backend		 (int *argc, char ***argv);
 
 typedef enum {
 	BVW_USE_TYPE_VIDEO,
@@ -117,68 +117,68 @@ typedef enum {
 	BVW_USE_TYPE_METADATA
 } BvwUseType;
 
-BaconVideoWidget *bacon_video_widget_new		 (int width, int height,
+EXPORT BaconVideoWidget *bacon_video_widget_new		 (int width, int height,
 						  BvwUseType type,
 						  char **error);
 
-char *bacon_video_widget_get_backend_name (BaconVideoWidget *bvw);
+EXPORT char *bacon_video_widget_get_backend_name (BaconVideoWidget *bvw);
 
 /* Actions */
 
-GtkWidget *bacon_video_widget_get_window (BaconVideoWidget *bvw);
-gboolean bacon_video_widget_open	 (BaconVideoWidget *bvw,
+EXPORT GtkWidget *bacon_video_widget_get_window (BaconVideoWidget *bvw);
+EXPORT gboolean bacon_video_widget_open	 (BaconVideoWidget *bvw,
 						  const char *mrl,
 						  char **err);
-gchar *bacon_video_widget_get_mrl (BaconVideoWidget * bvw);
-gboolean bacon_video_widget_play                 (BaconVideoWidget *bvw);
-void bacon_video_widget_pause			 (BaconVideoWidget *bvw);
-gboolean bacon_video_widget_is_playing           (BaconVideoWidget *bvw);
-void bacon_video_widget_stop                     (BaconVideoWidget *bvw);
-void bacon_video_widget_close                    (BaconVideoWidget *bvw);
+EXPORT gchar *bacon_video_widget_get_mrl (BaconVideoWidget * bvw);
+EXPORT gboolean bacon_video_widget_play                 (BaconVideoWidget *bvw);
+EXPORT void bacon_video_widget_pause			 (BaconVideoWidget *bvw);
+EXPORT gboolean bacon_video_widget_is_playing           (BaconVideoWidget *bvw);
+EXPORT void bacon_video_widget_stop                     (BaconVideoWidget *bvw);
+EXPORT void bacon_video_widget_close                    (BaconVideoWidget *bvw);
 
 /* Seeking and length */
-gboolean bacon_video_widget_is_seekable          (BaconVideoWidget *bvw);
-gboolean bacon_video_widget_seek		 (BaconVideoWidget *bvw,
+EXPORT gboolean bacon_video_widget_is_seekable          (BaconVideoWidget *bvw);
+EXPORT gboolean bacon_video_widget_seek		 (BaconVideoWidget *bvw,
 						  float position);
-gboolean bacon_video_widget_seek_time		 	(BaconVideoWidget *bvw,
+EXPORT gboolean bacon_video_widget_seek_time		 	(BaconVideoWidget *bvw,
 						  						gint64 time, gboolean accurate);
-gboolean bacon_video_widget_segment_seek 		(BaconVideoWidget *bvw,
+EXPORT gboolean bacon_video_widget_segment_seek 		(BaconVideoWidget *bvw,
 												gint64 start, gint64 stop);
-gboolean bacon_video_widget_seek_in_segment     (BaconVideoWidget *bvw, gint64 pos );
-gboolean bacon_video_widget_can_direct_seek	 	(BaconVideoWidget *bvw);
-float bacon_video_widget_get_position           (BaconVideoWidget *bvw);
-gint64 bacon_video_widget_get_current_time      (BaconVideoWidget *bvw);
-gint64 bacon_video_widget_get_stream_length     (BaconVideoWidget *bvw);
+EXPORT gboolean bacon_video_widget_seek_in_segment     (BaconVideoWidget *bvw, gint64 pos );
+EXPORT gboolean bacon_video_widget_can_direct_seek	 	(BaconVideoWidget *bvw);
+EXPORT float bacon_video_widget_get_position           (BaconVideoWidget *bvw);
+EXPORT gint64 bacon_video_widget_get_current_time      (BaconVideoWidget *bvw);
+EXPORT gint64 bacon_video_widget_get_stream_length     (BaconVideoWidget *bvw);
 
 
 
 /* Audio volume */
-gboolean bacon_video_widget_can_set_volume       (BaconVideoWidget *bvw);
-void bacon_video_widget_set_volume               (BaconVideoWidget *bvw,
+EXPORT gboolean bacon_video_widget_can_set_volume       (BaconVideoWidget *bvw);
+EXPORT void bacon_video_widget_set_volume               (BaconVideoWidget *bvw,
 						  int volume);
-int bacon_video_widget_get_volume                (BaconVideoWidget *bvw);
+EXPORT int bacon_video_widget_get_volume                (BaconVideoWidget *bvw);
 
 /* Properties */
-void bacon_video_widget_set_logo		 (BaconVideoWidget *bvw,
+EXPORT void bacon_video_widget_set_logo		 (BaconVideoWidget *bvw,
 						  char *filename);
 
-void  bacon_video_widget_set_logo_mode		 (BaconVideoWidget *bvw,
+EXPORT void  bacon_video_widget_set_logo_mode		 (BaconVideoWidget *bvw,
 						  gboolean logo_mode);
-gboolean bacon_video_widget_get_logo_mode	 (BaconVideoWidget *bvw);
+EXPORT gboolean bacon_video_widget_get_logo_mode	 (BaconVideoWidget *bvw);
 
-void bacon_video_widget_set_fullscreen		 (BaconVideoWidget *bvw,
+EXPORT void bacon_video_widget_set_fullscreen		 (BaconVideoWidget *bvw,
 						  gboolean fullscreen);
 
-void bacon_video_widget_set_show_cursor          (BaconVideoWidget *bvw,
+EXPORT void bacon_video_widget_set_show_cursor          (BaconVideoWidget *bvw,
 						  gboolean use_cursor);
-gboolean bacon_video_widget_get_show_cursor      (BaconVideoWidget *bvw);
+EXPORT gboolean bacon_video_widget_get_show_cursor      (BaconVideoWidget *bvw);
 
-gboolean bacon_video_widget_get_auto_resize	 (BaconVideoWidget *bvw);
-void bacon_video_widget_set_auto_resize		 (BaconVideoWidget *bvw,
+EXPORT gboolean bacon_video_widget_get_auto_resize	 (BaconVideoWidget *bvw);
+EXPORT void bacon_video_widget_set_auto_resize		 (BaconVideoWidget *bvw,
 						  gboolean auto_resize);
 
 
-void bacon_video_widget_set_media_device         (BaconVideoWidget *bvw,
+EXPORT void bacon_video_widget_set_media_device         (BaconVideoWidget *bvw,
 						  const char *path);
 
 
