@@ -2210,7 +2210,7 @@ bacon_video_widget_segment_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop)
   }
   
  gboolean 
- bacon_video_widget_segment_stop_update(BaconVideoWidget *bvw, gint stop)
+ bacon_video_widget_segment_stop_update(BaconVideoWidget *bvw, gint64 stop)
  {
 	 	g_return_val_if_fail (bvw != NULL, FALSE);
   	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
