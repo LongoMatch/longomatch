@@ -2477,7 +2477,7 @@
     <action-group name="Default" />
     <property name="MemberName" />
     <property name="Title" translatable="yes">LongoMatch</property>
-    <property name="Icon">file:./bin/Release/logo.png</property>
+    <property name="Icon">file:./lgmlogo.png</property>
     <property name="WindowPosition">CenterAlways</property>
     <property name="Gravity">Center</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
@@ -2942,7 +2942,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.TimeLine" design-size="300 94">
+  <widget class="Gtk.Bin" id="LongoMatch.TimeLine" design-size="300 116">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.VBox" id="vbox2">
@@ -2952,16 +2952,15 @@
           <widget class="Gtk.HBox" id="hbox1">
             <property name="MemberName" />
             <child>
-              <widget class="LongoMatch.TimeScale" id="timescale1">
+              <widget class="LongoMatch.GtkTimescale" id="timescale1">
                 <property name="MemberName" />
-                <property name="Events">ButtonPressMask</property>
-                <signal name="PosValueChanged" handler="OnTimescale1PosValueChanged" />
-                <signal name="StartValueChanged" handler="OnTimescale1StartValueChanged" />
-                <signal name="StopValueChanged" handler="OnTimescale1StopValueChanged" />
+                <signal name="PosChanged" handler="OnPosValueChanged" />
+                <signal name="OutChanged" handler="OnStopValueChanged" />
+                <signal name="InChanged" handler="OnStartValueChanged" />
               </widget>
               <packing>
                 <property name="Position">0</property>
-                <property name="AutoSize">True</property>
+                <property name="AutoSize">False</property>
               </packing>
             </child>
             <child>

@@ -17,7 +17,7 @@ namespace LongoMatch {
         
         private Gtk.HBox hbox1;
         
-        private LongoMatch.TimeScale timescale1;
+        private LongoMatch.GtkTimescale timescale1;
         
         private Gtk.Button zoominbutton;
         
@@ -38,8 +38,7 @@ namespace LongoMatch {
             this.hbox1 = new Gtk.HBox();
             this.hbox1.Name = "hbox1";
             // Container child hbox1.Gtk.Box+BoxChild
-            this.timescale1 = new LongoMatch.TimeScale();
-            this.timescale1.Events = ((Gdk.EventMask)(256));
+            this.timescale1 = new LongoMatch.GtkTimescale();
             this.timescale1.Name = "timescale1";
             this.hbox1.Add(this.timescale1);
             Gtk.Box.BoxChild w1 = ((Gtk.Box.BoxChild)(this.hbox1[this.timescale1]));
@@ -113,9 +112,9 @@ namespace LongoMatch {
                 this.Child.ShowAll();
             }
             this.Show();
-            this.timescale1.PosValueChanged += new LongoMatch.PosValueChangedHandler(this.OnTimescale1PosValueChanged);
-            this.timescale1.StartValueChanged += new LongoMatch.StartValueChangedHandler(this.OnTimescale1StartValueChanged);
-            this.timescale1.StopValueChanged += new LongoMatch.StopValueChangedHandler(this.OnTimescale1StopValueChanged);
+            this.timescale1.PosChanged += new LongoMatch.PosChangedHandler(this.OnPosValueChanged);
+            this.timescale1.OutChanged += new LongoMatch.OutChangedHandler(this.OnStopValueChanged);
+            this.timescale1.InChanged += new LongoMatch.InChangedHandler(this.OnStartValueChanged);
             this.zoominbutton.Clicked += new System.EventHandler(this.OnZoominbuttonClicked);
             this.zoomoutbutton.Clicked += new System.EventHandler(this.OnZoomoutbuttonClicked);
         }

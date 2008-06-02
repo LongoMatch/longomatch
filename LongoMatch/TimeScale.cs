@@ -49,7 +49,7 @@ namespace LongoMatch
 
 		private IntPtr Raw;
 		
-		[DllImport ("liblongomatch")]
+		[DllImport ("libtimescale")]
 		private static extern IntPtr  gtk_timescale_new(double upper);
 		
 		~ TimeScale(){
@@ -84,20 +84,20 @@ namespace LongoMatch
 		}
 		
 		
-		[DllImport ("liblongomatch")]
+		[DllImport ("libtimescale")]
 		private static extern void  gtk_timescale_set_bounds(IntPtr timescale,double lower, double upper);
 		public void SetBounds(double lower, double upper){
 			
 			gtk_timescale_set_bounds(Raw,lower, upper);
 		}
 		
-		[DllImport ("liblongomatch")]
+		[DllImport ("libtimescale")]
 		private static extern void gtk_timescale_set_segment(IntPtr timescale,double start, double stop);
 		public void SetSegment(double start, double stop){
 			gtk_timescale_set_segment(Raw,start,stop);
 		}
 		
-		[DllImport ("liblongomatch")]
+		[DllImport ("libtimescale")]
 		private static extern void  gtk_timescale_adjust_position(IntPtr timescale,double pos,int adj);
 		public void AdjustPosition (double pos, int adj){
 			

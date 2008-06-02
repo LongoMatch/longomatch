@@ -123,34 +123,11 @@ namespace LongoMatch
 			
 		}
 
-		protected virtual void OnTimescale1PosValueChanged (double pos)
-		{
-			if (PositionChanged  != null && pos >startFrame && pos < stopFrame)
-				this.PositionChanged((long)pos*MS/framerate);
-		}
+		
 
-		protected virtual void OnTimescale1StartValueChanged (double pos)
-		{
-			if (tNode != null){
-				this.startFrame = (int)pos;
-				this.tNode.Start = (long)startFrame*MS/framerate;
-				this.timeprecisionadjustwidget1.SetTimeNode(tNode);
-				if (TimeNodeChanged != null)
-					TimeNodeChanged(tNode,tNode.Start);
-			}
-			
-		}
+		
 
-		protected virtual void OnTimescale1StopValueChanged (double pos)
-		{
-			if (tNode!= null){
-				this.stopFrame = (int)pos;
-				this.tNode.Stop = (long)stopFrame*MS/framerate;
-				this.timeprecisionadjustwidget1.SetTimeNode(tNode);
-				if (TimeNodeChanged != null)
-					TimeNodeChanged(tNode,tNode.Stop);
-			}
-		}
+		
 
 		protected virtual void OnZoominbuttonClicked (object sender, System.EventArgs e)
 		{
@@ -169,5 +146,43 @@ namespace LongoMatch
 			}
 			
 		}
+
+		protected virtual void OnPosValueChanged (object o, LongoMatch.PosChangedArgs args)
+		{
+			double pos = args.Val;
+			if (PositionChanged  != null && pos >startFrame && pos < stopFrame)
+				this.PositionChanged((long)pos*MS/framerate);
+		}
+
+		protected virtual void OnStopValueChanged (object o, LongoMatch.OutChangedArgs args)
+		{
+			double pos = args.Val;		
+			
+			if (tNode!= null){
+				this.stopFrame = (int)pos;
+				this.tNode.Stop = (long)stopFrame*MS/framerate;
+				this.timeprecisionadjustwidget1.SetTimeNode(tNode);
+				if (TimeNodeChanged != null)
+					TimeNodeChanged(tNode,tNode.Stop);
+			}
+		
+		}
+
+		protected virtual void OnStartValueChanged (object o, LongoMatch.InChangedArgs args)
+		{
+			double pos = args.Val;
+			if (tNode != null){
+				this.startFrame = (int)pos;
+				this.tNode.Start = (long)startFrame*MS/framerate;
+				this.timeprecisionadjustwidget1.SetTimeNode(tNode);
+				if (TimeNodeChanged != null)
+					TimeNodeChanged(tNode,tNode.Start);
+			}
+			
+			
+		
+		}
+
+	
 	}
 }

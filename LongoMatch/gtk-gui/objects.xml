@@ -119,4 +119,14 @@
     <itemgroups />
     <signals />
   </object>
+  <object type="LongoMatch.GtkTimescale" palette-category="LongoMatch" allow-children="false" base-type="Gtk.HBox">
+    <itemgroups />
+    <signals>
+      <itemgroup label="GtkTimescale Signals">
+        <signal name="PosChanged" />
+        <signal name="OutChanged" />
+        <signal name="InChanged" />
+      </itemgroup>
+    </signals>
+  </object>
 </objects>
