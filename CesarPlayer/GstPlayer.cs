@@ -148,7 +148,7 @@ namespace CesarPlayer
 		public string FilePath {
 			set {
 				IntPtr err;
-			   	bacon_video_widget_open(Raw,value, out err);			
+			   	bacon_video_widget_open(Raw,"file://"+value, out err);			
 			}
 
 			get { return bacon_video_widget_get_mrl (Raw); }
