@@ -45,7 +45,7 @@ namespace LongoMatch
 				base("LongoMatch")
 		{			
 			this.Build();
-			this.PopulateMenuBar();
+			//this.PopulateMenuBar();
 			playerbin1.SetLogo(MainClass.ImagesDir()+"background.png");
 			player = playerbin1.Player ;
 			player.LogoMode = true;
@@ -68,7 +68,7 @@ namespace LongoMatch
 				else {
 					this.Title = System.IO.Path.GetFileNameWithoutExtension(fData.Filename) + " - LongoMatch";
 					this.ShowWidgets();
-					playerbin1.SetFile(fData.Filename);				
+					playerbin1.File=fData.Filename;				
 					buttonswidget1.SetSections(fData.Sections);
 					treewidget1.Model=fData.GetModel();	
 					//timeprecisionadjustwidget1.Reset();
@@ -100,62 +100,6 @@ namespace LongoMatch
 			openedFileData = null;			
 		}
 		
-		private void PopulateMenuBar(){
-
-            Gtk.UIManager w1 = new Gtk.UIManager();
-            Gtk.ActionGroup w2 = new Gtk.ActionGroup("Default");
-            Gtk.Action w3 = new Gtk.Action("File", Mono.Unix.Catalog.GetString("File"), null, null);
-            w3.ShortLabel = Mono.Unix.Catalog.GetString("File");
-            w2.Add(w3, null);
-            Gtk.Action w4 = new Gtk.Action("View", Mono.Unix.Catalog.GetString("View"), null, null);
-            w4.ShortLabel = Mono.Unix.Catalog.GetString("View");
-            w2.Add(w4, null);
-            Gtk.Action w5 = new Gtk.Action("Tools", Mono.Unix.Catalog.GetString("Tools"), null, null);
-            w5.ShortLabel = Mono.Unix.Catalog.GetString("Tools");
-            w2.Add(w5, null);
-            Gtk.Action w6 = new Gtk.Action("Open", Mono.Unix.Catalog.GetString("Open"), null, "gtk-open");
-            w6.ShortLabel = Mono.Unix.Catalog.GetString("Open");
-            w2.Add(w6, null);
-            Gtk.Action w7 = new Gtk.Action("New", Mono.Unix.Catalog.GetString("New"), null, "gtk-new");
-            w7.ShortLabel = Mono.Unix.Catalog.GetString("New");
-            w2.Add(w7, null);
-            Gtk.Action w8 = new Gtk.Action("Close", Mono.Unix.Catalog.GetString("Close"), null, "gtk-close");
-            w8.ShortLabel = Mono.Unix.Catalog.GetString("Close");
-            w2.Add(w8, null);
-            Gtk.Action w9 = new Gtk.Action("DatabaseManager", Mono.Unix.Catalog.GetString("Database Manager"), null, null);
-            w9.ShortLabel = Mono.Unix.Catalog.GetString("Database Manager");
-            w2.Add(w9, null);
-            Gtk.Action w10 = new Gtk.Action("SectionsTemplatesManager", Mono.Unix.Catalog.GetString("Sections Templates Manager"), null, null);
-            w10.ShortLabel = Mono.Unix.Catalog.GetString("Sections Templates Manager");
-            w2.Add(w10, null);
-            Gtk.ToggleAction w11 = new Gtk.ToggleAction("ViewPlayList", Mono.Unix.Catalog.GetString("View Play List"), null, null);
-            w11.ShortLabel = Mono.Unix.Catalog.GetString("View Play List");
-            w2.Add(w11, null);
-            Gtk.ToggleAction w12 = new Gtk.ToggleAction("ViewButtonsBar", Mono.Unix.Catalog.GetString("View Buttons Bar"), null, null);
-            w12.ShortLabel = Mono.Unix.Catalog.GetString("View Buttons Bar");
-            w2.Add(w12, null);
-            w1.InsertActionGroup(w2, 0);
-            this.AddAccelGroup(w1.AccelGroup);
-            // Container child mainvbox.Gtk.Box+BoxChild
-            w1.AddUiFromString("<ui><menubar name='menubar1'><menu action='File'><menuitem action='Open'/><menuitem action='New'/><menuitem action='Close'/></menu><menu action='View'><menuitem action='ViewPlayList'/><menuitem action='ViewButtonsBar'/></menu><menu action='Tools'><menuitem action='DatabaseManager'/><menuitem action='SectionsTemplatesManager'/></menu></menubar></ui>");
-            Gtk.MenuBar w14 = ((Gtk.MenuBar)(w1.GetWidget("/menubar1")));
-
-            w14.Name = "menubar1";
-            this.menubox.Add(w14);
-			
-			
-			w6.Activated += new EventHandler(OnOpenActivated);
-			w7.Activated += new EventHandler(OnNewActivated);
-            w8.Activated += new EventHandler(OnCloseActivated);
-            w9.Activated += new EventHandler(OnDatabaseManagerActivated);
-            w10.Activated += new EventHandler(OnSectionsTemplatesManagerActivated);
-            w11.Activated += new EventHandler(OnViewPlaylistActivated);
-           // w12.Activated += new EventHandler(OnViewButtonsBarActivated);
-    
-
-			
-			
-		}
 
 		protected virtual void OnUnrealized(object sender, System.EventArgs e){
 			this.Destroy();			
@@ -283,17 +227,7 @@ namespace LongoMatch
 			
 		}
 
-		protected virtual void OnTimeScaleTimeNodeChanged (LongoMatch.TimeNode tNode, object val)
-		{
-			if (this.playerbin1.Player.Playing)
-				this.playerbin1.Player.Pause();
-			if ((long)val == tNode.Start)
-					this.playerbin1.UpdateSegmentStartTime((long)val);
-				else
-					this.playerbin1.UpdateSegmentStopTime((long)val);
-			//this.timeprecisionadjustwidget1.SetTimeNode(tNode);
 		
-		}
 		protected virtual void OnTimeNodeChanged (LongoMatch.TimeNode tNode, object val)
 		{
 			//Si hemos modificado el valor de un nodo de tiempo a través del 
@@ -310,9 +244,7 @@ namespace LongoMatch
 				else{
 					this.playerbin1.UpdateSegmentStopTime(pos);
 					this.timeline2.UpdateStopTime(pos);
-				}
-	
-	
+				}	
 			}
 			
 			//Si modificamos un padre actualizamos los nombres de los botones
@@ -339,28 +271,23 @@ namespace LongoMatch
 
 		protected virtual void OnPlayListNodeAdded (LongoMatch.TimeNode tNode)
 		{
-			this.playlistwidget2.AddPlayListNode(new PlayListNode(openedFileData.Filename,tNode));
+			this.playlistwidget2.Add(new PlayListNode(openedFileData.Filename,tNode));
 		}
 
 		protected virtual void OnPlaylistwidget2PlayListNodeSelected (LongoMatch.PlayListNode plNode, bool hasNext)
 		{
-			//Hay que seleccionar tb el archivo
-			Console.WriteLine("{0}   {1}   {2}   ",plNode.FileName,plNode.StartTime,plNode.StopTime);
+			
+			playerbin1.File = plNode.FileName;
 			this.playerbin1.SetPlayListElement(plNode.FileName,plNode.StartTime,plNode.StopTime,hasNext);
 
 		}
 		
 		protected virtual void OnPlayListSegmentDone ()
-		{
-			
-			
-			
-			//playlistwidget2.playNext();
+		{	
+			playlistwidget2.Next();
 		}
 		
-		protected virtual void OnViewPlaylistActivated (object sender, System.EventArgs e){
-			this.playlistwidget2.Visible = !this.playlistwidget2.Visible;
-		}
+		
 		
 
 		
@@ -391,6 +318,21 @@ namespace LongoMatch
 			errorDialog.Destroy();	
 			this.CloseActualProyect();
 		}
+
+		protected virtual void OnQuitActivated (object sender, System.EventArgs e)
+		{
+			Application.Quit();
+		}
+
+
+		protected virtual void OnPlaylistActionToggled (object sender, System.EventArgs e)
+		{			
+				this.playlistwidget2.Visible=((Gtk.ToggleAction)sender).Active;			
+		}
+
+		
+
+		
 
 	
 	

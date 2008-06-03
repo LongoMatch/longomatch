@@ -286,9 +286,13 @@ namespace CesarPlayer
 				StateChanged (this.Playing);*/
 		}
 		
-		public double Rate {
+		[DllImport ("liblongomatch")]
+		private static extern bool bacon_video_widget_set_rate (IntPtr player, float rate);
+		
+		public float Rate {
 			get{return 1;}
-			set{}
+			set{// bacon_video_widget_set_rate (Raw,value);
+			}
 		}
 		
 		public void TogglePlay(){

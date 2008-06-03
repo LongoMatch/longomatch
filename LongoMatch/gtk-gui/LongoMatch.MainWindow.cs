@@ -13,9 +13,43 @@ namespace LongoMatch {
     
     public partial class MainWindow {
         
+        private Gtk.Action FileAction;
+        
+        private Gtk.Action NewPoyectAction;
+        
+        private Gtk.Action OpenProyectAction;
+        
+        private Gtk.Action QuitAction;
+        
+        private Gtk.Action CloseProyectAction;
+        
+        private Gtk.Action ToolsAction;
+        
+        private Gtk.Action DatabaseManagerAction;
+        
+        private Gtk.Action TemplatesManagerAction;
+        
+        private Gtk.Action ViewAction;
+        
+        private Gtk.ToggleAction FullScreenAction;
+        
+        private Gtk.ToggleAction PlaylistAction;
+        
+        private Gtk.Action PlayerAction;
+        
+        private Gtk.Action PlayAction;
+        
+        private Gtk.Action PauseAction;
+        
+        private Gtk.Action PreviousAction;
+        
+        private Gtk.Action NextAction;
+        
         private Gtk.VBox vbox1;
         
         private Gtk.VBox menubox;
+        
+        private Gtk.MenuBar menubar1;
         
         private Gtk.HPaned hpaned;
         
@@ -42,11 +76,62 @@ namespace LongoMatch {
             // Widget LongoMatch.MainWindow
             Gtk.UIManager w1 = new Gtk.UIManager();
             Gtk.ActionGroup w2 = new Gtk.ActionGroup("Default");
+            this.FileAction = new Gtk.Action("FileAction", Mono.Unix.Catalog.GetString("_File"), null, null);
+            this.FileAction.ShortLabel = Mono.Unix.Catalog.GetString("_File");
+            w2.Add(this.FileAction, null);
+            this.NewPoyectAction = new Gtk.Action("NewPoyectAction", Mono.Unix.Catalog.GetString("_New Poyect"), null, "gtk-new");
+            this.NewPoyectAction.ShortLabel = Mono.Unix.Catalog.GetString("_New Poyect");
+            w2.Add(this.NewPoyectAction, null);
+            this.OpenProyectAction = new Gtk.Action("OpenProyectAction", Mono.Unix.Catalog.GetString("_Open Proyect"), null, "gtk-open");
+            this.OpenProyectAction.ShortLabel = Mono.Unix.Catalog.GetString("_Open Proyect");
+            w2.Add(this.OpenProyectAction, null);
+            this.QuitAction = new Gtk.Action("QuitAction", Mono.Unix.Catalog.GetString("_Quit"), null, "gtk-quit");
+            this.QuitAction.ShortLabel = Mono.Unix.Catalog.GetString("_Quit");
+            w2.Add(this.QuitAction, null);
+            this.CloseProyectAction = new Gtk.Action("CloseProyectAction", Mono.Unix.Catalog.GetString("_Close Proyect"), null, "gtk-close");
+            this.CloseProyectAction.ShortLabel = Mono.Unix.Catalog.GetString("_Close Proyect");
+            w2.Add(this.CloseProyectAction, null);
+            this.ToolsAction = new Gtk.Action("ToolsAction", Mono.Unix.Catalog.GetString("_Tools"), null, null);
+            this.ToolsAction.ShortLabel = Mono.Unix.Catalog.GetString("_Tools");
+            w2.Add(this.ToolsAction, null);
+            this.DatabaseManagerAction = new Gtk.Action("DatabaseManagerAction", Mono.Unix.Catalog.GetString("Database Manager"), null, null);
+            this.DatabaseManagerAction.ShortLabel = Mono.Unix.Catalog.GetString("Database Manager");
+            w2.Add(this.DatabaseManagerAction, null);
+            this.TemplatesManagerAction = new Gtk.Action("TemplatesManagerAction", Mono.Unix.Catalog.GetString("Templates Manager"), null, null);
+            this.TemplatesManagerAction.ShortLabel = Mono.Unix.Catalog.GetString("Templates Manager");
+            w2.Add(this.TemplatesManagerAction, null);
+            this.ViewAction = new Gtk.Action("ViewAction", Mono.Unix.Catalog.GetString("_View"), null, null);
+            this.ViewAction.ShortLabel = Mono.Unix.Catalog.GetString("_View");
+            w2.Add(this.ViewAction, null);
+            this.FullScreenAction = new Gtk.ToggleAction("FullScreenAction", Mono.Unix.Catalog.GetString("Full Screen"), null, "gtk-fullscreen");
+            this.FullScreenAction.ShortLabel = Mono.Unix.Catalog.GetString("Full Screen");
+            this.FullScreenAction.Visible = false;
+            w2.Add(this.FullScreenAction, null);
+            this.PlaylistAction = new Gtk.ToggleAction("PlaylistAction", Mono.Unix.Catalog.GetString("Playlist"), null, null);
+            this.PlaylistAction.ShortLabel = Mono.Unix.Catalog.GetString("Playlist");
+            w2.Add(this.PlaylistAction, null);
+            this.PlayerAction = new Gtk.Action("PlayerAction", Mono.Unix.Catalog.GetString("_Player"), null, null);
+            this.PlayerAction.ShortLabel = Mono.Unix.Catalog.GetString("_Player");
+            w2.Add(this.PlayerAction, null);
             w1.InsertActionGroup(w2, 0);
+            Gtk.ActionGroup w3 = new Gtk.ActionGroup("Player");
+            this.PlayAction = new Gtk.Action("PlayAction", Mono.Unix.Catalog.GetString("_Play"), null, "gtk-media-play");
+            this.PlayAction.ShortLabel = Mono.Unix.Catalog.GetString("dasdf");
+            w3.Add(this.PlayAction, null);
+            this.PauseAction = new Gtk.Action("PauseAction", Mono.Unix.Catalog.GetString("P_ause"), null, "gtk-media-pause");
+            this.PauseAction.ShortLabel = Mono.Unix.Catalog.GetString("P_ause");
+            w3.Add(this.PauseAction, null);
+            this.PreviousAction = new Gtk.Action("PreviousAction", Mono.Unix.Catalog.GetString("P_revious"), null, "gtk-media-previous");
+            this.PreviousAction.ShortLabel = Mono.Unix.Catalog.GetString("P_revious");
+            w3.Add(this.PreviousAction, null);
+            this.NextAction = new Gtk.Action("NextAction", Mono.Unix.Catalog.GetString("_Next"), null, "gtk-media-next");
+            this.NextAction.ShortLabel = Mono.Unix.Catalog.GetString("_Next");
+            w3.Add(this.NextAction, null);
+            w1.InsertActionGroup(w3, 1);
             this.AddAccelGroup(w1.AccelGroup);
             this.Name = "LongoMatch.MainWindow";
             this.Title = Mono.Unix.Catalog.GetString("LongoMatch");
-            this.Icon = new Gdk.Pixbuf(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "lgmlogo.png"));
+            this.Icon = new Gdk.Pixbuf(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "./lgmlogo.png"));
             this.WindowPosition = ((Gtk.WindowPosition)(3));
             this.Gravity = ((Gdk.Gravity)(5));
             // Container child LongoMatch.MainWindow.Gtk.Container+ContainerChild
@@ -57,11 +142,20 @@ namespace LongoMatch {
             this.menubox = new Gtk.VBox();
             this.menubox.Name = "menubox";
             this.menubox.Spacing = 6;
+            // Container child menubox.Gtk.Box+BoxChild
+            w1.AddUiFromString("<ui><menubar name='menubar1'><menu action='FileAction'><menuitem action='NewPoyectAction'/><menuitem action='OpenProyectAction'/><menuitem action='CloseProyectAction'/><separator/><menuitem action='QuitAction'/></menu><menu action='ToolsAction'><menuitem action='DatabaseManagerAction'/><menuitem action='TemplatesManagerAction'/></menu><menu action='ViewAction'><menuitem action='FullScreenAction'/><menuitem action='PlaylistAction'/></menu><menu action='PlayerAction'><menuitem action='PlayAction'/><menuitem action='PauseAction'/><menuitem action='NextAction'/><menuitem action='PreviousAction'/></menu></menubar></ui>");
+            this.menubar1 = ((Gtk.MenuBar)(w1.GetWidget("/menubar1")));
+            this.menubar1.Name = "menubar1";
+            this.menubox.Add(this.menubar1);
+            Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(this.menubox[this.menubar1]));
+            w4.Position = 0;
+            w4.Expand = false;
+            w4.Fill = false;
             this.vbox1.Add(this.menubox);
-            Gtk.Box.BoxChild w3 = ((Gtk.Box.BoxChild)(this.vbox1[this.menubox]));
-            w3.Position = 0;
-            w3.Expand = false;
-            w3.Fill = false;
+            Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(this.vbox1[this.menubox]));
+            w5.Position = 0;
+            w5.Expand = false;
+            w5.Fill = false;
             // Container child vbox1.Gtk.Box+BoxChild
             this.hpaned = new Gtk.HPaned();
             this.hpaned.CanFocus = true;
@@ -76,11 +170,11 @@ namespace LongoMatch {
             this.treewidget1.Events = ((Gdk.EventMask)(256));
             this.treewidget1.Name = "treewidget1";
             this.leftbox.Add(this.treewidget1);
-            Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(this.leftbox[this.treewidget1]));
-            w4.Position = 0;
+            Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(this.leftbox[this.treewidget1]));
+            w6.Position = 0;
             this.hpaned.Add(this.leftbox);
-            Gtk.Paned.PanedChild w5 = ((Gtk.Paned.PanedChild)(this.hpaned[this.leftbox]));
-            w5.Resize = false;
+            Gtk.Paned.PanedChild w7 = ((Gtk.Paned.PanedChild)(this.hpaned[this.leftbox]));
+            w7.Resize = false;
             // Container child hpaned.Gtk.Paned+PanedChild
             this.hpaned1 = new Gtk.HPaned();
             this.hpaned1.CanFocus = true;
@@ -96,52 +190,52 @@ namespace LongoMatch {
             this.playerbin1.Events = ((Gdk.EventMask)(256));
             this.playerbin1.Name = "playerbin1";
             this.vbox5.Add(this.playerbin1);
-            Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(this.vbox5[this.playerbin1]));
-            w6.Position = 0;
+            Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(this.vbox5[this.playerbin1]));
+            w8.Position = 0;
             // Container child vbox5.Gtk.Box+BoxChild
             this.timeline2 = new LongoMatch.TimeLine();
             this.timeline2.Events = ((Gdk.EventMask)(256));
             this.timeline2.Name = "timeline2";
             this.timeline2.Enabled = false;
             this.vbox5.Add(this.timeline2);
-            Gtk.Box.BoxChild w7 = ((Gtk.Box.BoxChild)(this.vbox5[this.timeline2]));
-            w7.Position = 1;
-            w7.Expand = false;
-            w7.Fill = false;
+            Gtk.Box.BoxChild w9 = ((Gtk.Box.BoxChild)(this.vbox5[this.timeline2]));
+            w9.Position = 1;
+            w9.Expand = false;
+            w9.Fill = false;
             // Container child vbox5.Gtk.Box+BoxChild
             this.buttonswidget1 = new LongoMatch.ButtonsWidget();
             this.buttonswidget1.Events = ((Gdk.EventMask)(256));
             this.buttonswidget1.Name = "buttonswidget1";
             this.vbox5.Add(this.buttonswidget1);
-            Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(this.vbox5[this.buttonswidget1]));
-            w8.Position = 2;
-            w8.Expand = false;
+            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.vbox5[this.buttonswidget1]));
+            w10.Position = 2;
+            w10.Expand = false;
             this.hpaned1.Add(this.vbox5);
-            Gtk.Paned.PanedChild w9 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.vbox5]));
-            w9.Resize = false;
-            w9.Shrink = false;
+            Gtk.Paned.PanedChild w11 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.vbox5]));
+            w11.Resize = false;
+            w11.Shrink = false;
             // Container child hpaned1.Gtk.Paned+PanedChild
             this.playlistwidget2 = new LongoMatch.PlayListWidget();
             this.playlistwidget2.WidthRequest = 200;
             this.playlistwidget2.Events = ((Gdk.EventMask)(256));
             this.playlistwidget2.Name = "playlistwidget2";
             this.hpaned1.Add(this.playlistwidget2);
-            Gtk.Paned.PanedChild w10 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.playlistwidget2]));
-            w10.Resize = false;
-            w10.Shrink = false;
+            Gtk.Paned.PanedChild w12 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.playlistwidget2]));
+            w12.Resize = false;
+            w12.Shrink = false;
             this.hpaned.Add(this.hpaned1);
             this.vbox1.Add(this.hpaned);
-            Gtk.Box.BoxChild w12 = ((Gtk.Box.BoxChild)(this.vbox1[this.hpaned]));
-            w12.Position = 1;
+            Gtk.Box.BoxChild w14 = ((Gtk.Box.BoxChild)(this.vbox1[this.hpaned]));
+            w14.Position = 1;
             // Container child vbox1.Gtk.Box+BoxChild
             this.statusbar1 = new Gtk.Statusbar();
             this.statusbar1.Name = "statusbar1";
             this.statusbar1.Spacing = 6;
             this.vbox1.Add(this.statusbar1);
-            Gtk.Box.BoxChild w13 = ((Gtk.Box.BoxChild)(this.vbox1[this.statusbar1]));
-            w13.Position = 2;
-            w13.Expand = false;
-            w13.Fill = false;
+            Gtk.Box.BoxChild w15 = ((Gtk.Box.BoxChild)(this.vbox1[this.statusbar1]));
+            w15.Position = 2;
+            w15.Expand = false;
+            w15.Fill = false;
             this.Add(this.vbox1);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
@@ -154,6 +248,13 @@ namespace LongoMatch {
             this.playlistwidget2.Hide();
             this.Show();
             this.DeleteEvent += new Gtk.DeleteEventHandler(this.OnDeleteEvent);
+            this.NewPoyectAction.Activated += new System.EventHandler(this.OnNewActivated);
+            this.OpenProyectAction.Activated += new System.EventHandler(this.OnOpenActivated);
+            this.QuitAction.Activated += new System.EventHandler(this.OnQuitActivated);
+            this.CloseProyectAction.Activated += new System.EventHandler(this.OnCloseActivated);
+            this.DatabaseManagerAction.Activated += new System.EventHandler(this.OnDatabaseManagerActivated);
+            this.TemplatesManagerAction.Activated += new System.EventHandler(this.OnSectionsTemplatesManagerActivated);
+            this.PlaylistAction.Toggled += new System.EventHandler(this.OnPlaylistActionToggled);
             this.treewidget1.TimeNodeSelected += new LongoMatch.TimeNodeSelectedHandler(this.OnTimeNodeSelected);
             this.treewidget1.TimeNodeChanged += new LongoMatch.TimeNodeChangedHandler(this.OnTimeNodeChanged);
             this.treewidget1.TimeNodeDeleted += new LongoMatch.TimeNodeDeletedHandler(this.OnTimeNodeDeleted);
@@ -161,7 +262,7 @@ namespace LongoMatch {
             this.playerbin1.TickEvent += new CesarPlayer.TickEventHandler(this.OnPlayerbin1TickEvent);
             this.playerbin1.SegmentClosedEvent += new CesarPlayer.SegmentClosedHandler(this.OnPlayerbin1SegmentClosedEvent);
             this.playerbin1.ErrorEvent += new CesarPlayer.ErrorEventHandler(this.OnPlayerbin1ErrorEvent);
-            this.timeline2.TimeNodeChanged += new LongoMatch.TimeNodeChangedHandler(this.OnTimeScaleTimeNodeChanged);
+            this.timeline2.TimeNodeChanged += new LongoMatch.TimeNodeChangedHandler(this.OnTimeNodeChanged);
             this.timeline2.PositionChanged += new LongoMatch.PositionChangedHandler(this.OnTimeline2PositionChanged);
             this.buttonswidget1.NewMarkEvent += new LongoMatch.NewMarkEventHandler(this.OnNewMark);
             this.playlistwidget2.PlayListNodeSelected += new LongoMatch.PlayListNodeSelectedHandler(this.OnPlaylistwidget2PlayListNodeSelected);

@@ -73,7 +73,7 @@ namespace CesarPlayer
 			set;
 		}
 		
-		double Rate{
+		float Rate{
 			get;
 			set;
 		}

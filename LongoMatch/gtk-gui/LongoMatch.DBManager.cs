@@ -149,8 +149,8 @@ namespace LongoMatch {
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.UseStock = true;
             this.buttonOk.UseUnderline = true;
-            this.buttonOk.Label = "gtk-ok";
-            this.AddActionWidget(this.buttonOk, -5);
+            this.buttonOk.Label = "gtk-quit";
+            this.AddActionWidget(this.buttonOk, 0);
             Gtk.ButtonBox.ButtonBoxChild w13 = ((Gtk.ButtonBox.ButtonBoxChild)(w12[this.buttonOk]));
             w13.Expand = false;
             w13.Fill = false;
@@ -158,7 +158,7 @@ namespace LongoMatch {
                 this.Child.ShowAll();
             }
             this.DefaultWidth = 816;
-            this.DefaultHeight = 467;
+            this.DefaultHeight = 483;
             this.Show();
             this.filedatalistwidget1.FileDataSelectedEvent += new LongoMatch.FileDataSelectedHandler(this.OnFiledatalistwidget1FileDataSelectedEvent);
             this.saveButton.Pressed += new System.EventHandler(this.OnSaveButtonPressed);

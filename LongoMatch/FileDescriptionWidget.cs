@@ -166,6 +166,7 @@ namespace LongoMatch
 			                                                   FileChooserAction.Open,
 			                                                   "gtk-cancel",ResponseType.Cancel,
 			                                                   "gtk-open",ResponseType.Accept);
+			fChooser.SetCurrentFolder(System.Environment.GetEnvironmentVariable("HOME"));
 			if (fChooser.Run() == (int)ResponseType.Accept){
 				fileEntry.Text = fChooser.Filename;
 			}

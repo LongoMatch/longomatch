@@ -29,12 +29,13 @@ namespace LongoMatch
 	public partial class PlayListWidget : Gtk.Bin
 	{
 		public event PlayListNodeSelectedHandler PlayListNodeSelected;
+		
+		
+		
 		public PlayListWidget()
 		{
 			this.Build();			
 		}
-
-
 
 		
 		public ListStore Model {
@@ -42,10 +43,37 @@ namespace LongoMatch
 			get {return (ListStore)this.playlisttreeview1.Model;}
 		}
 		
-		public void AddPlayListNode (PlayListNode plNode){
+		public void Add (PlayListNode plNode){
 			this.Model.AppendValues(plNode);
 		}
 		
+		public bool Next(){
+			
+			TreePath path;			
+			path = (this.playlisttreeview1.Selection.GetSelectedRows())[0];
+			path.Next();
+			if (path!=null){
+				this.playlisttreeview1.Selection.SelectPath(path);			
+				this.SelectPlayListNode(path);			
+			}
+			return true;
+		}
+		
+		public void Prev(){
+								
+		}
+		
+		
+		
+		private void StartClock (long stopTime)
+		{
+ 
+			GLib.Timeout.Add (20, new GLib.TimeoutHandler (CheckStopTime));
+		}
+
+		private bool CheckStopTime(){
+			return true;
+		}
 		private void SelectPlayListNode (TreePath path){
 			
 			Gtk.TreeIter iter;
@@ -65,27 +93,21 @@ namespace LongoMatch
 		
 		}
 		
-		public void playNext(){
-			TreePath path;
-			
-			path = (this.playlisttreeview1.Selection.GetSelectedRows())[0];
-			path.Next();
-			this.playlisttreeview1.Selection.SelectPath(path);
-			
-			
-			
-			this.SelectPlayListNode(path);
-
-
-			
-			
-		}
+		
 
 		protected virtual void OnPlaylisttreeview1RowActivated (object o, Gtk.RowActivatedArgs args)
 		{
 			this.SelectPlayListNode(args.Path);
 			
 			
+		}
+
+		protected virtual void OnUpbuttonClicked (object sender, System.EventArgs e)
+		{
+		}
+
+		protected virtual void OnDownbuttonClicked (object sender, System.EventArgs e)
+		{
 		}
 
 	}

@@ -2191,6 +2191,7 @@ bacon_video_widget_segment_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop)
 
   	GST_LOG ("Segment seeking from %" GST_TIME_FORMAT, GST_TIME_ARGS (start * GST_MSECOND));
   
+  	
   	if (start > bvw->priv->stream_length
       	&& bvw->priv->stream_length > 0
       	&& !g_str_has_prefix (bvw->priv->mrl, "dvd:")
@@ -2199,7 +2200,7 @@ bacon_video_widget_segment_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop)
      		bvw->priv->eos_id = g_idle_add (bvw_signal_eos_delayed, bvw);
     	return TRUE;
   	}
-
+	
 	got_time_tick (bvw->priv->play, start * GST_MSECOND, bvw);
 	gst_element_seek (bvw->priv->play, 1.0,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_SEGMENT | GST_SEEK_FLAG_ACCURATE,
@@ -2213,8 +2214,8 @@ bacon_video_widget_segment_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop)
  bacon_video_widget_segment_stop_update(BaconVideoWidget *bvw, gint64 stop)
  {
 	 	g_return_val_if_fail (bvw != NULL, FALSE);
-  	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
-  	g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
+  		g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  		g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 	 	gst_element_seek (bvw->priv->play, 1.0,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_SEGMENT | GST_SEEK_FLAG_ACCURATE,
       	GST_SEEK_TYPE_SET, stop * GST_MSECOND-1,
@@ -2670,7 +2671,7 @@ done:
 gchar *
 bacon_video_widget_get_mrl (BaconVideoWidget * bvw)
 {
-	return bvw->priv->mrl;
+	return g_strdup(bvw->priv->mrl);
 }
 
 

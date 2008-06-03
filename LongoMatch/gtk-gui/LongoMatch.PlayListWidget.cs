@@ -88,14 +88,14 @@ namespace LongoMatch {
             this.savebutton.UseUnderline = true;
             // Container child savebutton.Gtk.Container+ContainerChild
             Gtk.Alignment w12 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment.Gtk.Container+ContainerChild
+            // Container child GtkAlignment1.Gtk.Container+ContainerChild
             Gtk.HBox w13 = new Gtk.HBox();
             w13.Spacing = 2;
-            // Container child GtkHBox.Gtk.Container+ContainerChild
+            // Container child GtkHBox1.Gtk.Container+ContainerChild
             Gtk.Image w14 = new Gtk.Image();
             w14.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-save", Gtk.IconSize.Button, 20);
             w13.Add(w14);
-            // Container child GtkHBox.Gtk.Container+ContainerChild
+            // Container child GtkHBox1.Gtk.Container+ContainerChild
             Gtk.Label w16 = new Gtk.Label();
             w16.LabelProp = "";
             w13.Add(w16);
@@ -111,14 +111,14 @@ namespace LongoMatch {
             this.upbutton.UseUnderline = true;
             // Container child upbutton.Gtk.Container+ContainerChild
             Gtk.Alignment w21 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment.Gtk.Container+ContainerChild
+            // Container child GtkAlignment2.Gtk.Container+ContainerChild
             Gtk.HBox w22 = new Gtk.HBox();
             w22.Spacing = 2;
-            // Container child GtkHBox.Gtk.Container+ContainerChild
+            // Container child GtkHBox2.Gtk.Container+ContainerChild
             Gtk.Image w23 = new Gtk.Image();
             w23.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-go-up", Gtk.IconSize.Button, 20);
             w22.Add(w23);
-            // Container child GtkHBox.Gtk.Container+ContainerChild
+            // Container child GtkHBox2.Gtk.Container+ContainerChild
             Gtk.Label w25 = new Gtk.Label();
             w25.LabelProp = "";
             w22.Add(w25);
@@ -134,14 +134,14 @@ namespace LongoMatch {
             this.downbutton.UseUnderline = true;
             // Container child downbutton.Gtk.Container+ContainerChild
             Gtk.Alignment w30 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment.Gtk.Container+ContainerChild
+            // Container child GtkAlignment3.Gtk.Container+ContainerChild
             Gtk.HBox w31 = new Gtk.HBox();
             w31.Spacing = 2;
-            // Container child GtkHBox.Gtk.Container+ContainerChild
+            // Container child GtkHBox3.Gtk.Container+ContainerChild
             Gtk.Image w32 = new Gtk.Image();
             w32.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-go-down", Gtk.IconSize.Button, 20);
             w31.Add(w32);
-            // Container child GtkHBox.Gtk.Container+ContainerChild
+            // Container child GtkHBox3.Gtk.Container+ContainerChild
             Gtk.Label w34 = new Gtk.Label();
             w34.LabelProp = "";
             w31.Add(w34);
@@ -161,6 +161,8 @@ namespace LongoMatch {
             }
             this.Show();
             this.playlisttreeview1.RowActivated += new Gtk.RowActivatedHandler(this.OnPlaylisttreeview1RowActivated);
+            this.upbutton.Clicked += new System.EventHandler(this.OnUpbuttonClicked);
+            this.downbutton.Clicked += new System.EventHandler(this.OnDownbuttonClicked);
         }
     }
 }

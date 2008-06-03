@@ -1,6 +1,10 @@
 <objects>
   <object type="CesarPlayer.PlayerBin" allow-children="false" base-type="Gtk.Bin" palette-category="CesarPlayer">
-    <itemgroups />
+    <itemgroups>
+      <itemgroup label="PlayerBin Properties">
+        <property name="File" />
+      </itemgroup>
+    </itemgroups>
     <signals>
       <itemgroup label="PlayerBin Signals">
         <signal name="PlayListSegmentDoneEvent" />

@@ -76,13 +76,20 @@ namespace CesarPlayer
 			_videoscreen.Show();
 		}
 		
-		public void SetFile (string filename){
-			this.closebutton.Hide();
-			this.SetSensitive();
-			timescale.Value=0;
-			timelabel.Text="";
-			player.FilePath = filename;
-			player.Play();
+		public string File {
+			set{
+				this.closebutton.Hide();
+				this.SetSensitive();
+				timescale.Value=0;
+				timelabel.Text="";
+				this.SegmentClosedEvent();
+				this.player.CancelProgramedStop();
+				player.FilePath = value;
+				player.Play();
+			}
+			get{
+				return player.FilePath;
+			}
 			
 			
 			
@@ -115,10 +122,12 @@ namespace CesarPlayer
 			this.segmentStartTime = start;
 			player.UpdateSegmentStartTime(start);
 			
+			
 		}
 		
 		public void UpdateSegmentStopTime (long stop){
 			player.UpdateSegmentStopTime(stop);
+			
 		}
 		
 		public void SetStartStop(long start, long stop){
@@ -126,6 +135,7 @@ namespace CesarPlayer
 			this.closebutton.Show();
 			this.timescale.Sensitive = false;
 			player.SegmentSeek(start,stop);
+			player.Rate = 0.2f;
 			
 		}
 		
@@ -235,6 +245,7 @@ namespace CesarPlayer
 		protected virtual void OnSegmentDone (){
 			if (this.hasNext && this.PlayListSegmentDoneEvent != null )
 				PlayListSegmentDoneEvent();
+			
 				
 		}
 		

@@ -79,6 +79,8 @@ namespace LongoMatch
 			return System.IO.Path.Combine (baseDirectory, "db");
 		}
 		
+		
+		
 		public static void CheckDirs(){
 
 			if (!System.IO.Directory.Exists(homeDirectory))
