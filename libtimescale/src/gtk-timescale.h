@@ -68,7 +68,7 @@ struct _GtkTimescale
 	
 };
 
-GType gtk_timescale_get_type (void) G_GNUC_CONST;
+EXPORT GType gtk_timescale_get_type (void) G_GNUC_CONST;
 EXPORT GtkWidget *gtk_timescale_new(gint32 upper);
 EXPORT void gtk_timescale_set_bounds(GtkTimescale *gts,gdouble lower, gdouble upper);
 EXPORT void gtk_timescale_adjust_position(GtkTimescale *gts,gdouble val, gint adj); 
