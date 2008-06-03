@@ -276,6 +276,7 @@ namespace CesarPlayer {
             this.closebutton.Hide();
             this.prevbutton.Hide();
             this.nextbutton.Hide();
+            this.controlsbox.Hide();
             this.Show();
             this.closebutton.Clicked += new System.EventHandler(this.OnClosebuttonClicked);
             this.playbutton.Clicked += new System.EventHandler(this.OnPlaybuttonClicked);
