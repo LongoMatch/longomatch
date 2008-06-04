@@ -282,6 +282,7 @@ namespace CesarPlayer {
             this.playbutton.Clicked += new System.EventHandler(this.OnPlaybuttonClicked);
             this.pausebutton.Clicked += new System.EventHandler(this.OnPausebuttonClicked);
             this.prevbutton.Clicked += new System.EventHandler(this.OnPrevbuttonClicked);
+            this.nextbutton.Clicked += new System.EventHandler(this.OnNextbuttonClicked);
             this.timescale.ValueChanged += new System.EventHandler(this.OnTimescaleValueChanged);
             this.timescale.AdjustBounds += new Gtk.AdjustBoundsHandler(this.OnTimescaleAdjustBounds);
             this.volumebutton.Clicked += new System.EventHandler(this.OnVolumebuttonClicked);

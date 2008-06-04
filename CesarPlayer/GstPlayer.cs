@@ -306,6 +306,16 @@ namespace CesarPlayer
 			
 		}
 		
+		
+		[DllImport ("liblongomatch")]		
+		private static extern long bacon_video_widget_get_accurate_current_time (IntPtr player);
+		
+		public long GetAccurateCurrentTime(){
+			
+			
+			return bacon_video_widget_get_accurate_current_time(Raw);
+		}
+		
 		[DllImport ("liblongomatch")]		
 		private static extern IntPtr bacon_video_widget_get_current_frame (IntPtr player);
 		

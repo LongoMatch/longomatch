@@ -109,6 +109,8 @@ namespace CesarPlayer
 		
 		void UpdateSegmentStopTime(long stop);
 		
+		long GetAccurateCurrentTime();
+		
 		void CancelProgramedStop();
 		
 		void SetLogo(string fileName);

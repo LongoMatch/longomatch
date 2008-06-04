@@ -104,10 +104,7 @@ namespace CesarPlayer
 		}
 		
 		public void SetPlayListElement(string fileName,long start, long stop, bool hasNext){
-			/*if (this.player.FilePath != fileName){
-				//Cambiar archivo
-			}*/
-
+			
 			this.hasNext = hasNext;
 			if (hasNext)
 				this.nextbutton.Sensitive = true;
@@ -131,11 +128,12 @@ namespace CesarPlayer
 		}
 		
 		public void SetStartStop(long start, long stop){
+			Console.WriteLine(start);
 			this.segmentStartTime = start;
 			this.closebutton.Show();
 			this.timescale.Sensitive = false;
 			player.SegmentSeek(start,stop);
-			player.Rate = 0.2f;
+		
 			
 		}
 		
@@ -268,6 +266,11 @@ namespace CesarPlayer
 		{
 			player.SeekInSegment(this.segmentStartTime);
 			player.Play();
+		}
+
+		protected virtual void OnNextbuttonClicked (object sender, System.EventArgs e)
+		{
+			
 		}
 
 		
