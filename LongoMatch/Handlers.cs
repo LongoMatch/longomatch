@@ -26,7 +26,7 @@ namespace LongoMatch
 	//Manejador para el evento producido al seleccionar un nodo en el árbol
 	public delegate void TimeNodeSelectedHandler (TimeNode tNode);
 	//Manejador para el evento producido al pulsar un botón de selección de nuava marca
-	public delegate void NewMarkEventHandler (int i, int start, int stop);
+	public delegate void NewMarkEventHandler (int i, Time start, Time stop);
 	//Manejador para el evento producido cuando se edita un nodo
 	public delegate void TimeNodeChangedHandler (TimeNode tNode, object val);
 	//Manejador para el evento producido al eliminar un TimeNode
@@ -36,7 +36,7 @@ namespace LongoMatch
 	//Manejador para el evento producido al selecionar un nodo en la lista de reproducción
 	public delegate void PlayListNodeSelectedHandler (PlayListNode plNode, bool hasNext);
 	//Manejador para el evento producido al ajustar la posición 
-	public delegate void PositionChangedHandler (long pos);
+	public delegate void PositionChangedHandler (Time pos);
 	
 	public delegate void DateSelectedHandler (DateTime selectedDate);
 }

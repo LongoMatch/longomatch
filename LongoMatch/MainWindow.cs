@@ -50,6 +50,7 @@ namespace LongoMatch
 			player = playerbin1.Player ;
 			player.LogoMode = true;
 			this.playerbin1.PlayListSegmentDoneEvent += new CesarPlayer.PlayListSegmentDoneHandler(OnPlayListSegmentDone);
+			this.playlistwidget2.SetPlayer(player);
 		}
 
 		
@@ -111,15 +112,16 @@ namespace LongoMatch
 
 
 				
-		protected virtual void OnNewMark(int i, int startTime, int stopTime){
+		protected virtual void OnNewMark(int i, Time startTime, Time stopTime){
 			if (player != null && openedFileData != null){
+
 				long pos = player.CurrentTime;
-				long start = pos - startTime;
-				long stop = pos + stopTime;
+				long start = pos - startTime.MSeconds;
+				long stop = pos + stopTime.MSeconds;
 				long fStart = (start<0) ? 0 : start;
 				//La longitud tiene que ser en ms
 				long fStop = (stop > player.Length*1000) ? player.Length : stop;
-				TimeNode tn = openedFileData.AddTimeNode(i,fStart,fStop);			
+				TimeNode tn = openedFileData.AddTimeNode(i,new Time((int)fStart),new Time((int)fStop));			
 				treewidget1.AddTimeNode(tn,i);							
 				MainClass.DB.UpdateFileData(openedFileData);
 			}
@@ -214,13 +216,12 @@ namespace LongoMatch
 		protected virtual void OnTimeNodeSelected (LongoMatch.TimeNode tNode)
 		{
 			
-			//this.timeprecisionadjustwidget1.Show();
-			//this.timeprecisionadjustwidget1.SetTimeNode(tNode);
-			//this.selectedTimeNode = tNode;
+			
 			this.buttonswidget1.Hide();
 			this.timeline2.Enabled = false;
 			this.timeline2.SetTimeNode(tNode,25);
-			this.playerbin1.SetStartStop(tNode.Start,tNode.Stop);
+
+			this.playerbin1.SetStartStop(tNode.Start.MSeconds,tNode.Stop.MSeconds);
 			this.timeline2.Enabled = true;
 			
 			
@@ -233,16 +234,16 @@ namespace LongoMatch
 			//Si hemos modificado el valor de un nodo de tiempo a través del 
 			//widget de ajuste de tiempo posicionamos el reproductor en el punto
 			//
-			if (val is long ){
-				long pos = (long)val;
+			if (val is Time ){
+				Time pos = (Time)val;
 				this.player.Pause();
 				if (pos == tNode.Start){
-					this.playerbin1.UpdateSegmentStartTime(pos);
+					this.playerbin1.UpdateSegmentStartTime(pos.MSeconds);
 					this.timeline2.UpdateStartTime(pos);
 				}
 				
 				else{
-					this.playerbin1.UpdateSegmentStopTime(pos);
+					this.playerbin1.UpdateSegmentStopTime(pos.MSeconds);
 					this.timeline2.UpdateStopTime(pos);
 				}	
 			}
@@ -277,8 +278,7 @@ namespace LongoMatch
 		protected virtual void OnPlaylistwidget2PlayListNodeSelected (LongoMatch.PlayListNode plNode, bool hasNext)
 		{
 			
-			playerbin1.File = plNode.FileName;
-			this.playerbin1.SetPlayListElement(plNode.FileName,plNode.StartTime,plNode.StopTime,hasNext);
+			this.playerbin1.SetPlayListElement(plNode.FileName,plNode.StartTime.MSeconds,plNode.StopTime.MSeconds,hasNext);
 
 		}
 		
@@ -295,7 +295,7 @@ namespace LongoMatch
 		protected virtual void OnPlayerbin1TickEvent (long currentTime, long streamLength, float position, bool seekable)
 		{
 			if (this.timeline2.Enabled)
-				this.timeline2.SetPosition(currentTime);
+				this.timeline2.SetPosition(new Time ((int)(currentTime)));
 		}
 
 		protected virtual void OnPlayerbin1SegmentClosedEvent ()
@@ -306,9 +306,9 @@ namespace LongoMatch
 			this.timeline2.Enabled = false;
 		}
 
-		protected virtual void OnTimeline2PositionChanged (long pos)
+		protected virtual void OnTimeline2PositionChanged (Time pos)
 		{
-			this.player.SeekInSegment(pos);
+			this.player.SeekInSegment(pos.MSeconds);
 		}
 
 		protected virtual void OnPlayerbin1ErrorEvent (string error)

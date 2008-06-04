@@ -45,44 +45,46 @@ namespace LongoMatch
 		
 		public void SetTimeNode(TimeNode tNode){
 			this.tNode=tNode;
-			startlabel.Text = TimeString.MSecondsToMSecondsString(tNode.Start);
-			stoplabel.Text = TimeString.MSecondsToMSecondsString(tNode.Stop);
+			startlabel.Text = tNode.Start.ToMSecondsString();
+			stoplabel.Text = tNode.Stop.ToMSecondsString();
 			
 
 		}
 		
-		protected virtual void OnStartTimeAdjusted(long gap)
+		protected virtual void OnStartTimeAdjusted(int gap)
 		{
+			
 			if (tNode != null ){
-				if (tNode.Start +gap <= 0 ){
-					tNode.Start = 0;
+				if (tNode.Start.MSeconds +gap <= 0 ){
+					tNode.Start.MSeconds = 0;
 				}
-				else if ((tNode.Start+gap) < (tNode.Stop -500) ) {
-					tNode.Start += gap;					
+				else if ((tNode.Start.MSeconds+gap) < (tNode.Stop.MSeconds -500) ) {
+					tNode.Start.MSeconds += gap;					
 				}
 				//Si el gap introducido hace que sean más de 500ms lo 
 				//ajustamos a 500 ms para que se quede parejo
 				else {
-					tNode.Start = tNode.Stop - 500;
+					tNode.Start.MSeconds = tNode.Stop.MSeconds - 500;
 				}
 				
-				startlabel.Text = TimeString.MSecondsToMSecondsString(tNode.Start);
+				startlabel.Text = tNode.Start.ToMSecondsString();
 				if (TimeNodeChanged != null)
 						TimeNodeChanged(tNode, tNode.Start);
 			}			
 		}
 		
-		protected virtual void OnStopTimeAdjusted(long gap)
+		protected virtual void OnStopTimeAdjusted(int gap)
 		{
+
 			if (tNode != null){
-				if ((tNode.Stop + gap) > (tNode.Start+500)){
-					tNode.Stop += gap;
+				if ((tNode.Stop.MSeconds + gap) > (tNode.Start.MSeconds+500)){
+					tNode.Stop.MSeconds += gap;
 					
 				}
 				else{
-					tNode.Stop = tNode.Start + 500;
+					tNode.Stop.MSeconds = tNode.Start.MSeconds + 500;
 				}
-				stoplabel.Text = TimeString.MSecondsToMSecondsString(tNode.Stop);
+				stoplabel.Text = tNode.Stop.ToMSecondsString();
 				if (TimeNodeChanged != null)
 						TimeNodeChanged(tNode, tNode.Stop);
 			}

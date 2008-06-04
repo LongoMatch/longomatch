@@ -28,10 +28,10 @@ namespace LongoMatch
 	{
 		private string fileName;
 		private string name;
-		private long startTime;
-		private long stopTime;
+		private Time startTime;
+		private Time stopTime;
 		
-		public PlayListNode(string fileName, string name, long startTime, long stopTime)
+		public PlayListNode(string fileName, string name, Time startTime, Time stopTime)
 		{
 			this.fileName = fileName;
 			this.name = name;
@@ -55,12 +55,12 @@ namespace LongoMatch
 			get{ return this.name;}
 		}
 		
-		public long StartTime{
+		public Time StartTime{
 			set{ this.startTime = value;}
 			get{ return this.startTime;}
 		}
 		
-		public long StopTime{
+		public Time StopTime{
 			set{ this.stopTime = value;}
 			get{ return this.stopTime;}
 		}

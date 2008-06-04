@@ -132,7 +132,7 @@ public class PlayListTreeView : Gtk.TreeView
 		private void RenderStartTime (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			PlayListNode tNode = (PlayListNode) model.GetValue (iter, 0);
-			(cell as Gtk.CellRendererText).Text = TimeString.MSecondsToSecondsString(tNode.StartTime);
+			(cell as Gtk.CellRendererText).Text = tNode.StartTime.ToMSecondsString();
 				
 			
 		}
@@ -140,7 +140,7 @@ public class PlayListTreeView : Gtk.TreeView
 		private void RenderStopTime (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			PlayListNode tNode = (PlayListNode) model.GetValue (iter, 0);
-			(cell as Gtk.CellRendererText).Text = TimeString.MSecondsToMSecondsString(tNode.StopTime);
+			(cell as Gtk.CellRendererText).Text = tNode.StopTime.ToMSecondsString();
 		}
 		
 			

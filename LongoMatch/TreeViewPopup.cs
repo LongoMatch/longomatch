@@ -145,7 +145,7 @@ namespace LongoMatch
 			TimeNode tNode = (TimeNode) model.GetValue (iter, 0);
 			//comprobamos que no se trata de ningún padre para no dibujar el tiempo
 			if (!tNode.IsRoot())
-				(cell as Gtk.CellRendererText).Text = TimeString.MSecondsToMSecondsString(tNode.Start);
+				(cell as Gtk.CellRendererText).Text =tNode.Start.ToMSecondsString();
 			else 
 				(cell as Gtk.CellRendererText).Text = "";
 				
@@ -156,7 +156,7 @@ namespace LongoMatch
 		{
 			TimeNode tNode = (TimeNode) model.GetValue (iter, 0);
 			if (!tNode.IsRoot())
-				(cell as Gtk.CellRendererText).Text = TimeString.MSecondsToMSecondsString(tNode.Stop);
+				(cell as Gtk.CellRendererText).Text = tNode.Stop.ToMSecondsString();
 			else 
 				(cell as Gtk.CellRendererText).Text = "";
 		}

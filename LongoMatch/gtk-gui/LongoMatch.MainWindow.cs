@@ -13,6 +13,14 @@ namespace LongoMatch {
     
     public partial class MainWindow {
         
+        private Gtk.Action PlayAction;
+        
+        private Gtk.Action PauseAction;
+        
+        private Gtk.Action PreviousAction;
+        
+        private Gtk.Action NextAction;
+        
         private Gtk.Action FileAction;
         
         private Gtk.Action NewPoyectAction;
@@ -36,14 +44,6 @@ namespace LongoMatch {
         private Gtk.ToggleAction PlaylistAction;
         
         private Gtk.Action PlayerAction;
-        
-        private Gtk.Action PlayAction;
-        
-        private Gtk.Action PauseAction;
-        
-        private Gtk.Action PreviousAction;
-        
-        private Gtk.Action NextAction;
         
         private Gtk.VBox vbox1;
         
@@ -75,58 +75,58 @@ namespace LongoMatch {
             Stetic.Gui.Initialize(this);
             // Widget LongoMatch.MainWindow
             Gtk.UIManager w1 = new Gtk.UIManager();
-            Gtk.ActionGroup w2 = new Gtk.ActionGroup("Default");
+            Gtk.ActionGroup w2 = new Gtk.ActionGroup("Player");
+            this.PlayAction = new Gtk.Action("PlayAction", Mono.Unix.Catalog.GetString("_Play"), null, "gtk-media-play");
+            this.PlayAction.ShortLabel = Mono.Unix.Catalog.GetString("dasdf");
+            w2.Add(this.PlayAction, null);
+            this.PauseAction = new Gtk.Action("PauseAction", Mono.Unix.Catalog.GetString("P_ause"), null, "gtk-media-pause");
+            this.PauseAction.ShortLabel = Mono.Unix.Catalog.GetString("P_ause");
+            w2.Add(this.PauseAction, null);
+            this.PreviousAction = new Gtk.Action("PreviousAction", Mono.Unix.Catalog.GetString("P_revious"), null, "gtk-media-previous");
+            this.PreviousAction.ShortLabel = Mono.Unix.Catalog.GetString("P_revious");
+            w2.Add(this.PreviousAction, null);
+            this.NextAction = new Gtk.Action("NextAction", Mono.Unix.Catalog.GetString("_Next"), null, "gtk-media-next");
+            this.NextAction.ShortLabel = Mono.Unix.Catalog.GetString("_Next");
+            w2.Add(this.NextAction, null);
+            w1.InsertActionGroup(w2, 0);
+            Gtk.ActionGroup w3 = new Gtk.ActionGroup("Default");
             this.FileAction = new Gtk.Action("FileAction", Mono.Unix.Catalog.GetString("_File"), null, null);
             this.FileAction.ShortLabel = Mono.Unix.Catalog.GetString("_File");
-            w2.Add(this.FileAction, null);
+            w3.Add(this.FileAction, null);
             this.NewPoyectAction = new Gtk.Action("NewPoyectAction", Mono.Unix.Catalog.GetString("_New Poyect"), null, "gtk-new");
             this.NewPoyectAction.ShortLabel = Mono.Unix.Catalog.GetString("_New Poyect");
-            w2.Add(this.NewPoyectAction, null);
+            w3.Add(this.NewPoyectAction, null);
             this.OpenProyectAction = new Gtk.Action("OpenProyectAction", Mono.Unix.Catalog.GetString("_Open Proyect"), null, "gtk-open");
             this.OpenProyectAction.ShortLabel = Mono.Unix.Catalog.GetString("_Open Proyect");
-            w2.Add(this.OpenProyectAction, null);
+            w3.Add(this.OpenProyectAction, null);
             this.QuitAction = new Gtk.Action("QuitAction", Mono.Unix.Catalog.GetString("_Quit"), null, "gtk-quit");
             this.QuitAction.ShortLabel = Mono.Unix.Catalog.GetString("_Quit");
-            w2.Add(this.QuitAction, null);
+            w3.Add(this.QuitAction, null);
             this.CloseProyectAction = new Gtk.Action("CloseProyectAction", Mono.Unix.Catalog.GetString("_Close Proyect"), null, "gtk-close");
             this.CloseProyectAction.ShortLabel = Mono.Unix.Catalog.GetString("_Close Proyect");
-            w2.Add(this.CloseProyectAction, null);
+            w3.Add(this.CloseProyectAction, null);
             this.ToolsAction = new Gtk.Action("ToolsAction", Mono.Unix.Catalog.GetString("_Tools"), null, null);
             this.ToolsAction.ShortLabel = Mono.Unix.Catalog.GetString("_Tools");
-            w2.Add(this.ToolsAction, null);
+            w3.Add(this.ToolsAction, null);
             this.DatabaseManagerAction = new Gtk.Action("DatabaseManagerAction", Mono.Unix.Catalog.GetString("Database Manager"), null, null);
             this.DatabaseManagerAction.ShortLabel = Mono.Unix.Catalog.GetString("Database Manager");
-            w2.Add(this.DatabaseManagerAction, null);
+            w3.Add(this.DatabaseManagerAction, null);
             this.TemplatesManagerAction = new Gtk.Action("TemplatesManagerAction", Mono.Unix.Catalog.GetString("Templates Manager"), null, null);
             this.TemplatesManagerAction.ShortLabel = Mono.Unix.Catalog.GetString("Templates Manager");
-            w2.Add(this.TemplatesManagerAction, null);
+            w3.Add(this.TemplatesManagerAction, null);
             this.ViewAction = new Gtk.Action("ViewAction", Mono.Unix.Catalog.GetString("_View"), null, null);
             this.ViewAction.ShortLabel = Mono.Unix.Catalog.GetString("_View");
-            w2.Add(this.ViewAction, null);
+            w3.Add(this.ViewAction, null);
             this.FullScreenAction = new Gtk.ToggleAction("FullScreenAction", Mono.Unix.Catalog.GetString("Full Screen"), null, "gtk-fullscreen");
             this.FullScreenAction.ShortLabel = Mono.Unix.Catalog.GetString("Full Screen");
             this.FullScreenAction.Visible = false;
-            w2.Add(this.FullScreenAction, null);
+            w3.Add(this.FullScreenAction, null);
             this.PlaylistAction = new Gtk.ToggleAction("PlaylistAction", Mono.Unix.Catalog.GetString("Playlist"), null, null);
             this.PlaylistAction.ShortLabel = Mono.Unix.Catalog.GetString("Playlist");
-            w2.Add(this.PlaylistAction, null);
+            w3.Add(this.PlaylistAction, null);
             this.PlayerAction = new Gtk.Action("PlayerAction", Mono.Unix.Catalog.GetString("_Player"), null, null);
             this.PlayerAction.ShortLabel = Mono.Unix.Catalog.GetString("_Player");
-            w2.Add(this.PlayerAction, null);
-            w1.InsertActionGroup(w2, 0);
-            Gtk.ActionGroup w3 = new Gtk.ActionGroup("Player");
-            this.PlayAction = new Gtk.Action("PlayAction", Mono.Unix.Catalog.GetString("_Play"), null, "gtk-media-play");
-            this.PlayAction.ShortLabel = Mono.Unix.Catalog.GetString("dasdf");
-            w3.Add(this.PlayAction, null);
-            this.PauseAction = new Gtk.Action("PauseAction", Mono.Unix.Catalog.GetString("P_ause"), null, "gtk-media-pause");
-            this.PauseAction.ShortLabel = Mono.Unix.Catalog.GetString("P_ause");
-            w3.Add(this.PauseAction, null);
-            this.PreviousAction = new Gtk.Action("PreviousAction", Mono.Unix.Catalog.GetString("P_revious"), null, "gtk-media-previous");
-            this.PreviousAction.ShortLabel = Mono.Unix.Catalog.GetString("P_revious");
-            w3.Add(this.PreviousAction, null);
-            this.NextAction = new Gtk.Action("NextAction", Mono.Unix.Catalog.GetString("_Next"), null, "gtk-media-next");
-            this.NextAction.ShortLabel = Mono.Unix.Catalog.GetString("_Next");
-            w3.Add(this.NextAction, null);
+            w3.Add(this.PlayerAction, null);
             w1.InsertActionGroup(w3, 1);
             this.AddAccelGroup(w1.AccelGroup);
             this.Name = "LongoMatch.MainWindow";

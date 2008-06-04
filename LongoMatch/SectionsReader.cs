@@ -37,14 +37,14 @@ namespace LongoMatch
 		{
 		
 			configXml = new XmlDocument();
-		
+			
 			
 			if (!File.Exists(filePath)){
 				//manejar el error!!!
 			}
 			fConfig = Path.Combine (MainClass.TemplatesDir(), filePath);
 			configXml.Load(fConfig);
-			Console.WriteLine(configXml.Name);
+	
 		}
 		
 		private string GetStringValue(string section, string clave) 
@@ -77,19 +77,22 @@ namespace LongoMatch
 			return names;
 		}
 		
-		private int[] GetStartTimes(){
-			int[] startTimes = new int [20];
+		private Time[] GetStartTimes(){
+			Time[] startTimes = new Time [20];
 			for (int i=0;i<20;i++){
-				startTimes[i] = this.GetIntValue("configuration","Start"+(i+1));
+				
+				startTimes[i] = new Time(GetIntValue("configuration","Stop"+(i+1))*Time.SECONDS_TO_TIME);
+		
 			}
 			return startTimes;
 		
 		}
 		
-		private int[] GetStopTimes(){
-			int[] stopTimes = new int [20];
+		private Time[] GetStopTimes(){
+			Time[] stopTimes = new Time [20];
 			for (int i=0;i<20;i++){
-				stopTimes[i] = this.GetIntValue("configuration","Stop"+(i+1));
+				stopTimes[i] = new Time(GetIntValue("configuration","Stop"+(i+1))*Time.SECONDS_TO_TIME);
+
 			}
 			return stopTimes;	
 		

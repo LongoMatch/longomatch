@@ -81,8 +81,9 @@ namespace LongoMatch
 			
 			for (int i = 0; i<20;i++){
 				SetValue(configXml,"configuration","Name" + (i+1),sections.GetName(i));
-				SetValue(configXml,"configuration","Start"+ (i+1),sections.GetStartTime(i).ToString());
-				SetValue(configXml,"configuration","Stop"+ (i+1),sections.GetStopTime(i).ToString());
+				Console.WriteLine(sections.GetStartTime(i).Seconds);
+				SetValue(configXml,"configuration","Start"+ (i+1),sections.GetStartTime(i).Seconds.ToString());
+				SetValue(configXml,"configuration","Stop"+ (i+1),sections.GetStopTime(i).Seconds.ToString());
 			}
 			configXml.Save(fConfig);
 		}

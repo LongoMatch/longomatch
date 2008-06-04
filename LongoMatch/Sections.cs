@@ -53,7 +53,7 @@ namespace LongoMatch
 		}
 		
 		
-		public void SetTimeNodes(string[] names, int[] startTimes, int[] stopTimes){
+		public void SetTimeNodes(string[] names, Time[] startTimes, Time[] stopTimes){
 			for (int i=0;i<20;i++){
 				timeNodesArray[i] = new TimeNode(names[i],startTimes[i],stopTimes[i]);
 			}
@@ -74,22 +74,22 @@ namespace LongoMatch
 		
 		}
 		
-		public int[] GetSectionsStartTimes(){
-			int[] startTimes = new int[totalSections];
+		public Time[] GetSectionsStartTimes(){
+			Time[] startTimes = new Time[totalSections];
 			TimeNode tNode;
 			for (int i=0; i<totalSections; i++){
 				tNode = timeNodesArray[i];
-				startTimes[i]=(int)tNode.Start;
+				startTimes[i]=tNode.Start;
 			}
 			return startTimes;
 		}
 		
-		public int[] GetSectionsStopTimes(){
-			int[] stopTimes = new int[totalSections];
+		public Time[] GetSectionsStopTimes(){
+			Time[] stopTimes = new Time[totalSections];
 			TimeNode tNode;
 			for (int i=0; i<totalSections; i++){
 				tNode = timeNodesArray[i];
-				stopTimes[i]=(int)tNode.Start;
+				stopTimes[i]=tNode.Start;
 			}
 			return stopTimes;
 			
@@ -103,12 +103,12 @@ namespace LongoMatch
 			return timeNodesArray[section].Name;
 		}
 		
-		public int GetStartTime ( int section){
-			return (int)(this.timeNodesArray[section].Start);
+		public Time GetStartTime ( int section){
+			return this.timeNodesArray[section].Start;
 		}
 		
-		public int GetStopTime ( int section){
-			return (int)(this.timeNodesArray[section].Stop);
+		public Time GetStopTime ( int section){
+			return this.timeNodesArray[section].Stop;
 		}
 	}
 }

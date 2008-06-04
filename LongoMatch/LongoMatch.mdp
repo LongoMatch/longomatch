@@ -87,6 +87,7 @@
     <File name="PosChangedHandler.cs" subtype="Code" buildaction="Compile" />
     <File name="ObjectManager.cs" subtype="Code" buildaction="Compile" />
     <File name="background.png" subtype="Code" buildaction="FileCopy" />
+    <File name="Time.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="Db4objects.Db4o.dll" />

@@ -138,15 +138,15 @@ namespace LongoMatch
 				
 		}
 		
-		public int[] GetSectionsStartTimes(){
+		public Time[] GetSectionsStartTimes(){
 			return sections.GetSectionsStartTimes();
 		}
 		
-		public int[] GetSectionsStopTimes(){
+		public Time[] GetSectionsStopTimes(){
 			return sections.GetSectionsStopTimes();
 		}
 
-		public TimeNode AddTimeNode(int dataSection, long start, long stop) {
+		public TimeNode AddTimeNode(int dataSection, Time start, Time stop) {
 			ArrayList al= dataSectionArray[dataSection];
 			int count= al.Count+1;
 			TimeNode tn = new TimeNode(sections.GetName(dataSection) + " " +count, start, stop,

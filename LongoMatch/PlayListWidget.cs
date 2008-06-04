@@ -21,6 +21,7 @@
 using System;
 using Gtk;
 using Gdk;
+using CesarPlayer;
 
 namespace LongoMatch
 {
@@ -29,6 +30,9 @@ namespace LongoMatch
 	public partial class PlayListWidget : Gtk.Bin
 	{
 		public event PlayListNodeSelectedHandler PlayListNodeSelected;
+		private IPlayer player;
+		private PlayListNode plNode;
+		private uint timeout;
 		
 		
 		
@@ -37,7 +41,9 @@ namespace LongoMatch
 			this.Build();			
 		}
 
-		
+		public void SetPlayer(IPlayer player){
+			this.player = player;
+		}
 		public ListStore Model {
 			set {this.playlisttreeview1.Model = value;}
 			get {return (ListStore)this.playlisttreeview1.Model;}
@@ -47,7 +53,7 @@ namespace LongoMatch
 			this.Model.AppendValues(plNode);
 		}
 		
-		public bool Next(){
+		public PlayListNode Next(){
 			
 			TreePath path;			
 			path = (this.playlisttreeview1.Selection.GetSelectedRows())[0];
@@ -56,7 +62,7 @@ namespace LongoMatch
 				this.playlisttreeview1.Selection.SelectPath(path);			
 				this.SelectPlayListNode(path);			
 			}
-			return true;
+			return plNode;
 		}
 		
 		public void Prev(){
@@ -65,13 +71,28 @@ namespace LongoMatch
 		
 		
 		
-		private void StartClock (long stopTime)
+		private void StartClock ()
 		{
- 
-			GLib.Timeout.Add (20, new GLib.TimeoutHandler (CheckStopTime));
+			Console.WriteLine("Clock Started");
+			if (player!=null)
+				timeout = Gtk.Timeout.Add (20, new Gtk.Function (CheckStopTime));
+		}
+		
+		private void StopClock(){
+			Gtk.Timeout.Remove(timeout);
 		}
 
 		private bool CheckStopTime(){
+			if (player != null){
+				if (plNode == null)
+					this.StopClock();
+				//Console.WriteLine(player.GetAccurateCurrentTime()/1000000);
+				//Console.WriteLine(plNode.StopTime);
+				else {
+					if (player.GetAccurateCurrentTime() >= plNode.StopTime.MSeconds)
+						this.Next();
+				}
+			}
 			return true;
 		}
 		private void SelectPlayListNode (TreePath path){
@@ -79,17 +100,26 @@ namespace LongoMatch
 			Gtk.TreeIter iter;
 			bool hasNext= false;
 			this.Model.GetIter (out iter, path);
-			PlayListNode plNode = (PlayListNode)this.Model.GetValue (iter, 0);
+			if (this.Model.IterIsValid(iter)){
+				PlayListNode selectedNode = (PlayListNode)this.Model.GetValue (iter, 0);
 			
-			//Desplazamos una posición en el arbol en busca de un siguiente nodo
-			path.Next();
+				this.plNode = selectedNode;
+				//Desplazamos una posición en el arbol en busca de un siguiente nodo
+				path.Next();
 
-			//comprobamos que el siguiente elemento en el arbol no sea nulo
-			this.Model.GetIter (out iter, path);
-			hasNext = this.Model.IterIsValid(iter);
+				//comprobamos que el siguiente elemento en el arbol no sea nulo
+				this.Model.GetIter (out iter, path);
+				hasNext = this.Model.IterIsValid(iter);
+			
+				this.plNode = plNode;
+				Console.WriteLine(this.plNode.StartTime);
+				Console.WriteLine(plNode.StartTime);
 
-			if (this.PlayListNodeSelected != null)
-				this.PlayListNodeSelected(plNode,hasNext);
+				if (this.PlayListNodeSelected != null)
+					this.PlayListNodeSelected(plNode,hasNext);
+				this.StartClock();
+			}
+			else this.plNode = null;
 		
 		}
 		

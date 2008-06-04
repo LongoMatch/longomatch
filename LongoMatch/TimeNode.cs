@@ -36,10 +36,10 @@ using System;
 		private string name;
 
 		//Stores the start time
-		private long start;
+		private Time start;
 
 		//Stores the stop time
-		private long stop;
+		private Time stop;
 
 		//Stores the Data Section it belowns to, to allow its removal
 		 private int dataSection;
@@ -47,7 +47,7 @@ using System;
 		//Determines if it's a void node used in the Tree Viev with no time values
 		 private bool isRoot;
 
-		public TimeNode (String name,long start, long stop){
+		public TimeNode (String name,Time start, Time stop){
 			this.name = name;
 			this.start = start;
 			this.stop = stop;
@@ -55,10 +55,10 @@ using System;
 			
 		}
 		
-		public TimeNode(String name, long start, long stop, int dataSection) {
+		public TimeNode(String name, Time start, Time stop, int dataSection) {
+			this.start = start;
 			this.start = start;
 			this.stop = stop;
-			this.name = name;
 			this.dataSection = dataSection;
 
 		}
@@ -92,7 +92,7 @@ using System;
 		 * 
 		 * @returns Start time
 		 */
-		public long Start{
+		public Time Start{
 			get{
 			return this.start;
 			}
@@ -106,7 +106,7 @@ using System;
 		 * 
 		 * @returns Stop time
 		 */
-		public long Stop {
+		public Time Stop {
 			get{
 			return stop;
 			}
@@ -129,7 +129,7 @@ using System;
 			}
 		}
 
-		public void changeStartStop(long start, long stop) {
+		public void changeStartStop(Time start, Time stop) {
 			this.start = start;
 			this.stop = stop;
 		}

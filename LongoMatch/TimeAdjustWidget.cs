@@ -34,16 +34,16 @@ namespace LongoMatch
 		}
 		
 		public void SetTimeNode(TimeNode tNode){
-			spinbutton1.Value=(int)tNode.Start;
-			spinbutton2.Value=(int)tNode.Stop;			
+			spinbutton1.Value=tNode.Start.Seconds;
+			spinbutton2.Value=tNode.Stop.Seconds;			
 		}
 		
-		public long GetStartTime(){
-			return (long)spinbutton1.Value;
+		public Time GetStartTime(){
+			return new Time((int)spinbutton1.Value);
 		}
 		
-		public long GetStopTime(){
-			return (long)spinbutton2.Value;
+		public Time GetStopTime(){
+			return new Time ((int)spinbutton2.Value);
 		}
 	}
 }

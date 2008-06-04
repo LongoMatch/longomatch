@@ -48,17 +48,17 @@ namespace LongoMatch
 			
 		}
 		
-		public void UpdateStartTime (long start){
+		public void UpdateStartTime (Time start){
 			this.tNode.Start = start;
-			this.startFrame = (int) (tNode.Start *framerate /MS);
+			this.startFrame = (int) (tNode.Start.Seconds *framerate);
 			this.timescale1.AdjustPosition(startFrame,TimeScale.START);
 			
 		
 		}
 		
-		public void UpdateStopTime (long stop){
+		public void UpdateStopTime (Time stop){
 			this.tNode.Stop = stop;
-			this.stopFrame = (int) (tNode.Stop *framerate /MS);
+			this.stopFrame = (int) (tNode.Stop.Seconds *framerate );
 			this.timescale1.AdjustPosition(stopFrame,TimeScale.STOP);
 			
 		
@@ -67,8 +67,8 @@ namespace LongoMatch
 		public void UpdateTimeNode(TimeNode tNode){
 			if (this.tNode != null){
 				this.tNode = tNode;
-				this.startFrame = (int) (tNode.Start *framerate /MS);
-				this.stopFrame = (int) (tNode.Stop * framerate /MS);
+				this.startFrame = (int) (tNode.Start.Seconds *framerate);
+				this.stopFrame = (int) (tNode.Stop.Seconds * framerate );
 				this.timeprecisionadjustwidget1.SetTimeNode(tNode);
 				this.timescale1.SetSegment(startFrame,stopFrame);
 
@@ -79,8 +79,8 @@ namespace LongoMatch
 
 			//startFrame y stopFrame se actualizan al llamar a la función SetBounds
 			//por lo tanto no se pueden usar las variables del objecto
-			int startFrame = (int) (tNode.Start *framerate /MS);
-			int stopFrame = (int) (tNode.Stop * framerate /MS);
+			int startFrame = (int) (tNode.Start.Seconds *framerate);
+			int stopFrame = (int) (tNode.Stop.Seconds * framerate );
 
 			this.startFrame = startFrame;
 			this.stopFrame = stopFrame;
@@ -105,9 +105,9 @@ namespace LongoMatch
 			}
 		}
 		
-		public void SetPosition(long pos){
+		public void SetPosition(Time pos){
 			double framePos;
-			framePos = pos * framerate / MS;
+			framePos = pos.Seconds * framerate;
 			this.timescale1.AdjustPosition(framePos,TimeScale.POS);
 		}
 			
@@ -150,8 +150,9 @@ namespace LongoMatch
 		protected virtual void OnPosValueChanged (object o, LongoMatch.PosChangedArgs args)
 		{
 			double pos = args.Val;
+		
 			if (PositionChanged  != null && pos >startFrame && pos < stopFrame)
-				this.PositionChanged((long)pos*MS/framerate);
+				this.PositionChanged(new Time ((int)pos*MS/framerate));
 		}
 
 		protected virtual void OnStopValueChanged (object o, LongoMatch.OutChangedArgs args)
@@ -160,7 +161,7 @@ namespace LongoMatch
 			
 			if (tNode!= null){
 				this.stopFrame = (int)pos;
-				this.tNode.Stop = (long)stopFrame*MS/framerate;
+				this.tNode.Stop.MSeconds = (int)stopFrame*MS/framerate;
 				this.timeprecisionadjustwidget1.SetTimeNode(tNode);
 				if (TimeNodeChanged != null)
 					TimeNodeChanged(tNode,tNode.Stop);
@@ -173,7 +174,8 @@ namespace LongoMatch
 			double pos = args.Val;
 			if (tNode != null){
 				this.startFrame = (int)pos;
-				this.tNode.Start = (long)startFrame*MS/framerate;
+				this.tNode.Start.MSeconds = (int)startFrame*MS/framerate;
+				Console.WriteLine(this.tNode.Start.MSeconds);
 				this.timeprecisionadjustwidget1.SetTimeNode(tNode);
 				if (TimeNodeChanged != null)
 					TimeNodeChanged(tNode,tNode.Start);
