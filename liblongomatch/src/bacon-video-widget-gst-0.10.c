@@ -2594,6 +2594,21 @@ bacon_video_widget_get_current_time (BaconVideoWidget * bvw)
 }
 
 gint64
+bacon_video_widget_get_accurate_current_time(BaconVideoWidget *bvw)
+{ 
+	g_return_val_if_fail (bvw != NULL, -1);
+  	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -1);
+
+	GstFormat fmt = GST_FORMAT_TIME;
+   	gint64 pos = -1;
+
+  	gst_element_query_position(bvw->priv->play, &fmt, &pos);
+  	
+  	return pos/GST_MSECOND;
+ 
+}
+
+gint64
 bacon_video_widget_get_stream_length (BaconVideoWidget * bvw)
 {
   g_return_val_if_fail (bvw != NULL, -1);

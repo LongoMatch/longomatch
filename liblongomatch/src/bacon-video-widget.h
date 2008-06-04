@@ -148,6 +148,7 @@ EXPORT gboolean bacon_video_widget_seek_in_segment     (BaconVideoWidget *bvw, g
 EXPORT gboolean bacon_video_widget_can_direct_seek	 	(BaconVideoWidget *bvw);
 EXPORT float bacon_video_widget_get_position           (BaconVideoWidget *bvw);
 EXPORT gint64 bacon_video_widget_get_current_time      (BaconVideoWidget *bvw);
+EXPORT gint64 bacon_video_widget_get_accurate_current_time (BaconVideoWidget *bvw);
 EXPORT gint64 bacon_video_widget_get_stream_length     (BaconVideoWidget *bvw);
 
 
