@@ -235,7 +235,9 @@ namespace LongoMatch
 			//widget de ajuste de tiempo posicionamos el reproductor en el punto
 			//
 			if (val is Time ){
+				
 				Time pos = (Time)val;
+				Console.WriteLine(pos.MSeconds);
 				this.player.Pause();
 				if (pos == tNode.Start){
 					this.playerbin1.UpdateSegmentStartTime(pos.MSeconds);

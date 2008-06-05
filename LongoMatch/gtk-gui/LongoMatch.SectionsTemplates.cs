@@ -29,8 +29,6 @@ namespace LongoMatch {
         
         private LongoMatch.SectionsPropertiesWidget sectionspropertieswidget1;
         
-        private Gtk.Button buttonCancel;
-        
         private Gtk.Button buttonOk;
         
         protected virtual void Build() {
@@ -67,115 +65,108 @@ namespace LongoMatch {
             this.hbox2.Homogeneous = true;
             // Container child hbox2.Gtk.Box+BoxChild
             this.newbutton = new Gtk.Button();
+            Gtk.Tooltips w3 = new Gtk.Tooltips();
+            w3.SetTip(this.newbutton, "Create a new template", "Create a new template");
             this.newbutton.CanFocus = true;
             this.newbutton.Name = "newbutton";
             this.newbutton.UseUnderline = true;
             // Container child newbutton.Gtk.Container+ContainerChild
-            Gtk.Alignment w3 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            Gtk.Alignment w4 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
             // Container child GtkAlignment.Gtk.Container+ContainerChild
-            Gtk.HBox w4 = new Gtk.HBox();
-            w4.Spacing = 2;
+            Gtk.HBox w5 = new Gtk.HBox();
+            w5.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Image w5 = new Gtk.Image();
-            w5.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-new", Gtk.IconSize.Button, 20);
+            Gtk.Image w6 = new Gtk.Image();
+            w6.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-new", Gtk.IconSize.Button, 20);
+            w5.Add(w6);
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Label w8 = new Gtk.Label();
+            w8.LabelProp = "";
+            w5.Add(w8);
             w4.Add(w5);
-            // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Label w7 = new Gtk.Label();
-            w7.LabelProp = "";
-            w4.Add(w7);
-            w3.Add(w4);
-            this.newbutton.Add(w3);
+            this.newbutton.Add(w4);
             this.hbox2.Add(this.newbutton);
-            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.hbox2[this.newbutton]));
-            w11.Position = 0;
-            w11.Expand = false;
-            w11.Fill = false;
+            Gtk.Box.BoxChild w12 = ((Gtk.Box.BoxChild)(this.hbox2[this.newbutton]));
+            w12.Position = 0;
+            w12.Expand = false;
+            w12.Fill = false;
             // Container child hbox2.Gtk.Box+BoxChild
             this.savebutton = new Gtk.Button();
+            w3.SetTip(this.savebutton, "Save this template", "Save this template");
             this.savebutton.Sensitive = false;
             this.savebutton.CanFocus = true;
             this.savebutton.Name = "savebutton";
             this.savebutton.UseUnderline = true;
             // Container child savebutton.Gtk.Container+ContainerChild
-            Gtk.Alignment w12 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            Gtk.Alignment w13 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
             // Container child GtkAlignment1.Gtk.Container+ContainerChild
-            Gtk.HBox w13 = new Gtk.HBox();
-            w13.Spacing = 2;
+            Gtk.HBox w14 = new Gtk.HBox();
+            w14.Spacing = 2;
             // Container child GtkHBox1.Gtk.Container+ContainerChild
-            Gtk.Image w14 = new Gtk.Image();
-            w14.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-save", Gtk.IconSize.Button, 20);
+            Gtk.Image w15 = new Gtk.Image();
+            w15.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-save", Gtk.IconSize.Button, 20);
+            w14.Add(w15);
+            // Container child GtkHBox1.Gtk.Container+ContainerChild
+            Gtk.Label w17 = new Gtk.Label();
+            w17.LabelProp = "";
+            w14.Add(w17);
             w13.Add(w14);
-            // Container child GtkHBox1.Gtk.Container+ContainerChild
-            Gtk.Label w16 = new Gtk.Label();
-            w16.LabelProp = "";
-            w13.Add(w16);
-            w12.Add(w13);
-            this.savebutton.Add(w12);
+            this.savebutton.Add(w13);
             this.hbox2.Add(this.savebutton);
-            Gtk.Box.BoxChild w20 = ((Gtk.Box.BoxChild)(this.hbox2[this.savebutton]));
-            w20.Position = 1;
-            w20.Expand = false;
-            w20.Fill = false;
+            Gtk.Box.BoxChild w21 = ((Gtk.Box.BoxChild)(this.hbox2[this.savebutton]));
+            w21.Position = 1;
+            w21.Expand = false;
+            w21.Fill = false;
             // Container child hbox2.Gtk.Box+BoxChild
             this.deletebutton = new Gtk.Button();
+            w3.SetTip(this.deletebutton, "Delete this template", "Delete this template");
             this.deletebutton.Sensitive = false;
             this.deletebutton.CanFocus = true;
             this.deletebutton.Name = "deletebutton";
             this.deletebutton.UseUnderline = true;
             // Container child deletebutton.Gtk.Container+ContainerChild
-            Gtk.Alignment w21 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            Gtk.Alignment w22 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
             // Container child GtkAlignment2.Gtk.Container+ContainerChild
-            Gtk.HBox w22 = new Gtk.HBox();
-            w22.Spacing = 2;
+            Gtk.HBox w23 = new Gtk.HBox();
+            w23.Spacing = 2;
             // Container child GtkHBox2.Gtk.Container+ContainerChild
-            Gtk.Image w23 = new Gtk.Image();
-            w23.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-delete", Gtk.IconSize.Button, 20);
+            Gtk.Image w24 = new Gtk.Image();
+            w24.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-delete", Gtk.IconSize.Button, 20);
+            w23.Add(w24);
+            // Container child GtkHBox2.Gtk.Container+ContainerChild
+            Gtk.Label w26 = new Gtk.Label();
+            w26.LabelProp = "";
+            w23.Add(w26);
             w22.Add(w23);
-            // Container child GtkHBox2.Gtk.Container+ContainerChild
-            Gtk.Label w25 = new Gtk.Label();
-            w25.LabelProp = "";
-            w22.Add(w25);
-            w21.Add(w22);
-            this.deletebutton.Add(w21);
+            this.deletebutton.Add(w22);
             this.hbox2.Add(this.deletebutton);
-            Gtk.Box.BoxChild w29 = ((Gtk.Box.BoxChild)(this.hbox2[this.deletebutton]));
-            w29.Position = 2;
-            w29.Expand = false;
-            w29.Fill = false;
-            this.vbox2.Add(this.hbox2);
-            Gtk.Box.BoxChild w30 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox2]));
-            w30.Position = 1;
+            Gtk.Box.BoxChild w30 = ((Gtk.Box.BoxChild)(this.hbox2[this.deletebutton]));
+            w30.Position = 2;
             w30.Expand = false;
             w30.Fill = false;
+            this.vbox2.Add(this.hbox2);
+            Gtk.Box.BoxChild w31 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox2]));
+            w31.Position = 1;
+            w31.Expand = false;
+            w31.Fill = false;
             this.hpaned1.Add(this.vbox2);
-            Gtk.Paned.PanedChild w31 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.vbox2]));
-            w31.Resize = false;
+            Gtk.Paned.PanedChild w32 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.vbox2]));
+            w32.Resize = false;
             // Container child hpaned1.Gtk.Paned+PanedChild
             this.sectionspropertieswidget1 = new LongoMatch.SectionsPropertiesWidget();
+            this.sectionspropertieswidget1.Sensitive = false;
             this.sectionspropertieswidget1.Events = ((Gdk.EventMask)(256));
             this.sectionspropertieswidget1.Name = "sectionspropertieswidget1";
             this.hpaned1.Add(this.sectionspropertieswidget1);
             w1.Add(this.hpaned1);
-            Gtk.Box.BoxChild w33 = ((Gtk.Box.BoxChild)(w1[this.hpaned1]));
-            w33.Position = 0;
+            Gtk.Box.BoxChild w34 = ((Gtk.Box.BoxChild)(w1[this.hpaned1]));
+            w34.Position = 0;
             // Internal child LongoMatch.SectionsTemplates.ActionArea
-            Gtk.HButtonBox w34 = this.ActionArea;
-            w34.Name = "dialog1_ActionArea";
-            w34.Spacing = 6;
-            w34.BorderWidth = ((uint)(5));
-            w34.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
-            // Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
-            this.buttonCancel = new Gtk.Button();
-            this.buttonCancel.CanDefault = true;
-            this.buttonCancel.CanFocus = true;
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.UseStock = true;
-            this.buttonCancel.UseUnderline = true;
-            this.buttonCancel.Label = "gtk-cancel";
-            this.AddActionWidget(this.buttonCancel, -6);
-            Gtk.ButtonBox.ButtonBoxChild w35 = ((Gtk.ButtonBox.ButtonBoxChild)(w34[this.buttonCancel]));
-            w35.Expand = false;
-            w35.Fill = false;
+            Gtk.HButtonBox w35 = this.ActionArea;
+            w35.Name = "dialog1_ActionArea";
+            w35.Spacing = 6;
+            w35.BorderWidth = ((uint)(5));
+            w35.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
             // Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
             this.buttonOk = new Gtk.Button();
             this.buttonOk.CanDefault = true;
@@ -183,10 +174,9 @@ namespace LongoMatch {
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.UseStock = true;
             this.buttonOk.UseUnderline = true;
-            this.buttonOk.Label = "gtk-ok";
-            this.AddActionWidget(this.buttonOk, -5);
-            Gtk.ButtonBox.ButtonBoxChild w36 = ((Gtk.ButtonBox.ButtonBoxChild)(w34[this.buttonOk]));
-            w36.Position = 1;
+            this.buttonOk.Label = "gtk-quit";
+            this.AddActionWidget(this.buttonOk, 0);
+            Gtk.ButtonBox.ButtonBoxChild w36 = ((Gtk.ButtonBox.ButtonBoxChild)(w35[this.buttonOk]));
             w36.Expand = false;
             w36.Fill = false;
             if ((this.Child != null)) {
@@ -199,7 +189,7 @@ namespace LongoMatch {
             this.newbutton.Clicked += new System.EventHandler(this.OnNewbuttonClicked);
             this.savebutton.Clicked += new System.EventHandler(this.OnSavebuttonClicked);
             this.deletebutton.Clicked += new System.EventHandler(this.OnDeletebuttonClicked);
-            this.buttonCancel.Clicked += new System.EventHandler(this.OnButtonCancelClicked);
+            this.buttonOk.Clicked += new System.EventHandler(this.OnButtonOkClicked);
         }
     }
 }

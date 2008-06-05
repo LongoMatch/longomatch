@@ -67,15 +67,15 @@ namespace LongoMatch
 			(cell as Gtk.CellRendererText).Text = System.IO.Path.GetFileNameWithoutExtension(_templateFilePath.ToString());
 		}
 		
-		public void SetSections(Sections sections){			
+		public void SetSections(Sections sections){				
+
 			this.sectionspropertieswidget1.SetSections(sections);
 			
 		}
-		
-
-				
+					
 
 		private void SetSensitive (bool sensitive){
+			this.sectionspropertieswidget1.Sensitive = true;
 			this.savebutton.Sensitive = sensitive;
 			this.deletebutton.Sensitive = sensitive;
 		}
@@ -116,6 +116,14 @@ namespace LongoMatch
 		
 		protected virtual void OnDeletebuttonClicked (object sender, System.EventArgs e)
 		{
+			MessageDialog mes = new MessageDialog(this,DialogFlags.Modal,MessageType.Warning,ButtonsType.YesNo,
+			                                      Catalog.GetString("Do you really want to delete "+templateName+" template?"));
+			if (mes.Run() == (int)ResponseType.Yes){
+				System.IO.File.Delete(templateName);
+				this.Fill();
+			}
+			mes.Destroy();
+			                                      
 		}
 
 		protected virtual void OnButtonCancelClicked (object sender, System.EventArgs e)
@@ -125,7 +133,9 @@ namespace LongoMatch
 
 		protected virtual void OnTreeviewCursorChanged (object sender, System.EventArgs e)
 		{
+			
 			TreeIter iter;
+
 			this.treeview.Selection.GetSelected(out iter);
 			this.templateName = (string) this.dataFileListStore.GetValue (iter, 0);
 
@@ -133,6 +143,11 @@ namespace LongoMatch
 			this.selectedSections = sr.GetSections();
 			this.SetSections(sr.GetSections());
 			this.SetSensitive (true);
+		}
+
+		protected virtual void OnButtonOkClicked (object sender, System.EventArgs e)
+		{
+			this.Destroy();
 		}
 
 		

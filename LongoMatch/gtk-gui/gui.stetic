@@ -2317,7 +2317,7 @@
     <property name="MemberName" />
     <property name="Title" translatable="yes">Templates Manager</property>
     <property name="WindowPosition">CenterOnParent</property>
-    <property name="Buttons">2</property>
+    <property name="Buttons">1</property>
     <property name="HelpButton">False</property>
     <property name="HasSeparator">False</property>
     <child internal-child="VBox">
@@ -2352,6 +2352,7 @@
                     <child>
                       <widget class="Gtk.Button" id="newbutton">
                         <property name="MemberName" />
+                        <property name="Tooltip" translatable="yes">Create a new template</property>
                         <property name="CanFocus">True</property>
                         <property name="Type">TextAndIcon</property>
                         <property name="Icon">stock:gtk-new Button</property>
@@ -2370,6 +2371,7 @@
                       <widget class="Gtk.Button" id="savebutton">
                         <property name="MemberName" />
                         <property name="Sensitive">False</property>
+                        <property name="Tooltip" translatable="yes">Save this template</property>
                         <property name="CanFocus">True</property>
                         <property name="Type">TextAndIcon</property>
                         <property name="Icon">stock:gtk-save Button</property>
@@ -2388,6 +2390,7 @@
                       <widget class="Gtk.Button" id="deletebutton">
                         <property name="MemberName" />
                         <property name="Sensitive">False</property>
+                        <property name="Tooltip" translatable="yes">Delete this template</property>
                         <property name="CanFocus">True</property>
                         <property name="Type">TextAndIcon</property>
                         <property name="Icon">stock:gtk-delete Button</property>
@@ -2418,6 +2421,7 @@
             <child>
               <widget class="LongoMatch.SectionsPropertiesWidget" id="sectionspropertieswidget1">
                 <property name="MemberName" />
+                <property name="Sensitive">False</property>
                 <property name="Events">ButtonPressMask</property>
               </widget>
             </child>
@@ -2434,25 +2438,8 @@
         <property name="MemberName" />
         <property name="Spacing">6</property>
         <property name="BorderWidth">5</property>
-        <property name="Size">2</property>
+        <property name="Size">1</property>
         <property name="LayoutStyle">End</property>
-        <child>
-          <widget class="Gtk.Button" id="buttonCancel">
-            <property name="MemberName" />
-            <property name="CanDefault">True</property>
-            <property name="CanFocus">True</property>
-            <property name="UseStock">True</property>
-            <property name="Type">StockItem</property>
-            <property name="StockId">gtk-cancel</property>
-            <property name="ResponseId">-6</property>
-            <signal name="Clicked" handler="OnButtonCancelClicked" />
-            <property name="label">gtk-cancel</property>
-          </widget>
-          <packing>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
         <child>
           <widget class="Gtk.Button" id="buttonOk">
             <property name="MemberName" />
@@ -2460,12 +2447,12 @@
             <property name="CanFocus">True</property>
             <property name="UseStock">True</property>
             <property name="Type">StockItem</property>
-            <property name="StockId">gtk-ok</property>
-            <property name="ResponseId">-5</property>
-            <property name="label">gtk-ok</property>
+            <property name="StockId">gtk-quit</property>
+            <property name="ResponseId">0</property>
+            <signal name="Clicked" handler="OnButtonOkClicked" />
+            <property name="label">gtk-quit</property>
           </widget>
           <packing>
-            <property name="Position">1</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
           </packing>

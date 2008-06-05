@@ -50,7 +50,11 @@ namespace LongoMatch
 		
 		public void UpdateStartTime (Time start){
 			this.tNode.Start = start;
-			this.startFrame = (int) (tNode.Start.Seconds *framerate);
+			
+			//El tiempo lo tenemos que obtener en ms para no perder  precisión
+			//y volver a pasarlo a segundos para el calculo del framerate
+			//cambiarlo con un nuevo Método
+			this.startFrame = GetFrame(tNode.Start);
 			this.timescale1.AdjustPosition(startFrame,TimeScale.START);
 			
 		
@@ -58,7 +62,7 @@ namespace LongoMatch
 		
 		public void UpdateStopTime (Time stop){
 			this.tNode.Stop = stop;
-			this.stopFrame = (int) (tNode.Stop.Seconds *framerate );
+			this.stopFrame = GetFrame(tNode.Stop);
 			this.timescale1.AdjustPosition(stopFrame,TimeScale.STOP);
 			
 		
@@ -67,8 +71,8 @@ namespace LongoMatch
 		public void UpdateTimeNode(TimeNode tNode){
 			if (this.tNode != null){
 				this.tNode = tNode;
-				this.startFrame = (int) (tNode.Start.Seconds *framerate);
-				this.stopFrame = (int) (tNode.Stop.Seconds * framerate );
+				this.startFrame = GetFrame(tNode.Start);
+				this.stopFrame = GetFrame(tNode.Stop);
 				this.timeprecisionadjustwidget1.SetTimeNode(tNode);
 				this.timescale1.SetSegment(startFrame,stopFrame);
 
@@ -79,8 +83,8 @@ namespace LongoMatch
 
 			//startFrame y stopFrame se actualizan al llamar a la función SetBounds
 			//por lo tanto no se pueden usar las variables del objecto
-			int startFrame = (int) (tNode.Start.Seconds *framerate);
-			int stopFrame = (int) (tNode.Stop.Seconds * framerate );
+			int startFrame = GetFrame(tNode.Start);
+			int stopFrame = GetFrame(tNode.Stop);
 
 			this.startFrame = startFrame;
 			this.stopFrame = stopFrame;
@@ -107,10 +111,14 @@ namespace LongoMatch
 		
 		public void SetPosition(Time pos){
 			double framePos;
-			framePos = pos.Seconds * framerate;
+			framePos = GetFrame(pos);
 			this.timescale1.AdjustPosition(framePos,TimeScale.POS);
 		}
 			
+		private int GetFrame (Time time){
+			return time.MSeconds * framerate /MS;
+			
+		}
 		private void ApplyZoomValue(uint zoomValue){
 			
 			int lower,upper,gap;
@@ -160,8 +168,10 @@ namespace LongoMatch
 			double pos = args.Val;		
 			
 			if (tNode!= null){
+				
 				this.stopFrame = (int)pos;
-				this.tNode.Stop.MSeconds = (int)stopFrame*MS/framerate;
+				tNode.Stop.MSeconds = (int)(stopFrame*MS/framerate);
+				
 				this.timeprecisionadjustwidget1.SetTimeNode(tNode);
 				if (TimeNodeChanged != null)
 					TimeNodeChanged(tNode,tNode.Stop);
@@ -175,7 +185,6 @@ namespace LongoMatch
 			if (tNode != null){
 				this.startFrame = (int)pos;
 				this.tNode.Start.MSeconds = (int)startFrame*MS/framerate;
-				Console.WriteLine(this.tNode.Start.MSeconds);
 				this.timeprecisionadjustwidget1.SetTimeNode(tNode);
 				if (TimeNodeChanged != null)
 					TimeNodeChanged(tNode,tNode.Start);
