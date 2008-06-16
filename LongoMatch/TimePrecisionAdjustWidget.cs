@@ -27,7 +27,7 @@ namespace LongoMatch
 	public partial class TimePrecisionAdjustWidget : Gtk.Bin
 	{
 		
-		private TimeNode tNode;
+		private MediaTimeNode tNode;
 
 
 		public event TimeNodeChangedHandler TimeNodeChanged;
@@ -43,7 +43,7 @@ namespace LongoMatch
 			stoplabel.Text = "";			
 		}
 		
-		public void SetTimeNode(TimeNode tNode){
+		public void SetTimeNode(MediaTimeNode tNode){
 			this.tNode=tNode;
 			startlabel.Text = tNode.Start.ToMSecondsString();
 			stoplabel.Text = tNode.Stop.ToMSecondsString();

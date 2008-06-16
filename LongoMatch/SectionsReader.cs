@@ -22,51 +22,25 @@ using System;
 using System.Configuration;
 using System.IO;
 using System.Xml;
+using Gdk;
 
 namespace LongoMatch
 {
 	
 	
-	public class SectionsReader
+	public class SectionsReader : XMLReader
 	{
-		private XmlDocument configXml;
+		
 		private string fConfig;
 
 		
-		public SectionsReader(string filePath)
+		public SectionsReader(string filePath) : base (filePath) 
 		{
-		
-			configXml = new XmlDocument();
 			
-			
-			if (!File.Exists(filePath)){
-				//manejar el error!!!
-			}
-			fConfig = Path.Combine (MainClass.TemplatesDir(), filePath);
-			configXml.Load(fConfig);
-	
-		}
-		
-		private string GetStringValue(string section, string clave) 
-		{    
-    		XmlNode n;
-    		n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");
-    		object result = n.Attributes["value"].Value;
-    		return (result is string ) ? (string)result : null;
 			
 		}
 		
-		private int GetIntValue(string section, string clave) 
-		{    
-    		XmlNode n;
-    		n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");
-			if (n != null){
-				object result = n.Attributes["value"].Value;				
-				return int.Parse(result.ToString());
-    		}
-			else return -1;
-			
-		}
+		
 			
 
 		private String[] GetNames(){
@@ -82,6 +56,7 @@ namespace LongoMatch
 			for (int i=0;i<20;i++){
 				
 				startTimes[i] = new Time(GetIntValue("configuration","Stop"+(i+1))*Time.SECONDS_TO_TIME);
+			
 		
 			}
 			return startTimes;
@@ -98,10 +73,29 @@ namespace LongoMatch
 		
 		}
 		
+		private Color[] GetColors(){
+			Color[] colors = new Color[20];
+			ushort red,green,blue;
+			for (int i=0;i<20;i++){
+				red = GetUShortValue("configuration","Red"+(i+1));
+				green = GetUShortValue("configuration","Green"+(i+1));
+				blue = GetUShortValue("configuration","Blue"+(i+1));
+				Color col = new Color();
+				col.Red = red;
+				col.Blue = blue;
+				col.Green = green;
+				colors[i] = col;
+					
+			}
+			return colors;
+			
+		}
+		
 		public Sections GetSections(){
 			Sections sections = new Sections(20);
 			this.GetStartTimes();
 			sections.SetTimeNodes(this.GetNames(),this.GetStartTimes(),this.GetStopTimes());
+			sections.SetColors(this.GetColors());
 			return sections;
 		}
 		

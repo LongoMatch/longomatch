@@ -19,6 +19,7 @@
 using System;
 using Gtk;
 using Mono.Unix;
+using Gdk;
 
 namespace LongoMatch
 {
@@ -61,16 +62,20 @@ namespace LongoMatch
 			
 			for(int i=0;i<20;i++){
 				tndArray[i].SetTimeNode(sections.GetTimeNode(i));
+				tndArray[i].SetColor(sections.GetColor(i));
 			}
 			
 		}
 		
 		public Sections GetSections (){
 			Sections sections = new Sections(20);
-			TimeNode[] timeNodesArray = new TimeNode[20];
+			SectionsTimeNode[] timeNodesArray = new SectionsTimeNode[20];
+			Color[] colorsArray = new Color[20];
 			for(int i=0;i<20;i++){
 				timeNodesArray[i]=tndArray[i].GetTimeNode();
+				colorsArray[i] = tndArray[i].GetColor();
 			}
+			sections.SetColors(colorsArray);
 			sections.SetTimeNodes(timeNodesArray);
 			return sections;
 		}

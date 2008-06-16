@@ -24,17 +24,17 @@ namespace LongoMatch
 {
 		
 	//Manejador para el evento producido al seleccionar un nodo en el árbol
-	public delegate void TimeNodeSelectedHandler (TimeNode tNode);
+	public delegate void TimeNodeSelectedHandler (MediaTimeNode tNode);
 	//Manejador para el evento producido al pulsar un botón de selección de nuava marca
 	public delegate void NewMarkEventHandler (int i, Time start, Time stop);
 	//Manejador para el evento producido cuando se edita un nodo
 	public delegate void TimeNodeChangedHandler (TimeNode tNode, object val);
-	//Manejador para el evento producido al eliminar un TimeNode
-	public delegate void TimeNodeDeletedHandler (TimeNode tNode);
-	//Manejador para el evento producido al inserir un TimeNode en la lista de reproducción
-	public delegate void PlayListNodeAddedHandler(TimeNode tNode);
+	//Manejador para el evento producido al eliminar un MediaTimeNode
+	public delegate void TimeNodeDeletedHandler (MediaTimeNode tNode);
+	//Manejador para el evento producido al inserir un MediaTimeNode en la lista de reproducción
+	public delegate void PlayListNodeAddedHandler(MediaTimeNode tNode);
 	//Manejador para el evento producido al selecionar un nodo en la lista de reproducción
-	public delegate void PlayListNodeSelectedHandler (PlayListNode plNode, bool hasNext);
+	public delegate void PlayListNodeSelectedHandler (PlayListTimeNode plNode, bool hasNext);
 	//Manejador para el evento producido al ajustar la posición 
 	public delegate void PositionChangedHandler (Time pos);
 	

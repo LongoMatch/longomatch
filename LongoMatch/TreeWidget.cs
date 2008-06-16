@@ -34,29 +34,36 @@ namespace LongoMatch
 		public event TimeNodeDeletedHandler TimeNodeDeleted;
 		public event PlayListNodeAddedHandler PlayListNodeAdded;
 
-		
+		private FileData fileData;
 
 		
 		public TreeWidget()
-		{
-		
-			this.Build();
-		                   
+		{		
+			this.Build();		                   
 		}
 		
-		public void AddTimeNode(TimeNode tNode, int i){
-			TreeIter iter;
-			this.Model.GetIterFromString (out iter, i.ToString());
-			this.Model.AppendValues (iter,tNode);
+		public void AddTimeNode(MediaTimeNode tNode, int i){
+			if (fileData != null){
+				TreeIter iter;
+				TreeStore model = (TreeStore)treeview.Model;
+				model.GetIterFromString (out iter, i.ToString());
+				model.AppendValues (iter,tNode);
+			}
 			
 		
 		}
+		public FileData FileData{
+			set{ 
+				this.fileData = value;
+				treeview.Model = this.fileData.GetModel();
+				treeview.Colors = this.fileData.Sections.GetColors();
+			}
+			
+		}
+		
+		
 		
 	
-		public TreeStore Model {
-			set {treeview.Model = value;}
-			get {return (TreeStore)treeview.Model;}
-		}
 
 	
 		
@@ -65,26 +72,19 @@ namespace LongoMatch
 			this.TimeNodeChanged(tNode,val);
 		}
 		
-		protected virtual void OnTimeNodeSelected(TimeNode tNode){
+		protected virtual void OnTimeNodeSelected(MediaTimeNode tNode){
 			this.TimeNodeSelected(tNode);
 		}
 		
-		protected virtual void OnTimeNodeDeleted(TimeNode tNode){
+		protected virtual void OnTimeNodeDeleted(MediaTimeNode tNode){
 			this.TimeNodeDeleted(tNode);
 		}
 
-		protected virtual void OnPlayListNodeAdded (TimeNode tNode)
+		protected virtual void OnPlayListNodeAdded (MediaTimeNode tNode)
 		{
 			this.PlayListNodeAdded(tNode);
 		}
 
-		
-
-		
-		
-		
-		
-		
 		
 	}
 }

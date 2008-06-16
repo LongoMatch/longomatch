@@ -26,7 +26,7 @@ using Gtk;
 namespace LongoMatch
 {
 
-	
+	//añadir eventos de cambios para realizar el cambio directamente sobre el file data abierto
 	public partial class FileDescriptionWidget : Gtk.Bin
 	{
 
@@ -126,17 +126,31 @@ namespace LongoMatch
 		
 		public FileData GetFileData(){
 			if (this.Filename != ""){
-				SectionsReader reader = new SectionsReader(this.SectionsFile);
+				SectionsReader reader = new SectionsReader(System.IO.Path.Combine(MainClass.TemplatesDir(),this.SectionsFile));
 				Sections sections = reader.GetSections();
 				sections.VisibleSections = this.VisibleSections;
 				
-				return new FileData(this.Filename,
+				if (fData == null){
+					return new FileData(this.Filename,
 					                    this.LocalName,
 					                    this.VisitorName,
 					                    this.LocalGoals,
 					                    this.VisitorGoals,
 					                    this.Date,
 					                    sections);
+				}
+				else {
+					fData.Filename = this.Filename;
+					fData.LocalName = this.LocalName;
+					fData.VisitorGoals = this.VisitorGoals;
+					fData.LocalGoals = this.LocalGoals;
+					fData.VisitorGoals = this.VisitorGoals;
+					fData.MatchDate = this.Date;
+					fData.VisibleSections = this.VisibleSections;
+					return fData;
+					 
+						
+				}
 				
 			}
 			else return null;
@@ -181,13 +195,13 @@ namespace LongoMatch
 
 
 
-	protected virtual void OnCalendarbuttonClicked (object sender, System.EventArgs e)
-	{
+		protected virtual void OnCalendarbuttonClicked (object sender, System.EventArgs e)
+		{
 			cp.Show();
-	}
+		}
 
-	protected virtual void OnEditbuttonClicked (object sender, System.EventArgs e)
-	{
+		protected virtual void OnEditbuttonClicked (object sender, System.EventArgs e)
+		{
 			
 			TemplateEditorDialog ted = new TemplateEditorDialog();
 			ted.Sections=fData.Sections;
@@ -197,8 +211,8 @@ namespace LongoMatch
 			}
 			
 			ted.Destroy();
-	}
-
+		}
+		
 		
 	}
 }

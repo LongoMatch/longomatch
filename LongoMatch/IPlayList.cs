@@ -1,6 +1,6 @@
-// TimeAdjustWidget.cs
+// IPlayList.cs
 //
-//  Copyright (C) 2007 [name of author]
+//  Copyright (C) 2008 Andoni Morales Alastruey
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,31 +19,19 @@
 //
 
 using System;
+using Gtk;
 
 namespace LongoMatch
 {
 	
 	
-	public partial class TimeAdjustWidget : Gtk.Bin
+	public interface IPlayList
 	{
-
+		void Load (string path);
+		void Save (string path);
+		void Next();
+		void Add();
+		void Prev();
 		
-		public TimeAdjustWidget()
-		{
-			this.Build();
-		}
-		
-		public void SetTimeNode(SectionsTimeNode tNode){
-			spinbutton1.Value=tNode.Start.Seconds;
-			spinbutton2.Value=tNode.Stop.Seconds;			
-		}
-		
-		public Time GetStartTime(){
-			return new Time((int)spinbutton1.Value*Time.SECONDS_TO_TIME);
-		}
-		
-		public Time GetStopTime(){
-			return new Time ((int)spinbutton2.Value*Time.SECONDS_TO_TIME);
-		}
 	}
 }

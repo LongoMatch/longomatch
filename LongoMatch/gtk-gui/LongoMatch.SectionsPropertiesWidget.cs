@@ -25,7 +25,7 @@ namespace LongoMatch {
         
         private LongoMatch.TimeNodeProperties timenodeproperties104;
         
-        private Gtk.Label label13;
+        private Gtk.Label label17;
         
         private Gtk.Table table6;
         
@@ -37,7 +37,7 @@ namespace LongoMatch {
         
         private LongoMatch.TimeNodeProperties timenodeproperties108;
         
-        private Gtk.Label label29;
+        private Gtk.Label label34;
         
         private Gtk.Table table11;
         
@@ -49,7 +49,7 @@ namespace LongoMatch {
         
         private LongoMatch.TimeNodeProperties timenodeproperties112;
         
-        private Gtk.Label label41;
+        private Gtk.Label label51;
         
         private Gtk.Table table16;
         
@@ -61,7 +61,7 @@ namespace LongoMatch {
         
         private LongoMatch.TimeNodeProperties timenodeproperties116;
         
-        private Gtk.Label label53;
+        private Gtk.Label label68;
         
         private Gtk.Table table21;
         
@@ -73,7 +73,7 @@ namespace LongoMatch {
         
         private LongoMatch.TimeNodeProperties timenodeproperties120;
         
-        private Gtk.Label label65;
+        private Gtk.Label label85;
         
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
@@ -124,11 +124,11 @@ namespace LongoMatch {
             w4.RightAttach = ((uint)(2));
             this.notebook1.Add(this.table1);
             // Notebook tab
-            this.label13 = new Gtk.Label();
-            this.label13.Name = "label13";
-            this.label13.LabelProp = Mono.Unix.Catalog.GetString("1-4");
-            this.notebook1.SetTabLabel(this.table1, this.label13);
-            this.label13.ShowAll();
+            this.label17 = new Gtk.Label();
+            this.label17.Name = "label17";
+            this.label17.LabelProp = Mono.Unix.Catalog.GetString("1-4");
+            this.notebook1.SetTabLabel(this.table1, this.label17);
+            this.label17.ShowAll();
             // Container child notebook1.Gtk.Notebook+NotebookChild
             this.table6 = new Gtk.Table(((uint)(2)), ((uint)(2)), false);
             this.table6.Name = "table6";
@@ -169,11 +169,11 @@ namespace LongoMatch {
             Gtk.Notebook.NotebookChild w10 = ((Gtk.Notebook.NotebookChild)(this.notebook1[this.table6]));
             w10.Position = 1;
             // Notebook tab
-            this.label29 = new Gtk.Label();
-            this.label29.Name = "label29";
-            this.label29.LabelProp = Mono.Unix.Catalog.GetString("5-8");
-            this.notebook1.SetTabLabel(this.table6, this.label29);
-            this.label29.ShowAll();
+            this.label34 = new Gtk.Label();
+            this.label34.Name = "label34";
+            this.label34.LabelProp = Mono.Unix.Catalog.GetString("5-8");
+            this.notebook1.SetTabLabel(this.table6, this.label34);
+            this.label34.ShowAll();
             // Container child notebook1.Gtk.Notebook+NotebookChild
             this.table11 = new Gtk.Table(((uint)(2)), ((uint)(2)), false);
             this.table11.Name = "table11";
@@ -214,11 +214,11 @@ namespace LongoMatch {
             Gtk.Notebook.NotebookChild w15 = ((Gtk.Notebook.NotebookChild)(this.notebook1[this.table11]));
             w15.Position = 2;
             // Notebook tab
-            this.label41 = new Gtk.Label();
-            this.label41.Name = "label41";
-            this.label41.LabelProp = Mono.Unix.Catalog.GetString("9-12");
-            this.notebook1.SetTabLabel(this.table11, this.label41);
-            this.label41.ShowAll();
+            this.label51 = new Gtk.Label();
+            this.label51.Name = "label51";
+            this.label51.LabelProp = Mono.Unix.Catalog.GetString("9-12");
+            this.notebook1.SetTabLabel(this.table11, this.label51);
+            this.label51.ShowAll();
             // Container child notebook1.Gtk.Notebook+NotebookChild
             this.table16 = new Gtk.Table(((uint)(2)), ((uint)(2)), false);
             this.table16.Name = "table16";
@@ -259,11 +259,11 @@ namespace LongoMatch {
             Gtk.Notebook.NotebookChild w20 = ((Gtk.Notebook.NotebookChild)(this.notebook1[this.table16]));
             w20.Position = 3;
             // Notebook tab
-            this.label53 = new Gtk.Label();
-            this.label53.Name = "label53";
-            this.label53.LabelProp = Mono.Unix.Catalog.GetString("13-16");
-            this.notebook1.SetTabLabel(this.table16, this.label53);
-            this.label53.ShowAll();
+            this.label68 = new Gtk.Label();
+            this.label68.Name = "label68";
+            this.label68.LabelProp = Mono.Unix.Catalog.GetString("13-16");
+            this.notebook1.SetTabLabel(this.table16, this.label68);
+            this.label68.ShowAll();
             // Container child notebook1.Gtk.Notebook+NotebookChild
             this.table21 = new Gtk.Table(((uint)(2)), ((uint)(2)), false);
             this.table21.Name = "table21";
@@ -304,11 +304,11 @@ namespace LongoMatch {
             Gtk.Notebook.NotebookChild w25 = ((Gtk.Notebook.NotebookChild)(this.notebook1[this.table21]));
             w25.Position = 4;
             // Notebook tab
-            this.label65 = new Gtk.Label();
-            this.label65.Name = "label65";
-            this.label65.LabelProp = Mono.Unix.Catalog.GetString("17-20");
-            this.notebook1.SetTabLabel(this.table21, this.label65);
-            this.label65.ShowAll();
+            this.label85 = new Gtk.Label();
+            this.label85.Name = "label85";
+            this.label85.LabelProp = Mono.Unix.Catalog.GetString("17-20");
+            this.notebook1.SetTabLabel(this.table21, this.label85);
+            this.label85.ShowAll();
             this.Add(this.notebook1);
             if ((this.Child != null)) {
                 this.Child.ShowAll();

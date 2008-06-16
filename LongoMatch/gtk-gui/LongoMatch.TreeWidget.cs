@@ -15,7 +15,7 @@ namespace LongoMatch {
         
         private Gtk.ScrolledWindow scrolledwindow1;
         
-        private LongoMatch.TreeViewPopup treeview;
+        private LongoMatch.TimeNodesTreeView treeview;
         
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
@@ -30,9 +30,10 @@ namespace LongoMatch {
             Gtk.Viewport w1 = new Gtk.Viewport();
             w1.ShadowType = ((Gtk.ShadowType)(0));
             // Container child GtkViewport.Gtk.Container+ContainerChild
-            this.treeview = new LongoMatch.TreeViewPopup();
+            this.treeview = new LongoMatch.TimeNodesTreeView();
             this.treeview.CanFocus = true;
             this.treeview.Name = "treeview";
+            this.treeview.HeadersClickable = true;
             w1.Add(this.treeview);
             this.scrolledwindow1.Add(w1);
             this.Add(this.scrolledwindow1);

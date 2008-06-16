@@ -21,6 +21,7 @@
 using System;
 using System.Collections;
 using Gtk;
+using Gdk;
 
 namespace LongoMatch
 {
@@ -30,7 +31,9 @@ namespace LongoMatch
 	{
 		
 		private string filename;
-
+		
+		private string title;
+				
 		private string localName;
 
 		private string visitorName;
@@ -53,80 +56,69 @@ namespace LongoMatch
 	
 		
 		public FileData(String filename, String localName, String visitorName, int localGoals,
-			int visitorGoals, DateTime matchDate, Sections sections) {
-				this.filename = filename;
-				this.localName = localName;
-				this.visitorName = visitorName;
-				this.localGoals = localGoals;
-				this.visitorGoals = visitorGoals;
-				this.matchDate = matchDate;		
-			    this.sections = sections;
-				dataSectionArray = new ArrayList[20];
+		                int visitorGoals, DateTime matchDate, Sections sections) {
+			
+			this.filename = filename;
+			this.localName = localName;
+			this.visitorName = visitorName;
+			this.localGoals = localGoals;
+			this.visitorGoals = visitorGoals;
+			this.matchDate = matchDate;		
+			this.sections = sections;
+			dataSectionArray = new ArrayList[20];
 
 		
-				dataSection1 = new ArrayList();
-				dataSectionArray[0] = dataSection1;
-				dataSection2 = new ArrayList();
-				dataSectionArray[1] = dataSection2;
-				dataSection3 = new ArrayList();
-				dataSectionArray[2] = dataSection3;
-				dataSection4 = new ArrayList();
-				dataSectionArray[3] = dataSection4;
-				dataSection5 = new ArrayList();
-				dataSectionArray[4] = dataSection5;
-				dataSection6 = new ArrayList();
-				dataSectionArray[5] = dataSection6;
-				dataSection7 = new ArrayList();
-				dataSectionArray[6] = dataSection7;
-				dataSection8 = new ArrayList();
-				dataSectionArray[7] = dataSection8;
-				dataSection9 = new ArrayList();
-				dataSectionArray[8] = dataSection9;
-				dataSection10 = new ArrayList();
-				dataSectionArray[9] = dataSection10;
-				dataSection11 = new ArrayList();
-				dataSectionArray[10] = dataSection11;
-				dataSection12 = new ArrayList();
-				dataSectionArray[11] = dataSection12;
-				dataSection13 = new ArrayList();
-				dataSectionArray[12] = dataSection13;
-				dataSection14 = new ArrayList();
-				dataSectionArray[13] = dataSection14;
-				dataSection15 = new ArrayList();
-				dataSectionArray[14] = dataSection15;
-				dataSection16 = new ArrayList();
-				dataSectionArray[15] = dataSection16;
-				dataSection17 = new ArrayList();
-				dataSectionArray[16] = dataSection17;
-				dataSection18 = new ArrayList();
-				dataSectionArray[17] = dataSection18;
-				dataSection19 = new ArrayList();
-				dataSectionArray[18] = dataSection19;
-				dataSection20 = new ArrayList();
-				dataSectionArray[19] = dataSection20;
-		
-
-		
-		
+			dataSection1 = new ArrayList();
+			dataSectionArray[0] = dataSection1;
+			dataSection2 = new ArrayList();
+			dataSectionArray[1] = dataSection2;
+			dataSection3 = new ArrayList();
+			dataSectionArray[2] = dataSection3;
+			dataSection4 = new ArrayList();
+			dataSectionArray[3] = dataSection4;
+			dataSection5 = new ArrayList();
+			dataSectionArray[4] = dataSection5;
+			dataSection6 = new ArrayList();
+			dataSectionArray[5] = dataSection6;
+			dataSection7 = new ArrayList();
+			dataSectionArray[6] = dataSection7;
+			dataSection8 = new ArrayList();
+			dataSectionArray[7] = dataSection8;
+			dataSection9 = new ArrayList();
+			dataSectionArray[8] = dataSection9;
+			dataSection10 = new ArrayList();
+			dataSectionArray[9] = dataSection10;
+			dataSection11 = new ArrayList();
+			dataSectionArray[10] = dataSection11;
+			dataSection12 = new ArrayList();
+			dataSectionArray[11] = dataSection12;
+			dataSection13 = new ArrayList();
+			dataSectionArray[12] = dataSection13;
+			dataSection14 = new ArrayList();
+			dataSectionArray[13] = dataSection14;
+			dataSection15 = new ArrayList();
+			dataSectionArray[14] = dataSection15;
+			dataSection16 = new ArrayList();
+			dataSectionArray[15] = dataSection16;
+			dataSection17 = new ArrayList();
+			dataSectionArray[16] = dataSection17;
+			dataSection18 = new ArrayList();
+			dataSectionArray[17] = dataSection18;
+			dataSection19 = new ArrayList();
+			dataSectionArray[18] = dataSection19;
+			dataSection20 = new ArrayList();
+			dataSectionArray[19] = dataSection20;
+			
+			
+			this.Title = System.IO.Path.GetFileNameWithoutExtension(this.filename);
+			
+			System.IO.Directory.CreateDirectory(MainClass.ThumbnailsDir()+"/"+title);
+			
+			
+			
 	
 		}
-		
-		
-		
-		/*public void SetName(int num, String name) {
-			names[num - 1] = name;
-		}
-
-		public void SetNames(String[] snames) {
-			for (int i = 0; i <= 19; i++) {
-				SetName(i + 1, snames[i]);
-			}
-		}
-
-		public void SetDataName(String name, int dataSection) {
-			names[dataSection] = name;
-		}*/
-		
+	
 		public Sections Sections{
 			get{ return this.sections;}
 			set {this.sections = value;}
@@ -146,25 +138,30 @@ namespace LongoMatch
 			return sections.GetSectionsStopTimes();
 		}
 
-		public TimeNode AddTimeNode(int dataSection, Time start, Time stop) {
+		public MediaTimeNode AddTimeNode(int dataSection, Time start, Time stop,Pixbuf miniature) {
 			ArrayList al= dataSectionArray[dataSection];
 			int count= al.Count+1;
-			TimeNode tn = new TimeNode(sections.GetName(dataSection) + " " +count, start, stop,
-				dataSection);
-			dataSectionArray[dataSection].Add(tn);
+			string name = sections.GetName(dataSection) + " " +count;
+			string miniaturePath = MainClass.ThumbnailsDir() + "/"+this.Title+"/"+"Section"+dataSection+"-"+name+
+				"-"+start.ToMSecondsString()+"-"+stop.ToMSecondsString()+".jpg";		
+			MediaTimeNode tn = new MediaTimeNode(name, start, stop,dataSection,miniaturePath);
+			miniature.Save(tn.MiniaturePath,"jpeg");
+			dataSectionArray[dataSection].Add(tn);			
 			return tn;
 
 		}
 
-		public void DelTimeNode(TimeNode tNode) {
+		public void DelTimeNode(MediaTimeNode tNode) {
 			dataSectionArray[tNode.DataSection].Remove(tNode);
+			if (System.IO.File.Exists(tNode.MiniaturePath))
+			    System.IO.File.Delete(tNode.MiniaturePath);
 		}
 		
 		public TreeStore GetModel (){
-			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore (typeof (TimeNode));
+			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore (typeof (MediaTimeNode));
 			for (int i=0;i<this.Sections.VisibleSections;i++){
 				Gtk.TreeIter iter = dataFileListStore.AppendValues (sections.GetTimeNode(i));
-				foreach(TimeNode tNode in dataSectionArray[i]){
+				foreach(MediaTimeNode tNode in dataSectionArray[i]){
 					dataFileListStore.AppendValues (iter,tNode);
 				}					
 			}
@@ -182,6 +179,11 @@ namespace LongoMatch
 		public String Filename {
 			get{return filename;}
 			set{filename=value;}
+		}
+		
+		public String Title {
+			get{return title;}
+			set{title=value;}
 		}
 		
 		public String LocalName {

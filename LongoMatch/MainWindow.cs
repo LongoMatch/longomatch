@@ -23,6 +23,7 @@ using Gtk;
 using Mono.Unix;
 using System.IO;
 using GLib;
+using Gdk;
 
 
 namespace LongoMatch
@@ -49,7 +50,6 @@ namespace LongoMatch
 			playerbin1.SetLogo(MainClass.ImagesDir()+"background.png");
 			player = playerbin1.Player ;
 			player.LogoMode = true;
-			this.playerbin1.PlayListSegmentDoneEvent += new CesarPlayer.PlayListSegmentDoneHandler(OnPlayListSegmentDone);
 			this.playlistwidget2.SetPlayer(player);
 		}
 
@@ -71,7 +71,7 @@ namespace LongoMatch
 					this.ShowWidgets();
 					playerbin1.File=fData.Filename;				
 					buttonswidget1.SetSections(fData.Sections);
-					treewidget1.Model=fData.GetModel();	
+					treewidget1.FileData=fData;	
 					//timeprecisionadjustwidget1.Reset();
 					player.LogoMode = false;
 				}
@@ -114,14 +114,19 @@ namespace LongoMatch
 				
 		protected virtual void OnNewMark(int i, Time startTime, Time stopTime){
 			if (player != null && openedFileData != null){
-
 				long pos = player.CurrentTime;
 				long start = pos - startTime.MSeconds;
 				long stop = pos + stopTime.MSeconds;
 				long fStart = (start<0) ? 0 : start;
 				//La longitud tiene que ser en ms
 				long fStop = (stop > player.Length*1000) ? player.Length : stop;
-				TimeNode tn = openedFileData.AddTimeNode(i,new Time((int)fStart),new Time((int)fStop));			
+				Console.WriteLine(fStart+" " +fStop);
+				Pixbuf miniature = this.player.GetCurrentThumbnail();
+				MediaTimeNode tn = openedFileData.AddTimeNode(i,new Time((int)fStart),new Time((int)fStop),miniature);
+							
+				
+				
+				Console.WriteLine(tn.MiniaturePath);
 				treewidget1.AddTimeNode(tn,i);							
 				MainClass.DB.UpdateFileData(openedFileData);
 			}
@@ -213,14 +218,15 @@ namespace LongoMatch
 				hpaned.Position = args.Requisition.Width;
 		}
 
-		protected virtual void OnTimeNodeSelected (LongoMatch.TimeNode tNode)
+		protected virtual void OnTimeNodeSelected (MediaTimeNode tNode)
 		{
 			
-			
+			Console.WriteLine(tNode.MiniaturePath);
 			this.buttonswidget1.Hide();
+			//Si hay un nodo de la lista de reproducción activa se para el reloj
+			this.playlistwidget2.Stop();
 			this.timeline2.Enabled = false;
 			this.timeline2.SetTimeNode(tNode,25);
-
 			this.playerbin1.SetStartStop(tNode.Start.MSeconds,tNode.Stop.MSeconds);
 			this.timeline2.Enabled = true;
 			
@@ -237,7 +243,6 @@ namespace LongoMatch
 			if (val is Time ){
 				
 				Time pos = (Time)val;
-				Console.WriteLine(pos.MSeconds);
 				this.player.Pause();
 				if (pos == tNode.Start){
 					this.playerbin1.UpdateSegmentStartTime(pos.MSeconds);
@@ -251,16 +256,16 @@ namespace LongoMatch
 			}
 			
 			//Si modificamos un padre actualizamos los nombres de los botones
-			if (tNode.IsRoot()){
+			if (tNode is SectionsTimeNode){
 				this.buttonswidget1.SetNames(openedFileData.GetSectionsNames());
 			}
 				MainClass.DB.UpdateFileData(openedFileData);
 
 		}
 
-		protected virtual void OnTimeNodeDeleted (LongoMatch.TimeNode tNode)
+		protected virtual void OnTimeNodeDeleted (LongoMatch.MediaTimeNode tNode)
 		{
-			openedFileData.DelTimeNode(tNode);
+			openedFileData.DelTimeNode(tNode);		
 			MainClass.DB.UpdateFileData(openedFileData);
 		}
 
@@ -272,15 +277,15 @@ namespace LongoMatch
 			
 		}
 
-		protected virtual void OnPlayListNodeAdded (LongoMatch.TimeNode tNode)
+		protected virtual void OnPlayListNodeAdded (LongoMatch.MediaTimeNode tNode)
 		{
-			this.playlistwidget2.Add(new PlayListNode(openedFileData.Filename,tNode));
+			this.playlistwidget2.Add(new PlayListTimeNode(openedFileData.Filename,tNode));
 		}
 
-		protected virtual void OnPlaylistwidget2PlayListNodeSelected (LongoMatch.PlayListNode plNode, bool hasNext)
+		protected virtual void OnPlaylistwidget2PlayListNodeSelected (LongoMatch.PlayListTimeNode plNode, bool hasNext)
 		{
-			
-			this.playerbin1.SetPlayListElement(plNode.FileName,plNode.StartTime.MSeconds,plNode.StopTime.MSeconds,hasNext);
+			this.timeline2.Visible=false;
+			this.playerbin1.SetPlayListElement(plNode.FileName,plNode.Start.MSeconds,plNode.Stop.MSeconds,hasNext);
 
 		}
 		

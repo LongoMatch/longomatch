@@ -17,17 +17,19 @@ namespace LongoMatch {
         
         private Gtk.ScrolledWindow scrolledwindow1;
         
+        private Gtk.VBox vbox1;
+        
+        private Gtk.Label label1;
+        
         private LongoMatch.PlayListTreeView playlisttreeview1;
         
         private Gtk.HBox hbox2;
         
+        private Gtk.Button newbutton;
+        
         private Gtk.Button openbutton;
         
         private Gtk.Button savebutton;
-        
-        private Gtk.Button upbutton;
-        
-        private Gtk.Button downbutton;
         
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
@@ -44,125 +46,124 @@ namespace LongoMatch {
             this.scrolledwindow1.Name = "scrolledwindow1";
             this.scrolledwindow1.ShadowType = ((Gtk.ShadowType)(1));
             // Container child scrolledwindow1.Gtk.Container+ContainerChild
+            Gtk.Viewport w1 = new Gtk.Viewport();
+            w1.ShadowType = ((Gtk.ShadowType)(0));
+            // Container child GtkViewport.Gtk.Container+ContainerChild
+            this.vbox1 = new Gtk.VBox();
+            this.vbox1.Name = "vbox1";
+            this.vbox1.Spacing = 6;
+            // Container child vbox1.Gtk.Box+BoxChild
+            this.label1 = new Gtk.Label();
+            this.label1.Name = "label1";
+            this.label1.LabelProp = Mono.Unix.Catalog.GetString("Load a playlist or create a new one.");
+            this.vbox1.Add(this.label1);
+            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.vbox1[this.label1]));
+            w2.Position = 0;
+            w2.Expand = false;
+            w2.Fill = false;
+            // Container child vbox1.Gtk.Box+BoxChild
             this.playlisttreeview1 = new LongoMatch.PlayListTreeView();
+            this.playlisttreeview1.Sensitive = false;
             this.playlisttreeview1.CanFocus = true;
             this.playlisttreeview1.Name = "playlisttreeview1";
             this.playlisttreeview1.Reorderable = true;
             this.playlisttreeview1.HeadersClickable = true;
-            this.scrolledwindow1.Add(this.playlisttreeview1);
+            this.vbox1.Add(this.playlisttreeview1);
+            Gtk.Box.BoxChild w3 = ((Gtk.Box.BoxChild)(this.vbox1[this.playlisttreeview1]));
+            w3.Position = 1;
+            w1.Add(this.vbox1);
+            this.scrolledwindow1.Add(w1);
             this.vbox2.Add(this.scrolledwindow1);
-            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.vbox2[this.scrolledwindow1]));
-            w2.Position = 0;
+            Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(this.vbox2[this.scrolledwindow1]));
+            w6.Position = 0;
             // Container child vbox2.Gtk.Box+BoxChild
             this.hbox2 = new Gtk.HBox();
             this.hbox2.Name = "hbox2";
             this.hbox2.Homogeneous = true;
             this.hbox2.Spacing = 6;
             // Container child hbox2.Gtk.Box+BoxChild
+            this.newbutton = new Gtk.Button();
+            this.newbutton.CanFocus = true;
+            this.newbutton.Name = "newbutton";
+            this.newbutton.UseUnderline = true;
+            // Container child newbutton.Gtk.Container+ContainerChild
+            Gtk.Alignment w7 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
+            Gtk.HBox w8 = new Gtk.HBox();
+            w8.Spacing = 2;
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Image w9 = new Gtk.Image();
+            w9.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-new", Gtk.IconSize.Button, 20);
+            w8.Add(w9);
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Label w11 = new Gtk.Label();
+            w11.LabelProp = "";
+            w8.Add(w11);
+            w7.Add(w8);
+            this.newbutton.Add(w7);
+            this.hbox2.Add(this.newbutton);
+            Gtk.Box.BoxChild w15 = ((Gtk.Box.BoxChild)(this.hbox2[this.newbutton]));
+            w15.Position = 0;
+            // Container child hbox2.Gtk.Box+BoxChild
             this.openbutton = new Gtk.Button();
             this.openbutton.CanFocus = true;
             this.openbutton.Name = "openbutton";
             this.openbutton.UseUnderline = true;
             // Container child openbutton.Gtk.Container+ContainerChild
-            Gtk.Alignment w3 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            Gtk.Alignment w16 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
             // Container child GtkAlignment.Gtk.Container+ContainerChild
-            Gtk.HBox w4 = new Gtk.HBox();
-            w4.Spacing = 2;
+            Gtk.HBox w17 = new Gtk.HBox();
+            w17.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Image w5 = new Gtk.Image();
-            w5.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-open", Gtk.IconSize.Button, 20);
-            w4.Add(w5);
+            Gtk.Image w18 = new Gtk.Image();
+            w18.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-open", Gtk.IconSize.Button, 20);
+            w17.Add(w18);
             // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Label w7 = new Gtk.Label();
-            w7.LabelProp = "";
-            w4.Add(w7);
-            w3.Add(w4);
-            this.openbutton.Add(w3);
+            Gtk.Label w20 = new Gtk.Label();
+            w20.LabelProp = "";
+            w17.Add(w20);
+            w16.Add(w17);
+            this.openbutton.Add(w16);
             this.hbox2.Add(this.openbutton);
-            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.hbox2[this.openbutton]));
-            w11.Position = 0;
+            Gtk.Box.BoxChild w24 = ((Gtk.Box.BoxChild)(this.hbox2[this.openbutton]));
+            w24.Position = 1;
             // Container child hbox2.Gtk.Box+BoxChild
             this.savebutton = new Gtk.Button();
             this.savebutton.CanFocus = true;
             this.savebutton.Name = "savebutton";
             this.savebutton.UseUnderline = true;
             // Container child savebutton.Gtk.Container+ContainerChild
-            Gtk.Alignment w12 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            Gtk.Alignment w25 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
             // Container child GtkAlignment.Gtk.Container+ContainerChild
-            Gtk.HBox w13 = new Gtk.HBox();
-            w13.Spacing = 2;
+            Gtk.HBox w26 = new Gtk.HBox();
+            w26.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Image w14 = new Gtk.Image();
-            w14.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-save", Gtk.IconSize.Button, 20);
-            w13.Add(w14);
+            Gtk.Image w27 = new Gtk.Image();
+            w27.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-save", Gtk.IconSize.Button, 20);
+            w26.Add(w27);
             // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Label w16 = new Gtk.Label();
-            w16.LabelProp = "";
-            w13.Add(w16);
-            w12.Add(w13);
-            this.savebutton.Add(w12);
+            Gtk.Label w29 = new Gtk.Label();
+            w29.LabelProp = "";
+            w26.Add(w29);
+            w25.Add(w26);
+            this.savebutton.Add(w25);
             this.hbox2.Add(this.savebutton);
-            Gtk.Box.BoxChild w20 = ((Gtk.Box.BoxChild)(this.hbox2[this.savebutton]));
-            w20.Position = 1;
-            // Container child hbox2.Gtk.Box+BoxChild
-            this.upbutton = new Gtk.Button();
-            this.upbutton.CanFocus = true;
-            this.upbutton.Name = "upbutton";
-            this.upbutton.UseUnderline = true;
-            // Container child upbutton.Gtk.Container+ContainerChild
-            Gtk.Alignment w21 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment.Gtk.Container+ContainerChild
-            Gtk.HBox w22 = new Gtk.HBox();
-            w22.Spacing = 2;
-            // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Image w23 = new Gtk.Image();
-            w23.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-go-up", Gtk.IconSize.Button, 20);
-            w22.Add(w23);
-            // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Label w25 = new Gtk.Label();
-            w25.LabelProp = "";
-            w22.Add(w25);
-            w21.Add(w22);
-            this.upbutton.Add(w21);
-            this.hbox2.Add(this.upbutton);
-            Gtk.Box.BoxChild w29 = ((Gtk.Box.BoxChild)(this.hbox2[this.upbutton]));
-            w29.Position = 2;
-            // Container child hbox2.Gtk.Box+BoxChild
-            this.downbutton = new Gtk.Button();
-            this.downbutton.CanFocus = true;
-            this.downbutton.Name = "downbutton";
-            this.downbutton.UseUnderline = true;
-            // Container child downbutton.Gtk.Container+ContainerChild
-            Gtk.Alignment w30 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment.Gtk.Container+ContainerChild
-            Gtk.HBox w31 = new Gtk.HBox();
-            w31.Spacing = 2;
-            // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Image w32 = new Gtk.Image();
-            w32.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-go-down", Gtk.IconSize.Button, 20);
-            w31.Add(w32);
-            // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Label w34 = new Gtk.Label();
-            w34.LabelProp = "";
-            w31.Add(w34);
-            w30.Add(w31);
-            this.downbutton.Add(w30);
-            this.hbox2.Add(this.downbutton);
-            Gtk.Box.BoxChild w38 = ((Gtk.Box.BoxChild)(this.hbox2[this.downbutton]));
-            w38.Position = 3;
+            Gtk.Box.BoxChild w33 = ((Gtk.Box.BoxChild)(this.hbox2[this.savebutton]));
+            w33.Position = 2;
             this.vbox2.Add(this.hbox2);
-            Gtk.Box.BoxChild w39 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox2]));
-            w39.Position = 1;
-            w39.Expand = false;
-            w39.Fill = false;
+            Gtk.Box.BoxChild w34 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox2]));
+            w34.Position = 1;
+            w34.Expand = false;
+            w34.Fill = false;
             this.Add(this.vbox2);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
             this.Show();
             this.playlisttreeview1.RowActivated += new Gtk.RowActivatedHandler(this.OnPlaylisttreeview1RowActivated);
-            this.upbutton.Clicked += new System.EventHandler(this.OnUpbuttonClicked);
-            this.downbutton.Clicked += new System.EventHandler(this.OnDownbuttonClicked);
+            this.newbutton.Clicked += new System.EventHandler(this.OnNewbuttonClicked);
+            this.openbutton.Clicked += new System.EventHandler(this.OnOpenbuttonClicked);
+            this.savebutton.Clicked += new System.EventHandler(this.OnSavebuttonClicked);
         }
     }
 }

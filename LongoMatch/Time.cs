@@ -30,6 +30,9 @@ namespace LongoMatch
 		private const int MS = 1000000 ; 
 		public const int SECONDS_TO_TIME = 1000;
 		
+		public Time(){
+			this.time = 0;
+		}
 		
 		public Time(int time)
 		{

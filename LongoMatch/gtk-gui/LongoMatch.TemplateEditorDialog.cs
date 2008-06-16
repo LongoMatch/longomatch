@@ -72,7 +72,7 @@ namespace LongoMatch {
                 this.Child.ShowAll();
             }
             this.DefaultWidth = 744;
-            this.DefaultHeight = 381;
+            this.DefaultHeight = 385;
             this.Show();
         }
     }

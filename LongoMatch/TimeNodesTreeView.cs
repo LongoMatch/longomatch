@@ -27,7 +27,7 @@ namespace LongoMatch
 {
 	
 	
-	public class TreeViewPopup : Gtk.TreeView
+	public class TimeNodesTreeView : Gtk.TreeView
 	{
 		
 		public event TimeNodeChangedHandler TimeNodeChanged;
@@ -37,9 +37,10 @@ namespace LongoMatch
 		private TreeIter selectedIter;
 		private Menu menu;
 		private TimeNode selectedTimeNode;
+		private Color[] colors;
 
 		
-		public TreeViewPopup(){
+		public TimeNodesTreeView(){
 			
 			this.RowActivated += new RowActivatedHandler(OnTreeviewRowActivated);
 						
@@ -53,14 +54,16 @@ namespace LongoMatch
 			menu.Append(addPLN);
 			menu.Append(quit);		
 			
-
-			Gtk.TreeViewColumn nameColumn = new Gtk.TreeViewColumn ();
+			colors = new Color[20];
 			
+			Gtk.TreeViewColumn nameColumn = new Gtk.TreeViewColumn ();
 			nameColumn.Title = "Name";
 			Gtk.CellRendererText nameCell = new Gtk.CellRendererText ();
 			nameCell.Editable = true;
 			nameCell.Edited += OnNameCellEdited;
-			nameColumn.PackStart (nameCell, true);
+			Gtk.CellRendererPixbuf miniatureCell = new Gtk.CellRendererPixbuf ();
+			nameColumn.PackStart (miniatureCell, true);
+			nameColumn.PackEnd (nameCell, true);
  
 			Gtk.TreeViewColumn startTimeColumn = new Gtk.TreeViewColumn ();
 			startTimeColumn.Title = "Start";
@@ -72,7 +75,7 @@ namespace LongoMatch
 			Gtk.CellRendererText stopTimeCell = new Gtk.CellRendererText ();
 			stopTimeColumn.PackStart (stopTimeCell, true);
 
-			
+			nameColumn.SetCellDataFunc (miniatureCell, new Gtk.TreeCellDataFunc(RenderMiniature));
 			nameColumn.SetCellDataFunc (nameCell, new Gtk.TreeCellDataFunc (RenderName));
 			startTimeColumn.SetCellDataFunc (startTimeCell, new Gtk.TreeCellDataFunc (RenderStartTime));
 			stopTimeColumn.SetCellDataFunc (stopTimeCell, new Gtk.TreeCellDataFunc (RenderStopTime));
@@ -85,11 +88,14 @@ namespace LongoMatch
 		}
 		
 		
-		~TreeViewPopup()
+		~TimeNodesTreeView()
 		{
 
 		}
 		
+		public Color[]  Colors{
+			set {this.colors = value;}
+		}
 		
 		protected override bool OnButtonPressEvent (EventButton evnt)
 		{
@@ -105,7 +111,7 @@ namespace LongoMatch
 				if (path!=null){
 					this.Model.GetIter (out selectedIter,path); 
 					selectedTimeNode = (TimeNode)this.Model.GetValue (selectedIter, 0);
-					if (!selectedTimeNode.IsRoot())
+					if (selectedTimeNode is MediaTimeNode )
 					    menu.Popup();
 				}
 			}
@@ -115,14 +121,27 @@ namespace LongoMatch
 		
 		protected void OnDeleted(object obj, EventArgs args){
 			if (TimeNodeDeleted != null)
-				TimeNodeDeleted(selectedTimeNode);
+				TimeNodeDeleted((MediaTimeNode)selectedTimeNode);
 			((TreeStore)this.Model).Remove(ref selectedIter);
 			
 		}
 		
 		protected void OnAdded(object obj, EventArgs args){
 			if (PlayListNodeAdded != null)	
-				PlayListNodeAdded(selectedTimeNode);
+				PlayListNodeAdded((MediaTimeNode)selectedTimeNode);
+		}
+		
+		private void RenderMiniature (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
+		{
+			TimeNode tNode = (TimeNode) model.GetValue (iter, 0);
+			if (tNode is MediaTimeNode){
+				(cell as Gtk.CellRendererPixbuf).Pixbuf = ((MediaTimeNode)tNode).Miniature;
+				(cell as Gtk.CellRendererPixbuf).CellBackgroundGdk = colors[((MediaTimeNode)tNode).DataSection];
+			}
+			else {
+				(cell as Gtk.CellRendererPixbuf).Pixbuf = null;
+				(cell as Gtk.CellRendererPixbuf).CellBackground = "white";
+			}
 		}
 		
 		private void RenderName (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
@@ -137,17 +156,35 @@ namespace LongoMatch
 			}*/
  
 			(cell as Gtk.CellRendererText).Text = tNode.Name;
+			
+			if (tNode is MediaTimeNode){
+				(cell as Gtk.CellRendererText).BackgroundGdk = colors[((MediaTimeNode)tNode).DataSection];
+				(cell as Gtk.CellRendererText).CellBackgroundGdk = colors[((MediaTimeNode)tNode).DataSection];
+			}
+			else{
+				(cell as Gtk.CellRendererText).Background = "white";
+				(cell as Gtk.CellRendererText).CellBackground = "white";
+			}
+			
 		}
  
 		
 		private void RenderStartTime (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			TimeNode tNode = (TimeNode) model.GetValue (iter, 0);
-			//comprobamos que no se trata de ningún padre para no dibujar el tiempo
-			if (!tNode.IsRoot())
+			
+
+			if (tNode is MediaTimeNode){
 				(cell as Gtk.CellRendererText).Text =tNode.Start.ToMSecondsString();
-			else 
+				(cell as Gtk.CellRendererText).BackgroundGdk = colors[((MediaTimeNode)tNode).DataSection];
+				(cell as Gtk.CellRendererText).CellBackgroundGdk = colors[((MediaTimeNode)tNode).DataSection];
+				
+			}
+			else {
 				(cell as Gtk.CellRendererText).Text = "";
+				(cell as Gtk.CellRendererText).Background = "white";
+				(cell as Gtk.CellRendererText).CellBackground = "white";
+			}
 				
 			
 		}
@@ -155,10 +192,16 @@ namespace LongoMatch
 		private void RenderStopTime (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			TimeNode tNode = (TimeNode) model.GetValue (iter, 0);
-			if (!tNode.IsRoot())
+			if (tNode is MediaTimeNode){
 				(cell as Gtk.CellRendererText).Text = tNode.Stop.ToMSecondsString();
-			else 
+				(cell as Gtk.CellRendererText).BackgroundGdk = colors[((MediaTimeNode)tNode).DataSection];
+				(cell as Gtk.CellRendererText).CellBackgroundGdk = colors[((MediaTimeNode)tNode).DataSection];
+			}
+			else {
 				(cell as Gtk.CellRendererText).Text = "";
+				(cell as Gtk.CellRendererText).Background = "white";
+				(cell as Gtk.CellRendererText).CellBackground = "white";
+			}
 		}
 		
 		private void OnNameCellEdited (object o, Gtk.EditedArgs args)
@@ -176,8 +219,8 @@ namespace LongoMatch
 			Gtk.TreeIter iter;
 			this.Model.GetIter (out iter, args.Path);
 			TimeNode tNode = (TimeNode)this.Model.GetValue (iter, 0);
-			if (!tNode.IsRoot())
-				this.TimeNodeSelected(tNode);
+			if (tNode is MediaTimeNode && TimeNodeSelected != null)
+				this.TimeNodeSelected((MediaTimeNode)tNode);
 				
 
 	

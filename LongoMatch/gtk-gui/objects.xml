@@ -32,17 +32,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.TreeViewPopup" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Widget">
-    <itemgroups />
-    <signals>
-      <itemgroup label="TreeViewPopup Signals">
-        <signal name="TimeNodeChanged" />
-        <signal name="TimeNodeSelected" />
-        <signal name="TimeNodeDeleted" />
-        <signal name="PlayListNodeAdded" />
-      </itemgroup>
-    </signals>
-  </object>
   <object type="LongoMatch.ButtonsWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>
@@ -126,6 +115,17 @@
         <signal name="PosChanged" />
         <signal name="OutChanged" />
         <signal name="InChanged" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.TimeNodesTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
+    <itemgroups />
+    <signals>
+      <itemgroup label="TimeNodesTreeView Signals">
+        <signal name="TimeNodeChanged" />
+        <signal name="TimeNodeSelected" />
+        <signal name="TimeNodeDeleted" />
+        <signal name="PlayListNodeAdded" />
       </itemgroup>
     </signals>
   </object>

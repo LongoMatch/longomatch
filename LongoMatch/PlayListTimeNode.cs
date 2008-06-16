@@ -1,4 +1,4 @@
-// PlayListNode.cs 
+// PlayListTimeNode.cs 
 //
 //  Copyright (C) 2007 Andoni Morales Alastruey
 //
@@ -19,51 +19,35 @@
 //
 
 using System;
+using Gdk;
 
 namespace LongoMatch
 {
 	
-	
-	public class PlayListNode
+	[Serializable]
+	public class PlayListTimeNode : PixbufTimeNode
 	{
 		private string fileName;
-		private string name;
-		private Time startTime;
-		private Time stopTime;
 		
-		public PlayListNode(string fileName, string name, Time startTime, Time stopTime)
-		{
-			this.fileName = fileName;
-			this.name = name;
-			this.stopTime = stopTime;
-			this.startTime = startTime;
+
+		
+		public PlayListTimeNode(){
 		}
 		
-		public PlayListNode(string fileName, TimeNode tNode){
+		public PlayListTimeNode(string fileName, MediaTimeNode tNode) : base(tNode.Name,tNode.Start,tNode.Stop,tNode.MiniaturePath)
+		{
 			this.fileName = fileName;
-			this.name = tNode.Name;
-			this.stopTime = tNode.Stop;
-			this.startTime = tNode.Start;
+
+			
 		}
 		public string FileName{
 			set{ this.fileName = value;}
 			get{ return this.fileName;}
 		}
 		
-		public string Name{
-			set{ this.name = value;}
-			get{ return this.name;}
-		}
 		
-		public Time StartTime{
-			set{ this.startTime = value;}
-			get{ return this.startTime;}
-		}
 		
-		public Time StopTime{
-			set{ this.stopTime = value;}
-			get{ return this.stopTime;}
-		}
+	
 		
 	}
 }

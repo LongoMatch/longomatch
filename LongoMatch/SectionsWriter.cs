@@ -22,6 +22,7 @@ using System;
 using System.Configuration;
 using System.IO;
 using System.Xml;
+using Gdk;
 
 namespace LongoMatch
 {
@@ -43,6 +44,9 @@ namespace LongoMatch
 				sb.Append("<add key=\"Name"+i+"\" value=\"Data "+i+"\" />");
 				sb.Append("<add key=\"Start"+i+"\" value=\"10\" />");
 				sb.Append("<add key=\"Stop"+i+"\" value=\"10\" />");
+				sb.Append("<add key=\"Red"+i+"\" value=\"65535\" />");
+				sb.Append("<add key=\"Green"+i+"\" value=\"65535\" />");
+				sb.Append("<add key=\"Blue"+i+"\" value=\"65535\" />");
 			}
 			
 			sb.Append("</configuration>");
@@ -72,18 +76,19 @@ namespace LongoMatch
 				return;
 			}
 		
-			Console.WriteLine(fConfig);
-			Console.WriteLine(File.Exists(fConfig));
-			
+
 			
 			XmlDocument configXml = new XmlDocument();
 			configXml.Load(fConfig);
 			
 			for (int i = 0; i<20;i++){
+				Color color = sections.GetColor(i);
 				SetValue(configXml,"configuration","Name" + (i+1),sections.GetName(i));
-				Console.WriteLine(sections.GetStartTime(i).Seconds);
 				SetValue(configXml,"configuration","Start"+ (i+1),sections.GetStartTime(i).Seconds.ToString());
 				SetValue(configXml,"configuration","Stop"+ (i+1),sections.GetStopTime(i).Seconds.ToString());
+				SetValue(configXml,"configuration","Red"+ (i+1),color.Red.ToString());
+				SetValue(configXml,"configuration","Green"+ (i+1),color.Green.ToString());
+				SetValue(configXml,"configuration","Blue"+ (i+1),color.Blue.ToString());
 			}
 			configXml.Save(fConfig);
 		}

@@ -1,6 +1,6 @@
-// TimeAdjustWidget.cs
+// PixbufTimeNode.cs
 //
-//  Copyright (C) 2007 [name of author]
+//  Copyright (C) 2008 Andoni Morales Alastruey
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,31 +19,40 @@
 //
 
 using System;
+using Gdk;
 
 namespace LongoMatch
 {
 	
 	
-	public partial class TimeAdjustWidget : Gtk.Bin
+	public class PixbufTimeNode : TimeNode
 	{
-
+		private string miniaturePath;
 		
-		public TimeAdjustWidget()
+		
+		public PixbufTimeNode(){
+		}
+	
+		
+		public PixbufTimeNode(string name, Time start, Time stop,string miniaturePath): base (name,start,stop)
 		{
-			this.Build();
+			this.miniaturePath = miniaturePath;
 		}
 		
-		public void SetTimeNode(SectionsTimeNode tNode){
-			spinbutton1.Value=tNode.Start.Seconds;
-			spinbutton2.Value=tNode.Stop.Seconds;			
+		public Pixbuf Miniature{
+			get{ 
+
+				if (System.IO.File.Exists(this.MiniaturePath)){
+					
+					return new Pixbuf(this.MiniaturePath);
+				}
+				else return null;
+			}
 		}
 		
-		public Time GetStartTime(){
-			return new Time((int)spinbutton1.Value*Time.SECONDS_TO_TIME);
-		}
-		
-		public Time GetStopTime(){
-			return new Time ((int)spinbutton2.Value*Time.SECONDS_TO_TIME);
+		public String MiniaturePath{
+	
+			get{return this.miniaturePath;}
 		}
 	}
 }

@@ -35,7 +35,7 @@ namespace LongoMatch
 		private int stopFrame;
 		private int framerate;		
 		private uint zoomValue=4;
-		private TimeNode tNode;
+		private MediaTimeNode tNode;
 		private bool enabled = false;
 		
 			
@@ -45,6 +45,7 @@ namespace LongoMatch
 		public TimeLine()
 		{
 			this.Build();
+			
 			
 		}
 		
@@ -68,7 +69,7 @@ namespace LongoMatch
 		
 		}
 		
-		public void UpdateTimeNode(TimeNode tNode){
+		public void UpdateTimeNode(MediaTimeNode tNode){
 			if (this.tNode != null){
 				this.tNode = tNode;
 				this.startFrame = GetFrame(tNode.Start);
@@ -79,7 +80,7 @@ namespace LongoMatch
 			}
 		}
 		
-		public void SetTimeNode(TimeNode tNode,int framerate){
+		public void SetTimeNode(MediaTimeNode tNode,int framerate){
 
 			//startFrame y stopFrame se actualizan al llamar a la función SetBounds
 			//por lo tanto no se pueden usar las variables del objecto

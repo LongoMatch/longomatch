@@ -124,9 +124,10 @@ namespace LongoMatch
 		
 		protected virtual void OnButton1Clicked(object sender, System.EventArgs e)
 		{
+			
 			if (NewMarkEvent != null && this.sections != null)
 				this.NewMarkEvent(0,sections.GetStartTime(0),sections.GetStopTime(0));	
-			Console.WriteLine(sections.GetStartTime(0).MSeconds);
+
 		}
 
 		protected virtual void OnButton2Clicked(object sender, System.EventArgs e)
@@ -137,6 +138,7 @@ namespace LongoMatch
 
 		protected virtual void OnButton3Clicked(object sender, System.EventArgs e)
 		{
+			
 			if (NewMarkEvent != null && this.sections != null)
 				this.NewMarkEvent(2,sections.GetStartTime(2),sections.GetStopTime(2));
 		}

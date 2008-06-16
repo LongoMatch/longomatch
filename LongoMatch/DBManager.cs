@@ -66,7 +66,12 @@ namespace LongoMatch
 					                                     Catalog.GetString("Do yo really want to delete:\n")+selectedFileData.Filename);
 					if (md.Run()== (int)ResponseType.Yes){
 						this.filedescriptionwidget3.Clear();
-						MainClass.DB.RemoveFileData(selectedFileData);				
+						MainClass.DB.RemoveFileData(selectedFileData);	
+						string directory = MainClass.ThumbnailsDir()+"/"+selectedFileData.Title;
+						foreach (string path in System.IO.Directory.GetFiles(directory,"*")){
+							System.IO.File.Delete(path);
+						}
+						System.IO.Directory.Delete(directory);
 						this.Fill();
 						
 					}

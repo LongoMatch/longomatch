@@ -22,6 +22,10 @@ using System;
 using Gtk;
 using Gdk;
 using CesarPlayer;
+using Mono.Unix;
+using System.IO;
+
+
 
 namespace LongoMatch
 {
@@ -31,69 +35,98 @@ namespace LongoMatch
 	{
 		public event PlayListNodeSelectedHandler PlayListNodeSelected;
 		private IPlayer player;
-		private PlayListNode plNode;
+		private PlayListTimeNode plNode;
+		private PlayList playList;
 		private uint timeout;
+		private object lock_node;
+		private ListStore ls;
+		private bool clock_started = false;
+	
 		
 		
 		
 		public PlayListWidget()
 		{
 			this.Build();			
+			playList = new PlayList();
+			lock_node = new System.Object();
+	
+			
 		}
 
 		public void SetPlayer(IPlayer player){
 			this.player = player;
 		}
+		
 		public ListStore Model {
 			set {this.playlisttreeview1.Model = value;}
 			get {return (ListStore)this.playlisttreeview1.Model;}
 		}
 		
-		public void Add (PlayListNode plNode){
-			this.Model.AppendValues(plNode);
+		public void Add (PlayListTimeNode plNode){
+			if (playList.isLoaded()){
+				this.Model.AppendValues(plNode);
+			}
+			
 		}
 		
-		public PlayListNode Next(){
-			
-			TreePath path;			
-			path = (this.playlisttreeview1.Selection.GetSelectedRows())[0];
-			path.Next();
-			if (path!=null){
-				this.playlisttreeview1.Selection.SelectPath(path);			
-				this.SelectPlayListNode(path);			
+		public PlayListTimeNode Next(){
+			lock (this.lock_node){
+				TreePath path;			
+				path = (this.playlisttreeview1.Selection.GetSelectedRows())[0];
+				path.Next();
+				if (path!=null){
+					this.playlisttreeview1.Selection.SelectPath(path);			
+					this.SelectPlayListNode(path);			
+				}
+				return plNode;
 			}
-			return plNode;
 		}
 		
 		public void Prev(){
 								
 		}
 		
+		public void Stop(){
+			this.StopClock();
+		}
+		
 		
 		
 		private void StartClock ()
 		{
-			Console.WriteLine("Clock Started");
-			if (player!=null)
+
+			if (player!=null && !clock_started){
 				timeout = Gtk.Timeout.Add (20, new Gtk.Function (CheckStopTime));
+				clock_started=true;
+			}
 		}
 		
 		private void StopClock(){
-			Gtk.Timeout.Remove(timeout);
+			if (this.clock_started){
+				Gtk.Timeout.Remove(timeout);
+				this.clock_started = false;
+			}
 		}
 
 		private bool CheckStopTime(){
-			if (player != null){
-				if (plNode == null)
-					this.StopClock();
-				//Console.WriteLine(player.GetAccurateCurrentTime()/1000000);
-				//Console.WriteLine(plNode.StopTime);
-				else {
-					if (player.GetAccurateCurrentTime() >= plNode.StopTime.MSeconds)
-						this.Next();
+			
+			lock (this.lock_node){
+				
+				if (player != null){
+					if (plNode == null)
+						this.StopClock();
+					
+					else {
+						
+						if (player.GetAccurateCurrentTime() >= plNode.Stop.MSeconds){
+					
+							this.Next();
+						}
+					}
 				}
+				return true;
 			}
-			return true;
 		}
 		private void SelectPlayListNode (TreePath path){
 			
@@ -101,7 +134,7 @@ namespace LongoMatch
 			bool hasNext= false;
 			this.Model.GetIter (out iter, path);
 			if (this.Model.IterIsValid(iter)){
-				PlayListNode selectedNode = (PlayListNode)this.Model.GetValue (iter, 0);
+				PlayListTimeNode selectedNode = (PlayListTimeNode)this.Model.GetValue (iter, 0);
 			
 				this.plNode = selectedNode;
 				//Desplazamos una posición en el arbol en busca de un siguiente nodo
@@ -112,16 +145,17 @@ namespace LongoMatch
 				hasNext = this.Model.IterIsValid(iter);
 			
 				this.plNode = plNode;
-				Console.WriteLine(this.plNode.StartTime);
-				Console.WriteLine(plNode.StartTime);
 
 				if (this.PlayListNodeSelected != null)
 					this.PlayListNodeSelected(plNode,hasNext);
 				this.StartClock();
+
 			}
 			else this.plNode = null;
 		
 		}
+		
+		
 		
 		
 
@@ -138,6 +172,77 @@ namespace LongoMatch
 
 		protected virtual void OnDownbuttonClicked (object sender, System.EventArgs e)
 		{
+		}
+
+		protected virtual void OnSavebuttonClicked (object sender, System.EventArgs e)
+		{
+			string filename = null;
+			
+			if (playList.isLoaded()){
+				filename = playList.File;
+			}
+			else{
+				FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Save playlist"),
+				                                                   null,
+				                                                   FileChooserAction.Open,
+				                                                   "gtk-cancel",ResponseType.Cancel,
+				                                                   "gtk-save",ResponseType.Accept);
+				fChooser.SetCurrentFolder(MainClass.PlayListDir());
+				fChooser.AddFilter(playList.FileFilter);
+				if (fChooser.Run() == (int)ResponseType.Accept){
+					filename = fChooser.Filename;
+					
+				}	
+				fChooser.Destroy();
+			}
+			playList.SetModel(this.Model);
+			playList.Save(filename);
+
+			
+		
+		}
+
+		protected virtual void OnOpenbuttonClicked (object sender, System.EventArgs e)
+		{
+			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Open playlist"),
+			                                                   null,
+			                                                   FileChooserAction.Save,
+			                                                   "gtk-cancel",ResponseType.Cancel,
+			                                                   "gtk-open",ResponseType.Accept);
+			fChooser.SetCurrentFolder(MainClass.PlayListDir());
+			fChooser.AddFilter(playList.FileFilter);
+			if (fChooser.Run() == (int)ResponseType.Accept){
+				this.label1.Visible = false;
+				playList.Load(fChooser.Filename);
+				this.Model = playList.GetModel();
+				this.playlisttreeview1.Sensitive = true;
+			}
+		
+			fChooser.Destroy();
+			
+			
+			
+		}
+
+		protected virtual void OnNewbuttonClicked (object sender, System.EventArgs e)
+		{
+			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("New playlist"),
+			                                                   null,
+			                                                   FileChooserAction.Save,
+			                                                   "gtk-cancel",ResponseType.Cancel,
+			                                                   "gtk-save",ResponseType.Accept);
+			fChooser.SetCurrentFolder(MainClass.PlayListDir());			
+			fChooser.AddFilter(playList.FileFilter);
+			
+			if (fChooser.Run() == (int)ResponseType.Accept){
+				this.label1.Visible = false;
+				playList.New(fChooser.Filename);
+				this.Model = playList.GetModel();
+				this.playlisttreeview1.Sensitive = true;
+				
+			}
+			fChooser.Destroy();
+				
 		}
 
 	}

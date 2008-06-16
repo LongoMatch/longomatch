@@ -18,6 +18,7 @@
 //
 //
 using System;
+using Gdk;
 
 namespace LongoMatch
 {
@@ -25,16 +26,22 @@ namespace LongoMatch
 	
 	public class Sections
 	{
-		private TimeNode[] timeNodesArray;
+		private SectionsTimeNode[] timeNodesArray;
+		private Color[] colorsArray;
 		private int visibleSections;
 		private int totalSections;
 		
 		
 		public Sections(int sections)
 		{
-			this.timeNodesArray = new TimeNode[sections];
+			this.timeNodesArray = new SectionsTimeNode[sections];
+			this.colorsArray = new Color[sections];
 			this.totalSections = sections;
 			this.visibleSections = sections;
+			for (int i=0;i<20;i++){
+				colorsArray[i] = new Color(254,254,254);
+				timeNodesArray[i] = null;
+			}
 			
 		}
 
@@ -55,17 +62,31 @@ namespace LongoMatch
 		
 		public void SetTimeNodes(string[] names, Time[] startTimes, Time[] stopTimes){
 			for (int i=0;i<20;i++){
-				timeNodesArray[i] = new TimeNode(names[i],startTimes[i],stopTimes[i]);
+				timeNodesArray[i] = new SectionsTimeNode(names[i],startTimes[i],stopTimes[i]);
+				
+				
 			}
+			
+		}
+		public void SetColors(Color[] colors){
+			this.colorsArray = colors;
+			
 		}
 		
-		public void SetTimeNodes(TimeNode[] timeNodesArray){
+		public Color[] GetColors(){
+			return this.colorsArray;
+		}
+		
+		
+		public void SetTimeNodes(SectionsTimeNode[] timeNodesArray){
 			this.timeNodesArray = timeNodesArray;
+			
+			
 		}
 		
 		public string[] GetSectionsNames(){
 			string[] names = new string[totalSections];
-			TimeNode tNode;
+			SectionsTimeNode tNode;
 			for (int i=0; i<totalSections; i++){
 				tNode = timeNodesArray[i];
 				names[i]=tNode.Name;
@@ -76,7 +97,7 @@ namespace LongoMatch
 		
 		public Time[] GetSectionsStartTimes(){
 			Time[] startTimes = new Time[totalSections];
-			TimeNode tNode;
+			SectionsTimeNode tNode;
 			for (int i=0; i<totalSections; i++){
 				tNode = timeNodesArray[i];
 				startTimes[i]=tNode.Start;
@@ -86,7 +107,7 @@ namespace LongoMatch
 		
 		public Time[] GetSectionsStopTimes(){
 			Time[] stopTimes = new Time[totalSections];
-			TimeNode tNode;
+			SectionsTimeNode tNode;
 			for (int i=0; i<totalSections; i++){
 				tNode = timeNodesArray[i];
 				stopTimes[i]=tNode.Start;
@@ -95,7 +116,7 @@ namespace LongoMatch
 			
 		}
 		
-		public TimeNode GetTimeNode (int section){
+		public SectionsTimeNode GetTimeNode (int section){
 			return timeNodesArray[section];
 		}
 		
@@ -109,6 +130,10 @@ namespace LongoMatch
 		
 		public Time GetStopTime ( int section){
 			return this.timeNodesArray[section].Stop;
+		}
+		
+		public Color GetColor (int section){
+			return this.colorsArray[section];
 		}
 	}
 }

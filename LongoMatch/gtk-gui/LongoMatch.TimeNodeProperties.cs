@@ -27,6 +27,12 @@ namespace LongoMatch {
         
         private LongoMatch.TimeAdjustWidget timeadjustwidget1;
         
+        private Gtk.HBox hbox1;
+        
+        private Gtk.Label label4;
+        
+        private Gtk.ColorButton colorbutton1;
+        
         private Gtk.Label GtkLabel1;
         
         protected virtual void Build() {
@@ -82,6 +88,34 @@ namespace LongoMatch {
             w4.Position = 1;
             w4.Expand = false;
             w4.Fill = false;
+            // Container child vbox2.Gtk.Box+BoxChild
+            this.hbox1 = new Gtk.HBox();
+            this.hbox1.Name = "hbox1";
+            this.hbox1.Spacing = 6;
+            // Container child hbox1.Gtk.Box+BoxChild
+            this.label4 = new Gtk.Label();
+            this.label4.Name = "label4";
+            this.label4.LabelProp = Mono.Unix.Catalog.GetString("Color:        ");
+            this.hbox1.Add(this.label4);
+            Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(this.hbox1[this.label4]));
+            w5.Position = 0;
+            w5.Expand = false;
+            w5.Fill = false;
+            // Container child hbox1.Gtk.Box+BoxChild
+            this.colorbutton1 = new Gtk.ColorButton();
+            this.colorbutton1.CanFocus = true;
+            this.colorbutton1.Events = ((Gdk.EventMask)(784));
+            this.colorbutton1.Name = "colorbutton1";
+            this.hbox1.Add(this.colorbutton1);
+            Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(this.hbox1[this.colorbutton1]));
+            w6.Position = 1;
+            w6.Expand = false;
+            w6.Fill = false;
+            this.vbox2.Add(this.hbox1);
+            Gtk.Box.BoxChild w7 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox1]));
+            w7.Position = 2;
+            w7.Expand = false;
+            w7.Fill = false;
             this.GtkAlignment.Add(this.vbox2);
             this.frame1.Add(this.GtkAlignment);
             this.GtkLabel1 = new Gtk.Label();

@@ -31,7 +31,7 @@ public class PlayListTreeView : Gtk.TreeView
 
 		private TreeIter selectedIter;
 		private Menu menu;
-		private PlayListNode selectedPlayListNode;
+		private PlayListTimeNode selectedPlayListNode;
 		private ListStore ls;
 
 		
@@ -40,7 +40,7 @@ public class PlayListTreeView : Gtk.TreeView
 
 			this.HeadersVisible = false;
 
-			ls = new ListStore(typeof(PlayListNode));
+			ls = new ListStore(typeof(PlayListTimeNode));
 			this.Model = ls;
 			
 		
@@ -101,7 +101,7 @@ public class PlayListTreeView : Gtk.TreeView
 				this.GetPathAtPos((int)evnt.X,(int)evnt.Y,out path);
 				if (path!=null){
 					this.Model.GetIter (out selectedIter,path); 
-					selectedPlayListNode = (PlayListNode)this.Model.GetValue (selectedIter, 0);
+					selectedPlayListNode = (PlayListTimeNode)this.Model.GetValue (selectedIter, 0);
 				    menu.Popup();
 				}
 			}
@@ -116,7 +116,7 @@ public class PlayListTreeView : Gtk.TreeView
 		
 		private void RenderName (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			PlayListNode tNode = (PlayListNode) model.GetValue (iter, 0);
+			PlayListTimeNode tNode = (PlayListTimeNode) model.GetValue (iter, 0);
 			
  
 			/*if (song.Artist.StartsWith ("X") == true) {
@@ -131,16 +131,16 @@ public class PlayListTreeView : Gtk.TreeView
 		
 		private void RenderStartTime (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			PlayListNode tNode = (PlayListNode) model.GetValue (iter, 0);
-			(cell as Gtk.CellRendererText).Text = tNode.StartTime.ToMSecondsString();
+			PlayListTimeNode tNode = (PlayListTimeNode) model.GetValue (iter, 0);
+			(cell as Gtk.CellRendererText).Text = tNode.Start.ToMSecondsString();
 				
 			
 		}
 		
 		private void RenderStopTime (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			PlayListNode tNode = (PlayListNode) model.GetValue (iter, 0);
-			(cell as Gtk.CellRendererText).Text = tNode.StopTime.ToMSecondsString();
+			PlayListTimeNode tNode = (PlayListTimeNode) model.GetValue (iter, 0);
+			(cell as Gtk.CellRendererText).Text = tNode.Stop.ToMSecondsString();
 		}
 		
 			

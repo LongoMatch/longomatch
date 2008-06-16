@@ -1,6 +1,6 @@
-// TimeAdjustWidget.cs
+// TimeNodeTreeView.cs
 //
-//  Copyright (C) 2007 [name of author]
+//  Copyright (C) 2008 Andoni Morales Alastruey
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -24,26 +24,12 @@ namespace LongoMatch
 {
 	
 	
-	public partial class TimeAdjustWidget : Gtk.Bin
+	public partial class TimeNodeTreeView : Gtk.Bin
 	{
-
 		
-		public TimeAdjustWidget()
+		public TimeNodeTreeView()
 		{
 			this.Build();
-		}
-		
-		public void SetTimeNode(SectionsTimeNode tNode){
-			spinbutton1.Value=tNode.Start.Seconds;
-			spinbutton2.Value=tNode.Stop.Seconds;			
-		}
-		
-		public Time GetStartTime(){
-			return new Time((int)spinbutton1.Value*Time.SECONDS_TO_TIME);
-		}
-		
-		public Time GetStopTime(){
-			return new Time ((int)spinbutton2.Value*Time.SECONDS_TO_TIME);
 		}
 	}
 }

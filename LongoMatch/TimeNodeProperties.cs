@@ -19,6 +19,7 @@
 //
 
 using System;
+using Gdk;
 
 namespace LongoMatch
 {
@@ -38,14 +39,22 @@ namespace LongoMatch
 			GtkLabel1.Text=title;		
 		}
 		
-		public void SetTimeNode(TimeNode tNode)
+		public void SetTimeNode(SectionsTimeNode tNode)
 		{
 			entry1.Text = tNode.Name;
 			timeadjustwidget1.SetTimeNode(tNode);		
 		}
+		public void SetColor(Color color){
+			this.colorbutton1.Color = color;
+		}
 		
-		public TimeNode GetTimeNode(){
-			return new TimeNode (entry1.Text,timeadjustwidget1.GetStartTime(),timeadjustwidget1.GetStopTime());
+		public Color GetColor(){
+			return this.colorbutton1.Color;
+			Console.WriteLine(this.colorbutton1.Color.ToString());
+		}
+		
+		public SectionsTimeNode GetTimeNode(){
+			return new SectionsTimeNode (entry1.Text,timeadjustwidget1.GetStartTime(),timeadjustwidget1.GetStopTime());
 		}
 
 	}
