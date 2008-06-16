@@ -273,6 +273,29 @@ namespace CesarPlayer
 			
 		}
 
+		protected virtual void OnVscale1FormatValue (object o, Gtk.FormatValueArgs args)
+		{
+			Console.WriteLine("formatting value");
+		}
+
+		protected virtual void OnVscale1ValueChanged (object sender, System.EventArgs e)
+		{
+			VScale scale= (VScale)sender;
+			double val = scale.Value;
+			if (val >25 ){
+				val = val-25 ;
+				this.ratelabel.Text = "X"+val;
+				player.Rate =(float) val;
+			}
+			else if (val <25){
+				
+				this.ratelabel.Text="-X"+val+"/25";
+				player.Rate = (float)(val/25);
+			}
+				
+			
+		}
+
 		
 	}
 }

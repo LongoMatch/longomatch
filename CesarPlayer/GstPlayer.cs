@@ -72,6 +72,7 @@ namespace CesarPlayer
 	
 
 		private long stopTime=0;
+		private int THUMBNAIL_WIDTH = 50;
 
 
 		
@@ -291,7 +292,7 @@ namespace CesarPlayer
 		
 		public float Rate {
 			get{return 1;}
-			set{// bacon_video_widget_set_rate (Raw,value);
+			set{ bacon_video_widget_set_rate (Raw,value);
 			}
 		}
 		
@@ -324,6 +325,16 @@ namespace CesarPlayer
 			IntPtr ptr = bacon_video_widget_get_current_frame (Raw);				
 			Pixbuf pixbuf = new Pixbuf(ptr);
 			return pixbuf;
+		}
+		
+		public Pixbuf GetCurrentThumbnail(){
+			int h,w;
+			double rate;
+			Pixbuf pixbuf = this.GetCurrentFrame();
+			h = pixbuf.Height;
+			w = pixbuf.Width;
+			rate = w/h;
+			return pixbuf.ScaleSimple(THUMBNAIL_WIDTH,(int)(THUMBNAIL_WIDTH/rate),InterpType.Bilinear);
 		}
 		
 		[DllImport ("liblongomatch")]

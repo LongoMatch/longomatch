@@ -41,6 +41,12 @@ namespace CesarPlayer {
         
         private Gtk.Button volumebutton;
         
+        private Gtk.VBox vbox3;
+        
+        private Gtk.VScale vscale1;
+        
+        private Gtk.Label ratelabel;
+        
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
             // Widget CesarPlayer.PlayerBin
@@ -81,7 +87,7 @@ namespace CesarPlayer {
             w3.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w4 = new Gtk.Image();
-            w4.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-close", Gtk.IconSize.Button, 20);
+            w4.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-close", Gtk.IconSize.Dnd, 32);
             w3.Add(w4);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w6 = new Gtk.Label();
@@ -269,6 +275,40 @@ namespace CesarPlayer {
             this.mainbox.Add(this.vbox2);
             Gtk.Box.BoxChild w61 = ((Gtk.Box.BoxChild)(this.mainbox[this.vbox2]));
             w61.Position = 0;
+            // Container child mainbox.Gtk.Box+BoxChild
+            this.vbox3 = new Gtk.VBox();
+            this.vbox3.Name = "vbox3";
+            this.vbox3.Spacing = 6;
+            // Container child vbox3.Gtk.Box+BoxChild
+            this.vscale1 = new Gtk.VScale(null);
+            this.vscale1.CanFocus = true;
+            this.vscale1.Name = "vscale1";
+            this.vscale1.Inverted = true;
+            this.vscale1.Adjustment.Lower = 1;
+            this.vscale1.Adjustment.Upper = 50;
+            this.vscale1.Adjustment.PageIncrement = 10;
+            this.vscale1.Adjustment.StepIncrement = 1;
+            this.vscale1.Adjustment.Value = 25;
+            this.vscale1.DrawValue = false;
+            this.vscale1.Digits = 0;
+            this.vscale1.ValuePos = ((Gtk.PositionType)(2));
+            this.vbox3.Add(this.vscale1);
+            Gtk.Box.BoxChild w62 = ((Gtk.Box.BoxChild)(this.vbox3[this.vscale1]));
+            w62.Position = 0;
+            // Container child vbox3.Gtk.Box+BoxChild
+            this.ratelabel = new Gtk.Label();
+            this.ratelabel.Name = "ratelabel";
+            this.ratelabel.LabelProp = Mono.Unix.Catalog.GetString("x0");
+            this.vbox3.Add(this.ratelabel);
+            Gtk.Box.BoxChild w63 = ((Gtk.Box.BoxChild)(this.vbox3[this.ratelabel]));
+            w63.Position = 1;
+            w63.Expand = false;
+            w63.Fill = false;
+            this.mainbox.Add(this.vbox3);
+            Gtk.Box.BoxChild w64 = ((Gtk.Box.BoxChild)(this.mainbox[this.vbox3]));
+            w64.Position = 1;
+            w64.Expand = false;
+            w64.Fill = false;
             this.Add(this.mainbox);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
@@ -277,6 +317,7 @@ namespace CesarPlayer {
             this.prevbutton.Hide();
             this.nextbutton.Hide();
             this.controlsbox.Hide();
+            this.vscale1.Hide();
             this.Show();
             this.closebutton.Clicked += new System.EventHandler(this.OnClosebuttonClicked);
             this.playbutton.Clicked += new System.EventHandler(this.OnPlaybuttonClicked);
@@ -286,6 +327,8 @@ namespace CesarPlayer {
             this.timescale.ValueChanged += new System.EventHandler(this.OnTimescaleValueChanged);
             this.timescale.AdjustBounds += new Gtk.AdjustBoundsHandler(this.OnTimescaleAdjustBounds);
             this.volumebutton.Clicked += new System.EventHandler(this.OnVolumebuttonClicked);
+            this.vscale1.FormatValue += new Gtk.FormatValueHandler(this.OnVscale1FormatValue);
+            this.vscale1.ValueChanged += new System.EventHandler(this.OnVscale1ValueChanged);
         }
     }
 }

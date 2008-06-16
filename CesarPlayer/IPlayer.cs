@@ -117,5 +117,7 @@ namespace CesarPlayer
 		
 		Pixbuf GetCurrentFrame();
 		
+		Pixbuf GetCurrentThumbnail();
+		
 	}
 }
