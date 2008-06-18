@@ -1,4 +1,4 @@
-<Project name="liblongomatch" fileversion="2.0" Description="Gstreamer backend libraries for LongoMatch" language="C" ctype="CProject">
+<Project name="libcesarplayer" fileversion="2.0" Description="Gstreamer backend libraries for LongoMatch" language="C" ctype="CProject">
   <Configurations active="Release">
     <Configuration name="Debug" ctype="CProjectConfiguration">
       <Output directory="bin/Debug" output="testtt" />
@@ -41,7 +41,7 @@
     <ProjectPackage file="gstreamer-audio-0.10" name="gstreamer-audio-0.10" IsProject="False" />
     <ProjectPackage file="gstreamer-video-0.10" name="gstreamer-video-0.10" IsProject="False" />
   </Packages>
-  <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="./Makefile.am" IsAutotoolsProject="True" RelativeConfigureInPath="./">
+  <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am" IsAutotoolsProject="True" RelativeConfigureInPath=".">
     <BuildFilesVar />
     <DeployFilesVar />
     <ResourcesVar />
