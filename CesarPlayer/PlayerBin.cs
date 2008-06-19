@@ -19,6 +19,7 @@
 //
 using System;
 using Gtk;
+using Gdk;
 using Mono.Unix;
 using System.Runtime.InteropServices;
 
@@ -34,6 +35,7 @@ namespace CesarPlayer
 		public event TickEventHandler TickEvent;
 		public event ErrorEventHandler ErrorEvent;
 		
+		private const int THUMBNAIL_WIDTH = 50;
 		private TickEventHandler tickEventHandler;
 		private IPlayer player;
 		private long length=0;
@@ -57,17 +59,20 @@ namespace CesarPlayer
 			this.PlayerInit();
 			vwin = new VolumeWindow();
 			vwin.VolumeChanged += new VolumeChangedHandler(OnVolumeChanged);
+			this.vscale1.Visible = false;
 			
 			
 		}
 		
 		private void PlayerInit(){
+			string error=null;
 			PlayerMaker pMaker = new PlayerMaker();
-			player = pMaker.getPlayer(320,280);
+			player = pMaker.getPlayer(320,280,error);
+			//IF error do something
 	
 			tickEventHandler = new TickEventHandler(OnTick);
 			player.TickEvent += tickEventHandler;
-			player.StateChanged += new StateChangedHandler(OnStateChanged);
+			player.StateChangedEvent += new StateChangedEventHandler(OnStateChanged);
 			player.EndOfStreamEvent += new EndOfStreamEventHandler (OnEndOfStream);
 			player.SegmentDoneEvent += new SegmentDoneHandler (OnSegmentDone);
 			player.ErrorEvent += new ErrorEventHandler (OnError);
@@ -84,11 +89,11 @@ namespace CesarPlayer
 				timelabel.Text="";
 				this.SegmentClosedEvent();
 				this.player.CancelProgramedStop();
-				player.FilePath = value;
+				player.Open(value,null);
 				player.Play();
 			}
 			get{
-				return player.FilePath;
+				return player.Mrl;
 			}
 			
 			
@@ -99,8 +104,21 @@ namespace CesarPlayer
 			get {return player;}
 		}
 		
+		
+		public Pixbuf CurrentThumbnail{
+			get{
+				int h,w;
+				double rate;
+				Pixbuf pixbuf = player.CurrentFrame;
+				h = pixbuf.Height;
+				w = pixbuf.Width;
+				rate = w/h;
+				return pixbuf.ScaleSimple(THUMBNAIL_WIDTH,(int)(THUMBNAIL_WIDTH/rate),InterpType.Bilinear);
+			}
+		}
+		
 		public void SetLogo (string filename){
-			this.player.SetLogo(filename);
+			this.player.Logo=filename;
 		}
 		
 		public void SetPlayListElement(string fileName,long start, long stop, bool hasNext){
@@ -158,7 +176,8 @@ namespace CesarPlayer
 			}
 		}
 		
-		protected virtual void OnTick(long currentTime, long streamLength, float position, bool seekable){
+		protected virtual void OnTick(long currentTime, long streamLength, float currentposition,bool seekable){
+			
 			//Console.WriteLine ("Current Time:{0}\nCurrent Pos:{1}\nStream Length:{2}\n",currentTime,position, streamLength);
 			if (this.length != streamLength){				
 				this.length = streamLength;
@@ -166,9 +185,9 @@ namespace CesarPlayer
 			}
 			else {	
 			    timelabel.Text = TimeString.MSecondsToSecondsString(currentTime) + "/" + slength;
-				timescale.Value = position*65535;
+				timescale.Value = currentposition*65535;
 				if (TickEvent != null)
-					this.TickEvent(currentTime,streamLength,position,seekable);
+					this.TickEvent(currentTime,streamLength,currentposition,seekable);
 			}
 			
 			
@@ -210,7 +229,7 @@ namespace CesarPlayer
 
 		protected virtual void OnStopbuttonClicked(object sender, System.EventArgs e)
 		{
-			player.Seek(this.segmentStartTime,true);
+			player.SeekTo(this.segmentStartTime,true);
 
 		}
 
@@ -247,7 +266,7 @@ namespace CesarPlayer
 				
 		}
 		
-		protected virtual void OnError (String error){
+		protected virtual void OnError (string error){
 			if(this.ErrorEvent != null)
 				this.ErrorEvent(error);
 		}
@@ -285,12 +304,12 @@ namespace CesarPlayer
 			if (val >25 ){
 				val = val-25 ;
 				this.ratelabel.Text = "X"+val;
-				player.Rate =(float) val;
+				//player.Rate =(float) val;
 			}
 			else if (val <25){
 				
 				this.ratelabel.Text="-X"+val+"/25";
-				player.Rate = (float)(val/25);
+				//player.Rate = (float)(val/25);
 			}
 				
 			

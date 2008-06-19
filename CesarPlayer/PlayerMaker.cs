@@ -35,19 +35,19 @@ namespace CesarPlayer
 		
 		}
 		
-		public IPlayer getPlayer(int width, int height){
+		public IPlayer getPlayer(int width, int height,string error){
 			
 			switch (oS.Platform){
 			 case PlatformID.Unix:
-				return new GstPlayer(width,height,BvwUseType.BVW_USE_TYPE_VIDEO);
+				return new BaconVideoWidget(width,height,BvwUseType.Video,error);
 				
 			case PlatformID.Win32NT:
-				return new GstPlayer(width,height,BvwUseType.BVW_USE_TYPE_VIDEO);
+				return new  BaconVideoWidget(width,height,BvwUseType.Video,error);
 				
 
 				
 			 default:
-				return new GstPlayer(width,height,BvwUseType.BVW_USE_TYPE_VIDEO);
+				return new  BaconVideoWidget(width,height,BvwUseType.Video,error);
 				
 				
 			}

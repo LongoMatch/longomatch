@@ -34,19 +34,19 @@ namespace CesarPlayer
 
 		// Events
 
-		event         StateChangedHandler StateChanged;
+		event         StateChangedEventHandler StateChangedEvent;
 		event         TickEventHandler TickEvent;
 		event         EndOfStreamEventHandler EndOfStreamEvent;
 		event         InvalidVideoFileHandler InvalidVideoFile;
 		event         SegmentDoneHandler SegmentDoneEvent;
 		event         ErrorEventHandler ErrorEvent;
 
-		string FilePath{
-			get;
-			set;
+		string Mrl{
+			get;			
 		}
 		
-		long Length{
+		
+		long StreamLength{
 			get;
 		}
 		
@@ -73,10 +73,10 @@ namespace CesarPlayer
 			set;
 		}
 		
-		float Rate{
+		/*float Rate{
 			get;
 			set;
-		}
+		}*/
 		
 		Widget Window{
 			get;
@@ -86,9 +86,23 @@ namespace CesarPlayer
 			get;
 		}
 		
-		void Seek(long time, bool accurate);
+		Pixbuf CurrentFrame{
+			get;
+		}
 		
-		void Play();
+		string Logo {
+			set;
+		}
+		
+		long AccurateCurrentTime{
+			get;
+		}
+		
+		bool SeekTo(long time, bool accurate);
+		
+		bool Play();
+		
+		bool Open(string mrl, string error);
 		
 		void TogglePlay();
 		
@@ -101,23 +115,18 @@ namespace CesarPlayer
 		
 		void Dispose();
 		
-		void SegmentSeek(long start, long stop);
+		bool SegmentSeek(long start, long stop);
 		
-		void SeekInSegment(long pos);
+		bool SeekInSegment(long pos);
 			
 		void UpdateSegmentStartTime(long start);
 		
 		void UpdateSegmentStopTime(long stop);
 		
-		long GetAccurateCurrentTime();
-		
 		void CancelProgramedStop();
+			
 		
-		void SetLogo(string fileName);
 		
-		Pixbuf GetCurrentFrame();
-		
-		Pixbuf GetCurrentThumbnail();
 		
 	}
 }

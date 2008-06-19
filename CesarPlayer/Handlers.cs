@@ -25,7 +25,7 @@ namespace CesarPlayer
 	
 	public delegate void PlayListSegmentDoneHandler ();
 	public delegate void SegmentClosedHandler();
-	public delegate void StateChangedHandler (bool playing);
+	public delegate void StateChangedEventHandler (bool playing);
 	public delegate void TickEventHandler (long currentTime, long streamLength, float position, bool seekable);
 	public delegate void EndOfStreamEventHandler ();
 	public delegate void SegmentDoneHandler();

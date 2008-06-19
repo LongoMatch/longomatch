@@ -29,10 +29,6 @@ namespace CesarPlayer
 {
 	
 	
-	public enum BvwUseType {BVW_USE_TYPE_VIDEO,
-							BVW_USE_TYPE_AUDIO,
-							BVW_USE_TYPE_CAPTURE,
-							BVW_USE_TYPE_METADATA};
 				
 	public class PlayerException : Exception
 	{
