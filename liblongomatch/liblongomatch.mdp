@@ -41,7 +41,7 @@
     <ProjectPackage file="gstreamer-audio-0.10" name="gstreamer-audio-0.10" IsProject="False" />
     <ProjectPackage file="gstreamer-video-0.10" name="gstreamer-video-0.10" IsProject="False" />
   </Packages>
-  <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am" IsAutotoolsProject="True" RelativeConfigureInPath=".">
+  <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="Makefile.am" IsAutotoolsProject="True" RelativeConfigureInPath=".">
     <BuildFilesVar />
     <DeployFilesVar />
     <ResourcesVar />
