@@ -1,0 +1,61 @@
+// TimeNodeProperties.cs
+//
+//  Copyright (C) 2007 Andoni Morales Alastruey
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+//
+
+using System;
+using Gdk;
+
+namespace LongoMatch
+{
+	
+	
+	public partial  class TimeNodeProperties : Gtk.Bin
+	{
+
+
+		
+		public TimeNodeProperties()
+		{
+			this.Build();
+		}
+		
+		public void SetTitle (string title){
+			GtkLabel1.Text=title;		
+		}
+		
+		public void SetTimeNode(SectionsTimeNode tNode)
+		{
+			entry1.Text = tNode.Name;
+			timeadjustwidget1.SetTimeNode(tNode);		
+		}
+		public void SetColor(Color color){
+			this.colorbutton1.Color = color;
+		}
+		
+		public Color GetColor(){
+			return this.colorbutton1.Color;
+			Console.WriteLine(this.colorbutton1.Color.ToString());
+		}
+		
+		public SectionsTimeNode GetTimeNode(){
+			return new SectionsTimeNode (entry1.Text,timeadjustwidget1.GetStartTime(),timeadjustwidget1.GetStopTime());
+		}
+
+	}
+}

@@ -1,0 +1,23 @@
+<objects>
+  <object type="CesarPlayer.PlayerBin" allow-children="false" base-type="Gtk.Bin" palette-category="CesarPlayer">
+    <itemgroups>
+      <itemgroup label="PlayerBin Properties">
+        <property name="File" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="PlayerBin Signals">
+        <signal name="PlayListSegmentDoneEvent" />
+        <signal name="SegmentClosedEvent" />
+        <signal name="Tick" />
+        <signal name="Error" />
+        <signal name="Next" />
+        <signal name="Prev" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="CesarPlayer.TimeLine" palette-category="CesarPlayer" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+</objects>
