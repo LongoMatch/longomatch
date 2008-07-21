@@ -82,6 +82,7 @@ namespace CesarPlayer
 			Widget _videoscreen = player.Window;
 			videobox.Add(_videoscreen);
 			_videoscreen.Show();
+			this.vscale1.Hide();
 		}
 		
 		public string File {
