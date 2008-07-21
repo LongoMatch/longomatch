@@ -89,7 +89,6 @@ namespace CesarPlayer
 			set{
 				this.filename = value;
 				this.ResetGui();
-				string error = null;
 				player.Open(value);
 			
 			}

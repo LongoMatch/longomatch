@@ -2465,38 +2465,6 @@
     </child>
   </widget>
   <widget class="Gtk.Window" id="LongoMatch.MainWindow" design-size="1005 569">
-    <action-group name="Player">
-      <action id="PlayAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">_Play</property>
-        <property name="ShortLabel" translatable="yes">dasdf</property>
-        <property name="StockId">gtk-media-play</property>
-      </action>
-      <action id="PauseAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">P_ause</property>
-        <property name="ShortLabel" translatable="yes">P_ause</property>
-        <property name="StockId">gtk-media-pause</property>
-      </action>
-      <action id="PreviousAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">P_revious</property>
-        <property name="ShortLabel" translatable="yes">P_revious</property>
-        <property name="StockId">gtk-media-previous</property>
-      </action>
-      <action id="NextAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">_Next</property>
-        <property name="ShortLabel" translatable="yes">_Next</property>
-        <property name="StockId">gtk-media-next</property>
-      </action>
-      <action id="OpenPlaylistAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">Open Playlist</property>
-        <property name="ShortLabel" translatable="yes">Open Playlist</property>
-        <signal name="Activated" handler="OnOpenPlaylistActionActivated" />
-      </action>
-    </action-group>
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -2574,6 +2542,38 @@
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_Player</property>
         <property name="ShortLabel" translatable="yes">_Player</property>
+      </action>
+    </action-group>
+    <action-group name="Player">
+      <action id="PlayAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Play</property>
+        <property name="ShortLabel" translatable="yes">dasdf</property>
+        <property name="StockId">gtk-media-play</property>
+      </action>
+      <action id="PauseAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">P_ause</property>
+        <property name="ShortLabel" translatable="yes">P_ause</property>
+        <property name="StockId">gtk-media-pause</property>
+      </action>
+      <action id="PreviousAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">P_revious</property>
+        <property name="ShortLabel" translatable="yes">P_revious</property>
+        <property name="StockId">gtk-media-previous</property>
+      </action>
+      <action id="NextAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Next</property>
+        <property name="ShortLabel" translatable="yes">_Next</property>
+        <property name="StockId">gtk-media-next</property>
+      </action>
+      <action id="OpenPlaylistAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Open Playlist</property>
+        <property name="ShortLabel" translatable="yes">Open Playlist</property>
+        <signal name="Activated" handler="OnOpenPlaylistActionActivated" />
       </action>
     </action-group>
     <property name="MemberName" />

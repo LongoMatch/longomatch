@@ -50,7 +50,7 @@ namespace LongoMatch
 		
 		public Color GetColor(){
 			return this.colorbutton1.Color;
-			Console.WriteLine(this.colorbutton1.Color.ToString());
+			
 		}
 		
 		public SectionsTimeNode GetTimeNode(){
