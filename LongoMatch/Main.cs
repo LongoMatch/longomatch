@@ -36,8 +36,7 @@ namespace LongoMatch
 		public static void Main (string[] args)
 		{		
 			
-			//Iniciamos la base de datos
-			db = new DB();
+			
 			
 			//Configuramos el directorio base de la ejecucuión y el directorio HOME
 			baseDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
@@ -55,6 +54,8 @@ namespace LongoMatch
 			MainClass.CheckDirs();
 			MainClass.CheckFiles();
 			
+			//Iniciamos la base de datos
+			db = new DB();
 			
 			
 			//Iniciamos la aplicación
@@ -86,7 +87,7 @@ namespace LongoMatch
 		}
 		
 		public static string DBDir(){
-			return System.IO.Path.Combine (baseDirectory, "db");
+			return System.IO.Path.Combine (homeDirectory, "db");
 		}
 		
 		
@@ -101,6 +102,8 @@ namespace LongoMatch
 			    System.IO.Directory.CreateDirectory(ThumbnailsDir());
 			if (!System.IO.Directory.Exists(PlayListDir()))
 			    System.IO.Directory.CreateDirectory(PlayListDir());
+			if (!System.IO.Directory.Exists(DBDir()))
+			    System.IO.Directory.CreateDirectory(DBDir());
 			  
 		}
 		public static void CheckFiles(){			

@@ -9,9 +9,9 @@
     <widget-library name="../bin/Release/LongoMatch.exe" internal="true" />
   </import>
   <icon-factory>
-    <icon-set id="ygg">
+    <icon-set id="Logo">
       <source>
-        <property name="Image">stock:gtk-color-picker Menu</property>
+        <property name="Image">file:./lgmlogo.png</property>
       </source>
     </icon-set>
   </icon-factory>

@@ -36,8 +36,7 @@ namespace LongoMatch
 		
 		public SectionsReader(string filePath) : base (filePath) 
 		{
-			
-			
+						
 		}
 		
 		

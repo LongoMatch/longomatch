@@ -36,8 +36,7 @@ namespace LongoMatch
 		
 		public DB()
 		{
-			string baseDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
-			file = Path.Combine (baseDirectory, "db.yap");
+			file = Path.Combine (MainClass.DBDir(), "db.yap");
 		}
 		
 		
