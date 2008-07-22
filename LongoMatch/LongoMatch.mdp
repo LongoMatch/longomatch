@@ -94,6 +94,11 @@
     <File name="DB/TimeNode.cs" subtype="Code" buildaction="Compile" />
     <File name="DB/DB.cs" subtype="Code" buildaction="Compile" />
     <File name="DB/Time.cs" subtype="Code" buildaction="Compile" />
+    <File name="Handlers" subtype="Directory" buildaction="Compile" />
+    <File name="Handlers/Handlers.cs" subtype="Code" buildaction="Compile" />
+    <File name="Handlers/InChangedHandler.cs" subtype="Code" buildaction="Compile" />
+    <File name="Handlers/OutChangedHandler.cs" subtype="Code" buildaction="Compile" />
+    <File name="Handlers/PosChangedHandler.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="Db4objects.Db4o.dll" />
