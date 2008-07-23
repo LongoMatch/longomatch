@@ -47,24 +47,22 @@ namespace LongoMatch
 		
 		public PlayListWidget()
 		{
-			this.Build();			
-			playList = new PlayList();
-			lock_node = new System.Object();
-	
-			
+			this.Build();					
+			lock_node = new System.Object();			
 		}
 
-		public void SetPlayer(IPlayer player){
-			this.player = player;
 		
+		public void SetPlayer(IPlayer player){
+			this.player = player;		
 		}
 		
 		public void Load(string filePath){
 			this.label1.Visible = false;
-			this.playList.Load(filePath);
+			this.playList = new PlayList(filePath);
 			this.Model = playList.GetModel();
 			this.playlisttreeview1.Sensitive = true;
 		}
+		
 		public ListStore Model {
 			set {this.playlisttreeview1.Model = value;}
 			get {return (ListStore)this.playlisttreeview1.Model;}
@@ -73,54 +71,42 @@ namespace LongoMatch
 		public void Add (PlayListTimeNode plNode){
 			if (playList.isLoaded()){
 				this.Model.AppendValues(plNode);
-			}
-			
+				this.playList.Add(plNode);
+			}			
 		}
 		
 		public PlayListTimeNode Next(){
-			Console.WriteLine(player.AccurateCurrentTime );
-			lock (this.lock_node){
-				TreePath path;			
-				path = (this.playlisttreeview1.Selection.GetSelectedRows())[0];
-				path.Next();
-				if (path!=null){
-					this.playlisttreeview1.Selection.SelectPath(path);			
-					this.SelectPlayListNode(path);			
-				}
-				return plNode;
+			Console.WriteLine(this.player.AccurateCurrentTime);
+			if (this.playList.HasNext()){								
+				this.plNode = this.playList.Next();
+				this.playlisttreeview1.Selection.SelectPath(new TreePath(this.playList.GetCurrentIndex().ToString()));
+				if (this.PlayListNodeSelected != null)
+					this.PlayListNodeSelected(plNode,this.playList.HasNext());
+				this.StartClock();					
 			}
+			return plNode;			
 		}
 		
 		public void Prev(){
-			//Comprobamos el tiempo transcurrido de reproducción
-			Console.WriteLine(player.AccurateCurrentTime );
-			if ((this.player.CurrentTime - this.plNode.Start.MSeconds) < 100){
+			Console.WriteLine(this.player.AccurateCurrentTime);
+			if ((this.player.AccurateCurrentTime - this.plNode.Start.MSeconds) < 500){
 				//Seleccionaod el elemento anterior
-				lock (this.lock_node){
-					TreePath path;			
-					path = (this.playlisttreeview1.Selection.GetSelectedRows())[0];
-					path.Prev();
-					if (path!=null){
-						this.playlisttreeview1.Selection.SelectPath(path);			
-						this.SelectPlayListNode(path);			
-					}
-				}
-				
-				
+				if (this.playList.HasPrev()){								
+					this.plNode = this.playList.Prev();
+					this.playlisttreeview1.Selection.SelectPath(new TreePath(this.playList.GetCurrentIndex().ToString()));
+					if (this.PlayListNodeSelected != null)
+						this.PlayListNodeSelected(plNode,this.playList.HasNext());
+					this.StartClock();					
+				}				
 			}
 			else 
 				//Nos situamos al inicio del segmento
-				this.player.SeekTo(plNode.Start.MSeconds,true);
-			
-			
-								
+				this.player.SeekTo(plNode.Start.MSeconds,true);							
 		}
 		
 		public void Stop(){
 			this.StopClock();
-		}
-		
-		
+		}		
 		
 		private void StartClock ()
 		{
@@ -159,40 +145,28 @@ namespace LongoMatch
 		}
 		private void SelectPlayListNode (TreePath path){
 			
-			Gtk.TreeIter iter;
-			bool hasNext= false;
-			this.Model.GetIter (out iter, path);
-			if (this.Model.IterIsValid(iter)){
-				PlayListTimeNode selectedNode = (PlayListTimeNode)this.Model.GetValue (iter, 0);
-			
-				this.plNode = selectedNode;
-				//Desplazamos una posición en el arbol en busca de un siguiente nodo
-				path.Next();
-
-				//comprobamos que el siguiente elemento en el arbol no sea nulo
-				this.Model.GetIter (out iter, path);
-				hasNext = this.Model.IterIsValid(iter);
-			
-				this.plNode = plNode;
-
-				if (this.PlayListNodeSelected != null)
-					this.PlayListNodeSelected(plNode,hasNext);
-				this.StartClock();
-
-			}
-			else this.plNode = null;
-		
+			this.plNode = this.playList.Select(Int32.Parse(path.ToString()));
+			if (this.PlayListNodeSelected != null)
+				this.PlayListNodeSelected(plNode,this.playList.HasNext());
+			this.StartClock();		
 		}
 		
 		
-		
+		private FileFilter FileFilter{
+			get{
+				FileFilter filter = new FileFilter();
+				filter.Name = "LGM playlist";
+				filter.AddPattern("*.lgm");
+				return filter;
+			}
+				
+				
+		}
 		
 
 		protected virtual void OnPlaylisttreeview1RowActivated (object o, Gtk.RowActivatedArgs args)
 		{
-			this.SelectPlayListNode(args.Path);
-			
-			
+			this.SelectPlayListNode(args.Path);			
 		}
 
 		protected virtual void OnUpbuttonClicked (object sender, System.EventArgs e)
@@ -204,31 +178,10 @@ namespace LongoMatch
 		}
 
 		protected virtual void OnSavebuttonClicked (object sender, System.EventArgs e)
-		{
-			string filename = null;
-			
-			if (playList.isLoaded()){
-				filename = playList.File;
-			}
-			else{
-				FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Save playlist"),
-				                                                   null,
-				                                                   FileChooserAction.Open,
-				                                                   "gtk-cancel",ResponseType.Cancel,
-				                                                   "gtk-save",ResponseType.Accept);
-				fChooser.SetCurrentFolder(MainClass.PlayListDir());
-				fChooser.AddFilter(playList.FileFilter);
-				if (fChooser.Run() == (int)ResponseType.Accept){
-					filename = fChooser.Filename;
-					
-				}	
-				fChooser.Destroy();
-			}
-			playList.SetModel(this.Model);
-			playList.Save(filename);
-
-			
-		
+		{		
+			if (playList != null){
+				playList.Save();
+			}	
 		}
 
 		protected virtual void OnOpenbuttonClicked (object sender, System.EventArgs e)
@@ -239,7 +192,7 @@ namespace LongoMatch
 			                                                   "gtk-cancel",ResponseType.Cancel,
 			                                                   "gtk-open",ResponseType.Accept);
 			fChooser.SetCurrentFolder(MainClass.PlayListDir());
-			fChooser.AddFilter(playList.FileFilter);
+			fChooser.AddFilter(this.FileFilter);
 			if (fChooser.Run() == (int)ResponseType.Accept){
 				
 				this.Load(fChooser.Filename);
@@ -260,14 +213,12 @@ namespace LongoMatch
 			                                                   "gtk-cancel",ResponseType.Cancel,
 			                                                   "gtk-save",ResponseType.Accept);
 			fChooser.SetCurrentFolder(MainClass.PlayListDir());			
-			fChooser.AddFilter(playList.FileFilter);
+			fChooser.AddFilter(this.FileFilter);
+		
 			
 			if (fChooser.Run() == (int)ResponseType.Accept){
-				this.label1.Visible = false;
-				playList.New(fChooser.Filename);
-				this.Model = playList.GetModel();
-				this.playlisttreeview1.Sensitive = true;
-				
+				this.Load(fChooser.Filename);
+
 			}
 			fChooser.Destroy();
 				

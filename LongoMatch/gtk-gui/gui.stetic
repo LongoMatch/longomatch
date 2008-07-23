@@ -2679,6 +2679,8 @@
                         <signal name="SegmentClosedEvent" handler="OnPlayerbin1SegmentClosedEvent" />
                         <signal name="Error" handler="OnPlayerbin1Error" />
                         <signal name="Tick" handler="OnPlayerbin1Tick" />
+                        <signal name="Next" handler="OnPlayerbin1Next" />
+                        <signal name="Prev" handler="OnPlayerbin1Prev" />
                       </widget>
                       <packing>
                         <property name="Position">0</property>

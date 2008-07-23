@@ -29,9 +29,16 @@ namespace LongoMatch
 	{
 		void Load (string path);
 		void Save (string path);
-		void Next();
-		void Add();
-		void Prev();
+		PlayListTimeNode Next();
+		PlayListTimeNode Prev();
+		int GetCurrentIndex();
+		void Add(PlayListTimeNode plNode);
+		void Remove (PlayListTimeNode plNode);
+		PlayListTimeNode Select(int index);	
+		bool HasNext();
+		bool HasPrev();
+		ListStore GetModel();
+	
 		
 	}
 }

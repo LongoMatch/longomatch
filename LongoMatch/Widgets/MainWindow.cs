@@ -371,7 +371,7 @@ namespace LongoMatch
 
 		protected virtual void OnPlayerbin1Prev ()
 		{
-			this.playlistwidget2.Prev();
+			//this.playlistwidget2.Prev();
 		}
 
 		protected virtual void OnPlayerbin1Tick (object o, CesarPlayer.TickArgs args)

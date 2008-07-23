@@ -19,6 +19,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Collections;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -29,25 +30,41 @@ namespace LongoMatch
 {
 	
 	
-	public class PlayList
+	public class PlayList: IPlayList
 	{
-		private ArrayList list;
+		
+		private  List<PlayListTimeNode> list;
 		private static XmlSerializer ser; 
 		private string filename = null;
+		private int indexSelection = 0;
 		
-		public PlayList()
+		
+		public PlayList(string file)
 		{
-			list = new ArrayList();	
-			ser = new XmlSerializer(typeof(ArrayList),new Type[] {typeof(PlayListTimeNode)});
+			
+				
+			ser = new XmlSerializer(typeof(List<PlayListTimeNode>),new Type[] {typeof(PlayListTimeNode)});
+			//For new Play List
+			if (!System.IO.File.Exists(file)){
+			    list = new List<PlayListTimeNode>();
+				filename = file;
+			}
+			else
+				this.Load(file);
+			
 		}
 		
 		public void Load(string file){
 			
 			using(FileStream strm = new FileStream(file, FileMode.Open, FileAccess.Read)) 
 			{
-				list = ser.Deserialize(strm) as ArrayList; 
+				list = ser.Deserialize(strm) as List<PlayListTimeNode>; 
 			}			
 			this.filename = file;
+		}
+		
+		public void Save(){
+			this.Save(this.filename);
 		}
 		
 		public void Save(string file){
@@ -57,24 +74,46 @@ namespace LongoMatch
 				ser.Serialize(strm, list);
 			}
 		} 
-		public void New(string filename){
-			this.filename = filename;
-			this.list.Clear();
-		}
+
 		public bool isLoaded(){
 			return this.filename != null;
 		}
 		
-		public FileFilter FileFilter{
-			get{
-				FileFilter filter = new FileFilter();
-				filter.Name = "LGM playlist";
-				filter.AddPattern("*.lgm");
-				return filter;
-			}
-				
-				
+		public int GetCurrentIndex(){
+			return this.indexSelection;
 		}
+		
+		public PlayListTimeNode Next(){
+			this.indexSelection++;
+			return list[indexSelection];
+		}
+		
+		public PlayListTimeNode Prev(){
+			this.indexSelection--;
+			return list[indexSelection];
+		}
+		
+		public void Add (PlayListTimeNode plNode){
+			this.list.Add(plNode);
+		}
+		
+		public void Remove(PlayListTimeNode plNode){
+			this.list.Remove(plNode);
+		}
+		
+		public PlayListTimeNode Select (int index){
+			this.indexSelection = index;
+			return this.list[index];
+		}
+		
+		public bool HasNext(){
+			return this.indexSelection < list.Count-1;
+		}
+		
+		public bool HasPrev(){
+			return ! this.indexSelection.Equals(0);
+		}
+		
 		
 		public string File{
 			get {return this.filename;}
@@ -88,16 +127,8 @@ namespace LongoMatch
 			return listStore;
 		}
 		
-		public void SetModel(ListStore listStore){
-			TreeIter iter ;
-			listStore.GetIterFirst(out iter);
-			while (listStore.IterIsValid(iter)){
-				this.list.Add(listStore.GetValue (iter, 0) as PlayListTimeNode);
-				Console.WriteLine((listStore.GetValue (iter, 0) as PlayListTimeNode).MiniaturePath);
-				listStore.IterNext(ref iter);
-			}
-			
-		}
+	
+	
 		
 		
 	}

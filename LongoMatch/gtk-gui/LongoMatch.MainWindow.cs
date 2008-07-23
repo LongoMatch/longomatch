@@ -268,6 +268,8 @@ namespace LongoMatch {
             this.playerbin1.SegmentClosedEvent += new CesarPlayer.SegmentClosedHandler(this.OnPlayerbin1SegmentClosedEvent);
             this.playerbin1.Error += new CesarPlayer.ErrorHandler(this.OnPlayerbin1Error);
             this.playerbin1.Tick += new CesarPlayer.TickHandler(this.OnPlayerbin1Tick);
+            this.playerbin1.Next += new CesarPlayer.NextButtonClickedHandler(this.OnPlayerbin1Next);
+            this.playerbin1.Prev += new CesarPlayer.PrevButtonClickedHandler(this.OnPlayerbin1Prev);
             this.timeline2.TimeNodeChanged += new LongoMatch.TimeNodeChangedHandler(this.OnTimeNodeChanged);
             this.timeline2.PositionChanged += new LongoMatch.PositionChangedHandler(this.OnTimeline2PositionChanged);
             this.buttonswidget1.NewMarkEvent += new LongoMatch.NewMarkEventHandler(this.OnNewMark);
