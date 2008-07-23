@@ -374,6 +374,11 @@ namespace LongoMatch
 			this.playlistwidget2.Prev();
 		}
 
+		protected virtual void OnPlayerbin1Tick (object o, CesarPlayer.TickArgs args)
+		{
+			this.timeline2.SetPosition(new Time((int)args.CurrentTime));
+		}
+
 		
 
 		

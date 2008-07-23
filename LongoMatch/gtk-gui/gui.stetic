@@ -2678,6 +2678,7 @@
                         <property name="Events">ButtonPressMask</property>
                         <signal name="SegmentClosedEvent" handler="OnPlayerbin1SegmentClosedEvent" />
                         <signal name="Error" handler="OnPlayerbin1Error" />
+                        <signal name="Tick" handler="OnPlayerbin1Tick" />
                       </widget>
                       <packing>
                         <property name="Position">0</property>
@@ -3131,7 +3132,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.TimeLine" design-size="300 116">
+  <widget class="Gtk.Bin" id="LongoMatch.TimeLine" design-size="503 116">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.VBox" id="vbox2">
@@ -3143,6 +3144,9 @@
             <child>
               <widget class="LongoMatch.GtkTimescale" id="timescale1">
                 <property name="MemberName" />
+                <signal name="PosChanged" handler="OnPosValueChanged" />
+                <signal name="OutChanged" handler="OnStopValueChanged" />
+                <signal name="InChanged" handler="OnStartValueChanged" />
               </widget>
               <packing>
                 <property name="Position">0</property>
@@ -3204,12 +3208,6 @@
           </packing>
         </child>
       </widget>
-    </child>
-  </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.TimeScale" design-size="300 300">
-    <property name="MemberName" />
-    <child>
-      <placeholder />
     </child>
   </widget>
   <widget class="Gtk.Bin" id="LongoMatch.CapturePropertiesWidget" design-size="300 300">

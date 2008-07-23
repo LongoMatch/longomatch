@@ -93,11 +93,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.TimeScale" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-    </signals>
-  </object>
   <object type="LongoMatch.CapturePropertiesWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />

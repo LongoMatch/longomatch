@@ -4,14 +4,13 @@ AC_PREREQ([2.54])
 AC_INIT([LongoMatch], [0.1.1])
 AM_INIT_AUTOMAKE([foreign])
 
-AM_CONFIG_HEADER(config.h)
-AM_MAINTAINER_MODE
-
 AC_ISC_POSIX
 AC_PROG_CC
 AM_PROG_CC_STDC
 AC_HEADER_STDC
 
+
+AM_PROG_LIBTOOL
 
 dnl pkg-config
 AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
@@ -57,16 +56,26 @@ dnl package checks, common for all configs
 PKG_CHECK_MODULES([GLIB_SHARP_20], [glib-sharp-2.0])
 PKG_CHECK_MODULES([GTK_SHARP_20], [gtk-sharp-2.0])
 
+PKG_CHECK_MODULES(LIBTIMESCALE, [gtk+-2.0 glib-2.0 atk gobject-2.0 ])
+AC_SUBST(LIBTIMESCALE_CFLAGS)
+AC_SUBST(LIBTIMESCALE_LIBS)
+
+PKG_CHECK_MODULES(CESARPLAYER, [gtk+-2.0 >= 2.8 gdk-2.0 glib-2.0 gstreamer-0.10 gstreamer-audio-0.10 gstreamer-video-0.10 gobject-2.0 gstreamer-interfaces-0.10])
+AC_SUBST(CESARPLAYER_CFLAGS)
+AC_SUBST(CESARPLAYER_LIBS)
+
 dnl package checks, per config
 
 
 AC_CONFIG_FILES([
 LongoMatch/Makefile
 CesarPlayer/Makefile
+libcesarplayer/Makefile
+libcesarplayer/src/Makefile
+libtimescale/Makefile
+libtimescale/src/Makefile
 LongoMatch/longomatch
 Makefile
-libcesarplayer/libcesarplayer.pc
-libtimescale/libtimescale.pc
 CesarPlayer/cesarplayer.pc
 LongoMatchTranslation/Makefile
 

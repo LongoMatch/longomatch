@@ -12,7 +12,6 @@ cesarplayerdoc_DATA = \
 	INSTALL\
 	NEWS
 
-EXTRA_DIST = $(cesarplayerdoc_DATA)
 
 # Copy all the spec files. Of cource, only one is actually used.
 dist-hook:

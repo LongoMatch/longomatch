@@ -75,14 +75,14 @@ namespace LongoMatch {
             this.zoomoutbutton.UseUnderline = true;
             // Container child zoomoutbutton.Gtk.Container+ContainerChild
             Gtk.Alignment w11 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment1.Gtk.Container+ContainerChild
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
             Gtk.HBox w12 = new Gtk.HBox();
             w12.Spacing = 2;
-            // Container child GtkHBox1.Gtk.Container+ContainerChild
+            // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w13 = new Gtk.Image();
             w13.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-zoom-out", Gtk.IconSize.SmallToolbar, 18);
             w12.Add(w13);
-            // Container child GtkHBox1.Gtk.Container+ContainerChild
+            // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w15 = new Gtk.Label();
             w15.LabelProp = "";
             w12.Add(w15);
@@ -112,6 +112,9 @@ namespace LongoMatch {
                 this.Child.ShowAll();
             }
             this.Show();
+            this.timescale1.PosChanged += new LongoMatch.PosChangedHandler(this.OnPosValueChanged);
+            this.timescale1.OutChanged += new LongoMatch.OutChangedHandler(this.OnStopValueChanged);
+            this.timescale1.InChanged += new LongoMatch.InChangedHandler(this.OnStartValueChanged);
             this.zoominbutton.Clicked += new System.EventHandler(this.OnZoominbuttonClicked);
             this.zoomoutbutton.Clicked += new System.EventHandler(this.OnZoomoutbuttonClicked);
         }

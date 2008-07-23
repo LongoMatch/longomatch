@@ -25,9 +25,7 @@
 #include "gtk-timescale.h"
 #include <malloc.h>
 
-#define ADJ_POS 0
-#define ADJ_IN 1
-#define ADJ_OUT 2
+
 
 
 /* Signals */
@@ -39,6 +37,9 @@ enum
   LAST_SIGNAL
   
 };
+
+
+	
 
 
 
@@ -213,7 +214,7 @@ gtk_timescale_set_bounds(GtkTimescale *gts, gdouble lower, gdouble upper)
 	
 }
 
-EXPORT void gtk_timescale_adjust_position(GtkTimescale *gts,gdouble val, gint adj){
+EXPORT void gtk_timescale_adjust_position(GtkTimescale *gts,gdouble val, AdjustType adj){
 	g_return_if_fail (val > gts->adjustment[adj]->lower || val < gts->adjustment[adj]->upper);
 	
 	// Este método se ejecuta cuando a sido notificado un cambio de posición.ype

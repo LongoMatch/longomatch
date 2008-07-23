@@ -68,10 +68,17 @@ struct _GtkTimescale
 	
 };
 
+typedef enum
+{
+	ADJ_POS = 0,
+	ADJ_IN = 1,
+	ADJ_OUT = 2
+}AdjustType;
+
 EXPORT GType gtk_timescale_get_type (void) G_GNUC_CONST;
 EXPORT GtkWidget *gtk_timescale_new(gint32 upper);
 EXPORT void gtk_timescale_set_bounds(GtkTimescale *gts,gdouble lower, gdouble upper);
-EXPORT void gtk_timescale_adjust_position(GtkTimescale *gts,gdouble val, gint adj); 
+EXPORT void gtk_timescale_adjust_position(GtkTimescale *gts,gdouble val, AdjustType adj); 
 EXPORT void gtk_timescale_set_segment(GtkTimescale *gts, gdouble in, gdouble out);
 
 

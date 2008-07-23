@@ -33,7 +33,7 @@ namespace LongoMatch
 		
 		private int startFrame;
 		private int stopFrame;
-		private int framerate;		
+		private int framerate = 25;		
 		private uint zoomValue=4;
 		private MediaTimeNode tNode;
 		private bool enabled = false;
@@ -45,6 +45,7 @@ namespace LongoMatch
 		public TimeLine()
 		{
 			this.Build();
+		
 			
 			
 		}
@@ -56,7 +57,7 @@ namespace LongoMatch
 			//y volver a pasarlo a segundos para el calculo del framerate
 			//cambiarlo con un nuevo Método
 			this.startFrame = GetFrame(tNode.Start);
-			this.timescale1.AdjustPosition(startFrame,TimeScale.START);
+			this.timescale1.AdjustPosition(startFrame,AdjustType.ADJ_IN);
 			
 		
 		}
@@ -64,7 +65,7 @@ namespace LongoMatch
 		public void UpdateStopTime (Time stop){
 			this.tNode.Stop = stop;
 			this.stopFrame = GetFrame(tNode.Stop);
-			this.timescale1.AdjustPosition(stopFrame,TimeScale.STOP);
+			this.timescale1.AdjustPosition(stopFrame,AdjustType.ADJ_OUT);
 			
 		
 		}
@@ -84,16 +85,22 @@ namespace LongoMatch
 
 			//startFrame y stopFrame se actualizan al llamar a la función SetBounds
 			//por lo tanto no se pueden usar las variables del objecto
-			int startFrame = GetFrame(tNode.Start);
-			int stopFrame = GetFrame(tNode.Stop);
 
-			this.startFrame = startFrame;
-			this.stopFrame = stopFrame;
+
+			this.startFrame = GetFrame(tNode.Start);
+			this.stopFrame = GetFrame(tNode.Stop);
+			Console.WriteLine(stopFrame);
+			Console.WriteLine(startFrame);
 			this.framerate = framerate;
 			this.tNode = tNode;
-			this.timeprecisionadjustwidget1.SetTimeNode(tNode);
+			this.timeprecisionadjustwidget1.SetTimeNode(tNode);	
+			Console.WriteLine(tNode.Start.ToMSecondsString());
+			
+			Console.WriteLine(stopFrame);
+			Console.WriteLine(startFrame);
 			this.ApplyZoomValue(zoomValue);
 			this.timescale1.SetSegment(startFrame,stopFrame);
+			
 
 		}
 		
@@ -113,7 +120,7 @@ namespace LongoMatch
 		public void SetPosition(Time pos){
 			double framePos;
 			framePos = GetFrame(pos);
-			this.timescale1.AdjustPosition(framePos,TimeScale.POS);
+			this.timescale1.AdjustPosition(framePos,AdjustType.ADJ_POS);
 		}
 			
 		private int GetFrame (Time time){
@@ -127,16 +134,14 @@ namespace LongoMatch
 			lower =  startFrame-gap*(float)zoomValue/2 >= 0 ? (int)(startFrame-gap*(float)zoomValue/2) : 0;
 			//Hay que poner un máximo con la longitud del clip
 			upper = (int)(stopFrame+gap*(float)zoomValue/2);
+			Console.WriteLine(stopFrame);
+			Console.WriteLine(startFrame);
+			Console.WriteLine(lower);
+			Console.WriteLine(upper);
 			this.timescale1.SetBounds(lower,upper);	
 
 			
-		}
-
-		
-
-		
-
-		
+		}		
 
 		protected virtual void OnZoominbuttonClicked (object sender, System.EventArgs e)
 		{
@@ -194,6 +199,8 @@ namespace LongoMatch
 			
 		
 		}
+
+		
 
 	
 	}
