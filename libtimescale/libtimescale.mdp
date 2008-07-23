@@ -20,6 +20,13 @@
     <File name="src/gtkenhancedscale.h" subtype="Code" buildaction="Nothing" />
     <File name="src/gtk-timescale.c" subtype="Code" buildaction="Compile" />
     <File name="src/gtk-timescale.h" subtype="Code" buildaction="Nothing" />
+    <File name="AUTHORS" subtype="Code" buildaction="Nothing" />
+    <File name="ChangeLog" subtype="Code" buildaction="Nothing" />
+    <File name="COPYING" subtype="Code" buildaction="Nothing" />
+    <File name="INSTALL" subtype="Code" buildaction="Nothing" />
+    <File name="Makefile.am" subtype="Code" buildaction="Nothing" />
+    <File name="NEWS" subtype="Code" buildaction="Nothing" />
+    <File name="README" subtype="Code" buildaction="Nothing" />
   </Contents>
   <compiler ctype="GccCompiler" />
   <Packages>

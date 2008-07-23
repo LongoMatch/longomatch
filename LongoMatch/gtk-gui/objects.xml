@@ -96,11 +96,6 @@
   <object type="LongoMatch.TimeScale" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>
-      <itemgroup label="TimeScale Signals">
-        <signal name="PosValueChanged" />
-        <signal name="StartValueChanged" />
-        <signal name="StopValueChanged" />
-      </itemgroup>
     </signals>
   </object>
   <object type="LongoMatch.CapturePropertiesWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
