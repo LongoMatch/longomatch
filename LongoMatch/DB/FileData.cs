@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Gtk;
 using Gdk;
 
@@ -45,13 +46,13 @@ namespace LongoMatch
 		private DateTime matchDate;
 
 
-		private ArrayList 	dataSection1, dataSection2, dataSection3, dataSection4, dataSection5, dataSection6, dataSection7, dataSection8,
+		private List<TimeNode> 	dataSection1, dataSection2, dataSection3, dataSection4, dataSection5, dataSection6, dataSection7, dataSection8,
 					dataSection9, dataSection10, dataSection11, dataSection12, dataSection13, dataSection14, dataSection15, dataSection16,
 					dataSection17, dataSection18, dataSection19, dataSection20;
 
 		private Sections sections;
 
-		private ArrayList[] dataSectionArray;
+		private List<TimeNode>[] dataSectionArray;
 		
 	
 		
@@ -65,48 +66,48 @@ namespace LongoMatch
 			this.visitorGoals = visitorGoals;
 			this.matchDate = matchDate;		
 			this.sections = sections;
-			dataSectionArray = new ArrayList[20];
+			dataSectionArray = new List<TimeNode>[20];
 
 		
-			dataSection1 = new ArrayList();
+			dataSection1 = new List<TimeNode>();
 			dataSectionArray[0] = dataSection1;
-			dataSection2 = new ArrayList();
+			dataSection2 = new List<TimeNode>();
 			dataSectionArray[1] = dataSection2;
-			dataSection3 = new ArrayList();
+			dataSection3 = new List<TimeNode>();
 			dataSectionArray[2] = dataSection3;
-			dataSection4 = new ArrayList();
+			dataSection4 = new List<TimeNode>();
 			dataSectionArray[3] = dataSection4;
-			dataSection5 = new ArrayList();
+			dataSection5 = new List<TimeNode>();
 			dataSectionArray[4] = dataSection5;
-			dataSection6 = new ArrayList();
+			dataSection6 = new List<TimeNode>();
 			dataSectionArray[5] = dataSection6;
-			dataSection7 = new ArrayList();
+			dataSection7 = new List<TimeNode>();
 			dataSectionArray[6] = dataSection7;
-			dataSection8 = new ArrayList();
+			dataSection8 = new List<TimeNode>();
 			dataSectionArray[7] = dataSection8;
-			dataSection9 = new ArrayList();
+			dataSection9 = new List<TimeNode>();
 			dataSectionArray[8] = dataSection9;
-			dataSection10 = new ArrayList();
+			dataSection10 = new List<TimeNode>();
 			dataSectionArray[9] = dataSection10;
-			dataSection11 = new ArrayList();
+			dataSection11 = new List<TimeNode>();
 			dataSectionArray[10] = dataSection11;
-			dataSection12 = new ArrayList();
+			dataSection12 = new List<TimeNode>();
 			dataSectionArray[11] = dataSection12;
-			dataSection13 = new ArrayList();
+			dataSection13 = new List<TimeNode>();
 			dataSectionArray[12] = dataSection13;
-			dataSection14 = new ArrayList();
+			dataSection14 = new List<TimeNode>();
 			dataSectionArray[13] = dataSection14;
-			dataSection15 = new ArrayList();
+			dataSection15 = new List<TimeNode>();
 			dataSectionArray[14] = dataSection15;
-			dataSection16 = new ArrayList();
+			dataSection16 = new List<TimeNode>();
 			dataSectionArray[15] = dataSection16;
-			dataSection17 = new ArrayList();
+			dataSection17 = new List<TimeNode>();
 			dataSectionArray[16] = dataSection17;
-			dataSection18 = new ArrayList();
+			dataSection18 = new List<TimeNode>();
 			dataSectionArray[17] = dataSection18;
-			dataSection19 = new ArrayList();
+			dataSection19 = new List<TimeNode>();
 			dataSectionArray[18] = dataSection19;
-			dataSection20 = new ArrayList();
+			dataSection20 = new List<TimeNode>();
 			dataSectionArray[19] = dataSection20;
 			
 			
@@ -141,7 +142,7 @@ namespace LongoMatch
 		public MediaTimeNode AddTimeNode(int dataSection, Time start, Time stop,Pixbuf miniature) {
 			MediaTimeNode tn ;
 			string miniaturePath = null;
-			ArrayList al= dataSectionArray[dataSection];
+			List<TimeNode> al= dataSectionArray[dataSection];
 			int count= al.Count+1;
 			string name = sections.GetName(dataSection) + " " +count;
 			if (miniature != null){
@@ -172,7 +173,7 @@ namespace LongoMatch
 			return dataFileListStore;
 		}
 
-		public ArrayList[] GetDataArray() {
+		public List<TimeNode>[] GetDataArray() {
 			return dataSectionArray;
 		}
 

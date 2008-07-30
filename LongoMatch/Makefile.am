@@ -90,7 +90,6 @@ FILES = \
 	gtk-gui/LongoMatch.PlayListWidget.cs \
 	gtk-gui/LongoMatch.NewSectionsTemplatesFiles.cs \
 	gtk-gui/LongoMatch.TimeLine.cs \
-	gtk-gui/LongoMatch.TimeScale.cs \
 	gtk-gui/LongoMatch.CapturePropertiesWidget.cs \
 	AssemblyInfo.cs \
 	Main.cs \
