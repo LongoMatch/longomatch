@@ -60,9 +60,9 @@ namespace LongoMatch
 		}
 		
 		
-		public void SetTimeNodes(string[] names, Time[] startTimes, Time[] stopTimes){
+		public void SetTimeNodes(string[] names, Time[] startTimes, Time[] stopTimes,bool[] visible){
 			for (int i=0;i<20;i++){
-				timeNodesArray[i] = new SectionsTimeNode(names[i],startTimes[i],stopTimes[i]);
+				timeNodesArray[i] = new SectionsTimeNode(names[i],startTimes[i],stopTimes[i],visible[i]);
 				
 				
 			}

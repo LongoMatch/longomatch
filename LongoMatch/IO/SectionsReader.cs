@@ -72,6 +72,16 @@ namespace LongoMatch
 		
 		}
 		
+		private bool[] GetVisibility(){
+			bool[] visibility = new bool [20];
+			for (int i=0;i<20;i++){
+				visibility[i] = GetBoolValue("configuration","Visible");
+
+			}
+			return visibility;	
+		
+		}
+		
 		private Color[] GetColors(){
 			Color[] colors = new Color[20];
 			ushort red,green,blue;
@@ -93,7 +103,7 @@ namespace LongoMatch
 		public Sections GetSections(){
 			Sections sections = new Sections(20);
 			this.GetStartTimes();
-			sections.SetTimeNodes(this.GetNames(),this.GetStartTimes(),this.GetStopTimes());
+			sections.SetTimeNodes(this.GetNames(),this.GetStartTimes(),this.GetStopTimes(),this.GetVisibility());
 			sections.SetColors(this.GetColors());
 			return sections;
 		}

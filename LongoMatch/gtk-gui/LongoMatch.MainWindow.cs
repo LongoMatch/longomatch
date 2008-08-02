@@ -67,6 +67,8 @@ namespace LongoMatch {
         
         private LongoMatch.TimeLine timeline2;
         
+        private LongoMatch.TimeLineWidget timelinewidget1;
+        
         private LongoMatch.ButtonsWidget buttonswidget1;
         
         private LongoMatch.PlayListWidget playlistwidget2;
@@ -208,39 +210,46 @@ namespace LongoMatch {
             w9.Expand = false;
             w9.Fill = false;
             // Container child vbox5.Gtk.Box+BoxChild
+            this.timelinewidget1 = new LongoMatch.TimeLineWidget();
+            this.timelinewidget1.Events = ((Gdk.EventMask)(256));
+            this.timelinewidget1.Name = "timelinewidget1";
+            this.vbox5.Add(this.timelinewidget1);
+            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.vbox5[this.timelinewidget1]));
+            w10.Position = 2;
+            // Container child vbox5.Gtk.Box+BoxChild
             this.buttonswidget1 = new LongoMatch.ButtonsWidget();
             this.buttonswidget1.Events = ((Gdk.EventMask)(256));
             this.buttonswidget1.Name = "buttonswidget1";
             this.vbox5.Add(this.buttonswidget1);
-            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.vbox5[this.buttonswidget1]));
-            w10.Position = 2;
-            w10.Expand = false;
+            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.vbox5[this.buttonswidget1]));
+            w11.Position = 3;
+            w11.Expand = false;
             this.hpaned1.Add(this.vbox5);
-            Gtk.Paned.PanedChild w11 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.vbox5]));
-            w11.Resize = false;
-            w11.Shrink = false;
+            Gtk.Paned.PanedChild w12 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.vbox5]));
+            w12.Resize = false;
+            w12.Shrink = false;
             // Container child hpaned1.Gtk.Paned+PanedChild
             this.playlistwidget2 = new LongoMatch.PlayListWidget();
             this.playlistwidget2.WidthRequest = 50;
             this.playlistwidget2.Events = ((Gdk.EventMask)(256));
             this.playlistwidget2.Name = "playlistwidget2";
             this.hpaned1.Add(this.playlistwidget2);
-            Gtk.Paned.PanedChild w12 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.playlistwidget2]));
-            w12.Resize = false;
-            w12.Shrink = false;
+            Gtk.Paned.PanedChild w13 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.playlistwidget2]));
+            w13.Resize = false;
+            w13.Shrink = false;
             this.hpaned.Add(this.hpaned1);
             this.vbox1.Add(this.hpaned);
-            Gtk.Box.BoxChild w14 = ((Gtk.Box.BoxChild)(this.vbox1[this.hpaned]));
-            w14.Position = 1;
+            Gtk.Box.BoxChild w15 = ((Gtk.Box.BoxChild)(this.vbox1[this.hpaned]));
+            w15.Position = 1;
             // Container child vbox1.Gtk.Box+BoxChild
             this.statusbar1 = new Gtk.Statusbar();
             this.statusbar1.Name = "statusbar1";
             this.statusbar1.Spacing = 6;
             this.vbox1.Add(this.statusbar1);
-            Gtk.Box.BoxChild w15 = ((Gtk.Box.BoxChild)(this.vbox1[this.statusbar1]));
-            w15.Position = 2;
-            w15.Expand = false;
-            w15.Fill = false;
+            Gtk.Box.BoxChild w16 = ((Gtk.Box.BoxChild)(this.vbox1[this.statusbar1]));
+            w16.Position = 2;
+            w16.Expand = false;
+            w16.Fill = false;
             this.Add(this.vbox1);
             if ((this.Child != null)) {
                 this.Child.ShowAll();

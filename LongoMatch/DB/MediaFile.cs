@@ -1,4 +1,4 @@
-// SectionsTimeNode.cs
+// MediaFile.cs
 //
 //  Copyright (C) 2008 Andoni Morales Alastruey
 //
@@ -24,18 +24,36 @@ namespace LongoMatch
 {
 	
 	
-	public class SectionsTimeNode:TimeNode
+	public class MediaFile
 	{
-		bool visible;
+		string filePath;
+		Time length;
+		ushort fps;
 		
-		public SectionsTimeNode(String name,Time start, Time stop,bool visible):base (name,start,stop,0)
+		public MediaFile(string filePath,Time length,ushort fps)
 		{
-			this.visible = visible;
+			this.filePath = filePath;
+			this.length = length;
+			this.fps = fps;
 		}
 		
-		public bool Visible{
-			get{return this.visible;}
-			set{this.visible = value;}
+		public string FilePath{
+			get {return this.filePath;}
+			set {this.filePath = value;}
+		}
+		
+		public Time Length{
+			get {return this.length;}
+			set {this.length = value;}
+		}
+		
+		public ushort Fps{
+			get {return this.fps;}
+			set {this.fps = value;}
+		}
+		
+		public uint GetFrames(){
+			return (uint) (Fps*Length.Seconds);
 		}
 	}
 }

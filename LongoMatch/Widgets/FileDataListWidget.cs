@@ -86,7 +86,7 @@ namespace LongoMatch
 		private void RenderName (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			FileData _fData = (FileData) model.GetValue (iter, 0);
-			string _filePath = _fData.Filename;	
+			string _filePath = _fData.File.FilePath;	
 			(cell as Gtk.CellRendererText).Text = System.IO.Path.GetFileName(_filePath.ToString());
 			
 			

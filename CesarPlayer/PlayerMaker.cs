@@ -35,24 +35,33 @@ namespace CesarPlayer
 		
 		}
 		
-		public IPlayer getPlayer(int width, int height,out string error){
+		public IPlayer getPlayer(int width, int height){
 			
 			switch (oS.Platform) { 
 			 case PlatformID.Unix:
-				return new GstPlayer(width,height,BvwUseType.Video,out error);
+				return new GstPlayer(width,height,BvwUseType.Video);
 				
 			case PlatformID.Win32NT:
-				return new GstPlayer(width,height,BvwUseType.Video,out error);
-				
-
+				return new GstPlayer(width,height,BvwUseType.Video);
 				
 			 default:
-				return new GstPlayer(width,height,BvwUseType.Video,out error);
-				
-				
+				return new GstPlayer(width,height,BvwUseType.Video);				
 			}
-				                     
 		
+		}
+		
+		public IMetadataReader getMetadataReader(){
+			
+			switch (oS.Platform) { 
+			 case PlatformID.Unix:
+				return new GstPlayer(1,1,BvwUseType.Metadata);
+				
+			case PlatformID.Win32NT:
+				return new GstPlayer(1,1,BvwUseType.Metadata);
+				
+			 default:
+				return new GstPlayer(1,1,BvwUseType.Metadata);
+			}
 		}
 	}
 }

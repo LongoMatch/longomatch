@@ -81,10 +81,8 @@ namespace LongoMatch {
             this.vbox2.Name = "vbox2";
             this.vbox2.Spacing = 6;
             // Container child vbox2.Gtk.Box+BoxChild
-            this.table1 = new Gtk.Table(((uint)(11)), ((uint)(2)), false);
+            this.table1 = new Gtk.Table(((uint)(10)), ((uint)(2)), false);
             this.table1.Name = "table1";
-            this.table1.RowSpacing = ((uint)(6));
-            this.table1.ColumnSpacing = ((uint)(6));
             // Container child table1.Gtk.Table+TableChild
             this.dataSpinButton = new Gtk.SpinButton(4, 20, 4);
             this.dataSpinButton.CanFocus = true;
@@ -150,7 +148,7 @@ namespace LongoMatch {
             this.fileEntry = new Gtk.Entry();
             this.fileEntry.CanFocus = true;
             this.fileEntry.Name = "fileEntry";
-            this.fileEntry.IsEditable = true;
+            this.fileEntry.IsEditable = false;
             this.fileEntry.InvisibleChar = '●';
             this.hbox4.Add(this.fileEntry);
             Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(this.hbox4[this.fileEntry]));
@@ -393,6 +391,8 @@ namespace LongoMatch {
             this.vbox2.Add(this.table1);
             Gtk.Box.BoxChild w36 = ((Gtk.Box.BoxChild)(this.vbox2[this.table1]));
             w36.Position = 0;
+            w36.Expand = false;
+            w36.Fill = false;
             this.Add(this.vbox2);
             if ((this.Child != null)) {
                 this.Child.ShowAll();

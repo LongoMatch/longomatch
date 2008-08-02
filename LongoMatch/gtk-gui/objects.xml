@@ -14,7 +14,6 @@
         <property name="VisitorName" />
         <property name="LocalGoals" />
         <property name="VisitorGoals" />
-        <property name="Filename" />
         <property name="Date" />
         <property name="VisibleSections" />
       </itemgroup>
@@ -111,6 +110,25 @@
     <itemgroups />
     <signals>
       <itemgroup label="TimeNodesTreeView Signals">
+        <signal name="TimeNodeChanged" />
+        <signal name="TimeNodeSelected" />
+        <signal name="TimeNodeDeleted" />
+        <signal name="PlayListNodeAdded" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.TimeLineWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.TimeScale" palette-category="LongoMatch" allow-children="false" base-type="Gtk.DrawingArea">
+    <itemgroups>
+      <itemgroup label="TimeScale Properties">
+        <property name="PixelRatio" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="TimeScale Signals">
         <signal name="TimeNodeChanged" />
         <signal name="TimeNodeSelected" />
         <signal name="TimeNodeDeleted" />

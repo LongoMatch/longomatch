@@ -32,14 +32,14 @@ namespace LongoMatch
 
 		private DateTime date;
 		private FileData fData;
+		private MediaFile mFile;
 		private CalendarPopup cp;
 		
 		
 		public FileDescriptionWidget()
 		{
 			this.Build();
-			cp = new CalendarPopup();
-			
+			cp = new CalendarPopup();			
 			cp.Hide();
 			cp.DateSelectedEvent += new DateSelectedHandler(OnDateSelected);
 			date = System.DateTime.Today;
@@ -72,7 +72,7 @@ namespace LongoMatch
 			set { this.visitorSpinButton.Value = value;}
 		}
 		
-		public string Filename {
+		private string Filename {
 			get { return fileEntry.Text;}
 			set { this.fileEntry.Text = value;}
 		}
@@ -87,7 +87,7 @@ namespace LongoMatch
 			set { this.dataSpinButton.Value = value;}
 		}
 		
-		public string SectionsFile{
+		private string SectionsFile{
 			get {
 				string filename =  combobox1.ActiveText + ".sct";
 				return filename;
@@ -97,7 +97,8 @@ namespace LongoMatch
 
 		public void SetFileData(FileData fData){
 			this.fData = fData;
-			this.Filename = fData.Filename;
+			this.mFile = fData.File;
+			this.Filename = this.mFile.FilePath;
 			this.LocalName = fData.LocalName;
 			this.VisitorName = fData.VisitorName;
 			this.LocalGoals = fData.LocalGoals;
@@ -113,7 +114,7 @@ namespace LongoMatch
 		}
 		
 		public void UpdateFileData(){
-			fData.Filename=this.fileEntry.Text;
+			fData.File=this.mFile;
 			fData.LocalName = this.localTeamEntry.Text;
 			fData.VisitorName = this.visitorTeamEntry.Text;
 			fData.LocalGoals = (int)this.localSpinButton.Value;
@@ -132,7 +133,7 @@ namespace LongoMatch
 				sections.VisibleSections = this.VisibleSections;
 				
 				if (fData == null){
-					return new FileData(this.Filename,
+					return new FileData(this.mFile,
 					                    this.LocalName,
 					                    this.VisitorName,
 					                    this.LocalGoals,
@@ -141,7 +142,7 @@ namespace LongoMatch
 					                    sections);
 				}
 				else {
-					fData.Filename = this.Filename;
+					fData.File = this.mFile;
 					fData.LocalName = this.LocalName;
 					fData.VisitorGoals = this.VisitorGoals;
 					fData.LocalGoals = this.LocalGoals;
@@ -165,6 +166,7 @@ namespace LongoMatch
 			this.VisitorGoals = 0;
 			this.Date = System.DateTime.Today;
 			this.Filename = "";
+			this.mFile = null;
 			this.VisibleSections =  0;
 			
 		}
@@ -185,7 +187,22 @@ namespace LongoMatch
 		
 			fChooser.SetCurrentFolder(System.Environment.GetEnvironmentVariable("HOME"));
 			if (fChooser.Run() == (int)ResponseType.Accept){
-				fileEntry.Text = fChooser.Filename;
+				CesarPlayer.PlayerMaker pm = new CesarPlayer.PlayerMaker();
+				CesarPlayer.IMetadataReader reader = pm.getMetadataReader();
+				try{
+					reader.Open(fChooser.Filename);
+					int duration = (int)reader.GetMetadata(CesarPlayer.GstPlayerMetadataType.Duration);
+					int fps = (int) reader.GetMetadata(CesarPlayer.GstPlayerMetadataType.Fps);
+					Console.WriteLine(duration+" "+fps);
+					this.mFile = new MediaFile(fChooser.Filename,new Time(duration*1000),(ushort)fps);				
+					fileEntry.Text = fChooser.Filename;
+				}
+				catch (GLib.GException ex){
+					MessageDialog errorDialog = new MessageDialog(null,DialogFlags.Modal,MessageType.Error,ButtonsType.Ok,
+					                                              Catalog.GetString("Error Loading this file:\n")+ex.Message);
+					errorDialog.Run();
+					errorDialog.Destroy();
+				}
 			}
 		
 			fChooser.Destroy();

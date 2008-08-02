@@ -97,10 +97,10 @@ namespace LongoMatch
 		}
 		public void AddFileData (FileData fileData){
 			db = Db4oFactory.OpenFile(file);
-			
+			Console.WriteLine("jor");
 			try	
 			{
-				if (!this.Exists(fileData.Filename)){
+				if (!this.Exists(fileData.File.FilePath)){
 				db.Set (fileData);
 				}
 				else throw new Exception (Catalog.GetString("The FileData for this video file already exists.\n Try to edit it whit the Database Manager"));
@@ -119,7 +119,7 @@ namespace LongoMatch
 			try	{			
 				IQuery query = db.Query();
 				query.Constrain(typeof(FileData));
-				query.Descend("filename").Constrain(filedata.Filename);
+				query.Descend("file").Descend("filePath").Constrain(filedata.File.FilePath);
 				IObjectSet result = query.Execute();
 				filedata = (FileData)result.Next();
 				db.Delete(filedata);   				
@@ -139,11 +139,11 @@ namespace LongoMatch
 			db = Db4oFactory.OpenFile(file);
 			try	{
 				// Buscamos si ya existe un obejto FileData para el archivo multimedia
-				if (!Exists(fData.Filename)){
+				if (!Exists(fData.File.FilePath)){
 					//Borramos el antiguo archivo FileData
 					IQuery query = db.Query();
 					query.Constrain(typeof(FileData));
-					query.Descend("filename").Constrain(previousFileName);
+					query.Descend("file").Descend("filePath").Constrain(previousFileName);
 					IObjectSet result = query.Execute();  
 					FileData fd = (FileData)result.Next();
 					db.Delete(fd);
@@ -170,7 +170,7 @@ namespace LongoMatch
 			try	{				
 				IQuery query = db.Query();
 				query.Constrain(typeof(FileData));
-				query.Descend("filename").Constrain(fData.Filename);
+				query.Descend("file").Descend("filePath").Constrain(fData.File.FilePath);
 				IObjectSet result = query.Execute();  
 				FileData fd = (FileData)result.Next();
 				db.Delete(fd);
@@ -188,7 +188,7 @@ namespace LongoMatch
 		private bool Exists(string filename){
 			IQuery query = db.Query();
 			query.Constrain(typeof(FileData));
-			query.Descend("filename").Constrain(filename);
+			query.Descend("file").Descend("filePath").Constrain(filename);
 			IObjectSet result = query.Execute();
 			return (result.HasNext());
 		}

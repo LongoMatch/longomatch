@@ -64,15 +64,16 @@ namespace CesarPlayer
 			this.PlayerInit();
 			vwin = new VolumeWindow();
 			vwin.VolumeChanged += new VolumeChangedHandler(OnVolumeChanged);
-			this.vscale1.Hide();			
+			this.controlsbox.Visible = false;
+		
+						
 		}
 		
 		private void PlayerInit(){
-			string error=null;
+			
 			PlayerMaker pMaker = new PlayerMaker();
-			player = pMaker.getPlayer(320,280,out error);
-			//IF error do something
-	
+			player = pMaker.getPlayer(320,280);
+			//IF error do something	
 			tickHandler = new TickHandler(OnTick);
 			player.Tick += tickHandler;
 			player.StateChanged += new StateChangedHandler(OnStateChanged);
@@ -82,7 +83,7 @@ namespace CesarPlayer
 			Widget _videoscreen = player.Window;
 			videobox.Add(_videoscreen);
 			_videoscreen.Show();
-			this.vscale1.Hide();
+		
 		}
 		
 		public string File {
@@ -154,6 +155,7 @@ namespace CesarPlayer
 		public void Close(){
 			this.Player.Close();
 			this.filename = null;
+			this.timescale.Value = 0;
 			this.UnSensitive();
 		}
 		
@@ -342,13 +344,13 @@ namespace CesarPlayer
 			double val = scale.Value;
 			if (val >25 ){
 				val = val-25 ;
-				this.ratelabel.Text = "X"+val;
+				//this.ratelabel.Text = "X"+val;
 				player.SetRate((float) val,segmentStopTime);
 				Console.WriteLine((float) val);
 			}
 			else if (val <25){
 				
-				this.ratelabel.Text="-X"+val+"/25";
+				//this.ratelabel.Text="-X"+val+"/25";
 				Console.WriteLine((float)(val/25));
 				player.SetRate((float)(val/25),segmentStopTime);
 			}

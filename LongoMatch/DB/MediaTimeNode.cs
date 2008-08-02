@@ -39,7 +39,7 @@ using Gdk;
 		private string miniaturePath;
 				
 		
-		public MediaTimeNode(String name, Time start, Time stop, int dataSection,string miniaturePath):base (name,start,stop) {
+		public MediaTimeNode(String name, Time start, Time stop, uint fps, int dataSection,string miniaturePath):base (name,start,stop,fps) {
 			this.dataSection = dataSection;		
 			this.miniaturePath= miniaturePath;
 		}

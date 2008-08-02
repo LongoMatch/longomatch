@@ -33,6 +33,10 @@ namespace LongoMatch {
         
         private Gtk.ColorButton colorbutton1;
         
+        private Gtk.CheckButton checkbutton2;
+        
+        private Gtk.Label label5;
+        
         private Gtk.Label GtkLabel1;
         
         protected virtual void Build() {
@@ -99,8 +103,6 @@ namespace LongoMatch {
             this.hbox1.Add(this.label4);
             Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(this.hbox1[this.label4]));
             w5.Position = 0;
-            w5.Expand = false;
-            w5.Fill = false;
             // Container child hbox1.Gtk.Box+BoxChild
             this.colorbutton1 = new Gtk.ColorButton();
             this.colorbutton1.CanFocus = true;
@@ -111,11 +113,33 @@ namespace LongoMatch {
             w6.Position = 1;
             w6.Expand = false;
             w6.Fill = false;
-            this.vbox2.Add(this.hbox1);
-            Gtk.Box.BoxChild w7 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox1]));
+            // Container child hbox1.Gtk.Box+BoxChild
+            this.checkbutton2 = new Gtk.CheckButton();
+            this.checkbutton2.CanFocus = true;
+            this.checkbutton2.Name = "checkbutton2";
+            this.checkbutton2.Label = Mono.Unix.Catalog.GetString("checkbutton2");
+            this.checkbutton2.Active = true;
+            this.checkbutton2.DrawIndicator = true;
+            this.checkbutton2.UseUnderline = true;
+            this.hbox1.Add(this.checkbutton2);
+            Gtk.Box.BoxChild w7 = ((Gtk.Box.BoxChild)(this.hbox1[this.checkbutton2]));
+            w7.PackType = ((Gtk.PackType)(1));
             w7.Position = 2;
             w7.Expand = false;
             w7.Fill = false;
+            // Container child hbox1.Gtk.Box+BoxChild
+            this.label5 = new Gtk.Label();
+            this.label5.Name = "label5";
+            this.label5.LabelProp = Mono.Unix.Catalog.GetString("Visible");
+            this.hbox1.Add(this.label5);
+            Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(this.hbox1[this.label5]));
+            w8.PackType = ((Gtk.PackType)(1));
+            w8.Position = 3;
+            this.vbox2.Add(this.hbox1);
+            Gtk.Box.BoxChild w9 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox1]));
+            w9.Position = 2;
+            w9.Expand = false;
+            w9.Fill = false;
             this.GtkAlignment.Add(this.vbox2);
             this.frame1.Add(this.GtkAlignment);
             this.GtkLabel1 = new Gtk.Label();

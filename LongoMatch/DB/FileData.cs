@@ -31,7 +31,8 @@ namespace LongoMatch
 	public class FileData : IComparable
 	{
 		
-		private string filename;
+		private MediaFile file;
+		
 		
 		private string title;
 				
@@ -56,10 +57,10 @@ namespace LongoMatch
 		
 	
 		
-		public FileData(String filename, String localName, String visitorName, int localGoals,
+		public FileData(MediaFile file, String localName, String visitorName, int localGoals,
 		                int visitorGoals, DateTime matchDate, Sections sections) {
 			
-			this.filename = filename;
+			this.file = file;
 			this.localName = localName;
 			this.visitorName = visitorName;
 			this.localGoals = localGoals;
@@ -111,7 +112,7 @@ namespace LongoMatch
 			dataSectionArray[19] = dataSection20;
 			
 			
-			this.Title = System.IO.Path.GetFileNameWithoutExtension(this.filename);
+			this.Title = System.IO.Path.GetFileNameWithoutExtension(this.file.FilePath);
 			
 			System.IO.Directory.CreateDirectory(MainClass.ThumbnailsDir()+"/"+title);
 			
@@ -150,7 +151,7 @@ namespace LongoMatch
 					"-"+start.ToMSecondsString()+"-"+stop.ToMSecondsString()+".jpg";				
 				miniature.Save(miniaturePath,"jpeg");
 			}
-			tn = new MediaTimeNode(name, start, stop,dataSection,miniaturePath);
+			tn = new MediaTimeNode(name, start, stop,this.file.Fps,dataSection,miniaturePath);
 			dataSectionArray[dataSection].Add(tn);			
 			return tn;
 
@@ -181,10 +182,12 @@ namespace LongoMatch
 			return roots;
 		}*/
 
-		public String Filename {
-			get{return filename;}
-			set{filename=value;}
+		public MediaFile File {
+			get{return file;}
+			set{file=value;}
 		}
+		
+	
 		
 		public String Title {
 			get{return title;}
@@ -223,14 +226,14 @@ namespace LongoMatch
 		}
 
 		public bool Equals(FileData fileData){
-			return this.Filename.Equals(fileData.Filename);
+			return this.File.FilePath.Equals(fileData.File.FilePath);
 		}
 		
 		public int CompareTo(object obj) {
 			if(obj is FileData) {
 				FileData fData = (FileData) obj;
 
-				return this.Filename.CompareTo(fData.Filename);
+				return this.File.FilePath.CompareTo(fData.File.FilePath);
 			}
 			else
 				throw new ArgumentException("object is not a FileData and cannot be compared");    

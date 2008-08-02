@@ -1,4 +1,4 @@
-// SectionsTimeNode.cs
+// IMetadataReader.cs
 //
 //  Copyright (C) 2008 Andoni Morales Alastruey
 //
@@ -20,22 +20,13 @@
 
 using System;
 
-namespace LongoMatch
+namespace CesarPlayer
 {
 	
 	
-	public class SectionsTimeNode:TimeNode
+	public interface IMetadataReader
 	{
-		bool visible;
-		
-		public SectionsTimeNode(String name,Time start, Time stop,bool visible):base (name,start,stop,0)
-		{
-			this.visible = visible;
-		}
-		
-		public bool Visible{
-			get{return this.visible;}
-			set{this.visible = value;}
-		}
+		bool Open(string mrl);
+		object GetMetadata(GstPlayerMetadataType type);
 	}
 }

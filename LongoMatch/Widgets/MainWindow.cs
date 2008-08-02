@@ -57,23 +57,25 @@ namespace LongoMatch
 
 		private void SetFileData(FileData fData){			
 			openedFileData = fData;
+	
 			
 			
 			if (fData!=null){		
-				if(!File.Exists(fData.Filename)){
+				if(!File.Exists(fData.File.FilePath)){
 					MessageDialog infoDialog = new MessageDialog (this,DialogFlags.Modal,MessageType.Warning,ButtonsType.Ok,Catalog.GetString("The file associated to this proyect doesn't exits.\n If the location of the file has changed try to change it with de DataBase Manager.") );
 					infoDialog.Run();
 					infoDialog.Destroy();
 					
 				}
 				else {
-					this.Title = System.IO.Path.GetFileNameWithoutExtension(fData.Filename) + " - LongoMatch";
+					this.Title = System.IO.Path.GetFileNameWithoutExtension(fData.File.FilePath) + " - LongoMatch";
 					this.ShowWidgets();
-					playerbin1.File=fData.Filename;		
+					playerbin1.File=fData.File.FilePath;		
 					this.timeline2.Visible = false;
 					buttonswidget1.Visible = true;
 					buttonswidget1.SetSections(fData.Sections);
 					treewidget1.FileData=fData;	
+					this.timelinewidget1.Initialize(fData);
 					//timeprecisionadjustwidget1.Reset();
 					player.LogoMode = false;
 				}
@@ -278,7 +280,7 @@ namespace LongoMatch
 
 		protected virtual void OnPlayListNodeAdded (LongoMatch.MediaTimeNode tNode)
 		{
-			this.playlistwidget2.Add(new PlayListTimeNode(openedFileData.Filename,tNode));
+			this.playlistwidget2.Add(new PlayListTimeNode(openedFileData.File.FilePath,tNode));
 		}
 
 		protected virtual void OnPlaylistwidget2PlayListNodeSelected (LongoMatch.PlayListTimeNode plNode, bool hasNext)

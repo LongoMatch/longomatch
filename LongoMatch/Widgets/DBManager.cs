@@ -63,7 +63,7 @@ namespace LongoMatch
 				}
 				else {
 					MessageDialog md = new MessageDialog(this,DialogFlags.Modal,MessageType.Question,ButtonsType.YesNo,
-					                                     Catalog.GetString("Do yo really want to delete:\n")+selectedFileData.Filename);
+					                                     Catalog.GetString("Do yo really want to delete:\n")+selectedFileData.File.FilePath);
 					if (md.Run()== (int)ResponseType.Yes){
 						this.filedescriptionwidget3.Clear();
 						MainClass.DB.RemoveFileData(selectedFileData);	
@@ -89,13 +89,13 @@ namespace LongoMatch
 			String previousFileName;			
 			FileData changedFileData;
 			
-			previousFileName = filedatalistwidget1.GetSelection().Filename;			
+			previousFileName = filedatalistwidget1.GetSelection().File.FilePath;			
 			changedFileData = this.filedescriptionwidget3.GetFileData();
 			
 			if (changedFileData != null){
 
 				
-				if (changedFileData.Filename == previousFileName)
+				if (changedFileData.File.FilePath == previousFileName)
 					MainClass.DB.UpdateFileData(changedFileData);
 				else{
 					try{

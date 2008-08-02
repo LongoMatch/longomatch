@@ -60,7 +60,15 @@ namespace LongoMatch
 			else return -1;
 			
 		}
-		
+		protected bool GetBoolValue(string section, string clave){
+			XmlNode n;
+    		n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");
+			if (n != null){
+				object result = n.Attributes["value"].Value;				
+				return bool.Parse(result.ToString());
+    		}
+			else return false;
+		}
 		protected ushort GetUShortValue(string section, string clave){
 			XmlNode n;
     		n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");

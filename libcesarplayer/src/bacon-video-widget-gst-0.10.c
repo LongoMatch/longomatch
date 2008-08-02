@@ -66,6 +66,8 @@
 #endif
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
+#include <gio/gio.h>
+
 //#include <gconf/gconf-client.h>
 
 #include "bacon-video-widget.h"
@@ -1853,11 +1855,12 @@ error:
 
 gboolean
 bacon_video_widget_open(BaconVideoWidget * bvw,
-     const gchar * mrl, char ** err)
+     const gchar * mrl, GError **error)
 {
-  GError *error=NULL;
+  
   GstMessage *err_msg = NULL;
-
+  GFile *file;
+  char *path;
   gboolean ret;
 
   g_return_val_if_fail (bvw != NULL, FALSE);
@@ -1873,49 +1876,49 @@ bacon_video_widget_open(BaconVideoWidget * bvw,
   GST_INFO ("mrl = %s", GST_STR_NULL (mrl));
 
 
-  /* hmm... */
-  	if (bvw->priv->mrl && strcmp (bvw->priv->mrl, mrl) == 0) {
-    	GST_INFO ("same as current mrl");
-    	/* FIXME: shouldn't we ensure playing state here? */
-    	return TRUE;
-  	}
+
   
+  
+  /* this allows non-URI type of files in the thumbnailer and so on */
+  file = g_file_new_for_commandline_arg (mrl);
 
-  	/* this allows non-URI type of files in the thumbnailer and so on */
-  	g_free (bvw->priv->mrl);
-  	if (mrl[0] == '/') {
-   	 bvw->priv->mrl = g_strdup_printf ("file://%s", mrl);
-  	} else {
-    	if (strchr (mrl, ':')) {
-      	bvw->priv->mrl = g_strdup (mrl);
-    	} else {
-      	gchar *cur_dir = g_get_current_dir ();
+  /* Only use the URI when FUSE isn't available for a file */
+  path = g_file_get_path (file);
+  if (path) {
+    bvw->priv->mrl = g_filename_to_uri (path, NULL, NULL);
+    g_free (path);
+  } else {
+    bvw->priv->mrl = g_file_get_uri (file);
+  }
 
-      	if (!cur_dir) {
-        	g_set_error (&error, BVW_ERROR, BVW_ERROR_GENERIC,
-                     _("Failed to retrieve working directory"));
-        	return FALSE;
-      	}
-      	bvw->priv->mrl = g_strdup_printf ("file://%s/%s", cur_dir, mrl);
-      	g_free (cur_dir);
-    	}
-  	}
+  g_object_unref (file);
 
+  /* No path? Choke on your errors already! */
+  if (bvw->priv->mrl == NULL)
+    bvw->priv->mrl = g_strdup (mrl);
 
-  	if (g_str_has_prefix (mrl, "icy:") != FALSE) {
-   	 /* Handle "icy://" URLs from QuickTime */
-   	 g_free (bvw->priv->mrl);
-    	bvw->priv->mrl = g_strdup_printf ("http:%s", mrl + 4);
-  	} else if (g_str_has_prefix (mrl, "icy:") != FALSE) {
-    	/* Handle "icyx://" URLs from Orban/Coding Technologies AAC/aacPlus Player */
-    	g_free (bvw->priv->mrl);
-    	bvw->priv->mrl = g_strdup_printf ("http:%s", mrl + 5);
-  	} else if (g_str_has_prefix (mrl, "dvd:///")) {
-    	/* this allows to play backups of dvds */
-    	g_free (bvw->priv->mrl);
-    	bvw->priv->mrl = g_strdup ("dvd://");
-    	bacon_video_widget_set_media_device (bvw, mrl + strlen ("dvd://"));
-  	}
+  if (g_str_has_prefix (mrl, "icy:") != FALSE) {
+    /* Handle "icy://" URLs from QuickTime */
+    g_free (bvw->priv->mrl);
+    bvw->priv->mrl = g_strdup_printf ("http:%s", mrl + 4);
+  } else if (g_str_has_prefix (mrl, "icyx:") != FALSE) {
+    /* Handle "icyx://" URLs from Orban/Coding Technologies AAC/aacPlus Player */
+    g_free (bvw->priv->mrl);
+    bvw->priv->mrl = g_strdup_printf ("http:%s", mrl + 5);
+  } else if (g_str_has_prefix (mrl, "dvd:///")) {
+    /* this allows to play backups of dvds */
+    g_free (bvw->priv->mrl);
+    bvw->priv->mrl = g_strdup ("dvd://");
+    g_free (bvw->priv->media_device);
+    bvw->priv->media_device = g_strdup (mrl + strlen ("dvd://"));
+  } else if (g_str_has_prefix (mrl, "vcd:///")) {
+    /* this allows to play backups of vcds */
+    g_free (bvw->priv->mrl);
+    bvw->priv->mrl = g_strdup ("vcd://");
+    g_free (bvw->priv->media_device);
+    bvw->priv->media_device = g_strdup (mrl + strlen ("vcd://"));
+  }
+
   
   	bvw->priv->got_redirect = FALSE;
   	bvw->priv->media_has_video = FALSE;
@@ -1977,21 +1980,14 @@ bacon_video_widget_open(BaconVideoWidget * bvw,
 
   if (err_msg != NULL) {
     if (error) {
-      error = bvw_error_from_gst_error (bvw, err_msg);
+      *error = bvw_error_from_gst_error (bvw, err_msg);
 
     } else {
       GST_WARNING ("Got error, but caller is not collecting error details!");
     }
     gst_message_unref (err_msg);
   }
-  if (error) {
-
-      *err = g_strdup(error->message);
-	  g_error_free(error);
-	  
-  }
-
-  
+    
   
   return ret;
 }
@@ -2986,8 +2982,10 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
         integer = (bvw->priv->video_fps_n + bvw->priv->video_fps_d/2) /
                   bvw->priv->video_fps_d;
       }
-      else
+      else{
+	      g_print("mal");
         integer = 0;
+       }
       break;
     case BVW_INFO_AUDIO_BITRATE:
       if (bvw->priv->audiotags == NULL)
@@ -3123,9 +3121,13 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
       bacon_video_widget_get_metadata_string (bvw, type, value);
       break;
     case BVW_INFO_DURATION:
+      bacon_video_widget_get_metadata_int (bvw, type, value);
+      break;
     case BVW_INFO_DIMENSION_X:
     case BVW_INFO_DIMENSION_Y:
     case BVW_INFO_FPS:
+      bacon_video_widget_get_metadata_int (bvw, type, value);
+      break;    
     case BVW_INFO_AUDIO_BITRATE:
     case BVW_INFO_VIDEO_BITRATE:
     case BVW_INFO_TRACK_NUMBER:
@@ -3427,9 +3429,9 @@ static void bvw_window_construct(int width, int weight,  BaconVideoWidget *bvw){
 
 BaconVideoWidget *
 bacon_video_widget_new (int width, int height,
-                        BvwUseType type, char ** error)
+                        BvwUseType type, GError ** err)
 {
-  GError *err = NULL;
+  
   BaconVideoWidget *bvw;
   GstElement *audio_sink = NULL, *video_sink = NULL;
   gchar *version_str;
@@ -3458,7 +3460,7 @@ bacon_video_widget_new (int width, int height,
   bvw->priv->play = gst_element_factory_make ("playbin", "play");
   if (!bvw->priv->play) {
 	  g_print("Erroe");
-    g_set_error (&err, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
+    g_set_error (err, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
                  _("Failed to create a GStreamer play object. "
                    "Please check your GStreamer installation."));
     g_object_ref_sink (bvw);
@@ -3532,19 +3534,19 @@ bacon_video_widget_new (int width, int height,
         err_msg = gst_bus_poll (bvw->priv->bus, GST_MESSAGE_ERROR, 0);
         if (err_msg == NULL) {
           g_warning ("Should have gotten an error message, please file a bug.");
-          g_set_error (&err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
+          g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
                _("Failed to open video output. It may not be available. "
                  "Please select another video output in the Multimedia "
                  "Systems Selector."));
         } else if (err_msg) {
-          err = bvw_error_from_gst_error (bvw, err_msg);
+          *err = bvw_error_from_gst_error (bvw, err_msg);
           gst_message_unref (err_msg);
         }
         goto sink_error;
       }
     }
   } else {
-    g_set_error (&err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
+    g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
                  _("Could not find the video output. "
                    "You may need to install additional GStreamer plugins, "
                    "or select another video output in the Multimedia Systems "
@@ -3579,14 +3581,14 @@ bacon_video_widget_new (int width, int height,
         err_msg = gst_bus_poll (bus, GST_MESSAGE_ERROR, 0);
         if (err_msg == NULL) {
           g_warning ("Should have gotten an error message, please file a bug.");
-          g_set_error (&err, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
+          g_set_error (err, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
                        _("Failed to open audio output. You may not have "
                          "permission to open the sound device, or the sound "
                          "server may not be running. "
                          "Please select another audio output in the Multimedia "
                          "Systems Selector."));
         } else if (err) {
-          err = bvw_error_from_gst_error (bvw, err_msg);
+          *err = bvw_error_from_gst_error (bvw, err_msg);
           gst_message_unref (err_msg);
         }
         gst_object_unref (bus);
@@ -3599,7 +3601,7 @@ bacon_video_widget_new (int width, int height,
     }
     gst_object_unref (bus);
   } else {
-    g_set_error (&err, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
+    g_set_error (err, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
                  _("Could not find the audio output. "
                    "You may need to install additional GStreamer plugins, or "
                    "select another audio output in the Multimedia Systems "
@@ -3628,7 +3630,7 @@ bacon_video_widget_new (int width, int height,
 
     if (ret != GST_STATE_CHANGE_SUCCESS) {
       GST_WARNING ("Timeout setting videosink to READY");
-      g_set_error (&err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
+      g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
           _("Failed to open video output. It may not be available. "
           "Please select another video output in the Multimedia Systems Selector."));
       return NULL;
@@ -3667,11 +3669,10 @@ sink_error:
       gst_element_set_state (audio_sink, GST_STATE_NULL);
       gst_object_unref (audio_sink);
     }
-	*error = g_strdup (err->message);
+	
     g_object_ref (bvw);
     g_object_ref_sink (G_OBJECT (bvw));
     g_object_unref (bvw);
-	g_error_free(err);
 
     return NULL;
   }

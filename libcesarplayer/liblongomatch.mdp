@@ -46,6 +46,7 @@
     <ProjectPackage file="gstreamer-interfaces-0.10" name="gstreamer-interfaces-0.10" IsProject="False" />
     <ProjectPackage file="gstreamer-audio-0.10" name="gstreamer-audio-0.10" IsProject="False" />
     <ProjectPackage file="gstreamer-video-0.10" name="gstreamer-video-0.10" IsProject="False" />
+    <ProjectPackage file="gio-2.0" name="gio-2.0" IsProject="False" />
   </Packages>
   <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="Makefile.am" IsAutotoolsProject="True" RelativeConfigureInPath=".">
     <BuildFilesVar />

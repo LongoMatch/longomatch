@@ -44,6 +44,7 @@ namespace LongoMatch
 				sb.Append("<add key=\"Name"+i+"\" value=\"Data "+i+"\" />");
 				sb.Append("<add key=\"Start"+i+"\" value=\"10\" />");
 				sb.Append("<add key=\"Stop"+i+"\" value=\"10\" />");
+				sb.Append("<add key=\"Visible"+i+"\" value=\"true\" />");
 				sb.Append("<add key=\"Red"+i+"\" value=\"65535\" />");
 				sb.Append("<add key=\"Green"+i+"\" value=\"65535\" />");
 				sb.Append("<add key=\"Blue"+i+"\" value=\"65535\" />");

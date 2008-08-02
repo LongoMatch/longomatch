@@ -15,7 +15,7 @@
       </source>
     </icon-set>
   </icon-factory>
-  <widget class="Gtk.Bin" id="LongoMatch.FileDescriptionWidget" design-size="400 374">
+  <widget class="Gtk.Bin" id="LongoMatch.FileDescriptionWidget" design-size="400 298">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.VBox" id="vbox2">
@@ -24,16 +24,8 @@
         <child>
           <widget class="Gtk.Table" id="table1">
             <property name="MemberName" />
-            <property name="NRows">11</property>
+            <property name="NRows">10</property>
             <property name="NColumns">2</property>
-            <property name="RowSpacing">6</property>
-            <property name="ColumnSpacing">6</property>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
             <child>
               <widget class="Gtk.SpinButton" id="dataSpinButton">
                 <property name="MemberName">dataSpinButton</property>
@@ -134,7 +126,7 @@
                   <widget class="Gtk.Entry" id="fileEntry">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
-                    <property name="IsEditable">True</property>
+                    <property name="IsEditable">False</property>
                     <property name="InvisibleChar">●</property>
                   </widget>
                   <packing>
@@ -546,6 +538,8 @@
           <packing>
             <property name="Position">0</property>
             <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
           </packing>
         </child>
       </widget>
@@ -1430,25 +1424,22 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.TimeAdjustWidget" design-size="143 60">
+  <widget class="Gtk.Bin" id="LongoMatch.TimeAdjustWidget" design-size="264 33">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.Table" id="table1">
         <property name="MemberName" />
-        <property name="NRows">2</property>
-        <property name="NColumns">3</property>
-        <property name="RowSpacing">6</property>
-        <property name="ColumnSpacing">6</property>
+        <property name="NRows">1</property>
+        <property name="NColumns">5</property>
         <child>
           <widget class="Gtk.Label" id="label1">
             <property name="MemberName" />
             <property name="LabelProp" translatable="yes">Start gap:</property>
           </widget>
           <packing>
-            <property name="AutoSize">True</property>
-            <property name="XOptions">Fill</property>
+            <property name="AutoSize">False</property>
             <property name="YOptions">Fill</property>
-            <property name="XExpand">False</property>
+            <property name="XExpand">True</property>
             <property name="XFill">True</property>
             <property name="XShrink">False</property>
             <property name="YExpand">False</property>
@@ -1462,12 +1453,11 @@
             <property name="LabelProp" translatable="yes">Stop gap:</property>
           </widget>
           <packing>
-            <property name="TopAttach">1</property>
-            <property name="BottomAttach">2</property>
-            <property name="AutoSize">True</property>
-            <property name="XOptions">Fill</property>
+            <property name="LeftAttach">3</property>
+            <property name="RightAttach">4</property>
+            <property name="AutoSize">False</property>
             <property name="YOptions">Fill</property>
-            <property name="XExpand">False</property>
+            <property name="XExpand">True</property>
             <property name="XFill">True</property>
             <property name="XShrink">False</property>
             <property name="YExpand">False</property>
@@ -1488,7 +1478,7 @@
           <packing>
             <property name="LeftAttach">2</property>
             <property name="RightAttach">3</property>
-            <property name="AutoSize">True</property>
+            <property name="AutoSize">False</property>
             <property name="XOptions">Fill</property>
             <property name="YOptions">Fill</property>
             <property name="XExpand">False</property>
@@ -1511,10 +1501,8 @@
             <property name="Numeric">True</property>
           </widget>
           <packing>
-            <property name="TopAttach">1</property>
-            <property name="BottomAttach">2</property>
-            <property name="LeftAttach">2</property>
-            <property name="RightAttach">3</property>
+            <property name="LeftAttach">4</property>
+            <property name="RightAttach">5</property>
             <property name="AutoSize">True</property>
             <property name="XOptions">Fill</property>
             <property name="YOptions">Fill</property>
@@ -1535,27 +1523,6 @@
             <property name="LeftAttach">1</property>
             <property name="RightAttach">2</property>
             <property name="AutoSize">True</property>
-            <property name="XOptions">Fill</property>
-            <property name="YOptions">Fill</property>
-            <property name="XExpand">False</property>
-            <property name="XFill">True</property>
-            <property name="XShrink">False</property>
-            <property name="YExpand">False</property>
-            <property name="YFill">True</property>
-            <property name="YShrink">False</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Label" id="stoplabel">
-            <property name="MemberName" />
-            <property name="LabelProp" translatable="yes" />
-          </widget>
-          <packing>
-            <property name="TopAttach">1</property>
-            <property name="BottomAttach">2</property>
-            <property name="LeftAttach">1</property>
-            <property name="RightAttach">2</property>
-            <property name="AutoSize">False</property>
             <property name="XOptions">Fill</property>
             <property name="YOptions">Fill</property>
             <property name="XExpand">False</property>
@@ -1877,8 +1844,6 @@
             <property name="MemberName" />
             <property name="NRows">2</property>
             <property name="NColumns">2</property>
-            <property name="RowSpacing">6</property>
-            <property name="ColumnSpacing">6</property>
             <child>
               <widget class="LongoMatch.TimeNodeProperties" id="timenodeproperties101">
                 <property name="MemberName" />
@@ -1963,8 +1928,6 @@
             <property name="MemberName" />
             <property name="NRows">2</property>
             <property name="NColumns">2</property>
-            <property name="RowSpacing">6</property>
-            <property name="ColumnSpacing">6</property>
             <child>
               <widget class="LongoMatch.TimeNodeProperties" id="timenodeproperties105">
                 <property name="MemberName" />
@@ -2052,8 +2015,6 @@
             <property name="MemberName" />
             <property name="NRows">2</property>
             <property name="NColumns">2</property>
-            <property name="RowSpacing">6</property>
-            <property name="ColumnSpacing">6</property>
             <child>
               <widget class="LongoMatch.TimeNodeProperties" id="timenodeproperties109">
                 <property name="MemberName" />
@@ -2141,8 +2102,6 @@
             <property name="MemberName" />
             <property name="NRows">2</property>
             <property name="NColumns">2</property>
-            <property name="RowSpacing">6</property>
-            <property name="ColumnSpacing">6</property>
             <child>
               <widget class="LongoMatch.TimeNodeProperties" id="timenodeproperties113">
                 <property name="MemberName" />
@@ -2230,8 +2189,6 @@
             <property name="MemberName" />
             <property name="NRows">2</property>
             <property name="NColumns">2</property>
-            <property name="RowSpacing">6</property>
-            <property name="ColumnSpacing">6</property>
             <child>
               <widget class="LongoMatch.TimeNodeProperties" id="timenodeproperties117">
                 <property name="MemberName" />
@@ -2465,38 +2422,6 @@
     </child>
   </widget>
   <widget class="Gtk.Window" id="LongoMatch.MainWindow" design-size="1005 569">
-    <action-group name="Player">
-      <action id="PlayAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">_Play</property>
-        <property name="ShortLabel" translatable="yes">dasdf</property>
-        <property name="StockId">gtk-media-play</property>
-      </action>
-      <action id="PauseAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">P_ause</property>
-        <property name="ShortLabel" translatable="yes">P_ause</property>
-        <property name="StockId">gtk-media-pause</property>
-      </action>
-      <action id="PreviousAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">P_revious</property>
-        <property name="ShortLabel" translatable="yes">P_revious</property>
-        <property name="StockId">gtk-media-previous</property>
-      </action>
-      <action id="NextAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">_Next</property>
-        <property name="ShortLabel" translatable="yes">_Next</property>
-        <property name="StockId">gtk-media-next</property>
-      </action>
-      <action id="OpenPlaylistAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">Open Playlist</property>
-        <property name="ShortLabel" translatable="yes">Open Playlist</property>
-        <signal name="Activated" handler="OnOpenPlaylistActionActivated" />
-      </action>
-    </action-group>
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -2574,6 +2499,38 @@
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_Player</property>
         <property name="ShortLabel" translatable="yes">_Player</property>
+      </action>
+    </action-group>
+    <action-group name="Player">
+      <action id="PlayAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Play</property>
+        <property name="ShortLabel" translatable="yes">dasdf</property>
+        <property name="StockId">gtk-media-play</property>
+      </action>
+      <action id="PauseAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">P_ause</property>
+        <property name="ShortLabel" translatable="yes">P_ause</property>
+        <property name="StockId">gtk-media-pause</property>
+      </action>
+      <action id="PreviousAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">P_revious</property>
+        <property name="ShortLabel" translatable="yes">P_revious</property>
+        <property name="StockId">gtk-media-previous</property>
+      </action>
+      <action id="NextAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Next</property>
+        <property name="ShortLabel" translatable="yes">_Next</property>
+        <property name="StockId">gtk-media-next</property>
+      </action>
+      <action id="OpenPlaylistAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Open Playlist</property>
+        <property name="ShortLabel" translatable="yes">Open Playlist</property>
+        <signal name="Activated" handler="OnOpenPlaylistActionActivated" />
       </action>
     </action-group>
     <property name="MemberName" />
@@ -2704,6 +2661,16 @@
                       </packing>
                     </child>
                     <child>
+                      <widget class="LongoMatch.TimeLineWidget" id="timelinewidget1">
+                        <property name="MemberName" />
+                        <property name="Events">ButtonPressMask</property>
+                      </widget>
+                      <packing>
+                        <property name="Position">2</property>
+                        <property name="AutoSize">True</property>
+                      </packing>
+                    </child>
+                    <child>
                       <widget class="LongoMatch.ButtonsWidget" id="buttonswidget1">
                         <property name="MemberName" />
                         <property name="Visible">False</property>
@@ -2711,7 +2678,7 @@
                         <signal name="NewMarkEvent" handler="OnNewMark" />
                       </widget>
                       <packing>
-                        <property name="Position">2</property>
+                        <property name="Position">3</property>
                         <property name="AutoSize">False</property>
                         <property name="Expand">False</property>
                       </packing>
@@ -2839,9 +2806,7 @@
                       </widget>
                       <packing>
                         <property name="Position">0</property>
-                        <property name="AutoSize">True</property>
-                        <property name="Expand">False</property>
-                        <property name="Fill">False</property>
+                        <property name="AutoSize">False</property>
                       </packing>
                     </child>
                     <child>
@@ -2856,6 +2821,38 @@
                         <property name="AutoSize">True</property>
                         <property name="Expand">False</property>
                         <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.CheckButton" id="checkbutton2">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="Label" translatable="yes">checkbutton2</property>
+                        <property name="Active">True</property>
+                        <property name="DrawIndicator">True</property>
+                        <property name="HasLabel">False</property>
+                        <property name="UseUnderline">True</property>
+                        <child>
+                          <placeholder />
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="PackType">End</property>
+                        <property name="Position">2</property>
+                        <property name="AutoSize">False</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Label" id="label5">
+                        <property name="MemberName" />
+                        <property name="LabelProp" translatable="yes">Visible</property>
+                      </widget>
+                      <packing>
+                        <property name="PackType">End</property>
+                        <property name="Position">3</property>
+                        <property name="AutoSize">False</property>
                       </packing>
                     </child>
                   </widget>
@@ -3231,6 +3228,94 @@
           <packing>
             <property name="type">label_item</property>
           </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Bin" id="LongoMatch.TimeLineWidget" design-size="907 389">
+    <property name="MemberName" />
+    <child>
+      <widget class="Gtk.ScrolledWindow" id="scrolledwindow1">
+        <property name="MemberName" />
+        <property name="CanFocus">True</property>
+        <property name="ShadowType">In</property>
+        <child>
+          <widget class="Gtk.Viewport" id="GtkViewport">
+            <property name="MemberName" />
+            <property name="ShadowType">None</property>
+            <child>
+              <widget class="Gtk.VBox" id="vbox1">
+                <property name="MemberName" />
+                <property name="Spacing">6</property>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+              </widget>
+            </child>
+          </widget>
         </child>
       </widget>
     </child>

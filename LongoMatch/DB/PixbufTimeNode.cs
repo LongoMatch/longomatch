@@ -34,7 +34,7 @@ namespace LongoMatch
 		}
 	
 		
-		public PixbufTimeNode(string name, Time start, Time stop,string miniaturePath): base (name,start,stop)
+		public PixbufTimeNode(string name, Time start, Time stop, uint fps,string miniaturePath): base (name,start,stop,fps)
 		{
 			this.miniaturePath = miniaturePath;
 			Console.WriteLine(this.miniaturePath);

@@ -25,25 +25,20 @@ namespace LongoMatch {
         
         private Gtk.Label startlabel;
         
-        private Gtk.Label stoplabel;
-        
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
             // Widget LongoMatch.TimeAdjustWidget
             Stetic.BinContainer.Attach(this);
             this.Name = "LongoMatch.TimeAdjustWidget";
             // Container child LongoMatch.TimeAdjustWidget.Gtk.Container+ContainerChild
-            this.table1 = new Gtk.Table(((uint)(2)), ((uint)(3)), false);
+            this.table1 = new Gtk.Table(((uint)(1)), ((uint)(5)), false);
             this.table1.Name = "table1";
-            this.table1.RowSpacing = ((uint)(6));
-            this.table1.ColumnSpacing = ((uint)(6));
             // Container child table1.Gtk.Table+TableChild
             this.label1 = new Gtk.Label();
             this.label1.Name = "label1";
             this.label1.LabelProp = Mono.Unix.Catalog.GetString("Start gap:");
             this.table1.Add(this.label1);
             Gtk.Table.TableChild w1 = ((Gtk.Table.TableChild)(this.table1[this.label1]));
-            w1.XOptions = ((Gtk.AttachOptions)(4));
             w1.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.label3 = new Gtk.Label();
@@ -51,9 +46,8 @@ namespace LongoMatch {
             this.label3.LabelProp = Mono.Unix.Catalog.GetString("Stop gap:");
             this.table1.Add(this.label3);
             Gtk.Table.TableChild w2 = ((Gtk.Table.TableChild)(this.table1[this.label3]));
-            w2.TopAttach = ((uint)(1));
-            w2.BottomAttach = ((uint)(2));
-            w2.XOptions = ((Gtk.AttachOptions)(4));
+            w2.LeftAttach = ((uint)(3));
+            w2.RightAttach = ((uint)(4));
             w2.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.spinbutton1 = new Gtk.SpinButton(0, 100, 1);
@@ -77,10 +71,8 @@ namespace LongoMatch {
             this.spinbutton2.Numeric = true;
             this.table1.Add(this.spinbutton2);
             Gtk.Table.TableChild w4 = ((Gtk.Table.TableChild)(this.table1[this.spinbutton2]));
-            w4.TopAttach = ((uint)(1));
-            w4.BottomAttach = ((uint)(2));
-            w4.LeftAttach = ((uint)(2));
-            w4.RightAttach = ((uint)(3));
+            w4.LeftAttach = ((uint)(4));
+            w4.RightAttach = ((uint)(5));
             w4.XOptions = ((Gtk.AttachOptions)(4));
             w4.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
@@ -93,18 +85,6 @@ namespace LongoMatch {
             w5.RightAttach = ((uint)(2));
             w5.XOptions = ((Gtk.AttachOptions)(4));
             w5.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child table1.Gtk.Table+TableChild
-            this.stoplabel = new Gtk.Label();
-            this.stoplabel.Name = "stoplabel";
-            this.stoplabel.LabelProp = "";
-            this.table1.Add(this.stoplabel);
-            Gtk.Table.TableChild w6 = ((Gtk.Table.TableChild)(this.table1[this.stoplabel]));
-            w6.TopAttach = ((uint)(1));
-            w6.BottomAttach = ((uint)(2));
-            w6.LeftAttach = ((uint)(1));
-            w6.RightAttach = ((uint)(2));
-            w6.XOptions = ((Gtk.AttachOptions)(4));
-            w6.YOptions = ((Gtk.AttachOptions)(4));
             this.Add(this.table1);
             if ((this.Child != null)) {
                 this.Child.ShowAll();

@@ -31,7 +31,7 @@
 #ifdef WIN32
 	#define EXPORT __declspec (dllexport)
 #else
-	#define EXPORT
+	#define EXPORT	
 #endif
 
 #include <gtk/gtkbox.h>
@@ -120,7 +120,7 @@ typedef enum {
 
 EXPORT BaconVideoWidget *bacon_video_widget_new		 (int width, int height,
 						  BvwUseType type,
-						  char **error);
+						  GError **error);
 
 EXPORT char *bacon_video_widget_get_backend_name (BaconVideoWidget *bvw);
 
@@ -129,7 +129,7 @@ EXPORT char *bacon_video_widget_get_backend_name (BaconVideoWidget *bvw);
 EXPORT GtkWidget *bacon_video_widget_get_window (BaconVideoWidget *bvw);
 EXPORT gboolean bacon_video_widget_open	 (BaconVideoWidget *bvw,
 						  const char *mrl,
-						  char **err);
+						  GError **error);
 EXPORT gchar *bacon_video_widget_get_mrl (BaconVideoWidget * bvw);
 EXPORT gboolean bacon_video_widget_play                 (BaconVideoWidget *bvw);
 EXPORT void bacon_video_widget_pause			 (BaconVideoWidget *bvw);
@@ -208,7 +208,7 @@ typedef enum {
 	BVW_INFO_AUDIO_CHANNELS
 } BaconVideoWidgetMetadataType;
 
-void bacon_video_widget_get_metadata		 (BaconVideoWidget *bvw,
+EXPORT void bacon_video_widget_get_metadata		 (BaconVideoWidget *bvw,
 						  BaconVideoWidgetMetadataType
 						  type,
 						  GValue *value);
@@ -246,7 +246,7 @@ int bacon_video_widget_get_zoom			 (BaconVideoWidget *bvw);
 /* Screenshot functions */
 gboolean bacon_video_widget_can_get_frames       (BaconVideoWidget *bvw,
 						  GError **error);
-GdkPixbuf *bacon_video_widget_get_current_frame (BaconVideoWidget *bvw);
+EXPORT GdkPixbuf *bacon_video_widget_get_current_frame (BaconVideoWidget *bvw);
 
 
 
