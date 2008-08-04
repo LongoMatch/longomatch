@@ -1153,7 +1153,7 @@ namespace CesarPlayer {
 
 		public bool Open(string mrl) {
 			
-			IntPtr native_mrl = GLib.Marshaller.StringToPtrGStrdup (mrl);
+			IntPtr native_mrl = GLib.Marshaller.StringToPtrGStrdup ("file://"+mrl);
 			IntPtr error = IntPtr.Zero;
 			bool raw_ret = bacon_video_widget_open(Handle, native_mrl, out error);
 			bool ret = raw_ret;
