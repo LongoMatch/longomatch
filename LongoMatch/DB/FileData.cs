@@ -165,11 +165,13 @@ namespace LongoMatch
 		
 		public TreeStore GetModel (){
 			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore (typeof (MediaTimeNode));
-			for (int i=0;i<this.Sections.VisibleSections;i++){
-				Gtk.TreeIter iter = dataFileListStore.AppendValues (sections.GetTimeNode(i));
-				foreach(MediaTimeNode tNode in dataSectionArray[i]){
-					dataFileListStore.AppendValues (iter,tNode);
-				}					
+			for (int i=0;i<20;i++){
+				if (this.Sections.GetVisibility(i)){
+					Gtk.TreeIter iter = dataFileListStore.AppendValues (sections.GetTimeNode(i));
+					foreach(MediaTimeNode tNode in dataSectionArray[i]){
+						dataFileListStore.AppendValues (iter,tNode);
+					}			
+				}
 			}
 			return dataFileListStore;
 		}

@@ -83,6 +83,7 @@
     <itemgroups>
       <itemgroup label="TimeScale Properties">
         <property name="PixelRatio" />
+        <property name="CurrentFrame" />
       </itemgroup>
     </itemgroups>
     <signals>
@@ -121,7 +122,11 @@
     </signals>
   </object>
   <object type="LongoMatch.TimeLineWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
+    <itemgroups>
+      <itemgroup label="TimeLineWidget Properties">
+        <property name="CurrentFrame" />
+      </itemgroup>
+    </itemgroups>
     <signals>
       <itemgroup label="TimeLineWidget Signals">
         <signal name="TimeNodeChanged" />

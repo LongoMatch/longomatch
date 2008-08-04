@@ -33,6 +33,7 @@ namespace LongoMatch {
 		private uint frames;
 		private uint pixelRatio=1;
 		private TimeNode selected;
+		private uint currentFrame;
 
 		
 		public TimeLineWidget()
@@ -54,6 +55,23 @@ namespace LongoMatch {
 				this.QueueDraw();
 			}
 		}
+		
+		public uint CurrentFrame{
+			get{return this.currentFrame;}
+			set{
+				this.currentFrame = value;
+				
+				if (tsArray != null && tnArray != null){
+					
+					foreach (TimeScale  ts in tsArray){
+						ts.CurrentFrame = value;					
+					}
+					tr.CurrentFrame = value;
+				}
+				this.QueueDraw();}
+		}
+		
+		
 		public void SetPixelRatio(uint pixelRatio){
 			
 			if (tsArray != null && tnArray != null){
@@ -141,5 +159,8 @@ namespace LongoMatch {
 			}
 			
 		}
+		
+		
+
 	}
 }

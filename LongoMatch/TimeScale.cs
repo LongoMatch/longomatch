@@ -40,8 +40,9 @@ namespace LongoMatch
 		private bool movingLimit;
 		private TimeNode selected=null;
 		private uint lastTime=0;
+		private uint currentFrame;
 		
-		
+			
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event TimeNodeSelectedHandler TimeNodeSelected;
 		public event TimeNodeDeletedHandler TimeNodeDeleted;
@@ -51,85 +52,91 @@ namespace LongoMatch
 		{			
 			this.frames = frames;	
 			this.list = list;				
-			this.Size((int)(frames/pixelRatio), SECTION_HEIGHT);
+				this.Size((int)(frames/pixelRatio), SECTION_HEIGHT);
 			this.HeightRequest= SECTION_HEIGHT;
 			this.WidthRequest = (int)(frames/pixelRatio);		
 			this.color = this.RGBToCairoColor(color);
 			this.color.A = ALPHA;
 			this.Events = EventMask.PointerMotionMask | EventMask.ButtonPressMask | EventMask.ButtonReleaseMask ;
 			
-		
+			
 		}
-		
+			
 		public uint PixelRatio{
 			get {return pixelRatio;}
 			set {
 				this.pixelRatio = value;
 				this.Size((int)(frames/pixelRatio),SECTION_HEIGHT);
-				
+					
 			}
 		}
-	
+		
+		public uint CurrentFrame{
+			get{return this.currentFrame;}
+			set{this.currentFrame = value;}
+		}
+		
 		public TimeNode SelectedTimeNode{
 			get{return this.selected;}
-			set{this.selected = value;}
+				set{this.selected = value;}
 		}
 		public void ReDraw(){
 			Gdk.Region region = this.GdkWindow.ClipRegion;
 			this.GdkWindow.InvalidateRegion(region,true);
 			this.GdkWindow.ProcessUpdates(true);
-		}
-			
-		private Cairo.Color RGBToCairoColor(Gdk.Color gdkColor){			
+			}
 		
+		private Cairo.Color RGBToCairoColor(Gdk.Color gdkColor){			
+			
 			return   new Cairo.Color((double)(gdkColor.Red)/ushort.MaxValue,(double)(gdkColor.Green)/ushort.MaxValue,(double)(gdkColor.Blue)/ushort.MaxValue);
 		}
 		
-		private void DrawTimeNodes(Gdk.Window win){
+			private void DrawTimeNodes(Gdk.Window win){
 			
 			using (Cairo.Context g = Gdk.CairoHelper.Create (win)){	
 				int height;
 				int width;	
 				double[] dashed = new double[2];
 				
-				win.Resize((int)(frames/pixelRatio), this.Allocation.Height);
+					win.Resize((int)(frames/pixelRatio), this.Allocation.Height);
 				win.GetSize(out width, out height);	
 				g.Color = new Cairo.Color(0,0,0);
 				g.LineWidth = 1;
-				g.MoveTo(new PointD(0,0));
-				g.LineTo(new PointD(width,0));
-				g.Stroke();	
-				g.MoveTo(new PointD(0,height));
-				g.LineTo(new PointD(width,height));
-				g.Stroke();					
-												
+				g.MoveTo(0,0);
+				g.LineTo(width,0);
+				g.StrokePreserve();	
+				g.MoveTo(0,height);
+				g.LineTo(width,height);
+				g.Stroke();		
+				g.Color = new Cairo.Color(1,1,1);
+				g.LineWidth = 1;
+				g.MoveTo(currentFrame/pixelRatio,0);
+				g.LineTo(currentFrame/pixelRatio,height);
+				g.Stroke();
+				
 				foreach (MediaTimeNode tn in list){					
-					g.Operator = Operator.Add;				
-					
+					g.Operator = Operator.Add;							
 					g.Rectangle( new Cairo.Rectangle(tn.StartFrame/pixelRatio,3,tn.TotalFrames/pixelRatio,height-6));					
-					g.Color = this.color;					
+						g.Color = this.color;					
 					g.FillPreserve();
 					if (tn == this.selected) {						
-					
-						dashed[0] = 4;
-						dashed[1] = 2;
+						
 						g.Color = new Cairo.Color (0.5, 0.5 , 0.5, 1);						
 					}
-					else{
+						else{
 						g.Color = new Cairo.Color (color.R+0.1, color.G+0.1,color.B+0.1, 1);
 					}					
 					g.LineWidth = 2;
 					g.LineJoin = LineJoin.Round;
 					g.Stroke();
-					dashed[0] = 1;
-					dashed[1] = 0;
-					g.SetDash(dashed,0);
+					g.LineWidth=1;
+					
 				}
 				
 				
-			
+				
 			}
-			
+				
 			
 		}
 		
@@ -137,14 +144,14 @@ namespace LongoMatch
 		{			
 			
 			this.DrawTimeNodes(evnt.Window);
-			return base.OnExposeEvent (evnt);			
+				return base.OnExposeEvent (evnt);			
 		}
 		
 		protected override bool OnMotionNotifyEvent (EventMotion evnt)
 		{
 			
 			if (this.movingLimit){
-				
+					
 				uint pos = (uint) (evnt.X*pixelRatio);
 				if (this.candidateStart && pos  > 0 && pos < this.candidateTN.StopFrame-10){
 					this.candidateTN.StartFrame = pos;					
@@ -153,15 +160,15 @@ namespace LongoMatch
 				}
 				else if (!this.candidateStart && pos < this.frames && pos > this.candidateTN.StartFrame+10){
 					this.candidateTN.StopFrame = pos;					
-					if (this.TimeNodeChanged != null)
+						if (this.TimeNodeChanged != null)
 						this.TimeNodeChanged(this.candidateTN,this.candidateTN.Stop);
 				}
 				Gdk.Region region = this.GdkWindow.ClipRegion;
-					this.GdkWindow.InvalidateRegion(region,true);
-					this.GdkWindow.ProcessUpdates(true);
-							
-			
-			}
+				this.GdkWindow.InvalidateRegion(region,true);
+				this.GdkWindow.ProcessUpdates(true);
+				
+				
+				}
 			return base.OnMotionNotifyEvent (evnt);
 		}
 		
@@ -170,7 +177,7 @@ namespace LongoMatch
 			
 			
 			if (evnt.Button == 1){
-				if (this.lastTime != evnt.Time){
+					if (this.lastTime != evnt.Time){
 					candidateTN = null;
 					foreach (MediaTimeNode tn in list){	
 						int pos = (int) (evnt.X*pixelRatio);
@@ -200,14 +207,13 @@ namespace LongoMatch
 							TimeNodeSelected(tn);
 							break;
 						}
-					}
-					
+					}					
 				}
 			}
 			this.lastTime = evnt.Time;
 			return base.OnButtonPressEvent (evnt);
-	}
-		
+		}
+			
 		protected override bool OnButtonReleaseEvent (EventButton evnt)
 		{
 			if (this.movingLimit){

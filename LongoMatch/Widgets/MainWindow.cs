@@ -359,6 +359,8 @@ namespace LongoMatch
 
 		protected virtual void OnPlayerbin1Tick (object o, CesarPlayer.TickArgs args)
 		{
+			if (args.CurrentTime != 0)
+				this.timelinewidget1.CurrentFrame=(uint)(args.CurrentTime * openedFileData.File.Fps / 1000);
 		}
 
 		protected virtual void OnCaptureModeActionToggled (object sender, System.EventArgs e)

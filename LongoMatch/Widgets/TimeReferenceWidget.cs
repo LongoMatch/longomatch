@@ -30,6 +30,7 @@ namespace LongoMatch
 	public partial class TimeReferenceWidget : Gtk.DrawingArea
 	{
 		ushort frameRate;
+		uint currentFrame;
 		uint frames;
 		uint pixelRatio=1;//Número de frames por poixel
 		public TimeReferenceWidget(uint frames,ushort frameRate)
@@ -42,6 +43,10 @@ namespace LongoMatch
 
 		}
 				
+		public uint CurrentFrame{
+			get{return this.currentFrame;}
+			set{this.currentFrame = value;}
+		}
 		
 		public uint PixelRatio{
 			get {return pixelRatio;}
@@ -67,15 +72,22 @@ namespace LongoMatch
 			
 			time = new Time();
 			
-			using (Cairo.Context g = Gdk.CairoHelper.Create (evnt.Window)){	
-				g.Color = new Cairo.Color(1,1,1);
+			using (Cairo.Context g = Gdk.CairoHelper.Create (evnt.Window)){
 				
+				g.Color = new Cairo.Color(1,1,1);
+				g.MoveTo(currentFrame/pixelRatio,height);
+				g.LineTo(currentFrame/pixelRatio+5,height-15);
+				g.LineTo(currentFrame/pixelRatio-5,height-15);
+				g.ClosePath();
+				g.Fill();
+				g.Stroke();
 				g.MoveTo(new PointD(0,height));
 				g.LineTo(new PointD(width,height));
 				g.LineWidth = 2;
 				g.Stroke();
 				g.MoveTo(new PointD(0,height-20));
 				g.ShowText("0");
+				
 				for (int i=10*frameRate; i<=frames/pixelRatio; ){
 					g.MoveTo(new PointD(i,height));
 					g.LineTo(new PointD(i,height-10));

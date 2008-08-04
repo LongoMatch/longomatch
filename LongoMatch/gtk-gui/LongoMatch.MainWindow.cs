@@ -217,6 +217,7 @@ namespace LongoMatch {
             this.timelinewidget1.HeightRequest = 200;
             this.timelinewidget1.Events = ((Gdk.EventMask)(256));
             this.timelinewidget1.Name = "timelinewidget1";
+            this.timelinewidget1.CurrentFrame = ((uint)(0));
             this.vbox5.Add(this.timelinewidget1);
             Gtk.Box.BoxChild w9 = ((Gtk.Box.BoxChild)(this.vbox5[this.timelinewidget1]));
             w9.Position = 1;

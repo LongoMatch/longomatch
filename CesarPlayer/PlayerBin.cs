@@ -202,10 +202,11 @@ namespace CesarPlayer
 			this.hasNext = false;
 			this.segmentStartTime = 0;
 			this.segmentStopTime = 0;
-			this.timescale.Value = 0;
+			this.vscale1.Value=25;
 			this.timescale.Sensitive = true;
 			this.SegmentClosedEvent();
 			this.player.CancelProgramedStop();
+			
 		}
 		
 		public void SetSensitive(){
