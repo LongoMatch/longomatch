@@ -96,11 +96,11 @@
     <File name="IO/XMLReader.cs" subtype="Code" buildaction="Compile" />
     <File name="images" subtype="Directory" buildaction="Compile" />
     <File name="images/background.png" subtype="Code" buildaction="FileCopy" DeployService.UseProjectRelativePath="True" />
-    <File name="TimeScale.cs" subtype="Code" buildaction="Compile" />
     <File name="DB/MediaFile.cs" subtype="Code" buildaction="Compile" />
     <File name="gtk-gui/LongoMatch.TimeLineWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="Widgets/TimeLineWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="Widgets/TimeReferenceWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/TimeScale.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="Db4objects.Db4o.dll" />

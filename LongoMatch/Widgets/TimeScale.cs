@@ -1,6 +1,6 @@
-// TimeScale.cs 
+// TimeScale.cs
 //
-//  Copyright (C) 2007 Andoni Morales Alastruey
+//  Copyright (C) 2008 Andoni Morales Alastruey
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,108 +19,209 @@
 //
 
 using System;
-using System.Runtime.InteropServices;
-using Gtk;
-
+using System.Collections.Generic;
+using Cairo;
+using Gdk;
 namespace LongoMatch
 {
 	
-	public delegate void PosValueChangedHandler(double pos);
-	public delegate void StartValueChangedHandler(double pos);
-	public delegate void StopValueChangedHandler(double pos);
 	
-	public partial class TimeScale : Gtk.Bin
+	public class TimeScale : Gtk.DrawingArea
 	{
+		private const int SECTION_HEIGHT = 25;
+		private const double ALPHA = 0.6;
+		private uint frames;
+		private uint pixelRatio=1;
+		MediaTimeNode candidateTN;
+		private Cairo.Color color;
+		private double zoom;
+		private List<TimeNode> list;
+		private bool candidateStart;
+		private bool movingLimit;
+		private TimeNode selected=null;
+		private uint lastTime=0;
+		private uint currentFrame;
 		
-		public const int POS = 0;
-		public const int START = 1;
-		public const int STOP = 2;
+			
+		public event TimeNodeChangedHandler TimeNodeChanged;
+		public event TimeNodeSelectedHandler TimeNodeSelected;
+		public event TimeNodeDeletedHandler TimeNodeDeleted;
+		public event PlayListNodeAddedHandler PlayListNodeAdded;
 		
-		public event PosValueChangedHandler PosValueChanged;
-		public event StartValueChangedHandler StartValueChanged;
-		public event StopValueChangedHandler StopValueChanged;
-		
-		//public event ValueChangedHandler ValueChanged;
-		// Callbacks
-		private SignalUtils.SignalDelegateDouble adj_pos_cb ;
-		private SignalUtils.SignalDelegateDouble adj_in_cb  ;
-		private SignalUtils.SignalDelegateDouble adj_out_cb;
-		
-
-		private IntPtr Raw;
-		
-		[DllImport ("libtimescale")]
-		private static extern IntPtr  gtk_timescale_new(double upper);
-		
-		~ TimeScale(){
-			Console.WriteLine("Disposing");
-			GLib.Object o = GLib.Object.GetObject(Raw);
-			o.Dispose();
-			Dispose();
+		public TimeScale(List<TimeNode> list,uint frames,Gdk.Color color)
+		{			
+			this.frames = frames;	
+			this.list = list;				
+				this.Size((int)(frames/pixelRatio), SECTION_HEIGHT);
+			this.HeightRequest= SECTION_HEIGHT;
+			this.WidthRequest = (int)(frames/pixelRatio);		
+			this.color = this.RGBToCairoColor(color);
+			this.color.A = ALPHA;
+			this.Events = EventMask.PointerMotionMask | EventMask.ButtonPressMask | EventMask.ButtonReleaseMask ;
+			
+			
 		}
-		public TimeScale()
-		{
-			this.Build();
-			Widget timescale;
-			Raw = gtk_timescale_new(UInt16.MaxValue);
-			timescale =  new Widget(Raw);
-			timescale.Show();
-			this.Add(timescale);
 			
-			//Creamos las señales que se pueden lanzar
-			
-			adj_in_cb    += new SignalUtils.SignalDelegateDouble   (OnInAdjusted);
-			adj_out_cb   += new SignalUtils.SignalDelegateDouble   (OnOutAdjusted);
-			adj_pos_cb   += new SignalUtils.SignalDelegateDouble   (OnPosAdjusted);
-			
-			
-			//El objeto Player puede lanzar señales que vienen definidas
-			//en el archivo palyer.c con los nombre tick end_of_stream y error
-			// y serán atendidas por tick_cb eos_cb y error_cb y sus respectivos
-			//métodos OnTick OnEndOfStream y OnError
-			SignalUtils.SignalConnect (Raw, "pos_changed"         , adj_pos_cb );
-			SignalUtils.SignalConnect (Raw, "in_changed"              , adj_in_cb  );
-			SignalUtils.SignalConnect (Raw, "out_changed"        , adj_out_cb);
+		public uint PixelRatio{
+			get {return pixelRatio;}
+			set {
+				this.pixelRatio = value;
+				this.Size((int)(frames/pixelRatio),SECTION_HEIGHT);
+					
+			}
 		}
 		
-		
-		[DllImport ("libtimescale")]
-		private static extern void  gtk_timescale_set_bounds(IntPtr timescale,double lower, double upper);
-		public void SetBounds(double lower, double upper){
-			
-			gtk_timescale_set_bounds(Raw,lower, upper);
+		public uint CurrentFrame{
+			get{return this.currentFrame;}
+			set{this.currentFrame = value;}
 		}
 		
-		[DllImport ("libtimescale")]
-		private static extern void gtk_timescale_set_segment(IntPtr timescale,double start, double stop);
-		public void SetSegment(double start, double stop){
-			gtk_timescale_set_segment(Raw,start,stop);
+		public TimeNode SelectedTimeNode{
+			get{return this.selected;}
+				set{this.selected = value;}
+		}
+		public void ReDraw(){
+			Gdk.Region region = this.GdkWindow.ClipRegion;
+			this.GdkWindow.InvalidateRegion(region,true);
+			this.GdkWindow.ProcessUpdates(true);
+			}
+		
+		private Cairo.Color RGBToCairoColor(Gdk.Color gdkColor){			
+			
+			return   new Cairo.Color((double)(gdkColor.Red)/ushort.MaxValue,(double)(gdkColor.Green)/ushort.MaxValue,(double)(gdkColor.Blue)/ushort.MaxValue);
 		}
 		
-		[DllImport ("libtimescale")]
-		private static extern void  gtk_timescale_adjust_position(IntPtr timescale,double pos,int adj);
-		public void AdjustPosition (double pos, int adj){
+			private void DrawTimeNodes(Gdk.Window win){
 			
-			gtk_timescale_adjust_position(Raw, pos,adj);
-			if (adj == START || adj == STOP)
-				gtk_timescale_adjust_position(Raw, pos,POS);
+			using (Cairo.Context g = Gdk.CairoHelper.Create (win)){	
+				int height;
+				int width;	
+				double[] dashed = new double[2];
 				
+					win.Resize((int)(frames/pixelRatio), this.Allocation.Height);
+				win.GetSize(out width, out height);	
+				g.Color = new Cairo.Color(0,0,0);
+				g.LineWidth = 1;
+				g.MoveTo(0,0);
+				g.LineTo(width,0);
+				g.StrokePreserve();	
+				g.MoveTo(0,height);
+				g.LineTo(width,height);
+				g.Stroke();		
+				g.Color = new Cairo.Color(1,1,1);
+				g.LineWidth = 1;
+				g.MoveTo(currentFrame/pixelRatio,0);
+				g.LineTo(currentFrame/pixelRatio,height);
+				g.Stroke();
+				
+				foreach (MediaTimeNode tn in list){					
+					g.Operator = Operator.Add;							
+					g.Rectangle( new Cairo.Rectangle(tn.StartFrame/pixelRatio,3,tn.TotalFrames/pixelRatio,height-6));					
+						g.Color = this.color;					
+					g.FillPreserve();
+					if (tn == this.selected) {						
+						
+						g.Color = new Cairo.Color (0.5, 0.5 , 0.5, 1);						
+					}
+						else{
+						g.Color = new Cairo.Color (color.R+0.1, color.G+0.1,color.B+0.1, 1);
+					}					
+					g.LineWidth = 2;
+					g.LineJoin = LineJoin.Round;
+					g.Stroke();
+					g.LineWidth=1;
+					
+				}
+				
+				
+				
+			}
+				
+			
 		}
 		
-		protected virtual void OnPosAdjusted(IntPtr obj, double val){
-			if (PosValueChanged != null )
-				this.PosValueChanged(val);
-	
+		protected override bool OnExposeEvent (EventExpose evnt)
+		{			
+			
+			this.DrawTimeNodes(evnt.Window);
+				return base.OnExposeEvent (evnt);			
 		}
 		
-		protected virtual void OnInAdjusted(IntPtr obj, double val){
-			if (StartValueChanged != null)
-				this.StartValueChanged(val);
+		protected override bool OnMotionNotifyEvent (EventMotion evnt)
+		{
+			
+			if (this.movingLimit){
+					
+				uint pos = (uint) (evnt.X*pixelRatio);
+				if (this.candidateStart && pos  > 0 && pos < this.candidateTN.StopFrame-10){
+					this.candidateTN.StartFrame = pos;					
+					if (this.TimeNodeChanged != null)
+						this.TimeNodeChanged(this.candidateTN,this.candidateTN.Start);
+				}
+				else if (!this.candidateStart && pos < this.frames && pos > this.candidateTN.StartFrame+10){
+					this.candidateTN.StopFrame = pos;					
+						if (this.TimeNodeChanged != null)
+						this.TimeNodeChanged(this.candidateTN,this.candidateTN.Stop);
+				}
+				Gdk.Region region = this.GdkWindow.ClipRegion;
+				this.GdkWindow.InvalidateRegion(region,true);
+				this.GdkWindow.ProcessUpdates(true);
+				
+				
+				}
+			return base.OnMotionNotifyEvent (evnt);
 		}
 		
-		protected virtual void OnOutAdjusted(IntPtr obj, double val){
-			if (StopValueChanged != null)
-				this.StopValueChanged(val);
+		protected override bool OnButtonPressEvent (EventButton evnt)
+		{
+			
+			
+			if (evnt.Button == 1){
+					if (this.lastTime != evnt.Time){
+					candidateTN = null;
+					foreach (MediaTimeNode tn in list){	
+						int pos = (int) (evnt.X*pixelRatio);
+						if (Math.Abs(pos-tn.StopFrame) < 3*pixelRatio ){
+							this.candidateStart = false;
+							candidateTN = tn;
+							this.movingLimit = true;
+							this.TimeNodeChanged(tn,tn.Start);
+							this.ReDraw();
+							break;
+						}
+						else if (Math.Abs(pos-tn.StartFrame) < 3*pixelRatio){
+							this.candidateStart =true;
+							candidateTN = tn;
+							this.movingLimit = true;
+							this.TimeNodeChanged(tn,tn.Stop);
+							this.ReDraw();
+							break;
+						}			
+					}
+				}
+				//On Double Click
+				else {
+					foreach (MediaTimeNode tn in list){
+						int pos = (int) (evnt.X*pixelRatio);
+						if (this.TimeNodeSelected!= null && tn.HasFrame(pos) ){							
+							TimeNodeSelected(tn);
+							break;
+						}
+					}					
+				}
+			}
+			this.lastTime = evnt.Time;
+			return base.OnButtonPressEvent (evnt);
 		}
+			
+		protected override bool OnButtonReleaseEvent (EventButton evnt)
+		{
+			if (this.movingLimit){
+				this.movingLimit = false;
+				candidateTN.Selected = false;
+				this.ReDraw();
+			}
+			return base.OnButtonReleaseEvent (evnt);
+		}	
 	}
 }
