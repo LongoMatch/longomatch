@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+# SharpDevelop 2.2.1.2648
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CesarPlayer", "CesarPlayer\CesarPlayer.csproj", "{21A2B917-44CA-4E09-A6DA-9B4E2279C267}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch", "LongoMatch\LongoMatch.csproj", "{91D4FB4D-80A5-43A7-B4FC-55FCD382D31D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B578468F-3DF9-48FB-BDB9-3687D9D4B01E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B578468F-3DF9-48FB-BDB9-3687D9D4B01E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B578468F-3DF9-48FB-BDB9-3687D9D4B01E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B578468F-3DF9-48FB-BDB9-3687D9D4B01E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08597636-2E44-41D1-86CC-4FB9E637AEAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08597636-2E44-41D1-86CC-4FB9E637AEAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08597636-2E44-41D1-86CC-4FB9E637AEAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08597636-2E44-41D1-86CC-4FB9E637AEAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91D4FB4D-80A5-43A7-B4FC-55FCD382D31D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91D4FB4D-80A5-43A7-B4FC-55FCD382D31D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91D4FB4D-80A5-43A7-B4FC-55FCD382D31D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91D4FB4D-80A5-43A7-B4FC-55FCD382D31D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21A2B917-44CA-4E09-A6DA-9B4E2279C267}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21A2B917-44CA-4E09-A6DA-9B4E2279C267}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21A2B917-44CA-4E09-A6DA-9B4E2279C267}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21A2B917-44CA-4E09-A6DA-9B4E2279C267}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+EndGlobal

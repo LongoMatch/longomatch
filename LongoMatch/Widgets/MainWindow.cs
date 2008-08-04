@@ -1,4 +1,4 @@
-// MainWindow.cs
+﻿// MainWindow.cs
 //
 //  Copyright (C) 2007 Andoni Morales Alastruey
 //
@@ -116,7 +116,7 @@ namespace LongoMatch
 		
 		private void SaveDB(){
 			
-			MainClass.DB.UpdateFileData(this.OpenedFileData());
+			MainClass.DB.UpdateFileData(OpenedFileData());
 			this.fileDataModified=false;
 			
 		}
