@@ -11,39 +11,108 @@
 
 using System;
 using System.Collections.Generic;
+using Gtk;
 
 namespace LongoMatch {
 	
 	
 	public partial class TimeLineWidget : Gtk.Bin
 	{
-		TimeScale[] tsArray;
-		List<TimeNode>[] tnArray;
-		Sections sections;
+		
+		public event TimeNodeChangedHandler TimeNodeChanged;
+		public event TimeNodeSelectedHandler TimeNodeSelected;
+		public event TimeNodeDeletedHandler TimeNodeDeleted;
+		public event PlayListNodeAddedHandler PlayListNodeAdded;
+		
+		private TimeScale[] tsArray;
+		private List<TimeNode>[] tnArray;
+		private Sections sections;
+		private TimeReferenceWidget tr;
+		private FileData fData;
+		private uint frames;
+		private uint pixelRatio=1;
+
 		
 		public TimeLineWidget()
 		{
-			this.Build();
-		
-			
+			this.Build();	
 			
 		}
 		
-		public void Initialize(FileData fData){
-			sections = fData.Sections;
-			tnArray = fData.GetDataArray();
-			tsArray = new TimeScale[20]; 
+		
+		
+		public void SetPixelRatio(uint pixelRatio){
 			
-			TimeReferenceWidget tr = new TimeReferenceWidget(fData.File.GetFrames(),fData.File.Fps);
-			tr.PixelRatio = 50;
-			this.vbox1.Add(tr);
-			tr.Show();
-			for (int i=0; i<20; i++){
-				TimeScale ts = new TimeScale(tnArray[i],fData.File.GetFrames(),sections.GetColor(i));
-				ts.PixelRatio = 50;
-				tsArray[i]=ts;
-				this.vbox1.Add(ts);
-				ts.Show();
+			if (tsArray != null && tnArray != null){
+				this.pixelRatio = pixelRatio;
+				this.tr.PixelRatio = pixelRatio;
+				foreach (TimeScale  ts in tsArray){
+					ts.PixelRatio = this.pixelRatio;					
+				}
+				this.scrolledwindow1.Hadjustment.Upper = this.frames/pixelRatio;
+			}
+			
+		}
+		
+		
+		
+		public FileData FileData{
+			set{
+				sections = value.Sections;
+				tnArray = value.GetDataArray();
+				tsArray = new TimeScale[20]; 
+				
+				//Unrealize all children
+				foreach (Widget w in vbox1.AllChildren){
+					w.Unrealize();
+					this.vbox1.Remove(w);
+				}				
+				
+				this.frames = value.File.GetFrames();
+				ushort fps = value.File.Fps;
+				
+				tr = new TimeReferenceWidget(frames,fps);
+				tr.PixelRatio = 1;
+				this.vbox1.Add(tr);
+				tr.Show();
+				for (int i=0; i<20; i++){
+					TimeScale ts = new TimeScale(tnArray[i],frames,sections.GetColor(i));
+					ts.PixelRatio = 1;
+					tsArray[i]=ts;
+					ts.TimeNodeChanged += new TimeNodeChangedHandler(OnTimeNodeChanged);
+					this.vbox1.Add(ts);
+					
+					if (value.Sections.GetVisibility(i)){
+						ts.Show();
+					}
+				}
+			}
+			get {return fData;}
+		}
+	
+		protected virtual void OnTimeNodeChanged(TimeNode tn, object val){
+			if (this.TimeNodeChanged != null)			
+				this.TimeNodeChanged(tn,val);
+		}
+
+		protected virtual void OnZoominbuttonClicked (object sender, System.EventArgs e)
+		{
+			if (this.pixelRatio > 2){
+				this.pixelRatio--;
+				this.pixelRatio--;
+				this.SetPixelRatio(this.pixelRatio);
+				this.QueueDraw();
+			}
+			
+		}
+
+		protected virtual void OnZoomoutbuttonClicked (object sender, System.EventArgs e)
+		{
+			if (this.pixelRatio <99){
+				this.pixelRatio++;
+				this.pixelRatio++;
+				this.SetPixelRatio(this.pixelRatio);
+				this.QueueDraw();
 			}
 			
 		}

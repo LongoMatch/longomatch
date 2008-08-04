@@ -13,6 +13,14 @@ namespace LongoMatch {
     
     public partial class TimeLineWidget {
         
+        private Gtk.HBox hbox3;
+        
+        private Gtk.VBox vbox3;
+        
+        private Gtk.Button zoominbutton;
+        
+        private Gtk.Button zoomoutbutton;
+        
         private Gtk.ScrolledWindow scrolledwindow1;
         
         private Gtk.VBox vbox1;
@@ -23,24 +31,93 @@ namespace LongoMatch {
             Stetic.BinContainer.Attach(this);
             this.Name = "LongoMatch.TimeLineWidget";
             // Container child LongoMatch.TimeLineWidget.Gtk.Container+ContainerChild
+            this.hbox3 = new Gtk.HBox();
+            this.hbox3.Name = "hbox3";
+            this.hbox3.Spacing = 6;
+            // Container child hbox3.Gtk.Box+BoxChild
+            this.vbox3 = new Gtk.VBox();
+            this.vbox3.Name = "vbox3";
+            this.vbox3.Spacing = 6;
+            // Container child vbox3.Gtk.Box+BoxChild
+            this.zoominbutton = new Gtk.Button();
+            this.zoominbutton.CanFocus = true;
+            this.zoominbutton.Name = "zoominbutton";
+            this.zoominbutton.UseUnderline = true;
+            // Container child zoominbutton.Gtk.Container+ContainerChild
+            Gtk.Alignment w1 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
+            Gtk.HBox w2 = new Gtk.HBox();
+            w2.Spacing = 2;
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Image w3 = new Gtk.Image();
+            w3.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-zoom-in", Gtk.IconSize.Button, 20);
+            w2.Add(w3);
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Label w5 = new Gtk.Label();
+            w5.LabelProp = "";
+            w2.Add(w5);
+            w1.Add(w2);
+            this.zoominbutton.Add(w1);
+            this.vbox3.Add(this.zoominbutton);
+            Gtk.Box.BoxChild w9 = ((Gtk.Box.BoxChild)(this.vbox3[this.zoominbutton]));
+            w9.Position = 0;
+            w9.Expand = false;
+            w9.Fill = false;
+            // Container child vbox3.Gtk.Box+BoxChild
+            this.zoomoutbutton = new Gtk.Button();
+            this.zoomoutbutton.CanFocus = true;
+            this.zoomoutbutton.Name = "zoomoutbutton";
+            this.zoomoutbutton.UseUnderline = true;
+            // Container child zoomoutbutton.Gtk.Container+ContainerChild
+            Gtk.Alignment w10 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
+            Gtk.HBox w11 = new Gtk.HBox();
+            w11.Spacing = 2;
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Image w12 = new Gtk.Image();
+            w12.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-zoom-out", Gtk.IconSize.Button, 20);
+            w11.Add(w12);
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Label w14 = new Gtk.Label();
+            w14.LabelProp = "";
+            w11.Add(w14);
+            w10.Add(w11);
+            this.zoomoutbutton.Add(w10);
+            this.vbox3.Add(this.zoomoutbutton);
+            Gtk.Box.BoxChild w18 = ((Gtk.Box.BoxChild)(this.vbox3[this.zoomoutbutton]));
+            w18.Position = 1;
+            w18.Expand = false;
+            w18.Fill = false;
+            this.hbox3.Add(this.vbox3);
+            Gtk.Box.BoxChild w19 = ((Gtk.Box.BoxChild)(this.hbox3[this.vbox3]));
+            w19.Position = 0;
+            w19.Expand = false;
+            w19.Fill = false;
+            // Container child hbox3.Gtk.Box+BoxChild
             this.scrolledwindow1 = new Gtk.ScrolledWindow();
             this.scrolledwindow1.CanFocus = true;
             this.scrolledwindow1.Name = "scrolledwindow1";
             this.scrolledwindow1.ShadowType = ((Gtk.ShadowType)(1));
             // Container child scrolledwindow1.Gtk.Container+ContainerChild
-            Gtk.Viewport w1 = new Gtk.Viewport();
-            w1.ShadowType = ((Gtk.ShadowType)(0));
+            Gtk.Viewport w20 = new Gtk.Viewport();
+            w20.ShadowType = ((Gtk.ShadowType)(0));
             // Container child GtkViewport.Gtk.Container+ContainerChild
             this.vbox1 = new Gtk.VBox();
             this.vbox1.Name = "vbox1";
-            this.vbox1.Spacing = 6;
-            w1.Add(this.vbox1);
-            this.scrolledwindow1.Add(w1);
-            this.Add(this.scrolledwindow1);
+            this.vbox1.Homogeneous = true;
+            this.vbox1.Spacing = 2;
+            w20.Add(this.vbox1);
+            this.scrolledwindow1.Add(w20);
+            this.hbox3.Add(this.scrolledwindow1);
+            Gtk.Box.BoxChild w23 = ((Gtk.Box.BoxChild)(this.hbox3[this.scrolledwindow1]));
+            w23.Position = 1;
+            this.Add(this.hbox3);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
             this.Show();
+            this.zoominbutton.Clicked += new System.EventHandler(this.OnZoominbuttonClicked);
+            this.zoomoutbutton.Clicked += new System.EventHandler(this.OnZoomoutbuttonClicked);
         }
     }
 }

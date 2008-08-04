@@ -131,7 +131,7 @@ public class PlayListTreeView : Gtk.TreeView
  
 			(cell as Gtk.CellRendererText).Text = Catalog.GetString("Name: ")+tNode.Name +"\n"+Catalog.GetString("Start: ")+tNode.Start.ToMSecondsString()
 				+Catalog.GetString(" sec")+"\n"+Catalog.GetString("Duration: ")+tNode.Duration.ToMSecondsString()+Catalog.GetString(" sec");
-			if (tNode.NonValid)
+			if (!tNode.Valid)
 				(cell as Gtk.CellRendererText).Sensitive = false;
 		}
  

@@ -34,6 +34,7 @@ namespace LongoMatch
 		public event TimeNodeSelectedHandler TimeNodeSelected;
 		public event TimeNodeDeletedHandler TimeNodeDeleted;
 		public event PlayListNodeAddedHandler PlayListNodeAdded;
+		public event NewMarkEventHandler NewMarkEvent;
 		private TreeIter selectedIter;
 		private Menu menu;
 		private TimeNode selectedTimeNode;
@@ -219,9 +220,11 @@ namespace LongoMatch
 			Gtk.TreeIter iter;
 			this.Model.GetIter (out iter, args.Path);
 			TimeNode tNode = (TimeNode)this.Model.GetValue (iter, 0);
+			
 			if (tNode is MediaTimeNode && TimeNodeSelected != null)
 				this.TimeNodeSelected((MediaTimeNode)tNode);
-				
+			else if (tNode is SectionsTimeNode && this.NewMarkEvent != null)
+				Console.WriteLine(args.Path);
 
 	
 		}

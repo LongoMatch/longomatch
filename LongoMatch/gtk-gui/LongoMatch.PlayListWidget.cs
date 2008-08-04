@@ -35,7 +35,7 @@ namespace LongoMatch {
             Stetic.Gui.Initialize(this);
             // Widget LongoMatch.PlayListWidget
             Stetic.BinContainer.Attach(this);
-            this.WidthRequest = 30;
+            this.WidthRequest = 100;
             this.Name = "LongoMatch.PlayListWidget";
             // Container child LongoMatch.PlayListWidget.Gtk.Container+ContainerChild
             this.vbox2 = new Gtk.VBox();
@@ -162,6 +162,7 @@ namespace LongoMatch {
             }
             this.Show();
             this.playlisttreeview1.RowActivated += new Gtk.RowActivatedHandler(this.OnPlaylisttreeview1RowActivated);
+            this.playlisttreeview1.DragEnd += new Gtk.DragEndHandler(this.OnPlaylisttreeview1DragEnd);
             this.newbutton.Clicked += new System.EventHandler(this.OnNewbuttonClicked);
             this.openbutton.Clicked += new System.EventHandler(this.OnOpenbuttonClicked);
             this.savebutton.Clicked += new System.EventHandler(this.OnSavebuttonClicked);

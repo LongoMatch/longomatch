@@ -29,7 +29,7 @@ namespace LongoMatch
 	{
 		private string fileName;
 		private string miniaturePath;
-		private bool nonValid=false;
+		private bool valid=true;
 
 		
 		public PlayListTimeNode(){
@@ -38,7 +38,6 @@ namespace LongoMatch
 		public PlayListTimeNode(string fileName, MediaTimeNode tNode) : base(tNode.Name,tNode.Start,tNode.Stop,tNode.Fps,tNode.MiniaturePath)
 		{
 			this.fileName = fileName;
-
 			
 		}
 		public string FileName{
@@ -46,9 +45,10 @@ namespace LongoMatch
 			get{ return this.fileName;}
 		}
 		
-		public bool NonValid{
-			get{return this.nonValid;}
-			set{this.nonValid = value;}
+		
+		public bool Valid{
+			get{return this.valid;}
+			set{this.valid = value;}
 		}
 		
 	

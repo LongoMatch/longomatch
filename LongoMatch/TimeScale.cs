@@ -28,7 +28,7 @@ namespace LongoMatch
 	
 	public class TimeScale : Gtk.DrawingArea
 	{
-		private const int SECTION_HEIGHT = 50;
+		private const int SECTION_HEIGHT = 25;
 		private const double ALPHA = 0.6;
 		private uint frames;
 		private uint pixelRatio=1;
@@ -38,6 +38,7 @@ namespace LongoMatch
 		private List<TimeNode> list;
 		private bool candidateStart;
 		private bool movingLimit;
+		
 		
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event TimeNodeSelectedHandler TimeNodeSelected;
@@ -61,15 +62,15 @@ namespace LongoMatch
 			get {return pixelRatio;}
 			set {
 				this.pixelRatio = value;
-				if (this.Visible){
-					Gdk.Region region = this.GdkWindow.ClipRegion;
-					this.GdkWindow.InvalidateRegion(region,true);
-					this.GdkWindow.ProcessUpdates(true);
-				}
+				
 			}
 		}
 	
-		
+		public void ReDraw(){
+			Gdk.Region region = this.GdkWindow.ClipRegion;
+			this.GdkWindow.InvalidateRegion(region,true);
+			this.GdkWindow.ProcessUpdates(true);
+		}
 			
 		private Cairo.Color RGBToCairoColor(Gdk.Color gdkColor){			
 		
@@ -80,9 +81,10 @@ namespace LongoMatch
 			
 			using (Cairo.Context g = Gdk.CairoHelper.Create (win)){	
 				int height;
-				int width;			
-				
-				win.GetSize(out width, out height);
+				int width;				
+				win.Resize((int)(frames/pixelRatio), SECTION_HEIGHT);
+				win.GetSize(out width, out height);	
+				this.WidthRequest = width;
 				g.Color = new Cairo.Color(0,0,0);
 				g.LineWidth = 1;
 				g.MoveTo(new PointD(0,0));
@@ -108,7 +110,11 @@ namespace LongoMatch
 					g.LineJoin = LineJoin.Round;
 					g.Stroke();
 				}
+				
+				
+			
 			}
+			
 			
 		}
 		
@@ -122,61 +128,57 @@ namespace LongoMatch
 		{
 			
 			if (this.movingLimit){
+				
 				uint pos = (uint) (evnt.X*pixelRatio);
 				if (this.candidateStart && pos  > 0 && pos < this.candidateTN.StopFrame-10){
-					this.candidateTN.StartFrame = pos;
+					this.candidateTN.StartFrame = pos;					
 					if (this.TimeNodeChanged != null)
 						this.TimeNodeChanged(this.candidateTN,this.candidateTN.Start);
 				}
 				else if (!this.candidateStart && pos < this.frames && pos > this.candidateTN.StartFrame+10){
-					this.candidateTN.StopFrame = pos;
+					this.candidateTN.StopFrame = pos;					
 					if (this.TimeNodeChanged != null)
 						this.TimeNodeChanged(this.candidateTN,this.candidateTN.Stop);
 				}
-				
-				Gdk.Region region = evnt.Window.ClipRegion;
-				evnt.Window.InvalidateRegion(region,true);
-				evnt.Window.ProcessUpdates(true);				
-			}
-			else {				
-				candidateTN = null;
-				foreach (MediaTimeNode tn in list){	
-					int pos = (int) (evnt.X*pixelRatio);
-					if (Math.Abs(pos-tn.StopFrame) < 3*pixelRatio ){
-						this.candidateStart = false;
-						candidateTN = tn;
-						break;
-					}
-					else if (Math.Abs(pos-tn.StartFrame) < 3*pixelRatio  ){
-						this.candidateStart =true;
-						candidateTN = tn;
-						break;
-					}	
-				}			
+				Gdk.Region region = this.GdkWindow.ClipRegion;
+					this.GdkWindow.InvalidateRegion(region,true);
+					this.GdkWindow.ProcessUpdates(true);
+							
+			
 			}
 			return base.OnMotionNotifyEvent (evnt);
 		}
 		
 	protected override bool OnButtonPressEvent (EventButton evnt)
-		{
-			if (candidateTN != null){
-				this.movingLimit = true;
-				candidateTN.Selected = true;
-				Gdk.Region region = evnt.Window.ClipRegion;
-				evnt.Window.InvalidateRegion(region,true);
-				evnt.Window.ProcessUpdates(true);
-			}			
-			return base.OnButtonPressEvent (evnt);
+	{
+		candidateTN = null;
+		foreach (MediaTimeNode tn in list){	
+			int pos = (int) (evnt.X*pixelRatio);
+			if (Math.Abs(pos-tn.StopFrame) < 3*pixelRatio ){
+				this.candidateStart = false;
+				candidateTN = tn;
+				break;
+			}
+			else if (Math.Abs(pos-tn.StartFrame) < 3*pixelRatio  ){
+				this.candidateStart =true;
+				candidateTN = tn;
+				break;
+			}
 		}
+		if (candidateTN != null){
+			this.movingLimit = true;
+			candidateTN.Selected = true;
+			this.ReDraw();
+		}			
+		return base.OnButtonPressEvent (evnt);
+	}
 		
 		protected override bool OnButtonReleaseEvent (EventButton evnt)
 		{
 			if (this.movingLimit){
 				this.movingLimit = false;
 				candidateTN.Selected = false;
-				Gdk.Region region = evnt.Window.ClipRegion;
-				evnt.Window.InvalidateRegion(region,true);
-				evnt.Window.ProcessUpdates(true);
+				this.ReDraw();
 			}
 			return base.OnButtonReleaseEvent (evnt);
 		}	

@@ -31,7 +31,7 @@ namespace LongoMatch
 	{
 		ushort frameRate;
 		uint frames;
-		uint pixelRatio;//Número de frames por poixel
+		uint pixelRatio=1;//Número de frames por poixel
 		public TimeReferenceWidget(uint frames,ushort frameRate)
 		{
 			this.frameRate = frameRate;
@@ -45,11 +45,7 @@ namespace LongoMatch
 			get {return pixelRatio;}
 			set {
 				this.pixelRatio = value;
-				if (this.Visible){
-					Gdk.Region region = this.GdkWindow.ClipRegion;
-					this.GdkWindow.InvalidateRegion(region,true);
-					this.GdkWindow.ProcessUpdates(true);
-				}
+										
 			}
 		}
 		
@@ -58,20 +54,24 @@ namespace LongoMatch
 			int height;
 			int width;	
 			Time time;
-				
+			
+			
 			evnt.Window.GetSize(out width, out height);	
+			evnt.Window.Resize((int)(frames/pixelRatio), height);
+			evnt.Window.GetSize(out width, out height);	
+			
 			time = new Time();
 			
 			using (Cairo.Context g = Gdk.CairoHelper.Create (evnt.Window)){	
 				g.Color = new Cairo.Color(1,1,1);
 				
 				g.MoveTo(new PointD(0,height));
-				g.LineTo(new PointD(frames,height));
+				g.LineTo(new PointD(width,height));
 				g.LineWidth = 2;
 				g.Stroke();
 				g.MoveTo(new PointD(0,height-20));
 				g.ShowText("0");
-				for (int i=10*frameRate; i<=frames; ){
+				for (int i=10*frameRate; i<=frames/pixelRatio; ){
 					g.MoveTo(new PointD(i,height));
 					g.LineTo(new PointD(i,height-10));
 					g.LineWidth = 2;
@@ -81,7 +81,7 @@ namespace LongoMatch
 					g.ShowText(time.ToSecondsString());
 					i=i+10*frameRate;				
 				}
-				for (int i=0; i<=frames; ){
+				for (int i=0; i<=frames/pixelRatio; ){
 					g.MoveTo(new PointD(i,height));
 					g.LineTo(new PointD(i,height-5));
 					g.LineWidth = 1;
@@ -91,7 +91,8 @@ namespace LongoMatch
 				
 				
 			}
-		
+			
+			Console.WriteLine(width);
 			return base.OnExposeEvent (evnt);
 		}
 

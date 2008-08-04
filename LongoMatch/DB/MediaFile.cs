@@ -29,12 +29,20 @@ namespace LongoMatch
 		string filePath;
 		Time length;
 		ushort fps;
+		bool hasAudio;
+		bool hasVideo;
 		
-		public MediaFile(string filePath,Time length,ushort fps)
+		public MediaFile(string filePath,Time length,ushort fps,bool hasAudio, bool hasVideo)
 		{
 			this.filePath = filePath;
 			this.length = length;
-			this.fps = fps;
+			this.hasAudio = hasAudio;
+			this.hasVideo = hasVideo;
+			if (fps == 0)
+					//For audio Files
+					this.fps=25;
+				else
+					this.fps = fps;
 		}
 		
 		public string FilePath{
@@ -47,9 +55,24 @@ namespace LongoMatch
 			set {this.length = value;}
 		}
 		
+		public bool HasVideo{
+			get { return this.hasVideo;}
+			set{this.hasVideo = value;}
+		}
+		
+		public bool HasAudio{
+			get { return this.hasAudio;}
+			set{this.hasAudio = value;}
+		}
+		
 		public ushort Fps{
 			get {return this.fps;}
-			set {this.fps = value;}
+			set {
+				if (value == 0)
+					//For audio Files
+					this.fps=25;
+				else
+					this.fps = value;}
 		}
 		
 		public uint GetFrames(){

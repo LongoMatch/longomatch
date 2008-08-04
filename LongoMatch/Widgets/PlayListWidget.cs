@@ -224,5 +224,13 @@ namespace LongoMatch
 				
 		}
 
+		protected virtual void OnPlaylisttreeview1DragEnd (object o, Gtk.DragEndArgs args)
+		{
+			
+			this.playList.SetModel((ListStore)this.playlisttreeview1.Model);
+		}
+
+		
+
 	}
 }

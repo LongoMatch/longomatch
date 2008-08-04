@@ -116,6 +116,16 @@ namespace LongoMatch
 			
 		}
 		
+		public bool[] GetSectionsVisibility(){
+			bool[] visibility = new bool[20];
+			SectionsTimeNode tNode;
+			for (int i=0; i<totalSections; i++){
+				tNode = timeNodesArray[i];
+				visibility[i]=tNode.Visible;
+			}
+			return visibility;
+		}
+		
 		public SectionsTimeNode GetTimeNode (int section){
 			return timeNodesArray[section];
 		}
@@ -132,6 +142,9 @@ namespace LongoMatch
 			return this.timeNodesArray[section].Stop;
 		}
 		
+		public bool GetVisibility (int section){
+			return this.timeNodesArray[section].Visible;
+		}
 		public Color GetColor (int section){
 			return this.colorsArray[section];
 		}

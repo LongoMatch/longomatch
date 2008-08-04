@@ -3135,6 +3135,8 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
       bacon_video_widget_get_metadata_int (bvw, type, value);
       break;
     case BVW_INFO_HAS_VIDEO:
+      bacon_video_widget_get_metadata_bool (bvw, type, value);
+      break;
     case BVW_INFO_HAS_AUDIO:
       bacon_video_widget_get_metadata_bool (bvw, type, value);
       break;

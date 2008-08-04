@@ -89,6 +89,8 @@ namespace LongoMatch {
             // Container child notebook1.Gtk.Notebook+NotebookChild
             this.table1 = new Gtk.Table(((uint)(2)), ((uint)(2)), false);
             this.table1.Name = "table1";
+            this.table1.RowSpacing = ((uint)(6));
+            this.table1.ColumnSpacing = ((uint)(6));
             // Container child table1.Gtk.Table+TableChild
             this.timenodeproperties101 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties101.Events = ((Gdk.EventMask)(256));
@@ -130,6 +132,8 @@ namespace LongoMatch {
             // Container child notebook1.Gtk.Notebook+NotebookChild
             this.table6 = new Gtk.Table(((uint)(2)), ((uint)(2)), false);
             this.table6.Name = "table6";
+            this.table6.RowSpacing = ((uint)(6));
+            this.table6.ColumnSpacing = ((uint)(6));
             // Container child table6.Gtk.Table+TableChild
             this.timenodeproperties105 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties105.Events = ((Gdk.EventMask)(256));
@@ -173,6 +177,8 @@ namespace LongoMatch {
             // Container child notebook1.Gtk.Notebook+NotebookChild
             this.table11 = new Gtk.Table(((uint)(2)), ((uint)(2)), false);
             this.table11.Name = "table11";
+            this.table11.RowSpacing = ((uint)(6));
+            this.table11.ColumnSpacing = ((uint)(6));
             // Container child table11.Gtk.Table+TableChild
             this.timenodeproperties109 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties109.Events = ((Gdk.EventMask)(256));
@@ -216,6 +222,8 @@ namespace LongoMatch {
             // Container child notebook1.Gtk.Notebook+NotebookChild
             this.table16 = new Gtk.Table(((uint)(2)), ((uint)(2)), false);
             this.table16.Name = "table16";
+            this.table16.RowSpacing = ((uint)(6));
+            this.table16.ColumnSpacing = ((uint)(6));
             // Container child table16.Gtk.Table+TableChild
             this.timenodeproperties113 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties113.Events = ((Gdk.EventMask)(256));
@@ -259,6 +267,8 @@ namespace LongoMatch {
             // Container child notebook1.Gtk.Notebook+NotebookChild
             this.table21 = new Gtk.Table(((uint)(2)), ((uint)(2)), false);
             this.table21.Name = "table21";
+            this.table21.RowSpacing = ((uint)(6));
+            this.table21.ColumnSpacing = ((uint)(6));
             // Container child table21.Gtk.Table+TableChild
             this.timenodeproperties117 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties117.Events = ((Gdk.EventMask)(256));

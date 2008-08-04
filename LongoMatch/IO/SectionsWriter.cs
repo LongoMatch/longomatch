@@ -44,7 +44,7 @@ namespace LongoMatch
 				sb.Append("<add key=\"Name"+i+"\" value=\"Data "+i+"\" />");
 				sb.Append("<add key=\"Start"+i+"\" value=\"10\" />");
 				sb.Append("<add key=\"Stop"+i+"\" value=\"10\" />");
-				sb.Append("<add key=\"Visible"+i+"\" value=\"true\" />");
+				sb.Append("<add key=\"Visible"+i+"\" value=\"True\" />");
 				sb.Append("<add key=\"Red"+i+"\" value=\"65535\" />");
 				sb.Append("<add key=\"Green"+i+"\" value=\"65535\" />");
 				sb.Append("<add key=\"Blue"+i+"\" value=\"65535\" />");
@@ -87,6 +87,7 @@ namespace LongoMatch
 				SetValue(configXml,"configuration","Name" + (i+1),sections.GetName(i));
 				SetValue(configXml,"configuration","Start"+ (i+1),sections.GetStartTime(i).Seconds.ToString());
 				SetValue(configXml,"configuration","Stop"+ (i+1),sections.GetStopTime(i).Seconds.ToString());
+				SetValue(configXml,"configuration","Visible"+ (i+1),sections.GetVisibility(i).ToString());
 				SetValue(configXml,"configuration","Red"+ (i+1),color.Red.ToString());
 				SetValue(configXml,"configuration","Green"+ (i+1),color.Green.ToString());
 				SetValue(configXml,"configuration","Blue"+ (i+1),color.Blue.ToString());

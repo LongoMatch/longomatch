@@ -193,8 +193,10 @@ namespace LongoMatch
 					reader.Open(fChooser.Filename);
 					int duration = (int)reader.GetMetadata(CesarPlayer.GstPlayerMetadataType.Duration);
 					int fps = (int) reader.GetMetadata(CesarPlayer.GstPlayerMetadataType.Fps);
-					Console.WriteLine(duration+" "+fps);
-					this.mFile = new MediaFile(fChooser.Filename,new Time(duration*1000),(ushort)fps);				
+					bool hasVideo = (bool) reader.GetMetadata(CesarPlayer.GstPlayerMetadataType.HasVideo);
+					bool hasAudio = (bool) reader.GetMetadata(CesarPlayer.GstPlayerMetadataType.HasAudio);
+					
+					this.mFile = new MediaFile(fChooser.Filename,new Time(duration*1000),(ushort)fps,hasAudio,hasVideo);				
 					fileEntry.Text = fChooser.Filename;
 				}
 				catch (GLib.GException ex){

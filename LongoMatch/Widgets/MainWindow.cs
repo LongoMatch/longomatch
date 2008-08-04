@@ -23,24 +23,18 @@ using Gtk;
 using Mono.Unix;
 using System.IO;
 using GLib;
+using System.Threading;
 using Gdk;
 
 
 namespace LongoMatch
-{
-	
-   
- 
-	
+{	
 	public partial class MainWindow : Gtk.Window
 	{
-
-		private static FileData openedFileData;
+		private static  FileData openedFileData;
 		private CesarPlayer.IPlayer player;
+		bool fileDataModified;	
 
-	
- 
-		
 		
 		public MainWindow() : 
 				base("LongoMatch")
@@ -51,33 +45,36 @@ namespace LongoMatch
 			player = playerbin1.Player ;
 			player.LogoMode = true;
 			this.playlistwidget2.SetPlayer(player);
+			GLib.Idle.Add(UpdateFileData);
 		}
 
 		
 
 		private void SetFileData(FileData fData){			
-			openedFileData = fData;
-	
-			
-			
+			openedFileData = fData;			
 			if (fData!=null){		
 				if(!File.Exists(fData.File.FilePath)){
 					MessageDialog infoDialog = new MessageDialog (this,DialogFlags.Modal,MessageType.Warning,ButtonsType.Ok,Catalog.GetString("The file associated to this proyect doesn't exits.\n If the location of the file has changed try to change it with de DataBase Manager.") );
 					infoDialog.Run();
 					infoDialog.Destroy();
-					
+					this.CloseActualProyect();					
 				}
 				else {
+					
 					this.Title = System.IO.Path.GetFileNameWithoutExtension(fData.File.FilePath) + " - LongoMatch";
-					this.ShowWidgets();
 					playerbin1.File=fData.File.FilePath;		
-					this.timeline2.Visible = false;
-					buttonswidget1.Visible = true;
-					buttonswidget1.SetSections(fData.Sections);
 					treewidget1.FileData=fData;	
-					this.timelinewidget1.Initialize(fData);
-					//timeprecisionadjustwidget1.Reset();
-					player.LogoMode = false;
+					this.timelinewidget1.FileData = fData;;
+					this.buttonswidget1.SetSections(fData.Sections);	
+					if (fData.File.HasVideo){
+						player.LogoMode = false;
+						this.FullScreenAction.Sensitive = true;
+					}
+					this.CloseProyectAction.Sensitive=true;
+					this.PlayerAction.Sensitive= true;
+					this.CaptureModeAction.Sensitive = true;
+					this.AnalyzeModeAction.Sensitive = true;
+					this.ShowWidgets();
 				}
 			}			
 		}
@@ -87,14 +84,17 @@ namespace LongoMatch
 		}
 		
 		private void ShowWidgets(){
-			this.buttonswidget1.Show();
 			this.leftbox.Show();
+			if (this.CaptureModeAction.Active)
+				this.buttonswidget1.Show();
+			else 
+				this.timelinewidget1.Show();
 		}
 		
 		private void HideWidgets(){
-			buttonswidget1.Hide();
-			this.timeline2.Hide();
-			this.leftbox.Hide();			
+			this.leftbox.Hide();
+			this.buttonswidget1.Hide();
+			this.timelinewidget1.Hide();
 		}
 				
 	    private void CloseActualProyect(){
@@ -102,39 +102,26 @@ namespace LongoMatch
 			this.HideWidgets();
 			this.playerbin1.Close();			
 			this.player.LogoMode = true;
-			openedFileData = null;			
+			this.SaveDB();			
+			openedFileData = null;	
+			this.CloseProyectAction.Sensitive=false;
+			this.PlayerAction.Sensitive= false;
+			this.CaptureModeAction.Sensitive = false;
+			this.AnalyzeModeAction.Sensitive = false;
+			this.FullScreenAction.Sensitive = false;
 		}
 		
-
+		private void SaveDB(){
+			MainClass.DB.UpdateFileData(this.OpenedFileData());
+			this.fileDataModified=false;
+			
+		}
+		
 		protected virtual void OnUnrealized(object sender, System.EventArgs e){
 			this.Destroy();			
 			Application.Quit();					
 		}
-
 		
-			
-
-
-				
-		protected virtual void OnNewMark(int i, Time startTime, Time stopTime){
-			if (player != null && openedFileData != null){
-				long pos = player.CurrentTime;
-				long start = pos - startTime.MSeconds;
-				long stop = pos + stopTime.MSeconds;
-				long fStart = (start<0) ? 0 : start;
-				//La longitud tiene que ser en ms
-				long fStop = (stop > player.StreamLength*1000) ? player.StreamLength: stop;
-				Console.WriteLine(fStart+" " +fStop);
-				Pixbuf miniature = this.playerbin1.CurrentThumbnail;
-				MediaTimeNode tn = openedFileData.AddTimeNode(i,new Time((int)fStart),new Time((int)fStop),miniature);				
-				Console.WriteLine(tn.MiniaturePath);
-				treewidget1.AddTimeNode(tn,i);							
-				MainClass.DB.UpdateFileData(openedFileData);
-			}
-		}
-					
-				
-
 		
 		protected virtual void OnSectionsTemplatesManagerActivated (object sender, System.EventArgs e)
 		{
@@ -199,40 +186,53 @@ namespace LongoMatch
 			}
 		}
 
+		protected virtual bool UpdateFileData(){
+			if (fileDataModified && openedFileData != null){
+				this.SaveDB();
+			}
+			return true;
+		}
+		
 		protected virtual void OnCloseActivated (object sender, System.EventArgs e)
 		{
-			this.CloseActualProyect();
-			
+			this.CloseActualProyect();			
 		}
 
 		protected virtual void OnDatabaseManagerActivated (object sender, System.EventArgs e)
 		{
 			DBManager db = new DBManager();
 			db.Show();
-		}
-
-		
+		}		
 
 		protected virtual void OnTimeprecisionadjustwidget1SizeRequested (object o, Gtk.SizeRequestedArgs args)
 		{
 			if (args.Requisition.Width>= hpaned.Position)
 				hpaned.Position = args.Requisition.Width;
 		}
+		
+		protected virtual void OnNewMark(int i, Time startTime, Time stopTime){
+			if (player != null && openedFileData != null){
+				long pos = player.CurrentTime;
+				long start = pos - startTime.MSeconds;
+				long stop = pos + stopTime.MSeconds;
+				long fStart = (start<0) ? 0 : start;
+				//La longitud tiene que ser en ms
+				long fStop = (stop > player.StreamLength*1000) ? player.StreamLength: stop;
+				Console.WriteLine(fStart+" " +fStop);
+				Pixbuf miniature = this.playerbin1.CurrentThumbnail;
+				MediaTimeNode tn = openedFileData.AddTimeNode(i,new Time((int)fStart),new Time((int)fStop),miniature);				
+				Console.WriteLine(tn.MiniaturePath);
+				treewidget1.AddTimeNode(tn,i);
+				this.fileDataModified = true;
+				this.timelinewidget1.QueueDraw();
+			}
+		}
 
 		protected virtual void OnTimeNodeSelected (MediaTimeNode tNode)
-		{
-			
-			Console.WriteLine(tNode.MiniaturePath);
-			this.buttonswidget1.Hide();
+		{			
 			//Si hay un nodo de la lista de reproducción activa se para el reloj
-			this.playlistwidget2.Stop();
-			this.timeline2.Enabled = false;
-			this.timeline2.SetTimeNode(tNode,25);
-			this.playerbin1.SetStartStop(tNode.Start.MSeconds,tNode.Stop.MSeconds);
-			this.timeline2.Enabled = true;
-			
-			
-			
+			this.playlistwidget2.Stop();			
+			this.playerbin1.SetStartStop(tNode.Start.MSeconds,tNode.Stop.MSeconds);		
 		}
 
 		
@@ -241,41 +241,31 @@ namespace LongoMatch
 			//Si hemos modificado el valor de un nodo de tiempo a través del 
 			//widget de ajuste de tiempo posicionamos el reproductor en el punto
 			//
-			if (val is Time ){
-				
+			if (val is Time ){				
 				Time pos = (Time)val;
 				this.player.Pause();
 				if (pos == tNode.Start){
 					this.playerbin1.UpdateSegmentStartTime(pos.MSeconds);
-					this.timeline2.UpdateStartTime(pos);
-				}
-				
+				}				
 				else{
 					this.playerbin1.UpdateSegmentStopTime(pos.MSeconds);
-					this.timeline2.UpdateStopTime(pos);
 				}	
-			}
-			
-			//Si modificamos un padre actualizamos los nombres de los botones
-			if (tNode is SectionsTimeNode){
-				this.buttonswidget1.SetNames(openedFileData.GetSectionsNames());
-			}
-				MainClass.DB.UpdateFileData(openedFileData);
-
+			}			
+			this.fileDataModified = true;			
 		}
 
 		protected virtual void OnTimeNodeDeleted (LongoMatch.MediaTimeNode tNode)
 		{
 			openedFileData.DelTimeNode(tNode);		
-			MainClass.DB.UpdateFileData(openedFileData);
+			this.fileDataModified = true;
+			this.timelinewidget1.QueueDraw();
 		}
 
 
 		protected virtual void OnDeleteEvent (object o, Gtk.DeleteEventArgs args)
 		{
 			this.playerbin1.Dispose();
-			Application.Quit();
-			
+			Application.Quit();			
 		}
 
 		protected virtual void OnPlayListNodeAdded (LongoMatch.MediaTimeNode tNode)
@@ -286,7 +276,7 @@ namespace LongoMatch
 		protected virtual void OnPlaylistwidget2PlayListNodeSelected (LongoMatch.PlayListTimeNode plNode, bool hasNext)
 		{
 			if (openedFileData == null){
-				this.timeline2.Visible=false;				
+
 				this.playerbin1.SetPlayListElement(plNode.FileName,plNode.Start.MSeconds,plNode.Stop.MSeconds,hasNext);
 			}
 		}
@@ -295,38 +285,20 @@ namespace LongoMatch
 		{	
 			playlistwidget2.Next();
 		}
-		
-		
-		
-
-		
-
-		protected virtual void OnPlayerbin1TickEvent (long currentTime, long streamLength, float position, bool seekable)
-		{
-			
-			if (this.timeline2.Enabled)
-				this.timeline2.SetPosition(new Time ((int)(currentTime)));
-		}
 
 		protected virtual void OnPlayerbin1SegmentClosedEvent ()
 		{
-		
-			this.buttonswidget1.Show();
-			this.timeline2.Enabled = false;
 		}
 
 		protected virtual void OnTimeline2PositionChanged (Time pos)
 		{
 			this.player.SeekInSegment(pos.MSeconds);
-		}
-
-		
+		}		
 
 		protected virtual void OnQuitActivated (object sender, System.EventArgs e)
 		{
 			Application.Quit();
 		}
-
 
 		protected virtual void OnPlaylistActionToggled (object sender, System.EventArgs e)
 		{			
@@ -347,14 +319,12 @@ namespace LongoMatch
 			
 			fChooser.AddFilter(filter);
 			if (fChooser.Run() == (int)ResponseType.Accept){
-				this.CloseActualProyect();
+				if (openedFileData != null)
+					this.CloseActualProyect();
 				this.playlistwidget2.Load(fChooser.Filename);				
-				this.PlaylistAction.Active = true;
-				
-			}
-		
-			fChooser.Destroy();
-			
+				this.PlaylistAction.Active = true;				
+			}		
+			fChooser.Destroy();			
 		}
 
 		protected virtual void OnPlayerbin1Error (object o, CesarPlayer.ErrorArgs args)
@@ -378,17 +348,36 @@ namespace LongoMatch
 
 		protected virtual void OnPlayerbin1Tick (object o, CesarPlayer.TickArgs args)
 		{
-			this.timeline2.SetPosition(new Time((int)args.CurrentTime));
+		}
+
+		protected virtual void OnCaptureModeActionToggled (object sender, System.EventArgs e)
+		{
+
+			if (((Gtk.ToggleAction)sender).Active){
+				this.buttonswidget1.Show();
+				this.timelinewidget1.Hide();
+			}
+			else{
+				this.buttonswidget1.Hide();
+				this.timelinewidget1.Show();
+			}
+			
+			
+		}
+
+		protected virtual void OnAnalyzeModeActionToggled (object sender, System.EventArgs e)
+		{
+		}
+
+		protected virtual void OnFullScreenActionToggled (object sender, System.EventArgs e)
+		{
+		
+				this.playerbin1.FullScreen = ((Gtk.ToggleAction)sender).Active;
 		}
 
 		
-
 		
 
-	
-	
-
-
-			
+		
 	}
 }

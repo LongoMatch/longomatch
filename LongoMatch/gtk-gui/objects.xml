@@ -1,12 +1,4 @@
 <objects>
-  <object type="LongoMatch.PlayListWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Widget">
-    <itemgroups />
-    <signals>
-      <itemgroup label="PlayListWidget Signals">
-        <signal name="PlayListNodeSelected" />
-      </itemgroup>
-    </signals>
-  </object>
   <object type="LongoMatch.FileDescriptionWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="FileDescriptionWidget Properties">
@@ -75,6 +67,14 @@
     <itemgroups />
     <signals />
   </object>
+  <object type="LongoMatch.PlayListWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="PlayListWidget Signals">
+        <signal name="PlayListNodeSelected" />
+      </itemgroup>
+    </signals>
+  </object>
   <object type="LongoMatch.PlayListTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
     <itemgroups />
     <signals />
@@ -89,6 +89,21 @@
       <itemgroup label="TimeLine Signals">
         <signal name="TimeNodeChanged" />
         <signal name="PositionChanged" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.TimeScale" palette-category="LongoMatch" allow-children="false" base-type="Gtk.DrawingArea">
+    <itemgroups>
+      <itemgroup label="TimeScale Properties">
+        <property name="PixelRatio" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="TimeScale Signals">
+        <signal name="TimeNodeChanged" />
+        <signal name="TimeNodeSelected" />
+        <signal name="TimeNodeDeleted" />
+        <signal name="PlayListNodeAdded" />
       </itemgroup>
     </signals>
   </object>
@@ -114,21 +129,14 @@
         <signal name="TimeNodeSelected" />
         <signal name="TimeNodeDeleted" />
         <signal name="PlayListNodeAdded" />
+        <signal name="NewMarkEvent" />
       </itemgroup>
     </signals>
   </object>
   <object type="LongoMatch.TimeLineWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.TimeScale" palette-category="LongoMatch" allow-children="false" base-type="Gtk.DrawingArea">
-    <itemgroups>
-      <itemgroup label="TimeScale Properties">
-        <property name="PixelRatio" />
-      </itemgroup>
-    </itemgroups>
     <signals>
-      <itemgroup label="TimeScale Signals">
+      <itemgroup label="TimeLineWidget Signals">
         <signal name="TimeNodeChanged" />
         <signal name="TimeNodeSelected" />
         <signal name="TimeNodeDeleted" />

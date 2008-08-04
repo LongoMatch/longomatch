@@ -18,10 +18,6 @@ namespace Stetic {
         internal static void Initialize(Gtk.Widget iconRenderer) {
             if ((Stetic.Gui.initialized == false)) {
                 Stetic.Gui.initialized = true;
-                Gtk.IconFactory w1 = new Gtk.IconFactory();
-                Gtk.IconSet w2 = new Gtk.IconSet(Gdk.Pixbuf.LoadFromResource("gtk-media-play-ltr.svg"));
-                w1.Add("play", w2);
-                w1.AddDefault();
             }
         }
     }

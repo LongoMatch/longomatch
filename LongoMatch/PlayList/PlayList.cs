@@ -59,7 +59,10 @@ namespace LongoMatch
 			using(FileStream strm = new FileStream(file, FileMode.Open, FileAccess.Read)) 
 			{
 				list = ser.Deserialize(strm) as List<PlayListTimeNode>; 
-			}			
+			}		
+			foreach (PlayListTimeNode plNode in list){
+				plNode.Valid = System.IO.File.Exists(plNode.FileName);
+			}
 			this.filename = file;
 		}
 		
@@ -126,6 +129,20 @@ namespace LongoMatch
 			}
 			return listStore;
 		}
+		
+		
+		public void SetModel(ListStore listStore){
+			TreeIter iter ;
+			listStore.GetIterFirst(out iter);
+			this.list.Clear();
+			while (listStore.IterIsValid(iter)){
+				this.list.Add(listStore.GetValue (iter, 0) as PlayListTimeNode);
+				Console.WriteLine((listStore.GetValue (iter, 0) as PlayListTimeNode).Start.ToMSecondsString());
+				listStore.IterNext(ref iter);
+			}
+			
+		}
+		
 		
 	
 	

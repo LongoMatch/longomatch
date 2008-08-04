@@ -117,8 +117,7 @@ namespace LongoMatch {
             this.checkbutton2 = new Gtk.CheckButton();
             this.checkbutton2.CanFocus = true;
             this.checkbutton2.Name = "checkbutton2";
-            this.checkbutton2.Label = Mono.Unix.Catalog.GetString("checkbutton2");
-            this.checkbutton2.Active = true;
+            this.checkbutton2.Label = "";
             this.checkbutton2.DrawIndicator = true;
             this.checkbutton2.UseUnderline = true;
             this.hbox1.Add(this.checkbutton2);
@@ -130,7 +129,7 @@ namespace LongoMatch {
             // Container child hbox1.Gtk.Box+BoxChild
             this.label5 = new Gtk.Label();
             this.label5.Name = "label5";
-            this.label5.LabelProp = Mono.Unix.Catalog.GetString("Visible");
+            this.label5.LabelProp = Mono.Unix.Catalog.GetString("Visible:");
             this.hbox1.Add(this.label5);
             Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(this.hbox1[this.label5]));
             w8.PackType = ((Gtk.PackType)(1));

@@ -13,11 +13,11 @@ namespace CesarPlayer {
     
     public partial class PlayerBin {
         
-        private Gtk.VBox mainbox;
+        private Gtk.HBox mainbox;
+        
+        private Gtk.VBox vbox2;
         
         private Gtk.HBox videobox;
-        
-        private Gtk.VScale vscale1;
         
         private Gtk.HBox controlsbox;
         
@@ -41,42 +41,34 @@ namespace CesarPlayer {
         
         private Gtk.Button volumebutton;
         
+        private Gtk.VBox vbox3;
+        
+        private Gtk.VScale vscale1;
+        
+        private Gtk.Label ratelabel;
+        
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
             // Widget CesarPlayer.PlayerBin
             Stetic.BinContainer.Attach(this);
             this.Name = "CesarPlayer.PlayerBin";
             // Container child CesarPlayer.PlayerBin.Gtk.Container+ContainerChild
-            this.mainbox = new Gtk.VBox();
+            this.mainbox = new Gtk.HBox();
             this.mainbox.Name = "mainbox";
             this.mainbox.Spacing = 6;
             // Container child mainbox.Gtk.Box+BoxChild
+            this.vbox2 = new Gtk.VBox();
+            this.vbox2.Name = "vbox2";
+            this.vbox2.Spacing = 6;
+            // Container child vbox2.Gtk.Box+BoxChild
             this.videobox = new Gtk.HBox();
             this.videobox.Name = "videobox";
             this.videobox.Spacing = 6;
-            // Container child videobox.Gtk.Box+BoxChild
-            this.vscale1 = new Gtk.VScale(null);
-            this.vscale1.Sensitive = false;
-            this.vscale1.CanFocus = true;
-            this.vscale1.Name = "vscale1";
-            this.vscale1.Adjustment.Upper = 100;
-            this.vscale1.Adjustment.PageIncrement = 10;
-            this.vscale1.Adjustment.StepIncrement = 1;
-            this.vscale1.Adjustment.Value = 61;
-            this.vscale1.DrawValue = true;
-            this.vscale1.Digits = 0;
-            this.vscale1.ValuePos = ((Gtk.PositionType)(2));
-            this.videobox.Add(this.vscale1);
-            Gtk.Box.BoxChild w1 = ((Gtk.Box.BoxChild)(this.videobox[this.vscale1]));
-            w1.Position = 1;
-            w1.Expand = false;
-            w1.Fill = false;
-            this.mainbox.Add(this.videobox);
-            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.mainbox[this.videobox]));
-            w2.Position = 0;
-            // Container child mainbox.Gtk.Box+BoxChild
+            this.vbox2.Add(this.videobox);
+            Gtk.Box.BoxChild w1 = ((Gtk.Box.BoxChild)(this.vbox2[this.videobox]));
+            w1.Position = 0;
+            // Container child vbox2.Gtk.Box+BoxChild
             this.controlsbox = new Gtk.HBox();
-            this.controlsbox.Sensitive = false;
             this.controlsbox.Name = "controlsbox";
             this.controlsbox.Spacing = 6;
             // Container child controlsbox.Gtk.Box+BoxChild
@@ -89,38 +81,51 @@ namespace CesarPlayer {
             this.closebutton.Name = "closebutton";
             this.closebutton.UseUnderline = true;
             // Container child closebutton.Gtk.Container+ContainerChild
-            Gtk.Alignment w3 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            Gtk.Alignment w2 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
             // Container child GtkAlignment.Gtk.Container+ContainerChild
-            Gtk.HBox w4 = new Gtk.HBox();
-            w4.Spacing = 2;
+            Gtk.HBox w3 = new Gtk.HBox();
+            w3.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Image w5 = new Gtk.Image();
-            w5.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-close", Gtk.IconSize.Menu, 16);
-            w4.Add(w5);
-            // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Label w7 = new Gtk.Label();
-            w7.LabelProp = "";
-            w4.Add(w7);
+            Gtk.Image w4 = new Gtk.Image();
+            w4.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-close", Gtk.IconSize.Dnd, 32);
             w3.Add(w4);
-            this.closebutton.Add(w3);
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Label w6 = new Gtk.Label();
+            w6.LabelProp = "";
+            w3.Add(w6);
+            w2.Add(w3);
+            this.closebutton.Add(w2);
             this.buttonsbox.Add(this.closebutton);
-            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.buttonsbox[this.closebutton]));
-            w11.Position = 0;
-            w11.Expand = false;
-            w11.Fill = false;
+            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.buttonsbox[this.closebutton]));
+            w10.Position = 0;
+            w10.Expand = false;
+            w10.Fill = false;
             // Container child buttonsbox.Gtk.Box+BoxChild
             this.playbutton = new Gtk.Button();
             this.playbutton.CanFocus = true;
             this.playbutton.Name = "playbutton";
-            this.playbutton.UseStock = true;
             this.playbutton.UseUnderline = true;
             this.playbutton.Relief = ((Gtk.ReliefStyle)(2));
-            this.playbutton.Label = "play";
+            // Container child playbutton.Gtk.Container+ContainerChild
+            Gtk.Alignment w11 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
+            Gtk.HBox w12 = new Gtk.HBox();
+            w12.Spacing = 2;
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Image w13 = new Gtk.Image();
+            w13.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-play", Gtk.IconSize.Button, 20);
+            w12.Add(w13);
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Label w15 = new Gtk.Label();
+            w15.LabelProp = "";
+            w12.Add(w15);
+            w11.Add(w12);
+            this.playbutton.Add(w11);
             this.buttonsbox.Add(this.playbutton);
-            Gtk.Box.BoxChild w12 = ((Gtk.Box.BoxChild)(this.buttonsbox[this.playbutton]));
-            w12.Position = 1;
-            w12.Expand = false;
-            w12.Fill = false;
+            Gtk.Box.BoxChild w19 = ((Gtk.Box.BoxChild)(this.buttonsbox[this.playbutton]));
+            w19.Position = 1;
+            w19.Expand = false;
+            w19.Fill = false;
             // Container child buttonsbox.Gtk.Box+BoxChild
             this.pausebutton = new Gtk.Button();
             this.pausebutton.CanFocus = true;
@@ -128,25 +133,25 @@ namespace CesarPlayer {
             this.pausebutton.UseUnderline = true;
             this.pausebutton.Relief = ((Gtk.ReliefStyle)(2));
             // Container child pausebutton.Gtk.Container+ContainerChild
-            Gtk.Alignment w13 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            Gtk.Alignment w20 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
             // Container child GtkAlignment.Gtk.Container+ContainerChild
-            Gtk.HBox w14 = new Gtk.HBox();
-            w14.Spacing = 2;
+            Gtk.HBox w21 = new Gtk.HBox();
+            w21.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Image w15 = new Gtk.Image();
-            w15.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-pause", Gtk.IconSize.Button, 20);
-            w14.Add(w15);
+            Gtk.Image w22 = new Gtk.Image();
+            w22.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-pause", Gtk.IconSize.Button, 20);
+            w21.Add(w22);
             // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Label w17 = new Gtk.Label();
-            w17.LabelProp = "";
-            w14.Add(w17);
-            w13.Add(w14);
-            this.pausebutton.Add(w13);
+            Gtk.Label w24 = new Gtk.Label();
+            w24.LabelProp = "";
+            w21.Add(w24);
+            w20.Add(w21);
+            this.pausebutton.Add(w20);
             this.buttonsbox.Add(this.pausebutton);
-            Gtk.Box.BoxChild w21 = ((Gtk.Box.BoxChild)(this.buttonsbox[this.pausebutton]));
-            w21.Position = 2;
-            w21.Expand = false;
-            w21.Fill = false;
+            Gtk.Box.BoxChild w28 = ((Gtk.Box.BoxChild)(this.buttonsbox[this.pausebutton]));
+            w28.Position = 2;
+            w28.Expand = false;
+            w28.Fill = false;
             // Container child buttonsbox.Gtk.Box+BoxChild
             this.prevbutton = new Gtk.Button();
             this.prevbutton.CanFocus = true;
@@ -154,25 +159,25 @@ namespace CesarPlayer {
             this.prevbutton.UseUnderline = true;
             this.prevbutton.Relief = ((Gtk.ReliefStyle)(2));
             // Container child prevbutton.Gtk.Container+ContainerChild
-            Gtk.Alignment w22 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            Gtk.Alignment w29 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
             // Container child GtkAlignment.Gtk.Container+ContainerChild
-            Gtk.HBox w23 = new Gtk.HBox();
-            w23.Spacing = 2;
+            Gtk.HBox w30 = new Gtk.HBox();
+            w30.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Image w24 = new Gtk.Image();
-            w24.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-previous", Gtk.IconSize.Button, 20);
-            w23.Add(w24);
+            Gtk.Image w31 = new Gtk.Image();
+            w31.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-previous", Gtk.IconSize.Button, 20);
+            w30.Add(w31);
             // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Label w26 = new Gtk.Label();
-            w26.LabelProp = "";
-            w23.Add(w26);
-            w22.Add(w23);
-            this.prevbutton.Add(w22);
+            Gtk.Label w33 = new Gtk.Label();
+            w33.LabelProp = "";
+            w30.Add(w33);
+            w29.Add(w30);
+            this.prevbutton.Add(w29);
             this.buttonsbox.Add(this.prevbutton);
-            Gtk.Box.BoxChild w30 = ((Gtk.Box.BoxChild)(this.buttonsbox[this.prevbutton]));
-            w30.Position = 3;
-            w30.Expand = false;
-            w30.Fill = false;
+            Gtk.Box.BoxChild w37 = ((Gtk.Box.BoxChild)(this.buttonsbox[this.prevbutton]));
+            w37.Position = 3;
+            w37.Expand = false;
+            w37.Fill = false;
             // Container child buttonsbox.Gtk.Box+BoxChild
             this.nextbutton = new Gtk.Button();
             this.nextbutton.Sensitive = false;
@@ -181,39 +186,39 @@ namespace CesarPlayer {
             this.nextbutton.UseUnderline = true;
             this.nextbutton.Relief = ((Gtk.ReliefStyle)(2));
             // Container child nextbutton.Gtk.Container+ContainerChild
-            Gtk.Alignment w31 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            Gtk.Alignment w38 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
             // Container child GtkAlignment.Gtk.Container+ContainerChild
-            Gtk.HBox w32 = new Gtk.HBox();
-            w32.Spacing = 2;
+            Gtk.HBox w39 = new Gtk.HBox();
+            w39.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Image w33 = new Gtk.Image();
-            w33.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-next", Gtk.IconSize.Button, 20);
-            w32.Add(w33);
+            Gtk.Image w40 = new Gtk.Image();
+            w40.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-next", Gtk.IconSize.Button, 20);
+            w39.Add(w40);
             // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Label w35 = new Gtk.Label();
-            w35.LabelProp = "";
-            w32.Add(w35);
-            w31.Add(w32);
-            this.nextbutton.Add(w31);
+            Gtk.Label w42 = new Gtk.Label();
+            w42.LabelProp = "";
+            w39.Add(w42);
+            w38.Add(w39);
+            this.nextbutton.Add(w38);
             this.buttonsbox.Add(this.nextbutton);
-            Gtk.Box.BoxChild w39 = ((Gtk.Box.BoxChild)(this.buttonsbox[this.nextbutton]));
-            w39.Position = 4;
-            w39.Expand = false;
-            w39.Fill = false;
+            Gtk.Box.BoxChild w46 = ((Gtk.Box.BoxChild)(this.buttonsbox[this.nextbutton]));
+            w46.Position = 4;
+            w46.Expand = false;
+            w46.Fill = false;
             this.controlsbox.Add(this.buttonsbox);
-            Gtk.Box.BoxChild w40 = ((Gtk.Box.BoxChild)(this.controlsbox[this.buttonsbox]));
-            w40.Position = 0;
-            w40.Expand = false;
-            w40.Fill = false;
+            Gtk.Box.BoxChild w47 = ((Gtk.Box.BoxChild)(this.controlsbox[this.buttonsbox]));
+            w47.Position = 0;
+            w47.Expand = false;
+            w47.Fill = false;
             // Container child controlsbox.Gtk.Box+BoxChild
             this.tlabel = new Gtk.Label();
             this.tlabel.Name = "tlabel";
             this.tlabel.LabelProp = Mono.Unix.Catalog.GetString("Time:");
             this.controlsbox.Add(this.tlabel);
-            Gtk.Box.BoxChild w41 = ((Gtk.Box.BoxChild)(this.controlsbox[this.tlabel]));
-            w41.Position = 1;
-            w41.Expand = false;
-            w41.Fill = false;
+            Gtk.Box.BoxChild w48 = ((Gtk.Box.BoxChild)(this.controlsbox[this.tlabel]));
+            w48.Position = 1;
+            w48.Expand = false;
+            w48.Fill = false;
             // Container child controlsbox.Gtk.Box+BoxChild
             this.timescale = new Gtk.HScale(null);
             this.timescale.CanFocus = true;
@@ -227,16 +232,16 @@ namespace CesarPlayer {
             this.timescale.Digits = 0;
             this.timescale.ValuePos = ((Gtk.PositionType)(2));
             this.controlsbox.Add(this.timescale);
-            Gtk.Box.BoxChild w42 = ((Gtk.Box.BoxChild)(this.controlsbox[this.timescale]));
-            w42.Position = 2;
+            Gtk.Box.BoxChild w49 = ((Gtk.Box.BoxChild)(this.controlsbox[this.timescale]));
+            w49.Position = 2;
             // Container child controlsbox.Gtk.Box+BoxChild
             this.timelabel = new Gtk.Label();
             this.timelabel.Name = "timelabel";
             this.timelabel.LabelProp = "";
             this.controlsbox.Add(this.timelabel);
-            Gtk.Box.BoxChild w43 = ((Gtk.Box.BoxChild)(this.controlsbox[this.timelabel]));
-            w43.Position = 3;
-            w43.Expand = false;
+            Gtk.Box.BoxChild w50 = ((Gtk.Box.BoxChild)(this.controlsbox[this.timelabel]));
+            w50.Position = 3;
+            w50.Expand = false;
             // Container child controlsbox.Gtk.Box+BoxChild
             this.volumebutton = new Gtk.Button();
             this.volumebutton.CanFocus = true;
@@ -244,39 +249,77 @@ namespace CesarPlayer {
             this.volumebutton.UseUnderline = true;
             this.volumebutton.Relief = ((Gtk.ReliefStyle)(2));
             // Container child volumebutton.Gtk.Container+ContainerChild
-            Gtk.Alignment w44 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            Gtk.Alignment w51 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
             // Container child GtkAlignment.Gtk.Container+ContainerChild
-            Gtk.HBox w45 = new Gtk.HBox();
-            w45.Spacing = 2;
+            Gtk.HBox w52 = new Gtk.HBox();
+            w52.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Image w46 = new Gtk.Image();
-            w46.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_volume", Gtk.IconSize.Button, 20);
-            w45.Add(w46);
+            Gtk.Image w53 = new Gtk.Image();
+            w53.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_volume", Gtk.IconSize.Button, 20);
+            w52.Add(w53);
             // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Label w48 = new Gtk.Label();
-            w48.LabelProp = "";
-            w45.Add(w48);
-            w44.Add(w45);
-            this.volumebutton.Add(w44);
+            Gtk.Label w55 = new Gtk.Label();
+            w55.LabelProp = "";
+            w52.Add(w55);
+            w51.Add(w52);
+            this.volumebutton.Add(w51);
             this.controlsbox.Add(this.volumebutton);
-            Gtk.Box.BoxChild w52 = ((Gtk.Box.BoxChild)(this.controlsbox[this.volumebutton]));
-            w52.Position = 4;
-            w52.Expand = false;
-            w52.Fill = false;
-            this.mainbox.Add(this.controlsbox);
-            Gtk.Box.BoxChild w53 = ((Gtk.Box.BoxChild)(this.mainbox[this.controlsbox]));
-            w53.Position = 1;
-            w53.Expand = false;
-            w53.Fill = false;
+            Gtk.Box.BoxChild w59 = ((Gtk.Box.BoxChild)(this.controlsbox[this.volumebutton]));
+            w59.Position = 4;
+            w59.Expand = false;
+            w59.Fill = false;
+            this.vbox2.Add(this.controlsbox);
+            Gtk.Box.BoxChild w60 = ((Gtk.Box.BoxChild)(this.vbox2[this.controlsbox]));
+            w60.Position = 1;
+            w60.Expand = false;
+            this.mainbox.Add(this.vbox2);
+            Gtk.Box.BoxChild w61 = ((Gtk.Box.BoxChild)(this.mainbox[this.vbox2]));
+            w61.Position = 0;
+            // Container child mainbox.Gtk.Box+BoxChild
+            this.vbox3 = new Gtk.VBox();
+            this.vbox3.Name = "vbox3";
+            this.vbox3.Spacing = 6;
+            // Container child vbox3.Gtk.Box+BoxChild
+            this.vscale1 = new Gtk.VScale(null);
+            this.vscale1.Sensitive = false;
+            this.vscale1.CanFocus = true;
+            this.vscale1.Name = "vscale1";
+            this.vscale1.Inverted = true;
+            this.vscale1.Adjustment.Lower = 1;
+            this.vscale1.Adjustment.Upper = 50;
+            this.vscale1.Adjustment.PageIncrement = 10;
+            this.vscale1.Adjustment.PageSize = 1;
+            this.vscale1.Adjustment.StepIncrement = 1;
+            this.vscale1.Adjustment.Value = 25;
+            this.vscale1.DrawValue = true;
+            this.vscale1.Digits = 0;
+            this.vscale1.ValuePos = ((Gtk.PositionType)(2));
+            this.vbox3.Add(this.vscale1);
+            Gtk.Box.BoxChild w62 = ((Gtk.Box.BoxChild)(this.vbox3[this.vscale1]));
+            w62.Position = 0;
+            // Container child vbox3.Gtk.Box+BoxChild
+            this.ratelabel = new Gtk.Label();
+            this.ratelabel.Name = "ratelabel";
+            this.ratelabel.LabelProp = Mono.Unix.Catalog.GetString("x0");
+            this.vbox3.Add(this.ratelabel);
+            Gtk.Box.BoxChild w63 = ((Gtk.Box.BoxChild)(this.vbox3[this.ratelabel]));
+            w63.Position = 1;
+            w63.Expand = false;
+            w63.Fill = false;
+            this.mainbox.Add(this.vbox3);
+            Gtk.Box.BoxChild w64 = ((Gtk.Box.BoxChild)(this.mainbox[this.vbox3]));
+            w64.Position = 1;
+            w64.Expand = false;
+            w64.Fill = false;
             this.Add(this.mainbox);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.vscale1.Hide();
             this.closebutton.Hide();
             this.prevbutton.Hide();
             this.nextbutton.Hide();
             this.controlsbox.Hide();
+            this.vscale1.Hide();
             this.Show();
             this.closebutton.Clicked += new System.EventHandler(this.OnClosebuttonClicked);
             this.playbutton.Clicked += new System.EventHandler(this.OnPlaybuttonClicked);
@@ -286,6 +329,8 @@ namespace CesarPlayer {
             this.timescale.ValueChanged += new System.EventHandler(this.OnTimescaleValueChanged);
             this.timescale.AdjustBounds += new Gtk.AdjustBoundsHandler(this.OnTimescaleAdjustBounds);
             this.volumebutton.Clicked += new System.EventHandler(this.OnVolumebuttonClicked);
+            this.vscale1.FormatValue += new Gtk.FormatValueHandler(this.OnVscale1FormatValue);
+            this.vscale1.ValueChanged += new System.EventHandler(this.OnVscale1ValueChanged);
         }
     }
 }

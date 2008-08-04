@@ -105,16 +105,26 @@ namespace CesarPlayer
 			get {return player;}
 		}
 		
-		
+		public bool FullScreen{
+			set{
+				if (value)
+					this.GdkWindow.Fullscreen();
+				else 
+					this.GdkWindow.Unfullscreen();
+			}
+		}
 		public Pixbuf CurrentThumbnail{
 			get{
 				int h,w;
 				double rate;
 				Pixbuf pixbuf = player.CurrentFrame;
-				h = pixbuf.Height;
-				w = pixbuf.Width;
-				rate = w/h;
-				return pixbuf.ScaleSimple(THUMBNAIL_WIDTH,(int)(THUMBNAIL_WIDTH/rate),InterpType.Bilinear);
+				if (pixbuf != null){
+					h = pixbuf.Height;
+					w = pixbuf.Width;
+					rate = w/h;
+					return pixbuf.ScaleSimple(THUMBNAIL_WIDTH,(int)(THUMBNAIL_WIDTH/rate),InterpType.Bilinear);
+				}
+				else return null;
 			}
 		}
 		
@@ -159,6 +169,9 @@ namespace CesarPlayer
 			this.UnSensitive();
 		}
 		
+		public void Pause(){
+			Player.Pause();
+		}
 		public void UpdateSegmentStartTime (long start){
 			this.segmentStartTime = start;
 			player.UpdateSegmentStartTime(start);

@@ -33,6 +33,8 @@ namespace LongoMatch {
             // Container child LongoMatch.TimeAdjustWidget.Gtk.Container+ContainerChild
             this.table1 = new Gtk.Table(((uint)(1)), ((uint)(5)), false);
             this.table1.Name = "table1";
+            this.table1.RowSpacing = ((uint)(6));
+            this.table1.ColumnSpacing = ((uint)(6));
             // Container child table1.Gtk.Table+TableChild
             this.label1 = new Gtk.Label();
             this.label1.Name = "label1";

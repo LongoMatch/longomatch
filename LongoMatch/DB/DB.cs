@@ -33,10 +33,12 @@ namespace LongoMatch
 	{
 		private IObjectContainer db;
 		private string file;
+		private object locker;
 		
 		public DB()
 		{
 			file = Path.Combine (MainClass.DBDir(), "db.yap");
+			locker = new object();
 		}
 		
 		
@@ -80,109 +82,116 @@ namespace LongoMatch
 		}
 		
 		public FileData GetFileData(String filename){
-			db = Db4oFactory.OpenFile(file);
-			try	{   				
-   				IQuery query = db.Query();
-				query.Constrain(typeof(FileData));
-				query.Descend("filename").Constrain(filename);
-				IObjectSet result = query.Execute();
-				return (FileData)result.Next();
-   			 }
-			
-			finally
-			{
-    			db.Close();
+			lock(this.locker){
+				db = Db4oFactory.OpenFile(file);
+				try	{   				
+					IQuery query = db.Query();
+					query.Constrain(typeof(FileData));
+					query.Descend("filename").Constrain(filename);
+					IObjectSet result = query.Execute();
+					return (FileData)result.Next();
+				}
+				
+				finally
+				{
+					db.Close();
+				}
 			}
-			
 		}
 		public void AddFileData (FileData fileData){
-			db = Db4oFactory.OpenFile(file);
-			Console.WriteLine("jor");
-			try	
-			{
-				if (!this.Exists(fileData.File.FilePath)){
-				db.Set (fileData);
-				}
-				else throw new Exception (Catalog.GetString("The FileData for this video file already exists.\n Try to edit it whit the Database Manager"));
-   			 }
-			
-			finally
-			{
+			lock(this.locker){
+				db = Db4oFactory.OpenFile(file);
 				
-    			db.Close();
+				try	
+				{
+					if (!this.Exists(fileData.File.FilePath)){
+						db.Set (fileData);
+					}
+					else throw new Exception (Catalog.GetString("The FileData for this video file already exists.\n Try to edit it whit the Database Manager"));
+				}
+				
+			finally
+				{
+					
+					db.Close();
+				}
 			}
-		
+			
 		}
 		public void RemoveFileData(FileData filedata){
-			Db4oFactory.Configure().ObjectClass(typeof(FileData)).CascadeOnDelete(true);			
-			db = Db4oFactory.OpenFile(file);
-			try	{			
-				IQuery query = db.Query();
-				query.Constrain(typeof(FileData));
-				query.Descend("file").Descend("filePath").Constrain(filedata.File.FilePath);
-				IObjectSet result = query.Execute();
-				filedata = (FileData)result.Next();
-				db.Delete(filedata);   				
-   			 }
-			
+			lock(this.locker){
+				Db4oFactory.Configure().ObjectClass(typeof(FileData)).CascadeOnDelete(true);			
+				db = Db4oFactory.OpenFile(file);
+				try	{			
+					IQuery query = db.Query();
+					query.Constrain(typeof(FileData));
+					query.Descend("file").Descend("filePath").Constrain(filedata.File.FilePath);
+					IObjectSet result = query.Execute();
+					filedata = (FileData)result.Next();
+					db.Delete(filedata);   				
+				}
+				
 			finally
-			{
-    			db.Close();
+				{
+					db.Close();
+				}
 			}
 			
 		}
 		
 		public void UpdateFileData(FileData fData, string previousFileName){
-			bool error = false;
-			Db4oFactory.Configure().ObjectClass(typeof(FileData)).CascadeOnDelete(true);
-			Db4oFactory.Configure().ObjectClass(typeof(ArrayList)).CascadeOnUpdate(true);
-			db = Db4oFactory.OpenFile(file);
-			try	{
-				// Buscamos si ya existe un obejto FileData para el archivo multimedia
-				if (!Exists(fData.File.FilePath)){
-					//Borramos el antiguo archivo FileData
-					IQuery query = db.Query();
-					query.Constrain(typeof(FileData));
-					query.Descend("file").Descend("filePath").Constrain(previousFileName);
-					IObjectSet result = query.Execute();  
-					FileData fd = (FileData)result.Next();
-					db.Delete(fd);
-					// Agregamos el nuevo obejto actualizado
-					db.Set(fData);	
-				}
-				else 
-					error = true;
+			lock(this.locker){
+				bool error = false;
+				Db4oFactory.Configure().ObjectClass(typeof(FileData)).CascadeOnDelete(true);
+				Db4oFactory.Configure().ObjectClass(typeof(ArrayList)).CascadeOnUpdate(true);
+				db = Db4oFactory.OpenFile(file);
+				try	{
+					// Buscamos si ya existe un obejto FileData para el archivo multimedia
+					if (!Exists(fData.File.FilePath)){
+						//Borramos el antiguo archivo FileData
+						IQuery query = db.Query();
+						query.Constrain(typeof(FileData));
+						query.Descend("file").Descend("filePath").Constrain(previousFileName);
+						IObjectSet result = query.Execute();  
+						FileData fd = (FileData)result.Next();
+						db.Delete(fd);
+						// Agregamos el nuevo obejto actualizado
+						db.Set(fData);	
+					}
+					else 
+						error = true;
 					
-   			 }
-			finally{
+				}
+				finally{
 				db.Close();
-				if (error)
-					throw new Exception();
+					if (error)
+						throw new Exception();
+				}
 			}
-		
+			
 		}
 		
 		public void UpdateFileData(FileData fData){
-			
-			Db4oFactory.Configure().ObjectClass(typeof(FileData)).CascadeOnDelete(true);
-			Db4oFactory.Configure().ObjectClass(typeof(ArrayList)).CascadeOnUpdate(true);
-			db = Db4oFactory.OpenFile(file);
-			try	{				
-				IQuery query = db.Query();
-				query.Constrain(typeof(FileData));
-				query.Descend("file").Descend("filePath").Constrain(fData.File.FilePath);
-				IObjectSet result = query.Execute();  
-				FileData fd = (FileData)result.Next();
-				db.Delete(fd);
-				db.Set(fData);				
-   			 }
-			
-			finally
-			{
-    			db.Close();
+			lock(this.locker){
+				Db4oFactory.Configure().ObjectClass(typeof(FileData)).CascadeOnDelete(true);
+				Db4oFactory.Configure().ObjectClass(typeof(ArrayList)).CascadeOnUpdate(true);
+				db = Db4oFactory.OpenFile(file);
+				try	{				
+					IQuery query = db.Query();
+					query.Constrain(typeof(FileData));
+					query.Descend("file").Descend("filePath").Constrain(fData.File.FilePath);
+					IObjectSet result = query.Execute();  
+					FileData fd = (FileData)result.Next();
+					db.Delete(fd);
+					db.Set(fData);				
+				}
+				
+				finally
+				{
+					db.Close();
+				}
 			}
-		
-		
+			
 		}
 		
 		private bool Exists(string filename){

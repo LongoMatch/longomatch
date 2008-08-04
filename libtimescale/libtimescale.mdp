@@ -27,6 +27,7 @@
     <File name="Makefile.am" subtype="Code" buildaction="Nothing" />
     <File name="NEWS" subtype="Code" buildaction="Nothing" />
     <File name="README" subtype="Code" buildaction="Nothing" />
+    <File name="Makefile.win32" subtype="Code" buildaction="Nothing" />
   </Contents>
   <compiler ctype="GccCompiler" />
   <Packages>

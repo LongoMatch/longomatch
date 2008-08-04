@@ -47,6 +47,10 @@ namespace LongoMatch {
         
         private Gtk.Action PlayerAction;
         
+        private Gtk.RadioAction CaptureModeAction;
+        
+        private Gtk.RadioAction AnalyzeModeAction;
+        
         private Gtk.VBox vbox1;
         
         private Gtk.VBox menubox;
@@ -64,8 +68,6 @@ namespace LongoMatch {
         private Gtk.VBox vbox5;
         
         private CesarPlayer.PlayerBin playerbin1;
-        
-        private LongoMatch.TimeLine timeline2;
         
         private LongoMatch.TimeLineWidget timelinewidget1;
         
@@ -110,6 +112,7 @@ namespace LongoMatch {
             this.QuitAction.ShortLabel = Mono.Unix.Catalog.GetString("_Quit");
             w3.Add(this.QuitAction, null);
             this.CloseProyectAction = new Gtk.Action("CloseProyectAction", Mono.Unix.Catalog.GetString("_Close Proyect"), null, "gtk-close");
+            this.CloseProyectAction.Sensitive = false;
             this.CloseProyectAction.ShortLabel = Mono.Unix.Catalog.GetString("_Close Proyect");
             w3.Add(this.CloseProyectAction, null);
             this.ToolsAction = new Gtk.Action("ToolsAction", Mono.Unix.Catalog.GetString("_Tools"), null, null);
@@ -126,14 +129,24 @@ namespace LongoMatch {
             w3.Add(this.ViewAction, null);
             this.FullScreenAction = new Gtk.ToggleAction("FullScreenAction", Mono.Unix.Catalog.GetString("Full Screen"), null, "gtk-fullscreen");
             this.FullScreenAction.ShortLabel = Mono.Unix.Catalog.GetString("Full Screen");
-            this.FullScreenAction.Visible = false;
             w3.Add(this.FullScreenAction, null);
             this.PlaylistAction = new Gtk.ToggleAction("PlaylistAction", Mono.Unix.Catalog.GetString("Playlist"), null, null);
             this.PlaylistAction.ShortLabel = Mono.Unix.Catalog.GetString("Playlist");
             w3.Add(this.PlaylistAction, null);
             this.PlayerAction = new Gtk.Action("PlayerAction", Mono.Unix.Catalog.GetString("_Player"), null, null);
+            this.PlayerAction.Sensitive = false;
             this.PlayerAction.ShortLabel = Mono.Unix.Catalog.GetString("_Player");
             w3.Add(this.PlayerAction, null);
+            this.CaptureModeAction = new Gtk.RadioAction("CaptureModeAction", Mono.Unix.Catalog.GetString("Capture Mode"), null, null, 0);
+            this.CaptureModeAction.Group = new GLib.SList(System.IntPtr.Zero);
+            this.CaptureModeAction.Sensitive = false;
+            this.CaptureModeAction.ShortLabel = Mono.Unix.Catalog.GetString("Capture Mode");
+            w3.Add(this.CaptureModeAction, null);
+            this.AnalyzeModeAction = new Gtk.RadioAction("AnalyzeModeAction", Mono.Unix.Catalog.GetString("Analyze Mode"), null, null, 0);
+            this.AnalyzeModeAction.Group = this.CaptureModeAction.Group;
+            this.AnalyzeModeAction.Sensitive = false;
+            this.AnalyzeModeAction.ShortLabel = Mono.Unix.Catalog.GetString("Analyze Mode");
+            w3.Add(this.AnalyzeModeAction, null);
             w1.InsertActionGroup(w3, 1);
             this.AddAccelGroup(w1.AccelGroup);
             this.Name = "LongoMatch.MainWindow";
@@ -150,7 +163,7 @@ namespace LongoMatch {
             this.menubox.Name = "menubox";
             this.menubox.Spacing = 6;
             // Container child menubox.Gtk.Box+BoxChild
-            w1.AddUiFromString("<ui><menubar name='menubar1'><menu action='FileAction'><menuitem action='NewPoyectAction'/><menuitem action='OpenProyectAction'/><menuitem action='CloseProyectAction'/><menuitem action='OpenPlaylistAction'/><separator/><menuitem action='QuitAction'/></menu><menu action='ToolsAction'><menuitem action='DatabaseManagerAction'/><menuitem action='TemplatesManagerAction'/></menu><menu action='ViewAction'><menuitem action='FullScreenAction'/><menuitem action='PlaylistAction'/></menu><menu action='PlayerAction'><menuitem action='PlayAction'/><menuitem action='PauseAction'/><menuitem action='NextAction'/><menuitem action='PreviousAction'/></menu></menubar></ui>");
+            w1.AddUiFromString("<ui><menubar name='menubar1'><menu action='FileAction'><menuitem action='NewPoyectAction'/><menuitem action='OpenProyectAction'/><menuitem action='CloseProyectAction'/><menuitem action='OpenPlaylistAction'/><separator/><menuitem action='QuitAction'/></menu><menu action='ToolsAction'><menuitem action='DatabaseManagerAction'/><menuitem action='TemplatesManagerAction'/></menu><menu action='ViewAction'><menuitem action='FullScreenAction'/><menuitem action='PlaylistAction'/><menuitem action='CaptureModeAction'/><menuitem action='AnalyzeModeAction'/></menu><menu action='PlayerAction'><menuitem action='PlayAction'/><menuitem action='PauseAction'/><menuitem action='NextAction'/><menuitem action='PreviousAction'/></menu></menubar></ui>");
             this.menubar1 = ((Gtk.MenuBar)(w1.GetWidget("/menubar1")));
             this.menubar1.Name = "menubar1";
             this.menubox.Add(this.menubar1);
@@ -186,7 +199,7 @@ namespace LongoMatch {
             this.hpaned1 = new Gtk.HPaned();
             this.hpaned1.CanFocus = true;
             this.hpaned1.Name = "hpaned1";
-            this.hpaned1.Position = 676;
+            this.hpaned1.Position = 765;
             // Container child hpaned1.Gtk.Paned+PanedChild
             this.vbox5 = new Gtk.VBox();
             this.vbox5.WidthRequest = 320;
@@ -200,64 +213,58 @@ namespace LongoMatch {
             Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(this.vbox5[this.playerbin1]));
             w8.Position = 0;
             // Container child vbox5.Gtk.Box+BoxChild
-            this.timeline2 = new LongoMatch.TimeLine();
-            this.timeline2.Events = ((Gdk.EventMask)(256));
-            this.timeline2.Name = "timeline2";
-            this.timeline2.Enabled = false;
-            this.vbox5.Add(this.timeline2);
-            Gtk.Box.BoxChild w9 = ((Gtk.Box.BoxChild)(this.vbox5[this.timeline2]));
-            w9.Position = 1;
-            w9.Expand = false;
-            w9.Fill = false;
-            // Container child vbox5.Gtk.Box+BoxChild
             this.timelinewidget1 = new LongoMatch.TimeLineWidget();
+            this.timelinewidget1.HeightRequest = 200;
             this.timelinewidget1.Events = ((Gdk.EventMask)(256));
             this.timelinewidget1.Name = "timelinewidget1";
             this.vbox5.Add(this.timelinewidget1);
-            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.vbox5[this.timelinewidget1]));
-            w10.Position = 2;
+            Gtk.Box.BoxChild w9 = ((Gtk.Box.BoxChild)(this.vbox5[this.timelinewidget1]));
+            w9.Position = 1;
+            w9.Expand = false;
+            w9.Fill = false;
             // Container child vbox5.Gtk.Box+BoxChild
             this.buttonswidget1 = new LongoMatch.ButtonsWidget();
             this.buttonswidget1.Events = ((Gdk.EventMask)(256));
             this.buttonswidget1.Name = "buttonswidget1";
             this.vbox5.Add(this.buttonswidget1);
-            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.vbox5[this.buttonswidget1]));
-            w11.Position = 3;
-            w11.Expand = false;
+            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.vbox5[this.buttonswidget1]));
+            w10.Position = 2;
+            w10.Expand = false;
+            w10.Fill = false;
             this.hpaned1.Add(this.vbox5);
-            Gtk.Paned.PanedChild w12 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.vbox5]));
-            w12.Resize = false;
-            w12.Shrink = false;
+            Gtk.Paned.PanedChild w11 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.vbox5]));
+            w11.Resize = false;
+            w11.Shrink = false;
             // Container child hpaned1.Gtk.Paned+PanedChild
             this.playlistwidget2 = new LongoMatch.PlayListWidget();
-            this.playlistwidget2.WidthRequest = 50;
+            this.playlistwidget2.WidthRequest = 150;
             this.playlistwidget2.Events = ((Gdk.EventMask)(256));
             this.playlistwidget2.Name = "playlistwidget2";
             this.hpaned1.Add(this.playlistwidget2);
-            Gtk.Paned.PanedChild w13 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.playlistwidget2]));
-            w13.Resize = false;
-            w13.Shrink = false;
+            Gtk.Paned.PanedChild w12 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.playlistwidget2]));
+            w12.Resize = false;
+            w12.Shrink = false;
             this.hpaned.Add(this.hpaned1);
             this.vbox1.Add(this.hpaned);
-            Gtk.Box.BoxChild w15 = ((Gtk.Box.BoxChild)(this.vbox1[this.hpaned]));
-            w15.Position = 1;
+            Gtk.Box.BoxChild w14 = ((Gtk.Box.BoxChild)(this.vbox1[this.hpaned]));
+            w14.Position = 1;
             // Container child vbox1.Gtk.Box+BoxChild
             this.statusbar1 = new Gtk.Statusbar();
             this.statusbar1.Name = "statusbar1";
             this.statusbar1.Spacing = 6;
             this.vbox1.Add(this.statusbar1);
-            Gtk.Box.BoxChild w16 = ((Gtk.Box.BoxChild)(this.vbox1[this.statusbar1]));
-            w16.Position = 2;
-            w16.Expand = false;
-            w16.Fill = false;
+            Gtk.Box.BoxChild w15 = ((Gtk.Box.BoxChild)(this.vbox1[this.statusbar1]));
+            w15.Position = 2;
+            w15.Expand = false;
+            w15.Fill = false;
             this.Add(this.vbox1);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 1005;
+            this.DefaultWidth = 1194;
             this.DefaultHeight = 569;
             this.leftbox.Hide();
-            this.timeline2.Hide();
+            this.timelinewidget1.Hide();
             this.buttonswidget1.Hide();
             this.playlistwidget2.Hide();
             this.Show();
@@ -269,7 +276,10 @@ namespace LongoMatch {
             this.CloseProyectAction.Activated += new System.EventHandler(this.OnCloseActivated);
             this.DatabaseManagerAction.Activated += new System.EventHandler(this.OnDatabaseManagerActivated);
             this.TemplatesManagerAction.Activated += new System.EventHandler(this.OnSectionsTemplatesManagerActivated);
+            this.FullScreenAction.Toggled += new System.EventHandler(this.OnFullScreenActionToggled);
             this.PlaylistAction.Toggled += new System.EventHandler(this.OnPlaylistActionToggled);
+            this.CaptureModeAction.Toggled += new System.EventHandler(this.OnCaptureModeActionToggled);
+            this.AnalyzeModeAction.Toggled += new System.EventHandler(this.OnAnalyzeModeActionToggled);
             this.treewidget1.TimeNodeSelected += new LongoMatch.TimeNodeSelectedHandler(this.OnTimeNodeSelected);
             this.treewidget1.TimeNodeChanged += new LongoMatch.TimeNodeChangedHandler(this.OnTimeNodeChanged);
             this.treewidget1.TimeNodeDeleted += new LongoMatch.TimeNodeDeletedHandler(this.OnTimeNodeDeleted);
@@ -279,8 +289,10 @@ namespace LongoMatch {
             this.playerbin1.Tick += new CesarPlayer.TickHandler(this.OnPlayerbin1Tick);
             this.playerbin1.Next += new CesarPlayer.NextButtonClickedHandler(this.OnPlayerbin1Next);
             this.playerbin1.Prev += new CesarPlayer.PrevButtonClickedHandler(this.OnPlayerbin1Prev);
-            this.timeline2.TimeNodeChanged += new LongoMatch.TimeNodeChangedHandler(this.OnTimeNodeChanged);
-            this.timeline2.PositionChanged += new LongoMatch.PositionChangedHandler(this.OnTimeline2PositionChanged);
+            this.timelinewidget1.TimeNodeChanged += new LongoMatch.TimeNodeChangedHandler(this.OnTimeNodeChanged);
+            this.timelinewidget1.TimeNodeSelected += new LongoMatch.TimeNodeSelectedHandler(this.OnTimeNodeSelected);
+            this.timelinewidget1.TimeNodeDeleted += new LongoMatch.TimeNodeDeletedHandler(this.OnTimeNodeDeleted);
+            this.timelinewidget1.PlayListNodeAdded += new LongoMatch.PlayListNodeAddedHandler(this.OnPlayListNodeAdded);
             this.buttonswidget1.NewMarkEvent += new LongoMatch.NewMarkEventHandler(this.OnNewMark);
             this.playlistwidget2.PlayListNodeSelected += new LongoMatch.PlayListNodeSelectedHandler(this.OnPlaylistwidget2PlayListNodeSelected);
         }

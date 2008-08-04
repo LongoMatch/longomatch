@@ -1,6 +1,6 @@
-// TimeNodeProperties.cs
+// TimeLineControlsWidget.cs
 //
-//  Copyright (C) 2007 Andoni Morales Alastruey
+//  Copyright (C) 2008 Andoni Morales Alastruey
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,46 +19,25 @@
 //
 
 using System;
-using Gdk;
 
 namespace LongoMatch
 {
 	
 	
-	public partial  class TimeNodeProperties : Gtk.Bin
+	public partial class TimeLineControlsWidget : Gtk.Bin
 	{
-
-
 		
-		public TimeNodeProperties()
+		public TimeLineControlsWidget()
 		{
 			this.Build();
 		}
-		
-		public void SetTitle (string title){
-			GtkLabel1.Text=title;		
-		}
-		
-		public void SetTimeNode(SectionsTimeNode tNode)
+
+		protected virtual void OnZoominbuttonClicked (object sender, System.EventArgs e)
 		{
-			entry1.Text = tNode.Name;
-			this.checkbutton2.Active = tNode.Visible;
-			timeadjustwidget1.SetTimeNode(tNode);	
-		
-		}
-		public void SetColor(Color color){
-			this.colorbutton1.Color = color;
-		}
-		
-		public Color GetColor(){
-			return this.colorbutton1.Color;
-			
-		}
-		
-		public SectionsTimeNode GetTimeNode(){
-
-			return new SectionsTimeNode (entry1.Text,timeadjustwidget1.GetStartTime(),timeadjustwidget1.GetStopTime(),this.checkbutton2.Active);
 		}
 
+		protected virtual void OnZoomoutbuttonClicked (object sender, System.EventArgs e)
+		{
+		}
 	}
 }
