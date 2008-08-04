@@ -66,7 +66,7 @@
 #endif
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
-#include <gio/gio.h>
+
 
 //#include <gconf/gconf-client.h>
 
@@ -1859,7 +1859,6 @@ bacon_video_widget_open(BaconVideoWidget * bvw,
 {
   
   GstMessage *err_msg = NULL;
-  GFile *file;
   char *path;
   gboolean ret;
 
@@ -1867,6 +1866,7 @@ bacon_video_widget_open(BaconVideoWidget * bvw,
   g_return_val_if_fail (mrl != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
+  
   
   /* So we aren't closed yet... */
   if (bvw->priv->mrl) {
@@ -1876,22 +1876,34 @@ bacon_video_widget_open(BaconVideoWidget * bvw,
   GST_INFO ("mrl = %s", GST_STR_NULL (mrl));
 
 
-
+  /* hmm... */
+  	if (bvw->priv->mrl && strcmp (bvw->priv->mrl, mrl) == 0) {
+    	GST_INFO ("same as current mrl");
+    	/* FIXME: shouldn't we ensure playing state here? */
+    	return TRUE;
+  	}
   
-  
-  /* this allows non-URI type of files in the thumbnailer and so on */
-  file = g_file_new_for_commandline_arg (mrl);
 
-  /* Only use the URI when FUSE isn't available for a file */
-  path = g_file_get_path (file);
-  if (path) {
-    bvw->priv->mrl = g_filename_to_uri (path, NULL, NULL);
-    g_free (path);
-  } else {
-    bvw->priv->mrl = g_file_get_uri (file);
-  }
+  	/* this allows non-URI type of files in the thumbnailer and so on */
+  	g_free (bvw->priv->mrl);
+  	if (mrl[0] == '/') {
+   	 bvw->priv->mrl = g_strdup_printf ("file://%s", mrl);
+  	} else {
+    	if (strchr (mrl, ':')) {
+      	bvw->priv->mrl = g_strdup (mrl);
+    	} else {
+      	gchar *cur_dir = g_get_current_dir ();
 
-  g_object_unref (file);
+      	if (!cur_dir) {
+        	g_set_error (error, BVW_ERROR, BVW_ERROR_GENERIC,
+                     _("Failed to retrieve working directory"));
+        	return FALSE;
+      	}
+      	bvw->priv->mrl = g_strdup_printf ("file://%s/%s", cur_dir, mrl);
+      	g_free (cur_dir);
+    	}
+  	}
+
 
   /* No path? Choke on your errors already! */
   if (bvw->priv->mrl == NULL)
