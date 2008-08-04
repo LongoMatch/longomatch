@@ -48,7 +48,8 @@ namespace LongoMatch
 		public PlayListWidget()
 		{
 			this.Build();					
-			lock_node = new System.Object();			
+			lock_node = new System.Object();
+			this.playList = new PlayList();
 		}
 
 		

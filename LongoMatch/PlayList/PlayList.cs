@@ -39,6 +39,11 @@ namespace LongoMatch
 		private int indexSelection = 0;
 		
 		
+		public PlayList(){
+			ser = new XmlSerializer(typeof(List<PlayListTimeNode>),new Type[] {typeof(PlayListTimeNode)});
+			list = new List<PlayListTimeNode>();
+		}
+		
 		public PlayList(string file)
 		{
 			

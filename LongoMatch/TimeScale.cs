@@ -38,6 +38,8 @@ namespace LongoMatch
 		private List<TimeNode> list;
 		private bool candidateStart;
 		private bool movingLimit;
+		private TimeNode selected=null;
+		private uint lastTime=0;
 		
 		
 		public event TimeNodeChangedHandler TimeNodeChanged;
@@ -49,12 +51,13 @@ namespace LongoMatch
 		{			
 			this.frames = frames;	
 			this.list = list;				
-			this.Size((int)frames, SECTION_HEIGHT);
+			this.Size((int)(frames/pixelRatio), SECTION_HEIGHT);
 			this.HeightRequest= SECTION_HEIGHT;
-			this.WidthRequest = (int)frames;		
+			this.WidthRequest = (int)(frames/pixelRatio);		
 			this.color = this.RGBToCairoColor(color);
 			this.color.A = ALPHA;
 			this.Events = EventMask.PointerMotionMask | EventMask.ButtonPressMask | EventMask.ButtonReleaseMask ;
+			
 		
 		}
 		
@@ -62,10 +65,15 @@ namespace LongoMatch
 			get {return pixelRatio;}
 			set {
 				this.pixelRatio = value;
+				this.Size((int)(frames/pixelRatio),SECTION_HEIGHT);
 				
 			}
 		}
 	
+		public TimeNode SelectedTimeNode{
+			get{return this.selected;}
+			set{this.selected = value;}
+		}
 		public void ReDraw(){
 			Gdk.Region region = this.GdkWindow.ClipRegion;
 			this.GdkWindow.InvalidateRegion(region,true);
@@ -81,10 +89,11 @@ namespace LongoMatch
 			
 			using (Cairo.Context g = Gdk.CairoHelper.Create (win)){	
 				int height;
-				int width;				
-				win.Resize((int)(frames/pixelRatio), SECTION_HEIGHT);
+				int width;	
+				double[] dashed = new double[2];
+				
+				win.Resize((int)(frames/pixelRatio), this.Allocation.Height);
 				win.GetSize(out width, out height);	
-				this.WidthRequest = width;
 				g.Color = new Cairo.Color(0,0,0);
 				g.LineWidth = 1;
 				g.MoveTo(new PointD(0,0));
@@ -100,15 +109,21 @@ namespace LongoMatch
 					g.Rectangle( new Cairo.Rectangle(tn.StartFrame/pixelRatio,3,tn.TotalFrames/pixelRatio,height-6));					
 					g.Color = this.color;					
 					g.FillPreserve();
-					if (tn.Selected) {
+					if (tn == this.selected) {						
+					
+						dashed[0] = 4;
+						dashed[1] = 2;
 						g.Color = new Cairo.Color (0.5, 0.5 , 0.5, 1);						
 					}
 					else{
 						g.Color = new Cairo.Color (color.R+0.1, color.G+0.1,color.B+0.1, 1);
 					}					
-					g.LineWidth = 3;
+					g.LineWidth = 2;
 					g.LineJoin = LineJoin.Round;
 					g.Stroke();
+					dashed[0] = 1;
+					dashed[1] = 0;
+					g.SetDash(dashed,0);
 				}
 				
 				
@@ -120,6 +135,7 @@ namespace LongoMatch
 		
 		protected override bool OnExposeEvent (EventExpose evnt)
 		{			
+			
 			this.DrawTimeNodes(evnt.Window);
 			return base.OnExposeEvent (evnt);			
 		}
@@ -149,28 +165,47 @@ namespace LongoMatch
 			return base.OnMotionNotifyEvent (evnt);
 		}
 		
-	protected override bool OnButtonPressEvent (EventButton evnt)
-	{
-		candidateTN = null;
-		foreach (MediaTimeNode tn in list){	
-			int pos = (int) (evnt.X*pixelRatio);
-			if (Math.Abs(pos-tn.StopFrame) < 3*pixelRatio ){
-				this.candidateStart = false;
-				candidateTN = tn;
-				break;
+		protected override bool OnButtonPressEvent (EventButton evnt)
+		{
+			
+			
+			if (evnt.Button == 1){
+				if (this.lastTime != evnt.Time){
+					candidateTN = null;
+					foreach (MediaTimeNode tn in list){	
+						int pos = (int) (evnt.X*pixelRatio);
+						if (Math.Abs(pos-tn.StopFrame) < 3*pixelRatio ){
+							this.candidateStart = false;
+							candidateTN = tn;
+							this.movingLimit = true;
+							this.TimeNodeChanged(tn,tn.Start);
+							this.ReDraw();
+							break;
+						}
+						else if (Math.Abs(pos-tn.StartFrame) < 3*pixelRatio){
+							this.candidateStart =true;
+							candidateTN = tn;
+							this.movingLimit = true;
+							this.TimeNodeChanged(tn,tn.Stop);
+							this.ReDraw();
+							break;
+						}			
+					}
+				}
+				//On Double Click
+				else {
+					foreach (MediaTimeNode tn in list){
+						int pos = (int) (evnt.X*pixelRatio);
+						if (this.TimeNodeSelected!= null && tn.HasFrame(pos) ){							
+							TimeNodeSelected(tn);
+							break;
+						}
+					}
+					
+				}
 			}
-			else if (Math.Abs(pos-tn.StartFrame) < 3*pixelRatio  ){
-				this.candidateStart =true;
-				candidateTN = tn;
-				break;
-			}
-		}
-		if (candidateTN != null){
-			this.movingLimit = true;
-			candidateTN.Selected = true;
-			this.ReDraw();
-		}			
-		return base.OnButtonPressEvent (evnt);
+			this.lastTime = evnt.Time;
+			return base.OnButtonPressEvent (evnt);
 	}
 		
 		protected override bool OnButtonReleaseEvent (EventButton evnt)

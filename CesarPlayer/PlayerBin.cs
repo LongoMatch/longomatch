@@ -191,18 +191,32 @@ namespace CesarPlayer
 			this.segmentStopTime = stop;
 			this.closebutton.Show();
 			this.timescale.Sensitive = false;
+			this.vscale1.Value = 25;
 			player.SegmentSeek(start,stop);
 		
 			
 		}
 		
+		public void CloseActualSegment(){
+			this.closebutton.Hide();
+			this.hasNext = false;
+			this.segmentStartTime = 0;
+			this.segmentStopTime = 0;
+			this.timescale.Value = 0;
+			this.timescale.Sensitive = true;
+			this.SegmentClosedEvent();
+			this.player.CancelProgramedStop();
+		}
+		
 		public void SetSensitive(){
 			this.controlsbox.Sensitive = true;
+			this.vscale1.Sensitive = true;
 					
 		}
 		
 		public void UnSensitive(){			
 			this.controlsbox.Sensitive = false;
+			this.vscale1.Sensitive = false;
 				
 		}
 		
@@ -321,14 +335,7 @@ namespace CesarPlayer
 
 		protected virtual void OnClosebuttonClicked (object sender, System.EventArgs e)
 		{
-			this.closebutton.Hide();
-			this.hasNext = false;
-			this.segmentStartTime = 0;
-			this.segmentStopTime = 0;
-			this.timescale.Value = 0;
-			this.timescale.Sensitive = true;
-			this.SegmentClosedEvent();
-			this.player.CancelProgramedStop();
+			this.CloseActualSegment();	
 		}
 
 		protected virtual void OnPrevbuttonClicked (object sender, System.EventArgs e)
@@ -348,7 +355,18 @@ namespace CesarPlayer
 
 		protected virtual void OnVscale1FormatValue (object o, Gtk.FormatValueArgs args)
 		{
-			Console.WriteLine("formatting value");
+			Console.WriteLine(args.Value);
+			double val = args.Value;
+			if (val >25 ){
+				val = val-25 ;
+				args.RetVal = val +"X";
+			}
+			else if (val ==25){
+				args.RetVal = "1X";
+			}
+			else if (val <25){
+				args.RetVal = "-"+val+"/25"+"X";
+			}
 		}
 
 		protected virtual void OnVscale1ValueChanged (object sender, System.EventArgs e)
@@ -356,17 +374,20 @@ namespace CesarPlayer
 			VScale scale= (VScale)sender;
 			double val = scale.Value;
 			if (val >25 ){
-				val = val-25 ;
-				//this.ratelabel.Text = "X"+val;
-				player.SetRate((float) val,segmentStopTime);
-				Console.WriteLine((float) val);
-			}
-			else if (val <25){
+				val = val-25 ;	
+				if (this.segmentStartTime == 0 && this.segmentStopTime==0)
+					player.SetRate((float)val);
+				else
+					player.SetRateInSegment((float) val,segmentStopTime);
 				
-				//this.ratelabel.Text="-X"+val+"/25";
-				Console.WriteLine((float)(val/25));
-				player.SetRate((float)(val/25),segmentStopTime);
 			}
+			else if (val <=25){			
+				if (this.segmentStartTime == 0 && this.segmentStopTime==0)
+					player.SetRate((float)(val/25));
+				else
+					player.SetRateInSegment((float)(val/25),segmentStopTime);
+			}
+			
 				
 			
 		}

@@ -220,8 +220,6 @@ namespace LongoMatch {
             this.vbox5.Add(this.timelinewidget1);
             Gtk.Box.BoxChild w9 = ((Gtk.Box.BoxChild)(this.vbox5[this.timelinewidget1]));
             w9.Position = 1;
-            w9.Expand = false;
-            w9.Fill = false;
             // Container child vbox5.Gtk.Box+BoxChild
             this.buttonswidget1 = new LongoMatch.ButtonsWidget();
             this.buttonswidget1.Events = ((Gdk.EventMask)(256));

@@ -33,6 +33,7 @@ namespace LongoMatch
 	{
 		private static  FileData openedFileData;
 		private CesarPlayer.IPlayer player;
+		private TimeNode selectedTimeNode;
 		bool fileDataModified;	
 
 		
@@ -62,7 +63,8 @@ namespace LongoMatch
 				else {
 					
 					this.Title = System.IO.Path.GetFileNameWithoutExtension(fData.File.FilePath) + " - LongoMatch";
-					playerbin1.File=fData.File.FilePath;		
+					playerbin1.File=fData.File.FilePath;
+					this.playlistwidget2.Stop();	
 					treewidget1.FileData=fData;	
 					this.timelinewidget1.FileData = fData;;
 					this.buttonswidget1.SetSections(fData.Sections);	
@@ -104,6 +106,7 @@ namespace LongoMatch
 			this.player.LogoMode = true;
 			this.SaveDB();			
 			openedFileData = null;	
+			this.selectedTimeNode = null;
 			this.CloseProyectAction.Sensitive=false;
 			this.PlayerAction.Sensitive= false;
 			this.CaptureModeAction.Sensitive = false;
@@ -112,6 +115,7 @@ namespace LongoMatch
 		}
 		
 		private void SaveDB(){
+			
 			MainClass.DB.UpdateFileData(this.OpenedFileData());
 			this.fileDataModified=false;
 			
@@ -188,7 +192,8 @@ namespace LongoMatch
 
 		protected virtual bool UpdateFileData(){
 			if (fileDataModified && openedFileData != null){
-				this.SaveDB();
+				System.Threading.Thread thread = new System.Threading.Thread(new ThreadStart(SaveDB));				                                            
+				thread.Start();
 			}
 			return true;
 		}
@@ -230,8 +235,8 @@ namespace LongoMatch
 
 		protected virtual void OnTimeNodeSelected (MediaTimeNode tNode)
 		{			
-			//Si hay un nodo de la lista de reproducción activa se para el reloj
-			this.playlistwidget2.Stop();			
+			this.selectedTimeNode = tNode;			
+			this.timelinewidget1.SelectedTimeNode = tNode;
 			this.playerbin1.SetStartStop(tNode.Start.MSeconds,tNode.Stop.MSeconds);		
 		}
 
@@ -241,16 +246,22 @@ namespace LongoMatch
 			//Si hemos modificado el valor de un nodo de tiempo a través del 
 			//widget de ajuste de tiempo posicionamos el reproductor en el punto
 			//
-			if (val is Time ){				
+			if (tNode is MediaTimeNode && val is Time ){	
+				if(tNode != selectedTimeNode)
+					this.OnTimeNodeSelected((MediaTimeNode)tNode);
 				Time pos = (Time)val;
 				this.player.Pause();
 				if (pos == tNode.Start){
+					
 					this.playerbin1.UpdateSegmentStartTime(pos.MSeconds);
 				}				
 				else{
 					this.playerbin1.UpdateSegmentStopTime(pos.MSeconds);
 				}	
-			}			
+			}	
+			else if (tNode is SectionsTimeNode){
+				this.buttonswidget1.SetSections(openedFileData.Sections);
+			}
 			this.fileDataModified = true;			
 		}
 

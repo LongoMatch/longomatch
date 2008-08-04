@@ -37,14 +37,18 @@ namespace LongoMatch
 			this.frameRate = frameRate;
 			this.frames = frames;
 			this.pixelRatio = 1;
-			this.Size((int)frames+25, 30);
+			this.Size((int)(frames/pixelRatio+25), 30);
 			this.HeightRequest= 30;
+
 		}
+				
 		
 		public uint PixelRatio{
 			get {return pixelRatio;}
 			set {
 				this.pixelRatio = value;
+				this.Size((int)(frames/pixelRatio),30);
+			
 										
 			}
 		}
@@ -58,6 +62,7 @@ namespace LongoMatch
 			
 			evnt.Window.GetSize(out width, out height);	
 			evnt.Window.Resize((int)(frames/pixelRatio), height);
+			this.Size((int)(frames/pixelRatio),height);
 			evnt.Window.GetSize(out width, out height);	
 			
 			time = new Time();
@@ -91,8 +96,6 @@ namespace LongoMatch
 				
 				
 			}
-			
-			Console.WriteLine(width);
 			return base.OnExposeEvent (evnt);
 		}
 

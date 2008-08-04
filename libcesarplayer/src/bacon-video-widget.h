@@ -151,7 +151,8 @@ EXPORT float bacon_video_widget_get_position           (BaconVideoWidget *bvw);
 EXPORT gint64 bacon_video_widget_get_current_time      (BaconVideoWidget *bvw);
 EXPORT gint64 bacon_video_widget_get_accurate_current_time (BaconVideoWidget *bvw);
 EXPORT gint64 bacon_video_widget_get_stream_length     (BaconVideoWidget *bvw);
-EXPORT gboolean bacon_video_widget_set_rate     (BaconVideoWidget *bvw, gfloat rate, gint64 stop);
+EXPORT gboolean bacon_video_widget_set_rate     (BaconVideoWidget *bvw, gfloat rate);
+EXPORT gboolean bacon_video_widget_set_rate_in_segment    (BaconVideoWidget *bvw, gfloat rate, gint64 stop);
 
 
 

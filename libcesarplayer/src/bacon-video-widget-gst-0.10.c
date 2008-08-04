@@ -2145,7 +2145,7 @@ bacon_video_widget_seek_in_segment (BaconVideoWidget *bvw, gint64 pos )
 }
 
 gboolean
-bacon_video_widget_set_rate (BaconVideoWidget *bvw, gfloat rate, gint64 stop)
+bacon_video_widget_set_rate_in_segment (BaconVideoWidget *bvw, gfloat rate, gint64 stop)
 {
 
   g_return_val_if_fail (bvw != NULL, FALSE);
@@ -2159,6 +2159,25 @@ bacon_video_widget_set_rate (BaconVideoWidget *bvw, gfloat rate, gint64 stop)
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE | GST_SEEK_FLAG_SEGMENT,
       	GST_SEEK_TYPE_SET,bacon_video_widget_get_accurate_current_time(bvw) * GST_MSECOND,
       	GST_SEEK_TYPE_SET, stop * GST_MSECOND);
+      
+  return TRUE;
+}
+
+gboolean
+bacon_video_widget_set_rate (BaconVideoWidget *bvw, gfloat rate)
+{
+
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
+
+  //GST_LOG ("Seeking to %" GST_TIME_FORMAT, GST_TIME_ARGS (time * GST_MSECOND));
+ 
+
+   gst_element_seek (bvw->priv->play, rate,
+      	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
+      	GST_SEEK_TYPE_SET,bacon_video_widget_get_accurate_current_time(bvw) * GST_MSECOND,
+      	GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
       
   return TRUE;
 }

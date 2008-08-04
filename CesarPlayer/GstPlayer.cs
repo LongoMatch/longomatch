@@ -986,10 +986,17 @@ namespace CesarPlayer {
 		
 		
 		[DllImport("libcesarplayer.dll")]
-		static extern bool bacon_video_widget_set_rate(IntPtr raw, float rate, long stop_time);
+		static extern bool bacon_video_widget_set_rate_in_segment(IntPtr raw, float rate, long stop_time);
 
-		public bool SetRate(float rate, long stopTime) {
-			return bacon_video_widget_set_rate(Handle, rate, stopTime);
+		public bool SetRateInSegment(float rate, long stopTime) {
+			return bacon_video_widget_set_rate_in_segment(Handle, rate, stopTime);
+		}
+		
+		[DllImport("libcesarplayer.dll")]
+		static extern bool bacon_video_widget_set_rate(IntPtr raw, float rate);
+		
+		public bool SetRate(float rate){
+			return bacon_video_widget_set_rate_in_segment(Handle, rate);
 		}
 
 		[DllImport("libcesarplayer.dll")]

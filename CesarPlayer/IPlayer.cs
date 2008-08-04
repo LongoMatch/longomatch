@@ -102,7 +102,9 @@ namespace CesarPlayer
 		
 		bool Open(string mrl);
 		
-		bool SetRate(float rate, long stopTime);
+		bool SetRate(float rate);
+		
+		bool SetRateInSegment(float rate, long stopTime);
 		
 		void TogglePlay();
 		

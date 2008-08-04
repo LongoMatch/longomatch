@@ -21,7 +21,7 @@ namespace LongoMatch {
         
         private Gtk.Button zoomoutbutton;
         
-        private Gtk.ScrolledWindow scrolledwindow1;
+        private Gtk.ScrolledWindow GtkScrolledWindow;
         
         private Gtk.VBox vbox1;
         
@@ -94,22 +94,20 @@ namespace LongoMatch {
             w19.Expand = false;
             w19.Fill = false;
             // Container child hbox3.Gtk.Box+BoxChild
-            this.scrolledwindow1 = new Gtk.ScrolledWindow();
-            this.scrolledwindow1.CanFocus = true;
-            this.scrolledwindow1.Name = "scrolledwindow1";
-            this.scrolledwindow1.ShadowType = ((Gtk.ShadowType)(1));
-            // Container child scrolledwindow1.Gtk.Container+ContainerChild
+            this.GtkScrolledWindow = new Gtk.ScrolledWindow();
+            this.GtkScrolledWindow.Name = "GtkScrolledWindow";
+            this.GtkScrolledWindow.ShadowType = ((Gtk.ShadowType)(1));
+            // Container child GtkScrolledWindow.Gtk.Container+ContainerChild
             Gtk.Viewport w20 = new Gtk.Viewport();
             w20.ShadowType = ((Gtk.ShadowType)(0));
             // Container child GtkViewport.Gtk.Container+ContainerChild
             this.vbox1 = new Gtk.VBox();
             this.vbox1.Name = "vbox1";
-            this.vbox1.Homogeneous = true;
-            this.vbox1.Spacing = 2;
+            this.vbox1.BorderWidth = ((uint)(2));
             w20.Add(this.vbox1);
-            this.scrolledwindow1.Add(w20);
-            this.hbox3.Add(this.scrolledwindow1);
-            Gtk.Box.BoxChild w23 = ((Gtk.Box.BoxChild)(this.hbox3[this.scrolledwindow1]));
+            this.GtkScrolledWindow.Add(w20);
+            this.hbox3.Add(this.GtkScrolledWindow);
+            Gtk.Box.BoxChild w23 = ((Gtk.Box.BoxChild)(this.hbox3[this.GtkScrolledWindow]));
             w23.Position = 1;
             this.Add(this.hbox3);
             if ((this.Child != null)) {

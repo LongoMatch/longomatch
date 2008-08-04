@@ -79,19 +79,6 @@
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.TimeLine" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="TimeLine Properties">
-        <property name="Enabled" />
-      </itemgroup>
-    </itemgroups>
-    <signals>
-      <itemgroup label="TimeLine Signals">
-        <signal name="TimeNodeChanged" />
-        <signal name="PositionChanged" />
-      </itemgroup>
-    </signals>
-  </object>
   <object type="LongoMatch.TimeScale" palette-category="LongoMatch" allow-children="false" base-type="Gtk.DrawingArea">
     <itemgroups>
       <itemgroup label="TimeScale Properties">
