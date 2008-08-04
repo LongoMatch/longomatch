@@ -45,6 +45,8 @@ programfilesdir = @libdir@/@PACKAGE@
 programfiles_DATA = $(PROGRAMFILES)
 linuxpkgconfigdir = @libdir@/pkgconfig
 linuxpkgconfig_DATA = $(LINUX_PKGCONFIG)
+programfilesimagesdir = @libdir@/@PACKAGE@/images
+programfilesimages_DATA = $(PROGRAMFILES_IMAGES)
 
 
 # macros

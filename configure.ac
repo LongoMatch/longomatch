@@ -56,11 +56,8 @@ dnl package checks, common for all configs
 PKG_CHECK_MODULES([GLIB_SHARP_20], [glib-sharp-2.0])
 PKG_CHECK_MODULES([GTK_SHARP_20], [gtk-sharp-2.0])
 
-PKG_CHECK_MODULES(LIBTIMESCALE, [gtk+-2.0 glib-2.0 atk gobject-2.0 ])
-AC_SUBST(LIBTIMESCALE_CFLAGS)
-AC_SUBST(LIBTIMESCALE_LIBS)
 
-PKG_CHECK_MODULES(CESARPLAYER, [gtk+-2.0 >= 2.8 gdk-2.0 glib-2.0 gstreamer-0.10 gstreamer-audio-0.10 gstreamer-video-0.10 gobject-2.0 gstreamer-interfaces-0.10])
+PKG_CHECK_MODULES(CESARPLAYER, [gtk+-2.0 >= 2.8 gdk-2.0 gio-2.0 glib-2.0 gstreamer-0.10 gstreamer-audio-0.10 gstreamer-video-0.10 gobject-2.0 gstreamer-interfaces-0.10])
 AC_SUBST(CESARPLAYER_CFLAGS)
 AC_SUBST(CESARPLAYER_LIBS)
 
@@ -72,8 +69,6 @@ LongoMatch/Makefile
 CesarPlayer/Makefile
 libcesarplayer/Makefile
 libcesarplayer/src/Makefile
-libtimescale/Makefile
-libtimescale/src/Makefile
 LongoMatch/longomatch
 Makefile
 CesarPlayer/cesarplayer.pc

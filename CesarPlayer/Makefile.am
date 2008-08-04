@@ -44,11 +44,7 @@ FILES = \
 	SignalUtils.cs \
 	PlayerMaker.cs \
 	VolumeWindow.cs \
-	gtk-gui/CesarPlayer.VolumeWindow.cs \
 	PlayerBin.cs \
-	gtk-gui/CesarPlayer.PlayerBin.cs \
-	TimeLine.cs \
-	gtk-gui/CesarPlayer.TimeLine.cs \
 	Handlers.cs \
 	BufferingHandler.cs \
 	ErrorHandler.cs \
@@ -61,8 +57,11 @@ FILES = \
 	StateChangedHandler.cs \
 	TitleChangeHandler.cs \
 	TickHandler.cs \
-	BaconVideoWidget.cs \
-	gtk-gui/generated.cs 
+	GstPlayer.cs \
+	gtk-gui/generated.cs \
+	IMetadataReader.cs \
+	gtk-gui/CesarPlayer.VolumeWindow.cs \
+	gtk-gui/CesarPlayer.PlayerBin.cs 
 
 DATA_FILES = 
 

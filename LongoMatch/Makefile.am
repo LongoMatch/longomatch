@@ -19,7 +19,7 @@ DB4OBJECTS_DB4O_DLL_SOURCE=Db4objects.Db4o.dll
 LONGOMATCH_DESKTOP_SOURCE=app.desktop
 CESARPLAYER_EXE_SOURCE=../CesarPlayer/bin/Debug/CesarPlayer.exe
 CESARPLAYER_EXE=$(BUILD_DIR)/CesarPlayer.exe
-BACKGROUND_PNG_SOURCE=background.png
+BACKGROUND_PNG_SOURCE=images/background.png
 CESARPLAYER_EXE_MDB_SOURCE=../CesarPlayer/bin/Debug/CesarPlayer.exe.mdb
 CESARPLAYER_EXE_MDB=$(BUILD_DIR)/CesarPlayer.exe.mdb
 LGMLOGO_PNG_SOURCE=lgmlogo.png
@@ -42,7 +42,7 @@ CESARPLAYER_DLL=$(BUILD_DIR)/CesarPlayer.dll
 DB4OBJECTS_DB4O_DLL_SOURCE=Db4objects.Db4o.dll
 LONGOMATCH_DESKTOP_SOURCE=app.desktop
 CESARPLAYER_EXE=
-BACKGROUND_PNG_SOURCE=background.png
+BACKGROUND_PNG_SOURCE=images/background.png
 CESARPLAYER_EXE_MDB=
 LGMLOGO_PNG_SOURCE=lgmlogo.png
 
@@ -55,9 +55,11 @@ PROGRAMFILES = \
 	$(CESARPLAYER_DLL) \
 	$(DB4OBJECTS_DB4O_DLL) \
 	$(CESARPLAYER_EXE) \
-	$(BACKGROUND_PNG) \
 	$(CESARPLAYER_EXE_MDB) \
 	$(LGMLOGO_PNG)  
+
+PROGRAMFILES_IMAGES = \
+	$(BACKGROUND_PNG)  
 
 LINUX_DESKTOPAPPLICATIONS = \
 	$(LONGOMATCH_DESKTOP)  
@@ -67,7 +69,7 @@ BINARIES = \
 
 
 	
-all: $(ASSEMBLY) $(PROGRAMFILES) $(LINUX_DESKTOPAPPLICATIONS) $(BINARIES) 
+all: $(ASSEMBLY) $(PROGRAMFILES) $(PROGRAMFILES_IMAGES) $(LINUX_DESKTOPAPPLICATIONS) $(BINARIES) 
 
 FILES = \
 	gtk-gui/generated.cs \
@@ -89,7 +91,6 @@ FILES = \
 	gtk-gui/LongoMatch.TemplateEditorDialog.cs \
 	gtk-gui/LongoMatch.PlayListWidget.cs \
 	gtk-gui/LongoMatch.NewSectionsTemplatesFiles.cs \
-	gtk-gui/LongoMatch.TimeLine.cs \
 	gtk-gui/LongoMatch.CapturePropertiesWidget.cs \
 	AssemblyInfo.cs \
 	Main.cs \
@@ -112,7 +113,6 @@ FILES = \
 	Widgets/SectionsTemplates.cs \
 	Widgets/TemplateEditorDialog.cs \
 	Widgets/TimeAdjustWidget.cs \
-	Widgets/TimeLine.cs \
 	Widgets/TimeNodesTreeView.cs \
 	Widgets/TimePrecisionAdjustWidget.cs \
 	Widgets/TreeWidget.cs \
@@ -136,13 +136,18 @@ FILES = \
 	IO/SectionsReader.cs \
 	IO/TimeString.cs \
 	PlayList/IPlayList.cs \
-	IO/XMLReader.cs 
+	IO/XMLReader.cs \
+	TimeScale.cs \
+	DB/MediaFile.cs \
+	gtk-gui/LongoMatch.TimeLineWidget.cs \
+	Widgets/TimeLineWidget.cs \
+	Widgets/TimeReferenceWidget.cs 
 
 DATA_FILES = \
 	app.desktop \
 	Db4objects.Db4o.dll \
 	lgmlogo.png \
-	background.png 
+	images/background.png 
 
 RESOURCES = \
 	gtk-gui/objects.xml \
@@ -155,19 +160,20 @@ REFERENCES =  \
 	Mono.Posix \
 	System.Xml \
 	$(GTK_SHARP_20_LIBS) \
-	$(GLIB_SHARP_20_LIBS)
+	$(GLIB_SHARP_20_LIBS) \
+	Mono.Cairo
 
 DLL_REFERENCES =  \
 	Db4objects.Db4o.dll
 
-CLEANFILES = $(PROGRAMFILES) $(LINUX_DESKTOPAPPLICATIONS) $(BINARIES) 
+CLEANFILES = $(PROGRAMFILES) $(PROGRAMFILES_IMAGES) $(LINUX_DESKTOPAPPLICATIONS) $(BINARIES) 
 
 include $(top_srcdir)/Makefile.include
 
 LONGOMATCH = $(BUILD_DIR)/longomatch
 DB4OBJECTS_DB4O_DLL = $(BUILD_DIR)/Db4objects.Db4o.dll
 LONGOMATCH_DESKTOP = $(BUILD_DIR)/longomatch.desktop
-BACKGROUND_PNG = $(BUILD_DIR)/background.png
+BACKGROUND_PNG = $(BUILD_DIR)/images/background.png
 LGMLOGO_PNG = $(BUILD_DIR)/lgmlogo.png
 
 $(eval $(call emit-deploy-target,CESARPLAYER_DLL))

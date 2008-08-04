@@ -8,7 +8,6 @@
       <Entry build="True" name="libcesarplayer" configuration="Debug" />
       <Entry build="True" name="libcesarplayer" configuration="Debug" />
       <Entry build="True" name="CesarPlayer" configuration="Debug" />
-      <Entry build="True" name="libtimescale" configuration="Debug" />
       <Entry build="True" name="libcesarplayer" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
@@ -19,7 +18,6 @@
       <Entry build="True" name="libcesarplayer" configuration="Release" />
       <Entry build="True" name="libcesarplayer" configuration="Release" />
       <Entry build="True" name="CesarPlayer" configuration="Release" />
-      <Entry build="True" name="libtimescale" configuration="Release" />
       <Entry build="True" name="libcesarplayer" configuration="Release" />
     </Configuration>
   </Configurations>
@@ -30,7 +28,6 @@
     <Execute type="None" entry="liblongomatch" />
     <Execute type="None" entry="CesarPlayer" />
     <Execute type="None" entry="libtimescale" />
-    <Execute type="None" entry="libtimescale" />
     <Execute type="None" entry="libcesarplayer" />
   </StartMode>
   <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="UpdateNearestChangeLog" />
@@ -39,7 +36,6 @@
     <Entry filename="Packages.mdse" />
     <Entry filename="LongoMatchTranslation/LongoMatchTranslation.mdse" />
     <Entry filename="CesarPlayer/CesarPlayer.mdp" />
-    <Entry filename="libtimescale/libtimescale.mdp" />
     <Entry filename="libcesarplayer/liblongomatch.mdp" />
   </Entries>
 </Combine>
