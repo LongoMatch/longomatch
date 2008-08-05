@@ -90,7 +90,7 @@ namespace LongoMatch
 		}
 		
 		public void Prev(){
-			Console.WriteLine(this.player.AccurateCurrentTime);
+
 			if ((this.player.AccurateCurrentTime - this.plNode.Start.MSeconds) < 500){
 				//Seleccionaod el elemento anterior
 				if (this.playList.HasPrev()){								

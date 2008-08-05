@@ -223,8 +223,8 @@ namespace LongoMatch
 			
 			if (tNode is MediaTimeNode && TimeNodeSelected != null)
 				this.TimeNodeSelected((MediaTimeNode)tNode);
-			else if (tNode is SectionsTimeNode && this.NewMarkEvent != null)
-				Console.WriteLine(args.Path);
+			else if (tNode is SectionsTimeNode && this.NewMarkEvent != null);
+				// TODO  Send a NewMarkEvent signal when clicking SectionsTimeNode
 
 	
 		}

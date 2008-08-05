@@ -223,10 +223,8 @@ namespace LongoMatch
 				long fStart = (start<0) ? 0 : start;
 				//La longitud tiene que ser en ms
 				long fStop = (stop > player.StreamLength*1000) ? player.StreamLength: stop;
-				Console.WriteLine(fStart+" " +fStop);
 				Pixbuf miniature = this.playerbin1.CurrentThumbnail;
 				MediaTimeNode tn = openedFileData.AddTimeNode(i,new Time((int)fStart),new Time((int)fStop),miniature);				
-				Console.WriteLine(tn.MiniaturePath);
 				treewidget1.AddTimeNode(tn,i);
 				this.fileDataModified = true;
 				this.timelinewidget1.QueueDraw();
