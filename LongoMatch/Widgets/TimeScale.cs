@@ -52,7 +52,7 @@ namespace LongoMatch
 		{			
 			this.frames = frames;	
 			this.list = list;				
-				this.Size((int)(frames/pixelRatio), SECTION_HEIGHT);
+			this.Size((int)(frames/pixelRatio), SECTION_HEIGHT);
 			this.HeightRequest= SECTION_HEIGHT;
 			this.WidthRequest = (int)(frames/pixelRatio);		
 			this.color = this.RGBToCairoColor(color);
@@ -98,7 +98,7 @@ namespace LongoMatch
 				int width;	
 				double[] dashed = new double[2];
 				
-					win.Resize((int)(frames/pixelRatio), this.Allocation.Height);
+				win.Resize((int)(frames/pixelRatio), this.Allocation.Height);
 				win.GetSize(out width, out height);	
 				g.Color = new Cairo.Color(0,0,0);
 				g.LineWidth = 1;

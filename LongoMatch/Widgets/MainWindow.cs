@@ -41,12 +41,11 @@ namespace LongoMatch
 				base("LongoMatch")
 		{			
 			this.Build();
-			//this.PopulateMenuBar();
 			playerbin1.SetLogo(MainClass.ImagesDir()+"background.png");
 			player = playerbin1.Player ;
 			player.LogoMode = true;
 			this.playlistwidget2.SetPlayer(player);
-			GLib.Idle.Add(UpdateFileData);
+
 		}
 
 		
@@ -72,10 +71,12 @@ namespace LongoMatch
 						player.LogoMode = false;
 						this.FullScreenAction.Sensitive = true;
 					}
-					this.CloseProyectAction.Sensitive=true;
+					this.CloseProjectAction.Sensitive=true;
+					this.SaveProjectAction.Sensitive = true;
 					this.PlayerAction.Sensitive= true;
 					this.CaptureModeAction.Sensitive = true;
 					this.AnalyzeModeAction.Sensitive = true;
+				
 					this.ShowWidgets();
 				}
 			}			
@@ -107,7 +108,8 @@ namespace LongoMatch
 			this.SaveDB();			
 			openedFileData = null;	
 			this.selectedTimeNode = null;
-			this.CloseProyectAction.Sensitive=false;
+			this.CloseProjectAction.Sensitive=false;
+			this.SaveProjectAction.Sensitive = false;
 			this.PlayerAction.Sensitive= false;
 			this.CaptureModeAction.Sensitive = false;
 			this.AnalyzeModeAction.Sensitive = false;
@@ -200,6 +202,8 @@ namespace LongoMatch
 		
 		protected virtual void OnCloseActivated (object sender, System.EventArgs e)
 		{
+			// FIXME Ask to Save the Project if it has changed
+			this.UpdateFileData();
 			this.CloseActualProyect();			
 		}
 
@@ -273,7 +277,9 @@ namespace LongoMatch
 
 		protected virtual void OnDeleteEvent (object o, Gtk.DeleteEventArgs args)
 		{
-			this.playerbin1.Dispose();
+			this.UpdateFileData();
+			this.playerbin1.Destroy();
+			Application.Quit();
 			Application.Quit();			
 		}
 
@@ -306,6 +312,9 @@ namespace LongoMatch
 
 		protected virtual void OnQuitActivated (object sender, System.EventArgs e)
 		{
+			// FIXME Ask to Save the Project if it has changed
+			this.UpdateFileData();
+			this.playerbin1.Destroy();
 			Application.Quit();
 		}
 
@@ -384,6 +393,11 @@ namespace LongoMatch
 		{
 		
 				this.playerbin1.FullScreen = ((Gtk.ToggleAction)sender).Active;
+		}
+
+		protected virtual void OnSaveProjectActionActivated (object sender, System.EventArgs e)
+		{
+			this.SaveDB();
 		}
 
 		

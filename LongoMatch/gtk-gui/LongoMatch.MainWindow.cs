@@ -15,17 +15,17 @@ namespace LongoMatch {
         
         private Gtk.Action FileAction;
         
-        private Gtk.Action NewPoyectAction;
+        private Gtk.Action NewPojectAction;
         
-        private Gtk.Action OpenProyectAction;
+        private Gtk.Action OpenProjectAction;
         
         private Gtk.Action QuitAction;
         
-        private Gtk.Action CloseProyectAction;
+        private Gtk.Action CloseProjectAction;
         
         private Gtk.Action ToolsAction;
         
-        private Gtk.Action DatabaseManagerAction;
+        private Gtk.Action ProjectsManagerAction;
         
         private Gtk.Action TemplatesManagerAction;
         
@@ -40,6 +40,8 @@ namespace LongoMatch {
         private Gtk.RadioAction CaptureModeAction;
         
         private Gtk.RadioAction AnalyzeModeAction;
+        
+        private Gtk.Action SaveProjectAction;
         
         private Gtk.Action PlayAction;
         
@@ -85,25 +87,25 @@ namespace LongoMatch {
             this.FileAction = new Gtk.Action("FileAction", Mono.Unix.Catalog.GetString("_File"), null, null);
             this.FileAction.ShortLabel = Mono.Unix.Catalog.GetString("_File");
             w2.Add(this.FileAction, null);
-            this.NewPoyectAction = new Gtk.Action("NewPoyectAction", Mono.Unix.Catalog.GetString("_New Poyect"), null, "gtk-new");
-            this.NewPoyectAction.ShortLabel = Mono.Unix.Catalog.GetString("_New Poyect");
-            w2.Add(this.NewPoyectAction, null);
-            this.OpenProyectAction = new Gtk.Action("OpenProyectAction", Mono.Unix.Catalog.GetString("_Open Proyect"), null, "gtk-open");
-            this.OpenProyectAction.ShortLabel = Mono.Unix.Catalog.GetString("_Open Proyect");
-            w2.Add(this.OpenProyectAction, null);
+            this.NewPojectAction = new Gtk.Action("NewPojectAction", Mono.Unix.Catalog.GetString("_New Poject"), null, "gtk-new");
+            this.NewPojectAction.ShortLabel = Mono.Unix.Catalog.GetString("_New Poyect");
+            w2.Add(this.NewPojectAction, null);
+            this.OpenProjectAction = new Gtk.Action("OpenProjectAction", Mono.Unix.Catalog.GetString("_Open Project"), null, "gtk-open");
+            this.OpenProjectAction.ShortLabel = Mono.Unix.Catalog.GetString("_Open Proyect");
+            w2.Add(this.OpenProjectAction, null);
             this.QuitAction = new Gtk.Action("QuitAction", Mono.Unix.Catalog.GetString("_Quit"), null, "gtk-quit");
             this.QuitAction.ShortLabel = Mono.Unix.Catalog.GetString("_Quit");
             w2.Add(this.QuitAction, null);
-            this.CloseProyectAction = new Gtk.Action("CloseProyectAction", Mono.Unix.Catalog.GetString("_Close Proyect"), null, "gtk-close");
-            this.CloseProyectAction.Sensitive = false;
-            this.CloseProyectAction.ShortLabel = Mono.Unix.Catalog.GetString("_Close Proyect");
-            w2.Add(this.CloseProyectAction, null);
+            this.CloseProjectAction = new Gtk.Action("CloseProjectAction", Mono.Unix.Catalog.GetString("_Close Project"), null, "gtk-close");
+            this.CloseProjectAction.Sensitive = false;
+            this.CloseProjectAction.ShortLabel = Mono.Unix.Catalog.GetString("_Close Proyect");
+            w2.Add(this.CloseProjectAction, null);
             this.ToolsAction = new Gtk.Action("ToolsAction", Mono.Unix.Catalog.GetString("_Tools"), null, null);
             this.ToolsAction.ShortLabel = Mono.Unix.Catalog.GetString("_Tools");
             w2.Add(this.ToolsAction, null);
-            this.DatabaseManagerAction = new Gtk.Action("DatabaseManagerAction", Mono.Unix.Catalog.GetString("Database Manager"), null, null);
-            this.DatabaseManagerAction.ShortLabel = Mono.Unix.Catalog.GetString("Database Manager");
-            w2.Add(this.DatabaseManagerAction, null);
+            this.ProjectsManagerAction = new Gtk.Action("ProjectsManagerAction", Mono.Unix.Catalog.GetString("Projects Manager"), null, null);
+            this.ProjectsManagerAction.ShortLabel = Mono.Unix.Catalog.GetString("Database Manager");
+            w2.Add(this.ProjectsManagerAction, null);
             this.TemplatesManagerAction = new Gtk.Action("TemplatesManagerAction", Mono.Unix.Catalog.GetString("Templates Manager"), null, null);
             this.TemplatesManagerAction.ShortLabel = Mono.Unix.Catalog.GetString("Templates Manager");
             w2.Add(this.TemplatesManagerAction, null);
@@ -130,6 +132,10 @@ namespace LongoMatch {
             this.AnalyzeModeAction.Sensitive = false;
             this.AnalyzeModeAction.ShortLabel = Mono.Unix.Catalog.GetString("Analyze Mode");
             w2.Add(this.AnalyzeModeAction, null);
+            this.SaveProjectAction = new Gtk.Action("SaveProjectAction", Mono.Unix.Catalog.GetString("_Save Project"), null, "gtk-save");
+            this.SaveProjectAction.Sensitive = false;
+            this.SaveProjectAction.ShortLabel = Mono.Unix.Catalog.GetString("_Save Project");
+            w2.Add(this.SaveProjectAction, null);
             w1.InsertActionGroup(w2, 0);
             Gtk.ActionGroup w3 = new Gtk.ActionGroup("Player");
             this.PlayAction = new Gtk.Action("PlayAction", Mono.Unix.Catalog.GetString("_Play"), null, "gtk-media-play");
@@ -163,7 +169,7 @@ namespace LongoMatch {
             this.menubox.Name = "menubox";
             this.menubox.Spacing = 6;
             // Container child menubox.Gtk.Box+BoxChild
-            w1.AddUiFromString("<ui><menubar name='menubar1'><menu action='FileAction'><menuitem action='NewPoyectAction'/><menuitem action='OpenProyectAction'/><menuitem action='CloseProyectAction'/><menuitem action='OpenPlaylistAction'/><separator/><menuitem action='QuitAction'/></menu><menu action='ToolsAction'><menuitem action='DatabaseManagerAction'/><menuitem action='TemplatesManagerAction'/></menu><menu action='ViewAction'><menuitem action='FullScreenAction'/><menuitem action='PlaylistAction'/><menuitem action='CaptureModeAction'/><menuitem action='AnalyzeModeAction'/></menu><menu action='PlayerAction'><menuitem action='PlayAction'/><menuitem action='PauseAction'/><menuitem action='NextAction'/><menuitem action='PreviousAction'/></menu></menubar></ui>");
+            w1.AddUiFromString("<ui><menubar name='menubar1'><menu action='FileAction'><menuitem action='NewPojectAction'/><menuitem action='OpenProjectAction'/><menuitem action='SaveProjectAction'/><menuitem action='CloseProjectAction'/><menuitem action='OpenPlaylistAction'/><separator/><menuitem action='QuitAction'/></menu><menu action='ToolsAction'><menuitem action='ProjectsManagerAction'/><menuitem action='TemplatesManagerAction'/></menu><menu action='ViewAction'><menuitem action='FullScreenAction'/><menuitem action='PlaylistAction'/><menuitem action='CaptureModeAction'/><menuitem action='AnalyzeModeAction'/></menu><menu action='PlayerAction'><menuitem action='PlayAction'/><menuitem action='PauseAction'/><menuitem action='NextAction'/><menuitem action='PreviousAction'/></menu></menubar></ui>");
             this.menubar1 = ((Gtk.MenuBar)(w1.GetWidget("/menubar1")));
             this.menubar1.Name = "menubar1";
             this.menubox.Add(this.menubar1);
@@ -268,16 +274,17 @@ namespace LongoMatch {
             this.playlistwidget2.Hide();
             this.Show();
             this.DeleteEvent += new Gtk.DeleteEventHandler(this.OnDeleteEvent);
-            this.NewPoyectAction.Activated += new System.EventHandler(this.OnNewActivated);
-            this.OpenProyectAction.Activated += new System.EventHandler(this.OnOpenActivated);
+            this.NewPojectAction.Activated += new System.EventHandler(this.OnNewActivated);
+            this.OpenProjectAction.Activated += new System.EventHandler(this.OnOpenActivated);
             this.QuitAction.Activated += new System.EventHandler(this.OnQuitActivated);
-            this.CloseProyectAction.Activated += new System.EventHandler(this.OnCloseActivated);
-            this.DatabaseManagerAction.Activated += new System.EventHandler(this.OnDatabaseManagerActivated);
+            this.CloseProjectAction.Activated += new System.EventHandler(this.OnCloseActivated);
+            this.ProjectsManagerAction.Activated += new System.EventHandler(this.OnDatabaseManagerActivated);
             this.TemplatesManagerAction.Activated += new System.EventHandler(this.OnSectionsTemplatesManagerActivated);
             this.FullScreenAction.Toggled += new System.EventHandler(this.OnFullScreenActionToggled);
             this.PlaylistAction.Toggled += new System.EventHandler(this.OnPlaylistActionToggled);
             this.CaptureModeAction.Toggled += new System.EventHandler(this.OnCaptureModeActionToggled);
             this.AnalyzeModeAction.Toggled += new System.EventHandler(this.OnAnalyzeModeActionToggled);
+            this.SaveProjectAction.Activated += new System.EventHandler(this.OnSaveProjectActionActivated);
             this.OpenPlaylistAction.Activated += new System.EventHandler(this.OnOpenPlaylistActionActivated);
             this.treewidget1.TimeNodeSelected += new LongoMatch.TimeNodeSelectedHandler(this.OnTimeNodeSelected);
             this.treewidget1.TimeNodeChanged += new LongoMatch.TimeNodeChangedHandler(this.OnTimeNodeChanged);

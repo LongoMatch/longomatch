@@ -1120,68 +1120,6 @@
             <property name="Fill">False</property>
           </packing>
         </child>
-        <child>
-          <widget class="Gtk.Table" id="table1">
-            <property name="MemberName" />
-            <property name="NRows">4</property>
-            <property name="NColumns">4</property>
-            <property name="RowSpacing">6</property>
-            <property name="ColumnSpacing">6</property>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-          </widget>
-          <packing>
-            <property name="PackType">End</property>
-            <property name="Position">5</property>
-            <property name="AutoSize">True</property>
-          </packing>
-        </child>
       </widget>
     </child>
   </widget>
@@ -2536,16 +2474,16 @@
         <property name="Label" translatable="yes">_File</property>
         <property name="ShortLabel" translatable="yes">_File</property>
       </action>
-      <action id="NewPoyectAction">
+      <action id="NewPojectAction">
         <property name="Type">Action</property>
-        <property name="Label" translatable="yes">_New Poyect</property>
+        <property name="Label" translatable="yes">_New Poject</property>
         <property name="ShortLabel" translatable="yes">_New Poyect</property>
         <property name="StockId">gtk-new</property>
         <signal name="Activated" handler="OnNewActivated" />
       </action>
-      <action id="OpenProyectAction">
+      <action id="OpenProjectAction">
         <property name="Type">Action</property>
-        <property name="Label" translatable="yes">_Open Proyect</property>
+        <property name="Label" translatable="yes">_Open Project</property>
         <property name="ShortLabel" translatable="yes">_Open Proyect</property>
         <property name="StockId">gtk-open</property>
         <signal name="Activated" handler="OnOpenActivated" />
@@ -2557,9 +2495,9 @@
         <property name="StockId">gtk-quit</property>
         <signal name="Activated" handler="OnQuitActivated" />
       </action>
-      <action id="CloseProyectAction">
+      <action id="CloseProjectAction">
         <property name="Type">Action</property>
-        <property name="Label" translatable="yes">_Close Proyect</property>
+        <property name="Label" translatable="yes">_Close Project</property>
         <property name="Sensitive">False</property>
         <property name="ShortLabel" translatable="yes">_Close Proyect</property>
         <property name="StockId">gtk-close</property>
@@ -2570,9 +2508,9 @@
         <property name="Label" translatable="yes">_Tools</property>
         <property name="ShortLabel" translatable="yes">_Tools</property>
       </action>
-      <action id="DatabaseManagerAction">
+      <action id="ProjectsManagerAction">
         <property name="Type">Action</property>
-        <property name="Label" translatable="yes">Database Manager</property>
+        <property name="Label" translatable="yes">Projects Manager</property>
         <property name="ShortLabel" translatable="yes">Database Manager</property>
         <signal name="Activated" handler="OnDatabaseManagerActivated" />
       </action>
@@ -2632,6 +2570,14 @@
         <property name="Group">group1</property>
         <signal name="Toggled" handler="OnAnalyzeModeActionToggled" />
       </action>
+      <action id="SaveProjectAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Save Project</property>
+        <property name="Sensitive">False</property>
+        <property name="ShortLabel" translatable="yes">_Save Project</property>
+        <property name="StockId">gtk-save</property>
+        <signal name="Activated" handler="OnSaveProjectActionActivated" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">LongoMatch</property>
@@ -2652,15 +2598,16 @@
                 <property name="MemberName" />
                 <node name="menubar1" type="Menubar">
                   <node type="Menu" action="FileAction">
-                    <node type="Menuitem" action="NewPoyectAction" />
-                    <node type="Menuitem" action="OpenProyectAction" />
-                    <node type="Menuitem" action="CloseProyectAction" />
+                    <node type="Menuitem" action="NewPojectAction" />
+                    <node type="Menuitem" action="OpenProjectAction" />
+                    <node type="Menuitem" action="SaveProjectAction" />
+                    <node type="Menuitem" action="CloseProjectAction" />
                     <node type="Menuitem" action="OpenPlaylistAction" />
                     <node type="Separator" />
                     <node type="Menuitem" action="QuitAction" />
                   </node>
                   <node type="Menu" action="ToolsAction">
-                    <node type="Menuitem" action="DatabaseManagerAction" />
+                    <node type="Menuitem" action="ProjectsManagerAction" />
                     <node type="Menuitem" action="TemplatesManagerAction" />
                   </node>
                   <node type="Menu" action="ViewAction">

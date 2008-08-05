@@ -19,6 +19,7 @@
 //
 
 using System;
+using Gtk;
 
 namespace LongoMatch
 {
@@ -45,7 +46,9 @@ namespace LongoMatch
 		public void SetSections(Sections sections){
 			this.sections = sections;
 			this.SetNames(sections.GetSectionsNames());
-			this.SetVisibleSections(sections.VisibleSections);
+			// FIXME Show only the buttons with a SectinsTimeNode visible
+			this.SetVisibleSections(20);
+			
 			
 		}
 			
@@ -76,6 +79,7 @@ namespace LongoMatch
 		
 		private void SetVisibleSections(int number){
 			
+
 			int files = (number / 4) ;
 			//Si es mayor  que 20 hay que lanzar una Exception!
 			switch (files){

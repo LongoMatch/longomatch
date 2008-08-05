@@ -76,11 +76,11 @@ namespace LongoMatch
 				
 				g.Color = new Cairo.Color(1,1,1);
 				g.MoveTo(currentFrame/pixelRatio,height);
-				g.LineTo(currentFrame/pixelRatio+5,height-15);
+				/*g.LineTo(currentFrame/pixelRatio+5,height-15);
 				g.LineTo(currentFrame/pixelRatio-5,height-15);
 				g.ClosePath();
 				g.Fill();
-				g.Stroke();
+				g.Stroke();*/
 				g.MoveTo(new PointD(0,height));
 				g.LineTo(new PointD(width,height));
 				g.LineWidth = 2;
