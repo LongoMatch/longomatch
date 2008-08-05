@@ -92,7 +92,10 @@ namespace LongoMatch
 		}
 		
 		public PlayListTimeNode Next(){
-			this.indexSelection++;
+			do {
+				this.indexSelection++;
+			}
+			while(list[indexSelection].Valid);
 			return list[indexSelection];
 		}
 		

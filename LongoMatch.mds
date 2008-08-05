@@ -1,4 +1,4 @@
-<Combine releaseversion="0.1.1" name="LongoMatch" fileversion="2.0" description="LongoMatch: Digtal Video Analyse Tool" outputpath="build/bin/">
+<Combine releaseversion="0.1.2" name="LongoMatch" fileversion="2.0" description="LongoMatch: Digtal Video Analyze Tool" outputpath="build/bin/">
   <Configurations active="Release">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="LongoMatch" configuration="Debug" />
@@ -25,9 +25,7 @@
     <Execute type="None" entry="LongoMatch" />
     <Execute type="None" entry="Packages" />
     <Execute type="None" entry="LongoMatchTranslation" />
-    <Execute type="None" entry="liblongomatch" />
     <Execute type="None" entry="CesarPlayer" />
-    <Execute type="None" entry="libtimescale" />
     <Execute type="None" entry="libcesarplayer" />
   </StartMode>
   <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="UpdateNearestChangeLog" />

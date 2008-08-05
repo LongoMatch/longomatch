@@ -77,12 +77,13 @@ namespace LongoMatch
 		}
 		
 		public PlayListTimeNode Next(){
-			Console.WriteLine(this.player.AccurateCurrentTime);
 			if (this.playList.HasNext()){								
 				this.plNode = this.playList.Next();
 				this.playlisttreeview1.Selection.SelectPath(new TreePath(this.playList.GetCurrentIndex().ToString()));
-				if (this.PlayListNodeSelected != null)
+				if (this.PlayListNodeSelected != null && plNode.Valid)
 					this.PlayListNodeSelected(plNode,this.playList.HasNext());
+				else 
+					this.Next();
 				this.StartClock();					
 			}
 			return plNode;			
@@ -147,7 +148,7 @@ namespace LongoMatch
 		private void SelectPlayListNode (TreePath path){
 			
 			this.plNode = this.playList.Select(Int32.Parse(path.ToString()));
-			if (this.PlayListNodeSelected != null)
+			if (this.PlayListNodeSelected != null && plNode.Valid)
 				this.PlayListNodeSelected(plNode,this.playList.HasNext());
 			this.StartClock();		
 		}

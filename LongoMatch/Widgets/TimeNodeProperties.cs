@@ -56,7 +56,6 @@ namespace LongoMatch
 		}
 		
 		public SectionsTimeNode GetTimeNode(){
-
 			return new SectionsTimeNode (entry1.Text,timeadjustwidget1.GetStartTime(),timeadjustwidget1.GetStopTime(),this.checkbutton2.Active);
 		}
 

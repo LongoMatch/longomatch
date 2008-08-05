@@ -94,11 +94,7 @@ public class PlayListTreeView : Gtk.TreeView
 		
 		protected override bool OnButtonPressEvent (EventButton evnt)
 		{
-			//Call base class, to allow normal handling,
-			//such as allowing the row to be selected by the right-click:
-			bool returnValue = base.OnButtonPressEvent(evnt);
 			
-			//Then do our custom stuff:
 			if( (evnt.Type == EventType.ButtonPress) && (evnt.Button == 3) )
 			{
 				TreePath path;
@@ -109,7 +105,7 @@ public class PlayListTreeView : Gtk.TreeView
 				    menu.Popup();
 				}
 			}
-			return returnValue;
+			return base.OnButtonPressEvent(evnt);
 								
 		}
 		
@@ -131,8 +127,9 @@ public class PlayListTreeView : Gtk.TreeView
  
 			(cell as Gtk.CellRendererText).Text = Catalog.GetString("Name: ")+tNode.Name +"\n"+Catalog.GetString("Start: ")+tNode.Start.ToMSecondsString()
 				+Catalog.GetString(" sec")+"\n"+Catalog.GetString("Duration: ")+tNode.Duration.ToMSecondsString()+Catalog.GetString(" sec");
-			if (!tNode.Valid)
-				(cell as Gtk.CellRendererText).Sensitive = false;
+			if (!tNode.Valid){
+				(cell as Gtk.CellRendererText).Foreground = "red";				
+			}
 		}
  
 		

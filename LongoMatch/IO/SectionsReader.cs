@@ -75,7 +75,7 @@ namespace LongoMatch
 		private bool[] GetVisibility(){
 			bool[] visibility = new bool [20];
 			for (int i=0;i<20;i++){
-				visibility[i] = GetBoolValue("configuration","Visible");
+				visibility[i] = GetBoolValue("configuration","Visible"+(i+1));
 
 			}
 			return visibility;	
