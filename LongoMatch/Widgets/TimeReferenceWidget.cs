@@ -1,4 +1,4 @@
-// TimeReferenceWidget.cs
+﻿// TimeReferenceWidget.cs
 //
 //  Copyright (C) 2008 Andoni Morales Alastruey
 //
@@ -70,7 +70,7 @@ namespace LongoMatch
 			
 			using (Cairo.Context g = Gdk.CairoHelper.Create (evnt.Window)){
 				
-				g.Color = new Cairo.Color(1,1,1);
+				g.Color = new Cairo.Color(0,0,0);
 				g.MoveTo(currentFrame/pixelRatio,height);
 				/*g.LineTo(currentFrame/pixelRatio+5,height-15);
 				g.LineTo(currentFrame/pixelRatio-5,height-15);

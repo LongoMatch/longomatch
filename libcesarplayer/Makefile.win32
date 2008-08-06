@@ -44,8 +44,6 @@ src/gst-video-capturer.o:src/gst-video-capturer.c
 src/gstvideowidget.o:src/gstvideowidget.c
 	$(CC) -c src/gstvideowidget.c -o src/gstvideowidget.o $(CFLAGS)
 
-src/video-utils.o:src/video-utils.c
-	$(CC) -c src/video-utils.c -o src/video-utils.o $(CFLAGS)
 
 src/bacon-video-widget-gst-0.10.o:src/bacon-video-widget-gst-0.10.c
 	$(CC) -c src/bacon-video-widget-gst-0.10.c -o src/bacon-video-widget-gst-0.10.o $(CFLAGS)

@@ -31,7 +31,7 @@ namespace LongoMatch
 	public class TimeScale : Gtk.DrawingArea
 	{
 		private const int SECTION_HEIGHT = 25;
-		private const double ALPHA = 0.6;
+		private const double ALPHA = 0.8;
 		private uint frames;
 		private uint pixelRatio=1;
 		MediaTimeNode candidateTN;
@@ -109,8 +109,7 @@ namespace LongoMatch
 				g.Stroke();	
 				g.MoveTo(0,height);
 				g.LineTo(width,height);
-				g.Stroke();		
-				g.Color = new Cairo.Color(1,1,1);
+				g.Stroke();				
 				g.LineWidth = 1;
 				g.MoveTo(currentFrame/pixelRatio,0);
 				g.LineTo(currentFrame/pixelRatio,height);
@@ -122,7 +121,7 @@ namespace LongoMatch
 						g.Color = this.color;					
 					g.FillPreserve();
 					if (tn == this.selected) {								
-						g.Color = new Cairo.Color (1, 1 , 1, 1);						
+						g.Color = new Cairo.Color (0,0,0,0);						
 					}
 						else{
 						g.Color = new Cairo.Color (color.R+0.1, color.G+0.1,color.B+0.1, 1);

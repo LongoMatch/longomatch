@@ -1,0 +1,153 @@
+<Project name="LongoMatch" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+  <Configurations active="Release">
+    <Configuration name="Debug" ctype="DotNetProjectConfiguration">
+      <CustomCommands>
+        <Command type="BeforeBuild" command="/bin/mkdir -p &quot;./templates&quot;" workingdir="${TargetDir}" />
+        <Command type="BeforeBuild" command="/bin/mkdir -p &quot;./images&quot;" workingdir="${TargetDir}" />
+        <Command type="BeforeBuild" command="/bin/mkdir -p &quot;./db&quot;" workingdir="${TargetDir}" />
+      </CustomCommands>
+      <Output directory="bin/Debug" assemblyKeyFile="." assembly="LongoMatch" />
+      <Build debugmode="True" target="WinExe" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="LongoMatch.MainClass" generatexmldocumentation="False" win32Icon="." ctype="CSharpCompilerParameters" />
+    </Configuration>
+    <Configuration name="Release" ctype="DotNetProjectConfiguration">
+      <Output directory="bin/Release" assemblyKeyFile="." assembly="LongoMatch" />
+      <Build debugmode="False" target="WinExe" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="LongoMatch.MainClass" generatexmldocumentation="False" win32Icon="." ctype="CSharpCompilerParameters" />
+    </Configuration>
+  </Configurations>
+  <Contents>
+    <File name="app.desktop" subtype="Code" buildaction="FileCopy" DeployService.TargetDirectoryId="Linux.DesktopApplications" />
+    <File name="Db4objects.Db4o.dll" subtype="Code" buildaction="FileCopy" />
+    <File name="lgmlogo.png" subtype="Code" buildaction="FileCopy" DeployService.UseProjectRelativePath="True" />
+    <File name="gtk-gui/generated.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.FileDescriptionWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.FileDataListWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.TreeWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.CalendarPopup.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.ButtonsWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.DBManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.OpenProjectDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.NewProjectDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.TimeAdjustWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.PrecisionWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.TimePrecisionAdjustWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.SectionsPropertiesWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.SectionsTemplates.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.MainWindow.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.TimeNodeProperties.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.TemplateEditorDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.PlayListWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.NewSectionsTemplatesFiles.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.CapturePropertiesWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/objects.xml" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Main.cs" subtype="Code" buildaction="Compile" />
+    <File name="ObjectManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/gui.stetic" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Widgets" subtype="Directory" buildaction="Compile" />
+    <File name="Widgets/ButtonsWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/CalendarPopup.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/CapturePropertiesWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/DBManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/FileDataListWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/FileDescriptionWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/GtkTimescale.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/MainWindow.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/NewProjectDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/NewSectionsTemplatesFiles.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/OpenProjectDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/PlayListTreeView.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/PlayListWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/PrecisionWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/SectionsPropertiesWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/SectionsTemplates.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/TemplateEditorDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/TimeAdjustWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/TimeNodesTreeView.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/TimePrecisionAdjustWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/TreeWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/TimeNodeProperties.cs" subtype="Code" buildaction="Compile" />
+    <File name="PlayList" subtype="Directory" buildaction="Compile" />
+    <File name="PlayList/PlayList.cs" subtype="Code" buildaction="Compile" />
+    <File name="PlayList/PlayListReader.cs" subtype="Code" buildaction="Compile" />
+    <File name="PlayList/PlayListTimeNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="DB" subtype="Directory" buildaction="Compile" />
+    <File name="DB/FileData.cs" subtype="Code" buildaction="Compile" />
+    <File name="DB/MediaTimeNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="DB/PixbufTimeNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="DB/Sections.cs" subtype="Code" buildaction="Compile" />
+    <File name="DB/SectionsTimeNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="DB/TimeNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="DB/DB.cs" subtype="Code" buildaction="Compile" />
+    <File name="DB/Time.cs" subtype="Code" buildaction="Compile" />
+    <File name="Handlers" subtype="Directory" buildaction="Compile" />
+    <File name="Handlers/Handlers.cs" subtype="Code" buildaction="Compile" />
+    <File name="Handlers/InChangedHandler.cs" subtype="Code" buildaction="Compile" />
+    <File name="Handlers/OutChangedHandler.cs" subtype="Code" buildaction="Compile" />
+    <File name="Handlers/PosChangedHandler.cs" subtype="Code" buildaction="Compile" />
+    <File name="IO" subtype="Directory" buildaction="Compile" />
+    <File name="IO/SectionsWriter.cs" subtype="Code" buildaction="Compile" />
+    <File name="IO/SectionsReader.cs" subtype="Code" buildaction="Compile" />
+    <File name="IO/TimeString.cs" subtype="Code" buildaction="Compile" />
+    <File name="PlayList/IPlayList.cs" subtype="Code" buildaction="Compile" />
+    <File name="IO/XMLReader.cs" subtype="Code" buildaction="Compile" />
+    <File name="images" subtype="Directory" buildaction="Compile" />
+    <File name="images/background.png" subtype="Code" buildaction="FileCopy" DeployService.UseProjectRelativePath="True" />
+    <File name="TimeScale.cs" subtype="Code" buildaction="Compile" />
+    <File name="DB/MediaFile.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.TimeLineWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/TimeLineWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/TimeReferenceWidget.cs" subtype="Code" buildaction="Compile" />
+  </Contents>
+  <References>
+    <ProjectReference type="Assembly" localcopy="True" refto="Db4objects.Db4o.dll" />
+    <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Project" localcopy="True" refto="CesarPlayer" />
+    <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="Mono.Cairo, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+  </References>
+  <GtkDesignInfo isWidgetLibrary="True" gtkVersion="2.12.0">
+    <ExportedWidgets>
+      <Widget>LongoMatch.FileDescriptionWidget</Widget>
+      <Widget>LongoMatch.FileDataListWidget</Widget>
+      <Widget>LongoMatch.TreeViewPopup</Widget>
+      <Widget>LongoMatch.TreeviewPopup</Widget>
+      <Widget>LongoMatch.TreeWidget</Widget>
+      <Widget>LongoMatch.ButtonsWidget</Widget>
+      <Widget>LongoMatch.TimeAdjustWidget</Widget>
+      <Widget>LongoMatch.PrecisionWidget</Widget>
+      <Widget>LongoMatch.TimePrecisonAdjustWidget</Widget>
+      <Widget>LongoMatch.TimePrecisionAdjustWidget</Widget>
+      <Widget>LongoMatch.SectionsPropertiesWidget</Widget>
+      <Widget>LongoMatch.TimeNodeProperties</Widget>
+      <Widget>LongoMatch.PlayListWidget</Widget>
+      <Widget>LongoMatch.FileListTreeView</Widget>
+      <Widget>LongoMatch.PlayListTreeView</Widget>
+      <Widget>LongoMatch.GtkEhancedScale</Widget>
+      <Widget>LongoMatch.TimeLine</Widget>
+      <Widget>LongoMatch.TimeScale</Widget>
+      <Widget>LongoMatch.CapturePropertiesWidget</Widget>
+      <Widget>LongoMatch.GtkTimescale</Widget>
+      <Widget>LongoMatch.TimeNodesTreeWidget</Widget>
+      <Widget>LongoMatch.TimeNodeTreeView</Widget>
+      <Widget>LongoMatch.TimeNodesTreeView</Widget>
+      <Widget>LongoMatch.TimeLineControlsWidget</Widget>
+      <Widget>LongoMatch.TimeLineWidget</Widget>
+    </ExportedWidgets>
+  </GtkDesignInfo>
+  <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="../CesarPlayer/Makefile.am" RelativeConfigureInPath="../">
+    <BuildFilesVar Name="FILES" />
+    <DeployFilesVar />
+    <ResourcesVar Name="RESOURCES" />
+    <OthersVar />
+    <GacRefVar Name="REFERENCES" />
+    <AsmRefVar Name="REFERENCES" />
+    <ProjectRefVar Name="REFERENCES" />
+  </MonoDevelop.Autotools.MakefileInfo>
+</Project>
