@@ -63,10 +63,10 @@ namespace LongoMatch
 		protected bool GetBoolValue(string section, string clave){
 			XmlNode n;
     		n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");
-			Console.WriteLine("Reading");
+
 			if (n != null){
 				object result = n.Attributes["value"].Value;
-				Console.WriteLine(result.ToString());
+
 				return bool.Parse(result.ToString());
     		}
 			else return false;

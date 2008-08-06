@@ -29,6 +29,7 @@ namespace LongoMatch
 	
 	public partial class TimeReferenceWidget : Gtk.DrawingArea
 	{
+		private const int SECTION_HEIGHT = 30;
 		ushort frameRate;
 		uint currentFrame;
 		uint frames;
@@ -38,9 +39,8 @@ namespace LongoMatch
 			this.frameRate = frameRate;
 			this.frames = frames;
 			this.pixelRatio = 1;
-			this.Size((int)(frames/pixelRatio+25), 30);
-			this.HeightRequest= 30;
-
+			this.HeightRequest= SECTION_HEIGHT;
+			this.Size((int)(this.frames/pixelRatio),SECTION_HEIGHT);
 		}
 				
 		public uint CurrentFrame{
@@ -51,10 +51,8 @@ namespace LongoMatch
 		public uint PixelRatio{
 			get {return pixelRatio;}
 			set {
-				this.pixelRatio = value;
-				this.Size((int)(frames/pixelRatio),30);
-			
-										
+				this.pixelRatio = value;	
+				this.Size((int)(this.frames/pixelRatio),SECTION_HEIGHT);
 			}
 		}
 		
@@ -62,12 +60,10 @@ namespace LongoMatch
 		{
 			int height;
 			int width;	
-			Time time;
-			
+			Time time;			
 			
 			evnt.Window.GetSize(out width, out height);	
 			evnt.Window.Resize((int)(frames/pixelRatio), height);
-			this.Size((int)(frames/pixelRatio),height);
 			evnt.Window.GetSize(out width, out height);	
 			
 			time = new Time();

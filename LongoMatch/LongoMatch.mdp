@@ -33,7 +33,6 @@
     <File name="gtk-gui/LongoMatch.NewProjectDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="gtk-gui/LongoMatch.TimeAdjustWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="gtk-gui/LongoMatch.PrecisionWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.TimePrecisionAdjustWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="gtk-gui/LongoMatch.SectionsPropertiesWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="gtk-gui/LongoMatch.SectionsTemplates.cs" subtype="Code" buildaction="Compile" />
     <File name="gtk-gui/LongoMatch.MainWindow.cs" subtype="Code" buildaction="Compile" />
@@ -67,7 +66,6 @@
     <File name="Widgets/TemplateEditorDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="Widgets/TimeAdjustWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="Widgets/TimeNodesTreeView.cs" subtype="Code" buildaction="Compile" />
-    <File name="Widgets/TimePrecisionAdjustWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="Widgets/TreeWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="Widgets/TimeNodeProperties.cs" subtype="Code" buildaction="Compile" />
     <File name="PlayList" subtype="Directory" buildaction="Compile" />
@@ -77,7 +75,6 @@
     <File name="DB" subtype="Directory" buildaction="Compile" />
     <File name="DB/FileData.cs" subtype="Code" buildaction="Compile" />
     <File name="DB/MediaTimeNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="DB/PixbufTimeNode.cs" subtype="Code" buildaction="Compile" />
     <File name="DB/Sections.cs" subtype="Code" buildaction="Compile" />
     <File name="DB/SectionsTimeNode.cs" subtype="Code" buildaction="Compile" />
     <File name="DB/TimeNode.cs" subtype="Code" buildaction="Compile" />
@@ -101,6 +98,7 @@
     <File name="Widgets/TimeLineWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="Widgets/TimeReferenceWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="Widgets/TimeScale.cs" subtype="Code" buildaction="Compile" />
+    <File name="DB/PixbufTimeNode.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="Db4objects.Db4o.dll" />

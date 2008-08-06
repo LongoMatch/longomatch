@@ -31,12 +31,10 @@ namespace LongoMatch
 	public class SectionsReader : XMLReader
 	{
 		
-		private string fConfig;
 
 		
 		public SectionsReader(string filePath) : base (filePath) 
-		{
-						
+		{						
 		}
 		
 		

@@ -29,7 +29,6 @@ namespace LongoMatch {
 		private List<TimeNode>[] tnArray;
 		private Sections sections;
 		private TimeReferenceWidget tr;
-		private FileData fData;
 		private uint frames;
 		private uint pixelRatio=1;
 		private TimeNode selected;
@@ -74,14 +73,17 @@ namespace LongoMatch {
 		
 		public void SetPixelRatio(uint pixelRatio){
 			
+		
 			if (tsArray != null && tnArray != null){
 				this.pixelRatio = pixelRatio;
 				this.tr.PixelRatio = pixelRatio;
 				foreach (TimeScale  ts in tsArray){
-					ts.PixelRatio = this.pixelRatio;					
-				}
+					ts.PixelRatio = this.pixelRatio;
 					
-	
+				}	
+				tr.Size((int)(this.frames/pixelRatio),50);
+
+				
 			}
 			
 		}
@@ -115,13 +117,13 @@ namespace LongoMatch {
 					ts.TimeNodeChanged += new TimeNodeChangedHandler(OnTimeNodeChanged);
 					ts.TimeNodeSelected += new TimeNodeSelectedHandler (OnTimeNodeSelected);
 					ts.TimeNodeDeleted += new TimeNodeDeletedHandler(OnTimeNodeDeleted);
-					this.vbox1.PackStart(ts,true,false,0);					
+					this.vbox1.PackStart(ts,true,true,0);					
 					if (value.Sections.GetVisibility(i)){
 						ts.Show();
 					}
 				}
 			}
-			get {return fData;}
+			
 		}
 	
 		protected virtual void OnTimeNodeChanged(TimeNode tn, object val){

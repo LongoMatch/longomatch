@@ -28,7 +28,6 @@ namespace LongoMatch
 	public class PlayListTimeNode : PixbufTimeNode
 	{
 		private string fileName;
-		private string miniaturePath;
 		private bool valid=true;
 
 		

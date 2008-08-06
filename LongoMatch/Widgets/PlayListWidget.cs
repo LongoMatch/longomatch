@@ -39,7 +39,6 @@ namespace LongoMatch
 		private PlayList playList;
 		private uint timeout;
 		private object lock_node;
-		private ListStore ls;
 		private bool clock_started = false;
 	
 		
@@ -114,14 +113,15 @@ namespace LongoMatch
 		{
 
 			if (player!=null && !clock_started){
-				timeout = Gtk.Timeout.Add (20, new Gtk.Function (CheckStopTime));
+			
+				timeout = GLib.Timeout.Add (20,CheckStopTime);
 				clock_started=true;
 			}
 		}
 		
 		private void StopClock(){
 			if (this.clock_started){
-				Gtk.Timeout.Remove(timeout);
+				GLib.Source.Remove(timeout);
 				this.clock_started = false;
 			}
 		}

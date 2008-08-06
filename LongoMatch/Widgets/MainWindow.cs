@@ -46,6 +46,7 @@ namespace LongoMatch
 			player.LogoMode = true;
 			this.playlistwidget2.SetPlayer(player);
 
+
 		}
 
 		
@@ -63,9 +64,10 @@ namespace LongoMatch
 					
 					this.Title = System.IO.Path.GetFileNameWithoutExtension(fData.File.FilePath) + " - LongoMatch";
 					playerbin1.File=fData.File.FilePath;
-					this.playlistwidget2.Stop();	
-					treewidget1.FileData=fData;	
-					this.timelinewidget1.FileData = fData;;
+					this.playlistwidget2.Stop();
+					
+					treewidget1.FileData=fData;						
+					this.timelinewidget1.FileData = fData;
 					this.buttonswidget1.SetSections(fData.Sections);	
 					if (fData.File.HasVideo){
 						player.LogoMode = false;
@@ -116,10 +118,11 @@ namespace LongoMatch
 			this.FullScreenAction.Sensitive = false;
 		}
 		
-		private void SaveDB(){
-			
-			MainClass.DB.UpdateFileData(OpenedFileData());
-			this.fileDataModified=false;
+		private void SaveDB(){			
+			if (openedFileData != null){
+				MainClass.DB.UpdateFileData(OpenedFileData());
+				this.fileDataModified=false;
+			}
 			
 		}
 		
@@ -203,7 +206,7 @@ namespace LongoMatch
 		protected virtual void OnCloseActivated (object sender, System.EventArgs e)
 		{
 			// FIXME Ask to Save the Project if it has changed
-			this.UpdateFileData();
+			this.SaveDB();
 			this.CloseActualProyect();			
 		}
 
@@ -277,10 +280,10 @@ namespace LongoMatch
 
 		protected virtual void OnDeleteEvent (object o, Gtk.DeleteEventArgs args)
 		{
-			this.UpdateFileData();
-			this.playerbin1.Destroy();
+			this.SaveDB();
+			this.playerbin1.Dispose();
 			Application.Quit();
-			Application.Quit();			
+					
 		}
 
 		protected virtual void OnPlayListNodeAdded (LongoMatch.MediaTimeNode tNode)
@@ -291,7 +294,7 @@ namespace LongoMatch
 		protected virtual void OnPlaylistwidget2PlayListNodeSelected (LongoMatch.PlayListTimeNode plNode, bool hasNext)
 		{
 			if (openedFileData == null){
-
+				this.selectedTimeNode = plNode;
 				this.playerbin1.SetPlayListElement(plNode.FileName,plNode.Start.MSeconds,plNode.Stop.MSeconds,hasNext);
 			}
 		}
@@ -303,6 +306,8 @@ namespace LongoMatch
 
 		protected virtual void OnPlayerbin1SegmentClosedEvent ()
 		{
+			this.selectedTimeNode = null;
+			this.timelinewidget1.SelectedTimeNode = null;
 		}
 
 		protected virtual void OnTimeline2PositionChanged (Time pos)
@@ -361,12 +366,19 @@ namespace LongoMatch
 
 		protected virtual void OnPlayerbin1Prev ()
 		{
-			//this.playlistwidget2.Prev();
+			if (this.selectedTimeNode is MediaTimeNode){
+				this.playerbin1.Player.SeekInSegment(this.selectedTimeNode.Start.MSeconds);
+				player.Play();
+			}
+			else if (this.selectedTimeNode is PlayListTimeNode)
+				this.playlistwidget2.Prev();
+			else if (this.selectedTimeNode == null)
+				this.playerbin1.Player.SeekTo(0,false);
 		}
 
 		protected virtual void OnPlayerbin1Tick (object o, CesarPlayer.TickArgs args)
 		{
-			if (args.CurrentTime != 0)
+			if (args.CurrentTime != 0 && this.timelinewidget1 != null && openedFileData != null)
 				this.timelinewidget1.CurrentFrame=(uint)(args.CurrentTime * openedFileData.File.Fps / 1000);
 		}
 

@@ -22,6 +22,8 @@ using System;
 using System.Collections.Generic;
 using Cairo;
 using Gdk;
+using Gtk;
+using Mono.Unix;
 namespace LongoMatch
 {
 	
@@ -34,31 +36,32 @@ namespace LongoMatch
 		private uint pixelRatio=1;
 		MediaTimeNode candidateTN;
 		private Cairo.Color color;
-		private double zoom;
 		private List<TimeNode> list;
 		private bool candidateStart;
 		private bool movingLimit;
 		private TimeNode selected=null;
 		private uint lastTime=0;
 		private uint currentFrame;
-		
+		private Menu menu;
+		private Dictionary<MenuItem,MediaTimeNode> dic;
 			
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event TimeNodeSelectedHandler TimeNodeSelected;
 		public event TimeNodeDeletedHandler TimeNodeDeleted;
-		public event PlayListNodeAddedHandler PlayListNodeAdded;
+
 		
 		public TimeScale(List<TimeNode> list,uint frames,Gdk.Color color)
 		{			
 			this.frames = frames;	
 			this.list = list;				
-			this.Size((int)(frames/pixelRatio), SECTION_HEIGHT);
 			this.HeightRequest= SECTION_HEIGHT;
-			this.WidthRequest = (int)(frames/pixelRatio);		
+			this.Size((int)(this.frames/pixelRatio),SECTION_HEIGHT);
 			this.color = this.RGBToCairoColor(color);
 			this.color.A = ALPHA;
 			this.Events = EventMask.PointerMotionMask | EventMask.ButtonPressMask | EventMask.ButtonReleaseMask ;
-			
+			dic = new Dictionary<MenuItem,MediaTimeNode>();
+			menu = new Menu();
+					
 			
 		}
 			
@@ -66,8 +69,7 @@ namespace LongoMatch
 			get {return pixelRatio;}
 			set {
 				this.pixelRatio = value;
-				this.Size((int)(frames/pixelRatio),SECTION_HEIGHT);
-					
+				this.Size((int)(this.frames/pixelRatio),SECTION_HEIGHT);
 			}
 		}
 		
@@ -96,7 +98,7 @@ namespace LongoMatch
 			using (Cairo.Context g = Gdk.CairoHelper.Create (win)){	
 				int height;
 				int width;	
-				double[] dashed = new double[2];
+
 				
 				win.Resize((int)(frames/pixelRatio), this.Allocation.Height);
 				win.GetSize(out width, out height);	
@@ -104,7 +106,7 @@ namespace LongoMatch
 				g.LineWidth = 1;
 				g.MoveTo(0,0);
 				g.LineTo(width,0);
-				g.StrokePreserve();	
+				g.Stroke();	
 				g.MoveTo(0,height);
 				g.LineTo(width,height);
 				g.Stroke();		
@@ -119,9 +121,8 @@ namespace LongoMatch
 					g.Rectangle( new Cairo.Rectangle(tn.StartFrame/pixelRatio,3,tn.TotalFrames/pixelRatio,height-6));					
 						g.Color = this.color;					
 					g.FillPreserve();
-					if (tn == this.selected) {						
-						
-						g.Color = new Cairo.Color (0.5, 0.5 , 0.5, 1);						
+					if (tn == this.selected) {								
+						g.Color = new Cairo.Color (1, 1 , 1, 1);						
 					}
 						else{
 						g.Color = new Cairo.Color (color.R+0.1, color.G+0.1,color.B+0.1, 1);
@@ -138,6 +139,13 @@ namespace LongoMatch
 			}
 				
 			
+		}
+		protected void OnDelete(object obj, EventArgs args){
+			MediaTimeNode tNode;
+			dic.TryGetValue((MenuItem)obj, out tNode);
+			if (this.TimeNodeDeleted != null && tNode != null){
+				this.TimeNodeDeleted(tNode);
+			}
 		}
 		
 		protected override bool OnExposeEvent (EventExpose evnt)
@@ -177,7 +185,7 @@ namespace LongoMatch
 			
 			
 			if (evnt.Button == 1){
-					if (this.lastTime != evnt.Time){
+				if (this.lastTime != evnt.Time){
 					candidateTN = null;
 					foreach (MediaTimeNode tn in list){	
 						int pos = (int) (evnt.X*pixelRatio);
@@ -185,7 +193,7 @@ namespace LongoMatch
 							this.candidateStart = false;
 							candidateTN = tn;
 							this.movingLimit = true;
-							this.TimeNodeChanged(tn,tn.Start);
+							this.TimeNodeChanged(tn,tn.Stop);
 							this.ReDraw();
 							break;
 						}
@@ -193,7 +201,7 @@ namespace LongoMatch
 							this.candidateStart =true;
 							candidateTN = tn;
 							this.movingLimit = true;
-							this.TimeNodeChanged(tn,tn.Stop);
+							this.TimeNodeChanged(tn,tn.Start);
 							this.ReDraw();
 							break;
 						}			
@@ -209,6 +217,23 @@ namespace LongoMatch
 						}
 					}					
 				}
+			}
+			else if (evnt.Button == 3){
+				this.menu = new Menu();
+				dic.Clear();
+				foreach (MediaTimeNode tn in list){
+					int pos = (int) (evnt.X*pixelRatio);
+					if (tn.HasFrame(pos) ){	
+						// TODO Add a delete menu for all the 
+						MenuItem delete = new MenuItem(Catalog.GetString("Delete "+tn.Name));					
+						delete.Activated += new EventHandler(OnDelete);
+						delete.Show();
+						menu.Append(delete);
+						dic.Add(delete,tn);
+					}
+				}	
+				this.menu.Popup();
+				
 			}
 			this.lastTime = evnt.Time;
 			return base.OnButtonPressEvent (evnt);

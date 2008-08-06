@@ -92,15 +92,15 @@ namespace LongoMatch
 		}
 		
 		public PlayListTimeNode Next(){
-			do {
-				this.indexSelection++;
-			}
-			while(list[indexSelection].Valid);
+			
+			if (this.HasNext())
+				this.indexSelection++;	
 			return list[indexSelection];
 		}
 		
 		public PlayListTimeNode Prev(){
-			this.indexSelection--;
+			if (this.HasPrev())
+				this.indexSelection--;
 			return list[indexSelection];
 		}
 		
@@ -145,7 +145,6 @@ namespace LongoMatch
 			this.list.Clear();
 			while (listStore.IterIsValid(iter)){
 				this.list.Add(listStore.GetValue (iter, 0) as PlayListTimeNode);
-				Console.WriteLine((listStore.GetValue (iter, 0) as PlayListTimeNode).Start.ToMSecondsString());
 				listStore.IterNext(ref iter);
 			}
 			

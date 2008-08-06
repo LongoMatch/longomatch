@@ -341,8 +341,7 @@ namespace CesarPlayer
 
 		protected virtual void OnPrevbuttonClicked (object sender, System.EventArgs e)
 		{
-			player.SeekInSegment(this.segmentStartTime);
-			player.Play();
+			
 			if (Prev != null)
 				Prev();
 		}
@@ -356,7 +355,7 @@ namespace CesarPlayer
 
 		protected virtual void OnVscale1FormatValue (object o, Gtk.FormatValueArgs args)
 		{
-			Console.WriteLine(args.Value);
+
 			double val = args.Value;
 			if (val >25 ){
 				val = val-25 ;

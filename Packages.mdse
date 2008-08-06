@@ -1,12 +1,12 @@
 <CombineEntry name="Packages" fileversion="2.0" ctype="PackagingProject">
   <Packages>
     <Package name="Linux binarios">
-      <Builder rootEntry="LongoMatch.mds" targetFile="UnixLongoMatch.tar.gz" platform="Linux" ctype="BinariesZipPackageBuilder">
+      <Builder rootEntry="LongoMatch.mds" targetFile="LongoMatch.tar.gz" platform="Linux" ctype="BinariesZipPackageBuilder">
         <ChildEntries>
-          <Entry>LongoMatch/LongoMatch.mdp</Entry>
-          <Entry>CesarPlayer/CesarPlayer/CesarPlayer.mdp</Entry>
-          <Entry>liblongomatch/liblongomatch.mdp</Entry>
           <Entry>LongoMatchTranslation/LongoMatchTranslation.mdse</Entry>
+          <Entry>CesarPlayer/CesarPlayer.mdp</Entry>
+          <Entry>libcesarplayer/liblongomatch.mdp</Entry>
+          <Entry>LongoMatch/LongoMatch.mdp</Entry>
         </ChildEntries>
         <ExcludedFiles>
           <File>cesarplayer,ProgramFiles,DirectShowLib-2005.dll</File>

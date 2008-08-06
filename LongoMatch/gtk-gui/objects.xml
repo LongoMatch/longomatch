@@ -51,14 +51,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.TimePrecisionAdjustWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="TimePrecisionAdjustWidget Signals">
-        <signal name="TimeNodeChanged" />
-      </itemgroup>
-    </signals>
-  </object>
   <object type="LongoMatch.SectionsPropertiesWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
@@ -91,7 +83,6 @@
         <signal name="TimeNodeChanged" />
         <signal name="TimeNodeSelected" />
         <signal name="TimeNodeDeleted" />
-        <signal name="PlayListNodeAdded" />
       </itemgroup>
     </signals>
   </object>

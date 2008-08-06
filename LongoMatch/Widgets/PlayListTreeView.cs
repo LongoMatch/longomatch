@@ -32,7 +32,6 @@ public class PlayListTreeView : Gtk.TreeView
 
 		private TreeIter selectedIter;
 		private Menu menu;
-		private PlayListTimeNode selectedPlayListNode;
 		private ListStore ls;
 
 		
@@ -61,26 +60,12 @@ public class PlayListTreeView : Gtk.TreeView
 			nameColumn.PackStart (nameCell, true);
 			nameColumn.SetCellDataFunc (nameCell, new Gtk.TreeCellDataFunc (RenderName));
  
-			/*Gtk.TreeViewColumn startTimeColumn = new Gtk.TreeViewColumn ();
-			startTimeColumn.Title = "Start";
-			Gtk.CellRendererText startTimeCell = new Gtk.CellRendererText ();
-			startTimeColumn.PackStart (startTimeCell, true);
-			
-			Gtk.TreeViewColumn stopTimeColumn = new Gtk.TreeViewColumn ();
-			stopTimeColumn.Title = "Stop";
-			Gtk.CellRendererText stopTimeCell = new Gtk.CellRendererText ();
-			stopTimeColumn.PackStart (stopTimeCell, true);
-
-            startTimeColumn.SetCellDataFunc (startTimeCell, new Gtk.TreeCellDataFunc (RenderStartTime));
-			stopTimeColumn.SetCellDataFunc (stopTimeCell, new Gtk.TreeCellDataFunc (RenderStopTime));*/
-			
 			
 			
 			
 			
 			this.AppendColumn (nameColumn);
-			/*this.AppendColumn (startTimeColumn);
-			this.AppendColumn (stopTimeColumn);*/
+			
 
 		
 		}
@@ -101,7 +86,7 @@ public class PlayListTreeView : Gtk.TreeView
 				this.GetPathAtPos((int)evnt.X,(int)evnt.Y,out path);
 				if (path!=null){
 					this.Model.GetIter (out selectedIter,path); 
-					selectedPlayListNode = (PlayListTimeNode)this.Model.GetValue (selectedIter, 0);
+
 				    menu.Popup();
 				}
 			}
@@ -119,11 +104,7 @@ public class PlayListTreeView : Gtk.TreeView
 			PlayListTimeNode tNode = (PlayListTimeNode) model.GetValue (iter, 0);
 			
  
-			/*if (song.Artist.StartsWith ("X") == true) {
-				(cell as Gtk.CellRendererText).Foreground = "red";
-			} else {
-				(cell as Gtk.CellRendererText).Foreground = "darkgreen";
-			}*/
+			
  
 			(cell as Gtk.CellRendererText).Text = Catalog.GetString("Name: ")+tNode.Name +"\n"+Catalog.GetString("Start: ")+tNode.Start.ToMSecondsString()
 				+Catalog.GetString(" sec")+"\n"+Catalog.GetString("Duration: ")+tNode.Duration.ToMSecondsString()+Catalog.GetString(" sec");
@@ -133,19 +114,7 @@ public class PlayListTreeView : Gtk.TreeView
 		}
  
 		
-		private void RenderStartTime (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
-		{
-			PlayListTimeNode tNode = (PlayListTimeNode) model.GetValue (iter, 0);
-			(cell as Gtk.CellRendererText).Text = tNode.Start.ToMSecondsString();
-				
-			
-		}
 		
-		private void RenderStopTime (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
-		{
-			PlayListTimeNode tNode = (PlayListTimeNode) model.GetValue (iter, 0);
-			(cell as Gtk.CellRendererText).Text = tNode.Stop.ToMSecondsString();
-		}
 		
 			
 

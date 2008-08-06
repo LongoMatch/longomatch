@@ -96,9 +96,7 @@ namespace LongoMatch
 		}
 		
 	
-		private bool isDefaultTemplateName(string templateName){
-			return templateName == "default.sct";
-		}
+		
 	
 		
 	}
