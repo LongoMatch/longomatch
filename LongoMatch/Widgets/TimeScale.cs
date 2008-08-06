@@ -114,7 +114,7 @@ namespace LongoMatch
 				
 				
 				foreach (MediaTimeNode tn in list){					
-					g.Operator = Operator.Add;							
+
 					g.Rectangle( new Cairo.Rectangle(tn.StartFrame/pixelRatio,3,tn.TotalFrames/pixelRatio,height-6));					
 					
 					if (tn == this.selected) {								
