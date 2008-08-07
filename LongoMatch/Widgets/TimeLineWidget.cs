@@ -67,7 +67,13 @@ namespace LongoMatch {
 					}
 					tr.CurrentFrame = value;
 				}
-				this.QueueDraw();}
+				this.QueueDraw();
+				Console.WriteLine(this.GtkScrolledWindow.Hadjustment.Value);
+			}
+		}
+		
+		public void AdjustPostion(uint currentframe){
+			
 		}
 		
 		

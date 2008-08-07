@@ -45,10 +45,7 @@ namespace LongoMatch
 		
 		public void SetSections(Sections sections){
 			this.sections = sections;
-			this.SetNames(sections.GetSectionsNames());
-			// FIXME Show only the buttons with a SectinsTimeNode visible
-			this.SetVisibleSections(20);
-			
+			this.SetNames(sections.GetSectionsNames());	
 			
 		}
 			
@@ -77,7 +74,7 @@ namespace LongoMatch
 		}
 		
 		
-		private void SetVisibleSections(int number){
+		/*private void SetVisibleSections(int number){
 			
 
 			int files = (number / 4) ;
@@ -123,7 +120,7 @@ namespace LongoMatch
 					this.filebox5.Show();
 					break;
 			}
-		}
+		}*/
 		
 		
 		protected virtual void OnButton1Clicked(object sender, System.EventArgs e)

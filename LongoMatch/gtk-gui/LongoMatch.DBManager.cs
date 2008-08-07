@@ -82,7 +82,6 @@ namespace LongoMatch {
             this.filedescriptionwidget3.LocalGoals = 0;
             this.filedescriptionwidget3.VisitorGoals = 0;
             this.filedescriptionwidget3.Date = new System.DateTime(0);
-            this.filedescriptionwidget3.VisibleSections = 0;
             this.GtkAlignment2.Add(this.filedescriptionwidget3);
             this.frame1.Add(this.GtkAlignment2);
             this.GtkLabel6 = new Gtk.Label();

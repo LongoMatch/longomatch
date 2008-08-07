@@ -83,7 +83,6 @@ FILES = \
 	gtk-gui/LongoMatch.NewProjectDialog.cs \
 	gtk-gui/LongoMatch.TimeAdjustWidget.cs \
 	gtk-gui/LongoMatch.PrecisionWidget.cs \
-	gtk-gui/LongoMatch.TimePrecisionAdjustWidget.cs \
 	gtk-gui/LongoMatch.SectionsPropertiesWidget.cs \
 	gtk-gui/LongoMatch.SectionsTemplates.cs \
 	gtk-gui/LongoMatch.MainWindow.cs \
@@ -114,7 +113,6 @@ FILES = \
 	Widgets/TemplateEditorDialog.cs \
 	Widgets/TimeAdjustWidget.cs \
 	Widgets/TimeNodesTreeView.cs \
-	Widgets/TimePrecisionAdjustWidget.cs \
 	Widgets/TreeWidget.cs \
 	Widgets/TimeNodeProperties.cs \
 	PlayList/PlayList.cs \
@@ -137,7 +135,6 @@ FILES = \
 	IO/TimeString.cs \
 	PlayList/IPlayList.cs \
 	IO/XMLReader.cs \
-	TimeScale.cs \
 	DB/MediaFile.cs \
 	gtk-gui/LongoMatch.TimeLineWidget.cs \
 	Widgets/TimeLineWidget.cs \

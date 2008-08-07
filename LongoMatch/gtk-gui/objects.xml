@@ -7,7 +7,6 @@
         <property name="LocalGoals" />
         <property name="VisitorGoals" />
         <property name="Date" />
-        <property name="VisibleSections" />
       </itemgroup>
     </itemgroups>
     <signals />

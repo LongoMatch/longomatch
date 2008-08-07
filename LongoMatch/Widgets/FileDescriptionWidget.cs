@@ -82,10 +82,7 @@ namespace LongoMatch
 			set { this.dateEntry.Text = value.ToString(Catalog.GetString("MM/dd/yyyy"));}
 		}
 		
-		public int VisibleSections{
-			get { return (int)dataSpinButton.Value;}
-			set { this.dataSpinButton.Value = value;}
-		}
+		
 		
 		private string SectionsFile{
 			get {
@@ -104,7 +101,7 @@ namespace LongoMatch
 			this.LocalGoals = fData.LocalGoals;
 			this.VisitorGoals = fData.VisitorGoals;
 			this.Date= fData.MatchDate;
-			this.VisibleSections =  fData.VisibleSections;	
+
 			
 			//Cambiamos el gui
 
@@ -120,7 +117,7 @@ namespace LongoMatch
 			fData.LocalGoals = (int)this.localSpinButton.Value;
 			fData.VisitorGoals = (int)this.visitorSpinButton.Value;
 			fData.MatchDate = DateTime.Parse(this.dateEntry.Text);
-			fData.VisibleSections = (int)this.dataSpinButton.Value;
+
 		
 		}
 		
@@ -130,7 +127,7 @@ namespace LongoMatch
 			if (this.Filename != ""){
 				SectionsReader reader = new SectionsReader(System.IO.Path.Combine(MainClass.TemplatesDir(),this.SectionsFile));
 				Sections sections = reader.GetSections();
-				sections.VisibleSections = this.VisibleSections;
+
 				
 				if (fData == null){
 					return new FileData(this.mFile,
@@ -148,7 +145,7 @@ namespace LongoMatch
 					fData.LocalGoals = this.LocalGoals;
 					fData.VisitorGoals = this.VisitorGoals;
 					fData.MatchDate = this.Date;
-					fData.VisibleSections = this.VisibleSections;
+
 					return fData;
 					 
 						
@@ -167,7 +164,7 @@ namespace LongoMatch
 			this.Date = System.DateTime.Today;
 			this.Filename = "";
 			this.mFile = null;
-			this.VisibleSections =  0;
+
 			
 		}
 

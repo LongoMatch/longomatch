@@ -215,12 +215,7 @@ namespace LongoMatch
 			get{ return visitorGoals;}
 			set{visitorGoals=value;}
 		}
-		
-		
-		public int VisibleSections {
-			get{ return this.Sections.VisibleSections;}
-			set{ this.Sections.VisibleSections=value;}
-		}
+	
 		
 		public DateTime MatchDate {
 			get{ return matchDate;}

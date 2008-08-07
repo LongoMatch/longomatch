@@ -35,7 +35,6 @@ namespace LongoMatch {
             this.fdwidget.LocalGoals = 0;
             this.fdwidget.VisitorGoals = 0;
             this.fdwidget.Date = new System.DateTime(0);
-            this.fdwidget.VisibleSections = 0;
             w1.Add(this.fdwidget);
             Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(w1[this.fdwidget]));
             w2.Position = 0;
