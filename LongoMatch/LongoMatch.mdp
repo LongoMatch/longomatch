@@ -99,6 +99,8 @@
     <File name="Widgets/TimeReferenceWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="Widgets/TimeScale.cs" subtype="Code" buildaction="Compile" />
     <File name="DB/PixbufTimeNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="fakeColorBin.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.fakeColorBin.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="Db4objects.Db4o.dll" />
@@ -137,6 +139,7 @@
       <Widget>LongoMatch.TimeNodesTreeView</Widget>
       <Widget>LongoMatch.TimeLineControlsWidget</Widget>
       <Widget>LongoMatch.TimeLineWidget</Widget>
+      <Widget>LongoMatch.fakeColorBin</Widget>
     </ExportedWidgets>
   </GtkDesignInfo>
   <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="../CesarPlayer/Makefile.am" RelativeConfigureInPath="../">

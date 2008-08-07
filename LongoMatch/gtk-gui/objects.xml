@@ -126,4 +126,8 @@
       </itemgroup>
     </signals>
   </object>
+  <object type="LongoMatch.fakeColorBin" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
 </objects>

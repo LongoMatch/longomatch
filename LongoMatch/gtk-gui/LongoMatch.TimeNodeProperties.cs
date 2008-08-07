@@ -31,7 +31,7 @@ namespace LongoMatch {
         
         private Gtk.Label label4;
         
-        private Gtk.ColorButton colorbutton1;
+        private LongoMatch.fakeColorBin colorbutton1;
         
         private Gtk.CheckButton checkbutton2;
         
@@ -104,9 +104,8 @@ namespace LongoMatch {
             Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(this.hbox1[this.label4]));
             w5.Position = 0;
             // Container child hbox1.Gtk.Box+BoxChild
-            this.colorbutton1 = new Gtk.ColorButton();
-            this.colorbutton1.CanFocus = true;
-            this.colorbutton1.Events = ((Gdk.EventMask)(784));
+            this.colorbutton1 = new LongoMatch.fakeColorBin();
+            this.colorbutton1.Events = ((Gdk.EventMask)(256));
             this.colorbutton1.Name = "colorbutton1";
             this.hbox1.Add(this.colorbutton1);
             Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(this.hbox1[this.colorbutton1]));

@@ -36,33 +36,23 @@ namespace LongoMatch
 			// Agrupamos todos los TimeNodeProperties en un array para 
 			// tratarlos mas facilmente
 			tndArray = new TimeNodeProperties[20];
-			Table[] _tableArray = new Table[5];
-			_tableArray[0] = this.table1;
-			_tableArray[1] = this.table6;
-			_tableArray[2] = this.table11;			
-			_tableArray[3] = this.table16;
-			_tableArray[4] = this.table21;
-			
-			for(int j=0; j<5; j++){
-				Gtk.Widget[] children = new Gtk.Widget[5];
-				children = _tableArray[j].Children;
-				int i=3;
-				foreach (TimeNodeProperties tnd in children){
-					tndArray[i+j*4] = (TimeNodeProperties)tnd;
-					i--;
-				}
-			}
+			Table table = this.table20;
+			int j=19;
+			foreach (TimeNodeProperties tnd in table20.Children){
+				tndArray[j] = ((TimeNodeProperties)tnd);
+				j--;
+			}			
 			
 			for(int i=0;i<20;i++){
-				tndArray[i].SetTitle(Catalog.GetString("Section") +(i+1));
+				tndArray[i].Title = Catalog.GetString("Section") +(i+1);
 			}
 		}
 		
 		public void SetSections(Sections sections){
 			
 			for(int i=0;i<20;i++){
-				tndArray[i].SetTimeNode(sections.GetTimeNode(i));
-				tndArray[i].SetColor(sections.GetColor(i));
+				tndArray[i].TimeNode=sections.GetTimeNode(i);
+				tndArray[i].Color=sections.GetColor(i);
 			}
 			
 		}
@@ -72,8 +62,8 @@ namespace LongoMatch
 			SectionsTimeNode[] timeNodesArray = new SectionsTimeNode[20];
 			Color[] colorsArray = new Color[20];
 			for(int i=0;i<20;i++){
-				timeNodesArray[i]=tndArray[i].GetTimeNode();
-				colorsArray[i] = tndArray[i].GetColor();
+				timeNodesArray[i]=tndArray[i].TimeNode;
+				colorsArray[i] = tndArray[i].Color;
 			}
 			sections.SetColors(colorsArray);
 			sections.SetTimeNodes(timeNodesArray);

@@ -1,6 +1,6 @@
-// TimeNodeProperties.cs
+// fakeColorBin.cs
 //
-//  Copyright (C) 2007 Andoni Morales Alastruey
+//  Copyright (C) 2008 Andoni Morales Alastruey
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,51 +19,28 @@
 //
 
 using System;
+using Gtk;
 using Gdk;
 
 namespace LongoMatch
 {
 	
 	
-	public partial  class TimeNodeProperties : Gtk.Bin
+	public partial class fakeColorBin : Gtk.Bin
 	{
-
-
 		
-		public TimeNodeProperties()
+		public fakeColorBin()
 		{
 			this.Build();
 		}
 		
-		public string Title {
-			set{
-				GtkLabel1.Text=value;	
-			}
-		}
-		
-		public SectionsTimeNode TimeNode
-		{
-			set{
-				entry1.Text = value.Name;
-				this.checkbutton2.Active = value.Visible;
-				timeadjustwidget1.SetTimeNode(value);	
-			}
-			
-			get{
-				return new SectionsTimeNode (entry1.Text,timeadjustwidget1.GetStartTime(),timeadjustwidget1.GetStopTime(),this.checkbutton2.Active);
-			}
-		}
-		
 		public Color Color{
-			set{
-				this.colorbutton1.Color = value;
-			}
 			get{
-				return this.colorbutton1.Color;
+				return this.colorbutton2.Color;
+			}
+			set {
+				this.colorbutton2.Color = value;
 			}
 		}
-		
-	
-
 	}
 }

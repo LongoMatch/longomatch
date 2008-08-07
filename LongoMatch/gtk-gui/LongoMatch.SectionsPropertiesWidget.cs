@@ -13,9 +13,9 @@ namespace LongoMatch {
     
     public partial class SectionsPropertiesWidget {
         
-        private Gtk.Notebook notebook1;
+        private Gtk.ScrolledWindow scrolledwindow1;
         
-        private Gtk.Table table1;
+        private Gtk.Table table20;
         
         private LongoMatch.TimeNodeProperties timenodeproperties101;
         
@@ -25,10 +25,6 @@ namespace LongoMatch {
         
         private LongoMatch.TimeNodeProperties timenodeproperties104;
         
-        private Gtk.Label label17;
-        
-        private Gtk.Table table6;
-        
         private LongoMatch.TimeNodeProperties timenodeproperties105;
         
         private LongoMatch.TimeNodeProperties timenodeproperties106;
@@ -36,10 +32,6 @@ namespace LongoMatch {
         private LongoMatch.TimeNodeProperties timenodeproperties107;
         
         private LongoMatch.TimeNodeProperties timenodeproperties108;
-        
-        private Gtk.Label label34;
-        
-        private Gtk.Table table11;
         
         private LongoMatch.TimeNodeProperties timenodeproperties109;
         
@@ -49,10 +41,6 @@ namespace LongoMatch {
         
         private LongoMatch.TimeNodeProperties timenodeproperties112;
         
-        private Gtk.Label label51;
-        
-        private Gtk.Table table16;
-        
         private LongoMatch.TimeNodeProperties timenodeproperties113;
         
         private LongoMatch.TimeNodeProperties timenodeproperties114;
@@ -60,10 +48,6 @@ namespace LongoMatch {
         private LongoMatch.TimeNodeProperties timenodeproperties115;
         
         private LongoMatch.TimeNodeProperties timenodeproperties116;
-        
-        private Gtk.Label label68;
-        
-        private Gtk.Table table21;
         
         private LongoMatch.TimeNodeProperties timenodeproperties117;
         
@@ -73,243 +57,249 @@ namespace LongoMatch {
         
         private LongoMatch.TimeNodeProperties timenodeproperties120;
         
-        private Gtk.Label label85;
-        
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
             // Widget LongoMatch.SectionsPropertiesWidget
             Stetic.BinContainer.Attach(this);
             this.Name = "LongoMatch.SectionsPropertiesWidget";
             // Container child LongoMatch.SectionsPropertiesWidget.Gtk.Container+ContainerChild
-            this.notebook1 = new Gtk.Notebook();
-            this.notebook1.CanFocus = true;
-            this.notebook1.Name = "notebook1";
-            this.notebook1.CurrentPage = 0;
-            this.notebook1.TabPos = ((Gtk.PositionType)(1));
-            // Container child notebook1.Gtk.Notebook+NotebookChild
-            this.table1 = new Gtk.Table(((uint)(2)), ((uint)(2)), false);
-            this.table1.Name = "table1";
-            this.table1.RowSpacing = ((uint)(6));
-            this.table1.ColumnSpacing = ((uint)(6));
-            // Container child table1.Gtk.Table+TableChild
+            this.scrolledwindow1 = new Gtk.ScrolledWindow();
+            this.scrolledwindow1.CanFocus = true;
+            this.scrolledwindow1.Name = "scrolledwindow1";
+            this.scrolledwindow1.ShadowType = ((Gtk.ShadowType)(1));
+            // Container child scrolledwindow1.Gtk.Container+ContainerChild
+            Gtk.Viewport w1 = new Gtk.Viewport();
+            w1.ShadowType = ((Gtk.ShadowType)(0));
+            // Container child GtkViewport.Gtk.Container+ContainerChild
+            this.table20 = new Gtk.Table(((uint)(4)), ((uint)(5)), false);
+            this.table20.Name = "table20";
+            this.table20.RowSpacing = ((uint)(6));
+            this.table20.ColumnSpacing = ((uint)(6));
+            // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties101 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties101.Events = ((Gdk.EventMask)(256));
             this.timenodeproperties101.Name = "timenodeproperties101";
-            this.table1.Add(this.timenodeproperties101);
-            // Container child table1.Gtk.Table+TableChild
+            this.table20.Add(this.timenodeproperties101);
+            Gtk.Table.TableChild w2 = ((Gtk.Table.TableChild)(this.table20[this.timenodeproperties101]));
+            w2.XOptions = ((Gtk.AttachOptions)(4));
+            w2.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties102 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties102.Events = ((Gdk.EventMask)(256));
             this.timenodeproperties102.Name = "timenodeproperties102";
-            this.table1.Add(this.timenodeproperties102);
-            Gtk.Table.TableChild w2 = ((Gtk.Table.TableChild)(this.table1[this.timenodeproperties102]));
-            w2.LeftAttach = ((uint)(1));
-            w2.RightAttach = ((uint)(2));
-            // Container child table1.Gtk.Table+TableChild
+            this.table20.Add(this.timenodeproperties102);
+            Gtk.Table.TableChild w3 = ((Gtk.Table.TableChild)(this.table20[this.timenodeproperties102]));
+            w3.LeftAttach = ((uint)(1));
+            w3.RightAttach = ((uint)(2));
+            w3.XOptions = ((Gtk.AttachOptions)(4));
+            w3.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties103 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties103.Events = ((Gdk.EventMask)(256));
             this.timenodeproperties103.Name = "timenodeproperties103";
-            this.table1.Add(this.timenodeproperties103);
-            Gtk.Table.TableChild w3 = ((Gtk.Table.TableChild)(this.table1[this.timenodeproperties103]));
-            w3.TopAttach = ((uint)(1));
-            w3.BottomAttach = ((uint)(2));
-            // Container child table1.Gtk.Table+TableChild
+            this.table20.Add(this.timenodeproperties103);
+            Gtk.Table.TableChild w4 = ((Gtk.Table.TableChild)(this.table20[this.timenodeproperties103]));
+            w4.LeftAttach = ((uint)(2));
+            w4.RightAttach = ((uint)(3));
+            w4.XOptions = ((Gtk.AttachOptions)(4));
+            w4.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties104 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties104.Events = ((Gdk.EventMask)(256));
             this.timenodeproperties104.Name = "timenodeproperties104";
-            this.table1.Add(this.timenodeproperties104);
-            Gtk.Table.TableChild w4 = ((Gtk.Table.TableChild)(this.table1[this.timenodeproperties104]));
-            w4.TopAttach = ((uint)(1));
-            w4.BottomAttach = ((uint)(2));
-            w4.LeftAttach = ((uint)(1));
-            w4.RightAttach = ((uint)(2));
-            this.notebook1.Add(this.table1);
-            // Notebook tab
-            this.label17 = new Gtk.Label();
-            this.label17.Name = "label17";
-            this.label17.LabelProp = Mono.Unix.Catalog.GetString("1-4");
-            this.notebook1.SetTabLabel(this.table1, this.label17);
-            this.label17.ShowAll();
-            // Container child notebook1.Gtk.Notebook+NotebookChild
-            this.table6 = new Gtk.Table(((uint)(2)), ((uint)(2)), false);
-            this.table6.Name = "table6";
-            this.table6.RowSpacing = ((uint)(6));
-            this.table6.ColumnSpacing = ((uint)(6));
-            // Container child table6.Gtk.Table+TableChild
+            this.table20.Add(this.timenodeproperties104);
+            Gtk.Table.TableChild w5 = ((Gtk.Table.TableChild)(this.table20[this.timenodeproperties104]));
+            w5.LeftAttach = ((uint)(3));
+            w5.RightAttach = ((uint)(4));
+            w5.XOptions = ((Gtk.AttachOptions)(4));
+            w5.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties105 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties105.Events = ((Gdk.EventMask)(256));
             this.timenodeproperties105.Name = "timenodeproperties105";
-            this.table6.Add(this.timenodeproperties105);
-            // Container child table6.Gtk.Table+TableChild
+            this.table20.Add(this.timenodeproperties105);
+            Gtk.Table.TableChild w6 = ((Gtk.Table.TableChild)(this.table20[this.timenodeproperties105]));
+            w6.LeftAttach = ((uint)(4));
+            w6.RightAttach = ((uint)(5));
+            w6.XOptions = ((Gtk.AttachOptions)(4));
+            w6.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties106 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties106.Events = ((Gdk.EventMask)(256));
             this.timenodeproperties106.Name = "timenodeproperties106";
-            this.table6.Add(this.timenodeproperties106);
-            Gtk.Table.TableChild w7 = ((Gtk.Table.TableChild)(this.table6[this.timenodeproperties106]));
-            w7.LeftAttach = ((uint)(1));
-            w7.RightAttach = ((uint)(2));
-            // Container child table6.Gtk.Table+TableChild
+            this.table20.Add(this.timenodeproperties106);
+            Gtk.Table.TableChild w7 = ((Gtk.Table.TableChild)(this.table20[this.timenodeproperties106]));
+            w7.TopAttach = ((uint)(1));
+            w7.BottomAttach = ((uint)(2));
+            w7.XOptions = ((Gtk.AttachOptions)(4));
+            w7.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties107 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties107.Events = ((Gdk.EventMask)(256));
             this.timenodeproperties107.Name = "timenodeproperties107";
-            this.table6.Add(this.timenodeproperties107);
-            Gtk.Table.TableChild w8 = ((Gtk.Table.TableChild)(this.table6[this.timenodeproperties107]));
+            this.table20.Add(this.timenodeproperties107);
+            Gtk.Table.TableChild w8 = ((Gtk.Table.TableChild)(this.table20[this.timenodeproperties107]));
             w8.TopAttach = ((uint)(1));
             w8.BottomAttach = ((uint)(2));
-            // Container child table6.Gtk.Table+TableChild
+            w8.LeftAttach = ((uint)(1));
+            w8.RightAttach = ((uint)(2));
+            w8.XOptions = ((Gtk.AttachOptions)(4));
+            w8.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties108 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties108.Events = ((Gdk.EventMask)(256));
             this.timenodeproperties108.Name = "timenodeproperties108";
-            this.table6.Add(this.timenodeproperties108);
-            Gtk.Table.TableChild w9 = ((Gtk.Table.TableChild)(this.table6[this.timenodeproperties108]));
+            this.table20.Add(this.timenodeproperties108);
+            Gtk.Table.TableChild w9 = ((Gtk.Table.TableChild)(this.table20[this.timenodeproperties108]));
             w9.TopAttach = ((uint)(1));
             w9.BottomAttach = ((uint)(2));
-            w9.LeftAttach = ((uint)(1));
-            w9.RightAttach = ((uint)(2));
-            this.notebook1.Add(this.table6);
-            Gtk.Notebook.NotebookChild w10 = ((Gtk.Notebook.NotebookChild)(this.notebook1[this.table6]));
-            w10.Position = 1;
-            // Notebook tab
-            this.label34 = new Gtk.Label();
-            this.label34.Name = "label34";
-            this.label34.LabelProp = Mono.Unix.Catalog.GetString("5-8");
-            this.notebook1.SetTabLabel(this.table6, this.label34);
-            this.label34.ShowAll();
-            // Container child notebook1.Gtk.Notebook+NotebookChild
-            this.table11 = new Gtk.Table(((uint)(2)), ((uint)(2)), false);
-            this.table11.Name = "table11";
-            this.table11.RowSpacing = ((uint)(6));
-            this.table11.ColumnSpacing = ((uint)(6));
-            // Container child table11.Gtk.Table+TableChild
+            w9.LeftAttach = ((uint)(2));
+            w9.RightAttach = ((uint)(3));
+            w9.XOptions = ((Gtk.AttachOptions)(4));
+            w9.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties109 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties109.Events = ((Gdk.EventMask)(256));
             this.timenodeproperties109.Name = "timenodeproperties109";
-            this.table11.Add(this.timenodeproperties109);
-            // Container child table11.Gtk.Table+TableChild
+            this.table20.Add(this.timenodeproperties109);
+            Gtk.Table.TableChild w10 = ((Gtk.Table.TableChild)(this.table20[this.timenodeproperties109]));
+            w10.TopAttach = ((uint)(1));
+            w10.BottomAttach = ((uint)(2));
+            w10.LeftAttach = ((uint)(3));
+            w10.RightAttach = ((uint)(4));
+            w10.XOptions = ((Gtk.AttachOptions)(4));
+            w10.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties110 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties110.Events = ((Gdk.EventMask)(256));
             this.timenodeproperties110.Name = "timenodeproperties110";
-            this.table11.Add(this.timenodeproperties110);
-            Gtk.Table.TableChild w12 = ((Gtk.Table.TableChild)(this.table11[this.timenodeproperties110]));
-            w12.LeftAttach = ((uint)(1));
-            w12.RightAttach = ((uint)(2));
-            // Container child table11.Gtk.Table+TableChild
+            this.table20.Add(this.timenodeproperties110);
+            Gtk.Table.TableChild w11 = ((Gtk.Table.TableChild)(this.table20[this.timenodeproperties110]));
+            w11.TopAttach = ((uint)(1));
+            w11.BottomAttach = ((uint)(2));
+            w11.LeftAttach = ((uint)(4));
+            w11.RightAttach = ((uint)(5));
+            w11.XOptions = ((Gtk.AttachOptions)(4));
+            w11.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties111 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties111.Events = ((Gdk.EventMask)(256));
             this.timenodeproperties111.Name = "timenodeproperties111";
-            this.table11.Add(this.timenodeproperties111);
-            Gtk.Table.TableChild w13 = ((Gtk.Table.TableChild)(this.table11[this.timenodeproperties111]));
-            w13.TopAttach = ((uint)(1));
-            w13.BottomAttach = ((uint)(2));
-            // Container child table11.Gtk.Table+TableChild
+            this.table20.Add(this.timenodeproperties111);
+            Gtk.Table.TableChild w12 = ((Gtk.Table.TableChild)(this.table20[this.timenodeproperties111]));
+            w12.TopAttach = ((uint)(2));
+            w12.BottomAttach = ((uint)(3));
+            w12.XOptions = ((Gtk.AttachOptions)(4));
+            w12.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties112 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties112.Events = ((Gdk.EventMask)(256));
             this.timenodeproperties112.Name = "timenodeproperties112";
-            this.table11.Add(this.timenodeproperties112);
-            Gtk.Table.TableChild w14 = ((Gtk.Table.TableChild)(this.table11[this.timenodeproperties112]));
-            w14.TopAttach = ((uint)(1));
-            w14.BottomAttach = ((uint)(2));
-            w14.LeftAttach = ((uint)(1));
-            w14.RightAttach = ((uint)(2));
-            this.notebook1.Add(this.table11);
-            Gtk.Notebook.NotebookChild w15 = ((Gtk.Notebook.NotebookChild)(this.notebook1[this.table11]));
-            w15.Position = 2;
-            // Notebook tab
-            this.label51 = new Gtk.Label();
-            this.label51.Name = "label51";
-            this.label51.LabelProp = Mono.Unix.Catalog.GetString("9-12");
-            this.notebook1.SetTabLabel(this.table11, this.label51);
-            this.label51.ShowAll();
-            // Container child notebook1.Gtk.Notebook+NotebookChild
-            this.table16 = new Gtk.Table(((uint)(2)), ((uint)(2)), false);
-            this.table16.Name = "table16";
-            this.table16.RowSpacing = ((uint)(6));
-            this.table16.ColumnSpacing = ((uint)(6));
-            // Container child table16.Gtk.Table+TableChild
+            this.table20.Add(this.timenodeproperties112);
+            Gtk.Table.TableChild w13 = ((Gtk.Table.TableChild)(this.table20[this.timenodeproperties112]));
+            w13.TopAttach = ((uint)(2));
+            w13.BottomAttach = ((uint)(3));
+            w13.LeftAttach = ((uint)(1));
+            w13.RightAttach = ((uint)(2));
+            w13.XOptions = ((Gtk.AttachOptions)(4));
+            w13.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties113 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties113.Events = ((Gdk.EventMask)(256));
             this.timenodeproperties113.Name = "timenodeproperties113";
-            this.table16.Add(this.timenodeproperties113);
-            // Container child table16.Gtk.Table+TableChild
+            this.table20.Add(this.timenodeproperties113);
+            Gtk.Table.TableChild w14 = ((Gtk.Table.TableChild)(this.table20[this.timenodeproperties113]));
+            w14.TopAttach = ((uint)(2));
+            w14.BottomAttach = ((uint)(3));
+            w14.LeftAttach = ((uint)(2));
+            w14.RightAttach = ((uint)(3));
+            w14.XOptions = ((Gtk.AttachOptions)(4));
+            w14.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties114 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties114.Events = ((Gdk.EventMask)(256));
             this.timenodeproperties114.Name = "timenodeproperties114";
-            this.table16.Add(this.timenodeproperties114);
-            Gtk.Table.TableChild w17 = ((Gtk.Table.TableChild)(this.table16[this.timenodeproperties114]));
-            w17.LeftAttach = ((uint)(1));
-            w17.RightAttach = ((uint)(2));
-            // Container child table16.Gtk.Table+TableChild
+            this.table20.Add(this.timenodeproperties114);
+            Gtk.Table.TableChild w15 = ((Gtk.Table.TableChild)(this.table20[this.timenodeproperties114]));
+            w15.TopAttach = ((uint)(2));
+            w15.BottomAttach = ((uint)(3));
+            w15.LeftAttach = ((uint)(3));
+            w15.RightAttach = ((uint)(4));
+            w15.XOptions = ((Gtk.AttachOptions)(4));
+            w15.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties115 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties115.Events = ((Gdk.EventMask)(256));
             this.timenodeproperties115.Name = "timenodeproperties115";
-            this.table16.Add(this.timenodeproperties115);
-            Gtk.Table.TableChild w18 = ((Gtk.Table.TableChild)(this.table16[this.timenodeproperties115]));
-            w18.TopAttach = ((uint)(1));
-            w18.BottomAttach = ((uint)(2));
-            // Container child table16.Gtk.Table+TableChild
+            this.table20.Add(this.timenodeproperties115);
+            Gtk.Table.TableChild w16 = ((Gtk.Table.TableChild)(this.table20[this.timenodeproperties115]));
+            w16.TopAttach = ((uint)(2));
+            w16.BottomAttach = ((uint)(3));
+            w16.LeftAttach = ((uint)(4));
+            w16.RightAttach = ((uint)(5));
+            w16.XOptions = ((Gtk.AttachOptions)(4));
+            w16.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties116 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties116.Events = ((Gdk.EventMask)(256));
             this.timenodeproperties116.Name = "timenodeproperties116";
-            this.table16.Add(this.timenodeproperties116);
-            Gtk.Table.TableChild w19 = ((Gtk.Table.TableChild)(this.table16[this.timenodeproperties116]));
-            w19.TopAttach = ((uint)(1));
-            w19.BottomAttach = ((uint)(2));
-            w19.LeftAttach = ((uint)(1));
-            w19.RightAttach = ((uint)(2));
-            this.notebook1.Add(this.table16);
-            Gtk.Notebook.NotebookChild w20 = ((Gtk.Notebook.NotebookChild)(this.notebook1[this.table16]));
-            w20.Position = 3;
-            // Notebook tab
-            this.label68 = new Gtk.Label();
-            this.label68.Name = "label68";
-            this.label68.LabelProp = Mono.Unix.Catalog.GetString("13-16");
-            this.notebook1.SetTabLabel(this.table16, this.label68);
-            this.label68.ShowAll();
-            // Container child notebook1.Gtk.Notebook+NotebookChild
-            this.table21 = new Gtk.Table(((uint)(2)), ((uint)(2)), false);
-            this.table21.Name = "table21";
-            this.table21.RowSpacing = ((uint)(6));
-            this.table21.ColumnSpacing = ((uint)(6));
-            // Container child table21.Gtk.Table+TableChild
+            this.table20.Add(this.timenodeproperties116);
+            Gtk.Table.TableChild w17 = ((Gtk.Table.TableChild)(this.table20[this.timenodeproperties116]));
+            w17.TopAttach = ((uint)(3));
+            w17.BottomAttach = ((uint)(4));
+            w17.XOptions = ((Gtk.AttachOptions)(4));
+            w17.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties117 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties117.Events = ((Gdk.EventMask)(256));
             this.timenodeproperties117.Name = "timenodeproperties117";
-            this.table21.Add(this.timenodeproperties117);
-            // Container child table21.Gtk.Table+TableChild
+            this.table20.Add(this.timenodeproperties117);
+            Gtk.Table.TableChild w18 = ((Gtk.Table.TableChild)(this.table20[this.timenodeproperties117]));
+            w18.TopAttach = ((uint)(3));
+            w18.BottomAttach = ((uint)(4));
+            w18.LeftAttach = ((uint)(1));
+            w18.RightAttach = ((uint)(2));
+            w18.XOptions = ((Gtk.AttachOptions)(4));
+            w18.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties118 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties118.Events = ((Gdk.EventMask)(256));
             this.timenodeproperties118.Name = "timenodeproperties118";
-            this.table21.Add(this.timenodeproperties118);
-            Gtk.Table.TableChild w22 = ((Gtk.Table.TableChild)(this.table21[this.timenodeproperties118]));
-            w22.LeftAttach = ((uint)(1));
-            w22.RightAttach = ((uint)(2));
-            // Container child table21.Gtk.Table+TableChild
+            this.table20.Add(this.timenodeproperties118);
+            Gtk.Table.TableChild w19 = ((Gtk.Table.TableChild)(this.table20[this.timenodeproperties118]));
+            w19.TopAttach = ((uint)(3));
+            w19.BottomAttach = ((uint)(4));
+            w19.LeftAttach = ((uint)(2));
+            w19.RightAttach = ((uint)(3));
+            w19.XOptions = ((Gtk.AttachOptions)(4));
+            w19.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties119 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties119.Events = ((Gdk.EventMask)(256));
             this.timenodeproperties119.Name = "timenodeproperties119";
-            this.table21.Add(this.timenodeproperties119);
-            Gtk.Table.TableChild w23 = ((Gtk.Table.TableChild)(this.table21[this.timenodeproperties119]));
-            w23.TopAttach = ((uint)(1));
-            w23.BottomAttach = ((uint)(2));
-            // Container child table21.Gtk.Table+TableChild
+            this.table20.Add(this.timenodeproperties119);
+            Gtk.Table.TableChild w20 = ((Gtk.Table.TableChild)(this.table20[this.timenodeproperties119]));
+            w20.TopAttach = ((uint)(3));
+            w20.BottomAttach = ((uint)(4));
+            w20.LeftAttach = ((uint)(3));
+            w20.RightAttach = ((uint)(4));
+            w20.XOptions = ((Gtk.AttachOptions)(4));
+            w20.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties120 = new LongoMatch.TimeNodeProperties();
             this.timenodeproperties120.Events = ((Gdk.EventMask)(256));
             this.timenodeproperties120.Name = "timenodeproperties120";
-            this.table21.Add(this.timenodeproperties120);
-            Gtk.Table.TableChild w24 = ((Gtk.Table.TableChild)(this.table21[this.timenodeproperties120]));
-            w24.TopAttach = ((uint)(1));
-            w24.BottomAttach = ((uint)(2));
-            w24.LeftAttach = ((uint)(1));
-            w24.RightAttach = ((uint)(2));
-            this.notebook1.Add(this.table21);
-            Gtk.Notebook.NotebookChild w25 = ((Gtk.Notebook.NotebookChild)(this.notebook1[this.table21]));
-            w25.Position = 4;
-            // Notebook tab
-            this.label85 = new Gtk.Label();
-            this.label85.Name = "label85";
-            this.label85.LabelProp = Mono.Unix.Catalog.GetString("17-20");
-            this.notebook1.SetTabLabel(this.table21, this.label85);
-            this.label85.ShowAll();
-            this.Add(this.notebook1);
+            this.table20.Add(this.timenodeproperties120);
+            Gtk.Table.TableChild w21 = ((Gtk.Table.TableChild)(this.table20[this.timenodeproperties120]));
+            w21.TopAttach = ((uint)(3));
+            w21.BottomAttach = ((uint)(4));
+            w21.LeftAttach = ((uint)(4));
+            w21.RightAttach = ((uint)(5));
+            w21.XOptions = ((Gtk.AttachOptions)(4));
+            w21.YOptions = ((Gtk.AttachOptions)(4));
+            w1.Add(this.table20);
+            this.scrolledwindow1.Add(w1);
+            this.Add(this.scrolledwindow1);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
