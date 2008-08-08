@@ -199,13 +199,7 @@ namespace LongoMatch
 			}
 		}
 
-		protected virtual bool UpdateFileData(){
-			if (fileDataModified && openedFileData != null){
-				System.Threading.Thread thread = new System.Threading.Thread(new ThreadStart(SaveDB));				                                            
-				thread.Start();
-			}
-			return true;
-		}
+		
 		
 		protected virtual void OnCloseActivated (object sender, System.EventArgs e)
 		{
@@ -324,7 +318,7 @@ namespace LongoMatch
 		protected virtual void OnQuitActivated (object sender, System.EventArgs e)
 		{
 			// FIXME Ask to Save the Project if it has changed
-			this.UpdateFileData();
+			this.SaveDB();
 			this.playerbin1.Destroy();
 			Application.Quit();
 		}

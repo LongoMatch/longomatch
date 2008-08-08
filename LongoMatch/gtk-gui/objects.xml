@@ -77,4 +77,20 @@
     <itemgroups />
     <signals />
   </object>
+  <object type="LongoMatch.Widgets.Component.PlayListTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Widgets.Component.TimeNodesTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
+    <itemgroups />
+    <signals>
+      <itemgroup label="TimeNodesTreeView Signals">
+        <signal name="TimeNodeChanged" />
+        <signal name="TimeNodeSelected" />
+        <signal name="TimeNodeDeleted" />
+        <signal name="PlayListNodeAdded" />
+        <signal name="NewMarkEvent" />
+      </itemgroup>
+    </signals>
+  </object>
 </objects>

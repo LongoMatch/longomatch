@@ -39,7 +39,7 @@ namespace LongoMatch.Widgets.Component
 			// Agrupamos todos los TimeNodeProperties en un array para 
 			// tratarlos mas facilmente
 			tndArray = new TimeNodeProperties[20];
-			Table table = this.table20;
+		
 			int j=19;
 			foreach (TimeNodeProperties tnd in table20.Children){
 				tndArray[j] = ((TimeNodeProperties)tnd);

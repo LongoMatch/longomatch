@@ -36,12 +36,12 @@ using Gdk;
 		//Stores the Data Section it belowns to, to allow its removal
 		 private int dataSection;
 		
-		private string miniaturePath;
+
 				
 		
 		public MediaTimeNode(String name, Time start, Time stop, uint fps, int dataSection,string miniaturePath):base (name,start,stop,fps,miniaturePath) {
 			this.dataSection = dataSection;		
-			this.miniaturePath= miniaturePath;
+
 		}
 		
 		public int DataSection{

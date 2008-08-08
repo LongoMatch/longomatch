@@ -63,7 +63,12 @@ namespace LongoMatch.Widgets.Component {
             w2.Expand = false;
             w2.Fill = false;
             // Container child vbox1.Gtk.Box+BoxChild
-            this.playlisttreeview1 = null;
+            this.playlisttreeview1 = new LongoMatch.Widgets.Component.PlayListTreeView();
+            this.playlisttreeview1.Sensitive = false;
+            this.playlisttreeview1.CanFocus = true;
+            this.playlisttreeview1.Name = "playlisttreeview1";
+            this.playlisttreeview1.Reorderable = true;
+            this.playlisttreeview1.HeadersClickable = true;
             this.vbox1.Add(this.playlisttreeview1);
             Gtk.Box.BoxChild w3 = ((Gtk.Box.BoxChild)(this.vbox1[this.playlisttreeview1]));
             w3.Position = 1;
@@ -156,6 +161,8 @@ namespace LongoMatch.Widgets.Component {
                 this.Child.ShowAll();
             }
             this.Show();
+            this.playlisttreeview1.RowActivated += new Gtk.RowActivatedHandler(this.OnPlaylisttreeview1RowActivated);
+            this.playlisttreeview1.DragEnd += new Gtk.DragEndHandler(this.OnPlaylisttreeview1DragEnd);
             this.newbutton.Clicked += new System.EventHandler(this.OnNewbuttonClicked);
             this.openbutton.Clicked += new System.EventHandler(this.OnOpenbuttonClicked);
             this.savebutton.Clicked += new System.EventHandler(this.OnSavebuttonClicked);
