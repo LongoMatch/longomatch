@@ -25,17 +25,17 @@ using Mono.Unix;
 using Db4objects.Db4o;
 using Db4objects.Db4o.Query;
 
-namespace LongoMatch
+namespace LongoMatch.DB
 {
 	
 	
-	public sealed class DB
+	public sealed class DataBase
 	{
 		private IObjectContainer db;
 		private string file;
 		private object locker;
 		
-		public DB()
+		public DataBase()
 		{
 			file = Path.Combine (MainClass.DBDir(), "db.yap");
 			locker = new object();
@@ -43,7 +43,7 @@ namespace LongoMatch
 		
 		
 		// Singleton to avoid various instance of DB opened at once
-		public static DB Instance
+		public static DataBase Instance
 		{
 			get
 			{
@@ -55,7 +55,7 @@ namespace LongoMatch
 		{
 			static Nested(){
 			}
-			internal static readonly DB instance = new DB();
+			internal static readonly DataBase instance = new DataBase();
 		}
 		
 		

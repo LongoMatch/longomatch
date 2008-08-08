@@ -19,8 +19,9 @@
 //
 
 using System;
+using LongoMatch.DB;
 
-namespace LongoMatch
+namespace LongoMatch.Widgets.Dialog
 {
 	
 	
@@ -44,7 +45,7 @@ namespace LongoMatch
 			filedatalistwidget.Fill(MainClass.DB.GetAllDB());
 		}
 
-		protected virtual void OnFiledatalistwidgetFileDataSelectedEvent (LongoMatch.FileData fData)
+		protected virtual void OnFiledatalistwidgetFileDataSelectedEvent (FileData fData)
 		{
 			this.buttonOk.Activate();
 		}

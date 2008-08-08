@@ -1,4 +1,4 @@
-// PlayListReader.cs
+// fakeColorBin.cs
 //
 //  Copyright (C) 2008 Andoni Morales Alastruey
 //
@@ -19,18 +19,30 @@
 //
 
 using System;
+using Gtk;
+using Gdk;
 
-namespace LongoMatch
+namespace LongoMatch.Widgets.Component
 {
 	
+	// HACK This Class is a hack to prevent the colors selector's window appearing under
+	// the main window on Windows
 	
-	public class PlayListReader : XMLReader
+	public partial class fakeColorBin : Gtk.Bin
 	{
 		
-		public PlayListReader(string filePath) : base (filePath)
+		public fakeColorBin()
 		{
+			this.Build();
 		}
 		
-		
+		public Color Color{
+			get{
+				return this.colorbutton2.Color;
+			}
+			set {
+				this.colorbutton2.Color = value;
+			}
+		}
 	}
 }

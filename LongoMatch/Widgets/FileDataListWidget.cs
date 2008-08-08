@@ -24,10 +24,11 @@ using System.IO;
 using Mono.Unix;
 using Gtk;
 using Db4objects.Db4o;
+using LongoMatch.DB;
 
 
 
-namespace LongoMatch
+namespace LongoMatch.Widgets.Component
 {
 	
 	public delegate void FileDataSelectedHandler (FileData fData);

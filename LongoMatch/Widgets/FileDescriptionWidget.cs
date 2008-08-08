@@ -21,9 +21,14 @@
 using System;
 using Mono.Unix;
 using Gtk;
+using LongoMatch.DB;
+using LongoMatch.Handlers;
+using LongoMatch.IO;
+using LongoMatch.Widgets.Popup;
+using LongoMatch.Widgets.Dialog;
+using LongoMatch.TimeNodes;
 
-
-namespace LongoMatch
+namespace LongoMatch.Widgets.Component
 {
 
 	//añadir eventos de cambios para realizar el cambio directamente sobre el file data abierto

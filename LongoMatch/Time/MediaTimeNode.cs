@@ -21,7 +21,7 @@
 using System;
 using Gdk;
 
-	namespace LongoMatch
+	namespace LongoMatch.TimeNodes
 	{
 		/* MediaTimeNode is the main object of the database for {@LongoMatch}. It' s used to
 	       store the name of each reference point we want to remind with its start time
@@ -30,7 +30,7 @@ using Gdk;
 	       video sequence again.
 		*/
 		[Serializable]
-		public class MediaTimeNode : TimeNode
+		public class MediaTimeNode : PixbufTimeNode
 		{
 		
 		//Stores the Data Section it belowns to, to allow its removal
@@ -39,7 +39,7 @@ using Gdk;
 		private string miniaturePath;
 				
 		
-		public MediaTimeNode(String name, Time start, Time stop, uint fps, int dataSection,string miniaturePath):base (name,start,stop,fps) {
+		public MediaTimeNode(String name, Time start, Time stop, uint fps, int dataSection,string miniaturePath):base (name,start,stop,fps,miniaturePath) {
 			this.dataSection = dataSection;		
 			this.miniaturePath= miniaturePath;
 		}
@@ -49,7 +49,7 @@ using Gdk;
 			return dataSection;
 			}
 		}	
-		
+		/*
 		public Pixbuf Miniature{
 			get{ 
 				if (System.IO.File.Exists(this.MiniaturePath)){					
@@ -62,7 +62,7 @@ using Gdk;
 		public String MiniaturePath{
 	
 			get{return this.miniaturePath;}
-		}
+		}*/
 		
 	}
 		

@@ -1,6 +1,6 @@
-// SectionsTimeNode.cs
+// PlayListTimeNode.cs 
 //
-//  Copyright (C) 2008 Andoni Morales Alastruey
+//  Copyright (C) 2007 Andoni Morales Alastruey
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,23 +19,41 @@
 //
 
 using System;
+using Gdk;
 
-namespace LongoMatch
+namespace LongoMatch.TimeNodes
 {
 	
-	
-	public class SectionsTimeNode:TimeNode
+	[Serializable]
+	public class PlayListTimeNode : PixbufTimeNode
 	{
-		bool visible;
+		private string fileName;
+		private bool valid=true;
+
 		
-		public SectionsTimeNode(String name,Time start, Time stop,bool visible):base (name,start,stop,0)
+		public PlayListTimeNode(){
+		}
+		
+		public PlayListTimeNode(string fileName, MediaTimeNode tNode) : base(tNode.Name,tNode.Start,tNode.Stop,tNode.Fps,tNode.MiniaturePath)
 		{
-			this.visible = visible;
+			this.fileName = fileName;
+			
+		}
+		public string FileName{
+			set{ this.fileName = value;}
+			get{ return this.fileName;}
 		}
 		
-		public bool Visible{
-			get{return this.visible;}
-			set{this.visible = value;}
+		
+		public bool Valid{
+			get{return this.valid;}
+			set{this.valid = value;}
 		}
+		
+	
+		
+		
+	
+		
 	}
 }

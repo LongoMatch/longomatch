@@ -22,8 +22,9 @@ using System;
 using System.Collections;
 using Gtk;
 using Mono.Unix;
+using LongoMatch.DB;
 
-namespace LongoMatch
+namespace LongoMatch.Widgets.Dialog
 {
 	
 	
@@ -117,7 +118,7 @@ namespace LongoMatch
 			
 		}
 
-		protected virtual void OnFiledatalistwidget1FileDataSelectedEvent (LongoMatch.FileData fData)
+		protected virtual void OnFiledatalistwidget1FileDataSelectedEvent (FileData fData)
 		{
 			this.filedescriptionwidget3.Sensitive = true;
 			this.filedescriptionwidget3.SetFileData(fData);

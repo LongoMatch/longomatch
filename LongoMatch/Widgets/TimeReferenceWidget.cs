@@ -22,8 +22,9 @@ using System;
 using Gtk;
 using Gdk;
 using Cairo;
+using LongoMatch.TimeNodes;
 
-namespace LongoMatch
+namespace LongoMatch.Widgets.Component
 {
 	
 	

@@ -21,7 +21,7 @@
 using System;
 using Gdk;
 
-namespace LongoMatch
+namespace LongoMatch.TimeNodes
 {
 	
 	
@@ -54,6 +54,7 @@ namespace LongoMatch
 		public String MiniaturePath{
 	
 			get{return this.miniaturePath;}
+			set{this.miniaturePath = value;}
 		}
 	}
 }

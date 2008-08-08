@@ -13,8 +13,11 @@ using System;
 using System.Collections.Generic;
 using Gtk;
 using Gdk;
+using LongoMatch.DB;
+using LongoMatch.Handlers;
+using LongoMatch.TimeNodes;
 
-namespace LongoMatch {
+namespace LongoMatch.Widgets.Component {
 	
 	
 	public partial class TimeLineWidget : Gtk.Bin

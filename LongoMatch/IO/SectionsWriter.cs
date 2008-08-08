@@ -22,9 +22,10 @@ using System;
 using System.Configuration;
 using System.IO;
 using System.Xml;
+using LongoMatch.DB;
 using Gdk;
 
-namespace LongoMatch
+namespace LongoMatch.IO
 {
 	
 	

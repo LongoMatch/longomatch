@@ -19,8 +19,10 @@
 //
 
 using System;
+using LongoMatch;
+using LongoMatch.TimeNodes;
 
-namespace LongoMatch
+namespace LongoMatch.Handlers
 {
 		
 	//Manejador para el evento producido al seleccionar un nodo en el árbol

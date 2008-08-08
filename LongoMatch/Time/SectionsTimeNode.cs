@@ -1,4 +1,4 @@
-// fakeColorBin.cs
+// SectionsTimeNode.cs
 //
 //  Copyright (C) 2008 Andoni Morales Alastruey
 //
@@ -19,30 +19,23 @@
 //
 
 using System;
-using Gtk;
-using Gdk;
 
-namespace LongoMatch
+namespace LongoMatch.TimeNodes
 {
 	
-	// HACK This Class is a hack to prevent the colors selector's window appearing under
-	// the main window on Windows
 	
-	public partial class fakeColorBin : Gtk.Bin
+	public class SectionsTimeNode:TimeNode
 	{
+		bool visible;
 		
-		public fakeColorBin()
+		public SectionsTimeNode(String name,Time start, Time stop,bool visible):base (name,start,stop,0)
 		{
-			this.Build();
+			this.visible = visible;
 		}
 		
-		public Color Color{
-			get{
-				return this.colorbutton2.Color;
-			}
-			set {
-				this.colorbutton2.Color = value;
-			}
+		public bool Visible{
+			get{return this.visible;}
+			set{this.visible = value;}
 		}
 	}
 }

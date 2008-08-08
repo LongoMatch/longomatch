@@ -22,6 +22,8 @@
 using System;
 using Gtk;
 using Mono.Unix;
+using LongoMatch.DB;
+using LongoMatch.IO;
 
 namespace LongoMatch
 	
@@ -29,7 +31,7 @@ namespace LongoMatch
 	
 	class MainClass
 	{
-		private static DB db;
+		private static DataBase db;
 		private static string baseDirectory;
 		private static string homeDirectory;
 		
@@ -55,7 +57,7 @@ namespace LongoMatch
 			MainClass.CheckFiles();
 			
 			//Iniciamos la base de datos
-			db = new DB();
+			db = new DataBase();
 			
 			
 			//Iniciamos la aplicación
@@ -113,7 +115,7 @@ namespace LongoMatch
 			    SectionsWriter.CreateNewTemplate("default.sct");
 			}
 		}
-		public static DB DB{
+		public static DataBase DB{
 			get { return db;}
 		}
 	}

@@ -25,6 +25,10 @@ using System.IO;
 using GLib;
 using System.Threading;
 using Gdk;
+using LongoMatch.DB;
+using LongoMatch.TimeNodes;
+using LongoMatch.Widgets.Dialog;
+using LongoMatch.Widgets;
 
 
 namespace LongoMatch
@@ -248,7 +252,7 @@ namespace LongoMatch
 		}
 
 		
-		protected virtual void OnTimeNodeChanged (LongoMatch.TimeNode tNode, object val)
+		protected virtual void OnTimeNodeChanged (TimeNode tNode, object val)
 		{
 			//Si hemos modificado el valor de un nodo de tiempo a través del 
 			//widget de ajuste de tiempo posicionamos el reproductor en el punto
@@ -272,7 +276,7 @@ namespace LongoMatch
 			this.fileDataModified = true;			
 		}
 
-		protected virtual void OnTimeNodeDeleted (LongoMatch.MediaTimeNode tNode)
+		protected virtual void OnTimeNodeDeleted (MediaTimeNode tNode)
 		{
 			openedFileData.DelTimeNode(tNode);		
 			this.fileDataModified = true;
@@ -288,12 +292,12 @@ namespace LongoMatch
 					
 		}
 
-		protected virtual void OnPlayListNodeAdded (LongoMatch.MediaTimeNode tNode)
+		protected virtual void OnPlayListNodeAdded (MediaTimeNode tNode)
 		{
 			this.playlistwidget2.Add(new PlayListTimeNode(openedFileData.File.FilePath,tNode));
 		}
 
-		protected virtual void OnPlaylistwidget2PlayListNodeSelected (LongoMatch.PlayListTimeNode plNode, bool hasNext)
+		protected virtual void OnPlaylistwidget2PlayListNodeSelected (PlayListTimeNode plNode, bool hasNext)
 		{
 			if (openedFileData == null){
 				this.selectedTimeNode = plNode;

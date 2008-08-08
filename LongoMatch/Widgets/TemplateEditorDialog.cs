@@ -18,8 +18,9 @@
 //
 //
 using System;
+using LongoMatch.DB;
 
-namespace LongoMatch
+namespace LongoMatch.Widgets.Dialog
 {
 	
 	

@@ -24,10 +24,12 @@ using Gdk;
 using CesarPlayer;
 using Mono.Unix;
 using System.IO;
+using LongoMatch.Handlers;
+using LongoMatch.TimeNodes;
 
 
 
-namespace LongoMatch
+namespace LongoMatch.Widgets.Component
 {
 	
 	

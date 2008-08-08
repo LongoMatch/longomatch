@@ -23,8 +23,10 @@ using System.IO;
 using Gtk;
 using Mono.Unix;
 using System.Collections;
+using LongoMatch.DB;
+using LongoMatch.IO;
 
-namespace LongoMatch
+namespace LongoMatch.Widgets.Dialog
 {
 	
 	

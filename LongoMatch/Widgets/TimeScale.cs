@@ -24,7 +24,10 @@ using Cairo;
 using Gdk;
 using Gtk;
 using Mono.Unix;
-namespace LongoMatch
+using LongoMatch.Handlers;
+using LongoMatch.TimeNodes;
+
+namespace LongoMatch.Widgets.Component
 {
 	
 	

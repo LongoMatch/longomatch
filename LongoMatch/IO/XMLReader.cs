@@ -22,7 +22,7 @@ using System;
 using System.IO;
 using System.Xml;
 
-namespace LongoMatch
+namespace LongoMatch.IO
 {
 	
 	

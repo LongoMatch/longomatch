@@ -20,8 +20,11 @@ using System;
 using Gtk;
 using Mono.Unix;
 using Gdk;
+using LongoMatch.DB;
+using LongoMatch.TimeNodes;
 
-namespace LongoMatch
+
+namespace LongoMatch.Widgets.Component
 {
 	
 	

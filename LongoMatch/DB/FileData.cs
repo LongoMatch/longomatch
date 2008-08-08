@@ -24,8 +24,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Gtk;
 using Gdk;
+using LongoMatch.TimeNodes;
 
-namespace LongoMatch
+namespace LongoMatch.DB
 {
 	
 	[Serializable]

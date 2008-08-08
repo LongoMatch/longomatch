@@ -21,8 +21,11 @@
 using System;
 using Gtk;
 using Mono.Unix;
+using LongoMatch.DB;
+using LongoMatch.Handlers;
+using LongoMatch.TimeNodes;
 
-namespace LongoMatch
+namespace LongoMatch.Widgets.Component
 {
 	
 	
@@ -52,6 +55,9 @@ namespace LongoMatch
 			
 		
 		}
+
+	
+	
 		public FileData FileData{
 			set{ 
 				this.fileData = value;

@@ -19,8 +19,9 @@
 //
 using System;
 using Gdk;
+using LongoMatch.TimeNodes;
 
-namespace LongoMatch
+namespace LongoMatch.DB
 {
 	
 	

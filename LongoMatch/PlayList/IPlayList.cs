@@ -20,9 +20,9 @@
 
 using System;
 using Gtk;
+using LongoMatch.TimeNodes;
 
-namespace LongoMatch
-{
+namespace LongoMatch{
 	
 	
 	public interface IPlayList

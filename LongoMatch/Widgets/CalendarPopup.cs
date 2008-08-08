@@ -19,8 +19,9 @@
 //
 
 using System;
+using LongoMatch.Handlers;
 
-namespace LongoMatch
+namespace LongoMatch.Widgets.Popup
 {
 	
 
