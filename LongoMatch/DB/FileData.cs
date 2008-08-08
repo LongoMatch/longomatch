@@ -19,6 +19,7 @@
 //
 
 using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using Gtk;
@@ -147,7 +148,9 @@ namespace LongoMatch
 			int count= al.Count+1;
 			string name = sections.GetName(dataSection) + " " +count;
 			if (miniature != null){
-				miniaturePath = MainClass.ThumbnailsDir() + "/"+this.Title+"/"+"Section"+dataSection+"-"+name+
+				char sep = Path.DirectorySeparatorChar;
+				Console.WriteLine(sep);
+				miniaturePath = MainClass.ThumbnailsDir() + sep +this.Title+ sep +"Section"+dataSection+"-"+name+
 					"-"+start.ToMSecondsString()+"-"+stop.ToMSecondsString()+".jpg";				
 				miniature.Save(miniaturePath,"jpeg");
 			}

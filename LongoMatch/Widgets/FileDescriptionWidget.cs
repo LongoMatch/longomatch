@@ -192,10 +192,6 @@ namespace LongoMatch
 					int fps = (int) reader.GetMetadata(CesarPlayer.GstPlayerMetadataType.Fps);
 					bool hasVideo = (bool) reader.GetMetadata(CesarPlayer.GstPlayerMetadataType.HasVideo);
 					bool hasAudio = (bool) reader.GetMetadata(CesarPlayer.GstPlayerMetadataType.HasAudio);
-					Console.WriteLine("Has video:"+hasVideo);
-					Console.WriteLine("Has audio:"+hasAudio);
-					Console.WriteLine("Duration:"+duration);
-					Console.WriteLine("Fps:"+fps);
 					
 					this.mFile = new MediaFile(fChooser.Filename,new Time(duration*1000),(ushort)fps,hasAudio,hasVideo);				
 					fileEntry.Text = fChooser.Filename;

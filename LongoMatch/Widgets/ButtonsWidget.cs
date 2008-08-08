@@ -26,6 +26,7 @@ namespace LongoMatch
 	
 
 	
+	//FIXME Make non-sensitive non visible buttons
 	
 	public partial class ButtonsWidget : Gtk.Bin
 	{
