@@ -117,13 +117,15 @@ namespace LongoMatch
 
 					g.Rectangle( new Cairo.Rectangle(tn.StartFrame/pixelRatio,3,tn.TotalFrames/pixelRatio,height-6));					
 					
-					if (tn == this.selected) {								
+					if (tn == this.selected) {			
+						g.LineWidth = 3;
 						g.Color = new Cairo.Color (0,0,0,1);						
 					}
 					else{
+						g.LineWidth = 2;
 						g.Color = new Cairo.Color (color.R+0.1, color.G+0.1,color.B+0.1, 1);
 					}					
-					g.LineWidth = 2;
+		
 					g.LineJoin = LineJoin.Round;
 					g.StrokePreserve();
 					g.Color = this.color;						

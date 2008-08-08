@@ -96,12 +96,43 @@ namespace LongoMatch
 				Time  otherTime = (Time) obj;
 				return this.MSeconds.CompareTo(otherTime.MSeconds);
 			}
+			
 			else
 			{
 				throw new ArgumentException("Object is not a Temperature");
 			}    
 		}
 
+		public static bool operator < (Time t1,Time t2){
+			return t1.MSeconds < t2.MSeconds;
+		}
+		public static bool operator > (Time t1,Time t2){
+			return t1.MSeconds > t2.MSeconds;
+		}
+		public static bool operator <= (Time t1,Time t2){
+			return t1.MSeconds <= t2.MSeconds;
+		}
+		public static bool operator >= (Time t1,Time t2){
+			return t1.MSeconds >= t2.MSeconds;
+		}
+		public static Time operator +(Time t1,int t2){
+			return new Time(t1.MSeconds+t2);
+			
+		}
+		
+		public static Time operator +(Time t1,Time t2){
+			return new Time(t1.MSeconds+t2.MSeconds);
+			
+		}
+		
+		public  static Time operator -(Time t1,Time t2){
+			return new Time(t1.MSeconds-t2.MSeconds);
+			
+		}
+		public  static Time operator -(Time t1,int t2){
+			return new Time(t1.MSeconds-t2);
+			
+		}
 
 	}
 }

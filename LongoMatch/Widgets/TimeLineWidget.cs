@@ -68,7 +68,7 @@ namespace LongoMatch {
 					tr.CurrentFrame = value;
 				}
 				this.QueueDraw();
-				Console.WriteLine(this.GtkScrolledWindow.Hadjustment.Value);
+
 			}
 		}
 		

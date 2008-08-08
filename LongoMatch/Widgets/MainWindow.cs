@@ -224,14 +224,16 @@ namespace LongoMatch
 		
 		protected virtual void OnNewMark(int i, Time startTime, Time stopTime){
 			if (player != null && openedFileData != null){
-				long pos = player.CurrentTime;
-				long start = pos - startTime.MSeconds;
-				long stop = pos + stopTime.MSeconds;
-				long fStart = (start<0) ? 0 : start;
+				
+				Time pos = new Time((int)player.CurrentTime);
+				Time start = pos - startTime;
+				Time stop = pos + stopTime;
+				Time fStart = (start < new Time(0)) ? new Time(0) : start;
 				//La longitud tiene que ser en ms
-				long fStop = (stop > player.StreamLength*1000) ? player.StreamLength: stop;
+				Time length = new Time((int)player.StreamLength*1000);
+				Time fStop = (stop > length) ? length: stop;
 				Pixbuf miniature = this.playerbin1.CurrentThumbnail;
-				MediaTimeNode tn = openedFileData.AddTimeNode(i,new Time((int)fStart),new Time((int)fStop),miniature);				
+				MediaTimeNode tn = openedFileData.AddTimeNode(i,fStart, fStop,miniature);				
 				treewidget1.AddTimeNode(tn,i);
 				this.fileDataModified = true;
 				this.timelinewidget1.QueueDraw();

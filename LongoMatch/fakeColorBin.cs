@@ -25,6 +25,8 @@ using Gdk;
 namespace LongoMatch
 {
 	
+	// HACK This Class is a hack to prevent the colors selector's window appearing under
+	// the main window on Windows
 	
 	public partial class fakeColorBin : Gtk.Bin
 	{

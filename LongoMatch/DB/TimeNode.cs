@@ -50,8 +50,8 @@ namespace LongoMatch
 		{
 			this.name = name;
 			this.start = start;
-			if (stop.MSeconds<=start.MSeconds)
-				this.stop = new Time(start.MSeconds+500);
+			if (stop <= start )
+				this.stop = start+500;
 			else
 				this.stop = stop;
 			
@@ -88,8 +88,8 @@ namespace LongoMatch
 			}
 			
 			set{ 
-				if (this.Stop != null && value.MSeconds >= this.Stop.MSeconds)
-					this.start = new Time (stop.MSeconds-500);
+				if (this.Stop != null && value >= this.Stop)
+					this.start = stop-500;
 				else
 					this.start=value;
 			}
@@ -106,15 +106,15 @@ namespace LongoMatch
 			return stop;
 			}
 			set{ 
-				if (this.Start != null && value.MSeconds<=this.Start.MSeconds)
-					this.stop = new Time(start.MSeconds+500);
+				if (this.Start != null && value<=this.Start)
+					this.stop =start+500;
 				else
 					this.stop = value;
 			}
 		}
 		
 		public Time Duration {
-			get {return new Time (Stop.MSeconds-Start.MSeconds);}
+			get {return Stop-Start;}
 		}
 		
 		public uint Fps{

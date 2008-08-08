@@ -149,7 +149,6 @@ namespace LongoMatch
 			string name = sections.GetName(dataSection) + " " +count;
 			if (miniature != null){
 				char sep = Path.DirectorySeparatorChar;
-				Console.WriteLine(sep);
 				miniaturePath = MainClass.ThumbnailsDir() + sep +this.Title+ sep +"Section"+dataSection+"-"+name+
 					"-"+start.ToMSecondsString()+"-"+stop.ToMSecondsString()+".jpg";				
 				miniature.Save(miniaturePath,"jpeg");
