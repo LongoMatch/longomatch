@@ -1,0 +1,104 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{21A2B917-44CA-4E09-A6DA-9B4E2279C267}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>CesarPlayer</RootNamespace>
+    <AssemblyName>CesarPlayer</AssemblyName>
+    <TargetFrameworkVersion>Mono v2.0</TargetFrameworkVersion>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="BufferingHandler.cs" />
+    <Compile Include="ErrorHandler.cs" />
+    <Compile Include="GotRedirectHandler.cs" />
+    <Compile Include="GstError.cs" />
+    <Compile Include="GstPlayer.cs" />
+    <Compile Include="GstPlayerAspectRatio.cs" />
+    <Compile Include="GstPlayerMetadataType.cs" />
+    <Compile Include="GstUseType.cs" />
+    <Compile Include="gtk-gui\CesarPlayer.PlayerBin.cs">
+      <Link>CesarPlayer.PlayerBin.cs</Link>
+    </Compile>
+    <Compile Include="gtk-gui\CesarPlayer.VolumeWindow.cs">
+      <Link>CesarPlayer.VolumeWindow.cs</Link>
+    </Compile>
+    <Compile Include="gtk-gui\generated.cs">
+      <Link>generated.cs</Link>
+    </Compile>
+    <Compile Include="Handlers.cs" />
+    <Compile Include="IMetadataReader.cs" />
+    <Compile Include="IPlayer.cs" />
+    <Compile Include="MainWindow.cs" />
+    <Compile Include="ObjectManager.cs" />
+    <Compile Include="PlayerBin.cs" />
+    <Compile Include="PlayerMaker.cs" />
+    <Compile Include="SignalUtils.cs" />
+    <Compile Include="StateChangedHandler.cs" />
+    <Compile Include="TickHandler.cs" />
+    <Compile Include="TimeString.cs" />
+    <Compile Include="TitleChangeHandler.cs" />
+    <Compile Include="VolumeWindow.cs" />
+    <None Include="gtk-gui\gui.stetic">
+      <Link>gui.stetic</Link>
+    </None>
+    <None Include="gtk-gui\objects.xml">
+      <Link>objects.xml</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="atk-sharp">
+      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\atk-sharp\2.10.0.0__35e10195dab3c99f\atk-sharp.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="gdk-sharp">
+      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\gdk-sharp\2.10.0.0__35e10195dab3c99f\gdk-sharp.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="glib-sharp">
+      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\glib-sharp\2.10.0.0__35e10195dab3c99f\glib-sharp.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="gtk-sharp">
+      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\gtk-sharp\2.10.0.0__35e10195dab3c99f\gtk-sharp.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Mono.Posix">
+      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\Mono.Posix\2.0.0.0__0738eb9f132ed756\Mono.Posix.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\System\2.0.0.0__b77a5c561934e089\System.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(SharpDevelopBinPath)\SharpDevelop.Build.CSharp.targets" />
+</Project>
