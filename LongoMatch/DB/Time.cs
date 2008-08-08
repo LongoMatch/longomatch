@@ -24,7 +24,7 @@ namespace LongoMatch
 {
 	
 	
-	public class Time
+	public class Time :  IComparable
 	{
 		private int time;
 		private const int MS = 1000000 ; 
@@ -90,6 +90,18 @@ namespace LongoMatch
 		}
 		
 		
+		public int CompareTo(object obj) {
+			if(obj is Time) 
+			{
+				Time  otherTime = (Time) obj;
+				return this.MSeconds.CompareTo(otherTime.MSeconds);
+			}
+			else
+			{
+				throw new ArgumentException("Object is not a Temperature");
+			}    
+		}
+
 
 	}
 }

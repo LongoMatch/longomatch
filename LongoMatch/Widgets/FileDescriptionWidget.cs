@@ -180,28 +180,30 @@ namespace LongoMatch
 			                                                   FileChooserAction.Open,
 			                                                   "gtk-cancel",ResponseType.Cancel,
 			                                                   "gtk-open",ResponseType.Accept);
-		
-		
-			fChooser.SetCurrentFolder(System.Environment.GetEnvironmentVariable("HOME"));
+			
+			
+			fChooser.SetCurrentFolder(System.Environment.GetFolderPath(Environment.SpecialFolder.Personal));
 			if (fChooser.Run() == (int)ResponseType.Accept){
 				CesarPlayer.PlayerMaker pm = new CesarPlayer.PlayerMaker();
 				CesarPlayer.IMetadataReader reader = pm.getMetadataReader();
-				try{
-					reader.Open(fChooser.Filename);
-					int duration = (int)reader.GetMetadata(CesarPlayer.GstPlayerMetadataType.Duration);
-					int fps = (int) reader.GetMetadata(CesarPlayer.GstPlayerMetadataType.Fps);
-					bool hasVideo = (bool) reader.GetMetadata(CesarPlayer.GstPlayerMetadataType.HasVideo);
-					bool hasAudio = (bool) reader.GetMetadata(CesarPlayer.GstPlayerMetadataType.HasAudio);
-					
-					this.mFile = new MediaFile(fChooser.Filename,new Time(duration*1000),(ushort)fps,hasAudio,hasVideo);				
-					fileEntry.Text = fChooser.Filename;
-				}
-				catch (GLib.GException ex){
-					MessageDialog errorDialog = new MessageDialog(null,DialogFlags.Modal,MessageType.Error,ButtonsType.Ok,
-					                                              Catalog.GetString("Error Loading this file:\n")+ex.Message);
-					errorDialog.Run();
-					errorDialog.Destroy();
-				}
+					try{
+						reader.Open(fChooser.Filename);
+						int duration = (int)reader.GetMetadata(CesarPlayer.GstPlayerMetadataType.Duration);
+						int fps = (int) reader.GetMetadata(CesarPlayer.GstPlayerMetadataType.Fps);
+						bool hasVideo = (bool) reader.GetMetadata(CesarPlayer.GstPlayerMetadataType.HasVideo);
+						bool hasAudio = (bool) reader.GetMetadata(CesarPlayer.GstPlayerMetadataType.HasAudio);
+						
+						this.mFile = new MediaFile(fChooser.Filename,new Time(duration*1000),(ushort)fps,hasAudio,hasVideo);				
+						fileEntry.Text = fChooser.Filename;
+			
+					}
+					catch (GLib.GException ex){
+						MessageDialog errorDialog = new MessageDialog(null,DialogFlags.Modal,MessageType.Error,ButtonsType.Ok,
+						                                              Catalog.GetString("Error Loading this file:\n")+ex.Message);
+						errorDialog.Run();
+						errorDialog.Destroy();
+					}
+				
 			}
 		
 			fChooser.Destroy();
