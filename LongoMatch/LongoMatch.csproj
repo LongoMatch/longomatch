@@ -29,6 +29,10 @@
       <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\atk-sharp\2.10.0.0__35e10195dab3c99f\atk-sharp.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Db4objects.Db4o">
+      <HintPath>Db4objects.Db4o.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="gdk-sharp">
       <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\gdk-sharp\2.10.0.0__35e10195dab3c99f\gdk-sharp.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
@@ -57,5 +61,189 @@
       <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\System.Xml\2.0.0.0__b77a5c561934e089\System.Xml.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="DB\DataBase.cs">
+      <Link>DataBase.cs</Link>
+    </Compile>
+    <Compile Include="DB\FileData.cs">
+      <Link>FileData.cs</Link>
+    </Compile>
+    <Compile Include="DB\MediaFile.cs">
+      <Link>MediaFile.cs</Link>
+    </Compile>
+    <Compile Include="DB\Sections.cs">
+      <Link>Sections.cs</Link>
+    </Compile>
+    <Compile Include="gtk-gui\generated.cs">
+      <Link>generated.cs</Link>
+    </Compile>
+    <Compile Include="gtk-gui\LongoMatch.MainWindow.cs">
+      <Link>LongoMatch.MainWindow.cs</Link>
+    </Compile>
+    <Compile Include="gtk-gui\LongoMatch.Widgets.Component.ButtonsWidget.cs">
+      <Link>LongoMatch.Widgets.Component.ButtonsWidget.cs</Link>
+    </Compile>
+    <Compile Include="gtk-gui\LongoMatch.Widgets.Component.fakeColorBin.cs">
+      <Link>LongoMatch.Widgets.Component.fakeColorBin.cs</Link>
+    </Compile>
+    <Compile Include="gtk-gui\LongoMatch.Widgets.Component.FileDataListWidget.cs">
+      <Link>LongoMatch.Widgets.Component.FileDataListWidget.cs</Link>
+    </Compile>
+    <Compile Include="gtk-gui\LongoMatch.Widgets.Component.FileDescriptionWidget.cs">
+      <Link>LongoMatch.Widgets.Component.FileDescriptionWidget.cs</Link>
+    </Compile>
+    <Compile Include="gtk-gui\LongoMatch.Widgets.Component.PlayListWidget.cs">
+      <Link>LongoMatch.Widgets.Component.PlayListWidget.cs</Link>
+    </Compile>
+    <Compile Include="gtk-gui\LongoMatch.Widgets.Component.SectionsPropertiesWidget.cs">
+      <Link>LongoMatch.Widgets.Component.SectionsPropertiesWidget.cs</Link>
+    </Compile>
+    <Compile Include="gtk-gui\LongoMatch.Widgets.Component.TimeAdjustWidget.cs">
+      <Link>LongoMatch.Widgets.Component.TimeAdjustWidget.cs</Link>
+    </Compile>
+    <Compile Include="gtk-gui\LongoMatch.Widgets.Component.TimeLineWidget.cs">
+      <Link>LongoMatch.Widgets.Component.TimeLineWidget.cs</Link>
+    </Compile>
+    <Compile Include="gtk-gui\LongoMatch.Widgets.Component.TimeNodeProperties.cs">
+      <Link>LongoMatch.Widgets.Component.TimeNodeProperties.cs</Link>
+    </Compile>
+    <Compile Include="gtk-gui\LongoMatch.Widgets.Component.TreeWidget.cs">
+      <Link>LongoMatch.Widgets.Component.TreeWidget.cs</Link>
+    </Compile>
+    <Compile Include="gtk-gui\LongoMatch.Widgets.Dialog.DBManager.cs">
+      <Link>LongoMatch.Widgets.Dialog.DBManager.cs</Link>
+    </Compile>
+    <Compile Include="gtk-gui\LongoMatch.Widgets.Dialog.NewProjectDialog.cs">
+      <Link>LongoMatch.Widgets.Dialog.NewProjectDialog.cs</Link>
+    </Compile>
+    <Compile Include="gtk-gui\LongoMatch.Widgets.Dialog.NewSectionsTemplatesFiles.cs">
+      <Link>LongoMatch.Widgets.Dialog.NewSectionsTemplatesFiles.cs</Link>
+    </Compile>
+    <Compile Include="gtk-gui\LongoMatch.Widgets.Dialog.OpenProjectDialog.cs">
+      <Link>LongoMatch.Widgets.Dialog.OpenProjectDialog.cs</Link>
+    </Compile>
+    <Compile Include="gtk-gui\LongoMatch.Widgets.Dialog.SectionsTemplates.cs">
+      <Link>LongoMatch.Widgets.Dialog.SectionsTemplates.cs</Link>
+    </Compile>
+    <Compile Include="gtk-gui\LongoMatch.Widgets.Dialog.TemplateEditorDialog.cs">
+      <Link>LongoMatch.Widgets.Dialog.TemplateEditorDialog.cs</Link>
+    </Compile>
+    <Compile Include="gtk-gui\LongoMatch.Widgets.Popup.CalendarPopup.cs">
+      <Link>LongoMatch.Widgets.Popup.CalendarPopup.cs</Link>
+    </Compile>
+    <Compile Include="Handlers\Handlers.cs">
+      <Link>Handlers.cs</Link>
+    </Compile>
+    <Compile Include="IO\PlayListReader.cs">
+      <Link>PlayListReader.cs</Link>
+    </Compile>
+    <Compile Include="IO\SectionsReader.cs">
+      <Link>SectionsReader.cs</Link>
+    </Compile>
+    <Compile Include="IO\SectionsWriter.cs">
+      <Link>SectionsWriter.cs</Link>
+    </Compile>
+    <Compile Include="IO\XMLReader.cs">
+      <Link>XMLReader.cs</Link>
+    </Compile>
+    <Compile Include="Main.cs" />
+    <Compile Include="PlayList\IPlayList.cs">
+      <Link>IPlayList.cs</Link>
+    </Compile>
+    <Compile Include="PlayList\PlayList.cs">
+      <Link>PlayList.cs</Link>
+    </Compile>
+    <Compile Include="Time\MediaTimeNode.cs">
+      <Link>MediaTimeNode.cs</Link>
+    </Compile>
+    <Compile Include="Time\PixbufTimeNode.cs">
+      <Link>PixbufTimeNode.cs</Link>
+    </Compile>
+    <Compile Include="Time\PlayListTimeNode.cs">
+      <Link>PlayListTimeNode.cs</Link>
+    </Compile>
+    <Compile Include="Time\SectionsTimeNode.cs">
+      <Link>SectionsTimeNode.cs</Link>
+    </Compile>
+    <Compile Include="Time\Time.cs">
+      <Link>Time.cs</Link>
+    </Compile>
+    <Compile Include="Time\TimeNode.cs">
+      <Link>TimeNode.cs</Link>
+    </Compile>
+    <Compile Include="Widgets\ButtonsWidget.cs">
+      <Link>ButtonsWidget.cs</Link>
+    </Compile>
+    <Compile Include="Widgets\CalendarPopup.cs">
+      <Link>CalendarPopup.cs</Link>
+    </Compile>
+    <Compile Include="Widgets\DBManager.cs">
+      <Link>DBManager.cs</Link>
+    </Compile>
+    <Compile Include="Widgets\fakeColorBin.cs">
+      <Link>fakeColorBin.cs</Link>
+    </Compile>
+    <Compile Include="Widgets\FileDataListWidget.cs">
+      <Link>FileDataListWidget.cs</Link>
+    </Compile>
+    <Compile Include="Widgets\FileDescriptionWidget.cs">
+      <Link>FileDescriptionWidget.cs</Link>
+    </Compile>
+    <Compile Include="Widgets\MainWindow.cs">
+      <Link>MainWindow.cs</Link>
+    </Compile>
+    <Compile Include="Widgets\NewProjectDialog.cs">
+      <Link>NewProjectDialog.cs</Link>
+    </Compile>
+    <Compile Include="Widgets\NewSectionsTemplatesFiles.cs">
+      <Link>NewSectionsTemplatesFiles.cs</Link>
+    </Compile>
+    <Compile Include="Widgets\OpenProjectDialog.cs">
+      <Link>OpenProjectDialog.cs</Link>
+    </Compile>
+    <Compile Include="Widgets\PlayListTreeView.cs">
+      <Link>PlayListTreeView.cs</Link>
+    </Compile>
+    <Compile Include="Widgets\PlayListWidget.cs">
+      <Link>PlayListWidget.cs</Link>
+    </Compile>
+    <Compile Include="Widgets\SectionsPropertiesWidget.cs">
+      <Link>SectionsPropertiesWidget.cs</Link>
+    </Compile>
+    <Compile Include="Widgets\SectionsTemplates.cs">
+      <Link>SectionsTemplates.cs</Link>
+    </Compile>
+    <Compile Include="Widgets\TemplateEditorDialog.cs">
+      <Link>TemplateEditorDialog.cs</Link>
+    </Compile>
+    <Compile Include="Widgets\TimeAdjustWidget.cs">
+      <Link>TimeAdjustWidget.cs</Link>
+    </Compile>
+    <Compile Include="Widgets\TimeLineWidget.cs">
+      <Link>TimeLineWidget.cs</Link>
+    </Compile>
+    <Compile Include="Widgets\TimeNodeProperties.cs">
+      <Link>TimeNodeProperties.cs</Link>
+    </Compile>
+    <Compile Include="Widgets\TimeNodesTreeView.cs">
+      <Link>TimeNodesTreeView.cs</Link>
+    </Compile>
+    <Compile Include="Widgets\TimeReferenceWidget.cs">
+      <Link>TimeReferenceWidget.cs</Link>
+    </Compile>
+    <Compile Include="Widgets\TimeScale.cs">
+      <Link>TimeScale.cs</Link>
+    </Compile>
+    <Compile Include="Widgets\TreeWidget.cs">
+      <Link>TreeWidget.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CesarPlayer\CesarPlayer.csproj">
+      <Project>{21A2B917-44CA-4E09-A6DA-9B4E2279C267}</Project>
+      <Name>CesarPlayer</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
