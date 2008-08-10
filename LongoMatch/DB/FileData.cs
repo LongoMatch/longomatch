@@ -47,12 +47,7 @@ namespace LongoMatch.DB
 		private int visitorGoals;
 		
 		private DateTime matchDate;
-
-
-		private List<TimeNode> 	dataSection1, dataSection2, dataSection3, dataSection4, dataSection5, dataSection6, dataSection7, dataSection8,
-					dataSection9, dataSection10, dataSection11, dataSection12, dataSection13, dataSection14, dataSection15, dataSection16,
-					dataSection17, dataSection18, dataSection19, dataSection20;
-
+		
 		private Sections sections;
 
 		private List<TimeNode>[] dataSectionArray;
@@ -61,6 +56,7 @@ namespace LongoMatch.DB
 		
 		public FileData(MediaFile file, String localName, String visitorName, int localGoals,
 		                int visitorGoals, DateTime matchDate, Sections sections) {
+			List<TimeNode> tnArray;
 			
 			this.file = file;
 			this.localName = localName;
@@ -70,49 +66,13 @@ namespace LongoMatch.DB
 			this.matchDate = matchDate;		
 			this.sections = sections;
 			dataSectionArray = new List<TimeNode>[20];
+			
+			for (int i=0;i<20;i++){
+				tnArray = new List<TimeNode>();
+				dataSectionArray[i]=tnArray;
+			}
 
 		
-			dataSection1 = new List<TimeNode>();
-			dataSectionArray[0] = dataSection1;
-			dataSection2 = new List<TimeNode>();
-			dataSectionArray[1] = dataSection2;
-			dataSection3 = new List<TimeNode>();
-			dataSectionArray[2] = dataSection3;
-			dataSection4 = new List<TimeNode>();
-			dataSectionArray[3] = dataSection4;
-			dataSection5 = new List<TimeNode>();
-			dataSectionArray[4] = dataSection5;
-			dataSection6 = new List<TimeNode>();
-			dataSectionArray[5] = dataSection6;
-			dataSection7 = new List<TimeNode>();
-			dataSectionArray[6] = dataSection7;
-			dataSection8 = new List<TimeNode>();
-			dataSectionArray[7] = dataSection8;
-			dataSection9 = new List<TimeNode>();
-			dataSectionArray[8] = dataSection9;
-			dataSection10 = new List<TimeNode>();
-			dataSectionArray[9] = dataSection10;
-			dataSection11 = new List<TimeNode>();
-			dataSectionArray[10] = dataSection11;
-			dataSection12 = new List<TimeNode>();
-			dataSectionArray[11] = dataSection12;
-			dataSection13 = new List<TimeNode>();
-			dataSectionArray[12] = dataSection13;
-			dataSection14 = new List<TimeNode>();
-			dataSectionArray[13] = dataSection14;
-			dataSection15 = new List<TimeNode>();
-			dataSectionArray[14] = dataSection15;
-			dataSection16 = new List<TimeNode>();
-			dataSectionArray[15] = dataSection16;
-			dataSection17 = new List<TimeNode>();
-			dataSectionArray[16] = dataSection17;
-			dataSection18 = new List<TimeNode>();
-			dataSectionArray[17] = dataSection18;
-			dataSection19 = new List<TimeNode>();
-			dataSectionArray[18] = dataSection19;
-			dataSection20 = new List<TimeNode>();
-			dataSectionArray[19] = dataSection20;
-			
 			
 			this.Title = System.IO.Path.GetFileNameWithoutExtension(this.file.FilePath);
 			

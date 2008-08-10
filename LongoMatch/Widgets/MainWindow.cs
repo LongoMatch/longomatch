@@ -72,7 +72,7 @@ namespace LongoMatch
 					
 					treewidget1.FileData=fData;						
 					this.timelinewidget1.FileData = fData;
-					this.buttonswidget1.SetSections(fData.Sections);	
+					this.buttonswidget1.Sections = fData.Sections;	
 					if (fData.File.HasVideo){
 						player.LogoMode = false;
 						this.FullScreenAction.Sensitive = true;
@@ -265,7 +265,7 @@ namespace LongoMatch
 				}	
 			}	
 			else if (tNode is SectionsTimeNode){
-				this.buttonswidget1.SetSections(openedFileData.Sections);
+				this.buttonswidget1.Sections = openedFileData.Sections;
 			}
 			this.fileDataModified = true;			
 		}

@@ -46,34 +46,38 @@ namespace LongoMatch.Widgets.Component
 
 		}
 		
-		public void SetSections(Sections sections){
-			this.sections = sections;
-			this.SetNames(sections.GetSectionsNames());	
+		public Sections Sections{
+			set{
+				this.sections = value;
+				this.Names = value.GetSectionsNames();	
+			}
 			
 		}
 			
-		public void SetNames (String[] names){
+		public String[] Names {
 			
-			button1.Label = names[0];
-			button2.Label = names[1];
-			button3.Label = names[2];
-			button4.Label = names[3];
-			button5.Label = names[4];
-			button6.Label = names[5];
-			button7.Label = names[6];
-			button8.Label = names[7];
-			button9.Label = names[8];
-			button10.Label = names[9];
-			button11.Label = names[10];
-			button12.Label = names[11];
-			button13.Label = names[12];
-			button14.Label = names[13];
-			button15.Label = names[14];
-			button16.Label = names[15];
-			button17.Label = names[16];
-			button18.Label = names[17];
-			button19.Label = names[18];
-			button20.Label = names[19];			
+			set{
+				button1.Label = value[0];
+				button2.Label = value[1];
+				button3.Label = value[2];
+				button4.Label = value[3];
+				button5.Label = value[4];
+				button6.Label = value[5];
+				button7.Label = value[6];
+				button8.Label = value[7];
+				button9.Label = value[8];
+				button10.Label = value[9];
+				button11.Label = value[10];
+				button12.Label = value[11];
+				button13.Label = value[12];
+				button14.Label = value[13];
+				button15.Label = value[14];
+				button16.Label = value[15];
+				button17.Label = value[16];
+				button18.Label = value[17];
+				button19.Label = value[18];
+				button20.Label = value[19];	
+			}
 		}
 		
 		

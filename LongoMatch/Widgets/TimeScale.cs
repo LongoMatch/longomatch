@@ -233,7 +233,6 @@ namespace LongoMatch.Widgets.Component
 				foreach (MediaTimeNode tn in list){
 					int pos = (int) (evnt.X*pixelRatio);
 					if (tn.HasFrame(pos) ){	
-						// TODO Add a delete menu for all the 
 						MenuItem delete = new MenuItem(Catalog.GetString("Delete "+tn.Name));					
 						delete.Activated += new EventHandler(OnDelete);
 						delete.Show();
