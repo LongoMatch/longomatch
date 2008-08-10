@@ -35,6 +35,8 @@ namespace LongoMatch.IO
 
 		
 		public static void CreateNewTemplate(string templateName){
+			
+			
 			XmlDocument configXml = new XmlDocument();
 			string fConfig = Path.Combine (MainClass.TemplatesDir(), templateName);
 			 System.Text.StringBuilder sb = new System.Text.StringBuilder();
