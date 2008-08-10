@@ -103,8 +103,9 @@ namespace LongoMatch.IO
 		public Sections GetSections(){
 			Sections sections = new Sections(20);
 			this.GetStartTimes();
+		
 			sections.SetTimeNodes(this.GetNames(),this.GetStartTimes(),this.GetStopTimes(),this.GetVisibility());
-			sections.SetColors(this.GetColors());
+			sections.Colors = this.GetColors();
 			return sections;
 		}
 		

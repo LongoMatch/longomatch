@@ -46,18 +46,16 @@ namespace LongoMatch
 		}
 		
 		public PlayList(string file)
-		{
-			
-				
+		{				
 			ser = new XmlSerializer(typeof(List<PlayListTimeNode>),new Type[] {typeof(PlayListTimeNode)});
+		
 			//For new Play List
 			if (!System.IO.File.Exists(file)){
 			    list = new List<PlayListTimeNode>();
 				filename = file;
 			}
 			else
-				this.Load(file);
-			
+				this.Load(file);			
 		}
 		
 		public void Load(string file){

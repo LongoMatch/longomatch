@@ -29,7 +29,7 @@ namespace LongoMatch.Widgets.Component {
 		public event PlayListNodeAddedHandler PlayListNodeAdded;
 		
 		private TimeScale[] tsArray;
-		private List<TimeNode>[] tnArray;
+		private List<MediaTimeNode>[] tnArray;
 		private Sections sections;
 		private TimeReferenceWidget tr;
 		private uint frames;

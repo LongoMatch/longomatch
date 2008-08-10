@@ -39,7 +39,7 @@ namespace LongoMatch.Widgets.Component
 		private uint pixelRatio=1;
 		MediaTimeNode candidateTN;
 		private Cairo.Color color;
-		private List<TimeNode> list;
+		private List<MediaTimeNode> list;
 		private bool candidateStart;
 		private bool movingLimit;
 		private TimeNode selected=null;
@@ -53,7 +53,7 @@ namespace LongoMatch.Widgets.Component
 		public event TimeNodeDeletedHandler TimeNodeDeleted;
 
 		
-		public TimeScale(List<TimeNode> list,uint frames,Gdk.Color color)
+		public TimeScale(List<MediaTimeNode> list,uint frames,Gdk.Color color)
 		{			
 			this.frames = frames;	
 			this.list = list;				

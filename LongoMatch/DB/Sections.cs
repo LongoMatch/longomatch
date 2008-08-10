@@ -69,20 +69,16 @@ namespace LongoMatch.DB
 			}
 			
 		}
-		public void SetColors(Color[] colors){
-			this.colorsArray = colors;
-			
-		}
 		
-		public Color[] GetColors(){
-			return this.colorsArray;
-		}
-		
-		
-		public void SetTimeNodes(SectionsTimeNode[] timeNodesArray){
-			this.timeNodesArray = timeNodesArray;
+		public Color[] Colors{
 			
-			
+			set{this.colorsArray = value;}
+			get{return this.colorsArray;}			
+		}		
+	
+		
+		public SectionsTimeNode[] SectionsTimeNodes{
+			set{this.timeNodesArray = value;}			
 		}
 		
 		public string[] GetSectionsNames(){

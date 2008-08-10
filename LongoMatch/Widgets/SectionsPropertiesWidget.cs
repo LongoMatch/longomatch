@@ -68,8 +68,8 @@ namespace LongoMatch.Widgets.Component
 				timeNodesArray[i]=tndArray[i].TimeNode;
 				colorsArray[i] = tndArray[i].Color;
 			}
-			sections.SetColors(colorsArray);
-			sections.SetTimeNodes(timeNodesArray);
+			sections.Colors = colorsArray;
+			sections.SectionsTimeNodes = timeNodesArray;
 			return sections;
 		}
 	}

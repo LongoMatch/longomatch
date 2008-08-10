@@ -50,13 +50,13 @@ namespace LongoMatch.DB
 		
 		private Sections sections;
 
-		private List<TimeNode>[] dataSectionArray;
+		private List<MediaTimeNode>[] dataSectionArray;
 		
 	
 		
 		public FileData(MediaFile file, String localName, String visitorName, int localGoals,
 		                int visitorGoals, DateTime matchDate, Sections sections) {
-			List<TimeNode> tnArray;
+			List<MediaTimeNode> tnArray;
 			
 			this.file = file;
 			this.localName = localName;
@@ -65,10 +65,10 @@ namespace LongoMatch.DB
 			this.visitorGoals = visitorGoals;
 			this.matchDate = matchDate;		
 			this.sections = sections;
-			dataSectionArray = new List<TimeNode>[20];
+			dataSectionArray = new List<MediaTimeNode>[20];
 			
 			for (int i=0;i<20;i++){
-				tnArray = new List<TimeNode>();
+				tnArray = new List<MediaTimeNode>();
 				dataSectionArray[i]=tnArray;
 			}
 
@@ -105,7 +105,7 @@ namespace LongoMatch.DB
 		public MediaTimeNode AddTimeNode(int dataSection, Time start, Time stop,Pixbuf miniature) {
 			MediaTimeNode tn ;
 			string miniaturePath = null;
-			List<TimeNode> al= dataSectionArray[dataSection];
+			List<MediaTimeNode> al= dataSectionArray[dataSection];
 			int count= al.Count+1;
 			string name = sections.GetName(dataSection) + " " +count;
 			if (miniature != null){
@@ -139,7 +139,7 @@ namespace LongoMatch.DB
 			return dataFileListStore;
 		}
 
-		public List<TimeNode>[] GetDataArray() {
+		public List<MediaTimeNode>[] GetDataArray() {
 			return dataSectionArray;
 		}
 

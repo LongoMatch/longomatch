@@ -72,7 +72,6 @@
     <File name="Time/SectionsTimeNode.cs" subtype="Code" buildaction="Compile" />
     <File name="Time/TimeNode.cs" subtype="Code" buildaction="Compile" />
     <File name="Time/Time.cs" subtype="Code" buildaction="Compile" />
-    <File name="IO/PlayListReader.cs" subtype="Code" buildaction="Compile" />
     <File name="Time/PlayListTimeNode.cs" subtype="Code" buildaction="Compile" />
     <File name="gtk-gui/LongoMatch.Widgets.Component.ButtonsWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="gtk-gui/LongoMatch.Widgets.Component.FileDataListWidget.cs" subtype="Code" buildaction="Compile" />

@@ -62,7 +62,7 @@ namespace LongoMatch.Widgets.Component
 			set{ 
 				this.fileData = value;
 				treeview.Model = this.fileData.GetModel();
-				treeview.Colors = this.fileData.Sections.GetColors();
+				treeview.Colors = this.fileData.Sections.Colors;
 			}
 			
 		}
