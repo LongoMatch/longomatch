@@ -1,262 +1,32 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" xmlns:Conversion="urn:Conversion">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <ProjectGuid>{64BBF35C-C210-4869-B93B-924234A32C0D}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{91D4FB4D-80A5-43A7-B4FC-55FCD382D31D}</ProjectGuid>
-    <AssemblyName>LongoMatch</AssemblyName>
     <OutputType>Exe</OutputType>
-    <WarningLevel>4</WarningLevel>
-    <NoStdLib>False</NoStdLib>
-    <NoConfig />
-    <RunPostBuildEvent>OnSuccessfulBuild</RunPostBuildEvent>
-    <PreBuildEvent />
-    <PostBuildEvent />
-    <TargetFrameworkVersion>Mono v2.0</TargetFrameworkVersion>
+    <RootNamespace>LongoMatch</RootNamespace>
+    <AssemblyName>LongoMatch</AssemblyName>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>false</DebugSymbols>
-    <Optimize>True</Optimize>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <DebugType>None</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugSymbols />
-    <Optimize>True</Optimize>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
-    <DefineConstants />
-    <OutputPath>bin/Release\</OutputPath>
-    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <BaseAddress>4194304</BaseAddress>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <FileAlignment>4096</FileAlignment>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="DB\DB.cs">
-      <Link>DB.cs</Link>
-    </Compile>
-    <Compile Include="DB\FileData.cs">
-      <Link>FileData.cs</Link>
-    </Compile>
-    <Compile Include="DB\MediaFile.cs">
-      <Link>MediaFile.cs</Link>
-    </Compile>
-    <Compile Include="DB\MediaTimeNode.cs">
-      <Link>MediaTimeNode.cs</Link>
-    </Compile>
-    <Compile Include="DB\PixbufTimeNode.cs">
-      <Link>PixbufTimeNode.cs</Link>
-    </Compile>
-    <Compile Include="DB\Sections.cs">
-      <Link>Sections.cs</Link>
-    </Compile>
-    <Compile Include="DB\SectionsTimeNode.cs">
-      <Link>SectionsTimeNode.cs</Link>
-    </Compile>
-    <Compile Include="DB\Time.cs">
-      <Link>Time.cs</Link>
-    </Compile>
-    <Compile Include="DB\TimeNode.cs">
-      <Link>TimeNode.cs</Link>
-    </Compile>
-    <Compile Include="fakeColorBin.cs" />
-    <Compile Include="gtk-gui\generated.cs">
-      <Link>generated.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.ButtonsWidget.cs">
-      <Link>LongoMatch.ButtonsWidget.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.CalendarPopup.cs">
-      <Link>LongoMatch.CalendarPopup.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.CapturePropertiesWidget.cs">
-      <Link>LongoMatch.CapturePropertiesWidget.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.DBManager.cs">
-      <Link>LongoMatch.DBManager.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.fakeColorBin.cs">
-      <Link>LongoMatch.fakeColorBin.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.FileDataListWidget.cs">
-      <Link>LongoMatch.FileDataListWidget.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.FileDescriptionWidget.cs">
-      <Link>LongoMatch.FileDescriptionWidget.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.MainWindow.cs">
-      <Link>LongoMatch.MainWindow.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.NewProjectDialog.cs">
-      <Link>LongoMatch.NewProjectDialog.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.NewSectionsTemplatesFiles.cs">
-      <Link>LongoMatch.NewSectionsTemplatesFiles.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.OpenProjectDialog.cs">
-      <Link>LongoMatch.OpenProjectDialog.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.PlayListWidget.cs">
-      <Link>LongoMatch.PlayListWidget.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.PrecisionWidget.cs">
-      <Link>LongoMatch.PrecisionWidget.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.SectionsPropertiesWidget.cs">
-      <Link>LongoMatch.SectionsPropertiesWidget.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.SectionsTemplates.cs">
-      <Link>LongoMatch.SectionsTemplates.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.TemplateEditorDialog.cs">
-      <Link>LongoMatch.TemplateEditorDialog.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.TimeAdjustWidget.cs">
-      <Link>LongoMatch.TimeAdjustWidget.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.TimeLineWidget.cs">
-      <Link>LongoMatch.TimeLineWidget.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.TimeNodeProperties.cs">
-      <Link>LongoMatch.TimeNodeProperties.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.TreeWidget.cs">
-      <Link>LongoMatch.TreeWidget.cs</Link>
-    </Compile>
-    <Compile Include="Handlers\Handlers.cs">
-      <Link>Handlers.cs</Link>
-    </Compile>
-    <Compile Include="Handlers\InChangedHandler.cs">
-      <Link>InChangedHandler.cs</Link>
-    </Compile>
-    <Compile Include="Handlers\OutChangedHandler.cs">
-      <Link>OutChangedHandler.cs</Link>
-    </Compile>
-    <Compile Include="Handlers\PosChangedHandler.cs">
-      <Link>PosChangedHandler.cs</Link>
-    </Compile>
-    <Compile Include="IO\SectionsReader.cs">
-      <Link>SectionsReader.cs</Link>
-    </Compile>
-    <Compile Include="IO\SectionsWriter.cs">
-      <Link>SectionsWriter.cs</Link>
-    </Compile>
-    <Compile Include="IO\TimeString.cs">
-      <Link>TimeString.cs</Link>
-    </Compile>
-    <Compile Include="IO\XMLReader.cs">
-      <Link>XMLReader.cs</Link>
-    </Compile>
-    <Compile Include="Main.cs" />
-    <Compile Include="ObjectManager.cs" />
-    <Compile Include="PlayList\IPlayList.cs">
-      <Link>IPlayList.cs</Link>
-    </Compile>
-    <Compile Include="PlayList\PlayList.cs">
-      <Link>PlayList.cs</Link>
-    </Compile>
-    <Compile Include="PlayList\PlayListReader.cs">
-      <Link>PlayListReader.cs</Link>
-    </Compile>
-    <Compile Include="PlayList\PlayListTimeNode.cs">
-      <Link>PlayListTimeNode.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\ButtonsWidget.cs">
-      <Link>ButtonsWidget.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\CalendarPopup.cs">
-      <Link>CalendarPopup.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\CapturePropertiesWidget.cs">
-      <Link>CapturePropertiesWidget.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\DBManager.cs">
-      <Link>DBManager.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\FileDataListWidget.cs">
-      <Link>FileDataListWidget.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\FileDescriptionWidget.cs">
-      <Link>FileDescriptionWidget.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\GtkTimescale.cs">
-      <Link>GtkTimescale.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\MainWindow.cs">
-      <Link>MainWindow.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\NewProjectDialog.cs">
-      <Link>NewProjectDialog.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\NewSectionsTemplatesFiles.cs">
-      <Link>NewSectionsTemplatesFiles.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\OpenProjectDialog.cs">
-      <Link>OpenProjectDialog.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\PlayListTreeView.cs">
-      <Link>PlayListTreeView.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\PlayListWidget.cs">
-      <Link>PlayListWidget.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\PrecisionWidget.cs">
-      <Link>PrecisionWidget.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\SectionsPropertiesWidget.cs">
-      <Link>SectionsPropertiesWidget.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\SectionsTemplates.cs">
-      <Link>SectionsTemplates.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\TemplateEditorDialog.cs">
-      <Link>TemplateEditorDialog.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\TimeAdjustWidget.cs">
-      <Link>TimeAdjustWidget.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\TimeLineWidget.cs">
-      <Link>TimeLineWidget.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\TimeNodeProperties.cs">
-      <Link>TimeNodeProperties.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\TimeNodesTreeView.cs">
-      <Link>TimeNodesTreeView.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\TimeReferenceWidget.cs">
-      <Link>TimeReferenceWidget.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\TimeScale.cs">
-      <Link>TimeScale.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\TreeWidget.cs">
-      <Link>TreeWidget.cs</Link>
-    </Compile>
-    <None Include="images\background.png">
-      <Link>background.png</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="lgmlogo.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
     <Reference Include="atk-sharp">
       <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\atk-sharp\2.10.0.0__35e10195dab3c99f\atk-sharp.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="Db4objects.Db4o">
-      <HintPath>Db4objects.Db4o.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="gdk-sharp">
@@ -287,11 +57,5 @@
       <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\System.Xml\2.0.0.0__b77a5c561934e089\System.Xml.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <ProjectReference Include="..\CesarPlayer\CesarPlayer.csproj">
-      <Project>{08597636-2E44-41D1-86CC-4FB9E637AEAE}</Project>
-      <Name>CesarPlayer</Name>
-    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(SharpDevelopBinPath)\SharpDevelop.Build.CSharp.targets" />
 </Project>
