@@ -116,31 +116,31 @@ namespace CesarPlayer
             this.mediaPosition = (IMediaPosition)this.graphBuilder;
 
           
-        	    // Query for video interfaces, which may not be relevant for audio files
-            	this.videoWindow = this.graphBuilder as IVideoWindow;
-            	this.basicVideo = this.graphBuilder as IBasicVideo;
-
-           	 	// Query for audio interfaces, which may not be relevant for video-only files
-           	 	this.basicAudio = this.graphBuilder as IBasicAudio;
-
-
-            	// Have the graph signal event via window callbacks for performance
-            	hr = this.mediaEventEx.SetNotifyWindow(this.Handle, WMGraphNotify, IntPtr.Zero);
-            	DsError.ThrowExceptionForHR(hr);
-
-            	// Setup the video window
-            	hr = this.videoWindow.put_Owner(this.videoPanel.Handle);
-            	//this.gtkDrawingWindow = new GtkWin32EmbedWidget ( this.userControl);
-				Gdk.Window b = Gdk.Window.ForeignNew((uint)this.Handle); 
-				b.Reparent(this.gtkDrawingWindow.GdkWindow,0,0);
-				b.Show();
-             
+			// Query for video interfaces, which may not be relevant for audio files
+			this.videoWindow = this.graphBuilder as IVideoWindow;
+			this.basicVideo = this.graphBuilder as IBasicVideo;
 			
-            DsError.ThrowExceptionForHR(hr);
-
-            hr = this.videoWindow.put_WindowStyle(WindowStyle.Child | WindowStyle.ClipSiblings | WindowStyle.ClipChildren);
-            DsError.ThrowExceptionForHR(hr);
-
+			// Query for audio interfaces, which may not be relevant for video-only files
+			this.basicAudio = this.graphBuilder as IBasicAudio;
+			
+			
+			// Have the graph signal event via window callbacks for performance
+			hr = this.mediaEventEx.SetNotifyWindow(this.Handle, WMGraphNotify, IntPtr.Zero);
+			DsError.ThrowExceptionForHR(hr);
+			
+			// Setup the video window
+			hr = this.videoWindow.put_Owner(this.videoPanel.Handle);
+			//this.gtkDrawingWindow = new GtkWin32EmbedWidget ( this.userControl);
+			Gdk.Window b = Gdk.Window.ForeignNew((uint)this.Handle); 
+			b.Reparent(this.gtkDrawingWindow.GdkWindow,0,0);
+			b.Show();
+			
+			
+			DsError.ThrowExceptionForHR(hr);
+			
+			hr = this.videoWindow.put_WindowStyle(WindowStyle.Child | WindowStyle.ClipSiblings | WindowStyle.ClipChildren);
+			DsError.ThrowExceptionForHR(hr);
+			
             // Read the default video size and get the aspect ratio
             int lWidth;
             int lHeight;
@@ -158,9 +158,9 @@ namespace CesarPlayer
             getDuration();
 
             // Run the graph to play the media file
-            if (this.type != UseType.Metadata){
+            
             	this.Play();
-            }
+            
         }
 
 
