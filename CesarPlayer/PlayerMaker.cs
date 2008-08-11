@@ -39,15 +39,16 @@ namespace CesarPlayer
 			
 			switch (oS.Platform) { 
 			 case PlatformID.Unix:
-				return new GstPlayer(width,height,BvwUseType.Video);
+				return new GstPlayer(width,height,UseType.Video);
 				
 				
 			case PlatformID.Win32NT:
-				return new DSPlayer();
+				//return new GstPlayer(width,height,UseType.Video);
+				return new DSPlayer(UseType.Video);
 				
 				
 			 default:
-				return new GstPlayer(width,height,BvwUseType.Video);
+				return new GstPlayer(width,height,UseType.Video);
 				
 			}
 		
@@ -57,13 +58,14 @@ namespace CesarPlayer
 			
 			switch (oS.Platform) { 
 			 case PlatformID.Unix:
-				return new GstPlayer(1,1,BvwUseType.Metadata);
+				return new GstPlayer(1,1,UseType.Metadata);
 				
 			case PlatformID.Win32NT:
-				return new DSPlayer();
+				return new GstPlayer(1,1,UseType.Metadata);
+				//return new DSPlayer(UseType.Metadata);
 				
 			 default:
-				return new GstPlayer(1,1,BvwUseType.Metadata);
+				return new GstPlayer(1,1,UseType.Metadata);
 			}
 		}
 	}

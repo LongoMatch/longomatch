@@ -25,7 +25,7 @@ namespace CesarPlayer {
 		[DllImport("libcesarplayer.dll")]
 		static extern IntPtr bacon_video_widget_new(int width, int height, int type, out IntPtr error);
 
-		public GstPlayer (int width, int height, CesarPlayer.BvwUseType type) : base (IntPtr.Zero)
+		public GstPlayer (int width, int height, CesarPlayer.UseType type) : base (IntPtr.Zero)
 		{
 			
 			

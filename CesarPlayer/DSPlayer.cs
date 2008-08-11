@@ -64,6 +64,8 @@ namespace CesarPlayer
         private double currentPlaybackRate = 1.0;
         private IntPtr hDrain = IntPtr.Zero;
 
+        private UseType type;
+        
 		private Widget gtkDrawingWindow;
 		private System.Windows.Forms.Panel videoPanel;
 
@@ -76,8 +78,10 @@ namespace CesarPlayer
 			// Reset status variables
 			this.currentState = PlayState.Stopped;
 			StateChangedArgs args = new StateChangedArgs();
-			args.Playing = false ;
-			this.StateChanged((object)this,args);
+			args.Args = new object[1];
+			args.Args[0] = false ;
+			if (this.StateChanged != null)
+				this.StateChanged((object)this,args);
 			this.currentVolume = VolumeFull;
 			
 			//Set file name				
@@ -111,25 +115,26 @@ namespace CesarPlayer
             this.mediaSeeking = (IMediaSeeking)this.graphBuilder;
             this.mediaPosition = (IMediaPosition)this.graphBuilder;
 
-            // Query for video interfaces, which may not be relevant for audio files
-            this.videoWindow = this.graphBuilder as IVideoWindow;
-            this.basicVideo = this.graphBuilder as IBasicVideo;
+          
+        	    // Query for video interfaces, which may not be relevant for audio files
+            	this.videoWindow = this.graphBuilder as IVideoWindow;
+            	this.basicVideo = this.graphBuilder as IBasicVideo;
 
-            // Query for audio interfaces, which may not be relevant for video-only files
-            this.basicAudio = this.graphBuilder as IBasicAudio;
+           	 	// Query for audio interfaces, which may not be relevant for video-only files
+           	 	this.basicAudio = this.graphBuilder as IBasicAudio;
 
 
-            // Have the graph signal event via window callbacks for performance
-            hr = this.mediaEventEx.SetNotifyWindow(this.Handle, WMGraphNotify, IntPtr.Zero);
-            DsError.ThrowExceptionForHR(hr);
+            	// Have the graph signal event via window callbacks for performance
+            	hr = this.mediaEventEx.SetNotifyWindow(this.Handle, WMGraphNotify, IntPtr.Zero);
+            	DsError.ThrowExceptionForHR(hr);
 
-            // Setup the video window
-            hr = this.videoWindow.put_Owner(this.videoPanel.Handle);
-            //this.gtkDrawingWindow = new GtkWin32EmbedWidget ( this.userControl);
-			Gdk.Window b = Gdk.Window.ForeignNew((uint)this.Handle); 
-			b.Reparent(this.gtkDrawingWindow.GdkWindow,0,0);
-			b.Show();
-			
+            	// Setup the video window
+            	hr = this.videoWindow.put_Owner(this.videoPanel.Handle);
+            	//this.gtkDrawingWindow = new GtkWin32EmbedWidget ( this.userControl);
+				Gdk.Window b = Gdk.Window.ForeignNew((uint)this.Handle); 
+				b.Reparent(this.gtkDrawingWindow.GdkWindow,0,0);
+				b.Show();
+             
 			
             DsError.ThrowExceptionForHR(hr);
 
@@ -153,7 +158,9 @@ namespace CesarPlayer
             getDuration();
 
             // Run the graph to play the media file
-            this.Play();
+            if (this.type != UseType.Metadata){
+            	this.Play();
+            }
         }
 
 
@@ -299,8 +306,10 @@ namespace CesarPlayer
                 if (this.mediaControl.Run() >= 0){
                     this.currentState = PlayState.Running;
 					StateChangedArgs args = new StateChangedArgs();
-					args.Playing = true ;
-					this.StateChanged((object)this,args);
+					args.Args = new object[1];
+					args.Args[0] = true ;
+					if (this.StateChanged != null)						
+						this.StateChanged((object)this,args);
 
 					// Start Timer
 					timer.Start();
@@ -311,7 +320,9 @@ namespace CesarPlayer
                 if (this.mediaControl.Pause() >= 0){
                     this.currentState = PlayState.Paused;
 					StateChangedArgs args = new StateChangedArgs();
-					args.Playing = false ;
+					args.Args = new object[1];
+					args.Args[0] = false ;
+					if (this.StateChanged != null)
 					this.StateChanged((object)this,args);					
 					// Stop Timer
 					timer.Stop();
@@ -331,7 +342,9 @@ namespace CesarPlayer
                 if (this.mediaControl.Pause() >= 0){
                     this.currentState = PlayState.Paused;
 					StateChangedArgs args = new StateChangedArgs();
-					args.Playing = false ;
+					args.Args = new object[1];
+					args.Args[0] = false ;
+					if (this.StateChanged != null)
 					this.StateChanged((object)this,args);
 					// Stop Timer
 					timer.Stop();
@@ -348,7 +361,9 @@ namespace CesarPlayer
                 if (this.mediaControl.Run() >= 0){
                     this.currentState = PlayState.Running;
 					StateChangedArgs args = new StateChangedArgs();
-					args.Playing = true ;
+					args.Args = new object[1];
+					args.Args[0] = true ;
+					if (this.StateChanged != null)
 					this.StateChanged((object)this,args);
 
 					// Start Timer
@@ -373,7 +388,9 @@ namespace CesarPlayer
                 DsError.ThrowExceptionForHR(hr);
                 this.currentState = PlayState.Stopped;
 				StateChangedArgs args = new StateChangedArgs();
-				args.Playing = false ;
+				args.Args = new object[1];
+				args.Args[0] = false ;
+if (this.StateChanged != null)
 				this.StateChanged((object)this,args);
 
 
@@ -800,6 +817,7 @@ namespace CesarPlayer
                 if (evCode == EventCode.Complete)
                 {
                 	Console.WriteLine("segmento completo");
+                	if (this.Eos != null)
                 	this.Eos((object)this,new EventArgs());
                     
                 }
@@ -919,12 +937,13 @@ namespace CesarPlayer
             }
         }
         */
-        public DSPlayer()
+        public DSPlayer(UseType type)
         {
 			this.timer = new System.Timers.Timer(100);
 			this.timer.Elapsed += new ElapsedEventHandler(OnTimerElapsed);
 			this.timer.Enabled = true;
 			this.timer.Start();
+			this.type = type;
             InitializeComponent();
            
 
@@ -991,10 +1010,15 @@ namespace CesarPlayer
 		protected virtual void OnTimerElapsed(object sender, ElapsedEventArgs e) {
       
 			TickArgs args = new TickArgs();
-			args.CurrentTime = this.CurrentTime;
-			args.StreamLength = this.clipLength;
-			args.CurrentPosition = this.currentPosition;
-			args.Seekable = true;
+			args.Args = new object[4];
+		
+			args.Args[0] = this.CurrentTime;
+			args.Args[1] = this.clipLength;
+				
+			args.Args[2] = this.currentPosition;
+			args.Args[3] = true;
+			
+			if (this.Tick != null)
 			this.Tick((object)this,args);		
 		}
 
