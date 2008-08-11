@@ -70,14 +70,14 @@ namespace LongoMatch.Widgets.Component {
             this.zoomoutbutton.UseUnderline = true;
             // Container child zoomoutbutton.Gtk.Container+ContainerChild
             Gtk.Alignment w10 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment1.Gtk.Container+ContainerChild
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
             Gtk.HBox w11 = new Gtk.HBox();
             w11.Spacing = 2;
-            // Container child GtkHBox1.Gtk.Container+ContainerChild
+            // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w12 = new Gtk.Image();
             w12.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-zoom-out", Gtk.IconSize.Button, 20);
             w11.Add(w12);
-            // Container child GtkHBox1.Gtk.Container+ContainerChild
+            // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w14 = new Gtk.Label();
             w14.LabelProp = "";
             w11.Add(w14);

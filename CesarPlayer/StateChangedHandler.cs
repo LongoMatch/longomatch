@@ -12,6 +12,9 @@ namespace CesarPlayer {
 			get {
 				return (bool) Args[0];
 			}
+			set{
+				this.Args[0] = value;
+			}
 		}
 
 	}

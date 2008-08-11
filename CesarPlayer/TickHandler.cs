@@ -12,11 +12,18 @@ namespace CesarPlayer {
 			get {
 				return (long) Args[0];
 			}
+			
+			set{
+				this.Args[0]=value;
+			}
 		}
 
 		public long StreamLength{
 			get {
 				return (long) Args[1];
+			}
+			set{
+				this.Args[1]=value;
 			}
 		}
 
@@ -24,11 +31,17 @@ namespace CesarPlayer {
 			get {
 				return (float) Args[2];
 			}
+			set{
+				this.Args[2]=value;
+			}
 		}
 
 		public bool Seekable{
 			get {
 				return (bool) Args[3];
+			}
+			set{
+				this.Args[3]=value;
 			}
 		}
 
