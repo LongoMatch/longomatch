@@ -136,9 +136,6 @@
     <Compile Include="Handlers\Handlers.cs">
       <Link>Handlers.cs</Link>
     </Compile>
-    <Compile Include="IO\PlayListReader.cs">
-      <Link>PlayListReader.cs</Link>
-    </Compile>
     <Compile Include="IO\SectionsReader.cs">
       <Link>SectionsReader.cs</Link>
     </Compile>

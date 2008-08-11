@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="BufferingHandler.cs" />
+    <Compile Include="DSPlayer.cs" />
     <Compile Include="ErrorHandler.cs" />
     <Compile Include="GotRedirectHandler.cs" />
     <Compile Include="GstError.cs" />
@@ -79,6 +80,10 @@
       <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\atk-sharp\2.10.0.0__35e10195dab3c99f\atk-sharp.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="DirectShowLib-2005">
+      <HintPath>DirectShowLib-2005.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="gdk-sharp">
       <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\gdk-sharp\2.10.0.0__35e10195dab3c99f\gdk-sharp.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
@@ -97,6 +102,14 @@
     </Reference>
     <Reference Include="System">
       <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\System\2.0.0.0__b77a5c561934e089\System.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\System.Drawing\2.0.0.0__b03f5f7f11d50a3a\System.Drawing.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\System.Windows.Forms\2.0.0.0__b77a5c561934e089\System.Windows.Forms.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
   </ItemGroup>

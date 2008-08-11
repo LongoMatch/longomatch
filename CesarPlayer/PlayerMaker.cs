@@ -41,11 +41,14 @@ namespace CesarPlayer
 			 case PlatformID.Unix:
 				return new GstPlayer(width,height,BvwUseType.Video);
 				
+				
 			case PlatformID.Win32NT:
-				return new DSPlayer(width,height);
+				return new DSPlayer();
+				
 				
 			 default:
-				return new GstPlayer(width,height,BvwUseType.Video);				
+				return new GstPlayer(width,height,BvwUseType.Video);
+				
 			}
 		
 		}
@@ -57,7 +60,7 @@ namespace CesarPlayer
 				return new GstPlayer(1,1,BvwUseType.Metadata);
 				
 			case PlatformID.Win32NT:
-				return new DSPlayer(100,100);
+				return new DSPlayer();
 				
 			 default:
 				return new GstPlayer(1,1,BvwUseType.Metadata);

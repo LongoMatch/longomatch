@@ -22,7 +22,7 @@ namespace CesarPlayer
     };
 	
 	
-    public class DSPlayer : UserControl, IPlayer
+    public class DSPlayer : UserControl, IPlayer, IMetadataReader
     {
 		
 				// Events
@@ -507,7 +507,14 @@ namespace CesarPlayer
 
 			}
 		}
-
+        public object GetMetadata(GstPlayerMetadataType type){
+        	if (type == GstPlayerMetadataType.Duration){
+        		this.getDuration();
+        		return this.clipLength;
+        	}
+        	else return null;
+        		
+        }
         private void updateTime()
         {
 			
@@ -772,9 +779,10 @@ namespace CesarPlayer
 
         private void HandleGraphEvent()
         {
+        	
             int hr = 0;
             EventCode evCode;
-            int evParam1, evParam2;
+            IntPtr evParam1, evParam2;
 
             // Make sure that we don't access the media event interface
             // after it has already been released.
@@ -818,7 +826,7 @@ namespace CesarPlayer
 
             // Pass this message to the video window for notification of system changes
             if (this.videoWindow != null)
-                this.videoWindow.NotifyOwnerMessage(m.HWnd, m.Msg, m.WParam.ToInt32(), m.LParam.ToInt32());
+                this.videoWindow.NotifyOwnerMessage(m.HWnd, m.Msg, m.WParam, m.LParam);
 
             base.WndProc(ref m);
         }
