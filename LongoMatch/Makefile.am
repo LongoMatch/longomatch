@@ -14,6 +14,7 @@ PROJECT_REFERENCES =  \
 	../CesarPlayer/bin/Debug/CesarPlayer.exe
 BUILD_DIR = bin/Debug
 
+DIRECTSHOWLIB_2005_DLL_SOURCE=../CesarPlayer/DirectShowLib-2005.dll
 CESARPLAYER_DLL=
 DB4OBJECTS_DB4O_DLL_SOURCE=Db4objects.Db4o.dll
 LONGOMATCH_DESKTOP_SOURCE=app.desktop
@@ -37,6 +38,7 @@ PROJECT_REFERENCES =  \
 	../CesarPlayer/bin/Release/CesarPlayer.dll
 BUILD_DIR = bin/Release
 
+DIRECTSHOWLIB_2005_DLL_SOURCE=../CesarPlayer/DirectShowLib-2005.dll
 CESARPLAYER_DLL_SOURCE=../CesarPlayer/bin/Release/CesarPlayer.dll
 CESARPLAYER_DLL=$(BUILD_DIR)/CesarPlayer.dll
 DB4OBJECTS_DB4O_DLL_SOURCE=Db4objects.Db4o.dll
@@ -52,6 +54,7 @@ AL=al2
 SATELLITE_ASSEMBLY_NAME=.resources.dll
 
 PROGRAMFILES = \
+	$(DIRECTSHOWLIB_2005_DLL) \
 	$(CESARPLAYER_DLL) \
 	$(DB4OBJECTS_DB4O_DLL) \
 	$(CESARPLAYER_EXE) \
@@ -73,41 +76,20 @@ all: $(ASSEMBLY) $(PROGRAMFILES) $(PROGRAMFILES_IMAGES) $(LINUX_DESKTOPAPPLICATI
 
 FILES = \
 	gtk-gui/generated.cs \
-	gtk-gui/LongoMatch.FileDescriptionWidget.cs \
-	gtk-gui/LongoMatch.FileDataListWidget.cs \
-	gtk-gui/LongoMatch.TreeWidget.cs \
-	gtk-gui/LongoMatch.CalendarPopup.cs \
-	gtk-gui/LongoMatch.ButtonsWidget.cs \
-	gtk-gui/LongoMatch.DBManager.cs \
-	gtk-gui/LongoMatch.OpenProjectDialog.cs \
-	gtk-gui/LongoMatch.NewProjectDialog.cs \
-	gtk-gui/LongoMatch.TimeAdjustWidget.cs \
-	gtk-gui/LongoMatch.PrecisionWidget.cs \
-	gtk-gui/LongoMatch.SectionsPropertiesWidget.cs \
-	gtk-gui/LongoMatch.SectionsTemplates.cs \
 	gtk-gui/LongoMatch.MainWindow.cs \
-	gtk-gui/LongoMatch.TimeNodeProperties.cs \
-	gtk-gui/LongoMatch.TemplateEditorDialog.cs \
-	gtk-gui/LongoMatch.PlayListWidget.cs \
-	gtk-gui/LongoMatch.NewSectionsTemplatesFiles.cs \
-	gtk-gui/LongoMatch.CapturePropertiesWidget.cs \
 	AssemblyInfo.cs \
 	Main.cs \
-	ObjectManager.cs \
 	Widgets/ButtonsWidget.cs \
 	Widgets/CalendarPopup.cs \
-	Widgets/CapturePropertiesWidget.cs \
 	Widgets/DBManager.cs \
 	Widgets/FileDataListWidget.cs \
 	Widgets/FileDescriptionWidget.cs \
-	Widgets/GtkTimescale.cs \
 	Widgets/MainWindow.cs \
 	Widgets/NewProjectDialog.cs \
 	Widgets/NewSectionsTemplatesFiles.cs \
 	Widgets/OpenProjectDialog.cs \
 	Widgets/PlayListTreeView.cs \
 	Widgets/PlayListWidget.cs \
-	Widgets/PrecisionWidget.cs \
 	Widgets/SectionsPropertiesWidget.cs \
 	Widgets/SectionsTemplates.cs \
 	Widgets/TemplateEditorDialog.cs \
@@ -116,29 +98,42 @@ FILES = \
 	Widgets/TreeWidget.cs \
 	Widgets/TimeNodeProperties.cs \
 	PlayList/PlayList.cs \
-	PlayList/PlayListReader.cs \
-	PlayList/PlayListTimeNode.cs \
 	DB/FileData.cs \
-	DB/MediaTimeNode.cs \
-	DB/PixbufTimeNode.cs \
 	DB/Sections.cs \
-	DB/SectionsTimeNode.cs \
-	DB/TimeNode.cs \
-	DB/DB.cs \
-	DB/Time.cs \
+	DB/DataBase.cs \
 	Handlers/Handlers.cs \
-	Handlers/InChangedHandler.cs \
-	Handlers/OutChangedHandler.cs \
-	Handlers/PosChangedHandler.cs \
 	IO/SectionsWriter.cs \
 	IO/SectionsReader.cs \
-	IO/TimeString.cs \
 	PlayList/IPlayList.cs \
 	IO/XMLReader.cs \
 	DB/MediaFile.cs \
-	gtk-gui/LongoMatch.TimeLineWidget.cs \
 	Widgets/TimeLineWidget.cs \
-	Widgets/TimeReferenceWidget.cs 
+	Widgets/TimeReferenceWidget.cs \
+	Widgets/TimeScale.cs \
+	Time/MediaTimeNode.cs \
+	Time/PixbufTimeNode.cs \
+	Time/SectionsTimeNode.cs \
+	Time/TimeNode.cs \
+	Time/Time.cs \
+	Time/PlayListTimeNode.cs \
+	gtk-gui/LongoMatch.Widgets.Component.ButtonsWidget.cs \
+	gtk-gui/LongoMatch.Widgets.Component.FileDataListWidget.cs \
+	gtk-gui/LongoMatch.Widgets.Dialog.DBManager.cs \
+	gtk-gui/LongoMatch.Widgets.Component.FileDescriptionWidget.cs \
+	gtk-gui/LongoMatch.Widgets.Dialog.NewProjectDialog.cs \
+	gtk-gui/LongoMatch.Widgets.Dialog.OpenProjectDialog.cs \
+	gtk-gui/LongoMatch.Widgets.Component.SectionsPropertiesWidget.cs \
+	gtk-gui/LongoMatch.Widgets.Dialog.SectionsTemplates.cs \
+	gtk-gui/LongoMatch.Widgets.Dialog.TemplateEditorDialog.cs \
+	gtk-gui/LongoMatch.Widgets.Component.TimeLineWidget.cs \
+	gtk-gui/LongoMatch.Widgets.Component.PlayListWidget.cs \
+	gtk-gui/LongoMatch.Widgets.Component.TimeAdjustWidget.cs \
+	gtk-gui/LongoMatch.Widgets.Component.TimeNodeProperties.cs \
+	gtk-gui/LongoMatch.Widgets.Popup.CalendarPopup.cs \
+	gtk-gui/LongoMatch.Widgets.Dialog.NewSectionsTemplatesFiles.cs \
+	gtk-gui/LongoMatch.Widgets.Component.TreeWidget.cs \
+	Widgets/fakeColorBin.cs \
+	gtk-gui/LongoMatch.Widgets.Component.fakeColorBin.cs 
 
 DATA_FILES = \
 	app.desktop \
@@ -167,12 +162,14 @@ CLEANFILES = $(PROGRAMFILES) $(PROGRAMFILES_IMAGES) $(LINUX_DESKTOPAPPLICATIONS)
 
 include $(top_srcdir)/Makefile.include
 
+DIRECTSHOWLIB_2005_DLL = $(BUILD_DIR)/DirectShowLib-2005.dll
 LONGOMATCH = $(BUILD_DIR)/longomatch
 DB4OBJECTS_DB4O_DLL = $(BUILD_DIR)/Db4objects.Db4o.dll
 LONGOMATCH_DESKTOP = $(BUILD_DIR)/longomatch.desktop
 BACKGROUND_PNG = $(BUILD_DIR)/images/background.png
 LGMLOGO_PNG = $(BUILD_DIR)/lgmlogo.png
 
+$(eval $(call emit-deploy-target,DIRECTSHOWLIB_2005_DLL))
 $(eval $(call emit-deploy-target,CESARPLAYER_DLL))
 $(eval $(call emit-deploy-wrapper,LONGOMATCH,longomatch,x))
 $(eval $(call emit-deploy-target,DB4OBJECTS_DB4O_DLL))

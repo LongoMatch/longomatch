@@ -12,6 +12,7 @@ COMPILE_TARGET = module
 PROJECT_REFERENCES = 
 BUILD_DIR = bin/Debug
 
+DIRECTSHOWLIB_2005_DLL_SOURCE=DirectShowLib-2005.dll
 
 endif
 
@@ -24,18 +25,22 @@ COMPILE_TARGET = library
 PROJECT_REFERENCES = 
 BUILD_DIR = bin/Release
 
+DIRECTSHOWLIB_2005_DLL_SOURCE=DirectShowLib-2005.dll
 
 endif
 
 AL=al2
 SATELLITE_ASSEMBLY_NAME=longomatch.resources.dll
 
+PROGRAMFILES = \
+	$(DIRECTSHOWLIB_2005_DLL)  
+
 LINUX_PKGCONFIG = \
 	$(CESARPLAYER_PC)  
 
 
 	
-all: $(ASSEMBLY) $(LINUX_PKGCONFIG) 
+all: $(ASSEMBLY) $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
 
 FILES = \
 	AssemblyInfo.cs \
@@ -61,7 +66,8 @@ FILES = \
 	gtk-gui/generated.cs \
 	IMetadataReader.cs \
 	gtk-gui/CesarPlayer.VolumeWindow.cs \
-	gtk-gui/CesarPlayer.PlayerBin.cs 
+	gtk-gui/CesarPlayer.PlayerBin.cs \
+	DSPlayer.cs 
 
 DATA_FILES = 
 
@@ -70,6 +76,7 @@ RESOURCES = \
 	gtk-gui/gui.stetic 
 
 EXTRAS = \
+	DirectShowLib-2005.dll \
 	cesarplayer.pc.in 
 
 REFERENCES =  \
@@ -77,15 +84,19 @@ REFERENCES =  \
 	System \
 	Mono.Posix \
 	System.Drawing \
-	$(GLIB_SHARP_20_LIBS)
+	$(GLIB_SHARP_20_LIBS) \
+	System.Windows.Forms
 
-DLL_REFERENCES = 
+DLL_REFERENCES =  \
+	DirectShowLib-2005.dll
 
-CLEANFILES = $(LINUX_PKGCONFIG) 
+CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
 
 include $(top_srcdir)/Makefile.include
 
+DIRECTSHOWLIB_2005_DLL = $(BUILD_DIR)/DirectShowLib-2005.dll
 
+$(eval $(call emit-deploy-target,DIRECTSHOWLIB_2005_DLL))
 $(eval $(call emit-deploy-wrapper,CESARPLAYER_PC,cesarplayer.pc))
 
 
