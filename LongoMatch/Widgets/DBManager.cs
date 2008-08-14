@@ -42,7 +42,7 @@ namespace LongoMatch.Widgets.Dialog
 		
 		public void Fill(){
 			ArrayList allDB = MainClass.DB.GetAllDB();
-			filedatalistwidget1.Fill(allDB);
+			projectlistwidget1.Fill(allDB);
 			this.filedescriptionwidget3.Clear();
 			this.filedescriptionwidget3.Sensitive = false;
 			this.saveButton.Sensitive = false;
@@ -54,22 +54,22 @@ namespace LongoMatch.Widgets.Dialog
 
 		protected virtual void OnDeleteButtonPressed (object sender, System.EventArgs e)
 		{
-			FileData selectedFileData = filedatalistwidget1.GetSelection();
-			if (selectedFileData != null){
-				if (MainWindow.OpenedFileData()!= null && selectedFileData.Equals(MainWindow.OpenedFileData())) {
+			Project selectedProject = projectlistwidget1.GetSelection();
+			if (selectedProject != null){
+				if (MainWindow.OpenedProject()!= null && selectedProject.Equals(MainWindow.OpenedProject())) {
 				
 					MessageDialog md = new MessageDialog(this,DialogFlags.Modal,MessageType.Warning,ButtonsType.Ok,
-					                                     Catalog.GetString("This FileData is actually in use.\n Close it first to allow its removal from the database"));
+					                                     Catalog.GetString("This Project is actually in use.\n Close it first to allow its removal from the database"));
 					md.Run();				
 					md.Destroy();
 				}
 				else {
 					MessageDialog md = new MessageDialog(this,DialogFlags.Modal,MessageType.Question,ButtonsType.YesNo,
-					                                     Catalog.GetString("Do yo really want to delete:\n")+selectedFileData.File.FilePath);
+					                                     Catalog.GetString("Do yo really want to delete:\n")+selectedProject.File.FilePath);
 					if (md.Run()== (int)ResponseType.Yes){
 						this.filedescriptionwidget3.Clear();
-						MainClass.DB.RemoveFileData(selectedFileData);	
-						string directory = MainClass.ThumbnailsDir()+"/"+selectedFileData.Title;
+						MainClass.DB.RemoveProject(selectedProject);	
+						string directory = MainClass.ThumbnailsDir()+"/"+selectedProject.Title;
 						foreach (string path in System.IO.Directory.GetFiles(directory,"*")){
 							System.IO.File.Delete(path);
 						}
@@ -89,26 +89,26 @@ namespace LongoMatch.Widgets.Dialog
 		protected virtual void OnSaveButtonPressed (object sender, System.EventArgs e)
 		{
 			String previousFileName;			
-			FileData changedFileData;
+			Project changedProject;
 			
-			previousFileName = filedatalistwidget1.GetSelection().File.FilePath;			
-			changedFileData = this.filedescriptionwidget3.GetFileData();
+			previousFileName = projectlistwidget1.GetSelection().File.FilePath;			
+			changedProject = this.filedescriptionwidget3.GetProject();
 			
-			if (changedFileData != null){
+			if (changedProject != null){
 
 				
-				if (changedFileData.File.FilePath == previousFileName)
-					MainClass.DB.UpdateFileData(changedFileData);
+				if (changedProject.File.FilePath == previousFileName)
+					MainClass.DB.UpdateProject(changedProject);
 				else{
 					try{
-						MainClass.DB.UpdateFileData(changedFileData,previousFileName);
+						MainClass.DB.UpdateProject(changedProject,previousFileName);
 					}
 					catch{
 						MessageDialog error = new MessageDialog(this,
 						                                        DialogFlags.DestroyWithParent,
 						                                        MessageType.Error,
 						                                        ButtonsType.Ok,
-						                                        "The FileData for this file already exists.\nTry to edit it.");
+						                                        "The Project for this file already exists.\nTry to edit it.");
 						error.Run();
 						error.Destroy();	
 					}
@@ -118,12 +118,24 @@ namespace LongoMatch.Widgets.Dialog
 			
 		}
 
-		protected virtual void OnFiledatalistwidget1FileDataSelectedEvent (FileData fData)
+		protected virtual void OnFiledatalistwidget1ProjectSelectedEvent (Project project)
 		{
-			this.filedescriptionwidget3.Sensitive = true;
-			this.filedescriptionwidget3.SetFileData(fData);
-			this.saveButton.Sensitive = true;
-			this.deleteButton.Sensitive = true;
+			
+			
+				if (MainWindow.OpenedProject()!= null && project.Equals(MainWindow.OpenedProject())) {
+				
+					MessageDialog md = new MessageDialog(this,DialogFlags.Modal,MessageType.Warning,ButtonsType.Ok,
+					                                     Catalog.GetString("This Project is actually in use.\n Close it first to allow its removal from the database"));
+					md.Run();				
+					md.Destroy();
+				}
+				else{
+					this.filedescriptionwidget3.Sensitive = true;
+					this.filedescriptionwidget3.SetProject(project);
+					this.saveButton.Sensitive = true;
+					this.deleteButton.Sensitive = true;
+				}
+			
 
 		}
 

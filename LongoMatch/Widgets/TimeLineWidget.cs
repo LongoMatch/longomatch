@@ -99,7 +99,7 @@ namespace LongoMatch.Widgets.Component {
 		
 		
 		
-		public FileData FileData{
+		public Project Project{
 			set{
 				sections = value.Sections;
 				tnArray = value.GetDataArray();

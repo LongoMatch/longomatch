@@ -37,7 +37,7 @@ namespace LongoMatch.Widgets.Component
 		public event TimeNodeDeletedHandler TimeNodeDeleted;
 		public event PlayListNodeAddedHandler PlayListNodeAdded;
 
-		private FileData fileData;
+		private Project fileData;
 
 		
 		public TreeWidget()
@@ -58,7 +58,7 @@ namespace LongoMatch.Widgets.Component
 
 	
 	
-		public FileData FileData{
+		public Project Project{
 			set{ 
 				this.fileData = value;
 				treeview.Model = this.fileData.GetModel();

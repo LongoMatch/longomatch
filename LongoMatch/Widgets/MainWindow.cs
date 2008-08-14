@@ -35,7 +35,7 @@ namespace LongoMatch
 {	
 	public partial class MainWindow : Gtk.Window
 	{
-		private static  FileData openedFileData;
+		private static Project openedProject;
 		private CesarPlayer.IPlayer player;
 		private TimeNode selectedTimeNode;
 		bool fileDataModified;	
@@ -55,10 +55,10 @@ namespace LongoMatch
 
 		
 
-		private void SetFileData(FileData fData){			
-			openedFileData = fData;			
-			if (fData!=null){		
-				if(!File.Exists(fData.File.FilePath)){
+		private void SetProject(Project project){			
+			openedProject = project;			
+			if (project!=null){		
+				if(!File.Exists(project.File.FilePath)){
 					MessageDialog infoDialog = new MessageDialog (this,DialogFlags.Modal,MessageType.Warning,ButtonsType.Ok,Catalog.GetString("The file associated to this proyect doesn't exits.\n If the location of the file has changed try to change it with de DataBase Manager.") );
 					infoDialog.Run();
 					infoDialog.Destroy();
@@ -66,14 +66,14 @@ namespace LongoMatch
 				}
 				else {
 					
-					this.Title = System.IO.Path.GetFileNameWithoutExtension(fData.File.FilePath) + " - LongoMatch";
-					playerbin1.File=fData.File.FilePath;
+					this.Title = System.IO.Path.GetFileNameWithoutExtension(project.File.FilePath) + " - LongoMatch";
+					playerbin1.File=project.File.FilePath;
 					this.playlistwidget2.Stop();
 					
-					treewidget1.FileData=fData;						
-					this.timelinewidget1.FileData = fData;
-					this.buttonswidget1.Sections = fData.Sections;	
-					if (fData.File.HasVideo){
+					treewidget1.Project=project;						
+					this.timelinewidget1.Project = project;
+					this.buttonswidget1.Sections = project.Sections;	
+					if (project.File.HasVideo){
 						player.LogoMode = false;
 						this.FullScreenAction.Sensitive = true;
 					}
@@ -88,8 +88,8 @@ namespace LongoMatch
 			}			
 		}
 		
-		public static FileData OpenedFileData(){			
-			return openedFileData;
+		public static Project OpenedProject(){			
+			return openedProject;
 		}
 		
 		private void ShowWidgets(){
@@ -112,7 +112,7 @@ namespace LongoMatch
 			this.playerbin1.Close();			
 			this.player.LogoMode = true;
 			this.SaveDB();			
-			openedFileData = null;	
+			openedProject = null;	
 			this.selectedTimeNode = null;
 			this.CloseProjectAction.Sensitive=false;
 			this.SaveProjectAction.Sensitive = false;
@@ -123,8 +123,8 @@ namespace LongoMatch
 		}
 		
 		private void SaveDB(){			
-			if (openedFileData != null){
-				MainClass.DB.UpdateFileData(OpenedFileData());
+			if (openedProject != null){
+				MainClass.DB.UpdateProject(OpenedProject());
 				this.fileDataModified=false;
 			}
 			
@@ -144,30 +144,30 @@ namespace LongoMatch
 
 		protected virtual void OnOpenActivated (object sender, System.EventArgs e)
 		{
-			FileData fData;
+			Project project;
 			OpenProjectDialog opd = new OpenProjectDialog();
 			int answer=opd.Run();
 			while (answer == (int)ResponseType.Reject){
-				fData = opd.GetSelection();
-				MainClass.DB.RemoveFileData(fData);
+				project = opd.GetSelection();
+				MainClass.DB.RemoveProject(project);
 				opd.Fill();
 				answer=opd.Run();
 			}
 			if (answer == (int)ResponseType.Ok){
-				fData = opd.GetSelection();
-				this.SetFileData(fData);
+				project = opd.GetSelection();
+				this.SetProject(project);
 			}
 			opd.Destroy();
 		}
 
 		protected virtual void OnNewActivated (object sender, System.EventArgs e)
 		{
-			FileData fData;
+			Project project;
 			NewProjectDialog npd = new NewProjectDialog();
 			// Esperamos a que se pulse el boton aceptar y se cumplan las condiciones para 
-			// crear un nuevo objeto del tipo FileData
+			// crear un nuevo objeto del tipo Project
 			int response = npd.Run();
-			while (response == (int)ResponseType.Ok && npd.GetFileData() == null){
+			while (response == (int)ResponseType.Ok && npd.GetProject() == null){
 				MessageDialog md = new MessageDialog(npd,
 				                                     DialogFlags.DestroyWithParent,
 				                                     MessageType.Info,
@@ -180,18 +180,18 @@ namespace LongoMatch
 			npd.Destroy();
 			// Si se cumplen las condiciones y se ha pulsado el botón aceptar continuamos
 			if (response ==(int)ResponseType.Ok){
-				fData = npd.GetFileData();
-				if (fData != null){
+				project = npd.GetProject();
+				if (project != null){
 					try{
-						MainClass.DB.AddFileData(fData);
-						this.SetFileData(fData);
+						MainClass.DB.AddProject(project);
+						this.SetProject(project);
 					}
 					catch {						
 						MessageDialog error = new MessageDialog(this,
 						                                        DialogFlags.DestroyWithParent,
 						                                        MessageType.Error,
 						                                        ButtonsType.Ok,
-						                                        "The FileData for this file already exists.\nTry to edit it.");
+						                                        "The Project for this file already exists.\nTry to edit it.");
 						error.Run();
 						error.Destroy();							
 					}
@@ -221,7 +221,7 @@ namespace LongoMatch
 		}
 		
 		protected virtual void OnNewMark(int i, Time startTime, Time stopTime){
-			if (player != null && openedFileData != null){
+			if (player != null && openedProject != null){
 				
 				Time pos = new Time((int)player.CurrentTime);
 				Time start = pos - startTime;
@@ -231,7 +231,7 @@ namespace LongoMatch
 				Time length = new Time((int)player.StreamLength*1000);
 				Time fStop = (stop > length) ? length: stop;
 				Pixbuf miniature = this.playerbin1.CurrentThumbnail;
-				MediaTimeNode tn = openedFileData.AddTimeNode(i,fStart, fStop,miniature);				
+				MediaTimeNode tn = openedProject.AddTimeNode(i,fStart, fStop,miniature);				
 				treewidget1.AddTimeNode(tn,i);
 				this.fileDataModified = true;
 				this.timelinewidget1.QueueDraw();
@@ -265,14 +265,14 @@ namespace LongoMatch
 				}	
 			}	
 			else if (tNode is SectionsTimeNode){
-				this.buttonswidget1.Sections = openedFileData.Sections;
+				this.buttonswidget1.Sections = openedProject.Sections;
 			}
 			this.fileDataModified = true;			
 		}
 
 		protected virtual void OnTimeNodeDeleted (MediaTimeNode tNode)
 		{
-			openedFileData.DelTimeNode(tNode);		
+			openedProject.DelTimeNode(tNode);		
 			this.fileDataModified = true;
 			this.timelinewidget1.QueueDraw();
 		}
@@ -288,12 +288,12 @@ namespace LongoMatch
 
 		protected virtual void OnPlayListNodeAdded (MediaTimeNode tNode)
 		{
-			this.playlistwidget2.Add(new PlayListTimeNode(openedFileData.File.FilePath,tNode));
+			this.playlistwidget2.Add(new PlayListTimeNode(openedProject.File.FilePath,tNode));
 		}
 
 		protected virtual void OnPlaylistwidget2PlayListNodeSelected (PlayListTimeNode plNode, bool hasNext)
 		{
-			if (openedFileData == null){
+			if (openedProject == null){
 				this.selectedTimeNode = plNode;
 				this.playerbin1.SetPlayListElement(plNode.FileName,plNode.Start.MSeconds,plNode.Stop.MSeconds,hasNext);
 			}
@@ -342,7 +342,7 @@ namespace LongoMatch
 			
 			fChooser.AddFilter(filter);
 			if (fChooser.Run() == (int)ResponseType.Accept){
-				if (openedFileData != null)
+				if (openedProject != null)
 					this.CloseActualProyect();
 				this.playlistwidget2.Load(fChooser.Filename);				
 				this.PlaylistAction.Active = true;				
@@ -378,8 +378,8 @@ namespace LongoMatch
 
 		protected virtual void OnPlayerbin1Tick (object o, CesarPlayer.TickArgs args)
 		{
-			if (args.CurrentTime != 0 && this.timelinewidget1 != null && openedFileData != null)
-				this.timelinewidget1.CurrentFrame=(uint)(args.CurrentTime * openedFileData.File.Fps / 1000);
+			if (args.CurrentTime != 0 && this.timelinewidget1 != null && openedProject != null)
+				this.timelinewidget1.CurrentFrame=(uint)(args.CurrentTime * openedProject.File.Fps / 1000);
 		}
 
 		protected virtual void OnCaptureModeActionToggled (object sender, System.EventArgs e)

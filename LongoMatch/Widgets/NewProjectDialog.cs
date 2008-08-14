@@ -37,8 +37,8 @@ namespace LongoMatch.Widgets.Dialog
 			this.Build();
 		}
 		
-		public FileData GetFileData(){
-			return this.fdwidget.GetFileData();
+		public Project GetProject(){
+			return this.fdwidget.GetProject();
 		}
 	}
 }

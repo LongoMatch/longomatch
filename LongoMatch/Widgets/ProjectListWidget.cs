@@ -1,4 +1,4 @@
-// FileDataListWidget.cs
+// ProjectListWidget.cs
 //
 //  Copyright (C) 2007 Andoni Morales Alastruey
 //
@@ -31,18 +31,18 @@ using LongoMatch.DB;
 namespace LongoMatch.Widgets.Component
 {
 	
-	public delegate void FileDataSelectedHandler (FileData fData);
+	public delegate void ProjectSelectedHandler (Project project);
 	
-	public partial class FileDataListWidget : Gtk.Bin
+	public partial class ProjectListWidget : Gtk.Bin
 	{
 
 		private Gtk.ListStore dataFileListStore;
-		public event         FileDataSelectedHandler FileDataSelectedEvent;
+		public event         ProjectSelectedHandler ProjectSelectedEvent;
 		
-		public FileDataListWidget()
+		public ProjectListWidget()
 		{
 			this.Build();
-			dataFileListStore = new Gtk.ListStore (typeof (FileData));
+			dataFileListStore = new Gtk.ListStore (typeof (Project));
 			treeview.Model=dataFileListStore;
 			
 			Gtk.TreeViewColumn filenameColumn = new Gtk.TreeViewColumn ();
@@ -86,8 +86,8 @@ namespace LongoMatch.Widgets.Component
 				
 		private void RenderName (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			FileData _fData = (FileData) model.GetValue (iter, 0);
-			string _filePath = _fData.File.FilePath;	
+			Project _project = (Project) model.GetValue (iter, 0);
+			string _filePath = _project.File.FilePath;	
 			(cell as Gtk.CellRendererText).Text = System.IO.Path.GetFileName(_filePath.ToString());
 			
 			
@@ -95,8 +95,8 @@ namespace LongoMatch.Widgets.Component
 		
 		private void RenderDate (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			FileData _fData = (FileData) model.GetValue (iter, 0);
-			(cell as Gtk.CellRendererText).Text = _fData.MatchDate.ToString(Catalog.GetString("MM/dd/yyyy"));;
+			Project _project = (Project) model.GetValue (iter, 0);
+			(cell as Gtk.CellRendererText).Text = _project.MatchDate.ToString(Catalog.GetString("MM/dd/yyyy"));;
 			
 			
 		}
@@ -104,23 +104,23 @@ namespace LongoMatch.Widgets.Component
 		
 		private void RenderLocalName (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			FileData _fData = (FileData) model.GetValue (iter, 0);
-			(cell as Gtk.CellRendererText).Text = _fData.LocalName;
+			Project _project = (Project) model.GetValue (iter, 0);
+			(cell as Gtk.CellRendererText).Text = _project.LocalName;
 				
 			
 		}
 		
 		private void RenderVisitorName (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			FileData _fData = (FileData) model.GetValue (iter, 0);
-			(cell as Gtk.CellRendererText).Text = _fData.VisitorName;
+			Project _project = (Project) model.GetValue (iter, 0);
+			(cell as Gtk.CellRendererText).Text = _project.VisitorName;
 
 		}
 		
 		private void RenderResult (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			FileData _fData = (FileData) model.GetValue (iter, 0);
-			(cell as Gtk.CellRendererText).Text = _fData.LocalGoals+"-"+_fData.VisitorGoals;;
+			Project _project = (Project) model.GetValue (iter, 0);
+			(cell as Gtk.CellRendererText).Text = _project.LocalGoals+"-"+_project.VisitorGoals;;
 		}
 		
 		
@@ -129,27 +129,27 @@ namespace LongoMatch.Widgets.Component
 			db.Sort();
 			
 				
-			foreach (FileData _fData in db){
+			foreach (Project _project in db){
 				
-				dataFileListStore.AppendValues(_fData);
+				dataFileListStore.AppendValues(_project);
 			}
 			//dataFileListStore.Reorder();
 		}
 		
-		public FileData GetSelection(){
+		public Project GetSelection(){
 			TreePath path;
 			TreeViewColumn col;
 			treeview.GetCursor(out path,out col);
-			return this.GetFileData(path);
+			return this.GetProject(path);
 			
 		}
 		
-		private FileData GetFileData(TreePath path){
+		private Project GetProject(TreePath path){
 			if (path != null){
 				Gtk.TreeIter iter;
 				dataFileListStore.GetIter (out iter, path);
- 				FileData fData = (FileData) dataFileListStore.GetValue (iter, 0);
-				return fData;
+ 				Project project = (Project) dataFileListStore.GetValue (iter, 0);
+				return project;
 			}
 			else return null;
 			
@@ -160,9 +160,9 @@ namespace LongoMatch.Widgets.Component
 		{
 			TreeIter iter;
 			this.treeview.Selection.GetSelected(out iter);
-			FileData selectedFileData = (FileData) dataFileListStore.GetValue (iter, 0);
-			if (FileDataSelectedEvent!=null)
-				FileDataSelectedEvent(selectedFileData);
+			Project selectedProject = (Project) dataFileListStore.GetValue (iter, 0);
+			if (ProjectSelectedEvent!=null)
+				ProjectSelectedEvent(selectedProject);
 		}
 
 

@@ -80,55 +80,7 @@ namespace LongoMatch.Widgets.Component
 			}
 		}
 		
-		
-		/*private void SetVisibleSections(int number){
-			
 
-			int files = (number / 4) ;
-			//Si es mayor  que 20 hay que lanzar una Exception!
-			switch (files){
-				case 1:
-					this.filebox1.Show();
-					this.filebox2.Hide();
-					this.filebox3.Hide();
-					this.filebox4.Hide();
-					this.filebox5.Hide();
-					break;
-					
-				case 2:
-					this.filebox1.Show();
-					this.filebox2.Show();
-					this.filebox3.Hide();
-					this.filebox4.Hide();
-					this.filebox5.Hide();
-					break;
-					
-				case 3:
-					this.filebox1.Show();
-					this.filebox2.Show();
-					this.filebox3.Show();
-					this.filebox4.Hide();
-					this.filebox5.Hide();
-					break;
-					
-				case 4:
-					this.filebox1.Show();
-					this.filebox2.Show();
-					this.filebox3.Show();
-					this.filebox4.Show();
-					this.filebox5.Hide();
-					break;
-					
-				case 5:
-					this.filebox1.Show();
-					this.filebox2.Show();
-					this.filebox3.Show();
-					this.filebox4.Show();
-					this.filebox5.Show();
-					break;
-			}
-		}*/
-		
 		
 		protected virtual void OnButton1Clicked(object sender, System.EventArgs e)
 		{

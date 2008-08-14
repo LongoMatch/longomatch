@@ -37,15 +37,15 @@ namespace LongoMatch.Widgets.Dialog
 			
 		}
 		
-		public FileData GetSelection(){
-			return filedatalistwidget.GetSelection();			
+		public Project GetSelection(){
+			return projectlistwidget.GetSelection();			
 		}
 		
 		public void Fill(){
-			filedatalistwidget.Fill(MainClass.DB.GetAllDB());
+			projectlistwidget.Fill(MainClass.DB.GetAllDB());
 		}
 
-		protected virtual void OnFiledatalistwidgetFileDataSelectedEvent (FileData fData)
+		protected virtual void OnFiledatalistwidgetProjectSelectedEvent (Project project)
 		{
 			this.buttonOk.Activate();
 		}

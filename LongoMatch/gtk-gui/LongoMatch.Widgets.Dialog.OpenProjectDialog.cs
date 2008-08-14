@@ -13,7 +13,7 @@ namespace LongoMatch.Widgets.Dialog {
     
     public partial class OpenProjectDialog {
         
-        private LongoMatch.Widgets.Component.FileDataListWidget filedatalistwidget;
+        private LongoMatch.Widgets.Component.ProjectListWidget projectlistwidget;
         
         private Gtk.Button buttonCancel;
         
@@ -31,11 +31,9 @@ namespace LongoMatch.Widgets.Dialog {
             w1.Name = "dialog1_VBox";
             w1.BorderWidth = ((uint)(2));
             // Container child dialog1_VBox.Gtk.Box+BoxChild
-            this.filedatalistwidget = new LongoMatch.Widgets.Component.FileDataListWidget();
-            this.filedatalistwidget.Events = ((Gdk.EventMask)(256));
-            this.filedatalistwidget.Name = "filedatalistwidget";
-            w1.Add(this.filedatalistwidget);
-            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(w1[this.filedatalistwidget]));
+            this.projectlistwidget = null;
+            w1.Add(this.projectlistwidget);
+            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(w1[this.projectlistwidget]));
             w2.Position = 0;
             // Internal child LongoMatch.Widgets.Dialog.OpenProjectDialog.ActionArea
             Gtk.HButtonBox w3 = this.ActionArea;
@@ -74,7 +72,6 @@ namespace LongoMatch.Widgets.Dialog {
             this.DefaultWidth = 400;
             this.DefaultHeight = 300;
             this.Show();
-            this.filedatalistwidget.FileDataSelectedEvent += new LongoMatch.Widgets.Component.FileDataSelectedHandler(this.OnFiledatalistwidgetFileDataSelectedEvent);
         }
     }
 }

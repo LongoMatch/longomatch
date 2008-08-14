@@ -1,4 +1,4 @@
-// FileData.cs
+// Project.cs
 //
 //  Copyright (C) 2007 Andoni Morales Alastruey
 //
@@ -30,7 +30,7 @@ namespace LongoMatch.DB
 {
 	
 	[Serializable]
-	public class FileData : IComparable
+	public class Project : IComparable
 	{
 		
 		private MediaFile file;
@@ -54,7 +54,7 @@ namespace LongoMatch.DB
 		
 	
 		
-		public FileData(MediaFile file, String localName, String visitorName, int localGoals,
+		public Project(MediaFile file, String localName, String visitorName, int localGoals,
 		                int visitorGoals, DateTime matchDate, Sections sections) {
 			List<MediaTimeNode> tnArray;
 			
@@ -185,18 +185,18 @@ namespace LongoMatch.DB
 			set{ matchDate=value;}
 		}
 
-		public bool Equals(FileData fileData){
+		public bool Equals(Project fileData){
 			return this.File.FilePath.Equals(fileData.File.FilePath);
 		}
 		
 		public int CompareTo(object obj) {
-			if(obj is FileData) {
-				FileData fData = (FileData) obj;
+			if(obj is Project) {
+				Project project = (Project) obj;
 
-				return this.File.FilePath.CompareTo(fData.File.FilePath);
+				return this.File.FilePath.CompareTo(project.File.FilePath);
 			}
 			else
-				throw new ArgumentException("object is not a FileData and cannot be compared");    
+				throw new ArgumentException("object is not a Project and cannot be compared");    
 		}
 	}
 }

@@ -36,7 +36,7 @@ namespace LongoMatch.Widgets.Component
 	{
 
 		private DateTime date;
-		private FileData fData;
+		private Project project;
 		private MediaFile mFile;
 		private CalendarPopup cp;
 		
@@ -97,15 +97,15 @@ namespace LongoMatch.Widgets.Component
 		}
 		
 
-		public void SetFileData(FileData fData){
-			this.fData = fData;
-			this.mFile = fData.File;
+		public void SetProject(Project project){
+			this.project = project;
+			this.mFile = project.File;
 			this.Filename = this.mFile.FilePath;
-			this.LocalName = fData.LocalName;
-			this.VisitorName = fData.VisitorName;
-			this.LocalGoals = fData.LocalGoals;
-			this.VisitorGoals = fData.VisitorGoals;
-			this.Date= fData.MatchDate;
+			this.LocalName = project.LocalName;
+			this.VisitorName = project.VisitorName;
+			this.LocalGoals = project.LocalGoals;
+			this.VisitorGoals = project.VisitorGoals;
+			this.Date= project.MatchDate;
 
 			
 			//Cambiamos el gui
@@ -115,27 +115,27 @@ namespace LongoMatch.Widgets.Component
 			
 		}
 		
-		public void UpdateFileData(){
-			fData.File=this.mFile;
-			fData.LocalName = this.localTeamEntry.Text;
-			fData.VisitorName = this.visitorTeamEntry.Text;
-			fData.LocalGoals = (int)this.localSpinButton.Value;
-			fData.VisitorGoals = (int)this.visitorSpinButton.Value;
-			fData.MatchDate = DateTime.Parse(this.dateEntry.Text);
+		public void UpdateProject(){
+			project.File=this.mFile;
+			project.LocalName = this.localTeamEntry.Text;
+			project.VisitorName = this.visitorTeamEntry.Text;
+			project.LocalGoals = (int)this.localSpinButton.Value;
+			project.VisitorGoals = (int)this.visitorSpinButton.Value;
+			project.MatchDate = DateTime.Parse(this.dateEntry.Text);
 
 		
 		}
 		
 	
 		
-		public FileData GetFileData(){
+		public Project GetProject(){
 			if (this.Filename != ""){
 				SectionsReader reader = new SectionsReader(System.IO.Path.Combine(MainClass.TemplatesDir(),this.SectionsFile));
 				Sections sections = reader.GetSections();
 
 				
-				if (fData == null){
-					return new FileData(this.mFile,
+				if (project == null){
+					return new Project(this.mFile,
 					                    this.LocalName,
 					                    this.VisitorName,
 					                    this.LocalGoals,
@@ -144,14 +144,14 @@ namespace LongoMatch.Widgets.Component
 					                    sections);
 				}
 				else {
-					fData.File = this.mFile;
-					fData.LocalName = this.LocalName;
-					fData.VisitorGoals = this.VisitorGoals;
-					fData.LocalGoals = this.LocalGoals;
-					fData.VisitorGoals = this.VisitorGoals;
-					fData.MatchDate = this.Date;
+					project.File = this.mFile;
+					project.LocalName = this.LocalName;
+					project.VisitorGoals = this.VisitorGoals;
+					project.LocalGoals = this.LocalGoals;
+					project.VisitorGoals = this.VisitorGoals;
+					project.MatchDate = this.Date;
 
-					return fData;
+					return project;
 					 
 						
 				}
@@ -230,10 +230,10 @@ namespace LongoMatch.Widgets.Component
 		{
 			
 			TemplateEditorDialog ted = new TemplateEditorDialog();
-			ted.Sections=fData.Sections;
+			ted.Sections=project.Sections;
 			
 			if (ted.Run() == (int)ResponseType.Apply){
-				fData.Sections = ted.Sections;
+				project.Sections = ted.Sections;
 			}
 			
 			ted.Destroy();

@@ -422,7 +422,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Widgets.Component.FileDataListWidget" design-size="572 300">
+  <widget class="Gtk.Bin" id="LongoMatch.Widgets.Component.ProjectListWidget" design-size="572 300">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.ScrolledWindow" id="scrolledwindow2">
@@ -1000,7 +1000,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Widgets.Dialog.DBManager" design-size="816 512">
+  <widget class="Gtk.Dialog" id="LongoMatch.Widgets.Dialog.DBManager" design-size="1024 512">
     <property name="MemberName" />
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Buttons">1</property>
@@ -1019,10 +1019,10 @@
                 <property name="MemberName" />
                 <property name="Spacing">6</property>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.FileDataListWidget" id="filedatalistwidget1">
+                  <widget class="LongoMatch.Widgets.Component.ProjectListWidget" id="projectlistwidget1">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
-                    <signal name="FileDataSelectedEvent" handler="OnFiledatalistwidget1FileDataSelectedEvent" />
+                    <signal name="ProjectSelectedEvent" handler="OnFiledatalistwidget1ProjectSelectedEvent" />
                   </widget>
                   <packing>
                     <property name="Position">0</property>
@@ -1179,10 +1179,10 @@
         <property name="MemberName" />
         <property name="BorderWidth">2</property>
         <child>
-          <widget class="LongoMatch.Widgets.Component.FileDataListWidget" id="filedatalistwidget">
-            <property name="MemberName">filedatalistwidget</property>
+          <widget class="LongoMatch.Widgets.Component.ProjectListWidget" id="projectlistwidget">
+            <property name="MemberName">projectlistwidget</property>
             <property name="Events">ButtonPressMask</property>
-            <signal name="FileDataSelectedEvent" handler="OnFiledatalistwidgetFileDataSelectedEvent" />
+            <signal name="ProjectSelectedEvent" handler="OnFiledatalistwidgetProjectSelectedEvent" />
           </widget>
           <packing>
             <property name="Position">0</property>
@@ -1990,38 +1990,6 @@
     </child>
   </widget>
   <widget class="Gtk.Window" id="LongoMatch.MainWindow" design-size="1194 569">
-    <action-group name="Player">
-      <action id="PlayAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">_Play</property>
-        <property name="ShortLabel" translatable="yes">dasdf</property>
-        <property name="StockId">gtk-media-play</property>
-      </action>
-      <action id="PauseAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">P_ause</property>
-        <property name="ShortLabel" translatable="yes">P_ause</property>
-        <property name="StockId">gtk-media-pause</property>
-      </action>
-      <action id="PreviousAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">P_revious</property>
-        <property name="ShortLabel" translatable="yes">P_revious</property>
-        <property name="StockId">gtk-media-previous</property>
-      </action>
-      <action id="NextAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">_Next</property>
-        <property name="ShortLabel" translatable="yes">_Next</property>
-        <property name="StockId">gtk-media-next</property>
-      </action>
-      <action id="OpenPlaylistAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">Open Playlist</property>
-        <property name="ShortLabel" translatable="yes">Open Playlist</property>
-        <signal name="Activated" handler="OnOpenPlaylistActionActivated" />
-      </action>
-    </action-group>
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -2131,6 +2099,38 @@
         <property name="ShortLabel" translatable="yes">_Save Project</property>
         <property name="StockId">gtk-save</property>
         <signal name="Activated" handler="OnSaveProjectActionActivated" />
+      </action>
+    </action-group>
+    <action-group name="Player">
+      <action id="PlayAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Play</property>
+        <property name="ShortLabel" translatable="yes">dasdf</property>
+        <property name="StockId">gtk-media-play</property>
+      </action>
+      <action id="PauseAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">P_ause</property>
+        <property name="ShortLabel" translatable="yes">P_ause</property>
+        <property name="StockId">gtk-media-pause</property>
+      </action>
+      <action id="PreviousAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">P_revious</property>
+        <property name="ShortLabel" translatable="yes">P_revious</property>
+        <property name="StockId">gtk-media-previous</property>
+      </action>
+      <action id="NextAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Next</property>
+        <property name="ShortLabel" translatable="yes">_Next</property>
+        <property name="StockId">gtk-media-next</property>
+      </action>
+      <action id="OpenPlaylistAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Open Playlist</property>
+        <property name="ShortLabel" translatable="yes">Open Playlist</property>
+        <signal name="Activated" handler="OnOpenPlaylistActionActivated" />
       </action>
     </action-group>
     <property name="MemberName" />

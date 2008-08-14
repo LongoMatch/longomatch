@@ -11,7 +11,7 @@
 namespace LongoMatch.Widgets.Component {
     
     
-    public partial class FileDataListWidget {
+    public partial class ProjectListWidget {
         
         private Gtk.ScrolledWindow scrolledwindow2;
         
@@ -19,10 +19,10 @@ namespace LongoMatch.Widgets.Component {
         
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
-            // Widget LongoMatch.Widgets.Component.FileDataListWidget
+            // Widget LongoMatch.Widgets.Component.ProjectListWidget
             Stetic.BinContainer.Attach(this);
-            this.Name = "LongoMatch.Widgets.Component.FileDataListWidget";
-            // Container child LongoMatch.Widgets.Component.FileDataListWidget.Gtk.Container+ContainerChild
+            this.Name = "LongoMatch.Widgets.Component.ProjectListWidget";
+            // Container child LongoMatch.Widgets.Component.ProjectListWidget.Gtk.Container+ContainerChild
             this.scrolledwindow2 = new Gtk.ScrolledWindow();
             this.scrolledwindow2.CanFocus = true;
             this.scrolledwindow2.Name = "scrolledwindow2";

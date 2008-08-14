@@ -17,7 +17,7 @@ namespace LongoMatch.Widgets.Dialog {
         
         private Gtk.HBox hbox2;
         
-        private LongoMatch.Widgets.Component.FileDataListWidget filedatalistwidget1;
+        private LongoMatch.Widgets.Component.ProjectListWidget projectlistwidget1;
         
         private Gtk.VBox vbox2;
         
@@ -56,11 +56,9 @@ namespace LongoMatch.Widgets.Dialog {
             this.hbox2.Name = "hbox2";
             this.hbox2.Spacing = 6;
             // Container child hbox2.Gtk.Box+BoxChild
-            this.filedatalistwidget1 = new LongoMatch.Widgets.Component.FileDataListWidget();
-            this.filedatalistwidget1.Events = ((Gdk.EventMask)(256));
-            this.filedatalistwidget1.Name = "filedatalistwidget1";
-            this.hbox2.Add(this.filedatalistwidget1);
-            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.hbox2[this.filedatalistwidget1]));
+            this.projectlistwidget1 = null;
+            this.hbox2.Add(this.projectlistwidget1);
+            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.hbox2[this.projectlistwidget1]));
             w2.Position = 0;
             // Container child hbox2.Gtk.Box+BoxChild
             this.vbox2 = new Gtk.VBox();
@@ -158,10 +156,9 @@ namespace LongoMatch.Widgets.Dialog {
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 816;
+            this.DefaultWidth = 1024;
             this.DefaultHeight = 512;
             this.Show();
-            this.filedatalistwidget1.FileDataSelectedEvent += new LongoMatch.Widgets.Component.FileDataSelectedHandler(this.OnFiledatalistwidget1FileDataSelectedEvent);
             this.saveButton.Pressed += new System.EventHandler(this.OnSaveButtonPressed);
             this.deleteButton.Pressed += new System.EventHandler(this.OnDeleteButtonPressed);
             this.buttonOk.Clicked += new System.EventHandler(this.OnButtonOkClicked);
