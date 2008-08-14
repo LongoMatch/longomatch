@@ -45,7 +45,7 @@ namespace LongoMatch
 				base("LongoMatch")
 		{			
 			this.Build();
-			playerbin1.SetLogo(MainClass.ImagesDir()+"background.png");
+			playerbin1.SetLogo("background.png");
 			player = playerbin1.Player ;
 			player.LogoMode = true;
 			this.playlistwidget2.SetPlayer(player);
