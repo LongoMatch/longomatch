@@ -2,7 +2,7 @@
   <object type="CesarPlayer.PlayerBin" allow-children="false" base-type="Gtk.Bin" palette-category="CesarPlayer">
     <itemgroups>
       <itemgroup label="PlayerBin Properties">
-        <property name="File" />
+        <property name="LogoMode" />
       </itemgroup>
     </itemgroups>
     <signals>

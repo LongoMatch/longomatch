@@ -29,6 +29,7 @@ using LongoMatch.DB;
 using LongoMatch.TimeNodes;
 using LongoMatch.Widgets.Dialog;
 using LongoMatch.Widgets;
+using CesarPlayer;
 
 
 namespace LongoMatch
@@ -36,19 +37,22 @@ namespace LongoMatch
 	public partial class MainWindow : Gtk.Window
 	{
 		private static Project openedProject;
-		private CesarPlayer.IPlayer player;
+
 		private TimeNode selectedTimeNode;
-		bool fileDataModified;	
+		private EventsManager eManager;
+
 
 		
 		public MainWindow() : 
 				base("LongoMatch")
 		{			
 			this.Build();
+			this.eManager = new EventsManager(this.treewidget1,this.buttonswidget1,this.playlistwidget2,
+			                                  this.playerbin1,this.timelinewidget1);
 			playerbin1.SetLogo("background.png");
-			player = playerbin1.Player ;
-			player.LogoMode = true;
-			this.playlistwidget2.SetPlayer(player);
+
+			playerbin1.LogoMode = true;
+			this.playlistwidget2.SetPlayer((ISimplePlayer) playerbin1);
 
 
 		}
@@ -56,7 +60,8 @@ namespace LongoMatch
 		
 
 		private void SetProject(Project project){			
-			openedProject = project;			
+			openedProject = project;
+			this.eManager.OpenedProject = project;
 			if (project!=null){		
 				if(!File.Exists(project.File.FilePath)){
 					MessageDialog infoDialog = new MessageDialog (this,DialogFlags.Modal,MessageType.Warning,ButtonsType.Ok,Catalog.GetString("The file associated to this proyect doesn't exits.\n If the location of the file has changed try to change it with de DataBase Manager.") );
@@ -67,14 +72,14 @@ namespace LongoMatch
 				else {
 					
 					this.Title = System.IO.Path.GetFileNameWithoutExtension(project.File.FilePath) + " - LongoMatch";
-					playerbin1.File=project.File.FilePath;
+					this.playerbin1.Open(project.File.FilePath);
 					this.playlistwidget2.Stop();
 					
-					treewidget1.Project=project;						
+					this.treewidget1.Project=project;						
 					this.timelinewidget1.Project = project;
 					this.buttonswidget1.Sections = project.Sections;	
 					if (project.File.HasVideo){
-						player.LogoMode = false;
+						this.playerbin1.LogoMode = false;
 						this.FullScreenAction.Sensitive = true;
 					}
 					this.CloseProjectAction.Sensitive=true;
@@ -110,9 +115,10 @@ namespace LongoMatch
 			this.Title = "LongoMatch";
 			this.HideWidgets();
 			this.playerbin1.Close();			
-			this.player.LogoMode = true;
+			this.playerbin1.LogoMode = true;
 			this.SaveDB();			
 			openedProject = null;	
+			this.eManager.OpenedProject = null;
 			this.selectedTimeNode = null;
 			this.CloseProjectAction.Sensitive=false;
 			this.SaveProjectAction.Sensitive = false;
@@ -125,7 +131,7 @@ namespace LongoMatch
 		private void SaveDB(){			
 			if (openedProject != null){
 				MainClass.DB.UpdateProject(OpenedProject());
-				this.fileDataModified=false;
+
 			}
 			
 		}
@@ -220,62 +226,8 @@ namespace LongoMatch
 				hpaned.Position = args.Requisition.Width;
 		}
 		
-		protected virtual void OnNewMark(int i, Time startTime, Time stopTime){
-			if (player != null && openedProject != null){
-				
-				Time pos = new Time((int)player.CurrentTime);
-				Time start = pos - startTime;
-				Time stop = pos + stopTime;
-				Time fStart = (start < new Time(0)) ? new Time(0) : start;
-				//La longitud tiene que ser en ms
-				Time length = new Time((int)player.StreamLength*1000);
-				Time fStop = (stop > length) ? length: stop;
-				Pixbuf miniature = this.playerbin1.CurrentThumbnail;
-				MediaTimeNode tn = openedProject.AddTimeNode(i,fStart, fStop,miniature);				
-				treewidget1.AddTimeNode(tn,i);
-				this.fileDataModified = true;
-				this.timelinewidget1.QueueDraw();
-			}
-		}
-
-		protected virtual void OnTimeNodeSelected (MediaTimeNode tNode)
-		{			
-			this.selectedTimeNode = tNode;			
-			this.timelinewidget1.SelectedTimeNode = tNode;
-			this.playerbin1.SetStartStop(tNode.Start.MSeconds,tNode.Stop.MSeconds);		
-		}
-
 		
-		protected virtual void OnTimeNodeChanged (TimeNode tNode, object val)
-		{
-			//Si hemos modificado el valor de un nodo de tiempo a través del 
-			//widget de ajuste de tiempo posicionamos el reproductor en el punto
-			//
-			if (tNode is MediaTimeNode && val is Time ){	
-				if(tNode != selectedTimeNode)
-					this.OnTimeNodeSelected((MediaTimeNode)tNode);
-				Time pos = (Time)val;
-				this.player.Pause();
-				if (pos == tNode.Start){
-					
-					this.playerbin1.UpdateSegmentStartTime(pos.MSeconds);
-				}				
-				else{
-					this.playerbin1.UpdateSegmentStopTime(pos.MSeconds);
-				}	
-			}	
-			else if (tNode is SectionsTimeNode){
-				this.buttonswidget1.Sections = openedProject.Sections;
-			}
-			this.fileDataModified = true;			
-		}
 
-		protected virtual void OnTimeNodeDeleted (MediaTimeNode tNode)
-		{
-			openedProject.DelTimeNode(tNode);		
-			this.fileDataModified = true;
-			this.timelinewidget1.QueueDraw();
-		}
 
 
 		protected virtual void OnDeleteEvent (object o, Gtk.DeleteEventArgs args)
@@ -286,34 +238,6 @@ namespace LongoMatch
 					
 		}
 
-		protected virtual void OnPlayListNodeAdded (MediaTimeNode tNode)
-		{
-			this.playlistwidget2.Add(new PlayListTimeNode(openedProject.File.FilePath,tNode));
-		}
-
-		protected virtual void OnPlaylistwidget2PlayListNodeSelected (PlayListTimeNode plNode, bool hasNext)
-		{
-			if (openedProject == null){
-				this.selectedTimeNode = plNode;
-				this.playerbin1.SetPlayListElement(plNode.FileName,plNode.Start.MSeconds,plNode.Stop.MSeconds,hasNext);
-			}
-		}
-		
-		protected virtual void OnPlayListSegmentDone ()
-		{	
-			playlistwidget2.Next();
-		}
-
-		protected virtual void OnPlayerbin1SegmentClosedEvent ()
-		{
-			this.selectedTimeNode = null;
-			this.timelinewidget1.SelectedTimeNode = null;
-		}
-
-		protected virtual void OnTimeline2PositionChanged (Time pos)
-		{
-			this.player.SeekInSegment(pos.MSeconds);
-		}		
 
 		protected virtual void OnQuitActivated (object sender, System.EventArgs e)
 		{
@@ -359,28 +283,8 @@ namespace LongoMatch
 			this.CloseActualProyect();
 		}
 
-		protected virtual void OnPlayerbin1Next ()
-		{
-			this.playlistwidget2.Next();
-		}
+		
 
-		protected virtual void OnPlayerbin1Prev ()
-		{
-			if (this.selectedTimeNode is MediaTimeNode){
-				this.playerbin1.Player.SeekInSegment(this.selectedTimeNode.Start.MSeconds);
-				player.Play();
-			}
-			else if (this.selectedTimeNode is PlayListTimeNode)
-				this.playlistwidget2.Prev();
-			else if (this.selectedTimeNode == null)
-				this.playerbin1.Player.SeekTo(0,false);
-		}
-
-		protected virtual void OnPlayerbin1Tick (object o, CesarPlayer.TickArgs args)
-		{
-			if (args.CurrentTime != 0 && this.timelinewidget1 != null && openedProject != null)
-				this.timelinewidget1.CurrentFrame=(uint)(args.CurrentTime * openedProject.File.Fps / 1000);
-		}
 
 		protected virtual void OnCaptureModeActionToggled (object sender, System.EventArgs e)
 		{
@@ -397,9 +301,7 @@ namespace LongoMatch
 			
 		}
 
-		protected virtual void OnAnalyzeModeActionToggled (object sender, System.EventArgs e)
-		{
-		}
+		
 
 		protected virtual void OnFullScreenActionToggled (object sender, System.EventArgs e)
 		{

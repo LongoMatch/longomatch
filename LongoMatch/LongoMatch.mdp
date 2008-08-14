@@ -92,6 +92,7 @@
     <File name="gtk-gui/LongoMatch.Widgets.Component.fakeColorBin.cs" subtype="Code" buildaction="Compile" />
     <File name="background.png" subtype="Code" buildaction="FileCopy" />
     <File name="gtk-gui/LongoMatch.Widgets.Component.ProjectListWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="EventsManager.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="Db4objects.Db4o.dll" />

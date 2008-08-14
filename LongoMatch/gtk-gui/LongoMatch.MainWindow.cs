@@ -215,6 +215,7 @@ namespace LongoMatch {
             this.playerbin1 = new CesarPlayer.PlayerBin();
             this.playerbin1.Events = ((Gdk.EventMask)(256));
             this.playerbin1.Name = "playerbin1";
+            this.playerbin1.LogoMode = false;
             this.vbox5.Add(this.playerbin1);
             Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(this.vbox5[this.playerbin1]));
             w8.Position = 0;
@@ -284,23 +285,8 @@ namespace LongoMatch {
             this.FullScreenAction.Toggled += new System.EventHandler(this.OnFullScreenActionToggled);
             this.PlaylistAction.Toggled += new System.EventHandler(this.OnPlaylistActionToggled);
             this.CaptureModeAction.Toggled += new System.EventHandler(this.OnCaptureModeActionToggled);
-            this.AnalyzeModeAction.Toggled += new System.EventHandler(this.OnAnalyzeModeActionToggled);
             this.SaveProjectAction.Activated += new System.EventHandler(this.OnSaveProjectActionActivated);
-            this.treewidget1.TimeNodeSelected += new LongoMatch.Handlers.TimeNodeSelectedHandler(this.OnTimeNodeSelected);
-            this.treewidget1.TimeNodeChanged += new LongoMatch.Handlers.TimeNodeChangedHandler(this.OnTimeNodeChanged);
-            this.treewidget1.TimeNodeDeleted += new LongoMatch.Handlers.TimeNodeDeletedHandler(this.OnTimeNodeDeleted);
-            this.treewidget1.PlayListNodeAdded += new LongoMatch.Handlers.PlayListNodeAddedHandler(this.OnPlayListNodeAdded);
-            this.playerbin1.SegmentClosedEvent += new CesarPlayer.SegmentClosedHandler(this.OnPlayerbin1SegmentClosedEvent);
             this.playerbin1.Error += new CesarPlayer.ErrorHandler(this.OnPlayerbin1Error);
-            this.playerbin1.Tick += new CesarPlayer.TickHandler(this.OnPlayerbin1Tick);
-            this.playerbin1.Next += new CesarPlayer.NextButtonClickedHandler(this.OnPlayerbin1Next);
-            this.playerbin1.Prev += new CesarPlayer.PrevButtonClickedHandler(this.OnPlayerbin1Prev);
-            this.timelinewidget1.TimeNodeChanged += new LongoMatch.Handlers.TimeNodeChangedHandler(this.OnTimeNodeChanged);
-            this.timelinewidget1.TimeNodeSelected += new LongoMatch.Handlers.TimeNodeSelectedHandler(this.OnTimeNodeSelected);
-            this.timelinewidget1.TimeNodeDeleted += new LongoMatch.Handlers.TimeNodeDeletedHandler(this.OnTimeNodeDeleted);
-            this.timelinewidget1.PlayListNodeAdded += new LongoMatch.Handlers.PlayListNodeAddedHandler(this.OnPlayListNodeAdded);
-            this.buttonswidget1.NewMarkEvent += new LongoMatch.Handlers.NewMarkEventHandler(this.OnNewMark);
-            this.playlistwidget2.PlayListNodeSelected += new LongoMatch.Handlers.PlayListNodeSelectedHandler(this.OnPlaylistwidget2PlayListNodeSelected);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace CesarPlayer
 {
 	
 	
-	public partial class PlayerBin : Gtk.Bin
+	public partial class PlayerBin : Gtk.Bin, ISimplePlayer
 	{
 		
 		public event PlayListSegmentDoneHandler PlayListSegmentDoneEvent;
@@ -86,23 +86,30 @@ namespace CesarPlayer
 		
 		}
 		
-		public string File {
-			set{
-				this.filename = value;
+		public void Open (string mrl){
+			this.filename = mrl;
 				this.ResetGui();
-				player.Open(value);
-			
-			}
-			get{
-				return this.filename;
-			}
-			
-			
-			
+				player.Open(mrl);
 		}
 		
-		public IPlayer Player{
-			get {return player;}
+		public void Play(){
+			player.Play();
+		}
+		
+		public void Pause(){
+			this.player.Pause();
+		}
+		
+		public long AccurateCurrentTime{
+			get{return this.player.AccurateCurrentTime;}
+		}
+		
+		public long CurrentTime{
+			get{return this.player.CurrentTime;}
+		}
+		
+		public long StreamLength{
+			get{return player.StreamLength;}
 		}
 		
 		public bool FullScreen{
@@ -113,7 +120,8 @@ namespace CesarPlayer
 					this.GdkWindow.Unfullscreen();
 			}
 		}
-		public Pixbuf CurrentThumbnail{
+		
+		public Pixbuf CurrentFrame{
 			get{
 				int h,w;
 				double rate;
@@ -125,6 +133,15 @@ namespace CesarPlayer
 					return pixbuf.ScaleSimple(THUMBNAIL_WIDTH,(int)(THUMBNAIL_WIDTH/rate),InterpType.Bilinear);
 				}
 				else return null;
+			}
+		}
+		
+		public bool LogoMode {
+			get{
+				return this.player.LogoMode;
+			}
+			set{
+				this.player.LogoMode = value;
 			}
 		}
 		
@@ -147,8 +164,8 @@ namespace CesarPlayer
 				this.nextbutton.Sensitive = true;
 			else
 				this.nextbutton.Sensitive = false;
-			if (fileName != this.File){
-				this.File = fileName;				
+			if (fileName != this.filename){
+				this.filename = fileName;				
 				player.NewFileSeek(start,stop);		
 				player.Play();
 			}
@@ -163,15 +180,24 @@ namespace CesarPlayer
 		}
 		
 		public void Close(){
-			this.Player.Close();
+			this.player.Close();
 			this.filename = null;
 			this.timescale.Value = 0;
 			this.UnSensitive();
 		}
 		
-		public void Pause(){
-			Player.Pause();
+		
+		
+		
+		
+		public void SeekTo(long time, bool accurate){
+			this.player.SeekTo(time,accurate);
 		}
+		
+		public void SeekInSegment(long pos){
+			player.SeekInSegment(pos);
+		}
+		
 		public void UpdateSegmentStartTime (long start){
 			this.segmentStartTime = start;
 			player.UpdateSegmentStartTime(start);

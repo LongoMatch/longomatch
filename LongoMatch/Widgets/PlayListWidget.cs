@@ -36,7 +36,7 @@ namespace LongoMatch.Widgets.Component
 	public partial class PlayListWidget : Gtk.Bin
 	{
 		public event PlayListNodeSelectedHandler PlayListNodeSelected;
-		private IPlayer player;
+		private ISimplePlayer player;
 		private PlayListTimeNode plNode;
 		private PlayList playList;
 		private uint timeout;
@@ -54,7 +54,7 @@ namespace LongoMatch.Widgets.Component
 		}
 
 		
-		public void SetPlayer(IPlayer player){
+		public void SetPlayer(ISimplePlayer player){
 			this.player = player;		
 		}
 		
