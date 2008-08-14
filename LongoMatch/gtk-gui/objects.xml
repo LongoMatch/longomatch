@@ -85,4 +85,12 @@
       </itemgroup>
     </signals>
   </object>
+  <object type="LongoMatch.Widgets.Component.ProjectListWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="ProjectListWidget Signals">
+        <signal name="ProjectSelectedEvent" />
+      </itemgroup>
+    </signals>
+  </object>
 </objects>

@@ -133,6 +133,7 @@
       <Widget>LongoMatch.Widgets.Component.fakeColorBin</Widget>
       <Widget>LongoMatch.Widgets.Component.PlayListTreeView</Widget>
       <Widget>LongoMatch.Widgets.Component.TimeNodesTreeView</Widget>
+      <Widget>LongoMatch.Widgets.Component.ProjectListWidget</Widget>
     </ExportedWidgets>
   </GtkDesignInfo>
   <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="../CesarPlayer/Makefile.am" RelativeConfigureInPath="../">

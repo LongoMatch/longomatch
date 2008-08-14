@@ -31,7 +31,7 @@ namespace LongoMatch.Widgets.Dialog
 	public partial class DBManager : Gtk.Dialog
 	{
 
-		// FIXME No permitir que se editen proyectos abiertos
+		
 		
 		public DBManager()
 		{

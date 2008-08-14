@@ -203,7 +203,7 @@ namespace LongoMatch
 		
 		protected virtual void OnCloseActivated (object sender, System.EventArgs e)
 		{
-			// FIXME Ask to Save the Project if it has changed
+
 			this.SaveDB();
 			this.CloseActualProyect();			
 		}
@@ -317,7 +317,7 @@ namespace LongoMatch
 
 		protected virtual void OnQuitActivated (object sender, System.EventArgs e)
 		{
-			// FIXME Ask to Save the Project if it has changed
+
 			this.SaveDB();
 			this.playerbin1.Destroy();
 			Application.Quit();

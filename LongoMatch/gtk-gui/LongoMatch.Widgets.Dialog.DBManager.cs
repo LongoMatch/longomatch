@@ -56,7 +56,9 @@ namespace LongoMatch.Widgets.Dialog {
             this.hbox2.Name = "hbox2";
             this.hbox2.Spacing = 6;
             // Container child hbox2.Gtk.Box+BoxChild
-            this.projectlistwidget1 = null;
+            this.projectlistwidget1 = new LongoMatch.Widgets.Component.ProjectListWidget();
+            this.projectlistwidget1.Events = ((Gdk.EventMask)(256));
+            this.projectlistwidget1.Name = "projectlistwidget1";
             this.hbox2.Add(this.projectlistwidget1);
             Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.hbox2[this.projectlistwidget1]));
             w2.Position = 0;
@@ -159,6 +161,7 @@ namespace LongoMatch.Widgets.Dialog {
             this.DefaultWidth = 1024;
             this.DefaultHeight = 512;
             this.Show();
+            this.projectlistwidget1.ProjectSelectedEvent += new LongoMatch.Widgets.Component.ProjectSelectedHandler(this.OnFiledatalistwidget1ProjectSelectedEvent);
             this.saveButton.Pressed += new System.EventHandler(this.OnSaveButtonPressed);
             this.deleteButton.Pressed += new System.EventHandler(this.OnDeleteButtonPressed);
             this.buttonOk.Clicked += new System.EventHandler(this.OnButtonOkClicked);

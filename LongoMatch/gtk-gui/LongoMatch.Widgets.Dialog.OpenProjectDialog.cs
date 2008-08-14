@@ -31,7 +31,9 @@ namespace LongoMatch.Widgets.Dialog {
             w1.Name = "dialog1_VBox";
             w1.BorderWidth = ((uint)(2));
             // Container child dialog1_VBox.Gtk.Box+BoxChild
-            this.projectlistwidget = null;
+            this.projectlistwidget = new LongoMatch.Widgets.Component.ProjectListWidget();
+            this.projectlistwidget.Events = ((Gdk.EventMask)(256));
+            this.projectlistwidget.Name = "projectlistwidget";
             w1.Add(this.projectlistwidget);
             Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(w1[this.projectlistwidget]));
             w2.Position = 0;
@@ -72,6 +74,7 @@ namespace LongoMatch.Widgets.Dialog {
             this.DefaultWidth = 400;
             this.DefaultHeight = 300;
             this.Show();
+            this.projectlistwidget.ProjectSelectedEvent += new LongoMatch.Widgets.Component.ProjectSelectedHandler(this.OnFiledatalistwidgetProjectSelectedEvent);
         }
     }
 }
