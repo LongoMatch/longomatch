@@ -58,7 +58,7 @@
     <Compile Include="Handlers.cs" />
     <Compile Include="IMetadataReader.cs" />
     <Compile Include="IPlayer.cs" />
-    <Compile Include="MainWindow.cs" />
+    <Compile Include="ISimplePlayer.cs" />
     <Compile Include="ObjectManager.cs" />
     <Compile Include="PlayerBin.cs" />
     <Compile Include="PlayerMaker.cs" />

@@ -76,6 +76,7 @@
     <Compile Include="DB\Sections.cs">
       <Link>Sections.cs</Link>
     </Compile>
+    <Compile Include="EventsManager.cs" />
     <Compile Include="gtk-gui\generated.cs">
       <Link>generated.cs</Link>
     </Compile>
@@ -88,14 +89,14 @@
     <Compile Include="gtk-gui\LongoMatch.Widgets.Component.fakeColorBin.cs">
       <Link>LongoMatch.Widgets.Component.fakeColorBin.cs</Link>
     </Compile>
-    <Compile Include="gtk-gui\LongoMatch.Widgets.Component.FileDataListWidget.cs">
-      <Link>LongoMatch.Widgets.Component.FileDataListWidget.cs</Link>
-    </Compile>
     <Compile Include="gtk-gui\LongoMatch.Widgets.Component.FileDescriptionWidget.cs">
       <Link>LongoMatch.Widgets.Component.FileDescriptionWidget.cs</Link>
     </Compile>
     <Compile Include="gtk-gui\LongoMatch.Widgets.Component.PlayListWidget.cs">
       <Link>LongoMatch.Widgets.Component.PlayListWidget.cs</Link>
+    </Compile>
+    <Compile Include="gtk-gui\LongoMatch.Widgets.Component.ProjectListWidget.cs">
+      <Link>LongoMatch.Widgets.Component.ProjectListWidget.cs</Link>
     </Compile>
     <Compile Include="gtk-gui\LongoMatch.Widgets.Component.SectionsPropertiesWidget.cs">
       <Link>LongoMatch.Widgets.Component.SectionsPropertiesWidget.cs</Link>
@@ -170,6 +171,18 @@
     <Compile Include="Time\TimeNode.cs">
       <Link>TimeNode.cs</Link>
     </Compile>
+    <Compile Include="Video\AudioQuality.cs">
+      <Link>AudioQuality.cs</Link>
+    </Compile>
+    <Compile Include="Video\FFMPEGVideoEditor.cs">
+      <Link>FFMPEGVideoEditor.cs</Link>
+    </Compile>
+    <Compile Include="Video\IVideoEditor.cs">
+      <Link>IVideoEditor.cs</Link>
+    </Compile>
+    <Compile Include="Video\VideoQuality.cs">
+      <Link>VideoQuality.cs</Link>
+    </Compile>
     <Compile Include="Widgets\ButtonsWidget.cs">
       <Link>ButtonsWidget.cs</Link>
     </Compile>
@@ -181,9 +194,6 @@
     </Compile>
     <Compile Include="Widgets\fakeColorBin.cs">
       <Link>fakeColorBin.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\FileDataListWidget.cs">
-      <Link>FileDataListWidget.cs</Link>
     </Compile>
     <Compile Include="Widgets\FileDescriptionWidget.cs">
       <Link>FileDescriptionWidget.cs</Link>
@@ -205,6 +215,9 @@
     </Compile>
     <Compile Include="Widgets\PlayListWidget.cs">
       <Link>PlayListWidget.cs</Link>
+    </Compile>
+    <Compile Include="Widgets\ProjectListWidget.cs">
+      <Link>ProjectListWidget.cs</Link>
     </Compile>
     <Compile Include="Widgets\SectionsPropertiesWidget.cs">
       <Link>SectionsPropertiesWidget.cs</Link>
@@ -236,6 +249,9 @@
     <Compile Include="Widgets\TreeWidget.cs">
       <Link>TreeWidget.cs</Link>
     </Compile>
+    <None Include="lgmlogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CesarPlayer\CesarPlayer.csproj">
