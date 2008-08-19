@@ -35,7 +35,7 @@ namespace LongoMatch.Video
 		VideoQuality vq;
 		AudioQuality aq;
 		bool audioEnabled;
-		//Process process;
+		Process process;
 		
 		public FFMPEGVideoEditor(PlayList playlist, string outputFile, VideoQuality vq, AudioQuality aq)
 		{
