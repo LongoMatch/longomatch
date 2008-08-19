@@ -152,13 +152,13 @@ namespace LongoMatch
 				this.player.SetPlayListElement(plNode.FileName,plNode.Start.MSeconds,plNode.Stop.MSeconds,hasNext);
 			}
 			else {
-				MessageDialog error = new MessageDialog(this,
-						                                        DialogFlags.DestroyWithParent,
-						                                        MessageType.Error,
-						                                        ButtonsType.Ok,
-						                                        "Please, close the opened project to play the playlist.");
-						error.Run();
-						error.Destroy();
+				MessageDialog error = new MessageDialog(null,
+				                                        DialogFlags.DestroyWithParent,
+				                                        MessageType.Error,
+				                                        ButtonsType.Ok,
+				                                        "Please, close the opened project to play the playlist.");
+				error.Run();
+				error.Destroy();
 			}
 		}
 		

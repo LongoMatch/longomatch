@@ -1756,6 +1756,8 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
   return ret;
 }
 
+
+
 static gboolean
 poll_for_state_change_full (BaconVideoWidget *bvw, GstElement *element,
     GstState state, GstMessage ** err_msg, gint64 timeout)
@@ -3451,6 +3453,7 @@ got_new_video_sink_bin_element (GstBin *video_sink, GstElement *element,
 }
 
 static void bvw_window_construct(int width, int weight,  BaconVideoWidget *bvw){
+	
 	//Create the Video Widget
 	bvw->priv->video_window = gst_video_widget_new();
 	
@@ -3492,7 +3495,7 @@ bacon_video_widget_new (int width, int height,
 
   bvw->priv->play = gst_element_factory_make ("playbin", "play");
   if (!bvw->priv->play) {
-	  g_print("Erroe");
+
     g_set_error (err, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
                  _("Failed to create a GStreamer play object. "
                    "Please check your GStreamer installation."));

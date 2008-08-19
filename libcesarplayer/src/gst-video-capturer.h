@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
 /*
  * foob
- * Copyright (C)  2008 <>
+ * Copyright (C)  2008 <Andoni Morales Alastruey>
  * 
  * foob is free software.
  * 
@@ -76,11 +76,6 @@ typedef enum{
 	GVC_AUDIO_ENCODER_MPEG1
 }GvcAudioEncoderType;
 
-typedef enum {
-	GVC_ENCODING_PASS_TYPE_CBR = 0,
-	GVC_ENCODING_PASS_TYPE_VBR1 = 512,
-	GVC_ENCODING_PASS_TYPE_VBR2 = 1024
-}GvcEncodingPassType;
 
 GType gst_video_capturer_get_type (void) G_GNUC_CONST;
 

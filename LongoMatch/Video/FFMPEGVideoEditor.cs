@@ -19,50 +19,62 @@
 //
 
 using System;
+using System.Diagnostics;
 
-namespace LongoMatch
+
+namespace LongoMatch.Video
 {
 	
 	
 	public class FFMPEGVideoEditor : IVideoEditor
 	{
+		
+		public event System.EventHandler EditionFinished;
 		PlayList playlist;
 		string outputFile;
 		VideoQuality vq;
 		AudioQuality aq;
+		bool audioEnabled;
+		//Process process;
 		
 		public FFMPEGVideoEditor(PlayList playlist, string outputFile, VideoQuality vq, AudioQuality aq)
 		{
 			this.playlist = playlist;
 			this.outputFile = outputFile;
 			this.aq = aq;
-			this.vq = vq;
-			
-			
+			this.vq = vq;	
 		}
 		
-		PlayList PlayList {
-			set;
+		public PlayList PlayList {
+			set{this.playlist = value;}
+			get{return this.playlist;}
 		}
 		
-		VideoQuality VideoQuality{
-			set;
+		public VideoQuality VideoQuality{
+			set{this.vq = value;}
+			get{return this.vq;}
 		}
 		
-		AudioQuality AudioQuality{
-			set;
+		public AudioQuality AudioQuality{
+			set{this.aq = value;}
+			get{return this.aq;}
 		}
 		
-		string OutputFile{
-			set;
+		public string OutputFile{
+			set{this.outputFile = value;}
+			get{return this.outputFile;}
 		}
 		
-		bool EnableAudio{
-			set;
+		public bool EnableAudio{
+			set{this.audioEnabled = value;}
+			get{return this.audioEnabled;}
 		}
 		
-		void Start();
+		public void Start(){
+
+			//process = new Process();
+		}
 		
-		void Cancel();
+		public void Cancel(){}
 	}
 }
