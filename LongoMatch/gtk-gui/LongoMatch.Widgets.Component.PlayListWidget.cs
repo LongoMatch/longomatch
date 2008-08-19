@@ -31,6 +31,8 @@ namespace LongoMatch.Widgets.Component {
         
         private Gtk.Button savebutton;
         
+        private Gtk.Button newvideobutton;
+        
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
             // Widget LongoMatch.Widgets.Component.PlayListWidget
@@ -151,11 +153,34 @@ namespace LongoMatch.Widgets.Component {
             this.hbox2.Add(this.savebutton);
             Gtk.Box.BoxChild w33 = ((Gtk.Box.BoxChild)(this.hbox2[this.savebutton]));
             w33.Position = 2;
+            // Container child hbox2.Gtk.Box+BoxChild
+            this.newvideobutton = new Gtk.Button();
+            this.newvideobutton.CanFocus = true;
+            this.newvideobutton.Name = "newvideobutton";
+            this.newvideobutton.UseUnderline = true;
+            // Container child newvideobutton.Gtk.Container+ContainerChild
+            Gtk.Alignment w34 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
+            Gtk.HBox w35 = new Gtk.HBox();
+            w35.Spacing = 2;
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Image w36 = new Gtk.Image();
+            w36.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-record", Gtk.IconSize.Button, 20);
+            w35.Add(w36);
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Label w38 = new Gtk.Label();
+            w38.LabelProp = "";
+            w35.Add(w38);
+            w34.Add(w35);
+            this.newvideobutton.Add(w34);
+            this.hbox2.Add(this.newvideobutton);
+            Gtk.Box.BoxChild w42 = ((Gtk.Box.BoxChild)(this.hbox2[this.newvideobutton]));
+            w42.Position = 3;
             this.vbox2.Add(this.hbox2);
-            Gtk.Box.BoxChild w34 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox2]));
-            w34.Position = 1;
-            w34.Expand = false;
-            w34.Fill = false;
+            Gtk.Box.BoxChild w43 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox2]));
+            w43.Position = 1;
+            w43.Expand = false;
+            w43.Fill = false;
             this.Add(this.vbox2);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
@@ -166,6 +191,7 @@ namespace LongoMatch.Widgets.Component {
             this.newbutton.Clicked += new System.EventHandler(this.OnNewbuttonClicked);
             this.openbutton.Clicked += new System.EventHandler(this.OnOpenbuttonClicked);
             this.savebutton.Clicked += new System.EventHandler(this.OnSavebuttonClicked);
+            this.newvideobutton.Clicked += new System.EventHandler(this.OnNewvideobuttonClicked);
         }
     }
 }

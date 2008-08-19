@@ -26,6 +26,7 @@ using Mono.Unix;
 using System.IO;
 using LongoMatch.Handlers;
 using LongoMatch.TimeNodes;
+using LongoMatch.Video;
 
 
 
@@ -232,6 +233,12 @@ namespace LongoMatch.Widgets.Component
 		{
 			
 			this.playList.SetModel((ListStore)this.playlisttreeview1.Model);
+		}
+
+		protected virtual void OnNewvideobuttonClicked (object sender, System.EventArgs e)
+		{
+			IVideoEditor videoEditor= new FFMPEGVideoEditor (this.playList,"NewVideo.avi",VideoQuality.Good,AudioQuality.Good);
+			videoEditor.Start();
 		}
 
 		

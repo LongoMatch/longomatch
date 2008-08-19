@@ -2521,7 +2521,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Widgets.Component.PlayListWidget" design-size="252 447">
+  <widget class="Gtk.Bin" id="LongoMatch.Widgets.Component.PlayListWidget" design-size="291 447">
     <property name="MemberName" />
     <property name="WidthRequest">100</property>
     <child>
@@ -2625,6 +2625,21 @@
               </widget>
               <packing>
                 <property name="Position">2</property>
+                <property name="AutoSize">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Button" id="newvideobutton">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="Type">TextAndIcon</property>
+                <property name="Icon">stock:gtk-media-record Button</property>
+                <property name="Label" translatable="yes" />
+                <property name="UseUnderline">True</property>
+                <signal name="Clicked" handler="OnNewvideobuttonClicked" />
+              </widget>
+              <packing>
+                <property name="Position">3</property>
                 <property name="AutoSize">False</property>
               </packing>
             </child>

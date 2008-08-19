@@ -84,6 +84,14 @@ namespace LongoMatch
 			return System.IO.Path.Combine (homeDirectory, "thumbnails");
 		}
 		
+		public static string VideosDir(){
+			return System.IO.Path.Combine (homeDirectory, "videos");
+		}
+		
+		public static string TempVideosDir(){
+			return System.IO.Path.Combine (VideosDir(), "temp");
+		}
+		
 		public static string ImagesDir(){
 			return System.IO.Path.Combine (baseDirectory, "./");
 		}
@@ -106,6 +114,10 @@ namespace LongoMatch
 			    System.IO.Directory.CreateDirectory(PlayListDir());
 			if (!System.IO.Directory.Exists(DBDir()))
 			    System.IO.Directory.CreateDirectory(DBDir());
+			if (!System.IO.Directory.Exists(VideosDir()))
+			    System.IO.Directory.CreateDirectory(VideosDir());
+			if (!System.IO.Directory.Exists(TempVideosDir()))
+			    System.IO.Directory.CreateDirectory(TempVideosDir());
 			  
 		}
 		public static void CheckFiles(){			

@@ -149,6 +149,10 @@ namespace LongoMatch
 			
 		}
 		
+		public IEnumerator GetEnumerator(){
+			return this.list.GetEnumerator();
+		}
+		
 		
 	
 	

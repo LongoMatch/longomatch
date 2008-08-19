@@ -19,7 +19,9 @@
 //
 
 using System;
+using System.Threading;
 using System.Diagnostics;
+using LongoMatch.TimeNodes;
 
 
 namespace LongoMatch.Video
@@ -36,6 +38,7 @@ namespace LongoMatch.Video
 		AudioQuality aq;
 		bool audioEnabled;
 		Process process;
+
 		
 		public FFMPEGVideoEditor(PlayList playlist, string outputFile, VideoQuality vq, AudioQuality aq)
 		{
@@ -43,6 +46,7 @@ namespace LongoMatch.Video
 			this.outputFile = outputFile;
 			this.aq = aq;
 			this.vq = vq;	
+			this.process = new Process();
 		}
 		
 		public PlayList PlayList {
@@ -70,11 +74,60 @@ namespace LongoMatch.Video
 			get{return this.audioEnabled;}
 		}
 		
-		public void Start(){
-
-			//process = new Process();
+		public void Start(){			
+			string[] files = System.IO.Directory.GetFiles(MainClass.TempVideosDir());
+			Thread thread = new Thread(new ParameterizedThreadStart(EncodeVideo));
+			thread.Start(this.playlist);  
+			
 		}
 		
 		public void Cancel(){}
+		
+		private void MergeVideo(){
+			string list="";
+			string[] files = System.IO.Directory.GetFiles(MainClass.TempVideosDir());
+			foreach (String file in files)
+				list = list + file +" ";
+			ProcessStartInfo pinfo = new ProcessStartInfo();
+			pinfo.FileName="mencoder";
+			pinfo.Arguments = "-oac copy -ovc copy " + list +" -o " + System.IO.Path.Combine (MainClass.VideosDir(),this.OutputFile);
+			process.StartInfo = pinfo;
+			process.Start();
+			process.WaitForExit();			
+		}
+		
+		
+		private void EncodeVideo(object o){
+			int i= 0;
+			if (o is PlayList){
+				PlayList playList = (PlayList)o;
+				foreach (PlayListTimeNode plNode in playList){				
+					
+					ProcessStartInfo pinfo = new ProcessStartInfo();
+					pinfo.FileName="ffmpeg";
+					pinfo.Arguments = "-i '" + plNode.FileName + "' -f avi -y -ss " + plNode.Start.ToMSecondsString() 
+						+ " -t " +plNode.Duration.ToMSecondsString() + " -vcodec  copy -acodec copy "
+						+ System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i);	
+					Console.WriteLine(pinfo.Arguments);
+					process.StartInfo = pinfo;
+					process.Start();
+					process.WaitForExit();
+					// HACK to rebuild the index of the splitted video.
+					pinfo = new ProcessStartInfo();
+					pinfo.FileName="ffmpeg";
+					pinfo.Arguments = "-i '" + System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i) 
+						+ "' -vcodec  copy -acodec copy "
+						+ System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i+".avi");					
+					process.StartInfo = pinfo;
+					process.Start();
+					process.WaitForExit();
+					
+					System.IO.File.Delete(System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i));					
+					i++;
+				}
+				Thread thread = new Thread(new ThreadStart(MergeVideo));
+				thread.Start(); 
+			}
+		}
 	}
 }

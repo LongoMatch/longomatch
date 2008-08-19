@@ -19,13 +19,14 @@
 //
 
 using System;
+using System.Collections;
 using Gtk;
 using LongoMatch.TimeNodes;
 
 namespace LongoMatch{
 	
 	
-	public interface IPlayList
+	public interface IPlayList:IEnumerable
 	{
 		void Load (string path);
 		void Save (string path);
@@ -38,6 +39,7 @@ namespace LongoMatch{
 		bool HasNext();
 		bool HasPrev();
 		ListStore GetModel();
+		
 	
 		
 	}
