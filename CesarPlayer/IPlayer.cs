@@ -21,13 +21,11 @@
 using System;
 using Gtk;
 using Gdk;
+using LongoMatch.Video.Handlers;
 
-namespace CesarPlayer
+namespace LongoMatch.Video
+	      
 {
-	
-	
-
-
 	public interface IPlayer
 	{
 	
@@ -35,11 +33,11 @@ namespace CesarPlayer
 		// Events
 		
 		
-		event         CesarPlayer.SegmentDoneHandler SegmentDoneEvent;
-		event         CesarPlayer.ErrorHandler Error;
+		event         SegmentDoneHandler SegmentDoneEvent;
+		event         ErrorHandler Error;
 		event         System.EventHandler Eos;
-		event         StateChangedHandler StateChanged;
-		event         CesarPlayer.TickHandler Tick;
+		event         LongoMatch.Video.Handlers.StateChangedHandler StateChanged;
+		event         TickHandler Tick;
 		event         System.EventHandler GotDuration;
 		event         System.EventHandler SegmentDone;
 

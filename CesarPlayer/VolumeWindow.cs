@@ -18,8 +18,9 @@
 //
 //
 using System;
+using LongoMatch.Video.Handlers;
 
-namespace CesarPlayer
+namespace LongoMatch.Video
 {
 	
 	

@@ -32,6 +32,7 @@ namespace LongoMatch.Video
 	{
 		
 		public event System.EventHandler EditionFinished;
+		
 		PlayList playlist;
 		string outputFile;
 		VideoQuality vq;

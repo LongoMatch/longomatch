@@ -17,32 +17,32 @@
     <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="IPlayer.cs" subtype="Code" buildaction="Compile" />
     <File name="TimeString.cs" subtype="Code" buildaction="Compile" />
-    <File name="SignalUtils.cs" subtype="Code" buildaction="Compile" />
     <File name="PlayerMaker.cs" subtype="Code" buildaction="Compile" />
     <File name="VolumeWindow.cs" subtype="Code" buildaction="Compile" />
     <File name="PlayerBin.cs" subtype="Code" buildaction="Compile" />
-    <File name="Handlers.cs" subtype="Code" buildaction="Compile" />
     <File name="BufferingHandler.cs" subtype="Code" buildaction="Compile" />
-    <File name="ErrorHandler.cs" subtype="Code" buildaction="Compile" />
-    <File name="GotRedirectHandler.cs" subtype="Code" buildaction="Compile" />
     <File name="GstError.cs" subtype="Code" buildaction="Compile" />
     <File name="GstPlayerAspectRatio.cs" subtype="Code" buildaction="Compile" />
     <File name="GstPlayerMetadataType.cs" subtype="Code" buildaction="Compile" />
     <File name="GstUseType.cs" subtype="Code" buildaction="Compile" />
     <File name="ObjectManager.cs" subtype="Code" buildaction="Compile" />
     <File name="StateChangedHandler.cs" subtype="Code" buildaction="Compile" />
-    <File name="TitleChangeHandler.cs" subtype="Code" buildaction="Compile" />
-    <File name="TickHandler.cs" subtype="Code" buildaction="Compile" />
     <File name="gtk-gui/objects.xml" subtype="Code" buildaction="EmbedAsResource" />
     <File name="GstPlayer.cs" subtype="Code" buildaction="Compile" />
     <File name="gtk-gui/gui.stetic" subtype="Code" buildaction="EmbedAsResource" />
     <File name="gtk-gui/generated.cs" subtype="Code" buildaction="Compile" />
     <File name="IMetadataReader.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/CesarPlayer.VolumeWindow.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/CesarPlayer.PlayerBin.cs" subtype="Code" buildaction="Compile" />
     <File name="DSPlayer.cs" subtype="Code" buildaction="Compile" />
     <File name="DirectShowLib-2005.dll" subtype="Code" buildaction="Nothing" />
     <File name="ISimplePlayer.cs" subtype="Code" buildaction="Compile" />
+    <File name="Handlers" subtype="Directory" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.Video.PlayerBin.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.Video.VolumeWindow.cs" subtype="Code" buildaction="Compile" />
+    <File name="Handlers/ErrorHandler.cs" subtype="Code" buildaction="Compile" />
+    <File name="Handlers/GotRedirectHandler.cs" subtype="Code" buildaction="Compile" />
+    <File name="Handlers/Handlers.cs" subtype="Code" buildaction="Compile" />
+    <File name="Handlers/TickHandler.cs" subtype="Code" buildaction="Compile" />
+    <File name="Handlers/TitleChangeHandler.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
@@ -57,12 +57,12 @@
   <GtkDesignInfo isWidgetLibrary="True">
     <ExportedWidgets>
       <Widget>CesarPlayer.jander</Widget>
-      <Widget>CesarPlayer.PlayerBin</Widget>
       <Widget>CesarPlayer.prander</Widget>
       <Widget>cesarplayer.GtkTimeScale</Widget>
       <Widget>cesarplayer.GtkTimeScaleWidget</Widget>
       <Widget>CesarPlayer.GtkTimeScaleWidget</Widget>
       <Widget>CesarPlayer.TimeLine</Widget>
+      <Widget>LongoMatch.Video.PlayerBin</Widget>
     </ExportedWidgets>
   </GtkDesignInfo>
   <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="Makefile.am" RelativeConfigureInPath="../">

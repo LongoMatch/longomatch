@@ -22,7 +22,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace CesarPlayer
+namespace LongoMatch.Video
 {
 	public static class SignalUtils 
 	{

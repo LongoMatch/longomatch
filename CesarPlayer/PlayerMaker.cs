@@ -19,8 +19,7 @@
 //
 
 using System;
-
-namespace CesarPlayer
+namespace LongoMatch.Video
 {
 	
 	

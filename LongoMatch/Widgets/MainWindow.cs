@@ -28,8 +28,7 @@ using Gdk;
 using LongoMatch.DB;
 using LongoMatch.TimeNodes;
 using LongoMatch.Widgets.Dialog;
-using LongoMatch.Widgets;
-using CesarPlayer;
+using LongoMatch.Widgets;using LongoMatch.Video;
 
 
 namespace LongoMatch
@@ -274,7 +273,7 @@ namespace LongoMatch
 			fChooser.Destroy();			
 		}
 
-		protected virtual void OnPlayerbin1Error (object o, CesarPlayer.ErrorArgs args)
+		protected virtual void OnPlayerbin1Error (object o,LongoMatch.Video.Handlers.ErrorArgs args)
 		{
 			MessageDialog errorDialog = new MessageDialog (this,DialogFlags.Modal,MessageType.Error,ButtonsType.Ok,Catalog.GetString 
 			                                               ("The actual Proyect will bo closed due to this error on the media player:\n") +args.Message);

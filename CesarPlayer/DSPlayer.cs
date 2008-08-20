@@ -8,10 +8,11 @@ using System.Runtime.InteropServices;
 using System.Timers;
 using Gtk;
 using Gdk;
+using LongoMatch.Video.Handlers;
 
 
 
-namespace CesarPlayer
+namespace LongoMatch.Video
 {
     internal enum PlayState
     {
@@ -22,16 +23,16 @@ namespace CesarPlayer
     };
 	
 	
-    public class DSPlayer : UserControl, IPlayer, IMetadataReader
+    public class DSPlayer : UserControl, LongoMatch.Video.IPlayer, IMetadataReader
     {
 		
 				// Events
 
-		public event         StateChangedHandler StateChanged;
+		public event         LongoMatch.Video.Handlers.StateChangedHandler StateChanged;
 		public event         TickHandler Tick;
 		public event         System.EventHandler Eos;
 		public event         SegmentDoneHandler SegmentDoneEvent;		
-		public event         CesarPlayer.ErrorHandler Error;
+		public event         ErrorHandler Error;
 		public event         System.EventHandler GotDuration;
 		public event         System.EventHandler SegmentDone;
 		
@@ -77,7 +78,7 @@ namespace CesarPlayer
 			
 			// Reset status variables
 			this.currentState = PlayState.Stopped;
-			StateChangedArgs args = new StateChangedArgs();
+			LongoMatch.Video.Handlers.StateChangedArgs args = new LongoMatch.Video.Handlers.StateChangedArgs();
 			args.Args = new object[1];
 			args.Args[0] = false ;
 			if (this.StateChanged != null)
@@ -305,7 +306,7 @@ namespace CesarPlayer
             {
                 if (this.mediaControl.Run() >= 0){
                     this.currentState = PlayState.Running;
-					StateChangedArgs args = new StateChangedArgs();
+					LongoMatch.Video.Handlers.StateChangedArgs args = new LongoMatch.Video.Handlers.StateChangedArgs();
 					args.Args = new object[1];
 					args.Args[0] = true ;
 					if (this.StateChanged != null)						
@@ -319,7 +320,7 @@ namespace CesarPlayer
             {
                 if (this.mediaControl.Pause() >= 0){
                     this.currentState = PlayState.Paused;
-					StateChangedArgs args = new StateChangedArgs();
+					LongoMatch.Video.Handlers.StateChangedArgs args = new LongoMatch.Video.Handlers.StateChangedArgs();
 					args.Args = new object[1];
 					args.Args[0] = false ;
 					if (this.StateChanged != null)
@@ -341,7 +342,7 @@ namespace CesarPlayer
             {
                 if (this.mediaControl.Pause() >= 0){
                     this.currentState = PlayState.Paused;
-					StateChangedArgs args = new StateChangedArgs();
+					LongoMatch.Video.Handlers.StateChangedArgs args = new LongoMatch.Video.Handlers.StateChangedArgs();
 					args.Args = new object[1];
 					args.Args[0] = false ;
 					if (this.StateChanged != null)
@@ -360,7 +361,7 @@ namespace CesarPlayer
             {
                 if (this.mediaControl.Run() >= 0){
                     this.currentState = PlayState.Running;
-					StateChangedArgs args = new StateChangedArgs();
+					LongoMatch.Video.Handlers.StateChangedArgs args = new LongoMatch.Video.Handlers.StateChangedArgs();
 					args.Args = new object[1];
 					args.Args[0] = true ;
 					if (this.StateChanged != null)
@@ -387,7 +388,7 @@ namespace CesarPlayer
                 hr = this.mediaControl.Stop();
                 DsError.ThrowExceptionForHR(hr);
                 this.currentState = PlayState.Stopped;
-				StateChangedArgs args = new StateChangedArgs();
+				LongoMatch.Video.Handlers.StateChangedArgs args = new LongoMatch.Video.Handlers.StateChangedArgs();
 				args.Args = new object[1];
 				args.Args[0] = false ;
 if (this.StateChanged != null)

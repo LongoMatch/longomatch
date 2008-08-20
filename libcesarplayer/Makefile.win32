@@ -25,8 +25,8 @@ clean: clean-custom
 	${RM} $(OBJ) $(BIN)
 
 
-DEFFILE=libcesarplayer.def
-STATICLIB=libcesarplayer.a
+DEFFILE=libLongoMatch.Video.def
+STATICLIB=libLongoMatch.Video.a
 
 $(BIN): $(LINKOBJ)
 	

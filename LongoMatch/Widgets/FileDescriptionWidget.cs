@@ -189,14 +189,14 @@ namespace LongoMatch.Widgets.Component
 			
 			fChooser.SetCurrentFolder(System.Environment.GetFolderPath(Environment.SpecialFolder.Personal));
 			if (fChooser.Run() == (int)ResponseType.Accept){
-				CesarPlayer.PlayerMaker pm = new CesarPlayer.PlayerMaker();
-				CesarPlayer.IMetadataReader reader = pm.getMetadataReader();
+				LongoMatch.Video.PlayerMaker pm = new LongoMatch.Video.PlayerMaker();
+				LongoMatch.Video.IMetadataReader reader = pm.getMetadataReader();
 					try{
 						reader.Open(fChooser.Filename);
-						int duration = (int)reader.GetMetadata(CesarPlayer.GstPlayerMetadataType.Duration);
-						int fps = (int) reader.GetMetadata(CesarPlayer.GstPlayerMetadataType.Fps);
-						bool hasVideo = (bool) reader.GetMetadata(CesarPlayer.GstPlayerMetadataType.HasVideo);
-						bool hasAudio = (bool) reader.GetMetadata(CesarPlayer.GstPlayerMetadataType.HasAudio);
+						int duration = (int)reader.GetMetadata(LongoMatch.Video.GstPlayerMetadataType.Duration);
+						int fps = (int) reader.GetMetadata(LongoMatch.Video.GstPlayerMetadataType.Fps);
+						bool hasVideo = (bool) reader.GetMetadata(LongoMatch.Video.GstPlayerMetadataType.HasVideo);
+						bool hasAudio = (bool) reader.GetMetadata(LongoMatch.Video.GstPlayerMetadataType.HasAudio);
 						
 						this.mFile = new MediaFile(fChooser.Filename,new Time(duration*1000),(ushort)fps,hasAudio,hasVideo);				
 						fileEntry.Text = fChooser.Filename;

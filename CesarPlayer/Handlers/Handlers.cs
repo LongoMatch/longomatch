@@ -20,7 +20,7 @@
 
 using System;
 
-namespace CesarPlayer
+namespace LongoMatch.Video.Handlers
 {
 	
 	public delegate void PlayListSegmentDoneHandler ();

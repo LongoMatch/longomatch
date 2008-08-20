@@ -22,7 +22,8 @@ using System;
 using LongoMatch.Widgets.Component;
 using LongoMatch.TimeNodes;
 using LongoMatch.DB;
-using CesarPlayer;
+using LongoMatch.Video;
+using LongoMatch.Video.Handlers;
 using Gtk;
 using Gdk;
 using Mono.Unix;
@@ -190,7 +191,7 @@ namespace LongoMatch
 				this.player.SeekTo(0,false);
 		}
 		
-		protected virtual void OnTick (object o, CesarPlayer.TickArgs args)
+		protected virtual void OnTick (object o, LongoMatch.Video.Handlers.TickArgs args)
 		{
 			if (args.CurrentTime != 0 && this.timeline != null && openedProject != null)
 				this.timeline.CurrentFrame=(uint)(args.CurrentTime * openedProject.File.Fps / 1000);

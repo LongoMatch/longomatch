@@ -19,16 +19,16 @@
 //
 
 using System;
-using CesarPlayer;
 using Gdk;
+using LongoMatch.Video.Handlers;
 
-namespace CesarPlayer
+namespace LongoMatch.Video
 {
 	
 	
 	public interface ISimplePlayer
 	{
-		event         CesarPlayer.TickHandler Tick;
+		event         TickHandler Tick;
 		
 		
 		

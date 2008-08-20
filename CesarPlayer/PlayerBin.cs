@@ -22,8 +22,8 @@ using Gtk;
 using Gdk;
 using Mono.Unix;
 using System.Runtime.InteropServices;
-
-namespace CesarPlayer
+using LongoMatch.Video.Handlers;
+namespace LongoMatch.Video
 {
 	
 	
@@ -76,7 +76,7 @@ namespace CesarPlayer
 			//IF error do something	
 			tickHandler = new TickHandler(OnTick);
 			player.Tick += tickHandler;
-			player.StateChanged += new StateChangedHandler(OnStateChanged);
+			player.StateChanged += new LongoMatch.Video.Handlers.StateChangedHandler(OnStateChanged);
 			player.Eos += new EventHandler (OnEndOfStream);
 			player.SegmentDoneEvent += new SegmentDoneHandler (OnSegmentDone);
 			player.Error += new ErrorHandler (OnError);
@@ -247,7 +247,7 @@ namespace CesarPlayer
 				
 		}
 		
-		protected virtual void OnStateChanged(object o, StateChangedArgs args){
+		protected virtual void OnStateChanged(object o, LongoMatch.Video.Handlers.StateChangedArgs args){
 			if (args.Playing){
 				playbutton.Hide();
 				pausebutton.Show();

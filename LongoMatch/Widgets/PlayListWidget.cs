@@ -21,7 +21,7 @@
 using System;
 using Gtk;
 using Gdk;
-using CesarPlayer;
+using LongoMatch.Video;
 using Mono.Unix;
 using System.IO;
 using LongoMatch.Handlers;
