@@ -23,11 +23,12 @@ using System.Collections;
 using Gtk;
 using LongoMatch.TimeNodes;
 
-namespace LongoMatch{
+namespace LongoMatch.Video{
 	
 	
 	public interface IPlayList:IEnumerable
 	{
+		int Count {get;}
 		void Load (string path);
 		void Save (string path);
 		PlayListTimeNode Next();

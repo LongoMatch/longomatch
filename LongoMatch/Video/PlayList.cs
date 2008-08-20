@@ -27,7 +27,7 @@ using System.Xml.Serialization;
 using Gtk;
 using LongoMatch.TimeNodes;
 
-namespace LongoMatch
+namespace LongoMatch.Video
 {
 	
 	
@@ -56,6 +56,10 @@ namespace LongoMatch
 			}
 			else
 				this.Load(file);			
+		}
+		
+		public int Count {
+			get{return this.list.Count;}
 		}
 		
 		public void Load(string file){

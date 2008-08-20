@@ -79,6 +79,8 @@ namespace LongoMatch {
         
         private Gtk.Statusbar statusbar1;
         
+        private Gtk.ProgressBar progressbar1;
+        
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
             // Widget LongoMatch.MainWindow
@@ -258,11 +260,19 @@ namespace LongoMatch {
             this.statusbar1 = new Gtk.Statusbar();
             this.statusbar1.Name = "statusbar1";
             this.statusbar1.Spacing = 6;
-            this.vbox1.Add(this.statusbar1);
-            Gtk.Box.BoxChild w15 = ((Gtk.Box.BoxChild)(this.vbox1[this.statusbar1]));
+            // Container child statusbar1.Gtk.Box+BoxChild
+            this.progressbar1 = new Gtk.ProgressBar();
+            this.progressbar1.Name = "progressbar1";
+            this.statusbar1.Add(this.progressbar1);
+            Gtk.Box.BoxChild w15 = ((Gtk.Box.BoxChild)(this.statusbar1[this.progressbar1]));
             w15.Position = 2;
             w15.Expand = false;
             w15.Fill = false;
+            this.vbox1.Add(this.statusbar1);
+            Gtk.Box.BoxChild w16 = ((Gtk.Box.BoxChild)(this.vbox1[this.statusbar1]));
+            w16.Position = 2;
+            w16.Expand = false;
+            w16.Fill = false;
             this.Add(this.vbox1);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
@@ -273,6 +283,7 @@ namespace LongoMatch {
             this.timelinewidget1.Hide();
             this.buttonswidget1.Hide();
             this.playlistwidget2.Hide();
+            this.progressbar1.Hide();
             this.Show();
             this.DeleteEvent += new Gtk.DeleteEventHandler(this.OnDeleteEvent);
             this.OpenPlaylistAction.Activated += new System.EventHandler(this.OnOpenPlaylistActionActivated);
@@ -286,7 +297,7 @@ namespace LongoMatch {
             this.PlaylistAction.Toggled += new System.EventHandler(this.OnPlaylistActionToggled);
             this.CaptureModeAction.Toggled += new System.EventHandler(this.OnCaptureModeActionToggled);
             this.SaveProjectAction.Activated += new System.EventHandler(this.OnSaveProjectActionActivated);
-            this.playerbin1.Error += new LongoMatch.Video.Handlers.ErrorHandler(this.OnPlayerbin1Error);
+            this.playerbin1.Error += new LongoMatch.Handlers.ErrorHandler(this.OnPlayerbin1Error);
         }
     }
 }

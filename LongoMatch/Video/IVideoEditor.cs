@@ -26,7 +26,7 @@ namespace LongoMatch.Video.Editor
 	
 	public interface IVideoEditor
 	{
-		event System.EventHandler EditionFinished;
+		event LongoMatch.Handlers.ProgressHandler Progress;
 		
 		PlayList PlayList {
 			set;

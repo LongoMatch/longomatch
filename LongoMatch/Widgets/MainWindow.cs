@@ -48,7 +48,7 @@ namespace LongoMatch
 		{			
 			this.Build();
 			this.eManager = new EventsManager(this.treewidget1,this.buttonswidget1,this.playlistwidget2,
-			                                  this.playerbin1,this.timelinewidget1);
+			                                  this.playerbin1,this.timelinewidget1,this.progressbar1);
 			playerbin1.SetLogo("background.png");
 
 			playerbin1.LogoMode = true;
@@ -274,7 +274,7 @@ namespace LongoMatch
 			fChooser.Destroy();			
 		}
 
-		protected virtual void OnPlayerbin1Error (object o,LongoMatch.Video.Handlers.ErrorArgs args)
+		protected virtual void OnPlayerbin1Error (object o,LongoMatch.Handlers.ErrorArgs args)
 		{
 			MessageDialog errorDialog = new MessageDialog (this,DialogFlags.Modal,MessageType.Error,ButtonsType.Ok,Catalog.GetString 
 			                                               ("The actual Proyect will bo closed due to this error on the media player:\n") +args.Message);

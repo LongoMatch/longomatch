@@ -22,6 +22,7 @@ using System;
 using Gtk;
 using Gdk;
 using LongoMatch.Video.Handlers;
+using LongoMatch.Handlers;
 
 namespace LongoMatch.Video.Player
 	      

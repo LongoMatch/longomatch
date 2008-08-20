@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using System.Timers;
 using Gtk;
 using Gdk;
-using LongoMatch.Video.Handlers;
+using LongoMatch.Handlers;
 
 
 
@@ -29,7 +29,7 @@ namespace LongoMatch.Video.Player
 				// Events
 
 		public event         LongoMatch.Video.Handlers.StateChangedHandler StateChanged;
-		public event         TickHandler Tick;
+		public event         LongoMatch.Handlers.TickHandler Tick;
 		public event         System.EventHandler Eos;
 		public event         SegmentDoneHandler SegmentDoneEvent;		
 		public event         ErrorHandler Error;

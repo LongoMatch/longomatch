@@ -24,6 +24,7 @@ using LongoMatch.TimeNodes;
 using LongoMatch.DB;
 using LongoMatch.Video.Player;
 using LongoMatch.Video.Handlers;
+using LongoMatch.Handlers;
 using Gtk;
 using Gdk;
 using Mono.Unix;
@@ -40,19 +41,21 @@ namespace LongoMatch
 		private PlayListWidget playlist;
 		private PlayerBin player;
 		private TimeLineWidget timeline;
+		private ProgressBar progressbar;
 		
 		
 		private TimeNode selectedTimeNode=null;
 		private Project openedProject;
 		
 		public EventsManager(TreeWidget treewidget,ButtonsWidget buttonswidget,PlayListWidget playlist,
-		                     PlayerBin playerbin,TimeLineWidget timeline)
+		                     PlayerBin playerbin,TimeLineWidget timeline, ProgressBar progressbar)
 		{
 			this.treewidget = treewidget;
 			this.buttonswidget = buttonswidget;
 			this.playlist = playlist;
 			this.player = playerbin;
 			this.timeline = timeline;	
+			this.progressbar = progressbar;
 			
 			this.buttonswidget.NewMarkEvent += new Handlers.NewMarkEventHandler(OnNewMark);
 			
@@ -66,7 +69,7 @@ namespace LongoMatch
 			this.timeline.TimeNodeSelected += new Handlers.TimeNodeSelectedHandler(OnTimeNodeSelected);
 			
 			this.playlist.PlayListNodeSelected += new Handlers.PlayListNodeSelectedHandler(OnPlayListNodeSelected);
-			
+			this.playlist.Progress += new ProgressHandler(OnProgress);
 			
 			this.treewidget.PlayListNodeAdded += new Handlers.PlayListNodeAddedHandler(OnPlayListNodeAdded);
 			this.timeline.PlayListNodeAdded += new Handlers.PlayListNodeAddedHandler(OnPlayListNodeAdded);
@@ -81,6 +84,31 @@ namespace LongoMatch
 			set{
 				this.openedProject = value;
 			}
+		}
+		
+		protected virtual void OnProgress(float progress){
+			if (progress == 0 ){
+				this.progressbar.Show();
+				this.progressbar.Fraction = 0;
+				this.progressbar.Text = "Creating new video";
+			}
+			else if (progress > 0){								
+				this.progressbar.Fraction = progress;
+
+			}
+			else if (progress == -1) {
+				this.progressbar.Hide();
+				MessageDialog info = new MessageDialog(null,
+				                                        DialogFlags.DestroyWithParent,
+				                                        MessageType.Info,
+				                                        ButtonsType.Ok,
+				                                        "The video edition is finished ");
+				info.Run();
+				info.Destroy();
+				
+			}
+			
+			
 		}
 				
 		protected virtual void OnNewMark(int i, Time startTime, Time stopTime){
@@ -150,6 +178,7 @@ namespace LongoMatch
 		{
 			if (openedProject == null){
 				this.selectedTimeNode = plNode;
+				
 				this.player.SetPlayListElement(plNode.FileName,plNode.Start.MSeconds,plNode.Stop.MSeconds,hasNext);
 			}
 			else {
@@ -191,7 +220,7 @@ namespace LongoMatch
 				this.player.SeekTo(0,false);
 		}
 		
-		protected virtual void OnTick (object o, LongoMatch.Video.Handlers.TickArgs args)
+		protected virtual void OnTick (object o, LongoMatch.Handlers.TickArgs args)
 		{
 			if (args.CurrentTime != 0 && this.timeline != null && openedProject != null)
 				this.timeline.CurrentFrame=(uint)(args.CurrentTime * openedProject.File.Fps / 1000);

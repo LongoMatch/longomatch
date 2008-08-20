@@ -40,5 +40,7 @@ namespace LongoMatch.Handlers
 	//Manejador para el evento producido al ajustar la posición 
 	public delegate void PositionChangedHandler (Time pos);
 	
+	public delegate void ProgressHandler (float progress);
+	
 	public delegate void DateSelectedHandler (DateTime selectedDate);
 }

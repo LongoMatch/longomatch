@@ -47,8 +47,6 @@
     <File name="Widgets/TimeNodesTreeView.cs" subtype="Code" buildaction="Compile" />
     <File name="Widgets/TreeWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="Widgets/TimeNodeProperties.cs" subtype="Code" buildaction="Compile" />
-    <File name="PlayList" subtype="Directory" buildaction="Compile" />
-    <File name="PlayList/PlayList.cs" subtype="Code" buildaction="Compile" />
     <File name="DB" subtype="Directory" buildaction="Compile" />
     <File name="DB/FileData.cs" subtype="Code" buildaction="Compile" />
     <File name="DB/Sections.cs" subtype="Code" buildaction="Compile" />
@@ -58,10 +56,7 @@
     <File name="IO" subtype="Directory" buildaction="Compile" />
     <File name="IO/SectionsWriter.cs" subtype="Code" buildaction="Compile" />
     <File name="IO/SectionsReader.cs" subtype="Code" buildaction="Compile" />
-    <File name="PlayList/IPlayList.cs" subtype="Code" buildaction="Compile" />
     <File name="IO/XMLReader.cs" subtype="Code" buildaction="Compile" />
-    <File name="images" subtype="Directory" buildaction="Compile" />
-    <File name="images/background.png" subtype="Code" buildaction="FileCopy" DeployService.UseProjectRelativePath="True" />
     <File name="DB/MediaFile.cs" subtype="Code" buildaction="Compile" />
     <File name="Widgets/TimeLineWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="Widgets/TimeReferenceWidget.cs" subtype="Code" buildaction="Compile" />
@@ -94,10 +89,12 @@
     <File name="gtk-gui/LongoMatch.Widgets.Component.ProjectListWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="EventsManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Video" subtype="Directory" buildaction="Compile" />
-    <File name="Video/IVideoEditor.cs" subtype="Code" buildaction="Compile" />
-    <File name="Video/VideoQuality.cs" subtype="Code" buildaction="Compile" />
     <File name="Video/AudioQuality.cs" subtype="Code" buildaction="Compile" />
     <File name="Video/FFMPEGVideoEditor.cs" subtype="Code" buildaction="Compile" />
+    <File name="Video/IVideoEditor.cs" subtype="Code" buildaction="Compile" />
+    <File name="Video/VideoQuality.cs" subtype="Code" buildaction="Compile" />
+    <File name="Video/IPlayList.cs" subtype="Code" buildaction="Compile" />
+    <File name="Video/PlayList.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="Db4objects.Db4o.dll" />

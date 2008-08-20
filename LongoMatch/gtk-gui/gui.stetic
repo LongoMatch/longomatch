@@ -2221,7 +2221,7 @@
               <widget class="Gtk.HPaned" id="hpaned1">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Position">765</property>
+                <property name="Position">767</property>
                 <child>
                   <widget class="Gtk.VBox" id="vbox5">
                     <property name="MemberName" />
@@ -2299,7 +2299,16 @@
               <placeholder />
             </child>
             <child>
-              <placeholder />
+              <widget class="Gtk.ProgressBar" id="progressbar1">
+                <property name="MemberName" />
+                <property name="Visible">False</property>
+              </widget>
+              <packing>
+                <property name="Position">2</property>
+                <property name="AutoSize">False</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
             </child>
           </widget>
           <packing>
@@ -2640,6 +2649,22 @@
               </widget>
               <packing>
                 <property name="Position">3</property>
+                <property name="AutoSize">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Button" id="closebutton">
+                <property name="MemberName" />
+                <property name="Visible">False</property>
+                <property name="CanFocus">True</property>
+                <property name="Type">TextAndIcon</property>
+                <property name="Icon">stock:gtk-close Button</property>
+                <property name="Label" translatable="yes" />
+                <property name="UseUnderline">True</property>
+                <signal name="Clicked" handler="OnClosebuttonClicked" />
+              </widget>
+              <packing>
+                <property name="Position">4</property>
                 <property name="AutoSize">False</property>
               </packing>
             </child>

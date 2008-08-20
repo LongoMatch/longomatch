@@ -43,6 +43,7 @@
     <signals>
       <itemgroup label="PlayListWidget Signals">
         <signal name="PlayListNodeSelected" />
+        <signal name="Progress" />
       </itemgroup>
     </signals>
   </object>

@@ -31,27 +31,38 @@ namespace LongoMatch.Video.Editor
 	public class FFMPEGVideoEditor : IVideoEditor
 	{
 		
-		public event System.EventHandler EditionFinished;
+		public event LongoMatch.Handlers.ProgressHandler Progress;
 		
-		PlayList playlist;
-		string outputFile;
-		VideoQuality vq;
-		AudioQuality aq;
-		bool audioEnabled;
-		Process process;
+		private PlayList playlist;
+		private string outputFile;
+		private VideoQuality vq;
+		private AudioQuality aq;
+		private bool audioEnabled;
+		private int steps;
+		private Thread thread;
+		private Process process;
 
 		
-		public FFMPEGVideoEditor(PlayList playlist, string outputFile, VideoQuality vq, AudioQuality aq)
+		public FFMPEGVideoEditor(PlayList playlist, string outputFile)
 		{
-			this.playlist = playlist;
+			this.PlayList = playlist;
 			this.outputFile = outputFile;
-			this.aq = aq;
-			this.vq = vq;	
+			this.aq = AudioQuality.copy;
+			this.vq = VideoQuality.copy;	
+			this.process = new Process();
+		}
+		
+		public FFMPEGVideoEditor(){
+			this.aq = AudioQuality.copy;
+			this.vq = VideoQuality.copy;	
 			this.process = new Process();
 		}
 		
 		public PlayList PlayList {
-			set{this.playlist = value;}
+			set{
+				this.playlist = value;
+				this.steps = 2*this.playlist.Count + 1;
+			}
 			get{return this.playlist;}
 		}
 		
@@ -75,26 +86,59 @@ namespace LongoMatch.Video.Editor
 			get{return this.audioEnabled;}
 		}
 		
-		public void Start(){			
-			string[] files = System.IO.Directory.GetFiles(MainClass.TempVideosDir());
-			Thread thread = new Thread(new ParameterizedThreadStart(EncodeVideo));
-			thread.Start(this.playlist);  
+		public void Start(){	
+			//only one process at the same time
+			
+			if (this.thread == null || !this.thread.IsAlive ){
+				if (this.Progress != null)
+						this.Progress (0);
+				string[] files = System.IO.Directory.GetFiles(MainClass.TempVideosDir());
+			    thread = new Thread(new ParameterizedThreadStart(EncodeVideo));
+				thread.Start(this.playlist);  
+			}			
+		}
+		
+		public void Cancel(){	
+			
+			if (this.thread != null && this.thread.IsAlive){
+				this.thread.Abort();				
+			}
+			if (this.process != null && !this.process.HasExited ){
+				this.process.Kill();
+				this.process.Dispose();
+			}
+			if (this.Progress != null)
+						this.Progress (-1);
 			
 		}
 		
-		public void Cancel(){}
-		
 		private void MergeVideo(){
+			string svq;
+			string saq;
 			string list="";
 			string[] files = System.IO.Directory.GetFiles(MainClass.TempVideosDir());
 			foreach (String file in files)
 				list = list + file +" ";
 			ProcessStartInfo pinfo = new ProcessStartInfo();
 			pinfo.FileName="mencoder";
-			pinfo.Arguments = "-oac copy -ovc copy " + list +" -o " + System.IO.Path.Combine (MainClass.VideosDir(),this.OutputFile);
+			
+		    if (this.vq == VideoQuality.copy)
+				svq = "copy";
+			else
+				svq = ((int)this.vq).ToString();
+			
+			if (this.aq == AudioQuality.copy)
+				saq = "copy";
+			else
+				saq = ((int) this.aq).ToString(); 
+			
+			pinfo.Arguments = "-oac " + saq+ " -ovc "+ svq + " " + list +" -o " + System.IO.Path.Combine (MainClass.VideosDir(),this.OutputFile);
 			process.StartInfo = pinfo;
 			process.Start();
-			process.WaitForExit();			
+			process.WaitForExit();	
+			if (this.Progress != null)
+						this.Progress (1);
+			this.Cancel();
 		}
 		
 		
@@ -113,22 +157,33 @@ namespace LongoMatch.Video.Editor
 					process.StartInfo = pinfo;
 					process.Start();
 					process.WaitForExit();
+					if (this.Progress != null)
+						this.Progress ( (((float)i+1)*2-1)/steps);
 					// HACK to rebuild the index of the splitted video.
 					pinfo = new ProcessStartInfo();
 					pinfo.FileName="ffmpeg";
 					pinfo.Arguments = "-i '" + System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i) 
-						+ "' -vcodec  copy -acodec copy "
+						+ "' -vcodec  copy -acodec copy -y "
 						+ System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i+".avi");					
 					process.StartInfo = pinfo;
 					process.Start();
 					process.WaitForExit();
 					
 					System.IO.File.Delete(System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i));					
+					
+					if (this.Progress != null)
+						this.Progress ( ((float)i+1)*2/steps);
 					i++;
 				}
 				Thread thread = new Thread(new ThreadStart(MergeVideo));
 				thread.Start(); 
 			}
 		}
+		
+		 ~FFMPEGVideoEditor ()
+		{
+			this.Cancel();
+		}
+
 	}
 }

@@ -18,7 +18,7 @@
 //
 //
 using System;
-using LongoMatch.Video.Handlers;
+using LongoMatch.Handlers;
 
 namespace LongoMatch.Video
 {

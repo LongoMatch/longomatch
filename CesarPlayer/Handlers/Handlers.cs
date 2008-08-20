@@ -20,16 +20,16 @@
 
 using System;
 
-namespace LongoMatch.Video.Handlers
+namespace LongoMatch.Handlers
 {
 	
 	public delegate void PlayListSegmentDoneHandler ();
 	public delegate void SegmentClosedHandler();
 	public delegate void SegmentDoneHandler();
-	public delegate void InvalidVideoFileHandler (string videoFile);
 	public delegate void VolumeChangedHandler (int level);
 	public delegate void NextButtonClickedHandler ();
 	public delegate void PrevButtonClickedHandler ();
+
 	
 	
 }

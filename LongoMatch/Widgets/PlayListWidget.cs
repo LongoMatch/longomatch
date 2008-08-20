@@ -27,6 +27,7 @@ using System.IO;
 using LongoMatch.Handlers;
 using LongoMatch.TimeNodes;
 using LongoMatch.Video.Player;
+using LongoMatch.Video;
 
 
 
@@ -37,12 +38,16 @@ namespace LongoMatch.Widgets.Component
 	public partial class PlayListWidget : Gtk.Bin
 	{
 		public event PlayListNodeSelectedHandler PlayListNodeSelected;
+		public event LongoMatch.Handlers.ProgressHandler Progress;
+		
+		
 		private PlayerBin player;
 		private PlayListTimeNode plNode;
 		private PlayList playList;
 		private uint timeout;
 		private object lock_node;
 		private bool clock_started = false;
+		private IVideoEditor videoEditor;
 	
 		
 		
@@ -52,11 +57,15 @@ namespace LongoMatch.Widgets.Component
 			this.Build();					
 			lock_node = new System.Object();
 			this.playList = new PlayList();
+			this.videoEditor = new FFMPEGVideoEditor();
+			this.videoEditor.Progress += new LongoMatch.Handlers.ProgressHandler(OnProgress);
+			
 		}
 
 		
 		public void SetPlayer(PlayerBin player){
-			this.player = player;		
+			this.player = player;
+			this.closebutton.Hide();
 		}
 		
 		public void Load(string filePath){
@@ -237,11 +246,29 @@ namespace LongoMatch.Widgets.Component
 
 		protected virtual void OnNewvideobuttonClicked (object sender, System.EventArgs e)
 		{
-			IVideoEditor videoEditor= new FFMPEGVideoEditor (this.playList,"NewVideo.avi",VideoQuality.Good,AudioQuality.Good);
+			this.newvideobutton.Hide();
+			this.closebutton.Show();
+		
+			videoEditor.PlayList = this.playList;
+			this.videoEditor.OutputFile = "NewVideo.avi";
 			videoEditor.Start();
 		}
 
+		protected virtual void OnClosebuttonClicked (object sender, System.EventArgs e)
+		{
+			this.videoEditor.Cancel();
+			this.closebutton.Hide();
+			this.newvideobutton.Show();
+		}
+
+		protected virtual void OnProgress (float progress){
+			if (this.Progress!= null)
+				this.Progress(progress);
+		}
 		
+		~PlayListWidget(){
+			
+		}
 
 	}
 }

@@ -23,6 +23,7 @@ using Gdk;
 using Mono.Unix;
 using System.Runtime.InteropServices;
 using LongoMatch.Video.Handlers;
+using LongoMatch.Handlers;
 namespace LongoMatch.Video.Player
 {
 	
@@ -165,7 +166,7 @@ using LongoMatch.Video.Handlers;
 			else
 				this.nextbutton.Sensitive = false;
 			if (fileName != this.filename){
-				this.filename = fileName;				
+				this.Open(fileName);				
 				player.NewFileSeek(start,stop);		
 				player.Play();
 			}

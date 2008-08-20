@@ -33,6 +33,8 @@ namespace LongoMatch.Widgets.Component {
         
         private Gtk.Button newvideobutton;
         
+        private Gtk.Button closebutton;
+        
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
             // Widget LongoMatch.Widgets.Component.PlayListWidget
@@ -114,14 +116,14 @@ namespace LongoMatch.Widgets.Component {
             this.openbutton.UseUnderline = true;
             // Container child openbutton.Gtk.Container+ContainerChild
             Gtk.Alignment w16 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment1.Gtk.Container+ContainerChild
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
             Gtk.HBox w17 = new Gtk.HBox();
             w17.Spacing = 2;
-            // Container child GtkHBox1.Gtk.Container+ContainerChild
+            // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w18 = new Gtk.Image();
             w18.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-open", Gtk.IconSize.Button, 20);
             w17.Add(w18);
-            // Container child GtkHBox1.Gtk.Container+ContainerChild
+            // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w20 = new Gtk.Label();
             w20.LabelProp = "";
             w17.Add(w20);
@@ -137,14 +139,14 @@ namespace LongoMatch.Widgets.Component {
             this.savebutton.UseUnderline = true;
             // Container child savebutton.Gtk.Container+ContainerChild
             Gtk.Alignment w25 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment2.Gtk.Container+ContainerChild
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
             Gtk.HBox w26 = new Gtk.HBox();
             w26.Spacing = 2;
-            // Container child GtkHBox2.Gtk.Container+ContainerChild
+            // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w27 = new Gtk.Image();
             w27.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-save", Gtk.IconSize.Button, 20);
             w26.Add(w27);
-            // Container child GtkHBox2.Gtk.Container+ContainerChild
+            // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w29 = new Gtk.Label();
             w29.LabelProp = "";
             w26.Add(w29);
@@ -160,14 +162,14 @@ namespace LongoMatch.Widgets.Component {
             this.newvideobutton.UseUnderline = true;
             // Container child newvideobutton.Gtk.Container+ContainerChild
             Gtk.Alignment w34 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment3.Gtk.Container+ContainerChild
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
             Gtk.HBox w35 = new Gtk.HBox();
             w35.Spacing = 2;
-            // Container child GtkHBox3.Gtk.Container+ContainerChild
+            // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w36 = new Gtk.Image();
             w36.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-record", Gtk.IconSize.Button, 20);
             w35.Add(w36);
-            // Container child GtkHBox3.Gtk.Container+ContainerChild
+            // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w38 = new Gtk.Label();
             w38.LabelProp = "";
             w35.Add(w38);
@@ -176,15 +178,39 @@ namespace LongoMatch.Widgets.Component {
             this.hbox2.Add(this.newvideobutton);
             Gtk.Box.BoxChild w42 = ((Gtk.Box.BoxChild)(this.hbox2[this.newvideobutton]));
             w42.Position = 3;
+            // Container child hbox2.Gtk.Box+BoxChild
+            this.closebutton = new Gtk.Button();
+            this.closebutton.CanFocus = true;
+            this.closebutton.Name = "closebutton";
+            this.closebutton.UseUnderline = true;
+            // Container child closebutton.Gtk.Container+ContainerChild
+            Gtk.Alignment w43 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
+            Gtk.HBox w44 = new Gtk.HBox();
+            w44.Spacing = 2;
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Image w45 = new Gtk.Image();
+            w45.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-close", Gtk.IconSize.Button, 20);
+            w44.Add(w45);
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Label w47 = new Gtk.Label();
+            w47.LabelProp = "";
+            w44.Add(w47);
+            w43.Add(w44);
+            this.closebutton.Add(w43);
+            this.hbox2.Add(this.closebutton);
+            Gtk.Box.BoxChild w51 = ((Gtk.Box.BoxChild)(this.hbox2[this.closebutton]));
+            w51.Position = 4;
             this.vbox2.Add(this.hbox2);
-            Gtk.Box.BoxChild w43 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox2]));
-            w43.Position = 1;
-            w43.Expand = false;
-            w43.Fill = false;
+            Gtk.Box.BoxChild w52 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox2]));
+            w52.Position = 1;
+            w52.Expand = false;
+            w52.Fill = false;
             this.Add(this.vbox2);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
+            this.closebutton.Hide();
             this.Show();
             this.playlisttreeview1.RowActivated += new Gtk.RowActivatedHandler(this.OnPlaylisttreeview1RowActivated);
             this.playlisttreeview1.DragEnd += new Gtk.DragEndHandler(this.OnPlaylisttreeview1DragEnd);
@@ -192,6 +218,7 @@ namespace LongoMatch.Widgets.Component {
             this.openbutton.Clicked += new System.EventHandler(this.OnOpenbuttonClicked);
             this.savebutton.Clicked += new System.EventHandler(this.OnSavebuttonClicked);
             this.newvideobutton.Clicked += new System.EventHandler(this.OnNewvideobuttonClicked);
+            this.closebutton.Clicked += new System.EventHandler(this.OnClosebuttonClicked);
         }
     }
 }

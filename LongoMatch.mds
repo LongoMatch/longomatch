@@ -3,24 +3,24 @@
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="LongoMatch" configuration="Debug" />
       <Entry build="True" name="Packages" configuration="" />
-      <Entry build="True" name="LongoMatchTranslation" configuration="Debug" />
       <Entry build="True" name="libcesarplayer" configuration="Debug" />
       <Entry build="True" name="libcesarplayer" configuration="Debug" />
       <Entry build="True" name="libcesarplayer" configuration="Debug" />
       <Entry build="True" name="CesarPlayer" configuration="Debug" />
       <Entry build="True" name="libcesarplayer" configuration="Debug" />
       <Entry build="True" name="GstCesarPlayer" configuration="Debug" />
+      <Entry build="True" name="LongoMatchTranslations" configuration="" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="LongoMatch" configuration="Release" />
       <Entry build="True" name="Packages" configuration="" />
-      <Entry build="True" name="LongoMatchTranslation" configuration="Release" />
       <Entry build="True" name="libcesarplayer" configuration="Release" />
       <Entry build="True" name="libcesarplayer" configuration="Release" />
       <Entry build="True" name="libcesarplayer" configuration="Release" />
       <Entry build="True" name="CesarPlayer" configuration="Release" />
       <Entry build="True" name="libcesarplayer" configuration="Release" />
       <Entry build="True" name="GstCesarPlayer" configuration="Release" />
+      <Entry build="True" name="LongoMatchTranslations" configuration="" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="LongoMatch" single="True">
@@ -31,13 +31,14 @@
     <Execute type="None" entry="libcesarplayer" />
     <Execute type="None" entry="GstCesarPlayer" />
     <Execute type="None" entry="Paquetes" />
+    <Execute type="None" entry="LongoMatchTranslations" />
   </StartMode>
   <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="UpdateNearestChangeLog" />
   <Entries>
     <Entry filename="LongoMatch/LongoMatch.mdp" />
     <Entry filename="Packages.mdse" />
-    <Entry filename="LongoMatchTranslation/LongoMatchTranslation.mdse" />
     <Entry filename="CesarPlayer/CesarPlayer.mdp" />
     <Entry filename="libcesarplayer/liblongomatch.mdp" />
+    <Entry filename="LongoMatchTranslations/LongoMatchTranslations.mdse" />
   </Entries>
 </Combine>
