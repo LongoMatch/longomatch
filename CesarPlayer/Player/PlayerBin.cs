@@ -23,11 +23,11 @@ using Gdk;
 using Mono.Unix;
 using System.Runtime.InteropServices;
 using LongoMatch.Video.Handlers;
-namespace LongoMatch.Video
+namespace LongoMatch.Video.Player
 {
 	
 	
-	public partial class PlayerBin : Gtk.Bin, ISimplePlayer
+	public partial class PlayerBin : Gtk.Bin
 	{
 		
 		public event PlayListSegmentDoneHandler PlayListSegmentDoneEvent;

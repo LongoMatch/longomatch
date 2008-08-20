@@ -12,7 +12,7 @@ using LongoMatch.Video.Handlers;
 
 
 
-namespace LongoMatch.Video
+namespace LongoMatch.Video.Player
 {
     internal enum PlayState
     {
@@ -23,7 +23,7 @@ namespace LongoMatch.Video
     };
 	
 	
-    public class DSPlayer : UserControl, LongoMatch.Video.IPlayer, IMetadataReader
+    public class DSPlayer : UserControl, IPlayer, IMetadataReader
     {
 		
 				// Events

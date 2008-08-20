@@ -20,7 +20,7 @@
 
 using System;
 
-namespace LongoMatch
+namespace LongoMatch.Video.Editor
 {
 	
 	

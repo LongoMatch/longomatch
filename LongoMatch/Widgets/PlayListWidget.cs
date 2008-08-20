@@ -21,12 +21,12 @@
 using System;
 using Gtk;
 using Gdk;
-using LongoMatch.Video;
+using LongoMatch.Video.Editor;
 using Mono.Unix;
 using System.IO;
 using LongoMatch.Handlers;
 using LongoMatch.TimeNodes;
-using LongoMatch.Video;
+using LongoMatch.Video.Player;
 
 
 
@@ -37,7 +37,7 @@ namespace LongoMatch.Widgets.Component
 	public partial class PlayListWidget : Gtk.Bin
 	{
 		public event PlayListNodeSelectedHandler PlayListNodeSelected;
-		private ISimplePlayer player;
+		private PlayerBin player;
 		private PlayListTimeNode plNode;
 		private PlayList playList;
 		private uint timeout;
@@ -55,7 +55,7 @@ namespace LongoMatch.Widgets.Component
 		}
 
 		
-		public void SetPlayer(ISimplePlayer player){
+		public void SetPlayer(PlayerBin player){
 			this.player = player;		
 		}
 		

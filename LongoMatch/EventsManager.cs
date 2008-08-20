@@ -22,7 +22,7 @@ using System;
 using LongoMatch.Widgets.Component;
 using LongoMatch.TimeNodes;
 using LongoMatch.DB;
-using LongoMatch.Video;
+using LongoMatch.Video.Player;
 using LongoMatch.Video.Handlers;
 using Gtk;
 using Gdk;
@@ -38,7 +38,7 @@ namespace LongoMatch
 		private TreeWidget treewidget;
 		private ButtonsWidget buttonswidget;
 		private PlayListWidget playlist;
-		private ISimplePlayer player;
+		private PlayerBin player;
 		private TimeLineWidget timeline;
 		
 		

@@ -1,5 +1,5 @@
 <objects>
-  <object type="LongoMatch.Video.PlayerBin" palette-category="CesarPlayer" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.Video.Player.PlayerBin" palette-category="CesarPlayer" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="PlayerBin Properties">
         <property name="LogoMode" />

@@ -24,7 +24,7 @@ using System.Diagnostics;
 using LongoMatch.TimeNodes;
 
 
-namespace LongoMatch.Video
+namespace LongoMatch.Video.Editor
 {
 	
 	

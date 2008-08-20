@@ -69,7 +69,7 @@ namespace LongoMatch {
         
         private Gtk.VBox vbox5;
         
-        private LongoMatch.Video.PlayerBin playerbin1;
+        private LongoMatch.Video.Player.PlayerBin playerbin1;
         
         private LongoMatch.Widgets.Component.TimeLineWidget timelinewidget1;
         
@@ -212,7 +212,7 @@ namespace LongoMatch {
             this.vbox5.Name = "vbox5";
             this.vbox5.Spacing = 6;
             // Container child vbox5.Gtk.Box+BoxChild
-            this.playerbin1 = new LongoMatch.Video.PlayerBin();
+            this.playerbin1 = new LongoMatch.Video.Player.PlayerBin();
             this.playerbin1.Events = ((Gdk.EventMask)(256));
             this.playerbin1.Name = "playerbin1";
             this.playerbin1.LogoMode = false;

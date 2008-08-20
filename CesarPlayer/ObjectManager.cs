@@ -14,7 +14,7 @@ namespace GtkSharp.FooSharp {
 
 			initialized = true;
 
-			GLib.GType.Register (LongoMatch.Video.GstPlayer.GType, typeof (LongoMatch.Video.GstPlayer));
+			GLib.GType.Register (LongoMatch.Video.Player.GstPlayer.GType, typeof (LongoMatch.Video.Player.GstPlayer));
 			
 		}
 	}

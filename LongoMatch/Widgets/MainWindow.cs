@@ -28,7 +28,8 @@ using Gdk;
 using LongoMatch.DB;
 using LongoMatch.TimeNodes;
 using LongoMatch.Widgets.Dialog;
-using LongoMatch.Widgets;using LongoMatch.Video;
+using LongoMatch.Widgets;
+using LongoMatch.Video.Player;
 
 
 namespace LongoMatch
@@ -51,7 +52,7 @@ namespace LongoMatch
 			playerbin1.SetLogo("background.png");
 
 			playerbin1.LogoMode = true;
-			this.playlistwidget2.SetPlayer((ISimplePlayer) playerbin1);
+			this.playlistwidget2.SetPlayer(playerbin1);
 
 
 		}

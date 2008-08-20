@@ -72,7 +72,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Video.PlayerBin" design-size="798 300">
+  <widget class="Gtk.Bin" id="LongoMatch.Video.Player.PlayerBin" design-size="798 300">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.HBox" id="mainbox">

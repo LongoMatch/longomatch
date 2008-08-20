@@ -19,7 +19,7 @@
 //
 
 using System;
-namespace LongoMatch.Video
+namespace LongoMatch.Video.Player
 {
 	
 	

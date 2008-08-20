@@ -1,4 +1,4 @@
-// ISimplePlayer.cs
+// IMetadataReader.cs
 //
 //  Copyright (C) 2008 Andoni Morales Alastruey
 //
@@ -19,64 +19,14 @@
 //
 
 using System;
-using Gdk;
-using LongoMatch.Video.Handlers;
 
-namespace LongoMatch.Video
+namespace LongoMatch.Video.Player
 {
 	
 	
-	public interface ISimplePlayer
+	public interface IMetadataReader
 	{
-		event         TickHandler Tick;
-		
-		
-		
-		
-		
-		
-		long AccurateCurrentTime{
-			get;
-		}
-		
-		long CurrentTime{
-			get;
-			
-		}
-		
-		long StreamLength{
-			get;
-		}
-		
-		bool LogoMode {
-			get;
-			set;
-		}
-		
-		
-		Pixbuf CurrentFrame{
-			get;
-		}
-		
-		
-		
-		void SeekTo(long time, bool accurate);
-		
-		void SetStartStop(long start, long stop);
-		
-		void Open(string mrl);
-		
-		void Play();
-		
-		void Pause();
-		
-		void SeekInSegment(long pos);
-		
-		void UpdateSegmentStartTime(long start);
-		
-		void UpdateSegmentStopTime(long stop);
-		
-		void SetPlayListElement(string fileName,long start, long stop, bool hasNext);
-		
+		bool Open(string mrl);
+		object GetMetadata(GstPlayerMetadataType type);
 	}
 }

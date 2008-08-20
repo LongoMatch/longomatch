@@ -23,7 +23,7 @@ using Gtk;
 using Gdk;
 using LongoMatch.Video.Handlers;
 
-namespace LongoMatch.Video
+namespace LongoMatch.Video.Player
 	      
 {
 	public interface IPlayer
