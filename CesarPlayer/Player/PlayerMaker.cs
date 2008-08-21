@@ -19,7 +19,8 @@
 //
 
 using System;
-namespace LongoMatch.Video.Player
+
+namespace LongoMatch.Video.Player
 {
 	
 	
@@ -42,8 +43,8 @@ using System;
 				
 				
 			case PlatformID.Win32NT:
-				//return new GstPlayer(width,height,UseType.Video);
-				return new DSPlayer(UseType.Video);
+				return new GstPlayer(width,height,UseType.Video);
+				//return new DSPlayer(UseType.Video);
 				
 				
 			 default:

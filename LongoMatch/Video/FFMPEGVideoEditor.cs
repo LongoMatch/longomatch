@@ -49,13 +49,13 @@ namespace LongoMatch.Video.Editor
 			this.outputFile = outputFile;
 			this.aq = AudioQuality.copy;
 			this.vq = VideoQuality.copy;	
-			this.process = new Process();
+			
 		}
 		
 		public FFMPEGVideoEditor(){
 			this.aq = AudioQuality.copy;
 			this.vq = VideoQuality.copy;	
-			this.process = new Process();
+			
 		}
 		
 		public PlayList PlayList {
@@ -103,7 +103,7 @@ namespace LongoMatch.Video.Editor
 			if (this.thread != null && this.thread.IsAlive){
 				this.thread.Abort();				
 			}
-			if (this.process != null && !this.process.HasExited ){
+			if (this.process != null  && !this.process.HasExited ){
 				this.process.Kill();
 				this.process.Dispose();
 			}
@@ -120,7 +120,11 @@ namespace LongoMatch.Video.Editor
 			foreach (String file in files)
 				list = list + file +" ";
 			ProcessStartInfo pinfo = new ProcessStartInfo();
-			pinfo.FileName="mencoder";
+			if (System.Environment.OSVersion.Platform != PlatformID.Unix)
+				pinfo.FileName=System.IO.Path.Combine (System.AppDomain.CurrentDomain.BaseDirectory,"mencoder.exe");
+			else 
+				pinfo.FileName="mencoder";
+			
 			
 		    if (this.vq == VideoQuality.copy)
 				svq = "copy";
@@ -132,7 +136,7 @@ namespace LongoMatch.Video.Editor
 			else
 				saq = ((int) this.aq).ToString(); 
 			
-			pinfo.Arguments = "-oac " + saq+ " -ovc "+ svq + " " + list +" -o " + System.IO.Path.Combine (MainClass.VideosDir(),this.OutputFile);
+			pinfo.Arguments = "-oac " + saq+ " -ovc "+ svq + " " + list +" -o '" + System.IO.Path.Combine (MainClass.VideosDir(),this.OutputFile)+"'";
 			process.StartInfo = pinfo;
 			process.Start();
 			process.WaitForExit();	
@@ -146,13 +150,17 @@ namespace LongoMatch.Video.Editor
 			int i= 0;
 			if (o is PlayList){
 				PlayList playList = (PlayList)o;
+				process = new Process();
 				foreach (PlayListTimeNode plNode in playList){				
 					
 					ProcessStartInfo pinfo = new ProcessStartInfo();
-					pinfo.FileName="ffmpeg";
+					if (System.Environment.OSVersion.Platform != PlatformID.Unix)
+						pinfo.FileName=System.IO.Path.Combine (System.AppDomain.CurrentDomain.BaseDirectory,"ffmpeg.exe");
+					else 
+						pinfo.FileName="ffmpeg";
 					pinfo.Arguments = "-i '" + plNode.FileName + "' -f avi -y -ss " + plNode.Start.ToMSecondsString() 
-						+ " -t " +plNode.Duration.ToMSecondsString() + " -vcodec  copy -acodec copy "
-						+ System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i);	
+						+ " -t " +plNode.Duration.ToMSecondsString() + " -vcodec  copy -acodec copy '"
+						+ System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i)+"'";	
 					Console.WriteLine(pinfo.Arguments);
 					process.StartInfo = pinfo;
 					process.Start();
@@ -160,11 +168,10 @@ namespace LongoMatch.Video.Editor
 					if (this.Progress != null)
 						this.Progress ( (((float)i+1)*2-1)/steps);
 					// HACK to rebuild the index of the splitted video.
-					pinfo = new ProcessStartInfo();
-					pinfo.FileName="ffmpeg";
+				
 					pinfo.Arguments = "-i '" + System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i) 
-						+ "' -vcodec  copy -acodec copy -y "
-						+ System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i+".avi");					
+						+ "' -vcodec  copy -acodec copy -y '"
+						+ System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i+".avi")+"'";					
 					process.StartInfo = pinfo;
 					process.Start();
 					process.WaitForExit();

@@ -37,36 +37,67 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="BufferingHandler.cs" />
-    <Compile Include="DSPlayer.cs" />
-    <Compile Include="ErrorHandler.cs" />
-    <Compile Include="GotRedirectHandler.cs" />
     <Compile Include="GstError.cs" />
-    <Compile Include="GstPlayer.cs" />
-    <Compile Include="GstPlayerAspectRatio.cs" />
-    <Compile Include="GstPlayerMetadataType.cs" />
-    <Compile Include="GstUseType.cs" />
-    <Compile Include="gtk-gui\CesarPlayer.PlayerBin.cs">
-      <Link>CesarPlayer.PlayerBin.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\CesarPlayer.VolumeWindow.cs">
-      <Link>CesarPlayer.VolumeWindow.cs</Link>
-    </Compile>
     <Compile Include="gtk-gui\generated.cs">
       <Link>generated.cs</Link>
     </Compile>
-    <Compile Include="Handlers.cs" />
-    <Compile Include="IMetadataReader.cs" />
-    <Compile Include="IPlayer.cs" />
-    <Compile Include="ISimplePlayer.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Video.Player.PlayerBin.cs">
+      <Link>LongoMatch.Video.Player.PlayerBin.cs</Link>
+    </Compile>
+    <Compile Include="gtk-gui\LongoMatch.Video.VolumeWindow.cs">
+      <Link>LongoMatch.Video.VolumeWindow.cs</Link>
+    </Compile>
+    <Compile Include="Handlers\BufferingHandler.cs">
+      <Link>BufferingHandler.cs</Link>
+    </Compile>
+    <Compile Include="Handlers\ErrorHandler.cs">
+      <Link>ErrorHandler.cs</Link>
+    </Compile>
+    <Compile Include="Handlers\GotRedirectHandler.cs">
+      <Link>GotRedirectHandler.cs</Link>
+    </Compile>
+    <Compile Include="Handlers\Handlers.cs">
+      <Link>Handlers.cs</Link>
+    </Compile>
+    <Compile Include="Handlers\StateChangedHandler.cs">
+      <Link>StateChangedHandler.cs</Link>
+    </Compile>
+    <Compile Include="Handlers\TickHandler.cs">
+      <Link>TickHandler.cs</Link>
+    </Compile>
+    <Compile Include="Handlers\TitleChangeHandler.cs">
+      <Link>TitleChangeHandler.cs</Link>
+    </Compile>
     <Compile Include="ObjectManager.cs" />
-    <Compile Include="PlayerBin.cs" />
-    <Compile Include="PlayerMaker.cs" />
+    <Compile Include="Player\DSPlayer.cs">
+      <Link>DSPlayer.cs</Link>
+    </Compile>
+    <Compile Include="Player\GstPlayer.cs">
+      <Link>GstPlayer.cs</Link>
+    </Compile>
+    <Compile Include="Player\GstPlayerAspectRatio.cs">
+      <Link>GstPlayerAspectRatio.cs</Link>
+    </Compile>
+    <Compile Include="Player\GstPlayerMetadataType.cs">
+      <Link>GstPlayerMetadataType.cs</Link>
+    </Compile>
+    <Compile Include="Player\GstUseType.cs">
+      <Link>GstUseType.cs</Link>
+    </Compile>
+    <Compile Include="Player\IMetadataReader.cs">
+      <Link>IMetadataReader.cs</Link>
+    </Compile>
+    <Compile Include="Player\IPlayer.cs">
+      <Link>IPlayer.cs</Link>
+    </Compile>
+    <Compile Include="Player\PlayerBin.cs">
+      <Link>PlayerBin.cs</Link>
+    </Compile>
+    <Compile Include="Player\PlayerMaker.cs">
+      <Link>PlayerMaker.cs</Link>
+    </Compile>
     <Compile Include="SignalUtils.cs" />
-    <Compile Include="StateChangedHandler.cs" />
-    <Compile Include="TickHandler.cs" />
     <Compile Include="TimeString.cs" />
-    <Compile Include="TitleChangeHandler.cs" />
     <Compile Include="VolumeWindow.cs" />
     <None Include="gtk-gui\gui.stetic">
       <Link>gui.stetic</Link>

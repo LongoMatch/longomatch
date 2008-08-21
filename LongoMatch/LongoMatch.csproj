@@ -3,7 +3,7 @@
     <ProjectGuid>{64BBF35C-C210-4869-B93B-924234A32C0D}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>LongoMatch</RootNamespace>
     <AssemblyName>LongoMatch</AssemblyName>
   </PropertyGroup>
@@ -121,6 +121,7 @@
     </Compile>
     <Compile Include="gtk-gui\LongoMatch.Widgets.Dialog.NewSectionsTemplatesFiles.cs">
       <Link>LongoMatch.Widgets.Dialog.NewSectionsTemplatesFiles.cs</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="gtk-gui\LongoMatch.Widgets.Dialog.OpenProjectDialog.cs">
       <Link>LongoMatch.Widgets.Dialog.OpenProjectDialog.cs</Link>
@@ -147,12 +148,6 @@
       <Link>XMLReader.cs</Link>
     </Compile>
     <Compile Include="Main.cs" />
-    <Compile Include="PlayList\IPlayList.cs">
-      <Link>IPlayList.cs</Link>
-    </Compile>
-    <Compile Include="PlayList\PlayList.cs">
-      <Link>PlayList.cs</Link>
-    </Compile>
     <Compile Include="Time\MediaTimeNode.cs">
       <Link>MediaTimeNode.cs</Link>
     </Compile>
@@ -177,8 +172,14 @@
     <Compile Include="Video\FFMPEGVideoEditor.cs">
       <Link>FFMPEGVideoEditor.cs</Link>
     </Compile>
+    <Compile Include="Video\IPlayList.cs">
+      <Link>IPlayList.cs</Link>
+    </Compile>
     <Compile Include="Video\IVideoEditor.cs">
       <Link>IVideoEditor.cs</Link>
+    </Compile>
+    <Compile Include="Video\PlayList.cs">
+      <Link>PlayList.cs</Link>
     </Compile>
     <Compile Include="Video\VideoQuality.cs">
       <Link>VideoQuality.cs</Link>
@@ -249,7 +250,16 @@
     <Compile Include="Widgets\TreeWidget.cs">
       <Link>TreeWidget.cs</Link>
     </Compile>
+    <None Include="background.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ffmpeg.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="lgmlogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="mencoder.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
