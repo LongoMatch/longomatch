@@ -167,31 +167,11 @@ namespace LongoMatch.Video.Editor
 				process = new Process();
 				foreach (PlayListTimeNode plNode in playList){				
 					
-					ProcessStartInfo pinfo = new ProcessStartInfo();
-					if (System.Environment.OSVersion.Platform != PlatformID.Unix)
-						pinfo.FileName=System.IO.Path.Combine (System.AppDomain.CurrentDomain.BaseDirectory,"ffmpeg.exe");
-					else 
-						pinfo.FileName="ffmpeg";
-					pinfo.Arguments = "-i '" + plNode.FileName + "' -f avi -y -ss " + plNode.Start.ToMSecondsString() 
-						+ " -t " +plNode.Duration.ToMSecondsString() + " -vcodec  copy -acodec copy '"
-						+ System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i)+"'";	
-					Console.WriteLine(pinfo.Arguments);
-					process.StartInfo = pinfo;
-					process.Start();
-					process.WaitForExit();
+					this.SplitVideo(plNode,i);
 					if (this.Progress != null)
 						this.Progress ( (((float)i+1)*2-1)/steps);
-					// HACK to rebuild the index of the splitted video.
-				
-					pinfo.Arguments = "-i '" + System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i) 
-						+ "' -vcodec  copy -acodec copy -y '"
-						+ System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i+".avi")+"'";					
-					process.StartInfo = pinfo;
-					process.Start();
-					process.WaitForExit();
-					
-					System.IO.File.Delete(System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i));					
-					
+					// HACK to rebuild the index of the splitted video.				
+					this.FixSplitedVideo(i);					
 					if (this.Progress != null)
 						this.Progress ( ((float)i+1)*2/steps);
 					i++;
@@ -199,6 +179,35 @@ namespace LongoMatch.Video.Editor
 				Thread thread = new Thread(new ThreadStart(MergeVideo));
 				thread.Start(); 
 			}
+		}
+		
+		private void SplitVideo(PlayListTimeNode plNode,int i){
+			
+			ProcessStartInfo pinfo = new ProcessStartInfo();
+			if (System.Environment.OSVersion.Platform != PlatformID.Unix)
+				pinfo.FileName=System.IO.Path.Combine (System.AppDomain.CurrentDomain.BaseDirectory,"ffmpeg.exe");
+			else 
+				pinfo.FileName="ffmpeg";
+			pinfo.Arguments = "-i '" + plNode.FileName + "' -f avi -y -ss " + plNode.Start.ToMSecondsString() 
+				+ " -t " +plNode.Duration.ToMSecondsString() + " -vcodec  copy -acodec copy '"
+					+ System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i)+"'";	
+			Console.WriteLine(pinfo.Arguments);
+			process.StartInfo = pinfo;
+			process.Start();
+			process.WaitForExit();			
+		}
+		
+		private void FixSplitedVideo(int i){
+			
+			ProcessStartInfo pinfo = new ProcessStartInfo();
+			pinfo.Arguments = "-i '" + System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i) 
+				+ "' -vcodec  copy -acodec copy -y '"
+					+ System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i+".avi")+"'";					
+			process.StartInfo = pinfo;
+			process.Start();
+			process.WaitForExit();			
+			System.IO.File.Delete(System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i));
+			
 		}
 		
 		~FFMPEGVideoEditor ()

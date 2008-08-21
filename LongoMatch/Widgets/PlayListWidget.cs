@@ -249,12 +249,36 @@ namespace LongoMatch.Widgets.Component
 
 		protected virtual void OnNewvideobuttonClicked (object sender, System.EventArgs e)
 		{
+			bool exist = true;
 			this.newvideobutton.Hide();
 			this.closebutton.Show();
+			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Save Video As ..."),
+			                                                   null,
+			                                                   FileChooserAction.Save,
+			                                                   "gtk-cancel",ResponseType.Cancel,
+			                                                   "gtk-save",ResponseType.Accept);
+			fChooser.SetCurrentFolder(MainClass.VideosDir());
+			fChooser.CurrentName = "NewVideo.avi";
+			FileFilter filter = new FileFilter();
+			filter.Name = "Avi File";
+			filter.AddPattern("*.avi");
+			fChooser.Filter = filter;
+			while (fChooser.Run() == (int)ResponseType.Accept){
+				
+				exist = System.IO.File.Exists(fChooser.Filename);
+				if (exist){
+					//TODO Send Overwrite message
+				}					
+				else {					
+					videoEditor.PlayList = this.playList;
+					this.videoEditor.OutputFile = fChooser.Filename;
+					videoEditor.Start();
+					break;					
+				}
+			}
 		
-			videoEditor.PlayList = this.playList;
-			this.videoEditor.OutputFile = "NewVideo.avi";
-			videoEditor.Start();
+			fChooser.Destroy();
+			
 		}
 
 		protected virtual void OnClosebuttonClicked (object sender, System.EventArgs e)
