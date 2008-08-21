@@ -37,7 +37,7 @@ namespace LongoMatch.Widgets.Component
 		public event TimeNodeDeletedHandler TimeNodeDeleted;
 		public event PlayListNodeAddedHandler PlayListNodeAdded;
 
-		private Project fileData;
+		private Project project;
 
 		
 		public TreeWidget()
@@ -45,24 +45,28 @@ namespace LongoMatch.Widgets.Component
 			this.Build();		                   
 		}
 		
-		public void AddTimeNode(MediaTimeNode tNode, int i){
-			if (fileData != null){
+		/*public void AddTimeNode(MediaTimeNode tNode, int i){
+			if (project != null){
 				TreeIter iter;
-				TreeStore model = (TreeStore)treeview.Model;
+				TreeStore model = (TreeStore)treeview.Model;				
 				model.GetIterFromString (out iter, i.ToString());
 				model.AppendValues (iter,tNode);
 			}
 			
 		
+		}*/
+		
+		public void Update(){
+			treeview.Model = this.project.GetModel();
 		}
 
 	
 	
 		public Project Project{
 			set{ 
-				this.fileData = value;
-				treeview.Model = this.fileData.GetModel();
-				treeview.Colors = this.fileData.Sections.Colors;
+				this.project = value;
+				treeview.Model = this.project.GetModel();
+				treeview.Colors = this.project.Sections.Colors;
 			}
 			
 		}

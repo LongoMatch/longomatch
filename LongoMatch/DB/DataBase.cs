@@ -98,14 +98,14 @@ namespace LongoMatch.DB
 				}
 			}
 		}
-		public void AddProject (Project fileData){
+		public void AddProject (Project project){
 			lock(this.locker){
 				db = Db4oFactory.OpenFile(file);
 				
 				try	
 				{
-					if (!this.Exists(fileData.File.FilePath)){
-						db.Set (fileData);
+					if (!this.Exists(project.File.FilePath)){
+						db.Set (project);
 					}
 					else throw new Exception (Catalog.GetString("The Project for this video file already exists.\n Try to edit it whit the Database Manager"));
 				}

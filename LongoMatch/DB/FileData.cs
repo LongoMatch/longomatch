@@ -133,8 +133,9 @@ namespace LongoMatch.DB
 					Gtk.TreeIter iter = dataFileListStore.AppendValues (sections.GetTimeNode(i));
 					foreach(MediaTimeNode tNode in dataSectionArray[i]){
 						dataFileListStore.AppendValues (iter,tNode);
-					}			
+					}						
 				}
+
 			}
 			return dataFileListStore;
 		}
@@ -185,8 +186,8 @@ namespace LongoMatch.DB
 			set{ matchDate=value;}
 		}
 
-		public bool Equals(Project fileData){
-			return this.File.FilePath.Equals(fileData.File.FilePath);
+		public bool Equals(Project project){
+			return this.File.FilePath.Equals(project.File.FilePath);
 		}
 		
 		public int CompareTo(object obj) {

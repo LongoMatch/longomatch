@@ -96,7 +96,7 @@ namespace LongoMatch
 				this.progressbar.Fraction = progress;
 
 			}
-			else if (progress == -1) {
+			else if (progress == 1) {
 				this.progressbar.Hide();
 				MessageDialog info = new MessageDialog(null,
 				                                        DialogFlags.DestroyWithParent,
@@ -106,6 +106,9 @@ namespace LongoMatch
 				info.Run();
 				info.Destroy();
 				
+			}
+			else if (progress == -1 ){
+				this.progressbar.Hide();
 			}
 			
 			
@@ -123,7 +126,8 @@ namespace LongoMatch
 				Time fStop = (stop > length) ? length: stop;
 				Pixbuf miniature = this.player.CurrentFrame;
 				MediaTimeNode tn = openedProject.AddTimeNode(i,fStart, fStop,miniature);				
-				treewidget.AddTimeNode(tn,i);
+				//treewidget.AddTimeNode(tn,i);
+				treewidget.Update();
 				this.timeline.QueueDraw();
 			}
 		}
