@@ -200,6 +200,10 @@ namespace LongoMatch.Video.Editor
 		private void FixSplitedVideo(int i){
 			
 			ProcessStartInfo pinfo = new ProcessStartInfo();
+			if (System.Environment.OSVersion.Platform != PlatformID.Unix)
+				pinfo.FileName=System.IO.Path.Combine (System.AppDomain.CurrentDomain.BaseDirectory,"ffmpeg.exe");
+			else 
+				pinfo.FileName="ffmpeg";
 			pinfo.Arguments = "-i '" + System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i) 
 				+ "' -vcodec  copy -acodec copy -y '"
 					+ System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i+".avi")+"'";					

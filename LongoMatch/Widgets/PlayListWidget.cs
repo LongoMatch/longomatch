@@ -267,9 +267,18 @@ namespace LongoMatch.Widgets.Component
 				
 				exist = System.IO.File.Exists(fChooser.Filename);
 				if (exist){
-					//TODO Send Overwrite message
-				}					
-				else {					
+					MessageDialog warning = new MessageDialog(null,
+				                                        DialogFlags.DestroyWithParent,
+				                                        MessageType.Question,
+				                                        ButtonsType.YesNo,
+				                                        "This file already exists. Do You want to overwrite it?");
+					if (warning.Run()== (int)ResponseType.Yes)
+						exist = false;
+					warning.Destroy();					
+				}		
+				
+				//Reavaluate the condition
+				if (!exist) {					
 					videoEditor.PlayList = this.playList;
 					this.videoEditor.OutputFile = fChooser.Filename;
 					videoEditor.Start();
