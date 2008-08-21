@@ -66,12 +66,15 @@ namespace LongoMatch.Widgets.Component
 		public void SetPlayer(PlayerBin player){
 			this.player = player;
 			this.closebutton.Hide();
+			this.newvideobutton.Hide();
 		}
 		
 		public void Load(string filePath){
 			this.label1.Visible = false;
+			this.newvideobutton.Show();
 			this.playList = new PlayList(filePath);
 			this.Model = playList.GetModel();
+			this.playlisttreeview1.PlayList = playList;
 			this.playlisttreeview1.Sensitive = true;
 		}
 		
@@ -267,7 +270,7 @@ namespace LongoMatch.Widgets.Component
 		}
 		
 		~PlayListWidget(){
-			
+			this.videoEditor.Cancel();		
 		}
 
 	}

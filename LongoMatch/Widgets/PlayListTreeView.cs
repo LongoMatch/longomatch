@@ -22,6 +22,7 @@ using Gtk;
 using Gdk;
 using Mono.Unix;
 using LongoMatch.TimeNodes;
+using LongoMatch.Video;
 
 namespace LongoMatch.Widgets.Component
 {
@@ -34,6 +35,7 @@ public class PlayListTreeView : Gtk.TreeView
 		private TreeIter selectedIter;
 		private Menu menu;
 		private ListStore ls;
+		private PlayList playlist;
 
 		
 		public PlayListTreeView(){
@@ -71,6 +73,10 @@ public class PlayListTreeView : Gtk.TreeView
 		
 		}
 		
+		public PlayList PlayList{
+			set{ this.playlist = value;}
+		}
+		
 		
 		~PlayListTreeView()
 		{
@@ -87,7 +93,6 @@ public class PlayListTreeView : Gtk.TreeView
 				this.GetPathAtPos((int)evnt.X,(int)evnt.Y,out path);
 				if (path!=null){
 					this.Model.GetIter (out selectedIter,path); 
-
 				    menu.Popup();
 				}
 			}
@@ -96,7 +101,10 @@ public class PlayListTreeView : Gtk.TreeView
 		}
 		
 		protected void OnMenuFilePopup(object obj, EventArgs args){
-			((ListStore)this.Model).Remove(ref selectedIter);
+			ListStore list = ((ListStore)this.Model);
+			this.playlist.Remove((PlayListTimeNode)(list.GetValue(selectedIter,0)));
+			list.Remove(ref selectedIter);
+			
 			
 		}
 		

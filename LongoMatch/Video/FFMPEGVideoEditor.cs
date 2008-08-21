@@ -101,11 +101,17 @@ namespace LongoMatch.Video.Editor
 		public void Cancel(){	
 			
 			this.KillProcess();
-			
+			this.DeleteTempFiles();
 			// -1 means we have cancelled the encoding
 			if (this.Progress != null)
 						this.Progress (-1);
 			
+		}
+		
+		private void DeleteTempFiles(){
+			string[] files = System.IO.Directory.GetFiles(MainClass.TempVideosDir());
+			foreach (string f in files)
+				System.IO.File.Delete(f);
 		}
 		
 		private void KillProcess(){
@@ -114,6 +120,7 @@ namespace LongoMatch.Video.Editor
 			}
 			if (this.process != null  && !this.process.HasExited ){
 				this.process.Kill();
+				this.process.WaitForExit();
 				this.process.Dispose();
 			}
 		}
@@ -145,8 +152,8 @@ namespace LongoMatch.Video.Editor
 			pinfo.Arguments = "-oac " + saq+ " -ovc "+ svq + " " + list +" -o '" + System.IO.Path.Combine (MainClass.VideosDir(),this.OutputFile)+"'";
 			process.StartInfo = pinfo;
 			process.Start();
-			process.WaitForExit();
-			this.KillProcess();
+			process.WaitForExit();			
+			this.DeleteTempFiles();
 			if (this.Progress != null)
 						this.Progress (1);
 			
@@ -194,9 +201,9 @@ namespace LongoMatch.Video.Editor
 			}
 		}
 		
-		 ~FFMPEGVideoEditor ()
+		~FFMPEGVideoEditor ()
 		{
-
+			Console.WriteLine("Finalizing");
 			this.KillProcess();
 		}
 

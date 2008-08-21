@@ -112,7 +112,10 @@ namespace LongoMatch.Video
 		}
 		
 		public void Remove(PlayListTimeNode plNode){
+			
 			this.list.Remove(plNode);
+			if (this.GetCurrentIndex() >= list.Count)
+				this.indexSelection --;
 		}
 		
 		public PlayListTimeNode Select (int index){
