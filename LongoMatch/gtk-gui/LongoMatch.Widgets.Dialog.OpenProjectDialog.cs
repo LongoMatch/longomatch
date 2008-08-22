@@ -25,6 +25,11 @@ namespace LongoMatch.Widgets.Dialog {
             this.Name = "LongoMatch.Widgets.Dialog.OpenProjectDialog";
             this.Title = Mono.Unix.Catalog.GetString("Open Project");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
+            this.Modal = true;
+            this.DestroyWithParent = true;
+            this.Gravity = ((Gdk.Gravity)(5));
+            this.SkipPagerHint = true;
+            this.SkipTaskbarHint = true;
             this.HasSeparator = false;
             // Internal child LongoMatch.Widgets.Dialog.OpenProjectDialog.VBox
             Gtk.VBox w1 = this.VBox;

@@ -41,7 +41,13 @@ namespace LongoMatch.Widgets.Dialog {
             Stetic.Gui.Initialize(this);
             // Widget LongoMatch.Widgets.Dialog.DBManager
             this.Name = "LongoMatch.Widgets.Dialog.DBManager";
+            this.Title = Mono.Unix.Catalog.GetString("DataBase Manager");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
+            this.Modal = true;
+            this.DestroyWithParent = true;
+            this.Gravity = ((Gdk.Gravity)(5));
+            this.SkipPagerHint = true;
+            this.SkipTaskbarHint = true;
             this.HasSeparator = false;
             // Internal child LongoMatch.Widgets.Dialog.DBManager.VBox
             Gtk.VBox w1 = this.VBox;

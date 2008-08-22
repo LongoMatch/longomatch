@@ -255,7 +255,7 @@ namespace LongoMatch
 		protected virtual void OnOpenPlaylistActionActivated (object sender, System.EventArgs e)
 		{
 			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Open playlist"),
-			                                                   null,
+			                                                   (Gtk.Window)this.Toplevel,
 			                                                   FileChooserAction.Open,
 			                                                   "gtk-cancel",ResponseType.Cancel,
 			                                                   "gtk-open",ResponseType.Accept);

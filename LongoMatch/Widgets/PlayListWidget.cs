@@ -204,7 +204,7 @@ namespace LongoMatch.Widgets.Component
 		protected virtual void OnOpenbuttonClicked (object sender, System.EventArgs e)
 		{
 			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Open playlist"),
-			                                                   null,
+			                                                   (Gtk.Window)this.Toplevel,
 			                                                   FileChooserAction.Open,
 			                                                   "gtk-cancel",ResponseType.Cancel,
 			                                                   "gtk-open",ResponseType.Accept);
@@ -225,7 +225,7 @@ namespace LongoMatch.Widgets.Component
 		protected virtual void OnNewbuttonClicked (object sender, System.EventArgs e)
 		{
 			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("New playlist"),
-			                                                   null,
+			                                                   (Gtk.Window)this.Toplevel,
 			                                                   FileChooserAction.Save,
 			                                                   "gtk-cancel",ResponseType.Cancel,
 			                                                   "gtk-save",ResponseType.Accept);
@@ -253,7 +253,7 @@ namespace LongoMatch.Widgets.Component
 			this.newvideobutton.Hide();
 			this.closebutton.Show();
 			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Save Video As ..."),
-			                                                   null,
+			                                                   (Gtk.Window)this.Toplevel,
 			                                                   FileChooserAction.Save,
 			                                                   "gtk-cancel",ResponseType.Cancel,
 			                                                   "gtk-save",ResponseType.Accept);
@@ -267,7 +267,7 @@ namespace LongoMatch.Widgets.Component
 				
 				exist = System.IO.File.Exists(fChooser.Filename);
 				if (exist){
-					MessageDialog warning = new MessageDialog(null,
+					MessageDialog warning = new MessageDialog((Gtk.Window)this.Toplevel,
 				                                        DialogFlags.DestroyWithParent,
 				                                        MessageType.Question,
 				                                        ButtonsType.YesNo,

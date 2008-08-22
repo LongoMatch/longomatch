@@ -1002,7 +1002,13 @@
   </widget>
   <widget class="Gtk.Dialog" id="LongoMatch.Widgets.Dialog.DBManager" design-size="1024 512">
     <property name="MemberName" />
+    <property name="Title" translatable="yes">DataBase Manager</property>
     <property name="WindowPosition">CenterOnParent</property>
+    <property name="Modal">True</property>
+    <property name="DestroyWithParent">True</property>
+    <property name="Gravity">Center</property>
+    <property name="SkipPagerHint">True</property>
+    <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">1</property>
     <property name="HelpButton">False</property>
     <property name="HasSeparator">False</property>
@@ -1171,6 +1177,11 @@
     <property name="MemberName" />
     <property name="Title" translatable="yes">Open Project</property>
     <property name="WindowPosition">CenterOnParent</property>
+    <property name="Modal">True</property>
+    <property name="DestroyWithParent">True</property>
+    <property name="Gravity">Center</property>
+    <property name="SkipPagerHint">True</property>
+    <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
     <property name="HasSeparator">False</property>
@@ -1238,6 +1249,11 @@
     <property name="MemberName" />
     <property name="Title" translatable="yes">New Project</property>
     <property name="WindowPosition">CenterOnParent</property>
+    <property name="Modal">True</property>
+    <property name="DestroyWithParent">True</property>
+    <property name="Gravity">Center</property>
+    <property name="SkipPagerHint">True</property>
+    <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
     <child internal-child="VBox">
@@ -1846,6 +1862,11 @@
     <property name="MemberName" />
     <property name="Title" translatable="yes">Templates Manager</property>
     <property name="WindowPosition">CenterOnParent</property>
+    <property name="Modal">True</property>
+    <property name="DestroyWithParent">True</property>
+    <property name="Gravity">Center</property>
+    <property name="SkipPagerHint">True</property>
+    <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">1</property>
     <property name="HelpButton">False</property>
     <property name="HasSeparator">False</property>
@@ -1990,6 +2011,38 @@
     </child>
   </widget>
   <widget class="Gtk.Window" id="LongoMatch.MainWindow" design-size="1194 569">
+    <action-group name="Player">
+      <action id="PlayAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Play</property>
+        <property name="ShortLabel" translatable="yes">dasdf</property>
+        <property name="StockId">gtk-media-play</property>
+      </action>
+      <action id="PauseAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">P_ause</property>
+        <property name="ShortLabel" translatable="yes">P_ause</property>
+        <property name="StockId">gtk-media-pause</property>
+      </action>
+      <action id="PreviousAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">P_revious</property>
+        <property name="ShortLabel" translatable="yes">P_revious</property>
+        <property name="StockId">gtk-media-previous</property>
+      </action>
+      <action id="NextAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Next</property>
+        <property name="ShortLabel" translatable="yes">_Next</property>
+        <property name="StockId">gtk-media-next</property>
+      </action>
+      <action id="OpenPlaylistAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Open Playlist</property>
+        <property name="ShortLabel" translatable="yes">Open Playlist</property>
+        <signal name="Activated" handler="OnOpenPlaylistActionActivated" />
+      </action>
+    </action-group>
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -2098,38 +2151,6 @@
         <property name="ShortLabel" translatable="yes">_Save Project</property>
         <property name="StockId">gtk-save</property>
         <signal name="Activated" handler="OnSaveProjectActionActivated" />
-      </action>
-    </action-group>
-    <action-group name="Player">
-      <action id="PlayAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">_Play</property>
-        <property name="ShortLabel" translatable="yes">dasdf</property>
-        <property name="StockId">gtk-media-play</property>
-      </action>
-      <action id="PauseAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">P_ause</property>
-        <property name="ShortLabel" translatable="yes">P_ause</property>
-        <property name="StockId">gtk-media-pause</property>
-      </action>
-      <action id="PreviousAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">P_revious</property>
-        <property name="ShortLabel" translatable="yes">P_revious</property>
-        <property name="StockId">gtk-media-previous</property>
-      </action>
-      <action id="NextAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">_Next</property>
-        <property name="ShortLabel" translatable="yes">_Next</property>
-        <property name="StockId">gtk-media-next</property>
-      </action>
-      <action id="OpenPlaylistAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">Open Playlist</property>
-        <property name="ShortLabel" translatable="yes">Open Playlist</property>
-        <signal name="Activated" handler="OnOpenPlaylistActionActivated" />
       </action>
     </action-group>
     <property name="MemberName" />
@@ -2464,10 +2485,15 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Widgets.Dialog.TemplateEditorDialog" design-size="744 385">
+  <widget class="Gtk.Dialog" id="LongoMatch.Widgets.Dialog.TemplateEditorDialog" design-size="1066 473">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Template Editor</property>
     <property name="WindowPosition">CenterOnParent</property>
+    <property name="Modal">True</property>
+    <property name="DestroyWithParent">True</property>
+    <property name="Gravity">Center</property>
+    <property name="SkipPagerHint">True</property>
+    <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
     <property name="HasSeparator">False</property>

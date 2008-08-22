@@ -46,6 +46,7 @@ namespace LongoMatch.Widgets.Component
 			this.Build();
 			cp = new CalendarPopup();			
 			cp.Hide();
+			
 			cp.DateSelectedEvent += new DateSelectedHandler(OnDateSelected);
 			date = System.DateTime.Today;
 			dateEntry.Text = date.ToString(Catalog.GetString("MM/dd/yyyy"));
@@ -180,12 +181,12 @@ namespace LongoMatch.Widgets.Component
 		protected virtual void OnOpenbuttonClicked(object sender, System.EventArgs e)
 		{
 			
+			
 			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Choose the file to open"),
-			                                                   null,
+			                                                   (Gtk.Window)this.Toplevel,
 			                                                   FileChooserAction.Open,
 			                                                   "gtk-cancel",ResponseType.Cancel,
-			                                                   "gtk-open",ResponseType.Accept);
-			
+			                                                   "gtk-open",ResponseType.Accept);			
 			
 			fChooser.SetCurrentFolder(System.Environment.GetFolderPath(Environment.SpecialFolder.Personal));
 			if (fChooser.Run() == (int)ResponseType.Accept){
@@ -203,7 +204,7 @@ namespace LongoMatch.Widgets.Component
 			
 					}
 					catch (GLib.GException ex){
-						MessageDialog errorDialog = new MessageDialog(null,DialogFlags.Modal,MessageType.Error,ButtonsType.Ok,
+						MessageDialog errorDialog = new MessageDialog((Gtk.Window)this.Toplevel,DialogFlags.Modal,MessageType.Error,ButtonsType.Ok,
 						                                              Catalog.GetString("Error Loading this file:\n")+ex.Message);
 						errorDialog.Run();
 						errorDialog.Destroy();
@@ -223,7 +224,9 @@ namespace LongoMatch.Widgets.Component
 
 		protected virtual void OnCalendarbuttonClicked (object sender, System.EventArgs e)
 		{
+			cp.TransientFor=(Gtk.Window)this.Toplevel;
 			cp.Show();
+			
 		}
 
 		protected virtual void OnEditbuttonClicked (object sender, System.EventArgs e)

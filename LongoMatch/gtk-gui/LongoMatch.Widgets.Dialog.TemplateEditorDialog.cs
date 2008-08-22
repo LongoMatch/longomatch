@@ -25,6 +25,11 @@ namespace LongoMatch.Widgets.Dialog {
             this.Name = "LongoMatch.Widgets.Dialog.TemplateEditorDialog";
             this.Title = Mono.Unix.Catalog.GetString("Template Editor");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
+            this.Modal = true;
+            this.DestroyWithParent = true;
+            this.Gravity = ((Gdk.Gravity)(5));
+            this.SkipPagerHint = true;
+            this.SkipTaskbarHint = true;
             this.HasSeparator = false;
             // Internal child LongoMatch.Widgets.Dialog.TemplateEditorDialog.VBox
             Gtk.VBox w1 = this.VBox;
@@ -71,8 +76,8 @@ namespace LongoMatch.Widgets.Dialog {
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 744;
-            this.DefaultHeight = 385;
+            this.DefaultWidth = 1066;
+            this.DefaultHeight = 473;
             this.Show();
         }
     }
