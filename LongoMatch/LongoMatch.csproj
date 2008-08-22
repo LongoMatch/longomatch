@@ -86,9 +86,6 @@
     <Compile Include="gtk-gui\LongoMatch.Widgets.Component.ButtonsWidget.cs">
       <Link>LongoMatch.Widgets.Component.ButtonsWidget.cs</Link>
     </Compile>
-    <Compile Include="gtk-gui\LongoMatch.Widgets.Component.fakeColorBin.cs">
-      <Link>LongoMatch.Widgets.Component.fakeColorBin.cs</Link>
-    </Compile>
     <Compile Include="gtk-gui\LongoMatch.Widgets.Component.FileDescriptionWidget.cs">
       <Link>LongoMatch.Widgets.Component.FileDescriptionWidget.cs</Link>
     </Compile>
@@ -192,9 +189,6 @@
     </Compile>
     <Compile Include="Widgets\DBManager.cs">
       <Link>DBManager.cs</Link>
-    </Compile>
-    <Compile Include="Widgets\fakeColorBin.cs">
-      <Link>fakeColorBin.cs</Link>
     </Compile>
     <Compile Include="Widgets\FileDescriptionWidget.cs">
       <Link>FileDescriptionWidget.cs</Link>
