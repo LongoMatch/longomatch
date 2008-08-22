@@ -66,10 +66,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Widgets.Component.fakeColorBin" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
   <object type="LongoMatch.Widgets.Component.PlayListTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
     <itemgroups />
     <signals />
