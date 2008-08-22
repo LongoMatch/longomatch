@@ -1,9 +1,9 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
 /*
- * foob
- * Copyright (C)  2008 <Andoni Morales Alastruey>
+ * Gstreamer DV capturer
+ * Copyright (C)  Andoni Morales Alastruey 2008 <ylatuya@gmail.com>
  * 
- * foob is free software.
+ * Gstreamer DV capturer is free software.
  * 
  * You may redistribute it and/or modify it under the terms of the
  * GNU General Public License, as published by the Free Software
@@ -44,6 +44,8 @@ typedef struct GstVideoCapturerPrivate GstVideoCapturerPrivate;
 struct _GstVideoCapturerClass
 {
 	GObjectClass parent_class;
+	
+	void (*eos) (GstVideoCapturer *gvc);
 	void (*error) (GstVideoCapturer *gvc, const char *message);
 	void (*invalidsource) (GstVideoCapturer *gvc);
 };

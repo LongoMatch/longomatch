@@ -1861,7 +1861,6 @@ bacon_video_widget_open(BaconVideoWidget * bvw,
 {
   
   GstMessage *err_msg = NULL;
-  char *path;
   gboolean ret;
 
   g_return_val_if_fail (bvw != NULL, FALSE);

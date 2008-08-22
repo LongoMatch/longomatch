@@ -59,8 +59,7 @@ typedef struct {
 typedef struct {
 	GObjectClass parent_class;
 
-	void (*error) (BaconVideoWidget *bvw, const char *message,
-                       gboolean playback_stopped, gboolean fatal);
+	void (*error) (BaconVideoWidget *bvw, const char *message);
 	void (*eos) (BaconVideoWidget *bvw);
 	void (*got_metadata) (BaconVideoWidget *bvw);
 	void (*segment_done) (BaconVideoWidget *bvw);
