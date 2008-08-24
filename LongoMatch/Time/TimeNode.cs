@@ -35,18 +35,12 @@ namespace LongoMatch.TimeNodes
 		//Stores the stop time
 		private Time stop;
 		
-		private uint fps;
 		
-		private bool selected;
-		
-		private uint startFrame;
-		
-		private uint stopFrame;
 		
 		public TimeNode(){
 		}
 		
-		public TimeNode(String name,Time start, Time stop, uint fps)
+		public TimeNode(String name,Time start, Time stop)
 		{
 			this.name = name;
 			this.start = start;
@@ -55,9 +49,7 @@ namespace LongoMatch.TimeNodes
 			else
 				this.stop = stop;
 			
-			this.fps = fps;
-			this.startFrame = (uint) this.Start.MSeconds*fps/1000;
-			this.stopFrame = (uint) this.Stop.MSeconds*fps/1000;
+			
 		}
 		
 		/**
@@ -117,10 +109,7 @@ namespace LongoMatch.TimeNodes
 			get {return Stop-Start;}
 		}
 		
-		public uint Fps{
-			get{return this.fps;}
-			set{this.fps = value;}
-		}
+		
 
 		/**
 		 * Returns a String object that represents the name of the reference point
@@ -136,34 +125,7 @@ namespace LongoMatch.TimeNodes
 			this.stop = stop;
 		}
 		
-		public bool Selected {
-			get {return selected;}
-			set{this.selected = value;}
-			
-		}
-		public uint CentralFrame{
-			get{ return this.StopFrame-((this.TotalFrames)/2);}
-		}
-		public uint TotalFrames{
-			get{return this.StopFrame-this.StartFrame;}
-		}
-		public uint StartFrame {
-			get {return startFrame;}			
-			set { 
-				this.startFrame = value;
-				this.Start = new Time((int)(1000*value/fps));
-			}
-		}
-		public uint StopFrame {
-			get {return stopFrame;}
-			set { 
-				this.stopFrame = value;
-				this.Stop = new Time((int)(1000*value/fps));
-			}
-		}
-	
-		public bool HasFrame(int frame){
-			return (frame>=startFrame && frame<stopFrame);
-		}
+		
+		
 	}
 }

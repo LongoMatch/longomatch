@@ -286,8 +286,8 @@ namespace LongoMatch.Video.Player {
             this.vscale1.UpdatePolicy = ((Gtk.UpdateType)(1));
             this.vscale1.Inverted = true;
             this.vscale1.Adjustment.Lower = 1;
-            this.vscale1.Adjustment.Upper = 50;
-            this.vscale1.Adjustment.PageIncrement = 10;
+            this.vscale1.Adjustment.Upper = 28;
+            this.vscale1.Adjustment.PageIncrement = 3;
             this.vscale1.Adjustment.PageSize = 1;
             this.vscale1.Adjustment.StepIncrement = 1;
             this.vscale1.Adjustment.Value = 25;

@@ -34,7 +34,7 @@ namespace LongoMatch.TimeNodes
 		public PlayListTimeNode(){
 		}
 		
-		public PlayListTimeNode(string fileName, MediaTimeNode tNode) : base(tNode.Name,tNode.Start,tNode.Stop,tNode.Fps,tNode.MiniaturePath)
+		public PlayListTimeNode(string fileName, MediaTimeNode tNode) : base(tNode.Name,tNode.Start,tNode.Stop,tNode.MiniaturePath)
 		{
 			this.fileName = fileName;
 			

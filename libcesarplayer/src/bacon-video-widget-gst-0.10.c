@@ -878,18 +878,26 @@ bvw_reconfigure_tick_timeout (BaconVideoWidget *bvw, guint msecs)
 static gboolean
 bvw_expose_event (GtkWidget *widget, GdkEventExpose *event, gpointer user_data)
 {
-	BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (user_data);
-  	GstXOverlay *xoverlay;
-	  g_print ("expose \n");
-	xoverlay = bvw->priv->xoverlay;
-	 /* no logo, pass the expose to gst */
-    if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay) && !bvw->priv->logo_mode)
-      gst_x_overlay_expose (xoverlay);
-      
-    if (xoverlay != NULL)
-    gst_object_unref (xoverlay);
+	BaconVideoWidget *bvw;
 
-  	return TRUE;
+	
+	g_return_val_if_fail (widget != NULL, FALSE);
+  	g_return_val_if_fail (GST_IS_VIDEO_WIDGET (widget), FALSE);
+  	g_return_val_if_fail (event != NULL, FALSE);
+  	
+	bvw = BACON_VIDEO_WIDGET (user_data);  	
+
+	
+	 //Pass the expose to the widget
+	gst_video_widget_force_expose(widget,event);
+	 
+   if (bvw->priv->xoverlay != NULL && !bvw->priv->logo_mode)
+      gst_x_overlay_expose (bvw->priv->xoverlay);
+  
+	
+		
+   
+   return TRUE;
 
 
 	
@@ -3483,8 +3491,8 @@ static void bvw_window_construct(int width, int weight,  BaconVideoWidget *bvw){
 	gst_video_widget_set_minimum_size (GST_VIDEO_WIDGET (bvw->priv->video_window),
             width, weight);
 	gst_video_widget_set_source_size (GST_VIDEO_WIDGET (bvw->priv->video_window), width,weight );
-	//g_signal_connect (G_OBJECT (bvw->priv->video_window), "expose_event",
-	//	    G_CALLBACK (bvw_expose_event), bvw);
+	g_signal_connect (G_OBJECT (bvw->priv->video_window), "expose_event",
+		    G_CALLBACK (bvw_expose_event), bvw);
 
 
 }

@@ -21,46 +21,91 @@
 using System;
 using Gdk;
 
-	namespace LongoMatch.TimeNodes
-	{
+namespace LongoMatch.TimeNodes
+{
 	public enum Team{
 		NONE = 0,
 		A = 1,
 		B = 2,
 	}
 	
-		/* MediaTimeNode is the main object of the database for {@LongoMatch}. It' s used to
+	/* MediaTimeNode is the main object of the database for {@LongoMatch}. It' s used to
 	       store the name of each reference point we want to remind with its start time
 	       and its stop time, and the data type it belowns to. When we mark a moment in the
 	       video, this object contains all the information we need to reproduce the
 	       video sequence again.
-		*/
-		[Serializable]
-		public class MediaTimeNode : PixbufTimeNode
-		{
+	 */
+	[Serializable]
+	public class MediaTimeNode : PixbufTimeNode
+	{
 		
 		//Stores the Data Section it belowns to, to allow its removal
-		 private int dataSection;
-		 private Team team;
-
-				
+		private int dataSection;
+		private Team team;
+		private uint fps;
 		
-		public MediaTimeNode(String name, Time start, Time stop, uint fps, int dataSection,string miniaturePath):base (name,start,stop,fps,miniaturePath) {
+		private bool selected;
+		
+		private uint startFrame;
+		
+		private uint stopFrame;
+
+		
+		
+		public MediaTimeNode(String name, Time start, Time stop, uint fps, int dataSection,string miniaturePath):base (name,start,stop,miniaturePath) {
 			this.dataSection = dataSection;		
 			this.team = Team.NONE;
-
+			this.fps = fps;
+			this.startFrame = (uint) this.Start.MSeconds*fps/1000;
+			this.stopFrame = (uint) this.Stop.MSeconds*fps/1000;
 		}
 		
 		public int DataSection{
-			get{
-			return dataSection;
-			}
+			get{return dataSection;}
 		}	
 		
 		public Team Team{
 			get{return this.team;}
-			set{this.team = value;}
-				
+			set{this.team = value;}				
+		}
+		
+		public uint Fps{
+			get{return this.fps;}
+			set{this.fps = value;}
+		}
+		
+		public uint CentralFrame{
+			get{ return this.StopFrame-((this.TotalFrames)/2);}
+		}
+		
+		public uint TotalFrames{
+			get{return this.StopFrame-this.StartFrame;}
+		}
+		
+		public uint StartFrame {
+			get {return startFrame;}			
+			set { 
+				this.startFrame = value;
+				this.Start = new Time((int)(1000*value/fps));
+			}
+		}
+		
+		public uint StopFrame {			
+			get {return stopFrame;}
+			set { 
+				this.stopFrame = value;
+				this.Stop = new Time((int)(1000*value/fps));
+			}
+		}
+	
+		public bool HasFrame(int frame){
+			return (frame>=startFrame && frame<stopFrame);
+		}
+		
+		public bool Selected {
+			get {return selected;}
+			set{this.selected = value;}
+			
 		}
 		
 	}

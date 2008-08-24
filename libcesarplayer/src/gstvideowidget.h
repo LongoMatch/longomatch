@@ -119,4 +119,7 @@ GdkWindow *gst_video_widget_get_video_window (GstVideoWidget * vw);
 void gst_video_widget_set_logo (GstVideoWidget * vw, GdkPixbuf * logo_pixbuf);
 GdkPixbuf *gst_video_widget_get_logo (GstVideoWidget * vw);
 
+/*Force the expose callback*/
+void gst_video_widget_force_expose(GtkWidget * widget, GdkEventExpose * event);
+
 #endif /* __GST_VIDEO_WIDGET_H__ */

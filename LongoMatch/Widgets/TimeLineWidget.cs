@@ -34,7 +34,7 @@ namespace LongoMatch.Widgets.Component {
 		private TimeReferenceWidget tr;
 		private uint frames;
 		private uint pixelRatio=1;
-		private TimeNode selected;
+		private MediaTimeNode selected;
 		private uint currentFrame;
 
 		
@@ -45,7 +45,7 @@ namespace LongoMatch.Widgets.Component {
 		}
 		
 		
-		public TimeNode SelectedTimeNode{
+		public MediaTimeNode SelectedTimeNode{
 			get{return this.selected;}
 			set{
 				this.selected = value;

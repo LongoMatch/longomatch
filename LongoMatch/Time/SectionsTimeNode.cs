@@ -28,7 +28,7 @@ namespace LongoMatch.TimeNodes
 	{
 		bool visible;
 		
-		public SectionsTimeNode(String name,Time start, Time stop,bool visible):base (name,start,stop,0)
+		public SectionsTimeNode(String name,Time start, Time stop,bool visible):base (name,start,stop)
 		{
 			this.visible = visible;
 		}

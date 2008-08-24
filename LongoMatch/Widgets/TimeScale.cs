@@ -42,7 +42,7 @@ namespace LongoMatch.Widgets.Component
 		private List<MediaTimeNode> list;
 		private bool candidateStart;
 		private bool movingLimit;
-		private TimeNode selected=null;
+		private MediaTimeNode selected=null;
 		private uint lastTime=0;
 		private uint currentFrame;
 		private Menu menu;
@@ -81,7 +81,7 @@ namespace LongoMatch.Widgets.Component
 			set{this.currentFrame = value;}
 		}
 		
-		public TimeNode SelectedTimeNode{
+		public MediaTimeNode SelectedTimeNode{
 			get{return this.selected;}
 				set{this.selected = value;}
 		}
