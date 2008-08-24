@@ -87,19 +87,20 @@ namespace LongoMatch
 		}
 		
 		protected virtual void OnProgress(float progress){
-			if (progress == 0 ){
+			if (progress == -1 ){
+				this.progressbar.Hide();
+			}
+			
+			else if (progress == 0 ){
 				this.progressbar.Show();
 				this.progressbar.Fraction = 0;
 				this.progressbar.Text = "Creating new video";
 			}
-			else if (progress > 0){								
-				this.progressbar.Fraction = progress;
-
-			}
+			
 			else if (progress == 1) {
 				this.progressbar.Hide();
 				MessageDialog info = new MessageDialog(null,
-				                                        DialogFlags.DestroyWithParent,
+				                                       DialogFlags.DestroyWithParent,
 				                                        MessageType.Info,
 				                                        ButtonsType.Ok,
 				                                        "The video edition is finished ");
@@ -107,8 +108,10 @@ namespace LongoMatch
 				info.Destroy();
 				
 			}
-			else if (progress == -1 ){
-				this.progressbar.Hide();
+			
+			else if (progress > 0){								
+				this.progressbar.Fraction = progress;
+
 			}
 			
 			

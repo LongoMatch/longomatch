@@ -23,6 +23,12 @@ using Gdk;
 
 	namespace LongoMatch.TimeNodes
 	{
+	public enum Team{
+		NONE = 0,
+		A = 1,
+		B = 2,
+	}
+	
 		/* MediaTimeNode is the main object of the database for {@LongoMatch}. It' s used to
 	       store the name of each reference point we want to remind with its start time
 	       and its stop time, and the data type it belowns to. When we mark a moment in the
@@ -35,12 +41,13 @@ using Gdk;
 		
 		//Stores the Data Section it belowns to, to allow its removal
 		 private int dataSection;
-		
+		 private Team team;
 
 				
 		
 		public MediaTimeNode(String name, Time start, Time stop, uint fps, int dataSection,string miniaturePath):base (name,start,stop,fps,miniaturePath) {
 			this.dataSection = dataSection;		
+			this.team = Team.NONE;
 
 		}
 		
@@ -49,20 +56,12 @@ using Gdk;
 			return dataSection;
 			}
 		}	
-		/*
-		public Pixbuf Miniature{
-			get{ 
-				if (System.IO.File.Exists(this.MiniaturePath)){					
-					return new Pixbuf(this.MiniaturePath);
-				}
-				else return null;
-			}
-		}
 		
-		public String MiniaturePath{
-	
-			get{return this.miniaturePath;}
-		}*/
+		public Team Team{
+			get{return this.team;}
+			set{this.team = value;}
+				
+		}
 		
 	}
 		

@@ -250,8 +250,6 @@ namespace LongoMatch.Widgets.Component
 		protected virtual void OnNewvideobuttonClicked (object sender, System.EventArgs e)
 		{
 			bool exist = true;
-			this.newvideobutton.Hide();
-			this.closebutton.Show();
 			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Save Video As ..."),
 			                                                   (Gtk.Window)this.Toplevel,
 			                                                   FileChooserAction.Save,

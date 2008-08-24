@@ -151,7 +151,8 @@ namespace LongoMatch.Video.Editor
 			
 			pinfo.Arguments = "-oac " + saq+ " -ovc "+ svq + " " + list +" -o \"" + System.IO.Path.Combine (MainClass.VideosDir(),this.OutputFile)+"\"";
 			pinfo.CreateNoWindow = true;
-			pinfo.RedirectStandardOutput = true;
+			pinfo.RedirectStandardOutput=true;
+			pinfo.UseShellExecute = false;
 			process.StartInfo = pinfo;
 			Console.WriteLine(pinfo.Arguments);
 			process.Start();
@@ -194,9 +195,9 @@ namespace LongoMatch.Video.Editor
 			pinfo.Arguments = "-i \"" + plNode.FileName + "\" -f avi -y -ss " + plNode.Start.ToMSecondsString() 
 				+ " -t " +plNode.Duration.ToMSecondsString() + " -vcodec  copy -acodec copy \""
 					+ System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i)+"\"";	
-			Console.WriteLine(pinfo.Arguments);		
+				
 			pinfo.CreateNoWindow = true;
-			pinfo.RedirectStandardOutput = true;
+			pinfo.UseShellExecute = false;
 			process.StartInfo = pinfo;
 	
 			process.Start();
@@ -214,7 +215,7 @@ namespace LongoMatch.Video.Editor
 				+ "\" -vcodec  copy -acodec copy -y \""
 					+ System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i+".avi")+"\"";		
 			pinfo.CreateNoWindow = true;
-			pinfo.RedirectStandardOutput = true;
+			pinfo.UseShellExecute = false;
 			process.StartInfo = pinfo;
 			process.Start();
 			process.WaitForExit();			
