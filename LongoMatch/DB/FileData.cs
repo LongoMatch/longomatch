@@ -108,7 +108,8 @@ namespace LongoMatch.DB
 			List<MediaTimeNode> al= dataSectionArray[dataSection];
 			int count= al.Count+1;
 			string name = sections.GetName(dataSection) + " " +count;
-			if (miniature != null){
+			//TODO Windos doesn't accpet ':' as a valid char for a file
+			if (miniature != null && System.Environment.OSVersion.Platform == PlatformID.Unix){
 				char sep = Path.DirectorySeparatorChar;
 				miniaturePath = MainClass.ThumbnailsDir() + sep +this.Title+ sep +"Section"+dataSection+"-"+name+
 					"-"+start.ToMSecondsString()+"-"+stop.ToMSecondsString()+".jpg";				

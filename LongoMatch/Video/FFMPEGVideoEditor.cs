@@ -131,7 +131,7 @@ namespace LongoMatch.Video.Editor
 			string list="";
 			string[] files = System.IO.Directory.GetFiles(MainClass.TempVideosDir());
 			foreach (String file in files)
-				list = list + file +" ";
+				list = list +"\"" + file +"\" ";
 			ProcessStartInfo pinfo = new ProcessStartInfo();
 			if (System.Environment.OSVersion.Platform != PlatformID.Unix)
 				pinfo.FileName=System.IO.Path.Combine (System.AppDomain.CurrentDomain.BaseDirectory,"mencoder.exe");
@@ -149,8 +149,11 @@ namespace LongoMatch.Video.Editor
 			else
 				saq = ((int) this.aq).ToString(); 
 			
-			pinfo.Arguments = "-oac " + saq+ " -ovc "+ svq + " " + list +" -o '" + System.IO.Path.Combine (MainClass.VideosDir(),this.OutputFile)+"'";
+			pinfo.Arguments = "-oac " + saq+ " -ovc "+ svq + " " + list +" -o \"" + System.IO.Path.Combine (MainClass.VideosDir(),this.OutputFile)+"\"";
+			pinfo.CreateNoWindow = true;
+			pinfo.RedirectStandardOutput = true;
 			process.StartInfo = pinfo;
+			Console.WriteLine(pinfo.Arguments);
 			process.Start();
 			process.WaitForExit();			
 			this.DeleteTempFiles();
@@ -188,11 +191,14 @@ namespace LongoMatch.Video.Editor
 				pinfo.FileName=System.IO.Path.Combine (System.AppDomain.CurrentDomain.BaseDirectory,"ffmpeg.exe");
 			else 
 				pinfo.FileName="ffmpeg";
-			pinfo.Arguments = "-i '" + plNode.FileName + "' -f avi -y -ss " + plNode.Start.ToMSecondsString() 
-				+ " -t " +plNode.Duration.ToMSecondsString() + " -vcodec  copy -acodec copy '"
-					+ System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i)+"'";	
-			Console.WriteLine(pinfo.Arguments);
+			pinfo.Arguments = "-i \"" + plNode.FileName + "\" -f avi -y -ss " + plNode.Start.ToMSecondsString() 
+				+ " -t " +plNode.Duration.ToMSecondsString() + " -vcodec  copy -acodec copy \""
+					+ System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i)+"\"";	
+			Console.WriteLine(pinfo.Arguments);		
+			pinfo.CreateNoWindow = true;
+			pinfo.RedirectStandardOutput = true;
 			process.StartInfo = pinfo;
+	
 			process.Start();
 			process.WaitForExit();			
 		}
@@ -204,9 +210,11 @@ namespace LongoMatch.Video.Editor
 				pinfo.FileName=System.IO.Path.Combine (System.AppDomain.CurrentDomain.BaseDirectory,"ffmpeg.exe");
 			else 
 				pinfo.FileName="ffmpeg";
-			pinfo.Arguments = "-i '" + System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i) 
-				+ "' -vcodec  copy -acodec copy -y '"
-					+ System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i+".avi")+"'";					
+			pinfo.Arguments = "-i \"" + System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i) 
+				+ "\" -vcodec  copy -acodec copy -y \""
+					+ System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i+".avi")+"\"";		
+			pinfo.CreateNoWindow = true;
+			pinfo.RedirectStandardOutput = true;
 			process.StartInfo = pinfo;
 			process.Start();
 			process.WaitForExit();			
