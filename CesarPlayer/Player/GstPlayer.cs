@@ -1161,6 +1161,7 @@ namespace LongoMatch.Video.Player {
 			bool ret = raw_ret;
 			GLib.Marshaller.Free (native_mrl);
 			if (error != IntPtr.Zero) throw new GLib.GException (error);
+			this.Play();
 			return ret;
 			
 		}
