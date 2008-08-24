@@ -96,7 +96,9 @@ namespace LongoMatch.Widgets.Component
 			return   new Cairo.Color((double)(gdkColor.Red)/ushort.MaxValue,(double)(gdkColor.Green)/ushort.MaxValue,(double)(gdkColor.Blue)/ushort.MaxValue);
 		}
 		
-			private void DrawTimeNodes(Gdk.Window win){
+		private void DrawTimeNodes(Gdk.Window win){
+			
+			bool hasSelectedTimeNode=false;
 			
 			using (Cairo.Context g = Gdk.CairoHelper.Create (win)){	
 				int height;
@@ -115,30 +117,39 @@ namespace LongoMatch.Widgets.Component
 				g.Stroke();			
 				
 				
+				g.Operator = Operator.Over;
 				
 				foreach (MediaTimeNode tn in list){					
 
-					g.Rectangle( new Cairo.Rectangle(tn.StartFrame/pixelRatio,3,tn.TotalFrames/pixelRatio,height-6));					
-					
-					if (tn == this.selected) {			
-						g.LineWidth = 3;
-						g.Color = new Cairo.Color (0,0,0,1);						
-					}
-					else{
+					if (tn != this.selected) {
+						g.Rectangle( new Cairo.Rectangle(tn.StartFrame/pixelRatio,3,tn.TotalFrames/pixelRatio,height-6));					
 						g.LineWidth = 2;
-						g.Color = new Cairo.Color (color.R+0.1, color.G+0.1,color.B+0.1, 1);
-					}					
-		
+						g.Color = new Cairo.Color (color.R+0.1, color.G+0.1,color.B+0.1, 1);				
+						g.LineJoin = LineJoin.Round;
+						g.StrokePreserve();
+						g.Color = this.color;						
+						g.Fill();
+					}
+					else {
+						hasSelectedTimeNode = true;
+					}								
+				}
+				//Then we draw the selected TimeNode ove the oders
+				if (hasSelectedTimeNode){
+					
+					g.Rectangle( new Cairo.Rectangle(selected.StartFrame/pixelRatio,3,selected.TotalFrames/pixelRatio,height-6));					
+					g.Color = new Cairo.Color (0, 0, 0, 1);		
+					g.LineWidth = 3;
 					g.LineJoin = LineJoin.Round;
+					g.Operator = Operator.Source;
 					g.StrokePreserve();
+					g.Operator = Operator.Over;
 					g.Color = this.color;						
 					g.Fill();
-					
-					
 				}
-				g.Color = new Cairo.Color(0,0,0);
-				g.LineWidth = 1;
 				g.Operator = Operator.Over;
+				g.Color = new Cairo.Color(0,0,0);
+				g.LineWidth = 1;				
 				g.MoveTo(currentFrame/pixelRatio,0);
 				g.LineTo(currentFrame/pixelRatio,height);
 				g.Stroke();

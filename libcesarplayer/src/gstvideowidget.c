@@ -287,6 +287,7 @@ gst_video_widget_expose (GtkWidget * widget, GdkEventExpose * event)
 
   vw = GST_VIDEO_WIDGET (widget);
 
+  g_print ("expose widget\n");
   if (GTK_WIDGET_VISIBLE (widget) && GTK_WIDGET_MAPPED (widget)) {
     if ((vw->priv->logo_focused) && (vw->priv->logo_pixbuf)) {
       GdkPixbuf *frame;

@@ -10,7 +10,7 @@
       <Output directory="../LongoMatch/bin/Release" output="libcesarplayer" />
       <Build debugmode="False" target="SharedLibrary" />
       <Execution runwithwarnings="True" consolepause="True" />
-      <CodeGeneration WarningLevel="All" WarningsAsErrors="False" OptimizationLevel="3" ExtraCompilerArguments="" ExtraLinkerArguments="" DefineSymbols="MONODEVELOP" ctype="CCompilationParameters" />
+      <CodeGeneration WarningLevel="Normal" WarningsAsErrors="False" OptimizationLevel="3" ExtraCompilerArguments="" ExtraLinkerArguments="" DefineSymbols="MONODEVELOP" ctype="CCompilationParameters" />
     </Configuration>
   </Configurations>
   <Contents>

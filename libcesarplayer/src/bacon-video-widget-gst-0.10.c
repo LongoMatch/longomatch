@@ -214,6 +214,9 @@ static void bvw_update_interface_implementations (BaconVideoWidget *bvw);
 
 static void bvw_process_pending_tag_messages (BaconVideoWidget * bvw);
 static void bvw_stop_play_pipeline (BaconVideoWidget * bvw);
+static gboolean bvw_expose_event (GtkWidget *widget, GdkEventExpose *event,gpointer user_data);
+
+
 static GError* bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage *m);
 static GList * get_stream_info_objects_for_type (BaconVideoWidget * bvw,
     const gchar * typestr);
@@ -871,6 +874,27 @@ bvw_reconfigure_tick_timeout (BaconVideoWidget *bvw, guint msecs)
       g_timeout_add (msecs, (GSourceFunc) bvw_query_timeout, bvw);
   }
 }
+
+static gboolean
+bvw_expose_event (GtkWidget *widget, GdkEventExpose *event, gpointer user_data)
+{
+	BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (user_data);
+  	GstXOverlay *xoverlay;
+	  g_print ("expose \n");
+	xoverlay = bvw->priv->xoverlay;
+	 /* no logo, pass the expose to gst */
+    if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay) && !bvw->priv->logo_mode)
+      gst_x_overlay_expose (xoverlay);
+      
+    if (xoverlay != NULL)
+    gst_object_unref (xoverlay);
+
+  	return TRUE;
+
+
+	
+}
+
 
 /* returns TRUE if the error/signal has been handled and should be ignored */
 static gboolean
@@ -3459,6 +3483,9 @@ static void bvw_window_construct(int width, int weight,  BaconVideoWidget *bvw){
 	gst_video_widget_set_minimum_size (GST_VIDEO_WIDGET (bvw->priv->video_window),
             width, weight);
 	gst_video_widget_set_source_size (GST_VIDEO_WIDGET (bvw->priv->video_window), width,weight );
+	//g_signal_connect (G_OBJECT (bvw->priv->video_window), "expose_event",
+	//	    G_CALLBACK (bvw_expose_event), bvw);
+
 
 }
 
