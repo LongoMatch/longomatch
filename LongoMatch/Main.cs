@@ -1,4 +1,4 @@
-// Main.cs
+﻿// Main.cs
 //
 //  Copyright (C) 2007 Andoni Morales Alastruey
 //
@@ -153,12 +153,16 @@ namespace LongoMatch
 		static extern void gst_registry_add_path  (IntPtr registry,string path);
 		[DllImport("libgstreamer-0.10.dll")]
 		static extern void gst_init(out int argc, IntPtr argv);
+		[DllImport("libgstreamer-0.10.dll")]
+		static extern bool gst_update_registry ();
+
 		
 		private static void SetGstPluginsPath(){
 			int argc;
 			gst_init(out argc, GLib.Marshaller.StringToPtrGStrdup(String.Empty));			
-			IntPtr ptr = gst_registry_get_default();
+			IntPtr ptr = gst_registry_get_default();		
 			gst_registry_add_path(ptr,GstPluginsDir());
+			gst_update_registry();
 			
 		}
 
