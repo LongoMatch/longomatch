@@ -141,8 +141,8 @@ namespace LongoMatch
 		}
 		
 		
+		
 		private static void InitGstreamer(){
-			LongoMatch.Video.Player.GstPlayer.InitBackend(String.Empty);
 			if (System.Environment.OSVersion.Platform == PlatformID.Win32NT)
 				SetGstPluginsPath();
 		}
@@ -151,8 +151,12 @@ namespace LongoMatch
 		static extern IntPtr  gst_registry_get_default ();
 		[DllImport("libgstreamer-0.10.dll")]
 		static extern void gst_registry_add_path  (IntPtr registry,string path);
+		[DllImport("libgstreamer-0.10.dll")]
+		static extern void gst_init(out int argc, IntPtr argv);
 		
 		private static void SetGstPluginsPath(){
+			int argc;
+			gst_init(out argc, GLib.Marshaller.StringToPtrGStrdup(String.Empty));			
 			IntPtr ptr = gst_registry_get_default();
 			gst_registry_add_path(ptr,GstPluginsDir());
 			
