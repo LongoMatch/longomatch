@@ -23,7 +23,7 @@ namespace LongoMatch.Video.Player {
 
 		
 		
-		
+
 		[DllImport("libcesarplayer.dll")]
 		static extern IntPtr bacon_video_widget_new(int width, int height, int type, out IntPtr error);
 

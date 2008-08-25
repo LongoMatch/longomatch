@@ -24,6 +24,7 @@ using Gtk;
 using Mono.Unix;
 using LongoMatch.DB;
 using LongoMatch.IO;
+using System.Runtime.InteropServices;
 
 namespace LongoMatch
 	
@@ -59,6 +60,9 @@ namespace LongoMatch
 			//Iniciamos la base de datos
 			db = new DataBase();
 			
+			//Initializa Gstreamer
+			
+			InitGstreamer();			
 			
 			//Iniciamos la aplicación
 			Application.Init ();
@@ -99,6 +103,11 @@ namespace LongoMatch
 		public static string DBDir(){
 			return System.IO.Path.Combine (homeDirectory, "db");
 		}
+
+		private  static string GstPluginsDir(){
+			return System.IO.Path.Combine (baseDirectory, "gst-plugins");
+		}
+
 		
 		
 		
@@ -130,5 +139,24 @@ namespace LongoMatch
 		public static DataBase DB{
 			get { return db;}
 		}
+		
+		
+		private static void InitGstreamer(){
+			LongoMatch.Video.Player.GstPlayer.InitBackend(String.Empty);
+			if (System.Environment.OSVersion.Platform == PlatformID.Win32NT)
+				SetGstPluginsPath();
+		}
+		
+		[DllImport("libgstreamer-0.10.dll")]
+		static extern IntPtr  gst_registry_get_default ();
+		[DllImport("libgstreamer-0.10.dll")]
+		static extern void gst_registry_add_path  (IntPtr registry,string path);
+		
+		private static void SetGstPluginsPath(){
+			IntPtr ptr = gst_registry_get_default();
+			gst_registry_add_path(ptr,GstPluginsDir());
+			
+		}
+
 	}
 }
