@@ -3,9 +3,9 @@
     <ProjectGuid>{64BBF35C-C210-4869-B93B-924234A32C0D}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>LongoMatch</RootNamespace>
-    <AssemblyName>LongoMatch</AssemblyName>
+    <AssemblyName>LGM</AssemblyName>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <NoStdLib>False</NoStdLib>
     <WarningLevel>4</WarningLevel>
