@@ -348,7 +348,7 @@ gst_video_widget_expose (GtkWidget * widget, GdkEventExpose * event)
   }
 
   if (GDK_IS_WINDOW (vw->priv->video_window)) {
-    guint pos_x, pos_y, width, height, depth;
+    gint pos_x, pos_y, width, height, depth;
 
     gdk_window_get_geometry (vw->priv->video_window, &pos_x, &pos_y,
 	&width, &height, &depth);

@@ -79,8 +79,7 @@ namespace LongoMatch
 					this.timelinewidget1.Project = project;
 					this.buttonswidget1.Sections = project.Sections;	
 					if (project.File.HasVideo){
-						this.playerbin1.LogoMode = false;
-						this.FullScreenAction.Sensitive = true;
+						this.playerbin1.LogoMode = false;						
 					}
 					this.CloseProjectAction.Sensitive=true;
 					this.SaveProjectAction.Sensitive = true;
@@ -124,8 +123,7 @@ namespace LongoMatch
 			this.SaveProjectAction.Sensitive = false;
 			this.PlayerAction.Sensitive= false;
 			this.CaptureModeAction.Sensitive = false;
-			this.AnalyzeModeAction.Sensitive = false;
-			this.FullScreenAction.Sensitive = false;
+			this.AnalyzeModeAction.Sensitive = false;			
 		}
 		
 		private void SaveDB(){			

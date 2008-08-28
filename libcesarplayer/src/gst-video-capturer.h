@@ -26,6 +26,8 @@
 #define _GST_VIDEO_CAPTURER_H_
 
 #include <glib-object.h>
+#include <gtk/gtk.h>
+
 
 G_BEGIN_DECLS
 
@@ -43,7 +45,7 @@ typedef struct GstVideoCapturerPrivate GstVideoCapturerPrivate;
 
 struct _GstVideoCapturerClass
 {
-	GObjectClass parent_class;
+	GtkWidgetClass parent_class;
 	
 	void (*eos) (GstVideoCapturer *gvc);
 	void (*error) (GstVideoCapturer *gvc, const char *message);
@@ -52,7 +54,7 @@ struct _GstVideoCapturerClass
 
 struct _GstVideoCapturer
 {
-	GObject parent_instance;
+	GtkWidget parent_instance;
 	GstVideoCapturerPrivate *priv;
 };
 
@@ -82,7 +84,7 @@ typedef enum{
 GType gst_video_capturer_get_type (void) G_GNUC_CONST;
 
 void gst_video_capturer_init_backend (int *argc, char ***argv);
-void gst_video_capturer_new (gchar *mrl, GvcUseType use_type, gchar **error );
+GstVideoCapturer * gst_video_capturer_new (GvcUseType use_type, gchar **error );
 
 G_END_DECLS
 

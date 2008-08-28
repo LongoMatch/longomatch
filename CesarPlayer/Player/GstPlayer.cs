@@ -177,15 +177,15 @@ namespace LongoMatch.Video.Player {
 		}
 
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-		delegate void StateChangedVMDelegate (IntPtr bvw, bool playing);
+		delegate void StateChangedVMDelegate (IntPtr gst, bool playing);
 
 		static StateChangedVMDelegate StateChangedVMCallback;
 
-		static void statechanged_cb (IntPtr bvw, bool playing)
+		static void statechanged_cb (IntPtr gst, bool playing)
 		{
 			try {
-				GstPlayer bvw_managed = GLib.Object.GetObject (bvw, false) as GstPlayer;
-				bvw_managed.OnStateChanged (playing);
+				GstPlayer gst_managed = GLib.Object.GetObject (gst, false) as GstPlayer;
+				gst_managed.OnStateChanged (playing);
 			} catch (Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException (e, false);
 			}
@@ -246,15 +246,15 @@ namespace LongoMatch.Video.Player {
 		}
 
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-		delegate void GotRedirectVMDelegate (IntPtr bvw, IntPtr mrl);
+		delegate void GotRedirectVMDelegate (IntPtr gst, IntPtr mrl);
 
 		static GotRedirectVMDelegate GotRedirectVMCallback;
 
-		static void gotredirect_cb (IntPtr bvw, IntPtr mrl)
+		static void gotredirect_cb (IntPtr gst, IntPtr mrl)
 		{
 			try {
-				GstPlayer bvw_managed = GLib.Object.GetObject (bvw, false) as GstPlayer;
-				bvw_managed.OnGotRedirect (GLib.Marshaller.Utf8PtrToString (mrl));
+				GstPlayer gst_managed = GLib.Object.GetObject (gst, false) as GstPlayer;
+				gst_managed.OnGotRedirect (GLib.Marshaller.Utf8PtrToString (mrl));
 			} catch (Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException (e, false);
 			}
@@ -295,15 +295,15 @@ namespace LongoMatch.Video.Player {
 		}
 
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-		delegate void SegmentDoneVMDelegate (IntPtr bvw);
+		delegate void SegmentDoneVMDelegate (IntPtr gst);
 
 		static SegmentDoneVMDelegate SegmentDoneVMCallback;
 
-		static void segmentdone_cb (IntPtr bvw)
+		static void segmentdone_cb (IntPtr gst)
 		{
 			try {
-				GstPlayer bvw_managed = GLib.Object.GetObject (bvw, false) as GstPlayer;
-				bvw_managed.OnSegmentDone ();
+				GstPlayer gst_managed = GLib.Object.GetObject (gst, false) as GstPlayer;
+				gst_managed.OnSegmentDone ();
 			} catch (Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException (e, false);
 			}
@@ -343,15 +343,15 @@ namespace LongoMatch.Video.Player {
 		}
 
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-		delegate void EosVMDelegate (IntPtr bvw);
+		delegate void EosVMDelegate (IntPtr gst);
 
 		static EosVMDelegate EosVMCallback;
 
-		static void eos_cb (IntPtr bvw)
+		static void eos_cb (IntPtr gst)
 		{
 			try {
-				GstPlayer bvw_managed = GLib.Object.GetObject (bvw, false) as GstPlayer;
-				bvw_managed.OnEos ();
+				GstPlayer gst_managed = GLib.Object.GetObject (gst, false) as GstPlayer;
+				gst_managed.OnEos ();
 			} catch (Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException (e, false);
 			}
@@ -414,15 +414,15 @@ namespace LongoMatch.Video.Player {
 		}
 
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-		delegate void ErrorVMDelegate (IntPtr bvw, IntPtr message, bool playback_stopped, bool fatal);
+		delegate void ErrorVMDelegate (IntPtr gst, IntPtr message, bool playback_stopped, bool fatal);
 
 		static ErrorVMDelegate ErrorVMCallback;
 
-		static void error_cb (IntPtr bvw, IntPtr message, bool playback_stopped, bool fatal)
+		static void error_cb (IntPtr gst, IntPtr message, bool playback_stopped, bool fatal)
 		{
 			try {
-				GstPlayer bvw_managed = GLib.Object.GetObject (bvw, false) as GstPlayer;
-				bvw_managed.OnError (GLib.Marshaller.Utf8PtrToString (message), playback_stopped, fatal);
+				GstPlayer gst_managed = GLib.Object.GetObject (gst, false) as GstPlayer;
+				gst_managed.OnError (GLib.Marshaller.Utf8PtrToString (message), playback_stopped, fatal);
 			} catch (Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException (e, false);
 			}
@@ -487,15 +487,15 @@ namespace LongoMatch.Video.Player {
 		}
 
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-		delegate void BufferingVMDelegate (IntPtr bvw, uint progress);
+		delegate void BufferingVMDelegate (IntPtr gst, uint progress);
 
 		static BufferingVMDelegate BufferingVMCallback;
 
-		static void buffering_cb (IntPtr bvw, uint progress)
+		static void buffering_cb (IntPtr gst, uint progress)
 		{
 			try {
-				GstPlayer bvw_managed = GLib.Object.GetObject (bvw, false) as GstPlayer;
-				bvw_managed.OnBuffering (progress);
+				GstPlayer gst_managed = GLib.Object.GetObject (gst, false) as GstPlayer;
+				gst_managed.OnBuffering (progress);
 			} catch (Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException (e, false);
 			}
@@ -536,15 +536,15 @@ namespace LongoMatch.Video.Player {
 		}
 
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-		delegate void ChannelsChangeVMDelegate (IntPtr bvw);
+		delegate void ChannelsChangeVMDelegate (IntPtr gst);
 
 		static ChannelsChangeVMDelegate ChannelsChangeVMCallback;
 
-		static void channelschange_cb (IntPtr bvw)
+		static void channelschange_cb (IntPtr gst)
 		{
 			try {
-				GstPlayer bvw_managed = GLib.Object.GetObject (bvw, false) as GstPlayer;
-				bvw_managed.OnChannelsChange ();
+				GstPlayer gst_managed = GLib.Object.GetObject (gst, false) as GstPlayer;
+				gst_managed.OnChannelsChange ();
 			} catch (Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException (e, false);
 			}
@@ -583,15 +583,15 @@ namespace LongoMatch.Video.Player {
 		}
 
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-		delegate void GotMetadataVMDelegate (IntPtr bvw);
+		delegate void GotMetadataVMDelegate (IntPtr gst);
 
 		static GotMetadataVMDelegate GotMetadataVMCallback;
 
-		static void gotmetadata_cb (IntPtr bvw)
+		static void gotmetadata_cb (IntPtr gst)
 		{
 			try {
-				GstPlayer bvw_managed = GLib.Object.GetObject (bvw, false) as GstPlayer;
-				bvw_managed.OnGotMetadata ();
+				GstPlayer gst_managed = GLib.Object.GetObject (gst, false) as GstPlayer;
+				gst_managed.OnGotMetadata ();
 			} catch (Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException (e, false);
 			}
@@ -653,15 +653,15 @@ namespace LongoMatch.Video.Player {
 		}
 
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-		delegate void TickVMDelegate (IntPtr bvw, long current_time, long stream_length, float current_position, bool seekable);
+		delegate void TickVMDelegate (IntPtr gst, long current_time, long stream_length, float current_position, bool seekable);
 
 		static TickVMDelegate TickVMCallback;
 
-		static void tick_cb (IntPtr bvw, long current_time, long stream_length, float current_position, bool seekable)
+		static void tick_cb (IntPtr gst, long current_time, long stream_length, float current_position, bool seekable)
 		{
 			try {
-				GstPlayer bvw_managed = GLib.Object.GetObject (bvw, false) as GstPlayer;
-				bvw_managed.OnTick (current_time, stream_length, current_position, seekable);
+				GstPlayer gst_managed = GLib.Object.GetObject (gst, false) as GstPlayer;
+				gst_managed.OnTick (current_time, stream_length, current_position, seekable);
 			} catch (Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException (e, false);
 			}
@@ -728,15 +728,15 @@ namespace LongoMatch.Video.Player {
 		}
 
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-		delegate void TitleChangeVMDelegate (IntPtr bvw, IntPtr title);
+		delegate void TitleChangeVMDelegate (IntPtr gst, IntPtr title);
 
 		static TitleChangeVMDelegate TitleChangeVMCallback;
 
-		static void titlechange_cb (IntPtr bvw, IntPtr title)
+		static void titlechange_cb (IntPtr gst, IntPtr title)
 		{
 			try {
-				GstPlayer bvw_managed = GLib.Object.GetObject (bvw, false) as GstPlayer;
-				bvw_managed.OnTitleChange (GLib.Marshaller.Utf8PtrToString (title));
+				GstPlayer gst_managed = GLib.Object.GetObject (gst, false) as GstPlayer;
+				gst_managed.OnTitleChange (GLib.Marshaller.Utf8PtrToString (title));
 			} catch (Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException (e, false);
 			}
@@ -777,15 +777,15 @@ namespace LongoMatch.Video.Player {
 		}
 
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-		delegate void GotDurationVMDelegate (IntPtr bvw);
+		delegate void GotDurationVMDelegate (IntPtr gst);
 
 		static GotDurationVMDelegate GotDurationVMCallback;
 
-		static void gotduration_cb (IntPtr bvw)
+		static void gotduration_cb (IntPtr gst)
 		{
 			try {
-				GstPlayer bvw_managed = GLib.Object.GetObject (bvw, false) as GstPlayer;
-				bvw_managed.OnGotDuration ();
+				GstPlayer gst_managed = GLib.Object.GetObject (gst, false) as GstPlayer;
+				gst_managed.OnGotDuration ();
 			} catch (Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException (e, false);
 			}
