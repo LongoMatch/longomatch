@@ -39,6 +39,10 @@ namespace LongoMatch.Widgets.Component
 		public event NewMarkEventHandler NewMarkEvent;
 		private TreeIter selectedIter;
 		private Menu menu;
+		private MenuItem local;
+	    private	MenuItem visitor;
+		private MenuItem noTeam;
+		//Using TimeNode as in the tree there are Media and Sections timenodes
 		private TimeNode selectedTimeNode;
 		private Color[] colors;
 
@@ -47,15 +51,7 @@ namespace LongoMatch.Widgets.Component
 			
 			this.RowActivated += new RowActivatedHandler(OnTreeviewRowActivated);
 						
-			menu = new Menu();
-			MenuItem quit = new MenuItem("Delete");
-			MenuItem addPLN = new MenuItem("Add to playlist");
-			addPLN.Activated += new EventHandler(OnAdded);
-			quit.Activated += new EventHandler(OnDeleted);
-			addPLN.Show();
-			quit.Show();
-			menu.Append(addPLN);
-			menu.Append(quit);		
+			SetMenu();	
 			
 			colors = new Color[20];
 			
@@ -100,6 +96,39 @@ namespace LongoMatch.Widgets.Component
 			set {this.colors = value;}
 		}
 		
+		private void SetMenu(){
+			
+			
+			Menu teamMenu = new Menu();
+			local = new MenuItem(Catalog.GetString("Local Team"));
+			visitor = new MenuItem(Catalog.GetString("Visitor Team"));
+			noTeam = new MenuItem(Catalog.GetString("No Team"));
+			teamMenu .Append(local);
+			teamMenu .Append(visitor);
+			teamMenu .Append(noTeam);
+			
+			menu = new Menu();
+			MenuItem team = new MenuItem(Catalog.GetString("Team Selection"));
+			team.Submenu = teamMenu;
+			MenuItem quit = new MenuItem(Catalog.GetString("Delete"));
+			MenuItem addPLN = new MenuItem(Catalog.GetString("Add to playlist"));
+			menu.Append(team);			
+			menu.Append(addPLN);
+			menu.Append(quit);
+			
+			local.Activated += new EventHandler(OnTeamSelection);
+			visitor.Activated += new EventHandler(OnTeamSelection);
+			noTeam.Activated += new EventHandler(OnTeamSelection);
+			addPLN.Activated += new EventHandler(OnAdded);
+			quit.Activated += new EventHandler(OnDeleted);
+			menu.ShowAll();
+			
+			
+			
+			
+		}
+		
+		
 		protected override bool OnButtonPressEvent (EventButton evnt)
 		{
 			//Call base class, to allow normal handling,
@@ -127,6 +156,19 @@ namespace LongoMatch.Widgets.Component
 				TimeNodeDeleted((MediaTimeNode)selectedTimeNode);
 			((TreeStore)this.Model).Remove(ref selectedIter);
 			
+		}
+		
+		protected void OnTeamSelection(object obj, EventArgs args){
+			MenuItem sender = (MenuItem)obj;
+			Team team = Team.NONE;
+			if (sender == local)
+				team = Team.LOCAL;
+			else if (sender == visitor)
+				team = Team.VISITOR;
+			else if (sender == noTeam)
+				team = Team.NONE;
+			((MediaTimeNode)selectedTimeNode).Team= team;
+			                
 		}
 		
 		protected void OnAdded(object obj, EventArgs args){

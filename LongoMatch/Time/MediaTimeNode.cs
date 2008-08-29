@@ -25,8 +25,8 @@ namespace LongoMatch.TimeNodes
 {
 	public enum Team{
 		NONE = 0,
-		A = 1,
-		B = 2,
+		LOCAL = 1,
+		VISITOR = 2,
 	}
 	
 	/* MediaTimeNode is the main object of the database for {@LongoMatch}. It' s used to

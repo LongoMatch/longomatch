@@ -21,6 +21,8 @@ namespace LongoMatch.Widgets.Component {
         
         private Gtk.Button zoomoutbutton;
         
+        private Gtk.Button fitbutton;
+        
         private Gtk.ScrolledWindow GtkScrolledWindow;
         
         private Gtk.VBox vbox1;
@@ -88,27 +90,52 @@ namespace LongoMatch.Widgets.Component {
             w18.Position = 1;
             w18.Expand = false;
             w18.Fill = false;
+            // Container child vbox3.Gtk.Box+BoxChild
+            this.fitbutton = new Gtk.Button();
+            this.fitbutton.CanFocus = true;
+            this.fitbutton.Name = "fitbutton";
+            this.fitbutton.UseUnderline = true;
+            // Container child fitbutton.Gtk.Container+ContainerChild
+            Gtk.Alignment w19 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
+            Gtk.HBox w20 = new Gtk.HBox();
+            w20.Spacing = 2;
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Image w21 = new Gtk.Image();
+            w21.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-zoom-fit", Gtk.IconSize.Button, 20);
+            w20.Add(w21);
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Label w23 = new Gtk.Label();
+            w23.LabelProp = "";
+            w20.Add(w23);
+            w19.Add(w20);
+            this.fitbutton.Add(w19);
+            this.vbox3.Add(this.fitbutton);
+            Gtk.Box.BoxChild w27 = ((Gtk.Box.BoxChild)(this.vbox3[this.fitbutton]));
+            w27.Position = 2;
+            w27.Expand = false;
+            w27.Fill = false;
             this.hbox3.Add(this.vbox3);
-            Gtk.Box.BoxChild w19 = ((Gtk.Box.BoxChild)(this.hbox3[this.vbox3]));
-            w19.Position = 0;
-            w19.Expand = false;
-            w19.Fill = false;
+            Gtk.Box.BoxChild w28 = ((Gtk.Box.BoxChild)(this.hbox3[this.vbox3]));
+            w28.Position = 0;
+            w28.Expand = false;
+            w28.Fill = false;
             // Container child hbox3.Gtk.Box+BoxChild
             this.GtkScrolledWindow = new Gtk.ScrolledWindow();
             this.GtkScrolledWindow.Name = "GtkScrolledWindow";
             this.GtkScrolledWindow.ShadowType = ((Gtk.ShadowType)(1));
             // Container child GtkScrolledWindow.Gtk.Container+ContainerChild
-            Gtk.Viewport w20 = new Gtk.Viewport();
-            w20.ShadowType = ((Gtk.ShadowType)(0));
+            Gtk.Viewport w29 = new Gtk.Viewport();
+            w29.ShadowType = ((Gtk.ShadowType)(0));
             // Container child GtkViewport.Gtk.Container+ContainerChild
             this.vbox1 = new Gtk.VBox();
             this.vbox1.Name = "vbox1";
             this.vbox1.BorderWidth = ((uint)(2));
-            w20.Add(this.vbox1);
-            this.GtkScrolledWindow.Add(w20);
+            w29.Add(this.vbox1);
+            this.GtkScrolledWindow.Add(w29);
             this.hbox3.Add(this.GtkScrolledWindow);
-            Gtk.Box.BoxChild w23 = ((Gtk.Box.BoxChild)(this.hbox3[this.GtkScrolledWindow]));
-            w23.Position = 1;
+            Gtk.Box.BoxChild w32 = ((Gtk.Box.BoxChild)(this.hbox3[this.GtkScrolledWindow]));
+            w32.Position = 1;
             this.Add(this.hbox3);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
@@ -116,6 +143,7 @@ namespace LongoMatch.Widgets.Component {
             this.Show();
             this.zoominbutton.Clicked += new System.EventHandler(this.OnZoominbuttonClicked);
             this.zoomoutbutton.Clicked += new System.EventHandler(this.OnZoomoutbuttonClicked);
+            this.fitbutton.Clicked += new System.EventHandler(this.OnFitbuttonClicked);
         }
     }
 }
