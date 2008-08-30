@@ -78,11 +78,11 @@
     <Compile Include="DB\DataBase.cs">
       <Link>DataBase.cs</Link>
     </Compile>
-    <Compile Include="DB\FileData.cs">
-      <Link>FileData.cs</Link>
-    </Compile>
     <Compile Include="DB\MediaFile.cs">
       <Link>MediaFile.cs</Link>
+    </Compile>
+    <Compile Include="DB\Project.cs">
+      <Link>Project.cs</Link>
     </Compile>
     <Compile Include="DB\Sections.cs">
       <Link>Sections.cs</Link>

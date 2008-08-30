@@ -69,9 +69,6 @@
       <Link>TitleChangeHandler.cs</Link>
     </Compile>
     <Compile Include="ObjectManager.cs" />
-    <Compile Include="Player\DSPlayer.cs">
-      <Link>DSPlayer.cs</Link>
-    </Compile>
     <Compile Include="Player\GstPlayer.cs">
       <Link>GstPlayer.cs</Link>
     </Compile>
