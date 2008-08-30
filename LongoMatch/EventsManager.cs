@@ -72,7 +72,8 @@ namespace LongoMatch
 			this.playlist.Progress += new ProgressHandler(OnProgress);
 			
 			this.treewidget.PlayListNodeAdded += new Handlers.PlayListNodeAddedHandler(OnPlayListNodeAdded);
-			this.timeline.PlayListNodeAdded += new Handlers.PlayListNodeAddedHandler(OnPlayListNodeAdded);
+			
+			this.timeline.NewMarkEvent += new NewMarkAtFrameEventHandler(OnNewMarkAtFrame);
 			
 			playerbin.Prev += new PrevButtonClickedHandler(OnPrev);
 			playerbin.Next += new NextButtonClickedHandler(OnNext);
@@ -83,6 +84,24 @@ namespace LongoMatch
 		public  Project OpenedProject{
 			set{
 				this.openedProject = value;
+			}
+		}
+		
+		private void ProcessNewMarkEvent(int section,Time pos){
+			if (this.player != null && openedProject != null){
+				Time startTime = openedProject.Sections.GetStartTime(section);
+				Time stopTime = openedProject.Sections.GetStopTime(section);				
+				Time start = pos - startTime;
+				Time stop = pos + stopTime;
+				Time fStart = (start < new Time(0)) ? new Time(0) : start;
+				//La longitud tiene que ser en ms
+				Time length = new Time((int)player.StreamLength*1000);
+				Time fStop = (stop > length) ? length: stop;
+				Pixbuf miniature = this.player.CurrentFrame;
+				MediaTimeNode tn = openedProject.AddTimeNode(section,fStart, fStop,miniature);				
+				//treewidget.AddTimeNode(tn,i);
+				treewidget.Update();
+				this.timeline.QueueDraw();
 			}
 		}
 		
@@ -116,23 +135,18 @@ namespace LongoMatch
 			
 			
 		}
+			
+	    protected virtual void OnNewMarkAtFrame(int section, int frame){
+			
+			Time pos = new Time(frame*1000/this.openedProject.File.Fps);
+			ProcessNewMarkEvent(section,pos);
+		}
+		
+		protected virtual void OnNewMark(int i){
+			Time pos = new Time((int)player.CurrentTime);
+			ProcessNewMarkEvent(i,pos);	
 				
-		protected virtual void OnNewMark(int i, Time startTime, Time stopTime){
-			if (this.player != null && openedProject != null){
 				
-				Time pos = new Time((int)player.CurrentTime);
-				Time start = pos - startTime;
-				Time stop = pos + stopTime;
-				Time fStart = (start < new Time(0)) ? new Time(0) : start;
-				//La longitud tiene que ser en ms
-				Time length = new Time((int)player.StreamLength*1000);
-				Time fStop = (stop > length) ? length: stop;
-				Pixbuf miniature = this.player.CurrentFrame;
-				MediaTimeNode tn = openedProject.AddTimeNode(i,fStart, fStop,miniature);				
-				//treewidget.AddTimeNode(tn,i);
-				treewidget.Update();
-				this.timeline.QueueDraw();
-			}
 		}
 		
 		protected virtual void OnTimeNodeSelected (MediaTimeNode tNode)

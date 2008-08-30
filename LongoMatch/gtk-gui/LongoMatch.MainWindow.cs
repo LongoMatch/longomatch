@@ -141,7 +141,7 @@ namespace LongoMatch {
             w1.InsertActionGroup(w2, 0);
             Gtk.ActionGroup w3 = new Gtk.ActionGroup("Player");
             this.PlayAction = new Gtk.Action("PlayAction", Mono.Unix.Catalog.GetString("_Play"), null, "gtk-media-play");
-            this.PlayAction.ShortLabel = Mono.Unix.Catalog.GetString("dasdf");
+            this.PlayAction.ShortLabel = Mono.Unix.Catalog.GetString("_Play");
             w3.Add(this.PlayAction, null);
             this.PauseAction = new Gtk.Action("PauseAction", Mono.Unix.Catalog.GetString("P_ause"), null, "gtk-media-pause");
             this.PauseAction.ShortLabel = Mono.Unix.Catalog.GetString("P_ause");

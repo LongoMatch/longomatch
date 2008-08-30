@@ -34,7 +34,8 @@ namespace LongoMatch.Widgets.Component {
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event TimeNodeSelectedHandler TimeNodeSelected;
 		public event TimeNodeDeletedHandler TimeNodeDeleted;
-		public event PlayListNodeAddedHandler PlayListNodeAdded;
+		public event NewMarkAtFrameEventHandler NewMarkEvent;
+		//public event PlayListNodeAddedHandler PlayListNodeAdded;
 		
 		private TimeScale[] tsArray;
 		private List<MediaTimeNode>[] tnArray;
@@ -63,6 +64,12 @@ namespace LongoMatch.Widgets.Component {
 					}
 				}
 				this.QueueDraw();
+				
+				if (this.selected != null){
+					//TODO 
+					/*if (SelectedTimeNode.StartFrame/pixelRatio < this.GtkScrolledWindow.Hadjustment.Value)
+						this.AdjustPostion(SelectedTimeNode.StartFrame/pixelRatio);*/
+				}
 			}
 		}
 		
@@ -147,12 +154,13 @@ namespace LongoMatch.Widgets.Component {
 				this.vbox1.PackStart(tr,false,false,0);
 				tr.Show();
 				for (int i=0; i<20; i++){
-					TimeScale ts = new TimeScale(tnArray[i],frames,sections.GetColor(i));
+					TimeScale ts = new TimeScale(i,tnArray[i],frames,sections.GetColor(i));
 					ts.PixelRatio = 1;
 					tsArray[i]=ts;
 					ts.TimeNodeChanged += new TimeNodeChangedHandler(OnTimeNodeChanged);
 					ts.TimeNodeSelected += new TimeNodeSelectedHandler (OnTimeNodeSelected);
 					ts.TimeNodeDeleted += new TimeNodeDeletedHandler(OnTimeNodeDeleted);
+					ts.NewMarkAtFrameEvent += new NewMarkAtFrameEventHandler(OnNewMark);
 					this.vbox1.PackStart(ts,true,true,0);					
 					if (value.Sections.GetVisibility(i)){
 						ts.Show();
@@ -162,6 +170,11 @@ namespace LongoMatch.Widgets.Component {
 			
 		}
 	
+		protected virtual void OnNewMark(int section, int frame){
+			if (this.NewMarkEvent != null)
+				this.NewMarkEvent(section,frame);
+		}
+		
 		protected virtual void OnTimeNodeChanged(TimeNode tn, object val){
 			if (this.TimeNodeChanged != null)			
 				this.TimeNodeChanged(tn,val);

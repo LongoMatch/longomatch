@@ -105,6 +105,8 @@ namespace LongoMatch.Widgets.Component {
         
         private Gtk.Button button20;
         
+        private Gtk.Table table1;
+        
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
             // Widget LongoMatch.Widgets.Component.ButtonsWidget
@@ -438,6 +440,15 @@ namespace LongoMatch.Widgets.Component {
             w45.Position = 4;
             w45.Expand = false;
             w45.Fill = false;
+            // Container child vbox1.Gtk.Box+BoxChild
+            this.table1 = new Gtk.Table(((uint)(3)), ((uint)(3)), false);
+            this.table1.Name = "table1";
+            this.table1.RowSpacing = ((uint)(6));
+            this.table1.ColumnSpacing = ((uint)(6));
+            this.vbox1.Add(this.table1);
+            Gtk.Box.BoxChild w46 = ((Gtk.Box.BoxChild)(this.vbox1[this.table1]));
+            w46.PackType = ((Gtk.PackType)(1));
+            w46.Position = 5;
             this.Add(this.vbox1);
             if ((this.Child != null)) {
                 this.Child.ShowAll();

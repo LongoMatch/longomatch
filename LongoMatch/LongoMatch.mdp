@@ -48,7 +48,7 @@
     <File name="Widgets/TreeWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="Widgets/TimeNodeProperties.cs" subtype="Code" buildaction="Compile" />
     <File name="DB" subtype="Directory" buildaction="Compile" />
-    <File name="DB/FileData.cs" subtype="Code" buildaction="Compile" />
+    <File name="DB/Project.cs" subtype="Code" buildaction="Compile" />
     <File name="DB/Sections.cs" subtype="Code" buildaction="Compile" />
     <File name="DB/DataBase.cs" subtype="Code" buildaction="Compile" />
     <File name="Handlers" subtype="Directory" buildaction="Compile" />

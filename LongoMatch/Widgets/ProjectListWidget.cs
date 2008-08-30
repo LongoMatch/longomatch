@@ -50,7 +50,7 @@ namespace LongoMatch.Widgets.Component
 			Gtk.CellRendererText filenameCell = new Gtk.CellRendererText ();
 			filenameColumn.PackStart (filenameCell, true);
 			
-			Gtk.TreeViewColumn dateColumn = new Gtk.TreeViewColumn ();
+			/*Gtk.TreeViewColumn dateColumn = new Gtk.TreeViewColumn ();
 			dateColumn.Title = Catalog.GetString("Date");
 			Gtk.CellRendererText dateCell = new Gtk.CellRendererText ();
 			dateColumn.PackStart (dateCell, true);
@@ -68,19 +68,23 @@ namespace LongoMatch.Widgets.Component
 			Gtk.TreeViewColumn resultColumn = new Gtk.TreeViewColumn ();
 			resultColumn.Title = Catalog.GetString("Result");
 			Gtk.CellRendererText resultCell = new Gtk.CellRendererText ();
-			resultColumn.PackStart (resultCell, true);
+			resultColumn.PackStart (resultCell, true);*/
 			
 			filenameColumn.SetCellDataFunc (filenameCell, new Gtk.TreeCellDataFunc (RenderName));
-			dateColumn.SetCellDataFunc (dateCell, new Gtk.TreeCellDataFunc (RenderDate));
+			/*dateColumn.SetCellDataFunc (dateCell, new Gtk.TreeCellDataFunc (RenderDate));
 			localNameColumn.SetCellDataFunc (localNameCell, new Gtk.TreeCellDataFunc (RenderLocalName));
 			visitorNameColumn.SetCellDataFunc (visitorNameCell, new Gtk.TreeCellDataFunc (RenderVisitorName));
-			resultColumn.SetCellDataFunc (resultCell, new Gtk.TreeCellDataFunc (RenderResult));
+			resultColumn.SetCellDataFunc (resultCell, new Gtk.TreeCellDataFunc (RenderResult));*/
 			
 			treeview.AppendColumn (filenameColumn);
-			treeview.AppendColumn (dateColumn);
+			/*treeview.AppendColumn (dateColumn);
 			treeview.AppendColumn (localNameColumn);
 			treeview.AppendColumn (visitorNameColumn);
-			treeview.AppendColumn (resultColumn);
+			treeview.AppendColumn (resultColumn);*/
+			
+			treeview.EnableGridLines = TreeViewGridLines.Horizontal;
+			treeview.HeadersVisible = false;
+		
 		}
 		
 				
@@ -88,7 +92,14 @@ namespace LongoMatch.Widgets.Component
 		{
 			Project _project = (Project) model.GetValue (iter, 0);
 			string _filePath = _project.File.FilePath;	
-			(cell as Gtk.CellRendererText).Text = System.IO.Path.GetFileName(_filePath.ToString());
+			string text;
+			text = Catalog.GetString("File: ") + System.IO.Path.GetFileName(_filePath.ToString());
+			text = text +"\n"+Catalog.GetString("Local Team: ") + _project.LocalName;
+			text = text +"\n"+Catalog.GetString("Visitor Team: ") + _project.VisitorName;
+			text = text +"\n"+Catalog.GetString("Result: ") + _project.LocalGoals+"-"+_project.VisitorGoals;
+			text = text +"\n"+Catalog.GetString("Date: ") + _project.MatchDate.ToString(Catalog.GetString("MM/dd/yyyy"));
+			
+			(cell as Gtk.CellRendererText).Text = text;
 			
 			
 		}
@@ -96,7 +107,7 @@ namespace LongoMatch.Widgets.Component
 		private void RenderDate (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			Project _project = (Project) model.GetValue (iter, 0);
-			(cell as Gtk.CellRendererText).Text = _project.MatchDate.ToString(Catalog.GetString("MM/dd/yyyy"));;
+			(cell as Gtk.CellRendererText).Text = _project.MatchDate.ToString(Catalog.GetString("MM/dd/yyyy"));
 			
 			
 		}

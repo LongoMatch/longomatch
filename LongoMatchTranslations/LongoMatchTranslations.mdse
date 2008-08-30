@@ -1,7 +1,5 @@
-<CombineEntry name="LongoMatchTranslations" fileversion="2.0" packageName="i8n1" outputType="RelativeToOutput" relPath="locale" ctype="TranslationProject">
+<CombineEntry name="LongoMatchTranslations" fileversion="2.0" packageName="longomatch" outputType="RelativeToOutput" relPath="locale" ctype="TranslationProject">
   <translations>
     <Translation isoCode="es" />
-    <Translation isoCode="it" />
-    <Translation isoCode="fr" />
   </translations>
 </CombineEntry>

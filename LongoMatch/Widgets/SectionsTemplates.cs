@@ -119,7 +119,7 @@ namespace LongoMatch.Widgets.Dialog
 		protected virtual void OnDeletebuttonClicked (object sender, System.EventArgs e)
 		{
 			MessageDialog mes = new MessageDialog(this,DialogFlags.Modal,MessageType.Warning,ButtonsType.YesNo,
-			                                      Catalog.GetString("Do you really want to delete "+templateName+" template?"));
+			                                      Catalog.GetString("Do you really want to delete ")+templateName+Catalog.GetString(" template?"));
 			if (mes.Run() == (int)ResponseType.Yes){
 				System.IO.File.Delete(templateName);
 				this.Fill();

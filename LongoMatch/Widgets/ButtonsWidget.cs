@@ -86,124 +86,124 @@ namespace LongoMatch.Widgets.Component
 		{
 			
 			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(0,sections.GetStartTime(0),sections.GetStopTime(0));	
+				this.NewMarkEvent(0);	
 
 		}
 
 		protected virtual void OnButton2Clicked(object sender, System.EventArgs e)
 		{
 			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(1,sections.GetStartTime(1),sections.GetStopTime(1));			
+				this.NewMarkEvent(1);			
 		}
 
 		protected virtual void OnButton3Clicked(object sender, System.EventArgs e)
 		{
 			
 			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(2,sections.GetStartTime(2),sections.GetStopTime(2));
+				this.NewMarkEvent(2);
 		}
 
 		protected virtual void OnButton4Clicked(object sender, System.EventArgs e)
 		{
 			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(3,sections.GetStartTime(3),sections.GetStopTime(3));
+				this.NewMarkEvent(3);
 		}
 
 		protected virtual void OnButton5Clicked(object sender, System.EventArgs e)
 		{
 			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(4,sections.GetStartTime(4),sections.GetStopTime(4));
+				this.NewMarkEvent(4);
 		}
 
 		protected virtual void OnButton6Clicked(object sender, System.EventArgs e)
 		{
 			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(5,sections.GetStartTime(5),sections.GetStopTime(5));
+				this.NewMarkEvent(5);
 		}
 
 		protected virtual void OnButton7Clicked(object sender, System.EventArgs e)
 		{
 			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(6,sections.GetStartTime(6),sections.GetStopTime(6));
+				this.NewMarkEvent(6);
 		}
 
 		protected virtual void OnButton8Clicked(object sender, System.EventArgs e)
 		{
 			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(7,sections.GetStartTime(7),sections.GetStopTime(7));
+				this.NewMarkEvent(7);
 		}
 
 		protected virtual void OnButton9Clicked(object sender, System.EventArgs e)
 		{
 			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(8,sections.GetStartTime(8),sections.GetStopTime(8));
+				this.NewMarkEvent(8);
 		}
 
 		protected virtual void OnButton10Clicked(object sender, System.EventArgs e)
 		{
 			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(9,sections.GetStartTime(9),sections.GetStopTime(9));
+				this.NewMarkEvent(9);
 		}
 
 		protected virtual void OnButton11Clicked(object sender, System.EventArgs e)
 		{
 			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(10,sections.GetStartTime(10),sections.GetStopTime(10));
+				this.NewMarkEvent(10);
 		}
 
 		protected virtual void OnButton12Clicked(object sender, System.EventArgs e)
 		{
 			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(11,sections.GetStartTime(11),sections.GetStopTime(11));
+				this.NewMarkEvent(11);
 
 		}
 
 		protected virtual void OnButton13Clicked(object sender, System.EventArgs e)
 		{
 			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(12,sections.GetStartTime(12),sections.GetStopTime(12));
+				this.NewMarkEvent(12);
 		}
 
 		protected virtual void OnButton14Clicked(object sender, System.EventArgs e)
 		{
 			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(13,sections.GetStartTime(13),sections.GetStopTime(13));
+				this.NewMarkEvent(13);
 		}
 
 		protected virtual void OnButton15Clicked(object sender, System.EventArgs e)
 		{
 			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(14,sections.GetStartTime(14),sections.GetStopTime(14));
+				this.NewMarkEvent(14);
 		}
 
 		protected virtual void OnButton16Clicked(object sender, System.EventArgs e)
 		{
 			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(15,sections.GetStartTime(15),sections.GetStopTime(15));
+				this.NewMarkEvent(15);
 		}
 
 		protected virtual void OnButton17Clicked(object sender, System.EventArgs e)
 		{
 			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(16,sections.GetStartTime(16),sections.GetStopTime(16));
+				this.NewMarkEvent(16);
 		}
 
 		protected virtual void OnButton18Clicked(object sender, System.EventArgs e)
 		{
 			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(17,sections.GetStartTime(17),sections.GetStopTime(17));
+				this.NewMarkEvent(17);
 		}
 
 		protected virtual void OnButton19Clicked(object sender, System.EventArgs e)
 		{
 			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(18,sections.GetStartTime(18),sections.GetStopTime(18));
+				this.NewMarkEvent(18);
 		}
 
 		protected virtual void OnButton20Clicked(object sender, System.EventArgs e)
 		{
 			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(19,sections.GetStartTime(19),sections.GetStopTime(19));
+				this.NewMarkEvent(19);
 		}
 	}
 }

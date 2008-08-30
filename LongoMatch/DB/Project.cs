@@ -108,11 +108,13 @@ namespace LongoMatch.DB
 			List<MediaTimeNode> al= dataSectionArray[dataSection];
 			int count= al.Count+1;
 			string name = sections.GetName(dataSection) + " " +count;
-			//TODO Windos doesn't accpet ':' as a valid char for a file
+
 			if (miniature != null && System.Environment.OSVersion.Platform == PlatformID.Unix){
 				char sep = Path.DirectorySeparatorChar;
+				//Windows doesn't accept ':' as a valid char for a file
+				//Replacing by '-' in the time string representation
 				miniaturePath = MainClass.ThumbnailsDir() + sep +this.Title+ sep +"Section"+dataSection+"-"+name+
-					"-"+start.ToMSecondsString()+"-"+stop.ToMSecondsString()+".jpg";				
+					"-"+start.ToMSecondsString().Replace(':','-')+"-"+stop.ToMSecondsString().Replace(':','-')+".jpg";				
 				miniature.Save(miniaturePath,"jpeg");
 			}
 			tn = new MediaTimeNode(name, start, stop,this.file.Fps,dataSection,miniaturePath);

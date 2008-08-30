@@ -34,7 +34,7 @@
         <signal name="TimeNodeChanged" />
         <signal name="TimeNodeSelected" />
         <signal name="TimeNodeDeleted" />
-        <signal name="PlayListNodeAdded" />
+        <signal name="NewMarkEvent" />
       </itemgroup>
     </signals>
   </object>

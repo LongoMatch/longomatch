@@ -231,6 +231,8 @@ namespace LongoMatch
 		protected virtual void OnDeleteEvent (object o, Gtk.DeleteEventArgs args)
 		{
 			this.SaveDB();
+			// We never know...
+			System.Threading.Thread.Sleep(1000);
 			this.playerbin1.Dispose();
 			Application.Quit();
 					
@@ -241,6 +243,8 @@ namespace LongoMatch
 		{
 
 			this.SaveDB();
+			// We never know...
+			System.Threading.Thread.Sleep(1000);
 			this.playerbin1.Destroy();
 			Application.Quit();
 		}

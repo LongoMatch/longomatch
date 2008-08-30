@@ -45,16 +45,22 @@ namespace LongoMatch.Widgets.Component
 		private MediaTimeNode selected=null;
 		private uint lastTime=0;
 		private uint currentFrame;
+		private int section;
+		private Menu deleteMenu;
 		private Menu menu;
+		private MenuItem delete;
+		private int cursorFrame;
 		private Dictionary<MenuItem,MediaTimeNode> dic;
 			
+		public event NewMarkAtFrameEventHandler NewMarkAtFrameEvent;
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event TimeNodeSelectedHandler TimeNodeSelected;
 		public event TimeNodeDeletedHandler TimeNodeDeleted;
 
 		
-		public TimeScale(List<MediaTimeNode> list,uint frames,Gdk.Color color)
+		public TimeScale(int section,List<MediaTimeNode> list,uint frames,Gdk.Color color)
 		{			
+			this.section = section;
 			this.frames = frames;	
 			this.list = list;				
 			this.HeightRequest= SECTION_HEIGHT;
@@ -63,9 +69,7 @@ namespace LongoMatch.Widgets.Component
 			this.color.A = ALPHA;
 			this.Events = EventMask.PointerMotionMask | EventMask.ButtonPressMask | EventMask.ButtonReleaseMask ;
 			dic = new Dictionary<MenuItem,MediaTimeNode>();
-			menu = new Menu();
-					
-			
+			SetMenu();
 		}
 			
 		public uint PixelRatio{
@@ -96,6 +100,24 @@ namespace LongoMatch.Widgets.Component
 			return   new Cairo.Color((double)(gdkColor.Red)/ushort.MaxValue,(double)(gdkColor.Green)/ushort.MaxValue,(double)(gdkColor.Blue)/ushort.MaxValue);
 		}
 		
+		private void SetMenu(){
+			
+			menu = new Menu();
+			
+			delete = new MenuItem(Catalog.GetString("Delete Play"));			
+			
+			MenuItem newPlay = new MenuItem(Catalog.GetString("Add New Play"));
+			
+			menu.Append(newPlay);
+			menu.Append(delete);
+			
+			newPlay.Activated += new EventHandler(OnNewPlay);
+			
+			menu.ShowAll();
+			
+			
+			
+		}
 		private void DrawTimeNodes(Gdk.Window win){
 			
 			bool hasSelectedTimeNode=false;
@@ -160,6 +182,13 @@ namespace LongoMatch.Widgets.Component
 				
 			
 		}
+		
+		protected void OnNewPlay(object obj, EventArgs args){
+			if (this.NewMarkAtFrameEvent != null)
+			 
+				this.NewMarkAtFrameEvent(this.section,this.cursorFrame);			
+		}
+		
 		protected void OnDelete(object obj, EventArgs args){
 			MediaTimeNode tNode;
 			dic.TryGetValue((MenuItem)obj, out tNode);
@@ -238,19 +267,26 @@ namespace LongoMatch.Widgets.Component
 					}					
 				}
 			}
+			// On Right button pressed
 			else if (evnt.Button == 3){
-				this.menu = new Menu();
+			
+				this.cursorFrame =(int) (evnt.X*pixelRatio);
+				this.deleteMenu = new Menu();
+				this.delete.Submenu=deleteMenu;
 				dic.Clear();
 				foreach (MediaTimeNode tn in list){
-					int pos = (int) (evnt.X*pixelRatio);
-					if (tn.HasFrame(pos) ){	
-						MenuItem delete = new MenuItem(Catalog.GetString("Delete "+tn.Name));					
-						delete.Activated += new EventHandler(OnDelete);
-						delete.Show();
-						menu.Append(delete);
-						dic.Add(delete,tn);
+										
+					//We scan all the time Nodes looking for one matching the cursor selectcio
+					//And we add them to the delete menu
+					if (tn.HasFrame(this.cursorFrame) ){						
+						MenuItem del = new MenuItem(Catalog.GetString("Delete "+tn.Name));					
+						del.Activated += new EventHandler(OnDelete);				
+						this.deleteMenu.Append(del);
+						dic.Add(del,tn);					
 					}
+				
 				}	
+				this.menu.ShowAll();
 				this.menu.Popup();
 				
 			}
