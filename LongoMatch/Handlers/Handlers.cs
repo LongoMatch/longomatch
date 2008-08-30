@@ -28,8 +28,7 @@ namespace LongoMatch.Handlers
 	//Manejador para el evento producido al seleccionar un nodo en el árbol
 	public delegate void TimeNodeSelectedHandler (MediaTimeNode tNode);
 	//Manejador para el evento producido al pulsar un botón de selección de nuava marca
-	public delegate void NewMarkEventHandler (int i);
-	
+	public delegate void NewMarkEventHandler (int i);	
 	//Manejador para el evento producido al pulsar un botón de selección de nuava marca
 	public delegate void NewMarkAtFrameEventHandler (int i,int frame);
 	

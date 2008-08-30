@@ -20,7 +20,7 @@
 using System;
 using LongoMatch.Handlers;
 
-namespace LongoMatch.Video
+namespace LongoMatch.Gui
 {
 	
 	

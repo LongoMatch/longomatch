@@ -25,6 +25,7 @@ using LongoMatch.DB;
 using LongoMatch.Video.Player;
 using LongoMatch.Video.Handlers;
 using LongoMatch.Handlers;
+using LongoMatch.Gui;
 using Gtk;
 using Gdk;
 using Mono.Unix;

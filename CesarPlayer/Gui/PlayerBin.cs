@@ -24,7 +24,9 @@ using Mono.Unix;
 using System.Runtime.InteropServices;
 using LongoMatch.Video.Handlers;
 using LongoMatch.Handlers;
-namespace LongoMatch.Video.Player
+using LongoMatch.Video.Player;
+using LongoMatch.Video.Utils;
+namespace LongoMatch.Gui
 {
 	
 	

@@ -69,7 +69,7 @@ namespace LongoMatch {
         
         private Gtk.VBox vbox5;
         
-        private LongoMatch.Video.Player.PlayerBin playerbin1;
+        private LongoMatch.Gui.PlayerBin playerbin1;
         
         private LongoMatch.Widgets.Component.TimeLineWidget timelinewidget1;
         
@@ -141,7 +141,7 @@ namespace LongoMatch {
             w1.InsertActionGroup(w2, 0);
             Gtk.ActionGroup w3 = new Gtk.ActionGroup("Player");
             this.PlayAction = new Gtk.Action("PlayAction", Mono.Unix.Catalog.GetString("_Play"), null, "gtk-media-play");
-            this.PlayAction.ShortLabel = Mono.Unix.Catalog.GetString("_Play");
+            this.PlayAction.ShortLabel = Mono.Unix.Catalog.GetString("dasdf");
             w3.Add(this.PlayAction, null);
             this.PauseAction = new Gtk.Action("PauseAction", Mono.Unix.Catalog.GetString("P_ause"), null, "gtk-media-pause");
             this.PauseAction.ShortLabel = Mono.Unix.Catalog.GetString("P_ause");
@@ -214,7 +214,7 @@ namespace LongoMatch {
             this.vbox5.Name = "vbox5";
             this.vbox5.Spacing = 6;
             // Container child vbox5.Gtk.Box+BoxChild
-            this.playerbin1 = new LongoMatch.Video.Player.PlayerBin();
+            this.playerbin1 = new LongoMatch.Gui.PlayerBin();
             this.playerbin1.Events = ((Gdk.EventMask)(256));
             this.playerbin1.Name = "playerbin1";
             this.playerbin1.LogoMode = false;
