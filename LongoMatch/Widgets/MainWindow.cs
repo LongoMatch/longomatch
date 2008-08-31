@@ -27,8 +27,8 @@ using System.Threading;
 using Gdk;
 using LongoMatch.DB;
 using LongoMatch.TimeNodes;
-using LongoMatch.Widgets.Dialog;
-using LongoMatch.Widgets;
+using LongoMatch.Gui.Dialog;
+using LongoMatch.Gui;
 using LongoMatch.Video.Player;
 
 

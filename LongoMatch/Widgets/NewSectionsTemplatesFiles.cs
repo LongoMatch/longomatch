@@ -20,7 +20,7 @@
 
 using System;
 
-namespace LongoMatch.Widgets.Dialog
+namespace LongoMatch.Gui.Dialog
 {
 	
 	

@@ -24,7 +24,7 @@ using Mono.Unix;
 using LongoMatch.TimeNodes;
 using LongoMatch.Video;
 
-namespace LongoMatch.Widgets.Component
+namespace LongoMatch.Gui.Component
 {
 	
 	

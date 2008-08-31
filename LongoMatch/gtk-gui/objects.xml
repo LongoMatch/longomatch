@@ -1,5 +1,9 @@
 <objects>
-  <object type="LongoMatch.Widgets.Component.ButtonsWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.MainWindow" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Window">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.ButtonsWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>
       <itemgroup label="ButtonsWidget Signals">
@@ -7,23 +11,20 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Widgets.Component.FileDescriptionWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.Gui.Component.TimeReferenceWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.DrawingArea">
     <itemgroups>
-      <itemgroup label="FileDescriptionWidget Properties">
-        <property name="LocalName" />
-        <property name="VisitorName" />
-        <property name="LocalGoals" />
-        <property name="VisitorGoals" />
-        <property name="Date" />
+      <itemgroup label="TimeReferenceWidget Properties">
+        <property name="CurrentFrame" />
+        <property name="PixelRatio" />
       </itemgroup>
     </itemgroups>
     <signals />
   </object>
-  <object type="LongoMatch.Widgets.Component.SectionsPropertiesWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.Gui.Component.SectionsPropertiesWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Widgets.Component.TimeLineWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.Gui.Component.TimeLineWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="TimeLineWidget Properties">
         <property name="CurrentFrame" />
@@ -38,24 +39,7 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Widgets.Component.PlayListWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="PlayListWidget Signals">
-        <signal name="PlayListNodeSelected" />
-        <signal name="Progress" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Widgets.Component.TimeAdjustWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Widgets.Component.TimeNodeProperties" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Widgets.Component.TreeWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.Gui.Component.TreeWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>
       <itemgroup label="TreeWidget Signals">
@@ -66,11 +50,23 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Widgets.Component.PlayListTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
-    <itemgroups />
-    <signals />
+  <object type="LongoMatch.Gui.Component.TimeScale" palette-category="LongoMatch" allow-children="false" base-type="Gtk.DrawingArea">
+    <itemgroups>
+      <itemgroup label="TimeScale Properties">
+        <property name="PixelRatio" />
+        <property name="CurrentFrame" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="TimeScale Signals">
+        <signal name="NewMarkAtFrameEvent" />
+        <signal name="TimeNodeChanged" />
+        <signal name="TimeNodeSelected" />
+        <signal name="TimeNodeDeleted" />
+      </itemgroup>
+    </signals>
   </object>
-  <object type="LongoMatch.Widgets.Component.TimeNodesTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
+  <object type="LongoMatch.Gui.Component.TimeNodesTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
     <itemgroups />
     <signals>
       <itemgroup label="TimeNodesTreeView Signals">
@@ -82,12 +78,57 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Widgets.Component.ProjectListWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.Gui.Component.ProjectListWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>
       <itemgroup label="ProjectListWidget Signals">
         <signal name="ProjectSelectedEvent" />
       </itemgroup>
     </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.PlayListWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="PlayListWidget Signals">
+        <signal name="PlayListNodeSelected" />
+        <signal name="Progress" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.TimeAdjustWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.PlayListTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.FileDescriptionWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="FileDescriptionWidget Properties">
+        <property name="LocalName" />
+        <property name="VisitorName" />
+        <property name="LocalGoals" />
+        <property name="VisitorGoals" />
+        <property name="Date" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.TimeNodeProperties" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Dialog.DBManager" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Dialog">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Dialog.NewSectionsTemplatesFiles" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Dialog">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Dialog.SectionsTemplates" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Dialog">
+    <itemgroups />
+    <signals />
   </object>
 </objects>

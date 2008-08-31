@@ -21,7 +21,7 @@
 using System;
 using LongoMatch.Handlers;
 
-namespace LongoMatch.Widgets.Popup
+namespace LongoMatch.Gui.Popup
 {
 	
 

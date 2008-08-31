@@ -32,7 +32,7 @@ using LongoMatch.Gui;
 
 
 
-namespace LongoMatch.Widgets.Component
+namespace LongoMatch.Gui.Component
 {
 	
 	

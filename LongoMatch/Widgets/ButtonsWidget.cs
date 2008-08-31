@@ -22,8 +22,9 @@ using System;
 using Gtk;
 using LongoMatch.DB;
 using LongoMatch.Handlers;
+using System.Collections.Generic;
 
-namespace LongoMatch.Widgets.Component
+namespace LongoMatch.Gui.Component
 {
 	
 
@@ -35,21 +36,31 @@ namespace LongoMatch.Widgets.Component
 				
 		private Sections sections;
 		private const int MS = 1000;
-		
+		private Button[] bList;
 	
 		public event NewMarkEventHandler NewMarkEvent;
 
 		
 		public ButtonsWidget()
 		{
+			int i=19;
+			
 			this.Build();
-
+			
+			bList = new Button[20];
+			foreach (Button b in this.table1){
+				bList[i]=b;
+				i--;
+			}
 		}
 		
 		public Sections Sections{
 			set{
 				this.sections = value;
 				this.Names = value.GetSectionsNames();	
+				for( int i=0;i<20;i++){
+					bList[i].Sensitive=sections.GetVisibility(i);
+				}
 			}
 			
 		}
@@ -57,26 +68,8 @@ namespace LongoMatch.Widgets.Component
 		public String[] Names {
 			
 			set{
-				button1.Label = value[0];
-				button2.Label = value[1];
-				button3.Label = value[2];
-				button4.Label = value[3];
-				button5.Label = value[4];
-				button6.Label = value[5];
-				button7.Label = value[6];
-				button8.Label = value[7];
-				button9.Label = value[8];
-				button10.Label = value[9];
-				button11.Label = value[10];
-				button12.Label = value[11];
-				button13.Label = value[12];
-				button14.Label = value[13];
-				button15.Label = value[14];
-				button16.Label = value[15];
-				button17.Label = value[16];
-				button18.Label = value[17];
-				button19.Label = value[18];
-				button20.Label = value[19];	
+				for (int i=0;i<20;i++)
+					bList[i].Label = value[i];
 			}
 		}
 		

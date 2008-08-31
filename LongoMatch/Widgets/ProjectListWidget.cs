@@ -28,7 +28,7 @@ using LongoMatch.DB;
 
 
 
-namespace LongoMatch.Widgets.Component
+namespace LongoMatch.Gui.Component
 {
 	
 	public delegate void ProjectSelectedHandler (Project project);

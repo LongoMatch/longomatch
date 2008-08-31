@@ -15,7 +15,7 @@
       </source>
     </icon-set>
   </icon-factory>
-  <widget class="Gtk.Bin" id="LongoMatch.Widgets.Component.FileDescriptionWidget" design-size="400 330">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.FileDescriptionWidget" design-size="400 330">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.VBox" id="vbox2">
@@ -422,7 +422,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Widgets.Component.ProjectListWidget" design-size="572 300">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.ProjectListWidget" design-size="572 300">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.ScrolledWindow" id="scrolledwindow2">
@@ -440,7 +440,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Widgets.Component.TreeWidget" design-size="300 300">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.TreeWidget" design-size="300 300">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.ScrolledWindow" id="scrolledwindow1">
@@ -451,7 +451,7 @@
             <property name="MemberName" />
             <property name="ShadowType">None</property>
             <child>
-              <widget class="LongoMatch.Widgets.Component.TimeNodesTreeView" id="treeview">
+              <widget class="LongoMatch.Gui.Component.TimeNodesTreeView" id="treeview">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="ShowScrollbars">True</property>
@@ -467,7 +467,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="LongoMatch.Widgets.Popup.CalendarPopup" design-size="281 215">
+  <widget class="Gtk.Window" id="LongoMatch.Gui.Popup.CalendarPopup" design-size="281 215">
     <property name="MemberName" />
     <property name="Title" translatable="yes" />
     <property name="WindowPosition">Mouse</property>
@@ -487,561 +487,477 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Widgets.Component.ButtonsWidget" design-size="532 187">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.ButtonsWidget" design-size="532 169">
     <property name="MemberName" />
     <child>
-      <widget class="Gtk.VBox" id="vbox1">
+      <widget class="Gtk.Table" id="table1">
         <property name="MemberName" />
+        <property name="NRows">5</property>
+        <property name="NColumns">4</property>
+        <property name="RowSpacing">6</property>
+        <property name="ColumnSpacing">6</property>
         <child>
-          <widget class="Gtk.HBox" id="filebox1">
-            <property name="MemberName">filebox1</property>
-            <property name="Visible">False</property>
-            <property name="Homogeneous">True</property>
-            <child>
-              <widget class="Gtk.HBox" id="hbox2">
-                <property name="MemberName" />
-                <child>
-                  <widget class="Gtk.Button" id="button1">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Type">TextOnly</property>
-                    <property name="Label">Data 1</property>
-                    <signal name="Clicked" handler="OnButton1Clicked" />
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.HBox" id="hbox3">
-                <property name="MemberName" />
-                <child>
-                  <widget class="Gtk.Button" id="button2">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Type">TextOnly</property>
-                    <property name="Label">Data 2</property>
-                    <signal name="Clicked" handler="OnButton2Clicked" />
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">1</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.HBox" id="hbox4">
-                <property name="MemberName" />
-                <child>
-                  <widget class="Gtk.Button" id="button3">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Type">TextOnly</property>
-                    <property name="Label">Data 3</property>
-                    <signal name="Clicked" handler="OnButton3Clicked" />
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">2</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.HBox" id="hbox5">
-                <property name="MemberName" />
-                <child>
-                  <widget class="Gtk.Button" id="button4">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Type">TextOnly</property>
-                    <property name="Label">Data 4</property>
-                    <signal name="Clicked" handler="OnButton4Clicked" />
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">3</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-          </widget>
-          <packing>
-            <property name="Position">0</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.HBox" id="filebox2">
-            <property name="MemberName">filebox2</property>
-            <property name="Visible">False</property>
-            <property name="Homogeneous">True</property>
-            <child>
-              <widget class="Gtk.HBox" id="hbox7">
-                <property name="MemberName" />
-                <child>
-                  <widget class="Gtk.Button" id="button5">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Type">TextOnly</property>
-                    <property name="Label">Data 5</property>
-                    <signal name="Clicked" handler="OnButton5Clicked" />
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.HBox" id="hbox8">
-                <property name="MemberName" />
-                <child>
-                  <widget class="Gtk.Button" id="button6">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Type">TextOnly</property>
-                    <property name="Label">Data 6</property>
-                    <signal name="Clicked" handler="OnButton6Clicked" />
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">1</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.HBox" id="hbox9">
-                <property name="MemberName" />
-                <child>
-                  <widget class="Gtk.Button" id="button7">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Type">TextOnly</property>
-                    <property name="Label">Data 7</property>
-                    <signal name="Clicked" handler="OnButton7Clicked" />
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">2</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.HBox" id="hbox10">
-                <property name="MemberName" />
-                <child>
-                  <widget class="Gtk.Button" id="button8">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Type">TextOnly</property>
-                    <property name="Label">Data 8</property>
-                    <signal name="Clicked" handler="OnButton8Clicked" />
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">3</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-          </widget>
-          <packing>
-            <property name="Position">1</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.HBox" id="filebox3">
-            <property name="MemberName">filebox3</property>
-            <property name="Visible">False</property>
-            <property name="Homogeneous">True</property>
-            <child>
-              <widget class="Gtk.HBox" id="hbox12">
-                <property name="MemberName" />
-                <child>
-                  <widget class="Gtk.Button" id="button9">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Type">TextOnly</property>
-                    <property name="Label">Data 9</property>
-                    <signal name="Clicked" handler="OnButton9Clicked" />
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.HBox" id="hbox13">
-                <property name="MemberName" />
-                <child>
-                  <widget class="Gtk.Button" id="button10">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Type">TextOnly</property>
-                    <property name="Label">Data 10</property>
-                    <signal name="Clicked" handler="OnButton10Clicked" />
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">1</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.HBox" id="hbox14">
-                <property name="MemberName" />
-                <child>
-                  <widget class="Gtk.Button" id="button11">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Type">TextOnly</property>
-                    <property name="Label">Data 11</property>
-                    <signal name="Clicked" handler="OnButton11Clicked" />
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">2</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.HBox" id="hbox15">
-                <property name="MemberName" />
-                <child>
-                  <widget class="Gtk.Button" id="button12">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Type">TextOnly</property>
-                    <property name="Label">Data 12</property>
-                    <signal name="Clicked" handler="OnButton12Clicked" />
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">3</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-          </widget>
-          <packing>
-            <property name="Position">2</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.HBox" id="filebox4">
-            <property name="MemberName">filebox4</property>
-            <property name="Visible">False</property>
-            <property name="Homogeneous">True</property>
-            <child>
-              <widget class="Gtk.HBox" id="hbox17">
-                <property name="MemberName" />
-                <child>
-                  <widget class="Gtk.Button" id="button13">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Type">TextOnly</property>
-                    <property name="Label">Data 13</property>
-                    <signal name="Clicked" handler="OnButton13Clicked" />
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.HBox" id="hbox18">
-                <property name="MemberName" />
-                <child>
-                  <widget class="Gtk.Button" id="button14">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Type">TextOnly</property>
-                    <property name="Label">Data 14</property>
-                    <signal name="Clicked" handler="OnButton14Clicked" />
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">1</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.HBox" id="hbox19">
-                <property name="MemberName" />
-                <child>
-                  <widget class="Gtk.Button" id="button15">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Type">TextOnly</property>
-                    <property name="Label">Data 15</property>
-                    <signal name="Clicked" handler="OnButton15Clicked" />
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">2</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.HBox" id="hbox20">
-                <property name="MemberName" />
-                <child>
-                  <widget class="Gtk.Button" id="button16">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Type">TextOnly</property>
-                    <property name="Label">Data 16</property>
-                    <signal name="Clicked" handler="OnButton16Clicked" />
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">3</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-          </widget>
-          <packing>
-            <property name="Position">3</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.HBox" id="filebox5">
-            <property name="MemberName">filebox5</property>
-            <property name="Visible">False</property>
-            <property name="Homogeneous">True</property>
-            <child>
-              <widget class="Gtk.HBox" id="hbox22">
-                <property name="MemberName" />
-                <child>
-                  <widget class="Gtk.Button" id="button17">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Type">TextOnly</property>
-                    <property name="Label">Data 17</property>
-                    <signal name="Clicked" handler="OnButton17Clicked" />
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.HBox" id="hbox23">
-                <property name="MemberName" />
-                <child>
-                  <widget class="Gtk.Button" id="button18">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Type">TextOnly</property>
-                    <property name="Label">Data 18</property>
-                    <signal name="Clicked" handler="OnButton18Clicked" />
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">1</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.HBox" id="hbox24">
-                <property name="MemberName" />
-                <child>
-                  <widget class="Gtk.Button" id="button19">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Type">TextOnly</property>
-                    <property name="Label">Data 19</property>
-                    <signal name="Clicked" handler="OnButton19Clicked" />
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">2</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.HBox" id="hbox25">
-                <property name="MemberName" />
-                <child>
-                  <widget class="Gtk.Button" id="button20">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Type">TextOnly</property>
-                    <property name="Label">Data 20</property>
-                    <signal name="Clicked" handler="OnButton20Clicked" />
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">3</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-          </widget>
-          <packing>
-            <property name="Position">4</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Table" id="table1">
+          <widget class="Gtk.Button" id="button01">
             <property name="MemberName" />
-            <property name="NRows">3</property>
-            <property name="NColumns">3</property>
-            <property name="RowSpacing">6</property>
-            <property name="ColumnSpacing">6</property>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label">Data 1</property>
+            <signal name="Clicked" handler="OnButton1Clicked" />
           </widget>
           <packing>
-            <property name="PackType">End</property>
-            <property name="Position">5</property>
+            <property name="AutoSize">False</property>
+            <property name="YOptions">Fill</property>
+            <property name="XExpand">True</property>
+            <property name="XFill">True</property>
+            <property name="XShrink">False</property>
+            <property name="YExpand">False</property>
+            <property name="YFill">True</property>
+            <property name="YShrink">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="button02">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label">Data 2</property>
+            <signal name="Clicked" handler="OnButton2Clicked" />
+          </widget>
+          <packing>
+            <property name="LeftAttach">1</property>
+            <property name="RightAttach">2</property>
+            <property name="AutoSize">False</property>
+            <property name="YOptions">Fill</property>
+            <property name="XExpand">True</property>
+            <property name="XFill">True</property>
+            <property name="XShrink">False</property>
+            <property name="YExpand">False</property>
+            <property name="YFill">True</property>
+            <property name="YShrink">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="button03">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label">Data 3</property>
+            <signal name="Clicked" handler="OnButton3Clicked" />
+          </widget>
+          <packing>
+            <property name="LeftAttach">2</property>
+            <property name="RightAttach">3</property>
+            <property name="AutoSize">False</property>
+            <property name="YOptions">Fill</property>
+            <property name="XExpand">True</property>
+            <property name="XFill">True</property>
+            <property name="XShrink">False</property>
+            <property name="YExpand">False</property>
+            <property name="YFill">True</property>
+            <property name="YShrink">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="button04">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label">Data 4</property>
+            <signal name="Clicked" handler="OnButton4Clicked" />
+          </widget>
+          <packing>
+            <property name="LeftAttach">3</property>
+            <property name="RightAttach">4</property>
+            <property name="AutoSize">False</property>
+            <property name="YOptions">Fill</property>
+            <property name="XExpand">True</property>
+            <property name="XFill">True</property>
+            <property name="XShrink">False</property>
+            <property name="YExpand">False</property>
+            <property name="YFill">True</property>
+            <property name="YShrink">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="button05">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label">Data 5</property>
+            <signal name="Clicked" handler="OnButton5Clicked" />
+          </widget>
+          <packing>
+            <property name="TopAttach">1</property>
+            <property name="BottomAttach">2</property>
             <property name="AutoSize">True</property>
+            <property name="XOptions">Fill</property>
+            <property name="YOptions">Fill</property>
+            <property name="XExpand">False</property>
+            <property name="XFill">True</property>
+            <property name="XShrink">False</property>
+            <property name="YExpand">False</property>
+            <property name="YFill">True</property>
+            <property name="YShrink">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="button06">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label">Data 6</property>
+            <signal name="Clicked" handler="OnButton6Clicked" />
+          </widget>
+          <packing>
+            <property name="TopAttach">1</property>
+            <property name="BottomAttach">2</property>
+            <property name="LeftAttach">1</property>
+            <property name="RightAttach">2</property>
+            <property name="AutoSize">True</property>
+            <property name="XOptions">Fill</property>
+            <property name="YOptions">Fill</property>
+            <property name="XExpand">False</property>
+            <property name="XFill">True</property>
+            <property name="XShrink">False</property>
+            <property name="YExpand">False</property>
+            <property name="YFill">True</property>
+            <property name="YShrink">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="button07">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label">Data 7</property>
+            <signal name="Clicked" handler="OnButton7Clicked" />
+          </widget>
+          <packing>
+            <property name="TopAttach">1</property>
+            <property name="BottomAttach">2</property>
+            <property name="LeftAttach">2</property>
+            <property name="RightAttach">3</property>
+            <property name="AutoSize">True</property>
+            <property name="XOptions">Fill</property>
+            <property name="YOptions">Fill</property>
+            <property name="XExpand">False</property>
+            <property name="XFill">True</property>
+            <property name="XShrink">False</property>
+            <property name="YExpand">False</property>
+            <property name="YFill">True</property>
+            <property name="YShrink">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="button08">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label">Data 8</property>
+            <signal name="Clicked" handler="OnButton8Clicked" />
+          </widget>
+          <packing>
+            <property name="TopAttach">1</property>
+            <property name="BottomAttach">2</property>
+            <property name="LeftAttach">3</property>
+            <property name="RightAttach">4</property>
+            <property name="AutoSize">True</property>
+            <property name="XOptions">Fill</property>
+            <property name="YOptions">Fill</property>
+            <property name="XExpand">False</property>
+            <property name="XFill">True</property>
+            <property name="XShrink">False</property>
+            <property name="YExpand">False</property>
+            <property name="YFill">True</property>
+            <property name="YShrink">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="button09">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label">Data 9</property>
+            <signal name="Clicked" handler="OnButton9Clicked" />
+          </widget>
+          <packing>
+            <property name="TopAttach">2</property>
+            <property name="BottomAttach">3</property>
+            <property name="AutoSize">True</property>
+            <property name="XOptions">Fill</property>
+            <property name="YOptions">Fill</property>
+            <property name="XExpand">False</property>
+            <property name="XFill">True</property>
+            <property name="XShrink">False</property>
+            <property name="YExpand">False</property>
+            <property name="YFill">True</property>
+            <property name="YShrink">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="button10">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label">Data 10</property>
+            <signal name="Clicked" handler="OnButton10Clicked" />
+          </widget>
+          <packing>
+            <property name="TopAttach">2</property>
+            <property name="BottomAttach">3</property>
+            <property name="LeftAttach">1</property>
+            <property name="RightAttach">2</property>
+            <property name="AutoSize">True</property>
+            <property name="XOptions">Fill</property>
+            <property name="YOptions">Fill</property>
+            <property name="XExpand">False</property>
+            <property name="XFill">True</property>
+            <property name="XShrink">False</property>
+            <property name="YExpand">False</property>
+            <property name="YFill">True</property>
+            <property name="YShrink">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="button11">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label">Data 11</property>
+            <signal name="Clicked" handler="OnButton11Clicked" />
+          </widget>
+          <packing>
+            <property name="TopAttach">2</property>
+            <property name="BottomAttach">3</property>
+            <property name="LeftAttach">2</property>
+            <property name="RightAttach">3</property>
+            <property name="AutoSize">True</property>
+            <property name="XOptions">Fill</property>
+            <property name="YOptions">Fill</property>
+            <property name="XExpand">False</property>
+            <property name="XFill">True</property>
+            <property name="XShrink">False</property>
+            <property name="YExpand">False</property>
+            <property name="YFill">True</property>
+            <property name="YShrink">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="button12">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label">Data 12</property>
+            <signal name="Clicked" handler="OnButton12Clicked" />
+          </widget>
+          <packing>
+            <property name="TopAttach">2</property>
+            <property name="BottomAttach">3</property>
+            <property name="LeftAttach">3</property>
+            <property name="RightAttach">4</property>
+            <property name="AutoSize">True</property>
+            <property name="XOptions">Fill</property>
+            <property name="YOptions">Fill</property>
+            <property name="XExpand">False</property>
+            <property name="XFill">True</property>
+            <property name="XShrink">False</property>
+            <property name="YExpand">False</property>
+            <property name="YFill">True</property>
+            <property name="YShrink">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="button13">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label">Data 13</property>
+            <signal name="Clicked" handler="OnButton13Clicked" />
+          </widget>
+          <packing>
+            <property name="TopAttach">3</property>
+            <property name="BottomAttach">4</property>
+            <property name="AutoSize">True</property>
+            <property name="XOptions">Fill</property>
+            <property name="YOptions">Fill</property>
+            <property name="XExpand">False</property>
+            <property name="XFill">True</property>
+            <property name="XShrink">False</property>
+            <property name="YExpand">False</property>
+            <property name="YFill">True</property>
+            <property name="YShrink">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="button14">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label">Data 14</property>
+            <signal name="Clicked" handler="OnButton14Clicked" />
+          </widget>
+          <packing>
+            <property name="TopAttach">3</property>
+            <property name="BottomAttach">4</property>
+            <property name="LeftAttach">1</property>
+            <property name="RightAttach">2</property>
+            <property name="AutoSize">True</property>
+            <property name="XOptions">Fill</property>
+            <property name="YOptions">Fill</property>
+            <property name="XExpand">False</property>
+            <property name="XFill">True</property>
+            <property name="XShrink">False</property>
+            <property name="YExpand">False</property>
+            <property name="YFill">True</property>
+            <property name="YShrink">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="button15">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label">Data 15</property>
+            <signal name="Clicked" handler="OnButton15Clicked" />
+          </widget>
+          <packing>
+            <property name="TopAttach">3</property>
+            <property name="BottomAttach">4</property>
+            <property name="LeftAttach">2</property>
+            <property name="RightAttach">3</property>
+            <property name="AutoSize">True</property>
+            <property name="XOptions">Fill</property>
+            <property name="YOptions">Fill</property>
+            <property name="XExpand">False</property>
+            <property name="XFill">True</property>
+            <property name="XShrink">False</property>
+            <property name="YExpand">False</property>
+            <property name="YFill">True</property>
+            <property name="YShrink">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="button16">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label">Data 16</property>
+            <signal name="Clicked" handler="OnButton16Clicked" />
+          </widget>
+          <packing>
+            <property name="TopAttach">3</property>
+            <property name="BottomAttach">4</property>
+            <property name="LeftAttach">3</property>
+            <property name="RightAttach">4</property>
+            <property name="AutoSize">True</property>
+            <property name="XOptions">Fill</property>
+            <property name="YOptions">Fill</property>
+            <property name="XExpand">False</property>
+            <property name="XFill">True</property>
+            <property name="XShrink">False</property>
+            <property name="YExpand">False</property>
+            <property name="YFill">True</property>
+            <property name="YShrink">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="button17">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label">Data 17</property>
+            <signal name="Clicked" handler="OnButton17Clicked" />
+          </widget>
+          <packing>
+            <property name="TopAttach">4</property>
+            <property name="BottomAttach">5</property>
+            <property name="AutoSize">True</property>
+            <property name="XOptions">Fill</property>
+            <property name="YOptions">Fill</property>
+            <property name="XExpand">False</property>
+            <property name="XFill">True</property>
+            <property name="XShrink">False</property>
+            <property name="YExpand">False</property>
+            <property name="YFill">True</property>
+            <property name="YShrink">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="button18">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label">Data 18</property>
+            <signal name="Clicked" handler="OnButton18Clicked" />
+          </widget>
+          <packing>
+            <property name="TopAttach">4</property>
+            <property name="BottomAttach">5</property>
+            <property name="LeftAttach">1</property>
+            <property name="RightAttach">2</property>
+            <property name="AutoSize">True</property>
+            <property name="XOptions">Fill</property>
+            <property name="YOptions">Fill</property>
+            <property name="XExpand">False</property>
+            <property name="XFill">True</property>
+            <property name="XShrink">False</property>
+            <property name="YExpand">False</property>
+            <property name="YFill">True</property>
+            <property name="YShrink">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="button19">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label">Data 19</property>
+            <signal name="Clicked" handler="OnButton19Clicked" />
+          </widget>
+          <packing>
+            <property name="TopAttach">4</property>
+            <property name="BottomAttach">5</property>
+            <property name="LeftAttach">2</property>
+            <property name="RightAttach">3</property>
+            <property name="AutoSize">True</property>
+            <property name="XOptions">Fill</property>
+            <property name="YOptions">Fill</property>
+            <property name="XExpand">False</property>
+            <property name="XFill">True</property>
+            <property name="XShrink">False</property>
+            <property name="YExpand">False</property>
+            <property name="YFill">True</property>
+            <property name="YShrink">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="button20">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label">Data 20</property>
+            <signal name="Clicked" handler="OnButton20Clicked" />
+          </widget>
+          <packing>
+            <property name="TopAttach">4</property>
+            <property name="BottomAttach">5</property>
+            <property name="LeftAttach">3</property>
+            <property name="RightAttach">4</property>
+            <property name="AutoSize">True</property>
+            <property name="XOptions">Fill</property>
+            <property name="YOptions">Fill</property>
+            <property name="XExpand">False</property>
+            <property name="XFill">True</property>
+            <property name="XShrink">False</property>
+            <property name="YExpand">False</property>
+            <property name="YFill">True</property>
+            <property name="YShrink">False</property>
           </packing>
         </child>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Widgets.Dialog.DBManager" design-size="1024 512">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.DBManager" design-size="1024 512">
     <property name="MemberName" />
     <property name="Title" translatable="yes">DataBase Manager</property>
     <property name="WindowPosition">CenterOnParent</property>
@@ -1066,7 +982,7 @@
                 <property name="MemberName" />
                 <property name="Spacing">6</property>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.ProjectListWidget" id="projectlistwidget1">
+                  <widget class="LongoMatch.Gui.Component.ProjectListWidget" id="projectlistwidget1">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                     <signal name="ProjectSelectedEvent" handler="OnFiledatalistwidget1ProjectSelectedEvent" />
@@ -1091,7 +1007,7 @@
                             <property name="Yalign">0</property>
                             <property name="LeftPadding">12</property>
                             <child>
-                              <widget class="LongoMatch.Widgets.Component.FileDescriptionWidget" id="filedescriptionwidget3">
+                              <widget class="LongoMatch.Gui.Component.FileDescriptionWidget" id="filedescriptionwidget3">
                                 <property name="MemberName" />
                                 <property name="Sensitive">False</property>
                                 <property name="Events">ButtonPressMask</property>
@@ -1214,7 +1130,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Widgets.Dialog.OpenProjectDialog" design-size="400 300">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.OpenProjectDialog" design-size="400 300">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Open Project</property>
     <property name="WindowPosition">CenterOnParent</property>
@@ -1231,7 +1147,7 @@
         <property name="MemberName" />
         <property name="BorderWidth">2</property>
         <child>
-          <widget class="LongoMatch.Widgets.Component.ProjectListWidget" id="projectlistwidget">
+          <widget class="LongoMatch.Gui.Component.ProjectListWidget" id="projectlistwidget">
             <property name="MemberName">projectlistwidget</property>
             <property name="Events">ButtonPressMask</property>
             <signal name="ProjectSelectedEvent" handler="OnFiledatalistwidgetProjectSelectedEvent" />
@@ -1286,7 +1202,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Widgets.Dialog.NewProjectDialog" design-size="412 391">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.NewProjectDialog" design-size="412 391">
     <property name="MemberName" />
     <property name="Title" translatable="yes">New Project</property>
     <property name="WindowPosition">CenterOnParent</property>
@@ -1302,7 +1218,7 @@
         <property name="MemberName" />
         <property name="BorderWidth">2</property>
         <child>
-          <widget class="LongoMatch.Widgets.Component.FileDescriptionWidget" id="fdwidget">
+          <widget class="LongoMatch.Gui.Component.FileDescriptionWidget" id="fdwidget">
             <property name="MemberName">fdwidget</property>
             <property name="LocalGoals">0</property>
             <property name="VisitorGoals">0</property>
@@ -1358,7 +1274,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Widgets.Component.TimeAdjustWidget" design-size="264 33">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.TimeAdjustWidget" design-size="264 33">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.Table" id="table1">
@@ -1472,7 +1388,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Widgets.Component.SectionsPropertiesWidget" design-size="1185 535">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.SectionsPropertiesWidget" design-size="1185 535">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.ScrolledWindow" id="scrolledwindow1">
@@ -1491,7 +1407,7 @@
                 <property name="RowSpacing">6</property>
                 <property name="ColumnSpacing">6</property>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.TimeNodeProperties" id="timenodeproperties101">
+                  <widget class="LongoMatch.Gui.Component.TimeNodeProperties" id="timenodeproperties101">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                   </widget>
@@ -1508,7 +1424,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.TimeNodeProperties" id="timenodeproperties102">
+                  <widget class="LongoMatch.Gui.Component.TimeNodeProperties" id="timenodeproperties102">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                   </widget>
@@ -1527,7 +1443,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.TimeNodeProperties" id="timenodeproperties103">
+                  <widget class="LongoMatch.Gui.Component.TimeNodeProperties" id="timenodeproperties103">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                   </widget>
@@ -1546,7 +1462,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.TimeNodeProperties" id="timenodeproperties104">
+                  <widget class="LongoMatch.Gui.Component.TimeNodeProperties" id="timenodeproperties104">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                   </widget>
@@ -1565,7 +1481,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.TimeNodeProperties" id="timenodeproperties105">
+                  <widget class="LongoMatch.Gui.Component.TimeNodeProperties" id="timenodeproperties105">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                   </widget>
@@ -1584,7 +1500,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.TimeNodeProperties" id="timenodeproperties106">
+                  <widget class="LongoMatch.Gui.Component.TimeNodeProperties" id="timenodeproperties106">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                   </widget>
@@ -1603,7 +1519,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.TimeNodeProperties" id="timenodeproperties107">
+                  <widget class="LongoMatch.Gui.Component.TimeNodeProperties" id="timenodeproperties107">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                   </widget>
@@ -1624,7 +1540,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.TimeNodeProperties" id="timenodeproperties108">
+                  <widget class="LongoMatch.Gui.Component.TimeNodeProperties" id="timenodeproperties108">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                   </widget>
@@ -1645,7 +1561,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.TimeNodeProperties" id="timenodeproperties109">
+                  <widget class="LongoMatch.Gui.Component.TimeNodeProperties" id="timenodeproperties109">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                   </widget>
@@ -1666,7 +1582,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.TimeNodeProperties" id="timenodeproperties110">
+                  <widget class="LongoMatch.Gui.Component.TimeNodeProperties" id="timenodeproperties110">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                   </widget>
@@ -1687,7 +1603,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.TimeNodeProperties" id="timenodeproperties111">
+                  <widget class="LongoMatch.Gui.Component.TimeNodeProperties" id="timenodeproperties111">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                   </widget>
@@ -1706,7 +1622,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.TimeNodeProperties" id="timenodeproperties112">
+                  <widget class="LongoMatch.Gui.Component.TimeNodeProperties" id="timenodeproperties112">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                   </widget>
@@ -1727,7 +1643,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.TimeNodeProperties" id="timenodeproperties113">
+                  <widget class="LongoMatch.Gui.Component.TimeNodeProperties" id="timenodeproperties113">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                   </widget>
@@ -1748,7 +1664,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.TimeNodeProperties" id="timenodeproperties114">
+                  <widget class="LongoMatch.Gui.Component.TimeNodeProperties" id="timenodeproperties114">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                   </widget>
@@ -1769,7 +1685,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.TimeNodeProperties" id="timenodeproperties115">
+                  <widget class="LongoMatch.Gui.Component.TimeNodeProperties" id="timenodeproperties115">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                   </widget>
@@ -1790,7 +1706,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.TimeNodeProperties" id="timenodeproperties116">
+                  <widget class="LongoMatch.Gui.Component.TimeNodeProperties" id="timenodeproperties116">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                   </widget>
@@ -1809,7 +1725,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.TimeNodeProperties" id="timenodeproperties117">
+                  <widget class="LongoMatch.Gui.Component.TimeNodeProperties" id="timenodeproperties117">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                   </widget>
@@ -1830,7 +1746,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.TimeNodeProperties" id="timenodeproperties118">
+                  <widget class="LongoMatch.Gui.Component.TimeNodeProperties" id="timenodeproperties118">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                   </widget>
@@ -1851,7 +1767,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.TimeNodeProperties" id="timenodeproperties119">
+                  <widget class="LongoMatch.Gui.Component.TimeNodeProperties" id="timenodeproperties119">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                   </widget>
@@ -1872,7 +1788,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.TimeNodeProperties" id="timenodeproperties120">
+                  <widget class="LongoMatch.Gui.Component.TimeNodeProperties" id="timenodeproperties120">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                   </widget>
@@ -1899,7 +1815,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Widgets.Dialog.SectionsTemplates" design-size="803 388">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.SectionsTemplates" design-size="803 388">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Templates Manager</property>
     <property name="WindowPosition">CenterOnParent</property>
@@ -2010,7 +1926,7 @@
               </packing>
             </child>
             <child>
-              <widget class="LongoMatch.Widgets.Component.SectionsPropertiesWidget" id="sectionspropertieswidget1">
+              <widget class="LongoMatch.Gui.Component.SectionsPropertiesWidget" id="sectionspropertieswidget1">
                 <property name="MemberName" />
                 <property name="Sensitive">False</property>
                 <property name="Events">ButtonPressMask</property>
@@ -2265,7 +2181,7 @@
                 <property name="Visible">False</property>
                 <property name="Spacing">6</property>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.TreeWidget" id="treewidget1">
+                  <widget class="LongoMatch.Gui.Component.TreeWidget" id="treewidget1">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                   </widget>
@@ -2302,7 +2218,7 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="LongoMatch.Widgets.Component.TimeLineWidget" id="timelinewidget1">
+                      <widget class="LongoMatch.Gui.Component.TimeLineWidget" id="timelinewidget1">
                         <property name="MemberName" />
                         <property name="HeightRequest">200</property>
                         <property name="Visible">False</property>
@@ -2315,7 +2231,7 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="LongoMatch.Widgets.Component.ButtonsWidget" id="buttonswidget1">
+                      <widget class="LongoMatch.Gui.Component.ButtonsWidget" id="buttonswidget1">
                         <property name="MemberName" />
                         <property name="Visible">False</property>
                         <property name="Events">ButtonPressMask</property>
@@ -2334,7 +2250,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.PlayListWidget" id="playlistwidget2">
+                  <widget class="LongoMatch.Gui.Component.PlayListWidget" id="playlistwidget2">
                     <property name="MemberName" />
                     <property name="WidthRequest">150</property>
                     <property name="Visible">False</property>
@@ -2383,7 +2299,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Widgets.Component.TimeNodeProperties" design-size="280 118">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.TimeNodeProperties" design-size="571 118">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.Frame" id="frame1">
@@ -2436,7 +2352,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="LongoMatch.Widgets.Component.TimeAdjustWidget" id="timeadjustwidget1">
+                  <widget class="LongoMatch.Gui.Component.TimeAdjustWidget" id="timeadjustwidget1">
                     <property name="MemberName" />
                     <property name="Events">ButtonPressMask</property>
                   </widget>
@@ -2528,7 +2444,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Widgets.Dialog.TemplateEditorDialog" design-size="1066 473">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.TemplateEditorDialog" design-size="1066 473">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Template Editor</property>
     <property name="WindowPosition">CenterOnParent</property>
@@ -2545,7 +2461,7 @@
         <property name="MemberName" />
         <property name="BorderWidth">2</property>
         <child>
-          <widget class="LongoMatch.Widgets.Component.SectionsPropertiesWidget" id="sectionspropertieswidget3">
+          <widget class="LongoMatch.Gui.Component.SectionsPropertiesWidget" id="sectionspropertieswidget3">
             <property name="MemberName" />
             <property name="Events">ButtonPressMask</property>
           </widget>
@@ -2599,7 +2515,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Widgets.Component.PlayListWidget" design-size="291 447">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.PlayListWidget" design-size="291 447">
     <property name="MemberName" />
     <property name="WidthRequest">100</property>
     <child>
@@ -2632,7 +2548,7 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="LongoMatch.Widgets.Component.PlayListTreeView" id="playlisttreeview1">
+                      <widget class="LongoMatch.Gui.Component.PlayListTreeView" id="playlisttreeview1">
                         <property name="MemberName" />
                         <property name="Sensitive">False</property>
                         <property name="CanFocus">True</property>
@@ -2748,7 +2664,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Widgets.Dialog.NewSectionsTemplatesFiles" design-size="352 102">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.NewSectionsTemplatesFiles" design-size="352 102">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Select new name</property>
     <property name="WindowPosition">CenterOnParent</property>
@@ -2816,7 +2732,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Widgets.Component.TimeLineWidget" design-size="907 229">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.TimeLineWidget" design-size="907 229">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.HBox" id="hbox3">

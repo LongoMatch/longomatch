@@ -24,7 +24,7 @@ using Gdk;
 using Cairo;
 using LongoMatch.TimeNodes;
 
-namespace LongoMatch.Widgets.Component
+namespace LongoMatch.Gui.Component
 {
 	
 	

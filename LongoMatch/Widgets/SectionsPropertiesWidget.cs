@@ -24,7 +24,7 @@ using LongoMatch.DB;
 using LongoMatch.TimeNodes;
 
 
-namespace LongoMatch.Widgets.Component
+namespace LongoMatch.Gui.Component
 {
 	
 	

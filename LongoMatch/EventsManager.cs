@@ -19,7 +19,7 @@
 //
 
 using System;
-using LongoMatch.Widgets.Component;
+using LongoMatch.Gui.Component;
 using LongoMatch.TimeNodes;
 using LongoMatch.DB;
 using LongoMatch.Video.Player;

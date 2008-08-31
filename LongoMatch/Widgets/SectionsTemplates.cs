@@ -26,7 +26,7 @@ using System.Collections;
 using LongoMatch.DB;
 using LongoMatch.IO;
 
-namespace LongoMatch.Widgets.Dialog
+namespace LongoMatch.Gui.Dialog
 {
 	
 	

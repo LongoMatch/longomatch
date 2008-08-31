@@ -24,11 +24,11 @@ using Gtk;
 using LongoMatch.DB;
 using LongoMatch.Handlers;
 using LongoMatch.IO;
-using LongoMatch.Widgets.Popup;
-using LongoMatch.Widgets.Dialog;
+using LongoMatch.Gui.Popup;
+using LongoMatch.Gui.Dialog;
 using LongoMatch.TimeNodes;
 
-namespace LongoMatch.Widgets.Component
+namespace LongoMatch.Gui.Component
 {
 
 	//añadir eventos de cambios para realizar el cambio directamente sobre el file data abierto
