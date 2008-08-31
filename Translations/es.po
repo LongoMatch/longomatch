@@ -1,0 +1,395 @@
+msgid ""
+msgstr ""
+"X-Generator: MonoDevelop.Gettext \n"
+"Language-Team: \n"
+"PO-Revision-Date: 2008-08-31 02:02:44+0200\n"
+"POT-Creation-Date: \n"
+"Project-Id-Version: LongoMatch 0.3\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: Andoni Morales Alastruey <ylatuya@gmail.com>\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+#: ../LongoMatch/Widgets/DBManager.cs:61
+#: ../LongoMatch/Widgets/DBManager.cs:127
+#, fuzzy
+msgid ""
+"This Project is actually in use.\\n Close it first to allow its removal from "
+"the database"
+msgstr ""
+"El Proyecto está actulamente en uso.\\\\nCiérrelo primero para para permitir \n"
+"borrarlo de la Base de Datos"
+
+#: ../LongoMatch/Widgets/DBManager.cs:67
+#, fuzzy
+msgid ""
+"Do yo really want to delete:\\n"
+msgstr ""
+"Quiere suprimir:\\\\n"
+
+#: ../LongoMatch/Widgets/ProjectListWidget.cs:48
+msgid "Filename"
+msgstr "Archivo"
+
+#: ../LongoMatch/Widgets/ProjectListWidget.cs:95
+msgid "File: "
+msgstr "Archivo:"
+
+#: ../LongoMatch/Widgets/ProjectListWidget.cs:96
+msgid "Local Team: "
+msgstr "Equipo Local:"
+
+#: ../LongoMatch/Widgets/ProjectListWidget.cs:97
+msgid "Visitor Team: "
+msgstr "Equipo Visitante:"
+
+#: ../LongoMatch/Widgets/ProjectListWidget.cs:98
+msgid "Result: "
+msgstr "Resultado:"
+
+#: ../LongoMatch/Widgets/ProjectListWidget.cs:99
+msgid "Date: "
+msgstr "Fecha:"
+
+#: ../LongoMatch/Widgets/ProjectListWidget.cs:99
+#: ../LongoMatch/Widgets/ProjectListWidget.cs:109
+#: ../LongoMatch/Widgets/FileDescriptionWidget.cs:51
+#: ../LongoMatch/Widgets/FileDescriptionWidget.cs:87
+#: ../LongoMatch/Widgets/FileDescriptionWidget.cs:177
+msgid "MM/dd/yyyy"
+msgstr "dd/MM/yyyy"
+
+#: ../LongoMatch/Widgets/FileDescriptionWidget.cs:184
+msgid "Choose the file to open"
+msgstr "Elija el archivo a abrir"
+
+#: ../LongoMatch/Widgets/FileDescriptionWidget.cs:207
+#, fuzzy
+msgid ""
+"Error Loading this file:\\n"
+msgstr ""
+"Error cargando este archivo:\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n"
+
+#: ../LongoMatch/Widgets/MainWindow.cs:66
+#, fuzzy
+msgid ""
+"The file associated to this proyect doesn't exits.\\n If the location of the "
+"file has changed try to change it with de DataBase \n"
+"Manager."
+msgstr ""
+"El archivo associado a este proyecto no "
+"existe.\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\nSi el \n"
+"archivo ha \\nsido \\\\\\\\ncambiado de sitio, intente cambiarlo con el "
+"gestor \\\\\\\\\\\\\\\\nde la \n"
+"Base \\nde Datos"
+
+#: ../LongoMatch/Widgets/MainWindow.cs:178
+msgid "Please, select a video file."
+msgstr "Por favor, escoja un archivo de video."
+
+#: ../LongoMatch/Widgets/MainWindow.cs:258
+#: ../LongoMatch/Widgets/PlayListWidget.cs:206
+msgid "Open playlist"
+msgstr "Abrir lista de reproducción"
+
+#: ../LongoMatch/Widgets/MainWindow.cs:280
+#, fuzzy
+msgid ""
+"The actual Proyect will bo closed due to this error on the media player:\\n"
+msgstr ""
+"El Proyecto actual se cerrará debido a un error en el "
+"reproductor:\\\\\\\\\\\\\\\\\\\\\n"
+"\\\\\\\\\\\\n"
+
+#: ../LongoMatch/Widgets/PlayListTreeView.cs:51
+#: ../LongoMatch/Widgets/TimeNodesTreeView.cs:112
+msgid "Delete"
+msgstr "Borrar"
+
+#: ../LongoMatch/Widgets/PlayListTreeView.cs:59
+msgid "Name"
+msgstr "Nombre"
+
+#: ../LongoMatch/Widgets/PlayListTreeView.cs:117
+msgid "Name: "
+msgstr "Nombre:"
+
+#: ../LongoMatch/Widgets/PlayListTreeView.cs:117
+msgid "Start: "
+msgstr "Inicio:"
+
+#: ../LongoMatch/Widgets/PlayListTreeView.cs:118
+msgid " sec"
+msgstr "sec"
+
+#: ../LongoMatch/Widgets/PlayListTreeView.cs:118
+msgid "Duration: "
+msgstr "Duración:"
+
+#: ../LongoMatch/Widgets/PlayListWidget.cs:227
+msgid "New playlist"
+msgstr "Nueva Lista de Reproducción"
+
+#: ../LongoMatch/Widgets/PlayListWidget.cs:253
+msgid "Save Video As ..."
+msgstr "Guardar Video Como..."
+
+#: ../LongoMatch/Widgets/SectionsPropertiesWidget.cs:49
+msgid "Section"
+msgstr "Sección"
+
+#: ../LongoMatch/Widgets/SectionsTemplates.cs:43
+msgid "Templates Files"
+msgstr "Plantilla"
+
+#: ../LongoMatch/Widgets/SectionsTemplates.cs:121
+#, fuzzy
+msgid "Do you really want to delete "
+msgstr ""
+"Quiere suprimir:\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n"
+
+#: ../LongoMatch/Widgets/SectionsTemplates.cs:121
+msgid " template?"
+msgstr "plantilla?"
+
+#: ../LongoMatch/Widgets/TimeNodesTreeView.cs:102
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.FileDescriptionWidget.cs:246
+msgid "Local Team"
+msgstr "Equipo Local:"
+
+#: ../LongoMatch/Widgets/TimeNodesTreeView.cs:103
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.FileDescriptionWidget.cs:196
+msgid "Visitor Team"
+msgstr "Equipo Visitante:"
+
+#: ../LongoMatch/Widgets/TimeNodesTreeView.cs:104
+msgid "No Team"
+msgstr "Sin Equipo"
+
+#: ../LongoMatch/Widgets/TimeNodesTreeView.cs:110
+msgid "Team Selection"
+msgstr "Selección de quipo"
+
+#: ../LongoMatch/Widgets/TimeNodesTreeView.cs:113
+msgid "Add to playlist"
+msgstr "Añadir a la lista de reproducción"
+
+#: ../LongoMatch/DB/DataBase.cs:109
+#, fuzzy
+msgid ""
+"The Project for this video file already exists.\\n Try to edit it whit the "
+"Database Manager"
+msgstr ""
+"El proyecto para este archivo ya existe..\\\\\\\\\\\\\\\\nIntente editarlo "
+"con la \n"
+"base \\nde \\\\ndatos"
+
+#: ../LongoMatch/Widgets/TimeScale.cs:106
+msgid "Delete Play"
+msgstr "Borrar Jugada"
+
+#: ../LongoMatch/Widgets/TimeScale.cs:108
+msgid "Add New Play"
+msgstr "Añadir Nueva Jugada"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.FileDescriptionWidget.cs:176
+msgid "_Calendar"
+msgstr "_Calendario"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.FileDescriptionWidget.cs:206
+msgid "Local Goals"
+msgstr "Goles Local:"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.FileDescriptionWidget.cs:216
+msgid "Visitor Goals"
+msgstr "Goles Visitante:"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.FileDescriptionWidget.cs:226
+msgid "Date"
+msgstr "Fecha:"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.FileDescriptionWidget.cs:236
+msgid "File"
+msgstr "Archivo:"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.FileDescriptionWidget.cs:254
+msgid "Sections Template File"
+msgstr "Archivo de plantilla"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.DBManager.cs:43
+msgid "DataBase Manager"
+msgstr "Gestor de la Base de Datos"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.DBManager.cs:94
+#, fuzzy
+msgid "<b>Propiedades</b>"
+msgstr ""
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.OpenProjectDialog.cs:25
+msgid "Open Project"
+msgstr "Abrir Proyecto"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.NewProjectDialog.cs:25
+msgid "New Project"
+msgstr "Proyecto Nuevo"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs:40
+msgid "Start gap:"
+msgstr "Tiempo Antes:"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs:47
+msgid "Stop gap:"
+msgstr "Tiempo después:"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SectionsTemplates.cs:37
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:127
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:128
+msgid "Templates Manager"
+msgstr "Gestor de _Plantillas"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:88
+msgid "_Play"
+msgstr "_Reproducir"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:89
+msgid "dasdf"
+msgstr ""
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:91
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:92
+msgid "P_ause"
+msgstr "_Pausar"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:94
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:95
+msgid "P_revious"
+msgstr "_Anterior"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:97
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:98
+msgid "_Next"
+msgstr "_Siguiente"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:100
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:101
+msgid "Open Playlist"
+msgstr "Abrir Lista de Reproducción"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:105
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:106
+msgid "_File"
+msgstr "_Archivo"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:108
+msgid "_New Poject"
+msgstr "Proyecto _Nuevo"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:109
+msgid "_New Poyect"
+msgstr "Proyecto _Nuevo"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:111
+msgid "_Open Project"
+msgstr "_Abrir Proyecto"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:112
+msgid "_Open Proyect"
+msgstr "_Abrir Proyecto"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:114
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:115
+msgid "_Quit"
+msgstr "_Salir"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:117
+msgid "_Close Project"
+msgstr "_Cerrar Proyecto"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:119
+msgid "_Close Proyect"
+msgstr "_Cerrar Proyecto"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:121
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:122
+msgid "_Tools"
+msgstr "_Herramientas"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:124
+msgid "Projects Manager"
+msgstr "Gestor de _Proyectos"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:125
+msgid "Database Manager"
+msgstr "Gestor de la _Base de Datos"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:130
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:131
+msgid "_View"
+msgstr "_Ver"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:133
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:134
+msgid "Full Screen"
+msgstr "Pantalla Completa"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:136
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:137
+msgid "Playlist"
+msgstr "Lista de Reproducción"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:139
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:141
+msgid "_Player"
+msgstr "_Reproductor"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:143
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:146
+msgid "Capture Mode"
+msgstr "Modo Captura"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:148
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:151
+msgid "Analyze Mode"
+msgstr "Modo Análisis"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:153
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:155
+msgid "_Save Project"
+msgstr "_Guardar Proyecto"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.MainWindow.cs:160
+msgid "LongoMatch"
+msgstr "LongoMatch"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TimeNodeProperties.cs:65
+msgid "Name:"
+msgstr "Nombre:"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TimeNodeProperties.cs:101
+msgid "Color:        "
+msgstr "Color:"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TimeNodeProperties.cs:131
+msgid "Visible:"
+msgstr "Visible:"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TimeNodeProperties.cs:145
+msgid "<b>frame1</b>"
+msgstr ""
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.TemplateEditorDialog.cs:25
+msgid "Template Editor"
+msgstr "Editor de Plantillas"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs:62
+msgid "Load a playlist or create a new one."
+msgstr "Cargar una lista de reproducción o cree una nueva."
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.NewSectionsTemplatesFiles.cs:25
+msgid "Select new name"
+msgstr "Seleccionar nombre nuevo"
+
+#: ../CesarPlayer/gtk-gui/LongoMatch.Gui.PlayerBin.cs:213
+msgid "Time:"
+msgstr "Tiempo:"
+
