@@ -2,4 +2,7 @@
   <translations>
     <Translation isoCode="es" />
   </translations>
+  <projectInformations>
+    <TranslationProjectInformation projectName="libcesarplayer" isIncluded="False" />
+  </projectInformations>
 </CombineEntry>
