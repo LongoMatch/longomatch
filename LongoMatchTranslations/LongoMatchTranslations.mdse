@@ -1,5 +1,0 @@
-<CombineEntry name="LongoMatchTranslations" fileversion="2.0" packageName="longomatch" outputType="RelativeToOutput" relPath="locale" ctype="TranslationProject">
-  <translations>
-    <Translation isoCode="es" />
-  </translations>
-</CombineEntry>
