@@ -1,6 +1,0 @@
-<CombineEntry name="LongoMatchTranslation" fileversion="2.0" packageName="longomatch" outputType="RelativeToOutput" ctype="TranslationProject">
-  <Configurations active="Release">
-    <Configuration name="Debug" ctype="TranslationProjectConfiguration" />
-    <Configuration name="Release" ctype="TranslationProjectConfiguration" />
-  </Configurations>
-</CombineEntry>
