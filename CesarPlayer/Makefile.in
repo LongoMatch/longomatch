@@ -216,30 +216,28 @@ LINUX_PKGCONFIG = \
 
 FILES = \
 	AssemblyInfo.cs \
-	IPlayer.cs \
-	TimeString.cs \
-	SignalUtils.cs \
-	PlayerMaker.cs \
-	VolumeWindow.cs \
-	PlayerBin.cs \
-	Handlers.cs \
-	BufferingHandler.cs \
-	ErrorHandler.cs \
-	GotRedirectHandler.cs \
+	Player/IPlayer.cs \
+	Utils/TimeString.cs \
+	Player/PlayerMaker.cs \
+	Gui/VolumeWindow.cs \
+	Gui/PlayerBin.cs \
+	Handlers/Handlers.cs \
+	Handlers/BufferingHandler.cs \
+	Handlers/ErrorHandler.cs \
+	Handlers/GotRedirectHandler.cs \
 	GstError.cs \
-	GstPlayerAspectRatio.cs \
-	GstPlayerMetadataType.cs \
-	GstUseType.cs \
+	Player/GstPlayerAspectRatio.cs \
+	Player/GstPlayerMetadataType.cs \
+	Player/GstUseType.cs \
 	ObjectManager.cs \
-	StateChangedHandler.cs \
-	TitleChangeHandler.cs \
-	TickHandler.cs \
-	GstPlayer.cs \
+	Handlers/StateChangedHandler.cs \
+	Handlers/TitleChangeHandler.cs \
+	Handlers/TickHandler.cs \
+	Player/GstPlayer.cs \
 	gtk-gui/generated.cs \
-	IMetadataReader.cs \
-	gtk-gui/CesarPlayer.VolumeWindow.cs \
-	gtk-gui/CesarPlayer.PlayerBin.cs \
-	DSPlayer.cs 
+	Player/IMetadataReader.cs \
+	gtk-gui/LongoMatch.Gui.VolumeWindow.cs \
+	gtk-gui/LongoMatch.Gui.PlayerBin.cs 
 
 DATA_FILES = 
 RESOURCES = \
@@ -255,8 +253,7 @@ REFERENCES = \
 	System \
 	Mono.Posix \
 	System.Drawing \
-	$(GLIB_SHARP_20_LIBS) \
-	System.Windows.Forms
+	$(GLIB_SHARP_20_LIBS) 
 
 DLL_REFERENCES = \
 	DirectShowLib-2005.dll

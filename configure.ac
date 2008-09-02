@@ -6,8 +6,10 @@ AM_INIT_AUTOMAKE([foreign])
 
 AC_ISC_POSIX
 AC_PROG_CC
+AC_C_CONST
 AM_PROG_CC_STDC
 AC_HEADER_STDC
+
 
 
 AM_PROG_LIBTOOL
@@ -61,6 +63,9 @@ PKG_CHECK_MODULES(CESARPLAYER, [gtk+-2.0 >= 2.8 gdk-2.0 gio-2.0 glib-2.0 gstream
 AC_SUBST(CESARPLAYER_CFLAGS)
 AC_SUBST(CESARPLAYER_LIBS)
 
+# Checks for library functions.
+AC_CHECK_FUNCS([strchr strstr])
+
 dnl package checks, per config
 
 
@@ -72,8 +77,9 @@ libcesarplayer/src/Makefile
 LongoMatch/longomatch
 Makefile
 CesarPlayer/cesarplayer.pc
-LongoMatchTranslation/Makefile
+Translations/Makefile
 
 ])
+
 
 AC_OUTPUT
