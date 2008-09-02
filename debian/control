@@ -1,0 +1,12 @@
+Source: longomatch
+Section: unknown
+Priority: extra
+Maintainer: Andoni Morales Alastruey <ylatuya@gmail.com>
+Build-Depends: debhelper (>= 5), autotools-dev, cdbs
+Standards-Version: 3.7.2
+
+Package: longomatch
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, mono-runtime
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>
