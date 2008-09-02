@@ -41,11 +41,17 @@
     <Compile Include="gtk-gui\generated.cs">
       <Link>generated.cs</Link>
     </Compile>
-    <Compile Include="gtk-gui\LongoMatch.Video.Player.PlayerBin.cs">
-      <Link>LongoMatch.Video.Player.PlayerBin.cs</Link>
+    <Compile Include="gtk-gui\LongoMatch.Gui.PlayerBin.cs">
+      <Link>LongoMatch.Gui.PlayerBin.cs</Link>
     </Compile>
-    <Compile Include="gtk-gui\LongoMatch.Video.VolumeWindow.cs">
-      <Link>LongoMatch.Video.VolumeWindow.cs</Link>
+    <Compile Include="gtk-gui\LongoMatch.Gui.VolumeWindow.cs">
+      <Link>LongoMatch.Gui.VolumeWindow.cs</Link>
+    </Compile>
+    <Compile Include="Gui\PlayerBin.cs">
+      <Link>PlayerBin.cs</Link>
+    </Compile>
+    <Compile Include="Gui\VolumeWindow.cs">
+      <Link>VolumeWindow.cs</Link>
     </Compile>
     <Compile Include="Handlers\BufferingHandler.cs">
       <Link>BufferingHandler.cs</Link>
@@ -87,15 +93,12 @@
     <Compile Include="Player\IPlayer.cs">
       <Link>IPlayer.cs</Link>
     </Compile>
-    <Compile Include="Player\PlayerBin.cs">
-      <Link>PlayerBin.cs</Link>
-    </Compile>
     <Compile Include="Player\PlayerMaker.cs">
       <Link>PlayerMaker.cs</Link>
     </Compile>
-    <Compile Include="SignalUtils.cs" />
-    <Compile Include="TimeString.cs" />
-    <Compile Include="VolumeWindow.cs" />
+    <Compile Include="Utils\TimeString.cs">
+      <Link>TimeString.cs</Link>
+    </Compile>
     <None Include="gtk-gui\gui.stetic">
       <Link>gui.stetic</Link>
     </None>
