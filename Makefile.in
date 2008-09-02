@@ -58,8 +58,7 @@ RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = . Translations libcesarplayer CesarPlayer \
-	GstCesarPlayer LongoMatch
+DIST_SUBDIRS = . Translations libcesarplayer CesarPlayer LongoMatch
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -193,7 +192,7 @@ top_srcdir = @top_srcdir@
 EXTRA_DIST = expansions.m4 LongoMatch/Db4objects.Db4o.dll CesarPlayer/DirectShowLib-2005.dll
 
 #Warning: This is an automatically generated file, do not edit!
-@ENABLE_DEBUG_TRUE@SUBDIRS = .  Translations libcesarplayer CesarPlayer GstCesarPlayer .  LongoMatch
+@ENABLE_DEBUG_TRUE@SUBDIRS = .  Translations libcesarplayer CesarPlayer .  LongoMatch
 @ENABLE_RELEASE_TRUE@SUBDIRS = .  Translations libcesarplayer CesarPlayer  .  LongoMatch
 all: all-recursive
 

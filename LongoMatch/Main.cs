@@ -51,7 +51,7 @@ namespace LongoMatch
 			
 			//Iniciamos la internalización
 			//Catalog.Init("longomatch",RelativeToSystemPath("../../share/locale"));
-			Catalog.Init("longomatch",System.IO.Path.Combine(baseDirectory,"locale"));
+			Catalog.Init("longomatch",baseDirectory);
 			
 			//Comprobamos los archivos de inicio
 			MainClass.CheckDirs();

@@ -20,7 +20,7 @@ DB4OBJECTS_DB4O_DLL_SOURCE=Db4objects.Db4o.dll
 LONGOMATCH_DESKTOP_SOURCE=app.desktop
 CESARPLAYER_EXE_SOURCE=../CesarPlayer/bin/Debug/CesarPlayer.exe
 CESARPLAYER_EXE=$(BUILD_DIR)/CesarPlayer.exe
-BACKGROUND_PNG_SOURCE=images/background.png
+BACKGROUND_PNG_SOURCE=background.png
 CESARPLAYER_EXE_MDB_SOURCE=../CesarPlayer/bin/Debug/CesarPlayer.exe.mdb
 CESARPLAYER_EXE_MDB=$(BUILD_DIR)/CesarPlayer.exe.mdb
 LGMLOGO_PNG_SOURCE=lgmlogo.png
@@ -44,7 +44,7 @@ CESARPLAYER_DLL=$(BUILD_DIR)/CesarPlayer.dll
 DB4OBJECTS_DB4O_DLL_SOURCE=Db4objects.Db4o.dll
 LONGOMATCH_DESKTOP_SOURCE=app.desktop
 CESARPLAYER_EXE=
-BACKGROUND_PNG_SOURCE=images/background.png
+BACKGROUND_PNG_SOURCE=background.png
 CESARPLAYER_EXE_MDB=
 LGMLOGO_PNG_SOURCE=lgmlogo.png
 
@@ -79,67 +79,71 @@ FILES = \
 	gtk-gui/LongoMatch.MainWindow.cs \
 	AssemblyInfo.cs \
 	Main.cs \
-	Widgets/ButtonsWidget.cs \
-	Widgets/CalendarPopup.cs \
-	Widgets/DBManager.cs \
-	Widgets/FileDataListWidget.cs \
-	Widgets/FileDescriptionWidget.cs \
-	Widgets/MainWindow.cs \
-	Widgets/NewProjectDialog.cs \
-	Widgets/NewSectionsTemplatesFiles.cs \
-	Widgets/OpenProjectDialog.cs \
-	Widgets/PlayListTreeView.cs \
-	Widgets/PlayListWidget.cs \
-	Widgets/SectionsPropertiesWidget.cs \
-	Widgets/SectionsTemplates.cs \
-	Widgets/TemplateEditorDialog.cs \
-	Widgets/TimeAdjustWidget.cs \
-	Widgets/TimeNodesTreeView.cs \
-	Widgets/TreeWidget.cs \
-	Widgets/TimeNodeProperties.cs \
-	PlayList/PlayList.cs \
-	DB/FileData.cs \
+	EventsManager.cs \
+	Gui/ButtonsWidget.cs \
+	Gui/CalendarPopup.cs \
+	Gui/DBManager.cs \
+	Gui/ProjectListWidget.cs \
+	Gui/FileDescriptionWidget.cs \
+	Gui/MainWindow.cs \
+	Gui/NewProjectDialog.cs \
+	Gui/NewSectionsTemplatesFiles.cs \
+	Gui/OpenProjectDialog.cs \
+	Gui/PlayListTreeView.cs \
+	Gui/PlayListWidget.cs \
+	Gui/SectionsPropertiesWidget.cs \
+	Gui/SectionsTemplates.cs \
+	Gui/TemplateEditorDialog.cs \
+	Gui/TimeAdjustWidget.cs \
+	Gui/TimeNodesTreeView.cs \
+	Gui/TreeWidget.cs \
+	Gui/TimeNodeProperties.cs \
+	DB/Project.cs \
 	DB/Sections.cs \
 	DB/DataBase.cs \
 	Handlers/Handlers.cs \
 	IO/SectionsWriter.cs \
 	IO/SectionsReader.cs \
-	PlayList/IPlayList.cs \
+	Video/AudioQuality.cs \
+	Video/FFMPEGVideoEditor.cs \
+	Video/IPlayList.cs \
+	Video/IVideoEditor.cs \
+	Video/PlayList.cs \
+	Video/VideoQuality.cs \
 	IO/XMLReader.cs \
 	DB/MediaFile.cs \
-	Widgets/TimeLineWidget.cs \
-	Widgets/TimeReferenceWidget.cs \
-	Widgets/TimeScale.cs \
+	Gui/TimeLineWidget.cs \
+	Gui/TimeReferenceWidget.cs \
+	Gui/TimeScale.cs \
 	Time/MediaTimeNode.cs \
 	Time/PixbufTimeNode.cs \
 	Time/SectionsTimeNode.cs \
 	Time/TimeNode.cs \
 	Time/Time.cs \
 	Time/PlayListTimeNode.cs \
-	gtk-gui/LongoMatch.Widgets.Component.ButtonsWidget.cs \
-	gtk-gui/LongoMatch.Widgets.Component.FileDataListWidget.cs \
-	gtk-gui/LongoMatch.Widgets.Dialog.DBManager.cs \
-	gtk-gui/LongoMatch.Widgets.Component.FileDescriptionWidget.cs \
-	gtk-gui/LongoMatch.Widgets.Dialog.NewProjectDialog.cs \
-	gtk-gui/LongoMatch.Widgets.Dialog.OpenProjectDialog.cs \
-	gtk-gui/LongoMatch.Widgets.Component.SectionsPropertiesWidget.cs \
-	gtk-gui/LongoMatch.Widgets.Dialog.SectionsTemplates.cs \
-	gtk-gui/LongoMatch.Widgets.Dialog.TemplateEditorDialog.cs \
-	gtk-gui/LongoMatch.Widgets.Component.TimeLineWidget.cs \
-	gtk-gui/LongoMatch.Widgets.Component.PlayListWidget.cs \
-	gtk-gui/LongoMatch.Widgets.Component.TimeAdjustWidget.cs \
-	gtk-gui/LongoMatch.Widgets.Component.TimeNodeProperties.cs \
-	gtk-gui/LongoMatch.Widgets.Popup.CalendarPopup.cs \
-	gtk-gui/LongoMatch.Widgets.Dialog.NewSectionsTemplatesFiles.cs \
-	gtk-gui/LongoMatch.Widgets.Component.TreeWidget.cs \
-	Widgets/fakeColorBin.cs \
-	gtk-gui/LongoMatch.Widgets.Component.fakeColorBin.cs 
+	gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.DBManager.cs \
+	gtk-gui/LongoMatch.Gui.Component.FileDescriptionWidget.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.NewProjectDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.OpenProjectDialog.cs \
+	gtk-gui/LongoMatch.Gui.Component.SectionsPropertiesWidget.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.SectionsTemplates.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.TemplateEditorDialog.cs \
+	gtk-gui/LongoMatch.Gui.Component.TimeLineWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.TimeNodeProperties.cs \
+	gtk-gui/LongoMatch.Gui.Popup.CalendarPopup.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.NewSectionsTemplatesFiles.cs \
+	gtk-gui/LongoMatch.Gui.Component.TreeWidget.cs 
+	
 
 DATA_FILES = \
 	app.desktop \
 	Db4objects.Db4o.dll \
 	lgmlogo.png \
-	images/background.png 
+	background.png 
 
 RESOURCES = \
 	gtk-gui/objects.xml \
@@ -149,6 +153,7 @@ EXTRAS = \
 	longomatch.in 
 
 REFERENCES =  \
+	System \
 	Mono.Posix \
 	System.Xml \
 	$(GTK_SHARP_20_LIBS) \

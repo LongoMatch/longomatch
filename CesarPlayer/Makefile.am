@@ -26,6 +26,7 @@ PROJECT_REFERENCES =
 BUILD_DIR = bin/Release
 
 DIRECTSHOWLIB_2005_DLL_SOURCE=DirectShowLib-2005.dll
+ASSEMBLY_KEY_FILE_SOURCE=cesarplayer.key
 
 endif
 
@@ -33,7 +34,8 @@ AL=al2
 SATELLITE_ASSEMBLY_NAME=longomatch.resources.dll
 
 PROGRAMFILES = \
-	$(DIRECTSHOWLIB_2005_DLL)  
+	$(DIRECTSHOWLIB_2005_DLL) \
+	$(ASSEMBLY_KEY_FILE_SOURCE)
 
 LINUX_PKGCONFIG = \
 	$(CESARPLAYER_PC)  
@@ -76,6 +78,7 @@ RESOURCES = \
 
 EXTRAS = \
 	DirectShowLib-2005.dll \
+	cesarplayer.key \
 	cesarplayer.pc.in 
 
 REFERENCES =  \
