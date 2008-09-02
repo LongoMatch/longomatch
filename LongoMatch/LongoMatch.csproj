@@ -3,7 +3,7 @@
     <ProjectGuid>{64BBF35C-C210-4869-B93B-924234A32C0D}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>LongoMatch</RootNamespace>
     <AssemblyName>LGM</AssemblyName>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
