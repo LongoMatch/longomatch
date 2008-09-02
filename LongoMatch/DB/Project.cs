@@ -114,7 +114,7 @@ namespace LongoMatch.DB
 				//Windows doesn't accept ':' as a valid char for a file
 				//Replacing by '-' in the time string representation
 				miniaturePath = MainClass.ThumbnailsDir() + sep +this.Title+ sep +"Section"+dataSection+"-"+name+
-					"-"+start.ToMSecondsString().Replace(':','-').Replace(',','.')+"-"+stop.ToMSecondsString().Replace(':','-')+".jpg";
+					"-"+start.ToMSecondsString().Replace(':','-').Replace(',','.')+"-"+stop.ToMSecondsString().Replace(':','-').Replace(',','.')+".jpg";
 				miniature.Save(miniaturePath,"jpeg");
 			}
 			tn = new MediaTimeNode(name, start, stop,this.file.Fps,dataSection,miniaturePath);
