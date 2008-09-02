@@ -5,20 +5,31 @@ It was downloaded from <url://example.com>
 
 Upstream Author(s): 
 
-    <put author's name and email here>
-    <likewise for another author>
+    Andoni Morales Alastruey <ylatuya@gmail.com>
+    
 
 Copyright: 
 
-    <Copyright (C) YYYY Name OfAuthor>
-    <likewise for another author>
+    Copyright (C) 2008 Andoni Morales Alastruey <ylatuya@gmail.com>
+    
 
 License:
 
-    <Put the license of the package here indented by 4 spaces>
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
 
-The Debian packaging is (C) 2008, Andoni Morales Alastruey <ylatuya@gmail.com> and
-is licensed under the GPL, see `/usr/share/common-licenses/GPL'.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+   The Debian packaging is (C) 2008, Andoni Morales Alastruey <ylatuya@gmail.com> and
+   is licensed under the GPL, see `/usr/share/common-licenses/GPL'.
 
 # Please also look if there are files or directories which have a
 # different copyright/license attached and list them here.

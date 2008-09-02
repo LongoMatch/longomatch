@@ -97,7 +97,7 @@ namespace LongoMatch
 		}
 		
 		public static string ImagesDir(){
-			return System.IO.Path.Combine (baseDirectory, "./");
+			return System.IO.Path.Combine (baseDirectory, "images");
 		}
 		
 		public static string DBDir(){

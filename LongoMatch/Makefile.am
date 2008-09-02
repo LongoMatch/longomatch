@@ -3,31 +3,9 @@ EXTRA_DIST =
 
 # Warning: This is an automatically generated file, do not edit!
 
-if ENABLE_DEBUG
-ASSEMBLY_COMPILER_COMMAND = gmcs
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ -debug -define:DEBUG "-main:LongoMatch.MainClass"
 
-ASSEMBLY = bin/Debug/LongoMatch.exe
-ASSEMBLY_MDB = $(ASSEMBLY).mdb
-COMPILE_TARGET = winexe
-PROJECT_REFERENCES =  \
-	../CesarPlayer/bin/Debug/CesarPlayer.exe
-BUILD_DIR = bin/Debug
 
-DIRECTSHOWLIB_2005_DLL_SOURCE=../CesarPlayer/DirectShowLib-2005.dll
-CESARPLAYER_DLL=
-DB4OBJECTS_DB4O_DLL_SOURCE=Db4objects.Db4o.dll
-LONGOMATCH_DESKTOP_SOURCE=app.desktop
-CESARPLAYER_EXE_SOURCE=../CesarPlayer/bin/Debug/CesarPlayer.exe
-CESARPLAYER_EXE=$(BUILD_DIR)/CesarPlayer.exe
-BACKGROUND_PNG_SOURCE=background.png
-CESARPLAYER_EXE_MDB_SOURCE=../CesarPlayer/bin/Debug/CesarPlayer.exe.mdb
-CESARPLAYER_EXE_MDB=$(BUILD_DIR)/CesarPlayer.exe.mdb
-LGMLOGO_PNG_SOURCE=lgmlogo.png
 
-endif
-
-if ENABLE_RELEASE
 ASSEMBLY_COMPILER_COMMAND = gmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-main:LongoMatch.MainClass"
 
@@ -43,12 +21,10 @@ CESARPLAYER_DLL_SOURCE=../CesarPlayer/bin/Release/CesarPlayer.dll
 CESARPLAYER_DLL=$(BUILD_DIR)/CesarPlayer.dll
 DB4OBJECTS_DB4O_DLL_SOURCE=Db4objects.Db4o.dll
 LONGOMATCH_DESKTOP_SOURCE=app.desktop
-CESARPLAYER_EXE=
-BACKGROUND_PNG_SOURCE=background.png
-CESARPLAYER_EXE_MDB=
-LGMLOGO_PNG_SOURCE=lgmlogo.png
+BACKGROUND_PNG_SOURCE=images/background.png
+LGMLOGO_PNG_SOURCE=images/lgmlogo.png
 
-endif
+
 
 AL=al2
 SATELLITE_ASSEMBLY_NAME=.resources.dll
@@ -56,13 +32,13 @@ SATELLITE_ASSEMBLY_NAME=.resources.dll
 PROGRAMFILES = \
 	$(DIRECTSHOWLIB_2005_DLL) \
 	$(CESARPLAYER_DLL) \
-	$(DB4OBJECTS_DB4O_DLL) \
-	$(CESARPLAYER_EXE) \
-	$(CESARPLAYER_EXE_MDB) \
-	$(LGMLOGO_PNG)  
+	$(DB4OBJECTS_DB4O_DLL) 
+	
+	  
 
 PROGRAMFILES_IMAGES = \
-	$(BACKGROUND_PNG)  
+	$(BACKGROUND_PNG) \
+	$(LGMLOGO_PNG)  
 
 LINUX_DESKTOPAPPLICATIONS = \
 	$(LONGOMATCH_DESKTOP)  
@@ -142,8 +118,8 @@ FILES = \
 DATA_FILES = \
 	app.desktop \
 	Db4objects.Db4o.dll \
-	lgmlogo.png \
-	background.png 
+	images/lgmlogo.png \
+	images/background.png 
 
 RESOURCES = \
 	gtk-gui/objects.xml \
@@ -172,7 +148,7 @@ LONGOMATCH = $(BUILD_DIR)/longomatch
 DB4OBJECTS_DB4O_DLL = $(BUILD_DIR)/Db4objects.Db4o.dll
 LONGOMATCH_DESKTOP = $(BUILD_DIR)/longomatch.desktop
 BACKGROUND_PNG = $(BUILD_DIR)/images/background.png
-LGMLOGO_PNG = $(BUILD_DIR)/lgmlogo.png
+LGMLOGO_PNG = $(BUILD_DIR)/images/lgmlogo.png
 
 $(eval $(call emit-deploy-target,DIRECTSHOWLIB_2005_DLL))
 $(eval $(call emit-deploy-target,CESARPLAYER_DLL))

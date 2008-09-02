@@ -49,7 +49,7 @@ namespace LongoMatch
 			this.Build();
 			this.eManager = new EventsManager(this.treewidget1,this.buttonswidget1,this.playlistwidget2,
 			                                  this.playerbin1,this.timelinewidget1,this.progressbar1);
-			playerbin1.SetLogo("background.png");
+			playerbin1.SetLogo(System.IO.Path.Combine(MainClass.ImagesDir(),"background.png"));
 
 			playerbin1.LogoMode = true;
 			this.playlistwidget2.SetPlayer(playerbin1);

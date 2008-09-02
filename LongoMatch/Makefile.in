@@ -190,55 +190,32 @@ EXTRA_DIST = $(build_sources) $(build_resx_files) \
 	$(DATA_FILES) $(build_culture_res_files)
 
 # Warning: This is an automatically generated file, do not edit!
-@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
-@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
-@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4 -optimize+ -debug -define:DEBUG "-main:LongoMatch.MainClass"
-@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4 -optimize+ "-main:LongoMatch.MainClass"
-@ENABLE_DEBUG_TRUE@ASSEMBLY = bin/Debug/LongoMatch.exe
-@ENABLE_RELEASE_TRUE@ASSEMBLY = bin/Release/LongoMatch.exe
-@ENABLE_DEBUG_TRUE@ASSEMBLY_MDB = $(ASSEMBLY).mdb
-@ENABLE_RELEASE_TRUE@ASSEMBLY_MDB = 
-@ENABLE_DEBUG_TRUE@COMPILE_TARGET = winexe
-@ENABLE_RELEASE_TRUE@COMPILE_TARGET = winexe
-@ENABLE_DEBUG_TRUE@PROJECT_REFERENCES = \
-@ENABLE_DEBUG_TRUE@	../CesarPlayer/bin/Debug/CesarPlayer.exe
+ASSEMBLY_COMPILER_COMMAND = gmcs
+ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4 -optimize+ "-main:LongoMatch.MainClass"
+ASSEMBLY = bin/Release/LongoMatch.exe
+ASSEMBLY_MDB = 
+COMPILE_TARGET = winexe
+PROJECT_REFERENCES = \
+	../CesarPlayer/bin/Release/CesarPlayer.dll
 
-@ENABLE_RELEASE_TRUE@PROJECT_REFERENCES = \
-@ENABLE_RELEASE_TRUE@	../CesarPlayer/bin/Release/CesarPlayer.dll
-
-@ENABLE_DEBUG_TRUE@BUILD_DIR = bin/Debug
-@ENABLE_RELEASE_TRUE@BUILD_DIR = bin/Release
-@ENABLE_DEBUG_TRUE@DIRECTSHOWLIB_2005_DLL_SOURCE = ../CesarPlayer/DirectShowLib-2005.dll
-@ENABLE_RELEASE_TRUE@DIRECTSHOWLIB_2005_DLL_SOURCE = ../CesarPlayer/DirectShowLib-2005.dll
-@ENABLE_DEBUG_TRUE@CESARPLAYER_DLL = 
-@ENABLE_RELEASE_TRUE@CESARPLAYER_DLL = $(BUILD_DIR)/CesarPlayer.dll
-@ENABLE_DEBUG_TRUE@DB4OBJECTS_DB4O_DLL_SOURCE = Db4objects.Db4o.dll
-@ENABLE_RELEASE_TRUE@DB4OBJECTS_DB4O_DLL_SOURCE = Db4objects.Db4o.dll
-@ENABLE_DEBUG_TRUE@LONGOMATCH_DESKTOP_SOURCE = app.desktop
-@ENABLE_RELEASE_TRUE@LONGOMATCH_DESKTOP_SOURCE = app.desktop
-@ENABLE_DEBUG_TRUE@CESARPLAYER_EXE_SOURCE = ../CesarPlayer/bin/Debug/CesarPlayer.exe
-@ENABLE_DEBUG_TRUE@CESARPLAYER_EXE = $(BUILD_DIR)/CesarPlayer.exe
-@ENABLE_RELEASE_TRUE@CESARPLAYER_EXE = 
-@ENABLE_DEBUG_TRUE@BACKGROUND_PNG_SOURCE = background.png
-@ENABLE_RELEASE_TRUE@BACKGROUND_PNG_SOURCE = background.png
-@ENABLE_DEBUG_TRUE@CESARPLAYER_EXE_MDB_SOURCE = ../CesarPlayer/bin/Debug/CesarPlayer.exe.mdb
-@ENABLE_DEBUG_TRUE@CESARPLAYER_EXE_MDB = $(BUILD_DIR)/CesarPlayer.exe.mdb
-@ENABLE_RELEASE_TRUE@CESARPLAYER_EXE_MDB = 
-@ENABLE_DEBUG_TRUE@LGMLOGO_PNG_SOURCE = lgmlogo.png
-@ENABLE_RELEASE_TRUE@LGMLOGO_PNG_SOURCE = lgmlogo.png
-@ENABLE_RELEASE_TRUE@CESARPLAYER_DLL_SOURCE = ../CesarPlayer/bin/Release/CesarPlayer.dll
+BUILD_DIR = bin/Release
+DIRECTSHOWLIB_2005_DLL_SOURCE = ../CesarPlayer/DirectShowLib-2005.dll
+CESARPLAYER_DLL_SOURCE = ../CesarPlayer/bin/Release/CesarPlayer.dll
+CESARPLAYER_DLL = $(BUILD_DIR)/CesarPlayer.dll
+DB4OBJECTS_DB4O_DLL_SOURCE = Db4objects.Db4o.dll
+LONGOMATCH_DESKTOP_SOURCE = app.desktop
+BACKGROUND_PNG_SOURCE = images/background.png
+LGMLOGO_PNG_SOURCE = images/lgmlogo.png
 AL = al2
 SATELLITE_ASSEMBLY_NAME = .resources.dll
 PROGRAMFILES = \
 	$(DIRECTSHOWLIB_2005_DLL) \
 	$(CESARPLAYER_DLL) \
-	$(DB4OBJECTS_DB4O_DLL) \
-	$(CESARPLAYER_EXE) \
-	$(CESARPLAYER_EXE_MDB) \
-	$(LGMLOGO_PNG)  
+	$(DB4OBJECTS_DB4O_DLL) 
 
 PROGRAMFILES_IMAGES = \
-	$(BACKGROUND_PNG)  
+	$(BACKGROUND_PNG) \
+	$(LGMLOGO_PNG)  
 
 LINUX_DESKTOPAPPLICATIONS = \
 	$(LONGOMATCH_DESKTOP)  
@@ -313,8 +290,8 @@ FILES = \
 DATA_FILES = \
 	app.desktop \
 	Db4objects.Db4o.dll \
-	lgmlogo.png \
-	background.png 
+	images/lgmlogo.png \
+	images/background.png 
 
 RESOURCES = \
 	gtk-gui/objects.xml \
@@ -391,7 +368,7 @@ LONGOMATCH = $(BUILD_DIR)/longomatch
 DB4OBJECTS_DB4O_DLL = $(BUILD_DIR)/Db4objects.Db4o.dll
 LONGOMATCH_DESKTOP = $(BUILD_DIR)/longomatch.desktop
 BACKGROUND_PNG = $(BUILD_DIR)/images/background.png
-LGMLOGO_PNG = $(BUILD_DIR)/lgmlogo.png
+LGMLOGO_PNG = $(BUILD_DIR)/images/lgmlogo.png
 all: all-am
 
 .SUFFIXES:

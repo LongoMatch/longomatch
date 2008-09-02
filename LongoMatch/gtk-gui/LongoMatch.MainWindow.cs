@@ -159,7 +159,6 @@ namespace LongoMatch {
             this.AddAccelGroup(w1.AccelGroup);
             this.Name = "LongoMatch.MainWindow";
             this.Title = Mono.Unix.Catalog.GetString("LongoMatch");
-            this.Icon = new Gdk.Pixbuf(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "./lgmlogo.png"));
             this.WindowPosition = ((Gtk.WindowPosition)(3));
             this.Gravity = ((Gdk.Gravity)(5));
             // Container child LongoMatch.MainWindow.Gtk.Container+ContainerChild

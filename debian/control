@@ -8,5 +8,10 @@ Standards-Version: 3.7.2
 Package: longomatch
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, mono-runtime
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Description: LongoMatch:The Digital Coach
+ LongoMatch is a sports video analyze tool for coaches 
+ and trainers to assist them  on making live video reports
+ from a match. It creates a database with the most    
+ important plays of a game, grouped by categories, to easily
+ access them and to create play lists and new videos from the
+ selected plays. 
