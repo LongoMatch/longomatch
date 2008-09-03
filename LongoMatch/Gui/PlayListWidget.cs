@@ -281,6 +281,8 @@ namespace LongoMatch.Gui.Component
 					videoEditor.PlayList = this.playList;
 					this.videoEditor.OutputFile = fChooser.Filename;
 					videoEditor.Start();
+					this.closebutton.Show();
+					this.newvideobutton.Hide();
 					break;					
 				}
 			}
@@ -297,6 +299,10 @@ namespace LongoMatch.Gui.Component
 		}
 
 		protected virtual void OnProgress (float progress){
+			if (progress ==1){
+				this.closebutton.Hide();
+				this.newvideobutton.Show();
+			}
 			if (this.Progress!= null)
 				this.Progress(progress);
 		}

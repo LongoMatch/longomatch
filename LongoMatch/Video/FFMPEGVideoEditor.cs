@@ -151,7 +151,6 @@ namespace LongoMatch.Video.Editor
 			
 			pinfo.Arguments = "-oac " + saq+ " -ovc "+ svq + " " + list +" -o \"" + System.IO.Path.Combine (MainClass.VideosDir(),this.OutputFile)+"\"";
 			pinfo.CreateNoWindow = true;
-			pinfo.RedirectStandardOutput=true;
 			pinfo.UseShellExecute = false;
 			process.StartInfo = pinfo;
 			Console.WriteLine(pinfo.Arguments);
@@ -169,13 +168,12 @@ namespace LongoMatch.Video.Editor
 			if (o is PlayList){
 				PlayList playList = (PlayList)o;
 				process = new Process();
-				foreach (PlayListTimeNode plNode in playList){				
-					
+				foreach (PlayListTimeNode plNode in playList){						
 					this.SplitVideo(plNode,i);
 					if (this.Progress != null)
 						this.Progress ( (((float)i+1)*2-1)/steps);
 					// HACK to rebuild the index of the splitted video.				
-					this.FixSplitedVideo(i);					
+					this.FixSplitedVideo(plNode,i);					
 					if (this.Progress != null)
 						this.Progress ( ((float)i+1)*2/steps);
 					i++;
@@ -204,15 +202,15 @@ namespace LongoMatch.Video.Editor
 			process.WaitForExit();			
 		}
 		
-		private void FixSplitedVideo(int i){
+		private void FixSplitedVideo(PlayListTimeNode plNode,int i){
 			
 			ProcessStartInfo pinfo = new ProcessStartInfo();
 			if (System.Environment.OSVersion.Platform != PlatformID.Unix)
-				pinfo.FileName=System.IO.Path.Combine (System.AppDomain.CurrentDomain.BaseDirectory,"ffmpeg.exe");
+				pinfo.FileName=System.IO.Path.Combine (System.AppDomain.CurrentDomain.BaseDirectory,"mencoder.exe");
 			else 
-				pinfo.FileName="ffmpeg";
-			pinfo.Arguments = "-i \"" + System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i) 
-				+ "\" -vcodec  copy -acodec copy -y \""
+				pinfo.FileName="mencoder";
+			pinfo.Arguments = "\""+System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i) 
+				+ "\" -oac  copy -ovc copy -ss "+plNode.Start.ToMSecondsString() +" -o \""
 					+ System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i+".avi")+"\"";		
 			pinfo.CreateNoWindow = true;
 			pinfo.UseShellExecute = false;
