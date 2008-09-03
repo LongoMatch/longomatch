@@ -405,12 +405,13 @@ gst_video_capturer_new (GvcUseType use_type, gchar **error )
 	gvc->priv->input_file = "/dev/null";
 	gvc->priv->output_file = "/dev/null";
 	
-	gvc->priv->display_height= 576;
+	/*Handled by Properties?*/
+	/*gvc->priv->display_height= 576;
 	gvc->priv->display_width= 720;
 	gvc->priv->encode_height= 576;
 	gvc->priv->encode_width= 720;
 	gvc->priv->audio_bitrate= 128;
-	gvc->priv->video_bitrate= 5000000;
+	gvc->priv->video_bitrate= 5000000;*/
 	
 	gvc->priv->use_type = use_type;
 	
@@ -429,6 +430,7 @@ gst_video_capturer_new (GvcUseType use_type, gchar **error )
   	}
   	
   	/* Setup*/
+  	GST_INFO("Initializing decodebin");
   	source = gst_element_factory_make ("dv1394src", "dvsource");  	
   	g_object_set (source,"use-avc", FALSE,NULL);
   	gvc->priv->decode_bin = gst_element_factory_make ("decodebin", "decoder");  	
@@ -438,6 +440,7 @@ gst_video_capturer_new (GvcUseType use_type, gchar **error )
   	gst_element_link(GST_ELEMENT(source),gvc->priv->decode_bin);
   	
   	
+  	GST_INFO("Initializing audiobin");
   	 /* create audio output */  	 
   	gvc->priv->audio_bin = gst_bin_new ("audiobin");
   	conv = gst_element_factory_make ("audioconvert", "aconv");
@@ -453,6 +456,7 @@ gst_video_capturer_new (GvcUseType use_type, gchar **error )
   	gst_bin_add (GST_BIN (gvc->priv->main_pipeline), gvc->priv->audio_bin);
 
 
+	GST_INFO("Initializing videobin");
 	/*Create video output*/
 	gvc->priv->video_bin= gst_bin_new ("videobin");
   	deinterlacer = gst_element_factory_make ("ffdeinterlace", "deinterlace");
@@ -481,6 +485,7 @@ gst_video_capturer_new (GvcUseType use_type, gchar **error )
 	
 	
 	/*Connect bus signals*/
+	GST_INFO("Initializing signals bus");
   	gvc->priv->bus = gst_element_get_bus (GST_ELEMENT(gvc->priv->main_pipeline));
   
   	gst_bus_add_signal_watch (gvc->priv->bus);	
@@ -520,31 +525,34 @@ void gst_video_encoder_set_encoder(GstVideoCapturer *gvc)
 	g_return_if_fail (GST_IS_VIDEO_CAPTURER(gvc));
 	
 	/*Create encodebin*/
-	gvc->priv->vencode_bin= gst_bin_new ("encodebin");
-  	queue = gst_element_factory_make ("queue", "encodequeue");
-  	encodepad = gst_element_get_pad (queue, "sink");
-  	videoscale = gst_element_factory_make ("videoscale", "videoscale");
-  	videofilter = gst_element_factory_make ("capsfilter", "filterscale");
-  	g_object_set (G_OBJECT(videofilter), "caps",gst_caps_new_simple ("audio/x-raw-yuv",
-      "width", G_TYPE_INT, gvc->priv->encode_width, NULL),NULL);
-    encoder= gst_element_factory_make ("xvidenc", "xvidencoder");
-    g_object_set (G_OBJECT(encoder), "bitrate",gvc->priv->video_bitrate,NULL);
-    muxer = gst_element_factory_make("avimux","muxer");
-  	filesink = gst_element_factory_make ("filesink", "filesink");
-  	g_object_set (G_OBJECT(filesink), "location",gvc->priv->output_file,NULL);
+	if (gvc->priv->vencode_bin != null){
+		GST_INFO("Initializing encoder");
+		gvc->priv->vencode_bin= gst_bin_new ("encodebin");
+  		queue = gst_element_factory_make ("queue", "encodequeue");
+  		encodepad = gst_element_get_pad (queue, "sink");
+  		videoscale = gst_element_factory_make ("videoscale", "videoscale");
+  		videofilter = gst_element_factory_make ("capsfilter", "filterscale");
+  		g_object_set (G_OBJECT(videofilter), "caps",gst_caps_new_simple ("audio/x-raw-yuv",
+      	"width", G_TYPE_INT, gvc->priv->encode_width, NULL),NULL);
+    	encoder= gst_element_factory_make ("xvidenc", "xvidencoder");
+    	g_object_set (G_OBJECT(encoder), "bitrate",gvc->priv->video_bitrate,NULL);
+    	muxer = gst_element_factory_make("avimux","muxer");
+  		filesink = gst_element_factory_make ("filesink", "filesink");
+  		g_object_set (G_OBJECT(filesink), "location",gvc->priv->output_file,NULL);
 
-  	gst_bin_add_many (GST_BIN(gvc->priv->vencode_bin), queue, videoscale , videofilter,
+  		gst_bin_add_many (GST_BIN(gvc->priv->vencode_bin), queue, videoscale , videofilter,
   		encoder, filesink, NULL);  	
-  	gst_element_link_many (  queue, videoscale , videofilter,encoder, filesink,NULL);
-  	gst_element_add_pad (gvc->priv->vencode_bin,
+  		gst_element_link_many (  queue, videoscale , videofilter,encoder, filesink,NULL);
+  		gst_element_add_pad (gvc->priv->vencode_bin,
       	gst_ghost_pad_new ("sink", GST_PAD(encodepad)));
-  	gst_object_unref (encoder);
-  	gst_object_unref (encodepad);
-  	gst_object_unref (muxer);
-  	gst_object_unref (queue);
-  	gst_object_unref (videoscale);
-  	gst_object_unref (videofilter);
-  	gst_object_unref (filesink);
+  		gst_object_unref (encoder);
+  		gst_object_unref (encodepad);
+  		gst_object_unref (muxer);
+  		gst_object_unref (queue);
+  		gst_object_unref (videoscale);
+  		gst_object_unref (videofilter);
+  		gst_object_unref (filesink);
+ 	}
   	
 	
 }
@@ -580,6 +588,8 @@ static void new_decoded_pad_cb (GstElement* object,
     	g_object_unref (gvc);
     	return;
   	}
+  	
+  	GST_INFO("Linking Audio Pad");
   	/* link 'n play*/
   	gst_pad_link (pad, audiopad);
   	g_object_unref (audiopad);
@@ -596,6 +606,7 @@ static void new_decoded_pad_cb (GstElement* object,
     	return;
   	}
   	/* link 'n play*/
+  	GST_INFO("Linking Video Pad");
   	gst_pad_link (pad, videopad);
   	g_object_unref (videopad);
   	gst_caps_unref (caps);

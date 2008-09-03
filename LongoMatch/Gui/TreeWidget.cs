@@ -45,23 +45,29 @@ namespace LongoMatch.Gui.Component
 			this.Build();		                   
 		}
 		
-		/*public void AddTimeNode(MediaTimeNode tNode, int i){
+		public void AddTimeNode(MediaTimeNode tNode, int i){
 			if (project != null){
 				TreeIter iter;
-				TreeStore model = (TreeStore)treeview.Model;				
-				model.GetIterFromString (out iter, i.ToString());
-				model.AppendValues (iter,tNode);
+				TreeStore model = (TreeStore)treeview.Model;
+				// Seeking the SectionTimeNode position in the tree
+				// For some  configuration not all 
+				// the sections are shown, eg: the 2nd may not be
+				// at the 2nd row in the tree, it can be at the 1st
+				// row if the 1st is hidden
+				for (int j=0; j<19;j++){					
+					model.GetIterFromString (out iter, j.ToString());
+					TimeNode stNode = (TimeNode)model.GetValue (iter,0);
+					if (project.Sections.GetTimeNode(i) == stNode){				
+						model.AppendValues (iter,tNode);
+						break;
+					}
+				}
 			}
 			
 		
-		}*/
-		
-		public void Update(){
-			treeview.Model = this.project.GetModel();
 		}
-
-	
-	
+		
+			
 		public Project Project{
 			set{ 
 				this.project = value;
@@ -70,13 +76,6 @@ namespace LongoMatch.Gui.Component
 			}
 			
 		}
-		
-		
-		
-	
-
-	
-		
 
 		protected virtual void OnTimeNodeChanged(TimeNode tNode,object val){
 			this.TimeNodeChanged(tNode,val);

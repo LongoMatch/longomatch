@@ -63,6 +63,11 @@ namespace LongoMatch.Gui.Component
 			Gtk.CellRendererPixbuf miniatureCell = new Gtk.CellRendererPixbuf ();
 			nameColumn.PackStart (miniatureCell, true);
 			nameColumn.PackEnd (nameCell, true);
+			
+			Gtk.TreeViewColumn teamColumn = new Gtk.TreeViewColumn ();
+			teamColumn.Title = "Team";
+			Gtk.CellRendererText teamCell = new Gtk.CellRendererText ();
+			teamColumn.PackStart (teamCell, true);
  
 			Gtk.TreeViewColumn startTimeColumn = new Gtk.TreeViewColumn ();
 			startTimeColumn.Title = "Start";
@@ -76,11 +81,13 @@ namespace LongoMatch.Gui.Component
 
 			nameColumn.SetCellDataFunc (miniatureCell, new Gtk.TreeCellDataFunc(RenderMiniature));
 			nameColumn.SetCellDataFunc (nameCell, new Gtk.TreeCellDataFunc (RenderName));
+			teamColumn.SetCellDataFunc(teamCell, new Gtk.TreeCellDataFunc(RenderTeam));
 			startTimeColumn.SetCellDataFunc (startTimeCell, new Gtk.TreeCellDataFunc (RenderStartTime));
 			stopTimeColumn.SetCellDataFunc (stopTimeCell, new Gtk.TreeCellDataFunc (RenderStopTime));
 			
 			
 			this.AppendColumn (nameColumn);
+			this.AppendColumn(teamColumn);
 			this.AppendColumn (startTimeColumn);
 			this.AppendColumn (stopTimeColumn);
 		
@@ -187,6 +194,33 @@ namespace LongoMatch.Gui.Component
 				(cell as Gtk.CellRendererPixbuf).Pixbuf = null;
 				(cell as Gtk.CellRendererPixbuf).CellBackground = "white";
 			}
+		}
+		
+		private void RenderTeam (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
+		{
+			TimeNode tNode = (TimeNode) model.GetValue (iter, 0);
+			
+ 
+			/*if (song.Artist.StartsWith ("X") == true) {
+				(cell as Gtk.CellRendererText).Foreground = "red";
+			} else {
+				(cell as Gtk.CellRendererText).Foreground = "darkgreen";
+			}*/
+ 
+			(cell as Gtk.CellRendererText).Text = tNode.Name;
+			
+			if (tNode is MediaTimeNode){
+				(cell as Gtk.CellRendererText).Text =((MediaTimeNode)tNode).Team.ToString().ToLowerInvariant();
+				(cell as Gtk.CellRendererText).BackgroundGdk = colors[((MediaTimeNode)tNode).DataSection];
+				(cell as Gtk.CellRendererText).CellBackgroundGdk = colors[((MediaTimeNode)tNode).DataSection];
+				
+			}
+			else {
+				(cell as Gtk.CellRendererText).Text = "";
+				(cell as Gtk.CellRendererText).Background = "white";
+				(cell as Gtk.CellRendererText).CellBackground = "white";
+			}
+			
 		}
 		
 		private void RenderName (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)

@@ -306,19 +306,21 @@ namespace LongoMatch.Gui.Component
 		}
 
 		protected virtual void OnProgress (float progress){
+			if (this.Progress!= null)
+				this.Progress(progress);
+			
 			if (progress ==1){
 				this.closebutton.Hide();
 				this.newvideobutton.Show();
 				MessageDialog info = new MessageDialog(null,
-				                                       DialogFlags.DestroyWithParent,
+				                                       DialogFlags.Modal,
 				                                        MessageType.Info,
 				                                        ButtonsType.Ok,
 				                                       Catalog.GetString("Video Edition finished."));
 				info.Run();
 				info.Destroy();
 			}
-			if (this.Progress!= null)
-				this.Progress(progress);
+			
 		}
 		
 		~PlayListWidget(){

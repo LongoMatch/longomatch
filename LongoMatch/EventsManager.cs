@@ -100,8 +100,8 @@ namespace LongoMatch
 				Time fStop = (stop > length) ? length: stop;
 				Pixbuf miniature = this.player.CurrentFrame;
 				MediaTimeNode tn = openedProject.AddTimeNode(section,fStart, fStop,miniature);				
-				//treewidget.AddTimeNode(tn,i);
-				treewidget.Update();
+				treewidget.AddTimeNode(tn,section);
+				//treewidget.Update();
 				this.timeline.QueueDraw();
 			}
 		}
