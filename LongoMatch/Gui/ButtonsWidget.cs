@@ -27,10 +27,6 @@ using System.Collections.Generic;
 namespace LongoMatch.Gui.Component
 {
 	
-
-	
-	//FIXME Make non-sensitive non visible buttons
-	
 	public partial class ButtonsWidget : Gtk.Bin
 	{
 				

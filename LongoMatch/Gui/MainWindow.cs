@@ -230,10 +230,12 @@ namespace LongoMatch
 
 		protected virtual void OnDeleteEvent (object o, Gtk.DeleteEventArgs args)
 		{
+			this.playlistwidget2.StopEdition();
 			this.SaveDB();
 			// We never know...
 			System.Threading.Thread.Sleep(1000);
 			this.playerbin1.Dispose();
+			
 			Application.Quit();
 					
 		}
@@ -241,7 +243,7 @@ namespace LongoMatch
 
 		protected virtual void OnQuitActivated (object sender, System.EventArgs e)
 		{
-
+			this.playlistwidget2.StopEdition();
 			this.SaveDB();
 			// We never know...
 			System.Threading.Thread.Sleep(1000);

@@ -118,14 +118,7 @@ namespace LongoMatch
 			}
 			
 			else if (progress == 1) {
-				this.progressbar.Hide();
-				MessageDialog info = new MessageDialog(null,
-				                                       DialogFlags.DestroyWithParent,
-				                                        MessageType.Info,
-				                                        ButtonsType.Ok,
-				                                        "The video edition is finished ");
-				info.Run();
-				info.Destroy();
+				this.progressbar.Hide();			
 				
 			}
 			

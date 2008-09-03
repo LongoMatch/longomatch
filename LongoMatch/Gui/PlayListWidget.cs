@@ -121,9 +121,16 @@ namespace LongoMatch.Gui.Component
 				this.player.SeekTo(plNode.Start.MSeconds,true);							
 		}
 		
+		public void StopEdition(){
+			if (this.videoEditor != null)
+				this.videoEditor.Cancel();
+		}
+		
 		public void Stop(){
 			this.StopClock();
 		}		
+		
+		
 		
 		private void StartClock ()
 		{
@@ -302,6 +309,13 @@ namespace LongoMatch.Gui.Component
 			if (progress ==1){
 				this.closebutton.Hide();
 				this.newvideobutton.Show();
+				MessageDialog info = new MessageDialog(null,
+				                                       DialogFlags.DestroyWithParent,
+				                                        MessageType.Info,
+				                                        ButtonsType.Ok,
+				                                       Catalog.GetString("Video Edition finished."));
+				info.Run();
+				info.Destroy();
 			}
 			if (this.Progress!= null)
 				this.Progress(progress);
