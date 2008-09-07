@@ -1,8 +1,8 @@
 <Project name="libcesarplayer" fileversion="2.0" Description="Gstreamer backend libraries for LongoMatch" language="C" ctype="CProject">
-  <Configurations active="Release">
-    <Configuration name="Debug" ctype="CProjectConfiguration">
+  <Configurations active="Debug">
+    <Configuration name="Debug" SourceDirectory="." ctype="CProjectConfiguration">
       <Output directory="bin/Debug" output="testtt" />
-      <Build debugmode="True" target="SharedLibrary" />
+      <Build debugmode="True" target="Bin" />
       <Execution runwithwarnings="True" consolepause="True" />
       <CodeGeneration WarningLevel="Normal" WarningsAsErrors="False" OptimizationLevel="0" ExtraCompilerArguments="" ExtraLinkerArguments="" DefineSymbols="DEBUG MONODEVELOP" ctype="CCompilationParameters" />
     </Configuration>
@@ -33,6 +33,7 @@
     <File name="Makefile.am" subtype="Code" buildaction="Nothing" />
     <File name="NEWS" subtype="Code" buildaction="Nothing" />
     <File name="README" subtype="Code" buildaction="Nothing" />
+    <File name="src/main.c" subtype="Code" buildaction="Compile" />
   </Contents>
   <compiler ctype="GccCompiler" />
   <Packages>
