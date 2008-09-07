@@ -28,8 +28,7 @@ using LongoMatch.Video.Player;
 using LongoMatch.Video.Utils;
 namespace LongoMatch.Gui
 {
-	
-	
+		
 	public partial class PlayerBin : Gtk.Bin
 	{
 		
