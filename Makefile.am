@@ -1,10 +1,23 @@
+## Process this file with automake to produce Makefile.in
+## Created by Anjuta
 
-EXTRA_DIST =  expansions.m4 LongoMatch/Db4objects.Db4o.dll CesarPlayer/DirectShowLib-2005.dll
+SUBDIRS = src
 
-#Warning: This is an automatically generated file, do not edit!
-if ENABLE_DEBUG
- SUBDIRS =  .  Translations libcesarplayer CesarPlayer .  LongoMatch
-endif
-if ENABLE_RELEASE
- SUBDIRS =  .  Translations libcesarplayer CesarPlayer  .  LongoMatch
-endif
+cesarplayerdocdir = ${prefix}/doc/cesarplayer
+cesarplayerdoc_DATA = \
+	README\
+	COPYING\
+	AUTHORS\
+	ChangeLog\
+	INSTALL\
+	NEWS
+
+
+# Copy all the spec files. Of cource, only one is actually used.
+dist-hook:
+	for specfile in *.spec; do \
+		if test -f $$specfile; then \
+			cp -p $$specfile $(distdir); \
+		fi \
+	done
+
