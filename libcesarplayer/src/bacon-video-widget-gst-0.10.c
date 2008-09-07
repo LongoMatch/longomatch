@@ -3,6 +3,7 @@
  *      Julien Moutte <julien@moutte.net>
  *      Ronald Bultje <rbultje@ronald.bitfreak.net>
  *      Tim-Philipp Müller <tim centricular net>
+ * Copyright (C) 2008  Andoni Morales Alastruey <ylatuya@gmail.com> 
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

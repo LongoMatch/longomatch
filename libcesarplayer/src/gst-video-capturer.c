@@ -525,7 +525,7 @@ void gst_video_encoder_set_encoder(GstVideoCapturer *gvc)
 	g_return_if_fail (GST_IS_VIDEO_CAPTURER(gvc));
 	
 	/*Create encodebin*/
-	if (gvc->priv->vencode_bin != null){
+	if (gvc->priv->vencode_bin != NULL){
 		GST_INFO("Initializing encoder");
 		gvc->priv->vencode_bin= gst_bin_new ("encodebin");
   		queue = gst_element_factory_make ("queue", "encodequeue");
