@@ -26,6 +26,7 @@ using LongoMatch.Video.Handlers;
 using LongoMatch.Handlers;
 using LongoMatch.Video.Player;
 using LongoMatch.Video.Utils;
+using LongoMatch.Video;
 namespace LongoMatch.Gui
 {
 		
@@ -266,8 +267,8 @@ using LongoMatch.Video.Utils;
 			float currentposition = args.CurrentPosition;
 			bool seekable = args.Seekable;
 			
-			//Console.WriteLine ("Current Time:{0}\nCurrent Pos:{1}\nStream Length:{2}\n",currentTime,position, streamLength);
-			if (this.length != streamLength){				
+			Console.WriteLine ("Current Time:{0}\n Length:{1}\n",currentTime, streamLength);
+	        if (this.length != streamLength){				
 				this.length = streamLength;
 				this.slength = TimeString.MSecondsToSecondsString(length);
 			}
