@@ -1219,7 +1219,7 @@ namespace LongoMatch.Video.Player {
 
 		static GstPlayer ()
 		{
-			GtkSharp.FooSharp.ObjectManager.Initialize ();
+			LongoMatch.GtkSharp.Video.ObjectManager.Initialize ();
 		}
 #endregion
 	}

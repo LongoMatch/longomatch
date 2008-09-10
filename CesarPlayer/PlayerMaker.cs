@@ -19,8 +19,10 @@
 //
 
 using System;
+using LongoMatch.Video.Capturer;
+using LongoMatch.Video.Player;
 
-namespace LongoMatch.Video.Player
+namespace LongoMatch.Video
 {
 	
 	
@@ -67,6 +69,21 @@ namespace LongoMatch.Video.Player
 			 default:
 				return new GstPlayer(1,1,UseType.Metadata);
 			}
+		}
+		
+		public ICapturer getCapturer(){
+			switch (oS.Platform) { 
+				
+			 case PlatformID.Unix:
+				return new GstVideoCapturer(GvcUseType.DeviceCapture);
+				
+			case PlatformID.Win32NT:
+				return new GstVideoCapturer(GvcUseType.DeviceCapture);	
+				
+			 default:
+				return new GstVideoCapturer(GvcUseType.DeviceCapture);
+			}
+			
 		}
 	}
 }
