@@ -37,7 +37,7 @@ G_BEGIN_DECLS
 #define GST_IS_VIDEO_CAPTURER(obj)          (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GST_TYPE_VIDEO_CAPTURER))
 #define GST_IS_VIDEO_CAPTURER_CLASS(klass)  (G_TYPE_CHECK_CLASS_TYPE ((klass), GST_TYPE_VIDEO_CAPTURER))
 #define GST_VIDEO_CAPTURER_GET_CLASS(obj)   (G_TYPE_INSTANCE_GET_CLASS ((obj), GST_TYPE_VIDEO_CAPTURER, GstVideoCapturerClass))
-#define GVC_ERROR bacon_video_widget_error_quark ()
+#define GVC_ERROR gst_video_capturer_error_quark ()
 
 typedef struct _GstVideoCapturerClass GstVideoCapturerClass;
 typedef struct _GstVideoCapturer GstVideoCapturer;
@@ -115,9 +115,11 @@ typedef enum{
 GType gst_video_capturer_get_type (void) G_GNUC_CONST;
 
 void gst_video_capturer_init_backend (int *argc, char ***argv);
-GstVideoCapturer * gst_video_capturer_new (GvcUseType use_type, gchar *source,gchar *output_file,GError ** err );
+GstVideoCapturer * gst_video_capturer_new (GvcUseType use_type,GError ** err );
 void gst_video_capturer_set_encoder(GstVideoCapturer *gvc);
 void gst_video_capturer_rec(GstVideoCapturer *gvc);
+void gst_video_capturer_pause(GstVideoCapturer *gvc);
+void gst_video_capturer_stop(GstVideoCapturer *gvc);
 
 G_END_DECLS
 

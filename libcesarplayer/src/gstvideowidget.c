@@ -759,13 +759,14 @@ gst_video_widget_set_source_size (GstVideoWidget * vw, guint width,
 {
   g_return_val_if_fail (vw != NULL, FALSE);
   g_return_val_if_fail (GST_IS_VIDEO_WIDGET (vw), FALSE);
-
+  
+  
   if (vw->priv->source_width != width || vw->priv->source_height != height) {
     vw->priv->source_width = width;
     vw->priv->source_height = height;
     gtk_widget_queue_resize (GTK_WIDGET (vw));
   }
-
+ 
   return TRUE;
 }
 

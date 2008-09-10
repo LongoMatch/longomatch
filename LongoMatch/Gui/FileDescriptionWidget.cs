@@ -28,9 +28,15 @@ using LongoMatch.Gui.Popup;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.TimeNodes;
 
+
 namespace LongoMatch.Gui.Component
 {
 
+	public enum UseType{
+		NewCaptureProject,
+		NewFromFileProject,
+		EditProject,		
+	}
 	//añadir eventos de cambios para realizar el cambio directamente sobre el file data abierto
 	public partial class FileDescriptionWidget : Gtk.Bin
 	{
@@ -39,10 +45,16 @@ namespace LongoMatch.Gui.Component
 		private Project project;
 		private MediaFile mFile;
 		private CalendarPopup cp;
+		private Sections actualSection;
+		private UseType useType;
 		
 		
 		public FileDescriptionWidget()
 		{
+			string[] allFiles;
+			int i=0;
+			int index = 0;
+				
 			this.Build();
 			cp = new CalendarPopup();			
 			cp.Hide();
@@ -50,12 +62,38 @@ namespace LongoMatch.Gui.Component
 			cp.DateSelectedEvent += new DateSelectedHandler(OnDateSelected);
 			date = System.DateTime.Today;
 			dateEntry.Text = date.ToString(Catalog.GetString("MM/dd/yyyy"));
-			string[] allFiles = System.IO.Directory.GetFiles(MainClass.TemplatesDir(),"*.sct");
+			allFiles = System.IO.Directory.GetFiles(MainClass.TemplatesDir(),"*.sct");
 			foreach (string filePath in allFiles){
-				combobox1.AppendText(System.IO.Path.GetFileNameWithoutExtension(filePath));
+				string fileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
+				combobox1.AppendText(fileName);
+				//Setting the selceted value to the default template
+				if (fileName == "default")
+					index = i;
+				i++;
 			}
-			combobox1.Active=0;
+			combobox1.Active = index;
+			SectionsReader reader = new SectionsReader(System.IO.Path.Combine(MainClass.TemplatesDir(),this.SectionsFile));			
+			this.Sections= reader.GetSections();
+			this.Use=UseType.NewCaptureProject;
 			
+			
+		}
+		
+		public UseType Use{
+			set{
+				if (value == UseType.NewFromFileProject  || value == UseType.EditProject){					
+					this.label1.Hide();
+					this.bitratespinbutton.Hide();
+				}
+					
+				if (value == UseType.EditProject){				
+					this.combobox1.Visible = false;
+				}
+			}
+			get{
+				return this.useType;
+			}
+				
 		}
 		
 		public string LocalName {
@@ -88,6 +126,11 @@ namespace LongoMatch.Gui.Component
 			set { this.dateEntry.Text = value.ToString(Catalog.GetString("MM/dd/yyyy"));}
 		}
 		
+		public Sections Sections{
+			get {return this.actualSection;}
+			set {this.actualSection = value;}
+		}
+		
 		
 		
 		private string SectionsFile{
@@ -107,13 +150,8 @@ namespace LongoMatch.Gui.Component
 			this.LocalGoals = project.LocalGoals;
 			this.VisitorGoals = project.VisitorGoals;
 			this.Date= project.MatchDate;
+			this.Sections = project.Sections;			
 
-			
-			//Cambiamos el gui
-
-			this.combobox1.Visible = false;
-			this.editbutton.Sensitive = true;
-			
 		}
 		
 		public void UpdateProject(){
@@ -123,18 +161,14 @@ namespace LongoMatch.Gui.Component
 			project.LocalGoals = (int)this.localSpinButton.Value;
 			project.VisitorGoals = (int)this.visitorSpinButton.Value;
 			project.MatchDate = DateTime.Parse(this.dateEntry.Text);
-
-		
+			project.Sections = this.Sections;
 		}
 		
 	
 		
 		public Project GetProject(){
 			if (this.Filename != ""){
-				SectionsReader reader = new SectionsReader(System.IO.Path.Combine(MainClass.TemplatesDir(),this.SectionsFile));
-				Sections sections = reader.GetSections();
-
-				
+								
 				if (project == null){
 					return new Project(this.mFile,
 					                    this.LocalName,
@@ -142,7 +176,7 @@ namespace LongoMatch.Gui.Component
 					                    this.LocalGoals,
 					                    this.VisitorGoals,
 					                    this.Date,
-					                    sections);
+					                    this.Sections);
 				}
 				else {
 					project.File = this.mFile;
@@ -151,10 +185,8 @@ namespace LongoMatch.Gui.Component
 					project.LocalGoals = this.LocalGoals;
 					project.VisitorGoals = this.VisitorGoals;
 					project.MatchDate = this.Date;
-
-					return project;
-					 
-						
+					project.Sections = this.Sections;
+					return project;						
 				}
 				
 			}
@@ -190,7 +222,7 @@ namespace LongoMatch.Gui.Component
 			
 			fChooser.SetCurrentFolder(System.Environment.GetFolderPath(Environment.SpecialFolder.Personal));
 			if (fChooser.Run() == (int)ResponseType.Accept){
-				LongoMatch.Video.Player.PlayerMaker pm = new LongoMatch.Video.Player.PlayerMaker();
+				LongoMatch.Video.PlayerMaker pm = new LongoMatch.Video.PlayerMaker();
 				LongoMatch.Video.Player.IMetadataReader reader = pm.getMetadataReader();
 					try{
 						reader.Open(fChooser.Filename);
@@ -233,10 +265,10 @@ namespace LongoMatch.Gui.Component
 		{
 			
 			TemplateEditorDialog ted = new TemplateEditorDialog();
-			ted.Sections=project.Sections;
+			ted.Sections=this.Sections;
 			
 			if (ted.Run() == (int)ResponseType.Apply){
-				project.Sections = ted.Sections;
+				this.Sections = ted.Sections;
 			}
 			
 			ted.Destroy();

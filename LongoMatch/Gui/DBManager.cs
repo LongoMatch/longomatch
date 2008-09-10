@@ -23,6 +23,7 @@ using System.Collections;
 using Gtk;
 using Mono.Unix;
 using LongoMatch.DB;
+using LongoMatch.Gui.Component;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -37,7 +38,7 @@ namespace LongoMatch.Gui.Dialog
 		{
 			this.Build();
 			this.Fill();
-			
+			this.filedescriptionwidget3.Use = LongoMatch.Gui.Component.UseType.EditProject;
 		}
 		
 		public void Fill(){
@@ -117,10 +118,16 @@ namespace LongoMatch.Gui.Dialog
 			}
 			
 		}
+		
+	
 
-		protected virtual void OnFiledatalistwidget1ProjectSelectedEvent (Project project)
+		protected virtual void OnButtonOkClicked (object sender, System.EventArgs e)
 		{
-			
+			this.Destroy();
+		}
+
+		protected virtual void OnProjectlistwidget1ProjectSelectedEvent (LongoMatch.DB.Project project)
+		{
 			
 				if (MainWindow.OpenedProject()!= null && project.Equals(MainWindow.OpenedProject())) {
 				
@@ -135,13 +142,6 @@ namespace LongoMatch.Gui.Dialog
 					this.saveButton.Sensitive = true;
 					this.deleteButton.Sensitive = true;
 				}
-			
-
-		}
-
-		protected virtual void OnButtonOkClicked (object sender, System.EventArgs e)
-		{
-			this.Destroy();
 		}
 
 		

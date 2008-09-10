@@ -73,6 +73,10 @@ namespace LongoMatch
 					
 					this.Title = System.IO.Path.GetFileNameWithoutExtension(project.File.FilePath) + " - LongoMatch";
 					this.playerbin1.Open(project.File.FilePath);
+					if (project.File.HasVideo)
+						this.playerbin1.LogoMode = true;
+					else 
+						this.playerbin1.LogoMode = false;
 					this.playlistwidget2.Stop();
 					
 					this.treewidget1.Project=project;						

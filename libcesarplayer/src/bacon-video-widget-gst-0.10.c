@@ -892,7 +892,7 @@ gvc_expose_event (GtkWidget *widget, GdkEventExpose *event, gpointer user_data)
 	 //Pass the expose to the widget
 	gst_video_widget_force_expose(widget,event);
 	 
-   if (gvc->priv->xoverlay != NULL && !gvc->priv->logo_mode)
+    if (gvc->priv->xoverlay != NULL && !gvc->priv->logo_mode)
       gst_x_overlay_expose (gvc->priv->xoverlay);
   
 	
@@ -1281,8 +1281,7 @@ got_time_tick (GstElement * play, gint64 time_nanos, BaconVideoWidget * gvc)
   g_return_if_fail (gvc != NULL);
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (gvc));
 
-  if (gvc->priv->logo_mode != FALSE)
-    return;
+ 
 
   gvc->priv->current_time_nanos = time_nanos;
 
@@ -1424,6 +1423,7 @@ parse_stream_info (BaconVideoWidget *gvc)
   gvc->priv->media_has_video = FALSE;
   if (video_streams) {
     gvc->priv->media_has_video = TRUE;
+    gtk_widget_show(GTK_WIDGET(gvc->priv->video_window));
     for (l = video_streams; videopad == NULL && l != NULL; l = l->next) {
       g_object_get (l->data, "object", &videopad, NULL);
 		//Aquí habría que volver a mostrar la ventana
@@ -1434,7 +1434,9 @@ parse_stream_info (BaconVideoWidget *gvc)
   if (audio_streams) {
     gvc->priv->media_has_audio = TRUE;
     if (!gvc->priv->media_has_video && gvc->priv->video_window) {
-      //Aquí habría que ocultar la ventana      
+      //Aquí habría que ocultar la ventana 
+      gtk_widget_hide(GTK_WIDGET(gvc->priv->video_window));
+      
     }
   }
 
