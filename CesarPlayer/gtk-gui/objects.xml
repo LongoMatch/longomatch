@@ -16,7 +16,6 @@
       </itemgroup>
     </signals>
   </object>
-<<<<<<< .mine
   <object type="LongoMatch.Video.Capturer.GstVideoCapturer" palette-category="CesarPlayer" allow-children="false" base-type="Gtk.HBox">
     <itemgroups>
       <itemgroup label="GstVideoCapturer Properties">
@@ -41,10 +40,8 @@
     <itemgroups />
     <signals />
   </object>
-=======
   <object type="longomatch.CapturerBin" palette-category="CesarPlayer" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
   </object>
->>>>>>> .r275
 </objects>

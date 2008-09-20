@@ -32,12 +32,12 @@ static gboolean window_state_event (GtkWidget *widget, GdkEventWindowState *even
 {
 	i++;
 	g_print("%d\n",i);
-	if (i==6){
+	if (i==3){
     	gst_video_capturer_rec(GST_VIDEO_CAPTURER(gvc));
-    	g_print("holahola");
+
    	}
-    if (i==9)
-    	gst_video_capturer_stop(GST_VIDEO_CAPTURER(gvc));
+    if (i==5)
+        gst_video_capturer_stop(GST_VIDEO_CAPTURER(gvc));
     return TRUE;
 }
 

@@ -1,15 +1,15 @@
 <Combine releaseversion="0.1.2" name="LongoMatch" fileversion="2.0" description="LongoMatch: Digtal Video Analyze Tool" outputpath="build/bin/">
-  <Configurations active="Release">
+  <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="LongoMatch" configuration="Debug" />
       <Entry build="True" name="Packages" configuration="" />
       <Entry build="True" name="libcesarplayer" configuration="Debug" />
       <Entry build="True" name="libcesarplayer" configuration="Debug" />
       <Entry build="True" name="libcesarplayer" configuration="Debug" />
-      <Entry build="True" name="CesarPlayer" configuration="Debug" />
       <Entry build="True" name="libcesarplayer" configuration="Debug" />
       <Entry build="True" name="GstCesarPlayer" configuration="Debug" />
       <Entry build="True" name="Translations" configuration="" />
+      <Entry build="True" name="CesarPlayer" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="LongoMatch" configuration="Release" />
@@ -17,10 +17,10 @@
       <Entry build="True" name="libcesarplayer" configuration="Release" />
       <Entry build="True" name="libcesarplayer" configuration="Release" />
       <Entry build="True" name="libcesarplayer" configuration="Release" />
-      <Entry build="True" name="CesarPlayer" configuration="Release" />
       <Entry build="True" name="libcesarplayer" configuration="Release" />
       <Entry build="True" name="GstCesarPlayer" configuration="Release" />
       <Entry build="True" name="Translations" configuration="" />
+      <Entry build="True" name="CesarPlayer" configuration="Release" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="LongoMatch" single="True">
@@ -32,13 +32,14 @@
     <Execute type="None" entry="GstCesarPlayer" />
     <Execute type="None" entry="Paquetes" />
     <Execute type="None" entry="Translations" />
+    <Execute type="None" entry="CesarPlayer" />
   </StartMode>
   <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="UpdateNearestChangeLog" />
   <Entries>
     <Entry filename="LongoMatch/LongoMatch.mdp" />
     <Entry filename="Packages.mdse" />
-    <Entry filename="CesarPlayer/CesarPlayer.mdp" />
     <Entry filename="libcesarplayer/liblongomatch.mdp" />
     <Entry filename="Translations/Translations.mdse" />
+    <Entry filename="CesarPlayer/CesarPlayer.mdp" />
   </Entries>
 </Combine>

@@ -172,6 +172,7 @@ namespace LongoMatch
 		{
 			Project project;
 			NewProjectDialog npd = new NewProjectDialog();
+			npd.Use = LongoMatch.Gui.Component.UseType.NewFromFileProject;
 			// Esperamos a que se pulse el boton aceptar y se cumplan las condiciones para 
 			// crear un nuevo objeto del tipo Project
 			int response = npd.Run();

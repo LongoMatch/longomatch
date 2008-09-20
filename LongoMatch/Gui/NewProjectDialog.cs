@@ -35,7 +35,13 @@ namespace LongoMatch.Gui.Dialog
 		public NewProjectDialog()
 		{
 			this.Build();
-			this.fdwidget.Use = LongoMatch.Gui.Component.UseType.NewFromFileProject;
+			
+		}
+		
+		public LongoMatch.Gui.Component.UseType Use{
+			set {
+				this.fdwidget.Use = value;				
+			}
 		}
 		
 		public Project GetProject(){

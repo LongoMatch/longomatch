@@ -74,7 +74,7 @@ namespace LongoMatch.Gui.Component
 			combobox1.Active = index;
 			SectionsReader reader = new SectionsReader(System.IO.Path.Combine(MainClass.TemplatesDir(),this.SectionsFile));			
 			this.Sections= reader.GetSections();
-			this.Use=UseType.NewCaptureProject;
+			this.Use=UseType.NewFromFileProject;
 			
 			
 		}
@@ -89,6 +89,7 @@ namespace LongoMatch.Gui.Component
 				if (value == UseType.EditProject){				
 					this.combobox1.Visible = false;
 				}
+				this.useType = value;
 			}
 			get{
 				return this.useType;
@@ -212,18 +213,35 @@ namespace LongoMatch.Gui.Component
 		
 		protected virtual void OnOpenbuttonClicked(object sender, System.EventArgs e)
 		{
+			FileChooserDialog fChooser = null;
+			Console.WriteLine(useType.ToString());
+			if (this.useType == UseType.NewCaptureProject){
+				fChooser = new FileChooserDialog(Catalog.GetString("Save File as..."),
+			                                                   (Gtk.Window)this.Toplevel,
+			                                                   FileChooserAction.Open,
+			                                                   "gtk-cancel",ResponseType.Cancel,
+			                                                   "gtk-save",ResponseType.Accept);
+				fChooser.SetCurrentFolder(MainClass.VideosDir());
+				if (fChooser.Run() == (int)ResponseType.Accept){
+						fileEntry.Text = fChooser.Filename;
+					}
+				
+			}
 			
 			
-			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Choose the file to open"),
+			else if (this.useType == UseType.NewFromFileProject){
+				fChooser = new FileChooserDialog(Catalog.GetString("Open file..."),
 			                                                   (Gtk.Window)this.Toplevel,
 			                                                   FileChooserAction.Open,
 			                                                   "gtk-cancel",ResponseType.Cancel,
 			                                                   "gtk-open",ResponseType.Accept);			
 			
-			fChooser.SetCurrentFolder(System.Environment.GetFolderPath(Environment.SpecialFolder.Personal));
-			if (fChooser.Run() == (int)ResponseType.Accept){
-				LongoMatch.Video.PlayerMaker pm = new LongoMatch.Video.PlayerMaker();
-				LongoMatch.Video.Player.IMetadataReader reader = pm.getMetadataReader();
+				fChooser.SetCurrentFolder(System.Environment.GetFolderPath(Environment.SpecialFolder.Personal));
+		
+				if (fChooser.Run() == (int)ResponseType.Accept){
+					
+					LongoMatch.Video.PlayerMaker pm = new LongoMatch.Video.PlayerMaker();
+					LongoMatch.Video.Player.IMetadataReader reader = pm.getMetadataReader();
 					try{
 						reader.Open(fChooser.Filename);
 						int duration = (int)reader.GetMetadata(LongoMatch.Video.Player.GstPlayerMetadataType.Duration);
@@ -233,7 +251,7 @@ namespace LongoMatch.Gui.Component
 						
 						this.mFile = new MediaFile(fChooser.Filename,new Time(duration*1000),(ushort)fps,hasAudio,hasVideo);				
 						fileEntry.Text = fChooser.Filename;
-			
+						
 					}
 					catch (GLib.GException ex){
 						MessageDialog errorDialog = new MessageDialog((Gtk.Window)this.Toplevel,DialogFlags.Modal,MessageType.Error,ButtonsType.Ok,
@@ -241,6 +259,8 @@ namespace LongoMatch.Gui.Component
 						errorDialog.Run();
 						errorDialog.Destroy();
 					}
+				}
+				
 				
 			}
 		

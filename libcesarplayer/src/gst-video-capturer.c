@@ -481,7 +481,7 @@ static void gvc_window_construct(int width, int weight,  GstVideoCapturer *gvc){
 	gst_video_widget_set_minimum_size (GST_VIDEO_WIDGET (gvc->priv->video_window),
             120, 80);
       gst_video_widget_set_source_size(GST_VIDEO_WIDGET (gvc->priv->video_window),
-            120, 80);    
+            720, 576);    
 	gtk_widget_show(gvc->priv->video_window);
 	g_signal_connect (G_OBJECT (gvc->priv->video_window), "expose_event",
 		    G_CALLBACK (gvc_expose_event), gvc);
@@ -804,10 +804,10 @@ void gst_video_capturer_stop(GstVideoCapturer *gvc)
 	GstPad *pad;
 	GstEvent *eos = gst_event_new_eos();
 
-	gst_video_capturer_pause(gvc);
 	pad = gst_element_get_pad(gvc->priv->vencode_bin,"sink"); 
-	gst_element_set_state(gvc->priv->vencode_bin,GST_STATE_READY);
-	gst_pad_send_event (pad, gst_event_ref (eos));
+    gst_pad_send_event (pad, gst_event_ref (eos)); 
+	
+	g_object_set(gvc,"input_file","",NULL);
 	
 	gst_event_unref(eos);
 	gst_object_unref(pad);
@@ -1059,7 +1059,7 @@ gvc_element_msg_sync (GstBus *bus, GstMessage *msg, gpointer data)
 	
 	
 	g_print("\nSetting Source size: %d",gvc->priv->video_width);
-    gst_video_widget_set_source_size (GST_VIDEO_WIDGET (gvc->priv->video_window),gvc->priv->video_width,gvc->priv->video_height);
+    //gst_video_widget_set_source_size (GST_VIDEO_WIDGET (gvc->priv->video_window),gvc->priv->video_width,gvc->priv->video_height);
 
 
 	
