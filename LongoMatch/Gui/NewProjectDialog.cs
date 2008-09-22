@@ -27,15 +27,10 @@ namespace LongoMatch.Gui.Dialog
 	
 	public partial class NewProjectDialog : Gtk.Dialog
 	{
-	
-
-		
-
 		
 		public NewProjectDialog()
 		{
-			this.Build();
-			
+			this.Build();			
 		}
 		
 		public LongoMatch.Gui.Component.UseType Use{

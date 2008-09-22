@@ -183,9 +183,65 @@ namespace LongoMatch.Gui.Component
 			
 		}
 		
+		private void ProcessButton3(double X){
+			this.cursorFrame =(int) (X*pixelRatio);
+			this.deleteMenu = new Menu();
+			this.delete.Submenu=deleteMenu;
+			dic.Clear();
+			foreach (MediaTimeNode tn in list){
+				
+				//We scan all the time Nodes looking for one matching the cursor selectcio
+				//And we add them to the delete menu
+				if (tn.HasFrame(this.cursorFrame) ){						
+					MenuItem del = new MenuItem(Catalog.GetString("Delete "+tn.Name));					
+					del.Activated += new EventHandler(OnDelete);				
+					this.deleteMenu.Append(del);
+					dic.Add(del,tn);					
+				}
+				
+			}	
+			this.menu.ShowAll();
+			this.menu.Popup();		
+		}
+		
+		private void ProcessButton1(EventButton evnt){
+			if (this.lastTime != evnt.Time){
+				candidateTN = null;
+				foreach (MediaTimeNode tn in list){	
+					int pos = (int) (evnt.X*pixelRatio);
+					if (Math.Abs(pos-tn.StopFrame) < 3*pixelRatio ){
+						this.candidateStart = false;
+						candidateTN = tn;
+						this.movingLimit = true;
+						this.TimeNodeChanged(tn,tn.Stop);
+						this.ReDraw();
+						break;
+					}
+					else if (Math.Abs(pos-tn.StartFrame) < 3*pixelRatio){
+						this.candidateStart =true;
+						candidateTN = tn;
+							this.movingLimit = true;
+						this.TimeNodeChanged(tn,tn.Start);
+						this.ReDraw();
+						break;
+					}			
+				}
+			}
+			//On Double Click
+			else {
+				foreach (MediaTimeNode tn in list){
+					int pos = (int) (evnt.X*pixelRatio);
+					if (this.TimeNodeSelected!= null && tn.HasFrame(pos) ){							
+						TimeNodeSelected(tn);
+						break;
+					}
+				}					
+			}
+		}
+		
 		protected void OnNewPlay(object obj, EventArgs args){
 			if (this.NewMarkAtFrameEvent != null)
-			 
+				
 				this.NewMarkAtFrameEvent(this.section,this.cursorFrame);			
 		}
 		
@@ -220,6 +276,7 @@ namespace LongoMatch.Gui.Component
 						if (this.TimeNodeChanged != null)
 						this.TimeNodeChanged(this.candidateTN,this.candidateTN.Stop);
 				}
+				
 				Gdk.Region region = this.GdkWindow.ClipRegion;
 				this.GdkWindow.InvalidateRegion(region,true);
 				this.GdkWindow.ProcessUpdates(true);
@@ -234,66 +291,16 @@ namespace LongoMatch.Gui.Component
 			
 			
 			if (evnt.Button == 1){
-				if (this.lastTime != evnt.Time){
-					candidateTN = null;
-					foreach (MediaTimeNode tn in list){	
-						int pos = (int) (evnt.X*pixelRatio);
-						if (Math.Abs(pos-tn.StopFrame) < 3*pixelRatio ){
-							this.candidateStart = false;
-							candidateTN = tn;
-							this.movingLimit = true;
-							this.TimeNodeChanged(tn,tn.Stop);
-							this.ReDraw();
-							break;
-						}
-						else if (Math.Abs(pos-tn.StartFrame) < 3*pixelRatio){
-							this.candidateStart =true;
-							candidateTN = tn;
-							this.movingLimit = true;
-							this.TimeNodeChanged(tn,tn.Start);
-							this.ReDraw();
-							break;
-						}			
-					}
-				}
-				//On Double Click
-				else {
-					foreach (MediaTimeNode tn in list){
-						int pos = (int) (evnt.X*pixelRatio);
-						if (this.TimeNodeSelected!= null && tn.HasFrame(pos) ){							
-							TimeNodeSelected(tn);
-							break;
-						}
-					}					
-				}
+				this.ProcessButton1(evnt);				
 			}
 			// On Right button pressed
 			else if (evnt.Button == 3){
-			
-				this.cursorFrame =(int) (evnt.X*pixelRatio);
-				this.deleteMenu = new Menu();
-				this.delete.Submenu=deleteMenu;
-				dic.Clear();
-				foreach (MediaTimeNode tn in list){
-										
-					//We scan all the time Nodes looking for one matching the cursor selectcio
-					//And we add them to the delete menu
-					if (tn.HasFrame(this.cursorFrame) ){						
-						MenuItem del = new MenuItem(Catalog.GetString("Delete "+tn.Name));					
-						del.Activated += new EventHandler(OnDelete);				
-						this.deleteMenu.Append(del);
-						dic.Add(del,tn);					
-					}
-				
-				}	
-				this.menu.ShowAll();
-				this.menu.Popup();
-				
+				this.ProcessButton3(evnt.X);
 			}
-			this.lastTime = evnt.Time;
+			this.lastTime = evnt.Time;		
 			return base.OnButtonPressEvent (evnt);
 		}
-			
+		
 		protected override bool OnButtonReleaseEvent (EventButton evnt)
 		{
 			if (this.movingLimit){

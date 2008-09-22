@@ -267,7 +267,7 @@ using LongoMatch.Video;
 			float currentposition = args.CurrentPosition;
 			bool seekable = args.Seekable;
 			
-			Console.WriteLine ("Current Time:{0}\n Length:{1}\n",currentTime, streamLength);
+			//Console.WriteLine ("Current Time:{0}\n Length:{1}\n",currentTime, streamLength);
 	        if (this.length != streamLength){				
 				this.length = streamLength;
 				this.slength = TimeString.MSecondsToSecondsString(length);

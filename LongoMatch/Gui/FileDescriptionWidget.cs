@@ -182,6 +182,7 @@ namespace LongoMatch.Gui.Component
 				else {
 					project.File = this.mFile;
 					project.LocalName = this.LocalName;
+					project.VisitorName = this.VisitorName;
 					project.VisitorGoals = this.VisitorGoals;
 					project.LocalGoals = this.LocalGoals;
 					project.VisitorGoals = this.VisitorGoals;
@@ -218,7 +219,7 @@ namespace LongoMatch.Gui.Component
 			if (this.useType == UseType.NewCaptureProject){
 				fChooser = new FileChooserDialog(Catalog.GetString("Save File as..."),
 			                                                   (Gtk.Window)this.Toplevel,
-			                                                   FileChooserAction.Open,
+			                                                   FileChooserAction.Save,
 			                                                   "gtk-cancel",ResponseType.Cancel,
 			                                                   "gtk-save",ResponseType.Accept);
 				fChooser.SetCurrentFolder(MainClass.VideosDir());
@@ -229,7 +230,7 @@ namespace LongoMatch.Gui.Component
 			}
 			
 			
-			else if (this.useType == UseType.NewFromFileProject){
+			else {
 				fChooser = new FileChooserDialog(Catalog.GetString("Open file..."),
 			                                                   (Gtk.Window)this.Toplevel,
 			                                                   FileChooserAction.Open,

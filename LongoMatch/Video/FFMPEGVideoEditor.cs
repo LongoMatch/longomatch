@@ -153,7 +153,6 @@ namespace LongoMatch.Video.Editor
 			pinfo.CreateNoWindow = true;
 			pinfo.UseShellExecute = false;
 			process.StartInfo = pinfo;
-			Console.WriteLine(pinfo.Arguments);
 			process.Start();
 			process.WaitForExit();			
 			this.DeleteTempFiles();

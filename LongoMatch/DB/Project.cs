@@ -124,6 +124,8 @@ namespace LongoMatch.DB
 		}
 
 		public void DelTimeNode(MediaTimeNode tNode) {
+			Console.WriteLine("deleting TimeNode: " + tNode.DataSection);
+			Console.WriteLine(dataSectionArray[tNode.DataSection].Contains(tNode));
 			dataSectionArray[tNode.DataSection].Remove(tNode);
 			if (System.IO.File.Exists(tNode.MiniaturePath))
 			    System.IO.File.Delete(tNode.MiniaturePath);

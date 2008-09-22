@@ -161,7 +161,7 @@ namespace LongoMatch.Gui.Component
 		protected void OnDeleted(object obj, EventArgs args){
 			if (TimeNodeDeleted != null)
 				TimeNodeDeleted((MediaTimeNode)selectedTimeNode);
-			((TreeStore)this.Model).Remove(ref selectedIter);
+			//((TreeStore)this.Model).Remove(ref selectedIter);
 			
 		}
 		
@@ -287,6 +287,7 @@ namespace LongoMatch.Gui.Component
 		{
 			Gtk.TreeIter iter;
 			this.Model.GetIter (out iter, new Gtk.TreePath (args.Path)); 
+			Console.WriteLine(iter);
 			TimeNode tNode = (TimeNode)this.Model.GetValue (iter,0);
 			tNode.Name = args.NewText;
 			if (TimeNodeChanged != null)

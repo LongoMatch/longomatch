@@ -100,7 +100,7 @@ namespace LongoMatch
 				Time fStop = (stop > length) ? length: stop;
 				Pixbuf miniature = this.player.CurrentFrame;
 				MediaTimeNode tn = openedProject.AddTimeNode(section,fStart, fStop,miniature);				
-				treewidget.AddTimeNode(tn,section);
+				treewidget.AddTimeNode(tn);
 				//treewidget.Update();
 				this.timeline.QueueDraw();
 			}
@@ -177,7 +177,8 @@ namespace LongoMatch
 		
 		protected virtual void OnTimeNodeDeleted (MediaTimeNode tNode)
 		{
-			openedProject.DelTimeNode(tNode);		
+			openedProject.DelTimeNode(tNode);	
+			this.treewidget.DeleteTimeNode(tNode);
 			this.timeline.QueueDraw();
 		}
 		
@@ -204,6 +205,7 @@ namespace LongoMatch
 				                                        "Please, close the opened project to play the playlist.");
 				error.Run();
 				error.Destroy();
+				this.playlist.Stop();
 			}
 		}
 		
