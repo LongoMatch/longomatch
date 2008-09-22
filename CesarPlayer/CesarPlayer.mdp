@@ -1,5 +1,5 @@
 <Project name="CesarPlayer" fileversion="2.0" DefaultNamespace="longomatch" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
-  <Configurations active="Debug">
+  <Configurations active="Release">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="bin/Debug" signAssembly="True" assemblyKeyFile="bin/Debug/CesarPlayer.dll" assembly="CesarPlayer" />
       <Build debugmode="True" target="Library" />
@@ -54,8 +54,6 @@
     <File name="PlayerMaker.cs" subtype="Code" buildaction="Compile" />
     <File name="Player/ObjectManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Capturer/ObjectManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="CapturerBin.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/longomatch.CapturerBin.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

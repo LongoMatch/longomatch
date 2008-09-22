@@ -40,8 +40,4 @@
     <itemgroups />
     <signals />
   </object>
-  <object type="longomatch.CapturerBin" palette-category="CesarPlayer" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
 </objects>

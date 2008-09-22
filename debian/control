@@ -1,13 +1,13 @@
 Source: longomatch
-Section: unknown
+Section: devel
 Priority: extra
 Maintainer: Andoni Morales Alastruey <ylatuya@gmail.com>
-Build-Depends: debhelper (>= 5), autotools-dev, cdbs
+Build-Depends: debhelper (>= 5), autotools-dev, cdbs, pkg-config, mono-gmcs, libgtk2.0-cil,libgstreamer0.10-dev, libgstreamer-plugins-base0.10-dev, libgtk2.0-dev, libmono2.0-cil, libmono-cairo2.0-cil
 Standards-Version: 3.7.2
 
 Package: longomatch
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, mono-runtime
+Depends: ${shlibs:Depends}, ${misc:Depends}, mono-runtime, ffmpeg, mencoder
 Description: LongoMatch:The Digital Coach
  LongoMatch is a sports video analyze tool for coaches 
  and trainers to assist them  on making live video reports

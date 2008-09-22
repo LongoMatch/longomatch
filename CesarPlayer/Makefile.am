@@ -47,27 +47,34 @@ all: $(ASSEMBLY) $(PROGRAMFILES) $(LINUX_PKGCONFIG)
 
 FILES = \
 	AssemblyInfo.cs \
-	Player/IPlayer.cs \
+	PlayerMaker.cs \
 	Utils/TimeString.cs \
-	Player/PlayerMaker.cs \
 	Gui/VolumeWindow.cs \
 	Gui/PlayerBin.cs \
-	Handlers/Handlers.cs \
-	Handlers/BufferingHandler.cs \
-	Handlers/ErrorHandler.cs \
-	Handlers/GotRedirectHandler.cs \
-	GstError.cs \
+	Gui/CapturerBin.cs \
+	Player/GstPlayer.cs \
 	Player/GstPlayerAspectRatio.cs \
 	Player/GstPlayerMetadataType.cs \
 	Player/GstUseType.cs \
-	ObjectManager.cs \
-	Handlers/StateChangedHandler.cs \
-	Handlers/TitleChangeHandler.cs \
-	Handlers/TickHandler.cs \
-	Player/GstPlayer.cs \
-	gtk-gui/generated.cs \
 	Player/IMetadataReader.cs \
+	Player/IPlayer.cs \
+	Player/ObjectManager.cs \
+	Handlers/BufferingHandler.cs \
+	Handlers/ErrorHandler.cs \
+	Handlers/GotRedirectHandler.cs \
+	Handlers/Handlers.cs \
+	Handlers/StateChangedHandler.cs \
+	Handlers/TickHandler.cs \
+	Handlers/TitleChangeHandler.cs \
+	Capturer/ErrorHandler.cs \
+	Capturer/GstVideoCapturer.cs \
+	Capturer/GvcAudioEncoderType.cs \
+	Capturer/GvcUseType.cs \
+	Capturer/ICapturer.cs \
+	Capturer/ObjectManager.cs \
+	gtk-gui/generated.cs \
 	gtk-gui/LongoMatch.Gui.VolumeWindow.cs \
+	gtk-gui/LongoMatch.Gui.CapturerBin.cs \
 	gtk-gui/LongoMatch.Gui.PlayerBin.cs 
 
 
