@@ -94,6 +94,8 @@
     <File name="images/lgmlogo.png" subtype="Code" buildaction="FileCopy" DeployService.UseProjectRelativePath="True" />
     <File name="images" subtype="Directory" buildaction="Compile" />
     <File name="images/background.png" subtype="Code" buildaction="FileCopy" DeployService.UseProjectRelativePath="True" />
+    <File name="gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs" subtype="Code" buildaction="Compile" />
+    <File name="Gui/VideoEditionProperties.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="Db4objects.Db4o.dll" />

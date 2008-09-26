@@ -47,14 +47,14 @@ namespace LongoMatch.Video.Editor
 		{
 			this.PlayList = playlist;
 			this.outputFile = outputFile;
-			this.aq = AudioQuality.copy;
-			this.vq = VideoQuality.copy;	
+			this.aq = AudioQuality.Normal;
+			this.vq = VideoQuality.Normal;	
 			
 		}
 		
 		public FFMPEGVideoEditor(){
-			this.aq = AudioQuality.copy;
-			this.vq = VideoQuality.copy;	
+			this.aq = AudioQuality.Normal;
+			this.vq = VideoQuality.Normal;	
 			
 		}
 		
@@ -137,19 +137,7 @@ namespace LongoMatch.Video.Editor
 				pinfo.FileName=System.IO.Path.Combine (System.AppDomain.CurrentDomain.BaseDirectory,"mencoder.exe");
 			else 
 				pinfo.FileName="mencoder";
-			
-			
-		    if (this.vq == VideoQuality.copy)
-				svq = "copy";
-			else
-				svq = ((int)this.vq).ToString();
-			
-			if (this.aq == AudioQuality.copy)
-				saq = "copy";
-			else
-				saq = ((int) this.aq).ToString(); 
-			
-			pinfo.Arguments = "-oac " + saq+ " -ovc "+ svq + " " + list +" -o \"" + System.IO.Path.Combine (MainClass.VideosDir(),this.OutputFile)+"\"";
+			pinfo.Arguments = " -ovc lavc -lavcopts vcodec=libx264:vbitrate="+(int)this.VideoQuality+" " + list +" -o \"" + System.IO.Path.Combine (MainClass.VideosDir(),this.OutputFile)+"\"";
 			pinfo.CreateNoWindow = true;
 			pinfo.UseShellExecute = false;
 			process.StartInfo = pinfo;

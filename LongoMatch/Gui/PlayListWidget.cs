@@ -29,6 +29,7 @@ using LongoMatch.TimeNodes;
 using LongoMatch.Video.Player;
 using LongoMatch.Video;
 using LongoMatch.Gui;
+using LongoMatch.Gui.Dialog;
 
 
 
@@ -188,19 +189,11 @@ namespace LongoMatch.Gui.Component
 				
 		}
 		
-
 		protected virtual void OnPlaylisttreeview1RowActivated (object o, Gtk.RowActivatedArgs args)
 		{
 			this.SelectPlayListNode(args.Path);			
 		}
-
-		protected virtual void OnUpbuttonClicked (object sender, System.EventArgs e)
-		{
-		}
-
-		protected virtual void OnDownbuttonClicked (object sender, System.EventArgs e)
-		{
-		}
+		
 
 		protected virtual void OnSavebuttonClicked (object sender, System.EventArgs e)
 		{		
@@ -218,6 +211,7 @@ namespace LongoMatch.Gui.Component
 			                                                   "gtk-open",ResponseType.Accept);
 			fChooser.SetCurrentFolder(MainClass.PlayListDir());
 			fChooser.AddFilter(this.FileFilter);
+			fChooser.DoOverwriteConfirmation = true;
 			if (fChooser.Run() == (int)ResponseType.Accept){
 				
 				this.Load(fChooser.Filename);
@@ -243,7 +237,6 @@ namespace LongoMatch.Gui.Component
 			
 			if (fChooser.Run() == (int)ResponseType.Accept){
 				this.Load(fChooser.Filename);
-
 			}
 			fChooser.Destroy();
 				
@@ -257,45 +250,32 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnNewvideobuttonClicked (object sender, System.EventArgs e)
 		{
-			bool exist = true;
-			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Save Video As ..."),
-			                                                   (Gtk.Window)this.Toplevel,
-			                                                   FileChooserAction.Save,
-			                                                   "gtk-cancel",ResponseType.Cancel,
-			                                                   "gtk-save",ResponseType.Accept);
-			fChooser.SetCurrentFolder(MainClass.VideosDir());
-			fChooser.CurrentName = "NewVideo.avi";
-			FileFilter filter = new FileFilter();
-			filter.Name = "Avi File";
-			filter.AddPattern("*.avi");
-			fChooser.Filter = filter;
-			while (fChooser.Run() == (int)ResponseType.Accept){
-				
-				exist = System.IO.File.Exists(fChooser.Filename);
-				if (exist){
-					MessageDialog warning = new MessageDialog((Gtk.Window)this.Toplevel,
-				                                        DialogFlags.DestroyWithParent,
-				                                        MessageType.Question,
-				                                        ButtonsType.YesNo,
-				                                        "This file already exists. Do You want to overwrite it?");
-					if (warning.Run()== (int)ResponseType.Yes)
-						exist = false;
-					warning.Destroy();					
-				}		
-				
-				//Reavaluate the condition
-				if (!exist) {					
-					videoEditor.PlayList = this.playList;
-					this.videoEditor.OutputFile = fChooser.Filename;
-					videoEditor.Start();
-					this.closebutton.Show();
-					this.newvideobutton.Hide();
-					break;					
-				}
-			}
-		
-			fChooser.Destroy();
+			VideoEditionProperties vep;
+			VideoQuality vq;
+			int response;
 			
+			vep = new VideoEditionProperties();
+			response = vep.Run();
+			while( response == (int)ResponseType.Ok && vep.Filename == ""){
+				MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel,
+				                                     DialogFlags.DestroyWithParent|DialogFlags.Modal,
+				                                     MessageType.Info,
+				                                     ButtonsType.Ok,
+				                                     Catalog.GetString("Please, select a video file."));
+				md.Run();
+				md.Destroy();	
+				response=vep.Run();
+			}
+			if (response ==(int)ResponseType.Ok){
+				vq = vep.VideoQuality;
+				videoEditor.PlayList = this.playList;
+				videoEditor.VideoQuality = vq;
+				videoEditor.OutputFile = vep.Filename;
+				videoEditor.Start();
+				this.closebutton.Show();
+				this.newvideobutton.Hide();
+			}
+			vep.Destroy();
 		}
 
 		protected virtual void OnClosebuttonClicked (object sender, System.EventArgs e)

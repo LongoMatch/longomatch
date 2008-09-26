@@ -74,6 +74,17 @@ namespace LongoMatch.Gui.Dialog
 			this.sectionspropertieswidget1.SetSections(sections);
 			
 		}
+		
+		private FileFilter FileFilter{
+			get{
+				FileFilter filter = new FileFilter();
+				filter.Name = "LongoMatch Project Template";
+				filter.AddPattern("*.sct");
+				return filter;
+			}
+				
+				
+		}
 					
 
 		private void SetSensitive (bool sensitive){
@@ -102,14 +113,31 @@ namespace LongoMatch.Gui.Dialog
 
 		protected virtual void OnNewbuttonClicked (object sender, System.EventArgs e)
 		{
-			string name;
+			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Select Template Name"),
+			                                                   (Gtk.Window)this.Toplevel,
+			                                                   FileChooserAction.Save,
+			                                                   "gtk-cancel",ResponseType.Cancel,
+			                                                   "gtk-save",ResponseType.Accept);
+			fChooser.SetCurrentFolder(MainClass.TemplatesDir());
+			fChooser.AddFilter(this.FileFilter);
+			fChooser.SetFilename("NewTemplate.sct");
+			fChooser.DoOverwriteConfirmation = true;
+			if (fChooser.Run() == (int)ResponseType.Accept){
+				string filename;				
+				filename = System.IO.Path.ChangeExtension(fChooser.Filename,"sct");				
+				SectionsWriter.CreateNewTemplate(filename);
+				this.Fill();
+			}
+		
+			fChooser.Destroy();
+			/*string name;
 			NewSectionsTemplatesFiles nstf = new NewSectionsTemplatesFiles();
 			if (nstf.Run() == (int)ResponseType.Ok){
 				name = nstf.GetName();
 				SectionsWriter.CreateNewTemplate(name+".sct");
 				this.Fill();
 			}
-			nstf.Destroy();
+			nstf.Destroy();*/
 				
 		}
 			

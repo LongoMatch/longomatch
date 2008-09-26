@@ -1,5 +1,5 @@
 <Project name="libcesarplayer" fileversion="2.0" Description="Gstreamer backend libraries for LongoMatch" language="C" ctype="CProject">
-  <Configurations active="Debug">
+  <Configurations active="Release">
     <Configuration name="Debug" SourceDirectory="." ctype="CProjectConfiguration">
       <Output directory="bin/Debug" output="testtt" />
       <Build debugmode="True" target="Bin" />

@@ -116,14 +116,14 @@ namespace LongoMatch.Gui.Component {
             this.openbutton.UseUnderline = true;
             // Container child openbutton.Gtk.Container+ContainerChild
             Gtk.Alignment w16 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment.Gtk.Container+ContainerChild
+            // Container child GtkAlignment1.Gtk.Container+ContainerChild
             Gtk.HBox w17 = new Gtk.HBox();
             w17.Spacing = 2;
-            // Container child GtkHBox.Gtk.Container+ContainerChild
+            // Container child GtkHBox1.Gtk.Container+ContainerChild
             Gtk.Image w18 = new Gtk.Image();
             w18.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-open", Gtk.IconSize.Button, 20);
             w17.Add(w18);
-            // Container child GtkHBox.Gtk.Container+ContainerChild
+            // Container child GtkHBox1.Gtk.Container+ContainerChild
             Gtk.Label w20 = new Gtk.Label();
             w20.LabelProp = "";
             w17.Add(w20);
@@ -139,14 +139,14 @@ namespace LongoMatch.Gui.Component {
             this.savebutton.UseUnderline = true;
             // Container child savebutton.Gtk.Container+ContainerChild
             Gtk.Alignment w25 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment.Gtk.Container+ContainerChild
+            // Container child GtkAlignment2.Gtk.Container+ContainerChild
             Gtk.HBox w26 = new Gtk.HBox();
             w26.Spacing = 2;
-            // Container child GtkHBox.Gtk.Container+ContainerChild
+            // Container child GtkHBox2.Gtk.Container+ContainerChild
             Gtk.Image w27 = new Gtk.Image();
             w27.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-save", Gtk.IconSize.Button, 20);
             w26.Add(w27);
-            // Container child GtkHBox.Gtk.Container+ContainerChild
+            // Container child GtkHBox2.Gtk.Container+ContainerChild
             Gtk.Label w29 = new Gtk.Label();
             w29.LabelProp = "";
             w26.Add(w29);
@@ -162,14 +162,14 @@ namespace LongoMatch.Gui.Component {
             this.newvideobutton.UseUnderline = true;
             // Container child newvideobutton.Gtk.Container+ContainerChild
             Gtk.Alignment w34 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment.Gtk.Container+ContainerChild
+            // Container child GtkAlignment3.Gtk.Container+ContainerChild
             Gtk.HBox w35 = new Gtk.HBox();
             w35.Spacing = 2;
-            // Container child GtkHBox.Gtk.Container+ContainerChild
+            // Container child GtkHBox3.Gtk.Container+ContainerChild
             Gtk.Image w36 = new Gtk.Image();
             w36.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-record", Gtk.IconSize.Button, 20);
             w35.Add(w36);
-            // Container child GtkHBox.Gtk.Container+ContainerChild
+            // Container child GtkHBox3.Gtk.Container+ContainerChild
             Gtk.Label w38 = new Gtk.Label();
             w38.LabelProp = "";
             w35.Add(w38);
@@ -185,14 +185,14 @@ namespace LongoMatch.Gui.Component {
             this.closebutton.UseUnderline = true;
             // Container child closebutton.Gtk.Container+ContainerChild
             Gtk.Alignment w43 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment.Gtk.Container+ContainerChild
+            // Container child GtkAlignment4.Gtk.Container+ContainerChild
             Gtk.HBox w44 = new Gtk.HBox();
             w44.Spacing = 2;
-            // Container child GtkHBox.Gtk.Container+ContainerChild
+            // Container child GtkHBox4.Gtk.Container+ContainerChild
             Gtk.Image w45 = new Gtk.Image();
             w45.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-close", Gtk.IconSize.Button, 20);
             w44.Add(w45);
-            // Container child GtkHBox.Gtk.Container+ContainerChild
+            // Container child GtkHBox4.Gtk.Container+ContainerChild
             Gtk.Label w47 = new Gtk.Label();
             w47.LabelProp = "";
             w44.Add(w47);

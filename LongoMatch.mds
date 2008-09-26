@@ -1,5 +1,5 @@
 <Combine releaseversion="0.1.2" name="LongoMatch" fileversion="2.0" description="LongoMatch: Digtal Video Analyze Tool" outputpath="build/bin/">
-  <Configurations active="Debug">
+  <Configurations active="Release">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="LongoMatch" configuration="Debug" />
       <Entry build="True" name="Packages" configuration="" />

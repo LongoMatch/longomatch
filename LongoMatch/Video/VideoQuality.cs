@@ -30,7 +30,6 @@ namespace LongoMatch.Video.Editor
 		Normal = 3000,
 		Good = 5000,
 		Extra = 7000,
-		copy,
-		
+			
 	}
 }
