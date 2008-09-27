@@ -2034,6 +2034,13 @@
         <property name="ShortLabel" translatable="yes">Open Playlist</property>
         <signal name="Activated" handler="OnOpenPlaylistActionActivated" />
       </action>
+      <action id="TakeScreenshotAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Take _Screenshot</property>
+        <property name="Sensitive">False</property>
+        <property name="ShortLabel" translatable="yes">Take _Screenshot</property>
+        <signal name="Activated" handler="OnTakeScreenshotActionActivated" />
+      </action>
     </action-group>
     <action-group name="Default">
       <action id="FileAction">
@@ -2174,6 +2181,7 @@
                   <node type="Menu" action="ToolsAction">
                     <node type="Menuitem" action="ProjectsManagerAction" />
                     <node type="Menuitem" action="TemplatesManagerAction" />
+                    <node type="Menuitem" action="TakeScreenshotAction" />
                   </node>
                   <node type="Menu" action="ViewAction">
                     <node type="Menuitem" action="FullScreenAction" />
@@ -2870,7 +2878,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.VideoEditionProperties" design-size="335 144">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.VideoEditionProperties" design-size="377 144">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Video Properties</property>
     <property name="WindowPosition">CenterOnParent</property>
@@ -2927,9 +2935,9 @@
                         <property name="CanFocus">True</property>
                         <property name="UseStock">True</property>
                         <property name="Type">StockItem</property>
-                        <property name="StockId">gtk-open</property>
+                        <property name="StockId">gtk-save-as</property>
                         <signal name="Clicked" handler="OnOpenbuttonClicked" />
-                        <property name="label">gtk-open</property>
+                        <property name="label">gtk-save-as</property>
                       </widget>
                       <packing>
                         <property name="Position">1</property>

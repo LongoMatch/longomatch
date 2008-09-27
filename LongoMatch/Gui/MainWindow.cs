@@ -88,6 +88,7 @@ namespace LongoMatch
 					this.CloseProjectAction.Sensitive=true;
 					this.SaveProjectAction.Sensitive = true;
 					this.PlayerAction.Sensitive= true;
+					this.TakeScreenshotAction.Sensitive = true;
 					this.CaptureModeAction.Sensitive = true;
 					this.AnalyzeModeAction.Sensitive = true;
 				
@@ -126,6 +127,7 @@ namespace LongoMatch
 			this.CloseProjectAction.Sensitive=false;
 			this.SaveProjectAction.Sensitive = false;
 			this.PlayerAction.Sensitive= false;
+			this.TakeScreenshotAction.Sensitive = false;
 			this.CaptureModeAction.Sensitive = false;
 			this.AnalyzeModeAction.Sensitive = false;			
 		}
@@ -133,7 +135,6 @@ namespace LongoMatch
 		private void SaveDB(){			
 			if (openedProject != null){
 				MainClass.DB.UpdateProject(OpenedProject());
-
 			}
 			
 		}
@@ -321,6 +322,12 @@ namespace LongoMatch
 		protected virtual void OnSaveProjectActionActivated (object sender, System.EventArgs e)
 		{
 			this.SaveDB();
+		}
+
+		protected virtual void OnTakeScreenshotActionActivated (object sender, System.EventArgs e)
+		{
+			/*Pixbuf frame = this.playerbin1.CurrentFrame;
+			frame.Save(MainClass.SnapshotsDir(),"jpeg");*/
 		}
 
 		

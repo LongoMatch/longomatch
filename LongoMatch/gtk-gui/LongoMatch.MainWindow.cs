@@ -53,6 +53,8 @@ namespace LongoMatch {
         
         private Gtk.Action OpenPlaylistAction;
         
+        private Gtk.Action TakeScreenshotAction;
+        
         private Gtk.VBox vbox1;
         
         private Gtk.VBox menubox;
@@ -155,6 +157,10 @@ namespace LongoMatch {
             this.OpenPlaylistAction = new Gtk.Action("OpenPlaylistAction", Mono.Unix.Catalog.GetString("Open Playlist"), null, null);
             this.OpenPlaylistAction.ShortLabel = Mono.Unix.Catalog.GetString("Open Playlist");
             w3.Add(this.OpenPlaylistAction, null);
+            this.TakeScreenshotAction = new Gtk.Action("TakeScreenshotAction", Mono.Unix.Catalog.GetString("Take _Screenshot"), null, null);
+            this.TakeScreenshotAction.Sensitive = false;
+            this.TakeScreenshotAction.ShortLabel = Mono.Unix.Catalog.GetString("Take _Screenshot");
+            w3.Add(this.TakeScreenshotAction, null);
             w1.InsertActionGroup(w3, 1);
             this.AddAccelGroup(w1.AccelGroup);
             this.Name = "LongoMatch.MainWindow";
@@ -170,7 +176,7 @@ namespace LongoMatch {
             this.menubox.Name = "menubox";
             this.menubox.Spacing = 6;
             // Container child menubox.Gtk.Box+BoxChild
-            w1.AddUiFromString("<ui><menubar name='menubar1'><menu action='FileAction'><menuitem action='NewPojectAction'/><menuitem action='OpenProjectAction'/><menuitem action='SaveProjectAction'/><menuitem action='CloseProjectAction'/><menuitem action='OpenPlaylistAction'/><separator/><menuitem action='QuitAction'/></menu><menu action='ToolsAction'><menuitem action='ProjectsManagerAction'/><menuitem action='TemplatesManagerAction'/></menu><menu action='ViewAction'><menuitem action='FullScreenAction'/><menuitem action='PlaylistAction'/><menuitem action='CaptureModeAction'/><menuitem action='AnalyzeModeAction'/></menu><menu action='PlayerAction'><menuitem action='PlayAction'/><menuitem action='PauseAction'/><menuitem action='NextAction'/><menuitem action='PreviousAction'/></menu></menubar></ui>");
+            w1.AddUiFromString("<ui><menubar name='menubar1'><menu action='FileAction'><menuitem action='NewPojectAction'/><menuitem action='OpenProjectAction'/><menuitem action='SaveProjectAction'/><menuitem action='CloseProjectAction'/><menuitem action='OpenPlaylistAction'/><separator/><menuitem action='QuitAction'/></menu><menu action='ToolsAction'><menuitem action='ProjectsManagerAction'/><menuitem action='TemplatesManagerAction'/><menuitem action='TakeScreenshotAction'/></menu><menu action='ViewAction'><menuitem action='FullScreenAction'/><menuitem action='PlaylistAction'/><menuitem action='CaptureModeAction'/><menuitem action='AnalyzeModeAction'/></menu><menu action='PlayerAction'><menuitem action='PlayAction'/><menuitem action='PauseAction'/><menuitem action='NextAction'/><menuitem action='PreviousAction'/></menu></menubar></ui>");
             this.menubar1 = ((Gtk.MenuBar)(w1.GetWidget("/menubar1")));
             this.menubar1.Name = "menubar1";
             this.menubox.Add(this.menubar1);
@@ -296,6 +302,7 @@ namespace LongoMatch {
             this.CaptureModeAction.Toggled += new System.EventHandler(this.OnCaptureModeActionToggled);
             this.SaveProjectAction.Activated += new System.EventHandler(this.OnSaveProjectActionActivated);
             this.OpenPlaylistAction.Activated += new System.EventHandler(this.OnOpenPlaylistActionActivated);
+            this.TakeScreenshotAction.Activated += new System.EventHandler(this.OnTakeScreenshotActionActivated);
             this.playerbin1.Error += new LongoMatch.Handlers.ErrorHandler(this.OnPlayerbin1Error);
         }
     }

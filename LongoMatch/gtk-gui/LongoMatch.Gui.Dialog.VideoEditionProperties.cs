@@ -86,7 +86,7 @@ namespace LongoMatch.Gui.Dialog {
             this.openbutton.Name = "openbutton";
             this.openbutton.UseStock = true;
             this.openbutton.UseUnderline = true;
-            this.openbutton.Label = "gtk-open";
+            this.openbutton.Label = "gtk-save-as";
             this.hbox3.Add(this.openbutton);
             Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(this.hbox3[this.openbutton]));
             w4.Position = 1;
@@ -168,7 +168,7 @@ namespace LongoMatch.Gui.Dialog {
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 335;
+            this.DefaultWidth = 377;
             this.DefaultHeight = 144;
             this.Show();
             this.openbutton.Clicked += new System.EventHandler(this.OnOpenbuttonClicked);
