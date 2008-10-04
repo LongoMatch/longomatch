@@ -247,6 +247,7 @@ FILES = \
 	Gui/TimeNodesTreeView.cs \
 	Gui/TreeWidget.cs \
 	Gui/TimeNodeProperties.cs \
+	Gui/VideoEditionProperties.cs \
 	DB/Project.cs \
 	DB/Sections.cs \
 	DB/DataBase.cs \
@@ -285,7 +286,8 @@ FILES = \
 	gtk-gui/LongoMatch.Gui.Component.TimeNodeProperties.cs \
 	gtk-gui/LongoMatch.Gui.Popup.CalendarPopup.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.NewSectionsTemplatesFiles.cs \
-	gtk-gui/LongoMatch.Gui.Component.TreeWidget.cs 
+	gtk-gui/LongoMatch.Gui.Component.TreeWidget.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs 
 
 DATA_FILES = \
 	app.desktop \

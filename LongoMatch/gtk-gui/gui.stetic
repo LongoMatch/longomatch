@@ -2030,7 +2030,8 @@
       </action>
       <action id="OpenPlaylistAction">
         <property name="Type">Action</property>
-        <property name="Label" translatable="yes">Open Playlist</property>
+        <property name="Accelerator">l</property>
+        <property name="Label" translatable="yes">Open Play_list</property>
         <property name="ShortLabel" translatable="yes">Open Playlist</property>
         <signal name="Activated" handler="OnOpenPlaylistActionActivated" />
       </action>
