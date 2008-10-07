@@ -2884,6 +2884,7 @@
     <property name="Title" translatable="yes">Video Properties</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
+    <property name="DestroyWithParent">True</property>
     <property name="Gravity">Center</property>
     <property name="SkipPagerHint">True</property>
     <property name="SkipTaskbarHint">True</property>
