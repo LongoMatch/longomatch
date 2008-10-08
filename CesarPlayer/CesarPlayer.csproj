@@ -6,11 +6,11 @@
     <OutputType>Library</OutputType>
     <RootNamespace>CesarPlayer</RootNamespace>
     <AssemblyName>CesarPlayer</AssemblyName>
-    <TargetFrameworkVersion>Mono v2.0</TargetFrameworkVersion>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <NoStdLib>False</NoStdLib>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <TargetFrameworkVersion>Mono v2.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -37,7 +37,27 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="GstError.cs" />
+    <Compile Include="Capturer\ErrorHandler.cs">
+      <Link>ErrorHandler.cs</Link>
+    </Compile>
+    <Compile Include="Capturer\GstVideoCapturer.cs">
+      <Link>GstVideoCapturer.cs</Link>
+    </Compile>
+    <Compile Include="Capturer\GvcAudioEncoderType.cs">
+      <Link>GvcAudioEncoderType.cs</Link>
+    </Compile>
+    <Compile Include="Capturer\GvcUseType.cs">
+      <Link>GvcUseType.cs</Link>
+    </Compile>
+    <Compile Include="Capturer\GvcVideoEncoderType.cs">
+      <Link>GvcVideoEncoderType.cs</Link>
+    </Compile>
+    <Compile Include="Capturer\ICapturer.cs">
+      <Link>ICapturer.cs</Link>
+    </Compile>
+    <Compile Include="Capturer\ObjectManager.cs">
+      <Link>ObjectManager.cs</Link>
+    </Compile>
     <Compile Include="gtk-gui\generated.cs">
       <Link>generated.cs</Link>
     </Compile>
@@ -74,7 +94,7 @@
     <Compile Include="Handlers\TitleChangeHandler.cs">
       <Link>TitleChangeHandler.cs</Link>
     </Compile>
-    <Compile Include="ObjectManager.cs" />
+    <Compile Include="PlayerMaker.cs" />
     <Compile Include="Player\GstPlayer.cs">
       <Link>GstPlayer.cs</Link>
     </Compile>
@@ -93,8 +113,8 @@
     <Compile Include="Player\IPlayer.cs">
       <Link>IPlayer.cs</Link>
     </Compile>
-    <Compile Include="Player\PlayerMaker.cs">
-      <Link>PlayerMaker.cs</Link>
+    <Compile Include="Player\ObjectManager.cs">
+      <Link>ObjectManager.cs</Link>
     </Compile>
     <Compile Include="Utils\TimeString.cs">
       <Link>TimeString.cs</Link>
@@ -108,39 +128,31 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="atk-sharp">
-      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\atk-sharp\2.10.0.0__35e10195dab3c99f\atk-sharp.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="DirectShowLib-2005">
-      <HintPath>DirectShowLib-2005.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\atk-sharp\2.10.0.0__35e10195dab3c99f\atk-sharp.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="gdk-sharp">
-      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\gdk-sharp\2.10.0.0__35e10195dab3c99f\gdk-sharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\gdk-sharp\2.10.0.0__35e10195dab3c99f\gdk-sharp.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="glib-sharp">
-      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\glib-sharp\2.10.0.0__35e10195dab3c99f\glib-sharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\glib-sharp\2.10.0.0__35e10195dab3c99f\glib-sharp.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="gtk-sharp">
-      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\gtk-sharp\2.10.0.0__35e10195dab3c99f\gtk-sharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\gtk-sharp\2.10.0.0__35e10195dab3c99f\gtk-sharp.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Mono.Cairo">
+      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\Mono.Cairo\2.0.0.0__0738eb9f132ed756\Mono.Cairo.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Mono.Posix">
-      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\Mono.Posix\2.0.0.0__0738eb9f132ed756\Mono.Posix.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\Mono.Posix\2.0.0.0__0738eb9f132ed756\Mono.Posix.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System">
-      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\System\2.0.0.0__b77a5c561934e089\System.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System.Drawing">
-      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\System.Drawing\2.0.0.0__b03f5f7f11d50a3a\System.Drawing.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System.Windows.Forms">
-      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\System.Windows.Forms\2.0.0.0__b77a5c561934e089\System.Windows.Forms.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\System\2.0.0.0__b77a5c561934e089\System.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
   </ItemGroup>

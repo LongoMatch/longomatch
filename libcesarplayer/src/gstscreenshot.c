@@ -196,3 +196,4 @@ gvc_frame_conv_convert (GstBuffer * buf, GstCaps * to_caps)
 
   return result;
 }
+
