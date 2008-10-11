@@ -27,7 +27,8 @@ using LongoMatch.Handlers;
 using LongoMatch.Video.Player;
 using LongoMatch.Video.Utils;
 using LongoMatch.Video;
-namespace LongoMatch.Gui
+
+namespace LongoMatch.Gui
 {
 		
 	public partial class PlayerBin : Gtk.Bin
@@ -112,7 +113,11 @@ using LongoMatch.Video;
 		}
 		
 		public long StreamLength{
-			get{return player.StreamLength;}
+			get{
+				
+				 return player.StreamLength;
+				
+			}
 		}
 		
 		public bool FullScreen{
@@ -203,9 +208,7 @@ using LongoMatch.Video;
 		
 		public void UpdateSegmentStartTime (long start){
 			this.segmentStartTime = start;
-			player.UpdateSegmentStartTime(start);
-			
-			
+			player.UpdateSegmentStartTime(start);						
 		}
 		
 		public void UpdateSegmentStopTime (long stop){
@@ -288,7 +291,11 @@ using LongoMatch.Video;
 				seeking = true;
 				this.IsPlayingPrevState = player.Playing;
 				player.Tick -= this.tickHandler;
-				player.Pause();
+				if (Environment.OSVersion.Platform != PlatformID.Win32NT){
+					player.Pause();
+				}
+				
+				
 
 			}
 			

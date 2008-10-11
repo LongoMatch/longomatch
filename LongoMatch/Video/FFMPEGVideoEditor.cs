@@ -143,7 +143,7 @@ namespace LongoMatch.Video.Editor
 			process.StartInfo = pinfo;
 			process.Start();
 			process.WaitForExit();			
-			this.DeleteTempFiles();
+			//this.DeleteTempFiles();
 			if (this.Progress != null)
 						this.Progress (1);
 			
@@ -180,11 +180,9 @@ namespace LongoMatch.Video.Editor
 			pinfo.Arguments = "-i \"" + plNode.FileName + "\" -f avi -y -ss " + plNode.Start.ToMSecondsString() 
 				+ " -t " +plNode.Duration.ToMSecondsString() + " -vcodec  copy -acodec copy \""
 					+ System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i)+"\"";	
-				
 			pinfo.CreateNoWindow = true;
 			pinfo.UseShellExecute = false;
-			process.StartInfo = pinfo;
-	
+			process.StartInfo = pinfo;	
 			process.Start();
 			process.WaitForExit();			
 		}
@@ -196,15 +194,17 @@ namespace LongoMatch.Video.Editor
 				pinfo.FileName=System.IO.Path.Combine (System.AppDomain.CurrentDomain.BaseDirectory,"mencoder.exe");
 			else 
 				pinfo.FileName="mencoder";
+			
 			pinfo.Arguments = "\""+System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i) 
 				+ "\" -oac  copy -ovc copy -ss "+plNode.Start.ToMSecondsString() +" -o \""
 					+ System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i+".avi")+"\"";		
+			Console.WriteLine(pinfo.Arguments);
 			pinfo.CreateNoWindow = true;
 			pinfo.UseShellExecute = false;
 			process.StartInfo = pinfo;
 			process.Start();
 			process.WaitForExit();			
-			System.IO.File.Delete(System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i));
+			//System.IO.File.Delete(System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i));
 			
 		}
 		

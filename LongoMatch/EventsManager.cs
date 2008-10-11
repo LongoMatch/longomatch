@@ -1,4 +1,4 @@
-// EventsManager.cs
+﻿// EventsManager.cs
 //
 //  Copyright (C) 2008 Andoni Morales Alastruey
 //
@@ -96,7 +96,13 @@ namespace LongoMatch
 				Time stop = pos + stopTime;
 				Time fStart = (start < new Time(0)) ? new Time(0) : start;
 				//La longitud tiene que ser en ms
-				Time length = new Time((int)player.StreamLength*1000);
+				Time length;
+				if (Environment.OSVersion.Platform == PlatformID.Win32NT){
+					length = new Time((int)player.StreamLength);
+				}
+				else{
+					length = new Time((int)player.StreamLength*1000);
+				}
 				Time fStop = (stop > length) ? length: stop;
 				Pixbuf miniature = this.player.CurrentFrame;
 				MediaTimeNode tn = openedProject.AddTimeNode(section,fStart, fStop,miniature);				
@@ -160,14 +166,19 @@ namespace LongoMatch
 				if(tNode != selectedTimeNode)
 					this.OnTimeNodeSelected((MediaTimeNode)tNode);
 				Time pos = (Time)val;
-				this.player.Pause();
+				if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+					this.player.Play();
+				else 
+					this.player.Pause();
 					if (pos == tNode.Start){
 					
 					this.player.UpdateSegmentStartTime(pos.MSeconds);
 				}				
 				else{
 					this.player.UpdateSegmentStopTime(pos.MSeconds);
-				}	
+				}
+				if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+					this.player.Pause();
 			}	
 			else if (tNode is SectionsTimeNode){
 				this.buttonswidget.Sections = openedProject.Sections;

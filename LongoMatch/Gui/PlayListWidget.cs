@@ -250,6 +250,17 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnNewvideobuttonClicked (object sender, System.EventArgs e)
 		{
+			if (Environment.OSVersion.Platform == PlatformID.Win32NT){
+				MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel,
+				                                     DialogFlags.DestroyWithParent|DialogFlags.Modal,
+				                                     MessageType.Info,
+				                                     ButtonsType.Ok,
+				                                     Catalog.GetString("This functionisn not implemented under windows...\nTry the Linux version with full support!!!"));
+				
+				md.Run();
+				md.Destroy();	
+				return;
+			}
 			VideoEditionProperties vep;
 			VideoQuality vq;
 			int response;
