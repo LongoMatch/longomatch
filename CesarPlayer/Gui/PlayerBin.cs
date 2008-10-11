@@ -153,6 +153,11 @@ namespace LongoMatch.Gui
 			}
 		}
 		
+		public bool PlaylistMode{
+			set{				
+				this.timescale.Sensitive = !value;				
+			}
+		}
 		public void SetLogo (string filename){
 			this.player.Logo=filename;
 		}
@@ -164,9 +169,9 @@ namespace LongoMatch.Gui
 			timelabel.Text="";
 			this.player.CancelProgramedStop();			
 		}
-		
+	
 		public void SetPlayListElement(string fileName,long start, long stop, bool hasNext){
-			
+			this.PlaylistMode = true;
 			this.hasNext = hasNext;
 			if (hasNext)
 				this.nextbutton.Sensitive = true;

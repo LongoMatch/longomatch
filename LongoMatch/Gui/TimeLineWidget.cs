@@ -42,14 +42,15 @@ namespace LongoMatch.Gui.Component {
 		private Sections sections;
 		private TimeReferenceWidget tr;
 		private uint frames;
-		private uint pixelRatio=1;
+		private uint pixelRatio;
 		private MediaTimeNode selected;
 		private uint currentFrame;
 
 		
 		public TimeLineWidget()
 		{
-			this.Build();	
+			this.Build();			
+			this.SetPixelRatio(10);
 			
 		}
 		
@@ -113,9 +114,9 @@ namespace LongoMatch.Gui.Component {
 		}
 		
 		
-		public void SetPixelRatio(uint pixelRatio){
+		private void SetPixelRatio(uint pixelRatio){
 			
-		
+			
 			if (tsArray != null && tnArray != null){
 				this.pixelRatio = pixelRatio;
 				this.tr.PixelRatio = pixelRatio;
@@ -125,6 +126,7 @@ namespace LongoMatch.Gui.Component {
 				}	
 				tr.Size((int)(this.frames/pixelRatio),50);				
 			}
+			Console.WriteLine(pixelRatio);
 					
 			
 			
@@ -150,12 +152,12 @@ namespace LongoMatch.Gui.Component {
 				ushort fps = value.File.Fps;
 				
 				tr = new TimeReferenceWidget(frames,fps);
-				tr.PixelRatio = 1;
+				tr.PixelRatio = 3;
 				this.vbox1.PackStart(tr,false,false,0);
 				tr.Show();
 				for (int i=0; i<20; i++){
 					TimeScale ts = new TimeScale(i,tnArray[i],frames,sections.GetColor(i));
-					ts.PixelRatio = 1;
+					ts.PixelRatio = 3;
 					tsArray[i]=ts;
 					ts.TimeNodeChanged += new TimeNodeChangedHandler(OnTimeNodeChanged);
 					ts.TimeNodeSelected += new TimeNodeSelectedHandler (OnTimeNodeSelected);

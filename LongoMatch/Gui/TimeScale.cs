@@ -36,7 +36,7 @@ namespace LongoMatch.Gui.Component
 		private const int SECTION_HEIGHT = 25;
 		private const double ALPHA = 0.6;
 		private uint frames;
-		private uint pixelRatio=1;
+		private uint pixelRatio=10;
 		MediaTimeNode candidateTN;
 		private Cairo.Color color;
 		private List<MediaTimeNode> list;
@@ -70,6 +70,7 @@ namespace LongoMatch.Gui.Component
 			this.Events = EventMask.PointerMotionMask | EventMask.ButtonPressMask | EventMask.ButtonReleaseMask ;
 			dic = new Dictionary<MenuItem,MediaTimeNode>();
 			SetMenu();
+			
 		}
 			
 		public uint PixelRatio{

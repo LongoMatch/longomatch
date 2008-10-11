@@ -34,12 +34,11 @@ namespace LongoMatch.Gui.Component
 		ushort frameRate;
 		uint currentFrame;
 		uint frames;
-		uint pixelRatio=1;//Número de frames por pixel
+		uint pixelRatio=10;//Número de frames por pixel
 		public TimeReferenceWidget(uint frames,ushort frameRate)
 		{
 			this.frameRate = frameRate;
 			this.frames = frames;
-			this.pixelRatio = 1;
 			this.HeightRequest= SECTION_HEIGHT;
 			this.Size((int)(this.frames/pixelRatio),SECTION_HEIGHT);
 		}

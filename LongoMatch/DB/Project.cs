@@ -109,7 +109,7 @@ namespace LongoMatch.DB
 			int count= al.Count+1;
 			string name = sections.GetName(dataSection) + " " +count;
 
-			if (miniature != null && System.Environment.OSVersion.Platform == PlatformID.Unix){
+			if (miniature != null ){
 				char sep = Path.DirectorySeparatorChar;
 				//Windows doesn't accept ':' as a valid char for a file
 				//Replacing by '-' in the time string representation

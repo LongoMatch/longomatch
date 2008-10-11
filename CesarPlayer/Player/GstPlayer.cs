@@ -926,10 +926,19 @@ namespace LongoMatch.Video.Player {
 		static extern bool bacon_video_widget_new_file_seek(IntPtr raw, long start,long stop);
 
 		public bool NewFileSeek(long start, long stop) {
-			bool raw_ret = bacon_video_widget_new_file_seek(Handle,start,stop);
-			bool ret = raw_ret;
-			this.Play();
-			return ret;
+			if (Environment.OSVersion.Platform == PlatformID.Win32NT){
+				while(!this.Playing){
+					this.SegmentSeek(start,stop);
+				}
+				this.Play();
+				return true;
+			}
+			else {
+				bool raw_ret = bacon_video_widget_new_file_seek(Handle,start,stop);
+				bool ret = raw_ret;
+				this.Play();
+				return ret;
+			}
 		}
 		
 		[DllImport ("libcesarplayer.dll")]
