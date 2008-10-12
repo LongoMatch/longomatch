@@ -102,7 +102,7 @@ namespace LongoMatch {
             w2.Add(this.NextAction, null);
             this.OpenPlaylistAction = new Gtk.Action("OpenPlaylistAction", Mono.Unix.Catalog.GetString("Open Play_list"), null, null);
             this.OpenPlaylistAction.ShortLabel = Mono.Unix.Catalog.GetString("Open Playlist");
-            w2.Add(this.OpenPlaylistAction, "l");
+            w2.Add(this.OpenPlaylistAction, null);
             this.TakeScreenshotAction = new Gtk.Action("TakeScreenshotAction", Mono.Unix.Catalog.GetString("Take _Screenshot"), null, null);
             this.TakeScreenshotAction.Sensitive = false;
             this.TakeScreenshotAction.ShortLabel = Mono.Unix.Catalog.GetString("Take _Screenshot");

@@ -3,7 +3,7 @@
     <ProjectGuid>{64BBF35C-C210-4869-B93B-924234A32C0D}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>LongoMatch</RootNamespace>
     <AssemblyName>LGM</AssemblyName>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
@@ -303,6 +303,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="libs" />
     <Folder Include="gst-plugins" />
     <Reference Include="atk-sharp">
       <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.0\lib\mono\gac\atk-sharp\2.10.0.0__35e10195dab3c99f\atk-sharp.dll</HintPath>
