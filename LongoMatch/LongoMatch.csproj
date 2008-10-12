@@ -226,83 +226,303 @@
     <None Include="ffmpeg.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="gst-plugins\libgstadder.dll" />
-    <None Include="gst-plugins\libgstalaw.dll" />
-    <None Include="gst-plugins\libgstalpha.dll" />
-    <None Include="gst-plugins\libgstalphacolor.dll" />
-    <None Include="gst-plugins\libgstapetag.dll" />
-    <None Include="gst-plugins\libgstasfdemux.dll" />
-    <None Include="gst-plugins\libgstaudioconvert.dll" />
-    <None Include="gst-plugins\libgstaudiorate.dll" />
-    <None Include="gst-plugins\libgstaudioresample.dll" />
-    <None Include="gst-plugins\libgstaudiotestsrc.dll" />
-    <None Include="gst-plugins\libgstauparse.dll" />
-    <None Include="gst-plugins\libgstautodetect.dll" />
-    <None Include="gst-plugins\libgstavi.dll" />
-    <None Include="gst-plugins\libgstcoreelements.dll" />
-    <None Include="gst-plugins\libgstcutter.dll" />
-    <None Include="gst-plugins\libgstdecodebin.dll" />
-    <None Include="gst-plugins\libgstdecodebin2.dll" />
-    <None Include="gst-plugins\libgstdirectdraw.dll" />
-    <None Include="gst-plugins\libgstdirectsound.dll" />
-    <None Include="gst-plugins\libgstdshowdecwrapper.dll" />
-    <None Include="gst-plugins\libgstdshowsrcwrapper.dll" />
-    <None Include="gst-plugins\libgstdvdlpcmdec.dll" />
-    <None Include="gst-plugins\libgstdvdsub.dll" />
-    <None Include="gst-plugins\libgsteffectv.dll" />
-    <None Include="gst-plugins\libgstffmpeg.dll" />
-    <None Include="gst-plugins\libgstffmpegcolorspace.dll" />
-    <None Include="gst-plugins\libgstflv.dll" />
-    <None Include="gst-plugins\libgstflx.dll" />
-    <None Include="gst-plugins\libgstgdp.dll" />
-    <None Include="gst-plugins\libgstgoom.dll" />
-    <None Include="gst-plugins\libgsticydemux.dll" />
-    <None Include="gst-plugins\libgstid3demux.dll" />
-    <None Include="gst-plugins\libgstiec958.dll" />
-    <None Include="gst-plugins\libgstjpeg.dll" />
-    <None Include="gst-plugins\libgstlame.dll" />
-    <None Include="gst-plugins\libgstlevel.dll" />
-    <None Include="gst-plugins\libgstmad.dll" />
-    <None Include="gst-plugins\libgstmatroska.dll" />
-    <None Include="gst-plugins\libgstmonoscope.dll" />
-    <None Include="gst-plugins\libgstmpegaudioparse.dll" />
-    <None Include="gst-plugins\libgstmpegstream.dll" />
-    <None Include="gst-plugins\libgstmpegvideoparse.dll" />
-    <None Include="gst-plugins\libgstmulaw.dll" />
-    <None Include="gst-plugins\libgstmultipart.dll" />
-    <None Include="gst-plugins\libgstneon.dll" />
-    <None Include="gst-plugins\libgstogg.dll" />
-    <None Include="gst-plugins\libgstplaybin.dll" />
-    <None Include="gst-plugins\libgstpng.dll" />
-    <None Include="gst-plugins\libgstqtdemux.dll" />
-    <None Include="gst-plugins\libgstrealmedia.dll" />
-    <None Include="gst-plugins\libgstrtp.dll" />
-    <None Include="gst-plugins\libgstrtsp.dll" />
-    <None Include="gst-plugins\libgstsmpte.dll" />
-    <None Include="gst-plugins\libgstspeex.dll" />
-    <None Include="gst-plugins\libgsttheora.dll" />
-    <None Include="gst-plugins\libgsttypefindfunctions.dll" />
-    <None Include="gst-plugins\libgstudp.dll" />
-    <None Include="gst-plugins\libgstvideobalance.dll" />
-    <None Include="gst-plugins\libgstvideobox.dll" />
-    <None Include="gst-plugins\libgstvideocrop.dll" />
-    <None Include="gst-plugins\libgstvideoflip.dll" />
-    <None Include="gst-plugins\libgstvideomixer.dll" />
-    <None Include="gst-plugins\libgstvideorate.dll" />
-    <None Include="gst-plugins\libgstvideoscale.dll" />
-    <None Include="gst-plugins\libgstvideotestsrc.dll" />
-    <None Include="gst-plugins\libgstvolume.dll" />
-    <None Include="gst-plugins\libgstvorbis.dll" />
-    <None Include="gst-plugins\libgstwaveform.dll" />
-    <None Include="gst-plugins\libgstwavenc.dll" />
+    <None Include="gst-plugins\libgstadder.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstalaw.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstalpha.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstalphacolor.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstapetag.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstasfdemux.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstaudioconvert.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstaudiorate.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstaudioresample.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstaudiotestsrc.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstauparse.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstautodetect.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstavi.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstcoreelements.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstcutter.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstdecodebin.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstdecodebin2.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstdirectdraw.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstdirectsound.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstdshowdecwrapper.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstdshowsrcwrapper.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstdvdlpcmdec.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstdvdsub.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgsteffectv.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstffmpeg.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstffmpegcolorspace.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstflv.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstflx.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstgdp.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstgoom.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgsticydemux.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstid3demux.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstiec958.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstjpeg.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstlame.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstlevel.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstmad.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstmatroska.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstmonoscope.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstmpegaudioparse.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstmpegstream.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstmpegvideoparse.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstmulaw.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstmultipart.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstneon.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstogg.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstplaybin.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstpng.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstqtdemux.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstrealmedia.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstrtp.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstrtsp.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstsmpte.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstspeex.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgsttheora.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgsttypefindfunctions.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstudp.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstvideobalance.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstvideobox.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstvideocrop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstvideoflip.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstvideomixer.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstvideorate.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstvideoscale.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstvideotestsrc.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstvolume.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstvorbis.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstwaveform.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="gst-plugins\libgstwavenc.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="gst-plugins\libgstwavparse.dll">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="images\background.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="images\lgmlogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\avcodec-51.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\avformat-52.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\avutil-49.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\libgstapp-0.10.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\libgstaudio-0.10.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\libgstbase-0.10.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\libgstcontroller-0.10.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\libgstdataprotocol-0.10.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\libgstdshow-0.10.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\libgstinterfaces-0.10.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\libgstnet-0.10.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\libgstnetbuffer-0.10.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\libgstpbutils-0.10.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\libgstreamer-0.10.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\libgstriff-0.10.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\libgstrtp-0.10.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\libgstrtsp-0.10.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\libgstsdp-0.10.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\libgsttag-0.10.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\libgstvideo-0.10.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\libjpeg.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\libmms.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\liboil-0.3-0.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\liboil-0.3-0.dll.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="libs\xvidcore.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="mencoder.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="images" />
     <Folder Include="libs" />
     <Folder Include="gst-plugins" />
     <Reference Include="atk-sharp">
