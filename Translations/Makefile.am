@@ -9,7 +9,7 @@ CLEANFILES = $(GMO_FILES)
 include $(top_srcdir)/Makefile.include
 
 PACKAGE = @PACKAGE@
-BUILD_DIR = .
+BUILD_DIR = GMO
 INSTALL_DIR = $(DESTDIR)@expanded_libdir@/$(PACKAGE)/locale
 
 FILES = \
