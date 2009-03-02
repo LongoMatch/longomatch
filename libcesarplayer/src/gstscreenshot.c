@@ -77,7 +77,7 @@ create_element (const gchar *factory_name, GstElement **element, GError **err)
 
 /* takes ownership of the input buffer */
 GstBuffer *
-gvc_frame_conv_convert (GstBuffer * buf, GstCaps * to_caps)
+gst_frame_conv_convert (GstBuffer * buf, GstCaps * to_caps)
 {
   GstElement *src, *csp, *filter1, *vscale, *filter2, *sink, *pipeline;
   GstMessage *msg;

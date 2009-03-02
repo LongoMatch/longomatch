@@ -11,7 +11,7 @@
 namespace LongoMatch.Gui.Dialog {
     
     
-    public partial class NewSectionsTemplatesFiles {
+    public partial class TemplateNameSelectionDialog {
         
         private Gtk.Entry entry1;
         
@@ -21,12 +21,13 @@ namespace LongoMatch.Gui.Dialog {
         
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
-            // Widget LongoMatch.Gui.Dialog.NewSectionsTemplatesFiles
-            this.Name = "LongoMatch.Gui.Dialog.NewSectionsTemplatesFiles";
-            this.Title = Mono.Unix.Catalog.GetString("Select new name");
+            // Widget LongoMatch.Gui.Dialog.TemplateNameSelectionDialog
+            this.Name = "LongoMatch.Gui.Dialog.TemplateNameSelectionDialog";
+            this.Title = Mono.Unix.Catalog.GetString("Select template name");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
+            this.Gravity = ((Gdk.Gravity)(5));
             this.HasSeparator = false;
-            // Internal child LongoMatch.Gui.Dialog.NewSectionsTemplatesFiles.VBox
+            // Internal child LongoMatch.Gui.Dialog.TemplateNameSelectionDialog.VBox
             Gtk.VBox w1 = this.VBox;
             w1.Name = "dialog1_VBox";
             w1.BorderWidth = ((uint)(2));
@@ -39,7 +40,7 @@ namespace LongoMatch.Gui.Dialog {
             w1.Add(this.entry1);
             Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(w1[this.entry1]));
             w2.Position = 0;
-            // Internal child LongoMatch.Gui.Dialog.NewSectionsTemplatesFiles.ActionArea
+            // Internal child LongoMatch.Gui.Dialog.TemplateNameSelectionDialog.ActionArea
             Gtk.HButtonBox w3 = this.ActionArea;
             w3.Name = "dialog1_ActionArea";
             w3.Spacing = 6;
@@ -73,8 +74,8 @@ namespace LongoMatch.Gui.Dialog {
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 352;
-            this.DefaultHeight = 102;
+            this.DefaultWidth = 232;
+            this.DefaultHeight = 114;
             this.Show();
         }
     }

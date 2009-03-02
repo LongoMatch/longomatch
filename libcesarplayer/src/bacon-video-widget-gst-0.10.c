@@ -186,7 +186,7 @@ struct BaconVideoWidgetPrivate
   gulong                       sig_bus_sync;
   gulong                       sig_bus_async;
 
-  gvcUseType                   use_type;
+  BvwUseType                   use_type;
 
   gint                         eos_id;
 
@@ -211,20 +211,20 @@ static void bacon_video_widget_get_property (GObject * object,
 
 static void bacon_video_widget_finalize (GObject * object);
 
-static void gvc_update_interface_implementations (BaconVideoWidget *gvc);
+static void BVW_update_interface_implementations (BaconVideoWidget *bvw);
 
-static void gvc_process_pending_tag_messages (BaconVideoWidget * gvc);
-static void gvc_stop_play_pipeline (BaconVideoWidget * gvc);
-static gboolean gvc_expose_event (GtkWidget *widget, GdkEventExpose *event,gpointer user_data);
+static void BVW_process_pending_tag_messages (BaconVideoWidget * bvw);
+static void BVW_stop_play_pipeline (BaconVideoWidget * bvw);
+static gboolean BVW_expose_event (GtkWidget *widget, GdkEventExpose *event,gpointer user_data);
 
 
-static GError* gvc_error_from_gst_error (BaconVideoWidget *gvc, GstMessage *m);
-static GList * get_stream_info_objects_for_type (BaconVideoWidget * gvc,
+static GError* BVW_error_from_gst_error (BaconVideoWidget *bvw, GstMessage *m);
+static GList * get_stream_info_objects_for_type (BaconVideoWidget * bvw,
     const gchar * typestr);
 
 static GtkWidgetClass *parent_class = NULL;
 
-static int gvc_signals[LAST_SIGNAL] = { 0 };
+static int BVW_signals[LAST_SIGNAL] = { 0 };
 
 GST_DEBUG_CATEGORY (_totem_gst_debug_cat);
 #define GST_CAT_DEFAULT _totem_gst_debug_cat
@@ -233,14 +233,14 @@ GST_DEBUG_CATEGORY (_totem_gst_debug_cat);
  * requirements to core/base CVS (0.10.11.1) before the next totem release */
 #define gst_pb_utils_init() /* noop */
 #define gst_is_missing_plugin_message(msg) \
-	gvc_is_missing_plugin_message(msg)
+	BVW_is_missing_plugin_message(msg)
 #define gst_missing_plugin_message_get_description \
-	gvc_missing_plugin_message_get_description
+	BVW_missing_plugin_message_get_description
 #define gst_missing_plugin_message_get_installer_detail \
-    gvc_missing_plugin_message_get_installer_detail
+    BVW_missing_plugin_message_get_installer_detail
 
 static gboolean
-gvc_is_missing_plugin_message (GstMessage * msg)
+BVW_is_missing_plugin_message (GstMessage * msg)
 {
   g_return_val_if_fail (msg != NULL, FALSE);
   g_return_val_if_fail (GST_IS_MESSAGE (msg), FALSE);
@@ -252,21 +252,21 @@ gvc_is_missing_plugin_message (GstMessage * msg)
 }
 
 static gchar *
-gvc_missing_plugin_message_get_description (GstMessage * msg)
+BVW_missing_plugin_message_get_description (GstMessage * msg)
 {
-  g_return_val_if_fail (gvc_is_missing_plugin_message (msg), NULL);
+  g_return_val_if_fail (BVW_is_missing_plugin_message (msg), NULL);
 
   return g_strdup (gst_structure_get_string (msg->structure, "name"));
 }
 
 static gchar *
-gvc_missing_plugin_message_get_installer_detail (GstMessage * msg)
+BVW_missing_plugin_message_get_installer_detail (GstMessage * msg)
 {
   const GValue *val;
   const gchar *type;
   gchar *desc, *ret, *details;
 
-  g_return_val_if_fail (gvc_is_missing_plugin_message (msg), NULL);
+  g_return_val_if_fail (BVW_is_missing_plugin_message (msg), NULL);
 
   type = gst_structure_get_string (msg->structure, "type");
   g_return_val_if_fail (type != NULL, NULL);
@@ -279,7 +279,7 @@ gvc_missing_plugin_message_get_installer_detail (GstMessage * msg)
   } else {
     g_return_val_if_reached (NULL);
   }
-  desc = gvc_missing_plugin_message_get_description (msg);
+  desc = BVW_missing_plugin_message_get_description (msg);
   ret = g_strdup_printf ("gstreamer.net|0.10|totem|%s|%s-%s",
       (desc) ? desc : "", type, (details) ? details: "");
   g_free (desc);
@@ -290,7 +290,7 @@ gvc_missing_plugin_message_get_installer_detail (GstMessage * msg)
 typedef gchar * (* MsgToStrFunc) (GstMessage * msg);
 
 static gchar **
-gvc_get_missing_plugins_foo (const GList * missing_plugins, MsgToStrFunc func)
+BVW_get_missing_plugins_foo (const GList * missing_plugins, MsgToStrFunc func)
 {
   GPtrArray *arr = g_ptr_array_new ();
 
@@ -303,37 +303,37 @@ gvc_get_missing_plugins_foo (const GList * missing_plugins, MsgToStrFunc func)
 }
 
 static gchar **
-gvc_get_missing_plugins_details (const GList * missing_plugins)
+BVW_get_missing_plugins_details (const GList * missing_plugins)
 {
-  return gvc_get_missing_plugins_foo (missing_plugins,
+  return BVW_get_missing_plugins_foo (missing_plugins,
       gst_missing_plugin_message_get_installer_detail);
 }
 
 static gchar **
-gvc_get_missing_plugins_descriptions (const GList * missing_plugins)
+BVW_get_missing_plugins_descriptions (const GList * missing_plugins)
 {
-  return gvc_get_missing_plugins_foo (missing_plugins,
+  return BVW_get_missing_plugins_foo (missing_plugins,
       gst_missing_plugin_message_get_description);
 }
 
 static void
-gvc_clear_missing_plugins_messages (BaconVideoWidget * gvc)
+BVW_clear_missing_plugins_messages (BaconVideoWidget * bvw)
 {
-  g_list_foreach (gvc->priv->missing_plugins,
+  g_list_foreach (bvw->priv->missing_plugins,
                   (GFunc) gst_mini_object_unref, NULL);
-  g_list_free (gvc->priv->missing_plugins);
-  gvc->priv->missing_plugins = NULL;
+  g_list_free (bvw->priv->missing_plugins);
+  bvw->priv->missing_plugins = NULL;
 }
 
 static void
-gvc_check_if_video_decoder_is_missing (BaconVideoWidget * gvc)
+BVW_check_if_video_decoder_is_missing (BaconVideoWidget * bvw)
 {
   GList *l;
 
-  if (gvc->priv->media_has_video || gvc->priv->missing_plugins == NULL)
+  if (bvw->priv->media_has_video || bvw->priv->missing_plugins == NULL)
     return;
 
-  for (l = gvc->priv->missing_plugins; l != NULL; l = l->next) {
+  for (l = bvw->priv->missing_plugins; l != NULL; l = l->next) {
     GstMessage *msg = GST_MESSAGE (l->data);
     gchar *d, *f;
 
@@ -343,11 +343,11 @@ gvc_check_if_video_decoder_is_missing (BaconVideoWidget * gvc)
 
         /* create a fake GStreamer error so we get a nice warning message */
         err = g_error_new (GST_CORE_ERROR, GST_CORE_ERROR_MISSING_PLUGIN, "x");
-        msg = gst_message_new_error (GST_OBJECT (gvc->priv->play), err, NULL);
+        msg = gst_message_new_error (GST_OBJECT (bvw->priv->play), err, NULL);
         g_error_free (err);
-        err = gvc_error_from_gst_error (gvc, msg);
+        err = BVW_error_from_gst_error (bvw, msg);
         gst_message_unref (msg);
-        g_signal_emit (gvc, gvc_signals[SIGNAL_ERROR], 0, err->message);
+        g_signal_emit (bvw, BVW_signals[SIGNAL_ERROR], 0, err->message);
         g_error_free (err);
         g_free (d);
         break;
@@ -358,7 +358,7 @@ gvc_check_if_video_decoder_is_missing (BaconVideoWidget * gvc)
 }
 
 static void
-gvc_error_msg (BaconVideoWidget * gvc, GstMessage * msg)
+BVW_error_msg (BaconVideoWidget * bvw, GstMessage * msg)
 {
   GError *err = NULL;
   gchar *dbg = NULL;
@@ -371,7 +371,7 @@ gvc_error_msg (BaconVideoWidget * gvc, GstMessage * msg)
     GST_ERROR ("code    = %d", err->code);
     GST_ERROR ("debug   = %s", GST_STR_NULL (dbg));
     GST_ERROR ("source  = %" GST_PTR_FORMAT, msg->src);
-    GST_ERROR ("uri     = %s", GST_STR_NULL (gvc->priv->mrl));
+    GST_ERROR ("uri     = %s", GST_STR_NULL (bvw->priv->mrl));
 
     g_message ("Error: %s\n%s\n", GST_STR_NULL (err->message),
         GST_STR_NULL (dbg));
@@ -382,18 +382,18 @@ gvc_error_msg (BaconVideoWidget * gvc, GstMessage * msg)
 }
 
 static void
-get_media_size (BaconVideoWidget *gvc, gint *width, gint *height)
+get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
 {
-  if (gvc->priv->logo_mode) {
-    if (gvc->priv->logo_pixbuf) {
-      *width = gdk_pixbuf_get_width (gvc->priv->logo_pixbuf);
-      *height = gdk_pixbuf_get_height (gvc->priv->logo_pixbuf);
+  if (bvw->priv->logo_mode) {
+    if (bvw->priv->logo_pixbuf) {
+      *width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
+      *height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
     } else {
       *width = 0;
       *height = 0;
     }
   } else {
-    if (gvc->priv->media_has_video) {
+    if (bvw->priv->media_has_video) {
       GValue * disp_par = NULL;
       guint movie_par_n, movie_par_d, disp_par_n, disp_par_d, num, den;
       
@@ -405,18 +405,18 @@ get_media_size (BaconVideoWidget *gvc, gint *width, gint *height)
       gst_value_set_fraction (disp_par, 1, 1);
     
       /* Now try getting display's pixel aspect ratio */
-      if (gvc->priv->xoverlay) {
+      if (bvw->priv->xoverlay) {
         GObjectClass *klass;
         GParamSpec *pspec;
 
-        klass = G_OBJECT_GET_CLASS (gvc->priv->xoverlay);
+        klass = G_OBJECT_GET_CLASS (bvw->priv->xoverlay);
         pspec = g_object_class_find_property (klass, "pixel-aspect-ratio");
       
         if (pspec != NULL) {
           GValue disp_par_prop = { 0, };
 
           g_value_init (&disp_par_prop, pspec->value_type);
-          g_object_get_property (G_OBJECT (gvc->priv->xoverlay),
+          g_object_get_property (G_OBJECT (bvw->priv->xoverlay),
               "pixel-aspect-ratio", &disp_par_prop);
 
           if (!g_value_transform (&disp_par_prop, disp_par)) {
@@ -434,26 +434,26 @@ get_media_size (BaconVideoWidget *gvc, gint *width, gint *height)
       GST_INFO ("display PAR is %d/%d", disp_par_n, disp_par_d);
       
       /* If movie pixel aspect ratio is enforced, use that */
-      if (gvc->priv->ratio_type != gvc_RATIO_AUTO) {
-        switch (gvc->priv->ratio_type) {
-          case gvc_RATIO_SQUARE:
+      if (bvw->priv->ratio_type != BVW_RATIO_AUTO) {
+        switch (bvw->priv->ratio_type) {
+          case BVW_RATIO_SQUARE:
             movie_par_n = 1;
             movie_par_d = 1;
             break;
-          case gvc_RATIO_FOURBYTHREE:
-            movie_par_n = 4 * gvc->priv->video_height;
-            movie_par_d = 3 * gvc->priv->video_width;
+          case BVW_RATIO_FOURBYTHREE:
+            movie_par_n = 4 * bvw->priv->video_height;
+            movie_par_d = 3 * bvw->priv->video_width;
             break;
-          case gvc_RATIO_ANAMORPHIC:
-            movie_par_n = 16 * gvc->priv->video_height;
-            movie_par_d = 9 * gvc->priv->video_width;
+          case BVW_RATIO_ANAMORPHIC:
+            movie_par_n = 16 * bvw->priv->video_height;
+            movie_par_d = 9 * bvw->priv->video_width;
             break;
-          case gvc_RATIO_DVB:
-            movie_par_n = 20 * gvc->priv->video_height;
-            movie_par_d = 9 * gvc->priv->video_width;
+          case BVW_RATIO_DVB:
+            movie_par_n = 20 * bvw->priv->video_height;
+            movie_par_d = 9 * bvw->priv->video_width;
             break;
           /* handle these to avoid compiler warnings */
-          case gvc_RATIO_AUTO:
+          case BVW_RATIO_AUTO:
           default:
             movie_par_n = 0;
             movie_par_d = 0;
@@ -462,10 +462,10 @@ get_media_size (BaconVideoWidget *gvc, gint *width, gint *height)
       }
       else {
         /* Use the movie pixel aspect ratio if any */
-        if (gvc->priv->movie_par) {
-          movie_par_n = gst_value_get_fraction_numerator (gvc->priv->movie_par);
+        if (bvw->priv->movie_par) {
+          movie_par_n = gst_value_get_fraction_numerator (bvw->priv->movie_par);
           movie_par_d =
-              gst_value_get_fraction_denominator (gvc->priv->movie_par);
+              gst_value_get_fraction_denominator (bvw->priv->movie_par);
         }
         else {
           /* Square pixels */
@@ -477,7 +477,7 @@ get_media_size (BaconVideoWidget *gvc, gint *width, gint *height)
       GST_INFO ("movie PAR is %d/%d", movie_par_n, movie_par_d);
 
       if (!gst_video_calculate_display_ratio (&num, &den,
-          gvc->priv->video_width, gvc->priv->video_height,
+          bvw->priv->video_width, bvw->priv->video_height,
           movie_par_n, movie_par_d, disp_par_n, disp_par_d)) {
         GST_WARNING ("overflow calculating display aspect ratio!");
         num = 1;   /* FIXME: what values to use here? */
@@ -485,7 +485,7 @@ get_media_size (BaconVideoWidget *gvc, gint *width, gint *height)
       }
 
       GST_INFO ("calculated scaling ratio %d/%d for video %dx%d", num, den,
-          gvc->priv->video_width, gvc->priv->video_height);
+          bvw->priv->video_width, bvw->priv->video_height);
       
       /* now find a width x height that respects this display ratio.
        * prefer those that have one of w/h the same as the incoming video
@@ -493,27 +493,27 @@ get_media_size (BaconVideoWidget *gvc, gint *width, gint *height)
     
       /* start with same height, because of interlaced video */
       /* check hd / den is an integer scale factor, and scale wd with the PAR */
-      if (gvc->priv->video_height % den == 0) {
+      if (bvw->priv->video_height % den == 0) {
         GST_INFO ("keeping video height");
-        gvc->priv->video_width_pixels =
-            (guint) gst_util_uint64_scale (gvc->priv->video_height, num, den);
-        gvc->priv->video_height_pixels = gvc->priv->video_height;
-      } else if (gvc->priv->video_width % num == 0) {
+        bvw->priv->video_width_pixels =
+            (guint) gst_util_uint64_scale (bvw->priv->video_height, num, den);
+        bvw->priv->video_height_pixels = bvw->priv->video_height;
+      } else if (bvw->priv->video_width % num == 0) {
         GST_INFO ("keeping video width");
-        gvc->priv->video_width_pixels = gvc->priv->video_width;
-        gvc->priv->video_height_pixels =
-            (guint) gst_util_uint64_scale (gvc->priv->video_width, den, num);
+        bvw->priv->video_width_pixels = bvw->priv->video_width;
+        bvw->priv->video_height_pixels =
+            (guint) gst_util_uint64_scale (bvw->priv->video_width, den, num);
       } else {
         GST_INFO ("approximating while keeping video height");
-        gvc->priv->video_width_pixels =
-            (guint) gst_util_uint64_scale (gvc->priv->video_height, num, den);
-        gvc->priv->video_height_pixels = gvc->priv->video_height;
+        bvw->priv->video_width_pixels =
+            (guint) gst_util_uint64_scale (bvw->priv->video_height, num, den);
+        bvw->priv->video_height_pixels = bvw->priv->video_height;
       }
-      GST_INFO ("scaling to %dx%d", gvc->priv->video_width_pixels,
-          gvc->priv->video_height_pixels);
+      GST_INFO ("scaling to %dx%d", bvw->priv->video_width_pixels,
+          bvw->priv->video_height_pixels);
       
-      *width = gvc->priv->video_width_pixels;
-      *height = gvc->priv->video_height_pixels;
+      *width = bvw->priv->video_width_pixels;
+      *height = bvw->priv->video_height_pixels;
       
       /* Free the PAR fraction */
       g_value_unset (disp_par);
@@ -541,7 +541,7 @@ get_media_size (BaconVideoWidget *gvc, gint *width, gint *height)
 
 
 static gboolean
-gvc_boolean_handled_accumulator (GSignalInvocationHint * ihint,
+BVW_boolean_handled_accumulator (GSignalInvocationHint * ihint,
     GValue * return_accu, const GValue * handler_return, gpointer foobar)
 {
   gboolean continue_emission;
@@ -610,7 +610,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   
 
   /* Signals */
-  gvc_signals[SIGNAL_ERROR] =
+  BVW_signals[SIGNAL_ERROR] =
     g_signal_new ("error",
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
@@ -619,42 +619,42 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   g_cclosure_marshal_VOID__STRING,
                   G_TYPE_NONE, 1, G_TYPE_STRING);
 
-  gvc_signals[SIGNAL_EOS] =
+  BVW_signals[SIGNAL_EOS] =
     g_signal_new ("eos",
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (BaconVideoWidgetClass, eos),
                   NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
   
-  gvc_signals[SIGNAL_SEGMENT_DONE] =
+  BVW_signals[SIGNAL_SEGMENT_DONE] =
     g_signal_new ("segment_done",
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (BaconVideoWidgetClass, segment_done),
                   NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);  
                   
-    gvc_signals[SIGNAL_READY_TO_SEEK] =
+    BVW_signals[SIGNAL_READY_TO_SEEK] =
     g_signal_new ("ready_to_seek",
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (BaconVideoWidgetClass, ready_to_seek),
                   NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
                   
-  gvc_signals[SIGNAL_GOT_DURATION] =
+  BVW_signals[SIGNAL_GOT_DURATION] =
     g_signal_new ("got_duration",
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (BaconVideoWidgetClass, got_duration),
                   NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
-  gvc_signals[SIGNAL_GOT_METADATA] =
+  BVW_signals[SIGNAL_GOT_METADATA] =
     g_signal_new ("got-metadata",
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (BaconVideoWidgetClass, got_metadata),
                   NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
-  gvc_signals[SIGNAL_REDIRECT] =
+  BVW_signals[SIGNAL_REDIRECT] =
     g_signal_new ("got-redirect",
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
@@ -662,7 +662,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   NULL, NULL, g_cclosure_marshal_VOID__STRING,
                   G_TYPE_NONE, 1, G_TYPE_STRING);
 
-  gvc_signals[SIGNAL_TITLE_CHANGE] =
+  BVW_signals[SIGNAL_TITLE_CHANGE] =
     g_signal_new ("title-change",
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
@@ -671,14 +671,14 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   g_cclosure_marshal_VOID__STRING,
                   G_TYPE_NONE, 1, G_TYPE_STRING);
 
-  gvc_signals[SIGNAL_CHANNELS_CHANGE] =
+  BVW_signals[SIGNAL_CHANNELS_CHANGE] =
     g_signal_new ("channels-change",
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (BaconVideoWidgetClass, channels_change),
                   NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
-  gvc_signals[SIGNAL_TICK] =
+  BVW_signals[SIGNAL_TICK] =
     g_signal_new ("tick",
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
@@ -688,7 +688,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   G_TYPE_NONE, 4, G_TYPE_INT64, G_TYPE_INT64, G_TYPE_FLOAT,
                   G_TYPE_BOOLEAN);
 
-  gvc_signals[SIGNAL_BUFFERING] =
+  BVW_signals[SIGNAL_BUFFERING] =
     g_signal_new ("buffering",
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
@@ -696,7 +696,7 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   NULL, NULL,
                   g_cclosure_marshal_VOID__INT, G_TYPE_NONE, 1, G_TYPE_INT);
                   
-    gvc_signals[SIGNAL_STATE_CHANGED] =
+    BVW_signals[SIGNAL_STATE_CHANGED] =
     g_signal_new ("state_changed",
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
@@ -712,24 +712,24 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
    *  return value: callback must return TRUE to indicate that it took some
    *                action, FALSE will be interpreted as no action taken
    */
-  gvc_signals[SIGNAL_MISSING_PLUGINS] =
+  BVW_signals[SIGNAL_MISSING_PLUGINS] =
     g_signal_new ("missing-plugins",
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
                   0, /* signal is enough, we don't need a vfunc */
-                  gvc_boolean_handled_accumulator, NULL,
+                  BVW_boolean_handled_accumulator, NULL,
                   baconvideowidget_marshal_BOOLEAN__BOXED_BOXED_BOOLEAN,
                   G_TYPE_BOOLEAN, 3, G_TYPE_STRV, G_TYPE_STRV, G_TYPE_BOOLEAN);
 }
 
 static void
-bacon_video_widget_init (BaconVideoWidget * gvc)
+bacon_video_widget_init (BaconVideoWidget * bvw)
 {
   BaconVideoWidgetPrivate *priv;
 
 
 
-  gvc->priv = priv = G_TYPE_INSTANCE_GET_PRIVATE (gvc, BACON_TYPE_VIDEO_WIDGET, BaconVideoWidgetPrivate);
+  bvw->priv = priv = G_TYPE_INSTANCE_GET_PRIVATE (bvw, BACON_TYPE_VIDEO_WIDGET, BaconVideoWidgetPrivate);
 
   
   priv->update_id = 0;
@@ -739,31 +739,31 @@ bacon_video_widget_init (BaconVideoWidget * gvc)
 
   priv->lock = g_mutex_new ();
 
-  gvc->priv->missing_plugins = NULL;
-  gvc->priv->plugin_install_in_progress = FALSE;
+  bvw->priv->missing_plugins = NULL;
+  bvw->priv->plugin_install_in_progress = FALSE;
 }
 
 
 
-static gboolean gvc_query_timeout (BaconVideoWidget *gvc);
-static void parse_stream_info (BaconVideoWidget *gvc);
+static gboolean BVW_query_timeout (BaconVideoWidget *bvw);
+static void parse_stream_info (BaconVideoWidget *bvw);
 
 static void
-gvc_update_stream_info (BaconVideoWidget *gvc)
+BVW_update_stream_info (BaconVideoWidget *bvw)
 {
-  parse_stream_info (gvc);
+  parse_stream_info (bvw);
 
   /* if we're not interactive, we want to announce metadata
    * only later when we can be sure we got it all */
-  if (gvc->priv->use_type == gvc_USE_TYPE_VIDEO ||
-      gvc->priv->use_type == gvc_USE_TYPE_AUDIO) {
-    g_signal_emit (gvc, gvc_signals[SIGNAL_GOT_METADATA], 0, NULL);
-    g_signal_emit (gvc, gvc_signals[SIGNAL_CHANNELS_CHANGE], 0);
+  if (bvw->priv->use_type == BVW_USE_TYPE_VIDEO ||
+      bvw->priv->use_type == BVW_USE_TYPE_AUDIO) {
+    g_signal_emit (bvw, BVW_signals[SIGNAL_GOT_METADATA], 0, NULL);
+    g_signal_emit (bvw, BVW_signals[SIGNAL_CHANNELS_CHANGE], 0);
   }
 }
 
 static void
-gvc_handle_application_message (BaconVideoWidget *gvc, GstMessage *msg)
+BVW_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
 {
   const gchar *msg_name;
   gint h;
@@ -775,18 +775,18 @@ gvc_handle_application_message (BaconVideoWidget *gvc, GstMessage *msg)
   GST_INFO ("Handling application message: %" GST_PTR_FORMAT, msg->structure);
 
   if (strcmp (msg_name, "notify-streaminfo") == 0) {
-    gvc_update_stream_info (gvc);
+    BVW_update_stream_info (bvw);
   } 
   else if (strcmp (msg_name, "video-size") == 0) {
     /* if we're not interactive, we want to announce metadata
      * only later when we can be sure we got it all */
-    if (gvc->priv->use_type == gvc_USE_TYPE_VIDEO ||
-        gvc->priv->use_type == gvc_USE_TYPE_AUDIO) {
-      g_signal_emit (gvc, gvc_signals[SIGNAL_GOT_METADATA], 0, NULL);
+    if (bvw->priv->use_type == BVW_USE_TYPE_VIDEO ||
+        bvw->priv->use_type == BVW_USE_TYPE_AUDIO) {
+      g_signal_emit (bvw, BVW_signals[SIGNAL_GOT_METADATA], 0, NULL);
     }
 
-      get_media_size (gvc, &w, &h);
-      gst_video_widget_set_source_size (GST_VIDEO_WIDGET(gvc->priv->video_window), w, h);
+      get_media_size (bvw, &w, &h);
+      gst_video_widget_set_source_size (GST_VIDEO_WIDGET(bvw->priv->video_window), w, h);
    
   } else {
     g_message ("Unhandled application message %s", msg_name);
@@ -794,7 +794,7 @@ gvc_handle_application_message (BaconVideoWidget *gvc, GstMessage *msg)
 }
 
 static void
-gvc_handle_element_message (BaconVideoWidget *gvc, GstMessage *msg)
+BVW_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
 {
   const gchar *type_name = NULL;
   gchar *src_name;
@@ -815,18 +815,18 @@ gvc_handle_element_message (BaconVideoWidget *gvc, GstMessage *msg)
     GST_INFO ("Got redirect to '%s'", GST_STR_NULL (new_location));
 
     if (new_location && *new_location) {
-      g_signal_emit (gvc, gvc_signals[SIGNAL_REDIRECT], 0, new_location);
+      g_signal_emit (bvw, BVW_signals[SIGNAL_REDIRECT], 0, new_location);
       goto done;
     }
   } else if (strcmp (type_name, "progress") == 0) {
     /* this is similar to buffering messages, but shouldn't affect pipeline
      * state; qtdemux emits those when headers are after movie data and
      * it is in streaming mode and has to receive all the movie data first */
-    if (!gvc->priv->buffering) {
+    if (!bvw->priv->buffering) {
       gint percent = 0;
 
       if (gst_structure_get_int (msg->structure, "percent", &percent))
-        g_signal_emit (gvc, gvc_signals[SIGNAL_BUFFERING], 0, percent);
+        g_signal_emit (bvw, BVW_signals[SIGNAL_BUFFERING], 0, percent);
     }
     goto done;
   } else if (strcmp (type_name, "prepare-xwindow-id") == 0 ||
@@ -834,8 +834,8 @@ gvc_handle_element_message (BaconVideoWidget *gvc, GstMessage *msg)
     /* we handle these synchronously or want to ignore them */
     goto done;
   } else if (gst_is_missing_plugin_message (msg)) {
-    gvc->priv->missing_plugins =
-      g_list_prepend (gvc->priv->missing_plugins, gst_message_ref (msg));
+    bvw->priv->missing_plugins =
+      g_list_prepend (bvw->priv->missing_plugins, gst_message_ref (msg));
     goto done;
   }
 
@@ -852,51 +852,46 @@ done:
  * and deadlocking there. We need something like a
  * gst_bus_set_auto_flushing(bus, FALSE) ... */
 static gboolean
-gvc_signal_eos_delayed (gpointer user_data)
+BVW_signal_eos_delayed (gpointer user_data)
 {
-  BaconVideoWidget *gvc = BACON_VIDEO_WIDGET (user_data);
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (user_data);
   g_print("EOS delayed\n");
-  g_signal_emit (gvc, gvc_signals[SIGNAL_EOS], 0, NULL);
-  gvc->priv->eos_id = 0;
+  g_signal_emit (bvw, BVW_signals[SIGNAL_EOS], 0, NULL);
+  bvw->priv->eos_id = 0;
   return FALSE;
 }
 
 static void
-gvc_reconfigure_tick_timeout (BaconVideoWidget *gvc, guint msecs)
+BVW_reconfigure_tick_timeout (BaconVideoWidget *bvw, guint msecs)
 {
-  if (gvc->priv->update_id != 0) {
+  if (bvw->priv->update_id != 0) {
     GST_INFO ("removing tick timeout");
-    g_source_remove (gvc->priv->update_id);
-    gvc->priv->update_id = 0;
+    g_source_remove (bvw->priv->update_id);
+    bvw->priv->update_id = 0;
   }
   if (msecs > 0) {
     GST_INFO ("adding tick timeout (at %ums)", msecs);
-    gvc->priv->update_id =
-      g_timeout_add (msecs, (GSourceFunc) gvc_query_timeout, gvc);
+    bvw->priv->update_id =
+      g_timeout_add (msecs, (GSourceFunc) BVW_query_timeout, bvw);
   }
 }
 
 static gboolean
-gvc_expose_event (GtkWidget *widget, GdkEventExpose *event, gpointer user_data)
+BVW_expose_event (GtkWidget *widget, GdkEventExpose *event, gpointer user_data)
 {
-	BaconVideoWidget *gvc;
-
+	BaconVideoWidget *bvw;
 	
 	g_return_val_if_fail (widget != NULL, FALSE);
   	g_return_val_if_fail (GST_IS_VIDEO_WIDGET (widget), FALSE);
   	g_return_val_if_fail (event != NULL, FALSE);
-  	
-	gvc = BACON_VIDEO_WIDGET (user_data);  	
 
+	bvw = BACON_VIDEO_WIDGET (user_data);  
 	
 	 //Pass the expose to the widget
 	gst_video_widget_force_expose(widget,event);
 	 
-    if (gvc->priv->xoverlay != NULL && !gvc->priv->logo_mode)
-      gst_x_overlay_expose (gvc->priv->xoverlay);
-  
-	
-		
+    if (bvw->priv->xoverlay != NULL && !bvw->priv->logo_mode)
+      gst_x_overlay_expose (bvw->priv->xoverlay);		
    
    return TRUE;
 
@@ -907,17 +902,17 @@ gvc_expose_event (GtkWidget *widget, GdkEventExpose *event, gpointer user_data)
 
 /* returns TRUE if the error/signal has been handled and should be ignored */
 static gboolean
-gvc_emit_missing_plugins_signal (BaconVideoWidget * gvc, gboolean prerolled)
+BVW_emit_missing_plugins_signal (BaconVideoWidget * bvw, gboolean prerolled)
 {
   gboolean handled = FALSE;
   gchar **descriptions, **details;
 
-  details = gvc_get_missing_plugins_details (gvc->priv->missing_plugins);
-  descriptions = gvc_get_missing_plugins_descriptions (gvc->priv->missing_plugins);
+  details = BVW_get_missing_plugins_details (bvw->priv->missing_plugins);
+  descriptions = BVW_get_missing_plugins_descriptions (bvw->priv->missing_plugins);
 
   GST_LOG ("emitting missing-plugins signal (prerolled=%d)", prerolled);
 
-  g_signal_emit (gvc, gvc_signals[SIGNAL_MISSING_PLUGINS], 0,
+  g_signal_emit (bvw, BVW_signals[SIGNAL_MISSING_PLUGINS], 0,
       details, descriptions, prerolled, &handled);
   GST_INFO ("missing-plugins signal was %shandled", (handled) ? "" : "not ");
 
@@ -925,8 +920,8 @@ gvc_emit_missing_plugins_signal (BaconVideoWidget * gvc, gboolean prerolled)
   g_strfreev (details);
 
   if (handled) {
-    gvc->priv->plugin_install_in_progress = TRUE;
-    gvc_clear_missing_plugins_messages (gvc);
+    bvw->priv->plugin_install_in_progress = TRUE;
+    BVW_clear_missing_plugins_messages (bvw);
   }
 
   /* if it wasn't handled, we might need the list of missing messages again
@@ -937,20 +932,20 @@ gvc_emit_missing_plugins_signal (BaconVideoWidget * gvc, gboolean prerolled)
 
 /* returns TRUE if the error has been handled and should be ignored */
 static gboolean
-gvc_check_missing_plugins_error (BaconVideoWidget * gvc, GstMessage * err_msg)
+BVW_check_missing_plugins_error (BaconVideoWidget * bvw, GstMessage * err_msg)
 {
   gboolean error_src_is_playbin;
   gboolean ret = FALSE;
   GError *err = NULL;
 
-  if (gvc->priv->missing_plugins == NULL) {
+  if (bvw->priv->missing_plugins == NULL) {
     GST_INFO ("no missing-plugin messages");
     return FALSE;
   }
 
   gst_message_parse_error (err_msg, &err, NULL);
 
-  error_src_is_playbin = (err_msg->src == GST_OBJECT_CAST (gvc->priv->play));
+  error_src_is_playbin = (err_msg->src == GST_OBJECT_CAST (bvw->priv->play));
 
   /* If we get a WRONG_TYPE error from playbin itself it's most likely because
    * there is a subtitle stream we can decode, but no video stream to overlay
@@ -960,11 +955,11 @@ gvc_check_missing_plugins_error (BaconVideoWidget * gvc, GstMessage * err_msg)
   if (is_error (err, CORE, MISSING_PLUGIN) ||
       is_error (err, STREAM, CODEC_NOT_FOUND) ||
       (is_error (err, STREAM, WRONG_TYPE) && error_src_is_playbin)) {
-    ret = gvc_emit_missing_plugins_signal (gvc, FALSE);
+    ret = BVW_emit_missing_plugins_signal (bvw, FALSE);
     if (ret) {
       /* If it was handled, stop playback to make sure we're not processing any
        * other error messages that might also be on the bus */
-      bacon_video_widget_stop (gvc);
+      bacon_video_widget_stop (bvw);
     }
   } else {
     GST_INFO ("not an error code we are looking for, doing nothing");
@@ -976,29 +971,30 @@ gvc_check_missing_plugins_error (BaconVideoWidget * gvc, GstMessage * err_msg)
 
 /* returns TRUE if the error/signal has been handled and should be ignored */
 static gboolean
-gvc_check_missing_plugins_on_preroll (BaconVideoWidget * gvc)
+BVW_check_missing_plugins_on_preroll (BaconVideoWidget * bvw)
 {
-  if (gvc->priv->missing_plugins == NULL) {
+  if (bvw->priv->missing_plugins == NULL) {
+
     GST_INFO ("no missing-plugin messages");
     return FALSE;
   }
 
-  return gvc_emit_missing_plugins_signal (gvc, TRUE); 
+  return BVW_emit_missing_plugins_signal (bvw, TRUE); 
 }
 
 static void
-gvc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
+BVW_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 {
-  BaconVideoWidget *gvc = (BaconVideoWidget *) data;
+  BaconVideoWidget *bvw = (BaconVideoWidget *) data;
   GstMessageType msg_type;
 
-  g_return_if_fail (gvc != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (gvc));
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
   msg_type = GST_MESSAGE_TYPE (message);
 
   /* somebody else is handling the message, probably in poll_for_state_change */
-  if (gvc->priv->ignore_messages_mask & msg_type) {
+  if (bvw->priv->ignore_messages_mask & msg_type) {
     GST_LOG ("Ignoring %s message from element %" GST_PTR_FORMAT
         " as requested: %" GST_PTR_FORMAT, GST_MESSAGE_TYPE_NAME (message),
         message->src, message);
@@ -1015,21 +1011,21 @@ gvc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
   switch (msg_type) {
     case GST_MESSAGE_ERROR: {
 
-      gvc_error_msg (gvc, message);
+      BVW_error_msg (bvw, message);
 
-      if (!gvc_check_missing_plugins_error (gvc, message)) {
+      if (!BVW_check_missing_plugins_error (bvw, message)) {
         GError *error;
 
-        error = gvc_error_from_gst_error (gvc, message);
+        error = BVW_error_from_gst_error (bvw, message);
 
-        g_signal_emit (gvc, gvc_signals[SIGNAL_ERROR], 0,
+        g_signal_emit (bvw, BVW_signals[SIGNAL_ERROR], 0,
                        error->message);
 
-        if (gvc->priv->play)
-          gst_element_set_state (gvc->priv->play, GST_STATE_NULL);
+        if (bvw->priv->play)
+          gst_element_set_state (bvw->priv->play, GST_STATE_NULL);
 
-        gvc->priv->target_state = GST_STATE_NULL;
-        gvc->priv->buffering = FALSE;
+        bvw->priv->target_state = GST_STATE_NULL;
+        bvw->priv->buffering = FALSE;
         g_error_free (error);
       }
       break;
@@ -1048,11 +1044,11 @@ gvc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 
       /* all tags (replace previous tags, title/artist/etc. might change
        * in the middle of a stream, e.g. with radio streams) */
-      result = gst_tag_list_merge (gvc->priv->tagcache, tag_list,
+      result = gst_tag_list_merge (bvw->priv->tagcache, tag_list,
                                    GST_TAG_MERGE_REPLACE);
-      if (gvc->priv->tagcache)
-        gst_tag_list_free (gvc->priv->tagcache);
-      gvc->priv->tagcache = result;
+      if (bvw->priv->tagcache)
+        gst_tag_list_free (bvw->priv->tagcache);
+      bvw->priv->tagcache = result;
 
       /* media-type-specific tags */
       if (GST_IS_ELEMENT (message->src) &&
@@ -1061,9 +1057,9 @@ gvc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
         GstTagList **cache = NULL;
 
         if (g_strrstr (klass, "Video")) {
-          cache = &gvc->priv->videotags;
+          cache = &bvw->priv->videotags;
         } else if (g_strrstr (klass, "Audio")) {
-          cache = &gvc->priv->audiotags;
+          cache = &bvw->priv->audiotags;
         }
 
         if (cache) {
@@ -1079,22 +1075,22 @@ gvc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 
       /* if we're not interactive, we want to announce metadata
        * only later when we can be sure we got it all */
-      if (gvc->priv->use_type == gvc_USE_TYPE_VIDEO ||
-          gvc->priv->use_type == gvc_USE_TYPE_AUDIO) {
-        g_signal_emit (gvc, gvc_signals[SIGNAL_GOT_METADATA], 0);
+      if (bvw->priv->use_type == BVW_USE_TYPE_VIDEO ||
+          bvw->priv->use_type == BVW_USE_TYPE_AUDIO) {
+        g_signal_emit (bvw, BVW_signals[SIGNAL_GOT_METADATA], 0);
       }
       break;
     }
     case GST_MESSAGE_EOS:
       GST_INFO ("EOS message");
       /* update slider one last time */
-      gvc_query_timeout (gvc);
-      if (gvc->priv->eos_id == 0)
-        gvc->priv->eos_id = g_idle_add (gvc_signal_eos_delayed, gvc);
+      BVW_query_timeout (bvw);
+      if (bvw->priv->eos_id == 0)
+        bvw->priv->eos_id = g_idle_add (BVW_signal_eos_delayed, bvw);
       break;
 	  
 	case GST_MESSAGE_SEGMENT_DONE:
-		g_signal_emit (gvc, gvc_signals[SIGNAL_SEGMENT_DONE], 0);
+		g_signal_emit (bvw, BVW_signals[SIGNAL_SEGMENT_DONE], 0);
 		break;
 	
     case GST_MESSAGE_BUFFERING: {
@@ -1102,37 +1098,37 @@ gvc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 
       /* FIXME: use gst_message_parse_buffering() once core 0.10.11 is out */
       gst_structure_get_int (message->structure, "buffer-percent", &percent);
-      g_signal_emit (gvc, gvc_signals[SIGNAL_BUFFERING], 0, percent);
+      g_signal_emit (bvw, BVW_signals[SIGNAL_BUFFERING], 0, percent);
 
       if (percent >= 100) {
         /* a 100% message means buffering is done */
-        gvc->priv->buffering = FALSE;
+        bvw->priv->buffering = FALSE;
         /* if the desired state is playing, go back */
-        if (gvc->priv->target_state == GST_STATE_PLAYING) {
+        if (bvw->priv->target_state == GST_STATE_PLAYING) {
           GST_INFO ("Buffering done, setting pipeline back to PLAYING");
-          gst_element_set_state (gvc->priv->play, GST_STATE_PLAYING);
+          gst_element_set_state (bvw->priv->play, GST_STATE_PLAYING);
         } else {
           GST_INFO ("Buffering done, keeping pipeline PAUSED");
         }
-      } else if (gvc->priv->buffering == FALSE &&
-          gvc->priv->target_state == GST_STATE_PLAYING) {
+      } else if (bvw->priv->buffering == FALSE &&
+          bvw->priv->target_state == GST_STATE_PLAYING) {
         GstState cur_state;
 
-        gst_element_get_state (gvc->priv->play, &cur_state, NULL, 0);
+        gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
         if (cur_state == GST_STATE_PLAYING) {
           GST_INFO ("Buffering ... temporarily pausing playback");
-          gst_element_set_state (gvc->priv->play, GST_STATE_PAUSED);
+          gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED);
         } else {
           GST_INFO ("Buffering ... prerolling, not doing anything");
         }
-        gvc->priv->buffering = TRUE;
+        bvw->priv->buffering = TRUE;
       } else {
         GST_LOG ("Buffering ... %d", percent);
       }
       break;
     }
     case GST_MESSAGE_APPLICATION: {
-      gvc_handle_application_message (gvc, message);
+      BVW_handle_application_message (bvw, message);
       break;
     }
     case GST_MESSAGE_STATE_CHANGED: {
@@ -1145,7 +1141,7 @@ gvc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
         break;
 
       /* we only care about playbin (pipeline) state changes */
-      if (GST_MESSAGE_SRC (message) != GST_OBJECT (gvc->priv->play))
+      if (GST_MESSAGE_SRC (message) != GST_OBJECT (bvw->priv->play))
         break;
 
       src_name = gst_object_get_name (message->src);
@@ -1157,63 +1153,63 @@ gvc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 
       /* now do stuff */
       if (new_state < GST_STATE_PAUSED) {
-        gvc_reconfigure_tick_timeout (gvc, 0);
+        BVW_reconfigure_tick_timeout (bvw, 0);
         
-        g_signal_emit (gvc, gvc_signals[SIGNAL_STATE_CHANGED], 0, FALSE);
+        g_signal_emit (bvw, BVW_signals[SIGNAL_STATE_CHANGED], 0, FALSE);
       } else if (new_state == GST_STATE_PAUSED) {
         // yes, we need to keep the tick timeout running in PAUSED state
         //  as well, totem depends on that (use lower frequency though) 
        
-	    gvc_reconfigure_tick_timeout (gvc, 500);
-	    g_signal_emit (gvc, gvc_signals[SIGNAL_STATE_CHANGED], 0, FALSE);
-	    g_signal_emit (gvc, gvc_signals[SIGNAL_READY_TO_SEEK], 0, FALSE);
+	    BVW_reconfigure_tick_timeout (bvw, 500);
+	    g_signal_emit (bvw, BVW_signals[SIGNAL_STATE_CHANGED], 0, FALSE);
+	    g_signal_emit (bvw, BVW_signals[SIGNAL_READY_TO_SEEK], 0, FALSE);
       } else if (new_state > GST_STATE_PAUSED) {
-        gvc_reconfigure_tick_timeout (gvc, 200);
-        g_signal_emit (gvc, gvc_signals[SIGNAL_STATE_CHANGED], 0, TRUE);
+        BVW_reconfigure_tick_timeout (bvw, 200);
+        g_signal_emit (bvw, BVW_signals[SIGNAL_STATE_CHANGED], 0, TRUE);
       }
 
       if (old_state == GST_STATE_READY && new_state == GST_STATE_PAUSED) {
-        gvc_update_stream_info (gvc);
-        if (!gvc_check_missing_plugins_on_preroll (gvc)) {
+        BVW_update_stream_info (bvw);
+        if (!BVW_check_missing_plugins_on_preroll (bvw)) {
           /* show a non-fatal warning message if we can't decode the video */
-          gvc_check_if_video_decoder_is_missing (gvc);
+          BVW_check_if_video_decoder_is_missing (bvw);
         }
       } else if (old_state == GST_STATE_PAUSED && new_state == GST_STATE_READY) {
-        gvc->priv->media_has_video = FALSE;
-        gvc->priv->media_has_audio = FALSE;
+        bvw->priv->media_has_video = FALSE;
+        bvw->priv->media_has_audio = FALSE;
 
         /* clean metadata cache */
-        if (gvc->priv->tagcache) {
-          gst_tag_list_free (gvc->priv->tagcache);
-          gvc->priv->tagcache = NULL;
+        if (bvw->priv->tagcache) {
+          gst_tag_list_free (bvw->priv->tagcache);
+          bvw->priv->tagcache = NULL;
         }
-        if (gvc->priv->audiotags) {
-          gst_tag_list_free (gvc->priv->audiotags);
-          gvc->priv->audiotags = NULL;
+        if (bvw->priv->audiotags) {
+          gst_tag_list_free (bvw->priv->audiotags);
+          bvw->priv->audiotags = NULL;
         }
-        if (gvc->priv->videotags) {
-          gst_tag_list_free (gvc->priv->videotags);
-          gvc->priv->videotags = NULL;
+        if (bvw->priv->videotags) {
+          gst_tag_list_free (bvw->priv->videotags);
+          bvw->priv->videotags = NULL;
         }
 
-        gvc->priv->video_width = 0;
-        gvc->priv->video_height = 0;
+        bvw->priv->video_width = 0;
+        bvw->priv->video_height = 0;
       }
       break;
     }
     case GST_MESSAGE_ELEMENT:{
-      gvc_handle_element_message (gvc, message);
+      BVW_handle_element_message (bvw, message);
       break;
     }
 
     case GST_MESSAGE_DURATION: {
       /* force _get_stream_length() to do new duration query */
-      gvc->priv->stream_length = 0;
-      if (bacon_video_widget_get_stream_length (gvc) == 0) {
+      bvw->priv->stream_length = 0;
+      if (bacon_video_widget_get_stream_length (bvw) == 0) {
         GST_INFO ("Failed to query duration after DURATION message?!");
       }
       else
-      	g_signal_emit (gvc, gvc_signals[SIGNAL_GOT_DURATION], 0, NULL);
+      	g_signal_emit (bvw, BVW_signals[SIGNAL_GOT_DURATION], 0, NULL);
       break;
     }
 
@@ -1232,104 +1228,104 @@ gvc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 /* FIXME: how to recognise this in 0.9? */
 #if 0
 static void
-group_switch (GstElement *play, BaconVideoWidget *gvc)
+group_switch (GstElement *play, BaconVideoWidget *bvw)
 {
   GstMessage *msg;
 
-  g_return_if_fail (gvc != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (gvc));
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
-  if (gvc->priv->tagcache) {
-    gst_tag_list_free (gvc->priv->tagcache);
-    gvc->priv->tagcache = NULL;
+  if (bvw->priv->tagcache) {
+    gst_tag_list_free (bvw->priv->tagcache);
+    bvw->priv->tagcache = NULL;
   }
-  if (gvc->priv->audiotags) {
-    gst_tag_list_free (gvc->priv->audiotags);
-    gvc->priv->audiotags = NULL;
+  if (bvw->priv->audiotags) {
+    gst_tag_list_free (bvw->priv->audiotags);
+    bvw->priv->audiotags = NULL;
   }
-  if (gvc->priv->videotags) {
-    gst_tag_list_free (gvc->priv->videotags);
-    gvc->priv->videotags = NULL;
+  if (bvw->priv->videotags) {
+    gst_tag_list_free (bvw->priv->videotags);
+    bvw->priv->videotags = NULL;
   }
 
-  msg = gst_message_new_application (GST_OBJECT (gvc->priv->play),
+  msg = gst_message_new_application (GST_OBJECT (bvw->priv->play),
       gst_structure_new ("notify-streaminfo", NULL));
-  gst_element_post_message (gvc->priv->play, msg);
+  gst_element_post_message (bvw->priv->play, msg);
 }
 #endif
 
 static void
-got_video_size (BaconVideoWidget * gvc)
+got_video_size (BaconVideoWidget * bvw)
 {
   GstMessage *msg;
 
-  g_return_if_fail (gvc != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (gvc));
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
-  msg = gst_message_new_application (GST_OBJECT (gvc->priv->play),
+  msg = gst_message_new_application (GST_OBJECT (bvw->priv->play),
       gst_structure_new ("video-size", "width", G_TYPE_INT,
-          gvc->priv->video_width, "height", G_TYPE_INT,
-          gvc->priv->video_height, NULL));
-  gst_element_post_message (gvc->priv->play, msg);
+          bvw->priv->video_width, "height", G_TYPE_INT,
+          bvw->priv->video_height, NULL));
+  gst_element_post_message (bvw->priv->play, msg);
 }
 
 static void
-got_time_tick (GstElement * play, gint64 time_nanos, BaconVideoWidget * gvc)
+got_time_tick (GstElement * play, gint64 time_nanos, BaconVideoWidget * bvw)
 {
   gboolean seekable;
 
-  g_return_if_fail (gvc != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (gvc));
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
  
 
-  gvc->priv->current_time_nanos = time_nanos;
+  bvw->priv->current_time_nanos = time_nanos;
 
-  gvc->priv->current_time = (gint64) time_nanos / GST_MSECOND;
+  bvw->priv->current_time = (gint64) time_nanos / GST_MSECOND;
 
-  if (gvc->priv->stream_length == 0) {
-    gvc->priv->current_position = 0;
+  if (bvw->priv->stream_length == 0) {
+    bvw->priv->current_position = 0;
   } else {
-    gvc->priv->current_position =
-      (gfloat) gvc->priv->current_time / gvc->priv->stream_length;
+    bvw->priv->current_position =
+      (gfloat) bvw->priv->current_time / bvw->priv->stream_length;
   }
 
-  if (gvc->priv->stream_length == 0) {
-    seekable = bacon_video_widget_is_seekable (gvc);
+  if (bvw->priv->stream_length == 0) {
+    seekable = bacon_video_widget_is_seekable (bvw);
   } else {
     seekable = TRUE;
   }
 
 /*
   GST_INFO ("%" GST_TIME_FORMAT ",%" GST_TIME_FORMAT " %s",
-      GST_TIME_ARGS (gvc->priv->current_time),
-      GST_TIME_ARGS (gvc->priv->stream_length),
+      GST_TIME_ARGS (bvw->priv->current_time),
+      GST_TIME_ARGS (bvw->priv->stream_length),
       (seekable) ? "TRUE" : "FALSE");
 */
   
-  g_signal_emit (gvc, gvc_signals[SIGNAL_TICK], 0,
-                 gvc->priv->current_time, gvc->priv->stream_length,
-                 gvc->priv->current_position,
+  g_signal_emit (bvw, BVW_signals[SIGNAL_TICK], 0,
+                 bvw->priv->current_time, bvw->priv->stream_length,
+                 bvw->priv->current_position,
                  seekable);
 }
 
 static void
-playbin_source_notify_cb (GObject *play, GParamSpec *p, BaconVideoWidget *gvc)
+playbin_source_notify_cb (GObject *play, GParamSpec *p, BaconVideoWidget *bvw)
 {
   GObject *source = NULL;
 
   /* CHECKME: do we really need these taglist frees here (tpm)? */
-  if (gvc->priv->tagcache) {
-    gst_tag_list_free (gvc->priv->tagcache);
-    gvc->priv->tagcache = NULL;
+  if (bvw->priv->tagcache) {
+    gst_tag_list_free (bvw->priv->tagcache);
+    bvw->priv->tagcache = NULL;
   }
-  if (gvc->priv->audiotags) {
-    gst_tag_list_free (gvc->priv->audiotags);
-    gvc->priv->audiotags = NULL;
+  if (bvw->priv->audiotags) {
+    gst_tag_list_free (bvw->priv->audiotags);
+    bvw->priv->audiotags = NULL;
   }
-  if (gvc->priv->videotags) {
-    gst_tag_list_free (gvc->priv->videotags);
-    gvc->priv->videotags = NULL;
+  if (bvw->priv->videotags) {
+    gst_tag_list_free (bvw->priv->videotags);
+    bvw->priv->videotags = NULL;
   }
 
   g_object_get (play, "source", &source, NULL);
@@ -1338,10 +1334,10 @@ playbin_source_notify_cb (GObject *play, GParamSpec *p, BaconVideoWidget *gvc)
 
   GST_INFO ("Got source of type %s", G_OBJECT_TYPE_NAME (source));
 
-  if (gvc->priv->media_device) {
+  if (bvw->priv->media_device) {
     if (g_object_class_find_property (G_OBJECT_GET_CLASS (source), "device")) {
-      GST_INFO ("Setting device to '%s'", gvc->priv->media_device);
-      g_object_set (source, "device", gvc->priv->media_device, NULL);
+      GST_INFO ("Setting device to '%s'", bvw->priv->media_device);
+      g_object_set (source, "device", bvw->priv->media_device, NULL);
     }
   }
 
@@ -1349,28 +1345,28 @@ playbin_source_notify_cb (GObject *play, GParamSpec *p, BaconVideoWidget *gvc)
 }
 
 static gboolean
-gvc_query_timeout (BaconVideoWidget *gvc)
+BVW_query_timeout (BaconVideoWidget *bvw)
 {
   GstFormat fmt = GST_FORMAT_TIME;
   gint64 prev_len = -1;
   gint64 pos = -1, len = -1;
   
   /* check length/pos of stream */
-  prev_len = gvc->priv->stream_length;
-  if (gst_element_query_duration (gvc->priv->play, &fmt, &len)) {
+  prev_len = bvw->priv->stream_length;
+  if (gst_element_query_duration (bvw->priv->play, &fmt, &len)) {
     if (len != -1 && fmt == GST_FORMAT_TIME) {
-      gvc->priv->stream_length = len / GST_MSECOND;
-      if (gvc->priv->stream_length != prev_len) {
-        g_signal_emit (gvc, gvc_signals[SIGNAL_GOT_METADATA], 0, NULL);
+      bvw->priv->stream_length = len / GST_MSECOND;
+      if (bvw->priv->stream_length != prev_len) {
+        g_signal_emit (bvw, BVW_signals[SIGNAL_GOT_METADATA], 0, NULL);
       }
     }
   } else {
     GST_INFO ("could not get duration");
   }
 
-  if (gst_element_query_position (gvc->priv->play, &fmt, &pos)) {
+  if (gst_element_query_position (bvw->priv->play, &fmt, &pos)) {
     if (pos != -1 && fmt == GST_FORMAT_TIME) {
-      got_time_tick (GST_ELEMENT (gvc->priv->play), pos, gvc);
+      got_time_tick (GST_ELEMENT (bvw->priv->play), pos, bvw);
     }
   } else {
     GST_INFO ("could not get position");
@@ -1381,7 +1377,7 @@ gvc_query_timeout (BaconVideoWidget *gvc)
 
 static void
 caps_set (GObject * obj,
-    GParamSpec * pspec, BaconVideoWidget * gvc)
+    GParamSpec * pspec, BaconVideoWidget * bvw)
 {
   GstPad *pad = GST_PAD (obj);
   GstStructure *s;
@@ -1394,17 +1390,17 @@ caps_set (GObject * obj,
   s = gst_caps_get_structure (caps, 0);
   if (s) {
     /* We need at least width/height and framerate */
-    if (!(gst_structure_get_fraction (s, "framerate", &gvc->priv->video_fps_n, 
-          &gvc->priv->video_fps_d) &&
-          gst_structure_get_int (s, "width", &gvc->priv->video_width) &&
-          gst_structure_get_int (s, "height", &gvc->priv->video_height)))
+    if (!(gst_structure_get_fraction (s, "framerate", &bvw->priv->video_fps_n, 
+          &bvw->priv->video_fps_d) &&
+          gst_structure_get_int (s, "width", &bvw->priv->video_width) &&
+          gst_structure_get_int (s, "height", &bvw->priv->video_height)))
       return;
     
     /* Get the movie PAR if available */
-    gvc->priv->movie_par = gst_structure_get_value (s, "pixel-aspect-ratio");
+    bvw->priv->movie_par = gst_structure_get_value (s, "pixel-aspect-ratio");
     
     /* Now set for real */
-    bacon_video_widget_set_aspect_ratio (gvc, gvc->priv->ratio_type);
+    bacon_video_widget_set_aspect_ratio (bvw, bvw->priv->ratio_type);
   }
 
   gst_caps_unref (caps);
@@ -1412,30 +1408,30 @@ caps_set (GObject * obj,
 
 
 static void
-parse_stream_info (BaconVideoWidget *gvc)
+parse_stream_info (BaconVideoWidget *bvw)
 {
   GList *audio_streams, *video_streams, *l;
   GstPad *videopad = NULL;
 
-  audio_streams = get_stream_info_objects_for_type (gvc, "audio");
-  video_streams = get_stream_info_objects_for_type (gvc, "video");
+  audio_streams = get_stream_info_objects_for_type (bvw, "audio");
+  video_streams = get_stream_info_objects_for_type (bvw, "video");
 
-  gvc->priv->media_has_video = FALSE;
+  bvw->priv->media_has_video = FALSE;
   if (video_streams) {
-    gvc->priv->media_has_video = TRUE;
-    gtk_widget_show(GTK_WIDGET(gvc->priv->video_window));
+    bvw->priv->media_has_video = TRUE;
+    gtk_widget_show(GTK_WIDGET(bvw->priv->video_window));
     for (l = video_streams; videopad == NULL && l != NULL; l = l->next) {
       g_object_get (l->data, "object", &videopad, NULL);
 		//Aquí habría que volver a mostrar la ventana
     }
   }
 
-  gvc->priv->media_has_audio = FALSE;
+  bvw->priv->media_has_audio = FALSE;
   if (audio_streams) {
-    gvc->priv->media_has_audio = TRUE;
-    if (!gvc->priv->media_has_video && gvc->priv->video_window) {
+    bvw->priv->media_has_audio = TRUE;
+    if (!bvw->priv->media_has_video && bvw->priv->video_window) {
       //Aquí habría que ocultar la ventana 
-      gtk_widget_hide(GTK_WIDGET(gvc->priv->video_window));
+      gtk_widget_hide(GTK_WIDGET(bvw->priv->video_window));
       
     }
   }
@@ -1444,11 +1440,11 @@ parse_stream_info (BaconVideoWidget *gvc)
     GstCaps *caps;
 
     if ((caps = gst_pad_get_negotiated_caps (videopad))) {
-      caps_set (G_OBJECT (videopad), NULL, gvc);
+      caps_set (G_OBJECT (videopad), NULL, bvw);
       gst_caps_unref (caps);
     }
     g_signal_connect (videopad, "notify::caps",
-        G_CALLBACK (caps_set), gvc);
+        G_CALLBACK (caps_set), bvw);
     gst_object_unref (videopad);
   } 
 
@@ -1461,76 +1457,76 @@ parse_stream_info (BaconVideoWidget *gvc)
 static void
 playbin_stream_info_notify_cb (GObject * obj, GParamSpec * pspec, gpointer data)
 {
-  BaconVideoWidget *gvc = BACON_VIDEO_WIDGET (data);
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (data);
   GstMessage *msg;
 
   /* we're being called from the streaming thread, so don't do anything here */
   GST_LOG ("stream info changed");
-  msg = gst_message_new_application (GST_OBJECT (gvc->priv->play),
+  msg = gst_message_new_application (GST_OBJECT (bvw->priv->play),
       gst_structure_new ("notify-streaminfo", NULL));
-  gst_element_post_message (gvc->priv->play, msg);
+  gst_element_post_message (bvw->priv->play, msg);
 }
 
 static void
 bacon_video_widget_finalize (GObject * object)
 {
-  BaconVideoWidget *gvc = (BaconVideoWidget *) object;
+  BaconVideoWidget *bvw = (BaconVideoWidget *) object;
 
   GST_INFO ("finalizing");
 
-  if (gvc->priv->bus) {
+  if (bvw->priv->bus) {
     /* make bus drop all messages to make sure none of our callbacks is ever
      * called again (main loop might be run again to display error dialog) */
-    gst_bus_set_flushing (gvc->priv->bus, TRUE);
+    gst_bus_set_flushing (bvw->priv->bus, TRUE);
 
-    if (gvc->priv->sig_bus_sync)
-      g_signal_handler_disconnect (gvc->priv->bus, gvc->priv->sig_bus_sync);
+    if (bvw->priv->sig_bus_sync)
+      g_signal_handler_disconnect (bvw->priv->bus, bvw->priv->sig_bus_sync);
 
-    if (gvc->priv->sig_bus_async)
-      g_signal_handler_disconnect (gvc->priv->bus, gvc->priv->sig_bus_async);
+    if (bvw->priv->sig_bus_async)
+      g_signal_handler_disconnect (bvw->priv->bus, bvw->priv->sig_bus_async);
 
-    gst_object_unref (gvc->priv->bus);
-    gvc->priv->bus = NULL;
+    gst_object_unref (bvw->priv->bus);
+    bvw->priv->bus = NULL;
   }
 
-  g_free (gvc->priv->media_device);
-  gvc->priv->media_device = NULL;
+  g_free (bvw->priv->media_device);
+  bvw->priv->media_device = NULL;
     
-  g_free (gvc->priv->mrl);
-  gvc->priv->mrl = NULL;
+  g_free (bvw->priv->mrl);
+  bvw->priv->mrl = NULL;
   
   
  
   
 
-  if (gvc->priv->play != NULL && GST_IS_ELEMENT (gvc->priv->play)) {
-    gst_element_set_state (gvc->priv->play, GST_STATE_NULL);
-    gst_object_unref (gvc->priv->play);
-    gvc->priv->play = NULL;
+  if (bvw->priv->play != NULL && GST_IS_ELEMENT (bvw->priv->play)) {
+    gst_element_set_state (bvw->priv->play, GST_STATE_NULL);
+    gst_object_unref (bvw->priv->play);
+    bvw->priv->play = NULL;
   }
 
-  if (gvc->priv->update_id) {
-    g_source_remove (gvc->priv->update_id);
-    gvc->priv->update_id = 0;
+  if (bvw->priv->update_id) {
+    g_source_remove (bvw->priv->update_id);
+    bvw->priv->update_id = 0;
   }
 
-  if (gvc->priv->tagcache) {
-    gst_tag_list_free (gvc->priv->tagcache);
-    gvc->priv->tagcache = NULL;
+  if (bvw->priv->tagcache) {
+    gst_tag_list_free (bvw->priv->tagcache);
+    bvw->priv->tagcache = NULL;
   }
-  if (gvc->priv->audiotags) {
-    gst_tag_list_free (gvc->priv->audiotags);
-    gvc->priv->audiotags = NULL;
+  if (bvw->priv->audiotags) {
+    gst_tag_list_free (bvw->priv->audiotags);
+    bvw->priv->audiotags = NULL;
   }
-  if (gvc->priv->videotags) {
-    gst_tag_list_free (gvc->priv->videotags);
-    gvc->priv->videotags = NULL;
+  if (bvw->priv->videotags) {
+    gst_tag_list_free (bvw->priv->videotags);
+    bvw->priv->videotags = NULL;
   }
 
-  if (gvc->priv->eos_id != 0)
-    g_source_remove (gvc->priv->eos_id);
+  if (bvw->priv->eos_id != 0)
+    g_source_remove (bvw->priv->eos_id);
 
-  g_mutex_free (gvc->priv->lock);
+  g_mutex_free (bvw->priv->lock);
 
 
 
@@ -1541,21 +1537,21 @@ static void
 bacon_video_widget_set_property (GObject * object, guint property_id,
                                  const GValue * value, GParamSpec * pspec)
 {
-  BaconVideoWidget *gvc;
+  BaconVideoWidget *bvw;
 
-  gvc = BACON_VIDEO_WIDGET (object);
+  bvw = BACON_VIDEO_WIDGET (object);
 
   switch (property_id) {
     case PROP_LOGO_MODE:
-      bacon_video_widget_set_logo_mode (gvc,
+      bacon_video_widget_set_logo_mode (bvw,
       g_value_get_boolean (value));
       break;
     case PROP_SHOWCURSOR:
-      bacon_video_widget_set_show_cursor (gvc,
+      bacon_video_widget_set_show_cursor (bvw,
       g_value_get_boolean (value));
       break;
     case PROP_MEDIADEV:
-      bacon_video_widget_set_media_device (gvc,
+      bacon_video_widget_set_media_device (bvw,
       g_value_get_string (value));
       break;
 
@@ -1569,39 +1565,39 @@ static void
 bacon_video_widget_get_property (GObject * object, guint property_id,
                                  GValue * value, GParamSpec * pspec)
 {
-  BaconVideoWidget *gvc;
+  BaconVideoWidget *bvw;
 
-  gvc = BACON_VIDEO_WIDGET (object);
+  bvw = BACON_VIDEO_WIDGET (object);
 
   switch (property_id) {
     case PROP_LOGO_MODE:
       g_value_set_boolean (value,
-      bacon_video_widget_get_logo_mode (gvc));
+      bacon_video_widget_get_logo_mode (bvw));
       break;
     case PROP_POSITION:
-      g_value_set_int64 (value, bacon_video_widget_get_position (gvc));
+      g_value_set_int64 (value, bacon_video_widget_get_position (bvw));
       break;
     case PROP_STREAM_LENGTH:
       g_value_set_int64 (value,
-      bacon_video_widget_get_stream_length (gvc));
+      bacon_video_widget_get_stream_length (bvw));
       break;
     case PROP_PLAYING:
       g_value_set_boolean (value,
-      bacon_video_widget_is_playing (gvc));
+      bacon_video_widget_is_playing (bvw));
       break;
     case PROP_SEEKABLE:
       g_value_set_boolean (value,
-      bacon_video_widget_is_seekable (gvc));
+      bacon_video_widget_is_seekable (bvw));
       break;
     case PROP_SHOWCURSOR:
       g_value_set_boolean (value,
-      bacon_video_widget_get_show_cursor (gvc));
+      bacon_video_widget_get_show_cursor (bvw));
       break;
     case PROP_MEDIADEV:
-      g_value_set_string (value, gvc->priv->media_device);
+      g_value_set_string (value, bvw->priv->media_device);
       break;
     case PROP_VOLUME:
-      g_value_set_int (value, bacon_video_widget_get_volume (gvc));
+      g_value_set_int (value, bacon_video_widget_get_volume (bvw));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -1616,22 +1612,22 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
 /* ============================================================= */
 
 char *
-bacon_video_widget_get_backend_name (BaconVideoWidget * gvc)
+bacon_video_widget_get_backend_name (BaconVideoWidget * bvw)
 {
   return gst_version_string ();
 }
 
 static GList *
-get_stream_info_objects_for_type (BaconVideoWidget * gvc, const gchar * typestr)
+get_stream_info_objects_for_type (BaconVideoWidget * bvw, const gchar * typestr)
 {
   GValueArray *info_arr = NULL;
   GList *ret = NULL;
   guint i;
 
-  if (gvc->priv->play == NULL || gvc->priv->mrl == NULL)
+  if (bvw->priv->play == NULL || bvw->priv->mrl == NULL)
     return NULL;
 
-  g_object_get (gvc->priv->play, "stream-info-value-array", &info_arr, NULL);
+  g_object_get (bvw->priv->play, "stream-info-value-array", &info_arr, NULL);
   if (info_arr == NULL)
     return NULL;
 
@@ -1676,7 +1672,7 @@ get_stream_info_objects_for_type (BaconVideoWidget * gvc, const gchar * typestr)
 /* =========================================== */
 
 static GError*
-gvc_error_from_gst_error (BaconVideoWidget *gvc, GstMessage * err_msg)
+BVW_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
 {
   const gchar *src_typename;
   GError *ret = NULL;
@@ -1695,22 +1691,22 @@ gvc_error_from_gst_error (BaconVideoWidget *gvc, GstMessage * err_msg)
         (g_str_has_prefix (mrl, "dvd") ||
          g_str_has_prefix (mrl, "cd") ||
          g_str_has_prefix (mrl, "vcd"))) {
-      ret = g_error_new_literal (gvc_ERROR, gvc_ERROR_INVALID_DEVICE,
+      ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_INVALID_DEVICE,
                                  e->message);
     } else {
 #endif
       if (e->code == GST_RESOURCE_ERROR_NOT_FOUND) {
         if (GST_IS_BASE_AUDIO_SINK (err_msg->src)) {
-          ret = g_error_new_literal (gvc_ERROR, gvc_ERROR_AUDIO_PLUGIN,
+          ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
               _("The requested audio output was not found. "
                 "Please select another audio output in the Multimedia "
                 "Systems Selector."));
         } else {
-          ret = g_error_new_literal (gvc_ERROR, gvc_ERROR_FILE_NOT_FOUND,
+          ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_NOT_FOUND,
                                      _("Location not found."));
         }
       } else {
-        ret = g_error_new_literal (gvc_ERROR, gvc_ERROR_FILE_PERMISSION,
+        ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_PERMISSION,
             _("Could not open location; "
               "You may not have permission to open the file."));
       }
@@ -1720,29 +1716,29 @@ gvc_error_from_gst_error (BaconVideoWidget *gvc, GstMessage * err_msg)
   } else if (is_error (e, RESOURCE, BUSY)) {
     if (GST_IS_VIDEO_SINK (err_msg->src)) {
       /* a somewhat evil check, but hey.. */
-      ret = g_error_new_literal (gvc_ERROR,
-          gvc_ERROR_VIDEO_PLUGIN,
+      ret = g_error_new_literal (BVW_ERROR,
+          BVW_ERROR_VIDEO_PLUGIN,
           _("The video output is in use by another application. "
             "Please close other video applications, or select "
             "another video output in the Multimedia Systems Selector."));
     } else if (GST_IS_BASE_AUDIO_SINK (err_msg->src)) {
-      ret = g_error_new_literal (gvc_ERROR,
-          gvc_ERROR_AUDIO_BUSY,
+      ret = g_error_new_literal (BVW_ERROR,
+          BVW_ERROR_AUDIO_BUSY,
            _("The audio output is in use by another application. "
              "Please select another audio output in the Multimedia Systems Selector. "
              "You may want to consider using a sound server."));
     }
   } else if (e->domain == GST_RESOURCE_ERROR) {
-    ret = g_error_new_literal (gvc_ERROR, gvc_ERROR_FILE_GENERIC,
+    ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_GENERIC,
                                e->message);
   } else if (is_error (e, CORE, MISSING_PLUGIN) ||
              is_error (e, STREAM, CODEC_NOT_FOUND)) {
-    if (gvc->priv->missing_plugins != NULL) {
+    if (bvw->priv->missing_plugins != NULL) {
       gchar **descs, *msg = NULL;
       guint num;
 
-      descs = gvc_get_missing_plugins_descriptions (gvc->priv->missing_plugins);
-      num = g_list_length (gvc->priv->missing_plugins);
+      descs = BVW_get_missing_plugins_descriptions (bvw->priv->missing_plugins);
+      num = g_list_length (bvw->priv->missing_plugins);
 
       if (is_error (e, CORE, MISSING_PLUGIN)) {
         /* should be exactly one missing thing (source or converter) */
@@ -1758,35 +1754,35 @@ gvc_error_from_gst_error (BaconVideoWidget *gvc, GstMessage * err_msg)
             "installed:\n\n%s"), num), (num == 1) ? descs[0] : desc_list);
         g_free (desc_list);
       }
-      ret = g_error_new_literal (gvc_ERROR, gvc_ERROR_CODEC_NOT_HANDLED, msg);
+      ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED, msg);
       g_free (msg);
       g_strfreev (descs);
     } else {
       GST_LOG ("no missing plugin messages, posting generic error");
-      ret = g_error_new_literal (gvc_ERROR, gvc_ERROR_CODEC_NOT_HANDLED,
+      ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED,
           e->message);
     }
   } else if (is_error (e, STREAM, WRONG_TYPE) ||
              is_error (e, STREAM, NOT_IMPLEMENTED)) {
     if (src_typename) {
-      ret = g_error_new (gvc_ERROR, gvc_ERROR_CODEC_NOT_HANDLED, "%s: %s",
+      ret = g_error_new (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED, "%s: %s",
           src_typename, e->message);
     } else {
-      ret = g_error_new_literal (gvc_ERROR, gvc_ERROR_CODEC_NOT_HANDLED,
+      ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED,
           e->message);
     }
   } else if (is_error (e, STREAM, FAILED) &&
              src_typename && strncmp (src_typename, "GstTypeFind", 11) == 0) {
-    ret = g_error_new_literal (gvc_ERROR, gvc_ERROR_READ_ERROR,
+    ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_READ_ERROR,
         _("Cannot play this file over the network. "
           "Try downloading it to disk first."));
   } else {
     /* generic error, no code; take message */
-    ret = g_error_new_literal (gvc_ERROR, gvc_ERROR_GENERIC,
+    ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_GENERIC,
                                e->message);
   }
   g_error_free (e);
-  gvc_clear_missing_plugins_messages (gvc);
+  BVW_clear_missing_plugins_messages (bvw);
 
   return ret;
 }
@@ -1794,7 +1790,7 @@ gvc_error_from_gst_error (BaconVideoWidget *gvc, GstMessage * err_msg)
 
 
 static gboolean
-poll_for_state_change_full (BaconVideoWidget *gvc, GstElement *element,
+poll_for_state_change_full (BaconVideoWidget *bvw, GstElement *element,
     GstState state, GstMessage ** err_msg, gint64 timeout)
 {
   GstBus *bus;
@@ -1806,14 +1802,14 @@ poll_for_state_change_full (BaconVideoWidget *gvc, GstElement *element,
 
   events = GST_MESSAGE_STATE_CHANGED | GST_MESSAGE_ERROR | GST_MESSAGE_EOS;
 
-  saved_events = gvc->priv->ignore_messages_mask;
+  saved_events = bvw->priv->ignore_messages_mask;
 
-  if (element != NULL && element == gvc->priv->play) {
+  if (element != NULL && element == bvw->priv->play) {
     /* we do want the main handler to process state changed messages for
      * playbin as well, otherwise it won't hook up the timeout etc. */
-    gvc->priv->ignore_messages_mask |= (events ^ GST_MESSAGE_STATE_CHANGED);
+    bvw->priv->ignore_messages_mask |= (events ^ GST_MESSAGE_STATE_CHANGED);
   } else {
-    gvc->priv->ignore_messages_mask |= events;
+    bvw->priv->ignore_messages_mask |= events;
   }
 
   while (TRUE) {
@@ -1841,7 +1837,7 @@ poll_for_state_change_full (BaconVideoWidget *gvc, GstElement *element,
       break;
     }
     case GST_MESSAGE_ERROR: {
-      gvc_error_msg (gvc, message);
+      BVW_error_msg (bvw, message);
       *err_msg = message;
       message = NULL;
       goto error;
@@ -1851,9 +1847,9 @@ poll_for_state_change_full (BaconVideoWidget *gvc, GstElement *element,
       GError *e = NULL;
 
       gst_message_unref (message);
-      e = g_error_new_literal (gvc_ERROR, gvc_ERROR_FILE_GENERIC,
+      e = g_error_new_literal (BVW_ERROR, BVW_ERROR_FILE_GENERIC,
           _("Media file could not be played."));
-      *err_msg = gst_message_new_error (GST_OBJECT (gvc->priv->play), e, NULL);
+      *err_msg = gst_message_new_error (GST_OBJECT (bvw->priv->play), e, NULL);
       g_error_free (e);
       goto error;
       break;
@@ -1871,7 +1867,7 @@ poll_for_state_change_full (BaconVideoWidget *gvc, GstElement *element,
 success:
   /* state change succeeded */
   GST_INFO ("state change to %s succeeded", gst_element_state_get_name (state));
-  gvc->priv->ignore_messages_mask = saved_events;
+  bvw->priv->ignore_messages_mask = saved_events;
   return TRUE;
 
 timed_out:
@@ -1879,41 +1875,41 @@ timed_out:
    * the user to stop the loading process with the normal stop button */
   GST_INFO ("state change to %s timed out, returning success and handling "
       "errors asynchronously", gst_element_state_get_name (state));
-  gvc->priv->ignore_messages_mask = saved_events;
+  bvw->priv->ignore_messages_mask = saved_events;
   return TRUE;
 
 error:
   GST_INFO ("error while waiting for state change to %s: %" GST_PTR_FORMAT,
       gst_element_state_get_name (state), *err_msg);
   /* already set *err_msg */
-  gvc->priv->ignore_messages_mask = saved_events;
+  bvw->priv->ignore_messages_mask = saved_events;
   return FALSE;
 }
 
 gboolean
-bacon_video_widget_open(BaconVideoWidget * gvc,
+bacon_video_widget_open(BaconVideoWidget * bvw,
      const gchar * mrl, GError **error)
 {
   
   GstMessage *err_msg = NULL;
   gboolean ret;
 
-  g_return_val_if_fail (gvc != NULL, FALSE);
+  g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (mrl != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), FALSE);
-  g_return_val_if_fail (gvc->priv->play != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
   
   
   /* So we aren't closed yet... */
-  if (gvc->priv->mrl) {
-    bacon_video_widget_close (gvc);
+  if (bvw->priv->mrl) {
+    bacon_video_widget_close (bvw);
   }
-  
+
   GST_INFO ("mrl = %s", GST_STR_NULL (mrl));
 
 
   /* hmm... */
-  	if (gvc->priv->mrl && strcmp (gvc->priv->mrl, mrl) == 0) {
+  	if (bvw->priv->mrl && strcmp (bvw->priv->mrl, mrl) == 0) {
     	GST_INFO ("same as current mrl");
     	/* FIXME: shouldn't we ensure playing state here? */
     	return TRUE;
@@ -1921,70 +1917,76 @@ bacon_video_widget_open(BaconVideoWidget * gvc,
   
 
   	/* this allows non-URI type of files in the thumbnailer and so on */
-  	g_free (gvc->priv->mrl);
+  	g_free (bvw->priv->mrl);
   	if (mrl[0] == '/') {
-   	 gvc->priv->mrl = g_strdup_printf ("file://%s", mrl);
+#ifdef WIN32
+ bvw->priv->mrl = g_strdup_printf ("file:///%s", mrl);
+#else
+ bvw->priv->mrl = g_strdup_printf ("file://%s", mrl);
+#endif
+
+   	 
   	} else {
     	if (strchr (mrl, ':')) {
-      	gvc->priv->mrl = g_strdup (mrl);
+      	bvw->priv->mrl = g_strdup (mrl);
     	} else {
       	gchar *cur_dir = g_get_current_dir ();
 
       	if (!cur_dir) {
-        	g_set_error (error, gvc_ERROR, gvc_ERROR_GENERIC,
+        	g_set_error (error, BVW_ERROR, BVW_ERROR_GENERIC,
                      _("Failed to retrieve working directory"));
         	return FALSE;
       	}
-      	gvc->priv->mrl = g_strdup_printf ("file://%s/%s", cur_dir, mrl);
+      	bvw->priv->mrl = g_strdup_printf ("file://%s/%s", cur_dir, mrl);
       	g_free (cur_dir);
     	}
   	}
 
 
   /* No path? Choke on your errors already! */
-  if (gvc->priv->mrl == NULL)
-    gvc->priv->mrl = g_strdup (mrl);
+  if (bvw->priv->mrl == NULL)
+    bvw->priv->mrl = g_strdup (mrl);
 
   if (g_str_has_prefix (mrl, "icy:") != FALSE) {
     /* Handle "icy://" URLs from QuickTime */
-    g_free (gvc->priv->mrl);
-    gvc->priv->mrl = g_strdup_printf ("http:%s", mrl + 4);
+    g_free (bvw->priv->mrl);
+    bvw->priv->mrl = g_strdup_printf ("http:%s", mrl + 4);
   } else if (g_str_has_prefix (mrl, "icyx:") != FALSE) {
     /* Handle "icyx://" URLs from Orban/Coding Technologies AAC/aacPlus Player */
-    g_free (gvc->priv->mrl);
-    gvc->priv->mrl = g_strdup_printf ("http:%s", mrl + 5);
+    g_free (bvw->priv->mrl);
+    bvw->priv->mrl = g_strdup_printf ("http:%s", mrl + 5);
   } else if (g_str_has_prefix (mrl, "dvd:///")) {
     /* this allows to play backups of dvds */
-    g_free (gvc->priv->mrl);
-    gvc->priv->mrl = g_strdup ("dvd://");
-    g_free (gvc->priv->media_device);
-    gvc->priv->media_device = g_strdup (mrl + strlen ("dvd://"));
+    g_free (bvw->priv->mrl);
+    bvw->priv->mrl = g_strdup ("dvd://");
+    g_free (bvw->priv->media_device);
+    bvw->priv->media_device = g_strdup (mrl + strlen ("dvd://"));
   } else if (g_str_has_prefix (mrl, "vcd:///")) {
     /* this allows to play backups of vcds */
-    g_free (gvc->priv->mrl);
-    gvc->priv->mrl = g_strdup ("vcd://");
-    g_free (gvc->priv->media_device);
-    gvc->priv->media_device = g_strdup (mrl + strlen ("vcd://"));
+    g_free (bvw->priv->mrl);
+    bvw->priv->mrl = g_strdup ("vcd://");
+    g_free (bvw->priv->media_device);
+    bvw->priv->media_device = g_strdup (mrl + strlen ("vcd://"));
   }
 
   
-  	gvc->priv->got_redirect = FALSE;
-  	gvc->priv->media_has_video = FALSE;
-  	gvc->priv->media_has_audio = FALSE;
-  	gvc->priv->stream_length = 0;
-  	gvc->priv->ignore_messages_mask = 0;  
- 	g_object_set (gvc->priv->play, "uri", gvc->priv->mrl,NULL);
+  	bvw->priv->got_redirect = FALSE;
+  	bvw->priv->media_has_video = FALSE;
+  	bvw->priv->media_has_audio = FALSE;
+  	bvw->priv->stream_length = 0;
+  	bvw->priv->ignore_messages_mask = 0;  
+ 	g_object_set (bvw->priv->play, "uri", bvw->priv->mrl,NULL);
 
  
 
-  gvc->priv->seekable = -1;
-  gvc->priv->target_state = GST_STATE_PAUSED;
-  gvc_clear_missing_plugins_messages (gvc);
+  bvw->priv->seekable = -1;
+  bvw->priv->target_state = GST_STATE_PAUSED;
+  BVW_clear_missing_plugins_messages (bvw);
 
-  gst_element_set_state (gvc->priv->play, GST_STATE_PAUSED);
+  gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED);
 
-  if (gvc->priv->use_type == gvc_USE_TYPE_AUDIO ||
-      gvc->priv->use_type == gvc_USE_TYPE_VIDEO) {
+  if (bvw->priv->use_type == BVW_USE_TYPE_AUDIO ||
+      bvw->priv->use_type == BVW_USE_TYPE_VIDEO) {
     GST_INFO ("normal playback, handling all errors asynchroneously");
     ret = TRUE;
   } else {
@@ -1992,43 +1994,43 @@ bacon_video_widget_open(BaconVideoWidget * gvc,
      * this case, wait for any state change to really finish and process any
      * pending tag messages, so that the information is available right away */
     GST_INFO ("waiting for state changed to PAUSED to complete");
-    ret = poll_for_state_change_full (gvc, gvc->priv->play,
+    ret = poll_for_state_change_full (bvw, bvw->priv->play,
         GST_STATE_PAUSED, &err_msg, -1);
 
-    gvc_process_pending_tag_messages (gvc);
-    bacon_video_widget_get_stream_length (gvc);
-    GST_INFO ("stream length = %u", gvc->priv->stream_length);
+    BVW_process_pending_tag_messages (bvw);
+    bacon_video_widget_get_stream_length (bvw);
+    GST_INFO ("stream length = %u", bvw->priv->stream_length);
 
     /* even in case of an error (e.g. no decoders installed) we might still
      * have useful metadata (like codec types, duration, etc.) */
-    g_signal_emit (gvc, gvc_signals[SIGNAL_GOT_METADATA], 0, NULL);
+    g_signal_emit (bvw, BVW_signals[SIGNAL_GOT_METADATA], 0, NULL);
   }
 
   if (ret) {
-    g_signal_emit (gvc, gvc_signals[SIGNAL_CHANNELS_CHANGE], 0);
+    g_signal_emit (bvw, BVW_signals[SIGNAL_CHANNELS_CHANGE], 0);
   } else {
     GST_INFO ("Error on open: %" GST_PTR_FORMAT, err_msg);
-    if (gvc_check_missing_plugins_error (gvc, err_msg)) {
+    if (BVW_check_missing_plugins_error (bvw, err_msg)) {
       /* totem will try to start playing, so ignore all messages on the bus */
-      gvc->priv->ignore_messages_mask |= GST_MESSAGE_ERROR;
+      bvw->priv->ignore_messages_mask |= GST_MESSAGE_ERROR;
       GST_LOG ("missing plugins handled, ignoring error and returning TRUE");
       gst_message_unref (err_msg);
       err_msg = NULL;
       ret = TRUE;
     } else {
-      gvc->priv->ignore_messages_mask |= GST_MESSAGE_ERROR;
-      gvc_stop_play_pipeline (gvc);
-      g_free (gvc->priv->mrl);
-      gvc->priv->mrl = NULL;
+      bvw->priv->ignore_messages_mask |= GST_MESSAGE_ERROR;
+      BVW_stop_play_pipeline (bvw);
+      g_free (bvw->priv->mrl);
+      bvw->priv->mrl = NULL;
     }
   }
 
   /* When opening a new media we want to redraw ourselves */
-  gtk_widget_queue_draw (GTK_WIDGET (gvc->priv->video_window));
+  gtk_widget_queue_draw (GTK_WIDGET (bvw->priv->video_window));
 
   if (err_msg != NULL) {
     if (error) {
-      *error = gvc_error_from_gst_error (gvc, err_msg);
+      *error = BVW_error_from_gst_error (bvw, err_msg);
 
     } else {
       GST_WARNING ("Got error, but caller is not collecting error details!");
@@ -2041,57 +2043,57 @@ bacon_video_widget_open(BaconVideoWidget * gvc,
 }
 
 gboolean
-bacon_video_widget_play (BaconVideoWidget * gvc)
+bacon_video_widget_play (BaconVideoWidget * bvw)
 {
   
   GstState cur_state;
 
-  g_return_val_if_fail (gvc != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), FALSE);
-  g_return_val_if_fail (GST_IS_ELEMENT (gvc->priv->play), FALSE);
-  g_return_val_if_fail (gvc->priv->mrl != NULL, FALSE);
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
+  g_return_val_if_fail (bvw->priv->mrl != NULL, FALSE);
 
-  gvc->priv->target_state = GST_STATE_PLAYING;
+  bvw->priv->target_state = GST_STATE_PLAYING;
 
   /* no need to actually go into PLAYING in capture/metadata mode (esp.
    * not with sinks that don't sync to the clock), we'll get everything
    * we need by prerolling the pipeline, and that is done in _open() */
-  if (gvc->priv->use_type == gvc_USE_TYPE_CAPTURE ||
-      gvc->priv->use_type == gvc_USE_TYPE_METADATA) {
+  if (bvw->priv->use_type == BVW_USE_TYPE_CAPTURE ||
+      bvw->priv->use_type == BVW_USE_TYPE_METADATA) {
     return TRUE;
   }
 
   /* just lie and do nothing in this case */
-  gst_element_get_state (gvc->priv->play, &cur_state, NULL, 0);
-  if (gvc->priv->plugin_install_in_progress && cur_state != GST_STATE_PAUSED) {
+  gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
+  if (bvw->priv->plugin_install_in_progress && cur_state != GST_STATE_PAUSED) {
     GST_INFO ("plugin install in progress and nothing to play, doing nothing");
     return TRUE;
   }
 
   GST_INFO ("play");
-  gst_element_set_state (gvc->priv->play, GST_STATE_PLAYING);
+  gst_element_set_state (bvw->priv->play, GST_STATE_PLAYING);
 
   /* will handle all errors asynchroneously */
   return TRUE;
 }
 
 gboolean
-bacon_video_widget_can_direct_seek (BaconVideoWidget *gvc)
+bacon_video_widget_can_direct_seek (BaconVideoWidget *bvw)
 {
-  g_return_val_if_fail (gvc != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), FALSE);
-  g_return_val_if_fail (GST_IS_ELEMENT (gvc->priv->play), FALSE);
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  g_return_val_if_fail (gvc != NULL, FALSE);
+  g_return_val_if_fail (bvw != NULL, FALSE);
 
-	if (gvc->priv->mrl == NULL)
+	if (bvw->priv->mrl == NULL)
 		return FALSE;
 
 	/* (instant seeking only make sense with video,
 	 * hence no cdda:// here) */
-	if (g_str_has_prefix (gvc->priv->mrl, "file://") ||
-			g_str_has_prefix (gvc->priv->mrl, "dvd://") ||
-			g_str_has_prefix (gvc->priv->mrl, "vcd://"))
+	if (g_str_has_prefix (bvw->priv->mrl, "file://") ||
+			g_str_has_prefix (bvw->priv->mrl, "dvd://") ||
+			g_str_has_prefix (bvw->priv->mrl, "vcd://"))
 		return TRUE;
 
 	return FALSE;
@@ -2100,43 +2102,43 @@ bacon_video_widget_can_direct_seek (BaconVideoWidget *gvc)
 //If we want to seek throug a seekbar we want speed, so we use the KEY_UNIT flag
 //Sometimes accurate position is requested so we use the ACCURATE flag
 gboolean
-bacon_video_widget_seek_time (BaconVideoWidget *gvc, gint64 time, gboolean accurate)
+bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, gboolean accurate)
 {
 
 
-  g_return_val_if_fail (gvc != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), FALSE);
-  g_return_val_if_fail (GST_IS_ELEMENT (gvc->priv->play), FALSE);
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
   GST_LOG ("Seeking to %" GST_TIME_FORMAT, GST_TIME_ARGS (time * GST_MSECOND));
   
-  if (time > gvc->priv->stream_length
-      && gvc->priv->stream_length > 0
-      && !g_str_has_prefix (gvc->priv->mrl, "dvd:")
-      && !g_str_has_prefix (gvc->priv->mrl, "vcd:")) {
-    if (gvc->priv->eos_id == 0)
-      gvc->priv->eos_id = g_idle_add (gvc_signal_eos_delayed, gvc);
+  if (time > bvw->priv->stream_length
+      && bvw->priv->stream_length > 0
+      && !g_str_has_prefix (bvw->priv->mrl, "dvd:")
+      && !g_str_has_prefix (bvw->priv->mrl, "vcd:")) {
+    if (bvw->priv->eos_id == 0)
+      bvw->priv->eos_id = g_idle_add (BVW_signal_eos_delayed, bvw);
     return TRUE;
   }
 
 
-  if(accurate)
-  	gst_element_seek (gvc->priv->play, 1.0,
+  if(accurate){
+    got_time_tick (bvw->priv->play, time * GST_MSECOND, bvw);
+  	gst_element_seek (bvw->priv->play, 1.0,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
       	GST_SEEK_TYPE_SET, time * GST_MSECOND,
       	GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
-  else {
-  
+  }
+  else {  
 	 /* Emit a time tick of where we are going, we are paused */
-
-  	got_time_tick (gvc->priv->play, time * GST_MSECOND, gvc);
-	gst_element_seek (gvc->priv->play, 1.0,
+  	got_time_tick (bvw->priv->play, time * GST_MSECOND, bvw);
+	gst_element_seek (bvw->priv->play, 1.0,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT,
       	GST_SEEK_TYPE_SET, time * GST_MSECOND,
       	GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
   }
   
-  gst_element_get_state (gvc->priv->play, NULL, NULL, 100 * GST_MSECOND);
+  gst_element_get_state (bvw->priv->play, NULL, NULL, 100 * GST_MSECOND);
 
   return TRUE;
 }
@@ -2146,45 +2148,45 @@ bacon_video_widget_seek_time (BaconVideoWidget *gvc, gint64 time, gboolean accur
 
 
 gboolean
-bacon_video_widget_seek (BaconVideoWidget *gvc, float position )
+bacon_video_widget_seek (BaconVideoWidget *bvw, float position )
 {
 
   gint64 seek_time, length_nanos;
 
-  g_return_val_if_fail (gvc != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), FALSE);
-  g_return_val_if_fail (GST_IS_ELEMENT (gvc->priv->play), FALSE);
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  length_nanos = (gint64) (gvc->priv->stream_length * GST_MSECOND);
+  length_nanos = (gint64) (bvw->priv->stream_length * GST_MSECOND);
   seek_time = (gint64) (length_nanos * position);
 
   GST_LOG ("Seeking to %3.2f%% %" GST_TIME_FORMAT, position,
       GST_TIME_ARGS (seek_time));
 
-  return bacon_video_widget_seek_time (gvc, seek_time / GST_MSECOND, FALSE);
+  return bacon_video_widget_seek_time (bvw, seek_time / GST_MSECOND, FALSE);
 }
 
 gboolean
-bacon_video_widget_seek_in_segment (BaconVideoWidget *gvc, gint64 pos )
+bacon_video_widget_seek_in_segment (BaconVideoWidget *bvw, gint64 pos )
 {
 
-  	g_return_val_if_fail (gvc != NULL, FALSE);
-  	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), FALSE);
-  	g_return_val_if_fail (GST_IS_ELEMENT (gvc->priv->play), FALSE);
+  	g_return_val_if_fail (bvw != NULL, FALSE);
+  	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  	g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
   	GST_LOG ("Segment seeking from %" GST_TIME_FORMAT, GST_TIME_ARGS (pos * GST_MSECOND));
   
-  	if (pos > gvc->priv->stream_length
-      	&& gvc->priv->stream_length > 0
-      	&& !g_str_has_prefix (gvc->priv->mrl, "dvd:")
-     	&& !g_str_has_prefix (gvc->priv->mrl, "vcd:")) {
-    	if (gvc->priv->eos_id == 0)
-     		gvc->priv->eos_id = g_idle_add (gvc_signal_eos_delayed, gvc);
+  	if (pos > bvw->priv->stream_length
+      	&& bvw->priv->stream_length > 0
+      	&& !g_str_has_prefix (bvw->priv->mrl, "dvd:")
+     	&& !g_str_has_prefix (bvw->priv->mrl, "vcd:")) {
+    	if (bvw->priv->eos_id == 0)
+     		bvw->priv->eos_id = g_idle_add (BVW_signal_eos_delayed, bvw);
     	return TRUE;
   	}
 
-	got_time_tick (gvc->priv->play, pos * GST_MSECOND, gvc);
-	gst_element_seek (gvc->priv->play, 1.0,
+	got_time_tick (bvw->priv->play, pos * GST_MSECOND, bvw);
+	gst_element_seek (bvw->priv->play, 1.0,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_SEGMENT | GST_SEEK_FLAG_ACCURATE,
       	GST_SEEK_TYPE_SET, pos * GST_MSECOND,
       	GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
@@ -2193,38 +2195,38 @@ bacon_video_widget_seek_in_segment (BaconVideoWidget *gvc, gint64 pos )
 }
 
 gboolean
-bacon_video_widget_set_rate_in_segment (BaconVideoWidget *gvc, gfloat rate, gint64 stop)
+bacon_video_widget_set_rate_in_segment (BaconVideoWidget *bvw, gfloat rate, gint64 stop)
 {
 
-  g_return_val_if_fail (gvc != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), FALSE);
-  g_return_val_if_fail (GST_IS_ELEMENT (gvc->priv->play), FALSE);
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
   //GST_LOG ("Seeking to %" GST_TIME_FORMAT, GST_TIME_ARGS (time * GST_MSECOND));
  
 
-   gst_element_seek (gvc->priv->play, rate,
+   gst_element_seek (bvw->priv->play, rate,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE | GST_SEEK_FLAG_SEGMENT,
-      	GST_SEEK_TYPE_SET,bacon_video_widget_get_accurate_current_time(gvc) * GST_MSECOND,
+      	GST_SEEK_TYPE_SET,bacon_video_widget_get_accurate_current_time(bvw) * GST_MSECOND,
       	GST_SEEK_TYPE_SET, stop * GST_MSECOND);
       
   return TRUE;
 }
 
 gboolean
-bacon_video_widget_set_rate (BaconVideoWidget *gvc, gfloat rate)
+bacon_video_widget_set_rate (BaconVideoWidget *bvw, gfloat rate)
 {
 
-  g_return_val_if_fail (gvc != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), FALSE);
-  g_return_val_if_fail (GST_IS_ELEMENT (gvc->priv->play), FALSE);
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
   //GST_LOG ("Seeking to %" GST_TIME_FORMAT, GST_TIME_ARGS (time * GST_MSECOND));
  
 
-   gst_element_seek (gvc->priv->play, rate,
+   gst_element_seek (bvw->priv->play, rate,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
-      	GST_SEEK_TYPE_SET,bacon_video_widget_get_accurate_current_time(gvc) * GST_MSECOND,
+      	GST_SEEK_TYPE_SET,bacon_video_widget_get_accurate_current_time(bvw) * GST_MSECOND,
       	GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
       
   return TRUE;
@@ -2232,35 +2234,36 @@ bacon_video_widget_set_rate (BaconVideoWidget *gvc, gfloat rate)
 
  
 gboolean 
-bacon_video_widget_new_file_seek (BaconVideoWidget *gvc,gint64 start,gint64 stop)
+bacon_video_widget_new_file_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop)
 {
-	
-  	g_return_val_if_fail (gvc != NULL, FALSE);
-  	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), FALSE);
-  	g_return_val_if_fail (GST_IS_ELEMENT (gvc->priv->play), FALSE);
+	GstState cur_state;
+
+  	g_return_val_if_fail (bvw != NULL, FALSE);
+  	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  	g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
 	
   	GST_LOG ("Segment seeking from %" GST_TIME_FORMAT, GST_TIME_ARGS (start * GST_MSECOND));
   	
-  	GstState cur_state;
+  	
   
   	
-  	if (start > gvc->priv->stream_length
-      	&& gvc->priv->stream_length > 0
-      	&& !g_str_has_prefix (gvc->priv->mrl, "dvd:")
-     	&& !g_str_has_prefix (gvc->priv->mrl, "vcd:")) {
-    	if (gvc->priv->eos_id == 0)
-     		gvc->priv->eos_id = g_idle_add (gvc_signal_eos_delayed, gvc);
+  	if (start > bvw->priv->stream_length
+      	&& bvw->priv->stream_length > 0
+      	&& !g_str_has_prefix (bvw->priv->mrl, "dvd:")
+     	&& !g_str_has_prefix (bvw->priv->mrl, "vcd:")) {
+    	if (bvw->priv->eos_id == 0)
+     		bvw->priv->eos_id = g_idle_add (BVW_signal_eos_delayed, bvw);
     	return TRUE;
   	}
 	 
 		do{
-			 gst_element_get_state (gvc->priv->play, &cur_state, NULL, 0);
+			 gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
 
 		}while(cur_state <= GST_STATE_READY);
        
-		got_time_tick (gvc->priv->play, start * GST_MSECOND, gvc);
-		gst_element_seek (gvc->priv->play, 1.0,
+		got_time_tick (bvw->priv->play, start * GST_MSECOND, bvw);
+		gst_element_seek (bvw->priv->play, 1.0,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_SEGMENT | GST_SEEK_FLAG_ACCURATE,
       	GST_SEEK_TYPE_SET, start * GST_MSECOND,
       	GST_SEEK_TYPE_SET, stop * GST_MSECOND);
@@ -2269,27 +2272,27 @@ bacon_video_widget_new_file_seek (BaconVideoWidget *gvc,gint64 start,gint64 stop
   }
 
 gboolean 
-bacon_video_widget_segment_seek (BaconVideoWidget *gvc,gint64 start,gint64 stop)
+bacon_video_widget_segment_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop)
 {
 	
-  	g_return_val_if_fail (gvc != NULL, FALSE);
-  	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), FALSE);
-  	g_return_val_if_fail (GST_IS_ELEMENT (gvc->priv->play), FALSE);
+  	g_return_val_if_fail (bvw != NULL, FALSE);
+  	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  	g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
   	GST_LOG ("Segment seeking from %" GST_TIME_FORMAT, GST_TIME_ARGS (start * GST_MSECOND));
   
   	
-  	if (start > gvc->priv->stream_length
-      	&& gvc->priv->stream_length > 0
-      	&& !g_str_has_prefix (gvc->priv->mrl, "dvd:")
-     	&& !g_str_has_prefix (gvc->priv->mrl, "vcd:")) {
-    	if (gvc->priv->eos_id == 0)
-     		gvc->priv->eos_id = g_idle_add (gvc_signal_eos_delayed, gvc);
+  	if (start > bvw->priv->stream_length
+      	&& bvw->priv->stream_length > 0
+      	&& !g_str_has_prefix (bvw->priv->mrl, "dvd:")
+     	&& !g_str_has_prefix (bvw->priv->mrl, "vcd:")) {
+    	if (bvw->priv->eos_id == 0)
+     		bvw->priv->eos_id = g_idle_add (BVW_signal_eos_delayed, bvw);
     	return TRUE;
   	}
 	
-	got_time_tick (gvc->priv->play, start * GST_MSECOND, gvc);
-	gst_element_seek (gvc->priv->play, 1.0,
+	got_time_tick (bvw->priv->play, start * GST_MSECOND, bvw);
+	gst_element_seek (bvw->priv->play, 1.0,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_SEGMENT | GST_SEEK_FLAG_ACCURATE,
       	GST_SEEK_TYPE_SET, start * GST_MSECOND,
       	GST_SEEK_TYPE_SET, stop * GST_MSECOND);
@@ -2297,54 +2300,144 @@ bacon_video_widget_segment_seek (BaconVideoWidget *gvc,gint64 start,gint64 stop)
     return TRUE;
   }
   
+gboolean  
+bacon_video_widget_seek_to_next_frame (BaconVideoWidget *bvw, gboolean in_segment){
+	
+	gint fps;
+  	gint64 pos;
+  	gint64 final_pos;
+  	gboolean ret;
+  	
+	g_return_val_if_fail (bvw != NULL, FALSE);
+  	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  	g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
+  	
+  	
+  	
+  	//Round framerate to the nearest integer  	
+  	fps = (bvw->priv->video_fps_n + bvw->priv->video_fps_d/2) /
+                  bvw->priv->video_fps_d;
+    pos = bacon_video_widget_get_accurate_current_time(bvw);
+    final_pos = pos*GST_MSECOND + 1*GST_SECOND/fps;
+
+#ifdef WIN32
+	bacon_video_widget_play(bvw);
+#endif
+    if (in_segment)
+    	 ret = gst_element_seek (bvw->priv->play, 1.0,
+       GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE |GST_SEEK_FLAG_SEGMENT,
+       GST_SEEK_TYPE_SET,  final_pos,
+       GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE );
+
+    else 
+       ret = gst_element_seek (bvw->priv->play, 1.0,
+       GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE  ,
+       GST_SEEK_TYPE_SET,  final_pos,
+	   GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE );
+
+	
+#ifdef WIN32
+	bacon_video_widget_pause(bvw);
+#endif
+    return ret;
+  	
+}
+gboolean  bacon_video_widget_seek_to_previous_frame (BaconVideoWidget *bvw, gboolean in_segment){
+	gint fps;
+  	gint64 pos;
+  	gint64 final_pos;
+  	gboolean ret;
+  	
+	g_return_val_if_fail (bvw != NULL, FALSE);
+  	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  	g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
+  	
+    	
+  		//Round framerate to the nearest integer  	
+  	fps = (bvw->priv->video_fps_n + bvw->priv->video_fps_d/2) /
+                  bvw->priv->video_fps_d;
+    pos = bacon_video_widget_get_accurate_current_time(bvw);
+    final_pos = pos*GST_MSECOND - 1*GST_SECOND/fps;
+
+#ifdef WIN32
+	bacon_video_widget_play(bvw);
+#endif
+    if (in_segment)
+    	 ret = gst_element_seek (bvw->priv->play, 1.0,
+       GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE |GST_SEEK_FLAG_SEGMENT,
+       GST_SEEK_TYPE_SET,  final_pos,
+       GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE );
+
+    else 
+       ret = gst_element_seek (bvw->priv->play, 1.0,
+       GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE  ,
+       GST_SEEK_TYPE_SET,  final_pos,
+	   GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE );
+
+#ifdef WIN32
+	bacon_video_widget_pause(bvw);
+#endif
+    return ret;
+}
+  
  gboolean 
- bacon_video_widget_segment_stop_update(BaconVideoWidget *gvc, gint64 stop)
+ bacon_video_widget_segment_stop_update(BaconVideoWidget *bvw, gint64 stop)
  {
-	 	g_return_val_if_fail (gvc != NULL, FALSE);
-  		g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), FALSE);
-  		g_return_val_if_fail (GST_IS_ELEMENT (gvc->priv->play), FALSE);
-	 	gst_element_seek (gvc->priv->play, 1.0,
+
+	 	g_return_val_if_fail (bvw != NULL, FALSE);
+  		g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  		g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
+#ifdef WIN32	
+		bacon_video_widget_play(bvw);
+		
+#endif
+		gst_element_seek (bvw->priv->play, 0.1,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_SEGMENT | GST_SEEK_FLAG_ACCURATE,
       	GST_SEEK_TYPE_SET, stop * GST_MSECOND-1,
-      	GST_SEEK_TYPE_SET, stop * GST_MSECOND);
-      	return TRUE;
+      	GST_SEEK_TYPE_SET, stop * GST_MSECOND);	 	
+
+		bacon_video_widget_pause(bvw);              	
+
+		return TRUE;
  }
  gboolean 
- bacon_video_widget_segment_start_update(BaconVideoWidget *gvc,gint64 start)
+ bacon_video_widget_segment_start_update(BaconVideoWidget *bvw,gint64 start)
  {
-	g_return_val_if_fail (gvc != NULL, FALSE);
-  	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), FALSE);
-  	g_return_val_if_fail (GST_IS_ELEMENT (gvc->priv->play), FALSE);
-  	
-  	gst_element_seek (gvc->priv->play, 1.0,
+	g_return_val_if_fail (bvw != NULL, FALSE);
+  	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  	g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
+#ifdef WIN32
+		bacon_video_widget_play(bvw);
+#endif
+  	gst_element_seek (bvw->priv->play, 1.0,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_SEGMENT | GST_SEEK_FLAG_ACCURATE,
       	GST_SEEK_TYPE_SET, start * GST_MSECOND,
-      	GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
-  	
+      	GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE); 
 
-  	
+        bacon_video_widget_pause(bvw);
+
   	return TRUE;
 	  
  }
 
 
 static void
-gvc_stop_play_pipeline (BaconVideoWidget * gvc)
+BVW_stop_play_pipeline (BaconVideoWidget * bvw)
 {
   GstState cur_state;
 
-  gst_element_get_state (gvc->priv->play, &cur_state, NULL, 0);
+  gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
   if (cur_state > GST_STATE_READY) {
     GstMessage *msg;
     GstBus *bus;
 
     GST_INFO ("stopping");
-    gst_element_set_state (gvc->priv->play, GST_STATE_READY);
+    gst_element_set_state (bvw->priv->play, GST_STATE_READY);
 
     /* process all remaining state-change messages so everything gets
      * cleaned up properly (before the state change to NULL flushes them) */
     GST_INFO ("processing pending state-change messages");
-    bus = gst_element_get_bus (gvc->priv->play);
+    bus = gst_element_get_bus (bvw->priv->play);
     while ((msg = gst_bus_poll (bus, GST_MESSAGE_STATE_CHANGED, 0))) {
       gst_bus_async_signal_func (bus, msg, NULL);
       gst_message_unref (msg);
@@ -2352,59 +2445,59 @@ gvc_stop_play_pipeline (BaconVideoWidget * gvc)
     gst_object_unref (bus);
   }
 
-  gst_element_set_state (gvc->priv->play, GST_STATE_NULL);
-  gvc->priv->target_state = GST_STATE_NULL;
-  gvc->priv->buffering = FALSE;
-  gvc->priv->plugin_install_in_progress = FALSE;
-  gvc->priv->ignore_messages_mask = 0;
+  gst_element_set_state (bvw->priv->play, GST_STATE_NULL);
+  bvw->priv->target_state = GST_STATE_NULL;
+  bvw->priv->buffering = FALSE;
+  bvw->priv->plugin_install_in_progress = FALSE;
+  bvw->priv->ignore_messages_mask = 0;
   GST_INFO ("stopped");
 }
 
 void
-bacon_video_widget_stop (BaconVideoWidget * gvc)
+bacon_video_widget_stop (BaconVideoWidget * bvw)
 {
-  g_return_if_fail (gvc != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (gvc));
-  g_return_if_fail (GST_IS_ELEMENT (gvc->priv->play));
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
   GST_LOG ("Stopping");
-  gvc_stop_play_pipeline (gvc);
+  BVW_stop_play_pipeline (bvw);
   
   /* Reset position to 0 when stopping */
-  got_time_tick (GST_ELEMENT (gvc->priv->play), 0, gvc);
+  got_time_tick (GST_ELEMENT (bvw->priv->play), 0, bvw);
 }
 
 void
-bacon_video_widget_close (BaconVideoWidget * gvc)
+bacon_video_widget_close (BaconVideoWidget * bvw)
 {
-  g_return_if_fail (gvc != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (gvc));
-  g_return_if_fail (GST_IS_ELEMENT (gvc->priv->play));
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
   
   GST_LOG ("Closing");
-  gvc_stop_play_pipeline (gvc);
+  BVW_stop_play_pipeline (bvw);
 
-  if (gvc->priv->mrl) {
-    g_free (gvc->priv->mrl);
-    gvc->priv->mrl = NULL;
+  if (bvw->priv->mrl) {
+    g_free (bvw->priv->mrl);
+    bvw->priv->mrl = NULL;
   }
 
-  g_signal_emit (gvc, gvc_signals[SIGNAL_CHANNELS_CHANGE], 0);
+  g_signal_emit (bvw, BVW_signals[SIGNAL_CHANNELS_CHANGE], 0);
 }
 
 
 void
-bacon_video_widget_set_logo (BaconVideoWidget * gvc, gchar * filename)
+bacon_video_widget_set_logo (BaconVideoWidget * bvw, gchar * filename)
 {
   GError *error = NULL;
 
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (gvc));
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (filename != NULL);
 
-  if (gvc->priv->logo_pixbuf != NULL)
-    g_object_unref (gvc->priv->logo_pixbuf);
+  if (bvw->priv->logo_pixbuf != NULL)
+    g_object_unref (bvw->priv->logo_pixbuf);
 
-  gvc->priv->logo_pixbuf = gdk_pixbuf_new_from_file (filename, &error);
+  bvw->priv->logo_pixbuf = gdk_pixbuf_new_from_file (filename, &error);
 
   if (error) {
     g_warning ("An error occurred trying to open logo %s: %s",
@@ -2412,176 +2505,176 @@ bacon_video_widget_set_logo (BaconVideoWidget * gvc, gchar * filename)
     g_error_free (error);
   }
   else {
-	  gst_video_widget_set_logo(GST_VIDEO_WIDGET(gvc->priv->video_window),gvc->priv->logo_pixbuf);
+	  gst_video_widget_set_logo(GST_VIDEO_WIDGET(bvw->priv->video_window),bvw->priv->logo_pixbuf);
 }
 }
 
 
 void
-bacon_video_widget_set_logo_mode (BaconVideoWidget * gvc, gboolean logo_mode)
+bacon_video_widget_set_logo_mode (BaconVideoWidget * bvw, gboolean logo_mode)
 {
-	g_return_if_fail (gvc != NULL);
- 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (gvc));
-  	g_return_if_fail (gvc->priv->logo_pixbuf != NULL);
+	g_return_if_fail (bvw != NULL);
+ 	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  	g_return_if_fail (bvw->priv->logo_pixbuf != NULL);
 	
-	gst_video_widget_set_logo_focus(GST_VIDEO_WIDGET(gvc->priv->video_window),logo_mode);
-	gvc->priv->logo_mode = logo_mode;  
+	gst_video_widget_set_logo_focus(GST_VIDEO_WIDGET(bvw->priv->video_window),logo_mode);
+	bvw->priv->logo_mode = logo_mode;  
 }
   
 
 
 gboolean
-bacon_video_widget_get_logo_mode (BaconVideoWidget * gvc)
+bacon_video_widget_get_logo_mode (BaconVideoWidget * bvw)
 {
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 
-  return gvc->priv->logo_mode;
+  return bvw->priv->logo_mode;
 }
 
 void
-bacon_video_widget_pause (BaconVideoWidget * gvc)
+bacon_video_widget_pause (BaconVideoWidget * bvw)
 {
-  g_return_if_fail (gvc != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (gvc));
-  g_return_if_fail (GST_IS_ELEMENT (gvc->priv->play));
-  g_return_if_fail (gvc->priv->mrl != NULL);
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
+  g_return_if_fail (bvw->priv->mrl != NULL);
 
   GST_LOG ("Pausing");
-  gst_element_set_state (GST_ELEMENT (gvc->priv->play), GST_STATE_PAUSED);
-  gvc->priv->target_state = GST_STATE_PAUSED;
+  gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_PAUSED);
+  bvw->priv->target_state = GST_STATE_PAUSED;
 }
 
 void
-bacon_video_widget_set_subtitle_font (BaconVideoWidget * gvc,
+bacon_video_widget_set_subtitle_font (BaconVideoWidget * bvw,
                                           const gchar * font)
 {
-  g_return_if_fail (gvc != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (gvc));
-  g_return_if_fail (GST_IS_ELEMENT (gvc->priv->play));
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
-  if (!g_object_class_find_property (G_OBJECT_GET_CLASS (gvc->priv->play), "subtitle-font-desc"))
+  if (!g_object_class_find_property (G_OBJECT_GET_CLASS (bvw->priv->play), "subtitle-font-desc"))
     return;
-  g_object_set (gvc->priv->play, "subtitle-font-desc", font, NULL);
+  g_object_set (bvw->priv->play, "subtitle-font-desc", font, NULL);
 }
 
 void
-bacon_video_widget_set_subtitle_encoding (BaconVideoWidget *gvc,
+bacon_video_widget_set_subtitle_encoding (BaconVideoWidget *bvw,
                                           const char *encoding)
 {
-  g_return_if_fail (gvc != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (gvc));
-  g_return_if_fail (GST_IS_ELEMENT (gvc->priv->play));
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
-  if (!g_object_class_find_property (G_OBJECT_GET_CLASS (gvc->priv->play), "subtitle-encoding"))
+  if (!g_object_class_find_property (G_OBJECT_GET_CLASS (bvw->priv->play), "subtitle-encoding"))
     return;
-  g_object_set (gvc->priv->play, "subtitle-encoding", encoding, NULL);
+  g_object_set (bvw->priv->play, "subtitle-encoding", encoding, NULL);
 }
 
 gboolean
-bacon_video_widget_can_set_volume (BaconVideoWidget * gvc)
+bacon_video_widget_can_set_volume (BaconVideoWidget * bvw)
 {
-  g_return_val_if_fail (gvc != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), FALSE);
-  g_return_val_if_fail (GST_IS_ELEMENT (gvc->priv->play), FALSE);
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  if (gvc->priv->speakersetup == gvc_AUDIO_SOUND_AC3PASSTHRU)
+  if (bvw->priv->speakersetup == BVW_AUDIO_SOUND_AC3PASSTHRU)
     return FALSE;
 
-  return !gvc->priv->uses_fakesink;
+  return !bvw->priv->uses_fakesink;
 }
 
 void
-bacon_video_widget_set_volume (BaconVideoWidget * gvc, gint volume)
+bacon_video_widget_set_volume (BaconVideoWidget * bvw, gint volume)
 {
-  g_return_if_fail (gvc != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (gvc));
-  g_return_if_fail (GST_IS_ELEMENT (gvc->priv->play));
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
-  if (bacon_video_widget_can_set_volume (gvc) != FALSE)
+  if (bacon_video_widget_can_set_volume (bvw) != FALSE)
   {
     volume = CLAMP (volume, 0, 100);
-    g_object_set (gvc->priv->play, "volume",
+    g_object_set (bvw->priv->play, "volume",
                   (gdouble) (1. * volume / 100), NULL);
-    g_object_notify (G_OBJECT (gvc), "volume");
+    g_object_notify (G_OBJECT (bvw), "volume");
   }
 }
 
 int
-bacon_video_widget_get_volume (BaconVideoWidget * gvc)
+bacon_video_widget_get_volume (BaconVideoWidget * bvw)
 {
   gdouble vol;
 
-  g_return_val_if_fail (gvc != NULL, -1);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), -1);
-  g_return_val_if_fail (GST_IS_ELEMENT (gvc->priv->play), -1);
+  g_return_val_if_fail (bvw != NULL, -1);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -1);
+  g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), -1);
 
-  g_object_get (G_OBJECT (gvc->priv->play), "volume", &vol, NULL);
+  g_object_get (G_OBJECT (bvw->priv->play), "volume", &vol, NULL);
 
   return (gint) (vol * 100 + 0.5);
 }
 
 
 void
-bacon_video_widget_set_fullscreen (BaconVideoWidget * gvc,
+bacon_video_widget_set_fullscreen (BaconVideoWidget * bvw,
                                    gboolean fullscreen)
 {
- /* g_return_if_fail (gvc != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (gvc));
+ /* g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
-  if (gvc->priv->have_xvidmode == FALSE )
+  if (bvw->priv->have_xvidmode == FALSE )
     return;
 
-  gvc->priv->fullscreen_mode = fullscreen;
+  bvw->priv->fullscreen_mode = fullscreen;
 
   if (fullscreen == FALSE){
 	bacon_restore ();
 	  
-  } else if (gvc->priv->have_xvidmode != FALSE) {
+  } else if (bvw->priv->have_xvidmode != FALSE) {
     bacon_resize ();
 	  
   }*/
 }
 
 void
-bacon_video_widget_set_show_cursor (BaconVideoWidget * gvc,
+bacon_video_widget_set_show_cursor (BaconVideoWidget * bvw,
                                     gboolean show_cursor)
 {
-  /*g_return_if_fail (gvc != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (gvc));
+  /*g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   
-  gvc->priv->cursor_shown = show_cursor;
+  bvw->priv->cursor_shown = show_cursor;
   
-  if (!GTK_WIDGET (gvc)->window) {
+  if (!GTK_WIDGET (bvw)->window) {
     return;
   }
 
   if (show_cursor == FALSE) {
-    totem_gdk_window_set_invisible_cursor (GTK_WIDGET (gvc)->window);
+    totem_gdk_window_set_invisible_cursor (GTK_WIDGET (bvw)->window);
   } else {
-    gdk_window_set_cursor (GTK_WIDGET (gvc)->window, NULL);
+    gdk_window_set_cursor (GTK_WIDGET (bvw)->window, NULL);
   }*/
 }
 
 gboolean
-bacon_video_widget_get_show_cursor (BaconVideoWidget * gvc)
+bacon_video_widget_get_show_cursor (BaconVideoWidget * bvw)
 {
-  g_return_val_if_fail (gvc != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), FALSE);
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 
-  return gvc->priv->cursor_shown;
+  return bvw->priv->cursor_shown;
 }
 
 
 void
-bacon_video_widget_set_media_device (BaconVideoWidget * gvc, const char *path)
+bacon_video_widget_set_media_device (BaconVideoWidget * bvw, const char *path)
 {
-  g_return_if_fail (gvc != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (gvc));
-  g_return_if_fail (GST_IS_ELEMENT (gvc->priv->play));
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
   /* FIXME: totally not thread-safe, used in the notify::source callback */  
-  g_free (gvc->priv->media_device);
-  gvc->priv->media_device = g_strdup (path);
+  g_free (bvw->priv->media_device);
+  bvw->priv->media_device = g_strdup (path);
 }
 
 
@@ -2591,72 +2684,72 @@ bacon_video_widget_set_media_device (BaconVideoWidget * gvc, const char *path)
 
 
 gboolean
-bacon_video_widget_get_auto_resize (BaconVideoWidget * gvc)
+bacon_video_widget_get_auto_resize (BaconVideoWidget * bvw)
 {
-  g_return_val_if_fail (gvc != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), FALSE);
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 
-  return gvc->priv->auto_resize;
+  return bvw->priv->auto_resize;
 }
 
 void
-bacon_video_widget_set_auto_resize (BaconVideoWidget * gvc,
+bacon_video_widget_set_auto_resize (BaconVideoWidget * bvw,
                                     gboolean auto_resize)
 {
-  g_return_if_fail (gvc != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (gvc));
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
-  gvc->priv->auto_resize = auto_resize;
+  bvw->priv->auto_resize = auto_resize;
 
   /* this will take effect when the next media file loads */
 }
 
 void
-bacon_video_widget_set_aspect_ratio (BaconVideoWidget *gvc,
+bacon_video_widget_set_aspect_ratio (BaconVideoWidget *bvw,
                                 BaconVideoWidgetAspectRatio ratio)
 {
-  g_return_if_fail (gvc != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (gvc));
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
-  gvc->priv->ratio_type = ratio;
-  got_video_size (gvc);
+  bvw->priv->ratio_type = ratio;
+  got_video_size (bvw);
 }
 
 BaconVideoWidgetAspectRatio
-bacon_video_widget_get_aspect_ratio (BaconVideoWidget *gvc)
+bacon_video_widget_get_aspect_ratio (BaconVideoWidget *bvw)
 {
-  g_return_val_if_fail (gvc != NULL, 0);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), 0);
+  g_return_val_if_fail (bvw != NULL, 0);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
 
-  return gvc->priv->ratio_type;
+  return bvw->priv->ratio_type;
 }
 
 void
-bacon_video_widget_set_scale_ratio (BaconVideoWidget * gvc, gfloat ratio)
+bacon_video_widget_set_scale_ratio (BaconVideoWidget * bvw, gfloat ratio)
 {
 }
 
 gboolean
-bacon_video_widget_can_set_zoom (BaconVideoWidget *gvc)
+bacon_video_widget_can_set_zoom (BaconVideoWidget *bvw)
 {
   return FALSE;
 }
 
 void
-bacon_video_widget_set_zoom (BaconVideoWidget *gvc,
+bacon_video_widget_set_zoom (BaconVideoWidget *bvw,
                              int               zoom)
 {
-  g_return_if_fail (gvc != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (gvc));
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
   /* implement me */
 }
 
 int
-bacon_video_widget_get_zoom (BaconVideoWidget *gvc)
+bacon_video_widget_get_zoom (BaconVideoWidget *bvw)
 {
-  g_return_val_if_fail (gvc != NULL, 100);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), 100);
+  g_return_val_if_fail (bvw != NULL, 100);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 100);
 
   return 100;
 }
@@ -2665,101 +2758,104 @@ bacon_video_widget_get_zoom (BaconVideoWidget *gvc)
 
 
 float
-bacon_video_widget_get_position (BaconVideoWidget * gvc)
+bacon_video_widget_get_position (BaconVideoWidget * bvw)
 {
-  g_return_val_if_fail (gvc != NULL, -1);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), -1);
-  return gvc->priv->current_position;
+  g_return_val_if_fail (bvw != NULL, -1);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -1);
+  return bvw->priv->current_position;
 }
 
 gint64
-bacon_video_widget_get_current_time (BaconVideoWidget * gvc)
+bacon_video_widget_get_current_time (BaconVideoWidget * bvw)
 {
-  g_return_val_if_fail (gvc != NULL, -1);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), -1);
-  return gvc->priv->current_time;
+  g_return_val_if_fail (bvw != NULL, -1);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -1);
+  return bvw->priv->current_time;
 }
 
 gint64
-bacon_video_widget_get_accurate_current_time(BaconVideoWidget *gvc)
+bacon_video_widget_get_accurate_current_time(BaconVideoWidget *bvw)
 { 
-	g_return_val_if_fail (gvc != NULL, -1);
-  	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), -1);
+	GstFormat fmt;
+	gint64 pos;
 
-	GstFormat fmt = GST_FORMAT_TIME;
-   	gint64 pos = -1;
+	g_return_val_if_fail (bvw != NULL, -1);
+  	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -1);
 
-  	gst_element_query_position(gvc->priv->play, &fmt, &pos);
+	 fmt = GST_FORMAT_TIME;
+   	 pos = -1;
+
+  	gst_element_query_position(bvw->priv->play, &fmt, &pos);
   	
   	return pos/GST_MSECOND;
  
 }
 
 gint64
-bacon_video_widget_get_stream_length (BaconVideoWidget * gvc)
+bacon_video_widget_get_stream_length (BaconVideoWidget * bvw)
 {
-  g_return_val_if_fail (gvc != NULL, -1);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), -1);
+  g_return_val_if_fail (bvw != NULL, -1);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), -1);
 
-  if (gvc->priv->stream_length == 0 && gvc->priv->play != NULL) {
+  if (bvw->priv->stream_length == 0 && bvw->priv->play != NULL) {
     GstFormat fmt = GST_FORMAT_TIME;
     gint64 len = -1;
 
-    if (gst_element_query_duration (gvc->priv->play, &fmt, &len) && len != -1) {
-      gvc->priv->stream_length = len / GST_MSECOND;
+    if (gst_element_query_duration (bvw->priv->play, &fmt, &len) && len != -1) {
+      bvw->priv->stream_length = len / GST_MSECOND;
     }
   }
 
-  return gvc->priv->stream_length;
+  return bvw->priv->stream_length;
 }
 
 gboolean
-bacon_video_widget_is_playing (BaconVideoWidget * gvc)
+bacon_video_widget_is_playing (BaconVideoWidget * bvw)
 {
   gboolean ret;
 
-  g_return_val_if_fail (gvc != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), FALSE);
-  g_return_val_if_fail (GST_IS_ELEMENT (gvc->priv->play), FALSE);
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  ret = (gvc->priv->target_state == GST_STATE_PLAYING);
+  ret = (bvw->priv->target_state == GST_STATE_PLAYING);
   GST_LOG ("%splaying", (ret) ? "" : "not ");
 
   return ret;
 }
 
 gboolean
-bacon_video_widget_is_seekable (BaconVideoWidget * gvc)
+bacon_video_widget_is_seekable (BaconVideoWidget * bvw)
 {
   gboolean res;
 
-  g_return_val_if_fail (gvc != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), FALSE);
-  g_return_val_if_fail (GST_IS_ELEMENT (gvc->priv->play), FALSE);
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  if (gvc->priv->seekable == -1) {
+  if (bvw->priv->seekable == -1) {
     GstQuery *query;
 
     query = gst_query_new_seeking (GST_FORMAT_TIME);
-    if (gst_element_query (gvc->priv->play, query)) {
+    if (gst_element_query (bvw->priv->play, query)) {
       gst_query_parse_seeking (query, NULL, &res, NULL, NULL);
-      gvc->priv->seekable = (res) ? 1 : 0;
+      bvw->priv->seekable = (res) ? 1 : 0;
     } else {
       GST_INFO ("seeking query failed");
     }
     gst_query_unref (query);
   }
 
-  if (gvc->priv->seekable != -1) {
-    res = (gvc->priv->seekable != 0);
+  if (bvw->priv->seekable != -1) {
+    res = (bvw->priv->seekable != 0);
     goto done;
   }
 
   /* try to guess from duration (this is very unreliable though) */
-  if (gvc->priv->stream_length == 0) {
-    res = (bacon_video_widget_get_stream_length (gvc) > 0);
+  if (bvw->priv->stream_length == 0) {
+    res = (bacon_video_widget_get_stream_length (bvw) > 0);
   } else {
-    res = (gvc->priv->stream_length > 0);
+    res = (bvw->priv->stream_length > 0);
   }
 
 done:
@@ -2771,9 +2867,9 @@ done:
 
 
 gchar *
-bacon_video_widget_get_mrl (BaconVideoWidget * gvc)
+bacon_video_widget_get_mrl (BaconVideoWidget * bvw)
 {
-	return g_strdup(gvc->priv->mrl);
+	return g_strdup(bvw->priv->mrl);
 }
 
 
@@ -2782,23 +2878,23 @@ static struct _metadata_map_info {
   BaconVideoWidgetMetadataType type;
   const gchar *str;
 } metadata_str_map[] = {
-  { gvc_INFO_TITLE, "title" },
-  { gvc_INFO_ARTIST, "artist" },
-  { gvc_INFO_YEAR, "year" },
-  { gvc_INFO_ALBUM, "album" },
-  { gvc_INFO_DURATION, "duration" },
-  { gvc_INFO_TRACK_NUMBER, "track-number" },
-  { gvc_INFO_HAS_VIDEO, "has-video" },
-  { gvc_INFO_DIMENSION_X, "dimension-x" },
-  { gvc_INFO_DIMENSION_Y, "dimension-y" },
-  { gvc_INFO_VIDEO_BITRATE, "video-bitrate" },
-  { gvc_INFO_VIDEO_CODEC, "video-codec" },
-  { gvc_INFO_FPS, "fps" },
-  { gvc_INFO_HAS_AUDIO, "has-audio" },
-  { gvc_INFO_AUDIO_BITRATE, "audio-bitrate" },
-  { gvc_INFO_AUDIO_CODEC, "audio-codec" },
-  { gvc_INFO_AUDIO_SAMPLE_RATE, "samplerate" },
-  { gvc_INFO_AUDIO_CHANNELS, "channels" }
+  { BVW_INFO_TITLE, "title" },
+  { BVW_INFO_ARTIST, "artist" },
+  { BVW_INFO_YEAR, "year" },
+  { BVW_INFO_ALBUM, "album" },
+  { BVW_INFO_DURATION, "duration" },
+  { BVW_INFO_TRACK_NUMBER, "track-number" },
+  { BVW_INFO_HAS_VIDEO, "has-video" },
+  { BVW_INFO_DIMENSION_X, "dimension-x" },
+  { BVW_INFO_DIMENSION_Y, "dimension-y" },
+  { BVW_INFO_VIDEO_BITRATE, "video-bitrate" },
+  { BVW_INFO_VIDEO_CODEC, "video-codec" },
+  { BVW_INFO_FPS, "fps" },
+  { BVW_INFO_HAS_AUDIO, "has-audio" },
+  { BVW_INFO_AUDIO_BITRATE, "audio-bitrate" },
+  { BVW_INFO_AUDIO_CODEC, "audio-codec" },
+  { BVW_INFO_AUDIO_SAMPLE_RATE, "samplerate" },
+  { BVW_INFO_AUDIO_CHANNELS, "channels" }
 };
 
 static const gchar *
@@ -2813,7 +2909,7 @@ get_metadata_type_name (BaconVideoWidgetMetadataType type)
 }
 
 static GObject *
-gvc_get_stream_info_of_current_stream (BaconVideoWidget * gvc,
+BVW_get_stream_info_of_current_stream (BaconVideoWidget * bvw,
     const gchar *stream_type)
 {
   GObject *current_info;
@@ -2821,12 +2917,12 @@ gvc_get_stream_info_of_current_stream (BaconVideoWidget * gvc,
   gchar *lower, *cur_prop_str;
   gint stream_num = -1;
 
-  if (gvc->priv->play == NULL)
+  if (bvw->priv->play == NULL)
     return NULL;
 
   lower = g_ascii_strdown (stream_type, -1);
   cur_prop_str = g_strconcat ("current-", lower, NULL);
-  g_object_get (gvc->priv->play, cur_prop_str, &stream_num, NULL);
+  g_object_get (bvw->priv->play, cur_prop_str, &stream_num, NULL);
   g_free (cur_prop_str);
   g_free (lower);
 
@@ -2834,7 +2930,7 @@ gvc_get_stream_info_of_current_stream (BaconVideoWidget * gvc,
   if (stream_num < 0)
     return NULL;
 
-  streams = get_stream_info_objects_for_type (gvc, stream_type);
+  streams = get_stream_info_objects_for_type (bvw, stream_type);
   current_info = g_list_nth_data (streams, stream_num);
   if (current_info != NULL)
     g_object_ref (current_info);
@@ -2845,13 +2941,13 @@ gvc_get_stream_info_of_current_stream (BaconVideoWidget * gvc,
 }
 
 static GstCaps *
-gvc_get_caps_of_current_stream (BaconVideoWidget * gvc,
+BVW_get_caps_of_current_stream (BaconVideoWidget * bvw,
     const gchar *stream_type)
 {
   GstCaps *caps = NULL;
   GObject *current;
 
-  current = gvc_get_stream_info_of_current_stream (gvc, stream_type);
+  current = BVW_get_stream_info_of_current_stream (bvw, stream_type);
   if (current != NULL) {
     GstObject *obj = NULL;
 
@@ -2898,7 +2994,7 @@ audio_caps_have_LFE (GstStructure * s)
 }
 
 static void
-bacon_video_widget_get_metadata_string (BaconVideoWidget * gvc,
+bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
                                         BaconVideoWidgetMetadataType type,
                                         GValue * value)
 {
@@ -2907,80 +3003,80 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * gvc,
 
   g_value_init (value, G_TYPE_STRING);
 
-  if (gvc->priv->play == NULL) {
+  if (bvw->priv->play == NULL) {
     g_value_set_string (value, NULL);
     return;
   }
 
   switch (type) {
-    case gvc_INFO_TITLE:
-      if (gvc->priv->tagcache != NULL) {
-        res = gst_tag_list_get_string_index (gvc->priv->tagcache,
+    case BVW_INFO_TITLE:
+      if (bvw->priv->tagcache != NULL) {
+        res = gst_tag_list_get_string_index (bvw->priv->tagcache,
                                              GST_TAG_TITLE, 0, &string);
       }
       break;
-    case gvc_INFO_ARTIST:
-      if (gvc->priv->tagcache != NULL) {
-        res = gst_tag_list_get_string_index (gvc->priv->tagcache,
+    case BVW_INFO_ARTIST:
+      if (bvw->priv->tagcache != NULL) {
+        res = gst_tag_list_get_string_index (bvw->priv->tagcache,
                                              GST_TAG_ARTIST, 0, &string);
       }
       break;
-    case gvc_INFO_YEAR:
-      if (gvc->priv->tagcache != NULL) {
+    case BVW_INFO_YEAR:
+      if (bvw->priv->tagcache != NULL) {
         GDate *date;
 
-        if ((res = gst_tag_list_get_date (gvc->priv->tagcache,
+        if ((res = gst_tag_list_get_date (bvw->priv->tagcache,
                                           GST_TAG_DATE, &date))) {
           string = g_strdup_printf ("%d", g_date_get_year (date));
           g_date_free (date);
         }
       }
       break;
-    case gvc_INFO_ALBUM:
-      if (gvc->priv->tagcache != NULL) {
-        res = gst_tag_list_get_string_index (gvc->priv->tagcache,
+    case BVW_INFO_ALBUM:
+      if (bvw->priv->tagcache != NULL) {
+        res = gst_tag_list_get_string_index (bvw->priv->tagcache,
                                              GST_TAG_ALBUM, 0, &string);
       }
       break;
-    case gvc_INFO_VIDEO_CODEC: {
+    case BVW_INFO_VIDEO_CODEC: {
       GObject *info;
 
       /* try to get this from the stream info first */
-      if ((info = gvc_get_stream_info_of_current_stream (gvc, "video"))) {
+      if ((info = BVW_get_stream_info_of_current_stream (bvw, "video"))) {
         g_object_get (info, "codec", &string, NULL);
         res = (string != NULL);
         gst_object_unref (info);
       }
 
       /* if that didn't work, try the aggregated tags */
-      if (!res && gvc->priv->tagcache != NULL) {
-        res = gst_tag_list_get_string (gvc->priv->tagcache,
+      if (!res && bvw->priv->tagcache != NULL) {
+        res = gst_tag_list_get_string (bvw->priv->tagcache,
             GST_TAG_VIDEO_CODEC, &string);
       }
       break;
     }
-    case gvc_INFO_AUDIO_CODEC: {
+    case BVW_INFO_AUDIO_CODEC: {
       GObject *info;
 
       /* try to get this from the stream info first */
-      if ((info = gvc_get_stream_info_of_current_stream (gvc, "audio"))) {
+      if ((info = BVW_get_stream_info_of_current_stream (bvw, "audio"))) {
         g_object_get (info, "codec", &string, NULL);
         res = (string != NULL);
         gst_object_unref (info);
       }
 
       /* if that didn't work, try the aggregated tags */
-      if (!res && gvc->priv->tagcache != NULL) {
-        res = gst_tag_list_get_string (gvc->priv->tagcache,
+      if (!res && bvw->priv->tagcache != NULL) {
+        res = gst_tag_list_get_string (bvw->priv->tagcache,
             GST_TAG_AUDIO_CODEC, &string);
       }
       break;
     }
-    case gvc_INFO_AUDIO_CHANNELS: {
+    case BVW_INFO_AUDIO_CHANNELS: {
       GstStructure *s;
       GstCaps *caps;
 
-      caps = gvc_get_caps_of_current_stream (gvc, "audio");
+      caps = BVW_get_caps_of_current_stream (bvw, "audio");
       if (caps) {
         gint channels = 0;
 
@@ -3013,7 +3109,7 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * gvc,
 }
 
 static void
-bacon_video_widget_get_metadata_int (BaconVideoWidget * gvc,
+bacon_video_widget_get_metadata_int (BaconVideoWidget * bvw,
                                      BaconVideoWidgetMetadataType type,
                                      GValue * value)
 {
@@ -3021,64 +3117,63 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * gvc,
 
   g_value_init (value, G_TYPE_INT);
 
-  if (gvc->priv->play == NULL) {
+  if (bvw->priv->play == NULL) {
     g_value_set_int (value, 0);
     return;
   }
 
   switch (type) {
-    case gvc_INFO_DURATION:
-      integer = bacon_video_widget_get_stream_length (gvc) / 1000;
+    case BVW_INFO_DURATION:
+      integer = bacon_video_widget_get_stream_length (bvw) / 1000;
       break;
-    case gvc_INFO_TRACK_NUMBER:
-      if (gvc->priv->tagcache == NULL)
+    case BVW_INFO_TRACK_NUMBER:
+      if (bvw->priv->tagcache == NULL)
         break;
-      if (!gst_tag_list_get_uint (gvc->priv->tagcache,
+      if (!gst_tag_list_get_uint (bvw->priv->tagcache,
                                   GST_TAG_TRACK_NUMBER, (guint *) &integer))
         integer = 0;
       break;
-    case gvc_INFO_DIMENSION_X:
-      integer = gvc->priv->video_width;
+    case BVW_INFO_DIMENSION_X:
+      integer = bvw->priv->video_width;
       break;
-    case gvc_INFO_DIMENSION_Y:
-      integer = gvc->priv->video_height;
+    case BVW_INFO_DIMENSION_Y:
+      integer = bvw->priv->video_height;
       break;
-    case gvc_INFO_FPS:
-      if (gvc->priv->video_fps_d > 0) {
+    case BVW_INFO_FPS:
+      if (bvw->priv->video_fps_d > 0) {
         /* Round up/down to the nearest integer framerate */
-        integer = (gvc->priv->video_fps_n + gvc->priv->video_fps_d/2) /
-                  gvc->priv->video_fps_d;
+        integer = (bvw->priv->video_fps_n + bvw->priv->video_fps_d/2) /
+                  bvw->priv->video_fps_d;
       }
-      else{
-	      g_print("mal");
+      else{	      
         integer = 0;
        }
       break;
-    case gvc_INFO_AUDIO_BITRATE:
-      if (gvc->priv->audiotags == NULL)
+    case BVW_INFO_AUDIO_BITRATE:
+      if (bvw->priv->audiotags == NULL)
         break;
-      if (gst_tag_list_get_uint (gvc->priv->audiotags, GST_TAG_BITRATE,
+      if (gst_tag_list_get_uint (bvw->priv->audiotags, GST_TAG_BITRATE,
           (guint *)&integer) ||
-          gst_tag_list_get_uint (gvc->priv->audiotags, GST_TAG_NOMINAL_BITRATE,
+          gst_tag_list_get_uint (bvw->priv->audiotags, GST_TAG_NOMINAL_BITRATE,
           (guint *)&integer)) {
         integer /= 1000;
       }
       break;
-    case gvc_INFO_VIDEO_BITRATE:
-      if (gvc->priv->videotags == NULL)
+    case BVW_INFO_VIDEO_BITRATE:
+      if (bvw->priv->videotags == NULL)
         break;
-      if (gst_tag_list_get_uint (gvc->priv->videotags, GST_TAG_BITRATE,
+      if (gst_tag_list_get_uint (bvw->priv->videotags, GST_TAG_BITRATE,
           (guint *)&integer) ||
-          gst_tag_list_get_uint (gvc->priv->videotags, GST_TAG_NOMINAL_BITRATE,
+          gst_tag_list_get_uint (bvw->priv->videotags, GST_TAG_NOMINAL_BITRATE,
           (guint *)&integer)) {
         integer /= 1000;
       }
       break;
-    case gvc_INFO_AUDIO_SAMPLE_RATE: {
+    case BVW_INFO_AUDIO_SAMPLE_RATE: {
       GstStructure *s;
       GstCaps *caps;
 
-      caps = gvc_get_caps_of_current_stream (gvc, "audio");
+      caps = BVW_get_caps_of_current_stream (bvw, "audio");
       if (caps) {
         s = gst_caps_get_structure (caps, 0);
         gst_structure_get_int (s, "rate", &integer);
@@ -3097,7 +3192,7 @@ bacon_video_widget_get_metadata_int (BaconVideoWidget * gvc,
 }
 
 static void
-bacon_video_widget_get_metadata_bool (BaconVideoWidget * gvc,
+bacon_video_widget_get_metadata_bool (BaconVideoWidget * bvw,
                                       BaconVideoWidgetMetadataType type,
                                       GValue * value)
 {
@@ -3105,35 +3200,35 @@ bacon_video_widget_get_metadata_bool (BaconVideoWidget * gvc,
 
   g_value_init (value, G_TYPE_BOOLEAN);
 
-  if (gvc->priv->play == NULL) {
+  if (bvw->priv->play == NULL) {
     g_value_set_boolean (value, FALSE);
     return;
   }
 
-  GST_INFO ("tagcache  = %" GST_PTR_FORMAT, gvc->priv->tagcache);
-  GST_INFO ("videotags = %" GST_PTR_FORMAT, gvc->priv->videotags);
-  GST_INFO ("audiotags = %" GST_PTR_FORMAT, gvc->priv->audiotags);
+  GST_INFO ("tagcache  = %" GST_PTR_FORMAT, bvw->priv->tagcache);
+  GST_INFO ("videotags = %" GST_PTR_FORMAT, bvw->priv->videotags);
+  GST_INFO ("audiotags = %" GST_PTR_FORMAT, bvw->priv->audiotags);
 
   switch (type)
   {
-    case gvc_INFO_HAS_VIDEO:
-      boolean = gvc->priv->media_has_video;
+    case BVW_INFO_HAS_VIDEO:
+      boolean = bvw->priv->media_has_video;
       /* if properties dialog, show the metadata we
        * have even if we cannot decode the stream */
-      if (!boolean && gvc->priv->use_type == gvc_USE_TYPE_METADATA &&
-          gvc->priv->tagcache != NULL &&
-          gst_structure_has_field ((GstStructure *) gvc->priv->tagcache,
+      if (!boolean && bvw->priv->use_type == BVW_USE_TYPE_METADATA &&
+          bvw->priv->tagcache != NULL &&
+          gst_structure_has_field ((GstStructure *) bvw->priv->tagcache,
                                    GST_TAG_VIDEO_CODEC)) {
         boolean = TRUE;
       }
       break;
-    case gvc_INFO_HAS_AUDIO:
-      boolean = gvc->priv->media_has_audio;
+    case BVW_INFO_HAS_AUDIO:
+      boolean = bvw->priv->media_has_audio;
       /* if properties dialog, show the metadata we
        * have even if we cannot decode the stream */
-      if (!boolean && gvc->priv->use_type == gvc_USE_TYPE_METADATA &&
-          gvc->priv->tagcache != NULL &&
-          gst_structure_has_field ((GstStructure *) gvc->priv->tagcache,
+      if (!boolean && bvw->priv->use_type == BVW_USE_TYPE_METADATA &&
+          bvw->priv->tagcache != NULL &&
+          gst_structure_has_field ((GstStructure *) bvw->priv->tagcache,
                                    GST_TAG_AUDIO_CODEC)) {
         boolean = TRUE;
       }
@@ -3149,7 +3244,7 @@ bacon_video_widget_get_metadata_bool (BaconVideoWidget * gvc,
 }
 
 static void
-gvc_process_pending_tag_messages (BaconVideoWidget * gvc)
+BVW_process_pending_tag_messages (BaconVideoWidget * bvw)
 {
   GstMessageType events;
   GstMessage *msg;
@@ -3160,7 +3255,7 @@ gvc_process_pending_tag_messages (BaconVideoWidget * gvc)
 
   /* application message is for stream-info */
   events = GST_MESSAGE_TAG | GST_MESSAGE_DURATION | GST_MESSAGE_APPLICATION;
-  bus = gst_element_get_bus (gvc->priv->play);
+  bus = gst_element_get_bus (bvw->priv->play);
   while ((msg = gst_bus_poll (bus, events, 0))) {
     gst_bus_async_signal_func (bus, msg, NULL);
   }
@@ -3168,44 +3263,44 @@ gvc_process_pending_tag_messages (BaconVideoWidget * gvc)
 }
 
 void
-bacon_video_widget_get_metadata (BaconVideoWidget * gvc,
+bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
                                  BaconVideoWidgetMetadataType type,
                                  GValue * value)
 {
-  g_return_if_fail (gvc != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (gvc));
-  g_return_if_fail (GST_IS_ELEMENT (gvc->priv->play));
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
 
   switch (type)
     {
-    case gvc_INFO_TITLE:
-    case gvc_INFO_ARTIST:
-    case gvc_INFO_YEAR:
-    case gvc_INFO_ALBUM:
-    case gvc_INFO_VIDEO_CODEC:
-    case gvc_INFO_AUDIO_CODEC:
-    case gvc_INFO_AUDIO_CHANNELS:
-      bacon_video_widget_get_metadata_string (gvc, type, value);
+    case BVW_INFO_TITLE:
+    case BVW_INFO_ARTIST:
+    case BVW_INFO_YEAR:
+    case BVW_INFO_ALBUM:
+    case BVW_INFO_VIDEO_CODEC:
+    case BVW_INFO_AUDIO_CODEC:
+    case BVW_INFO_AUDIO_CHANNELS:
+      bacon_video_widget_get_metadata_string (bvw, type, value);
       break;
-    case gvc_INFO_DURATION:
-      bacon_video_widget_get_metadata_int (gvc, type, value);
+    case BVW_INFO_DURATION:
+      bacon_video_widget_get_metadata_int (bvw, type, value);
       break;
-    case gvc_INFO_DIMENSION_X:
-    case gvc_INFO_DIMENSION_Y:
-    case gvc_INFO_FPS:
-      bacon_video_widget_get_metadata_int (gvc, type, value);
+    case BVW_INFO_DIMENSION_X:
+    case BVW_INFO_DIMENSION_Y:
+    case BVW_INFO_FPS:
+      bacon_video_widget_get_metadata_int (bvw, type, value);
       break;    
-    case gvc_INFO_AUDIO_BITRATE:
-    case gvc_INFO_VIDEO_BITRATE:
-    case gvc_INFO_TRACK_NUMBER:
-    case gvc_INFO_AUDIO_SAMPLE_RATE:
-      bacon_video_widget_get_metadata_int (gvc, type, value);
+    case BVW_INFO_AUDIO_BITRATE:
+    case BVW_INFO_VIDEO_BITRATE:
+    case BVW_INFO_TRACK_NUMBER:
+    case BVW_INFO_AUDIO_SAMPLE_RATE:
+      bacon_video_widget_get_metadata_int (bvw, type, value);
       break;
-    case gvc_INFO_HAS_VIDEO:
-      bacon_video_widget_get_metadata_bool (gvc, type, value);
+    case BVW_INFO_HAS_VIDEO:
+      bacon_video_widget_get_metadata_bool (bvw, type, value);
       break;
-    case gvc_INFO_HAS_AUDIO:
-      bacon_video_widget_get_metadata_bool (gvc, type, value);
+    case BVW_INFO_HAS_AUDIO:
+      bacon_video_widget_get_metadata_bool (bvw, type, value);
       break;
     default:
       g_return_if_reached ();
@@ -3216,27 +3311,27 @@ bacon_video_widget_get_metadata (BaconVideoWidget * gvc,
 
 /* Screenshot functions */
 gboolean
-bacon_video_widget_can_get_frames (BaconVideoWidget * gvc, GError ** error)
+bacon_video_widget_can_get_frames (BaconVideoWidget * bvw, GError ** error)
 {
-  g_return_val_if_fail (gvc != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), FALSE);
-  g_return_val_if_fail (GST_IS_ELEMENT (gvc->priv->play), FALSE);
+  g_return_val_if_fail (bvw != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
   /* check for version */
   if (!g_object_class_find_property (
-           G_OBJECT_GET_CLASS (gvc->priv->play), "frame")) {
-    g_set_error (error, gvc_ERROR, gvc_ERROR_GENERIC,
+           G_OBJECT_GET_CLASS (bvw->priv->play), "frame")) {
+    g_set_error (error, BVW_ERROR, BVW_ERROR_GENERIC,
         _("Too old version of GStreamer installed."));
     return FALSE;
   }
 
   /* check for video */
-  if (!gvc->priv->media_has_video) {
-    g_set_error (error, gvc_ERROR, gvc_ERROR_GENERIC,
+  if (!bvw->priv->media_has_video) {
+    g_set_error (error, BVW_ERROR, BVW_ERROR_GENERIC,
         _("Media contains no supported video streams."));
   }
 
-  return gvc->priv->media_has_video;
+  return bvw->priv->media_has_video;
 }
 
 static void
@@ -3246,7 +3341,7 @@ destroy_pixbuf (guchar *pix, gpointer data)
 }
 
 GdkPixbuf *
-bacon_video_widget_get_current_frame (BaconVideoWidget * gvc)
+bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
 {
   GstStructure *s;
   GstBuffer *buf = NULL;
@@ -3255,24 +3350,24 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * gvc)
   gint outwidth = 0;
   gint outheight = 0;
 
-  g_return_val_if_fail (gvc != NULL, NULL);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (gvc), NULL);
-  g_return_val_if_fail (GST_IS_ELEMENT (gvc->priv->play), NULL);
+  g_return_val_if_fail (bvw != NULL, NULL);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
+  g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), NULL);
 
   /* when used as thumbnailer, wait for pending seeks to complete */
-  if (gvc->priv->use_type == gvc_USE_TYPE_CAPTURE) {
-    gst_element_get_state (gvc->priv->play, NULL, NULL, -1);
+  if (bvw->priv->use_type == BVW_USE_TYPE_CAPTURE) {
+    gst_element_get_state (bvw->priv->play, NULL, NULL, -1);
   }
 
   /* no video info */
-  if (!gvc->priv->video_width || !gvc->priv->video_height) {
+  if (!bvw->priv->video_width || !bvw->priv->video_height) {
     GST_INFO ("Could not take screenshot: %s", "no video info");
     g_warning ("Could not take screenshot: %s", "no video info");
     return NULL;
   }
 
   /* get frame */
-  g_object_get (gvc->priv->play, "frame", &buf, NULL);
+  g_object_get (bvw->priv->play, "frame", &buf, NULL);
 
   if (!buf) {
     GST_INFO ("Could not take screenshot: %s", "no last video frame");
@@ -3294,7 +3389,7 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * gvc)
        * videoscale can adjust dimensions from a non-1/1 pixel aspect
        * ratio to a 1/1 pixel-aspect-ratio */
       "framerate", GST_TYPE_FRACTION, 
-      gvc->priv->video_fps_n, gvc->priv->video_fps_d,
+      bvw->priv->video_fps_n, bvw->priv->video_fps_d,
       "pixel-aspect-ratio", GST_TYPE_FRACTION, 1, 1,
       "endianness", G_TYPE_INT, G_BIG_ENDIAN,
       "red_mask", G_TYPE_INT, 0xff0000,
@@ -3305,8 +3400,8 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * gvc)
   GST_INFO ("frame caps: %" GST_PTR_FORMAT, GST_BUFFER_CAPS (buf));
   GST_INFO ("pixbuf caps: %" GST_PTR_FORMAT, to_caps);
 
-  /* gvc_frame_conv_convert () takes ownership of the buffer passed */
-  buf = gvc_frame_conv_convert (buf, to_caps);
+  /* bvw_frame_conv_convert () takes ownership of the buffer passed */
+  buf = gst_frame_conv_convert (buf, to_caps);
 
   gst_caps_unref (to_caps);
 
@@ -3397,22 +3492,22 @@ bacon_video_widget_error_quark (void)
   static GQuark q; /* 0 */
 
   if (G_UNLIKELY (q == 0)) {
-    q = g_quark_from_static_string ("gvc-error-quark");
+    q = g_quark_from_static_string ("bvw-error-quark");
   }
   return q;
 }
 
 static void
-gvc_update_interface_implementations (BaconVideoWidget *gvc)
+BVW_update_interface_implementations (BaconVideoWidget *bvw)
 {
 
-  GstXOverlay *old_xoverlay = gvc->priv->xoverlay;
+  GstXOverlay *old_xoverlay = bvw->priv->xoverlay;
   GstElement *video_sink = NULL;
   GstElement *element = NULL;
 
 
 
-  g_object_get (gvc->priv->play, "video-sink", &video_sink, NULL);
+  g_object_get (bvw->priv->play, "video-sink", &video_sink, NULL);
   g_assert (video_sink != NULL);
 
 
@@ -3427,10 +3522,10 @@ gvc_update_interface_implementations (BaconVideoWidget *gvc)
 
   if (GST_IS_X_OVERLAY (element)) {
     GST_INFO ("Found xoverlay: %s", GST_OBJECT_NAME (element));
-    gvc->priv->xoverlay = GST_X_OVERLAY (element);
+    bvw->priv->xoverlay = GST_X_OVERLAY (element);
   } else {
     GST_INFO ("No xoverlay found");
-    gvc->priv->xoverlay = NULL;
+    bvw->priv->xoverlay = NULL;
   }
   if (old_xoverlay)
     gst_object_unref (GST_OBJECT (old_xoverlay));
@@ -3440,10 +3535,10 @@ gvc_update_interface_implementations (BaconVideoWidget *gvc)
 }
 
 static void
-gvc_element_msg_sync (GstBus *bus, GstMessage *msg, gpointer data)
+BVW_element_msg_sync (GstBus *bus, GstMessage *msg, gpointer data)
 {
   
-  BaconVideoWidget *gvc = BACON_VIDEO_WIDGET (data);
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (data);
 
   g_assert (msg->type == GST_MESSAGE_ELEMENT);
 
@@ -3457,18 +3552,18 @@ gvc_element_msg_sync (GstBus *bus, GstMessage *msg, gpointer data)
 
     GST_INFO ("Handling sync prepare-xwindow-id message");
 
-    g_mutex_lock (gvc->priv->lock);
-    gvc_update_interface_implementations (gvc);
-    g_mutex_unlock (gvc->priv->lock);
+    g_mutex_lock (bvw->priv->lock);
+    BVW_update_interface_implementations (bvw);
+    g_mutex_unlock (bvw->priv->lock);
 
-    g_return_if_fail (gvc->priv->xoverlay != NULL);
-    g_return_if_fail (gvc->priv->video_window != NULL);
+    g_return_if_fail (bvw->priv->xoverlay != NULL);
+    g_return_if_fail (bvw->priv->video_window != NULL);
 
-    window = gst_video_widget_get_video_window (GST_VIDEO_WIDGET(gvc->priv->video_window));
+    window = gst_video_widget_get_video_window (GST_VIDEO_WIDGET(bvw->priv->video_window));
     #ifdef WIN32
-   	  gst_x_overlay_set_xwindow_id (gvc->priv->xoverlay, GDK_WINDOW_HWND(window));
+   	  gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay, GDK_WINDOW_HWND(window));
 	#else
-	  gst_x_overlay_set_xwindow_id (gvc->priv->xoverlay, GDK_WINDOW_XID (window));
+	  gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay, GDK_WINDOW_XID (window));
 	#endif
 
   }
@@ -3478,34 +3573,34 @@ static void
 got_new_video_sink_bin_element (GstBin *video_sink, GstElement *element,
                                 gpointer data)
 {
-  BaconVideoWidget *gvc = BACON_VIDEO_WIDGET (data);
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (data);
 
-  g_mutex_lock (gvc->priv->lock);
-  gvc_update_interface_implementations (gvc);
-  g_mutex_unlock (gvc->priv->lock);
+  g_mutex_lock (bvw->priv->lock);
+  BVW_update_interface_implementations (bvw);
+  g_mutex_unlock (bvw->priv->lock);
 
 }
 
-static void gvc_window_construct(int width, int weight,  BaconVideoWidget *gvc){
+static void BVW_window_construct(int width, int weight,  BaconVideoWidget *bvw){
 	
 	//Create the Video Widget
-	gvc->priv->video_window = gst_video_widget_new();
+	bvw->priv->video_window = gst_video_widget_new();
 	
-	gst_video_widget_set_minimum_size (GST_VIDEO_WIDGET (gvc->priv->video_window),
+	gst_video_widget_set_minimum_size (GST_VIDEO_WIDGET (bvw->priv->video_window),
             width, weight);
-	gst_video_widget_set_source_size (GST_VIDEO_WIDGET (gvc->priv->video_window), width,weight );
-	g_signal_connect (G_OBJECT (gvc->priv->video_window), "expose_event",
-		    G_CALLBACK (gvc_expose_event), gvc);
+	gst_video_widget_set_source_size (GST_VIDEO_WIDGET (bvw->priv->video_window), width,weight );
+	g_signal_connect (G_OBJECT (bvw->priv->video_window), "expose_event",
+		    G_CALLBACK (BVW_expose_event), bvw);
 
 
 }
 
 BaconVideoWidget *
 bacon_video_widget_new (int width, int height,
-                        gvcUseType type, GError ** err)
+                        BvwUseType type, GError ** err)
 {
   
-  BaconVideoWidget *gvc;
+  BaconVideoWidget *bvw;
   GstElement *audio_sink = NULL, *video_sink = NULL;
   gchar *version_str;
 
@@ -3523,47 +3618,49 @@ bacon_video_widget_new (int width, int height,
 
   gst_pb_utils_init ();
 
-  gvc = g_object_new(bacon_video_widget_get_type (), NULL);
-  gvc_window_construct(width,height,gvc);
+  bvw = g_object_new(bacon_video_widget_get_type (), NULL);
+  BVW_window_construct(width,height,bvw);
 
-  gvc->priv->use_type = type;
+  bvw->priv->use_type = type;
   
   GST_INFO ("use_type = %d", type);
 
-  gvc->priv->play = gst_element_factory_make ("playbin", "play");
-  if (!gvc->priv->play) {
+  bvw->priv->play = gst_element_factory_make ("playbin", "play");
+  if (!bvw->priv->play) {
 
-    g_set_error (err, gvc_ERROR, gvc_ERROR_PLUGIN_LOAD,
+    g_set_error (err, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
                  _("Failed to create a GStreamer play object. "
                    "Please check your GStreamer installation."));
-    g_object_ref_sink (gvc);
-    g_object_unref (gvc);
+    g_object_ref_sink (bvw);
+    g_object_unref (bvw);
     return NULL;
   }
 
-  gvc->priv->bus = gst_element_get_bus (gvc->priv->play);
+  bvw->priv->bus = gst_element_get_bus (bvw->priv->play);
   
-  gst_bus_add_signal_watch (gvc->priv->bus);
+  gst_bus_add_signal_watch (bvw->priv->bus);
 
-  gvc->priv->sig_bus_async = 
-      g_signal_connect (gvc->priv->bus, "message", 
-                        G_CALLBACK (gvc_bus_message_cb),
-                        gvc);
+  bvw->priv->sig_bus_async = 
+      g_signal_connect (bvw->priv->bus, "message", 
+                        G_CALLBACK (BVW_bus_message_cb),
+                        bvw);
 
-  gvc->priv->speakersetup = gvc_AUDIO_SOUND_STEREO;
-  gvc->priv->media_device = g_strdup ("/dev/dvd");
-  gvc->priv->init_width = 240;
-  gvc->priv->init_height = 180;
-  gvc->priv->ratio_type = gvc_RATIO_AUTO;
+  bvw->priv->speakersetup = BVW_AUDIO_SOUND_STEREO;
+  bvw->priv->media_device = g_strdup ("/dev/dvd");
+  bvw->priv->init_width = 240;
+  bvw->priv->init_height = 180;
+  bvw->priv->ratio_type = BVW_RATIO_AUTO;
 
-  gvc->priv->cursor_shown = TRUE;
-  gvc->priv->logo_mode = FALSE;
-  gvc->priv->auto_resize = TRUE;
+  bvw->priv->cursor_shown = TRUE;
+  bvw->priv->logo_mode = FALSE;
+  bvw->priv->auto_resize = TRUE;
 
 
 
-  if (type == gvc_USE_TYPE_VIDEO || type == gvc_USE_TYPE_AUDIO) {
-    audio_sink = gst_element_factory_make ("autoaudiosink", "audio-sink");
+  if (type == BVW_USE_TYPE_VIDEO || type == BVW_USE_TYPE_AUDIO) {
+
+	audio_sink = gst_element_factory_make ("autoaudiosink", "audio-sink");
+
     if (audio_sink == NULL) {
       g_warning ("Could not create element 'autoaudiosink'");
     } 
@@ -3571,7 +3668,7 @@ bacon_video_widget_new (int width, int height,
     audio_sink = gst_element_factory_make ("fakesink", "audio-fake-sink");
   }
 
-  if (type == gvc_USE_TYPE_VIDEO) {   
+  if (type == BVW_USE_TYPE_VIDEO) {   
       video_sink = gst_element_factory_make ("autovideosink", "video-sink");
       if (video_sink == NULL) {
         g_warning ("Could not create element 'autovideosink'");
@@ -3590,7 +3687,7 @@ bacon_video_widget_new (int width, int height,
 
     /* need to set bus explicitly as it's not in a bin yet and
      * poll_for_state_change() needs one to catch error messages */
-    gst_element_set_bus (video_sink, gvc->priv->bus);
+    gst_element_set_bus (video_sink, bvw->priv->bus);
     /* state change NULL => READY should always be synchronous */
     ret = gst_element_set_state (video_sink, GST_STATE_READY);
     if (ret == GST_STATE_CHANGE_FAILURE) {
@@ -3599,27 +3696,27 @@ bacon_video_widget_new (int width, int height,
       gst_object_unref (video_sink);
       /* Try again with autovideosink */
       video_sink = gst_element_factory_make ("autovideosink", "video-sink");
-      gst_element_set_bus (video_sink, gvc->priv->bus);
+      gst_element_set_bus (video_sink, bvw->priv->bus);
       ret = gst_element_set_state (video_sink, GST_STATE_READY);
       if (ret == GST_STATE_CHANGE_FAILURE) {
         GstMessage *err_msg;
 
-        err_msg = gst_bus_poll (gvc->priv->bus, GST_MESSAGE_ERROR, 0);
+        err_msg = gst_bus_poll (bvw->priv->bus, GST_MESSAGE_ERROR, 0);
         if (err_msg == NULL) {
           g_warning ("Should have gotten an error message, please file a bug.");
-          g_set_error (err, gvc_ERROR, gvc_ERROR_VIDEO_PLUGIN,
+          g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
                _("Failed to open video output. It may not be available. "
                  "Please select another video output in the Multimedia "
                  "Systems Selector."));
         } else if (err_msg) {
-          *err = gvc_error_from_gst_error (gvc, err_msg);
+          *err = BVW_error_from_gst_error (bvw, err_msg);
           gst_message_unref (err_msg);
         }
         goto sink_error;
       }
     }
   } else {
-    g_set_error (err, gvc_ERROR, gvc_ERROR_VIDEO_PLUGIN,
+    g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
                  _("Could not find the video output. "
                    "You may need to install additional GStreamer plugins, "
                    "or select another video output in the Multimedia Systems "
@@ -3646,7 +3743,7 @@ bacon_video_widget_new (int width, int height,
       gst_object_unref (audio_sink);
       audio_sink = NULL;
       /* Hopefully, fakesink should always work */
-      if (type != gvc_USE_TYPE_AUDIO)
+      if (type != BVW_USE_TYPE_AUDIO)
         audio_sink = gst_element_factory_make ("fakesink", "audio-sink");
       if (audio_sink == NULL) {
         GstMessage *err_msg;
@@ -3654,14 +3751,14 @@ bacon_video_widget_new (int width, int height,
         err_msg = gst_bus_poll (bus, GST_MESSAGE_ERROR, 0);
         if (err_msg == NULL) {
           g_warning ("Should have gotten an error message, please file a bug.");
-          g_set_error (err, gvc_ERROR, gvc_ERROR_AUDIO_PLUGIN,
+          g_set_error (err, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
                        _("Failed to open audio output. You may not have "
                          "permission to open the sound device, or the sound "
                          "server may not be running. "
                          "Please select another audio output in the Multimedia "
                          "Systems Selector."));
         } else if (err) {
-          *err = gvc_error_from_gst_error (gvc, err_msg);
+          *err = BVW_error_from_gst_error (bvw, err_msg);
           gst_message_unref (err_msg);
         }
         gst_object_unref (bus);
@@ -3670,11 +3767,11 @@ bacon_video_widget_new (int width, int height,
       /* make fakesink sync to the clock like a real sink */
       g_object_set (audio_sink, "sync", TRUE, NULL);
       GST_INFO ("audio sink doesn't work, using fakesink instead");
-      gvc->priv->uses_fakesink = TRUE;
+      bvw->priv->uses_fakesink = TRUE;
     }
     gst_object_unref (bus);
   } else {
-    g_set_error (err, gvc_ERROR, gvc_ERROR_AUDIO_PLUGIN,
+    g_set_error (err, BVW_ERROR, BVW_ERROR_AUDIO_PLUGIN,
                  _("Could not find the audio output. "
                    "You may need to install additional GStreamer plugins, or "
                    "select another audio output in the Multimedia Systems "
@@ -3684,17 +3781,18 @@ bacon_video_widget_new (int width, int height,
 
   
   /* now tell playbin */
-  g_object_set (gvc->priv->play, "video-sink", video_sink, NULL);
-  g_object_set (gvc->priv->play, "audio-sink", audio_sink, NULL);
+  g_object_set (bvw->priv->play, "video-sink", video_sink, NULL);
+  g_object_set (bvw->priv->play, "audio-sink", audio_sink, NULL);
+
   
  
 
-  g_signal_connect (gvc->priv->play, "notify::source",
-      G_CALLBACK (playbin_source_notify_cb), gvc);
-  g_signal_connect (gvc->priv->play, "notify::stream-info",
-      G_CALLBACK (playbin_stream_info_notify_cb), gvc);
+  g_signal_connect (bvw->priv->play, "notify::source",
+      G_CALLBACK (playbin_source_notify_cb), bvw);
+  g_signal_connect (bvw->priv->play, "notify::stream-info",
+      G_CALLBACK (playbin_stream_info_notify_cb), bvw);
 
-  if (type == gvc_USE_TYPE_VIDEO) {
+  if (type == BVW_USE_TYPE_VIDEO) {
     GstStateChangeReturn ret;
 
     /* wait for video sink to finish changing to READY state, 
@@ -3703,21 +3801,21 @@ bacon_video_widget_new (int width, int height,
 
     if (ret != GST_STATE_CHANGE_SUCCESS) {
       GST_WARNING ("Timeout setting videosink to READY");
-      g_set_error (err, gvc_ERROR, gvc_ERROR_VIDEO_PLUGIN,
+      g_set_error (err, BVW_ERROR, BVW_ERROR_VIDEO_PLUGIN,
           _("Failed to open video output. It may not be available. "
           "Please select another video output in the Multimedia Systems Selector."));
       return NULL;
     }
-	 gvc_update_interface_implementations (gvc);
+	 BVW_update_interface_implementations (bvw);
 
   }
 
   /* we want to catch "prepare-xwindow-id" element messages synchronously */
-  gst_bus_set_sync_handler (gvc->priv->bus, gst_bus_sync_signal_handler, gvc);
+  gst_bus_set_sync_handler (bvw->priv->bus, gst_bus_sync_signal_handler, bvw);
 
-  gvc->priv->sig_bus_sync = 
-      g_signal_connect (gvc->priv->bus, "sync-message::element",
-                        G_CALLBACK (gvc_element_msg_sync), gvc);
+  bvw->priv->sig_bus_sync = 
+      g_signal_connect (bvw->priv->bus, "sync-message::element",
+                        G_CALLBACK (BVW_element_msg_sync), bvw);
 
   if (GST_IS_BIN (video_sink)) {
     /* video sink bins like gconfvideosink might remove their children and
@@ -3725,11 +3823,11 @@ bacon_video_widget_new (int width, int height,
      * to NULL state whenever playbin re-creates its internal video bin
      * (it sets all elements to NULL state before gst_bin_remove()ing them) */
     g_signal_connect (video_sink, "element-added",
-                      G_CALLBACK (got_new_video_sink_bin_element), gvc);
+                      G_CALLBACK (got_new_video_sink_bin_element), bvw);
   }
 
     
-  return gvc;
+  return bvw;
 
   /* errors */
 sink_error:
@@ -3743,15 +3841,15 @@ sink_error:
       gst_object_unref (audio_sink);
     }
 	
-    g_object_ref (gvc);
-    g_object_ref_sink (G_OBJECT (gvc));
-    g_object_unref (gvc);
+    g_object_ref (bvw);
+    g_object_ref_sink (G_OBJECT (bvw));
+    g_object_unref (bvw);
 
     return NULL;
   }
 }
 
 GtkWidget 
-* bacon_video_widget_get_window (BaconVideoWidget *gvc){
-	return gvc->priv->video_window;
+* bacon_video_widget_get_window (BaconVideoWidget *bvw){
+	return bvw->priv->video_window;
 }

@@ -19,9 +19,13 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.Collections;
 using System.Threading;
 using System.Diagnostics;
+using Gtk;
 using LongoMatch.TimeNodes;
+using LongoMatch.Playlist;
 
 
 namespace LongoMatch.Video.Editor
@@ -33,19 +37,22 @@ namespace LongoMatch.Video.Editor
 		
 		public event LongoMatch.Handlers.ProgressHandler Progress;
 		
-		private PlayList playlist;
+		private List<PlayListTimeNode> encodeList;
 		private string outputFile;
 		private VideoQuality vq;
 		private AudioQuality aq;
 		private bool audioEnabled;
 		private int steps;
 		private Thread thread;
+		private Thread mthread;
 		private Process process;
+		private string list;
 
 		
 		public FFMPEGVideoEditor(PlayList playlist, string outputFile)
 		{
-			this.PlayList = playlist;
+			this.encodeList = new List<PlayListTimeNode>();
+			this.PlayList=playlist;		
 			this.outputFile = outputFile;
 			this.aq = AudioQuality.Normal;
 			this.vq = VideoQuality.Normal;	
@@ -58,12 +65,17 @@ namespace LongoMatch.Video.Editor
 			
 		}
 		
-		public PlayList PlayList {
+		public IPlayList PlayList{
 			set{
-				this.playlist = value;
-				this.steps = 2*this.playlist.Count + 1;
+				if (this.thread == null || !this.thread.IsAlive ){
+					this.encodeList = new List<PlayListTimeNode>();
+					foreach (PlayListTimeNode plNode in value){
+						encodeList.Add(plNode);	
+					}
+					this.steps = 2*this.encodeList.Count + 1;
+				}					
 			}
-			get{return this.playlist;}
+					
 		}
 		
 		public VideoQuality VideoQuality{
@@ -88,24 +100,20 @@ namespace LongoMatch.Video.Editor
 		
 		public void Start(){	
 			//only one process at the same time
-			
-			if (this.thread == null || !this.thread.IsAlive ){
-				if (this.Progress != null)
+			if (this.Progress != null)
 						this.Progress (0);
-				string[] files = System.IO.Directory.GetFiles(MainClass.TempVideosDir());
-			    thread = new Thread(new ParameterizedThreadStart(EncodeVideo));
-				thread.Start(this.playlist);  
-			}			
+			if (this.thread == null || !this.thread.IsAlive ){				
+				process = new Process();
+				thread = new Thread(new ParameterizedThreadStart(EncodeVideo));
+				thread.Start(this.encodeList);  
+			}
 		}
 		
-		public void Cancel(){	
-			
+		public void Cancel(){				
 			this.KillProcess();
 			this.DeleteTempFiles();
-			// -1 means we have cancelled the encoding
 			if (this.Progress != null)
-						this.Progress (-1);
-			
+						this.Progress (-1);			
 		}
 		
 		private void DeleteTempFiles(){
@@ -115,9 +123,15 @@ namespace LongoMatch.Video.Editor
 		}
 		
 		private void KillProcess(){
+			
 			if (this.thread != null && this.thread.IsAlive){
 				this.thread.Abort();				
 			}
+			
+			if (this.mthread != null && this.mthread.IsAlive){
+				this.mthread.Abort();				
+			}
+			
 			if (this.process != null  && !this.process.HasExited ){
 				this.process.Kill();
 				this.process.WaitForExit();
@@ -125,92 +139,131 @@ namespace LongoMatch.Video.Editor
 			}
 		}
 		
-		private void MergeVideo(){
-			string svq;
-			string saq;
-			string list="";
-			string[] files = System.IO.Directory.GetFiles(MainClass.TempVideosDir());
-			foreach (String file in files)
-				list = list +"\"" + file +"\" ";
+		private void EncodeVideo(object o){
+			List<PlayListTimeNode> encodeList = (List<PlayListTimeNode>)o;
+			int i = 0;
+            list = "";
+			
+				ArrayList parameters = new ArrayList();			
+				
+				foreach (PlayListTimeNode plNode in encodeList){
+					if (plNode.Valid){
+						string outputFile = System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i+".avi");
+						list  = list +"\"" + outputFile +"\" ";
+						mthread = new Thread(new ParameterizedThreadStart(SplitVideo));
+						parameters.Insert(0,plNode);
+						parameters.Insert(1,outputFile);
+						mthread.Start(parameters);
+						mthread.Join();				
+						if (this.Progress != null)
+							Application.Invoke(delegate {this.Progress ( (((float)i+1)*2-1)/steps);});							
+						if (System.Environment.OSVersion.Platform == PlatformID.Unix){
+							// HACK to rebuild the index of the splitted video when usinf ffmpef to 
+							// split witch is more efficient on linux.
+							mthread = new Thread(new ParameterizedThreadStart(FixSplitedVideo));
+							mthread.Start(parameters);
+							mthread.Join();
+							
+						}
+									
+						if (this.Progress != null)
+							Application.Invoke(delegate {this.Progress ( ((float)i+1)*2/steps);});
+						i++;
+					}
+					else {
+					
+						if (this.Progress != null)
+							Application.Invoke(delegate {this.Progress ( ((float)i+1)*2/steps);});
+						i++;
+					}
+				}
+				mthread = new Thread(new ParameterizedThreadStart(MergeVideo));
+				mthread.Start(list);  
+				mthread.Join();
+				if (this.Progress != null)
+						Application.Invoke(delegate {this.Progress (1);});
+			
+					
+		
+		}
+		
+		
+		private void MergeVideo(object o){
+			string list = (string) o;
+				
 			ProcessStartInfo pinfo = new ProcessStartInfo();
 			if (System.Environment.OSVersion.Platform != PlatformID.Unix)
-				pinfo.FileName=System.IO.Path.Combine (System.AppDomain.CurrentDomain.BaseDirectory,"mencoder.exe");
+				pinfo.FileName=MainClass.RelativeToPrefix("bin\\mencoder.exe");
 			else 
-				pinfo.FileName="mencoder";
-			pinfo.Arguments = " -ovc lavc -lavcopts vcodec=libx264:vbitrate="+(int)this.VideoQuality+" " + list +" -o \"" + System.IO.Path.Combine (MainClass.VideosDir(),this.OutputFile)+"\"";
+				pinfo.FileName="mencoder";			
+			pinfo.Arguments = "  -nosound -ovc  copy "  + list +" -o \"" + System.IO.Path.Combine (MainClass.VideosDir(),this.OutputFile)+"\"";
 			pinfo.CreateNoWindow = true;
 			pinfo.UseShellExecute = false;
 			process.StartInfo = pinfo;
 			process.Start();
 			process.WaitForExit();			
-			//this.DeleteTempFiles();
-			if (this.Progress != null)
-						this.Progress (1);
+			this.DeleteTempFiles();
 			
-		}
+		}	
 		
 		
-		private void EncodeVideo(object o){
-			int i= 0;
-			if (o is PlayList){
-				PlayList playList = (PlayList)o;
-				process = new Process();
-				foreach (PlayListTimeNode plNode in playList){						
-					this.SplitVideo(plNode,i);
-					if (this.Progress != null)
-						this.Progress ( (((float)i+1)*2-1)/steps);
-					// HACK to rebuild the index of the splitted video.				
-					this.FixSplitedVideo(plNode,i);					
-					if (this.Progress != null)
-						this.Progress ( ((float)i+1)*2/steps);
-					i++;
-				}
-				Thread thread = new Thread(new ThreadStart(MergeVideo));
-				thread.Start(); 
-			}
-		}
-		
-		private void SplitVideo(PlayListTimeNode plNode,int i){
+		private void SplitVideo(object o){
+			PlayListTimeNode plNode =(PlayListTimeNode)((ArrayList)o)[0]; 
+			string outputFile = (string)((ArrayList)o)[1];
+			string tempFile = System.IO.Path.Combine (MainClass.TempVideosDir(),
+			                                          System.IO.Path.GetFileNameWithoutExtension(outputFile));
+			
 			
 			ProcessStartInfo pinfo = new ProcessStartInfo();
-			if (System.Environment.OSVersion.Platform != PlatformID.Unix)
-				pinfo.FileName=System.IO.Path.Combine (System.AppDomain.CurrentDomain.BaseDirectory,"ffmpeg.exe");
-			else 
+			if (System.Environment.OSVersion.Platform != PlatformID.Unix){
+				pinfo.FileName=MainClass.RelativeToPrefix("bin\\mencoder.exe");
+				pinfo.Arguments = "\""+plNode.FileName+"\" -nosound -vf scale=720:576 -ovc  lavc -lavcopts autoaspect:vcodec=libx264:vbitrate="+(int)this.VideoQuality+"  -ss "+plNode.Start.ToMSecondsString() + " -endpos "+plNode.Duration.ToMSecondsString()+" -o \""
+					+ outputFile +"\"";
+				
+			}		
+			else {
+				
 				pinfo.FileName="ffmpeg";
-			pinfo.Arguments = "-i \"" + plNode.FileName + "\" -f avi -y -ss " + plNode.Start.ToMSecondsString() 
-				+ " -t " +plNode.Duration.ToMSecondsString() + " -vcodec  copy -acodec copy \""
-					+ System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i)+"\"";	
+				pinfo.Arguments = "-i \"" + plNode.FileName + "\" -f avi -y -ss " + plNode.Start.ToMSecondsString() 
+					+ " -t " +plNode.Duration.ToMSecondsString() + " -vcodec  copy -acodec copy \""
+					+ tempFile+"\"";	
+						
+			}
 			pinfo.CreateNoWindow = true;
 			pinfo.UseShellExecute = false;
 			process.StartInfo = pinfo;	
 			process.Start();
-			process.WaitForExit();			
+			process.WaitForExit();
+		
 		}
 		
-		private void FixSplitedVideo(PlayListTimeNode plNode,int i){
-			
+		private void FixSplitedVideo(object o){
+			PlayListTimeNode plNode =(PlayListTimeNode)((ArrayList)o)[0];
+			string outputFile = (string)((ArrayList)o)[1];
+			string tempFile = System.IO.Path.Combine (MainClass.TempVideosDir(),
+			                                          System.IO.Path.GetFileNameWithoutExtension(outputFile));
 			ProcessStartInfo pinfo = new ProcessStartInfo();
 			if (System.Environment.OSVersion.Platform != PlatformID.Unix)
 				pinfo.FileName=System.IO.Path.Combine (System.AppDomain.CurrentDomain.BaseDirectory,"mencoder.exe");
 			else 
 				pinfo.FileName="mencoder";
 			
-			pinfo.Arguments = "\""+System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i) 
-				+ "\" -oac  copy -ovc copy -ss "+plNode.Start.ToMSecondsString() +" -o \""
-					+ System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i+".avi")+"\"";		
-			Console.WriteLine(pinfo.Arguments);
+			pinfo.Arguments = "\""+tempFile
+				+ "\" -nosound -vf scale=720:576 -ovc  lavc -lavcopts autoaspect:vcodec=libx264:vbitrate="+(int)this.VideoQuality+"  -ss "+plNode.Start.ToMSecondsString() +" -o \""
+					+ outputFile +"\"";		
+			
 			pinfo.CreateNoWindow = true;
 			pinfo.UseShellExecute = false;
 			process.StartInfo = pinfo;
 			process.Start();
 			process.WaitForExit();			
-			//System.IO.File.Delete(System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i));
+			System.IO.File.Delete(tempFile);
 			
 		}
 		
 		~FFMPEGVideoEditor ()
 		{
-			Console.WriteLine("Finalizing");
+
 			this.KillProcess();
 		}
 

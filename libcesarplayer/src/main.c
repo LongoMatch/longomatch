@@ -72,10 +72,10 @@ main (int argc, char *argv[])
 
 	/*Create GstVideoCapturer*/
 	gst_video_capturer_init_backend (&argc, &argv);
-	//gvc = gst_video_capturer_new (GVC_USE_TYPE_DEVICE_CAPTURE, &error );
-	gvc = gst_video_capturer_new (GVC_USE_TYPE_VIDEO_TRANSCODE, &error );
-	g_object_set(gvc,"input_file","/home/ando/Lacie/polo 5 complu 1 rey.avi",NULL);
-	g_object_set(gvc,"output_file","/home/ando/janderrrr.avi",NULL);
+	gvc = gst_video_capturer_new (GVC_USE_TYPE_DEVICE_CAPTURE, &error );
+	//gvc = gst_video_capturer_new (GVC_USE_TYPE_VIDEO_TRANSCODE, &error );
+	//g_object_set(gvc,"input_file","/home/andoni/Escritorio/RC Polo vs CD Complutense.avi",NULL);
+	g_object_set(gvc,"output_file","/home/andoni/jander.avi",NULL);
 	//gvc = gst_video_capturer_new (GVC_USE_TYPE_TEST, &error );
 	
 	window = create_window (gvc);

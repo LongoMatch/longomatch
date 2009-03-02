@@ -34,8 +34,7 @@ namespace LongoMatch.Gui.Dialog
 		
 		public VideoEditionProperties()
 		{
-			FileFilter filter ;
-			
+
 			this.Build();
 			
 			
@@ -77,7 +76,7 @@ namespace LongoMatch.Gui.Dialog
 		protected virtual void OnOpenbuttonClicked (object sender, System.EventArgs e)
 		{
 			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Save Video As ..."),
-			                                                   (Gtk.Window)this.Toplevel,
+			                                                   this,
 			                                                   FileChooserAction.Save,
 			                                                   "gtk-cancel",ResponseType.Cancel,
 			                                                   "gtk-save",ResponseType.Accept);

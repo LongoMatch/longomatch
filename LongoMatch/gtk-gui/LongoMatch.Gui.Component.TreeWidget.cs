@@ -33,7 +33,6 @@ namespace LongoMatch.Gui.Component {
             this.treeview = new LongoMatch.Gui.Component.TimeNodesTreeView();
             this.treeview.CanFocus = true;
             this.treeview.Name = "treeview";
-            this.treeview.HeadersClickable = true;
             w1.Add(this.treeview);
             this.scrolledwindow1.Add(w1);
             this.Add(this.scrolledwindow1);
@@ -45,6 +44,7 @@ namespace LongoMatch.Gui.Component {
             this.treeview.TimeNodeSelected += new LongoMatch.Handlers.TimeNodeSelectedHandler(this.OnTimeNodeSelected);
             this.treeview.TimeNodeDeleted += new LongoMatch.Handlers.TimeNodeDeletedHandler(this.OnTimeNodeDeleted);
             this.treeview.PlayListNodeAdded += new LongoMatch.Handlers.PlayListNodeAddedHandler(this.OnPlayListNodeAdded);
+            this.treeview.SnapshotSeriesEvent += new LongoMatch.Handlers.SnapshotSeriesHandler(this.OnTreeviewSnapshotSeriesEvent);
         }
     }
 }

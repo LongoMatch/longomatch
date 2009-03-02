@@ -76,7 +76,7 @@ namespace LongoMatch.Gui.Dialog {
             this.fileentry.CanFocus = true;
             this.fileentry.Name = "fileentry";
             this.fileentry.IsEditable = false;
-            this.fileentry.InvisibleChar = '●';
+            this.fileentry.InvisibleChar =  '●';
             this.hbox3.Add(this.fileentry);
             Gtk.Box.BoxChild w3 = ((Gtk.Box.BoxChild)(this.hbox3[this.fileentry]));
             w3.Position = 0;
@@ -168,8 +168,8 @@ namespace LongoMatch.Gui.Dialog {
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 377;
-            this.DefaultHeight = 144;
+            this.DefaultWidth = 402;
+            this.DefaultHeight = 158;
             this.Show();
             this.openbutton.Clicked += new System.EventHandler(this.OnOpenbuttonClicked);
             this.buttonOk.Clicked += new System.EventHandler(this.OnButtonOkClicked);

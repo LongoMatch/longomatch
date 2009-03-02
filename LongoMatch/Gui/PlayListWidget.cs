@@ -30,6 +30,7 @@ using LongoMatch.Video.Player;
 using LongoMatch.Video;
 using LongoMatch.Gui;
 using LongoMatch.Gui.Dialog;
+using LongoMatch.Playlist;
 
 
 
@@ -40,7 +41,7 @@ namespace LongoMatch.Gui.Component
 	public partial class PlayListWidget : Gtk.Bin
 	{
 		public event PlayListNodeSelectedHandler PlayListNodeSelected;
-		public event LongoMatch.Handlers.ProgressHandler Progress;
+		public event ProgressHandler Progress;
 		
 		
 		private PlayerBin player;
@@ -58,13 +59,13 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build();					
 			lock_node = new System.Object();
-			this.playList = new PlayList();
 			this.videoEditor = new FFMPEGVideoEditor();
-			this.videoEditor.Progress += new LongoMatch.Handlers.ProgressHandler(OnProgress);
+			this.videoEditor.Progress += new ProgressHandler(OnProgress);
+			this.savebutton.Sensitive = false;
 			
 		}
 
-		
+	
 		public void SetPlayer(PlayerBin player){
 			this.player = player;
 			this.closebutton.Hide();
@@ -78,6 +79,7 @@ namespace LongoMatch.Gui.Component
 			this.Model = playList.GetModel();
 			this.playlisttreeview1.PlayList = playList;
 			this.playlisttreeview1.Sensitive = true;
+			this.savebutton.Sensitive = true;
 		}
 		
 		public ListStore Model {
@@ -86,17 +88,18 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		public void Add (PlayListTimeNode plNode){
-			if (playList.isLoaded()){
+			if (playList!=null){
 				this.Model.AppendValues(plNode);
 				this.playList.Add(plNode);
 			}			
 		}
 		
+		
 		public PlayListTimeNode Next(){
 			if (this.playList.HasNext()){								
 				this.plNode = this.playList.Next();
 				this.playlisttreeview1.Selection.SelectPath(new TreePath(this.playList.GetCurrentIndex().ToString()));
-				if (this.PlayListNodeSelected != null && plNode.Valid)
+				if (this.PlayListNodeSelected != null)
 					this.PlayListNodeSelected(plNode,this.playList.HasNext());
 				else 
 					this.Next();
@@ -108,7 +111,7 @@ namespace LongoMatch.Gui.Component
 		public void Prev(){
 
 			if ((this.player.AccurateCurrentTime - this.plNode.Start.MSeconds) < 500){
-				//Seleccionaod el elemento anterior
+				//Seleccionando el elemento anterior si no han pasado más 500ms
 				if (this.playList.HasPrev()){								
 					this.plNode = this.playList.Prev();
 					this.playlisttreeview1.Selection.SelectPath(new TreePath(this.playList.GetCurrentIndex().ToString()));
@@ -133,11 +136,8 @@ namespace LongoMatch.Gui.Component
 		
 		
 		
-		private void StartClock ()
-		{
-
-			if (player!=null && !clock_started){
-			
+		public void StartClock ()	{
+			if (player!=null && !clock_started){			
 				timeout = GLib.Timeout.Add (20,CheckStopTime);
 				clock_started=true;
 			}
@@ -173,8 +173,7 @@ namespace LongoMatch.Gui.Component
 			
 			this.plNode = this.playList.Select(Int32.Parse(path.ToString()));
 			if (this.PlayListNodeSelected != null && plNode.Valid)
-				this.PlayListNodeSelected(plNode,this.playList.HasNext());
-			this.StartClock();		
+				this.PlayListNodeSelected(plNode,this.playList.HasNext());				
 		}
 		
 		
@@ -250,26 +249,17 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnNewvideobuttonClicked (object sender, System.EventArgs e)
 		{
-			if (Environment.OSVersion.Platform == PlatformID.Win32NT){
-				MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel,
-				                                     DialogFlags.DestroyWithParent|DialogFlags.Modal,
-				                                     MessageType.Info,
-				                                     ButtonsType.Ok,
-				                                     Catalog.GetString("This functionisn not implemented under windows...\nTry the Linux version with full support!!!"));
-				
-				md.Run();
-				md.Destroy();	
-				return;
-			}
+		
 			VideoEditionProperties vep;
 			VideoQuality vq;
 			int response;
 			
 			vep = new VideoEditionProperties();
+			vep.TransientFor = (Gtk.Window)this.Toplevel;
 			response = vep.Run();
 			while( response == (int)ResponseType.Ok && vep.Filename == ""){
-				MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel,
-				                                     DialogFlags.DestroyWithParent|DialogFlags.Modal,
+				MessageDialog md = new MessageDialog(vep,
+				                                     DialogFlags.Modal,
 				                                     MessageType.Info,
 				                                     ButtonsType.Ok,
 				                                     Catalog.GetString("Please, select a video file."));
@@ -277,6 +267,7 @@ namespace LongoMatch.Gui.Component
 				md.Destroy();	
 				response=vep.Run();
 			}
+			vep.Destroy();
 			if (response ==(int)ResponseType.Ok){
 				vq = vep.VideoQuality;
 				videoEditor.PlayList = this.playList;
@@ -286,7 +277,7 @@ namespace LongoMatch.Gui.Component
 				this.closebutton.Show();
 				this.newvideobutton.Hide();
 			}
-			vep.Destroy();
+			
 		}
 
 		protected virtual void OnClosebuttonClicked (object sender, System.EventArgs e)
@@ -302,14 +293,7 @@ namespace LongoMatch.Gui.Component
 			
 			if (progress ==1){
 				this.closebutton.Hide();
-				this.newvideobutton.Show();
-				MessageDialog info = new MessageDialog(null,
-				                                       DialogFlags.Modal,
-				                                        MessageType.Info,
-				                                        ButtonsType.Ok,
-				                                       Catalog.GetString("Video Edition finished."));
-				info.Run();
-				info.Destroy();
+				this.newvideobutton.Show();				
 			}
 			
 		}

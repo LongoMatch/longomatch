@@ -40,7 +40,7 @@ namespace LongoMatch.DB
 			this.totalSections = sections;
 			this.visibleSections = sections;
 			for (int i=0;i<20;i++){
-				colorsArray[i] = new Color(254,254,254);
+				colorsArray[i] = new Color(254,0,0);
 				timeNodesArray[i] = null;
 			}
 			

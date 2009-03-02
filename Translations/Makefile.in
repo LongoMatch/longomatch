@@ -44,10 +44,9 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(pkglibdir)" \
+	"$(DESTDIR)$(commonapplicationdatarootimagesdir)" \
 	"$(DESTDIR)$(linuxdesktopapplicationsdir)" \
-	"$(DESTDIR)$(linuxpkgconfigdir)" \
-	"$(DESTDIR)$(programfilesdir)" \
-	"$(DESTDIR)$(programfilesimagesdir)"
+	"$(DESTDIR)$(programfilesdir)"
 binSCRIPT_INSTALL = $(INSTALL_SCRIPT)
 pkglibSCRIPT_INSTALL = $(INSTALL_SCRIPT)
 SCRIPTS = $(bin_SCRIPTS) $(pkglib_SCRIPTS)
@@ -59,12 +58,11 @@ am__vpath_adj = case $$p in \
     *) f=$$p;; \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
+commonapplicationdatarootimagesDATA_INSTALL = $(INSTALL_DATA)
 linuxdesktopapplicationsDATA_INSTALL = $(INSTALL_DATA)
-linuxpkgconfigDATA_INSTALL = $(INSTALL_DATA)
 programfilesDATA_INSTALL = $(INSTALL_DATA)
-programfilesimagesDATA_INSTALL = $(INSTALL_DATA)
-DATA = $(linuxdesktopapplications_DATA) $(linuxpkgconfig_DATA) \
-	$(programfiles_DATA) $(programfilesimages_DATA)
+DATA = $(commonapplicationdatarootimages_DATA) \
+	$(linuxdesktopapplications_DATA) $(programfiles_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -80,22 +78,19 @@ CESARPLAYER_LIBS = @CESARPLAYER_LIBS@
 CFLAGS = @CFLAGS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
-CXX = @CXX@
-CXXCPP = @CXXCPP@
-CXXDEPMODE = @CXXDEPMODE@
-CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
+DB4O_CFLAGS = @DB4O_CFLAGS@
+DB4O_LIBS = @DB4O_LIBS@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
 DSYMUTIL = @DSYMUTIL@
-ECHO = @ECHO@
+DUMPBIN = @DUMPBIN@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGREP = @EGREP@
 EXEEXT = @EXEEXT@
-F77 = @F77@
-FFLAGS = @FFLAGS@
+FGREP = @FGREP@
 GLIB_SHARP_20_CFLAGS = @GLIB_SHARP_20_CFLAGS@
 GLIB_SHARP_20_LIBS = @GLIB_SHARP_20_LIBS@
 GMCS = @GMCS@
@@ -107,16 +102,21 @@ INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+LD = @LD@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
+LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
 MKDIR_P = @MKDIR_P@
+NM = @NM@
 NMEDIT = @NMEDIT@
 OBJEXT = @OBJEXT@
+OTOOL = @OTOOL@
+OTOOL64 = @OTOOL64@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
@@ -136,8 +136,7 @@ abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
 abs_top_srcdir = @abs_top_srcdir@
 ac_ct_CC = @ac_ct_CC@
-ac_ct_CXX = @ac_ct_CXX@
-ac_ct_F77 = @ac_ct_F77@
+ac_ct_DUMPBIN = @ac_ct_DUMPBIN@
 am__include = @am__include@
 am__leading_dot = @am__leading_dot@
 am__quote = @am__quote@
@@ -171,6 +170,7 @@ libdir = @libdir@
 libexecdir = @libexecdir@
 localedir = @localedir@
 localstatedir = @localstatedir@
+lt_ECHO = @lt_ECHO@
 mandir = @mandir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
@@ -228,10 +228,8 @@ linuxdesktopapplicationsdir = @datadir@/applications
 linuxdesktopapplications_DATA = $(LINUX_DESKTOPAPPLICATIONS)
 programfilesdir = @libdir@/@PACKAGE@
 programfiles_DATA = $(PROGRAMFILES)
-linuxpkgconfigdir = @libdir@/pkgconfig
-linuxpkgconfig_DATA = $(LINUX_PKGCONFIG)
-programfilesimagesdir = @libdir@/@PACKAGE@/images
-programfilesimages_DATA = $(PROGRAMFILES_IMAGES)
+commonapplicationdatarootimagesdir = @datadir@/images
+commonapplicationdatarootimages_DATA = $(COMMONAPPLICATIONDATAROOT_IMAGES)
 
 # generating satellite assemblies
 culture_resources = $(foreach res, $(RESOURCES), $(if $(call is_cultured_resource,$(call get_resource_name, $(res))),$(res)))
@@ -240,8 +238,8 @@ culture_resource_dependencies = $(BUILD_DIR)/$1/$(SATELLITE_ASSEMBLY_NAME): $(su
 culture_resource_commandlines = cmd_line_satellite_$1 += '/embed:$(subst .resx,.resources,$2)'
 build_satellite_assembly_list = $(cultures:%=$(BUILD_DIR)/%/$(SATELLITE_ASSEMBLY_NAME))
 build_culture_res_files = $(foreach res, $(culture_resources),$(call get_resource_name,$(res)))
-BUILD_DIR = ./gmo
-INSTALL_DIR = $(DESTDIR)@expanded_libdir@/$(PACKAGE)
+BUILD_DIR = .
+INSTALL_DIR = $(DESTDIR)@expanded_libdir@/$(PACKAGE)/locale
 FILES = \
 	es.po
 
@@ -323,6 +321,23 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
+install-commonapplicationdatarootimagesDATA: $(commonapplicationdatarootimages_DATA)
+	@$(NORMAL_INSTALL)
+	test -z "$(commonapplicationdatarootimagesdir)" || $(MKDIR_P) "$(DESTDIR)$(commonapplicationdatarootimagesdir)"
+	@list='$(commonapplicationdatarootimages_DATA)'; for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  f=$(am__strip_dir) \
+	  echo " $(commonapplicationdatarootimagesDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(commonapplicationdatarootimagesdir)/$$f'"; \
+	  $(commonapplicationdatarootimagesDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(commonapplicationdatarootimagesdir)/$$f"; \
+	done
+
+uninstall-commonapplicationdatarootimagesDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(commonapplicationdatarootimages_DATA)'; for p in $$list; do \
+	  f=$(am__strip_dir) \
+	  echo " rm -f '$(DESTDIR)$(commonapplicationdatarootimagesdir)/$$f'"; \
+	  rm -f "$(DESTDIR)$(commonapplicationdatarootimagesdir)/$$f"; \
+	done
 install-linuxdesktopapplicationsDATA: $(linuxdesktopapplications_DATA)
 	@$(NORMAL_INSTALL)
 	test -z "$(linuxdesktopapplicationsdir)" || $(MKDIR_P) "$(DESTDIR)$(linuxdesktopapplicationsdir)"
@@ -340,23 +355,6 @@ uninstall-linuxdesktopapplicationsDATA:
 	  echo " rm -f '$(DESTDIR)$(linuxdesktopapplicationsdir)/$$f'"; \
 	  rm -f "$(DESTDIR)$(linuxdesktopapplicationsdir)/$$f"; \
 	done
-install-linuxpkgconfigDATA: $(linuxpkgconfig_DATA)
-	@$(NORMAL_INSTALL)
-	test -z "$(linuxpkgconfigdir)" || $(MKDIR_P) "$(DESTDIR)$(linuxpkgconfigdir)"
-	@list='$(linuxpkgconfig_DATA)'; for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  f=$(am__strip_dir) \
-	  echo " $(linuxpkgconfigDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(linuxpkgconfigdir)/$$f'"; \
-	  $(linuxpkgconfigDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(linuxpkgconfigdir)/$$f"; \
-	done
-
-uninstall-linuxpkgconfigDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(linuxpkgconfig_DATA)'; for p in $$list; do \
-	  f=$(am__strip_dir) \
-	  echo " rm -f '$(DESTDIR)$(linuxpkgconfigdir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(linuxpkgconfigdir)/$$f"; \
-	done
 install-programfilesDATA: $(programfiles_DATA)
 	@$(NORMAL_INSTALL)
 	test -z "$(programfilesdir)" || $(MKDIR_P) "$(DESTDIR)$(programfilesdir)"
@@ -373,23 +371,6 @@ uninstall-programfilesDATA:
 	  f=$(am__strip_dir) \
 	  echo " rm -f '$(DESTDIR)$(programfilesdir)/$$f'"; \
 	  rm -f "$(DESTDIR)$(programfilesdir)/$$f"; \
-	done
-install-programfilesimagesDATA: $(programfilesimages_DATA)
-	@$(NORMAL_INSTALL)
-	test -z "$(programfilesimagesdir)" || $(MKDIR_P) "$(DESTDIR)$(programfilesimagesdir)"
-	@list='$(programfilesimages_DATA)'; for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  f=$(am__strip_dir) \
-	  echo " $(programfilesimagesDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(programfilesimagesdir)/$$f'"; \
-	  $(programfilesimagesDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(programfilesimagesdir)/$$f"; \
-	done
-
-uninstall-programfilesimagesDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(programfilesimages_DATA)'; for p in $$list; do \
-	  f=$(am__strip_dir) \
-	  echo " rm -f '$(DESTDIR)$(programfilesimagesdir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(programfilesimagesdir)/$$f"; \
 	done
 tags: TAGS
 TAGS:
@@ -428,7 +409,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(SCRIPTS) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(pkglibdir)" "$(DESTDIR)$(linuxdesktopapplicationsdir)" "$(DESTDIR)$(linuxpkgconfigdir)" "$(DESTDIR)$(programfilesdir)" "$(DESTDIR)$(programfilesimagesdir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(pkglibdir)" "$(DESTDIR)$(commonapplicationdatarootimagesdir)" "$(DESTDIR)$(linuxdesktopapplicationsdir)" "$(DESTDIR)$(programfilesdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install-exec: install-exec-am
@@ -473,9 +454,8 @@ info: info-am
 
 info-am:
 
-install-data-am: install-linuxdesktopapplicationsDATA \
-	install-linuxpkgconfigDATA install-programfilesDATA \
-	install-programfilesimagesDATA
+install-data-am: install-commonapplicationdatarootimagesDATA \
+	install-linuxdesktopapplicationsDATA install-programfilesDATA
 
 install-dvi: install-dvi-am
 
@@ -510,29 +490,29 @@ ps: ps-am
 ps-am:
 
 uninstall-am: uninstall-binSCRIPTS \
-	uninstall-linuxdesktopapplicationsDATA \
-	uninstall-linuxpkgconfigDATA uninstall-pkglibSCRIPTS \
-	uninstall-programfilesDATA uninstall-programfilesimagesDATA
+	uninstall-commonapplicationdatarootimagesDATA \
+	uninstall-linuxdesktopapplicationsDATA uninstall-pkglibSCRIPTS \
+	uninstall-programfilesDATA
 
 .MAKE: install-am install-strip
 
 .PHONY: all all-am check check-am clean clean-generic clean-libtool \
 	distclean distclean-generic distclean-libtool distdir dvi \
 	dvi-am html html-am info info-am install install-am \
-	install-binSCRIPTS install-data install-data-am install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am \
-	install-linuxdesktopapplicationsDATA \
-	install-linuxpkgconfigDATA install-man install-pdf \
+	install-binSCRIPTS install-commonapplicationdatarootimagesDATA \
+	install-data install-data-am install-dvi install-dvi-am \
+	install-exec install-exec-am install-html install-html-am \
+	install-info install-info-am \
+	install-linuxdesktopapplicationsDATA install-man install-pdf \
 	install-pdf-am install-pkglibSCRIPTS install-programfilesDATA \
-	install-programfilesimagesDATA install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	uninstall uninstall-am uninstall-binSCRIPTS \
-	uninstall-linuxdesktopapplicationsDATA \
-	uninstall-linuxpkgconfigDATA uninstall-pkglibSCRIPTS \
-	uninstall-programfilesDATA uninstall-programfilesimagesDATA
+	install-ps install-ps-am install-strip installcheck \
+	installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-generic \
+	mostlyclean-libtool pdf pdf-am ps ps-am uninstall uninstall-am \
+	uninstall-binSCRIPTS \
+	uninstall-commonapplicationdatarootimagesDATA \
+	uninstall-linuxdesktopapplicationsDATA uninstall-pkglibSCRIPTS \
+	uninstall-programfilesDATA
 
 
 # macros

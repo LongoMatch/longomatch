@@ -30,8 +30,7 @@ namespace LongoMatch.Handlers
 	//Manejador para el evento producido al pulsar un botón de selección de nuava marca
 	public delegate void NewMarkEventHandler (int i);	
 	//Manejador para el evento producido al pulsar un botón de selección de nuava marca
-	public delegate void NewMarkAtFrameEventHandler (int i,int frame);
-	
+	public delegate void NewMarkAtFrameEventHandler (int i,int frame);	
 	//Manejador para el evento producido cuando se edita un nodo
 	public delegate void TimeNodeChangedHandler (TimeNode tNode, object val);
 	//Manejador para el evento producido al eliminar un MediaTimeNode
@@ -41,9 +40,12 @@ namespace LongoMatch.Handlers
 	//Manejador para el evento producido al selecionar un nodo en la lista de reproducción
 	public delegate void PlayListNodeSelectedHandler (PlayListTimeNode plNode, bool hasNext);
 	//Manejador para el evento producido al ajustar la posición 
-	public delegate void PositionChangedHandler (Time pos);
+	public delegate void PositionChangedHandler (Time pos);	
 	
-	public delegate void ProgressHandler (float progress);
+	public delegate void ProgressHandler (float progress);	
 	
 	public delegate void DateSelectedHandler (DateTime selectedDate);
+	
+	public delegate void SnapshotSeriesHandler(MediaTimeNode tNode);
+	
 }

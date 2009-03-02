@@ -24,10 +24,11 @@ namespace LongoMatch.Gui.Dialog
 {
 	
 	
-	public partial class NewSectionsTemplatesFiles : Gtk.Dialog
+	
+	public partial class TemplateNameSelectionDialog : Gtk.Dialog
 	{
 		
-		public NewSectionsTemplatesFiles()
+		public TemplateNameSelectionDialog()
 		{
 			this.Build();
 		}

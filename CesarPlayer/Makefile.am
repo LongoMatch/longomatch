@@ -6,77 +6,68 @@ EXTRA_DIST =
 if ENABLE_DEBUG
 ASSEMBLY_COMPILER_COMMAND = gmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ -debug -define:DEBUG
-ASSEMBLY = bin/Debug/CesarPlayer.exe
+ASSEMBLY = a.dll
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
-COMPILE_TARGET = module
+COMPILE_TARGET = library
 PROJECT_REFERENCES = 
-BUILD_DIR = bin/Debug
+BUILD_DIR = .
 
-DIRECTSHOWLIB_2005_DLL_SOURCE=DirectShowLib-2005.dll
-ASSEMBLY_KEY_FILE_SOURCE=cesarplayer.key
 
 endif
 
 if ENABLE_RELEASE
 ASSEMBLY_COMPILER_COMMAND = gmcs
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+
+ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ -debug -define:DEBUG
 ASSEMBLY = bin/Release/CesarPlayer.dll
-ASSEMBLY_MDB = 
+ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
 PROJECT_REFERENCES = 
 BUILD_DIR = bin/Release
 
-DIRECTSHOWLIB_2005_DLL_SOURCE=DirectShowLib-2005.dll
-ASSEMBLY_KEY_FILE_SOURCE=cesarplayer.key
 
 endif
 
 AL=al2
 SATELLITE_ASSEMBLY_NAME=longomatch.resources.dll
 
-PROGRAMFILES = \
-	$(DIRECTSHOWLIB_2005_DLL) 
-
-
-LINUX_PKGCONFIG = \
-	$(CESARPLAYER_PC)  
-
 
 	
-all: $(ASSEMBLY) $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
+all: $(ASSEMBLY) 
 
 FILES = \
 	AssemblyInfo.cs \
-	PlayerMaker.cs \
-	Utils/TimeString.cs \
-	Gui/VolumeWindow.cs \
-	Gui/PlayerBin.cs \
-	Gui/CapturerBin.cs \
-	Player/GstPlayer.cs \
-	Player/GstPlayerAspectRatio.cs \
-	Player/GstPlayerMetadataType.cs \
-	Player/GstUseType.cs \
-	Player/IMetadataReader.cs \
-	Player/IPlayer.cs \
-	Player/ObjectManager.cs \
-	Handlers/BufferingHandler.cs \
+	gtk-gui/generated.cs \
 	Handlers/ErrorHandler.cs \
 	Handlers/GotRedirectHandler.cs \
 	Handlers/Handlers.cs \
-	Handlers/StateChangedHandler.cs \
 	Handlers/TickHandler.cs \
 	Handlers/TitleChangeHandler.cs \
+	Handlers/BufferingHandler.cs \
+	Player/GstPlayer.cs \
+	Player/IPlayer.cs \
+	Player/GstPlayerAspectRatio.cs \
+	Player/GstUseType.cs \
+	Handlers/StateChangedHandler.cs \
+	Utils/TimeString.cs \
+	gtk-gui/LongoMatch.Gui.PlayerBin.cs \
+	gtk-gui/LongoMatch.Gui.VolumeWindow.cs \
+	Gui/VolumeWindow.cs \
 	Capturer/ErrorHandler.cs \
 	Capturer/GstVideoCapturer.cs \
 	Capturer/GvcAudioEncoderType.cs \
 	Capturer/GvcUseType.cs \
+	Capturer/GvcVideoEncoderType.cs \
 	Capturer/ICapturer.cs \
-	Capturer/ObjectManager.cs \
-	gtk-gui/generated.cs \
-	gtk-gui/LongoMatch.Gui.VolumeWindow.cs \
+	Gui/CapturerBin.cs \
 	gtk-gui/LongoMatch.Gui.CapturerBin.cs \
-	gtk-gui/LongoMatch.Gui.PlayerBin.cs 
-
+	PlayerMaker.cs \
+	Player/ObjectManager.cs \
+	Capturer/ObjectManager.cs \
+	Utils/IFramesCapturer.cs \
+	Utils/FramesCapturer.cs \
+	Utils/IMetadataReader.cs \
+	Utils/GstPlayerMetadataType.cs \
+	Gui/PlayerBin.cs 
 
 DATA_FILES = 
 
@@ -85,29 +76,22 @@ RESOURCES = \
 	gtk-gui/gui.stetic 
 
 EXTRAS = \
-	DirectShowLib-2005.dll \
-	cesarplayer.key \
-	cesarplayer.pc.in 
+	cesarplayer.key 
 
 REFERENCES =  \
-	$(GTK_SHARP_20_LIBS) \
 	System \
 	Mono.Posix \
 	System.Drawing \
-	$(GLIB_SHARP_20_LIBS) 
+	$(GTK_SHARP_20_LIBS) \
+	$(GLIB_SHARP_20_LIBS)
 
+DLL_REFERENCES = 
 
-DLL_REFERENCES =  \
-	DirectShowLib-2005.dll
-
-CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
+CLEANFILES = 
 
 include $(top_srcdir)/Makefile.include
 
-DIRECTSHOWLIB_2005_DLL = $(BUILD_DIR)/DirectShowLib-2005.dll
 
-$(eval $(call emit-deploy-target,DIRECTSHOWLIB_2005_DLL))
-$(eval $(call emit-deploy-wrapper,CESARPLAYER_PC,cesarplayer.pc))
 
 
 $(build_xamlg_list): %.xaml.g.cs: %.xaml

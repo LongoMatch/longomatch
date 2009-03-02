@@ -1,8 +1,4 @@
 <objects>
-  <object type="LongoMatch.MainWindow" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Window">
-    <itemgroups />
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Component.ButtonsWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>
@@ -47,6 +43,7 @@
         <signal name="TimeNodeChanged" />
         <signal name="TimeNodeDeleted" />
         <signal name="PlayListNodeAdded" />
+        <signal name="SnapshotSeriesEvent" />
       </itemgroup>
     </signals>
   </object>
@@ -74,7 +71,7 @@
         <signal name="TimeNodeSelected" />
         <signal name="TimeNodeDeleted" />
         <signal name="PlayListNodeAdded" />
-        <signal name="NewMarkEvent" />
+        <signal name="SnapshotSeriesEvent" />
       </itemgroup>
     </signals>
   </object>
@@ -123,11 +120,24 @@
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Dialog.NewSectionsTemplatesFiles" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Dialog">
+  <object type="LongoMatch.Gui.Dialog.SectionsTemplates" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Dialog">
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Dialog.SectionsTemplates" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Dialog">
+  <object type="LongoMatch.Gui.Component.NotesWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+    </itemgroups>
+    <signals>
+      <itemgroup label="NotesWidget Signals">
+        <signal name="TimeNodeChanged" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.MainWindow" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Window">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Dialog.TemplateNameSelectionDialog" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Dialog">
     <itemgroups />
     <signals />
   </object>

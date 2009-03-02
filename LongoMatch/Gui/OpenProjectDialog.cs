@@ -19,6 +19,7 @@
 //
 
 using System;
+using Gtk;
 using LongoMatch.DB;
 
 namespace LongoMatch.Gui.Dialog
@@ -36,6 +37,7 @@ namespace LongoMatch.Gui.Dialog
 			this.Fill();
 			
 		}
+			
 		
 		public Project GetSelection(){
 			return projectlistwidget.GetSelection();			

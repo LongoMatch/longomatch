@@ -49,6 +49,8 @@ namespace LongoMatch.TimeNodes
 		private uint startFrame;
 		
 		private uint stopFrame;
+		
+		private string notes;
 
 		
 		
@@ -60,6 +62,19 @@ namespace LongoMatch.TimeNodes
 			this.stopFrame = (uint) this.Stop.MSeconds*fps/1000;
 		}
 		
+		public MediaTimeNode(String name, Time start, Time stop,string notes, uint fps, int dataSection,string miniaturePath):base (name,start,stop,miniaturePath) {
+			this.notes = notes;
+			this.dataSection = dataSection;		
+			this.team = Team.NONE;
+			this.fps = fps;
+			this.startFrame = (uint) this.Start.MSeconds*fps/1000;
+			this.stopFrame = (uint) this.Stop.MSeconds*fps/1000;
+		}
+		
+		public string Notes {
+			get{return notes;}
+			set{notes = value;}
+		}
 		public int DataSection{
 			get{return dataSection;}
 		}	

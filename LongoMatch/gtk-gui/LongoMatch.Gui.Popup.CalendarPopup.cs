@@ -25,7 +25,7 @@ namespace LongoMatch.Gui.Popup {
             this.Resizable = false;
             this.AllowGrow = false;
             this.Decorated = false;
-            this.DestroyWithParent = true;
+            this.Gravity = ((Gdk.Gravity)(5));
             this.SkipPagerHint = true;
             this.SkipTaskbarHint = true;
             // Container child LongoMatch.Gui.Popup.CalendarPopup.Gtk.Container+ContainerChild
@@ -38,7 +38,7 @@ namespace LongoMatch.Gui.Popup {
                 this.Child.ShowAll();
             }
             this.DefaultWidth = 281;
-            this.DefaultHeight = 215;
+            this.DefaultHeight = 260;
             this.Show();
             this.calendar1.DaySelectedDoubleClick += new System.EventHandler(this.OnCalendar1DaySelectedDoubleClick);
         }

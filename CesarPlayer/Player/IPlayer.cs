@@ -22,7 +22,7 @@ using System;
 using Gtk;
 using Gdk;
 using LongoMatch.Video.Handlers;
-using LongoMatch.Handlers;
+
 
 namespace LongoMatch.Video.Player
 	      
@@ -105,6 +105,8 @@ namespace LongoMatch.Video.Player
 		
 		bool SetRateInSegment(float rate, long stopTime);
 		
+		
+		
 		void TogglePlay();
 		
 		void Pause();
@@ -125,6 +127,10 @@ namespace LongoMatch.Video.Player
 		void UpdateSegmentStartTime(long start);
 		
 		void UpdateSegmentStopTime(long stop);
+		
+		void SeekToNextFrame(bool in_segment);
+		
+		void SeekToPreviousFrame(bool in_segment);
 		
 		void CancelProgramedStop();
 			

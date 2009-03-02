@@ -24,6 +24,7 @@ using System.Collections;
 using Mono.Unix;
 using Db4objects.Db4o;
 using Db4objects.Db4o.Query;
+using LongoMatch.TimeNodes;
 
 namespace LongoMatch.DB
 {
@@ -31,8 +32,11 @@ namespace LongoMatch.DB
 	
 	public sealed class DataBase
 	{
+		// Database container
 		private IObjectContainer db;
+		// File path of the database
 		private string file;
+		// Lock object 
 		private object locker;
 		
 		public DataBase()
@@ -60,25 +64,25 @@ namespace LongoMatch.DB
 		
 		
 		public ArrayList GetAllDB(){
-			ArrayList allDB = new ArrayList();
-			db = Db4oFactory.OpenFile(file);
-			try	{   				
-   				IQuery query = db.Query();
-				query.Constrain(typeof(Project));
-				IObjectSet result = query.Execute();
-				while (result.HasNext()){
-					allDB.Add(result.Next());
-					
-				}
-				return allDB;
-					
-   			 }
 			
-			finally
-			{
-    			db.Close();
+			lock(this.locker){
+				ArrayList allDB = new ArrayList();
+				db = Db4oFactory.OpenFile(file);
+				try	{   				
+					IQuery query = db.Query();
+					query.Constrain(typeof(Project));
+					IObjectSet result = query.Execute();
+					while (result.HasNext()){
+						allDB.Add(result.Next());					
+					}
+					return allDB;					
+				}
+				
+				finally
+				{
+					db.Close();
+				}		
 			}
-		
 		}
 		
 		public Project GetProject(String filename){
@@ -106,8 +110,9 @@ namespace LongoMatch.DB
 				{
 					if (!this.Exists(project.File.FilePath)){
 						db.Set (project);
+						db.Commit();
 					}
-					else throw new Exception (Catalog.GetString("The Project for this video file already exists.\n Try to edit it whit the Database Manager"));
+					else throw new Exception (Catalog.GetString("The Project for this video file already exists.")+"\n"+Catalog.GetString("Try to edit it whit the Database Manager"));
 				}
 				
 			finally
@@ -120,7 +125,11 @@ namespace LongoMatch.DB
 		}
 		public void RemoveProject(Project project){
 			lock(this.locker){
-				Db4oFactory.Configure().ObjectClass(typeof(Project)).CascadeOnDelete(true);			
+				Db4oFactory.Configure().ObjectClass(typeof(Project)).CascadeOnDelete(true);
+				Db4oFactory.Configure().ObjectClass(typeof(Sections)).CascadeOnDelete(true);
+				Db4oFactory.Configure().ObjectClass(typeof(TimeNode)).CascadeOnDelete(true);
+				Db4oFactory.Configure().ObjectClass(typeof(Time)).CascadeOnDelete(true);
+				Db4oFactory.Configure().ObjectClass(typeof(Team)).CascadeOnDelete(true);
 				db = Db4oFactory.OpenFile(file);
 				try	{			
 					IQuery query = db.Query();
@@ -128,7 +137,8 @@ namespace LongoMatch.DB
 					query.Descend("file").Descend("filePath").Constrain(project.File.FilePath);
 					IObjectSet result = query.Execute();
 					project = (Project)result.Next();
-					db.Delete(project);   				
+					db.Delete(project);   			
+					db.Commit();
 				}
 				
 			finally
@@ -142,21 +152,27 @@ namespace LongoMatch.DB
 		public void UpdateProject(Project project, string previousFileName){
 			lock(this.locker){
 				bool error = false;
+				
+				// Configure db4o to cascade on delete for each one of the objects stored in a Project
 				Db4oFactory.Configure().ObjectClass(typeof(Project)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(ArrayList)).CascadeOnUpdate(true);
+				Db4oFactory.Configure().ObjectClass(typeof(Sections)).CascadeOnDelete(true);
+				Db4oFactory.Configure().ObjectClass(typeof(TimeNode)).CascadeOnDelete(true);
+				Db4oFactory.Configure().ObjectClass(typeof(Time)).CascadeOnDelete(true);
+				Db4oFactory.Configure().ObjectClass(typeof(Team)).CascadeOnDelete(true);
 				db = Db4oFactory.OpenFile(file);
 				try	{
-					// Buscamos si ya existe un obejto Project para el archivo multimedia
+					// We look for a project with that uses the same file
 					if (!Exists(project.File.FilePath)){
-						//Borramos el antiguo archivo Project
+						// Delete the old project
 						IQuery query = db.Query();
 						query.Constrain(typeof(Project));
 						query.Descend("file").Descend("filePath").Constrain(previousFileName);
 						IObjectSet result = query.Execute();  
 						Project fd = (Project)result.Next();
 						db.Delete(fd);
-						// Agregamos el nuevo obejto actualizado
+						// Add the updated project
 						db.Set(project);	
+						db.Commit();
 					}
 					else 
 						error = true;
@@ -170,11 +186,16 @@ namespace LongoMatch.DB
 			}
 			
 		}
-		
+
 		public void UpdateProject(Project project){
 			lock(this.locker){
+				// Configure db40 to cascade on delete for each one of the objects stored in a Project
 				Db4oFactory.Configure().ObjectClass(typeof(Project)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(ArrayList)).CascadeOnUpdate(true);
+				Db4oFactory.Configure().ObjectClass(typeof(TimeNode)).CascadeOnDelete(true);
+				Db4oFactory.Configure().ObjectClass(typeof(Sections)).CascadeOnDelete(true);
+				Db4oFactory.Configure().ObjectClass(typeof(Time)).CascadeOnDelete(true);
+				Db4oFactory.Configure().ObjectClass(typeof(Team)).CascadeOnDelete(true);
+				
 				db = Db4oFactory.OpenFile(file);
 				try	{				
 					IQuery query = db.Query();
@@ -183,7 +204,8 @@ namespace LongoMatch.DB
 					IObjectSet result = query.Execute();  
 					Project fd = (Project)result.Next();
 					db.Delete(fd);
-					db.Set(project);				
+					db.Set(project);		
+					db.Commit();
 				}
 				
 				finally
@@ -195,6 +217,7 @@ namespace LongoMatch.DB
 		}
 		
 		private bool Exists(string filename){
+			
 			IQuery query = db.Query();
 			query.Constrain(typeof(Project));
 			query.Descend("file").Descend("filePath").Constrain(filename);

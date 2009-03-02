@@ -27,6 +27,7 @@ namespace LongoMatch.DB
 	
 	public class MediaFile
 	{
+		
 		string filePath;
 		Time length;
 		ushort fps;

@@ -60,6 +60,10 @@ namespace LongoMatch.Gui
 			this.capturer.Pause();
 		}
 		
+		public void StartRec(){
+			this.capturer.StartRec();
+		}
+		
 		public void Rec(){
 			this.capturer.Rec();
 		}
@@ -71,14 +75,17 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnRecbuttonClicked (object sender, System.EventArgs e)
 		{
+			this.StartRec();
 		}
 
 		protected virtual void OnPausebuttonClicked (object sender, System.EventArgs e)
 		{
+			this.Pause();
 		}
 
 		protected virtual void OnStopbuttonClicked (object sender, System.EventArgs e)
 		{
+			this.Stop();
 		}
 		
 		

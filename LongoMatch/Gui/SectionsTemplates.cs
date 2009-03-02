@@ -95,14 +95,6 @@ namespace LongoMatch.Gui.Dialog
 
 
 
-
-		protected virtual void OnButtonNewClicked (object sender, System.EventArgs e)
-		{
-			/*NewSectionsTemplatesFiles nstf = new NewSectionsTemplatesFiles();			
-			SectionsReader sr = new SectionsReader("default.sct");
-			this.SetSections(sr.GetSections());*/
-		}
-
 		protected virtual void OnSavebuttonClicked (object sender, System.EventArgs e)
 		{
 			this.selectedSections = this.sectionspropertieswidget1.GetSections();
@@ -113,31 +105,16 @@ namespace LongoMatch.Gui.Dialog
 
 		protected virtual void OnNewbuttonClicked (object sender, System.EventArgs e)
 		{
-			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Select Template Name"),
-			                                                   (Gtk.Window)this.Toplevel,
-			                                                   FileChooserAction.Save,
-			                                                   "gtk-cancel",ResponseType.Cancel,
-			                                                   "gtk-save",ResponseType.Accept);
-			fChooser.SetCurrentFolder(MainClass.TemplatesDir());
-			fChooser.AddFilter(this.FileFilter);
-			fChooser.SetFilename("NewTemplate.sct");
-			fChooser.DoOverwriteConfirmation = true;
-			if (fChooser.Run() == (int)ResponseType.Accept){
-				string filename;				
-				filename = System.IO.Path.ChangeExtension(fChooser.Filename,"sct");				
-				SectionsWriter.CreateNewTemplate(filename);
-				this.Fill();
-			}
-		
-			fChooser.Destroy();
-			/*string name;
-			NewSectionsTemplatesFiles nstf = new NewSectionsTemplatesFiles();
-			if (nstf.Run() == (int)ResponseType.Ok){
-				name = nstf.GetName();
+			
+			string name;
+			TemplateNameSelectionDialog tnsd = new  TemplateNameSelectionDialog();
+			if (tnsd.Run() == (int)ResponseType.Ok){
+				//TODO Add overwrite test
+				name = tnsd.GetName();
 				SectionsWriter.CreateNewTemplate(name+".sct");
 				this.Fill();
 			}
-			nstf.Destroy();*/
+			tnsd .Destroy();
 				
 		}
 			

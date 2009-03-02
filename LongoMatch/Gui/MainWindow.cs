@@ -32,14 +32,16 @@ using LongoMatch.Gui;
 using LongoMatch.Video.Player;
 
 
-namespace LongoMatch
+namespace LongoMatch.Gui
 {	
 	public partial class MainWindow : Gtk.Window
 	{
-		private static Project openedProject;
-
+		private static Project openedProject;		
 		private TimeNode selectedTimeNode;
-		private EventsManager eManager;
+		
+		private EventsManager eManager;	
+		
+
 
 
 		
@@ -48,7 +50,8 @@ namespace LongoMatch
 		{			
 			this.Build();
 			this.eManager = new EventsManager(this.treewidget1,this.buttonswidget1,this.playlistwidget2,
-			                                  this.playerbin1,this.timelinewidget1,this.progressbar1);
+			                                  this.playerbin1,this.timelinewidget1,this.videoprogressbar,
+			                                  this.noteswidget1);
 			playerbin1.SetLogo(System.IO.Path.Combine(MainClass.ImagesDir(),"background.png"));
 
 			playerbin1.LogoMode = true;
@@ -64,36 +67,39 @@ namespace LongoMatch
 			this.eManager.OpenedProject = project;
 			if (project!=null){		
 				if(!File.Exists(project.File.FilePath)){
-					MessageDialog infoDialog = new MessageDialog (this,DialogFlags.Modal,MessageType.Warning,ButtonsType.Ok,Catalog.GetString("The file associated to this proyect doesn't exits.\n If the location of the file has changed try to change it with de DataBase Manager.") );
+					MessageDialog infoDialog = new MessageDialog (this,DialogFlags.Modal,MessageType.Warning,ButtonsType.Ok,Catalog.GetString("The file associated to this project doesn't exist.")+"\n"+Catalog.GetString("If the location of the file has changed try to edit it with the database manager.") );
 					infoDialog.Run();
 					infoDialog.Destroy();
 					this.CloseActualProyect();					
 				}
-				else {
-					
+				else {					
 					this.Title = System.IO.Path.GetFileNameWithoutExtension(project.File.FilePath) + " - LongoMatch";
-					this.playerbin1.Open(project.File.FilePath);
-					if (project.File.HasVideo)
-						this.playerbin1.LogoMode = true;
-					else 
-						this.playerbin1.LogoMode = false;
-					this.playerbin1.PlaylistMode = false;
-					this.playlistwidget2.Stop();
-					
-					this.treewidget1.Project=project;						
-					this.timelinewidget1.Project = project;
-					this.buttonswidget1.Sections = project.Sections;	
-					if (project.File.HasVideo){
-						this.playerbin1.LogoMode = false;						
+					try {
+						this.playerbin1.Open(project.File.FilePath);
+						if (project.File.HasVideo)
+							this.playerbin1.LogoMode = true;
+						else 
+							this.playerbin1.LogoMode = false;
+						this.playerbin1.PlaylistMode = false;
+						this.playlistwidget2.Stop();					
+						this.treewidget1.Project=project;						
+						this.timelinewidget1.Project = project;
+						this.buttonswidget1.Sections = project.Sections;	
+						if (project.File.HasVideo){
+							this.playerbin1.LogoMode = false;						
+						}
+						this.CloseProjectAction.Sensitive=true;
+						this.SaveProjectAction.Sensitive = true;						
+						this.CaptureModeAction.Sensitive = true;
+						this.AnalyzeModeAction.Sensitive = true;				
+						this.ShowWidgets();
 					}
-					this.CloseProjectAction.Sensitive=true;
-					this.SaveProjectAction.Sensitive = true;
-					this.PlayerAction.Sensitive= true;
-					this.TakeScreenshotAction.Sensitive = true;
-					this.CaptureModeAction.Sensitive = true;
-					this.AnalyzeModeAction.Sensitive = true;
-				
-					this.ShowWidgets();
+					catch (GLib.GException ex){
+						MessageDialog infoDialog = new MessageDialog (this,DialogFlags.Modal,MessageType.Error,ButtonsType.Ok,Catalog.GetString("An error ocurred opening this project:")+"\n"+ex.Message);
+						infoDialog.Run();
+						infoDialog.Destroy();
+						this.CloseActualProyect();	
+					}
 				}
 			}			
 		}
@@ -127,8 +133,6 @@ namespace LongoMatch
 			this.selectedTimeNode = null;
 			this.CloseProjectAction.Sensitive=false;
 			this.SaveProjectAction.Sensitive = false;
-			this.PlayerAction.Sensitive= false;
-			this.TakeScreenshotAction.Sensitive = false;
 			this.CaptureModeAction.Sensitive = false;
 			this.AnalyzeModeAction.Sensitive = false;			
 		}
@@ -136,8 +140,7 @@ namespace LongoMatch
 		private void SaveDB(){			
 			if (openedProject != null){
 				MainClass.DB.UpdateProject(OpenedProject());
-			}
-			
+			}			
 		}
 		
 		protected virtual void OnUnrealized(object sender, System.EventArgs e){
@@ -149,6 +152,7 @@ namespace LongoMatch
 		protected virtual void OnSectionsTemplatesManagerActivated (object sender, System.EventArgs e)
 		{
 			SectionsTemplates st = new SectionsTemplates();
+			st.TransientFor = this;
 			st.Show();
 		}
 
@@ -156,6 +160,7 @@ namespace LongoMatch
 		{
 			Project project;
 			OpenProjectDialog opd = new OpenProjectDialog();
+			opd.TransientFor = this;
 			int answer=opd.Run();
 			while (answer == (int)ResponseType.Reject){
 				project = opd.GetSelection();
@@ -174,6 +179,7 @@ namespace LongoMatch
 		{
 			Project project;
 			NewProjectDialog npd = new NewProjectDialog();
+			npd.TransientFor = this;
 			npd.Use = LongoMatch.Gui.Component.UseType.NewFromFileProject;
 			// Esperamos a que se pulse el boton aceptar y se cumplan las condiciones para 
 			// crear un nuevo objeto del tipo Project
@@ -202,7 +208,7 @@ namespace LongoMatch
 						                                        DialogFlags.DestroyWithParent,
 						                                        MessageType.Error,
 						                                        ButtonsType.Ok,
-						                                        "The Project for this file already exists.\nTry to edit it.");
+						                                        Catalog.GetString("The Project for this file already exists.")+"\n"+Catalog.GetString("Try to edit it."));
 						error.Run();
 						error.Destroy();							
 					}
@@ -222,6 +228,7 @@ namespace LongoMatch
 		protected virtual void OnDatabaseManagerActivated (object sender, System.EventArgs e)
 		{
 			DBManager db = new DBManager();
+			db.TransientFor = this;
 			db.Show();
 		}		
 
@@ -230,10 +237,6 @@ namespace LongoMatch
 			if (args.Requisition.Width>= hpaned.Position)
 				hpaned.Position = args.Requisition.Width;
 		}
-		
-		
-
-
 
 		protected virtual void OnDeleteEvent (object o, Gtk.DeleteEventArgs args)
 		{
@@ -254,13 +257,21 @@ namespace LongoMatch
 			this.SaveDB();
 			// We never know...
 			System.Threading.Thread.Sleep(1000);
-			this.playerbin1.Destroy();
+			this.playerbin1.Dispose();
 			Application.Quit();
 		}
 
 		protected virtual void OnPlaylistActionToggled (object sender, System.EventArgs e)
 		{			
-				this.playlistwidget2.Visible=((Gtk.ToggleAction)sender).Active;			
+			if (((Gtk.ToggleAction)sender).Active){
+				this.rightvbox.Visible = true;
+				this.playlistwidget2.Visible=true;	
+			}
+			else {
+				this.playlistwidget2.Visible=false;				
+				if (!this.noteswidget1.Visible)
+					this.rightvbox.Visible = false;
+			}			
 		}
 
 		protected virtual void OnOpenPlaylistActionActivated (object sender, System.EventArgs e)
@@ -285,10 +296,10 @@ namespace LongoMatch
 			fChooser.Destroy();			
 		}
 
-		protected virtual void OnPlayerbin1Error (object o,LongoMatch.Handlers.ErrorArgs args)
+		protected virtual void OnPlayerbin1Error (object o,LongoMatch.Video.Handlers.ErrorArgs args)
 		{
 			MessageDialog errorDialog = new MessageDialog (this,DialogFlags.Modal,MessageType.Error,ButtonsType.Ok,Catalog.GetString 
-			                                               ("The actual Proyect will bo closed due to this error on the media player:\n") +args.Message);
+			                                               ("The actual project will be closed caused by an error in the media player:")+"\n" +args.Message);
 			errorDialog.Run();
 			errorDialog.Destroy();	
 			this.CloseActualProyect();
@@ -298,8 +309,7 @@ namespace LongoMatch
 
 
 		protected virtual void OnCaptureModeActionToggled (object sender, System.EventArgs e)
-		{
-
+		{			
 			if (((Gtk.ToggleAction)sender).Active){
 				this.buttonswidget1.Show();
 				this.timelinewidget1.Hide();
@@ -307,33 +317,73 @@ namespace LongoMatch
 			else{
 				this.buttonswidget1.Hide();
 				this.timelinewidget1.Show();
-			}
-			
-			
+			}		
 		}
-
 		
-
+		
+		
 		protected virtual void OnFullScreenActionToggled (object sender, System.EventArgs e)
 		{
-		
-				this.playerbin1.FullScreen = ((Gtk.ToggleAction)sender).Active;
+			
+			this.playerbin1.FullScreen = ((Gtk.ToggleAction)sender).Active;
 		}
-
+		
 		protected virtual void OnSaveProjectActionActivated (object sender, System.EventArgs e)
 		{
 			this.SaveDB();
 		}
-
+		
 		protected virtual void OnTakeScreenshotActionActivated (object sender, System.EventArgs e)
 		{
 			/*Pixbuf frame = this.playerbin1.CurrentFrame;
 			frame.Save(MainClass.SnapshotsDir(),"jpeg");*/
 		}
-
 		
+		protected override bool OnKeyPressEvent (EventKey evnt)
+		{
+			if (openedProject != null){
+				Gdk.Key key = evnt.Key;
+				if (key == Gdk.Key.z){
+					if (selectedTimeNode == null)
+						this.playerbin1.SeekToPreviousFrame(false);
+					else
+						this.playerbin1.SeekToPreviousFrame(true);
+				}
+				if (key == Gdk.Key.x){
+					if (selectedTimeNode == null)
+						this.playerbin1.SeekToNextFrame(false);
+					else
+						this.playerbin1.SeekToNextFrame(true);
+				}
+			}
+			return base.OnKeyPressEvent (evnt);
+		}
 		
-
+		protected virtual void OnTimeNodeSelected (LongoMatch.TimeNodes.MediaTimeNode tNode)
+		{
+			rightvbox.Visible=true;
+		}
 		
+		protected virtual void OnSegmentClosedEvent ()
+		{
+			if (!this.playlistwidget2.Visible)
+				this.rightvbox.Visible=false;
+		}
+		
+		protected virtual void OnAboutActionActivated (object sender, System.EventArgs e)
+		{
+			Gtk.AboutDialog about = new AboutDialog();
+			if (Environment.OSVersion.Platform == PlatformID.Unix)
+		    //about.ProgramName = "LongoMatch";
+			about.Version = "0.12";
+			about.Copyright = "Copyright ©2007-2008 Andoni Morales Alastruey";
+			about.Website= "www.ylatuya.es";
+			about.License = "This program is free software; you can redistribute it and/or modify\n it under the terms of the GNU General Public License as published by\nthe Free Software Foundation; either version 2 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU General Public License for more details.\n";
+			about.Authors = new string[]{"Andoni Morales Alastruey"};
+			about.Artists = new string[]{"Bencomo González Marrero"};
+			about.TransientFor = this;
+			about.Run();
+			about.Destroy();			
+		}
 	}
 }

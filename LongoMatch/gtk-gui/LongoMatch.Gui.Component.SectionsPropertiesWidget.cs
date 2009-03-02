@@ -82,7 +82,6 @@ namespace LongoMatch.Gui.Component {
             this.table20.Add(this.timenodeproperties101);
             Gtk.Table.TableChild w2 = ((Gtk.Table.TableChild)(this.table20[this.timenodeproperties101]));
             w2.XOptions = ((Gtk.AttachOptions)(4));
-            w2.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties102 = new LongoMatch.Gui.Component.TimeNodeProperties();
             this.timenodeproperties102.Events = ((Gdk.EventMask)(256));
@@ -92,7 +91,6 @@ namespace LongoMatch.Gui.Component {
             w3.LeftAttach = ((uint)(1));
             w3.RightAttach = ((uint)(2));
             w3.XOptions = ((Gtk.AttachOptions)(4));
-            w3.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties103 = new LongoMatch.Gui.Component.TimeNodeProperties();
             this.timenodeproperties103.Events = ((Gdk.EventMask)(256));
@@ -102,7 +100,6 @@ namespace LongoMatch.Gui.Component {
             w4.LeftAttach = ((uint)(2));
             w4.RightAttach = ((uint)(3));
             w4.XOptions = ((Gtk.AttachOptions)(4));
-            w4.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties104 = new LongoMatch.Gui.Component.TimeNodeProperties();
             this.timenodeproperties104.Events = ((Gdk.EventMask)(256));
@@ -112,7 +109,6 @@ namespace LongoMatch.Gui.Component {
             w5.LeftAttach = ((uint)(3));
             w5.RightAttach = ((uint)(4));
             w5.XOptions = ((Gtk.AttachOptions)(4));
-            w5.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties105 = new LongoMatch.Gui.Component.TimeNodeProperties();
             this.timenodeproperties105.Events = ((Gdk.EventMask)(256));
@@ -122,7 +118,6 @@ namespace LongoMatch.Gui.Component {
             w6.LeftAttach = ((uint)(4));
             w6.RightAttach = ((uint)(5));
             w6.XOptions = ((Gtk.AttachOptions)(4));
-            w6.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties106 = new LongoMatch.Gui.Component.TimeNodeProperties();
             this.timenodeproperties106.Events = ((Gdk.EventMask)(256));
@@ -132,7 +127,6 @@ namespace LongoMatch.Gui.Component {
             w7.TopAttach = ((uint)(1));
             w7.BottomAttach = ((uint)(2));
             w7.XOptions = ((Gtk.AttachOptions)(4));
-            w7.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties107 = new LongoMatch.Gui.Component.TimeNodeProperties();
             this.timenodeproperties107.Events = ((Gdk.EventMask)(256));
@@ -144,7 +138,6 @@ namespace LongoMatch.Gui.Component {
             w8.LeftAttach = ((uint)(1));
             w8.RightAttach = ((uint)(2));
             w8.XOptions = ((Gtk.AttachOptions)(4));
-            w8.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties108 = new LongoMatch.Gui.Component.TimeNodeProperties();
             this.timenodeproperties108.Events = ((Gdk.EventMask)(256));
@@ -156,7 +149,6 @@ namespace LongoMatch.Gui.Component {
             w9.LeftAttach = ((uint)(2));
             w9.RightAttach = ((uint)(3));
             w9.XOptions = ((Gtk.AttachOptions)(4));
-            w9.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties109 = new LongoMatch.Gui.Component.TimeNodeProperties();
             this.timenodeproperties109.Events = ((Gdk.EventMask)(256));
@@ -168,7 +160,6 @@ namespace LongoMatch.Gui.Component {
             w10.LeftAttach = ((uint)(3));
             w10.RightAttach = ((uint)(4));
             w10.XOptions = ((Gtk.AttachOptions)(4));
-            w10.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties110 = new LongoMatch.Gui.Component.TimeNodeProperties();
             this.timenodeproperties110.Events = ((Gdk.EventMask)(256));
@@ -180,7 +171,6 @@ namespace LongoMatch.Gui.Component {
             w11.LeftAttach = ((uint)(4));
             w11.RightAttach = ((uint)(5));
             w11.XOptions = ((Gtk.AttachOptions)(4));
-            w11.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties111 = new LongoMatch.Gui.Component.TimeNodeProperties();
             this.timenodeproperties111.Events = ((Gdk.EventMask)(256));
@@ -190,7 +180,6 @@ namespace LongoMatch.Gui.Component {
             w12.TopAttach = ((uint)(2));
             w12.BottomAttach = ((uint)(3));
             w12.XOptions = ((Gtk.AttachOptions)(4));
-            w12.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties112 = new LongoMatch.Gui.Component.TimeNodeProperties();
             this.timenodeproperties112.Events = ((Gdk.EventMask)(256));
@@ -202,7 +191,6 @@ namespace LongoMatch.Gui.Component {
             w13.LeftAttach = ((uint)(1));
             w13.RightAttach = ((uint)(2));
             w13.XOptions = ((Gtk.AttachOptions)(4));
-            w13.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties113 = new LongoMatch.Gui.Component.TimeNodeProperties();
             this.timenodeproperties113.Events = ((Gdk.EventMask)(256));
@@ -214,7 +202,6 @@ namespace LongoMatch.Gui.Component {
             w14.LeftAttach = ((uint)(2));
             w14.RightAttach = ((uint)(3));
             w14.XOptions = ((Gtk.AttachOptions)(4));
-            w14.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties114 = new LongoMatch.Gui.Component.TimeNodeProperties();
             this.timenodeproperties114.Events = ((Gdk.EventMask)(256));
@@ -226,7 +213,6 @@ namespace LongoMatch.Gui.Component {
             w15.LeftAttach = ((uint)(3));
             w15.RightAttach = ((uint)(4));
             w15.XOptions = ((Gtk.AttachOptions)(4));
-            w15.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties115 = new LongoMatch.Gui.Component.TimeNodeProperties();
             this.timenodeproperties115.Events = ((Gdk.EventMask)(256));
@@ -238,7 +224,6 @@ namespace LongoMatch.Gui.Component {
             w16.LeftAttach = ((uint)(4));
             w16.RightAttach = ((uint)(5));
             w16.XOptions = ((Gtk.AttachOptions)(4));
-            w16.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties116 = new LongoMatch.Gui.Component.TimeNodeProperties();
             this.timenodeproperties116.Events = ((Gdk.EventMask)(256));
@@ -248,7 +233,6 @@ namespace LongoMatch.Gui.Component {
             w17.TopAttach = ((uint)(3));
             w17.BottomAttach = ((uint)(4));
             w17.XOptions = ((Gtk.AttachOptions)(4));
-            w17.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties117 = new LongoMatch.Gui.Component.TimeNodeProperties();
             this.timenodeproperties117.Events = ((Gdk.EventMask)(256));
@@ -260,7 +244,6 @@ namespace LongoMatch.Gui.Component {
             w18.LeftAttach = ((uint)(1));
             w18.RightAttach = ((uint)(2));
             w18.XOptions = ((Gtk.AttachOptions)(4));
-            w18.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties118 = new LongoMatch.Gui.Component.TimeNodeProperties();
             this.timenodeproperties118.Events = ((Gdk.EventMask)(256));
@@ -272,7 +255,6 @@ namespace LongoMatch.Gui.Component {
             w19.LeftAttach = ((uint)(2));
             w19.RightAttach = ((uint)(3));
             w19.XOptions = ((Gtk.AttachOptions)(4));
-            w19.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties119 = new LongoMatch.Gui.Component.TimeNodeProperties();
             this.timenodeproperties119.Events = ((Gdk.EventMask)(256));
@@ -284,7 +266,6 @@ namespace LongoMatch.Gui.Component {
             w20.LeftAttach = ((uint)(3));
             w20.RightAttach = ((uint)(4));
             w20.XOptions = ((Gtk.AttachOptions)(4));
-            w20.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table20.Gtk.Table+TableChild
             this.timenodeproperties120 = new LongoMatch.Gui.Component.TimeNodeProperties();
             this.timenodeproperties120.Events = ((Gdk.EventMask)(256));
@@ -296,7 +277,6 @@ namespace LongoMatch.Gui.Component {
             w21.LeftAttach = ((uint)(4));
             w21.RightAttach = ((uint)(5));
             w21.XOptions = ((Gtk.AttachOptions)(4));
-            w21.YOptions = ((Gtk.AttachOptions)(4));
             w1.Add(this.table20);
             this.scrolledwindow1.Add(w1);
             this.Add(this.scrolledwindow1);

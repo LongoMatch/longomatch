@@ -19,6 +19,9 @@
 //
 
 using System;
+using System.Collections.Generic;
+using LongoMatch.TimeNodes;
+using LongoMatch.Playlist;
 
 namespace LongoMatch.Video.Editor
 {
@@ -28,9 +31,7 @@ namespace LongoMatch.Video.Editor
 	{
 		event LongoMatch.Handlers.ProgressHandler Progress;
 		
-		PlayList PlayList {
-			set;
-		}
+		
 		
 		VideoQuality VideoQuality{
 			set;
@@ -48,7 +49,13 @@ namespace LongoMatch.Video.Editor
 			set;
 		}
 		
+		IPlayList PlayList{
+			set;
+		}
+		
 		void Start();
+		
+		
 		
 		void Cancel();
 		

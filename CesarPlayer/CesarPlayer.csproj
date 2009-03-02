@@ -22,7 +22,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>bin\Release\</OutputPath>
-    <DebugSymbols>False</DebugSymbols>
+    <DebugSymbols>false</DebugSymbols>
     <DebugType>None</DebugType>
     <Optimize>True</Optimize>
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
@@ -61,11 +61,17 @@
     <Compile Include="gtk-gui\generated.cs">
       <Link>generated.cs</Link>
     </Compile>
+    <Compile Include="gtk-gui\LongoMatch.Gui.CapturerBin.cs">
+      <Link>LongoMatch.Gui.CapturerBin.cs</Link>
+    </Compile>
     <Compile Include="gtk-gui\LongoMatch.Gui.PlayerBin.cs">
       <Link>LongoMatch.Gui.PlayerBin.cs</Link>
     </Compile>
     <Compile Include="gtk-gui\LongoMatch.Gui.VolumeWindow.cs">
       <Link>LongoMatch.Gui.VolumeWindow.cs</Link>
+    </Compile>
+    <Compile Include="Gui\CapturerBin.cs">
+      <Link>CapturerBin.cs</Link>
     </Compile>
     <Compile Include="Gui\PlayerBin.cs">
       <Link>PlayerBin.cs</Link>
@@ -101,20 +107,26 @@
     <Compile Include="Player\GstPlayerAspectRatio.cs">
       <Link>GstPlayerAspectRatio.cs</Link>
     </Compile>
-    <Compile Include="Player\GstPlayerMetadataType.cs">
-      <Link>GstPlayerMetadataType.cs</Link>
-    </Compile>
     <Compile Include="Player\GstUseType.cs">
       <Link>GstUseType.cs</Link>
-    </Compile>
-    <Compile Include="Player\IMetadataReader.cs">
-      <Link>IMetadataReader.cs</Link>
     </Compile>
     <Compile Include="Player\IPlayer.cs">
       <Link>IPlayer.cs</Link>
     </Compile>
     <Compile Include="Player\ObjectManager.cs">
       <Link>ObjectManager.cs</Link>
+    </Compile>
+    <Compile Include="Utils\FramesCapturer.cs">
+      <Link>FramesCapturer.cs</Link>
+    </Compile>
+    <Compile Include="Utils\GstPlayerMetadataType.cs">
+      <Link>GstPlayerMetadataType.cs</Link>
+    </Compile>
+    <Compile Include="Utils\IFramesCapturer.cs">
+      <Link>IFramesCapturer.cs</Link>
+    </Compile>
+    <Compile Include="Utils\IMetadataReader.cs">
+      <Link>IMetadataReader.cs</Link>
     </Compile>
     <Compile Include="Utils\TimeString.cs">
       <Link>TimeString.cs</Link>
@@ -128,33 +140,36 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="atk-sharp">
-      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\atk-sharp\2.10.0.0__35e10195dab3c99f\atk-sharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.0\lib\mono\gac\atk-sharp\2.12.0.0__35e10195dab3c99f\atk-sharp.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="gdk-sharp">
-      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\gdk-sharp\2.10.0.0__35e10195dab3c99f\gdk-sharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.0\lib\mono\gac\gdk-sharp\2.12.0.0__35e10195dab3c99f\gdk-sharp.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="glib-sharp">
-      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\glib-sharp\2.10.0.0__35e10195dab3c99f\glib-sharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.0\lib\mono\gac\glib-sharp\2.12.0.0__35e10195dab3c99f\glib-sharp.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="gtk-sharp">
-      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\gtk-sharp\2.10.0.0__35e10195dab3c99f\gtk-sharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.0\lib\mono\gac\gtk-sharp\2.12.0.0__35e10195dab3c99f\gtk-sharp.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Mono.Cairo">
-      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\Mono.Cairo\2.0.0.0__0738eb9f132ed756\Mono.Cairo.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.2\lib\mono\gac\Mono.Cairo\2.0.0.0__0738eb9f132ed756\Mono.Cairo.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Mono.Posix">
-      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\Mono.Posix\2.0.0.0__0738eb9f132ed756\Mono.Posix.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.2\lib\mono\gac\Mono.Posix\2.0.0.0__0738eb9f132ed756\Mono.Posix.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System">
-      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-1.9.1\lib\mono\gac\System\2.0.0.0__b77a5c561934e089\System.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.2\lib\mono\gac\System\2.0.0.0__b77a5c561934e089\System.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Directorio Nuevo" />
   </ItemGroup>
   <Import Project="$(SharpDevelopBinPath)\SharpDevelop.Build.CSharp.targets" />
 </Project>

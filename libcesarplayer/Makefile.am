@@ -3,15 +3,6 @@
 
 SUBDIRS = src
 
-cesarplayerdocdir = ${prefix}/doc/cesarplayer
-cesarplayerdoc_DATA = \
-	README\
-	COPYING\
-	AUTHORS\
-	ChangeLog\
-	INSTALL\
-	NEWS
-
 
 # Copy all the spec files. Of cource, only one is actually used.
 dist-hook:

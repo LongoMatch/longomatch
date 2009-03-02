@@ -25,6 +25,12 @@
 #ifndef _GST_VIDEO_CAPTURER_H_
 #define _GST_VIDEO_CAPTURER_H_
 
+#ifdef WIN32
+	#define EXPORT __declspec (dllexport)
+#else
+	#define EXPORT	
+#endif
+
 #include <glib-object.h>
 #include <gtk/gtk.h>
 
@@ -112,14 +118,14 @@ typedef enum{
 }GvcAudioEncoderType;
 
 
-GType gst_video_capturer_get_type (void) G_GNUC_CONST;
+EXPORT GType gst_video_capturer_get_type (void) G_GNUC_CONST;
 
-void gst_video_capturer_init_backend (int *argc, char ***argv);
-GstVideoCapturer * gst_video_capturer_new (GvcUseType use_type,GError ** err );
-void gst_video_capturer_set_encoder(GstVideoCapturer *gvc);
-void gst_video_capturer_rec(GstVideoCapturer *gvc);
-void gst_video_capturer_pause(GstVideoCapturer *gvc);
-void gst_video_capturer_stop(GstVideoCapturer *gvc);
+EXPORT void gst_video_capturer_init_backend (int *argc, char ***argv);
+EXPORT GstVideoCapturer * gst_video_capturer_new (GvcUseType use_type,GError ** err );
+EXPORT void gst_video_capturer_start_rec(GstVideoCapturer *gvc);
+EXPORT void gst_video_capturer_rec(GstVideoCapturer *gvc);
+EXPORT void gst_video_capturer_pause(GstVideoCapturer *gvc);
+EXPORT void gst_video_capturer_stop(GstVideoCapturer *gvc);
 
 G_END_DECLS
 

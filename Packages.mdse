@@ -24,23 +24,12 @@
         </ChildEntries>
       </Builder>
     </Package>
-    <Package name="MonoDevelop Project Model fuentes">
-      <Builder rootEntry="LongoMatch.mds" targetFile="UnixLongoMatch.tar.gz" format="MonoDevelop.Projects.MonoDevelopFileFormat" ctype="SourcesZipPackageBuilder">
-        <ChildEntries>
-          <Entry>Packages.mdse</Entry>
-          <Entry>LongoMatch/LongoMatch.mdp</Entry>
-          <Entry>CesarPlayer/CesarPlayer/CesarPlayer.mdp</Entry>
-          <Entry>liblongomatch/liblongomatch.mdp</Entry>
-          <Entry>LongoMatchTranslation/LongoMatchTranslation.mdse</Entry>
-        </ChildEntries>
-      </Builder>
-    </Package>
     <Package name="Tarball">
-      <Builder rootEntry="LongoMatch.mds" TargetDirectory="/home/ando/Proyectos/UnixLongoMatch" DefaultConfiguration="Release" ctype="TarballDeployTarget">
+      <Builder rootEntry="LongoMatch.mds" TargetDirectory="/home/ando/Proyectos/UnixLongoMatch" DefaultConfiguration="Release" GenerateFiles="False" ctype="TarballDeployTarget">
         <ChildEntries>
           <Entry>LongoMatch/LongoMatch.mdp</Entry>
-          <Entry>CesarPlayer/CesarPlayer/CesarPlayer.mdp</Entry>
-          <Entry>LongoMatchTranslation/LongoMatchTranslation.mdse</Entry>
+          <Entry>CesarPlayer/CesarPlayer.mdp</Entry>
+          <Entry>Translations/Translations.mdse</Entry>
         </ChildEntries>
       </Builder>
     </Package>

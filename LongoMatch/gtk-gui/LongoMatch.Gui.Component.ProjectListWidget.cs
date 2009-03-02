@@ -30,8 +30,6 @@ namespace LongoMatch.Gui.Component {
             this.treeview = new Gtk.TreeView();
             this.treeview.CanFocus = true;
             this.treeview.Name = "treeview";
-            this.treeview.Reorderable = true;
-            this.treeview.HeadersClickable = true;
             this.scrolledwindow2.Add(this.treeview);
             this.Add(this.scrolledwindow2);
             if ((this.Child != null)) {

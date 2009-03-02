@@ -43,10 +43,8 @@ linuxdesktopapplicationsdir = @datadir@/applications
 linuxdesktopapplications_DATA = $(LINUX_DESKTOPAPPLICATIONS)
 programfilesdir = @libdir@/@PACKAGE@
 programfiles_DATA = $(PROGRAMFILES)
-linuxpkgconfigdir = @libdir@/pkgconfig
-linuxpkgconfig_DATA = $(LINUX_PKGCONFIG)
-programfilesimagesdir = @libdir@/@PACKAGE@/images
-programfilesimages_DATA = $(PROGRAMFILES_IMAGES)
+commonapplicationdatarootimagesdir = @datadir@/images
+commonapplicationdatarootimages_DATA = $(COMMONAPPLICATIONDATAROOT_IMAGES)
 
 
 # macros

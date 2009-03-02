@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>WinExe</OutputType>
     <RootNamespace>LongoMatch</RootNamespace>
-    <AssemblyName>LGM</AssemblyName>
+    <AssemblyName>LongoMatch</AssemblyName>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <NoStdLib>False</NoStdLib>
     <WarningLevel>4</WarningLevel>
@@ -38,495 +38,96 @@
   <Import Project="$(SharpDevelopBinPath)\SharpDevelop.Build.CSharp.targets" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="DB\DataBase.cs">
-      <Link>DataBase.cs</Link>
-    </Compile>
-    <Compile Include="DB\MediaFile.cs">
-      <Link>MediaFile.cs</Link>
-    </Compile>
-    <Compile Include="DB\Project.cs">
-      <Link>Project.cs</Link>
-    </Compile>
-    <Compile Include="DB\Sections.cs">
-      <Link>Sections.cs</Link>
-    </Compile>
+    <Compile Include="DB\DataBase.cs" />
+    <Compile Include="DB\MediaFile.cs" />
+    <Compile Include="DB\Project.cs" />
+    <Compile Include="DB\Sections.cs" />
     <Compile Include="EventsManager.cs" />
-    <Compile Include="gtk-gui\generated.cs">
-      <Link>generated.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.ButtonsWidget.cs">
-      <Link>LongoMatch.Gui.Component.ButtonsWidget.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.FileDescriptionWidget.cs">
-      <Link>LongoMatch.Gui.Component.FileDescriptionWidget.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.PlayListWidget.cs">
-      <Link>LongoMatch.Gui.Component.PlayListWidget.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.ProjectListWidget.cs">
-      <Link>LongoMatch.Gui.Component.ProjectListWidget.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.SectionsPropertiesWidget.cs">
-      <Link>LongoMatch.Gui.Component.SectionsPropertiesWidget.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.TimeAdjustWidget.cs">
-      <Link>LongoMatch.Gui.Component.TimeAdjustWidget.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.TimeLineWidget.cs">
-      <Link>LongoMatch.Gui.Component.TimeLineWidget.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.TimeNodeProperties.cs">
-      <Link>LongoMatch.Gui.Component.TimeNodeProperties.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.Gui.Component.TreeWidget.cs">
-      <Link>LongoMatch.Gui.Component.TreeWidget.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.DBManager.cs">
-      <Link>LongoMatch.Gui.Dialog.DBManager.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.NewProjectDialog.cs">
-      <Link>LongoMatch.Gui.Dialog.NewProjectDialog.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.NewSectionsTemplatesFiles.cs">
-      <Link>LongoMatch.Gui.Dialog.NewSectionsTemplatesFiles.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.OpenProjectDialog.cs">
-      <Link>LongoMatch.Gui.Dialog.OpenProjectDialog.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.SectionsTemplates.cs">
-      <Link>LongoMatch.Gui.Dialog.SectionsTemplates.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.TemplateEditorDialog.cs">
-      <Link>LongoMatch.Gui.Dialog.TemplateEditorDialog.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.VideoEditionProperties.cs">
-      <Link>LongoMatch.Gui.Dialog.VideoEditionProperties.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.Gui.Popup.CalendarPopup.cs">
-      <Link>LongoMatch.Gui.Popup.CalendarPopup.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.MainWindow.cs">
-      <Link>LongoMatch.MainWindow.cs</Link>
-    </Compile>
-    <Compile Include="Gui\ButtonsWidget.cs">
-      <Link>ButtonsWidget.cs</Link>
-    </Compile>
-    <Compile Include="Gui\CalendarPopup.cs">
-      <Link>CalendarPopup.cs</Link>
-    </Compile>
-    <Compile Include="Gui\DBManager.cs">
-      <Link>DBManager.cs</Link>
-    </Compile>
-    <Compile Include="Gui\FileDescriptionWidget.cs">
-      <Link>FileDescriptionWidget.cs</Link>
-    </Compile>
-    <Compile Include="Gui\MainWindow.cs">
-      <Link>MainWindow.cs</Link>
-    </Compile>
-    <Compile Include="Gui\NewProjectDialog.cs">
-      <Link>NewProjectDialog.cs</Link>
-    </Compile>
-    <Compile Include="Gui\NewSectionsTemplatesFiles.cs">
-      <Link>NewSectionsTemplatesFiles.cs</Link>
-    </Compile>
-    <Compile Include="Gui\OpenProjectDialog.cs">
-      <Link>OpenProjectDialog.cs</Link>
-    </Compile>
-    <Compile Include="Gui\PlayListTreeView.cs">
-      <Link>PlayListTreeView.cs</Link>
-    </Compile>
-    <Compile Include="Gui\PlayListWidget.cs">
-      <Link>PlayListWidget.cs</Link>
-    </Compile>
-    <Compile Include="Gui\ProjectListWidget.cs">
-      <Link>ProjectListWidget.cs</Link>
-    </Compile>
-    <Compile Include="Gui\SectionsPropertiesWidget.cs">
-      <Link>SectionsPropertiesWidget.cs</Link>
-    </Compile>
-    <Compile Include="Gui\SectionsTemplates.cs">
-      <Link>SectionsTemplates.cs</Link>
-    </Compile>
-    <Compile Include="Gui\TemplateEditorDialog.cs">
-      <Link>TemplateEditorDialog.cs</Link>
-    </Compile>
-    <Compile Include="Gui\TimeAdjustWidget.cs">
-      <Link>TimeAdjustWidget.cs</Link>
-    </Compile>
-    <Compile Include="Gui\TimeLineWidget.cs">
-      <Link>TimeLineWidget.cs</Link>
-    </Compile>
-    <Compile Include="Gui\TimeNodeProperties.cs">
-      <Link>TimeNodeProperties.cs</Link>
-    </Compile>
-    <Compile Include="Gui\TimeNodesTreeView.cs">
-      <Link>TimeNodesTreeView.cs</Link>
-    </Compile>
-    <Compile Include="Gui\TimeReferenceWidget.cs">
-      <Link>TimeReferenceWidget.cs</Link>
-    </Compile>
-    <Compile Include="Gui\TimeScale.cs">
-      <Link>TimeScale.cs</Link>
-    </Compile>
-    <Compile Include="Gui\TreeWidget.cs">
-      <Link>TreeWidget.cs</Link>
-    </Compile>
-    <Compile Include="Gui\VideoEditionProperties.cs">
-      <Link>VideoEditionProperties.cs</Link>
-    </Compile>
-    <Compile Include="Handlers\Handlers.cs">
-      <Link>Handlers.cs</Link>
-    </Compile>
-    <Compile Include="IO\SectionsReader.cs">
-      <Link>SectionsReader.cs</Link>
-    </Compile>
-    <Compile Include="IO\SectionsWriter.cs">
-      <Link>SectionsWriter.cs</Link>
-    </Compile>
-    <Compile Include="IO\XMLReader.cs">
-      <Link>XMLReader.cs</Link>
-    </Compile>
+    <Compile Include="gtk-gui\generated.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Component.ButtonsWidget.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Component.FileDescriptionWidget.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Component.NotesWidget.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Component.PlayListWidget.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Component.ProjectListWidget.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Component.SectionsPropertiesWidget.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Component.TimeAdjustWidget.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Component.TimeLineWidget.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Component.TimeNodeProperties.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Component.TreeWidget.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.DBManager.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.NewProjectDialog.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.OpenProjectDialog.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.SectionsTemplates.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.SnapshotsDialog.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.TemplateEditorDialog.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.TemplateNameSelectionDialog.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.Transcoder.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.VideoEditionProperties.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.MainWindow.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Popup.CalendarPopup.cs" />
+    <Compile Include="Gui\ButtonsWidget.cs" />
+    <Compile Include="Gui\CalendarPopup.cs" />
+    <Compile Include="Gui\DBManager.cs" />
+    <Compile Include="Gui\FileDescriptionWidget.cs" />
+    <Compile Include="Gui\FramesCaptureProgressDialog.cs" />
+    <Compile Include="Gui\MainWindow.cs" />
+    <Compile Include="Gui\NewProjectDialog.cs" />
+    <Compile Include="Gui\NewSectionsTemplatesFiles.cs" />
+    <Compile Include="Gui\NotesWidget.cs" />
+    <Compile Include="Gui\OpenProjectDialog.cs" />
+    <Compile Include="Gui\PlayListTreeView.cs" />
+    <Compile Include="Gui\PlayListWidget.cs" />
+    <Compile Include="Gui\ProjectListWidget.cs" />
+    <Compile Include="Gui\SectionsPropertiesWidget.cs" />
+    <Compile Include="Gui\SectionsTemplates.cs" />
+    <Compile Include="Gui\SnapshotsDialog.cs" />
+    <Compile Include="Gui\TemplateEditorDialog.cs" />
+    <Compile Include="Gui\TimeAdjustWidget.cs" />
+    <Compile Include="Gui\TimeLineWidget.cs" />
+    <Compile Include="Gui\TimeNodeProperties.cs" />
+    <Compile Include="Gui\TimeNodesTreeView.cs" />
+    <Compile Include="Gui\TimeReferenceWidget.cs" />
+    <Compile Include="Gui\TimeScale.cs" />
+    <Compile Include="Gui\TreeWidget.cs" />
+    <Compile Include="Gui\VideoEditionProperties.cs" />
+    <Compile Include="Handlers\Handlers.cs" />
+    <Compile Include="IO\SectionsReader.cs" />
+    <Compile Include="IO\SectionsWriter.cs" />
+    <Compile Include="IO\XMLReader.cs" />
     <Compile Include="Main.cs" />
-    <Compile Include="Time\MediaTimeNode.cs">
-      <Link>MediaTimeNode.cs</Link>
-    </Compile>
-    <Compile Include="Time\PixbufTimeNode.cs">
-      <Link>PixbufTimeNode.cs</Link>
-    </Compile>
-    <Compile Include="Time\PlayListTimeNode.cs">
-      <Link>PlayListTimeNode.cs</Link>
-    </Compile>
-    <Compile Include="Time\SectionsTimeNode.cs">
-      <Link>SectionsTimeNode.cs</Link>
-    </Compile>
-    <Compile Include="Time\Time.cs">
-      <Link>Time.cs</Link>
-    </Compile>
-    <Compile Include="Time\TimeNode.cs">
-      <Link>TimeNode.cs</Link>
-    </Compile>
-    <Compile Include="Video\AudioQuality.cs">
-      <Link>AudioQuality.cs</Link>
-    </Compile>
-    <Compile Include="Video\FFMPEGVideoEditor.cs">
-      <Link>FFMPEGVideoEditor.cs</Link>
-    </Compile>
-    <Compile Include="Video\IPlayList.cs">
-      <Link>IPlayList.cs</Link>
-    </Compile>
-    <Compile Include="Video\IVideoEditor.cs">
-      <Link>IVideoEditor.cs</Link>
-    </Compile>
-    <Compile Include="Video\PlayList.cs">
-      <Link>PlayList.cs</Link>
-    </Compile>
-    <Compile Include="Video\VideoQuality.cs">
-      <Link>VideoQuality.cs</Link>
-    </Compile>
-    <None Include="ffmpeg.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstadder.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstalaw.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstalpha.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstalphacolor.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstapetag.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstasfdemux.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstaudioconvert.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstaudiorate.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstaudioresample.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstaudiotestsrc.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstauparse.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstautodetect.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstavi.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstcoreelements.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstcutter.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstdecodebin.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstdecodebin2.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstdirectdraw.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstdirectsound.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstdshowdecwrapper.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstdshowsrcwrapper.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstdvdlpcmdec.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstdvdsub.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgsteffectv.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstffmpeg.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstffmpegcolorspace.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstflv.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstflx.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstgdp.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstgoom.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgsticydemux.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstid3demux.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstiec958.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstjpeg.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstlame.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstlevel.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstmad.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstmatroska.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstmonoscope.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstmpegaudioparse.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstmpegstream.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstmpegvideoparse.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstmulaw.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstmultipart.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstneon.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstogg.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstplaybin.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstpng.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstqtdemux.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstrealmedia.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstrtp.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstrtsp.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstsmpte.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstspeex.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgsttheora.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgsttypefindfunctions.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstudp.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstvideobalance.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstvideobox.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstvideocrop.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstvideoflip.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstvideomixer.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstvideorate.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstvideoscale.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstvideotestsrc.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstvolume.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstvorbis.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstwaveform.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstwavenc.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="gst-plugins\libgstwavparse.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <Compile Include="Playlist\IPlayList.cs" />
+    <Compile Include="Playlist\PlayList.cs" />
+    <Compile Include="Time\MediaTimeNode.cs" />
+    <Compile Include="Time\PixbufTimeNode.cs" />
+    <Compile Include="Time\PlayListTimeNode.cs" />
+    <Compile Include="Time\SectionsTimeNode.cs" />
+    <Compile Include="Time\Time.cs" />
+    <Compile Include="Time\TimeNode.cs" />
+    <Compile Include="Transcoder.cs" />
+    <Compile Include="Video\AudioQuality.cs" />
+    <Compile Include="Video\FFMPEGVideoEditor.cs" />
+    <Compile Include="Video\IVideoEditor.cs" />
+    <Compile Include="Video\VideoQuality.cs" />
     <None Include="images\background.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="images\lgmlogo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="libs\avcodec-51.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="libs\avformat-52.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="libs\avutil-49.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="libs\libgstapp-0.10.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="libs\libgstaudio-0.10.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="libs\libgstbase-0.10.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="libs\libgstcontroller-0.10.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="libs\libgstdataprotocol-0.10.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="libs\libgstdshow-0.10.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="libs\libgstinterfaces-0.10.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="libs\libgstnet-0.10.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="libs\libgstnetbuffer-0.10.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="libs\libgstpbutils-0.10.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="libs\libgstreamer-0.10.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="libs\libgstriff-0.10.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="libs\libgstrtp-0.10.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="libs\libgstrtsp-0.10.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="libs\libgstsdp-0.10.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="libs\libgsttag-0.10.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="libs\libgstvideo-0.10.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="libs\libjpeg.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="libs\libmms.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="libs\liboil-0.3-0.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="libs\liboil-0.3-0.dll.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="libs\xvidcore.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="mencoder.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DB" />
+    <Folder Include="gtk-gui" />
+    <Folder Include="Video" />
+    <Folder Include="Time" />
+    <Folder Include="Playlist" />
+    <Folder Include="IO" />
+    <Folder Include="Handlers" />
+    <Folder Include="Gui" />
     <Folder Include="images" />
-    <Folder Include="libs" />
-    <Folder Include="gst-plugins" />
     <Reference Include="atk-sharp">
-      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.0\lib\mono\gac\atk-sharp\2.10.0.0__35e10195dab3c99f\atk-sharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.0\lib\mono\gac\atk-sharp\2.12.0.0__35e10195dab3c99f\atk-sharp.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Db4objects.Db4o">
@@ -534,15 +135,15 @@
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="gdk-sharp">
-      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.0\lib\mono\gac\gdk-sharp\2.10.0.0__35e10195dab3c99f\gdk-sharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.0\lib\mono\gac\gdk-sharp\2.12.0.0__35e10195dab3c99f\gdk-sharp.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="glib-sharp">
-      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.0\lib\mono\gac\glib-sharp\2.10.0.0__35e10195dab3c99f\glib-sharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.0\lib\mono\gac\glib-sharp\2.12.0.0__35e10195dab3c99f\glib-sharp.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="gtk-sharp">
-      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.0\lib\mono\gac\gtk-sharp\2.10.0.0__35e10195dab3c99f\gtk-sharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.0\lib\mono\gac\gtk-sharp\2.12.0.0__35e10195dab3c99f\gtk-sharp.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Mono.Cairo">
@@ -551,6 +152,10 @@
     </Reference>
     <Reference Include="Mono.Posix">
       <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.0\lib\mono\gac\Mono.Posix\2.0.0.0__0738eb9f132ed756\Mono.Posix.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="pango-sharp">
+      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.0\lib\mono\gac\pango-sharp\2.12.0.0__35e10195dab3c99f\pango-sharp.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System">

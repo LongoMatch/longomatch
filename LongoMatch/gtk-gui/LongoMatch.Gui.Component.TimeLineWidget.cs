@@ -56,7 +56,6 @@ namespace LongoMatch.Gui.Component {
             w2.Add(w3);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w5 = new Gtk.Label();
-            w5.LabelProp = "";
             w2.Add(w5);
             w1.Add(w2);
             this.zoominbutton.Add(w1);
@@ -81,7 +80,6 @@ namespace LongoMatch.Gui.Component {
             w11.Add(w12);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w14 = new Gtk.Label();
-            w14.LabelProp = "";
             w11.Add(w14);
             w10.Add(w11);
             this.zoomoutbutton.Add(w10);
@@ -106,7 +104,6 @@ namespace LongoMatch.Gui.Component {
             w20.Add(w21);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w23 = new Gtk.Label();
-            w23.LabelProp = "";
             w20.Add(w23);
             w19.Add(w20);
             this.fitbutton.Add(w19);

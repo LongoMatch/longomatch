@@ -96,8 +96,7 @@ namespace LongoMatch.Gui.Component {
 			int realWidth;
 			uint pos;
 			int scrollbarWidth;
-			if (this.Visible){
-				
+			if (this.Visible){				
 				scrollbarWidth= this.GtkScrolledWindow.VScrollbar.Allocation.Width;
 				visibleWidth = this.GtkScrolledWindow.Allocation.Width-scrollbarWidth;
 				realWidth = this.vbox1.Allocation.Width;				
@@ -126,10 +125,7 @@ namespace LongoMatch.Gui.Component {
 				}	
 				tr.Size((int)(this.frames/pixelRatio),50);				
 			}
-			Console.WriteLine(pixelRatio);
-					
-			
-			
+
 			
 		}
 		
@@ -156,7 +152,7 @@ namespace LongoMatch.Gui.Component {
 				this.vbox1.PackStart(tr,false,false,0);
 				tr.Show();
 				for (int i=0; i<20; i++){
-					TimeScale ts = new TimeScale(i,tnArray[i],frames,sections.GetColor(i));
+					TimeScale ts = new TimeScale(i,tnArray[i],sections.GetName(i),frames,sections.GetColor(i));
 					ts.PixelRatio = 3;
 					tsArray[i]=ts;
 					ts.TimeNodeChanged += new TimeNodeChangedHandler(OnTimeNodeChanged);
@@ -193,7 +189,7 @@ namespace LongoMatch.Gui.Component {
 
 		protected virtual void OnZoominbuttonClicked (object sender, System.EventArgs e)
 		{
-			if (this.pixelRatio > 2){
+			if (this.pixelRatio > 1){
 				this.pixelRatio--;
 				this.pixelRatio--;
 				this.SetPixelRatio(this.pixelRatio);				
@@ -217,7 +213,9 @@ namespace LongoMatch.Gui.Component {
 
 		protected virtual void OnFitbuttonClicked (object sender, System.EventArgs e)
 		{
-			this.AdjustPostion(currentFrame);
+			this.zoominbutton.Click();
+			this.zoomoutbutton.Click();
+
 		}
 		
 		

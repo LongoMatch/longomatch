@@ -23,7 +23,6 @@ using Gdk;
 using Mono.Unix;
 using System.Runtime.InteropServices;
 using LongoMatch.Video.Handlers;
-using LongoMatch.Handlers;
 using LongoMatch.Video.Player;
 using LongoMatch.Video.Utils;
 using LongoMatch.Video;
@@ -51,9 +50,13 @@ namespace LongoMatch.Gui
 		private bool hasNext;
 		private bool seeking=false;
 		private bool IsPlayingPrevState = false;
+		private float rate=1;
+		private int previousVLevel = 1;
+		private bool muted=false;
 		//the player.mrl is diferent from the filenameas it's an uri eg:file:///foo.avi
 		private string filename = null;
 		protected VolumeWindow vwin;
+		
 		
 
 
@@ -74,9 +77,12 @@ namespace LongoMatch.Gui
 		}
 		
 		private void PlayerInit(){
+			PlayerMaker pMaker;
+			Widget _videoscreen;
 			
-			PlayerMaker pMaker = new PlayerMaker();
+			pMaker = new PlayerMaker();
 			player = pMaker.getPlayer(320,280);
+			
 			//IF error do something	
 			tickHandler = new TickHandler(OnTick);
 			player.Tick += tickHandler;
@@ -84,7 +90,8 @@ namespace LongoMatch.Gui
 			player.Eos += new EventHandler (OnEndOfStream);
 			player.SegmentDoneEvent += new SegmentDoneHandler (OnSegmentDone);
 			player.Error += new ErrorHandler (OnError);
-			Widget _videoscreen = player.Window;
+			
+			_videoscreen = player.Window;			
 			videobox.Add(_videoscreen);
 			_videoscreen.Show();
 		
@@ -92,16 +99,35 @@ namespace LongoMatch.Gui
 		
 		public void Open (string mrl){
 			this.filename = mrl;
-				this.ResetGui();
-				player.Open(mrl);
+			this.ResetGui();
+			this.CloseActualSegment();			
+				try{
+					player.Open(mrl);
+				}
+				catch (GLib.GException error) {
+				//We handle this error async
+				
+				}
 		}
 		
 		public void Play(){
+			
 			player.Play();
+			
+			float val = this.getRate();			
+						
+				if (this.segmentStartTime == 0 && this.segmentStopTime==0)
+					player.SetRate(val);
+				else
+					player.SetRateInSegment(val,segmentStopTime);		
 		}
 		
 		public void Pause(){
-			this.player.Pause();
+			player.Pause();
+		}
+		
+		public IPlayer Player{
+			get{return this.player;}
 		}
 		
 		public long AccurateCurrentTime{
@@ -113,10 +139,8 @@ namespace LongoMatch.Gui
 		}
 		
 		public long StreamLength{
-			get{
-				
-				 return player.StreamLength;
-				
+			get{				
+				 return player.StreamLength;				
 			}
 		}
 		
@@ -180,14 +204,13 @@ namespace LongoMatch.Gui
 			if (fileName != this.filename){
 				this.Open(fileName);				
 				player.NewFileSeek(start,stop);		
-				player.Play();
+				Play();
 			}
-			else player.SegmentSeek(start,stop);
-						
+			else player.SegmentSeek(start,stop);			
 			this.segmentStartTime = start;
 			this.segmentStopTime = stop;
 			player.LogoMode = false;
-			
+			this.OnVscale1ValueChanged(this.vscale1,new EventArgs());
 
 			
 		}
@@ -209,6 +232,17 @@ namespace LongoMatch.Gui
 		
 		public void SeekInSegment(long pos){
 			player.SeekInSegment(pos);
+		}
+		
+		public void SeekToNextFrame(bool in_segment){
+		
+			player.SeekToNextFrame(in_segment);
+		}
+		
+		public void SeekToPreviousFrame(bool in_segment){
+
+			player.SeekToPreviousFrame(in_segment);
+
 		}
 		
 		public void UpdateSegmentStartTime (long start){
@@ -256,6 +290,19 @@ namespace LongoMatch.Gui
 			this.controlsbox.Sensitive = false;
 			this.vscale1.Sensitive = false;
 				
+		}
+		
+		private float getRate(){
+			VScale scale= this.vscale1;
+			double val = scale.Value;
+			
+			if (val >25 ){
+				val = val-25 ;					
+			}
+			else if (val <=25){			
+				val = val/25;
+			}
+			return (float)val;
 		}
 		
 		protected virtual void OnStateChanged(object o, LongoMatch.Video.Handlers.StateChangedArgs args){
@@ -317,15 +364,13 @@ namespace LongoMatch.Gui
 				seeking=false;
 				player.Tick += this.tickHandler;
 				if (IsPlayingPrevState)
-					player.Play();
+					Play();
 			}
 		}
 
 		protected virtual void OnPlaybuttonClicked(object sender, System.EventArgs e)
 		{
-			player.TogglePlay();
-			
-			
+			  Play();		
 		}
 
 		protected virtual void OnStopbuttonClicked(object sender, System.EventArgs e)
@@ -347,12 +392,16 @@ namespace LongoMatch.Gui
 		
 		protected virtual void OnVolumeChanged(int level){
 			player.Volume = level;
-			
+			if (level == 0)
+				muted = true;
+			else
+				muted = false;
 		}
 
 		protected virtual void OnPausebuttonClicked (object sender, System.EventArgs e)
 		{
-			player.TogglePlay();
+			
+			player.Pause();
 		}
 		
 		protected virtual void OnEndOfStream (object o, EventArgs args){
@@ -369,6 +418,7 @@ namespace LongoMatch.Gui
 		}
 		
 		protected virtual void OnError (object o, ErrorArgs args){
+			Console.WriteLine(args.Message);
 			if(this.Error != null)
 				this.Error(o,args);
 		}
@@ -412,26 +462,34 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnVscale1ValueChanged (object sender, System.EventArgs e)
 		{
-			VScale scale= (VScale)sender;
-			double val = scale.Value;
-			if (val >25 ){
-				val = val-25 ;	
-				if (this.segmentStartTime == 0 && this.segmentStopTime==0)
-					player.SetRate((float)val);
-				else
-					player.SetRateInSegment((float) val,segmentStopTime);
-				
-			}
-			else if (val <=25){			
-				if (this.segmentStartTime == 0 && this.segmentStopTime==0)
-					player.SetRate((float)(val/25));
-				else
-					player.SetRateInSegment((float)(val/25),segmentStopTime);
-			}
+			float val = this.getRate();
 			
-				
+			// Kill volume for rate != 1
+			if (val != 1 && player.Volume != 0){ 
+				previousVLevel = player.Volume;
+				player.Volume=0;
+			}
+			else if  (val != 1 && muted)
+			          previousVLevel = 0;			
+			else if (val ==1)
+				player.Volume = previousVLevel;
+			
+			
+			if (this.segmentStartTime == 0 && this.segmentStopTime==0)
+				player.SetRate(val);
+			else
+				player.SetRateInSegment(val,segmentStopTime);	
 			
 		}
+
+		protected virtual void OnVideoboxButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
+		{
+			if (!player.Playing)
+				Play();
+			else 
+				Pause();		
+		}
+
 
 		
 	}

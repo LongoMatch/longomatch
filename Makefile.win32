@@ -1,53 +1,53 @@
 
 MINGW_PATH = C:/MinGW/bin
-GTK = C:\Archivos de programa\Mono-1.9.1
-GST = C:/Archivos de programa/Archivos comunes/GStreamer/0.10
-DLLWRAP = ${MINGW_PATH}/dllwrap.exe -mno-cygwin -mms-bitfields  --target i386-mingw32 --export-all-symbols
+GTK = C:\Archivos de programa\Mono-2.0
+GST = C:\gstreamerRelease
 CC   = ${MINGW_PATH}/mingw32-gcc.exe
-OUTDIR = ./../LongoMatch/bin/Debug
-OBJ  =  src/gstscreenshot.o  src/gstvideowidget.o src/bacon-video-widget-gst-0.10.o src/baconvideowidget-marshal.o
-LINKOBJ  = src/gstscreenshot.o  src/gstvideowidget.o  src/bacon-video-widget-gst-0.10.o src/baconvideowidget-marshal.o
-LIBS =  -L"${GTK}/bin" -L"${GST}/bin" -lgstreamer-0.10 -llibgstreamer-0.10 -llibgstvideo-0.10  -llibgstaudio-0.10 -llibgstinterfaces-0.10 -limm32 -lshell32 -lole32 -luuid -lintl -llibcairo-2 -lpangowin32-1.0-0 -latk-1.0-0 -lgdk_pixbuf-2.0-0 -lgdk-win32-2.0-0 -lglib-2.0-0 -lgmodule-2.0-0 -lgobject-2.0-0 -lgthread-2.0-0 -lgtk-win32-2.0-0  
-INCS =   -I"${GST}\include" -I"${GTK}\include" -I"${GTK}\include\gtk-2.0" -I"${GTK}\lib\gtk-2.0\include" -I"${GTK}\include\atk-1.0" -I"${GTK}\include\pango-1.0" -I"${GTK}\include\cairo" -I"${GTK}\include\glib-2.0" -I"${GTK}\include\glib-2.0\glib" -I"${GTK}\lib\glib-2.0" -I"${GTK}\lib\glib-2.0\include" -I"${GTK}\include\libxml2" 
-BIN  = libcesarplayer.dll
-CFLAGS = $(INCS) -DWIN32 -mms-bitfields  -shared -Wall 
-LDFLAGS =  -shared -Wl 
+BASH = /bin/bash.exe
+BUNDLE = makebundle.sh
+OUTDIR = LongoMatch/Win32/bin
+OBJ  =   libcesarplayer/src/gstscreenshot.o  libcesarplayer/src/gstvideowidget.o libcesarplayer/src/bacon-video-widget-gst-0.10.o libcesarplayer/src/baconvideowidget-marshal.o libcesarplayer/src/main.o libcesarplayer/src/gst-video-capturer.o
+LINKOBJ  =  libcesarplayer/src/gstvideowidget.o  libcesarplayer/src/bacon-video-widget-gst-0.10.o libcesarplayer/src/baconvideowidget-marshal.o  libcesarplayer/src/gstscreenshot.o libcesarplayer/src/gst-video-capturer.o
+LIBS =  -L"${GTK}/bin" -L"${GST}/bin"  -llibgstreamer-0.10 -llibgstvideo-0.10  -llibgstaudio-0.10 -llibgstinterfaces-0.10 -limm32 -lshell32 -lole32 -luuid -lintl -llibcairo-2 -lpangowin32-1.0-0 -latk-1.0-0 -lgdk_pixbuf-2.0-0 -lgdk-win32-2.0-0 -lglib-2.0-0 -lgmodule-2.0-0 -lgobject-2.0-0 -lgthread-2.0-0 -lgtk-win32-2.0-0  
+INCS =   -I"${GST}\include\gstreamer-0.10" -I"${GTK}\include" -I"${GTK}\include\gtk-2.0" -I"${GTK}\lib\gtk-2.0\include" -I"${GTK}\include\atk-1.0" -I"${GTK}\include\pango-1.0" -I"${GTK}\include\cairo" -I"${GTK}\include\glib-2.0" -I"${GTK}\include\glib-2.0\glib" -I"${GTK}\lib\glib-2.0" -I"${GTK}\lib\glib-2.0\include" -I"${GTK}\include\libxml2" 
+BIN  = libcesarplayer/libcesarplayer.dll
+CFLAGS = $(INCS) -DWIN32 -mms-bitfields -shared   -Wall 
+LDFLAGS =  -shared -Wl -mno-cygwin -mms-bitfields  --export-all-symbols --enable-auto-import
 RM = rm -f
 
 .PHONY: all all-before all-after clean clean-custom
 
-all: all-before ${BIN} all-after
+all: all-before ${BIN} bundle  all-after
 
-install : $(BIN)
+install: $(BIN) 
 	cp $(BIN) "$(OUTDIR)"
+	cp obj/LongoMatch.exe "$(OUTDIR)"
 
 clean: clean-custom
-	${RM} $(OBJ) $(BIN)
+	${RM} $(OBJ) $(BIN) obj/*
+
+bundle:$(BUNDLE)
+	${BASH} $(BUNDLE)     
+
+$(BIN): $(LINKOBJ)	
+	$(CC) $(LDFLAGS) -o $(BIN) $(LINKOBJ) $(LIBS)
+
+libcesarplayer/src/main.o:libcesarplayer/src/main.c
+	$(CC) -c libcesarplayer/src/main.c -o  libcesarplayer/src/main.o $(CFLAGS)
+
+libcesarplayer/src/gstscreenshot.o:libcesarplayer/src/gstscreenshot.c
+	$(CC) -c libcesarplayer/src/gstscreenshot.c -o  libcesarplayer/src/gstscreenshot.o $(CFLAGS)
+
+libcesarplayer/src/gst-video-capturer.o:libcesarplayer/src/gst-video-capturer.c
+	$(CC) -c libcesarplayer/src/gst-video-capturer.c -o libcesarplayer/src/gst-video-capturer.o $(CFLAGS)
+
+libcesarplayer/src/gstvideowidget.o:libcesarplayer/src/gstvideowidget.c
+	$(CC) -c libcesarplayer/src/gstvideowidget.c -o libcesarplayer/src/gstvideowidget.o $(CFLAGS)
 
 
-DEFFILE=libLongoMatch.Video.def
-STATICLIB=libLongoMatch.Video.a
+libcesarplayer/src/bacon-video-widget-gst-0.10.o:libcesarplayer/src/bacon-video-widget-gst-0.10.c
+	$(CC) -c libcesarplayer/src/bacon-video-widget-gst-0.10.c -o libcesarplayer/src/bacon-video-widget-gst-0.10.o $(CFLAGS)
 
-$(BIN): $(LINKOBJ)
-	
-	$(DLLWRAP) --output-def=$(DEFFILE) --output-lib=$(STATICLIB) --implib $(STATICLIB) --driver-name=gcc $(LINKOBJ) $(LIBS) --dllname=$(BIN)
-	#$(CC) $(LDFLAGS),-soname,$(BIN) -o $(BIN) $(LINKOBJ) $(LIBS)
-
-
-
-src/gstscreenshot.o:src/gstscreenshot.c
-	$(CC) -c src/gstscreenshot.c -o  src/gstscreenshot.o $(CFLAGS)
-
-src/gst-video-capturer.o:src/gst-video-capturer.c
-	$(CC) -c src/gst-video-capturer.c -o src/gst-video-capturer.o $(CFLAGS)
-
-src/gstvideowidget.o:src/gstvideowidget.c
-	$(CC) -c src/gstvideowidget.c -o src/gstvideowidget.o $(CFLAGS)
-
-
-src/bacon-video-widget-gst-0.10.o:src/bacon-video-widget-gst-0.10.c
-	$(CC) -c src/bacon-video-widget-gst-0.10.c -o src/bacon-video-widget-gst-0.10.o $(CFLAGS)
-
-src/baconvideowidget-marshal.o:src/baconvideowidget-marshal.c
-	$(CC) -c src/baconvideowidget-marshal.c -o src/baconvideowidget-marshal.o $(CFLAGS)
+libcesarplayer/src/baconvideowidget-marshal.o:libcesarplayer/src/baconvideowidget-marshal.c
+	$(CC) -c libcesarplayer/src/baconvideowidget-marshal.c -o libcesarplayer/src/baconvideowidget-marshal.o $(CFLAGS)
 

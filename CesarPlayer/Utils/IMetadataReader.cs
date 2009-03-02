@@ -1,4 +1,4 @@
-// IPlayList.cs
+// IMetadataReader.cs
 //
 //  Copyright (C) 2008 Andoni Morales Alastruey
 //
@@ -19,29 +19,15 @@
 //
 
 using System;
-using System.Collections;
-using Gtk;
-using LongoMatch.TimeNodes;
 
-namespace LongoMatch.Video{
+
+namespace LongoMatch.Video.Utils
+{
 	
 	
-	public interface IPlayList:IEnumerable
+	public interface IMetadataReader
 	{
-		int Count {get;}
-		void Load (string path);
-		void Save (string path);
-		PlayListTimeNode Next();
-		PlayListTimeNode Prev();
-		int GetCurrentIndex();
-		void Add(PlayListTimeNode plNode);
-		void Remove (PlayListTimeNode plNode);
-		PlayListTimeNode Select(int index);	
-		bool HasNext();
-		bool HasPrev();
-		ListStore GetModel();
-		
-	
-		
+		bool Open(string mrl);
+		object GetMetadata(GstPlayerMetadataType type);
 	}
 }

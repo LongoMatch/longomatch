@@ -54,7 +54,7 @@ namespace LongoMatch.IO
 			Time[] startTimes = new Time [20];
 			for (int i=0;i<20;i++){
 				
-				startTimes[i] = new Time(GetIntValue("configuration","Stop"+(i+1))*Time.SECONDS_TO_TIME);
+				startTimes[i] = new Time(GetIntValue("configuration","Start"+(i+1))*Time.SECONDS_TO_TIME);
 			
 		
 			}

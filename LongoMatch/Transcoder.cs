@@ -1,6 +1,6 @@
-// IMetadataReader.cs
+// Transcoder.cs
 //
-//  Copyright (C) 2008 Andoni Morales Alastruey
+//  Copyright (C) 2008 [name of author]
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,13 +20,16 @@
 
 using System;
 
-namespace LongoMatch.Video.Player
+namespace LongoMatch.Gui.Dialog
 {
 	
 	
-	public interface IMetadataReader
+	public partial class Transcoder : Gtk.Dialog
 	{
-		bool Open(string mrl);
-		object GetMetadata(GstPlayerMetadataType type);
+		
+		public Transcoder()
+		{
+			this.Build();
+		}
 	}
 }

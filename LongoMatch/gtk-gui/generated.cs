@@ -18,10 +18,6 @@ namespace Stetic {
         internal static void Initialize(Gtk.Widget iconRenderer) {
             if ((Stetic.Gui.initialized == false)) {
                 Stetic.Gui.initialized = true;
-                Gtk.IconFactory w1 = new Gtk.IconFactory();
-                Gtk.IconSet w2 = new Gtk.IconSet(new Gdk.Pixbuf(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "./images/lgmlogo.png")));
-                w1.Add("logo", w2);
-                w1.AddDefault();
             }
         }
     }

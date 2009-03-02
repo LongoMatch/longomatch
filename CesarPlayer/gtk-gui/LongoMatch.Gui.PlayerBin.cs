@@ -17,7 +17,7 @@ namespace LongoMatch.Gui {
         
         private Gtk.VBox vbox2;
         
-        private Gtk.HBox videobox;
+        private Gtk.EventBox videobox;
         
         private Gtk.HBox controlsbox;
         
@@ -59,9 +59,9 @@ namespace LongoMatch.Gui {
             this.vbox2.Name = "vbox2";
             this.vbox2.Spacing = 6;
             // Container child vbox2.Gtk.Box+BoxChild
-            this.videobox = new Gtk.HBox();
+            this.videobox = new Gtk.EventBox();
+            this.videobox.CanFocus = true;
             this.videobox.Name = "videobox";
-            this.videobox.Spacing = 6;
             this.vbox2.Add(this.videobox);
             Gtk.Box.BoxChild w1 = ((Gtk.Box.BoxChild)(this.vbox2[this.videobox]));
             w1.Position = 0;
@@ -89,7 +89,6 @@ namespace LongoMatch.Gui {
             w3.Add(w4);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w6 = new Gtk.Label();
-            w6.LabelProp = "";
             w3.Add(w6);
             w2.Add(w3);
             this.closebutton.Add(w2);
@@ -115,7 +114,6 @@ namespace LongoMatch.Gui {
             w12.Add(w13);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w15 = new Gtk.Label();
-            w15.LabelProp = "";
             w12.Add(w15);
             w11.Add(w12);
             this.playbutton.Add(w11);
@@ -141,7 +139,6 @@ namespace LongoMatch.Gui {
             w21.Add(w22);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w24 = new Gtk.Label();
-            w24.LabelProp = "";
             w21.Add(w24);
             w20.Add(w21);
             this.pausebutton.Add(w20);
@@ -167,7 +164,6 @@ namespace LongoMatch.Gui {
             w30.Add(w31);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w33 = new Gtk.Label();
-            w33.LabelProp = "";
             w30.Add(w33);
             w29.Add(w30);
             this.prevbutton.Add(w29);
@@ -194,7 +190,6 @@ namespace LongoMatch.Gui {
             w39.Add(w40);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w42 = new Gtk.Label();
-            w42.LabelProp = "";
             w39.Add(w42);
             w38.Add(w39);
             this.nextbutton.Add(w38);
@@ -235,7 +230,6 @@ namespace LongoMatch.Gui {
             // Container child controlsbox.Gtk.Box+BoxChild
             this.timelabel = new Gtk.Label();
             this.timelabel.Name = "timelabel";
-            this.timelabel.LabelProp = "";
             this.controlsbox.Add(this.timelabel);
             Gtk.Box.BoxChild w50 = ((Gtk.Box.BoxChild)(this.controlsbox[this.timelabel]));
             w50.Position = 3;
@@ -257,7 +251,6 @@ namespace LongoMatch.Gui {
             w52.Add(w53);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w55 = new Gtk.Label();
-            w55.LabelProp = "";
             w52.Add(w55);
             w51.Add(w52);
             this.volumebutton.Add(w51);
@@ -311,6 +304,7 @@ namespace LongoMatch.Gui {
             this.nextbutton.Hide();
             this.controlsbox.Hide();
             this.Show();
+            this.videobox.ButtonPressEvent += new Gtk.ButtonPressEventHandler(this.OnVideoboxButtonPressEvent);
             this.closebutton.Clicked += new System.EventHandler(this.OnClosebuttonClicked);
             this.playbutton.Clicked += new System.EventHandler(this.OnPlaybuttonClicked);
             this.pausebutton.Clicked += new System.EventHandler(this.OnPausebuttonClicked);

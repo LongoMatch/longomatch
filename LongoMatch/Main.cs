@@ -22,6 +22,7 @@
 using System;
 using Gtk;
 using Mono.Unix;
+using LongoMatch.Gui;
 using LongoMatch.DB;
 using LongoMatch.IO;
 using System.Runtime.InteropServices;
@@ -37,21 +38,24 @@ namespace LongoMatch
 		private static string homeDirectory;
 		
 		public static void Main (string[] args)
-		{		
+		{	
 			
 			
 			
 			//Configuramos el directorio base de la ejecucuión y el directorio HOME
-			baseDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
+			baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../../");
 			homeDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.Personal);
 			homeDirectory = System.IO.Path.Combine(homeDirectory,"LongoMatch");
-
-		
-
 			
+			if (Environment.OSVersion.Platform == PlatformID.Win32NT){
+				baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../");
+				Environment.SetEnvironmentVariable("GST_PLUGIN_PATH",RelativeToPrefix("lib\\gstreamer-0.10"));
+				setGtkTheme();
+			}
+					
 			//Iniciamos la internalización
-			//Catalog.Init("longomatch",RelativeToSystemPath("../../share/locale"));
-			Catalog.Init("longomatch",baseDirectory);
+			Catalog.Init("longomatch",RelativeToPrefix("share/locale"));
+			//Catalog.Init("longomatch",LocaleDir());
 			
 			//Comprobamos los archivos de inicio
 			MainClass.CheckDirs();
@@ -60,9 +64,6 @@ namespace LongoMatch
 			//Iniciamos la base de datos
 			db = new DataBase();
 			
-			//Initializa Gstreamer
-			
-			InitGstreamer();			
 			
 			//Iniciamos la aplicación
 			Application.Init ();
@@ -72,8 +73,13 @@ namespace LongoMatch
 			
 		}
 		
-		public static string RelativeToSystemPath(string relativePath){
+		public static string RelativeToPrefix(string relativePath){
 			return System.IO.Path.Combine (baseDirectory, relativePath);
+		}
+		
+		public static string LocaleDir(){
+				return RelativeToPrefix("share/images");
+	
 		}
 		
 		public static string PlayListDir(){
@@ -100,18 +106,15 @@ namespace LongoMatch
 			return System.IO.Path.Combine (VideosDir(), "temp");
 		}
 		
-		public static string ImagesDir(){
-			return System.IO.Path.Combine (baseDirectory, "images");
+		public static string ImagesDir(){			
+			return RelativeToPrefix("share/images");		
 		}
 		
 		public static string DBDir(){
 			return System.IO.Path.Combine (homeDirectory, "db");
 		}
 
-		private  static string GstPluginsDir(){
-			return System.IO.Path.Combine (baseDirectory, "gst-plugins");
-		}
-
+		
 		
 		
 		
@@ -120,7 +123,7 @@ namespace LongoMatch
 			if (!System.IO.Directory.Exists(homeDirectory))
 			    System.IO.Directory.CreateDirectory(homeDirectory);
 			if (!System.IO.Directory.Exists(TemplatesDir()))
-			    System.IO.Directory.CreateDirectory(SnapshotsDir());
+			    System.IO.Directory.CreateDirectory(TemplatesDir());
 			if (!System.IO.Directory.Exists(SnapshotsDir()))
 			    System.IO.Directory.CreateDirectory(SnapshotsDir());
 			if (!System.IO.Directory.Exists(ThumbnailsDir()))
@@ -146,31 +149,15 @@ namespace LongoMatch
 			get { return db;}
 		}
 		
-		
-		
-		private static void InitGstreamer(){
-		/*	if (System.Environment.OSVersion.Platform == PlatformID.Win32NT)
-				SetGstPluginsPath();*/
+		private static void setGtkTheme(){
+			if (!System.IO.File.Exists(System.IO.Path.Combine(homeDirectory,"../../.gtkrc-2.0"))){
+			    System.IO.File.Copy(RelativeToPrefix("etc/gtk-2.0/gtkrc-2.0"),System.IO.Path.Combine(homeDirectory,"../../.gtkrc-2.0"),true);
+			   
+			}
 		}
 		
-		/*[DllImport("libgstreamer-0.10.dll")]
-		static extern IntPtr  gst_registry_get_default ();
-		[DllImport("libgstreamer-0.10.dll")]
-		static extern void gst_registry_add_path  (IntPtr registry,string path);
-		[DllImport("libgstreamer-0.10.dll")]
-		static extern void gst_init(out int argc, IntPtr argv);
-		[DllImport("libgstreamer-0.10.dll")]
-		static extern bool gst_update_registry ();
-
 		
-		private static void SetGstPluginsPath(){
-			int argc;
-			gst_init(out argc, GLib.Marshaller.StringToPtrGStrdup(String.Empty));			
-			IntPtr ptr = gst_registry_get_default();		
-			gst_registry_add_path(ptr,GstPluginsDir());
-			gst_update_registry();
-			
-		}*/
+		
 
 	}
 }

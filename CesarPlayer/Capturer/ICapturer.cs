@@ -64,6 +64,8 @@ namespace LongoMatch.Video.Capturer
 		
 		void Rec();
 		
+		void StartRec();
+		
 		void Stop();
 	}
 }

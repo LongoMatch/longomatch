@@ -44,10 +44,9 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES = cesarplayer.pc
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(pkglibdir)" \
+	"$(DESTDIR)$(commonapplicationdatarootimagesdir)" \
 	"$(DESTDIR)$(linuxdesktopapplicationsdir)" \
-	"$(DESTDIR)$(linuxpkgconfigdir)" \
-	"$(DESTDIR)$(programfilesdir)" \
-	"$(DESTDIR)$(programfilesimagesdir)"
+	"$(DESTDIR)$(programfilesdir)"
 binSCRIPT_INSTALL = $(INSTALL_SCRIPT)
 pkglibSCRIPT_INSTALL = $(INSTALL_SCRIPT)
 SCRIPTS = $(bin_SCRIPTS) $(pkglib_SCRIPTS)
@@ -59,12 +58,11 @@ am__vpath_adj = case $$p in \
     *) f=$$p;; \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
+commonapplicationdatarootimagesDATA_INSTALL = $(INSTALL_DATA)
 linuxdesktopapplicationsDATA_INSTALL = $(INSTALL_DATA)
-linuxpkgconfigDATA_INSTALL = $(INSTALL_DATA)
 programfilesDATA_INSTALL = $(INSTALL_DATA)
-programfilesimagesDATA_INSTALL = $(INSTALL_DATA)
-DATA = $(linuxdesktopapplications_DATA) $(linuxpkgconfig_DATA) \
-	$(programfiles_DATA) $(programfilesimages_DATA)
+DATA = $(commonapplicationdatarootimages_DATA) \
+	$(linuxdesktopapplications_DATA) $(programfiles_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -80,22 +78,19 @@ CESARPLAYER_LIBS = @CESARPLAYER_LIBS@
 CFLAGS = @CFLAGS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
-CXX = @CXX@
-CXXCPP = @CXXCPP@
-CXXDEPMODE = @CXXDEPMODE@
-CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
+DB4O_CFLAGS = @DB4O_CFLAGS@
+DB4O_LIBS = @DB4O_LIBS@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
 DSYMUTIL = @DSYMUTIL@
-ECHO = @ECHO@
+DUMPBIN = @DUMPBIN@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGREP = @EGREP@
 EXEEXT = @EXEEXT@
-F77 = @F77@
-FFLAGS = @FFLAGS@
+FGREP = @FGREP@
 GLIB_SHARP_20_CFLAGS = @GLIB_SHARP_20_CFLAGS@
 GLIB_SHARP_20_LIBS = @GLIB_SHARP_20_LIBS@
 GMCS = @GMCS@
@@ -107,16 +102,21 @@ INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+LD = @LD@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
+LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
 MKDIR_P = @MKDIR_P@
+NM = @NM@
 NMEDIT = @NMEDIT@
 OBJEXT = @OBJEXT@
+OTOOL = @OTOOL@
+OTOOL64 = @OTOOL64@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
@@ -136,8 +136,7 @@ abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
 abs_top_srcdir = @abs_top_srcdir@
 ac_ct_CC = @ac_ct_CC@
-ac_ct_CXX = @ac_ct_CXX@
-ac_ct_F77 = @ac_ct_F77@
+ac_ct_DUMPBIN = @ac_ct_DUMPBIN@
 am__include = @am__include@
 am__leading_dot = @am__leading_dot@
 am__quote = @am__quote@
@@ -171,6 +170,7 @@ libdir = @libdir@
 libexecdir = @libexecdir@
 localedir = @localedir@
 localstatedir = @localstatedir@
+lt_ECHO = @lt_ECHO@
 mandir = @mandir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
@@ -193,60 +193,53 @@ EXTRA_DIST = $(build_sources) $(build_resx_files) \
 @ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
 @ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
 @ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4 -optimize+ -debug -define:DEBUG
-@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4 -optimize+
-@ENABLE_DEBUG_TRUE@ASSEMBLY = bin/Debug/CesarPlayer.exe
+@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4 -optimize+ -debug -define:DEBUG
+@ENABLE_DEBUG_TRUE@ASSEMBLY = a.dll
 @ENABLE_RELEASE_TRUE@ASSEMBLY = bin/Release/CesarPlayer.dll
 @ENABLE_DEBUG_TRUE@ASSEMBLY_MDB = $(ASSEMBLY).mdb
-@ENABLE_RELEASE_TRUE@ASSEMBLY_MDB = 
-@ENABLE_DEBUG_TRUE@COMPILE_TARGET = module
+@ENABLE_RELEASE_TRUE@ASSEMBLY_MDB = $(ASSEMBLY).mdb
+@ENABLE_DEBUG_TRUE@COMPILE_TARGET = library
 @ENABLE_RELEASE_TRUE@COMPILE_TARGET = library
 @ENABLE_DEBUG_TRUE@PROJECT_REFERENCES = 
 @ENABLE_RELEASE_TRUE@PROJECT_REFERENCES = 
-@ENABLE_DEBUG_TRUE@BUILD_DIR = bin/Debug
+@ENABLE_DEBUG_TRUE@BUILD_DIR = .
 @ENABLE_RELEASE_TRUE@BUILD_DIR = bin/Release
-@ENABLE_DEBUG_TRUE@DIRECTSHOWLIB_2005_DLL_SOURCE = DirectShowLib-2005.dll
-@ENABLE_RELEASE_TRUE@DIRECTSHOWLIB_2005_DLL_SOURCE = DirectShowLib-2005.dll
-@ENABLE_DEBUG_TRUE@ASSEMBLY_KEY_FILE_SOURCE = cesarplayer.key
-@ENABLE_RELEASE_TRUE@ASSEMBLY_KEY_FILE_SOURCE = cesarplayer.key
 AL = al2
 SATELLITE_ASSEMBLY_NAME = longomatch.resources.dll
-PROGRAMFILES = \
-	$(DIRECTSHOWLIB_2005_DLL) 
-
-LINUX_PKGCONFIG = \
-	$(CESARPLAYER_PC)  
-
 FILES = \
 	AssemblyInfo.cs \
-	PlayerMaker.cs \
-	Utils/TimeString.cs \
-	Gui/VolumeWindow.cs \
-	Gui/PlayerBin.cs \
-	Gui/CapturerBin.cs \
-	Player/GstPlayer.cs \
-	Player/GstPlayerAspectRatio.cs \
-	Player/GstPlayerMetadataType.cs \
-	Player/GstUseType.cs \
-	Player/IMetadataReader.cs \
-	Player/IPlayer.cs \
-	Player/ObjectManager.cs \
-	Handlers/BufferingHandler.cs \
+	gtk-gui/generated.cs \
 	Handlers/ErrorHandler.cs \
 	Handlers/GotRedirectHandler.cs \
 	Handlers/Handlers.cs \
-	Handlers/StateChangedHandler.cs \
 	Handlers/TickHandler.cs \
 	Handlers/TitleChangeHandler.cs \
+	Handlers/BufferingHandler.cs \
+	Player/GstPlayer.cs \
+	Player/IPlayer.cs \
+	Player/GstPlayerAspectRatio.cs \
+	Player/GstUseType.cs \
+	Handlers/StateChangedHandler.cs \
+	Utils/TimeString.cs \
+	gtk-gui/LongoMatch.Gui.PlayerBin.cs \
+	gtk-gui/LongoMatch.Gui.VolumeWindow.cs \
+	Gui/VolumeWindow.cs \
 	Capturer/ErrorHandler.cs \
 	Capturer/GstVideoCapturer.cs \
 	Capturer/GvcAudioEncoderType.cs \
 	Capturer/GvcUseType.cs \
+	Capturer/GvcVideoEncoderType.cs \
 	Capturer/ICapturer.cs \
-	Capturer/ObjectManager.cs \
-	gtk-gui/generated.cs \
-	gtk-gui/LongoMatch.Gui.VolumeWindow.cs \
+	Gui/CapturerBin.cs \
 	gtk-gui/LongoMatch.Gui.CapturerBin.cs \
-	gtk-gui/LongoMatch.Gui.PlayerBin.cs 
+	PlayerMaker.cs \
+	Player/ObjectManager.cs \
+	Capturer/ObjectManager.cs \
+	Utils/IFramesCapturer.cs \
+	Utils/FramesCapturer.cs \
+	Utils/IMetadataReader.cs \
+	Utils/GstPlayerMetadataType.cs \
+	Gui/PlayerBin.cs 
 
 DATA_FILES = 
 RESOURCES = \
@@ -254,23 +247,18 @@ RESOURCES = \
 	gtk-gui/gui.stetic 
 
 EXTRAS = \
-	DirectShowLib-2005.dll \
-	cesarplayer.key \
-	cesarplayer.pc.in 
+	cesarplayer.key 
 
 REFERENCES = \
-	$(GTK_SHARP_20_LIBS) \
 	System \
 	Mono.Posix \
 	System.Drawing \
-	$(GLIB_SHARP_20_LIBS) 
+	$(GTK_SHARP_20_LIBS) \
+	$(GLIB_SHARP_20_LIBS)
 
-DLL_REFERENCES = \
-	DirectShowLib-2005.dll
-
-CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG) $(ASSEMBLY) \
-	$(ASSEMBLY).mdb $(BINARIES) $(build_resx_resources) \
-	$(build_satellite_assembly_list)
+DLL_REFERENCES = 
+CLEANFILES = $(ASSEMBLY) $(ASSEMBLY).mdb $(BINARIES) \
+	$(build_resx_resources) $(build_satellite_assembly_list)
 VALID_CULTURES = ar bg ca zh-CHS cs da de el en es fi fr he hu is it ja ko nl no pl pt ro ru hr sk sq sv th tr id uk be sl et lv lt fa vi hy eu mk af fo hi sw gu ta te kn mr gl kok ar-SA bg-BG ca-ES zh-TW cs-CZ da-DK de-DE el-GR en-US fi-FI fr-FR he-IL hu-HU is-IS it-IT ja-JP ko-KR nl-NL nb-NO pl-PL pt-BR ro-RO ru-RU hr-HR sk-SK sq-AL sv-SE th-TH tr-TR id-ID uk-UA be-BY sl-SI et-EE lv-LV lt-LT fa-IR vi-VN hy-AM eu-ES mk-MK af-ZA fo-FO hi-IN sw-KE gu-IN ta-IN te-IN kn-IN mr-IN gl-ES kok-IN ar-IQ zh-CN de-CH en-GB es-MX fr-BE it-CH nl-BE nn-NO pt-PT sv-FI ar-EG zh-HK de-AT en-AU es-ES fr-CA ar-LY zh-SG de-LU en-CA es-GT fr-CH ar-DZ zh-MO en-NZ es-CR fr-LU ar-MA en-IE es-PA ar-TN en-ZA es-DO ar-OM es-VE ar-YE es-CO ar-SY es-PE ar-JO es-AR ar-LB en-ZW es-EC ar-KW en-PH es-CL ar-AE es-UY ar-BH es-PY ar-QA es-BO es-SV es-HN es-NI es-PR zh-CHT
 build_sources = $(FILES) $(GENERATED_FILES)
 build_sources_embed = $(build_sources:%='$(srcdir)/%')
@@ -307,10 +295,8 @@ linuxdesktopapplicationsdir = @datadir@/applications
 linuxdesktopapplications_DATA = $(LINUX_DESKTOPAPPLICATIONS)
 programfilesdir = @libdir@/@PACKAGE@
 programfiles_DATA = $(PROGRAMFILES)
-linuxpkgconfigdir = @libdir@/pkgconfig
-linuxpkgconfig_DATA = $(LINUX_PKGCONFIG)
-programfilesimagesdir = @libdir@/@PACKAGE@/images
-programfilesimages_DATA = $(PROGRAMFILES_IMAGES)
+commonapplicationdatarootimagesdir = @datadir@/images
+commonapplicationdatarootimages_DATA = $(COMMONAPPLICATIONDATAROOT_IMAGES)
 
 # generating satellite assemblies
 culture_resources = $(foreach res, $(RESOURCES), $(if $(call is_cultured_resource,$(call get_resource_name, $(res))),$(res)))
@@ -319,7 +305,6 @@ culture_resource_dependencies = $(BUILD_DIR)/$1/$(SATELLITE_ASSEMBLY_NAME): $(su
 culture_resource_commandlines = cmd_line_satellite_$1 += '/embed:$(subst .resx,.resources,$2)'
 build_satellite_assembly_list = $(cultures:%=$(BUILD_DIR)/%/$(SATELLITE_ASSEMBLY_NAME))
 build_culture_res_files = $(foreach res, $(culture_resources),$(call get_resource_name,$(res)))
-DIRECTSHOWLIB_2005_DLL = $(BUILD_DIR)/DirectShowLib-2005.dll
 all: all-am
 
 .SUFFIXES:
@@ -398,6 +383,23 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
+install-commonapplicationdatarootimagesDATA: $(commonapplicationdatarootimages_DATA)
+	@$(NORMAL_INSTALL)
+	test -z "$(commonapplicationdatarootimagesdir)" || $(MKDIR_P) "$(DESTDIR)$(commonapplicationdatarootimagesdir)"
+	@list='$(commonapplicationdatarootimages_DATA)'; for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  f=$(am__strip_dir) \
+	  echo " $(commonapplicationdatarootimagesDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(commonapplicationdatarootimagesdir)/$$f'"; \
+	  $(commonapplicationdatarootimagesDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(commonapplicationdatarootimagesdir)/$$f"; \
+	done
+
+uninstall-commonapplicationdatarootimagesDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(commonapplicationdatarootimages_DATA)'; for p in $$list; do \
+	  f=$(am__strip_dir) \
+	  echo " rm -f '$(DESTDIR)$(commonapplicationdatarootimagesdir)/$$f'"; \
+	  rm -f "$(DESTDIR)$(commonapplicationdatarootimagesdir)/$$f"; \
+	done
 install-linuxdesktopapplicationsDATA: $(linuxdesktopapplications_DATA)
 	@$(NORMAL_INSTALL)
 	test -z "$(linuxdesktopapplicationsdir)" || $(MKDIR_P) "$(DESTDIR)$(linuxdesktopapplicationsdir)"
@@ -415,23 +417,6 @@ uninstall-linuxdesktopapplicationsDATA:
 	  echo " rm -f '$(DESTDIR)$(linuxdesktopapplicationsdir)/$$f'"; \
 	  rm -f "$(DESTDIR)$(linuxdesktopapplicationsdir)/$$f"; \
 	done
-install-linuxpkgconfigDATA: $(linuxpkgconfig_DATA)
-	@$(NORMAL_INSTALL)
-	test -z "$(linuxpkgconfigdir)" || $(MKDIR_P) "$(DESTDIR)$(linuxpkgconfigdir)"
-	@list='$(linuxpkgconfig_DATA)'; for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  f=$(am__strip_dir) \
-	  echo " $(linuxpkgconfigDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(linuxpkgconfigdir)/$$f'"; \
-	  $(linuxpkgconfigDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(linuxpkgconfigdir)/$$f"; \
-	done
-
-uninstall-linuxpkgconfigDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(linuxpkgconfig_DATA)'; for p in $$list; do \
-	  f=$(am__strip_dir) \
-	  echo " rm -f '$(DESTDIR)$(linuxpkgconfigdir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(linuxpkgconfigdir)/$$f"; \
-	done
 install-programfilesDATA: $(programfiles_DATA)
 	@$(NORMAL_INSTALL)
 	test -z "$(programfilesdir)" || $(MKDIR_P) "$(DESTDIR)$(programfilesdir)"
@@ -448,23 +433,6 @@ uninstall-programfilesDATA:
 	  f=$(am__strip_dir) \
 	  echo " rm -f '$(DESTDIR)$(programfilesdir)/$$f'"; \
 	  rm -f "$(DESTDIR)$(programfilesdir)/$$f"; \
-	done
-install-programfilesimagesDATA: $(programfilesimages_DATA)
-	@$(NORMAL_INSTALL)
-	test -z "$(programfilesimagesdir)" || $(MKDIR_P) "$(DESTDIR)$(programfilesimagesdir)"
-	@list='$(programfilesimages_DATA)'; for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  f=$(am__strip_dir) \
-	  echo " $(programfilesimagesDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(programfilesimagesdir)/$$f'"; \
-	  $(programfilesimagesDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(programfilesimagesdir)/$$f"; \
-	done
-
-uninstall-programfilesimagesDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(programfilesimages_DATA)'; for p in $$list; do \
-	  f=$(am__strip_dir) \
-	  echo " rm -f '$(DESTDIR)$(programfilesimagesdir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(programfilesimagesdir)/$$f"; \
 	done
 tags: TAGS
 TAGS:
@@ -503,7 +471,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(SCRIPTS) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(pkglibdir)" "$(DESTDIR)$(linuxdesktopapplicationsdir)" "$(DESTDIR)$(linuxpkgconfigdir)" "$(DESTDIR)$(programfilesdir)" "$(DESTDIR)$(programfilesimagesdir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(pkglibdir)" "$(DESTDIR)$(commonapplicationdatarootimagesdir)" "$(DESTDIR)$(linuxdesktopapplicationsdir)" "$(DESTDIR)$(programfilesdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -550,9 +518,8 @@ info: info-am
 
 info-am:
 
-install-data-am: install-linuxdesktopapplicationsDATA \
-	install-linuxpkgconfigDATA install-programfilesDATA \
-	install-programfilesimagesDATA
+install-data-am: install-commonapplicationdatarootimagesDATA \
+	install-linuxdesktopapplicationsDATA install-programfilesDATA
 
 install-dvi: install-dvi-am
 
@@ -587,32 +554,32 @@ ps: ps-am
 ps-am:
 
 uninstall-am: uninstall-binSCRIPTS \
-	uninstall-linuxdesktopapplicationsDATA \
-	uninstall-linuxpkgconfigDATA uninstall-pkglibSCRIPTS \
-	uninstall-programfilesDATA uninstall-programfilesimagesDATA
+	uninstall-commonapplicationdatarootimagesDATA \
+	uninstall-linuxdesktopapplicationsDATA uninstall-pkglibSCRIPTS \
+	uninstall-programfilesDATA
 
 .MAKE: install-am install-strip
 
 .PHONY: all all-am check check-am clean clean-generic clean-libtool \
 	distclean distclean-generic distclean-libtool distdir dvi \
 	dvi-am html html-am info info-am install install-am \
-	install-binSCRIPTS install-data install-data-am install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am \
-	install-linuxdesktopapplicationsDATA \
-	install-linuxpkgconfigDATA install-man install-pdf \
+	install-binSCRIPTS install-commonapplicationdatarootimagesDATA \
+	install-data install-data-am install-dvi install-dvi-am \
+	install-exec install-exec-am install-html install-html-am \
+	install-info install-info-am \
+	install-linuxdesktopapplicationsDATA install-man install-pdf \
 	install-pdf-am install-pkglibSCRIPTS install-programfilesDATA \
-	install-programfilesimagesDATA install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	uninstall uninstall-am uninstall-binSCRIPTS \
-	uninstall-linuxdesktopapplicationsDATA \
-	uninstall-linuxpkgconfigDATA uninstall-pkglibSCRIPTS \
-	uninstall-programfilesDATA uninstall-programfilesimagesDATA
+	install-ps install-ps-am install-strip installcheck \
+	installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-generic \
+	mostlyclean-libtool pdf pdf-am ps ps-am uninstall uninstall-am \
+	uninstall-binSCRIPTS \
+	uninstall-commonapplicationdatarootimagesDATA \
+	uninstall-linuxdesktopapplicationsDATA uninstall-pkglibSCRIPTS \
+	uninstall-programfilesDATA
 
 
-all: $(ASSEMBLY) $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
+all: $(ASSEMBLY) 
 
 # macros
 
@@ -640,9 +607,6 @@ $(eval $(foreach res, $(culture_resources), $(eval $(call culture_resource_comma
 $(build_satellite_assembly_list): $(BUILD_DIR)/%/$(SATELLITE_ASSEMBLY_NAME):
 	mkdir -p '$(@D)'
 	$(AL) -out:'$@' -culture:$* -t:lib $(cmd_line_satellite_$*)
-
-$(eval $(call emit-deploy-target,DIRECTSHOWLIB_2005_DLL))
-$(eval $(call emit-deploy-wrapper,CESARPLAYER_PC,cesarplayer.pc))
 
 $(build_xamlg_list): %.xaml.g.cs: %.xaml
 	xamlg '$<'

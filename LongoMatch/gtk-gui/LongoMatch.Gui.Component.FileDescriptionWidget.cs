@@ -131,7 +131,7 @@ namespace LongoMatch.Gui.Component {
             this.fileEntry.CanFocus = true;
             this.fileEntry.Name = "fileEntry";
             this.fileEntry.IsEditable = false;
-            this.fileEntry.InvisibleChar = '●';
+            this.fileEntry.InvisibleChar =  '●';
             this.hbox4.Add(this.fileEntry);
             Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(this.hbox4[this.fileEntry]));
             w5.Position = 0;
@@ -162,7 +162,7 @@ namespace LongoMatch.Gui.Component {
             this.dateEntry.CanFocus = true;
             this.dateEntry.Name = "dateEntry";
             this.dateEntry.IsEditable = false;
-            this.dateEntry.InvisibleChar = '●';
+            this.dateEntry.InvisibleChar =  '●';
             this.hbox5.Add(this.dateEntry);
             Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(this.hbox5[this.dateEntry]));
             w8.Position = 0;
@@ -278,7 +278,7 @@ namespace LongoMatch.Gui.Component {
             w26.XOptions = ((Gtk.AttachOptions)(4));
             w26.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
-            this.localSpinButton = new Gtk.SpinButton(0, 100, 1);
+            this.localSpinButton = new Gtk.SpinButton(0, 1000, 1);
             this.localSpinButton.CanFocus = true;
             this.localSpinButton.Name = "localSpinButton";
             this.localSpinButton.Adjustment.PageIncrement = 10;
@@ -303,7 +303,7 @@ namespace LongoMatch.Gui.Component {
             w28.LeftAttach = ((uint)(1));
             w28.RightAttach = ((uint)(2));
             // Container child table1.Gtk.Table+TableChild
-            this.visitorSpinButton = new Gtk.SpinButton(0, 100, 1);
+            this.visitorSpinButton = new Gtk.SpinButton(0, 1000, 1);
             this.visitorSpinButton.CanFocus = true;
             this.visitorSpinButton.Name = "visitorSpinButton";
             this.visitorSpinButton.Adjustment.PageIncrement = 10;
@@ -342,6 +342,7 @@ namespace LongoMatch.Gui.Component {
             this.Show();
             this.calendarbutton.Clicked += new System.EventHandler(this.OnCalendarbuttonClicked);
             this.openbutton.Clicked += new System.EventHandler(this.OnOpenbuttonClicked);
+            this.combobox1.Changed += new System.EventHandler(this.OnCombobox1Changed);
             this.editbutton.Clicked += new System.EventHandler(this.OnEditbuttonClicked);
         }
     }

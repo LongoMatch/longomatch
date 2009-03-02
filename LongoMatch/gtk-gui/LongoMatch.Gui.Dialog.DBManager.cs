@@ -44,7 +44,6 @@ namespace LongoMatch.Gui.Dialog {
             this.Title = Mono.Unix.Catalog.GetString("DataBase Manager");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.Modal = true;
-            this.DestroyWithParent = true;
             this.Gravity = ((Gdk.Gravity)(5));
             this.SkipPagerHint = true;
             this.SkipTaskbarHint = true;

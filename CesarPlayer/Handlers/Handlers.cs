@@ -1,6 +1,6 @@
 // Handlers.cs
 //
-//  Copyright (C) 2008 Andoni Maorales Alastruey
+//  Copyright (C) 2008 Andoni Morales Alastruey
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 
 using System;
 
-namespace LongoMatch.Handlers
+namespace LongoMatch.Video.Handlers
 {
 	
 	public delegate void PlayListSegmentDoneHandler ();
@@ -29,6 +29,8 @@ namespace LongoMatch.Handlers
 	public delegate void VolumeChangedHandler (int level);
 	public delegate void NextButtonClickedHandler ();
 	public delegate void PrevButtonClickedHandler ();
+	public delegate void ProgressHandler (float progress);
+	public delegate void FramesProgressHandler (int actual, int total);
 
 	
 	

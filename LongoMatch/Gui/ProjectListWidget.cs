@@ -50,38 +50,11 @@ namespace LongoMatch.Gui.Component
 			Gtk.CellRendererText filenameCell = new Gtk.CellRendererText ();
 			filenameColumn.PackStart (filenameCell, true);
 			
-			/*Gtk.TreeViewColumn dateColumn = new Gtk.TreeViewColumn ();
-			dateColumn.Title = Catalog.GetString("Date");
-			Gtk.CellRendererText dateCell = new Gtk.CellRendererText ();
-			dateColumn.PackStart (dateCell, true);
- 
-			Gtk.TreeViewColumn localNameColumn = new Gtk.TreeViewColumn ();
-			localNameColumn.Title = Catalog.GetString("Local Team");
-			Gtk.CellRendererText localNameCell = new Gtk.CellRendererText ();
-			localNameColumn.PackStart (localNameCell, true);
 			
-			Gtk.TreeViewColumn visitorNameColumn = new Gtk.TreeViewColumn ();
-			visitorNameColumn.Title = Catalog.GetString("Visitor Team");
-			Gtk.CellRendererText visitorNameCell = new Gtk.CellRendererText ();
-			visitorNameColumn.PackStart (visitorNameCell, true);
-			
-			Gtk.TreeViewColumn resultColumn = new Gtk.TreeViewColumn ();
-			resultColumn.Title = Catalog.GetString("Result");
-			Gtk.CellRendererText resultCell = new Gtk.CellRendererText ();
-			resultColumn.PackStart (resultCell, true);*/
 			
 			filenameColumn.SetCellDataFunc (filenameCell, new Gtk.TreeCellDataFunc (RenderName));
-			/*dateColumn.SetCellDataFunc (dateCell, new Gtk.TreeCellDataFunc (RenderDate));
-			localNameColumn.SetCellDataFunc (localNameCell, new Gtk.TreeCellDataFunc (RenderLocalName));
-			visitorNameColumn.SetCellDataFunc (visitorNameCell, new Gtk.TreeCellDataFunc (RenderVisitorName));
-			resultColumn.SetCellDataFunc (resultCell, new Gtk.TreeCellDataFunc (RenderResult));*/
 			
 			treeview.AppendColumn (filenameColumn);
-			/*treeview.AppendColumn (dateColumn);
-			treeview.AppendColumn (localNameColumn);
-			treeview.AppendColumn (visitorNameColumn);
-			treeview.AppendColumn (resultColumn);*/
-			
 			treeview.EnableGridLines = TreeViewGridLines.Horizontal;
 			treeview.HeadersVisible = false;
 		
@@ -104,35 +77,7 @@ namespace LongoMatch.Gui.Component
 			
 		}
 		
-		private void RenderDate (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
-		{
-			Project _project = (Project) model.GetValue (iter, 0);
-			(cell as Gtk.CellRendererText).Text = _project.MatchDate.ToString(Catalog.GetString("MM/dd/yyyy"));
-			
-			
-		}
- 
 		
-		private void RenderLocalName (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
-		{
-			Project _project = (Project) model.GetValue (iter, 0);
-			(cell as Gtk.CellRendererText).Text = _project.LocalName;
-				
-			
-		}
-		
-		private void RenderVisitorName (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
-		{
-			Project _project = (Project) model.GetValue (iter, 0);
-			(cell as Gtk.CellRendererText).Text = _project.VisitorName;
-
-		}
-		
-		private void RenderResult (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
-		{
-			Project _project = (Project) model.GetValue (iter, 0);
-			(cell as Gtk.CellRendererText).Text = _project.LocalGoals+"-"+_project.VisitorGoals;;
-		}
 		
 		
 		public void Fill(ArrayList db){	

@@ -60,13 +60,13 @@ namespace LongoMatch.Gui.Dialog
 				if (MainWindow.OpenedProject()!= null && selectedProject.Equals(MainWindow.OpenedProject())) {
 				
 					MessageDialog md = new MessageDialog(this,DialogFlags.Modal,MessageType.Warning,ButtonsType.Ok,
-					                                     Catalog.GetString("This Project is actually in use.\n Close it first to allow its removal from the database"));
+					                                     Catalog.GetString("This Project is actually in use.")+"\n"+Catalog.GetString("Close it first to allow its removal from the database"));
 					md.Run();				
 					md.Destroy();
 				}
 				else {
 					MessageDialog md = new MessageDialog(this,DialogFlags.Modal,MessageType.Question,ButtonsType.YesNo,
-					                                     Catalog.GetString("Do yo really want to delete:\n")+selectedProject.File.FilePath);
+					                                     Catalog.GetString("Do yo really want to delete:")+"\n"+selectedProject.File.FilePath);
 					if (md.Run()== (int)ResponseType.Yes){
 						this.filedescriptionwidget3.Clear();
 						MainClass.DB.RemoveProject(selectedProject);	
@@ -132,7 +132,7 @@ namespace LongoMatch.Gui.Dialog
 				if (MainWindow.OpenedProject()!= null && project.Equals(MainWindow.OpenedProject())) {
 				
 					MessageDialog md = new MessageDialog(this,DialogFlags.Modal,MessageType.Warning,ButtonsType.Ok,
-					                                     Catalog.GetString("This Project is actually in use.\n Close it first to allow its removal from the database"));
+					                                     Catalog.GetString("This Project is actually in use.")+"\n" +Catalog.GetString ("Close it first to allow its removal from the database"));
 					md.Run();				
 					md.Destroy();
 				}

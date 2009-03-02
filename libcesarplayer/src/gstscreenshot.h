@@ -17,8 +17,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __gvc_FRAME_CONV_H__
-#define __gvc_FRAME_CONV_H__
+#ifndef __GST_FRAME_CONV_H__
+#define __GST_FRAME_CONV_H__
 
 #if BUILDING_DLL
 # define DLLIMPORT __declspec (dllexport)
@@ -30,7 +30,7 @@
 
 G_BEGIN_DECLS
 
-GstBuffer *     gvc_frame_conv_convert  (GstBuffer *buf,
+GstBuffer *     gst_frame_conv_convert  (GstBuffer *buf,
                                          GstCaps   *to);
 
 G_END_DECLS

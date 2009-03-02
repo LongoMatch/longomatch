@@ -1,4 +1,4 @@
-// FileDescriptionWidget.cs
+﻿// FileDescriptionWidget.cs
 //
 //  Copyright (C) 2007 Andoni Morales Alastruey
 //
@@ -27,6 +27,7 @@ using LongoMatch.IO;
 using LongoMatch.Gui.Popup;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.TimeNodes;
+using LongoMatch.Video.Utils;
 
 
 namespace LongoMatch.Gui.Component
@@ -56,12 +57,11 @@ namespace LongoMatch.Gui.Component
 			int index = 0;
 				
 			this.Build();
-			cp = new CalendarPopup();			
-			cp.Hide();
 			
-			cp.DateSelectedEvent += new DateSelectedHandler(OnDateSelected);
-			date = System.DateTime.Today;
-			dateEntry.Text = date.ToString(Catalog.GetString("MM/dd/yyyy"));
+			cp = new CalendarPopup();			
+			cp.Hide();			
+			cp.DateSelectedEvent += new DateSelectedHandler(OnDateSelected);	
+			
 			allFiles = System.IO.Directory.GetFiles(MainClass.TemplatesDir(),"*.sct");
 			foreach (string filePath in allFiles){
 				string fileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
@@ -72,9 +72,20 @@ namespace LongoMatch.Gui.Component
 				i++;
 			}
 			combobox1.Active = index;
+			
 			SectionsReader reader = new SectionsReader(System.IO.Path.Combine(MainClass.TemplatesDir(),this.SectionsFile));			
 			this.Sections= reader.GetSections();
+			
 			this.Use=UseType.NewFromFileProject;
+			
+			Date = System.DateTime.Today;
+			
+			if (Environment.OSVersion.Platform == PlatformID.Win32NT){
+				this.calendarbutton.Sensitive = false;
+				this.calendarbutton.Visible = false;	
+			}
+				
+			
 			
 			
 		}
@@ -124,7 +135,10 @@ namespace LongoMatch.Gui.Component
 		
 		public DateTime Date{
 			get {return date;}
-			set { this.dateEntry.Text = value.ToString(Catalog.GetString("MM/dd/yyyy"));}
+			set {
+				date = value;
+				this.dateEntry.Text = value.ToString(Catalog.GetString("MM/dd/yyyy"));
+			}
 		}
 		
 		public Sections Sections{
@@ -215,7 +229,6 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnOpenbuttonClicked(object sender, System.EventArgs e)
 		{
 			FileChooserDialog fChooser = null;
-			Console.WriteLine(useType.ToString());
 			if (this.useType == UseType.NewCaptureProject){
 				fChooser = new FileChooserDialog(Catalog.GetString("Save File as..."),
 			                                                   (Gtk.Window)this.Toplevel,
@@ -242,21 +255,21 @@ namespace LongoMatch.Gui.Component
 				if (fChooser.Run() == (int)ResponseType.Accept){
 					
 					LongoMatch.Video.PlayerMaker pm = new LongoMatch.Video.PlayerMaker();
-					LongoMatch.Video.Player.IMetadataReader reader = pm.getMetadataReader();
+					IMetadataReader reader = pm.getMetadataReader();
 					try{
 						reader.Open(fChooser.Filename);
-						int duration = (int)reader.GetMetadata(LongoMatch.Video.Player.GstPlayerMetadataType.Duration);
-						int fps = (int) reader.GetMetadata(LongoMatch.Video.Player.GstPlayerMetadataType.Fps);
-						bool hasVideo = (bool) reader.GetMetadata(LongoMatch.Video.Player.GstPlayerMetadataType.HasVideo);
-						bool hasAudio = (bool) reader.GetMetadata(LongoMatch.Video.Player.GstPlayerMetadataType.HasAudio);
+						int duration = (int)reader.GetMetadata(GstPlayerMetadataType.Duration);
+						int fps = (int) reader.GetMetadata(GstPlayerMetadataType.Fps);
+						bool hasVideo = (bool) reader.GetMetadata(GstPlayerMetadataType.HasVideo);
+						bool hasAudio = (bool) reader.GetMetadata(GstPlayerMetadataType.HasAudio);
 						
 						this.mFile = new MediaFile(fChooser.Filename,new Time(duration*1000),(ushort)fps,hasAudio,hasVideo);				
 						fileEntry.Text = fChooser.Filename;
 						
 					}
 					catch (GLib.GException ex){
-						MessageDialog errorDialog = new MessageDialog((Gtk.Window)this.Toplevel,DialogFlags.Modal,MessageType.Error,ButtonsType.Ok,
-						                                              Catalog.GetString("Invalid video file:\n")+ex.Message);
+			    		MessageDialog errorDialog = new MessageDialog((Gtk.Window)this.Toplevel,DialogFlags.Modal,MessageType.Error,ButtonsType.Ok,
+						                                              Catalog.GetString("Invalid video file:")+"\n"+ex.Message);
 						errorDialog.Run();
 						errorDialog.Destroy();
 					}
@@ -277,7 +290,7 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnCalendarbuttonClicked (object sender, System.EventArgs e)
 		{
-			cp.TransientFor=(Gtk.Window)this.Toplevel;
+			cp.TransientFor=(Gtk.Window)this.Toplevel;		
 			cp.Show();
 			
 		}
@@ -293,6 +306,12 @@ namespace LongoMatch.Gui.Component
 			}
 			
 			ted.Destroy();
+		}
+		
+		protected virtual void OnCombobox1Changed (object sender, System.EventArgs e)
+		{
+			SectionsReader reader = new SectionsReader(System.IO.Path.Combine(MainClass.TemplatesDir(),this.SectionsFile));			
+			this.Sections= reader.GetSections();
 		}
 		
 		

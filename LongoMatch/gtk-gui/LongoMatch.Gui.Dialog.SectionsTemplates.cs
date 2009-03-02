@@ -38,7 +38,6 @@ namespace LongoMatch.Gui.Dialog {
             this.Title = Mono.Unix.Catalog.GetString("Templates Manager");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.Modal = true;
-            this.DestroyWithParent = true;
             this.Gravity = ((Gdk.Gravity)(5));
             this.SkipPagerHint = true;
             this.SkipTaskbarHint = true;
@@ -51,7 +50,7 @@ namespace LongoMatch.Gui.Dialog {
             this.hpaned1 = new Gtk.HPaned();
             this.hpaned1.CanFocus = true;
             this.hpaned1.Name = "hpaned1";
-            this.hpaned1.Position = 158;
+            this.hpaned1.Position = 182;
             // Container child hpaned1.Gtk.Paned+PanedChild
             this.vbox2 = new Gtk.VBox();
             this.vbox2.Name = "vbox2";
@@ -60,7 +59,6 @@ namespace LongoMatch.Gui.Dialog {
             this.treeview = new Gtk.TreeView();
             this.treeview.CanFocus = true;
             this.treeview.Name = "treeview";
-            this.treeview.HeadersClickable = true;
             this.vbox2.Add(this.treeview);
             Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.vbox2[this.treeview]));
             w2.Position = 0;
@@ -86,7 +84,6 @@ namespace LongoMatch.Gui.Dialog {
             w5.Add(w6);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w8 = new Gtk.Label();
-            w8.LabelProp = "";
             w5.Add(w8);
             w4.Add(w5);
             this.newbutton.Add(w4);
@@ -113,7 +110,6 @@ namespace LongoMatch.Gui.Dialog {
             w14.Add(w15);
             // Container child GtkHBox1.Gtk.Container+ContainerChild
             Gtk.Label w17 = new Gtk.Label();
-            w17.LabelProp = "";
             w14.Add(w17);
             w13.Add(w14);
             this.savebutton.Add(w13);
@@ -140,7 +136,6 @@ namespace LongoMatch.Gui.Dialog {
             w23.Add(w24);
             // Container child GtkHBox2.Gtk.Container+ContainerChild
             Gtk.Label w26 = new Gtk.Label();
-            w26.LabelProp = "";
             w23.Add(w26);
             w22.Add(w23);
             this.deletebutton.Add(w22);

@@ -23,6 +23,7 @@ using Gdk;
 using Mono.Unix;
 using LongoMatch.TimeNodes;
 using LongoMatch.Video;
+using LongoMatch.Playlist;
 
 namespace LongoMatch.Gui.Component
 {
@@ -120,13 +121,10 @@ public class PlayListTreeView : Gtk.TreeView
 			if (!tNode.Valid){
 				(cell as Gtk.CellRendererText).Foreground = "red";				
 			}
+			else {
+				(cell as Gtk.CellRendererText).Foreground = "black";
+			}
 		}
- 
-		
-		
-		
-			
-
 
 
 	}

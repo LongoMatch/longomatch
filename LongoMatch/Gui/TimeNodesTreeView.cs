@@ -36,7 +36,8 @@ namespace LongoMatch.Gui.Component
 		public event TimeNodeSelectedHandler TimeNodeSelected;
 		public event TimeNodeDeletedHandler TimeNodeDeleted;
 		public event PlayListNodeAddedHandler PlayListNodeAdded;
-		public event NewMarkEventHandler NewMarkEvent;
+		public event SnapshotSeriesHandler SnapshotSeriesEvent;
+		
 		private TreeIter selectedIter;
 		private Menu menu;
 		private MenuItem local;
@@ -119,15 +120,18 @@ namespace LongoMatch.Gui.Component
 			team.Submenu = teamMenu;
 			MenuItem quit = new MenuItem(Catalog.GetString("Delete"));
 			MenuItem addPLN = new MenuItem(Catalog.GetString("Add to playlist"));
+			MenuItem snapshot = new MenuItem(Catalog.GetString("Take Snapshot Series"));
 			menu.Append(team);			
 			menu.Append(addPLN);
 			menu.Append(quit);
+			menu.Append(snapshot);
 			
 			local.Activated += new EventHandler(OnTeamSelection);
 			visitor.Activated += new EventHandler(OnTeamSelection);
 			noTeam.Activated += new EventHandler(OnTeamSelection);
 			addPLN.Activated += new EventHandler(OnAdded);
 			quit.Activated += new EventHandler(OnDeleted);
+			snapshot.Activated += new EventHandler(OnSnapshot);
 			menu.ShowAll();
 			
 			
@@ -183,6 +187,11 @@ namespace LongoMatch.Gui.Component
 				PlayListNodeAdded((MediaTimeNode)selectedTimeNode);
 		}
 		
+		protected void OnSnapshot(object obj, EventArgs args){
+			if (SnapshotSeriesEvent != null)
+				SnapshotSeriesEvent((MediaTimeNode)selectedTimeNode);
+			
+		}
 		private void RenderMiniature (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			TimeNode tNode = (TimeNode) model.GetValue (iter, 0);
@@ -287,7 +296,6 @@ namespace LongoMatch.Gui.Component
 		{
 			Gtk.TreeIter iter;
 			this.Model.GetIter (out iter, new Gtk.TreePath (args.Path)); 
-			Console.WriteLine(iter);
 			TimeNode tNode = (TimeNode)this.Model.GetValue (iter,0);
 			tNode.Name = args.NewText;
 			if (TimeNodeChanged != null)
@@ -302,8 +310,7 @@ namespace LongoMatch.Gui.Component
 			
 			if (tNode is MediaTimeNode && TimeNodeSelected != null)
 				this.TimeNodeSelected((MediaTimeNode)tNode);
-			else if (tNode is SectionsTimeNode && this.NewMarkEvent != null);
-				// TODO  Send a NewMarkEvent signal when clicking SectionsTimeNode
+			
 
 	
 		}

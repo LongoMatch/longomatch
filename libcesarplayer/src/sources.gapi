@@ -1,0 +1,9 @@
+ <gapi-parser-input>
+  <api filename="./camera.g">
+    <library name="libcesarplayer.dll">
+      <namespace name="LongoMatch">
+        <dir>.</dir>
+      </namespace>
+    </library>
+  </api>
+ </gapi-parser-input>

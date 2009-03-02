@@ -90,8 +90,6 @@ namespace LongoMatch.Gui.Component {
             this.vbox2.Add(this.timeadjustwidget1);
             Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(this.vbox2[this.timeadjustwidget1]));
             w4.Position = 1;
-            w4.Expand = false;
-            w4.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.hbox1 = new Gtk.HBox();
             this.hbox1.Name = "hbox1";

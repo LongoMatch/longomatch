@@ -2,7 +2,7 @@
 <stetic-interface>
   <configuration>
     <images-root-path>..</images-root-path>
-    <target-gtk-version>2.12.0</target-gtk-version>
+    <target-gtk-version>2.12.1</target-gtk-version>
   </configuration>
   <import>
     <widget-library name="../bin/Release/CesarPlayer.dll" internal="true" />
@@ -83,16 +83,17 @@
             <property name="MemberName" />
             <property name="Spacing">6</property>
             <child>
-              <widget class="Gtk.HBox" id="videobox">
+              <widget class="Gtk.EventBox" id="videobox">
                 <property name="MemberName" />
-                <property name="Spacing">6</property>
+                <property name="CanFocus">True</property>
+                <signal name="ButtonPressEvent" handler="OnVideoboxButtonPressEvent" />
                 <child>
                   <placeholder />
                 </child>
               </widget>
               <packing>
                 <property name="Position">0</property>
-                <property name="AutoSize">False</property>
+                <property name="AutoSize">True</property>
               </packing>
             </child>
             <child>
@@ -240,7 +241,6 @@
                 <child>
                   <widget class="Gtk.Label" id="timelabel">
                     <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes" />
                   </widget>
                   <packing>
                     <property name="Position">3</property>

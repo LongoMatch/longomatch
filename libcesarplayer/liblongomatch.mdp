@@ -1,16 +1,16 @@
 <Project name="libcesarplayer" fileversion="2.0" Description="Gstreamer backend libraries for LongoMatch" language="C" ctype="CProject">
   <Configurations active="Release">
-    <Configuration name="Debug" SourceDirectory="." ctype="CProjectConfiguration">
-      <Output directory="bin/Debug" output="testtt" />
+    <Configuration name="Debug" ctype="CProjectConfiguration">
+      <Output directory="." output="libcesarplayer.dll" />
       <Build debugmode="True" target="Bin" />
       <Execution runwithwarnings="True" consolepause="True" />
       <CodeGeneration WarningLevel="Normal" WarningsAsErrors="False" OptimizationLevel="0" ExtraCompilerArguments="" ExtraLinkerArguments="" DefineSymbols="DEBUG MONODEVELOP" ctype="CCompilationParameters" />
     </Configuration>
     <Configuration name="Release" SourceDirectory="." ctype="CProjectConfiguration">
-      <Output directory="../LongoMatch/bin/Release" output="libcesarplayer" />
-      <Build debugmode="False" target="SharedLibrary" />
+      <Output directory="../LongoMatch/bin/Release/" output="libcesarplayer.dll" />
+      <Build debugmode="True" target="Bin" />
       <Execution runwithwarnings="True" consolepause="True" />
-      <CodeGeneration WarningLevel="All" WarningsAsErrors="False" OptimizationLevel="3" ExtraCompilerArguments="" ExtraLinkerArguments="" DefineSymbols="MONODEVELOP" ctype="CCompilationParameters" />
+      <CodeGeneration WarningLevel="Normal" WarningsAsErrors="False" OptimizationLevel="3" ExtraCompilerArguments="" ExtraLinkerArguments="" DefineSymbols="MONODEVELOP" ctype="CCompilationParameters" />
     </Configuration>
   </Configurations>
   <Contents>
@@ -41,13 +41,10 @@
     <ProjectPackage file="glib-2.0" name="glib-2.0" IsProject="False" />
     <ProjectPackage file="gobject-2.0" name="gobject-2.0" IsProject="False" />
     <ProjectPackage file="gstreamer-0.10" name="gstreamer-0.10" IsProject="False" />
-    <ProjectPackage file="gtk+-2.0" name="gtk+-2.0" IsProject="False" />
-    <ProjectPackage file="totem-plparser" name="totem-plparser" IsProject="False" />
-    <ProjectPackage file="gstreamer-pbutils-0.10" name="gstreamer-pbutils-0.10" IsProject="False" />
-    <ProjectPackage file="gstreamer-interfaces-0.10" name="gstreamer-interfaces-0.10" IsProject="False" />
     <ProjectPackage file="gstreamer-audio-0.10" name="gstreamer-audio-0.10" IsProject="False" />
+    <ProjectPackage file="gstreamer-interfaces-0.10" name="gstreamer-interfaces-0.10" IsProject="False" />
     <ProjectPackage file="gstreamer-video-0.10" name="gstreamer-video-0.10" IsProject="False" />
-    <ProjectPackage file="gio-2.0" name="gio-2.0" IsProject="False" />
+    <ProjectPackage file="gtk+-2.0" name="gtk+-2.0" IsProject="False" />
   </Packages>
   <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="Makefile.am" IsAutotoolsProject="True" RelativeConfigureInPath=".">
     <BuildFilesVar />
@@ -58,5 +55,5 @@
     <AsmRefVar />
     <ProjectRefVar />
   </MonoDevelop.Autotools.MakefileInfo>
-  <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="OneChangeLogInProjectRootDirectory" />
+  <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="UseParentPolicy" />
 </Project>

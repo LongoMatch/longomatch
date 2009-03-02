@@ -1,13 +1,15 @@
 dnl Warning: This is an automatically generated file, do not edit!
 dnl Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.54])
-AC_INIT([LongoMatch], [0.5.3])
+AC_INIT([LongoMatch], [0.12])
 AM_INIT_AUTOMAKE([foreign])
 
+AC_CONFIG_MACRO_DIR([m4])
+
+AM_PROG_CC_STDC
 AC_ISC_POSIX
 AC_PROG_CC
 AC_C_CONST
-AM_PROG_CC_STDC
 AC_HEADER_STDC
 
 
@@ -57,7 +59,7 @@ fi
 dnl package checks, common for all configs
 PKG_CHECK_MODULES([GLIB_SHARP_20], [glib-sharp-2.0])
 PKG_CHECK_MODULES([GTK_SHARP_20], [gtk-sharp-2.0])
-
+PKG_CHECK_MODULES([DB4O], [db4o])
 
 PKG_CHECK_MODULES(CESARPLAYER, [gtk+-2.0 >= 2.8 gdk-2.0 gio-2.0 glib-2.0 gstreamer-0.10 gstreamer-audio-0.10 gstreamer-video-0.10 gobject-2.0 gstreamer-interfaces-0.10])
 AC_SUBST(CESARPLAYER_CFLAGS)
@@ -66,20 +68,21 @@ AC_SUBST(CESARPLAYER_LIBS)
 # Checks for library functions.
 AC_CHECK_FUNCS([strchr strstr])
 
+
 dnl package checks, per config
 
 
 AC_CONFIG_FILES([
 LongoMatch/Makefile
 CesarPlayer/Makefile
+Translations/Makefile
 libcesarplayer/Makefile
 libcesarplayer/src/Makefile
-LongoMatch/longomatch
 Makefile
 CesarPlayer/cesarplayer.pc
-Translations/Makefile
+LongoMatch/longomatch
+
 
 ])
-
 
 AC_OUTPUT
