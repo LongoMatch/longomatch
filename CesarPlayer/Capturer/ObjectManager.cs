@@ -33,8 +33,7 @@ namespace LongoMatch.GtkSharp.Capturer {
 
 			initialized = true;
 
-
-			GLib.GType.Register (LongoMatch.Video.Capturer.GstVideoCapturer.GType, typeof (LongoMatch.Video.Capturer.GstVideoCapturer));
+			GLib.GType.Register (LongoMatch.Video.Capturer.GstCameraCapturer.GType, typeof (LongoMatch.Video.Capturer.GstCameraCapturer));
 		}
 	}
 }

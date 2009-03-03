@@ -443,13 +443,20 @@ gst_camera_capturer_new (gchar *filename, GError ** err )
 	/* Setup*/
 	GST_INFO("Initializing camerabin");
 	gcc->priv->camerabin = gst_element_factory_make ("camerabin","camerabin");
+	gst_bin_add(GST_BIN(gcc->priv->main_pipeline),gcc->priv->camerabin);
 
 	GST_INFO("Setting video source ");
-	gcc->priv->videosrc = gst_element_factory_make (VIDEOSRC, "source"); 
+	gcc->priv->videosrc = gst_element_factory_make (VIDEOSRC, "videosource"); 
 	g_object_set (gcc->priv->camerabin,"videosrc",gcc->priv->videosrc,NULL);
+
+	GST_INFO("Setting audio source ");
+	gcc->priv->audiosrc = gst_element_factory_make ("dshowaudiosrc", "audiosource"); 
+	g_object_set (gcc->priv->camerabin,"audiosrc",gcc->priv->audiosrc,NULL);
 
 	GST_INFO("Setting capture mode to \"video\"");
 	g_object_set (gcc->priv->camerabin,"mode",1,NULL);
+
+	g_object_set (gcc->priv->camerabin,"mute",TRUE,NULL);
 
 	/*Connect bus signals*/
 	GST_INFO("Connecting bus signals");	
@@ -459,8 +466,6 @@ gst_camera_capturer_new (gchar *filename, GError ** err )
 		g_signal_connect (gcc->priv->bus, "message", 
 		G_CALLBACK (gcc_bus_message_cb),
 		gcc);     
-	gcc_update_interface_implementations (gcc);
-
 
 	/* we want to catch "prepare-xwindow-id" element messages synchronously */
 	gst_bus_set_sync_handler (gcc->priv->bus, gst_bus_sync_signal_handler, gcc);
@@ -483,20 +488,20 @@ void gst_camera_capturer_run(GstCameraCapturer *gcc)
 void gst_camera_capturer_start (GstCameraCapturer *gcc)
 {
 	g_return_if_fail(GST_IS_CAMERA_CAPTURER(gcc));	
-	g_signal_emit_by_name (G_OBJECT(gcc),"user-start",0,0);
+	g_signal_emit_by_name (G_OBJECT(gcc->priv->camerabin),"user-start",0,0);
 }
 
 
 void gst_camera_capturer_toggle_pause(GstCameraCapturer *gcc)
 {
 	g_return_if_fail(GST_IS_CAMERA_CAPTURER(gcc));
-	g_signal_emit_by_name (G_OBJECT(gcc),"user-pause",0,0);
+	g_signal_emit_by_name (G_OBJECT(gcc->priv->camerabin),"user-pause",0,0);
 }
 
 void gst_camera_capturer_stop(GstCameraCapturer *gcc)
 {
 	g_return_if_fail(GST_IS_CAMERA_CAPTURER(gcc));	
-	g_signal_emit_by_name (G_OBJECT(gcc),"user-stop",0,0);
+	g_signal_emit_by_name (G_OBJECT(gcc->priv->camerabin),"user-stop",0,0);
 }
 
 
@@ -645,21 +650,12 @@ gcc_update_interface_implementations (GstCameraCapturer *gcc)
 {
 
 	GstXOverlay *old_xoverlay = gcc->priv->xoverlay;
-	GstElement *video_sink = NULL;
 	GstElement *element = NULL;
-
-	g_object_get(gcc->priv->camerabin,"vfsink",&video_sink,NULL);
-	g_assert (video_sink != NULL);
-
-	/* We try to get an element supporting XOverlay interface */
-	if (GST_IS_BIN (video_sink)) {
-		g_print ("Retrieving xoverlay from bin ...");
-		element = gst_bin_get_by_interface (GST_BIN (video_sink),
-			GST_TYPE_X_OVERLAY);
-	} else {
-		element = video_sink;
-	}
-
+	
+	GST_INFO("Retrieving xoverlay from bin ...");
+	element = gst_bin_get_by_interface (GST_BIN (gcc->priv->camerabin),
+										GST_TYPE_X_OVERLAY);
+	
 	if (GST_IS_X_OVERLAY (element)) {
 		gcc->priv->xoverlay = GST_X_OVERLAY (element);
 	} else {
@@ -668,7 +664,6 @@ gcc_update_interface_implementations (GstCameraCapturer *gcc)
 	if (old_xoverlay)
 		gst_object_unref (GST_OBJECT (old_xoverlay));
 
-	gst_object_unref (video_sink);
 }
 
 static void

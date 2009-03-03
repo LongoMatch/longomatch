@@ -26,13 +26,7 @@ namespace LongoMatch.Video.Capturer
 	
 	public interface ICapturer
 	{
-		uint SourceHeight{
-			get;
-		}
 		
-		uint SourceWidth{
-			get;
-		}
 		
 		uint EncodeWidth {
 			get ;
@@ -60,12 +54,12 @@ namespace LongoMatch.Video.Capturer
 			set ;
 		}
 		
-		void Pause();
+		void TogglePause();
 		
-		void Rec();
-		
-		void StartRec();
+		void Start();
 		
 		void Stop();
+		
+		void Run();
 	}
 }

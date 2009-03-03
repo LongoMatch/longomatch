@@ -40,11 +40,11 @@ namespace LongoMatch
 				Environment.SetEnvironmentVariable("GST_PLUGIN_PATH",System.IO.Path.Combine(baseDirectory,"..\\lib\\gstreamer-0.10"));
 			Application.Init ();
 			Gtk.Window win = new Window(Gtk.WindowType.Toplevel);
-			LongoMatch.Video.Capturer.GstVideoCapturer.InitBackend("");
+			LongoMatch.Video.Capturer.GstCameraCapturer.InitBackend("");
 			LongoMatch.Gui.CapturerBin cap = new CapturerBin();
-			//LongoMatch.Video.Capturer.GstVideoCapturer cap = new LongoMatch.Video.Capturer.GstVideoCapturer(LongoMatch.Video.Capturer.GvcUseType.DeviceCapture);
+			cap.OutputFile="testtt.avi";		
+			cap.Run();
 			win.Add((Gtk.Widget)cap);
-			cap.OutputFile="test.avi";
 			cap.Show();
 			win.ShowAll ();		
 			Application.Run ();

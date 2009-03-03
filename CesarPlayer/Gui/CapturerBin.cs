@@ -56,31 +56,33 @@ namespace LongoMatch.Gui
 			set{this.capturer.AudioBitrate=value;}
 		}
 		
-		public void Pause(){
-			this.capturer.Pause();
+		public void TogglePause(){
+			this.capturer.TogglePause();
 		}
 		
-		public void StartRec(){
-			this.capturer.StartRec();
+		public void Start(){
+			this.capturer.Start();
 		}
 		
-		public void Rec(){
-			this.capturer.Rec();
+		public void Stop(){
+			this.capturer.Stop();
+		}
+		
+		public void Run(){
+			this.capturer.Run();
 		}
 				
 		
-		void Stop(){
-			this.capturer.Stop();
-		}
+		
 
 		protected virtual void OnRecbuttonClicked (object sender, System.EventArgs e)
 		{
-			this.StartRec();
+			this.Start();
 		}
 
 		protected virtual void OnPausebuttonClicked (object sender, System.EventArgs e)
 		{
-			this.Pause();
+			this.TogglePause();
 		}
 
 		protected virtual void OnStopbuttonClicked (object sender, System.EventArgs e)

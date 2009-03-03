@@ -92,13 +92,13 @@ namespace LongoMatch.Video
 			switch (oS.Platform) { 
 				
 			 case PlatformID.Unix:
-				return new GstVideoCapturer(GvcUseType.DeviceCapture);
+				return new GstCameraCapturer("test.avi");
 				
 			case PlatformID.Win32NT:
-				return new GstVideoCapturer(GvcUseType.DeviceCapture);	
+				return new GstCameraCapturer("test.avi");	
 				
 			 default:
-				return new GstVideoCapturer(GvcUseType.DeviceCapture);
+				return new GstCameraCapturer("test.avi");
 			}
 			
 		}

@@ -6,7 +6,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>CesarPlayer</RootNamespace>
     <AssemblyName>CesarPlayer</AssemblyName>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <NoStdLib>False</NoStdLib>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
@@ -40,8 +40,20 @@
     <Compile Include="Capturer\ErrorHandler.cs">
       <Link>ErrorHandler.cs</Link>
     </Compile>
-    <Compile Include="Capturer\GstVideoCapturer.cs">
-      <Link>GstVideoCapturer.cs</Link>
+    <Compile Include="Capturer\GccAudioEncoderType.cs">
+      <Link>GccAudioEncoderType.cs</Link>
+    </Compile>
+    <Compile Include="Capturer\GccError.cs">
+      <Link>GccError.cs</Link>
+    </Compile>
+    <Compile Include="Capturer\GccVideoEncoderType.cs">
+      <Link>GccVideoEncoderType.cs</Link>
+    </Compile>
+    <Compile Include="Capturer\GccVideoMuxerType.cs">
+      <Link>GccVideoMuxerType.cs</Link>
+    </Compile>
+    <Compile Include="Capturer\GstCameraCapturer.cs">
+      <Link>GstCameraCapturer.cs</Link>
     </Compile>
     <Compile Include="Capturer\GvcAudioEncoderType.cs">
       <Link>GvcAudioEncoderType.cs</Link>
