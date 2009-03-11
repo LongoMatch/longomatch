@@ -140,6 +140,7 @@ namespace LongoMatch.Gui {
             this.AddAccelGroup(w1.AccelGroup);
             this.Name = "LongoMatch.Gui.MainWindow";
             this.Title = Mono.Unix.Catalog.GetString("LongoMatch");
+            this.Icon = Gdk.Pixbuf.LoadFromResource("lgmlogo.png");
             this.WindowPosition = ((Gtk.WindowPosition)(3));
             this.Gravity = ((Gdk.Gravity)(5));
             // Container child LongoMatch.Gui.MainWindow.Gtk.Container+ContainerChild
@@ -168,7 +169,7 @@ namespace LongoMatch.Gui {
             this.hpaned = new Gtk.HPaned();
             this.hpaned.CanFocus = true;
             this.hpaned.Name = "hpaned";
-            this.hpaned.Position = 166;
+            this.hpaned.Position = 182;
             // Container child hpaned.Gtk.Paned+PanedChild
             this.leftbox = new Gtk.VBox();
             this.leftbox.Name = "leftbox";
@@ -187,7 +188,7 @@ namespace LongoMatch.Gui {
             this.hpaned1 = new Gtk.HPaned();
             this.hpaned1.CanFocus = true;
             this.hpaned1.Name = "hpaned1";
-            this.hpaned1.Position = 867;
+            this.hpaned1.Position = 830;
             // Container child hpaned1.Gtk.Paned+PanedChild
             this.vbox5 = new Gtk.VBox();
             this.vbox5.Name = "vbox5";

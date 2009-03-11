@@ -24,6 +24,7 @@ namespace LongoMatch.Gui.Dialog {
             // Widget LongoMatch.Gui.Dialog.TemplateEditorDialog
             this.Name = "LongoMatch.Gui.Dialog.TemplateEditorDialog";
             this.Title = Mono.Unix.Catalog.GetString("Template Editor");
+            this.Icon = Gdk.Pixbuf.LoadFromResource("lgmlogo.png");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.Modal = true;
             this.Gravity = ((Gdk.Gravity)(5));

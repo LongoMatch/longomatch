@@ -16,26 +16,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Video.Capturer.GstVideoCapturer" palette-category="CesarPlayer" allow-children="false" base-type="Gtk.HBox">
-    <itemgroups>
-      <itemgroup label="GstVideoCapturer Properties">
-        <property name="EncodeWidth" />
-        <property name="EncodeHeight" />
-        <property name="VideoBitrate" />
-        <property name="OutputFile" />
-        <property name="InputFile" />
-        <property name="AudioBitrate" />
-        <property name="SourceWidth" />
-        <property name="SourceHeight" />
-      </itemgroup>
-    </itemgroups>
-    <signals>
-      <itemgroup label="GstVideoCapturer Signals">
-        <signal name="Error" />
-        <signal name="Eos" />
-      </itemgroup>
-    </signals>
-  </object>
   <object type="LongoMatch.Gui.CapturerBin" palette-category="CesarPlayer" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />

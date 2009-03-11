@@ -192,8 +192,8 @@ EXTRA_DIST = $(build_sources) $(build_resx_files) \
 	$(DATA_FILES) $(build_culture_res_files)
 
 # Warning: This is an automatically generated file, do not edit!
-@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
-@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
+@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = $(GMCS)
+@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = $(GMCS)
 @ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4 -optimize+ -debug -define:DEBUG "-main:LongoMatch.MainClass"
 @ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4 -optimize+ -debug -define:DEBUG "-main:LongoMatch.MainClass"
 @ENABLE_DEBUG_TRUE@ASSEMBLY = bin/Debug/LongoMatch.exe

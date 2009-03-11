@@ -12026,8 +12026,8 @@ fi
 
 
 if test "x$MCS" = "xno"; then
-       	# Extract the first word of "gmcs", so it can be a program name with args.
-set dummy gmcs; ac_word=$2
+       	# Extract the first word of "gmcs2", so it can be a program name with args.
+set dummy gmcs2; ac_word=$2
 { echo "$as_me:$LINENO: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6; }
 if test "${ac_cv_path_MCS2+set}" = set; then
@@ -12072,12 +12072,12 @@ fi
 echo "$as_me: error: gmcs Not found" >&2;}
    { (exit 1); exit 1; }; }
 	else
-		GMCS=$MCS2
+		GMCS=gmcs2
 
 	fi
 
 else
-	GMCS=$MCS
+	GMCS=gmcs
 
 fi
 

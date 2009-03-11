@@ -31,15 +31,15 @@ AC_PROG_INSTALL
 
 AC_PATH_PROG(MCS, gmcs, no)
 if test "x$MCS" = "xno"; then
-       	AC_PATH_PROG(MCS2, gmcs,no)
+       	AC_PATH_PROG(MCS2, gmcs2,no)
 	if test "x$MCS2" = "xno"; then
 		AC_MSG_ERROR([gmcs Not found])
 	else 
-		AC_SUBST(GMCS,$MCS2)	
+		AC_SUBST(GMCS,[gmcs2])	
 	fi
 	
 else 
-	AC_SUBST(GMCS,$MCS)
+	AC_SUBST(GMCS,[gmcs])
 fi
 
 
