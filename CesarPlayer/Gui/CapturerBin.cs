@@ -46,7 +46,7 @@ namespace LongoMatch.Gui
 			}
 			
 		}
-
+		
 				
 		public uint VideoBitrate {
 			set{this.capturer.VideoBitrate=value;}
@@ -72,8 +72,17 @@ namespace LongoMatch.Gui
 			this.capturer.Run();
 		}
 				
+		public void SetVideoEncoder(LongoMatch.Video.Capturer.GccVideoEncoderType type){
+			this.capturer.SetVideoEncoder(type);
+		}
 		
+		public void SetAudioEncoder(LongoMatch.Video.Capturer.GccAudioEncoderType type){
+			this.capturer.SetAudioEncoder(type);
+		}
 		
+		public void SetVideoMuxer(LongoMatch.Video.Capturer.GccVideoMuxerType type){
+			this.capturer.SetVideoMuxer(type);
+		}
 
 		protected virtual void OnRecbuttonClicked (object sender, System.EventArgs e)
 		{

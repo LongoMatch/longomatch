@@ -374,7 +374,7 @@ namespace LongoMatch.Gui
 		{
 			Gtk.AboutDialog about = new AboutDialog();
 			if (Environment.OSVersion.Platform == PlatformID.Unix)
-		    //about.ProgramName = "LongoMatch";
+		    about.ProgramName = "LongoMatch";
 			about.Version = "0.12";
 			about.Copyright = "Copyright ©2007-2008 Andoni Morales Alastruey";
 			about.Website= "www.ylatuya.es";

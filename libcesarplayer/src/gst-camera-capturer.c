@@ -417,7 +417,8 @@ gst_camera_capturer_error_quark (void)
 GstCameraCapturer *
 gst_camera_capturer_new (gchar *filename, GError ** err )
 {
-	GstCameraCapturer *gcc = NULL;		
+	GstCameraCapturer *gcc = NULL;
+	GstState state;
 
 	gcc = g_object_new(GST_TYPE_CAMERA_CAPTURER, NULL);	
 
@@ -445,13 +446,26 @@ gst_camera_capturer_new (gchar *filename, GError ** err )
 	gcc->priv->camerabin = gst_element_factory_make ("camerabin","camerabin");
 	gst_bin_add(GST_BIN(gcc->priv->main_pipeline),gcc->priv->camerabin);
 
+	GST_INFO("Setting capture mode to \"video\"");
+	g_object_set (gcc->priv->camerabin,"mode",1,NULL);
+
 	GST_INFO("Setting video source ");
 	gcc->priv->videosrc = gst_element_factory_make (VIDEOSRC, "videosource"); 
 	g_object_set (gcc->priv->camerabin,"videosrc",gcc->priv->videosrc,NULL);
+	g_object_set (gcc->priv->videosrc,"do-timestamp",TRUE,NULL);
 
 	GST_INFO("Setting audio source ");
 	gcc->priv->audiosrc = gst_element_factory_make ("dshowaudiosrc", "audiosource"); 
 	g_object_set (gcc->priv->camerabin,"audiosrc",gcc->priv->audiosrc,NULL);
+
+	/*gcc->priv->videoenc = gst_element_factory_make ("ffenc_mpeg4","videoenc");
+			g_object_set (gcc->priv->camerabin,"videoenc",gcc->priv->videoenc,NULL);
+	gcc->priv->audioenc = gst_element_factory_make ("faac","audioenc");
+			g_object_set (gcc->priv->camerabin,"audioenc",gcc->priv->audioenc,NULL);
+	gcc->priv->videomux = gst_element_factory_make ("avimux","videomux");
+			g_object_set (gcc->priv->camerabin,"videomux",gcc->priv->videomux,NULL);*/
+
+	
 
 	GST_INFO("Setting capture mode to \"video\"");
 	g_object_set (gcc->priv->camerabin,"mode",1,NULL);
@@ -473,6 +487,16 @@ gst_camera_capturer_new (gchar *filename, GError ** err )
 	gcc->priv->sig_bus_sync = 
 		g_signal_connect (gcc->priv->bus, "sync-message::element",
 		G_CALLBACK (gcc_element_msg_sync), gcc);
+	
+
+	/*gst_element_set_state (gcc->priv->camerabin, GST_STATE_NULL);
+	do
+    {
+		gst_element_get_state(gcc->priv->camerabin, &state, NULL, 
+			GST_CLOCK_TIME_NONE);
+		
+     }
+     while(state != GST_STATE_NULL);	*/
 
 	
 

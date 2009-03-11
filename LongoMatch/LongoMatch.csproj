@@ -73,7 +73,6 @@
     <Compile Include="Gui\FramesCaptureProgressDialog.cs" />
     <Compile Include="Gui\MainWindow.cs" />
     <Compile Include="Gui\NewProjectDialog.cs" />
-    <Compile Include="Gui\NewSectionsTemplatesFiles.cs" />
     <Compile Include="Gui\NotesWidget.cs" />
     <Compile Include="Gui\OpenProjectDialog.cs" />
     <Compile Include="Gui\PlayListTreeView.cs" />
@@ -83,6 +82,7 @@
     <Compile Include="Gui\SectionsTemplates.cs" />
     <Compile Include="Gui\SnapshotsDialog.cs" />
     <Compile Include="Gui\TemplateEditorDialog.cs" />
+    <Compile Include="Gui\TemplateNameSelectionDialog.cs" />
     <Compile Include="Gui\TimeAdjustWidget.cs" />
     <Compile Include="Gui\TimeLineWidget.cs" />
     <Compile Include="Gui\TimeNodeProperties.cs" />

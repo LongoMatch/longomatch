@@ -42,7 +42,10 @@ namespace LongoMatch
 			Gtk.Window win = new Window(Gtk.WindowType.Toplevel);
 			LongoMatch.Video.Capturer.GstCameraCapturer.InitBackend("");
 			LongoMatch.Gui.CapturerBin cap = new CapturerBin();
-			cap.OutputFile="testtt.avi";		
+			cap.OutputFile="testtt.avi";
+			cap.SetAudioEncoder(LongoMatch.Video.Capturer.GccAudioEncoderType.Mp3);
+			cap.SetVideoEncoder(LongoMatch.Video.Capturer.GccVideoEncoderType.Mpeg4);
+			cap.SetVideoMuxer(LongoMatch.Video.Capturer.GccVideoMuxerType.Avi);
 			cap.Run();
 			win.Add((Gtk.Widget)cap);
 			cap.Show();

@@ -53,6 +53,9 @@ namespace LongoMatch.Video.Capturer
 			get ;
 			set ;
 		}
+		bool SetVideoEncoder(LongoMatch.Video.Capturer.GccVideoEncoderType type);
+		bool SetAudioEncoder(LongoMatch.Video.Capturer.GccAudioEncoderType type);
+		bool SetVideoMuxer(LongoMatch.Video.Capturer.GccVideoMuxerType type);
 		
 		void TogglePause();
 		

@@ -115,7 +115,7 @@ typedef enum{
 } GccVideoMuxerType;
 
 
-GType gst_camera_capturer_get_type (void) G_GNUC_CONST;
+EXPORT GType gst_camera_capturer_get_type (void) G_GNUC_CONST;
 
 EXPORT void gst_camera_capturer_init_backend (int *argc, char ***argv);
 EXPORT GstCameraCapturer * gst_camera_capturer_new (gchar *filename,GError ** err );
