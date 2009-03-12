@@ -991,7 +991,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.DBManager" design-size="1024 512">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.DBManager" design-size="664 465">
     <property name="MemberName" />
     <property name="Title" translatable="yes">DataBase Manager</property>
     <property name="Icon">resource:lgmlogo.png</property>
@@ -1351,7 +1351,7 @@
         <child>
           <widget class="Gtk.Label" id="label1">
             <property name="MemberName" />
-            <property name="LabelProp" translatable="yes">Start gap:</property>
+            <property name="LabelProp" translatable="yes">Lead time:</property>
           </widget>
           <packing>
             <property name="AutoSize">False</property>
@@ -1367,7 +1367,7 @@
         <child>
           <widget class="Gtk.Label" id="label3">
             <property name="MemberName" />
-            <property name="LabelProp" translatable="yes">Stop gap:</property>
+            <property name="LabelProp" translatable="yes">Lag time:</property>
           </widget>
           <packing>
             <property name="LeftAttach">3</property>
@@ -2010,7 +2010,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="LongoMatch.Gui.MainWindow" design-size="1269 580">
+  <widget class="Gtk.Window" id="LongoMatch.Gui.MainWindow" design-size="764 523">
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -2187,7 +2187,7 @@
           <widget class="Gtk.HPaned" id="hpaned">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="Position">182</property>
+            <property name="Position">108</property>
             <child>
               <widget class="Gtk.VBox" id="leftbox">
                 <property name="MemberName" />
@@ -2213,7 +2213,7 @@
               <widget class="Gtk.HPaned" id="hpaned1">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Position">830</property>
+                <property name="Position">494</property>
                 <child>
                   <widget class="Gtk.VBox" id="vbox5">
                     <property name="MemberName" />
@@ -2491,7 +2491,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.TemplateEditorDialog" design-size="1066 473">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.TemplateEditorDialog" design-size="758 404">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Template Editor</property>
     <property name="Icon">resource:lgmlogo.png</property>

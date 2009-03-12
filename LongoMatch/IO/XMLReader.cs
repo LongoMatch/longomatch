@@ -40,7 +40,7 @@ namespace LongoMatch.IO
 			configXml.Load(filePath);
 		}
 		
-		protected string GetStringValue(string section, string clave) 
+		public string GetStringValue(string section, string clave) 
 		{    
     		XmlNode n;
     		n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");
@@ -49,7 +49,7 @@ namespace LongoMatch.IO
 			
 		}
 		
-		protected int GetIntValue(string section, string clave) 
+		public int GetIntValue(string section, string clave) 
 		{    
     		XmlNode n;
     		n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");
@@ -60,7 +60,7 @@ namespace LongoMatch.IO
 			else return -1;
 			
 		}
-		protected bool GetBoolValue(string section, string clave){
+		public bool GetBoolValue(string section, string clave){
 			XmlNode n;
     		n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");
 
@@ -71,7 +71,7 @@ namespace LongoMatch.IO
     		}
 			else return false;
 		}
-		protected ushort GetUShortValue(string section, string clave){
+		public ushort GetUShortValue(string section, string clave){
 			XmlNode n;
     		n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");
 			if (n != null){

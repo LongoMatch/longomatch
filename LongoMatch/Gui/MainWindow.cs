@@ -30,6 +30,7 @@ using LongoMatch.TimeNodes;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui;
 using LongoMatch.Video.Player;
+using LongoMatch.Updates;
 
 
 namespace LongoMatch.Gui
@@ -49,6 +50,10 @@ namespace LongoMatch.Gui
 				base("LongoMatch")
 		{			
 			this.Build();
+			
+			Updater updater = new Updater();
+			updater.Run();
+			
 			this.eManager = new EventsManager(this.treewidget1,this.buttonswidget1,this.playlistwidget2,
 			                                  this.playerbin1,this.timelinewidget1,this.videoprogressbar,
 			                                  this.noteswidget1);
@@ -375,15 +380,16 @@ namespace LongoMatch.Gui
 			Gtk.AboutDialog about = new AboutDialog();
 			if (Environment.OSVersion.Platform == PlatformID.Unix)
 		    about.ProgramName = "LongoMatch";
-			about.Version = "0.12";
-			about.Copyright = "Copyright ©2007-2008 Andoni Morales Alastruey";
-			about.Website= "www.ylatuya.es";
+			about.Version = "0.14";
+			about.Copyright = "Copyright ©2007-2009 Andoni Morales Alastruey";
+			about.Website = "http://www.ylatuya.es";
 			about.License = "This program is free software; you can redistribute it and/or modify\n it under the terms of the GNU General Public License as published by\nthe Free Software Foundation; either version 2 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU General Public License for more details.\n";
 			about.Authors = new string[]{"Andoni Morales Alastruey"};
 			about.Artists = new string[]{"Bencomo González Marrero"};
 			about.TransientFor = this;
 			about.Run();
-			about.Destroy();			
+			about.Destroy();	
+		 
 		}
 	}
 }

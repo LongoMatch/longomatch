@@ -38,14 +38,14 @@ namespace LongoMatch.Gui.Component {
             // Container child table1.Gtk.Table+TableChild
             this.label1 = new Gtk.Label();
             this.label1.Name = "label1";
-            this.label1.LabelProp = Mono.Unix.Catalog.GetString("Start gap:");
+            this.label1.LabelProp = Mono.Unix.Catalog.GetString("Lead time:");
             this.table1.Add(this.label1);
             Gtk.Table.TableChild w1 = ((Gtk.Table.TableChild)(this.table1[this.label1]));
             w1.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.label3 = new Gtk.Label();
             this.label3.Name = "label3";
-            this.label3.LabelProp = Mono.Unix.Catalog.GetString("Stop gap:");
+            this.label3.LabelProp = Mono.Unix.Catalog.GetString("Lag time:");
             this.table1.Add(this.label3);
             Gtk.Table.TableChild w2 = ((Gtk.Table.TableChild)(this.table1[this.label3]));
             w2.LeftAttach = ((uint)(3));

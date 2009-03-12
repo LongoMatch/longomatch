@@ -169,7 +169,7 @@ namespace LongoMatch.Gui {
             this.hpaned = new Gtk.HPaned();
             this.hpaned.CanFocus = true;
             this.hpaned.Name = "hpaned";
-            this.hpaned.Position = 182;
+            this.hpaned.Position = 108;
             // Container child hpaned.Gtk.Paned+PanedChild
             this.leftbox = new Gtk.VBox();
             this.leftbox.Name = "leftbox";
@@ -188,7 +188,7 @@ namespace LongoMatch.Gui {
             this.hpaned1 = new Gtk.HPaned();
             this.hpaned1.CanFocus = true;
             this.hpaned1.Name = "hpaned1";
-            this.hpaned1.Position = 830;
+            this.hpaned1.Position = 494;
             // Container child hpaned1.Gtk.Paned+PanedChild
             this.vbox5 = new Gtk.VBox();
             this.vbox5.Name = "vbox5";
@@ -276,8 +276,8 @@ namespace LongoMatch.Gui {
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 1269;
-            this.DefaultHeight = 580;
+            this.DefaultWidth = 764;
+            this.DefaultHeight = 523;
             this.leftbox.Hide();
             this.timelinewidget1.Hide();
             this.buttonswidget1.Hide();

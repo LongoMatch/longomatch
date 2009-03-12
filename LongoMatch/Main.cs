@@ -68,7 +68,8 @@ namespace LongoMatch
 			//Iniciamos la aplicación
 			Application.Init ();
 			MainWindow win = new MainWindow ();
-			win.Show ();		
+			win.Show ();
+			
 			Application.Run ();
 			
 		}

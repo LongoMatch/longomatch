@@ -48,4 +48,6 @@ namespace LongoMatch.Handlers
 	
 	public delegate void SnapshotSeriesHandler(MediaTimeNode tNode);
 	
+	public delegate void NewVersionHandler(Version version, string URL);
+	
 }
