@@ -187,35 +187,18 @@ namespace LongoMatch.Gui.Component {
 				this.TimeNodeDeleted(tn);
 		}
 
-		protected virtual void OnZoominbuttonClicked (object sender, System.EventArgs e)
-		{
-			if (this.pixelRatio > 1){
-				this.pixelRatio--;
-				this.pixelRatio--;
-				this.SetPixelRatio(this.pixelRatio);				
-				this.QueueDraw();
-				this.AdjustPostion(currentFrame);
-			}
-			
-		}
-
-		protected virtual void OnZoomoutbuttonClicked (object sender, System.EventArgs e)
-		{
-			if (this.pixelRatio <99){
-				this.pixelRatio++;
-				this.pixelRatio++;
-				this.SetPixelRatio(this.pixelRatio);  				
-				this.QueueDraw();				
-				this.AdjustPostion(currentFrame);
-			}
-			
-		}
+		
 
 		protected virtual void OnFitbuttonClicked (object sender, System.EventArgs e)
 		{
-			this.zoominbutton.Click();
-			this.zoomoutbutton.Click();
+			this.AdjustPostion(currentFrame);
+		}
 
+		protected virtual void OnVscale1ValueChanged (object sender, System.EventArgs e)
+		{
+			this.SetPixelRatio((uint)(vscale1.Value));  				
+			this.QueueDraw();				
+			//this.AdjustPostion(currentFrame);
 		}
 		
 		

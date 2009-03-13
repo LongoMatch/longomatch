@@ -2793,40 +2793,6 @@ new one.</property>
             <property name="MemberName" />
             <property name="Spacing">6</property>
             <child>
-              <widget class="Gtk.Button" id="zoominbutton">
-                <property name="MemberName" />
-                <property name="CanFocus">True</property>
-                <property name="Type">TextAndIcon</property>
-                <property name="Icon">stock:gtk-zoom-in Button</property>
-                <property name="Label" translatable="yes" />
-                <property name="UseUnderline">True</property>
-                <signal name="Clicked" handler="OnZoominbuttonClicked" />
-              </widget>
-              <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.Button" id="zoomoutbutton">
-                <property name="MemberName" />
-                <property name="CanFocus">True</property>
-                <property name="Type">TextAndIcon</property>
-                <property name="Icon">stock:gtk-zoom-out Button</property>
-                <property name="Label" translatable="yes" />
-                <property name="UseUnderline">True</property>
-                <signal name="Clicked" handler="OnZoomoutbuttonClicked" />
-              </widget>
-              <packing>
-                <property name="Position">1</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
-            <child>
               <widget class="Gtk.Button" id="fitbutton">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
@@ -2837,10 +2803,31 @@ new one.</property>
                 <signal name="Clicked" handler="OnFitbuttonClicked" />
               </widget>
               <packing>
-                <property name="Position">2</property>
+                <property name="Position">0</property>
                 <property name="AutoSize">True</property>
                 <property name="Expand">False</property>
                 <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.VScale" id="vscale1">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="Inverted">True</property>
+                <property name="Lower">1</property>
+                <property name="Upper">100</property>
+                <property name="PageIncrement">10</property>
+                <property name="StepIncrement">1</property>
+                <property name="Value">3</property>
+                <property name="DrawValue">True</property>
+                <property name="Digits">0</property>
+                <property name="ValuePos">Bottom</property>
+                <signal name="ValueChanged" handler="OnVscale1ValueChanged" />
+              </widget>
+              <packing>
+                <property name="PackType">End</property>
+                <property name="Position">1</property>
+                <property name="AutoSize">True</property>
               </packing>
             </child>
           </widget>

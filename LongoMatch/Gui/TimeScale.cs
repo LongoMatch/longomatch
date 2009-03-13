@@ -283,10 +283,11 @@ namespace LongoMatch.Gui.Component
 		
 		protected override bool OnMotionNotifyEvent (EventMotion evnt)
 		{
+			uint pos = (uint) (evnt.X*pixelRatio);
 			
-			if (this.movingLimit){
+			
+			if (this.movingLimit){				
 				
-				uint pos = (uint) (evnt.X*pixelRatio);
 				if (this.candidateStart && pos  > 0 && pos < this.candidateTN.StopFrame-10){
 					this.candidateTN.StartFrame = pos;					
 					if (this.TimeNodeChanged != null)
@@ -311,7 +312,9 @@ namespace LongoMatch.Gui.Component
 		protected override bool OnButtonPressEvent (EventButton evnt)
 		{		
 			if (evnt.Button == 1){
-				this.ProcessButton1(evnt);				
+				this.ProcessButton1(evnt);	
+				this.GdkWindow.Cursor = new Gdk.Cursor(CursorType.SbHDoubleArrow);
+				                                       
 			}
 			// On Right button pressed
 			else if (evnt.Button == 3){
@@ -326,6 +329,7 @@ namespace LongoMatch.Gui.Component
 			if (this.movingLimit){
 				this.movingLimit = false;
 				candidateTN.Selected = false;
+								this.GdkWindow.Cursor = new Gdk.Cursor(CursorType.Arrow);
 				this.ReDraw();
 			}
 			return base.OnButtonReleaseEvent (evnt);
