@@ -1,12 +1,12 @@
-longomatch (0.12) hardy; urgency=low
+longomatch (0.12) intrepid; urgency=low
 
   * Added skins support (Win32)
   * Added mp4 support (Win32)
   * Added mpeg2 support (Win32)
-  * Mayor bugs correction
+  * Fixed error setting lead and lag time in the project templates
   * Changed snapshot series capturer behaviour
 
 
- -- Andoni Morales Alastruey <ylatuya@gmail.com>  Tue, 02 Feb 2009 17:41:08 +0200
+ -- Andoni Morales Alastruey <ylatuya@gmail.com>  Sat, 14 Mar 2009 17:41:08 +0200
 
 

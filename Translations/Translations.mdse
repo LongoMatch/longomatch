@@ -1,4 +1,4 @@
-<CombineEntry name="Translations" fileversion="2.0" packageName="longomatch" outputType="RelativeToOutput" relPath="locale" ctype="TranslationProject">
+<CombineEntry name="Translations" fileversion="2.0" packageName="longomatch" outputType="SystemPath" relPath="locale" ctype="TranslationProject">
   <Configurations active="Release">
     <Configuration name="Release" ctype="TranslationProjectConfiguration" />
     <Configuration name="Debug" ctype="TranslationProjectConfiguration" />

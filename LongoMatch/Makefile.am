@@ -4,7 +4,7 @@ EXTRA_DIST =
 # Warning: This is an automatically generated file, do not edit!
 
 if ENABLE_DEBUG
-ASSEMBLY_COMPILER_COMMAND = $(GMCS)
+ASSEMBLY_COMPILER_COMMAND = gmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ -debug -define:DEBUG "-main:LongoMatch.MainClass"
 
 ASSEMBLY = bin/Debug/LongoMatch.exe
@@ -22,12 +22,11 @@ CESARPLAYER_DLL_MDB=
 A_DLL_MDB_SOURCE=../CesarPlayer/a.dll.mdb
 A_DLL_MDB=$(BUILD_DIR)/a.dll.mdb
 BACKGROUND_PNG_SOURCE=images/background.png
-LGMLOGO_PNG_SOURCE=images/lgmlogo.png
 
 endif
 
 if ENABLE_RELEASE
-ASSEMBLY_COMPILER_COMMAND = $(GMCS)
+ASSEMBLY_COMPILER_COMMAND = gmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ -debug -define:DEBUG "-main:LongoMatch.MainClass"
 
 ASSEMBLY = bin/Release/LongoMatch.exe
@@ -45,7 +44,6 @@ CESARPLAYER_DLL_MDB_SOURCE=../CesarPlayer/bin/Release/CesarPlayer.dll.mdb
 CESARPLAYER_DLL_MDB=$(BUILD_DIR)/CesarPlayer.dll.mdb
 A_DLL_MDB=
 BACKGROUND_PNG_SOURCE=images/background.png
-LGMLOGO_PNG_SOURCE=images/lgmlogo.png
 
 endif
 
@@ -53,8 +51,7 @@ AL=al2
 SATELLITE_ASSEMBLY_NAME=.resources.dll
 
 COMMONAPPLICATIONDATAROOT_IMAGES = \
-	$(BACKGROUND_PNG) \
-	$(LGMLOGO_PNG)  
+	$(BACKGROUND_PNG)  
 
 PROGRAMFILES = \
 	$(CESARPLAYER_DLL) \
@@ -81,7 +78,6 @@ FILES = \
 	Gui/DBManager.cs \
 	Gui/ProjectListWidget.cs \
 	Gui/FileDescriptionWidget.cs \
-	Gui/FramesCaptureProgressDialog.cs\
 	Gui/MainWindow.cs \
 	Gui/NewProjectDialog.cs \
 	Gui/OpenProjectDialog.cs \
@@ -89,9 +85,7 @@ FILES = \
 	Gui/PlayListWidget.cs \
 	Gui/SectionsPropertiesWidget.cs \
 	Gui/SectionsTemplates.cs \
-	Gui/SectionsPropertiesWidget.cs\
 	Gui/TemplateEditorDialog.cs \
-	Gui/TemplateNameSelectionDialog.cs\
 	Gui/TimeAdjustWidget.cs \
 	Gui/TimeNodesTreeView.cs \
 	Gui/TreeWidget.cs \
@@ -126,12 +120,10 @@ FILES = \
 	gtk-gui/LongoMatch.Gui.Dialog.DBManager.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.OpenProjectDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.NewProjectDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs \
 	gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.SectionsPropertiesWidget.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.SectionsTemplates.cs \
 	gtk-gui/LongoMatch.Gui.Component.TimeNodeProperties.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.TemplateNameSelectionDialog.cs\
 	gtk-gui/LongoMatch.Gui.Dialog.TemplateEditorDialog.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TimeLineWidget.cs \
@@ -145,17 +137,22 @@ FILES = \
 	gtk-gui/LongoMatch.Gui.Dialog.Transcoder.cs \
 	gtk-gui/LongoMatch.Gui.Component.NotesWidget.cs \
 	gtk-gui/LongoMatch.Gui.MainWindow.cs \
-	Gui/NotesWidget.cs 
+	Gui/NotesWidget.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.TemplateNameSelectionDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs \
+	Gui/FramesCaptureProgressDialog.cs \
+	Gui/TemplateNameSelectionDialog.cs \
+	Updates/Updater.cs \
+	Updates/XmlUpdateParser.cs 
 
 DATA_FILES = \
 	app.desktop \
-	images/lgmlogo.png \
 	images/background.png 
 
 RESOURCES = \
 	gtk-gui/objects.xml \
 	gtk-gui/gui.stetic \
-	$(LGMLOGO_PNG_SOURCE)
+	images/lgmlogo 
 
 EXTRAS = \
 	longomatch.in 
@@ -178,7 +175,6 @@ include $(top_srcdir)/Makefile.include
 LONGOMATCH = $(BUILD_DIR)/longomatch
 LONGOMATCH_DESKTOP = $(BUILD_DIR)/longomatch.desktop
 BACKGROUND_PNG = $(BUILD_DIR)/images/background.png
-LGMLOGO_PNG = $(BUILD_DIR)/images/lgmlogo.png
 
 $(eval $(call emit-deploy-target,CESARPLAYER_DLL))
 $(eval $(call emit-deploy-wrapper,LONGOMATCH,longomatch,x))
@@ -187,7 +183,6 @@ $(eval $(call emit-deploy-target,LONGOMATCH_DESKTOP))
 $(eval $(call emit-deploy-target,CESARPLAYER_DLL_MDB))
 $(eval $(call emit-deploy-target,A_DLL_MDB))
 $(eval $(call emit-deploy-target,BACKGROUND_PNG))
-$(eval $(call emit-deploy-target,LGMLOGO_PNG))
 
 
 $(build_xamlg_list): %.xaml.g.cs: %.xaml

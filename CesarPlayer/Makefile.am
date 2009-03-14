@@ -5,7 +5,7 @@ EXTRA_DIST =
 
 if ENABLE_DEBUG
 ASSEMBLY_COMPILER_COMMAND = gmcs
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ -debug -define:DEBUG
+ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -unsafe -warn:4 -optimize+ -debug -define:DEBUG
 ASSEMBLY = a.dll
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
@@ -16,8 +16,8 @@ BUILD_DIR = .
 endif
 
 if ENABLE_RELEASE
-ASSEMBLY_COMPILER_COMMAND = $(GMCS)
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ -debug -define:DEBUG
+ASSEMBLY_COMPILER_COMMAND = gmcs
+ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -unsafe -warn:4 -optimize+ -debug -define:DEBUG
 ASSEMBLY = bin/Release/CesarPlayer.dll
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
@@ -53,10 +53,6 @@ FILES = \
 	gtk-gui/LongoMatch.Gui.VolumeWindow.cs \
 	Gui/VolumeWindow.cs \
 	Capturer/ErrorHandler.cs \
-	Capturer/GstVideoCapturer.cs \
-	Capturer/GvcAudioEncoderType.cs \
-	Capturer/GvcUseType.cs \
-	Capturer/GvcVideoEncoderType.cs \
 	Capturer/ICapturer.cs \
 	Gui/CapturerBin.cs \
 	gtk-gui/LongoMatch.Gui.CapturerBin.cs \
@@ -67,7 +63,12 @@ FILES = \
 	Utils/FramesCapturer.cs \
 	Utils/IMetadataReader.cs \
 	Utils/GstPlayerMetadataType.cs \
-	Gui/PlayerBin.cs 
+	Gui/PlayerBin.cs \
+	Capturer/GccAudioEncoderType.cs \
+	Capturer/GccError.cs \
+	Capturer/GccVideoEncoderType.cs \
+	Capturer/GccVideoMuxerType.cs \
+	Capturer/GstCameraCapturer.cs 
 
 DATA_FILES = 
 

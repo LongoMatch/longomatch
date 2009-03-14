@@ -328,7 +328,8 @@ DATA_FILES = \
 
 RESOURCES = \
 	gtk-gui/objects.xml \
-	gtk-gui/gui.stetic 
+	gtk-gui/gui.stetic \
+	$(LGMLOGO_PNG_SOURCE)
 
 EXTRAS = \
 	longomatch.in 

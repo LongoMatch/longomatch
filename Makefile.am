@@ -1,12 +1,10 @@
 
-EXTRA_DIST =  expansions.m4 debian/changelog debian/control debian/rules debian/copyright
+EXTRA_DIST =  expansions.m4
 
 #Warning: This is an automatically generated file, do not edit!
 if ENABLE_DEBUG
- SUBDIRS =  libcesarplayer Translations CesarPlayer LongoMatch 
+ SUBDIRS =  libcesarplayer Translations CesarPlayer Packages adsf LongoMatch
 endif
 if ENABLE_RELEASE
- SUBDIRS =  libcesarplayer Translations CesarPlayer LongoMatch 
+ SUBDIRS =  libcesarplayer Translations CesarPlayer Packages adsf LongoMatch
 endif
-
-ACLOCAL_AMFLAGS=-I m4

@@ -9,12 +9,12 @@ CLEANFILES = $(GMO_FILES)
 include $(top_srcdir)/Makefile.include
 
 PACKAGE = @PACKAGE@
-BUILD_DIR = GMO
-INSTALL_DIR = $(DESTDIR)@expanded_libdir@/$(PACKAGE)/locale
+BUILD_DIR = ./GMO
+INSTALL_DIR = $(DESTDIR)@expanded_datadir@/locale
 
 FILES = \
-	es.po
-
+	es.po\
+	it.po
 
 GMO_FILES = $(patsubst %.po,$(BUILD_DIR)/%.gmo,$(FILES))
 MO_FILES = $(foreach po,$(FILES), $(INSTALL_DIR)/$(basename $(po))/LC_MESSAGES/$(PACKAGE).mo)

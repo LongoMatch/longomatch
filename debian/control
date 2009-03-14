@@ -1,5 +1,5 @@
 Source: longomatch
-Section: devel
+Section: gnome
 Priority: extra
 Maintainer: Andoni Morales Alastruey <ylatuya@gmail.com>
 Build-Depends: debhelper (>= 5), autotools-dev, cdbs, pkg-config, mono-gmcs,libdb4o6.0-cil, libgtk2.0-cil,libgstreamer0.10-dev, libgstreamer-plugins-base0.10-dev, libgtk2.0-dev, libmono2.0-cil, libmono-cairo2.0-cil
@@ -9,9 +9,4 @@ Package: longomatch
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},gstreamer0.10-plugins-good, gstreamer0.10-plugins-bad, gstreamer0.10-plugins-ugly,gstreamer0.10-ffmpeg, mono-runtime, ffmpeg, mencoder
 Description: LongoMatch:The Digital Coach
- LongoMatch is a sports video analyze tool for coaches 
- and trainers to assist them  on making live video reports
- from a match. It creates a database with the most    
- important plays of a game, grouped by categories, to easily
- access them and to create play lists and new videos from the
- selected plays. 
+ Sports video analysis tool for coaches to assist them in making game video analysis. You can tag the most important plays of the game and group them by categories to study each detail of the game strategy. A list with all the tagged plays lets you review them with a simple click, even in slow motion. The timeline gives a quick overview of the game and lets you adjust the lead and lag time of each play frame by frame. LongoMatch has support for playlists, an easy way to create presentations with plays from different games. You can create new videos with your favorite plays using the video editing feature. 
