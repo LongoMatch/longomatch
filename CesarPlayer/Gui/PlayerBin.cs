@@ -150,6 +150,7 @@ namespace LongoMatch.Gui
 					this.GdkWindow.Fullscreen();
 				else 
 					this.GdkWindow.Unfullscreen();
+				
 			}
 		}
 		
@@ -179,9 +180,10 @@ namespace LongoMatch.Gui
 		
 		public bool PlaylistMode{
 			set{				
-				this.timescale.Sensitive = !value;				
+				//this.timescale.Sensitive = !value;				
 			}
 		}
+		
 		public void SetLogo (string filename){
 			this.player.Logo=filename;
 		}
@@ -261,7 +263,7 @@ namespace LongoMatch.Gui
 			this.segmentStartTime = start;
 			this.segmentStopTime = stop;
 			this.closebutton.Show();
-			this.timescale.Sensitive = false;
+			//this.timescale.Sensitive = false;
 			this.vscale1.Value = 25;
 			player.SegmentSeek(start,stop);
 		
@@ -274,7 +276,8 @@ namespace LongoMatch.Gui
 			this.segmentStartTime = 0;
 			this.segmentStopTime = 0;
 			this.vscale1.Value=25;
-			this.timescale.Sensitive = true;
+			//this.timescale.Sensitive = true;
+			this.slength = TimeString.MSecondsToSecondsString(length);
 			this.SegmentClosedEvent();
 			this.player.CancelProgramedStop();
 			
@@ -305,6 +308,10 @@ namespace LongoMatch.Gui
 			return (float)val;
 		}
 		
+		private bool InSegment(){
+			return segmentStartTime != 0 && segmentStopTime != 0;
+		}
+		
 		protected virtual void OnStateChanged(object o, LongoMatch.Video.Handlers.StateChangedArgs args){
 			if (args.Playing){
 				playbutton.Hide();
@@ -318,45 +325,54 @@ namespace LongoMatch.Gui
 		
 		protected virtual void OnTick(object o,TickArgs args){
 			long currentTime = args.CurrentTime;
-			long streamLength = args.StreamLength;
-			float currentposition = args.CurrentPosition;
+			float currentposition = args.CurrentPosition;		
+			long streamLength = args.StreamLength;		
 			bool seekable = args.Seekable;
 			
 			//Console.WriteLine ("Current Time:{0}\n Length:{1}\n",currentTime, streamLength);
-	        if (this.length != streamLength){				
+			if (this.length != streamLength){							
 				this.length = streamLength;
-				this.slength = TimeString.MSecondsToSecondsString(length);
-			}
-			else if (seekable) {	
-			    timelabel.Text = TimeString.MSecondsToSecondsString(currentTime) + "/" + slength;
-				timescale.Value = currentposition*65535;
-				if (Tick != null)
-					this.Tick(o,args);
+				this.slength = TimeString.MSecondsToSecondsString(length);				
 			}
 			
+			if  (InSegment()){
+				currentTime -= segmentStartTime;
+				currentposition = (float)currentTime/(float)(segmentStopTime-segmentStartTime);
+				this.slength = TimeString.MSecondsToSecondsString(segmentStopTime-segmentStartTime);
+			}						
 			
+			timelabel.Text = TimeString.MSecondsToSecondsString(currentTime) + "/" + slength;			    
+			timescale.Value = currentposition*65535;
+			if (Tick != null)
+				this.Tick(o,args);
 			
 		}
+		
 		protected virtual void OnTimescaleAdjustBounds(object o, Gtk.AdjustBoundsArgs args)
 		{
-			if (!seeking){
+			float pos;
+				
+			if (!seeking)
 				seeking = true;
-				this.IsPlayingPrevState = player.Playing;
-				player.Tick -= this.tickHandler;
-				if (Environment.OSVersion.Platform != PlatformID.Win32NT){
-					player.Pause();
+			this.IsPlayingPrevState = player.Playing;
+			player.Tick -= this.tickHandler;
+			if (Environment.OSVersion.Platform != PlatformID.Win32NT){
+				player.Pause();
 				}
-				
-				
-
-			}
 			
-			    float pos = (float)timescale.Value/65535;
+			pos = (float)timescale.Value/65535;
+			
+			if (InSegment()){
+				player.SeekInSegment(segmentStartTime + (long)(pos*(segmentStopTime-segmentStartTime)));
+			}
+			else {
 				player.Position = pos;
 				timelabel.Text= TimeString.MSecondsToSecondsString(player.CurrentTime) + "/" + this.slength;
-				
+			}
+			
 			
 		}
+		
 
 		protected virtual void OnTimescaleValueChanged(object sender, System.EventArgs e)
 		{
@@ -431,8 +447,7 @@ namespace LongoMatch.Gui
 		}
 
 		protected virtual void OnPrevbuttonClicked (object sender, System.EventArgs e)
-		{
-			
+		{			
 			if (Prev != null)
 				Prev();
 		}
@@ -464,7 +479,7 @@ namespace LongoMatch.Gui
 		{
 			float val = this.getRate();
 			
-			// Kill volume for rate != 1
+			// Mute for rate != 1
 			if (val != 1 && player.Volume != 0){ 
 				previousVLevel = player.Volume;
 				player.Volume=0;
@@ -475,7 +490,7 @@ namespace LongoMatch.Gui
 				player.Volume = previousVLevel;
 			
 			
-			if (this.segmentStartTime == 0 && this.segmentStopTime==0)
+			if (InSegment())
 				player.SetRate(val);
 			else
 				player.SetRateInSegment(val,segmentStopTime);	

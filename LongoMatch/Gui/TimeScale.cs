@@ -230,10 +230,11 @@ namespace LongoMatch.Gui.Component
 				candidateTN = null;
 				foreach (MediaTimeNode tn in list){	
 					int pos = (int) (evnt.X*pixelRatio);
-					if (Math.Abs(pos-tn.StopFrame) < 3*pixelRatio ){
+					if (Math.Abs(pos-tn.StopFrame) < 3*pixelRatio){
 						this.candidateStart = false;
 						candidateTN = tn;
 						this.movingLimit = true;
+						this.GdkWindow.Cursor = new Gdk.Cursor(CursorType.SbHDoubleArrow);
 						this.TimeNodeChanged(tn,tn.Stop);
 						this.ReDraw();
 						break;
@@ -241,7 +242,8 @@ namespace LongoMatch.Gui.Component
 					else if (Math.Abs(pos-tn.StartFrame) < 3*pixelRatio){
 						this.candidateStart =true;
 						candidateTN = tn;
-							this.movingLimit = true;
+						this.movingLimit = true;
+						this.GdkWindow.Cursor = new Gdk.Cursor(CursorType.SbHDoubleArrow);
 						this.TimeNodeChanged(tn,tn.Start);
 						this.ReDraw();
 						break;
@@ -301,9 +303,7 @@ namespace LongoMatch.Gui.Component
 				
 				Gdk.Region region = this.GdkWindow.ClipRegion;
 				this.GdkWindow.InvalidateRegion(region,true);
-				this.GdkWindow.ProcessUpdates(true);
-				
-				
+				this.GdkWindow.ProcessUpdates(true);			
 				
 			}
 			return base.OnMotionNotifyEvent (evnt);
@@ -313,7 +313,7 @@ namespace LongoMatch.Gui.Component
 		{		
 			if (evnt.Button == 1){
 				this.ProcessButton1(evnt);	
-				this.GdkWindow.Cursor = new Gdk.Cursor(CursorType.SbHDoubleArrow);
+				
 				                                       
 			}
 			// On Right button pressed
