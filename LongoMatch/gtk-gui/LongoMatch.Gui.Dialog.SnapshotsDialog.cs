@@ -33,7 +33,7 @@ namespace LongoMatch.Gui.Dialog {
             Stetic.Gui.Initialize(this);
             // Widget LongoMatch.Gui.Dialog.SnapshotsDialog
             this.Name = "LongoMatch.Gui.Dialog.SnapshotsDialog";
-            this.Icon = Gdk.Pixbuf.LoadFromResource("lgmlogo.png");
+            this.Icon = Gdk.Pixbuf.LoadFromResource("lgmlogo");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.Gravity = ((Gdk.Gravity)(5));
             this.SkipPagerHint = true;
