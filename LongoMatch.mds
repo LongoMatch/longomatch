@@ -6,7 +6,6 @@
       <Entry build="True" name="Translations" configuration="Debug" />
       <Entry build="True" name="CesarPlayer" configuration="Debug" />
       <Entry build="True" name="Packages" configuration="" />
-      <Entry build="True" name="adsf" configuration="" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="LongoMatch" configuration="Release" />
@@ -14,7 +13,6 @@
       <Entry build="True" name="Translations" configuration="Release" />
       <Entry build="True" name="CesarPlayer" configuration="Release" />
       <Entry build="True" name="Packages" configuration="" />
-      <Entry build="True" name="adsf" configuration="" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="LongoMatch" single="True">
@@ -23,7 +21,6 @@
     <Execute type="None" entry="Translations" />
     <Execute type="None" entry="CesarPlayer" />
     <Execute type="None" entry="Packages" />
-    <Execute type="None" entry="adsf" />
   </StartMode>
   <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="UpdateNearestChangeLog" />
   <Entries>
@@ -32,6 +29,5 @@
     <Entry filename="Translations/Translations.mdse" />
     <Entry filename="CesarPlayer/CesarPlayer.mdp" />
     <Entry filename="Packages/Packages.mdse" />
-    <Entry filename="adsf/adsf.mdse" />
   </Entries>
 </Combine>

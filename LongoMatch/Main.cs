@@ -78,6 +78,11 @@ namespace LongoMatch
 			return System.IO.Path.Combine (baseDirectory, relativePath);
 		}
 		
+		public static string HomeDir(){
+				return homeDirectory;
+	
+		}
+		
 		public static string LocaleDir(){
 				return RelativeToPrefix("share/images");
 	

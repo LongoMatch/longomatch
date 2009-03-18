@@ -434,7 +434,6 @@ namespace LongoMatch.Gui
 		}
 		
 		protected virtual void OnError (object o, ErrorArgs args){
-			Console.WriteLine(args.Message);
 			if(this.Error != null)
 				this.Error(o,args);
 		}

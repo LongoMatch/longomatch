@@ -281,7 +281,6 @@ namespace LongoMatch
 				fcpd = new FramesCaptureProgressDialog(fsc);
 				fcpd.TransientFor=(Gtk.Window) treewidget.Toplevel;
 				fcpd.Run();			
-				Console.WriteLine("closed");
 				fcpd.Destroy();
 			}
 		}

@@ -52,13 +52,10 @@ namespace LongoMatch.Updates
 				XmlUpdateParser parser = new XmlUpdateParser(temp_file);
 				update = parser.UpdateVersion;
 				downloadURL = parser.DownloadURL;
-				Console.WriteLine("Version:"+update.ToString());
-				Console.WriteLine("Url:"+downloadURL);
 				                  
 			}
 			catch (Exception ex){
 				update = actual;
-				Console.WriteLine("Could not fetch file:"+ex.ToString());
 			}			
 		}
 		
@@ -73,8 +70,6 @@ namespace LongoMatch.Updates
 		}
 		
 		private bool IsOutDated(){
-			Console.WriteLine(actual.Major+"."+actual.Minor+"."+actual.Build);
-			Console.WriteLine(update.Major+"."+update.Minor+"."+update.Build);
 			if(update.Major > actual.Major)
 				return true;
 			else if (update.Minor > actual.Minor)

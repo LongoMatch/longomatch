@@ -31,6 +31,7 @@ using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui;
 using LongoMatch.Video.Player;
 using LongoMatch.Updates;
+using LongoMatch.IO;
 
 
 namespace LongoMatch.Gui
@@ -52,6 +53,7 @@ namespace LongoMatch.Gui
 			this.Build();
 			
 			Updater updater = new Updater();
+			updater.NewVersion += new LongoMatch.Handlers.NewVersionHandler(OnUpdate);
 			updater.Run();
 			
 			this.eManager = new EventsManager(this.treewidget1,this.buttonswidget1,this.playlistwidget2,
@@ -96,7 +98,8 @@ namespace LongoMatch.Gui
 						this.CloseProjectAction.Sensitive=true;
 						this.SaveProjectAction.Sensitive = true;						
 						this.CaptureModeAction.Sensitive = true;
-						this.AnalyzeModeAction.Sensitive = true;				
+						this.AnalyzeModeAction.Sensitive = true;
+						this.ExportProjectToCSVFileAction.Sensitive = true;
 						this.ShowWidgets();
 					}
 					catch (GLib.GException ex){
@@ -139,7 +142,8 @@ namespace LongoMatch.Gui
 			this.CloseProjectAction.Sensitive=false;
 			this.SaveProjectAction.Sensitive = false;
 			this.CaptureModeAction.Sensitive = false;
-			this.AnalyzeModeAction.Sensitive = false;			
+			this.AnalyzeModeAction.Sensitive = false;	
+			this.ExportProjectToCSVFileAction.Sensitive = false;
 		}
 		
 		private void SaveDB(){			
@@ -338,11 +342,7 @@ namespace LongoMatch.Gui
 			this.SaveDB();
 		}
 		
-		protected virtual void OnTakeScreenshotActionActivated (object sender, System.EventArgs e)
-		{
-			/*Pixbuf frame = this.playerbin1.CurrentFrame;
-			frame.Save(MainClass.SnapshotsDir(),"jpeg");*/
-		}
+		
 		
 		protected override bool OnKeyPressEvent (EventKey evnt)
 		{
@@ -375,6 +375,15 @@ namespace LongoMatch.Gui
 				this.rightvbox.Visible=false;
 		}
 		
+		protected virtual void OnUpdate(Version version, string URL){
+			LongoMatch.Gui.Dialog.UpdateDialog updater = new LongoMatch.Gui.Dialog.UpdateDialog();
+			updater.Fill(version, URL);
+			updater.TransientFor = this;
+			updater.Run();
+			updater.Destroy();
+			
+		}
+		
 		protected virtual void OnAboutActionActivated (object sender, System.EventArgs e)
 		{
 			Gtk.AboutDialog about = new AboutDialog();
@@ -390,6 +399,29 @@ namespace LongoMatch.Gui
 			about.Run();
 			about.Destroy();	
 		 
+		}
+
+		protected virtual void OnExportProjectToCSVFileActionActivated (object sender, System.EventArgs e)
+		{
+			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Select Export File"),
+			                                                   (Gtk.Window)this.Toplevel,
+			                                                   FileChooserAction.Save,
+			                                                   "gtk-cancel",ResponseType.Cancel,
+			                                                   "gtk-save",ResponseType.Accept);
+			fChooser.SetCurrentFolder(MainClass.HomeDir());
+			fChooser.DoOverwriteConfirmation = true;
+			FileFilter filter = new FileFilter();
+			filter.Name = "CSV File";
+			filter.AddPattern("*.csv");			
+			fChooser.AddFilter(filter);
+			if (fChooser.Run() == (int)ResponseType.Accept){
+				string outputFile=fChooser.Filename;
+				outputFile = System.IO.Path.ChangeExtension(outputFile,"csv");				
+				CSVExport export = new CSVExport(openedProject, outputFile);
+				export.WriteToFile();			
+			}		
+			fChooser.Destroy();			
+			
 		}
 	}
 }
