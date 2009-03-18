@@ -198,7 +198,7 @@ namespace LongoMatch.Gui.Component {
 		{
 			this.SetPixelRatio((uint)(vscale1.Value));  				
 			this.QueueDraw();				
-			//this.AdjustPostion(currentFrame);
+			this.AdjustPostion(currentFrame);
 		}
 		
 		

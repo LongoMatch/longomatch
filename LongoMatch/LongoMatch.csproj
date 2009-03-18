@@ -11,6 +11,7 @@
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <TargetFrameworkVersion>Mono v2.0</TargetFrameworkVersion>
+    <ApplicationIcon>minilogo.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -105,6 +106,8 @@
     <Compile Include="Time\Time.cs" />
     <Compile Include="Time\TimeNode.cs" />
     <Compile Include="Transcoder.cs" />
+    <Compile Include="Updates\Updater.cs" />
+    <Compile Include="Updates\XmlUpdateParser.cs" />
     <Compile Include="Video\AudioQuality.cs" />
     <Compile Include="Video\FFMPEGVideoEditor.cs" />
     <Compile Include="Video\IVideoEditor.cs" />
@@ -112,12 +115,12 @@
     <None Include="images\background.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="images\lgmlogo.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <EmbeddedResource Include="lgmlogo" />
+    <EmbeddedResource Include="Resource1.resx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DB" />
+    <Folder Include="Updates" />
     <Folder Include="gtk-gui" />
     <Folder Include="Video" />
     <Folder Include="Time" />
