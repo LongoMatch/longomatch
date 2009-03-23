@@ -58,6 +58,10 @@ namespace LongoMatch.TimeNodes
 			this.dataSection = dataSection;		
 			this.team = Team.NONE;
 			this.fps = fps;
+			if (stop <= start )
+				this.Stop = start+500;
+			else
+				this.Stop = stop;
 			this.startFrame = (uint) this.Start.MSeconds*fps/1000;
 			this.stopFrame = (uint) this.Stop.MSeconds*fps/1000;
 		}

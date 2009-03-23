@@ -44,10 +44,13 @@ namespace LongoMatch.TimeNodes
 		{
 			this.name = name;
 			this.start = start;
+			this.stop = stop;
+			/*
 			if (stop <= start )
 				this.stop = start+500;
 			else
 				this.stop = stop;
+				*/
 			
 			
 		}
