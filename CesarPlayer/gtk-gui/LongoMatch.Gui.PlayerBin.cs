@@ -220,7 +220,7 @@ namespace LongoMatch.Gui {
             this.timescale.Adjustment.Upper = 65535;
             this.timescale.Adjustment.PageIncrement = 10;
             this.timescale.Adjustment.StepIncrement = 1;
-            this.timescale.Adjustment.Value = 10;
+            this.timescale.Adjustment.Value = 12;
             this.timescale.DrawValue = false;
             this.timescale.Digits = 0;
             this.timescale.ValuePos = ((Gtk.PositionType)(2));

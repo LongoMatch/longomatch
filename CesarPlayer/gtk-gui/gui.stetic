@@ -226,7 +226,7 @@
                     <property name="Upper">65535</property>
                     <property name="PageIncrement">10</property>
                     <property name="StepIncrement">1</property>
-                    <property name="Value">10</property>
+                    <property name="Value">12</property>
                     <property name="DrawValue">False</property>
                     <property name="Digits">0</property>
                     <property name="ValuePos">Top</property>

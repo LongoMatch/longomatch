@@ -490,9 +490,10 @@ namespace LongoMatch.Gui
 			
 			
 			if (InSegment())
-				player.SetRate(val);
+				player.SetRateInSegment(val,segmentStopTime);			
 			else
-				player.SetRateInSegment(val,segmentStopTime);	
+				player.SetRate(val);
+					
 			
 		}
 
