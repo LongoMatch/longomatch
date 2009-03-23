@@ -2814,6 +2814,7 @@ new one.</property>
               <widget class="Gtk.VScale" id="vscale1">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
+                <property name="UpdatePolicy">Discontinuous</property>
                 <property name="Inverted">True</property>
                 <property name="Lower">1</property>
                 <property name="Upper">100</property>

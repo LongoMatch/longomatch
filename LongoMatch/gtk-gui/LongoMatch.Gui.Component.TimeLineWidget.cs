@@ -66,6 +66,7 @@ namespace LongoMatch.Gui.Component {
             this.vscale1 = new Gtk.VScale(null);
             this.vscale1.CanFocus = true;
             this.vscale1.Name = "vscale1";
+            this.vscale1.UpdatePolicy = ((Gtk.UpdateType)(1));
             this.vscale1.Inverted = true;
             this.vscale1.Adjustment.Lower = 1;
             this.vscale1.Adjustment.Upper = 100;
