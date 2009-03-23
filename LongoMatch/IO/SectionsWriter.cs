@@ -86,6 +86,9 @@ namespace LongoMatch.IO
 			configXml.Load(fConfig);
 			
 			for (int i = 0; i<20;i++){
+				Console.WriteLine("Sections Writer start: " +sections.GetStartTime(i).Seconds.ToString());
+				Console.WriteLine("Sections Writer stop: " +sections.GetStopTime(i).Seconds.ToString());
+				
 				Color color = sections.GetColor(i);
 				SetValue(configXml,"configuration","Name" + (i+1),sections.GetName(i));
 				SetValue(configXml,"configuration","Start"+ (i+1),sections.GetStartTime(i).Seconds.ToString());

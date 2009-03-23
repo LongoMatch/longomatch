@@ -51,6 +51,8 @@ namespace LongoMatch.Gui.Component
 			}
 			
 			get{
+				Console.WriteLine(timeadjustwidget1.GetStartTime().ToSecondsString());
+				Console.WriteLine(timeadjustwidget1.GetStopTime().ToSecondsString());
 				return new SectionsTimeNode (entry1.Text,timeadjustwidget1.GetStartTime(),timeadjustwidget1.GetStopTime(),this.checkbutton2.Active);
 			}
 		}

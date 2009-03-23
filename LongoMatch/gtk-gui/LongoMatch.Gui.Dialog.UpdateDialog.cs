@@ -29,7 +29,7 @@ namespace LongoMatch.Gui.Dialog {
             Stetic.Gui.Initialize(this);
             // Widget LongoMatch.Gui.Dialog.UpdateDialog
             this.Name = "LongoMatch.Gui.Dialog.UpdateDialog";
-            //this.Icon = Gdk.Pixbuf.LoadFromResource("lgmlogo");
+            this.Icon = Gdk.Pixbuf.LoadFromResource("lgmlogo");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.HasSeparator = false;
             // Internal child LongoMatch.Gui.Dialog.UpdateDialog.VBox

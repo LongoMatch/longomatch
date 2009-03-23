@@ -24,7 +24,7 @@ namespace LongoMatch.Gui.Dialog {
             // Widget LongoMatch.Gui.Dialog.NewProjectDialog
             this.Name = "LongoMatch.Gui.Dialog.NewProjectDialog";
             this.Title = Mono.Unix.Catalog.GetString("New Project");
-           // this.Icon = Gdk.Pixbuf.LoadFromResource("lgmlogo");
+            this.Icon = Gdk.Pixbuf.LoadFromResource("lgmlogo");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.Modal = true;
             this.DestroyWithParent = true;
