@@ -40,6 +40,8 @@ namespace LongoMatch.Gui.Component
 		private uint frames;
 		private uint pixelRatio=10;
 		
+		private object locker;
+		
 		private int section;
 		private string name;
 		private Cairo.Color color;
@@ -81,13 +83,16 @@ namespace LongoMatch.Gui.Component
 			dic = new Dictionary<MenuItem,MediaTimeNode>();
 			layout =  new Pango.Layout(this.PangoContext);
 			SetMenu();
+			locker = new object();
 		}
 			
 		public uint PixelRatio{
 			get {return pixelRatio;}
 			set {
-				this.pixelRatio = value;
-				this.Size((int)(this.frames/pixelRatio),SECTION_HEIGHT);
+				lock(locker){
+					this.pixelRatio = value;
+					this.Size((int)(this.frames/pixelRatio),SECTION_HEIGHT);
+				}
 			}
 		}
 		
@@ -129,46 +134,47 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		private void DrawTimeNodes(Gdk.Window win){
+			lock(locker){
+				bool hasSelectedTimeNode=false;
 			
-			bool hasSelectedTimeNode=false;
-			
-			using (Cairo.Context g = Gdk.CairoHelper.Create (win)){	
-				int height;
-				int width;	
+				using (Cairo.Context g = Gdk.CairoHelper.Create (win)){	
+					int height;
+					int width;	
 
 				
-				win.Resize((int)(frames/pixelRatio), this.Allocation.Height);
-				win.GetSize(out width, out height);				
+					win.Resize((int)(frames/pixelRatio), this.Allocation.Height);
+					win.GetSize(out width, out height);				
 				
-				g.Operator = Operator.Over;
+					g.Operator = Operator.Over;
 				
-				foreach (MediaTimeNode tn in list){	
-					if (tn != this.selected) {
-						g.Rectangle( new Cairo.Rectangle(tn.StartFrame/pixelRatio,3,tn.TotalFrames/pixelRatio,height-6));					
-						g.LineWidth = 2;
-						g.Color = new Cairo.Color (color.R+0.1, color.G+0.1,color.B+0.1, 1);				
+					foreach (MediaTimeNode tn in list){	
+						if (tn != this.selected) {
+							g.Rectangle( new Cairo.Rectangle(tn.StartFrame/pixelRatio,3,tn.TotalFrames/pixelRatio,height-6));					
+							g.LineWidth = 2;
+							g.Color = new Cairo.Color (color.R+0.1, color.G+0.1,color.B+0.1, 1);				
+							g.LineJoin = LineJoin.Round;
+							g.StrokePreserve();
+							g.Color = this.color;						
+							g.Fill();
+						}
+						else {
+							hasSelectedTimeNode = true;
+						}								
+					}
+					//Then we draw the selected TimeNode ove the oders
+					if (hasSelectedTimeNode){					
+						g.Rectangle( new Cairo.Rectangle(selected.StartFrame/pixelRatio,3,selected.TotalFrames/pixelRatio,height-6));					
+						g.Color = new Cairo.Color (0, 0, 0, 1);		
+						g.LineWidth = 3;
 						g.LineJoin = LineJoin.Round;
+						g.Operator = Operator.Source;
 						g.StrokePreserve();
+						g.Operator = Operator.Over;
 						g.Color = this.color;						
 						g.Fill();
-					}
-					else {
-						hasSelectedTimeNode = true;
-					}								
+					}				
+					this.DrawLines(win,g,height,width);			
 				}
-				//Then we draw the selected TimeNode ove the oders
-				if (hasSelectedTimeNode){					
-					g.Rectangle( new Cairo.Rectangle(selected.StartFrame/pixelRatio,3,selected.TotalFrames/pixelRatio,height-6));					
-					g.Color = new Cairo.Color (0, 0, 0, 1);		
-					g.LineWidth = 3;
-					g.LineJoin = LineJoin.Round;
-					g.Operator = Operator.Source;
-					g.StrokePreserve();
-					g.Operator = Operator.Over;
-					g.Color = this.color;						
-					g.Fill();
-				}				
-				this.DrawLines(win,g,height,width);			
 			}
 		}
 		

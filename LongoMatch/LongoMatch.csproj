@@ -64,6 +64,7 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.TemplateEditorDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.TemplateNameSelectionDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.Transcoder.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.UpdateDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.VideoEditionProperties.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.MainWindow.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Popup.CalendarPopup.cs" />
@@ -91,8 +92,10 @@
     <Compile Include="Gui\TimeReferenceWidget.cs" />
     <Compile Include="Gui\TimeScale.cs" />
     <Compile Include="Gui\TreeWidget.cs" />
+    <Compile Include="Gui\UpdateDialog.cs" />
     <Compile Include="Gui\VideoEditionProperties.cs" />
     <Compile Include="Handlers\Handlers.cs" />
+    <Compile Include="IO\CSVExport.cs" />
     <Compile Include="IO\SectionsReader.cs" />
     <Compile Include="IO\SectionsWriter.cs" />
     <Compile Include="IO\XMLReader.cs" />
@@ -115,8 +118,6 @@
     <None Include="images\background.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <EmbeddedResource Include="lgmlogo" />
-    <EmbeddedResource Include="Resource1.resx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DB" />

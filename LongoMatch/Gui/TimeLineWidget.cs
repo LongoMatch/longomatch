@@ -196,9 +196,10 @@ namespace LongoMatch.Gui.Component {
 
 		protected virtual void OnVscale1ValueChanged (object sender, System.EventArgs e)
 		{
-			this.SetPixelRatio((uint)(vscale1.Value));  				
-			this.QueueDraw();				
+			this.SetPixelRatio((uint)(vscale1.Value)); 
+			this.QueueDraw();
 			this.AdjustPostion(currentFrame);
+			
 		}
 		
 		
