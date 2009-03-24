@@ -2875,7 +2875,7 @@ new one.</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.VideoEditionProperties" design-size="402 158">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.VideoEditionProperties" design-size="377 145">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Video Properties</property>
     <property name="Icon">resource:lgmlogo</property>
@@ -3051,7 +3051,7 @@ Extra</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.SnapshotsDialog" design-size="426 200">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.SnapshotsDialog" design-size="301 160">
     <property name="MemberName" />
     <property name="Icon">resource:lgmlogo</property>
     <property name="WindowPosition">CenterOnParent</property>
@@ -3213,7 +3213,7 @@ Extra</property>
             <property name="CanFocus">True</property>
             <property name="Type">TextAndIcon</property>
             <property name="Icon">stock:gtk-media-record Button</property>
-            <property name="Label" translatable="yes">Start snapshot series</property>
+            <property name="Label" translatable="yes">Export to PNG image</property>
             <property name="UseUnderline">True</property>
             <property name="ResponseId">-5</property>
           </widget>

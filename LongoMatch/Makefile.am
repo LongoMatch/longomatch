@@ -143,7 +143,10 @@ FILES = \
 	Gui/FramesCaptureProgressDialog.cs \
 	Gui/TemplateNameSelectionDialog.cs \
 	Updates/Updater.cs \
-	Updates/XmlUpdateParser.cs 
+	Updates/XmlUpdateParser.cs \
+	IO/CSVExport.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs \
+	Gui/UpdateDialog.cs 
 
 DATA_FILES = \
 	app.desktop \

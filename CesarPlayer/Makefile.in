@@ -193,9 +193,9 @@ EXTRA_DIST = $(build_sources) $(build_resx_files) \
 
 # Warning: This is an automatically generated file, do not edit!
 @ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
-@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = $(GMCS)
-@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4 -optimize+ -debug -define:DEBUG
-@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4 -optimize+ -debug -define:DEBUG
+@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
+@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -unsafe -warn:4 -optimize+ -debug -define:DEBUG
+@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -unsafe -warn:4 -optimize+ -debug -define:DEBUG
 @ENABLE_DEBUG_TRUE@ASSEMBLY = a.dll
 @ENABLE_RELEASE_TRUE@ASSEMBLY = bin/Release/CesarPlayer.dll
 @ENABLE_DEBUG_TRUE@ASSEMBLY_MDB = $(ASSEMBLY).mdb
@@ -227,10 +227,6 @@ FILES = \
 	gtk-gui/LongoMatch.Gui.VolumeWindow.cs \
 	Gui/VolumeWindow.cs \
 	Capturer/ErrorHandler.cs \
-	Capturer/GstVideoCapturer.cs \
-	Capturer/GvcAudioEncoderType.cs \
-	Capturer/GvcUseType.cs \
-	Capturer/GvcVideoEncoderType.cs \
 	Capturer/ICapturer.cs \
 	Gui/CapturerBin.cs \
 	gtk-gui/LongoMatch.Gui.CapturerBin.cs \
@@ -241,7 +237,12 @@ FILES = \
 	Utils/FramesCapturer.cs \
 	Utils/IMetadataReader.cs \
 	Utils/GstPlayerMetadataType.cs \
-	Gui/PlayerBin.cs 
+	Gui/PlayerBin.cs \
+	Capturer/GccAudioEncoderType.cs \
+	Capturer/GccError.cs \
+	Capturer/GccVideoEncoderType.cs \
+	Capturer/GccVideoMuxerType.cs \
+	Capturer/GstCameraCapturer.cs 
 
 DATA_FILES = 
 RESOURCES = \

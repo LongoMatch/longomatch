@@ -5,14 +5,12 @@
       <Entry build="True" name="libcesarplayer" configuration="Debug" />
       <Entry build="True" name="Translations" configuration="Debug" />
       <Entry build="True" name="CesarPlayer" configuration="Debug" />
-      <Entry build="True" name="Packages" configuration="" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="LongoMatch" configuration="Release" />
       <Entry build="True" name="libcesarplayer" configuration="Release" />
       <Entry build="True" name="Translations" configuration="Release" />
       <Entry build="True" name="CesarPlayer" configuration="Release" />
-      <Entry build="True" name="Packages" configuration="" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="LongoMatch" single="True">
@@ -28,6 +26,5 @@
     <Entry filename="libcesarplayer/liblongomatch.mdp" />
     <Entry filename="Translations/Translations.mdse" />
     <Entry filename="CesarPlayer/CesarPlayer.mdp" />
-    <Entry filename="Packages/Packages.mdse" />
   </Entries>
 </Combine>

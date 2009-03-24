@@ -120,7 +120,7 @@ namespace LongoMatch.Gui.Component
 			team.Submenu = teamMenu;
 			MenuItem quit = new MenuItem(Catalog.GetString("Delete"));
 			MenuItem addPLN = new MenuItem(Catalog.GetString("Add to playlist"));
-			MenuItem snapshot = new MenuItem(Catalog.GetString("Take Snapshot Series"));
+			MenuItem snapshot = new MenuItem(Catalog.GetString("Export to PGN images"));
 			menu.Append(team);			
 			menu.Append(addPLN);
 			menu.Append(quit);

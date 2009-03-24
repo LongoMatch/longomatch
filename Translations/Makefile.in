@@ -241,7 +241,7 @@ culture_resource_commandlines = cmd_line_satellite_$1 += '/embed:$(subst .resx,.
 build_satellite_assembly_list = $(cultures:%=$(BUILD_DIR)/%/$(SATELLITE_ASSEMBLY_NAME))
 build_culture_res_files = $(foreach res, $(culture_resources),$(call get_resource_name,$(res)))
 BUILD_DIR = GMO
-INSTALL_DIR = $(DESTDIR)@expanded_libdir@/$(PACKAGE)/locale
+INSTALL_DIR = $(DESTDIR)@expanded_datadir@/locale
 FILES = \
 	es.po
 

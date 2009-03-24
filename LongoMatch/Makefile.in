@@ -192,8 +192,8 @@ EXTRA_DIST = $(build_sources) $(build_resx_files) \
 	$(DATA_FILES) $(build_culture_res_files)
 
 # Warning: This is an automatically generated file, do not edit!
-@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = $(GMCS)
-@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = $(GMCS)
+@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
+@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
 @ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4 -optimize+ -debug -define:DEBUG "-main:LongoMatch.MainClass"
 @ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4 -optimize+ -debug -define:DEBUG "-main:LongoMatch.MainClass"
 @ENABLE_DEBUG_TRUE@ASSEMBLY = bin/Debug/LongoMatch.exe
@@ -224,15 +224,12 @@ EXTRA_DIST = $(build_sources) $(build_resx_files) \
 @ENABLE_RELEASE_TRUE@A_DLL_MDB = 
 @ENABLE_DEBUG_TRUE@BACKGROUND_PNG_SOURCE = images/background.png
 @ENABLE_RELEASE_TRUE@BACKGROUND_PNG_SOURCE = images/background.png
-@ENABLE_DEBUG_TRUE@LGMLOGO_PNG_SOURCE = images/lgmlogo.png
-@ENABLE_RELEASE_TRUE@LGMLOGO_PNG_SOURCE = images/lgmlogo.png
 @ENABLE_RELEASE_TRUE@CESARPLAYER_DLL_SOURCE = ../CesarPlayer/bin/Release/CesarPlayer.dll
 @ENABLE_RELEASE_TRUE@CESARPLAYER_DLL_MDB_SOURCE = ../CesarPlayer/bin/Release/CesarPlayer.dll.mdb
 AL = al2
 SATELLITE_ASSEMBLY_NAME = .resources.dll
 COMMONAPPLICATIONDATAROOT_IMAGES = \
-	$(BACKGROUND_PNG) \
-	$(LGMLOGO_PNG)  
+	$(BACKGROUND_PNG)  
 
 PROGRAMFILES = \
 	$(CESARPLAYER_DLL) \
@@ -255,7 +252,6 @@ FILES = \
 	Gui/DBManager.cs \
 	Gui/ProjectListWidget.cs \
 	Gui/FileDescriptionWidget.cs \
-	Gui/FramesCaptureProgressDialog.cs\
 	Gui/MainWindow.cs \
 	Gui/NewProjectDialog.cs \
 	Gui/OpenProjectDialog.cs \
@@ -263,9 +259,7 @@ FILES = \
 	Gui/PlayListWidget.cs \
 	Gui/SectionsPropertiesWidget.cs \
 	Gui/SectionsTemplates.cs \
-	Gui/SectionsPropertiesWidget.cs\
 	Gui/TemplateEditorDialog.cs \
-	Gui/TemplateNameSelectionDialog.cs\
 	Gui/TimeAdjustWidget.cs \
 	Gui/TimeNodesTreeView.cs \
 	Gui/TreeWidget.cs \
@@ -300,12 +294,10 @@ FILES = \
 	gtk-gui/LongoMatch.Gui.Dialog.DBManager.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.OpenProjectDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.NewProjectDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs \
 	gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.SectionsPropertiesWidget.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.SectionsTemplates.cs \
 	gtk-gui/LongoMatch.Gui.Component.TimeNodeProperties.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.TemplateNameSelectionDialog.cs\
 	gtk-gui/LongoMatch.Gui.Dialog.TemplateEditorDialog.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TimeLineWidget.cs \
@@ -319,17 +311,25 @@ FILES = \
 	gtk-gui/LongoMatch.Gui.Dialog.Transcoder.cs \
 	gtk-gui/LongoMatch.Gui.Component.NotesWidget.cs \
 	gtk-gui/LongoMatch.Gui.MainWindow.cs \
-	Gui/NotesWidget.cs 
+	Gui/NotesWidget.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.TemplateNameSelectionDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs \
+	Gui/FramesCaptureProgressDialog.cs \
+	Gui/TemplateNameSelectionDialog.cs \
+	Updates/Updater.cs \
+	Updates/XmlUpdateParser.cs \
+	IO/CSVExport.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs \
+	Gui/UpdateDialog.cs 
 
 DATA_FILES = \
 	app.desktop \
-	images/lgmlogo.png \
 	images/background.png 
 
 RESOURCES = \
 	gtk-gui/objects.xml \
 	gtk-gui/gui.stetic \
-	$(LGMLOGO_PNG_SOURCE)
+	images/lgmlogo 
 
 EXTRAS = \
 	longomatch.in 
@@ -397,7 +397,6 @@ build_culture_res_files = $(foreach res, $(culture_resources),$(call get_resourc
 LONGOMATCH = $(BUILD_DIR)/longomatch
 LONGOMATCH_DESKTOP = $(BUILD_DIR)/longomatch.desktop
 BACKGROUND_PNG = $(BUILD_DIR)/images/background.png
-LGMLOGO_PNG = $(BUILD_DIR)/images/lgmlogo.png
 all: all-am
 
 .SUFFIXES:
@@ -708,7 +707,6 @@ $(eval $(call emit-deploy-target,LONGOMATCH_DESKTOP))
 $(eval $(call emit-deploy-target,CESARPLAYER_DLL_MDB))
 $(eval $(call emit-deploy-target,A_DLL_MDB))
 $(eval $(call emit-deploy-target,BACKGROUND_PNG))
-$(eval $(call emit-deploy-target,LGMLOGO_PNG))
 
 $(build_xamlg_list): %.xaml.g.cs: %.xaml
 	xamlg '$<'

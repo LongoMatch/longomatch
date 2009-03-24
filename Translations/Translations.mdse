@@ -5,7 +5,6 @@
   </Configurations>
   <translations>
     <Translation isoCode="es" />
-    <Translation isoCode="it" />
   </translations>
   <projectInformations>
     <TranslationProjectInformation projectName="libcesarplayer" isIncluded="False" />

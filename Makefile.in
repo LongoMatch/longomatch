@@ -193,12 +193,11 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-EXTRA_DIST = expansions.m4 debian/changelog debian/control debian/rules debian/copyright
+EXTRA_DIST = expansions.m4 debian
 
 #Warning: This is an automatically generated file, do not edit!
-@ENABLE_DEBUG_TRUE@SUBDIRS = libcesarplayer Translations CesarPlayer LongoMatch 
-@ENABLE_RELEASE_TRUE@SUBDIRS = libcesarplayer Translations CesarPlayer LongoMatch 
-ACLOCAL_AMFLAGS = -I m4
+@ENABLE_DEBUG_TRUE@SUBDIRS = libcesarplayer Translations CesarPlayer LongoMatch
+@ENABLE_RELEASE_TRUE@SUBDIRS = libcesarplayer Translations CesarPlayer LongoMatch
 all: all-recursive
 
 .SUFFIXES:
