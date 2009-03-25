@@ -136,7 +136,7 @@ namespace LongoMatch.Gui.Dialog {
             w11.Add(w12);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w14 = new Gtk.Label();
-            w14.LabelProp = Mono.Unix.Catalog.GetString("Start snapshot series");
+            w14.LabelProp = Mono.Unix.Catalog.GetString("Export to PNG images");
             w14.UseUnderline = true;
             w11.Add(w14);
             w10.Add(w11);
@@ -148,8 +148,8 @@ namespace LongoMatch.Gui.Dialog {
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 426;
-            this.DefaultHeight = 200;
+            this.DefaultWidth = 301;
+            this.DefaultHeight = 160;
             this.Show();
         }
     }

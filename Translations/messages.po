@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "X-Generator: MonoDevelop.Gettext \n"
 "Language-Team: \n"
-"PO-Revision-Date: 2009-03-24 23:54:20+0100\n"
+"PO-Revision-Date: 2009-03-25 00:26:30+0100\n"
 "POT-Creation-Date: \n"
 "Project-Id-Version: \n"
 "MIME-Version: 1.0\n"
@@ -346,7 +346,7 @@ msgid "Default Play"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:138
-msgid "Start snapshot series"
+msgid "Export to PNG images"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.Transcoder.cs:39

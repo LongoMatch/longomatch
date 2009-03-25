@@ -1,22 +1,20 @@
 msgid ""
 msgstr ""
-"X-Generator: MonoDevelop.Gettext \n"
-"Language-Team: \n"
-"PO-Revision-Date: 2009-03-24 23:56:31+0100\n"
-"POT-Creation-Date: \n"
 "Project-Id-Version: LongoMatch 0.3\n"
-"MIME-Version: 1.0\n"
-"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2009-03-24 23:56:31+0100\n"
 "Last-Translator: Andoni Morales Alastruey <ylatuya@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: MonoDevelop.Gettext \n"
 
-#: ../LongoMatch/Gui/DBManager.cs:62
-#: ../LongoMatch/Gui/DBManager.cs:134
+#: ../LongoMatch/Gui/DBManager.cs:62 ../LongoMatch/Gui/DBManager.cs:134
 msgid "This Project is actually in use."
 msgstr "Este Proyecto está actualmente en uso"
 
-#: ../LongoMatch/Gui/DBManager.cs:62
-#: ../LongoMatch/Gui/DBManager.cs:134
+#: ../LongoMatch/Gui/DBManager.cs:62 ../LongoMatch/Gui/DBManager.cs:134
 msgid "Close it first to allow its removal from the database"
 msgstr "Ciérrelo primero para permitir borrarlo de la base de datos"
 
@@ -73,7 +71,7 @@ msgstr "El archivo asociado a este proyecto no existe."
 #: ../LongoMatch/Gui/MainWindow.cs:76
 #, fuzzy
 msgid ""
-"If the location of the file has changed try to edit it with the database \n"
+"If the location of the file has changed try to edit it with the database "
 "manager."
 msgstr ""
 "Si el archivo ha sido cambiado de sitio, intente editarlo con el gestor de "
@@ -83,8 +81,7 @@ msgstr ""
 msgid "An error ocurred opening this project:"
 msgstr "A ocurrido un error abriendo el proyecto:"
 
-#: ../LongoMatch/Gui/MainWindow.cs:200
-#: ../LongoMatch/Gui/PlayListWidget.cs:264
+#: ../LongoMatch/Gui/MainWindow.cs:200 ../LongoMatch/Gui/PlayListWidget.cs:264
 msgid "Please, select a video file."
 msgstr "Por favor, escoja un archivo de video."
 
@@ -96,8 +93,7 @@ msgstr "El proyecto para este archivo ya existe."
 msgid "Try to edit it."
 msgstr "Intente editarlo."
 
-#: ../LongoMatch/Gui/MainWindow.cs:287
-#: ../LongoMatch/Gui/PlayListWidget.cs:205
+#: ../LongoMatch/Gui/MainWindow.cs:287 ../LongoMatch/Gui/PlayListWidget.cs:205
 msgid "Open playlist"
 msgstr "Abrir lista de reproducción"
 
@@ -289,9 +285,10 @@ msgstr "Editor de Plantillas"
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs:62
 #, fuzzy
 msgid ""
-"Load a playlist\\nor create a \\nnew one."
-msgstr ""
-"Cargar una lista\\\\nde reproducción\\\\no cree una nueva."
+"Load a playlist\n"
+"or create a \n"
+"new one."
+msgstr "Cargar una lista\\\\nde reproducción\\\\no cree una nueva."
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:41
 msgid "Video Properties"
@@ -350,8 +347,9 @@ msgid "Default Play"
 msgstr "Jugada por defecto"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:138
-msgid "Start snapshot series"
-msgstr "Comenzar captura de la serie"
+#, fuzzy
+msgid "Export to PNG images"
+msgstr "Exportar a fotogramas PNG"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.Transcoder.cs:39
 msgid "Transcoder"
@@ -483,7 +481,8 @@ msgstr "Capturando fotogramas"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs:45
 msgid ""
-"\\nA new version of LongoMatch has been released at www.ylatuya.es!\\n"
+"\n"
+"A new version of LongoMatch has been released at www.ylatuya.es!\n"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs:55
@@ -492,7 +491,8 @@ msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs:65
 msgid ""
-"\\nYou can download it using this direct link:"
+"\n"
+"You can download it using this direct link:"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs:75
@@ -502,6 +502,9 @@ msgstr ""
 #: ../CesarPlayer/gtk-gui/LongoMatch.Gui.PlayerBin.cs:208
 msgid "Time:"
 msgstr "Tiempo:"
+
+#~ msgid "Start snapshot series"
+#~ msgstr "Comenzar captura de la serie"
 
 #~ msgid "Take Snapshot Series"
 #~ msgstr "Comenzar captura de la serie"
@@ -556,4 +559,3 @@ msgstr "Tiempo:"
 
 #~ msgid "File"
 #~ msgstr "Archivo:"
-

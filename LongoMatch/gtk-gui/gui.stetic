@@ -3213,7 +3213,7 @@ Extra</property>
             <property name="CanFocus">True</property>
             <property name="Type">TextAndIcon</property>
             <property name="Icon">stock:gtk-media-record Button</property>
-            <property name="Label" translatable="yes">Export to PNG image</property>
+            <property name="Label" translatable="yes">Export to PNG images</property>
             <property name="UseUnderline">True</property>
             <property name="ResponseId">-5</property>
           </widget>
