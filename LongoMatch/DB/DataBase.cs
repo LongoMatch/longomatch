@@ -104,8 +104,7 @@ namespace LongoMatch.DB
 		}
 		public void AddProject (Project project){
 			lock(this.locker){
-				db = Db4oFactory.OpenFile(file);
-				
+				db = Db4oFactory.OpenFile(file);				
 				try	
 				{
 					if (!this.Exists(project.File.FilePath)){

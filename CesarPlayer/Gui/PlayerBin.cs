@@ -237,13 +237,13 @@ namespace LongoMatch.Gui
 		}
 		
 		public void SeekToNextFrame(bool in_segment){
-		
-			player.SeekToNextFrame(in_segment);
+			if (segmentStopTime==0 | player.CurrentTime < segmentStopTime)
+				player.SeekToNextFrame(in_segment);
 		}
 		
 		public void SeekToPreviousFrame(bool in_segment){
-
-			player.SeekToPreviousFrame(in_segment);
+			if (player.CurrentTime > segmentStartTime)
+				player.SeekToPreviousFrame(in_segment);
 
 		}
 		

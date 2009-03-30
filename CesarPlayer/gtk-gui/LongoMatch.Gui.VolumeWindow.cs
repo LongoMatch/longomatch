@@ -73,8 +73,8 @@ namespace LongoMatch.Gui {
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 31;
-            this.DefaultHeight = 204;
+            this.DefaultWidth = 20;
+            this.DefaultHeight = 200;
             this.Hide();
             this.FocusOutEvent += new Gtk.FocusOutEventHandler(this.OnFocusOutEvent);
             this.morebutton.Clicked += new System.EventHandler(this.OnMorebuttonClicked);

@@ -49,12 +49,12 @@ namespace LongoMatch.IO
 			arrayList = project.GetDataArray();
 			sectionNames = project.GetSectionsNames();
 			
-			tx.WriteLine("Section,Name,Team,StartTime,StopTime");
+			tx.WriteLine("Section;Name;Team;StartTime;StopTime");
 			
 			for (int i=0; i<20; i++){
 				string sectionName = sectionNames[i];
 				foreach (MediaTimeNode tn in arrayList[i]){
-					tx.WriteLine("\""+sectionName+"\",\""+tn.Name+"\",\""+tn.Team+"\",\""+tn.Start.ToMSecondsString()+"\",\""+tn.Stop.ToMSecondsString()+"\"");
+					tx.WriteLine("\""+sectionName+"\";\""+tn.Name+"\";\""+tn.Team+"\";\""+tn.Start.ToMSecondsString()+"\";\""+tn.Stop.ToMSecondsString()+"\"");
 				}	
 					
 			}
