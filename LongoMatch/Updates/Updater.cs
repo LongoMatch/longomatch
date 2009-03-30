@@ -54,8 +54,8 @@ namespace LongoMatch.Updates
 				downloadURL = parser.DownloadURL;
 				                  
 			}
-			catch (Exception ex){
-				update = actual;
+			catch (Exception ex){	
+					update = actual;
 			}			
 		}
 		
@@ -65,6 +65,7 @@ namespace LongoMatch.Updates
 				return true;
 			}
 			catch{
+				update = actual;
 				return false;
 			}
 		}
