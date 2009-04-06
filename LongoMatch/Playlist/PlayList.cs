@@ -39,7 +39,7 @@ namespace LongoMatch.Playlist
 		private string filename = null;
 		private int indexSelection = 0;
 		
-		
+		#region Constructors
 		public PlayList(){
 			ser = new XmlSerializer(typeof(List<PlayListTimeNode>),new Type[] {typeof(PlayListTimeNode)});
 			list = new List<PlayListTimeNode>();
@@ -57,13 +57,22 @@ namespace LongoMatch.Playlist
 			else
 				this.Load(file);			
 		}
+		#endregion
+		
+		#region Properties
 		
 		public int Count {
 			get{return this.list.Count;}
 		}
 		
-		public void Load(string file){
-			
+		public string File{
+			get {return this.filename;}
+		}
+		#endregion
+		
+		#region Public methods
+		
+		public void Load(string file){			
 			using(FileStream strm = new FileStream(file, FileMode.Open, FileAccess.Read)) 
 			{
 				list = ser.Deserialize(strm) as List<PlayListTimeNode>; 
@@ -130,12 +139,7 @@ namespace LongoMatch.Playlist
 		public bool HasPrev(){
 			return ! this.indexSelection.Equals(0);
 		}
-		
-		
-		public string File{
-			get {return this.filename;}
-		}
-		
+				
 		public ListStore GetModel (){
 			Gtk.ListStore listStore = new ListStore (typeof (PlayListTimeNode));
 			foreach (PlayListTimeNode plNode in list){
@@ -152,8 +156,7 @@ namespace LongoMatch.Playlist
 			while (listStore.IterIsValid(iter)){
 				this.list.Add(listStore.GetValue (iter, 0) as PlayListTimeNode);
 				listStore.IterNext(ref iter);
-			}
-			
+			}			
 		}
 		
 		public IEnumerator GetEnumerator(){
@@ -162,10 +165,8 @@ namespace LongoMatch.Playlist
 		
 		public IPlayList Copy(){
 			return (IPlayList)(this.MemberwiseClone());
-		}
-	
-	
+		}		
 		
-		
+		#endregion
 	}
 }

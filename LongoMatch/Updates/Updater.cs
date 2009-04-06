@@ -38,21 +38,21 @@ namespace LongoMatch.Updates
 		private string temp_file = null;
 		private string downloadURL;
 		
+		#region Constructors 
 		public Updater()
 		{
 			this.actual = Assembly.GetExecutingAssembly().GetName().Version;	
-			this.temp_file = System.IO.Path.Combine(MainClass.TemplatesDir(),"version.xml");
-			
+			this.temp_file = System.IO.Path.Combine(MainClass.TemplatesDir(),"version.xml");			
 		}
-		
+		#endregion
+		#region Private methods 
 		private void FetchNewVersion(){			
 			WebClient wb = new WebClient();
 			try {
 				wb.DownloadFile(UPDATE_INFO_URL,temp_file);
 				XmlUpdateParser parser = new XmlUpdateParser(temp_file);
 				update = parser.UpdateVersion;
-				downloadURL = parser.DownloadURL;
-				                  
+				downloadURL = parser.DownloadURL;				                  
 			}
 			catch (Exception ex){	
 					update = actual;
@@ -88,12 +88,14 @@ namespace LongoMatch.Updates
 				Gtk.Application.Invoke(delegate {this.NewVersion(update,downloadURL);});			
 			}		
 		}
+		#endregion
 		
+		#region Public methods
 		public void Run(){
 			Thread thread = new Thread(new ThreadStart(CheckForUpdates));
 			thread.Start();
 		}
-				
+		#endregion 		
 		
 	}
 }

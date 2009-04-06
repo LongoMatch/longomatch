@@ -32,6 +32,7 @@ namespace LongoMatch.Updates
 		string downloadURL;
 		string oSVersion;
 		
+		#region Constructors
 		public XmlUpdateParser(string file)			
 		{
 			if (System.Environment.OSVersion.Platform == PlatformID.Win32NT)
@@ -40,10 +41,9 @@ namespace LongoMatch.Updates
 				this.oSVersion = "unix";
 			reader = new XMLReader(file);
 			ParseVersion();
-			ParseURL();
-			
-			
+			ParseURL();			
 		}
+		#endregion
 		
 		private void ParseVersion(){
 			int major,minor,build;

@@ -33,15 +33,14 @@ namespace LongoMatch.IO
 	public class SectionsReader : XMLReader
 	{
 		
-
+#region Constructors
 		
 		public SectionsReader(string filePath) : base (filePath) 
 		{						
 		}
+#endregion		
 		
-		
-			
-
+#region Private methods
 		private String[] GetNames(){
 			String[] names = new String[20];
 			for (int i=0;i<20;i++){
@@ -52,14 +51,10 @@ namespace LongoMatch.IO
 		
 		private Time[] GetStartTimes(){
 			Time[] startTimes = new Time [20];
-			for (int i=0;i<20;i++){
-				
+			for (int i=0;i<20;i++){				
 				startTimes[i] = new Time(GetIntValue("configuration","Start"+(i+1))*Time.SECONDS_TO_TIME);
-			
-		
 			}
-			return startTimes;
-		
+			return startTimes;		
 		}
 		
 		private Time[] GetStopTimes(){
@@ -78,8 +73,7 @@ namespace LongoMatch.IO
 				visibility[i] = GetBoolValue("configuration","Visible"+(i+1));
 
 			}
-			return visibility;	
-		
+			return visibility;		
 		}
 		
 		private Color[] GetColors(){
@@ -93,22 +87,22 @@ namespace LongoMatch.IO
 				col.Red = red;
 				col.Blue = blue;
 				col.Green = green;
-				colors[i] = col;
-					
+				colors[i] = col;					
 			}
 			return colors;
 			
 		}
-		
+#endregion		
+
+#region Public methods
 		public Sections GetSections(){
 			Sections sections = new Sections(20);
-			this.GetStartTimes();
-		
+			this.GetStartTimes();		
 			sections.SetTimeNodes(this.GetNames(),this.GetStartTimes(),this.GetStopTimes(),this.GetVisibility());
 			sections.Colors = this.GetColors();
 			return sections;
 		}
-		
+#endregion
 		
 	}
 }

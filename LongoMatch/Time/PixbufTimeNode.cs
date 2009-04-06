@@ -29,16 +29,18 @@ namespace LongoMatch.TimeNodes
 	{
 		private string miniaturePath;
 		
-		
+		#region Contructors
 		public PixbufTimeNode(){
-		}
-	
+		}	
 		
 		public PixbufTimeNode(string name, Time start, Time stop, string miniaturePath): base (name,start,stop)
 		{
 			this.miniaturePath = miniaturePath;
 
 		}
+		#endregion
+		
+		#region Properties
 		
 		public Pixbuf Miniature{
 			get{ 
@@ -56,5 +58,7 @@ namespace LongoMatch.TimeNodes
 			get{return this.miniaturePath;}
 			set{this.miniaturePath = value;}
 		}
+		
+		#endregion
 	}
 }

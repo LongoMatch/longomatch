@@ -28,9 +28,10 @@ namespace LongoMatch.TimeNodes
 	public class PlayListTimeNode : PixbufTimeNode
 	{
 		private string fileName;
-		private bool valid=true;
+		private float rate=1;
+		private bool valid=true;//True if the file is present in the system
 
-		
+		#region Constructors
 		public PlayListTimeNode(){
 		}
 		
@@ -39,17 +40,25 @@ namespace LongoMatch.TimeNodes
 			this.fileName = fileName;
 			
 		}
+		#endregion
+		#region  Properties
+		
 		public string FileName{
 			set{ this.fileName = value;}
 			get{ return this.fileName;}
 		}
 		
+		public float Rate{
+			set{ this.rate = value;}
+			get{ return this.rate;}
+		}
 		
+		//FIXME Tiene que devolver la comprobación de si el fichero existe, así no hay que setearlo externamente
 		public bool Valid{
 			get{return this.valid;}
 			set{this.valid = value;}
 		}
-		
+		#endregion
 	
 		
 		

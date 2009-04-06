@@ -263,9 +263,7 @@ namespace LongoMatch
 			
 			// We need to close the actual segment to seek freely along the stream
 			player.CloseActualSegment();
-			capturer = (IFramesCapturer)(player.Player);
-			
-			
+			capturer = (IFramesCapturer)(player.Player);			
 			
 			sd= new SnapshotsDialog();
 			sd.TransientFor= (Gtk.Window) treewidget.Toplevel;

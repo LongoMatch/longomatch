@@ -30,6 +30,7 @@ namespace LongoMatch.TimeNodes
 		private const int MS = 1000000 ; 
 		public const int SECONDS_TO_TIME = 1000;
 		
+		#region Constructors
 		public Time(){
 			this.time = 0;
 		}
@@ -38,6 +39,8 @@ namespace LongoMatch.TimeNodes
 		{
 			this.time = time;
 		}
+		#endregion
+		#region Properties
 		
 		public int MSeconds {
 			get { return time;}
@@ -49,7 +52,8 @@ namespace LongoMatch.TimeNodes
 			//set {this.time = value*SECONDS_TO_TIME;}
 		}
 		
-		
+		#endregion
+		#region Public methods
 		
 		public  string ToSecondsString ()
 		{
@@ -103,7 +107,11 @@ namespace LongoMatch.TimeNodes
 				throw new ArgumentException("Object is not a Temperature");
 			}    
 		}
+		
+		#endregion
 
+		#region Operators
+		
 		public static bool operator < (Time t1,Time t2){
 			return t1.MSeconds < t2.MSeconds;
 		}
@@ -134,6 +142,8 @@ namespace LongoMatch.TimeNodes
 			return new Time(t1.MSeconds-t2);
 			
 		}
+		
+		#endregion 
 
 	}
 }

@@ -26,16 +26,20 @@ namespace LongoMatch.TimeNodes
 	
 	public class SectionsTimeNode:TimeNode
 	{
-		bool visible;
+		bool visible;// Plays can only be tagged in a category if this category is visible
 		
+		#region Constructors
 		public SectionsTimeNode(String name,Time start, Time stop,bool visible):base (name,start,stop)
 		{
 			this.visible = visible;
 		}
+		#endregion
+		#region  Properties 
 		
 		public bool Visible{
 			get{return this.visible;}
 			set{this.visible = value;}
 		}
+		#endregion
 	}
 }

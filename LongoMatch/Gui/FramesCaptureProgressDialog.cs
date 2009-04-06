@@ -19,7 +19,7 @@
 //
 
 using System;
-using Mono.Posix;
+using Mono.Unix;
 using LongoMatch.Video.Utils;
 
 namespace LongoMatch.Gui.Dialog
@@ -33,8 +33,10 @@ namespace LongoMatch.Gui.Dialog
 		public FramesCaptureProgressDialog(FramesSeriesCapturer capturer)
 		{
 			this.Build();
+			//FIXME Separate GUI layer from execution layer
 			this.capturer = capturer;
 			capturer.Progress += new LongoMatch.Video.Handlers.FramesProgressHandler(Update);
+			capturer.Start();
 			this.Deletable = false;
 		}		
 		
@@ -51,13 +53,7 @@ namespace LongoMatch.Gui.Dialog
 			this.Destroy();
 
 		}
-		
-		
-		public void Run(){
-			capturer.Start();
-			this.Destroy();
-			
-		}
+				
 	}
 		
 	

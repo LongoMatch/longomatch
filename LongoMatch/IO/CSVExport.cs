@@ -33,12 +33,15 @@ namespace LongoMatch.IO
 		string outputFile;
 		Project project;
 		
+		#region Constructors 
 		public CSVExport(Project project,string outputFile)
 		{
 			this.project = project;
 			this.outputFile = outputFile;
 		}
+		#endregion
 		
+		#region Public methods
 		public void WriteToFile(){
 			List<MediaTimeNode>[] arrayList;
 			List<MediaTimeNode> tnList;
@@ -55,11 +58,10 @@ namespace LongoMatch.IO
 				string sectionName = sectionNames[i];
 				foreach (MediaTimeNode tn in arrayList[i]){
 					tx.WriteLine("\""+sectionName+"\";\""+tn.Name+"\";\""+tn.Team+"\";\""+tn.Start.ToMSecondsString()+"\";\""+tn.Stop.ToMSecondsString()+"\"");
-				}	
-					
-			}
-			
+				}						
+			}			
 			tx.Close();
 		}
+		#endregion
 	}
 }

@@ -30,6 +30,7 @@ namespace LongoMatch.IO
 	{
 		private XmlDocument configXml;
 		
+		#region Constructors
 		public XMLReader(string filePath)
 		{
 			configXml = new XmlDocument();
@@ -39,6 +40,8 @@ namespace LongoMatch.IO
 			
 			configXml.Load(filePath);
 		}
+		#endregion
+		#region Public methods
 		
 		public string GetStringValue(string section, string clave) 
 		{    
@@ -80,5 +83,6 @@ namespace LongoMatch.IO
     		}
 			else return 254;
 		}
+		#endregion
 	}
 }

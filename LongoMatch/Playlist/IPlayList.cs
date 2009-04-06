@@ -30,18 +30,15 @@ namespace LongoMatch.Playlist{
 		int Count {get;}
 		void Load (string path);
 		void Save (string path);
-		PlayListTimeNode Next();
-		PlayListTimeNode Prev();
-		int GetCurrentIndex();
 		void Add(PlayListTimeNode plNode);
 		void Remove (PlayListTimeNode plNode);
+		PlayListTimeNode Next();
+		PlayListTimeNode Prev();
 		PlayListTimeNode Select(int index);	
+		int GetCurrentIndex();		
 		bool HasNext();
 		bool HasPrev();
 		ListStore GetModel();
 		IPlayList Copy();
-		
-	
-		
 	}
 }

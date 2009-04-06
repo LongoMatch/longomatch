@@ -64,7 +64,6 @@ namespace LongoMatch.IO
     		XmlNode n;
     		n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");
     		if( n != null )    {
-
         		n.Attributes["value"].Value = valor;
     		}
 		}
@@ -79,8 +78,6 @@ namespace LongoMatch.IO
 				//Salimos silenciosamente
 				return;
 			}
-		
-
 			
 			XmlDocument configXml = new XmlDocument();
 			configXml.Load(fConfig);

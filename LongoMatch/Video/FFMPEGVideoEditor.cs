@@ -48,7 +48,7 @@ namespace LongoMatch.Video.Editor
 		private Process process;
 		private string list;
 
-		
+		#region Constructors
 		public FFMPEGVideoEditor(PlayList playlist, string outputFile)
 		{
 			this.encodeList = new List<PlayListTimeNode>();
@@ -64,58 +64,8 @@ namespace LongoMatch.Video.Editor
 			this.vq = VideoQuality.Normal;	
 			
 		}
-		
-		public IPlayList PlayList{
-			set{
-				if (this.thread == null || !this.thread.IsAlive ){
-					this.encodeList = new List<PlayListTimeNode>();
-					foreach (PlayListTimeNode plNode in value){
-						encodeList.Add(plNode);	
-					}
-					this.steps = 2*this.encodeList.Count + 1;
-				}					
-			}
-					
-		}
-		
-		public VideoQuality VideoQuality{
-			set{this.vq = value;}
-			get{return this.vq;}
-		}
-		
-		public AudioQuality AudioQuality{
-			set{this.aq = value;}
-			get{return this.aq;}
-		}
-		
-		public string OutputFile{
-			set{this.outputFile = value;}
-			get{return this.outputFile;}
-		}
-		
-		public bool EnableAudio{
-			set{this.audioEnabled = value;}
-			get{return this.audioEnabled;}
-		}
-		
-		public void Start(){	
-			//only one process at the same time
-			if (this.Progress != null)
-						this.Progress (0);
-			if (this.thread == null || !this.thread.IsAlive ){				
-				process = new Process();
-				thread = new Thread(new ParameterizedThreadStart(EncodeVideo));
-				thread.Start(this.encodeList);  
-			}
-		}
-		
-		public void Cancel(){				
-			this.KillProcess();
-			this.DeleteTempFiles();
-			if (this.Progress != null)
-						this.Progress (-1);			
-		}
-		
+		#endregion
+		#region Private methods
 		private void DeleteTempFiles(){
 			string[] files = System.IO.Directory.GetFiles(MainClass.TempVideosDir());
 			foreach (string f in files)
@@ -144,47 +94,43 @@ namespace LongoMatch.Video.Editor
 			int i = 0;
             list = "";
 			
-				ArrayList parameters = new ArrayList();			
-				
-				foreach (PlayListTimeNode plNode in encodeList){
-					if (plNode.Valid){
-						string outputFile = System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i+".avi");
-						list  = list +"\"" + outputFile +"\" ";
-						mthread = new Thread(new ParameterizedThreadStart(SplitVideo));
-						parameters.Insert(0,plNode);
-						parameters.Insert(1,outputFile);
+			ArrayList parameters = new ArrayList();			
+			
+			//Split video segments
+			foreach (PlayListTimeNode plNode in encodeList){
+				if (plNode.Valid){
+					string outputFile = System.IO.Path.Combine (MainClass.TempVideosDir(),"temp"+i+".avi");
+					list  = list +"\"" + outputFile +"\" ";
+					mthread = new Thread(new ParameterizedThreadStart(SplitVideo));
+					parameters.Insert(0,plNode);
+					parameters.Insert(1,outputFile);
+					mthread.Start(parameters);
+					mthread.Join();				
+					if (this.Progress != null)
+						Application.Invoke(delegate {this.Progress ( (((float)i+1)*2-1)/steps);});							
+					if (System.Environment.OSVersion.Platform == PlatformID.Unix){
+						// HACK to rebuild the index of the splitted video when using ffmpeg to 
+						// split, which is more efficient on linux.
+						mthread = new Thread(new ParameterizedThreadStart(FixSplitedVideo));
 						mthread.Start(parameters);
-						mthread.Join();				
-						if (this.Progress != null)
-							Application.Invoke(delegate {this.Progress ( (((float)i+1)*2-1)/steps);});							
-						if (System.Environment.OSVersion.Platform == PlatformID.Unix){
-							// HACK to rebuild the index of the splitted video when usinf ffmpef to 
-							// split witch is more efficient on linux.
-							mthread = new Thread(new ParameterizedThreadStart(FixSplitedVideo));
-							mthread.Start(parameters);
-							mthread.Join();
-							
-						}
-									
-						if (this.Progress != null)
-							Application.Invoke(delegate {this.Progress ( ((float)i+1)*2/steps);});
-						i++;
+						mthread.Join();
 					}
-					else {
-					
-						if (this.Progress != null)
-							Application.Invoke(delegate {this.Progress ( ((float)i+1)*2/steps);});
+					if (this.Progress != null)
+						Application.Invoke(delegate {this.Progress ( ((float)i+1)*2/steps);});
+						i++;
+				}
+				else {
+					if (this.Progress != null)
+						Application.Invoke(delegate {this.Progress ( ((float)i+1)*2/steps);});
 						i++;
 					}
 				}
+			    //Merge video segments
 				mthread = new Thread(new ParameterizedThreadStart(MergeVideo));
 				mthread.Start(list);  
 				mthread.Join();
 				if (this.Progress != null)
-						Application.Invoke(delegate {this.Progress (1);});
-			
-					
-		
+						Application.Invoke(delegate {this.Progress (1);});		
 		}
 		
 		
@@ -221,13 +167,11 @@ namespace LongoMatch.Video.Editor
 					+ outputFile +"\"";
 				
 			}		
-			else {
-				
+			else {				
 				pinfo.FileName="ffmpeg";
 				pinfo.Arguments = "-i \"" + plNode.FileName + "\" -f avi -y -ss " + plNode.Start.ToMSecondsString() 
 					+ " -t " +plNode.Duration.ToMSecondsString() + " -vcodec  copy -acodec copy \""
-					+ tempFile+"\"";	
-						
+					+ tempFile+"\"";							
 			}
 			pinfo.CreateNoWindow = true;
 			pinfo.UseShellExecute = false;
@@ -260,10 +204,66 @@ namespace LongoMatch.Video.Editor
 			System.IO.File.Delete(tempFile);
 			
 		}
+		#endregion
+		
+		#region Properties
+		public IPlayList PlayList{
+			set{
+				if (this.thread == null || !this.thread.IsAlive ){
+					this.encodeList = new List<PlayListTimeNode>();
+					foreach (PlayListTimeNode plNode in value){
+						encodeList.Add(plNode);	
+					}
+					this.steps = 2*this.encodeList.Count + 1;
+				}					
+			}
+					
+		}
+		
+		public VideoQuality VideoQuality{
+			set{this.vq = value;}
+			get{return this.vq;}
+		}
+		
+		public AudioQuality AudioQuality{
+			set{this.aq = value;}
+			get{return this.aq;}
+		}
+		
+		public string OutputFile{
+			set{this.outputFile = value;}
+			get{return this.outputFile;}
+		}
+		
+		public bool EnableAudio{
+			set{this.audioEnabled = value;}
+			get{return this.audioEnabled;}
+		}
+		#endregion 
+		#region Public methods		
+		
+		public void Start(){	
+			//only one process at the same time
+			if (this.Progress != null)
+						this.Progress (0);
+			if (this.thread == null || !this.thread.IsAlive ){				
+				process = new Process();
+				thread = new Thread(new ParameterizedThreadStart(EncodeVideo));
+				thread.Start(this.encodeList);  
+			}
+		}
+		
+		public void Cancel(){				
+			this.KillProcess();
+			this.DeleteTempFiles();
+			if (this.Progress != null)
+						this.Progress (-1);			
+		}
+		
+      	#endregion
 		
 		~FFMPEGVideoEditor ()
 		{
-
 			this.KillProcess();
 		}
 

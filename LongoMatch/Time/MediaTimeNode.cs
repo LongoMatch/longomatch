@@ -41,7 +41,9 @@ namespace LongoMatch.TimeNodes
 		
 		//Stores the Data Section it belowns to, to allow its removal
 		private int dataSection;
+		
 		private Team team;
+		
 		private uint fps;
 		
 		private bool selected;
@@ -53,11 +55,12 @@ namespace LongoMatch.TimeNodes
 		private string notes;
 
 		
-		
+		#region Constructors
 		public MediaTimeNode(String name, Time start, Time stop, uint fps, int dataSection,string miniaturePath):base (name,start,stop,miniaturePath) {
 			this.dataSection = dataSection;		
 			this.team = Team.NONE;
 			this.fps = fps;
+			//A play cannot have a duration lower than 500 ms
 			if (stop <= start )
 				this.Stop = start+500;
 			else
@@ -74,6 +77,9 @@ namespace LongoMatch.TimeNodes
 			this.startFrame = (uint) this.Start.MSeconds*fps/1000;
 			this.stopFrame = (uint) this.Stop.MSeconds*fps/1000;
 		}
+		#endregion
+		
+		#region Properties 
 		
 		public string Notes {
 			get{return notes;}
@@ -115,18 +121,21 @@ namespace LongoMatch.TimeNodes
 				this.stopFrame = value;
 				this.Stop = new Time((int)(1000*value/fps));
 			}
+		}		
+		
+		public bool Selected {
+			get {return selected;}
+			set{this.selected = value;}			
 		}
-	
+		#endregion
+		
+		#region Public methods
+		
 		public bool HasFrame(int frame){
 			return (frame>=startFrame && frame<stopFrame);
 		}
 		
-		public bool Selected {
-			get {return selected;}
-			set{this.selected = value;}
-			
-		}
-		
+		#endregion
 	}
 		
 }
