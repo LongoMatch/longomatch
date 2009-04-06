@@ -1,5 +1,0 @@
-<CombineEntry name="adsf" fileversion="2.0" packageName="i8n1" outputType="SystemPath" relPath="local" ctype="TranslationProject">
-  <translations>
-    <Translation isoCode="af" />
-  </translations>
-</CombineEntry>
