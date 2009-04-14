@@ -27,7 +27,7 @@ namespace LongoMatch.TimeNodes
 	public class SectionsTimeNode:TimeNode
 	{
 		bool visible;// Plays can only be tagged in a category if this category is visible
-		
+		Gdk.Key hotkey; 
 		#region Constructors
 		public SectionsTimeNode(String name,Time start, Time stop,bool visible):base (name,start,stop)
 		{
@@ -39,6 +39,11 @@ namespace LongoMatch.TimeNodes
 		public bool Visible{
 			get{return this.visible;}
 			set{this.visible = value;}
+		}
+		
+		public Gdk.Key HotKey{
+			get{return this.hotkey;}
+			set{this.hotkey = value;}
 		}
 		#endregion
 	}
