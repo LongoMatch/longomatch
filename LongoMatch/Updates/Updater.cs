@@ -55,6 +55,7 @@ namespace LongoMatch.Updates
 				downloadURL = parser.DownloadURL;				                  
 			}
 			catch (Exception ex){	
+				Console.WriteLine ("Error downloading version file:\n"+ex);
 					update = actual;
 			}			
 		}
