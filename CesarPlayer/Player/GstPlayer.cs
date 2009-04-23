@@ -1183,9 +1183,8 @@ namespace LongoMatch.Video.Player {
 		[DllImport("libcesarplayer.dll")]
 		static extern void bacon_video_widget_seek_to_next_frame (IntPtr raw,bool in_segment);		
 		public void SeekToNextFrame(bool in_segment){
-			bacon_video_widget_seek_to_next_frame(Handle,in_segment);
-			
-			
+	
+			bacon_video_widget_seek_to_next_frame(Handle,in_segment);					
 		}
 		
 		[DllImport("libcesarplayer.dll")]
