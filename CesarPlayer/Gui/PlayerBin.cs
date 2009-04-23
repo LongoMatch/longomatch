@@ -56,13 +56,7 @@ namespace LongoMatch.Gui
 		//the player.mrl is diferent from the filenameas it's an uri eg:file:///foo.avi
 		private string filename = null;
 		protected VolumeWindow vwin;
-		
-		
-
-
-	
-
-		
+				
 		
 		public PlayerBin()
 		{		
@@ -242,8 +236,9 @@ namespace LongoMatch.Gui
 		}
 		
 		public void SeekToPreviousFrame(bool in_segment){
-			if (player.CurrentTime > segmentStartTime)
+			if (player.CurrentTime > segmentStartTime){
 				player.SeekToPreviousFrame(in_segment);
+			}
 
 		}
 		
