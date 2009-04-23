@@ -10,7 +10,7 @@
 * Foundation; either version 2 of the License, or (at your option)
 * any later version.
 * 
-* foob is distributed in the hope that it will be useful,
+* Gstreamer DV is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU General Public License for more details.
@@ -61,14 +61,11 @@ enum
 enum
 {
 	PROP_0,
-	PROP_DISPLAY_HEIGHT,
-	PROP_DISPLAY_WIDTH,
 	PROP_ENCODE_HEIGHT,
 	PROP_ENCODE_WIDTH,
 	PROP_VIDEO_BITRATE,
 	PROP_AUDIO_BITRATE,
 	PROP_OUTPUT_FILE,
-	PROP_INPUT_FILE,
 	PROP_WITH_AUDIO
 };
 
@@ -77,8 +74,6 @@ struct GstCameraCapturerPrivate
 
 	/*Encoding properties*/
 	gchar				*output_file;	
-	guint				display_height;
-	guint				display_width;
 	guint				encode_height;
 	guint				encode_width;
 	guint				audio_bitrate;
@@ -229,7 +224,7 @@ static void gst_camera_capturer_set_audio_bit_rate (GstCameraCapturer *gcc,gint 
 
 	gcc->priv->audio_bitrate= bitrate;
 	g_object_set (gcc->priv->audioenc,"bitrate",bitrate,NULL);
-	GST_INFO ("Changed audio bitrate to :\n%d",bitrate);
+	GST_INFO ("Changed audio bitrate to :\n%d",gcc->priv->audio_bitrate);
 
 }
 
@@ -291,7 +286,7 @@ case PROP_ENCODE_HEIGHT:
 	g_value_set_uint (value,gcc->priv->encode_height);
 	break;
 case PROP_ENCODE_WIDTH:
-	g_value_set_uint (value,gcc->priv->display_width);
+	g_value_set_uint (value,gcc->priv->encode_width);
 	break;
 case PROP_AUDIO_BITRATE:
 	g_value_set_uint (value,gcc->priv->audio_bitrate);
@@ -389,7 +384,7 @@ gcc_expose_event (GtkWidget *widget, GdkEventExpose *event, gpointer user_data)
 	return TRUE;
 }
 
-static void gcc_window_construct(int width, int weight,  GstCameraCapturer *gcc){
+static void gcc_window_construct(int width, int height,  GstCameraCapturer *gcc){
 
 	//Create the Video Widget
 	gcc->priv->video_window = gst_video_widget_new();
@@ -428,7 +423,7 @@ gst_camera_capturer_new (gchar *filename, GError ** err )
 	gcc->priv->audio_bitrate= 128;
 	gcc->priv->video_bitrate= 5000;
 
-	gcc_window_construct(gcc->priv->display_width,gcc->priv->display_height,gcc);
+	gcc_window_construct(720,576,gcc);
 
 	gcc->priv->main_pipeline = gst_pipeline_new ("main_pipeline");
 
@@ -459,13 +454,13 @@ gst_camera_capturer_new (gchar *filename, GError ** err )
 	g_object_set (gcc->priv->camerabin,"audiosrc",gcc->priv->audiosrc,NULL);
 
 	/*gcc->priv->videoenc = gst_element_factory_make ("ffenc_mpeg4","videoenc");
-			g_object_set (gcc->priv->camerabin,"videoenc",gcc->priv->videoenc,NULL);
+	g_object_set (gcc->priv->camerabin,"videoenc",gcc->priv->videoenc,NULL);
 	gcc->priv->audioenc = gst_element_factory_make ("faac","audioenc");
-			g_object_set (gcc->priv->camerabin,"audioenc",gcc->priv->audioenc,NULL);
+	g_object_set (gcc->priv->camerabin,"audioenc",gcc->priv->audioenc,NULL);
 	gcc->priv->videomux = gst_element_factory_make ("avimux","videomux");
-			g_object_set (gcc->priv->camerabin,"videomux",gcc->priv->videomux,NULL);*/
+	g_object_set (gcc->priv->camerabin,"videomux",gcc->priv->videomux,NULL);*/
 
-	
+
 
 	GST_INFO("Setting capture mode to \"video\"");
 	g_object_set (gcc->priv->camerabin,"mode",1,NULL);
@@ -487,18 +482,18 @@ gst_camera_capturer_new (gchar *filename, GError ** err )
 	gcc->priv->sig_bus_sync = 
 		g_signal_connect (gcc->priv->bus, "sync-message::element",
 		G_CALLBACK (gcc_element_msg_sync), gcc);
-	
+
 
 	/*gst_element_set_state (gcc->priv->camerabin, GST_STATE_NULL);
 	do
-    {
-		gst_element_get_state(gcc->priv->camerabin, &state, NULL, 
-			GST_CLOCK_TIME_NONE);
-		
-     }
-     while(state != GST_STATE_NULL);	*/
+	{
+	gst_element_get_state(gcc->priv->camerabin, &state, NULL, 
+	GST_CLOCK_TIME_NONE);
 
-	
+	}
+	while(state != GST_STATE_NULL);	*/
+
+
 
 	return gcc;
 }
@@ -533,25 +528,25 @@ gboolean gst_camera_capturer_set_video_encoder(GstCameraCapturer *gcc,GccVideoEn
 {
 	g_return_val_if_fail(GST_IS_CAMERA_CAPTURER(gcc),FALSE);
 	switch (type){
-		case GCC_VIDEO_ENCODER_TYPE_MPEG4:
-			gcc->priv->videoenc = gst_element_factory_make ("ffenc_mpeg4","videoenc");
-			g_object_set (gcc->priv->camerabin,"videoenc",gcc->priv->videoenc,NULL);
-			break;
+case GCC_VIDEO_ENCODER_TYPE_MPEG4:
+	gcc->priv->videoenc = gst_element_factory_make ("ffenc_mpeg4","videoenc");
+	g_object_set (gcc->priv->camerabin,"videoenc",gcc->priv->videoenc,NULL);
+	break;
 
-		case GCC_VIDEO_ENCODER_TYPE_XVID:
-			gcc->priv->videoenc = gst_element_factory_make ("xvid_enc","videoenc");
-			g_object_set (gcc->priv->camerabin,"videoenc",gcc->priv->videoenc,NULL);
-			break;
+case GCC_VIDEO_ENCODER_TYPE_XVID:
+	gcc->priv->videoenc = gst_element_factory_make ("xvid_enc","videoenc");
+	g_object_set (gcc->priv->camerabin,"videoenc",gcc->priv->videoenc,NULL);
+	break;
 
-		case GCC_VIDEO_ENCODER_TYPE_THEORA:
-			gcc->priv->videoenc = gst_element_factory_make ("theoraenc","videoenc");
-			g_object_set (gcc->priv->camerabin,"videoenc",gcc->priv->videoenc,NULL);
-			break;
+case GCC_VIDEO_ENCODER_TYPE_THEORA:
+	gcc->priv->videoenc = gst_element_factory_make ("theoraenc","videoenc");
+	g_object_set (gcc->priv->camerabin,"videoenc",gcc->priv->videoenc,NULL);
+	break;
 
-		case GCC_VIDEO_ENCODER_TYPE_H264:
-			gcc->priv->videoenc = gst_element_factory_make ("x264enc","videoenc");
-			g_object_set (gcc->priv->camerabin,"videoenc",gcc->priv->videoenc,NULL);
-			break;
+case GCC_VIDEO_ENCODER_TYPE_H264:
+	gcc->priv->videoenc = gst_element_factory_make ("x264enc","videoenc");
+	g_object_set (gcc->priv->camerabin,"videoenc",gcc->priv->videoenc,NULL);
+	break;
 
 	}
 	return TRUE;
@@ -560,22 +555,22 @@ gboolean gst_camera_capturer_set_video_encoder(GstCameraCapturer *gcc,GccVideoEn
 gboolean  gst_camera_capturer_set_audio_encoder(GstCameraCapturer *gcc,GccAudioEncoderType type)
 {
 	g_return_val_if_fail(GST_IS_CAMERA_CAPTURER(gcc),FALSE);
-	
+
 	switch (type){
-		case GCC_AUDIO_ENCODER_MP3:
-			gcc->priv->audioenc = gst_element_factory_make ("ffenc_libmp3lame","audioenc");
-			g_object_set (gcc->priv->camerabin,"audioenc",gcc->priv->audioenc,NULL);
-			break;
+case GCC_AUDIO_ENCODER_MP3:
+	gcc->priv->audioenc = gst_element_factory_make ("ffenc_libmp3lame","audioenc");
+	g_object_set (gcc->priv->camerabin,"audioenc",gcc->priv->audioenc,NULL);
+	break;
 
-		case GCC_AUDIO_ENCODER_AAC:
-			gcc->priv->audioenc = gst_element_factory_make ("faac","audioenc");
-			g_object_set (gcc->priv->camerabin,"audioenc",gcc->priv->audioenc,NULL);
-			break;
+case GCC_AUDIO_ENCODER_AAC:
+	gcc->priv->audioenc = gst_element_factory_make ("faac","audioenc");
+	g_object_set (gcc->priv->camerabin,"audioenc",gcc->priv->audioenc,NULL);
+	break;
 
-		case GCC_AUDIO_ENCODER_VORBIS:	
-			gcc->priv->audioenc = gst_element_factory_make ("vorbisenc","audioenc");
-			g_object_set (gcc->priv->camerabin,"audioenc",gcc->priv->audioenc,NULL);
-			break;
+case GCC_AUDIO_ENCODER_VORBIS:	
+	gcc->priv->audioenc = gst_element_factory_make ("vorbisenc","audioenc");
+	g_object_set (gcc->priv->camerabin,"audioenc",gcc->priv->audioenc,NULL);
+	break;
 	}
 
 	return TRUE;
@@ -587,18 +582,18 @@ gboolean gst_camera_capturer_set_video_muxer(GstCameraCapturer *gcc,GccVideoMuxe
 	g_return_val_if_fail(GST_IS_CAMERA_CAPTURER(gcc),FALSE);
 
 	switch (type){
-		case GCC_VIDEO_MUXER_OGG:
-			gcc->priv->videomux = gst_element_factory_make ("oggmux","videomux");
-			g_object_set (gcc->priv->camerabin,"videomux",gcc->priv->audioenc,NULL);
-			break;
-		case GCC_VIDEO_MUXER_AVI:
-			gcc->priv->videomux = gst_element_factory_make ("avimux","videomux");
-			g_object_set (gcc->priv->camerabin,"videomux",gcc->priv->audioenc,NULL);
-			break;
-		case GCC_VIDEO_MUXER_MATROSKA:	
-			gcc->priv->videomux = gst_element_factory_make ("matroskamux","videomux");
-			g_object_set (gcc->priv->camerabin,"videomux",gcc->priv->audioenc,NULL);
-			break;
+case GCC_VIDEO_MUXER_OGG:
+	gcc->priv->videomux = gst_element_factory_make ("oggmux","videomux");
+	g_object_set (gcc->priv->camerabin,"videomux",gcc->priv->audioenc,NULL);
+	break;
+case GCC_VIDEO_MUXER_AVI:
+	gcc->priv->videomux = gst_element_factory_make ("avimux","videomux");
+	g_object_set (gcc->priv->camerabin,"videomux",gcc->priv->audioenc,NULL);
+	break;
+case GCC_VIDEO_MUXER_MATROSKA:	
+	gcc->priv->videomux = gst_element_factory_make ("matroskamux","videomux");
+	g_object_set (gcc->priv->camerabin,"videomux",gcc->priv->audioenc,NULL);
+	break;
 	}
 
 	return TRUE;
@@ -619,27 +614,27 @@ static void gcc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer dat
 	msg_type = GST_MESSAGE_TYPE (message);
 
 	switch (msg_type) {
-		case GST_MESSAGE_ERROR: {
-			gcc_error_msg (gcc, message);
-			if (gcc->priv->main_pipeline)
-				gst_element_set_state (gcc->priv->main_pipeline, GST_STATE_NULL);              
-			break;
-		}
+case GST_MESSAGE_ERROR: {
+	gcc_error_msg (gcc, message);
+	if (gcc->priv->main_pipeline)
+		gst_element_set_state (gcc->priv->main_pipeline, GST_STATE_NULL);              
+	break;
+						}
 
-		case GST_MESSAGE_WARNING: {
-			GST_WARNING ("Warning message: %" GST_PTR_FORMAT, message);
-			break;
-		} 
+case GST_MESSAGE_WARNING: {
+	GST_WARNING ("Warning message: %" GST_PTR_FORMAT, message);
+	break;
+						  } 
 
-		case GST_MESSAGE_EOS:{
-			GST_INFO("EOS message");
-			g_signal_emit (gcc, gcc_signals[SIGNAL_EOS], 0);
-			break;
-		}			  
+case GST_MESSAGE_EOS:{
+	GST_INFO("EOS message");
+	g_signal_emit (gcc, gcc_signals[SIGNAL_EOS], 0);
+	break;
+					 }			  
 
-		default:
-			GST_LOG ("Unhandled message: %" GST_PTR_FORMAT, message);
-		break;
+default:
+	GST_LOG ("Unhandled message: %" GST_PTR_FORMAT, message);
+	break;
 	}
 }
 
@@ -675,11 +670,11 @@ gcc_update_interface_implementations (GstCameraCapturer *gcc)
 
 	GstXOverlay *old_xoverlay = gcc->priv->xoverlay;
 	GstElement *element = NULL;
-	
+
 	GST_INFO("Retrieving xoverlay from bin ...");
 	element = gst_bin_get_by_interface (GST_BIN (gcc->priv->camerabin),
-										GST_TYPE_X_OVERLAY);
-	
+		GST_TYPE_X_OVERLAY);
+
 	if (GST_IS_X_OVERLAY (element)) {
 		gcc->priv->xoverlay = GST_X_OVERLAY (element);
 	} else {
@@ -739,7 +734,7 @@ static int
 gcc_parse_video_stream_info (GstCaps *caps, GstCameraCapturer * gcc)
 {
 	GstStructure *s;
-	
+
 	if (!(caps))
 		return -1;
 
