@@ -26,7 +26,8 @@ using LongoMatch.Video.Editor;
 namespace LongoMatch.Gui.Dialog
 {
 	
-	
+	[System.ComponentModel.Category("LongoMatch")]
+	[System.ComponentModel.ToolboxItem(false)]
 	public partial class VideoEditionProperties : Gtk.Dialog
 	{
 		VideoQuality vq;

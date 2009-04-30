@@ -33,6 +33,8 @@ namespace LongoMatch.Gui.Component
 	
 	public delegate void ProjectSelectedHandler (Project project);
 	
+	[System.ComponentModel.Category("LongoMatch")]
+	[System.ComponentModel.ToolboxItem(true)]
 	public partial class ProjectListWidget : Gtk.Bin
 	{
 

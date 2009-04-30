@@ -24,7 +24,8 @@ using LongoMatch.DB;
 namespace LongoMatch.Gui.Dialog
 {
 	
-	
+	[System.ComponentModel.Category("LongoMatch")]
+	[System.ComponentModel.ToolboxItem(false)]
 	public partial class NewProjectDialog : Gtk.Dialog
 	{
 		

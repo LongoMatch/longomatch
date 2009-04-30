@@ -26,7 +26,8 @@ using LongoMatch.Handlers;
 namespace LongoMatch.Gui.Component
 {
 	
-	
+	[System.ComponentModel.Category("LongoMatch")]
+	[System.ComponentModel.ToolboxItem(true)]
 	public partial class NotesWidget : Gtk.Bin
 	{
 		public event TimeNodeChangedHandler TimeNodeChanged;

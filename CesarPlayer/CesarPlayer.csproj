@@ -1,4 +1,5 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{21A2B917-44CA-4E09-A6DA-9B4E2279C267}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -10,7 +11,8 @@
     <NoStdLib>False</NoStdLib>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <TargetFrameworkVersion>Mono v2.0</TargetFrameworkVersion>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -35,153 +37,76 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <WarningLevel>3</WarningLevel>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Capturer\ErrorHandler.cs">
-      <Link>ErrorHandler.cs</Link>
-    </Compile>
-    <Compile Include="Capturer\GccAudioEncoderType.cs">
-      <Link>GccAudioEncoderType.cs</Link>
-    </Compile>
-    <Compile Include="Capturer\GccError.cs">
-      <Link>GccError.cs</Link>
-    </Compile>
-    <Compile Include="Capturer\GccVideoEncoderType.cs">
-      <Link>GccVideoEncoderType.cs</Link>
-    </Compile>
-    <Compile Include="Capturer\GccVideoMuxerType.cs">
-      <Link>GccVideoMuxerType.cs</Link>
-    </Compile>
-    <Compile Include="Capturer\GstCameraCapturer.cs">
-      <Link>GstCameraCapturer.cs</Link>
-    </Compile>
-    <Compile Include="Capturer\GvcAudioEncoderType.cs">
-      <Link>GvcAudioEncoderType.cs</Link>
-    </Compile>
-    <Compile Include="Capturer\GvcUseType.cs">
-      <Link>GvcUseType.cs</Link>
-    </Compile>
-    <Compile Include="Capturer\GvcVideoEncoderType.cs">
-      <Link>GvcVideoEncoderType.cs</Link>
-    </Compile>
-    <Compile Include="Capturer\ICapturer.cs">
-      <Link>ICapturer.cs</Link>
-    </Compile>
-    <Compile Include="Capturer\ObjectManager.cs">
-      <Link>ObjectManager.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\generated.cs">
-      <Link>generated.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.Gui.CapturerBin.cs">
-      <Link>LongoMatch.Gui.CapturerBin.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.Gui.PlayerBin.cs">
-      <Link>LongoMatch.Gui.PlayerBin.cs</Link>
-    </Compile>
-    <Compile Include="gtk-gui\LongoMatch.Gui.VolumeWindow.cs">
-      <Link>LongoMatch.Gui.VolumeWindow.cs</Link>
-    </Compile>
-    <Compile Include="Gui\CapturerBin.cs">
-      <Link>CapturerBin.cs</Link>
-    </Compile>
-    <Compile Include="Gui\PlayerBin.cs">
-      <Link>PlayerBin.cs</Link>
-    </Compile>
-    <Compile Include="Gui\VolumeWindow.cs">
-      <Link>VolumeWindow.cs</Link>
-    </Compile>
-    <Compile Include="Handlers\BufferingHandler.cs">
-      <Link>BufferingHandler.cs</Link>
-    </Compile>
-    <Compile Include="Handlers\ErrorHandler.cs">
-      <Link>ErrorHandler.cs</Link>
-    </Compile>
-    <Compile Include="Handlers\GotRedirectHandler.cs">
-      <Link>GotRedirectHandler.cs</Link>
-    </Compile>
-    <Compile Include="Handlers\Handlers.cs">
-      <Link>Handlers.cs</Link>
-    </Compile>
-    <Compile Include="Handlers\StateChangedHandler.cs">
-      <Link>StateChangedHandler.cs</Link>
-    </Compile>
-    <Compile Include="Handlers\TickHandler.cs">
-      <Link>TickHandler.cs</Link>
-    </Compile>
-    <Compile Include="Handlers\TitleChangeHandler.cs">
-      <Link>TitleChangeHandler.cs</Link>
-    </Compile>
+    <Compile Include="Capturer\ErrorHandler.cs" />
+    <Compile Include="Capturer\GccAudioEncoderType.cs" />
+    <Compile Include="Capturer\GccError.cs" />
+    <Compile Include="Capturer\GccVideoEncoderType.cs" />
+    <Compile Include="Capturer\GccVideoMuxerType.cs" />
+    <Compile Include="Capturer\GstCameraCapturer.cs" />
+    <Compile Include="Capturer\GvcAudioEncoderType.cs" />
+    <Compile Include="Capturer\GvcUseType.cs" />
+    <Compile Include="Capturer\GvcVideoEncoderType.cs" />
+    <Compile Include="Capturer\ICapturer.cs" />
+    <Compile Include="Capturer\ObjectManager.cs" />
+    <Compile Include="gtk-gui\generated.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.CapturerBin.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.PlayerBin.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.VolumeWindow.cs" />
+    <Compile Include="Gui\CapturerBin.cs" />
+    <Compile Include="Gui\PlayerBin.cs" />
+    <Compile Include="Gui\VolumeWindow.cs" />
+    <Compile Include="Handlers\BufferingHandler.cs" />
+    <Compile Include="Handlers\ErrorHandler.cs" />
+    <Compile Include="Handlers\GotRedirectHandler.cs" />
+    <Compile Include="Handlers\Handlers.cs" />
+    <Compile Include="Handlers\StateChangedHandler.cs" />
+    <Compile Include="Handlers\TickHandler.cs" />
+    <Compile Include="Handlers\TitleChangeHandler.cs" />
     <Compile Include="PlayerMaker.cs" />
-    <Compile Include="Player\GstPlayer.cs">
-      <Link>GstPlayer.cs</Link>
-    </Compile>
-    <Compile Include="Player\GstPlayerAspectRatio.cs">
-      <Link>GstPlayerAspectRatio.cs</Link>
-    </Compile>
-    <Compile Include="Player\GstUseType.cs">
-      <Link>GstUseType.cs</Link>
-    </Compile>
-    <Compile Include="Player\IPlayer.cs">
-      <Link>IPlayer.cs</Link>
-    </Compile>
-    <Compile Include="Player\ObjectManager.cs">
-      <Link>ObjectManager.cs</Link>
-    </Compile>
-    <Compile Include="Utils\FramesCapturer.cs">
-      <Link>FramesCapturer.cs</Link>
-    </Compile>
-    <Compile Include="Utils\GstPlayerMetadataType.cs">
-      <Link>GstPlayerMetadataType.cs</Link>
-    </Compile>
-    <Compile Include="Utils\IFramesCapturer.cs">
-      <Link>IFramesCapturer.cs</Link>
-    </Compile>
-    <Compile Include="Utils\IMetadataReader.cs">
-      <Link>IMetadataReader.cs</Link>
-    </Compile>
-    <Compile Include="Utils\TimeString.cs">
-      <Link>TimeString.cs</Link>
-    </Compile>
-    <None Include="gtk-gui\gui.stetic">
-      <Link>gui.stetic</Link>
-    </None>
-    <None Include="gtk-gui\objects.xml">
-      <Link>objects.xml</Link>
-    </None>
+    <Compile Include="Player\GstPlayer.cs" />
+    <Compile Include="Player\GstPlayerAspectRatio.cs" />
+    <Compile Include="Player\GstUseType.cs" />
+    <Compile Include="Player\IPlayer.cs" />
+    <Compile Include="Player\ObjectManager.cs" />
+    <Compile Include="Utils\FramesCapturer.cs" />
+    <Compile Include="Utils\GstPlayerMetadataType.cs" />
+    <Compile Include="Utils\IFramesCapturer.cs" />
+    <Compile Include="Utils\IMetadataReader.cs" />
+    <Compile Include="Utils\TimeString.cs" />
+    <None Include="gtk-gui\gui.stetic" />
+    <None Include="gtk-gui\objects.xml" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="atk-sharp">
-      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.0\lib\mono\gac\atk-sharp\2.12.0.0__35e10195dab3c99f\atk-sharp.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="gdk-sharp">
-      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.0\lib\mono\gac\gdk-sharp\2.12.0.0__35e10195dab3c99f\gdk-sharp.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="glib-sharp">
-      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.0\lib\mono\gac\glib-sharp\2.12.0.0__35e10195dab3c99f\glib-sharp.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="gtk-sharp">
-      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.0\lib\mono\gac\gtk-sharp\2.12.0.0__35e10195dab3c99f\gtk-sharp.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Mono.Cairo">
-      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.2\lib\mono\gac\Mono.Cairo\2.0.0.0__0738eb9f132ed756\Mono.Cairo.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="Mono.Posix">
-      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.2\lib\mono\gac\Mono.Posix\2.0.0.0__0738eb9f132ed756\Mono.Posix.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System">
-      <HintPath>..\..\..\..\..\..\Archivos de programa\Mono-2.2\lib\mono\gac\System\2.0.0.0__b77a5c561934e089\System.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Directorio Nuevo" />
+    <Reference Include="Mono.Cairo" />
+    <Reference Include="Mono.Posix" />
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(SharpDevelopBinPath)\SharpDevelop.Build.CSharp.targets" />
 </Project>

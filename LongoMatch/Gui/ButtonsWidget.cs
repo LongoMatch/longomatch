@@ -26,7 +26,8 @@ using System.Collections.Generic;
 
 namespace LongoMatch.Gui.Component
 {
-	
+	[System.ComponentModel.Category("LongoMatch")]
+	[System.ComponentModel.ToolboxItem(true)]
 	public partial class ButtonsWidget : Gtk.Bin
 	{
 				

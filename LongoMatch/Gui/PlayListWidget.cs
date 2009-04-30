@@ -37,7 +37,8 @@ using LongoMatch.Playlist;
 namespace LongoMatch.Gui.Component
 {
 	
-	
+	[System.ComponentModel.Category("LongoMatch")]
+	[System.ComponentModel.ToolboxItem(true)]
 	public partial class PlayListWidget : Gtk.Bin
 	{
 		public event PlayListNodeSelectedHandler PlayListNodeSelected;

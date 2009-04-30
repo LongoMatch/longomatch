@@ -1,4 +1,4 @@
-<Combine releaseversion="0.9.0" name="LongoMatch" fileversion="2.0" description="LongoMatch : The Digital Coach" outputpath="build/bin/">
+<Combine fileversion="2.0" description="LongoMatch : The Digital Coach" outputpath="build/bin/" releaseversion="0.9.0" name="LongoMatch">
   <Configurations active="Release">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="LongoMatch" configuration="Debug" />
@@ -18,7 +18,6 @@
     <Execute type="None" entry="libcesarplayer" />
     <Execute type="None" entry="Translations" />
     <Execute type="None" entry="CesarPlayer" />
-    <Execute type="None" entry="Packages" />
   </StartMode>
   <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="UpdateNearestChangeLog" />
   <Entries>

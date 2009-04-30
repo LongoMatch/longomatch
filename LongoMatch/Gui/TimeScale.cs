@@ -32,6 +32,8 @@ namespace LongoMatch.Gui.Component
 {
 	
 	
+	[System.ComponentModel.Category("LongoMatch")]
+	[System.ComponentModel.ToolboxItem(true)]
 	public class TimeScale : Gtk.DrawingArea
 	{
 		private const int SECTION_HEIGHT = 25;

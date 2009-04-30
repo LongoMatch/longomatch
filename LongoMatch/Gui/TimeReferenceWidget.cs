@@ -29,6 +29,8 @@ namespace LongoMatch.Gui.Component
 {
 	
 	
+	[System.ComponentModel.Category("LongoMatch")]
+	[System.ComponentModel.ToolboxItem(true)]
 	public partial class TimeReferenceWidget : Gtk.DrawingArea
 	{
 		private const int SECTION_HEIGHT = 30;

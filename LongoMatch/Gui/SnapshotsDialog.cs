@@ -25,7 +25,8 @@ using LongoMatch.Handlers;
 namespace LongoMatch.Gui.Dialog
 {
 	
-	
+	[System.ComponentModel.Category("LongoMatch")]
+	[System.ComponentModel.ToolboxItem(false)]
 	public partial class SnapshotsDialog : Gtk.Dialog
 	{
 		

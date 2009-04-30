@@ -28,6 +28,8 @@ namespace LongoMatch.Gui.Component
 {
 	
 	
+	[System.ComponentModel.Category("LongoMatch")]
+	[System.ComponentModel.ToolboxItem(true)]
 	public partial class SectionsPropertiesWidget : Gtk.Bin
 	{
 		TimeNodeProperties[] tndArray;

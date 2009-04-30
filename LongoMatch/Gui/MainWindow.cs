@@ -36,6 +36,8 @@ using LongoMatch.IO;
 
 namespace LongoMatch.Gui
 {	
+	[System.ComponentModel.Category("LongoMatch")]
+	[System.ComponentModel.ToolboxItem(false)]
 	public partial class MainWindow : Gtk.Window
 	{
 		private static Project openedProject;		

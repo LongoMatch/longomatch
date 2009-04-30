@@ -28,7 +28,8 @@ using LongoMatch.Gui.Component;
 namespace LongoMatch.Gui.Dialog
 {
 	
-	
+	[System.ComponentModel.Category("LongoMatch")]
+	[System.ComponentModel.ToolboxItem(false)]
 	public partial class DBManager : Gtk.Dialog
 	{
 

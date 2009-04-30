@@ -24,7 +24,8 @@ using LongoMatch.Handlers;
 namespace LongoMatch.Gui.Popup
 {
 	
-
+	[System.ComponentModel.Category("LongoMatch")]
+	[System.ComponentModel.ToolboxItem(false)]
 	public partial class CalendarPopup : Gtk.Window
 	{
  
