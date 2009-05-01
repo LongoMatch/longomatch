@@ -32,6 +32,7 @@ using LongoMatch.Gui;
 using LongoMatch.Video.Player;
 using LongoMatch.Updates;
 using LongoMatch.IO;
+using System.Reflection;
 
 
 namespace LongoMatch.Gui
@@ -391,7 +392,7 @@ namespace LongoMatch.Gui
 			Gtk.AboutDialog about = new AboutDialog();
 			if (Environment.OSVersion.Platform == PlatformID.Unix)
 		    about.ProgramName = "LongoMatch";
-			about.Version = "0.14";
+			about.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 			about.Copyright = "Copyright ©2007-2009 Andoni Morales Alastruey";
 			about.Website = "http://www.ylatuya.es";
 			about.License = "This program is free software; you can redistribute it and/or modify\n it under the terms of the GNU General Public License as published by\nthe Free Software Foundation; either version 2 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU General Public License for more details.\n";
