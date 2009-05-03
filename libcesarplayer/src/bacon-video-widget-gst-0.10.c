@@ -2239,17 +2239,14 @@ gboolean
 bacon_video_widget_new_file_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop)
 {
 	GstState cur_state;
-
+	GstMessage * err_msg;
+	
   	g_return_val_if_fail (bvw != NULL, FALSE);
   	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   	g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
-
 	
   	GST_LOG ("Segment seeking from %" GST_TIME_FORMAT, GST_TIME_ARGS (start * GST_MSECOND));
-  	
-  	
-  
-  	
+  	  	
   	if (start > bvw->priv->stream_length
       	&& bvw->priv->stream_length > 0
       	&& !g_str_has_prefix (bvw->priv->mrl, "dvd:")
@@ -2259,10 +2256,13 @@ bacon_video_widget_new_file_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop
     	return TRUE;
   	}
 	 
-		do{
+		/*do{
 			 gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
 
-		}while(cur_state <= GST_STATE_READY);
+		}while(cur_state <= GST_STATE_READY);*/
+		
+		poll_for_state_change_full (bvw, bvw->priv->play,
+        GST_STATE_PAUSED, &err_msg, -1);
        
 		got_time_tick (bvw->priv->play, start * GST_MSECOND, bvw);
 		gst_element_seek (bvw->priv->play, 1.0,
