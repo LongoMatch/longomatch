@@ -62,6 +62,7 @@ namespace LongoMatch.Gui
 			this.eManager = new EventsManager(this.treewidget1,this.buttonswidget1,this.playlistwidget2,
 			                                  this.playerbin1,this.timelinewidget1,this.videoprogressbar,
 			                                  this.noteswidget1);
+			
 			playerbin1.SetLogo(System.IO.Path.Combine(MainClass.ImagesDir(),"background.png"));
 
 			playerbin1.LogoMode = true;
@@ -139,7 +140,7 @@ namespace LongoMatch.Gui
 			this.playerbin1.Close();			
 			this.playerbin1.LogoMode = true;
 			this.SaveDB();			
-			openedProject = null;	
+			this.openedProject = null;	
 			this.eManager.OpenedProject = null;
 			this.selectedTimeNode = null;
 			this.CloseProjectAction.Sensitive=false;
