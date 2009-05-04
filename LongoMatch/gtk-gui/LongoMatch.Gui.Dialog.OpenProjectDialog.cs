@@ -42,8 +42,6 @@ namespace LongoMatch.Gui.Dialog {
             w1.Add(this.projectlistwidget);
             Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(w1[this.projectlistwidget]));
             w2.Position = 0;
-            w2.Expand = false;
-            w2.Fill = false;
             // Internal child LongoMatch.Gui.Dialog.OpenProjectDialog.ActionArea
             Gtk.HButtonBox w3 = this.ActionArea;
             w3.Name = "dialog1_ActionArea";
@@ -79,7 +77,7 @@ namespace LongoMatch.Gui.Dialog {
                 this.Child.ShowAll();
             }
             this.DefaultWidth = 615;
-            this.DefaultHeight = 300;
+            this.DefaultHeight = 359;
             this.Show();
             this.projectlistwidget.ProjectSelectedEvent += new LongoMatch.Gui.Component.ProjectSelectedHandler(this.OnFiledatalistwidgetProjectSelectedEvent);
         }
