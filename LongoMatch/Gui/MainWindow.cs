@@ -140,7 +140,7 @@ namespace LongoMatch.Gui
 			this.playerbin1.Close();			
 			this.playerbin1.LogoMode = true;
 			this.SaveDB();			
-			this.openedProject = null;	
+			openedProject = null;	
 			this.eManager.OpenedProject = null;
 			this.selectedTimeNode = null;
 			this.CloseProjectAction.Sensitive=false;

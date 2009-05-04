@@ -24,7 +24,7 @@ namespace LongoMatch.Gui.Dialog {
             // Widget LongoMatch.Gui.Dialog.TemplateNameSelectionDialog
             this.Name = "LongoMatch.Gui.Dialog.TemplateNameSelectionDialog";
             this.Title = Mono.Unix.Catalog.GetString("Select template name");
-            this.Icon = Gdk.Pixbuf.LoadFromResource("lgmlogo");
+            this.Icon = Gdk.Pixbuf.LoadFromResource("longomatch_logo.png");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.Gravity = ((Gdk.Gravity)(5));
             this.HasSeparator = false;

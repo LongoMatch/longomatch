@@ -892,8 +892,10 @@ BVW_expose_event (GtkWidget *widget, GdkEventExpose *event, gpointer user_data)
 	 //Pass the expose to the widget
 	gst_video_widget_force_expose(widget,event);
 	 
-    if (bvw->priv->xoverlay != NULL && !bvw->priv->logo_mode)
+    if (bvw->priv->xoverlay != NULL && !bvw->priv->logo_mode){
       gst_x_overlay_expose (bvw->priv->xoverlay);		
+      g_print("drawing on expose\n");
+    }
    
    return TRUE;
 

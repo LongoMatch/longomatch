@@ -986,7 +986,7 @@
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.DBManager" design-size="1282 465">
     <property name="MemberName" />
     <property name="Title" translatable="yes">DataBase Manager</property>
-    <property name="Icon">resource:lgmlogo</property>
+    <property name="Icon">resourcelongomatch_logo.png</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
     <property name="Gravity">Center</property>
@@ -1161,7 +1161,7 @@
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.OpenProjectDialog" design-size="615 300">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Open Project</property>
-    <property name="Icon">resource:lgmlogo</property>
+    <property name="Icon">resource:longomatch_logo.png</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
     <property name="Gravity">Center</property>
@@ -1235,7 +1235,7 @@
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.NewProjectDialog" design-size="645 391">
     <property name="MemberName" />
     <property name="Title" translatable="yes">New Project</property>
-    <property name="Icon">resource:lgmlogo</property>
+    <property name="Icon">resource:longomatch_logo.png</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
     <property name="DestroyWithParent">True</property>
@@ -1858,7 +1858,7 @@
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.SectionsTemplates" design-size="803 388">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Templates Manager</property>
-    <property name="Icon">resource:lgmlogo</property>
+    <property name="Icon">resource:longomatch_logo.png</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
     <property name="Gravity">Center</property>
@@ -2132,7 +2132,7 @@
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">LongoMatch</property>
-    <property name="Icon">resource:lgmlogo</property>
+    <property name="Icon">resource:longomatch_logo.png</property>
     <property name="WindowPosition">CenterAlways</property>
     <property name="Gravity">Center</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
@@ -2498,7 +2498,7 @@
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.TemplateEditorDialog" design-size="758 404">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Template Editor</property>
-    <property name="Icon">resource:lgmlogo</property>
+    <property name="Icon">resource:longomatch_logo.png</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
     <property name="Gravity">Center</property>
@@ -2719,7 +2719,7 @@ new one.</property>
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.TemplateNameSelectionDialog" design-size="232 114">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Select template name</property>
-    <property name="Icon">resource:lgmlogo</property>
+    <property name="Icon">resource:longomatch_logo.png</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Gravity">Center</property>
     <property name="Buttons">2</property>
@@ -2881,7 +2881,7 @@ new one.</property>
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.VideoEditionProperties" design-size="392 145">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Video Properties</property>
-    <property name="Icon">resource:lgmlogo</property>
+    <property name="Icon">resource:longomatch_logo.png</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
     <property name="Gravity">Center</property>
@@ -3056,7 +3056,7 @@ Extra</property>
   </widget>
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.SnapshotsDialog" design-size="323 160">
     <property name="MemberName" />
-    <property name="Icon">resource:lgmlogo</property>
+    <property name="Icon">resource:longomatch_logo.png</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Gravity">Center</property>
     <property name="SkipPagerHint">True</property>
@@ -3231,7 +3231,7 @@ Extra</property>
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.Transcoder" design-size="400 192">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Transcoder</property>
-    <property name="Icon">resource:lgmlogo</property>
+    <property name="Icon">resource:longomatch_logo.png</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
     <property name="Gravity">Center</property>
@@ -3449,7 +3449,7 @@ Extra</property>
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.FramesCaptureProgressDialog" design-size="400 108">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Capture Progress</property>
-    <property name="Icon">resource:lgmlogo</property>
+    <property name="Icon">resource:longomatch_logo.png</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
     <property name="BorderWidth">3</property>
@@ -3516,7 +3516,7 @@ Extra</property>
   </widget>
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.UpdateDialog" design-size="508 220">
     <property name="MemberName" />
-    <property name="Icon">resource:lgmlogo</property>
+    <property name="Icon">resource:longomatch_logo.png</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Buttons">1</property>
     <property name="HelpButton">False</property>

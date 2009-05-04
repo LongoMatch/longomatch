@@ -42,7 +42,7 @@ namespace LongoMatch.Gui.Dialog {
             // Widget LongoMatch.Gui.Dialog.DBManager
             this.Name = "LongoMatch.Gui.Dialog.DBManager";
             this.Title = Mono.Unix.Catalog.GetString("DataBase Manager");
-            this.Icon = Gdk.Pixbuf.LoadFromResource("lgmlogo");
+            this.Icon = Gdk.Pixbuf.LoadFromResource("longomatch_logo.png");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.Modal = true;
             this.Gravity = ((Gdk.Gravity)(5));
