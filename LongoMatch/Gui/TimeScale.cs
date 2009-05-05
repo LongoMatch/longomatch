@@ -82,8 +82,13 @@ namespace LongoMatch.Gui.Component
 			this.color = this.RGBToCairoColor(color);
 			this.color.A = ALPHA;
 			this.Events = EventMask.PointerMotionMask | EventMask.ButtonPressMask | EventMask.ButtonReleaseMask ;
+			
 			dic = new Dictionary<MenuItem,MediaTimeNode>();
+			
 			layout =  new Pango.Layout(this.PangoContext);
+			layout.Wrap = Pango.WrapMode.WordChar;
+			layout.Alignment = Pango.Alignment.Left;
+
 			SetMenu();
 			locker = new object();
 		}
@@ -163,7 +168,7 @@ namespace LongoMatch.Gui.Component
 							hasSelectedTimeNode = true;
 						}								
 					}
-					//Then we draw the selected TimeNode ove the oders
+					//Then we draw the selected TimeNode over the others
 					if (hasSelectedTimeNode){					
 						g.Rectangle( new Cairo.Rectangle(selected.StartFrame/pixelRatio,3,selected.TotalFrames/pixelRatio,height-6));					
 						g.Color = new Cairo.Color (0, 0, 0, 1);		
@@ -208,9 +213,19 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		private void DrawSectionName(){
+			//FIXME 200 is enought?
+			layout.Width = Pango.Units.FromPixels(200);
 			layout.SetMarkup(name);
 			this.GdkWindow.DrawLayout(this.Style.TextGC(StateType.Normal),this.Allocation.X,0,layout);
 			
+		}
+		
+		private void DrawTimeNodesName(){
+			foreach (MediaTimeNode tn in list){	
+				layout.Width = Pango.Units.FromPixels((int)(tn.TotalFrames/pixelRatio-3));
+				layout.SetMarkup (tn.Name);
+				this.GdkWindow.DrawLayout(this.Style.TextGC(StateType.Normal),(int)(tn.StartFrame/pixelRatio),2,layout);
+			}
 		}
 		
 		private void ProcessButton3(double X){
@@ -278,16 +293,19 @@ namespace LongoMatch.Gui.Component
 		protected void OnDelete(object obj, EventArgs args){
 			MediaTimeNode tNode;
 			dic.TryGetValue((MenuItem)obj, out tNode);
-			if (this.TimeNodeDeleted != null && tNode != null){
-				this.TimeNodeDeleted(tNode);
+			if (TimeNodeDeleted != null && tNode != null){
+				TimeNodeDeleted(tNode);
 			}
 		}
 		
 		protected override bool OnExposeEvent (EventExpose evnt)
 		{			
-			
-			this.DrawTimeNodes(evnt.Window);
-			this.DrawSectionName();
+			if (this.Visible){
+				DrawTimeNodes(evnt.Window);
+				//We don't need the draw the Sections Names if we also draw the TimeNode name
+				//DrawSectionName();
+				DrawTimeNodesName();
+			}
 			return base.OnExposeEvent (evnt);			
 		}
 		
