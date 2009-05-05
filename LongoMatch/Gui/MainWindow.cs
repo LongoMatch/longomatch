@@ -390,10 +390,11 @@ namespace LongoMatch.Gui
 		
 		protected virtual void OnAboutActionActivated (object sender, System.EventArgs e)
 		{
+			Version version = Assembly.GetExecutingAssembly().GetName().Version;
 			Gtk.AboutDialog about = new AboutDialog();
 			if (Environment.OSVersion.Platform == PlatformID.Unix)
 		    about.ProgramName = "LongoMatch";
-			about.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+			about.Version = String.Format("{0}.{1}.{2}",version.Major,version.Minor,version.Build);
 			about.Copyright = "Copyright ©2007-2009 Andoni Morales Alastruey";
 			about.Website = "http://www.ylatuya.es";
 			about.License = "This program is free software; you can redistribute it and/or modify\n it under the terms of the GNU General Public License as published by\nthe Free Software Foundation; either version 2 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU General Public License for more details.\n";
