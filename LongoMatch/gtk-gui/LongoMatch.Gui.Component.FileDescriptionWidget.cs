@@ -302,7 +302,7 @@ namespace LongoMatch.Gui.Component {
             w28.LeftAttach = ((uint)(1));
             w28.RightAttach = ((uint)(2));
             // Container child table1.Gtk.Table+TableChild
-            this.visitorSpinButton = new Gtk.SpinButton(0, 100, 1);
+            this.visitorSpinButton = new Gtk.SpinButton(0, 1000, 1);
             this.visitorSpinButton.CanFocus = true;
             this.visitorSpinButton.Name = "visitorSpinButton";
             this.visitorSpinButton.Adjustment.PageIncrement = 10;

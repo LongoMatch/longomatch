@@ -31,7 +31,7 @@ namespace LongoMatch.Gui.Component {
             Stetic.BinContainer.Attach(this);
             this.Name = "LongoMatch.Gui.Component.TimeAdjustWidget";
             // Container child LongoMatch.Gui.Component.TimeAdjustWidget.Gtk.Container+ContainerChild
-            this.table1 = new Gtk.Table(((uint)(3)), ((uint)(5)), false);
+            this.table1 = new Gtk.Table(((uint)(1)), ((uint)(5)), false);
             this.table1.Name = "table1";
             this.table1.RowSpacing = ((uint)(6));
             this.table1.ColumnSpacing = ((uint)(6));
@@ -65,7 +65,7 @@ namespace LongoMatch.Gui.Component {
             w3.XOptions = ((Gtk.AttachOptions)(4));
             w3.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
-            this.spinbutton2 = new Gtk.SpinButton(-100, 100, 1);
+            this.spinbutton2 = new Gtk.SpinButton(0, 100, 1);
             this.spinbutton2.CanFocus = true;
             this.spinbutton2.Name = "spinbutton2";
             this.spinbutton2.Adjustment.PageIncrement = 10;

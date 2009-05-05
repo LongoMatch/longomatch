@@ -397,7 +397,7 @@
               <widget class="Gtk.SpinButton" id="visitorSpinButton">
                 <property name="MemberName">visitorSpinButton</property>
                 <property name="CanFocus">True</property>
-                <property name="Upper">100</property>
+                <property name="Upper">1000</property>
                 <property name="PageIncrement">10</property>
                 <property name="StepIncrement">1</property>
                 <property name="ClimbRate">1</property>
@@ -1301,45 +1301,14 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.TimeAdjustWidget" design-size="303 64">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.TimeAdjustWidget" design-size="303 24">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.Table" id="table1">
         <property name="MemberName" />
-        <property name="NRows">3</property>
         <property name="NColumns">5</property>
         <property name="RowSpacing">6</property>
         <property name="ColumnSpacing">6</property>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
         <child>
           <widget class="Gtk.Label" id="label1">
             <property name="MemberName" />
@@ -1402,7 +1371,6 @@
           <widget class="Gtk.SpinButton" id="spinbutton2">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="Lower">-100</property>
             <property name="Upper">100</property>
             <property name="PageIncrement">10</property>
             <property name="StepIncrement">1</property>
