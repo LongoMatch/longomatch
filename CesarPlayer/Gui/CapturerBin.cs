@@ -27,6 +27,8 @@ namespace LongoMatch.Gui
 {
 	
 	
+	[System.ComponentModel.Category("CesarPlayer")]
+	[System.ComponentModel.ToolboxItem(true)]
 	public partial class CapturerBin : Gtk.Bin
 	{
 		ICapturer capturer;

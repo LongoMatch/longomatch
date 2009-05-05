@@ -29,6 +29,8 @@ using LongoMatch.Video;
 
 namespace LongoMatch.Gui
 {
+	[System.ComponentModel.Category("LongoMatch")]
+	[System.ComponentModel.ToolboxItem(true)]
 		
 	public partial class PlayerBin : Gtk.Bin
 	{
@@ -290,6 +292,10 @@ namespace LongoMatch.Gui
 				
 		}
 		
+		public void RedrawLastFrame(){
+			player.RedrawLastFrame();
+		}
+		
 		private float getRate(){
 			VScale scale= this.vscale1;
 			double val = scale.Value;
@@ -346,14 +352,18 @@ namespace LongoMatch.Gui
 		protected virtual void OnTimescaleAdjustBounds(object o, Gtk.AdjustBoundsArgs args)
 		{
 			float pos;
+			
 				
-			if (!seeking)
+			if (!seeking){
 				seeking = true;
-			this.IsPlayingPrevState = player.Playing;
-			player.Tick -= this.tickHandler;
-			if (Environment.OSVersion.Platform != PlatformID.Win32NT){
-				player.Pause();
+				this.IsPlayingPrevState = player.Playing;
+				player.Tick -= this.tickHandler;
+				if (Environment.OSVersion.Platform != PlatformID.Win32NT){
+					player.Pause();
 				}
+			}
+			
+			
 			
 			pos = (float)timescale.Value/65535;
 			
@@ -365,6 +375,7 @@ namespace LongoMatch.Gui
 				timelabel.Text= TimeString.MSecondsToSecondsString(player.CurrentTime) + "/" + this.slength;
 			}
 			
+				
 			
 		}
 		
@@ -375,7 +386,7 @@ namespace LongoMatch.Gui
 				seeking=false;
 				player.Tick += this.tickHandler;
 				if (IsPlayingPrevState)
-					Play();
+					player.Play();
 			}
 		}
 

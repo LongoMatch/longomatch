@@ -894,7 +894,6 @@ BVW_expose_event (GtkWidget *widget, GdkEventExpose *event, gpointer user_data)
 	 
     if (bvw->priv->xoverlay != NULL && !bvw->priv->logo_mode){
       gst_x_overlay_expose (bvw->priv->xoverlay);		
-      g_print("drawing on expose\n");
     }
    
    return TRUE;
@@ -2494,6 +2493,19 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
   }
 
   g_signal_emit (bvw, BVW_signals[SIGNAL_CHANNELS_CHANGE], 0);
+}
+
+
+void 
+bacon_video_widget_redraw_last_frame (BaconVideoWidget *bvw)
+{
+	g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+	g_return_if_fail (bvw->priv->xoverlay != NULL);
+	
+	if (!bvw->priv->logo_mode && !bacon_video_widget_is_playing(bvw)){
+      gst_x_overlay_expose (bvw->priv->xoverlay);		
+    }
+	
 }
 
 

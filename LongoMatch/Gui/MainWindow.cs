@@ -427,5 +427,12 @@ namespace LongoMatch.Gui
 			fChooser.Destroy();			
 			
 		}
+		
+		protected override bool OnConfigureEvent (Gdk.EventConfigure evnt)
+		{
+			playerbin1.RedrawLastFrame();
+			return base.OnConfigureEvent (evnt);
+		}
+
 	}
 }

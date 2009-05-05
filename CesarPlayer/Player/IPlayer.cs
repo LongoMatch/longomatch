@@ -133,6 +133,8 @@ namespace LongoMatch.Video.Player
 		void SeekToPreviousFrame(bool in_segment);
 		
 		void CancelProgramedStop();
+		
+		void RedrawLastFrame();
 			
 		
 		

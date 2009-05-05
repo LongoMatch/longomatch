@@ -227,7 +227,7 @@ typedef enum {
 	BVW_RATIO_DVB
 } BaconVideoWidgetAspectRatio;
 
-
+void bacon_video_widget_redraw_last_frame (BaconVideoWidget *bvw);
 
 void bacon_video_widget_set_aspect_ratio         (BaconVideoWidget *bvw,
 						  BaconVideoWidgetAspectRatio
