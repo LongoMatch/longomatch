@@ -2130,7 +2130,7 @@
     <property name="MemberName" />
     <property name="Title" translatable="yes">LongoMatch</property>
     <property name="Icon">resource:longomatch_logo.png</property>
-    <property name="WindowPosition">CenterAlways</property>
+    <property name="WindowPosition">Center</property>
     <property name="Gravity">Center</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
     <child>
