@@ -38,6 +38,8 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build();
 			this.buf = textview1.Buffer;
+			buf.Changed += new EventHandler (OnEdition);
+			
 		}
 		
 		public MediaTimeNode Play{
@@ -55,6 +57,12 @@ namespace LongoMatch.Gui.Component
 				return buf.GetText(buf.StartIter,buf.EndIter,true);		
 			}
 		}
+		
+		protected virtual void OnEdition(object sender, EventArgs args){
+			if (Notes != play.Notes){
+				savebutton.Sensitive = true;
+			}
+		}
 
 		protected virtual void OnSavebuttonClicked (object sender, System.EventArgs e)
 		{
@@ -62,8 +70,9 @@ namespace LongoMatch.Gui.Component
 				play.Notes=Notes;
 				if (TimeNodeChanged != null)
 					TimeNodeChanged(play,null);
+				savebutton.Sensitive = false;
 			}
-		}
+		}		
 		
 	}
 }

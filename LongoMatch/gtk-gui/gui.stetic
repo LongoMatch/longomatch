@@ -3426,6 +3426,7 @@ Extra</property>
         <child>
           <widget class="Gtk.Button" id="savebutton">
             <property name="MemberName" />
+            <property name="Sensitive">False</property>
             <property name="CanFocus">True</property>
             <property name="UseStock">True</property>
             <property name="Type">StockItem</property>

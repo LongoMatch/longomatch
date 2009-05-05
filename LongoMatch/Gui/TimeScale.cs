@@ -221,10 +221,12 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		private void DrawTimeNodesName(){
-			foreach (MediaTimeNode tn in list){	
-				layout.Width = Pango.Units.FromPixels((int)(tn.TotalFrames/pixelRatio-3));
-				layout.SetMarkup (tn.Name);
-				this.GdkWindow.DrawLayout(this.Style.TextGC(StateType.Normal),(int)(tn.StartFrame/pixelRatio),2,layout);
+			lock(locker){
+				foreach (MediaTimeNode tn in list){	
+					layout.Width = Pango.Units.FromPixels((int)(tn.TotalFrames/pixelRatio));
+					layout.SetMarkup (tn.Name);
+					this.GdkWindow.DrawLayout(this.Style.TextGC(StateType.Normal),(int)(tn.StartFrame/pixelRatio),2,layout);
+				}
 			}
 		}
 		

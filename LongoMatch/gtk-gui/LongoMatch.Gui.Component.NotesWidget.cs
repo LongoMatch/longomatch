@@ -49,6 +49,7 @@ namespace LongoMatch.Gui.Component {
             w4.Position = 0;
             // Container child vbox2.Gtk.Box+BoxChild
             this.savebutton = new Gtk.Button();
+            this.savebutton.Sensitive = false;
             this.savebutton.CanFocus = true;
             this.savebutton.Name = "savebutton";
             this.savebutton.UseStock = true;

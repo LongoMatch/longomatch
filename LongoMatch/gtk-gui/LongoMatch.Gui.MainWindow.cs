@@ -149,7 +149,7 @@ namespace LongoMatch.Gui {
             this.Name = "LongoMatch.Gui.MainWindow";
             this.Title = Mono.Unix.Catalog.GetString("LongoMatch");
             this.Icon = Gdk.Pixbuf.LoadFromResource("longomatch_logo.png");
-            this.WindowPosition = ((Gtk.WindowPosition)(3));
+            this.WindowPosition = ((Gtk.WindowPosition)(1));
             this.Gravity = ((Gdk.Gravity)(5));
             // Container child LongoMatch.Gui.MainWindow.Gtk.Container+ContainerChild
             this.vbox1 = new Gtk.VBox();
