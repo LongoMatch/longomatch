@@ -86,7 +86,7 @@ namespace LongoMatch.Gui.Component
 			dic = new Dictionary<MenuItem,MediaTimeNode>();
 			
 			layout =  new Pango.Layout(this.PangoContext);
-			layout.Wrap = Pango.WrapMode.WordChar;
+			layout.Wrap = Pango.WrapMode.Char;
 			layout.Alignment = Pango.Alignment.Left;
 
 			SetMenu();
