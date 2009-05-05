@@ -46,10 +46,6 @@ namespace LongoMatch.Gui
 		
 		private EventsManager eManager;	
 		
-
-
-
-		
 		public MainWindow() : 
 				base("LongoMatch")
 		{			

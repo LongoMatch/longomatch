@@ -155,7 +155,7 @@ DATA_FILES = \
 RESOURCES = \
 	gtk-gui/objects.xml \
 	gtk-gui/gui.stetic \
-	images/lgmlogo 
+	images/longomatch_logo.png
 
 EXTRAS = \
 	longomatch.in 

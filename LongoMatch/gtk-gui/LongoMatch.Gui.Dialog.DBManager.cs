@@ -67,8 +67,6 @@ namespace LongoMatch.Gui.Dialog {
             this.hbox2.Add(this.projectlistwidget1);
             Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.hbox2[this.projectlistwidget1]));
             w2.Position = 0;
-            w2.Expand = false;
-            w2.Fill = false;
             // Container child hbox2.Gtk.Box+BoxChild
             this.vbox2 = new Gtk.VBox();
             this.vbox2.Name = "vbox2";
@@ -111,6 +109,7 @@ namespace LongoMatch.Gui.Dialog {
             Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(this.vbox2[this.saveButton]));
             w6.Position = 1;
             w6.Expand = false;
+            w6.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.deleteButton = new Gtk.Button();
             this.deleteButton.Sensitive = false;

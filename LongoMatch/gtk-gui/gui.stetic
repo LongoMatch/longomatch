@@ -352,7 +352,7 @@
               <widget class="Gtk.SpinButton" id="localSpinButton">
                 <property name="MemberName">localSpinButton</property>
                 <property name="CanFocus">True</property>
-                <property name="Upper">100</property>
+                <property name="Upper">1000</property>
                 <property name="PageIncrement">10</property>
                 <property name="StepIncrement">1</property>
                 <property name="ClimbRate">1</property>
@@ -1014,9 +1014,7 @@
                   </widget>
                   <packing>
                     <property name="Position">0</property>
-                    <property name="AutoSize">True</property>
-                    <property name="Expand">False</property>
-                    <property name="Fill">False</property>
+                    <property name="AutoSize">False</property>
                   </packing>
                 </child>
                 <child>
@@ -1076,6 +1074,7 @@
                         <property name="Position">1</property>
                         <property name="AutoSize">False</property>
                         <property name="Expand">False</property>
+                        <property name="Fill">False</property>
                       </packing>
                     </child>
                     <child>

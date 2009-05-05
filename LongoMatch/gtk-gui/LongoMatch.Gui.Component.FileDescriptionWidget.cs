@@ -277,7 +277,7 @@ namespace LongoMatch.Gui.Component {
             w26.XOptions = ((Gtk.AttachOptions)(4));
             w26.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
-            this.localSpinButton = new Gtk.SpinButton(0, 100, 1);
+            this.localSpinButton = new Gtk.SpinButton(0, 1000, 1);
             this.localSpinButton.CanFocus = true;
             this.localSpinButton.Name = "localSpinButton";
             this.localSpinButton.Adjustment.PageIncrement = 10;
