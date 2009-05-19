@@ -29,14 +29,14 @@
   </Contents>
   <compiler ctype="GccCompiler" />
   <Packages>
-    <Package file="gdk-2.0" name="gdk-2.0" IsProject="False" />
-    <Package file="glib-2.0" name="glib-2.0" IsProject="False" />
-    <Package file="gobject-2.0" name="gobject-2.0" IsProject="False" />
-    <Package file="gstreamer-0.10" name="gstreamer-0.10" IsProject="False" />
-    <Package file="gstreamer-audio-0.10" name="gstreamer-audio-0.10" IsProject="False" />
-    <Package file="gstreamer-interfaces-0.10" name="gstreamer-interfaces-0.10" IsProject="False" />
-    <Package file="gstreamer-video-0.10" name="gstreamer-video-0.10" IsProject="False" />
-    <Package file="gtk+-2.0" name="gtk+-2.0" IsProject="False" />
+    <Package file="/usr/lib/pkgconfig/gstreamer-0.10.pc" name="GStreamer" IsProject="False" />
+    <Package file="/usr/lib/pkgconfig/gstreamer-audio-0.10.pc" name="GStreamer Audio library" IsProject="False" />
+    <Package file="/usr/lib/pkgconfig/gstreamer-interfaces-0.10.pc" name="GStreamer Interfaces Library" IsProject="False" />
+    <Package file="/usr/lib/pkgconfig/gstreamer-video-0.10.pc" name="GStreamer Video Library" IsProject="False" />
+    <Package file="/usr/lib/pkgconfig/glib-2.0.pc" name="GLib" IsProject="False" />
+    <Package file="/usr/lib/pkgconfig/gobject-2.0.pc" name="GObject" IsProject="False" />
+    <Package file="/usr/lib/pkgconfig/gdk-2.0.pc" name="GDK" IsProject="False" />
+    <Package file="/usr/lib/pkgconfig/gtk+-2.0.pc" name="GTK+" IsProject="False" />
   </Packages>
   <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="Makefile.am" IsAutotoolsProject="True" RelativeConfigureInPath=".">
     <BuildFilesVar />
