@@ -67,7 +67,7 @@ namespace LongoMatch.Gui.Component
 				colorbutton1.Color = stn.Color;
 				
 				//FIXME 1.0 Every TimeNode object must have a HotKey != null
-				if (stn.HotKey != null && stn.HotKey.Key != null){
+				if (stn.HotKey != null && stn.HotKey.Defined){
 					hotKeyLabel.Text = stn.HotKey.ToString();
 				}
 				else hotKeyLabel.Text = Catalog.GetString("none"); 
