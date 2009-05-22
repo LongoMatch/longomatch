@@ -1,5 +1,8 @@
 
 using System;
+using Gtk;
+using Gdk;
+using Mono.Unix;
 
 namespace LongoMatch.TimeNodes
 {
@@ -27,6 +30,7 @@ namespace LongoMatch.TimeNodes
 		}
 		#endregion	
 		
+#region Override
 		public override bool Equals (object obj)
 		{
 			HotKey comp;
@@ -38,6 +42,20 @@ namespace LongoMatch.TimeNodes
 			else 
 				return false;
 		}
+		
+		public override string ToString ()
+		{
+			string modifierS;
+			if ((modifier & ModifierType.ControlMask) != 0)
+				modifierS=Catalog.GetString("Control");
+			else if ((modifier & ModifierType.ShiftMask) != 0)
+				modifierS=Catalog.GetString("Shift");
+			else if ((modifier & ModifierType.SuperMask) != 0)
+				modifierS=Catalog.GetString("Super");
+			else return "";	
+			return string.Format("<{0}> + {1}", modifierS,(Key.ToString()).ToLower());
+		}
 
+#endregion
 	}
 }

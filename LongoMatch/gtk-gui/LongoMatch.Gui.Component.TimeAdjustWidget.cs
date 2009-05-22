@@ -41,6 +41,7 @@ namespace LongoMatch.Gui.Component {
             this.label1.LabelProp = Mono.Unix.Catalog.GetString("Lead time:");
             this.table1.Add(this.label1);
             Gtk.Table.TableChild w1 = ((Gtk.Table.TableChild)(this.table1[this.label1]));
+            w1.XOptions = ((Gtk.AttachOptions)(0));
             w1.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.label3 = new Gtk.Label();
@@ -50,6 +51,7 @@ namespace LongoMatch.Gui.Component {
             Gtk.Table.TableChild w2 = ((Gtk.Table.TableChild)(this.table1[this.label3]));
             w2.LeftAttach = ((uint)(3));
             w2.RightAttach = ((uint)(4));
+            w2.XOptions = ((Gtk.AttachOptions)(4));
             w2.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.spinbutton1 = new Gtk.SpinButton(0, 100, 1);
@@ -62,7 +64,6 @@ namespace LongoMatch.Gui.Component {
             Gtk.Table.TableChild w3 = ((Gtk.Table.TableChild)(this.table1[this.spinbutton1]));
             w3.LeftAttach = ((uint)(2));
             w3.RightAttach = ((uint)(3));
-            w3.XOptions = ((Gtk.AttachOptions)(4));
             w3.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.spinbutton2 = new Gtk.SpinButton(0, 100, 1);
@@ -75,7 +76,6 @@ namespace LongoMatch.Gui.Component {
             Gtk.Table.TableChild w4 = ((Gtk.Table.TableChild)(this.table1[this.spinbutton2]));
             w4.LeftAttach = ((uint)(4));
             w4.RightAttach = ((uint)(5));
-            w4.XOptions = ((Gtk.AttachOptions)(4));
             w4.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.startlabel = new Gtk.Label();

@@ -57,7 +57,6 @@ namespace LongoMatch.Gui.Component
 			
 			for(int i=0;i<20;i++){
 				tndArray[i].TimeNode=sections.GetTimeNode(i);
-				tndArray[i].Color=sections.GetColor(i);
 			}
 			
 		}
@@ -65,12 +64,9 @@ namespace LongoMatch.Gui.Component
 		public Sections GetSections (){
 			Sections sections = new Sections(20);
 			SectionsTimeNode[] timeNodesArray = new SectionsTimeNode[20];
-			Color[] colorsArray = new Color[20];
 			for(int i=0;i<20;i++){
 				timeNodesArray[i]=tndArray[i].TimeNode;
-				colorsArray[i] = tndArray[i].Color;
 			}
-			sections.Colors = colorsArray;
 			sections.SectionsTimeNodes = timeNodesArray;
 			return sections;
 		}

@@ -23,7 +23,7 @@ namespace LongoMatch.Gui.Component {
         
         private Gtk.Label label1;
         
-        private Gtk.Entry entry1;
+        private Gtk.Entry nameentry;
         
         private LongoMatch.Gui.Component.TimeAdjustWidget timeadjustwidget1;
         
@@ -33,11 +33,19 @@ namespace LongoMatch.Gui.Component {
         
         private Gtk.ColorButton colorbutton1;
         
-        private Gtk.CheckButton checkbutton2;
+        private Gtk.CheckButton visiblecheckbutton;
         
         private Gtk.Label label5;
         
-        private Gtk.Label GtkLabel1;
+        private Gtk.HBox hbox2;
+        
+        private Gtk.Label label6;
+        
+        private Gtk.Label hotKeyLabel;
+        
+        private Gtk.Button changebuton;
+        
+        private Gtk.Label titlelabel;
         
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
@@ -70,13 +78,13 @@ namespace LongoMatch.Gui.Component {
             w1.Expand = false;
             w1.Fill = false;
             // Container child hbox4.Gtk.Box+BoxChild
-            this.entry1 = new Gtk.Entry();
-            this.entry1.CanFocus = true;
-            this.entry1.Name = "entry1";
-            this.entry1.IsEditable = true;
-            this.entry1.InvisibleChar = '●';
-            this.hbox4.Add(this.entry1);
-            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.hbox4[this.entry1]));
+            this.nameentry = new Gtk.Entry();
+            this.nameentry.CanFocus = true;
+            this.nameentry.Name = "nameentry";
+            this.nameentry.IsEditable = true;
+            this.nameentry.InvisibleChar = '●';
+            this.hbox4.Add(this.nameentry);
+            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.hbox4[this.nameentry]));
             w2.Position = 1;
             this.vbox2.Add(this.hbox4);
             Gtk.Box.BoxChild w3 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox4]));
@@ -90,6 +98,8 @@ namespace LongoMatch.Gui.Component {
             this.vbox2.Add(this.timeadjustwidget1);
             Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(this.vbox2[this.timeadjustwidget1]));
             w4.Position = 1;
+            w4.Expand = false;
+            w4.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.hbox1 = new Gtk.HBox();
             this.hbox1.Name = "hbox1";
@@ -101,6 +111,8 @@ namespace LongoMatch.Gui.Component {
             this.hbox1.Add(this.label4);
             Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(this.hbox1[this.label4]));
             w5.Position = 0;
+            w5.Expand = false;
+            w5.Fill = false;
             // Container child hbox1.Gtk.Box+BoxChild
             this.colorbutton1 = new Gtk.ColorButton();
             this.colorbutton1.CanFocus = true;
@@ -112,14 +124,14 @@ namespace LongoMatch.Gui.Component {
             w6.Expand = false;
             w6.Fill = false;
             // Container child hbox1.Gtk.Box+BoxChild
-            this.checkbutton2 = new Gtk.CheckButton();
-            this.checkbutton2.CanFocus = true;
-            this.checkbutton2.Name = "checkbutton2";
-            this.checkbutton2.Label = "";
-            this.checkbutton2.DrawIndicator = true;
-            this.checkbutton2.UseUnderline = true;
-            this.hbox1.Add(this.checkbutton2);
-            Gtk.Box.BoxChild w7 = ((Gtk.Box.BoxChild)(this.hbox1[this.checkbutton2]));
+            this.visiblecheckbutton = new Gtk.CheckButton();
+            this.visiblecheckbutton.CanFocus = true;
+            this.visiblecheckbutton.Name = "visiblecheckbutton";
+            this.visiblecheckbutton.Label = "";
+            this.visiblecheckbutton.DrawIndicator = true;
+            this.visiblecheckbutton.UseUnderline = true;
+            this.hbox1.Add(this.visiblecheckbutton);
+            Gtk.Box.BoxChild w7 = ((Gtk.Box.BoxChild)(this.hbox1[this.visiblecheckbutton]));
             w7.PackType = ((Gtk.PackType)(1));
             w7.Position = 2;
             w7.Expand = false;
@@ -132,23 +144,63 @@ namespace LongoMatch.Gui.Component {
             Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(this.hbox1[this.label5]));
             w8.PackType = ((Gtk.PackType)(1));
             w8.Position = 3;
+            w8.Expand = false;
+            w8.Fill = false;
             this.vbox2.Add(this.hbox1);
             Gtk.Box.BoxChild w9 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox1]));
             w9.Position = 2;
             w9.Expand = false;
             w9.Fill = false;
+            // Container child vbox2.Gtk.Box+BoxChild
+            this.hbox2 = new Gtk.HBox();
+            this.hbox2.Name = "hbox2";
+            this.hbox2.Spacing = 6;
+            // Container child hbox2.Gtk.Box+BoxChild
+            this.label6 = new Gtk.Label();
+            this.label6.Name = "label6";
+            this.label6.LabelProp = Mono.Unix.Catalog.GetString("HotKey:");
+            this.hbox2.Add(this.label6);
+            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.hbox2[this.label6]));
+            w10.Position = 0;
+            w10.Expand = false;
+            w10.Fill = false;
+            // Container child hbox2.Gtk.Box+BoxChild
+            this.hotKeyLabel = new Gtk.Label();
+            this.hotKeyLabel.Name = "hotKeyLabel";
+            this.hotKeyLabel.LabelProp = Mono.Unix.Catalog.GetString("none");
+            this.hbox2.Add(this.hotKeyLabel);
+            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.hbox2[this.hotKeyLabel]));
+            w11.Position = 1;
+            // Container child hbox2.Gtk.Box+BoxChild
+            this.changebuton = new Gtk.Button();
+            this.changebuton.CanFocus = true;
+            this.changebuton.Name = "changebuton";
+            this.changebuton.UseUnderline = true;
+            this.changebuton.Label = Mono.Unix.Catalog.GetString("Change");
+            this.hbox2.Add(this.changebuton);
+            Gtk.Box.BoxChild w12 = ((Gtk.Box.BoxChild)(this.hbox2[this.changebuton]));
+            w12.Position = 2;
+            w12.Expand = false;
+            w12.Fill = false;
+            this.vbox2.Add(this.hbox2);
+            Gtk.Box.BoxChild w13 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox2]));
+            w13.PackType = ((Gtk.PackType)(1));
+            w13.Position = 3;
+            w13.Expand = false;
+            w13.Fill = false;
             this.GtkAlignment.Add(this.vbox2);
             this.frame1.Add(this.GtkAlignment);
-            this.GtkLabel1 = new Gtk.Label();
-            this.GtkLabel1.Name = "GtkLabel1";
-            this.GtkLabel1.LabelProp = Mono.Unix.Catalog.GetString("<b>frame1</b>");
-            this.GtkLabel1.UseMarkup = true;
-            this.frame1.LabelWidget = this.GtkLabel1;
+            this.titlelabel = new Gtk.Label();
+            this.titlelabel.Name = "titlelabel";
+            this.titlelabel.LabelProp = Mono.Unix.Catalog.GetString("<b>frame1</b>");
+            this.titlelabel.UseMarkup = true;
+            this.frame1.LabelWidget = this.titlelabel;
             this.Add(this.frame1);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
             this.Show();
+            this.changebuton.Clicked += new System.EventHandler(this.OnChangebutonClicked);
         }
     }
 }

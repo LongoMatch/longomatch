@@ -20,7 +20,10 @@
 
 using System;
 using Gdk;
+using Gtk;
+using Mono.Unix;
 using LongoMatch.TimeNodes;
+using LongoMatch.Gui.Dialog;
 
 namespace LongoMatch.Gui.Component
 {
@@ -30,7 +33,7 @@ namespace LongoMatch.Gui.Component
 	public partial  class TimeNodeProperties : Gtk.Bin
 	{
 
-
+		private SectionsTimeNode stn = null;
 		
 		public TimeNodeProperties()
 		{
@@ -39,32 +42,53 @@ namespace LongoMatch.Gui.Component
 		
 		public string Title {
 			set{
-				GtkLabel1.Text=value;	
+				titlelabel.Text=value;	
 			}
 		}
 		
 		public SectionsTimeNode TimeNode
 		{
 			set{
-				entry1.Text = value.Name;
-				this.checkbutton2.Active = value.Visible;
-				timeadjustwidget1.SetTimeNode(value);	
+				this.stn = value;
+				UpdateGui();				
 			}
 			
 			get{
-				Console.WriteLine(timeadjustwidget1.GetStartTime().ToSecondsString());
-				Console.WriteLine(timeadjustwidget1.GetStopTime().ToSecondsString());
-				return new SectionsTimeNode (entry1.Text,timeadjustwidget1.GetStartTime(),timeadjustwidget1.GetStopTime(),this.checkbutton2.Active);
+				UpdateSectionTimeNode();
+				return stn;
 			}
 		}
+
+		private void  UpdateGui(){
+			if ( stn != null){
+				nameentry.Text = stn.Name;
+				visiblecheckbutton.Active =  stn.Visible;
+				timeadjustwidget1.SetTimeNode(stn);
+				
+				//FIXME 1.0 Every TimeNode object must have a HotKey != null
+				if (stn.HotKey != null && stn.HotKey.Key != null){
+					hotKeyLabel.Text = stn.HotKey.ToString();
+				}
+				else hotKeyLabel.Text = Catalog.GetString("none"); 
+			}
+		}
+
+		private void UpdateSectionTimeNode(){
+			stn.Name = nameentry.Text;
+			stn.Start=timeadjustwidget1.GetStartTime();
+			stn.Stop=timeadjustwidget1.GetStopTime();
+			stn.Visible=visiblecheckbutton.Active;
+			stn.Color=colorbutton1.Color;
+		}
 		
-		public Color Color{
-			set{
-				this.colorbutton1.Color = value;
+		protected virtual void OnChangebutonClicked (object sender, System.EventArgs e)
+		{
+			HotKeySelectorDialog dialog = new HotKeySelectorDialog();
+			if (dialog.Run() == (int)ResponseType.Ok){
+				stn.HotKey=dialog.HotKey;
+				UpdateGui();
 			}
-			get{
-				return this.colorbutton1.Color;
-			}
+			dialog.Destroy();		
 		}
 		
 	

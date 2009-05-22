@@ -44,7 +44,6 @@ namespace LongoMatch.IO
 		#region Public methods
 		public void WriteToFile(){
 			List<MediaTimeNode>[] arrayList;
-			List<MediaTimeNode> tnList;
 			string[] sectionNames;
 			TextWriter tx;
 			

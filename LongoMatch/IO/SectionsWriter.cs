@@ -51,6 +51,8 @@ namespace LongoMatch.IO
 				sb.Append("<add key=\"Red"+i+"\" value=\"65535\" />");
 				sb.Append("<add key=\"Green"+i+"\" value=\"0\" />");
 				sb.Append("<add key=\"Blue"+i+"\" value=\"0\" />");
+				sb.Append("<add key=\"Modifier"+i+"\" value=\"0\" />");
+				sb.Append("<add key=\"Key"+i+"\" value=\"0\" />");
 			}
 			
 			sb.Append("</configuration>");
@@ -83,9 +85,7 @@ namespace LongoMatch.IO
 			configXml.Load(fConfig);
 			
 			for (int i = 0; i<20;i++){
-				Console.WriteLine("Sections Writer start: " +sections.GetStartTime(i).Seconds.ToString());
-				Console.WriteLine("Sections Writer stop: " +sections.GetStopTime(i).Seconds.ToString());
-				
+								
 				Color color = sections.GetColor(i);
 				SetValue(configXml,"configuration","Name" + (i+1),sections.GetName(i));
 				SetValue(configXml,"configuration","Start"+ (i+1),sections.GetStartTime(i).Seconds.ToString());
@@ -94,6 +94,9 @@ namespace LongoMatch.IO
 				SetValue(configXml,"configuration","Red"+ (i+1),color.Red.ToString());
 				SetValue(configXml,"configuration","Green"+ (i+1),color.Green.ToString());
 				SetValue(configXml,"configuration","Blue"+ (i+1),color.Blue.ToString());
+				SetValue(configXml,"configuration","Modifier"+ (i+1),((int)(sections.GetHotKey(i).Modifier)).ToString());
+				SetValue(configXml,"configuration","Key"+ (i+1),((int)(sections.GetHotKey(i).Key)).ToString());
+
 			}
 			configXml.Save(fConfig);
 		}

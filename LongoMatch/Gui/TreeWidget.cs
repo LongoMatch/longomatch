@@ -119,7 +119,7 @@ namespace LongoMatch.Gui.Component
 			set{ 
 				project = value;
 				treeview.Model = project.GetModel();
-				treeview.Colors = project.Sections.Colors;
+				treeview.Colors = project.Sections.GetColors();
 			}
 			
 		}

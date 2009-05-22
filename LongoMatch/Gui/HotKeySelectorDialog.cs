@@ -23,7 +23,7 @@ namespace LongoMatch.Gui.Dialog
 		
 #region Properties
 		
-		HotKey PressedHotKey{
+		public HotKey HotKey{
 			get{return this.hotKey;}
 		}		
 #endregion

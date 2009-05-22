@@ -89,17 +89,27 @@ namespace LongoMatch.IO
 				col.Green = green;
 				colors[i] = col;					
 			}
-			return colors;
-			
+			return colors;			
 		}
+		
+		private HotKey[] GetHotKeys(){
+			HotKey[] hotkeys = new HotKey[20];
+			for (int i=0;i<20;i++){
+				HotKey hotkey = new HotKey();
+				hotkey.Modifier= (ModifierType)GetIntValue("configuration","Modifier"+(i+1));
+				hotkey.Key = (Gdk.Key)GetIntValue("configuration","Key"+(i+1));
+				hotkeys[i]=hotkey;
+			}
+			return hotkeys;
+		}
+			
 #endregion		
 
 #region Public methods
 		public Sections GetSections(){
 			Sections sections = new Sections(20);
 			this.GetStartTimes();		
-			sections.SetTimeNodes(this.GetNames(),this.GetStartTimes(),this.GetStopTimes(),this.GetVisibility());
-			sections.Colors = this.GetColors();
+			sections.SetTimeNodes(GetNames(),GetStartTimes(),GetStopTimes(),GetVisibility(),GetHotKeys(),GetColors());
 			return sections;
 		}
 #endregion

@@ -21,6 +21,8 @@ namespace LongoMatch.Gui.Dialog {
             Stetic.Gui.Initialize(this);
             // Widget LongoMatch.Gui.Dialog.HotKeySelectorDialog
             this.Name = "LongoMatch.Gui.Dialog.HotKeySelectorDialog";
+            this.Title = Mono.Unix.Catalog.GetString("Select a HotKey");
+            this.Icon = Gdk.Pixbuf.LoadFromResource("longomatch_logo.png");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.HasSeparator = false;
             // Internal child LongoMatch.Gui.Dialog.HotKeySelectorDialog.VBox

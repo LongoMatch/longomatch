@@ -28,7 +28,6 @@ namespace LongoMatch.DB
 	public class Sections
 	{
 		private SectionsTimeNode[] timeNodesArray;
-		private Color[] colorsArray;
 		private int visibleSections;
 		private int totalSections;
 		
@@ -36,11 +35,9 @@ namespace LongoMatch.DB
 		public Sections(int sections)
 		{
 			this.timeNodesArray = new SectionsTimeNode[sections];
-			this.colorsArray = new Color[sections];
 			this.totalSections = sections;
 			this.visibleSections = sections;
 			for (int i=0;i<20;i++){
-				colorsArray[i] = new Color(254,0,0);
 				timeNodesArray[i] = null;
 			}
 			
@@ -61,22 +58,13 @@ namespace LongoMatch.DB
 		}
 		
 		
-		public void SetTimeNodes(string[] names, Time[] startTimes, Time[] stopTimes,bool[] visible){
+		public void SetTimeNodes(string[] names, Time[] startTimes, Time[] stopTimes,bool[] visible,HotKey[] hotkey,Color[] color){
 			for (int i=0;i<20;i++){
-				timeNodesArray[i] = new SectionsTimeNode(names[i],startTimes[i],stopTimes[i],visible[i]);
-				
-				
-			}
-			
+				timeNodesArray[i] = new SectionsTimeNode(names[i],startTimes[i],stopTimes[i],visible[i],hotkey[i],color[i]);	
+			}			
 		}
 		
-		public Color[] Colors{
-			
-			set{this.colorsArray = value;}
-			get{return this.colorsArray;}			
-		}		
-	
-		
+				
 		public SectionsTimeNode[] SectionsTimeNodes{
 			set{this.timeNodesArray = value;}			
 		}
@@ -90,6 +78,16 @@ namespace LongoMatch.DB
 			}
 			return names;
 		
+		}
+		
+		public Color[] GetColors(){
+			Color[] colors = new Color[totalSections];
+			SectionsTimeNode tNode;
+			for (int i=0; i<totalSections; i++){
+				tNode = timeNodesArray[i];
+				colors[i]=tNode.Color;
+			}
+			return colors;
 		}
 		
 		public Time[] GetSectionsStartTimes(){
@@ -142,8 +140,13 @@ namespace LongoMatch.DB
 		public bool GetVisibility (int section){
 			return this.timeNodesArray[section].Visible;
 		}
+		
 		public Color GetColor (int section){
-			return this.colorsArray[section];
+			return this.timeNodesArray[section].Color;
+		}
+		
+		public HotKey GetHotKey (int section){
+			return this.timeNodesArray[section].HotKey;
 		}
 	}
 }
