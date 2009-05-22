@@ -64,6 +64,7 @@ namespace LongoMatch.Gui.Component
 				nameentry.Text = stn.Name;
 				visiblecheckbutton.Active =  stn.Visible;
 				timeadjustwidget1.SetTimeNode(stn);
+				colorbutton1.Color = stn.Color;
 				
 				//FIXME 1.0 Every TimeNode object must have a HotKey != null
 				if (stn.HotKey != null && stn.HotKey.Key != null){
