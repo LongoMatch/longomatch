@@ -53,11 +53,11 @@ namespace LongoMatch.TimeNodes
 		public override string ToString ()
 		{
 			string modifierS;
-			if ((modifier & ModifierType.ControlMask) != 0)
+			if ((Modifier & ModifierType.ControlMask) != 0)
 				modifierS=Catalog.GetString("Control");
-			else if ((modifier & ModifierType.ShiftMask) != 0)
+			else if ((Modifier & ModifierType.ShiftMask) != 0)
 				modifierS=Catalog.GetString("Shift");
-			else if ((modifier & ModifierType.SuperMask) != 0)
+			else if ((Modifier & ModifierType.SuperMask) != 0)
 				modifierS=Catalog.GetString("Super");
 			else return "";	
 			return string.Format("<{0}> + {1}", modifierS,(Key.ToString()).ToLower());
