@@ -9,24 +9,31 @@ namespace LongoMatch.TimeNodes
 	
 	public class HotKey
 	{
-		Gdk.Key key;
-		Gdk.ModifierType modifier;
+		int key;
+		int modifier;
 	
 		#region Constructors
 		public HotKey()
 		{
+			this.key = -1;
+			this.modifier = -1;
 		}
 		#endregion
 		
+	
 		#region Properties
 		public Gdk.Key Key{
-			get{return this.key;}
-			set{this.key = value;}
+			get{return (Gdk.Key)key;}
+			set{key = (int)value;}
 		}
 		
 		public Gdk.ModifierType Modifier{
-			get{return this.modifier;}
-			set{this.modifier= value; }
+			get{return (Gdk.ModifierType)modifier;}
+			set{modifier= (int)value; }
+		}
+		
+		public Boolean Defined{
+			get{return (key!=-1 && modifier != -1);}
 		}
 		#endregion	
 		
@@ -37,7 +44,7 @@ namespace LongoMatch.TimeNodes
 			
 			if (obj is HotKey){
 				comp = (HotKey)obj;
-				return (comp.Key==this.Key && comp.Modifier==this.Modifier);
+				return (comp.Key==Key && comp.Modifier==Modifier);
 			}
 			else 
 				return false;
