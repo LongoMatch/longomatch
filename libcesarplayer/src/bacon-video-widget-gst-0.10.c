@@ -3,7 +3,7 @@
  *      Julien Moutte <julien@moutte.net>
  *      Ronald Bultje <rbultje@ronald.bitfreak.net>
  *      Tim-Philipp Müller <tim centricular net>
- * Copyright (C) 2008  Andoni Morales Alastruey <ylatuya@gmail.com> 
+ * Copyright (C) 2008-2009  Andoni Morales Alastruey <ylatuya@gmail.com> 
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,9 +23,6 @@
  * plugins to be used and distributed together with GStreamer and Totem. This
  * permission is above and beyond the permissions granted by the GPL license
  * Totem is covered by.
- *
- * Monday 7th February 2005: Christian Schaller: Add exemption clause.
- * See license_change file for details.
  *
  */
 

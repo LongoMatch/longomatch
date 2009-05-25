@@ -50,22 +50,19 @@ enum
   PROP_VIDEO_BITRATE,
   PROP_AUDIO_BITRATE,
   PROP_OUTPUT_FILE,
+  PROP_INPUT_FILE,
   PROP_WITH_AUDIO
 };
 
 struct GstVideoCapturerPrivate
 {
-	GvcUseType use_type;
-	GList 	**input_files;
-	gchar	*output_file;
 
-	
+	gchar	*output_file;
+	gchar	*input_file;
 	guint   encode_height;
 	guint   encode_width;
 	guint	audio_bitrate;
 	guint	video_bitrate;
-
-
 	
 	GstElement *main_pipeline;	
 	GstElement *decode_bin;
@@ -82,17 +79,9 @@ struct GstVideoCapturerPrivate
 	GstElement *muxer;
 	GstElement *file_sink;
 	
-	gboolean media_has_video;
-	gboolean media_has_audio;
-	
-	GvcVideoEncoderType *video_encoder_type;
-	GvcAudioEncoderType	*audio_encoder_type;
-
-	GtkWidget *video_window;
-
 	GstBus                      *bus;
 	gulong              sig_bus_async;
-	gulong             sig_bus_sync;
+
 };
 
 static int gvc_signals[LAST_SIGNAL] = { 0 };
@@ -106,7 +95,7 @@ static void gvc_set_video_encode_bin (GstVideoCapturer *gvc);
 static void gvc_set_audio_encode_bin (GstVideoCapturer *gvc);
 static void gvc_set_filesink_bin (GstVideoCapturer *gvc);
 
-G_DEFINE_TYPE (GstVideoCapturer, gst_video_capturer, G_OBJECT);
+G_DEFINE_TYPE (GstVideoCapturer, gst_video_capturer, G_TYPE_OBJECT);
 
 
 
@@ -128,10 +117,7 @@ gst_video_capturer_finalize (GObject *object)
 {
   GstVideoCapturer *gvc = (GstVideoCapturer *) object;
 
-  gtk_widget_destroy(gvc->priv->video_window);
-  gtk_widget_unref(gvc->priv->video_window);
-  gvc->priv->video_window = NULL;
-
+  
   if (gvc->priv->bus) {
     /* make bus drop all messages to make sure none of our callbacks is ever
      * called again (main loop might be run again to display error dialog) */
@@ -206,6 +192,11 @@ gst_video_capturer_class_init (GstVideoCapturerClass *klass)
                                                          G_PARAM_READWRITE));
  	g_object_class_install_property (object_class, PROP_OUTPUT_FILE,
                                    g_param_spec_string ("output_file", NULL,
+                                                        NULL, FALSE,
+                                                        G_PARAM_READWRITE));
+                                                        
+    g_object_class_install_property (object_class, PROP_INPUT_FILE,
+                                   g_param_spec_string ("input_file", NULL,
                                                         NULL, FALSE,
                                                         G_PARAM_READWRITE));
 
@@ -294,6 +285,19 @@ static void gst_video_capturer_set_output_file(GstVideoCapturer *gvc,const gchar
    }
 }
 
+static void gst_video_capturer_set_input_file(GstVideoCapturer *gvc,const gchar *file)
+{
+	GstState cur_state;
+
+	gvc->priv->input_file = g_strdup(file);
+	gst_element_get_state (gvc->priv->vencode_bin, &cur_state, NULL, 0);
+    if (cur_state == GST_STATE_NULL) {
+	    g_object_set (gvc->priv->gnl_filesource,"location",file,NULL);
+    	GST_INFO ("Input file changed to :\n%s",file);
+
+   }
+}
+
 
 static void
 gst_video_capturer_set_property (GObject * object, guint property_id,
@@ -325,6 +329,11 @@ gst_video_capturer_set_property (GObject * object, guint property_id,
       gst_video_capturer_set_output_file(gvc,
       g_value_get_string (value));
       break;
+      
+    case PROP_INPUT_FILE:
+      gst_video_capturer_set_input_file(gvc,
+      g_value_get_string (value));
+      break;
    
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -352,6 +361,9 @@ gst_video_capturer_get_property (GObject * object, guint property_id,
       break;
     case PROP_OUTPUT_FILE:
       g_value_set_string (value,gvc->priv->output_file);
+      break;
+    case PROP_INPUT_FILE:
+      g_value_set_string (value,gvc->priv->input_file);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -391,9 +403,9 @@ gst_video_capturer_new (GError ** err)
 	gvc->priv->main_pipeline = gst_pipeline_new ("main_pipeline");
 
 	if (!gvc->priv->main_pipeline ) {
-    	g_set_error (err, GVC_ERROR, GVC_ERROR_PLUGIN_LOAD,
+    	/*g_set_error (err, GVC_ERROR, GVC_ERROR_PLUGIN_LOAD,
                 	("Failed to create a GStreamer Bin. "
-                    "Please check your GStreamer installation."));
+                    "Please check your GStreamer installation."));*/
     	g_object_ref_sink (gvc);
     	g_object_unref (gvc);
     	return NULL;
@@ -514,22 +526,55 @@ static void gvc_set_filesink_bin (GstVideoCapturer *gvc)
 	gst_bin_add_many(GST_BIN(gvc->priv->filesink_bin), muxer, filesink, NULL);
 	gst_element_link(muxer, filesink);
 	
-	videosinkpad = gst_element_request_pad (muxer, "video_0");
+	videosinkpad = gst_element_get_pad (muxer, "video_0");
     gst_element_add_pad (gvc->priv->filesink_bin,
     					gst_ghost_pad_new ("videosink", GST_PAD(videosinkpad)));
     
-    audiosinkpad = gst_element_request_pad (muxer, "audio_0");
+    audiosinkpad = gst_element_get_pad (muxer, "audio_0");
     gst_element_add_pad (gvc->priv->filesink_bin,
     					gst_ghost_pad_new ("audiosink", GST_PAD(audiosinkpad)));
     
-    gst_object_unref(audiopad);
-    gst_object_unref(videopad);
+    gst_object_unref(audiosinkpad);
+    gst_object_unref(videosinkpad);
 	
 	
 }
 
+static void gvc_link_audio_to_file_sink(GstVideoCapturer *gvc){
+	
+	GstPad *audiosrcpad;
+	GstPad *sinkpad;
+	
+	g_return_if_fail (GST_IS_VIDEO_CAPTURER(gvc));
+	
+	audiosrcpad = gst_element_get_pad (gvc->priv->aencode_bin, "src");
+	sinkpad = gst_element_get_pad (gvc->priv->filesink_bin, "audio_sink");
 
+	gst_pad_link (audiosrcpad, sinkpad);
+	
+	gst_object_unref(audiosrcpad);
+	gst_object_unref (sinkpad);
+	
+	
+}
 
+static void gvc_link_video_to_file_sink(GstVideoCapturer *gvc){
+	
+	GstPad *videosrcpad;
+	GstPad *sinkpad;
+	
+	g_return_if_fail (GST_IS_VIDEO_CAPTURER(gvc));
+	
+	videosrcpad = gst_element_get_pad (gvc->priv->vencode_bin, "src");
+	sinkpad = gst_element_get_pad (gvc->priv->filesink_bin, "video_sink");
+
+	gst_pad_link (videosrcpad, sinkpad);
+	
+	gst_object_unref(videosrcpad);
+	gst_object_unref (sinkpad);
+	
+	
+}
 
 
 static void new_decoded_pad_cb (GstElement* object,
@@ -540,7 +585,7 @@ static void new_decoded_pad_cb (GstElement* object,
 	GstCaps *caps=NULL;
 	GstStructure *str =NULL;
 	GstPad *audiopad=NULL;
-	GstPad *videoteepad=NULL;
+	GstPad *videopad=NULL;
 	GstVideoCapturer *gvc=NULL;
 
 
@@ -563,29 +608,29 @@ static void new_decoded_pad_cb (GstElement* object,
 
   		/* link 'n play*/
   		gst_pad_link (pad, audiopad);
+  		gvc_link_audio_to_file_sink(gvc);
   		g_object_unref (audiopad);
   	}
 	
 	else if (g_strrstr (gst_structure_get_name (str), "video")){
 
-		videoteepad = gst_element_get_pad (gvc->priv->vencode_bin, "sink");
+		videopad = gst_element_get_pad (gvc->priv->vencode_bin, "sink");
 
 		/* only link once */
-		if (GST_PAD_IS_LINKED (videoteepad)) {
-    		g_object_unref (videoteepad);
+		if (GST_PAD_IS_LINKED (videopad)) {
+    		g_object_unref (videopad);
     		gst_caps_unref (caps);
     		return;
   		}
   		
   		/* link 'n play*/
-    	gst_pad_link (pad,videoteepad);
-		g_object_unref (videoteepad);
+    	gst_pad_link (pad,videopad);
+    	gvc_link_video_to_file_sink(gvc);
+		g_object_unref (videopad);
 
   }
 
   gst_caps_unref (caps);
-
-
 }
 
 static void gvc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)

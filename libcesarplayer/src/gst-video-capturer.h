@@ -65,67 +65,14 @@ struct _GstVideoCapturer
 	GstVideoCapturerPrivate *priv;
 };
 
-typedef enum {
-	/* Plugins */
-	GVC_ERROR_AUDIO_PLUGIN,
-	GVC_ERROR_NO_PLUGIN_FOR_FILE,
-	GVC_ERROR_VIDEO_PLUGIN,
-	GVC_ERROR_AUDIO_BUSY,
-	/* File */
-	GVC_ERROR_BROKEN_FILE,
-	GVC_ERROR_FILE_GENERIC,
-	GVC_ERROR_FILE_PERMISSION,
-	GVC_ERROR_FILE_ENCRYPTED,
-	GVC_ERROR_FILE_NOT_FOUND,
-	/* Devices */
-	GVC_ERROR_DVD_ENCRYPTED,
-	GVC_ERROR_INVALID_DEVICE,
-	/* Network */
-	GVC_ERROR_UNKNOWN_HOST,
-	GVC_ERROR_NETWORK_UNREACHABLE,
-	GVC_ERROR_CONNECTION_REFUSED,
-	/* Generic */
-	GVC_ERROR_UNVALID_LOCATION,
-	GVC_ERROR_GENERIC,
-	GVC_ERROR_CODEC_NOT_HANDLED,
-	GVC_ERROR_AUDIO_ONLY,
-	GVC_ERROR_CANNOT_CAPTURE,
-	GVC_ERROR_READ_ERROR,
-	GVC_ERROR_PLUGIN_LOAD,
-	GVC_ERROR_EMPTY_FILE
-} gvcError;
-
-typedef enum {
-	GVC_USE_TYPE_DEVICE_CAPTURE,
-	GVC_USE_TYPE_VIDEO_TRANSCODE,
-	GVC_USE_TYPE_TEST
-} GvcUseType;
-
-typedef enum{
-	GVC_VIDEO_ENCODER_TYPE_MPEG4,
-	GVC_VIDEO_ENCODER_TYPE_WMV,
-	GVC_VIDEO_ENCODER_TYPE_MPEG2,
-	GVC_VIDEO_ENCODER_TYPE_RV,	
-	GVC_VIDEO_ENCODER_TYPE_XVID,
-	GVC_VIDEO_ENCODER_TYPE_H264
-}GvcVideoEncoderType;
-
-typedef enum{
-	GVC_AUDIO_ENCODER_MP3,
-	GVC_AUDIO_ENCODER_AAC,
-	GVC_AUDIO_ENCODER_WAV,
-	GVC_AUDIO_ENCODER_MPEG1
-}GvcAudioEncoderType;
 
 
 EXPORT GType gst_video_capturer_get_type (void) G_GNUC_CONST;
 
 EXPORT void gst_video_capturer_init_backend (int *argc, char ***argv);
-EXPORT GstVideoCapturer * gst_video_capturer_new (GvcUseType use_type,GError ** err );
-EXPORT void gst_video_capturer_start_rec(GstVideoCapturer *gvc);
-EXPORT void gst_video_capturer_rec(GstVideoCapturer *gvc);
-EXPORT void gst_video_capturer_pause(GstVideoCapturer *gvc);
-EXPORT void gst_video_capturer_stop(GstVideoCapturer *gvc);
+EXPORT GstVideoCapturer * gst_video_capturer_new (GError ** err);
+EXPORT void gst_video_capturer_start(GstVideoCapturer *gvc);
+EXPORT void gst_video_capturer_set_segment(GstVideoCapturer *gvc, glong start, glong stop);
 
 G_END_DECLS
 
