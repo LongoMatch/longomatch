@@ -143,6 +143,11 @@ gst_video_capturer_finalize (GObject *object)
     	gst_object_unref (gvc->priv->vencode_bin);
     	gvc->priv->vencode_bin = NULL;
   	}
+  	
+  	if (gvc->priv->filesink_bin != NULL && GST_IS_ELEMENT (gvc->priv->filesink_bin )) {
+    	gst_object_unref (gvc->priv->filesink_bin);
+    	gvc->priv->filesink_bin = NULL;
+  	}
 
   	if (gvc->priv->aencode_bin != NULL && GST_IS_ELEMENT (gvc->priv->aencode_bin )) {
     	gst_object_unref (gvc->priv->aencode_bin);
@@ -371,14 +376,6 @@ gst_video_capturer_get_property (GObject * object, guint property_id,
   }
 }
 
-
-
-void
-gst_video_capturer_init_backend (int *argc, char ***argv)
-{
-  gst_init (argc, argv);
-}
-
 GstVideoCapturer *
 gst_video_capturer_new (GError ** err)
 {
@@ -443,6 +440,13 @@ gst_video_capturer_new (GError ** err)
 
 
 }
+
+/* =========================================== */
+/*                                             */
+/*               Private Methods               */
+/*                                             */
+/* =========================================== */
+
 
 static void gvc_set_audio_encode_bin(GstVideoCapturer *gvc)
 {
@@ -577,6 +581,12 @@ static void gvc_link_video_to_file_sink(GstVideoCapturer *gvc){
 }
 
 
+/* =========================================== */
+/*                                             */
+/*                Callbacks                    */
+/*                                             */
+/* =========================================== */
+
 static void new_decoded_pad_cb (GstElement* object,
                                            GstPad* pad,
                                            gboolean arg1,
@@ -692,5 +702,23 @@ gvc_error_msg (GstVideoCapturer * gvc, GstMessage * msg)
   g_free (dbg);
 }
 
+/* =========================================== */
+/*                                             */
+/*              Public Methods                 */
+/*                                             */
+/* =========================================== */
+
+void gst_video_capturer_set_segment(GstVideoCapturer *gvc, glong start, glong stop){
+	
+	
+}
+
+
+
+void
+gst_video_capturer_init_backend (int *argc, char ***argv)
+{
+  gst_init (argc, argv);
+}
 
 
