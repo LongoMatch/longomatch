@@ -22,8 +22,6 @@
     <File name="src/gstvideowidget.c" subtype="Code" buildaction="Compile" />
     <File name="src/gstvideowidget.h" subtype="Code" buildaction="Nothing" />
     <File name="src/macros.h" subtype="Code" buildaction="Nothing" />
-    <File name="src/gst-video-capturer.h" subtype="Code" buildaction="Nothing" />
-    <File name="src/gst-video-capturer.c" subtype="Code" buildaction="Compile" />
     <File name="src/gstscreenshot.c" subtype="Code" buildaction="Compile" />
     <File name="src/gstscreenshot.h" subtype="Code" buildaction="Nothing" />
   </Contents>

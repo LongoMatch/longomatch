@@ -90,6 +90,16 @@ namespace LongoMatch.DB
 			return colors;
 		}
 		
+		public HotKey[] GetHotKeys(){
+			HotKey[] hotkeys = new HotKey[totalSections];
+			SectionsTimeNode tNode;
+			for (int i=0; i<totalSections; i++){
+				tNode = timeNodesArray[i];
+				hotkeys[i]=tNode.HotKey;
+			}
+			return hotkeys;
+		}
+		
 		public Time[] GetSectionsStartTimes(){
 			Time[] startTimes = new Time[totalSections];
 			SectionsTimeNode tNode;

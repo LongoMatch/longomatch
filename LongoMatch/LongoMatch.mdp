@@ -59,7 +59,6 @@
     <File name="Time/TimeNode.cs" subtype="Code" buildaction="Compile" />
     <File name="Time/Time.cs" subtype="Code" buildaction="Compile" />
     <File name="Time/PlayListTimeNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="EventsManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Video" subtype="Directory" buildaction="Compile" />
     <File name="Video/AudioQuality.cs" subtype="Code" buildaction="Compile" />
     <File name="Video/FFMPEGVideoEditor.cs" subtype="Code" buildaction="Compile" />
@@ -90,8 +89,6 @@
     <File name="Playlist" subtype="Directory" buildaction="Compile" />
     <File name="Playlist/IPlayList.cs" subtype="Code" buildaction="Compile" />
     <File name="Playlist/PlayList.cs" subtype="Code" buildaction="Compile" />
-    <File name="Transcoder.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Dialog.Transcoder.cs" subtype="Code" buildaction="Compile" />
     <File name="gtk-gui/LongoMatch.Gui.Component.NotesWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="gtk-gui/LongoMatch.Gui.MainWindow.cs" subtype="Code" buildaction="Compile" />
     <File name="Gui/NotesWidget.cs" subtype="Code" buildaction="Compile" />
@@ -108,6 +105,8 @@
     <File name="Gui/HotKeySelectorDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="Time/HotKey.cs" subtype="Code" buildaction="Compile" />
+    <File name="Handlers/EventsManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="Handlers/HotKeysManager.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
@@ -118,8 +117,8 @@
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Cairo, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <ProjectReference type="Gac" localcopy="True" refto="Db4objects.Db4o, Version=6.0.1.0, Culture=neutral, PublicKeyToken=6199cd4f203aa8eb" />
     <ProjectReference type="Project" localcopy="True" refto="CesarPlayer" />
+    <ProjectReference type="Gac" localcopy="True" refto="Db4objects.Db4o, Version=6.0.1.0, Culture=neutral, PublicKeyToken=6199cd4f203aa8eb" />
   </References>
   <LanguageParameters StartupObject="LongoMatch.MainClass" ApplicationIcon="." CodePage="65001" ctype="CSharpProjectParameters" />
   <Deployment.LinuxDeployData />

@@ -1,5 +1,27 @@
+// HotKey.cs
+//
+//  Copyright (C) 2009 Andoni Morales Alastruey
+//
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+//
+
 
 using System;
+using System.Collections.Generic;
 using Gtk;
 using Gdk;
 using Mono.Unix;
@@ -7,21 +29,21 @@ using Mono.Unix;
 namespace LongoMatch.TimeNodes
 {
 	
-	public class HotKey
+	public class HotKey : IEquatable<HotKey>
 	{
 		int key;
 		int modifier;
 	
-		#region Constructors
+#region Constructors
 		public HotKey()
 		{
 			this.key = -1;
 			this.modifier = -1;
 		}
-		#endregion
+#endregion
 		
 	
-		#region Properties
+#region Properties
 		public Gdk.Key Key{
 			get{return (Gdk.Key)key;}
 			set{key = (int)value;}
@@ -35,32 +57,25 @@ namespace LongoMatch.TimeNodes
 		public Boolean Defined{
 			get{return (key!=-1 && modifier != -1);}
 		}
-		#endregion	
+		
+		public bool Equals(HotKey hotkeyComp){
+			return (this.Key == hotkeyComp.Key && this.Modifier == hotkeyComp.Modifier);
+		}
+#endregion	
 		
 #region Override
 		public override bool Equals (object obj)
 		{
-			HotKey comp;
-			
-			if (obj is HotKey){
-				comp = (HotKey)obj;
-				return (comp.Key==Key && comp.Modifier==Modifier);
-			}
-			else 
-				return false;
+			HotKey hotkey= obj as HotKey;
+   		 	if (hotkey != null)
+        		return Equals(hotkey);
+    		else
+        		return false;
 		}
 		
 		public override string ToString ()
 		{
-			string modifierS;
-			if ((Modifier & ModifierType.ControlMask) != 0)
-				modifierS=Catalog.GetString("Control");
-			else if ((Modifier & ModifierType.ShiftMask) != 0)
-				modifierS=Catalog.GetString("Shift");
-			else if ((Modifier & ModifierType.SuperMask) != 0)
-				modifierS=Catalog.GetString("Super");
-			else return "";	
-			return string.Format("<{0}> + {1}", modifierS,(Key.ToString()).ToLower());
+			return string.Format("<{0}> + {1}", Modifier,(Key.ToString()).ToLower());
 		}
 
 #endregion

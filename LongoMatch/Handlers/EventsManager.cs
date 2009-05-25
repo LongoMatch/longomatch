@@ -66,8 +66,7 @@ namespace LongoMatch
 			this.videoprogressbar = videoprogressbar;
 			this.notes = notes;
 			
-			//Adding Handlers for each event
-			
+			//Adding Handlers for each event		
 			
 			this.buttonswidget.NewMarkEvent += new Handlers.NewMarkEventHandler(OnNewMark);
 			

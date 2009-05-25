@@ -37,7 +37,7 @@ namespace LongoMatch.Gui.Dialog
 			
 			if ((modifier & (ModifierType.ControlMask | ModifierType.ShiftMask | ModifierType.SuperMask)) != 0){
 				hotKey.Key = key;
-				hotKey.Modifier = modifier;
+				hotKey.Modifier = modifier & (ModifierType.ControlMask | ModifierType.ShiftMask | ModifierType.SuperMask);
 				this.Respond (ResponseType.Ok);
 			}
 			

@@ -32,6 +32,7 @@ using LongoMatch.Gui;
 using LongoMatch.Video.Player;
 using LongoMatch.Updates;
 using LongoMatch.IO;
+using LongoMatch.Handlers;
 using System.Reflection;
 
 
@@ -44,8 +45,11 @@ namespace LongoMatch.Gui
 		private static Project openedProject;		
 		private TimeNode selectedTimeNode;
 		
-		private EventsManager eManager;	
-		
+		private EventsManager eManager;			
+		private HotKeysManager hkManager;		
+		private KeyPressEventHandler hotkeysListener;
+
+#region Constructors
 		public MainWindow() : 
 				base("LongoMatch")
 		{			
@@ -59,16 +63,23 @@ namespace LongoMatch.Gui
 			                                  this.playerbin1,this.timelinewidget1,this.videoprogressbar,
 			                                  this.noteswidget1);
 			
+			hkManager = new HotKeysManager();
+
+			hotkeysListener = new KeyPressEventHandler (hkManager.KeyListener);
+			
 			playerbin1.SetLogo(System.IO.Path.Combine(MainClass.ImagesDir(),"background.png"));
 
 			playerbin1.LogoMode = true;
+			
 			this.playlistwidget2.SetPlayer(playerbin1);
 
 
 		}
+		
+#endregion
 
 		
-
+#region Private Methods
 		private void SetProject(Project project){			
 			openedProject = project;
 			this.eManager.OpenedProject = project;
@@ -95,12 +106,10 @@ namespace LongoMatch.Gui
 						if (project.File.HasVideo){
 							this.playerbin1.LogoMode = false;						
 						}
-						this.CloseProjectAction.Sensitive=true;
-						this.SaveProjectAction.Sensitive = true;						
-						this.CaptureModeAction.Sensitive = true;
-						this.AnalyzeModeAction.Sensitive = true;
-						this.ExportProjectToCSVFileAction.Sensitive = true;
+						MakeActionsSensitive(true);
 						this.ShowWidgets();
+						hkManager.SetSections(project.Sections);
+						this.KeyPressEvent += hotkeysListener;
 					}
 					catch (GLib.GException ex){
 						MessageDialog infoDialog = new MessageDialog (this,DialogFlags.Modal,MessageType.Error,ButtonsType.Ok,Catalog.GetString("An error ocurred opening this project:")+"\n"+ex.Message);
@@ -112,8 +121,25 @@ namespace LongoMatch.Gui
 			}			
 		}
 		
-		public static Project OpenedProject(){			
-			return openedProject;
+		private void CloseActualProyect(){
+			this.Title = "LongoMatch";
+			this.HideWidgets();
+			this.playerbin1.Close();			
+			this.playerbin1.LogoMode = true;
+			this.SaveDB();			
+			openedProject = null;	
+			this.eManager.OpenedProject = null;
+			this.selectedTimeNode = null;
+			MakeActionsSensitive(false);
+			this.KeyPressEvent -= hotkeysListener;
+		}
+		
+		private void MakeActionsSensitive(bool sensitive){
+			this.CloseProjectAction.Sensitive=sensitive;
+			this.SaveProjectAction.Sensitive = sensitive;
+			this.CaptureModeAction.Sensitive = sensitive;
+			this.AnalyzeModeAction.Sensitive = sensitive;	
+			this.ExportProjectToCSVFileAction.Sensitive = sensitive;
 		}
 		
 		private void ShowWidgets(){
@@ -130,27 +156,25 @@ namespace LongoMatch.Gui
 			this.timelinewidget1.Hide();
 		}
 				
-	    private void CloseActualProyect(){
-			this.Title = "LongoMatch";
-			this.HideWidgets();
-			this.playerbin1.Close();			
-			this.playerbin1.LogoMode = true;
-			this.SaveDB();			
-			openedProject = null;	
-			this.eManager.OpenedProject = null;
-			this.selectedTimeNode = null;
-			this.CloseProjectAction.Sensitive=false;
-			this.SaveProjectAction.Sensitive = false;
-			this.CaptureModeAction.Sensitive = false;
-			this.AnalyzeModeAction.Sensitive = false;	
-			this.ExportProjectToCSVFileAction.Sensitive = false;
-		}
+
 		
 		private void SaveDB(){			
 			if (openedProject != null){
 				MainClass.DB.UpdateProject(OpenedProject());
 			}			
 		}
+		
+		
+#endregion
+		
+#region Public Methods		
+		public static Project OpenedProject(){			
+			return openedProject;
+		}
+		
+#endregion	
+		
+#region Callbacks
 		
 		protected virtual void OnUnrealized(object sender, System.EventArgs e){
 			this.Destroy();			
@@ -430,6 +454,8 @@ namespace LongoMatch.Gui
 			playerbin1.RedrawLastFrame();
 			return base.OnConfigureEvent (evnt);
 		}
+		
+#endregion
 
 	}
 }

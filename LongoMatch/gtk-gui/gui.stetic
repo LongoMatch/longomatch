@@ -5,8 +5,8 @@
     <target-gtk-version>2.12</target-gtk-version>
   </configuration>
   <import>
-    <widget-library name="../../CesarPlayer/bin/Release/CesarPlayer.dll" />
-    <widget-library name="../bin/Release/LongoMatch.exe" internal="true" />
+    <widget-library name="../../CesarPlayer/a.dll" />
+    <widget-library name="../bin/Debug/LongoMatch.exe" internal="true" />
   </import>
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.FileDescriptionWidget" design-size="400 330">
     <property name="MemberName" />
@@ -2175,7 +2175,7 @@
           <widget class="Gtk.HPaned" id="hpaned">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="Position">171</property>
+            <property name="Position">178</property>
             <child>
               <widget class="Gtk.VBox" id="leftbox">
                 <property name="MemberName" />
@@ -2201,7 +2201,7 @@
               <widget class="Gtk.HPaned" id="hpaned1">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Position">859</property>
+                <property name="Position">839</property>
                 <child>
                   <widget class="Gtk.VBox" id="vbox5">
                     <property name="MemberName" />
@@ -3262,173 +3262,6 @@ Extra</property>
             <property name="ResponseId">-5</property>
           </widget>
           <packing>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
-      </widget>
-    </child>
-  </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.Transcoder" design-size="400 192">
-    <property name="MemberName" />
-    <property name="Title" translatable="yes">Transcoder</property>
-    <property name="Icon">resource:longomatch_logo.png</property>
-    <property name="WindowPosition">CenterOnParent</property>
-    <property name="Modal">True</property>
-    <property name="Gravity">Center</property>
-    <property name="SkipPagerHint">True</property>
-    <property name="SkipTaskbarHint">True</property>
-    <property name="Buttons">2</property>
-    <property name="HelpButton">False</property>
-    <property name="HasSeparator">False</property>
-    <child internal-child="VBox">
-      <widget class="Gtk.VBox" id="dialog1_VBox">
-        <property name="MemberName" />
-        <property name="BorderWidth">2</property>
-        <child>
-          <widget class="Gtk.VBox" id="vbox2">
-            <property name="MemberName" />
-            <property name="Spacing">6</property>
-            <child>
-              <widget class="Gtk.FileChooserButton" id="filechooserbutton1">
-                <property name="MemberName" />
-                <property name="ShowHidden">True</property>
-              </widget>
-              <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.HBox" id="hbox1">
-                <property name="MemberName" />
-                <property name="Spacing">6</property>
-                <child>
-                  <widget class="Gtk.Label" id="label1">
-                    <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes">Audio bitrate (kbps)</property>
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                    <property name="Fill">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.SpinButton" id="spinbutton1">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Lower">32</property>
-                    <property name="Upper">320</property>
-                    <property name="PageIncrement">10</property>
-                    <property name="StepIncrement">1</property>
-                    <property name="ClimbRate">1</property>
-                    <property name="Numeric">True</property>
-                    <property name="Value">128</property>
-                  </widget>
-                  <packing>
-                    <property name="Position">1</property>
-                    <property name="AutoSize">True</property>
-                    <property name="Expand">False</property>
-                    <property name="Fill">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">1</property>
-                <property name="AutoSize">False</property>
-                <property name="Expand">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.HBox" id="hbox2">
-                <property name="MemberName" />
-                <property name="Spacing">6</property>
-                <child>
-                  <widget class="Gtk.Label" id="label2">
-                    <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes">Video bitrate (kbps)</property>
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.SpinButton" id="spinbutton2">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Lower">400</property>
-                    <property name="Upper">15000</property>
-                    <property name="PageIncrement">10</property>
-                    <property name="StepIncrement">1</property>
-                    <property name="ClimbRate">1</property>
-                    <property name="Numeric">True</property>
-                    <property name="Value">2000</property>
-                  </widget>
-                  <packing>
-                    <property name="Position">1</property>
-                    <property name="AutoSize">True</property>
-                    <property name="Expand">False</property>
-                    <property name="Fill">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">2</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
-          </widget>
-          <packing>
-            <property name="Position">0</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
-      </widget>
-    </child>
-    <child internal-child="ActionArea">
-      <widget class="Gtk.HButtonBox" id="dialog1_ActionArea">
-        <property name="MemberName" />
-        <property name="Spacing">6</property>
-        <property name="BorderWidth">5</property>
-        <property name="Size">2</property>
-        <property name="LayoutStyle">End</property>
-        <child>
-          <widget class="Gtk.Button" id="buttonCancel">
-            <property name="MemberName" />
-            <property name="CanDefault">True</property>
-            <property name="CanFocus">True</property>
-            <property name="UseStock">True</property>
-            <property name="Type">StockItem</property>
-            <property name="StockId">gtk-cancel</property>
-            <property name="ResponseId">-6</property>
-            <property name="label">gtk-cancel</property>
-          </widget>
-          <packing>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Button" id="buttonOk">
-            <property name="MemberName" />
-            <property name="CanDefault">True</property>
-            <property name="CanFocus">True</property>
-            <property name="UseStock">True</property>
-            <property name="Type">StockItem</property>
-            <property name="StockId">gtk-ok</property>
-            <property name="ResponseId">-5</property>
-            <property name="label">gtk-ok</property>
-          </widget>
-          <packing>
-            <property name="Position">1</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
           </packing>
