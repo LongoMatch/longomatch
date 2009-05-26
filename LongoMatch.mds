@@ -5,12 +5,16 @@
       <Entry build="True" name="libcesarplayer" configuration="Debug" />
       <Entry build="True" name="Translations" configuration="Debug" />
       <Entry build="True" name="CesarPlayer" configuration="Debug" />
+      <Entry build="True" name="TEST" configuration="Debug" />
+      <Entry build="True" name="TEST2" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="LongoMatch" configuration="Release" />
       <Entry build="True" name="libcesarplayer" configuration="Release" />
       <Entry build="True" name="Translations" configuration="Release" />
       <Entry build="True" name="CesarPlayer" configuration="Release" />
+      <Entry build="True" name="TEST" configuration="Release" />
+      <Entry build="True" name="TEST2" configuration="Release" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="LongoMatch" single="True">
@@ -18,6 +22,8 @@
     <Execute type="None" entry="libcesarplayer" />
     <Execute type="None" entry="Translations" />
     <Execute type="None" entry="CesarPlayer" />
+    <Execute type="None" entry="TEST" />
+    <Execute type="None" entry="TEST2" />
   </StartMode>
   <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="UpdateNearestChangeLog" />
   <Entries>
@@ -25,5 +31,7 @@
     <Entry filename="libcesarplayer/liblongomatch.mdp" />
     <Entry filename="Translations/Translations.mdse" />
     <Entry filename="CesarPlayer/CesarPlayer.mdp" />
+    <Entry filename="TEST/TEST.csproj" />
+    <Entry filename="TEST2/TEST2.mdp" />
   </Entries>
 </Combine>

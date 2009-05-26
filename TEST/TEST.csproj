@@ -66,8 +66,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CesarPlayer\CesarPlayer.csproj">
-      <Project>{21A2B917-44CA-4E09-A6DA-9B4E2279C267}</Project>
+    <ProjectReference Include="..\CesarPlayer\CesarPlayer.mdp">
       <Name>CesarPlayer</Name>
     </ProjectReference>
     <Compile Include="main.cs" />

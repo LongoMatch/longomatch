@@ -1,4 +1,4 @@
- /* GStreamer Non Linear Video Editor Based On GNonlin
+ /*GStreamer Video splitter Based On GNonlin
  * Copyright (C)  Andoni Morales Alastruey 2009 <ylatuya@gmail.com>
  *
  * This program is free software.
@@ -36,7 +36,6 @@ enum
 {
   SIGNAL_ERROR,
   SIGNAL_EOS,
-  SIGNAL_STATE_CHANGED,
   SIGNAL_PERCENT_COMPLETED,
   LAST_SIGNAL
 };
@@ -86,7 +85,7 @@ struct GstVideoCapturerPrivate
 
 static int gvc_signals[LAST_SIGNAL] = { 0 };
 static void gvc_error_msg (GstVideoCapturer * gvc, GstMessage * msg);
-static void new_decoded_pad_cb (GstElement* object,GstPad* arg0,gboolean arg1,gpointer user_data);
+static void new_decoded_pad_cb (GstElement* object,GstPad* arg0,gpointer user_data);
 static void gvc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data);
 static void gst_video_capturer_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec);
 static void gst_video_capturer_set_property (GObject * object, guint property_id,const GValue * value, GParamSpec * pspec);
@@ -376,70 +375,7 @@ gst_video_capturer_get_property (GObject * object, guint property_id,
   }
 }
 
-GstVideoCapturer *
-gst_video_capturer_new (GError ** err)
-{
 
-	GstPad *videoteesrcpad=NULL;
-	GstPad *audioteesrcpad=NULL;
-	GstPad *pad=NULL;
-
-	GstVideoCapturer *gvc = NULL;
-
-	gvc = g_object_new(GST_TYPE_VIDEO_CAPTURER, NULL);
-
-
-	gvc->priv->output_file = "/dev/null";
-
-	/*Handled by Properties?*/
-	gvc->priv->encode_height= 720;
-	gvc->priv->encode_width= 1280;
-	gvc->priv->audio_bitrate= 128;
-	gvc->priv->video_bitrate= 5000000;
-	
-	gvc->priv->main_pipeline = gst_pipeline_new ("main_pipeline");
-
-	if (!gvc->priv->main_pipeline ) {
-    	/*g_set_error (err, GVC_ERROR, GVC_ERROR_PLUGIN_LOAD,
-                	("Failed to create a GStreamer Bin. "
-                    "Please check your GStreamer installation."));*/
-    	g_object_ref_sink (gvc);
-    	g_object_unref (gvc);
-    	return NULL;
-  	}
-
-  	/* Setup*/
-
-  	gvc->priv->gnl_composition = gst_element_factory_make("gnlcomposition","gnlcomposition");
- 	gvc->priv->gnl_filesource = gst_element_factory_make ("gnlfilesource","gnlfilesource");
- 	gst_bin_add (GST_BIN(gvc->priv->gnl_composition),gvc->priv->gnl_filesource);
-	 
- 
-    GST_INFO("Initializing encoder");
-    gvc_set_video_encoder_bin(gvc);
-    gvc_set_audio_encoder_bin(gvc);
-    gvc_set_filesink_bin(gvc);     
-
-  	gst_bin_add_many(GST_BIN (gvc->priv->main_pipeline),gvc->priv->gnl_composition,NULL );
-
-
-   
-	/*Connect bus signals*/
-	g_print("Initializing signals bus");
-
-    /*We have to wait for a "new-decoded-pad" message to link the composition with
-    the encoder tail*/
-	gvc->priv->bus = gst_element_get_bus (GST_ELEMENT(gvc->priv->main_pipeline));
-  	g_signal_connect (gvc->priv->gnl_composition, "new-decoded-pad",G_CALLBACK(new_decoded_pad_cb),gvc);
-	gst_bus_add_signal_watch (gvc->priv->bus);
-  	gvc->priv->sig_bus_async =	g_signal_connect (gvc->priv->bus, "message",
-                        		G_CALLBACK (gvc_bus_message_cb),
-                        		gvc);
-
-	return gvc;
-
-
-}
 
 /* =========================================== */
 /*                                             */
@@ -466,6 +402,9 @@ static void gvc_set_audio_encode_bin(GstVideoCapturer *gvc)
     gst_bin_add_many (GST_BIN(gvc->priv->aencode_bin),audioqueue,gvc->priv->audio_encoder,NULL);
     gst_element_link_many(audioqueue,gvc->priv->audio_encoder, NULL);
     
+    gst_bin_add (GST_BIN (gvc->priv->main_pipeline), gvc->priv->aencode_bin);
+
+    
     sinkpad = gst_element_get_pad (audioqueue, "sink");  
     gst_element_add_pad (gvc->priv->aencode_bin,
     					gst_ghost_pad_new ("sink", GST_PAD(sinkpad)));
@@ -475,7 +414,7 @@ static void gvc_set_audio_encode_bin(GstVideoCapturer *gvc)
    						gst_ghost_pad_new ("src", GST_PAD(sourcepad)));
 
     gst_object_unref(sinkpad);
-    gst_onbject_unref(sourcepad);
+    gst_object_unref(sourcepad);
     
 }
 
@@ -498,6 +437,8 @@ static void gvc_set_video_encode_bin (GstVideoCapturer *gvc)
 
     gst_bin_add_many (GST_BIN(gvc->priv->vencode_bin),videoqueue,gvc->priv->video_encoder,NULL);
     gst_element_link_many (videoqueue,gvc->priv->video_encoder,NULL);
+    
+    gst_bin_add (GST_BIN (gvc->priv->main_pipeline), gvc->priv->vencode_bin);
 
 	sinkpad = gst_element_get_pad (videoqueue, "sink");
     gst_element_add_pad(gvc->priv->vencode_bin,
@@ -508,7 +449,7 @@ static void gvc_set_video_encode_bin (GstVideoCapturer *gvc)
     					gst_ghost_pad_new ("src", GST_PAD(sourcepad)));
     
     gst_object_unref(sinkpad);
-    gst_onbject_unref(sourcepad);
+    gst_object_unref(sourcepad);
 
 }
 
@@ -516,7 +457,6 @@ static void gvc_set_filesink_bin (GstVideoCapturer *gvc)
 
 {
 	GstElement *muxer = NULL;
-	GstElement *filesink = NULL;
 	GstPad *videosinkpad = NULL;
 	GstPad *audiosinkpad = NULL;
 	
@@ -525,18 +465,21 @@ static void gvc_set_filesink_bin (GstVideoCapturer *gvc)
 	gvc->priv->filesink_bin = gst_bin_new ("filesinkbin");
 	
 	muxer = gst_element_factory_make (DEAFAULT_VIDEO_MUXER, "videomuxer");
-	filesink = gst_element_factory_make ("filesink", "filesink");
+	gvc->priv->file_sink = gst_element_factory_make ("filesink", "filesink");
 	
-	gst_bin_add_many(GST_BIN(gvc->priv->filesink_bin), muxer, filesink, NULL);
-	gst_element_link(muxer, filesink);
+	gst_bin_add_many(GST_BIN(gvc->priv->filesink_bin), muxer, gvc->priv->file_sink, NULL);
+	gst_element_link(muxer, gvc->priv->file_sink);
+	
+	gst_bin_add (GST_BIN (gvc->priv->main_pipeline), gvc->priv->filesink_bin);
+
 	
 	videosinkpad = gst_element_get_pad (muxer, "video_0");
     gst_element_add_pad (gvc->priv->filesink_bin,
-    					gst_ghost_pad_new ("videosink", GST_PAD(videosinkpad)));
+    					gst_ghost_pad_new ("video_sink", GST_PAD(videosinkpad)));
     
     audiosinkpad = gst_element_get_pad (muxer, "audio_0");
     gst_element_add_pad (gvc->priv->filesink_bin,
-    					gst_ghost_pad_new ("audiosink", GST_PAD(audiosinkpad)));
+    					gst_ghost_pad_new ("audio_sink", GST_PAD(audiosinkpad)));
     
     gst_object_unref(audiosinkpad);
     gst_object_unref(videosinkpad);
@@ -569,6 +512,7 @@ static void gvc_link_video_to_file_sink(GstVideoCapturer *gvc){
 	
 	g_return_if_fail (GST_IS_VIDEO_CAPTURER(gvc));
 	
+	g_print("Linking video demuxer to file sink\n");
 	videosrcpad = gst_element_get_pad (gvc->priv->vencode_bin, "src");
 	sinkpad = gst_element_get_pad (gvc->priv->filesink_bin, "video_sink");
 
@@ -589,7 +533,6 @@ static void gvc_link_video_to_file_sink(GstVideoCapturer *gvc){
 
 static void new_decoded_pad_cb (GstElement* object,
                                            GstPad* pad,
-                                           gboolean arg1,
                                            gpointer user_data)
 {
 	GstCaps *caps=NULL;
@@ -617,8 +560,10 @@ static void new_decoded_pad_cb (GstElement* object,
   		}
 
   		/* link 'n play*/
+  		g_print ("Found audio stream...");
   		gst_pad_link (pad, audiopad);
   		gvc_link_audio_to_file_sink(gvc);
+  		g_print ("Linked!");
   		g_object_unref (audiopad);
   	}
 	
@@ -634,8 +579,10 @@ static void new_decoded_pad_cb (GstElement* object,
   		}
   		
   		/* link 'n play*/
+  		g_print ("Found video stream...");
     	gst_pad_link (pad,videopad);
     	gvc_link_video_to_file_sink(gvc);
+    	g_print ("Linked!");
 		g_object_unref (videopad);
 
   }
@@ -658,7 +605,7 @@ static void gvc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer dat
 
       gvc_error_msg (gvc, message);
       if (gvc->priv->main_pipeline)
-          gst_element_set_state (gvc->priv->main_pipeline, GST_STATE_NULL);
+          gst_element_set_state (gvc->priv->main_pipeline, GST_STATE_READY);
       break;
     }
     case GST_MESSAGE_WARNING: {
@@ -708,13 +655,31 @@ gvc_error_msg (GstVideoCapturer * gvc, GstMessage * msg)
 /*                                             */
 /* =========================================== */
 
-void gst_video_capturer_set_segment(GstVideoCapturer *gvc, glong start, glong stop){
+void gst_video_capturer_set_segment(GstVideoCapturer *gvc, glong start, glong duration,gdouble rate)
+{
+	GstState cur_state;
 	
+	g_return_if_fail (GST_IS_VIDEO_CAPTURER(gvc));	
+
+	gst_element_get_state (gvc->priv->vencode_bin, &cur_state, NULL, 0);
+    if (cur_state <= GST_STATE_READY) {	
+		g_object_set (G_OBJECT(gvc->priv->gnl_filesource), "media-start",GST_MSECOND * start,NULL);
+		g_object_set (G_OBJECT(gvc->priv->gnl_filesource), "duration",GST_MSECOND * duration,NULL);
+		g_object_set (G_OBJECT(gvc->priv->gnl_filesource), "start",GST_MSECOND * 0,NULL);
+		g_object_set (G_OBJECT(gvc->priv->gnl_filesource), "duration",GST_MSECOND * duration,NULL);
+		GST_INFO("New segment: start={%d} duration={%d} ",start, duration);
+    }
+    else
+    	GST_WARNING("Segments can only be defined in GST_STATE_NULL or GST_STATE_READY state");
 	
 }
 
-void gst_video_capturer_start(GstVideoCapturer *gvc){
+void gst_video_capturer_start(GstVideoCapturer *gvc)
+{
 	
+	g_return_if_fail (GST_IS_VIDEO_CAPTURER(gvc));
+	
+	gst_element_set_state(gvc->priv->main_pipeline, GST_STATE_PLAYING);
 	
 }
 
@@ -722,6 +687,69 @@ void
 gst_video_capturer_init_backend (int *argc, char ***argv)
 {
   gst_init (argc, argv);
+}
+
+GstVideoCapturer *
+gst_video_capturer_new (GError ** err)
+{
+
+	GstPad *videoteesrcpad=NULL;
+	GstPad *audioteesrcpad=NULL;
+	GstPad *pad=NULL;
+
+	GstVideoCapturer *gvc = NULL;
+
+	gvc = g_object_new(GST_TYPE_VIDEO_CAPTURER, NULL);
+
+
+	gvc->priv->output_file = "/dev/null";
+
+	/*Handled by Properties?*/
+	gvc->priv->encode_height= 720;
+	gvc->priv->encode_width= 1280;
+	gvc->priv->audio_bitrate= 128;
+	gvc->priv->video_bitrate= 5000000;
+	
+	gvc->priv->main_pipeline = gst_pipeline_new ("main_pipeline");
+
+	if (!gvc->priv->main_pipeline ) {
+    	/*g_set_error (err, GVC_ERROR, GVC_ERROR_PLUGIN_LOAD,
+                	("Failed to create a GStreamer Bin. "
+                    "Please check your GStreamer installation."));*/
+    	g_object_ref_sink (gvc);
+    	g_object_unref (gvc);
+    	return NULL;
+  	}
+
+  	/* Setup*/
+
+  	gvc->priv->gnl_composition = gst_element_factory_make("gnlcomposition","gnlcomposition");
+ 	gvc->priv->gnl_filesource = gst_element_factory_make ("gnlfilesource","gnlfilesource");
+ 	gst_bin_add (GST_BIN(gvc->priv->gnl_composition),gvc->priv->gnl_filesource);
+ 	gst_bin_add (GST_BIN (gvc->priv->main_pipeline),gvc->priv->gnl_composition);
+	 
+ 
+    GST_INFO("Initializing encoder");
+    gvc_set_video_encode_bin(gvc);
+    gvc_set_audio_encode_bin(gvc);
+    gvc_set_filesink_bin(gvc);     
+
+   
+	/*Connect bus signals*/
+	g_print("Initializing signals bus");
+
+    /*We have to wait for a "new-decoded-pad" message to link the composition with
+    the encoder tail*/
+	gvc->priv->bus = gst_element_get_bus (GST_ELEMENT(gvc->priv->main_pipeline));
+  	g_signal_connect (gvc->priv->gnl_composition, "pad-added",G_CALLBACK(new_decoded_pad_cb),gvc);
+	gst_bus_add_signal_watch (gvc->priv->bus);
+  	gvc->priv->sig_bus_async =	g_signal_connect (gvc->priv->bus, "message",
+                        		G_CALLBACK (gvc_bus_message_cb),
+                        		gvc);
+	g_print("Signal bus initialized");
+	return gvc;
+
+
 }
 
 
