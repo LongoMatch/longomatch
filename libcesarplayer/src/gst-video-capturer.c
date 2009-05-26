@@ -713,7 +713,10 @@ void gst_video_capturer_set_segment(GstVideoCapturer *gvc, glong start, glong st
 	
 }
 
-
+void gst_video_capturer_start(GstVideoCapturer *gvc){
+	
+	
+}
 
 void
 gst_video_capturer_init_backend (int *argc, char ***argv)
