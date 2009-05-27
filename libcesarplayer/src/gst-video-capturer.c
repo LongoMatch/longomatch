@@ -27,7 +27,7 @@
 
 #include "gst-video-capturer.h"
 
-#define DEFAULT_VIDEO_ENCODER "schroenc"
+#define DEFAULT_VIDEO_ENCODER "ffenc_mpeg4"
 #define DEFAULT_AUDIO_ENCODER "lame"
 #define DEAFAULT_VIDEO_MUXER "avimux"
 
@@ -56,27 +56,20 @@ enum
 struct GstVideoCapturerPrivate
 {
 	
-	glong 	last_stop;
+	gint64 	last_stop;
 	gint 	segments;
 
 	gchar	*output_file;
-	gchar	*input_file;
-	guint   encode_height;
-	guint   encode_width;
+	gchar	*input_file;	
 	guint	audio_bitrate;
 	guint	video_bitrate;
 	
 	GstElement *main_pipeline;	
-	GstElement *decode_bin;
-	GstElement *vencode_bin;
-	GstElement *aencode_bin;
-	GstElement *filesink_bin;	
-	
-	
-	GstElement *gnl_filesource;
+		
 	GstElement *gnl_composition;
 	GstElement *identity;
 	GstElement *videorate;	
+	GstElement *queue;
     GstElement *video_encoder;
 	GstElement *audio_encoder;
 	GstElement *muxer;
@@ -133,35 +126,14 @@ gst_video_capturer_finalize (GObject *object)
 	}
 
   	g_free (gvc->priv->output_file);
-  	gvc->priv->output_file = NULL;
-
+  	g_free (gvc->priv->input_file);
   
   	if (gvc->priv->main_pipeline != NULL && GST_IS_ELEMENT (gvc->priv->main_pipeline )) {
     	gst_element_set_state (gvc->priv->main_pipeline , GST_STATE_NULL);
     	gst_object_unref (gvc->priv->main_pipeline);
     	gvc->priv->main_pipeline = NULL;
   	}
-
-  	if (gvc->priv->vencode_bin != NULL && GST_IS_ELEMENT (gvc->priv->vencode_bin )) {
-    	gst_object_unref (gvc->priv->vencode_bin);
-    	gvc->priv->vencode_bin = NULL;
-  	}
-  	
-  	if (gvc->priv->filesink_bin != NULL && GST_IS_ELEMENT (gvc->priv->filesink_bin )) {
-    	gst_object_unref (gvc->priv->filesink_bin);
-    	gvc->priv->filesink_bin = NULL;
-  	}
-
-  	if (gvc->priv->aencode_bin != NULL && GST_IS_ELEMENT (gvc->priv->aencode_bin )) {
-    	gst_object_unref (gvc->priv->aencode_bin);
-    	gvc->priv->aencode_bin = NULL;
-  	}
-
-   	if (gvc->priv->decode_bin != NULL && GST_IS_ELEMENT (gvc->priv->decode_bin )) {
-	   	gst_object_unref (gvc->priv->decode_bin );
-    	gvc->priv->decode_bin  = NULL;
-  	}
-
+  	 	
 	G_OBJECT_CLASS (gst_video_capturer_parent_class)->finalize (object);
 }
 
@@ -182,14 +154,7 @@ gst_video_capturer_class_init (GstVideoCapturerClass *klass)
 
  	/* Properties */
   	
-  	g_object_class_install_property (object_class, PROP_ENCODE_HEIGHT,
-                                   g_param_spec_uint ("encode_height", NULL,
-                                                     NULL,180 , 5600, 576,
-                                                     G_PARAM_READWRITE));
-  	g_object_class_install_property (object_class, PROP_ENCODE_WIDTH,
-                                   g_param_spec_uint ("encode_width", NULL,
-                                                         NULL, 180,5600,780,
-                                                         G_PARAM_READWRITE));
+  	
   	g_object_class_install_property (object_class, PROP_VIDEO_BITRATE,
                                    g_param_spec_uint ("video_bitrate", NULL,
                                                          NULL, 100, G_MAXUINT,1000,
@@ -198,17 +163,7 @@ gst_video_capturer_class_init (GstVideoCapturerClass *klass)
                                    g_param_spec_uint ("audio_bitrate", NULL,
                                                          NULL, 12, G_MAXUINT,128,
                                                          G_PARAM_READWRITE));
- 	g_object_class_install_property (object_class, PROP_OUTPUT_FILE,
-                                   g_param_spec_string ("output_file", NULL,
-                                                        NULL, FALSE,
-                                                        G_PARAM_READWRITE));
-                                                        
-    g_object_class_install_property (object_class, PROP_INPUT_FILE,
-                                   g_param_spec_string ("input_file", NULL,
-                                                        NULL, FALSE,
-                                                        G_PARAM_READWRITE));
-
-
+ 	
   /* Signals */
   gvc_signals[SIGNAL_ERROR] =
     g_signal_new ("error",
@@ -219,7 +174,7 @@ gst_video_capturer_class_init (GstVideoCapturerClass *klass)
                   g_cclosure_marshal_VOID__STRING,
                   G_TYPE_NONE, 1, G_TYPE_STRING);
                   
-  gvc_signals[SIGNAL_ERROR] =
+  gvc_signals[SIGNAL_PERCENT_COMPLETED] =
     g_signal_new ("percent_completed",
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
@@ -243,25 +198,12 @@ gst_video_capturer_class_init (GstVideoCapturerClass *klass)
 /*                                             */
 /* =========================================== */
 
-
-
-static void gst_video_capturer_set_encode_width (GstVideoCapturer *gvc,gint width)
-{
-
-
-}
-
-static void gst_video_capturer_set_encode_height (GstVideoCapturer *gvc,gint height)
-{
-
-}
-
 static void gst_video_capturer_set_video_bit_rate (GstVideoCapturer *gvc,gint bitrate)
 {
 	GstState cur_state;
 
 	gvc->priv->video_bitrate= bitrate;
-	gst_element_get_state (gvc->priv->vencode_bin, &cur_state, NULL, 0);
+	gst_element_get_state (gvc->priv->video_encoder, &cur_state, NULL, 0);
     if (cur_state <= GST_STATE_READY) {
 	    g_object_set (gvc->priv->video_encoder,"bitrate",bitrate,NULL);
     	GST_INFO ("Encoding video bitrate changed to :\n%d",bitrate);
@@ -270,43 +212,10 @@ static void gst_video_capturer_set_video_bit_rate (GstVideoCapturer *gvc,gint bi
 
 static void gst_video_capturer_set_audio_bit_rate (GstVideoCapturer *gvc,gint bitrate)
 {
-	GstState cur_state;
-
-	gvc->priv->audio_bitrate= bitrate;
-	gst_element_get_state (gvc->priv->aencode_bin, &cur_state, NULL, 0);
-    if (cur_state <= GST_STATE_READY) {
-	    g_object_set (gvc->priv->audio_encoder,"bitrate",bitrate,NULL);
-    	GST_INFO ("Encoding audio bitrate to :\n%d",bitrate);
-   }
+	//TODO Not implemented
+   
+   
 }
-
-static void gst_video_capturer_set_output_file(GstVideoCapturer *gvc,const gchar *file)
-{
-	GstState cur_state;
-
-	gvc->priv->output_file = g_strdup(file);
-	gst_element_get_state (gvc->priv->vencode_bin, &cur_state, NULL, 0);
-    if (cur_state == GST_STATE_NULL) {
-	    g_object_set (gvc->priv->file_sink,"location",file,NULL);
-    	GST_INFO ("Output file changed to :\n%s",file);
-
-   }
-}
-
-static void gst_video_capturer_set_input_file(GstVideoCapturer *gvc,const gchar *file)
-{
-	GstState cur_state;
-
-	gvc->priv->input_file = g_strdup(file);
-	gst_element_get_state (gvc->priv->vencode_bin, &cur_state, NULL, 0);
-    if (cur_state == GST_STATE_NULL) {
-	    g_object_set (gvc->priv->gnl_filesource,"location",file,NULL);
-    	GST_INFO ("Input file changed to :\n%s",file);
-
-   }
-}
-
-
 static void
 gst_video_capturer_set_property (GObject * object, guint property_id,
                                  const GValue * value, GParamSpec * pspec)
@@ -315,16 +224,8 @@ gst_video_capturer_set_property (GObject * object, guint property_id,
 
 	gvc = GST_VIDEO_CAPTURER (object);
 
-  switch (property_id) {
+  switch (property_id) {  
     
-    case PROP_ENCODE_HEIGHT:
-      gst_video_capturer_set_encode_height (gvc,
-      g_value_get_uint (value));
-      break;
-    case PROP_ENCODE_WIDTH:
-      gst_video_capturer_set_encode_width (gvc,
-      g_value_get_uint (value));
-      break;
     case PROP_VIDEO_BITRATE:
       gst_video_capturer_set_video_bit_rate (gvc,
       g_value_get_uint (value));
@@ -333,16 +234,6 @@ gst_video_capturer_set_property (GObject * object, guint property_id,
       gst_video_capturer_set_audio_bit_rate (gvc,
       g_value_get_uint (value));
       break;
-    case PROP_OUTPUT_FILE:
-      gst_video_capturer_set_output_file(gvc,
-      g_value_get_string (value));
-      break;
-      
-    case PROP_INPUT_FILE:
-      gst_video_capturer_set_input_file(gvc,
-      g_value_get_string (value));
-      break;
-   
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -358,20 +249,11 @@ gst_video_capturer_get_property (GObject * object, guint property_id,
   gvc = GST_VIDEO_CAPTURER (object);
 
   switch (property_id) {
-    case PROP_ENCODE_HEIGHT:
-      g_value_set_uint (value,gvc->priv->encode_height);
-      break;
-   case PROP_AUDIO_BITRATE:
+    case PROP_AUDIO_BITRATE:
       g_value_set_uint (value,gvc->priv->audio_bitrate);
       break;
     case PROP_VIDEO_BITRATE:
       g_value_set_uint (value,gvc->priv->video_bitrate);
-      break;
-    case PROP_OUTPUT_FILE:
-      g_value_set_string (value,gvc->priv->output_file);
-      break;
-    case PROP_INPUT_FILE:
-      g_value_set_string (value,gvc->priv->input_file);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -413,28 +295,9 @@ static void new_decoded_pad_cb (GstElement* object,
 
 	/* check media type */
 	caps = gst_pad_get_caps (pad);
-	str = gst_caps_get_structure (caps, 0);
+	str = gst_caps_get_structure (caps, 0);	
 	
-	if (g_strrstr (gst_structure_get_name (str), "audio")) {		
-		/* only link once */
-		return;
-		audiopad = gst_element_get_pad (gvc->priv->aencode_bin, "sink");
-		if (GST_PAD_IS_LINKED (audiopad)) {
-    		g_object_unref (audiopad);
-    		gst_caps_unref (caps);
-    		g_object_unref (gvc);
-    		return;
-  		}
-
-  		/* link 'n play*/
-  		g_print ("Found audio stream...");
-  		gvc_link_audio_to_file_sink(gvc);
-  		gst_pad_link (pad, audiopad);  		
-  		g_print ("Linked!");
-  		g_object_unref (audiopad);
-  	}
-	
-	else if (g_strrstr (gst_structure_get_name (str), "video")){
+	if (g_strrstr (gst_structure_get_name (str), "video")){
 
 		videopad = gst_element_get_compatible_pad (gvc->priv->identity, pad, NULL);
 		/* only link once */
@@ -445,9 +308,8 @@ static void new_decoded_pad_cb (GstElement* object,
   		}
   		
   		/* link 'n play*/
-  		g_print ("Found video stream...");
+  		GST_INFO ("Found video stream...");
     	gst_pad_link (pad,videopad);    	
-    	g_print ("Linked!");
 		g_object_unref (videopad);
 
   }
@@ -478,7 +340,6 @@ static void gvc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer dat
       break;
     }
     case GST_MESSAGE_EOS:{
-      g_print ("EOS message");
       g_signal_emit (gvc, gvc_signals[SIGNAL_EOS], 0);
       break;
     }
@@ -526,24 +387,25 @@ void gst_video_capturer_add_segment (GstVideoCapturer *gvc , gint64 start, gint6
 	GstState cur_state;
 	GstElement *gnl_filesource;
 	gchar *element_name;
+	gint64 final_duration;
 	
 	
 	g_return_if_fail (GST_IS_VIDEO_CAPTURER(gvc));
 	GST_INFO("Adding new segment");
 	gst_element_get_state (gvc->priv->gnl_composition, &cur_state, NULL, 0);
     if (cur_state <= GST_STATE_READY) {	  
-    	 	
+    	final_duration = GST_MSECOND * duration / rate;
        	element_name = g_strdup_printf("filesource%d",gvc->priv->segments);
 		gnl_filesource = gst_element_factory_make ("gnlfilesource", element_name);
 		g_object_set (G_OBJECT(gnl_filesource), "location",gvc->priv->input_file,NULL);
 		g_object_set (G_OBJECT(gnl_filesource), "media-start",GST_MSECOND*start,NULL);
 		g_object_set (G_OBJECT(gnl_filesource), "media-duration",GST_MSECOND*duration,NULL);
 		g_object_set (G_OBJECT(gnl_filesource), "start",gvc->priv->last_stop,NULL);
-		gvc->priv->last_stop += (gint64)(GST_MSECOND * duration / rate);
-		g_object_set (G_OBJECT(gnl_filesource), "duration",gvc->priv->last_stop,NULL);
+		g_object_set (G_OBJECT(gnl_filesource), "duration",final_duration,NULL);
+		gvc->priv->last_stop += final_duration;		
 		gst_bin_add (GST_BIN(gvc->priv->gnl_composition), gnl_filesource);
 		gvc->priv->segments ++;
-		GST_INFO("New segment: start={%" GST_TIME_FORMAT "} duration={%" GST_TIME_FORMAT "} ",GST_TIME_ARGS(start), GST_TIME_ARGS(duration));
+		GST_INFO("New segment: start={%" GST_TIME_FORMAT "} duration={%" GST_TIME_FORMAT "} ",GST_TIME_ARGS(start * GST_MSECOND), GST_TIME_ARGS(duration * GST_MSECOND));
     }
     else
     	GST_WARNING("Segments can only be defined in GST_STATE_NULL or GST_STATE_READY state");
@@ -571,6 +433,7 @@ gst_video_capturer_new (gchar *file_source, gchar *output_file,GError ** err)
 {
 	GstElement *muxer = NULL;
 	GstVideoCapturer *gvc = NULL;
+	GstElement *queue = NULL;
 
 	gvc = g_object_new(GST_TYPE_VIDEO_CAPTURER, NULL);
 
@@ -581,8 +444,6 @@ gst_video_capturer_new (gchar *file_source, gchar *output_file,GError ** err)
 	gvc->priv->input_file = g_strdup(file_source);
 	
 	/*Handled by Properties?*/
-	gvc->priv->encode_height= 720;
-	gvc->priv->encode_width= 1280;
 	gvc->priv->audio_bitrate= 128;
 	gvc->priv->video_bitrate= 5000000;
 	
@@ -611,6 +472,7 @@ gst_video_capturer_new (gchar *file_source, gchar *output_file,GError ** err)
     gvc->priv->identity = gst_element_factory_make ("identity", "identity");
     g_object_set (G_OBJECT(gvc->priv->identity), "single-segment",TRUE,NULL);
     gvc->priv->videorate = gst_element_factory_make ("videorate", "videorate");    
+    gvc->priv->queue =  gst_element_factory_make ("queue", "queue"); 
     gvc->priv->video_encoder= gst_element_factory_make (DEFAULT_VIDEO_ENCODER, "videoencoder");
     g_object_set (G_OBJECT(gvc->priv->video_encoder), "bitrate",gvc->priv->video_bitrate,NULL); 
     gvc->priv->muxer = gst_element_factory_make (DEAFAULT_VIDEO_MUXER, "videomuxer");
@@ -620,6 +482,7 @@ gst_video_capturer_new (gchar *file_source, gchar *output_file,GError ** err)
 	gst_bin_add_many (	GST_BIN (gvc->priv->main_pipeline),
 						gvc->priv->identity,
 						gvc->priv->videorate,
+						gvc->priv->queue,
 						gvc->priv->video_encoder,
 						gvc->priv->muxer,						
 						gvc->priv->file_sink,
@@ -627,6 +490,7 @@ gst_video_capturer_new (gchar *file_source, gchar *output_file,GError ** err)
 						);
 	gst_element_link_many(	gvc->priv->identity,
 							gvc->priv->videorate,
+							gvc->priv->queue,
 							gvc->priv->video_encoder,
 							gvc->priv->muxer,						
 							gvc->priv->file_sink,
@@ -634,8 +498,6 @@ gst_video_capturer_new (gchar *file_source, gchar *output_file,GError ** err)
 							);
    
 	/*Connect bus signals*/
-	g_print("Initializing signals bus");
-
     /*We have to wait for a "new-decoded-pad" message to link the composition with
     the encoder tail*/
 	gvc->priv->bus = gst_element_get_bus (GST_ELEMENT(gvc->priv->main_pipeline));
@@ -644,13 +506,7 @@ gst_video_capturer_new (gchar *file_source, gchar *output_file,GError ** err)
   	gvc->priv->sig_bus_async =	g_signal_connect (gvc->priv->bus, "message",
                         		G_CALLBACK (gvc_bus_message_cb),
                         		gvc);
-	g_print("Signal bus initialized");
 	gst_element_set_state(gvc->priv->main_pipeline,GST_STATE_READY);
 	
-	
 	return gvc;
-
-
 }
-
-
