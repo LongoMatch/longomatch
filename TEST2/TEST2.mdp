@@ -19,8 +19,8 @@
   </Contents>
   <compiler ctype="GccCompiler" />
   <Packages>
+    <Package file="/home/andoni/Proyectos/libcesarplayer/libcesarplayer.md.pc" name="libcesarplayer" IsProject="True" />
     <Package file="/usr/lib/pkgconfig/gstreamer-0.10.pc" name="GStreamer" IsProject="False" />
     <Package file="/usr/lib/pkgconfig/gtk+-2.0.pc" name="GTK+" IsProject="False" />
-    <Package file="/home/andoni/Projects/libcesarplayer/libcesarplayer.md.pc" name="libcesarplayer" IsProject="True" />
   </Packages>
 </Project>

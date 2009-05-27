@@ -53,10 +53,8 @@ main (int argc, char *argv[])
 
 	/*Create GstVideoCapturer*/
 	gst_video_capturer_init_backend (&argc, &argv);
-	gvc = gst_video_capturer_new (&error );
-	g_object_set(gvc,"input_file","/home/andoni/test.mkv",NULL);
-	g_object_set(gvc,"output_file","/home/andoni/jander.avi",NULL);
-	gst_video_capturer_set_segment ( gvc, 1000, 2000,1);
+	gvc = gst_video_capturer_new ("/home/andoni/Vídeos/RCPolo_vs_CDComplutense.avi","/home/andoni/jander.avi",&error );
+	gst_video_capturer_set_segment ( gvc, 1000, 3000, 0.5);
 	gst_video_capturer_start(gvc);	
 	window = create_window ();
 	gtk_widget_show (window);	gtk_main ();
