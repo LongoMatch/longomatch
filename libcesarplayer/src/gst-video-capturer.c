@@ -55,6 +55,9 @@ enum
 
 struct GstVideoCapturerPrivate
 {
+	
+	glong 	last_stop;
+	gint 	segments;
 
 	gchar	*output_file;
 	gchar	*input_file;
@@ -517,26 +520,53 @@ gvc_error_msg (GstVideoCapturer * gvc, GstMessage * msg)
 /*                                             */
 /* =========================================== */
 
-void gst_video_capturer_set_segment(GstVideoCapturer *gvc, glong start, glong duration,gdouble rate)
+void gst_video_capturer_set_segment(GstVideoCapturer *gvc, gint64 start, gint64 duration, gdouble rate)
 {
 	GstState cur_state;
-	
+	gint64 output_duration;
 	g_return_if_fail (GST_IS_VIDEO_CAPTURER(gvc));	
 
 	gst_element_get_state (gvc->priv->gnl_filesource, &cur_state, NULL, 0);
     if (cur_state <= GST_STATE_READY) {	
-    	g_print ("1:%f\n",(gdouble)(duration*GST_MSECOND));
-    	g_print ("2:%f\n",rate);
-    	g_print("%f\n",GST_MSECOND * duration / rate);
-    	g_print("%d\n",(gint64)GST_MSECOND * duration / rate));
-		g_object_set (G_OBJECT(gvc->priv->gnl_filesource), "media-start",GST_MSECOND*start,NULL);
+    	output_duration = (gint64)(GST_MSECOND*duration/rate);
+    	g_object_set (G_OBJECT(gvc->priv->gnl_filesource), "media-start",GST_MSECOND*start,NULL);
 		g_object_set (G_OBJECT(gvc->priv->gnl_filesource), "media-duration",GST_MSECOND*duration,NULL);
 		g_object_set (G_OBJECT(gvc->priv->gnl_filesource), "start",GST_MSECOND * 0,NULL);
-		g_object_set (G_OBJECT(gvc->priv->gnl_filesource), "duration",(gint64)(GST_MSECOND * duration / rate),NULL);
-		GST_INFO("New segment: start={%d} duration={%d} ",start, duration);
+		g_object_set (G_OBJECT(gvc->priv->gnl_filesource), "duration",output_duration,NULL);
+		GST_INFO("New segment: start={%d} duration={%d} ",start, output_duration);
     }
     else
     	GST_WARNING("Segments can only be defined in GST_STATE_NULL or GST_STATE_READY state");
+}
+
+void gst_video_capturer_add_segment (GstVideoCapturer *gvc , gint64 start, gint64 duration, gdouble rate, gchar *title){
+	
+	
+	GstState cur_state;
+	GstElement *gnl_filesource;
+	gchar *element_name;
+	
+	
+	g_return_if_fail (GST_IS_VIDEO_CAPTURER(gvc));
+	
+	gst_element_get_state (gvc->priv->gnl_filesource, &cur_state, NULL, 0);
+    if (cur_state <= GST_STATE_READY) {	
+    	
+       	element_name = g_strdup_printf("filesource%d",gvc->priv->segments);
+		gnl_filesource = gst_element_factory_make ("gnlfilesource", element_name);
+		g_object_set (G_OBJECT(gnl_filesource), "media-start",GST_MSECOND*start,NULL);
+		g_object_set (G_OBJECT(gnl_filesource), "media-duration",GST_MSECOND*duration,NULL);
+		g_object_set (G_OBJECT(gnl_filesource), "start",gvc->priv->last_stop,NULL);
+		gvc->priv->last_stop += (gint64)(GST_MSECOND * duration / rate);
+		g_object_set (G_OBJECT(gnl_filesource), "duration",gvc->priv->last_stop,NULL);
+		gst_bin_add (GST_BIN(gvc->priv->gnl_composition), gnl_filesource);
+		gvc->priv->segments ++;
+		GST_INFO("New segment: start={%" GST_TIME_FORMAT "} duration={%" GST_TIME_FORMAT "} ",GST_TIME_ARGS(start), GST_TIME_ARGS(duration));
+    }
+    else
+    	GST_WARNING("Segments can only be defined in GST_STATE_NULL or GST_STATE_READY state");
+	g_free(element_name);
+	
 }
 
 void gst_video_capturer_start(GstVideoCapturer *gvc)
@@ -563,7 +593,8 @@ gst_video_capturer_new (gchar *file_source, gchar *output_file,GError ** err)
 	gvc = g_object_new(GST_TYPE_VIDEO_CAPTURER, NULL);
 
 
-	gvc->priv->output_file = "/dev/null";
+	gvc->priv->last_stop = 0;
+	gvc->priv->segments = 0;
 
 	/*Handled by Properties?*/
 	gvc->priv->encode_height= 720;
