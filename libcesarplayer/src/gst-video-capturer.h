@@ -1,7 +1,6 @@
-/* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
 /*
  * Gstreamer DV capturer
- * Copyright (C)  Andoni Morales Alastruey 2008 <ylatuya@gmail.com>
+ * Copyright (C)  Andoni Morales Alastruey 2009 <ylatuya@gmail.com>
  * 
  * Gstreamer DV capturer is free software.
  * 
@@ -70,9 +69,9 @@ struct _GstVideoCapturer
 EXPORT GType gst_video_capturer_get_type (void) G_GNUC_CONST;
 
 EXPORT void gst_video_capturer_init_backend (int *argc, char ***argv);
-EXPORT GstVideoCapturer * gst_video_capturer_new (gchar *file_source, gchar *output_file,GError ** err);
+EXPORT GstVideoCapturer * gst_video_capturer_new (gchar *output_file, GError ** err);
 EXPORT void gst_video_capturer_start(GstVideoCapturer *gvc);
-EXPORT void gst_video_capturer_add_segment(GstVideoCapturer *gvc, gint64 start, gint64 duration, gdouble rate, gchar *title);
+EXPORT void gst_video_capturer_add_segment(GstVideoCapturer *gvc, gchar *file, gint64 start, gint64 duration, gdouble rate, gchar *title);
 G_END_DECLS
 
 #endif /* _GST_VIDEO_CAPTURER_H_ */
