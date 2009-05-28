@@ -157,7 +157,7 @@ gst_video_capturer_class_init (GstVideoCapturerClass *klass)
                                                          NULL, 12, G_MAXUINT,128,
                                                          G_PARAM_READWRITE));
                                                          
-    g_object_class_install_property (object_class, PROP_AUDIO_BITRATE,
+    g_object_class_install_property (object_class, PROP_OUTPUT_FILE,
                                    g_param_spec_string ("output_file", NULL,
                                                          NULL, "",
                                                          G_PARAM_READWRITE));
@@ -225,6 +225,7 @@ gst_video_capturer_set_output_file (GstVideoCapturer *gvc,const char *output_fil
 	gvc->priv->output_file = g_strdup(output_file);
 	gst_element_get_state (gvc->priv->file_sink, &cur_state, NULL, 0);
     if (cur_state <= GST_STATE_READY) {
+	    gst_element_set_state(gvc->priv->file_sink,GST_STATE_NULL);
 	    g_object_set (gvc->priv->file_sink,"location",gvc->priv->output_file,NULL);
     	GST_INFO ("Ouput File changed to :\n%s",gvc->priv->output_file);
    }
@@ -271,6 +272,9 @@ gst_video_capturer_get_property (GObject * object, guint property_id,
       break;
     case PROP_VIDEO_BITRATE:
       g_value_set_uint (value,gvc->priv->video_bitrate);
+      break;
+    case PROP_OUTPUT_FILE:
+      g_value_set_string (value,gvc->priv->output_file);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
