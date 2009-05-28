@@ -55,7 +55,7 @@ struct _GstVideoCapturerClass
 	
 	void (*eos) (GstVideoCapturer *gvc);
 	void (*error) (GstVideoCapturer *gvc, const char *message);
-	void (*invalidsource) (GstVideoCapturer *gvc);
+	void (*percent_completed) (GstVideoCapturer *gvc, float percent);
 };
 
 struct _GstVideoCapturer
