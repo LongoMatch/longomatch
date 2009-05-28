@@ -25,6 +25,7 @@ using LongoMatch.Video.Editor;
 using Mono.Unix;
 using System.IO;
 using LongoMatch.Handlers;
+using LongoMatch.Video.Handlers;
 using LongoMatch.TimeNodes;
 using LongoMatch.Video.Player;
 using LongoMatch.Video;
@@ -42,8 +43,7 @@ namespace LongoMatch.Gui.Component
 	public partial class PlayListWidget : Gtk.Bin
 	{
 		public event PlayListNodeSelectedHandler PlayListNodeSelected;
-		public event ProgressHandler Progress;
-		
+		public event LongoMatch.Video.Handlers.ProgressHandler Progress;		
 		
 		private PlayerBin player;
 		private PlayListTimeNode plNode;
@@ -52,18 +52,16 @@ namespace LongoMatch.Gui.Component
 		private object lock_node;
 		private bool clock_started = false;
 		private IVideoEditor videoEditor;
-	
-		
 		
 		
 		public PlayListWidget()
 		{
 			this.Build();					
 			lock_node = new System.Object();
-			this.videoEditor = new FFMPEGVideoEditor();
-			this.videoEditor.Progress += new ProgressHandler(OnProgress);
-			this.savebutton.Sensitive = false;
-			
+			PlayerMaker pm = new PlayerMaker();
+			this.videoEditor = pm.getVideoEditor();
+			this.videoEditor.Progress += new LongoMatch.Video.Handlers.ProgressHandler(OnProgress);
+			this.savebutton.Sensitive = false;			
 		}
 
 	
@@ -271,7 +269,12 @@ namespace LongoMatch.Gui.Component
 			vep.Destroy();
 			if (response ==(int)ResponseType.Ok){
 				vq = vep.VideoQuality;
-				videoEditor.PlayList = this.playList;
+				foreach (PlayListTimeNode segment in playList)
+					videoEditor.AddSegment(segment.FileName, 
+					                       segment.Start.MSeconds, 
+					                       segment.Duration.MSeconds, 
+					                       segment.Rate, 
+					                       segment.Name);
 				videoEditor.VideoQuality = vq;
 				videoEditor.OutputFile = vep.Filename;
 				videoEditor.Start();
