@@ -1,6 +1,6 @@
 // Handlers.cs
 //
-//  Copyright (C) 2008 Andoni Morales Alastruey
+//  Copyright (C) 2008-2009 Andoni Morales Alastruey
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -41,8 +41,6 @@ namespace LongoMatch.Handlers
 	public delegate void PlayListNodeSelectedHandler (PlayListTimeNode plNode, bool hasNext);
 	//Manejador para el evento producido al ajustar la posición 
 	public delegate void PositionChangedHandler (Time pos);	
-	
-	public delegate void ProgressHandler (float progress);	
 	
 	public delegate void DateSelectedHandler (DateTime selectedDate);
 	

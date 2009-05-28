@@ -81,7 +81,7 @@ namespace LongoMatch
 			this.timeline.TimeNodeSelected += new Handlers.TimeNodeSelectedHandler(OnTimeNodeSelected);
 			
 			this.playlist.PlayListNodeSelected += new Handlers.PlayListNodeSelectedHandler(OnPlayListNodeSelected);
-			this.playlist.Progress += new LongoMatch.Handlers.ProgressHandler(OnProgress);
+			this.playlist.Progress += new LongoMatch.Video.Handlers.ProgressHandler(OnProgress);
 			
 
 			
