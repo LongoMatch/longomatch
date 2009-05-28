@@ -178,8 +178,8 @@ gst_video_capturer_class_init (GstVideoCapturerClass *klass)
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GstVideoCapturerClass, percent_completed),
                   NULL, NULL,
-                  g_cclosure_marshal_VOID__INT,
-                  G_TYPE_NONE, 1, G_TYPE_STRING);
+                  g_cclosure_marshal_VOID__FLOAT,
+                  G_TYPE_NONE, 1, G_TYPE_FLOAT);
 
   gvc_signals[SIGNAL_EOS] =
     g_signal_new ("eos",
@@ -374,6 +374,11 @@ gvc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
     }
     case GST_MESSAGE_EOS:{
       g_signal_emit (gvc, gvc_signals[SIGNAL_EOS], 0);
+      if (gvc->priv->update_id > 0){
+		g_source_remove (gvc->priv->update_id);
+		gvc->priv->update_id = 0;
+	  }
+	  g_signal_emit (gvc, gvc_signals[SIGNAL_PERCENT_COMPLETED],0,(gfloat)1);
       break;
     }
 
@@ -411,6 +416,22 @@ gvc_error_msg (GstVideoCapturer * gvc, GstMessage * msg)
 static gboolean  
 gvc_query_timeout (GstVideoCapturer * gvc)
 {
+	GstFormat fmt = GST_FORMAT_TIME;
+    gint64 pos = -1;
+	
+	if (gst_element_query_position (gvc->priv->main_pipeline, &fmt, &pos)) {
+    	if (pos != -1 && fmt == GST_FORMAT_TIME) {
+      		g_signal_emit 	(gvc, 
+      						gvc_signals[SIGNAL_PERCENT_COMPLETED], 
+      						0, 
+      						(float) pos / (float)gvc->priv->last_stop 
+    						);
+    	}
+  	} else {
+    	GST_INFO ("could not get position");
+  	}
+  
+	return TRUE;
 }
 
 
@@ -461,16 +482,23 @@ gst_video_capturer_start(GstVideoCapturer *gvc)
 	g_return_if_fail (GST_IS_VIDEO_CAPTURER(gvc));
 	
 	gst_element_set_state(gvc->priv->main_pipeline, GST_STATE_PLAYING);
+	gvc->priv->update_id =g_timeout_add (100, (GSourceFunc) gvc_query_timeout, gvc);
+	g_signal_emit (gvc, gvc_signals[SIGNAL_PERCENT_COMPLETED],0,(gfloat)0);
+
 	
 }
 
 void 
 gst_video_capturer_cancel(GstVideoCapturer *gvc)
-{
-	
+{	
 	g_return_if_fail (GST_IS_VIDEO_CAPTURER(gvc));
-	
+	if (gvc->priv->update_id > 0){
+		g_source_remove (gvc->priv->update_id);
+		gvc->priv->update_id = 0;
+	}
 	gst_element_set_state(gvc->priv->main_pipeline, GST_STATE_NULL);
+	g_signal_emit (gvc, gvc_signals[SIGNAL_PERCENT_COMPLETED],0,(gfloat)-1);
+    
 	
 }
 
