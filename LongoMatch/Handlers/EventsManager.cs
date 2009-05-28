@@ -126,36 +126,37 @@ namespace LongoMatch
 		}
 		
 		protected virtual void OnProgress(float progress){
-			if (progress > 0 && progress <= 1){								
-				this.videoprogressbar.Fraction = progress;
-
+			
+			Console.WriteLine(progress);
+			if (progress > 0 && progress <= 1 && progress > videoprogressbar.Fraction ){				
+				videoprogressbar.Fraction = progress;
 			}
 			
 			if (progress == -1 ){
-				this.videoprogressbar.Hide();
+				videoprogressbar.Hide();
 			}
 			
 			else if (progress == 0 ){
-				this.videoprogressbar.Show();
-				this.videoprogressbar.Fraction = 0;
-				this.videoprogressbar.Text = "Creating new video";
+				videoprogressbar.Show();
+				videoprogressbar.Fraction = 0;
+				videoprogressbar.Text = "Creating new video";
 			}
 			
 			else if (progress == 1) {				
-				MessageDialog info = new MessageDialog((Gtk.Window)(this.player.Toplevel),
+				MessageDialog info = new MessageDialog((Gtk.Window)(player.Toplevel),
 				                                       DialogFlags.Modal,
 				                                       MessageType.Info,
 				                                       ButtonsType.Ok,
 				                                       Catalog.GetString("Finished Video Edition."));
 				info.Run();
 				info.Destroy();
-				this.videoprogressbar.Hide();				
+				videoprogressbar.Hide();				
 			}		
 		}
 			
 	    protected virtual void OnNewMarkAtFrame(int section, int frame){
 			
-			Time pos = new Time(frame*1000/this.openedProject.File.Fps);
+			Time pos = new Time(frame*1000/openedProject.File.Fps);
 			ProcessNewMarkEvent(section,pos);
 		}
 		
@@ -166,11 +167,11 @@ namespace LongoMatch
 		
 		protected virtual void OnTimeNodeSelected (MediaTimeNode tNode)
 		{			
-			this.selectedTimeNode = tNode;			
-			this.timeline.SelectedTimeNode = tNode;
-			this.player.SetStartStop(tNode.Start.MSeconds,tNode.Stop.MSeconds);		
-			this.notes.Visible = true;
-			this.notes.Play= tNode;
+			selectedTimeNode = tNode;			
+			timeline.SelectedTimeNode = tNode;
+			player.SetStartStop(tNode.Start.MSeconds,tNode.Stop.MSeconds);		
+			notes.Visible = true;
+			notes.Play= tNode;
 		}
 		
 		
@@ -181,7 +182,7 @@ namespace LongoMatch
 			//
 			if (tNode is MediaTimeNode && val is Time ){	
 				if(tNode != selectedTimeNode)
-					this.OnTimeNodeSelected((MediaTimeNode)tNode);
+					OnTimeNodeSelected((MediaTimeNode)tNode);
 				Time pos = (Time)val;
 				//if (Environment.OSVersion.Platform == PlatformID.Win32NT)
 				//	this.player.Play();
