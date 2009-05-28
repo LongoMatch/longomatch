@@ -87,8 +87,8 @@ namespace LongoMatch.Video.Editor {
 				return ret;
 			}
 			set {
-				GLib.Value val = new GLib.Value(value);
-				SetProperty("audio_bitrate", val);
+				GLib.Value val = new GLib.Value(value);				
+				SetProperty("output_file", val);
 				val.Dispose ();
 			}
 		}
