@@ -16,4 +16,8 @@
       </itemgroup>
     </signals>
   </object>
+  <object type="LongoMatch.Gui.CapturerBin" palette-category="CesarPlayer" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
 </objects>

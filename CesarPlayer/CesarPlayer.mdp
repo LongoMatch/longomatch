@@ -20,11 +20,8 @@
     <File name="gtk-gui/generated.cs" subtype="Code" buildaction="Compile" />
     <File name="Handlers" subtype="Directory" buildaction="Compile" />
     <File name="Handlers/ErrorHandler.cs" subtype="Code" buildaction="Compile" />
-    <File name="Handlers/GotRedirectHandler.cs" subtype="Code" buildaction="Compile" />
     <File name="Handlers/Handlers.cs" subtype="Code" buildaction="Compile" />
     <File name="Handlers/TickHandler.cs" subtype="Code" buildaction="Compile" />
-    <File name="Handlers/TitleChangeHandler.cs" subtype="Code" buildaction="Compile" />
-    <File name="Handlers/BufferingHandler.cs" subtype="Code" buildaction="Compile" />
     <File name="Player" subtype="Directory" buildaction="Compile" />
     <File name="Player/GstPlayer.cs" subtype="Code" buildaction="Compile" />
     <File name="Player/IPlayer.cs" subtype="Code" buildaction="Compile" />
@@ -56,6 +53,13 @@
     <File name="Capturer/GccVideoEncoderType.cs" subtype="Code" buildaction="Compile" />
     <File name="Capturer/GccVideoMuxerType.cs" subtype="Code" buildaction="Compile" />
     <File name="Capturer/GstCameraCapturer.cs" subtype="Code" buildaction="Compile" />
+    <File name="Editor" subtype="Directory" buildaction="Compile" />
+    <File name="Editor/ErrorHandler.cs" subtype="Code" buildaction="Compile" />
+    <File name="Editor/GstVideoCapturer.cs" subtype="Code" buildaction="Compile" />
+    <File name="Editor/PercentCompletedHandler.cs" subtype="Code" buildaction="Compile" />
+    <File name="Editor/IVideoEditor.cs" subtype="Code" buildaction="Compile" />
+    <File name="Editor/AudioQuality.cs" subtype="Code" buildaction="Compile" />
+    <File name="Editor/VideoQuality.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
