@@ -467,7 +467,7 @@ gst_video_capturer_init_backend (int *argc, char ***argv)
 }
 
 GstVideoCapturer *
-gst_video_capturer_new (gchar *output_file,GError ** err)
+gst_video_capturer_new (GError ** err)
 {
 	GstElement *muxer = NULL;
 	GstVideoCapturer *gvc = NULL;
@@ -477,6 +477,8 @@ gst_video_capturer_new (gchar *output_file,GError ** err)
 
 	gvc->priv->last_stop = 0;
 	gvc->priv->segments = 0;
+	
+	gvc->priv->output_file = "new_video";
 
 	/*Handled by Properties?*/
 	gvc->priv->audio_bitrate= 128;
@@ -510,7 +512,7 @@ gst_video_capturer_new (gchar *output_file,GError ** err)
     gvc->priv->muxer = gst_element_factory_make (DEAFAULT_VIDEO_MUXER, "videomuxer");
     
 	gvc->priv->file_sink = gst_element_factory_make ("filesink", "filesink");	
-	g_object_set (G_OBJECT(gvc->priv->file_sink), "location",output_file,NULL); 
+	g_object_set (G_OBJECT(gvc->priv->file_sink), "location",gvc->priv->output_file ,NULL); 
 
 	gst_bin_add_many (	GST_BIN (gvc->priv->main_pipeline),
 						gvc->priv->gnl_composition,
