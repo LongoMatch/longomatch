@@ -1997,9 +1997,9 @@
         <property name="Label" translatable="yes">_File</property>
         <property name="ShortLabel" translatable="yes">_File</property>
       </action>
-      <action id="NewPojectAction">
+      <action id="NewProjectAction">
         <property name="Type">Action</property>
-        <property name="Label" translatable="yes">_New Poject</property>
+        <property name="Label" translatable="yes">_New Project</property>
         <property name="ShortLabel" translatable="yes">_New Poyect</property>
         <property name="StockId">gtk-new</property>
         <signal name="Activated" handler="OnNewActivated" />
