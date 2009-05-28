@@ -11,17 +11,17 @@ namespace LongoMatch.Video.Editor {
 	public class GstVideoCapturer : GLib.Object, IVideoEditor {
 
 		[DllImport("libcesarplayer.dll")]
-		static extern unsafe IntPtr gst_video_capturer_new(IntPtr file_source, IntPtr output_file, out IntPtr err);
+		static extern unsafe IntPtr gst_video_capturer_new(out IntPtr err);
 
 		public event LongoMatch.Video.Handlers.ProgressHandler Progress;
 		
-		public unsafe GstVideoCapturer (string file_source, string output_file) : base (IntPtr.Zero)
+		public unsafe GstVideoCapturer () : base (IntPtr.Zero)
 		{
 			if (GetType () != typeof (GstVideoCapturer)) {
 				throw new InvalidOperationException ("Can't override this constructor.");
 			}
 			IntPtr error = IntPtr.Zero;
-			Raw = gst_video_capturer_new(GLib.Marshaller.StringToPtrGStrdup(file_source), GLib.Marshaller.StringToPtrGStrdup(output_file), out error);
+			Raw = gst_video_capturer_new(out error);
 			if (error != IntPtr.Zero) throw new GLib.GException (error);
 			PercentCompleted += delegate(object o, PercentCompletedArgs args) {
 				if (Progress!= null)
