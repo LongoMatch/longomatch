@@ -71,6 +71,7 @@ EXPORT GType gst_video_capturer_get_type (void) G_GNUC_CONST;
 EXPORT void gst_video_capturer_init_backend (int *argc, char ***argv);
 EXPORT GstVideoCapturer * gst_video_capturer_new (GError ** err);
 EXPORT void gst_video_capturer_start(GstVideoCapturer *gvc);
+EXPORT void gst_video_capturer_cancel(GstVideoCapturer *gvc);
 EXPORT void gst_video_capturer_add_segment(GstVideoCapturer *gvc, gchar *file, gint64 start, gint64 duration, gdouble rate, gchar *title);
 G_END_DECLS
 

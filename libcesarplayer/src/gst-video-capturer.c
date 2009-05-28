@@ -460,6 +460,16 @@ gst_video_capturer_start(GstVideoCapturer *gvc)
 	
 }
 
+void 
+gst_video_capturer_cancel(GstVideoCapturer *gvc)
+{
+	
+	g_return_if_fail (GST_IS_VIDEO_CAPTURER(gvc));
+	
+	gst_element_set_state(gvc->priv->main_pipeline, GST_STATE_NULL);
+	
+}
+
 void
 gst_video_capturer_init_backend (int *argc, char ***argv)
 {
