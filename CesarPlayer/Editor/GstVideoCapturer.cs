@@ -257,6 +257,13 @@ namespace LongoMatch.Video.Editor {
 		public void Start() {
 			gst_video_capturer_start(Handle);
 		}
+		
+		[DllImport("libcesarplayer.dll")]
+		static extern void gst_video_capturer_cancel(IntPtr raw);
+
+		public void Cancel() {
+			gst_video_capturer_cancel(Handle);
+		}
 
 		[DllImport("libcesarplayer.dll")]
 		static extern void gst_video_capturer_init_backend(out int argc, IntPtr argv);
@@ -286,11 +293,6 @@ namespace LongoMatch.Video.Editor {
 			set{
 				VideoBitrate = (uint)value;
 			}
-		}
-		
-				
-		public void Cancel(){
-			//TODO not implemented
 		}
 		
 		#endregion
