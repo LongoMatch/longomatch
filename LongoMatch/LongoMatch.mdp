@@ -59,11 +59,6 @@
     <File name="Time/TimeNode.cs" subtype="Code" buildaction="Compile" />
     <File name="Time/Time.cs" subtype="Code" buildaction="Compile" />
     <File name="Time/PlayListTimeNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="Video" subtype="Directory" buildaction="Compile" />
-    <File name="Video/AudioQuality.cs" subtype="Code" buildaction="Compile" />
-    <File name="Video/FFMPEGVideoEditor.cs" subtype="Code" buildaction="Compile" />
-    <File name="Video/IVideoEditor.cs" subtype="Code" buildaction="Compile" />
-    <File name="Video/VideoQuality.cs" subtype="Code" buildaction="Compile" />
     <File name="gtk-gui/LongoMatch.Gui.Component.FileDescriptionWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="gtk-gui/LongoMatch.Gui.Component.TreeWidget.cs" subtype="Code" buildaction="Compile" />
