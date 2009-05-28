@@ -89,7 +89,7 @@ namespace LongoMatch.Gui {
             this.FileAction = new Gtk.Action("FileAction", Mono.Unix.Catalog.GetString("_File"), null, null);
             this.FileAction.ShortLabel = Mono.Unix.Catalog.GetString("_File");
             w1.Add(this.FileAction, null);
-            this.NewPojectAction = new Gtk.Action("NewPojectAction", Mono.Unix.Catalog.GetString("_New Poject"), null, "gtk-new");
+            this.NewPojectAction = new Gtk.Action("NewPojectAction", Mono.Unix.Catalog.GetString("_New Project"), null, "gtk-new");
             this.NewPojectAction.ShortLabel = Mono.Unix.Catalog.GetString("_New Poyect");
             w1.Add(this.NewPojectAction, null);
             this.OpenProjectAction = new Gtk.Action("OpenProjectAction", Mono.Unix.Catalog.GetString("_Open Project"), null, "gtk-open");
