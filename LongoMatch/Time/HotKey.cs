@@ -31,8 +31,8 @@ namespace LongoMatch.TimeNodes
 	
 	public class HotKey : IEquatable<HotKey>
 	{
-		int key;
-		int modifier;
+		private int key;
+		private int modifier;
 	
 #region Constructors
 		public HotKey()
@@ -61,6 +61,15 @@ namespace LongoMatch.TimeNodes
 		public bool Equals(HotKey hotkeyComp){
 			return (this.Key == hotkeyComp.Key && this.Modifier == hotkeyComp.Modifier);
 		}
+		
+		static public bool operator == (HotKey hk1, HotKey hk2){
+			return hk1.Equals(hk2);
+		}
+		
+		static public bool operator != (HotKey hk1, HotKey hk2){
+			return !hk1.Equals(hk2);
+		}
+			
 #endregion	
 		
 #region Override
@@ -72,6 +81,12 @@ namespace LongoMatch.TimeNodes
     		else
         		return false;
 		}
+		
+		public override int GetHashCode ()
+		{
+			return key ^ modifier;
+		}
+
 		
 		public override string ToString ()
 		{
