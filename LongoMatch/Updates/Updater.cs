@@ -62,7 +62,7 @@ namespace LongoMatch.Updates
 		
 		private bool ConexionExists(){			
 			try{
-				System.Net.Dns.GetHostByName("www.ylatuya.es");
+				System.Net.Dns.GetHostEntry("www.ylatuya.es");
 				return true;
 			}
 			catch{
