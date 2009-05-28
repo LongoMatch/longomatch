@@ -43,14 +43,11 @@ enum
 /* Properties */
 enum
 {
-  PROP_0,
-  PROP_ENCODE_HEIGHT,
-  PROP_ENCODE_WIDTH,
+  PROP_0, 
   PROP_VIDEO_BITRATE,
   PROP_AUDIO_BITRATE,
-  PROP_OUTPUT_FILE,
-  PROP_INPUT_FILE,
-  PROP_WITH_AUDIO
+  PROP_OUTPUT_FILE, 
+  PROP_ENABLE_AUDIO
 };
 
 struct GstVideoCapturerPrivate
@@ -159,6 +156,11 @@ gst_video_capturer_class_init (GstVideoCapturerClass *klass)
                                    g_param_spec_uint ("audio_bitrate", NULL,
                                                          NULL, 12, G_MAXUINT,128,
                                                          G_PARAM_READWRITE));
+                                                         
+    g_object_class_install_property (object_class, PROP_AUDIO_BITRATE,
+                                   g_param_spec_string ("output_file", NULL,
+                                                         NULL, "",
+                                                         G_PARAM_READWRITE));
  	
   /* Signals */
   gvc_signals[SIGNAL_ERROR] =
@@ -214,6 +216,19 @@ gst_video_capturer_set_audio_bit_rate (GstVideoCapturer *gvc,gint bitrate)
    
    
 }
+
+static void 
+gst_video_capturer_set_output_file (GstVideoCapturer *gvc,const char *output_file)
+{
+	GstState cur_state;
+
+	gvc->priv->output_file = g_strdup(output_file);
+	gst_element_get_state (gvc->priv->file_sink, &cur_state, NULL, 0);
+    if (cur_state <= GST_STATE_READY) {
+	    g_object_set (gvc->priv->file_sink,"location",gvc->priv->output_file,NULL);
+    	GST_INFO ("Ouput File changed to :\n%s",gvc->priv->output_file);
+   }
+}
 static void
 gst_video_capturer_set_property (GObject * object, guint property_id,
                                  const GValue * value, GParamSpec * pspec)
@@ -231,6 +246,10 @@ gst_video_capturer_set_property (GObject * object, guint property_id,
     	case PROP_AUDIO_BITRATE:
       		gst_video_capturer_set_audio_bit_rate (gvc,
       		g_value_get_uint (value));
+      	break;
+      	case PROP_OUTPUT_FILE:
+      		gst_video_capturer_set_output_file (gvc,
+      		g_value_get_string (value));
       	break;
     	default:
       		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
