@@ -44,7 +44,8 @@ namespace LongoMatch.Handlers
 			dic.Clear();
 			for (int i=0;i<20;i++){
 				if (sections.GetHotKey(i).Defined)	
-					dic.Add(sections.GetHotKey(i),i);					
+					if (!dic.ContainsKey(sections.GetHotKey(i)))
+						dic.Add(sections.GetHotKey(i),i);					
 			}
 					    
 		}
