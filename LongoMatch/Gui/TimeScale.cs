@@ -212,13 +212,13 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		private void DrawSectionName(){
+		/*private void DrawSectionName(){
 			//FIXME 200 is enought?
 			layout.Width = Pango.Units.FromPixels(200);
 			layout.SetMarkup(name);
 			this.GdkWindow.DrawLayout(this.Style.TextGC(StateType.Normal),this.Allocation.X,0,layout);
 			
-		}
+		}*/
 		
 		private void DrawTimeNodesName(){
 			lock(locker){
