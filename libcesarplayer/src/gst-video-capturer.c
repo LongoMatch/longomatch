@@ -176,7 +176,7 @@ gst_video_capturer_class_init (GstVideoCapturerClass *klass)
     g_signal_new ("percent_completed",
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GstVideoCapturerClass, error),
+                  G_STRUCT_OFFSET (GstVideoCapturerClass, percent_completed),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__INT,
                   G_TYPE_NONE, 1, G_TYPE_STRING);
