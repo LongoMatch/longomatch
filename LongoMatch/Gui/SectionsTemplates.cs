@@ -77,16 +77,14 @@ namespace LongoMatch.Gui.Dialog
 			
 		}
 		
-		private FileFilter FileFilter{
+		/*private FileFilter FileFilter{
 			get{
 				FileFilter filter = new FileFilter();
 				filter.Name = "LongoMatch Project Template";
 				filter.AddPattern("*.sct");
 				return filter;
-			}
-				
-				
-		}
+			}						
+		}*/
 					
 
 		private void SetSensitive (bool sensitive){
