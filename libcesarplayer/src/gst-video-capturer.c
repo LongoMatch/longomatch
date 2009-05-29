@@ -516,16 +516,13 @@ gst_video_capturer_add_segment (GstVideoCapturer *gvc , gchar *file, gint64 star
 {	
 	GstState cur_state;
 	GstElement *gnl_filesource;
+	/*GstElement *operation;
+	GstElement *overlay;*/
+	
 	gchar *element_name = "";
-	gint64 final_duration;
+	gint64 final_duration;	
 	
-	
-	g_return_if_fail (GST_IS_VIDEO_CAPTURER(gvc));
-	
-	if (gvc->priv->segments >= 99){
-		GST_WARNING("The maximum number of segments is 100");
-		return;
-	}
+	g_return_if_fail (GST_IS_VIDEO_CAPTURER(gvc));		
 	
 	gst_element_get_state (gvc->priv->gnl_composition, &cur_state, NULL, 0);
     if (cur_state <= GST_STATE_READY) {	  
@@ -537,10 +534,23 @@ gst_video_capturer_add_segment (GstVideoCapturer *gvc , gchar *file, gint64 star
 		g_object_set (G_OBJECT(gnl_filesource), "media-duration",GST_MSECOND*duration,NULL);
 		g_object_set (G_OBJECT(gnl_filesource), "start",gvc->priv->last_stop,NULL);
 		g_object_set (G_OBJECT(gnl_filesource), "duration",final_duration,NULL);
-		gvc->priv->last_stop += final_duration;		
 		gst_bin_add (GST_BIN(gvc->priv->gnl_composition), gnl_filesource);
 		gvc->priv->gnl_filesources = g_list_append(gvc->priv->gnl_filesources,gnl_filesource);
-		gvc->priv->segments++;
+		
+		/*operation = gst_element_factory_make ("gnloperation", "gnloperation");	
+		g_object_set (G_OBJECT(operation), "start",gvc->priv->last_stop,NULL);
+		g_object_set (G_OBJECT(operation), "duration",final_duration,NULL);
+		
+		overlay = gst_element_factory_make ("textoverlay", "text");	
+		g_object_set (G_OBJECT(overlay), "text","Hola",NULL);
+		
+
+		gst_bin_add (GST_BIN(operation), overlay);
+		gst_bin_add (GST_BIN(gvc->priv->gnl_composition), operation);*/		
+		
+		gvc->priv->last_stop += final_duration;	
+		gvc->priv->segments++;		
+		
 		GST_INFO("New segment: start={%" GST_TIME_FORMAT "} duration={%" GST_TIME_FORMAT "} ",GST_TIME_ARGS(start * GST_MSECOND), GST_TIME_ARGS(duration * GST_MSECOND));
     }
     else
