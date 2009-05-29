@@ -567,7 +567,8 @@ gst_video_capturer_clear_segments_list (GstVideoCapturer *gvc){
 	}
 	
 	g_list_free(tmp);
-	gvc->priv->gnl_filesources = NULL;		
+	gvc->priv->gnl_filesources = NULL;	
+	gvc->priv->last_stop = 0;	
 	
 }
 
