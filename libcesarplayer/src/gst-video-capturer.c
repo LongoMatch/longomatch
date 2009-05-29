@@ -563,7 +563,7 @@ gst_video_capturer_clear_segments_list (GstVideoCapturer *gvc){
     	GstElement *object = (GstElement *) tmp->data;
 		if (object)
 			gst_element_set_state (object, GST_STATE_NULL);
-			gst_object_unref (object);						
+			gst_bin_remove(GST_BIN(gvc->priv->gnl_composition), object);					
 	}
 	
 	g_list_free(tmp);
