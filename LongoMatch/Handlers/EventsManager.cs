@@ -127,7 +127,6 @@ namespace LongoMatch
 		
 		protected virtual void OnProgress(float progress){
 			
-			Console.WriteLine(progress);
 			if (progress > 0 && progress <= 1 && progress > videoprogressbar.Fraction ){				
 				videoprogressbar.Fraction = progress;
 			}
