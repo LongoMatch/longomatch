@@ -49,10 +49,10 @@ namespace LongoMatch.Video.Editor {
 		#region Properties
 		
 		[GLib.Property ("video_bitrate")]
-		public uint VideoBitrate {
+		public int VideoBitrate {
 			get {
 				GLib.Value val = GetProperty ("video_bitrate");
-				uint ret = (uint) val;
+				int ret = (int) val;
 				val.Dispose ();
 				return ret;
 			}
@@ -64,16 +64,46 @@ namespace LongoMatch.Video.Editor {
 		}
 
 		[GLib.Property ("audio_bitrate")]
-		public uint AudioBitrate {
+		public int AudioBitrate {
 			get {
 				GLib.Value val = GetProperty ("audio_bitrate");
-				uint ret = (uint) val;
+				int ret = (int) val;
 				val.Dispose ();
 				return ret;
 			}
 			set {
 				GLib.Value val = new GLib.Value(value);
 				SetProperty("audio_bitrate", val);
+				val.Dispose ();
+			}
+		}
+		
+		[GLib.Property ("width")]
+		public int Width {
+			get {
+				GLib.Value val = GetProperty ("width");
+				int ret = (int) val;
+				val.Dispose ();
+				return ret;
+			}
+			set {
+				GLib.Value val = new GLib.Value(value);
+				SetProperty("width", val);
+				val.Dispose ();
+			}
+		}
+		
+		[GLib.Property ("height")]
+		public int Height {
+			get {
+				GLib.Value val = GetProperty ("height");
+				int ret = (int) val;
+				val.Dispose ();
+				return ret;
+			}
+			set {
+				GLib.Value val = new GLib.Value(value);
+				SetProperty("height", val);
 				val.Dispose ();
 			}
 		}
@@ -147,53 +177,7 @@ namespace LongoMatch.Video.Editor {
 				sig.RemoveDelegate (value);
 			}
 		}
-
-		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-		delegate void EosVMDelegate (IntPtr gvc);
-
-		static EosVMDelegate EosVMCallback;
-
-		static void eos_cb (IntPtr gvc)
-		{
-			try {
-				GstVideoCapturer gvc_managed = GLib.Object.GetObject (gvc, false) as GstVideoCapturer;
-				gvc_managed.OnEos ();
-			} catch (Exception e) {
-				GLib.ExceptionManager.RaiseUnhandledException (e, false);
-			}
-		}
-
-		private static void OverrideEos (GLib.GType gtype)
-		{
-			if (EosVMCallback == null)
-				EosVMCallback = new EosVMDelegate (eos_cb);
-			OverrideVirtualMethod (gtype, "eos", EosVMCallback);
-		}
-
-		[GLib.DefaultSignalHandler(Type=typeof(LongoMatch.Video.Editor.GstVideoCapturer), ConnectionMethod="OverrideEos")]
-		protected virtual void OnEos ()
-		{
-			GLib.Value ret = GLib.Value.Empty;
-			GLib.ValueArray inst_and_params = new GLib.ValueArray (1);
-			GLib.Value[] vals = new GLib.Value [1];
-			vals [0] = new GLib.Value (this);
-			inst_and_params.Append (vals [0]);
-			g_signal_chain_from_overridden (inst_and_params.ArrayPtr, ref ret);
-			foreach (GLib.Value v in vals)
-				v.Dispose ();
-		}
-
-		[GLib.Signal("eos")]
-		public event System.EventHandler Eos {
-			add {
-				GLib.Signal sig = GLib.Signal.Lookup (this, "eos");
-				sig.AddDelegate (value);
-			}
-			remove {
-				GLib.Signal sig = GLib.Signal.Lookup (this, "eos");
-				sig.RemoveDelegate (value);
-			}
-		}
+		
 
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 		delegate void PercentCompletedVMDelegate (IntPtr gvc, float percent);
@@ -267,6 +251,13 @@ namespace LongoMatch.Video.Editor {
 		public void AddSegment(string filePath, long start, long duration, double rate, string title) {
 			gst_video_capturer_add_segment(Handle, filePath, start, duration, rate, GLib.Marshaller.StringToPtrGStrdup(title));
 		}
+		
+		[DllImport("libcesarplayer.dll")]
+		static extern void gst_video_capturer_clear_segments_list(IntPtr raw);
+
+		public void ClearList() {
+			gst_video_capturer_clear_segments_list(Handle);
+		}
 
 		[DllImport("libcesarplayer.dll")]
 		static extern void gst_video_capturer_start(IntPtr raw);
@@ -295,6 +286,7 @@ namespace LongoMatch.Video.Editor {
 
 		#region Interface Implementation
 		
+		
 		public bool EnableAudio{
 			//TODO not implemented
 			set{}
@@ -302,13 +294,13 @@ namespace LongoMatch.Video.Editor {
 		
 		public VideoQuality VideoQuality{
 			set {
-				VideoBitrate = (uint)value;
+				VideoBitrate = (int)value;
 			}
 		}
 		
 		public AudioQuality AudioQuality{
 			set{
-				VideoBitrate = (uint)value;
+				VideoBitrate = (int)value;
 			}
 		}
 		

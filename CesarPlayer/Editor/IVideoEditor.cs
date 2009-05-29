@@ -37,6 +37,16 @@ namespace LongoMatch.Video.Editor
 			set;
 		}
 		
+		int Height{
+			set;
+			get;
+		}
+		
+		int Width{
+			set;
+			get;
+		}
+		
 		string OutputFile{
 			set;
 		}
@@ -47,6 +57,8 @@ namespace LongoMatch.Video.Editor
 		
 			
 		void AddSegment (string filePath, long start, long duration, double rate, string title) ;
+		
+		void ClearList();
 		
 		void Start();		
 		

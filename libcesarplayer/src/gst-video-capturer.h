@@ -53,7 +53,6 @@ struct _GstVideoCapturerClass
 {
 	GtkHBoxClass parent_class;
 	
-	void (*eos) (GstVideoCapturer *gvc);
 	void (*error) (GstVideoCapturer *gvc, const char *message);
 	void (*percent_completed) (GstVideoCapturer *gvc, float percent);
 };
@@ -73,6 +72,7 @@ EXPORT GstVideoCapturer * gst_video_capturer_new (GError ** err);
 EXPORT void gst_video_capturer_start(GstVideoCapturer *gvc);
 EXPORT void gst_video_capturer_cancel(GstVideoCapturer *gvc);
 EXPORT void gst_video_capturer_add_segment(GstVideoCapturer *gvc, gchar *file, gint64 start, gint64 duration, gdouble rate, gchar *title);
+EXPORT void gst_video_capturer_clear_segments_list(GstVideoCapturer *gvc);
 G_END_DECLS
 
 #endif /* _GST_VIDEO_CAPTURER_H_ */

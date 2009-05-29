@@ -55,15 +55,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.PlayListWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="PlayListWidget Signals">
-        <signal name="PlayListNodeSelected" />
-        <signal name="Progress" />
-      </itemgroup>
-    </signals>
-  </object>
   <object type="LongoMatch.Gui.Component.TimeLineWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="TimeLineWidget Properties">
@@ -123,5 +114,14 @@
       </itemgroup>
     </itemgroups>
     <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.PlayListWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="PlayListWidget Signals">
+        <signal name="PlayListNodeSelected" />
+        <signal name="Progress" />
+      </itemgroup>
+    </signals>
   </object>
 </objects>
