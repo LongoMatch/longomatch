@@ -57,10 +57,7 @@ namespace LongoMatch.Gui.Component
 		public PlayListWidget()
 		{
 			this.Build();					
-			lock_node = new System.Object();
-			PlayerMaker pm = new PlayerMaker();
-			this.videoEditor = pm.getVideoEditor();
-			this.videoEditor.Progress += new LongoMatch.Video.Handlers.ProgressHandler(OnProgress);
+			lock_node = new System.Object();			
 			this.savebutton.Sensitive = false;			
 		}
 
@@ -269,12 +266,17 @@ namespace LongoMatch.Gui.Component
 			vep.Destroy();
 			if (response ==(int)ResponseType.Ok){
 				vq = vep.VideoQuality;
-				foreach (PlayListTimeNode segment in playList)
+				PlayerMaker pm = new PlayerMaker();
+				videoEditor = pm.getVideoEditor();
+				videoEditor.Progress += new LongoMatch.Video.Handlers.ProgressHandler(OnProgress);
+				foreach (PlayListTimeNode segment in playList){
+					Console.WriteLine (segment.Name);
 					videoEditor.AddSegment(segment.FileName, 
 					                       segment.Start.MSeconds, 
 					                       segment.Duration.MSeconds, 
 					                       segment.Rate, 
 					                       segment.Name);
+				}
 				videoEditor.VideoQuality = vq;
 				videoEditor.OutputFile = vep.Filename;
 				videoEditor.Start();
@@ -298,8 +300,8 @@ namespace LongoMatch.Gui.Component
 			if (progress ==1){
 				this.closebutton.Hide();
 				this.newvideobutton.Show();				
-			}
-			
+			}			
+						
 		}
 		
 		~PlayListWidget(){
