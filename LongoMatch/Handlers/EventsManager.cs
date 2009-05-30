@@ -225,6 +225,7 @@ namespace LongoMatch
 				selectedTimeNode = plNode;
 				if (plNode.Valid){
 					player.SetPlayListElement(plNode.FileName,plNode.Start.MSeconds,plNode.Stop.MSeconds,hasNext);
+					player.Rate = plNode.Rate;
 					playlist.StartClock();
 				}
 			}
@@ -312,9 +313,7 @@ namespace LongoMatch
 		}
 		
 		protected virtual void OnApplyRate (PlayListTimeNode plNode){
-			// Need to check if we are playing this element
-			if (selectedTimeNode == plNode)
-					plNode.Rate = player.Rate;
+			plNode.Rate = player.Rate;
 		}
 		
 		
