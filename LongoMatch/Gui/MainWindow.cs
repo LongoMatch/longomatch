@@ -59,9 +59,9 @@ namespace LongoMatch.Gui
 			updater.NewVersion += new LongoMatch.Handlers.NewVersionHandler(OnUpdate);
 			updater.Run();
 			
-			this.eManager = new EventsManager(this.treewidget1,this.buttonswidget1,this.playlistwidget2,
-			                                  this.playerbin1,this.timelinewidget1,this.videoprogressbar,
-			                                  this.noteswidget1);
+			eManager = new EventsManager(treewidget1,buttonswidget1,playlistwidget2,
+			                                  playerbin1,timelinewidget1,videoprogressbar,
+			                                  noteswidget1);
 			
 			hkManager = new HotKeysManager();
 
@@ -71,7 +71,7 @@ namespace LongoMatch.Gui
 
 			playerbin1.LogoMode = true;
 			
-			this.playlistwidget2.SetPlayer(playerbin1);
+			playlistwidget2.SetPlayer(playerbin1);
 
 
 		}
@@ -82,77 +82,77 @@ namespace LongoMatch.Gui
 #region Private Methods
 		private void SetProject(Project project){			
 			openedProject = project;
-			this.eManager.OpenedProject = project;
+			eManager.OpenedProject = project;
 			if (project!=null){		
 				if(!File.Exists(project.File.FilePath)){
 					MessageDialog infoDialog = new MessageDialog (this,DialogFlags.Modal,MessageType.Warning,ButtonsType.Ok,Catalog.GetString("The file associated to this project doesn't exist.")+"\n"+Catalog.GetString("If the location of the file has changed try to edit it with the database manager.") );
 					infoDialog.Run();
 					infoDialog.Destroy();
-					this.CloseActualProyect();					
+					CloseActualProyect();					
 				}
 				else {					
-					this.Title = System.IO.Path.GetFileNameWithoutExtension(project.File.FilePath) + " - LongoMatch";
+					Title = System.IO.Path.GetFileNameWithoutExtension(project.File.FilePath) + " - LongoMatch";
 					try {
-						this.playerbin1.Open(project.File.FilePath);
+						playerbin1.Open(project.File.FilePath);
 						if (project.File.HasVideo)
-							this.playerbin1.LogoMode = true;
+							playerbin1.LogoMode = true;
 						else 
-							this.playerbin1.LogoMode = false;
-						this.playlistwidget2.Stop();					
-						this.treewidget1.Project=project;						
-						this.timelinewidget1.Project = project;
-						this.buttonswidget1.Sections = project.Sections;	
+							playerbin1.LogoMode = false;
+						playlistwidget2.Stop();					
+						treewidget1.Project=project;						
+						timelinewidget1.Project = project;
+						buttonswidget1.Sections = project.Sections;	
 						if (project.File.HasVideo){
-							this.playerbin1.LogoMode = false;						
+							playerbin1.LogoMode = false;						
 						}
 						MakeActionsSensitive(true);
-						this.ShowWidgets();
+						ShowWidgets();
 						hkManager.SetSections(project.Sections);
-						this.KeyPressEvent += hotkeysListener;
+						KeyPressEvent += hotkeysListener;
 					}
 					catch (GLib.GException ex){
 						MessageDialog infoDialog = new MessageDialog (this,DialogFlags.Modal,MessageType.Error,ButtonsType.Ok,Catalog.GetString("An error ocurred opening this project:")+"\n"+ex.Message);
 						infoDialog.Run();
 						infoDialog.Destroy();
-						this.CloseActualProyect();	
+						CloseActualProyect();	
 					}
 				}
 			}			
 		}
 		
 		private void CloseActualProyect(){
-			this.Title = "LongoMatch";
-			this.HideWidgets();
-			this.playerbin1.Close();			
-			this.playerbin1.LogoMode = true;
-			this.SaveDB();			
+			Title = "LongoMatch";
+			HideWidgets();
+			playerbin1.Close();			
+			playerbin1.LogoMode = true;
+			SaveDB();			
 			openedProject = null;	
-			this.eManager.OpenedProject = null;
-			this.selectedTimeNode = null;
+			eManager.OpenedProject = null;
+			selectedTimeNode = null;
 			MakeActionsSensitive(false);
-			this.KeyPressEvent -= hotkeysListener;
+			KeyPressEvent -= hotkeysListener;
 		}
 		
 		private void MakeActionsSensitive(bool sensitive){
-			this.CloseProjectAction.Sensitive=sensitive;
-			this.SaveProjectAction.Sensitive = sensitive;
-			this.CaptureModeAction.Sensitive = sensitive;
-			this.AnalyzeModeAction.Sensitive = sensitive;	
-			this.ExportProjectToCSVFileAction.Sensitive = sensitive;
+			CloseProjectAction.Sensitive=sensitive;
+			SaveProjectAction.Sensitive = sensitive;
+			CaptureModeAction.Sensitive = sensitive;
+			AnalyzeModeAction.Sensitive = sensitive;	
+			ExportProjectToCSVFileAction.Sensitive = sensitive;
 		}
 		
 		private void ShowWidgets(){
-			this.leftbox.Show();
-			if (this.CaptureModeAction.Active)
-				this.buttonswidget1.Show();
+			leftbox.Show();
+			if (CaptureModeAction.Active)
+				buttonswidget1.Show();
 			else 
-				this.timelinewidget1.Show();
+				timelinewidget1.Show();
 		}
 		
 		private void HideWidgets(){
-			this.leftbox.Hide();
-			this.buttonswidget1.Hide();
-			this.timelinewidget1.Hide();
+			leftbox.Hide();
+			buttonswidget1.Hide();
+			timelinewidget1.Hide();
 		}
 				
 
@@ -176,7 +176,7 @@ namespace LongoMatch.Gui
 #region Callbacks
 		
 		protected virtual void OnUnrealized(object sender, System.EventArgs e){
-			this.Destroy();			
+			Destroy();			
 			Application.Quit();					
 		}
 		
@@ -202,7 +202,7 @@ namespace LongoMatch.Gui
 			}
 			if (answer == (int)ResponseType.Ok){
 				project = opd.GetSelection();
-				this.SetProject(project);
+				SetProject(project);
 			}
 			opd.Destroy();
 		}
@@ -233,7 +233,7 @@ namespace LongoMatch.Gui
 				if (project != null){
 					try{
 						MainClass.DB.AddProject(project);
-						this.SetProject(project);
+						SetProject(project);
 					}
 					catch {						
 						MessageDialog error = new MessageDialog(this,
@@ -253,8 +253,8 @@ namespace LongoMatch.Gui
 		protected virtual void OnCloseActivated (object sender, System.EventArgs e)
 		{
 
-			this.SaveDB();
-			this.CloseActualProyect();			
+			SaveDB();
+			CloseActualProyect();			
 		}
 
 		protected virtual void OnDatabaseManagerActivated (object sender, System.EventArgs e)
@@ -272,11 +272,11 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnDeleteEvent (object o, Gtk.DeleteEventArgs args)
 		{
-			this.playlistwidget2.StopEdition();
-			this.SaveDB();
+			playlistwidget2.StopEdition();
+			SaveDB();
 			// We never know...
 			System.Threading.Thread.Sleep(1000);
-			this.playerbin1.Dispose();
+			playerbin1.Dispose();
 			
 			Application.Quit();
 					
@@ -285,31 +285,31 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnQuitActivated (object sender, System.EventArgs e)
 		{
-			this.playlistwidget2.StopEdition();
-			this.SaveDB();
+			playlistwidget2.StopEdition();
+			SaveDB();
 			// We never know...
 			System.Threading.Thread.Sleep(1000);
-			this.playerbin1.Dispose();
+			playerbin1.Dispose();
 			Application.Quit();
 		}
 
 		protected virtual void OnPlaylistActionToggled (object sender, System.EventArgs e)
 		{			
 			if (((Gtk.ToggleAction)sender).Active){
-				this.rightvbox.Visible = true;
-				this.playlistwidget2.Visible=true;	
+				rightvbox.Visible = true;
+				playlistwidget2.Visible=true;	
 			}
 			else {
-				this.playlistwidget2.Visible=false;				
-				if (!this.noteswidget1.Visible)
-					this.rightvbox.Visible = false;
+				playlistwidget2.Visible=false;				
+				if (!noteswidget1.Visible)
+					rightvbox.Visible = false;
 			}			
 		}
 
 		protected virtual void OnOpenPlaylistActionActivated (object sender, System.EventArgs e)
 		{
 			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Open playlist"),
-			                                                   (Gtk.Window)this.Toplevel,
+			                                                   (Gtk.Window)Toplevel,
 			                                                   FileChooserAction.Open,
 			                                                   "gtk-cancel",ResponseType.Cancel,
 			                                                   "gtk-open",ResponseType.Accept);
@@ -321,9 +321,9 @@ namespace LongoMatch.Gui
 			fChooser.AddFilter(filter);
 			if (fChooser.Run() == (int)ResponseType.Accept){
 				if (openedProject != null)
-					this.CloseActualProyect();
-				this.playlistwidget2.Load(fChooser.Filename);				
-				this.PlaylistAction.Active = true;				
+					CloseActualProyect();
+				playlistwidget2.Load(fChooser.Filename);				
+				PlaylistAction.Active = true;				
 			}		
 			fChooser.Destroy();			
 		}
@@ -334,7 +334,7 @@ namespace LongoMatch.Gui
 			                                               ("The actual project will be closed caused by an error in the media player:")+"\n" +args.Message);
 			errorDialog.Run();
 			errorDialog.Destroy();	
-			this.CloseActualProyect();
+			CloseActualProyect();
 		}
 
 		
@@ -343,12 +343,12 @@ namespace LongoMatch.Gui
 		protected virtual void OnCaptureModeActionToggled (object sender, System.EventArgs e)
 		{			
 			if (((Gtk.ToggleAction)sender).Active){
-				this.buttonswidget1.Show();
-				this.timelinewidget1.Hide();
+				buttonswidget1.Show();
+				timelinewidget1.Hide();
 			}
 			else{
-				this.buttonswidget1.Hide();
-				this.timelinewidget1.Show();
+				buttonswidget1.Hide();
+				timelinewidget1.Show();
 			}		
 		}
 		
@@ -357,12 +357,12 @@ namespace LongoMatch.Gui
 		protected virtual void OnFullScreenActionToggled (object sender, System.EventArgs e)
 		{
 			
-			this.playerbin1.FullScreen = ((Gtk.ToggleAction)sender).Active;
+			playerbin1.FullScreen = ((Gtk.ToggleAction)sender).Active;
 		}
 		
 		protected virtual void OnSaveProjectActionActivated (object sender, System.EventArgs e)
 		{
-			this.SaveDB();
+			SaveDB();
 		}
 		
 		
@@ -373,15 +373,15 @@ namespace LongoMatch.Gui
 				Gdk.Key key = evnt.Key;
 				if (key == Gdk.Key.z){
 					if (selectedTimeNode == null)
-						this.playerbin1.SeekToPreviousFrame(false);
+						playerbin1.SeekToPreviousFrame(false);
 					else
-						this.playerbin1.SeekToPreviousFrame(true);
+						playerbin1.SeekToPreviousFrame(true);
 				}
 				if (key == Gdk.Key.x){
 					if (selectedTimeNode == null)
-						this.playerbin1.SeekToNextFrame(false);
+						playerbin1.SeekToNextFrame(false);
 					else
-						this.playerbin1.SeekToNextFrame(true);
+						playerbin1.SeekToNextFrame(true);
 				}
 			}
 			return base.OnKeyPressEvent (evnt);
@@ -394,8 +394,8 @@ namespace LongoMatch.Gui
 		
 		protected virtual void OnSegmentClosedEvent ()
 		{
-			if (!this.playlistwidget2.Visible)
-				this.rightvbox.Visible=false;
+			if (!playlistwidget2.Visible)
+				rightvbox.Visible=false;
 		}
 		
 		protected virtual void OnUpdate(Version version, string URL){
@@ -428,7 +428,7 @@ namespace LongoMatch.Gui
 		protected virtual void OnExportProjectToCSVFileActionActivated (object sender, System.EventArgs e)
 		{
 			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Select Export File"),
-			                                                   (Gtk.Window)this.Toplevel,
+			                                                   (Gtk.Window)Toplevel,
 			                                                   FileChooserAction.Save,
 			                                                   "gtk-cancel",ResponseType.Cancel,
 			                                                   "gtk-save",ResponseType.Accept);
