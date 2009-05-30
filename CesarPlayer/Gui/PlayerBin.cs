@@ -1,6 +1,6 @@
 ﻿// PlayerBin.cs 
 //
-//  Copyright (C) 2007 Andoni Morales Alastruey
+//  Copyright (C) 2007-2009 Andoni Morales Alastruey
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -67,9 +67,7 @@ namespace LongoMatch.Gui
 			PlayerInit();
 			vwin = new VolumeWindow();
 			vwin.VolumeChanged += new VolumeChangedHandler(OnVolumeChanged);
-			controlsbox.Visible = false;
-		
-						
+			controlsbox.Visible = false;						
 		}
 		
 #endregion
@@ -94,6 +92,7 @@ namespace LongoMatch.Gui
 		
 		public float Rate{
 			get{return rate;}
+			set{vscale1.Value = (int)(value*25);}
 		}
 		
 		public bool FullScreen{
@@ -144,7 +143,7 @@ namespace LongoMatch.Gui
 		
 		public void Play(){			
 			player.Play();			
-			float val = getRate();			
+			float val = getRateFromScale();			
 						
 			if (segmentStartTime == 0 && segmentStopTime==0)
 				player.SetRate(val);
@@ -259,7 +258,7 @@ namespace LongoMatch.Gui
 		
 #region Private methods
 		
-		private float getRate(){
+		private float getRateFromScale(){
 			VScale scale= vscale1;
 			double val = scale.Value;
 			
@@ -451,7 +450,7 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnVscale1ValueChanged (object sender, System.EventArgs e)
 		{
-			float val = getRate();
+			float val = getRateFromScale();
 			
 			// Mute for rate != 1
 			if (val != 1 && player.Volume != 0){ 
@@ -467,6 +466,7 @@ namespace LongoMatch.Gui
 				player.SetRateInSegment(val,segmentStopTime);			
 			else
 				player.SetRate(val);			
+			rate = val;
 		}
 
 		protected virtual void OnVideoboxButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
