@@ -59,94 +59,49 @@ namespace LongoMatch.Gui
 		private string filename = null;
 		protected VolumeWindow vwin;
 				
-		
+#region Constructors		
 		public PlayerBin()
 		{		
 			this.Build();
-			this.UnSensitive();
-			this.PlayerInit();
+			UnSensitive();
+			PlayerInit();
 			vwin = new VolumeWindow();
 			vwin.VolumeChanged += new VolumeChangedHandler(OnVolumeChanged);
-			this.controlsbox.Visible = false;
+			controlsbox.Visible = false;
 		
 						
 		}
 		
-		private void PlayerInit(){
-			PlayerMaker pMaker;
-			Widget _videoscreen;
-			
-			pMaker = new PlayerMaker();
-			player = pMaker.getPlayer(320,280);
-			
-			//IF error do something	
-			tickHandler = new TickHandler(OnTick);
-			player.Tick += tickHandler;
-			player.StateChanged += new LongoMatch.Video.Handlers.StateChangedHandler(OnStateChanged);
-			player.Eos += new EventHandler (OnEndOfStream);
-			player.SegmentDoneEvent += new SegmentDoneHandler (OnSegmentDone);
-			player.Error += new ErrorHandler (OnError);
-			
-			_videoscreen = player.Window;			
-			videobox.Add(_videoscreen);
-			_videoscreen.Show();
-		
-		}
-		
-		public void Open (string mrl){
-			this.filename = mrl;
-			this.ResetGui();
-			this.CloseActualSegment();			
-				try{
-					player.Open(mrl);
-				}
-				catch (GLib.GException error) {
-				//We handle this error async
-				
-				}
-		}
-		
-		public void Play(){
-			
-			player.Play();
-			
-			float val = this.getRate();			
-						
-				if (this.segmentStartTime == 0 && this.segmentStopTime==0)
-					player.SetRate(val);
-				else
-					player.SetRateInSegment(val,segmentStopTime);		
-		}
-		
-		public void Pause(){
-			player.Pause();
-		}
+#endregion
+	
+#region Properties
 		
 		public IPlayer Player{
-			get{return this.player;}
+			get{return player;}
 		}
 		
 		public long AccurateCurrentTime{
-			get{return this.player.AccurateCurrentTime;}
+			get{return player.AccurateCurrentTime;}
 		}
 		
 		public long CurrentTime{
-			get{return this.player.CurrentTime;}
+			get{return player.CurrentTime;}
 		}
 		
 		public long StreamLength{
-			get{				
-				 return player.StreamLength;				
-			}
+			get{return player.StreamLength;}
+		}
+		
+		public float Rate{
+			get{return rate;}
 		}
 		
 		public bool FullScreen{
 			set{
 				if (value)
-					this.GdkWindow.Fullscreen();
+					GdkWindow.Fullscreen();
 				else 
-					this.GdkWindow.Unfullscreen();
-				
+					GdkWindow.Unfullscreen();				
 			}
 		}
 		
@@ -166,66 +121,79 @@ namespace LongoMatch.Gui
 		}
 		
 		public bool LogoMode {
-			get{
-				return this.player.LogoMode;
-			}
-			set{
-				this.player.LogoMode = value;
-			}
+			get{return player.LogoMode;}
+			set{player.LogoMode = value;}
+		}		
+		
+#endregion	
+		
+#region Public methods		
+		
+		public void Open (string mrl){
+			filename = mrl;
+			ResetGui();
+			CloseActualSegment();			
+				try{
+					player.Open(mrl);
+				}
+				catch (GLib.GException error) {
+				//We handle this error async
+				
+				}
 		}
 		
-		public bool PlaylistMode{
-			set{				
-				//this.timescale.Sensitive = !value;				
-			}
+		public void Play(){			
+			player.Play();			
+			float val = getRate();			
+						
+			if (segmentStartTime == 0 && segmentStopTime==0)
+				player.SetRate(val);
+			else
+				player.SetRateInSegment(val,segmentStopTime);		
 		}
+		
+		public void Pause(){
+			player.Pause();
+		}		
 		
 		public void SetLogo (string filename){
-			this.player.Logo=filename;
+			player.Logo=filename;
 		}
 		
 		public void ResetGui(){
-			this.closebutton.Hide();
-			this.SetSensitive();
+			closebutton.Hide();
+			SetSensitive();
 			timescale.Value=0;
 			timelabel.Text="";
-			this.player.CancelProgramedStop();			
+			player.CancelProgramedStop();			
 		}
 	
 		public void SetPlayListElement(string fileName,long start, long stop, bool hasNext){
-			this.PlaylistMode = true;
-			this.hasNext = hasNext;
+			hasNext = hasNext;
 			if (hasNext)
-				this.nextbutton.Sensitive = true;
+				nextbutton.Sensitive = true;
 			else
-				this.nextbutton.Sensitive = false;
-			if (fileName != this.filename){
-				this.Open(fileName);				
+				nextbutton.Sensitive = false;
+			if (fileName != filename){
+				Open(fileName);				
 				player.NewFileSeek(start,stop);		
 				Play();
 			}
 			else player.SegmentSeek(start,stop);			
-			this.segmentStartTime = start;
-			this.segmentStopTime = stop;
+			segmentStartTime = start;
+			segmentStopTime = stop;
 			player.LogoMode = false;
-			this.OnVscale1ValueChanged(this.vscale1,new EventArgs());
-
-			
 		}
 		
 		public void Close(){
-			this.player.Close();
-			this.filename = null;
-			this.timescale.Value = 0;
-			this.UnSensitive();
+			player.Close();
+			filename = null;
+			timescale.Value = 0;
+			UnSensitive();
 		}
 		
-		
-		
-		
-		
 		public void SeekTo(long time, bool accurate){
-			this.player.SeekTo(time,accurate);
+			player.SeekTo(time,accurate);
 		}
 		
 		public void SeekInSegment(long pos){
@@ -241,63 +209,58 @@ namespace LongoMatch.Gui
 			if (player.CurrentTime > segmentStartTime){
 				player.SeekToPreviousFrame(in_segment);
 			}
-
 		}
 		
 		public void UpdateSegmentStartTime (long start){
-			this.segmentStartTime = start;
+			segmentStartTime = start;
 			player.UpdateSegmentStartTime(start);						
 		}
 		
 		public void UpdateSegmentStopTime (long stop){
-			this.segmentStopTime = stop;
-			player.UpdateSegmentStopTime(stop);
-			
+			segmentStopTime = stop;
+			player.UpdateSegmentStopTime(stop);	
 		}
 		
 		public void SetStartStop(long start, long stop){
-
-			this.segmentStartTime = start;
-			this.segmentStopTime = stop;
-			this.closebutton.Show();
-			//this.timescale.Sensitive = false;
-			this.vscale1.Value = 25;
-			player.SegmentSeek(start,stop);
-		
-			
+			segmentStartTime = start;
+			segmentStopTime = stop;
+			closebutton.Show();
+			vscale1.Value = 25;
+			player.SegmentSeek(start,stop);			
 		}
 		
 		public void CloseActualSegment(){
-			this.closebutton.Hide();
-			this.hasNext = false;
-			this.segmentStartTime = 0;
-			this.segmentStopTime = 0;
-			this.vscale1.Value=25;
-			//this.timescale.Sensitive = true;
-			this.slength = TimeString.MSecondsToSecondsString(length);
-			this.SegmentClosedEvent();
-			this.player.CancelProgramedStop();
-			
+			closebutton.Hide();
+			hasNext = false;
+			segmentStartTime = 0;
+			segmentStopTime = 0;
+			vscale1.Value=25;
+			//timescale.Sensitive = true;
+			slength = TimeString.MSecondsToSecondsString(length);
+			SegmentClosedEvent();
+			player.CancelProgramedStop();			
 		}
 		
 		public void SetSensitive(){
-			this.controlsbox.Sensitive = true;
-			this.vscale1.Sensitive = true;
-					
+			controlsbox.Sensitive = true;
+			vscale1.Sensitive = true;					
 		}
 		
 		public void UnSensitive(){			
-			this.controlsbox.Sensitive = false;
-			this.vscale1.Sensitive = false;
-				
+			controlsbox.Sensitive = false;
+			vscale1.Sensitive = false;				
 		}
 		
 		public void RedrawLastFrame(){
 			player.RedrawLastFrame();
 		}
 		
+#endregion
+		
+#region Private methods
+		
 		private float getRate(){
-			VScale scale= this.vscale1;
+			VScale scale= vscale1;
 			double val = scale.Value;
 			
 			if (val >25 ){
@@ -313,6 +276,29 @@ namespace LongoMatch.Gui
 			return segmentStartTime != 0 && segmentStopTime != 0;
 		}
 		
+		private void PlayerInit(){
+			PlayerMaker pMaker;
+			Widget _videoscreen;
+			
+			pMaker = new PlayerMaker();
+			player = pMaker.getPlayer(320,280);
+			
+			//IF error do something	
+			tickHandler = new TickHandler(OnTick);
+			player.Tick += tickHandler;
+			player.StateChanged += new LongoMatch.Video.Handlers.StateChangedHandler(OnStateChanged);
+			player.Eos += new EventHandler (OnEndOfStream);
+			player.SegmentDoneEvent += new SegmentDoneHandler (OnSegmentDone);
+			player.Error += new ErrorHandler (OnError);
+			
+			_videoscreen = player.Window;			
+			videobox.Add(_videoscreen);
+			_videoscreen.Show();		
+		}
+		
+#endregion
+		
+#region Callbacks
 		protected virtual void OnStateChanged(object o, LongoMatch.Video.Handlers.StateChangedArgs args){
 			if (args.Playing){
 				playbutton.Hide();
@@ -331,60 +317,52 @@ namespace LongoMatch.Gui
 			bool seekable = args.Seekable;
 			
 			//Console.WriteLine ("Current Time:{0}\n Length:{1}\n",currentTime, streamLength);
-			if (this.length != streamLength){							
-				this.length = streamLength;
-				this.slength = TimeString.MSecondsToSecondsString(length);				
+			if (length != streamLength){							
+				length = streamLength;
+				slength = TimeString.MSecondsToSecondsString(length);				
 			}
 			
 			if  (InSegment()){
 				currentTime -= segmentStartTime;
 				currentposition = (float)currentTime/(float)(segmentStopTime-segmentStartTime);
-				this.slength = TimeString.MSecondsToSecondsString(segmentStopTime-segmentStartTime);
+				slength = TimeString.MSecondsToSecondsString(segmentStopTime-segmentStartTime);
 			}						
 			
 			timelabel.Text = TimeString.MSecondsToSecondsString(currentTime) + "/" + slength;			    
 			timescale.Value = currentposition*65535;
 			if (Tick != null)
-				this.Tick(o,args);
+				Tick(o,args);
 			
 		}
 		
 		protected virtual void OnTimescaleAdjustBounds(object o, Gtk.AdjustBoundsArgs args)
 		{
-			float pos;
-			
+			float pos;		
 				
 			if (!seeking){
 				seeking = true;
-				this.IsPlayingPrevState = player.Playing;
-				player.Tick -= this.tickHandler;
+				IsPlayingPrevState = player.Playing;
+				player.Tick -= tickHandler;
 				if (Environment.OSVersion.Platform != PlatformID.Win32NT){
 					player.Pause();
 				}
 			}
-			
-			
-			
+					
 			pos = (float)timescale.Value/65535;
 			
-			if (InSegment()){
-				player.SeekInSegment(segmentStartTime + (long)(pos*(segmentStopTime-segmentStartTime)));
-			}
+			if (InSegment())
+				player.SeekInSegment(segmentStartTime + (long)(pos*(segmentStopTime-segmentStartTime)));			
 			else {
 				player.Position = pos;
-				timelabel.Text= TimeString.MSecondsToSecondsString(player.CurrentTime) + "/" + this.slength;
-			}
-			
-				
-			
-		}
-		
+				timelabel.Text= TimeString.MSecondsToSecondsString(player.CurrentTime) + "/" + slength;
+			}			
+		}		
 
 		protected virtual void OnTimescaleValueChanged(object sender, System.EventArgs e)
 		{
 			if (seeking){
 				seeking=false;
-				player.Tick += this.tickHandler;
+				player.Tick += tickHandler;
 				if (IsPlayingPrevState)
 					player.Play();
 			}
@@ -397,8 +375,7 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnStopbuttonClicked(object sender, System.EventArgs e)
 		{
-			player.SeekTo(this.segmentStartTime,true);
-
+			player.SeekTo(segmentStartTime,true);
 		}
 
 		protected virtual void OnVolumebuttonClicked(object sender, System.EventArgs e)
@@ -421,34 +398,28 @@ namespace LongoMatch.Gui
 		}
 
 		protected virtual void OnPausebuttonClicked (object sender, System.EventArgs e)
-		{
-			
+		{			
 			player.Pause();
 		}
 		
 		protected virtual void OnEndOfStream (object o, EventArgs args){
 			player.SeekInSegment(0);
-			player.Pause();
-			
+			player.Pause();			
 		}
 		
 		protected virtual void OnSegmentDone (){
-			if (this.hasNext && this.PlayListSegmentDoneEvent != null )
-				PlayListSegmentDoneEvent();
-			
-				
+			if (hasNext && PlayListSegmentDoneEvent != null )
+				PlayListSegmentDoneEvent();			
 		}
 		
 		protected virtual void OnError (object o, ErrorArgs args){
-			if(this.Error != null)
-				this.Error(o,args);
+			if(Error != null)
+				Error(o,args);
 		}
-		
-	
 
 		protected virtual void OnClosebuttonClicked (object sender, System.EventArgs e)
 		{
-			this.CloseActualSegment();	
+			CloseActualSegment();	
 		}
 
 		protected virtual void OnPrevbuttonClicked (object sender, System.EventArgs e)
@@ -460,13 +431,11 @@ namespace LongoMatch.Gui
 		protected virtual void OnNextbuttonClicked (object sender, System.EventArgs e)
 		{
 			if (Next != null)
-				Next();
-			
+				Next();		
 		}
 
 		protected virtual void OnVscale1FormatValue (object o, Gtk.FormatValueArgs args)
 		{
-
 			double val = args.Value;
 			if (val >25 ){
 				val = val-25 ;
@@ -482,7 +451,7 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnVscale1ValueChanged (object sender, System.EventArgs e)
 		{
-			float val = this.getRate();
+			float val = getRate();
 			
 			// Mute for rate != 1
 			if (val != 1 && player.Volume != 0){ 
@@ -492,15 +461,12 @@ namespace LongoMatch.Gui
 			else if  (val != 1 && muted)
 			          previousVLevel = 0;			
 			else if (val ==1)
-				player.Volume = previousVLevel;
-			
+				player.Volume = previousVLevel;			
 			
 			if (InSegment())
 				player.SetRateInSegment(val,segmentStopTime);			
 			else
-				player.SetRate(val);
-					
-			
+				player.SetRate(val);			
 		}
 
 		protected virtual void OnVideoboxButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
@@ -510,8 +476,6 @@ namespace LongoMatch.Gui
 			else 
 				Pause();		
 		}
-
-
-		
+#endregion		
 	}
 }
