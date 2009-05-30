@@ -43,6 +43,7 @@ namespace LongoMatch.Gui.Component
 	public partial class PlayListWidget : Gtk.Bin
 	{
 		public event PlayListNodeSelectedHandler PlayListNodeSelected;
+		public event ApplyCurrentRateHandler ApplyCurrentRate;
 		public event LongoMatch.Video.Handlers.ProgressHandler Progress;		
 		
 		private PlayerBin player;
@@ -61,9 +62,9 @@ namespace LongoMatch.Gui.Component
 			PlayerMaker pm = new PlayerMaker();
 			videoEditor = pm.getVideoEditor();
 			videoEditor.Progress += new LongoMatch.Video.Handlers.ProgressHandler(OnProgress);
+			playlisttreeview1.ApplyCurrentRate += new ApplyCurrentRateHandler(OnApplyRate);
 			savebutton.Sensitive = false;			
 		}
-
 	
 		public void SetPlayer(PlayerBin player){
 			player = player;
@@ -91,8 +92,7 @@ namespace LongoMatch.Gui.Component
 				Model.AppendValues(plNode);
 				playList.Add(plNode);
 			}			
-		}
-		
+		}		
 		
 		public PlayListTimeNode Next(){
 			if (playList.HasNext()){								
@@ -108,7 +108,6 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		public void Prev(){
-
 			if ((player.AccurateCurrentTime - plNode.Start.MSeconds) < 500){
 				//Seleccionando el elemento anterior si no han pasado más 500ms
 				if (playList.HasPrev()){								
@@ -131,9 +130,7 @@ namespace LongoMatch.Gui.Component
 		
 		public void Stop(){
 			StopClock();
-		}		
-		
-		
+		}				
 		
 		public void StartClock ()	{
 			if (player!=null && !clock_started){			
@@ -149,32 +146,26 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		private bool CheckStopTime(){
-			
-			lock (lock_node){
-				
+		private bool CheckStopTime(){			
+			lock (lock_node){				
 				if (player != null){
 					if (plNode == null)
-						StopClock();
-					
-					else {
-						
-						if (player.AccurateCurrentTime >= plNode.Stop.MSeconds){
-					
-							Next();
-						}
+						StopClock();					
+					else {						
+						if (player.AccurateCurrentTime >= plNode.Stop.MSeconds)					
+							Next();						
 					}
 				}
 				return true;
 			}
 		}
-		private void SelectPlayListNode (TreePath path){
+		private PlayListTimeNode SelectPlayListNode (TreePath path){
 			
 			plNode = playList.Select(Int32.Parse(path.ToString()));
 			if (PlayListNodeSelected != null && plNode.Valid)
-				PlayListNodeSelected(plNode,playList.HasNext());				
-		}
-		
+				PlayListNodeSelected(plNode,playList.HasNext());	
+			return plNode;
+		}		
 		
 		private FileFilter FileFilter{
 			get{
@@ -182,14 +173,12 @@ namespace LongoMatch.Gui.Component
 				filter.Name = "LGM playlist";
 				filter.AddPattern("*.lgm");
 				return filter;
-			}
-				
-				
+			}				
 		}
 		
 		protected virtual void OnPlaylisttreeview1RowActivated (object o, Gtk.RowActivatedArgs args)
-		{
-			SelectPlayListNode(args.Path);			
+		{			
+			playlisttreeview1.LoadedPlay = SelectPlayListNode(args.Path);	
 		}
 		
 
@@ -210,16 +199,9 @@ namespace LongoMatch.Gui.Component
 			fChooser.SetCurrentFolder(MainClass.PlayListDir());
 			fChooser.AddFilter(FileFilter);
 			fChooser.DoOverwriteConfirmation = true;
-			if (fChooser.Run() == (int)ResponseType.Accept){
-				
-				Load(fChooser.Filename);
-				
-			}
-		
-			fChooser.Destroy();
-			
-			
-			
+			if (fChooser.Run() == (int)ResponseType.Accept)				
+				Load(fChooser.Filename);				
+			fChooser.Destroy();			
 		}
 
 		protected virtual void OnNewbuttonClicked (object sender, System.EventArgs e)
@@ -230,25 +212,20 @@ namespace LongoMatch.Gui.Component
 			                                                   "gtk-cancel",ResponseType.Cancel,
 			                                                   "gtk-save",ResponseType.Accept);
 			fChooser.SetCurrentFolder(MainClass.PlayListDir());			
-			fChooser.AddFilter(FileFilter);
-		
+			fChooser.AddFilter(FileFilter);		
 			
-			if (fChooser.Run() == (int)ResponseType.Accept){
+			if (fChooser.Run() == (int)ResponseType.Accept)
 				Load(fChooser.Filename);
-			}
-			fChooser.Destroy();
-				
+			fChooser.Destroy();				
 		}
 
 		protected virtual void OnPlaylisttreeview1DragEnd (object o, Gtk.DragEndArgs args)
-		{
-			
+		{			
 			playList.SetModel((ListStore)playlisttreeview1.Model);
 		}
 
 		protected virtual void OnNewvideobuttonClicked (object sender, System.EventArgs e)
-		{
-		
+		{		
 			VideoEditionProperties vep;
 			VideoQuality vq;
 			int response;
@@ -302,8 +279,12 @@ namespace LongoMatch.Gui.Component
 			if (progress ==1){
 				closebutton.Hide();
 				newvideobutton.Show();				
-			}			
-						
+			}							
+		}
+		
+		protected virtual void OnApplyRate (PlayListTimeNode plNode){
+			if (ApplyCurrentRate != null)
+				ApplyCurrentRate(plNode);
 		}
 		
 		~PlayListWidget(){

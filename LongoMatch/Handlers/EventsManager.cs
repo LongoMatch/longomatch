@@ -49,7 +49,7 @@ namespace LongoMatch
 		private FramesSeriesCapturer fsc;
 		private FramesCaptureProgressDialog fcpd;
 		
-		// Current play in use null if no play is loaded
+		// Current play loaded. null if no play is loaded
 		private TimeNode selectedTimeNode=null;
 		// current proyect in use
 		private Project openedProject;
@@ -68,28 +68,27 @@ namespace LongoMatch
 			
 			//Adding Handlers for each event		
 			
-			this.buttonswidget.NewMarkEvent += new Handlers.NewMarkEventHandler(OnNewMark);
+			buttonswidget.NewMarkEvent += new Handlers.NewMarkEventHandler(OnNewMark);
 			
-			this.treewidget.TimeNodeChanged += new Handlers.TimeNodeChangedHandler(OnTimeNodeChanged);
-			this.timeline.TimeNodeChanged += new Handlers.TimeNodeChangedHandler(OnTimeNodeChanged);
-			this.notes.TimeNodeChanged += new TimeNodeChangedHandler(OnTimeNodeChanged);
+			treewidget.TimeNodeChanged += new Handlers.TimeNodeChangedHandler(OnTimeNodeChanged);
+			timeline.TimeNodeChanged += new Handlers.TimeNodeChangedHandler(OnTimeNodeChanged);
+			notes.TimeNodeChanged += new TimeNodeChangedHandler(OnTimeNodeChanged);
 			
-			this.treewidget.TimeNodeDeleted += new Handlers.TimeNodeDeletedHandler(OnTimeNodeDeleted);
-			this.timeline.TimeNodeDeleted += new Handlers.TimeNodeDeletedHandler(OnTimeNodeDeleted);
+			treewidget.TimeNodeDeleted += new Handlers.TimeNodeDeletedHandler(OnTimeNodeDeleted);
+			timeline.TimeNodeDeleted += new Handlers.TimeNodeDeletedHandler(OnTimeNodeDeleted);
 			
-			this.treewidget.TimeNodeSelected += new Handlers.TimeNodeSelectedHandler(OnTimeNodeSelected);
-			this.timeline.TimeNodeSelected += new Handlers.TimeNodeSelectedHandler(OnTimeNodeSelected);
+			treewidget.TimeNodeSelected += new Handlers.TimeNodeSelectedHandler(OnTimeNodeSelected);
+			timeline.TimeNodeSelected += new Handlers.TimeNodeSelectedHandler(OnTimeNodeSelected);
 			
-			this.playlist.PlayListNodeSelected += new Handlers.PlayListNodeSelectedHandler(OnPlayListNodeSelected);
-			this.playlist.Progress += new LongoMatch.Video.Handlers.ProgressHandler(OnProgress);
+			playlist.PlayListNodeSelected += new Handlers.PlayListNodeSelectedHandler(OnPlayListNodeSelected);
+			playlist.Progress += new LongoMatch.Video.Handlers.ProgressHandler(OnProgress);
+			playlist.ApplyCurrentRate += new ApplyCurrentRateHandler(OnApplyRate);
 			
+			treewidget.PlayListNodeAdded += new Handlers.PlayListNodeAddedHandler(OnPlayListNodeAdded);
+			
+			treewidget.SnapshotSeriesEvent += new Handlers.SnapshotSeriesHandler(OnSnapshotSeries);
 
-			
-			this.treewidget.PlayListNodeAdded += new Handlers.PlayListNodeAddedHandler(OnPlayListNodeAdded);
-			
-			this.treewidget.SnapshotSeriesEvent += new Handlers.SnapshotSeriesHandler(OnSnapshotSeries);
-
-			this.timeline.NewMarkEvent += new NewMarkAtFrameEventHandler(OnNewMarkAtFrame);
+			timeline.NewMarkEvent += new NewMarkAtFrameEventHandler(OnNewMarkAtFrame);
 			
 			playerbin.Prev += new PrevButtonClickedHandler(OnPrev);
 			playerbin.Next += new NextButtonClickedHandler(OnNext);
@@ -99,12 +98,12 @@ namespace LongoMatch
 		
 		public  Project OpenedProject{
 			set{
-				this.openedProject = value;
+				openedProject = value;
 			}
 		}
 		
 		private void ProcessNewMarkEvent(int section,Time pos){
-			if (this.player != null && openedProject != null){
+			if (player != null && openedProject != null){
 				//Getting defualt star and stop gap for the section
 				Time startTime = openedProject.Sections.GetStartTime(section);
 				Time stopTime = openedProject.Sections.GetStopTime(section);
@@ -118,10 +117,10 @@ namespace LongoMatch
 					length = new Time((int)player.StreamLength);
 								
 				Time fStop = (stop > length) ? length: stop;
-				Pixbuf miniature = this.player.CurrentFrame;
+				Pixbuf miniature = player.CurrentFrame;
 				MediaTimeNode tn = openedProject.AddTimeNode(section,fStart, fStop,miniature);				
 				treewidget.AddTimeNode(tn);
-				this.timeline.QueueDraw();
+				timeline.QueueDraw();
 			}
 		}
 		
@@ -188,25 +187,25 @@ namespace LongoMatch
 				//else 
 				//	this.player.Pause();
 					if (pos == tNode.Start){					
-					    this.player.UpdateSegmentStartTime(pos.MSeconds);
+					    player.UpdateSegmentStartTime(pos.MSeconds);
 				    }				
 				    else{
-					    this.player.UpdateSegmentStopTime(pos.MSeconds);
+					    player.UpdateSegmentStopTime(pos.MSeconds);
 				    }
 				//if (Environment.OSVersion.Platform == PlatformID.Win32NT)
 				//	this.player.Pause();
 			}	
 			else if (tNode is SectionsTimeNode){
-				this.buttonswidget.Sections = openedProject.Sections;
+				buttonswidget.Sections = openedProject.Sections;
 			}
 			
 		}
 		
 		protected virtual void OnTimeNodeDeleted (MediaTimeNode tNode)
 		{
-			this.treewidget.DeleteTimeNode(tNode);
+			treewidget.DeleteTimeNode(tNode);
 			openedProject.DelTimeNode(tNode);			
-			this.timeline.QueueDraw();
+			timeline.QueueDraw();
 			MainClass.DB.UpdateProject(openedProject);
 			
 			
@@ -215,7 +214,7 @@ namespace LongoMatch
 		
 		protected virtual void OnPlayListNodeAdded (MediaTimeNode tNode)
 		{
-			this.playlist.Add(new PlayListTimeNode(openedProject.File.FilePath,tNode));
+			playlist.Add(new PlayListTimeNode(openedProject.File.FilePath,tNode));
 		}
 		
 		
@@ -223,10 +222,10 @@ namespace LongoMatch
 		protected virtual void OnPlayListNodeSelected (PlayListTimeNode plNode, bool hasNext)
 		{
 			if (openedProject == null){
-				this.selectedTimeNode = plNode;
+				selectedTimeNode = plNode;
 				if (plNode.Valid){
-					this.player.SetPlayListElement(plNode.FileName,plNode.Start.MSeconds,plNode.Stop.MSeconds,hasNext);
-					this.playlist.StartClock();
+					player.SetPlayListElement(plNode.FileName,plNode.Start.MSeconds,plNode.Stop.MSeconds,hasNext);
+					playlist.StartClock();
 				}
 			}
 			else {
@@ -237,7 +236,7 @@ namespace LongoMatch
 				                                        "Please, close the opened project to play the playlist.");
 				error.Run();
 				error.Destroy();
-				this.playlist.Stop();
+				playlist.Stop();
 			}
 		}
 		
@@ -248,9 +247,9 @@ namespace LongoMatch
 
 		protected virtual void OnSegmentClosedEvent ()
 		{
-			this.selectedTimeNode = null;
-			this.timeline.SelectedTimeNode = null;
-			this.notes.Visible = false;
+			selectedTimeNode = null;
+			timeline.SelectedTimeNode = null;
+			notes.Visible = false;
 		}
 		
 		protected virtual void OnSnapshotSeries(MediaTimeNode tNode){
@@ -285,31 +284,37 @@ namespace LongoMatch
 
 		protected virtual void OnNext ()
 		{
-			this.playlist.Next();
+			playlist.Next();
 		}
 		
 		protected virtual void OnPrev ()
 		{
-			if (this.selectedTimeNode is MediaTimeNode){
-				this.player.SeekInSegment(this.selectedTimeNode.Start.MSeconds);
+			if (selectedTimeNode is MediaTimeNode){
+				player.SeekInSegment(selectedTimeNode.Start.MSeconds);
 				
 			}
-			else if (this.selectedTimeNode is PlayListTimeNode)
-				this.playlist.Prev();
-			else if (this.selectedTimeNode == null)
-				this.player.SeekTo(0,false);
+			else if (selectedTimeNode is PlayListTimeNode)
+				playlist.Prev();
+			else if (selectedTimeNode == null)
+				player.SeekTo(0,false);
 		}
 		
 		protected virtual void OnTick (object o, LongoMatch.Video.Handlers.TickArgs args)
 		{
-			if (args.CurrentTime != 0 && this.timeline != null && openedProject != null)
-				this.timeline.CurrentFrame=(uint)(args.CurrentTime * openedProject.File.Fps / 1000);
+			if (args.CurrentTime != 0 && timeline != null && openedProject != null)
+				timeline.CurrentFrame=(uint)(args.CurrentTime * openedProject.File.Fps / 1000);
 		}
 		
 	
 		protected virtual void OnTimeline2PositionChanged (Time pos)
 		{
-			this.player.SeekInSegment(pos.MSeconds);
+			player.SeekInSegment(pos.MSeconds);
+		}
+		
+		protected virtual void OnApplyRate (PlayListTimeNode plNode){
+			// Need to check if we are playing this element
+			if (selectedTimeNode == plNode)
+					plNode.Rate = player.Rate;
 		}
 		
 		

@@ -22,8 +22,8 @@ using Gtk;
 using Gdk;
 using Mono.Unix;
 using LongoMatch.TimeNodes;
-using LongoMatch.Video;
 using LongoMatch.Playlist;
+using LongoMatch.Handlers;
 
 namespace LongoMatch.Gui.Component
 {
@@ -32,94 +32,93 @@ namespace LongoMatch.Gui.Component
 [System.ComponentModel.Category("LongoMatch")]
 [System.ComponentModel.ToolboxItem(true)]
 public class PlayListTreeView : Gtk.TreeView
-	{
-		
-
-		private TreeIter selectedIter;
+	{		
 		private Menu menu;
+		private MenuItem setRate;
 		private ListStore ls;
 		private PlayList playlist;
-
+		private PlayListTimeNode loadedTimeNode = null; //The play currently loaded in the player
+		private PlayListTimeNode selectedTimeNode = null; //The play selected in the tree
+		private TreeIter selectedIter;
 		
-		public PlayListTreeView(){
-			
+		public event ApplyCurrentRateHandler ApplyCurrentRate;
+		
+		
+		public PlayListTreeView(){			
 
 			this.HeadersVisible = false;
 
 			ls = new ListStore(typeof(PlayListTimeNode));
-			this.Model = ls;
-			
-		
+			this.Model = ls;		
 			
 			menu = new Menu();
-			MenuItem quit = new MenuItem(Catalog.GetString("Delete"));
-			quit.Activated += new EventHandler(OnMenuFilePopup);
-			quit.Show();
-			menu.Append(quit);		
+			MenuItem delete = new MenuItem(Catalog.GetString("Delete"));
+			delete.Activated += new EventHandler(OnDelete);
+			delete.Show();
+			setRate = new MenuItem(Catalog.GetString("Apply current play rate"));
+			setRate.Activated += new EventHandler(OnApplyRate);
+			setRate.Show();
+			menu.Append(setRate);
+			menu.Append(delete);		
 			
 
-			Gtk.TreeViewColumn nameColumn = new Gtk.TreeViewColumn ();
-			
-			nameColumn.Title = Catalog.GetString("Name");
-		
+			Gtk.TreeViewColumn nameColumn = new Gtk.TreeViewColumn ();			
+			nameColumn.Title = Catalog.GetString("Name");		
 			Gtk.CellRendererText nameCell = new Gtk.CellRendererText ();
 			nameColumn.PackStart (nameCell, true);
-			nameColumn.SetCellDataFunc (nameCell, new Gtk.TreeCellDataFunc (RenderName));
- 
-			
-			
-			
-			
-			this.AppendColumn (nameColumn);
-			
-
-		
+			nameColumn.SetCellDataFunc (nameCell, new Gtk.TreeCellDataFunc (RenderName));			
+			this.AppendColumn (nameColumn);		
 		}
 		
 		public PlayList PlayList{
 			set{ this.playlist = value;}
-		}
+		}		
 		
+		public PlayListTimeNode LoadedPlay{
+			set { loadedTimeNode = value;}
+		}
 		
 		~PlayListTreeView()
 		{
-
 		}
 		
 		
 		protected override bool OnButtonPressEvent (EventButton evnt)
-		{
-			
+		{			
 			if( (evnt.Type == EventType.ButtonPress) && (evnt.Button == 3) )
 			{
-				TreePath path;
-				this.GetPathAtPos((int)evnt.X,(int)evnt.Y,out path);
+				TreePath path;				
+				GetPathAtPos((int)evnt.X,(int)evnt.Y,out path);
 				if (path!=null){
-					this.Model.GetIter (out selectedIter,path); 
+					ListStore list = ((ListStore)Model);					
+					Model.GetIter (out selectedIter,path); 
+					selectedTimeNode = (PlayListTimeNode)(list.GetValue(selectedIter,0));
+					setRate.Sensitive = selectedTimeNode == loadedTimeNode;
 				    menu.Popup();
 				}
 			}
-			return base.OnButtonPressEvent(evnt);
-								
+			return base.OnButtonPressEvent(evnt);								
 		}
 		
-		protected void OnMenuFilePopup(object obj, EventArgs args){
-			ListStore list = ((ListStore)this.Model);
-			this.playlist.Remove((PlayListTimeNode)(list.GetValue(selectedIter,0)));
-			list.Remove(ref selectedIter);
-			
-			
+		protected void OnDelete(object obj, EventArgs args){
+			ListStore list = ((ListStore)Model);
+			playlist.Remove(selectedTimeNode);
+			list.Remove(ref selectedIter);		
+		}
+		
+		protected void OnApplyRate(object obj, EventArgs args){
+			ListStore list = ((ListStore)Model);
+			if (ApplyCurrentRate != null)
+				ApplyCurrentRate(selectedTimeNode);
 		}
 		
 		private void RenderName (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			PlayListTimeNode tNode = (PlayListTimeNode) model.GetValue (iter, 0);
-			
- 
-			
- 
-			(cell as Gtk.CellRendererText).Text = Catalog.GetString("Name: ")+tNode.Name +"\n"+Catalog.GetString("Start: ")+tNode.Start.ToMSecondsString()
-				+Catalog.GetString(" sec")+"\n"+Catalog.GetString("Duration: ")+tNode.Duration.ToMSecondsString()+Catalog.GetString(" sec");
+			PlayListTimeNode tNode = (PlayListTimeNode) model.GetValue (iter, 0); 
+			(cell as Gtk.CellRendererText).Text = 	Catalog.GetString("Name: ")+tNode.Name +"\n"+
+													Catalog.GetString("Start: ")+tNode.Start.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
+													Catalog.GetString("Duration: ")+tNode.Duration.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
+													Catalog.GetString("Play Rate: ")+tNode.Rate.ToString();
 			if (!tNode.Valid){
 				(cell as Gtk.CellRendererText).Foreground = "red";				
 			}
@@ -127,7 +126,5 @@ public class PlayListTreeView : Gtk.TreeView
 				(cell as Gtk.CellRendererText).Foreground = "black";
 			}
 		}
-
-
 	}
 }

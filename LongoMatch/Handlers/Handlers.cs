@@ -48,4 +48,6 @@ namespace LongoMatch.Handlers
 	
 	public delegate void NewVersionHandler(Version version, string URL);
 	
+	public delegate void ApplyCurrentRateHandler (PlayListTimeNode plNode);
+	
 }

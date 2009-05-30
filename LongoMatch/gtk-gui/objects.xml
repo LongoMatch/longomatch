@@ -76,7 +76,11 @@
   </object>
   <object type="LongoMatch.Gui.Component.PlayListTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
     <itemgroups />
-    <signals />
+    <signals>
+      <itemgroup label="PlayListTreeView Signals">
+        <signal name="ApplyCurrentRate" />
+      </itemgroup>
+    </signals>
   </object>
   <object type="LongoMatch.Gui.Component.TimeScale" palette-category="LongoMatch" allow-children="false" base-type="Gtk.DrawingArea">
     <itemgroups>
@@ -120,6 +124,7 @@
     <signals>
       <itemgroup label="PlayListWidget Signals">
         <signal name="PlayListNodeSelected" />
+        <signal name="ApplyCurrentRate" />
         <signal name="Progress" />
       </itemgroup>
     </signals>

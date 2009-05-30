@@ -98,7 +98,6 @@ namespace LongoMatch.Gui
 							this.playerbin1.LogoMode = true;
 						else 
 							this.playerbin1.LogoMode = false;
-						this.playerbin1.PlaylistMode = false;
 						this.playlistwidget2.Stop();					
 						this.treewidget1.Project=project;						
 						this.timelinewidget1.Project = project;
