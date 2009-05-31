@@ -205,6 +205,7 @@ namespace LongoMatch.Gui {
             this.playerbin1 = new LongoMatch.Gui.PlayerBin();
             this.playerbin1.Events = ((Gdk.EventMask)(256));
             this.playerbin1.Name = "playerbin1";
+            this.playerbin1.Rate = 0F;
             this.playerbin1.LogoMode = false;
             this.vbox5.Add(this.playerbin1);
             Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(this.vbox5[this.playerbin1]));

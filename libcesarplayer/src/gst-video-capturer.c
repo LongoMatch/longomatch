@@ -27,9 +27,9 @@
 
 #include "gst-video-capturer.h"
 
-#define DEFAULT_VIDEO_ENCODER "x264enc"
+#define DEFAULT_VIDEO_ENCODER "theoraenc"
 #define DEFAULT_AUDIO_ENCODER "faac"
-#define DEAFAULT_VIDEO_MUXER "avimux"
+#define DEAFAULT_VIDEO_MUXER "matroskamux"
 
 /* Signals */
 enum
@@ -448,6 +448,7 @@ gvc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 		g_source_remove (gvc->priv->update_id);
 		gvc->priv->update_id = 0;
 	  }
+	  g_print("EOS\n");
 	  g_signal_emit (gvc, gvc_signals[SIGNAL_PERCENT_COMPLETED],0,(gfloat)1);
       break;
     }
@@ -516,6 +517,7 @@ gst_video_capturer_add_segment (GstVideoCapturer *gvc , gchar *file, gint64 star
 {	
 	GstState cur_state;
 	GstElement *gnl_filesource;
+	GstCaps *filter;
 	/*GstElement *operation;
 	GstElement *overlay;*/
 	
@@ -526,6 +528,8 @@ gst_video_capturer_add_segment (GstVideoCapturer *gvc , gchar *file, gint64 star
 	
 	gst_element_get_state (gvc->priv->gnl_composition, &cur_state, NULL, 0);
     if (cur_state <= GST_STATE_READY) {	  
+   		filter = gst_caps_new_simple ("video/x-raw-yuv",NULL);
+
     	final_duration = GST_MSECOND * duration / rate;
        	element_name = g_strdup_printf("filesource%d",gvc->priv->segments);
 		gnl_filesource = gst_element_factory_make ("gnlfilesource", element_name);		
@@ -534,6 +538,7 @@ gst_video_capturer_add_segment (GstVideoCapturer *gvc , gchar *file, gint64 star
 		g_object_set (G_OBJECT(gnl_filesource), "media-duration",GST_MSECOND*duration,NULL);
 		g_object_set (G_OBJECT(gnl_filesource), "start",gvc->priv->last_stop,NULL);
 		g_object_set (G_OBJECT(gnl_filesource), "duration",final_duration,NULL);
+		g_object_set (G_OBJECT(gnl_filesource), "caps",filter,NULL);
 		gst_bin_add (GST_BIN(gvc->priv->gnl_composition), gnl_filesource);
 		gvc->priv->gnl_filesources = g_list_append(gvc->priv->gnl_filesources,gnl_filesource);
 		

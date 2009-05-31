@@ -1,7 +1,12 @@
 <objects attr-sync="on">
+  <object type="LongoMatch.Gui.CapturerBin" palette-category="CesarPlayer" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
   <object type="LongoMatch.Gui.PlayerBin" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="PlayerBin Properties">
+        <property name="Rate" />
         <property name="LogoMode" />
       </itemgroup>
     </itemgroups>
@@ -15,9 +20,5 @@
         <signal name="Prev" />
       </itemgroup>
     </signals>
-  </object>
-  <object type="LongoMatch.Gui.CapturerBin" palette-category="CesarPlayer" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
   </object>
 </objects>
