@@ -19,6 +19,7 @@
 using System;
 using System.Threading;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Gtk;
 
 namespace LongoMatch.Video.Editor
@@ -31,6 +32,8 @@ namespace LongoMatch.Video.Editor
 		
 		private GstVideoSplitter splitter;
 		private Queue<VideoSegment> segmentsList;
+		private Queue<string> segmentsTempFiles;
+		private string outputFile;
 		private string tempDir;
 		private int segmentCoded;
 		private Thread thread;
@@ -41,6 +44,7 @@ namespace LongoMatch.Video.Editor
 			splitter.PercentCompleted += new PercentCompletedHandler(OnProgress); 
 			splitter.Error += new ErrorHandler(OnError);
 			segmentsList = new Queue<VideoSegment>();	
+			segmentsTempFiles = new Queue<string>();
 			tempDir = System.IO.Path.GetTempPath();
 			segmentCoded = -1;
 		}		
@@ -64,7 +68,9 @@ namespace LongoMatch.Video.Editor
 		}
 		
 		public string OutputFile{
-			set{ splitter.OutputFile = value;}
+			set{ 
+				outputFile = value;
+				splitter.OutputFile = value;}
 		}
 		
 		public string TempDir{
@@ -99,15 +105,63 @@ namespace LongoMatch.Video.Editor
 		
 		private void EncodeSegments(){
 			int i = 1;
+			string tempFile;
 			foreach (VideoSegment segment in segmentsList){
 				while (segmentCoded != -1);				
 				segmentCoded = i;
-				Console.WriteLine("Encoding segment "+segmentCoded);
-				splitter.OutputFile= System.IO.Path.Combine ( tempDir, "segment"+i+".mkv");
+				tempFile = System.IO.Path.Combine ( tempDir, "segment"+i+".mkv");
+				segmentsTempFiles.Enqueue(tempFile);
+				splitter.OutputFile= tempFile;
 				splitter.SetSegment(segment.FilePath, segment.Start, segment.Duration, segment.Rate, segment.Title);
 				splitter.Start();
 				i++;
 			}
+			MergeSegments();
+		}
+		
+		private void MergeSegments (){
+			Process process = new Process();
+			ProcessStartInfo pinfo = new ProcessStartInfo();
+			if (System.Environment.OSVersion.Platform != PlatformID.Unix)
+				pinfo.FileName=System.IO.Path.Combine(System.Environment.CurrentDirectory,"mkvmerge.exe");
+			else 
+				pinfo.FileName="mkvmerge";			
+			pinfo.Arguments = CreateMkvMergeCommandLine();
+			pinfo.CreateNoWindow = true;
+			pinfo.UseShellExecute = false;
+			process.StartInfo = pinfo;
+			process.Start();
+			process.WaitForExit();			
+			//this.DeleteTempFiles();
+		}
+		
+		private string CreateMkvMergeCommandLine(){
+		 	int i=0;
+			string appendTo="";
+			string args = String.Format("-o {0}  --language 1:eng --track-name 1:Video --default-track 1:yes --display-dimensions 1:{1}x{2} ",
+			                            outputFile, Width, Height);
+			
+			foreach (String path in segmentsTempFiles){
+				if (i==0){
+					args += String.Format ("-d 1 -A -S {0} ", path);
+					appendTo += String.Format("{0}:1:{1}:1",i+1,i);
+				}
+				else{
+					args += String.Format ("-d 1 -A -S +{0} ", path);
+					appendTo += String.Format(",{0}:1:{1}:1",i+1,i);
+				}				
+				i++;
+			}
+			
+			args += String.Format("--track-order 0:1 --append-to {0}", appendTo);
+			
+			Console.WriteLine(args);
+			return args;
+		}
+		
+		private void DeleteTempFiles(){
+			foreach (String path in segmentsTempFiles)
+				System.IO.File.Delete(path);
 		}
 		
 		protected virtual void OnError (object o, ErrorArgs args){
