@@ -63,6 +63,7 @@
     <File name="Editor/GstVideoSplitter.cs" subtype="Code" buildaction="Compile" />
     <File name="Editor/GnlMkvEditor.cs" subtype="Code" buildaction="Compile" />
     <File name="Editor/VideoSegment.cs" subtype="Code" buildaction="Compile" />
+    <File name="Editor/EditorState.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
