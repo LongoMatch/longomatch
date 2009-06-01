@@ -142,11 +142,11 @@ namespace LongoMatch.Video.Editor
 			                            outputFile, Width, Height);
 			
 			foreach (String path in segmentsTempFiles){
-				if (i==0){
+				if (i==1){
 					args += String.Format ("-d 1 -A -S {0} ", path);
-					appendTo += String.Format("{0}:1:{1}:1",i+1,i);
+					appendTo += String.Format("1:1:0:1,{0}:1:{1}:1",i+1,i);
 				}
-				else{
+				else if (i>1){
 					args += String.Format ("-d 1 -A -S +{0} ", path);
 					appendTo += String.Format(",{0}:1:{1}:1",i+1,i);
 				}				
