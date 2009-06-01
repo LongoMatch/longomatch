@@ -26,6 +26,7 @@ using LongoMatch.DB;
 using LongoMatch.Video.Player;
 using LongoMatch.Video.Handlers;
 using LongoMatch.Video.Utils;
+using LongoMatch.Video.Editor;
 using LongoMatch.Handlers;
 using LongoMatch.Gui;
 using Gtk;
@@ -126,30 +127,42 @@ namespace LongoMatch
 		
 		protected virtual void OnProgress(float progress){
 			
-			if (progress > 0 && progress <= 1 && progress > videoprogressbar.Fraction ){				
+			if (progress > EditorState.START && progress <= EditorState.FINISHED && progress > videoprogressbar.Fraction ){				
 				videoprogressbar.Fraction = progress;
 			}
 			
-			if (progress == -1 ){
+			if (progress == EditorState.CANCELED ){
 				videoprogressbar.Hide();
 			}
 			
-			else if (progress == 0 ){
+			else if (progress == EditorState.START ){
 				videoprogressbar.Show();
 				videoprogressbar.Fraction = 0;
 				videoprogressbar.Text = "Creating new video";
 			}
 			
-			else if (progress == 1) {				
+			else if (progress == EditorState.FINISHED) {				
 				MessageDialog info = new MessageDialog((Gtk.Window)(player.Toplevel),
 				                                       DialogFlags.Modal,
 				                                       MessageType.Info,
 				                                       ButtonsType.Ok,
-				                                       Catalog.GetString("Finished Video Edition."));
+				                                       Catalog.GetString("The video edition has finished successfully."));
 				info.Run();
 				info.Destroy();
 				videoprogressbar.Hide();				
-			}		
+			}	
+			
+			else if (progress == EditorState.ERROR) {				
+				MessageDialog info = new MessageDialog((Gtk.Window)(player.Toplevel),
+				                                       DialogFlags.Modal,
+				                                       MessageType.Error,
+				                                       ButtonsType.Ok,
+				                                       Catalog.GetString("An error has ocurred in the video editor.")
+				                                       +Catalog.GetString("Please, retry again."));
+				info.Run();
+				info.Destroy();
+				videoprogressbar.Hide();				
+			}	
 		}
 			
 	    protected virtual void OnNewMarkAtFrame(int section, int frame){
