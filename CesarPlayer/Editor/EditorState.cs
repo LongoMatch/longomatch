@@ -25,6 +25,7 @@ namespace LongoMatch.Video.Editor
 	public enum EditorState
 	{
 		START = 0,
+		FINISHED = 1,
 		CANCELED = -1,
 		ERROR = -2
 	}
