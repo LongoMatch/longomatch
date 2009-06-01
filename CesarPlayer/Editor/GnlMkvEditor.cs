@@ -38,7 +38,8 @@ namespace LongoMatch.Video.Editor
 		public GnlMkvEditor()
 		{			
 			splitter = new GstVideoSplitter();
-			splitter.PercentCompleted += new PercentCompletedHandler(OnProgress);
+			splitter.PercentCompleted += new PercentCompletedHandler(OnProgress); 
+			splitter.Error += new ErrorHandler(OnError);
 			segmentsList = new Queue<VideoSegment>();	
 			tempDir = System.IO.Path.GetTempPath();
 			segmentCoded = -1;
@@ -93,7 +94,7 @@ namespace LongoMatch.Video.Editor
 			thread.Abort();
 			segmentCoded = -1;
 			if (Progress != null)
-				Progress (-1);
+				Progress (EditorState.CANCELED);
 		}
 		
 		private void EncodeSegments(){
@@ -109,14 +110,17 @@ namespace LongoMatch.Video.Editor
 			}
 		}
 		
+		protected virtual void OnError (object o, ErrorArgs args){
+			if (Progress != null)
+				Application.Invoke(delegate {Progress (EditorState.ERROR);});
+		}
+		
 		protected virtual void OnProgress (object o, PercentCompletedArgs args){			
 			float percent = args.Percent;			
 			if (Progress != null)
-				Application.Invoke(delegate {Progress (percent*segmentCoded/segmentsList.Count);});
-			if (percent == 1){
+				Application.Invoke(delegate {Progress (percent/segmentsList.Count + (float)(segmentCoded-1)/segmentsList.Count);});
+			if (percent == 1){				
 				segmentCoded = -1;
-				if (segmentCoded == segmentsList.Count);
-					Application.Invoke(delegate {Progress (-1);});
 			}
 		}
 	}
