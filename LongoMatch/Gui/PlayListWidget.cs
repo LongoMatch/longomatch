@@ -67,7 +67,7 @@ namespace LongoMatch.Gui.Component
 		}
 	
 		public void SetPlayer(PlayerBin player){
-			player = player;
+			this.player = player;
 			closebutton.Hide();
 			newvideobutton.Hide();
 		}
