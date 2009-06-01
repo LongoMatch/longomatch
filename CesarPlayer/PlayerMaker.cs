@@ -92,13 +92,13 @@ namespace LongoMatch.Video
 			switch (oS.Platform) { 
 				
 			 case PlatformID.Unix:
-				return new GstVideoCapturer();
+				return new GnlMkvEditor();
 				
 			case PlatformID.Win32NT:
-				return new GstVideoCapturer();	
+				return new GnlMkvEditor();	
 				
 			 default:
-				return new GstVideoCapturer();
+				return new GnlMkvEditor();
 			}
 		}
 		

@@ -69,6 +69,7 @@ struct GstVideoSplitterPrivate
 	GstElement 	*identity;
 	GstElement 	*videorate;	
 	GstElement  *textoverlay;
+	GstElement  *videoscale;
 	GstElement 	*queue;
     GstElement 	*video_encoder;
 	GstElement 	*audio_encoder;
@@ -425,7 +426,6 @@ gvs_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 
   switch (msg_type) {
     case GST_MESSAGE_ERROR: {
-
       gvs_error_msg (gvs, message);
       if (gvs->priv->main_pipeline)
           gst_element_set_state (gvs->priv->main_pipeline, GST_STATE_READY);
@@ -440,6 +440,7 @@ gvs_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 		g_source_remove (gvs->priv->update_id);
 		gvs->priv->update_id = 0;
 	  }
+	  gst_element_set_state (gvs->priv->main_pipeline, GST_STATE_READY);
 	  g_signal_emit (gvs, gvs_signals[SIGNAL_PERCENT_COMPLETED],0,(gfloat)1);
       break;
     }
@@ -595,7 +596,9 @@ gst_video_splitter_new (GError ** err)
     gvs->priv->identity = gst_element_factory_make ("identity", "identity");
     g_object_set (G_OBJECT(gvs->priv->identity), "single-segment",TRUE,NULL);
     
-    gvs->priv->videorate = gst_element_factory_make ("videorate", "videorate");  
+    gvs->priv->videorate = gst_element_factory_make ("videorate", "videorate"); 
+    
+    gvs->priv->videoscale = gst_element_factory_make ("videoscale","videoscale"); 
     
     gvs->priv->textoverlay = gst_element_factory_make ("textoverlay","textoverlay");
       
@@ -613,6 +616,7 @@ gst_video_splitter_new (GError ** err)
 						gvs->priv->gnl_composition,
 						gvs->priv->identity,
 						gvs->priv->videorate,
+						gvs->priv->videoscale,
 						gvs->priv->textoverlay,
 						gvs->priv->queue,
 						gvs->priv->video_encoder,
@@ -622,6 +626,7 @@ gst_video_splitter_new (GError ** err)
 						);
 	gst_element_link_many(	gvs->priv->identity,
 							gvs->priv->videorate,
+							gvs->priv->videoscale,
 							gvs->priv->textoverlay,
 							gvs->priv->queue,
 							gvs->priv->video_encoder,
