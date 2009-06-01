@@ -2236,7 +2236,6 @@ bacon_video_widget_set_rate (BaconVideoWidget *bvw, gfloat rate)
 gboolean 
 bacon_video_widget_new_file_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop)
 {
-	GstState cur_state;
 	GstMessage * err_msg;
 	
   	g_return_val_if_fail (bvw != NULL, FALSE);

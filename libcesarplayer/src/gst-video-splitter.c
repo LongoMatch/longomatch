@@ -543,9 +543,9 @@ gst_video_splitter_start(GstVideoSplitter *gvs)
 {	
 	g_return_if_fail (GST_IS_VIDEO_SPLITTER(gvs));
 	
-	gst_element_set_state(gvs->priv->main_pipeline, GST_STATE_PLAYING);
-	gvs_set_tick_timeout(gvs,100);
+	gst_element_set_state(gvs->priv->main_pipeline, GST_STATE_PLAYING);	
 	g_signal_emit (gvs, gvs_signals[SIGNAL_PERCENT_COMPLETED],0,(gfloat)0);	
+	gvs_set_tick_timeout(gvs,100);
 }
 
 void 
