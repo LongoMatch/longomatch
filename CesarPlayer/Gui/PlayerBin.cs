@@ -168,7 +168,7 @@ namespace LongoMatch.Gui
 		}
 	
 		public void SetPlayListElement(string fileName,long start, long stop, bool hasNext){
-			hasNext = hasNext;
+			this.hasNext = hasNext;
 			if (hasNext)
 				nextbutton.Sensitive = true;
 			else
