@@ -94,7 +94,7 @@ namespace LongoMatch.Video.Editor
 			thread.Abort();
 			segmentCoded = -1;
 			if (Progress != null)
-				Progress (EditorState.CANCELED);
+				Progress ((float)EditorState.CANCELED);
 		}
 		
 		private void EncodeSegments(){
@@ -112,7 +112,7 @@ namespace LongoMatch.Video.Editor
 		
 		protected virtual void OnError (object o, ErrorArgs args){
 			if (Progress != null)
-				Application.Invoke(delegate {Progress (EditorState.ERROR);});
+				Application.Invoke(delegate {Progress ((float)EditorState.ERROR);});
 		}
 		
 		protected virtual void OnProgress (object o, PercentCompletedArgs args){			

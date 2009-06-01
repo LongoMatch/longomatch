@@ -127,21 +127,21 @@ namespace LongoMatch
 		
 		protected virtual void OnProgress(float progress){
 			
-			if (progress > EditorState.START && progress <= EditorState.FINISHED && progress > videoprogressbar.Fraction ){				
+			if (progress > (float)EditorState.START && progress <= (float)EditorState.FINISHED && progress > videoprogressbar.Fraction ){				
 				videoprogressbar.Fraction = progress;
 			}
 			
-			if (progress == EditorState.CANCELED ){
+			if (progress == (float)EditorState.CANCELED ){
 				videoprogressbar.Hide();
 			}
 			
-			else if (progress == EditorState.START ){
+			else if (progress == (float)EditorState.START ){
 				videoprogressbar.Show();
 				videoprogressbar.Fraction = 0;
 				videoprogressbar.Text = "Creating new video";
 			}
 			
-			else if (progress == EditorState.FINISHED) {				
+			else if (progress == (float)EditorState.FINISHED) {				
 				MessageDialog info = new MessageDialog((Gtk.Window)(player.Toplevel),
 				                                       DialogFlags.Modal,
 				                                       MessageType.Info,
@@ -152,7 +152,7 @@ namespace LongoMatch
 				videoprogressbar.Hide();				
 			}	
 			
-			else if (progress == EditorState.ERROR) {				
+			else if (progress == (float)EditorState.ERROR) {				
 				MessageDialog info = new MessageDialog((Gtk.Window)(player.Toplevel),
 				                                       DialogFlags.Modal,
 				                                       MessageType.Error,
