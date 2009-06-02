@@ -112,7 +112,7 @@ gst_video_splitter_init (GstVideoSplitter *object)
 	
 	priv->audio_bitrate = 128;
 	priv->video_bitrate = 5000000;
-	priv->height = 480;
+	priv->height = 540;
 	priv->width = 720;
 	
 	priv->duration = 0;
@@ -362,7 +362,8 @@ gvs_apply_new_caps (GstVideoSplitter *gvs)
        NULL);
        
      g_object_set (gvs->priv->gnl_composition,"caps",caps,NULL);
-     
+     gst_element_unlink (gvs->priv->videoscale,gvs->priv->textoverlay);
+     gst_element_link_filtered (gvs->priv->videoscale, gvs->priv->textoverlay, caps);     
      gst_caps_unref(caps);
 
 }
