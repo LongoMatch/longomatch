@@ -39,6 +39,7 @@ namespace LongoMatch.Video.Editor
 		private string tempDir;
 		private int segmentCoded;
 		private Thread thread;
+		private bool readyToMerge;
 		
 		public GnlMkvEditor()
 		{			
@@ -114,8 +115,7 @@ namespace LongoMatch.Video.Editor
 		private void EncodeSegments(){
 			int i = 1;
 			string tempFile;
-			foreach (VideoSegment segment in segmentsList){
-				while (segmentCoded != -1);				
+			foreach (VideoSegment segment in segmentsList){					
 				segmentCoded = i;
 				tempFile = System.IO.Path.Combine ( tempDir, "segment"+i+".mkv");
 				segmentsTempFiles.Enqueue(tempFile);
@@ -123,8 +123,11 @@ namespace LongoMatch.Video.Editor
 				splitter.SetSegment(segment.FilePath, segment.Start, segment.Duration, segment.Rate, segment.Title);
 				splitter.Start();
 				i++;
-			}
+				while (segmentCoded != -1);
+			}			
 			MergeSegments();
+			
+		
 		}
 		
 		private void MergeSegments (){
@@ -140,7 +143,9 @@ namespace LongoMatch.Video.Editor
 			process.StartInfo = pinfo;
 			process.Start();
 			process.WaitForExit();			
-			//this.DeleteTempFiles();
+			this.DeleteTempFiles();
+			Application.Invoke(delegate {Progress ((float)EditorState.FINISHED);});
+
 		}
 		
 		private string CreateMkvMergeCommandLine(){
@@ -150,13 +155,16 @@ namespace LongoMatch.Video.Editor
 			                            outputFile, Width, Height);
 			
 			foreach (String path in segmentsTempFiles){
-				if (i==1){
+				if (i==0){
 					args += String.Format ("-d 1 -A -S {0} ", path);
-					appendTo += String.Format("1:1:0:1,{0}:1:{1}:1",i+1,i);
+				}
+				if (i==1){
+					args += String.Format ("-d 1 -A -S +{0} ", path);
+					appendTo += String.Format("{0}:1:{1}:1",i,i-1);
 				}
 				else if (i>1){
 					args += String.Format ("-d 1 -A -S +{0} ", path);
-					appendTo += String.Format(",{0}:1:{1}:1",i+1,i);
+					appendTo += String.Format(",{0}:1:{1}:1",i,i-1);
 				}				
 				i++;
 			}
@@ -178,10 +186,11 @@ namespace LongoMatch.Video.Editor
 		}
 		
 		protected virtual void OnProgress (object o, PercentCompletedArgs args){			
-			float percent = args.Percent;			
-			if (Progress != null)
-				Application.Invoke(delegate {Progress (percent/segmentsList.Count + (float)(segmentCoded-1)/segmentsList.Count);});
-			if (percent == 1){				
+			float percent = args.Percent;	
+			float totalPercent = percent/segmentsList.Count + (float)(segmentCoded-1)/segmentsList.Count;
+			if (Progress != null && totalPercent != 1) //We have to wait to merge the segment before senden the FINISHED event
+				Application.Invoke(delegate {Progress (totalPercent);});
+			if (percent == 1){
 				segmentCoded = -1;
 			}
 		}
