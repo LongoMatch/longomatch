@@ -75,7 +75,7 @@ public class PlayListTreeView : Gtk.TreeView
 		}		
 		
 		public PlayListTimeNode LoadedPlay{
-			set { loadedTimeNode = value;}
+			set { loadedTimeNode = value; this.QueueDraw();}
 		}
 		
 		~PlayListTreeView()
@@ -119,12 +119,13 @@ public class PlayListTreeView : Gtk.TreeView
 													Catalog.GetString("Start: ")+tNode.Start.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
 													Catalog.GetString("Duration: ")+tNode.Duration.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
 													Catalog.GetString("Play Rate: ")+tNode.Rate.ToString();
-			if (!tNode.Valid){
-				(cell as Gtk.CellRendererText).Foreground = "red";				
-			}
-			else {
+			if (!tNode.Valid)
+				(cell as Gtk.CellRendererText).Foreground = "red";			
+			else if (tNode == loadedTimeNode)
+				(cell as Gtk.CellRendererText).Foreground = "blue";
+			else 
 				(cell as Gtk.CellRendererText).Foreground = "black";
-			}
+			
 		}
 	}
 }

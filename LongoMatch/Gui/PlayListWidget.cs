@@ -98,6 +98,7 @@ namespace LongoMatch.Gui.Component
 			if (playList.HasNext()){								
 				plNode = playList.Next();
 				playlisttreeview1.Selection.SelectPath(new TreePath(playList.GetCurrentIndex().ToString()));
+				playlisttreeview1.LoadedPlay = plNode;
 				if (PlayListNodeSelected != null)
 					PlayListNodeSelected(plNode,playList.HasNext());
 				else 
@@ -113,6 +114,7 @@ namespace LongoMatch.Gui.Component
 				if (playList.HasPrev()){								
 					plNode = playList.Prev();
 					playlisttreeview1.Selection.SelectPath(new TreePath(playList.GetCurrentIndex().ToString()));
+					playlisttreeview1.LoadedPlay = plNode;
 					if (PlayListNodeSelected != null)
 						PlayListNodeSelected(plNode,playList.HasNext());
 					StartClock();					
@@ -256,7 +258,7 @@ namespace LongoMatch.Gui.Component
 				}
 				videoEditor.VideoQuality = vq;
 				videoEditor.OutputFile = vep.Filename;
-				videoEditor.Height = 480;
+				videoEditor.Height = 540;
 				videoEditor.Width = 720;
 				videoEditor.Start();
 				closebutton.Show();
