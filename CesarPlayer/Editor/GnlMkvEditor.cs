@@ -160,7 +160,7 @@ namespace LongoMatch.Video.Editor
 				}
 				if (i==1){
 					args += String.Format ("-d 1 -A -S +{0} ", path);
-					appendTo += String.Format("{0}:1:{1}:1",i,i-1);
+					appendTo += String.Format(" --append-to {0}:1:{1}:1",i,i-1);
 				}
 				else if (i>1){
 					args += String.Format ("-d 1 -A -S +{0} ", path);
@@ -169,7 +169,7 @@ namespace LongoMatch.Video.Editor
 				i++;
 			}
 			
-			args += String.Format("--track-order 0:1 --append-to {0}", appendTo);
+			args += String.Format("--track-order 0:1 {0}", appendTo);
 			
 			Console.WriteLine(args);
 			return args;
