@@ -33,6 +33,8 @@ namespace LongoMatch.Video.Editor
 		private GstVideoSplitter splitter;
 		private Queue<VideoSegment> segmentsList;
 		private Queue<string> segmentsTempFiles;
+		private int height;
+		private int width;
 		private string outputFile;
 		private string tempDir;
 		private int segmentCoded;
@@ -58,13 +60,19 @@ namespace LongoMatch.Video.Editor
 		}
 		
 		public int Height{
-			set{ splitter.Height = value;}
-			get{ return splitter.Height;}
+			set{ 
+				splitter.Height = value;
+				height = value;
+			}
+			get{ return height;}
 		}
 		
 		public int Width{
-			set{ splitter.Width = value;}
-			get{ return splitter.Width;}
+			set{ 
+				splitter.Width = value;
+				width = value;
+			}
+			get{ return width;}
 		}
 		
 		public string OutputFile{
