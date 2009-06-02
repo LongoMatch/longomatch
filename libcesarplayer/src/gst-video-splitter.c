@@ -602,6 +602,12 @@ gst_video_splitter_new (GError ** err)
     gvs->priv->videoscale = gst_element_factory_make ("videoscale","videoscale"); 
     
     gvs->priv->textoverlay = gst_element_factory_make ("textoverlay","textoverlay");
+   	g_object_set (G_OBJECT(gvs->priv->textoverlay), "font-desc","sans bold 20",NULL);
+   	g_object_set (G_OBJECT(gvs->priv->textoverlay), "shaded-background",TRUE,NULL);
+	g_object_set (G_OBJECT(gvs->priv->textoverlay), "valignment",2,NULL);
+	g_object_set (G_OBJECT(gvs->priv->textoverlay), "halignment",2,NULL);
+
+
       
     gvs->priv->queue =  gst_element_factory_make ("queue", "queue"); 
     
