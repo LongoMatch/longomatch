@@ -363,9 +363,8 @@ gvs_apply_new_caps (GstVideoSplitter *gvs)
       "width", G_TYPE_INT, gvs->priv->width,
       "height", G_TYPE_INT, gvs->priv->height,
        NULL);
-		g_print ("%iX%i", gvs->priv->width,gvs->priv->height);
-     g_object_set (gvs->priv->gnl_composition,"caps",caps,NULL);
-     
+       
+     g_object_set (gvs->priv->gnl_composition,"caps",caps,NULL);     
      videoscale_src_pad = gst_element_get_pad (gvs->priv->videoscale, "src");
      filter_sink_pad = gst_pad_get_peer (videoscale_src_pad);
      filter = gst_pad_get_parent_element (filter_sink_pad);
