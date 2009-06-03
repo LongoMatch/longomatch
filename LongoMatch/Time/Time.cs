@@ -44,7 +44,7 @@ namespace LongoMatch.TimeNodes
 		
 		public int MSeconds {
 			get { return time;}
-			set {this.time = value;}
+			set { time = value;}
 		}
 		
 		public int Seconds {
@@ -89,17 +89,23 @@ namespace LongoMatch.TimeNodes
 		public override bool Equals (object o)
 		{
 			if (o is Time){
-				return ((Time)o).MSeconds == this.MSeconds;
+				return ((Time)o).MSeconds == MSeconds;
 			}
 			else return false;
 		}
+		
+		public override int GetHashCode ()
+		{
+			return base.GetHashCode ();
+		}
+
 		
 		
 		public int CompareTo(object obj) {
 			if(obj is Time) 
 			{
 				Time  otherTime = (Time) obj;
-				return this.MSeconds.CompareTo(otherTime.MSeconds);
+				return MSeconds.CompareTo(otherTime.MSeconds);
 			}
 			
 			else
@@ -125,22 +131,19 @@ namespace LongoMatch.TimeNodes
 			return t1.MSeconds >= t2.MSeconds;
 		}
 		public static Time operator +(Time t1,int t2){
-			return new Time(t1.MSeconds+t2);
-			
+			return new Time(t1.MSeconds+t2);			
 		}
 		
 		public static Time operator +(Time t1,Time t2){
-			return new Time(t1.MSeconds+t2.MSeconds);
-			
+			return new Time(t1.MSeconds+t2.MSeconds);			
 		}
 		
 		public  static Time operator -(Time t1,Time t2){
-			return new Time(t1.MSeconds-t2.MSeconds);
-			
+			return new Time(t1.MSeconds-t2.MSeconds);			
 		}
+		
 		public  static Time operator -(Time t1,int t2){
-			return new Time(t1.MSeconds-t2);
-			
+			return new Time(t1.MSeconds-t2);			
 		}
 		
 		#endregion 
