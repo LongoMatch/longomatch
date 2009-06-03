@@ -171,7 +171,7 @@ namespace LongoMatch
 			ProcessNewMarkEvent(section,pos);
 		}
 		
-		protected virtual void OnNewMark(int i){
+		public virtual void OnNewMark(int i){
 			Time pos = new Time((int)player.CurrentTime);
 			ProcessNewMarkEvent(i,pos);					
 		}

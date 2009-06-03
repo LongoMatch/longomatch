@@ -37,8 +37,7 @@ namespace LongoMatch.Handlers
 		public HotKeysManager()
 		{
 			dic = new Dictionary<HotKey,int>();		
-		}
-		
+		}		
 		
 		public void SetSections(Sections sections){
 			dic.Clear();
@@ -57,8 +56,7 @@ namespace LongoMatch.Handlers
 				HotKey hotkey = new HotKey();
 				hotkey.Key=args.Event.Key;
 				hotkey.Modifier=args.Event.State & (ModifierType.ControlMask | ModifierType.ShiftMask | ModifierType.SuperMask);
-				if (dic.TryGetValue(hotkey,out section)){
-					
+				if (dic.TryGetValue(hotkey,out section)){					
 					if (newMarkEvent != null){
 						newMarkEvent(section);
 					}

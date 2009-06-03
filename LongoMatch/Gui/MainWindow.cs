@@ -59,16 +59,18 @@ namespace LongoMatch.Gui
 			updater.NewVersion += new LongoMatch.Handlers.NewVersionHandler(OnUpdate);
 			updater.Run();
 			
-			eManager = new EventsManager(treewidget1,buttonswidget1,playlistwidget2,
-			                                  playerbin1,timelinewidget1,videoprogressbar,
-			                                  noteswidget1);
+			eManager = new EventsManager(treewidget1,buttonswidget1,
+			                             playlistwidget2,playerbin1,
+			                             timelinewidget1,videoprogressbar,
+			                             noteswidget1);
 			
 			hkManager = new HotKeysManager();
-
-			hotkeysListener = new KeyPressEventHandler (hkManager.KeyListener);
+			// Listenning only when a project is loaded
+			hotkeysListener = new KeyPressEventHandler (hkManager.KeyListener);			
+			// Forward the event to the events manager
+			hkManager.newMarkEvent += new NewMarkEventHandler(eManager.OnNewMark);
 			
 			playerbin1.SetLogo(System.IO.Path.Combine(MainClass.ImagesDir(),"background.png"));
-
 			playerbin1.LogoMode = true;
 			
 			playlistwidget2.SetPlayer(playerbin1);
