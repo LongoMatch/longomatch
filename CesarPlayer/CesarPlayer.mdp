@@ -55,7 +55,6 @@
     <File name="Capturer/GstCameraCapturer.cs" subtype="Code" buildaction="Compile" />
     <File name="Editor" subtype="Directory" buildaction="Compile" />
     <File name="Editor/ErrorHandler.cs" subtype="Code" buildaction="Compile" />
-    <File name="Editor/GstVideoCapturer.cs" subtype="Code" buildaction="Compile" />
     <File name="Editor/IVideoEditor.cs" subtype="Code" buildaction="Compile" />
     <File name="Editor/AudioQuality.cs" subtype="Code" buildaction="Compile" />
     <File name="Editor/VideoQuality.cs" subtype="Code" buildaction="Compile" />
@@ -64,6 +63,7 @@
     <File name="Editor/GnlMkvEditor.cs" subtype="Code" buildaction="Compile" />
     <File name="Editor/VideoSegment.cs" subtype="Code" buildaction="Compile" />
     <File name="Editor/EditorState.cs" subtype="Code" buildaction="Compile" />
+    <File name="Editor/VideoFormat.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
