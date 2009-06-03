@@ -31,6 +31,18 @@ namespace LongoMatch.Gui.Dialog {
         
         private Gtk.ComboBox combobox1;
         
+        private Gtk.HBox hbox4;
+        
+        private Gtk.Label label2;
+        
+        private Gtk.ComboBox combobox2;
+        
+        private Gtk.HBox hbox5;
+        
+        private Gtk.CheckButton descriptioncheckbutton;
+        
+        private Gtk.CheckButton audiocheckbutton;
+        
         private Gtk.Button buttonCancel;
         
         private Gtk.Button buttonOk;
@@ -104,16 +116,16 @@ namespace LongoMatch.Gui.Dialog {
             // Container child vbox2.Gtk.Box+BoxChild
             this.hbox2 = new Gtk.HBox();
             this.hbox2.Name = "hbox2";
+            this.hbox2.Homogeneous = true;
             this.hbox2.Spacing = 6;
             // Container child hbox2.Gtk.Box+BoxChild
             this.label1 = new Gtk.Label();
             this.label1.Name = "label1";
+            this.label1.Xalign = 0F;
             this.label1.LabelProp = Mono.Unix.Catalog.GetString("Video Quality:");
             this.hbox2.Add(this.label1);
             Gtk.Box.BoxChild w7 = ((Gtk.Box.BoxChild)(this.hbox2[this.label1]));
             w7.Position = 0;
-            w7.Expand = false;
-            w7.Fill = false;
             // Container child hbox2.Gtk.Box+BoxChild
             this.combobox1 = Gtk.ComboBox.NewText();
             this.combobox1.AppendText(Mono.Unix.Catalog.GetString("Low"));
@@ -130,17 +142,76 @@ namespace LongoMatch.Gui.Dialog {
             w9.Position = 1;
             w9.Expand = false;
             w9.Fill = false;
-            w1.Add(this.vbox2);
-            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(w1[this.vbox2]));
+            // Container child vbox2.Gtk.Box+BoxChild
+            this.hbox4 = new Gtk.HBox();
+            this.hbox4.Name = "hbox4";
+            this.hbox4.Homogeneous = true;
+            this.hbox4.Spacing = 6;
+            // Container child hbox4.Gtk.Box+BoxChild
+            this.label2 = new Gtk.Label();
+            this.label2.Name = "label2";
+            this.label2.Xalign = 0F;
+            this.label2.LabelProp = Mono.Unix.Catalog.GetString("Format: ");
+            this.hbox4.Add(this.label2);
+            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.hbox4[this.label2]));
             w10.Position = 0;
-            w10.Expand = false;
-            w10.Fill = false;
+            // Container child hbox4.Gtk.Box+BoxChild
+            this.combobox2 = Gtk.ComboBox.NewText();
+            this.combobox2.AppendText(Mono.Unix.Catalog.GetString("TV (4:3 - 720x540)"));
+            this.combobox2.AppendText(Mono.Unix.Catalog.GetString("HD 720p (16:9 - 1280x720)"));
+            this.combobox2.AppendText(Mono.Unix.Catalog.GetString("HD 1080p (16:9 - 1920x1080)"));
+            this.combobox2.Name = "combobox2";
+            this.combobox2.Active = 0;
+            this.hbox4.Add(this.combobox2);
+            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.hbox4[this.combobox2]));
+            w11.Position = 1;
+            this.vbox2.Add(this.hbox4);
+            Gtk.Box.BoxChild w12 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox4]));
+            w12.Position = 2;
+            w12.Expand = false;
+            w12.Fill = false;
+            // Container child vbox2.Gtk.Box+BoxChild
+            this.hbox5 = new Gtk.HBox();
+            this.hbox5.Name = "hbox5";
+            this.hbox5.Spacing = 6;
+            // Container child hbox5.Gtk.Box+BoxChild
+            this.descriptioncheckbutton = new Gtk.CheckButton();
+            this.descriptioncheckbutton.CanFocus = true;
+            this.descriptioncheckbutton.Name = "descriptioncheckbutton";
+            this.descriptioncheckbutton.Label = Mono.Unix.Catalog.GetString("Enable Title Overlay");
+            this.descriptioncheckbutton.Active = true;
+            this.descriptioncheckbutton.DrawIndicator = true;
+            this.descriptioncheckbutton.UseUnderline = true;
+            this.hbox5.Add(this.descriptioncheckbutton);
+            Gtk.Box.BoxChild w13 = ((Gtk.Box.BoxChild)(this.hbox5[this.descriptioncheckbutton]));
+            w13.Position = 0;
+            // Container child hbox5.Gtk.Box+BoxChild
+            this.audiocheckbutton = new Gtk.CheckButton();
+            this.audiocheckbutton.CanFocus = true;
+            this.audiocheckbutton.Name = "audiocheckbutton";
+            this.audiocheckbutton.Label = Mono.Unix.Catalog.GetString("Enable Sound");
+            this.audiocheckbutton.Active = true;
+            this.audiocheckbutton.DrawIndicator = true;
+            this.audiocheckbutton.UseUnderline = true;
+            this.hbox5.Add(this.audiocheckbutton);
+            Gtk.Box.BoxChild w14 = ((Gtk.Box.BoxChild)(this.hbox5[this.audiocheckbutton]));
+            w14.Position = 1;
+            this.vbox2.Add(this.hbox5);
+            Gtk.Box.BoxChild w15 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox5]));
+            w15.Position = 3;
+            w15.Expand = false;
+            w15.Fill = false;
+            w1.Add(this.vbox2);
+            Gtk.Box.BoxChild w16 = ((Gtk.Box.BoxChild)(w1[this.vbox2]));
+            w16.Position = 0;
+            w16.Expand = false;
+            w16.Fill = false;
             // Internal child LongoMatch.Gui.Dialog.VideoEditionProperties.ActionArea
-            Gtk.HButtonBox w11 = this.ActionArea;
-            w11.Name = "dialog1_ActionArea";
-            w11.Spacing = 6;
-            w11.BorderWidth = ((uint)(5));
-            w11.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
+            Gtk.HButtonBox w17 = this.ActionArea;
+            w17.Name = "dialog1_ActionArea";
+            w17.Spacing = 6;
+            w17.BorderWidth = ((uint)(5));
+            w17.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
             // Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
             this.buttonCancel = new Gtk.Button();
             this.buttonCancel.CanDefault = true;
@@ -150,9 +221,9 @@ namespace LongoMatch.Gui.Dialog {
             this.buttonCancel.UseUnderline = true;
             this.buttonCancel.Label = "gtk-cancel";
             this.AddActionWidget(this.buttonCancel, -6);
-            Gtk.ButtonBox.ButtonBoxChild w12 = ((Gtk.ButtonBox.ButtonBoxChild)(w11[this.buttonCancel]));
-            w12.Expand = false;
-            w12.Fill = false;
+            Gtk.ButtonBox.ButtonBoxChild w18 = ((Gtk.ButtonBox.ButtonBoxChild)(w17[this.buttonCancel]));
+            w18.Expand = false;
+            w18.Fill = false;
             // Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
             this.buttonOk = new Gtk.Button();
             this.buttonOk.CanDefault = true;
@@ -162,15 +233,15 @@ namespace LongoMatch.Gui.Dialog {
             this.buttonOk.UseUnderline = true;
             this.buttonOk.Label = "gtk-ok";
             this.AddActionWidget(this.buttonOk, -5);
-            Gtk.ButtonBox.ButtonBoxChild w13 = ((Gtk.ButtonBox.ButtonBoxChild)(w11[this.buttonOk]));
-            w13.Position = 1;
-            w13.Expand = false;
-            w13.Fill = false;
+            Gtk.ButtonBox.ButtonBoxChild w19 = ((Gtk.ButtonBox.ButtonBoxChild)(w17[this.buttonOk]));
+            w19.Position = 1;
+            w19.Expand = false;
+            w19.Fill = false;
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 392;
-            this.DefaultHeight = 145;
+            this.DefaultWidth = 484;
+            this.DefaultHeight = 181;
             this.Show();
             this.openbutton.Clicked += new System.EventHandler(this.OnOpenbuttonClicked);
             this.buttonOk.Clicked += new System.EventHandler(this.OnButtonOkClicked);
