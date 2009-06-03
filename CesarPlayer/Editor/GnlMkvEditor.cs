@@ -110,7 +110,8 @@ namespace LongoMatch.Video.Editor
 		
 		public void Cancel(){
 			splitter.Cancel();
-			thread.Abort();
+			if (thread != null)
+				thread.Abort();
 			segmentCoded = -1;
 			if (Progress != null)
 				Progress ((float)EditorState.CANCELED);
