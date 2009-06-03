@@ -352,6 +352,9 @@ gvs_set_tick_timeout (GstVideoSplitter *gvs , guint msecs)
 static void 
 gvs_apply_new_caps (GstVideoSplitter *gvs)
 {
+	GstElement *filter;
+	GstPad *videoscale_src_pad;
+	GstPad *filter_sink_pad;
 	GstCaps *caps;
 	
 	g_return_if_fail (GST_IS_VIDEO_SPLITTER(gvs));
@@ -360,9 +363,15 @@ gvs_apply_new_caps (GstVideoSplitter *gvs)
       "width", G_TYPE_INT, gvs->priv->width,
       "height", G_TYPE_INT, gvs->priv->height,
        NULL);
-       
+		g_print ("%iX%i", gvs->priv->width,gvs->priv->height);
      g_object_set (gvs->priv->gnl_composition,"caps",caps,NULL);
-     gst_element_unlink (gvs->priv->videoscale,gvs->priv->textoverlay);
+     
+     videoscale_src_pad = gst_element_get_pad (gvs->priv->videoscale, "src");
+     filter_sink_pad = gst_pad_get_peer (videoscale_src_pad);
+     filter = gst_pad_get_parent_element (filter_sink_pad);
+     gst_element_unlink (gvs->priv->videoscale,filter);
+     gst_element_unlink (filter, gvs->priv->textoverlay);
+     gst_bin_remove(GST_BIN(gvs->priv->main_pipeline), filter);
      gst_element_link_filtered (gvs->priv->videoscale, gvs->priv->textoverlay, caps);     
      gst_caps_unref(caps);
 
@@ -573,6 +582,7 @@ GstVideoSplitter *
 gst_video_splitter_new (GError ** err)
 {
 	GstVideoSplitter *gvs = NULL;
+	GstCaps *filter = NULL;
 
 	gvs = g_object_new(GST_TYPE_VIDEO_SPLITTER, NULL);
 
@@ -601,6 +611,11 @@ gst_video_splitter_new (GError ** err)
     
     gvs->priv->videoscale = gst_element_factory_make ("videoscale","videoscale"); 
     
+   	filter = gst_caps_new_simple ("video/x-raw-yuv",
+     	"width", G_TYPE_INT, gvs->priv->width,
+      	"height", G_TYPE_INT, gvs->priv->height,
+       	NULL);
+    
     gvs->priv->textoverlay = gst_element_factory_make ("textoverlay","textoverlay");
    	g_object_set (G_OBJECT(gvs->priv->textoverlay), "font-desc","sans bold 20",NULL);
    	g_object_set (G_OBJECT(gvs->priv->textoverlay), "shaded-background",TRUE,NULL);
@@ -620,27 +635,30 @@ gst_video_splitter_new (GError ** err)
 	g_object_set (G_OBJECT(gvs->priv->file_sink), "location",gvs->priv->output_file ,NULL); 
 
 	gst_bin_add_many (	GST_BIN (gvs->priv->main_pipeline),
-						gvs->priv->gnl_composition,
-						gvs->priv->identity,
-						gvs->priv->videorate,
-						gvs->priv->videoscale,
-						gvs->priv->textoverlay,
-						gvs->priv->queue,
-						gvs->priv->video_encoder,
-						gvs->priv->muxer,						
-						gvs->priv->file_sink,
-						NULL
-						);
+		gvs->priv->gnl_composition,
+		gvs->priv->identity,
+		gvs->priv->videorate,
+		gvs->priv->videoscale,
+		gvs->priv->textoverlay,
+		gvs->priv->queue,
+		gvs->priv->video_encoder,
+		gvs->priv->muxer,						
+		gvs->priv->file_sink,
+		NULL);
+		
 	gst_element_link_many(	gvs->priv->identity,
-							gvs->priv->videorate,
-							gvs->priv->videoscale,
-							gvs->priv->textoverlay,
-							gvs->priv->queue,
-							gvs->priv->video_encoder,
-							gvs->priv->muxer,						
-							gvs->priv->file_sink,
-							NULL
-							);
+		gvs->priv->videorate,
+		gvs->priv->videoscale,NULL);
+							
+	gst_element_link_filtered (gvs->priv->videoscale,gvs->priv->textoverlay, filter);				
+	 
+	gst_element_link_many(gvs->priv->textoverlay,
+		gvs->priv->queue,
+		gvs->priv->video_encoder,
+		gvs->priv->muxer,						
+		gvs->priv->file_sink,
+		NULL);
+		
    
 	/*Connect bus signals*/
     /*We have to wait for a "new-decoded-pad" message to link the composition with
