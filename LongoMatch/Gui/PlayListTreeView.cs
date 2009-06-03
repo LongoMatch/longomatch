@@ -107,7 +107,6 @@ public class PlayListTreeView : Gtk.TreeView
 		}
 		
 		protected void OnApplyRate(object obj, EventArgs args){
-			ListStore list = ((ListStore)Model);
 			if (ApplyCurrentRate != null)
 				ApplyCurrentRate(selectedTimeNode);
 		}

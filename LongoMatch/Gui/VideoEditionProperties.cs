@@ -30,47 +30,61 @@ namespace LongoMatch.Gui.Dialog
 	[System.ComponentModel.ToolboxItem(false)]
 	public partial class VideoEditionProperties : Gtk.Dialog
 	{
-		VideoQuality vq;
+		private VideoQuality vq;
+		private VideoFormat vf;
 
 		
 		public VideoEditionProperties()
 		{
-
-			this.Build();
-			
-			
+			this.Build();			
 		}
 		
 		public VideoQuality VideoQuality{
-			get{
-				return this.vq;
-			}
+			get{return this.vq;}
 		}
 		
 		public string Filename{
-			get{
-				return this.fileentry.Text;
-			}
+			get{return this.fileentry.Text;}
 		}
-
 		
+		public bool EnableAudio{
+			get{return audiocheckbutton.Active;}
+		}
+		
+		public bool TitleOverlay{
+			get{return descriptioncheckbutton.Active;}		
+		}
+		
+		public VideoFormat VideoFormat{
+			get{return vf;}
+		}		
 
 		protected virtual void OnButtonOkClicked (object sender, System.EventArgs e)
 		{
-			if (this.combobox1.ActiveText == Catalog.GetString("Low")){
-				this.vq = VideoQuality.Low;
+			if (combobox1.ActiveText == Catalog.GetString("Low")){
+				vq = VideoQuality.Low;
 			}
-			if (this.combobox1.ActiveText == Catalog.GetString("Normal")){
-				this.vq = VideoQuality.Normal;
+			else if (combobox1.ActiveText == Catalog.GetString("Normal")){
+				vq = VideoQuality.Normal;
 			}
-			if (this.combobox1.ActiveText == Catalog.GetString("Good")){
-				this.vq = VideoQuality.Good;
+			else if (combobox1.ActiveText == Catalog.GetString("Good")){
+				vq = VideoQuality.Good;
 			}
-			if (this.combobox1.ActiveText == Catalog.GetString("Extra")){
-				this.vq = VideoQuality.Extra;
+			else if (combobox1.ActiveText == Catalog.GetString("Extra")){
+				vq = VideoQuality.Extra;
 			}
+			
+			if (combobox2.ActiveText == "TV (4:3 - 720x540)"){
+				vf = VideoFormat.TV;
+			}			
+			else if (combobox2.ActiveText == "HD 720p (16:9 - 1280x720)"){
+				vf = VideoFormat.HD720p;
+			}
+			else if (combobox2.ActiveText == "HD 1080p (16:9 - 1920x1080)"){
+				vf = VideoFormat.HD1080p;
+			}			
 						
-			this.Hide();
+			Hide();
 		}
 
 
@@ -89,7 +103,7 @@ namespace LongoMatch.Gui.Dialog
 			filter.AddPattern("*.avi");
 			fChooser.Filter = filter;
 			if (fChooser.Run() == (int)ResponseType.Accept){						
-				this.fileentry.Text = fChooser.Filename;
+				fileentry.Text = fChooser.Filename;
 			}
 		
 			fChooser.Destroy();

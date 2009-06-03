@@ -229,7 +229,6 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnNewvideobuttonClicked (object sender, System.EventArgs e)
 		{		
 			VideoEditionProperties vep;
-			VideoQuality vq;
 			int response;
 			
 			vep = new VideoEditionProperties();
@@ -247,7 +246,6 @@ namespace LongoMatch.Gui.Component
 			}
 			vep.Destroy();
 			if (response ==(int)ResponseType.Ok){
-				vq = vep.VideoQuality;
 				videoEditor.ClearList();
 				foreach (PlayListTimeNode segment in playList){
 					videoEditor.AddSegment(segment.FileName, 
@@ -256,10 +254,10 @@ namespace LongoMatch.Gui.Component
 					                       segment.Rate, 
 					                       segment.Name);
 				}
-				videoEditor.VideoQuality = vq;
+				videoEditor.VideoQuality = vep.VideoQuality;
+				videoEditor.VideoFormat = vep.VideoFormat;
 				videoEditor.OutputFile = vep.Filename;
-				videoEditor.Height = 540;
-				videoEditor.Width = 720;
+				videoEditor.EnableAudio = vep.EnableAudio;
 				videoEditor.Start();
 				closebutton.Show();
 				newvideobutton.Hide();
