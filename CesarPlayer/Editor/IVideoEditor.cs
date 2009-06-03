@@ -37,14 +37,8 @@ namespace LongoMatch.Video.Editor
 			set;
 		}
 		
-		int Height{
+		VideoFormat VideoFormat{
 			set;
-			get;
-		}
-		
-		int Width{
-			set;
-			get;
 		}
 		
 		string OutputFile{

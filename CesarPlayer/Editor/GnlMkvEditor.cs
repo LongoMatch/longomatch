@@ -60,22 +60,26 @@ namespace LongoMatch.Video.Editor
 			set{ splitter.VideoBitrate = (int)value;}
 		}
 		
-		public int Height{
-			set{ 
-				splitter.Height = value;
-				height = value;
+		public VideoFormat VideoFormat{
+			set {
+				if (value == VideoFormat.TV){
+					height = 540;
+					width = 720;
+				}
+				else if (value == VideoFormat.HD720p){
+					height = 720;
+					width = 1280;
+				}
+				else if (value == VideoFormat.HD1080p){
+					height = 1080;
+					width = 1920;
+				}
+				splitter.Height = height;
+				splitter.Width = width;
 			}
-			get{ return height;}
 		}
 		
-		public int Width{
-			set{ 
-				splitter.Width = value;
-				width = value;
-			}
-			get{ return width;}
-		}
-		
+				
 		public string OutputFile{
 			set{ 
 				outputFile = value;
@@ -115,6 +119,8 @@ namespace LongoMatch.Video.Editor
 		private void EncodeSegments(){
 			int i = 1;
 			string tempFile;
+			
+			segmentsTempFiles.Clear();
 			foreach (VideoSegment segment in segmentsList){					
 				segmentCoded = i;
 				tempFile = System.IO.Path.Combine ( tempDir, "segment"+i+".mkv");
@@ -125,9 +131,7 @@ namespace LongoMatch.Video.Editor
 				i++;
 				while (segmentCoded != -1);
 			}			
-			MergeSegments();
-			
-		
+			MergeSegments();		
 		}
 		
 		private void MergeSegments (){
@@ -152,7 +156,7 @@ namespace LongoMatch.Video.Editor
 		 	int i=0;
 			string appendTo="";
 			string args = String.Format("-o {0}  --language 1:eng --track-name 1:Video --default-track 1:yes --display-dimensions 1:{1}x{2} ",
-			                            outputFile, Width, Height);
+			                            outputFile, width, height);
 			
 			foreach (String path in segmentsTempFiles){
 				if (i==0){
