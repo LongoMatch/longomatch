@@ -119,6 +119,7 @@ namespace LongoMatch.Video.Editor
 			segmentCoded = -1;
 			if (Progress != null)
 				Progress ((float)EditorState.CANCELED);
+			DeleteTempFiles();
 		}
 		
 		private void EncodeSegments(){
@@ -185,8 +186,10 @@ namespace LongoMatch.Video.Editor
 		}
 		
 		private void DeleteTempFiles(){
-			foreach (String path in segmentsTempFiles)
-				System.IO.File.Delete(path);
+			foreach (String path in segmentsTempFiles){
+				if (System.IO.File.Exists(path))
+				    System.IO.File.Delete(path);
+			}
 		}
 		
 		protected virtual void OnError (object o, ErrorArgs args){
