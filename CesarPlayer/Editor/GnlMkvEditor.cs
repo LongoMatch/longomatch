@@ -90,6 +90,10 @@ namespace LongoMatch.Video.Editor
 			set{tempDir = value;}
 		}
 		
+		public bool EnableTitle{
+			set{splitter.EnableTile = value;}
+		}
+		
 		public bool EnableAudio{
 			set{;}
 		}		

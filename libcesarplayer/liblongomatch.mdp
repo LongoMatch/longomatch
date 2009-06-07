@@ -39,6 +39,7 @@
     <Package file="/usr/lib/pkgconfig/gobject-2.0.pc" name="GObject" IsProject="False" />
     <Package file="/usr/lib/pkgconfig/gdk-2.0.pc" name="GDK" IsProject="False" />
     <Package file="/usr/lib/pkgconfig/gtk+-2.0.pc" name="GTK+" IsProject="False" />
+    <Package file="/usr/lib/pkgconfig/gstreamer-pbutils-0.10.pc" name="GStreamer Base Utils Library" IsProject="False" />
   </Packages>
   <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="Makefile.am" IsAutotoolsProject="True" RelativeConfigureInPath=".">
     <BuildFilesVar />

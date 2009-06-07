@@ -45,6 +45,10 @@ namespace LongoMatch.Video.Editor
 			set;
 		}
 		
+		bool EnableTitle{
+			set;
+		}
+		
 		bool EnableAudio{
 			set;
 		}

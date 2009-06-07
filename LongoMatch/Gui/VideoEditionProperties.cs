@@ -80,7 +80,7 @@ namespace LongoMatch.Gui.Dialog
 			else if (combobox2.ActiveText == "HD 720p (16:9 - 1280x720)"){
 				vf = VideoFormat.HD720p;
 			}
-			else if (combobox2.ActiveText == "HD 1080p (16:9 - 1920x1080)"){
+			else if (combobox2.ActiveText == "Full HD 1080p (16:9 - 1920x1080)"){
 				vf = VideoFormat.HD1080p;
 			}			
 						
@@ -96,11 +96,11 @@ namespace LongoMatch.Gui.Dialog
 			                                                   "gtk-cancel",ResponseType.Cancel,
 			                                                   "gtk-save",ResponseType.Accept);
 			fChooser.SetCurrentFolder(MainClass.VideosDir());
-			fChooser.CurrentName = "NewVideo.avi";
+			fChooser.CurrentName = "NewVideo.mkv";
 			fChooser.DoOverwriteConfirmation = true;
 			FileFilter filter = new FileFilter();
-			filter.Name = "Avi File";
-			filter.AddPattern("*.avi");
+			filter.Name = "Matroska File";
+			filter.AddPattern("*.mkv");
 			fChooser.Filter = filter;
 			if (fChooser.Run() == (int)ResponseType.Accept){						
 				fileentry.Text = fChooser.Filename;

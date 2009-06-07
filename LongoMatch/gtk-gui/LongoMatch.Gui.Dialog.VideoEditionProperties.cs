@@ -159,7 +159,7 @@ namespace LongoMatch.Gui.Dialog {
             this.combobox2 = Gtk.ComboBox.NewText();
             this.combobox2.AppendText(Mono.Unix.Catalog.GetString("TV (4:3 - 720x540)"));
             this.combobox2.AppendText(Mono.Unix.Catalog.GetString("HD 720p (16:9 - 1280x720)"));
-            this.combobox2.AppendText(Mono.Unix.Catalog.GetString("HD 1080p (16:9 - 1920x1080)"));
+            this.combobox2.AppendText(Mono.Unix.Catalog.GetString("Full HD 1080p (16:9 - 1920x1080)"));
             this.combobox2.Name = "combobox2";
             this.combobox2.Active = 0;
             this.hbox4.Add(this.combobox2);
@@ -240,7 +240,7 @@ namespace LongoMatch.Gui.Dialog {
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 484;
+            this.DefaultWidth = 514;
             this.DefaultHeight = 181;
             this.Show();
             this.openbutton.Clicked += new System.EventHandler(this.OnOpenbuttonClicked);

@@ -48,6 +48,36 @@ namespace LongoMatch.Video.Editor {
 
 		#region Properties
 		
+		[GLib.Property ("enable-audio")]
+		public bool EnableAudio {
+			get {
+				GLib.Value val = GetProperty ("enable-audio");
+				bool ret = (bool) val;
+				val.Dispose ();
+				return ret;
+			}
+			set {
+				GLib.Value val = new GLib.Value(value);
+				SetProperty("enable-audio", val);
+				val.Dispose ();
+			}
+		}
+		
+		[GLib.Property ("enable-title")]
+		public bool EnableTile {
+			get {
+				GLib.Value val = GetProperty ("enable-title");
+				bool ret = (bool) val;
+				val.Dispose ();
+				return ret;
+			}
+			set {
+				GLib.Value val = new GLib.Value(value);
+				SetProperty("enable-title", val);
+				val.Dispose ();
+			}
+		}
+		
 		[GLib.Property ("video_bitrate")]
 		public int VideoBitrate {
 			get {

@@ -44,18 +44,21 @@ enum
 enum
 {
   PROP_0, 
+  PROP_ENABLE_AUDIO,
+  PROP_ENABLE_TITLE,
   PROP_VIDEO_BITRATE,
   PROP_AUDIO_BITRATE,
   PROP_HEIGHT,
   PROP_WIDTH,
-  PROP_OUTPUT_FILE, 
-  PROP_ENABLE_AUDIO
+  PROP_OUTPUT_FILE
 };
 
 struct GstVideoSplitterPrivate
 {
 	gint64 		duration;
 	
+	gboolean 	audio_enabled;
+	gboolean	title_enabled;	
 	gchar		*output_file;
 	gint		audio_bitrate;
 	gint		video_bitrate;
@@ -113,7 +116,9 @@ gst_video_splitter_init (GstVideoSplitter *object)
 	priv->audio_bitrate = 128;
 	priv->video_bitrate = 5000000;
 	priv->height = 540;
-	priv->width = 720;
+	priv->width = 720;	
+	priv->title_enabled = TRUE;
+	priv->audio_enabled = TRUE;
 	
 	priv->duration = 0;
 	
@@ -165,11 +170,21 @@ gst_video_splitter_class_init (GstVideoSplitterClass *klass)
 
  	/* Properties */
   	
-  	
+  	g_object_class_install_property (object_class, PROP_ENABLE_AUDIO,
+                                   g_param_spec_boolean ("enable-audio", NULL,
+                                                         NULL, TRUE,
+                                                         G_PARAM_READWRITE));
+                                                         
+    g_object_class_install_property (object_class, PROP_ENABLE_TITLE,
+                                   g_param_spec_boolean ("enable-title", NULL,
+                                                         NULL, TRUE,
+                                                         G_PARAM_READWRITE));
+                                                         
   	g_object_class_install_property (object_class, PROP_VIDEO_BITRATE,
                                    g_param_spec_int ("video_bitrate", NULL,
                                                          NULL, 100, G_MAXINT,1000,
                                                          G_PARAM_READWRITE));
+                                                         
   	g_object_class_install_property (object_class, PROP_AUDIO_BITRATE,
                                    g_param_spec_int ("audio_bitrate", NULL,
                                                          NULL, 12, G_MAXINT,128,
@@ -215,6 +230,19 @@ gst_video_splitter_class_init (GstVideoSplitterClass *klass)
 /*                                             */
 /* =========================================== */
 
+static void 
+gst_video_splitter_set_enable_audio(GstVideoSplitter *gvs,gboolean audio_enabled)
+{
+	//TODO Not implemented
+}
+
+static void 
+gst_video_splitter_set_enable_title(GstVideoSplitter *gvs,gboolean title_enabled)
+{
+	gvs->priv->title_enabled = title_enabled;	
+	g_object_set (G_OBJECT(gvs->priv->textoverlay), "silent",!gvs->priv->title_enabled,NULL);
+	
+}
 static void 
 gst_video_splitter_set_video_bit_rate (GstVideoSplitter *gvs,gint bitrate)
 {
@@ -273,6 +301,14 @@ gst_video_splitter_set_property (GObject * object, guint property_id,
 
  	switch (property_id) {  
     
+    	case PROP_ENABLE_AUDIO:
+    		gst_video_splitter_set_enable_audio (gvs,
+    		g_value_get_boolean (value));
+    		break;
+    	case PROP_ENABLE_TITLE:
+    		gst_video_splitter_set_enable_title (gvs,
+    		g_value_get_boolean (value));
+    		break;
     	case PROP_VIDEO_BITRATE:
       		gst_video_splitter_set_video_bit_rate (gvs,
       		g_value_get_int (value));
@@ -308,6 +344,12 @@ gst_video_splitter_get_property (GObject * object, guint property_id,
   gvs = GST_VIDEO_SPLITTER (object);
 
   switch (property_id) {
+	case PROP_ENABLE_AUDIO:
+      g_value_set_boolean (value,gvs->priv->audio_enabled);
+      break;
+    case PROP_ENABLE_TITLE:
+      g_value_set_boolean (value,gvs->priv->title_enabled);
+      break;
     case PROP_AUDIO_BITRATE:
       g_value_set_int (value,gvs->priv->audio_bitrate);
       break;
