@@ -11,7 +11,7 @@
 namespace LongoMatch.Gui.Dialog {
     
     
-    public partial class TemplateNameSelectionDialog {
+    public partial class EntryDialog {
         
         private Gtk.Entry entry1;
         
@@ -21,14 +21,14 @@ namespace LongoMatch.Gui.Dialog {
         
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
-            // Widget LongoMatch.Gui.Dialog.TemplateNameSelectionDialog
-            this.Name = "LongoMatch.Gui.Dialog.TemplateNameSelectionDialog";
+            // Widget LongoMatch.Gui.Dialog.EntryDialog
+            this.Name = "LongoMatch.Gui.Dialog.EntryDialog";
             this.Title = Mono.Unix.Catalog.GetString("Select template name");
             this.Icon = Gdk.Pixbuf.LoadFromResource("longomatch_logo.png");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.Gravity = ((Gdk.Gravity)(5));
             this.HasSeparator = false;
-            // Internal child LongoMatch.Gui.Dialog.TemplateNameSelectionDialog.VBox
+            // Internal child LongoMatch.Gui.Dialog.EntryDialog.VBox
             Gtk.VBox w1 = this.VBox;
             w1.Name = "dialog1_VBox";
             w1.BorderWidth = ((uint)(2));
@@ -41,7 +41,7 @@ namespace LongoMatch.Gui.Dialog {
             w1.Add(this.entry1);
             Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(w1[this.entry1]));
             w2.Position = 0;
-            // Internal child LongoMatch.Gui.Dialog.TemplateNameSelectionDialog.ActionArea
+            // Internal child LongoMatch.Gui.Dialog.EntryDialog.ActionArea
             Gtk.HButtonBox w3 = this.ActionArea;
             w3.Name = "dialog1_ActionArea";
             w3.Spacing = 6;

@@ -26,16 +26,17 @@ namespace LongoMatch.Gui.Dialog
 	
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(false)]
-	public partial class TemplateNameSelectionDialog : Gtk.Dialog
+	public partial class EntryDialog : Gtk.Dialog
 	{
 		
-		public TemplateNameSelectionDialog()
+		public EntryDialog()
 		{
 			this.Build();
-		}
+		}	
 		
-		public string GetName(){
-			return this.entry1.Text;;			
+		public string Text{
+			get{return this.entry1.Text;}
+			set{this.entry1.Text = value;}				
 		}
 	}
 }

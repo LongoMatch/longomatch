@@ -50,10 +50,7 @@ namespace LongoMatch.Gui.Dialog
 			treeview.AppendColumn (templateFileColumn);
 			this.Fill();
 
-		}
-		
-		
-		
+		}	
 		
 		//Recorrer el directorio en busca de los archivos de configuración validos
 		private void Fill (){
@@ -77,15 +74,7 @@ namespace LongoMatch.Gui.Dialog
 			
 		}
 		
-		/*private FileFilter FileFilter{
-			get{
-				FileFilter filter = new FileFilter();
-				filter.Name = "LongoMatch Project Template";
-				filter.AddPattern("*.sct");
-				return filter;
-			}						
-		}*/
-					
+	
 
 		private void SetSensitive (bool sensitive){
 			this.sectionspropertieswidget1.Sensitive = true;
@@ -99,7 +88,6 @@ namespace LongoMatch.Gui.Dialog
 		{
 			this.selectedSections = this.sectionspropertieswidget1.GetSections();
 			SectionsWriter.UpdateTemplate (this.templateName,this.selectedSections);
-
 			
 		}
 
@@ -107,14 +95,31 @@ namespace LongoMatch.Gui.Dialog
 		{
 			
 			string name;
-			TemplateNameSelectionDialog tnsd = new  TemplateNameSelectionDialog();
-			if (tnsd.Run() == (int)ResponseType.Ok){
-				//TODO Add overwrite test
-				name = tnsd.GetName();
+			EntryDialog ed= new  EntryDialog();
+			ed.Title = Catalog.GetString("Template name");
+			//FIXME check if the template already exists or the name is null
+			if (ed.Run() == (int)ResponseType.Ok){
+				name = ed.Text;
+				if (name == ""){
+					MessageDialog mes = new MessageDialog(this,DialogFlags.Modal,MessageType.Warning,ButtonsType.Ok,
+			                                      Catalog.GetString("You cannot create a template with a void name"));
+					mes.Run();
+					mes.Destroy();
+					ed.Destroy();
+					return;
+				}
+				if (System.IO.File.Exists(System.IO.Path.Combine(MainClass.TemplatesDir(),name+".sct"))){
+					MessageDialog mes = new MessageDialog(this,DialogFlags.Modal,MessageType.Warning,ButtonsType.Ok,
+			                                      Catalog.GetString("A template with this name already exists"));
+					mes.Run();
+					mes.Destroy();
+					ed.Destroy();
+					return;					
+				}
 				SectionsWriter.CreateNewTemplate(name+".sct");
 				this.Fill();
 			}
-			tnsd .Destroy();
+			ed.Destroy();
 				
 		}
 			

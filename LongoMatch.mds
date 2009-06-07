@@ -1,12 +1,12 @@
 <Combine fileversion="2.0" description="LongoMatch : The Digital Coach" outputpath="build/bin/" releaseversion="0.9.0" name="LongoMatch">
   <Policies>
+    <DotNetNamingPolicy DirectoryNamespaceAssociation="PrefixedHierarchical" ResourceNamePolicy="FileFormatDefault" />
     <ChangeLogPolicy UpdateMode="None" inheritsSet="Mono">
       <MessageStyle LineAlign="0" />
     </ChangeLogPolicy>
-    <VersionControlPolicy inheritsSet="Mono" />
-    <TextStylePolicy FileWidth="120" TabWidth="4" TabsToSpaces="False" NoTabsAfterNonTabs="False" RemoveTrailingWhitespace="False" EolMarker="Native" />
     <StandardHeader inheritsSet="GPLv2License" />
-    <DotNetNamingPolicy DirectoryNamespaceAssociation="PrefixedHierarchical" ResourceNamePolicy="FileFormatDefault" />
+    <TextStylePolicy FileWidth="120" TabWidth="4" TabsToSpaces="False" NoTabsAfterNonTabs="False" RemoveTrailingWhitespace="False" EolMarker="Native" />
+    <VersionControlPolicy inheritsSet="Mono" />
   </Policies>
   <Configurations active="Release">
     <Configuration name="Debug" ctype="CombineConfiguration">

@@ -24,6 +24,7 @@ using Mono.Unix;
 using LongoMatch.TimeNodes;
 using LongoMatch.Playlist;
 using LongoMatch.Handlers;
+using LongoMatch.Gui.Dialog;
 
 namespace LongoMatch.Gui.Component
 {
@@ -52,12 +53,16 @@ public class PlayListTreeView : Gtk.TreeView
 			this.Model = ls;		
 			
 			menu = new Menu();
+			MenuItem title = new MenuItem(Catalog.GetString("Edit Title"));
+			title.Activated += new EventHandler(OnTitle);
+			title.Show();
 			MenuItem delete = new MenuItem(Catalog.GetString("Delete"));
 			delete.Activated += new EventHandler(OnDelete);
 			delete.Show();
 			setRate = new MenuItem(Catalog.GetString("Apply current play rate"));
 			setRate.Activated += new EventHandler(OnApplyRate);
 			setRate.Show();
+			menu.Append(title);
 			menu.Append(setRate);
 			menu.Append(delete);		
 			
@@ -100,6 +105,17 @@ public class PlayListTreeView : Gtk.TreeView
 			return base.OnButtonPressEvent(evnt);								
 		}
 		
+		protected void OnTitle (object o, EventArgs args){
+			EntryDialog ed = new EntryDialog();
+			ed.Title = Catalog.GetString("Edit Title");
+			ed.Text = selectedTimeNode.Name;
+			if (ed.Run() == (int)ResponseType.Ok){
+				selectedTimeNode.Name = ed.Text;
+				this.QueueDraw();
+			}
+			ed.Destroy();			
+		}
+		
 		protected void OnDelete(object obj, EventArgs args){
 			ListStore list = ((ListStore)Model);
 			playlist.Remove(selectedTimeNode);
@@ -114,7 +130,7 @@ public class PlayListTreeView : Gtk.TreeView
 		private void RenderName (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			PlayListTimeNode tNode = (PlayListTimeNode) model.GetValue (iter, 0); 
-			(cell as Gtk.CellRendererText).Text = 	Catalog.GetString("Name: ")+tNode.Name +"\n"+
+			(cell as Gtk.CellRendererText).Text = 	Catalog.GetString("Title: ")+tNode.Name +"\n"+
 													Catalog.GetString("Start: ")+tNode.Start.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
 													Catalog.GetString("Duration: ")+tNode.Duration.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
 													Catalog.GetString("Play Rate: ")+tNode.Rate.ToString();
