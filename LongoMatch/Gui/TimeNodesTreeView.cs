@@ -45,6 +45,10 @@ namespace LongoMatch.Gui.Component
 		private MenuItem local;
 	    private	MenuItem visitor;
 		private MenuItem noTeam;
+		private Gtk.CellRendererText nameCell;
+		private EventButton evnt;
+		private TreePath path;
+		private Gtk.TreeViewColumn nameColumn;
 		//Using TimeNode as in the tree there are Media and Sections timenodes
 		private TimeNode selectedTimeNode;
 		private Color[] colors;
@@ -58,10 +62,10 @@ namespace LongoMatch.Gui.Component
 			
 			colors = new Color[20];
 			
-			Gtk.TreeViewColumn nameColumn = new Gtk.TreeViewColumn ();
+			nameColumn = new Gtk.TreeViewColumn ();
 			nameColumn.Title = "Name";
-			Gtk.CellRendererText nameCell = new Gtk.CellRendererText ();
-			nameCell.Editable = true;
+			nameCell = new Gtk.CellRendererText ();
+			//nameCell.Editable = true;
 			nameCell.Edited += OnNameCellEdited;
 			Gtk.CellRendererPixbuf miniatureCell = new Gtk.CellRendererPixbuf ();
 			nameColumn.PackStart (miniatureCell, true);
@@ -118,27 +122,27 @@ namespace LongoMatch.Gui.Component
 			teamMenu .Append(noTeam);
 			
 			menu = new Menu();
+			
+			MenuItem name = new MenuItem(Catalog.GetString("Edit"));
 			MenuItem team = new MenuItem(Catalog.GetString("Team Selection"));
 			team.Submenu = teamMenu;
 			MenuItem quit = new MenuItem(Catalog.GetString("Delete"));
 			MenuItem addPLN = new MenuItem(Catalog.GetString("Add to playlist"));
 			MenuItem snapshot = new MenuItem(Catalog.GetString("Export to PGN images"));
+			menu.Append(name);
 			menu.Append(team);			
 			menu.Append(addPLN);
 			menu.Append(quit);
 			menu.Append(snapshot);
-			
+			 
+			name.Activated += new EventHandler(OnEdit);
 			local.Activated += new EventHandler(OnTeamSelection);
 			visitor.Activated += new EventHandler(OnTeamSelection);
 			noTeam.Activated += new EventHandler(OnTeamSelection);
 			addPLN.Activated += new EventHandler(OnAdded);
 			quit.Activated += new EventHandler(OnDeleted);
 			snapshot.Activated += new EventHandler(OnSnapshot);
-			menu.ShowAll();
-			
-			
-			
-			
+			menu.ShowAll();		
 		}
 		
 		
@@ -151,7 +155,7 @@ namespace LongoMatch.Gui.Component
 			//Then do our custom stuff:
 			if( (evnt.Type == EventType.ButtonPress) && (evnt.Button == 3) )
 			{
-				TreePath path;
+				
 				this.GetPathAtPos((int)evnt.X,(int)evnt.Y,out path);
 				if (path!=null){
 					this.Model.GetIter (out selectedIter,path); 
@@ -169,6 +173,11 @@ namespace LongoMatch.Gui.Component
 				TimeNodeDeleted((MediaTimeNode)selectedTimeNode);
 			//((TreeStore)this.Model).Remove(ref selectedIter);
 			
+		}
+		
+		protected virtual void OnEdit(object obj, EventArgs args){
+			nameCell.Editable = true;
+			this.SetCursor(path,  nameColumn, true);
 		}
 		
 		protected void OnTeamSelection(object obj, EventArgs args){
@@ -300,6 +309,7 @@ namespace LongoMatch.Gui.Component
 			this.Model.GetIter (out iter, new Gtk.TreePath (args.Path)); 
 			TimeNode tNode = (TimeNode)this.Model.GetValue (iter,0);
 			tNode.Name = args.NewText;
+			nameCell.Editable=false;
 			if (TimeNodeChanged != null)
 				TimeNodeChanged(tNode,args.NewText);
 		}
