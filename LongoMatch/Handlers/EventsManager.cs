@@ -290,9 +290,11 @@ namespace LongoMatch
 				fsc = new FramesSeriesCapturer(capturer,openedProject.File.FilePath,tNode.Start.MSeconds,tNode.Stop.MSeconds,interval,outDir);
 				fcpd = new FramesCaptureProgressDialog(fsc);
 				fcpd.TransientFor=(Gtk.Window) treewidget.Toplevel;
-				fcpd.Run();			
+				fcpd.Run();
 				fcpd.Destroy();
 			}
+			else 
+				sd.Destroy();
 		}
 		
 

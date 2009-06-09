@@ -54,7 +54,7 @@ namespace LongoMatch.Video.Utils
 			this.interval = interval;
 			this.outputDir = outputDir;
 			this.seriesName = System.IO.Path.GetFileName(outputDir);			
-			this.totalFrames = (int)((stop - start ) / interval)+1;
+			this.totalFrames = (int)Math.Floor((double)((stop - start ) / interval))+1;
 			this.locker = new System.Object();
 			
 		}
@@ -75,7 +75,7 @@ namespace LongoMatch.Video.Utils
 			pos = start;			
 		
 			//TODO add lock to protect start and stop
-			while (pos < stop){	
+			while (pos <= stop){	
 				lock (locker){
 					if (!cancel){
 						if (Progress != null)					
@@ -95,9 +95,7 @@ namespace LongoMatch.Video.Utils
 						return;
 					}
 				}
-				
 			}
-			
 			
 		}
 	}

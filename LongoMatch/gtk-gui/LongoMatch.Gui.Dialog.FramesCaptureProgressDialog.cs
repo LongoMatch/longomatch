@@ -17,7 +17,9 @@ namespace LongoMatch.Gui.Dialog {
         
         private Gtk.ProgressBar progressbar;
         
-        private Gtk.Button buttonCancel;
+        private Gtk.Button okbutton;
+        
+        private Gtk.Button cancelbutton;
         
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
@@ -59,24 +61,37 @@ namespace LongoMatch.Gui.Dialog {
             w4.BorderWidth = ((uint)(5));
             w4.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
             // Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
-            this.buttonCancel = new Gtk.Button();
-            this.buttonCancel.CanDefault = true;
-            this.buttonCancel.CanFocus = true;
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.UseStock = true;
-            this.buttonCancel.UseUnderline = true;
-            this.buttonCancel.Label = "gtk-cancel";
-            this.AddActionWidget(this.buttonCancel, -6);
-            Gtk.ButtonBox.ButtonBoxChild w5 = ((Gtk.ButtonBox.ButtonBoxChild)(w4[this.buttonCancel]));
+            this.okbutton = new Gtk.Button();
+            this.okbutton.CanFocus = true;
+            this.okbutton.Name = "okbutton";
+            this.okbutton.UseStock = true;
+            this.okbutton.UseUnderline = true;
+            this.okbutton.Label = "gtk-ok";
+            this.AddActionWidget(this.okbutton, -5);
+            Gtk.ButtonBox.ButtonBoxChild w5 = ((Gtk.ButtonBox.ButtonBoxChild)(w4[this.okbutton]));
             w5.Expand = false;
             w5.Fill = false;
+            // Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
+            this.cancelbutton = new Gtk.Button();
+            this.cancelbutton.CanDefault = true;
+            this.cancelbutton.CanFocus = true;
+            this.cancelbutton.Name = "cancelbutton";
+            this.cancelbutton.UseStock = true;
+            this.cancelbutton.UseUnderline = true;
+            this.cancelbutton.Label = "gtk-cancel";
+            this.AddActionWidget(this.cancelbutton, -6);
+            Gtk.ButtonBox.ButtonBoxChild w6 = ((Gtk.ButtonBox.ButtonBoxChild)(w4[this.cancelbutton]));
+            w6.Position = 1;
+            w6.Expand = false;
+            w6.Fill = false;
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
             this.DefaultWidth = 400;
             this.DefaultHeight = 108;
+            this.okbutton.Hide();
             this.Show();
-            this.buttonCancel.Clicked += new System.EventHandler(this.OnButtonCancelClicked);
+            this.cancelbutton.Clicked += new System.EventHandler(this.OnButtonCancelClicked);
         }
     }
 }

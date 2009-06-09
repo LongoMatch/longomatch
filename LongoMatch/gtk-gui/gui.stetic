@@ -3414,7 +3414,7 @@ Full HD 1080p (16:9 - 1920x1080)</property>
     <property name="Gravity">Center</property>
     <property name="SkipPagerHint">True</property>
     <property name="SkipTaskbarHint">True</property>
-    <property name="Buttons">1</property>
+    <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
     <property name="HasSeparator">False</property>
     <child internal-child="VBox">
@@ -3448,10 +3448,26 @@ Full HD 1080p (16:9 - 1920x1080)</property>
         <property name="MemberName" />
         <property name="Spacing">6</property>
         <property name="BorderWidth">5</property>
-        <property name="Size">1</property>
+        <property name="Size">2</property>
         <property name="LayoutStyle">End</property>
         <child>
-          <widget class="Gtk.Button" id="buttonCancel">
+          <widget class="Gtk.Button" id="okbutton">
+            <property name="MemberName" />
+            <property name="Visible">False</property>
+            <property name="CanFocus">True</property>
+            <property name="UseStock">True</property>
+            <property name="Type">StockItem</property>
+            <property name="StockId">gtk-ok</property>
+            <property name="ResponseId">-5</property>
+            <property name="label">gtk-ok</property>
+          </widget>
+          <packing>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="cancelbutton">
             <property name="MemberName" />
             <property name="CanDefault">True</property>
             <property name="CanFocus">True</property>
@@ -3463,6 +3479,7 @@ Full HD 1080p (16:9 - 1920x1080)</property>
             <property name="label">gtk-cancel</property>
           </widget>
           <packing>
+            <property name="Position">1</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
           </packing>
