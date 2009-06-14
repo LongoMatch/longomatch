@@ -63,6 +63,20 @@ struct _GstVideoSplitter
 	GstVideoSplitterPrivate *priv;
 };
 
+typedef enum
+{
+	THEORA,
+	H264,
+	XVID,
+	MPEG2
+	
+}GvsVideoCodec;
+
+typedef enum{
+	MKV,
+	AVI,
+	DVD
+}GvsVideoMuxer;
 
 
 EXPORT GType gst_video_splitter_get_type (void) G_GNUC_CONST;

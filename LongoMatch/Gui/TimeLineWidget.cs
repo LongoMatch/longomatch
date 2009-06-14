@@ -51,44 +51,40 @@ namespace LongoMatch.Gui.Component {
 		public TimeLineWidget()
 		{
 			this.Build();			
-			this.SetPixelRatio(10);
-			
-		}
-		
+			SetPixelRatio(10);			
+		}		
 		
 		public MediaTimeNode SelectedTimeNode{
-			get{return this.selected;}
+			get{return selected;}
 			set{
-				this.selected = value;
+				selected = value;
 				if (tsArray != null && tnArray != null){
 					foreach (TimeScale  ts in tsArray){
 						ts.SelectedTimeNode = value;					
 					}
+				}				
+				if (selected != null){
+					if (SelectedTimeNode.StartFrame/pixelRatio < GtkScrolledWindow.Hadjustment.Value ||
+					    SelectedTimeNode.StartFrame/pixelRatio > GtkScrolledWindow.Hadjustment.Value +
+					    GtkScrolledWindow.Allocation.Width - GtkScrolledWindow.VScrollbar.Allocation.Width)
+						AdjustPostion(SelectedTimeNode.StartFrame);
 				}
-				this.QueueDraw();
-				
-				if (this.selected != null){
-					//TODO 
-					/*if (SelectedTimeNode.StartFrame/pixelRatio < this.GtkScrolledWindow.Hadjustment.Value)
-						this.AdjustPostion(SelectedTimeNode.StartFrame/pixelRatio);*/
-				}
+				QueueDraw();
 			}
 		}
 		
 		public uint CurrentFrame{
-			get{return this.currentFrame;}
+			get{return currentFrame;}
 			set{
-				this.currentFrame = value;
+				currentFrame = value;
 				
-				if (tsArray != null && tnArray != null){
-					
+				if (tsArray != null && tnArray != null){					
 					foreach (TimeScale  ts in tsArray){
 						ts.CurrentFrame = value;					
 					}
 					tr.CurrentFrame = value;
 				}
-				this.QueueDraw();
-
+				QueueDraw();
 			}
 		}
 		
@@ -97,113 +93,98 @@ namespace LongoMatch.Gui.Component {
 			int realWidth;
 			uint pos;
 			int scrollbarWidth;
-			if (this.Visible){				
-				scrollbarWidth= this.GtkScrolledWindow.VScrollbar.Allocation.Width;
-				visibleWidth = this.GtkScrolledWindow.Allocation.Width-scrollbarWidth;
-				realWidth = this.vbox1.Allocation.Width;				
-				pos = currentframe/pixelRatio;				
-				if (pos+visibleWidth < realWidth){
-					this.GtkScrolledWindow.Hadjustment.Value = pos;		
+			if (Visible){				
+				scrollbarWidth= GtkScrolledWindow.VScrollbar.Allocation.Width;
+				visibleWidth = GtkScrolledWindow.Allocation.Width-scrollbarWidth;
+				realWidth = vbox1.Allocation.Width;				
+				pos = currentframe/pixelRatio;
+							if (pos+visibleWidth < realWidth){
+					GtkScrolledWindow.Hadjustment.Value = pos;		
 				}
 				else {
-					this.GtkScrolledWindow.Hadjustment.Value = realWidth-visibleWidth-20;
+					GtkScrolledWindow.Hadjustment.Value = realWidth-visibleWidth-20;
 				}
-
-			}
-			
+			}			
 		}
 		
 		
-		private void SetPixelRatio(uint pixelRatio){
-			
-			
+		private void SetPixelRatio(uint pixelRatio){			
 			if (tsArray != null && tnArray != null){
 				this.pixelRatio = pixelRatio;
-				this.tr.PixelRatio = pixelRatio;
+				tr.PixelRatio = pixelRatio;
 				foreach (TimeScale  ts in tsArray){
-					ts.PixelRatio = this.pixelRatio;
-					
+					ts.PixelRatio = pixelRatio;					
 				}	
-				tr.Size((int)(this.frames/pixelRatio),50);				
-			}
-
-			
+				vscale1.Value=pixelRatio;				
+			}		
 		}
-		
-		
+			
 		
 		public Project Project{
 			set{
 				sections = value.Sections;
 				tnArray = value.GetDataArray();
 				tsArray = new TimeScale[20]; 
-				this.pixelRatio=1;
+				
 				
 				//Unrealize all children
 				foreach (Widget w in vbox1.AllChildren){
 					w.Unrealize();
-					this.vbox1.Remove(w);
+					vbox1.Remove(w);
 				}				
 				
-				this.frames = value.File.GetFrames();
+				frames = value.File.GetFrames();
 				ushort fps = value.File.Fps;
 				
 				tr = new TimeReferenceWidget(frames,fps);
-				tr.PixelRatio = 3;
-				this.vbox1.PackStart(tr,false,false,0);
+				vbox1.PackStart(tr,false,false,0);
 				tr.Show();
 				for (int i=0; i<20; i++){
 					TimeScale ts = new TimeScale(i,tnArray[i],sections.GetName(i),frames,sections.GetColor(i));
-					ts.PixelRatio = 3;
 					tsArray[i]=ts;
 					ts.TimeNodeChanged += new TimeNodeChangedHandler(OnTimeNodeChanged);
 					ts.TimeNodeSelected += new TimeNodeSelectedHandler (OnTimeNodeSelected);
 					ts.TimeNodeDeleted += new TimeNodeDeletedHandler(OnTimeNodeDeleted);
 					ts.NewMarkAtFrameEvent += new NewMarkAtFrameEventHandler(OnNewMark);
-					this.vbox1.PackStart(ts,true,true,0);					
+					vbox1.PackStart(ts,true,true,0);					
 					if (value.Sections.GetVisibility(i)){
 						ts.Show();
 					}
 				}
+				SetPixelRatio(3);
 			}
 			
 		}
 	
 		protected virtual void OnNewMark(int section, int frame){
-			if (this.NewMarkEvent != null)
-				this.NewMarkEvent(section,frame);
+			if (NewMarkEvent != null)
+				NewMarkEvent(section,frame);
 		}
 		
 		protected virtual void OnTimeNodeChanged(TimeNode tn, object val){
-			if (this.TimeNodeChanged != null)			
-				this.TimeNodeChanged(tn,val);
+			if (TimeNodeChanged != null)			
+				TimeNodeChanged(tn,val);
 		}
 		
 		protected virtual void OnTimeNodeSelected(MediaTimeNode tn){
-			if (this.TimeNodeSelected != null)			
-				this.TimeNodeSelected(tn);
+			if (TimeNodeSelected != null)			
+				TimeNodeSelected(tn);
 		}
 		protected virtual void OnTimeNodeDeleted(MediaTimeNode tn){
-			if (this.TimeNodeDeleted != null)			
-				this.TimeNodeDeleted(tn);
-		}
-
-		
+			if (TimeNodeDeleted != null)			
+				TimeNodeDeleted(tn);
+		}		
 
 		protected virtual void OnFitbuttonClicked (object sender, System.EventArgs e)
 		{
-			this.AdjustPostion(currentFrame);
+			AdjustPostion(currentFrame);
 		}
 
 		protected virtual void OnVscale1ValueChanged (object sender, System.EventArgs e)
 		{
-			this.SetPixelRatio((uint)(vscale1.Value)); 
-			this.QueueDraw();
-			this.AdjustPostion(currentFrame);
-			
+			SetPixelRatio((uint)(vscale1.Value)); 
+			QueueDraw();
+			AdjustPostion(currentFrame);			
 		}
-		
-		
-
 	}
 }

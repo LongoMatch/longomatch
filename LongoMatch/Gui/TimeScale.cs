@@ -77,15 +77,15 @@ namespace LongoMatch.Gui.Component
 			this.frames = frames;	
 			this.list = list;	
 			this.name = name;
-			this.HeightRequest= SECTION_HEIGHT;
-			this.Size((int)(this.frames/pixelRatio),SECTION_HEIGHT);
-			this.color = this.RGBToCairoColor(color);
+			HeightRequest= SECTION_HEIGHT;
+			Size((int)(frames/pixelRatio),SECTION_HEIGHT);
+			this.color = RGBToCairoColor(color);
 			this.color.A = ALPHA;
-			this.Events = EventMask.PointerMotionMask | EventMask.ButtonPressMask | EventMask.ButtonReleaseMask ;
+			Events = EventMask.PointerMotionMask | EventMask.ButtonPressMask | EventMask.ButtonReleaseMask ;
 			
 			dic = new Dictionary<MenuItem,MediaTimeNode>();
 			
-			layout =  new Pango.Layout(this.PangoContext);
+			layout =  new Pango.Layout(PangoContext);
 			layout.Wrap = Pango.WrapMode.Char;
 			layout.Alignment = Pango.Alignment.Left;
 
@@ -97,26 +97,26 @@ namespace LongoMatch.Gui.Component
 			get {return pixelRatio;}
 			set {
 				lock(locker){
-					this.pixelRatio = value;
-					this.Size((int)(this.frames/pixelRatio),SECTION_HEIGHT);
+					pixelRatio = value;
+					Size((int)(frames/pixelRatio),SECTION_HEIGHT);
 				}
 			}
 		}
 		
 		public uint CurrentFrame{
-			get{return this.currentFrame;}
-			set{this.currentFrame = value;}
+			get{return currentFrame;}
+			set{currentFrame = value;}
 		}
 		
 		public MediaTimeNode SelectedTimeNode{
-			get{return this.selected;}
-			set{this.selected = value;}
+			get{return selected;}
+			set{selected = value;}
 		}
 		
 		public void ReDraw(){
-			Gdk.Region region = this.GdkWindow.ClipRegion;
-			this.GdkWindow.InvalidateRegion(region,true);
-			this.GdkWindow.ProcessUpdates(true);
+			Gdk.Region region = GdkWindow.ClipRegion;
+			GdkWindow.InvalidateRegion(region,true);
+			GdkWindow.ProcessUpdates(true);
 		}
 		
 		private Cairo.Color RGBToCairoColor(Gdk.Color gdkColor){				
@@ -149,19 +149,19 @@ namespace LongoMatch.Gui.Component
 					int width;	
 
 				
-					win.Resize((int)(frames/pixelRatio), this.Allocation.Height);
+					win.Resize((int)(frames/pixelRatio), Allocation.Height);
 					win.GetSize(out width, out height);				
 				
 					g.Operator = Operator.Over;
 				
 					foreach (MediaTimeNode tn in list){	
-						if (tn != this.selected) {
+						if (tn != selected) {
 							g.Rectangle( new Cairo.Rectangle(tn.StartFrame/pixelRatio,3,tn.TotalFrames/pixelRatio,height-6));					
 							g.LineWidth = 2;
 							g.Color = new Cairo.Color (color.R+0.1, color.G+0.1,color.B+0.1, 1);				
 							g.LineJoin = LineJoin.Round;
 							g.StrokePreserve();
-							g.Color = this.color;						
+							g.Color = color;						
 							g.Fill();
 						}
 						else {
@@ -177,10 +177,10 @@ namespace LongoMatch.Gui.Component
 						g.Operator = Operator.Source;
 						g.StrokePreserve();
 						g.Operator = Operator.Over;
-						g.Color = this.color;						
+						g.Color = color;						
 						g.Fill();
 					}				
-					this.DrawLines(win,g,height,width);			
+					DrawLines(win,g,height,width);			
 				}
 			}
 		}
@@ -216,7 +216,7 @@ namespace LongoMatch.Gui.Component
 			//FIXME 200 is enought?
 			layout.Width = Pango.Units.FromPixels(200);
 			layout.SetMarkup(name);
-			this.GdkWindow.DrawLayout(this.Style.TextGC(StateType.Normal),this.Allocation.X,0,layout);
+			GdkWindow.DrawLayout(Style.TextGC(StateType.Normal),Allocation.X,0,layout);
 			
 		}*/
 		
@@ -225,52 +225,52 @@ namespace LongoMatch.Gui.Component
 				foreach (MediaTimeNode tn in list){	
 					layout.Width = Pango.Units.FromPixels((int)(tn.TotalFrames/pixelRatio));
 					layout.SetMarkup (tn.Name);
-					this.GdkWindow.DrawLayout(this.Style.TextGC(StateType.Normal),(int)(tn.StartFrame/pixelRatio),2,layout);
+					GdkWindow.DrawLayout(Style.TextGC(StateType.Normal),(int)(tn.StartFrame/pixelRatio),2,layout);
 				}
 			}
 		}
 		
 		private void ProcessButton3(double X){
-			this.cursorFrame =(int) (X*pixelRatio);
-			this.deleteMenu = new Menu();
-			this.delete.Submenu=deleteMenu;
+			cursorFrame =(int) (X*pixelRatio);
+			deleteMenu = new Menu();
+			delete.Submenu=deleteMenu;
 			dic.Clear();
 			foreach (MediaTimeNode tn in list){				
 				//We scan all the time Nodes looking for one matching the cursor selectcio
 				//And we add them to the delete menu
-				if (tn.HasFrame(this.cursorFrame) ){						
+				if (tn.HasFrame(cursorFrame) ){						
 					MenuItem del = new MenuItem(Catalog.GetString("Delete "+tn.Name));					
 					del.Activated += new EventHandler(OnDelete);				
-					this.deleteMenu.Append(del);
+					deleteMenu.Append(del);
 					dic.Add(del,tn);					
 				}
 				
 			}	
-			this.menu.ShowAll();
-			this.menu.Popup();		
+			menu.ShowAll();
+			menu.Popup();		
 		}
 		
 		private void ProcessButton1(EventButton evnt){
-			if (this.lastTime != evnt.Time){
+			if (lastTime != evnt.Time){
 				candidateTN = null;
 				foreach (MediaTimeNode tn in list){	
 					int pos = (int) (evnt.X*pixelRatio);
 					if (Math.Abs(pos-tn.StopFrame) < 3*pixelRatio){
-						this.candidateStart = false;
+						candidateStart = false;
 						candidateTN = tn;
-						this.movingLimit = true;
-						this.GdkWindow.Cursor = new Gdk.Cursor(CursorType.SbHDoubleArrow);
-						this.TimeNodeChanged(tn,tn.Stop);
-						this.ReDraw();
+						movingLimit = true;
+						GdkWindow.Cursor = new Gdk.Cursor(CursorType.SbHDoubleArrow);
+						TimeNodeChanged(tn,tn.Stop);
+						ReDraw();
 						break;
 					}
 					else if (Math.Abs(pos-tn.StartFrame) < 3*pixelRatio){
-						this.candidateStart =true;
+						candidateStart =true;
 						candidateTN = tn;
-						this.movingLimit = true;
-						this.GdkWindow.Cursor = new Gdk.Cursor(CursorType.SbHDoubleArrow);
-						this.TimeNodeChanged(tn,tn.Start);
-						this.ReDraw();
+						movingLimit = true;
+						GdkWindow.Cursor = new Gdk.Cursor(CursorType.SbHDoubleArrow);
+						TimeNodeChanged(tn,tn.Start);
+						ReDraw();
 						break;
 					}			
 				}
@@ -279,7 +279,7 @@ namespace LongoMatch.Gui.Component
 			else {
 				foreach (MediaTimeNode tn in list){
 					int pos = (int) (evnt.X*pixelRatio);
-					if (this.TimeNodeSelected!= null && tn.HasFrame(pos) ){							
+					if (TimeNodeSelected!= null && tn.HasFrame(pos) ){							
 						TimeNodeSelected(tn);
 						break;
 					}
@@ -288,8 +288,8 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		protected void OnNewPlay(object obj, EventArgs args){
-			if (this.NewMarkAtFrameEvent != null)				
-				this.NewMarkAtFrameEvent(this.section,this.cursorFrame);			
+			if (NewMarkAtFrameEvent != null)				
+				NewMarkAtFrameEvent(section,cursorFrame);			
 		}
 		
 		protected void OnDelete(object obj, EventArgs args){
@@ -302,7 +302,7 @@ namespace LongoMatch.Gui.Component
 		
 		protected override bool OnExposeEvent (EventExpose evnt)
 		{			
-			if (this.Visible){
+			if (Visible){
 				DrawTimeNodes(evnt.Window);
 				//We don't need the draw the Sections Names if we also draw the TimeNode name
 				//DrawSectionName();
@@ -316,22 +316,22 @@ namespace LongoMatch.Gui.Component
 			uint pos = (uint) (evnt.X*pixelRatio);
 			
 			
-			if (this.movingLimit){				
+			if (movingLimit){				
 				
-				if (this.candidateStart && pos  > 0 && pos < this.candidateTN.StopFrame-10){
-					this.candidateTN.StartFrame = pos;					
-					if (this.TimeNodeChanged != null)
-						this.TimeNodeChanged(this.candidateTN,this.candidateTN.Start);
+				if (candidateStart && pos  > 0 && pos < candidateTN.StopFrame-10){
+					candidateTN.StartFrame = pos;					
+					if (TimeNodeChanged != null)
+						TimeNodeChanged(candidateTN,candidateTN.Start);
 				}
-				else if (!this.candidateStart && pos < this.frames && pos > this.candidateTN.StartFrame+10){
-					this.candidateTN.StopFrame = pos;					
-					if (this.TimeNodeChanged != null)
-						this.TimeNodeChanged(this.candidateTN,this.candidateTN.Stop);
+				else if (!candidateStart && pos < frames && pos > candidateTN.StartFrame+10){
+					candidateTN.StopFrame = pos;					
+					if (TimeNodeChanged != null)
+						TimeNodeChanged(candidateTN,candidateTN.Stop);
 				}
 				
-				Gdk.Region region = this.GdkWindow.ClipRegion;
-				this.GdkWindow.InvalidateRegion(region,true);
-				this.GdkWindow.ProcessUpdates(true);			
+				Gdk.Region region = GdkWindow.ClipRegion;
+				GdkWindow.InvalidateRegion(region,true);
+				GdkWindow.ProcessUpdates(true);			
 				
 			}
 			return base.OnMotionNotifyEvent (evnt);
@@ -340,25 +340,25 @@ namespace LongoMatch.Gui.Component
 		protected override bool OnButtonPressEvent (EventButton evnt)
 		{		
 			if (evnt.Button == 1){
-				this.ProcessButton1(evnt);	
+				ProcessButton1(evnt);	
 				
 				                                       
 			}
 			// On Right button pressed
 			else if (evnt.Button == 3){
-				this.ProcessButton3(evnt.X);
+				ProcessButton3(evnt.X);
 			}
-			this.lastTime = evnt.Time;		
+			lastTime = evnt.Time;		
 			return base.OnButtonPressEvent (evnt);
 		}
 		
 		protected override bool OnButtonReleaseEvent (EventButton evnt)
 		{
-			if (this.movingLimit){
-				this.movingLimit = false;
+			if (movingLimit){
+				movingLimit = false;
 				candidateTN.Selected = false;
-								this.GdkWindow.Cursor = new Gdk.Cursor(CursorType.Arrow);
-				this.ReDraw();
+				GdkWindow.Cursor = new Gdk.Cursor(CursorType.Arrow);
+				ReDraw();
 			}
 			return base.OnButtonReleaseEvent (evnt);
 		}	

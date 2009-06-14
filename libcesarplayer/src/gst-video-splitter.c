@@ -28,7 +28,7 @@
 #include "gst-video-splitter.h"
 
 #define DEFAULT_VIDEO_ENCODER "theoraenc"
-#define DEFAULT_AUDIO_ENCODER "faac"
+#define DEFAULT_AUDIO_ENCODER "vorbisenc"
 #define DEAFAULT_VIDEO_MUXER "matroskamux"
 
 /* Signals */
