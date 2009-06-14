@@ -145,6 +145,10 @@ namespace LongoMatch.Gui.Component
 			menu.ShowAll();		
 		}
 		
+		private int GetSectionFromIter (TreeIter iter){
+			TreePath path = this.Model.GetPath(iter);
+			return int.Parse(path.ToString().Split(':')[0]);			
+		}
 		
 		protected override bool OnButtonPressEvent (EventButton evnt)
 		{
@@ -169,10 +173,9 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		protected void OnDeleted(object obj, EventArgs args){
+			Console.WriteLine(path.ToString().Substring(2));
 			if (TimeNodeDeleted != null)
-				TimeNodeDeleted((MediaTimeNode)selectedTimeNode);
-			//((TreeStore)this.Model).Remove(ref selectedIter);
-			
+				TimeNodeDeleted((MediaTimeNode)selectedTimeNode,int.Parse(path.ToString().Split(':')[0]));
 		}
 		
 		protected virtual void OnEdit(object obj, EventArgs args){
@@ -208,7 +211,7 @@ namespace LongoMatch.Gui.Component
 			TimeNode tNode = (TimeNode) model.GetValue (iter, 0);
 			if (tNode is MediaTimeNode){
 				(cell as Gtk.CellRendererPixbuf).Pixbuf = ((MediaTimeNode)tNode).Miniature;
-				(cell as Gtk.CellRendererPixbuf).CellBackgroundGdk = colors[((MediaTimeNode)tNode).DataSection];
+				(cell as Gtk.CellRendererPixbuf).CellBackgroundGdk = colors[GetSectionFromIter(iter)];
 			}
 			else {
 				(cell as Gtk.CellRendererPixbuf).Pixbuf = null;
@@ -231,8 +234,8 @@ namespace LongoMatch.Gui.Component
 			
 			if (tNode is MediaTimeNode){
 				(cell as Gtk.CellRendererText).Text =((MediaTimeNode)tNode).Team.ToString().ToLowerInvariant();
-				(cell as Gtk.CellRendererText).BackgroundGdk = colors[((MediaTimeNode)tNode).DataSection];
-				(cell as Gtk.CellRendererText).CellBackgroundGdk = colors[((MediaTimeNode)tNode).DataSection];
+				(cell as Gtk.CellRendererText).BackgroundGdk = colors[GetSectionFromIter(iter)];
+				(cell as Gtk.CellRendererText).CellBackgroundGdk = colors[GetSectionFromIter(iter)];
 				
 			}
 			else {
@@ -257,8 +260,8 @@ namespace LongoMatch.Gui.Component
 			(cell as Gtk.CellRendererText).Text = tNode.Name;
 			
 			if (tNode is MediaTimeNode){
-				(cell as Gtk.CellRendererText).BackgroundGdk = colors[((MediaTimeNode)tNode).DataSection];
-				(cell as Gtk.CellRendererText).CellBackgroundGdk = colors[((MediaTimeNode)tNode).DataSection];
+				(cell as Gtk.CellRendererText).BackgroundGdk = colors[GetSectionFromIter(iter)];
+				(cell as Gtk.CellRendererText).CellBackgroundGdk = colors[GetSectionFromIter(iter)];
 			}
 			else{
 				(cell as Gtk.CellRendererText).Background = "white";
@@ -275,8 +278,8 @@ namespace LongoMatch.Gui.Component
 
 			if (tNode is MediaTimeNode){
 				(cell as Gtk.CellRendererText).Text =tNode.Start.ToMSecondsString();
-				(cell as Gtk.CellRendererText).BackgroundGdk = colors[((MediaTimeNode)tNode).DataSection];
-				(cell as Gtk.CellRendererText).CellBackgroundGdk = colors[((MediaTimeNode)tNode).DataSection];
+				(cell as Gtk.CellRendererText).BackgroundGdk = colors[GetSectionFromIter(iter)];
+				(cell as Gtk.CellRendererText).CellBackgroundGdk = colors[GetSectionFromIter(iter)];
 				
 			}
 			else {
@@ -293,8 +296,8 @@ namespace LongoMatch.Gui.Component
 			TimeNode tNode = (TimeNode) model.GetValue (iter, 0);
 			if (tNode is MediaTimeNode){
 				(cell as Gtk.CellRendererText).Text = tNode.Stop.ToMSecondsString();
-				(cell as Gtk.CellRendererText).BackgroundGdk = colors[((MediaTimeNode)tNode).DataSection];
-				(cell as Gtk.CellRendererText).CellBackgroundGdk = colors[((MediaTimeNode)tNode).DataSection];
+				(cell as Gtk.CellRendererText).BackgroundGdk = colors[GetSectionFromIter(iter)];
+				(cell as Gtk.CellRendererText).CellBackgroundGdk = colors[GetSectionFromIter(iter)];
 			}
 			else {
 				(cell as Gtk.CellRendererText).Text = "";

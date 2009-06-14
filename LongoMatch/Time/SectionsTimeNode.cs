@@ -27,25 +27,19 @@ namespace LongoMatch.TimeNodes
 	
 	public class SectionsTimeNode:TimeNode
 	{
-		bool visible;// Plays can only be tagged in a category if this category is visible
 		HotKey hotkey; 
 		Gdk.Color color;
 		
 		#region Constructors
-		public SectionsTimeNode(String name,Time start, Time stop,bool visible, HotKey hotkey, Color color):base (name,start,stop)
+		public SectionsTimeNode(String name,Time start, Time stop, HotKey hotkey, Color color):base (name,start,stop)
 		{
-			this.visible = visible;
 			this.hotkey = hotkey;
 			this.color = color;
 		}
 		#endregion
 		#region  Properties 
 		
-		public bool Visible{
-			get{return this.visible;}
-			set{this.visible = value;}
-		}
-		
+				
 		public HotKey HotKey{
 			get{return this.hotkey;}
 			set{this.hotkey = value;}

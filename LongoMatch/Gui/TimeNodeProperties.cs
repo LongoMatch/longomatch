@@ -62,7 +62,6 @@ namespace LongoMatch.Gui.Component
 		private void  UpdateGui(){
 			if ( stn != null){
 				nameentry.Text = stn.Name;
-				visiblecheckbutton.Active =  stn.Visible;
 				timeadjustwidget1.SetTimeNode(stn);
 				colorbutton1.Color = stn.Color;
 				
@@ -78,7 +77,6 @@ namespace LongoMatch.Gui.Component
 			stn.Name = nameentry.Text;
 			stn.Start=timeadjustwidget1.GetStartTime();
 			stn.Stop=timeadjustwidget1.GetStopTime();
-			stn.Visible=visiblecheckbutton.Active;
 			stn.Color=colorbutton1.Color;
 		}
 		

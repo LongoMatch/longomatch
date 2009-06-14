@@ -62,12 +62,12 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		public Sections GetSections (){
-			Sections sections = new Sections(20);
+			Sections sections = new Sections();
 			SectionsTimeNode[] timeNodesArray = new SectionsTimeNode[20];
 			for(int i=0;i<20;i++){
 				timeNodesArray[i]=tndArray[i].TimeNode;
 			}
-			sections.SectionsTimeNodes = timeNodesArray;
+			//sections.SectionsTimeNodes = timeNodesArray;
 			return sections;
 		}
 	}

@@ -50,7 +50,7 @@ namespace LongoMatch.DB
 		
 		private Sections sections;
 
-		private List<MediaTimeNode>[] dataSectionArray;
+		private List<List<MediaTimeNode>> sectionPlaysList;
 		
 	
 		
@@ -65,22 +65,14 @@ namespace LongoMatch.DB
 			this.visitorGoals = visitorGoals;
 			this.matchDate = matchDate;		
 			this.sections = sections;
-			dataSectionArray = new List<MediaTimeNode>[20];
+			this.sectionPlaysList = new List<List<MediaTimeNode>>(); 
 			
-			for (int i=0;i<20;i++){
-				tnArray = new List<MediaTimeNode>();
-				dataSectionArray[i]=tnArray;
-			}
-
-		
+			for (int i=0;i<sections.Count;i++){
+				sectionPlaysList.Add(new List<MediaTimeNode>());
+			}		
 			
-			this.Title = System.IO.Path.GetFileNameWithoutExtension(this.file.FilePath);
-			
-			System.IO.Directory.CreateDirectory(MainClass.ThumbnailsDir()+"/"+title);
-			
-			
-			
-	
+			this.Title = System.IO.Path.GetFileNameWithoutExtension(this.file.FilePath);			
+			System.IO.Directory.CreateDirectory(MainClass.ThumbnailsDir()+"/"+title);	
 		}
 	
 		public Sections Sections{
@@ -105,8 +97,8 @@ namespace LongoMatch.DB
 		public MediaTimeNode AddTimeNode(int dataSection, Time start, Time stop,Pixbuf miniature) {
 			MediaTimeNode tn ;
 			string miniaturePath = null;
-			List<MediaTimeNode> al= dataSectionArray[dataSection];
-			int count= al.Count+1;
+			List<MediaTimeNode> playsList= sectionPlaysList[dataSection];
+			int count= playsList.Count+1;
 			string name = sections.GetName(dataSection) + " " +count;
 
 			if (miniature != null ){
@@ -117,15 +109,15 @@ namespace LongoMatch.DB
 					"-"+start.ToMSecondsString().Replace(':','-')+"-"+stop.ToMSecondsString().Replace(':','-').Replace(',','.')+".jpg";
 				miniature.Save(miniaturePath,"jpeg");
 			}
-			tn = new MediaTimeNode(name, start, stop,this.file.Fps,dataSection,miniaturePath);
-			dataSectionArray[dataSection].Add(tn);			
+			tn = new MediaTimeNode(name, start, stop,"",file.Fps,miniaturePath);
+			playsList.Add(tn);			
 			return tn;
 
 		}
 
-		public void DelTimeNode(MediaTimeNode tNode) {
+		public void DelTimeNode(MediaTimeNode tNode,int section) {
 
-			dataSectionArray[tNode.DataSection].Remove(tNode);
+			sectionPlaysList[section].Remove(tNode);
 			if (System.IO.File.Exists(tNode.MiniaturePath))
 			    System.IO.File.Delete(tNode.MiniaturePath);
 
@@ -133,25 +125,19 @@ namespace LongoMatch.DB
 		
 		public TreeStore GetModel (){
 			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore (typeof (MediaTimeNode));
-			for (int i=0;i<20;i++){
-				if (this.Sections.GetVisibility(i)){
-					Gtk.TreeIter iter = dataFileListStore.AppendValues (sections.GetTimeNode(i));
-					foreach(MediaTimeNode tNode in dataSectionArray[i]){
+			for (int i=0;i<sections.Count;i++){
+				Gtk.TreeIter iter = dataFileListStore.AppendValues (sections.GetTimeNode(i));
+				foreach(MediaTimeNode tNode in sectionPlaysList[i]){
 						dataFileListStore.AppendValues (iter,tNode);
-					}						
-				}
-
+				}						
 			}
 			return dataFileListStore;
 		}
 
-		public List<MediaTimeNode>[] GetDataArray() {
-			return dataSectionArray;
+		public List<List<MediaTimeNode>> GetDataArray() {
+			return sectionPlaysList;
 		}
-
-		/*public String[] GetRoots() {
-			return roots;
-		}*/
+	
 
 		public MediaFile File {
 			get{return file;}

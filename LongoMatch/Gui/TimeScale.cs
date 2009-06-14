@@ -296,7 +296,7 @@ namespace LongoMatch.Gui.Component
 			MediaTimeNode tNode;
 			dic.TryGetValue((MenuItem)obj, out tNode);
 			if (TimeNodeDeleted != null && tNode != null){
-				TimeNodeDeleted(tNode);
+				TimeNodeDeleted(tNode, section);
 			}
 		}
 		

@@ -39,7 +39,7 @@ namespace LongoMatch.Gui.Component {
 		//public event PlayListNodeAddedHandler PlayListNodeAdded;
 		
 		private TimeScale[] tsArray;
-		private List<MediaTimeNode>[] tnArray;
+		private List<List<MediaTimeNode>> tnArray;
 		private Sections sections;
 		private TimeReferenceWidget tr;
 		private uint frames;
@@ -124,7 +124,7 @@ namespace LongoMatch.Gui.Component {
 			set{
 				sections = value.Sections;
 				tnArray = value.GetDataArray();
-				tsArray = new TimeScale[20]; 
+				tsArray = new TimeScale[sections.Count]; 
 				
 				
 				//Unrealize all children
@@ -139,7 +139,7 @@ namespace LongoMatch.Gui.Component {
 				tr = new TimeReferenceWidget(frames,fps);
 				vbox1.PackStart(tr,false,false,0);
 				tr.Show();
-				for (int i=0; i<20; i++){
+				for (int i=0; i<sections.Count; i++){
 					TimeScale ts = new TimeScale(i,tnArray[i],sections.GetName(i),frames,sections.GetColor(i));
 					tsArray[i]=ts;
 					ts.TimeNodeChanged += new TimeNodeChangedHandler(OnTimeNodeChanged);
@@ -147,9 +147,7 @@ namespace LongoMatch.Gui.Component {
 					ts.TimeNodeDeleted += new TimeNodeDeletedHandler(OnTimeNodeDeleted);
 					ts.NewMarkAtFrameEvent += new NewMarkAtFrameEventHandler(OnNewMark);
 					vbox1.PackStart(ts,true,true,0);					
-					if (value.Sections.GetVisibility(i)){
-						ts.Show();
-					}
+					ts.Show();					
 				}
 				SetPixelRatio(3);
 			}
@@ -170,9 +168,9 @@ namespace LongoMatch.Gui.Component {
 			if (TimeNodeSelected != null)			
 				TimeNodeSelected(tn);
 		}
-		protected virtual void OnTimeNodeDeleted(MediaTimeNode tn){
+		protected virtual void OnTimeNodeDeleted(MediaTimeNode tn, int section){
 			if (TimeNodeDeleted != null)			
-				TimeNodeDeleted(tn);
+				TimeNodeDeleted(tn,section);
 		}		
 
 		protected virtual void OnFitbuttonClicked (object sender, System.EventArgs e)

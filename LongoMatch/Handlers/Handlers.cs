@@ -34,7 +34,7 @@ namespace LongoMatch.Handlers
 	//Manejador para el evento producido cuando se edita un nodo
 	public delegate void TimeNodeChangedHandler (TimeNode tNode, object val);
 	//Manejador para el evento producido al eliminar un MediaTimeNode
-	public delegate void TimeNodeDeletedHandler (MediaTimeNode tNode);
+	public delegate void TimeNodeDeletedHandler (MediaTimeNode tNode,int section);
 	//Manejador para el evento producido al inserir un MediaTimeNode en la lista de reproducción
 	public delegate void PlayListNodeAddedHandler(MediaTimeNode tNode);
 	//Manejador para el evento producido al selecionar un nodo en la lista de reproducción

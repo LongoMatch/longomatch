@@ -43,19 +43,19 @@ namespace LongoMatch.IO
 		
 		#region Public methods
 		public void WriteToFile(){
-			List<MediaTimeNode>[] arrayList;
+			List<List<MediaTimeNode>> list;
 			string[] sectionNames;
 			TextWriter tx;
 			
 			tx = new StreamWriter(outputFile);			
-			arrayList = project.GetDataArray();
+			list = project.GetDataArray();
 			sectionNames = project.GetSectionsNames();
 			
 			tx.WriteLine("Section;Name;Team;StartTime;StopTime");
 			
-			for (int i=0; i<20; i++){
+			for (int i=0; i<list.Count; i++){
 				string sectionName = sectionNames[i];
-				foreach (MediaTimeNode tn in arrayList[i]){
+				foreach (MediaTimeNode tn in list[i]){
 					tx.WriteLine("\""+sectionName+"\";\""+tn.Name+"\";\""+tn.Team+"\";\""+tn.Start.ToMSecondsString()+"\";\""+tn.Stop.ToMSecondsString()+"\"");
 				}						
 			}			

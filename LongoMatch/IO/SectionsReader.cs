@@ -41,75 +41,53 @@ namespace LongoMatch.IO
 #endregion		
 		
 #region Private methods
-		private String[] GetNames(){
-			String[] names = new String[20];
-			for (int i=0;i<20;i++){
-				names[i] = this.GetStringValue("configuration","Name"+(i+1));
-			}
-			return names;
+		private string GetName(int section){
+			return this.GetStringValue("configuration","Name"+(section));
 		}
 		
-		private Time[] GetStartTimes(){
-			Time[] startTimes = new Time [20];
-			for (int i=0;i<20;i++){				
-				startTimes[i] = new Time(GetIntValue("configuration","Start"+(i+1))*Time.SECONDS_TO_TIME);
-			}
-			return startTimes;		
+		private Time GetStartTime(int section){
+			return new Time(GetIntValue("configuration","Start"+(section))*Time.SECONDS_TO_TIME);
 		}
 		
-		private Time[] GetStopTimes(){
-			Time[] stopTimes = new Time [20];
-			for (int i=0;i<20;i++){
-				stopTimes[i] = new Time(GetIntValue("configuration","Stop"+(i+1))*Time.SECONDS_TO_TIME);
-
-			}
-			return stopTimes;	
+		private Time GetStopTime(int section){
+			return new Time(GetIntValue("configuration","Stop"+(section))*Time.SECONDS_TO_TIME);
+		}		
 		
-		}
-		
-		private bool[] GetVisibility(){
-			bool[] visibility = new bool [20];
-			for (int i=0;i<20;i++){
-				visibility[i] = GetBoolValue("configuration","Visible"+(i+1));
-
-			}
-			return visibility;		
-		}
-		
-		private Color[] GetColors(){
-			Color[] colors = new Color[20];
+		private Color GetColor(int section){
 			ushort red,green,blue;
-			for (int i=0;i<20;i++){
-				red = GetUShortValue("configuration","Red"+(i+1));
-				green = GetUShortValue("configuration","Green"+(i+1));
-				blue = GetUShortValue("configuration","Blue"+(i+1));
-				Color col = new Color();
-				col.Red = red;
-				col.Blue = blue;
-				col.Green = green;
-				colors[i] = col;					
-			}
-			return colors;			
+			red = GetUShortValue("configuration","Red"+(section));
+			green = GetUShortValue("configuration","Green"+(section));
+			blue = GetUShortValue("configuration","Blue"+(section));
+			Color col = new Color();
+			col.Red = red;
+			col.Blue = blue;
+			col.Green = green;
+			return col;		
 		}
 		
-		private HotKey[] GetHotKeys(){
-			HotKey[] hotkeys = new HotKey[20];
-			for (int i=0;i<20;i++){
-				HotKey hotkey = new HotKey();
-				hotkey.Modifier= (ModifierType)GetIntValue("configuration","Modifier"+(i+1));
-				hotkey.Key = (Gdk.Key)GetIntValue("configuration","Key"+(i+1));
-				hotkeys[i]=hotkey;
-			}
-			return hotkeys;
+		private HotKey GetHotKey(int section){
+			HotKey hotkey = new HotKey();
+			hotkey.Modifier= (ModifierType)GetIntValue("configuration","Modifier"+(section));
+			hotkey.Key = (Gdk.Key)GetIntValue("configuration","Key"+(section));
+			return hotkey;
 		}
 			
 #endregion		
 
 #region Public methods
 		public Sections GetSections(){
-			Sections sections = new Sections(20);
-			this.GetStartTimes();		
-			sections.SetTimeNodes(GetNames(),GetStartTimes(),GetStopTimes(),GetVisibility(),GetHotKeys(),GetColors());
+			Sections sections = new Sections();
+			bool tryNext = true;
+			string name;
+			SectionsTimeNode tn;			
+			for (int i=1;tryNext;i++){
+				name = GetName(i);
+				if (name != null){
+					tn = new SectionsTimeNode(name, GetStartTime(i), GetStopTime(i), GetHotKey(i), GetColor(i));
+					sections.AddSection(tn);
+				}
+				else tryNext=false;
+			}
 			return sections;
 		}
 #endregion

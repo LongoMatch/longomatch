@@ -49,66 +49,39 @@ namespace LongoMatch.Gui.Component
 			
 		}
 		
-		public void DeleteTimeNode(MediaTimeNode tNode){
+		public void DeleteTimeNode(MediaTimeNode tNode, int section){
 			if (project != null){
 				TreeIter iter;
 				TreeStore model = (TreeStore)treeview.Model;
-				// Seeking the SectionTimeNode position in the tree
-				// For some  configuration not all 
-				// the sections are shown, eg: the 2nd may not be
-				// at the 2nd row in the tree, it can be at the 1st
-				// row if the 1st is hidden
-				for (int j=0; j<20;j++){					
-					model.GetIterFromString (out iter, j.ToString());
-					TimeNode stNode = (TimeNode)model.GetValue (iter,0);
-					
-					if (project.Sections.GetTimeNode(tNode.DataSection) == stNode){		
-						// Founded valid row
-						TreeIter child;
-
-						model.IterChildren(out child, iter);
-						// Searching the TimeNode to remove it
-						while (model.IterIsValid(child)){
-						    //TODO Se queda en un bucle infinito en el último
-							//hay que cambiar la condicón en el bucle while
-							// comparando por ejemplo con el anterior y viendo 
-							// si es el mismo
-							MediaTimeNode mtn = (MediaTimeNode) model.GetValue( child,0);
-							if(mtn == tNode){
-								// Fetched TimeNode to remove
-								model.Remove (ref child);
-								break;
-							}
-							TreeIter prev = child;
-							model.IterNext(ref child);
-							if (prev.Equals(child))
-								break;
-						}
+				Console.WriteLine(section);
+				model.GetIterFromString (out iter, section.ToString());
+				TreeIter child;						
+				model.IterChildren(out child, iter);
+				// Searching the TimeNode to remove it
+				while (model.IterIsValid(child)){
+				    MediaTimeNode mtn = (MediaTimeNode) model.GetValue( child,0);
+					if(mtn == tNode){
+						model.Remove (ref child);
 						break;
 					}
-				}
+					TreeIter prev = child;
+					model.IterNext(ref child);
+					if (prev.Equals(child))
+						break;
+				}				
 			}
 			
 		}
 		
 		
-		public void AddTimeNode(MediaTimeNode tNode){
+		public void AddTimeNode(MediaTimeNode tNode,int  section){
 			if (project != null){
 				TreeIter iter;
 				TreeStore model = (TreeStore)treeview.Model;
-				// Seeking the SectionTimeNode position in the tree
-				// For some  configuration not all 
-				// the sections are shown, eg: the 2nd may not be
-				// at the 2nd row in the tree, it can be at the 1st
-				// row if the 1st is hidden
-				for (int j=0; j<19;j++){					
-					model.GetIterFromString (out iter, j.ToString());
-					TimeNode stNode = (TimeNode)model.GetValue (iter,0);
-					if (project.Sections.GetTimeNode(tNode.DataSection) == stNode){				
-						model.AppendValues (iter,tNode);
-						break;
-					}
-				}
+				model.GetIterFromString (out iter, section.ToString());
+				TimeNode stNode = (TimeNode)model.GetValue (iter,0);
+				if (project.Sections.GetTimeNode(section) == stNode)
+					model.AppendValues (iter,tNode);
 			}
 			
 		
@@ -136,9 +109,9 @@ namespace LongoMatch.Gui.Component
 				TimeNodeSelected(tNode);
 		}
 		
-		protected virtual void OnTimeNodeDeleted(MediaTimeNode tNode){
+		protected virtual void OnTimeNodeDeleted(MediaTimeNode tNode, int section){
 			if (TimeNodeDeleted != null)
-				TimeNodeDeleted(tNode);
+				TimeNodeDeleted(tNode,section);
 		}
 
 		protected virtual void OnPlayListNodeAdded (MediaTimeNode tNode)

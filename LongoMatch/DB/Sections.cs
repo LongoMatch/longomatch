@@ -18,6 +18,7 @@
 //
 //
 using System;
+using System.Collections.Generic;
 using Gdk;
 using LongoMatch.TimeNodes;
 
@@ -27,136 +28,106 @@ namespace LongoMatch.DB
 	
 	public class Sections
 	{
-		private SectionsTimeNode[] timeNodesArray;
-		private int visibleSections;
-		private int totalSections;
+		private List<SectionsTimeNode> sectionsList;
 		
 		
-		public Sections(int sections)
+		public Sections()
 		{
-			this.timeNodesArray = new SectionsTimeNode[sections];
-			this.totalSections = sections;
-			this.visibleSections = sections;
-			for (int i=0;i<20;i++){
-				timeNodesArray[i] = null;
-			}
-			
-		}
-
-		public int VisibleSections {
-			
-			set{
-				if (value > this.totalSections ||value < 0 )
-					return;
-				else
-					this.visibleSections = value;
-			}
-			get{
-				return this.visibleSections;
-			}
-					
+			this.sectionsList = new List<SectionsTimeNode>();			
 		}
 		
-		
-		public void SetTimeNodes(string[] names, Time[] startTimes, Time[] stopTimes,bool[] visible,HotKey[] hotkey,Color[] color){
-			for (int i=0;i<20;i++){
-				timeNodesArray[i] = new SectionsTimeNode(names[i],startTimes[i],stopTimes[i],visible[i],hotkey[i],color[i]);	
-			}			
-		}
-		
+		public void AddSection(SectionsTimeNode tn){
+			sectionsList.Add(tn);
+		}		
 				
-		public SectionsTimeNode[] SectionsTimeNodes{
-			set{this.timeNodesArray = value;}			
+		public int Count{
+			get{return sectionsList.Count;}
+		}
+		public List<SectionsTimeNode> SectionsTimeNodes{
+			set{
+				sectionsList.Clear();
+				sectionsList = value;
+			}			
+			get{return sectionsList;}
 		}
 		
 		public string[] GetSectionsNames(){
-			string[] names = new string[totalSections];
+			int count = sectionsList.Count;
+			string[] names = new string[count];
 			SectionsTimeNode tNode;
-			for (int i=0; i<totalSections; i++){
-				tNode = timeNodesArray[i];
+			for (int i=0; i<count; i++){
+				tNode = sectionsList[i];
 				names[i]=tNode.Name;
 			}
-			return names;
-		
+			return names;		
 		}
 		
 		public Color[] GetColors(){
-			Color[] colors = new Color[totalSections];
+			int count = sectionsList.Count;
+			Color[] colors = new Color[count];
 			SectionsTimeNode tNode;
-			for (int i=0; i<totalSections; i++){
-				tNode = timeNodesArray[i];
+			for (int i=0; i<count; i++){
+				tNode = sectionsList[i];
 				colors[i]=tNode.Color;
 			}
 			return colors;
 		}
 		
 		public HotKey[] GetHotKeys(){
-			HotKey[] hotkeys = new HotKey[totalSections];
+			int count = sectionsList.Count;
+			HotKey[] hotkeys = new HotKey[count];
 			SectionsTimeNode tNode;
-			for (int i=0; i<totalSections; i++){
-				tNode = timeNodesArray[i];
+			for (int i=0; i<count; i++){
+				tNode = sectionsList[i];
 				hotkeys[i]=tNode.HotKey;
 			}
 			return hotkeys;
 		}
 		
 		public Time[] GetSectionsStartTimes(){
-			Time[] startTimes = new Time[totalSections];
+			int count = sectionsList.Count;
+			Time[] startTimes = new Time[count];
 			SectionsTimeNode tNode;
-			for (int i=0; i<totalSections; i++){
-				tNode = timeNodesArray[i];
+			for (int i=0; i<count; i++){
+				tNode = sectionsList[i];
 				startTimes[i]=tNode.Start;
 			}
 			return startTimes;
 		}
 		
 		public Time[] GetSectionsStopTimes(){
-			Time[] stopTimes = new Time[totalSections];
+			int count = sectionsList.Count;
+			Time[] stopTimes = new Time[count];
 			SectionsTimeNode tNode;
-			for (int i=0; i<totalSections; i++){
-				tNode = timeNodesArray[i];
+			for (int i=0; i<count; i++){
+				tNode = sectionsList[i];
 				stopTimes[i]=tNode.Start;
 			}
-			return stopTimes;
-			
-		}
-		
-		public bool[] GetSectionsVisibility(){
-			bool[] visibility = new bool[20];
-			SectionsTimeNode tNode;
-			for (int i=0; i<totalSections; i++){
-				tNode = timeNodesArray[i];
-				visibility[i]=tNode.Visible;
-			}
-			return visibility;
-		}
+			return stopTimes;			
+		}			
 		
 		public SectionsTimeNode GetTimeNode (int section){
-			return timeNodesArray[section];
+			return sectionsList [section];
 		}
 		
 		public string GetName ( int section){
-			return timeNodesArray[section].Name;
+			return sectionsList[section].Name;
 		}
 		
 		public Time GetStartTime ( int section){
-			return this.timeNodesArray[section].Start;
+			return sectionsList[section].Start;
 		}
 		
 		public Time GetStopTime ( int section){
-			return this.timeNodesArray[section].Stop;
-		}
-		
-		public bool GetVisibility (int section){
-			return this.timeNodesArray[section].Visible;
+			return sectionsList[section].Stop;
 		}
 		
 		public Color GetColor (int section){
-			return this.timeNodesArray[section].Color;
+			return sectionsList[section].Color;
 		}
 		
 		public HotKey GetHotKey (int section){
-			return this.timeNodesArray[section].HotKey;
+			return sectionsList[section].HotKey;
 		}
 	}
 }

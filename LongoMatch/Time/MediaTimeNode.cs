@@ -39,8 +39,6 @@ namespace LongoMatch.TimeNodes
 	public class MediaTimeNode : PixbufTimeNode
 	{
 		
-		//Stores the Data Section it belowns to, to allow its removal
-		private int dataSection;
 		
 		private Team team;
 		
@@ -55,23 +53,9 @@ namespace LongoMatch.TimeNodes
 		private string notes;
 
 		
-		#region Constructors
-		public MediaTimeNode(String name, Time start, Time stop, uint fps, int dataSection,string miniaturePath):base (name,start,stop,miniaturePath) {
-			this.dataSection = dataSection;		
-			this.team = Team.NONE;
-			this.fps = fps;
-			//A play cannot have a duration lower than 500 ms
-			if (stop <= start )
-				this.Stop = start+500;
-			else
-				this.Stop = stop;
-			this.startFrame = (uint) this.Start.MSeconds*fps/1000;
-			this.stopFrame = (uint) this.Stop.MSeconds*fps/1000;
-		}
-		
-		public MediaTimeNode(String name, Time start, Time stop,string notes, uint fps, int dataSection,string miniaturePath):base (name,start,stop,miniaturePath) {
+#region Constructors	
+		public MediaTimeNode(String name, Time start, Time stop,string notes, uint fps,string miniaturePath):base (name,start,stop,miniaturePath) {
 			this.notes = notes;
-			this.dataSection = dataSection;		
 			this.team = Team.NONE;
 			this.fps = fps;
 			this.startFrame = (uint) this.Start.MSeconds*fps/1000;
@@ -85,10 +69,7 @@ namespace LongoMatch.TimeNodes
 			get{return notes;}
 			set{notes = value;}
 		}
-		public int DataSection{
-			get{return dataSection;}
-		}	
-		
+				
 		public Team Team{
 			get{return this.team;}
 			set{this.team = value;}				

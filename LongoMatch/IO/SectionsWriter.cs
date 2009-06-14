@@ -23,6 +23,7 @@ using System.Configuration;
 using System.IO;
 using System.Xml;
 using LongoMatch.DB;
+using LongoMatch.TimeNodes;
 using Gdk;
 
 namespace LongoMatch.IO
@@ -34,12 +35,11 @@ namespace LongoMatch.IO
 		
 
 		
-		public static void CreateNewTemplate(string templateName){
-			
+		public static void CreateNewTemplate(string templateName){			
 			
 			XmlDocument configXml = new XmlDocument();
 			string fConfig = Path.Combine (MainClass.TemplatesDir(), templateName);
-			 System.Text.StringBuilder sb = new System.Text.StringBuilder();
+			System.Text.StringBuilder sb = new System.Text.StringBuilder();
             sb.Append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
             sb.Append("<configuration>");
             
@@ -47,7 +47,6 @@ namespace LongoMatch.IO
 				sb.Append("<add key=\"Name"+i+"\" value=\"Data "+i+"\" />");
 				sb.Append("<add key=\"Start"+i+"\" value=\"10\" />");
 				sb.Append("<add key=\"Stop"+i+"\" value=\"10\" />");
-				sb.Append("<add key=\"Visible"+i+"\" value=\"True\" />");
 				sb.Append("<add key=\"Red"+i+"\" value=\"65535\" />");
 				sb.Append("<add key=\"Green"+i+"\" value=\"0\" />");
 				sb.Append("<add key=\"Blue"+i+"\" value=\"0\" />");
@@ -75,30 +74,26 @@ namespace LongoMatch.IO
 		public static void UpdateTemplate(string templateName,Sections sections){
 			
 			string fConfig = Path.Combine (MainClass.TemplatesDir(), templateName);
-			
-			if (!File.Exists(fConfig)){
-				//Salimos silenciosamente
-				return;
-			}
-			
 			XmlDocument configXml = new XmlDocument();
-			configXml.Load(fConfig);
+			int i=1;
 			
-			for (int i = 0; i<20;i++){
-								
-				Color color = sections.GetColor(i);
-				SetValue(configXml,"configuration","Name" + (i+1),sections.GetName(i));
-				SetValue(configXml,"configuration","Start"+ (i+1),sections.GetStartTime(i).Seconds.ToString());
-				SetValue(configXml,"configuration","Stop"+ (i+1),sections.GetStopTime(i).Seconds.ToString());
-				SetValue(configXml,"configuration","Visible"+ (i+1),sections.GetVisibility(i).ToString());
-				SetValue(configXml,"configuration","Red"+ (i+1),color.Red.ToString());
-				SetValue(configXml,"configuration","Green"+ (i+1),color.Green.ToString());
-				SetValue(configXml,"configuration","Blue"+ (i+1),color.Blue.ToString());
-				SetValue(configXml,"configuration","Modifier"+ (i+1),((int)(sections.GetHotKey(i).Modifier)).ToString());
-				SetValue(configXml,"configuration","Key"+ (i+1),((int)(sections.GetHotKey(i).Key)).ToString());
-
-			}
-			configXml.Save(fConfig);
+			System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            sb.Append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
+            sb.Append("<configuration>");
+            
+			foreach(SectionsTimeNode tn in sections.SectionsTimeNodes){
+				sb.Append(String.Format("<add key=\"Name{0}\" value=\"{1}\" />",i,tn.Name));
+				sb.Append(String.Format("<add key=\"Start{0}\" value=\"{1}\" />",i,tn.Start.Seconds));
+				sb.Append(String.Format("<add key=\"Stop{0}\" value=\"{1}\" />",i,tn.Stop.Seconds));
+				sb.Append(String.Format("<add key=\"Red{0}\" value=\"{1}\" />",i,tn.Color.Red));
+				sb.Append(String.Format("<add key=\"Green{0}\" value=\"{1}\" />",i,tn.Color.Green));
+				sb.Append(String.Format("<add key=\"Blue{0}\" value=\"{1}\" />",i,tn.Color.Blue));
+				sb.Append(String.Format("<add key=\"Modifier{0}\" value=\"{1}\" />",i,tn.HotKey.Modifier));
+				sb.Append(String.Format("<add key=\"Key{0}\" value=\"{1}\" />",i,tn.HotKey.Key));
+			}			
+			sb.Append("</configuration>");
+			configXml.LoadXml(sb.ToString());
+            configXml.Save(fConfig);	
 		}
 		
 	

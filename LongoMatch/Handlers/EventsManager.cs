@@ -120,7 +120,7 @@ namespace LongoMatch
 				Time fStop = (stop > length) ? length: stop;
 				Pixbuf miniature = player.CurrentFrame;
 				MediaTimeNode tn = openedProject.AddTimeNode(section,fStart, fStop,miniature);				
-				treewidget.AddTimeNode(tn);
+				treewidget.AddTimeNode(tn,section);
 				timeline.QueueDraw();
 			}
 		}
@@ -214,10 +214,10 @@ namespace LongoMatch
 			
 		}
 		
-		protected virtual void OnTimeNodeDeleted (MediaTimeNode tNode)
+		protected virtual void OnTimeNodeDeleted (MediaTimeNode tNode,int section)
 		{
-			treewidget.DeleteTimeNode(tNode);
-			openedProject.DelTimeNode(tNode);			
+			treewidget.DeleteTimeNode(tNode,section);
+			openedProject.DelTimeNode(tNode,section);			
 			timeline.QueueDraw();
 			MainClass.DB.UpdateProject(openedProject);
 			

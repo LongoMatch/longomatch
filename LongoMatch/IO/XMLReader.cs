@@ -47,9 +47,9 @@ namespace LongoMatch.IO
 		{    
     		XmlNode n;
     		n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");
-    		object result = n.Attributes["value"].Value;
-    		return (result is string ) ? (string)result : null;
-			
+			if (n!=null)
+    		 return  (string)(n.Attributes["value"].Value);
+    		else return null;			
 		}
 		
 		public int GetIntValue(string section, string clave) 

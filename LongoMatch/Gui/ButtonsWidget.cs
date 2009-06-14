@@ -33,44 +33,60 @@ namespace LongoMatch.Gui.Component
 				
 		private Sections sections;
 		private const int MS = 1000;
-		private Button[] bList;
+		private List<Button> bList;
 	
 		public event NewMarkEventHandler NewMarkEvent;
 
 		
 		public ButtonsWidget()
-		{
-			int i=19;
-			
+		{		
 			this.Build();
-			
-			bList = new Button[20];
-			foreach (Button b in this.table1){
-				bList[i]=b;
-				i--;
-			}
+			bList = new List<Button>();			
 		}
 		
 		public Sections Sections{
 			set{
 				this.sections = value;
-				this.Names = value.GetSectionsNames();	
-				for( int i=0;i<20;i++){
-					bList[i].Sensitive=sections.GetVisibility(i);
+				int sectionsCount = value.Count;
+				
+				foreach (Widget w in table1.AllChildren){
+					w.Unrealize();
+					table1.Remove(w);
+				}
+				
+				table1.NColumns =(uint) 10;
+				table1.NRows =(uint) (sectionsCount/10);
+			
+				for( int i=0;i<sectionsCount;i++){
+					Button b = new Button();
+					Label l = new Label();
+					uint row_top =(uint) (i/table1.NColumns);
+					uint row_bottom = (uint) row_top+1 ;
+					uint col_left = (uint) i%table1.NColumns;
+					uint col_right = (uint) col_left+1 ;
+					
+					l.Text = sections.GetName(i);
+					b.Add(l);
+					b.Name = i.ToString();
+					b.Clicked += new EventHandler (OnButtonClicked);
+					l.Show();
+					b.Show();
+					
+					
+					table1.Attach(b,col_left,col_right,row_top,row_bottom);					
 				}
 			}
 			
 		}
-			
-		public String[] Names {
-			
-			set{
-				for (int i=0;i<20;i++)
-					bList[i].Label = value[i];
-			}
-		}
 		
 
+		protected virtual void OnButtonClicked(object sender,  System.EventArgs e)
+		{
+			Widget w = (Button)sender;
+			if (NewMarkEvent != null && this.sections != null)
+				this.NewMarkEvent(int.Parse(w.Name));
+			
+		}
 		
 		protected virtual void OnButton1Clicked(object sender, System.EventArgs e)
 		{
