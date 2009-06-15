@@ -63,7 +63,7 @@ namespace LongoMatch.Gui.Component
 			for( int i=0;i<sectionsCount;i++){
 				TimeNodeProperties tnp = new TimeNodeProperties();
 				tnp.Name = i.ToString();
-				tnp.Title =  sections.GetName(i);			
+				tnp.Title =  "Section "+(i+1);			
 				tnp.Section = sections.GetSection(i);	
 				tnp.DeleteSection += new EventHandler(OnDelete);
 				tnp.InsertAfter += new EventHandler(OnInsertAfter);
@@ -79,6 +79,8 @@ namespace LongoMatch.Gui.Component
 			}
 			
 		}
+		
+		
 		
 		public Sections GetSections (){
 			Sections sections = new Sections();

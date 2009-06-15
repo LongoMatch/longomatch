@@ -30,7 +30,11 @@ namespace LongoMatch.Gui.Dialog
 		
 		public TemplateEditorDialog()
 		{
-			this.Build();
+			this.Build();			
+		}
+		
+		public Project Project{
+			set {sectionspropertieswidget3.SetProject(value);}
 		}
 		
 		public Sections Sections{

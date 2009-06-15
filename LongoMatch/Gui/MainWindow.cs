@@ -183,7 +183,7 @@ namespace LongoMatch.Gui
 		
 		protected virtual void OnSectionsTemplatesManagerActivated (object sender, System.EventArgs e)
 		{
-			SectionsTemplates st = new SectionsTemplates();
+			SectionsTemplates st = new SectionsTemplates();		
 			st.TransientFor = this;
 			st.Show();
 		}

@@ -299,7 +299,7 @@ namespace LongoMatch.Gui.Component
 		{
 			
 			TemplateEditorDialog ted = new TemplateEditorDialog();
-			ted.Sections=this.Sections;
+			ted.Project=this.project;
 			
 			if (ted.Run() == (int)ResponseType.Apply){
 				this.Sections = ted.Sections;
