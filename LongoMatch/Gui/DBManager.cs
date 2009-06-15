@@ -33,7 +33,7 @@ namespace LongoMatch.Gui.Dialog
 	public partial class DBManager : Gtk.Dialog
 	{
 
-		
+		public bool edited;
 		
 		public DBManager()
 		{
@@ -51,6 +51,30 @@ namespace LongoMatch.Gui.Dialog
 			this.deleteButton.Sensitive = false;
 			
 		
+		}
+		
+		private void SaveProject(){
+			String previousFileName;			
+			Project changedProject;
+			
+			previousFileName = projectlistwidget1.GetSelection().File.FilePath;			
+			changedProject = this.filedescriptionwidget3.GetProject();
+			
+			if (changedProject != null){
+				
+				if (changedProject.File.FilePath == previousFileName)
+					MainClass.DB.UpdateProject(changedProject);
+				else{
+					try{
+						MainClass.DB.UpdateProject(changedProject,previousFileName);
+					}
+					catch{
+						MessagePopup.PopupMessage(this, MessageType.Warning, 
+				                          Catalog.GetString("The Project for this file already exists.\nTry to edit it."));
+					}
+				}
+				this.Fill();
+			}
 		}
 
 
@@ -88,28 +112,7 @@ namespace LongoMatch.Gui.Dialog
 
 		protected virtual void OnSaveButtonPressed (object sender, System.EventArgs e)
 		{
-			String previousFileName;			
-			Project changedProject;
-			
-			previousFileName = projectlistwidget1.GetSelection().File.FilePath;			
-			changedProject = this.filedescriptionwidget3.GetProject();
-			
-			if (changedProject != null){
-
-				
-				if (changedProject.File.FilePath == previousFileName)
-					MainClass.DB.UpdateProject(changedProject);
-				else{
-					try{
-						MainClass.DB.UpdateProject(changedProject,previousFileName);
-					}
-					catch{
-						MessagePopup.PopupMessage(this, MessageType.Warning, 
-				                          Catalog.GetString("The Project for this file already exists.\nTry to edit it."));
-					}
-				}
-				this.Fill();
-			}
+			SaveProject();
 			
 		}
 		
@@ -122,18 +125,26 @@ namespace LongoMatch.Gui.Dialog
 
 		protected virtual void OnProjectlistwidget1ProjectSelectedEvent (LongoMatch.DB.Project project)
 		{
+			if (edited){
+				MessageDialog md = new MessageDialog((Window)this.Toplevel,DialogFlags.Modal,
+				                                     MessageType.Question, ButtonsType.YesNo,
+				                                     Catalog.GetString("The Project has been edited, do you want to save the changes?"));
+				if (md.Run() == (int)ResponseType.Yes)
+					SaveProject();
+				edited=false;
+					
+			}
+			if (MainWindow.OpenedProject()!= null && project.Equals(MainWindow.OpenedProject())) {
 			
-				if (MainWindow.OpenedProject()!= null && project.Equals(MainWindow.OpenedProject())) {
-				
-					MessagePopup.PopupMessage(this, MessageType.Warning, 
-				                          Catalog.GetString("This Project is actually in use.")+"\n" +Catalog.GetString ("Close it first to allow its removal from the database"));
-				}
-				else{
-					this.filedescriptionwidget3.Sensitive = true;
-					this.filedescriptionwidget3.SetProject(project);
-					this.saveButton.Sensitive = true;
-					this.deleteButton.Sensitive = true;
-				}
+				MessagePopup.PopupMessage(this, MessageType.Warning, 
+				                          Catalog.GetString("The Project you are trying to load is actually in use.")+"\n" +Catalog.GetString ("Close it first to edit it"));
+			}
+			else{
+				this.filedescriptionwidget3.Sensitive = true;
+				this.filedescriptionwidget3.SetProject(project);
+				this.saveButton.Sensitive = true;
+				this.deleteButton.Sensitive = true;
+			}
 		}
 
 		

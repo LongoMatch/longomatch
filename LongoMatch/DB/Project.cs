@@ -86,6 +86,7 @@ namespace LongoMatch.DB
 		}
 		
 		public void AddSectionAtPos(SectionsTimeNode tn,int sectionIndex){
+			sectionPlaysList.Insert(sectionIndex,new List<MediaTimeNode>());
 			sections.AddSectionAtPos(tn,sectionIndex);
 		}
 		
@@ -139,6 +140,7 @@ namespace LongoMatch.DB
 		public TreeStore GetModel (){
 			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore (typeof (MediaTimeNode));
 			for (int i=0;i<sections.Count;i++){
+				Console.WriteLine("Geeting section"+i);
 				Gtk.TreeIter iter = dataFileListStore.AppendValues (sections.GetTimeNode(i));
 				foreach(MediaTimeNode tNode in sectionPlaysList[i]){
 						dataFileListStore.AppendValues (iter,tNode);

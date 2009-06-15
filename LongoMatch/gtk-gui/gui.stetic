@@ -585,7 +585,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.DBManager" design-size="1282 465">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.DBManager" design-size="678 412">
     <property name="MemberName" />
     <property name="Title" translatable="yes">DataBase Manager</property>
     <property name="WindowPosition">CenterOnParent</property>
@@ -1565,7 +1565,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.TimeNodeProperties" design-size="349 118">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.TimeNodeProperties" design-size="312 127">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.Frame" id="frame1">
@@ -1581,6 +1581,70 @@
               <widget class="Gtk.HBox" id="hbox1">
                 <property name="MemberName" />
                 <property name="Spacing">6</property>
+                <child>
+                  <widget class="Gtk.VBox" id="vbox2">
+                    <property name="MemberName" />
+                    <property name="Spacing">6</property>
+                    <child>
+                      <widget class="Gtk.Button" id="newleftbutton">
+                        <property name="MemberName" />
+                        <property name="Tooltip" translatable="yes">Insert After</property>
+                        <property name="CanFocus">True</property>
+                        <property name="Type">TextAndIcon</property>
+                        <property name="Icon">stock:gtk-goto-last Menu</property>
+                        <property name="Label" translatable="yes" />
+                        <property name="UseUnderline">True</property>
+                        <signal name="Clicked" handler="OnNewleftbuttonClicked" />
+                      </widget>
+                      <packing>
+                        <property name="Position">0</property>
+                        <property name="AutoSize">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Button" id="newleftbutton1">
+                        <property name="MemberName" />
+                        <property name="Tooltip" translatable="yes">InsertBefore</property>
+                        <property name="CanFocus">True</property>
+                        <property name="Type">TextAndIcon</property>
+                        <property name="Icon">stock:gtk-goto-first Menu</property>
+                        <property name="Label" translatable="yes" />
+                        <property name="UseUnderline">True</property>
+                        <signal name="Clicked" handler="OnNewleftbutton1Clicked" />
+                      </widget>
+                      <packing>
+                        <property name="Position">1</property>
+                        <property name="AutoSize">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Button" id="deletebutton">
+                        <property name="MemberName" />
+                        <property name="Tooltip" translatable="yes">Delete</property>
+                        <property name="CanFocus">True</property>
+                        <property name="Type">TextAndIcon</property>
+                        <property name="Icon">stock:gtk-delete Menu</property>
+                        <property name="Label" translatable="yes" />
+                        <property name="UseUnderline">True</property>
+                        <signal name="Clicked" handler="OnDeletebuttonClicked" />
+                      </widget>
+                      <packing>
+                        <property name="Position">2</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
                 <child>
                   <widget class="Gtk.VBox" id="vbox3">
                     <property name="MemberName" />
@@ -1713,83 +1777,10 @@
                     </child>
                   </widget>
                   <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">True</property>
-                    <property name="Expand">False</property>
-                    <property name="Fill">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.VSeparator" id="vseparator1">
-                    <property name="MemberName" />
-                  </widget>
-                  <packing>
                     <property name="Position">1</property>
                     <property name="AutoSize">True</property>
                     <property name="Expand">False</property>
                     <property name="Fill">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.VBox" id="vbox2">
-                    <property name="MemberName" />
-                    <property name="Spacing">6</property>
-                    <child>
-                      <widget class="Gtk.Button" id="deletebutton">
-                        <property name="MemberName" />
-                        <property name="Tooltip" translatable="yes">Delete</property>
-                        <property name="CanFocus">True</property>
-                        <property name="Type">TextAndIcon</property>
-                        <property name="Icon">stock:gtk-delete Menu</property>
-                        <property name="Label" translatable="yes" />
-                        <property name="UseUnderline">True</property>
-                        <signal name="Clicked" handler="OnDeletebuttonClicked" />
-                      </widget>
-                      <packing>
-                        <property name="Position">0</property>
-                        <property name="AutoSize">False</property>
-                        <property name="Fill">False</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="Gtk.Button" id="newleftbutton">
-                        <property name="MemberName" />
-                        <property name="Tooltip" translatable="yes">Insert After</property>
-                        <property name="CanFocus">True</property>
-                        <property name="Type">TextAndIcon</property>
-                        <property name="Icon">stock:gtk-goto-last Menu</property>
-                        <property name="Label" translatable="yes" />
-                        <property name="UseUnderline">True</property>
-                        <signal name="Clicked" handler="OnNewleftbuttonClicked" />
-                      </widget>
-                      <packing>
-                        <property name="Position">1</property>
-                        <property name="AutoSize">False</property>
-                        <property name="Fill">False</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="Gtk.Button" id="newleftbutton1">
-                        <property name="MemberName" />
-                        <property name="Tooltip" translatable="yes">InsertBefore</property>
-                        <property name="CanFocus">True</property>
-                        <property name="Type">TextAndIcon</property>
-                        <property name="Icon">stock:gtk-goto-first Menu</property>
-                        <property name="Label" translatable="yes" />
-                        <property name="UseUnderline">True</property>
-                        <signal name="Clicked" handler="OnNewleftbutton1Clicked" />
-                      </widget>
-                      <packing>
-                        <property name="Position">2</property>
-                        <property name="AutoSize">False</property>
-                        <property name="Fill">False</property>
-                      </packing>
-                    </child>
-                  </widget>
-                  <packing>
-                    <property name="PackType">End</property>
-                    <property name="Position">2</property>
-                    <property name="AutoSize">False</property>
                   </packing>
                 </child>
               </widget>

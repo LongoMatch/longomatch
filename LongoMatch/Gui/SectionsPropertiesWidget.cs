@@ -90,15 +90,49 @@ namespace LongoMatch.Gui.Component
 			return sections;
 		}
 		
+		private void AddSection (int index){
+			SectionsTimeNode tn;
+			HotKey hkey = new HotKey();
+			
+			Time start = new Time(10*Time.SECONDS_TO_TIME);
+			Time stop = new Time(10*Time.SECONDS_TO_TIME);
+			
+			
+			tn  = new SectionsTimeNode("New Section",start,stop,hkey,new Color(Byte.MaxValue,Byte.MinValue,Byte.MinValue));
+			
+			if (project != null){
+				project.AddSectionAtPos(tn,index);
+				SetSections(project.Sections);
+			}
+			else{				
+				Sections sections = GetSections();
+				sections.AddSectionAtPos(tn,index);
+				SetSections(sections);
+			}
+			
+				
+			
+		}
+		
 		protected virtual void OnDelete(object sender, EventArgs args){
-			project.DeleteSection(int.Parse(((Widget)sender).Name));
-			SetSections(project.Sections);		
+			int index = int.Parse(((Widget)sender).Name);
+			if(project!= null){
+				project.DeleteSection(index);
+				SetSections(project.Sections);	
+			}
+			else{
+				Sections sections = GetSections();
+				sections.RemoveSection(index);
+				SetSections(sections);
+			}
 		}
 		
 		protected virtual void OnInsertAfter(object sender, EventArgs args){
+			AddSection(int.Parse(((Widget)sender).Name)+1);
 		}
 		
 		protected virtual void OnInsertBefore(object sender, EventArgs args){
+			AddSection(int.Parse(((Widget)sender).Name));
 		}
 	}
 }
