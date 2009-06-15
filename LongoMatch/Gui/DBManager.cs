@@ -60,10 +60,8 @@ namespace LongoMatch.Gui.Dialog
 			if (selectedProject != null){
 				if (MainWindow.OpenedProject()!= null && selectedProject.Equals(MainWindow.OpenedProject())) {
 				
-					MessageDialog md = new MessageDialog(this,DialogFlags.Modal,MessageType.Warning,ButtonsType.Ok,
-					                                     Catalog.GetString("This Project is actually in use.")+"\n"+Catalog.GetString("Close it first to allow its removal from the database"));
-					md.Run();				
-					md.Destroy();
+					MessagePopup.PopupMessage(this, MessageType.Warning, 
+				                          Catalog.GetString("This Project is actually in use.")+"\n"+Catalog.GetString("Close it first to allow its removal from the database"));
 				}
 				else {
 					MessageDialog md = new MessageDialog(this,DialogFlags.Modal,MessageType.Question,ButtonsType.YesNo,
@@ -106,13 +104,8 @@ namespace LongoMatch.Gui.Dialog
 						MainClass.DB.UpdateProject(changedProject,previousFileName);
 					}
 					catch{
-						MessageDialog error = new MessageDialog(this,
-						                                        DialogFlags.DestroyWithParent,
-						                                        MessageType.Error,
-						                                        ButtonsType.Ok,
-						                                        "The Project for this file already exists.\nTry to edit it.");
-						error.Run();
-						error.Destroy();	
+						MessagePopup.PopupMessage(this, MessageType.Warning, 
+				                          Catalog.GetString("The Project for this file already exists.\nTry to edit it."));
 					}
 				}
 				this.Fill();
@@ -132,10 +125,8 @@ namespace LongoMatch.Gui.Dialog
 			
 				if (MainWindow.OpenedProject()!= null && project.Equals(MainWindow.OpenedProject())) {
 				
-					MessageDialog md = new MessageDialog(this,DialogFlags.Modal,MessageType.Warning,ButtonsType.Ok,
-					                                     Catalog.GetString("This Project is actually in use.")+"\n" +Catalog.GetString ("Close it first to allow its removal from the database"));
-					md.Run();				
-					md.Destroy();
+					MessagePopup.PopupMessage(this, MessageType.Warning, 
+				                          Catalog.GetString("This Project is actually in use.")+"\n" +Catalog.GetString ("Close it first to allow its removal from the database"));
 				}
 				else{
 					this.filedescriptionwidget3.Sensitive = true;

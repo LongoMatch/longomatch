@@ -235,13 +235,8 @@ namespace LongoMatch.Gui.Component
 			vep.TransientFor = (Gtk.Window)this.Toplevel;
 			response = vep.Run();
 			while( response == (int)ResponseType.Ok && vep.Filename == ""){
-				MessageDialog md = new MessageDialog(vep,
-				                                     DialogFlags.Modal,
-				                                     MessageType.Info,
-				                                     ButtonsType.Ok,
-				                                     Catalog.GetString("Please, select a video file."));
-				md.Run();
-				md.Destroy();	
+				MessagePopup.PopupMessage(this, MessageType.Warning, 
+				                          Catalog.GetString("Please, select a video file."));
 				response=vep.Run();
 			}
 			vep.Destroy();

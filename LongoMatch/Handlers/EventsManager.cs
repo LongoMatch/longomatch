@@ -141,26 +141,15 @@ namespace LongoMatch
 				videoprogressbar.Text = "Creating new video";
 			}
 			
-			else if (progress == (float)EditorState.FINISHED) {				
-				MessageDialog info = new MessageDialog((Gtk.Window)(player.Toplevel),
-				                                       DialogFlags.Modal,
-				                                       MessageType.Info,
-				                                       ButtonsType.Ok,
-				                                       Catalog.GetString("The video edition has finished successfully."));
-				info.Run();
-				info.Destroy();
+			else if (progress == (float)EditorState.FINISHED) {	
+				MessagePopup.PopupMessage(player, MessageType.Info,  Catalog.GetString("The video edition has finished successfully."));
 				videoprogressbar.Hide();				
 			}	
 			
-			else if (progress == (float)EditorState.ERROR) {				
-				MessageDialog info = new MessageDialog((Gtk.Window)(player.Toplevel),
-				                                       DialogFlags.Modal,
-				                                       MessageType.Error,
-				                                       ButtonsType.Ok,
-				                                       Catalog.GetString("An error has ocurred in the video editor.")
-				                                       +Catalog.GetString("Please, retry again."));
-				info.Run();
-				info.Destroy();
+			else if (progress == (float)EditorState.ERROR) {	
+				MessagePopup.PopupMessage(player, MessageType.Error, 
+				                          Catalog.GetString("An error has ocurred in the video editor.")
+				                          +Catalog.GetString("Please, retry again."));     
 				videoprogressbar.Hide();				
 			}	
 		}
@@ -195,18 +184,13 @@ namespace LongoMatch
 				if(tNode != selectedTimeNode)
 					OnTimeNodeSelected((MediaTimeNode)tNode);
 				Time pos = (Time)val;
-				//if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-				//	this.player.Play();
-				//else 
-				//	this.player.Pause();
 					if (pos == tNode.Start){					
 					    player.UpdateSegmentStartTime(pos.MSeconds);
 				    }				
 				    else{
 					    player.UpdateSegmentStopTime(pos.MSeconds);
 				    }
-				//if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-				//	this.player.Pause();
+
 			}	
 			else if (tNode is SectionsTimeNode){
 				buttonswidget.Sections = openedProject.Sections;
@@ -219,9 +203,7 @@ namespace LongoMatch
 			treewidget.DeleteTimeNode(tNode,section);
 			openedProject.DelTimeNode(tNode,section);			
 			timeline.QueueDraw();
-			MainClass.DB.UpdateProject(openedProject);
-			
-			
+			MainClass.DB.UpdateProject(openedProject);			
 		}
 		
 		
@@ -243,13 +225,8 @@ namespace LongoMatch
 				}
 			}
 			else {
-				MessageDialog error = new MessageDialog(null,
-				                                        DialogFlags.DestroyWithParent,
-				                                        MessageType.Error,
-				                                        ButtonsType.Ok,
-				                                        "Please, close the opened project to play the playlist.");
-				error.Run();
-				error.Destroy();
+				MessagePopup.PopupMessage(playlist, MessageType.Error, 
+				                          Catalog.GetString("Please, close the opened project to play the playlist."));
 				playlist.Stop();
 			}
 		}

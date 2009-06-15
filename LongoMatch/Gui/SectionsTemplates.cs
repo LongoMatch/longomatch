@@ -101,18 +101,14 @@ namespace LongoMatch.Gui.Dialog
 			if (ed.Run() == (int)ResponseType.Ok){
 				name = ed.Text;
 				if (name == ""){
-					MessageDialog mes = new MessageDialog(this,DialogFlags.Modal,MessageType.Warning,ButtonsType.Ok,
-			                                      Catalog.GetString("You cannot create a template with a void name"));
-					mes.Run();
-					mes.Destroy();
+					MessagePopup.PopupMessage(this, MessageType.Warning, 
+				                          Catalog.GetString("You cannot create a template with a void name"));
 					ed.Destroy();
 					return;
 				}
 				if (System.IO.File.Exists(System.IO.Path.Combine(MainClass.TemplatesDir(),name+".sct"))){
-					MessageDialog mes = new MessageDialog(this,DialogFlags.Modal,MessageType.Warning,ButtonsType.Ok,
-			                                      Catalog.GetString("A template with this name already exists"));
-					mes.Run();
-					mes.Destroy();
+					MessagePopup.PopupMessage(this, MessageType.Warning, 
+				                          Catalog.GetString("A template with this name already exists"));
 					ed.Destroy();
 					return;					
 				}

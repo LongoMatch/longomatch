@@ -270,10 +270,8 @@ namespace LongoMatch.Gui.Component
 						
 					}
 					catch (GLib.GException ex){
-			    		MessageDialog errorDialog = new MessageDialog((Gtk.Window)this.Toplevel,DialogFlags.Modal,MessageType.Error,ButtonsType.Ok,
-						                                              Catalog.GetString("Invalid video file:")+"\n"+ex.Message);
-						errorDialog.Run();
-						errorDialog.Destroy();
+			    		MessagePopup.PopupMessage(this, MessageType.Error, 
+				                          Catalog.GetString("Invalid video file:")+"\n"+ex.Message);
 					}
 				}
 				

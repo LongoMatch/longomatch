@@ -87,9 +87,8 @@ namespace LongoMatch.Gui
 			eManager.OpenedProject = project;
 			if (project!=null){		
 				if(!File.Exists(project.File.FilePath)){
-					MessageDialog infoDialog = new MessageDialog (this,DialogFlags.Modal,MessageType.Warning,ButtonsType.Ok,Catalog.GetString("The file associated to this project doesn't exist.")+"\n"+Catalog.GetString("If the location of the file has changed try to edit it with the database manager.") );
-					infoDialog.Run();
-					infoDialog.Destroy();
+					MessagePopup.PopupMessage(this, MessageType.Warning, 
+				                          	Catalog.GetString("The file associated to this project doesn't exist.")+"\n"+Catalog.GetString("If the location of the file has changed try to edit it with the database manager.") );
 					CloseActualProyect();					
 				}
 				else {					
@@ -113,9 +112,8 @@ namespace LongoMatch.Gui
 						KeyPressEvent += hotkeysListener;
 					}
 					catch (GLib.GException ex){
-						MessageDialog infoDialog = new MessageDialog (this,DialogFlags.Modal,MessageType.Error,ButtonsType.Ok,Catalog.GetString("An error ocurred opening this project:")+"\n"+ex.Message);
-						infoDialog.Run();
-						infoDialog.Destroy();
+						MessagePopup.PopupMessage(this, MessageType.Error, 
+				                         		 Catalog.GetString("An error ocurred opening this project:")+"\n"+ex.Message);
 						CloseActualProyect();	
 					}
 				}
@@ -219,13 +217,8 @@ namespace LongoMatch.Gui
 			// crear un nuevo objeto del tipo Project
 			int response = npd.Run();
 			while (response == (int)ResponseType.Ok && npd.GetProject() == null){
-				MessageDialog md = new MessageDialog(npd,
-				                                     DialogFlags.DestroyWithParent,
-				                                     MessageType.Info,
-				                                     ButtonsType.Ok,
-				                                     Catalog.GetString("Please, select a video file."));
-				md.Run();
-				md.Destroy();	
+				MessagePopup.PopupMessage(this, MessageType.Info, 
+				                          Catalog.GetString("Please, select a video file."));
 				response=npd.Run();
 			}
 			npd.Destroy();
@@ -238,13 +231,8 @@ namespace LongoMatch.Gui
 						SetProject(project);
 					}
 					catch {						
-						MessageDialog error = new MessageDialog(this,
-						                                        DialogFlags.DestroyWithParent,
-						                                        MessageType.Error,
-						                                        ButtonsType.Ok,
-						                                        Catalog.GetString("The Project for this file already exists.")+"\n"+Catalog.GetString("Try to edit it."));
-						error.Run();
-						error.Destroy();							
+						MessagePopup.PopupMessage(this, MessageType.Error, 
+				                          Catalog.GetString("This file is already used in a Project.")+"\n"+Catalog.GetString("Open the project, please."));
 					}
 				}
 			}
@@ -332,10 +320,8 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnPlayerbin1Error (object o,LongoMatch.Video.Handlers.ErrorArgs args)
 		{
-			MessageDialog errorDialog = new MessageDialog (this,DialogFlags.Modal,MessageType.Error,ButtonsType.Ok,Catalog.GetString 
-			                                               ("The actual project will be closed caused by an error in the media player:")+"\n" +args.Message);
-			errorDialog.Run();
-			errorDialog.Destroy();	
+			MessagePopup.PopupMessage(this, MessageType.Info, 
+				                          Catalog.GetString("The actual project will be closed due to an error in the media player:")+"\n" +args.Message);
 			CloseActualProyect();
 		}
 
