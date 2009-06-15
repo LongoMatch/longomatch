@@ -33,17 +33,11 @@ namespace LongoMatch.Gui.Component {
         
         private Gtk.ColorButton colorbutton1;
         
-        private Gtk.CheckButton visiblecheckbutton;
-        
-        private Gtk.Label label5;
-        
-        private Gtk.HBox hbox2;
-        
-        private Gtk.Label label6;
+        private Gtk.Button changebuton;
         
         private Gtk.Label hotKeyLabel;
         
-        private Gtk.Button changebuton;
+        private Gtk.Label label6;
         
         private Gtk.Label titlelabel;
         
@@ -89,7 +83,6 @@ namespace LongoMatch.Gui.Component {
             this.vbox2.Add(this.hbox4);
             Gtk.Box.BoxChild w3 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox4]));
             w3.Position = 0;
-            w3.Expand = false;
             w3.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.timeadjustwidget1 = new LongoMatch.Gui.Component.TimeAdjustWidget();
@@ -98,7 +91,6 @@ namespace LongoMatch.Gui.Component {
             this.vbox2.Add(this.timeadjustwidget1);
             Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(this.vbox2[this.timeadjustwidget1]));
             w4.Position = 1;
-            w4.Expand = false;
             w4.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.hbox1 = new Gtk.HBox();
@@ -124,70 +116,41 @@ namespace LongoMatch.Gui.Component {
             w6.Expand = false;
             w6.Fill = false;
             // Container child hbox1.Gtk.Box+BoxChild
-            this.visiblecheckbutton = new Gtk.CheckButton();
-            this.visiblecheckbutton.CanFocus = true;
-            this.visiblecheckbutton.Name = "visiblecheckbutton";
-            this.visiblecheckbutton.Label = "";
-            this.visiblecheckbutton.DrawIndicator = true;
-            this.visiblecheckbutton.UseUnderline = true;
-            this.hbox1.Add(this.visiblecheckbutton);
-            Gtk.Box.BoxChild w7 = ((Gtk.Box.BoxChild)(this.hbox1[this.visiblecheckbutton]));
-            w7.PackType = ((Gtk.PackType)(1));
-            w7.Position = 2;
-            w7.Expand = false;
-            w7.Fill = false;
-            // Container child hbox1.Gtk.Box+BoxChild
-            this.label5 = new Gtk.Label();
-            this.label5.Name = "label5";
-            this.label5.LabelProp = Mono.Unix.Catalog.GetString("Visible:");
-            this.hbox1.Add(this.label5);
-            Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(this.hbox1[this.label5]));
-            w8.PackType = ((Gtk.PackType)(1));
-            w8.Position = 3;
-            w8.Expand = false;
-            w8.Fill = false;
-            this.vbox2.Add(this.hbox1);
-            Gtk.Box.BoxChild w9 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox1]));
-            w9.Position = 2;
-            w9.Expand = false;
-            w9.Fill = false;
-            // Container child vbox2.Gtk.Box+BoxChild
-            this.hbox2 = new Gtk.HBox();
-            this.hbox2.Name = "hbox2";
-            this.hbox2.Spacing = 6;
-            // Container child hbox2.Gtk.Box+BoxChild
-            this.label6 = new Gtk.Label();
-            this.label6.Name = "label6";
-            this.label6.LabelProp = Mono.Unix.Catalog.GetString("HotKey:");
-            this.hbox2.Add(this.label6);
-            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.hbox2[this.label6]));
-            w10.Position = 0;
-            w10.Expand = false;
-            w10.Fill = false;
-            // Container child hbox2.Gtk.Box+BoxChild
-            this.hotKeyLabel = new Gtk.Label();
-            this.hotKeyLabel.Name = "hotKeyLabel";
-            this.hotKeyLabel.LabelProp = Mono.Unix.Catalog.GetString("none");
-            this.hbox2.Add(this.hotKeyLabel);
-            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.hbox2[this.hotKeyLabel]));
-            w11.Position = 1;
-            // Container child hbox2.Gtk.Box+BoxChild
             this.changebuton = new Gtk.Button();
             this.changebuton.CanFocus = true;
             this.changebuton.Name = "changebuton";
             this.changebuton.UseUnderline = true;
             this.changebuton.Label = Mono.Unix.Catalog.GetString("Change");
-            this.hbox2.Add(this.changebuton);
-            Gtk.Box.BoxChild w12 = ((Gtk.Box.BoxChild)(this.hbox2[this.changebuton]));
-            w12.Position = 2;
-            w12.Expand = false;
-            w12.Fill = false;
-            this.vbox2.Add(this.hbox2);
-            Gtk.Box.BoxChild w13 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox2]));
-            w13.PackType = ((Gtk.PackType)(1));
-            w13.Position = 3;
-            w13.Expand = false;
-            w13.Fill = false;
+            this.hbox1.Add(this.changebuton);
+            Gtk.Box.BoxChild w7 = ((Gtk.Box.BoxChild)(this.hbox1[this.changebuton]));
+            w7.PackType = ((Gtk.PackType)(1));
+            w7.Position = 2;
+            w7.Expand = false;
+            w7.Fill = false;
+            // Container child hbox1.Gtk.Box+BoxChild
+            this.hotKeyLabel = new Gtk.Label();
+            this.hotKeyLabel.Name = "hotKeyLabel";
+            this.hotKeyLabel.LabelProp = Mono.Unix.Catalog.GetString("none");
+            this.hbox1.Add(this.hotKeyLabel);
+            Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(this.hbox1[this.hotKeyLabel]));
+            w8.PackType = ((Gtk.PackType)(1));
+            w8.Position = 3;
+            w8.Expand = false;
+            w8.Fill = false;
+            // Container child hbox1.Gtk.Box+BoxChild
+            this.label6 = new Gtk.Label();
+            this.label6.Name = "label6";
+            this.label6.LabelProp = Mono.Unix.Catalog.GetString("HotKey:");
+            this.hbox1.Add(this.label6);
+            Gtk.Box.BoxChild w9 = ((Gtk.Box.BoxChild)(this.hbox1[this.label6]));
+            w9.PackType = ((Gtk.PackType)(1));
+            w9.Position = 4;
+            w9.Expand = false;
+            w9.Fill = false;
+            this.vbox2.Add(this.hbox1);
+            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox1]));
+            w10.Position = 2;
+            w10.Fill = false;
             this.GtkAlignment.Add(this.vbox2);
             this.frame1.Add(this.GtkAlignment);
             this.titlelabel = new Gtk.Label();

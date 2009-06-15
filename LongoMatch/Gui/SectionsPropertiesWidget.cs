@@ -17,6 +17,7 @@
 //
 //
 using System;
+using System.Collections.Generic;
 using Gtk;
 using Mono.Unix;
 using Gdk;
@@ -32,42 +33,44 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class SectionsPropertiesWidget : Gtk.Bin
 	{
-		TimeNodeProperties[] tndArray;
+		List<TimeNodeProperties> tndlist;
 		
 		public SectionsPropertiesWidget()
 		{
 			this.Build();
+			tndlist = new List<TimeNodeProperties>();
 			
-			// Agrupamos todos los TimeNodeProperties en un array para 
-			// tratarlos mas facilmente
-			tndArray = new TimeNodeProperties[20];
-		
-			int j=19;
-			foreach (TimeNodeProperties tnd in table20.Children){
-				tndArray[j] = ((TimeNodeProperties)tnd);
-				j--;
-			}			
-			
-			for(int i=0;i<20;i++){
-				tndArray[i].Title = Catalog.GetString("Section") +(i+1);
-			}
 		}
 		
 		public void SetSections(Sections sections){
+			int sectionsCount = sections.Count;
+			table1.NColumns =(uint) 10;
+			table1.NRows =(uint) (sectionsCount/10);
 			
-			for(int i=0;i<20;i++){
-				tndArray[i].TimeNode=sections.GetTimeNode(i);
+			tndlist.Clear();
+			
+			for( int i=0;i<sectionsCount;i++){
+				TimeNodeProperties tnp = new TimeNodeProperties();
+				tnp.Title =  sections.GetName(i);
+					
+				uint row_top =(uint) (i/table1.NColumns);
+				uint row_bottom = (uint) row_top+1 ;
+				uint col_left = (uint) i%table1.NColumns;
+				uint col_right = (uint) col_left+1 ;
+				
+				tnp.Section = sections.GetSection(i);
+				tnp.Show();
+				tndlist.Add(tnp);					
+				table1.Attach(tnp,col_left,col_right,row_top,row_bottom);					
 			}
 			
 		}
 		
 		public Sections GetSections (){
 			Sections sections = new Sections();
-			SectionsTimeNode[] timeNodesArray = new SectionsTimeNode[20];
-			for(int i=0;i<20;i++){
-				timeNodesArray[i]=tndArray[i].TimeNode;
+			foreach (TimeNodeProperties tnp in tndlist){
+				sections.AddSection(tnp.Section);					
 			}
-			//sections.SectionsTimeNodes = timeNodesArray;
 			return sections;
 		}
 	}

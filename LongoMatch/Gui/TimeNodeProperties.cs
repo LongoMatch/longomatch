@@ -46,7 +46,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		public SectionsTimeNode TimeNode
+		public SectionsTimeNode Section
 		{
 			set{
 				this.stn = value;
