@@ -17,7 +17,9 @@ namespace LongoMatch.Gui.Component {
         
         private Gtk.Alignment GtkAlignment;
         
-        private Gtk.VBox vbox2;
+        private Gtk.HBox hbox1;
+        
+        private Gtk.VBox vbox3;
         
         private Gtk.HBox hbox4;
         
@@ -27,7 +29,7 @@ namespace LongoMatch.Gui.Component {
         
         private LongoMatch.Gui.Component.TimeAdjustWidget timeadjustwidget1;
         
-        private Gtk.HBox hbox1;
+        private Gtk.HBox hbox2;
         
         private Gtk.Label label4;
         
@@ -38,6 +40,16 @@ namespace LongoMatch.Gui.Component {
         private Gtk.Label hotKeyLabel;
         
         private Gtk.Label label6;
+        
+        private Gtk.VSeparator vseparator1;
+        
+        private Gtk.VBox vbox2;
+        
+        private Gtk.Button deletebutton;
+        
+        private Gtk.Button newleftbutton;
+        
+        private Gtk.Button newleftbutton1;
         
         private Gtk.Label titlelabel;
         
@@ -55,10 +67,14 @@ namespace LongoMatch.Gui.Component {
             this.GtkAlignment.Name = "GtkAlignment";
             this.GtkAlignment.LeftPadding = ((uint)(12));
             // Container child GtkAlignment.Gtk.Container+ContainerChild
-            this.vbox2 = new Gtk.VBox();
-            this.vbox2.Name = "vbox2";
-            this.vbox2.Spacing = 6;
-            // Container child vbox2.Gtk.Box+BoxChild
+            this.hbox1 = new Gtk.HBox();
+            this.hbox1.Name = "hbox1";
+            this.hbox1.Spacing = 6;
+            // Container child hbox1.Gtk.Box+BoxChild
+            this.vbox3 = new Gtk.VBox();
+            this.vbox3.Name = "vbox3";
+            this.vbox3.Spacing = 6;
+            // Container child vbox3.Gtk.Box+BoxChild
             this.hbox4 = new Gtk.HBox();
             this.hbox4.Name = "hbox4";
             this.hbox4.Spacing = 6;
@@ -80,78 +96,171 @@ namespace LongoMatch.Gui.Component {
             this.hbox4.Add(this.nameentry);
             Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.hbox4[this.nameentry]));
             w2.Position = 1;
-            this.vbox2.Add(this.hbox4);
-            Gtk.Box.BoxChild w3 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox4]));
+            this.vbox3.Add(this.hbox4);
+            Gtk.Box.BoxChild w3 = ((Gtk.Box.BoxChild)(this.vbox3[this.hbox4]));
             w3.Position = 0;
             w3.Fill = false;
-            // Container child vbox2.Gtk.Box+BoxChild
+            // Container child vbox3.Gtk.Box+BoxChild
             this.timeadjustwidget1 = new LongoMatch.Gui.Component.TimeAdjustWidget();
             this.timeadjustwidget1.Events = ((Gdk.EventMask)(256));
             this.timeadjustwidget1.Name = "timeadjustwidget1";
-            this.vbox2.Add(this.timeadjustwidget1);
-            Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(this.vbox2[this.timeadjustwidget1]));
+            this.vbox3.Add(this.timeadjustwidget1);
+            Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(this.vbox3[this.timeadjustwidget1]));
             w4.Position = 1;
             w4.Fill = false;
-            // Container child vbox2.Gtk.Box+BoxChild
-            this.hbox1 = new Gtk.HBox();
-            this.hbox1.Name = "hbox1";
-            this.hbox1.Spacing = 6;
-            // Container child hbox1.Gtk.Box+BoxChild
+            // Container child vbox3.Gtk.Box+BoxChild
+            this.hbox2 = new Gtk.HBox();
+            this.hbox2.Name = "hbox2";
+            this.hbox2.Spacing = 6;
+            // Container child hbox2.Gtk.Box+BoxChild
             this.label4 = new Gtk.Label();
             this.label4.Name = "label4";
             this.label4.LabelProp = Mono.Unix.Catalog.GetString("Color:        ");
-            this.hbox1.Add(this.label4);
-            Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(this.hbox1[this.label4]));
+            this.hbox2.Add(this.label4);
+            Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(this.hbox2[this.label4]));
             w5.Position = 0;
             w5.Expand = false;
             w5.Fill = false;
-            // Container child hbox1.Gtk.Box+BoxChild
+            // Container child hbox2.Gtk.Box+BoxChild
             this.colorbutton1 = new Gtk.ColorButton();
             this.colorbutton1.CanFocus = true;
             this.colorbutton1.Events = ((Gdk.EventMask)(784));
             this.colorbutton1.Name = "colorbutton1";
-            this.hbox1.Add(this.colorbutton1);
-            Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(this.hbox1[this.colorbutton1]));
+            this.hbox2.Add(this.colorbutton1);
+            Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(this.hbox2[this.colorbutton1]));
             w6.Position = 1;
             w6.Expand = false;
             w6.Fill = false;
-            // Container child hbox1.Gtk.Box+BoxChild
+            // Container child hbox2.Gtk.Box+BoxChild
             this.changebuton = new Gtk.Button();
             this.changebuton.CanFocus = true;
             this.changebuton.Name = "changebuton";
             this.changebuton.UseUnderline = true;
             this.changebuton.Label = Mono.Unix.Catalog.GetString("Change");
-            this.hbox1.Add(this.changebuton);
-            Gtk.Box.BoxChild w7 = ((Gtk.Box.BoxChild)(this.hbox1[this.changebuton]));
+            this.hbox2.Add(this.changebuton);
+            Gtk.Box.BoxChild w7 = ((Gtk.Box.BoxChild)(this.hbox2[this.changebuton]));
             w7.PackType = ((Gtk.PackType)(1));
             w7.Position = 2;
             w7.Expand = false;
             w7.Fill = false;
-            // Container child hbox1.Gtk.Box+BoxChild
+            // Container child hbox2.Gtk.Box+BoxChild
             this.hotKeyLabel = new Gtk.Label();
             this.hotKeyLabel.Name = "hotKeyLabel";
             this.hotKeyLabel.LabelProp = Mono.Unix.Catalog.GetString("none");
-            this.hbox1.Add(this.hotKeyLabel);
-            Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(this.hbox1[this.hotKeyLabel]));
+            this.hbox2.Add(this.hotKeyLabel);
+            Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(this.hbox2[this.hotKeyLabel]));
             w8.PackType = ((Gtk.PackType)(1));
             w8.Position = 3;
             w8.Expand = false;
             w8.Fill = false;
-            // Container child hbox1.Gtk.Box+BoxChild
+            // Container child hbox2.Gtk.Box+BoxChild
             this.label6 = new Gtk.Label();
             this.label6.Name = "label6";
             this.label6.LabelProp = Mono.Unix.Catalog.GetString("HotKey:");
-            this.hbox1.Add(this.label6);
-            Gtk.Box.BoxChild w9 = ((Gtk.Box.BoxChild)(this.hbox1[this.label6]));
+            this.hbox2.Add(this.label6);
+            Gtk.Box.BoxChild w9 = ((Gtk.Box.BoxChild)(this.hbox2[this.label6]));
             w9.PackType = ((Gtk.PackType)(1));
             w9.Position = 4;
             w9.Expand = false;
             w9.Fill = false;
-            this.vbox2.Add(this.hbox1);
-            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox1]));
+            this.vbox3.Add(this.hbox2);
+            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.vbox3[this.hbox2]));
             w10.Position = 2;
             w10.Fill = false;
-            this.GtkAlignment.Add(this.vbox2);
+            this.hbox1.Add(this.vbox3);
+            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.hbox1[this.vbox3]));
+            w11.Position = 0;
+            w11.Expand = false;
+            w11.Fill = false;
+            // Container child hbox1.Gtk.Box+BoxChild
+            this.vseparator1 = new Gtk.VSeparator();
+            this.vseparator1.Name = "vseparator1";
+            this.hbox1.Add(this.vseparator1);
+            Gtk.Box.BoxChild w12 = ((Gtk.Box.BoxChild)(this.hbox1[this.vseparator1]));
+            w12.Position = 1;
+            w12.Expand = false;
+            w12.Fill = false;
+            // Container child hbox1.Gtk.Box+BoxChild
+            this.vbox2 = new Gtk.VBox();
+            this.vbox2.Name = "vbox2";
+            this.vbox2.Spacing = 6;
+            // Container child vbox2.Gtk.Box+BoxChild
+            this.deletebutton = new Gtk.Button();
+            this.deletebutton.TooltipMarkup = "Delete";
+            this.deletebutton.CanFocus = true;
+            this.deletebutton.Name = "deletebutton";
+            this.deletebutton.UseUnderline = true;
+            // Container child deletebutton.Gtk.Container+ContainerChild
+            Gtk.Alignment w13 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
+            Gtk.HBox w14 = new Gtk.HBox();
+            w14.Spacing = 2;
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Image w15 = new Gtk.Image();
+            w15.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-delete", Gtk.IconSize.Menu, 16);
+            w14.Add(w15);
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Label w17 = new Gtk.Label();
+            w14.Add(w17);
+            w13.Add(w14);
+            this.deletebutton.Add(w13);
+            this.vbox2.Add(this.deletebutton);
+            Gtk.Box.BoxChild w21 = ((Gtk.Box.BoxChild)(this.vbox2[this.deletebutton]));
+            w21.Position = 0;
+            w21.Fill = false;
+            // Container child vbox2.Gtk.Box+BoxChild
+            this.newleftbutton = new Gtk.Button();
+            this.newleftbutton.TooltipMarkup = "Insert After";
+            this.newleftbutton.CanFocus = true;
+            this.newleftbutton.Name = "newleftbutton";
+            this.newleftbutton.UseUnderline = true;
+            // Container child newleftbutton.Gtk.Container+ContainerChild
+            Gtk.Alignment w22 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
+            Gtk.HBox w23 = new Gtk.HBox();
+            w23.Spacing = 2;
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Image w24 = new Gtk.Image();
+            w24.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-goto-last", Gtk.IconSize.Menu, 16);
+            w23.Add(w24);
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Label w26 = new Gtk.Label();
+            w23.Add(w26);
+            w22.Add(w23);
+            this.newleftbutton.Add(w22);
+            this.vbox2.Add(this.newleftbutton);
+            Gtk.Box.BoxChild w30 = ((Gtk.Box.BoxChild)(this.vbox2[this.newleftbutton]));
+            w30.Position = 1;
+            w30.Fill = false;
+            // Container child vbox2.Gtk.Box+BoxChild
+            this.newleftbutton1 = new Gtk.Button();
+            this.newleftbutton1.TooltipMarkup = "InsertBefore";
+            this.newleftbutton1.CanFocus = true;
+            this.newleftbutton1.Name = "newleftbutton1";
+            this.newleftbutton1.UseUnderline = true;
+            // Container child newleftbutton1.Gtk.Container+ContainerChild
+            Gtk.Alignment w31 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
+            Gtk.HBox w32 = new Gtk.HBox();
+            w32.Spacing = 2;
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Image w33 = new Gtk.Image();
+            w33.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-goto-first", Gtk.IconSize.Menu, 16);
+            w32.Add(w33);
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Label w35 = new Gtk.Label();
+            w32.Add(w35);
+            w31.Add(w32);
+            this.newleftbutton1.Add(w31);
+            this.vbox2.Add(this.newleftbutton1);
+            Gtk.Box.BoxChild w39 = ((Gtk.Box.BoxChild)(this.vbox2[this.newleftbutton1]));
+            w39.Position = 2;
+            w39.Fill = false;
+            this.hbox1.Add(this.vbox2);
+            Gtk.Box.BoxChild w40 = ((Gtk.Box.BoxChild)(this.hbox1[this.vbox2]));
+            w40.PackType = ((Gtk.PackType)(1));
+            w40.Position = 2;
+            this.GtkAlignment.Add(this.hbox1);
             this.frame1.Add(this.GtkAlignment);
             this.titlelabel = new Gtk.Label();
             this.titlelabel.Name = "titlelabel";
@@ -164,6 +273,9 @@ namespace LongoMatch.Gui.Component {
             }
             this.Show();
             this.changebuton.Clicked += new System.EventHandler(this.OnChangebutonClicked);
+            this.deletebutton.Clicked += new System.EventHandler(this.OnDeletebuttonClicked);
+            this.newleftbutton.Clicked += new System.EventHandler(this.OnNewleftbuttonClicked);
+            this.newleftbutton1.Clicked += new System.EventHandler(this.OnNewleftbutton1Clicked);
         }
     }
 }

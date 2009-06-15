@@ -38,6 +38,10 @@ namespace LongoMatch.DB
 		
 		public void AddSection(SectionsTimeNode tn){
 			sectionsList.Add(tn);
+		}	
+		
+		public void AddSectionAtPos(SectionsTimeNode tn, int index){
+			sectionsList.Insert(index,tn);
 		}		
 		
 		public void RemoveSection(int index){

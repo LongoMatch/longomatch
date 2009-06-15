@@ -86,7 +86,7 @@ namespace LongoMatch.DB
 		}
 		
 		public void AddSectionAtPos(SectionsTimeNode tn,int sectionIndex){
-			sections.AddSection(tn,sectionIndex);
+			sections.AddSectionAtPos(tn,sectionIndex);
 		}
 		
 		public void DeleteSection(int sectionIndex){

@@ -33,6 +33,10 @@ namespace LongoMatch.Gui.Component
 	public partial  class TimeNodeProperties : Gtk.Bin
 	{
 
+		public event EventHandler DeleteSection;
+		public event EventHandler InsertBefore;
+		public event EventHandler InsertAfter;
+		
 		private SectionsTimeNode stn = null;
 		
 		public TimeNodeProperties()
@@ -88,6 +92,27 @@ namespace LongoMatch.Gui.Component
 				UpdateGui();
 			}
 			dialog.Destroy();		
+		}
+
+		protected virtual void OnDeletebuttonClicked (object sender, System.EventArgs e)
+		{
+			if (DeleteSection !=  null){
+				DeleteSection(this, e);
+			}
+		}
+
+		protected virtual void OnNewleftbuttonClicked (object sender, System.EventArgs e)
+		{
+			if(InsertAfter != null){
+				InsertAfter(this, e);
+			}
+		}
+
+		protected virtual void OnNewleftbutton1Clicked (object sender, System.EventArgs e)
+		{
+			if (InsertBefore != null){
+				InsertBefore(this, e);
+			}
 		}
 		
 	
