@@ -17,15 +17,29 @@
 // 
 
 using System;
+using System.Collections.Generic;
 
 namespace LongoMatch.Video.Editor
 {
 	
-	
-	public enum VideoMuxer
+	public interface IMuxer
 	{
-		MATROSKA,
-		AVI,
-		DVD
+		event EventHandler MuxDone;
+		event LongoMatch.Video.Handlers.ErrorHandler Error;
+		
+		List<string> FilesToMux{
+			set;
+		}
+		
+		string OutputFile {
+			set;
+		}
+		
+				
+		bool Start();
+		
+		void Cancel();
+		
+		
 	}
 }

@@ -41,6 +41,18 @@ namespace LongoMatch.Video.Editor
 			set;
 		}
 		
+		AudioCodec AudioCodec{
+			set;
+		}
+		
+		VideoCodec VideoCodec{
+			set;
+		}
+		
+		VideoMuxer VideoMuxer{
+			set;
+		}		
+		
 		string OutputFile{
 			set;
 		}

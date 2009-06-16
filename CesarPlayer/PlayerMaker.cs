@@ -92,13 +92,13 @@ namespace LongoMatch.Video
 			switch (oS.Platform) { 
 				
 			 case PlatformID.Unix:
-				return new GnlMkvEditor();
+				return new GnonlinEditor();
 				
 			case PlatformID.Win32NT:
-				return new GnlMkvEditor();	
+				return new GnonlinEditor();	
 				
 			 default:
-				return new GnlMkvEditor();
+				return new GnonlinEditor();
 			}
 		}
 		
@@ -114,8 +114,22 @@ namespace LongoMatch.Video
 				
 			 default:
 				return new GstCameraCapturer("test.avi");
-			}
-			
+			}			
+		}
+		
+		public IMuxer GetVideoMuxer(VideoMuxer muxer){
+			if (muxer == VideoMuxer.AVI)
+				return null;
+				//return new AviMuxer();
+			else if (muxer == VideoMuxer.DVD)
+				return null;
+				//return new MplexMuxer();
+			else if (muxer == VideoMuxer.MATROSKA)
+				return new MatroskaMuxer();
+			else 
+				return new MatroskaMuxer();
+			    
+			    
 		}
 		
 	}

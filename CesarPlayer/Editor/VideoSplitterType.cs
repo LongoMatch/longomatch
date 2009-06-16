@@ -22,10 +22,9 @@ namespace LongoMatch.Video.Editor
 {
 	
 	
-	public enum VideoMuxer
+	public enum VideoSplitterType
 	{
-		MATROSKA,
-		AVI,
-		DVD
+		FAST,
+		FEATURED
 	}
 }

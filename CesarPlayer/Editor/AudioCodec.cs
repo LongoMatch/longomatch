@@ -22,10 +22,12 @@ namespace LongoMatch.Video.Editor
 {
 	
 	
-	public enum VideoMuxer
+	public enum AudioCodec
 	{
-		MATROSKA,
-		AVI,
-		DVD
+		COPY,
+		MPEG2,
+		MP3,
+		AAC,
+		VORBIS
 	}
 }

@@ -22,10 +22,61 @@ namespace LongoMatch.Video.Editor
 {
 	
 	
-	public enum VideoMuxer
+	public interface IVideoSplitter
 	{
-		MATROSKA,
-		AVI,
-		DVD
+		event LongoMatch.Video.Handlers.ProgressHandler Progress;	
+		
+		bool EnableAudio{
+			set;
+			get;
+		}		
+		
+		bool EnableTitle{
+			set;
+			get;
+		}
+		
+		int VideoBitrate {
+			set;
+			get;
+		}
+		
+		int AudioBitrate {
+			set;
+			get;
+		}
+		
+		int Width {
+			get ;
+			set;
+		}
+		
+		int Height {
+			get ;
+			set ;
+		}
+		
+		string OutputFile {
+			get ;
+			set;
+		}
+		
+		AudioCodec AudioCodec{
+			set;
+		}
+		
+		VideoCodec VideoCodec{
+			set;
+		}
+		
+		VideoMuxer VideoMuxer{
+			set;
+		}		
+		
+		void SetSegment(string filePath, long start, long duration, double rate, string title);
+		
+		void Start();
+		
+		void Cancel();
 	}
 }

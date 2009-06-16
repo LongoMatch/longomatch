@@ -26,22 +26,28 @@ namespace LongoMatch.Video.Editor
 {
 	
 	
-	public class GnlMkvEditor : IVideoEditor
+	public class GnonlinEditor : IVideoEditor
 	{
 		public event LongoMatch.Video.Handlers.ProgressHandler Progress;	
 		
 		private GstVideoSplitter splitter;
 		private Queue<VideoSegment> segmentsList;
 		private Queue<string> segmentsTempFiles;
+		
 		private int height;
 		private int width;
 		private string outputFile;
+		private AudioCodec acodec;
+		private VideoCodec vcodec;
+		private VideoMuxer muxer;
 		private string tempDir;
-		private int segmentCoded;
-		private Thread thread;
-		private bool readyToMerge;
 		
-		public GnlMkvEditor()
+		private int segmentCoded;
+		private bool readyToMerge;
+		private Thread thread;
+	
+		
+		public GnonlinEditor()
 		{			
 			splitter = new GstVideoSplitter();
 			splitter.PercentCompleted += new PercentCompletedHandler(OnProgress); 
@@ -78,6 +84,18 @@ namespace LongoMatch.Video.Editor
 				splitter.Width = width;
 			}
 		}
+		
+		public AudioCodec AudioCodec{
+			set{}
+		}
+		
+		public VideoCodec VideoCodec{
+			set{}
+		}
+		
+		public VideoMuxer VideoMuxer{
+			set{}
+		}		
 		
 				
 		public string OutputFile{

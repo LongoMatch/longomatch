@@ -18,12 +18,12 @@
 
 using System;
 
-namespace longomatch.Editor
+namespace LongoMatch.Video.Editor
 {
-	
 	
 	public enum VideoCodec
 	{
+		COPY,
 		THEORA,
 		H264,
 		XVID,
