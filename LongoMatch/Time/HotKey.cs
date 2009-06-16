@@ -90,7 +90,11 @@ namespace LongoMatch.TimeNodes
 		
 		public override string ToString ()
 		{
-			return string.Format("<{0}> + {1}", Modifier,(Key.ToString()).ToLower());
+			string modifierS = Modifier.ToString();
+			// A modifier is represented like 'nameMask'
+			// We want to remove 'Mask'
+			modifierS = modifierS.Remove(modifierS.Length-4);
+			return string.Format("<{0}>+{1}", modifierS,(Key.ToString()).ToLower());
 		}
 
 #endregion

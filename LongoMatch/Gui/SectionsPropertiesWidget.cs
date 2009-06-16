@@ -33,13 +33,15 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class SectionsPropertiesWidget : Gtk.Bin
 	{
-		List<TimeNodeProperties> tndlist;
-		Project project;
+		private List<HotKey> hkList;
+		private List<TimeNodeProperties> tndlist;
+		private Project project;
 		
 		public SectionsPropertiesWidget()
 		{
 			this.Build();
 			tndlist = new List<TimeNodeProperties>();
+			hkList = new List<HotKey>();
 			
 		}
 		
@@ -54,6 +56,7 @@ namespace LongoMatch.Gui.Component
 			table1.NRows =(uint) (sectionsCount/5);
 			
 			tndlist.Clear();
+			hkList.Clear();
 			
 			foreach (Widget w in table1.AllChildren){
 					w.Unrealize();
@@ -62,13 +65,19 @@ namespace LongoMatch.Gui.Component
 			
 			for( int i=0;i<sectionsCount;i++){
 				TimeNodeProperties tnp = new TimeNodeProperties();
+				HotKey hk = sections.GetHotKey(i);
+				
 				tnp.Name = i.ToString();
 				tnp.Title =  "Section "+(i+1);			
 				tnp.Section = sections.GetSection(i);	
 				tnp.DeleteSection += new EventHandler(OnDelete);
 				tnp.InsertAfter += new EventHandler(OnInsertAfter);
 				tnp.InsertBefore += new EventHandler(OnInsertBefore);
+				tnp.HotKeyChanged += new HotKeyChangeHandler(OnHotKeyChanged);
 				tndlist.Add(tnp);	
+				
+				if (hk.Defined)
+					hkList.Add(sections.GetHotKey(i));
 				
 				uint row_top =(uint) (i/table1.NColumns);
 				uint row_bottom = (uint) row_top+1 ;
@@ -108,10 +117,7 @@ namespace LongoMatch.Gui.Component
 				Sections sections = GetSections();
 				sections.AddSectionAtPos(tn,index);
 				SetSections(sections);
-			}
-			
-				
-			
+			}			
 		}
 		
 		protected virtual void OnDelete(object sender, EventArgs args){
@@ -133,6 +139,17 @@ namespace LongoMatch.Gui.Component
 		
 		protected virtual void OnInsertBefore(object sender, EventArgs args){
 			AddSection(int.Parse(((Widget)sender).Name));
+		}
+		
+		protected virtual void OnHotKeyChanged(TimeNodeProperties sender, HotKey prevHotKey, SectionsTimeNode section){
+			if (hkList.Contains(section.HotKey)){
+			    MessagePopup.PopupMessage(this,MessageType.Warning,
+				                        Catalog.GetString("This hotkey is already in use."));
+				section.HotKey = prevHotKey;
+				sender.Section = section;			
+			}
+			else if (section.HotKey.Defined)
+				hkList.Add(section.HotKey);
 		}
 	}
 }

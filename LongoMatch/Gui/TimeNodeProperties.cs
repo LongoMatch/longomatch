@@ -28,6 +28,8 @@ using LongoMatch.Gui.Dialog;
 namespace LongoMatch.Gui.Component
 {
 	
+	public delegate void HotKeyChangeHandler (TimeNodeProperties  sender,HotKey prevHotKey, SectionsTimeNode newSection);
+	
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial  class TimeNodeProperties : Gtk.Bin
@@ -36,6 +38,7 @@ namespace LongoMatch.Gui.Component
 		public event EventHandler DeleteSection;
 		public event EventHandler InsertBefore;
 		public event EventHandler InsertAfter;
+		public event HotKeyChangeHandler HotKeyChanged;
 		
 		private SectionsTimeNode stn = null;
 		
@@ -69,7 +72,6 @@ namespace LongoMatch.Gui.Component
 				timeadjustwidget1.SetTimeNode(stn);
 				colorbutton1.Color = stn.Color;
 				
-				//FIXME 1.0 Every TimeNode object must have a HotKey != null
 				if (stn.HotKey.Defined){
 					hotKeyLabel.Text = stn.HotKey.ToString();
 				}
@@ -81,17 +83,20 @@ namespace LongoMatch.Gui.Component
 			stn.Name = nameentry.Text;
 			stn.Start=timeadjustwidget1.GetStartTime();
 			stn.Stop=timeadjustwidget1.GetStopTime();
-			stn.Color=colorbutton1.Color;
+			stn.Color=colorbutton1.Color;		
 		}
 		
 		protected virtual void OnChangebutonClicked (object sender, System.EventArgs e)
 		{
 			HotKeySelectorDialog dialog = new HotKeySelectorDialog();
-			if (dialog.Run() == (int)ResponseType.Ok){
-				stn.HotKey=dialog.HotKey;
+			HotKey prevHotKey =  stn.HotKey;	
+			if (dialog.Run() == (int)ResponseType.Ok){							
+				stn.HotKey=dialog.HotKey;				
 				UpdateGui();
 			}
-			dialog.Destroy();		
+			dialog.Destroy();	
+			if (HotKeyChanged != null)
+					HotKeyChanged(this,prevHotKey,stn);
 		}
 
 		protected virtual void OnDeletebuttonClicked (object sender, System.EventArgs e)
