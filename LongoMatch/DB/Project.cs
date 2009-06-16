@@ -48,6 +48,10 @@ namespace LongoMatch.DB
 		
 		private DateTime matchDate;
 		
+		private string season;
+		
+		private string competition;
+		
 		private Sections sections;
 
 		private List<List<MediaTimeNode>> sectionPlaysList;

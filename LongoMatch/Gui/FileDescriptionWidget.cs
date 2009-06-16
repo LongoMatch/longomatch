@@ -38,19 +38,17 @@ namespace LongoMatch.Gui.Component
 		NewFromFileProject,
 		EditProject,		
 	}
-	//añadir eventos de cambios para realizar el cambio directamente sobre el file data abierto
+	//TODO añadir eventos de cambios para realizar el cambio directamente sobre el file data abierto
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class FileDescriptionWidget : Gtk.Bin
 	{
-
 		private DateTime date;
 		private Project project;
 		private MediaFile mFile;
 		private CalendarPopup cp;
 		private Sections actualSection;
-		private UseType useType;
-		
+		private UseType useType;		
 		
 		public FileDescriptionWidget()
 		{
@@ -66,30 +64,23 @@ namespace LongoMatch.Gui.Component
 			
 			allFiles = System.IO.Directory.GetFiles(MainClass.TemplatesDir(),"*.sct");
 			foreach (string filePath in allFiles){
-				string fileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
+				string fileName = System.IO	.Path.GetFileNameWithoutExtension(filePath);
 				combobox1.AppendText(fileName);
 				//Setting the selceted value to the default template
 				if (fileName == "default")
 					index = i;
 				i++;
 			}
-			combobox1.Active = index;
-			
+			combobox1.Active = index;			
 			SectionsReader reader = new SectionsReader(System.IO.Path.Combine(MainClass.TemplatesDir(),this.SectionsFile));			
-			this.Sections= reader.GetSections();
-			
-			this.Use=UseType.NewFromFileProject;
-			
-			Date = System.DateTime.Today;
+			this.Sections= reader.GetSections();			
+			this.Use=UseType.NewFromFileProject;			
+			this.Date = System.DateTime.Today;
 			
 			if (Environment.OSVersion.Platform == PlatformID.Win32NT){
 				this.calendarbutton.Sensitive = false;
 				this.calendarbutton.Visible = false;	
-			}
-				
-			
-			
-			
+			}		
 		}
 		
 		public UseType Use{
@@ -106,8 +97,7 @@ namespace LongoMatch.Gui.Component
 			}
 			get{
 				return this.useType;
-			}
-				
+			}				
 		}
 		
 		public string LocalName {
@@ -146,17 +136,14 @@ namespace LongoMatch.Gui.Component
 		public Sections Sections{
 			get {return this.actualSection;}
 			set {this.actualSection = value;}
-		}
-		
-		
+		}	
 		
 		private string SectionsFile{
 			get {
 				string filename =  combobox1.ActiveText + ".sct";
 				return filename;
 				}
-		}
-		
+		}	
 
 		public void SetProject(Project project){
 			this.project = project;
@@ -167,8 +154,7 @@ namespace LongoMatch.Gui.Component
 			this.LocalGoals = project.LocalGoals;
 			this.VisitorGoals = project.VisitorGoals;
 			this.Date= project.MatchDate;
-			this.Sections = project.Sections;			
-
+			this.Sections = project.Sections;
 		}
 		
 		public void UpdateProject(){
@@ -179,13 +165,10 @@ namespace LongoMatch.Gui.Component
 			project.VisitorGoals = (int)this.visitorSpinButton.Value;
 			project.MatchDate = DateTime.Parse(this.dateEntry.Text);
 			project.Sections = this.Sections;
-		}
-		
-	
+		}	
 		
 		public Project GetProject(){
-			if (this.Filename != ""){
-								
+			if (this.Filename != ""){								
 				if (project == null){
 					return new Project(this.mFile,
 					                    this.LocalName,
@@ -205,23 +188,58 @@ namespace LongoMatch.Gui.Component
 					project.MatchDate = this.Date;
 					project.Sections = this.Sections;
 					return project;						
-				}
-				
+				}				
 			}
 			else return null;
 		}
 		
-		public void Clear(){
-			
+		public void Clear(){			
 			this.LocalName = "";
 			this.VisitorName = "";
 			this.LocalGoals = 0;
 			this.VisitorGoals = 0;
 			this.Date = System.DateTime.Today;
 			this.Filename = "";
-			this.mFile = null;
-
+			this.mFile = null;		
+		}
+		
+		private void CreateMediaFile(string filename){
+			int duration;			
+			bool hasVideo;
+			bool hasAudio;
+			string audioCodec = "";
+			string videoCodec = "";
+			int fps=0;
+			int height=0;
+			int width=0;			
+			LongoMatch.Video.PlayerMaker pm;
+			IMetadataReader reader;
 			
+			try{
+				pm =  new LongoMatch.Video.PlayerMaker();
+				reader = pm.getMetadataReader();
+				reader.Open(filename);
+				duration = (int)reader.GetMetadata(GstPlayerMetadataType.Duration);						
+				hasVideo = (bool) reader.GetMetadata(GstPlayerMetadataType.HasVideo);
+				hasAudio = (bool) reader.GetMetadata(GstPlayerMetadataType.HasAudio);
+				if (hasAudio){
+					audioCodec = (string) reader.GetMetadata(GstPlayerMetadataType.AudioCodec);					
+				}
+				if (hasVideo){
+					videoCodec = (string) reader.GetMetadata(GstPlayerMetadataType.VideoCodec);	
+					fps = (int) reader.GetMetadata(GstPlayerMetadataType.Fps);
+				}			
+				reader.Close();	
+				reader.Dispose();
+				Console.WriteLine(audioCodec);
+				Console.WriteLine(videoCodec);
+				this.mFile = new MediaFile(filename,new Time(duration*1000),(ushort)fps,hasAudio,hasVideo,videoCodec,audioCodec,0,0);
+				fileEntry.Text = filename;
+			}
+			catch (GLib.GException ex){
+			    MessagePopup.PopupMessage(this, MessageType.Error, 
+				                          Catalog.GetString("Invalid video file:")+"\n"+ex.Message);
+			}
 		}
 
 		protected virtual void OnDateSelected(DateTime dateTime){
@@ -229,8 +247,9 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		protected virtual void OnOpenbuttonClicked(object sender, System.EventArgs e)
-		{
+		{		
 			FileChooserDialog fChooser = null;
+			
 			if (this.useType == UseType.NewCaptureProject){
 				fChooser = new FileChooserDialog(Catalog.GetString("Save File as..."),
 			                                                   (Gtk.Window)this.Toplevel,
@@ -239,11 +258,10 @@ namespace LongoMatch.Gui.Component
 			                                                   "gtk-save",ResponseType.Accept);
 				fChooser.SetCurrentFolder(MainClass.VideosDir());
 				if (fChooser.Run() == (int)ResponseType.Accept){
-						fileEntry.Text = fChooser.Filename;
-					}
-				
-			}
-			
+					CreateMediaFile(fChooser.Filename);
+					fileEntry.Text = fChooser.Filename;					
+				}				
+			}			
 			
 			else {
 				fChooser = new FileChooserDialog(Catalog.GetString("Open file..."),
@@ -254,57 +272,29 @@ namespace LongoMatch.Gui.Component
 			
 				fChooser.SetCurrentFolder(System.Environment.GetFolderPath(Environment.SpecialFolder.Personal));
 		
-				if (fChooser.Run() == (int)ResponseType.Accept){
-					
-					LongoMatch.Video.PlayerMaker pm = new LongoMatch.Video.PlayerMaker();
-					IMetadataReader reader = pm.getMetadataReader();
-					try{
-						reader.Open(fChooser.Filename);
-						int duration = (int)reader.GetMetadata(GstPlayerMetadataType.Duration);
-						int fps = (int) reader.GetMetadata(GstPlayerMetadataType.Fps);
-						bool hasVideo = (bool) reader.GetMetadata(GstPlayerMetadataType.HasVideo);
-						bool hasAudio = (bool) reader.GetMetadata(GstPlayerMetadataType.HasAudio);
-						
-						this.mFile = new MediaFile(fChooser.Filename,new Time(duration*1000),(ushort)fps,hasAudio,hasVideo);				
-						fileEntry.Text = fChooser.Filename;
-						
-					}
-					catch (GLib.GException ex){
-			    		MessagePopup.PopupMessage(this, MessageType.Error, 
-				                          Catalog.GetString("Invalid video file:")+"\n"+ex.Message);
-					}
-				}
-				
-				
-			}
-		
+				if (fChooser.Run() == (int)ResponseType.Accept){					
+					CreateMediaFile(fChooser.Filename);
+					fileEntry.Text = fChooser.Filename;					
+				}			
+			}		
 			fChooser.Destroy();
 		}
-	
-
-
-
-
-
 
 
 		protected virtual void OnCalendarbuttonClicked (object sender, System.EventArgs e)
 		{
 			cp.TransientFor=(Gtk.Window)this.Toplevel;		
-			cp.Show();
-			
+			cp.Show();		
 		}
 
 		protected virtual void OnEditbuttonClicked (object sender, System.EventArgs e)
-		{
-			
+		{			
 			TemplateEditorDialog ted = new TemplateEditorDialog();
 			ted.Project=this.project;
 			
 			if (ted.Run() == (int)ResponseType.Apply){
 				this.Sections = ted.Sections;
-			}
-			
+			}			
 			ted.Destroy();
 		}
 		
@@ -312,8 +302,6 @@ namespace LongoMatch.Gui.Component
 		{
 			SectionsReader reader = new SectionsReader(System.IO.Path.Combine(MainClass.TemplatesDir(),this.SectionsFile));			
 			this.Sections= reader.GetSections();
-		}
-		
-		
+		}		
 	}
 }

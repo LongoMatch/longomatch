@@ -28,6 +28,8 @@ namespace LongoMatch.Video.Utils
 	public interface IMetadataReader
 	{
 		bool Open(string mrl);
+		void Close();
+		void Dispose();
 		object GetMetadata(GstPlayerMetadataType type);
 	}
 }

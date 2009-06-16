@@ -33,13 +33,21 @@ namespace LongoMatch.DB
 		ushort fps;
 		bool hasAudio;
 		bool hasVideo;
+		string videoCodec;
+		string audioCodec;
+		uint videoHeight;
+		uint videoWidth;
 		
-		public MediaFile(string filePath,Time length,ushort fps,bool hasAudio, bool hasVideo)
+		public MediaFile(string filePath,Time length,ushort fps,bool hasAudio, bool hasVideo, string videoCodec, string audioCodec, uint videoWidth, uint videoHeight)
 		{
 			this.filePath = filePath;
 			this.length = length;
 			this.hasAudio = hasAudio;
 			this.hasVideo = hasVideo;
+			this.videoCodec = videoCodec;
+			this.audioCodec = audioCodec;
+			this.videoHeight = videoHeight;
+			this.videoWidth = videoWidth;
 			if (fps == 0)
 					//For audio Files
 					this.fps=25;
@@ -65,6 +73,26 @@ namespace LongoMatch.DB
 		public bool HasAudio{
 			get { return this.hasAudio;}
 			set{this.hasAudio = value;}
+		}
+		
+		public string VideoCodec{
+			get {return this.videoCodec;}
+			set {this.videoCodec = value;}
+		}
+		
+		public string AudioCodec{
+			get {return this.audioCodec;}
+			set {this.audioCodec = value;}
+			}
+		
+		public uint VideoWidth{
+			get {return this.videoWidth;}
+			set {this.videoWidth= value;}			
+		}
+		
+		public uint VideoHeight{
+			get {return this.videoHeight;}
+			set {this.videoHeight= value;}			
 		}
 		
 		public ushort Fps{

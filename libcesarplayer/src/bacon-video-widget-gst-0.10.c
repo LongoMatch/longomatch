@@ -526,19 +526,6 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 static gboolean
 BVW_boolean_handled_accumulator (GSignalInvocationHint * ihint,
     GValue * return_accu, const GValue * handler_return, gpointer foobar)
@@ -1040,7 +1027,7 @@ BVW_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 
       gst_message_parse_tag (message, &tag_list);
 
-      GST_INFO ("Tags: %" GST_PTR_FORMAT, tag_list);
+      GST_INFO("Tags: %"GST_PTR_FORMAT, tag_list);
 
       /* all tags (replace previous tags, title/artist/etc. might change
        * in the middle of a stream, e.g. with radio streams) */

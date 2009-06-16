@@ -70,7 +70,7 @@ namespace LongoMatch.Gui.Dialog
 					}
 					catch{
 						MessagePopup.PopupMessage(this, MessageType.Warning, 
-				                          Catalog.GetString("The Project for this file already exists.\nTry to edit it."));
+				                          Catalog.GetString("A Project is already using this file."));
 					}
 				}
 				this.Fill();
