@@ -59,7 +59,7 @@
 /* gtk+/gnome */
 #ifdef WIN32
 	#include <gdk/gdkwin32.h>
-	#define DEFAULT_VIDEO_SINK "dshowvideosink"
+	#define DEFAULT_VIDEO_SINK "directdrawsink"
 #else
 	#include <gdk/gdkx.h>
 	#define DEFAULT_VIDEO_SINK "xvimagesink"
@@ -2119,14 +2119,12 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, gboolean accur
   else {  
 	 /* Emit a time tick of where we are going, we are paused */
   	got_time_tick (bvw->priv->play, time * GST_MSECOND, bvw);
+	g_print("Seek key");
 	gst_element_seek (bvw->priv->play, 1.0,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT,
       	GST_SEEK_TYPE_SET, time * GST_MSECOND,
       	GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
   }
-  
-  gst_element_get_state (bvw->priv->play, NULL, NULL, 100 * GST_MSECOND);
-
   return TRUE;
 }
 
@@ -2306,9 +2304,9 @@ bacon_video_widget_seek_to_next_frame (BaconVideoWidget *bvw, gboolean in_segmen
     pos = bacon_video_widget_get_accurate_current_time(bvw);
     final_pos = pos*GST_MSECOND + 1*GST_SECOND/fps;
 
-#ifdef WIN32
+/*#ifdef WIN32
 	bacon_video_widget_play(bvw);
-#endif
+#endif*/
 
 	if (bacon_video_widget_is_playing(bvw))
 		bacon_video_widget_pause(bvw);
@@ -2323,11 +2321,13 @@ bacon_video_widget_seek_to_next_frame (BaconVideoWidget *bvw, gboolean in_segmen
        GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE  ,
        GST_SEEK_TYPE_SET,  final_pos,
 	   GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE );
-
 	
-#ifdef WIN32
+	gst_x_overlay_expose(bvw->priv->xoverlay);
+	
+/*#ifdef WIN32
 	bacon_video_widget_pause(bvw);
 #endif
+*/
     return ret;
   	
 }
@@ -2348,10 +2348,10 @@ gboolean  bacon_video_widget_seek_to_previous_frame (BaconVideoWidget *bvw, gboo
     pos = bacon_video_widget_get_accurate_current_time(bvw);
     final_pos = pos*GST_MSECOND - 1*GST_SECOND/fps;
 
-#ifdef WIN32
+/*#ifdef WIN32
 	bacon_video_widget_play(bvw);
 #endif
-
+*/
 	if (bacon_video_widget_is_playing(bvw))
 		bacon_video_widget_pause(bvw);
 
@@ -2367,9 +2367,12 @@ gboolean  bacon_video_widget_seek_to_previous_frame (BaconVideoWidget *bvw, gboo
        GST_SEEK_TYPE_SET,  final_pos,
 	   GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE );
 
-#ifdef WIN32
+	gst_x_overlay_expose(bvw->priv->xoverlay);
+
+/*#ifdef WIN32
 	bacon_video_widget_pause(bvw);
 #endif
+	*/
     return ret;
 }
   
@@ -2380,16 +2383,19 @@ gboolean  bacon_video_widget_seek_to_previous_frame (BaconVideoWidget *bvw, gboo
 	 	g_return_val_if_fail (bvw != NULL, FALSE);
   		g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   		g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
-#ifdef WIN32	
+/*#ifdef WIN32	
 		bacon_video_widget_play(bvw);
 		
-#endif
-		gst_element_seek (bvw->priv->play, 0.1,
+#endif*/
+		gst_element_seek (bvw->priv->play, 1.0,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_SEGMENT | GST_SEEK_FLAG_ACCURATE,
       	GST_SEEK_TYPE_SET, stop * GST_MSECOND-1,
-      	GST_SEEK_TYPE_SET, stop * GST_MSECOND);	 	
+      	GST_SEEK_TYPE_SET, stop * GST_MSECOND);	 
+	
+		if (bacon_video_widget_is_playing(bvw))
+			bacon_video_widget_pause(bvw);        
 
-		bacon_video_widget_pause(bvw);              	
+		gst_x_overlay_expose(bvw->priv->xoverlay);
 
 		return TRUE;
  }
@@ -2399,15 +2405,18 @@ gboolean  bacon_video_widget_seek_to_previous_frame (BaconVideoWidget *bvw, gboo
 	g_return_val_if_fail (bvw != NULL, FALSE);
   	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   	g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
-#ifdef WIN32
+/*#ifdef WIN32
 		bacon_video_widget_play(bvw);
-#endif
+#endif*/
   	gst_element_seek (bvw->priv->play, 1.0,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_SEGMENT | GST_SEEK_FLAG_ACCURATE,
       	GST_SEEK_TYPE_SET, start * GST_MSECOND,
       	GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE); 
 
-        bacon_video_widget_pause(bvw);
+    if (bacon_video_widget_is_playing(bvw))
+		bacon_video_widget_pause(bvw);        
+
+	gst_x_overlay_expose(bvw->priv->xoverlay);
 
   	return TRUE;
 	  
