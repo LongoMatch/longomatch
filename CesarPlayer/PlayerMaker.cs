@@ -124,7 +124,7 @@ namespace LongoMatch.Video
 			else if (muxer == VideoMuxer.DVD)
 				return null;
 				//return new MplexMuxer();
-			else if (muxer == VideoMuxer.MATROSKA)
+			else if (muxer == VideoMuxer.MKV)
 				return new MatroskaMuxer();
 			else 
 				return new MatroskaMuxer();

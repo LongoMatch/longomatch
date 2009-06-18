@@ -25,7 +25,7 @@ namespace LongoMatch.Video.Editor {
 	using System.Runtime.InteropServices;
 
 
-	public class GstVideoSplitter : GLib.Object {
+	public class GstVideoSplitter : GLib.Object, IVideoSplitter {
 
 		[DllImport("libcesarplayer.dll")]
 		static extern unsafe IntPtr gst_video_splitter_new(out IntPtr err);
@@ -64,7 +64,7 @@ namespace LongoMatch.Video.Editor {
 		}
 		
 		[GLib.Property ("enable-title")]
-		public bool EnableTile {
+		public bool EnableTitle {
 			get {
 				GLib.Value val = GetProperty ("enable-title");
 				bool ret = (bool) val;
@@ -295,6 +295,27 @@ namespace LongoMatch.Video.Editor {
 
 		public void Cancel() {
 			gst_video_splitter_cancel(Handle);
+		}
+		
+		[DllImport("libcesarplayer.dll")]
+		static extern void gst_video_splitter_set_video_encoder(IntPtr raw, int type);
+
+		public void SetVideoEncoder(VideoCodec codec) {
+			gst_video_splitter_set_video_encoder(Handle,(int)codec);
+		}
+		
+		[DllImport("libcesarplayer.dll")]
+		static extern void gst_video_splitter_set_audio_encoder(IntPtr raw, int type);
+
+		public void SetAudioEncoder(AudioCodec codec) {
+			gst_video_splitter_set_audio_encoder(Handle,(int)codec);
+		}
+		
+		[DllImport("libcesarplayer.dll")]
+		static extern void gst_video_splitter_set_video_muxer(IntPtr raw, int type);
+
+		public void SetVideoMuxer(VideoMuxer muxer) {
+			gst_video_splitter_set_video_muxer(Handle,(int)muxer);
 		}
 
 		[DllImport("libcesarplayer.dll")]

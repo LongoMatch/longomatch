@@ -24,10 +24,10 @@ namespace LongoMatch.Video.Editor
 	
 	public enum AudioCodec
 	{
-		COPY,
-		MPEG2,
-		MP3,
-		AAC,
-		VORBIS
+		COPY = 0,
+		VORBIS= 1,
+		AAC = 2,
+		MP3 = 3,
+		MPEG2_AUDIO  = 4
 	}
 }

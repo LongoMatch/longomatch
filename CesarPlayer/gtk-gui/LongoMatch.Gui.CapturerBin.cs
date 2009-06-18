@@ -105,7 +105,7 @@ namespace LongoMatch.Gui {
             w21.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w22 = new Gtk.Image();
-            w22.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-stop", Gtk.IconSize.Menu, 16);
+            w22.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-stop", Gtk.IconSize.Button, 20);
             w21.Add(w22);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w24 = new Gtk.Label();

@@ -30,30 +30,32 @@ namespace LongoMatch.Video.Editor
 	{
 		public event LongoMatch.Video.Handlers.ProgressHandler Progress;	
 		
-		private GstVideoSplitter splitter;
-		private Queue<VideoSegment> segmentsList;
-		private Queue<string> segmentsTempFiles;
+		private IVideoSplitter splitter;
+		private IMuxer muxer;
+		private List<VideoSegment> segmentsList;
+		private List<string> segmentsTempFiles;
 		
 		private int height;
 		private int width;
 		private string outputFile;
-		private AudioCodec acodec;
-		private VideoCodec vcodec;
-		private VideoMuxer muxer;
 		private string tempDir;
 		
 		private int segmentCoded;
 		private bool readyToMerge;
 		private Thread thread;
+		
+		private PlayerMaker pm;
 	
 		
 		public GnonlinEditor()
-		{			
+		{		
+			pm = new PlayerMaker();
+			ChangeMuxer(VideoMuxer.MKV);
 			splitter = new GstVideoSplitter();
 			splitter.PercentCompleted += new PercentCompletedHandler(OnProgress); 
 			splitter.Error += new ErrorHandler(OnError);
-			segmentsList = new Queue<VideoSegment>();	
-			segmentsTempFiles = new Queue<string>();
+			segmentsList = new List<VideoSegment>();	
+			segmentsTempFiles = new List<string>();
 			tempDir = System.IO.Path.GetTempPath();
 			segmentCoded = -1;
 		}		
@@ -86,22 +88,25 @@ namespace LongoMatch.Video.Editor
 		}
 		
 		public AudioCodec AudioCodec{
-			set{}
+			set{splitter.SetAudioEncoder(value);}
 		}
 		
 		public VideoCodec VideoCodec{
-			set{}
+			set{splitter.SetVideoEncoder(value);}
 		}
 		
 		public VideoMuxer VideoMuxer{
-			set{}
-		}		
-		
+			set{
+				splitter.SetVideoMuxer(value);
+				PlayerMaker pm = new PlayerMaker();
+				muxer = pm.GetVideoMuxer(value);
+			}
+		}				
 				
 		public string OutputFile{
 			set{ 
 				outputFile = value;
-				splitter.OutputFile = value;}
+				muxer.OutputFile = value;}
 		}
 		
 		public string TempDir{
@@ -109,7 +114,7 @@ namespace LongoMatch.Video.Editor
 		}
 		
 		public bool EnableTitle{
-			set{splitter.EnableTile = value;}
+			set{splitter.EnableTitle = value;}
 		}
 		
 		public bool EnableAudio{
@@ -118,7 +123,7 @@ namespace LongoMatch.Video.Editor
 			
 		public void AddSegment (string filePath, long start, long duration, double rate, string title)
 		{
-			segmentsList.Enqueue(new VideoSegment(filePath, start, duration, rate, title));
+			segmentsList.Add(new VideoSegment(filePath, start, duration, rate, title));
 		}
 		
 		public void ClearList(){
@@ -126,7 +131,7 @@ namespace LongoMatch.Video.Editor
 		}
 		
 		public void Start(){
-			thread = new Thread(new ThreadStart(EncodeSegments));
+			thread = new Thread(new ThreadStart(SplitAndMerge));
 			thread.Start();			
 		}
 		
@@ -140,7 +145,19 @@ namespace LongoMatch.Video.Editor
 			DeleteTempFiles();
 		}
 		
-		private void EncodeSegments(){
+		private void ChangeMuxer(VideoMuxer videoMuxer){
+			muxer = pm.GetVideoMuxer(videoMuxer);
+			muxer.MuxDone += new EventHandler(OnMuxDone);
+		}
+		
+		
+		private void SplitAndMerge(){
+			SplitSegments();
+			muxer.FilesToMux = segmentsTempFiles;
+			muxer.Start();
+		}
+		
+		private void SplitSegments(){
 			int i = 1;
 			string tempFile;
 			
@@ -148,61 +165,15 @@ namespace LongoMatch.Video.Editor
 			foreach (VideoSegment segment in segmentsList){					
 				segmentCoded = i;
 				tempFile = System.IO.Path.Combine ( tempDir, "segment"+i+".mkv");
-				segmentsTempFiles.Enqueue(tempFile);
+				segmentsTempFiles.Add(tempFile);
 				splitter.OutputFile= tempFile;
 				splitter.SetSegment(segment.FilePath, segment.Start, segment.Duration, segment.Rate, segment.Title);
 				splitter.Start();
 				i++;
 				while (segmentCoded != -1);
-			}			
-			MergeSegments();		
+			}				
 		}
-		
-		private void MergeSegments (){
-			Process process = new Process();
-			ProcessStartInfo pinfo = new ProcessStartInfo();
-			if (System.Environment.OSVersion.Platform != PlatformID.Unix)
-				pinfo.FileName=System.IO.Path.Combine(System.Environment.CurrentDirectory,"mkvmerge.exe");
-			else 
-				pinfo.FileName="mkvmerge";			
-			pinfo.Arguments = CreateMkvMergeCommandLine();
-			pinfo.CreateNoWindow = true;
-			pinfo.UseShellExecute = false;
-			process.StartInfo = pinfo;
-			process.Start();
-			process.WaitForExit();			
-			this.DeleteTempFiles();
-			Application.Invoke(delegate {Progress ((float)EditorState.FINISHED);});
 
-		}
-		
-		private string CreateMkvMergeCommandLine(){
-		 	int i=0;
-			string appendTo="";
-			string args = String.Format("-o {0}  --language 1:eng --track-name 1:Video --default-track 1:yes --display-dimensions 1:{1}x{2} ",
-			                            outputFile, width, height);
-			
-			foreach (String path in segmentsTempFiles){
-				if (i==0){
-					args += String.Format ("-d 1 -A -S {0} ", path);
-				}
-				if (i==1){
-					args += String.Format ("-d 1 -A -S +{0} ", path);
-					appendTo += String.Format(" --append-to {0}:1:{1}:1",i,i-1);
-				}
-				else if (i>1){
-					args += String.Format ("-d 1 -A -S +{0} ", path);
-					appendTo += String.Format(",{0}:1:{1}:1",i,i-1);
-				}				
-				i++;
-			}
-			
-			args += String.Format("--track-order 0:1 {0}", appendTo);
-			
-			Console.WriteLine(args);
-			return args;
-		}
-		
 		private void DeleteTempFiles(){
 			foreach (String path in segmentsTempFiles){
 				if (System.IO.File.Exists(path))
@@ -223,6 +194,12 @@ namespace LongoMatch.Video.Editor
 			if (percent == 1){
 				segmentCoded = -1;
 			}
+		}
+		
+		protected virtual void OnMuxDone(object sender, EventArgs args){
+			if (Progress != null)
+				Application.Invoke(delegate {Progress ((float)EditorState.FINISHED);});
+
 		}
 	}
 }

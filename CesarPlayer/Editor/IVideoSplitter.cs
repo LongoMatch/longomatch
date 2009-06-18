@@ -24,7 +24,8 @@ namespace LongoMatch.Video.Editor
 	
 	public interface IVideoSplitter
 	{
-		event LongoMatch.Video.Handlers.ProgressHandler Progress;	
+		event LongoMatch.Video.Editor.PercentCompletedHandler PercentCompleted;	
+		event LongoMatch.Video.Editor.ErrorHandler Error;
 		
 		bool EnableAudio{
 			set;
@@ -61,19 +62,13 @@ namespace LongoMatch.Video.Editor
 			set;
 		}
 		
-		AudioCodec AudioCodec{
-			set;
-		}
-		
-		VideoCodec VideoCodec{
-			set;
-		}
-		
-		VideoMuxer VideoMuxer{
-			set;
-		}		
-		
 		void SetSegment(string filePath, long start, long duration, double rate, string title);
+		
+		void SetVideoEncoder (VideoCodec codec);
+		
+		void SetAudioEncoder (AudioCodec codec);
+		
+		void SetVideoMuxer (VideoMuxer muxer);
 		
 		void Start();
 		

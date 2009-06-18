@@ -65,17 +65,24 @@ struct _GstVideoSplitter
 
 typedef enum
 {
-	THEORA,
-	H264,
-	XVID,
-	MPEG2
-	
+	THEORA = 1,
+	H264 = 2,
+	XVID = 3,
+	MPEG2_VIDEO = 4	
 }GvsVideoCodec;
 
+typedef enum
+{
+	VORBIS= 1,
+	AAC = 2,
+	MP3 = 3,
+	MPEG2_AUDIO  = 4
+}GvsAudioCodec;
+
 typedef enum{
-	MKV,
-	AVI,
-	DVD
+	MKV = 1,
+	AVI = 2,
+	DVD = 3
 }GvsVideoMuxer;
 
 
@@ -85,6 +92,9 @@ EXPORT void gst_video_splitter_init_backend (int *argc, char ***argv);
 EXPORT GstVideoSplitter * gst_video_splitter_new (GError ** err);
 EXPORT void gst_video_splitter_start(GstVideoSplitter *gvs);
 EXPORT void gst_video_splitter_cancel(GstVideoSplitter *gvs);
+EXPORT void gst_video_splitter_set_video_encoder(GstVideoSplitter *gvs, GvsVideoCodec codec);
+EXPORT void gst_video_splitter_set_audio_encoder(GstVideoSplitter *gvs, GvsAudioCodec codec);
+EXPORT void gst_video_splitter_set_video_muxer(GstVideoSplitter *gvs, GvsVideoMuxer codec);
 EXPORT void gst_video_splitter_set_segment(GstVideoSplitter *gvs, gchar *file, gint64 start, gint64 duration, gdouble rate, gchar *title);
 G_END_DECLS
 

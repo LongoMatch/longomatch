@@ -24,8 +24,8 @@ namespace LongoMatch.Video.Editor
 	
 	public enum VideoMuxer
 	{
-		MATROSKA,
-		AVI,
-		DVD
+		MKV = 1,
+		AVI = 2,
+		DVD = 3
 	}
 }

@@ -23,10 +23,10 @@ namespace LongoMatch.Video.Editor
 	
 	public enum VideoCodec
 	{
-		COPY,
-		THEORA,
-		H264,
-		XVID,
-		MPEG2
+		COPY = 0,
+		THEORA = 1,
+		H264 = 2,
+		XVID = 3,
+		MPEG2_VIDEO = 4	
 	}
 }

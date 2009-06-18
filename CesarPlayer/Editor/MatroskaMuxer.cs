@@ -39,6 +39,7 @@ namespace LongoMatch.Video.Editor
 		public MatroskaMuxer()
 		{
 			filesToMuxList = new List<string>();
+			muxThread = new Thread(new ThreadStart(MergeSegments));
 		}
 		
 		public List<string> FilesToMux{
@@ -51,7 +52,6 @@ namespace LongoMatch.Video.Editor
 		
 		public bool Start(){
 			if (!muxThread.IsAlive){
-				muxThread = new Thread(new ThreadStart(MergeSegments));
 				muxThread.Start();
 				return true;
 			}
@@ -98,7 +98,7 @@ namespace LongoMatch.Video.Editor
 			string appendTo="";
 			//string args = String.Format("-o {0}  --language 1:eng --track-name 1:Video --default-track 1:yes --display-dimensions 1:{1}x{2} ",
 			//                            outputFile, width, height);
-			string args = String.Format("-o {0}  --language 1:eng --track-name 1:Video --default-track 1:yes ");	
+			string args = String.Format("-o {0}  --language 1:eng --track-name 1:Video --default-track 1:yes ", outputFile);	
 			
 			foreach (String path in filesToMuxList){
 				if (i==0){
