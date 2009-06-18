@@ -66,11 +66,13 @@
     <File name="Editor/VideoFormat.cs" subtype="Code" buildaction="Compile" />
     <File name="Editor/VideoMuxer.cs" subtype="Code" buildaction="Compile" />
     <File name="Editor/VideoCodec.cs" subtype="Code" buildaction="Compile" />
-    <File name="Editor/IMuxer.cs" subtype="Code" buildaction="Compile" />
-    <File name="Editor/MatroskaMuxer.cs" subtype="Code" buildaction="Compile" />
+    <File name="Editor/IMerger.cs" subtype="Code" buildaction="Compile" />
+    <File name="Editor/MatroskaMerger.cs" subtype="Code" buildaction="Compile" />
     <File name="Editor/AudioCodec.cs" subtype="Code" buildaction="Compile" />
     <File name="Editor/IVideoSplitter.cs" subtype="Code" buildaction="Compile" />
     <File name="Editor/VideoSplitterType.cs" subtype="Code" buildaction="Compile" />
+    <File name="Editor/DVDMerger.cs" subtype="Code" buildaction="Compile" />
+    <File name="Editor/GenericMerger.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

@@ -382,6 +382,13 @@ gst_video_splitter_get_property (GObject * object, guint property_id,
 /*                                             */
 /* =========================================== */
 
+static void 
+gvs_rewrite_headers (GstVideoSplitter *gvs)
+{
+	gst_element_set_state(gvs->priv->file_sink,GST_STATE_NULL);
+	gst_element_set_state(gvs->priv->file_sink,GST_STATE_READY);
+
+}
 static void
 gvs_set_tick_timeout (GstVideoSplitter *gvs , guint msecs)
 {
@@ -596,7 +603,7 @@ gst_video_splitter_set_video_encoder (GstVideoSplitter *gvs, GvsVideoCodec codec
 	GstElement *encoder = NULL;
 	GstState cur_state;
 	gchar *encoder_name="";
-	gchar *error="";
+	gchar error[200];
 	
 	g_return_if_fail (GST_IS_VIDEO_SPLITTER(gvs));
 	
@@ -618,42 +625,56 @@ gst_video_splitter_set_video_encoder (GstVideoSplitter *gvs, GvsVideoCodec codec
 			case MPEG2_VIDEO:
 				encoder_name = "mpeg2enc";
 				encoder = gst_element_factory_make ("mpeg2enc",encoder_name);
-				g_object_set (G_OBJECT(encoder), "format",3,NULL);	//Generic MPEG-2
+				g_object_set (G_OBJECT(encoder), "format",9,NULL);	//DVD compilant
+				g_object_set (G_OBJECT(encoder), "framerate",3,NULL);	//25 FPS (PAL/SECAM)
 				
 				break;
 			case THEORA:
 				encoder_name = "theoraenc";
 				encoder = gst_element_factory_make ("theoraenc",encoder_name);				
 				break;				
-		}
+		}		
+		g_print("Codec type %s\n",encoder_name);
+		g_print("Codec type %s\n",encoder_name);
+
 		
-		if (g_strcmp0(gst_element_get_name(gvs->priv->video_encoder),encoder_name)){
-			GST_WARNING("Not changing the video encoder as the new one is the same in use.");
-			return;
-		}
 		
-		if (encoder){		
+		if (encoder){
+			if (!g_strcmp0(gst_element_get_name(gvs->priv->video_encoder),encoder_name)){
+				GST_WARNING("Not changing the video encoder as the new one is the same in use.");
+				gst_object_unref(encoder);
+				return;
+			}		
 			gst_element_unlink(gvs->priv->queue,gvs->priv->video_encoder);
 			gst_element_unlink(gvs->priv->video_encoder,gvs->priv->muxer);
+			gst_element_set_state(gvs->priv->video_encoder,GST_STATE_NULL);
 			gst_bin_remove(GST_BIN(gvs->priv->main_pipeline),gvs->priv->video_encoder);
 			g_object_set (G_OBJECT(encoder), "bitrate",gvs->priv->video_bitrate,NULL);
 			gst_bin_add(GST_BIN(gvs->priv->main_pipeline),encoder);
 			gst_element_link_many(gvs->priv->queue,encoder,gvs->priv->muxer,NULL);		
-			gvs->priv->video_encoder = encoder;			
+			gvs->priv->video_encoder = encoder;	
+			gvs_rewrite_headers(gvs);		
 		}
 		
 		else {
-			g_sprintf (error, "The %s encoder element is not avalaible. Check you GSTreamer installation", encoder_name);
-			GST_ERROR ("%s", error);
-			g_signal_emit (gvs, 
+			g_sprintf (error, "The %s encoder element is not avalaible. Check you GStreamer installation", encoder_name);
+			GST_ERROR (error);
+			/*g_signal_emit (gvs, 
       						gvs_signals[SIGNAL_ERROR], 
       						0, 
-      						error);
-		}
+      						error);*/
+      		//g_free(error);	
+      	}
 			
 	}
 	else
     	GST_WARNING("The video encoder cannot be changed for a state <= GST_STATE_READY");
+}
+
+void 
+gst_video_splitter_set_audio_encoder (GstVideoSplitter *gvs, GvsAudioCodec codec)
+{
+	//TODO not implemented
 }
 
 void 
@@ -662,13 +683,14 @@ gst_video_splitter_set_video_muxer (GstVideoSplitter *gvs, GvsVideoMuxer muxerTy
 	GstElement *muxer = NULL;
 	GstState cur_state;
 	gchar *muxer_name="";
-	gchar *error="";
+	gchar error[200];
 	
 	g_return_if_fail (GST_IS_VIDEO_SPLITTER(gvs));
 	
 	gst_element_get_state (gvs->priv->main_pipeline, &cur_state, NULL, 0);
 	
-	if (cur_state <= GST_STATE_READY) {		
+	if (cur_state <= GST_STATE_READY) {	
+	
 		switch (muxerType){
 			case MKV:		
 				muxer_name = "matroskamux";		
@@ -684,29 +706,34 @@ gst_video_splitter_set_video_muxer (GstVideoSplitter *gvs, GvsVideoMuxer muxerTy
 				break;		
 		}
 		
-		if (g_strcmp0(gst_element_get_name(gvs->priv->muxer),muxer_name)){
-			GST_WARNING("Not changing the video encoder as the new one is the same in use.");
-			return;
-		}
-		
-		if (muxer){		
+	
+		if (muxer){	
+			if (!g_strcmp0(gst_element_get_name(gvs->priv->muxer),muxer_name)){
+				GST_WARNING("Not changing the video muxer as the new one is the same in use.");
+				gst_object_unref(muxer);
+				return;
+			}	
 			gst_element_unlink(gvs->priv->video_encoder,gvs->priv->muxer);
 			//gst_element_unlink(gvs->priv->audio_encoder,gvs->priv->muxer);
 			gst_element_unlink(gvs->priv->muxer,gvs->priv->file_sink);
+			gst_element_set_state(gvs->priv->muxer,GST_STATE_NULL);
 			gst_bin_remove(GST_BIN(gvs->priv->main_pipeline),gvs->priv->muxer);
 			gst_bin_add(GST_BIN(gvs->priv->main_pipeline),muxer);
 			gst_element_link_many(gvs->priv->video_encoder,muxer,gvs->priv->file_sink,NULL);	
 			//gst_element_link(gvs->priv->audio_encoder,muxer);	
-			gvs->priv->muxer = muxer;			
+			gvs->priv->muxer = muxer;
+			gvs_rewrite_headers(gvs);		
+				
 		}
 		
 		else {
 			g_sprintf (error, "The %s muxer element is not avalaible. Check you GSTreamer installation", muxer_name);
-			GST_ERROR ("%s", error);
-			g_signal_emit (gvs, 
+			GST_ERROR (error);
+			/*g_signal_emit (gvs, 
       						gvs_signals[SIGNAL_ERROR], 
       						0, 
-      						error);
+      						error);*/
+      		//g_free(error);
 		}			
 	}
 	else

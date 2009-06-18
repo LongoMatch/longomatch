@@ -31,7 +31,7 @@ namespace LongoMatch.Video.Editor
 		public event LongoMatch.Video.Handlers.ProgressHandler Progress;	
 		
 		private IVideoSplitter splitter;
-		private IMuxer muxer;
+		private IMerger merger;
 		private List<VideoSegment> segmentsList;
 		private List<string> segmentsTempFiles;
 		
@@ -50,7 +50,7 @@ namespace LongoMatch.Video.Editor
 		public GnonlinEditor()
 		{		
 			pm = new PlayerMaker();
-			ChangeMuxer(VideoMuxer.MKV);
+			ChangeMerger(VideoMuxer.MKV);
 			splitter = new GstVideoSplitter();
 			splitter.PercentCompleted += new PercentCompletedHandler(OnProgress); 
 			splitter.Error += new ErrorHandler(OnError);
@@ -98,15 +98,14 @@ namespace LongoMatch.Video.Editor
 		public VideoMuxer VideoMuxer{
 			set{
 				splitter.SetVideoMuxer(value);
-				PlayerMaker pm = new PlayerMaker();
-				muxer = pm.GetVideoMuxer(value);
+				ChangeMerger(value);
 			}
 		}				
 				
 		public string OutputFile{
 			set{ 
 				outputFile = value;
-				muxer.OutputFile = value;}
+				merger.OutputFile = value;}
 		}
 		
 		public string TempDir{
@@ -145,16 +144,16 @@ namespace LongoMatch.Video.Editor
 			DeleteTempFiles();
 		}
 		
-		private void ChangeMuxer(VideoMuxer videoMuxer){
-			muxer = pm.GetVideoMuxer(videoMuxer);
-			muxer.MuxDone += new EventHandler(OnMuxDone);
+		private void ChangeMerger(VideoMuxer videoMuxer){
+			merger = pm.GetVideoMerger(videoMuxer);
+			merger.MergeDone += new EventHandler(OnMergeDone);
 		}
 		
 		
 		private void SplitAndMerge(){
 			SplitSegments();
-			muxer.FilesToMux = segmentsTempFiles;
-			muxer.Start();
+			merger.FilesToMerge = segmentsTempFiles;
+			merger.Start();
 		}
 		
 		private void SplitSegments(){
@@ -196,9 +195,10 @@ namespace LongoMatch.Video.Editor
 			}
 		}
 		
-		protected virtual void OnMuxDone(object sender, EventArgs args){
+		protected virtual void OnMergeDone(object sender, EventArgs args){
 			if (Progress != null)
 				Application.Invoke(delegate {Progress ((float)EditorState.FINISHED);});
+			Console.WriteLine("Edition finished");
 
 		}
 	}

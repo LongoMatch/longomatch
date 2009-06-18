@@ -251,6 +251,9 @@ namespace LongoMatch.Gui.Component
 				}
 				videoEditor.VideoQuality = vep.VideoQuality;
 				videoEditor.VideoFormat = vep.VideoFormat;
+				videoEditor.AudioCodec = vep.AudioCodec;
+				videoEditor.VideoCodec = vep.VideoCodec;
+				videoEditor.VideoMuxer = vep.VideoMuxer;
 				videoEditor.OutputFile = vep.Filename;
 				videoEditor.EnableTitle = vep.TitleOverlay;
 				videoEditor.EnableAudio = vep.EnableAudio;

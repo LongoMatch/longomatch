@@ -32,6 +32,9 @@ namespace LongoMatch.Gui.Dialog
 	{
 		private VideoQuality vq;
 		private VideoFormat vf;
+		private VideoCodec vcodec;
+		private AudioCodec acodec;
+		private VideoMuxer muxer;
 
 		
 		public VideoEditionProperties()
@@ -40,11 +43,23 @@ namespace LongoMatch.Gui.Dialog
 		}
 		
 		public VideoQuality VideoQuality{
-			get{return this.vq;}
+			get{return vq;}
+		}
+		
+		public VideoCodec VideoCodec{
+			get{return vcodec;}
+		}
+		
+		public AudioCodec AudioCodec{
+			get{return acodec;}
+		}
+		
+		public VideoMuxer VideoMuxer{
+			get{return muxer;}
 		}
 		
 		public string Filename{
-			get{return this.fileentry.Text;}
+			get{return fileentry.Text;}
 		}
 		
 		public bool EnableAudio{
@@ -61,28 +76,46 @@ namespace LongoMatch.Gui.Dialog
 
 		protected virtual void OnButtonOkClicked (object sender, System.EventArgs e)
 		{
-			if (combobox1.ActiveText == Catalog.GetString("Low")){
+			if (qualitycombobox.ActiveText == Catalog.GetString("Low")){
 				vq = VideoQuality.Low;
 			}
-			else if (combobox1.ActiveText == Catalog.GetString("Normal")){
+			else if (qualitycombobox.ActiveText == Catalog.GetString("Normal")){
 				vq = VideoQuality.Normal;
 			}
-			else if (combobox1.ActiveText == Catalog.GetString("Good")){
+			else if (qualitycombobox.ActiveText == Catalog.GetString("Good")){
 				vq = VideoQuality.Good;
 			}
-			else if (combobox1.ActiveText == Catalog.GetString("Extra")){
+			else if (qualitycombobox.ActiveText == Catalog.GetString("Extra")){
 				vq = VideoQuality.Extra;
 			}
 			
-			if (combobox2.ActiveText == "TV (4:3 - 720x540)"){
+			if (sizecombobox.ActiveText == "TV (4:3 - 720x540)"){
 				vf = VideoFormat.TV;
 			}			
-			else if (combobox2.ActiveText == "HD 720p (16:9 - 1280x720)"){
+			else if (sizecombobox.ActiveText == "HD 720p (16:9 - 1280x720)"){
 				vf = VideoFormat.HD720p;
 			}
-			else if (combobox2.ActiveText == "Full HD 1080p (16:9 - 1920x1080)"){
+			else if (sizecombobox.ActiveText == "Full HD 1080p (16:9 - 1920x1080)"){
 				vf = VideoFormat.HD1080p;
+			}	
+			
+			
+			if (formatcombobox.ActiveText == "Matroska (H.264+AAC)"){
+				vcodec = VideoCodec.H264;
+				acodec = AudioCodec.AAC;
+				muxer = VideoMuxer.MKV;
 			}			
+			else if (formatcombobox.ActiveText == "Avi (Xvid+MP3)"){
+				vcodec = VideoCodec.XVID;
+				acodec = AudioCodec.MP3;
+				muxer = VideoMuxer.AVI;
+			}
+			else if (formatcombobox.ActiveText == "DVD (MPEG-2)"){
+				Console.WriteLine("DVD Muxer");
+				vcodec = VideoCodec.MPEG2_VIDEO;
+				acodec = AudioCodec.MPEG2_AUDIO;
+				muxer = VideoMuxer.DVD;
+			}
 						
 			Hide();
 		}

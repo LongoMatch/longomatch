@@ -25,82 +25,25 @@ namespace LongoMatch.Video.Editor
 {
 	
 	
-	public class MatroskaMuxer:IMuxer
+	public class MatroskaMerger:GenericMerger
 	{
 		
-		public event EventHandler MuxDone;
-		public event LongoMatch.Video.Handlers.ErrorHandler Error;
 		
-		private List<string> filesToMuxList;
-		private string outputFile;
-		private Process process;
-		private Thread muxThread;
 		
-		public MatroskaMuxer()
-		{
-			filesToMuxList = new List<string>();
-			muxThread = new Thread(new ThreadStart(MergeSegments));
+		public MatroskaMerger(): base ("mkvmerge")
+		{			
 		}
 		
-		public List<string> FilesToMux{
-			set{filesToMuxList = value;}
-		}
+	
 		
-		public string OutputFile {
-			set{outputFile = value;}
-		}
-		
-		public bool Start(){
-			if (!muxThread.IsAlive){
-				muxThread.Start();
-				return true;
-			}
-			else return false;
-		}
-		
-		public void Cancel(){
-			if (process != null && !process.HasExited)
-				process.Kill();
-			
-			if (muxThread != null && muxThread.IsAlive){
-				muxThread.Abort();
-				muxThread = null;					
-			}			
-		}
-		
-		private void MergeSegments (){
-			process = new Process();
-			ProcessStartInfo pinfo = new ProcessStartInfo();
-			if (System.Environment.OSVersion.Platform != PlatformID.Unix)
-				pinfo.FileName=System.IO.Path.Combine(System.Environment.CurrentDirectory,"mkvmerge.exe");
-			else 
-				pinfo.FileName="mkvmerge";			
-			pinfo.Arguments = CreateMkvMergeCommandLine();
-			pinfo.CreateNoWindow = true;
-			pinfo.UseShellExecute = false;
-			process.StartInfo = pinfo;
-			try {
-				process.Start();
-				process.WaitForExit();	
-			}
-			catch (Exception e){
-				//TODO
-				//if (Error != null)
-				//	Error (this, args);
-			}
-			if (MuxDone != null)
-				MuxDone(this,new EventArgs());
-
-		}
-		
-		private string CreateMkvMergeCommandLine(){
+		protected override string CreateMergeCommandLineArgs(){
 		 	int i=0;
 			string appendTo="";
 			//string args = String.Format("-o {0}  --language 1:eng --track-name 1:Video --default-track 1:yes --display-dimensions 1:{1}x{2} ",
 			//                            outputFile, width, height);
 			string args = String.Format("-o {0}  --language 1:eng --track-name 1:Video --default-track 1:yes ", outputFile);	
 			
-			foreach (String path in filesToMuxList){
+			foreach (String path in filesToMergeList){
 				if (i==0){
 					args += String.Format ("-d 1 -A -S {0} ", path);
 				}

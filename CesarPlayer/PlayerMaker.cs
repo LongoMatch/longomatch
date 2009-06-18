@@ -117,17 +117,16 @@ namespace LongoMatch.Video
 			}			
 		}
 		
-		public IMuxer GetVideoMuxer(VideoMuxer muxer){
+		public IMerger GetVideoMerger(VideoMuxer muxer){
 			if (muxer == VideoMuxer.AVI)
 				return null;
 				//return new AviMuxer();
 			else if (muxer == VideoMuxer.DVD)
-				return null;
-				//return new MplexMuxer();
+				return new DVDMerger();
 			else if (muxer == VideoMuxer.MKV)
-				return new MatroskaMuxer();
+				return new MatroskaMerger();
 			else 
-				return new MatroskaMuxer();
+				return new MatroskaMerger();
 			    
 			    
 		}

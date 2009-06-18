@@ -2166,7 +2166,7 @@ new one.</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.VideoEditionProperties" design-size="514 181">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.VideoEditionProperties" design-size="514 205">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Video Properties</property>
     <property name="Icon">resource:longomatch_logo.png</property>
@@ -2266,14 +2266,14 @@ new one.</property>
                   </packing>
                 </child>
                 <child>
-                  <widget class="Gtk.ComboBox" id="combobox1">
+                  <widget class="Gtk.ComboBox" id="qualitycombobox">
                     <property name="MemberName" />
                     <property name="IsTextCombo">True</property>
                     <property name="Items" translatable="yes">Low
 Normal
 Good
 Extra</property>
-                    <property name="Active">2</property>
+                    <property name="Active">1</property>
                   </widget>
                   <packing>
                     <property name="Position">1</property>
@@ -2297,7 +2297,7 @@ Extra</property>
                   <widget class="Gtk.Label" id="label2">
                     <property name="MemberName" />
                     <property name="Xalign">0</property>
-                    <property name="LabelProp" translatable="yes">Format: </property>
+                    <property name="LabelProp" translatable="yes">Size: </property>
                   </widget>
                   <packing>
                     <property name="Position">0</property>
@@ -2305,7 +2305,7 @@ Extra</property>
                   </packing>
                 </child>
                 <child>
-                  <widget class="Gtk.ComboBox" id="combobox2">
+                  <widget class="Gtk.ComboBox" id="sizecombobox">
                     <property name="MemberName" />
                     <property name="IsTextCombo">True</property>
                     <property name="Items">TV (4:3 - 720x540)
@@ -2328,6 +2328,44 @@ Full HD 1080p (16:9 - 1920x1080)</property>
             </child>
             <child>
               <widget class="Gtk.HBox" id="hbox5">
+                <property name="MemberName" />
+                <property name="Homogeneous">True</property>
+                <property name="Spacing">6</property>
+                <child>
+                  <widget class="Gtk.Label" id="label3">
+                    <property name="MemberName" />
+                    <property name="Xalign">0</property>
+                    <property name="LabelProp" translatable="yes">OuputFormat:</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.ComboBox" id="formatcombobox">
+                    <property name="MemberName" />
+                    <property name="IsTextCombo">True</property>
+                    <property name="Items" translatable="yes">Matroska (H.264+AAC)
+Avi (Xvid+MP3)
+DVD (MPEG-2)</property>
+                    <property name="Active">0</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">False</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">3</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.HBox" id="hbox6">
                 <property name="MemberName" />
                 <property name="Spacing">6</property>
                 <child>
@@ -2362,7 +2400,7 @@ Full HD 1080p (16:9 - 1920x1080)</property>
                 </child>
               </widget>
               <packing>
-                <property name="Position">3</property>
+                <property name="Position">4</property>
                 <property name="AutoSize">True</property>
                 <property name="Expand">False</property>
                 <property name="Fill">False</property>

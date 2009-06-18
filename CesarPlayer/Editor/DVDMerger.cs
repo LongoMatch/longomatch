@@ -17,29 +17,52 @@
 // 
 
 using System;
+using System.IO;
 using System.Collections.Generic;
+using System.Threading;
+using System.Diagnostics;
 
 namespace LongoMatch.Video.Editor
 {
 	
-	public interface IMuxer
+	
+	public class DVDMerger:GenericMerger
 	{
-		event EventHandler MuxDone;
-		event LongoMatch.Video.Handlers.ErrorHandler Error;
+		StreamReader outputReader;
+		Thread readerThread;
+			
+		public DVDMerger() :base ("cat")
+		{		
+		}		
 		
-		List<string> FilesToMux{
-			set;
+		protected override string CreateMergeCommandLineArgs(){
+		 	int i=0;
+			string args="";		
+			
+			foreach (String path in filesToMergeList){
+				args += " " +path +" ";
+			}			
+			pinfo.RedirectStandardOutput = true;
+			return args;
+		}		
+
+		override public void ReadOutput ()
+		{
+			outputReader = process.StandardOutput;
+			using (FileStream fs = new FileStream(outputFile,FileMode.Create, FileAccess.ReadWrite,FileShare.None)){
+				int temp;
+           		while((temp = outputReader.Read()) != -1)
+           		{
+             		fs.WriteByte((byte)temp);					
+            	}
+				fs.Flush();
+				fs.Close();
+				outputReader.Close();
+			} 			
 		}
-		
-		string OutputFile {
-			set;
-		}
-		
-				
-		bool Start();
-		
-		void Cancel();
-		
+
+	
+    
 		
 	}
 }
