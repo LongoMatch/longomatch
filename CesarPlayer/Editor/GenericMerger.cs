@@ -37,6 +37,7 @@ namespace LongoMatch.Video.Editor
 		protected Thread mergeThread;
 		protected string command;
 		protected ProcessStartInfo pinfo;
+		protected VideoMuxer filesVideoMuxer; //Muxer used in the files to mux. May be used by some muxers to set the way thay act 
 		
 		public GenericMerger(string command)
 		{
@@ -51,6 +52,10 @@ namespace LongoMatch.Video.Editor
 		
 		public string OutputFile {
 			set{outputFile = value;}
+		}
+		
+		public VideoMuxer FilesVideoMuxer{
+			set{filesVideoMuxer = value;}			
 		}
 		
 		public bool Start(){

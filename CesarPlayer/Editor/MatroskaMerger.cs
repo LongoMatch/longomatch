@@ -28,10 +28,10 @@ namespace LongoMatch.Video.Editor
 	public class MatroskaMerger:GenericMerger
 	{
 		
-		
-		
+	
 		public MatroskaMerger(): base ("mkvmerge")
 		{			
+			filesVideoMuxer = VideoMuxer.MKV;
 		}
 		
 	
@@ -39,27 +39,33 @@ namespace LongoMatch.Video.Editor
 		protected override string CreateMergeCommandLineArgs(){
 		 	int i=0;
 			string appendTo="";
-			//string args = String.Format("-o {0}  --language 1:eng --track-name 1:Video --default-track 1:yes --display-dimensions 1:{1}x{2} ",
-			//                            outputFile, width, height);
-			string args = String.Format("-o {0}  --language 1:eng --track-name 1:Video --default-track 1:yes ", outputFile);	
+			string args = ""; 
+			int trackID = 0;
 			
+			args = String.Format("-o {0} ", outputFile);
+			if (filesVideoMuxer == VideoMuxer.MKV){
+				args += "--language 1:eng --track-name 1:Video --default-track 1:yes ";
+				trackID = 1;
+			}
+							
 			foreach (String path in filesToMergeList){
 				if (i==0){
-					args += String.Format ("-d 1 -A -S {0} ", path);
+					args += String.Format ("-d {0} -A -S {1} ",trackID, path);
 				}
 				if (i==1){
-					args += String.Format ("-d 1 -A -S +{0} ", path);
-					appendTo += String.Format(" --append-to {0}:1:{1}:1",i,i-1);
+					args += String.Format ("-d {0} -A -S +{1} ",trackID, path);
+					appendTo += String.Format(" --append-to {0}:{2}:{1}:{2}",i,i-1, trackID);
 				}
 				else if (i>1){
-					args += String.Format ("-d 1 -A -S +{0} ", path);
-					appendTo += String.Format(",{0}:1:{1}:1",i,i-1);
+					args += String.Format ("-d {0} -A -S +{1} ",trackID, path);
+					appendTo += String.Format(",{0}:{2}:{1}:{2}",i,i-1,trackID);
 				}				
 				i++;
 			}
 			
-			args += String.Format("--track-order 0:1 {0}", appendTo);
+			args += String.Format("--track-order 0:{0} {1}",trackID, appendTo);
 			
+			Console.WriteLine(args);
 			return args;
 		}		
 		

@@ -44,6 +44,8 @@ namespace LongoMatch.Video.Editor
 		private bool readyToMerge;
 		private Thread thread;
 		
+		private VideoCodec vcodec; //Used to handle theora files
+		
 		private MultimediaFactory factory;
 	
 		
@@ -92,7 +94,9 @@ namespace LongoMatch.Video.Editor
 		}
 		
 		public VideoCodec VideoCodec{
-			set{splitter.SetVideoEncoder(value);}
+			set{
+				vcodec = value;
+				splitter.SetVideoEncoder(value);}
 		}
 		
 		public VideoMuxer VideoMuxer{
@@ -152,6 +156,8 @@ namespace LongoMatch.Video.Editor
 		
 		private void SplitAndMerge(){
 			SplitSegments();
+			if (vcodec == VideoCodec.THEORA)
+				merger.FilesVideoMuxer = VideoMuxer.OGG;
 			merger.FilesToMerge = segmentsTempFiles;
 			merger.Start();
 		}
@@ -165,6 +171,11 @@ namespace LongoMatch.Video.Editor
 				segmentCoded = i;
 				tempFile = System.IO.Path.Combine ( tempDir, "segment"+i+".mkv");
 				segmentsTempFiles.Add(tempFile);
+				//When using the theora encoder, the splitted files must be muxed using ogg
+				//and then merged using matroska as ogg concatenation does not works and
+				//muxing theora encoded streams using matroska doens't work neither
+				if (vcodec == VideoCodec.THEORA)
+				    splitter.SetVideoMuxer(VideoMuxer.OGG);				
 				splitter.OutputFile= tempFile;
 				splitter.SetSegment(segment.FilePath, segment.Start, segment.Duration, segment.Rate, segment.Title);
 				splitter.Start();

@@ -36,6 +36,10 @@ namespace LongoMatch.Video.Editor
 		}
 		
 				
+		VideoMuxer FilesVideoMuxer{
+			set;
+		}
+		
 		bool Start();
 		
 		void Cancel();

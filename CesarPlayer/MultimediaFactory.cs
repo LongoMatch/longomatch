@@ -120,7 +120,7 @@ namespace LongoMatch.Video
 		public IMerger GetVideoMerger(VideoMuxer muxer){
 			if (muxer == VideoMuxer.AVI)
 				return new AviMerger();
-			else if (muxer == VideoMuxer.DVD || muxer == VideoMuxer.OGG)
+			else if (muxer == VideoMuxer.DVD)
 				return new ConcatMerger();
 			else if (muxer == VideoMuxer.MKV)
 				return new MatroskaMerger();
