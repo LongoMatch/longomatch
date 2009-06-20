@@ -231,6 +231,12 @@ namespace LongoMatch.Gui.Component
 			VideoEditionProperties vep;
 			int response;
 			
+			if (playList.Count == 0){
+					MessagePopup.PopupMessage(this,MessageType.Warning,
+					                          Catalog.GetString("The playlist is empty!"));
+					return;
+			}
+			
 			vep = new VideoEditionProperties();
 			vep.TransientFor = (Gtk.Window)this.Toplevel;
 			response = vep.Run();
@@ -240,7 +246,7 @@ namespace LongoMatch.Gui.Component
 				response=vep.Run();
 			}
 			vep.Destroy();
-			if (response ==(int)ResponseType.Ok){
+			if (response ==(int)ResponseType.Ok){				
 				videoEditor.ClearList();
 				foreach (PlayListTimeNode segment in playList){
 					videoEditor.AddSegment(segment.FileName, 
