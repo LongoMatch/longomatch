@@ -626,8 +626,7 @@ gst_video_splitter_set_video_encoder (GstVideoSplitter *gvs, GvsVideoCodec codec
 				encoder_name = "mpeg2enc";
 				encoder = gst_element_factory_make ("mpeg2enc",encoder_name);
 				g_object_set (G_OBJECT(encoder), "format",9,NULL);	//DVD compilant
-				g_object_set (G_OBJECT(encoder), "framerate",3,NULL);	//25 FPS (PAL/SECAM)
-				
+				g_object_set (G_OBJECT(encoder), "framerate",3,NULL);	//25 FPS (PAL/SECAM)				
 				break;
 			case THEORA:
 				encoder_name = "theoraenc";
@@ -700,8 +699,14 @@ gst_video_splitter_set_video_muxer (GstVideoSplitter *gvs, GvsVideoMuxer muxerTy
 				muxer_name = "avimux";
 				muxer = gst_element_factory_make ("avimux",muxer_name);
 				break;
+			case OGG:
+				muxer_name = "oggmux";
+				muxer = gst_element_factory_make ("oggmux",muxer_name);
+				break;
 			case DVD:
 				muxer_name = "ffmux_dvd";
+				//We don't want to mux anything yet as ffmux_dvd is buggy
+				//FIXME: Until we don't have audio save the mpeg-ps stream with mux.
 				muxer = gst_element_factory_make ("identity",muxer_name);
 				break;		
 		}
