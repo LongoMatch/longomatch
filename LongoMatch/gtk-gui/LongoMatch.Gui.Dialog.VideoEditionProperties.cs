@@ -191,8 +191,9 @@ namespace LongoMatch.Gui.Dialog {
             w13.Position = 0;
             // Container child hbox5.Gtk.Box+BoxChild
             this.formatcombobox = Gtk.ComboBox.NewText();
-            this.formatcombobox.AppendText(Mono.Unix.Catalog.GetString("Matroska (H.264+AAC)"));
-            this.formatcombobox.AppendText(Mono.Unix.Catalog.GetString("Avi (Xvid+MP3)"));
+            this.formatcombobox.AppendText(Mono.Unix.Catalog.GetString("Matroska (H.264)"));
+            this.formatcombobox.AppendText(Mono.Unix.Catalog.GetString("Ogg (Theora)"));
+            this.formatcombobox.AppendText(Mono.Unix.Catalog.GetString("Avi (Xvid)"));
             this.formatcombobox.AppendText(Mono.Unix.Catalog.GetString("DVD (MPEG-2)"));
             this.formatcombobox.Name = "formatcombobox";
             this.formatcombobox.Active = 0;

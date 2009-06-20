@@ -36,8 +36,8 @@ namespace LongoMatch.Gui
 		public CapturerBin()
 		{
 			this.Build();
-			PlayerMaker pm = new PlayerMaker();
-			capturer = pm.getCapturer();			
+			MultimediaFactory factory = new MultimediaFactory();
+			capturer = factory.getCapturer();			
 			this.capturerhbox.Add((Widget)capturer);
 			((Widget)capturer).Show();
 		}

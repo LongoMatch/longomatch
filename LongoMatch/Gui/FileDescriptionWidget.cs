@@ -212,12 +212,12 @@ namespace LongoMatch.Gui.Component
 			int fps=0;
 			int height=0;
 			int width=0;			
-			LongoMatch.Video.PlayerMaker pm;
+			LongoMatch.Video.MultimediaFactory factory;
 			IMetadataReader reader;
 			
 			try{
-				pm =  new LongoMatch.Video.PlayerMaker();
-				reader = pm.getMetadataReader();
+				factory =  new LongoMatch.Video.MultimediaFactory();
+				reader = factory.getMetadataReader();
 				reader.Open(filename);
 				duration = (int)reader.GetMetadata(GstPlayerMetadataType.Duration);						
 				hasVideo = (bool) reader.GetMetadata(GstPlayerMetadataType.HasVideo);

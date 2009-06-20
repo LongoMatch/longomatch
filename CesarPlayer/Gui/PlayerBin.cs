@@ -276,11 +276,11 @@ namespace LongoMatch.Gui
 		}
 		
 		private void PlayerInit(){
-			PlayerMaker pMaker;
+			MultimediaFactory factory;
 			Widget _videoscreen;
 			
-			pMaker = new PlayerMaker();
-			player = pMaker.getPlayer(320,280);
+			factory= new MultimediaFactory();
+			player = factory.getPlayer(320,280);
 			
 			//IF error do something	
 			tickHandler = new TickHandler(OnTick);

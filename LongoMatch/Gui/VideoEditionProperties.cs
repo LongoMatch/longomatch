@@ -100,12 +100,17 @@ namespace LongoMatch.Gui.Dialog
 			}	
 			
 			
-			if (formatcombobox.ActiveText == "Matroska (H.264+AAC)"){
+			if (formatcombobox.ActiveText == "Matroska (H.264)"){
 				vcodec = VideoCodec.H264;
 				acodec = AudioCodec.AAC;
 				muxer = VideoMuxer.MKV;
-			}			
-			else if (formatcombobox.ActiveText == "Avi (Xvid+MP3)"){
+			}	
+			else if (formatcombobox.ActiveText == "Ogg (Theora)"){
+				vcodec = VideoCodec.THEORA;
+				acodec = AudioCodec.VORBIS;
+				muxer = VideoMuxer.OGG;
+			}	
+			else if (formatcombobox.ActiveText == "Avi (Xvid)"){
 				vcodec = VideoCodec.XVID;
 				acodec = AudioCodec.MP3;
 				muxer = VideoMuxer.AVI;

@@ -82,7 +82,8 @@ typedef enum
 typedef enum{
 	MKV = 1,
 	AVI = 2,
-	DVD = 3
+	DVD = 3,
+	OGG = 4
 }GvsVideoMuxer;
 
 

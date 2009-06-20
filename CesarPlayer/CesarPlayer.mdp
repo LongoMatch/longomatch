@@ -71,7 +71,7 @@
     <File name="Editor/AudioCodec.cs" subtype="Code" buildaction="Compile" />
     <File name="Editor/IVideoSplitter.cs" subtype="Code" buildaction="Compile" />
     <File name="Editor/VideoSplitterType.cs" subtype="Code" buildaction="Compile" />
-    <File name="Editor/DVDMerger.cs" subtype="Code" buildaction="Compile" />
+    <File name="Editor/ConcatMerger.cs" subtype="Code" buildaction="Compile" />
     <File name="Editor/GenericMerger.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>

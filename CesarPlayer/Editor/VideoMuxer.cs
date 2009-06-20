@@ -26,6 +26,7 @@ namespace LongoMatch.Video.Editor
 	{
 		MKV = 1,
 		AVI = 2,
-		DVD = 3
+		DVD = 3,
+		OGG = 4
 	}
 }

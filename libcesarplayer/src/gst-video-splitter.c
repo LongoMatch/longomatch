@@ -702,7 +702,7 @@ gst_video_splitter_set_video_muxer (GstVideoSplitter *gvs, GvsVideoMuxer muxerTy
 				break;
 			case DVD:
 				muxer_name = "ffmux_dvd";
-				muxer = gst_element_factory_make ("ffmux_dvd",muxer_name);
+				muxer = gst_element_factory_make ("identity",muxer_name);
 				break;		
 		}
 		

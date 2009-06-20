@@ -26,43 +26,38 @@ namespace LongoMatch.Video.Editor
 {
 	
 	
-	public class DVDMerger:GenericMerger
+	public class ConcatMerger:GenericMerger
 	{
 		StreamReader outputReader;
 		Thread readerThread;
 			
-		public DVDMerger() :base ("cat")
+		public ConcatMerger() :base ("")
 		{		
 		}		
 		
 		protected override string CreateMergeCommandLineArgs(){
-		 	int i=0;
-			string args="";		
+		 	int bufSize = 1024 * 64;
+
+			byte[] buf = new byte[bufSize];
+
+			using (FileStream outFile =	new FileStream(outputFile, FileMode.Create,
+						FileAccess.Write, FileShare.None, bufSize))
+			{
+				foreach (string inputFile in filesToMergeList)
+				{
+					using (FileStream inFile =	new FileStream(inputFile, FileMode.Open, FileAccess.Read,
+												FileShare.Read, bufSize))
+					{
+						int br = 0;
+						while ((br = inFile.Read(buf,0,buf.Length))!=0)
+						{
+							outFile.Write(buf,0,br);
+						}
+					}
+				}
+			}
 			
-			foreach (String path in filesToMergeList){
-				args += " " +path +" ";
-			}			
-			pinfo.RedirectStandardOutput = true;
-			return args;
-		}		
-
-		override public void ReadOutput ()
-		{
-			outputReader = process.StandardOutput;
-			using (FileStream fs = new FileStream(outputFile,FileMode.Create, FileAccess.ReadWrite,FileShare.None)){
-				int temp;
-           		while((temp = outputReader.Read()) != -1)
-           		{
-             		fs.WriteByte((byte)temp);					
-            	}
-				fs.Flush();
-				fs.Close();
-				outputReader.Close();
-			} 			
+			return "";
 		}
-
-	
-    
-		
 	}
 }

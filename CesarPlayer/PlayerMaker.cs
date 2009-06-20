@@ -28,12 +28,12 @@ namespace LongoMatch.Video
 {
 	
 	
-	public class PlayerMaker
+	public class MultimediaFactory
 	{
 		
 		OperatingSystem oS;
 		
-		public PlayerMaker()
+		public MultimediaFactory()
 		{
 			oS = Environment.OSVersion;	
 		
@@ -121,8 +121,8 @@ namespace LongoMatch.Video
 			if (muxer == VideoMuxer.AVI)
 				return null;
 				//return new AviMuxer();
-			else if (muxer == VideoMuxer.DVD)
-				return new DVDMerger();
+			else if (muxer == VideoMuxer.DVD || muxer == VideoMuxer.OGG)
+				return new ConcatMerger();
 			else if (muxer == VideoMuxer.MKV)
 				return new MatroskaMerger();
 			else 

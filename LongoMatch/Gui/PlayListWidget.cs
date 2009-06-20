@@ -59,8 +59,8 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build();					
 			lock_node = new System.Object();	
-			PlayerMaker pm = new PlayerMaker();
-			videoEditor = pm.getVideoEditor();
+			MultimediaFactory factory = new  MultimediaFactory();
+			videoEditor = factory.getVideoEditor();
 			videoEditor.Progress += new LongoMatch.Video.Handlers.ProgressHandler(OnProgress);
 			playlisttreeview1.ApplyCurrentRate += new ApplyCurrentRateHandler(OnApplyRate);
 			savebutton.Sensitive = false;			

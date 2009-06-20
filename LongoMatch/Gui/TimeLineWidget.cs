@@ -110,7 +110,7 @@ namespace LongoMatch.Gui.Component {
 		
 		private void SetPixelRatio(uint pixelRatio){			
 			if (tsArray != null && tnArray != null){
-				this.pixelRatio = pixelRatio;
+				pixelRatio = pixelRatio;
 				tr.PixelRatio = pixelRatio;
 				foreach (TimeScale  ts in tsArray){
 					ts.PixelRatio = pixelRatio;					
@@ -124,8 +124,7 @@ namespace LongoMatch.Gui.Component {
 			set{
 				sections = value.Sections;
 				tnArray = value.GetDataArray();
-				tsArray = new TimeScale[sections.Count]; 
-				
+				tsArray = new TimeScale[sections.Count]; 				
 				
 				//Unrealize all children
 				foreach (Widget w in vbox1.AllChildren){

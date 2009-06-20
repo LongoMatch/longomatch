@@ -44,12 +44,12 @@ namespace LongoMatch.Video.Editor
 		private bool readyToMerge;
 		private Thread thread;
 		
-		private PlayerMaker pm;
+		private MultimediaFactory factory;
 	
 		
 		public GnonlinEditor()
 		{		
-			pm = new PlayerMaker();
+			factory = new MultimediaFactory();
 			ChangeMerger(VideoMuxer.MKV);
 			splitter = new GstVideoSplitter();
 			splitter.PercentCompleted += new PercentCompletedHandler(OnProgress); 
@@ -71,7 +71,7 @@ namespace LongoMatch.Video.Editor
 		public VideoFormat VideoFormat{
 			set {
 				if (value == VideoFormat.TV){
-					height = 540;
+					height = 576;
 					width = 720;
 				}
 				else if (value == VideoFormat.HD720p){
@@ -145,7 +145,7 @@ namespace LongoMatch.Video.Editor
 		}
 		
 		private void ChangeMerger(VideoMuxer videoMuxer){
-			merger = pm.GetVideoMerger(videoMuxer);
+			merger = factory.GetVideoMerger(videoMuxer);
 			merger.MergeDone += new EventHandler(OnMergeDone);
 		}
 		
