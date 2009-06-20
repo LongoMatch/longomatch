@@ -105,10 +105,10 @@ namespace LongoMatch.Gui.Dialog
 				acodec = AudioCodec.AAC;
 				muxer = VideoMuxer.MKV;
 			}	
-			else if (formatcombobox.ActiveText == "Ogg (Theora)"){
+			else if (formatcombobox.ActiveText == "Matroska (Theora)"){
 				vcodec = VideoCodec.THEORA;
 				acodec = AudioCodec.VORBIS;
-				muxer = VideoMuxer.OGG;
+				muxer = VideoMuxer.MKV;
 			}	
 			else if (formatcombobox.ActiveText == "Avi (Xvid)"){
 				vcodec = VideoCodec.XVID;
