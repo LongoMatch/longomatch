@@ -64,6 +64,7 @@ namespace LongoMatch.Gui.Component {
 					}
 				}				
 				if (selected != null){
+					Console.WriteLine(pixelRatio);
 					if (SelectedTimeNode.StartFrame/pixelRatio < GtkScrolledWindow.Hadjustment.Value ||
 					    SelectedTimeNode.StartFrame/pixelRatio > GtkScrolledWindow.Hadjustment.Value +
 					    GtkScrolledWindow.Allocation.Width - GtkScrolledWindow.VScrollbar.Allocation.Width)
@@ -110,7 +111,7 @@ namespace LongoMatch.Gui.Component {
 		
 		private void SetPixelRatio(uint pixelRatio){			
 			if (tsArray != null && tnArray != null){
-				pixelRatio = pixelRatio;
+				this.pixelRatio = pixelRatio;
 				tr.PixelRatio = pixelRatio;
 				foreach (TimeScale  ts in tsArray){
 					ts.PixelRatio = pixelRatio;					
