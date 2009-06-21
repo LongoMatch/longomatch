@@ -185,7 +185,7 @@ namespace LongoMatch.Gui.Dialog {
             this.label3 = new Gtk.Label();
             this.label3.Name = "label3";
             this.label3.Xalign = 0F;
-            this.label3.LabelProp = Mono.Unix.Catalog.GetString("OuputFormat:");
+            this.label3.LabelProp = Mono.Unix.Catalog.GetString("Ouput Format:");
             this.hbox5.Add(this.label3);
             Gtk.Box.BoxChild w13 = ((Gtk.Box.BoxChild)(this.hbox5[this.label3]));
             w13.Position = 0;
@@ -224,7 +224,7 @@ namespace LongoMatch.Gui.Dialog {
             this.audiocheckbutton = new Gtk.CheckButton();
             this.audiocheckbutton.CanFocus = true;
             this.audiocheckbutton.Name = "audiocheckbutton";
-            this.audiocheckbutton.Label = Mono.Unix.Catalog.GetString("Enable Sound");
+            this.audiocheckbutton.Label = Mono.Unix.Catalog.GetString("Enable Audio");
             this.audiocheckbutton.Active = true;
             this.audiocheckbutton.DrawIndicator = true;
             this.audiocheckbutton.UseUnderline = true;

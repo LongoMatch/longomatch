@@ -36,11 +36,14 @@ namespace LongoMatch.Gui.Dialog
 		private AudioCodec acodec;
 		private VideoMuxer muxer;
 
-		
+#region Constructors
 		public VideoEditionProperties()
 		{
 			this.Build();			
 		}
+#endregion
+		
+#region Properties
 		
 		public VideoQuality VideoQuality{
 			get{return vq;}
@@ -72,7 +75,23 @@ namespace LongoMatch.Gui.Dialog
 		
 		public VideoFormat VideoFormat{
 			get{return vf;}
-		}		
+		}
+#endregion Properties
+		
+#region Private Methods
+		
+		private string GetExtension(){
+			if (formatcombobox.ActiveText == "Matroska (H.264)")
+				return "mkv";
+			else if (formatcombobox.ActiveText == "Matroska (Theora)")
+				return "mkv";
+			else if (formatcombobox.ActiveText == "Avi (Xvid)")
+				return "avi";
+			else
+				return "mpg";
+		}
+		
+#endregion		
 
 		protected virtual void OnButtonOkClicked (object sender, System.EventArgs e)
 		{
@@ -134,11 +153,15 @@ namespace LongoMatch.Gui.Dialog
 			                                                   "gtk-cancel",ResponseType.Cancel,
 			                                                   "gtk-save",ResponseType.Accept);
 			fChooser.SetCurrentFolder(MainClass.VideosDir());
-			fChooser.CurrentName = "NewVideo.mkv";
+			fChooser.CurrentName = "NewVideo."+GetExtension();
 			fChooser.DoOverwriteConfirmation = true;
 			FileFilter filter = new FileFilter();
-			filter.Name = "Matroska File";
+			filter.Name = "Multimedia Files";
 			filter.AddPattern("*.mkv");
+			filter.AddPattern("*.ogg");
+		 	filter.AddPattern("*.avi");
+			filter.AddPattern("*.mpg");
+			filter.AddPattern("*.vob");
 			fChooser.Filter = filter;
 			if (fChooser.Run() == (int)ResponseType.Accept){						
 				fileentry.Text = fChooser.Filename;

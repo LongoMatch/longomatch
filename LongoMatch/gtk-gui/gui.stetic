@@ -2308,7 +2308,7 @@ Extra</property>
                   <widget class="Gtk.ComboBox" id="sizecombobox">
                     <property name="MemberName" />
                     <property name="IsTextCombo">True</property>
-                    <property name="Items">TV (4:3 - 720x540)
+                    <property name="Items" translatable="yes">TV (4:3 - 720x540)
 HD 720p (16:9 - 1280x720)
 Full HD 1080p (16:9 - 1920x1080)</property>
                     <property name="Active">0</property>
@@ -2335,7 +2335,7 @@ Full HD 1080p (16:9 - 1920x1080)</property>
                   <widget class="Gtk.Label" id="label3">
                     <property name="MemberName" />
                     <property name="Xalign">0</property>
-                    <property name="LabelProp" translatable="yes">OuputFormat:</property>
+                    <property name="LabelProp" translatable="yes">Ouput Format:</property>
                   </widget>
                   <packing>
                     <property name="Position">0</property>
@@ -2346,7 +2346,7 @@ Full HD 1080p (16:9 - 1920x1080)</property>
                   <widget class="Gtk.ComboBox" id="formatcombobox">
                     <property name="MemberName" />
                     <property name="IsTextCombo">True</property>
-                    <property name="Items" translatable="yes">Matroska (H.264)
+                    <property name="Items">Matroska (H.264)
 Matroska (Theora)
 Avi (Xvid)
 DVD (MPEG-2)</property>
@@ -2388,7 +2388,7 @@ DVD (MPEG-2)</property>
                   <widget class="Gtk.CheckButton" id="audiocheckbutton">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
-                    <property name="Label" translatable="yes">Enable Sound</property>
+                    <property name="Label" translatable="yes">Enable Audio</property>
                     <property name="Active">True</property>
                     <property name="DrawIndicator">True</property>
                     <property name="HasLabel">True</property>
