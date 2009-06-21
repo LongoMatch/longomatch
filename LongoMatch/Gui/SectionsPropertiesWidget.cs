@@ -123,7 +123,14 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnDelete(object sender, EventArgs args){
 			int index = int.Parse(((Widget)sender).Name);
 			if(project!= null){
-				project.DeleteSection(index);
+				try{
+					project.DeleteSection(index);
+				}
+				catch (Exception e){
+					MessagePopup.PopupMessage(this,MessageType.Warning,
+					                          Catalog.GetString("You can't delete the last section"));
+					return;
+				}
 				SetSections(project.Sections);	
 			}
 			else{

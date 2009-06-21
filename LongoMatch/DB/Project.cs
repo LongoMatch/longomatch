@@ -95,6 +95,8 @@ namespace LongoMatch.DB
 		}
 		
 		public void DeleteSection(int sectionIndex){
+			if (sections.Count == 1)
+				throw new Exception ("You can't remove the last Section");
 			sections.RemoveSection(sectionIndex);
 			sectionPlaysList.RemoveAt(sectionIndex);			
 		}

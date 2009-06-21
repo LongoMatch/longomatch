@@ -84,10 +84,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.SectionsPropertiesWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Component.TimeNodeProperties" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>
@@ -135,5 +131,9 @@
         <signal name="NewMarkEvent" />
       </itemgroup>
     </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.SectionsPropertiesWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
   </object>
 </objects>

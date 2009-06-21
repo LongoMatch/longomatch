@@ -588,6 +588,7 @@
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.DBManager" design-size="678 412">
     <property name="MemberName" />
     <property name="Title" translatable="yes">DataBase Manager</property>
+    <property name="Icon">stock:longomatch Menu</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
     <property name="Gravity">Center</property>
@@ -2308,7 +2309,7 @@ Extra</property>
                   <widget class="Gtk.ComboBox" id="sizecombobox">
                     <property name="MemberName" />
                     <property name="IsTextCombo">True</property>
-                    <property name="Items" translatable="yes">TV (4:3 - 720x540)
+                    <property name="Items">TV (4:3 - 720x540)
 HD 720p (16:9 - 1280x720)
 Full HD 1080p (16:9 - 1920x1080)</property>
                     <property name="Active">0</property>
