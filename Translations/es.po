@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "X-Generator: MonoDevelop Gettext addin\n"
 "Language-Team: \n"
-"PO-Revision-Date: 2009-06-20 23:21:48+0200\n"
-"POT-Creation-Date: 2009-06-20 23:01:32+0200\n"
+"PO-Revision-Date: 2009-06-21 17:05:03+0200\n"
+"POT-Creation-Date: 2009-06-21 17:01:41+0200\n"
 "Project-Id-Version: LongoMatch 0.15\n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -170,7 +170,11 @@ msgstr "Nueva Lista de Reproducción"
 msgid "The playlist is empty!"
 msgstr "La lista de reproducción está vacía"
 
-#: ../LongoMatch/Gui/SectionsPropertiesWidget.cs:146
+#: ../LongoMatch/Gui/SectionsPropertiesWidget.cs:130
+msgid "You can't delete the last section"
+msgstr "No puede borrar la última sección"
+
+#: ../LongoMatch/Gui/SectionsPropertiesWidget.cs:153
 msgid "This hotkey is already in use."
 msgstr "Esta combinación de teclas está actualmente en uso"
 
@@ -287,7 +291,7 @@ msgstr "Plantilla:"
 msgid "DataBase Manager"
 msgstr "Gestor de la Base de Datos"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.DBManager.cs:93
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.DBManager.cs:94
 msgid "<b>Propiedades</b>"
 msgstr "<b>Propiedades</b>"
 
@@ -360,22 +364,22 @@ msgid "Video Quality:"
 msgstr "Calidad del video:"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:136
-#: ../LongoMatch/Gui/VideoEditionProperties.cs:78
+#: ../LongoMatch/Gui/VideoEditionProperties.cs:97
 msgid "Low"
 msgstr "Baja"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:137
-#: ../LongoMatch/Gui/VideoEditionProperties.cs:81
+#: ../LongoMatch/Gui/VideoEditionProperties.cs:100
 msgid "Normal"
 msgstr "Normal"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:138
-#: ../LongoMatch/Gui/VideoEditionProperties.cs:84
+#: ../LongoMatch/Gui/VideoEditionProperties.cs:103
 msgid "Good"
 msgstr "Buena"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:139
-#: ../LongoMatch/Gui/VideoEditionProperties.cs:87
+#: ../LongoMatch/Gui/VideoEditionProperties.cs:106
 msgid "Extra"
 msgstr "Extra"
 
@@ -396,7 +400,8 @@ msgid "Full HD 1080p (16:9 - 1920x1080)"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:187
-msgid "OuputFormat:"
+#, fuzzy
+msgid "Ouput Format:"
 msgstr "Formato:"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:193
@@ -420,10 +425,11 @@ msgid "Enable Title Overlay"
 msgstr "Sobreimprimir título"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:226
-msgid "Enable Sound"
+#, fuzzy
+msgid "Enable Audio"
 msgstr "Abilitar sonido"
 
-#: ../LongoMatch/Gui/VideoEditionProperties.cs:130
+#: ../LongoMatch/Gui/VideoEditionProperties.cs:149
 msgid "Save Video As ..."
 msgstr "Guardar Video Como..."
 

@@ -8,5 +8,7 @@
   </projectInformations>
   <translations>
     <Translation isoCode="es" />
+    <Translation isoCode="fr" />
+    <Translation isoCode="it" />
   </translations>
 </CombineEntry>

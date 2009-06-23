@@ -37,12 +37,13 @@ namespace LongoMatch.Gui.Component
 		private List<TimeNodeProperties> tndlist;
 		private Project project;
 		
+		
 		public SectionsPropertiesWidget()
 		{
 			this.Build();
 			tndlist = new List<TimeNodeProperties>();
 			hkList = new List<HotKey>();
-			
+			table1.NColumns =(uint) 5;						
 		}
 		
 		public void SetProject(Project project){
@@ -52,8 +53,6 @@ namespace LongoMatch.Gui.Component
 		
 		public void SetSections(Sections sections){
 			int sectionsCount = sections.Count;
-			table1.NColumns =(uint) 5;
-			table1.NRows =(uint) (sectionsCount/5);
 			
 			tndlist.Clear();
 			hkList.Clear();
@@ -69,24 +68,15 @@ namespace LongoMatch.Gui.Component
 				
 				tnp.Name = i.ToString();
 				tnp.Title =  "Section "+(i+1);			
-				tnp.Section = sections.GetSection(i);	
-				tnp.DeleteSection += new EventHandler(OnDelete);
-				tnp.InsertAfter += new EventHandler(OnInsertAfter);
-				tnp.InsertBefore += new EventHandler(OnInsertBefore);
-				tnp.HotKeyChanged += new HotKeyChangeHandler(OnHotKeyChanged);
-				tndlist.Add(tnp);	
+				tnp.Section = sections.GetSection(i);
+				ConnectTimeNodePropertiesEvents(tnp);
+				
 				
 				if (hk.Defined)
 					hkList.Add(sections.GetHotKey(i));
 				
-				uint row_top =(uint) (i/table1.NColumns);
-				uint row_bottom = (uint) row_top+1 ;
-				uint col_left = (uint) i%table1.NColumns;
-				uint col_right = (uint) col_left+1 ;
-				table1.Attach(tnp,col_left,col_right,row_top,row_bottom);	
-				tnp.Show();
-			}
-			
+				AddTimeNodeToTable(i,sections.Count,tnp);			
+			}			
 		}
 		
 		
@@ -99,8 +89,31 @@ namespace LongoMatch.Gui.Component
 			return sections;
 		}
 		
+		private void AddTimeNodeToTable(int index, int count, TimeNodeProperties tnp){
+			uint row_top,row_bottom,col_left,col_right;
+			
+			tndlist.Insert(index,tnp);
+			table1.NRows =(uint) (count/5);			
+			row_top =(uint) (index/table1.NColumns);
+			row_bottom = (uint) row_top+1 ;
+			col_left = (uint) index%table1.NColumns;
+			col_right = (uint) col_left+1 ;
+			
+			table1.Attach(tnp,col_left,col_right,row_top,row_bottom);	
+			tnp.Show();
+		}
+		
+		private void ConnectTimeNodePropertiesEvents(TimeNodeProperties tnp){
+			tnp.DeleteSection += new EventHandler(OnDelete);
+			tnp.InsertAfter += new EventHandler(OnInsertAfter);
+			tnp.InsertBefore += new EventHandler(OnInsertBefore);
+			tnp.HotKeyChanged += new HotKeyChangeHandler(OnHotKeyChanged);
+		}
+		
 		private void AddSection (int index){
+			Sections sections;
 			SectionsTimeNode tn;
+			TimeNodeProperties tnp;
 			HotKey hkey = new HotKey();
 			
 			Time start = new Time(10*Time.SECONDS_TO_TIME);
@@ -108,20 +121,31 @@ namespace LongoMatch.Gui.Component
 			
 			
 			tn  = new SectionsTimeNode("New Section",start,stop,hkey,new Color(Byte.MaxValue,Byte.MinValue,Byte.MinValue));
+			tnp = new TimeNodeProperties();
+			ConnectTimeNodePropertiesEvents(tnp);
 			
 			if (project != null){
 				project.AddSectionAtPos(tn,index);
-				SetSections(project.Sections);
+				AddTimeNodeToTable(project.Sections.Count-1,project.Sections.Count,tnp);
+				UpdateGui(project.Sections);
 			}
 			else{				
-				Sections sections = GetSections();
+				sections = GetSections();
 				sections.AddSectionAtPos(tn,index);
-				SetSections(sections);
+				AddTimeNodeToTable(sections.Count-1,sections.Count,tnp);
+				UpdateGui(sections);
 			}			
 		}
 		
-		protected virtual void OnDelete(object sender, EventArgs args){
-			int index = int.Parse(((Widget)sender).Name);
+		private void DeleteSection(TimeNodeProperties tnp){
+			Sections sections;
+			int index = int.Parse(tnp.Name);
+			
+			//Remove the last TimeNodeProperties Widget and clean-up
+			table1.Remove(tndlist[tndlist.Count-1]);
+			tndlist.Remove(tnp);
+			tnp.Destroy();
+			
 			if(project!= null){
 				try{
 					project.DeleteSection(index);
@@ -131,13 +155,32 @@ namespace LongoMatch.Gui.Component
 					                          Catalog.GetString("You can't delete the last section"));
 					return;
 				}
-				SetSections(project.Sections);	
+				UpdateGui(project.Sections);
 			}
 			else{
-				Sections sections = GetSections();
-				sections.RemoveSection(index);
-				SetSections(sections);
+				//The TimeNodeProperties has been removed yet. That's why we get 
+				//The actual Sections with GetSections();
+				UpdateGui(GetSections());
 			}
+			
+		}
+		
+		private void UpdateGui(Sections sections){
+			//After delting/adding a TimeNodeProperties we need to update
+			//both the widget names and their position in the table
+			TimeNodeProperties tnp;			
+			
+			for( int i=0;i< sections.Count;i++){
+				tnp=tndlist[i];
+				tnp.Name = i.ToString();
+				tnp.Title =  "Section "+(i+1);
+				tnp.Section = sections.GetSection(i);				
+			}
+			
+		}
+		
+		protected virtual void OnDelete(object sender, EventArgs args){			
+			DeleteSection((TimeNodeProperties)sender);
 		}
 		
 		protected virtual void OnInsertAfter(object sender, EventArgs args){
