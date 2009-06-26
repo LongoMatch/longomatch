@@ -2119,7 +2119,6 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, gboolean accur
   else {  
 	 /* Emit a time tick of where we are going, we are paused */
   	got_time_tick (bvw->priv->play, time * GST_MSECOND, bvw);
-	g_print("Seek key");
 	gst_element_seek (bvw->priv->play, 1.0,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT,
       	GST_SEEK_TYPE_SET, time * GST_MSECOND,

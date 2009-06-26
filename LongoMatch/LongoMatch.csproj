@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{64BBF35C-C210-4869-B93B-924234A32C0D}</ProjectGuid>
@@ -14,6 +14,7 @@
     <ApplicationIcon>minilogo.ico</ApplicationIcon>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
+    <TargetFrameworkVersion>Mono v2.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -58,7 +59,6 @@
     <Compile Include="DB\MediaFile.cs" />
     <Compile Include="DB\Project.cs" />
     <Compile Include="DB\Sections.cs" />
-    <Compile Include="EventsManager.cs" />
     <Compile Include="gtk-gui\generated.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.ButtonsWidget.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.FileDescriptionWidget.cs" />
@@ -71,14 +71,14 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.TimeNodeProperties.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Component.TreeWidget.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.DBManager.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EntryDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.NewProjectDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.OpenProjectDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.SectionsTemplates.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.SnapshotsDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.TemplateEditorDialog.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.TemplateNameSelectionDialog.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.Transcoder.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.UpdateDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.VideoEditionProperties.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.MainWindow.cs" />
@@ -86,9 +86,12 @@
     <Compile Include="Gui\ButtonsWidget.cs" />
     <Compile Include="Gui\CalendarPopup.cs" />
     <Compile Include="Gui\DBManager.cs" />
+    <Compile Include="Gui\EntryDialog.cs" />
     <Compile Include="Gui\FileDescriptionWidget.cs" />
     <Compile Include="Gui\FramesCaptureProgressDialog.cs" />
+    <Compile Include="Gui\HotKeySelectorDialog.cs" />
     <Compile Include="Gui\MainWindow.cs" />
+    <Compile Include="Gui\MessagePoupcs.cs" />
     <Compile Include="Gui\NewProjectDialog.cs" />
     <Compile Include="Gui\NotesWidget.cs" />
     <Compile Include="Gui\OpenProjectDialog.cs" />
@@ -99,7 +102,6 @@
     <Compile Include="Gui\SectionsTemplates.cs" />
     <Compile Include="Gui\SnapshotsDialog.cs" />
     <Compile Include="Gui\TemplateEditorDialog.cs" />
-    <Compile Include="Gui\TemplateNameSelectionDialog.cs" />
     <Compile Include="Gui\TimeAdjustWidget.cs" />
     <Compile Include="Gui\TimeLineWidget.cs" />
     <Compile Include="Gui\TimeNodeProperties.cs" />
@@ -109,7 +111,9 @@
     <Compile Include="Gui\TreeWidget.cs" />
     <Compile Include="Gui\UpdateDialog.cs" />
     <Compile Include="Gui\VideoEditionProperties.cs" />
+    <Compile Include="Handlers\EventsManager.cs" />
     <Compile Include="Handlers\Handlers.cs" />
+    <Compile Include="Handlers\HotKeysManager.cs" />
     <Compile Include="IO\CSVExport.cs" />
     <Compile Include="IO\SectionsReader.cs" />
     <Compile Include="IO\SectionsWriter.cs" />
@@ -117,19 +121,15 @@
     <Compile Include="Main.cs" />
     <Compile Include="Playlist\IPlayList.cs" />
     <Compile Include="Playlist\PlayList.cs" />
+    <Compile Include="Time\HotKey.cs" />
     <Compile Include="Time\MediaTimeNode.cs" />
     <Compile Include="Time\PixbufTimeNode.cs" />
     <Compile Include="Time\PlayListTimeNode.cs" />
     <Compile Include="Time\SectionsTimeNode.cs" />
     <Compile Include="Time\Time.cs" />
     <Compile Include="Time\TimeNode.cs" />
-    <Compile Include="Transcoder.cs" />
     <Compile Include="Updates\Updater.cs" />
     <Compile Include="Updates\XmlUpdateParser.cs" />
-    <Compile Include="Video\AudioQuality.cs" />
-    <Compile Include="Video\FFMPEGVideoEditor.cs" />
-    <Compile Include="Video\IVideoEditor.cs" />
-    <Compile Include="Video\VideoQuality.cs" />
     <None Include="images\background.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -1,14 +1,14 @@
 
 MINGW_PATH = C:/MinGW/bin
-GTK = C:\Archivos de programa\Mono-2.0
-GST = C:\gstreamer
+GTK = e:\Mono-2.4
+GST = E:\ossbuild2\Build\Windows\Win32\Release
 CC   = ${MINGW_PATH}/mingw32-gcc.exe
 BASH = /bin/bash.exe
 BUNDLE = makebundle.sh
 OUTDIR = LongoMatch/Win32/bin
-OBJ  =   libcesarplayer/src/gstscreenshot.o  libcesarplayer/src/gstvideowidget.o libcesarplayer/src/bacon-video-widget-gst-0.10.o libcesarplayer/src/baconvideowidget-marshal.o libcesarplayer/src/main.o libcesarplayer/src/gst-video-capturer.o libcesarplayer/src/gst-camera-capturer.o
-LINKOBJ  =  libcesarplayer/src/gstvideowidget.o  libcesarplayer/src/bacon-video-widget-gst-0.10.o libcesarplayer/src/baconvideowidget-marshal.o  libcesarplayer/src/gstscreenshot.o libcesarplayer/src/gst-video-capturer.o libcesarplayer/src/gst-camera-capturer.o
-LIBS =  -L"${GTK}/bin" -L"${GST}/bin"  -llibgstreamer-0.10 -llibgstvideo-0.10  -llibgstaudio-0.10 -llibgstinterfaces-0.10 -limm32 -lshell32 -lole32 -luuid -lintl -llibcairo-2 -lpangowin32-1.0-0 -latk-1.0-0 -lgdk_pixbuf-2.0-0 -lgdk-win32-2.0-0 -lglib-2.0-0 -lgmodule-2.0-0 -lgobject-2.0-0 -lgthread-2.0-0 -lgtk-win32-2.0-0  
+OBJ  =   libcesarplayer/src/gstscreenshot.o  libcesarplayer/src/gstvideowidget.o libcesarplayer/src/bacon-video-widget-gst-0.10.o libcesarplayer/src/baconvideowidget-marshal.o libcesarplayer/src/main.o libcesarplayer/src/gst-video-capturer.o libcesarplayer/src/gst-camera-capturer.o libcesarplayer/src/gst-video-splitter.o
+LINKOBJ  =  libcesarplayer/src/gstvideowidget.o  libcesarplayer/src/bacon-video-widget-gst-0.10.o libcesarplayer/src/baconvideowidget-marshal.o  libcesarplayer/src/gstscreenshot.o libcesarplayer/src/gst-video-capturer.o libcesarplayer/src/gst-camera-capturer.o libcesarplayer/src/gst-video-splitter.o
+LIBS =  -L"${GTK}/bin" -L"${GST}/bin/gstreamer"  -llibgstreamer -llibgstvideo  -llibgstaudio -llibgstinterfaces -limm32 -lshell32 -lole32 -luuid -lintl -llibcairo-2 -lpangowin32-1.0-0 -latk-1.0-0 -lgdk_pixbuf-2.0-0 -lgdk-win32-2.0-0 -lglib-2.0-0 -lgmodule-2.0-0 -lgobject-2.0-0 -lgthread-2.0-0 -lgtk-win32-2.0-0  
 INCS =   -I"${GST}\include\gstreamer-0.10" -I"${GTK}\include" -I"${GTK}\include\gtk-2.0" -I"${GTK}\lib\gtk-2.0\include" -I"${GTK}\include\atk-1.0" -I"${GTK}\include\pango-1.0" -I"${GTK}\include\cairo" -I"${GTK}\include\glib-2.0" -I"${GTK}\include\glib-2.0\glib" -I"${GTK}\lib\glib-2.0" -I"${GTK}\lib\glib-2.0\include" -I"${GTK}\include\libxml2" 
 BIN  = libcesarplayer/libcesarplayer.dll
 CFLAGS = $(INCS) -DWIN32 -mms-bitfields -shared   -Wall 
@@ -46,6 +46,9 @@ libcesarplayer/src/gstvideowidget.o:libcesarplayer/src/gstvideowidget.c
 
 libcesarplayer/src/gst-camera-capturer.o:libcesarplayer/src/gst-camera-capturer.c
 	$(CC) -c libcesarplayer/src/gst-camera-capturer.c -o  libcesarplayer/src/gst-camera-capturer.o $(CFLAGS)
+
+libcesarplayer/src/gst-video-splitter.o:libcesarplayer/src/gst-video-splitter.c
+	$(CC) -c libcesarplayer/src/gst-video-splitter.c -o  libcesarplayer/src/gst-video-splitter.o $(CFLAGS)
 
 
 libcesarplayer/src/bacon-video-widget-gst-0.10.o:libcesarplayer/src/bacon-video-widget-gst-0.10.c

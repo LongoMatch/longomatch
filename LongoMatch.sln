@@ -2,11 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 # SharpDevelop 2.2.1.2648
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CesarPlayer", "CesarPlayer\CesarPlayer.csproj", "{21A2B917-44CA-4E09-A6DA-9B4E2279C267}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch", "LongoMatch\LongoMatch.csproj", "{64BBF35C-C210-4869-B93B-924234A32C0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TEST", "TEST\TEST.csproj", "{54FAFD50-038A-4C9A-94EC-A50CC3E2BB86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CesarPlayer", "CesarPlayer\CesarPlayer.csproj", "{21A2B917-44CA-4E09-A6DA-9B4E2279C267}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
