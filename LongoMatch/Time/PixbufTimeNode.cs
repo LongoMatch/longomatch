@@ -27,15 +27,15 @@ namespace LongoMatch.TimeNodes
 	
 	public class PixbufTimeNode : TimeNode
 	{
-		private string miniaturePath;
+		private byte[] thumbnailBuf;
 		
 		#region Contructors
 		public PixbufTimeNode(){
 		}	
 		
-		public PixbufTimeNode(string name, Time start, Time stop, string miniaturePath): base (name,start,stop)
+		public PixbufTimeNode(string name, Time start, Time stop, Pixbuf thumbnail): base (name,start,stop)
 		{
-			this.miniaturePath = miniaturePath;
+			this.thumbnailBuf = thumbnail.SaveToBuffer("png");
 
 		}
 		#endregion
@@ -44,20 +44,10 @@ namespace LongoMatch.TimeNodes
 		
 		public Pixbuf Miniature{
 			get{ 
-
-				if (System.IO.File.Exists(this.MiniaturePath)){
-					
-					return new Pixbuf(this.MiniaturePath);
-				}
-				else return null;
+				return new Pixbuf(thumbnailBuf);
 			}
-		}
+		}		
 		
-		public String MiniaturePath{
-	
-			get{return this.miniaturePath;}
-			set{this.miniaturePath = value;}
-		}
 		
 		#endregion
 	}

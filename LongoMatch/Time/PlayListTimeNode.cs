@@ -25,7 +25,7 @@ namespace LongoMatch.TimeNodes
 {
 	
 	[Serializable]
-	public class PlayListTimeNode : PixbufTimeNode
+	public class PlayListTimeNode : TimeNode
 	{
 		private string fileName;
 		private float rate=1;
@@ -35,7 +35,7 @@ namespace LongoMatch.TimeNodes
 		public PlayListTimeNode(){
 		}
 		
-		public PlayListTimeNode(string fileName, MediaTimeNode tNode) : base(tNode.Name,tNode.Start,tNode.Stop,tNode.MiniaturePath)
+		public PlayListTimeNode(string fileName, MediaTimeNode tNode) : base(tNode.Name,tNode.Start,tNode.Stop)
 		{
 			this.fileName = fileName;
 			

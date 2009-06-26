@@ -21,6 +21,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using Gdk;
 using Mono.Unix;
 using Db4objects.Db4o;
 using Db4objects.Db4o.Query;

@@ -114,33 +114,20 @@ namespace LongoMatch.DB
 			return sections.GetSectionsStopTimes();
 		}
 
-		public MediaTimeNode AddTimeNode(int dataSection, Time start, Time stop,Pixbuf miniature) {
+		public MediaTimeNode AddTimeNode(int dataSection, Time start, Time stop,Pixbuf thumbnail) {
 			MediaTimeNode tn ;
-			string miniaturePath = null;
 			List<MediaTimeNode> playsList= sectionPlaysList[dataSection];
 			int count= playsList.Count+1;
 			string name = sections.GetName(dataSection) + " " +count;
 
-			if (miniature != null ){
-				char sep = Path.DirectorySeparatorChar;
-				//Windows doesn't accept ':' as a valid char for a file
-				//Replacing by '-' in the time string representation
-				miniaturePath = MainClass.ThumbnailsDir() + sep +this.Title+ sep +"Section"+dataSection+"-"+name+
-					"-"+start.ToMSecondsString().Replace(':','-')+"-"+stop.ToMSecondsString().Replace(':','-').Replace(',','.')+".jpg";
-				miniature.Save(miniaturePath,"jpeg");
-			}
-			tn = new MediaTimeNode(name, start, stop,"",file.Fps,miniaturePath);
+			tn = new MediaTimeNode(name, start, stop,"",file.Fps,thumbnail);
 			playsList.Add(tn);			
 			return tn;
 
 		}
 
 		public void DelTimeNode(MediaTimeNode tNode,int section) {
-
-			sectionPlaysList[section].Remove(tNode);
-			if (System.IO.File.Exists(tNode.MiniaturePath))
-			    System.IO.File.Delete(tNode.MiniaturePath);
-
+			sectionPlaysList[section].Remove(tNode);			
 		}
 		
 		public TreeStore GetModel (){
