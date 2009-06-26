@@ -42,7 +42,7 @@ namespace LongoMatch.Video.Editor
 			string args = ""; 
 			int trackID = 0;
 			
-			args = String.Format("-o {0} ", outputFile);
+			args = String.Format("-o \"{0}\" ", outputFile);
 			if (filesVideoMuxer == VideoMuxer.MKV){
 				args += "--language 1:eng --track-name 1:Video --default-track 1:yes ";
 				trackID = 1;
@@ -50,14 +50,14 @@ namespace LongoMatch.Video.Editor
 							
 			foreach (String path in filesToMergeList){
 				if (i==0){
-					args += String.Format ("-d {0} -A -S {1} ",trackID, path);
+					args += String.Format ("-d {0} -A -S \"{1}\" ",trackID, path);
 				}
 				if (i==1){
-					args += String.Format ("-d {0} -A -S +{1} ",trackID, path);
+					args += String.Format ("-d {0} -A -S +\"{1}\" ",trackID, path);
 					appendTo += String.Format(" --append-to {0}:{2}:{1}:{2}",i,i-1, trackID);
 				}
 				else if (i>1){
-					args += String.Format ("-d {0} -A -S +{1} ",trackID, path);
+					args += String.Format ("-d {0} -A -S +\"{1}\" ",trackID, path);
 					appendTo += String.Format(",{0}:{2}:{1}:{2}",i,i-1,trackID);
 				}				
 				i++;

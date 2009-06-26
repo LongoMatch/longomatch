@@ -186,8 +186,11 @@ namespace LongoMatch.Video.Editor
 
 		private void DeleteTempFiles(){
 			foreach (String path in segmentsTempFiles){
-				if (System.IO.File.Exists(path))
-				    System.IO.File.Delete(path);
+				if (System.IO.File.Exists(path)){
+					try{
+						System.IO.File.Delete(path);}
+					catch (Exception e){}
+				}
 			}
 		}
 		
