@@ -1,6 +1,6 @@
 // SectionsTemplates.cs
 //
-//  Copyright (C) 2007 Andoni Morales Alastruey
+//  Copyright (C) 2007-2009 Andoni Morales Alastruey
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -25,10 +25,10 @@ using Mono.Unix;
 using System.Collections;
 using LongoMatch.DB;
 using LongoMatch.IO;
+using LongoMatch.IO;
 
 namespace LongoMatch.Gui.Dialog
-{
-	
+{	
 	
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(false)]
@@ -49,7 +49,6 @@ namespace LongoMatch.Gui.Dialog
 			templateFileColumn.SetCellDataFunc (templateFileCell, new Gtk.TreeCellDataFunc (RenderTemplateFile));
 			treeview.AppendColumn (templateFileColumn);
 			this.Fill();
-
 		}	
 		
 		//Recorrer el directorio en busca de los archivos de configuración validos
@@ -68,36 +67,45 @@ namespace LongoMatch.Gui.Dialog
 			(cell as Gtk.CellRendererText).Text = System.IO.Path.GetFileNameWithoutExtension(_templateFilePath.ToString());
 		}
 		
-		public void SetSections(Sections sections){				
-
-			this.sectionspropertieswidget1.SetSections(sections);
-			
-		}
-		
-	
+		public void SetSections(Sections sections){	
+			this.sectionspropertieswidget1.SetSections(sections);			
+		}	
 
 		private void SetSensitive (bool sensitive){
-			this.sectionspropertieswidget1.Sensitive = true;
-			this.savebutton.Sensitive = sensitive;
-			this.deletebutton.Sensitive = sensitive;
+			sectionspropertieswidget1.Sensitive = true;
+			savebutton.Sensitive = sensitive;
+			deletebutton.Sensitive = sensitive;
 		}
+		
+		private void SelectTemplate (string templateName){
+			TreeIter iter;
+			string tName;
+			ListStore model = (ListStore)treeview.Model;
 
-
+			model.GetIterFirst(out iter);
+			while (model.IterIsValid(iter)){				
+				tName = System.IO.Path.GetFileNameWithoutExtension((string) model.GetValue(iter,0));
+				if (tName == templateName){
+					treeview.ActivateRow(model.GetPath(iter),null);
+					return;
+				}
+				model.IterNext(ref iter);
+			}
+		}
 
 		protected virtual void OnSavebuttonClicked (object sender, System.EventArgs e)
 		{
 			this.selectedSections = this.sectionspropertieswidget1.GetSections();
-			SectionsWriter.UpdateTemplate (this.templateName,this.selectedSections);
-			
+			SectionsWriter.UpdateTemplate (this.templateName,this.selectedSections);			
 		}
 
 		protected virtual void OnNewbuttonClicked (object sender, System.EventArgs e)
-		{
-			
+		{			
 			string name;
 			EntryDialog ed= new  EntryDialog();
+			
 			ed.Title = Catalog.GetString("Template name");
-			//FIXME check if the template already exists or the name is null
+			
 			if (ed.Run() == (int)ResponseType.Ok){
 				name = ed.Text;
 				if (name == ""){
@@ -113,14 +121,11 @@ namespace LongoMatch.Gui.Dialog
 					return;					
 				}
 				SectionsWriter.CreateNewTemplate(name+".sct");
-				this.Fill();
+				Fill();
+				SelectTemplate(name);
 			}
-			ed.Destroy();
-				
+			ed.Destroy();				
 		}
-			
-			
-
 		
 		protected virtual void OnDeletebuttonClicked (object sender, System.EventArgs e)
 		{
@@ -130,8 +135,7 @@ namespace LongoMatch.Gui.Dialog
 				System.IO.File.Delete(templateName);
 				this.Fill();
 			}
-			mes.Destroy();
-			                                      
+			mes.Destroy();			                                      
 		}
 
 		protected virtual void OnButtonCancelClicked (object sender, System.EventArgs e)
@@ -140,26 +144,22 @@ namespace LongoMatch.Gui.Dialog
 		}
 
 		protected virtual void OnTreeviewCursorChanged (object sender, System.EventArgs e)
-		{
-			
+		{			
 			TreeIter iter;
 
-			this.treeview.Selection.GetSelected(out iter);
-			this.templateName = (string) this.dataFileListStore.GetValue (iter, 0);
+			treeview.Selection.GetSelected(out iter);
+			templateName = (string) this.dataFileListStore.GetValue (iter, 0);
 
 			SectionsReader sr = new SectionsReader(this.templateName);
-			this.selectedSections = sr.GetSections();
-			this.SetSections(sr.GetSections());
-			this.SetSensitive (true);
+			selectedSections = sr.GetSections();
+			SetSections(sr.GetSections());
+			SetSensitive (true);
 		}
 
 		protected virtual void OnButtonOkClicked (object sender, System.EventArgs e)
 		{
 			this.Destroy();
 		}
-
-		
-
 	}
 }
 	
