@@ -56,6 +56,10 @@ namespace LongoMatch.DB
 
 		private List<List<MediaTimeNode>> sectionPlaysList;
 		
+		private TeamTemplate visitorTeamTemplate;
+		
+		private TeamTemplate visitorTeamTemplate;
+		
 	
 		
 		public Project(MediaFile file, String localName, String visitorName, int localGoals,
