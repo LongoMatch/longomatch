@@ -183,9 +183,7 @@ namespace LongoMatch.Gui {
             this.leftbox.Name = "leftbox";
             this.leftbox.Spacing = 6;
             // Container child leftbox.Gtk.Box+BoxChild
-            this.treewidget1 = new LongoMatch.Gui.Component.TreeWidget();
-            this.treewidget1.Events = ((Gdk.EventMask)(256));
-            this.treewidget1.Name = "treewidget1";
+            this.treewidget1 = null;
             this.leftbox.Add(this.treewidget1);
             Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(this.leftbox[this.treewidget1]));
             w4.Position = 0;
@@ -211,19 +209,13 @@ namespace LongoMatch.Gui {
             Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(this.vbox5[this.playerbin1]));
             w6.Position = 0;
             // Container child vbox5.Gtk.Box+BoxChild
-            this.timelinewidget1 = new LongoMatch.Gui.Component.TimeLineWidget();
-            this.timelinewidget1.HeightRequest = 200;
-            this.timelinewidget1.Events = ((Gdk.EventMask)(256));
-            this.timelinewidget1.Name = "timelinewidget1";
-            this.timelinewidget1.CurrentFrame = ((uint)(0));
+            this.timelinewidget1 = null;
             this.vbox5.Add(this.timelinewidget1);
             Gtk.Box.BoxChild w7 = ((Gtk.Box.BoxChild)(this.vbox5[this.timelinewidget1]));
             w7.Position = 1;
             w7.Expand = false;
             // Container child vbox5.Gtk.Box+BoxChild
-            this.buttonswidget1 = new LongoMatch.Gui.Component.ButtonsWidget();
-            this.buttonswidget1.Events = ((Gdk.EventMask)(256));
-            this.buttonswidget1.Name = "buttonswidget1";
+            this.buttonswidget1 = null;
             this.vbox5.Add(this.buttonswidget1);
             Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(this.vbox5[this.buttonswidget1]));
             w8.Position = 2;
@@ -238,17 +230,12 @@ namespace LongoMatch.Gui {
             this.rightvbox.Name = "rightvbox";
             this.rightvbox.Spacing = 6;
             // Container child rightvbox.Gtk.Box+BoxChild
-            this.noteswidget1 = new LongoMatch.Gui.Component.NotesWidget();
-            this.noteswidget1.Events = ((Gdk.EventMask)(256));
-            this.noteswidget1.Name = "noteswidget1";
+            this.noteswidget1 = null;
             this.rightvbox.Add(this.noteswidget1);
             Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.rightvbox[this.noteswidget1]));
             w10.Position = 1;
             // Container child rightvbox.Gtk.Box+BoxChild
-            this.playlistwidget2 = new LongoMatch.Gui.Component.PlayListWidget();
-            this.playlistwidget2.WidthRequest = 100;
-            this.playlistwidget2.Events = ((Gdk.EventMask)(256));
-            this.playlistwidget2.Name = "playlistwidget2";
+            this.playlistwidget2 = null;
             this.rightvbox.Add(this.playlistwidget2);
             Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.rightvbox[this.playlistwidget2]));
             w11.Position = 2;
@@ -288,10 +275,6 @@ namespace LongoMatch.Gui {
             this.DefaultWidth = 1259;
             this.DefaultHeight = 537;
             this.leftbox.Hide();
-            this.timelinewidget1.Hide();
-            this.buttonswidget1.Hide();
-            this.noteswidget1.Hide();
-            this.playlistwidget2.Hide();
             this.rightvbox.Hide();
             this.videoprogressbar.Hide();
             this.Show();
@@ -308,10 +291,8 @@ namespace LongoMatch.Gui {
             this.SaveProjectAction.Activated += new System.EventHandler(this.OnSaveProjectActionActivated);
             this.AboutAction.Activated += new System.EventHandler(this.OnAboutActionActivated);
             this.ExportProjectToCSVFileAction.Activated += new System.EventHandler(this.OnExportProjectToCSVFileActionActivated);
-            this.treewidget1.TimeNodeSelected += new LongoMatch.Handlers.TimeNodeSelectedHandler(this.OnTimeNodeSelected);
             this.playerbin1.Error += new LongoMatch.Video.Handlers.ErrorHandler(this.OnPlayerbin1Error);
             this.playerbin1.SegmentClosedEvent += new LongoMatch.Video.Handlers.SegmentClosedHandler(this.OnSegmentClosedEvent);
-            this.timelinewidget1.TimeNodeSelected += new LongoMatch.Handlers.TimeNodeSelectedHandler(this.OnTimeNodeSelected);
         }
     }
 }

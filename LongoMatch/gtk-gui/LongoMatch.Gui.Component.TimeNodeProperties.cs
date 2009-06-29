@@ -181,9 +181,7 @@ namespace LongoMatch.Gui.Component {
             w31.Position = 0;
             w31.Fill = false;
             // Container child vbox3.Gtk.Box+BoxChild
-            this.timeadjustwidget1 = new LongoMatch.Gui.Component.TimeAdjustWidget();
-            this.timeadjustwidget1.Events = ((Gdk.EventMask)(256));
-            this.timeadjustwidget1.Name = "timeadjustwidget1";
+            this.timeadjustwidget1 = null;
             this.vbox3.Add(this.timeadjustwidget1);
             Gtk.Box.BoxChild w32 = ((Gtk.Box.BoxChild)(this.vbox3[this.timeadjustwidget1]));
             w32.Position = 1;

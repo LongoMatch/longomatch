@@ -5,7 +5,8 @@
     <target-gtk-version>2.12</target-gtk-version>
   </configuration>
   <import>
-    <widget-library name="../bin/Release/LongoMatch.exe" internal="true" />
+    <widget-library name="../../CesarPlayer/a.dll" />
+    <widget-library name="../bin/Debug/LongoMatch.exe" internal="true" />
   </import>
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.FileDescriptionWidget" design-size="400 330">
     <property name="MemberName" />
