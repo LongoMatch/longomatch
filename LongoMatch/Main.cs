@@ -156,8 +156,6 @@ namespace LongoMatch
 			if (!System.IO.File.Exists(fConfig)){
 				TeamTemplate tt = new TeamTemplate();
 				tt.CreateDefaultTemplate(20);
-				foreach (Player p in tt.GetPlayersList())
-					Console.WriteLine(p.Name);
 				tt.Save(fConfig);					
 			}
 			

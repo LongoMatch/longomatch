@@ -30,12 +30,12 @@ namespace LongoMatch.TimeNodes
 		private int number;
 		private byte[] photo;
 		
-		public Player(string name, string position, int number)
+		public Player(string name, string position, int number, Pixbuf photo)
 		{
 			this.name = name;
 			this.position = position;
 			this.number = number;
-			this.photo = null;
+			Photo = photo;
 		}
 		
 		public string Name{

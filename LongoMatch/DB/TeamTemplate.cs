@@ -45,7 +45,7 @@ namespace LongoMatch.DB
 	
 		public void CreateDefaultTemplate(int playersCount){
 			for (int i=0; i<playersCount;i++){
-				playersList.Add(new Player("Player "+i,"",i));
+				playersList.Add(new Player("Player "+i,"",i,null));
 			}
 		}
 		
