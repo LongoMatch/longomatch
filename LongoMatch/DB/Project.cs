@@ -62,8 +62,8 @@ namespace LongoMatch.DB
 		
 	
 		
-		public Project(MediaFile file, String localName, String visitorName, int localGoals,
-		                int visitorGoals, DateTime matchDate, Sections sections) {
+		public Project(MediaFile file, String localName, String visitorName, String season, String competition, int localGoals,
+		                int visitorGoals, DateTime matchDate, Sections sections, TeamTemplate localTemplate, TeamTemplate visitorTemplate) {
 			List<MediaTimeNode> tnArray;
 			
 			this.file = file;
@@ -71,7 +71,11 @@ namespace LongoMatch.DB
 			this.visitorName = visitorName;
 			this.localGoals = localGoals;
 			this.visitorGoals = visitorGoals;
-			this.matchDate = matchDate;		
+			this.matchDate = matchDate;	
+			this.season = season;
+			this.competition = competition;
+			this.localTeamTemplate = localTeamTemplate;
+			this.visitorTeamTemplate = visitorTeamTemplate;
 			this.sections = sections;
 			this.sectionPlaysList = new List<List<MediaTimeNode>>(); 
 			
@@ -85,8 +89,17 @@ namespace LongoMatch.DB
 	
 		public Sections Sections{
 			get{ return this.sections;}
-			set {this.sections = value;}
-			
+			set {this.sections = value;}			
+		}
+		
+		public TeamTemplate LocalTeamTemplate{
+			get{return localTeamTemplate;}
+			set{localTeamTemplate=value;}
+		}
+		
+		public TeamTemplate VisitorTeamTemplate{
+			get{return visitorTeamTemplate;}
+			set{visitorTeamTemplate=value;}
 		}
 		
 		public void AddSection(SectionsTimeNode tn){
@@ -161,6 +174,16 @@ namespace LongoMatch.DB
 		public String Title {
 			get{return title;}
 			set{title=value;}
+		}
+		
+		public String Season{
+			get{return season;}
+			set{season = value;}
+		}
+		
+		public String Competition{
+			get{return competition;}
+			set{competition= value;}
 		}
 		
 		public String LocalName {

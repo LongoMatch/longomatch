@@ -106,7 +106,6 @@
     <File name="Gui/MessagePoupcs.cs" subtype="Code" buildaction="Compile" />
     <File name="DB/TeamTemplate.cs" subtype="Code" buildaction="Compile" />
     <File name="Time/Player.cs" subtype="Code" buildaction="Compile" />
-    <File name="IO/TeamTemplateWriter.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />

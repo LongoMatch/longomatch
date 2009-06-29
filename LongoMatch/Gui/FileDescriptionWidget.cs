@@ -1,6 +1,6 @@
 ﻿// FileDescriptionWidget.cs
 //
-//  Copyright (C) 2007 Andoni Morales Alastruey
+//  Copyright (C) 2007-2009 Andoni Morales Alastruey
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -48,13 +48,12 @@ namespace LongoMatch.Gui.Component
 		private MediaFile mFile;
 		private CalendarPopup cp;
 		private Sections actualSection;
+		private TeamTemplate actualVisitorTeam;
+		private TeamTemplate actualLocalTeam;
 		private UseType useType;		
 		
 		public FileDescriptionWidget()
-		{
-			string[] allFiles;
-			int i=0;
-			int index = 0;
+		{	
 				
 			this.Build();
 			
@@ -62,18 +61,9 @@ namespace LongoMatch.Gui.Component
 			cp.Hide();			
 			cp.DateSelectedEvent += new DateSelectedHandler(OnDateSelected);	
 			
-			allFiles = System.IO.Directory.GetFiles(MainClass.TemplatesDir(),"*.sct");
-			foreach (string filePath in allFiles){
-				string fileName = System.IO	.Path.GetFileNameWithoutExtension(filePath);
-				combobox1.AppendText(fileName);
-				//Setting the selceted value to the default template
-				if (fileName == "default")
-					index = i;
-				i++;
-			}
-			combobox1.Active = index;			
-			SectionsReader reader = new SectionsReader(System.IO.Path.Combine(MainClass.TemplatesDir(),this.SectionsFile));			
-			this.Sections= reader.GetSections();			
+			FillSections();
+			FillTeamsTemplate();
+			
 			this.Use=UseType.NewFromFileProject;			
 			this.Date = System.DateTime.Today;
 			
@@ -86,14 +76,16 @@ namespace LongoMatch.Gui.Component
 		public UseType Use{
 			set{
 				if (value == UseType.NewFromFileProject  || value == UseType.EditProject){					
-					this.label1.Hide();
-					this.bitratespinbutton.Hide();
+					videobitratelabel.Hide();
+					bitratespinbutton.Hide();
 				}
 					
 				if (value == UseType.EditProject){				
-					this.combobox1.Visible = false;
+					tagscombobox.Visible = false;
+					localcombobox.Visible = false;
+					visitorcombobox.Visible = false;
 				}
-				this.useType = value;
+				useType = value;
 			}
 			get{
 				return this.useType;
@@ -108,6 +100,16 @@ namespace LongoMatch.Gui.Component
 		public string VisitorName{
 			get { return visitorTeamEntry.Text; }
 			set { this.visitorTeamEntry.Text = value;}
+		}
+			
+		public string Season{
+			get{return seasonentry.Text;}
+			set{seasonentry.Text = value;}
+		}
+		
+		public string Competition{
+			get{return competitionentry.Text;}
+			set{competitionentry.Text = value;}
 		}
 		
 		public int LocalGoals{
@@ -138,55 +140,95 @@ namespace LongoMatch.Gui.Component
 			set {this.actualSection = value;}
 		}	
 		
+		public TeamTemplate LocalTeamTemplate{
+			get {return this.actualLocalTeam;}
+			set {this.actualLocalTeam = value;}
+		}
+		
+		public TeamTemplate VisitorTeamTemplate{
+			get {return this.actualVisitorTeam;}
+			set {this.actualVisitorTeam = value;}
+		}
+		
 		private string SectionsFile{
 			get {
-				string filename =  combobox1.ActiveText + ".sct";
+				string filename =  tagscombobox.ActiveText + ".sct";
 				return filename;
-				}
-		}	
+			}
+		}
+		
+		private string LocalTeamTemplateFile{
+			get {
+				string filename =  localcombobox.ActiveText + ".tem";
+				return filename;
+			}
+		}
+		
+		private string VisitorTeamTemplateFile{
+			get {
+				string filename =  visitorcombobox.ActiveText + ".tem";
+				return filename;
+			}
+		}
 
 		public void SetProject(Project project){
-			this.project = project;
-			this.mFile = project.File;
-			this.Filename = this.mFile.FilePath;
-			this.LocalName = project.LocalName;
-			this.VisitorName = project.VisitorName;
-			this.LocalGoals = project.LocalGoals;
-			this.VisitorGoals = project.VisitorGoals;
-			this.Date= project.MatchDate;
-			this.Sections = project.Sections;
+			project = project;
+			mFile = project.File;
+			Filename = mFile.FilePath;
+			LocalName = project.LocalName;
+			VisitorName = project.VisitorName;
+			LocalGoals = project.LocalGoals;
+			VisitorGoals = project.VisitorGoals;
+			Date= project.MatchDate;
+			Season = project.Season;
+			Competition = project.Competition;
+			Sections = project.Sections;
+			LocalTeamTemplate = project.LocalTeamTemplate;
+			VisitorTeamTemplate = project.VisitorTeamTemplate;
 		}
 		
 		public void UpdateProject(){
-			project.File=this.mFile;
-			project.LocalName = this.localTeamEntry.Text;
-			project.VisitorName = this.visitorTeamEntry.Text;
-			project.LocalGoals = (int)this.localSpinButton.Value;
-			project.VisitorGoals = (int)this.visitorSpinButton.Value;
-			project.MatchDate = DateTime.Parse(this.dateEntry.Text);
-			project.Sections = this.Sections;
+			project.File= mFile;
+			project.LocalName = localTeamEntry.Text;
+			project.VisitorName = visitorTeamEntry.Text;
+			project.LocalGoals = (int)localSpinButton.Value;
+			project.VisitorGoals = (int)visitorSpinButton.Value;
+			project.MatchDate = DateTime.Parse(dateEntry.Text);
+			project.Competition = competitionentry.Text;
+			project.Season = seasonentry.Text;
+			project.Sections = Sections;
+			project.LocalTeamTemplate = LocalTeamTemplate;
+			project.VisitorTeamTemplate = VisitorTeamTemplate;
 		}	
 		
 		public Project GetProject(){
 			if (this.Filename != ""){								
 				if (project == null){
-					return new Project(this.mFile,
-					                    this.LocalName,
-					                    this.VisitorName,
-					                    this.LocalGoals,
-					                    this.VisitorGoals,
-					                    this.Date,
-					                    this.Sections);
+					return new Project(mFile,
+					                   LocalName,
+					                   VisitorName,
+					                   Season,
+					                   Competition,
+					                   LocalGoals,
+					                   VisitorGoals,
+					                   Date,					                   
+					                   Sections,
+					                   LocalTeamTemplate,
+					                   VisitorTeamTemplate);
 				}
 				else {
-					project.File = this.mFile;
-					project.LocalName = this.LocalName;
-					project.VisitorName = this.VisitorName;
-					project.VisitorGoals = this.VisitorGoals;
-					project.LocalGoals = this.LocalGoals;
-					project.VisitorGoals = this.VisitorGoals;
-					project.MatchDate = this.Date;
-					project.Sections = this.Sections;
+					project.File = mFile;
+					project.LocalName = LocalName;
+					project.VisitorName = VisitorName;
+					project.VisitorGoals = VisitorGoals;
+					project.LocalGoals = LocalGoals;
+					project.VisitorGoals = VisitorGoals;
+					project.Season = Season;
+					project.Competition = Competition;
+					project.MatchDate = Date;
+					project.Sections = Sections;
+					project.LocalTeamTemplate=LocalTeamTemplate;
+					project.VisitorTeamTemplate = VisitorTeamTemplate;
 					return project;						
 				}				
 			}
@@ -240,6 +282,47 @@ namespace LongoMatch.Gui.Component
 			    MessagePopup.PopupMessage(this, MessageType.Error, 
 				                          Catalog.GetString("Invalid video file:")+"\n"+ex.Message);
 			}
+		}
+		
+		private void FillSections(){
+			string[] allFiles;
+			int i=0;
+			int index = 0;
+			
+			allFiles = System.IO.Directory.GetFiles(MainClass.TemplatesDir(),"*.sct");
+			foreach (string filePath in allFiles){
+				string fileName = System.IO	.Path.GetFileNameWithoutExtension(filePath);
+				tagscombobox.AppendText(fileName);
+				//Setting the selected value to the default template
+				if (fileName == "default")
+					index = i;
+				i++;
+			}
+			tagscombobox.Active = index;			
+			SectionsReader reader = new SectionsReader(System.IO.Path.Combine(MainClass.TemplatesDir(),this.SectionsFile));			
+			this.Sections= reader.GetSections();	
+		}
+		
+		private void FillTeamsTemplate(){
+			string[] allFiles;
+			int i=0;
+			int index = 0;
+			
+			allFiles = System.IO.Directory.GetFiles(MainClass.TemplatesDir(),"*.tem");
+			foreach (string filePath in allFiles){
+				string fileName = System.IO	.Path.GetFileNameWithoutExtension(filePath);
+				localcombobox.AppendText(fileName);
+				visitorcombobox.AppendText(fileName);
+
+				//Setting the selected value to the default template
+				if (fileName == "default")
+					index = i;
+				i++;
+			}
+			localcombobox.Active = index;	
+			visitorcombobox.Active = index;	
+			LocalTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(),this.LocalTeamTemplateFile));
+			VisitorTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(),this.VisitorTeamTemplateFile));
 		}
 
 		protected virtual void OnDateSelected(DateTime dateTime){

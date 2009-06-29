@@ -153,7 +153,10 @@ namespace LongoMatch.Gui.Dialog {
             Gtk.Paned.PanedChild w31 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.vbox2]));
             w31.Resize = false;
             // Container child hpaned1.Gtk.Paned+PanedChild
-            this.sectionspropertieswidget1 = null;
+            this.sectionspropertieswidget1 = new LongoMatch.Gui.Component.SectionsPropertiesWidget();
+            this.sectionspropertieswidget1.Sensitive = false;
+            this.sectionspropertieswidget1.Events = ((Gdk.EventMask)(256));
+            this.sectionspropertieswidget1.Name = "sectionspropertieswidget1";
             this.hpaned1.Add(this.sectionspropertieswidget1);
             w1.Add(this.hpaned1);
             Gtk.Box.BoxChild w33 = ((Gtk.Box.BoxChild)(w1[this.hpaned1]));

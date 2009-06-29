@@ -22,7 +22,7 @@ using Gdk;
 namespace LongoMatch.TimeNodes
 {
 	
-	
+	[Serializable]
 	public class Player
 	{
 		private string name;

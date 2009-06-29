@@ -30,7 +30,9 @@ namespace LongoMatch.Gui.Component {
             Gtk.Viewport w1 = new Gtk.Viewport();
             w1.ShadowType = ((Gtk.ShadowType)(0));
             // Container child GtkViewport.Gtk.Container+ContainerChild
-            this.treeview = null;
+            this.treeview = new LongoMatch.Gui.Component.TimeNodesTreeView();
+            this.treeview.CanFocus = true;
+            this.treeview.Name = "treeview";
             w1.Add(this.treeview);
             this.scrolledwindow1.Add(w1);
             this.Add(this.scrolledwindow1);
@@ -38,6 +40,11 @@ namespace LongoMatch.Gui.Component {
                 this.Child.ShowAll();
             }
             this.Show();
+            this.treeview.TimeNodeChanged += new LongoMatch.Handlers.TimeNodeChangedHandler(this.OnTimeNodeChanged);
+            this.treeview.TimeNodeSelected += new LongoMatch.Handlers.TimeNodeSelectedHandler(this.OnTimeNodeSelected);
+            this.treeview.TimeNodeDeleted += new LongoMatch.Handlers.TimeNodeDeletedHandler(this.OnTimeNodeDeleted);
+            this.treeview.PlayListNodeAdded += new LongoMatch.Handlers.PlayListNodeAddedHandler(this.OnPlayListNodeAdded);
+            this.treeview.SnapshotSeriesEvent += new LongoMatch.Handlers.SnapshotSeriesHandler(this.OnTreeviewSnapshotSeriesEvent);
         }
     }
 }
