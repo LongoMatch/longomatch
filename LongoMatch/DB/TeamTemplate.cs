@@ -18,13 +18,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using LongoMatch.TimeNodes;
 
 namespace LongoMatch.DB
 {
+	[Serializable]
 	
-	
-	public class TeamTemplate
+	public class TeamTemplate 
 	{
 		private List<Player> playersList;
 	
@@ -46,18 +49,33 @@ namespace LongoMatch.DB
 			}
 		}
 		
-		public void SetPlayersList(List<player> playersList){
+		public void SetPlayersList(List<Player> playersList){
 				this.playersList = playersList;
 		}
 		
 		public Player GetPlayer(int index){
 			if (index >= PlayersCount)
-				throw new Exception("The actual team template doesn't have so many players. Requesting player {0} but players count is {1}",index, PlayersCount);
+				throw new Exception(String.Format("The actual team template doesn't have so many players. Requesting player {0} but players count is {1}",index, PlayersCount));
 			return playersList[index];
 		}
 		
 		public List<Player> GetPlayersList(){
 			return playersList;
+		}
+		
+		public void Save(string filepath){
+			IFormatter formatter = new BinaryFormatter();
+			Stream stream = new FileStream(filepath, FileMode.Create, FileAccess.Write, FileShare.None);
+			formatter.Serialize(stream, this);
+			stream.Close();
+		}
+		
+		public static TeamTemplate LoadFromFile(string filepath){
+			IFormatter formatter = new BinaryFormatter();
+			Stream stream = new FileStream(filepath, FileMode.Open, FileAccess.Read, FileShare.Read);
+			TeamTemplate obj = (TeamTemplate) formatter.Deserialize(stream);
+			stream.Close();
+			return obj;
 		}
 	}
 }
