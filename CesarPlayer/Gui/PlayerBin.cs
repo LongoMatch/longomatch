@@ -55,7 +55,7 @@ namespace LongoMatch.Gui
 		private float rate=1;
 		private int previousVLevel = 1;
 		private bool muted=false;
-		//the player.mrl is diferent from the filenameas it's an uri eg:file:///foo.avi
+		//the player.mrl is diferent from the filename as it's an uri eg:file:///foo.avi
 		private string filename = null;
 		protected VolumeWindow vwin;
 				
@@ -328,7 +328,7 @@ namespace LongoMatch.Gui
 			}						
 			
 			timelabel.Text = TimeString.MSecondsToSecondsString(currentTime) + "/" + slength;			    
-			timescale.Value = currentposition*65535;
+			timescale.Value = currentposition;
 			if (Tick != null)
 				Tick(o,args);
 			
@@ -347,7 +347,7 @@ namespace LongoMatch.Gui
 				}
 			}
 					
-			pos = (float)timescale.Value/65535;
+			pos = (float)timescale.Value;
 			
 			if (InSegment())
 				player.SeekInSegment(segmentStartTime + (long)(pos*(segmentStopTime-segmentStartTime)));			
