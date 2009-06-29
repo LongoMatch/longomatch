@@ -7,51 +7,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.PlayListTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
-    <itemgroups />
-    <signals>
-      <itemgroup label="PlayListTreeView Signals">
-        <signal name="ApplyCurrentRate" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.TimeScale" palette-category="LongoMatch" allow-children="false" base-type="Gtk.DrawingArea">
-    <itemgroups>
-      <itemgroup label="TimeScale Properties">
-        <property name="PixelRatio" />
-        <property name="CurrentFrame" />
-      </itemgroup>
-    </itemgroups>
-    <signals>
-      <itemgroup label="TimeScale Signals">
-        <signal name="NewMarkAtFrameEvent" />
-        <signal name="TimeNodeChanged" />
-        <signal name="TimeNodeSelected" />
-        <signal name="TimeNodeDeleted" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.TimeNodesTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
-    <itemgroups />
-    <signals>
-      <itemgroup label="TimeNodesTreeView Signals">
-        <signal name="TimeNodeChanged" />
-        <signal name="TimeNodeSelected" />
-        <signal name="TimeNodeDeleted" />
-        <signal name="PlayListNodeAdded" />
-        <signal name="SnapshotSeriesEvent" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.TimeReferenceWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.DrawingArea">
-    <itemgroups>
-      <itemgroup label="TimeReferenceWidget Properties">
-        <property name="CurrentFrame" />
-        <property name="PixelRatio" />
-      </itemgroup>
-    </itemgroups>
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Component.ButtonsWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>

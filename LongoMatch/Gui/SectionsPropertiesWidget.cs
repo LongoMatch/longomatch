@@ -1,5 +1,5 @@
 // SectionsPropertiesWidget.cs
-//  Copyright (C) 2007 Andoni Morales Alastruey
+//  Copyright (C) 2007-2009 Andoni Morales Alastruey
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -142,10 +142,8 @@ namespace LongoMatch.Gui.Component
 			int index = int.Parse(tnp.Name);
 			
 			//Remove the last TimeNodeProperties Widget and clean-up
-			table1.Remove(tndlist[tndlist.Count-1]);
-			tndlist.Remove(tnp);
-			tnp.Destroy();
 			
+
 			if(project!= null){
 				try{
 					project.DeleteSection(index);
@@ -155,13 +153,18 @@ namespace LongoMatch.Gui.Component
 					                          Catalog.GetString("You can't delete the last section"));
 					return;
 				}
-				UpdateGui(project.Sections);
+				sections=project.Sections;
 			}
 			else{
 				//The TimeNodeProperties has been removed yet. That's why we get 
 				//The actual Sections with GetSections();
-				UpdateGui(GetSections());
+				sections = GetSections();
+				sections.RemoveSection(index);
+				
 			}
+			tndlist.Remove(tndlist[tndlist.Count]);
+			table1.Remove(tndlist[tndlist.Count]);
+			UpdateGui(sections);
 			
 		}
 		
