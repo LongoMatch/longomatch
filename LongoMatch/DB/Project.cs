@@ -58,7 +58,7 @@ namespace LongoMatch.DB
 		
 		private TeamTemplate visitorTeamTemplate;
 		
-		private TeamTemplate visitorTeamTemplate;
+		private TeamTemplate localTeamTemplate;
 		
 	
 		

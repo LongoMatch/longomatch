@@ -17,6 +17,8 @@
 // 
 
 using System;
+using System.Collections.Generic;
+using LongoMatch.TimeNodes;
 
 namespace LongoMatch.DB
 {
@@ -24,9 +26,38 @@ namespace LongoMatch.DB
 	
 	public class TeamTemplate
 	{
+		private List<Player> playersList;
+	
+		
 		
 		public TeamTemplate()
 		{
+			playersList = new List<Player>();	
+			
+		}
+		
+		public int PlayersCount{
+			get {return playersList.Count;}
+		}
+	
+		public void CreateDefaultTemplate(int playersCount){
+			for (int i=0; i<playersCount;i++){
+				playersList.Add(new Player("Player "+i,"",i));
+			}
+		}
+		
+		public void SetPlayersList(List<player> playersList){
+				this.playersList = playersList;
+		}
+		
+		public Player GetPlayer(int index){
+			if (index >= PlayersCount)
+				throw new Exception("The actual team template doesn't have so many players. Requesting player {0} but players count is {1}",index, PlayersCount);
+			return playersList[index];
+		}
+		
+		public List<Player> GetPlayersList(){
+			return playersList;
 		}
 	}
 }
