@@ -57,6 +57,10 @@ namespace LongoMatch.Video.Editor
 			set;
 		}
 		
+		string TempDir{
+			set;
+		}
+		
 		bool EnableTitle{
 			set;
 		}
