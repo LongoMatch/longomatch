@@ -156,11 +156,8 @@ namespace LongoMatch.Gui.Component
 				sections=project.Sections;
 			}
 			else{
-				//The TimeNodeProperties has been removed yet. That's why we get 
-				//The actual Sections with GetSections();
 				sections = GetSections();
 				sections.RemoveSection(index);
-				
 			}
 			tndlist.Remove(tndlist[tndlist.Count]);
 			table1.Remove(tndlist[tndlist.Count]);

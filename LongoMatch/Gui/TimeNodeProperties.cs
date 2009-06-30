@@ -89,6 +89,7 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnChangebutonClicked (object sender, System.EventArgs e)
 		{
 			HotKeySelectorDialog dialog = new HotKeySelectorDialog();
+			dialog.TransientFor=(Gtk.Window)this.Toplevel;
 			HotKey prevHotKey =  stn.HotKey;	
 			if (dialog.Run() == (int)ResponseType.Ok){							
 				stn.HotKey=dialog.HotKey;				

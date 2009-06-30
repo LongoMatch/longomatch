@@ -24,6 +24,9 @@ namespace LongoMatch.Gui.Dialog {
             this.Title = Mono.Unix.Catalog.GetString("Select a HotKey");
             this.Icon = Gdk.Pixbuf.LoadFromResource("longomatch_logo.png");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
+            this.Gravity = ((Gdk.Gravity)(5));
+            this.SkipPagerHint = true;
+            this.SkipTaskbarHint = true;
             this.HasSeparator = false;
             // Internal child LongoMatch.Gui.Dialog.HotKeySelectorDialog.VBox
             Gtk.VBox w1 = this.VBox;
