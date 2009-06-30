@@ -1,4 +1,4 @@
-// PlayListWidget.cs
+﻿// PlayListWidget.cs
 //
 //  Copyright (C) 2007-2009 Andoni Morales Alastruey
 //
@@ -263,6 +263,7 @@ namespace LongoMatch.Gui.Component
 				videoEditor.OutputFile = vep.Filename;
 				videoEditor.EnableTitle = vep.TitleOverlay;
 				videoEditor.EnableAudio = vep.EnableAudio;
+				videoEditor.TempDir = MainClass.TempVideosDir();
 				videoEditor.Start();
 				closebutton.Show();
 				newvideobutton.Hide();
