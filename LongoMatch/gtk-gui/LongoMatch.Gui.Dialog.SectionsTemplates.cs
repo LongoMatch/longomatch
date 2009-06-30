@@ -185,6 +185,7 @@ namespace LongoMatch.Gui.Dialog {
             this.DefaultWidth = 803;
             this.DefaultHeight = 388;
             this.Show();
+            this.treeview.RowActivated += new Gtk.RowActivatedHandler(this.OnTreeviewRowActivated);
             this.treeview.CursorChanged += new System.EventHandler(this.OnTreeviewCursorChanged);
             this.newbutton.Clicked += new System.EventHandler(this.OnNewbuttonClicked);
             this.savebutton.Clicked += new System.EventHandler(this.OnSavebuttonClicked);

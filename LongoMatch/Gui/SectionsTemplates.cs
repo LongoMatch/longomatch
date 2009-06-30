@@ -70,6 +70,14 @@ namespace LongoMatch.Gui.Dialog
 		public void SetSections(Sections sections){	
 			this.sectionspropertieswidget1.SetSections(sections);			
 		}	
+		
+		private void UpdateSections(){
+			SectionsReader sr = new SectionsReader(templateName);
+			selectedSections = sr.GetSections();
+			SetSections(sr.GetSections());
+			SetSensitive (true);
+		}
+		
 
 		private void SetSensitive (bool sensitive){
 			sectionspropertieswidget1.Sensitive = true;
@@ -86,7 +94,11 @@ namespace LongoMatch.Gui.Dialog
 			while (model.IterIsValid(iter)){				
 				tName = System.IO.Path.GetFileNameWithoutExtension((string) model.GetValue(iter,0));
 				if (tName == templateName){
-					treeview.ActivateRow(model.GetPath(iter),null);
+					//Do not delete 'this' as we want to change the class attribute
+					this.templateName = templateName = (string) this.dataFileListStore.GetValue (iter, 0);
+					treeview.SetCursor(model.GetPath(iter),null,false);
+					//treeview.ActivateRow(model.GetPath(iter),null);
+					
 					return;
 				}
 				model.IterNext(ref iter);
@@ -149,16 +161,18 @@ namespace LongoMatch.Gui.Dialog
 
 			treeview.Selection.GetSelected(out iter);
 			templateName = (string) this.dataFileListStore.GetValue (iter, 0);
-
-			SectionsReader sr = new SectionsReader(this.templateName);
-			selectedSections = sr.GetSections();
-			SetSections(sr.GetSections());
-			SetSensitive (true);
+			
+			UpdateSections();
 		}
 
 		protected virtual void OnButtonOkClicked (object sender, System.EventArgs e)
 		{
 			this.Destroy();
+		}
+
+		protected virtual void OnTreeviewRowActivated (object o, Gtk.RowActivatedArgs args)
+		{			
+			UpdateSections();
 		}
 	}
 }

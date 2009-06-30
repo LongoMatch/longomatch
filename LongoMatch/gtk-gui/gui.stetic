@@ -1315,6 +1315,7 @@
                   <widget class="Gtk.TreeView" id="treeview">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
+                    <signal name="RowActivated" handler="OnTreeviewRowActivated" />
                     <signal name="CursorChanged" handler="OnTreeviewCursorChanged" />
                   </widget>
                   <packing>
