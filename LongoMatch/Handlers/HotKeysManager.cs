@@ -51,11 +51,11 @@ namespace LongoMatch.Handlers
 		
 		
 		public void KeyListener(object sender, KeyPressEventArgs args){
-			if ((args.Event.State  & (ModifierType.ControlMask | ModifierType.ShiftMask | ModifierType.SuperMask)) != 0){
+			if ((args.Event.State  & (ModifierType.Mod1Mask | ModifierType.Mod5Mask | ModifierType.ShiftMask)) != 0){
 				int section=-1;
 				HotKey hotkey = new HotKey();
 				hotkey.Key=args.Event.Key;
-				hotkey.Modifier=args.Event.State & (ModifierType.ControlMask | ModifierType.ShiftMask | ModifierType.SuperMask);
+				hotkey.Modifier=args.Event.State & (ModifierType.Mod1Mask | ModifierType.Mod5Mask | ModifierType.ShiftMask);
 				if (dic.TryGetValue(hotkey,out section)){					
 					if (newMarkEvent != null){
 						newMarkEvent(section);

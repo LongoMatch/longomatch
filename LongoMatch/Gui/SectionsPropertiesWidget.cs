@@ -140,6 +140,7 @@ namespace LongoMatch.Gui.Component
 		private void DeleteSection(TimeNodeProperties tnp){
 			Sections sections;
 			int index = int.Parse(tnp.Name);
+			int count;
 			
 			//Remove the last TimeNodeProperties Widget and clean-up
 			
@@ -159,8 +160,10 @@ namespace LongoMatch.Gui.Component
 				sections = GetSections();
 				sections.RemoveSection(index);
 			}
-			tndlist.Remove(tndlist[tndlist.Count]);
-			table1.Remove(tndlist[tndlist.Count]);
+			count = tndlist.Count;
+			table1.Remove(tndlist[count-1]);
+			tndlist.Remove(tndlist[count-1]);
+			
 			UpdateGui(sections);
 			
 		}

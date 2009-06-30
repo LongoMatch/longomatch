@@ -35,7 +35,7 @@ namespace LongoMatch.Gui.Dialog {
             // Container child dialog1_VBox.Gtk.Box+BoxChild
             this.label1 = new Gtk.Label();
             this.label1.Name = "label1";
-            this.label1.LabelProp = Mono.Unix.Catalog.GetString("Press a key combination using Control, Shift or Super keys");
+            this.label1.LabelProp = Mono.Unix.Catalog.GetString("Press a key combination using  Shift, Alt or AltGR keys");
             w1.Add(this.label1);
             Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(w1[this.label1]));
             w2.Position = 0;

@@ -90,10 +90,14 @@ namespace LongoMatch.TimeNodes
 		
 		public override string ToString ()
 		{
-			string modifierS = Modifier.ToString();
-			// A modifier is represented like 'nameMask'
-			// We want to remove 'Mask'
-			modifierS = modifierS.Remove(modifierS.Length-4);
+			string modifierS = Catalog.GetString("none");
+			if (Modifier == ModifierType.Mod1Mask)
+				modifierS = "Alt";
+			else if (Modifier == ModifierType.Mod5Mask)
+				modifierS = "AltGr";
+			else if (Modifier == ModifierType.ShiftMask)
+				modifierS = "Shift";
+				
 			return string.Format("<{0}>+{1}", modifierS,(Key.ToString()).ToLower());
 		}
 

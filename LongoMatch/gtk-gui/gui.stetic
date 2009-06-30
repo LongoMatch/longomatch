@@ -3118,7 +3118,7 @@ You can download it using this direct link:</property>
         <child>
           <widget class="Gtk.Label" id="label1">
             <property name="MemberName" />
-            <property name="LabelProp" translatable="yes">Press a key combination using Control, Shift or Super keys</property>
+            <property name="LabelProp" translatable="yes">Press a key combination using  Shift, Alt or AltGR keys</property>
           </widget>
           <packing>
             <property name="Position">0</property>
@@ -3356,13 +3356,6 @@ You can download it using this direct link:</property>
     </child>
   </widget>
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.TeamTemplateWidget" design-size="300 300">
-    <property name="MemberName" />
-    <property name="Visible">False</property>
-    <child>
-      <placeholder />
-    </child>
-  </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.TeamTemplateWidget" design-size="300 300">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
