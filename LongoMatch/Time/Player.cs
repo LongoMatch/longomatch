@@ -54,8 +54,18 @@ namespace LongoMatch.TimeNodes
 		}
 		
 		public Pixbuf Photo{
-			get{return new Pixbuf(photo);}
-			set{photo=value.SaveToBuffer("png");}
+			get{
+				if(photo != null)
+					return new Pixbuf(photo);
+				else
+					return null;
+			}
+			set{
+				if(value != null)
+					photo=value.SaveToBuffer("png");
+				else 
+					photo=null;
+			}
 		}
 	}
 }
