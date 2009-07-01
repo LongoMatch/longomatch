@@ -125,11 +125,7 @@ namespace LongoMatch.DB
 		}
 		public void RemoveProject(Project project){
 			lock(this.locker){
-				Db4oFactory.Configure().ObjectClass(typeof(Project)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(Sections)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(TimeNode)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(Time)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(Team)).CascadeOnDelete(true);
+				SetCascadeOptions();
 				db = Db4oFactory.OpenFile(file);
 				try	{			
 					IQuery query = db.Query();
@@ -154,11 +150,7 @@ namespace LongoMatch.DB
 				bool error = false;
 				
 				// Configure db4o to cascade on delete for each one of the objects stored in a Project
-				Db4oFactory.Configure().ObjectClass(typeof(Project)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(Sections)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(TimeNode)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(Time)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(Team)).CascadeOnDelete(true);
+				SetCascadeOptions();
 				db = Db4oFactory.OpenFile(file);
 				try	{
 					// We look for a project with that uses the same file
@@ -189,13 +181,7 @@ namespace LongoMatch.DB
 
 		public void UpdateProject(Project project){
 			lock(this.locker){
-				// Configure db40 to cascade on delete for each one of the objects stored in a Project
-				Db4oFactory.Configure().ObjectClass(typeof(Project)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(TimeNode)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(Sections)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(Time)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(Team)).CascadeOnDelete(true);
-				
+				SetCascadeOptions();				
 				db = Db4oFactory.OpenFile(file);
 				try	{				
 					IQuery query = db.Query();
@@ -216,6 +202,15 @@ namespace LongoMatch.DB
 			
 		}
 		
+		private void SetCascadeOptions(){
+			Db4oFactory.Configure().ObjectClass(typeof(Project)).CascadeOnDelete(true);
+			Db4oFactory.Configure().ObjectClass(typeof(Sections)).CascadeOnDelete(true);
+			Db4oFactory.Configure().ObjectClass(typeof(TimeNode)).CascadeOnDelete(true);
+			Db4oFactory.Configure().ObjectClass(typeof(Time)).CascadeOnDelete(true);
+			Db4oFactory.Configure().ObjectClass(typeof(Team)).CascadeOnDelete(true);
+			Db4oFactory.Configure().ObjectClass(typeof(HotKey)).CascadeOnDelete(true);
+			Db4oFactory.Configure().ObjectClass(typeof(TeamTemplate)).CascadeOnDelete(true);
+		}
 		private bool Exists(string filename){
 			
 			IQuery query = db.Query();
