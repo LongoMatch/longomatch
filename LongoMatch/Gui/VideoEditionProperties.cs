@@ -135,7 +135,6 @@ namespace LongoMatch.Gui.Dialog
 				muxer = VideoMuxer.AVI;
 			}
 			else if (formatcombobox.ActiveText == "DVD (MPEG-2)"){
-				Console.WriteLine("DVD Muxer");
 				vcodec = VideoCodec.MPEG2_VIDEO;
 				acodec = AudioCodec.MPEG2_AUDIO;
 				muxer = VideoMuxer.DVD;

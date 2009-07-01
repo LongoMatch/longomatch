@@ -141,38 +141,29 @@ namespace LongoMatch.Gui.Component
 		}	
 		
 		public TeamTemplate LocalTeamTemplate{
-			get {return this.actualLocalTeam;}
-			set {this.actualLocalTeam = value;}
+			get {return actualLocalTeam;}
+			set {actualLocalTeam = value;}
 		}
 		
 		public TeamTemplate VisitorTeamTemplate{
-			get {return this.actualVisitorTeam;}
-			set {this.actualVisitorTeam = value;}
+			get {return actualVisitorTeam;}
+			set {actualVisitorTeam = value;}
 		}
 		
 		private string SectionsFile{
-			get {
-				string filename =  tagscombobox.ActiveText + ".sct";
-				return filename;
-			}
+			get {return tagscombobox.ActiveText + ".sct";}
 		}
 		
 		private string LocalTeamTemplateFile{
-			get {
-				string filename =  localcombobox.ActiveText + ".tem";
-				return filename;
-			}
+			get {return localcombobox.ActiveText + ".tem";}
 		}
 		
 		private string VisitorTeamTemplateFile{
-			get {
-				string filename =  visitorcombobox.ActiveText + ".tem";
-				return filename;
-			}
+			get {return visitorcombobox.ActiveText + ".tem";}
 		}
 
 		public void SetProject(Project project){
-			project = project;
+			this.project = project;
 			mFile = project.File;
 			Filename = mFile.FilePath;
 			LocalName = project.LocalName;
@@ -199,11 +190,12 @@ namespace LongoMatch.Gui.Component
 			project.Sections = Sections;
 			project.LocalTeamTemplate = LocalTeamTemplate;
 			project.VisitorTeamTemplate = VisitorTeamTemplate;
+			
 		}	
 		
 		public Project GetProject(){
 			if (this.Filename != ""){								
-				if (project == null){
+				if (useType == UseType.NewFromFileProject){
 					return new Project(mFile,
 					                   LocalName,
 					                   VisitorName,
@@ -215,20 +207,10 @@ namespace LongoMatch.Gui.Component
 					                   Sections,
 					                   LocalTeamTemplate,
 					                   VisitorTeamTemplate);
+					
 				}
 				else {
-					project.File = mFile;
-					project.LocalName = LocalName;
-					project.VisitorName = VisitorName;
-					project.VisitorGoals = VisitorGoals;
-					project.LocalGoals = LocalGoals;
-					project.VisitorGoals = VisitorGoals;
-					project.Season = Season;
-					project.Competition = Competition;
-					project.MatchDate = Date;
-					project.Sections = Sections;
-					project.LocalTeamTemplate=LocalTeamTemplate;
-					project.VisitorTeamTemplate = VisitorTeamTemplate;
+					UpdateProject();
 					return project;						
 				}				
 			}
@@ -299,7 +281,7 @@ namespace LongoMatch.Gui.Component
 				i++;
 			}
 			tagscombobox.Active = index;			
-			SectionsReader reader = new SectionsReader(System.IO.Path.Combine(MainClass.TemplatesDir(),this.SectionsFile));			
+			SectionsReader reader = new SectionsReader(System.IO.Path.Combine(MainClass.TemplatesDir(),SectionsFile));			
 			this.Sections= reader.GetSections();	
 		}
 		
@@ -321,8 +303,8 @@ namespace LongoMatch.Gui.Component
 			}
 			localcombobox.Active = index;	
 			visitorcombobox.Active = index;	
-			LocalTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(),this.LocalTeamTemplateFile));
-			VisitorTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(),this.VisitorTeamTemplateFile));
+			LocalTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(),LocalTeamTemplateFile));
+			VisitorTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(),VisitorTeamTemplateFile));
 		}
 
 		protected virtual void OnDateSelected(DateTime dateTime){
@@ -373,7 +355,7 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnEditbuttonClicked (object sender, System.EventArgs e)
 		{			
 			TemplateEditorDialog ted = new TemplateEditorDialog();
-			ted.Project=this.project;
+			ted.Sections = Sections;
 			
 			if (ted.Run() == (int)ResponseType.Apply){
 				this.Sections = ted.Sections;
@@ -383,14 +365,25 @@ namespace LongoMatch.Gui.Component
 		
 		protected virtual void OnCombobox1Changed (object sender, System.EventArgs e)
 		{
-			SectionsReader reader = new SectionsReader(System.IO.Path.Combine(MainClass.TemplatesDir(),this.SectionsFile));			
-			this.Sections= reader.GetSections();
-		}
+			SectionsReader reader = new SectionsReader(System.IO.Path.Combine(MainClass.TemplatesDir(),SectionsFile));			
+			Sections= reader.GetSections();
+		}
+		
+		protected virtual void OnVisitorcomboboxChanged (object sender, System.EventArgs e)
+		{
+			VisitorTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(), VisitorTeamTemplateFile));
+		}
+		
+				
+		protected virtual void OnLocalcomboboxChanged (object sender, System.EventArgs e)
+		{
+			LocalTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(), LocalTeamTemplateFile));
+		}
 		
 			
-		protected virtual void OnLocaltemplatebuttonClicked (object sender, System.EventArgs e){
-			
+		protected virtual void OnLocaltemplatebuttonClicked (object sender, System.EventArgs e){			
 			TeamTemplateEditor tted = new TeamTemplateEditor();
+	
 			tted.SetTeamTemplate(LocalTeamTemplate);	
 			if (tted.Run() == (int)ResponseType.Apply){
 				LocalTeamTemplate = tted.GetTeamTemplate();
@@ -400,8 +393,13 @@ namespace LongoMatch.Gui.Component
 		
 
 		protected virtual void OnVisitorbuttonClicked (object sender, System.EventArgs e){
-			
-		}
+			TeamTemplateEditor tted = new TeamTemplateEditor();
+			tted.SetTeamTemplate(VisitorTeamTemplate);	
+			if (tted.Run() == (int)ResponseType.Apply){
+				VisitorTeamTemplate = tted.GetTeamTemplate();
+			}			
+			tted.Destroy();			
+		}	
 	
 		
 	}	

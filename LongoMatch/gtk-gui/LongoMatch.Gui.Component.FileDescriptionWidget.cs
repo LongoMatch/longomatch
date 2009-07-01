@@ -495,7 +495,9 @@ namespace LongoMatch.Gui.Component {
             this.openbutton.Clicked += new System.EventHandler(this.OnOpenbuttonClicked);
             this.tagscombobox.Changed += new System.EventHandler(this.OnCombobox1Changed);
             this.editbutton.Clicked += new System.EventHandler(this.OnEditbuttonClicked);
+            this.visitorcombobox.Changed += new System.EventHandler(this.OnVisitorcomboboxChanged);
             this.visitorbutton.Clicked += new System.EventHandler(this.OnVisitorbuttonClicked);
+            this.localcombobox.Changed += new System.EventHandler(this.OnLocalcomboboxChanged);
             this.localtemplatebutton.Clicked += new System.EventHandler(this.OnLocaltemplatebuttonClicked);
         }
     }

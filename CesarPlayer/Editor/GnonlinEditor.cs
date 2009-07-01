@@ -212,8 +212,6 @@ namespace LongoMatch.Video.Editor
 		protected virtual void OnMergeDone(object sender, EventArgs args){
 			if (Progress != null)
 				Application.Invoke(delegate {Progress ((float)EditorState.FINISHED);});
-			Console.WriteLine("Edition finished");
-
 		}
 	}
 }

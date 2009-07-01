@@ -173,7 +173,6 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		protected void OnDeleted(object obj, EventArgs args){
-			Console.WriteLine(path.ToString().Substring(2));
 			if (TimeNodeDeleted != null)
 				TimeNodeDeleted((MediaTimeNode)selectedTimeNode,int.Parse(path.ToString().Split(':')[0]));
 		}

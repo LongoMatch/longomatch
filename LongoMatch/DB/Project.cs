@@ -63,7 +63,7 @@ namespace LongoMatch.DB
 	
 		
 		public Project(MediaFile file, String localName, String visitorName, String season, String competition, int localGoals,
-		                int visitorGoals, DateTime matchDate, Sections sections, TeamTemplate localTemplate, TeamTemplate visitorTemplate) {
+		                int visitorGoals, DateTime matchDate, Sections sections, TeamTemplate localTeamTemplate, TeamTemplate visitorTeamTemplate) {
 			List<MediaTimeNode> tnArray;
 			
 			this.file = file;
@@ -150,7 +150,6 @@ namespace LongoMatch.DB
 		public TreeStore GetModel (){
 			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore (typeof (MediaTimeNode));
 			for (int i=0;i<sections.Count;i++){
-				Console.WriteLine("Geeting section"+i);
 				Gtk.TreeIter iter = dataFileListStore.AppendValues (sections.GetTimeNode(i));
 				foreach(MediaTimeNode tNode in sectionPlaysList[i]){
 						dataFileListStore.AppendValues (iter,tNode);

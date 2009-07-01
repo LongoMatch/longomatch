@@ -100,6 +100,7 @@
                     <property name="MemberName" />
                     <property name="IsTextCombo">True</property>
                     <property name="Items" translatable="yes" />
+                    <signal name="Changed" handler="OnLocalcomboboxChanged" />
                   </widget>
                   <packing>
                     <property name="Position">0</property>
@@ -149,6 +150,7 @@
                     <property name="MemberName" />
                     <property name="IsTextCombo">True</property>
                     <property name="Items" translatable="yes" />
+                    <signal name="Changed" handler="OnVisitorcomboboxChanged" />
                   </widget>
                   <packing>
                     <property name="Position">0</property>

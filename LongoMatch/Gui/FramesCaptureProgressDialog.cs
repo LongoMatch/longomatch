@@ -44,7 +44,6 @@ namespace LongoMatch.Gui.Dialog
 		
 		
 		protected virtual void Update (int actual, int total){
-			Console.WriteLine(actual+"/"+total);
 			if (actual <= total){
 				progressbar.Text= Catalog.GetString("Capturing frame: ")+actual+"/"+total;
 				progressbar.Fraction = (double)actual/(double)total;

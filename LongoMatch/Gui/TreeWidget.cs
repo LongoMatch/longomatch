@@ -53,7 +53,6 @@ namespace LongoMatch.Gui.Component
 			if (project != null){
 				TreeIter iter;
 				TreeStore model = (TreeStore)treeview.Model;
-				Console.WriteLine(section);
 				model.GetIterFromString (out iter, section.ToString());
 				TreeIter child;						
 				model.IterChildren(out child, iter);

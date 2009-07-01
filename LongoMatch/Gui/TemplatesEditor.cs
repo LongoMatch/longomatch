@@ -189,7 +189,7 @@ namespace LongoMatch.Gui.Dialog
 				else {
 					TeamTemplate tt = new TeamTemplate();
 					tt.CreateDefaultTemplate(15);
-					tt.Save(name+fileExtension);
+					tt.Save(System.IO.Path.Combine (MainClass.TemplatesDir(), name+fileExtension));
 				}
 					
 				Fill();

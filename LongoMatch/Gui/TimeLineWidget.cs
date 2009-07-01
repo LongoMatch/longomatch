@@ -64,7 +64,6 @@ namespace LongoMatch.Gui.Component {
 					}
 				}				
 				if (selected != null){
-					Console.WriteLine(pixelRatio);
 					if (SelectedTimeNode.StartFrame/pixelRatio < GtkScrolledWindow.Hadjustment.Value ||
 					    SelectedTimeNode.StartFrame/pixelRatio > GtkScrolledWindow.Hadjustment.Value +
 					    GtkScrolledWindow.Allocation.Width - GtkScrolledWindow.VScrollbar.Allocation.Width)
