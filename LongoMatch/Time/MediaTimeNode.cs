@@ -19,6 +19,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Gdk;
 
 namespace LongoMatch.TimeNodes
@@ -51,6 +52,10 @@ namespace LongoMatch.TimeNodes
 		private uint stopFrame;
 		
 		private string notes;
+		
+		private List<int> localPlayersList; //Used to multitag: one play and several players
+											// We use the int index of the player in the template,		
+		private List<int> visitorPlayersList;// because it's the only unmutable variable
 
 		
 #region Constructors	
@@ -60,6 +65,8 @@ namespace LongoMatch.TimeNodes
 			this.fps = fps;
 			this.startFrame = (uint) this.Start.MSeconds*fps/1000;
 			this.stopFrame = (uint) this.Stop.MSeconds*fps/1000;
+			localPlayersList = new List<int>();
+			visitorPlayersList = new List<int>();
 		}
 		#endregion
 		
@@ -108,6 +115,16 @@ namespace LongoMatch.TimeNodes
 			get {return selected;}
 			set{this.selected = value;}			
 		}
+		
+		public List<int> LocalPlayers{
+			get{return localPlayersList;}
+		}
+		
+		public List<int> VisitorPlayers{
+			get{return visitorPlayersList;}
+		}
+		
+		
 		#endregion
 		
 		#region Public methods
@@ -115,6 +132,16 @@ namespace LongoMatch.TimeNodes
 		public bool HasFrame(int frame){
 			return (frame>=startFrame && frame<stopFrame);
 		}
+		
+		public void AddLocalPlayer(int index){
+			localPlayersList.Add(index);
+		}
+	
+		public void AddVisitorPlayer(int index){
+			visitorPlayersList.Add(index);			
+		}
+		
+		
 		
 		#endregion
 	}
