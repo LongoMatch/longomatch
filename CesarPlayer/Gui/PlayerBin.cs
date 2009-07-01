@@ -112,7 +112,7 @@ namespace LongoMatch.Gui
 				if (pixbuf != null){
 					h = pixbuf.Height;
 					w = pixbuf.Width;
-					rate = w/h;
+					rate = (double)w/(double)h;
 					return pixbuf.ScaleSimple(THUMBNAIL_WIDTH,(int)(THUMBNAIL_WIDTH/rate),InterpType.Bilinear);
 				}
 				else return null;

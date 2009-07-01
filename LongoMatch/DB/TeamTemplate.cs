@@ -49,6 +49,10 @@ namespace LongoMatch.DB
 			}
 		}
 		
+		public void AddPlayer(Player player){
+			playersList.Add(player);
+		}
+		
 		public void SetPlayersList(List<Player> playersList){
 				this.playersList = playersList;
 		}

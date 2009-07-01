@@ -385,6 +385,25 @@ namespace LongoMatch.Gui.Component
 		{
 			SectionsReader reader = new SectionsReader(System.IO.Path.Combine(MainClass.TemplatesDir(),this.SectionsFile));			
 			this.Sections= reader.GetSections();
-		}		
-	}
+		}
+		
+			
+		protected virtual void OnLocaltemplatebuttonClicked (object sender, System.EventArgs e){
+			
+			TeamTemplateEditor tted = new TeamTemplateEditor();
+			tted.SetTeamTemplate(LocalTeamTemplate);	
+			if (tted.Run() == (int)ResponseType.Apply){
+				LocalTeamTemplate = tted.GetTeamTemplate();
+			}			
+			tted.Destroy();			
+		}
+		
+
+		protected virtual void OnVisitorbuttonClicked (object sender, System.EventArgs e){
+			
+		}
+	
+		
+	}	
+		
 }

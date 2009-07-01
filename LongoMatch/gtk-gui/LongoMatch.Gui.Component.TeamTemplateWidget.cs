@@ -13,11 +13,19 @@ namespace LongoMatch.Gui.Component {
     
     public partial class TeamTemplateWidget {
         
+        private Gtk.Table table1;
+        
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
             // Widget LongoMatch.Gui.Component.TeamTemplateWidget
             Stetic.BinContainer.Attach(this);
             this.Name = "LongoMatch.Gui.Component.TeamTemplateWidget";
+            // Container child LongoMatch.Gui.Component.TeamTemplateWidget.Gtk.Container+ContainerChild
+            this.table1 = new Gtk.Table(((uint)(3)), ((uint)(3)), false);
+            this.table1.Name = "table1";
+            this.table1.RowSpacing = ((uint)(6));
+            this.table1.ColumnSpacing = ((uint)(6));
+            this.Add(this.table1);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }

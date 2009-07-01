@@ -4,6 +4,7 @@
       <Output directory="bin/Debug" assemblyKeyFile="." assembly="LongoMatch.exe" />
       <Build debugmode="True" target="Exe" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <EnvironmentVariables />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
@@ -110,6 +111,8 @@
     <File name="gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs" subtype="Code" buildaction="Compile" />
     <File name="Gui/TeamTemplateWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="gtk-gui/LongoMatch.Gui.Component.TeamTemplateWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.Gui.Dialog.TeamTemplateEditor.cs" subtype="Code" buildaction="Compile" />
+    <File name="Gui/TeamTemplateEditor.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />

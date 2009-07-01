@@ -17,6 +17,9 @@
 // 
 
 using System;
+using Gtk;
+using Gdk;
+using Mono.Unix;
 using LongoMatch.TimeNodes;
 
 namespace LongoMatch.Gui.Component
@@ -26,10 +29,17 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class PlayerProperties : Gtk.Bin
 	{
+		private const int THUMBNAIL_WIDTH = 50;
 		
 		public PlayerProperties()
 		{
 			this.Build();
+		}
+		
+		public string Title{
+			set{
+				titlelabel.Text=value;	
+			}
 		}
 		
 		public Player Player{
@@ -43,6 +53,41 @@ namespace LongoMatch.Gui.Component
 				numberspinbutton.Value = value.Number;
 				image.Pixbuf = value.Photo;
 			}
+		}
+		
+		private FileFilter FileFilter{
+			get{
+				FileFilter filter = new FileFilter();
+				filter.Name = "Images";
+				filter.AddPattern("*.png");
+				filter.AddPattern("*.jpg");
+				filter.AddPattern("*.jpeg");
+				return filter;
+			}				
+		}
+
+		protected virtual void OnOpenbuttonClicked (object sender, System.EventArgs e)
+		{
+			Pixbuf pimage;
+			int h,w;
+			double rate;
+			
+			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Choose an image"),
+			                                                   (Gtk.Window)this.Toplevel,
+			                                                   FileChooserAction.Open,
+			                                                   "gtk-cancel",ResponseType.Cancel,
+			                                                   "gtk-open",ResponseType.Accept);
+			fChooser.AddFilter(FileFilter);
+			if (fChooser.Run() == (int)ResponseType.Accept)	{		
+				pimage= new Gdk.Pixbuf(fChooser.Filename);	
+				if (pimage != null){
+					h = pimage.Height;
+					w = pimage.Width;
+					rate = (double)w/(double)h;
+					image.Pixbuf = pimage.ScaleSimple(THUMBNAIL_WIDTH,(int)(THUMBNAIL_WIDTH/rate),InterpType.Bilinear);
+				}
+			}
+			fChooser.Destroy();	
 		}
 	}
 }

@@ -224,8 +224,8 @@
                     <property name="CanFocus">True</property>
                     <property name="UpdatePolicy">Discontinuous</property>
                     <property name="Upper">1</property>
-                    <property name="PageIncrement">0.01</property>
-                    <property name="StepIncrement">0.01</property>
+                    <property name="PageIncrement">1</property>
+                    <property name="StepIncrement">1</property>
                     <property name="DrawValue">False</property>
                     <property name="Digits">0</property>
                     <property name="ValuePos">Top</property>
