@@ -183,9 +183,16 @@ namespace LongoMatch.Gui
 		
 		protected virtual void OnSectionsTemplatesManagerActivated (object sender, System.EventArgs e)
 		{
-			SectionsTemplates st = new SectionsTemplates();		
-			st.TransientFor = this;
-			st.Show();
+			TemplatesManager tManager = new TemplatesManager(TemplatesManager.UseType.SectionsTemplate);
+			tManager.TransientFor = this;
+			tManager.Show();
+		}
+		
+		protected virtual void OnTeamsTemplatesManagerActionActivated (object sender, System.EventArgs e)
+		{
+			TemplatesManager tManager = new TemplatesManager(TemplatesManager.UseType.TeamTemplate);
+			tManager.TransientFor = this;
+			tManager.Show();
 		}
 
 		protected virtual void OnOpenActivated (object sender, System.EventArgs e)
@@ -441,8 +448,12 @@ namespace LongoMatch.Gui
 			playerbin1.RedrawLastFrame();
 			return base.OnConfigureEvent (evnt);
 		}
+
+
 		
 #endregion
-
+	
+	
 	}
+	
 }

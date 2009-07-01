@@ -1,4 +1,4 @@
-// SectionsTemplates.cs
+// TemplatesManager.cs
 //
 //  Copyright (C) 2007-2009 Andoni Morales Alastruey
 //
@@ -30,16 +30,26 @@ using LongoMatch.IO;
 namespace LongoMatch.Gui.Dialog
 {	
 	
+	
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(false)]
-	public partial class SectionsTemplates : Gtk.Dialog
+	public partial class TemplatesManager : Gtk.Dialog
 	{
 		
+		public enum UseType{
+		TeamTemplate,
+		SectionsTemplate,		
+		}
+	
+		
 		private Gtk.ListStore dataFileListStore;
-		private Sections selectedSections;
+		private Sections selectedSectionsTemplate;
+		private TeamTemplate selectedTeamTemplate;
+		private UseType useType;
 		private string templateName;
+		private string fileExtension;
 
-		public SectionsTemplates()
+		public TemplatesManager(UseType type)
 		{
 			this.Build();				
 			Gtk.TreeViewColumn templateFileColumn = new Gtk.TreeViewColumn ();
@@ -48,17 +58,35 @@ namespace LongoMatch.Gui.Dialog
 			templateFileColumn.PackStart (templateFileCell, true);
 			templateFileColumn.SetCellDataFunc (templateFileCell, new Gtk.TreeCellDataFunc (RenderTemplateFile));
 			treeview.AppendColumn (templateFileColumn);
-			this.Fill();
+			Use = type;
 		}	
+		
+		public UseType Use{
+			set {
+				useType = value;
+				if (useType == UseType.TeamTemplate){
+					fileExtension = ".tem";
+					teamtemplatewidget1.Visible = true;
+					
+				}
+				else{
+					fileExtension=".sct";
+					sectionspropertieswidget1.Visible = true;
+				}
+				Fill();
+			}
+		}
 		
 		//Recorrer el directorio en busca de los archivos de configuración validos
 		private void Fill (){
-			this.dataFileListStore = new Gtk.ListStore (typeof (string));
-			string[] allFiles = System.IO.Directory.GetFiles(MainClass.TemplatesDir(),"*.sct");
+			string[] allFiles = System.IO.Directory.GetFiles(MainClass.TemplatesDir(),"*"+fileExtension);
+			
+			dataFileListStore = new Gtk.ListStore (typeof (string));
+			
 			foreach (string filePath in allFiles){
 				dataFileListStore.AppendValues (filePath);
 			}			
-			this.treeview.Model = dataFileListStore;
+			treeview.Model = dataFileListStore;
 		}
 		
 		private void RenderTemplateFile (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
@@ -67,20 +95,39 @@ namespace LongoMatch.Gui.Dialog
 			(cell as Gtk.CellRendererText).Text = System.IO.Path.GetFileNameWithoutExtension(_templateFilePath.ToString());
 		}
 		
-		public void SetSections(Sections sections){	
-			this.sectionspropertieswidget1.SetSections(sections);			
+		public void SetSectionsTemplate(Sections sections){	
+			if (useType != UseType.SectionsTemplate)
+				return;
+			sectionspropertieswidget1.SetSections(sections);			
 		}	
+		
+		public void SetTeamTemplate(TeamTemplate template){
+			if (useType != UseType.TeamTemplate)
+				return;
+			teamtemplatewidget1.SetTeamTemplate(template);
+		}
 		
 		private void UpdateSections(){
 			SectionsReader sr = new SectionsReader(templateName);
-			selectedSections = sr.GetSections();
-			SetSections(sr.GetSections());
+			selectedSectionsTemplate = sr.GetSections();
+			SetSectionsTemplate(sr.GetSections());
 			SetSensitive (true);
+		}	
+		
+	
+		
+		private void UpdateTeamTemplate(){
+			SetTeamTemplate(TeamTemplate.LoadFromFile(templateName));
+			SetSensitive(true);
+			                
 		}
 		
 
 		private void SetSensitive (bool sensitive){
-			sectionspropertieswidget1.Sensitive = true;
+			if (useType == UseType.SectionsTemplate)
+				sectionspropertieswidget1.Sensitive = true;
+			else
+				teamtemplatewidget1.Sensitive = true;			    
 			savebutton.Sensitive = sensitive;
 			deletebutton.Sensitive = sensitive;
 		}
@@ -97,8 +144,6 @@ namespace LongoMatch.Gui.Dialog
 					//Do not delete 'this' as we want to change the class attribute
 					this.templateName = templateName = (string) this.dataFileListStore.GetValue (iter, 0);
 					treeview.SetCursor(model.GetPath(iter),null,false);
-					//treeview.ActivateRow(model.GetPath(iter),null);
-					
 					return;
 				}
 				model.IterNext(ref iter);
@@ -107,8 +152,14 @@ namespace LongoMatch.Gui.Dialog
 
 		protected virtual void OnSavebuttonClicked (object sender, System.EventArgs e)
 		{
-			this.selectedSections = this.sectionspropertieswidget1.GetSections();
-			SectionsWriter.UpdateTemplate (this.templateName,this.selectedSections);			
+			if (useType == UseType.SectionsTemplate){
+				selectedSectionsTemplate = sectionspropertieswidget1.GetSections();
+				SectionsWriter.UpdateTemplate (templateName,selectedSectionsTemplate);	
+			}
+			else{
+				selectedTeamTemplate = teamtemplatewidget1.GetTeamTemplate();
+				selectedTeamTemplate.Save(templateName);
+			}		
 		}
 
 		protected virtual void OnNewbuttonClicked (object sender, System.EventArgs e)
@@ -126,13 +177,21 @@ namespace LongoMatch.Gui.Dialog
 					ed.Destroy();
 					return;
 				}
-				if (System.IO.File.Exists(System.IO.Path.Combine(MainClass.TemplatesDir(),name+".sct"))){
+				if (System.IO.File.Exists(System.IO.Path.Combine(MainClass.TemplatesDir(),name+fileExtension))){
 					MessagePopup.PopupMessage(this, MessageType.Warning, 
 				                          Catalog.GetString("A template with this name already exists"));
 					ed.Destroy();
 					return;					
 				}
-				SectionsWriter.CreateNewTemplate(name+".sct");
+				
+				if (useType == UseType.SectionsTemplate)
+					SectionsWriter.CreateNewTemplate(name+fileExtension);
+				else {
+					TeamTemplate tt = new TeamTemplate();
+					tt.CreateDefaultTemplate(15);
+					tt.Save(name+fileExtension);
+				}
+					
 				Fill();
 				SelectTemplate(name);
 			}
@@ -162,7 +221,10 @@ namespace LongoMatch.Gui.Dialog
 			treeview.Selection.GetSelected(out iter);
 			templateName = (string) this.dataFileListStore.GetValue (iter, 0);
 			
-			UpdateSections();
+			if (useType == UseType.SectionsTemplate)
+				UpdateSections();
+			else
+				UpdateTeamTemplate();
 		}
 
 		protected virtual void OnButtonOkClicked (object sender, System.EventArgs e)
@@ -172,7 +234,10 @@ namespace LongoMatch.Gui.Dialog
 
 		protected virtual void OnTreeviewRowActivated (object o, Gtk.RowActivatedArgs args)
 		{			
-			UpdateSections();
+			if (useType == UseType.SectionsTemplate)
+				UpdateSections();
+			else
+				UpdateTeamTemplate();
 		}
 	}
 }

@@ -29,7 +29,7 @@ namespace LongoMatch.Gui {
         
         private Gtk.Action ProjectsManagerAction;
         
-        private Gtk.Action TemplatesManagerAction;
+        private Gtk.Action SectionsTemplatesManagerAction;
         
         private Gtk.Action ViewAction;
         
@@ -48,6 +48,8 @@ namespace LongoMatch.Gui {
         private Gtk.Action AboutAction;
         
         private Gtk.Action ExportProjectToCSVFileAction;
+        
+        private Gtk.Action TeamsTemplatesManagerAction;
         
         private Gtk.VBox vbox1;
         
@@ -108,9 +110,9 @@ namespace LongoMatch.Gui {
             this.ProjectsManagerAction = new Gtk.Action("ProjectsManagerAction", Mono.Unix.Catalog.GetString("Projects Manager"), null, null);
             this.ProjectsManagerAction.ShortLabel = Mono.Unix.Catalog.GetString("Database Manager");
             w1.Add(this.ProjectsManagerAction, null);
-            this.TemplatesManagerAction = new Gtk.Action("TemplatesManagerAction", Mono.Unix.Catalog.GetString("Templates Manager"), null, null);
-            this.TemplatesManagerAction.ShortLabel = Mono.Unix.Catalog.GetString("Templates Manager");
-            w1.Add(this.TemplatesManagerAction, null);
+            this.SectionsTemplatesManagerAction = new Gtk.Action("SectionsTemplatesManagerAction", Mono.Unix.Catalog.GetString("Sections Templates Manager"), null, null);
+            this.SectionsTemplatesManagerAction.ShortLabel = Mono.Unix.Catalog.GetString("Templates Manager");
+            w1.Add(this.SectionsTemplatesManagerAction, null);
             this.ViewAction = new Gtk.Action("ViewAction", Mono.Unix.Catalog.GetString("_View"), null, null);
             this.ViewAction.ShortLabel = Mono.Unix.Catalog.GetString("_View");
             w1.Add(this.ViewAction, null);
@@ -144,6 +146,9 @@ namespace LongoMatch.Gui {
             this.ExportProjectToCSVFileAction.Sensitive = false;
             this.ExportProjectToCSVFileAction.ShortLabel = Mono.Unix.Catalog.GetString("Export Project To CSV File");
             w1.Add(this.ExportProjectToCSVFileAction, null);
+            this.TeamsTemplatesManagerAction = new Gtk.Action("TeamsTemplatesManagerAction", Mono.Unix.Catalog.GetString("Teams Templates Manager"), null, null);
+            this.TeamsTemplatesManagerAction.ShortLabel = Mono.Unix.Catalog.GetString("Teams Templates Manager");
+            w1.Add(this.TeamsTemplatesManagerAction, null);
             this.UIManager.InsertActionGroup(w1, 0);
             this.AddAccelGroup(this.UIManager.AccelGroup);
             this.Name = "LongoMatch.Gui.MainWindow";
@@ -160,7 +165,7 @@ namespace LongoMatch.Gui {
             this.menubox.Name = "menubox";
             this.menubox.Spacing = 6;
             // Container child menubox.Gtk.Box+BoxChild
-            this.UIManager.AddUiFromString("<ui><menubar name='menubar1'><menu name='FileAction' action='FileAction'><menuitem name='NewPojectAction' action='NewPojectAction'/><menuitem name='OpenProjectAction' action='OpenProjectAction'/><menuitem name='SaveProjectAction' action='SaveProjectAction'/><menuitem name='CloseProjectAction' action='CloseProjectAction'/><separator/><menuitem name='QuitAction' action='QuitAction'/></menu><menu name='ToolsAction' action='ToolsAction'><menuitem name='ProjectsManagerAction' action='ProjectsManagerAction'/><menuitem name='TemplatesManagerAction' action='TemplatesManagerAction'/><menuitem name='ExportProjectToCSVFileAction' action='ExportProjectToCSVFileAction'/></menu><menu name='ViewAction' action='ViewAction'><menuitem name='FullScreenAction' action='FullScreenAction'/><menuitem name='PlaylistAction' action='PlaylistAction'/><menuitem name='CaptureModeAction' action='CaptureModeAction'/><menuitem name='AnalyzeModeAction' action='AnalyzeModeAction'/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='AboutAction' action='AboutAction'/></menu></menubar></ui>");
+            this.UIManager.AddUiFromString("<ui><menubar name='menubar1'><menu name='FileAction' action='FileAction'><menuitem name='NewPojectAction' action='NewPojectAction'/><menuitem name='OpenProjectAction' action='OpenProjectAction'/><menuitem name='SaveProjectAction' action='SaveProjectAction'/><menuitem name='CloseProjectAction' action='CloseProjectAction'/><separator/><menuitem name='QuitAction' action='QuitAction'/></menu><menu name='ToolsAction' action='ToolsAction'><menuitem name='ProjectsManagerAction' action='ProjectsManagerAction'/><menuitem name='SectionsTemplatesManagerAction' action='SectionsTemplatesManagerAction'/><menuitem name='TeamsTemplatesManagerAction' action='TeamsTemplatesManagerAction'/><menuitem name='ExportProjectToCSVFileAction' action='ExportProjectToCSVFileAction'/></menu><menu name='ViewAction' action='ViewAction'><menuitem name='FullScreenAction' action='FullScreenAction'/><menuitem name='PlaylistAction' action='PlaylistAction'/><menuitem name='CaptureModeAction' action='CaptureModeAction'/><menuitem name='AnalyzeModeAction' action='AnalyzeModeAction'/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='AboutAction' action='AboutAction'/></menu></menubar></ui>");
             this.menubar1 = ((Gtk.MenuBar)(this.UIManager.GetWidget("/menubar1")));
             this.menubar1.Name = "menubar1";
             this.menubox.Add(this.menubar1);
@@ -301,13 +306,14 @@ namespace LongoMatch.Gui {
             this.QuitAction.Activated += new System.EventHandler(this.OnQuitActivated);
             this.CloseProjectAction.Activated += new System.EventHandler(this.OnCloseActivated);
             this.ProjectsManagerAction.Activated += new System.EventHandler(this.OnDatabaseManagerActivated);
-            this.TemplatesManagerAction.Activated += new System.EventHandler(this.OnSectionsTemplatesManagerActivated);
+            this.SectionsTemplatesManagerAction.Activated += new System.EventHandler(this.OnSectionsTemplatesManagerActivated);
             this.FullScreenAction.Toggled += new System.EventHandler(this.OnFullScreenActionToggled);
             this.PlaylistAction.Toggled += new System.EventHandler(this.OnPlaylistActionToggled);
             this.CaptureModeAction.Toggled += new System.EventHandler(this.OnCaptureModeActionToggled);
             this.SaveProjectAction.Activated += new System.EventHandler(this.OnSaveProjectActionActivated);
             this.AboutAction.Activated += new System.EventHandler(this.OnAboutActionActivated);
             this.ExportProjectToCSVFileAction.Activated += new System.EventHandler(this.OnExportProjectToCSVFileActionActivated);
+            this.TeamsTemplatesManagerAction.Activated += new System.EventHandler(this.OnTeamsTemplatesManagerActionActivated);
             this.treewidget1.TimeNodeSelected += new LongoMatch.Handlers.TimeNodeSelectedHandler(this.OnTimeNodeSelected);
             this.playerbin1.Error += new LongoMatch.Video.Handlers.ErrorHandler(this.OnPlayerbin1Error);
             this.playerbin1.SegmentClosedEvent += new LongoMatch.Video.Handlers.SegmentClosedHandler(this.OnSegmentClosedEvent);

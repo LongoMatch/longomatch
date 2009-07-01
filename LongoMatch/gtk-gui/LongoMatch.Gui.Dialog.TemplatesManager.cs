@@ -11,7 +11,7 @@
 namespace LongoMatch.Gui.Dialog {
     
     
-    public partial class SectionsTemplates {
+    public partial class TemplatesManager {
         
         private Gtk.HPaned hpaned1;
         
@@ -27,14 +27,18 @@ namespace LongoMatch.Gui.Dialog {
         
         private Gtk.Button deletebutton;
         
+        private Gtk.HBox hbox1;
+        
         private LongoMatch.Gui.Component.SectionsPropertiesWidget sectionspropertieswidget1;
+        
+        private LongoMatch.Gui.Component.TeamTemplateWidget teamtemplatewidget1;
         
         private Gtk.Button buttonOk;
         
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
-            // Widget LongoMatch.Gui.Dialog.SectionsTemplates
-            this.Name = "LongoMatch.Gui.Dialog.SectionsTemplates";
+            // Widget LongoMatch.Gui.Dialog.TemplatesManager
+            this.Name = "LongoMatch.Gui.Dialog.TemplatesManager";
             this.Title = Mono.Unix.Catalog.GetString("Templates Manager");
             this.Icon = Gdk.Pixbuf.LoadFromResource("longomatch_logo.png");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
@@ -43,7 +47,7 @@ namespace LongoMatch.Gui.Dialog {
             this.SkipPagerHint = true;
             this.SkipTaskbarHint = true;
             this.HasSeparator = false;
-            // Internal child LongoMatch.Gui.Dialog.SectionsTemplates.VBox
+            // Internal child LongoMatch.Gui.Dialog.TemplatesManager.VBox
             Gtk.VBox w1 = this.VBox;
             w1.Name = "dialog1_VBox";
             w1.BorderWidth = ((uint)(2));
@@ -153,20 +157,35 @@ namespace LongoMatch.Gui.Dialog {
             Gtk.Paned.PanedChild w31 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.vbox2]));
             w31.Resize = false;
             // Container child hpaned1.Gtk.Paned+PanedChild
+            this.hbox1 = new Gtk.HBox();
+            this.hbox1.Name = "hbox1";
+            this.hbox1.Spacing = 6;
+            // Container child hbox1.Gtk.Box+BoxChild
             this.sectionspropertieswidget1 = new LongoMatch.Gui.Component.SectionsPropertiesWidget();
             this.sectionspropertieswidget1.Sensitive = false;
             this.sectionspropertieswidget1.Events = ((Gdk.EventMask)(256));
             this.sectionspropertieswidget1.Name = "sectionspropertieswidget1";
-            this.hpaned1.Add(this.sectionspropertieswidget1);
+            this.hbox1.Add(this.sectionspropertieswidget1);
+            Gtk.Box.BoxChild w32 = ((Gtk.Box.BoxChild)(this.hbox1[this.sectionspropertieswidget1]));
+            w32.Position = 0;
+            // Container child hbox1.Gtk.Box+BoxChild
+            this.teamtemplatewidget1 = new LongoMatch.Gui.Component.TeamTemplateWidget();
+            this.teamtemplatewidget1.Sensitive = false;
+            this.teamtemplatewidget1.Events = ((Gdk.EventMask)(256));
+            this.teamtemplatewidget1.Name = "teamtemplatewidget1";
+            this.hbox1.Add(this.teamtemplatewidget1);
+            Gtk.Box.BoxChild w33 = ((Gtk.Box.BoxChild)(this.hbox1[this.teamtemplatewidget1]));
+            w33.Position = 1;
+            this.hpaned1.Add(this.hbox1);
             w1.Add(this.hpaned1);
-            Gtk.Box.BoxChild w33 = ((Gtk.Box.BoxChild)(w1[this.hpaned1]));
-            w33.Position = 0;
-            // Internal child LongoMatch.Gui.Dialog.SectionsTemplates.ActionArea
-            Gtk.HButtonBox w34 = this.ActionArea;
-            w34.Name = "dialog1_ActionArea";
-            w34.Spacing = 6;
-            w34.BorderWidth = ((uint)(5));
-            w34.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
+            Gtk.Box.BoxChild w35 = ((Gtk.Box.BoxChild)(w1[this.hpaned1]));
+            w35.Position = 0;
+            // Internal child LongoMatch.Gui.Dialog.TemplatesManager.ActionArea
+            Gtk.HButtonBox w36 = this.ActionArea;
+            w36.Name = "dialog1_ActionArea";
+            w36.Spacing = 6;
+            w36.BorderWidth = ((uint)(5));
+            w36.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
             // Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
             this.buttonOk = new Gtk.Button();
             this.buttonOk.CanDefault = true;
@@ -176,14 +195,16 @@ namespace LongoMatch.Gui.Dialog {
             this.buttonOk.UseUnderline = true;
             this.buttonOk.Label = "gtk-quit";
             this.AddActionWidget(this.buttonOk, 0);
-            Gtk.ButtonBox.ButtonBoxChild w35 = ((Gtk.ButtonBox.ButtonBoxChild)(w34[this.buttonOk]));
-            w35.Expand = false;
-            w35.Fill = false;
+            Gtk.ButtonBox.ButtonBoxChild w37 = ((Gtk.ButtonBox.ButtonBoxChild)(w36[this.buttonOk]));
+            w37.Expand = false;
+            w37.Fill = false;
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
             this.DefaultWidth = 803;
             this.DefaultHeight = 388;
+            this.sectionspropertieswidget1.Hide();
+            this.teamtemplatewidget1.Hide();
             this.Show();
             this.treeview.RowActivated += new Gtk.RowActivatedHandler(this.OnTreeviewRowActivated);
             this.treeview.CursorChanged += new System.EventHandler(this.OnTreeviewCursorChanged);
