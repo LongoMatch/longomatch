@@ -254,9 +254,7 @@ namespace LongoMatch.Gui.Component
 					fps = (int) reader.GetMetadata(GstPlayerMetadataType.Fps);
 				}			
 				reader.Close();	
-				reader.Dispose();
-				Console.WriteLine(audioCodec);
-				Console.WriteLine(videoCodec);
+				reader.Dispose();				
 				this.mFile = new MediaFile(filename,new Time(duration*1000),(ushort)fps,hasAudio,hasVideo,videoCodec,audioCodec,0,0);
 				fileEntry.Text = filename;
 			}
