@@ -140,16 +140,17 @@ EXPORT void bacon_video_widget_close                    (BaconVideoWidget *bvw);
 /* Seeking and length */
 EXPORT gboolean bacon_video_widget_is_seekable          (BaconVideoWidget *bvw);
 EXPORT gboolean bacon_video_widget_seek		 (BaconVideoWidget *bvw,
-						  float position);
+						  float position, gfloat rate);
 EXPORT gboolean bacon_video_widget_seek_time		 	(BaconVideoWidget *bvw,
-						  						gint64 time, gboolean accurate);
+						  						gint64 time, gfloat rate, gboolean accurate);
 EXPORT gboolean bacon_video_widget_segment_seek 		(BaconVideoWidget *bvw,
-												gint64 start, gint64 stop);
-EXPORT gboolean bacon_video_widget_seek_in_segment     (BaconVideoWidget *bvw, gint64 pos );
-EXPORT gboolean  bacon_video_widget_seek_to_next_frame (BaconVideoWidget *bvw, gboolean in_segment);
-EXPORT gboolean  bacon_video_widget_seek_to_previous_frame (BaconVideoWidget *bvw, gboolean in_segment);
-EXPORT gboolean bacon_video_widget_segment_stop_update(BaconVideoWidget *bvw, gint64 stop);
-EXPORT gboolean bacon_video_widget_segment_start_update(BaconVideoWidget *bvw,gint64 start);
+												gint64 start, gint64 stop,gfloat rate);
+EXPORT gboolean bacon_video_widget_seek_in_segment     (BaconVideoWidget *bvw, gint64 pos,  gfloat rate );
+EXPORT gboolean  bacon_video_widget_seek_to_next_frame (BaconVideoWidget *bvw, gfloat rate, gboolean in_segment);
+EXPORT gboolean  bacon_video_widget_seek_to_previous_frame (BaconVideoWidget *bvw, gfloat rate, gboolean in_segment);
+EXPORT gboolean bacon_video_widget_segment_stop_update(BaconVideoWidget *bvw,gint64 stop,gfloat rate);
+EXPORT gboolean bacon_video_widget_segment_start_update(BaconVideoWidget *bvw,gint64 start, gfloat rate);
+EXPORT gboolean bacon_video_widget_new_file_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop,gfloat rate);
 EXPORT gboolean bacon_video_widget_can_direct_seek	 	(BaconVideoWidget *bvw);
 EXPORT float bacon_video_widget_get_position           (BaconVideoWidget *bvw);
 EXPORT gint64 bacon_video_widget_get_current_time      (BaconVideoWidget *bvw);

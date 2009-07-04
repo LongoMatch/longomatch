@@ -37,7 +37,7 @@ namespace LongoMatch.TimeNodes
 		{
 			if (thumbnail != null)
 				this.thumbnailBuf = thumbnail.SaveToBuffer("png");
-
+			else thumbnailBuf = null;
 		}
 		#endregion
 		
@@ -45,7 +45,9 @@ namespace LongoMatch.TimeNodes
 		
 		public Pixbuf Miniature{
 			get{ 
-				return new Pixbuf(thumbnailBuf);
+				if (thumbnailBuf != null)
+					return new Pixbuf(thumbnailBuf);
+				else return null;
 			}
 		}		
 		

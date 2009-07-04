@@ -143,8 +143,7 @@ namespace LongoMatch.Gui
 		
 		public void Play(){			
 			player.Play();			
-			float val = getRateFromScale();			
-						
+			float val = GetRateFromScale();							
 			if (segmentStartTime == 0 && segmentStopTime==0)
 				player.SetRate(val);
 			else
@@ -167,7 +166,7 @@ namespace LongoMatch.Gui
 			player.CancelProgramedStop();			
 		}
 	
-		public void SetPlayListElement(string fileName,long start, long stop, bool hasNext){
+		public void SetPlayListElement(string fileName,long start, long stop, float rate, bool hasNext){
 			this.hasNext = hasNext;
 			if (hasNext)
 				nextbutton.Sensitive = true;
@@ -176,9 +175,9 @@ namespace LongoMatch.Gui
 			
 			if (fileName != filename){
 				Open(fileName);				
-				player.NewFileSeek(start,stop);		
+				player.NewFileSeek(start,stop,rate);		
 			}
-			else player.SegmentSeek(start,stop);	
+			else player.SegmentSeek(start,stop,rate);	
 			
 			segmentStartTime = start;
 			segmentStopTime = stop;
@@ -193,32 +192,32 @@ namespace LongoMatch.Gui
 		}
 		
 		public void SeekTo(long time, bool accurate){
-			player.SeekTo(time,accurate);
+			player.SeekTo(time,1,accurate);
 		}
 		
 		public void SeekInSegment(long pos){
-			player.SeekInSegment(pos);
+			player.SeekInSegment(pos, GetRateFromScale());
 		}
 		
 		public void SeekToNextFrame(bool in_segment){
 			if (segmentStopTime==0 | player.CurrentTime < segmentStopTime)
-				player.SeekToNextFrame(in_segment);
+				player.SeekToNextFrame( GetRateFromScale(), in_segment);
 		}
 		
 		public void SeekToPreviousFrame(bool in_segment){
 			if (player.CurrentTime > segmentStartTime){
-				player.SeekToPreviousFrame(in_segment);
+				player.SeekToPreviousFrame( GetRateFromScale(),in_segment);
 			}
 		}
 		
 		public void UpdateSegmentStartTime (long start){
 			segmentStartTime = start;
-			player.UpdateSegmentStartTime(start);						
+			player.UpdateSegmentStartTime(start, GetRateFromScale());						
 		}
 		
 		public void UpdateSegmentStopTime (long stop){
 			segmentStopTime = stop;
-			player.UpdateSegmentStopTime(stop);	
+			player.UpdateSegmentStopTime(stop, GetRateFromScale());	
 		}
 		
 		public void SetStartStop(long start, long stop){
@@ -226,7 +225,7 @@ namespace LongoMatch.Gui
 			segmentStopTime = stop;
 			closebutton.Show();
 			vscale1.Value = 25;
-			player.SegmentSeek(start,stop);			
+			player.SegmentSeek(start,stop, GetRateFromScale());			
 		}
 		
 		public void CloseActualSegment(){
@@ -259,7 +258,7 @@ namespace LongoMatch.Gui
 		
 #region Private methods
 		
-		private float getRateFromScale(){
+		private float GetRateFromScale(){
 			VScale scale= vscale1;
 			double val = scale.Value;
 			
@@ -343,18 +342,22 @@ namespace LongoMatch.Gui
 				seeking = true;
 				IsPlayingPrevState = player.Playing;
 				player.Tick -= tickHandler;
-				if (Environment.OSVersion.Platform != PlatformID.Win32NT){
+				//FIXME Should not need this
+				/*if (Environment.OSVersion.Platform != PlatformID.Win32NT){
 					player.Pause();
-				}
+				}*/
+				player.Pause();
 			}
 					
 			pos = (float)timescale.Value;
 			
-			if (InSegment())
-				player.SeekInSegment(segmentStartTime + (long)(pos*(segmentStopTime-segmentStartTime)));			
+			if (InSegment()){
+				player.SeekInSegment(segmentStartTime + (long)(pos*(segmentStopTime-segmentStartTime)), GetRateFromScale());	
+			}
 			else {
 				player.Position = pos;
 				timelabel.Text= TimeString.MSecondsToSecondsString(player.CurrentTime) + "/" + slength;
+				Rate = 1;				
 			}			
 		}		
 
@@ -375,7 +378,7 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnStopbuttonClicked(object sender, System.EventArgs e)
 		{
-			player.SeekTo(segmentStartTime,true);
+			player.SeekTo(segmentStartTime,1,true);
 		}
 
 		protected virtual void OnVolumebuttonClicked(object sender, System.EventArgs e)
@@ -403,7 +406,7 @@ namespace LongoMatch.Gui
 		}
 		
 		protected virtual void OnEndOfStream (object o, EventArgs args){
-			player.SeekInSegment(0);
+			player.SeekInSegment(0, GetRateFromScale());
 			player.Pause();			
 		}
 		
@@ -451,7 +454,7 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnVscale1ValueChanged (object sender, System.EventArgs e)
 		{
-			float val = getRateFromScale();
+			float val = GetRateFromScale();
 			
 			// Mute for rate != 1
 			if (val != 1 && player.Volume != 0){ 
@@ -463,8 +466,9 @@ namespace LongoMatch.Gui
 			else if (val ==1)
 				player.Volume = previousVLevel;			
 			
-			if (InSegment())
-				player.SetRateInSegment(val,segmentStopTime);			
+			if (InSegment()){
+				player.SetRateInSegment(val,segmentStopTime);
+			}
 			else
 				player.SetRate(val);			
 			rate = val;

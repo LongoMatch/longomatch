@@ -218,8 +218,7 @@ namespace LongoMatch
 		{
 			if (openedProject == null){
 				if (plNode.Valid){
-					player.SetPlayListElement(plNode.FileName,plNode.Start.MSeconds,plNode.Stop.MSeconds,hasNext);
-					player.Rate = plNode.Rate;	
+					player.SetPlayListElement(plNode.FileName,plNode.Start.MSeconds,plNode.Stop.MSeconds,plNode.Rate,hasNext);
 					selectedTimeNode = plNode;
 				}
 			}

@@ -95,7 +95,7 @@ namespace LongoMatch.Video.Player
 			get;
 		}
 		
-		bool SeekTo(long time, bool accurate);
+		bool SeekTo(long time,float rate, bool accurate);
 		
 		bool Play();
 		
@@ -118,19 +118,19 @@ namespace LongoMatch.Video.Player
 		
 		void Dispose();
 		
-		bool SegmentSeek(long start, long stop);
+		bool SegmentSeek(long start, long stop,float rate);
 		
-		bool SeekInSegment(long pos);
+		bool SeekInSegment(long pos,float rate);
 		
-		bool NewFileSeek(long start, long stop);
+		bool NewFileSeek(long start, long stop,float rate);
 			
-		void UpdateSegmentStartTime(long start);
+		void UpdateSegmentStartTime(long start,float rate);
 		
-		void UpdateSegmentStopTime(long stop);
+		void UpdateSegmentStopTime(long stop,float rate);
 		
-		void SeekToNextFrame(bool in_segment);
+		void SeekToNextFrame(float rate,bool in_segment);
 		
-		void SeekToPreviousFrame(bool in_segment);
+		void SeekToPreviousFrame(float rate,bool in_segment);
 		
 		void CancelProgramedStop();
 		

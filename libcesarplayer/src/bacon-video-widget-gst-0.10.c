@@ -2088,7 +2088,7 @@ bacon_video_widget_can_direct_seek (BaconVideoWidget *bvw)
 //If we want to seek throug a seekbar we want speed, so we use the KEY_UNIT flag
 //Sometimes accurate position is requested so we use the ACCURATE flag
 gboolean
-bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, gboolean accurate)
+bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time,gfloat rate, gboolean accurate)
 {
 
 
@@ -2110,7 +2110,7 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, gboolean accur
 
   if(accurate){
     got_time_tick (bvw->priv->play, time * GST_MSECOND, bvw);
-  	gst_element_seek (bvw->priv->play, 1.0,
+  	gst_element_seek (bvw->priv->play, rate,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
       	GST_SEEK_TYPE_SET, time * GST_MSECOND,
       	GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
@@ -2118,7 +2118,7 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, gboolean accur
   else {  
 	 /* Emit a time tick of where we are going, we are paused */
   	got_time_tick (bvw->priv->play, time * GST_MSECOND, bvw);
-	gst_element_seek (bvw->priv->play, 1.0,
+	gst_element_seek (bvw->priv->play, rate,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT,
       	GST_SEEK_TYPE_SET, time * GST_MSECOND,
       	GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
@@ -2131,7 +2131,7 @@ bacon_video_widget_seek_time (BaconVideoWidget *bvw, gint64 time, gboolean accur
 
 
 gboolean
-bacon_video_widget_seek (BaconVideoWidget *bvw, float position )
+bacon_video_widget_seek (BaconVideoWidget *bvw, float position, gfloat rate )
 {
 
   gint64 seek_time, length_nanos;
@@ -2146,11 +2146,11 @@ bacon_video_widget_seek (BaconVideoWidget *bvw, float position )
   GST_LOG ("Seeking to %3.2f%% %" GST_TIME_FORMAT, position,
       GST_TIME_ARGS (seek_time));
 
-  return bacon_video_widget_seek_time (bvw, seek_time / GST_MSECOND, FALSE);
+  return bacon_video_widget_seek_time (bvw, seek_time / GST_MSECOND, rate, FALSE);
 }
 
 gboolean
-bacon_video_widget_seek_in_segment (BaconVideoWidget *bvw, gint64 pos )
+bacon_video_widget_seek_in_segment (BaconVideoWidget *bvw, gint64 pos, gfloat rate)
 {
 
   	g_return_val_if_fail (bvw != NULL, FALSE);
@@ -2169,7 +2169,7 @@ bacon_video_widget_seek_in_segment (BaconVideoWidget *bvw, gint64 pos )
   	}
 
 	got_time_tick (bvw->priv->play, pos * GST_MSECOND, bvw);
-	gst_element_seek (bvw->priv->play, 1.0,
+	gst_element_seek (bvw->priv->play, rate,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_SEGMENT | GST_SEEK_FLAG_ACCURATE,
       	GST_SEEK_TYPE_SET, pos * GST_MSECOND,
       	GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
@@ -2216,7 +2216,7 @@ bacon_video_widget_set_rate (BaconVideoWidget *bvw, gfloat rate)
 
  
 gboolean 
-bacon_video_widget_new_file_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop)
+bacon_video_widget_new_file_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop,gfloat rate)
 {
 	GstMessage * err_msg;
 	GstState cur_state;
@@ -2244,7 +2244,7 @@ bacon_video_widget_new_file_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop
         gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
 
 		got_time_tick (bvw->priv->play, start * GST_MSECOND, bvw);
-		gst_element_seek (bvw->priv->play, 1.0,
+		gst_element_seek (bvw->priv->play, rate,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_SEGMENT | GST_SEEK_FLAG_ACCURATE,
       	GST_SEEK_TYPE_SET, start * GST_MSECOND,
       	GST_SEEK_TYPE_SET, stop * GST_MSECOND);
@@ -2253,7 +2253,7 @@ bacon_video_widget_new_file_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop
   }
 
 gboolean 
-bacon_video_widget_segment_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop)
+bacon_video_widget_segment_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop, gfloat rate)
 {
 	
   	g_return_val_if_fail (bvw != NULL, FALSE);
@@ -2273,7 +2273,7 @@ bacon_video_widget_segment_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop)
   	}
 	
 	got_time_tick (bvw->priv->play, start * GST_MSECOND, bvw);
-	gst_element_seek (bvw->priv->play, 1.0,
+	gst_element_seek (bvw->priv->play, rate,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_SEGMENT | GST_SEEK_FLAG_ACCURATE,
       	GST_SEEK_TYPE_SET, start * GST_MSECOND,
       	GST_SEEK_TYPE_SET, stop * GST_MSECOND);
@@ -2282,7 +2282,7 @@ bacon_video_widget_segment_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop)
   }
   
 gboolean  
-bacon_video_widget_seek_to_next_frame (BaconVideoWidget *bvw, gboolean in_segment){
+bacon_video_widget_seek_to_next_frame (BaconVideoWidget *bvw, gfloat rate, gboolean in_segment){
 	
 	gint fps;
   	gint64 pos;
@@ -2308,13 +2308,13 @@ bacon_video_widget_seek_to_next_frame (BaconVideoWidget *bvw, gboolean in_segmen
 	if (bacon_video_widget_is_playing(bvw))
 		bacon_video_widget_pause(bvw);
     if (in_segment)
-    	 ret = gst_element_seek (bvw->priv->play, 1.0,
+    	 ret = gst_element_seek (bvw->priv->play, rate,
        GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE |GST_SEEK_FLAG_SEGMENT,
        GST_SEEK_TYPE_SET,  final_pos,
        GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE );
 
     else 
-       ret = gst_element_seek (bvw->priv->play, 1.0,
+       ret = gst_element_seek (bvw->priv->play, rate,
        GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE  ,
        GST_SEEK_TYPE_SET,  final_pos,
 	   GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE );
@@ -2328,7 +2328,7 @@ bacon_video_widget_seek_to_next_frame (BaconVideoWidget *bvw, gboolean in_segmen
     return ret;
   	
 }
-gboolean  bacon_video_widget_seek_to_previous_frame (BaconVideoWidget *bvw, gboolean in_segment){
+gboolean  bacon_video_widget_seek_to_previous_frame (BaconVideoWidget *bvw,gfloat rate, gboolean in_segment){
 	gint fps;
   	gint64 pos;
   	gint64 final_pos;
@@ -2353,13 +2353,13 @@ gboolean  bacon_video_widget_seek_to_previous_frame (BaconVideoWidget *bvw, gboo
 		bacon_video_widget_pause(bvw);
 
     if (in_segment)
-    	 ret = gst_element_seek (bvw->priv->play, 1.0,
+    	 ret = gst_element_seek (bvw->priv->play, rate,
        GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE |GST_SEEK_FLAG_SEGMENT,
        GST_SEEK_TYPE_SET,  final_pos,
        GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE );
 
     else 
-       ret = gst_element_seek (bvw->priv->play, 1.0,
+       ret = gst_element_seek (bvw->priv->play, rate,
        GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE  ,
        GST_SEEK_TYPE_SET,  final_pos,
 	   GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE );
@@ -2374,7 +2374,7 @@ gboolean  bacon_video_widget_seek_to_previous_frame (BaconVideoWidget *bvw, gboo
 }
   
  gboolean 
- bacon_video_widget_segment_stop_update(BaconVideoWidget *bvw, gint64 stop)
+ bacon_video_widget_segment_stop_update(BaconVideoWidget *bvw, gint64 stop, gfloat rate)
  {
 
 	 	g_return_val_if_fail (bvw != NULL, FALSE);
@@ -2384,7 +2384,7 @@ gboolean  bacon_video_widget_seek_to_previous_frame (BaconVideoWidget *bvw, gboo
 		bacon_video_widget_play(bvw);
 		
 #endif*/
-		gst_element_seek (bvw->priv->play, 1.0,
+		gst_element_seek (bvw->priv->play, rate,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_SEGMENT | GST_SEEK_FLAG_ACCURATE,
       	GST_SEEK_TYPE_SET, stop * GST_MSECOND-1,
       	GST_SEEK_TYPE_SET, stop * GST_MSECOND);	 
@@ -2397,7 +2397,7 @@ gboolean  bacon_video_widget_seek_to_previous_frame (BaconVideoWidget *bvw, gboo
 		return TRUE;
  }
  gboolean 
- bacon_video_widget_segment_start_update(BaconVideoWidget *bvw,gint64 start)
+ bacon_video_widget_segment_start_update(BaconVideoWidget *bvw,gint64 start, gfloat rate)
  {
 	g_return_val_if_fail (bvw != NULL, FALSE);
   	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
@@ -2405,7 +2405,7 @@ gboolean  bacon_video_widget_seek_to_previous_frame (BaconVideoWidget *bvw, gboo
 /*#ifdef WIN32
 		bacon_video_widget_play(bvw);
 #endif*/
-  	gst_element_seek (bvw->priv->play, 1.0,
+  	gst_element_seek (bvw->priv->play, rate,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_SEGMENT | GST_SEEK_FLAG_ACCURATE,
       	GST_SEEK_TYPE_SET, start * GST_MSECOND,
       	GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE); 
@@ -3637,7 +3637,7 @@ bacon_video_widget_new (int width, int height,
   
   GST_INFO ("use_type = %d", type);
 
-  bvw->priv->play = gst_element_factory_make ("playbin2", "play");
+  bvw->priv->play = gst_element_factory_make ("playbin", "play");
   if (!bvw->priv->play) {
 
     g_set_error (err, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,

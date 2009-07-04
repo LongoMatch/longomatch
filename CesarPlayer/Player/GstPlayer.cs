@@ -153,7 +153,7 @@ namespace LongoMatch.Video.Player {
 				return ret;
 			}
 			set {
-				this.Seek(value);
+				this.Seek(value,1);
 			}
 		}
 
@@ -620,10 +620,10 @@ namespace LongoMatch.Video.Player {
 		}
 
 		[DllImport("libcesarplayer.dll")]
-		static extern bool bacon_video_widget_seek(IntPtr raw, float position);
+		static extern bool bacon_video_widget_seek(IntPtr raw, float position, float rate);
 
-		public bool Seek(float position) {
-			bool raw_ret = bacon_video_widget_seek(Handle, position);
+		public bool Seek(float position, float rate) {
+			bool raw_ret = bacon_video_widget_seek(Handle, position, rate);
 			bool ret = raw_ret;
 			return ret;
 		}
@@ -675,35 +675,35 @@ namespace LongoMatch.Video.Player {
 		}
 
 		[DllImport("libcesarplayer.dll")]
-		static extern bool bacon_video_widget_seek_in_segment(IntPtr raw, long pos);
+		static extern bool bacon_video_widget_seek_in_segment(IntPtr raw, long pos,float rate);
 
-		public bool SeekInSegment(long pos) {
-			bool raw_ret = bacon_video_widget_seek_in_segment(Handle, pos);
+		public bool SeekInSegment(long pos,float rate) {
+			bool raw_ret = bacon_video_widget_seek_in_segment(Handle, pos,rate);
 			bool ret = raw_ret;
 			return ret;
 		}
 		
 		[DllImport("libcesarplayer.dll")]
-		static extern bool bacon_video_widget_new_file_seek(IntPtr raw, long start,long stop);
+		static extern bool bacon_video_widget_new_file_seek(IntPtr raw, long start,long stop,float rate);
 
-		public bool NewFileSeek(long start, long stop) {
-			bool raw_ret = bacon_video_widget_new_file_seek(Handle,start,stop);
+		public bool NewFileSeek(long start, long stop,float rate) {
+			bool raw_ret = bacon_video_widget_new_file_seek(Handle,start,stop,rate);
 			bool ret = raw_ret;
 			return ret;
 		}
 		
 		[DllImport ("libcesarplayer.dll")]
-		private static extern bool bacon_video_widget_segment_start_update(IntPtr player, long start);
+		private static extern bool bacon_video_widget_segment_start_update(IntPtr player, long start,float rate);
 			
-		public void UpdateSegmentStartTime(long start){
-			bacon_video_widget_segment_start_update(Handle,start);
+		public void UpdateSegmentStartTime(long start,float rate){
+			bacon_video_widget_segment_start_update(Handle,start, rate);
 		}
 		
 		[DllImport ("libcesarplayer.dll")]
-		private static extern bool bacon_video_widget_segment_stop_update(IntPtr player, long stop);
+		private static extern bool bacon_video_widget_segment_stop_update(IntPtr player, long stop,float rate);
 			
-		public void UpdateSegmentStopTime(long stop){
-			bacon_video_widget_segment_stop_update(Handle,stop);
+		public void UpdateSegmentStopTime(long stop,float rate){
+			bacon_video_widget_segment_stop_update(Handle,stop,rate);
 		}
 
 		[DllImport("libcesarplayer.dll")]
@@ -762,16 +762,16 @@ namespace LongoMatch.Video.Player {
 		}
 
 		[DllImport("libcesarplayer.dll")]
-		static extern bool bacon_video_widget_seek_time(IntPtr raw, long time, bool accurate);
+		static extern bool bacon_video_widget_seek_time(IntPtr raw, long time, float rate,bool accurate);
 
-		public bool SeekTo(long time, bool accurate) {
-			bool raw_ret = bacon_video_widget_seek_time(Handle, time, accurate);
+		public bool SeekTo(long time, float rate, bool accurate) {
+			bool raw_ret = bacon_video_widget_seek_time(Handle, time, rate,accurate);
 			bool ret = raw_ret;
 			return ret;
 		}
 		
 		public void CancelProgramedStop(){
-			this.SegmentSeek(this.CurrentTime,this.StreamLength);		
+			this.SegmentSeek(this.CurrentTime,this.StreamLength,1);		
 		}
 
 		[DllImport("libcesarplayer.dll")]
@@ -837,10 +837,10 @@ namespace LongoMatch.Video.Player {
 		}
 
 		[DllImport("libcesarplayer.dll")]
-		static extern bool bacon_video_widget_segment_seek(IntPtr raw, long start, long stop);
+		static extern bool bacon_video_widget_segment_seek(IntPtr raw, long start, long stop,float rate);
 
-		public bool SegmentSeek(long start, long stop) {
-			bool raw_ret = bacon_video_widget_segment_seek(Handle, start, stop);
+		public bool SegmentSeek(long start, long stop,float rate) {
+			bool raw_ret = bacon_video_widget_segment_seek(Handle, start, stop,rate);
 			bool ret = raw_ret;
 			this.Play();
 			return ret;
@@ -989,17 +989,17 @@ namespace LongoMatch.Video.Player {
 #endregion
 		
 		[DllImport("libcesarplayer.dll")]
-		static extern void bacon_video_widget_seek_to_next_frame (IntPtr raw,bool in_segment);		
-		public void SeekToNextFrame(bool in_segment){
-			bacon_video_widget_seek_to_next_frame(Handle,in_segment);
+		static extern void bacon_video_widget_seek_to_next_frame (IntPtr raw,float rate,bool in_segment);		
+		public void SeekToNextFrame(float rate,bool in_segment){
+			bacon_video_widget_seek_to_next_frame(Handle, rate,in_segment);
 			
 			
 		}
 		
 		[DllImport("libcesarplayer.dll")]
-		static extern void bacon_video_widget_seek_to_previous_frame (IntPtr raw, bool in_segment);			
-		public void SeekToPreviousFrame(bool in_segment){
-			bacon_video_widget_seek_to_previous_frame(Handle,in_segment);
+		static extern void bacon_video_widget_seek_to_previous_frame (IntPtr raw,float rate, bool in_segment);			
+		public void SeekToPreviousFrame(float rate,bool in_segment){
+			bacon_video_widget_seek_to_previous_frame(Handle,rate,in_segment);
 		}
 		
 		[DllImport("libcesarplayer.dll")]
@@ -1008,6 +1008,9 @@ namespace LongoMatch.Video.Player {
 			bacon_video_widget_redraw_last_frame(Handle);
 		}
 		
+		public bool SeekTo(long time, bool accurate) {
+			return SeekTo(time,1,accurate);
+		}
 		
 	}
 }
