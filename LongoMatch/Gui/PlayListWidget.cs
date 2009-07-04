@@ -95,17 +95,21 @@ namespace LongoMatch.Gui.Component
 		}		
 		
 		public PlayListTimeNode Next(){
-			if (playList.HasNext()){								
+			if (playList.HasNext()){
 				plNode = playList.Next();
 				playlisttreeview1.Selection.SelectPath(new TreePath(playList.GetCurrentIndex().ToString()));
 				playlisttreeview1.LoadedPlay = plNode;
-				if (PlayListNodeSelected != null)
+				if (PlayListNodeSelected != null && plNode.Valid){
 					PlayListNodeSelected(plNode,playList.HasNext());
+					StartClock();	
+				}
 				else 
-					Next();
-				StartClock();					
+					Next();	
+				return plNode;
 			}
-			return plNode;			
+			else{
+				return null;
+			}
 		}
 		
 		public void Prev(){
@@ -120,9 +124,11 @@ namespace LongoMatch.Gui.Component
 					StartClock();					
 				}				
 			}
-			else 
+			else {
 				//Nos situamos al inicio del segmento
-				player.SeekTo(plNode.Start.MSeconds,true);							
+				player.SeekTo(plNode.Start.MSeconds,true);
+				player.Rate=plNode.Rate;
+			}
 		}
 		
 		public void StopEdition(){
@@ -134,7 +140,7 @@ namespace LongoMatch.Gui.Component
 			StopClock();
 		}				
 		
-		public void StartClock ()	{
+		void StartClock ()	{
 			if (player!=null && !clock_started){			
 				timeout = GLib.Timeout.Add (20,CheckStopTime);
 				clock_started=true;
@@ -148,15 +154,13 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		private bool CheckStopTime(){			
+		private bool CheckStopTime(){	
 			lock (lock_node){				
 				if (player != null){
-					if (plNode == null)
-						StopClock();					
-					else {						
-						if (player.AccurateCurrentTime >= plNode.Stop.MSeconds)					
-							Next();						
-					}
+					if (player.AccurateCurrentTime >= plNode.Stop.MSeconds-200){	
+							if (Next() == null)
+								StopClock();
+					}					
 				}
 				return true;
 			}
@@ -164,8 +168,10 @@ namespace LongoMatch.Gui.Component
 		private PlayListTimeNode SelectPlayListNode (TreePath path){
 			
 			plNode = playList.Select(Int32.Parse(path.ToString()));
-			if (PlayListNodeSelected != null && plNode.Valid)
-				PlayListNodeSelected(plNode,playList.HasNext());	
+			if (PlayListNodeSelected != null && plNode.Valid){
+				PlayListNodeSelected(plNode,playList.HasNext());
+				StartClock();
+			}
 			return plNode;
 		}		
 		
