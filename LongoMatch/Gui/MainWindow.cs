@@ -82,7 +82,8 @@ namespace LongoMatch.Gui
 
 		
 #region Private Methods
-		private void SetProject(Project project){			
+		private void SetProject(Project project){	
+			CloseActualProyect();
 			openedProject = project;
 			eManager.OpenedProject = project;
 			if (project!=null){		
@@ -100,7 +101,9 @@ namespace LongoMatch.Gui
 						else 
 							playerbin1.LogoMode = false;
 						playlistwidget2.Stop();					
-						treewidget1.Project=project;						
+						treewidget1.Project=project;
+						localplayerslisttreewidget.SetTeam(project.LocalTeamTemplate,project.GetLocalTeamModel());
+						visitorplayerslisttreewidget.SetTeam(project.VisitorTeamTemplate,project.GetVisitorTeamModel());
 						timelinewidget1.Project = project;
 						buttonswidget1.Sections = project.Sections;	
 						if (project.File.HasVideo){

@@ -139,7 +139,7 @@ namespace LongoMatch.Gui.Component {
 				vbox1.PackStart(tr,false,false,0);
 				tr.Show();
 				for (int i=0; i<sections.Count; i++){
-					TimeScale ts = new TimeScale(i,tnArray[i],sections.GetName(i),frames,sections.GetColor(i));
+					TimeScale ts = new TimeScale(i,tnArray[i],frames,sections.GetColor(i));
 					tsArray[i]=ts;
 					ts.TimeNodeChanged += new TimeNodeChangedHandler(OnTimeNodeChanged);
 					ts.TimeNodeSelected += new TimeNodeSelectedHandler (OnTimeNodeSelected);

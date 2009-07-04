@@ -1482,17 +1482,70 @@
           <widget class="Gtk.HPaned" id="hpaned">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="Position">179</property>
+            <property name="Position">270</property>
             <child>
               <widget class="Gtk.VBox" id="leftbox">
                 <property name="MemberName" />
                 <property name="Visible">False</property>
                 <property name="Spacing">6</property>
                 <child>
-                  <widget class="LongoMatch.Gui.Component.TreeWidget" id="treewidget1">
+                  <widget class="Gtk.Notebook" id="notebook1">
                     <property name="MemberName" />
-                    <property name="Events">ButtonPressMask</property>
-                    <signal name="TimeNodeSelected" handler="OnTimeNodeSelected" />
+                    <property name="CanFocus">True</property>
+                    <property name="CurrentPage">0</property>
+                    <property name="TabPos">Bottom</property>
+                    <child>
+                      <widget class="LongoMatch.Gui.Component.TreeWidget" id="treewidget1">
+                        <property name="MemberName" />
+                        <property name="Events">ButtonPressMask</property>
+                        <signal name="TimeNodeSelected" handler="OnTimeNodeSelected" />
+                      </widget>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Label" id="label2">
+                        <property name="MemberName" />
+                        <property name="LabelProp" translatable="yes">Plays1</property>
+                      </widget>
+                      <packing>
+                        <property name="type">tab</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="LongoMatch.Gui.Component.PlayersListTreeWidget" id="localplayerslisttreewidget">
+                        <property name="MemberName" />
+                        <property name="Events">ButtonPressMask</property>
+                      </widget>
+                      <packing>
+                        <property name="Position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Label" id="label3">
+                        <property name="MemberName" />
+                        <property name="LabelProp" translatable="yes">Local</property>
+                      </widget>
+                      <packing>
+                        <property name="type">tab</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="LongoMatch.Gui.Component.PlayersListTreeWidget" id="visitorplayerslisttreewidget">
+                        <property name="MemberName" />
+                        <property name="Events">ButtonPressMask</property>
+                      </widget>
+                      <packing>
+                        <property name="Position">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Label" id="label4">
+                        <property name="MemberName" />
+                        <property name="LabelProp" translatable="yes">Visitor</property>
+                      </widget>
+                      <packing>
+                        <property name="type">tab</property>
+                      </packing>
+                    </child>
                   </widget>
                   <packing>
                     <property name="Position">0</property>
@@ -1508,7 +1561,7 @@
               <widget class="Gtk.HPaned" id="hpaned1">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Position">836</property>
+                <property name="Position">765</property>
                 <child>
                   <widget class="Gtk.VBox" id="vbox5">
                     <property name="MemberName" />
@@ -3528,6 +3581,22 @@ You can download it using this direct link:</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
           </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.PlayersListTreeWidget" design-size="300 300">
+    <property name="MemberName" />
+    <child>
+      <widget class="Gtk.ScrolledWindow" id="scrolledwindow1">
+        <property name="MemberName" />
+        <property name="CanFocus">True</property>
+        <property name="ShadowType">In</property>
+        <child>
+          <widget class="LongoMatch.Gui.Component.PlayersTreeView" id="playerstreeview">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+          </widget>
         </child>
       </widget>
     </child>

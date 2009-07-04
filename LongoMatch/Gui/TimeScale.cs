@@ -45,7 +45,6 @@ namespace LongoMatch.Gui.Component
 		private object locker;
 		
 		private int section;
-		private string name;
 		private Cairo.Color color;
 		private List<MediaTimeNode> list;
 		
@@ -71,12 +70,11 @@ namespace LongoMatch.Gui.Component
 		public event TimeNodeDeletedHandler TimeNodeDeleted;
 
 		
-		public TimeScale(int section,List<MediaTimeNode> list,string name, uint frames,Gdk.Color color)
+		public TimeScale(int section,List<MediaTimeNode> list, uint frames,Gdk.Color color)
 		{			
 			this.section = section;
 			this.frames = frames;	
 			this.list = list;	
-			this.name = name;
 			HeightRequest= SECTION_HEIGHT;
 			Size((int)(frames/pixelRatio),SECTION_HEIGHT);
 			this.color = RGBToCairoColor(color);

@@ -25,7 +25,6 @@ using Mono.Unix;
 using System.Collections;
 using LongoMatch.DB;
 using LongoMatch.IO;
-using LongoMatch.IO;
 
 namespace LongoMatch.Gui.Dialog
 {	
