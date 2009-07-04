@@ -1149,6 +1149,7 @@ BVW_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
        
 	    BVW_reconfigure_tick_timeout (bvw, 500);
 	    g_signal_emit (bvw, BVW_signals[SIGNAL_STATE_CHANGED], 0, FALSE);
+	    g_print("Ready to seek\n");
 	    g_signal_emit (bvw, BVW_signals[SIGNAL_READY_TO_SEEK], 0, FALSE);
       } else if (new_state > GST_STATE_PAUSED) {
         BVW_reconfigure_tick_timeout (bvw, 200);
@@ -2188,7 +2189,7 @@ bacon_video_widget_set_rate_in_segment (BaconVideoWidget *bvw, gfloat rate, gint
 
   //GST_LOG ("Seeking to %" GST_TIME_FORMAT, GST_TIME_ARGS (time * GST_MSECOND));
  
-
+	g_print("Seeking to %" GST_TIME_FORMAT, GST_TIME_ARGS (stop* GST_MSECOND));
    gst_element_seek (bvw->priv->play, rate,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE | GST_SEEK_FLAG_SEGMENT,
       	GST_SEEK_TYPE_SET,bacon_video_widget_get_accurate_current_time(bvw) * GST_MSECOND,
@@ -2221,6 +2222,7 @@ gboolean
 bacon_video_widget_new_file_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop)
 {
 	GstMessage * err_msg;
+	GstState cur_state;
 	
   	g_return_val_if_fail (bvw != NULL, FALSE);
   	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
@@ -2237,14 +2239,14 @@ bacon_video_widget_new_file_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop
     	return TRUE;
   	}
 	 
-		/*do{
-			 gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
-
-		}while(cur_state <= GST_STATE_READY);*/
 		
+		GST_LOG ("Segment seeking from %" GST_TIME_FORMAT, GST_TIME_ARGS (start * GST_MSECOND));
 		poll_for_state_change_full (bvw, bvw->priv->play,
-        GST_STATE_PAUSED, &err_msg, -1);
-       
+        GST_STATE_PLAYING, &err_msg, -1);
+        
+        gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
+
+		g_print("Seeking:..\n");
 		got_time_tick (bvw->priv->play, start * GST_MSECOND, bvw);
 		gst_element_seek (bvw->priv->play, 1.0,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_SEGMENT | GST_SEEK_FLAG_ACCURATE,
@@ -3639,7 +3641,7 @@ bacon_video_widget_new (int width, int height,
   
   GST_INFO ("use_type = %d", type);
 
-  bvw->priv->play = gst_element_factory_make ("playbin", "play");
+  bvw->priv->play = gst_element_factory_make ("playbin2", "play");
   if (!bvw->priv->play) {
 
     g_set_error (err, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
