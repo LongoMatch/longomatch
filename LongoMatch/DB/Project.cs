@@ -56,6 +56,10 @@ namespace LongoMatch.DB
 
 		private List<List<MediaTimeNode>> sectionPlaysList;
 		
+		private List<List<MediaTimeNode>> localTeamPlaysList;
+		
+		private List<List<MediaTimeNode>> visitorTeamPlaysList;
+		
 		private TeamTemplate visitorTeamTemplate;
 		
 		private TeamTemplate localTeamTemplate;
@@ -78,10 +82,20 @@ namespace LongoMatch.DB
 			this.visitorTeamTemplate = visitorTeamTemplate;
 			this.sections = sections;
 			this.sectionPlaysList = new List<List<MediaTimeNode>>(); 
+			this.visitorTeamPlaysList = new List<List<MediaTimeNode>>();
+			this.localTeamPlaysList = new List<List<MediaTimeNode>>();
 			
 			for (int i=0;i<sections.Count;i++){
 				sectionPlaysList.Add(new List<MediaTimeNode>());
-			}		
+			}
+			
+			for (int i=0;i<localTeamTemplate.PlayersCount;i++){
+				localTeamPlaysList.Add(new List<MediaTimeNode>());
+			}
+			
+			for (int i=0;i<visitorTeamTemplate.PlayersCount;i++){
+				visitorTeamPlaysList.Add(new List<MediaTimeNode>());
+			}
 			
 			this.Title = System.IO.Path.GetFileNameWithoutExtension(this.file.FilePath);			
 			System.IO.Directory.CreateDirectory(MainClass.ThumbnailsDir()+"/"+title);	
@@ -152,6 +166,28 @@ namespace LongoMatch.DB
 			for (int i=0;i<sections.Count;i++){
 				Gtk.TreeIter iter = dataFileListStore.AppendValues (sections.GetTimeNode(i));
 				foreach(MediaTimeNode tNode in sectionPlaysList[i]){
+						dataFileListStore.AppendValues (iter,tNode);
+				}						
+			}
+			return dataFileListStore;
+		}
+		
+		public TreeStore GetLocalTeamModel (){
+			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore (typeof (object));
+			for (int i=0;i<localTeamTemplate.PlayersCount;i++){
+				Gtk.TreeIter iter = dataFileListStore.AppendValues (localTeamTemplate.GetPlayer(i));
+				foreach(MediaTimeNode tNode in localTeamPlaysList[i]){
+						dataFileListStore.AppendValues (iter,tNode);
+				}						
+			}
+			return dataFileListStore;
+		}
+		
+		public TreeStore GetVisitorTeamModel (){
+			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore (typeof (object));
+			for (int i=0;i<visitorTeamTemplate.PlayersCount;i++){
+				Gtk.TreeIter iter = dataFileListStore.AppendValues (visitorTeamTemplate.GetPlayer(i));
+				foreach(MediaTimeNode tNode in visitorTeamPlaysList[i]){
 						dataFileListStore.AppendValues (iter,tNode);
 				}						
 			}
