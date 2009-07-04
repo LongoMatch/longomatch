@@ -173,12 +173,13 @@ namespace LongoMatch.Gui
 				nextbutton.Sensitive = true;
 			else
 				nextbutton.Sensitive = false;
+			
 			if (fileName != filename){
 				Open(fileName);				
 				player.NewFileSeek(start,stop);		
-				Play();
 			}
-			else player.SegmentSeek(start,stop);			
+			else player.SegmentSeek(start,stop);	
+			
 			segmentStartTime = start;
 			segmentStopTime = stop;
 			player.LogoMode = false;
