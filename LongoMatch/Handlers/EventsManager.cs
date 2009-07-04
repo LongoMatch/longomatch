@@ -220,8 +220,7 @@ namespace LongoMatch
 				selectedTimeNode = plNode;
 				if (plNode.Valid){
 					player.SetPlayListElement(plNode.FileName,plNode.Start.MSeconds,plNode.Stop.MSeconds,hasNext);
-					player.Rate = plNode.Rate;
-					playlist.StartClock();
+					player.Rate = plNode.Rate;					
 				}
 			}
 			else {
@@ -283,13 +282,12 @@ namespace LongoMatch
 		protected virtual void OnPrev ()
 		{
 			if (selectedTimeNode is MediaTimeNode){
-				player.SeekInSegment(selectedTimeNode.Start.MSeconds);
-				
+				player.SeekInSegment(selectedTimeNode.Start.MSeconds);				
 			}
 			else if (selectedTimeNode is PlayListTimeNode)
 				playlist.Prev();
 			else if (selectedTimeNode == null)
-				player.SeekTo(0,false);
+				player.SeekTo(0,false);			
 		}
 		
 		protected virtual void OnTick (object o, LongoMatch.Video.Handlers.TickArgs args)
