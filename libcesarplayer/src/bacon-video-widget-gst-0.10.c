@@ -2242,7 +2242,7 @@ bacon_video_widget_new_file_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop
 		
 		GST_LOG ("Segment seeking from %" GST_TIME_FORMAT, GST_TIME_ARGS (start * GST_MSECOND));
 		poll_for_state_change_full (bvw, bvw->priv->play,
-        GST_STATE_PLAYING, &err_msg, -1);
+        GST_STATE_PAUSED, &err_msg, -1);
         
         gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
 
