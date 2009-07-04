@@ -26,7 +26,7 @@ namespace LongoMatch.Gui.Dialog {
             // Widget LongoMatch.Gui.Dialog.FramesCaptureProgressDialog
             this.Name = "LongoMatch.Gui.Dialog.FramesCaptureProgressDialog";
             this.Title = Mono.Unix.Catalog.GetString("Capture Progress");
-            this.Icon = Gdk.Pixbuf.LoadFromResource("longomatch_logo.png");
+            this.Icon = Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Dialog, 48);
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.Modal = true;
             this.BorderWidth = ((uint)(3));

@@ -40,7 +40,7 @@ namespace LongoMatch.Gui.Dialog {
             // Widget LongoMatch.Gui.Dialog.TemplatesManager
             this.Name = "LongoMatch.Gui.Dialog.TemplatesManager";
             this.Title = Mono.Unix.Catalog.GetString("Templates Manager");
-            this.Icon = Gdk.Pixbuf.LoadFromResource("longomatch_logo.png");
+            this.Icon = Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Dialog, 48);
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.Modal = true;
             this.Gravity = ((Gdk.Gravity)(5));

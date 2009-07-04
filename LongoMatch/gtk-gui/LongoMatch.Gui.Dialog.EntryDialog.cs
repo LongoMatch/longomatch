@@ -24,7 +24,7 @@ namespace LongoMatch.Gui.Dialog {
             // Widget LongoMatch.Gui.Dialog.EntryDialog
             this.Name = "LongoMatch.Gui.Dialog.EntryDialog";
             this.Title = Mono.Unix.Catalog.GetString("Select template name");
-            this.Icon = Gdk.Pixbuf.LoadFromResource("longomatch_logo.png");
+            this.Icon = Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Dialog, 48);
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.Gravity = ((Gdk.Gravity)(5));
             this.HasSeparator = false;
