@@ -841,7 +841,6 @@ static gboolean
 BVW_signal_eos_delayed (gpointer user_data)
 {
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (user_data);
-  g_print("EOS delayed\n");
   g_signal_emit (bvw, BVW_signals[SIGNAL_EOS], 0, NULL);
   bvw->priv->eos_id = 0;
   return FALSE;
@@ -1149,7 +1148,6 @@ BVW_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
        
 	    BVW_reconfigure_tick_timeout (bvw, 500);
 	    g_signal_emit (bvw, BVW_signals[SIGNAL_STATE_CHANGED], 0, FALSE);
-	    g_print("Ready to seek\n");
 	    g_signal_emit (bvw, BVW_signals[SIGNAL_READY_TO_SEEK], 0, FALSE);
       } else if (new_state > GST_STATE_PAUSED) {
         BVW_reconfigure_tick_timeout (bvw, 200);
@@ -2189,7 +2187,6 @@ bacon_video_widget_set_rate_in_segment (BaconVideoWidget *bvw, gfloat rate, gint
 
   //GST_LOG ("Seeking to %" GST_TIME_FORMAT, GST_TIME_ARGS (time * GST_MSECOND));
  
-	g_print("Seeking to %" GST_TIME_FORMAT, GST_TIME_ARGS (stop* GST_MSECOND));
    gst_element_seek (bvw->priv->play, rate,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE | GST_SEEK_FLAG_SEGMENT,
       	GST_SEEK_TYPE_SET,bacon_video_widget_get_accurate_current_time(bvw) * GST_MSECOND,
@@ -2246,7 +2243,6 @@ bacon_video_widget_new_file_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop
         
         gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
 
-		g_print("Seeking:..\n");
 		got_time_tick (bvw->priv->play, start * GST_MSECOND, bvw);
 		gst_element_seek (bvw->priv->play, 1.0,
       	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_SEGMENT | GST_SEEK_FLAG_ACCURATE,
