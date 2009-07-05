@@ -20,6 +20,7 @@
 
 
 using System;
+using System.IO;
 using Gtk;
 using Mono.Unix;
 using LongoMatch.Gui;
@@ -37,6 +38,8 @@ namespace LongoMatch
 		private static DataBase db;
 		private static string baseDirectory;
 		private static string homeDirectory;
+		private static string configDirectory;
+		private static const string WIN32_CONFIG_FILE = longomatch.cfg;
 		
 		public static void Main (string[] args)
 		{	
@@ -46,12 +49,11 @@ namespace LongoMatch
 			//Configuramos el directorio base de la ejecucuión y el directorio HOME
 			baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../../");
 			homeDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+			configDirectory = System.IO.Path.Combine(homeDirectory,".longomatch");
 			homeDirectory = System.IO.Path.Combine(homeDirectory,"LongoMatch");
 			
-			if (Environment.OSVersion.Platform == PlatformID.Win32NT){
-				baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../");
-				Environment.SetEnvironmentVariable("GST_PLUGIN_PATH",RelativeToPrefix("lib\\gstreamer-0.10"));
-				setGtkTheme();
+			if (Environment.OSVersion.Platform == PlatformID.Win32NT){				
+				SetUpWin32Config();
 			}
 					
 			//Iniciamos la internalización
@@ -116,14 +118,9 @@ namespace LongoMatch
 		
 		public static string DBDir(){
 			return System.IO.Path.Combine (homeDirectory, "db");
-		}
-
-		
-		
-		
+		}	
 		
 		public static void CheckDirs(){
-
 			if (!System.IO.Directory.Exists(homeDirectory))
 			    System.IO.Directory.CreateDirectory(homeDirectory);
 			if (!System.IO.Directory.Exists(TemplatesDir()))
@@ -137,9 +134,9 @@ namespace LongoMatch
 			if (!System.IO.Directory.Exists(VideosDir()))
 			    System.IO.Directory.CreateDirectory(VideosDir());
 			if (!System.IO.Directory.Exists(TempVideosDir()))
-			    System.IO.Directory.CreateDirectory(TempVideosDir());
-			  
+			    System.IO.Directory.CreateDirectory(TempVideosDir());			  
 		}
+		
 		public static void CheckFiles(){			
 			string fConfig;
 			fConfig = TemplatesDir()+"/default.sct";
@@ -152,10 +149,9 @@ namespace LongoMatch
 				TeamTemplate tt = new TeamTemplate();
 				tt.CreateDefaultTemplate(20);
 				tt.Save(fConfig);					
-			}
-			
-			
+			}			
 		}
+		
 		public static DataBase DB{
 			get { return db;}
 		}
@@ -163,9 +159,37 @@ namespace LongoMatch
 		private static void setGtkTheme(){
 			if (!System.IO.File.Exists(System.IO.Path.Combine(homeDirectory,"../../.gtkrc-2.0"))){
 			    System.IO.File.Copy(RelativeToPrefix("etc/gtk-2.0/gtkrc-2.0"),System.IO.Path.Combine(homeDirectory,"../../.gtkrc-2.0"),true);
-			   
 			}
 		}
+		
+		private static void SetUpWin32Config(){
+			string homeDir;
+			try{
+				StreamReader reader = new StreamReader(System.IO.Path.Combine(baseDirectory, "../"+WIN32_CONFIG_FILE));
+				homeDir = reader.ReadLine();
+				if (!System.IO.Directory.Exists(homeDir))
+					System.IO.Directory.CreateDirectory(homeDir);
+			}
+			catch (Exception ex){
+				homeDir = null;
+			}
+			
+			baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../");
+			Environment.SetEnvironmentVariable("GST_PLUGIN_PATH",RelativeToPrefix("lib\\gstreamer-0.10"));
+			setGtkTheme();
+		}
+		
+		private static void PromptForHomeDir(){
+			FileChooserDialog dialog = new FileChooserDialog("Select Home Folder",null, 
+			                                          FileChooserAction.SelectFolder,
+			                                          "gtk-accept",ResponseType.Accept);
+			dialog.SetCurrentFolder("c:\\LongoMatch");
+			
+			if ( dialog.Run() ==  (int) ResponseType.Accept)
+				homeDirectory = dialog.CurrentFolder;			
+		}
+			
+		
 		
 		
 		
