@@ -17,6 +17,7 @@
 // 
 
 using System;
+using System.IO;
 using Gtk;
 using Gdk;
 using Mono.Unix;
@@ -69,6 +70,7 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnOpenbuttonClicked (object sender, System.EventArgs e)
 		{
 			Pixbuf pimage;
+			StreamReader file;
 			int h,w;
 			double rate;
 			
@@ -78,8 +80,12 @@ namespace LongoMatch.Gui.Component
 			                                                   "gtk-cancel",ResponseType.Cancel,
 			                                                   "gtk-open",ResponseType.Accept);
 			fChooser.AddFilter(FileFilter);
-			if (fChooser.Run() == (int)ResponseType.Accept)	{		
-				pimage= new Gdk.Pixbuf(fChooser.Filename);	
+			if (fChooser.Run() == (int)ResponseType.Accept)	{
+				// For Win32 compatibility we need to open the image file
+				// using a StreamReader. Gdk.Pixbuf(string filePath) uses GLib to open the 
+				// input file and doesn't support Win32 files path encoding
+				file = new StreamReader(fChooser.Filename);
+				pimage= new Gdk.Pixbuf(file.BaseStream);	
 				if (pimage != null){
 					h = pimage.Height;
 					w = pimage.Width;
@@ -89,5 +95,8 @@ namespace LongoMatch.Gui.Component
 			}
 			fChooser.Destroy();	
 		}
+		
+		
 	}
+
 }
