@@ -24,6 +24,7 @@ using System.IO;
 using Gtk;
 using Mono.Unix;
 using LongoMatch.Gui;
+using LongoMatch.Gui.Dialog;
 using LongoMatch.DB;
 using LongoMatch.IO;
 using LongoMatch.TimeNodes;
@@ -39,13 +40,10 @@ namespace LongoMatch
 		private static string baseDirectory;
 		private static string homeDirectory;
 		private static string configDirectory;
-		private const string WIN32_CONFIG_FILE = "longomatch.cfg";
+		private const string WIN32_CONFIG_FILE = "longomatch.conf";
 		
 		public static void Main (string[] args)
-		{	
-			
-			
-			
+		{		
 			//Configuramos el directorio base de la ejecucuión y el directorio HOME
 			baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../../");
 			homeDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.Personal);
@@ -58,20 +56,17 @@ namespace LongoMatch
 					
 			//Iniciamos la internalización
 			Catalog.Init("longomatch",RelativeToPrefix("share/locale"));
-			//Catalog.Init("longomatch",LocaleDir());
-			
-			//Comprobamos los archivos de inicio
-			MainClass.CheckDirs();
-			MainClass.CheckFiles();
 			
 			//Iniciamos la base de datos
 			db = new DataBase();
-			
-			
+		
 			//Iniciamos la aplicación
 			Application.Init ();
 			if (homeDirectory == null)
 				PromptForHomeDir();
+			//Comprobamos los archivos de inicio
+			MainClass.CheckDirs();
+			MainClass.CheckFiles();			
 			MainWindow win = new MainWindow ();
 			win.Show ();
 			
@@ -165,40 +160,34 @@ namespace LongoMatch
 		}
 		
 		private static void SetUpWin32Config(){
-			string homeDir;
+			Environment.SetEnvironmentVariable("GST_PLUGIN_PATH",RelativeToPrefix("lib\\gstreamer-0.10"));
+			baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../");
+			
 			try{
-				StreamReader reader = new StreamReader(System.IO.Path.Combine(baseDirectory, "../"+WIN32_CONFIG_FILE));
-				homeDir = reader.ReadLine();
-				if (!System.IO.Directory.Exists(homeDir))
-					System.IO.Directory.CreateDirectory(homeDir);
+				StreamReader reader = new StreamReader(System.IO.Path.Combine(baseDirectory, "etc/"+WIN32_CONFIG_FILE));
+				homeDirectory = reader.ReadLine();
+				configDirectory = homeDirectory;
+				Console.WriteLine("HOME:"+homeDirectory);
+				if (!System.IO.Directory.Exists(homeDirectory))
+					System.IO.Directory.CreateDirectory(homeDirectory);
 				reader.Close();
 			}
 			catch (Exception ex){
-				homeDir = null;
-			}
-			
-			baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../");
-			configDirectory = homeDirectory;
-			Environment.SetEnvironmentVariable("GST_PLUGIN_PATH",RelativeToPrefix("lib\\gstreamer-0.10"));
-			setGtkTheme();
+				Console.WriteLine("No se encuentra el archivo");
+				homeDirectory = null;
+			}		
 		}
 		
 		private static void PromptForHomeDir(){
-			StreamWriter writer;
+		    StreamWriter writer;
+			WorkspaceChooser chooser = new WorkspaceChooser();
+				
+			chooser.Run();
+			homeDirectory = System.IO.Path.Combine(chooser.WorkspaceFolder,"LongoMatch");	
+			configDirectory = homeDirectory;				
+			chooser.Destroy();
 			
-			FileChooserDialog dialog = new FileChooserDialog("Select Home Folder",null, 
-			                                          FileChooserAction.SelectFolder,
-			                                          "gtk-accept",ResponseType.Accept);
-			dialog.SetCurrentFolder("c:\\LongoMatch");
-			
-			if ( dialog.Run() ==  (int) ResponseType.Accept){
-				homeDirectory = dialog.CurrentFolder;	
-				configDirectory = homeDirectory;
-			}
-			
-			dialog.Destroy();
-			
-			using (writer = new StreamWriter (System.IO.Path.Combine(baseDirectory, "../"+WIN32_CONFIG_FILE))){
+			using (writer = new StreamWriter (System.IO.Path.Combine(baseDirectory, "etc/"+WIN32_CONFIG_FILE))){
 				writer.WriteLine(homeDirectory);
 				writer.Flush();
 				writer.Close();
