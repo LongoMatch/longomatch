@@ -182,6 +182,7 @@ namespace LongoMatch.Gui
 			segmentStartTime = start;
 			segmentStopTime = stop;
 			player.LogoMode = false;
+			Rate = rate;
 		}
 		
 		public void Close(){
