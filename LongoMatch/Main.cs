@@ -94,7 +94,7 @@ namespace LongoMatch
 		}
 		
 		public static string PlayListDir(){
-			return System.IO.Path.Combine (homeDirectory, "playlists");
+			return System.IO.Path.Combine (configDirectory, "playlists");
 		}
 		
 		public static string SnapshotsDir(){
@@ -102,7 +102,7 @@ namespace LongoMatch
 		}
 		
 		public static string TemplatesDir(){
-			return System.IO.Path.Combine (homeDirectory, "templates");
+			return System.IO.Path.Combine (configDirectory, "templates");
 		}
 		
 				
@@ -111,7 +111,7 @@ namespace LongoMatch
 		}
 		
 		public static string TempVideosDir(){
-			return System.IO.Path.Combine (VideosDir(), "temp");
+			return System.IO.Path.Combine (configDirectory, "temp");
 		}
 		
 		public static string ImagesDir(){			
@@ -119,7 +119,7 @@ namespace LongoMatch
 		}
 		
 		public static string DBDir(){
-			return System.IO.Path.Combine (homeDirectory, "db");
+			return System.IO.Path.Combine (configDirectory, "db");
 		}	
 		
 		public static void CheckDirs(){
@@ -178,6 +178,7 @@ namespace LongoMatch
 			}
 			
 			baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../");
+			configDirectory = homeDirectory;
 			Environment.SetEnvironmentVariable("GST_PLUGIN_PATH",RelativeToPrefix("lib\\gstreamer-0.10"));
 			setGtkTheme();
 		}
@@ -190,8 +191,10 @@ namespace LongoMatch
 			                                          "gtk-accept",ResponseType.Accept);
 			dialog.SetCurrentFolder("c:\\LongoMatch");
 			
-			if ( dialog.Run() ==  (int) ResponseType.Accept)
+			if ( dialog.Run() ==  (int) ResponseType.Accept){
 				homeDirectory = dialog.CurrentFolder;	
+				configDirectory = homeDirectory;
+			}
 			
 			dialog.Destroy();
 			
