@@ -199,6 +199,11 @@ namespace LongoMatch.Gui.Dialog
 		
 		protected virtual void OnDeletebuttonClicked (object sender, System.EventArgs e)
 		{
+			if (System.IO.Path.GetFileNameWithoutExtension(templateName) =="default"){
+				MessagePopup.PopupMessage(this,MessageType.Warning,Catalog.GetString("You can't delete the default template"));
+				return;
+			}
+				
 			MessageDialog mes = new MessageDialog(this,DialogFlags.Modal,MessageType.Warning,ButtonsType.YesNo,
 			                                      Catalog.GetString("Do you really want to delete ")+templateName+Catalog.GetString(" template?"));
 			if (mes.Run() == (int)ResponseType.Yes){
