@@ -348,27 +348,22 @@ namespace LongoMatch.Gui
 				buttonswidget1.Hide();
 				timelinewidget1.Show();
 			}		
-		}
-		
-		
+		}		
 		
 		protected virtual void OnFullScreenActionToggled (object sender, System.EventArgs e)
-		{
-			
+		{			
 			playerbin1.FullScreen = ((Gtk.ToggleAction)sender).Active;
 		}
 		
 		protected virtual void OnSaveProjectActionActivated (object sender, System.EventArgs e)
 		{
 			SaveDB();
-		}
-		
-		
+		}		
 		
 		protected override bool OnKeyPressEvent (EventKey evnt)
 		{
-			if (openedProject != null){
-				Gdk.Key key = evnt.Key;
+			if (openedProject != null && evnt.State == ModifierType.None){
+				Gdk.Key key = evnt.Key;				
 				if (key == Gdk.Key.z){
 					if (selectedTimeNode == null)
 						playerbin1.SeekToPreviousFrame(false);
