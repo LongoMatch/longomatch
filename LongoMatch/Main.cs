@@ -39,7 +39,7 @@ namespace LongoMatch
 		private static string baseDirectory;
 		private static string homeDirectory;
 		private static string configDirectory;
-		private static const string WIN32_CONFIG_FILE = longomatch.cfg;
+		private const string WIN32_CONFIG_FILE = "longomatch.cfg";
 		
 		public static void Main (string[] args)
 		{	
@@ -70,6 +70,8 @@ namespace LongoMatch
 			
 			//Iniciamos la aplicación
 			Application.Init ();
+			if (homeDirectory == null)
+				PromptForHomeDir();
 			MainWindow win = new MainWindow ();
 			win.Show ();
 			
@@ -169,6 +171,7 @@ namespace LongoMatch
 				homeDir = reader.ReadLine();
 				if (!System.IO.Directory.Exists(homeDir))
 					System.IO.Directory.CreateDirectory(homeDir);
+				reader.Close();
 			}
 			catch (Exception ex){
 				homeDir = null;
@@ -180,13 +183,23 @@ namespace LongoMatch
 		}
 		
 		private static void PromptForHomeDir(){
+			StreamWriter writer;
+			
 			FileChooserDialog dialog = new FileChooserDialog("Select Home Folder",null, 
 			                                          FileChooserAction.SelectFolder,
 			                                          "gtk-accept",ResponseType.Accept);
 			dialog.SetCurrentFolder("c:\\LongoMatch");
 			
 			if ( dialog.Run() ==  (int) ResponseType.Accept)
-				homeDirectory = dialog.CurrentFolder;			
+				homeDirectory = dialog.CurrentFolder;	
+			
+			dialog.Destroy();
+			
+			using (writer = new StreamWriter (System.IO.Path.Combine(baseDirectory, "../"+WIN32_CONFIG_FILE))){
+				writer.WriteLine(homeDirectory);
+				writer.Flush();
+				writer.Close();
+			}
 		}
 			
 		
