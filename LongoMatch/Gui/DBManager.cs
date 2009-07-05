@@ -93,29 +93,18 @@ namespace LongoMatch.Gui.Dialog
 					if (md.Run()== (int)ResponseType.Yes){
 						this.filedescriptionwidget3.Clear();
 						MainClass.DB.RemoveProject(selectedProject);	
-						string directory = MainClass.ThumbnailsDir()+"/"+selectedProject.Title;
-						foreach (string path in System.IO.Directory.GetFiles(directory,"*")){
-							System.IO.File.Delete(path);
-						}
-						System.IO.Directory.Delete(directory);
-						this.Fill();
-						
+						this.Fill();						
 					}
 					md.Destroy();
 				}
-			}
-		
-		}
-		
-	
+			}		
+		}	
 
 
 		protected virtual void OnSaveButtonPressed (object sender, System.EventArgs e)
 		{
-			SaveProject();
-			
-		}
-		
+			SaveProject();			
+		}		
 	
 
 		protected virtual void OnButtonOkClicked (object sender, System.EventArgs e)
@@ -145,8 +134,6 @@ namespace LongoMatch.Gui.Dialog
 				this.saveButton.Sensitive = true;
 				this.deleteButton.Sensitive = true;
 			}
-		}
-
-		
+		}		
 	}
 }

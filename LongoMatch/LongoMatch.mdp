@@ -50,7 +50,6 @@
     <File name="IO/SectionsWriter.cs" subtype="Code" buildaction="Compile" />
     <File name="IO/SectionsReader.cs" subtype="Code" buildaction="Compile" />
     <File name="IO/XMLReader.cs" subtype="Code" buildaction="Compile" />
-    <File name="DB/MediaFile.cs" subtype="Code" buildaction="Compile" />
     <File name="Gui/TimeLineWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="Gui/TimeReferenceWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="Gui/TimeScale.cs" subtype="Code" buildaction="Compile" />

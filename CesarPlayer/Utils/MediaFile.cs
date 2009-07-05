@@ -19,9 +19,10 @@
 //
 
 using System;
-using LongoMatch.TimeNodes;
+using LongoMatch.Video;
+using Mono.Unix;
 
-namespace LongoMatch.DB
+namespace LongoMatch.Video.Utils
 {
 	
 	
@@ -29,7 +30,7 @@ namespace LongoMatch.DB
 	{
 		
 		string filePath;
-		Time length;
+		long length; // In MSeconds
 		ushort fps;
 		bool hasAudio;
 		bool hasVideo;
@@ -38,7 +39,7 @@ namespace LongoMatch.DB
 		uint videoHeight;
 		uint videoWidth;
 		
-		public MediaFile(string filePath,Time length,ushort fps,bool hasAudio, bool hasVideo, string videoCodec, string audioCodec, uint videoWidth, uint videoHeight)
+		public MediaFile(string filePath,long length,ushort fps,bool hasAudio, bool hasVideo, string videoCodec, string audioCodec, uint videoWidth, uint videoHeight)
 		{
 			this.filePath = filePath;
 			this.length = length;
@@ -60,7 +61,7 @@ namespace LongoMatch.DB
 			set {this.filePath = value;}
 		}
 		
-		public Time Length{
+		public long Length{
 			get {return this.length;}
 			set {this.length = value;}
 		}
@@ -106,7 +107,44 @@ namespace LongoMatch.DB
 		}
 		
 		public uint GetFrames(){
-			return (uint) (Fps*Length.Seconds);
+			return (uint) (Fps*Length/1000);
+		}
+		
+		public static MediaFile GetMediaFile(string filePath){
+			int duration;			
+			bool hasVideo;
+			bool hasAudio;
+			string audioCodec = "";
+			string videoCodec = "";
+			int fps=0;
+			int height=0;
+			int width=0;			
+			MultimediaFactory factory;
+			IMetadataReader reader;
+			
+			try{
+				factory =  new MultimediaFactory();
+				reader = factory.getMetadataReader();
+				reader.Open(filePath);
+				duration = (int)reader.GetMetadata(GstPlayerMetadataType.Duration);						
+				hasVideo = (bool) reader.GetMetadata(GstPlayerMetadataType.HasVideo);
+				hasAudio = (bool) reader.GetMetadata(GstPlayerMetadataType.HasAudio);
+				if (hasAudio){
+					audioCodec = (string) reader.GetMetadata(GstPlayerMetadataType.AudioCodec);					
+				}
+				if (hasVideo){
+					videoCodec = (string) reader.GetMetadata(GstPlayerMetadataType.VideoCodec);	
+					fps = (int) reader.GetMetadata(GstPlayerMetadataType.Fps);
+				}			
+				height = (int) reader.GetMetadata(GstPlayerMetadataType.DimensionY);
+				width = (int) reader.GetMetadata (GstPlayerMetadataType.DimensionX);
+				reader.Close();	
+				reader.Dispose();				
+				return new MediaFile(filePath,duration*1000,(ushort)fps,hasAudio,hasVideo,videoCodec,audioCodec,0,0);
+			}
+			catch (GLib.GException ex){
+			    throw new Exception (Catalog.GetString("Invalid video file:")+"\n"+ex.Message);
+			}
 		}
 	}
 }

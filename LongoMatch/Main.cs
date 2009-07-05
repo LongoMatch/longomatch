@@ -101,10 +101,7 @@ namespace LongoMatch
 			return System.IO.Path.Combine (homeDirectory, "templates");
 		}
 		
-		public static string ThumbnailsDir(){
-			return System.IO.Path.Combine (homeDirectory, "thumbnails");
-		}
-		
+				
 		public static string VideosDir(){
 			return System.IO.Path.Combine (homeDirectory, "videos");
 		}
@@ -133,8 +130,6 @@ namespace LongoMatch
 			    System.IO.Directory.CreateDirectory(TemplatesDir());
 			if (!System.IO.Directory.Exists(SnapshotsDir()))
 			    System.IO.Directory.CreateDirectory(SnapshotsDir());
-			if (!System.IO.Directory.Exists(ThumbnailsDir()))
-			    System.IO.Directory.CreateDirectory(ThumbnailsDir());
 			if (!System.IO.Directory.Exists(PlayListDir()))
 			    System.IO.Directory.CreateDirectory(PlayListDir());
 			if (!System.IO.Directory.Exists(DBDir()))

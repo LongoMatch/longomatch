@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using Gtk;
 using Gdk;
 using LongoMatch.TimeNodes;
+using LongoMatch.Video.Utils;
 
 namespace LongoMatch.DB
 {
@@ -98,7 +99,6 @@ namespace LongoMatch.DB
 			}
 			
 			this.Title = System.IO.Path.GetFileNameWithoutExtension(this.file.FilePath);			
-			System.IO.Directory.CreateDirectory(MainClass.ThumbnailsDir()+"/"+title);	
 		}
 	
 		public Sections Sections{
@@ -157,8 +157,13 @@ namespace LongoMatch.DB
 
 		}
 
-		public void DelTimeNode(MediaTimeNode tNode,int section) {
-			sectionPlaysList[section].Remove(tNode);			
+		public void DeleteTimeNode(MediaTimeNode tNode,int section) {
+			sectionPlaysList[section].Remove(tNode);
+			foreach (List<MediaTimeNode> playsList in localTeamPlaysList)
+				playsList.Remove(tNode);
+			foreach (List<MediaTimeNode> playslist in visitorTeamPlaysList)
+				playslist.Remove(tNode);
+			
 		}
 		
 		public TreeStore GetModel (){

@@ -201,7 +201,7 @@ namespace LongoMatch
 		protected virtual void OnTimeNodeDeleted (MediaTimeNode tNode,int section)
 		{
 			treewidget.DeleteTimeNode(tNode,section);
-			openedProject.DelTimeNode(tNode,section);			
+			openedProject.DeleteTimeNode(tNode,section);			
 			timeline.QueueDraw();
 			MainClass.DB.UpdateProject(openedProject);			
 		}

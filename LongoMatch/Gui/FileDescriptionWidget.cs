@@ -228,39 +228,13 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		private void CreateMediaFile(string filename){
-			int duration;			
-			bool hasVideo;
-			bool hasAudio;
-			string audioCodec = "";
-			string videoCodec = "";
-			int fps=0;
-			int height=0;
-			int width=0;			
-			LongoMatch.Video.MultimediaFactory factory;
-			IMetadataReader reader;
-			
 			try{
-				factory =  new LongoMatch.Video.MultimediaFactory();
-				reader = factory.getMetadataReader();
-				reader.Open(filename);
-				duration = (int)reader.GetMetadata(GstPlayerMetadataType.Duration);						
-				hasVideo = (bool) reader.GetMetadata(GstPlayerMetadataType.HasVideo);
-				hasAudio = (bool) reader.GetMetadata(GstPlayerMetadataType.HasAudio);
-				if (hasAudio){
-					audioCodec = (string) reader.GetMetadata(GstPlayerMetadataType.AudioCodec);					
-				}
-				if (hasVideo){
-					videoCodec = (string) reader.GetMetadata(GstPlayerMetadataType.VideoCodec);	
-					fps = (int) reader.GetMetadata(GstPlayerMetadataType.Fps);
-				}			
-				reader.Close();	
-				reader.Dispose();				
-				this.mFile = new MediaFile(filename,new Time(duration*1000),(ushort)fps,hasAudio,hasVideo,videoCodec,audioCodec,0,0);
+				mFile = MediaFile.GetMediaFile(filename);
 				fileEntry.Text = filename;
 			}
-			catch (GLib.GException ex){
+			catch (Exception ex){
 			    MessagePopup.PopupMessage(this, MessageType.Error, 
-				                          Catalog.GetString("Invalid video file:")+"\n"+ex.Message);
+				                          ex.Message);
 			}
 		}
 		
