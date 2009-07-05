@@ -38,5 +38,14 @@ namespace LongoMatch.Gui.Dialog
 			get{return this.entry1.Text;}
 			set{this.entry1.Text = value;}				
 		}
+		
+		public int Count{
+			get {return (int)spinbutton1.Value;}
+			set {spinbutton1.Value = value;}
+		}
+		
+		public bool ShowCount{
+			set{hbox1.Visible = value;}
+		}
 	}
 }

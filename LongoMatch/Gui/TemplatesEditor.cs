@@ -164,12 +164,16 @@ namespace LongoMatch.Gui.Dialog
 		protected virtual void OnNewbuttonClicked (object sender, System.EventArgs e)
 		{			
 			string name;
+			int count;
 			EntryDialog ed= new  EntryDialog();
 			
 			ed.Title = Catalog.GetString("Template name");
+			if (useType == UseType.TeamTemplate)
+				ed.ShowCount=true;
 			
 			if (ed.Run() == (int)ResponseType.Ok){
 				name = ed.Text;
+				count = ed.Count;
 				if (name == ""){
 					MessagePopup.PopupMessage(this, MessageType.Warning, 
 				                          Catalog.GetString("You cannot create a template with a void name"));
@@ -187,7 +191,7 @@ namespace LongoMatch.Gui.Dialog
 					SectionsWriter.CreateNewTemplate(name+fileExtension);
 				else {
 					TeamTemplate tt = new TeamTemplate();
-					tt.CreateDefaultTemplate(15);
+					tt.CreateDefaultTemplate(count);
 					tt.Save(System.IO.Path.Combine (MainClass.TemplatesDir(), name+fileExtension));
 				}
 					
@@ -205,7 +209,9 @@ namespace LongoMatch.Gui.Dialog
 			}
 				
 			MessageDialog mes = new MessageDialog(this,DialogFlags.Modal,MessageType.Warning,ButtonsType.YesNo,
-			                                      Catalog.GetString("Do you really want to delete ")+templateName+Catalog.GetString(" template?"));
+			                                      Catalog.GetString("Do you really want to delete the ")+
+			                                      System.IO.Path.GetFileNameWithoutExtension(templateName)
+			                                      +Catalog.GetString(" template?"));
 			if (mes.Run() == (int)ResponseType.Yes){
 				System.IO.File.Delete(templateName);
 				this.Fill();
