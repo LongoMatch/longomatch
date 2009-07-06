@@ -355,7 +355,10 @@ namespace LongoMatch.Gui
 			pos = (float)timescale.Value;
 			
 			if (InSegment()){
-				player.SeekInSegment(segmentStartTime + (long)(pos*(segmentStopTime-segmentStartTime)), GetRateFromScale());	
+				long seekPos = segmentStartTime + (long)(pos*(segmentStopTime-segmentStartTime));
+				player.SeekInSegment(seekPos, GetRateFromScale());	
+				timelabel.Text= TimeString.MSecondsToSecondsString(seekPos) + "/" + 
+					TimeString.MSecondsToSecondsString(segmentStopTime-segmentStartTime);
 			}
 			else {
 				player.Position = pos;
