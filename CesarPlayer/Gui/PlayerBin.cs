@@ -63,11 +63,13 @@ namespace LongoMatch.Gui
 		public PlayerBin()
 		{		
 			this.Build();
-			UnSensitive();
 			PlayerInit();
 			vwin = new VolumeWindow();
 			vwin.VolumeChanged += new VolumeChangedHandler(OnVolumeChanged);
-			controlsbox.Visible = false;						
+			controlsbox.Visible = false;	
+			UnSensitive();
+			timescale.Adjustment.PageIncrement = 0.0001;
+			timescale.Adjustment.StepIncrement = 0.0001;
 		}
 		
 #endregion
