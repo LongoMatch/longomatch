@@ -273,7 +273,7 @@ namespace LongoMatch.Gui
 		}
 		
 		private bool InSegment(){
-			return segmentStartTime != 0 && segmentStopTime != 0;
+			return  !(segmentStopTime == 0 && segmentStartTime ==0) ;
 		}
 		
 		private void PlayerInit(){
