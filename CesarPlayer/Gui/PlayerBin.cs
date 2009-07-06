@@ -345,14 +345,10 @@ namespace LongoMatch.Gui
 				seeking = true;
 				IsPlayingPrevState = player.Playing;
 				player.Tick -= tickHandler;
-				//FIXME Should not need this
-				/*if (Environment.OSVersion.Platform != PlatformID.Win32NT){
-					player.Pause();
-				}*/
 				player.Pause();
 			}
-					
-			pos = (float)timescale.Value;
+				
+			pos = (float)timescale.Value;			
 			
 			if (InSegment()){
 				long seekPos = segmentStartTime + (long)(pos*(segmentStopTime-segmentStartTime));
@@ -370,7 +366,7 @@ namespace LongoMatch.Gui
 		protected virtual void OnTimescaleValueChanged(object sender, System.EventArgs e)
 		{
 			if (seeking){
-				seeking=false;
+				seeking=false;				
 				player.Tick += tickHandler;
 				if (IsPlayingPrevState)
 					player.Play();
