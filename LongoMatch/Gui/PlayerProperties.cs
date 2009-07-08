@@ -92,7 +92,7 @@ namespace LongoMatch.Gui.Component
 					w = pimage.Width;
 					rate = (double)w/(double)h;
 					if (h>w)
-						image.Pixbuf = pimage.ScaleSimple((int)(THUMBNAIL_MAX_HEIGHT/rate),THUMBNAIL_MAX_HEIGHT,InterpType.Bilinear);
+						image.Pixbuf = pimage.ScaleSimple((int)(THUMBNAIL_MAX_HEIGHT*rate),THUMBNAIL_MAX_HEIGHT,InterpType.Bilinear);
 					else
 						image.Pixbuf = pimage.ScaleSimple(THUMBNAIL_MAX_WIDTH,(int)(THUMBNAIL_MAX_WIDTH/rate),InterpType.Bilinear);
 				}

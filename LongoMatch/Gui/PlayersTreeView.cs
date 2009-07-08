@@ -122,8 +122,10 @@ namespace LongoMatch.Gui.Component
 				if (path!=null){
 					this.Model.GetIter (out selectedIter,path); 
 					selectedItem = this.Model.GetValue (selectedIter, 0);
-					if (selectedItem is MediaTimeNode )
+					if (selectedItem is MediaTimeNode ){
+						selectedTimeNode = selectedItem as MediaTimeNode;
 					    menu.Popup();
+					}
 				}
 			}
 			return returnValue;
