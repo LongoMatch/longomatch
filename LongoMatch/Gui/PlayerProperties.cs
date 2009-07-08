@@ -30,7 +30,8 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class PlayerProperties : Gtk.Bin
 	{
-		private const int THUMBNAIL_WIDTH = 50;
+		private const int THUMBNAIL_MAX_WIDTH = 50;
+		private const int THUMBNAIL_MAX_HEIGHT = 50;
 		
 		public PlayerProperties()
 		{
@@ -90,7 +91,10 @@ namespace LongoMatch.Gui.Component
 					h = pimage.Height;
 					w = pimage.Width;
 					rate = (double)w/(double)h;
-					image.Pixbuf = pimage.ScaleSimple(THUMBNAIL_WIDTH,(int)(THUMBNAIL_WIDTH/rate),InterpType.Bilinear);
+					if (h>w)
+						image.Pixbuf = pimage.ScaleSimple((int)(THUMBNAIL_MAX_HEIGHT/rate),THUMBNAIL_MAX_HEIGHT,InterpType.Bilinear);
+					else
+						image.Pixbuf = pimage.ScaleSimple(THUMBNAIL_MAX_WIDTH,(int)(THUMBNAIL_MAX_WIDTH/rate),InterpType.Bilinear);
 				}
 			}
 			fChooser.Destroy();	

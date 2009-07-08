@@ -91,8 +91,7 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnTimeNodeSelected(MediaTimeNode tNode){
 			if (TimeNodeSelected != null)
 				TimeNodeSelected(tNode);
-		}		
-		
+		}			
 
 		protected virtual void OnSnapshotSeriesEvent (LongoMatch.TimeNodes.MediaTimeNode tNode)
 		{
