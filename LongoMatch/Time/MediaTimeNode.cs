@@ -122,7 +122,7 @@ namespace LongoMatch.TimeNodes
 		}
 		
 		public List<int> VisitorPlayers{
-			set {localPlayersList = value;}
+			set {visitorPlayersList = value;}
 			get{return visitorPlayersList;}
 		}
 		
