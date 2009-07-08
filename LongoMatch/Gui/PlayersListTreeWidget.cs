@@ -80,7 +80,11 @@ namespace LongoMatch.Gui.Component
 			
 		public void SetTeam(TeamTemplate template, TreeStore model){
 			this.template = template;
-			playerstreeview.Model = model;		
+			playerstreeview.Model = model;	
+		}
+		
+		public void UpdatePlaysList(TreeStore model){
+			playerstreeview.Model = model;
 		}
 		
 		

@@ -23,7 +23,12 @@ namespace LongoMatch.Gui.Dialog {
             Stetic.Gui.Initialize(this);
             // Widget LongoMatch.Gui.Dialog.PlayersSelectionDialog
             this.Name = "LongoMatch.Gui.Dialog.PlayersSelectionDialog";
+            this.Title = Mono.Unix.Catalog.GetString("Tag players");
+            this.Icon = Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Dialog, 48);
             this.WindowPosition = ((Gtk.WindowPosition)(4));
+            this.Gravity = ((Gdk.Gravity)(5));
+            this.SkipPagerHint = true;
+            this.SkipTaskbarHint = true;
             this.HasSeparator = false;
             // Internal child LongoMatch.Gui.Dialog.PlayersSelectionDialog.VBox
             Gtk.VBox w1 = this.VBox;

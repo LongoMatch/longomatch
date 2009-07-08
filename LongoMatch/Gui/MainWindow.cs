@@ -59,9 +59,14 @@ namespace LongoMatch.Gui
 			updater.NewVersion += new LongoMatch.Handlers.NewVersionHandler(OnUpdate);
 			updater.Run();
 			
-			eManager = new EventsManager(treewidget1,buttonswidget1,
-			                             playlistwidget2,playerbin1,
-			                             timelinewidget1,videoprogressbar,
+			eManager = new EventsManager(treewidget1,
+			                             localplayerslisttreewidget,
+			                             visitorplayerslisttreewidget, 
+			                             buttonswidget1,
+			                             playlistwidget2,
+			                             playerbin1,
+			                             timelinewidget1,
+			                             videoprogressbar,
 			                             noteswidget1);
 			
 			hkManager = new HotKeysManager();

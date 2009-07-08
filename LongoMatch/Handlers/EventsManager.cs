@@ -41,6 +41,7 @@ namespace LongoMatch
 	{
 
 		private TreeWidget treewidget;
+		private PlayersListTreeWidget localPlayersList,visitorPlayersList;
 		private ButtonsWidget buttonswidget;
 		private PlayListWidget playlist;
 		private PlayerBin player;
@@ -55,11 +56,13 @@ namespace LongoMatch
 		// current proyect in use
 		private Project openedProject;
 		
-		public EventsManager(TreeWidget treewidget,ButtonsWidget buttonswidget,PlayListWidget playlist,
-		                     PlayerBin playerbin,TimeLineWidget timeline, ProgressBar videoprogressbar,
-		                     NotesWidget notes)
+		public EventsManager(TreeWidget treewidget, PlayersListTreeWidget localPlayersList, PlayersListTreeWidget visitorPlayersList,
+		                     ButtonsWidget buttonswidget,PlayListWidget playlist, PlayerBin playerbin,
+		                     TimeLineWidget timeline, ProgressBar videoprogressbar,NotesWidget notes)
 		{
 			this.treewidget = treewidget;
+			this.localPlayersList = localPlayersList;
+			this.visitorPlayersList = visitorPlayersList;
 			this.buttonswidget = buttonswidget;
 			this.playlist = playlist;
 			this.player = playerbin;
@@ -313,6 +316,7 @@ namespace LongoMatch
 				dialog.PlayersChecked = tNode.LocalPlayers;
 				if (dialog.Run() == (int) ResponseType.Ok){				
 					tNode.LocalPlayers = dialog.PlayersChecked;
+					localPlayersList.UpdatePlaysList(openedProject.GetLocalTeamModel());					
 				}
 			}
 			
@@ -321,6 +325,7 @@ namespace LongoMatch
 				dialog.PlayersChecked = tNode.VisitorPlayers;
 				if (dialog.Run() == (int) ResponseType.Ok){				
 					tNode.VisitorPlayers = dialog.PlayersChecked;
+					visitorPlayersList.UpdatePlaysList(openedProject.GetVisitorTeamModel());
 				}
 			}			
 			dialog.Destroy();		         
