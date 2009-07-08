@@ -75,8 +75,7 @@ namespace LongoMatch.Gui.Component
 					
 					table1.Attach(b,col_left,col_right,row_top,row_bottom);					
 				}
-			}
-			
+			}			
 		}
 		
 
@@ -84,132 +83,7 @@ namespace LongoMatch.Gui.Component
 		{
 			Widget w = (Button)sender;
 			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(int.Parse(w.Name));
-			
-		}
-		
-		protected virtual void OnButton1Clicked(object sender, System.EventArgs e)
-		{
-			
-			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(0);	
-
-		}
-
-		protected virtual void OnButton2Clicked(object sender, System.EventArgs e)
-		{
-			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(1);			
-		}
-
-		protected virtual void OnButton3Clicked(object sender, System.EventArgs e)
-		{
-			
-			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(2);
-		}
-
-		protected virtual void OnButton4Clicked(object sender, System.EventArgs e)
-		{
-			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(3);
-		}
-
-		protected virtual void OnButton5Clicked(object sender, System.EventArgs e)
-		{
-			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(4);
-		}
-
-		protected virtual void OnButton6Clicked(object sender, System.EventArgs e)
-		{
-			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(5);
-		}
-
-		protected virtual void OnButton7Clicked(object sender, System.EventArgs e)
-		{
-			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(6);
-		}
-
-		protected virtual void OnButton8Clicked(object sender, System.EventArgs e)
-		{
-			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(7);
-		}
-
-		protected virtual void OnButton9Clicked(object sender, System.EventArgs e)
-		{
-			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(8);
-		}
-
-		protected virtual void OnButton10Clicked(object sender, System.EventArgs e)
-		{
-			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(9);
-		}
-
-		protected virtual void OnButton11Clicked(object sender, System.EventArgs e)
-		{
-			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(10);
-		}
-
-		protected virtual void OnButton12Clicked(object sender, System.EventArgs e)
-		{
-			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(11);
-
-		}
-
-		protected virtual void OnButton13Clicked(object sender, System.EventArgs e)
-		{
-			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(12);
-		}
-
-		protected virtual void OnButton14Clicked(object sender, System.EventArgs e)
-		{
-			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(13);
-		}
-
-		protected virtual void OnButton15Clicked(object sender, System.EventArgs e)
-		{
-			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(14);
-		}
-
-		protected virtual void OnButton16Clicked(object sender, System.EventArgs e)
-		{
-			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(15);
-		}
-
-		protected virtual void OnButton17Clicked(object sender, System.EventArgs e)
-		{
-			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(16);
-		}
-
-		protected virtual void OnButton18Clicked(object sender, System.EventArgs e)
-		{
-			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(17);
-		}
-
-		protected virtual void OnButton19Clicked(object sender, System.EventArgs e)
-		{
-			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(18);
-		}
-
-		protected virtual void OnButton20Clicked(object sender, System.EventArgs e)
-		{
-			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(19);
-		}
+				this.NewMarkEvent(int.Parse(w.Name));			
+		}		
 	}
 }
