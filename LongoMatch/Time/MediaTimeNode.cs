@@ -32,7 +32,7 @@ namespace LongoMatch.TimeNodes
 	
 	/* MediaTimeNode is the main object of the database for {@LongoMatch}. It' s used to
 	       store the name of each reference point we want to remind with its start time
-	       and its stop time, and the data type it belowns to. When we mark a moment in the
+	       and its stop time, and the data type it belowns to. When we mark a segment in the
 	       video, this object contains all the information we need to reproduce the
 	       video sequence again.
 	 */
