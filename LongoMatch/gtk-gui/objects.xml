@@ -154,6 +154,7 @@
       <itemgroup label="PlayersTreeView Signals">
         <signal name="TimeNodeSelected" />
         <signal name="SnapshotSeriesEvent" />
+        <signal name="TimeNodeChanged" />
       </itemgroup>
     </signals>
   </object>
@@ -163,6 +164,7 @@
       <itemgroup label="PlayersListTreeWidget Signals">
         <signal name="TimeNodeSelected" />
         <signal name="SnapshotSeriesEvent" />
+        <signal name="TimeNodeChanged" />
       </itemgroup>
     </signals>
   </object>

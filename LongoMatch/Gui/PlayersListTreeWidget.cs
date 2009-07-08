@@ -33,6 +33,7 @@ namespace LongoMatch.Gui.Component
 	{
 		
 		public event TimeNodeSelectedHandler TimeNodeSelected;
+		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event SnapshotSeriesHandler SnapshotSeriesEvent;
 
 		private TeamTemplate template;
@@ -75,8 +76,7 @@ namespace LongoMatch.Gui.Component
 				if (template.GetPlayer(playerindex) == player)
 					model.AppendValues (iter,tNode);
 			}		
-		}
-		
+		}		
 			
 		public void SetTeam(TeamTemplate template, TreeStore model){
 			this.template = template;
@@ -94,10 +94,17 @@ namespace LongoMatch.Gui.Component
 		}		
 		
 
-		protected virtual void OnTreeviewSnapshotSeriesEvent (LongoMatch.TimeNodes.MediaTimeNode tNode)
+		protected virtual void OnSnapshotSeriesEvent (LongoMatch.TimeNodes.MediaTimeNode tNode)
 		{
 			if (SnapshotSeriesEvent != null)
 				SnapshotSeriesEvent(tNode);
 		}
+
+		protected virtual void OnTimeNodeChanged (LongoMatch.TimeNodes.TimeNode tNode, object val)
+		{
+			if (TimeNodeChanged != null)
+				TimeNodeChanged (tNode, val);
+		}
+
 	}
 }

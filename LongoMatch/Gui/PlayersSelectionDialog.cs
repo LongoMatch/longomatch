@@ -46,7 +46,6 @@ namespace LongoMatch.Gui.Dialog
 				return;
 			
 			this.template = template;
-			Console.WriteLine(template.PlayersCount);
 			playersCount = template.PlayersCount;			
 		
 			table1.NColumns =(uint)(playersCount/10);
@@ -54,7 +53,6 @@ namespace LongoMatch.Gui.Dialog
 			
 			for( int i=0;i<playersCount;i++){
 				player = template.GetPlayer(i);
-				Console.WriteLine(player.Name);
 				button = new CheckButton();
 				button.Label = player.Name;
 				button.Name = i.ToString();
@@ -71,21 +69,17 @@ namespace LongoMatch.Gui.Dialog
 		}
 		
 		public List<int> PlayersChecked{
-			set{
-				foreach (int i in value){
-					Console.WriteLine(i);
-				}
-				for (int i=0; i<checkButtonsList.Count; i++){
-						checkButtonsList[i].Active = value.Contains(i);
-				}					
+			set{				
+				for (int i=0; i<checkButtonsList.Count; i++)
+						checkButtonsList[i].Active = value.Contains(i);								
 			}
 			get{
 				List<int> playersList = new List<int>();
 				for (int i=0; i<checkButtonsList.Count; i++){
-						if (checkButtonsList[i].Active){
-							playersList.Add(i);
-						}
-					}					
+					if (checkButtonsList[i].Active){
+						playersList.Add(i);
+					}
+				}					
 				return playersList;				
 			}				
 		}	

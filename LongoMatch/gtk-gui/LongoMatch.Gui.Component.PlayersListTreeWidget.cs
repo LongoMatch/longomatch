@@ -37,6 +37,9 @@ namespace LongoMatch.Gui.Component {
                 this.Child.ShowAll();
             }
             this.Show();
+            this.playerstreeview.TimeNodeSelected += new LongoMatch.Handlers.TimeNodeSelectedHandler(this.OnTimeNodeSelected);
+            this.playerstreeview.SnapshotSeriesEvent += new LongoMatch.Handlers.SnapshotSeriesHandler(this.OnSnapshotSeriesEvent);
+            this.playerstreeview.TimeNodeChanged += new LongoMatch.Handlers.TimeNodeChangedHandler(this.OnTimeNodeChanged);
         }
     }
 }

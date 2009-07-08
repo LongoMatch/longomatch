@@ -3671,6 +3671,9 @@ You can download it using this direct link:</property>
           <widget class="LongoMatch.Gui.Component.PlayersTreeView" id="playerstreeview">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
+            <signal name="TimeNodeSelected" handler="OnTimeNodeSelected" />
+            <signal name="SnapshotSeriesEvent" handler="OnSnapshotSeriesEvent" />
+            <signal name="TimeNodeChanged" handler="OnTimeNodeChanged" />
           </widget>
         </child>
       </widget>

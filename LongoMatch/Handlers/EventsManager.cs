@@ -57,7 +57,7 @@ namespace LongoMatch
 		private Project openedProject;
 		
 		public EventsManager(TreeWidget treewidget, PlayersListTreeWidget localPlayersList, PlayersListTreeWidget visitorPlayersList,
-		                     ButtonsWidget buttonswidget,PlayListWidget playlist, PlayerBin playerbin,
+		                     ButtonsWidget buttonswidget,PlayListWidget playlist, PlayerBin player,
 		                     TimeLineWidget timeline, ProgressBar videoprogressbar,NotesWidget notes)
 		{
 			this.treewidget = treewidget;
@@ -65,23 +65,37 @@ namespace LongoMatch
 			this.visitorPlayersList = visitorPlayersList;
 			this.buttonswidget = buttonswidget;
 			this.playlist = playlist;
-			this.player = playerbin;
+			this.player = player;
 			this.timeline = timeline;	
 			this.videoprogressbar = videoprogressbar;
 			this.notes = notes;
 			
+			ConnectSignals();
+		}
+		
+		public  Project OpenedProject{
+			set{
+				openedProject = value;
+			}
+		}
+		
+		private void ConnectSignals(){
 			//Adding Handlers for each event		
 			
 			buttonswidget.NewMarkEvent += new Handlers.NewMarkEventHandler(OnNewMark);
 			
 			treewidget.TimeNodeChanged += new Handlers.TimeNodeChangedHandler(OnTimeNodeChanged);
+			localPlayersList.TimeNodeChanged += new Handlers.TimeNodeChangedHandler(OnTimeNodeChanged);
+			visitorPlayersList.TimeNodeChanged += new Handlers.TimeNodeChangedHandler(OnTimeNodeChanged);
 			timeline.TimeNodeChanged += new Handlers.TimeNodeChangedHandler(OnTimeNodeChanged);
 			notes.TimeNodeChanged += new TimeNodeChangedHandler(OnTimeNodeChanged);
 			
 			treewidget.TimeNodeDeleted += new Handlers.TimeNodeDeletedHandler(OnTimeNodeDeleted);
 			timeline.TimeNodeDeleted += new Handlers.TimeNodeDeletedHandler(OnTimeNodeDeleted);
 			
-			treewidget.TimeNodeSelected += new Handlers.TimeNodeSelectedHandler(OnTimeNodeSelected);
+			treewidget.TimeNodeSelected += new Handlers.TimeNodeSelectedHandler(OnTimeNodeSelected);			
+			localPlayersList.TimeNodeSelected += new Handlers.TimeNodeSelectedHandler(OnTimeNodeSelected);
+			visitorPlayersList.TimeNodeSelected += new Handlers.TimeNodeSelectedHandler(OnTimeNodeSelected);
 			timeline.TimeNodeSelected += new Handlers.TimeNodeSelectedHandler(OnTimeNodeSelected);
 			
 			playlist.PlayListNodeSelected += new Handlers.PlayListNodeSelectedHandler(OnPlayListNodeSelected);
@@ -93,19 +107,15 @@ namespace LongoMatch
 			treewidget.PlayersTagged += new PlayersTaggedHandler(OnPlayersTagged);
 			
 			treewidget.SnapshotSeriesEvent += new Handlers.SnapshotSeriesHandler(OnSnapshotSeries);
+			localPlayersList.SnapshotSeriesEvent += new Handlers.SnapshotSeriesHandler(OnSnapshotSeries);
+			visitorPlayersList.SnapshotSeriesEvent += new Handlers.SnapshotSeriesHandler(OnSnapshotSeries);
 
 			timeline.NewMarkEvent += new NewMarkAtFrameEventHandler(OnNewMarkAtFrame);
 			
-			playerbin.Prev += new PrevButtonClickedHandler(OnPrev);
-			playerbin.Next += new NextButtonClickedHandler(OnNext);
-			playerbin.Tick += new TickHandler(OnTick);
-			playerbin.SegmentClosedEvent += new SegmentClosedHandler(OnSegmentClosedEvent);
-		}
-		
-		public  Project OpenedProject{
-			set{
-				openedProject = value;
-			}
+			player.Prev += new PrevButtonClickedHandler(OnPrev);
+			player.Next += new NextButtonClickedHandler(OnNext);
+			player.Tick += new TickHandler(OnTick);
+			player.SegmentClosedEvent += new SegmentClosedHandler(OnSegmentClosedEvent);
 		}
 		
 		private void ProcessNewMarkEvent(int section,Time pos){

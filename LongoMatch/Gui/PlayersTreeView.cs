@@ -33,6 +33,7 @@ namespace LongoMatch.Gui.Component
 	{
 		
 		public event TimeNodeSelectedHandler TimeNodeSelected;
+		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event SnapshotSeriesHandler SnapshotSeriesEvent;
 
 		private TreeIter selectedIter;
@@ -54,6 +55,7 @@ namespace LongoMatch.Gui.Component
 			nameColumn = new Gtk.TreeViewColumn ();
 			nameColumn.Title = "Name";
 			nameCell = new Gtk.CellRendererText ();
+			nameCell.Edited += OnNameCellEdited;
 			Gtk.CellRendererPixbuf miniatureCell = new Gtk.CellRendererPixbuf ();
 			nameColumn.PackStart (miniatureCell, true);
 			nameColumn.PackEnd (nameCell, true);
@@ -94,6 +96,7 @@ namespace LongoMatch.Gui.Component
 			menu.Append(snapshot);
 			 
 			delete.Activated += new EventHandler(OnDeleted);
+			name.Activated += new EventHandler(OnEdit);
 			snapshot.Activated += new EventHandler(OnSnapshot);
 			menu.ShowAll();		
 		}
@@ -179,6 +182,22 @@ namespace LongoMatch.Gui.Component
  				(cell as Gtk.CellRendererText).Text = (item as MediaTimeNode).Stop.ToMSecondsString();
 			else if (item is Player)
  				(cell as Gtk.CellRendererText).Text = "";
+		}
+		
+		protected virtual void OnEdit(object obj, EventArgs args){
+			nameCell.Editable = true;
+			this.SetCursor(path,  nameColumn, true);
+		}
+		
+		private void OnNameCellEdited (object o, Gtk.EditedArgs args)
+		{
+			Gtk.TreeIter iter;
+			this.Model.GetIter (out iter, new Gtk.TreePath (args.Path)); 
+			TimeNode tNode = (TimeNode)this.Model.GetValue (iter,0);
+			tNode.Name = args.NewText;
+			nameCell.Editable=false;
+			if (TimeNodeChanged != null)
+				TimeNodeChanged(tNode,args.NewText);
 		}
 			
 		
