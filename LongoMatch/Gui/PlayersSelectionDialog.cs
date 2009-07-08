@@ -29,6 +29,7 @@ namespace LongoMatch.Gui.Dialog
 	public partial class PlayersSelectionDialog : Gtk.Dialog
 	{
 		TeamTemplate template;
+		List<CheckButton> checkButtonsList;
 		
 		public PlayersSelectionDialog()
 		{
@@ -64,14 +65,27 @@ namespace LongoMatch.Gui.Dialog
 				uint col_right = (uint) col_left+1 ;
 					
 				table1.Attach(button,col_left,col_right,row_top,row_bottom);
+				checkButtonsList.Add(button);
 			}
 		}
 		
-		public List<int> PlayersList{
-			set{}
-			//get{}				
-		}
-		
-	
+		public List<int> PlayersChecked{
+			set{
+				if (template != null){
+					for (int i=0; i<checkButtonsList.Count; i++){
+						checkButtonsList[i].Active = value.Contains(i);
+					}					
+				}
+			}
+			get{
+				List<int> playersList = new List<int>();				
+				if (template != null){
+					for (int i=0; i<checkButtonsList.Count; i++){
+						if (checkButtonsList[i].Active)
+							playersList.Add(i);
+					}
+				}
+			}				
+		}	
 	}
 }
