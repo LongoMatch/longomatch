@@ -52,4 +52,6 @@ namespace LongoMatch.Handlers
 	
 	public delegate void ApplyCurrentRateHandler (PlayListTimeNode plNode);
 	
+	public delegate void PlayersTaggedHandler (MediaTimeNode tNode, Team team);
+	
 }

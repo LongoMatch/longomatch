@@ -715,6 +715,7 @@
                 <signal name="TimeNodeDeleted" handler="OnTimeNodeDeleted" />
                 <signal name="PlayListNodeAdded" handler="OnPlayListNodeAdded" />
                 <signal name="SnapshotSeriesEvent" handler="OnTreeviewSnapshotSeriesEvent" />
+                <signal name="PlayersTagged" handler="OnTreeviewPlayersTagged" />
               </widget>
             </child>
           </widget>
@@ -3779,9 +3780,14 @@ You can download it using this direct link:</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.PlayersSelectionDialog" design-size="400 300">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.PlayersSelectionDialog" design-size="204 300">
     <property name="MemberName" />
+    <property name="Title" translatable="yes">Tag players</property>
+    <property name="Icon">stock:longomatch Dialog</property>
     <property name="WindowPosition">CenterOnParent</property>
+    <property name="Gravity">Center</property>
+    <property name="SkipPagerHint">True</property>
+    <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
     <property name="HasSeparator">False</property>

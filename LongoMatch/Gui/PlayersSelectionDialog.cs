@@ -34,6 +34,7 @@ namespace LongoMatch.Gui.Dialog
 		public PlayersSelectionDialog()
 		{
 			this.Build();
+			checkButtonsList = new List<CheckButton>();
 		}
 		
 		public void SetPlayersInfo (TeamTemplate template ){	
@@ -71,20 +72,21 @@ namespace LongoMatch.Gui.Dialog
 		
 		public List<int> PlayersChecked{
 			set{
-				if (template != null){
-					for (int i=0; i<checkButtonsList.Count; i++){
-						checkButtonsList[i].Active = value.Contains(i);
-					}					
+				foreach (int i in value){
+					Console.WriteLine(i);
 				}
+				for (int i=0; i<checkButtonsList.Count; i++){
+						checkButtonsList[i].Active = value.Contains(i);
+				}					
 			}
 			get{
-				List<int> playersList = new List<int>();				
-				if (template != null){
-					for (int i=0; i<checkButtonsList.Count; i++){
-						if (checkButtonsList[i].Active)
+				List<int> playersList = new List<int>();
+				for (int i=0; i<checkButtonsList.Count; i++){
+						if (checkButtonsList[i].Active){
 							playersList.Add(i);
-					}
-				}
+						}
+					}					
+				return playersList;				
 			}				
 		}	
 	}

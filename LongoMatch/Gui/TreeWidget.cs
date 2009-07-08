@@ -39,6 +39,7 @@ namespace LongoMatch.Gui.Component
 		public event TimeNodeDeletedHandler TimeNodeDeleted;
 		public event PlayListNodeAddedHandler PlayListNodeAdded;
 		public event SnapshotSeriesHandler SnapshotSeriesEvent;
+		public event PlayersTaggedHandler PlayersTagged;
 
 		private Project project;
 
@@ -68,10 +69,8 @@ namespace LongoMatch.Gui.Component
 					if (prev.Equals(child))
 						break;
 				}				
-			}
-			
-		}
-		
+			}			
+		}		
 		
 		public void AddTimeNode(MediaTimeNode tNode,int  section){
 			if (project != null){
@@ -81,9 +80,7 @@ namespace LongoMatch.Gui.Component
 				TimeNode stNode = (TimeNode)model.GetValue (iter,0);
 				if (project.Sections.GetTimeNode(section) == stNode)
 					model.AppendValues (iter,tNode);
-			}
-			
-		
+			}		
 		}
 		
 			
@@ -92,11 +89,8 @@ namespace LongoMatch.Gui.Component
 				project = value;
 				treeview.Model = project.GetModel();
 				treeview.Colors = project.Sections.GetColors();
-			}
-			
-		}
-		
-		
+			}			
+		}		
 
 		protected virtual void OnTimeNodeChanged(TimeNode tNode,object val){
 			if (TimeNodeChanged != null)
@@ -123,8 +117,12 @@ namespace LongoMatch.Gui.Component
 		{
 			if (SnapshotSeriesEvent != null)
 				SnapshotSeriesEvent(tNode);
-		}
-
+		}		
 		
+		protected virtual void OnTreeviewPlayersTagged (LongoMatch.TimeNodes.MediaTimeNode tNode, LongoMatch.TimeNodes.Team team)
+		{
+			if (PlayersTagged != null)
+				PlayersTagged(tNode,team);
+		}		
 	}
 }

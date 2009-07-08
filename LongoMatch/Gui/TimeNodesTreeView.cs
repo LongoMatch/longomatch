@@ -39,6 +39,7 @@ namespace LongoMatch.Gui.Component
 		public event TimeNodeDeletedHandler TimeNodeDeleted;
 		public event PlayListNodeAddedHandler PlayListNodeAdded;
 		public event SnapshotSeriesHandler SnapshotSeriesEvent;
+		public event PlayersTaggedHandler PlayersTagged;
 		
 		private TreeIter selectedIter;
 		private Menu menu;
@@ -121,16 +122,26 @@ namespace LongoMatch.Gui.Component
 			teamMenu .Append(visitor);
 			teamMenu .Append(noTeam);
 			
+			Menu playersMenu = new Menu();
+			MenuItem localPlayers = new MenuItem(Catalog.GetString("Local team"));
+			MenuItem visitorPlayers = new MenuItem(Catalog.GetString("Visitor team"));
+			playersMenu.Append(localPlayers);
+			playersMenu.Append(visitorPlayers);
+			
 			menu = new Menu();
 			
 			MenuItem name = new MenuItem(Catalog.GetString("Edit"));
 			MenuItem team = new MenuItem(Catalog.GetString("Team Selection"));
 			team.Submenu = teamMenu;
+			MenuItem players = new MenuItem(Catalog.GetString("Tag player"));
+			players.Submenu = playersMenu;
 			MenuItem quit = new MenuItem(Catalog.GetString("Delete"));
 			MenuItem addPLN = new MenuItem(Catalog.GetString("Add to playlist"));
 			MenuItem snapshot = new MenuItem(Catalog.GetString("Export to PGN images"));
+			
 			menu.Append(name);
-			menu.Append(team);			
+			menu.Append(team);	
+			menu.Append(players);
 			menu.Append(addPLN);
 			menu.Append(quit);
 			menu.Append(snapshot);
@@ -139,6 +150,8 @@ namespace LongoMatch.Gui.Component
 			local.Activated += new EventHandler(OnTeamSelection);
 			visitor.Activated += new EventHandler(OnTeamSelection);
 			noTeam.Activated += new EventHandler(OnTeamSelection);
+			localPlayers.Activated += new EventHandler(OnLocalPlayers);
+			visitorPlayers.Activated += new EventHandler (OnVisitorPlayers);
 			addPLN.Activated += new EventHandler(OnAdded);
 			quit.Activated += new EventHandler(OnDeleted);
 			snapshot.Activated += new EventHandler(OnSnapshot);
@@ -150,61 +163,7 @@ namespace LongoMatch.Gui.Component
 			return int.Parse(path.ToString().Split(':')[0]);			
 		}
 		
-		protected override bool OnButtonPressEvent (EventButton evnt)
-		{
-			//Call base class, to allow normal handling,
-			//such as allowing the row to be selected by the right-click:
-			bool returnValue = base.OnButtonPressEvent(evnt);
-			
-			//Then do our custom stuff:
-			if( (evnt.Type == EventType.ButtonPress) && (evnt.Button == 3) )
-			{
-				
-				this.GetPathAtPos((int)evnt.X,(int)evnt.Y,out path);
-				if (path!=null){
-					this.Model.GetIter (out selectedIter,path); 
-					selectedTimeNode = (TimeNode)this.Model.GetValue (selectedIter, 0);
-					if (selectedTimeNode is MediaTimeNode )
-					    menu.Popup();
-				}
-			}
-			return returnValue;
-								
-		}
-		
-		protected void OnDeleted(object obj, EventArgs args){
-			if (TimeNodeDeleted != null)
-				TimeNodeDeleted((MediaTimeNode)selectedTimeNode,int.Parse(path.ToString().Split(':')[0]));
-		}
-		
-		protected virtual void OnEdit(object obj, EventArgs args){
-			nameCell.Editable = true;
-			this.SetCursor(path,  nameColumn, true);
-		}
-		
-		protected void OnTeamSelection(object obj, EventArgs args){
-			MenuItem sender = (MenuItem)obj;
-			Team team = Team.NONE;
-			if (sender == local)
-				team = Team.LOCAL;
-			else if (sender == visitor)
-				team = Team.VISITOR;
-			else if (sender == noTeam)
-				team = Team.NONE;
-			((MediaTimeNode)selectedTimeNode).Team= team;
-			                
-		}
-		
-		protected void OnAdded(object obj, EventArgs args){
-			if (PlayListNodeAdded != null)	
-				PlayListNodeAdded((MediaTimeNode)selectedTimeNode);
-		}
-		
-		protected void OnSnapshot(object obj, EventArgs args){
-			if (SnapshotSeriesEvent != null)
-				SnapshotSeriesEvent((MediaTimeNode)selectedTimeNode);
-			
-		}
+	
 		private void RenderMiniature (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			TimeNode tNode = (TimeNode) model.GetValue (iter, 0);
@@ -221,41 +180,25 @@ namespace LongoMatch.Gui.Component
 		private void RenderTeam (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			TimeNode tNode = (TimeNode) model.GetValue (iter, 0);
-			
- 
-			/*if (song.Artist.StartsWith ("X") == true) {
-				(cell as Gtk.CellRendererText).Foreground = "red";
-			} else {
-				(cell as Gtk.CellRendererText).Foreground = "darkgreen";
-			}*/
- 
+	 
 			(cell as Gtk.CellRendererText).Text = tNode.Name;
 			
 			if (tNode is MediaTimeNode){
 				(cell as Gtk.CellRendererText).Text =((MediaTimeNode)tNode).Team.ToString().ToLowerInvariant();
 				(cell as Gtk.CellRendererText).BackgroundGdk = colors[GetSectionFromIter(iter)];
-				(cell as Gtk.CellRendererText).CellBackgroundGdk = colors[GetSectionFromIter(iter)];
-				
+				(cell as Gtk.CellRendererText).CellBackgroundGdk = colors[GetSectionFromIter(iter)];				
 			}
 			else {
 				(cell as Gtk.CellRendererText).Text = "";
 				(cell as Gtk.CellRendererText).Background = "white";
 				(cell as Gtk.CellRendererText).CellBackground = "white";
-			}
-			
+			}			
 		}
 		
 		private void RenderName (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			TimeNode tNode = (TimeNode) model.GetValue (iter, 0);
-			
- 
-			/*if (song.Artist.StartsWith ("X") == true) {
-				(cell as Gtk.CellRendererText).Foreground = "red";
-			} else {
-				(cell as Gtk.CellRendererText).Foreground = "darkgreen";
-			}*/
- 
+	 
 			(cell as Gtk.CellRendererText).Text = tNode.Name;
 			
 			if (tNode is MediaTimeNode){
@@ -265,15 +208,13 @@ namespace LongoMatch.Gui.Component
 			else{
 				(cell as Gtk.CellRendererText).Background = "white";
 				(cell as Gtk.CellRendererText).CellBackground = "white";
-			}
-			
+			}			
 		}
  
 		
 		private void RenderStartTime (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			TimeNode tNode = (TimeNode) model.GetValue (iter, 0);
-			
+			TimeNode tNode = (TimeNode) model.GetValue (iter, 0);			
 
 			if (tNode is MediaTimeNode){
 				(cell as Gtk.CellRendererText).Text =tNode.Start.ToMSecondsString();
@@ -285,9 +226,7 @@ namespace LongoMatch.Gui.Component
 				(cell as Gtk.CellRendererText).Text = "";
 				(cell as Gtk.CellRendererText).Background = "white";
 				(cell as Gtk.CellRendererText).CellBackground = "white";
-			}
-				
-			
+			}		
 		}
 		
 		private void RenderStopTime (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
@@ -323,10 +262,71 @@ namespace LongoMatch.Gui.Component
 			TimeNode tNode = (TimeNode)this.Model.GetValue (iter, 0);
 			
 			if (tNode is MediaTimeNode && TimeNodeSelected != null)
-				this.TimeNodeSelected((MediaTimeNode)tNode);
+				this.TimeNodeSelected((MediaTimeNode)tNode);	
+		}
+		
+		protected override bool OnButtonPressEvent (EventButton evnt)
+		{
+			//Call base class, to allow normal handling,
+			//such as allowing the row to be selected by the right-click:
+			bool returnValue = base.OnButtonPressEvent(evnt);
 			
-
-	
+			//Then do our custom stuff:
+			if( (evnt.Type == EventType.ButtonPress) && (evnt.Button == 3) )
+			{
+				
+				this.GetPathAtPos((int)evnt.X,(int)evnt.Y,out path);
+				if (path!=null){
+					this.Model.GetIter (out selectedIter,path); 
+					selectedTimeNode = (TimeNode)this.Model.GetValue (selectedIter, 0);
+					if (selectedTimeNode is MediaTimeNode )
+					    menu.Popup();
+				}
+			}
+			return returnValue;								
+		}
+		
+		protected void OnDeleted(object obj, EventArgs args){
+			if (TimeNodeDeleted != null)
+				TimeNodeDeleted((MediaTimeNode)selectedTimeNode,int.Parse(path.ToString().Split(':')[0]));
+		}
+		
+		protected virtual void OnEdit(object obj, EventArgs args){
+			nameCell.Editable = true;
+			this.SetCursor(path,  nameColumn, true);
+		}
+		
+		protected void OnTeamSelection(object obj, EventArgs args){
+			MenuItem sender = (MenuItem)obj;
+			Team team = Team.NONE;
+			if (sender == local)
+				team = Team.LOCAL;
+			else if (sender == visitor)
+				team = Team.VISITOR;
+			else if (sender == noTeam)
+				team = Team.NONE;
+			((MediaTimeNode)selectedTimeNode).Team= team;
+			                
+		}
+		
+		protected void OnAdded(object obj, EventArgs args){
+			if (PlayListNodeAdded != null)	
+				PlayListNodeAdded((MediaTimeNode)selectedTimeNode);
+		}
+		
+		protected void OnSnapshot(object obj, EventArgs args){
+			if (SnapshotSeriesEvent != null)
+				SnapshotSeriesEvent((MediaTimeNode)selectedTimeNode);			
+		}
+		
+		protected virtual void OnLocalPlayers(object o, EventArgs args){
+			if (PlayersTagged != null)
+				PlayersTagged ((MediaTimeNode)selectedTimeNode, Team.LOCAL);
+		}
+		
+		protected virtual void OnVisitorPlayers(object o, EventArgs args){
+			if (PlayersTagged != null)
+				PlayersTagged ((MediaTimeNode)selectedTimeNode, Team.VISITOR);
 		}
 	}
 }

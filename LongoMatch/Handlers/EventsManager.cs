@@ -87,6 +87,8 @@ namespace LongoMatch
 			
 			treewidget.PlayListNodeAdded += new Handlers.PlayListNodeAddedHandler(OnPlayListNodeAdded);
 			
+			treewidget.PlayersTagged += new PlayersTaggedHandler(OnPlayersTagged);
+			
 			treewidget.SnapshotSeriesEvent += new Handlers.SnapshotSeriesHandler(OnSnapshotSeries);
 
 			timeline.NewMarkEvent += new NewMarkAtFrameEventHandler(OnNewMarkAtFrame);
@@ -302,6 +304,26 @@ namespace LongoMatch
 		
 		protected virtual void OnApplyRate (PlayListTimeNode plNode){
 			plNode.Rate = player.Rate;
+		}
+		
+		protected virtual void OnPlayersTagged (MediaTimeNode tNode, Team team){
+			PlayersSelectionDialog dialog = new PlayersSelectionDialog();
+			if (team == Team.LOCAL){
+				dialog.SetPlayersInfo(openedProject.LocalTeamTemplate);
+				dialog.PlayersChecked = tNode.LocalPlayers;
+				if (dialog.Run() == (int) ResponseType.Ok){				
+					tNode.LocalPlayers = dialog.PlayersChecked;
+				}
+			}
+			
+			else if (team == Team.VISITOR){
+				dialog.SetPlayersInfo(openedProject.VisitorTeamTemplate);
+				dialog.PlayersChecked = tNode.VisitorPlayers;
+				if (dialog.Run() == (int) ResponseType.Ok){				
+					tNode.VisitorPlayers = dialog.PlayersChecked;
+				}
+			}			
+			dialog.Destroy();		         
 		}
 		
 		
