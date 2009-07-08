@@ -57,10 +57,6 @@ namespace LongoMatch.DB
 
 		private List<List<MediaTimeNode>> sectionPlaysList;
 		
-		private List<List<MediaTimeNode>> localTeamPlaysList;
-		
-		private List<List<MediaTimeNode>> visitorTeamPlaysList;
-		
 		private TeamTemplate visitorTeamTemplate;
 		
 		private TeamTemplate localTeamTemplate;
@@ -82,21 +78,11 @@ namespace LongoMatch.DB
 			this.localTeamTemplate = localTeamTemplate;
 			this.visitorTeamTemplate = visitorTeamTemplate;
 			this.sections = sections;
-			this.sectionPlaysList = new List<List<MediaTimeNode>>(); 
-			this.visitorTeamPlaysList = new List<List<MediaTimeNode>>();
-			this.localTeamPlaysList = new List<List<MediaTimeNode>>();
+			this.sectionPlaysList = new List<List<MediaTimeNode>>();			
 			
 			for (int i=0;i<sections.Count;i++){
 				sectionPlaysList.Add(new List<MediaTimeNode>());
-			}
-			
-			for (int i=0;i<localTeamTemplate.PlayersCount;i++){
-				localTeamPlaysList.Add(new List<MediaTimeNode>());
-			}
-			
-			for (int i=0;i<visitorTeamTemplate.PlayersCount;i++){
-				visitorTeamPlaysList.Add(new List<MediaTimeNode>());
-			}
+			}			
 			
 			this.Title = System.IO.Path.GetFileNameWithoutExtension(this.file.FilePath);			
 		}
@@ -158,12 +144,7 @@ namespace LongoMatch.DB
 		}
 
 		public void DeleteTimeNode(MediaTimeNode tNode,int section) {
-			sectionPlaysList[section].Remove(tNode);
-			foreach (List<MediaTimeNode> playsList in localTeamPlaysList)
-				playsList.Remove(tNode);
-			foreach (List<MediaTimeNode> playslist in visitorTeamPlaysList)
-				playslist.Remove(tNode);
-			
+			sectionPlaysList[section].Remove(tNode);			
 		}
 		
 		public TreeStore GetModel (){
@@ -178,23 +159,31 @@ namespace LongoMatch.DB
 		}
 		
 		public TreeStore GetLocalTeamModel (){
+			List<TreeIter> itersList = new List<TreeIter>();
 			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore (typeof (object));
 			for (int i=0;i<localTeamTemplate.PlayersCount;i++){
-				Gtk.TreeIter iter = dataFileListStore.AppendValues (localTeamTemplate.GetPlayer(i));
-				foreach(MediaTimeNode tNode in localTeamPlaysList[i]){
-						dataFileListStore.AppendValues (iter,tNode);
-				}						
+				itersList.Add(dataFileListStore.AppendValues (localTeamTemplate.GetPlayer(i)));									
+			}
+			for (int i=0;i<localTeamTemplate.PlayersCount;i++){
+				foreach(MediaTimeNode tNode in sectionPlaysList[i]){
+					foreach (int player in tNode.LocalPlayers)					
+						dataFileListStore.AppendValues (itersList[player],tNode);
+					}	
 			}
 			return dataFileListStore;
 		}
 		
 		public TreeStore GetVisitorTeamModel (){
+			List<TreeIter> itersList = new List<TreeIter>();
 			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore (typeof (object));
 			for (int i=0;i<visitorTeamTemplate.PlayersCount;i++){
-				Gtk.TreeIter iter = dataFileListStore.AppendValues (visitorTeamTemplate.GetPlayer(i));
-				foreach(MediaTimeNode tNode in visitorTeamPlaysList[i]){
-						dataFileListStore.AppendValues (iter,tNode);
-				}						
+				itersList.Add(dataFileListStore.AppendValues (visitorTeamTemplate.GetPlayer(i)));									
+			}
+			for (int i=0;i<visitorTeamTemplate.PlayersCount;i++){
+				foreach(MediaTimeNode tNode in sectionPlaysList[i]){
+					foreach (int player in tNode.VisitorPlayers)					
+						dataFileListStore.AppendValues (itersList[player],tNode);
+				}	
 			}
 			return dataFileListStore;
 		}
