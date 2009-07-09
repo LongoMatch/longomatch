@@ -255,11 +255,12 @@ namespace LongoMatch.Gui.Component
 			if (response ==(int)ResponseType.Ok){				
 				videoEditor.ClearList();
 				foreach (PlayListTimeNode segment in playList){
-					videoEditor.AddSegment(segment.FileName, 
-					                       segment.Start.MSeconds, 
-					                       segment.Duration.MSeconds, 
-					                       segment.Rate, 
-					                       segment.Name);
+					if (segment.Valid)
+						videoEditor.AddSegment(segment.FileName, 
+					                       	segment.Start.MSeconds, 
+					                       	segment.Duration.MSeconds, 
+					                       	segment.Rate, 
+					                       	segment.Name);
 				}
 				videoEditor.VideoQuality = vep.VideoQuality;
 				videoEditor.VideoFormat = vep.VideoFormat;

@@ -216,7 +216,7 @@ namespace LongoMatch.Gui.Component
 				foreach (MediaTimeNode tn in list){	
 					layout.Width = Pango.Units.FromPixels((int)(tn.TotalFrames/pixelRatio));
 					layout.SetMarkup (tn.Name);
-					GdkWindow.DrawLayout(Style.TextGC(StateType.Normal),(int)(tn.StartFrame/pixelRatio),2,layout);
+					GdkWindow.DrawLayout(Style.TextGC(StateType.Normal),(int)(tn.StartFrame/pixelRatio)+2,2,layout);
 				}
 			}
 		}
