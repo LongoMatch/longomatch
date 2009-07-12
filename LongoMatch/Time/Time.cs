@@ -49,7 +49,6 @@ namespace LongoMatch.TimeNodes
 		
 		public int Seconds {
 			get { return time/SECONDS_TO_TIME;}
-			//set {this.time = value*SECONDS_TO_TIME;}
 		}
 		
 		#endregion

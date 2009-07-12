@@ -44,15 +44,7 @@ namespace LongoMatch.TimeNodes
 		{
 			this.name = name;
 			this.start = start;
-			this.stop = stop;
-			/*
-			if (stop <= start )
-				this.stop = start+500;
-			else
-				this.stop = stop;
-				*/
-			
-			
+			this.stop = stop;				
 		}
 		
 		/**
@@ -83,10 +75,7 @@ namespace LongoMatch.TimeNodes
 			}
 			
 			set{ 
-				if (this.Stop != null && value >= this.Stop)
-					this.start = stop-500;
-				else
-					this.start=value;
+				this.start=value;
 			}
 			
 		}
@@ -101,10 +90,7 @@ namespace LongoMatch.TimeNodes
 			return stop;
 			}
 			set{ 
-				if (this.Start != null && value<=this.Start)
-					this.stop =start+500;
-				else
-					this.stop = value;
+				this.stop = value;
 			}
 		}
 		
