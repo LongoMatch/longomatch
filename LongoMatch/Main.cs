@@ -79,15 +79,10 @@ namespace LongoMatch
 		}
 		
 		public static string HomeDir(){
-				return homeDirectory;
-	
+				return homeDirectory;	
 		}
 		
-		public static string LocaleDir(){
-				return RelativeToPrefix("share/images");
-	
-		}
-		
+
 		public static string PlayListDir(){
 			return System.IO.Path.Combine (configDirectory, "playlists");
 		}
@@ -98,8 +93,7 @@ namespace LongoMatch
 		
 		public static string TemplatesDir(){
 			return System.IO.Path.Combine (configDirectory, "templates");
-		}
-		
+		}		
 				
 		public static string VideosDir(){
 			return System.IO.Path.Combine (homeDirectory, "videos");
@@ -136,12 +130,12 @@ namespace LongoMatch
 		
 		public static void CheckFiles(){			
 			string fConfig;
-			fConfig = TemplatesDir()+"/default.sct";
+			fConfig = System.IO.Path.Combine(TemplatesDir(),"default.sct");
 			if (!System.IO.File.Exists(fConfig)){
 			    SectionsWriter.CreateNewTemplate("default.sct");
 			}
 			
-			fConfig = TemplatesDir()+"/default.tem";
+			fConfig = System.IO.Path.Combine(TemplatesDir(),"default.tem");
 			if (!System.IO.File.Exists(fConfig)){
 				TeamTemplate tt = new TeamTemplate();
 				tt.CreateDefaultTemplate(20);
@@ -167,13 +161,11 @@ namespace LongoMatch
 				StreamReader reader = new StreamReader(System.IO.Path.Combine(baseDirectory, "etc/"+WIN32_CONFIG_FILE));
 				homeDirectory = reader.ReadLine();
 				configDirectory = homeDirectory;
-				Console.WriteLine("HOME:"+homeDirectory);
 				if (!System.IO.Directory.Exists(homeDirectory))
 					System.IO.Directory.CreateDirectory(homeDirectory);
 				reader.Close();
 			}
 			catch (Exception ex){
-				Console.WriteLine("No se encuentra el archivo");
 				homeDirectory = null;
 			}		
 		}
@@ -193,11 +185,5 @@ namespace LongoMatch
 				writer.Close();
 			}
 		}
-			
-		
-		
-		
-		
-
 	}
 }

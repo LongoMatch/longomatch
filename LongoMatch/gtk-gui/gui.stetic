@@ -1183,10 +1183,11 @@
             <property name="MemberName" />
             <property name="CanFocus">True</property>
             <property name="Upper">100</property>
-            <property name="PageIncrement">10</property>
+            <property name="PageIncrement">1</property>
             <property name="StepIncrement">1</property>
             <property name="ClimbRate">1</property>
             <property name="Numeric">True</property>
+            <signal name="ValueChanged" handler="OnSpinbutton1ValueChanged" />
           </widget>
           <packing>
             <property name="LeftAttach">2</property>
@@ -1206,10 +1207,11 @@
             <property name="MemberName" />
             <property name="CanFocus">True</property>
             <property name="Upper">100</property>
-            <property name="PageIncrement">10</property>
+            <property name="PageIncrement">1</property>
             <property name="StepIncrement">1</property>
             <property name="ClimbRate">1</property>
             <property name="Numeric">True</property>
+            <signal name="ValueChanged" handler="OnSpinbutton2ValueChanged" />
           </widget>
           <packing>
             <property name="LeftAttach">4</property>
@@ -1811,6 +1813,7 @@
                             <property name="CanFocus">True</property>
                             <property name="IsEditable">True</property>
                             <property name="InvisibleChar">●</property>
+                            <signal name="Changed" handler="OnNameentryChanged" />
                           </widget>
                           <packing>
                             <property name="Position">1</property>
@@ -1828,6 +1831,8 @@
                       <widget class="LongoMatch.Gui.Component.TimeAdjustWidget" id="timeadjustwidget1">
                         <property name="MemberName" />
                         <property name="Events">ButtonPressMask</property>
+                        <signal name="LeadTimeChanged" handler="OnTimeadjustwidget1LeadTimeChanged" />
+                        <signal name="LagTimeChanged" handler="OnTimeadjustwidget1LagTimeChanged" />
                       </widget>
                       <packing>
                         <property name="Position">1</property>
@@ -1857,6 +1862,7 @@
                             <property name="CanFocus">True</property>
                             <property name="Events">ButtonMotionMask, ButtonPressMask, ButtonReleaseMask</property>
                             <property name="Alpha">-1</property>
+                            <signal name="ColorSet" handler="OnColorbutton1ColorSet" />
                           </widget>
                           <packing>
                             <property name="Position">1</property>

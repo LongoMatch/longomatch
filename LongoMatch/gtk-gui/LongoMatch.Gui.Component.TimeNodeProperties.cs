@@ -267,6 +267,10 @@ namespace LongoMatch.Gui.Component {
             this.newleftbutton.Clicked += new System.EventHandler(this.OnNewleftbuttonClicked);
             this.newleftbutton1.Clicked += new System.EventHandler(this.OnNewleftbutton1Clicked);
             this.deletebutton.Clicked += new System.EventHandler(this.OnDeletebuttonClicked);
+            this.nameentry.Changed += new System.EventHandler(this.OnNameentryChanged);
+            this.timeadjustwidget1.LeadTimeChanged += new System.EventHandler(this.OnTimeadjustwidget1LeadTimeChanged);
+            this.timeadjustwidget1.LagTimeChanged += new System.EventHandler(this.OnTimeadjustwidget1LagTimeChanged);
+            this.colorbutton1.ColorSet += new System.EventHandler(this.OnColorbutton1ColorSet);
             this.changebuton.Clicked += new System.EventHandler(this.OnChangebutonClicked);
         }
     }

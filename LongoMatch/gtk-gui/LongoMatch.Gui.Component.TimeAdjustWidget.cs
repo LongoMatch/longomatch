@@ -57,7 +57,7 @@ namespace LongoMatch.Gui.Component {
             this.spinbutton1 = new Gtk.SpinButton(0, 100, 1);
             this.spinbutton1.CanFocus = true;
             this.spinbutton1.Name = "spinbutton1";
-            this.spinbutton1.Adjustment.PageIncrement = 10;
+            this.spinbutton1.Adjustment.PageIncrement = 1;
             this.spinbutton1.ClimbRate = 1;
             this.spinbutton1.Numeric = true;
             this.table1.Add(this.spinbutton1);
@@ -69,7 +69,7 @@ namespace LongoMatch.Gui.Component {
             this.spinbutton2 = new Gtk.SpinButton(0, 100, 1);
             this.spinbutton2.CanFocus = true;
             this.spinbutton2.Name = "spinbutton2";
-            this.spinbutton2.Adjustment.PageIncrement = 10;
+            this.spinbutton2.Adjustment.PageIncrement = 1;
             this.spinbutton2.ClimbRate = 1;
             this.spinbutton2.Numeric = true;
             this.table1.Add(this.spinbutton2);
@@ -91,6 +91,8 @@ namespace LongoMatch.Gui.Component {
                 this.Child.ShowAll();
             }
             this.Show();
+            this.spinbutton2.ValueChanged += new System.EventHandler(this.OnSpinbutton2ValueChanged);
+            this.spinbutton1.ValueChanged += new System.EventHandler(this.OnSpinbutton1ValueChanged);
         }
     }
 }

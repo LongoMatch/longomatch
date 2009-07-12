@@ -70,7 +70,12 @@
   </object>
   <object type="LongoMatch.Gui.Component.TimeAdjustWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
-    <signals />
+    <signals>
+      <itemgroup label="TimeAdjustWidget Signals">
+        <signal name="LeadTimeChanged" />
+        <signal name="LagTimeChanged" />
+      </itemgroup>
+    </signals>
   </object>
   <object type="LongoMatch.Gui.Component.NotesWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
