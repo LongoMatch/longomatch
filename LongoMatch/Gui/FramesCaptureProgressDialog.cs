@@ -22,6 +22,7 @@ using System;
 using Gtk;
 using Mono.Unix;
 using LongoMatch.Video.Utils;
+using LongoMatch.Video.Handlers;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -30,18 +31,18 @@ namespace LongoMatch.Gui.Dialog
 	[System.ComponentModel.ToolboxItem(false)]
 	public partial class FramesCaptureProgressDialog : Gtk.Dialog
 	{
-		FramesSeriesCapturer capturer;
+		private FramesSeriesCapturer capturer;
+		private FramesProgressHandler progressHandler;
 		
 		public FramesCaptureProgressDialog(FramesSeriesCapturer capturer)
 		{
 			this.Build();
 			this.Deletable = false;
-			//FIXME Separate GUI layer from execution layer
 			this.capturer = capturer;
-			capturer.Progress += new LongoMatch.Video.Handlers.FramesProgressHandler(Update);			
+			progressHandler = new FramesProgressHandler(Update);
+			capturer.Progress += progressHandler;			
 			capturer.Start();			
-		}		
-		
+		}				
 		
 		protected virtual void Update (int actual, int total){
 			if (actual <= total){
@@ -51,17 +52,12 @@ namespace LongoMatch.Gui.Dialog
 			if (actual == total){
 				cancelbutton.Visible = false;
 				okbutton.Visible = true;
-			}
-			
-					
+			}				
 		}
 
 		protected virtual void OnButtonCancelClicked (object sender, System.EventArgs e)
 		{
 			capturer.Cancel();
-		}
-				
+		}				
 	}
-		
-	
 }

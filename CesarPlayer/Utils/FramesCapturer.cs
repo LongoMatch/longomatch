@@ -55,17 +55,19 @@ namespace LongoMatch.Video.Utils
 			this.outputDir = outputDir;
 			this.seriesName = System.IO.Path.GetFileName(outputDir);			
 			this.totalFrames = (int)Math.Floor((double)((stop - start ) / interval))+1;
-			this.locker = new System.Object();
-			
+			this.locker = new System.Object();			
 		}
 		
-		public void Cancel(){			
-			lock(locker){
-				cancel = true;					
-			}
+		public void Cancel(){
+			cancel = true;	
 		}
 		
-		public void Start(){			
+		public void Start(){
+			Thread thread = new Thread(new ThreadStart(CaptureFrames));
+			thread.Start();
+		}
+		
+		public void CaptureFrames(){		
 			long pos;
 			Pixbuf frame;
 			int i = 0;			
@@ -74,29 +76,25 @@ namespace LongoMatch.Video.Utils
 			
 			pos = start;			
 		
-			//TODO add lock to protect start and stop
 			while (pos <= stop){	
-				lock (locker){
-					if (!cancel){
-						if (Progress != null)					
-							Progress(i+1,totalFrames);			
-						capturer.SeekTo(pos,true);	
-						capturer.Pause();
-						frame = capturer.CurrentFrame;				
-						if (frame != null) {
-							frame.Save(System.IO.Path.Combine(outputDir,seriesName+"_" + i +".png"),"png");
-						}
-						pos += interval;
-						i++;
+				if (!cancel){
+					if (Progress != null)					
+						Application.Invoke(delegate {Progress(i+1,totalFrames);});
+					capturer.SeekTo(pos,true);	
+					capturer.Pause();
+					frame = capturer.CurrentFrame;				
+					if (frame != null) {
+						frame.Save(System.IO.Path.Combine(outputDir,seriesName+"_" + i +".png"),"png");
 					}
-					else {
-						System.IO.Directory.Delete(outputDir,true);	
-						cancel=false;
-						return;
-					}
+					pos += interval;
+					i++;
+				}
+				else {
+					System.IO.Directory.Delete(outputDir,true);	
+					cancel=false;
+					break;
 				}
 			}
-			
 		}
 	}
 }
