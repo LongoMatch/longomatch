@@ -40,7 +40,7 @@ namespace LongoMatch.Gui.Component
 		public event EventHandler InsertAfter;
 		public event HotKeyChangeHandler HotKeyChanged;
 		
-		private SectionsTimeNode stn = null;
+		private SectionsTimeNode stn;
 		
 		public TimeNodeProperties()
 		{
@@ -56,12 +56,11 @@ namespace LongoMatch.Gui.Component
 		public SectionsTimeNode Section
 		{
 			set{
-				this.stn = value;
-				UpdateGui();				
+				stn = value;
+				UpdateGui();	
 			}
 			
 			get{
-				UpdateSectionTimeNode();
 				return stn;
 			}
 		}
@@ -77,14 +76,7 @@ namespace LongoMatch.Gui.Component
 				}
 				else hotKeyLabel.Text = Catalog.GetString("none"); 
 			}
-		}
-
-		private void UpdateSectionTimeNode(){
-			stn.Name = nameentry.Text;
-			stn.Start=timeadjustwidget1.GetStartTime();
-			stn.Stop=timeadjustwidget1.GetStopTime();
-			stn.Color=colorbutton1.Color;		
-		}
+		}		
 		
 		protected virtual void OnChangebutonClicked (object sender, System.EventArgs e)
 		{
@@ -119,6 +111,27 @@ namespace LongoMatch.Gui.Component
 			if (InsertBefore != null){
 				InsertBefore(this, e);
 			}
+		}
+
+		protected virtual void OnColorbutton1ColorSet (object sender, System.EventArgs e)
+		{
+			if (stn != null)
+				stn.Color=colorbutton1.Color;
+		}
+
+		protected virtual void OnTimeadjustwidget1LeadTimeChanged (object sender, System.EventArgs e)
+		{
+			stn.Start = timeadjustwidget1.GetStartTime();	
+		}
+
+		protected virtual void OnTimeadjustwidget1LagTimeChanged (object sender, System.EventArgs e)
+		{			
+			stn.Stop= timeadjustwidget1.GetStopTime();
+		}
+
+		protected virtual void OnNameentryChanged (object sender, System.EventArgs e)
+		{
+			stn.Name = nameentry.Text;				
 		}
 		
 	

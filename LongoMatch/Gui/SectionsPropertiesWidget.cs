@@ -34,14 +34,14 @@ namespace LongoMatch.Gui.Component
 	public partial class SectionsPropertiesWidget : Gtk.Bin
 	{
 		private List<HotKey> hkList;
-		private List<TimeNodeProperties> tndlist;
+		private List<TimeNodeProperties> tnplist;
 		private Project project;
 		
 		
 		public SectionsPropertiesWidget()
 		{
 			this.Build();
-			tndlist = new List<TimeNodeProperties>();
+			tnplist = new List<TimeNodeProperties>();
 			hkList = new List<HotKey>();
 			table1.NColumns =(uint) 5;						
 		}
@@ -54,7 +54,7 @@ namespace LongoMatch.Gui.Component
 		public void SetSections(Sections sections){
 			int sectionsCount = sections.Count;
 			
-			tndlist.Clear();
+			tnplist.Clear();
 			hkList.Clear();
 			
 			foreach (Widget w in table1.AllChildren){
@@ -83,7 +83,7 @@ namespace LongoMatch.Gui.Component
 		
 		public Sections GetSections (){
 			Sections sections = new Sections();
-			foreach (TimeNodeProperties tnp in tndlist){
+			foreach (TimeNodeProperties tnp in tnplist){
 				sections.AddSection(tnp.Section);					
 			}
 			return sections;
@@ -92,7 +92,7 @@ namespace LongoMatch.Gui.Component
 		private void AddTimeNodeToTable(int index, int count, TimeNodeProperties tnp){
 			uint row_top,row_bottom,col_left,col_right;
 			
-			tndlist.Insert(index,tnp);
+			tnplist.Insert(index,tnp);
 			table1.NRows =(uint) (count/5);			
 			row_top =(uint) (index/table1.NColumns);
 			row_bottom = (uint) row_top+1 ;
@@ -160,9 +160,9 @@ namespace LongoMatch.Gui.Component
 				sections = GetSections();
 				sections.RemoveSection(index);
 			}
-			count = tndlist.Count;
-			table1.Remove(tndlist[count-1]);
-			tndlist.Remove(tndlist[count-1]);
+			count = tnplist.Count;
+			table1.Remove(tnplist[count-1]);
+			tnplist.Remove(tnplist[count-1]);
 			
 			UpdateGui(sections);
 			
@@ -174,7 +174,7 @@ namespace LongoMatch.Gui.Component
 			TimeNodeProperties tnp;			
 			
 			for( int i=0;i< sections.Count;i++){
-				tnp=tndlist[i];
+				tnp=tnplist[i];
 				tnp.Name = i.ToString();
 				tnp.Title =  "Section "+(i+1);
 				tnp.Section = sections.GetSection(i);				

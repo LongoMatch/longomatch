@@ -30,6 +30,8 @@ namespace LongoMatch.Gui.Component
 	public partial class TimeAdjustWidget : Gtk.Bin
 	{
 
+		public event EventHandler LeadTimeChanged;
+		public event EventHandler LagTimeChanged;
 		
 		public TimeAdjustWidget()
 		{
@@ -37,16 +39,32 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		public void SetTimeNode(SectionsTimeNode tNode){
+			Console.WriteLine("SetTimeNode, Start{0}, Stop{1}",tNode.Start.Seconds, tNode.Stop.Seconds);
 			spinbutton1.Value=tNode.Start.Seconds;
 			spinbutton2.Value=tNode.Stop.Seconds;			
 		}
 		
 		public Time GetStartTime(){
-			return new Time((int)spinbutton1.Value*Time.SECONDS_TO_TIME);
+			Time t = new  Time ((int)(spinbutton1.Value)*Time.SECONDS_TO_TIME);
+			Console.WriteLine((int)(spinbutton1.Value)*Time.SECONDS_TO_TIME);
+			Console.WriteLine(t.Seconds);
+			return new Time((int)(spinbutton1.Value)*Time.SECONDS_TO_TIME);
 		}
 		
 		public Time GetStopTime(){
-			return new Time ((int)spinbutton2.Value*Time.SECONDS_TO_TIME);
+			return new Time ((int)(spinbutton2.Value)*Time.SECONDS_TO_TIME);
+		}
+
+		protected virtual void OnSpinbutton1ValueChanged (object sender, System.EventArgs e)
+		{
+			if (LeadTimeChanged != null)
+				LeadTimeChanged(this,new EventArgs());
+		}
+
+		protected virtual void OnSpinbutton2ValueChanged (object sender, System.EventArgs e)
+		{
+			if (LagTimeChanged != null)
+				LagTimeChanged(this,new EventArgs());
 		}
 	}
 }
