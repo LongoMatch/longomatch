@@ -63,6 +63,11 @@ struct _GstVideoSplitter
 	GstVideoSplitterPrivate *priv;
 };
 
+typedef enum {	
+	GVC_ERROR_PLUGIN_LOAD,	
+} GvcError;
+
+
 typedef enum
 {
 	THEORA = 1,
@@ -93,9 +98,9 @@ EXPORT void gst_video_splitter_init_backend (int *argc, char ***argv);
 EXPORT GstVideoSplitter * gst_video_splitter_new (GError ** err);
 EXPORT void gst_video_splitter_start(GstVideoSplitter *gvs);
 EXPORT void gst_video_splitter_cancel(GstVideoSplitter *gvs);
-EXPORT void gst_video_splitter_set_video_encoder(GstVideoSplitter *gvs, GvsVideoCodec codec);
-EXPORT void gst_video_splitter_set_audio_encoder(GstVideoSplitter *gvs, GvsAudioCodec codec);
-EXPORT void gst_video_splitter_set_video_muxer(GstVideoSplitter *gvs, GvsVideoMuxer codec);
+EXPORT void gst_video_splitter_set_video_encoder(GstVideoSplitter *gvs,gchar **err, GvsVideoCodec codec);
+EXPORT void gst_video_splitter_set_audio_encoder(GstVideoSplitter *gvs,gchar **err, GvsAudioCodec codec);
+EXPORT void gst_video_splitter_set_video_muxer(GstVideoSplitter *gvs,gchar **err, GvsVideoMuxer codec);
 EXPORT void gst_video_splitter_set_segment(GstVideoSplitter *gvs, gchar *file, gint64 start, gint64 duration, gdouble rate, gchar *title);
 G_END_DECLS
 

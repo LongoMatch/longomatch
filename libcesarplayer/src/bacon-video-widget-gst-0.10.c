@@ -3682,11 +3682,7 @@ bacon_video_widget_new (int width, int height,
 
   if (type == BVW_USE_TYPE_VIDEO) {   
       video_sink = gst_element_factory_make (DEFAULT_VIDEO_SINK, "video-sink");
-
-
-
-
-
+      
       if (video_sink == NULL) {
         g_warning ("Could not create element 'autovideosink'");
         /* Try to fallback on ximagesink */

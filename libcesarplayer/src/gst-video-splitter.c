@@ -428,6 +428,17 @@ gvs_apply_new_caps (GstVideoSplitter *gvs)
 
 }
 
+GQuark
+gst_video_splitter_error_quark (void)
+{
+  static GQuark q; /* 0 */
+
+  if (G_UNLIKELY (q == 0)) {
+    q = g_quark_from_static_string ("gvs-error-quark");
+  }
+  return q;
+}
+
 
 
 /* =========================================== */
@@ -598,7 +609,7 @@ gst_video_splitter_set_segment (GstVideoSplitter *gvs , gchar *file, gint64 star
 }
 
 void 
-gst_video_splitter_set_video_encoder (GstVideoSplitter *gvs, GvsVideoCodec codec)
+gst_video_splitter_set_video_encoder (GstVideoSplitter *gvs, gchar **err, GvsVideoCodec codec)
 {
 	GstElement *encoder = NULL;
 	GstState cur_state;
@@ -613,34 +624,30 @@ gst_video_splitter_set_video_encoder (GstVideoSplitter *gvs, GvsVideoCodec codec
 		switch (codec){
 			case H264:		
 				encoder_name = "x264enc";		
-				encoder = gst_element_factory_make ("x264enc",encoder_name);
+				encoder = gst_element_factory_make (encoder_name,encoder_name);
 				g_object_set (G_OBJECT(encoder), "pass",17,NULL);	//Variable Bitrate-Pass 1
 				break;
 			case XVID:
 				encoder_name = "xvidenc";
-				encoder = gst_element_factory_make ("xvidenc",encoder_name);
+				encoder = gst_element_factory_make (encoder_name,encoder_name);
 				g_object_set (G_OBJECT(encoder), "pass",1,NULL);	//Variable Bitrate-Pass 1
 				
 				break;
 			case MPEG2_VIDEO:
 				encoder_name = "mpeg2enc";
-				encoder = gst_element_factory_make ("mpeg2enc",encoder_name);
+				encoder = gst_element_factory_make (encoder_name,encoder_name);
 				g_object_set (G_OBJECT(encoder), "format",9,NULL);	//DVD compilant
-				g_object_set (G_OBJECT(encoder), "framerate",3,NULL);	//25 FPS (PAL/SECAM)				
+				g_object_set (G_OBJECT(encoder), "framerate",3,NULL);	//25 FPS (PAL/SECAM)	
 				break;
 			case THEORA:
 				encoder_name = "theoraenc";
-				encoder = gst_element_factory_make ("theoraenc",encoder_name);				
+				encoder = gst_element_factory_make (encoder_name,encoder_name);				
 				break;				
 		}		
-		g_print("Codec type %s\n",encoder_name);
-		g_print("Codec type %s\n",encoder_name);
-
-		
-		
+	
 		if (encoder){
 			if (!g_strcmp0(gst_element_get_name(gvs->priv->video_encoder),encoder_name)){
-				GST_WARNING("Not changing the video encoder as the new one is the same in use.");
+				GST_WARNING("The video encoder is not changed because it is already in use.");
 				gst_object_unref(encoder);
 				return;
 			}		
@@ -656,28 +663,23 @@ gst_video_splitter_set_video_encoder (GstVideoSplitter *gvs, GvsVideoCodec codec
 		}
 		
 		else {
-			g_sprintf (error, "The %s encoder element is not avalaible. Check you GStreamer installation", encoder_name);
+			g_sprintf (error, "The %s encoder element is not avalaible. Check your GStreamer installation", encoder_name);
 			GST_ERROR (error);
-			/*g_signal_emit (gvs, 
-      						gvs_signals[SIGNAL_ERROR], 
-      						0, 
-      						error);*/
-      		//g_free(error);	
-      	}
-			
+			*err = g_strdup(error);
+		}
 	}
 	else
     	GST_WARNING("The video encoder cannot be changed for a state <= GST_STATE_READY");
 }
 
 void 
-gst_video_splitter_set_audio_encoder (GstVideoSplitter *gvs, GvsAudioCodec codec)
+gst_video_splitter_set_audio_encoder (GstVideoSplitter *gvs, gchar **err, GvsAudioCodec codec)
 {
 	//TODO not implemented
 }
 
 void 
-gst_video_splitter_set_video_muxer (GstVideoSplitter *gvs, GvsVideoMuxer muxerType)
+gst_video_splitter_set_video_muxer (GstVideoSplitter *gvs, gchar **err, GvsVideoMuxer muxerType)
 {
 	GstElement *muxer = NULL;
 	GstState cur_state;
@@ -706,7 +708,7 @@ gst_video_splitter_set_video_muxer (GstVideoSplitter *gvs, GvsVideoMuxer muxerTy
 			case DVD:
 				muxer_name = "ffmux_dvd";
 				//We don't want to mux anything yet as ffmux_dvd is buggy
-				//FIXME: Until we don't have audio save the mpeg-ps stream with mux.
+				//FIXME: Until we don't have audio save the mpeg-ps stream without mux.
 				muxer = gst_element_factory_make ("identity",muxer_name);
 				break;		
 		}
@@ -732,13 +734,9 @@ gst_video_splitter_set_video_muxer (GstVideoSplitter *gvs, GvsVideoMuxer muxerTy
 		}
 		
 		else {
-			g_sprintf (error, "The %s muxer element is not avalaible. Check you GSTreamer installation", muxer_name);
+			g_sprintf (error, "The %s muxer element is not avalaible. Check your GStreamer installation", muxer_name);
 			GST_ERROR (error);
-			/*g_signal_emit (gvs, 
-      						gvs_signals[SIGNAL_ERROR], 
-      						0, 
-      						error);*/
-      		//g_free(error);
+			*err = g_strdup(error);
 		}			
 	}
 	else
@@ -765,8 +763,6 @@ gst_video_splitter_cancel(GstVideoSplitter *gvs)
 	}
 	gst_element_set_state(gvs->priv->main_pipeline, GST_STATE_NULL);
 	g_signal_emit (gvs, gvs_signals[SIGNAL_PERCENT_COMPLETED],0,(gfloat)-1);
-    
-	
 }
 
 void
@@ -787,9 +783,9 @@ gst_video_splitter_new (GError ** err)
 	gvs->priv->main_pipeline = gst_pipeline_new ("main_pipeline");
 
 	if (!gvs->priv->main_pipeline ) {
-    	/*g_set_error (err, GVC_ERROR, GVC_ERROR_PLUGIN_LOAD,
+    	g_set_error (err, GVC_ERROR, GVC_ERROR_PLUGIN_LOAD,
                 	("Failed to create a GStreamer Bin. "
-                    "Please check your GStreamer installation."));*/
+                    "Please check your GStreamer installation."));
     	g_object_ref_sink (gvs);
     	g_object_unref (gvs);
     	return NULL;
@@ -797,7 +793,16 @@ gst_video_splitter_new (GError ** err)
 
   	/* Setup*/
 
-  	gvs->priv->gnl_composition = gst_element_factory_make("gnlcomposition","gnlcomposition");  	
+  	gvs->priv->gnl_composition = gst_element_factory_make("gnlcomposition","gnlcomposition");
+  	if (!gvs->priv->gnl_composition){	
+  		g_set_error (err, GVC_ERROR, GVC_ERROR_PLUGIN_LOAD,
+                 ("Failed to create a Gnonlin element. "
+                   "Please check your GStreamer installation."));
+        g_object_ref_sink (gvs);
+    	g_object_unref (gvs);
+        return NULL;                   
+  	}
+  	
   	gvs->priv->gnl_filesource = gst_element_factory_make("gnlfilesource","gnlfilesource");
   	gst_bin_add (GST_BIN(gvs->priv->gnl_composition),gvs->priv->gnl_filesource);
   	
@@ -818,7 +823,6 @@ gst_video_splitter_new (GError ** err)
    	g_object_set (G_OBJECT(gvs->priv->textoverlay), "shaded-background",TRUE,NULL);
 	g_object_set (G_OBJECT(gvs->priv->textoverlay), "valignment",2,NULL);
 	g_object_set (G_OBJECT(gvs->priv->textoverlay), "halignment",2,NULL);
-
 
       
     gvs->priv->queue =  gst_element_factory_make ("queue", "queue"); 
