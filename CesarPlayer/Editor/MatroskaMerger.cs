@@ -31,10 +31,7 @@ namespace LongoMatch.Video.Editor
 	
 		public MatroskaMerger(): base ("mkvmerge")
 		{			
-			filesVideoMuxer = VideoMuxer.MKV;
 		}
-		
-	
 		
 		protected override string CreateMergeCommandLineArgs(){
 		 	int i=0;
@@ -43,10 +40,9 @@ namespace LongoMatch.Video.Editor
 			int trackID = 0;
 			
 			args = String.Format("-o \"{0}\" ", outputFile);
-			if (filesVideoMuxer == VideoMuxer.MKV){
-				args += "--language 1:eng --track-name 1:Video --default-track 1:yes ";
-				trackID = 1;
-			}
+			args += "--language 1:eng --track-name 1:Video --default-track 1:yes ";
+			trackID = 1;
+			
 							
 			foreach (String path in filesToMergeList){
 				if (i==0){
@@ -67,7 +63,6 @@ namespace LongoMatch.Video.Editor
 			
 			Console.WriteLine(args);
 			return args;
-		}		
-		
+		}				
 	}
 }

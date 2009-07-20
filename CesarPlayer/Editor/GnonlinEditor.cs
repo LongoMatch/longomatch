@@ -21,6 +21,7 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Gtk;
+using LongoMatch.Video.Handlers;
 
 namespace LongoMatch.Video.Editor
 {
@@ -28,7 +29,8 @@ namespace LongoMatch.Video.Editor
 	
 	public class GnonlinEditor : IVideoEditor
 	{
-		public event LongoMatch.Video.Handlers.ProgressHandler Progress;	
+		public event ProgressHandler Progress;	
+		public event ErrorHandler Error;
 		
 		private IVideoSplitter splitter;
 		private IMerger merger;
@@ -90,18 +92,30 @@ namespace LongoMatch.Video.Editor
 		}
 		
 		public AudioCodec AudioCodec{
-			set{splitter.SetAudioEncoder(value);}
+			set{
+				string error;
+				splitter.SetAudioEncoder(out error,value);
+				if (error != null)
+					throw new Exception(error);
+			}
 		}
 		
 		public VideoCodec VideoCodec{
 			set{
+				string error;
 				vcodec = value;
-				splitter.SetVideoEncoder(value);}
+				splitter.SetVideoEncoder(out error, value);
+				if (error != null)
+					throw new Exception(error);
+			}
 		}
 		
 		public VideoMuxer VideoMuxer{
 			set{
-				splitter.SetVideoMuxer(value);
+				string error;
+				splitter.SetVideoMuxer(out error,value);
+				if (error != null)
+					throw new Exception(error);
 				ChangeMerger(value);
 			}
 		}				
@@ -150,14 +164,13 @@ namespace LongoMatch.Video.Editor
 		
 		private void ChangeMerger(VideoMuxer videoMuxer){
 			merger = factory.GetVideoMerger(videoMuxer);
+			merger.OutputMuxer = videoMuxer;
 			merger.MergeDone += new EventHandler(OnMergeDone);
-		}
-		
+			merger.Error += new ErrorHandler(OnError);
+		}		
 		
 		private void SplitAndMerge(){
 			SplitSegments();
-			if (vcodec == VideoCodec.THEORA)
-				merger.FilesVideoMuxer = VideoMuxer.OGG;
 			merger.FilesToMerge = segmentsTempFiles;
 			merger.Start();
 		}
@@ -165,6 +178,7 @@ namespace LongoMatch.Video.Editor
 		private void SplitSegments(){
 			int i = 1;
 			string tempFile;
+			string error;
 			
 			segmentsTempFiles.Clear();
 			foreach (VideoSegment segment in segmentsList){					
@@ -174,8 +188,12 @@ namespace LongoMatch.Video.Editor
 				//When using the theora encoder, the splitted files must be muxed using ogg
 				//and then merged using matroska as ogg concatenation does not works and
 				//muxing theora encoded streams using matroska doens't work neither
-				if (vcodec == VideoCodec.THEORA)
-				    splitter.SetVideoMuxer(VideoMuxer.OGG);				
+				if (vcodec == VideoCodec.THEORA){
+				    splitter.SetVideoMuxer(out error,VideoMuxer.OGG);
+					if (error != null)
+						throw new Exception (error);
+				}
+				
 				splitter.OutputFile= tempFile;
 				splitter.SetSegment(segment.FilePath, segment.Start, segment.Duration, segment.Rate, segment.Title);
 				splitter.Start();
@@ -184,6 +202,15 @@ namespace LongoMatch.Video.Editor
 			}				
 		}
 
+		private void SendErrorEvent(string error){
+			if (Error != null){
+					ErrorArgs args = new ErrorArgs ();
+					args.Args = new object[1];
+					args.Args[0] = error;
+					Error (this, args);
+			}
+		}
+		
 		private void DeleteTempFiles(){
 			foreach (String path in segmentsTempFiles){
 				if (System.IO.File.Exists(path)){
@@ -195,14 +222,14 @@ namespace LongoMatch.Video.Editor
 		}
 		
 		protected virtual void OnError (object o, ErrorArgs args){
-			if (Progress != null)
-				Application.Invoke(delegate {Progress ((float)EditorState.ERROR);});
+			if (Error != null)
+				Application.Invoke(delegate {Error (o,args);});			
 		}
 		
 		protected virtual void OnProgress (object o, PercentCompletedArgs args){			
 			float percent = args.Percent;	
 			float totalPercent = percent/segmentsList.Count + (float)(segmentCoded-1)/segmentsList.Count;
-			if (Progress != null && totalPercent != 1) //We have to wait to merge the segment before senden the FINISHED event
+			if (Progress != null && totalPercent != 1) //We have to wait to merge the segment before sending the FINISHED event
 				Application.Invoke(delegate {Progress (totalPercent);});
 			if (percent == 1){
 				segmentCoded = -1;

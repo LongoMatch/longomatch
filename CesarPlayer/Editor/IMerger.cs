@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using LongoMatch.Video.Handlers;
 
 namespace LongoMatch.Video.Editor
 {
@@ -25,7 +26,7 @@ namespace LongoMatch.Video.Editor
 	public interface IMerger
 	{
 		event EventHandler MergeDone;
-		event LongoMatch.Video.Handlers.ErrorHandler Error;
+		event ErrorHandler Error;
 		
 		List<string> FilesToMerge{
 			set;
@@ -33,10 +34,13 @@ namespace LongoMatch.Video.Editor
 		
 		string OutputFile {
 			set;
+		}		
+		
+		VideoMuxer OutputMuxer{
+			set;
 		}
 		
-				
-		VideoMuxer FilesVideoMuxer{
+		VideoCodec InputFilesVideoCodec{
 			set;
 		}
 		

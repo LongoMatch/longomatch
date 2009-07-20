@@ -298,24 +298,33 @@ namespace LongoMatch.Video.Editor {
 		}
 		
 		[DllImport("libcesarplayer.dll")]
-		static extern void gst_video_splitter_set_video_encoder(IntPtr raw, int type);
+		static extern void gst_video_splitter_set_video_encoder(IntPtr raw, out IntPtr error_ptr, int type);
 
-		public void SetVideoEncoder(VideoCodec codec) {
-			gst_video_splitter_set_video_encoder(Handle,(int)codec);
+		public void SetVideoEncoder(out string error, VideoCodec codec) {
+			IntPtr error_ptr = IntPtr.Zero;
+			gst_video_splitter_set_video_encoder(Handle,out error_ptr,(int)codec);
+			if (error_ptr != null)
+				error = GLib.Marshaller.Utf8PtrToString(error_ptr);
 		}
 		
 		[DllImport("libcesarplayer.dll")]
-		static extern void gst_video_splitter_set_audio_encoder(IntPtr raw, int type);
+		static extern void gst_video_splitter_set_audio_encoder(IntPtr raw, out IntPtr error_ptr, int type);
 
-		public void SetAudioEncoder(AudioCodec codec) {
-			gst_video_splitter_set_audio_encoder(Handle,(int)codec);
+		public void SetAudioEncoder(out string error, AudioCodec codec) {
+			IntPtr error_ptr = IntPtr.Zero;
+			gst_video_splitter_set_audio_encoder(Handle,out error_ptr,(int)codec);
+			if (error_ptr != null)
+				error = GLib.Marshaller.Utf8PtrToString(error_ptr);
 		}
 		
 		[DllImport("libcesarplayer.dll")]
-		static extern void gst_video_splitter_set_video_muxer(IntPtr raw, int type);
+		static extern void gst_video_splitter_set_video_muxer(IntPtr raw, out IntPtr error_ptr, int type);
 
-		public void SetVideoMuxer(VideoMuxer muxer) {
-			gst_video_splitter_set_video_muxer(Handle,(int)muxer);
+		public void SetVideoMuxer(out string error, VideoMuxer muxer) {
+			IntPtr error_ptr = IntPtr.Zero;
+			gst_video_splitter_set_video_muxer(Handle,out error_ptr,(int)muxer);
+			if (error_ptr != null)
+				error = GLib.Marshaller.Utf8PtrToString(error_ptr);
 		}
 
 		[DllImport("libcesarplayer.dll")]

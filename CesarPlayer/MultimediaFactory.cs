@@ -66,7 +66,6 @@ namespace LongoMatch.Video
 				
 			case PlatformID.Win32NT:
 				return new GstPlayer(1,1,UseType.Metadata);
-				//return new DSPlayer(UseType.Metadata);
 				
 			 default:
 				return new GstPlayer(1,1,UseType.Metadata);
@@ -81,7 +80,6 @@ namespace LongoMatch.Video
 				
 			case PlatformID.Win32NT:
 				return new GstPlayer(1,1,UseType.Metadata);
-				//return new DSPlayer(UseType.Metadata);
 				
 			 default:
 				return new GstPlayer(1,1,UseType.Metadata);
@@ -119,16 +117,15 @@ namespace LongoMatch.Video
 		
 		public IMerger GetVideoMerger(VideoMuxer muxer){
 			if (muxer == VideoMuxer.AVI)
-				return new AviMerger();
+				return new AvidemuxMerger();
 			else if (muxer == VideoMuxer.DVD)
-				return new ConcatMerger();
+				return new AvidemuxMerger();
 			else if (muxer == VideoMuxer.MKV)
 				return new MatroskaMerger();
+			else if (muxer == VideoMuxer.OGG)
+				return new AvidemuxMerger(); 
 			else 
-				return new MatroskaMerger();
-			    
-			    
-		}
-		
+				return new AvidemuxMerger();
+		}		
 	}
 }

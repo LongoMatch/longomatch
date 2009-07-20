@@ -20,6 +20,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Diagnostics;
+using Mono.Unix;
+using LongoMatch.Video.Handlers;
 
 namespace LongoMatch.Video.Editor
 {
@@ -29,7 +31,7 @@ namespace LongoMatch.Video.Editor
 	{
 		
 		public  event EventHandler MergeDone;
-		public  event LongoMatch.Video.Handlers.ErrorHandler Error;
+		public  event ErrorHandler Error;
 		
 		protected List<string> filesToMergeList;
 		protected string outputFile;
@@ -37,7 +39,8 @@ namespace LongoMatch.Video.Editor
 		protected Thread mergeThread;
 		protected string command;
 		protected ProcessStartInfo pinfo;
-		protected VideoMuxer filesVideoMuxer; //Muxer used in the files to mux. May be used by some muxers to set the way thay act 
+		protected VideoMuxer outputMuxer;
+		protected VideoCodec inputFilesVideoCodec;
 		
 		public GenericMerger(string command)
 		{
@@ -54,8 +57,12 @@ namespace LongoMatch.Video.Editor
 			set{outputFile = value;}
 		}
 		
-		public VideoMuxer FilesVideoMuxer{
-			set{filesVideoMuxer = value;}			
+		public VideoMuxer OutputMuxer{
+			set{outputMuxer = value;}			
+		}
+		
+		public VideoCodec InputFilesVideoCodec{
+			set{inputFilesVideoCodec = value;}
 		}
 		
 		public bool Start(){
@@ -93,10 +100,12 @@ namespace LongoMatch.Video.Editor
 				process.WaitForExit();	
 			}
 			catch (Exception e){
-				Console.WriteLine("Error merging");
-				//TODO
-				//if (Error != null)
-				//	Error (this, args);
+				if (Error != null){
+					ErrorArgs args = new ErrorArgs ();
+					args.Args = new object[1];
+					args.Args[0] = Catalog.GetString("Error merging video segments. Please retry again");
+					Error (this, args);
+				}
 			}
 			if (this.MergeDone != null)
 				this.MergeDone(this,new EventArgs());
