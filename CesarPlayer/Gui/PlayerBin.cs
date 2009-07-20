@@ -285,7 +285,6 @@ namespace LongoMatch.Gui
 			factory= new MultimediaFactory();
 			player = factory.getPlayer(320,280);
 			
-			//IF error do something	
 			tickHandler = new TickHandler(OnTick);
 			player.Tick += tickHandler;
 			player.StateChanged += new LongoMatch.Video.Handlers.StateChangedHandler(OnStateChanged);
