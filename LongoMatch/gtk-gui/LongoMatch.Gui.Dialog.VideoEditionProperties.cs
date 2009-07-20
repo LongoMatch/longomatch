@@ -15,16 +15,6 @@ namespace LongoMatch.Gui.Dialog {
         
         private Gtk.VBox vbox2;
         
-        private Gtk.HBox hbox1;
-        
-        private Gtk.Label filenamelabel;
-        
-        private Gtk.HBox hbox3;
-        
-        private Gtk.Entry fileentry;
-        
-        private Gtk.Button openbutton;
-        
         private Gtk.HBox hbox2;
         
         private Gtk.Label label1;
@@ -48,6 +38,16 @@ namespace LongoMatch.Gui.Dialog {
         private Gtk.CheckButton descriptioncheckbutton;
         
         private Gtk.CheckButton audiocheckbutton;
+        
+        private Gtk.HBox hbox1;
+        
+        private Gtk.Label filenamelabel;
+        
+        private Gtk.HBox hbox3;
+        
+        private Gtk.Entry fileentry;
+        
+        private Gtk.Button openbutton;
         
         private Gtk.Button buttonCancel;
         
@@ -74,52 +74,6 @@ namespace LongoMatch.Gui.Dialog {
             this.vbox2.Name = "vbox2";
             this.vbox2.Spacing = 6;
             // Container child vbox2.Gtk.Box+BoxChild
-            this.hbox1 = new Gtk.HBox();
-            this.hbox1.Name = "hbox1";
-            this.hbox1.Spacing = 6;
-            // Container child hbox1.Gtk.Box+BoxChild
-            this.filenamelabel = new Gtk.Label();
-            this.filenamelabel.Name = "filenamelabel";
-            this.filenamelabel.LabelProp = Mono.Unix.Catalog.GetString("File name: ");
-            this.hbox1.Add(this.filenamelabel);
-            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.hbox1[this.filenamelabel]));
-            w2.Position = 0;
-            w2.Expand = false;
-            w2.Fill = false;
-            // Container child hbox1.Gtk.Box+BoxChild
-            this.hbox3 = new Gtk.HBox();
-            this.hbox3.Name = "hbox3";
-            this.hbox3.Spacing = 6;
-            // Container child hbox3.Gtk.Box+BoxChild
-            this.fileentry = new Gtk.Entry();
-            this.fileentry.CanFocus = true;
-            this.fileentry.Name = "fileentry";
-            this.fileentry.IsEditable = false;
-            this.fileentry.InvisibleChar = '●';
-            this.hbox3.Add(this.fileentry);
-            Gtk.Box.BoxChild w3 = ((Gtk.Box.BoxChild)(this.hbox3[this.fileentry]));
-            w3.Position = 0;
-            // Container child hbox3.Gtk.Box+BoxChild
-            this.openbutton = new Gtk.Button();
-            this.openbutton.CanFocus = true;
-            this.openbutton.Name = "openbutton";
-            this.openbutton.UseStock = true;
-            this.openbutton.UseUnderline = true;
-            this.openbutton.Label = "gtk-save-as";
-            this.hbox3.Add(this.openbutton);
-            Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(this.hbox3[this.openbutton]));
-            w4.Position = 1;
-            w4.Expand = false;
-            w4.Fill = false;
-            this.hbox1.Add(this.hbox3);
-            Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(this.hbox1[this.hbox3]));
-            w5.Position = 1;
-            this.vbox2.Add(this.hbox1);
-            Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox1]));
-            w6.Position = 0;
-            w6.Expand = false;
-            w6.Fill = false;
-            // Container child vbox2.Gtk.Box+BoxChild
             this.hbox2 = new Gtk.HBox();
             this.hbox2.Name = "hbox2";
             this.hbox2.Homogeneous = true;
@@ -130,8 +84,8 @@ namespace LongoMatch.Gui.Dialog {
             this.label1.Xalign = 0F;
             this.label1.LabelProp = Mono.Unix.Catalog.GetString("Video Quality:");
             this.hbox2.Add(this.label1);
-            Gtk.Box.BoxChild w7 = ((Gtk.Box.BoxChild)(this.hbox2[this.label1]));
-            w7.Position = 0;
+            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.hbox2[this.label1]));
+            w2.Position = 0;
             // Container child hbox2.Gtk.Box+BoxChild
             this.qualitycombobox = Gtk.ComboBox.NewText();
             this.qualitycombobox.AppendText(Mono.Unix.Catalog.GetString("Low"));
@@ -141,13 +95,13 @@ namespace LongoMatch.Gui.Dialog {
             this.qualitycombobox.Name = "qualitycombobox";
             this.qualitycombobox.Active = 1;
             this.hbox2.Add(this.qualitycombobox);
-            Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(this.hbox2[this.qualitycombobox]));
-            w8.Position = 1;
+            Gtk.Box.BoxChild w3 = ((Gtk.Box.BoxChild)(this.hbox2[this.qualitycombobox]));
+            w3.Position = 1;
             this.vbox2.Add(this.hbox2);
-            Gtk.Box.BoxChild w9 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox2]));
-            w9.Position = 1;
-            w9.Expand = false;
-            w9.Fill = false;
+            Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox2]));
+            w4.Position = 0;
+            w4.Expand = false;
+            w4.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.hbox4 = new Gtk.HBox();
             this.hbox4.Name = "hbox4";
@@ -159,8 +113,8 @@ namespace LongoMatch.Gui.Dialog {
             this.label2.Xalign = 0F;
             this.label2.LabelProp = Mono.Unix.Catalog.GetString("Size: ");
             this.hbox4.Add(this.label2);
-            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.hbox4[this.label2]));
-            w10.Position = 0;
+            Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(this.hbox4[this.label2]));
+            w5.Position = 0;
             // Container child hbox4.Gtk.Box+BoxChild
             this.sizecombobox = Gtk.ComboBox.NewText();
             this.sizecombobox.AppendText(Mono.Unix.Catalog.GetString("TV (4:3 - 720x540)"));
@@ -169,13 +123,13 @@ namespace LongoMatch.Gui.Dialog {
             this.sizecombobox.Name = "sizecombobox";
             this.sizecombobox.Active = 0;
             this.hbox4.Add(this.sizecombobox);
-            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.hbox4[this.sizecombobox]));
-            w11.Position = 1;
+            Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(this.hbox4[this.sizecombobox]));
+            w6.Position = 1;
             this.vbox2.Add(this.hbox4);
-            Gtk.Box.BoxChild w12 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox4]));
-            w12.Position = 2;
-            w12.Expand = false;
-            w12.Fill = false;
+            Gtk.Box.BoxChild w7 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox4]));
+            w7.Position = 1;
+            w7.Expand = false;
+            w7.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.hbox5 = new Gtk.HBox();
             this.hbox5.Name = "hbox5";
@@ -187,24 +141,24 @@ namespace LongoMatch.Gui.Dialog {
             this.label3.Xalign = 0F;
             this.label3.LabelProp = Mono.Unix.Catalog.GetString("Ouput Format:");
             this.hbox5.Add(this.label3);
-            Gtk.Box.BoxChild w13 = ((Gtk.Box.BoxChild)(this.hbox5[this.label3]));
-            w13.Position = 0;
+            Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(this.hbox5[this.label3]));
+            w8.Position = 0;
             // Container child hbox5.Gtk.Box+BoxChild
             this.formatcombobox = Gtk.ComboBox.NewText();
             this.formatcombobox.AppendText(Mono.Unix.Catalog.GetString("Matroska (H.264)"));
-            this.formatcombobox.AppendText(Mono.Unix.Catalog.GetString("Matroska (Theora)"));
+            this.formatcombobox.AppendText(Mono.Unix.Catalog.GetString("OGG (Theora)"));
             this.formatcombobox.AppendText(Mono.Unix.Catalog.GetString("Avi (Xvid)"));
             this.formatcombobox.AppendText(Mono.Unix.Catalog.GetString("DVD (MPEG-2)"));
             this.formatcombobox.Name = "formatcombobox";
             this.formatcombobox.Active = 0;
             this.hbox5.Add(this.formatcombobox);
-            Gtk.Box.BoxChild w14 = ((Gtk.Box.BoxChild)(this.hbox5[this.formatcombobox]));
-            w14.Position = 1;
+            Gtk.Box.BoxChild w9 = ((Gtk.Box.BoxChild)(this.hbox5[this.formatcombobox]));
+            w9.Position = 1;
             this.vbox2.Add(this.hbox5);
-            Gtk.Box.BoxChild w15 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox5]));
-            w15.Position = 3;
-            w15.Expand = false;
-            w15.Fill = false;
+            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox5]));
+            w10.Position = 2;
+            w10.Expand = false;
+            w10.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.hbox6 = new Gtk.HBox();
             this.hbox6.Name = "hbox6";
@@ -218,8 +172,8 @@ namespace LongoMatch.Gui.Dialog {
             this.descriptioncheckbutton.DrawIndicator = true;
             this.descriptioncheckbutton.UseUnderline = true;
             this.hbox6.Add(this.descriptioncheckbutton);
-            Gtk.Box.BoxChild w16 = ((Gtk.Box.BoxChild)(this.hbox6[this.descriptioncheckbutton]));
-            w16.Position = 0;
+            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.hbox6[this.descriptioncheckbutton]));
+            w11.Position = 0;
             // Container child hbox6.Gtk.Box+BoxChild
             this.audiocheckbutton = new Gtk.CheckButton();
             this.audiocheckbutton.CanFocus = true;
@@ -229,10 +183,56 @@ namespace LongoMatch.Gui.Dialog {
             this.audiocheckbutton.DrawIndicator = true;
             this.audiocheckbutton.UseUnderline = true;
             this.hbox6.Add(this.audiocheckbutton);
-            Gtk.Box.BoxChild w17 = ((Gtk.Box.BoxChild)(this.hbox6[this.audiocheckbutton]));
-            w17.Position = 1;
+            Gtk.Box.BoxChild w12 = ((Gtk.Box.BoxChild)(this.hbox6[this.audiocheckbutton]));
+            w12.Position = 1;
             this.vbox2.Add(this.hbox6);
-            Gtk.Box.BoxChild w18 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox6]));
+            Gtk.Box.BoxChild w13 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox6]));
+            w13.Position = 3;
+            w13.Expand = false;
+            w13.Fill = false;
+            // Container child vbox2.Gtk.Box+BoxChild
+            this.hbox1 = new Gtk.HBox();
+            this.hbox1.Name = "hbox1";
+            this.hbox1.Spacing = 6;
+            // Container child hbox1.Gtk.Box+BoxChild
+            this.filenamelabel = new Gtk.Label();
+            this.filenamelabel.Name = "filenamelabel";
+            this.filenamelabel.LabelProp = Mono.Unix.Catalog.GetString("File name: ");
+            this.hbox1.Add(this.filenamelabel);
+            Gtk.Box.BoxChild w14 = ((Gtk.Box.BoxChild)(this.hbox1[this.filenamelabel]));
+            w14.Position = 0;
+            w14.Expand = false;
+            w14.Fill = false;
+            // Container child hbox1.Gtk.Box+BoxChild
+            this.hbox3 = new Gtk.HBox();
+            this.hbox3.Name = "hbox3";
+            this.hbox3.Spacing = 6;
+            // Container child hbox3.Gtk.Box+BoxChild
+            this.fileentry = new Gtk.Entry();
+            this.fileentry.CanFocus = true;
+            this.fileentry.Name = "fileentry";
+            this.fileentry.IsEditable = false;
+            this.fileentry.InvisibleChar = '●';
+            this.hbox3.Add(this.fileentry);
+            Gtk.Box.BoxChild w15 = ((Gtk.Box.BoxChild)(this.hbox3[this.fileentry]));
+            w15.Position = 0;
+            // Container child hbox3.Gtk.Box+BoxChild
+            this.openbutton = new Gtk.Button();
+            this.openbutton.CanFocus = true;
+            this.openbutton.Name = "openbutton";
+            this.openbutton.UseStock = true;
+            this.openbutton.UseUnderline = true;
+            this.openbutton.Label = "gtk-save-as";
+            this.hbox3.Add(this.openbutton);
+            Gtk.Box.BoxChild w16 = ((Gtk.Box.BoxChild)(this.hbox3[this.openbutton]));
+            w16.Position = 1;
+            w16.Expand = false;
+            w16.Fill = false;
+            this.hbox1.Add(this.hbox3);
+            Gtk.Box.BoxChild w17 = ((Gtk.Box.BoxChild)(this.hbox1[this.hbox3]));
+            w17.Position = 1;
+            this.vbox2.Add(this.hbox1);
+            Gtk.Box.BoxChild w18 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox1]));
             w18.Position = 4;
             w18.Expand = false;
             w18.Fill = false;
@@ -276,7 +276,7 @@ namespace LongoMatch.Gui.Dialog {
                 this.Child.ShowAll();
             }
             this.DefaultWidth = 514;
-            this.DefaultHeight = 205;
+            this.DefaultHeight = 221;
             this.Show();
             this.openbutton.Clicked += new System.EventHandler(this.OnOpenbuttonClicked);
             this.buttonOk.Clicked += new System.EventHandler(this.OnButtonOkClicked);

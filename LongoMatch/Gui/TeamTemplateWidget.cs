@@ -31,7 +31,6 @@ namespace LongoMatch.Gui.Component
 	public partial class TeamTemplateWidget : Gtk.Bin
 	{
 		private List<PlayerProperties> pplist;
-		private TeamTemplate template;
 		
 		public TeamTemplateWidget()
 		{

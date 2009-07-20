@@ -66,11 +66,19 @@ namespace LongoMatch
 				PromptForHomeDir();
 			//Comprobamos los archivos de inicio
 			MainClass.CheckDirs();
-			MainClass.CheckFiles();			
+			MainClass.CheckFiles();		
+			try {
 			MainWindow win = new MainWindow ();
 			win.Show ();
 			
-			Application.Run ();
+				Application.Run ();
+			}
+			catch (Exception ex){
+				// Try to save the opened project 
+				if (MainWindow.OpenedProject() != null)
+					DB.UpdateProject(MainWindow.OpenedProject());
+				ProcessExecutionError(ex);				
+			}
 			
 		}
 		
@@ -156,7 +164,7 @@ namespace LongoMatch
 		private static void SetUpWin32Config(){
 			Environment.SetEnvironmentVariable("GST_PLUGIN_PATH",RelativeToPrefix("lib\\gstreamer-0.10"));
 			baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../");
-			
+
 			try{
 				StreamReader reader = new StreamReader(System.IO.Path.Combine(baseDirectory, "etc/"+WIN32_CONFIG_FILE));
 				homeDirectory = reader.ReadLine();
@@ -165,7 +173,7 @@ namespace LongoMatch
 					System.IO.Directory.CreateDirectory(homeDirectory);
 				reader.Close();
 			}
-			catch (Exception ex){
+			catch {
 				homeDirectory = null;
 			}		
 		}
@@ -184,6 +192,31 @@ namespace LongoMatch
 				writer.Flush();
 				writer.Close();
 			}
+		}
+		
+		
+		private static void ProcessExecutionError(Exception ex){
+			string logFile ="LongoMatch-" + DateTime.Now +".log";
+			logFile = logFile.Replace("/","-");
+			logFile = logFile.Replace(" ","-");
+			logFile = System.IO.Path.Combine(HomeDir(),logFile);
+			
+			using (StreamWriter s = new StreamWriter(logFile)){
+				s.Write(ex.Message);
+				s.WriteLine();
+				s.Write(ex.Source);
+				s.WriteLine();
+				s.Write(ex.StackTrace);	
+				s.Flush();
+				s.Close();
+			}	 
+			
+			//TODO Add bug reports link
+			MessagePopup.PopupMessage(null, MessageType.Error, 
+			                          Catalog.GetString("The application has finished with an unexpected error.")+"\n"+
+			                          Catalog.GetString("A log has been saved at: "+logFile)+ "\n"+
+			                          Catalog.GetString("Please, fill a bug report at "));
+			Application.Quit();
 		}
 	}
 }

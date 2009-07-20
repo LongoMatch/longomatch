@@ -139,6 +139,7 @@ namespace LongoMatch.Gui
 			selectedTimeNode = null;
 			MakeActionsSensitive(false);
 			KeyPressEvent -= hotkeysListener;
+			
 		}
 		
 		private void MakeActionsSensitive(bool sensitive){
@@ -147,6 +148,7 @@ namespace LongoMatch.Gui
 			CaptureModeAction.Sensitive = sensitive;
 			AnalyzeModeAction.Sensitive = sensitive;	
 			ExportProjectToCSVFileAction.Sensitive = sensitive;
+			HideAllWidgetsAction.Sensitive=sensitive;
 		}
 		
 		private void ShowWidgets(){
@@ -451,11 +453,21 @@ namespace LongoMatch.Gui
 			playerbin1.RedrawLastFrame();
 			return base.OnConfigureEvent (evnt);
 		}
-
-
 		
-#endregion
-	
+		protected virtual void OnHideAllWidgetsActionToggled (object sender, System.EventArgs e)
+		{
+			if (openedProject != null){
+				leftbox.Visible = !((Gtk.ToggleAction)sender).Active;				
+				timelinewidget1.Visible = !((Gtk.ToggleAction)sender).Active && AnalyzeModeAction.Active;
+				buttonswidget1.Visible = !((Gtk.ToggleAction)sender).Active && CaptureModeAction.Active;
+				if (((Gtk.ToggleAction)sender).Active)
+					rightvbox.Visible = false;
+				else if (!((Gtk.ToggleAction)sender).Active && (playlistwidget2.Visible || noteswidget1.Visible))
+					rightvbox.Visible = true;
+			}
+		}
+		
+#endregion	
 	
 	}
 	

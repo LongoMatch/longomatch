@@ -262,20 +262,24 @@ namespace LongoMatch.Gui.Component
 					                       	segment.Rate, 
 					                       	segment.Name);
 				}
-				videoEditor.VideoQuality = vep.VideoQuality;
-				videoEditor.VideoFormat = vep.VideoFormat;
-				videoEditor.AudioCodec = vep.AudioCodec;
-				videoEditor.VideoCodec = vep.VideoCodec;
-				videoEditor.VideoMuxer = vep.VideoMuxer;
-				videoEditor.OutputFile = vep.Filename;
-				videoEditor.EnableTitle = vep.TitleOverlay;
-				videoEditor.EnableAudio = vep.EnableAudio;
-				videoEditor.TempDir = MainClass.TempVideosDir();
-				videoEditor.Start();
-				closebutton.Show();
-				newvideobutton.Hide();
-			}
-			
+				try {
+					videoEditor.VideoQuality = vep.VideoQuality;
+					videoEditor.VideoFormat = vep.VideoFormat;
+					videoEditor.AudioCodec = vep.AudioCodec;
+					videoEditor.VideoCodec = vep.VideoCodec;
+					videoEditor.VideoMuxer = vep.VideoMuxer;
+					videoEditor.OutputFile = vep.Filename;
+					videoEditor.EnableTitle = vep.TitleOverlay;
+					videoEditor.EnableAudio = vep.EnableAudio;
+					videoEditor.TempDir = MainClass.TempVideosDir();
+					videoEditor.Start();
+					closebutton.Show();
+					newvideobutton.Hide();
+				}
+				catch (Exception ex){
+					MessagePopup.PopupMessage(this, MessageType.Error, Catalog.GetString(ex.Message));
+				}					
+			}			
 		}
 
 		protected virtual void OnClosebuttonClicked (object sender, System.EventArgs e)

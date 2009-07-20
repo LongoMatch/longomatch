@@ -31,11 +31,17 @@ namespace LongoMatch.Gui
 		}
 		
 		public static void PopupMessage(Widget sender,MessageType type, String errorMessage){
-			MessageDialog md = new MessageDialog((Window)sender.Toplevel,
-				                                        DialogFlags.Modal,
-				                                        type,
-				                                        ButtonsType.Ok,
-				                                       	errorMessage);
+			Window toplevel;
+			if (sender != null)
+				toplevel = (Window)sender.Toplevel;
+			else 
+				toplevel = null;
+			
+			MessageDialog md = new MessageDialog(toplevel,
+			                                     DialogFlags.Modal,
+			                                     type,
+			                                     ButtonsType.Ok,
+			                                     errorMessage);
 			md.Run();
 			md.Destroy();
 		}	

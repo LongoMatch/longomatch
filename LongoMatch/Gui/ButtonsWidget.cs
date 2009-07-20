@@ -32,8 +32,6 @@ namespace LongoMatch.Gui.Component
 	{
 				
 		private Sections sections;
-		private const int MS = 1000;
-		private List<Button> bList;
 	
 		public event NewMarkEventHandler NewMarkEvent;
 
@@ -41,7 +39,6 @@ namespace LongoMatch.Gui.Component
 		public ButtonsWidget()
 		{		
 			this.Build();
-			bList = new List<Button>();			
 		}
 		
 		public Sections Sections{

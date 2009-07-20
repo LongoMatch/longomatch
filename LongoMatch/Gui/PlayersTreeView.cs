@@ -39,7 +39,6 @@ namespace LongoMatch.Gui.Component
 		private TreeIter selectedIter;
 		private Menu menu;
 		private Gtk.CellRendererText nameCell;
-		private EventButton evnt;
 		private TreePath path;
 		private Gtk.TreeViewColumn nameColumn;
 		//Using TimeNode as in the tree there are Media and Sections timenodes
@@ -109,8 +108,7 @@ namespace LongoMatch.Gui.Component
 		protected override bool OnButtonPressEvent (EventButton evnt)
 		{
 			object selectedItem;
-			MediaTimeNode selectedPlay;
-			Player selectedPlayer;
+
 			//Call base class, to allow normal handling,
 			//such as allowing the row to be selected by the right-click:
 			bool returnValue = base.OnButtonPressEvent(evnt);
