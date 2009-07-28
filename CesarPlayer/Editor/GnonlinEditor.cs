@@ -216,7 +216,7 @@ namespace LongoMatch.Video.Editor
 				if (System.IO.File.Exists(path)){
 					try{
 						System.IO.File.Delete(path);}
-					catch (Exception e){}
+					catch {}
 				}
 			}
 		}

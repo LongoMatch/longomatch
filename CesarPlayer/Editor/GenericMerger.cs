@@ -99,7 +99,7 @@ namespace LongoMatch.Video.Editor
 				ReadOutput();
 				process.WaitForExit();	
 			}
-			catch (Exception e){
+			catch {
 				if (Error != null){
 					ErrorArgs args = new ErrorArgs ();
 					args.Args = new object[1];

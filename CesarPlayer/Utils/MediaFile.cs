@@ -25,6 +25,7 @@ using Mono.Unix;
 namespace LongoMatch.Video.Utils
 {
 	
+	[Serializable]
 	
 	public class MediaFile
 	{
@@ -140,7 +141,7 @@ namespace LongoMatch.Video.Utils
 				width = (int) reader.GetMetadata (GstPlayerMetadataType.DimensionX);
 				reader.Close();	
 				reader.Dispose();				
-				return new MediaFile(filePath,duration*1000,(ushort)fps,hasAudio,hasVideo,videoCodec,audioCodec,0,0);
+				return new MediaFile(filePath,duration*1000,(ushort)fps,hasAudio,hasVideo,videoCodec,audioCodec,(uint)height,(uint)width);
 			}
 			catch (GLib.GException ex){
 			    throw new Exception (Catalog.GetString("Invalid video file:")+"\n"+ex.Message);

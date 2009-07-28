@@ -303,8 +303,10 @@ namespace LongoMatch.Video.Editor {
 		public void SetVideoEncoder(out string error, VideoCodec codec) {
 			IntPtr error_ptr = IntPtr.Zero;
 			gst_video_splitter_set_video_encoder(Handle,out error_ptr,(int)codec);
-			if (error_ptr != null)
+			if (error_ptr != IntPtr.Zero)
 				error = GLib.Marshaller.Utf8PtrToString(error_ptr);
+			else
+				error = null;
 		}
 		
 		[DllImport("libcesarplayer.dll")]
@@ -313,8 +315,10 @@ namespace LongoMatch.Video.Editor {
 		public void SetAudioEncoder(out string error, AudioCodec codec) {
 			IntPtr error_ptr = IntPtr.Zero;
 			gst_video_splitter_set_audio_encoder(Handle,out error_ptr,(int)codec);
-			if (error_ptr != null)
+			if (error_ptr != IntPtr.Zero)
 				error = GLib.Marshaller.Utf8PtrToString(error_ptr);
+			else
+				error = null;
 		}
 		
 		[DllImport("libcesarplayer.dll")]
@@ -323,8 +327,10 @@ namespace LongoMatch.Video.Editor {
 		public void SetVideoMuxer(out string error, VideoMuxer muxer) {
 			IntPtr error_ptr = IntPtr.Zero;
 			gst_video_splitter_set_video_muxer(Handle,out error_ptr,(int)muxer);
-			if (error_ptr != null)
+			if (error_ptr != IntPtr.Zero)
 				error = GLib.Marshaller.Utf8PtrToString(error_ptr);
+			else
+				error = null;
 		}
 
 		[DllImport("libcesarplayer.dll")]

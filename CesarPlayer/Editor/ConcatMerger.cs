@@ -28,8 +28,6 @@ namespace LongoMatch.Video.Editor
 	
 	public class ConcatMerger:GenericMerger
 	{
-		StreamReader outputReader;
-		Thread readerThread;
 			
 		public ConcatMerger() :base ("")
 		{		

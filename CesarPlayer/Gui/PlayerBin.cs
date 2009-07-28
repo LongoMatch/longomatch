@@ -137,9 +137,8 @@ namespace LongoMatch.Gui
 				try{
 					player.Open(mrl);
 				}
-				catch (GLib.GException error) {
-				//We handle this error async
-				
+				catch {
+				//We handle this error async				
 				}
 		}
 		
