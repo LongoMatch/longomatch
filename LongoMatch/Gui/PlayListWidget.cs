@@ -256,7 +256,7 @@ namespace LongoMatch.Gui.Component
 				videoEditor.ClearList();
 				foreach (PlayListTimeNode segment in playList){
 					if (segment.Valid)
-						videoEditor.AddSegment(segment.FileName, 
+						videoEditor.AddSegment(segment.MediaFile.FilePath, 
 					                       	segment.Start.MSeconds, 
 					                       	segment.Duration.MSeconds, 
 					                       	segment.Rate, 

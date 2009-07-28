@@ -20,6 +20,7 @@
 
 using System;
 using Gdk;
+using LongoMatch.Video.Utils;
 
 namespace LongoMatch.TimeNodes
 {
@@ -27,25 +28,25 @@ namespace LongoMatch.TimeNodes
 	[Serializable]
 	public class PlayListTimeNode : TimeNode
 	{
-		private string fileName;
+		private MediaFile mediaFile;
 		private float rate=1;
-		private bool valid=true;//True if the file is present in the system
+		private bool valid=true; //True if the file exists
 
 		#region Constructors
 		public PlayListTimeNode(){
 		}
 		
-		public PlayListTimeNode(string fileName, MediaTimeNode tNode) : base(tNode.Name,tNode.Start,tNode.Stop)
+		public PlayListTimeNode(MediaFile mediaFile, MediaTimeNode tNode) : base(tNode.Name,tNode.Start,tNode.Stop)
 		{
-			this.fileName = fileName;
+			this.mediaFile = mediaFile;
 			
 		}
 		#endregion
 		#region  Properties
 		
-		public string FileName{
-			set{ this.fileName = value;}
-			get{ return this.fileName;}
+		public MediaFile MediaFile{
+			set{ this.mediaFile = value;}
+			get{ return this.mediaFile;}
 		}
 		
 		public float Rate{
@@ -53,16 +54,11 @@ namespace LongoMatch.TimeNodes
 			get{ return this.rate;}
 		}
 		
-		//FIXME Tiene que devolver la comprobación de si el fichero existe, así no hay que setearlo externamente
+
 		public bool Valid{
 			get{return this.valid;}
 			set{this.valid = value;}
 		}
-		#endregion
-	
-		
-		
-	
-		
+		#endregion		
 	}
 }

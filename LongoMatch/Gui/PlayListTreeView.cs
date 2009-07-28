@@ -136,7 +136,7 @@ public class PlayListTreeView : Gtk.TreeView
 													Catalog.GetString("Play Rate: ")+tNode.Rate.ToString();
 			if (!tNode.Valid){
 				(cell as Gtk.CellRendererText).Foreground = "red";	
-				(cell as Gtk.CellRendererText).Text += Catalog.GetString("\nFile not found: "+tNode.FileName);
+				(cell as Gtk.CellRendererText).Text += Catalog.GetString("\nFile not found: "+tNode.MediaFile.FilePath);
 			}
 			else if (tNode == loadedTimeNode)
 				(cell as Gtk.CellRendererText).Foreground = "blue";

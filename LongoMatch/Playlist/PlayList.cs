@@ -78,7 +78,7 @@ namespace LongoMatch.Playlist
 				list = ser.Deserialize(strm) as List<PlayListTimeNode>; 
 			}		
 			foreach (PlayListTimeNode plNode in list){
-				plNode.Valid = System.IO.File.Exists(plNode.FileName);
+				plNode.Valid = System.IO.File.Exists(plNode.MediaFile.FilePath);
 			}
 			this.filename = file;
 		}

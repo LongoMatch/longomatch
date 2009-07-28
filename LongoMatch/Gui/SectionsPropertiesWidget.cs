@@ -149,7 +149,7 @@ namespace LongoMatch.Gui.Component
 				try{
 					project.DeleteSection(index);
 				}
-				catch (Exception e){
+				catch {
 					MessagePopup.PopupMessage(this,MessageType.Warning,
 					                          Catalog.GetString("You can't delete the last section"));
 					return;

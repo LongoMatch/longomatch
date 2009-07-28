@@ -47,7 +47,6 @@ namespace LongoMatch.Gui.Component
 	    private	MenuItem visitor;
 		private MenuItem noTeam;
 		private Gtk.CellRendererText nameCell;
-		private EventButton evnt;
 		private TreePath path;
 		private Gtk.TreeViewColumn nameColumn;
 		//Using TimeNode as in the tree there are Media and Sections timenodes

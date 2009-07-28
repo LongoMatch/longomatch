@@ -155,11 +155,11 @@ namespace LongoMatch
 			get { return db;}
 		}
 		
-		private static void setGtkTheme(){
+		/*private static void setGtkTheme(){
 			if (!System.IO.File.Exists(System.IO.Path.Combine(homeDirectory,"../../.gtkrc-2.0"))){
 			    System.IO.File.Copy(RelativeToPrefix("etc/gtk-2.0/gtkrc-2.0"),System.IO.Path.Combine(homeDirectory,"../../.gtkrc-2.0"),true);
 			}
-		}
+		}*/
 		
 		private static void SetUpWin32Config(){
 			Environment.SetEnvironmentVariable("GST_PLUGIN_PATH",RelativeToPrefix("lib\\gstreamer-0.10"));

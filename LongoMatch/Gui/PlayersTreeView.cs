@@ -100,10 +100,10 @@ namespace LongoMatch.Gui.Component
 			menu.ShowAll();		
 		}
 		
-		private int GetSectionFromIter (TreeIter iter){
+		/*private int GetSectionFromIter (TreeIter iter){
 			TreePath path = this.Model.GetPath(iter);
 			return int.Parse(path.ToString().Split(':')[0]);			
-		}
+		}*/
 		
 		protected override bool OnButtonPressEvent (EventButton evnt)
 		{

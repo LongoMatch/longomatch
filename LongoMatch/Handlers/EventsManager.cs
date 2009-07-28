@@ -224,7 +224,7 @@ namespace LongoMatch
 		
 		protected virtual void OnPlayListNodeAdded (MediaTimeNode tNode)
 		{
-			playlist.Add(new PlayListTimeNode(openedProject.File.FilePath,tNode));
+			playlist.Add(new PlayListTimeNode(openedProject.File,tNode));
 		}
 		
 		
@@ -233,7 +233,7 @@ namespace LongoMatch
 		{
 			if (openedProject == null){
 				if (plNode.Valid){
-					player.SetPlayListElement(plNode.FileName,plNode.Start.MSeconds,plNode.Stop.MSeconds,plNode.Rate,hasNext);
+					player.SetPlayListElement(plNode.MediaFile.FilePath,plNode.Start.MSeconds,plNode.Stop.MSeconds,plNode.Rate,hasNext);
 					selectedTimeNode = plNode;
 				}
 			}

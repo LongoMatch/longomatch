@@ -65,7 +65,6 @@ namespace LongoMatch.DB
 		
 		public Project(MediaFile file, String localName, String visitorName, String season, String competition, int localGoals,
 		                int visitorGoals, DateTime matchDate, Sections sections, TeamTemplate localTeamTemplate, TeamTemplate visitorTeamTemplate) {
-			List<MediaTimeNode> tnArray;
 			
 			this.file = file;
 			this.localName = localName;
