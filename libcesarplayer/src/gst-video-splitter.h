@@ -101,7 +101,9 @@ EXPORT void gst_video_splitter_cancel(GstVideoSplitter *gvs);
 EXPORT void gst_video_splitter_set_video_encoder(GstVideoSplitter *gvs,gchar **err, GvsVideoCodec codec);
 EXPORT void gst_video_splitter_set_audio_encoder(GstVideoSplitter *gvs,gchar **err, GvsAudioCodec codec);
 EXPORT void gst_video_splitter_set_video_muxer(GstVideoSplitter *gvs,gchar **err, GvsVideoMuxer codec);
-EXPORT void gst_video_splitter_set_segment(GstVideoSplitter *gvs, gchar *file, gint64 start, gint64 duration, gdouble rate, gchar *title);
+EXPORT void gst_video_splitter_clear_segments_list(GstVideoSplitter *gvs);
+EXPORT void gst_video_splitter_add_segment(GstVideoSplitter *gvs, gchar *file, gint64 start, gint64 duration, gdouble rate, gchar *title);
+
 G_END_DECLS
 
 #endif /* _GST_VIDEO_SPLITTER_H_ */
