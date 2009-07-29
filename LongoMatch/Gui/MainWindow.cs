@@ -244,18 +244,17 @@ namespace LongoMatch.Gui
 				project = npd.GetProject();
 				if (project != null){
 					try{
-						MainClass.DB.AddProject(project);
-						SetProject(project);
+						MainClass.DB.AddProject(project);						
 					}
-					catch {						
+					catch {				
 						MessagePopup.PopupMessage(this, MessageType.Error, 
 				                          Catalog.GetString("This file is already used in a Project.")+"\n"+Catalog.GetString("Open the project, please."));
+						return;
 					}
+					SetProject(project);
 				}
 			}
-		}
-
-		
+		}		
 		
 		protected virtual void OnCloseActivated (object sender, System.EventArgs e)
 		{
