@@ -40,6 +40,8 @@ namespace LongoMatch.Video.Utils
 		uint videoHeight;
 		uint videoWidth;
 		
+		public MediaFile(){}
+		
 		public MediaFile(string filePath,long length,ushort fps,bool hasAudio, bool hasVideo, string videoCodec, string audioCodec, uint videoWidth, uint videoHeight)
 		{
 			this.filePath = filePath;
