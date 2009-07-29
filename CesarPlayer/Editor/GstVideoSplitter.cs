@@ -25,7 +25,7 @@ namespace LongoMatch.Video.Editor {
 	using System.Runtime.InteropServices;
 
 
-	public class GstVideoSplitter : GLib.Object, IVideoSplitter {
+	public class GstVideoSplitter : GLib.Object, IVideoEditor, IVideoSplitter {
 
 		[DllImport("libcesarplayer.dll")]
 		static extern unsafe IntPtr gst_video_splitter_new(out IntPtr err);
@@ -276,10 +276,17 @@ namespace LongoMatch.Video.Editor {
 		
 
 		[DllImport("libcesarplayer.dll")]
-		static extern void gst_video_splitter_set_segment(IntPtr raw, string file_path, long start, long duration, double rate, IntPtr title);
+		static extern void gst_video_splitter_clear_segments_list(IntPtr raw);
 
-		public void SetSegment(string filePath, long start, long duration, double rate, string title) {
-			gst_video_splitter_set_segment(Handle, filePath, start, duration, rate, GLib.Marshaller.StringToPtrGStrdup(title));
+		public void ClearList() {
+			gst_video_splitter_clear_segments_list(Handle);
+		}
+		
+		[DllImport("libcesarplayer.dll")]
+		static extern void gst_video_splitter_add_segment(IntPtr raw, string file_path, long start, long duration, double rate, IntPtr title);
+
+		public void AddSegment(string filePath, long start, long duration, double rate, string title) {
+			gst_video_splitter_add_segment(Handle, filePath, start, duration, rate, GLib.Marshaller.StringToPtrGStrdup(title));
 		}
 		
 		
@@ -340,6 +347,68 @@ namespace LongoMatch.Video.Editor {
 			int argc;
 			gst_video_splitter_init_backend(out argc, GLib.Marshaller.StringToPtrGStrdup(argv));
 			return argc;
+		}
+		
+		
+		public void SetSegment (string filePath, long start, long duration, double rate, string title){
+			ClearList();
+			AddSegment(filePath, start, duration, rate, title);
+		}
+		
+		public VideoQuality VideoQuality{
+			set{VideoBitrate=(int)value;}
+		}
+		
+		public AudioQuality AudioQuality{
+			set{AudioBitrate = (int)value;}
+		}
+		
+		public VideoFormat VideoFormat{
+			set{
+				if (value == VideoFormat.TV){
+					Height = 576;
+					Width = 720;
+				}
+				else if (value == VideoFormat.HD720p){
+					Height = 720;
+					Width = 1280;
+				}
+				else if (value == VideoFormat.HD1080p){
+					Height = 1080;
+					Width = 1920;
+				}
+			}
+		}
+		
+		public AudioCodec AudioCodec{
+			set{
+				string error;
+				SetAudioEncoder(out error,value);
+				if (error != null)
+					throw new Exception(error);
+			}
+		}
+		
+		public VideoCodec VideoCodec{
+			set{
+				string error;
+				SetVideoEncoder(out error, value);
+				if (error != null)
+					throw new Exception(error);
+			}
+		}
+		
+		public VideoMuxer VideoMuxer{
+			set{
+				string error;
+				SetVideoMuxer(out error,value);
+				if (error != null)
+					throw new Exception(error);
+			}
+		}
+		
+		public string TempDir{
+			set{;}
 		}
 		
 		#endregion

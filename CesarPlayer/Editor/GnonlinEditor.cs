@@ -93,29 +93,20 @@ namespace LongoMatch.Video.Editor
 		
 		public AudioCodec AudioCodec{
 			set{
-				string error;
-				splitter.SetAudioEncoder(out error,value);
-				if (error != null)
-					throw new Exception(error);
+				splitter.AudioCodec=value;				
 			}
 		}
 		
 		public VideoCodec VideoCodec{
 			set{
-				string error;
 				vcodec = value;
-				splitter.SetVideoEncoder(out error, value);
-				if (error != null)
-					throw new Exception(error);
+				splitter.VideoCodec=value;
 			}
 		}
 		
 		public VideoMuxer VideoMuxer{
 			set{
-				string error;
-				splitter.SetVideoMuxer(out error,value);
-				if (error != null)
-					throw new Exception(error);
+				splitter.VideoMuxer=value;
 				ChangeMerger(value);
 			}
 		}				
@@ -188,12 +179,9 @@ namespace LongoMatch.Video.Editor
 				//When using the theora encoder, the splitted files must be muxed using ogg
 				//and then merged using matroska as ogg concatenation does not works and
 				//muxing theora encoded streams using matroska doens't work neither
-				if (vcodec == VideoCodec.THEORA){
-				    splitter.SetVideoMuxer(out error,VideoMuxer.OGG);
-					if (error != null)
-						throw new Exception (error);
-				}
-				
+				if (vcodec == VideoCodec.THEORA)
+				    splitter.VideoMuxer=VideoMuxer.OGG;
+					
 				splitter.OutputFile= tempFile;
 				splitter.SetSegment(segment.FilePath, segment.Start, segment.Duration, segment.Rate, segment.Title);
 				splitter.Start();

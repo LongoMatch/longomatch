@@ -64,11 +64,17 @@ namespace LongoMatch.Video.Editor
 		
 		void SetSegment(string filePath, long start, long duration, double rate, string title);
 		
-		void SetVideoEncoder (out string error, VideoCodec codec);
+		AudioCodec AudioCodec{
+			set;
+		}
 		
-		void SetAudioEncoder (out string error,AudioCodec codec);
+		VideoCodec VideoCodec{
+			set;
+		}
 		
-		void SetVideoMuxer (out string error,VideoMuxer muxer);
+		VideoMuxer VideoMuxer{
+			set;
+		}		
 		
 		void Start();
 		
