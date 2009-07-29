@@ -68,9 +68,8 @@ namespace LongoMatch
 			MainClass.CheckDirs();
 			MainClass.CheckFiles();		
 			try {
-			MainWindow win = new MainWindow ();
-			win.Show ();
-			
+				MainWindow win = new MainWindow ();
+				win.Show ();			
 				Application.Run ();
 			}
 			catch (Exception ex){
@@ -78,8 +77,7 @@ namespace LongoMatch
 				if (MainWindow.OpenedProject() != null)
 					DB.UpdateProject(MainWindow.OpenedProject());
 				ProcessExecutionError(ex);				
-			}
-			
+			}			
 		}
 		
 		public static string RelativeToPrefix(string relativePath){
@@ -92,7 +90,7 @@ namespace LongoMatch
 		
 
 		public static string PlayListDir(){
-			return System.IO.Path.Combine (configDirectory, "playlists");
+			return System.IO.Path.Combine (homeDirectory, "playlists");
 		}
 		
 		public static string SnapshotsDir(){
