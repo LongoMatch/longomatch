@@ -163,7 +163,7 @@ namespace LongoMatch.DB
 			for (int i=0;i<localTeamTemplate.PlayersCount;i++){
 				itersList.Add(dataFileListStore.AppendValues (localTeamTemplate.GetPlayer(i)));									
 			}
-			for (int i=0;i<localTeamTemplate.PlayersCount;i++){
+			for (int i=0;i<sections.Count;i++){
 				foreach(MediaTimeNode tNode in sectionPlaysList[i]){
 					foreach (int player in tNode.LocalPlayers)					
 						dataFileListStore.AppendValues (itersList[player],tNode);
@@ -178,7 +178,7 @@ namespace LongoMatch.DB
 			for (int i=0;i<visitorTeamTemplate.PlayersCount;i++){
 				itersList.Add(dataFileListStore.AppendValues (visitorTeamTemplate.GetPlayer(i)));									
 			}
-			for (int i=0;i<visitorTeamTemplate.PlayersCount;i++){
+			for (int i=0;i<sections.Count;i++){
 				foreach(MediaTimeNode tNode in sectionPlaysList[i]){
 					foreach (int player in tNode.VisitorPlayers)					
 						dataFileListStore.AppendValues (itersList[player],tNode);
