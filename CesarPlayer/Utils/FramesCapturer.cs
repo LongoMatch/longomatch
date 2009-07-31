@@ -39,23 +39,19 @@ namespace LongoMatch.Video.Utils
 		int totalFrames;
 		string seriesName;
 		string outputDir;
-		string videoFile;
 		bool cancel;
-		System.Object locker;
 		
 		public event FramesProgressHandler Progress;
 		
 		public FramesSeriesCapturer(IFramesCapturer capturer,string videoFile,long start, long stop, uint interval, string outputDir)
 		{
 			this.capturer=capturer;
-			this.videoFile = videoFile;
 			this.start= start;
 			this.stop = stop;
 			this.interval = interval;
 			this.outputDir = outputDir;
 			this.seriesName = System.IO.Path.GetFileName(outputDir);			
 			this.totalFrames = (int)Math.Floor((double)((stop - start ) / interval))+1;
-			this.locker = new System.Object();			
 		}
 		
 		public void Cancel(){
