@@ -21,6 +21,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Reflection;
 using Gdk;
 using Mono.Unix;
 using Db4objects.Db4o;
@@ -40,9 +41,41 @@ namespace LongoMatch.DB
 		// Lock object 
 		private object locker;
 		
+		private Version dbVersion;
+		
 		public DataBase()
 		{
 			file = Path.Combine (MainClass.DBDir(), "db.yap");
+			if (!System.IO.File.Exists(file)){
+				// Create new DB and add version
+				db = Db4oFactory.OpenFile(file);
+				try{					
+					dbVersion=Assembly.GetExecutingAssembly().GetName().Version;
+					db.Set(dbVersion);
+				}
+				finally{
+					db.Close();
+				}
+			}
+			
+			else{
+				db = Db4oFactory.OpenFile(file);
+				try	{   				
+					IQuery query = db.Query();
+					query.Constrain(typeof(Version));
+					IObjectSet result = query.Execute();
+					if (result.Count == 1)
+						dbVersion = (Version)result.Next();
+					//FIXME: Convert old DB
+					else{
+						//Convert DB
+					}
+				}				
+				finally
+				{
+					db.Close();
+				}
+			}
 			locker = new object();
 		}
 		
@@ -64,8 +97,7 @@ namespace LongoMatch.DB
 		}
 		
 		
-		public ArrayList GetAllDB(){
-			
+		public ArrayList GetAllDB(){			
 			lock(this.locker){
 				ArrayList allDB = new ArrayList();
 				db = Db4oFactory.OpenFile(file);
@@ -77,8 +109,7 @@ namespace LongoMatch.DB
 						allDB.Add(result.Next());					
 					}
 					return allDB;					
-				}
-				
+				}				
 				finally
 				{
 					db.Close();
@@ -95,14 +126,14 @@ namespace LongoMatch.DB
 					query.Descend("filename").Constrain(filename);
 					IObjectSet result = query.Execute();
 					return (Project)result.Next();
-				}
-				
+				}				
 				finally
 				{
 					db.Close();
 				}
 			}
 		}
+		
 		public void AddProject (Project project){
 			lock(this.locker){
 				db = Db4oFactory.OpenFile(file);				
@@ -113,16 +144,13 @@ namespace LongoMatch.DB
 						db.Commit();
 					}
 					else throw new Exception (Catalog.GetString("The Project for this video file already exists.")+"\n"+Catalog.GetString("Try to edit it whit the Database Manager"));
-				}
-				
-			finally
-				{
-					
+				}				
+				finally {
 					db.Close();
 				}
-			}
-			
+			}			
 		}
+		
 		public void RemoveProject(Project project){
 			lock(this.locker){
 				SetCascadeOptions();
@@ -135,14 +163,12 @@ namespace LongoMatch.DB
 					project = (Project)result.Next();
 					db.Delete(project);   			
 					db.Commit();
-				}
-				
-			finally
+				}				
+				finally
 				{
 					db.Close();
 				}
 			}
-			
 		}
 		
 		public void UpdateProject(Project project, string previousFileName){
@@ -167,18 +193,16 @@ namespace LongoMatch.DB
 						db.Commit();
 					}
 					else 
-						error = true;
-					
+						error = true;					
 				}
 				finally{
-				db.Close();
+					db.Close();
 					if (error)
 						throw new Exception();
 				}
-			}
-			
+			}			
 		}
-
+		
 		public void UpdateProject(Project project){
 			lock(this.locker){
 				SetCascadeOptions();				
@@ -192,14 +216,12 @@ namespace LongoMatch.DB
 					db.Delete(fd);
 					db.Set(project);		
 					db.Commit();
-				}
-				
+				}				
 				finally
 				{
 					db.Close();
 				}
-			}
-			
+			}			
 		}
 		
 		private void SetCascadeOptions(){
@@ -211,6 +233,7 @@ namespace LongoMatch.DB
 			Db4oFactory.Configure().ObjectClass(typeof(HotKey)).CascadeOnDelete(true);
 			Db4oFactory.Configure().ObjectClass(typeof(TeamTemplate)).CascadeOnDelete(true);
 		}
+		
 		private bool Exists(string filename){
 			
 			IQuery query = db.Query();
@@ -219,7 +242,6 @@ namespace LongoMatch.DB
 			IObjectSet result = query.Execute();
 			return (result.HasNext());
 		}
-		
+	}				
 
-	}
 }
