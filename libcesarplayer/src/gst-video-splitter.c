@@ -78,10 +78,9 @@ struct GstVideoSplitterPrivate
 	GstElement 	*main_pipeline;	
 		
 	GstElement 	*gnl_composition;
-	GstElement  *gnl_videoscale;
-	GstElement  *gnl_operation;
 	GstElement	*gnl_filesource;
 	GstElement 	*identity;
+	GstElement  *ffmpegcolorspace;
 	GstElement 	*videorate;	
 	GstElement  *textoverlay;
 	GstElement  *videoscale;
@@ -123,8 +122,6 @@ gst_video_splitter_init (GstVideoSplitter *object)
   	object->priv = priv = G_TYPE_INSTANCE_GET_PRIVATE (object, GST_TYPE_VIDEO_SPLITTER, GstVideoSplitterPrivate);
 		
 	priv->output_file = "new_video.avi";
-
-	
 	
 	priv->audio_bitrate = 128;
 	priv->video_bitrate = 5000000;
@@ -893,10 +890,9 @@ GstVideoSplitter *
 gst_video_splitter_new (GError ** err)
 {
 	GstVideoSplitter *gvs = NULL;
-	GstCaps *filter = NULL;
+	GstCaps *filter=NULL;
 
 	gvs = g_object_new(GST_TYPE_VIDEO_SPLITTER, NULL);
-
 	
 	gvs->priv->main_pipeline = gst_pipeline_new ("main_pipeline");
 
@@ -919,24 +915,13 @@ gst_video_splitter_new (GError ** err)
         g_object_ref_sink (gvs);
     	g_object_unref (gvs);
         return NULL;                   
-  	}
-  	filter = gst_caps_new_simple ("video/x-raw-yuv",
-     	"width", G_TYPE_INT, gvs->priv->width,
-      	"height", G_TYPE_INT, gvs->priv->height,
-      	"framerate",GST_TYPE_FRACTION,25,1,
-       	NULL);
-  	g_object_set (G_OBJECT(gvs->priv->gnl_composition), "caps",filter,NULL);
-  	
-  	gvs->priv->gnl_operation = gst_element_factory_make ("gnloperation", "gnloperation");	
-	gvs->priv->gnl_videoscale = gst_element_factory_make ("videoscale", "gnlvideoscale");	
-
-	gst_bin_add (GST_BIN(gvs->priv->gnl_operation), gvs->priv->gnl_videoscale);
-	gst_bin_add (GST_BIN(gvs->priv->gnl_composition), gvs->priv->gnl_operation);	
-  	
-    	
+  	}  	  	
+ 
     gvs->priv->identity = gst_element_factory_make ("identity", "identity");
     g_object_set (G_OBJECT(gvs->priv->identity), "single-segment",TRUE,NULL);
-    
+   
+    gvs->priv->ffmpegcolorspace = gst_element_factory_make ("ffmpegcolorspace", "ffmpegcolorspace"); 
+   
     gvs->priv->videorate = gst_element_factory_make ("videorate", "videorate"); 
     
     gvs->priv->videoscale = gst_element_factory_make ("videoscale","videoscale");  
@@ -961,6 +946,7 @@ gst_video_splitter_new (GError ** err)
 	gst_bin_add_many (	GST_BIN (gvs->priv->main_pipeline),
 		gvs->priv->gnl_composition,	
 		gvs->priv->identity,	
+		gvs->priv->ffmpegcolorspace,
 		gvs->priv->videorate,
 		gvs->priv->videoscale,
 		gvs->priv->textoverlay,		
@@ -971,10 +957,18 @@ gst_video_splitter_new (GError ** err)
 		NULL);
 		
 	gst_element_link_many(	gvs->priv->identity,
-		gvs->priv->videorate,
+		gvs->priv->ffmpegcolorspace,
+		gvs->priv->videorate,		
 		gvs->priv->videoscale,NULL);
+		
+	filter = gst_caps_new_simple ("video/x-raw-yuv",
+     	"width", G_TYPE_INT, gvs->priv->width,
+      	"height", G_TYPE_INT, gvs->priv->height,
+      	"framerate",GST_TYPE_FRACTION,25,1,
+       	NULL);
 							
-	gst_element_link_filtered (gvs->priv->videoscale,gvs->priv->textoverlay, filter);				
+	gst_element_link_filtered (gvs->priv->videoscale,gvs->priv->textoverlay, filter);	
+	gst_caps_unref(filter);			
 	 
 	gst_element_link_many(gvs->priv->textoverlay,
 		gvs->priv->queue,
