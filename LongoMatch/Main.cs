@@ -57,16 +57,20 @@ namespace LongoMatch
 			//Iniciamos la internalización
 			Catalog.Init("longomatch",RelativeToPrefix("share/locale"));
 			
-			//Iniciamos la base de datos
-			db = new DataBase();
-		
+					
 			//Iniciamos la aplicación
 			Application.Init ();
+			
 			if (homeDirectory == null)
 				PromptForHomeDir();
+			
 			//Comprobamos los archivos de inicio
 			MainClass.CheckDirs();
-			MainClass.CheckFiles();		
+			MainClass.CheckFiles();
+			
+			//Iniciamos la base de datos
+			db = new DataBase(Path.Combine(DBDir(),"longomatch.db"));			
+			
 			try {
 				MainWindow win = new MainWindow ();
 				win.Show ();			
