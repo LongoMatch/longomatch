@@ -43,14 +43,18 @@ namespace LongoMatch.DB
 		
 		private Version dbVersion;
 		
-		public DataBase()
+		private const int MAYOR=0;
+		
+		private const int MINOR=1;
+		
+		public DataBase(string file)
 		{
-			file = Path.Combine (MainClass.DBDir(), "db.yap");
+			this.file = file;
 			if (!System.IO.File.Exists(file)){
 				// Create new DB and add version
 				db = Db4oFactory.OpenFile(file);
 				try{					
-					dbVersion=Assembly.GetExecutingAssembly().GetName().Version;
+					dbVersion= new Version(MAYOR,MINOR);
 					db.Set(dbVersion);
 				}
 				finally{
@@ -64,38 +68,25 @@ namespace LongoMatch.DB
 					IQuery query = db.Query();
 					query.Constrain(typeof(Version));
 					IObjectSet result = query.Execute();
-					if (result.Count == 1)
-						dbVersion = (Version)result.Next();
-					//FIXME: Convert old DB
+					if (result.HasNext()){
+						dbVersion = (Version)result.Next();						
+					}					
 					else{
-						//Convert DB
+						dbVersion = new Version (0,0);
 					}
 				}				
 				finally
 				{
 					db.Close();
+					
 				}
 			}
 			locker = new object();
 		}
 		
-		
-		// Singleton to avoid various instance of DB opened at once
-		public static DataBase Instance
-		{
-			get
-			{
-				return Nested.instance;
-			}
+		public Version Version{
+			get{return dbVersion;}
 		}
-		
-		class Nested
-		{
-			static Nested(){
-			}
-			internal static readonly DataBase instance = new DataBase();
-		}
-		
 		
 		public ArrayList GetAllDB(){			
 			lock(this.locker){

@@ -81,5 +81,11 @@ namespace LongoMatch.DB
 			stream.Close();
 			return obj;
 		}
+		
+		public static TeamTemplate DefautlTemplate(int playersCount){
+			TeamTemplate defaultTemplate = new TeamTemplate();
+			defaultTemplate.CreateDefaultTemplate(playersCount);
+			return defaultTemplate;
+		}
 	}
 }
