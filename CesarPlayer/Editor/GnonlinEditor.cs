@@ -39,11 +39,9 @@ namespace LongoMatch.Video.Editor
 		
 		private int height;
 		private int width;
-		private string outputFile;
 		private string tempDir;
 		
 		private int segmentCoded;
-		private bool readyToMerge;
 		private Thread thread;
 		
 		private VideoCodec vcodec; //Used to handle theora files
@@ -112,9 +110,7 @@ namespace LongoMatch.Video.Editor
 		}				
 				
 		public string OutputFile{
-			set{ 
-				outputFile = value;
-				merger.OutputFile = value;}
+			set{merger.OutputFile = value;}
 		}
 		
 		public string TempDir{
@@ -169,7 +165,6 @@ namespace LongoMatch.Video.Editor
 		private void SplitSegments(){
 			int i = 1;
 			string tempFile;
-			string error;
 			
 			segmentsTempFiles.Clear();
 			foreach (VideoSegment segment in segmentsList){					
