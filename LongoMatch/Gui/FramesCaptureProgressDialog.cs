@@ -32,16 +32,14 @@ namespace LongoMatch.Gui.Dialog
 	public partial class FramesCaptureProgressDialog : Gtk.Dialog
 	{
 		private FramesSeriesCapturer capturer;
-		private FramesProgressHandler progressHandler;
 		
 		public FramesCaptureProgressDialog(FramesSeriesCapturer capturer)
 		{
 			this.Build();
 			this.Deletable = false;
 			this.capturer = capturer;
-			progressHandler = new FramesProgressHandler(Update);
-			capturer.Progress += progressHandler;			
-			capturer.Start();			
+			capturer.Progress += new FramesProgressHandler(Update);			
+			capturer.Start();	
 		}				
 		
 		protected virtual void Update (int actual, int total){

@@ -263,21 +263,18 @@ namespace LongoMatch
 			string seriesName;
 			string outDir;
 			
-			// We need to close the actual segment to seek freely along the stream
-			player.CloseActualSegment();
-			capturer = (IFramesCapturer)(player.Player);			
+			player.Pause();
 			
 			sd= new SnapshotsDialog();
 			sd.TransientFor= (Gtk.Window) treewidget.Toplevel;
 			sd.Play = tNode.Name;
 			
 			if (sd.Run() == (int)ResponseType.Ok){
-				sd.Destroy();
-				
+				sd.Destroy();				
 				interval = sd.Interval;
 				seriesName = sd.SeriesName;			
 				outDir = System.IO.Path.Combine(MainClass.SnapshotsDir(),seriesName);				
-				fsc = new FramesSeriesCapturer(capturer,openedProject.File.FilePath,tNode.Start.MSeconds,tNode.Stop.MSeconds,interval,outDir);
+				fsc = new FramesSeriesCapturer(openedProject.File.FilePath,tNode.Start.MSeconds,tNode.Stop.MSeconds,interval,outDir);
 				fcpd = new FramesCaptureProgressDialog(fsc);
 				fcpd.TransientFor=(Gtk.Window) treewidget.Toplevel;
 				fcpd.Run();
