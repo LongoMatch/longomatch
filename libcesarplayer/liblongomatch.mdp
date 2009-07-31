@@ -11,7 +11,7 @@
       <Output directory="../LongoMatch/bin/Release/" output="libcesarplayer.dll" />
       <Build debugmode="True" target="SharedLibrary" />
       <Execution runwithwarnings="True" consolepause="True" />
-      <CodeGeneration WarningLevel="All" WarningsAsErrors="False" OptimizationLevel="3" ExtraCompilerArguments="" ExtraLinkerArguments="" DefineSymbols="MONODEVELOP" ctype="CCompilationParameters" />
+      <CodeGeneration WarningLevel="Normal" WarningsAsErrors="False" OptimizationLevel="3" ExtraCompilerArguments="" ExtraLinkerArguments="" DefineSymbols="MONODEVELOP" ctype="CCompilationParameters" />
     </Configuration>
   </Configurations>
   <Contents>
@@ -28,6 +28,8 @@
     <File name="src/gst-video-capturer.h" subtype="Code" buildaction="Nothing" />
     <File name="src/gst-video-splitter.c" subtype="Code" buildaction="Compile" />
     <File name="src/gst-video-splitter.h" subtype="Code" buildaction="Nothing" />
+    <File name="src/gst-smart-video-scaler.c" subtype="Code" buildaction="Compile" />
+    <File name="src/gst-smart-video-scaler.h" subtype="Code" buildaction="Nothing" />
   </Contents>
   <compiler ctype="GccCompiler" />
   <Packages>
