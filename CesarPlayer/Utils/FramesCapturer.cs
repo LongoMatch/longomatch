@@ -43,9 +43,11 @@ namespace LongoMatch.Video.Utils
 		
 		public event FramesProgressHandler Progress;
 		
-		public FramesSeriesCapturer(IFramesCapturer capturer,string videoFile,long start, long stop, uint interval, string outputDir)
+		public FramesSeriesCapturer(string videoFile,long start, long stop, uint interval, string outputDir)
 		{
-			this.capturer=capturer;
+			MultimediaFactory mf= new MultimediaFactory();
+			this.capturer=mf.getFramesCapturer();
+			this.capturer.Open(videoFile);
 			this.start= start;
 			this.stop = stop;
 			this.interval = interval;
@@ -81,7 +83,7 @@ namespace LongoMatch.Video.Utils
 					frame = capturer.CurrentFrame;				
 					if (frame != null) {
 						frame.Save(System.IO.Path.Combine(outputDir,seriesName+"_" + i +".png"),"png");
-					}
+					}				
 					pos += interval;
 					i++;
 				}
