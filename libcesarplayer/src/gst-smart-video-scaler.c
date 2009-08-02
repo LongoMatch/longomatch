@@ -26,7 +26,6 @@ G_DEFINE_TYPE (GstSmartVideoScaler, gst_smart_video_scaler, GST_TYPE_BIN);
 
 struct _GstSmartVideoScalerPrivate
 {
-	GstCaps *capsin;	
 	gint widthin;
     gint heightin;
     GValue *parin;
@@ -36,11 +35,14 @@ struct _GstSmartVideoScalerPrivate
     gint widthout;
     gint heightout;
     GValue *parout;
-    GValue *darout ;
+    GValue *darout;
     
     GstElement *videoscale;
     GstElement *capsfilter;
     GstElement *videobox;
+    
+    GstPad *sink_pad;
+    GstPad *src_pad;
 };
 
 static void
@@ -65,8 +67,6 @@ gst_smart_video_scaler_init (GstSmartVideoScaler *object)
     g_value_init (priv->darout, GST_TYPE_FRACTION);
     gst_value_set_fraction(priv->darout,1,1);
     
-    priv->capsin = NULL;
-    priv->capsout = NULL;
     priv->widthin = -1;
     priv->widthout= -1;
     priv->heightin = -1;
@@ -76,10 +76,15 @@ gst_smart_video_scaler_init (GstSmartVideoScaler *object)
 static void
 gst_smart_video_scaler_finalize (GObject *object)
 {
-	GstSmartVideoScaler *gsvs = (GstSmartVideoScaler *) object;
+	GstSmartVideoScaler *gsvs = (GstSmartVideoScaler *) object;	
 	
-	gst_caps_unref(gsvs->priv->capsin);
-	gst_caps_unref(gsvs->priv->capsout);
+  	if (gsvs != NULL) {
+    	gst_element_set_state (GST_ELEMENT(gsvs), GST_STATE_NULL);
+    	gst_object_unref (gsvs );
+    	gsvs->priv->videoscale = NULL;
+    	gsvs->priv->videobox = NULL;
+    	gsvs->priv->capsfilter = NULL;
+  	}
 	
 	g_free(gsvs->priv->parin);
 	g_free(gsvs->priv->parout);
@@ -110,7 +115,6 @@ gsvs_compute_and_set_values (GstSmartVideoScaler *gsvs)
 	GstCaps *caps;
 	
 	/*Calculate the new values to set on capsfilter and videobox.*/
-	 //g_print ("%d, %d, %d, %d", gsvs->priv->widthin, gsvs->priv->heightin, gsvs->priv->widthout, gsvs->priv->heightout);
 	if (gsvs->priv->widthin == -1 || gsvs->priv->heightin == -1 || gsvs->priv->widthout == -1 || gsvs->priv->heightout == -1){
 		/* FIXME : should we reset videobox/capsfilter properties here ?*/
       	GST_ERROR("We don't have input and output caps, we can't calculate videobox values");
@@ -225,10 +229,15 @@ gsvs_sink_set_caps (GstPad *pad, GstCaps *caps)
 	GstSmartVideoScaler *gsvs = GST_SMART_VIDEO_SCALER (gst_element_get_parent(gst_pad_get_parent (pad)));
 	GstPad *videoscale_pad=NULL;
 	
+	videoscale_pad = gst_element_get_static_pad(GST_ELEMENT(gsvs),"sink");
+	
+	if (!gst_pad_set_caps(videoscale_pad, caps))
+		return FALSE;	
+	
 	gsvs_get_value_from_caps(caps, FALSE, &gsvs->priv->widthin, &gsvs->priv->heightin, &gsvs->priv->parin, &gsvs->priv->darin);
-	gsvs_compute_and_set_values(gsvs);
-	videoscale_pad = gst_element_get_static_pad(gsvs->priv->videoscale,"sink");
-	return gst_pad_set_caps(videoscale_pad, caps);
+	gsvs_compute_and_set_values(gsvs);	
+	
+	return TRUE;
 }
 
 void
@@ -237,6 +246,7 @@ gst_smart_video_scaler_set_caps(GstSmartVideoScaler *gsvs, GstCaps *caps)
 	g_return_if_fail(GST_IS_SMART_VIDEO_SCALER(gsvs));		
 	
 	gsvs_get_value_from_caps(caps, FALSE, &gsvs->priv->widthout, &gsvs->priv->heightout, &gsvs->priv->parout, &gsvs->priv->darout);
+	
 }
 
 GstSmartVideoScaler* 
