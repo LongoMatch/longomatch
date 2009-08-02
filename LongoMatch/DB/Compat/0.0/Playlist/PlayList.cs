@@ -26,7 +26,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 using Gtk;
 using LongoMatch.TimeNodes;
-using Mono.Unix;
+
 namespace LongoMatch.Playlist
 {
 	
@@ -38,13 +38,11 @@ namespace LongoMatch.Playlist
 		private static XmlSerializer ser; 
 		private string filename = null;
 		private int indexSelection = 0;
-		private Version version;
 		
-		#region Constructors
+		
 		public PlayList(){
 			ser = new XmlSerializer(typeof(List<PlayListTimeNode>),new Type[] {typeof(PlayListTimeNode)});
 			list = new List<PlayListTimeNode>();
-			Version = new Version(1,1);
 		}
 		
 		public PlayList(string file)
@@ -59,33 +57,19 @@ namespace LongoMatch.Playlist
 			else
 				this.Load(file);			
 		}
-		#endregion
-		
-		#region Properties
 		
 		public int Count {
 			get{return this.list.Count;}
 		}
 		
-		public string File{
-			get {return this.filename;}
-		}
-		#endregion
-		
-		#region Public methods
-		
-		public void Load(string file){			
+		public void Load(string file){
+			
 			using(FileStream strm = new FileStream(file, FileMode.Open, FileAccess.Read)) 
 			{
-				try {
-					list = ser.Deserialize(strm) as List<PlayListTimeNode>; 
-				}
-				catch {
-					throw new Exception(Catalog.GetString("The file you are trying to load is not a valid playlist"));
-				}
+				list = ser.Deserialize(strm) as List<PlayListTimeNode>; 
 			}		
 			foreach (PlayListTimeNode plNode in list){
-				plNode.Valid = System.IO.File.Exists(plNode.MediaFile.FilePath);
+				plNode.Valid = System.IO.File.Exists(plNode.FileName);
 			}
 			this.filename = file;
 		}
@@ -146,7 +130,12 @@ namespace LongoMatch.Playlist
 		public bool HasPrev(){
 			return ! this.indexSelection.Equals(0);
 		}
-				
+		
+		
+		public string File{
+			get {return this.filename;}
+		}
+		
 		public ListStore GetModel (){
 			Gtk.ListStore listStore = new ListStore (typeof (PlayListTimeNode));
 			foreach (PlayListTimeNode plNode in list){
@@ -163,7 +152,8 @@ namespace LongoMatch.Playlist
 			while (listStore.IterIsValid(iter)){
 				this.list.Add(listStore.GetValue (iter, 0) as PlayListTimeNode);
 				listStore.IterNext(ref iter);
-			}			
+			}
+			
 		}
 		
 		public IEnumerator GetEnumerator(){
@@ -172,8 +162,10 @@ namespace LongoMatch.Playlist
 		
 		public IPlayList Copy(){
 			return (IPlayList)(this.MemberwiseClone());
-		}		
+		}
+	
+	
 		
-		#endregion
+		
 	}
 }
