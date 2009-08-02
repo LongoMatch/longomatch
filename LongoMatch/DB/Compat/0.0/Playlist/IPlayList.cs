@@ -23,7 +23,7 @@ using System.Collections;
 using Gtk;
 using LongoMatch.TimeNodes;
 
-namespace LongoMatch.Playlist{
+namespace LongoMatch.DB.Compat.v00{
 		
 	public interface IPlayList:IEnumerable
 	{
