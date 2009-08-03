@@ -85,6 +85,8 @@ struct GstVideoSplitterPrivate
 	GstElement 	*videorate;	
 	GstElement  *textoverlay;
 	GstElement  *videoscale;
+	GstElement  *capsfilter;
+	GstElement  *videobox;
 	GstElement 	*queue;
     GstElement 	*video_encoder;
 	GstElement 	*audio_encoder;
@@ -423,17 +425,15 @@ gvs_apply_new_caps (GstVideoSplitter *gvs)
 	GstPad *filter_sink_pad;
 	GstCaps *caps;
 	
-	g_return_if_fail (GST_IS_VIDEO_SPLITTER(gvs));
-	
+	g_return_if_fail (GST_IS_VIDEO_SPLITTER(gvs));	
 	
 	caps = gst_caps_new_simple ("video/x-raw-yuv",
       "width", G_TYPE_INT, gvs->priv->width,
       "height", G_TYPE_INT, gvs->priv->height,
       "framerate",GST_TYPE_FRACTION,25,1,
        NULL);
-  	gst_smart_video_scaler_set_caps(GST_SMART_VIDEO_SCALER(gvs->priv->videoscale),caps);   
+  	g_object_set (G_OBJECT(gvs->priv->capsfilter), "caps",caps,NULL);  
  	gst_caps_unref(caps);
-
 }
 
 GQuark
@@ -557,28 +557,16 @@ gvs_query_timeout (GstVideoSplitter * gvs)
     gchar *title;
     gint64 stop_time = gvs->priv->stop_times[gvs->priv->active_segment];    
 	
-	if (gst_element_query_position (gvs->priv->main_pipeline, &fmt, &pos)) {
+	if (gst_element_query_position (gvs->priv->video_encoder, &fmt, &pos)) {
     	if (pos != -1 && fmt == GST_FORMAT_TIME) {
       		g_signal_emit 	(gvs, 
       						gvs_signals[SIGNAL_PERCENT_COMPLETED], 
       						0, 
       						(float) pos / (float)gvs->priv->duration);
-      		      		
-      		if (stop_time -pos >= 0 && stop_time - pos < TIMEOUT*GST_MSECOND){
-	      		g_print ("Stop Time: %lld\n",stop_time);
-      			g_print ("Position : %lld\n", pos);
-      			g_print ("Diff:%lld\n",stop_time-pos);
-      			g_print ("Timeout:%lld\n",TIMEOUT*GST_MSECOND);
+      		if ( stop_time - pos <= 0){
 	      		gvs->priv->active_segment++;
 	      		title = (gchar*) g_list_nth_data (gvs->priv->titles, gvs->priv->active_segment); 
 	      		g_object_set (G_OBJECT(gvs->priv->textoverlay), "text",title,NULL);
-      		}			
-      		else if ( stop_time - pos < TIMEOUT*GST_MSECOND){
-	      		g_print ("Stop Time1: %lld\n",stop_time);
-      			g_print ("Position1 : %lld\n", pos);
-      			g_print ("Diff1:%lld\n",stop_time-pos);
-      			g_print ("Timeout1:%lld\n",TIMEOUT*GST_MSECOND);
-	      		g_object_set (G_OBJECT(gvs->priv->textoverlay), "text","",NULL);
       		}      		
     	}    	   	
   	} 
@@ -866,8 +854,10 @@ gst_video_splitter_new (GError ** err)
   	}  	  	
     gvs->priv->identity = gst_element_factory_make ("identity", "identity");  
     gvs->priv->ffmpegcolorspace = gst_element_factory_make ("ffmpegcolorspace", "ffmpegcolorspace");   
-    gvs->priv->videorate = gst_element_factory_make ("videorate", "videorate");    
-    gvs->priv->videoscale =GST_ELEMENT(gst_smart_video_scaler_new());     
+    gvs->priv->videorate = gst_element_factory_make ("videorate", "videorate");
+    gvs->priv->videoscale = gst_element_factory_make ("videoscale", "videoscale"); 
+    gvs->priv->capsfilter = gst_element_factory_make ("capsfilter", "capsfilter");     
+	gvs->priv->videobox = gst_element_factory_make ("videobox", "videobox");    
     gvs->priv->textoverlay = gst_element_factory_make ("textoverlay","textoverlay");
     gvs->priv->queue =  gst_element_factory_make ("queue", "queue");     
     gvs->priv->video_encoder= gst_element_factory_make (DEFAULT_VIDEO_ENCODER, "theoraenc");
@@ -892,6 +882,8 @@ gst_video_splitter_new (GError ** err)
 		gvs->priv->ffmpegcolorspace,
 		gvs->priv->videorate,
 		gvs->priv->videoscale,
+		gvs->priv->capsfilter,
+		gvs->priv->videobox,
 		gvs->priv->textoverlay,		
 		gvs->priv->queue,
 		gvs->priv->video_encoder,
@@ -903,6 +895,8 @@ gst_video_splitter_new (GError ** err)
 		gvs->priv->ffmpegcolorspace,
 		gvs->priv->videorate,		
 		gvs->priv->videoscale,
+		gvs->priv->videoscale,
+		gvs->priv->capsfilter,
 		gvs->priv->textoverlay,
 		gvs->priv->queue,
 		gvs->priv->video_encoder,
