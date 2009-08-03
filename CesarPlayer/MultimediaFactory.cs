@@ -90,7 +90,7 @@ namespace LongoMatch.Video
 			switch (oS.Platform) { 
 				
 			 case PlatformID.Unix:
-				return new GnonlinEditor();
+				return new GstVideoSplitter();
 				
 			case PlatformID.Win32NT:
 				return new GnonlinEditor();	

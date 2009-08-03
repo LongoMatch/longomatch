@@ -517,9 +517,10 @@ gvs_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 				g_source_remove (gvs->priv->update_id);
 				gvs->priv->update_id = 0;
 	  		}
-	  		gst_element_set_state (gvs->priv->main_pipeline, GST_STATE_READY);
+	  		gst_element_set_state (gvs->priv->main_pipeline, GST_STATE_NULL);
 	  		g_signal_emit (gvs, gvs_signals[SIGNAL_PERCENT_COMPLETED],0,(gfloat)1);
 	  		gvs->priv->active_segment = 0;
+	  		g_object_set (G_OBJECT(gvs->priv->file_sink), "location","",NULL);
       		break;
     	default:
       		GST_LOG ("Unhandled message: %" GST_PTR_FORMAT, message);
@@ -557,23 +558,27 @@ gvs_query_timeout (GstVideoSplitter * gvs)
     gchar *title;
     gint64 stop_time = gvs->priv->stop_times[gvs->priv->active_segment];    
 	
-	if (gst_element_query_position (gvs->priv->video_encoder, &fmt, &pos)) {
+	if (gst_element_query_position (gvs->priv->main_pipeline, &fmt, &pos)) {
     	if (pos != -1 && fmt == GST_FORMAT_TIME) {
       		g_signal_emit 	(gvs, 
       						gvs_signals[SIGNAL_PERCENT_COMPLETED], 
       						0, 
-      						(float) pos / (float)gvs->priv->duration);
-      		if ( stop_time - pos <= 0){
-	      		gvs->priv->active_segment++;
-	      		title = (gchar*) g_list_nth_data (gvs->priv->titles, gvs->priv->active_segment); 
-	      		g_object_set (G_OBJECT(gvs->priv->textoverlay), "text",title,NULL);
-      		}      		
+      						(float) pos / (float)gvs->priv->duration);      		    		
     	}    	   	
   	} 
   	else {
     	GST_INFO ("could not get position");
   	}
+  	
+  	if (gst_element_query_position (gvs->priv->video_encoder, &fmt, &pos)) {
+	  	if ( stop_time - pos <= 0){
+	      		gvs->priv->active_segment++;
+	      		title = (gchar*) g_list_nth_data (gvs->priv->titles, gvs->priv->active_segment); 
+	      		g_object_set (G_OBJECT(gvs->priv->textoverlay), "text",title,NULL);
+      	}  
+  	}
   	  
+  	
 	return TRUE;
 }
 
@@ -895,8 +900,8 @@ gst_video_splitter_new (GError ** err)
 		gvs->priv->ffmpegcolorspace,
 		gvs->priv->videorate,		
 		gvs->priv->videoscale,
-		gvs->priv->videoscale,
 		gvs->priv->capsfilter,
+		gvs->priv->videobox,
 		gvs->priv->textoverlay,
 		gvs->priv->queue,
 		gvs->priv->video_encoder,
