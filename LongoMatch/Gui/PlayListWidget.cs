@@ -257,10 +257,11 @@ namespace LongoMatch.Gui.Component
 				foreach (PlayListTimeNode segment in playList){
 					if (segment.Valid)
 						videoEditor.AddSegment(segment.MediaFile.FilePath, 
-					                       	segment.Start.MSeconds, 
-					                       	segment.Duration.MSeconds, 
-					                       	segment.Rate, 
-					                       	segment.Name);
+						                       segment.Start.MSeconds, 
+						                       segment.Duration.MSeconds, 
+						                       segment.Rate, 
+						                       segment.Name,
+						                       segment.MediaFile.HasAudio);
 				}
 				try {
 					videoEditor.VideoQuality = vep.VideoQuality;
@@ -281,14 +282,14 @@ namespace LongoMatch.Gui.Component
 				}					
 			}			
 		}
-
+		
 		protected virtual void OnClosebuttonClicked (object sender, System.EventArgs e)
 		{
 			videoEditor.Cancel();
 			closebutton.Hide();
 			newvideobutton.Show();
 		}
-
+		
 		protected virtual void OnProgress (float progress){
 			if (Progress!= null)
 				Progress(progress);
@@ -307,6 +308,6 @@ namespace LongoMatch.Gui.Component
 		~PlayListWidget(){
 			videoEditor.Cancel();		
 		}
-
+		
 	}
 }
