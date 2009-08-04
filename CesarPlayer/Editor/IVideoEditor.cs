@@ -70,7 +70,7 @@ namespace LongoMatch.Video.Editor
 		}
 		
 			
-		void AddSegment (string filePath, long start, long duration, double rate, string title) ;
+		void AddSegment (string filePath, long start, long duration, double rate, string title, bool hasAudio) ;
 		
 		void ClearList();
 		

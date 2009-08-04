@@ -62,7 +62,7 @@ namespace LongoMatch.Video.Editor
 			set;
 		}
 		
-		void SetSegment(string filePath, long start, long duration, double rate, string title);
+		void SetSegment(string filePath, long start, long duration, double rate, string title, bool hasAudio);
 		
 		AudioCodec AudioCodec{
 			set;

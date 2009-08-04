@@ -29,14 +29,16 @@ namespace LongoMatch.Video.Editor
 		private long duration;
 		private double rate;
 		private string title;
+		private bool hasAudio;
 		
-		public VideoSegment(string filePath, long start, long duration, double rate, string title)
+		public VideoSegment(string filePath, long start, long duration, double rate, string title,bool hasAudio)
 		{
 			this.filePath = filePath;
 			this.start = start;
 			this.duration = duration;
 			this.rate = rate;
 			this.title = title;
+			this.hasAudio= hasAudio;
 		}
 		
 		public string FilePath{
@@ -57,6 +59,10 @@ namespace LongoMatch.Video.Editor
 		
 		public double Rate{
 			get{ return rate;}
+		}
+		
+		public bool HasAudio{
+			get{return hasAudio;}
 		}
 		
 		

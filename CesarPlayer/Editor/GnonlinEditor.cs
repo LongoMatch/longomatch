@@ -125,9 +125,9 @@ namespace LongoMatch.Video.Editor
 			set{;}
 		}		
 			
-		public void AddSegment (string filePath, long start, long duration, double rate, string title)
+		public void AddSegment (string filePath, long start, long duration, double rate, string title, bool hasAudio)
 		{
-			segmentsList.Add(new VideoSegment(filePath, start, duration, rate, title));
+			segmentsList.Add(new VideoSegment(filePath, start, duration, rate, title, hasAudio));
 		}
 		
 		public void ClearList(){
@@ -178,7 +178,7 @@ namespace LongoMatch.Video.Editor
 				    splitter.VideoMuxer=VideoMuxer.OGG;
 					
 				splitter.OutputFile= tempFile;
-				splitter.SetSegment(segment.FilePath, segment.Start, segment.Duration, segment.Rate, segment.Title);
+				splitter.SetSegment(segment.FilePath, segment.Start, segment.Duration, segment.Rate, segment.Title, segment.HasAudio);
 				splitter.Start();
 				i++;
 				while (segmentCoded != -1);

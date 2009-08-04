@@ -28,7 +28,7 @@ namespace LongoMatch.Video.Editor {
 	public class GstVideoSplitter : GLib.Object, IVideoEditor, IVideoSplitter {
 
 		[DllImport("libcesarplayer.dll")]
-		static extern unsafe IntPtr gst_video_splitter_new(out IntPtr err);
+		static extern unsafe IntPtr gst_video_editor_new(out IntPtr err);
 
 		public event LongoMatch.Video.Handlers.ProgressHandler Progress;
 		
@@ -38,7 +38,7 @@ namespace LongoMatch.Video.Editor {
 				throw new InvalidOperationException ("Can't override this constructor.");
 			}
 			IntPtr error = IntPtr.Zero;
-			Raw = gst_video_splitter_new(out error);
+			Raw = gst_video_editor_new(out error);
 			if (error != IntPtr.Zero) throw new GLib.GException (error);
 			PercentCompleted += delegate(object o, PercentCompletedArgs args) {
 				if (Progress!= null)
@@ -263,11 +263,11 @@ namespace LongoMatch.Video.Editor {
 		#region Public Methods
 
 		[DllImport("libcesarplayer.dll")]
-		static extern IntPtr gst_video_splitter_get_type();
+		static extern IntPtr gst_video_editor_get_type();
 
 		public static new GLib.GType GType { 
 			get {
-				IntPtr raw_ret = gst_video_splitter_get_type();
+				IntPtr raw_ret = gst_video_editor_get_type();
 				GLib.GType ret = new GLib.GType(raw_ret);
 				return ret;
 			}
@@ -276,40 +276,40 @@ namespace LongoMatch.Video.Editor {
 		
 
 		[DllImport("libcesarplayer.dll")]
-		static extern void gst_video_splitter_clear_segments_list(IntPtr raw);
+		static extern void gst_video_editor_clear_segments_list(IntPtr raw);
 
 		public void ClearList() {
-			gst_video_splitter_clear_segments_list(Handle);
+			gst_video_editor_clear_segments_list(Handle);
 		}
 		
 		[DllImport("libcesarplayer.dll")]
-		static extern void gst_video_splitter_add_segment(IntPtr raw, string file_path, long start, long duration, double rate, IntPtr title);
+		static extern void gst_video_editor_add_segment(IntPtr raw, string file_path, long start, long duration, double rate, IntPtr title, bool hasAudio);
 
-		public void AddSegment(string filePath, long start, long duration, double rate, string title) {
-			gst_video_splitter_add_segment(Handle, filePath, start, duration, rate, GLib.Marshaller.StringToPtrGStrdup(title));
+		public void AddSegment(string filePath, long start, long duration, double rate, string title, bool hasAudio) {
+			gst_video_editor_add_segment(Handle, filePath, start, duration, rate, GLib.Marshaller.StringToPtrGStrdup(title), hasAudio);
 		}
 		
 		
 		[DllImport("libcesarplayer.dll")]
-		static extern void gst_video_splitter_start(IntPtr raw);
+		static extern void gst_video_editor_start(IntPtr raw);
 
 		public void Start() {
-			gst_video_splitter_start(Handle);
+			gst_video_editor_start(Handle);
 		}
 		
 		[DllImport("libcesarplayer.dll")]
-		static extern void gst_video_splitter_cancel(IntPtr raw);
+		static extern void gst_video_editor_cancel(IntPtr raw);
 
 		public void Cancel() {
-			gst_video_splitter_cancel(Handle);
+			gst_video_editor_cancel(Handle);
 		}
 		
 		[DllImport("libcesarplayer.dll")]
-		static extern void gst_video_splitter_set_video_encoder(IntPtr raw, out IntPtr error_ptr, int type);
+		static extern void gst_video_editor_set_video_encoder(IntPtr raw, out IntPtr error_ptr, int type);
 
 		public void SetVideoEncoder(out string error, VideoCodec codec) {
 			IntPtr error_ptr = IntPtr.Zero;
-			gst_video_splitter_set_video_encoder(Handle,out error_ptr,(int)codec);
+			gst_video_editor_set_video_encoder(Handle,out error_ptr,(int)codec);
 			if (error_ptr != IntPtr.Zero)
 				error = GLib.Marshaller.Utf8PtrToString(error_ptr);
 			else
@@ -317,11 +317,11 @@ namespace LongoMatch.Video.Editor {
 		}
 		
 		[DllImport("libcesarplayer.dll")]
-		static extern void gst_video_splitter_set_audio_encoder(IntPtr raw, out IntPtr error_ptr, int type);
+		static extern void gst_video_editor_set_audio_encoder(IntPtr raw, out IntPtr error_ptr, int type);
 
 		public void SetAudioEncoder(out string error, AudioCodec codec) {
 			IntPtr error_ptr = IntPtr.Zero;
-			gst_video_splitter_set_audio_encoder(Handle,out error_ptr,(int)codec);
+			gst_video_editor_set_audio_encoder(Handle,out error_ptr,(int)codec);
 			if (error_ptr != IntPtr.Zero)
 				error = GLib.Marshaller.Utf8PtrToString(error_ptr);
 			else
@@ -329,11 +329,11 @@ namespace LongoMatch.Video.Editor {
 		}
 		
 		[DllImport("libcesarplayer.dll")]
-		static extern void gst_video_splitter_set_video_muxer(IntPtr raw, out IntPtr error_ptr, int type);
+		static extern void gst_video_editor_set_video_muxer(IntPtr raw, out IntPtr error_ptr, int type);
 
 		public void SetVideoMuxer(out string error, VideoMuxer muxer) {
 			IntPtr error_ptr = IntPtr.Zero;
-			gst_video_splitter_set_video_muxer(Handle,out error_ptr,(int)muxer);
+			gst_video_editor_set_video_muxer(Handle,out error_ptr,(int)muxer);
 			if (error_ptr != IntPtr.Zero)
 				error = GLib.Marshaller.Utf8PtrToString(error_ptr);
 			else
@@ -341,18 +341,18 @@ namespace LongoMatch.Video.Editor {
 		}
 
 		[DllImport("libcesarplayer.dll")]
-		static extern void gst_video_splitter_init_backend(out int argc, IntPtr argv);
+		static extern void gst_video_editor_init_backend(out int argc, IntPtr argv);
 
 		public static int InitBackend(string argv) {
 			int argc;
-			gst_video_splitter_init_backend(out argc, GLib.Marshaller.StringToPtrGStrdup(argv));
+			gst_video_editor_init_backend(out argc, GLib.Marshaller.StringToPtrGStrdup(argv));
 			return argc;
 		}
 		
 		
-		public void SetSegment (string filePath, long start, long duration, double rate, string title){
+		public void SetSegment (string filePath, long start, long duration, double rate, string title, bool hasAudio){
 			ClearList();
-			AddSegment(filePath, start, duration, rate, title);
+			AddSegment(filePath, start, duration, rate, title,hasAudio);
 		}
 		
 		public VideoQuality VideoQuality{
