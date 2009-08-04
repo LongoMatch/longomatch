@@ -1,4 +1,4 @@
- /*GStreamer Video Splitter Based On GNonlin
+ /*GStreamer Video Editor Based On GNonlin
  * Copyright (C)  Andoni Morales Alastruey 2009 <ylatuya@gmail.com>
  *
  * This program is free software.
@@ -25,10 +25,7 @@
 
 #include <gst/gst.h>
 
-#include <glib/gprintf.h>
-
-
-#include "gst-video-splitter.h"
+#include "gst-video-editor.h"
 #include "gst-smart-video-scaler.h"
 
 #define DEFAULT_VIDEO_ENCODER "theoraenc"
@@ -60,7 +57,7 @@ enum
 	PROP_OUTPUT_FILE
 };
 
-struct GstVideoSplitterPrivate
+struct GstVideoEditorPrivate
 {
 	gint 		segments;
 	gint		active_segment;
@@ -103,15 +100,15 @@ struct GstVideoSplitterPrivate
 
 };
 
-static int gvs_signals[LAST_SIGNAL] = { 0 };
-static void gvs_error_msg (GstVideoSplitter * gvs, GstMessage * msg);
+static int gve_signals[LAST_SIGNAL] = { 0 };
+static void gve_error_msg (GstVideoEditor * gve, GstMessage * msg);
 static void new_decoded_pad_cb (GstElement* object,GstPad* arg0,gpointer user_data);
-static void gvs_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data);
-static void gst_video_splitter_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec);
-static void gst_video_splitter_set_property (GObject * object, guint property_id,const GValue * value, GParamSpec * pspec);
-static gboolean  gvs_query_timeout (GstVideoSplitter * gvs);
-static void gvs_apply_new_caps (GstVideoSplitter *gvs);
-G_DEFINE_TYPE (GstVideoSplitter, gst_video_splitter, G_TYPE_OBJECT);
+static void gve_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data);
+static void gst_video_editor_get_property (GObject * object, guint property_id, GValue * value, GParamSpec * pspec);
+static void gst_video_editor_set_property (GObject * object, guint property_id,const GValue * value, GParamSpec * pspec);
+static gboolean  gve_query_timeout (GstVideoEditor * gve);
+static void gve_apply_new_caps (GstVideoEditor *gve);
+G_DEFINE_TYPE (GstVideoEditor, gst_video_editor, G_TYPE_OBJECT);
 
 
 
@@ -122,10 +119,10 @@ G_DEFINE_TYPE (GstVideoSplitter, gst_video_splitter, G_TYPE_OBJECT);
 /* =========================================== */
 
 static void
-gst_video_splitter_init (GstVideoSplitter *object)
+gst_video_editor_init (GstVideoEditor *object)
 {
-	GstVideoSplitterPrivate *priv;
-  	object->priv = priv = G_TYPE_INSTANCE_GET_PRIVATE (object, GST_TYPE_VIDEO_SPLITTER, GstVideoSplitterPrivate);
+	GstVideoEditorPrivate *priv;
+  	object->priv = priv = G_TYPE_INSTANCE_GET_PRIVATE (object, GST_TYPE_VIDEO_EDITOR, GstVideoEditorPrivate);
 		
 	priv->output_file = "new_video.avi";
 	
@@ -147,49 +144,49 @@ gst_video_splitter_init (GstVideoSplitter *object)
 }
 
 static void
-gst_video_splitter_finalize (GObject *object)
+gst_video_editor_finalize (GObject *object)
 {
-  	GstVideoSplitter *gvs = (GstVideoSplitter *) object;
+  	GstVideoEditor *gve = (GstVideoEditor *) object;
   
-  	if (gvs->priv->bus) {
+  	if (gve->priv->bus) {
     	/* make bus drop all messages to make sure none of our callbacks is ever
      	 called again (main loop might be run again to display error dialog) */
-    	gst_bus_set_flushing (gvs->priv->bus, TRUE);
+    	gst_bus_set_flushing (gve->priv->bus, TRUE);
 
-    if (gvs->priv->sig_bus_async)
-		g_signal_handler_disconnect (gvs->priv->bus,gvs->priv->sig_bus_async);
-		gst_object_unref (gvs->priv->bus);
-		gvs->priv->bus = NULL;
+    if (gve->priv->sig_bus_async)
+		g_signal_handler_disconnect (gve->priv->bus,gve->priv->sig_bus_async);
+		gst_object_unref (gve->priv->bus);
+		gve->priv->bus = NULL;
 	}  	
   
-  	if (gvs->priv->main_pipeline != NULL && GST_IS_ELEMENT (gvs->priv->main_pipeline )) {
-    	gst_element_set_state (gvs->priv->main_pipeline , GST_STATE_NULL);
-    	gst_object_unref (gvs->priv->main_pipeline);
-    	gvs->priv->main_pipeline = NULL;
+  	if (gve->priv->main_pipeline != NULL && GST_IS_ELEMENT (gve->priv->main_pipeline )) {
+    	gst_element_set_state (gve->priv->main_pipeline , GST_STATE_NULL);
+    	gst_object_unref (gve->priv->main_pipeline);
+    	gve->priv->main_pipeline = NULL;
   	}
   	
-  	g_free (gvs->priv->output_file);
-  	g_list_free(gvs->priv->gnl_filesources);
-  	g_free(gvs->priv->stop_times);
-  	g_list_free(gvs->priv->titles);
+  	g_free (gve->priv->output_file);
+  	g_list_free(gve->priv->gnl_filesources);
+  	g_free(gve->priv->stop_times);
+  	g_list_free(gve->priv->titles);
   	 	
-	G_OBJECT_CLASS (gst_video_splitter_parent_class)->finalize (object);
+	G_OBJECT_CLASS (gst_video_editor_parent_class)->finalize (object);
 }
 
 
 static void
-gst_video_splitter_class_init (GstVideoSplitterClass *klass)
+gst_video_editor_class_init (GstVideoEditorClass *klass)
 {
 	GObjectClass* object_class = G_OBJECT_CLASS (klass);
 
-	object_class->finalize = gst_video_splitter_finalize;
+	object_class->finalize = gst_video_editor_finalize;
 
-	g_type_class_add_private (object_class, sizeof (GstVideoSplitterPrivate));
+	g_type_class_add_private (object_class, sizeof (GstVideoEditorPrivate));
 
 	 /* GObject */
-  	object_class->set_property = gst_video_splitter_set_property;
- 	object_class->get_property = gst_video_splitter_get_property;
- 	object_class->finalize = gst_video_splitter_finalize;
+  	object_class->set_property = gst_video_editor_set_property;
+ 	object_class->get_property = gst_video_editor_get_property;
+ 	object_class->finalize = gst_video_editor_finalize;
 
  	/* Properties */
   	
@@ -227,20 +224,20 @@ gst_video_splitter_class_init (GstVideoSplitterClass *klass)
                                                          G_PARAM_READWRITE));
  	
   	/* Signals */
-  	gvs_signals[SIGNAL_ERROR] =
+  	gve_signals[SIGNAL_ERROR] =
     	g_signal_new ("error",
                   	G_TYPE_FROM_CLASS (object_class),
                   	G_SIGNAL_RUN_LAST,
-                  	G_STRUCT_OFFSET (GstVideoSplitterClass, error),
+                  	G_STRUCT_OFFSET (GstVideoEditorClass, error),
                   	NULL, NULL,
                   	g_cclosure_marshal_VOID__STRING,
                   	G_TYPE_NONE, 1, G_TYPE_STRING);
                   
-  	gvs_signals[SIGNAL_PERCENT_COMPLETED] =
+  	gve_signals[SIGNAL_PERCENT_COMPLETED] =
     	g_signal_new ("percent_completed",
                   	G_TYPE_FROM_CLASS (object_class),
                   	G_SIGNAL_RUN_LAST,
-                  	G_STRUCT_OFFSET (GstVideoSplitterClass, percent_completed),
+                  	G_STRUCT_OFFSET (GstVideoEditorClass, percent_completed),
                   	NULL, NULL,
                   	g_cclosure_marshal_VOID__FLOAT,
                   	G_TYPE_NONE, 1, G_TYPE_FLOAT);
@@ -254,33 +251,33 @@ gst_video_splitter_class_init (GstVideoSplitterClass *klass)
 /* =========================================== */
 
 static void 
-gst_video_splitter_set_enable_audio(GstVideoSplitter *gvs,gboolean audio_enabled)
+gst_video_editor_set_enable_audio(GstVideoEditor *gve,gboolean audio_enabled)
 {
 	//TODO Not implemented
 }
 
 static void 
-gst_video_splitter_set_enable_title(GstVideoSplitter *gvs,gboolean title_enabled)
+gst_video_editor_set_enable_title(GstVideoEditor *gve,gboolean title_enabled)
 {
-	gvs->priv->title_enabled = title_enabled;	
-	g_object_set (G_OBJECT(gvs->priv->textoverlay), "silent",!gvs->priv->title_enabled,NULL);
+	gve->priv->title_enabled = title_enabled;	
+	g_object_set (G_OBJECT(gve->priv->textoverlay), "silent",!gve->priv->title_enabled,NULL);
 	
 }
 static void 
-gst_video_splitter_set_video_bit_rate (GstVideoSplitter *gvs,gint bitrate)
+gst_video_editor_set_video_bit_rate (GstVideoEditor *gve,gint bitrate)
 {
 	GstState cur_state;
 
-	gvs->priv->video_bitrate= bitrate;
-	gst_element_get_state (gvs->priv->video_encoder, &cur_state, NULL, 0);
+	gve->priv->video_bitrate= bitrate;
+	gst_element_get_state (gve->priv->video_encoder, &cur_state, NULL, 0);
     if (cur_state <= GST_STATE_READY) {
-	    g_object_set (gvs->priv->video_encoder,"bitrate",bitrate,NULL);
+	    g_object_set (gve->priv->video_encoder,"bitrate",bitrate,NULL);
     	GST_INFO ("Encoding video bitrate changed to :\n%d",bitrate);
    	}
 }
 
 static void 
-gst_video_splitter_set_audio_bit_rate (GstVideoSplitter *gvs,gint bitrate)
+gst_video_editor_set_audio_bit_rate (GstVideoEditor *gve,gint bitrate)
 {
 	//TODO Not implemented
    
@@ -288,67 +285,67 @@ gst_video_splitter_set_audio_bit_rate (GstVideoSplitter *gvs,gint bitrate)
 }
 
 static void 
-gst_video_splitter_set_width (GstVideoSplitter *gvs,gint width)
+gst_video_editor_set_width (GstVideoEditor *gve,gint width)
 {
-	gvs->priv->width = width;
-	gvs_apply_new_caps (gvs);  
+	gve->priv->width = width;
+	gve_apply_new_caps (gve);  
 }
 
 static void 
-gst_video_splitter_set_height (GstVideoSplitter *gvs,gint height)
+gst_video_editor_set_height (GstVideoEditor *gve,gint height)
 {
-	gvs->priv->height = height;
-	gvs_apply_new_caps(gvs);   
+	gve->priv->height = height;
+	gve_apply_new_caps(gve);   
 }
 
 static void 
-gst_video_splitter_set_output_file (GstVideoSplitter *gvs,const char *output_file)
+gst_video_editor_set_output_file (GstVideoEditor *gve,const char *output_file)
 {
 	GstState cur_state;
 
-	gvs->priv->output_file = g_strdup(output_file);
-	gst_element_get_state (gvs->priv->file_sink, &cur_state, NULL, 0);
+	gve->priv->output_file = g_strdup(output_file);
+	gst_element_get_state (gve->priv->file_sink, &cur_state, NULL, 0);
     if (cur_state <= GST_STATE_READY) {
-	    gst_element_set_state(gvs->priv->file_sink,GST_STATE_NULL);
-	    g_object_set (gvs->priv->file_sink,"location",gvs->priv->output_file,NULL);
-    	GST_INFO ("Ouput File changed to :\n%s",gvs->priv->output_file);
+	    gst_element_set_state(gve->priv->file_sink,GST_STATE_NULL);
+	    g_object_set (gve->priv->file_sink,"location",gve->priv->output_file,NULL);
+    	GST_INFO ("Ouput File changed to :\n%s",gve->priv->output_file);
    	}
 }
 static void
-gst_video_splitter_set_property (GObject * object, guint property_id,
+gst_video_editor_set_property (GObject * object, guint property_id,
                                  const GValue * value, GParamSpec * pspec)
 {
-	GstVideoSplitter *gvs;
+	GstVideoEditor *gve;
 
-	gvs = GST_VIDEO_SPLITTER (object);
+	gve = GST_VIDEO_EDITOR (object);
 
  	switch (property_id) {      
     	case PROP_ENABLE_AUDIO:
-    		gst_video_splitter_set_enable_audio (gvs,
+    		gst_video_editor_set_enable_audio (gve,
     		g_value_get_boolean (value));
     		break;
     	case PROP_ENABLE_TITLE:
-    		gst_video_splitter_set_enable_title (gvs,
+    		gst_video_editor_set_enable_title (gve,
     		g_value_get_boolean (value));
     		break;
     	case PROP_VIDEO_BITRATE:
-      		gst_video_splitter_set_video_bit_rate (gvs,
+      		gst_video_editor_set_video_bit_rate (gve,
       		g_value_get_int (value));
       		break;
     	case PROP_AUDIO_BITRATE:
-      		gst_video_splitter_set_audio_bit_rate (gvs,
+      		gst_video_editor_set_audio_bit_rate (gve,
       		g_value_get_int (value));
       		break;
       	case PROP_WIDTH:
-      		gst_video_splitter_set_width (gvs,
+      		gst_video_editor_set_width (gve,
       		g_value_get_int (value));
       		break;
     	case PROP_HEIGHT:
-      		gst_video_splitter_set_height (gvs,
+      		gst_video_editor_set_height (gve,
       		g_value_get_int (value));
       		break;
       	case PROP_OUTPUT_FILE:
-      		gst_video_splitter_set_output_file (gvs,
+      		gst_video_editor_set_output_file (gve,
       		g_value_get_string (value));
       		break;
     	default:
@@ -358,34 +355,34 @@ gst_video_splitter_set_property (GObject * object, guint property_id,
 }
 
 static void
-gst_video_splitter_get_property (GObject * object, guint property_id,
+gst_video_editor_get_property (GObject * object, guint property_id,
                                  GValue * value, GParamSpec * pspec)
 {
-  	GstVideoSplitter *gvs;
+  	GstVideoEditor *gve;
 
-  	gvs = GST_VIDEO_SPLITTER (object);
+  	gve = GST_VIDEO_EDITOR (object);
 
   	switch (property_id) {
 		case PROP_ENABLE_AUDIO:
-      		g_value_set_boolean (value,gvs->priv->audio_enabled);
+      		g_value_set_boolean (value,gve->priv->audio_enabled);
       		break;
     	case PROP_ENABLE_TITLE:
-      		g_value_set_boolean (value,gvs->priv->title_enabled);
+      		g_value_set_boolean (value,gve->priv->title_enabled);
       		break;
     	case PROP_AUDIO_BITRATE:
-      		g_value_set_int (value,gvs->priv->audio_bitrate);
+      		g_value_set_int (value,gve->priv->audio_bitrate);
       		break;
     	case PROP_VIDEO_BITRATE:
-      		g_value_set_int (value,gvs->priv->video_bitrate);
+      		g_value_set_int (value,gve->priv->video_bitrate);
       		break;
     	case PROP_WIDTH:
-      		g_value_set_int (value,gvs->priv->width);
+      		g_value_set_int (value,gve->priv->width);
       		break;
     	case PROP_HEIGHT:
-      		g_value_set_int (value,gvs->priv->height);
+      		g_value_set_int (value,gve->priv->height);
       		break;
     	case PROP_OUTPUT_FILE:
-      		g_value_set_string (value,gvs->priv->output_file);
+      		g_value_set_string (value,gve->priv->output_file);
       		break;
     	default:
       		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -402,111 +399,111 @@ gst_video_splitter_get_property (GObject * object, guint property_id,
 /* =========================================== */
 
 static void 
-gvs_rewrite_headers (GstVideoSplitter *gvs)
+gve_rewrite_headers (GstVideoEditor *gve)
 {
-	gst_element_set_state(gvs->priv->file_sink,GST_STATE_NULL);
-	gst_element_set_state(gvs->priv->file_sink,GST_STATE_READY);
+	gst_element_set_state(gve->priv->file_sink,GST_STATE_NULL);
+	gst_element_set_state(gve->priv->file_sink,GST_STATE_READY);
 
 }
 static void
-gvs_set_tick_timeout (GstVideoSplitter *gvs , guint msecs)
+gve_set_tick_timeout (GstVideoEditor *gve , guint msecs)
 {
-	g_return_if_fail (GST_IS_VIDEO_SPLITTER(gvs));
+	g_return_if_fail (GST_IS_VIDEO_EDITOR(gve));
 
   	if (msecs > 0) {
     	GST_INFO ("adding tick timeout (at %ums)", msecs);
-    	gvs->priv->update_id =
-      		g_timeout_add (msecs, (GSourceFunc) gvs_query_timeout, gvs);
+    	gve->priv->update_id =
+      		g_timeout_add (msecs, (GSourceFunc) gve_query_timeout, gve);
   	}
 }
 
 static void 
-gvs_apply_new_caps (GstVideoSplitter *gvs)
+gve_apply_new_caps (GstVideoEditor *gve)
 {
 	GstCaps *caps;
 	gchar *font;
 	
 	caps = gst_caps_new_simple ("video/x-raw-yuv",
-      "width", G_TYPE_INT, gvs->priv->width,
-      "height", G_TYPE_INT, gvs->priv->height,
+      "width", G_TYPE_INT, gve->priv->width,
+      "height", G_TYPE_INT, gve->priv->height,
       "framerate",GST_TYPE_FRACTION,25,1,
        NULL);
        
-  	g_object_set (G_OBJECT(gvs->priv->capsfilter), "caps",caps,NULL);
-	font = g_strdup_printf("sans bold %d",(int)(gvs->priv->width*FONT_SIZE_FACTOR));
-	g_object_set (G_OBJECT(gvs->priv->textoverlay), "font-desc",font,NULL);
+  	g_object_set (G_OBJECT(gve->priv->capsfilter), "caps",caps,NULL);
+	font = g_strdup_printf("sans bold %d",(int)(gve->priv->width*FONT_SIZE_FACTOR));
+	g_object_set (G_OBJECT(gve->priv->textoverlay), "font-desc",font,NULL);
 	g_free(font);
 	gst_caps_unref(caps);
 }
 
 static void
-gvs_create_video_encode_bin(GstVideoSplitter *gvs)
+gve_create_video_encode_bin(GstVideoEditor *gve)
 {
 	GstPad *sinkpad=NULL;
 	GstPad *srcpad=NULL;
 	
-	if(gvs->priv->vencode_bin != NULL)
+	if(gve->priv->vencode_bin != NULL)
 		return;
 	
-	gvs->priv->vencode_bin = gst_element_factory_make ("bin", "vencodebin");
-	gvs->priv->identity = gst_element_factory_make ("identity", "identity");  
-    gvs->priv->ffmpegcolorspace = gst_element_factory_make ("ffmpegcolorspace", "ffmpegcolorspace");   
-    gvs->priv->videorate = gst_element_factory_make ("videorate", "videorate");
-    gvs->priv->videoscale = gst_element_factory_make ("videoscale", "videoscale"); 
-    gvs->priv->capsfilter = gst_element_factory_make ("capsfilter", "capsfilter");     
-	gvs->priv->videobox = gst_element_factory_make ("videobox", "videobox");    
-    gvs->priv->textoverlay = gst_element_factory_make ("textoverlay","textoverlay");
-    gvs->priv->queue = gst_element_factory_make ("queue","video-encode-queue");
-    gvs->priv->video_encoder = gst_element_factory_make (DEFAULT_VIDEO_ENCODER,"video-encoder");	
+	gve->priv->vencode_bin = gst_element_factory_make ("bin", "vencodebin");
+	gve->priv->identity = gst_element_factory_make ("identity", "identity");  
+    gve->priv->ffmpegcolorspace = gst_element_factory_make ("ffmpegcolorspace", "ffmpegcolorspace");   
+    gve->priv->videorate = gst_element_factory_make ("videorate", "videorate");
+    gve->priv->videoscale = gst_element_factory_make ("videoscale", "videoscale"); 
+    gve->priv->capsfilter = gst_element_factory_make ("capsfilter", "capsfilter");     
+	gve->priv->videobox = gst_element_factory_make ("videobox", "videobox");    
+    gve->priv->textoverlay = gst_element_factory_make ("textoverlay","textoverlay");
+    gve->priv->queue = gst_element_factory_make ("queue","video-encode-queue");
+    gve->priv->video_encoder = gst_element_factory_make (DEFAULT_VIDEO_ENCODER,"video-encoder");	
 	
-	g_object_set (G_OBJECT(gvs->priv->identity), "single-segment",TRUE,NULL);
-   	g_object_set (G_OBJECT(gvs->priv->textoverlay), "font-desc","sans bold 20",NULL);
-   	g_object_set (G_OBJECT(gvs->priv->textoverlay), "shaded-background",TRUE,NULL);
-	g_object_set (G_OBJECT(gvs->priv->textoverlay), "valignment",2,NULL);
-	g_object_set (G_OBJECT(gvs->priv->textoverlay), "halignment",2,NULL);  
-    g_object_set (G_OBJECT(gvs->priv->video_encoder), "bitrate",gvs->priv->video_bitrate,NULL); 
+	g_object_set (G_OBJECT(gve->priv->identity), "single-segment",TRUE,NULL);
+   	g_object_set (G_OBJECT(gve->priv->textoverlay), "font-desc","sans bold 20",NULL);
+   	g_object_set (G_OBJECT(gve->priv->textoverlay), "shaded-background",TRUE,NULL);
+	g_object_set (G_OBJECT(gve->priv->textoverlay), "valignment",2,NULL);
+	g_object_set (G_OBJECT(gve->priv->textoverlay), "halignment",2,NULL);  
+    g_object_set (G_OBJECT(gve->priv->video_encoder), "bitrate",gve->priv->video_bitrate,NULL); 
     
     /*Add and link elements*/
- 	gst_bin_add_many(GST_BIN(gvs->priv->vencode_bin),
- 		gvs->priv->identity,	
-		gvs->priv->ffmpegcolorspace,
-		gvs->priv->videorate,
-		gvs->priv->videoscale,
-		gvs->priv->capsfilter,
-		gvs->priv->videobox,
-		gvs->priv->textoverlay,		
-		gvs->priv->queue,
-		gvs->priv->video_encoder,
+ 	gst_bin_add_many(GST_BIN(gve->priv->vencode_bin),
+ 		gve->priv->identity,	
+		gve->priv->ffmpegcolorspace,
+		gve->priv->videorate,
+		gve->priv->videoscale,
+		gve->priv->capsfilter,
+		gve->priv->videobox,
+		gve->priv->textoverlay,		
+		gve->priv->queue,
+		gve->priv->video_encoder,
 		NULL);
-  	gst_element_link_many(gvs->priv->identity,	
-		gvs->priv->ffmpegcolorspace,
-		gvs->priv->videorate,
-		gvs->priv->videoscale,
-		gvs->priv->capsfilter,
-		gvs->priv->videobox,
-		gvs->priv->textoverlay,		
-		gvs->priv->queue,
-		gvs->priv->video_encoder,
+  	gst_element_link_many(gve->priv->identity,	
+		gve->priv->ffmpegcolorspace,
+		gve->priv->videorate,
+		gve->priv->videoscale,
+		gve->priv->capsfilter,
+		gve->priv->videobox,
+		gve->priv->textoverlay,		
+		gve->priv->queue,
+		gve->priv->video_encoder,
 		NULL);
 
 	/*Create bin sink pad*/
-	sinkpad = gst_element_get_static_pad(gvs->priv->identity,"sink");
+	sinkpad = gst_element_get_static_pad(gve->priv->identity,"sink");
 	gst_pad_set_active (sinkpad, TRUE);
-    gst_element_add_pad (GST_ELEMENT(gvs->priv->vencode_bin), gst_ghost_pad_new ("sink", sinkpad));	
+    gst_element_add_pad (GST_ELEMENT(gve->priv->vencode_bin), gst_ghost_pad_new ("sink", sinkpad));	
 	
 	/*Creat bin src pad*/
-	srcpad = gst_element_get_static_pad(gvs->priv->video_encoder,"src");
+	srcpad = gst_element_get_static_pad(gve->priv->video_encoder,"src");
 	gst_pad_set_active (srcpad, TRUE);
-    gst_element_add_pad (GST_ELEMENT(gvs->priv->vencode_bin), gst_ghost_pad_new ("src", srcpad));
+    gst_element_add_pad (GST_ELEMENT(gve->priv->vencode_bin), gst_ghost_pad_new ("src", srcpad));
 }
 
 GQuark
-gst_video_splitter_error_quark (void)
+gst_video_editor_error_quark (void)
 {
   	static GQuark q; /* 0 */
 
   	if (G_UNLIKELY (q == 0)) {
-    	q = g_quark_from_static_string ("gvs-error-quark");
+    	q = g_quark_from_static_string ("gve-error-quark");
   	}
   	return q;
 }
@@ -527,19 +524,19 @@ new_decoded_pad_cb (GstElement* object,
 	GstCaps *caps=NULL;
 	GstStructure *str =NULL;
 	GstPad *videopad=NULL;
-	GstVideoSplitter *gvs=NULL;
+	GstVideoEditor *gve=NULL;
 
-  	g_return_if_fail (GST_IS_VIDEO_SPLITTER(user_data));
- 	gvs = GST_VIDEO_SPLITTER (user_data);
+  	g_return_if_fail (GST_IS_VIDEO_EDITOR(user_data));
+ 	gve = GST_VIDEO_EDITOR (user_data);
 
 	/* check media type */
 	caps = gst_pad_get_caps (pad);
 	str = gst_caps_get_structure (caps, 0);	
 	
 	if (g_strrstr (gst_structure_get_name (str), "video")){
-		gst_element_set_locked_state(gvs->priv->vencode_bin, FALSE);
-		gst_element_set_state(gvs->priv->vencode_bin, GST_STATE_PLAYING);
-		videopad = gst_element_get_compatible_pad (gvs->priv->vencode_bin, pad, NULL);
+		gst_element_set_locked_state(gve->priv->vencode_bin, FALSE);
+		gst_element_set_state(gve->priv->vencode_bin, GST_STATE_PLAYING);
+		videopad = gst_element_get_compatible_pad (gve->priv->vencode_bin, pad, NULL);
 		/* only link once */
 		if (GST_PAD_IS_LINKED (videopad)) {
     		g_object_unref (videopad);
@@ -558,34 +555,34 @@ new_decoded_pad_cb (GstElement* object,
 }
 
 static void 
-gvs_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
+gve_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 {
-  	GstVideoSplitter *gvs = (GstVideoSplitter *) data;
+  	GstVideoEditor *gve = (GstVideoEditor *) data;
   	GstMessageType msg_type;
 
-  	g_return_if_fail (gvs!= NULL);
-  	g_return_if_fail (GST_IS_VIDEO_SPLITTER (gvs));
+  	g_return_if_fail (gve!= NULL);
+  	g_return_if_fail (GST_IS_VIDEO_EDITOR (gve));
 
   	msg_type = GST_MESSAGE_TYPE (message);
 
   	switch (msg_type) {
     	case GST_MESSAGE_ERROR: 
-      		gvs_error_msg (gvs, message);
-      		if (gvs->priv->main_pipeline)
-          		gst_element_set_state (gvs->priv->main_pipeline, GST_STATE_READY);
+      		gve_error_msg (gve, message);
+      		if (gve->priv->main_pipeline)
+          		gst_element_set_state (gve->priv->main_pipeline, GST_STATE_READY);
      		 break;    	
     	case GST_MESSAGE_WARNING: 
       		GST_WARNING ("Warning message: %" GST_PTR_FORMAT, message);
       		break;
 	    case GST_MESSAGE_EOS:
-      		if (gvs->priv->update_id > 0){
-				g_source_remove (gvs->priv->update_id);
-				gvs->priv->update_id = 0;
+      		if (gve->priv->update_id > 0){
+				g_source_remove (gve->priv->update_id);
+				gve->priv->update_id = 0;
 	  		}
-	  		gst_element_set_state (gvs->priv->main_pipeline, GST_STATE_NULL);
-	  		g_signal_emit (gvs, gvs_signals[SIGNAL_PERCENT_COMPLETED],0,(gfloat)1);
-	  		gvs->priv->active_segment = 0;
-	  		g_object_set (G_OBJECT(gvs->priv->file_sink), "location","",NULL);
+	  		gst_element_set_state (gve->priv->main_pipeline, GST_STATE_NULL);
+	  		g_signal_emit (gve, gve_signals[SIGNAL_PERCENT_COMPLETED],0,(gfloat)1);
+	  		gve->priv->active_segment = 0;
+	  		g_object_set (G_OBJECT(gve->priv->file_sink), "location","",NULL);
       		break;
     	default:
       		GST_LOG ("Unhandled message: %" GST_PTR_FORMAT, message);
@@ -594,7 +591,7 @@ gvs_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
  }
 
 static void
-gvs_error_msg (GstVideoSplitter * gvs, GstMessage * msg)
+gve_error_msg (GstVideoEditor * gve, GstMessage * msg)
 {
   	GError *err = NULL;
   	gchar *dbg = NULL;
@@ -609,37 +606,37 @@ gvs_error_msg (GstVideoSplitter * gvs, GstMessage * msg)
     	GST_ERROR ("source  = %" GST_PTR_FORMAT, msg->src);
     	
     	g_message ("Error: %s\n%s\n", GST_STR_NULL (err->message),GST_STR_NULL (dbg));
-    	g_signal_emit (gvs, gvs_signals[SIGNAL_ERROR], 0,err->message);
+    	g_signal_emit (gve, gve_signals[SIGNAL_ERROR], 0,err->message);
    	 	g_error_free (err);
   	}
   	g_free (dbg);
 }
 
 static gboolean  
-gvs_query_timeout (GstVideoSplitter * gvs)
+gve_query_timeout (GstVideoEditor * gve)
 {
 	GstFormat fmt = GST_FORMAT_TIME;
     gint64 pos = -1;
     gchar *title;
-    gint64 stop_time = gvs->priv->stop_times[gvs->priv->active_segment];    
+    gint64 stop_time = gve->priv->stop_times[gve->priv->active_segment];    
 	
-	if (gst_element_query_position (gvs->priv->main_pipeline, &fmt, &pos)) {
+	if (gst_element_query_position (gve->priv->main_pipeline, &fmt, &pos)) {
     	if (pos != -1 && fmt == GST_FORMAT_TIME) {
-      		g_signal_emit 	(gvs, 
-      						gvs_signals[SIGNAL_PERCENT_COMPLETED], 
+      		g_signal_emit 	(gve, 
+      						gve_signals[SIGNAL_PERCENT_COMPLETED], 
       						0, 
-      						(float) pos / (float)gvs->priv->duration);      		    		
+      						(float) pos / (float)gve->priv->duration);      		    		
     	}    	   	
   	} 
   	else {
     	GST_INFO ("could not get position");
   	}
   	
-  	if (gst_element_query_position (gvs->priv->video_encoder, &fmt, &pos)) {
+  	if (gst_element_query_position (gve->priv->video_encoder, &fmt, &pos)) {
 	  	if ( stop_time - pos <= 0){
-	      		gvs->priv->active_segment++;
-	      		title = (gchar*) g_list_nth_data (gvs->priv->titles, gvs->priv->active_segment); 
-	      		g_object_set (G_OBJECT(gvs->priv->textoverlay), "text",title,NULL);
+	      		gve->priv->active_segment++;
+	      		title = (gchar*) g_list_nth_data (gve->priv->titles, gve->priv->active_segment); 
+	      		g_object_set (G_OBJECT(gve->priv->textoverlay), "text",title,NULL);
       	}  
   	}
   	  
@@ -655,7 +652,7 @@ gvs_query_timeout (GstVideoSplitter * gvs)
 
 
 void 
-gst_video_splitter_add_segment (GstVideoSplitter *gvs , gchar *file, gint64 start, gint64 duration, gdouble rate, gchar *title)
+gst_video_editor_add_segment (GstVideoEditor *gve , gchar *file, gint64 start, gint64 duration, gdouble rate, gchar *title)
 {	
 	GstState cur_state;
 	GstElement *gnl_filesource;
@@ -664,32 +661,32 @@ gst_video_splitter_add_segment (GstVideoSplitter *gvs , gchar *file, gint64 star
 	gchar *element_name = "";
 	gint64 final_duration;	
 	
-	g_return_if_fail (GST_IS_VIDEO_SPLITTER(gvs));		
+	g_return_if_fail (GST_IS_VIDEO_EDITOR(gve));		
 	
-	gst_element_get_state (gvs->priv->gnl_composition, &cur_state, NULL, 0);
+	gst_element_get_state (gve->priv->gnl_composition, &cur_state, NULL, 0);
     if (cur_state <= GST_STATE_READY) {	
     	final_duration = GST_MSECOND * duration / rate; 
     	 
    		filter = gst_caps_new_simple ("video/x-raw-yuv",NULL);    	
-       	element_name = g_strdup_printf("gnlfilesource%d",gvs->priv->segments);
+       	element_name = g_strdup_printf("gnlfilesource%d",gve->priv->segments);
 		gnl_filesource = gst_element_factory_make ("gnlfilesource", element_name);		
 		g_object_set (G_OBJECT(gnl_filesource), "location",file,NULL);
 		g_object_set (G_OBJECT(gnl_filesource), "media-start",GST_MSECOND*start,NULL);
 		g_object_set (G_OBJECT(gnl_filesource), "media-duration",GST_MSECOND*duration,NULL);
-		g_object_set (G_OBJECT(gnl_filesource), "start",gvs->priv->duration,NULL);
+		g_object_set (G_OBJECT(gnl_filesource), "start",gve->priv->duration,NULL);
 		g_object_set (G_OBJECT(gnl_filesource), "duration",final_duration,NULL);
 		g_object_set (G_OBJECT(gnl_filesource), "caps",filter,NULL);	
-		if (gvs->priv->segments == 0){
-			g_object_set (G_OBJECT(gvs->priv->textoverlay), "text",title,NULL);
+		if (gve->priv->segments == 0){
+			g_object_set (G_OBJECT(gve->priv->textoverlay), "text",title,NULL);
 		}		
-		gst_bin_add (GST_BIN(gvs->priv->gnl_composition), gnl_filesource);
+		gst_bin_add (GST_BIN(gve->priv->gnl_composition), gnl_filesource);
 				
-		gvs->priv->duration += final_duration;	
-		gvs->priv->segments++;	
+		gve->priv->duration += final_duration;	
+		gve->priv->segments++;	
 		
-		gvs->priv->gnl_filesources = g_list_append(gvs->priv->gnl_filesources,gnl_filesource);
-		gvs->priv->titles = g_list_append(gvs->priv->titles,title);
-		gvs->priv->stop_times[gvs->priv->segments-1] = gvs->priv->duration;		
+		gve->priv->gnl_filesources = g_list_append(gve->priv->gnl_filesources,gnl_filesource);
+		gve->priv->titles = g_list_append(gve->priv->titles,title);
+		gve->priv->stop_times[gve->priv->segments-1] = gve->priv->duration;		
 			
 		GST_INFO("New segment: start={%" GST_TIME_FORMAT "} duration={%" GST_TIME_FORMAT "} ",GST_TIME_ARGS(start * GST_MSECOND), GST_TIME_ARGS(duration * GST_MSECOND));
     }
@@ -699,40 +696,40 @@ gst_video_splitter_add_segment (GstVideoSplitter *gvs , gchar *file, gint64 star
 }
 
 void
-gst_video_splitter_clear_segments_list (GstVideoSplitter *gvs)
+gst_video_editor_clear_segments_list (GstVideoEditor *gve)
 {	
 
 	GList *tmp = NULL; 
 
-	g_return_if_fail (GST_IS_VIDEO_SPLITTER(gvs));
+	g_return_if_fail (GST_IS_VIDEO_EDITOR(gve));
 	
-	gst_video_splitter_cancel(gvs);
+	gst_video_editor_cancel(gve);
 	
-	tmp = gvs->priv->gnl_filesources;
+	tmp = gve->priv->gnl_filesources;
 
 	for (; tmp; tmp = g_list_next (tmp)) {
     	GstElement *object = (GstElement *) tmp->data;
 		if (object)
 			gst_element_set_state (object, GST_STATE_NULL);
-			gst_bin_remove(GST_BIN(gvs->priv->gnl_composition), object);					
+			gst_bin_remove(GST_BIN(gve->priv->gnl_composition), object);					
 	}
 	
 	g_list_free(tmp);
-	g_list_free(gvs->priv->gnl_filesources);
-	g_free(gvs->priv->stop_times);
-	g_list_free(gvs->priv->titles);
+	g_list_free(gve->priv->gnl_filesources);
+	g_free(gve->priv->stop_times);
+	g_list_free(gve->priv->titles);
 	
-	gvs->priv->gnl_filesources = NULL;
-	gvs->priv->stop_times = (gint64 *)malloc (200*sizeof(gint64));
-	gvs->priv->titles = NULL;	
+	gve->priv->gnl_filesources = NULL;
+	gve->priv->stop_times = (gint64 *)malloc (200*sizeof(gint64));
+	gve->priv->titles = NULL;	
 	
-	gvs->priv->duration = 0;
-	gvs->priv->active_segment= 0;		
+	gve->priv->duration = 0;
+	gve->priv->active_segment= 0;		
 }
 
 
 void 
-gst_video_splitter_set_video_encoder (GstVideoSplitter *gvs, gchar **err, GvsVideoCodec codec)
+gst_video_editor_set_video_encoder (GstVideoEditor *gve, gchar **err, GvsVideoCodec codec)
 {
 	GstElement *encoder = NULL;
 	GstState cur_state;
@@ -741,9 +738,9 @@ gst_video_splitter_set_video_encoder (GstVideoSplitter *gvs, gchar **err, GvsVid
 	gchar *encoder_name="";
 	gchar *error;
 	
-	g_return_if_fail (GST_IS_VIDEO_SPLITTER(gvs));
+	g_return_if_fail (GST_IS_VIDEO_EDITOR(gve));
 	
-	gst_element_get_state (gvs->priv->main_pipeline, &cur_state, NULL, 0);
+	gst_element_get_state (gve->priv->main_pipeline, &cur_state, NULL, 0);
 	
 	if (cur_state <= GST_STATE_READY) {		
 		switch (codec){
@@ -771,7 +768,7 @@ gst_video_splitter_set_video_encoder (GstVideoSplitter *gvs, gchar **err, GvsVid
 		}		
 	
 		if (encoder){
-			if (!g_strcmp0(gst_element_get_name(gvs->priv->video_encoder),encoder_name)){
+			if (!g_strcmp0(gst_element_get_name(gve->priv->video_encoder),encoder_name)){
 				GST_WARNING("The video encoder is not changed because it is already in use.");
 				gst_object_unref(encoder);
 				return;
@@ -779,28 +776,28 @@ gst_video_splitter_set_video_encoder (GstVideoSplitter *gvs, gchar **err, GvsVid
 			
 			/*Remove old encoder element*/
 			
-			gst_element_unlink(gvs->priv->queue,gvs->priv->video_encoder);
-			gst_element_unlink(gvs->priv->vencode_bin,gvs->priv->muxer);
-			gst_element_set_state(gvs->priv->video_encoder,GST_STATE_NULL);
-			gst_bin_remove(GST_BIN(gvs->priv->vencode_bin),gvs->priv->video_encoder);
+			gst_element_unlink(gve->priv->queue,gve->priv->video_encoder);
+			gst_element_unlink(gve->priv->vencode_bin,gve->priv->muxer);
+			gst_element_set_state(gve->priv->video_encoder,GST_STATE_NULL);
+			gst_bin_remove(GST_BIN(gve->priv->vencode_bin),gve->priv->video_encoder);
 			
 			/*Add new encoder element*/
-			gvs->priv->video_encoder = encoder;	
-			g_object_set (G_OBJECT(gvs->priv->video_encoder), "bitrate",gvs->priv->video_bitrate,NULL);
+			gve->priv->video_encoder = encoder;	
+			g_object_set (G_OBJECT(gve->priv->video_encoder), "bitrate",gve->priv->video_bitrate,NULL);
 			/*Add first to the encoder bin*/
-			gst_bin_add(GST_BIN(gvs->priv->vencode_bin),gvs->priv->video_encoder);			
-			gst_element_link(gvs->priv->queue,gvs->priv->video_encoder);	
+			gst_bin_add(GST_BIN(gve->priv->vencode_bin),gve->priv->video_encoder);			
+			gst_element_link(gve->priv->queue,gve->priv->video_encoder);	
 			/*Remove old encoder bin's src pad*/
-			oldsrcpad = gst_element_get_static_pad(gvs->priv->vencode_bin,"src");
+			oldsrcpad = gst_element_get_static_pad(gve->priv->vencode_bin,"src");
 			gst_pad_set_active(oldsrcpad,FALSE);
-			gst_element_remove_pad(gvs->priv->vencode_bin,oldsrcpad);
+			gst_element_remove_pad(gve->priv->vencode_bin,oldsrcpad);
 			/*Create new encoder bin's src pad*/
-			srcpad = gst_element_get_static_pad(gvs->priv->video_encoder,"src");			
+			srcpad = gst_element_get_static_pad(gve->priv->video_encoder,"src");			
 			gst_pad_set_active (srcpad, TRUE);
-    		gst_element_add_pad (gvs->priv->vencode_bin, gst_ghost_pad_new ("src", srcpad));
-    		gst_element_link(gvs->priv->vencode_bin, gvs->priv->muxer);
+    		gst_element_add_pad (gve->priv->vencode_bin, gst_ghost_pad_new ("src", srcpad));
+    		gst_element_link(gve->priv->vencode_bin, gve->priv->muxer);
 			
-			gvs_rewrite_headers(gvs);		
+			gve_rewrite_headers(gve);		
 		}
 		
 		else {
@@ -815,22 +812,22 @@ gst_video_splitter_set_video_encoder (GstVideoSplitter *gvs, gchar **err, GvsVid
 }
 
 void 
-gst_video_splitter_set_audio_encoder (GstVideoSplitter *gvs, gchar **err, GvsAudioCodec codec)
+gst_video_editor_set_audio_encoder (GstVideoEditor *gve, gchar **err, GvsAudioCodec codec)
 {
 	//TODO not implemented
 }
 
 void 
-gst_video_splitter_set_video_muxer (GstVideoSplitter *gvs, gchar **err, GvsVideoMuxer muxerType)
+gst_video_editor_set_video_muxer (GstVideoEditor *gve, gchar **err, GvsVideoMuxer muxerType)
 {
 	GstElement *muxer = NULL;
 	GstState cur_state;
 	gchar *muxer_name="";
 	gchar *error;
 	
-	g_return_if_fail (GST_IS_VIDEO_SPLITTER(gvs));
+	g_return_if_fail (GST_IS_VIDEO_EDITOR(gve));
 	
-	gst_element_get_state (gvs->priv->main_pipeline, &cur_state, NULL, 0);
+	gst_element_get_state (gve->priv->main_pipeline, &cur_state, NULL, 0);
 	
 	if (cur_state <= GST_STATE_READY) {		
 		switch (muxerType){
@@ -855,21 +852,21 @@ gst_video_splitter_set_video_muxer (GstVideoSplitter *gvs, gchar **err, GvsVideo
 		}		
 	
 		if (muxer){	
-			if (!g_strcmp0(gst_element_get_name(gvs->priv->muxer),muxer_name)){
+			if (!g_strcmp0(gst_element_get_name(gve->priv->muxer),muxer_name)){
 				GST_WARNING("Not changing the video muxer as the new one is the same in use.");
 				gst_object_unref(muxer);
 				return;
 			}	
-			gst_element_unlink(gvs->priv->vencode_bin,gvs->priv->muxer);
-			//gst_element_unlink(gvs->priv->audio_encoder,gvs->priv->muxer);
-			gst_element_unlink(gvs->priv->muxer,gvs->priv->file_sink);
-			gst_element_set_state(gvs->priv->muxer,GST_STATE_NULL);
-			gst_bin_remove(GST_BIN(gvs->priv->main_pipeline),gvs->priv->muxer);
-			gst_bin_add(GST_BIN(gvs->priv->main_pipeline),muxer);
-			gst_element_link_many(gvs->priv->vencode_bin,muxer,gvs->priv->file_sink,NULL);	
-			//gst_element_link(gvs->priv->audio_encoder,muxer);	
-			gvs->priv->muxer = muxer;
-			gvs_rewrite_headers(gvs);				
+			gst_element_unlink(gve->priv->vencode_bin,gve->priv->muxer);
+			//gst_element_unlink(gve->priv->audio_encoder,gve->priv->muxer);
+			gst_element_unlink(gve->priv->muxer,gve->priv->file_sink);
+			gst_element_set_state(gve->priv->muxer,GST_STATE_NULL);
+			gst_bin_remove(GST_BIN(gve->priv->main_pipeline),gve->priv->muxer);
+			gst_bin_add(GST_BIN(gve->priv->main_pipeline),muxer);
+			gst_element_link_many(gve->priv->vencode_bin,muxer,gve->priv->file_sink,NULL);	
+			//gst_element_link(gve->priv->audio_encoder,muxer);	
+			gve->priv->muxer = muxer;
+			gve_rewrite_headers(gve);				
 		}
 		
 		else {
@@ -884,85 +881,85 @@ gst_video_splitter_set_video_muxer (GstVideoSplitter *gvs, gchar **err, GvsVideo
 }
 
 void 
-gst_video_splitter_start(GstVideoSplitter *gvs)
+gst_video_editor_start(GstVideoEditor *gve)
 {	
-	g_return_if_fail (GST_IS_VIDEO_SPLITTER(gvs));
+	g_return_if_fail (GST_IS_VIDEO_EDITOR(gve));
 	
-	gst_element_set_state(gvs->priv->main_pipeline, GST_STATE_PLAYING);	
-	g_signal_emit (gvs, gvs_signals[SIGNAL_PERCENT_COMPLETED],0,(gfloat)0);	
-	gvs_set_tick_timeout(gvs,TIMEOUT);
+	gst_element_set_state(gve->priv->main_pipeline, GST_STATE_PLAYING);	
+	g_signal_emit (gve, gve_signals[SIGNAL_PERCENT_COMPLETED],0,(gfloat)0);	
+	gve_set_tick_timeout(gve,TIMEOUT);
 }
 
 void 
-gst_video_splitter_cancel(GstVideoSplitter *gvs)
+gst_video_editor_cancel(GstVideoEditor *gve)
 {	
-	g_return_if_fail (GST_IS_VIDEO_SPLITTER(gvs));
-	if (gvs->priv->update_id > 0){
-		g_source_remove (gvs->priv->update_id);
-		gvs->priv->update_id = 0;
+	g_return_if_fail (GST_IS_VIDEO_EDITOR(gve));
+	if (gve->priv->update_id > 0){
+		g_source_remove (gve->priv->update_id);
+		gve->priv->update_id = 0;
 	}
-	gst_element_set_state(gvs->priv->main_pipeline, GST_STATE_NULL);
-	g_signal_emit (gvs, gvs_signals[SIGNAL_PERCENT_COMPLETED],0,(gfloat)-1);
+	gst_element_set_state(gve->priv->main_pipeline, GST_STATE_NULL);
+	g_signal_emit (gve, gve_signals[SIGNAL_PERCENT_COMPLETED],0,(gfloat)-1);
 }
 
 void
-gst_video_splitter_init_backend (int *argc, char ***argv)
+gst_video_editor_init_backend (int *argc, char ***argv)
 {
   	gst_init (argc, argv);
 }
 
-GstVideoSplitter *
-gst_video_splitter_new (GError ** err)
+GstVideoEditor *
+gst_video_editor_new (GError ** err)
 {
-	GstVideoSplitter *gvs = NULL;
+	GstVideoEditor *gve = NULL;
 	GstCaps *filter=NULL;
 
-	gvs = g_object_new(GST_TYPE_VIDEO_SPLITTER, NULL);
+	gve = g_object_new(GST_TYPE_VIDEO_EDITOR, NULL);
 	
-	gvs->priv->main_pipeline = gst_pipeline_new ("main_pipeline");
+	gve->priv->main_pipeline = gst_pipeline_new ("main_pipeline");
 
-	if (!gvs->priv->main_pipeline ) {
+	if (!gve->priv->main_pipeline ) {
     	g_set_error (err, GVC_ERROR, GVC_ERROR_PLUGIN_LOAD,
                 	("Failed to create a GStreamer Bin. "
                     "Please check your GStreamer installation."));
-    	g_object_ref_sink (gvs);
-    	g_object_unref (gvs);
+    	g_object_ref_sink (gve);
+    	g_object_unref (gve);
     	return NULL;
   	}
 
   	/* Create elements*/
 
-  	gvs->priv->gnl_composition = gst_element_factory_make("gnlcomposition","gnlcomposition");
-  	if (!gvs->priv->gnl_composition){	
+  	gve->priv->gnl_composition = gst_element_factory_make("gnlcomposition","gnlcomposition");
+  	if (!gve->priv->gnl_composition){	
   		g_set_error (err, GVC_ERROR, GVC_ERROR_PLUGIN_LOAD,
                  ("Failed to create a Gnonlin element. "
                    "Please check your GStreamer installation."));
-        g_object_ref_sink (gvs);
-    	g_object_unref (gvs);
+        g_object_ref_sink (gve);
+    	g_object_unref (gve);
         return NULL;                   
   	}  	  	
 
-    gvs->priv->muxer = gst_element_factory_make (DEFAULT_VIDEO_MUXER, "videomuxer");
-    gvs->priv->file_sink = gst_element_factory_make ("filesink", "filesink");
-    gvs_create_video_encode_bin(gvs);
+    gve->priv->muxer = gst_element_factory_make (DEFAULT_VIDEO_MUXER, "videomuxer");
+    gve->priv->file_sink = gst_element_factory_make ("filesink", "filesink");
+    gve_create_video_encode_bin(gve);
     
     /* Set elements properties*/    
 
-    g_object_set (G_OBJECT(gvs->priv->file_sink), "location",gvs->priv->output_file ,NULL); 
+    g_object_set (G_OBJECT(gve->priv->file_sink), "location",gve->priv->output_file ,NULL); 
     
     /* Link elements*/
 
-	gst_bin_add_many (	GST_BIN (gvs->priv->main_pipeline),
-		gvs->priv->gnl_composition,
-		gvs->priv->vencode_bin,	
-		gvs->priv->muxer,						
-		gvs->priv->file_sink,
+	gst_bin_add_many (	GST_BIN (gve->priv->main_pipeline),
+		gve->priv->gnl_composition,
+		gve->priv->vencode_bin,	
+		gve->priv->muxer,						
+		gve->priv->file_sink,
 		NULL);
 		
 	gst_element_link_many(
-		gvs->priv->vencode_bin,
-		gvs->priv->muxer,						
-		gvs->priv->file_sink,
+		gve->priv->vencode_bin,
+		gve->priv->muxer,						
+		gve->priv->file_sink,
 		NULL);
 		
    
@@ -970,15 +967,15 @@ gst_video_splitter_new (GError ** err)
 	
     /*We have to wait for a "new-decoded-pad" message to link the composition with
     the encoder tail*/
-	gvs->priv->bus = gst_element_get_bus (GST_ELEMENT(gvs->priv->main_pipeline));
-  	g_signal_connect (gvs->priv->gnl_composition, "pad-added",G_CALLBACK(new_decoded_pad_cb),gvs);
-	gst_bus_add_signal_watch (gvs->priv->bus);
-  	gvs->priv->sig_bus_async =	g_signal_connect (gvs->priv->bus, "message",
-                        		G_CALLBACK (gvs_bus_message_cb),
-                        		gvs);                        		
+	gve->priv->bus = gst_element_get_bus (GST_ELEMENT(gve->priv->main_pipeline));
+  	g_signal_connect (gve->priv->gnl_composition, "pad-added",G_CALLBACK(new_decoded_pad_cb),gve);
+	gst_bus_add_signal_watch (gve->priv->bus);
+  	gve->priv->sig_bus_async =	g_signal_connect (gve->priv->bus, "message",
+                        		G_CALLBACK (gve_bus_message_cb),
+                        		gve);                        		
                         		
-	gst_element_set_state(gvs->priv->main_pipeline,GST_STATE_READY);
-	gst_element_set_locked_state(gvs->priv->vencode_bin,TRUE);
+	gst_element_set_state(gve->priv->main_pipeline,GST_STATE_READY);
+	gst_element_set_locked_state(gve->priv->vencode_bin,TRUE);
 	
-	return gvs;
+	return gve;
 }
