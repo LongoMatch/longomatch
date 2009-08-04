@@ -78,6 +78,8 @@ struct GstVideoSplitterPrivate
 	gint		height;
 	
 	GstElement 	*main_pipeline;	
+	GstElement	*vencode_bin;
+	GstElement	*aencode_bin;
 		
 	GstElement 	*gnl_composition;
 	GstElement	*gnl_filesource;
@@ -437,6 +439,67 @@ gvs_apply_new_caps (GstVideoSplitter *gvs)
 	gst_caps_unref(caps);
 }
 
+static void
+gvs_create_video_encode_bin(GstVideoSplitter *gvs)
+{
+	GstPad *sinkpad=NULL;
+	GstPad *srcpad=NULL;
+	
+	if(gvs->priv->vencode_bin != NULL)
+		return;
+	
+	gvs->priv->vencode_bin = gst_element_factory_make ("bin", "vencodebin");
+	gvs->priv->identity = gst_element_factory_make ("identity", "identity");  
+    gvs->priv->ffmpegcolorspace = gst_element_factory_make ("ffmpegcolorspace", "ffmpegcolorspace");   
+    gvs->priv->videorate = gst_element_factory_make ("videorate", "videorate");
+    gvs->priv->videoscale = gst_element_factory_make ("videoscale", "videoscale"); 
+    gvs->priv->capsfilter = gst_element_factory_make ("capsfilter", "capsfilter");     
+	gvs->priv->videobox = gst_element_factory_make ("videobox", "videobox");    
+    gvs->priv->textoverlay = gst_element_factory_make ("textoverlay","textoverlay");
+    gvs->priv->queue = gst_element_factory_make ("queue","video-encode-queue");
+    gvs->priv->video_encoder = gst_element_factory_make (DEFAULT_VIDEO_ENCODER,"video-encoder");	
+	
+	g_object_set (G_OBJECT(gvs->priv->identity), "single-segment",TRUE,NULL);
+   	g_object_set (G_OBJECT(gvs->priv->textoverlay), "font-desc","sans bold 20",NULL);
+   	g_object_set (G_OBJECT(gvs->priv->textoverlay), "shaded-background",TRUE,NULL);
+	g_object_set (G_OBJECT(gvs->priv->textoverlay), "valignment",2,NULL);
+	g_object_set (G_OBJECT(gvs->priv->textoverlay), "halignment",2,NULL);  
+    g_object_set (G_OBJECT(gvs->priv->video_encoder), "bitrate",gvs->priv->video_bitrate,NULL); 
+    
+    /*Add and link elements*/
+ 	gst_bin_add_many(GST_BIN(gvs->priv->vencode_bin),
+ 		gvs->priv->identity,	
+		gvs->priv->ffmpegcolorspace,
+		gvs->priv->videorate,
+		gvs->priv->videoscale,
+		gvs->priv->capsfilter,
+		gvs->priv->videobox,
+		gvs->priv->textoverlay,		
+		gvs->priv->queue,
+		gvs->priv->video_encoder,
+		NULL);
+  	gst_element_link_many(gvs->priv->identity,	
+		gvs->priv->ffmpegcolorspace,
+		gvs->priv->videorate,
+		gvs->priv->videoscale,
+		gvs->priv->capsfilter,
+		gvs->priv->videobox,
+		gvs->priv->textoverlay,		
+		gvs->priv->queue,
+		gvs->priv->video_encoder,
+		NULL);
+
+	/*Create bin sink pad*/
+	sinkpad = gst_element_get_static_pad(gvs->priv->identity,"sink");
+	gst_pad_set_active (sinkpad, TRUE);
+    gst_element_add_pad (GST_ELEMENT(gvs->priv->vencode_bin), gst_ghost_pad_new ("sink", sinkpad));	
+	
+	/*Creat bin src pad*/
+	srcpad = gst_element_get_static_pad(gvs->priv->video_encoder,"src");
+	gst_pad_set_active (srcpad, TRUE);
+    gst_element_add_pad (GST_ELEMENT(gvs->priv->vencode_bin), gst_ghost_pad_new ("src", srcpad));
+}
+
 GQuark
 gst_video_splitter_error_quark (void)
 {
@@ -474,8 +537,9 @@ new_decoded_pad_cb (GstElement* object,
 	str = gst_caps_get_structure (caps, 0);	
 	
 	if (g_strrstr (gst_structure_get_name (str), "video")){
-
-		videopad = gst_element_get_compatible_pad (gvs->priv->identity, pad, NULL);
+		gst_element_set_locked_state(gvs->priv->vencode_bin, FALSE);
+		gst_element_set_state(gvs->priv->vencode_bin, GST_STATE_PLAYING);
+		videopad = gst_element_get_compatible_pad (gvs->priv->vencode_bin, pad, NULL);
 		/* only link once */
 		if (GST_PAD_IS_LINKED (videopad)) {
     		g_object_unref (videopad);
@@ -672,6 +736,8 @@ gst_video_splitter_set_video_encoder (GstVideoSplitter *gvs, gchar **err, GvsVid
 {
 	GstElement *encoder = NULL;
 	GstState cur_state;
+	GstPad *srcpad;
+	GstPad *oldsrcpad;
 	gchar *encoder_name="";
 	gchar *error;
 	
@@ -710,14 +776,30 @@ gst_video_splitter_set_video_encoder (GstVideoSplitter *gvs, gchar **err, GvsVid
 				gst_object_unref(encoder);
 				return;
 			}		
+			
+			/*Remove old encoder element*/
+			
 			gst_element_unlink(gvs->priv->queue,gvs->priv->video_encoder);
-			gst_element_unlink(gvs->priv->video_encoder,gvs->priv->muxer);
+			gst_element_unlink(gvs->priv->vencode_bin,gvs->priv->muxer);
 			gst_element_set_state(gvs->priv->video_encoder,GST_STATE_NULL);
-			gst_bin_remove(GST_BIN(gvs->priv->main_pipeline),gvs->priv->video_encoder);
-			g_object_set (G_OBJECT(encoder), "bitrate",gvs->priv->video_bitrate,NULL);
-			gst_bin_add(GST_BIN(gvs->priv->main_pipeline),encoder);
-			gst_element_link_many(gvs->priv->queue,encoder,gvs->priv->muxer,NULL);		
+			gst_bin_remove(GST_BIN(gvs->priv->vencode_bin),gvs->priv->video_encoder);
+			
+			/*Add new encoder element*/
 			gvs->priv->video_encoder = encoder;	
+			g_object_set (G_OBJECT(gvs->priv->video_encoder), "bitrate",gvs->priv->video_bitrate,NULL);
+			/*Add first to the encoder bin*/
+			gst_bin_add(GST_BIN(gvs->priv->vencode_bin),gvs->priv->video_encoder);			
+			gst_element_link(gvs->priv->queue,gvs->priv->video_encoder);	
+			/*Remove old encoder bin's src pad*/
+			oldsrcpad = gst_element_get_static_pad(gvs->priv->vencode_bin,"src");
+			gst_pad_set_active(oldsrcpad,FALSE);
+			gst_element_remove_pad(gvs->priv->vencode_bin,oldsrcpad);
+			/*Create new encoder bin's src pad*/
+			srcpad = gst_element_get_static_pad(gvs->priv->video_encoder,"src");			
+			gst_pad_set_active (srcpad, TRUE);
+    		gst_element_add_pad (gvs->priv->vencode_bin, gst_ghost_pad_new ("src", srcpad));
+    		gst_element_link(gvs->priv->vencode_bin, gvs->priv->muxer);
+			
 			gvs_rewrite_headers(gvs);		
 		}
 		
@@ -778,13 +860,13 @@ gst_video_splitter_set_video_muxer (GstVideoSplitter *gvs, gchar **err, GvsVideo
 				gst_object_unref(muxer);
 				return;
 			}	
-			gst_element_unlink(gvs->priv->video_encoder,gvs->priv->muxer);
+			gst_element_unlink(gvs->priv->vencode_bin,gvs->priv->muxer);
 			//gst_element_unlink(gvs->priv->audio_encoder,gvs->priv->muxer);
 			gst_element_unlink(gvs->priv->muxer,gvs->priv->file_sink);
 			gst_element_set_state(gvs->priv->muxer,GST_STATE_NULL);
 			gst_bin_remove(GST_BIN(gvs->priv->main_pipeline),gvs->priv->muxer);
 			gst_bin_add(GST_BIN(gvs->priv->main_pipeline),muxer);
-			gst_element_link_many(gvs->priv->video_encoder,muxer,gvs->priv->file_sink,NULL);	
+			gst_element_link_many(gvs->priv->vencode_bin,muxer,gvs->priv->file_sink,NULL);	
 			//gst_element_link(gvs->priv->audio_encoder,muxer);	
 			gvs->priv->muxer = muxer;
 			gvs_rewrite_headers(gvs);				
@@ -859,54 +941,26 @@ gst_video_splitter_new (GError ** err)
     	g_object_unref (gvs);
         return NULL;                   
   	}  	  	
-    gvs->priv->identity = gst_element_factory_make ("identity", "identity");  
-    gvs->priv->ffmpegcolorspace = gst_element_factory_make ("ffmpegcolorspace", "ffmpegcolorspace");   
-    gvs->priv->videorate = gst_element_factory_make ("videorate", "videorate");
-    gvs->priv->videoscale = gst_element_factory_make ("videoscale", "videoscale"); 
-    gvs->priv->capsfilter = gst_element_factory_make ("capsfilter", "capsfilter");     
-	gvs->priv->videobox = gst_element_factory_make ("videobox", "videobox");    
-    gvs->priv->textoverlay = gst_element_factory_make ("textoverlay","textoverlay");
-    gvs->priv->queue =  gst_element_factory_make ("queue", "queue");     
-    gvs->priv->video_encoder= gst_element_factory_make (DEFAULT_VIDEO_ENCODER, "theoraenc");
+
     gvs->priv->muxer = gst_element_factory_make (DEFAULT_VIDEO_MUXER, "videomuxer");
     gvs->priv->file_sink = gst_element_factory_make ("filesink", "filesink");
+    gvs_create_video_encode_bin(gvs);
     
-    /* Set elements properties*/
-    
-    g_object_set (G_OBJECT(gvs->priv->identity), "single-segment",TRUE,NULL);
-   	g_object_set (G_OBJECT(gvs->priv->textoverlay), "font-desc","sans bold 20",NULL);
-   	g_object_set (G_OBJECT(gvs->priv->textoverlay), "shaded-background",TRUE,NULL);
-	g_object_set (G_OBJECT(gvs->priv->textoverlay), "valignment",2,NULL);
-	g_object_set (G_OBJECT(gvs->priv->textoverlay), "halignment",2,NULL);  
-    g_object_set (G_OBJECT(gvs->priv->video_encoder), "bitrate",gvs->priv->video_bitrate,NULL); 
+    /* Set elements properties*/    
+
     g_object_set (G_OBJECT(gvs->priv->file_sink), "location",gvs->priv->output_file ,NULL); 
     
     /* Link elements*/
 
 	gst_bin_add_many (	GST_BIN (gvs->priv->main_pipeline),
-		gvs->priv->gnl_composition,	
-		gvs->priv->identity,	
-		gvs->priv->ffmpegcolorspace,
-		gvs->priv->videorate,
-		gvs->priv->videoscale,
-		gvs->priv->capsfilter,
-		gvs->priv->videobox,
-		gvs->priv->textoverlay,		
-		gvs->priv->queue,
-		gvs->priv->video_encoder,
+		gvs->priv->gnl_composition,
+		gvs->priv->vencode_bin,	
 		gvs->priv->muxer,						
 		gvs->priv->file_sink,
 		NULL);
 		
-	gst_element_link_many(	gvs->priv->identity,
-		gvs->priv->ffmpegcolorspace,
-		gvs->priv->videorate,		
-		gvs->priv->videoscale,
-		gvs->priv->capsfilter,
-		gvs->priv->videobox,
-		gvs->priv->textoverlay,
-		gvs->priv->queue,
-		gvs->priv->video_encoder,
+	gst_element_link_many(
+		gvs->priv->vencode_bin,
 		gvs->priv->muxer,						
 		gvs->priv->file_sink,
 		NULL);
@@ -924,6 +978,7 @@ gst_video_splitter_new (GError ** err)
                         		gvs);                        		
                         		
 	gst_element_set_state(gvs->priv->main_pipeline,GST_STATE_READY);
+	gst_element_set_locked_state(gvs->priv->vencode_bin,TRUE);
 	
 	return gvs;
 }
