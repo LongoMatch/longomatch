@@ -33,7 +33,8 @@
 
 #define DEFAULT_VIDEO_ENCODER "theoraenc"
 #define DEFAULT_AUDIO_ENCODER "vorbisenc"
-#define DEAFAULT_VIDEO_MUXER "matroskamux"
+#define DEFAULT_VIDEO_MUXER "matroskamux"
+#define FONT_SIZE_FACTOR 0.03
 
 #define TIMEOUT 50
 
@@ -420,20 +421,20 @@ gvs_set_tick_timeout (GstVideoSplitter *gvs , guint msecs)
 static void 
 gvs_apply_new_caps (GstVideoSplitter *gvs)
 {
-	GstElement *filter;
-	GstPad *videoscale_src_pad;
-	GstPad *filter_sink_pad;
 	GstCaps *caps;
-	
-	g_return_if_fail (GST_IS_VIDEO_SPLITTER(gvs));	
+	gchar *font;
 	
 	caps = gst_caps_new_simple ("video/x-raw-yuv",
       "width", G_TYPE_INT, gvs->priv->width,
       "height", G_TYPE_INT, gvs->priv->height,
       "framerate",GST_TYPE_FRACTION,25,1,
        NULL);
-  	g_object_set (G_OBJECT(gvs->priv->capsfilter), "caps",caps,NULL);  
- 	gst_caps_unref(caps);
+       
+  	g_object_set (G_OBJECT(gvs->priv->capsfilter), "caps",caps,NULL);
+	font = g_strdup_printf("sans bold %d",(int)(gvs->priv->width*FONT_SIZE_FACTOR));
+	g_object_set (G_OBJECT(gvs->priv->textoverlay), "font-desc",font,NULL);
+	g_free(font);
+	gst_caps_unref(caps);
 }
 
 GQuark
@@ -672,7 +673,7 @@ gst_video_splitter_set_video_encoder (GstVideoSplitter *gvs, gchar **err, GvsVid
 	GstElement *encoder = NULL;
 	GstState cur_state;
 	gchar *encoder_name="";
-	gchar error[200];
+	gchar *error;
 	
 	g_return_if_fail (GST_IS_VIDEO_SPLITTER(gvs));
 	
@@ -721,9 +722,10 @@ gst_video_splitter_set_video_encoder (GstVideoSplitter *gvs, gchar **err, GvsVid
 		}
 		
 		else {
-			g_sprintf (error, "The %s encoder element is not avalaible. Check your GStreamer installation", encoder_name);
+			error = g_strdup_printf("The %s encoder element is not avalaible. Check your GStreamer installation", encoder_name);
 			GST_ERROR (error);
 			*err = g_strdup(error);
+			g_free(error);
 		}
 	}
 	else
@@ -742,14 +744,13 @@ gst_video_splitter_set_video_muxer (GstVideoSplitter *gvs, gchar **err, GvsVideo
 	GstElement *muxer = NULL;
 	GstState cur_state;
 	gchar *muxer_name="";
-	gchar error[200];
+	gchar *error;
 	
 	g_return_if_fail (GST_IS_VIDEO_SPLITTER(gvs));
 	
 	gst_element_get_state (gvs->priv->main_pipeline, &cur_state, NULL, 0);
 	
-	if (cur_state <= GST_STATE_READY) {	
-	
+	if (cur_state <= GST_STATE_READY) {		
 		switch (muxerType){
 			case MKV:		
 				muxer_name = "matroskamux";		
@@ -768,7 +769,7 @@ gst_video_splitter_set_video_muxer (GstVideoSplitter *gvs, gchar **err, GvsVideo
 				//We don't want to mux anything yet as ffmux_dvd is buggy
 				//FIXME: Until we don't have audio save the mpeg-ps stream without mux.
 				muxer = gst_element_factory_make ("identity",muxer_name);
-				break;		
+				break;
 		}		
 	
 		if (muxer){	
@@ -790,9 +791,10 @@ gst_video_splitter_set_video_muxer (GstVideoSplitter *gvs, gchar **err, GvsVideo
 		}
 		
 		else {
-			g_sprintf (error, "The %s muxer element is not avalaible. Check your GStreamer installation", muxer_name);
+			error = g_strdup_printf( "The %s muxer element is not avalaible. Check your GStreamer installation", muxer_name);
 			GST_ERROR (error);
 			*err = g_strdup(error);
+			g_free(error);
 		}			
 	}
 	else
@@ -866,7 +868,7 @@ gst_video_splitter_new (GError ** err)
     gvs->priv->textoverlay = gst_element_factory_make ("textoverlay","textoverlay");
     gvs->priv->queue =  gst_element_factory_make ("queue", "queue");     
     gvs->priv->video_encoder= gst_element_factory_make (DEFAULT_VIDEO_ENCODER, "theoraenc");
-    gvs->priv->muxer = gst_element_factory_make (DEAFAULT_VIDEO_MUXER, "videomuxer");
+    gvs->priv->muxer = gst_element_factory_make (DEFAULT_VIDEO_MUXER, "videomuxer");
     gvs->priv->file_sink = gst_element_factory_make ("filesink", "filesink");
     
     /* Set elements properties*/
