@@ -26,8 +26,8 @@
     <File name="src/gstscreenshot.h" subtype="Code" buildaction="Nothing" />
     <File name="src/gst-video-capturer.c" subtype="Code" buildaction="Compile" />
     <File name="src/gst-video-capturer.h" subtype="Code" buildaction="Nothing" />
-    <File name="src/gst-video-splitter.c" subtype="Code" buildaction="Compile" />
-    <File name="src/gst-video-splitter.h" subtype="Code" buildaction="Nothing" />
+    <File name="src/gst-video-editor.c" subtype="Code" buildaction="Compile" />
+    <File name="src/gst-video-editor.h" subtype="Code" buildaction="Nothing" />
     <File name="src/gst-smart-video-scaler.c" subtype="Code" buildaction="Compile" />
     <File name="src/gst-smart-video-scaler.h" subtype="Code" buildaction="Nothing" />
   </Contents>

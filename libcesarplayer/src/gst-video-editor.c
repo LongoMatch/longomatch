@@ -32,6 +32,9 @@
 #define DEFAULT_AUDIO_ENCODER "vorbisenc"
 #define DEFAULT_VIDEO_MUXER "matroskamux"
 #define FONT_SIZE_FACTOR 0.03
+#define LAME_CAPS "audio/x-raw-int, rate=44100, channels=2, endianness=1234, signed=true, width=16, depth=16"
+#define VORBIS_CAPS "audio/x-raw-float, rate=44100, channels=2, endianness=1234, signed=true, width=32, depth=32"
+#define FAAC_CAPS "audio/x-raw-int, rate=44100, channels=2, endianness=1234, signed=true, width=16, depth=16"
 
 #define TIMEOUT 50
 
@@ -532,19 +535,22 @@ gve_create_audio_encode_bin(GstVideoEditor *gve)
 	gve->priv->aencode_bin = gst_element_factory_make ("bin", "aencodebin");
 	gve->priv->audioidentity = gst_element_factory_make ("identity", "audio-identity"); 
 	gve->priv->audioconvert = gst_element_factory_make ("audioconvert", "audioconvert");  
- 	gve->priv->audioresample = gst_element_factory_make ("audioresample", "audioresample");  
+ 	gve->priv->audioresample = gst_element_factory_make ("audioresample", "audioresample"); 
+ 	gve->priv->audiocapsfilter = gst_element_factory_make ("capsfilter", "audiocapsfilter");  
 	gve->priv->audioqueue = gst_element_factory_make ("queue", "audio-queue");
 	gve->priv->audioencoder = gst_element_factory_make (DEFAULT_AUDIO_ENCODER, "audio-encoder"); 
 	 
-	 
+	   
 	g_object_set (G_OBJECT(gve->priv->audioidentity), "single-segment",TRUE,NULL);
+	g_object_set (G_OBJECT(gve->priv->audiocapsfilter), "caps",	gst_caps_from_string(VORBIS_CAPS),NULL);
  	g_object_set (G_OBJECT(gve->priv->audioencoder), "bitrate",gve->priv->audio_bitrate,NULL);
 
     /*Add and link elements*/
  	gst_bin_add_many(GST_BIN(gve->priv->aencode_bin),
  		gve->priv->audioidentity,
 		gve->priv->audioconvert,
-    	gve->priv->audioresample,  
+    	gve->priv->audioresample,
+    	gve->priv->audiocapsfilter,  
     	gve->priv->audioqueue,
     	gve->priv->audioencoder, 
 		NULL);
@@ -552,7 +558,8 @@ gve_create_audio_encode_bin(GstVideoEditor *gve)
   	gst_element_link_many(
 		gve->priv->audioidentity,
 		gve->priv->audioconvert,
-    	gve->priv->audioresample,  
+    	gve->priv->audioresample, 
+    	gve->priv->audiocapsfilter, 
     	gve->priv->audioqueue,
     	gve->priv->audioencoder, 
 		NULL);
@@ -684,12 +691,12 @@ gve_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
           			gst_element_state_get_name (new_state));
       		g_free (src_name);
 			
-			if (new_state = GST_STATE_PLAYING)
+			if (new_state == GST_STATE_PLAYING)
 				gve_set_tick_timeout (gve, TIMEOUT);
-      		if (old_state >= GST_STATE_PAUSED && new_state == GST_STATE_READY) {
+      		if (old_state == GST_STATE_PAUSED && new_state == GST_STATE_READY) {
 	      		if (gve->priv->update_id > 0){
-				g_source_remove (gve->priv->update_id);
-				gve->priv->update_id = 0;
+					g_source_remove (gve->priv->update_id);
+					gve->priv->update_id = 0;
 	  			}
        		} 
       		break;
@@ -804,7 +811,7 @@ gst_video_editor_add_segment (GstVideoEditor *gve , gchar *file, gint64 start, g
 		gst_bin_add (GST_BIN(gve->priv->gnl_video_composition), gnl_filesource);
 		gve->priv->gnl_video_filesources = g_list_append(gve->priv->gnl_video_filesources,gnl_filesource);
 		
-		if (hasAudio){
+		if (hasAudio && rate == 1){
    			filter = gst_caps_from_string ("audio/x-raw-float;audio/x-raw-int");    	
        		element_name = g_strdup_printf("gnlaudiofilesource%d",gve->priv->segments);
 			gnl_filesource = gst_element_factory_make ("gnlfilesource", element_name);	
@@ -977,15 +984,18 @@ gst_video_editor_set_audio_encoder (GstVideoEditor *gve, gchar **err, GvsAudioCo
 			case AAC:		
 				encoder_name = "faac";		
 				encoder = gst_element_factory_make (encoder_name,encoder_name);
+				g_object_set (G_OBJECT(gve->priv->audiocapsfilter), "caps",	gst_caps_from_string(FAAC_CAPS),NULL);
 				break;
 			case MP3:
 				encoder_name = "lame";
 				encoder = gst_element_factory_make (encoder_name,encoder_name);
 				g_object_set (G_OBJECT(encoder), "vbr",4,NULL);	//Variable Bitrate
+				g_object_set (G_OBJECT(gve->priv->audiocapsfilter), "caps",	gst_caps_from_string(LAME_CAPS),NULL);
 				break;
 			case VORBIS:
 				encoder_name = "vorbisenc";
-				encoder = gst_element_factory_make (encoder_name,encoder_name);				
+				encoder = gst_element_factory_make (encoder_name,encoder_name);	
+				g_object_set (G_OBJECT(gve->priv->audiocapsfilter), "caps",	gst_caps_from_string(VORBIS_CAPS),NULL);			
 				break;				
 		}			
 		if (encoder){
