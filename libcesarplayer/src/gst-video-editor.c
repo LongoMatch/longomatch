@@ -63,9 +63,11 @@ struct GstVideoEditorPrivate
 	gint		active_segment;
 	gint64		*stop_times;
 	GList		*titles;
-	GList		*gnl_filesources;
+	GList		*gnl_video_filesources;
+	GList		*gnl_audio_filesources;
 	gint64 		duration;
 	
+	/* Properties */
 	gboolean 	audio_enabled;
 	gboolean	title_enabled;	
 	gchar		*output_file;
@@ -74,12 +76,16 @@ struct GstVideoEditorPrivate
 	gint 		width;
 	gint		height;
 	
+	/* Bins */
 	GstElement 	*main_pipeline;	
 	GstElement	*vencode_bin;
 	GstElement	*aencode_bin;
-		
-	GstElement 	*gnl_composition;
-	GstElement	*gnl_filesource;
+	
+	/* Source */		
+	GstElement 	*gnl_video_composition;
+	GstElement	*gnl_audio_composition;
+	
+	/* Video */
 	GstElement 	*identity;
 	GstElement  *ffmpegcolorspace;
 	GstElement 	*videorate;	
@@ -89,7 +95,16 @@ struct GstVideoEditorPrivate
 	GstElement  *videobox;
 	GstElement 	*queue;
     GstElement 	*video_encoder;
-	GstElement 	*audio_encoder;
+	
+	/* Audio */	
+	GstElement 	*audioidentity; 
+	GstElement 	*audioconvert;  
+ 	GstElement 	*audioresample;  
+	GstElement 	*audiocapsfilter; 
+	GstElement 	*audioqueue;
+	GstElement 	*audioencoder; 
+    
+	/* Sink */
 	GstElement 	*muxer;
 	GstElement 	*file_sink;
 	
@@ -135,7 +150,8 @@ gst_video_editor_init (GstVideoEditor *object)
 	
 	priv->duration = 0;
 	priv->segments = 0;
-	priv->gnl_filesources = NULL;
+	priv->gnl_video_filesources = NULL;
+	priv->gnl_audio_filesources = NULL;
 	priv->titles = NULL;
 	priv->stop_times = (gint64 *)malloc (200*sizeof(gint64));
 	
@@ -166,7 +182,8 @@ gst_video_editor_finalize (GObject *object)
   	}
   	
   	g_free (gve->priv->output_file);
-  	g_list_free(gve->priv->gnl_filesources);
+  	g_list_free(gve->priv->gnl_video_filesources);
+  	g_list_free(gve->priv->gnl_audio_filesources);
   	g_free(gve->priv->stop_times);
   	g_list_free(gve->priv->titles);
   	 	
@@ -279,9 +296,14 @@ gst_video_editor_set_video_bit_rate (GstVideoEditor *gve,gint bitrate)
 static void 
 gst_video_editor_set_audio_bit_rate (GstVideoEditor *gve,gint bitrate)
 {
-	//TODO Not implemented
-   
-   
+	GstState cur_state;
+
+	gve->priv->audio_bitrate= bitrate;
+	gst_element_get_state (gve->priv->audioencoder, &cur_state, NULL, 0);
+    if (cur_state <= GST_STATE_READY) {
+	    g_object_set (gve->priv->audioencoder,"bitrate",bitrate,NULL);
+    	GST_INFO ("Encoding audio bitrate changed to :\n%d",bitrate);
+   	}   
 }
 
 static void 
@@ -390,8 +412,6 @@ gst_video_editor_get_property (GObject * object, guint property_id,
   	}
 }
 
-
-
 /* =========================================== */
 /*                                             */
 /*               Private Methods               */
@@ -495,6 +515,60 @@ gve_create_video_encode_bin(GstVideoEditor *gve)
 	srcpad = gst_element_get_static_pad(gve->priv->video_encoder,"src");
 	gst_pad_set_active (srcpad, TRUE);
     gst_element_add_pad (GST_ELEMENT(gve->priv->vencode_bin), gst_ghost_pad_new ("src", srcpad));
+    
+    g_object_unref (srcpad);
+    g_object_unref (sinkpad);
+}
+
+static void
+gve_create_audio_encode_bin(GstVideoEditor *gve)
+{
+	GstPad *sinkpad=NULL;
+	GstPad *srcpad=NULL;
+	
+	if(gve->priv->aencode_bin != NULL)
+		return;
+	
+	gve->priv->aencode_bin = gst_element_factory_make ("bin", "aencodebin");
+	gve->priv->audioidentity = gst_element_factory_make ("identity", "audio-identity"); 
+	gve->priv->audioconvert = gst_element_factory_make ("audioconvert", "audioconvert");  
+ 	gve->priv->audioresample = gst_element_factory_make ("audioresample", "audioresample");  
+	gve->priv->audioqueue = gst_element_factory_make ("queue", "audio-queue");
+	gve->priv->audioencoder = gst_element_factory_make (DEFAULT_AUDIO_ENCODER, "audio-encoder"); 
+	 
+	 
+	g_object_set (G_OBJECT(gve->priv->audioidentity), "single-segment",TRUE,NULL);
+ 	g_object_set (G_OBJECT(gve->priv->audioencoder), "bitrate",gve->priv->audio_bitrate,NULL);
+
+    /*Add and link elements*/
+ 	gst_bin_add_many(GST_BIN(gve->priv->aencode_bin),
+ 		gve->priv->audioidentity,
+		gve->priv->audioconvert,
+    	gve->priv->audioresample,  
+    	gve->priv->audioqueue,
+    	gve->priv->audioencoder, 
+		NULL);
+		
+  	gst_element_link_many(
+		gve->priv->audioidentity,
+		gve->priv->audioconvert,
+    	gve->priv->audioresample,  
+    	gve->priv->audioqueue,
+    	gve->priv->audioencoder, 
+		NULL);
+
+	/*Create bin sink pad*/
+	sinkpad = gst_element_get_static_pad(gve->priv->audioidentity,"sink");
+	gst_pad_set_active (sinkpad, TRUE);
+    gst_element_add_pad (GST_ELEMENT(gve->priv->aencode_bin), gst_ghost_pad_new ("sink", sinkpad));	
+	
+	/*Creat bin src pad*/
+	srcpad = gst_element_get_static_pad(gve->priv->audioencoder,"src");
+	gst_pad_set_active (srcpad, TRUE);
+    gst_element_add_pad (GST_ELEMENT(gve->priv->aencode_bin), gst_ghost_pad_new ("src", srcpad));
+    
+    g_object_unref (srcpad);
+    g_object_unref (sinkpad);
 }
 
 GQuark
@@ -524,6 +598,7 @@ new_decoded_pad_cb (GstElement* object,
 	GstCaps *caps=NULL;
 	GstStructure *str =NULL;
 	GstPad *videopad=NULL;
+	GstPad *audiopad=NULL;
 	GstVideoEditor *gve=NULL;
 
   	g_return_if_fail (GST_IS_VIDEO_EDITOR(user_data));
@@ -542,16 +617,30 @@ new_decoded_pad_cb (GstElement* object,
     		g_object_unref (videopad);
     		gst_caps_unref (caps);
     		return;
-  		}
-  		
+  		}  		
   		/* link 'n play*/
-  		GST_INFO ("Found video stream...");
+  		GST_INFO ("Found video stream...%" GST_PTR_FORMAT, caps);
     	gst_pad_link (pad,videopad);    	
 		g_object_unref (videopad);
+  	}
+  	
+  	else if (g_strrstr (gst_structure_get_name (str), "audio")){
+		gst_element_set_locked_state(gve->priv->aencode_bin, FALSE);
+		gst_element_set_state(gve->priv->aencode_bin, GST_STATE_PLAYING);
+		audiopad = gst_element_get_compatible_pad (gve->priv->aencode_bin, pad, NULL);
+		/* only link once */
+		if (GST_PAD_IS_LINKED (audiopad)) {
+    		g_object_unref (audiopad);
+    		gst_caps_unref (caps);
+    		return;
+  		}  		
+  		/* link 'n play*/
+  		GST_INFO ("Found audio stream...%" GST_PTR_FORMAT, caps);
+    	gst_pad_link (pad,audiopad);    	
+   		g_object_unref (audiopad);
+  	}
 
-  }
-
-  gst_caps_unref (caps);
+  	gst_caps_unref (caps);
 }
 
 static void 
@@ -574,7 +663,38 @@ gve_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
     	case GST_MESSAGE_WARNING: 
       		GST_WARNING ("Warning message: %" GST_PTR_FORMAT, message);
       		break;
-	    case GST_MESSAGE_EOS:
+      		
+      	 case GST_MESSAGE_STATE_CHANGED:{
+      		GstState old_state, new_state;
+      		gchar *src_name;
+
+      		gst_message_parse_state_changed (message, &old_state, &new_state, NULL);
+	
+      		if (old_state == new_state)
+        		break;
+
+      		/* we only care about playbin (pipeline) state changes */
+      		if (GST_MESSAGE_SRC (message) != GST_OBJECT (gve->priv->main_pipeline))
+       			break;
+
+      		src_name = gst_object_get_name (message->src);
+
+      		GST_INFO("%s changed state from %s to %s", src_name,
+          			gst_element_state_get_name (old_state),
+          			gst_element_state_get_name (new_state));
+      		g_free (src_name);
+			
+			if (new_state = GST_STATE_PLAYING)
+				gve_set_tick_timeout (gve, TIMEOUT);
+      		if (old_state >= GST_STATE_PAUSED && new_state == GST_STATE_READY) {
+	      		if (gve->priv->update_id > 0){
+				g_source_remove (gve->priv->update_id);
+				gve->priv->update_id = 0;
+	  			}
+       		} 
+      		break;
+    	}
+    	case GST_MESSAGE_EOS:
       		if (gve->priv->update_id > 0){
 				g_source_remove (gve->priv->update_id);
 				gve->priv->update_id = 0;
@@ -582,12 +702,13 @@ gve_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 	  		gst_element_set_state (gve->priv->main_pipeline, GST_STATE_NULL);
 	  		g_signal_emit (gve, gve_signals[SIGNAL_PERCENT_COMPLETED],0,(gfloat)1);
 	  		gve->priv->active_segment = 0;
+	  		/* Close file sink properly */
 	  		g_object_set (G_OBJECT(gve->priv->file_sink), "location","",NULL);
       		break;
     	default:
       		GST_LOG ("Unhandled message: %" GST_PTR_FORMAT, message);
       		break;
-  }
+  	}
  }
 
 static void
@@ -638,8 +759,7 @@ gve_query_timeout (GstVideoEditor * gve)
 	      		title = (gchar*) g_list_nth_data (gve->priv->titles, gve->priv->active_segment); 
 	      		g_object_set (G_OBJECT(gve->priv->textoverlay), "text",title,NULL);
       	}  
-  	}
-  	  
+  	}  	  
   	
 	return TRUE;
 }
@@ -652,23 +772,25 @@ gve_query_timeout (GstVideoEditor * gve)
 
 
 void 
-gst_video_editor_add_segment (GstVideoEditor *gve , gchar *file, gint64 start, gint64 duration, gdouble rate, gchar *title)
+gst_video_editor_add_segment (GstVideoEditor *gve , gchar *file, gint64 start, gint64 duration, gdouble rate, gchar *title, gboolean hasAudio)
 {	
 	GstState cur_state;
 	GstElement *gnl_filesource;
 	GstCaps *filter;
+	
+	GstElement *audiotestsrc;
 		
 	gchar *element_name = "";
 	gint64 final_duration;	
 	
 	g_return_if_fail (GST_IS_VIDEO_EDITOR(gve));		
 	
-	gst_element_get_state (gve->priv->gnl_composition, &cur_state, NULL, 0);
+	gst_element_get_state (gve->priv->main_pipeline, &cur_state, NULL, 0);
     if (cur_state <= GST_STATE_READY) {	
     	final_duration = GST_MSECOND * duration / rate; 
     	 
-   		filter = gst_caps_new_simple ("video/x-raw-yuv",NULL);    	
-       	element_name = g_strdup_printf("gnlfilesource%d",gve->priv->segments);
+   		filter = gst_caps_from_string ("video/x-raw-rgb;video/x-raw-yuv");    	
+       	element_name = g_strdup_printf("gnlvideofilesource%d",gve->priv->segments);
 		gnl_filesource = gst_element_factory_make ("gnlfilesource", element_name);		
 		g_object_set (G_OBJECT(gnl_filesource), "location",file,NULL);
 		g_object_set (G_OBJECT(gnl_filesource), "media-start",GST_MSECOND*start,NULL);
@@ -679,12 +801,26 @@ gst_video_editor_add_segment (GstVideoEditor *gve , gchar *file, gint64 start, g
 		if (gve->priv->segments == 0){
 			g_object_set (G_OBJECT(gve->priv->textoverlay), "text",title,NULL);
 		}		
-		gst_bin_add (GST_BIN(gve->priv->gnl_composition), gnl_filesource);
+		gst_bin_add (GST_BIN(gve->priv->gnl_video_composition), gnl_filesource);
+		gve->priv->gnl_video_filesources = g_list_append(gve->priv->gnl_video_filesources,gnl_filesource);
+		
+		if (hasAudio){
+   			filter = gst_caps_from_string ("audio/x-raw-float;audio/x-raw-int");    	
+       		element_name = g_strdup_printf("gnlaudiofilesource%d",gve->priv->segments);
+			gnl_filesource = gst_element_factory_make ("gnlfilesource", element_name);	
+			g_object_set (G_OBJECT(gnl_filesource), "location",file,NULL);
+			g_object_set (G_OBJECT(gnl_filesource), "media-start",GST_MSECOND*start,NULL);
+			g_object_set (G_OBJECT(gnl_filesource), "media-duration",GST_MSECOND*duration,NULL);
+			g_object_set (G_OBJECT(gnl_filesource), "start",gve->priv->duration,NULL);
+			g_object_set (G_OBJECT(gnl_filesource), "duration",final_duration,NULL);
+			g_object_set (G_OBJECT(gnl_filesource), "caps",filter,NULL);	
+			gst_bin_add (GST_BIN(gve->priv->gnl_audio_composition), gnl_filesource);
+			gve->priv->gnl_audio_filesources = g_list_append(gve->priv->gnl_audio_filesources,gnl_filesource);
+		}		
 				
 		gve->priv->duration += final_duration;	
-		gve->priv->segments++;	
+		gve->priv->segments++;			
 		
-		gve->priv->gnl_filesources = g_list_append(gve->priv->gnl_filesources,gnl_filesource);
 		gve->priv->titles = g_list_append(gve->priv->titles,title);
 		gve->priv->stop_times[gve->priv->segments-1] = gve->priv->duration;		
 			
@@ -705,21 +841,32 @@ gst_video_editor_clear_segments_list (GstVideoEditor *gve)
 	
 	gst_video_editor_cancel(gve);
 	
-	tmp = gve->priv->gnl_filesources;
+	tmp = gve->priv->gnl_video_filesources;
 
 	for (; tmp; tmp = g_list_next (tmp)) {
     	GstElement *object = (GstElement *) tmp->data;
 		if (object)
 			gst_element_set_state (object, GST_STATE_NULL);
-			gst_bin_remove(GST_BIN(gve->priv->gnl_composition), object);					
+			gst_bin_remove(GST_BIN(gve->priv->gnl_video_composition), object);					
+	}
+	
+	tmp = gve->priv->gnl_audio_filesources;
+
+	for (; tmp; tmp = g_list_next (tmp)) {
+    	GstElement *object = (GstElement *) tmp->data;
+		if (object)
+			gst_element_set_state (object, GST_STATE_NULL);
+			gst_bin_remove(GST_BIN(gve->priv->gnl_audio_composition), object);					
 	}
 	
 	g_list_free(tmp);
-	g_list_free(gve->priv->gnl_filesources);
+	g_list_free(gve->priv->gnl_video_filesources);
+	g_list_free(gve->priv->gnl_audio_filesources);
 	g_free(gve->priv->stop_times);
 	g_list_free(gve->priv->titles);
 	
-	gve->priv->gnl_filesources = NULL;
+	gve->priv->gnl_video_filesources = NULL;
+	gve->priv->gnl_audio_filesources = NULL;
 	gve->priv->stop_times = (gint64 *)malloc (200*sizeof(gint64));
 	gve->priv->titles = NULL;	
 	
@@ -814,7 +961,74 @@ gst_video_editor_set_video_encoder (GstVideoEditor *gve, gchar **err, GvsVideoCo
 void 
 gst_video_editor_set_audio_encoder (GstVideoEditor *gve, gchar **err, GvsAudioCodec codec)
 {
-	//TODO not implemented
+	GstElement *encoder = NULL;
+	GstState cur_state;
+	GstPad *srcpad;
+	GstPad *oldsrcpad;
+	gchar *encoder_name="";
+	gchar *error;
+	
+	g_return_if_fail (GST_IS_VIDEO_EDITOR(gve));
+	
+	gst_element_get_state (gve->priv->main_pipeline, &cur_state, NULL, 0);
+	
+	if (cur_state <= GST_STATE_READY) {		
+		switch (codec){
+			case AAC:		
+				encoder_name = "faac";		
+				encoder = gst_element_factory_make (encoder_name,encoder_name);
+				break;
+			case MP3:
+				encoder_name = "lame";
+				encoder = gst_element_factory_make (encoder_name,encoder_name);
+				g_object_set (G_OBJECT(encoder), "vbr",4,NULL);	//Variable Bitrate
+				break;
+			case VORBIS:
+				encoder_name = "vorbisenc";
+				encoder = gst_element_factory_make (encoder_name,encoder_name);				
+				break;				
+		}			
+		if (encoder){
+			if (!g_strcmp0(gst_element_get_name(gve->priv->audioencoder),encoder_name)){
+				GST_WARNING("The audio encoder is not changed because it is already in use.");
+				gst_object_unref(encoder);
+				return;
+			}		
+			
+			/*Remove old encoder element*/
+			
+			gst_element_unlink(gve->priv->audioqueue,gve->priv->audioencoder);
+			gst_element_unlink(gve->priv->aencode_bin,gve->priv->muxer);
+			gst_element_set_state(gve->priv->audioencoder,GST_STATE_NULL);
+			gst_bin_remove(GST_BIN(gve->priv->aencode_bin),gve->priv->audioencoder);
+			
+			/*Add new encoder element*/
+			gve->priv->audioencoder = encoder;	
+			g_object_set (G_OBJECT(gve->priv->audioencoder), "bitrate",gve->priv->audio_bitrate,NULL);
+			/*Add first to the encoder bin*/
+			gst_bin_add(GST_BIN(gve->priv->aencode_bin),gve->priv->audioencoder);			
+			gst_element_link(gve->priv->audioqueue,gve->priv->audioencoder);
+			/*Remove old encoder bin's src pad*/
+			oldsrcpad = gst_element_get_static_pad(gve->priv->aencode_bin,"src");
+			gst_pad_set_active(oldsrcpad,FALSE);
+			gst_element_remove_pad(gve->priv->aencode_bin,oldsrcpad);
+			/*Create new encoder bin's src pad*/
+			srcpad = gst_element_get_static_pad(gve->priv->audioencoder,"src");			
+			gst_pad_set_active (srcpad, TRUE);
+    		gst_element_add_pad (gve->priv->aencode_bin, gst_ghost_pad_new ("src", srcpad));
+    		gst_element_link(gve->priv->aencode_bin, gve->priv->muxer);
+			gve_rewrite_headers(gve);
+		}
+		
+		else {
+			error = g_strdup_printf("The %s encoder element is not avalaible. Check your GStreamer installation", encoder_name);
+			GST_ERROR (error);
+			*err = g_strdup(error);
+			g_free(error);
+		}
+	}
+	else
+    	GST_WARNING("The audio encoder cannot be changed for a state <= GST_STATE_READY");
 }
 
 void 
@@ -858,13 +1072,13 @@ gst_video_editor_set_video_muxer (GstVideoEditor *gve, gchar **err, GvsVideoMuxe
 				return;
 			}	
 			gst_element_unlink(gve->priv->vencode_bin,gve->priv->muxer);
-			//gst_element_unlink(gve->priv->audio_encoder,gve->priv->muxer);
+			gst_element_unlink(gve->priv->aencode_bin,gve->priv->muxer);
 			gst_element_unlink(gve->priv->muxer,gve->priv->file_sink);
 			gst_element_set_state(gve->priv->muxer,GST_STATE_NULL);
 			gst_bin_remove(GST_BIN(gve->priv->main_pipeline),gve->priv->muxer);
 			gst_bin_add(GST_BIN(gve->priv->main_pipeline),muxer);
 			gst_element_link_many(gve->priv->vencode_bin,muxer,gve->priv->file_sink,NULL);	
-			//gst_element_link(gve->priv->audio_encoder,muxer);	
+			gst_element_link(gve->priv->aencode_bin,muxer);	
 			gve->priv->muxer = muxer;
 			gve_rewrite_headers(gve);				
 		}
@@ -886,8 +1100,8 @@ gst_video_editor_start(GstVideoEditor *gve)
 	g_return_if_fail (GST_IS_VIDEO_EDITOR(gve));
 	
 	gst_element_set_state(gve->priv->main_pipeline, GST_STATE_PLAYING);	
-	g_signal_emit (gve, gve_signals[SIGNAL_PERCENT_COMPLETED],0,(gfloat)0);	
-	gve_set_tick_timeout(gve,TIMEOUT);
+	g_signal_emit (gve, gve_signals[SIGNAL_PERCENT_COMPLETED],0,(gfloat)0);
+	
 }
 
 void 
@@ -913,6 +1127,8 @@ gst_video_editor_new (GError ** err)
 {
 	GstVideoEditor *gve = NULL;
 	GstCaps *filter=NULL;
+	GstElement *audiotestsrc=NULL;
+	GstElement *gnlsource=NULL;
 
 	gve = g_object_new(GST_TYPE_VIDEO_EDITOR, NULL);
 	
@@ -929,8 +1145,9 @@ gst_video_editor_new (GError ** err)
 
   	/* Create elements*/
 
-  	gve->priv->gnl_composition = gst_element_factory_make("gnlcomposition","gnlcomposition");
-  	if (!gve->priv->gnl_composition){	
+  	gve->priv->gnl_video_composition = gst_element_factory_make("gnlcomposition","gnl-video-composition");
+  	gve->priv->gnl_audio_composition = gst_element_factory_make("gnlcomposition","gnl-audio-composition");
+  	if (!gve->priv->gnl_video_composition || !gve->priv->gnl_audio_composition){	
   		g_set_error (err, GVC_ERROR, GVC_ERROR_PLUGIN_LOAD,
                  ("Failed to create a Gnonlin element. "
                    "Please check your GStreamer installation."));
@@ -939,9 +1156,21 @@ gst_video_editor_new (GError ** err)
         return NULL;                   
   	}  	  	
 
+	/* If the file doesn't contain audio, something must be playing */
+	/* We use an audiotestsrc mutted and with a low priority */
+	gnlsource = gst_element_factory_make ("gnlsource", "gnlaudiofakesrc");
+	audiotestsrc = gst_element_factory_make ("audiotestsrc", "audiotestsrc");
+	g_object_set (G_OBJECT(gnlsource), "expandable",TRUE,NULL); 
+	g_object_set (G_OBJECT(gnlsource), "priority",999,NULL); 
+	g_object_set (G_OBJECT(audiotestsrc), "volume",(double)0,NULL); 
+	gst_bin_add(GST_BIN(gnlsource), audiotestsrc);
+	gst_bin_add(GST_BIN(gve->priv->gnl_audio_composition),gnlsource);
+	
+	
     gve->priv->muxer = gst_element_factory_make (DEFAULT_VIDEO_MUXER, "videomuxer");
     gve->priv->file_sink = gst_element_factory_make ("filesink", "filesink");
     gve_create_video_encode_bin(gve);
+    gve_create_audio_encode_bin(gve);
     
     /* Set elements properties*/    
 
@@ -950,8 +1179,10 @@ gst_video_editor_new (GError ** err)
     /* Link elements*/
 
 	gst_bin_add_many (	GST_BIN (gve->priv->main_pipeline),
-		gve->priv->gnl_composition,
+		gve->priv->gnl_video_composition,
+		gve->priv->gnl_audio_composition,
 		gve->priv->vencode_bin,	
+		gve->priv->aencode_bin,	
 		gve->priv->muxer,						
 		gve->priv->file_sink,
 		NULL);
@@ -961,6 +1192,7 @@ gst_video_editor_new (GError ** err)
 		gve->priv->muxer,						
 		gve->priv->file_sink,
 		NULL);
+	gst_element_link(gve->priv->aencode_bin,gve->priv->muxer);
 		
    
 	/*Connect bus signals*/
@@ -968,7 +1200,9 @@ gst_video_editor_new (GError ** err)
     /*We have to wait for a "new-decoded-pad" message to link the composition with
     the encoder tail*/
 	gve->priv->bus = gst_element_get_bus (GST_ELEMENT(gve->priv->main_pipeline));
-  	g_signal_connect (gve->priv->gnl_composition, "pad-added",G_CALLBACK(new_decoded_pad_cb),gve);
+  	g_signal_connect (gve->priv->gnl_video_composition, "pad-added",G_CALLBACK(new_decoded_pad_cb),gve);
+  	g_signal_connect (gve->priv->gnl_audio_composition, "pad-added",G_CALLBACK(new_decoded_pad_cb),gve);
+
 	gst_bus_add_signal_watch (gve->priv->bus);
   	gve->priv->sig_bus_async =	g_signal_connect (gve->priv->bus, "message",
                         		G_CALLBACK (gve_bus_message_cb),
@@ -976,6 +1210,7 @@ gst_video_editor_new (GError ** err)
                         		
 	gst_element_set_state(gve->priv->main_pipeline,GST_STATE_READY);
 	gst_element_set_locked_state(gve->priv->vencode_bin,TRUE);
+	gst_element_set_locked_state(gve->priv->aencode_bin,TRUE);
 	
 	return gve;
 }

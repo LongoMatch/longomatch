@@ -102,7 +102,7 @@ EXPORT void gst_video_editor_set_video_encoder(GstVideoEditor *gve,gchar **err, 
 EXPORT void gst_video_editor_set_audio_encoder(GstVideoEditor *gve,gchar **err, GvsAudioCodec codec);
 EXPORT void gst_video_editor_set_video_muxer(GstVideoEditor *gve,gchar **err, GvsVideoMuxer codec);
 EXPORT void gst_video_editor_clear_segments_list(GstVideoEditor *gve);
-EXPORT void gst_video_editor_add_segment(GstVideoEditor *gve, gchar *file, gint64 start, gint64 duration, gdouble rate, gchar *title);
+EXPORT void gst_video_editor_add_segment(GstVideoEditor *gve, gchar *file, gint64 start, gint64 duration, gdouble rate, gchar *title, gboolean hasAudio);
 
 G_END_DECLS
 
