@@ -53,9 +53,7 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 libcesarplayer_la_LIBADD =
 am_libcesarplayer_la_OBJECTS = bacon-video-widget-gst-0.10.lo \
 	baconvideowidget-marshal.lo gstscreenshot.lo \
-	gst-video-capturer.lo gst-video-splitter.lo \
-	gst-smart-video-scaler.lo gst-smart-video-scaler.lo \
-	gstvideowidget.lo
+	gst-video-capturer.lo gst-video-editor.lo gstvideowidget.lo
 libcesarplayer_la_OBJECTS = $(am_libcesarplayer_la_OBJECTS)
 libcesarplayer_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
@@ -224,10 +222,8 @@ libcesarplayer_la_SOURCES = \
 	gstscreenshot.h \
 	gst-video-capturer.c \
 	gst-video-capturer.h \
-	gst-video-splitter.c\
-	gst-smart-video-scaler.c\
-	gst-smart-video-scaler.c\
-	gst-video.splitter.h\
+	gst-video-editor.c\
+	gst-video-editor.h\
 	gstvideowidget.c \
 	gstvideowidget.h \
 	macros.h 
@@ -306,9 +302,8 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bacon-video-widget-gst-0.10.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/baconvideowidget-marshal.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gst-smart-video-scaler.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gst-video-capturer.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gst-video-splitter.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gst-video-editor.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gstscreenshot.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gstvideowidget.Plo@am__quote@
 

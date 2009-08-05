@@ -10,41 +10,38 @@ ASSEMBLY = bin/Debug/LongoMatch.exe
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = exe
 PROJECT_REFERENCES =  \
-	../CesarPlayer/a.dll
+	../CesarPlayer/bin/Debug/CesarPlayer.dll
 BUILD_DIR = bin/Debug
-
-CESARPLAYER_DLL=
+CESARPLAYER_DLL_SOURCE=../CesarPlayer/bin/Debug/CesarPlayer.dll
+CESARPLAYER_DLL=$(BUILD_DIR)/CesarPlayer.dll
+CESARPLAYER_DLL_MDB_SOURCE=../CesarPlayer/bin/Debug/CesarPlayer.dll.mdb
+CESARPLAYER_DLL_MDB=$(BUILD_DIR)/CesarPlayer.dll.mdb
 LONGOMATCH_PNG_SOURCE=images/longomatch.png
 LONGOMATCH_EXE_MDB_SOURCE=bin/Debug/LongoMatch.exe.mdb
-A_DLL_SOURCE=../CesarPlayer/a.dll
-A_DLL=$(BUILD_DIR)/a.dll
+LONGOMATCH_EXE_MDB = $(BUILD_DIR)/LongoMatch.exe.mdb
 LONGOMATCH_DESKTOP_SOURCE=app.desktop
-CESARPLAYER_DLL_MDB=
-A_DLL_MDB_SOURCE=../CesarPlayer/a.dll.mdb
-A_DLL_MDB=$(BUILD_DIR)/a.dll.mdb
 BACKGROUND_PNG_SOURCE=images/background.png
 
 endif
 
 if ENABLE_RELEASE
 ASSEMBLY_COMPILER_COMMAND = $(GMCS)
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ -debug -define:DEBUG "-main:LongoMatch.MainClass"
+ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-main:LongoMatch.MainClass"
 ASSEMBLY = bin/Release/LongoMatch.exe
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = exe
 PROJECT_REFERENCES =  \
 	../CesarPlayer/bin/Release/CesarPlayer.dll
 BUILD_DIR = bin/Release
-
 CESARPLAYER_DLL_SOURCE=../CesarPlayer/bin/Release/CesarPlayer.dll
 CESARPLAYER_DLL=$(BUILD_DIR)/CesarPlayer.dll
 LONGOMATCH_PNG_SOURCE=images/longomatch.png
-LONGOMATCH_EXE_MDB_SOURCE=bin/Release/LongoMatch.exe.mdb
-A_DLL=
+LONGOMATCH_LOGO_SOURCE=images/logo_48x48.png
+LONGOMATCH_EXE_MDB_SOURCE=
+LONGOMATCH_EXE_MDB = 
 LONGOMATCH_DESKTOP_SOURCE=app.desktop
-CESARPLAYER_DLL_MDB_SOURCE=../CesarPlayer/bin/Release/CesarPlayer.dll.mdb
-CESARPLAYER_DLL_MDB=$(BUILD_DIR)/CesarPlayer.dll.mdb
-A_DLL_MDB=
+CESARPLAYER_DLL_MDB_SOURCE=
+CESARPLAYER_DLL_MDB=
 BACKGROUND_PNG_SOURCE=images/background.png
 
 endif
@@ -56,12 +53,14 @@ COMMONAPPLICATIONDATAROOT_IMAGES = \
 	$(LONGOMATCH_PNG) \
 	$(BACKGROUND_PNG)  
 
+COMMONAPPLICATIONDATAROOT_LOGO = \
+	$(LONGOMATCH_LOGO)
+	
+
 PROGRAMFILES = \
 	$(CESARPLAYER_DLL) \
 	$(LONGOMATCH_EXE_MDB) \
-	$(A_DLL) \
-	$(CESARPLAYER_DLL_MDB) \
-	$(A_DLL_MDB)  
+	$(CESARPLAYER_DLL_MDB) 
 
 LINUX_DESKTOPAPPLICATIONS = \
 	$(LONGOMATCH_DESKTOP)  
@@ -164,7 +163,21 @@ FILES = \
 	gtk-gui/LongoMatch.Gui.Dialog.WorkspaceChooser.cs \
 	Gui/WorkspaceChooser.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs \
-	Gui/PlayersSelectionDialog.cs 
+	Gui/PlayersSelectionDialog.cs \
+	DB/Compat/0.0/DB/DataBase.cs \
+	DB/Compat/0.0/DB/MediaFile.cs \
+	DB/Compat/0.0/DB/Project.cs \
+	DB/Compat/0.0/DB/Sections.cs \
+	DB/Compat/0.0/Time/MediaTimeNode.cs \
+	DB/Compat/0.0/Time/PixbufTimeNode.cs \
+	DB/Compat/0.0/Time/PlayListTimeNode.cs \
+	DB/Compat/0.0/Time/SectionsTimeNode.cs \
+	DB/Compat/0.0/Time/Time.cs \
+	DB/Compat/0.0/Time/TimeNode.cs \
+	DB/Compat/0.0/Playlist/IPlayList.cs \
+	DB/Compat/0.0/Playlist/PlayList.cs \
+	DB/Compat/0.0/DatabaseMigrator.cs \
+	DB/Compat/0.0/PlayListMigrator.cs 
 
 DATA_FILES = 
 
@@ -173,6 +186,7 @@ RESOURCES = \
 	gtk-gui/gui.stetic 
 
 EXTRAS = \
+	images/logo_48x48.png \
 	longomatch.in 
 
 REFERENCES =  \
@@ -191,19 +205,19 @@ CLEANFILES = $(COMMONAPPLICATIONDATAROOT_IMAGES) $(PROGRAMFILES) $(LINUX_DESKTOP
 include $(top_srcdir)/Makefile.include
 
 LONGOMATCH_PNG = $(BUILD_DIR)/images/longomatch.png
-LONGOMATCH_EXE_MDB = $(BUILD_DIR)/LongoMatch.exe.mdb
+LONGOMATCH_LOGO = $(BUILD_DIR)/icons/hicolor/48x48/apps/longomatch.png
 LONGOMATCH = $(BUILD_DIR)/longomatch
 LONGOMATCH_DESKTOP = $(BUILD_DIR)/longomatch.desktop
 BACKGROUND_PNG = $(BUILD_DIR)/images/background.png
 
 $(eval $(call emit-deploy-target,CESARPLAYER_DLL))
 $(eval $(call emit-deploy-target,LONGOMATCH_PNG))
+$(eval $(call emit-deploy-target,LONGOMATCH_LOGO))
+$(eval $(call emit-deploy-target,BACKGROUND_PNG))
 $(eval $(call emit-deploy-wrapper,LONGOMATCH,longomatch,x))
-$(eval $(call emit-deploy-target,A_DLL))
 $(eval $(call emit-deploy-target,LONGOMATCH_DESKTOP))
 $(eval $(call emit-deploy-target,CESARPLAYER_DLL_MDB))
-$(eval $(call emit-deploy-target,A_DLL_MDB))
-$(eval $(call emit-deploy-target,BACKGROUND_PNG))
+
 
 
 $(eval $(call emit_resgen_targets))

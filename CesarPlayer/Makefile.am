@@ -6,30 +6,27 @@ EXTRA_DIST =
 if ENABLE_DEBUG
 ASSEMBLY_COMPILER_COMMAND = $(GMCS)
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -unsafe -warn:4 -optimize+ -debug -define:DEBUG
-ASSEMBLY = a.dll
+ASSEMBLY = bin/Debug/CesarPlayer.dll
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
 PROJECT_REFERENCES = 
-BUILD_DIR = .
-
-CESARPLAYER_DLL_MDB=
-A_DLL_MDB_SOURCE=a.dll.mdb
-A_DLL_MDB=$(BUILD_DIR)/a.dll.mdb
+BUILD_DIR = bin/Debug
+CESARPLAYER_DLL_MDB_SOURCE=bin/Debug/CesarPlayer.dll.mdb
+CESARPLAYER_DLL_MDB=$(BUILD_DIR)/CesarPlayer.dll.mdb
 
 endif
 
 if ENABLE_RELEASE
 ASSEMBLY_COMPILER_COMMAND = $(GMCS)
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -unsafe -warn:4 -optimize+ -debug -define:DEBUG
+ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -unsafe -warn:4 -optimize+ 
 ASSEMBLY = bin/Release/CesarPlayer.dll
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
 PROJECT_REFERENCES = 
 BUILD_DIR = bin/Release
+CESARPLAYER_DLL_MDB_SOURCE=
+CESARPLAYER_DLL_MDB=
 
-CESARPLAYER_DLL_MDB_SOURCE=bin/Release/CesarPlayer.dll.mdb
-CESARPLAYER_DLL_MDB=$(BUILD_DIR)/CesarPlayer.dll.mdb
-A_DLL_MDB=
 
 endif
 
@@ -37,8 +34,7 @@ AL=al2
 SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
-	$(CESARPLAYER_DLL_MDB) \
-	$(A_DLL_MDB)  
+	$(CESARPLAYER_DLL_MDB)
 
 
 RESGEN=resgen2

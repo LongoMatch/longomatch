@@ -45,6 +45,7 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES = cesarplayer.pc
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(pkglibdir)" \
 	"$(DESTDIR)$(commonapplicationdatarootimagesdir)" \
+	"$(DESTDIR)$(commonapplicationdatarootlogodir)" \
 	"$(DESTDIR)$(linuxdesktopapplicationsdir)" \
 	"$(DESTDIR)$(programfilesdir)"
 binSCRIPT_INSTALL = $(INSTALL_SCRIPT)
@@ -59,9 +60,11 @@ am__vpath_adj = case $$p in \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 commonapplicationdatarootimagesDATA_INSTALL = $(INSTALL_DATA)
+commonapplicationdatarootlogoDATA_INSTALL = $(INSTALL_DATA)
 linuxdesktopapplicationsDATA_INSTALL = $(INSTALL_DATA)
 programfilesDATA_INSTALL = $(INSTALL_DATA)
 DATA = $(commonapplicationdatarootimages_DATA) \
+	$(commonapplicationdatarootlogo_DATA) \
 	$(linuxdesktopapplications_DATA) $(programfiles_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
@@ -194,11 +197,11 @@ EXTRA_DIST = $(build_sources) $(build_resx_files) \
 	$(DATA_FILES) $(build_culture_res_files)
 
 # Warning: This is an automatically generated file, do not edit!
-@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
-@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
+@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = $(GMCS)
+@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = $(GMCS)
 @ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -unsafe -warn:4 -optimize+ -debug -define:DEBUG
-@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -unsafe -warn:4 -optimize+ -debug -define:DEBUG
-@ENABLE_DEBUG_TRUE@ASSEMBLY = a.dll
+@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -unsafe -warn:4 -optimize+ 
+@ENABLE_DEBUG_TRUE@ASSEMBLY = bin/Debug/CesarPlayer.dll
 @ENABLE_RELEASE_TRUE@ASSEMBLY = bin/Release/CesarPlayer.dll
 @ENABLE_DEBUG_TRUE@ASSEMBLY_MDB = $(ASSEMBLY).mdb
 @ENABLE_RELEASE_TRUE@ASSEMBLY_MDB = $(ASSEMBLY).mdb
@@ -206,19 +209,16 @@ EXTRA_DIST = $(build_sources) $(build_resx_files) \
 @ENABLE_RELEASE_TRUE@COMPILE_TARGET = library
 @ENABLE_DEBUG_TRUE@PROJECT_REFERENCES = 
 @ENABLE_RELEASE_TRUE@PROJECT_REFERENCES = 
-@ENABLE_DEBUG_TRUE@BUILD_DIR = .
+@ENABLE_DEBUG_TRUE@BUILD_DIR = bin/Debug
 @ENABLE_RELEASE_TRUE@BUILD_DIR = bin/Release
-@ENABLE_DEBUG_TRUE@CESARPLAYER_DLL_MDB = 
-@ENABLE_RELEASE_TRUE@CESARPLAYER_DLL_MDB = $(BUILD_DIR)/CesarPlayer.dll.mdb
-@ENABLE_DEBUG_TRUE@A_DLL_MDB_SOURCE = a.dll.mdb
-@ENABLE_DEBUG_TRUE@A_DLL_MDB = $(BUILD_DIR)/a.dll.mdb
-@ENABLE_RELEASE_TRUE@A_DLL_MDB = 
-@ENABLE_RELEASE_TRUE@CESARPLAYER_DLL_MDB_SOURCE = bin/Release/CesarPlayer.dll.mdb
+@ENABLE_DEBUG_TRUE@CESARPLAYER_DLL_MDB_SOURCE = bin/Debug/CesarPlayer.dll.mdb
+@ENABLE_RELEASE_TRUE@CESARPLAYER_DLL_MDB_SOURCE = 
+@ENABLE_DEBUG_TRUE@CESARPLAYER_DLL_MDB = $(BUILD_DIR)/CesarPlayer.dll.mdb
+@ENABLE_RELEASE_TRUE@CESARPLAYER_DLL_MDB = 
 AL = al2
 SATELLITE_ASSEMBLY_NAME = $(notdir $(basename $(ASSEMBLY))).resources.dll
 PROGRAMFILES = \
-	$(CESARPLAYER_DLL_MDB) \
-	$(A_DLL_MDB)  
+	$(CESARPLAYER_DLL_MDB)
 
 RESGEN = resgen2
 FILES = \
@@ -353,8 +353,10 @@ linuxdesktopapplicationsdir = @datadir@/applications
 linuxdesktopapplications_DATA = $(LINUX_DESKTOPAPPLICATIONS)
 programfilesdir = @libdir@/@PACKAGE@
 programfiles_DATA = $(PROGRAMFILES)
-commonapplicationdatarootimagesdir = @datadir@/images
+commonapplicationdatarootimagesdir = @datadir@/@PACKAGE@/images
 commonapplicationdatarootimages_DATA = $(COMMONAPPLICATIONDATAROOT_IMAGES)
+commonapplicationdatarootlogodir = @datadir@/@PACKAGE@/icons/hicolor/48x48/apps
+commonapplicationdatarootlogo_DATA = $(COMMONAPPLICATIONDATAROOT_LOGO)
 
 # generating satellite assemblies
 culture_resources = $(foreach res, $(RESOURCES_ESC), $(if $(call is_cultured_resource,$(call get_resource_name, $(res))),$(res)))
@@ -459,6 +461,23 @@ uninstall-commonapplicationdatarootimagesDATA:
 	  echo " rm -f '$(DESTDIR)$(commonapplicationdatarootimagesdir)/$$f'"; \
 	  rm -f "$(DESTDIR)$(commonapplicationdatarootimagesdir)/$$f"; \
 	done
+install-commonapplicationdatarootlogoDATA: $(commonapplicationdatarootlogo_DATA)
+	@$(NORMAL_INSTALL)
+	test -z "$(commonapplicationdatarootlogodir)" || $(MKDIR_P) "$(DESTDIR)$(commonapplicationdatarootlogodir)"
+	@list='$(commonapplicationdatarootlogo_DATA)'; for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  f=$(am__strip_dir) \
+	  echo " $(commonapplicationdatarootlogoDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(commonapplicationdatarootlogodir)/$$f'"; \
+	  $(commonapplicationdatarootlogoDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(commonapplicationdatarootlogodir)/$$f"; \
+	done
+
+uninstall-commonapplicationdatarootlogoDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(commonapplicationdatarootlogo_DATA)'; for p in $$list; do \
+	  f=$(am__strip_dir) \
+	  echo " rm -f '$(DESTDIR)$(commonapplicationdatarootlogodir)/$$f'"; \
+	  rm -f "$(DESTDIR)$(commonapplicationdatarootlogodir)/$$f"; \
+	done
 install-linuxdesktopapplicationsDATA: $(linuxdesktopapplications_DATA)
 	@$(NORMAL_INSTALL)
 	test -z "$(linuxdesktopapplicationsdir)" || $(MKDIR_P) "$(DESTDIR)$(linuxdesktopapplicationsdir)"
@@ -530,7 +549,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(SCRIPTS) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(pkglibdir)" "$(DESTDIR)$(commonapplicationdatarootimagesdir)" "$(DESTDIR)$(linuxdesktopapplicationsdir)" "$(DESTDIR)$(programfilesdir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(pkglibdir)" "$(DESTDIR)$(commonapplicationdatarootimagesdir)" "$(DESTDIR)$(commonapplicationdatarootlogodir)" "$(DESTDIR)$(linuxdesktopapplicationsdir)" "$(DESTDIR)$(programfilesdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -578,6 +597,7 @@ info: info-am
 info-am:
 
 install-data-am: install-commonapplicationdatarootimagesDATA \
+	install-commonapplicationdatarootlogoDATA \
 	install-linuxdesktopapplicationsDATA install-programfilesDATA
 
 install-dvi: install-dvi-am
@@ -614,6 +634,7 @@ ps-am:
 
 uninstall-am: uninstall-binSCRIPTS \
 	uninstall-commonapplicationdatarootimagesDATA \
+	uninstall-commonapplicationdatarootlogoDATA \
 	uninstall-linuxdesktopapplicationsDATA uninstall-pkglibSCRIPTS \
 	uninstall-programfilesDATA
 
@@ -623,17 +644,18 @@ uninstall-am: uninstall-binSCRIPTS \
 	distclean distclean-generic distclean-libtool distdir dvi \
 	dvi-am html html-am info info-am install install-am \
 	install-binSCRIPTS install-commonapplicationdatarootimagesDATA \
-	install-data install-data-am install-dvi install-dvi-am \
-	install-exec install-exec-am install-html install-html-am \
-	install-info install-info-am \
-	install-linuxdesktopapplicationsDATA install-man install-pdf \
-	install-pdf-am install-pkglibSCRIPTS install-programfilesDATA \
-	install-ps install-ps-am install-strip installcheck \
-	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-generic \
-	mostlyclean-libtool pdf pdf-am ps ps-am uninstall uninstall-am \
-	uninstall-binSCRIPTS \
+	install-commonapplicationdatarootlogoDATA install-data \
+	install-data-am install-dvi install-dvi-am install-exec \
+	install-exec-am install-html install-html-am install-info \
+	install-info-am install-linuxdesktopapplicationsDATA \
+	install-man install-pdf install-pdf-am install-pkglibSCRIPTS \
+	install-programfilesDATA install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	uninstall uninstall-am uninstall-binSCRIPTS \
 	uninstall-commonapplicationdatarootimagesDATA \
+	uninstall-commonapplicationdatarootlogoDATA \
 	uninstall-linuxdesktopapplicationsDATA uninstall-pkglibSCRIPTS \
 	uninstall-programfilesDATA
 

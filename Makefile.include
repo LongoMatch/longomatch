@@ -69,8 +69,10 @@ linuxdesktopapplicationsdir = @datadir@/applications
 linuxdesktopapplications_DATA = $(LINUX_DESKTOPAPPLICATIONS)
 programfilesdir = @libdir@/@PACKAGE@
 programfiles_DATA = $(PROGRAMFILES)
-commonapplicationdatarootimagesdir = @datadir@/images
+commonapplicationdatarootimagesdir = @datadir@/@PACKAGE@/images
 commonapplicationdatarootimages_DATA = $(COMMONAPPLICATIONDATAROOT_IMAGES)
+commonapplicationdatarootlogodir = @datadir@/@PACKAGE@/icons/hicolor/48x48/apps
+commonapplicationdatarootlogo_DATA = $(COMMONAPPLICATIONDATAROOT_LOGO)
 
 
 # macros

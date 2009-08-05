@@ -15,6 +15,7 @@ INSTALL_DIR = $(DESTDIR)@expanded_datadir@/locale
 FILES = \
 	es.po
 
+
 GMO_FILES = $(patsubst %.po,$(BUILD_DIR)/%.gmo,$(FILES))
 MO_FILES = $(foreach po,$(FILES), $(INSTALL_DIR)/$(basename $(po))/LC_MESSAGES/$(PACKAGE).mo)
 

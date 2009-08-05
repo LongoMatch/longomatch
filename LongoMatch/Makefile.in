@@ -45,6 +45,7 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES = longomatch
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(pkglibdir)" \
 	"$(DESTDIR)$(commonapplicationdatarootimagesdir)" \
+	"$(DESTDIR)$(commonapplicationdatarootlogodir)" \
 	"$(DESTDIR)$(linuxdesktopapplicationsdir)" \
 	"$(DESTDIR)$(programfilesdir)"
 binSCRIPT_INSTALL = $(INSTALL_SCRIPT)
@@ -59,9 +60,11 @@ am__vpath_adj = case $$p in \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 commonapplicationdatarootimagesDATA_INSTALL = $(INSTALL_DATA)
+commonapplicationdatarootlogoDATA_INSTALL = $(INSTALL_DATA)
 linuxdesktopapplicationsDATA_INSTALL = $(INSTALL_DATA)
 programfilesDATA_INSTALL = $(INSTALL_DATA)
 DATA = $(commonapplicationdatarootimages_DATA) \
+	$(commonapplicationdatarootlogo_DATA) \
 	$(linuxdesktopapplications_DATA) $(programfiles_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
@@ -194,10 +197,10 @@ EXTRA_DIST = $(build_sources) $(build_resx_files) \
 	$(DATA_FILES) $(build_culture_res_files)
 
 # Warning: This is an automatically generated file, do not edit!
-@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
-@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
+@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = $(GMCS)
+@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = $(GMCS)
 @ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4 -optimize+ -debug -define:DEBUG "-main:LongoMatch.MainClass"
-@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4 -optimize+ -debug -define:DEBUG "-main:LongoMatch.MainClass"
+@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4 -optimize+ "-main:LongoMatch.MainClass"
 @ENABLE_DEBUG_TRUE@ASSEMBLY = bin/Debug/LongoMatch.exe
 @ENABLE_RELEASE_TRUE@ASSEMBLY = bin/Release/LongoMatch.exe
 @ENABLE_DEBUG_TRUE@ASSEMBLY_MDB = $(ASSEMBLY).mdb
@@ -205,45 +208,45 @@ EXTRA_DIST = $(build_sources) $(build_resx_files) \
 @ENABLE_DEBUG_TRUE@COMPILE_TARGET = exe
 @ENABLE_RELEASE_TRUE@COMPILE_TARGET = exe
 @ENABLE_DEBUG_TRUE@PROJECT_REFERENCES = \
-@ENABLE_DEBUG_TRUE@	../CesarPlayer/a.dll
+@ENABLE_DEBUG_TRUE@	../CesarPlayer/bin/Debug/CesarPlayer.dll
 
 @ENABLE_RELEASE_TRUE@PROJECT_REFERENCES = \
 @ENABLE_RELEASE_TRUE@	../CesarPlayer/bin/Release/CesarPlayer.dll
 
 @ENABLE_DEBUG_TRUE@BUILD_DIR = bin/Debug
 @ENABLE_RELEASE_TRUE@BUILD_DIR = bin/Release
-@ENABLE_DEBUG_TRUE@CESARPLAYER_DLL = 
+@ENABLE_DEBUG_TRUE@CESARPLAYER_DLL_SOURCE = ../CesarPlayer/bin/Debug/CesarPlayer.dll
+@ENABLE_RELEASE_TRUE@CESARPLAYER_DLL_SOURCE = ../CesarPlayer/bin/Release/CesarPlayer.dll
+@ENABLE_DEBUG_TRUE@CESARPLAYER_DLL = $(BUILD_DIR)/CesarPlayer.dll
 @ENABLE_RELEASE_TRUE@CESARPLAYER_DLL = $(BUILD_DIR)/CesarPlayer.dll
+@ENABLE_DEBUG_TRUE@CESARPLAYER_DLL_MDB_SOURCE = ../CesarPlayer/bin/Debug/CesarPlayer.dll.mdb
+@ENABLE_RELEASE_TRUE@CESARPLAYER_DLL_MDB_SOURCE = 
+@ENABLE_DEBUG_TRUE@CESARPLAYER_DLL_MDB = $(BUILD_DIR)/CesarPlayer.dll.mdb
+@ENABLE_RELEASE_TRUE@CESARPLAYER_DLL_MDB = 
 @ENABLE_DEBUG_TRUE@LONGOMATCH_PNG_SOURCE = images/longomatch.png
 @ENABLE_RELEASE_TRUE@LONGOMATCH_PNG_SOURCE = images/longomatch.png
 @ENABLE_DEBUG_TRUE@LONGOMATCH_EXE_MDB_SOURCE = bin/Debug/LongoMatch.exe.mdb
-@ENABLE_RELEASE_TRUE@LONGOMATCH_EXE_MDB_SOURCE = bin/Release/LongoMatch.exe.mdb
-@ENABLE_DEBUG_TRUE@A_DLL_SOURCE = ../CesarPlayer/a.dll
-@ENABLE_DEBUG_TRUE@A_DLL = $(BUILD_DIR)/a.dll
-@ENABLE_RELEASE_TRUE@A_DLL = 
+@ENABLE_RELEASE_TRUE@LONGOMATCH_EXE_MDB_SOURCE = 
+@ENABLE_DEBUG_TRUE@LONGOMATCH_EXE_MDB = $(BUILD_DIR)/LongoMatch.exe.mdb
+@ENABLE_RELEASE_TRUE@LONGOMATCH_EXE_MDB = 
 @ENABLE_DEBUG_TRUE@LONGOMATCH_DESKTOP_SOURCE = app.desktop
 @ENABLE_RELEASE_TRUE@LONGOMATCH_DESKTOP_SOURCE = app.desktop
-@ENABLE_DEBUG_TRUE@CESARPLAYER_DLL_MDB = 
-@ENABLE_RELEASE_TRUE@CESARPLAYER_DLL_MDB = $(BUILD_DIR)/CesarPlayer.dll.mdb
-@ENABLE_DEBUG_TRUE@A_DLL_MDB_SOURCE = ../CesarPlayer/a.dll.mdb
-@ENABLE_DEBUG_TRUE@A_DLL_MDB = $(BUILD_DIR)/a.dll.mdb
-@ENABLE_RELEASE_TRUE@A_DLL_MDB = 
 @ENABLE_DEBUG_TRUE@BACKGROUND_PNG_SOURCE = images/background.png
 @ENABLE_RELEASE_TRUE@BACKGROUND_PNG_SOURCE = images/background.png
-@ENABLE_RELEASE_TRUE@CESARPLAYER_DLL_SOURCE = ../CesarPlayer/bin/Release/CesarPlayer.dll
-@ENABLE_RELEASE_TRUE@CESARPLAYER_DLL_MDB_SOURCE = ../CesarPlayer/bin/Release/CesarPlayer.dll.mdb
+@ENABLE_RELEASE_TRUE@LONGOMATCH_LOGO_SOURCE = images/logo_48x48.png
 AL = al2
 SATELLITE_ASSEMBLY_NAME = $(notdir $(basename $(ASSEMBLY))).resources.dll
 COMMONAPPLICATIONDATAROOT_IMAGES = \
 	$(LONGOMATCH_PNG) \
 	$(BACKGROUND_PNG)  
 
+COMMONAPPLICATIONDATAROOT_LOGO = \
+	$(LONGOMATCH_LOGO)
+
 PROGRAMFILES = \
 	$(CESARPLAYER_DLL) \
 	$(LONGOMATCH_EXE_MDB) \
-	$(A_DLL) \
-	$(CESARPLAYER_DLL_MDB) \
-	$(A_DLL_MDB)  
+	$(CESARPLAYER_DLL_MDB) 
 
 LINUX_DESKTOPAPPLICATIONS = \
 	$(LONGOMATCH_DESKTOP)  
@@ -342,7 +345,21 @@ FILES = \
 	gtk-gui/LongoMatch.Gui.Dialog.WorkspaceChooser.cs \
 	Gui/WorkspaceChooser.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs \
-	Gui/PlayersSelectionDialog.cs 
+	Gui/PlayersSelectionDialog.cs \
+	DB/Compat/0.0/DB/DataBase.cs \
+	DB/Compat/0.0/DB/MediaFile.cs \
+	DB/Compat/0.0/DB/Project.cs \
+	DB/Compat/0.0/DB/Sections.cs \
+	DB/Compat/0.0/Time/MediaTimeNode.cs \
+	DB/Compat/0.0/Time/PixbufTimeNode.cs \
+	DB/Compat/0.0/Time/PlayListTimeNode.cs \
+	DB/Compat/0.0/Time/SectionsTimeNode.cs \
+	DB/Compat/0.0/Time/Time.cs \
+	DB/Compat/0.0/Time/TimeNode.cs \
+	DB/Compat/0.0/Playlist/IPlayList.cs \
+	DB/Compat/0.0/Playlist/PlayList.cs \
+	DB/Compat/0.0/DatabaseMigrator.cs \
+	DB/Compat/0.0/PlayListMigrator.cs 
 
 DATA_FILES = 
 RESOURCES = \
@@ -350,6 +367,7 @@ RESOURCES = \
 	gtk-gui/gui.stetic 
 
 EXTRAS = \
+	images/logo_48x48.png \
 	longomatch.in 
 
 REFERENCES = \
@@ -425,8 +443,10 @@ linuxdesktopapplicationsdir = @datadir@/applications
 linuxdesktopapplications_DATA = $(LINUX_DESKTOPAPPLICATIONS)
 programfilesdir = @libdir@/@PACKAGE@
 programfiles_DATA = $(PROGRAMFILES)
-commonapplicationdatarootimagesdir = @datadir@/images
+commonapplicationdatarootimagesdir = @datadir@/@PACKAGE@/images
 commonapplicationdatarootimages_DATA = $(COMMONAPPLICATIONDATAROOT_IMAGES)
+commonapplicationdatarootlogodir = @datadir@/@PACKAGE@/icons/hicolor/48x48/apps
+commonapplicationdatarootlogo_DATA = $(COMMONAPPLICATIONDATAROOT_LOGO)
 
 # generating satellite assemblies
 culture_resources = $(foreach res, $(RESOURCES_ESC), $(if $(call is_cultured_resource,$(call get_resource_name, $(res))),$(res)))
@@ -437,7 +457,7 @@ build_satellite_assembly_list = $(call q2s,$(cultures:%=$(BUILD_DIR)/%/$(SATELLI
 build_culture_res_files = $(call q2s,$(foreach res, $(culture_resources),$(call get_resource_name,$(res))))
 install_satellite_assembly_list = $(subst $(BUILD_DIR),$(DESTDIR)$(libdir)/$(PACKAGE),$(build_satellite_assembly_list))
 LONGOMATCH_PNG = $(BUILD_DIR)/images/longomatch.png
-LONGOMATCH_EXE_MDB = $(BUILD_DIR)/LongoMatch.exe.mdb
+LONGOMATCH_LOGO = $(BUILD_DIR)/icons/hicolor/48x48/apps/longomatch.png
 LONGOMATCH = $(BUILD_DIR)/longomatch
 LONGOMATCH_DESKTOP = $(BUILD_DIR)/longomatch.desktop
 BACKGROUND_PNG = $(BUILD_DIR)/images/background.png
@@ -536,6 +556,23 @@ uninstall-commonapplicationdatarootimagesDATA:
 	  echo " rm -f '$(DESTDIR)$(commonapplicationdatarootimagesdir)/$$f'"; \
 	  rm -f "$(DESTDIR)$(commonapplicationdatarootimagesdir)/$$f"; \
 	done
+install-commonapplicationdatarootlogoDATA: $(commonapplicationdatarootlogo_DATA)
+	@$(NORMAL_INSTALL)
+	test -z "$(commonapplicationdatarootlogodir)" || $(MKDIR_P) "$(DESTDIR)$(commonapplicationdatarootlogodir)"
+	@list='$(commonapplicationdatarootlogo_DATA)'; for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  f=$(am__strip_dir) \
+	  echo " $(commonapplicationdatarootlogoDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(commonapplicationdatarootlogodir)/$$f'"; \
+	  $(commonapplicationdatarootlogoDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(commonapplicationdatarootlogodir)/$$f"; \
+	done
+
+uninstall-commonapplicationdatarootlogoDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(commonapplicationdatarootlogo_DATA)'; for p in $$list; do \
+	  f=$(am__strip_dir) \
+	  echo " rm -f '$(DESTDIR)$(commonapplicationdatarootlogodir)/$$f'"; \
+	  rm -f "$(DESTDIR)$(commonapplicationdatarootlogodir)/$$f"; \
+	done
 install-linuxdesktopapplicationsDATA: $(linuxdesktopapplications_DATA)
 	@$(NORMAL_INSTALL)
 	test -z "$(linuxdesktopapplicationsdir)" || $(MKDIR_P) "$(DESTDIR)$(linuxdesktopapplicationsdir)"
@@ -607,7 +644,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(SCRIPTS) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(pkglibdir)" "$(DESTDIR)$(commonapplicationdatarootimagesdir)" "$(DESTDIR)$(linuxdesktopapplicationsdir)" "$(DESTDIR)$(programfilesdir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(pkglibdir)" "$(DESTDIR)$(commonapplicationdatarootimagesdir)" "$(DESTDIR)$(commonapplicationdatarootlogodir)" "$(DESTDIR)$(linuxdesktopapplicationsdir)" "$(DESTDIR)$(programfilesdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -655,6 +692,7 @@ info: info-am
 info-am:
 
 install-data-am: install-commonapplicationdatarootimagesDATA \
+	install-commonapplicationdatarootlogoDATA \
 	install-linuxdesktopapplicationsDATA install-programfilesDATA
 
 install-dvi: install-dvi-am
@@ -691,6 +729,7 @@ ps-am:
 
 uninstall-am: uninstall-binSCRIPTS \
 	uninstall-commonapplicationdatarootimagesDATA \
+	uninstall-commonapplicationdatarootlogoDATA \
 	uninstall-linuxdesktopapplicationsDATA uninstall-pkglibSCRIPTS \
 	uninstall-programfilesDATA
 
@@ -700,17 +739,18 @@ uninstall-am: uninstall-binSCRIPTS \
 	distclean distclean-generic distclean-libtool distdir dvi \
 	dvi-am html html-am info info-am install install-am \
 	install-binSCRIPTS install-commonapplicationdatarootimagesDATA \
-	install-data install-data-am install-dvi install-dvi-am \
-	install-exec install-exec-am install-html install-html-am \
-	install-info install-info-am \
-	install-linuxdesktopapplicationsDATA install-man install-pdf \
-	install-pdf-am install-pkglibSCRIPTS install-programfilesDATA \
-	install-ps install-ps-am install-strip installcheck \
-	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-generic \
-	mostlyclean-libtool pdf pdf-am ps ps-am uninstall uninstall-am \
-	uninstall-binSCRIPTS \
+	install-commonapplicationdatarootlogoDATA install-data \
+	install-data-am install-dvi install-dvi-am install-exec \
+	install-exec-am install-html install-html-am install-info \
+	install-info-am install-linuxdesktopapplicationsDATA \
+	install-man install-pdf install-pdf-am install-pkglibSCRIPTS \
+	install-programfilesDATA install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	uninstall uninstall-am uninstall-binSCRIPTS \
 	uninstall-commonapplicationdatarootimagesDATA \
+	uninstall-commonapplicationdatarootlogoDATA \
 	uninstall-linuxdesktopapplicationsDATA uninstall-pkglibSCRIPTS \
 	uninstall-programfilesDATA
 
@@ -755,12 +795,11 @@ uninstall-satellite-assemblies:
 
 $(eval $(call emit-deploy-target,CESARPLAYER_DLL))
 $(eval $(call emit-deploy-target,LONGOMATCH_PNG))
+$(eval $(call emit-deploy-target,LONGOMATCH_LOGO))
+$(eval $(call emit-deploy-target,BACKGROUND_PNG))
 $(eval $(call emit-deploy-wrapper,LONGOMATCH,longomatch,x))
-$(eval $(call emit-deploy-target,A_DLL))
 $(eval $(call emit-deploy-target,LONGOMATCH_DESKTOP))
 $(eval $(call emit-deploy-target,CESARPLAYER_DLL_MDB))
-$(eval $(call emit-deploy-target,A_DLL_MDB))
-$(eval $(call emit-deploy-target,BACKGROUND_PNG))
 
 $(eval $(call emit_resgen_targets))
 $(build_xamlg_list): %.xaml.g.cs: %.xaml

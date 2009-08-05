@@ -1,6 +1,5 @@
 ## Process this file with automake to produce Makefile.in
 
-## Created by Anjuta
 
 AM_CPPFLAGS = \
 	-DPACKAGE_LOCALE_DIR=\""../LongoMatch/bin/Release"\" \
@@ -25,10 +24,8 @@ libcesarplayer_la_SOURCES = \
 	gstscreenshot.h \
 	gst-video-capturer.c \
 	gst-video-capturer.h \
-	gst-video-splitter.c\
-	gst-smart-video-scaler.c\
-	gst-smart-video-scaler.c\
-	gst-video.splitter.h\
+	gst-video-editor.c\
+	gst-video-editor.h\
 	gstvideowidget.c \
 	gstvideowidget.h \
 	macros.h 
