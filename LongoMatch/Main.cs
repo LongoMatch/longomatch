@@ -114,7 +114,7 @@ namespace LongoMatch
 		}
 		
 		public static string ImagesDir(){			
-			return RelativeToPrefix("share/images");		
+			return RelativeToPrefix("share/longomatch/images");		
 		}
 		
 		public static string DBDir(){
@@ -199,20 +199,18 @@ namespace LongoMatch
 		
 		private static void ProcessExecutionError(Exception ex){
 			string logFile ="LongoMatch-" + DateTime.Now +".log";
+			string message;
+			
 			logFile = logFile.Replace("/","-");
 			logFile = logFile.Replace(" ","-");
 			logFile = System.IO.Path.Combine(HomeDir(),logFile);
 			
+			message = String.Format("{0}\n{1}\n{2}",ex.Message,ex.Source,ex.StackTrace);
 			using (StreamWriter s = new StreamWriter(logFile)){
-				s.Write(ex.Message);
-				s.WriteLine();
-				s.Write(ex.Source);
-				s.WriteLine();
-				s.Write(ex.StackTrace);	
-				s.Flush();
-				s.Close();
+				s.WriteLine(message);
 			}	 
 			
+			Console.WriteLine(message);
 			//TODO Add bug reports link
 			MessagePopup.PopupMessage(null, MessageType.Error, 
 			                          Catalog.GetString("The application has finished with an unexpected error.")+"\n"+
