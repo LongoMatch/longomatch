@@ -205,17 +205,19 @@ namespace LongoMatch
 				    else{
 					    player.UpdateSegmentStopTime(pos.MSeconds);
 				    }
-
 			}	
 			else if (tNode is SectionsTimeNode){
 				buttonswidget.Sections = openedProject.Sections;
-			}
-			
+			}			
 		}
 		
 		protected virtual void OnTimeNodeDeleted (MediaTimeNode tNode,int section)
 		{
 			treewidget.DeleteTimeNode(tNode,section);
+			foreach (int player in tNode.LocalPlayers)
+				localPlayersList.DeleteTimeNode(tNode,player);
+			foreach (int player in tNode.VisitorPlayers)
+				visitorPlayersList.DeleteTimeNode(tNode,player);
 			openedProject.DeleteTimeNode(tNode,section);			
 			timeline.QueueDraw();
 			MainClass.DB.UpdateProject(openedProject);			
@@ -336,9 +338,6 @@ namespace LongoMatch
 				}
 			}			
 			dialog.Destroy();		         
-		}
-		
-		
-		
+		}	
 	}
 }
