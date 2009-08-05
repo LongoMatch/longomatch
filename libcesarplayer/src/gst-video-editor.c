@@ -126,6 +126,7 @@ static void gst_video_editor_get_property (GObject * object, guint property_id, 
 static void gst_video_editor_set_property (GObject * object, guint property_id,const GValue * value, GParamSpec * pspec);
 static gboolean  gve_query_timeout (GstVideoEditor * gve);
 static void gve_apply_new_caps (GstVideoEditor *gve);
+static void gve_rewrite_headers (GstVideoEditor *gve);
 G_DEFINE_TYPE (GstVideoEditor, gst_video_editor, G_TYPE_OBJECT);
 
 
@@ -273,7 +274,37 @@ gst_video_editor_class_init (GstVideoEditorClass *klass)
 static void 
 gst_video_editor_set_enable_audio(GstVideoEditor *gve,gboolean audio_enabled)
 {
-	//TODO Not implemented
+	GstState cur_state;
+	
+	gst_element_get_state (gve->priv->main_pipeline, &cur_state, NULL, 0);
+		
+	if (cur_state > GST_STATE_READY) {
+		GST_WARNING("Could not enable/disable audio. Pipeline is playing");
+		return;
+	}   	
+
+	if (!gve->priv->audio_enabled && audio_enabled){
+		/* Audio needs to be enabled and is disabled */		
+		gst_bin_add_many(GST_BIN(gve->priv->main_pipeline),gve->priv->gnl_audio_composition,gve->priv->aencode_bin,NULL);
+		gst_element_link(gve->priv->aencode_bin,gve->priv->muxer);
+		gst_element_set_state(gve->priv->gnl_audio_composition,cur_state);
+		gst_element_set_state(gve->priv->aencode_bin,cur_state);	
+		gve_rewrite_headers(gve);			
+		gve->priv->audio_enabled=TRUE;
+		GST_INFO ("Audio enabled");		
+	}   	
+	else if (gve->priv->audio_enabled && !audio_enabled){
+		/* Audio is enabled and needs to be disabled) */
+		gst_element_unlink_many(gve->priv->gnl_audio_composition,gve->priv->aencode_bin,gve->priv->muxer,NULL);
+		gst_element_set_state(gve->priv->gnl_audio_composition,GST_STATE_NULL);
+		gst_element_set_state(gve->priv->aencode_bin,GST_STATE_NULL);
+		gst_object_ref(gve->priv->gnl_audio_composition);
+		gst_object_ref(gve->priv->aencode_bin);
+		gst_bin_remove_many(GST_BIN(gve->priv->main_pipeline),gve->priv->gnl_audio_composition,gve->priv->aencode_bin,NULL);
+		gve_rewrite_headers(gve);
+		gve->priv->audio_enabled=FALSE;
+		GST_INFO ("Audio disabled");
+	}    
 }
 
 static void 
@@ -292,7 +323,7 @@ gst_video_editor_set_video_bit_rate (GstVideoEditor *gve,gint bitrate)
 	gst_element_get_state (gve->priv->video_encoder, &cur_state, NULL, 0);
     if (cur_state <= GST_STATE_READY) {
 	    g_object_set (gve->priv->video_encoder,"bitrate",bitrate,NULL);
-    	GST_INFO ("Encoding video bitrate changed to :\n%d",bitrate);
+    	GST_INFO ("Encoding video bitrate changed to :%d\n",bitrate);
    	}
 }
 
@@ -305,7 +336,7 @@ gst_video_editor_set_audio_bit_rate (GstVideoEditor *gve,gint bitrate)
 	gst_element_get_state (gve->priv->audioencoder, &cur_state, NULL, 0);
     if (cur_state <= GST_STATE_READY) {
 	    g_object_set (gve->priv->audioencoder,"bitrate",bitrate,NULL);
-    	GST_INFO ("Encoding audio bitrate changed to :\n%d",bitrate);
+    	GST_INFO ("Encoding audio bitrate changed to :%d\n",bitrate);
    	}   
 }
 
@@ -333,7 +364,7 @@ gst_video_editor_set_output_file (GstVideoEditor *gve,const char *output_file)
     if (cur_state <= GST_STATE_READY) {
 	    gst_element_set_state(gve->priv->file_sink,GST_STATE_NULL);
 	    g_object_set (gve->priv->file_sink,"location",gve->priv->output_file,NULL);
-    	GST_INFO ("Ouput File changed to :\n%s",gve->priv->output_file);
+    	GST_INFO ("Ouput File changed to :%s\n",gve->priv->output_file);
    	}
 }
 static void
@@ -424,10 +455,12 @@ gst_video_editor_get_property (GObject * object, guint property_id,
 static void 
 gve_rewrite_headers (GstVideoEditor *gve)
 {
-	gst_element_set_state(gve->priv->file_sink,GST_STATE_NULL);
+	gst_element_set_state(gve->priv->muxer,GST_STATE_NULL);
+	gst_element_set_state(gve->priv->file_sink,GST_STATE_NULL);	
 	gst_element_set_state(gve->priv->file_sink,GST_STATE_READY);
-
+	gst_element_set_state(gve->priv->muxer,GST_STATE_READY);
 }
+
 static void
 gve_set_tick_timeout (GstVideoEditor *gve , guint msecs)
 {
@@ -1009,7 +1042,8 @@ gst_video_editor_set_audio_encoder (GstVideoEditor *gve, gchar **err, GvsAudioCo
 			/*Remove old encoder element*/
 			
 			gst_element_unlink(gve->priv->audioqueue,gve->priv->audioencoder);
-			gst_element_unlink(gve->priv->aencode_bin,gve->priv->muxer);
+			if (gve->priv->audio_enabled)
+				gst_element_unlink(gve->priv->aencode_bin,gve->priv->muxer);
 			gst_element_set_state(gve->priv->audioencoder,GST_STATE_NULL);
 			gst_bin_remove(GST_BIN(gve->priv->aencode_bin),gve->priv->audioencoder);
 			
@@ -1027,7 +1061,8 @@ gst_video_editor_set_audio_encoder (GstVideoEditor *gve, gchar **err, GvsAudioCo
 			srcpad = gst_element_get_static_pad(gve->priv->audioencoder,"src");			
 			gst_pad_set_active (srcpad, TRUE);
     		gst_element_add_pad (gve->priv->aencode_bin, gst_ghost_pad_new ("src", srcpad));
-    		gst_element_link(gve->priv->aencode_bin, gve->priv->muxer);
+    		if (gve->priv->audio_enabled)
+    			gst_element_link(gve->priv->aencode_bin, gve->priv->muxer);
 			gve_rewrite_headers(gve);
 		}
 		
@@ -1083,13 +1118,15 @@ gst_video_editor_set_video_muxer (GstVideoEditor *gve, gchar **err, GvsVideoMuxe
 				return;
 			}	
 			gst_element_unlink(gve->priv->vencode_bin,gve->priv->muxer);
-			gst_element_unlink(gve->priv->aencode_bin,gve->priv->muxer);
+			if (gve->priv->audio_enabled)
+				gst_element_unlink(gve->priv->aencode_bin,gve->priv->muxer);
 			gst_element_unlink(gve->priv->muxer,gve->priv->file_sink);
 			gst_element_set_state(gve->priv->muxer,GST_STATE_NULL);
 			gst_bin_remove(GST_BIN(gve->priv->main_pipeline),gve->priv->muxer);
 			gst_bin_add(GST_BIN(gve->priv->main_pipeline),muxer);
 			gst_element_link_many(gve->priv->vencode_bin,muxer,gve->priv->file_sink,NULL);	
-			gst_element_link(gve->priv->aencode_bin,muxer);	
+			if (gve->priv->audio_enabled)
+				gst_element_link(gve->priv->aencode_bin,muxer);	
 			gve->priv->muxer = muxer;
 			gve_rewrite_headers(gve);				
 		}
