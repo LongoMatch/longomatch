@@ -81,11 +81,11 @@ namespace LongoMatch.Gui.Dialog
 #region Private Methods
 		
 		private string GetExtension(){
-			if (formatcombobox.ActiveText == "Matroska (H.264)")
+			if (formatcombobox.ActiveText == "Matroska (H.264+AAC)")
 				return "mkv";
-			else if (formatcombobox.ActiveText == "OGG (Theora)")
+			else if (formatcombobox.ActiveText == "OGG (Theora+Vorbis)")
 				return "ogg";
-			else if (formatcombobox.ActiveText == "Avi (Xvid)")
+			else if (formatcombobox.ActiveText == "Avi (Xvid+MP3)")
 				return "avi";
 			else
 				return "mpg";
@@ -119,17 +119,17 @@ namespace LongoMatch.Gui.Dialog
 			}	
 			
 			
-			if (formatcombobox.ActiveText == "Matroska (H.264)"){
+			if (formatcombobox.ActiveText == "Matroska (H.264+AAC)"){
 				vcodec = VideoCodec.H264;
 				acodec = AudioCodec.AAC;
 				muxer = VideoMuxer.MKV;
 			}	
-			else if (formatcombobox.ActiveText == "OGG (Theora)"){
+			else if (formatcombobox.ActiveText == "OGG (Theora+Vorbis)"){
 				vcodec = VideoCodec.THEORA;
 				acodec = AudioCodec.VORBIS;
 				muxer = VideoMuxer.OGG;
 			}	
-			else if (formatcombobox.ActiveText == "Avi (Xvid)"){
+			else if (formatcombobox.ActiveText == "Avi (Xvid+MP3)"){
 				vcodec = VideoCodec.XVID;
 				acodec = AudioCodec.MP3;
 				muxer = VideoMuxer.AVI;

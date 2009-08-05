@@ -53,15 +53,14 @@ namespace LongoMatch.Gui.Component
 		private object lock_node;
 		private bool clock_started = false;
 		private IVideoEditor videoEditor;
+		private MultimediaFactory factory;
 		
 		
 		public PlayListWidget()
 		{
 			this.Build();					
 			lock_node = new System.Object();	
-			MultimediaFactory factory = new  MultimediaFactory();
-			videoEditor = factory.getVideoEditor();
-			videoEditor.Progress += new LongoMatch.Video.Handlers.ProgressHandler(OnProgress);
+			factory = new  MultimediaFactory();
 			playlisttreeview1.ApplyCurrentRate += new ApplyCurrentRateHandler(OnApplyRate);
 			savebutton.Sensitive = false;			
 		}
@@ -184,6 +183,11 @@ namespace LongoMatch.Gui.Component
 			}				
 		}
 		
+		private void LoadEditor(){
+			videoEditor = factory.getVideoEditor();
+			videoEditor.Progress += new LongoMatch.Video.Handlers.ProgressHandler(OnProgress);
+		}
+		
 		protected virtual void OnPlaylisttreeview1RowActivated (object o, Gtk.RowActivatedArgs args)
 		{			
 			playlisttreeview1.LoadedPlay = SelectPlayListNode(args.Path);	
@@ -252,8 +256,10 @@ namespace LongoMatch.Gui.Component
 				response=vep.Run();
 			}
 			vep.Destroy();
-			if (response ==(int)ResponseType.Ok){				
-				videoEditor.ClearList();
+			if (response ==(int)ResponseType.Ok){
+				//FIXME:Create a new instance of the video editor until we fix the audio swith enable/disabled 
+				LoadEditor();
+				//videoEditor.ClearList();
 				foreach (PlayListTimeNode segment in playList){
 					if (segment.Valid)
 						videoEditor.AddSegment(segment.MediaFile.FilePath, 
@@ -267,11 +273,14 @@ namespace LongoMatch.Gui.Component
 					videoEditor.VideoQuality = vep.VideoQuality;
 					videoEditor.VideoFormat = vep.VideoFormat;
 					videoEditor.AudioCodec = vep.AudioCodec;
-					videoEditor.VideoCodec = vep.VideoCodec;
-					videoEditor.VideoMuxer = vep.VideoMuxer;
+					videoEditor.VideoCodec = vep.VideoCodec;					
 					videoEditor.OutputFile = vep.Filename;
 					videoEditor.EnableTitle = vep.TitleOverlay;
-					videoEditor.EnableAudio = vep.EnableAudio;
+					if (vep.VideoCodec== VideoCodec.MPEG2_VIDEO)
+						videoEditor.EnableAudio = false;
+					else
+						videoEditor.EnableAudio = vep.EnableAudio;
+					videoEditor.VideoMuxer = vep.VideoMuxer;
 					videoEditor.TempDir = MainClass.TempVideosDir();
 					videoEditor.Start();
 					closebutton.Show();

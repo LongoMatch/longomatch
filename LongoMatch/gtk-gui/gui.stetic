@@ -2507,9 +2507,9 @@ Full HD 1080p (16:9 - 1920x1080)</property>
                   <widget class="Gtk.ComboBox" id="formatcombobox">
                     <property name="MemberName" />
                     <property name="IsTextCombo">True</property>
-                    <property name="Items">Matroska (H.264)
-OGG (Theora)
-Avi (Xvid)
+                    <property name="Items">Matroska (H.264+AAC)
+OGG (Theora+Vorbis)
+Avi (Xvid+MP3)
 DVD (MPEG-2)</property>
                     <property name="Active">0</property>
                   </widget>
