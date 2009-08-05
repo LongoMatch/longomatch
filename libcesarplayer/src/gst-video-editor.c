@@ -785,8 +785,6 @@ gst_video_editor_add_segment (GstVideoEditor *gve , gchar *file, gint64 start, g
 	GstElement *gnl_filesource;
 	GstCaps *filter;
 	
-	GstElement *audiotestsrc;
-		
 	gchar *element_name = "";
 	gint64 final_duration;	
 	
@@ -996,7 +994,10 @@ gst_video_editor_set_audio_encoder (GstVideoEditor *gve, gchar **err, GvsAudioCo
 				encoder_name = "vorbisenc";
 				encoder = gst_element_factory_make (encoder_name,encoder_name);	
 				g_object_set (G_OBJECT(gve->priv->audiocapsfilter), "caps",	gst_caps_from_string(VORBIS_CAPS),NULL);			
-				break;				
+				break;		
+			default:
+				gst_video_editor_set_enable_audio(gve,FALSE);
+				break;		
 		}			
 		if (encoder){
 			if (!g_strcmp0(gst_element_get_name(gve->priv->audioencoder),encoder_name)){
@@ -1136,7 +1137,6 @@ GstVideoEditor *
 gst_video_editor_new (GError ** err)
 {
 	GstVideoEditor *gve = NULL;
-	GstCaps *filter=NULL;
 	GstElement *audiotestsrc=NULL;
 	GstElement *gnlsource=NULL;
 
