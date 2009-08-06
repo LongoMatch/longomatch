@@ -49,10 +49,10 @@ namespace LongoMatch.Gui {
             this.volumescale.CanFocus = true;
             this.volumescale.Name = "volumescale";
             this.volumescale.Inverted = true;
-            this.volumescale.Adjustment.Upper = 100;
-            this.volumescale.Adjustment.PageIncrement = 10;
+            this.volumescale.Adjustment.Upper = 1;
+            this.volumescale.Adjustment.PageIncrement = 1;
             this.volumescale.Adjustment.StepIncrement = 1;
-            this.volumescale.Adjustment.Value = 100;
+            this.volumescale.Adjustment.Value = 1;
             this.volumescale.DrawValue = false;
             this.volumescale.Digits = 0;
             this.volumescale.ValuePos = ((Gtk.PositionType)(2));

@@ -70,7 +70,7 @@ typedef struct {
 	void (*tick) (BaconVideoWidget *bvw, gint64 current_time, gint64 stream_length,
 			float current_position, gboolean seekable);
 	void (*buffering) (BaconVideoWidget *bvw, guint progress);
-	void (*state_changed) (BaconVideoWidget *bvw, gboolean playing);
+	void (*state_change) (BaconVideoWidget *bvw, gboolean playing);
 	void (*got_duration) (BaconVideoWidget *bvw);
 	void (*ready_to_seek) (BaconVideoWidget *bvw);
 } BaconVideoWidgetClass;
@@ -192,6 +192,7 @@ gboolean  bacon_video_widget_seek_to_next_frame (BaconVideoWidget *bvw, gfloat r
 gboolean  bacon_video_widget_seek_to_previous_frame (BaconVideoWidget *bvw, gfloat rate, gboolean in_segment);
 gboolean bacon_video_widget_segment_stop_update(BaconVideoWidget *bvw,gint64 stop,gfloat rate);
 gboolean bacon_video_widget_segment_start_update(BaconVideoWidget *bvw,gint64 start, gfloat rate);
+gboolean bacon_video_widget_new_file_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop,gfloat rate);
 gboolean bacon_video_widget_can_direct_seek	 (BaconVideoWidget *bvw);
 double bacon_video_widget_get_position           (BaconVideoWidget *bvw);
 gint64 bacon_video_widget_get_current_time       (BaconVideoWidget *bvw);
@@ -460,10 +461,10 @@ GdkPixbuf *bacon_video_widget_get_current_frame (BaconVideoWidget *bvw);
  **/
 typedef enum {
 	BVW_AUDIO_SOUND_STEREO,
-	BVW_AUDIO_SOUND_4CHANNEL,
-	BVW_AUDIO_SOUND_41CHANNEL,
-	BVW_AUDIO_SOUND_5CHANNEL,
-	BVW_AUDIO_SOUND_51CHANNEL,
+	BVW_AUDIO_SOUND_CHANNEL4,
+	BVW_AUDIO_SOUND_CHANNEL41,
+	BVW_AUDIO_SOUND_CHANNEL5,
+	BVW_AUDIO_SOUND_CHANNEL51,
 	BVW_AUDIO_SOUND_AC3PASSTHRU
 } BvwAudioOutType;
 

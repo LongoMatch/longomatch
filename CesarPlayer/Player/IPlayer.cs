@@ -33,18 +33,13 @@ namespace LongoMatch.Video.Player
 
 		// Events
 		
-		
-		event         SegmentDoneHandler SegmentDoneEvent;
+	
 		event         ErrorHandler Error;
 		event         System.EventHandler Eos;
-		event         LongoMatch.Video.Handlers.StateChangedHandler StateChanged;
+		event         LongoMatch.Video.Handlers.StateChangeHandler StateChange;
 		event         TickHandler Tick;
 		event         System.EventHandler GotDuration;
 		event         System.EventHandler SegmentDone;
-
-		string Mrl{
-			get;			
-		}
 		
 		
 		long StreamLength{
@@ -58,7 +53,7 @@ namespace LongoMatch.Video.Player
 			
 		}
 		
-		float Position{
+		double Position{
 			get;
 			set;
 			
@@ -69,15 +64,10 @@ namespace LongoMatch.Video.Player
 			set;
 		}
 		
-		int Volume{
+		double Volume{
 			get;
 			set;
-		}
-		
-		
-		Widget Window{
-			get;
-		}
+		}		
 		
 		bool Playing {
 			get;
@@ -95,7 +85,7 @@ namespace LongoMatch.Video.Player
 			get;
 		}
 		
-		bool SeekTo(long time,float rate, bool accurate);
+		bool SeekTime(long time,float rate, bool accurate);
 		
 		bool Play();
 		
@@ -124,20 +114,15 @@ namespace LongoMatch.Video.Player
 		
 		bool NewFileSeek(long start, long stop,float rate);
 			
-		void UpdateSegmentStartTime(long start,float rate);
+		bool SegmentStartUpdate(long start,float rate);
 		
-		void UpdateSegmentStopTime(long stop,float rate);
+		bool SegmentStopUpdate(long stop,float rate);
 		
-		void SeekToNextFrame(float rate,bool in_segment);
+		bool SeekToNextFrame(float rate,bool in_segment);
 		
-		void SeekToPreviousFrame(float rate,bool in_segment);
+		bool SeekToPreviousFrame(float rate,bool in_segment);
 		
 		void CancelProgramedStop();
-		
-		void RedrawLastFrame();
-			
-		
-		
 		
 	}
 }

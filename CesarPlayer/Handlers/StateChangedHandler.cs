@@ -20,9 +20,9 @@ namespace LongoMatch.Video.Handlers {
 
 	using System;
 
-	public delegate void StateChangedHandler(object o, StateChangedArgs args);
+	public delegate void StateChangeHandler(object o, StateChangeArgs args);
 
-	public class StateChangedArgs : GLib.SignalArgs {
+	public class StateChangeArgs : GLib.SignalArgs {
 		public bool Playing{
 			get {
 				return (bool) Args[0];

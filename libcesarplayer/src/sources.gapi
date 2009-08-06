@@ -1,9 +1,10 @@
  <gapi-parser-input>
-  <api filename="./camera.g">
+  <api filename="./generetaed.gapi">
     <library name="libcesarplayer.dll">
       <namespace name="LongoMatch">
-        <dir>.</dir>
-      </namespace>
+	<file>./bacon-video-widget.h</file>
+	<file>./bacon-video-widget-gst-0.10.c</file>
+	</namespace>
     </library>
   </api>
  </gapi-parser-input>

@@ -35,7 +35,6 @@ namespace LongoMatch.Gui
 	public partial class PlayerBin : Gtk.Bin
 	{
 		
-		public event PlayListSegmentDoneHandler PlayListSegmentDoneEvent;
 		public event SegmentClosedHandler SegmentClosedEvent;
 		public event TickHandler Tick;
 		public event ErrorHandler Error;
@@ -53,7 +52,7 @@ namespace LongoMatch.Gui
 		private bool seeking=false;
 		private bool IsPlayingPrevState = false;
 		private float rate=1;
-		private int previousVLevel = 1;
+		private double previousVLevel = 1;
 		private bool muted=false;
 		//the player.mrl is diferent from the filename as it's an uri eg:file:///foo.avi
 		private string filename = null;
@@ -194,7 +193,7 @@ namespace LongoMatch.Gui
 		}
 		
 		public void SeekTo(long time, bool accurate){
-			player.SeekTo(time,1,accurate);
+			player.SeekTime(time,1,accurate);
 		}
 		
 		public void SeekInSegment(long pos){
@@ -214,12 +213,12 @@ namespace LongoMatch.Gui
 		
 		public void UpdateSegmentStartTime (long start){
 			segmentStartTime = start;
-			player.UpdateSegmentStartTime(start, GetRateFromScale());						
+			player.SegmentStartUpdate(start, GetRateFromScale());						
 		}
 		
 		public void UpdateSegmentStopTime (long stop){
 			segmentStopTime = stop;
-			player.UpdateSegmentStopTime(stop, GetRateFromScale());	
+			player.SegmentStopUpdate(stop, GetRateFromScale());	
 		}
 		
 		public void SetStartStop(long start, long stop){
@@ -250,11 +249,7 @@ namespace LongoMatch.Gui
 		public void UnSensitive(){			
 			controlsbox.Sensitive = false;
 			vscale1.Sensitive = false;				
-		}
-		
-		public void RedrawLastFrame(){
-			player.RedrawLastFrame();
-		}
+		}		
 		
 #endregion
 		
@@ -279,27 +274,26 @@ namespace LongoMatch.Gui
 		
 		private void PlayerInit(){
 			MultimediaFactory factory;
-			Widget _videoscreen;
+			Widget playerWidget;
 			
 			factory= new MultimediaFactory();
 			player = factory.getPlayer(320,280);
 			
 			tickHandler = new TickHandler(OnTick);
 			player.Tick += tickHandler;
-			player.StateChanged += new LongoMatch.Video.Handlers.StateChangedHandler(OnStateChanged);
+			player.StateChange += new LongoMatch.Video.Handlers.StateChangeHandler(OnStateChanged);
 			player.Eos += new EventHandler (OnEndOfStream);
-			player.SegmentDoneEvent += new SegmentDoneHandler (OnSegmentDone);
 			player.Error += new ErrorHandler (OnError);
 			
-			_videoscreen = player.Window;			
-			videobox.Add(_videoscreen);
-			_videoscreen.Show();		
+			playerWidget = (Widget)player;
+			playerWidget.Show();
+			videobox.Add(playerWidget);			
 		}
 		
 #endregion
 		
 #region Callbacks
-		protected virtual void OnStateChanged(object o, LongoMatch.Video.Handlers.StateChangedArgs args){
+		protected virtual void OnStateChanged(object o, LongoMatch.Video.Handlers.StateChangeArgs args){
 			if (args.Playing){
 				playbutton.Hide();
 				pausebutton.Show();
@@ -378,7 +372,7 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnStopbuttonClicked(object sender, System.EventArgs e)
 		{
-			player.SeekTo(segmentStartTime,1,true);
+			player.SeekTime(segmentStartTime,1,true);
 		}
 
 		protected virtual void OnVolumebuttonClicked(object sender, System.EventArgs e)
@@ -392,7 +386,7 @@ namespace LongoMatch.Gui
 			player.Dispose();
 		}
 		
-		protected virtual void OnVolumeChanged(int level){
+		protected virtual void OnVolumeChanged(double level){
 			player.Volume = level;
 			if (level == 0)
 				muted = true;
@@ -410,11 +404,7 @@ namespace LongoMatch.Gui
 			player.Pause();			
 		}
 		
-		protected virtual void OnSegmentDone (){
-			if (hasNext && PlayListSegmentDoneEvent != null )
-				PlayListSegmentDoneEvent();			
-		}
-		
+				
 		protected virtual void OnError (object o, ErrorArgs args){
 			if(Error != null)
 				Error(o,args);

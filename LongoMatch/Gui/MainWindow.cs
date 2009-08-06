@@ -449,7 +449,7 @@ namespace LongoMatch.Gui
 		
 		protected override bool OnConfigureEvent (Gdk.EventConfigure evnt)
 		{
-			playerbin1.RedrawLastFrame();
+			//playerbin1.RedrawLastFrame();
 			return base.OnConfigureEvent (evnt);
 		}
 		

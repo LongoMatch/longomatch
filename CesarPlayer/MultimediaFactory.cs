@@ -43,16 +43,16 @@ namespace LongoMatch.Video
 			
 			switch (oS.Platform) { 
 			 case PlatformID.Unix:
-				return new GstPlayer(width,height,UseType.Video);
+				return new GstPlayer(width,height,GstUseType.Video);
 				
 				
 			case PlatformID.Win32NT:
-				return new GstPlayer(width,height,UseType.Video);
+				return new GstPlayer(width,height,GstUseType.Video);
 				//return new DSPlayer(UseType.Video);
 				
 				
 			 default:
-				return new GstPlayer(width,height,UseType.Video);
+				return new GstPlayer(width,height,GstUseType.Video);
 				
 			}
 		
@@ -62,13 +62,13 @@ namespace LongoMatch.Video
 			
 			switch (oS.Platform) { 
 			 case PlatformID.Unix:
-				return new GstPlayer(1,1,UseType.Metadata);
+				return new GstPlayer(1,1,GstUseType.Metadata);
 				
 			case PlatformID.Win32NT:
-				return new GstPlayer(1,1,UseType.Metadata);
+				return new GstPlayer(1,1,GstUseType.Metadata);
 				
 			 default:
-				return new GstPlayer(1,1,UseType.Metadata);
+				return new GstPlayer(1,1,GstUseType.Metadata);
 			}
 		}
 		
@@ -76,13 +76,13 @@ namespace LongoMatch.Video
 			
 			switch (oS.Platform) { 
 			 case PlatformID.Unix:
-				return new GstPlayer(1,1,UseType.Metadata);
+				return new GstPlayer(1,1,GstUseType.Metadata);
 				
 			case PlatformID.Win32NT:
-				return new GstPlayer(1,1,UseType.Metadata);
+				return new GstPlayer(1,1,GstUseType.Metadata);
 				
 			 default:
-				return new GstPlayer(1,1,UseType.Metadata);
+				return new GstPlayer(1,1,GstUseType.Metadata);
 			}
 		}
 		

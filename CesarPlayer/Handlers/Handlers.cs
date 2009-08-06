@@ -26,7 +26,7 @@ namespace LongoMatch.Video.Handlers
 	public delegate void PlayListSegmentDoneHandler ();
 	public delegate void SegmentClosedHandler();
 	public delegate void SegmentDoneHandler();
-	public delegate void VolumeChangedHandler (int level);
+	public delegate void VolumeChangedHandler (double level);
 	public delegate void NextButtonClickedHandler ();
 	public delegate void PrevButtonClickedHandler ();
 	public delegate void ProgressHandler (float progress);

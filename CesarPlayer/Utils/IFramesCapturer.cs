@@ -28,7 +28,7 @@ namespace LongoMatch.Video.Utils
 	public interface IFramesCapturer
 	{
 		bool Open(string mrl);
-		bool SeekTo(long time, bool accurate);
+		bool SeekTime(long time, bool accurate);
 		void Pause();
 		Pixbuf CurrentFrame{
 			get;

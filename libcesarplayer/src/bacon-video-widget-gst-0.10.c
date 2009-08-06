@@ -99,7 +99,7 @@ enum
   SIGNAL_GOT_METADATA,
   SIGNAL_BUFFERING,
   SIGNAL_MISSING_PLUGINS,
-  SIGNAL_STATE_CHANGED,
+  SIGNAL_STATE_CHANGE,
   SIGNAL_GOT_DURATION,
   SIGNAL_READY_TO_SEEK,
   LAST_SIGNAL
@@ -1070,11 +1070,11 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   NULL, NULL,
                   g_cclosure_marshal_VOID__INT, G_TYPE_NONE, 1, G_TYPE_INT);
                   
-    bvw_signals[SIGNAL_STATE_CHANGED] =
-    g_signal_new ("state_changed",
+    bvw_signals[SIGNAL_STATE_CHANGE] =
+    g_signal_new ("state_change",
                   G_TYPE_FROM_CLASS (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (BaconVideoWidgetClass, state_changed),
+                  G_STRUCT_OFFSET (BaconVideoWidgetClass, state_change),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__BOOLEAN,
                   G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
@@ -1559,9 +1559,18 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       if (new_state <= GST_STATE_PAUSED) {
         bvw_query_timeout (bvw);
         bvw_reconfigure_tick_timeout (bvw, 0);
-      } else if (new_state > GST_STATE_PAUSED) {
-        bvw_reconfigure_tick_timeout (bvw, 200);
+        g_signal_emit (bvw, bvw_signals[SIGNAL_STATE_CHANGE], 0, FALSE);
+
+      } else if (new_state == GST_STATE_PAUSED) {
+        bvw_reconfigure_tick_timeout (bvw, 500);
+        g_signal_emit (bvw, bvw_signals[SIGNAL_STATE_CHANGE], 0, FALSE);
+	    g_signal_emit (bvw, bvw_signals[SIGNAL_READY_TO_SEEK], 0, FALSE);
       }
+       else if (new_state > GST_STATE_PAUSED) {
+        bvw_reconfigure_tick_timeout (bvw, 200);
+        g_signal_emit (bvw, bvw_signals[SIGNAL_STATE_CHANGE], 0, TRUE);
+      }
+
 
       if (old_state == GST_STATE_READY && new_state == GST_STATE_PAUSED) {
         GST_DEBUG_BIN_TO_DOT_FILE (GST_BIN_CAST (bvw->priv->play),
@@ -2345,16 +2354,16 @@ get_num_audio_channels (BaconVideoWidget * bvw)
     case BVW_AUDIO_SOUND_STEREO:
       channels = 2;
       break;
-    case BVW_AUDIO_SOUND_4CHANNEL:
+    case BVW_AUDIO_SOUND_CHANNEL4:
       channels = 4;
       break;
-    case BVW_AUDIO_SOUND_5CHANNEL:
+    case BVW_AUDIO_SOUND_CHANNEL5:
       channels = 5;
       break;
-    case BVW_AUDIO_SOUND_41CHANNEL:
+    case BVW_AUDIO_SOUND_CHANNEL41:
       /* so alsa has this as 5.1, but empty center speaker. We don't really
        * do that yet. ;-). So we'll take the placebo approach. */
-    case BVW_AUDIO_SOUND_51CHANNEL:
+    case BVW_AUDIO_SOUND_CHANNEL51:
       channels = 6;
       break;
     case BVW_AUDIO_SOUND_AC3PASSTHRU:
@@ -3111,15 +3120,15 @@ bacon_video_widget_new_file_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop
   	}
 	 
 		
-		GST_LOG ("Segment seeking from %" GST_TIME_FORMAT, GST_TIME_ARGS (start * GST_MSECOND));
-		poll_for_state_change_full (bvw, bvw->priv->play,
-        GST_STATE_PAUSED, &err_msg, -1);
+	GST_LOG ("Segment seeking from %" GST_TIME_FORMAT, GST_TIME_ARGS (start * GST_MSECOND));
+	poll_for_state_change_full (bvw, bvw->priv->play,
+    	GST_STATE_PAUSED, &err_msg, -1);
         
-        gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
+    gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
 
-		got_time_tick (bvw->priv->play, start * GST_MSECOND, bvw);
-		gst_element_seek (bvw->priv->play, rate,
-      	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_SEGMENT | GST_SEEK_FLAG_ACCURATE,
+	got_time_tick (bvw->priv->play, start * GST_MSECOND, bvw);
+	gst_element_seek (bvw->priv->play, rate,
+     	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_SEGMENT | GST_SEEK_FLAG_ACCURATE,
       	GST_SEEK_TYPE_SET, start * GST_MSECOND,
       	GST_SEEK_TYPE_SET, stop * GST_MSECOND);
     
@@ -4775,21 +4784,39 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
     case BVW_INFO_COMMENT:
     case BVW_INFO_ALBUM:
     case BVW_INFO_VIDEO_CODEC:
+      bacon_video_widget_get_metadata_string (bvw, type, value);
+      break;
     case BVW_INFO_AUDIO_CODEC:
+      bacon_video_widget_get_metadata_string (bvw, type, value);
+      break;
     case BVW_INFO_AUDIO_CHANNELS:
       bacon_video_widget_get_metadata_string (bvw, type, value);
       break;
     case BVW_INFO_DURATION:
+      bacon_video_widget_get_metadata_int (bvw, type, value);
+      break;
     case BVW_INFO_DIMENSION_X:
+      bacon_video_widget_get_metadata_int (bvw, type, value);
+      break;
     case BVW_INFO_DIMENSION_Y:
+      bacon_video_widget_get_metadata_int (bvw, type, value);
+      break;
     case BVW_INFO_FPS:
+      bacon_video_widget_get_metadata_int (bvw, type, value);
+      break;
     case BVW_INFO_AUDIO_BITRATE:
+      bacon_video_widget_get_metadata_int (bvw, type, value);
+      break;
     case BVW_INFO_VIDEO_BITRATE:
+      bacon_video_widget_get_metadata_int (bvw, type, value);
+      break;
     case BVW_INFO_TRACK_NUMBER:
     case BVW_INFO_AUDIO_SAMPLE_RATE:
       bacon_video_widget_get_metadata_int (bvw, type, value);
       break;
     case BVW_INFO_HAS_VIDEO:
+      bacon_video_widget_get_metadata_bool (bvw, type, value);
+      break;
     case BVW_INFO_HAS_AUDIO:
       bacon_video_widget_get_metadata_bool (bvw, type, value);
       break;

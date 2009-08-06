@@ -12,7 +12,6 @@
     </itemgroups>
     <signals>
       <itemgroup label="PlayerBin Signals">
-        <signal name="PlayListSegmentDoneEvent" />
         <signal name="SegmentClosedEvent" />
         <signal name="Tick" />
         <signal name="Error" />

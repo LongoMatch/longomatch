@@ -36,25 +36,27 @@ namespace LongoMatch.Gui
 				base(Gtk.WindowType.Toplevel)
 		{
 			this.Build();
+			volumescale.Adjustment.PageIncrement = 0.0001;
+			volumescale.Adjustment.StepIncrement = 0.0001;
 		}
 		
-		public void SetLevel(int level){
+		public void SetLevel(double level){
 			volumescale.Value = level ;
 		}
 
 		protected virtual void OnLessbuttonClicked(object sender, System.EventArgs e)
 		{
-			volumescale.Value = volumescale.Value - 5;
+			volumescale.Value = volumescale.Value - 0.1;
 		}
 
 		protected virtual void OnMorebuttonClicked(object sender, System.EventArgs e)
 		{
-			volumescale.Value = volumescale.Value + 5;
+			volumescale.Value = volumescale.Value + 0.1;
 		}
 
 		protected virtual void OnVolumescaleValueChanged(object sender, System.EventArgs e)
 		{
-			VolumeChanged((int)volumescale.Value);
+			VolumeChanged(volumescale.Value);
 		}
 
 		protected virtual void OnFocusOutEvent (object o, Gtk.FocusOutEventArgs args)

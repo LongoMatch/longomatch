@@ -60,7 +60,6 @@ namespace LongoMatch.Gui {
             this.vbox2.Spacing = 6;
             // Container child vbox2.Gtk.Box+BoxChild
             this.videobox = new Gtk.EventBox();
-            this.videobox.CanFocus = true;
             this.videobox.Name = "videobox";
             this.vbox2.Add(this.videobox);
             Gtk.Box.BoxChild w1 = ((Gtk.Box.BoxChild)(this.vbox2[this.videobox]));

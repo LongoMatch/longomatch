@@ -78,7 +78,7 @@ namespace LongoMatch.Video.Utils
 				if (!cancel){
 					if (Progress != null)					
 						Application.Invoke(delegate {Progress(i+1,totalFrames);});
-					capturer.SeekTo(pos,true);	
+					capturer.SeekTime(pos,true);	
 					capturer.Pause();
 					frame = capturer.CurrentFrame;				
 					if (frame != null) {
