@@ -13,8 +13,8 @@
  *
  * You should have received a copy of the GNU Library General Public
  * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301  USA.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -77,7 +77,7 @@ create_element (const gchar *factory_name, GstElement **element, GError **err)
 
 /* takes ownership of the input buffer */
 GstBuffer *
-gst_frame_conv_convert (GstBuffer * buf, GstCaps * to_caps)
+bvw_frame_conv_convert (GstBuffer * buf, GstCaps * to_caps)
 {
   GstElement *src, *csp, *filter1, *vscale, *filter2, *sink, *pipeline;
   GstMessage *msg;
