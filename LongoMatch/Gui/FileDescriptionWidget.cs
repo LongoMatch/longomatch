@@ -227,16 +227,7 @@ namespace LongoMatch.Gui.Component
 			this.mFile = null;		
 		}
 		
-		private void CreateMediaFile(string filename){
-			try{
-				mFile = MediaFile.GetMediaFile(filename);
-				fileEntry.Text = filename;
-			}
-			catch (Exception ex){
-			    MessagePopup.PopupMessage(this, MessageType.Error, 
-				                          ex.Message);
-			}
-		}
+		
 		
 		private void FillSections(){
 			string[] allFiles;
@@ -295,8 +286,14 @@ namespace LongoMatch.Gui.Component
 			                                                   "gtk-save",ResponseType.Accept);
 				fChooser.SetCurrentFolder(MainClass.VideosDir());
 				if (fChooser.Run() == (int)ResponseType.Accept){
-					CreateMediaFile(fChooser.Filename);
-					fileEntry.Text = fChooser.Filename;					
+					try{
+						mFile = MediaFile.GetMediaFile(fChooser.Filename);
+						fileEntry.Text = fChooser.Filename;			
+					}
+					catch (Exception ex){
+						MessagePopup.PopupMessage(fChooser, MessageType.Error, 
+				                          ex.Message);
+					}
 				}				
 			}			
 			
@@ -310,8 +307,15 @@ namespace LongoMatch.Gui.Component
 				fChooser.SetCurrentFolder(System.Environment.GetFolderPath(Environment.SpecialFolder.Personal));
 		
 				if (fChooser.Run() == (int)ResponseType.Accept){					
-					CreateMediaFile(fChooser.Filename);
-					fileEntry.Text = fChooser.Filename;					
+					try{
+						mFile = MediaFile.GetMediaFile(fChooser.Filename);
+						fileEntry.Text = fChooser.Filename;
+					}
+					catch (Exception ex){
+						MessagePopup.PopupMessage(fChooser, MessageType.Error, 
+				                          ex.Message);
+					}
+					
 				}			
 			}		
 			fChooser.Destroy();

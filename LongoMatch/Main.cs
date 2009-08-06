@@ -57,9 +57,11 @@ namespace LongoMatch
 			//Iniciamos la internalización
 			Catalog.Init("longomatch",RelativeToPrefix("share/locale"));
 			
-					
+								
 			//Iniciamos la aplicación
 			Application.Init ();
+			
+			LongoMatch.Video.Player.GstPlayer.InitBackend("");
 			
 			if (homeDirectory == null)
 				PromptForHomeDir();
