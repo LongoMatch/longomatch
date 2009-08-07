@@ -50,7 +50,7 @@ namespace LongoMatch.DB
 		
 		public override int GetHashCode ()
 		{
-			return text ^ 3 ;
+			return text.CompareTo("XXXXX") ^ 3 ;
 		}
 	}
 }
