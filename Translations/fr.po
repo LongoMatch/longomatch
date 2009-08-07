@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
-"X-Generator: MonoDevelop Gettext addin\n"
-"Language-Team: \n"
-"PO-Revision-Date: 2009-08-08 01:32:00+0200\n"
-"POT-Creation-Date: 2009-08-08 01:32:00+0200\n"
 "Project-Id-Version: \n"
-"MIME-Version: 1.0\n"
-"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2009-08-08 01:32:00+0200\n"
+"PO-Revision-Date: 2009-08-08 01:30:56+0200\n"
 "Last-Translator: Andoni Morales Alastruey <ylatuya@gmail.com>\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: MonoDevelop Gettext addin\n"
 
 #: ../LongoMatch/Main.cs:225
 msgid "The application has finished with an unexpected error."
-msgstr ""
+msgstr "Le programme a fini avec une error inespérée"
 
 #: ../LongoMatch/Main.cs:226
 msgid ""
@@ -24,35 +24,35 @@ msgstr ""
 
 #: ../LongoMatch/Gui/DBManager.cs:73
 msgid "A Project is already using this file."
-msgstr ""
+msgstr "Un Projet use déjà ce fichier"
 
 #: ../LongoMatch/Gui/DBManager.cs:88
 msgid "This Project is actually in use."
-msgstr ""
+msgstr "Ce projet est actualment ouvert"
 
 #: ../LongoMatch/Gui/DBManager.cs:88
 msgid "Close it first to allow its removal from the database"
-msgstr ""
+msgstr "Fermer le pour le suprimer de la base de données"
 
 #: ../LongoMatch/Gui/DBManager.cs:92
 msgid "Do yo really want to delete:"
-msgstr ""
+msgstr "Voulez-vous suprimer:"
 
 #: ../LongoMatch/Gui/DBManager.cs:120
 msgid "The Project has been edited, do you want to save the changes?"
-msgstr ""
+msgstr "Le Projet a été édité, voulez-vous le sauvez?"
 
 #: ../LongoMatch/Gui/DBManager.cs:129
 msgid "The Project you are trying to load is actually in use."
-msgstr ""
+msgstr "Le projet que vous essayer de charger est actuellement ouvert."
 
 #: ../LongoMatch/Gui/DBManager.cs:129
 msgid "Close it first to edit it"
-msgstr ""
+msgstr "Fermez-le pour pouvoir l'éditer"
 
 #: ../LongoMatch/Gui/ProjectListWidget.cs:54
 msgid "Filename"
-msgstr ""
+msgstr "Fichier"
 
 #: ../LongoMatch/Gui/ProjectListWidget.cs:81
 msgid "<b>File:</b>  "
@@ -109,8 +109,7 @@ msgstr ""
 msgid "An error ocurred opening this project:"
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:237
-#: ../LongoMatch/Gui/PlayListWidget.cs:254
+#: ../LongoMatch/Gui/MainWindow.cs:237 ../LongoMatch/Gui/PlayListWidget.cs:254
 msgid "Please, select a video file."
 msgstr ""
 
@@ -122,8 +121,7 @@ msgstr ""
 msgid "Open the project, please."
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:316
-#: ../LongoMatch/Gui/PlayListWidget.cs:205
+#: ../LongoMatch/Gui/MainWindow.cs:316 ../LongoMatch/Gui/PlayListWidget.cs:205
 msgid "Open playlist"
 msgstr ""
 
@@ -737,4 +735,3 @@ msgstr ""
 #: ../CesarPlayer/Utils/MediaFile.cs:193
 msgid "Invalid video file:"
 msgstr ""
-
