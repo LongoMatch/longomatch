@@ -1,5 +1,5 @@
 /* 
- * Copyright (C) 2003-2007 the GStreamer project
+ * Copyright (C) 2003-2009 the GStreamer project
  *      Julien Moutte <julien@moutte.net>
  *      Ronald Bultje <rbultje@ronald.bitfreak.net>
  *      Tim-Philipp Müller <tim centricular net>
@@ -236,6 +236,7 @@ static void size_changed_cb (GdkScreen *screen, BaconVideoWidget *bvw);
 static void bvw_process_pending_tag_messages (BaconVideoWidget * bvw);
 static void bvw_stop_play_pipeline (BaconVideoWidget * bvw);
 static GError* bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage *m);
+
 
 
 static GtkWidgetClass *parent_class = NULL;
@@ -634,7 +635,6 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
   GstXOverlay *xoverlay;
   gboolean draw_logo;
-  XID window;
   GdkWindow *win;
 
   if (event && event->count > 0)
@@ -651,10 +651,14 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
 
   g_mutex_unlock (bvw->priv->lock);
 
-  window = GDK_WINDOW_XWINDOW (bvw->priv->video_window);
 
-  if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay))
-    gst_x_overlay_set_xwindow_id (xoverlay, window);
+  if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay)){
+	#ifdef WIN32
+   	  gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay, GDK_WINDOW_HWND(bvw->priv->video_window));
+	#else
+	  gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay, GDK_WINDOW_XID (bvw->priv->video_window));
+	#endif
+	  }
 
   /* Start with a nice black canvas */
   win = gtk_widget_get_window (widget);
@@ -5273,8 +5277,6 @@ bvw_element_msg_sync (GstBus *bus, GstMessage *msg, gpointer data)
   /* This only gets sent if we haven't set an ID yet. This is our last
    * chance to set it before the video sink will create its own window */
   if (gst_structure_has_name (msg->structure, "prepare-xwindow-id")) {
-    GdkWindow *window;
-
     GST_INFO ("Handling sync prepare-xwindow-id message");
 
     g_mutex_lock (bvw->priv->lock);
@@ -5284,11 +5286,10 @@ bvw_element_msg_sync (GstBus *bus, GstMessage *msg, gpointer data)
     g_return_if_fail (bvw->priv->xoverlay != NULL);
     g_return_if_fail (bvw->priv->video_window != NULL);
 
-    window = gst_video_widget_get_video_window (GST_VIDEO_WIDGET(bvw->priv->video_window));
     #ifdef WIN32
-   	  gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay, GDK_WINDOW_HWND(window));
+   	  gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay, GDK_WINDOW_HWND(bvw->priv->video_window));
 	#else
-	  gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay, GDK_WINDOW_XID (window));
+	  gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay, GDK_WINDOW_XID (bvw->priv->video_window));
 	#endif
 
   }
