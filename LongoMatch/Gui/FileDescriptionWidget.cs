@@ -43,7 +43,6 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class FileDescriptionWidget : Gtk.Bin
 	{
-		private DateTime date;
 		private Project project;
 		private MediaFile mFile;
 		private CalendarPopup cp;
@@ -65,8 +64,7 @@ namespace LongoMatch.Gui.Component
 			FillTeamsTemplate();
 			
 			this.Use=UseType.NewFromFileProject;			
-			this.Date = System.DateTime.Today;
-			
+						
 			if (Environment.OSVersion.Platform == PlatformID.Win32NT){
 				this.calendarbutton.Sensitive = false;
 				this.calendarbutton.Visible = false;	
@@ -119,25 +117,22 @@ namespace LongoMatch.Gui.Component
 		
 		public int VisitorGoals{
 			get { return (int)visitorSpinButton.Value; }
-			set { this.visitorSpinButton.Value = value;}
+			set { visitorSpinButton.Value = value;}
 		}
 		
 		private string Filename {
 			get { return fileEntry.Text;}
-			set { this.fileEntry.Text = value;}
+			set { fileEntry.Text = value;}
 		}
 		
 		public DateTime Date{
-			get {return date;}
-			set {
-				date = value;
-				this.dateEntry.Text = value.ToString(Catalog.GetString("MM/dd/yyyy"));
-			}
+			get {return DateTime.Parse(dateEntry.Text);}
+			set {dateEntry.Text = value.ToString(Catalog.GetString("MM/dd/yyyy"));}
 		}
 		
 		public Sections Sections{
 			get {return this.actualSection;}
-			set {this.actualSection = value;}
+			set {actualSection = value;}
 		}	
 		
 		public TeamTemplate LocalTeamTemplate{
@@ -170,7 +165,7 @@ namespace LongoMatch.Gui.Component
 			VisitorName = project.VisitorName;
 			LocalGoals = project.LocalGoals;
 			VisitorGoals = project.VisitorGoals;
-			Date= project.MatchDate;
+			Date = project.MatchDate;
 			Season = project.Season;
 			Competition = project.Competition;
 			Sections = project.Sections;
@@ -271,7 +266,7 @@ namespace LongoMatch.Gui.Component
 		}
 
 		protected virtual void OnDateSelected(DateTime dateTime){
-			this.dateEntry.Text = dateTime.ToString(Catalog.GetString("MM/dd/yyyy"));
+			Date = dateTime;
 		}
 		
 		protected virtual void OnOpenbuttonClicked(object sender, System.EventArgs e)
