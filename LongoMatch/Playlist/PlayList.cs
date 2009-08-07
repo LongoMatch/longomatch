@@ -57,18 +57,22 @@ namespace LongoMatch.Playlist
 				filename = file;
 			}
 			else
-				this.Load(file);			
+				Load(file);			
 		}
 		#endregion
 		
 		#region Properties
 		
 		public int Count {
-			get{return this.list.Count;}
+			get{return list.Count;}
 		}
 		
 		public string File{
-			get {return this.filename;}
+			get {return filename;}
+		}
+		
+		public Version Version{
+			get{return version;}
 		}
 		#endregion
 		
@@ -87,11 +91,11 @@ namespace LongoMatch.Playlist
 			foreach (PlayListTimeNode plNode in list){
 				plNode.Valid = System.IO.File.Exists(plNode.MediaFile.FilePath);
 			}
-			this.filename = file;
+			filename = file;
 		}
 		
 		public void Save(){
-			this.Save(this.filename);
+			Save(filename);
 		}
 		
 		public void Save(string file){
@@ -103,48 +107,47 @@ namespace LongoMatch.Playlist
 		} 
 
 		public bool isLoaded(){
-			return this.filename != null;
+			return filename != null;
 		}
 		
 		public int GetCurrentIndex(){
-			return this.indexSelection;
+			return indexSelection;
 		}
 		
-		public PlayListTimeNode Next(){
-			
-			if (this.HasNext())
-				this.indexSelection++;	
+		public PlayListTimeNode Next(){			
+			if (HasNext())
+				indexSelection++;	
 			return list[indexSelection];
 		}
 		
 		public PlayListTimeNode Prev(){
-			if (this.HasPrev())
-				this.indexSelection--;
+			if (HasPrev())
+				indexSelection--;
 			return list[indexSelection];
 		}
 		
 		public void Add (PlayListTimeNode plNode){
-			this.list.Add(plNode);
+			list.Add(plNode);
 		}
 		
 		public void Remove(PlayListTimeNode plNode){
 			
-			this.list.Remove(plNode);
-			if (this.GetCurrentIndex() >= list.Count)
-				this.indexSelection --;
+			list.Remove(plNode);
+			if (GetCurrentIndex() >= list.Count)
+				indexSelection --;
 		}
 		
 		public PlayListTimeNode Select (int index){
-			this.indexSelection = index;
-			return this.list[index];
+			indexSelection = index;
+			return list[index];
 		}
 		
 		public bool HasNext(){
-			return this.indexSelection < list.Count-1;
+			return indexSelection < list.Count-1;
 		}
 		
 		public bool HasPrev(){
-			return ! this.indexSelection.Equals(0);
+			return !indexSelection.Equals(0);
 		}
 				
 		public ListStore GetModel (){
@@ -153,27 +156,26 @@ namespace LongoMatch.Playlist
 				listStore.AppendValues (plNode);							
 			}
 			return listStore;
-		}
-		
+		}		
 		
 		public void SetModel(ListStore listStore){
 			TreeIter iter ;
+			
 			listStore.GetIterFirst(out iter);
-			this.list.Clear();
+			list.Clear();
 			while (listStore.IterIsValid(iter)){
-				this.list.Add(listStore.GetValue (iter, 0) as PlayListTimeNode);
+				list.Add(listStore.GetValue (iter, 0) as PlayListTimeNode);
 				listStore.IterNext(ref iter);
 			}			
 		}
 		
 		public IEnumerator GetEnumerator(){
-			return this.list.GetEnumerator();
+			return list.GetEnumerator();
 		}
 		
 		public IPlayList Copy(){
-			return (IPlayList)(this.MemberwiseClone());
-		}		
-		
+			return (IPlayList)(MemberwiseClone());
+		}				
 		#endregion
 	}
 }
