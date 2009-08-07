@@ -3390,6 +3390,27 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
 }
 
 /**
+ * bacon_video_widget_stop:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Stops playing the current stream and resets to the first position in the stream.
+ **/
+void
+bacon_video_widget_stop (BaconVideoWidget * bvw)
+{
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
+
+  GST_LOG ("Stopping");
+  bvw_stop_play_pipeline (bvw);
+
+  /* Reset position to 0 when stopping */
+  got_time_tick (GST_ELEMENT (bvw->priv->play), 0, bvw);
+}
+
+
+/**
  * bacon_video_widget_close:
  * @bvw: a #BaconVideoWidget
  *

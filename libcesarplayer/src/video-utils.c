@@ -15,8 +15,11 @@ void
 totem_gdk_window_set_invisible_cursor (GdkWindow *window)
 {
 	GdkCursor *cursor;
-
-	cursor = gdk_cursor_new (GDK_BLANK_CURSOR);
+	#ifdef WIN32
+		cursor = gdk_cursor_new (GDK_X_CURSOR);
+	#else
+		cursor = gdk_cursor_new (GDK_BLANK_CURSOR);
+	#endif
 	gdk_window_set_cursor (window, cursor);
 	gdk_cursor_unref (cursor);
 }
