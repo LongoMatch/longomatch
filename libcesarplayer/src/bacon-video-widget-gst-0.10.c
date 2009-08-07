@@ -667,8 +667,58 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
 
   if (bvw->priv->logo_mode || draw_logo) {
     if (bvw->priv->logo_pixbuf != NULL) {
+	  GdkPixbuf *frame;
+      guchar *pixels;
+      int rowstride;
+      gint width, height, alloc_width, alloc_height, logo_x, logo_y;
+      gfloat width_ratio, height_ratio;
+
+      frame = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
+	  FALSE, 8, widget->allocation.width, widget->allocation.height);
+
+      width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
+      height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
+      alloc_width = widget->allocation.width;
+      alloc_height = widget->allocation.height;
+
+      /* Checking if allocated space is smaller than our logo */
+
+      if ((alloc_width < width) || (alloc_height < height)) {
+		width_ratio = (gfloat) alloc_width / (gfloat) width;
+		height_ratio = (gfloat) alloc_height / (gfloat) height;
+		width_ratio = MIN (width_ratio, height_ratio);
+		height_ratio = width_ratio;
+      } else
+		width_ratio = height_ratio = 1.0;
+
+      logo_x = (alloc_width / 2) - (width * width_ratio / 2);
+      logo_y = (alloc_height / 2) - (height * height_ratio / 2);
+
+      /* Scaling to available space */
+
+      gdk_pixbuf_composite (bvw->priv->logo_pixbuf,
+	  frame,
+	  0, 0,
+	  alloc_width, alloc_height,
+	  logo_x, logo_y, width_ratio, height_ratio, GDK_INTERP_BILINEAR, 255);
+
+      /* Drawing our frame */
+
+      rowstride = gdk_pixbuf_get_rowstride (frame);
+
+      pixels = gdk_pixbuf_get_pixels (frame) +
+	  rowstride * event->area.y + event->area.x * 3;
+
+      gdk_draw_rgb_image_dithalign (widget->window,
+	  widget->style->black_gc,
+	  event->area.x, event->area.y,
+	  event->area.width, event->area.height,
+	  GDK_RGB_DITHER_NORMAL, pixels,
+	  rowstride, event->area.x, event->area.y);
+
+      g_object_unref (frame);
       /* draw logo here */
-      GdkPixbuf *logo = NULL;
+      /*GdkPixbuf *logo = NULL;
       gint s_width, s_height, w_width, w_height;
       gfloat ratio;
       GdkRegion *region;
@@ -703,9 +753,9 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
 
       if (s_width <= 1 || s_height <= 1) {
         if (xoverlay != NULL)
-	  gst_object_unref (xoverlay);
-	gdk_window_end_paint (win);
-	return TRUE;
+	  	gst_object_unref (xoverlay);
+		gdk_window_end_paint (win);
+		return TRUE;
       }
 
       logo = gdk_pixbuf_scale_simple (bvw->priv->logo_pixbuf,
@@ -716,7 +766,7 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
           s_width, s_height, GDK_RGB_DITHER_NONE, 0, 0);
 
       gdk_window_end_paint (win);
-      g_object_unref (logo);
+      g_object_unref (logo);*/
     } else if (win) {
       /* No pixbuf, just draw a black background then */
       gdk_window_clear_area (win,
