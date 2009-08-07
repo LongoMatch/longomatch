@@ -34,6 +34,7 @@ namespace LongoMatch.Gui.Dialog
 	{
 
 		public bool edited;
+		public Project loadedProject;
 		
 		public DBManager()
 		{
@@ -45,20 +46,20 @@ namespace LongoMatch.Gui.Dialog
 		public void Fill(){
 			ArrayList allDB = MainClass.DB.GetAllDB();
 			projectlistwidget1.Fill(allDB);
-			this.filedescriptionwidget3.Clear();
-			this.filedescriptionwidget3.Sensitive = false;
-			this.saveButton.Sensitive = false;
-			this.deleteButton.Sensitive = false;
-			
-		
+			projectlistwidget1.ClearSearch();
+			filedescriptionwidget3.Clear();
+			filedescriptionwidget3.Sensitive = false;
+			saveButton.Sensitive = false;
+			deleteButton.Sensitive = false;
+			loadedProject=null;	
 		}
 		
 		private void SaveProject(){
 			String previousFileName;			
 			Project changedProject;
 			
-			previousFileName = projectlistwidget1.GetSelection().File.FilePath;			
-			changedProject = this.filedescriptionwidget3.GetProject();
+			changedProject = filedescriptionwidget3.GetProject();
+			previousFileName = loadedProject.File.FilePath;
 			
 			if (changedProject != null){
 				
@@ -73,7 +74,7 @@ namespace LongoMatch.Gui.Dialog
 				                          Catalog.GetString("A Project is already using this file."));
 					}
 				}
-				this.Fill();
+				Fill();
 			}
 		}
 
@@ -91,9 +92,9 @@ namespace LongoMatch.Gui.Dialog
 					MessageDialog md = new MessageDialog(this,DialogFlags.Modal,MessageType.Question,ButtonsType.YesNo,
 					                                     Catalog.GetString("Do yo really want to delete:")+"\n"+selectedProject.File.FilePath);
 					if (md.Run()== (int)ResponseType.Yes){
-						this.filedescriptionwidget3.Clear();
+						filedescriptionwidget3.Clear();
 						MainClass.DB.RemoveProject(selectedProject);	
-						this.Fill();						
+						Fill();						
 					}
 					md.Destroy();
 				}
@@ -127,12 +128,17 @@ namespace LongoMatch.Gui.Dialog
 			
 				MessagePopup.PopupMessage(this, MessageType.Warning, 
 				                          Catalog.GetString("The Project you are trying to load is actually in use.")+"\n" +Catalog.GetString ("Close it first to edit it"));
+				filedescriptionwidget3.Clear();
+				filedescriptionwidget3.Sensitive = false;
+				saveButton.Sensitive = false;
+				deleteButton.Sensitive = false;				
 			}
 			else{
-				this.filedescriptionwidget3.Sensitive = true;
-				this.filedescriptionwidget3.SetProject(project);
-				this.saveButton.Sensitive = true;
-				this.deleteButton.Sensitive = true;
+				loadedProject = project;
+				filedescriptionwidget3.Sensitive = true;
+				filedescriptionwidget3.SetProject(project);
+				saveButton.Sensitive = true;
+				deleteButton.Sensitive = true;
 			}
 		}		
 	}

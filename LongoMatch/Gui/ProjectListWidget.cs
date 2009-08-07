@@ -107,6 +107,10 @@ namespace LongoMatch.Gui.Component
 			
 		}
 		
+		public void ClearSearch(){
+			filterEntry.Text="";
+		}
+		
 		private Project GetProject(TreePath path){
 			if (path != null){
 				Gtk.TreeIter iter;
@@ -135,7 +139,10 @@ namespace LongoMatch.Gui.Component
 		
 		private bool FilterTree (Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			Project project =(Project) model.GetValue (iter, 0);
+			Project project =(Project) model.GetValue (iter, 0); 
+			
+			if (project == null)
+				return true;
  
 			if (filterEntry.Text == "")
 				return true;
