@@ -32,9 +32,15 @@ namespace LongoMatch.DB
 		}
 		
 		public bool AddTag (Tag tag){
+			if (tagsList.Contains(tag))
+			    return false;
+			else
+				tagsList.Add(tag);
+			return true;
 		}
 		
 		public bool removeTag (Tag tag){
+			return tagsList.Remove(tag);
 		}
 	}
 }
