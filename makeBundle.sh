@@ -1,4 +1,4 @@
-export MONO_INSTALL_PATH=/e/Mono-2.4/
+export MONO_INSTALL_PATH=/c/Mono-2.4/
 $MONO_INSTALL_PATH/bin/gacutil -i LongoMatch/bin/Release/CesarPlayer.dll
 $MONO_INSTALL_PATH/bin/gacutil -i LongoMatch/bin/Release/Db4objects.Db4o.dll
 export PKG_CONFIG_PATH=$MONO_INSTALL_PATH/lib/pkgconfig/
