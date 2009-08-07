@@ -93,8 +93,6 @@ namespace LongoMatch.TimeNodes
 			string modifierS = Catalog.GetString("none");
 			if (Modifier == ModifierType.Mod1Mask)
 				modifierS = "Alt";
-			else if (Modifier == ModifierType.Mod5Mask)
-				modifierS = "AltGr";
 			else if (Modifier == ModifierType.ShiftMask)
 				modifierS = "Shift";
 				

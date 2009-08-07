@@ -35,11 +35,13 @@ namespace LongoMatch.Gui.Dialog
 			Gdk.Key key = evnt.Key;
 			ModifierType modifier = evnt.State;
 
-			if ((modifier & (ModifierType.Mod1Mask | ModifierType.Mod5Mask | ModifierType.ShiftMask)) != 0
-				&& key != Gdk.Key.Shift_L && key != Gdk.Key.Shift_R
-			    && key != Gdk.Key.Alt_L &&  key != Gdk.Key.Alt_R ){
+			if ((modifier & (ModifierType.Mod1Mask | ModifierType.ShiftMask)) != 0
+				&& key != Gdk.Key.Shift_L 
+			    && key != Gdk.Key.Shift_R
+			    && key != Gdk.Key.Alt_L  )
+			{
 				hotKey.Key = key;
-				hotKey.Modifier = modifier & (ModifierType.Mod1Mask | ModifierType.Mod5Mask | ModifierType.ShiftMask);
+				hotKey.Modifier = modifier & (ModifierType.Mod1Mask | ModifierType.ShiftMask);
 				this.Respond (ResponseType.Ok);
 			}
 			
