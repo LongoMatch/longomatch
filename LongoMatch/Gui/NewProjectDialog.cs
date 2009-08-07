@@ -32,6 +32,7 @@ namespace LongoMatch.Gui.Dialog
 		public NewProjectDialog()
 		{
 			this.Build();			
+			fdwidget.Clear();
 		}
 		
 		public LongoMatch.Gui.Component.UseType Use{
