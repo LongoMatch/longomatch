@@ -44,7 +44,6 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		public Time GetStartTime(){
-			Time t = new  Time ((int)(spinbutton1.Value)*Time.SECONDS_TO_TIME);
 			return new Time((int)(spinbutton1.Value)*Time.SECONDS_TO_TIME);
 		}
 		
