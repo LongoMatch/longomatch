@@ -1,32 +1,57 @@
-2009-04-23  Andoni Morales <Alastruey> 
+===== LongoMatch 0.15 =====	
 
-	
+	== Features ==
 
-2009-04-23  Andoni Morales <Alastruey> 
+	* Illimted number of tagging categories (previous version allows only 20)
+	* Support for team templates
+	* Plays can be tagged to players
+	* HotKeys support	
+	* New video editor implemented using GNonLin
+	* Video Editor with audio support
+	* The video editor lets overlay the title of the play
+	* The video editor lets change the rendering playrate
+	* New output formats (TV, HD, FullHD)
+	* New output audio and video codecs supports (Matroska+H264+AAC, AVI+XVID+MP3, OGG+Theora+Vorbis, MPEG2-PS+Mpeg2Video)
 
-	
+	== Improvements ==
 
-2009-04-19  Andoni Morales <Alastruey> 
+	* Display the name of the play in the timeline
+	* Enable projects search
+	* Added image preview to projects
+	* Added "Competion" and "Season" properties to the Project's description	
+	* Multimedia player updated to playbin2
+	* Playlists elements can now have their own playrate
+	* Previsualization of captured frames
+	* Crash reports
+	* Many bug fixes!!!
 
-	
+===== LongoMatch 0.14.1 ====
 
-2009-04-14  Andoni Morales <Alastruey> 
+	* [#323] Crash whith no internet conexion
 
-	
+===== LongoMatch 0.14 =====
 
-2009-04-14  Andoni Morales <Alastruey> 
+	* Export projects to a csv file
+	* Control tiemline zoom through a scale
+	* Seek in a play segment
+	* Fixed bug playing WMV files on Windows
 
-	
+===== LongoMatch 0.12 ====
 
-2009-04-12   <> 
+	* Added skins support
+    	* Added mp4 support (Win32)
+   	* Added mpeg2 support (Win32-Experimental)
+    	* Bugs correction
+    	* Changed snapshot series capturer behaviour
 
-	
+===== LongoMatch 0.10 ====
 
-2009-03-11   <> 
+	* Support for annotations in plays a
+	* Support to captures frames series from a play
 
-	
+===== No records for revious releases ====
 
-2009-02-04  Andoni Morales Alastruey <ylatuya@gmail.com> 
+
 
 	
 

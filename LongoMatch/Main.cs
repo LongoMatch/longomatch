@@ -225,7 +225,7 @@ namespace LongoMatch
 			MessagePopup.PopupMessage(null, MessageType.Error, 
 			                          Catalog.GetString("The application has finished with an unexpected error.")+"\n"+
 			                          Catalog.GetString("A log has been saved at: "+logFile)+ "\n"+
-			                          Catalog.GetString("Please, fill a bug report ");
+			                          Catalog.GetString("Please, fill a bug report "));
 			
 			Application.Quit();
 		}
