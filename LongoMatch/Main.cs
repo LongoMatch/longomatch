@@ -224,7 +224,9 @@ namespace LongoMatch
 			MessagePopup.PopupMessage(null, MessageType.Error, 
 			                          Catalog.GetString("The application has finished with an unexpected error.")+"\n"+
 			                          Catalog.GetString("A log has been saved at: "+logFile)+ "\n"+
-			                          Catalog.GetString("Please, fill a bug report at "));
+			                          Catalog.GetString("Please, fill a bug report at: \n "+
+			                         "https://forja.rediris.es/tracker/?func=add&group_id=96&atid=439"));
+			
 			Application.Quit();
 		}
 	}
