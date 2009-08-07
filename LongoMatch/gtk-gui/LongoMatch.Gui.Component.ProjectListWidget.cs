@@ -15,6 +15,14 @@ namespace LongoMatch.Gui.Component {
         
         private Gtk.ScrolledWindow scrolledwindow2;
         
+        private Gtk.VBox vbox1;
+        
+        private Gtk.HBox hbox1;
+        
+        private Gtk.Label filterlabel;
+        
+        private Gtk.Entry filterEntry;
+        
         private Gtk.TreeView treeview;
         
         protected virtual void Build() {
@@ -27,15 +35,54 @@ namespace LongoMatch.Gui.Component {
             this.scrolledwindow2.CanFocus = true;
             this.scrolledwindow2.Name = "scrolledwindow2";
             // Container child scrolledwindow2.Gtk.Container+ContainerChild
+            Gtk.Viewport w1 = new Gtk.Viewport();
+            w1.ShadowType = ((Gtk.ShadowType)(0));
+            // Container child GtkViewport.Gtk.Container+ContainerChild
+            this.vbox1 = new Gtk.VBox();
+            this.vbox1.Name = "vbox1";
+            this.vbox1.Spacing = 6;
+            // Container child vbox1.Gtk.Box+BoxChild
+            this.hbox1 = new Gtk.HBox();
+            this.hbox1.Name = "hbox1";
+            this.hbox1.Spacing = 6;
+            // Container child hbox1.Gtk.Box+BoxChild
+            this.filterlabel = new Gtk.Label();
+            this.filterlabel.Name = "filterlabel";
+            this.filterlabel.LabelProp = Mono.Unix.Catalog.GetString("Projects Search:");
+            this.hbox1.Add(this.filterlabel);
+            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.hbox1[this.filterlabel]));
+            w2.Position = 0;
+            w2.Expand = false;
+            w2.Fill = false;
+            // Container child hbox1.Gtk.Box+BoxChild
+            this.filterEntry = new Gtk.Entry();
+            this.filterEntry.CanFocus = true;
+            this.filterEntry.Name = "filterEntry";
+            this.filterEntry.IsEditable = true;
+            this.filterEntry.InvisibleChar = '●';
+            this.hbox1.Add(this.filterEntry);
+            Gtk.Box.BoxChild w3 = ((Gtk.Box.BoxChild)(this.hbox1[this.filterEntry]));
+            w3.Position = 1;
+            this.vbox1.Add(this.hbox1);
+            Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(this.vbox1[this.hbox1]));
+            w4.Position = 0;
+            w4.Expand = false;
+            w4.Fill = false;
+            // Container child vbox1.Gtk.Box+BoxChild
             this.treeview = new Gtk.TreeView();
             this.treeview.CanFocus = true;
             this.treeview.Name = "treeview";
-            this.scrolledwindow2.Add(this.treeview);
+            this.vbox1.Add(this.treeview);
+            Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(this.vbox1[this.treeview]));
+            w5.Position = 1;
+            w1.Add(this.vbox1);
+            this.scrolledwindow2.Add(w1);
             this.Add(this.scrolledwindow2);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
             this.Show();
+            this.filterEntry.Changed += new System.EventHandler(this.OnFilterentryChanged);
             this.treeview.CursorChanged += new System.EventHandler(this.OnTreeviewCursorChanged);
         }
     }

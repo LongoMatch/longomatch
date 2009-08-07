@@ -38,60 +38,65 @@ namespace LongoMatch.Gui.Component
 	public partial class ProjectListWidget : Gtk.Bin
 	{
 
-		private Gtk.ListStore dataFileListStore;
-		public event         ProjectSelectedHandler ProjectSelectedEvent;
+		private Gtk.ListStore projectsListStore;
+		private TreeModelFilter filter;
+		public event ProjectSelectedHandler ProjectSelectedEvent;	
+
 		
 		public ProjectListWidget()
 		{
 			this.Build();
-			dataFileListStore = new Gtk.ListStore (typeof (Project));
-			treeview.Model=dataFileListStore;
+			projectsListStore = new Gtk.ListStore (typeof (Project));
+			filter = new Gtk.TreeModelFilter (projectsListStore, null);	
+			filter.VisibleFunc = new Gtk.TreeModelFilterVisibleFunc (FilterTree);			
+			treeview.Model = filter;
 			
-			Gtk.TreeViewColumn filenameColumn = new Gtk.TreeViewColumn ();
-			filenameColumn.Title = Catalog.GetString("Filename");
+			Gtk.TreeViewColumn fileDescriptionColumn = new Gtk.TreeViewColumn ();
+			fileDescriptionColumn.Title = Catalog.GetString("Filename");
 			Gtk.CellRendererText filenameCell = new Gtk.CellRendererText ();
-			filenameColumn.PackStart (filenameCell, true);
+			Gtk.CellRendererPixbuf miniatureCell = new Gtk.CellRendererPixbuf ();
+			fileDescriptionColumn.PackStart (miniatureCell,false);
+			fileDescriptionColumn.PackStart (filenameCell, true);			
 			
+			fileDescriptionColumn.SetCellDataFunc (filenameCell, new Gtk.TreeCellDataFunc (RenderName));
+			fileDescriptionColumn.SetCellDataFunc (miniatureCell, new Gtk.TreeCellDataFunc(RenderPixbuf));
 			
-			
-			filenameColumn.SetCellDataFunc (filenameCell, new Gtk.TreeCellDataFunc (RenderName));
-			
-			treeview.AppendColumn (filenameColumn);
+			treeview.AppendColumn (fileDescriptionColumn);
 			treeview.EnableGridLines = TreeViewGridLines.Horizontal;
-			treeview.HeadersVisible = false;
-		
-		}
-		
+			treeview.HeadersVisible = false;	
+		}		
 				
+		
+		private void RenderPixbuf (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
+		{
+			Project project = (Project) model.GetValue (iter, 0);			
+ 			(cell as Gtk.CellRendererPixbuf).Pixbuf= project.File.Preview;			
+		}
 		private void RenderName (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			Project _project = (Project) model.GetValue (iter, 0);
 			string _filePath = _project.File.FilePath;	
 			string text;
-			text = Catalog.GetString("File: ") + System.IO.Path.GetFileName(_filePath.ToString());
-			text = text +"\n"+Catalog.GetString("Local Team: ") + _project.LocalName;
-			text = text +"\n"+Catalog.GetString("Visitor Team: ") + _project.VisitorName;
-			text = text +"\n"+Catalog.GetString("Result: ") + _project.LocalGoals+"-"+_project.VisitorGoals;
-			text = text +"\n"+Catalog.GetString("Date: ") + _project.MatchDate.ToString(Catalog.GetString("MM/dd/yyyy"));
-			
-			(cell as Gtk.CellRendererText).Text = text;
 			
 			
+			text = Catalog.GetString("<b>File:</b>  ") + System.IO.Path.GetFileName(_filePath.ToString());
+			text = text +"\n"+Catalog.GetString("<b>Local Team:</b>  ") + _project.LocalName;
+			text = text +"\n"+Catalog.GetString("<b>Visitor Team:</b>  ") + _project.VisitorName;
+			text = text +"\n"+Catalog.GetString("<b>Season:</b>  ") + _project.Season;
+			text = text +"\n"+Catalog.GetString("<b>Competition:</b>  ") + _project.Competition;
+			text = text +"\n"+Catalog.GetString("<b>Result:</b>  ") + _project.LocalGoals+"-"+_project.VisitorGoals;
+			text = text +"\n"+Catalog.GetString("<b>Date:</b>  ") + _project.MatchDate.ToString(Catalog.GetString("MM/dd/yyyy"));
+			
+			(cell as Gtk.CellRendererText).Markup = text;	
 		}
-		
-		
-		
-		
+				
 		public void Fill(ArrayList db){	
-			dataFileListStore.Clear();
+			projectsListStore.Clear();
 			db.Sort();
-			
 				
-			foreach (Project _project in db){
-				
-				dataFileListStore.AppendValues(_project);
+			foreach (Project _project in db){				
+				projectsListStore.AppendValues(_project);
 			}
-			//dataFileListStore.Reorder();
 		}
 		
 		public Project GetSelection(){
@@ -105,12 +110,11 @@ namespace LongoMatch.Gui.Component
 		private Project GetProject(TreePath path){
 			if (path != null){
 				Gtk.TreeIter iter;
-				dataFileListStore.GetIter (out iter, path);
- 				Project project = (Project) dataFileListStore.GetValue (iter, 0);
+				filter.GetIter (out iter, path);
+ 				Project project = (Project) filter.GetValue (iter, 0);
 				return project;
 			}
-			else return null;
-			
+			else return null;			
 		}
 
 
@@ -118,10 +122,39 @@ namespace LongoMatch.Gui.Component
 		{
 			TreeIter iter;
 			this.treeview.Selection.GetSelected(out iter);
-			Project selectedProject = (Project) dataFileListStore.GetValue (iter, 0);
+			Project selectedProject = (Project) filter.GetValue (iter, 0);
 			if (ProjectSelectedEvent!=null)
 				ProjectSelectedEvent(selectedProject);
 		}
+
+		protected virtual void OnFilterentryChanged (object sender, System.EventArgs e)
+		{
+			filter.Refilter ();
+
+		}
+		
+		private bool FilterTree (Gtk.TreeModel model, Gtk.TreeIter iter)
+		{
+			Project project =(Project) model.GetValue (iter, 0);
+ 
+			if (filterEntry.Text == "")
+				return true;
+ 
+			if (project.Title.IndexOf (filterEntry.Text) > -1)
+				return true;
+			else if (project.Season.IndexOf (filterEntry.Text) > -1)
+				return true;
+			else if (project.Competition.IndexOf (filterEntry.Text) > -1)
+				return true;
+			else if (project.LocalName.IndexOf(filterEntry.Text) > -1)
+				return true;
+			else if (project.VisitorName.IndexOf(filterEntry.Text) > -1)
+				return true;
+			else
+				return false;
+	}
+
+		
 
 
 	}
