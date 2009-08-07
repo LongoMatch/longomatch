@@ -39,15 +39,12 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		public void SetTimeNode(SectionsTimeNode tNode){
-			Console.WriteLine("SetTimeNode, Start{0}, Stop{1}",tNode.Start.Seconds, tNode.Stop.Seconds);
 			spinbutton1.Value=tNode.Start.Seconds;
 			spinbutton2.Value=tNode.Stop.Seconds;			
 		}
 		
 		public Time GetStartTime(){
 			Time t = new  Time ((int)(spinbutton1.Value)*Time.SECONDS_TO_TIME);
-			Console.WriteLine((int)(spinbutton1.Value)*Time.SECONDS_TO_TIME);
-			Console.WriteLine(t.Seconds);
 			return new Time((int)(spinbutton1.Value)*Time.SECONDS_TO_TIME);
 		}
 		
