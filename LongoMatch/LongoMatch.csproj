@@ -79,7 +79,7 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.NewProjectDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.OpenProjectDialog.cs" />
-    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.SectionsTemplates.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.SnapshotsDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.TeamTemplateEditor.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.TemplateEditorDialog.cs" />
@@ -103,12 +103,12 @@
     <Compile Include="Gui\OpenProjectDialog.cs" />
     <Compile Include="Gui\PlayerProperties.cs" />
     <Compile Include="Gui\PlayersListTreeWidget.cs" />
+    <Compile Include="Gui\PlayersSelectionDialog.cs" />
     <Compile Include="Gui\PlayersTreeView.cs" />
     <Compile Include="Gui\PlayListTreeView.cs" />
     <Compile Include="Gui\PlayListWidget.cs" />
     <Compile Include="Gui\ProjectListWidget.cs" />
     <Compile Include="Gui\SectionsPropertiesWidget.cs" />
-    <Compile Include="Gui\SectionsTemplates.cs" />
     <Compile Include="Gui\SnapshotsDialog.cs" />
     <Compile Include="Gui\TeamTemplateEditor.cs" />
     <Compile Include="Gui\TeamTemplateWidget.cs" />
