@@ -212,6 +212,7 @@ namespace LongoMatch
 			
 			logFile = logFile.Replace("/","-");
 			logFile = logFile.Replace(" ","-");
+			logFile = logFile.Replace(":","-");
 			logFile = System.IO.Path.Combine(HomeDir(),logFile);
 			
 			message = String.Format("{0}\n{1}\n{2}",ex.Message,ex.Source,ex.StackTrace);
