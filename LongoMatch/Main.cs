@@ -61,6 +61,8 @@ namespace LongoMatch
 			//Iniciamos la aplicación
 			Application.Init ();
 			
+			GLib.ExceptionManager.UnhandledException += new GLib.UnhandledExceptionHandler(OnException);
+				
 			LongoMatch.Video.Player.GstPlayer.InitBackend("");
 			
 			if (homeDirectory == null)
@@ -197,7 +199,12 @@ namespace LongoMatch
 				writer.Close();
 			}
 		}
-		
+			
+		private static void OnException(GLib.UnhandledExceptionArgs args){			
+			if (MainWindow.OpenedProject() != null)
+				DB.UpdateProject(MainWindow.OpenedProject());
+			ProcessExecutionError((Exception)args.ExceptionObject);				
+		}
 		
 		private static void ProcessExecutionError(Exception ex){
 			string logFile ="LongoMatch-" + DateTime.Now +".log";
