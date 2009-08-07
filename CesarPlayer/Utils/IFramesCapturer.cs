@@ -30,6 +30,7 @@ namespace LongoMatch.Video.Utils
 		bool Open(string mrl);
 		bool SeekTime(long time, bool accurate);
 		void Pause();
+		void Dispose();
 		Pixbuf CurrentFrame{
 			get;
 		}

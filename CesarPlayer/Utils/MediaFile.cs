@@ -22,6 +22,7 @@ using System;
 using LongoMatch.Video;
 using LongoMatch.Video.Player;
 using Mono.Unix;
+using Gdk;
 
 namespace LongoMatch.Video.Utils
 {
@@ -40,10 +41,23 @@ namespace LongoMatch.Video.Utils
 		string audioCodec;
 		uint videoHeight;
 		uint videoWidth;
+		private byte[] thumbnailBuf;
+		
+		const int THUMBNAIL_MAX_HEIGHT=72;
+		const int THUMBNAIL_MAX_WIDTH=96;
 		
 		public MediaFile(){}
 		
-		public MediaFile(string filePath,long length,ushort fps,bool hasAudio, bool hasVideo, string videoCodec, string audioCodec, uint videoWidth, uint videoHeight)
+		public MediaFile(string filePath,
+		                 long length,
+		                 ushort fps,
+		                 bool hasAudio, 
+		                 bool hasVideo, 
+		                 string videoCodec, 
+		                 string audioCodec, 
+		                 uint videoWidth, 
+		                 uint videoHeight,
+		                 Pixbuf preview)
 		{
 			this.filePath = filePath;
 			this.length = length;
@@ -58,6 +72,7 @@ namespace LongoMatch.Video.Utils
 					this.fps=25;
 				else
 					this.fps = fps;
+			this.Preview=preview;
 		}
 		
 		public string FilePath{
@@ -114,6 +129,27 @@ namespace LongoMatch.Video.Utils
 			return (uint) (Fps*Length/1000);
 		}
 		
+		public Pixbuf Preview{
+			get{ 
+				if (thumbnailBuf != null)
+					return new Pixbuf(thumbnailBuf);
+				else return null;
+			}
+			set{
+				if (value != null){
+					int h = value.Height;
+					int w = value.Width;
+					double ratio = (double)w/(double)h;
+					if (h>w)
+						thumbnailBuf = value.ScaleSimple((int)(THUMBNAIL_MAX_HEIGHT*ratio),THUMBNAIL_MAX_HEIGHT,InterpType.Bilinear).SaveToBuffer("png");
+					else
+						thumbnailBuf = value.ScaleSimple(THUMBNAIL_MAX_WIDTH,(int)(THUMBNAIL_MAX_WIDTH/ratio),InterpType.Bilinear).SaveToBuffer("png");
+				}
+								
+				else thumbnailBuf = null;
+			}
+		}
+		
 		public static MediaFile GetMediaFile(string filePath){
 			int duration;			
 			bool hasVideo;
@@ -122,9 +158,11 @@ namespace LongoMatch.Video.Utils
 			string videoCodec = "";
 			int fps=0;
 			int height=0;
-			int width=0;			
+			int width=0;		
+			Pixbuf preview=null;
 			MultimediaFactory factory;
 			IMetadataReader reader;
+			IFramesCapturer thumbnailer;
 			
 			try{
 				factory =  new MultimediaFactory();
@@ -139,13 +177,18 @@ namespace LongoMatch.Video.Utils
 				if (hasVideo){
 					videoCodec = (string) reader.GetMetadata(GstMetadataType.VideoCodec);	
 					fps = (int) reader.GetMetadata(GstMetadataType.Fps);
+					thumbnailer = factory.getFramesCapturer();
+					thumbnailer.Open(filePath);
+					thumbnailer.SeekTime(1000,false);
+					preview = thumbnailer.CurrentFrame;
+					thumbnailer.Dispose();
 				}			
 				height = (int) reader.GetMetadata(GstMetadataType.DimensionY);
 				width = (int) reader.GetMetadata (GstMetadataType.DimensionX);
 				reader.Close();	
-				reader.Dispose();		
-				Console.WriteLine("{0}\n{1}\n{2}\n{3}\n{4}\n{5}\n{6}",duration*1000,(ushort)fps,hasAudio,hasVideo,videoCodec,audioCodec,(uint)height,(uint)width);
-				return new MediaFile(filePath,duration*1000,(ushort)fps,hasAudio,hasVideo,videoCodec,audioCodec,(uint)height,(uint)width);
+				reader.Dispose();	
+				
+				return new MediaFile(filePath,duration*1000,(ushort)fps,hasAudio,hasVideo,videoCodec,audioCodec,(uint)height,(uint)width,preview);
 			}
 			catch (GLib.GException ex){
 			    throw new Exception (Catalog.GetString("Invalid video file:")+"\n"+ex.Message);

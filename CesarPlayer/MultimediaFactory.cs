@@ -76,13 +76,13 @@ namespace LongoMatch.Video
 			
 			switch (oS.Platform) { 
 			 case PlatformID.Unix:
-				return new GstPlayer(1,1,GstUseType.Metadata);
+				return new GstPlayer(1,1,GstUseType.Capture);
 				
 			case PlatformID.Win32NT:
-				return new GstPlayer(1,1,GstUseType.Metadata);
+				return new GstPlayer(1,1,GstUseType.Capture);
 				
 			 default:
-				return new GstPlayer(1,1,GstUseType.Metadata);
+				return new GstPlayer(1,1,GstUseType.Capture);
 			}
 		}
 		
