@@ -66,6 +66,7 @@
     <Compile Include="Capturer\ObjectManager.cs" />
     <Compile Include="Editor\AudioCodec.cs" />
     <Compile Include="Editor\AudioQuality.cs" />
+    <Compile Include="Editor\AvidemuxMerger.cs" />
     <Compile Include="Editor\AviMerger.cs" />
     <Compile Include="Editor\ConcatMerger.cs" />
     <Compile Include="Editor\EditorState.cs" />
@@ -99,9 +100,15 @@
     <Compile Include="Handlers\TickHandler.cs" />
     <Compile Include="Handlers\TitleChangeHandler.cs" />
     <Compile Include="MultimediaFactory.cs" />
+    <Compile Include="Player\GstAspectRatio.cs" />
+    <Compile Include="Player\GstAudioOutType.cs" />
+    <Compile Include="Player\GstDVDEvent.cs" />
+    <Compile Include="Player\GstError.cs" />
+    <Compile Include="Player\GstMetadataType.cs" />
     <Compile Include="Player\GstPlayer.cs" />
     <Compile Include="Player\GstPlayerAspectRatio.cs" />
     <Compile Include="Player\GstUseType.cs" />
+    <Compile Include="Player\GstVideoProperty.cs" />
     <Compile Include="Player\IPlayer.cs" />
     <Compile Include="Player\ObjectManager.cs" />
     <Compile Include="Utils\FramesCapturer.cs" />
