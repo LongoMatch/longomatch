@@ -73,17 +73,18 @@ namespace LongoMatch.Video.Utils
 			System.IO.Directory.CreateDirectory(outputDir);	
 			
 			pos = start;			
-		
+			if (Progress != null)					
+						Application.Invoke(delegate {Progress(0,totalFrames,null);});
 			while (pos <= stop){	
-				if (!cancel){
-					if (Progress != null)					
-						Application.Invoke(delegate {Progress(i+1,totalFrames);});
+				if (!cancel){					
 					capturer.SeekTime(pos,true);	
 					capturer.Pause();
 					frame = capturer.CurrentFrame;				
 					if (frame != null) {
 						frame.Save(System.IO.Path.Combine(outputDir,seriesName+"_" + i +".png"),"png");
-					}				
+					}			
+					if (Progress != null)					
+						Application.Invoke(delegate {Progress(i+1,totalFrames,frame);});
 					pos += interval;
 					i++;
 				}

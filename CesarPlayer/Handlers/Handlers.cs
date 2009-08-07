@@ -19,6 +19,7 @@
 //
 
 using System;
+using Gdk;
 
 namespace LongoMatch.Video.Handlers
 {
@@ -30,7 +31,7 @@ namespace LongoMatch.Video.Handlers
 	public delegate void NextButtonClickedHandler ();
 	public delegate void PrevButtonClickedHandler ();
 	public delegate void ProgressHandler (float progress);
-	public delegate void FramesProgressHandler (int actual, int total);
+	public delegate void FramesProgressHandler (int actual, int total,Pixbuf frame);
 
 	
 	
