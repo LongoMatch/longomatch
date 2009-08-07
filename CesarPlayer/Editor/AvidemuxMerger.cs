@@ -72,7 +72,6 @@ namespace LongoMatch.Video.Editor
 			}
 			
 			args+= String.Format(" --video-codec COPY --audio-codec COPY --rebuild-index --output-format {0} --force-smart --save {1}",outputFormat,outputFile);
-			Console.WriteLine(args);
 			return args;
 			
 		}

@@ -61,7 +61,6 @@ namespace LongoMatch.Video.Editor
 			
 			args += String.Format("--track-order 0:{0} {1}",trackID, appendTo);
 			
-			Console.WriteLine(args);
 			return args;
 		}				
 	}
