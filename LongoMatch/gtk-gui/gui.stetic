@@ -3186,7 +3186,7 @@ You can download it using this direct link:</property>
         <child>
           <widget class="Gtk.Label" id="label1">
             <property name="MemberName" />
-            <property name="LabelProp" translatable="yes">Press a key combination using  Shift, Alt or AltGR keys</property>
+            <property name="LabelProp" translatable="yes">Press a key combination using  Shift or Alt keys</property>
           </widget>
           <packing>
             <property name="Position">0</property>
