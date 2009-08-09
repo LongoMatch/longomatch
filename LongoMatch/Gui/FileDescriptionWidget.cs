@@ -275,45 +275,49 @@ namespace LongoMatch.Gui.Component
 			
 			if (this.useType == UseType.NewCaptureProject){
 				fChooser = new FileChooserDialog(Catalog.GetString("Save File as..."),
-			                                                   (Gtk.Window)this.Toplevel,
-			                                                   FileChooserAction.Save,
-			                                                   "gtk-cancel",ResponseType.Cancel,
-			                                                   "gtk-save",ResponseType.Accept);
+				                                 (Gtk.Window)this.Toplevel,
+				                                 FileChooserAction.Save,
+				                                 "gtk-cancel",ResponseType.Cancel,
+				                                 "gtk-save",ResponseType.Accept);
 				fChooser.SetCurrentFolder(MainClass.VideosDir());
-				if (fChooser.Run() == (int)ResponseType.Accept){
-					try{
-						mFile = MediaFile.GetMediaFile(fChooser.Filename);
-						fileEntry.Text = fChooser.Filename;			
-					}
-					catch (Exception ex){
-						MessagePopup.PopupMessage(fChooser, MessageType.Error, 
-				                          ex.Message);
-					}
-				}				
-			}			
-			
-			else {
+				if (fChooser.Run() == (int)ResponseType.Accept)
+					fileEntry.Text = fChooser.Filename;
+				fChooser.Destroy();									
+			}else {
 				fChooser = new FileChooserDialog(Catalog.GetString("Open file..."),
-			                                                   (Gtk.Window)this.Toplevel,
-			                                                   FileChooserAction.Open,
-			                                                   "gtk-cancel",ResponseType.Cancel,
-			                                                   "gtk-open",ResponseType.Accept);			
+				                                 (Gtk.Window)this.Toplevel,
+				                                 FileChooserAction.Open,
+				                                 "gtk-cancel",ResponseType.Cancel,
+				                                 "gtk-open",ResponseType.Accept);			
 			
 				fChooser.SetCurrentFolder(System.Environment.GetFolderPath(Environment.SpecialFolder.Personal));
 		
-				if (fChooser.Run() == (int)ResponseType.Accept){					
+				if (fChooser.Run() == (int)ResponseType.Accept){
+					MessageDialog md=null;
+					string filename = fChooser.Filename;
+					fChooser.Destroy();
 					try{
-						mFile = MediaFile.GetMediaFile(fChooser.Filename);
-						fileEntry.Text = fChooser.Filename;
+						md = new MessageDialog((Gtk.Window)this.Toplevel,
+			                                     DialogFlags.Modal,
+			                                     MessageType.Info,
+			                                     Gtk.ButtonsType.None,
+			                                     Catalog.GetString("Analyzing video file:")+"\n"+filename);
+						md.Icon=Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Dialog, 48);
+						md.Show();
+						mFile = MediaFile.GetMediaFile(filename);
+						fileEntry.Text = filename;
 					}
 					catch (Exception ex){
-						MessagePopup.PopupMessage(fChooser, MessageType.Error, 
+						MessagePopup.PopupMessage(this, MessageType.Error, 
 				                          ex.Message);
 					}
+					finally{
+						md.Destroy();
+					}
+					
 					
 				}			
 			}		
-			fChooser.Destroy();
 		}
 
 
