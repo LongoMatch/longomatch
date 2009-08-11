@@ -1,5 +1,5 @@
 // 
-//  Copyright (C) 2009 andoni
+//  Copyright (C) 2009 Andoni Morales Alastruey
 // 
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,34 +17,36 @@
 // 
 
 using System;
-using Gtk;
+using LongoMatch.DB.Compat;
 
-namespace LongoMatch.Gui
+namespace LongoMatch.Gui.Dialog
 {
 	
-	public class MessagePopup
+	
+	public partial class Migrator : Gtk.Dialog
 	{
-		
-		
-		public MessagePopup()
+		DatabaseMigrator dbMigrator;
+
+			
+		public Migrator(string oldDBFile)
 		{
+			this.Build();
+			dbMigrator = new DatabaseMigrator(oldDBFile);
+			dbMigrator.ConversionProgressEvent += new ConversionProgressHandler(OnProgress);
+			dbMigrator.Start();			
 		}
 		
-		public static void PopupMessage(Widget sender,MessageType type, String errorMessage){
-			Window toplevel;
-			if (sender != null)
-				toplevel = (Window)sender.Toplevel;
-			else 
-				toplevel = null;
-			
-			MessageDialog md = new MessageDialog(toplevel,
-			                                     DialogFlags.Modal,
-			                                     type,
-			                                     ButtonsType.Ok,
-			                                     errorMessage);
-			md.Icon=Stetic.IconLoader.LoadIcon(md, "longomatch", Gtk.IconSize.Dialog, 48);
-			md.Run();
-			md.Destroy();
+		protected void OnProgress (string progress){
+			textview2.Buffer.Text+=progress+"\n";
+			if (progress == DatabaseMigrator.DONE){
+				buttonCancel.Visible=false;
+				buttonOk.Visible=true;
+			}
+		}
+		
+		protected virtual void OnButtonCancelClicked (object sender, System.EventArgs e)
+		{
+			dbMigrator.Cancel();
 		}	
 	}
 }

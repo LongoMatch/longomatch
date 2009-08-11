@@ -121,23 +121,25 @@
     <File name="Gui/PlayersSelectionDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="DB/Compat" subtype="Directory" buildaction="Compile" />
     <File name="DB/Compat/0.0" subtype="Directory" buildaction="Compile" />
-    <File name="DB/Compat/0.0/DB/DataBase.cs" subtype="Code" buildaction="Compile" />
-    <File name="DB/Compat/0.0/DB/MediaFile.cs" subtype="Code" buildaction="Compile" />
-    <File name="DB/Compat/0.0/DB/Project.cs" subtype="Code" buildaction="Compile" />
-    <File name="DB/Compat/0.0/DB/Sections.cs" subtype="Code" buildaction="Compile" />
-    <File name="DB/Compat/0.0/Time/MediaTimeNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="DB/Compat/0.0/Time/PixbufTimeNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="DB/Compat/0.0/Time/PlayListTimeNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="DB/Compat/0.0/Time/SectionsTimeNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="DB/Compat/0.0/Time/Time.cs" subtype="Code" buildaction="Compile" />
-    <File name="DB/Compat/0.0/Time/TimeNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="DB/Compat/0.0/Playlist/IPlayList.cs" subtype="Code" buildaction="Compile" />
-    <File name="DB/Compat/0.0/Playlist/PlayList.cs" subtype="Code" buildaction="Compile" />
     <File name="DB/Compat/0.0/DatabaseMigrator.cs" subtype="Code" buildaction="Compile" />
     <File name="DB/Compat/0.0/PlayListMigrator.cs" subtype="Code" buildaction="Compile" />
     <File name="images/logo_48x48.png" subtype="Code" buildaction="Nothing" DeployService.RelativeDeployPath="icons/hicolor/48x48/longomatch.png" DeployService.TargetDirectoryId="CommonApplicationDataRoot" />
     <File name="DB/Tag.cs" subtype="Code" buildaction="Compile" />
     <File name="DB/TagsTemplate.cs" subtype="Code" buildaction="Compile" />
+    <File name="Gui/Migrator.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.Gui.Dialog.Migrator.cs" subtype="Code" buildaction="Compile" />
+    <File name="DB/Compat/0.0/Playlist/IPlayList.cs" subtype="Code" buildaction="Compile" />
+    <File name="DB/Compat/0.0/Playlist/PlayList.cs" subtype="Code" buildaction="Compile" />
+    <File name="DB/Compat/0.0/Time/PlayListTimeNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="DB/Compat/0.0/Time/Time.cs" subtype="Code" buildaction="Compile" />
+    <File name="DB/Compat/0.0/Time/TimeNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="DB/Compat/0.0/Time/PixbufTimeNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="DB/Compat/0.0/Time/MediaTimeNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="DB/Compat/0.0/DB/MediaFile.cs" subtype="Code" buildaction="Compile" />
+    <File name="DB/Compat/0.0/DB/Sections.cs" subtype="Code" buildaction="Compile" />
+    <File name="DB/Compat/0.0/Time/SectionsTimeNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="DB/Compat/0.0/DB/Project.cs" subtype="Code" buildaction="Compile" />
+    <File name="DB/Compat/0.0/DB/DataBase.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />

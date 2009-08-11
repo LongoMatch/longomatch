@@ -69,11 +69,14 @@ namespace LongoMatch
 				PromptForHomeDir();
 			
 			//Comprobamos los archivos de inicio
-			MainClass.CheckDirs();
-			MainClass.CheckFiles();
+			CheckDirs();
+			CheckFiles();			
 			
 			//Iniciamos la base de datos
-			db = new DataBase(Path.Combine(DBDir(),"longomatch.db"));			
+			db = new DataBase(Path.Combine(DBDir(),"longomatch.db"));
+			
+			//Check for previous database
+			CheckOldFiles();
 			
 			try {
 				MainWindow win = new MainWindow ();
@@ -157,6 +160,27 @@ namespace LongoMatch
 			}			
 		}
 		
+		public static void CheckOldFiles(){
+			string oldDBFile= System.IO.Path.Combine (homeDirectory, "db/db.yap");
+			if (File.Exists(oldDBFile)){
+				MessageDialog md = new MessageDialog(null,
+				                                     DialogFlags.Modal,
+				                                     MessageType.Question,
+				                                     Gtk.ButtonsType.YesNo,
+				                                     Catalog.GetString("A database from an old version has been found")+"\n"+
+				                                     Catalog.GetString("Do you want to import your old projects to the new database?"));
+				md.Icon=Stetic.IconLoader.LoadIcon(md, "longomatch", Gtk.IconSize.Dialog, 48);
+				if(md.Run()==(int)ResponseType.Yes){
+					md.Destroy();
+					Migrator migrator = new Migrator(oldDBFile);
+					migrator.Run();
+					migrator.Destroy();
+				}
+				else 
+					md.Destroy();
+			}
+		}
+		
 		public static DataBase DB{
 			get { return db;}
 		}
@@ -213,14 +237,12 @@ namespace LongoMatch
 			logFile = logFile.Replace("/","-");
 			logFile = logFile.Replace(" ","-");
 			logFile = logFile.Replace(":","-");
-			logFile = System.IO.Path.Combine(HomeDir(),logFile);
+			logFile = System.IO.Path.Combine(HomeDir(),logFile); 
 			
-			message = String.Format("{0}\n{1}\n{2}",ex.Message,ex.Source,ex.StackTrace);
+			message = String.Format("{0}\n{1}\n{2}\n{3}",ex.Message,ex.Source,ex.StackTrace,ex.InnerException.StackTrace);
 			using (StreamWriter s = new StreamWriter(logFile)){
 				s.WriteLine(message);
 			}	 
-			
-			Console.WriteLine(message);
 			//TODO Add bug reports link
 			MessagePopup.PopupMessage(null, MessageType.Error, 
 			                          Catalog.GetString("The application has finished with an unexpected error.")+"\n"+
