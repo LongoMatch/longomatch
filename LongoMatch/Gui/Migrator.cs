@@ -17,7 +17,7 @@
 // 
 
 using System;
-using LongoMatch.DB.Compat;
+using LongoMatch.Compat;
 
 namespace LongoMatch.Gui.Dialog
 {

@@ -20,7 +20,7 @@
 
 using System;
 
-namespace LongoMatch.DB.Compat.v00.TimeNodes
+namespace LongoMatch.Compat.v00.TimeNodes
 {
 	
 	[Serializable]

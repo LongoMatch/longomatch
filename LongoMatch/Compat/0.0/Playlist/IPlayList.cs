@@ -21,9 +21,9 @@
 using System;
 using System.Collections;
 using Gtk;
-using LongoMatch.DB.Compat.v00.TimeNodes;
+using LongoMatch.Compat.v00.TimeNodes;
 
-namespace LongoMatch.DB.Compat.v00.PlayList{
+namespace LongoMatch.Compat.v00.PlayList{
 		
 	public interface IPlayList:IEnumerable
 	{

@@ -25,9 +25,9 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 using Gtk;
-using LongoMatch.DB.Compat.v00.TimeNodes;
+using LongoMatch.Compat.v00.TimeNodes;
 
-namespace LongoMatch.DB.Compat.v00.PlayList
+namespace LongoMatch.Compat.v00.PlayList
 {
 	
 	

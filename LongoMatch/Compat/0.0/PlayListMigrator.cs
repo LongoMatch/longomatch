@@ -21,7 +21,7 @@ using LongoMatch.Playlist;
 using LongoMatch.TimeNodes;
 using LongoMatch.Video.Utils;
 
-namespace LongoMatch.DB.Compat
+namespace LongoMatch.Compat
 {
 	
 	
@@ -40,7 +40,7 @@ namespace LongoMatch.DB.Compat
 			PlayList newPL;
 			LongoMatch.Video.Utils.MediaFile file;
 			
-			oldPL = new LongoMatch.DB.Compat.v00.PlayList.PlayList(oldPLFile);
+			oldPL = new LongoMatch.Compat.v00.PlayList.PlayList(oldPLFile);
 			System.IO.File.Move(oldPLFile,oldPLFile+".old");			
 			newPL= new PlayList(oldPLFile);
 			

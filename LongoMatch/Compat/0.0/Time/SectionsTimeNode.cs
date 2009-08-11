@@ -1,4 +1,4 @@
-// PixbufTimeNode.cs
+// SectionsTimeNode.cs
 //
 //  Copyright (C) 2008 Andoni Morales Alastruey
 //
@@ -19,42 +19,23 @@
 //
 
 using System;
-using Gdk;
 
-namespace LongoMatch.DB.Compat.v00.TimeNodes
+namespace LongoMatch.Compat.v00.TimeNodes
 {
 	
 	
-	public class PixbufTimeNode : TimeNode
+	public class SectionsTimeNode:TimeNode
 	{
-		private string miniaturePath;
+		bool visible;
 		
-		
-		public PixbufTimeNode(){
-		}
-	
-		
-		public PixbufTimeNode(string name, Time start, Time stop, string miniaturePath): base (name,start,stop)
+		public SectionsTimeNode(String name,Time start, Time stop,bool visible):base (name,start,stop)
 		{
-			this.miniaturePath = miniaturePath;
-
+			this.visible = visible;
 		}
 		
-		public Pixbuf Miniature{
-			get{ 
-
-				if (System.IO.File.Exists(this.MiniaturePath)){
-					
-					return new Pixbuf(this.MiniaturePath);
-				}
-				else return null;
-			}
-		}
-		
-		public String MiniaturePath{
-	
-			get{return this.miniaturePath;}
-			set{this.miniaturePath = value;}
+		public bool Visible{
+			get{return this.visible;}
+			set{this.visible = value;}
 		}
 	}
 }

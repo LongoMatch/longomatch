@@ -31,7 +31,7 @@ using Db4objects.Db4o.Config;
 using Db4objects.Db4o.Ext;
 	
 
-namespace LongoMatch.DB.Compat
+namespace LongoMatch.Compat
 {
 	
 	public delegate void ConversionProgressHandler (string progress);
@@ -42,6 +42,8 @@ namespace LongoMatch.DB.Compat
 		public event ConversionProgressHandler ConversionProgressEvent;
 		
 		public const string DONE="Database migrated successfully";
+		
+		public const string ERROR="Error importing the database";
 		
 		private string oldDBFile;
 		
@@ -65,50 +67,43 @@ namespace LongoMatch.DB.Compat
 		}
 		
 		public void StartConversion(){
-			ArrayList oldBackup1DBProjects;
-			ArrayList newProjects = new ArrayList();
-			string results="";
-			v00.DB.DataBase backup1DB;
-			v00.DB.DataBase backup2DB;
 			DataBase newDB;
-			
-			Console.WriteLine(oldDBFile);
-			
+			v00.DB.DataBase backupDB;
+			ArrayList backupProjects;		
+			ArrayList newProjects = new ArrayList();
+			string results="";		
+			string backupDBFile=oldDBFile+".bak1";
+						
 			if (!File.Exists(oldDBFile)){
-				SendEvent(String.Format("File {0} doesn't exists"));
+				SendEvent(String.Format("File {0} doesn't exists",oldDBFile));
+				SendEvent(ERROR);
 				return;
 			}	
 			
 			//Create a backup of the old DB in which objects are stored using
 			//the old namespace scheme. If you try to use the old DB
 			//directly, aliases messes-up all the DB.
-			File.Copy(oldDBFile,oldDBFile+".bak1",true);	
-			File.Copy(oldDBFile,oldDBFile+".bak2",true);
+			File.Copy(oldDBFile,backupDBFile,true);
 						
-			ChangeDBNamespace(oldDBFile+".bak2");
+			//Change the namespace of all classes to the new namespace
+			ChangeDBNamespace(backupDBFile);
 			
-			//Delete the old database backup to create an empty one
 			
-				
-				
 			newDB = MainClass.DB;			
-			backup1DB = new LongoMatch.DB.Compat.v00.DB.DataBase(oldDBFile+".bak1");
-			backup2DB = new LongoMatch.DB.Compat.v00.DB.DataBase(oldDBFile+".bak2");
+			backupDB = new LongoMatch.Compat.v00.DB.DataBase(backupDBFile);
 			
-			//SendEvent(String.Format("Importing Projects from the old database {0} (Version:0.0) to the current database (Version:{1})\n\n",oldDBFile, newDB.Version));
-			//SendEvent(String.Format("Found {0} Projects",oldDBProjects.Count));
+			backupProjects = backupDB.GetAllDB();
+			SendEvent(String.Format("Importing Projects from the old database {0} (Version:0.0) to the current database (Version:{1})\n\n",oldDBFile, newDB.Version));
+			SendEvent(String.Format("Found {0} Projects",backupProjects.Count));
 	
-			// Retrieve all the projects from the old database and store
-			// the in the new database using the new namespace scheme
+		
 			SendEvent("Creating backup of the old database");
-			oldBackup1DBProjects = backup1DB.GetAllDB(true);
-			foreach (v00.DB.Project oldProject in backup2DB.GetAllDB(false)){
+			foreach (v00.DB.Project oldProject in backupProjects){
 				MediaFile file;
 				string localName, visitorName;
 				int localGoals, visitorGoals;
 				DateTime date;
 				Sections sections;
-				v00.DB.Project backup1DBProject=null;
 				Project newProject;
 				
 				localName = oldProject.LocalName;
@@ -142,15 +137,13 @@ namespace LongoMatch.DB.Compat
 				SendEvent(String.Format("[{0}]Importing Sections...",oldProject.Title));
 				
 							
-				foreach (v00.TimeNodes.SectionsTimeNode oldSection in backup1DB.GetProject(oldProject.File.FilePath,true).Sections.SectionsTimeNodes){
-				//foreach (v00.TimeNodes.SectionsTimeNode oldSection in oldProject.Sections.SectionsTimeNodes){
-
+				foreach (v00.TimeNodes.SectionsTimeNode oldSection in oldProject.Sections.SectionsTimeNodes){
 					SectionsTimeNode stn = new SectionsTimeNode(oldSection.Name, 
 					                                            new Time(oldSection.Start.MSeconds), 
 					                                            new Time(oldSection.Stop.MSeconds),
 					                                            new HotKey(),
-					                                            //oldProject.Sections.GetColor(i)
-					                                            new Gdk.Color(255,0,0));
+					                                            oldProject.Sections.GetColor(i)
+					                                            );
 					sections.AddSection(stn);
 					SendEvent(String.Format("[{0}]Adding Section #{1} with name {2}",oldProject.Title,i,oldSection.Name));
 					i++;
@@ -180,6 +173,12 @@ namespace LongoMatch.DB.Compat
 						Console.WriteLine(oldTN.Name);
 						tn = newProject.AddTimeNode(oldTN.DataSection, new Time (oldTN.Start.MSeconds), new Time(oldTN.Stop.MSeconds), oldTN.Miniature);
 						tn.Name = oldTN.Name;
+						if (oldTN.Team == LongoMatch.Compat.v00.TimeNodes.Team.LOCAL)
+							tn.Team =Team.LOCAL;
+						else if (oldTN.Team == LongoMatch.Compat.v00.TimeNodes.Team.VISITOR)
+							tn.Team=Team.VISITOR;
+						else tn.Team=Team.NONE;
+						tn.Fps = oldTN.Fps;
 						tn.Notes = oldTN.Notes;
 						SendEvent(String.Format("[{0}]Added play {1}",oldProject.Title,tn.Name));
 					}		
@@ -208,14 +207,18 @@ namespace LongoMatch.DB.Compat
 					string oldName=x.GetName();							
 					var c2 = db.Ext().StoredClass(oldName);
 					if (c2 != null){
+						Console.WriteLine(oldName);
 						if(oldName.Contains("LongoMatch.DB")){
-							newName=oldName.Replace("LongoMatch.DB","LongoMatch.DB.Compat.v00.DB");
+							Console.WriteLine(oldName);							
+							newName=oldName.Replace("LongoMatch.DB","LongoMatch.Compat.v00.DB");
+							Console.WriteLine(newName);
 							c2.Rename(newName);
 						}
 						else if(oldName.Contains("LongoMatch.TimeNodes")){
-							newName=oldName.Replace("LongoMatch.TimeNodes","LongoMatch.DB.Compat.v00.TimeNodes");
+							newName=oldName.Replace("LongoMatch.TimeNodes","LongoMatch.Compat.v00.TimeNodes");
 							c2.Rename(newName);
 						}
+
 					}
 				}
 				

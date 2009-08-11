@@ -1,6 +1,6 @@
-// PlayListTimeNode.cs 
+// PixbufTimeNode.cs
 //
-//  Copyright (C) 2007 Andoni Morales Alastruey
+//  Copyright (C) 2008 Andoni Morales Alastruey
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,39 +21,40 @@
 using System;
 using Gdk;
 
-namespace LongoMatch.DB.Compat.v00.TimeNodes
+namespace LongoMatch.Compat.v00.TimeNodes
 {
 	
-	[Serializable]
-	public class PlayListTimeNode : PixbufTimeNode
+	
+	public class PixbufTimeNode : TimeNode
 	{
-		private string fileName;
-		private bool valid=true;
-
+		private string miniaturePath;
 		
-		public PlayListTimeNode(){
+		
+		public PixbufTimeNode(){
 		}
+	
 		
-		public PlayListTimeNode(string fileName, MediaTimeNode tNode) : base(tNode.Name,tNode.Start,tNode.Stop,tNode.MiniaturePath)
+		public PixbufTimeNode(string name, Time start, Time stop, string miniaturePath): base (name,start,stop)
 		{
-			this.fileName = fileName;
-			
-		}
-		public string FileName{
-			set{ this.fileName = value;}
-			get{ return this.fileName;}
+			this.miniaturePath = miniaturePath;
+
 		}
 		
-		
-		public bool Valid{
-			get{return this.valid;}
-			set{this.valid = value;}
+		public Pixbuf Miniature{
+			get{ 
+
+				if (System.IO.File.Exists(this.MiniaturePath)){
+					
+					return new Pixbuf(this.MiniaturePath);
+				}
+				else return null;
+			}
 		}
 		
+		public String MiniaturePath{
 	
-		
-		
-	
-		
+			get{return this.miniaturePath;}
+			set{this.miniaturePath = value;}
+		}
 	}
 }

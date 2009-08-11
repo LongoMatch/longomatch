@@ -21,7 +21,7 @@
 using System;
 using Gdk;
 
-namespace LongoMatch.DB.Compat.v00.TimeNodes
+namespace LongoMatch.Compat.v00.TimeNodes
 {
 	public enum Team{
 		NONE = 0,

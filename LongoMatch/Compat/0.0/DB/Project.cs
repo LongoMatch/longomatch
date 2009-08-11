@@ -24,9 +24,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Gtk;
 using Gdk;
-using LongoMatch.DB.Compat.v00.TimeNodes;
+using LongoMatch.Compat.v00.TimeNodes;
 
-namespace LongoMatch.DB.Compat.v00.DB
+namespace LongoMatch.Compat.v00.DB
 {
 	
 	[Serializable]
@@ -50,6 +50,7 @@ namespace LongoMatch.DB.Compat.v00.DB
 		
 		private Sections sections;
 
+		//This field is not used but must be kept for DataBase compatibility
 		private List<MediaTimeNode>[] dataSectionArray;
 		
 	
@@ -70,12 +71,8 @@ namespace LongoMatch.DB.Compat.v00.DB
 			for (int i=0;i<20;i++){
 				tnArray = new List<MediaTimeNode>();
 				dataSectionArray[i]=tnArray;
-			}
-
-		
-			
-			this.Title = System.IO.Path.GetFileNameWithoutExtension(this.file.FilePath);
-			
+			}			
+			this.Title = System.IO.Path.GetFileNameWithoutExtension(this.file.FilePath);			
 
 		}
 	
@@ -83,43 +80,6 @@ namespace LongoMatch.DB.Compat.v00.DB
 			get{ return this.sections;}
 			set {this.sections = value;}
 			
-		}
-		
-		public string[] GetSectionsNames(){
-			return sections.GetSectionsNames();
-				
-		}
-		
-		public Time[] GetSectionsStartTimes(){
-			return sections.GetSectionsStartTimes();
-		}
-		
-		public Time[] GetSectionsStopTimes(){
-			return sections.GetSectionsStopTimes();
-		}
-
-		
-
-		public void DelTimeNode(MediaTimeNode tNode) {
-
-			dataSectionArray[tNode.DataSection].Remove(tNode);
-			if (System.IO.File.Exists(tNode.MiniaturePath))
-			    System.IO.File.Delete(tNode.MiniaturePath);
-
-		}
-		
-		public TreeStore GetModel (){
-			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore (typeof (MediaTimeNode));
-			for (int i=0;i<20;i++){
-				if (this.Sections.GetVisibility(i)){
-					Gtk.TreeIter iter = dataFileListStore.AppendValues (sections.GetTimeNode(i));
-					foreach(MediaTimeNode tNode in dataSectionArray[i]){
-						dataFileListStore.AppendValues (iter,tNode);
-					}						
-				}
-
-			}
-			return dataFileListStore;
 		}
 
 		public List<MediaTimeNode>[] GetDataArray() {
