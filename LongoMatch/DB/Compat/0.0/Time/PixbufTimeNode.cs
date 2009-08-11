@@ -21,7 +21,7 @@
 using System;
 using Gdk;
 
-namespace LongoMatch.DB.Compat.v00
+namespace LongoMatch.DB.Compat.v00.TimeNodes
 {
 	
 	

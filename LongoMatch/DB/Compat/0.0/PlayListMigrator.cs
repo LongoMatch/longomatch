@@ -36,16 +36,16 @@ namespace LongoMatch.DB.Compat
 		}
 		
 		public void StartConversion(){
-			v00.PlayList oldPL;
+			v00.PlayList.PlayList oldPL;
 			PlayList newPL;
-			MediaFile file;
+			LongoMatch.Video.Utils.MediaFile file;
 			
-			oldPL = new LongoMatch.DB.Compat.v00.PlayList(oldPLFile);
+			oldPL = new LongoMatch.DB.Compat.v00.PlayList.PlayList(oldPLFile);
 			System.IO.File.Move(oldPLFile,oldPLFile+".old");			
 			newPL= new PlayList(oldPLFile);
 			
 			while (oldPL.HasNext()){
-				v00.PlayListTimeNode oldPLNode = oldPL.Next();
+				v00.TimeNodes.PlayListTimeNode oldPLNode = oldPL.Next();
 				PlayListTimeNode newPLNode = new PlayListTimeNode();
 				
 				newPLNode.Name = oldPLNode.Name;
@@ -55,10 +55,10 @@ namespace LongoMatch.DB.Compat
 				newPLNode.Valid = true;
 				
 				try{
-					file = MediaFile.GetMediaFile(oldPLNode.FileName);
+					file = LongoMatch.Video.Utils.MediaFile.GetMediaFile(oldPLNode.FileName);
 				}
 				catch{
-					file = new MediaFile();
+					file = new LongoMatch.Video.Utils.MediaFile();
 					file.FilePath = oldPLNode.FileName;
 					file.Fps = 25;
 					file.HasAudio = false;

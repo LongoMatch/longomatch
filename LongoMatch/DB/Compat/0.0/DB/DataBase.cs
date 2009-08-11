@@ -21,12 +21,14 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Collections.Generic;
 using Mono.Unix;
 using Db4objects.Db4o;
 using Db4objects.Db4o.Query;
-using LongoMatch.TimeNodes;
+using Db4objects.Db4o.Config;
+using LongoMatch.DB.Compat.v00.TimeNodes;
 
-namespace LongoMatch.DB.Compat.v00
+namespace LongoMatch.DB.Compat.v00.DB
 {
 	
 	
@@ -47,11 +49,18 @@ namespace LongoMatch.DB.Compat.v00
 		
 		
 			
-		public ArrayList GetAllDB(){
-			
-			lock(this.locker){
+		public ArrayList GetAllDB(bool oldNamespace){			
+			lock(this.locker){		
 				ArrayList allDB = new ArrayList();
-				db = Db4oFactory.OpenFile(file);
+				if (oldNamespace){
+					//Create an alias for the old namespace scheme
+					WildcardAlias wAlias = new WildcardAlias("LongoMatch.*", "LongoMatch.DB.Compat.v00.*");
+					IConfiguration configuration= Db4objects.Db4o.Db4oFactory.NewConfiguration();
+					configuration.AddAlias(wAlias);	
+					db = Db4oFactory.OpenFile(configuration,file);
+				}
+				else 
+					db = Db4oFactory.OpenFile(file);
 				try	{   				
 					IQuery query = db.Query();
 					query.Constrain(typeof(Project));
@@ -60,154 +69,50 @@ namespace LongoMatch.DB.Compat.v00
 						allDB.Add(result.Next());					
 					}
 					return allDB;					
-				}
-				
-				finally
-				{
+				}finally{
 					db.Close();
 				}		
 			}
 		}
 		
-		public Project GetProject(String filename){
+		
+		public Project GetProject(String filename,bool oldNamespace){
 			lock(this.locker){
-				db = Db4oFactory.OpenFile(file);
+				if (oldNamespace){
+					//Create an alias for the old namespace scheme
+					WildcardAlias wAlias = new WildcardAlias("LongoMatch.*", "LongoMatch.DB.Compat.v00.*");
+					IConfiguration configuration= Db4objects.Db4o.Db4oFactory.NewConfiguration();
+					configuration.AddAlias(wAlias);	
+					db = Db4oFactory.OpenFile(configuration,file);
+				}
+				else 
+					db = Db4oFactory.OpenFile(file);
 				try	{   				
 					IQuery query = db.Query();
 					query.Constrain(typeof(Project));
-					query.Descend("filename").Constrain(filename);
+					query.Descend("file").Descend("filePath").Constrain(filename);
 					IObjectSet result = query.Execute();
-					return (Project)result.Next();
-				}
-				
+					if (result.HasNext())
+					    return (Project)result.Next();
+					else return null;
+				}				
 				finally
 				{
 					db.Close();
 				}
 			}
 		}
-		public void AddProject (Project project){
-			lock(this.locker){
-				db = Db4oFactory.OpenFile(file);				
-				try	
-				{
-					if (!this.Exists(project.File.FilePath)){
-						db.Set (project);
-						db.Commit();
-					}
-					else throw new Exception (Catalog.GetString("The Project for this video file already exists.")+"\n"+Catalog.GetString("Try to edit it whit the Database Manager"));
-				}
-				
-			finally
-				{
-					
-					db.Close();
-				}
-			}
-			
-		}
-		public void RemoveProject(Project project){
-			lock(this.locker){
-				Db4oFactory.Configure().ObjectClass(typeof(Project)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(Sections)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(TimeNode)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(Time)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(Team)).CascadeOnDelete(true);
-				db = Db4oFactory.OpenFile(file);
-				try	{			
-					IQuery query = db.Query();
-					query.Constrain(typeof(Project));
-					query.Descend("file").Descend("filePath").Constrain(project.File.FilePath);
-					IObjectSet result = query.Execute();
-					project = (Project)result.Next();
-					db.Delete(project);   			
-					db.Commit();
-				}
-				
-			finally
-				{
-					db.Close();
-				}
-			}
-			
-		}
 		
-		public void UpdateProject(Project project, string previousFileName){
-			lock(this.locker){
-				bool error = false;
-				
-				// Configure db4o to cascade on delete for each one of the objects stored in a Project
-				Db4oFactory.Configure().ObjectClass(typeof(Project)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(Sections)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(TimeNode)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(Time)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(Team)).CascadeOnDelete(true);
-				db = Db4oFactory.OpenFile(file);
-				try	{
-					// We look for a project with that uses the same file
-					if (!Exists(project.File.FilePath)){
-						// Delete the old project
-						IQuery query = db.Query();
-						query.Constrain(typeof(Project));
-						query.Descend("file").Descend("filePath").Constrain(previousFileName);
-						IObjectSet result = query.Execute();  
-						Project fd = (Project)result.Next();
-						db.Delete(fd);
-						// Add the updated project
-						db.Set(project);	
-						db.Commit();
-					}
-					else 
-						error = true;
-					
-				}
-				finally{
-				db.Close();
-					if (error)
-						throw new Exception();
-				}
-			}
-			
-		}
 
-		public void UpdateProject(Project project){
-			lock(this.locker){
-				// Configure db40 to cascade on delete for each one of the objects stored in a Project
-				Db4oFactory.Configure().ObjectClass(typeof(Project)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(TimeNode)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(Sections)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(Time)).CascadeOnDelete(true);
-				Db4oFactory.Configure().ObjectClass(typeof(Team)).CascadeOnDelete(true);
-				
-				db = Db4oFactory.OpenFile(file);
-				try	{				
-					IQuery query = db.Query();
-					query.Constrain(typeof(Project));
-					query.Descend("file").Descend("filePath").Constrain(project.File.FilePath);
-					IObjectSet result = query.Execute();  
-					Project fd = (Project)result.Next();
-					db.Delete(fd);
-					db.Set(project);		
-					db.Commit();
-				}
-				
-				finally
-				{
-					db.Close();
-				}
-			}
-			
-		}
 		
-		private bool Exists(string filename){
-			
+		
+		
+		private bool Exists(string filename){			
 			IQuery query = db.Query();
 			query.Constrain(typeof(Project));
 			query.Descend("file").Descend("filePath").Constrain(filename);
 			IObjectSet result = query.Execute();
 			return (result.HasNext());
 		}
-		
-
 	}
 }
