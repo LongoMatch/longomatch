@@ -114,7 +114,7 @@ namespace LongoMatch.DB
 				try	{   				
 					IQuery query = db.Query();
 					query.Constrain(typeof(Project));
-					query.Descend("filename").Constrain(filename);
+					query.Descend("file").Descend("filePath").Constrain(filename);
 					IObjectSet result = query.Execute();
 					return (Project)result.Next();
 				}				
