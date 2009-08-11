@@ -19,43 +19,96 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using LongoMatch.DB;
 using LongoMatch.TimeNodes;
 using LongoMatch.Video.Utils;
+using System.Threading;
+using Gtk;
 	
-
+using Db4objects.Db4o;
+using Db4objects.Db4o.Config;
+using Db4objects.Db4o.Ext;
+	
 
 namespace LongoMatch.DB.Compat
 {
 	
+	public delegate void ConversionProgressHandler (string progress);
 	
 	public class DatabaseMigrator
 	{
+		
+		public event ConversionProgressHandler ConversionProgressEvent;
+		
+		public const string DONE="Database migrated successfully";
+		
 		private string oldDBFile;
 		
 		private string newDBFile;
 		
-		public DatabaseMigrator(string oldDBFile, string newDBFile)
+		private Thread thread;		
+		
+		public DatabaseMigrator(string oldDBFile)
 		{
 			this.oldDBFile = oldDBFile;
-			this.newDBFile = newDBFile;
+		}
+		
+		public void Start(){
+			thread = new Thread(new ThreadStart(StartConversion));
+			thread.Start();
+		}
+		
+		public void Cancel(){
+			if (thread != null && thread.IsAlive)
+				thread.Abort();
 		}
 		
 		public void StartConversion(){
-			ArrayList oldDBProjects;
+			ArrayList oldBackup1DBProjects;
+			ArrayList newProjects = new ArrayList();
 			string results="";
-			v00.DataBase oldDB = new v00.DataBase(oldDBFile);
-			DataBase newDB = new DataBase(newDBFile);
+			v00.DB.DataBase backup1DB;
+			v00.DB.DataBase backup2DB;
+			DataBase newDB;
 			
-			oldDBProjects = oldDB.GetAllDB();
+			Console.WriteLine(oldDBFile);
 			
-			results += String.Format("Converting {0} (Version:0.0) to {1} (Version:{2})\n\n",oldDBFile, newDBFile, newDB.Version);
-			foreach ( v00.Project oldProject in oldDBProjects){
+			if (!File.Exists(oldDBFile)){
+				SendEvent(String.Format("File {0} doesn't exists"));
+				return;
+			}	
+			
+			//Create a backup of the old DB in which objects are stored using
+			//the old namespace scheme. If you try to use the old DB
+			//directly, aliases messes-up all the DB.
+			File.Copy(oldDBFile,oldDBFile+".bak1",true);	
+			File.Copy(oldDBFile,oldDBFile+".bak2",true);
+						
+			ChangeDBNamespace(oldDBFile+".bak2");
+			
+			//Delete the old database backup to create an empty one
+			
+				
+				
+			newDB = MainClass.DB;			
+			backup1DB = new LongoMatch.DB.Compat.v00.DB.DataBase(oldDBFile+".bak1");
+			backup2DB = new LongoMatch.DB.Compat.v00.DB.DataBase(oldDBFile+".bak2");
+			
+			//SendEvent(String.Format("Importing Projects from the old database {0} (Version:0.0) to the current database (Version:{1})\n\n",oldDBFile, newDB.Version));
+			//SendEvent(String.Format("Found {0} Projects",oldDBProjects.Count));
+	
+			// Retrieve all the projects from the old database and store
+			// the in the new database using the new namespace scheme
+			SendEvent("Creating backup of the old database");
+			oldBackup1DBProjects = backup1DB.GetAllDB(true);
+			foreach (v00.DB.Project oldProject in backup2DB.GetAllDB(false)){
 				MediaFile file;
 				string localName, visitorName;
 				int localGoals, visitorGoals;
 				DateTime date;
 				Sections sections;
+				v00.DB.Project backup1DBProject=null;
 				Project newProject;
 				
 				localName = oldProject.LocalName;
@@ -63,14 +116,14 @@ namespace LongoMatch.DB.Compat
 				localGoals = oldProject.VisitorGoals;
 				visitorGoals = oldProject.VisitorGoals;
 				date = oldProject.MatchDate;
-				results += String.Format("Trying to open project {0}... \n",oldProject.File);
+				SendEvent(String.Format("Trying to open project {0}...",oldProject.Title));
 				try{
 					file = MediaFile.GetMediaFile(oldProject.File.FilePath);
-					results += String.Format("Opened file {0} \n",oldProject.File);
+					SendEvent(String.Format("[{0}]Getting properties of file {1}",oldProject.Title,oldProject.File.FilePath));
 				}
 				catch{
-					results += String.Format("Failed to open file {0} \n",oldProject.File);
-					results += "Cannot scan the file properties\n, using default values";
+					SendEvent(String.Format("[{0}]Failed to open file {1} \n",oldProject.Title,oldProject.File.FilePath));
+					SendEvent(String.Format("[{0}]Cannot scan the file properties\n, using default values",oldProject.Title));
 					file = new MediaFile();
 					file.FilePath = oldProject.File.FilePath;
 					file.Fps = oldProject.File.Fps;
@@ -86,20 +139,25 @@ namespace LongoMatch.DB.Compat
 				sections = new Sections();
 				int i=0;
 				
-				results += "Converting Sections...\n";
+				SendEvent(String.Format("[{0}]Importing Sections...",oldProject.Title));
 				
-				foreach (v00.SectionsTimeNode oldSection in oldProject.Sections.SectionsTimeNodes){
+							
+				foreach (v00.TimeNodes.SectionsTimeNode oldSection in backup1DB.GetProject(oldProject.File.FilePath,true).Sections.SectionsTimeNodes){
+				//foreach (v00.TimeNodes.SectionsTimeNode oldSection in oldProject.Sections.SectionsTimeNodes){
+
 					SectionsTimeNode stn = new SectionsTimeNode(oldSection.Name, 
 					                                            new Time(oldSection.Start.MSeconds), 
 					                                            new Time(oldSection.Stop.MSeconds),
 					                                            new HotKey(),
-					                                            oldProject.Sections.GetColor(i));
+					                                            //oldProject.Sections.GetColor(i)
+					                                            new Gdk.Color(255,0,0));
 					sections.AddSection(stn);
-					results += String.Format("Adding Section #{0} with name {1}\n",i,oldSection.Name);
+					SendEvent(String.Format("[{0}]Adding Section #{1} with name {2}",oldProject.Title,i,oldSection.Name));
 					i++;
 				}
 				
-				results += "Converting Sections... success\n";
+				
+				SendEvent(String.Format("[{0}]Sections imported successfully",oldProject.Title));
 				
 				newProject = new Project(file,
 				                         localName, 
@@ -115,26 +173,59 @@ namespace LongoMatch.DB.Compat
 				
 				i=0;
 				
-				results += "Adding Plays List...\n";
-				
-				foreach (List<v00.MediaTimeNode> list in oldProject.GetDataArray()){
-					results += String.Format("Adding Plays List #{0}\n",i);
-					foreach (v00.MediaTimeNode oldTN in list){
-						MediaTimeNode tn;						
-						tn = newProject.AddTimeNode(i, new Time (oldTN.Start.MSeconds), new Time(oldTN.Stop.MSeconds), oldTN.Miniature);
+				SendEvent(String.Format("[{0}]Importing all plays ...",oldProject.Title));
+				foreach (List<v00.TimeNodes.MediaTimeNode> list in oldProject.GetDataArray()){
+					foreach (v00.TimeNodes.MediaTimeNode oldTN in list){
+						MediaTimeNode tn;
+						Console.WriteLine(oldTN.Name);
+						tn = newProject.AddTimeNode(oldTN.DataSection, new Time (oldTN.Start.MSeconds), new Time(oldTN.Stop.MSeconds), oldTN.Miniature);
 						tn.Name = oldTN.Name;
 						tn.Notes = oldTN.Notes;
-						results += String.Format("Added Play {0}\n",tn.Name);
-					}
+						SendEvent(String.Format("[{0}]Added play {1}",oldProject.Title,tn.Name));
+					}		
 					i++;
 				}
+				SendEvent(String.Format("[{0}]Project converted successfully",oldProject.Title));
 				
-				results += "Project converted successfully \n";
-				
-				newDB.AddProject(newProject);				
+				newProjects.Add(newProject);				
 			}	
+			foreach (Project project in newProjects){
+				try {
+					newDB.AddProject(project);
+				}
+				catch{}
+			}
 			
-			results += "Conversion finished \n";
-		}		
+			SendEvent(DONE);
+		}	
+		private void ChangeDBNamespace(string DBFile){
+			using (IObjectContainer db = Db4oFactory.OpenFile(DBFile))
+			{
+				var n = db.Ext().StoredClasses();
+				foreach (var x in n)
+				{
+					string newName;
+					string oldName=x.GetName();							
+					var c2 = db.Ext().StoredClass(oldName);
+					if (c2 != null){
+						if(oldName.Contains("LongoMatch.DB")){
+							newName=oldName.Replace("LongoMatch.DB","LongoMatch.DB.Compat.v00.DB");
+							c2.Rename(newName);
+						}
+						else if(oldName.Contains("LongoMatch.TimeNodes")){
+							newName=oldName.Replace("LongoMatch.TimeNodes","LongoMatch.DB.Compat.v00.TimeNodes");
+							c2.Rename(newName);
+						}
+					}
+				}
+				
+			}
+		}
+		
+		public void SendEvent (string message){
+			Console.WriteLine(message);
+			if (ConversionProgressEvent != null)					
+						Application.Invoke(delegate {ConversionProgressEvent(message);});
+		}
 	}
 }
