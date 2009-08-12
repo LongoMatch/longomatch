@@ -227,32 +227,37 @@ FILES = \
 	Handlers/ErrorHandler.cs \
 	Handlers/Handlers.cs \
 	Handlers/TickHandler.cs \
-	Player/GstPlayer.cs \
-	Player/IPlayer.cs \
-	Player/GstPlayerAspectRatio.cs \
-	Player/GstUseType.cs \
 	Handlers/StateChangedHandler.cs \
-	Utils/TimeString.cs \
+	Player/GstAspectRatio.cs \
+	Player/GstAudioOutType.cs \
+	Player/GstDVDEvent.cs \
+	Player/GstError.cs \
+	Player/GstMetadataType.cs \
+	Player/GstPlayer.cs \
+	Player/GstUseType.cs \
+	Player/GstVideoProperty.cs \
+	Player/IPlayer.cs \
+	Player/ObjectManager.cs \
+	gtk-gui/LongoMatch.Gui.CapturerBin.cs \
 	gtk-gui/LongoMatch.Gui.PlayerBin.cs \
 	gtk-gui/LongoMatch.Gui.VolumeWindow.cs \
-	Gui/VolumeWindow.cs \
-	Capturer/ErrorHandler.cs \
-	Capturer/ICapturer.cs \
 	Gui/CapturerBin.cs \
-	gtk-gui/LongoMatch.Gui.CapturerBin.cs \
+	Gui/PlayerBin.cs \
+	Gui/VolumeWindow.cs \
 	MultimediaFactory.cs \
-	Player/ObjectManager.cs \
-	Capturer/ObjectManager.cs \
 	Utils/IFramesCapturer.cs \
 	Utils/FramesCapturer.cs \
 	Utils/IMetadataReader.cs \
 	Utils/GstPlayerMetadataType.cs \
-	Gui/PlayerBin.cs \
+	Utils/TimeString.cs \
 	Capturer/GccAudioEncoderType.cs \
 	Capturer/GccError.cs \
 	Capturer/GccVideoEncoderType.cs \
 	Capturer/GccVideoMuxerType.cs \
 	Capturer/GstCameraCapturer.cs \
+	Capturer/ErrorHandler.cs \
+	Capturer/ICapturer.cs \
+	Capturer/ObjectManager.cs \
 	Editor/ErrorHandler.cs \
 	Editor/IVideoEditor.cs \
 	Editor/AudioQuality.cs \

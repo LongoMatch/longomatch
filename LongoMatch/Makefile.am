@@ -82,18 +82,37 @@ FILES = \
 	Gui/DBManager.cs \
 	Gui/ProjectListWidget.cs \
 	Gui/FileDescriptionWidget.cs \
+	Gui/FramesCaptureProgressDialog.cs \
+	Gui/EntryDialog.cs \
 	Gui/MainWindow.cs \
+	Gui/MessagePopup.cs \
+	Gui/Migrator.cs\
 	Gui/NewProjectDialog.cs \
+	Gui/NotesWidget.cs \
 	Gui/OpenProjectDialog.cs \
+	Gui/PlayerProperties.cs \
+	Gui/PlayersListTreeWidget.cs \
+	Gui/PlayersSelectionDialog.cs \
+	Gui/PlayersTreeView.cs \
 	Gui/PlayListTreeView.cs \
 	Gui/PlayListWidget.cs \
 	Gui/SectionsPropertiesWidget.cs \
+	Gui/SnapshotsDialog.cs \
+	Gui/TeamTemplateEditor.cs \
+	Gui/TeamTemplateWidget.cs \
 	Gui/TemplatesEditor.cs \
 	Gui/TemplateEditorDialog.cs \
 	Gui/TimeAdjustWidget.cs \
 	Gui/TimeNodesTreeView.cs \
 	Gui/TreeWidget.cs \
 	Gui/TimeNodeProperties.cs \
+	Gui/TimeLineWidget.cs \
+	Gui/TimeReferenceWidget.cs \
+	Gui/TimeScale.cs \
+	Gui/VideoEditionProperties.cs \
+	Gui/UpdateDialog.cs \
+	Gui/HotKeySelectorDialog.cs \
+	Gui/WorkspaceChooser.cs \
 	DB/Project.cs \
 	DB/Sections.cs \
 	DB/DataBase.cs \
@@ -101,9 +120,6 @@ FILES = \
 	IO/SectionsWriter.cs \
 	IO/SectionsReader.cs \
 	IO/XMLReader.cs \
-	Gui/TimeLineWidget.cs \
-	Gui/TimeReferenceWidget.cs \
-	Gui/TimeScale.cs \
 	Time/MediaTimeNode.cs \
 	Time/PixbufTimeNode.cs \
 	Time/SectionsTimeNode.cs \
@@ -125,59 +141,45 @@ FILES = \
 	gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TimeLineWidget.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs \
-	Gui/VideoEditionProperties.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs \
-	Gui/SnapshotsDialog.cs \
-	Playlist/IPlayList.cs \
-	Playlist/PlayList.cs \
 	gtk-gui/LongoMatch.Gui.Component.NotesWidget.cs \
 	gtk-gui/LongoMatch.Gui.MainWindow.cs \
-	Gui/NotesWidget.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs \
-	Gui/FramesCaptureProgressDialog.cs \
-	Gui/EntryDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.Migrator.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs \
+	gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs \
+	gtk-gui/LongoMatch.Gui.Component.TeamTemplateWidget.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.TeamTemplateEditor.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.TemplatesManager.cs \
+	gtk-gui/LongoMatch.Gui.Component.PlayersListTreeWidget.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.WorkspaceChooser.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs \
+	Playlist/IPlayList.cs \
+	Playlist/PlayList.cs \
 	Updates/Updater.cs \
 	Updates/XmlUpdateParser.cs \
 	IO/CSVExport.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs \
-	Gui/UpdateDialog.cs \
-	Gui/HotKeySelectorDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs \
 	Time/HotKey.cs \
 	Handlers/EventsManager.cs \
 	Handlers/HotKeysManager.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs \
-	Gui/MessagePoupcs.cs \
 	DB/TeamTemplate.cs \
 	Time/Player.cs \
-	Gui/PlayerProperties.cs \
-	gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs \
-	Gui/TeamTemplateWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.TeamTemplateWidget.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.TeamTemplateEditor.cs \
-	Gui/TeamTemplateEditor.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.TemplatesManager.cs \
-	Gui/PlayersTreeView.cs \
-	gtk-gui/LongoMatch.Gui.Component.PlayersListTreeWidget.cs \
-	Gui/PlayersListTreeWidget.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.WorkspaceChooser.cs \
-	Gui/WorkspaceChooser.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs \
-	Gui/PlayersSelectionDialog.cs \
-	DB/Compat/0.0/DB/DataBase.cs \
-	DB/Compat/0.0/DB/MediaFile.cs \
-	DB/Compat/0.0/DB/Project.cs \
-	DB/Compat/0.0/DB/Sections.cs \
-	DB/Compat/0.0/Time/MediaTimeNode.cs \
-	DB/Compat/0.0/Time/PixbufTimeNode.cs \
-	DB/Compat/0.0/Time/PlayListTimeNode.cs \
-	DB/Compat/0.0/Time/SectionsTimeNode.cs \
-	DB/Compat/0.0/Time/Time.cs \
-	DB/Compat/0.0/Time/TimeNode.cs \
-	DB/Compat/0.0/Playlist/IPlayList.cs \
-	DB/Compat/0.0/Playlist/PlayList.cs \
-	DB/Compat/0.0/DatabaseMigrator.cs \
-	DB/Compat/0.0/PlayListMigrator.cs 
+	Compat/0.0/DB/DataBase.cs \
+	Compat/0.0/DB/MediaFile.cs \
+	Compat/0.0/DB/Project.cs \
+	Compat/0.0/DB/Sections.cs \
+	Compat/0.0/Time/MediaTimeNode.cs \
+	Compat/0.0/Time/PixbufTimeNode.cs \
+	Compat/0.0/Time/PlayListTimeNode.cs \
+	Compat/0.0/Time/SectionsTimeNode.cs \
+	Compat/0.0/Time/Time.cs \
+	Compat/0.0/Time/TimeNode.cs \
+	Compat/0.0/Playlist/IPlayList.cs \
+	Compat/0.0/Playlist/PlayList.cs \
+	Compat/0.0/DatabaseMigrator.cs \
+	Compat/0.0/PlayListMigrator.cs 
 
 DATA_FILES = 
 

@@ -12,7 +12,7 @@ AM_CFLAGS =\
 	 -g
 
 
-lib_LTLIBRARIES = \
+pkglib_LTLIBRARIES = \
 	libcesarplayer.la
 
 libcesarplayer_la_SOURCES = \

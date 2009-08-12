@@ -25,7 +25,6 @@
     <File name="Player" subtype="Directory" buildaction="Compile" />
     <File name="Player/GstPlayer.cs" subtype="Code" buildaction="Compile" />
     <File name="Player/IPlayer.cs" subtype="Code" buildaction="Compile" />
-    <File name="Player/GstPlayerAspectRatio.cs" subtype="Code" buildaction="Compile" />
     <File name="Player/GstUseType.cs" subtype="Code" buildaction="Compile" />
     <File name="Handlers/StateChangedHandler.cs" subtype="Code" buildaction="Compile" />
     <File name="cesarplayer.key" subtype="Code" buildaction="Nothing" />
