@@ -61,6 +61,8 @@ namespace LongoMatch.DB
 		
 		private TeamTemplate localTeamTemplate;
 		
+		private List<MediaTimeNode>[] dataSectionArray;
+		
 	
 		
 		public Project(MediaFile file, String localName, String visitorName, String season, String competition, int localGoals,

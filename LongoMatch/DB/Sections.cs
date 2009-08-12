@@ -30,6 +30,9 @@ namespace LongoMatch.DB
 	{
 		private List<SectionsTimeNode> sectionsList;
 		
+		//These fields are not used but must be kept for DataBase compatiblity
+		private Color[] colorsArray;
+		private SectionsTimeNode[] timeNodesArray;
 		
 		public Sections()
 		{
