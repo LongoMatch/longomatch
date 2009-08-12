@@ -3155,9 +3155,7 @@ bacon_video_widget_set_rate (BaconVideoWidget *bvw, gfloat rate)
 gboolean 
 bacon_video_widget_new_file_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop,gfloat rate)
 {
-	GstMessage * err_msg;
-	GstState cur_state;
-	
+
   	g_return_val_if_fail (bvw != NULL, FALSE);
   	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   	g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
@@ -3175,16 +3173,15 @@ bacon_video_widget_new_file_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop
 	 
 		
 	GST_LOG ("Segment seeking from %" GST_TIME_FORMAT, GST_TIME_ARGS (start * GST_MSECOND));
-	poll_for_state_change_full (bvw, bvw->priv->play,
-    	GST_STATE_PAUSED, &err_msg, -1);
         
-    gst_element_get_state (bvw->priv->play, &cur_state, NULL, 0);
+    gst_element_get_state (bvw->priv->play, NULL, NULL, 0);
 
 	got_time_tick (bvw->priv->play, start * GST_MSECOND, bvw);
 	gst_element_seek (bvw->priv->play, rate,
      	GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_SEGMENT | GST_SEEK_FLAG_ACCURATE,
       	GST_SEEK_TYPE_SET, start * GST_MSECOND,
       	GST_SEEK_TYPE_SET, stop * GST_MSECOND);
+    gst_element_set_state(bvw->priv->play,GST_STATE_PLAYING);
     
     return TRUE;
   }
