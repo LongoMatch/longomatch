@@ -17,7 +17,7 @@
 // 
 
 using System;
-using System.Threading;http://www.mowly.com/
+using System.Threading;
 using LongoMatch.Playlist;
 using LongoMatch.TimeNodes;
 using LongoMatch.Video.Utils;
@@ -67,7 +67,7 @@ namespace LongoMatch.Compat
 				}catch{
 					SendEvent(String.Format("File {0} is not a valid playlist",plFile));
 				}
-				if (System.IO.File.Exists(plFile+".old"){
+				if (System.IO.File.Exists(plFile+".old")){
 					SendEvent(String.Format("File {0} has already been converted",plFile));
 					oldPL = null;
 				}
