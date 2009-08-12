@@ -71,14 +71,18 @@ namespace LongoMatch.Gui.Component
 			newvideobutton.Hide();
 		}
 		
-		public void Load(string filePath){
-			label1.Visible = false;
-			newvideobutton.Show();
-			playList = new PlayList(filePath);
-			Model = playList.GetModel();
-			playlisttreeview1.PlayList = playList;
-			playlisttreeview1.Sensitive = true;
-			savebutton.Sensitive = true;
+		public void Load(string filePath){			
+			try {
+				playList = new PlayList(filePath);
+				Model = playList.GetModel();
+				label1.Visible = false;
+				newvideobutton.Show();
+				playlisttreeview1.PlayList = playList;
+				playlisttreeview1.Sensitive = true;
+				savebutton.Sensitive = true;
+			}catch {
+				MessagePopup.PopupMessage(this,MessageType.Error,Catalog.GetString("The file you are trying to load is not a playlist or it's not compatible with the current version")); 
+			}
 		}
 		
 		public ListStore Model {

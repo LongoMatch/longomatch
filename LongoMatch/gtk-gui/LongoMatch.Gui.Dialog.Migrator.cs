@@ -13,9 +13,27 @@ namespace LongoMatch.Gui.Dialog {
     
     public partial class Migrator {
         
+        private Gtk.HBox hbox1;
+        
+        private Gtk.Frame frame1;
+        
+        private Gtk.Alignment GtkAlignment2;
+        
         private Gtk.ScrolledWindow scrolledwindow1;
         
-        private Gtk.TextView textview2;
+        private Gtk.TextView dbtextview;
+        
+        private Gtk.Label GtkLabel2;
+        
+        private Gtk.Frame frame2;
+        
+        private Gtk.Alignment GtkAlignment3;
+        
+        private Gtk.ScrolledWindow scrolledwindow2;
+        
+        private Gtk.TextView pltextview;
+        
+        private Gtk.Label GtkLabel3;
         
         private Gtk.Button buttonCancel;
         
@@ -33,24 +51,74 @@ namespace LongoMatch.Gui.Dialog {
             w1.Name = "dialog1_VBox";
             w1.BorderWidth = ((uint)(2));
             // Container child dialog1_VBox.Gtk.Box+BoxChild
+            this.hbox1 = new Gtk.HBox();
+            this.hbox1.Name = "hbox1";
+            this.hbox1.Spacing = 6;
+            // Container child hbox1.Gtk.Box+BoxChild
+            this.frame1 = new Gtk.Frame();
+            this.frame1.Name = "frame1";
+            this.frame1.ShadowType = ((Gtk.ShadowType)(0));
+            // Container child frame1.Gtk.Container+ContainerChild
+            this.GtkAlignment2 = new Gtk.Alignment(0F, 0F, 1F, 1F);
+            this.GtkAlignment2.Name = "GtkAlignment2";
+            this.GtkAlignment2.LeftPadding = ((uint)(12));
+            // Container child GtkAlignment2.Gtk.Container+ContainerChild
             this.scrolledwindow1 = new Gtk.ScrolledWindow();
             this.scrolledwindow1.CanFocus = true;
             this.scrolledwindow1.Name = "scrolledwindow1";
             this.scrolledwindow1.ShadowType = ((Gtk.ShadowType)(1));
             // Container child scrolledwindow1.Gtk.Container+ContainerChild
-            this.textview2 = new Gtk.TextView();
-            this.textview2.CanFocus = true;
-            this.textview2.Name = "textview2";
-            this.scrolledwindow1.Add(this.textview2);
-            w1.Add(this.scrolledwindow1);
-            Gtk.Box.BoxChild w3 = ((Gtk.Box.BoxChild)(w1[this.scrolledwindow1]));
-            w3.Position = 0;
+            this.dbtextview = new Gtk.TextView();
+            this.dbtextview.CanFocus = true;
+            this.dbtextview.Name = "dbtextview";
+            this.scrolledwindow1.Add(this.dbtextview);
+            this.GtkAlignment2.Add(this.scrolledwindow1);
+            this.frame1.Add(this.GtkAlignment2);
+            this.GtkLabel2 = new Gtk.Label();
+            this.GtkLabel2.Name = "GtkLabel2";
+            this.GtkLabel2.LabelProp = Mono.Unix.Catalog.GetString("<b>Data Base Migration</b>");
+            this.GtkLabel2.UseMarkup = true;
+            this.frame1.LabelWidget = this.GtkLabel2;
+            this.hbox1.Add(this.frame1);
+            Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(this.hbox1[this.frame1]));
+            w5.Position = 0;
+            // Container child hbox1.Gtk.Box+BoxChild
+            this.frame2 = new Gtk.Frame();
+            this.frame2.Name = "frame2";
+            this.frame2.ShadowType = ((Gtk.ShadowType)(0));
+            // Container child frame2.Gtk.Container+ContainerChild
+            this.GtkAlignment3 = new Gtk.Alignment(0F, 0F, 1F, 1F);
+            this.GtkAlignment3.Name = "GtkAlignment3";
+            this.GtkAlignment3.LeftPadding = ((uint)(12));
+            // Container child GtkAlignment3.Gtk.Container+ContainerChild
+            this.scrolledwindow2 = new Gtk.ScrolledWindow();
+            this.scrolledwindow2.CanFocus = true;
+            this.scrolledwindow2.Name = "scrolledwindow2";
+            this.scrolledwindow2.ShadowType = ((Gtk.ShadowType)(1));
+            // Container child scrolledwindow2.Gtk.Container+ContainerChild
+            this.pltextview = new Gtk.TextView();
+            this.pltextview.CanFocus = true;
+            this.pltextview.Name = "pltextview";
+            this.scrolledwindow2.Add(this.pltextview);
+            this.GtkAlignment3.Add(this.scrolledwindow2);
+            this.frame2.Add(this.GtkAlignment3);
+            this.GtkLabel3 = new Gtk.Label();
+            this.GtkLabel3.Name = "GtkLabel3";
+            this.GtkLabel3.LabelProp = Mono.Unix.Catalog.GetString("<b>Playlists Migration</b>");
+            this.GtkLabel3.UseMarkup = true;
+            this.frame2.LabelWidget = this.GtkLabel3;
+            this.hbox1.Add(this.frame2);
+            Gtk.Box.BoxChild w9 = ((Gtk.Box.BoxChild)(this.hbox1[this.frame2]));
+            w9.Position = 1;
+            w1.Add(this.hbox1);
+            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(w1[this.hbox1]));
+            w10.Position = 0;
             // Internal child LongoMatch.Gui.Dialog.Migrator.ActionArea
-            Gtk.HButtonBox w4 = this.ActionArea;
-            w4.Name = "dialog1_ActionArea";
-            w4.Spacing = 6;
-            w4.BorderWidth = ((uint)(5));
-            w4.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
+            Gtk.HButtonBox w11 = this.ActionArea;
+            w11.Name = "dialog1_ActionArea";
+            w11.Spacing = 6;
+            w11.BorderWidth = ((uint)(5));
+            w11.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
             // Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
             this.buttonCancel = new Gtk.Button();
             this.buttonCancel.CanDefault = true;
@@ -60,9 +128,9 @@ namespace LongoMatch.Gui.Dialog {
             this.buttonCancel.UseUnderline = true;
             this.buttonCancel.Label = "gtk-cancel";
             this.AddActionWidget(this.buttonCancel, -6);
-            Gtk.ButtonBox.ButtonBoxChild w5 = ((Gtk.ButtonBox.ButtonBoxChild)(w4[this.buttonCancel]));
-            w5.Expand = false;
-            w5.Fill = false;
+            Gtk.ButtonBox.ButtonBoxChild w12 = ((Gtk.ButtonBox.ButtonBoxChild)(w11[this.buttonCancel]));
+            w12.Expand = false;
+            w12.Fill = false;
             // Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
             this.buttonOk = new Gtk.Button();
             this.buttonOk.CanDefault = true;
@@ -72,10 +140,10 @@ namespace LongoMatch.Gui.Dialog {
             this.buttonOk.UseUnderline = true;
             this.buttonOk.Label = "gtk-ok";
             this.AddActionWidget(this.buttonOk, -5);
-            Gtk.ButtonBox.ButtonBoxChild w6 = ((Gtk.ButtonBox.ButtonBoxChild)(w4[this.buttonOk]));
-            w6.Position = 1;
-            w6.Expand = false;
-            w6.Fill = false;
+            Gtk.ButtonBox.ButtonBoxChild w13 = ((Gtk.ButtonBox.ButtonBoxChild)(w11[this.buttonOk]));
+            w13.Position = 1;
+            w13.Expand = false;
+            w13.Fill = false;
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }

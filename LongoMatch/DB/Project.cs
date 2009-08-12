@@ -34,7 +34,7 @@ namespace LongoMatch.DB
 	public class Project : IComparable
 	{
 		
-		private MediaFile file;
+		private PreviewMediaFile file;
 		
 		
 		private string title;
@@ -65,7 +65,7 @@ namespace LongoMatch.DB
 		
 	
 		
-		public Project(MediaFile file, String localName, String visitorName, String season, String competition, int localGoals,
+		public Project(PreviewMediaFile file, String localName, String visitorName, String season, String competition, int localGoals,
 		                int visitorGoals, DateTime matchDate, Sections sections, TeamTemplate localTeamTemplate, TeamTemplate visitorTeamTemplate) {
 			
 			this.file = file;
@@ -194,7 +194,7 @@ namespace LongoMatch.DB
 		}
 	
 
-		public MediaFile File {
+		public PreviewMediaFile File {
 			get{return file;}
 			set{file=value;}
 		}

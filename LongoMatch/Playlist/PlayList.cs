@@ -95,6 +95,7 @@ namespace LongoMatch.Playlist
 		}
 		
 		public void Save(){
+			Console.WriteLine(filename);
 			Save(filename);
 		}
 		

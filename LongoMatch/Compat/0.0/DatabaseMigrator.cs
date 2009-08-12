@@ -99,7 +99,7 @@ namespace LongoMatch.Compat
 		
 			SendEvent("Creating backup of the old database");
 			foreach (v00.DB.Project oldProject in backupProjects){
-				MediaFile file;
+				PreviewMediaFile file;
 				string localName, visitorName;
 				int localGoals, visitorGoals;
 				DateTime date;
@@ -108,18 +108,18 @@ namespace LongoMatch.Compat
 				
 				localName = oldProject.LocalName;
 				visitorName = oldProject.VisitorName;
-				localGoals = oldProject.VisitorGoals;
+				localGoals = oldProject.LocalGoals;
 				visitorGoals = oldProject.VisitorGoals;
 				date = oldProject.MatchDate;
 				SendEvent(String.Format("Trying to open project {0}...",oldProject.Title));
 				try{
-					file = MediaFile.GetMediaFile(oldProject.File.FilePath);
+					file = PreviewMediaFile.GetMediaFile(oldProject.File.FilePath);
 					SendEvent(String.Format("[{0}]Getting properties of file {1}",oldProject.Title,oldProject.File.FilePath));
 				}
 				catch{
 					SendEvent(String.Format("[{0}]Failed to open file {1} \n",oldProject.Title,oldProject.File.FilePath));
 					SendEvent(String.Format("[{0}]Cannot scan the file properties\n, using default values",oldProject.Title));
-					file = new MediaFile();
+					file = new PreviewMediaFile();
 					file.FilePath = oldProject.File.FilePath;
 					file.Fps = oldProject.File.Fps;
 					file.HasAudio = oldProject.File.HasAudio;
@@ -207,26 +207,20 @@ namespace LongoMatch.Compat
 					string oldName=x.GetName();							
 					var c2 = db.Ext().StoredClass(oldName);
 					if (c2 != null){
-						Console.WriteLine(oldName);
 						if(oldName.Contains("LongoMatch.DB")){
-							Console.WriteLine(oldName);							
 							newName=oldName.Replace("LongoMatch.DB","LongoMatch.Compat.v00.DB");
-							Console.WriteLine(newName);
 							c2.Rename(newName);
 						}
 						else if(oldName.Contains("LongoMatch.TimeNodes")){
 							newName=oldName.Replace("LongoMatch.TimeNodes","LongoMatch.Compat.v00.TimeNodes");
 							c2.Rename(newName);
 						}
-
 					}
-				}
-				
+				}				
 			}
 		}
 		
 		public void SendEvent (string message){
-			Console.WriteLine(message);
 			if (ConversionProgressEvent != null)					
 						Application.Invoke(delegate {ConversionProgressEvent(message);});
 		}

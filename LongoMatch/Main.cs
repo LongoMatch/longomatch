@@ -84,9 +84,6 @@ namespace LongoMatch
 				Application.Run ();
 			}
 			catch (Exception ex){
-				// Try to save the opened project 
-				if (MainWindow.OpenedProject() != null)
-					DB.UpdateProject(MainWindow.OpenedProject());
 				ProcessExecutionError(ex);				
 			}			
 		}
@@ -162,17 +159,17 @@ namespace LongoMatch
 		
 		public static void CheckOldFiles(){
 			string oldDBFile= System.IO.Path.Combine (homeDirectory, "db/db.yap");
-			if (File.Exists(oldDBFile)){
+			if (File.Exists(oldDBFile) || Directory.Exists(Path.Combine(homeDirectory,"templates"))){
 				MessageDialog md = new MessageDialog(null,
 				                                     DialogFlags.Modal,
 				                                     MessageType.Question,
 				                                     Gtk.ButtonsType.YesNo,
-				                                     Catalog.GetString("A database from an old version has been found")+"\n"+
-				                                     Catalog.GetString("Do you want to import your old projects to the new database?"));
+				                                     Catalog.GetString("Some elements from the previous version (database, templates and/or playlists) have been found.")+"\n"+
+				                                     Catalog.GetString("Do you want to import them?"));
 				md.Icon=Stetic.IconLoader.LoadIcon(md, "longomatch", Gtk.IconSize.Dialog, 48);
 				if(md.Run()==(int)ResponseType.Yes){
 					md.Destroy();
-					Migrator migrator = new Migrator(oldDBFile);
+					Migrator migrator = new Migrator(homeDirectory);
 					migrator.Run();
 					migrator.Destroy();
 				}
@@ -225,12 +222,12 @@ namespace LongoMatch
 		}
 			
 		private static void OnException(GLib.UnhandledExceptionArgs args){			
-			if (MainWindow.OpenedProject() != null)
-				DB.UpdateProject(MainWindow.OpenedProject());
 			ProcessExecutionError((Exception)args.ExceptionObject);				
 		}
 		
 		private static void ProcessExecutionError(Exception ex){
+			if (MainWindow.OpenedProject() != null)
+				DB.UpdateProject(MainWindow.OpenedProject());
 			string logFile ="LongoMatch-" + DateTime.Now +".log";
 			string message;
 			
@@ -246,7 +243,7 @@ namespace LongoMatch
 			//TODO Add bug reports link
 			MessagePopup.PopupMessage(null, MessageType.Error, 
 			                          Catalog.GetString("The application has finished with an unexpected error.")+"\n"+
-			                          Catalog.GetString("A log has been saved at: "+logFile)+ "\n"+
+			                          Catalog.GetString("A log has been saved at: ")+logFile+ "\n"+
 			                          Catalog.GetString("Please, fill a bug report "));
 			
 			Application.Quit();

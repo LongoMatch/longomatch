@@ -44,7 +44,7 @@ namespace LongoMatch.Gui.Component
 	public partial class FileDescriptionWidget : Gtk.Bin
 	{
 		private Project project;
-		private LongoMatch.Video.Utils.MediaFile mFile;
+		private LongoMatch.Video.Utils.PreviewMediaFile mFile;
 		private CalendarPopup cp;
 		private Sections actualSection;
 		private TeamTemplate actualVisitorTeam;
@@ -304,7 +304,7 @@ namespace LongoMatch.Gui.Component
 			                                     Catalog.GetString("Analyzing video file:")+"\n"+filename);
 						md.Icon=Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Dialog, 48);
 						md.Show();
-						mFile = LongoMatch.Video.Utils.MediaFile.GetMediaFile(filename);
+						mFile = LongoMatch.Video.Utils.PreviewMediaFile.GetMediaFile(filename);
 						fileEntry.Text = filename;
 					}
 					catch (Exception ex){
