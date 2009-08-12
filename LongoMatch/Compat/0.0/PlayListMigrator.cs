@@ -107,9 +107,9 @@ namespace LongoMatch.Compat
 						newPLNode.MediaFile = file;
 						newPL.Add(newPLNode);
 					}				          
-					newPL.Save();
-					SendEvent(DONE);					
+					newPL.Save();										
 				}
+				SendEvent(DONE);
 			}
 		}
 		
