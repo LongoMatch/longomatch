@@ -226,7 +226,8 @@ namespace LongoMatch.Gui
 			segmentStopTime = stop;
 			closebutton.Show();
 			vscale1.Value = 25;
-			player.SegmentSeek(start,stop, GetRateFromScale());			
+			player.SegmentSeek(start,stop, GetRateFromScale());	
+			player.Play();
 		}
 		
 		public void CloseActualSegment(){
