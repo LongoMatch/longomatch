@@ -75,6 +75,8 @@ namespace LongoMatch
 			//Iniciamos la base de datos
 			db = new DataBase(Path.Combine(DBDir(),"longomatch.db"));
 			
+		
+			
 			//Check for previous database
 			CheckOldFiles();
 			
@@ -159,7 +161,9 @@ namespace LongoMatch
 		
 		public static void CheckOldFiles(){
 			string oldDBFile= System.IO.Path.Combine (homeDirectory, "db/db.yap");
-			if (File.Exists(oldDBFile) || Directory.Exists(Path.Combine(homeDirectory,"templates"))){
+			//We supose that if the conversion as already be done successfully,
+			//old DB file has been renamed to db.yap.bak
+			if (File.Exists(oldDBFile)){
 				MessageDialog md = new MessageDialog(null,
 				                                     DialogFlags.Modal,
 				                                     MessageType.Question,

@@ -1491,6 +1491,13 @@
         <property name="Active">False</property>
         <signal name="Toggled" handler="OnHideAllWidgetsActionToggled" />
       </action>
+      <action id="HelpAction1">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Help</property>
+        <property name="ShortLabel" translatable="yes">_Help</property>
+        <property name="StockId">gtk-help</property>
+        <signal name="Activated" handler="OnHelpAction1Activated" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">LongoMatch</property>
@@ -1534,6 +1541,7 @@
                   </node>
                   <node type="Menu" action="HelpAction">
                     <node type="Menuitem" action="AboutAction" />
+                    <node type="Menuitem" action="HelpAction1" />
                   </node>
                 </node>
               </widget>

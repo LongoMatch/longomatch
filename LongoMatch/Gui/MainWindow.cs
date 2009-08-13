@@ -414,11 +414,25 @@ namespace LongoMatch.Gui
 		    about.ProgramName = "LongoMatch";
 			about.Version = String.Format("{0}.{1}.{2}",version.Major,version.Minor,version.Build);
 			about.Copyright = "Copyright ©2007-2009 Andoni Morales Alastruey";
-			about.Website = "http://www.ylatuya.es";
-			about.License = "This program is free software; you can redistribute it and/or modify\n it under the terms of the GNU General Public License as published by\nthe Free Software Foundation; either version 2 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU General Public License for more details.\n";
+			about.Website = "http://www.longomatch.ylatuya.es";
+			about.License = 
+@"This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.";
 			about.Authors = new string[]{"Andoni Morales Alastruey"};
 			about.Artists = new string[]{"Bencomo González Marrero"};
 			about.TransientFor = this;
+			Gtk.AboutDialog.SetUrlHook(delegate (AboutDialog dialog,string url){
+				try{
+					System.Diagnostics.Process.Start(url);
+				}catch{}
+			});
 			about.Run();
 			about.Destroy();	
 		 
@@ -465,9 +479,15 @@ namespace LongoMatch.Gui
 					rightvbox.Visible = true;
 			}
 		}
+		protected virtual void OnHelpAction1Activated (object sender, System.EventArgs e)
+		{
+			try{
+				System.Diagnostics.Process.Start("http://www.longomatch.ylatuya.es/documentation/manual.html");
+			}catch{}
+		}
 		
 #endregion	
-	
+
 	}
 	
 }
