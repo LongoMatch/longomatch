@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LongoMatch 0.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-08 01:22:37+0200\n"
+"POT-Creation-Date: 2009-08-13 16:10:03+0200\n"
 "PO-Revision-Date: 2009-08-08 01:21:30+0200\n"
 "Last-Translator: Andoni Morales Alastruey <ylatuya@gmail.com>\n"
 "Language-Team: \n"
@@ -11,16 +11,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: MonoDevelop Gettext addin\n"
 
-#: ../LongoMatch/Main.cs:225
+#: ../LongoMatch/Main.cs:166
+msgid ""
+"Some elements from the previous version (database, templates and/or "
+"playlists) have been found."
+msgstr ""
+
+#: ../LongoMatch/Main.cs:167
+#, fuzzy
+msgid "Do you want to import them?"
+msgstr "Desea borrar el"
+
+#: ../LongoMatch/Main.cs:244
 msgid "The application has finished with an unexpected error."
 msgstr "El programa ha terminado con error inesperado"
 
-#: ../LongoMatch/Main.cs:226
-msgid ""
-"A log has been saved at: \"+logFile)+ \"\n"
-"\"+\r\n"
-"\t\t\t                          Catalog.GetString(\"Please, fill a bug "
-"report "
+#: ../LongoMatch/Main.cs:245
+msgid "A log has been saved at: "
+msgstr ""
+
+#: ../LongoMatch/Main.cs:246
+msgid "Please, fill a bug report "
 msgstr ""
 
 #: ../LongoMatch/Gui/DBManager.cs:73
@@ -99,9 +110,14 @@ msgstr "dd/MM/yyyy"
 msgid "Save File as..."
 msgstr "Guardar Video Como..."
 
-#: ../LongoMatch/Gui/FileDescriptionWidget.cs:295
+#: ../LongoMatch/Gui/FileDescriptionWidget.cs:286
 msgid "Open file..."
 msgstr "Abrir Archivo..."
+
+#: ../LongoMatch/Gui/FileDescriptionWidget.cs:303
+#, fuzzy
+msgid "Analyzing video file:"
+msgstr "Archivo de video invalido:"
 
 #: ../LongoMatch/Gui/MainWindow.cs:96
 msgid "The file associated to this project doesn't exist."
@@ -119,7 +135,7 @@ msgstr ""
 msgid "An error ocurred opening this project:"
 msgstr "A ocurrido un error abriendo el proyecto:"
 
-#: ../LongoMatch/Gui/MainWindow.cs:237 ../LongoMatch/Gui/PlayListWidget.cs:254
+#: ../LongoMatch/Gui/MainWindow.cs:237 ../LongoMatch/Gui/PlayListWidget.cs:258
 msgid "Please, select a video file."
 msgstr "Por favor, escoja un archivo de video."
 
@@ -131,7 +147,7 @@ msgstr "Este archivo ya está siendo usado por otro proyecto"
 msgid "Open the project, please."
 msgstr "Abra el pproyecto, por favor"
 
-#: ../LongoMatch/Gui/MainWindow.cs:316 ../LongoMatch/Gui/PlayListWidget.cs:205
+#: ../LongoMatch/Gui/MainWindow.cs:316 ../LongoMatch/Gui/PlayListWidget.cs:209
 msgid "Open playlist"
 msgstr "Abrir lista de reproducción"
 
@@ -183,11 +199,18 @@ msgstr "Duración:"
 msgid "Play Rate: "
 msgstr "Velocidad de reproducción:"
 
-#: ../LongoMatch/Gui/PlayListWidget.cs:220
+#: ../LongoMatch/Gui/PlayListWidget.cs:83
+#, fuzzy
+msgid ""
+"The file you are trying to load is not a playlist or it's not compatible "
+"with the current version"
+msgstr "El proyecto que intenta cargar está actualmente en uso."
+
+#: ../LongoMatch/Gui/PlayListWidget.cs:224
 msgid "New playlist"
 msgstr "Nueva Lista de Reproducción"
 
-#: ../LongoMatch/Gui/PlayListWidget.cs:245
+#: ../LongoMatch/Gui/PlayListWidget.cs:249
 msgid "The playlist is empty!"
 msgstr "La lista de reproducción está vacía"
 
@@ -278,12 +301,10 @@ msgid "none"
 msgstr "ninguno"
 
 #: ../LongoMatch/DB/DataBase.cs:136
-#: ../LongoMatch/DB/Compat/0.0/DB/DataBase.cs:97
 msgid "The Project for this video file already exists."
 msgstr "El proyecto para este archivo ya existe."
 
 #: ../LongoMatch/DB/DataBase.cs:136
-#: ../LongoMatch/DB/Compat/0.0/DB/DataBase.cs:97
 msgid "Try to edit it whit the Database Manager"
 msgstr "Intente editarlo con el Editor de Proyectos"
 
@@ -653,6 +674,11 @@ msgstr "Progreso de la captura"
 msgid "Capturing frame: "
 msgstr "Capturando fotogramas"
 
+#: ../LongoMatch/Gui/FramesCaptureProgressDialog.cs:62
+#, fuzzy
+msgid "Done"
+msgstr "ninguno"
+
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs:45
 msgid ""
 "\n"
@@ -678,7 +704,8 @@ msgid "Select a HotKey"
 msgstr "Seleccione una combinación de teclas"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs:37
-msgid "Press a key combination using  Shift, Alt or AltGR keys"
+#, fuzzy
+msgid "Press a key combination using  Shift or Alt keys"
 msgstr "Presiona una combinación de teclas usando  Shift o Alt"
 
 #: ../LongoMatch/Handlers/EventsManager.cs:159
@@ -742,6 +769,14 @@ msgstr "Escoja una carpeta"
 msgid "Tag players"
 msgstr "Marcar Jugadores"
 
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.Migrator.cs:78
+msgid "<b>Data Base Migration</b>"
+msgstr ""
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.Migrator.cs:106
+msgid "<b>Playlists Migration</b>"
+msgstr ""
+
 #: ../CesarPlayer/gtk-gui/LongoMatch.Gui.PlayerBin.cs:207
 msgid "Time:"
 msgstr "Tiempo:"
@@ -750,7 +785,8 @@ msgstr "Tiempo:"
 msgid "Error merging video segments. Please retry again"
 msgstr ""
 
-#: ../CesarPlayer/Utils/MediaFile.cs:193
+#: ../CesarPlayer/Utils/MediaFile.cs:163
+#: ../CesarPlayer/Utils/PreviewMediaFile.cs:114
 msgid "Invalid video file:"
 msgstr "Archivo de video invalido:"
 

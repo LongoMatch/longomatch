@@ -44,7 +44,7 @@ namespace LongoMatch.Playlist
 		public PlayList(){
 			ser = new XmlSerializer(typeof(List<PlayListTimeNode>),new Type[] {typeof(PlayListTimeNode)});
 			list = new List<PlayListTimeNode>();
-			version = new Version(1,1);
+			version = new Version(1,0);
 		}
 		
 		public PlayList(string file)
@@ -57,7 +57,9 @@ namespace LongoMatch.Playlist
 				filename = file;
 			}
 			else
-				Load(file);			
+				Load(file);	
+			
+			version = new Version(1,0);
 		}
 		#endregion
 		

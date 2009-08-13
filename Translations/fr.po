@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2009-08-08 01:32:00+0200\n"
+"POT-Creation-Date: 2009-08-13 16:10:03+0200\n"
 "PO-Revision-Date: 2009-08-08 01:30:56+0200\n"
 "Last-Translator: Andoni Morales Alastruey <ylatuya@gmail.com>\n"
 "Language-Team: \n"
@@ -10,16 +10,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: MonoDevelop Gettext addin\n"
 
-#: ../LongoMatch/Main.cs:225
+#: ../LongoMatch/Main.cs:166
+msgid ""
+"Some elements from the previous version (database, templates and/or "
+"playlists) have been found."
+msgstr ""
+
+#: ../LongoMatch/Main.cs:167
+msgid "Do you want to import them?"
+msgstr ""
+
+#: ../LongoMatch/Main.cs:244
 msgid "The application has finished with an unexpected error."
 msgstr "Le programme a fini avec une error inespérée"
 
-#: ../LongoMatch/Main.cs:226
-msgid ""
-"A log has been saved at: \"+logFile)+ \"\n"
-"\"+\r\n"
-"\t\t\t                          Catalog.GetString(\"Please, fill a bug "
-"report "
+#: ../LongoMatch/Main.cs:245
+msgid "A log has been saved at: "
+msgstr ""
+
+#: ../LongoMatch/Main.cs:246
+msgid "Please, fill a bug report "
 msgstr ""
 
 #: ../LongoMatch/Gui/DBManager.cs:73
@@ -91,8 +101,12 @@ msgstr ""
 msgid "Save File as..."
 msgstr ""
 
-#: ../LongoMatch/Gui/FileDescriptionWidget.cs:295
+#: ../LongoMatch/Gui/FileDescriptionWidget.cs:286
 msgid "Open file..."
+msgstr ""
+
+#: ../LongoMatch/Gui/FileDescriptionWidget.cs:303
+msgid "Analyzing video file:"
 msgstr ""
 
 #: ../LongoMatch/Gui/MainWindow.cs:96
@@ -109,7 +123,7 @@ msgstr ""
 msgid "An error ocurred opening this project:"
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:237 ../LongoMatch/Gui/PlayListWidget.cs:254
+#: ../LongoMatch/Gui/MainWindow.cs:237 ../LongoMatch/Gui/PlayListWidget.cs:258
 msgid "Please, select a video file."
 msgstr ""
 
@@ -121,7 +135,7 @@ msgstr ""
 msgid "Open the project, please."
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:316 ../LongoMatch/Gui/PlayListWidget.cs:205
+#: ../LongoMatch/Gui/MainWindow.cs:316 ../LongoMatch/Gui/PlayListWidget.cs:209
 msgid "Open playlist"
 msgstr ""
 
@@ -173,11 +187,17 @@ msgstr ""
 msgid "Play Rate: "
 msgstr ""
 
-#: ../LongoMatch/Gui/PlayListWidget.cs:220
+#: ../LongoMatch/Gui/PlayListWidget.cs:83
+msgid ""
+"The file you are trying to load is not a playlist or it's not compatible "
+"with the current version"
+msgstr ""
+
+#: ../LongoMatch/Gui/PlayListWidget.cs:224
 msgid "New playlist"
 msgstr ""
 
-#: ../LongoMatch/Gui/PlayListWidget.cs:245
+#: ../LongoMatch/Gui/PlayListWidget.cs:249
 msgid "The playlist is empty!"
 msgstr ""
 
@@ -268,12 +288,10 @@ msgid "none"
 msgstr ""
 
 #: ../LongoMatch/DB/DataBase.cs:136
-#: ../LongoMatch/DB/Compat/0.0/DB/DataBase.cs:97
 msgid "The Project for this video file already exists."
 msgstr ""
 
 #: ../LongoMatch/DB/DataBase.cs:136
-#: ../LongoMatch/DB/Compat/0.0/DB/DataBase.cs:97
 msgid "Try to edit it whit the Database Manager"
 msgstr ""
 
@@ -638,6 +656,10 @@ msgstr ""
 msgid "Capturing frame: "
 msgstr ""
 
+#: ../LongoMatch/Gui/FramesCaptureProgressDialog.cs:62
+msgid "Done"
+msgstr ""
+
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs:45
 msgid ""
 "\n"
@@ -663,7 +685,7 @@ msgid "Select a HotKey"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs:37
-msgid "Press a key combination using  Shift, Alt or AltGR keys"
+msgid "Press a key combination using  Shift or Alt keys"
 msgstr ""
 
 #: ../LongoMatch/Handlers/EventsManager.cs:159
@@ -724,6 +746,14 @@ msgstr ""
 msgid "Tag players"
 msgstr ""
 
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.Migrator.cs:78
+msgid "<b>Data Base Migration</b>"
+msgstr ""
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.Migrator.cs:106
+msgid "<b>Playlists Migration</b>"
+msgstr ""
+
 #: ../CesarPlayer/gtk-gui/LongoMatch.Gui.PlayerBin.cs:207
 msgid "Time:"
 msgstr ""
@@ -732,6 +762,7 @@ msgstr ""
 msgid "Error merging video segments. Please retry again"
 msgstr ""
 
-#: ../CesarPlayer/Utils/MediaFile.cs:193
+#: ../CesarPlayer/Utils/MediaFile.cs:163
+#: ../CesarPlayer/Utils/PreviewMediaFile.cs:114
 msgid "Invalid video file:"
 msgstr ""
