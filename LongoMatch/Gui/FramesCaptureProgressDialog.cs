@@ -60,6 +60,7 @@ namespace LongoMatch.Gui.Dialog
 				}
 			}
 			if (actual == total){
+				progressbar.Text= Catalog.GetString("Done");
 				cancelbutton.Visible = false;
 				okbutton.Visible = true;
 			}				

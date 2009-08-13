@@ -38,14 +38,25 @@ namespace LongoMatch.TimeNodes
 		
 		public PlayListTimeNode(MediaFile mediaFile, MediaTimeNode tNode) : base(tNode.Name,tNode.Start,tNode.Stop)
 		{
-			this.mediaFile = mediaFile;
+			MediaFile = mediaFile;
 			
 		}
 		#endregion
 		#region  Properties
 		
 		public MediaFile MediaFile{
-			set{ this.mediaFile = value;}
+			set{
+				//PlayListTimeNode is serializable and only primary classes
+				//can be serialiazed. In case it's a PreviewMidaFile we create
+				//a new MediaFile object.
+				if (value is PreviewMediaFile){
+					MediaFile mf  = new MediaFile(value.FilePath,value.Length,value.Fps,
+					                          value.HasAudio,value.HasVideo,value.VideoCodec,
+					                          value.AudioCodec,value.VideoWidth,value.VideoHeight);
+					this.mediaFile= mf;
+				}
+				else this.mediaFile = value;
+			}
 			get{ return this.mediaFile;}
 		}
 		
