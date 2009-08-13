@@ -26,8 +26,10 @@ libcesarplayer_la_SOURCES = \
 	gst-video-capturer.h \
 	gst-video-editor.c\
 	gst-video-editor.h\
-	gstvideowidget.c \
-	gstvideowidget.h \
+	bacon-resize.c\
+	bacon-resize.h\
+	video-utils.c\
+	video-utils.h\
 	macros.h 
 
 libcesarplayer_la_LDFLAGS = \

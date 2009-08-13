@@ -47,7 +47,7 @@ FILES = \
 	Handlers/ErrorHandler.cs \
 	Handlers/Handlers.cs \
 	Handlers/TickHandler.cs \
-	Handlers/StateChangedHandler.cs \	
+	Handlers/StateChangedHandler.cs \
 	Player/GstAspectRatio.cs \
 	Player/GstAudioOutType.cs \
 	Player/GstDVDEvent.cs \
@@ -58,18 +58,18 @@ FILES = \
 	Player/GstVideoProperty.cs \
 	Player/IPlayer.cs \
 	Player/ObjectManager.cs \
-	gtk-gui/LongoMatch.Gui.CapturerBin.cs \	
+	gtk-gui/LongoMatch.Gui.CapturerBin.cs \
 	gtk-gui/LongoMatch.Gui.PlayerBin.cs \
-	gtk-gui/LongoMatch.Gui.VolumeWindow.cs \		
+	gtk-gui/LongoMatch.Gui.VolumeWindow.cs \
 	Gui/CapturerBin.cs \
 	Gui/PlayerBin.cs \
-	Gui/VolumeWindow.cs \	
-	MultimediaFactory.cs \	
+	Gui/VolumeWindow.cs \
+	MultimediaFactory.cs \
 	Utils/IFramesCapturer.cs \
 	Utils/FramesCapturer.cs \
 	Utils/IMetadataReader.cs \
 	Utils/GstPlayerMetadataType.cs \
-	Utils/TimeString.cs \	
+	Utils/TimeString.cs \
 	Capturer/GccAudioEncoderType.cs \
 	Capturer/GccError.cs \
 	Capturer/GccVideoEncoderType.cs \
@@ -99,6 +99,7 @@ FILES = \
 	Editor/GenericMerger.cs \
 	Editor/AviMerger.cs \
 	Utils/MediaFile.cs \
+	Utils/PreviewMediaFile.cs\
 	Editor/AvidemuxMerger.cs 
 
 DATA_FILES = 

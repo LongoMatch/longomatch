@@ -279,6 +279,7 @@ FILES = \
 	Editor/GenericMerger.cs \
 	Editor/AviMerger.cs \
 	Utils/MediaFile.cs \
+	Utils/PreviewMediaFile.cs\
 	Editor/AvidemuxMerger.cs 
 
 DATA_FILES = 
