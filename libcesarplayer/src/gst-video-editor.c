@@ -26,7 +26,7 @@
 #include <gst/gst.h>
 
 #include "gst-video-editor.h"
-#include "gst-smart-video-scaler.h"
+
 
 #define DEFAULT_VIDEO_ENCODER "theoraenc"
 #define DEFAULT_AUDIO_ENCODER "vorbisenc"

@@ -75,7 +75,6 @@
 #include "bacon-video-widget.h"
 #include "baconvideowidget-marshal.h"
 #include "gstscreenshot.h"
-#include "gstvideowidget.h"
 #include "bacon-resize.h"
 #include "video-utils.h"
 
