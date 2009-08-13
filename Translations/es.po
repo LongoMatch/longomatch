@@ -1,26 +1,27 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: LongoMatch 0.15\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-13 16:10:03+0200\n"
-"PO-Revision-Date: 2009-08-08 01:21:30+0200\n"
-"Last-Translator: Andoni Morales Alastruey <ylatuya@gmail.com>\n"
-"Language-Team: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "X-Generator: MonoDevelop Gettext addin\n"
+"Language-Team: \n"
+"PO-Revision-Date: 2009-08-13 22:24:13+0200\n"
+"POT-Creation-Date: 2009-08-13 16:10:03+0200\n"
+"Project-Id-Version: LongoMatch 0.15\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: Andoni Morales Alastruey <ylatuya@gmail.com>\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: ../LongoMatch/Main.cs:166
 msgid ""
 "Some elements from the previous version (database, templates and/or "
 "playlists) have been found."
 msgstr ""
+"Se han encontrado algunos elementos de la versión anterior (base de datos, "
+"plantillas y/o listas de reproducción)."
 
 #: ../LongoMatch/Main.cs:167
-#, fuzzy
 msgid "Do you want to import them?"
-msgstr "Desea borrar el"
+msgstr "Desea importarlos?"
 
 #: ../LongoMatch/Main.cs:244
 msgid "The application has finished with an unexpected error."
@@ -28,11 +29,11 @@ msgstr "El programa ha terminado con error inesperado"
 
 #: ../LongoMatch/Main.cs:245
 msgid "A log has been saved at: "
-msgstr ""
+msgstr "Se ha guardado un log en:"
 
 #: ../LongoMatch/Main.cs:246
 msgid "Please, fill a bug report "
-msgstr ""
+msgstr "Por favor, envíe en reporte de fallos."
 
 #: ../LongoMatch/Gui/DBManager.cs:73
 msgid "A Project is already using this file."
@@ -67,39 +68,32 @@ msgid "Filename"
 msgstr "Archivo"
 
 #: ../LongoMatch/Gui/ProjectListWidget.cs:81
-#, fuzzy
 msgid "<b>File:</b>  "
-msgstr "Archivo:"
+msgstr "<b>Archivo:</b>  "
 
 #: ../LongoMatch/Gui/ProjectListWidget.cs:82
-#, fuzzy
 msgid "<b>Local Team:</b>  "
-msgstr "Equipo Local:"
+msgstr "<b>Equipo Local:</b>  "
 
 #: ../LongoMatch/Gui/ProjectListWidget.cs:83
-#, fuzzy
 msgid "<b>Visitor Team:</b>  "
-msgstr "Equipo Visitante:"
+msgstr "<b>Equipo Visitante:</b>"
 
 #: ../LongoMatch/Gui/ProjectListWidget.cs:84
-#, fuzzy
 msgid "<b>Season:</b>  "
-msgstr "Temporada"
+msgstr "<b>Temporada:</b>"
 
 #: ../LongoMatch/Gui/ProjectListWidget.cs:85
-#, fuzzy
 msgid "<b>Competition:</b>  "
-msgstr "Competición:"
+msgstr "<b>Competición:</b>"
 
 #: ../LongoMatch/Gui/ProjectListWidget.cs:86
-#, fuzzy
 msgid "<b>Result:</b>  "
-msgstr "Resultado:"
+msgstr "<b>Resultado:</b>"
 
 #: ../LongoMatch/Gui/ProjectListWidget.cs:87
-#, fuzzy
 msgid "<b>Date:</b>  "
-msgstr "Fecha:"
+msgstr "<b>Fecha:</b>"
 
 #: ../LongoMatch/Gui/ProjectListWidget.cs:87
 #: ../LongoMatch/Gui/FileDescriptionWidget.cs:129
@@ -115,9 +109,8 @@ msgid "Open file..."
 msgstr "Abrir Archivo..."
 
 #: ../LongoMatch/Gui/FileDescriptionWidget.cs:303
-#, fuzzy
 msgid "Analyzing video file:"
-msgstr "Archivo de video invalido:"
+msgstr "Analizando archivo de vídeo:"
 
 #: ../LongoMatch/Gui/MainWindow.cs:96
 msgid "The file associated to this project doesn't exist."
@@ -135,7 +128,8 @@ msgstr ""
 msgid "An error ocurred opening this project:"
 msgstr "A ocurrido un error abriendo el proyecto:"
 
-#: ../LongoMatch/Gui/MainWindow.cs:237 ../LongoMatch/Gui/PlayListWidget.cs:258
+#: ../LongoMatch/Gui/MainWindow.cs:237
+#: ../LongoMatch/Gui/PlayListWidget.cs:258
 msgid "Please, select a video file."
 msgstr "Por favor, escoja un archivo de video."
 
@@ -147,7 +141,8 @@ msgstr "Este archivo ya está siendo usado por otro proyecto"
 msgid "Open the project, please."
 msgstr "Abra el pproyecto, por favor"
 
-#: ../LongoMatch/Gui/MainWindow.cs:316 ../LongoMatch/Gui/PlayListWidget.cs:209
+#: ../LongoMatch/Gui/MainWindow.cs:316
+#: ../LongoMatch/Gui/PlayListWidget.cs:209
 msgid "Open playlist"
 msgstr "Abrir lista de reproducción"
 
@@ -200,11 +195,12 @@ msgid "Play Rate: "
 msgstr "Velocidad de reproducción:"
 
 #: ../LongoMatch/Gui/PlayListWidget.cs:83
-#, fuzzy
 msgid ""
-"The file you are trying to load is not a playlist or it's not compatible "
-"with the current version"
-msgstr "El proyecto que intenta cargar está actualmente en uso."
+"The file you are trying to load is not a playlist or it's not compatible with "
+"the current version"
+msgstr ""
+"El archivo que intenta cargar no es una lista de reproducción o no es "
+"compatible con esta versión."
 
 #: ../LongoMatch/Gui/PlayListWidget.cs:224
 msgid "New playlist"
@@ -369,9 +365,8 @@ msgid "Local Team Template"
 msgstr "Plantilla del equipo local"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs:50
-#, fuzzy
 msgid "Projects Search:"
-msgstr "Gestor de _Proyectos"
+msgstr "Búsqueda de Proyectos:"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.DBManager.cs:43
 msgid "DataBase Manager"
@@ -539,9 +534,10 @@ msgid "Export to PNG images"
 msgstr "Exportar a fotogramas PNG"
 
 #: ../LongoMatch/Playlist/PlayList.cs:87
-#, fuzzy
 msgid "The file you are trying to load is not a valid playlist"
-msgstr "El proyecto que intenta cargar está actualmente en uso."
+msgstr ""
+"El archivo que intenta cargar no es un archivo de lista de reproducción "
+"válido."
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:104
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:105
@@ -675,9 +671,8 @@ msgid "Capturing frame: "
 msgstr "Capturando fotogramas"
 
 #: ../LongoMatch/Gui/FramesCaptureProgressDialog.cs:62
-#, fuzzy
 msgid "Done"
-msgstr "ninguno"
+msgstr "Terminado"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs:45
 msgid ""
@@ -704,7 +699,6 @@ msgid "Select a HotKey"
 msgstr "Seleccione una combinación de teclas"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs:37
-#, fuzzy
 msgid "Press a key combination using  Shift or Alt keys"
 msgstr "Presiona una combinación de teclas usando  Shift o Alt"
 
@@ -771,11 +765,11 @@ msgstr "Marcar Jugadores"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.Migrator.cs:78
 msgid "<b>Data Base Migration</b>"
-msgstr ""
+msgstr "<b>Migración de Base de Datos</b>"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.Migrator.cs:106
 msgid "<b>Playlists Migration</b>"
-msgstr ""
+msgstr "<b>Migración de Listas de Reproducción</b>"
 
 #: ../CesarPlayer/gtk-gui/LongoMatch.Gui.PlayerBin.cs:207
 msgid "Time:"
@@ -867,3 +861,4 @@ msgstr "Archivo de video invalido:"
 
 #~ msgid "File"
 #~ msgstr "Archivo:"
+
