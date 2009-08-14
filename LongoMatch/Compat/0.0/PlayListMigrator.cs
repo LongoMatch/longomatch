@@ -61,7 +61,7 @@ namespace LongoMatch.Compat
 				PlayList newPL;
 				LongoMatch.Video.Utils.MediaFile file;
 								
-				SendEvent(String.Format("Converting file {0}",plFile));
+				SendEvent(String.Format("Converting playlist {0}",plFile));
 				try{
 					oldPL = new LongoMatch.Compat.v00.PlayList.PlayList(plFile);
 				}catch{
@@ -81,7 +81,7 @@ namespace LongoMatch.Compat
 						v00.TimeNodes.PlayListTimeNode oldPLNode = oldPL.Next();
 						PlayListTimeNode newPLNode = new PlayListTimeNode();
 					
-						SendEvent(String.Format("Add element {0} to playlist {1}",oldPLNode.Name,plFile));
+						//SendEvent(String.Format("Add element {0} to playlist {1}",oldPLNode.Name,plFile));
 						
 						newPLNode.Name = oldPLNode.Name;
 						newPLNode.Start = new Time(oldPLNode.Start.MSeconds);
@@ -108,11 +108,8 @@ namespace LongoMatch.Compat
 						newPL.Add(newPLNode);
 					}				          
 					newPL.Save();
-					Console.WriteLine("medio 1");
 				}	
-				Console.WriteLine("Medio 2");
 			}
-			Console.WriteLine("medio3");
 			SendEvent(DONE);
 		}
 		

@@ -97,7 +97,7 @@ namespace LongoMatch.Compat
 			SendEvent(String.Format("Found {0} Projects",backupProjects.Count));
 	
 		
-			SendEvent("Creating backup of the old database");
+			//SendEvent("Creating backup of the old database");
 			foreach (v00.DB.Project oldProject in backupProjects){
 				PreviewMediaFile file;
 				string localName, visitorName;
@@ -111,14 +111,14 @@ namespace LongoMatch.Compat
 				localGoals = oldProject.LocalGoals;
 				visitorGoals = oldProject.VisitorGoals;
 				date = oldProject.MatchDate;
-				SendEvent(String.Format("Trying to open project {0}...",oldProject.Title));
+				SendEvent(String.Format("Trying to convert project {0}...",oldProject.Title));
 				try{
 					file = PreviewMediaFile.GetMediaFile(oldProject.File.FilePath);
-					SendEvent(String.Format("[{0}]Getting properties of file {1}",oldProject.Title,oldProject.File.FilePath));
+					//SendEvent(String.Format("[{0}]Getting properties of file {1}",oldProject.Title,oldProject.File.FilePath));
 				}
 				catch{
-					SendEvent(String.Format("[{0}]Failed to open file {1} \n",oldProject.Title,oldProject.File.FilePath));
-					SendEvent(String.Format("[{0}]Cannot scan the file properties\n, using default values",oldProject.Title));
+					//SendEvent(String.Format("[{0}]Failed to open file {1} \n",oldProject.Title,oldProject.File.FilePath));
+					//SendEvent(String.Format("[{0}]Cannot scan the file properties\n, using default values",oldProject.Title));
 					file = new PreviewMediaFile();
 					file.FilePath = oldProject.File.FilePath;
 					file.Fps = oldProject.File.Fps;
@@ -134,7 +134,7 @@ namespace LongoMatch.Compat
 				sections = new Sections();
 				int i=0;
 				
-				SendEvent(String.Format("[{0}]Importing Sections...",oldProject.Title));
+				//SendEvent(String.Format("[{0}]Importing Sections...",oldProject.Title));
 				
 							
 				foreach (v00.TimeNodes.SectionsTimeNode oldSection in oldProject.Sections.SectionsTimeNodes){
@@ -145,12 +145,12 @@ namespace LongoMatch.Compat
 					                                            oldProject.Sections.GetColor(i)
 					                                            );
 					sections.AddSection(stn);
-					SendEvent(String.Format("[{0}]Adding Section #{1} with name {2}",oldProject.Title,i,oldSection.Name));
+					//SendEvent(String.Format("[{0}]Adding Section #{1} with name {2}",oldProject.Title,i,oldSection.Name));
 					i++;
 				}
 				
 				
-				SendEvent(String.Format("[{0}]Sections imported successfully",oldProject.Title));
+				//SendEvent(String.Format("[{0}]Sections imported successfully",oldProject.Title));
 				
 				newProject = new Project(file,
 				                         localName, 
@@ -166,7 +166,7 @@ namespace LongoMatch.Compat
 				
 				i=0;
 				
-				SendEvent(String.Format("[{0}]Importing all plays ...",oldProject.Title));
+				//SendEvent(String.Format("[{0}]Importing all plays ...",oldProject.Title));
 				foreach (List<v00.TimeNodes.MediaTimeNode> list in oldProject.GetDataArray()){
 					foreach (v00.TimeNodes.MediaTimeNode oldTN in list){
 						MediaTimeNode tn;
@@ -180,7 +180,7 @@ namespace LongoMatch.Compat
 						else tn.Team=Team.NONE;
 						tn.Fps = oldTN.Fps;
 						tn.Notes = oldTN.Notes;
-						SendEvent(String.Format("[{0}]Added play {1}",oldProject.Title,tn.Name));
+						//SendEvent(String.Format("[{0}]Added play {1}",oldProject.Title,tn.Name));
 					}		
 					i++;
 				}

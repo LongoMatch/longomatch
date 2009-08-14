@@ -74,7 +74,7 @@ namespace LongoMatch.Compat
 				if (oldTemplate != null){
 					int i=0;
 					foreach ( v00.TimeNodes.SectionsTimeNode sectionTN in oldTemplate.SectionsTimeNodes ){
-						SendEvent(String.Format("Converting Section #{0}: {1}",i+1,sectionTN.Name));
+						//SendEvent(String.Format("Converting Section #{0}: {1}",i+1,sectionTN.Name));
 						SectionsTimeNode newSectionTN = new SectionsTimeNode(sectionTN.Name,
 						                                                     new Time(sectionTN.Start.MSeconds),
 						                                                     new Time(sectionTN.Stop.MSeconds),
