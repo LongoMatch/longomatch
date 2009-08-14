@@ -1779,12 +1779,12 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.TimeNodeProperties" design-size="312 127">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.TimeNodeProperties" design-size="336 135">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.Frame" id="frame1">
         <property name="MemberName" />
-        <property name="ShadowType">None</property>
+        <property name="BorderWidth">1</property>
         <child>
           <widget class="Gtk.Alignment" id="GtkAlignment">
             <property name="MemberName" />
@@ -3235,7 +3235,6 @@ You can download it using this direct link:</property>
     <child>
       <widget class="Gtk.Frame" id="frame1">
         <property name="MemberName" />
-        <property name="ShadowType">None</property>
         <child>
           <widget class="Gtk.Alignment" id="GtkAlignment">
             <property name="MemberName" />
@@ -3980,7 +3979,7 @@ Please select the workspace folder.</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.Migrator" design-size="400 300">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.Migrator" design-size="821 300">
     <property name="MemberName" />
     <property name="Icon">stock:longomatch Menu</property>
     <property name="WindowPosition">CenterOnParent</property>
@@ -4076,6 +4075,48 @@ Please select the workspace folder.</property>
               </widget>
               <packing>
                 <property name="Position">1</property>
+                <property name="AutoSize">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Frame" id="frame3">
+                <property name="MemberName" />
+                <property name="ShadowType">None</property>
+                <child>
+                  <widget class="Gtk.Alignment" id="GtkAlignment4">
+                    <property name="MemberName" />
+                    <property name="Xalign">0</property>
+                    <property name="Yalign">0</property>
+                    <property name="LeftPadding">12</property>
+                    <child>
+                      <widget class="Gtk.ScrolledWindow" id="scrolledwindow3">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="ShadowType">In</property>
+                        <child>
+                          <widget class="Gtk.TextView" id="tptextview">
+                            <property name="MemberName" />
+                            <property name="CanFocus">True</property>
+                            <property name="Text" translatable="yes" />
+                          </widget>
+                        </child>
+                      </widget>
+                    </child>
+                  </widget>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="GtkLabel4">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">&lt;b&gt;Templates Migration&lt;/b&gt;</property>
+                    <property name="UseMarkup">True</property>
+                  </widget>
+                  <packing>
+                    <property name="type">label_item</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">2</property>
                 <property name="AutoSize">False</property>
               </packing>
             </child>

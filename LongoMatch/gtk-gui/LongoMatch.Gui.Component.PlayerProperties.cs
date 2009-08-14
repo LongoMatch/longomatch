@@ -49,7 +49,6 @@ namespace LongoMatch.Gui.Component {
             // Container child LongoMatch.Gui.Component.PlayerProperties.Gtk.Container+ContainerChild
             this.frame1 = new Gtk.Frame();
             this.frame1.Name = "frame1";
-            this.frame1.ShadowType = ((Gtk.ShadowType)(0));
             // Container child frame1.Gtk.Container+ContainerChild
             this.GtkAlignment = new Gtk.Alignment(0F, 0F, 1F, 1F);
             this.GtkAlignment.Name = "GtkAlignment";
