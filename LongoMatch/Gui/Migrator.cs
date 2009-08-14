@@ -28,8 +28,10 @@ namespace LongoMatch.Gui.Dialog
 	{
 		DatabaseMigrator dbMigrator;
 		PlayListMigrator plMigrator;
+		TemplatesMigrator tpMigrator;
 		bool plFinished;
 		bool dbFinished;
+		bool tpFinished;
 			
 		public Migrator(string oldHomeFolder)
 		{
@@ -37,6 +39,7 @@ namespace LongoMatch.Gui.Dialog
 			
 			CheckDataBase(oldHomeFolder);
 			CheckPlayLists(oldHomeFolder);
+			CheckTemplates(oldHomeFolder);
 		}
 			    
 		private void CheckDataBase(string oldHomeFolder){
@@ -67,11 +70,27 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 		
+		private void CheckTemplates(string oldHomeFolder){
+			string[] templatesFiles;
+			
+			templatesFiles = Directory.GetFiles(System.IO.Path.Combine(oldHomeFolder,"templates"),"*.sct");
+			if (templatesFiles.Length != 0){
+				tpMigrator = new TemplatesMigrator(templatesFiles);
+				tpMigrator.ConversionProgressEvent += new ConversionProgressHandler (OnTPProgress);
+				tpMigrator.Start();
+			}
+			else {
+				tptextview.Buffer.Text = "No templates to import";
+				tpFinished = true;
+			}
+		}
+		
+		
 		protected void OnDBProgress (string progress){
 			dbtextview.Buffer.Text+=progress+"\n";
 			if (progress == DatabaseMigrator.DONE){
 				dbFinished = true;
-				if (dbFinished && plFinished){
+				if (dbFinished && plFinished && tpFinished){
 					buttonCancel.Visible=false;
 					buttonOk.Visible=true;
 				}
@@ -82,7 +101,19 @@ namespace LongoMatch.Gui.Dialog
 			pltextview.Buffer.Text+=progress+"\n";
 			if (progress == PlayListMigrator.DONE){
 				plFinished = true;
-				if (dbFinished && plFinished){
+				if (dbFinished && plFinished && tpFinished){
+					buttonCancel.Visible=false;
+					buttonOk.Visible=true;
+				}			
+			}
+		}
+		
+			
+		protected void OnTPProgress (string progress){
+			tptextview.Buffer.Text+=progress+"\n";
+			if (progress == TemplatesMigrator.DONE){
+				tpFinished = true;
+				if (dbFinished && plFinished && tpFinished){
 					buttonCancel.Visible=false;
 					buttonOk.Visible=true;
 				}			
@@ -92,6 +123,8 @@ namespace LongoMatch.Gui.Dialog
 		protected virtual void OnButtonCancelClicked (object sender, System.EventArgs e)
 		{
 			dbMigrator.Cancel();
+			plMigrator.Cancel();
+			tpMigrator.Cancel();			
 		}	
 	}
 }

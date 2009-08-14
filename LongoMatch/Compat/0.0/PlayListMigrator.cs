@@ -107,14 +107,16 @@ namespace LongoMatch.Compat
 						newPLNode.MediaFile = file;
 						newPL.Add(newPLNode);
 					}				          
-					newPL.Save();										
-				}
-				SendEvent(DONE);
+					newPL.Save();
+					Console.WriteLine("medio 1");
+				}	
+				Console.WriteLine("Medio 2");
 			}
+			Console.WriteLine("medio3");
+			SendEvent(DONE);
 		}
 		
 		public void SendEvent (string message){
-			Console.WriteLine(message);
 			if (ConversionProgressEvent != null)					
 						Application.Invoke(delegate {ConversionProgressEvent(message);});
 		}

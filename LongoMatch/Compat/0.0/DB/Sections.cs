@@ -1,6 +1,6 @@
 // Sections.cs
 //
-//  Copyright (C) 2007 Andoni Morales Alastruey
+//  Copyright (C) 2007-2009 Andoni Morales Alastruey
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -50,6 +50,11 @@ namespace LongoMatch.Compat.v00.DB
 			get{return this.colorsArray;}			
 		}		
 	
+		public void SetTimeNodes(string[] names, Time[] startTimes, Time[] stopTimes,bool[] visible){
+			for (int i=0;i<20;i++)
+				timeNodesArray[i] = new SectionsTimeNode(names[i],startTimes[i],stopTimes[i],visible[i]);				
+		}
+			
 		
 		public SectionsTimeNode[] SectionsTimeNodes{
 			set{this.timeNodesArray = value;}

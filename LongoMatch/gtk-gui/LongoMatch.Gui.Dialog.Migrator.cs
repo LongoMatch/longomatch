@@ -35,6 +35,16 @@ namespace LongoMatch.Gui.Dialog {
         
         private Gtk.Label GtkLabel3;
         
+        private Gtk.Frame frame3;
+        
+        private Gtk.Alignment GtkAlignment4;
+        
+        private Gtk.ScrolledWindow scrolledwindow3;
+        
+        private Gtk.TextView tptextview;
+        
+        private Gtk.Label GtkLabel4;
+        
         private Gtk.Button buttonCancel;
         
         private Gtk.Button buttonOk;
@@ -110,15 +120,43 @@ namespace LongoMatch.Gui.Dialog {
             this.hbox1.Add(this.frame2);
             Gtk.Box.BoxChild w9 = ((Gtk.Box.BoxChild)(this.hbox1[this.frame2]));
             w9.Position = 1;
+            // Container child hbox1.Gtk.Box+BoxChild
+            this.frame3 = new Gtk.Frame();
+            this.frame3.Name = "frame3";
+            this.frame3.ShadowType = ((Gtk.ShadowType)(0));
+            // Container child frame3.Gtk.Container+ContainerChild
+            this.GtkAlignment4 = new Gtk.Alignment(0F, 0F, 1F, 1F);
+            this.GtkAlignment4.Name = "GtkAlignment4";
+            this.GtkAlignment4.LeftPadding = ((uint)(12));
+            // Container child GtkAlignment4.Gtk.Container+ContainerChild
+            this.scrolledwindow3 = new Gtk.ScrolledWindow();
+            this.scrolledwindow3.CanFocus = true;
+            this.scrolledwindow3.Name = "scrolledwindow3";
+            this.scrolledwindow3.ShadowType = ((Gtk.ShadowType)(1));
+            // Container child scrolledwindow3.Gtk.Container+ContainerChild
+            this.tptextview = new Gtk.TextView();
+            this.tptextview.CanFocus = true;
+            this.tptextview.Name = "tptextview";
+            this.scrolledwindow3.Add(this.tptextview);
+            this.GtkAlignment4.Add(this.scrolledwindow3);
+            this.frame3.Add(this.GtkAlignment4);
+            this.GtkLabel4 = new Gtk.Label();
+            this.GtkLabel4.Name = "GtkLabel4";
+            this.GtkLabel4.LabelProp = Mono.Unix.Catalog.GetString("<b>Templates Migration</b>");
+            this.GtkLabel4.UseMarkup = true;
+            this.frame3.LabelWidget = this.GtkLabel4;
+            this.hbox1.Add(this.frame3);
+            Gtk.Box.BoxChild w13 = ((Gtk.Box.BoxChild)(this.hbox1[this.frame3]));
+            w13.Position = 2;
             w1.Add(this.hbox1);
-            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(w1[this.hbox1]));
-            w10.Position = 0;
+            Gtk.Box.BoxChild w14 = ((Gtk.Box.BoxChild)(w1[this.hbox1]));
+            w14.Position = 0;
             // Internal child LongoMatch.Gui.Dialog.Migrator.ActionArea
-            Gtk.HButtonBox w11 = this.ActionArea;
-            w11.Name = "dialog1_ActionArea";
-            w11.Spacing = 6;
-            w11.BorderWidth = ((uint)(5));
-            w11.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
+            Gtk.HButtonBox w15 = this.ActionArea;
+            w15.Name = "dialog1_ActionArea";
+            w15.Spacing = 6;
+            w15.BorderWidth = ((uint)(5));
+            w15.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
             // Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
             this.buttonCancel = new Gtk.Button();
             this.buttonCancel.CanDefault = true;
@@ -128,9 +166,9 @@ namespace LongoMatch.Gui.Dialog {
             this.buttonCancel.UseUnderline = true;
             this.buttonCancel.Label = "gtk-cancel";
             this.AddActionWidget(this.buttonCancel, -6);
-            Gtk.ButtonBox.ButtonBoxChild w12 = ((Gtk.ButtonBox.ButtonBoxChild)(w11[this.buttonCancel]));
-            w12.Expand = false;
-            w12.Fill = false;
+            Gtk.ButtonBox.ButtonBoxChild w16 = ((Gtk.ButtonBox.ButtonBoxChild)(w15[this.buttonCancel]));
+            w16.Expand = false;
+            w16.Fill = false;
             // Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
             this.buttonOk = new Gtk.Button();
             this.buttonOk.CanDefault = true;
@@ -140,14 +178,14 @@ namespace LongoMatch.Gui.Dialog {
             this.buttonOk.UseUnderline = true;
             this.buttonOk.Label = "gtk-ok";
             this.AddActionWidget(this.buttonOk, -5);
-            Gtk.ButtonBox.ButtonBoxChild w13 = ((Gtk.ButtonBox.ButtonBoxChild)(w11[this.buttonOk]));
-            w13.Position = 1;
-            w13.Expand = false;
-            w13.Fill = false;
+            Gtk.ButtonBox.ButtonBoxChild w17 = ((Gtk.ButtonBox.ButtonBoxChild)(w15[this.buttonOk]));
+            w17.Position = 1;
+            w17.Expand = false;
+            w17.Fill = false;
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 400;
+            this.DefaultWidth = 821;
             this.DefaultHeight = 300;
             this.buttonOk.Hide();
             this.Show();

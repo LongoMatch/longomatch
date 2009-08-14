@@ -187,9 +187,7 @@ namespace LongoMatch.Compat
 				SendEvent(String.Format("[{0}]Project converted successfully",oldProject.Title));
 				
 				newProjects.Add(newProject);
-				File.Copy(oldDBFile, oldDBFile+".bak");
-				File.Delete(oldDBFile);
-				File.Delete(backupDBFile);
+				
 			}	
 			foreach (Project project in newProjects){
 				try {
@@ -197,6 +195,10 @@ namespace LongoMatch.Compat
 				}
 				catch{}
 			}
+			
+			File.Copy(oldDBFile, oldDBFile+".bak");
+			File.Delete(oldDBFile);
+			File.Delete(backupDBFile);
 			
 			SendEvent(DONE);
 		}	
