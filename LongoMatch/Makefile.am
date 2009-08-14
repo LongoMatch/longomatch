@@ -170,6 +170,7 @@ FILES = \
 	Compat/0.0/DB/MediaFile.cs \
 	Compat/0.0/DB/Project.cs \
 	Compat/0.0/DB/Sections.cs \
+	Compat/0.0/IO/SectionsReader.cs\
 	Compat/0.0/Time/MediaTimeNode.cs \
 	Compat/0.0/Time/PixbufTimeNode.cs \
 	Compat/0.0/Time/PlayListTimeNode.cs \
@@ -179,7 +180,8 @@ FILES = \
 	Compat/0.0/Playlist/IPlayList.cs \
 	Compat/0.0/Playlist/PlayList.cs \
 	Compat/0.0/DatabaseMigrator.cs \
-	Compat/0.0/PlayListMigrator.cs 
+	Compat/0.0/PlayListMigrator.cs\
+	Compat/0.0/TemplatesMigrator.cs 
 
 DATA_FILES = 
 

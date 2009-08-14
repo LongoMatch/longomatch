@@ -1,10 +1,10 @@
 [Desktop Entry]
-Version=0.15
-Encoding=UTF-8
+Version=1.0
 Name=LongoMatch
 Type=Application
 Exec=longomatch
 Terminal=false
 GenericName[es_ES]=
-Categories=Video;AudioVideo;Player;AudioVideoEditing;Recorder;AudioVideoEditing;Database;Recorder;Player;Education;Sports;
-Icon=longomatch.png
+Categories=Video;AudioVideo;Player;AudioVideoEditing;Recorder;AudioVideoEditing;Database;Recorder;Player;Sports;
+Icon=longomatch
+Comment=
