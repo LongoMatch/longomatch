@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "X-Generator: MonoDevelop Gettext addin\n"
 "Language-Team: \n"
-"PO-Revision-Date: 2009-08-15 00:40:35+0200\n"
+"PO-Revision-Date: 2009-08-15 16:06:35+0200\n"
 "POT-Creation-Date: 2009-08-15 00:35:57+0200\n"
 "Project-Id-Version: LongoMatch 0.15\n"
 "MIME-Version: 1.0\n"
@@ -240,7 +240,7 @@ msgstr "No puede borrar la plantilla por defecto"
 
 #: ../LongoMatch/Gui/TemplatesEditor.cs:211
 msgid "Do you really want to delete the template: "
-msgstr "Desea borrar la plantilla"
+msgstr "Desea borrar la plantilla: "
 
 #: ../LongoMatch/Gui/TimeNodesTreeView.cs:116
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:239
