@@ -275,14 +275,15 @@ namespace LongoMatch.Gui.Component
 				}
 				try {
 					videoEditor.VideoQuality = vep.VideoQuality;
+					videoEditor.AudioQuality = AudioQuality.Good;
 					videoEditor.VideoFormat = vep.VideoFormat;
 					videoEditor.AudioCodec = vep.AudioCodec;
 					videoEditor.VideoCodec = vep.VideoCodec;					
 					videoEditor.OutputFile = vep.Filename;
 					videoEditor.EnableTitle = vep.TitleOverlay;
-					if (vep.VideoCodec== VideoCodec.MPEG2_VIDEO)
+					/*if (vep.VideoCodec== VideoCodec.MPEG2_VIDEO)
 						videoEditor.EnableAudio = false;
-					else
+					else*/
 						videoEditor.EnableAudio = vep.EnableAudio;
 					videoEditor.VideoMuxer = vep.VideoMuxer;
 					//FIXME 0.16 Not used anymore with the GNonlin editor

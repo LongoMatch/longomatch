@@ -35,6 +35,7 @@
 #define LAME_CAPS "audio/x-raw-int, rate=44100, channels=2, endianness=1234, signed=true, width=16, depth=16"
 #define VORBIS_CAPS "audio/x-raw-float, rate=44100, channels=2, endianness=1234, signed=true, width=32, depth=32"
 #define FAAC_CAPS "audio/x-raw-int, rate=44100, channels=2, endianness=1234, signed=true, width=16, depth=16"
+#define AC3_CAPS "audio/x-raw-int, rate=44100, channels=2, endianness=1234, signed=true, width=16, depth=16"
 
 #define TIMEOUT 50
 
@@ -1029,8 +1030,9 @@ gst_video_editor_set_audio_encoder (GstVideoEditor *gve, gchar **err, GvsAudioCo
 				g_object_set (G_OBJECT(gve->priv->audiocapsfilter), "caps",	gst_caps_from_string(VORBIS_CAPS),NULL);			
 				break;	
 			case MPEG2_AUDIO:
-				encoder_name = "ffenc_ac3";
+				encoder_name = "lame";
 				encoder = gst_element_factory_make (encoder_name,encoder_name);	
+				g_object_set (G_OBJECT(gve->priv->audiocapsfilter), "caps",	gst_caps_from_string(LAME_CAPS),NULL);
 			default:
 				gst_video_editor_set_enable_audio(gve,FALSE);
 				break;		
@@ -1052,7 +1054,10 @@ gst_video_editor_set_audio_encoder (GstVideoEditor *gve, gchar **err, GvsAudioCo
 			
 			/*Add new encoder element*/
 			gve->priv->audioencoder = encoder;	
-			g_object_set (G_OBJECT(gve->priv->audioencoder), "bitrate",gve->priv->audio_bitrate,NULL);
+			if (codec ==  MP3)
+				g_object_set (G_OBJECT(gve->priv->audioencoder), "bitrate",gve->priv->audio_bitrate/1000,NULL);
+			else
+				g_object_set (G_OBJECT(gve->priv->audioencoder), "bitrate",gve->priv->audio_bitrate,NULL);
 			/*Add first to the encoder bin*/
 			gst_bin_add(GST_BIN(gve->priv->aencode_bin),gve->priv->audioencoder);			
 			gst_element_link(gve->priv->audioqueue,gve->priv->audioencoder);
@@ -1110,7 +1115,7 @@ gst_video_editor_set_video_muxer (GstVideoEditor *gve, gchar **err, GvsVideoMuxe
 				muxer_name = "ffmux_dvd";
 				//We don't want to mux anything yet as ffmux_dvd is buggy
 				//FIXME: Until we don't have audio save the mpeg-ps stream without mux.
-				muxer = gst_element_factory_make ("identity",muxer_name);
+				muxer = gst_element_factory_make ("ffmux_dvd",muxer_name);
 				break;
 		}		
 	
