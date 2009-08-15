@@ -300,15 +300,16 @@ namespace LongoMatch.Gui
 		}
 
 		protected virtual void OnPlaylistActionToggled (object sender, System.EventArgs e)
-		{			
-			if (((Gtk.ToggleAction)sender).Active){
-				rightvbox.Visible = true;
-				playlistwidget2.Visible=true;	
+		{	
+			bool visible = ((Gtk.ToggleAction)sender).Active;
+			playlistwidget2.Visible=visible;
+			treewidget1.PlayListLoaded=visible;
+			
+			if (!visible && !noteswidget1.Visible){
+				rightvbox.Visible = false;
 			}
-			else {
-				playlistwidget2.Visible=false;				
-				if (!noteswidget1.Visible)
-					rightvbox.Visible = false;
+			else if (visible){
+					rightvbox.Visible = true;
 			}			
 		}
 

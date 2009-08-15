@@ -46,12 +46,15 @@ namespace LongoMatch.Gui.Component
 		private MenuItem local;
 	    private	MenuItem visitor;
 		private MenuItem noTeam;
+		private MenuItem addPLN;
 		private Gtk.CellRendererText nameCell;
 		private TreePath path;
 		private Gtk.TreeViewColumn nameColumn;
 		//Using TimeNode as in the tree there are Media and Sections timenodes
 		private TimeNode selectedTimeNode;
 		private Color[] colors;
+	
+		
 
 		
 		public TimeNodesTreeView(){
@@ -110,6 +113,10 @@ namespace LongoMatch.Gui.Component
 			set {this.colors = value;}
 		}
 		
+		public bool PlayListLoaded{
+			set{addPLN.Sensitive=value;}
+		}
+		
 		private void SetMenu(){
 			
 			
@@ -135,7 +142,8 @@ namespace LongoMatch.Gui.Component
 			MenuItem players = new MenuItem(Catalog.GetString("Tag player"));
 			players.Submenu = playersMenu;
 			MenuItem quit = new MenuItem(Catalog.GetString("Delete"));
-			MenuItem addPLN = new MenuItem(Catalog.GetString("Add to playlist"));
+			addPLN = new MenuItem(Catalog.GetString("Add to playlist"));
+			addPLN.Sensitive=false;
 			MenuItem snapshot = new MenuItem(Catalog.GetString("Export to PGN images"));
 			
 			menu.Append(name);

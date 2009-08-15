@@ -90,7 +90,11 @@ namespace LongoMatch.Gui.Component
 				treeview.Model = project.GetModel();
 				treeview.Colors = project.Sections.GetColors();
 			}			
-		}		
+		}	
+		
+		public bool PlayListLoaded{
+			set{treeview.PlayListLoaded=value;}
+		}
 
 		protected virtual void OnTimeNodeChanged(TimeNode tNode,object val){
 			if (TimeNodeChanged != null)

@@ -250,8 +250,6 @@ namespace LongoMatch.Gui.Component {
             this.hbox1.Add(this.vbox3);
             Gtk.Box.BoxChild w39 = ((Gtk.Box.BoxChild)(this.hbox1[this.vbox3]));
             w39.Position = 1;
-            w39.Expand = false;
-            w39.Fill = false;
             this.GtkAlignment.Add(this.hbox1);
             this.frame1.Add(this.GtkAlignment);
             this.titlelabel = new Gtk.Label();
