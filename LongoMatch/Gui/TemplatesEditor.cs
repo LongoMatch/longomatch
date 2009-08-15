@@ -215,7 +215,11 @@ namespace LongoMatch.Gui.Dialog
 				System.IO.File.Delete(templateName);
 				this.Fill();
 			}
-			mes.Destroy();			                                      
+			mes.Destroy();	
+			//The default template is always there so we select this one.
+			//This allow to reset all the fields in the sections/players 
+			//properties.
+			SelectTemplate("default");
 		}
 
 		protected virtual void OnButtonCancelClicked (object sender, System.EventArgs e)
