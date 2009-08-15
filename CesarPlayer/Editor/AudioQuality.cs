@@ -26,10 +26,10 @@ namespace LongoMatch.Video.Editor
 	
 	public enum AudioQuality
 	{
-		Low = 32,
-		Normal = 64,
-		Good = 128,
-		Extra = 256,
+		Low = 32000,
+		Normal = 64000,
+		Good = 128000,
+		Extra = 256000,
 		copy,
 	}
 }

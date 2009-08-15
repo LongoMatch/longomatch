@@ -30,7 +30,7 @@
 
 #define DEFAULT_VIDEO_ENCODER "theoraenc"
 #define DEFAULT_AUDIO_ENCODER "vorbisenc"
-#define DEFAULT_VIDEO_MUXER "matroskamux"
+#define DEFAULT_VIDEO_MUXER "oggmux"
 #define FONT_SIZE_FACTOR 0.03
 #define LAME_CAPS "audio/x-raw-int, rate=44100, channels=2, endianness=1234, signed=true, width=16, depth=16"
 #define VORBIS_CAPS "audio/x-raw-float, rate=44100, channels=2, endianness=1234, signed=true, width=32, depth=32"
@@ -1027,7 +1027,10 @@ gst_video_editor_set_audio_encoder (GstVideoEditor *gve, gchar **err, GvsAudioCo
 				encoder_name = "vorbisenc";
 				encoder = gst_element_factory_make (encoder_name,encoder_name);	
 				g_object_set (G_OBJECT(gve->priv->audiocapsfilter), "caps",	gst_caps_from_string(VORBIS_CAPS),NULL);			
-				break;		
+				break;	
+			case MPEG2_AUDIO:
+				encoder_name = "ffenc_ac3";
+				encoder = gst_element_factory_make (encoder_name,encoder_name);	
 			default:
 				gst_video_editor_set_enable_audio(gve,FALSE);
 				break;		

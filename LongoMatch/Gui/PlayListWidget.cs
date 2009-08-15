@@ -285,6 +285,7 @@ namespace LongoMatch.Gui.Component
 					else
 						videoEditor.EnableAudio = vep.EnableAudio;
 					videoEditor.VideoMuxer = vep.VideoMuxer;
+					//FIXME 0.16 Not used anymore with the GNonlin editor
 					videoEditor.TempDir = MainClass.TempVideosDir();
 					videoEditor.Start();
 					closebutton.Show();
