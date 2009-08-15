@@ -1,0 +1,62 @@
+***********
+Description
+***********
+ 
+LongoMatch is a video analysis tool oriented to sports and coaches, to assist them on making game video analysis. It simplifies video analisys by providing a set of intuitive tools to tag, review and edit the most importants plays of the game. It allows to group plays by categories and adjust the lead and lag time of each play frame by frame through a timeline. It also has support for playlists, an easy way to create presentations with plays from different games and provides a video editor to create new videos from your favorite plays. Even if primary focused to sports, LongoMatch can be used for any task that requires tagging and reviewing segments of a video file, and can be applied to fields like cinema, medics or conferences
+
+********
+Features
+********
+ 
+ * Projects based on templates, customizable for different kind of analysis
+ * Projects manager
+ * Templates editor
+ * 20 categories to group plays
+ * Adjustable play rate
+ * Frame stepping
+ * Adjust the lead and lag time for each play
+ * Annotations
+ * One-click review
+ * Timeline
+ * Playlists support
+ * Export plays to png images with a variable frame rate
+ * Export playlist to new videos
+ * Export projects to CSV files for statistics analysis
+ * Support for the most common video formats
+ * Multiplatform (Linux, FreeBSD, Windows,...)
+
+
+*******
+Licence
+*******
+
+LongoMatch is released under the GNU General Public License, Version 2 (GPLv2).
+
+
+************
+Dependencies
+************
+ 
+ * Mono >= 2.0
+ * GTK# >= 2.12
+ * GStreamer >= 0.10.23
+ * GNonlin >= 0.10.10
+ * db4o
+
+
+*****
+Links
+*****
+ 
+Official web page:
+	http://www.longomatch.ylatuya.es
+
+Development forge:
+	https://forja.rediris.es/projects/csl-longomatch/LongoMatch
+
+Blog:
+	http://longomatch.wordpress.com/
+
+
+
+

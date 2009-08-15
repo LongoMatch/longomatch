@@ -868,7 +868,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.DBManager" design-size="678 550">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.DBManager" design-size="804 550">
     <property name="MemberName" />
     <property name="Title" translatable="yes">DataBase Manager</property>
     <property name="Icon">stock:longomatch Dialog</property>
@@ -893,100 +893,104 @@
                 <property name="MemberName" />
                 <property name="Spacing">6</property>
                 <child>
-                  <widget class="LongoMatch.Gui.Component.ProjectListWidget" id="projectlistwidget1">
+                  <widget class="Gtk.HPaned" id="hpaned1">
                     <property name="MemberName" />
-                    <property name="Events">ButtonPressMask</property>
-                    <signal name="ProjectSelectedEvent" handler="OnProjectlistwidget1ProjectSelectedEvent" />
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.VBox" id="vbox2">
-                    <property name="MemberName" />
-                    <property name="Spacing">6</property>
+                    <property name="CanFocus">True</property>
+                    <property name="Position">349</property>
                     <child>
-                      <widget class="Gtk.Frame" id="frame1">
+                      <widget class="LongoMatch.Gui.Component.ProjectListWidget" id="projectlistwidget1">
                         <property name="MemberName" />
-                        <property name="ShadowType">None</property>
+                        <property name="Events">ButtonPressMask</property>
+                        <signal name="ProjectSelectedEvent" handler="OnProjectlistwidget1ProjectSelectedEvent" />
+                      </widget>
+                      <packing>
+                        <property name="Resize">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.VBox" id="vbox2">
+                        <property name="MemberName" />
+                        <property name="Spacing">6</property>
                         <child>
-                          <widget class="Gtk.Alignment" id="GtkAlignment2">
+                          <widget class="Gtk.Frame" id="frame1">
                             <property name="MemberName" />
-                            <property name="Xalign">0</property>
-                            <property name="Yalign">0</property>
-                            <property name="LeftPadding">12</property>
+                            <property name="ShadowType">None</property>
                             <child>
-                              <widget class="LongoMatch.Gui.Component.FileDescriptionWidget" id="filedescriptionwidget3">
+                              <widget class="Gtk.Alignment" id="GtkAlignment2">
                                 <property name="MemberName" />
-                                <property name="Sensitive">False</property>
-                                <property name="Events">ButtonPressMask</property>
-                                <property name="LocalGoals">0</property>
-                                <property name="VisitorGoals">0</property>
-                                <property name="Date">0</property>
+                                <property name="Xalign">0</property>
+                                <property name="Yalign">0</property>
+                                <property name="LeftPadding">12</property>
+                                <child>
+                                  <widget class="LongoMatch.Gui.Component.FileDescriptionWidget" id="filedescriptionwidget3">
+                                    <property name="MemberName" />
+                                    <property name="Sensitive">False</property>
+                                    <property name="Events">ButtonPressMask</property>
+                                    <property name="LocalGoals">0</property>
+                                    <property name="VisitorGoals">0</property>
+                                    <property name="Date">0</property>
+                                  </widget>
+                                </child>
                               </widget>
                             </child>
-                          </widget>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Label" id="GtkLabel6">
-                            <property name="MemberName" />
-                            <property name="LabelProp" translatable="yes">&lt;b&gt;Propiedades&lt;/b&gt;</property>
-                            <property name="UseMarkup">True</property>
+                            <child>
+                              <widget class="Gtk.Label" id="GtkLabel6">
+                                <property name="MemberName" />
+                                <property name="LabelProp" translatable="yes">&lt;b&gt;Propiedades&lt;/b&gt;</property>
+                                <property name="UseMarkup">True</property>
+                              </widget>
+                              <packing>
+                                <property name="type">label_item</property>
+                              </packing>
+                            </child>
                           </widget>
                           <packing>
-                            <property name="type">label_item</property>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.Button" id="saveButton">
+                            <property name="MemberName" />
+                            <property name="Sensitive">False</property>
+                            <property name="CanFocus">True</property>
+                            <property name="UseStock">True</property>
+                            <property name="Type">StockItem</property>
+                            <property name="StockId">gtk-save</property>
+                            <signal name="Pressed" handler="OnSaveButtonPressed" />
+                            <property name="label">gtk-save</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">False</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.Button" id="deleteButton">
+                            <property name="MemberName" />
+                            <property name="Sensitive">False</property>
+                            <property name="CanFocus">True</property>
+                            <property name="UseStock">True</property>
+                            <property name="Type">StockItem</property>
+                            <property name="StockId">gtk-delete</property>
+                            <signal name="Pressed" handler="OnDeleteButtonPressed" />
+                            <property name="label">gtk-delete</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">2</property>
+                            <property name="AutoSize">False</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
                           </packing>
                         </child>
                       </widget>
-                      <packing>
-                        <property name="Position">0</property>
-                        <property name="AutoSize">False</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="Gtk.Button" id="saveButton">
-                        <property name="MemberName" />
-                        <property name="Sensitive">False</property>
-                        <property name="CanFocus">True</property>
-                        <property name="UseStock">True</property>
-                        <property name="Type">StockItem</property>
-                        <property name="StockId">gtk-save</property>
-                        <signal name="Pressed" handler="OnSaveButtonPressed" />
-                        <property name="label">gtk-save</property>
-                      </widget>
-                      <packing>
-                        <property name="Position">1</property>
-                        <property name="AutoSize">False</property>
-                        <property name="Expand">False</property>
-                        <property name="Fill">False</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="Gtk.Button" id="deleteButton">
-                        <property name="MemberName" />
-                        <property name="Sensitive">False</property>
-                        <property name="CanFocus">True</property>
-                        <property name="UseStock">True</property>
-                        <property name="Type">StockItem</property>
-                        <property name="StockId">gtk-delete</property>
-                        <signal name="Pressed" handler="OnDeleteButtonPressed" />
-                        <property name="label">gtk-delete</property>
-                      </widget>
-                      <packing>
-                        <property name="Position">2</property>
-                        <property name="AutoSize">False</property>
-                        <property name="Expand">False</property>
-                        <property name="Fill">False</property>
-                      </packing>
                     </child>
                   </widget>
                   <packing>
-                    <property name="Position">1</property>
+                    <property name="Position">0</property>
                     <property name="AutoSize">True</property>
-                    <property name="Expand">False</property>
-                    <property name="Fill">False</property>
                   </packing>
                 </child>
               </widget>

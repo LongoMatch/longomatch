@@ -17,6 +17,8 @@ namespace LongoMatch.Gui.Dialog {
         
         private Gtk.HBox hbox2;
         
+        private Gtk.HPaned hpaned1;
+        
         private LongoMatch.Gui.Component.ProjectListWidget projectlistwidget1;
         
         private Gtk.VBox vbox2;
@@ -62,13 +64,18 @@ namespace LongoMatch.Gui.Dialog {
             this.hbox2.Name = "hbox2";
             this.hbox2.Spacing = 6;
             // Container child hbox2.Gtk.Box+BoxChild
+            this.hpaned1 = new Gtk.HPaned();
+            this.hpaned1.CanFocus = true;
+            this.hpaned1.Name = "hpaned1";
+            this.hpaned1.Position = 349;
+            // Container child hpaned1.Gtk.Paned+PanedChild
             this.projectlistwidget1 = new LongoMatch.Gui.Component.ProjectListWidget();
             this.projectlistwidget1.Events = ((Gdk.EventMask)(256));
             this.projectlistwidget1.Name = "projectlistwidget1";
-            this.hbox2.Add(this.projectlistwidget1);
-            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.hbox2[this.projectlistwidget1]));
-            w2.Position = 0;
-            // Container child hbox2.Gtk.Box+BoxChild
+            this.hpaned1.Add(this.projectlistwidget1);
+            Gtk.Paned.PanedChild w2 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.projectlistwidget1]));
+            w2.Resize = false;
+            // Container child hpaned1.Gtk.Paned+PanedChild
             this.vbox2 = new Gtk.VBox();
             this.vbox2.Name = "vbox2";
             this.vbox2.Spacing = 6;
@@ -124,32 +131,31 @@ namespace LongoMatch.Gui.Dialog {
             w7.Position = 2;
             w7.Expand = false;
             w7.Fill = false;
-            this.hbox2.Add(this.vbox2);
-            Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(this.hbox2[this.vbox2]));
-            w8.Position = 1;
-            w8.Expand = false;
-            w8.Fill = false;
-            this.dialog1_VBox1.Add(this.hbox2);
-            Gtk.Box.BoxChild w9 = ((Gtk.Box.BoxChild)(this.dialog1_VBox1[this.hbox2]));
+            this.hpaned1.Add(this.vbox2);
+            this.hbox2.Add(this.hpaned1);
+            Gtk.Box.BoxChild w9 = ((Gtk.Box.BoxChild)(this.hbox2[this.hpaned1]));
             w9.Position = 0;
+            this.dialog1_VBox1.Add(this.hbox2);
+            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.dialog1_VBox1[this.hbox2]));
+            w10.Position = 0;
             // Container child dialog1_VBox1.Gtk.Box+BoxChild
             this.hseparator3 = new Gtk.HSeparator();
             this.hseparator3.Name = "hseparator3";
             this.dialog1_VBox1.Add(this.hseparator3);
-            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.dialog1_VBox1[this.hseparator3]));
-            w10.PackType = ((Gtk.PackType)(1));
-            w10.Position = 1;
-            w10.Expand = false;
-            w10.Fill = false;
+            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.dialog1_VBox1[this.hseparator3]));
+            w11.PackType = ((Gtk.PackType)(1));
+            w11.Position = 1;
+            w11.Expand = false;
+            w11.Fill = false;
             w1.Add(this.dialog1_VBox1);
-            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(w1[this.dialog1_VBox1]));
-            w11.Position = 0;
+            Gtk.Box.BoxChild w12 = ((Gtk.Box.BoxChild)(w1[this.dialog1_VBox1]));
+            w12.Position = 0;
             // Internal child LongoMatch.Gui.Dialog.DBManager.ActionArea
-            Gtk.HButtonBox w12 = this.ActionArea;
-            w12.Name = "dialog1_ActionArea";
-            w12.Spacing = 6;
-            w12.BorderWidth = ((uint)(5));
-            w12.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
+            Gtk.HButtonBox w13 = this.ActionArea;
+            w13.Name = "dialog1_ActionArea";
+            w13.Spacing = 6;
+            w13.BorderWidth = ((uint)(5));
+            w13.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
             // Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
             this.buttonOk = new Gtk.Button();
             this.buttonOk.CanDefault = true;
@@ -159,13 +165,13 @@ namespace LongoMatch.Gui.Dialog {
             this.buttonOk.UseUnderline = true;
             this.buttonOk.Label = "gtk-quit";
             this.AddActionWidget(this.buttonOk, 0);
-            Gtk.ButtonBox.ButtonBoxChild w13 = ((Gtk.ButtonBox.ButtonBoxChild)(w12[this.buttonOk]));
-            w13.Expand = false;
-            w13.Fill = false;
+            Gtk.ButtonBox.ButtonBoxChild w14 = ((Gtk.ButtonBox.ButtonBoxChild)(w13[this.buttonOk]));
+            w14.Expand = false;
+            w14.Fill = false;
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 678;
+            this.DefaultWidth = 804;
             this.DefaultHeight = 550;
             this.Show();
             this.projectlistwidget1.ProjectSelectedEvent += new LongoMatch.Gui.Component.ProjectSelectedHandler(this.OnProjectlistwidget1ProjectSelectedEvent);
