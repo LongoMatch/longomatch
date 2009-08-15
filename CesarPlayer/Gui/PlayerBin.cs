@@ -54,6 +54,7 @@ namespace LongoMatch.Gui
 		private float rate=1;
 		private double previousVLevel = 1;
 		private bool muted=false;
+		private object[] pendingSeek=null; //{start,stop,rate}
 		//the player.mrl is diferent from the filename as it's an uri eg:file:///foo.avi
 		private string filename = null;
 		protected VolumeWindow vwin;
@@ -174,8 +175,9 @@ namespace LongoMatch.Gui
 				nextbutton.Sensitive = false;
 			
 			if (fileName != filename){
-				Open(fileName);				
-				player.NewFileSeek(start,stop,rate);		
+				Open(fileName);	
+				//Wait until the pipeline is prerolled and ready to seek
+				pendingSeek = new object[3] {start,stop,rate};
 			}
 			else player.SegmentSeek(start,stop,rate);	
 			
@@ -285,6 +287,7 @@ namespace LongoMatch.Gui
 			player.StateChange += new LongoMatch.Video.Handlers.StateChangeHandler(OnStateChanged);
 			player.Eos += new EventHandler (OnEndOfStream);
 			player.Error += new ErrorHandler (OnError);
+			player.ReadyToSeek += new EventHandler(OnReadyToSeek);
 			
 			playerWidget = (Widget)player;
 			playerWidget.Show();
@@ -302,6 +305,17 @@ namespace LongoMatch.Gui
 			else{
 				playbutton.Show();
 				pausebutton.Hide();
+			}
+		}
+		
+		protected void OnReadyToSeek(object o, EventArgs args){
+			if (pendingSeek != null){
+				player.SegmentSeek((long)pendingSeek[0],
+				                   (long)pendingSeek[1],
+				                   (float)pendingSeek[2]);
+				player.Play();
+				pendingSeek = null;
+				                   
 			}
 		}
 		

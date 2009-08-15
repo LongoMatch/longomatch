@@ -1617,7 +1617,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       } else if (new_state == GST_STATE_PAUSED) {
         bvw_reconfigure_tick_timeout (bvw, 500);
         g_signal_emit (bvw, bvw_signals[SIGNAL_STATE_CHANGE], 0, FALSE);
-	    g_signal_emit (bvw, bvw_signals[SIGNAL_READY_TO_SEEK], 0, FALSE);
+	    
       }
        else if (new_state > GST_STATE_PAUSED) {
         bvw_reconfigure_tick_timeout (bvw, 200);
@@ -1634,6 +1634,8 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
           /* show a non-fatal warning message if we can't decode the video */
           bvw_check_if_video_decoder_is_missing (bvw);
         }
+        g_signal_emit (bvw, bvw_signals[SIGNAL_READY_TO_SEEK], 0, FALSE);
+        
       } else if (old_state == GST_STATE_PAUSED && new_state == GST_STATE_READY) {
         bvw->priv->media_has_video = FALSE;
         bvw->priv->media_has_audio = FALSE;
@@ -2890,7 +2892,7 @@ bacon_video_widget_open(BaconVideoWidget * bvw,
   gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED);
  
   if (bvw->priv->use_type == BVW_USE_TYPE_AUDIO ||
-      bvw->priv->use_type == BVW_USE_TYPE_VIDEO) {
+      bvw->priv->use_type == BVW_USE_TYPE_VIDEO ) {
     GST_INFO ("normal playback, handling all errors asynchroneously");
     ret = TRUE;
   } else {
@@ -3154,7 +3156,7 @@ bacon_video_widget_set_rate (BaconVideoWidget *bvw, gfloat rate)
 gboolean 
 bacon_video_widget_new_file_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop,gfloat rate)
 {
-
+  	
   	g_return_val_if_fail (bvw != NULL, FALSE);
   	g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   	g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
@@ -3173,7 +3175,8 @@ bacon_video_widget_new_file_seek (BaconVideoWidget *bvw,gint64 start,gint64 stop
 		
 	GST_LOG ("Segment seeking from %" GST_TIME_FORMAT, GST_TIME_ARGS (start * GST_MSECOND));
         
-    gst_element_get_state (bvw->priv->play, NULL, NULL, 0);
+    //FIXME Needs to wait until GST_STATE_PAUSED
+ 	gst_element_get_state (bvw->priv->play, NULL, NULL, 0);
 
 	got_time_tick (bvw->priv->play, start * GST_MSECOND, bvw);
 	gst_element_seek (bvw->priv->play, rate,

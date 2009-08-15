@@ -170,7 +170,6 @@ namespace LongoMatch.Compat
 				foreach (List<v00.TimeNodes.MediaTimeNode> list in oldProject.GetDataArray()){
 					foreach (v00.TimeNodes.MediaTimeNode oldTN in list){
 						MediaTimeNode tn;
-						Console.WriteLine(oldTN.Name);
 						tn = newProject.AddTimeNode(oldTN.DataSection, new Time (oldTN.Start.MSeconds), new Time(oldTN.Stop.MSeconds), oldTN.Miniature);
 						tn.Name = oldTN.Name;
 						if (oldTN.Team == LongoMatch.Compat.v00.TimeNodes.Team.LOCAL)

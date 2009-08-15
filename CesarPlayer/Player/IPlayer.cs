@@ -40,6 +40,7 @@ namespace LongoMatch.Video.Player
 		event         TickHandler Tick;
 		event         System.EventHandler GotDuration;
 		event         System.EventHandler SegmentDone;
+		event         System.EventHandler ReadyToSeek;
 		
 		
 		long StreamLength{
