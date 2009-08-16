@@ -6,7 +6,7 @@
 	* Support for team templates
 	* Plays can be tagged to players
 	* HotKeys support	
-	* New video editor implemented using GNonLin
+	* New video editor implemented using GNonLin (FFmpeg and Mencoder are not required anymore)
 	* Video Editor with audio support
 	* The video editor lets overlay the title of the play
 	* The video editor lets change the rendering playrate
