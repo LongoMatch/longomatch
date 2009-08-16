@@ -120,7 +120,7 @@ namespace LongoMatch
 		}
 		
 		public static string ImagesDir(){			
-			return RelativeToPrefix("share/longomatch/images");		
+			return RelativeToPrefix("share/images/longomatch");		
 		}
 		
 		public static string DBDir(){
@@ -240,7 +240,11 @@ namespace LongoMatch
 			logFile = logFile.Replace(":","-");
 			logFile = System.IO.Path.Combine(HomeDir(),logFile); 
 			
-			message = String.Format("{0}\n{1}\n{2}\n{3}",ex.Message,ex.Source,ex.StackTrace,ex.InnerException.StackTrace);
+			if (ex.InnerException != null)
+				message = String.Format("{0}\n{1}\n{2}\n{3}",ex.Message,ex.Source,ex.StackTrace,ex.InnerException.StackTrace);
+			else
+				message = String.Format("{0}\n{1}\n{2}",ex.Message,ex.Source,ex.StackTrace);
+
 			using (StreamWriter s = new StreamWriter(logFile)){
 				s.WriteLine(message);
 			}	 
