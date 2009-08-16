@@ -63,7 +63,7 @@
 	#define DEFAULT_VIDEO_SINK "directdrawsink"
 #else
 	#include <gdk/gdkx.h>
-	#define DEFAULT_VIDEO_SINK "xvimagesink"
+	#define DEFAULT_VIDEO_SINK "gconfvideosink"
 #endif
 #include <gtk/gtk.h>
 #include <gio/gio.h>
@@ -5420,7 +5420,7 @@ bacon_video_widget_new (int width, int height,
       video_sink = gst_element_factory_make (DEFAULT_VIDEO_SINK, "video-sink");
       
       if (video_sink == NULL) {
-        g_warning ("Could not create element 'autovideosink'");
+        g_warning ("Could not create element '%s'",DEFAULT_VIDEO_SINK);
         /* Try to fallback on ximagesink */
         video_sink = gst_element_factory_make ("ximagesink", "video-sink");
       }  
