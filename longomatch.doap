@@ -1,0 +1,18 @@
+<Project xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:gnome="http://api.gnome.org/doap-extensions#"
+         xmlns="http://usefulinc.com/ns/doap#">
+
+  <name xml:lang="en">LongoMatch</name>
+  <shortdesc xml:lang="en">Sports video analysis sofware to tag, review and edit important segments or plays of a game </shortdesc>
+  <homepage rdf:resource="http://www.longomatch.ylatuya.es" />
+
+  <maintainer>
+    <foaf:Person>
+      <foaf:name>Andoni Morales</foaf:name>
+      <foaf:mbox rdf:resource="mailto:ylatuya@gmail.com" />
+      <gnome:userid>amorales</gnome:userid>
+    </foaf:Person>
+  </maintainer>
+</Project>
