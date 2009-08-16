@@ -43,6 +43,9 @@ Dependencies
  * GNonlin >= 0.10.10
  * db4o
 
+We strongly recommend to use the latest GStreamer core version, as well as have installed all the gstreamer 
+module to get the best user experience.
+
 
 *****
 Links
