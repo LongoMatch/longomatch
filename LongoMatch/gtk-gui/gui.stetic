@@ -11,7 +11,7 @@
   <icon-factory>
     <icon-set id="longomatch">
       <source>
-        <property name="Image">file:../../share/images/longomatch/longomatch.png</property>
+        <property name="Image">file:../../share/longomatch/images/longomatch.png</property>
       </source>
     </icon-set>
   </icon-factory>

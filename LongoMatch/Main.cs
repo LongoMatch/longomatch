@@ -120,7 +120,7 @@ namespace LongoMatch
 		}
 		
 		public static string ImagesDir(){			
-			return RelativeToPrefix("share/images/longomatch");		
+			return RelativeToPrefix("share/longomatch/images");		
 		}
 		
 		public static string DBDir(){
