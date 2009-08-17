@@ -83,9 +83,9 @@
             <property name="MemberName" />
             <property name="Spacing">6</property>
             <child>
-              <widget class="Gtk.EventBox" id="videobox">
+              <widget class="Gtk.HBox" id="videobox">
                 <property name="MemberName" />
-                <signal name="ButtonPressEvent" handler="OnVideoboxButtonPressEvent" />
+                <property name="Spacing">6</property>
                 <child>
                   <placeholder />
                 </child>

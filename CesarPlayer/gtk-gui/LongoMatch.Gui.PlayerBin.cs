@@ -17,7 +17,7 @@ namespace LongoMatch.Gui {
         
         private Gtk.VBox vbox2;
         
-        private Gtk.EventBox videobox;
+        private Gtk.HBox videobox;
         
         private Gtk.HBox controlsbox;
         
@@ -59,8 +59,9 @@ namespace LongoMatch.Gui {
             this.vbox2.Name = "vbox2";
             this.vbox2.Spacing = 6;
             // Container child vbox2.Gtk.Box+BoxChild
-            this.videobox = new Gtk.EventBox();
+            this.videobox = new Gtk.HBox();
             this.videobox.Name = "videobox";
+            this.videobox.Spacing = 6;
             this.vbox2.Add(this.videobox);
             Gtk.Box.BoxChild w1 = ((Gtk.Box.BoxChild)(this.vbox2[this.videobox]));
             w1.Position = 0;
@@ -302,7 +303,6 @@ namespace LongoMatch.Gui {
             this.nextbutton.Hide();
             this.controlsbox.Hide();
             this.Show();
-            this.videobox.ButtonPressEvent += new Gtk.ButtonPressEventHandler(this.OnVideoboxButtonPressEvent);
             this.closebutton.Clicked += new System.EventHandler(this.OnClosebuttonClicked);
             this.playbutton.Clicked += new System.EventHandler(this.OnPlaybuttonClicked);
             this.pausebutton.Clicked += new System.EventHandler(this.OnPausebuttonClicked);

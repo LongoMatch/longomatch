@@ -290,8 +290,10 @@ namespace LongoMatch.Gui
 			player.ReadyToSeek += new EventHandler(OnReadyToSeek);
 			
 			playerWidget = (Widget)player;
+			playerWidget.ButtonPressEvent += new ButtonPressEventHandler(OnVideoboxButtonPressEvent);
 			playerWidget.Show();
 			videobox.Add(playerWidget);			
+				
 		}
 		
 #endregion
