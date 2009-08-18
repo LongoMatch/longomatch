@@ -93,7 +93,7 @@ namespace LongoMatch.Video
 				return new GstVideoSplitter();
 				
 			case PlatformID.Win32NT:
-				return new GnonlinEditor();	
+				return new GstVideoSplitter();	
 				
 			 default:
 				return new GnonlinEditor();
