@@ -116,6 +116,7 @@
     <Compile Include="Utils\IFramesCapturer.cs" />
     <Compile Include="Utils\IMetadataReader.cs" />
     <Compile Include="Utils\MediaFile.cs" />
+    <Compile Include="Utils\PreviewMediaFile.cs" />
     <Compile Include="Utils\TimeString.cs" />
     <None Include="gtk-gui\gui.stetic" />
     <None Include="gtk-gui\objects.xml" />
