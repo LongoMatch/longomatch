@@ -15,15 +15,17 @@ namespace LongoMatch.Gui.Dialog {
         
         private Gtk.VBox vbox2;
         
+        private Gtk.HBox hbox1;
+        
+        private Gtk.Image image29;
+        
         private Gtk.Label label1;
         
-        private Gtk.HBox hbox1;
+        private Gtk.HBox hbox2;
         
         private Gtk.Label label2;
         
         private Gtk.FileChooserButton filechooserbutton1;
-        
-        private Gtk.Button buttonCancel;
         
         private Gtk.Button buttonOk;
         
@@ -44,57 +46,61 @@ namespace LongoMatch.Gui.Dialog {
             this.vbox2.Name = "vbox2";
             this.vbox2.Spacing = 6;
             // Container child vbox2.Gtk.Box+BoxChild
-            this.label1 = new Gtk.Label();
-            this.label1.Name = "label1";
-            this.label1.Xalign = 0F;
-            this.label1.LabelProp = Mono.Unix.Catalog.GetString("This is the first time you run LongoMatch.\nPlease select the workspace folder.");
-            this.vbox2.Add(this.label1);
-            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.vbox2[this.label1]));
-            w2.Position = 0;
-            // Container child vbox2.Gtk.Box+BoxChild
             this.hbox1 = new Gtk.HBox();
             this.hbox1.Name = "hbox1";
             this.hbox1.Spacing = 6;
             // Container child hbox1.Gtk.Box+BoxChild
+            this.image29 = new Gtk.Image();
+            this.image29.Name = "image29";
+            this.image29.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-dialog-info", Gtk.IconSize.Dialog, 48);
+            this.hbox1.Add(this.image29);
+            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.hbox1[this.image29]));
+            w2.Position = 0;
+            // Container child hbox1.Gtk.Box+BoxChild
+            this.label1 = new Gtk.Label();
+            this.label1.Name = "label1";
+            this.label1.LabelProp = Mono.Unix.Catalog.GetString("This is the first time you run LongoMatch.\nChoose your workspace folder.\nIf you are not sure about what you are doing, click ok");
+            this.label1.Justify = ((Gtk.Justification)(2));
+            this.hbox1.Add(this.label1);
+            Gtk.Box.BoxChild w3 = ((Gtk.Box.BoxChild)(this.hbox1[this.label1]));
+            w3.Position = 1;
+            this.vbox2.Add(this.hbox1);
+            Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox1]));
+            w4.Position = 0;
+            w4.Expand = false;
+            w4.Fill = false;
+            // Container child vbox2.Gtk.Box+BoxChild
+            this.hbox2 = new Gtk.HBox();
+            this.hbox2.Name = "hbox2";
+            this.hbox2.Spacing = 6;
+            // Container child hbox2.Gtk.Box+BoxChild
             this.label2 = new Gtk.Label();
             this.label2.Name = "label2";
             this.label2.LabelProp = Mono.Unix.Catalog.GetString("Workspace Folder:");
-            this.hbox1.Add(this.label2);
-            Gtk.Box.BoxChild w3 = ((Gtk.Box.BoxChild)(this.hbox1[this.label2]));
-            w3.Position = 0;
-            w3.Expand = false;
-            w3.Fill = false;
-            // Container child hbox1.Gtk.Box+BoxChild
+            this.hbox2.Add(this.label2);
+            Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(this.hbox2[this.label2]));
+            w5.Position = 0;
+            w5.Expand = false;
+            w5.Fill = false;
+            // Container child hbox2.Gtk.Box+BoxChild
             this.filechooserbutton1 = new Gtk.FileChooserButton(Mono.Unix.Catalog.GetString("Select a folder"), ((Gtk.FileChooserAction)(2)));
             this.filechooserbutton1.Name = "filechooserbutton1";
-            this.hbox1.Add(this.filechooserbutton1);
-            Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(this.hbox1[this.filechooserbutton1]));
-            w4.Position = 1;
-            this.vbox2.Add(this.hbox1);
-            Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox1]));
-            w5.Position = 1;
-            w5.Fill = false;
+            this.hbox2.Add(this.filechooserbutton1);
+            Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(this.hbox2[this.filechooserbutton1]));
+            w6.Position = 1;
+            this.vbox2.Add(this.hbox2);
+            Gtk.Box.BoxChild w7 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox2]));
+            w7.Position = 1;
+            w7.Fill = false;
             w1.Add(this.vbox2);
-            Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(w1[this.vbox2]));
-            w6.Position = 0;
+            Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(w1[this.vbox2]));
+            w8.Position = 0;
             // Internal child LongoMatch.Gui.Dialog.WorkspaceChooser.ActionArea
-            Gtk.HButtonBox w7 = this.ActionArea;
-            w7.Name = "dialog1_ActionArea";
-            w7.Spacing = 6;
-            w7.BorderWidth = ((uint)(5));
-            w7.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
-            // Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
-            this.buttonCancel = new Gtk.Button();
-            this.buttonCancel.CanDefault = true;
-            this.buttonCancel.CanFocus = true;
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.UseStock = true;
-            this.buttonCancel.UseUnderline = true;
-            this.buttonCancel.Label = "gtk-cancel";
-            this.AddActionWidget(this.buttonCancel, -6);
-            Gtk.ButtonBox.ButtonBoxChild w8 = ((Gtk.ButtonBox.ButtonBoxChild)(w7[this.buttonCancel]));
-            w8.Expand = false;
-            w8.Fill = false;
+            Gtk.HButtonBox w9 = this.ActionArea;
+            w9.Name = "dialog1_ActionArea";
+            w9.Spacing = 6;
+            w9.BorderWidth = ((uint)(5));
+            w9.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
             // Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
             this.buttonOk = new Gtk.Button();
             this.buttonOk.CanDefault = true;
@@ -104,15 +110,14 @@ namespace LongoMatch.Gui.Dialog {
             this.buttonOk.UseUnderline = true;
             this.buttonOk.Label = "gtk-ok";
             this.AddActionWidget(this.buttonOk, -5);
-            Gtk.ButtonBox.ButtonBoxChild w9 = ((Gtk.ButtonBox.ButtonBoxChild)(w7[this.buttonOk]));
-            w9.Position = 1;
-            w9.Expand = false;
-            w9.Fill = false;
+            Gtk.ButtonBox.ButtonBoxChild w10 = ((Gtk.ButtonBox.ButtonBoxChild)(w9[this.buttonOk]));
+            w10.Expand = false;
+            w10.Fill = false;
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 311;
-            this.DefaultHeight = 143;
+            this.DefaultWidth = 362;
+            this.DefaultHeight = 131;
             this.Show();
         }
     }
