@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2009-08-15 00:35:57+0200\n"
+"POT-Creation-Date: 2009-08-18 02:58:54+0200\n"
 "PO-Revision-Date: 2009-08-08 01:30:56+0200\n"
 "Last-Translator: Andoni Morales Alastruey <ylatuya@gmail.com>\n"
 "Language-Team: \n"
@@ -20,15 +20,15 @@ msgstr ""
 msgid "Do you want to import them?"
 msgstr ""
 
-#: ../LongoMatch/Main.cs:248
+#: ../LongoMatch/Main.cs:252
 msgid "The application has finished with an unexpected error."
 msgstr "Le programme a fini avec une error inespérée"
 
-#: ../LongoMatch/Main.cs:249
+#: ../LongoMatch/Main.cs:253
 msgid "A log has been saved at: "
 msgstr ""
 
-#: ../LongoMatch/Main.cs:250
+#: ../LongoMatch/Main.cs:254
 msgid "Please, fill a bug report "
 msgstr ""
 
@@ -135,15 +135,15 @@ msgstr ""
 msgid "Open the project, please."
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:316 ../LongoMatch/Gui/PlayListWidget.cs:209
+#: ../LongoMatch/Gui/MainWindow.cs:317 ../LongoMatch/Gui/PlayListWidget.cs:209
 msgid "Open playlist"
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:339
+#: ../LongoMatch/Gui/MainWindow.cs:340
 msgid "The actual project will be closed due to an error in the media player:"
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:442
+#: ../LongoMatch/Gui/MainWindow.cs:443
 msgid "Select Export File"
 msgstr ""
 
@@ -153,7 +153,7 @@ msgid "Edit Title"
 msgstr ""
 
 #: ../LongoMatch/Gui/PlayListTreeView.cs:58
-#: ../LongoMatch/Gui/TimeNodesTreeView.cs:136
+#: ../LongoMatch/Gui/TimeNodesTreeView.cs:143
 #: ../LongoMatch/Gui/PlayersTreeView.cs:90
 msgid "Delete"
 msgstr ""
@@ -234,46 +234,46 @@ msgstr ""
 msgid "Do you really want to delete the template: "
 msgstr "Voulez-vous suprimer:"
 
-#: ../LongoMatch/Gui/TimeNodesTreeView.cs:116
+#: ../LongoMatch/Gui/TimeNodesTreeView.cs:123
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:239
 msgid "Local Team"
 msgstr ""
 
-#: ../LongoMatch/Gui/TimeNodesTreeView.cs:117
+#: ../LongoMatch/Gui/TimeNodesTreeView.cs:124
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:252
 msgid "Visitor Team"
 msgstr ""
 
-#: ../LongoMatch/Gui/TimeNodesTreeView.cs:118
+#: ../LongoMatch/Gui/TimeNodesTreeView.cs:125
 msgid "No Team"
 msgstr ""
 
-#: ../LongoMatch/Gui/TimeNodesTreeView.cs:124
+#: ../LongoMatch/Gui/TimeNodesTreeView.cs:131
 msgid "Local team"
 msgstr ""
 
-#: ../LongoMatch/Gui/TimeNodesTreeView.cs:125
+#: ../LongoMatch/Gui/TimeNodesTreeView.cs:132
 msgid "Visitor team"
 msgstr ""
 
-#: ../LongoMatch/Gui/TimeNodesTreeView.cs:131
+#: ../LongoMatch/Gui/TimeNodesTreeView.cs:138
 #: ../LongoMatch/Gui/PlayersTreeView.cs:89
 msgid "Edit"
 msgstr ""
 
-#: ../LongoMatch/Gui/TimeNodesTreeView.cs:132
+#: ../LongoMatch/Gui/TimeNodesTreeView.cs:139
 msgid "Team Selection"
 msgstr ""
 
-#: ../LongoMatch/Gui/TimeNodesTreeView.cs:134
+#: ../LongoMatch/Gui/TimeNodesTreeView.cs:141
 msgid "Tag player"
 msgstr ""
 
-#: ../LongoMatch/Gui/TimeNodesTreeView.cs:137
+#: ../LongoMatch/Gui/TimeNodesTreeView.cs:144
 msgid "Add to playlist"
 msgstr ""
 
-#: ../LongoMatch/Gui/TimeNodesTreeView.cs:138
+#: ../LongoMatch/Gui/TimeNodesTreeView.cs:146
 #: ../LongoMatch/Gui/PlayersTreeView.cs:91
 msgid "Export to PGN images"
 msgstr ""
@@ -356,11 +356,11 @@ msgstr ""
 msgid "Projects Search:"
 msgstr ""
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.DBManager.cs:43
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.DBManager.cs:45
 msgid "DataBase Manager"
 msgstr ""
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.DBManager.cs:94
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.DBManager.cs:101
 msgid "<b>Propiedades</b>"
 msgstr ""
 
@@ -381,7 +381,7 @@ msgid "Lag time:"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TimeNodeProperties.cs:163
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:51
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:54
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:93
 msgid "Name:"
 msgstr ""
@@ -398,7 +398,7 @@ msgstr ""
 msgid "HotKey:"
 msgstr ""
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TimeNodeProperties.cs:258
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TimeNodeProperties.cs:256
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:172
 msgid "<b>frame1</b>"
 msgstr ""
@@ -707,7 +707,7 @@ msgstr ""
 msgid "Select template name"
 msgstr ""
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:78
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:81
 msgid "Players:"
 msgstr ""
 
@@ -727,17 +727,18 @@ msgstr ""
 msgid "Photo:"
 msgstr ""
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.WorkspaceChooser.cs:49
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.WorkspaceChooser.cs:61
 msgid ""
 "This is the first time you run LongoMatch.\n"
-"Please select the workspace folder."
+"Choose your workspace folder.\n"
+"If you are not sure about what you are doing, click ok"
 msgstr ""
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.WorkspaceChooser.cs:60
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.WorkspaceChooser.cs:78
 msgid "Workspace Folder:"
 msgstr ""
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.WorkspaceChooser.cs:67
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.WorkspaceChooser.cs:85
 msgid "Select a folder"
 msgstr ""
 
@@ -757,7 +758,7 @@ msgstr ""
 msgid "<b>Templates Migration</b>"
 msgstr ""
 
-#: ../CesarPlayer/gtk-gui/LongoMatch.Gui.PlayerBin.cs:207
+#: ../CesarPlayer/gtk-gui/LongoMatch.Gui.PlayerBin.cs:208
 msgid "Time:"
 msgstr ""
 
