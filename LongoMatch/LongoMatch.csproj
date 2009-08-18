@@ -4,14 +4,13 @@
     <ProjectGuid>{64BBF35C-C210-4869-B93B-924234A32C0D}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>LongoMatch</RootNamespace>
     <AssemblyName>LongoMatch</AssemblyName>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <NoStdLib>False</NoStdLib>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <ApplicationIcon>minilogo.ico</ApplicationIcon>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <TargetFrameworkVersion>Mono v2.0</TargetFrameworkVersion>
@@ -93,6 +92,7 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EntryDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.Migrator.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.NewProjectDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.OpenProjectDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs" />
@@ -113,7 +113,8 @@
     <Compile Include="Gui\FramesCaptureProgressDialog.cs" />
     <Compile Include="Gui\HotKeySelectorDialog.cs" />
     <Compile Include="Gui\MainWindow.cs" />
-    <Compile Include="Gui\MessagePoupcs.cs" />
+    <Compile Include="Gui\MessagePopup.cs" />
+    <Compile Include="Gui\Migrator.cs" />
     <Compile Include="Gui\NewProjectDialog.cs" />
     <Compile Include="Gui\NotesWidget.cs" />
     <Compile Include="Gui\OpenProjectDialog.cs" />
