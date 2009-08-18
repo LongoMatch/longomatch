@@ -146,8 +146,8 @@ gst_video_editor_init (GstVideoEditor *object)
 		
 	priv->output_file = "new_video.avi";
 	
-	priv->audio_bitrate = 128;
-	priv->video_bitrate = 5000000;
+	priv->audio_bitrate = 128000;
+	priv->video_bitrate = 5000;
 	priv->height = 540;
 	priv->width = 720;	
 	priv->title_enabled = TRUE;
@@ -224,12 +224,12 @@ gst_video_editor_class_init (GstVideoEditorClass *klass)
                                                          
   	g_object_class_install_property (object_class, PROP_VIDEO_BITRATE,
                                    g_param_spec_int ("video_bitrate", NULL,
-                                                         NULL, 100, G_MAXINT,1000,
+                                                         NULL, 100, G_MAXINT,10000,
                                                          G_PARAM_READWRITE));
                                                          
   	g_object_class_install_property (object_class, PROP_AUDIO_BITRATE,
                                    g_param_spec_int ("audio_bitrate", NULL,
-                                                         NULL, 12, G_MAXINT,128,
+                                                         NULL, 12000, G_MAXINT,128000,
                                                          G_PARAM_READWRITE));
     g_object_class_install_property (object_class, PROP_HEIGHT,
                                    g_param_spec_int ("height", NULL,
@@ -324,7 +324,7 @@ gst_video_editor_set_video_bit_rate (GstVideoEditor *gve,gint bitrate)
 	gst_element_get_state (gve->priv->video_encoder, &cur_state, NULL, 0);
     if (cur_state <= GST_STATE_READY) {
 	    g_object_set (gve->priv->video_encoder,"bitrate",bitrate,NULL);
-    	GST_INFO ("Encoding video bitrate changed to :%d\n",bitrate);
+    	GST_INFO("Encoding video bitrate changed to :%d (kbps)\n",bitrate);
    	}
 }
 
@@ -337,7 +337,7 @@ gst_video_editor_set_audio_bit_rate (GstVideoEditor *gve,gint bitrate)
 	gst_element_get_state (gve->priv->audioencoder, &cur_state, NULL, 0);
     if (cur_state <= GST_STATE_READY) {
 	    g_object_set (gve->priv->audioencoder,"bitrate",bitrate,NULL);
-    	GST_INFO ("Encoding audio bitrate changed to :%d\n",bitrate);
+    	GST_INFO("Encoding audio bitrate changed to :%d (bps)\n",bitrate);
    	}   
 }
 
