@@ -55,6 +55,22 @@
   <Import Project="$(SharpDevelopBinPath)\SharpDevelop.Build.CSharp.targets" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Compat\0.0\DatabaseMigrator.cs" />
+    <Compile Include="Compat\0.0\DB\DataBase.cs" />
+    <Compile Include="Compat\0.0\DB\MediaFile.cs" />
+    <Compile Include="Compat\0.0\DB\Project.cs" />
+    <Compile Include="Compat\0.0\DB\Sections.cs" />
+    <Compile Include="Compat\0.0\IO\SectionsReader.cs" />
+    <Compile Include="Compat\0.0\PlayListMigrator.cs" />
+    <Compile Include="Compat\0.0\PlayList\IPlayList.cs" />
+    <Compile Include="Compat\0.0\PlayList\PlayList.cs" />
+    <Compile Include="Compat\0.0\TemplatesMigrator.cs" />
+    <Compile Include="Compat\0.0\Time\MediaTimeNode.cs" />
+    <Compile Include="Compat\0.0\Time\PixbufTimeNode.cs" />
+    <Compile Include="Compat\0.0\Time\PlayListTimeNode.cs" />
+    <Compile Include="Compat\0.0\Time\SectionsTimeNode.cs" />
+    <Compile Include="Compat\0.0\Time\Time.cs" />
+    <Compile Include="Compat\0.0\Time\TimeNode.cs" />
     <Compile Include="DB\DataBase.cs" />
     <Compile Include="DB\Project.cs" />
     <Compile Include="DB\Sections.cs" />
@@ -176,5 +192,13 @@
     <Reference Include="Mono.Posix" />
     <Reference Include="System" />
     <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Compat" />
+    <Folder Include="Compat\0.0" />
+    <Folder Include="Compat\0.0\DB" />
+    <Folder Include="Compat\0.0\IO" />
+    <Folder Include="Compat\0.0\Time" />
+    <Folder Include="Compat\0.0\PlayList" />
   </ItemGroup>
 </Project>
