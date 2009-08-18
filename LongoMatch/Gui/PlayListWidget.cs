@@ -265,13 +265,20 @@ namespace LongoMatch.Gui.Component
 				LoadEditor();
 				//videoEditor.ClearList();
 				foreach (PlayListTimeNode segment in playList){
-					if (segment.Valid)
-						videoEditor.AddSegment(segment.MediaFile.FilePath, 
+					if (segment.Valid){
+						Uri file;
+						if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+							file = new Uri("file:///"+segment.MediaFile.FilePath);
+						else
+							file = new Uri("file://"+segment.MediaFile.FilePath);
+						videoEditor.AddSegment(file, 
 						                       segment.Start.MSeconds, 
 						                       segment.Duration.MSeconds, 
 						                       segment.Rate, 
 						                       segment.Name,
 						                       segment.MediaFile.HasAudio);
+				
+					}
 				}
 				try {
 					videoEditor.VideoQuality = vep.VideoQuality;

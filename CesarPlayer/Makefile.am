@@ -84,23 +84,17 @@ FILES = \
 	Editor/VideoQuality.cs \
 	Editor/PercentCompletedHandler.cs \
 	Editor/GstVideoSplitter.cs \
-	Editor/GnonlinEditor.cs \
 	Editor/VideoSegment.cs \
 	Editor/EditorState.cs \
 	Editor/VideoFormat.cs \
 	Editor/VideoMuxer.cs \
 	Editor/VideoCodec.cs \
-	Editor/IMerger.cs \
-	Editor/MatroskaMerger.cs \
 	Editor/AudioCodec.cs \
 	Editor/IVideoSplitter.cs \
 	Editor/VideoSplitterType.cs \
-	Editor/ConcatMerger.cs \
-	Editor/GenericMerger.cs \
-	Editor/AviMerger.cs \
 	Utils/MediaFile.cs \
 	Utils/PreviewMediaFile.cs\
-	Editor/AvidemuxMerger.cs 
+
 
 DATA_FILES = 
 
@@ -108,8 +102,8 @@ RESOURCES = \
 	gtk-gui/objects.xml \
 	gtk-gui/gui.stetic 
 
-EXTRAS = \
-	cesarplayer.key 
+EXTRAS = 
+	
 
 REFERENCES =  \
 	System \
