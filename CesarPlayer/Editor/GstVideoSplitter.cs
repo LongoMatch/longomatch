@@ -285,9 +285,8 @@ namespace LongoMatch.Video.Editor {
 		[DllImport("libcesarplayer.dll")]
 		static extern void gst_video_editor_add_segment(IntPtr raw, string file_path, long start, long duration, double rate, IntPtr title, bool hasAudio);
 
-		public void AddSegment(Uri filePath, long start, long duration, double rate, string title, bool hasAudio) {
-			Console.WriteLine(filePath.AbsoluteUri);
-			gst_video_editor_add_segment(Handle, filePath.AbsoluteUri, start, duration, rate, GLib.Marshaller.StringToPtrGStrdup(title), hasAudio);
+		public void AddSegment(string filePath, long start, long duration, double rate, string title, bool hasAudio) {
+			gst_video_editor_add_segment(Handle, filePath, start, duration, rate, GLib.Marshaller.StringToPtrGStrdup(title), hasAudio);
 		}
 		
 		
@@ -351,7 +350,7 @@ namespace LongoMatch.Video.Editor {
 		}
 		
 		
-		public void SetSegment (Uri filePath, long start, long duration, double rate, string title, bool hasAudio){
+		public void SetSegment (string filePath, long start, long duration, double rate, string title, bool hasAudio){
 			ClearList();
 			AddSegment(filePath, start, duration, rate, title,hasAudio);
 		}
