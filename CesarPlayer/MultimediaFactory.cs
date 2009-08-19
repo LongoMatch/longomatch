@@ -96,7 +96,7 @@ namespace LongoMatch.Video
 				return new GstVideoSplitter();	
 				
 			 default:
-				return new GnonlinEditor();
+				return new GstVideoSplitter();
 			}
 		}
 		
@@ -115,7 +115,7 @@ namespace LongoMatch.Video
 			}			
 		}
 		
-		public IMerger GetVideoMerger(VideoMuxer muxer){
+		/*public IMerger GetVideoMerger(VideoMuxer muxer){
 			if (muxer == VideoMuxer.AVI)
 				return new AvidemuxMerger();
 			else if (muxer == VideoMuxer.DVD)
@@ -126,6 +126,6 @@ namespace LongoMatch.Video
 				return new AvidemuxMerger(); 
 			else 
 				return new AvidemuxMerger();
-		}		
+		}		*/
 	}
 }
