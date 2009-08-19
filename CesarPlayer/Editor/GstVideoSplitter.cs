@@ -286,6 +286,8 @@ namespace LongoMatch.Video.Editor {
 		static extern void gst_video_editor_add_segment(IntPtr raw, string file_path, long start, long duration, double rate, IntPtr title, bool hasAudio);
 
 		public void AddSegment(string filePath, long start, long duration, double rate, string title, bool hasAudio) {
+			if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+				filePath="file:///"+filePath;
 			gst_video_editor_add_segment(Handle, filePath, start, duration, rate, GLib.Marshaller.StringToPtrGStrdup(title), hasAudio);
 		}
 		
