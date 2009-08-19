@@ -117,6 +117,26 @@ namespace LongoMatch.Gui.Component
 			GdkWindow.ProcessUpdates(true);
 		}
 		
+		private void DrawRoundedRectangle (Cairo.Context gr, double x, double y, double width, double height, double radius)
+    	{
+			gr.Save ();
+	
+			if ((radius > height / 2) || (radius > width / 2))
+	    		radius = Math.Min (height / 2, width / 2);
+	
+			gr.MoveTo (x, y + radius);
+			gr.Arc (x + radius, y + radius, radius, Math.PI, -Math.PI / 2);
+			gr.LineTo (x + width - radius, y);
+			gr.Arc (x + width - radius, y + radius, radius, -Math.PI / 2, 0);
+			gr.LineTo (x + width, y + height - radius);
+			gr.Arc (x + width - radius, y + height - radius, radius, 0, Math.PI / 2);
+			gr.LineTo (x + radius, y + height);
+			gr.Arc (x + radius, y + height - radius, radius, Math.PI / 2, Math.PI);
+			gr.ClosePath ();
+			gr.Restore ();
+    }
+
+		
 		private Cairo.Color RGBToCairoColor(Gdk.Color gdkColor){				
 			return   new Cairo.Color((double)(gdkColor.Red)/ushort.MaxValue,
 			                         (double)(gdkColor.Green)/ushort.MaxValue,
@@ -154,7 +174,7 @@ namespace LongoMatch.Gui.Component
 				
 					foreach (MediaTimeNode tn in list){	
 						if (tn != selected) {
-							g.Rectangle( new Cairo.Rectangle(tn.StartFrame/pixelRatio,3,tn.TotalFrames/pixelRatio,height-6));					
+							DrawRoundedRectangle(g,tn.StartFrame/pixelRatio,3,tn.TotalFrames/pixelRatio,height-6,SECTION_HEIGHT/7);
 							g.LineWidth = 2;
 							g.Color = new Cairo.Color (color.R+0.1, color.G+0.1,color.B+0.1, 1);				
 							g.LineJoin = LineJoin.Round;
@@ -168,7 +188,7 @@ namespace LongoMatch.Gui.Component
 					}
 					//Then we draw the selected TimeNode over the others
 					if (hasSelectedTimeNode){					
-						g.Rectangle( new Cairo.Rectangle(selected.StartFrame/pixelRatio,3,selected.TotalFrames/pixelRatio,height-6));					
+						DrawRoundedRectangle(g,selected.StartFrame/pixelRatio,3,selected.TotalFrames/pixelRatio,height-6,SECTION_HEIGHT/7);					
 						g.Color = new Cairo.Color (0, 0, 0, 1);		
 						g.LineWidth = 3;
 						g.LineJoin = LineJoin.Round;
