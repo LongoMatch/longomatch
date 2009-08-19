@@ -39,7 +39,11 @@ namespace LongoMatch.Gui.Dialog
 #region Constructors
 		public VideoEditionProperties()
 		{
-			this.Build();			
+			this.Build();		
+			if (System.Environment.OSVersion.Platform == PlatformID.Win32NT){
+				formatcombobox.RemoveText(1);
+				formatcombobox.RemoveText(2);			
+			}
 		}
 #endregion
 		
