@@ -55,9 +55,9 @@ namespace LongoMatch.Gui
 		{			
 			this.Build();
 			
-			Updater updater = new Updater();
+			/*Updater updater = new Updater();
 			updater.NewVersion += new LongoMatch.Handlers.NewVersionHandler(OnUpdate);
-			updater.Run();
+			updater.Run();*/
 			
 			eManager = new EventsManager(treewidget1,
 			                             localplayerslisttreewidget,
