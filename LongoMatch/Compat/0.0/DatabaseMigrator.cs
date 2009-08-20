@@ -195,7 +195,7 @@ namespace LongoMatch.Compat
 				catch{}
 			}
 			
-			File.Copy(oldDBFile, oldDBFile+".bak");
+			File.Copy(oldDBFile, oldDBFile+".bak",true);
 			File.Delete(oldDBFile);
 			File.Delete(backupDBFile);
 			
