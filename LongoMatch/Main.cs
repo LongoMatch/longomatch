@@ -65,16 +65,13 @@ namespace LongoMatch
 				
 			LongoMatch.Video.Player.GstPlayer.InitBackend("");
 			
-			if (homeDirectory == null)
-				PromptForHomeDir();
-			
+				
 			//Comprobamos los archivos de inicio
 			CheckDirs();
 			CheckFiles();			
 			
 			//Iniciamos la base de datos
-			db = new DataBase(Path.Combine(DBDir(),"longomatch.db"));
-			
+			db = new DataBase(Path.Combine(DBDir(),"longomatch.db"));			
 		
 			
 			//Check for previous database
@@ -197,15 +194,19 @@ namespace LongoMatch
 			baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../");
 
 			try{
-				StreamReader reader = new StreamReader(System.IO.Path.Combine(baseDirectory, "etc/"+WIN32_CONFIG_FILE));
+				StreamReader reader = new StreamReader(System.IO.Path.Combine(homeDirectory,WIN32_CONFIG_FILE));
 				homeDirectory = reader.ReadLine();
 				configDirectory = homeDirectory;
 				if (!System.IO.Directory.Exists(homeDirectory))
 					System.IO.Directory.CreateDirectory(homeDirectory);
 				reader.Close();
 			}
+			//No config file exists, use default
 			catch {
-				homeDirectory = null;
+				//Vista permissions doesn't not allow to use the 'etc' dir
+				//in the installation path. Use the default homeDirectory
+				//and let the user change it by hand
+				configDirectory=homeDirectory;
 			}		
 		}
 		
