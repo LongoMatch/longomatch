@@ -85,9 +85,9 @@ namespace LongoMatch.Compat
 					}
 				}
 				newFileName = Path.Combine(MainClass.TemplatesDir(),Path.GetFileName(templateFile));
-				SectionsWriter.UpdateTemplate(newFileName,newTemplate);
 				File.Copy(templateFile ,templateFile+".old",true);
-				File.Delete(templateFile);		
+				File.Delete(templateFile);	
+				SectionsWriter.UpdateTemplate(newFileName,newTemplate);
 				SendEvent(String.Format("Template {0} converted successfully!",Path.GetFileName(templateFile)));
 			}
 			SendEvent(DONE);
