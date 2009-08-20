@@ -71,7 +71,7 @@ namespace LongoMatch.Video.Utils
 			}
 		}
 		
-		public static PreviewMediaFile GetMediaFile(string filePath){
+		public new static PreviewMediaFile GetMediaFile(string filePath){
 			int duration;			
 			bool hasVideo;
 			bool hasAudio;
