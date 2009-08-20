@@ -1,5 +1,5 @@
 
-EXTRA_DIST =  expansions.m4 Build/debian/*
+EXTRA_DIST =  expansions.m4 Build/debian
 
 #Warning: This is an automatically generated file, do not edit!
 if ENABLE_DEBUG
