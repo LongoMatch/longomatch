@@ -143,6 +143,14 @@ namespace LongoMatch.TimeNodes
 			visitorPlayersList.Add(index);			
 		}
 		
+		public void RemoveLocalPlayer(int index){
+			localPlayersList.Remove(index);
+		}
+	
+		public void RemoveVisitorPlayer(int index){
+			visitorPlayersList.Remove(index);			
+		}
+		
 		#endregion
 	}
 		

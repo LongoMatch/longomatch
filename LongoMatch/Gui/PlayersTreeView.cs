@@ -43,10 +43,13 @@ namespace LongoMatch.Gui.Component
 		private Gtk.TreeViewColumn nameColumn;
 		//Using TimeNode as in the tree there are Media and Sections timenodes
 		private TimeNode selectedTimeNode;
+		
+		private Team team;
 
 		
 		public PlayersTreeView(){
 			
+			team = Team.LOCAL;
 			this.RowActivated += new RowActivatedHandler(OnTreeviewRowActivated);
 						
 			SetMenu();				
@@ -80,7 +83,12 @@ namespace LongoMatch.Gui.Component
 			this.AppendColumn (startTimeColumn);
 			this.AppendColumn (stopTimeColumn);
 		
-		}	
+		}
+		
+		public Team Team{
+			set {team = value;}
+			get {return team ;}
+		}
 	
 		
 		private void SetMenu(){
@@ -99,12 +107,7 @@ namespace LongoMatch.Gui.Component
 			snapshot.Activated += new EventHandler(OnSnapshot);
 			menu.ShowAll();		
 		}
-		
-		/*private int GetSectionFromIter (TreeIter iter){
-			TreePath path = this.Model.GetPath(iter);
-			return int.Parse(path.ToString().Split(':')[0]);			
-		}*/
-		
+
 		protected override bool OnButtonPressEvent (EventButton evnt)
 		{
 			object selectedItem;
@@ -126,19 +129,23 @@ namespace LongoMatch.Gui.Component
 					}
 				}
 			}
-			return returnValue;
-								
+			return returnValue;								
 		}
 		
-		protected void OnDeleted(object obj, EventArgs args){
-				//TimeNodeDeleted((MediaTimeNode)selectedTimeNode,int.Parse(path.ToString().Split(':')[0]));
+		protected void OnDeleted(object obj, EventArgs args){	
+			(Model as TreeStore).Remove(ref selectedIter);
+			
+			if (Team == Team.LOCAL)
+				((MediaTimeNode) selectedTimeNode).RemoveLocalPlayer(int.Parse(path.ToString().Split(':')[0]));
+			if (Team == Team.VISITOR)
+				((MediaTimeNode) selectedTimeNode).RemoveVisitorPlayer(int.Parse(path.ToString().Split(':')[0]));
 		}	
 		
 		protected void OnSnapshot(object obj, EventArgs args){
 			if (SnapshotSeriesEvent != null)
-				SnapshotSeriesEvent((MediaTimeNode)selectedTimeNode);
-			
+				SnapshotSeriesEvent((MediaTimeNode)selectedTimeNode);			
 		}
+		
 		private void RenderMiniature (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			object item = model.GetValue (iter, 0);			
@@ -147,8 +154,7 @@ namespace LongoMatch.Gui.Component
  				(cell as Gtk.CellRendererPixbuf).Pixbuf = (item as MediaTimeNode).Miniature;
 			
 			if (item is Player)
-				(cell as Gtk.CellRendererPixbuf).Pixbuf= (item as Player).Photo;
-			
+				(cell as Gtk.CellRendererPixbuf).Pixbuf= (item as Player).Photo;			
 		}
 
 		

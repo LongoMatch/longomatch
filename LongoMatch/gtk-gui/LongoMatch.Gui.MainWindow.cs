@@ -214,7 +214,7 @@ namespace LongoMatch.Gui {
             this.notebook1 = new Gtk.Notebook();
             this.notebook1.CanFocus = true;
             this.notebook1.Name = "notebook1";
-            this.notebook1.CurrentPage = 0;
+            this.notebook1.CurrentPage = 2;
             this.notebook1.TabPos = ((Gtk.PositionType)(3));
             // Container child notebook1.Gtk.Notebook+NotebookChild
             this.treewidget1 = new LongoMatch.Gui.Component.TreeWidget();

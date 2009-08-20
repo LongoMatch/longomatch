@@ -168,8 +168,8 @@
     <signals>
       <itemgroup label="PlayersListTreeWidget Signals">
         <signal name="TimeNodeSelected" />
-        <signal name="SnapshotSeriesEvent" />
         <signal name="TimeNodeChanged" />
+        <signal name="SnapshotSeriesEvent" />
       </itemgroup>
     </signals>
   </object>

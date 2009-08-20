@@ -79,8 +79,9 @@ namespace LongoMatch.Gui
 			playerbin1.LogoMode = true;
 			
 			playlistwidget2.SetPlayer(playerbin1);
-
-
+			
+			localplayerslisttreewidget.Team = Team.LOCAL;
+			visitorplayerslisttreewidget.Team = Team.VISITOR;
 		}
 		
 #endregion

@@ -43,7 +43,10 @@ namespace LongoMatch.Gui.Component
 			this.Build();
 		}
 		
-				
+		public Team Team{
+			set {playerstreeview.Team = value;}
+		}
+		
 		public void DeleteTimeNode(MediaTimeNode tNode, int player){
 			if (template != null){
 				TreeIter iter;
