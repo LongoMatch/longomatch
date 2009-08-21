@@ -39,12 +39,12 @@ Dependencies
  
  * Mono >= 2.0
  * GTK# >= 2.12
- * GStreamer >= 0.10.23
- * GNonlin >= 0.10.10
+ * GStreamer >= 0.10.24
+ * GNonlin >= 0.10.11
  * db4o
 
 We strongly recommend to use the latest GStreamer core version, as well as have installed all the gstreamer 
-module to get the best user experience.
+modules to get the best user experience.
 
 
 *****
@@ -54,11 +54,11 @@ Links
 Official web page:
 	http://www.longomatch.ylatuya.es
 
-Development forge:
-	https://forja.rediris.es/projects/csl-longomatch/LongoMatch
+Git repository:
+	http://git.gnome.org/cgit/longomatch/
 
-Blog:
-	http://longomatch.wordpress.com/
+Bugzilla:
+	http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch
 
 
 
