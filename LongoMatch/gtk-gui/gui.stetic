@@ -461,7 +461,7 @@
             <child>
               <widget class="Gtk.Label" id="label9">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">Tags Template:</property>
+                <property name="LabelProp" translatable="yes">Sections Template:</property>
               </widget>
               <packing>
                 <property name="TopAttach">6</property>
