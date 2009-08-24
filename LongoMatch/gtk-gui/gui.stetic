@@ -776,7 +776,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="LongoMatch.Gui.Popup.CalendarPopup" design-size="281 260">
+  <widget class="Gtk.Window" id="LongoMatch.Gui.Popup.CalendarPopup" design-size="281 154">
     <property name="MemberName" />
     <property name="Title" translatable="yes" />
     <property name="WindowPosition">Mouse</property>
@@ -787,6 +787,7 @@
     <property name="Gravity">Center</property>
     <property name="SkipPagerHint">True</property>
     <property name="SkipTaskbarHint">True</property>
+    <signal name="FocusOutEvent" handler="OnFocusOutEvent" />
     <child>
       <widget class="Gtk.Calendar" id="calendar1">
         <property name="MemberName" />
@@ -4177,6 +4178,62 @@ If you are not sure about what you are doing, click ok</property>
           </widget>
           <packing>
             <property name="Position">1</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.Win32CalendarDialog" design-size="217 204">
+    <property name="MemberName" />
+    <property name="Title" translatable="yes">Calendar</property>
+    <property name="Icon">stock:longomatch Menu</property>
+    <property name="WindowPosition">CenterOnParent</property>
+    <property name="Gravity">Center</property>
+    <property name="SkipPagerHint">True</property>
+    <property name="SkipTaskbarHint">True</property>
+    <property name="Buttons">1</property>
+    <property name="HelpButton">False</property>
+    <property name="HasSeparator">False</property>
+    <child internal-child="VBox">
+      <widget class="Gtk.VBox" id="dialog1_VBox">
+        <property name="MemberName" />
+        <property name="BorderWidth">2</property>
+        <child>
+          <widget class="Gtk.Calendar" id="calendar1">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="DisplayOptions">35</property>
+            <signal name="DaySelectedDoubleClick" handler="OnCalendar1DaySelectedDoubleClick" />
+            <signal name="DaySelected" handler="OnCalendar1DaySelected" />
+          </widget>
+          <packing>
+            <property name="Position">0</property>
+            <property name="AutoSize">False</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+    <child internal-child="ActionArea">
+      <widget class="Gtk.HButtonBox" id="dialog1_ActionArea">
+        <property name="MemberName" />
+        <property name="Spacing">6</property>
+        <property name="BorderWidth">5</property>
+        <property name="Size">1</property>
+        <property name="LayoutStyle">End</property>
+        <child>
+          <widget class="Gtk.Button" id="buttonOk">
+            <property name="MemberName" />
+            <property name="CanDefault">True</property>
+            <property name="CanFocus">True</property>
+            <property name="UseStock">True</property>
+            <property name="Type">StockItem</property>
+            <property name="StockId">gtk-ok</property>
+            <property name="ResponseId">-5</property>
+            <property name="label">gtk-ok</property>
+          </widget>
+          <packing>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
           </packing>
