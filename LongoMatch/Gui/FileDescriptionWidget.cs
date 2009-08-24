@@ -126,7 +126,19 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		public DateTime Date{
-			get {return DateTime.Parse(dateEntry.Text);}
+			get {
+				//HACK See bug http://bugzilla.gnome.org/show_bug.cgi?id=592934
+				//dateEntry is not editable and we set the date manually
+				//Why do we get this error?
+				DateTime date;
+				try{
+					date = DateTime.Parse(dateEntry.Text);
+				}
+				catch{
+					date = DateTime.Now;
+				}
+				
+				return DateTime.Parse(dateEntry.Text);}
 			set {dateEntry.Text = value.ToString(Catalog.GetString("MM/dd/yyyy"));}
 		}
 		
