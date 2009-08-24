@@ -47,11 +47,7 @@ namespace LongoMatch.Gui.Popup
 		protected virtual void OnFocusOutEvent (object o, Gtk.FocusOutEventArgs args)
 		{
 			this.Hide();
-		}
-		
-		
-
-	
+		}	
 
 		protected virtual void OnCalendar1DaySelectedDoubleClick (object sender, System.EventArgs e)
 		{

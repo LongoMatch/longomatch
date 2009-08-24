@@ -112,6 +112,7 @@ FILES = \
 	Gui/VideoEditionProperties.cs \
 	Gui/UpdateDialog.cs \
 	Gui/HotKeySelectorDialog.cs \
+	Gui/Win32CalendarDialog.cs\
 	Gui/WorkspaceChooser.cs \
 	DB/Project.cs \
 	DB/Sections.cs \
@@ -156,6 +157,7 @@ FILES = \
 	gtk-gui/LongoMatch.Gui.Dialog.WorkspaceChooser.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.Win32CalendarDialog.cs \
 	Playlist/IPlayList.cs \
 	Playlist/PlayList.cs \
 	Updates/Updater.cs \

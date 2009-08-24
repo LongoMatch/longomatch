@@ -46,6 +46,7 @@ namespace LongoMatch.Gui.Component
 		private Project project;
 		private LongoMatch.Video.Utils.PreviewMediaFile mFile;
 		private CalendarPopup cp;
+		private Win32CalendarDialog win32CP;
 		private Sections actualSection;
 		private TeamTemplate actualVisitorTeam;
 		private TeamTemplate actualLocalTeam;
@@ -56,19 +57,17 @@ namespace LongoMatch.Gui.Component
 				
 			this.Build();
 			
-			cp = new CalendarPopup();			
-			cp.Hide();			
-			cp.DateSelectedEvent += new DateSelectedHandler(OnDateSelected);	
+			//HACK:The calendar dialog does not respond on win32
+			if (Environment.OSVersion.Platform != PlatformID.Win32NT){				
+				cp = new CalendarPopup();			
+				cp.Hide();			
+				cp.DateSelectedEvent += new DateSelectedHandler(OnDateSelected);
+			}
 			
 			FillSections();
 			FillTeamsTemplate();
 			
-			this.Use=UseType.NewFromFileProject;			
-						
-			if (Environment.OSVersion.Platform == PlatformID.Win32NT){
-				this.calendarbutton.Sensitive = false;
-				this.calendarbutton.Visible = false;	
-			}		
+			this.Use=UseType.NewFromFileProject;					
 		}
 		
 		public UseType Use{
@@ -335,8 +334,17 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnCalendarbuttonClicked (object sender, System.EventArgs e)
 		{
-			cp.TransientFor=(Gtk.Window)this.Toplevel;		
-			cp.Show();		
+			if (Environment.OSVersion.Platform == PlatformID.Win32NT){
+				win32CP = new Win32CalendarDialog();
+				win32CP.TransientFor = (Gtk.Window)this.Toplevel;
+				win32CP.Run();
+				Date = win32CP.getSelectedDate();
+				win32CP.Destroy();
+			}
+			else {
+				cp.TransientFor=(Gtk.Window)this.Toplevel;		
+				cp.Show();	
+			}
 		}
 
 		protected virtual void OnEditbuttonClicked (object sender, System.EventArgs e)
