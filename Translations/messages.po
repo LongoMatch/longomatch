@@ -2,33 +2,33 @@ msgid ""
 msgstr ""
 "X-Generator: MonoDevelop Gettext addin\n"
 "Language-Team: \n"
-"PO-Revision-Date: 2009-08-19 16:15:07+0200\n"
-"POT-Creation-Date: 2009-08-19 16:15:06+0200\n"
+"PO-Revision-Date: 2009-08-24 22:19:39+0200\n"
+"POT-Creation-Date: 2009-08-24 22:19:38+0200\n"
 "Project-Id-Version: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Last-Translator: Andoni Morales Alastruey <ylatuya@gmail.com>\n"
 "Content-Type: text/plain; charset=utf-8\n"
 
-#: ../LongoMatch/Main.cs:170
+#: ../LongoMatch/Main.cs:167
 msgid ""
 "Some elements from the previous version (database, templates and/or "
 "playlists) have been found."
 msgstr ""
 
-#: ../LongoMatch/Main.cs:171
+#: ../LongoMatch/Main.cs:168
 msgid "Do you want to import them?"
 msgstr ""
 
-#: ../LongoMatch/Main.cs:252
+#: ../LongoMatch/Main.cs:253
 msgid "The application has finished with an unexpected error."
 msgstr ""
 
-#: ../LongoMatch/Main.cs:253
+#: ../LongoMatch/Main.cs:254
 msgid "A log has been saved at: "
 msgstr ""
 
-#: ../LongoMatch/Main.cs:254
+#: ../LongoMatch/Main.cs:255
 msgid "Please, fill a bug report "
 msgstr ""
 
@@ -93,59 +93,59 @@ msgid "<b>Date:</b>  "
 msgstr ""
 
 #: ../LongoMatch/Gui/ProjectListWidget.cs:87
-#: ../LongoMatch/Gui/FileDescriptionWidget.cs:129
+#: ../LongoMatch/Gui/FileDescriptionWidget.cs:140
 msgid "MM/dd/yyyy"
 msgstr ""
 
-#: ../LongoMatch/Gui/FileDescriptionWidget.cs:276
+#: ../LongoMatch/Gui/FileDescriptionWidget.cs:287
 msgid "Save File as..."
 msgstr ""
 
-#: ../LongoMatch/Gui/FileDescriptionWidget.cs:286
+#: ../LongoMatch/Gui/FileDescriptionWidget.cs:298
 msgid "Open file..."
 msgstr ""
 
-#: ../LongoMatch/Gui/FileDescriptionWidget.cs:303
+#: ../LongoMatch/Gui/FileDescriptionWidget.cs:315
 msgid "Analyzing video file:"
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:96
+#: ../LongoMatch/Gui/MainWindow.cs:97
 msgid "The file associated to this project doesn't exist."
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:96
+#: ../LongoMatch/Gui/MainWindow.cs:97
 msgid ""
 "If the location of the file has changed try to edit it with the database "
 "manager."
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:123
+#: ../LongoMatch/Gui/MainWindow.cs:124
 msgid "An error ocurred opening this project:"
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:237
+#: ../LongoMatch/Gui/MainWindow.cs:238
 #: ../LongoMatch/Gui/PlayListWidget.cs:258
 msgid "Please, select a video file."
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:250
+#: ../LongoMatch/Gui/MainWindow.cs:251
 msgid "This file is already used in a Project."
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:250
+#: ../LongoMatch/Gui/MainWindow.cs:251
 msgid "Open the project, please."
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:317
+#: ../LongoMatch/Gui/MainWindow.cs:318
 #: ../LongoMatch/Gui/PlayListWidget.cs:209
 msgid "Open playlist"
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:340
+#: ../LongoMatch/Gui/MainWindow.cs:341
 msgid "The actual project will be closed due to an error in the media player:"
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:443
+#: ../LongoMatch/Gui/MainWindow.cs:444
 msgid "Select Export File"
 msgstr ""
 
@@ -156,7 +156,7 @@ msgstr ""
 
 #: ../LongoMatch/Gui/PlayListTreeView.cs:58
 #: ../LongoMatch/Gui/TimeNodesTreeView.cs:143
-#: ../LongoMatch/Gui/PlayersTreeView.cs:90
+#: ../LongoMatch/Gui/PlayersTreeView.cs:98
 msgid "Delete"
 msgstr ""
 
@@ -258,7 +258,7 @@ msgid "Visitor team"
 msgstr ""
 
 #: ../LongoMatch/Gui/TimeNodesTreeView.cs:138
-#: ../LongoMatch/Gui/PlayersTreeView.cs:89
+#: ../LongoMatch/Gui/PlayersTreeView.cs:97
 msgid "Edit"
 msgstr ""
 
@@ -275,7 +275,7 @@ msgid "Add to playlist"
 msgstr ""
 
 #: ../LongoMatch/Gui/TimeNodesTreeView.cs:146
-#: ../LongoMatch/Gui/PlayersTreeView.cs:91
+#: ../LongoMatch/Gui/PlayersTreeView.cs:99
 msgid "Export to PGN images"
 msgstr ""
 
@@ -293,11 +293,11 @@ msgstr ""
 msgid "Try to edit it whit the Database Manager"
 msgstr ""
 
-#: ../LongoMatch/Gui/TimeScale.cs:129
+#: ../LongoMatch/Gui/TimeScale.cs:149
 msgid "Delete Play"
 msgstr ""
 
-#: ../LongoMatch/Gui/TimeScale.cs:130
+#: ../LongoMatch/Gui/TimeScale.cs:150
 msgid "Add New Play"
 msgstr ""
 
@@ -334,7 +334,7 @@ msgid "Local Team:"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.FileDescriptionWidget.cs:369
-msgid "Tags Template:"
+msgid "Sections Template:"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.FileDescriptionWidget.cs:404
@@ -358,7 +358,8 @@ msgid "Projects Search:"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.DBManager.cs:45
-msgid "DataBase Manager"
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:125
+msgid "Projects Manager"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.DBManager.cs:101
@@ -424,22 +425,22 @@ msgid "Video Quality:"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:90
-#: ../LongoMatch/Gui/VideoEditionProperties.cs:97
+#: ../LongoMatch/Gui/VideoEditionProperties.cs:101
 msgid "Low"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:91
-#: ../LongoMatch/Gui/VideoEditionProperties.cs:100
+#: ../LongoMatch/Gui/VideoEditionProperties.cs:104
 msgid "Normal"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:92
-#: ../LongoMatch/Gui/VideoEditionProperties.cs:103
+#: ../LongoMatch/Gui/VideoEditionProperties.cs:107
 msgid "Good"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:93
-#: ../LongoMatch/Gui/VideoEditionProperties.cs:106
+#: ../LongoMatch/Gui/VideoEditionProperties.cs:110
 msgid "Extra"
 msgstr ""
 
@@ -484,14 +485,14 @@ msgid "Enable Title Overlay"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:180
-msgid "Enable Audio"
+msgid "Enable Audio (Experimental)"
 msgstr ""
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:199
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:198
 msgid "File name: "
 msgstr ""
 
-#: ../LongoMatch/Gui/VideoEditionProperties.cs:148
+#: ../LongoMatch/Gui/VideoEditionProperties.cs:152
 msgid "Save Video As ..."
 msgstr ""
 
@@ -560,10 +561,6 @@ msgstr ""
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:122
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:123
 msgid "_Tools"
-msgstr ""
-
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:125
-msgid "Projects Manager"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:126
@@ -757,6 +754,10 @@ msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.Migrator.cs:144
 msgid "<b>Templates Migration</b>"
+msgstr ""
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.Win32CalendarDialog.cs:23
+msgid "Calendar"
 msgstr ""
 
 #: ../CesarPlayer/gtk-gui/LongoMatch.Gui.PlayerBin.cs:208
