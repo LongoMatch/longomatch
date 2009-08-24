@@ -178,8 +178,7 @@ namespace LongoMatch.Gui.Dialog {
             this.audiocheckbutton = new Gtk.CheckButton();
             this.audiocheckbutton.CanFocus = true;
             this.audiocheckbutton.Name = "audiocheckbutton";
-            this.audiocheckbutton.Label = Mono.Unix.Catalog.GetString("Enable Audio");
-            this.audiocheckbutton.Active = true;
+            this.audiocheckbutton.Label = Mono.Unix.Catalog.GetString("Enable Audio (Experimental)");
             this.audiocheckbutton.DrawIndicator = true;
             this.audiocheckbutton.UseUnderline = true;
             this.hbox6.Add(this.audiocheckbutton);
