@@ -43,7 +43,7 @@ namespace LongoMatch.Gui.Dialog {
             Stetic.Gui.Initialize(this);
             // Widget LongoMatch.Gui.Dialog.DBManager
             this.Name = "LongoMatch.Gui.Dialog.DBManager";
-            this.Title = Mono.Unix.Catalog.GetString("DataBase Manager");
+            this.Title = Mono.Unix.Catalog.GetString("Projects Manager");
             this.Icon = Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Dialog, 48);
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.Modal = true;

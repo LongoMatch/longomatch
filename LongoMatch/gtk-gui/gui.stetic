@@ -870,7 +870,7 @@
   </widget>
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.DBManager" design-size="804 550">
     <property name="MemberName" />
-    <property name="Title" translatable="yes">DataBase Manager</property>
+    <property name="Title" translatable="yes">Projects Manager</property>
     <property name="Icon">stock:longomatch Dialog</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
