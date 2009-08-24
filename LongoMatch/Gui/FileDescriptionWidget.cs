@@ -282,8 +282,9 @@ namespace LongoMatch.Gui.Component
 				fChooser.SetCurrentFolder(MainClass.VideosDir());
 				if (fChooser.Run() == (int)ResponseType.Accept)
 					fileEntry.Text = fChooser.Filename;
-				fChooser.Destroy();									
-			}else {
+				fChooser.Destroy();
+				
+			}else	{
 				fChooser = new FileChooserDialog(Catalog.GetString("Open file..."),
 				                                 (Gtk.Window)this.Toplevel,
 				                                 FileChooserAction.Open,
@@ -314,7 +315,8 @@ namespace LongoMatch.Gui.Component
 					finally{
 						md.Destroy();
 					}					
-				}			
+				}
+				fChooser.Destroy();
 			}		
 		}
 
