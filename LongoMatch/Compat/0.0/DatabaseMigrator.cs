@@ -49,6 +49,8 @@ namespace LongoMatch.Compat
 		
 		private string newDBFile;
 		
+		private PreviewMediaFile file;
+		
 		private Thread thread;		
 		
 		public DatabaseMigrator(string oldDBFile)
@@ -99,12 +101,13 @@ namespace LongoMatch.Compat
 		
 			//SendEvent("Creating backup of the old database");
 			foreach (v00.DB.Project oldProject in backupProjects){
-				PreviewMediaFile file;
+				
 				string localName, visitorName;
 				int localGoals, visitorGoals;
 				DateTime date;
 				Sections sections;
 				Project newProject;
+				Thread openFileThread;
 				
 				localName = oldProject.LocalName;
 				visitorName = oldProject.VisitorName;
@@ -113,12 +116,25 @@ namespace LongoMatch.Compat
 				date = oldProject.MatchDate;
 				SendEvent(String.Format("Trying to convert project {0}...",oldProject.Title));
 				try{
-					file = PreviewMediaFile.GetMediaFile(oldProject.File.FilePath);
-					//SendEvent(String.Format("[{0}]Getting properties of file {1}",oldProject.Title,oldProject.File.FilePath));
+					SendEvent(String.Format("[{0}]Getting properties of file {1}",oldProject.Title,oldProject.File.FilePath));
+					file = null;
+					//If file doesn't exits the metadata reader send and async message but doesn't not 
+					//throw any Exception. We have to check if file exist and if not throw an
+					//Excecptio to jump to 'catch'
+					if (!File.Exists(oldProject.File.FilePath))
+						throw new Exception();
+					//Now we try to read the file until it's opened
+					while(file==null){
+						openFileThread = new Thread (new ParameterizedThreadStart(OpenFile));
+						openFileThread.Start(oldProject.File.FilePath);
+						openFileThread.Join(5000);
+						if (openFileThread.IsAlive)
+							openFileThread.Abort();
+					}					
 				}
 				catch{
-					//SendEvent(String.Format("[{0}]Failed to open file {1} \n",oldProject.Title,oldProject.File.FilePath));
-					//SendEvent(String.Format("[{0}]Cannot scan the file properties\n, using default values",oldProject.Title));
+					SendEvent(String.Format("[{0}]Failed to open file {1} \n",oldProject.Title,oldProject.File.FilePath));
+					SendEvent(String.Format("[{0}]Cannot scan the file properties\n, using default values",oldProject.Title));
 					file = new PreviewMediaFile();
 					file.FilePath = oldProject.File.FilePath;
 					file.Fps = oldProject.File.Fps;
@@ -201,6 +217,7 @@ namespace LongoMatch.Compat
 			
 			SendEvent(DONE);
 		}	
+		
 		private void ChangeDBNamespace(string DBFile){
 			using (IObjectContainer db = Db4oFactory.OpenFile(DBFile))
 			{
@@ -224,7 +241,11 @@ namespace LongoMatch.Compat
 			}
 		}
 		
-		public void SendEvent (string message){
+		private void OpenFile(object filePath){
+			file =  PreviewMediaFile.GetMediaFile(filePath as string);
+		}
+		
+		private void SendEvent (string message){
 			if (ConversionProgressEvent != null)					
 						Application.Invoke(delegate {ConversionProgressEvent(message);});
 		}

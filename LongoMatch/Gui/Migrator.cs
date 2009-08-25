@@ -122,9 +122,12 @@ namespace LongoMatch.Gui.Dialog
 		
 		protected virtual void OnButtonCancelClicked (object sender, System.EventArgs e)
 		{
-			dbMigrator.Cancel();
-			plMigrator.Cancel();
-			tpMigrator.Cancel();			
+			if (dbMigrator != null)
+				dbMigrator.Cancel();
+			if (plMigrator != null)
+				plMigrator.Cancel();
+			if (tpMigrator != null)
+				tpMigrator.Cancel();			
 		}	
 	}
 }

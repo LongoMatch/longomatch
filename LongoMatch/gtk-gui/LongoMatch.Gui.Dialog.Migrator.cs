@@ -159,6 +159,7 @@ namespace LongoMatch.Gui.Dialog {
             w15.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
             // Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
             this.buttonCancel = new Gtk.Button();
+            this.buttonCancel.Sensitive = false;
             this.buttonCancel.CanDefault = true;
             this.buttonCancel.CanFocus = true;
             this.buttonCancel.Name = "buttonCancel";
@@ -187,6 +188,7 @@ namespace LongoMatch.Gui.Dialog {
             }
             this.DefaultWidth = 821;
             this.DefaultHeight = 300;
+            this.buttonCancel.Hide();
             this.buttonOk.Hide();
             this.Show();
             this.buttonCancel.Clicked += new System.EventHandler(this.OnButtonCancelClicked);
