@@ -394,7 +394,8 @@ namespace LongoMatch.Gui.Component
 				VisitorTeamTemplate = tted.GetTeamTemplate();
 			}			
 			tted.Destroy();			
-		}	
+		}
+	
 	
 		
 	}	
