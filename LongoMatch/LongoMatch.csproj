@@ -102,6 +102,7 @@
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.TemplatesManager.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.UpdateDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.VideoEditionProperties.cs" />
+    <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.Win32CalendarDialog.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Dialog.WorkspaceChooser.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.MainWindow.cs" />
     <Compile Include="gtk-gui\LongoMatch.Gui.Popup.CalendarPopup.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="Gui\TreeWidget.cs" />
     <Compile Include="Gui\UpdateDialog.cs" />
     <Compile Include="Gui\VideoEditionProperties.cs" />
+    <Compile Include="Gui\Win32CalendarDialog.cs" />
     <Compile Include="Gui\WorkspaceChooser.cs" />
     <Compile Include="Handlers\EventsManager.cs" />
     <Compile Include="Handlers\Handlers.cs" />
