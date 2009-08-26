@@ -1,4 +1,4 @@
-0.15.0 Pre-Release "Caipiroska de fresa" 
+LongoMatch-0.15.1 "Caipiroska de fresa" 
 -------------------------------------------------
 
 The LongoMatch team is proud to announce the first release in the unstable 0.15
@@ -15,26 +15,39 @@ experience.
  * Support for team templates
  * Plays can be tagged to players
  * HotKeys support	
+ * Database migration tool
  * New video editor implemented using GNonLin (FFmpeg and Mencoder are not required anymore)
  * Video Editor with audio support
- * The video editor lets overlay the title of the play
- * The video editor lets change the rendering playrate
+ * Overlay title of the play in rendered clips
+ * Change the playrate of plays in the rendered clip
  * New output formats (TV, HD, FullHD)
  * New output audio and video codecs supports (Matroska+H264+AAC, AVI+XVID+MP3, OGG+Theora+Vorbis, MPEG2-PS+Mpeg2Video)
+	
 
 * Requirements
  
  * mono >= 2.0
  * mono-posix >= 2.0
  * mono-cairo >= 2.0
- * gstreamer >= 0.10.23
+ * gstreamer >= 0.10.24
  * gnonlin >= 0.10.11
  * gtk-sharp >= 2.12
  * db40 >= 6.0
 
 
 * Download
-
+* Illimted number of tagging categories (previous version allows only 20)
+	* Support for team templates
+	* Plays can be tagged to players
+	* HotKeys support	
+	* Database migration tool
+	* New video editor implemented using GNonLin (FFmpeg and Mencoder are not required anymore)
+	* Video Editor with audio support
+	* Overlay title of the play in rendered clips
+	* Change the playrate of plays in the rendered clip
+	* New output formats (TV, HD, FullHD)
+	* New output audio and video codecs supports (Matroska+H264+AAC, AVI+XVID+MP3, OGG+Theora+Vorbis, MPEG2-PS+Mpeg2Video)
+	
   LongoMatch source tarballs are available on gnome FTP:
    http://ftp.gnome.org/pub/GNOME/sources/longomatch/0.15/
 

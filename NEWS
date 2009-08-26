@@ -1,4 +1,4 @@
-===== LongoMatch 0.15 =====	
+===== LongoMatch 0.15.1 =====	
 
 	== Features ==
 
@@ -6,16 +6,18 @@
 	* Support for team templates
 	* Plays can be tagged to players
 	* HotKeys support	
+	* Database migration tool
 	* New video editor implemented using GNonLin (FFmpeg and Mencoder are not required anymore)
 	* Video Editor with audio support
-	* The video editor lets overlay the title of the play
-	* The video editor lets change the rendering playrate
+	* Overlay title of the play in rendered clips
+	* Change the playrate of plays in the rendered clip
 	* New output formats (TV, HD, FullHD)
 	* New output audio and video codecs supports (Matroska+H264+AAC, AVI+XVID+MP3, OGG+Theora+Vorbis, MPEG2-PS+Mpeg2Video)
-
+	
 	== Improvements ==
 
 	* Display the name of the play in the timeline
+	* Draw rounded rectangles in thetimeline
 	* Enable projects search
 	* Added image preview to projects
 	* Added "Competion" and "Season" properties to the Project's description	
@@ -24,7 +26,6 @@
 	* Previsualization of captured frames
 	* Crash reports
 	* Many bug fixes!!!
-
 ===== LongoMatch 0.14.1 ====
 
 	* [#323] Crash whith no internet conexion
