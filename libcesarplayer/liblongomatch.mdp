@@ -19,8 +19,6 @@
     <File name="src/bacon-video-widget-gst-0.10.c" subtype="Code" buildaction="Compile" />
     <File name="src/baconvideowidget-marshal.c" subtype="Code" buildaction="Compile" />
     <File name="src/baconvideowidget-marshal.h" subtype="Code" buildaction="Nothing" />
-    <File name="src/gstvideowidget.c" subtype="Code" buildaction="Compile" />
-    <File name="src/gstvideowidget.h" subtype="Code" buildaction="Nothing" />
     <File name="src/macros.h" subtype="Code" buildaction="Nothing" />
     <File name="src/gstscreenshot.c" subtype="Code" buildaction="Compile" />
     <File name="src/gstscreenshot.h" subtype="Code" buildaction="Nothing" />
