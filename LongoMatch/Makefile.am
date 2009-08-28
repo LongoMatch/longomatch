@@ -4,7 +4,7 @@ EXTRA_DIST =
 # Warning: This is an automatically generated file, do not edit!
 
 if ENABLE_DEBUG
-ASSEMBLY_COMPILER_COMMAND = $(GMCS)
+ASSEMBLY_COMPILER_COMMAND = $(CSC)
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ -debug -define:DEBUG "-main:LongoMatch.MainClass"
 ASSEMBLY = bin/Debug/LongoMatch.exe
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
@@ -25,7 +25,7 @@ BACKGROUND_PNG_SOURCE=images/background.png
 endif
 
 if ENABLE_RELEASE
-ASSEMBLY_COMPILER_COMMAND = $(GMCS)
+ASSEMBLY_COMPILER_COMMAND = $(CSC)
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-main:LongoMatch.MainClass"
 ASSEMBLY = bin/Release/LongoMatch.exe
 ASSEMBLY_MDB = $(ASSEMBLY).mdb

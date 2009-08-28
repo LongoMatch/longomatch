@@ -4,7 +4,7 @@ EXTRA_DIST =
 # Warning: This is an automatically generated file, do not edit!
 
 if ENABLE_DEBUG
-ASSEMBLY_COMPILER_COMMAND = $(GMCS)
+ASSEMBLY_COMPILER_COMMAND = $(CSC)
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -unsafe -warn:4 -optimize+ -debug -define:DEBUG
 ASSEMBLY = bin/Debug/CesarPlayer.dll
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
@@ -17,7 +17,7 @@ CESARPLAYER_DLL_MDB=$(BUILD_DIR)/CesarPlayer.dll.mdb
 endif
 
 if ENABLE_RELEASE
-ASSEMBLY_COMPILER_COMMAND = $(GMCS)
+ASSEMBLY_COMPILER_COMMAND = $(CSC)
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -unsafe -warn:4 -optimize+ 
 ASSEMBLY = bin/Release/CesarPlayer.dll
 ASSEMBLY_MDB = $(ASSEMBLY).mdb

@@ -28,17 +28,9 @@ SHAMROCK_EXPAND_DATADIR
 AC_PROG_INSTALL
 
 
-AC_PATH_PROG(MCS, gmcs, no)
-if test "x$MCS" = "xno"; then
-       	AC_PATH_PROG(MCS2, gmcs2,no)
-	if test "x$MCS2" = "xno"; then
-		AC_MSG_ERROR([gmcs Not found])
-	else 
-		AC_SUBST(GMCS,[gmcs2])	
-	fi
-	
-else 
-	AC_SUBST(GMCS,[gmcs])
+AC_PATH_PROG(CSC, csc, no)
+if test "x$CSC" = "xno"; then
+	AC_MSG_ERROR([c-sharp compiler not found])
 fi
 
 
