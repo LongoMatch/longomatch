@@ -269,7 +269,7 @@ namespace LongoMatch.Gui.Component
 			TimeNode tNode = (TimeNode)this.Model.GetValue (iter, 0);
 			
 			if (tNode is MediaTimeNode && TimeNodeSelected != null)
-				this.TimeNodeSelected((MediaTimeNode)tNode);	
+				this.TimeNodeSelected((MediaTimeNode)tNode);				
 		}
 		
 		protected override bool OnButtonPressEvent (EventButton evnt)
@@ -288,6 +288,10 @@ namespace LongoMatch.Gui.Component
 					selectedTimeNode = (TimeNode)this.Model.GetValue (selectedIter, 0);
 					if (selectedTimeNode is MediaTimeNode )
 					    menu.Popup();
+					else{
+						nameCell.Editable = true;
+						this.SetCursor(path,  nameColumn, true);
+					}
 				}
 			}
 			return returnValue;								
