@@ -127,6 +127,10 @@ namespace LongoMatch.Gui.Component
 						selectedTimeNode = selectedItem as MediaTimeNode;
 					    menu.Popup();
 					}
+					else{
+						nameCell.Editable = true;
+						this.SetCursor(path,  nameColumn, true);
+					}
 				}
 			}
 			return returnValue;								
@@ -199,11 +203,18 @@ namespace LongoMatch.Gui.Component
 		{
 			Gtk.TreeIter iter;
 			this.Model.GetIter (out iter, new Gtk.TreePath (args.Path)); 
-			TimeNode tNode = (TimeNode)this.Model.GetValue (iter,0);
-			tNode.Name = args.NewText;
-			nameCell.Editable=false;
-			if (TimeNodeChanged != null)
-				TimeNodeChanged(tNode,args.NewText);
+			if (Model.GetValue (iter,0) is TimeNode){
+				TimeNode tNode = (TimeNode)this.Model.GetValue (iter,0);
+				tNode.Name = args.NewText;
+				nameCell.Editable=false;
+				if (TimeNodeChanged != null)
+					TimeNodeChanged(tNode,args.NewText);
+			}
+			else{
+				Player player = (Player)this.Model.GetValue (iter,0);
+				player.Name = args.NewText;
+				nameCell.Editable=false;				
+			}
 		}
 			
 		
