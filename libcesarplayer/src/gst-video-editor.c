@@ -1215,7 +1215,15 @@ gst_video_editor_new (GError ** err)
 	/* We use an audiotestsrc mutted and with a low priority */
 	gnlsource = gst_element_factory_make ("gnlsource", "gnlaudiofakesrc");
 	audiotestsrc = gst_element_factory_make ("audiotestsrc", "audiotestsrc");
-	g_object_set (G_OBJECT(gnlsource), "expandable",TRUE,NULL); 
+	/*Check for 'expandable' property, gnonlin >= 0.11.2*/
+	if (g_object_class_find_property (G_OBJECT_GET_CLASS(gnlsource), "expandable")){
+		g_print("encontrada");
+		g_object_set (G_OBJECT(gnlsource), "expandable",TRUE,NULL); 
+	}
+	else {
+		g_object_set (G_OBJECT(gnlsource), "start",(gint64)0,NULL);
+		g_object_set (G_OBJECT(gnlsource), "duration",(gint64)G_MAXINT32,NULL);
+	}
 	g_object_set (G_OBJECT(gnlsource), "priority",999,NULL); 
 	g_object_set (G_OBJECT(audiotestsrc), "volume",(double)0,NULL); 
 	gst_bin_add(GST_BIN(gnlsource), audiotestsrc);

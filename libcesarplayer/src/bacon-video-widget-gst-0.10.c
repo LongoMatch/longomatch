@@ -1289,7 +1289,8 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
     bvw->priv->missing_plugins =
       g_list_prepend (bvw->priv->missing_plugins, gst_message_ref (msg));
     goto done;
-  } else {
+  } else {	
+  #if 0
     GstNavigationMessageType nav_msg_type =
         gst_navigation_message_get_type (msg);
 
@@ -1315,6 +1316,7 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
       default:
         break;
     }
+  #endif
   }
 
 unhandled:
@@ -3447,6 +3449,7 @@ bacon_video_widget_redraw_last_frame (BaconVideoWidget *bvw)
     }	
 }
 
+#if 0
 static void
 bvw_do_navigation_command (BaconVideoWidget * bvw, GstNavigationCommand command)
 {
@@ -3554,6 +3557,7 @@ bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
       break;
   }
 }
+#endif
 
 /**
  * bacon_video_widget_set_logo:
