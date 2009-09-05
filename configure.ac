@@ -37,14 +37,14 @@ if test "x$CSC" = "xno"; then
 		if test "x$MCS2" = "xno"; then
 			AC_MSG_ERROR([You need to install a C-sharp compiler])
 		else 
-			AC_SUBST(GMCS,[gmcs2])	
+			AC_SUBST(CSC,[gmcs2])	
 		fi
 	
 	else 
-		AC_SUBST(GMCS,[gmcs])
+		AC_SUBST(CSC,[gmcs])
 	fi
 else 
-	AC_SUBST(GMCS,[csc])
+	AC_SUBST(CSC,[csc])
 fi
 
 dnl Check for gettext utils
