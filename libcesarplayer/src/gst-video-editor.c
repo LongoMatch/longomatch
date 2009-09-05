@@ -1217,7 +1217,6 @@ gst_video_editor_new (GError ** err)
 	audiotestsrc = gst_element_factory_make ("audiotestsrc", "audiotestsrc");
 	/*Check for 'expandable' property, gnonlin >= 0.11.2*/
 	if (g_object_class_find_property (G_OBJECT_GET_CLASS(gnlsource), "expandable")){
-		g_print("encontrada");
 		g_object_set (G_OBJECT(gnlsource), "expandable",TRUE,NULL); 
 	}
 	else {
