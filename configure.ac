@@ -28,9 +28,31 @@ SHAMROCK_EXPAND_DATADIR
 AC_PROG_INSTALL
 
 
+dnl Check for C# compiler
 AC_PATH_PROG(CSC, csc, no)
 if test "x$CSC" = "xno"; then
-	AC_MSG_ERROR([c-sharp compiler not found])
+	AC_PATH_PROG(MCS, gmcs, no)
+	if test "x$MCS" = "xno"; then
+       		AC_PATH_PROG(MCS2, gmcs2,no)
+		if test "x$MCS2" = "xno"; then
+			AC_MSG_ERROR([You need to install a C-sharp compiler])
+		else 
+			AC_SUBST(GMCS,[gmcs2])	
+		fi
+	
+	else 
+		AC_SUBST(GMCS,[gmcs])
+	fi
+else 
+	AC_SUBST(GMCS,[csc])
+fi
+
+dnl Check for gettext utils
+AC_PATH_PROG(MSGFMT, msgfmt, no)
+if test "x$MSGFMT" = "xno"; then
+	AC_MSG_ERROR([gettext not found])
+else 
+	AC_SUBST(MSGFMT,[msgfmt])
 fi
 
 
@@ -64,6 +86,17 @@ PKG_CHECK_MODULES([DB4O_60], [db4o])
 PKG_CHECK_MODULES(CESARPLAYER, [gtk+-2.0 >= 2.8 gdk-2.0 gio-2.0 glib-2.0 gstreamer-0.10 gstreamer-audio-0.10 gstreamer-video-0.10 gstreamer-pbutils-0.10 gobject-2.0 gstreamer-interfaces-0.10])
 AC_SUBST(CESARPLAYER_CFLAGS)
 AC_SUBST(CESARPLAYER_LIBS)
+
+dnl Check for Mono assemblies that we need
+needed_dlls="Mono.Posix Mono.Cairo"
+for i in $needed_dlls; do
+  AC_MSG_CHECKING([for $i.dll])
+  if test ! \( -e `$PKG_CONFIG --variable=prefix mono`/lib/mono/2.0/$i.dll -o -e `$PKG_CONFIG --variable=prefix mono`/lib64/mono/2.0//$i.dll \); then
+    AC_MSG_ERROR([missing required mono 2.0 DLL: $i.dll])
+  else
+    AC_MSG_RESULT([found])
+  fi
+done
 
 # Checks for library functions.
 AC_CHECK_FUNCS([strchr strstr])
