@@ -483,6 +483,8 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnVideoboxButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
 		{
+			if(filename == null)
+				return;
 			if (!player.Playing)
 				Play();
 			else 
