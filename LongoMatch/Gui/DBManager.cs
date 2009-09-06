@@ -34,7 +34,7 @@ namespace LongoMatch.Gui.Dialog
 	{
 
 		public bool edited;
-		public Project loadedProject;
+		public string originalFilePath;
 		
 		public DBManager()
 		{
@@ -51,31 +51,28 @@ namespace LongoMatch.Gui.Dialog
 			filedescriptionwidget3.Sensitive = false;
 			saveButton.Sensitive = false;
 			deleteButton.Sensitive = false;
-			loadedProject=null;	
+			originalFilePath=null;	
 		}
 		
 		private void SaveProject(){
-			String previousFileName;			
-			Project changedProject;
-			
-			changedProject = filedescriptionwidget3.GetProject();
-			previousFileName = loadedProject.File.FilePath;
-			
-			if (changedProject != null){
-				
-				if (changedProject.File.FilePath == previousFileName)
-					MainClass.DB.UpdateProject(changedProject);
-				else{
-					try{
-						MainClass.DB.UpdateProject(changedProject,previousFileName);
-					}
-					catch{
-						MessagePopup.PopupMessage(this, MessageType.Warning, 
-				                          Catalog.GetString("A Project is already using this file."));
-					}
+			Project project = filedescriptionwidget3.GetProject();
+						
+			if (project == null)
+				return;
+							
+			if (project.File.FilePath == originalFilePath)
+				MainClass.DB.UpdateProject(project);
+			else{
+				try{
+					MainClass.DB.UpdateProject(project,originalFilePath);
 				}
-				Fill();
+				catch{
+					MessagePopup.PopupMessage(this, MessageType.Warning, 
+					                          Catalog.GetString("A Project is already using this file."));
+				}
 			}
+			Fill();
+			
 		}
 
 
@@ -134,9 +131,9 @@ namespace LongoMatch.Gui.Dialog
 				deleteButton.Sensitive = false;				
 			}
 			else{
-				loadedProject = project;
 				filedescriptionwidget3.Sensitive = true;
 				filedescriptionwidget3.SetProject(project);
+				originalFilePath = project.File.FilePath;
 				saveButton.Sensitive = true;
 				deleteButton.Sensitive = true;
 			}
