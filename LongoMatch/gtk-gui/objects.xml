@@ -173,4 +173,19 @@
     </itemgroups>
     <signals />
   </object>
+  <object type="LongoMatch.Gui.Popup.TransparentDrawingArea" palette-category="General" allow-children="false" base-type="Gtk.Window">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.DrawingToolBox" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="DrawingToolBox Signals">
+        <signal name="LineWidthChanged" />
+        <signal name="ColorChanged" />
+        <signal name="VisibilityChanged" />
+        <signal name="ClearDrawing" />
+      </itemgroup>
+    </signals>
+  </object>
 </objects>

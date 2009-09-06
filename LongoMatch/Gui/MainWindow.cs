@@ -28,7 +28,7 @@ using Gdk;
 using LongoMatch.DB;
 using LongoMatch.TimeNodes;
 using LongoMatch.Gui.Dialog;
-using LongoMatch.Gui;
+using LongoMatch.Gui.Popup;
 using LongoMatch.Video.Player;
 using LongoMatch.Updates;
 using LongoMatch.IO;
@@ -48,6 +48,7 @@ namespace LongoMatch.Gui
 		private EventsManager eManager;			
 		private HotKeysManager hkManager;		
 		private KeyPressEventHandler hotkeysListener;
+		
 
 #region Constructors
 		public MainWindow() : 
@@ -75,13 +76,17 @@ namespace LongoMatch.Gui
 			// Forward the event to the events manager
 			hkManager.newMarkEvent += new NewMarkEventHandler(eManager.OnNewMark);
 			
+			DrawingManager dManager = new DrawingManager(drawingtoolbox1,playerbin1.VideoWidget);
+			//Forward Key and Button events to the Drawing Manager
+			KeyPressEvent += new KeyPressEventHandler(dManager.OnKeyPressEvent);			
+			
 			playerbin1.SetLogo(System.IO.Path.Combine(MainClass.ImagesDir(),"background.png"));
 			playerbin1.LogoMode = true;
 			
 			playlistwidget2.SetPlayer(playerbin1);
 			
 			localplayerslisttreewidget.Team = Team.LOCAL;
-			visitorplayerslisttreewidget.Team = Team.VISITOR;
+			visitorplayerslisttreewidget.Team = Team.VISITOR;				
 		}
 		
 #endregion
@@ -369,7 +374,7 @@ namespace LongoMatch.Gui
 		}		
 		
 		protected override bool OnKeyPressEvent (EventKey evnt)
-		{
+		{			
 			if (openedProject != null && evnt.State == ModifierType.None){
 				Gdk.Key key = evnt.Key;				
 				if (key == Gdk.Key.z){
@@ -406,6 +411,12 @@ namespace LongoMatch.Gui
 			updater.Run();
 			updater.Destroy();
 			
+		}
+		
+		protected virtual void OnDrawingToolActionToggled (object sender, System.EventArgs e)
+		{
+			drawingtoolbox1.Visible = DrawingToolAction.Active;
+			drawingtoolbox1.DrawingVisibility = DrawingToolAction.Active;
 		}
 		
 		protected virtual void OnAboutActionActivated (object sender, System.EventArgs e)
@@ -486,10 +497,7 @@ GNU General Public License for more details.";
 			try{
 				System.Diagnostics.Process.Start("http://www.longomatch.ylatuya.es/documentation/manual.html");
 			}catch{}
-		}
-		
-#endregion	
-
+		}		
+#endregion
 	}
-	
 }

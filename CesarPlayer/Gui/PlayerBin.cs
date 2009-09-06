@@ -126,6 +126,9 @@ namespace LongoMatch.Gui
 			set{player.LogoMode = value;}
 		}		
 		
+		public Widget VideoWidget{
+			get{return ((Gtk.EventBox)player);}
+		}
 #endregion	
 		
 #region Public methods		

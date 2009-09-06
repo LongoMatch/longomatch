@@ -1359,7 +1359,6 @@ namespace LongoMatch.Video.Player {
 		public void CancelProgramedStop(){
 			this.SegmentSeek(this.CurrentTime,this.StreamLength,1);		
 		}
-
-
+		
 	}
 }

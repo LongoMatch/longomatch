@@ -26,33 +26,52 @@ using LongoMatch.TimeNodes;
 namespace LongoMatch.Handlers
 {
 		
-	//Manejador para el evento producido al seleccionar un nodo en el árbol
+	/*Tagging Events*/
+	//A Play was selected 
 	public delegate void TimeNodeSelectedHandler (MediaTimeNode tNode);
-	//Manejador para el evento producido al pulsar un botón de selección de nuava marca
-	public delegate void NewMarkEventHandler (int i);	
+	//A new play needs to be create for a specific category at the current play time
+	public delegate void NewMarkEventHandler (int i);
+	//Several plays needs to be created for a several categories
 	public delegate void NewMarksEventHandler (List<int> sections);
-	//Manejador para el evento producido al pulsar un botón de selección de nuava marca
+	//A need play needs to be created at precise frame
 	public delegate void NewMarkAtFrameEventHandler (int i,int frame);	
-	//Manejador para el evento producido cuando se edita un nodo
+	//A play was edited
 	public delegate void TimeNodeChangedHandler (TimeNode tNode, object val);
-	//Manejador para el evento producido al eliminar un MediaTimeNode
+	//A play was deleted
 	public delegate void TimeNodeDeletedHandler (MediaTimeNode tNode,int section);
-	//Manejador para el evento producido al inserir un MediaTimeNode en la lista de reproducción
+	//Players needs to be tagged
+	public delegate void PlayersTaggedHandler (MediaTimeNode tNode, Team team);
+	
+	/*Playlist Events*/
+	//Add the a play to the opened playlist
 	public delegate void PlayListNodeAddedHandler(MediaTimeNode tNode);
-	//Manejador para el evento producido al selecionar un nodo en la lista de reproducción
+	//A play list element is selected
 	public delegate void PlayListNodeSelectedHandler (PlayListTimeNode plNode, bool hasNext);
-	//Manejador para el evento producido al ajustar la posición 
-	public delegate void PositionChangedHandler (Time pos);	
-	
-	public delegate void DateSelectedHandler (DateTime selectedDate);
-	
-	public delegate void SnapshotSeriesHandler(MediaTimeNode tNode);
-	
-	public delegate void NewVersionHandler(Version version, string URL);
-	
+	//Save current playrate to a play list element
 	public delegate void ApplyCurrentRateHandler (PlayListTimeNode plNode);
 	
-	public delegate void PlayersTaggedHandler (MediaTimeNode tNode, Team team);
+	//Drawing events
+	//Paint color changed
+	public delegate void ColorChangedHandler (Gdk.Color color);
+	//Paint line width changed
+	public delegate void LineWidthChangedHandler (int width);
+	//Toggle widget visibility
+	public delegate void VisibilityChangedHandler (bool visible);
+	//Clear drawings
+	public delegate void ClearDrawingHandler ();
+	
+	
+	//The position of the stream has changed
+	public delegate void PositionChangedHandler (Time pos);	
+	//A date was selected
+	public delegate void DateSelectedHandler (DateTime selectedDate);
+	//Create snapshots for a play
+	public delegate void SnapshotSeriesHandler(MediaTimeNode tNode);
+	//A new version of the software exists
+	public delegate void NewVersionHandler(Version version, string URL);
+	
+	
+	
 	
 	
 	

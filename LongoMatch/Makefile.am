@@ -80,6 +80,7 @@ FILES = \
 	Gui/ButtonsWidget.cs \
 	Gui/CalendarPopup.cs \
 	Gui/DBManager.cs \
+	Gui/DrawingToolBox.cs\
 	Gui/ProjectListWidget.cs \
 	Gui/FileDescriptionWidget.cs \
 	Gui/FramesCaptureProgressDialog.cs \
@@ -109,6 +110,7 @@ FILES = \
 	Gui/TimeLineWidget.cs \
 	Gui/TimeReferenceWidget.cs \
 	Gui/TimeScale.cs \
+	Gui/TransparentDrawingArea.cs\
 	Gui/VideoEditionProperties.cs \
 	Gui/UpdateDialog.cs \
 	Gui/HotKeySelectorDialog.cs \
@@ -131,7 +133,9 @@ FILES = \
 	gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TreeWidget.cs \
 	gtk-gui/LongoMatch.Gui.Popup.CalendarPopup.cs \
+	gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs\
 	gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs\
 	gtk-gui/LongoMatch.Gui.Dialog.DBManager.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.OpenProjectDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.NewProjectDialog.cs \
@@ -164,6 +168,7 @@ FILES = \
 	Updates/XmlUpdateParser.cs \
 	IO/CSVExport.cs \
 	Time/HotKey.cs \
+	Handlers/DrawingManager.cs\
 	Handlers/EventsManager.cs \
 	Handlers/HotKeysManager.cs \
 	DB/TeamTemplate.cs \
