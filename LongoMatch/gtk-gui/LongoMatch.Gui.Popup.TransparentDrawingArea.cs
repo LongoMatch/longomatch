@@ -20,6 +20,7 @@ namespace LongoMatch.Gui.Popup {
             // Widget LongoMatch.Gui.Popup.TransparentDrawingArea
             this.Name = "LongoMatch.Gui.Popup.TransparentDrawingArea";
             this.Title = Mono.Unix.Catalog.GetString("TransparentDrawingArea");
+            this.TypeHint = ((Gdk.WindowTypeHint)(4));
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.AllowShrink = true;
             this.Gravity = ((Gdk.Gravity)(5));

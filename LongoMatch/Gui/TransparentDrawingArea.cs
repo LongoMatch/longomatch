@@ -49,8 +49,7 @@ namespace LongoMatch.Gui.Popup
 			LineColor=foreground;
 			lineWidth = 6;			
 			modified = false;
-			this.targetWidget = targetWidget;
-			Maximize();			
+			this.targetWidget = targetWidget;					
 		}		
 				
 		public int LineWidth{
@@ -123,24 +122,24 @@ namespace LongoMatch.Gui.Popup
 					
 			//Create a 1 depth pixmap used as a shape
 			//that will contain the info about transparency
-			shape = new Pixmap(null,Allocation.Width,Allocation.Height,1);
+			shape = new Pixmap(null,Gdk.Screen.Default.Width,Gdk.Screen.Default.Height,1);
 			shapeGC = new Gdk.GC(shape);
 			shapeGCV = new GCValues();
 			shapeGC.GetValues(shapeGCV);
 			transparent = shapeGCV.Foreground;
 			opaque = shapeGCV.Background;				
 			shapeGC.Foreground = transparent;
-			shape.DrawRectangle(shapeGC,true,0,0,Allocation.Width,Allocation.Height);	
+			shape.DrawRectangle(shapeGC,true,0,0,Gdk.Screen.Default.Width,Gdk.Screen.Default.Height);	
 			shapeGC.Background=opaque;
 			
 			ShapeCombineMask(shape, 0,0);
 		
 			//Create the pixmap that will contain the real drawing
 			//Used on Expose event to redraw the drawing area
-			pixmap = new Pixmap (drawingarea.GdkWindow,Allocation.Width,Allocation.Height);
+			pixmap = new Pixmap (drawingarea.GdkWindow,Gdk.Screen.Default.Width,Gdk.Screen.Default.Height);
 			paintGC= new Gdk.GC(pixmap);
 			pixmap.Colormap = Gdk.Rgb.Colormap;
-			pixmap.DrawRectangle(drawingarea.Style.BlackGC,true,0,0,Allocation.Width,Allocation.Height);
+			pixmap.DrawRectangle(drawingarea.Style.BlackGC,true,0,0,Gdk.Screen.Default.Width,Gdk.Screen.Default.Height);
 		}
 		
 		private double Clamp(double val, double min, double max){
@@ -239,8 +238,8 @@ namespace LongoMatch.Gui.Popup
 		
 		protected override void  OnShown(){
 			//Prevent a dirty flash when the 
-			//Window is created and inmediatle hidden
-			if (targetWidget != null){
+			//Window is created and hidden
+			if (targetWidget != null){				
 				base.OnShown ();
 				timeoutId = GLib.Timeout.Add(20,Reshape);
 			}
@@ -249,24 +248,8 @@ namespace LongoMatch.Gui.Popup
 		protected virtual void OnDrawingareaConfigureEvent (object o, Gtk.ConfigureEventArgs args)
 		{
 			this.TransientFor = (Gtk.Window)targetWidget.Toplevel;	
-			if (ready){
-				CreatePixmaps();
-				ready=false;
-			}		
-		}
-
-		protected virtual void OnWindowStateEvent (object o, Gtk.WindowStateEventArgs args)
-		{
-			//Create pixmap and shape once, the first time the
-			//the widget is maximized
-			if (args.Event.NewWindowState == WindowState.Maximized 
-			    && pixmap == null)
-				ready=true;
-		}
-
-		protected virtual void OnFocused (object o, Gtk.FocusedArgs args)
-		{
-			
-		}			
+			this.Resize(Gdk.Screen.Default.Width,Gdk.Screen.Default.Height);
+			CreatePixmaps();
+		}				
 	}
 }

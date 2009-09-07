@@ -4283,13 +4283,12 @@ If you are not sure about what you are doing, click ok</property>
   <widget class="Gtk.Window" id="LongoMatch.Gui.Popup.TransparentDrawingArea" design-size="644 370">
     <property name="MemberName" />
     <property name="Title" translatable="yes">TransparentDrawingArea</property>
+    <property name="TypeHint">Splashscreen</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="AllowShrink">True</property>
     <property name="Gravity">Center</property>
     <property name="SkipPagerHint">True</property>
     <property name="SkipTaskbarHint">True</property>
-    <signal name="WindowStateEvent" handler="OnWindowStateEvent" />
-    <signal name="Focused" handler="OnFocused" />
     <child>
       <widget class="Gtk.DrawingArea" id="drawingarea">
         <property name="MemberName" />
@@ -4338,7 +4337,6 @@ If you are not sure about what you are doing, click ok</property>
               <widget class="Gtk.RadioButton" id="bbutton">
                 <property name="MemberName" />
                 <property name="Label" translatable="yes" />
-                <property name="Active">True</property>
                 <property name="DrawIndicator">False</property>
                 <property name="HasLabel">True</property>
                 <property name="UseUnderline">True</property>
