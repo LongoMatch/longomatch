@@ -36,8 +36,6 @@ namespace LongoMatch.Gui.Popup {
             this.DefaultWidth = 644;
             this.DefaultHeight = 370;
             this.Show();
-            this.WindowStateEvent += new Gtk.WindowStateEventHandler(this.OnWindowStateEvent);
-            this.Focused += new Gtk.FocusedHandler(this.OnFocused);
             this.drawingarea.MotionNotifyEvent += new Gtk.MotionNotifyEventHandler(this.OnDrawingareaMotionNotifyEvent);
             this.drawingarea.ButtonPressEvent += new Gtk.ButtonPressEventHandler(this.OnDrawingareaButtonPressEvent);
             this.drawingarea.ExposeEvent += new Gtk.ExposeEventHandler(this.OnDrawingareaExposeEvent);

@@ -15,14 +15,12 @@ namespace LongoMatch.Gui.Popup
 		private Pixmap pixmap;
 		private Pixmap shape;
 		private Gdk.GC shapeGC;
-		private Gdk.GC paintGC;
 		private Gdk.Color transparent;
 		private Gdk.Color opaque;		
 
 		//Mouse motion
 		private double lastx=-1;
 		private double lasty=-1;
-		private uint motionTime;
 
 		//Reshaping timeout
 		private uint timeoutId;
@@ -30,11 +28,10 @@ namespace LongoMatch.Gui.Popup
 		//Status
 		private bool modified;
 		private bool hardGrab;		
-		private bool ready;
 		
 		//Drawing Properties
 		private Gdk.Color foreground;
-		private int lineWidth = 7;
+		private int lineWidth;
 		
 		//"Parent" Widget we want to draw over
 		private Widget targetWidget;
@@ -137,17 +134,7 @@ namespace LongoMatch.Gui.Popup
 			//Create the pixmap that will contain the real drawing
 			//Used on Expose event to redraw the drawing area
 			pixmap = new Pixmap (drawingarea.GdkWindow,Gdk.Screen.Default.Width,Gdk.Screen.Default.Height);
-			paintGC= new Gdk.GC(pixmap);
-			pixmap.Colormap = Gdk.Rgb.Colormap;
 			pixmap.DrawRectangle(drawingarea.Style.BlackGC,true,0,0,Gdk.Screen.Default.Width,Gdk.Screen.Default.Height);
-		}
-		
-		private double Clamp(double val, double min, double max){
-			if (val < min)
-				return min;
-			if (val>max)
-				return max;
-			else return val;
 		}
 		
 		private void  DrawCairoLine(Context c, int x1, int y1, int x2, int y2,Gdk.Color color){

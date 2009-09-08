@@ -260,7 +260,6 @@ namespace LongoMatch
 		
 		protected virtual void OnSnapshotSeries(MediaTimeNode tNode){
 			SnapshotsDialog sd;
-			IFramesCapturer capturer;
 			uint interval;
 			string seriesName;
 			string outDir;

@@ -135,10 +135,13 @@ namespace LongoMatch.Gui.Component
 				}
 				catch{
 					date = DateTime.Now;
-				}
-				
-				return DateTime.Parse(dateEntry.Text);}
-			set {dateEntry.Text = value.ToString(Catalog.GetString("MM/dd/yyyy"));}
+				}				
+				return date;
+			}
+			
+			set {
+				dateEntry.Text = value.ToString(Catalog.GetString("MM/dd/yyyy"));
+			}
 		}
 		
 		public Sections Sections{

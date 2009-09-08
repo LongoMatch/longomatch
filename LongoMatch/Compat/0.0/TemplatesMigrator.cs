@@ -59,7 +59,6 @@ namespace LongoMatch.Compat
 			foreach (string templateFile in oldTPFiles){
 				v00.DB.Sections oldTemplate=null;
 				Sections newTemplate= null;
-				SectionsWriter writer;
 				string newFileName;
 				
 				SendEvent(String.Format("Converting template: {0}",Path.GetFileName(templateFile)));

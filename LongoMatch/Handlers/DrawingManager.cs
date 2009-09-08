@@ -31,12 +31,9 @@ namespace LongoMatch.Handlers
 		
 		TransparentDrawingArea drawingArea;
 		DrawingToolBox toolBox;
-		Widget targetWidget;
 		
 		public DrawingManager(DrawingToolBox toolBox, Widget targetWidget)
 		{
-			this.targetWidget=targetWidget;
-			targetWidget.AddEvents((int)(EventMask.ButtonReleaseMask));
 			drawingArea = new TransparentDrawingArea(targetWidget);
 			drawingArea.Hide();	
 			this.toolBox=toolBox;
@@ -76,8 +73,7 @@ namespace LongoMatch.Handlers
 		}
 		
 		protected virtual void OnClearDrawing(){
-			drawingArea.Clear();
-			
+			drawingArea.Clear();			
 		}
 	}
 }

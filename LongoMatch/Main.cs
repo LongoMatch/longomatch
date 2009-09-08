@@ -208,23 +208,7 @@ namespace LongoMatch
 				//and let the user change it by hand
 				configDirectory=homeDirectory;
 			}		
-		}
-		
-		private static void PromptForHomeDir(){
-		    StreamWriter writer;
-			WorkspaceChooser chooser = new WorkspaceChooser();
-				
-			chooser.Run();
-			homeDirectory = System.IO.Path.Combine(chooser.WorkspaceFolder,"LongoMatch");	
-			configDirectory = homeDirectory;				
-			chooser.Destroy();
-			
-			using (writer = new StreamWriter (System.IO.Path.Combine(baseDirectory, "etc/"+WIN32_CONFIG_FILE))){
-				writer.WriteLine(homeDirectory);
-				writer.Flush();
-				writer.Close();
-			}
-		}
+		}		
 			
 		private static void OnException(GLib.UnhandledExceptionArgs args){			
 			ProcessExecutionError((Exception)args.ExceptionObject);				

@@ -73,7 +73,6 @@ namespace LongoMatch.Compat
 			v00.DB.DataBase backupDB;
 			ArrayList backupProjects;		
 			ArrayList newProjects = new ArrayList();
-			string results="";		
 			string backupDBFile=oldDBFile+".bak1";
 						
 			if (!File.Exists(oldDBFile)){
