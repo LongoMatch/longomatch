@@ -91,6 +91,8 @@ namespace LongoMatch.TimeNodes
 		public override string ToString ()
 		{
 			string modifierS = Catalog.GetString("none");
+			if (!Defined)
+				return Catalog.GetString("Not defined");
 			if (Modifier == ModifierType.Mod1Mask)
 				modifierS = "Alt";
 			else if (Modifier == ModifierType.ShiftMask)
