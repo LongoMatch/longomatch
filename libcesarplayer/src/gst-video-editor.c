@@ -514,10 +514,10 @@ gve_create_video_encode_bin(GstVideoEditor *gve)
     gve->priv->video_encoder = gst_element_factory_make (DEFAULT_VIDEO_ENCODER,"video-encoder");	
 	
 	g_object_set (G_OBJECT(gve->priv->identity), "single-segment",TRUE,NULL);
-   	g_object_set (G_OBJECT(gve->priv->textoverlay), "font-desc","sans bold 20",NULL);
-   	g_object_set (G_OBJECT(gve->priv->textoverlay), "shaded-background",TRUE,NULL);
-	g_object_set (G_OBJECT(gve->priv->textoverlay), "valignment",2,NULL);
-	g_object_set (G_OBJECT(gve->priv->textoverlay), "halignment",2,NULL);  
+   	g_object_set (G_OBJECT(gve->priv->textoverlay), "font-desc","sans bold 20",
+   				 "shaded-background",TRUE,
+   				 "valignment",2,
+   				 "halignment",2,NULL);  
     g_object_set (G_OBJECT(gve->priv->video_encoder), "bitrate",gve->priv->video_bitrate,NULL); 
     
     /*Add and link elements*/
@@ -650,7 +650,6 @@ new_decoded_pad_cb (GstElement* object,
 	str = gst_caps_get_structure (caps, 0);	
 	
 	if (g_strrstr (gst_structure_get_name (str), "video")){
-		gst_element_set_locked_state(gve->priv->vencode_bin, FALSE);
 		gst_element_set_state(gve->priv->vencode_bin, GST_STATE_PLAYING);
 		videopad = gst_element_get_compatible_pad (gve->priv->vencode_bin, pad, NULL);
 		/* only link once */
@@ -666,7 +665,6 @@ new_decoded_pad_cb (GstElement* object,
   	}
   	
   	else if (g_strrstr (gst_structure_get_name (str), "audio")){
-		gst_element_set_locked_state(gve->priv->aencode_bin, FALSE);
 		gst_element_set_state(gve->priv->aencode_bin, GST_STATE_PLAYING);
 		audiopad = gst_element_get_compatible_pad (gve->priv->aencode_bin, pad, NULL);
 		/* only link once */
@@ -816,8 +814,9 @@ void
 gst_video_editor_add_segment (GstVideoEditor *gve , gchar *file, gint64 start, gint64 duration, gdouble rate, gchar *title, gboolean hasAudio)
 {	
 	GstState cur_state;
-	GstElement *gnl_filesource;
-	GstCaps *filter;
+	GstElement *gnl_filesource=NULL;
+	GstElement *audiotestsrc=NULL;
+	GstCaps *filter=NULL;
 	
 	gchar *element_name = "";
 	gint64 final_duration;	
@@ -843,20 +842,32 @@ gst_video_editor_add_segment (GstVideoEditor *gve , gchar *file, gint64 start, g
 		gst_bin_add (GST_BIN(gve->priv->gnl_video_composition), gnl_filesource);
 		gve->priv->gnl_video_filesources = g_list_append(gve->priv->gnl_video_filesources,gnl_filesource);
 		
+		
+		    	
 		if (hasAudio && rate == 1){
-   			filter = gst_caps_from_string ("audio/x-raw-float;audio/x-raw-int");    	
-       		element_name = g_strdup_printf("gnlaudiofilesource%d",gve->priv->segments);
+			element_name = g_strdup_printf("gnlaudiofilesource%d",gve->priv->segments);
 			gnl_filesource = gst_element_factory_make ("gnlfilesource", element_name);	
 			g_object_set (G_OBJECT(gnl_filesource), "location",file,NULL);
-			g_object_set (G_OBJECT(gnl_filesource), "media-start",GST_MSECOND*start,NULL);
-			g_object_set (G_OBJECT(gnl_filesource), "media-duration",GST_MSECOND*duration,NULL);
-			g_object_set (G_OBJECT(gnl_filesource), "start",gve->priv->duration,NULL);
-			g_object_set (G_OBJECT(gnl_filesource), "duration",final_duration,NULL);
-			g_object_set (G_OBJECT(gnl_filesource), "caps",filter,NULL);	
-			gst_bin_add (GST_BIN(gve->priv->gnl_audio_composition), gnl_filesource);
-			gve->priv->gnl_audio_filesources = g_list_append(gve->priv->gnl_audio_filesources,gnl_filesource);
-		}		
-				
+		}
+		else {
+			element_name = g_strdup_printf("gnlaudiofakesource%d",gve->priv->segments);
+			gnl_filesource = gst_element_factory_make ("gnlsource", element_name);
+			/* If the file doesn't contain audio, something must be playing */
+			/* We use an audiotestsrc mutted and with a low priority */
+			element_name = g_strdup_printf("audiotestsource%d",gve->priv->segments);
+			audiotestsrc = gst_element_factory_make ("audiotestsrc", element_name);
+			g_object_set (G_OBJECT(audiotestsrc), "volume",(double)0,NULL); 
+			gst_bin_add(GST_BIN(gnl_filesource), audiotestsrc);
+		}
+   		filter = gst_caps_from_string ("audio/x-raw-float;audio/x-raw-int");
+		g_object_set (G_OBJECT(gnl_filesource), "media-start",GST_MSECOND*start,NULL);
+		g_object_set (G_OBJECT(gnl_filesource), "media-duration",GST_MSECOND*duration,NULL);
+		g_object_set (G_OBJECT(gnl_filesource), "start",gve->priv->duration,NULL);
+		g_object_set (G_OBJECT(gnl_filesource), "duration",final_duration,NULL);
+		g_object_set (G_OBJECT(gnl_filesource), "caps",filter,NULL);	
+		gst_bin_add (GST_BIN(gve->priv->gnl_audio_composition), gnl_filesource);
+		gve->priv->gnl_audio_filesources = g_list_append(gve->priv->gnl_audio_filesources,gnl_filesource);
+		
 		gve->priv->duration += final_duration;	
 		gve->priv->segments++;			
 		
@@ -1182,8 +1193,6 @@ GstVideoEditor *
 gst_video_editor_new (GError ** err)
 {
 	GstVideoEditor *gve = NULL;
-	GstElement *audiotestsrc=NULL;
-	GstElement *gnlsource=NULL;
 
 	gve = g_object_new(GST_TYPE_VIDEO_EDITOR, NULL);
 	
@@ -1210,24 +1219,6 @@ gst_video_editor_new (GError ** err)
     	g_object_unref (gve);
         return NULL;                   
   	}  	  	
-
-	/* If the file doesn't contain audio, something must be playing */
-	/* We use an audiotestsrc mutted and with a low priority */
-	gnlsource = gst_element_factory_make ("gnlsource", "gnlaudiofakesrc");
-	audiotestsrc = gst_element_factory_make ("audiotestsrc", "audiotestsrc");
-	/*Check for 'expandable' property, gnonlin >= 0.11.2*/
-	if (g_object_class_find_property (G_OBJECT_GET_CLASS(gnlsource), "expandable")){
-		g_object_set (G_OBJECT(gnlsource), "expandable",TRUE,NULL); 
-	}
-	else {
-		g_object_set (G_OBJECT(gnlsource), "start",(gint64)0,NULL);
-		g_object_set (G_OBJECT(gnlsource), "duration",(gint64)G_MAXINT32,NULL);
-	}
-	g_object_set (G_OBJECT(gnlsource), "priority",999,NULL); 
-	g_object_set (G_OBJECT(audiotestsrc), "volume",(double)0,NULL); 
-	gst_bin_add(GST_BIN(gnlsource), audiotestsrc);
-	gst_bin_add(GST_BIN(gve->priv->gnl_audio_composition),gnlsource);
-	
 	
     gve->priv->muxer = gst_element_factory_make (DEFAULT_VIDEO_MUXER, "videomuxer");
     gve->priv->file_sink = gst_element_factory_make ("filesink", "filesink");
@@ -1271,8 +1262,6 @@ gst_video_editor_new (GError ** err)
                         		gve);                        		
                         		
 	gst_element_set_state(gve->priv->main_pipeline,GST_STATE_READY);
-	gst_element_set_locked_state(gve->priv->vencode_bin,TRUE);
-	gst_element_set_locked_state(gve->priv->aencode_bin,TRUE);
 	
 	return gve;
 }
