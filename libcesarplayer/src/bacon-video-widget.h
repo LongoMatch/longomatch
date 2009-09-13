@@ -419,6 +419,7 @@ EXPORT gboolean bacon_video_widget_has_previous_track	 (BaconVideoWidget *bvw);
 EXPORT gboolean bacon_video_widget_can_get_frames       (BaconVideoWidget *bvw,
 						  GError **error);
 EXPORT GdkPixbuf *bacon_video_widget_get_current_frame (BaconVideoWidget *bvw);
+EXPORT void bacon_video_widget_unref_pixbuf (GdkPixbuf *pixbuf);
 
 /* Audio-out functions */
 /**

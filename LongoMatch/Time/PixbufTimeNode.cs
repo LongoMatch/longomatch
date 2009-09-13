@@ -35,8 +35,10 @@ namespace LongoMatch.TimeNodes
 		
 		public PixbufTimeNode(string name, Time start, Time stop, Pixbuf thumbnail): base (name,start,stop)
 		{
-			if (thumbnail != null)
+			if (thumbnail != null){
 				this.thumbnailBuf = thumbnail.SaveToBuffer("png");
+				thumbnail.Dispose();
+			}
 			else thumbnailBuf = null;
 		}
 		#endregion

@@ -58,15 +58,9 @@ namespace LongoMatch.Video.Utils
 			}
 			set{
 				if (value != null){
-					int h = value.Height;
-					int w = value.Width;
-					double ratio = (double)w/(double)h;
-					if (h>w)
-						thumbnailBuf = value.ScaleSimple((int)(THUMBNAIL_MAX_HEIGHT*ratio),THUMBNAIL_MAX_HEIGHT,InterpType.Bilinear).SaveToBuffer("png");
-					else
-						thumbnailBuf = value.ScaleSimple(THUMBNAIL_MAX_WIDTH,(int)(THUMBNAIL_MAX_WIDTH/ratio),InterpType.Bilinear).SaveToBuffer("png");
+					thumbnailBuf = value.SaveToBuffer("png");
+					value.Dispose();
 				}
-								
 				else thumbnailBuf = null;
 			}
 		}
@@ -101,7 +95,7 @@ namespace LongoMatch.Video.Utils
 					thumbnailer = factory.getFramesCapturer();
 					thumbnailer.Open(filePath);
 					thumbnailer.SeekTime(1000,false);
-					preview = thumbnailer.CurrentFrame;
+					preview = thumbnailer.GetCurrentFrame(THUMBNAIL_MAX_WIDTH,THUMBNAIL_MAX_HEIGHT);
 					thumbnailer.Dispose();
 				}			
 				height = (int) reader.GetMetadata(GstMetadataType.DimensionY);
@@ -109,7 +103,11 @@ namespace LongoMatch.Video.Utils
 				reader.Close();	
 				reader.Dispose();	
 				
-				return new PreviewMediaFile(filePath,duration*1000,(ushort)fps,hasAudio,hasVideo,videoCodec,audioCodec,(uint)height,(uint)width,preview);
+				return new PreviewMediaFile(filePath,duration*1000,
+				                            (ushort)fps,hasAudio,
+				                            hasVideo,videoCodec,
+				                            audioCodec,(uint)height,
+				                            (uint)width,preview);
 			}
 			catch (GLib.GException ex){
 			    throw new Exception (Catalog.GetString("Invalid video file:")+"\n"+ex.Message);

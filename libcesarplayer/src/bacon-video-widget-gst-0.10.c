@@ -4976,6 +4976,11 @@ destroy_pixbuf (guchar *pix, gpointer data)
   gst_buffer_unref (GST_BUFFER (data));
 }
 
+void 
+bacon_video_widget_unref_pixbuf (GdkPixbuf *pixbuf){
+	g_object_unref(pixbuf);
+}
+
 /**
  * bacon_video_widget_get_current_frame:
  * @bvw: a #BaconVideoWidget

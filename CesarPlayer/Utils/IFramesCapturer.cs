@@ -31,8 +31,8 @@ namespace LongoMatch.Video.Utils
 		bool SeekTime(long time, bool accurate);
 		void Pause();
 		void Dispose();
-		Pixbuf CurrentFrame{
-			get;
-		}
+		Pixbuf GetCurrentFrame(int outwidth, int outheight);
+		Pixbuf GetCurrentFrame();
+		
 	}
 }

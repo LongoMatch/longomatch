@@ -1099,13 +1099,34 @@ namespace LongoMatch.Video.Player {
 
 		[DllImport("libcesarplayer.dll")]
 		static extern IntPtr bacon_video_widget_get_current_frame(IntPtr raw);
+		
+		[DllImport("libcesarplayer.dll")]
+		static extern IntPtr bacon_video_widget_unref_pixbuf(IntPtr raw);
 
-		public Gdk.Pixbuf CurrentFrame { 
-			get {
-				IntPtr raw_ret = bacon_video_widget_get_current_frame(Handle);
-				Gdk.Pixbuf ret = GLib.Object.GetObject(raw_ret) as Gdk.Pixbuf;
-				return ret;
+
+		public Gdk.Pixbuf GetCurrentFrame(int outwidth, int outheight) { 
+			IntPtr raw_ret = bacon_video_widget_get_current_frame(Handle);
+			Gdk.Pixbuf unmanaged = GLib.Object.GetObject(raw_ret) as Gdk.Pixbuf;
+			Gdk.Pixbuf managed;
+			int h = unmanaged.Height;
+			int w = unmanaged.Width;
+			double rate = (double)w/(double)h;
+			if (outwidth == -1 || outheight == -1){
+				outwidth = w;
+				outheight = h;
+			}else if (h>w){
+				outwidth = (int)(outheight*rate);
+			}else{
+				outheight = (int)(outwidth/rate);
 			}
+			managed = unmanaged.ScaleSimple(outwidth,outheight,Gdk.InterpType.Bilinear);
+			unmanaged.Dispose();
+			bacon_video_widget_unref_pixbuf(raw_ret);
+			return managed;
+		}
+		
+		public Gdk.Pixbuf GetCurrentFrame() { 
+			return GetCurrentFrame(-1,-1);
 		}
 
 		[DllImport("libcesarplayer.dll")]

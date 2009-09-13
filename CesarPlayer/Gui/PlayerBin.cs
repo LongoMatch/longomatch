@@ -108,15 +108,9 @@ namespace LongoMatch.Gui
 		
 		public Pixbuf CurrentFrame{
 			get{
-				int h,w;
-				double rate;
-				Pixbuf pixbuf = player.CurrentFrame;
-				if (pixbuf != null){
-					h = pixbuf.Height;
-					w = pixbuf.Width;
-					rate = (double)w/(double)h;
-					return pixbuf.ScaleSimple(THUMBNAIL_WIDTH,(int)(THUMBNAIL_WIDTH/rate),InterpType.Bilinear);
-				}
+				Pixbuf pixbuf = player.GetCurrentFrame(50,50);				
+				if (pixbuf != null)
+					return pixbuf;
 				else return null;
 			}
 		}

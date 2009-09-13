@@ -73,11 +73,7 @@ namespace LongoMatch.Video.Player
 		bool Playing {
 			get;
 		}
-		
-		Pixbuf CurrentFrame{
-			get;
-		}
-		
+			
 		string Logo {
 			set;
 		}
@@ -122,6 +118,10 @@ namespace LongoMatch.Video.Player
 		bool SeekToNextFrame(float rate,bool in_segment);
 		
 		bool SeekToPreviousFrame(float rate,bool in_segment);
+		
+		Pixbuf GetCurrentFrame(int outwidth, int outheight);
+		
+		Pixbuf GetCurrentFrame();
 		
 		void CancelProgramedStop();
 		

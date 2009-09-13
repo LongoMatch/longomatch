@@ -32,9 +32,7 @@ namespace LongoMatch.Gui.Dialog
 	[System.ComponentModel.ToolboxItem(false)]
 	public partial class FramesCaptureProgressDialog : Gtk.Dialog
 	{
-		private FramesSeriesCapturer capturer;
-		private const int THUMBNAIL_MAX_HEIGHT=250;
-		private const int THUMBNAIL_MAX_WIDTH=300;
+		private FramesSeriesCapturer capturer;		
 		
 		public FramesCaptureProgressDialog(FramesSeriesCapturer capturer)
 		{
@@ -50,13 +48,9 @@ namespace LongoMatch.Gui.Dialog
 				progressbar.Text= Catalog.GetString("Capturing frame: ")+actual+"/"+total;
 				progressbar.Fraction = (double)actual/(double)total;
 				if (frame != null){
-					int h = frame.Height;
-					int w = frame.Width;
-					double rate = (double)w/(double)h;
-					if (h>w)
-						image.Pixbuf = frame.ScaleSimple((int)(THUMBNAIL_MAX_HEIGHT*rate),THUMBNAIL_MAX_HEIGHT,InterpType.Bilinear);
-					else
-						image.Pixbuf = frame.ScaleSimple(THUMBNAIL_MAX_WIDTH,(int)(THUMBNAIL_MAX_WIDTH/rate),InterpType.Bilinear);
+					if (image.Pixbuf != null)
+						image.Pixbuf.Dispose();
+					image.Pixbuf = frame;
 				}
 			}
 			if (actual == total){

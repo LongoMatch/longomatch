@@ -40,6 +40,8 @@ namespace LongoMatch.Video.Utils
 		string seriesName;
 		string outputDir;
 		bool cancel;
+		private const int THUMBNAIL_MAX_HEIGHT=250;
+		private const int THUMBNAIL_MAX_WIDTH=300;
 		
 		public event FramesProgressHandler Progress;
 		
@@ -68,6 +70,7 @@ namespace LongoMatch.Video.Utils
 		public void CaptureFrames(){		
 			long pos;
 			Pixbuf frame;
+			Pixbuf scaledFrame=null;
 			int i = 0;			
 						
 			System.IO.Directory.CreateDirectory(outputDir);	
@@ -79,12 +82,21 @@ namespace LongoMatch.Video.Utils
 				if (!cancel){					
 					capturer.SeekTime(pos,true);	
 					capturer.Pause();
-					frame = capturer.CurrentFrame;				
+					frame = capturer.GetCurrentFrame();				
 					if (frame != null) {
 						frame.Save(System.IO.Path.Combine(outputDir,seriesName+"_" + i +".png"),"png");
-					}			
+						int h = frame.Height;
+						int w = frame.Width;
+						double rate = (double)w/(double)h;
+						if (h>w)
+							scaledFrame = frame.ScaleSimple((int)(THUMBNAIL_MAX_HEIGHT*rate),THUMBNAIL_MAX_HEIGHT,InterpType.Bilinear);
+						else
+							scaledFrame = frame.ScaleSimple(THUMBNAIL_MAX_WIDTH,(int)(THUMBNAIL_MAX_WIDTH/rate),InterpType.Bilinear);
+						frame.Dispose();				
+					}
+					
 					if (Progress != null)					
-						Application.Invoke(delegate {Progress(i+1,totalFrames,frame);});
+						Application.Invoke(delegate {Progress(i+1,totalFrames,scaledFrame);});
 					pos += interval;
 					i++;
 				}
