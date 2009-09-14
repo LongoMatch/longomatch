@@ -86,6 +86,7 @@ FILES = \
 	Gui/FileDescriptionWidget.cs \
 	Gui/FramesCaptureProgressDialog.cs \
 	Gui/EntryDialog.cs \
+	Gui/EditPlayerDialog.cs\
 	Gui/MainWindow.cs \
 	Gui/MessagePopup.cs \
 	Gui/Migrator.cs\
@@ -93,6 +94,7 @@ FILES = \
 	Gui/NotesWidget.cs \
 	Gui/OpenProjectDialog.cs \
 	Gui/PlayerProperties.cs \
+	Gui/PlayerPropertiesTreeView.cs\
 	Gui/PlayersListTreeWidget.cs \
 	Gui/PlayersSelectionDialog.cs \
 	Gui/PlayersTreeView.cs \
@@ -135,6 +137,7 @@ FILES = \
 	gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TreeWidget.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.EditSectionsDialog.cs\
+	gtk-gui/LongoMatch.Gui.Dialog.EditPlayerDialog.cs\
 	gtk-gui/LongoMatch.Gui.Popup.CalendarPopup.cs \
 	gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs\
 	gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs \
