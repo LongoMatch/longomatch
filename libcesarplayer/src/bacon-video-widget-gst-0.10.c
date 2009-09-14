@@ -3237,6 +3237,8 @@ bacon_video_widget_seek_to_next_frame (BaconVideoWidget *bvw, gfloat rate, gbool
   	fps = (bvw->priv->video_fps_n + bvw->priv->video_fps_d/2) /
                   bvw->priv->video_fps_d;
     pos = bacon_video_widget_get_accurate_current_time(bvw);
+    if (pos==0)
+	return FALSE;
     final_pos = pos*GST_MSECOND + 1*GST_SECOND/fps;
 
 /*#ifdef WIN32
@@ -3283,6 +3285,8 @@ gboolean  bacon_video_widget_seek_to_previous_frame (BaconVideoWidget *bvw,gfloa
     pos = bacon_video_widget_get_accurate_current_time(bvw);
     final_pos = pos*GST_MSECOND - 1*GST_SECOND/fps;
 
+	if (pos==0)
+		return FALSE;
 /*#ifdef WIN32
 	bacon_video_widget_play(bvw);
 #endif
