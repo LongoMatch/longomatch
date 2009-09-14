@@ -32,11 +32,11 @@ namespace LongoMatch.Gui.Dialog
 		}
 		
 		public void SetTeamTemplate (TeamTemplate template){
-			teamtemplatewidget1.SetTeamTemplate(template);
+			teamtemplatewidget1.TeamTemplate=template;
 		}
 		
 		public TeamTemplate GetTeamTemplate (){
-			return teamtemplatewidget1.GetTeamTemplate();
+			return teamtemplatewidget1.TeamTemplate;
 		}
 	}
 }

@@ -38,8 +38,12 @@ namespace LongoMatch.Gui.Dialog
 		}
 		
 		public Sections Sections{
-			set{this.sectionspropertieswidget3.SetSections(value);}
-			get{return this.sectionspropertieswidget3.GetSections();}
+			set{this.sectionspropertieswidget3.Sections=value;}
+			get{return this.sectionspropertieswidget3.Sections;}
+		}
+
+		protected virtual void OnButtonOkClicked (object sender, System.EventArgs e)
+		{
 		}
 	
 	}

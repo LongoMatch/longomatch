@@ -13,9 +13,21 @@ namespace LongoMatch.Gui.Component {
     
     public partial class SectionsPropertiesWidget {
         
-        private Gtk.ScrolledWindow scrolledwindow1;
+        private Gtk.HBox hbox1;
         
-        private Gtk.Table table1;
+        private Gtk.ScrolledWindow scrolledwindow2;
+        
+        private LongoMatch.Gui.Component.SectionsTreeView sectionstreeview1;
+        
+        private Gtk.VBox vbox2;
+        
+        private Gtk.Button newprevbutton;
+        
+        private Gtk.Button newafterbutton;
+        
+        private Gtk.Button removebutton;
+        
+        private Gtk.Button editbutton;
         
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
@@ -23,25 +35,152 @@ namespace LongoMatch.Gui.Component {
             Stetic.BinContainer.Attach(this);
             this.Name = "LongoMatch.Gui.Component.SectionsPropertiesWidget";
             // Container child LongoMatch.Gui.Component.SectionsPropertiesWidget.Gtk.Container+ContainerChild
-            this.scrolledwindow1 = new Gtk.ScrolledWindow();
-            this.scrolledwindow1.CanFocus = true;
-            this.scrolledwindow1.Name = "scrolledwindow1";
-            this.scrolledwindow1.ShadowType = ((Gtk.ShadowType)(1));
-            // Container child scrolledwindow1.Gtk.Container+ContainerChild
-            Gtk.Viewport w1 = new Gtk.Viewport();
-            w1.ShadowType = ((Gtk.ShadowType)(0));
-            // Container child GtkViewport.Gtk.Container+ContainerChild
-            this.table1 = new Gtk.Table(((uint)(3)), ((uint)(3)), true);
-            this.table1.Name = "table1";
-            this.table1.RowSpacing = ((uint)(6));
-            this.table1.ColumnSpacing = ((uint)(6));
-            w1.Add(this.table1);
-            this.scrolledwindow1.Add(w1);
-            this.Add(this.scrolledwindow1);
+            this.hbox1 = new Gtk.HBox();
+            this.hbox1.Name = "hbox1";
+            this.hbox1.Spacing = 6;
+            // Container child hbox1.Gtk.Box+BoxChild
+            this.scrolledwindow2 = new Gtk.ScrolledWindow();
+            this.scrolledwindow2.CanFocus = true;
+            this.scrolledwindow2.Name = "scrolledwindow2";
+            this.scrolledwindow2.ShadowType = ((Gtk.ShadowType)(1));
+            // Container child scrolledwindow2.Gtk.Container+ContainerChild
+            this.sectionstreeview1 = new LongoMatch.Gui.Component.SectionsTreeView();
+            this.sectionstreeview1.CanFocus = true;
+            this.sectionstreeview1.Name = "sectionstreeview1";
+            this.scrolledwindow2.Add(this.sectionstreeview1);
+            this.hbox1.Add(this.scrolledwindow2);
+            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.hbox1[this.scrolledwindow2]));
+            w2.Position = 0;
+            // Container child hbox1.Gtk.Box+BoxChild
+            this.vbox2 = new Gtk.VBox();
+            this.vbox2.Name = "vbox2";
+            this.vbox2.Spacing = 6;
+            // Container child vbox2.Gtk.Box+BoxChild
+            this.newprevbutton = new Gtk.Button();
+            this.newprevbutton.Sensitive = false;
+            this.newprevbutton.CanFocus = true;
+            this.newprevbutton.Name = "newprevbutton";
+            this.newprevbutton.UseUnderline = true;
+            // Container child newprevbutton.Gtk.Container+ContainerChild
+            Gtk.Alignment w3 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
+            Gtk.HBox w4 = new Gtk.HBox();
+            w4.Spacing = 2;
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Image w5 = new Gtk.Image();
+            w5.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-goto-top", Gtk.IconSize.Menu, 16);
+            w4.Add(w5);
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Label w7 = new Gtk.Label();
+            w7.LabelProp = Mono.Unix.Catalog.GetString("New Before");
+            w7.UseUnderline = true;
+            w4.Add(w7);
+            w3.Add(w4);
+            this.newprevbutton.Add(w3);
+            this.vbox2.Add(this.newprevbutton);
+            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.vbox2[this.newprevbutton]));
+            w11.Position = 0;
+            w11.Expand = false;
+            w11.Fill = false;
+            // Container child vbox2.Gtk.Box+BoxChild
+            this.newafterbutton = new Gtk.Button();
+            this.newafterbutton.Sensitive = false;
+            this.newafterbutton.CanFocus = true;
+            this.newafterbutton.Name = "newafterbutton";
+            this.newafterbutton.UseUnderline = true;
+            // Container child newafterbutton.Gtk.Container+ContainerChild
+            Gtk.Alignment w12 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
+            Gtk.HBox w13 = new Gtk.HBox();
+            w13.Spacing = 2;
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Image w14 = new Gtk.Image();
+            w14.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-goto-bottom", Gtk.IconSize.Menu, 16);
+            w13.Add(w14);
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Label w16 = new Gtk.Label();
+            w16.LabelProp = Mono.Unix.Catalog.GetString("New After");
+            w16.UseUnderline = true;
+            w13.Add(w16);
+            w12.Add(w13);
+            this.newafterbutton.Add(w12);
+            this.vbox2.Add(this.newafterbutton);
+            Gtk.Box.BoxChild w20 = ((Gtk.Box.BoxChild)(this.vbox2[this.newafterbutton]));
+            w20.Position = 1;
+            w20.Expand = false;
+            w20.Fill = false;
+            // Container child vbox2.Gtk.Box+BoxChild
+            this.removebutton = new Gtk.Button();
+            this.removebutton.Sensitive = false;
+            this.removebutton.CanFocus = true;
+            this.removebutton.Name = "removebutton";
+            this.removebutton.UseUnderline = true;
+            // Container child removebutton.Gtk.Container+ContainerChild
+            Gtk.Alignment w21 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
+            Gtk.HBox w22 = new Gtk.HBox();
+            w22.Spacing = 2;
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Image w23 = new Gtk.Image();
+            w23.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-remove", Gtk.IconSize.Menu, 16);
+            w22.Add(w23);
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Label w25 = new Gtk.Label();
+            w25.LabelProp = Mono.Unix.Catalog.GetString("Remove");
+            w25.UseUnderline = true;
+            w22.Add(w25);
+            w21.Add(w22);
+            this.removebutton.Add(w21);
+            this.vbox2.Add(this.removebutton);
+            Gtk.Box.BoxChild w29 = ((Gtk.Box.BoxChild)(this.vbox2[this.removebutton]));
+            w29.Position = 2;
+            w29.Expand = false;
+            w29.Fill = false;
+            // Container child vbox2.Gtk.Box+BoxChild
+            this.editbutton = new Gtk.Button();
+            this.editbutton.Sensitive = false;
+            this.editbutton.CanFocus = true;
+            this.editbutton.Name = "editbutton";
+            this.editbutton.UseUnderline = true;
+            // Container child editbutton.Gtk.Container+ContainerChild
+            Gtk.Alignment w30 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
+            Gtk.HBox w31 = new Gtk.HBox();
+            w31.Spacing = 2;
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Image w32 = new Gtk.Image();
+            w32.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-edit", Gtk.IconSize.Menu, 16);
+            w31.Add(w32);
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Label w34 = new Gtk.Label();
+            w34.LabelProp = Mono.Unix.Catalog.GetString("Edit");
+            w34.UseUnderline = true;
+            w31.Add(w34);
+            w30.Add(w31);
+            this.editbutton.Add(w30);
+            this.vbox2.Add(this.editbutton);
+            Gtk.Box.BoxChild w38 = ((Gtk.Box.BoxChild)(this.vbox2[this.editbutton]));
+            w38.Position = 3;
+            w38.Expand = false;
+            w38.Fill = false;
+            this.hbox1.Add(this.vbox2);
+            Gtk.Box.BoxChild w39 = ((Gtk.Box.BoxChild)(this.hbox1[this.vbox2]));
+            w39.Position = 1;
+            w39.Expand = false;
+            w39.Fill = false;
+            this.Add(this.hbox1);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
             this.Show();
+            this.KeyPressEvent += new Gtk.KeyPressEventHandler(this.OnKeyPressEvent);
+            this.sectionstreeview1.SectionClicked += new LongoMatch.Gui.Component.SectionHandler(this.OnSectionstreeview1SectionClicked);
+            this.sectionstreeview1.SectionSelected += new LongoMatch.Gui.Component.SectionHandler(this.OnSectionstreeview1SectionSelected);
+            this.newprevbutton.Clicked += new System.EventHandler(this.OnNewBefore);
+            this.newafterbutton.Clicked += new System.EventHandler(this.OnNewAfter);
+            this.newafterbutton.Activated += new System.EventHandler(this.OnNewBefore);
+            this.removebutton.Clicked += new System.EventHandler(this.OnRemove);
+            this.editbutton.Clicked += new System.EventHandler(this.OnEdit);
         }
     }
 }

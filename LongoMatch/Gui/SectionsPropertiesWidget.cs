@@ -23,6 +23,7 @@ using Mono.Unix;
 using Gdk;
 using LongoMatch.DB;
 using LongoMatch.TimeNodes;
+using LongoMatch.Gui.Dialog;
 
 
 namespace LongoMatch.Gui.Component
@@ -34,117 +35,68 @@ namespace LongoMatch.Gui.Component
 	public partial class SectionsPropertiesWidget : Gtk.Bin
 	{
 		private List<HotKey> hkList;
-		private List<TimeNodeProperties> tnplist;
 		private Project project;
-		
+		private Sections sections;
+		private SectionsTimeNode selectedSection;		
+		private bool edited = false;
 		
 		public SectionsPropertiesWidget()
 		{
 			this.Build();
-			tnplist = new List<TimeNodeProperties>();
 			hkList = new List<HotKey>();
-			table1.NColumns =(uint) 5;						
 		}
 		
 		public void SetProject(Project project){
 			this.project = project;
-			SetSections(project.Sections);
-		}
+			Sections=project.Sections;
+		}	
 		
-		public void SetSections(Sections sections){
-			int sectionsCount = sections.Count;
-			
-			tnplist.Clear();
-			hkList.Clear();
-			
-			foreach (Widget w in table1.AllChildren){
-					w.Unrealize();
-					table1.Remove(w);
+		public Sections Sections{
+			get{return sections;}
+			set{
+				this.sections = value;
+				edited = false;
+				Gtk.TreeStore sectionsListStore = new Gtk.TreeStore (typeof (SectionsTimeNode));
+				hkList.Clear();
+				for (int i=0;i<sections.Count;i++){
+					sectionsListStore.AppendValues (sections.GetSection(i));
+					try{
+						hkList.Add(sections.GetSection(i).HotKey);
+					}catch{}; //Do not add duplicated hotkeys
+				}
+				sectionstreeview1.Model = sectionsListStore;
 			}
-			
-			for( int i=0;i<sectionsCount;i++){
-				TimeNodeProperties tnp = new TimeNodeProperties();
-				HotKey hk = sections.GetHotKey(i);
-				
-				tnp.Name = i.ToString();
-				tnp.Title =  "Section "+(i+1);			
-				tnp.Section = sections.GetSection(i);
-				ConnectTimeNodePropertiesEvents(tnp);
-				
-				
-				if (hk.Defined)
-					hkList.Add(sections.GetHotKey(i));
-				
-				AddTimeNodeToTable(i,sections.Count,tnp);			
-			}			
 		}
 		
-		
-		
-		public Sections GetSections (){
-			Sections sections = new Sections();
-			foreach (TimeNodeProperties tnp in tnplist){
-				sections.AddSection(tnp.Section);					
-			}
-			return sections;
+		public bool Edited{
+			get{return edited;}
+			set{edited=value;}
 		}
 		
-		private void AddTimeNodeToTable(int index, int count, TimeNodeProperties tnp){
-			uint row_top,row_bottom,col_left,col_right;
-			
-			tnplist.Insert(index,tnp);
-			table1.NRows =(uint) (count/5);			
-			row_top =(uint) (index/table1.NColumns);
-			row_bottom = (uint) row_top+1 ;
-			col_left = (uint) index%table1.NColumns;
-			col_right = (uint) col_left+1 ;
-			
-			table1.Attach(tnp,col_left,col_right,row_top,row_bottom);	
-			tnp.Show();
-		}
-		
-		private void ConnectTimeNodePropertiesEvents(TimeNodeProperties tnp){
-			tnp.DeleteSection += new EventHandler(OnDelete);
-			tnp.InsertAfter += new EventHandler(OnInsertAfter);
-			tnp.InsertBefore += new EventHandler(OnInsertBefore);
-			tnp.HotKeyChanged += new HotKeyChangeHandler(OnHotKeyChanged);
+		private void UpdateModel(){
+			Sections = Sections;
 		}
 		
 		private void AddSection (int index){
-			Sections sections;
 			SectionsTimeNode tn;
-			TimeNodeProperties tnp;
 			HotKey hkey = new HotKey();
 			
 			Time start = new Time(10*Time.SECONDS_TO_TIME);
-			Time stop = new Time(10*Time.SECONDS_TO_TIME);
-			
+			Time stop = new Time(10*Time.SECONDS_TO_TIME);			
 			
 			tn  = new SectionsTimeNode("New Section",start,stop,hkey,new Color(Byte.MaxValue,Byte.MinValue,Byte.MinValue));
-			tnp = new TimeNodeProperties();
-			ConnectTimeNodePropertiesEvents(tnp);
-			
+		
 			if (project != null){
 				project.AddSectionAtPos(tn,index);
-				AddTimeNodeToTable(project.Sections.Count-1,project.Sections.Count,tnp);
-				UpdateGui(project.Sections);
 			}
 			else{				
-				sections = GetSections();
 				sections.AddSectionAtPos(tn,index);
-				AddTimeNodeToTable(sections.Count-1,sections.Count,tnp);
-				UpdateGui(sections);
-			}			
+			}		
+			UpdateModel();
+			edited = true;
 		}
 		
-		private void DeleteSection(TimeNodeProperties tnp){
-			Sections sections;
-			int index = int.Parse(tnp.Name);
-			int count;
-			
-			//Remove the last TimeNodeProperties Widget and clean-up
-			
-
+		private void RemoveSection(int index){
 			if(project!= null){
 				try{
 					project.DeleteSection(index);
@@ -155,54 +107,65 @@ namespace LongoMatch.Gui.Component
 					return;
 				}
 				sections=project.Sections;
-			}
-			else{
-				sections = GetSections();
+			}else{
 				sections.RemoveSection(index);
 			}
-			count = tnplist.Count;
-			table1.Remove(tnplist[count-1]);
-			tnplist.Remove(tnplist[count-1]);
-			
-			UpdateGui(sections);
-			
+			UpdateModel();
+			edited = true;
+			selectedSection = null;
+			ButtonsSensitive=false;
 		}
 		
-		private void UpdateGui(Sections sections){
-			//After delting/adding a TimeNodeProperties we need to update
-			//both the widget names and their position in the table
-			TimeNodeProperties tnp;			
-			
-			for( int i=0;i< sections.Count;i++){
-				tnp=tnplist[i];
-				tnp.Name = i.ToString();
-				tnp.Title =  "Section "+(i+1);
-				tnp.Section = sections.GetSection(i);				
+		private bool ButtonsSensitive{
+			set{
+				newprevbutton.Sensitive = value;
+				newafterbutton.Sensitive = value;
+				removebutton.Sensitive = value;
+				editbutton.Sensitive = value;
 			}
-			
 		}
 		
-		protected virtual void OnDelete(object sender, EventArgs args){			
-			DeleteSection((TimeNodeProperties)sender);
+		private void EditSelectedSection(){
+			EditSectionsDialog dialog = new EditSectionsDialog();
+			dialog.Section=selectedSection;
+			dialog.HotKeysList = hkList;
+			dialog.TransientFor = (Gtk.Window) Toplevel;
+			dialog.Run();
+			dialog.Destroy();
+			edited = true;
 		}
 		
-		protected virtual void OnInsertAfter(object sender, EventArgs args){
-			AddSection(int.Parse(((Widget)sender).Name)+1);
+		protected virtual void OnNewAfter(object sender, EventArgs args){
+			AddSection(sections.SectionsTimeNodes.IndexOf(selectedSection)+1);
 		}
 		
-		protected virtual void OnInsertBefore(object sender, EventArgs args){
-			AddSection(int.Parse(((Widget)sender).Name));
+		protected virtual void OnNewBefore(object sender, EventArgs args){
+			AddSection(sections.SectionsTimeNodes.IndexOf(selectedSection));
 		}
 		
-		protected virtual void OnHotKeyChanged(TimeNodeProperties sender, HotKey prevHotKey, SectionsTimeNode section){
-			if (hkList.Contains(section.HotKey)){
-			    MessagePopup.PopupMessage(this,MessageType.Warning,
-				                        Catalog.GetString("This hotkey is already in use."));
-				section.HotKey = prevHotKey;
-				sender.Section = section;			
-			}
-			else if (section.HotKey.Defined)
-				hkList.Add(section.HotKey);
+		protected virtual void OnRemove(object sender, EventArgs args){			
+			RemoveSection(sections.SectionsTimeNodes.IndexOf(selectedSection));
+		}
+		
+		protected virtual void OnEdit(object sender, EventArgs args){			
+			EditSelectedSection();
+		}	
+
+		protected virtual void OnSectionstreeview1SectionClicked (LongoMatch.TimeNodes.SectionsTimeNode tNode)
+		{
+			EditSelectedSection();
+		}
+
+		protected virtual void OnSectionstreeview1SectionSelected (LongoMatch.TimeNodes.SectionsTimeNode tNode)
+		{
+			selectedSection = tNode;
+			ButtonsSensitive = selectedSection != null;
+		}
+
+		protected virtual void OnKeyPressEvent (object o, Gtk.KeyPressEventArgs args)
+		{
+			if (args.Event.Key == Gdk.Key.Delete && selectedSection != null)
+				RemoveSection(sections.SectionsTimeNodes.IndexOf(selectedSection));
 		}
 	}
 }

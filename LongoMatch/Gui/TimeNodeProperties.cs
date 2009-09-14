@@ -28,16 +28,13 @@ using LongoMatch.Gui.Dialog;
 namespace LongoMatch.Gui.Component
 {
 	
-	public delegate void HotKeyChangeHandler (TimeNodeProperties  sender,HotKey prevHotKey, SectionsTimeNode newSection);
+	public delegate void HotKeyChangeHandler (HotKey prevHotKey, SectionsTimeNode newSection);
 	
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial  class TimeNodeProperties : Gtk.Bin
 	{
 
-		public event EventHandler DeleteSection;
-		public event EventHandler InsertBefore;
-		public event EventHandler InsertAfter;
 		public event HotKeyChangeHandler HotKeyChanged;
 		
 		private SectionsTimeNode stn;
@@ -45,24 +42,15 @@ namespace LongoMatch.Gui.Component
 		public TimeNodeProperties()
 		{
 			this.Build();
-		}
-		
-		public string Title {
-			set{
-				titlelabel.Text=value;	
-			}
-		}
+		}				
 		
 		public SectionsTimeNode Section
 		{
 			set{
 				stn = value;
 				UpdateGui();	
-			}
-			
-			get{
-				return stn;
-			}
+			}			
+			get{return stn;	}
 		}
 
 		private void  UpdateGui(){
@@ -89,30 +77,9 @@ namespace LongoMatch.Gui.Component
 			}
 			dialog.Destroy();	
 			if (HotKeyChanged != null)
-					HotKeyChanged(this,prevHotKey,stn);
+					HotKeyChanged(prevHotKey,stn);
 		}
-
-		protected virtual void OnDeletebuttonClicked (object sender, System.EventArgs e)
-		{
-			if (DeleteSection !=  null){
-				DeleteSection(this, e);
-			}
-		}
-
-		protected virtual void OnNewleftbuttonClicked (object sender, System.EventArgs e)
-		{
-			if(InsertAfter != null){
-				InsertAfter(this, e);
-			}
-		}
-
-		protected virtual void OnNewleftbutton1Clicked (object sender, System.EventArgs e)
-		{
-			if (InsertBefore != null){
-				InsertBefore(this, e);
-			}
-		}
-
+	
 		protected virtual void OnColorbutton1ColorSet (object sender, System.EventArgs e)
 		{
 			if (stn != null)

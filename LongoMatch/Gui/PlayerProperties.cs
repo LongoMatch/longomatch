@@ -33,28 +33,22 @@ namespace LongoMatch.Gui.Component
 		private const int THUMBNAIL_MAX_WIDTH = 50;
 		private const int THUMBNAIL_MAX_HEIGHT = 50;
 		
+		private Player player;
+		
 		public PlayerProperties()
 		{
 			this.Build();
 		}
-		
-		public string Title{
-			set{
-				titlelabel.Text=value;	
-			}
-		}
-		
+				
 		public Player Player{
-			get{
-				return new Player (nameentry.Text, positionentry.Text, (int)numberspinbutton.Value, image.Pixbuf);
-			}
-			
 			set{
-				this.nameentry.Text = value.Name;
+				this.player = value;
+				nameentry.Text = value.Name;
 				positionentry.Text = value.Position;
 				numberspinbutton.Value = value.Number;
 				image.Pixbuf = value.Photo;
 			}
+			get{return player;}				
 		}
 		
 		private FileFilter FileFilter{
@@ -92,15 +86,33 @@ namespace LongoMatch.Gui.Component
 					w = pimage.Width;
 					rate = (double)w/(double)h;
 					if (h>w)
-						image.Pixbuf = pimage.ScaleSimple((int)(THUMBNAIL_MAX_HEIGHT*rate),THUMBNAIL_MAX_HEIGHT,InterpType.Bilinear);
+						player.Photo = pimage.ScaleSimple((int)(THUMBNAIL_MAX_HEIGHT*rate),THUMBNAIL_MAX_HEIGHT,InterpType.Bilinear);
 					else
-						image.Pixbuf = pimage.ScaleSimple(THUMBNAIL_MAX_WIDTH,(int)(THUMBNAIL_MAX_WIDTH/rate),InterpType.Bilinear);
+						player.Photo = pimage.ScaleSimple(THUMBNAIL_MAX_WIDTH,(int)(THUMBNAIL_MAX_WIDTH/rate),InterpType.Bilinear);
+					image.Pixbuf = player.Photo;
 				}
 			}
 			fChooser.Destroy();	
 		}
-		
-		
-	}
 
+		protected virtual void OnNameentryChanged (object sender, System.EventArgs e)
+		{
+			player.Name = nameentry.Text;
+		}
+
+		protected virtual void OnPositionentryChanged (object sender, System.EventArgs e)
+		{
+			player.Position = positionentry.Text;
+		}
+
+		protected virtual void OnNumberspinbuttonChanged (object sender, System.EventArgs e)
+		{
+			player.Number =(int) numberspinbutton.Value;
+		}
+
+		protected virtual void OnNumberspinbuttonValueChanged (object sender, System.EventArgs e)
+		{
+			player.Number =(int) numberspinbutton.Value;
+		}		
+	}
 }

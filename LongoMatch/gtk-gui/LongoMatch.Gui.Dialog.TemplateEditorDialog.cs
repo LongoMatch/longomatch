@@ -37,6 +37,7 @@ namespace LongoMatch.Gui.Dialog {
             this.sectionspropertieswidget3 = new LongoMatch.Gui.Component.SectionsPropertiesWidget();
             this.sectionspropertieswidget3.Events = ((Gdk.EventMask)(256));
             this.sectionspropertieswidget3.Name = "sectionspropertieswidget3";
+            this.sectionspropertieswidget3.Edited = false;
             w1.Add(this.sectionspropertieswidget3);
             Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(w1[this.sectionspropertieswidget3]));
             w2.Position = 0;
@@ -61,8 +62,8 @@ namespace LongoMatch.Gui.Dialog {
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 758;
-            this.DefaultHeight = 404;
+            this.DefaultWidth = 470;
+            this.DefaultHeight = 243;
             this.Show();
         }
     }

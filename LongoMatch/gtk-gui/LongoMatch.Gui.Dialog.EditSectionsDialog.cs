@@ -11,36 +11,33 @@
 namespace LongoMatch.Gui.Dialog {
     
     
-    public partial class TeamTemplateEditor {
+    public partial class EditSectionsDialog {
         
-        private LongoMatch.Gui.Component.TeamTemplateWidget teamtemplatewidget1;
+        private LongoMatch.Gui.Component.TimeNodeProperties timenodeproperties2;
         
         private Gtk.Button buttonOk;
         
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
-            // Widget LongoMatch.Gui.Dialog.TeamTemplateEditor
-            this.Name = "LongoMatch.Gui.Dialog.TeamTemplateEditor";
+            // Widget LongoMatch.Gui.Dialog.EditSectionsDialog
+            this.Name = "LongoMatch.Gui.Dialog.EditSectionsDialog";
+            this.Title = Mono.Unix.Catalog.GetString("Section Properties");
             this.Icon = Gdk.Pixbuf.LoadFromResource("longomatch.png");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.Modal = true;
-            this.Gravity = ((Gdk.Gravity)(5));
-            this.SkipPagerHint = true;
-            this.SkipTaskbarHint = true;
             this.HasSeparator = false;
-            // Internal child LongoMatch.Gui.Dialog.TeamTemplateEditor.VBox
+            // Internal child LongoMatch.Gui.Dialog.EditSectionsDialog.VBox
             Gtk.VBox w1 = this.VBox;
             w1.Name = "dialog1_VBox";
             w1.BorderWidth = ((uint)(2));
             // Container child dialog1_VBox.Gtk.Box+BoxChild
-            this.teamtemplatewidget1 = new LongoMatch.Gui.Component.TeamTemplateWidget();
-            this.teamtemplatewidget1.Events = ((Gdk.EventMask)(256));
-            this.teamtemplatewidget1.Name = "teamtemplatewidget1";
-            this.teamtemplatewidget1.Edited = false;
-            w1.Add(this.teamtemplatewidget1);
-            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(w1[this.teamtemplatewidget1]));
+            this.timenodeproperties2 = new LongoMatch.Gui.Component.TimeNodeProperties();
+            this.timenodeproperties2.Events = ((Gdk.EventMask)(256));
+            this.timenodeproperties2.Name = "timenodeproperties2";
+            w1.Add(this.timenodeproperties2);
+            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(w1[this.timenodeproperties2]));
             w2.Position = 0;
-            // Internal child LongoMatch.Gui.Dialog.TeamTemplateEditor.ActionArea
+            // Internal child LongoMatch.Gui.Dialog.EditSectionsDialog.ActionArea
             Gtk.HButtonBox w3 = this.ActionArea;
             w3.Name = "dialog1_ActionArea";
             w3.Spacing = 6;
@@ -53,16 +50,16 @@ namespace LongoMatch.Gui.Dialog {
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.UseStock = true;
             this.buttonOk.UseUnderline = true;
-            this.buttonOk.Label = "gtk-apply";
-            this.AddActionWidget(this.buttonOk, -10);
+            this.buttonOk.Label = "gtk-ok";
+            this.AddActionWidget(this.buttonOk, -5);
             Gtk.ButtonBox.ButtonBoxChild w4 = ((Gtk.ButtonBox.ButtonBoxChild)(w3[this.buttonOk]));
             w4.Expand = false;
             w4.Fill = false;
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 436;
-            this.DefaultHeight = 313;
+            this.DefaultWidth = 264;
+            this.DefaultHeight = 137;
             this.Show();
         }
     }

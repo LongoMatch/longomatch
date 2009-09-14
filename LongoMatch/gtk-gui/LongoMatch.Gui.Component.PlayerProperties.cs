@@ -13,10 +13,6 @@ namespace LongoMatch.Gui.Component {
     
     public partial class PlayerProperties {
         
-        private Gtk.Frame frame1;
-        
-        private Gtk.Alignment GtkAlignment;
-        
         private Gtk.Table table1;
         
         private Gtk.HBox hbox1;
@@ -39,21 +35,12 @@ namespace LongoMatch.Gui.Component {
         
         private Gtk.Entry positionentry;
         
-        private Gtk.Label titlelabel;
-        
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
             // Widget LongoMatch.Gui.Component.PlayerProperties
             Stetic.BinContainer.Attach(this);
             this.Name = "LongoMatch.Gui.Component.PlayerProperties";
             // Container child LongoMatch.Gui.Component.PlayerProperties.Gtk.Container+ContainerChild
-            this.frame1 = new Gtk.Frame();
-            this.frame1.Name = "frame1";
-            // Container child frame1.Gtk.Container+ContainerChild
-            this.GtkAlignment = new Gtk.Alignment(0F, 0F, 1F, 1F);
-            this.GtkAlignment.Name = "GtkAlignment";
-            this.GtkAlignment.LeftPadding = ((uint)(12));
-            // Container child GtkAlignment.Gtk.Container+ContainerChild
             this.table1 = new Gtk.Table(((uint)(4)), ((uint)(2)), false);
             this.table1.Name = "table1";
             this.table1.RowSpacing = ((uint)(6));
@@ -166,18 +153,15 @@ namespace LongoMatch.Gui.Component {
             w10.RightAttach = ((uint)(2));
             w10.XOptions = ((Gtk.AttachOptions)(4));
             w10.YOptions = ((Gtk.AttachOptions)(4));
-            this.GtkAlignment.Add(this.table1);
-            this.frame1.Add(this.GtkAlignment);
-            this.titlelabel = new Gtk.Label();
-            this.titlelabel.Name = "titlelabel";
-            this.titlelabel.LabelProp = Mono.Unix.Catalog.GetString("<b>frame1</b>");
-            this.titlelabel.UseMarkup = true;
-            this.frame1.LabelWidget = this.titlelabel;
-            this.Add(this.frame1);
+            this.Add(this.table1);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
             this.Hide();
+            this.positionentry.Changed += new System.EventHandler(this.OnPositionentryChanged);
+            this.numberspinbutton.EditingDone += new System.EventHandler(this.OnNumberspinbuttonChanged);
+            this.numberspinbutton.ValueChanged += new System.EventHandler(this.OnNumberspinbuttonValueChanged);
+            this.nameentry.Changed += new System.EventHandler(this.OnNameentryChanged);
             this.openbutton.Clicked += new System.EventHandler(this.OnOpenbuttonClicked);
         }
     }

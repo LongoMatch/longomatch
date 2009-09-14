@@ -97,13 +97,13 @@ namespace LongoMatch.Gui.Dialog
 		public void SetSectionsTemplate(Sections sections){	
 			if (useType != UseType.SectionsTemplate)
 				return;
-			sectionspropertieswidget1.SetSections(sections);			
+			sectionspropertieswidget1.Sections=sections;			
 		}	
 		
 		public void SetTeamTemplate(TeamTemplate template){
 			if (useType != UseType.TeamTemplate)
 				return;
-			teamtemplatewidget1.SetTeamTemplate(template);
+			teamtemplatewidget1.TeamTemplate=template;
 		}
 		
 		private void UpdateSections(){
@@ -148,17 +148,32 @@ namespace LongoMatch.Gui.Dialog
 				model.IterNext(ref iter);
 			}
 		}
-
-		protected virtual void OnSavebuttonClicked (object sender, System.EventArgs e)
-		{
+		
+		private void SaveTemplate(){
 			if (useType == UseType.SectionsTemplate){
-				selectedSectionsTemplate = sectionspropertieswidget1.GetSections();
+				selectedSectionsTemplate = sectionspropertieswidget1.Sections;
 				SectionsWriter.UpdateTemplate (templateName,selectedSectionsTemplate);	
 			}
 			else{
-				selectedTeamTemplate = teamtemplatewidget1.GetTeamTemplate();
+				selectedTeamTemplate = teamtemplatewidget1.TeamTemplate;
 				selectedTeamTemplate.Save(templateName);
-			}		
+			}
+		}
+		
+		private void PromptForSave(){
+			MessageDialog mes = new MessageDialog(this,DialogFlags.Modal,MessageType.Question,ButtonsType.YesNo,
+			                                      Catalog.GetString("The template has been modified. Do you want to save it? "));
+			if (mes.Run() == (int)ResponseType.Yes){
+				SaveTemplate();					
+			}
+			mes.Destroy();		
+		}
+
+		protected virtual void OnSavebuttonClicked (object sender, System.EventArgs e)
+		{
+			SaveTemplate();		
+			sectionspropertieswidget1.Edited=false;
+			teamtemplatewidget1.Edited=false;
 		}
 
 		protected virtual void OnNewbuttonClicked (object sender, System.EventArgs e)
@@ -219,8 +234,7 @@ namespace LongoMatch.Gui.Dialog
 				//properties.
 				SelectTemplate("default");
 			}
-			mes.Destroy();	
-		
+			mes.Destroy();			
 		}
 
 		protected virtual void OnButtonCancelClicked (object sender, System.EventArgs e)
@@ -232,17 +246,23 @@ namespace LongoMatch.Gui.Dialog
 		{			
 			TreeIter iter;
 
+			if (sectionspropertieswidget1.Edited || teamtemplatewidget1.Edited)
+				PromptForSave();			
+				
 			treeview.Selection.GetSelected(out iter);
 			templateName = (string) this.dataFileListStore.GetValue (iter, 0);
 			
 			if (useType == UseType.SectionsTemplate)
 				UpdateSections();
+			
 			else
 				UpdateTeamTemplate();
 		}
 
 		protected virtual void OnButtonOkClicked (object sender, System.EventArgs e)
 		{
+			if (sectionspropertieswidget1.Edited)
+				PromptForSave();
 			this.Destroy();
 		}
 

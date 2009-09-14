@@ -13,9 +13,11 @@ namespace LongoMatch.Gui.Component {
     
     public partial class TeamTemplateWidget {
         
+        private Gtk.HBox hbox1;
+        
         private Gtk.ScrolledWindow scrolledwindow2;
         
-        private Gtk.Table table1;
+        private LongoMatch.Gui.Component.PlayerPropertiesTreeView playerpropertiestreeview1;
         
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
@@ -23,25 +25,29 @@ namespace LongoMatch.Gui.Component {
             Stetic.BinContainer.Attach(this);
             this.Name = "LongoMatch.Gui.Component.TeamTemplateWidget";
             // Container child LongoMatch.Gui.Component.TeamTemplateWidget.Gtk.Container+ContainerChild
+            this.hbox1 = new Gtk.HBox();
+            this.hbox1.Name = "hbox1";
+            this.hbox1.Spacing = 6;
+            // Container child hbox1.Gtk.Box+BoxChild
             this.scrolledwindow2 = new Gtk.ScrolledWindow();
             this.scrolledwindow2.CanFocus = true;
             this.scrolledwindow2.Name = "scrolledwindow2";
             this.scrolledwindow2.ShadowType = ((Gtk.ShadowType)(1));
             // Container child scrolledwindow2.Gtk.Container+ContainerChild
-            Gtk.Viewport w1 = new Gtk.Viewport();
-            w1.ShadowType = ((Gtk.ShadowType)(0));
-            // Container child GtkViewport.Gtk.Container+ContainerChild
-            this.table1 = new Gtk.Table(((uint)(3)), ((uint)(3)), false);
-            this.table1.Name = "table1";
-            this.table1.RowSpacing = ((uint)(6));
-            this.table1.ColumnSpacing = ((uint)(6));
-            w1.Add(this.table1);
-            this.scrolledwindow2.Add(w1);
-            this.Add(this.scrolledwindow2);
+            this.playerpropertiestreeview1 = new LongoMatch.Gui.Component.PlayerPropertiesTreeView();
+            this.playerpropertiestreeview1.CanFocus = true;
+            this.playerpropertiestreeview1.Name = "playerpropertiestreeview1";
+            this.scrolledwindow2.Add(this.playerpropertiestreeview1);
+            this.hbox1.Add(this.scrolledwindow2);
+            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.hbox1[this.scrolledwindow2]));
+            w2.Position = 0;
+            this.Add(this.hbox1);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
             this.Hide();
+            this.playerpropertiestreeview1.PlayerClicked += new LongoMatch.Gui.Component.PlayerPropertiesHandler(this.OnPlayerpropertiestreeview1PlayerClicked);
+            this.playerpropertiestreeview1.PlayerSelected += new LongoMatch.Gui.Component.PlayerPropertiesHandler(this.OnPlayerpropertiestreeview1PlayerSelected);
         }
     }
 }

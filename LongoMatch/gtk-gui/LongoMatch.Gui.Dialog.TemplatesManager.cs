@@ -23,9 +23,9 @@ namespace LongoMatch.Gui.Dialog {
         
         private Gtk.Button newbutton;
         
-        private Gtk.Button savebutton;
-        
         private Gtk.Button deletebutton;
+        
+        private Gtk.Button savebutton;
         
         private Gtk.HBox hbox1;
         
@@ -55,7 +55,7 @@ namespace LongoMatch.Gui.Dialog {
             this.hpaned1 = new Gtk.HPaned();
             this.hpaned1.CanFocus = true;
             this.hpaned1.Name = "hpaned1";
-            this.hpaned1.Position = 182;
+            this.hpaned1.Position = 144;
             // Container child hpaned1.Gtk.Paned+PanedChild
             this.vbox2 = new Gtk.VBox();
             this.vbox2.Name = "vbox2";
@@ -97,32 +97,6 @@ namespace LongoMatch.Gui.Dialog {
             w11.Expand = false;
             w11.Fill = false;
             // Container child hbox2.Gtk.Box+BoxChild
-            this.savebutton = new Gtk.Button();
-            this.savebutton.TooltipMarkup = "Save this template";
-            this.savebutton.Sensitive = false;
-            this.savebutton.CanFocus = true;
-            this.savebutton.Name = "savebutton";
-            this.savebutton.UseUnderline = true;
-            // Container child savebutton.Gtk.Container+ContainerChild
-            Gtk.Alignment w12 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment1.Gtk.Container+ContainerChild
-            Gtk.HBox w13 = new Gtk.HBox();
-            w13.Spacing = 2;
-            // Container child GtkHBox1.Gtk.Container+ContainerChild
-            Gtk.Image w14 = new Gtk.Image();
-            w14.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-save", Gtk.IconSize.Button, 20);
-            w13.Add(w14);
-            // Container child GtkHBox1.Gtk.Container+ContainerChild
-            Gtk.Label w16 = new Gtk.Label();
-            w13.Add(w16);
-            w12.Add(w13);
-            this.savebutton.Add(w12);
-            this.hbox2.Add(this.savebutton);
-            Gtk.Box.BoxChild w20 = ((Gtk.Box.BoxChild)(this.hbox2[this.savebutton]));
-            w20.Position = 1;
-            w20.Expand = false;
-            w20.Fill = false;
-            // Container child hbox2.Gtk.Box+BoxChild
             this.deletebutton = new Gtk.Button();
             this.deletebutton.TooltipMarkup = "Delete this template";
             this.deletebutton.Sensitive = false;
@@ -130,21 +104,47 @@ namespace LongoMatch.Gui.Dialog {
             this.deletebutton.Name = "deletebutton";
             this.deletebutton.UseUnderline = true;
             // Container child deletebutton.Gtk.Container+ContainerChild
+            Gtk.Alignment w12 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            // Container child GtkAlignment1.Gtk.Container+ContainerChild
+            Gtk.HBox w13 = new Gtk.HBox();
+            w13.Spacing = 2;
+            // Container child GtkHBox1.Gtk.Container+ContainerChild
+            Gtk.Image w14 = new Gtk.Image();
+            w14.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-delete", Gtk.IconSize.Button, 20);
+            w13.Add(w14);
+            // Container child GtkHBox1.Gtk.Container+ContainerChild
+            Gtk.Label w16 = new Gtk.Label();
+            w13.Add(w16);
+            w12.Add(w13);
+            this.deletebutton.Add(w12);
+            this.hbox2.Add(this.deletebutton);
+            Gtk.Box.BoxChild w20 = ((Gtk.Box.BoxChild)(this.hbox2[this.deletebutton]));
+            w20.Position = 1;
+            w20.Expand = false;
+            w20.Fill = false;
+            // Container child hbox2.Gtk.Box+BoxChild
+            this.savebutton = new Gtk.Button();
+            this.savebutton.TooltipMarkup = "Save this template";
+            this.savebutton.Sensitive = false;
+            this.savebutton.CanFocus = true;
+            this.savebutton.Name = "savebutton";
+            this.savebutton.UseUnderline = true;
+            // Container child savebutton.Gtk.Container+ContainerChild
             Gtk.Alignment w21 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
             // Container child GtkAlignment2.Gtk.Container+ContainerChild
             Gtk.HBox w22 = new Gtk.HBox();
             w22.Spacing = 2;
             // Container child GtkHBox2.Gtk.Container+ContainerChild
             Gtk.Image w23 = new Gtk.Image();
-            w23.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-delete", Gtk.IconSize.Button, 20);
+            w23.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-save", Gtk.IconSize.Button, 20);
             w22.Add(w23);
             // Container child GtkHBox2.Gtk.Container+ContainerChild
             Gtk.Label w25 = new Gtk.Label();
             w22.Add(w25);
             w21.Add(w22);
-            this.deletebutton.Add(w21);
-            this.hbox2.Add(this.deletebutton);
-            Gtk.Box.BoxChild w29 = ((Gtk.Box.BoxChild)(this.hbox2[this.deletebutton]));
+            this.savebutton.Add(w21);
+            this.hbox2.Add(this.savebutton);
+            Gtk.Box.BoxChild w29 = ((Gtk.Box.BoxChild)(this.hbox2[this.savebutton]));
             w29.Position = 2;
             w29.Expand = false;
             w29.Fill = false;
@@ -165,6 +165,7 @@ namespace LongoMatch.Gui.Dialog {
             this.sectionspropertieswidget1.Sensitive = false;
             this.sectionspropertieswidget1.Events = ((Gdk.EventMask)(256));
             this.sectionspropertieswidget1.Name = "sectionspropertieswidget1";
+            this.sectionspropertieswidget1.Edited = false;
             this.hbox1.Add(this.sectionspropertieswidget1);
             Gtk.Box.BoxChild w32 = ((Gtk.Box.BoxChild)(this.hbox1[this.sectionspropertieswidget1]));
             w32.Position = 0;
@@ -173,6 +174,7 @@ namespace LongoMatch.Gui.Dialog {
             this.teamtemplatewidget1.Sensitive = false;
             this.teamtemplatewidget1.Events = ((Gdk.EventMask)(256));
             this.teamtemplatewidget1.Name = "teamtemplatewidget1";
+            this.teamtemplatewidget1.Edited = false;
             this.hbox1.Add(this.teamtemplatewidget1);
             Gtk.Box.BoxChild w33 = ((Gtk.Box.BoxChild)(this.hbox1[this.teamtemplatewidget1]));
             w33.Position = 1;
@@ -201,16 +203,16 @@ namespace LongoMatch.Gui.Dialog {
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 803;
-            this.DefaultHeight = 388;
+            this.DefaultWidth = 483;
+            this.DefaultHeight = 336;
             this.sectionspropertieswidget1.Hide();
             this.teamtemplatewidget1.Hide();
             this.Show();
             this.treeview.RowActivated += new Gtk.RowActivatedHandler(this.OnTreeviewRowActivated);
             this.treeview.CursorChanged += new System.EventHandler(this.OnTreeviewCursorChanged);
             this.newbutton.Clicked += new System.EventHandler(this.OnNewbuttonClicked);
-            this.savebutton.Clicked += new System.EventHandler(this.OnSavebuttonClicked);
             this.deletebutton.Clicked += new System.EventHandler(this.OnDeletebuttonClicked);
+            this.savebutton.Clicked += new System.EventHandler(this.OnSavebuttonClicked);
             this.buttonOk.Clicked += new System.EventHandler(this.OnButtonOkClicked);
         }
     }

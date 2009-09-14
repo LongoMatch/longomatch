@@ -32,9 +32,6 @@
     <itemgroups />
     <signals>
       <itemgroup label="TimeNodeProperties Signals">
-        <signal name="DeleteSection" />
-        <signal name="InsertBefore" />
-        <signal name="InsertAfter" />
         <signal name="HotKeyChanged" />
       </itemgroup>
     </signals>
@@ -63,10 +60,6 @@
         <signal name="NewMarkEvent" />
       </itemgroup>
     </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.SectionsPropertiesWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
   </object>
   <object type="LongoMatch.Gui.Component.TimeAdjustWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
@@ -136,7 +129,11 @@
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.TeamTemplateWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
+    <itemgroups>
+      <itemgroup label="TeamTemplateWidget Properties">
+        <property name="Edited" />
+      </itemgroup>
+    </itemgroups>
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.PlayersTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
@@ -185,6 +182,32 @@
         <signal name="ColorChanged" />
         <signal name="VisibilityChanged" />
         <signal name="ClearDrawing" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.SectionsPropertiesWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="SectionsPropertiesWidget Properties">
+        <property name="Edited" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.SectionsTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
+    <itemgroups />
+    <signals>
+      <itemgroup label="SectionsTreeView Signals">
+        <signal name="SectionClicked" />
+        <signal name="SectionSelected" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.PlayerPropertiesTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
+    <itemgroups />
+    <signals>
+      <itemgroup label="PlayerPropertiesTreeView Signals">
+        <signal name="PlayerClicked" />
+        <signal name="PlayerSelected" />
       </itemgroup>
     </signals>
   </object>

@@ -30,57 +30,55 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class TeamTemplateWidget : Gtk.Bin
 	{
-		private List<PlayerProperties> pplist;
+		private TeamTemplate template;
+		private Player selectedPlayer;
+		private bool edited;
 		
 		public TeamTemplateWidget()
 		{
-			this.Build();
-			pplist = new List<PlayerProperties>();
-			table1.NColumns =(uint) 5;
+			this.Build();			
 		}
 		
-		public void SetTeamTemplate(TeamTemplate template){
-			int playersCount = template.PlayersCount;
-			
-			pplist.Clear();
-			
-			foreach (Widget w in table1.AllChildren){
-					w.Unrealize();
-					table1.Remove(w);
+		public TeamTemplate TeamTemplate{
+			get{return template;}
+			set{
+				this.template= value;
+				edited = false;
+				Gtk.TreeStore playersListStore = new Gtk.TreeStore (typeof (Player));
+				for (int i=0;i<template.PlayersCount;i++)
+					playersListStore.AppendValues (template.GetPlayer(i));				
+				playerpropertiestreeview1.Model=playersListStore;
 			}
-			
-			for( int i=0;i<playersCount;i++){
-				PlayerProperties pp = new PlayerProperties();
-				
-				pp.Name = i.ToString();
-				pp.Title =  "Player "+(i+1);			
-				pp.Player = template.GetPlayer(i);
-			
-				AddPlayerToTable(i,template.PlayersCount,pp);			
-			}		
-			
 		}
 		
-		public TeamTemplate GetTeamTemplate(){
-			TeamTemplate template = new TeamTemplate();
-			foreach (PlayerProperties pp in pplist){
-				template.AddPlayer(pp.Player);					
-			}
-			return template;
+		public bool Edited{
+			get{return edited;}
+			set{edited=value;}
 		}
 		
-		private void AddPlayerToTable(int index, int count, PlayerProperties pp){
-			uint row_top,row_bottom,col_left,col_right;
-			
-			pplist.Insert(index,pp);
-			table1.NRows =(uint) (count/5);			
-			row_top =(uint) (index/table1.NColumns);
-			row_bottom = (uint) row_top+1 ;
-			col_left = (uint) index%table1.NColumns;
-			col_right = (uint) col_left+1 ;
-			
-			table1.Attach(pp,col_left,col_right,row_top,row_bottom);	
-			pp.Show();
+		private void UpdateModel(){
+			TeamTemplate = template;
 		}
+						
+		private void EditSelectedPlayer(){
+			LongoMatch.Gui.Dialog.EditPlayerDialog dialog = new LongoMatch.Gui.Dialog.EditPlayerDialog();
+			dialog.Player=selectedPlayer;
+			dialog.TransientFor = (Gtk.Window) Toplevel;
+			dialog.Run();
+			dialog.Destroy();
+			edited = true;
+		}
+
+		protected virtual void OnPlayerpropertiestreeview1PlayerClicked (LongoMatch.TimeNodes.Player player)
+		{
+			selectedPlayer = player;
+			EditSelectedPlayer();
+		}
+
+		protected virtual void OnPlayerpropertiestreeview1PlayerSelected (LongoMatch.TimeNodes.Player player)
+		{
+			selectedPlayer = player;
+		}	
+
 	}
 }

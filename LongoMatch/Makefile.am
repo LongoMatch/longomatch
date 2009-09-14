@@ -81,6 +81,7 @@ FILES = \
 	Gui/CalendarPopup.cs \
 	Gui/DBManager.cs \
 	Gui/DrawingToolBox.cs\
+	Gui/EditSectionsDialog.cs\
 	Gui/ProjectListWidget.cs \
 	Gui/FileDescriptionWidget.cs \
 	Gui/FramesCaptureProgressDialog.cs \
@@ -98,6 +99,7 @@ FILES = \
 	Gui/PlayListTreeView.cs \
 	Gui/PlayListWidget.cs \
 	Gui/SectionsPropertiesWidget.cs \
+	Gui/SectionsTreeView.cs\
 	Gui/SnapshotsDialog.cs \
 	Gui/TeamTemplateEditor.cs \
 	Gui/TeamTemplateWidget.cs \
@@ -132,6 +134,7 @@ FILES = \
 	gtk-gui/LongoMatch.Gui.Component.FileDescriptionWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TreeWidget.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.EditSectionsDialog.cs\
 	gtk-gui/LongoMatch.Gui.Popup.CalendarPopup.cs \
 	gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs\
 	gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs \

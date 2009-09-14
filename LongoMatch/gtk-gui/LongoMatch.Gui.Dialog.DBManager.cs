@@ -99,7 +99,7 @@ namespace LongoMatch.Gui.Dialog {
             this.frame1.Add(this.GtkAlignment2);
             this.GtkLabel6 = new Gtk.Label();
             this.GtkLabel6.Name = "GtkLabel6";
-            this.GtkLabel6.LabelProp = Mono.Unix.Catalog.GetString("<b>Propiedades</b>");
+            this.GtkLabel6.LabelProp = Mono.Unix.Catalog.GetString("<b>Project Details</b>");
             this.GtkLabel6.UseMarkup = true;
             this.frame1.LabelWidget = this.GtkLabel6;
             this.vbox2.Add(this.frame1);
