@@ -74,128 +74,128 @@ RESGEN=resgen2
 all: $(ASSEMBLY) $(COMMONAPPLICATIONDATAROOT_IMAGES)  $(COMMONAPPLICATIONDATAROOT_LOGO) $(PROGRAMFILES) $(LINUX_DESKTOPAPPLICATIONS) $(BINARIES) 
 
 FILES = \
-	gtk-gui/generated.cs \
 	AssemblyInfo.cs \
-	Main.cs \
-	Gui/ButtonsWidget.cs \
-	Gui/CalendarPopup.cs \
-	Gui/DBManager.cs \
-	Gui/DrawingToolBox.cs\
-	Gui/EditSectionsDialog.cs\
-	Gui/ProjectListWidget.cs \
-	Gui/FileDescriptionWidget.cs \
-	Gui/FramesCaptureProgressDialog.cs \
-	Gui/EntryDialog.cs \
-	Gui/EditPlayerDialog.cs\
-	Gui/MainWindow.cs \
-	Gui/MessagePopup.cs \
-	Gui/Migrator.cs\
-	Gui/NewProjectDialog.cs \
-	Gui/NotesWidget.cs \
-	Gui/OpenProjectDialog.cs \
-	Gui/PlayerProperties.cs \
-	Gui/PlayerPropertiesTreeView.cs\
-	Gui/PlayersListTreeWidget.cs \
-	Gui/PlayersSelectionDialog.cs \
-	Gui/PlayersTreeView.cs \
-	Gui/PlayListTreeView.cs \
-	Gui/PlayListWidget.cs \
-	Gui/SectionsPropertiesWidget.cs \
-	Gui/SectionsTreeView.cs\
-	Gui/SnapshotsDialog.cs \
-	Gui/TeamTemplateEditor.cs \
-	Gui/TeamTemplateWidget.cs \
-	Gui/TemplatesEditor.cs \
-	Gui/TemplateEditorDialog.cs \
-	Gui/TimeAdjustWidget.cs \
-	Gui/TimeNodesTreeView.cs \
-	Gui/TreeWidget.cs \
-	Gui/TimeNodeProperties.cs \
-	Gui/TimeLineWidget.cs \
-	Gui/TimeReferenceWidget.cs \
-	Gui/TimeScale.cs \
-	Gui/TransparentDrawingArea.cs\
-	Gui/VideoEditionProperties.cs \
-	Gui/UpdateDialog.cs \
-	Gui/HotKeySelectorDialog.cs \
-	Gui/Win32CalendarDialog.cs\
-	Gui/WorkspaceChooser.cs \
-	DB/Project.cs \
-	DB/Sections.cs \
-	DB/DataBase.cs \
-	Handlers/Handlers.cs \
-	IO/SectionsWriter.cs \
-	IO/SectionsReader.cs \
-	IO/XMLReader.cs \
-	Time/MediaTimeNode.cs \
-	Time/PixbufTimeNode.cs \
-	Time/SectionsTimeNode.cs \
-	Time/TimeNode.cs \
-	Time/Time.cs \
-	Time/PlayListTimeNode.cs \
-	gtk-gui/LongoMatch.Gui.Component.FileDescriptionWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.TreeWidget.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.EditSectionsDialog.cs\
-	gtk-gui/LongoMatch.Gui.Dialog.EditPlayerDialog.cs\
-	gtk-gui/LongoMatch.Gui.Popup.CalendarPopup.cs \
-	gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs\
-	gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs\
-	gtk-gui/LongoMatch.Gui.Dialog.DBManager.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.OpenProjectDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.NewProjectDialog.cs \
-	gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.SectionsPropertiesWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.TimeNodeProperties.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.TemplateEditorDialog.cs \
-	gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.TimeLineWidget.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs \
-	gtk-gui/LongoMatch.Gui.Component.NotesWidget.cs \
-	gtk-gui/LongoMatch.Gui.MainWindow.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.Migrator.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs \
-	gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs \
-	gtk-gui/LongoMatch.Gui.Component.TeamTemplateWidget.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.TeamTemplateEditor.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.TemplatesManager.cs \
-	gtk-gui/LongoMatch.Gui.Component.PlayersListTreeWidget.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.WorkspaceChooser.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.Win32CalendarDialog.cs \
-	Playlist/IPlayList.cs \
-	Playlist/PlayList.cs \
-	Updates/Updater.cs \
-	Updates/XmlUpdateParser.cs \
-	IO/CSVExport.cs \
-	Time/HotKey.cs \
-	Handlers/DrawingManager.cs\
-	Handlers/EventsManager.cs \
-	Handlers/HotKeysManager.cs \
-	DB/TeamTemplate.cs \
-	Time/Player.cs \
+	Compat/0.0/DatabaseMigrator.cs \
 	Compat/0.0/DB/DataBase.cs \
 	Compat/0.0/DB/MediaFile.cs \
 	Compat/0.0/DB/Project.cs \
 	Compat/0.0/DB/Sections.cs \
-	Compat/0.0/IO/SectionsReader.cs\
+	Compat/0.0/IO/SectionsReader.cs \
+	Compat/0.0/Playlist/IPlayList.cs \
+	Compat/0.0/PlayListMigrator.cs \
+	Compat/0.0/Playlist/PlayList.cs \
+	Compat/0.0/TemplatesMigrator.cs \
 	Compat/0.0/Time/MediaTimeNode.cs \
 	Compat/0.0/Time/PixbufTimeNode.cs \
 	Compat/0.0/Time/PlayListTimeNode.cs \
 	Compat/0.0/Time/SectionsTimeNode.cs \
 	Compat/0.0/Time/Time.cs \
 	Compat/0.0/Time/TimeNode.cs \
-	Compat/0.0/Playlist/IPlayList.cs \
-	Compat/0.0/Playlist/PlayList.cs \
-	Compat/0.0/DatabaseMigrator.cs \
-	Compat/0.0/PlayListMigrator.cs\
-	Compat/0.0/TemplatesMigrator.cs 
-
+	DB/DataBase.cs \
+	DB/Project.cs \
+	DB/Sections.cs \
+	DB/Tag.cs \
+	DB/TagsTemplate.cs \
+	DB/TeamTemplate.cs \
+	gtk-gui/generated.cs \
+	gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs \
+	gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs \
+	gtk-gui/LongoMatch.Gui.Component.NotesWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs \
+	gtk-gui/LongoMatch.Gui.Component.PlayersListTreeWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.PlaysListTreeWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.ProjectTemplateWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.TeamTemplateWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.TimeLineWidget.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.EditCategoryDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.EditPlayerDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.Migrator.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.NewProjectDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.OpenProjectDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.ProjectTemplateEditorDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.TeamTemplateEditor.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.TemplatesManager.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.Win32CalendarDialog.cs \
+	gtk-gui/LongoMatch.Gui.MainWindow.cs \
+	gtk-gui/LongoMatch.Gui.Popup.CalendarPopup.cs \
+	gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs \
+	Gui/Component/ButtonsWidget.cs \
+	Gui/Component/CategoryProperties.cs \
+	Gui/Component/DrawingToolBox.cs \
+	Gui/Component/NotesWidget.cs \
+	Gui/Component/PlayerProperties.cs \
+	Gui/Component/PlayersListTreeWidget.cs \
+	Gui/Component/PlayListWidget.cs \
+	Gui/Component/PlaysListTreeWidget.cs \
+	Gui/Component/ProjectDetailsWidget.cs \
+	Gui/Component/ProjectListWidget.cs \
+	Gui/Component/ProjectTemplateWidget.cs \
+	Gui/Component/TeamTemplateEditor.cs \
+	Gui/Component/TeamTemplateWidget.cs \
+	Gui/Component/TimeAdjustWidget.cs \
+	Gui/Component/TimeLineWidget.cs \
+	Gui/Component/TimeReferenceWidget.cs \
+	Gui/Component/TimeScale.cs \
+	Gui/Dialog/EditCategoryDialog.cs \
+	Gui/Dialog/EditPlayerDialog.cs \
+	Gui/Dialog/EntryDialog.cs \
+	Gui/Dialog/FramesCaptureProgressDialog.cs \
+	Gui/Dialog/HotKeySelectorDialog.cs \
+	Gui/Dialog/Migrator.cs \
+	Gui/Dialog/NewProjectDialog.cs \
+	Gui/Dialog/OpenProjectDialog.cs \
+	Gui/Dialog/PlayersSelectionDialog.cs \
+	Gui/Dialog/ProjectsManager.cs \
+	Gui/Dialog/ProjectTemplateEditorDialog.cs \
+	Gui/Dialog/SnapshotsDialog.cs \
+	Gui/Dialog/TemplatesEditor.cs \
+	Gui/Dialog/UpdateDialog.cs \
+	Gui/Dialog/VideoEditionProperties.cs \
+	Gui/Dialog/Win32CalendarDialog.cs \
+	Gui/MainWindow.cs \
+	Gui/Popup/CalendarPopup.cs \
+	Gui/Popup/MessagePopup.cs \
+	Gui/TransparentDrawingArea.cs \
+	Gui/TreeView/CategoriesTreeView.cs \
+	Gui/TreeView/PlayerPropertiesTreeView.cs \
+	Gui/TreeView/PlayersTreeView.cs \
+	Gui/TreeView/PlayListTreeView.cs \
+	Gui/TreeView/PlaysTreeView.cs \
+	Handlers/DrawingManager.cs \
+	Handlers/EventsManager.cs \
+	Handlers/Handlers.cs \
+	Handlers/HotKeysManager.cs \
+	IO/CSVExport.cs \
+	IO/SectionsReader.cs \
+	IO/SectionsWriter.cs \
+	IO/XMLReader.cs \
+	Main.cs \
+	Playlist/IPlayList.cs \
+	Playlist/PlayList.cs \
+	Time/HotKey.cs \
+	Time/MediaTimeNode.cs \
+	Time/PixbufTimeNode.cs \
+	Time/Player.cs \
+	Time/PlayListTimeNode.cs \
+	Time/SectionsTimeNode.cs \
+	Time/Time.cs \
+	Time/TimeNode.cs \
+	Updates/Updater.cs \
+	Updates/XmlUpdateParser.cs
+	
 DATA_FILES = 
 
 RESOURCES = \

@@ -1,4 +1,4 @@
-// TimeNodeProperties.cs
+// CategoryProperties.cs
 //
 //  Copyright (C) 2007-2009 Andoni Morales Alastruey
 //
@@ -32,14 +32,14 @@ namespace LongoMatch.Gui.Component
 	
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
-	public partial  class TimeNodeProperties : Gtk.Bin
+	public partial  class CategoryProperties : Gtk.Bin
 	{
 
 		public event HotKeyChangeHandler HotKeyChanged;
 		
 		private SectionsTimeNode stn;
 		
-		public TimeNodeProperties()
+		public CategoryProperties()
 		{
 			this.Build();
 		}				

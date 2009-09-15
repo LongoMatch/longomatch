@@ -32,12 +32,12 @@ namespace LongoMatch.Gui.Component
 	
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
-	public class SectionsTreeView : Gtk.TreeView
+	public class CategoriesTreeView : Gtk.TreeView
 	{
 		public event SectionHandler SectionClicked;
 		public event SectionHandler SectionSelected;
 		
-		public SectionsTreeView(){
+		public CategoriesTreeView(){
 			
 			RowActivated += OnTreeviewRowActivated;
 			CursorChanged += OnCursorChanged;

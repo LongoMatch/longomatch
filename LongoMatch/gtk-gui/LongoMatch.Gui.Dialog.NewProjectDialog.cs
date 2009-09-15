@@ -13,7 +13,7 @@ namespace LongoMatch.Gui.Dialog {
     
     public partial class NewProjectDialog {
         
-        private LongoMatch.Gui.Component.FileDescriptionWidget fdwidget;
+        private LongoMatch.Gui.Component.ProjectDetailsWidget fdwidget;
         
         private Gtk.Button buttonCancel;
         
@@ -36,7 +36,7 @@ namespace LongoMatch.Gui.Dialog {
             w1.Name = "dialog1_VBox";
             w1.BorderWidth = ((uint)(2));
             // Container child dialog1_VBox.Gtk.Box+BoxChild
-            this.fdwidget = new LongoMatch.Gui.Component.FileDescriptionWidget();
+            this.fdwidget = new LongoMatch.Gui.Component.ProjectDetailsWidget();
             this.fdwidget.Name = "fdwidget";
             this.fdwidget.LocalGoals = 0;
             this.fdwidget.VisitorGoals = 0;

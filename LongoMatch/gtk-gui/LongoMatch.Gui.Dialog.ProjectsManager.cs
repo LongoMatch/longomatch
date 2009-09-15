@@ -11,7 +11,7 @@
 namespace LongoMatch.Gui.Dialog {
     
     
-    public partial class DBManager {
+    public partial class ProjectsManager {
         
         private Gtk.VBox dialog1_VBox1;
         
@@ -27,7 +27,7 @@ namespace LongoMatch.Gui.Dialog {
         
         private Gtk.Alignment GtkAlignment2;
         
-        private LongoMatch.Gui.Component.FileDescriptionWidget filedescriptionwidget3;
+        private LongoMatch.Gui.Component.ProjectDetailsWidget filedescriptionwidget3;
         
         private Gtk.Label GtkLabel6;
         
@@ -41,8 +41,8 @@ namespace LongoMatch.Gui.Dialog {
         
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
-            // Widget LongoMatch.Gui.Dialog.DBManager
-            this.Name = "LongoMatch.Gui.Dialog.DBManager";
+            // Widget LongoMatch.Gui.Dialog.ProjectsManager
+            this.Name = "LongoMatch.Gui.Dialog.ProjectsManager";
             this.Title = Mono.Unix.Catalog.GetString("Projects Manager");
             this.Icon = Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Dialog, 48);
             this.WindowPosition = ((Gtk.WindowPosition)(4));
@@ -51,7 +51,7 @@ namespace LongoMatch.Gui.Dialog {
             this.SkipPagerHint = true;
             this.SkipTaskbarHint = true;
             this.HasSeparator = false;
-            // Internal child LongoMatch.Gui.Dialog.DBManager.VBox
+            // Internal child LongoMatch.Gui.Dialog.ProjectsManager.VBox
             Gtk.VBox w1 = this.VBox;
             w1.Name = "dialog1_VBox";
             w1.BorderWidth = ((uint)(2));
@@ -88,7 +88,7 @@ namespace LongoMatch.Gui.Dialog {
             this.GtkAlignment2.Name = "GtkAlignment2";
             this.GtkAlignment2.LeftPadding = ((uint)(12));
             // Container child GtkAlignment2.Gtk.Container+ContainerChild
-            this.filedescriptionwidget3 = new LongoMatch.Gui.Component.FileDescriptionWidget();
+            this.filedescriptionwidget3 = new LongoMatch.Gui.Component.ProjectDetailsWidget();
             this.filedescriptionwidget3.Sensitive = false;
             this.filedescriptionwidget3.Events = ((Gdk.EventMask)(256));
             this.filedescriptionwidget3.Name = "filedescriptionwidget3";
@@ -150,7 +150,7 @@ namespace LongoMatch.Gui.Dialog {
             w1.Add(this.dialog1_VBox1);
             Gtk.Box.BoxChild w12 = ((Gtk.Box.BoxChild)(w1[this.dialog1_VBox1]));
             w12.Position = 0;
-            // Internal child LongoMatch.Gui.Dialog.DBManager.ActionArea
+            // Internal child LongoMatch.Gui.Dialog.ProjectsManager.ActionArea
             Gtk.HButtonBox w13 = this.ActionArea;
             w13.Name = "dialog1_ActionArea";
             w13.Spacing = 6;

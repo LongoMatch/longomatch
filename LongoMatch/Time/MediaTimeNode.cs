@@ -37,7 +37,7 @@ namespace LongoMatch.TimeNodes
 	       video sequence again.
 	 */
 	[Serializable]
-	public class MediaTimeNode : PixbufTimeNode
+	public class  MediaTimeNode : PixbufTimeNode
 	{
 		
 		

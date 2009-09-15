@@ -271,9 +271,9 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnDatabaseManagerActivated (object sender, System.EventArgs e)
 		{
-			DBManager db = new DBManager();
-			db.TransientFor = this;
-			db.Show();
+			ProjectsManager pm = new ProjectsManager();
+			pm.TransientFor = this;
+			pm.Show();
 		}		
 
 		protected virtual void OnTimeprecisionadjustwidget1SizeRequested (object o, Gtk.SizeRequestedArgs args)

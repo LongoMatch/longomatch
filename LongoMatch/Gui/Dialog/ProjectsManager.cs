@@ -30,13 +30,13 @@ namespace LongoMatch.Gui.Dialog
 	
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(false)]
-	public partial class DBManager : Gtk.Dialog
+	public partial class ProjectsManager : Gtk.Dialog
 	{
 
 		public bool edited;
 		public string originalFilePath;
 		
-		public DBManager()
+		public ProjectsManager()
 		{
 			this.Build();
 			this.Fill();

@@ -31,7 +31,7 @@ namespace LongoMatch.Gui.Component
 	
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
-	public partial class TreeWidget : Gtk.Bin
+	public partial class PlaysListTreeWidget : Gtk.Bin
 	{
 
 		public event TimeNodeSelectedHandler TimeNodeSelected;
@@ -44,13 +44,13 @@ namespace LongoMatch.Gui.Component
 		private Project project;
 
 		
-		public TreeWidget()
+		public PlaysListTreeWidget()
 		{		
 			this.Build();		    
 			
 		}
 		
-		public void DeleteTimeNode(MediaTimeNode tNode, int section){
+		public void DeletePlay (MediaTimeNode play, int section){
 			if (project != null){
 				TreeIter iter;
 				TreeStore model = (TreeStore)treeview.Model;
@@ -60,7 +60,7 @@ namespace LongoMatch.Gui.Component
 				// Searching the TimeNode to remove it
 				while (model.IterIsValid(child)){
 				    MediaTimeNode mtn = (MediaTimeNode) model.GetValue( child,0);
-					if(mtn == tNode){
+					if(mtn == play){
 						model.Remove (ref child);
 						break;
 					}
@@ -72,14 +72,14 @@ namespace LongoMatch.Gui.Component
 			}			
 		}		
 		
-		public void AddTimeNode(MediaTimeNode tNode,int  section){
+		public void AddPlay(MediaTimeNode play,int  section){
 			if (project != null){
 				TreeIter iter;
 				TreeStore model = (TreeStore)treeview.Model;
 				model.GetIterFromString (out iter, section.ToString());
 				TimeNode stNode = (TimeNode)model.GetValue (iter,0);
 				if (project.Sections.GetTimeNode(section) == stNode)
-					model.AppendValues (iter,tNode);
+					model.AppendValues (iter,play);
 			}		
 		}
 		

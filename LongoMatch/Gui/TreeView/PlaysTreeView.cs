@@ -31,7 +31,7 @@ namespace LongoMatch.Gui.Component
 	
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
-	public class TimeNodesTreeView : Gtk.TreeView
+	public class PlaysTreeView : Gtk.TreeView
 	{
 		
 		public event TimeNodeChangedHandler TimeNodeChanged;
@@ -57,7 +57,7 @@ namespace LongoMatch.Gui.Component
 		
 
 		
-		public TimeNodesTreeView(){
+		public PlaysTreeView(){
 			
 			this.RowActivated += new RowActivatedHandler(OnTreeviewRowActivated);
 						
@@ -101,12 +101,6 @@ namespace LongoMatch.Gui.Component
 			this.AppendColumn (startTimeColumn);
 			this.AppendColumn (stopTimeColumn);
 		
-		}
-		
-		
-		~TimeNodesTreeView()
-		{
-
 		}
 		
 		public Color[]  Colors{

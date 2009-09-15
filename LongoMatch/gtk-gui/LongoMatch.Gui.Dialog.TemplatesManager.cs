@@ -29,7 +29,7 @@ namespace LongoMatch.Gui.Dialog {
         
         private Gtk.HBox hbox1;
         
-        private LongoMatch.Gui.Component.SectionsPropertiesWidget sectionspropertieswidget1;
+        private LongoMatch.Gui.Component.ProjectTemplateWidget sectionspropertieswidget1;
         
         private LongoMatch.Gui.Component.TeamTemplateWidget teamtemplatewidget1;
         
@@ -161,7 +161,7 @@ namespace LongoMatch.Gui.Dialog {
             this.hbox1.Name = "hbox1";
             this.hbox1.Spacing = 6;
             // Container child hbox1.Gtk.Box+BoxChild
-            this.sectionspropertieswidget1 = new LongoMatch.Gui.Component.SectionsPropertiesWidget();
+            this.sectionspropertieswidget1 = new LongoMatch.Gui.Component.ProjectTemplateWidget();
             this.sectionspropertieswidget1.Sensitive = false;
             this.sectionspropertieswidget1.Events = ((Gdk.EventMask)(256));
             this.sectionspropertieswidget1.Name = "sectionspropertieswidget1";

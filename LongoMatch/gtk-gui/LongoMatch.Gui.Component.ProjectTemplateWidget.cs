@@ -11,13 +11,13 @@
 namespace LongoMatch.Gui.Component {
     
     
-    public partial class SectionsPropertiesWidget {
+    public partial class ProjectTemplateWidget {
         
         private Gtk.HBox hbox1;
         
         private Gtk.ScrolledWindow scrolledwindow2;
         
-        private LongoMatch.Gui.Component.SectionsTreeView sectionstreeview1;
+        private LongoMatch.Gui.Component.CategoriesTreeView sectionstreeview1;
         
         private Gtk.VBox vbox2;
         
@@ -31,10 +31,10 @@ namespace LongoMatch.Gui.Component {
         
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
-            // Widget LongoMatch.Gui.Component.SectionsPropertiesWidget
+            // Widget LongoMatch.Gui.Component.ProjectTemplateWidget
             Stetic.BinContainer.Attach(this);
-            this.Name = "LongoMatch.Gui.Component.SectionsPropertiesWidget";
-            // Container child LongoMatch.Gui.Component.SectionsPropertiesWidget.Gtk.Container+ContainerChild
+            this.Name = "LongoMatch.Gui.Component.ProjectTemplateWidget";
+            // Container child LongoMatch.Gui.Component.ProjectTemplateWidget.Gtk.Container+ContainerChild
             this.hbox1 = new Gtk.HBox();
             this.hbox1.Name = "hbox1";
             this.hbox1.Spacing = 6;
@@ -44,7 +44,7 @@ namespace LongoMatch.Gui.Component {
             this.scrolledwindow2.Name = "scrolledwindow2";
             this.scrolledwindow2.ShadowType = ((Gtk.ShadowType)(1));
             // Container child scrolledwindow2.Gtk.Container+ContainerChild
-            this.sectionstreeview1 = new LongoMatch.Gui.Component.SectionsTreeView();
+            this.sectionstreeview1 = new LongoMatch.Gui.Component.CategoriesTreeView();
             this.sectionstreeview1.CanFocus = true;
             this.sectionstreeview1.Name = "sectionstreeview1";
             this.scrolledwindow2.Add(this.sectionstreeview1);

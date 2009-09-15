@@ -11,7 +11,7 @@
 namespace LongoMatch.Gui.Component {
     
     
-    public partial class TimeNodeProperties {
+    public partial class CategoryProperties {
         
         private Gtk.VBox vbox3;
         
@@ -37,10 +37,10 @@ namespace LongoMatch.Gui.Component {
         
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
-            // Widget LongoMatch.Gui.Component.TimeNodeProperties
+            // Widget LongoMatch.Gui.Component.CategoryProperties
             Stetic.BinContainer.Attach(this);
-            this.Name = "LongoMatch.Gui.Component.TimeNodeProperties";
-            // Container child LongoMatch.Gui.Component.TimeNodeProperties.Gtk.Container+ContainerChild
+            this.Name = "LongoMatch.Gui.Component.CategoryProperties";
+            // Container child LongoMatch.Gui.Component.CategoryProperties.Gtk.Container+ContainerChild
             this.vbox3 = new Gtk.VBox();
             this.vbox3.Name = "vbox3";
             this.vbox3.Spacing = 6;

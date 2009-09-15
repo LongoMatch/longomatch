@@ -29,11 +29,11 @@ namespace LongoMatch.Gui.Dialog
 {
 	
 	
-	public partial class EditSectionsDialog : Gtk.Dialog
+	public partial class EditCategoryDialog : Gtk.Dialog
 	{
 		private List<HotKey> hkList;
 		
-		public EditSectionsDialog()
+		public EditCategoryDialog()
 		{
 			this.Build();
 			timenodeproperties2.HotKeyChanged += OnHotKeyChanged;

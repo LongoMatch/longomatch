@@ -40,7 +40,7 @@ namespace LongoMatch
 	public class EventsManager 
 	{
 
-		private TreeWidget treewidget;
+		private PlaysListTreeWidget treewidget;
 		private PlayersListTreeWidget localPlayersList,visitorPlayersList;
 		private ButtonsWidget buttonswidget;
 		private PlayListWidget playlist;
@@ -56,7 +56,7 @@ namespace LongoMatch
 		// current proyect in use
 		private Project openedProject;
 		
-		public EventsManager(TreeWidget treewidget, PlayersListTreeWidget localPlayersList, PlayersListTreeWidget visitorPlayersList,
+		public EventsManager(PlaysListTreeWidget treewidget, PlayersListTreeWidget localPlayersList, PlayersListTreeWidget visitorPlayersList,
 		                     ButtonsWidget buttonswidget,PlayListWidget playlist, PlayerBin player,
 		                     TimeLineWidget timeline, ProgressBar videoprogressbar,NotesWidget notes)
 		{
@@ -135,7 +135,7 @@ namespace LongoMatch
 				Time fStop = (stop > length) ? length: stop;
 				Pixbuf miniature = player.CurrentFrame;
 				MediaTimeNode tn = openedProject.AddTimeNode(section,fStart, fStop,miniature);	
-				treewidget.AddTimeNode(tn,section);
+				treewidget.AddPlay(tn,section);
 				timeline.QueueDraw();
 			}
 		}
@@ -213,7 +213,7 @@ namespace LongoMatch
 		
 		protected virtual void OnTimeNodeDeleted (MediaTimeNode tNode,int section)
 		{
-			treewidget.DeleteTimeNode(tNode,section);
+			treewidget.DeletePlay(tNode,section);
 			foreach (int player in tNode.LocalPlayers)
 				localPlayersList.DeleteTimeNode(tNode,player);
 			foreach (int player in tNode.VisitorPlayers)

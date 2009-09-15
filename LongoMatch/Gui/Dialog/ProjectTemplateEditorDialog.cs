@@ -25,10 +25,10 @@ namespace LongoMatch.Gui.Dialog
 	
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(false)]
-	public partial class TemplateEditorDialog : Gtk.Dialog
+	public partial class ProjectTemplateEditorDialog : Gtk.Dialog
 	{
 		
-		public TemplateEditorDialog()
+		public ProjectTemplateEditorDialog()
 		{
 			this.Build();			
 		}

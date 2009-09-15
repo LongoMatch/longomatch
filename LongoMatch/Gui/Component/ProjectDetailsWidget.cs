@@ -41,7 +41,7 @@ namespace LongoMatch.Gui.Component
 	//TODO añadir eventos de cambios para realizar el cambio directamente sobre el file data abierto
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
-	public partial class FileDescriptionWidget : Gtk.Bin
+	public partial class ProjectDetailsWidget : Gtk.Bin
 	{
 		private Project project;
 		private LongoMatch.Video.Utils.PreviewMediaFile mFile;
@@ -52,7 +52,7 @@ namespace LongoMatch.Gui.Component
 		private TeamTemplate actualLocalTeam;
 		private UseType useType;		
 		
-		public FileDescriptionWidget()
+		public ProjectDetailsWidget()
 		{	
 				
 			this.Build();
@@ -352,7 +352,7 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnEditbuttonClicked (object sender, System.EventArgs e)
 		{			
-			TemplateEditorDialog ted = new TemplateEditorDialog();
+			ProjectTemplateEditorDialog ted = new ProjectTemplateEditorDialog();
 			ted.Sections = Sections;
 			
 			if (ted.Run() == (int)ResponseType.Apply){

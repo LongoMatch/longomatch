@@ -144,16 +144,16 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		private void SetMenu(){			
-			MenuItem newPlay;
+			MenuItem newMediaTimeNode;
 			
 			menu = new Menu();			
-			delete = new MenuItem(Catalog.GetString("Delete Play"));			
-			newPlay = new MenuItem(Catalog.GetString("Add New Play"));
+			delete = new MenuItem(Catalog.GetString("Delete MediaTimeNode"));			
+			newMediaTimeNode = new MenuItem(Catalog.GetString("Add New MediaTimeNode"));
 			
-			menu.Append(newPlay);
+			menu.Append(newMediaTimeNode);
 			menu.Append(delete);
 			
-			newPlay.Activated += new EventHandler(OnNewPlay);
+			newMediaTimeNode.Activated += new EventHandler(OnNewMediaTimeNode);
 			
 			menu.ShowAll();			
 		}
@@ -298,7 +298,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		protected void OnNewPlay(object obj, EventArgs args){
+		protected void OnNewMediaTimeNode(object obj, EventArgs args){
 			if (NewMarkAtFrameEvent != null)				
 				NewMarkAtFrameEvent(section,cursorFrame);			
 		}

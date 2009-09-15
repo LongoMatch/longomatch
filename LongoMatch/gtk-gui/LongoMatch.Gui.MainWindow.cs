@@ -69,7 +69,7 @@ namespace LongoMatch.Gui {
         
         private Gtk.Notebook notebook1;
         
-        private LongoMatch.Gui.Component.TreeWidget treewidget1;
+        private LongoMatch.Gui.Component.PlaysListTreeWidget treewidget1;
         
         private Gtk.Label label2;
         
@@ -226,7 +226,7 @@ namespace LongoMatch.Gui {
             this.notebook1.CurrentPage = 2;
             this.notebook1.TabPos = ((Gtk.PositionType)(3));
             // Container child notebook1.Gtk.Notebook+NotebookChild
-            this.treewidget1 = new LongoMatch.Gui.Component.TreeWidget();
+            this.treewidget1 = new LongoMatch.Gui.Component.PlaysListTreeWidget();
             this.treewidget1.Events = ((Gdk.EventMask)(256));
             this.treewidget1.Name = "treewidget1";
             this.notebook1.Add(this.treewidget1);
@@ -378,7 +378,7 @@ namespace LongoMatch.Gui {
                 this.Child.ShowAll();
             }
             this.DefaultWidth = 1259;
-            this.DefaultHeight = 537;
+            this.DefaultHeight = 590;
             this.leftbox.Hide();
             this.drawingtoolbox1.Hide();
             this.timelinewidget1.Hide();

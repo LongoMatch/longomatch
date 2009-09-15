@@ -11,16 +11,16 @@
 namespace LongoMatch.Gui.Dialog {
     
     
-    public partial class TemplateEditorDialog {
+    public partial class ProjectTemplateEditorDialog {
         
-        private LongoMatch.Gui.Component.SectionsPropertiesWidget sectionspropertieswidget3;
+        private LongoMatch.Gui.Component.ProjectTemplateWidget sectionspropertieswidget3;
         
         private Gtk.Button buttonOk;
         
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
-            // Widget LongoMatch.Gui.Dialog.TemplateEditorDialog
-            this.Name = "LongoMatch.Gui.Dialog.TemplateEditorDialog";
+            // Widget LongoMatch.Gui.Dialog.ProjectTemplateEditorDialog
+            this.Name = "LongoMatch.Gui.Dialog.ProjectTemplateEditorDialog";
             this.Title = Mono.Unix.Catalog.GetString("Template Editor");
             this.Icon = Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Dialog, 48);
             this.WindowPosition = ((Gtk.WindowPosition)(4));
@@ -29,19 +29,19 @@ namespace LongoMatch.Gui.Dialog {
             this.SkipPagerHint = true;
             this.SkipTaskbarHint = true;
             this.HasSeparator = false;
-            // Internal child LongoMatch.Gui.Dialog.TemplateEditorDialog.VBox
+            // Internal child LongoMatch.Gui.Dialog.ProjectTemplateEditorDialog.VBox
             Gtk.VBox w1 = this.VBox;
             w1.Name = "dialog1_VBox";
             w1.BorderWidth = ((uint)(2));
             // Container child dialog1_VBox.Gtk.Box+BoxChild
-            this.sectionspropertieswidget3 = new LongoMatch.Gui.Component.SectionsPropertiesWidget();
+            this.sectionspropertieswidget3 = new LongoMatch.Gui.Component.ProjectTemplateWidget();
             this.sectionspropertieswidget3.Events = ((Gdk.EventMask)(256));
             this.sectionspropertieswidget3.Name = "sectionspropertieswidget3";
             this.sectionspropertieswidget3.Edited = false;
             w1.Add(this.sectionspropertieswidget3);
             Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(w1[this.sectionspropertieswidget3]));
             w2.Position = 0;
-            // Internal child LongoMatch.Gui.Dialog.TemplateEditorDialog.ActionArea
+            // Internal child LongoMatch.Gui.Dialog.ProjectTemplateEditorDialog.ActionArea
             Gtk.HButtonBox w3 = this.ActionArea;
             w3.Name = "dialog1_ActionArea";
             w3.Spacing = 6;

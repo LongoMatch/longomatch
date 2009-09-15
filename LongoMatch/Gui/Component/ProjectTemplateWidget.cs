@@ -32,7 +32,7 @@ namespace LongoMatch.Gui.Component
 	
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
-	public partial class SectionsPropertiesWidget : Gtk.Bin
+	public partial class ProjectTemplateWidget : Gtk.Bin
 	{
 		private List<HotKey> hkList;
 		private Project project;
@@ -40,7 +40,7 @@ namespace LongoMatch.Gui.Component
 		private SectionsTimeNode selectedSection;		
 		private bool edited = false;
 		
-		public SectionsPropertiesWidget()
+		public ProjectTemplateWidget()
 		{
 			this.Build();
 			hkList = new List<HotKey>();
@@ -126,7 +126,7 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		private void EditSelectedSection(){
-			EditSectionsDialog dialog = new EditSectionsDialog();
+			EditCategoryDialog dialog = new EditCategoryDialog();
 			dialog.Section=selectedSection;
 			dialog.HotKeysList = hkList;
 			dialog.TransientFor = (Gtk.Window) Toplevel;

@@ -11,7 +11,7 @@
 namespace LongoMatch.Gui.Component {
     
     
-    public partial class FileDescriptionWidget {
+    public partial class ProjectDetailsWidget {
         
         private Gtk.VBox vbox2;
         
@@ -87,10 +87,10 @@ namespace LongoMatch.Gui.Component {
         
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
-            // Widget LongoMatch.Gui.Component.FileDescriptionWidget
+            // Widget LongoMatch.Gui.Component.ProjectDetailsWidget
             Stetic.BinContainer.Attach(this);
-            this.Name = "LongoMatch.Gui.Component.FileDescriptionWidget";
-            // Container child LongoMatch.Gui.Component.FileDescriptionWidget.Gtk.Container+ContainerChild
+            this.Name = "LongoMatch.Gui.Component.ProjectDetailsWidget";
+            // Container child LongoMatch.Gui.Component.ProjectDetailsWidget.Gtk.Container+ContainerChild
             this.vbox2 = new Gtk.VBox();
             this.vbox2.Name = "vbox2";
             this.vbox2.Spacing = 6;
@@ -367,7 +367,7 @@ namespace LongoMatch.Gui.Component {
             // Container child table1.Gtk.Table+TableChild
             this.label9 = new Gtk.Label();
             this.label9.Name = "label9";
-            this.label9.LabelProp = Mono.Unix.Catalog.GetString("Sections Template:");
+            this.label9.LabelProp = Mono.Unix.Catalog.GetString("Categories Template:");
             this.table1.Add(this.label9);
             Gtk.Table.TableChild w33 = ((Gtk.Table.TableChild)(this.table1[this.label9]));
             w33.TopAttach = ((uint)(6));
