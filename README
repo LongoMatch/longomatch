@@ -11,16 +11,17 @@ Features
  * Projects based on templates, customizable for different kind of analysis
  * Projects manager
  * Templates editor
- * 20 categories to group plays
+ * Illimited categories to tag plays
  * Adjustable play rate
  * Frame stepping
  * Adjust the lead and lag time for each play
  * Annotations
  * One-click review
  * Timeline
+ * Drawing tool
  * Playlists support
  * Export plays to png images with a variable frame rate
- * Export playlist to new videos
+ * Render playlist into new clip
  * Export projects to CSV files for statistics analysis
  * Support for the most common video formats
  * Multiplatform (Linux, FreeBSD, Windows,...)

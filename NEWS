@@ -1,3 +1,17 @@
+===== LongoMatch 0.15.2 =====
+
+	== Features ==
+	
+	* Drawing tool for on-video annotations
+ 	* Redesigned templates manager
+ 	
+ 	== Bugs Fixed ==
+ 	
+ 	* [#594161] Can't edit categories name in the treeview 
+ 	* [#594329] Cannot change the file associated to a project in the Projects Manager
+ 	* [#595397] Video editor stalls for some audio formats
+ 	* [#595110] Memory leak handling unamanged Pixbuf
+ 	
 ===== LongoMatch 0.15.1 =====	
 
 	== Features ==

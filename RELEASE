@@ -1,15 +1,26 @@
-LongoMatch-0.15.1 "Caipiroska de fresa" 
+LongoMatch-0.15.2 "Drawing cheese cakes" 
 -------------------------------------------------
 
-The LongoMatch team is proud to announce the first release in the unstable 0.15
+The LongoMatch team is proud to announce the second release in the unstable 0.15
 LongoMatch series.
 
 Due to its dependency on GStreamer, The LongoMatch team strongly recommends users have
 all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
-
 * Features of this release
+
+ * Drawing tool for on-video annotations
+ * Redesigned templates manager
+
+* Bugs Fixed
+
+ *  [#594161] Can't edit categories name in the treeview 
+ *  [#594329] Cannot change the file associated to a project in the Projects Manager
+ *  [#595397] Video editor stalls for some audio formats
+ *  [#595110] Memory leak handling unamanged Pixbuf
+ 
+* Features of the 0.15 series
 
  * Illimted number of tagging categories (previous version allows only 20)
  * Support for team templates
@@ -29,25 +40,13 @@ experience.
  * mono >= 2.0
  * mono-posix >= 2.0
  * mono-cairo >= 2.0
- * gstreamer >= 0.10.24
- * gnonlin >= 0.10.11
+ * gstreamer >= 0.10.22
+ * gnonlin >= 0.10.10
  * gtk-sharp >= 2.12
  * db40 >= 6.0
 
 
 * Download
-* Illimted number of tagging categories (previous version allows only 20)
-	* Support for team templates
-	* Plays can be tagged to players
-	* HotKeys support	
-	* Database migration tool
-	* New video editor implemented using GNonLin (FFmpeg and Mencoder are not required anymore)
-	* Video Editor with audio support
-	* Overlay title of the play in rendered clips
-	* Change the playrate of plays in the rendered clip
-	* New output formats (TV, HD, FullHD)
-	* New output audio and video codecs supports (Matroska+H264+AAC, AVI+XVID+MP3, OGG+Theora+Vorbis, MPEG2-PS+Mpeg2Video)
-	
   LongoMatch source tarballs are available on gnome FTP:
    http://ftp.gnome.org/pub/GNOME/sources/longomatch/0.15/
 
@@ -56,5 +55,9 @@ experience.
 * Information and Feedback
 
  * Information for users and developers can be found on the LongoMatch website :
-     http://www.longomatch.ylatuya.es/
+  http://www.longomatch.ylatuya.es/
+     
+ * Bugs and Features Requests
+  http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch
+    
 
