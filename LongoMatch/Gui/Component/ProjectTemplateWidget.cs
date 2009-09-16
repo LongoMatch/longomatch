@@ -48,8 +48,8 @@ namespace LongoMatch.Gui.Component
 		
 		public void SetProject(Project project){
 			this.project = project;
-			Sections=project.Sections;
-		}	
+			Sections=project.Sections;			
+		}			
 		
 		public Sections Sections{
 			get{return sections;}
@@ -65,6 +65,7 @@ namespace LongoMatch.Gui.Component
 					}catch{}; //Do not add duplicated hotkeys
 				}
 				sectionstreeview1.Model = sectionsListStore;
+				ButtonsSensitive = false;
 			}
 		}
 		
