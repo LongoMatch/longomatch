@@ -24,8 +24,10 @@ namespace LongoMatch.Video.Editor
 	
 	public enum VideoFormat
 	{
-		TV,
-		HD720p,
-		HD1080p
+		PORTABLE=0,
+		VGA=1,
+		TV=2,
+		HD720p=3,
+		HD1080p=4
 	}
 }

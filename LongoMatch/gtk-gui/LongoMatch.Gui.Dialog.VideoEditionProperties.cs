@@ -117,11 +117,13 @@ namespace LongoMatch.Gui.Dialog {
             w5.Position = 0;
             // Container child hbox4.Gtk.Box+BoxChild
             this.sizecombobox = Gtk.ComboBox.NewText();
-            this.sizecombobox.AppendText(Mono.Unix.Catalog.GetString("TV (4:3 - 720x540)"));
+            this.sizecombobox.AppendText(Mono.Unix.Catalog.GetString("Portable (4:3 - 320x240)"));
+            this.sizecombobox.AppendText(Mono.Unix.Catalog.GetString("VGA (4:3 - 640x480)"));
+            this.sizecombobox.AppendText(Mono.Unix.Catalog.GetString("TV (4:3 - 720x576)"));
             this.sizecombobox.AppendText(Mono.Unix.Catalog.GetString("HD 720p (16:9 - 1280x720)"));
             this.sizecombobox.AppendText(Mono.Unix.Catalog.GetString("Full HD 1080p (16:9 - 1920x1080)"));
             this.sizecombobox.Name = "sizecombobox";
-            this.sizecombobox.Active = 0;
+            this.sizecombobox.Active = 1;
             this.hbox4.Add(this.sizecombobox);
             Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(this.hbox4[this.sizecombobox]));
             w6.Position = 1;
@@ -145,12 +147,7 @@ namespace LongoMatch.Gui.Dialog {
             w8.Position = 0;
             // Container child hbox5.Gtk.Box+BoxChild
             this.formatcombobox = Gtk.ComboBox.NewText();
-            this.formatcombobox.AppendText(Mono.Unix.Catalog.GetString("Matroska (H.264+AAC)"));
-            this.formatcombobox.AppendText(Mono.Unix.Catalog.GetString("OGG (Theora+Vorbis)"));
-            this.formatcombobox.AppendText(Mono.Unix.Catalog.GetString("Avi (Xvid+MP3)"));
-            this.formatcombobox.AppendText(Mono.Unix.Catalog.GetString("DVD (MPEG-2)"));
             this.formatcombobox.Name = "formatcombobox";
-            this.formatcombobox.Active = 0;
             this.hbox5.Add(this.formatcombobox);
             Gtk.Box.BoxChild w9 = ((Gtk.Box.BoxChild)(this.hbox5[this.formatcombobox]));
             w9.Position = 1;

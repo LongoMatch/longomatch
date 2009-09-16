@@ -281,13 +281,8 @@ namespace LongoMatch.Gui.Component
 					videoEditor.VideoCodec = vep.VideoCodec;					
 					videoEditor.OutputFile = vep.Filename;
 					videoEditor.EnableTitle = vep.TitleOverlay;
-					/*if (vep.VideoCodec== VideoCodec.MPEG2_VIDEO)
-						videoEditor.EnableAudio = false;
-					else*/
-						videoEditor.EnableAudio = vep.EnableAudio;
+					videoEditor.EnableAudio = vep.EnableAudio;
 					videoEditor.VideoMuxer = vep.VideoMuxer;
-					//FIXME 0.16 Not used anymore with the GNonlin editor
-					videoEditor.TempDir = MainClass.TempVideosDir();
 					videoEditor.Start();
 					closebutton.Show();
 					newvideobutton.Hide();

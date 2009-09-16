@@ -367,7 +367,15 @@ namespace LongoMatch.Video.Editor {
 		
 		public VideoFormat VideoFormat{
 			set{
-				if (value == VideoFormat.TV){
+				if (value == VideoFormat.PORTABLE){
+					Height = 240;
+					Width = 320;
+				}
+				else if (value == VideoFormat.VGA){
+					Height = 480 ;
+					Width = 640;
+				}
+				else if (value == VideoFormat.TV){
 					Height = 576;
 					Width = 720;
 				}

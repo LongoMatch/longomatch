@@ -35,15 +35,24 @@ namespace LongoMatch.Gui.Dialog
 		private VideoCodec vcodec;
 		private AudioCodec acodec;
 		private VideoMuxer muxer;
+		
+		private const string MP4="MP4 (H.264+AAC)";
+		private const string AVI="AVI (Xvid+MP3)";
+		private const string OGG="OGG (Theora+Vorbis)";
+		private const string DVD="DVD (MPEG-2)";
+		
 
 #region Constructors
 		public VideoEditionProperties()
 		{
-			this.Build();		
-			if (System.Environment.OSVersion.Platform == PlatformID.Win32NT){
-				formatcombobox.RemoveText(1);
-				formatcombobox.RemoveText(2);			
-			}
+			this.Build();
+			formatcombobox.AppendText(MP4);
+			formatcombobox.AppendText(AVI);
+			if (System.Environment.OSVersion.Platform != PlatformID.Win32NT){
+				formatcombobox.AppendText(OGG);
+				formatcombobox.AppendText(DVD);			
+			}	
+			formatcombobox.Active=0;
 		}
 #endregion
 		
@@ -85,11 +94,11 @@ namespace LongoMatch.Gui.Dialog
 #region Private Methods
 		
 		private string GetExtension(){
-			if (formatcombobox.ActiveText == "Matroska (H.264+AAC)")
+			if (formatcombobox.ActiveText == MP4)
 				return "mkv";
-			else if (formatcombobox.ActiveText == "OGG (Theora+Vorbis)")
+			else if (formatcombobox.ActiveText == OGG)
 				return "ogg";
-			else if (formatcombobox.ActiveText == "Avi (Xvid+MP3)")
+			else if (formatcombobox.ActiveText == AVI)
 				return "avi";
 			else
 				return "mpg";
@@ -112,41 +121,30 @@ namespace LongoMatch.Gui.Dialog
 				vq = VideoQuality.Extra;
 			}
 			
-			if (sizecombobox.ActiveText == "TV (4:3 - 720x540)"){
-				vf = VideoFormat.TV;
-			}			
-			else if (sizecombobox.ActiveText == "HD 720p (16:9 - 1280x720)"){
-				vf = VideoFormat.HD720p;
-			}
-			else if (sizecombobox.ActiveText == "Full HD 1080p (16:9 - 1920x1080)"){
-				vf = VideoFormat.HD1080p;
-			}	
+			vf = (VideoFormat)sizecombobox.Active;				
 			
-			
-			if (formatcombobox.ActiveText == "Matroska (H.264+AAC)"){
+			if (formatcombobox.ActiveText == MP4){
 				vcodec = VideoCodec.H264;
 				acodec = AudioCodec.AAC;
 				muxer = VideoMuxer.MKV;
 			}	
-			else if (formatcombobox.ActiveText == "OGG (Theora+Vorbis)"){
+			else if (formatcombobox.ActiveText == OGG){
 				vcodec = VideoCodec.THEORA;
 				acodec = AudioCodec.VORBIS;
 				muxer = VideoMuxer.OGG;
 			}	
-			else if (formatcombobox.ActiveText == "Avi (Xvid+MP3)"){
+			else if (formatcombobox.ActiveText == AVI){
 				vcodec = VideoCodec.XVID;
 				acodec = AudioCodec.MP3;
 				muxer = VideoMuxer.AVI;
 			}
-			else if (formatcombobox.ActiveText == "DVD (MPEG-2)"){
+			else if (formatcombobox.ActiveText == DVD){
 				vcodec = VideoCodec.MPEG2_VIDEO;
 				acodec = AudioCodec.MPEG2_AUDIO;
 				muxer = VideoMuxer.DVD;
-			}
-						
+			}						
 			Hide();
 		}
-
 
 		protected virtual void OnOpenbuttonClicked (object sender, System.EventArgs e)
 		{
@@ -168,8 +166,7 @@ namespace LongoMatch.Gui.Dialog
 			fChooser.Filter = filter;
 			if (fChooser.Run() == (int)ResponseType.Accept){						
 				fileentry.Text = fChooser.Filename;
-			}
-		
+			}		
 			fChooser.Destroy();
 		}
 	}

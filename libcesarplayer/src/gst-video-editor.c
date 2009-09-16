@@ -237,7 +237,7 @@ gst_video_editor_class_init (GstVideoEditorClass *klass)
                                                          G_PARAM_READWRITE));
     g_object_class_install_property (object_class, PROP_WIDTH,
                                    g_param_spec_int ("width", NULL,
-                                                         NULL, 340, 1920,720,
+                                                         NULL, 320, 1920,720,
                                                          G_PARAM_READWRITE));
                                                          
     g_object_class_install_property (object_class, PROP_OUTPUT_FILE,
@@ -1079,7 +1079,7 @@ gst_video_editor_set_audio_encoder (GstVideoEditor *gve, gchar **err, GvsAudioCo
 			/*Create new encoder bin's src pad*/
 			srcpad = gst_element_get_static_pad(gve->priv->audioencoder,"src");			
 			gst_pad_set_active (srcpad, TRUE);
-    		gst_element_add_pad (gve->priv->aencode_bin, gst_ghost_pad_new ("src", srcpad));
+    			gst_element_add_pad (gve->priv->aencode_bin, gst_ghost_pad_new ("src", srcpad));
     		if (gve->priv->audio_enabled)
     			gst_element_link(gve->priv->aencode_bin, gve->priv->muxer);
 			gve_rewrite_headers(gve);

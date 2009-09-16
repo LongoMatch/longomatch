@@ -2541,10 +2541,12 @@ Extra</property>
                   <widget class="Gtk.ComboBox" id="sizecombobox">
                     <property name="MemberName" />
                     <property name="IsTextCombo">True</property>
-                    <property name="Items">TV (4:3 - 720x540)
+                    <property name="Items">Portable (4:3 - 320x240)
+VGA (4:3 - 640x480)
+TV (4:3 - 720x576)
 HD 720p (16:9 - 1280x720)
 Full HD 1080p (16:9 - 1920x1080)</property>
-                    <property name="Active">0</property>
+                    <property name="Active">1</property>
                   </widget>
                   <packing>
                     <property name="Position">1</property>
@@ -2579,11 +2581,7 @@ Full HD 1080p (16:9 - 1920x1080)</property>
                   <widget class="Gtk.ComboBox" id="formatcombobox">
                     <property name="MemberName" />
                     <property name="IsTextCombo">True</property>
-                    <property name="Items">Matroska (H.264+AAC)
-OGG (Theora+Vorbis)
-Avi (Xvid+MP3)
-DVD (MPEG-2)</property>
-                    <property name="Active">0</property>
+                    <property name="Items" />
                   </widget>
                   <packing>
                     <property name="Position">1</property>
