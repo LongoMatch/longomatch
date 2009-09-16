@@ -49,20 +49,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.ProjectDetailsWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="ProjectDetailsWidget Properties">
-        <property name="LocalName" />
-        <property name="VisitorName" />
-        <property name="Season" />
-        <property name="Competition" />
-        <property name="LocalGoals" />
-        <property name="VisitorGoals" />
-        <property name="Date" />
-      </itemgroup>
-    </itemgroups>
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Component.PlayerProperties" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
@@ -229,5 +215,19 @@
         <signal name="PlayersTagged" />
       </itemgroup>
     </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.ProjectDetailsWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="ProjectDetailsWidget Properties">
+        <property name="LocalName" />
+        <property name="VisitorName" />
+        <property name="Season" />
+        <property name="Competition" />
+        <property name="LocalGoals" />
+        <property name="VisitorGoals" />
+        <property name="Date" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
   </object>
 </objects>

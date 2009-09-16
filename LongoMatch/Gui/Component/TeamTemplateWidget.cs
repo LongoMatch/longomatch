@@ -55,11 +55,7 @@ namespace LongoMatch.Gui.Component
 			get{return edited;}
 			set{edited=value;}
 		}
-		
-		private void UpdateModel(){
-			TeamTemplate = template;
-		}
-						
+								
 		private void EditSelectedPlayer(){
 			LongoMatch.Gui.Dialog.EditPlayerDialog dialog = new LongoMatch.Gui.Dialog.EditPlayerDialog();
 			dialog.Player=selectedPlayer;
@@ -79,6 +75,5 @@ namespace LongoMatch.Gui.Component
 		{
 			selectedPlayer = player;
 		}	
-
 	}
 }
