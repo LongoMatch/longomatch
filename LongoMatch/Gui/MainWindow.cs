@@ -60,6 +60,11 @@ namespace LongoMatch.Gui
 			updater.NewVersion += new LongoMatch.Handlers.NewVersionHandler(OnUpdate);
 			updater.Run();*/
 			
+			if (Environment.OSVersion.Platform == PlatformID.Win32NT){
+				DrawingToolAction.Visible = false;
+				DrawingToolAction.DisconnectAccelerator();
+			}
+			
 			eManager = new EventsManager(treewidget1,
 			                             localplayerslisttreewidget,
 			                             visitorplayerslisttreewidget, 
