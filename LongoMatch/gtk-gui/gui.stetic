@@ -5,6 +5,7 @@
     <target-gtk-version>2.12</target-gtk-version>
   </configuration>
   <import>
+    <widget-library name="../../CesarPlayer/bin/Release/CesarPlayer.dll" />
     <widget-library name="../bin/Release/LongoMatch.exe" internal="true" />
   </import>
   <icon-factory>
@@ -124,6 +125,7 @@
                     <property name="label">gtk-edit</property>
                   </widget>
                   <packing>
+                    <property name="PackType">End</property>
                     <property name="Position">1</property>
                     <property name="AutoSize">True</property>
                     <property name="Expand">False</property>
@@ -174,6 +176,7 @@
                     <property name="label">gtk-edit</property>
                   </widget>
                   <packing>
+                    <property name="PackType">End</property>
                     <property name="Position">1</property>
                     <property name="AutoSize">True</property>
                     <property name="Expand">False</property>
@@ -225,6 +228,7 @@
                     <property name="label">gtk-edit</property>
                   </widget>
                   <packing>
+                    <property name="PackType">End</property>
                     <property name="Position">1</property>
                     <property name="AutoSize">True</property>
                     <property name="Expand">False</property>
@@ -1418,7 +1422,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="LongoMatch.Gui.MainWindow" design-size="1259 537">
+  <widget class="Gtk.Window" id="LongoMatch.Gui.MainWindow" design-size="1259 590">
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -1465,9 +1469,9 @@
         <property name="ShortLabel" translatable="yes">Database Manager</property>
         <signal name="Activated" handler="OnDatabaseManagerActivated" />
       </action>
-      <action id="SectionsTemplatesManagerAction">
+      <action id="CategoriesTemplatesManagerAction">
         <property name="Type">Action</property>
-        <property name="Label" translatable="yes">Sections Templates Manager</property>
+        <property name="Label" translatable="yes">Categories Templates Manager</property>
         <property name="ShortLabel" translatable="yes">Templates Manager</property>
         <signal name="Activated" handler="OnSectionsTemplatesManagerActivated" />
       </action>
@@ -1602,7 +1606,7 @@
                   </node>
                   <node type="Menu" action="ToolsAction">
                     <node type="Menuitem" action="ProjectsManagerAction" />
-                    <node type="Menuitem" action="SectionsTemplatesManagerAction" />
+                    <node type="Menuitem" action="CategoriesTemplatesManagerAction" />
                     <node type="Menuitem" action="TeamsTemplatesManagerAction" />
                     <node type="Menuitem" action="ExportProjectToCSVFileAction" />
                   </node>
@@ -2023,7 +2027,7 @@
   </widget>
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.ProjectTemplateEditorDialog" design-size="470 243">
     <property name="MemberName" />
-    <property name="Title" translatable="yes">Template Editor</property>
+    <property name="Title" translatable="yes">Project Template</property>
     <property name="Icon">stock:longomatch Dialog</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
@@ -3471,60 +3475,6 @@ You can download it using this direct link:</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.TeamTemplateEditor" design-size="436 313">
-    <property name="MemberName" />
-    <property name="Icon">resource:longomatch.png</property>
-    <property name="WindowPosition">CenterOnParent</property>
-    <property name="Modal">True</property>
-    <property name="Gravity">Center</property>
-    <property name="SkipPagerHint">True</property>
-    <property name="SkipTaskbarHint">True</property>
-    <property name="Buttons">1</property>
-    <property name="HelpButton">False</property>
-    <property name="HasSeparator">False</property>
-    <child internal-child="VBox">
-      <widget class="Gtk.VBox" id="dialog1_VBox">
-        <property name="MemberName" />
-        <property name="BorderWidth">2</property>
-        <child>
-          <widget class="LongoMatch.Gui.Component.TeamTemplateWidget" id="teamtemplatewidget1">
-            <property name="MemberName" />
-            <property name="Events">ButtonPressMask</property>
-            <property name="Edited">False</property>
-          </widget>
-          <packing>
-            <property name="Position">0</property>
-            <property name="AutoSize">True</property>
-          </packing>
-        </child>
-      </widget>
-    </child>
-    <child internal-child="ActionArea">
-      <widget class="Gtk.HButtonBox" id="dialog1_ActionArea">
-        <property name="MemberName" />
-        <property name="Spacing">6</property>
-        <property name="BorderWidth">5</property>
-        <property name="Size">1</property>
-        <property name="LayoutStyle">End</property>
-        <child>
-          <widget class="Gtk.Button" id="buttonOk">
-            <property name="MemberName" />
-            <property name="CanDefault">True</property>
-            <property name="CanFocus">True</property>
-            <property name="UseStock">True</property>
-            <property name="Type">StockItem</property>
-            <property name="StockId">gtk-apply</property>
-            <property name="ResponseId">-10</property>
-            <property name="label">gtk-apply</property>
-          </widget>
-          <packing>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
-      </widget>
-    </child>
-  </widget>
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.TemplatesManager" design-size="483 336">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Templates Manager</property>
@@ -4417,6 +4367,60 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
             <property name="StockId">gtk-ok</property>
             <property name="ResponseId">-5</property>
             <property name="label">gtk-ok</property>
+          </widget>
+          <packing>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.TeamTemplateEditor" design-size="436 313">
+    <property name="MemberName" />
+    <property name="Icon">resource:longomatch.png</property>
+    <property name="WindowPosition">CenterOnParent</property>
+    <property name="Modal">True</property>
+    <property name="Gravity">Center</property>
+    <property name="SkipPagerHint">True</property>
+    <property name="SkipTaskbarHint">True</property>
+    <property name="Buttons">1</property>
+    <property name="HelpButton">False</property>
+    <property name="HasSeparator">False</property>
+    <child internal-child="VBox">
+      <widget class="Gtk.VBox" id="dialog1_VBox">
+        <property name="MemberName" />
+        <property name="BorderWidth">2</property>
+        <child>
+          <widget class="LongoMatch.Gui.Component.TeamTemplateWidget" id="teamtemplatewidget1">
+            <property name="MemberName" />
+            <property name="Events">ButtonPressMask</property>
+            <property name="Edited">False</property>
+          </widget>
+          <packing>
+            <property name="Position">0</property>
+            <property name="AutoSize">True</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+    <child internal-child="ActionArea">
+      <widget class="Gtk.HButtonBox" id="dialog1_ActionArea">
+        <property name="MemberName" />
+        <property name="Spacing">6</property>
+        <property name="BorderWidth">5</property>
+        <property name="Size">1</property>
+        <property name="LayoutStyle">End</property>
+        <child>
+          <widget class="Gtk.Button" id="buttonOk">
+            <property name="MemberName" />
+            <property name="CanDefault">True</property>
+            <property name="CanFocus">True</property>
+            <property name="UseStock">True</property>
+            <property name="Type">StockItem</property>
+            <property name="StockId">gtk-apply</property>
+            <property name="ResponseId">-10</property>
+            <property name="label">gtk-apply</property>
           </widget>
           <packing>
             <property name="Expand">False</property>

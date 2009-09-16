@@ -143,8 +143,7 @@ FILES = \
 	Gui/Component/ProjectDetailsWidget.cs \
 	Gui/Component/ProjectListWidget.cs \
 	Gui/Component/ProjectTemplateWidget.cs \
-	Gui/Component/TeamTemplateEditor.cs \
-	Gui/Component/TeamTemplateWidget.cs \
+	Gui/Component/TeamTemplateWidget.cs\
 	Gui/Component/TimeAdjustWidget.cs \
 	Gui/Component/TimeLineWidget.cs \
 	Gui/Component/TimeReferenceWidget.cs \
@@ -162,6 +161,7 @@ FILES = \
 	Gui/Dialog/ProjectTemplateEditorDialog.cs \
 	Gui/Dialog/SnapshotsDialog.cs \
 	Gui/Dialog/TemplatesEditor.cs \
+	Gui/Dialog/TeamTemplateEditor.cs\
 	Gui/Dialog/UpdateDialog.cs \
 	Gui/Dialog/VideoEditionProperties.cs \
 	Gui/Dialog/Win32CalendarDialog.cs \

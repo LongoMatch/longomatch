@@ -158,6 +158,7 @@ namespace LongoMatch.Gui.Component {
             this.localtemplatebutton.Label = "gtk-edit";
             this.hbox1.Add(this.localtemplatebutton);
             Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(this.hbox1[this.localtemplatebutton]));
+            w5.PackType = ((Gtk.PackType)(1));
             w5.Position = 1;
             w5.Expand = false;
             w5.Fill = false;
@@ -188,6 +189,7 @@ namespace LongoMatch.Gui.Component {
             this.visitorbutton.Label = "gtk-edit";
             this.hbox2.Add(this.visitorbutton);
             Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(this.hbox2[this.visitorbutton]));
+            w8.PackType = ((Gtk.PackType)(1));
             w8.Position = 1;
             w8.Expand = false;
             w8.Fill = false;
@@ -218,6 +220,7 @@ namespace LongoMatch.Gui.Component {
             this.editbutton.Label = "gtk-edit";
             this.hbox3.Add(this.editbutton);
             Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.hbox3[this.editbutton]));
+            w11.PackType = ((Gtk.PackType)(1));
             w11.Position = 1;
             w11.Expand = false;
             w11.Fill = false;

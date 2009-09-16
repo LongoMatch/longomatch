@@ -121,14 +121,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.ProjectTemplateWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="ProjectTemplateWidget Properties">
-        <property name="Edited" />
-      </itemgroup>
-    </itemgroups>
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Component.CategoriesTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
     <itemgroups />
     <signals>
@@ -215,6 +207,14 @@
         <signal name="PlayersTagged" />
       </itemgroup>
     </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.ProjectTemplateWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="ProjectTemplateWidget Properties">
+        <property name="Edited" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
   </object>
   <object type="LongoMatch.Gui.Component.ProjectDetailsWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>

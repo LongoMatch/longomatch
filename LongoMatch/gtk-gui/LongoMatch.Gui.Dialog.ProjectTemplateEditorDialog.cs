@@ -21,7 +21,7 @@ namespace LongoMatch.Gui.Dialog {
             Stetic.Gui.Initialize(this);
             // Widget LongoMatch.Gui.Dialog.ProjectTemplateEditorDialog
             this.Name = "LongoMatch.Gui.Dialog.ProjectTemplateEditorDialog";
-            this.Title = Mono.Unix.Catalog.GetString("Template Editor");
+            this.Title = Mono.Unix.Catalog.GetString("Project Template");
             this.Icon = Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Dialog, 48);
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.Modal = true;

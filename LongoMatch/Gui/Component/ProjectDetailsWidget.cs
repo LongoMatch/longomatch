@@ -353,6 +353,7 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnEditbuttonClicked (object sender, System.EventArgs e)
 		{			
 			ProjectTemplateEditorDialog ted = new ProjectTemplateEditorDialog();
+			ted.TransientFor = (Window)Toplevel;
 			ted.Sections = Sections;
 			
 			if (ted.Run() == (int)ResponseType.Apply){
@@ -381,26 +382,24 @@ namespace LongoMatch.Gui.Component
 			
 		protected virtual void OnLocaltemplatebuttonClicked (object sender, System.EventArgs e){			
 			TeamTemplateEditor tted = new TeamTemplateEditor();
-	
+			tted.TransientFor = (Window)Toplevel;
+			tted.Title=Catalog.GetString("Local Team Template");
 			tted.SetTeamTemplate(LocalTeamTemplate);	
 			if (tted.Run() == (int)ResponseType.Apply){
 				LocalTeamTemplate = tted.GetTeamTemplate();
 			}			
 			tted.Destroy();			
-		}
-		
+		}		
 
 		protected virtual void OnVisitorbuttonClicked (object sender, System.EventArgs e){
 			TeamTemplateEditor tted = new TeamTemplateEditor();
+			tted.TransientFor = (Window)Toplevel;
+			tted.Title=Catalog.GetString("Visitor Team Template");
 			tted.SetTeamTemplate(VisitorTeamTemplate);	
 			if (tted.Run() == (int)ResponseType.Apply){
 				VisitorTeamTemplate = tted.GetTeamTemplate();
 			}			
 			tted.Destroy();			
-		}
-	
-	
-		
-	}	
-		
+		}	
+	}			
 }
