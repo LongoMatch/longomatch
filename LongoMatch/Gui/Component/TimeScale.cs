@@ -147,8 +147,8 @@ namespace LongoMatch.Gui.Component
 			MenuItem newMediaTimeNode;
 			
 			menu = new Menu();			
-			delete = new MenuItem(Catalog.GetString("Delete MediaTimeNode"));			
-			newMediaTimeNode = new MenuItem(Catalog.GetString("Add New MediaTimeNode"));
+			delete = new MenuItem(Catalog.GetString("Delete Play"));			
+			newMediaTimeNode = new MenuItem(Catalog.GetString("Add New Play"));
 			
 			menu.Append(newMediaTimeNode);
 			menu.Append(delete);
