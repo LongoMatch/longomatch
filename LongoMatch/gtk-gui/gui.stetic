@@ -2027,7 +2027,7 @@
   </widget>
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.ProjectTemplateEditorDialog" design-size="470 243">
     <property name="MemberName" />
-    <property name="Title" translatable="yes">Project Template</property>
+    <property name="Title" translatable="yes">Categories Template</property>
     <property name="Icon">stock:longomatch Dialog</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
