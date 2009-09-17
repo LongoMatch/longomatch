@@ -114,8 +114,8 @@ libcesarplayer/src/Makefile
 Makefile
 CesarPlayer/cesarplayer.pc
 LongoMatch/longomatch
-
-
+LongoMatch/AssemblyInfo.cs
+CesarPlayer/AssemblyInfo.cs
 ])
 
 AC_OUTPUT

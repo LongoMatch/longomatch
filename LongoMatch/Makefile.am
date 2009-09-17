@@ -208,7 +208,8 @@ EXTRAS = \
 	images/background.png\
 	images/logo_48x48.png \
 	longomatch.desktop\
-	longomatch.in 
+	longomatch.in\
+	AssemblyInfo.cs.in
 
 REFERENCES =  \
 	Mono.Posix \

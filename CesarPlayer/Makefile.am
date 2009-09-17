@@ -102,7 +102,8 @@ RESOURCES = \
 	gtk-gui/gui.stetic 
 
 EXTRAS = \
-	cesarplayer.key 
+	cesarplayer.key\
+	AssemblyInfo.cs.in
 
 REFERENCES =  \
 	System \
