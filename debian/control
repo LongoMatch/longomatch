@@ -2,11 +2,10 @@ Source: longomatch
 Section: graphics
 Priority: extra
 Maintainer: Andoni Morales Alastruey <ylatuya@gmail.com>
-Build-Depends: debhelper (>= 7), libgtk2.0-cil, libdb4o6.0-cil,
+Build-Depends: debhelper (>= 7), cdbs, libgtk2.0-cil, libdb4o6.0-cil,
  mono-2.0-devel, libmono-posix2.0-cil, libgtk2.0-dev, 
  libgstreamer0.10-dev, libgstreamer-plugins-base0.10-dev, 
  autotools-dev
-
 Standards-Version: 3.8.3
 
 Package: longomatch
@@ -14,7 +13,6 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, gstreamer0.10-plugins-good,
  gstreamer0.10-plugins-bad, gstreamer0.10-plugins-ugly, gstreamer0.10-ffmpeg,
  gstreamer0.10-gnonlin, libdb4o6.0-cil, libgtk2.0-cil, libmono-cairo2.0-cil,
- libmono-posix2.0-cil
-
-Description: LongoMatch:The Digital Coach
- Sports video analysis tool for coaches and sports scientists, to assist them on making games video analysis. It simplifies video analysis by    providing a set of intuitive tools to tag, review and edit the most importants plays of the game. It allows to group plays by categories and adjust the lead and lag time of each play frame by frame through a timeline. It also has support for playlists, an easy way to create presentations with plays from different games and provides a video editor to render new videos with your favorite plays. Even if it is primary focused to sports, LongoMatch can be used for any task that requires tagging and reviewing segments of a video file, and can be applied to fields like cinema, medics or conferences.
+ libmono-posix2.0-cil 
+Description: LongoMatch-The Digital Coach
+ Sports video analysis tool for coaches and sports scientists, to assist them on making games video analysis. It simplifies video analysis by providing a set of intuitive tools to tag, review and edit the most importants plays of the game. It allows to group plays by categories and adjust the lead and lag time of each play frame by frame through a timeline. It also has support for playlists, an easy way to create presentations with plays from different games and provides a video editor to render new videos with your favorite plays. Even if it is primary focused to sports, LongoMatch can be used for any task that requires tagging and reviewing segments of a video file, and can be applied to fields like cinema, medics or conferences.
