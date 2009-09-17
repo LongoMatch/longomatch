@@ -1,6 +1,11 @@
+longomatch (0.15.2) karmic; urgency=low
+
+  *New Upstream Release 
+
+ -- Andoni Morales Alastruey <ylatuya@gmail.com>  Thu, 17 Sep 2009 17:40:26 +0200
+
 longomatch (0.15.0) intrepid; urgency=low
+
   *Upstream release
 
  -- Andoni Morales Alastruey <ylatuya@gmail.com>  Sat, 15 Aug 2009 17:41:08 +0200
-
-
