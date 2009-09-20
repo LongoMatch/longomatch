@@ -34,6 +34,7 @@ namespace LongoMatch.Gui.Component
 		
 		public event TimeNodeSelectedHandler TimeNodeSelected;
 		public event TimeNodeChangedHandler TimeNodeChanged;
+		public event PlayListNodeAddedHandler PlayListNodeAdded;
 		public event SnapshotSeriesHandler SnapshotSeriesEvent;
 
 		private TeamTemplate template;
@@ -90,6 +91,9 @@ namespace LongoMatch.Gui.Component
 			playerstreeview.Model = model;
 		}
 		
+		public bool PlayListLoaded{
+			set{playerstreeview.PlayListLoaded=value;}
+		}
 		
 		protected virtual void OnTimeNodeSelected(MediaTimeNode tNode){
 			if (TimeNodeSelected != null)
@@ -106,6 +110,12 @@ namespace LongoMatch.Gui.Component
 		{
 			if (TimeNodeChanged != null)
 				TimeNodeChanged (tNode, val);
+		}
+
+		protected virtual void OnPlayerstreeviewPlayListNodeAdded (LongoMatch.TimeNodes.MediaTimeNode tNode)
+		{
+			if (PlayListNodeAdded != null)
+				PlayListNodeAdded (tNode);
 		}
 
 	}

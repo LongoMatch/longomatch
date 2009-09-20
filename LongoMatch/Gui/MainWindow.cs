@@ -315,6 +315,8 @@ namespace LongoMatch.Gui
 			bool visible = ((Gtk.ToggleAction)sender).Active;
 			playlistwidget2.Visible=visible;
 			treewidget1.PlayListLoaded=visible;
+			localplayerslisttreewidget.PlayListLoaded=visible;
+			visitorplayerslisttreewidget.PlayListLoaded=visible;
 			
 			if (!visible && !noteswidget1.Visible){
 				rightvbox.Visible = false;

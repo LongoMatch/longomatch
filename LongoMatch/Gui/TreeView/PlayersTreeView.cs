@@ -34,10 +34,12 @@ namespace LongoMatch.Gui.Component
 		
 		public event TimeNodeSelectedHandler TimeNodeSelected;
 		public event TimeNodeChangedHandler TimeNodeChanged;
+		public event PlayListNodeAddedHandler PlayListNodeAdded;
 		public event SnapshotSeriesHandler SnapshotSeriesEvent;
 
 		private TreeIter selectedIter;
 		private Menu menu;
+		private MenuItem addPLN; 
 		private Gtk.CellRendererText nameCell;
 		private TreePath path;
 		private Gtk.TreeViewColumn nameColumn;
@@ -89,7 +91,10 @@ namespace LongoMatch.Gui.Component
 			set {team = value;}
 			get {return team ;}
 		}
-	
+		
+		public bool PlayListLoaded{
+			set{addPLN.Sensitive=value;}
+		}	
 		
 		private void SetMenu(){
 		
@@ -98,12 +103,17 @@ namespace LongoMatch.Gui.Component
 			MenuItem name = new MenuItem(Catalog.GetString("Edit"));
 			MenuItem delete = new MenuItem(Catalog.GetString("Delete"));
 			MenuItem snapshot = new MenuItem(Catalog.GetString("Export to PGN images"));
+			addPLN = new MenuItem(Catalog.GetString("Add to playlist"));
+			addPLN.Sensitive=false;
+			
 			menu.Append(name);
 			menu.Append(delete);
+			menu.Append(addPLN);
 			menu.Append(snapshot);
 			 
 			delete.Activated += new EventHandler(OnDeleted);
 			name.Activated += new EventHandler(OnEdit);
+			addPLN.Activated += new EventHandler(OnAdded);
 			snapshot.Activated += new EventHandler(OnSnapshot);
 			menu.ShowAll();		
 		}
@@ -197,6 +207,11 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnEdit(object obj, EventArgs args){
 			nameCell.Editable = true;
 			this.SetCursor(path,  nameColumn, true);
+		}
+		
+		protected void OnAdded(object obj, EventArgs args){
+			if (PlayListNodeAdded != null)	
+				PlayListNodeAdded((MediaTimeNode)selectedTimeNode);
 		}
 		
 		private void OnNameCellEdited (object o, Gtk.EditedArgs args)

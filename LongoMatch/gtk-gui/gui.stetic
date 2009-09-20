@@ -3664,6 +3664,7 @@ You can download it using this direct link:</property>
             <signal name="TimeNodeSelected" handler="OnTimeNodeSelected" />
             <signal name="SnapshotSeriesEvent" handler="OnSnapshotSeriesEvent" />
             <signal name="TimeNodeChanged" handler="OnTimeNodeChanged" />
+            <signal name="PlayListNodeAdded" handler="OnPlayerstreeviewPlayListNodeAdded" />
           </widget>
         </child>
       </widget>

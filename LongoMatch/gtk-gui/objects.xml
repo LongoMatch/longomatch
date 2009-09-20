@@ -60,6 +60,7 @@
         <signal name="TimeNodeSelected" />
         <signal name="TimeNodeChanged" />
         <signal name="SnapshotSeriesEvent" />
+        <signal name="PlayListNodeAdded" />
       </itemgroup>
     </signals>
   </object>
@@ -100,6 +101,7 @@
         <signal name="TimeNodeSelected" />
         <signal name="TimeNodeChanged" />
         <signal name="SnapshotSeriesEvent" />
+        <signal name="PlayListNodeAdded" />
       </itemgroup>
     </signals>
   </object>

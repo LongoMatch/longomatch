@@ -82,40 +82,42 @@ namespace LongoMatch
 		private void ConnectSignals(){
 			//Adding Handlers for each event		
 			
-			buttonswidget.NewMarkEvent += new Handlers.NewMarkEventHandler(OnNewMark);
+			buttonswidget.NewMarkEvent += OnNewMark;
 			
-			treewidget.TimeNodeChanged += new Handlers.TimeNodeChangedHandler(OnTimeNodeChanged);
-			localPlayersList.TimeNodeChanged += new Handlers.TimeNodeChangedHandler(OnTimeNodeChanged);
-			visitorPlayersList.TimeNodeChanged += new Handlers.TimeNodeChangedHandler(OnTimeNodeChanged);
-			timeline.TimeNodeChanged += new Handlers.TimeNodeChangedHandler(OnTimeNodeChanged);
-			notes.TimeNodeChanged += new TimeNodeChangedHandler(OnTimeNodeChanged);
+			treewidget.TimeNodeChanged += OnTimeNodeChanged;
+			localPlayersList.TimeNodeChanged += OnTimeNodeChanged;
+			visitorPlayersList.TimeNodeChanged += OnTimeNodeChanged;
+			timeline.TimeNodeChanged += OnTimeNodeChanged;
+			notes.TimeNodeChanged += OnTimeNodeChanged;
 			
-			treewidget.TimeNodeDeleted += new Handlers.TimeNodeDeletedHandler(OnTimeNodeDeleted);
-			timeline.TimeNodeDeleted += new Handlers.TimeNodeDeletedHandler(OnTimeNodeDeleted);
+			treewidget.TimeNodeDeleted += OnTimeNodeDeleted;
+			timeline.TimeNodeDeleted += OnTimeNodeDeleted;
 			
-			treewidget.TimeNodeSelected += new Handlers.TimeNodeSelectedHandler(OnTimeNodeSelected);			
-			localPlayersList.TimeNodeSelected += new Handlers.TimeNodeSelectedHandler(OnTimeNodeSelected);
-			visitorPlayersList.TimeNodeSelected += new Handlers.TimeNodeSelectedHandler(OnTimeNodeSelected);
-			timeline.TimeNodeSelected += new Handlers.TimeNodeSelectedHandler(OnTimeNodeSelected);
+			treewidget.TimeNodeSelected += OnTimeNodeSelected;			
+			localPlayersList.TimeNodeSelected += OnTimeNodeSelected;
+			visitorPlayersList.TimeNodeSelected += OnTimeNodeSelected;
+			timeline.TimeNodeSelected += OnTimeNodeSelected;
 			
-			playlist.PlayListNodeSelected += new Handlers.PlayListNodeSelectedHandler(OnPlayListNodeSelected);
-			playlist.Progress += new LongoMatch.Video.Handlers.ProgressHandler(OnProgress);
-			playlist.ApplyCurrentRate += new ApplyCurrentRateHandler(OnApplyRate);
+			playlist.PlayListNodeSelected += OnPlayListNodeSelected;
+			playlist.Progress += OnProgress;
+			playlist.ApplyCurrentRate += OnApplyRate;
 			
-			treewidget.PlayListNodeAdded += new Handlers.PlayListNodeAddedHandler(OnPlayListNodeAdded);
+			treewidget.PlayListNodeAdded += OnPlayListNodeAdded;
+			localPlayersList.PlayListNodeAdded += OnPlayListNodeAdded;
+			visitorPlayersList.PlayListNodeAdded += OnPlayListNodeAdded;
 			
-			treewidget.PlayersTagged += new PlayersTaggedHandler(OnPlayersTagged);
+			treewidget.PlayersTagged += OnPlayersTagged;
 			
-			treewidget.SnapshotSeriesEvent += new Handlers.SnapshotSeriesHandler(OnSnapshotSeries);
-			localPlayersList.SnapshotSeriesEvent += new Handlers.SnapshotSeriesHandler(OnSnapshotSeries);
-			visitorPlayersList.SnapshotSeriesEvent += new Handlers.SnapshotSeriesHandler(OnSnapshotSeries);
+			treewidget.SnapshotSeriesEvent += OnSnapshotSeries;
+			localPlayersList.SnapshotSeriesEvent += OnSnapshotSeries;
+			visitorPlayersList.SnapshotSeriesEvent += OnSnapshotSeries;
 
-			timeline.NewMarkEvent += new NewMarkAtFrameEventHandler(OnNewMarkAtFrame);
+			timeline.NewMarkEvent += OnNewMarkAtFrame;
 			
-			player.Prev += new PrevButtonClickedHandler(OnPrev);
-			player.Next += new NextButtonClickedHandler(OnNext);
-			player.Tick += new TickHandler(OnTick);
-			player.SegmentClosedEvent += new SegmentClosedHandler(OnSegmentClosedEvent);
+			player.Prev += OnPrev;
+			player.Next += OnNext;
+			player.Tick += OnTick;
+			player.SegmentClosedEvent += OnSegmentClosedEvent;
 		}
 		
 		private void ProcessNewMarkEvent(int section,Time pos){
