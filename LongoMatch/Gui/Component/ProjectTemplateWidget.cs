@@ -99,14 +99,19 @@ namespace LongoMatch.Gui.Component
 		
 		private void RemoveSection(int index){
 			if(project!= null){
+				MessageDialog dialog = new MessageDialog((Gtk.Window)this.Toplevel,DialogFlags.Modal,MessageType.Question,
+					                                         ButtonsType.YesNo,true,
+					                                         Catalog.GetString("You are about to delete a category and all the plays added to this category.Do you want to proceed?"));
+				if (dialog.Run() == (int)ResponseType.Yes) 
 				try{
-					project.DeleteSection(index);
-				}
-				catch {
+					project.DeleteSection(index);					
+				}catch{
 					MessagePopup.PopupMessage(this,MessageType.Warning,
 					                          Catalog.GetString("You can't delete the last section"));
+					dialog.Destroy();
 					return;
 				}
+				dialog.Destroy();
 				sections=project.Sections;
 			}else{
 				sections.RemoveSection(index);
