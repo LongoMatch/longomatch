@@ -355,6 +355,7 @@ namespace LongoMatch.Gui.Component
 			ProjectTemplateEditorDialog ted = new ProjectTemplateEditorDialog();
 			ted.TransientFor = (Window)Toplevel;
 			ted.Sections = Sections;
+			ted.Project = project;
 			
 			if (ted.Run() == (int)ResponseType.Apply){
 				this.Sections = ted.Sections;
