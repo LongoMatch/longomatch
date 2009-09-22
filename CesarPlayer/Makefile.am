@@ -68,7 +68,6 @@ FILES = \
 	Utils/IFramesCapturer.cs \
 	Utils/FramesCapturer.cs \
 	Utils/IMetadataReader.cs \
-	Utils/GstPlayerMetadataType.cs \
 	Utils/TimeString.cs \
 	Capturer/GccAudioEncoderType.cs \
 	Capturer/GccError.cs \
