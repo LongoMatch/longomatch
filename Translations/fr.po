@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2009-09-16 19:53:56+0200\n"
+"POT-Creation-Date: 2009-09-23 01:00:48+0200\n"
 "PO-Revision-Date: 2009-08-08 01:30:56+0200\n"
 "Last-Translator: Andoni Morales Alastruey <ylatuya@gmail.com>\n"
 "Language-Team: \n"
@@ -32,43 +32,43 @@ msgstr ""
 msgid "Please, fill a bug report "
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:102
+#: ../LongoMatch/Gui/MainWindow.cs:107
 msgid "The file associated to this project doesn't exist."
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:102
+#: ../LongoMatch/Gui/MainWindow.cs:107
 msgid ""
 "If the location of the file has changed try to edit it with the database "
 "manager."
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:129
+#: ../LongoMatch/Gui/MainWindow.cs:134
 msgid "An error ocurred opening this project:"
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:243
+#: ../LongoMatch/Gui/MainWindow.cs:248
 #: ../LongoMatch/Gui/Component/PlayListWidget.cs:258
 msgid "Please, select a video file."
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:256
+#: ../LongoMatch/Gui/MainWindow.cs:261
 msgid "This file is already used in a Project."
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:256
+#: ../LongoMatch/Gui/MainWindow.cs:261
 msgid "Open the project, please."
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:323
+#: ../LongoMatch/Gui/MainWindow.cs:330
 #: ../LongoMatch/Gui/Component/PlayListWidget.cs:209
 msgid "Open playlist"
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:346
+#: ../LongoMatch/Gui/MainWindow.cs:353
 msgid "The actual project will be closed due to an error in the media player:"
 msgstr ""
 
-#: ../LongoMatch/Gui/MainWindow.cs:455
+#: ../LongoMatch/Gui/MainWindow.cs:462
 msgid "Select Export File"
 msgstr ""
 
@@ -97,22 +97,22 @@ msgid "Video Quality:"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:90
-#: ../LongoMatch/Gui/Dialog/VideoEditionProperties.cs:101
+#: ../LongoMatch/Gui/Dialog/VideoEditionProperties.cs:110
 msgid "Low"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:91
-#: ../LongoMatch/Gui/Dialog/VideoEditionProperties.cs:104
+#: ../LongoMatch/Gui/Dialog/VideoEditionProperties.cs:113
 msgid "Normal"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:92
-#: ../LongoMatch/Gui/Dialog/VideoEditionProperties.cs:107
+#: ../LongoMatch/Gui/Dialog/VideoEditionProperties.cs:116
 msgid "Good"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:93
-#: ../LongoMatch/Gui/Dialog/VideoEditionProperties.cs:110
+#: ../LongoMatch/Gui/Dialog/VideoEditionProperties.cs:119
 msgid "Extra"
 msgstr ""
 
@@ -121,46 +121,38 @@ msgid "Size: "
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:119
-msgid "TV (4:3 - 720x540)"
+msgid "Portable (4:3 - 320x240)"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:120
-msgid "HD 720p (16:9 - 1280x720)"
+msgid "VGA (4:3 - 640x480)"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:121
+msgid "TV (4:3 - 720x576)"
+msgstr ""
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:122
+msgid "HD 720p (16:9 - 1280x720)"
+msgstr ""
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:123
 msgid "Full HD 1080p (16:9 - 1920x1080)"
 msgstr ""
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:141
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:143
 msgid "Ouput Format:"
 msgstr ""
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:147
-msgid "Matroska (H.264+AAC)"
-msgstr ""
-
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:148
-msgid "OGG (Theora+Vorbis)"
-msgstr ""
-
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:149
-msgid "Avi (Xvid+MP3)"
-msgstr ""
-
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:150
-msgid "DVD (MPEG-2)"
-msgstr ""
-
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:169
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:166
 msgid "Enable Title Overlay"
 msgstr ""
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:180
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:177
 msgid "Enable Audio (Experimental)"
 msgstr ""
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:198
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:195
 msgid "File name: "
 msgstr ""
 
@@ -378,19 +370,19 @@ msgstr ""
 msgid "Not defined"
 msgstr ""
 
-#: ../LongoMatch/Handlers/EventsManager.cs:159
+#: ../LongoMatch/Handlers/EventsManager.cs:161
 msgid "The video edition has finished successfully."
 msgstr ""
 
-#: ../LongoMatch/Handlers/EventsManager.cs:165
+#: ../LongoMatch/Handlers/EventsManager.cs:167
 msgid "An error has ocurred in the video editor."
 msgstr ""
 
-#: ../LongoMatch/Handlers/EventsManager.cs:166
+#: ../LongoMatch/Handlers/EventsManager.cs:168
 msgid "Please, retry again."
 msgstr ""
 
-#: ../LongoMatch/Handlers/EventsManager.cs:243
+#: ../LongoMatch/Handlers/EventsManager.cs:246
 msgid "Please, close the opened project to play the playlist."
 msgstr ""
 
@@ -457,12 +449,12 @@ msgstr ""
 msgid "Analyzing video file:"
 msgstr ""
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:385
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:386
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:479
 msgid "Local Team Template"
 msgstr ""
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:396
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:397
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:407
 msgid "Visitor Team Template"
 msgstr ""
@@ -538,21 +530,26 @@ msgstr ""
 msgid "Choose an image"
 msgstr ""
 
-#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:97
+#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:102
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:132
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectTemplateWidget.cs:155
 msgid "Edit"
 msgstr ""
 
-#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:98
+#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:103
 #: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:58
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:137
 msgid "Delete"
 msgstr ""
 
-#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:99
+#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:104
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:140
 msgid "Export to PGN images"
+msgstr ""
+
+#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:105
+#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:138
+msgid "Add to playlist"
 msgstr ""
 
 #: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:44
@@ -617,10 +614,6 @@ msgstr ""
 
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:135
 msgid "Tag player"
-msgstr ""
-
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:138
-msgid "Add to playlist"
 msgstr ""
 
 #: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:70
@@ -727,7 +720,13 @@ msgstr ""
 msgid "Do you really want to delete the template: "
 msgstr "Voulez-vous suprimer:"
 
-#: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:106
+#: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:103
+msgid ""
+"You are about to delete a category and all the plays added to this category."
+"Do you want to proceed?"
+msgstr ""
+
+#: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:109
 msgid "You can't delete the last section"
 msgstr ""
 
@@ -755,7 +754,7 @@ msgstr ""
 msgid "Add New Play"
 msgstr ""
 
-#: ../LongoMatch/Gui/Dialog/VideoEditionProperties.cs:152
+#: ../LongoMatch/Gui/Dialog/VideoEditionProperties.cs:150
 msgid "Save Video As ..."
 msgstr ""
 

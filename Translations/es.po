@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: LongoMatch 0.15\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-16 19:54:41+0200\n"
-"PO-Revision-Date: 2009-09-16 19:54:35+0200\n"
-"Last-Translator: Andoni Morales Alastruey <ylatuya@gmail.com>\n"
-"Language-Team: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "X-Generator: MonoDevelop Gettext addin\n"
+"Language-Team: \n"
+"PO-Revision-Date: 2009-09-23 01:02:55+0200\n"
+"POT-Creation-Date: 2009-09-23 01:00:48+0200\n"
+"Project-Id-Version: LongoMatch 0.15\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: Andoni Morales Alastruey <ylatuya@gmail.com>\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: ../LongoMatch/Main.cs:167
 msgid ""
@@ -35,11 +35,11 @@ msgstr "Se ha guardado un log en:"
 msgid "Please, fill a bug report "
 msgstr "Por favor, envíe en reporte de fallos."
 
-#: ../LongoMatch/Gui/MainWindow.cs:102
+#: ../LongoMatch/Gui/MainWindow.cs:107
 msgid "The file associated to this project doesn't exist."
 msgstr "El archivo asociado a este proyecto no existe."
 
-#: ../LongoMatch/Gui/MainWindow.cs:102
+#: ../LongoMatch/Gui/MainWindow.cs:107
 msgid ""
 "If the location of the file has changed try to edit it with the database "
 "manager."
@@ -47,33 +47,33 @@ msgstr ""
 "Si el archivo ha sido cambiado de sitio, intente editarlo con el gestor de "
 "\\nproyectos"
 
-#: ../LongoMatch/Gui/MainWindow.cs:129
+#: ../LongoMatch/Gui/MainWindow.cs:134
 msgid "An error ocurred opening this project:"
 msgstr "A ocurrido un error abriendo el proyecto:"
 
-#: ../LongoMatch/Gui/MainWindow.cs:243
+#: ../LongoMatch/Gui/MainWindow.cs:248
 #: ../LongoMatch/Gui/Component/PlayListWidget.cs:258
 msgid "Please, select a video file."
 msgstr "Por favor, escoja un archivo de video."
 
-#: ../LongoMatch/Gui/MainWindow.cs:256
+#: ../LongoMatch/Gui/MainWindow.cs:261
 msgid "This file is already used in a Project."
 msgstr "Este archivo ya está siendo usado por otro proyecto"
 
-#: ../LongoMatch/Gui/MainWindow.cs:256
+#: ../LongoMatch/Gui/MainWindow.cs:261
 msgid "Open the project, please."
 msgstr "Abra el pproyecto, por favor"
 
-#: ../LongoMatch/Gui/MainWindow.cs:323
+#: ../LongoMatch/Gui/MainWindow.cs:330
 #: ../LongoMatch/Gui/Component/PlayListWidget.cs:209
 msgid "Open playlist"
 msgstr "Abrir lista de reproducción"
 
-#: ../LongoMatch/Gui/MainWindow.cs:346
+#: ../LongoMatch/Gui/MainWindow.cs:353
 msgid "The actual project will be closed due to an error in the media player:"
 msgstr "El proyecto actual se cerrará debido a un error en el reproductor:"
 
-#: ../LongoMatch/Gui/MainWindow.cs:455
+#: ../LongoMatch/Gui/MainWindow.cs:462
 msgid "Select Export File"
 msgstr "Seleccione el archivo a exportar"
 
@@ -102,22 +102,22 @@ msgid "Video Quality:"
 msgstr "Calidad del video:"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:90
-#: ../LongoMatch/Gui/Dialog/VideoEditionProperties.cs:101
+#: ../LongoMatch/Gui/Dialog/VideoEditionProperties.cs:110
 msgid "Low"
 msgstr "Baja"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:91
-#: ../LongoMatch/Gui/Dialog/VideoEditionProperties.cs:104
+#: ../LongoMatch/Gui/Dialog/VideoEditionProperties.cs:113
 msgid "Normal"
 msgstr "Normal"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:92
-#: ../LongoMatch/Gui/Dialog/VideoEditionProperties.cs:107
+#: ../LongoMatch/Gui/Dialog/VideoEditionProperties.cs:116
 msgid "Good"
 msgstr "Buena"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:93
-#: ../LongoMatch/Gui/Dialog/VideoEditionProperties.cs:110
+#: ../LongoMatch/Gui/Dialog/VideoEditionProperties.cs:119
 msgid "Extra"
 msgstr "Extra"
 
@@ -126,46 +126,38 @@ msgid "Size: "
 msgstr "Tamaño:"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:119
-msgid "TV (4:3 - 720x540)"
+msgid "Portable (4:3 - 320x240)"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:120
-msgid "HD 720p (16:9 - 1280x720)"
+msgid "VGA (4:3 - 640x480)"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:121
+msgid "TV (4:3 - 720x576)"
+msgstr ""
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:122
+msgid "HD 720p (16:9 - 1280x720)"
+msgstr ""
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:123
 msgid "Full HD 1080p (16:9 - 1920x1080)"
 msgstr ""
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:141
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:143
 msgid "Ouput Format:"
 msgstr "Formato:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:147
-msgid "Matroska (H.264+AAC)"
-msgstr ""
-
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:148
-msgid "OGG (Theora+Vorbis)"
-msgstr ""
-
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:149
-msgid "Avi (Xvid+MP3)"
-msgstr ""
-
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:150
-msgid "DVD (MPEG-2)"
-msgstr ""
-
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:169
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:166
 msgid "Enable Title Overlay"
 msgstr "Sobreimprimir título"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:180
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:177
 msgid "Enable Audio (Experimental)"
 msgstr "Habilitar sonido (Experimental)"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:198
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:195
 msgid "File name: "
 msgstr "Archivo:"
 
@@ -385,19 +377,19 @@ msgstr "ninguno"
 msgid "Not defined"
 msgstr "Sin definir"
 
-#: ../LongoMatch/Handlers/EventsManager.cs:159
+#: ../LongoMatch/Handlers/EventsManager.cs:161
 msgid "The video edition has finished successfully."
 msgstr "La edición del vídeo ha finalizado con éxito"
 
-#: ../LongoMatch/Handlers/EventsManager.cs:165
+#: ../LongoMatch/Handlers/EventsManager.cs:167
 msgid "An error has ocurred in the video editor."
 msgstr "A ocurrido un error en el editor de vídeo"
 
-#: ../LongoMatch/Handlers/EventsManager.cs:166
+#: ../LongoMatch/Handlers/EventsManager.cs:168
 msgid "Please, retry again."
 msgstr "Por favor, vuelva a intentarlo"
 
-#: ../LongoMatch/Handlers/EventsManager.cs:243
+#: ../LongoMatch/Handlers/EventsManager.cs:246
 msgid "Please, close the opened project to play the playlist."
 msgstr ""
 "Por favor, cierre el actual proyecto para reproducir la lista de reprodución"
@@ -465,12 +457,12 @@ msgstr "Abrir Archivo..."
 msgid "Analyzing video file:"
 msgstr "Analizando archivo de vídeo:"
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:385
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:386
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:479
 msgid "Local Team Template"
 msgstr "Plantilla del equipo local"
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:396
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:397
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:407
 msgid "Visitor Team Template"
 msgstr "Plantilla del equipo visitante"
@@ -553,22 +545,27 @@ msgstr "Terminado"
 msgid "Choose an image"
 msgstr "Escoja una imagen"
 
-#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:97
+#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:102
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:132
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectTemplateWidget.cs:155
 msgid "Edit"
 msgstr "Editar"
 
-#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:98
+#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:103
 #: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:58
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:137
 msgid "Delete"
 msgstr "Borrar"
 
-#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:99
+#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:104
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:140
 msgid "Export to PGN images"
 msgstr "Exportar a fotogramas PNG"
+
+#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:105
+#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:138
+msgid "Add to playlist"
+msgstr "Añadir a la lista de reproducción"
 
 #: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:44
 msgid "Photo"
@@ -634,10 +631,6 @@ msgstr "Selección de equipo"
 msgid "Tag player"
 msgstr "Asociar jugador"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:138
-msgid "Add to playlist"
-msgstr "Añadir a la lista de reproducción"
-
 #: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:70
 msgid "A Project is already using this file."
 msgstr "Un proyecto está ya usando este archivo."
@@ -668,8 +661,8 @@ msgstr "Ciérrelo para poder editarlo"
 
 #: ../LongoMatch/Gui/Component/PlayListWidget.cs:83
 msgid ""
-"The file you are trying to load is not a playlist or it's not compatible "
-"with the current version"
+"The file you are trying to load is not a playlist or it's not compatible with "
+"the current version"
 msgstr ""
 "El archivo que intenta cargar no es una lista de reproducción o no es "
 "compatible con esta versión."
@@ -742,7 +735,14 @@ msgstr "No puede borrar la plantilla por defecto"
 msgid "Do you really want to delete the template: "
 msgstr "Desea borrar la plantilla: "
 
-#: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:106
+#: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:103
+msgid ""
+"You are about to delete a category and all the plays added to this "
+"category.Do you want to proceed?"
+msgstr ""
+"Está a punto de borrar una categoría y todas sus jugadas.Quiere continuar?"
+
+#: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:109
 msgid "You can't delete the last section"
 msgstr "No puede borrar la última sección"
 
@@ -770,7 +770,7 @@ msgstr "Borrar Jugada"
 msgid "Add New Play"
 msgstr "Añadir Nueva Jugada"
 
-#: ../LongoMatch/Gui/Dialog/VideoEditionProperties.cs:152
+#: ../LongoMatch/Gui/Dialog/VideoEditionProperties.cs:150
 msgid "Save Video As ..."
 msgstr "Guardar Video Como..."
 
@@ -971,3 +971,4 @@ msgstr "Archivo de video invalido:"
 
 #~ msgid "File"
 #~ msgstr "Archivo:"
+
