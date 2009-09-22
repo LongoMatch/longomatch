@@ -1,6 +1,6 @@
 /*
  * Gstreamer Video Editor
- * Copyright (C)  Andoni Morales Alastruey 2009 <ylatuya@gmail.com>
+ * Copyright (C) 2007-2009 Andoni Morales Alastruey <ylatuya@gmail.com>
  * 
  * Gstreamer Video Editor is free software.
  * 

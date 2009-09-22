@@ -1,5 +1,5 @@
  /*GStreamer Video Editor Based On GNonlin
- * Copyright (C)  Andoni Morales Alastruey 2009 <ylatuya@gmail.com>
+ * Copyright (C) 2007-2009 Andoni Morales Alastruey <ylatuya@gmail.com>
  *
  * This program is free software.
  *

@@ -1,8 +1,4 @@
 <objects attr-sync="on">
-  <object type="LongoMatch.Gui.Popup.TransparentDrawingArea" palette-category="General" allow-children="false" base-type="Gtk.Window">
-    <itemgroups />
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Component.NotesWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>
@@ -187,25 +183,26 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.PlaysListTreeWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="PlaysListTreeWidget Signals">
-        <signal name="TimeNodeSelected" />
-        <signal name="TimeNodeChanged" />
-        <signal name="TimeNodeDeleted" />
-        <signal name="PlayListNodeAdded" />
-        <signal name="SnapshotSeriesEvent" />
-        <signal name="PlayersTagged" />
-      </itemgroup>
-    </signals>
-  </object>
   <object type="LongoMatch.Gui.Component.ProjectTemplateWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="ProjectTemplateWidget Properties">
         <property name="Edited" />
       </itemgroup>
     </itemgroups>
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.PlayListWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="PlayListWidget Signals">
+        <signal name="PlayListNodeSelected" />
+        <signal name="ApplyCurrentRate" />
+        <signal name="Progress" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Popup.TransparentDrawingArea" palette-category="General" allow-children="false" base-type="Gtk.Window">
+    <itemgroups />
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.ProjectDetailsWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
@@ -222,13 +219,16 @@
     </itemgroups>
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.PlayListWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.Gui.Component.PlaysListTreeWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>
-      <itemgroup label="PlayListWidget Signals">
-        <signal name="PlayListNodeSelected" />
-        <signal name="ApplyCurrentRate" />
-        <signal name="Progress" />
+      <itemgroup label="PlaysListTreeWidget Signals">
+        <signal name="TimeNodeSelected" />
+        <signal name="TimeNodeChanged" />
+        <signal name="TimeNodeDeleted" />
+        <signal name="PlayListNodeAdded" />
+        <signal name="SnapshotSeriesEvent" />
+        <signal name="PlayersTagged" />
       </itemgroup>
     </signals>
   </object>

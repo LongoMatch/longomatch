@@ -1,6 +1,6 @@
 /*
  * Gstreamer DV capturer
- * Copyright (C)  Andoni Morales Alastruey 2009 <ylatuya@gmail.com>
+ * Copyright (C) 2007-2009 Andoni Morales Alastruey <ylatuya@gmail.com>
  * 
  * Gstreamer DV capturer is free software.
  * 
