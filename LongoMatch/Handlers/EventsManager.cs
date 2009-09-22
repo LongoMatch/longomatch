@@ -220,7 +220,8 @@ namespace LongoMatch
 				localPlayersList.DeleteTimeNode(tNode,player);
 			foreach (int player in tNode.VisitorPlayers)
 				visitorPlayersList.DeleteTimeNode(tNode,player);
-			openedProject.DeleteTimeNode(tNode,section);			
+			openedProject.DeleteTimeNode(tNode,section);
+			player.CloseActualSegment();
 			timeline.QueueDraw();
 			MainClass.DB.UpdateProject(openedProject);			
 		}
