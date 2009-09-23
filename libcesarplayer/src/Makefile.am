@@ -2,7 +2,6 @@
 
 
 AM_CPPFLAGS = \
-	-DPACKAGE_LOCALE_DIR=\""../LongoMatch/bin/Release"\" \
 	-DPACKAGE_SRC_DIR=\""$(srcdir)"\" \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
 	$(CESARPLAYER_CFLAGS)
@@ -11,15 +10,23 @@ AM_CFLAGS =\
 	 -Wall\
 	 -g
 
+BVWMARSHALFILES = baconvideowidget-marshal.c baconvideowidget-marshal.h
+GLIB_GENMARSHAL=`pkg-config --variable=glib_genmarshal glib-2.0`
+BUILT_SOURCES = $(BVWMARSHALFILES)
+
+baconvideowidget-marshal.h: baconvideowidget-marshal.list
+	( $(GLIB_GENMARSHAL) --prefix=baconvideowidget_marshal $(srcdir)/baconvideowidget-marshal.list --header > baconvideowidget-marshal.h )
+baconvideowidget-marshal.c: baconvideowidget-marshal.h
+	( $(GLIB_GENMARSHAL) --prefix=baconvideowidget_marshal $(srcdir)/baconvideowidget-marshal.list --body --header > baconvideowidget-marshal.c )
+
 
 pkglib_LTLIBRARIES = \
 	libcesarplayer.la
 
 libcesarplayer_la_SOURCES = \
+	$(BVWMARSHALFILES) \
 	bacon-video-widget.h\
 	bacon-video-widget-gst-0.10.c\
-	baconvideowidget-marshal.c \
-	baconvideowidget-marshal.h \
 	gstscreenshot.c \
 	gstscreenshot.h \
 	gst-video-capturer.c \
@@ -34,3 +41,9 @@ libcesarplayer_la_SOURCES = \
 
 libcesarplayer_la_LDFLAGS = \
 	$(CESARPLAYER_LIBS)
+	
+CLEANFILES = $(BUILT_SOURCES)
+	
+EXTRA_DIST = \
+	baconvideowidget-marshal.list
+
