@@ -62,6 +62,7 @@
                 <property name="CanFocus">True</property>
                 <property name="IsEditable">True</property>
                 <property name="InvisibleChar">●</property>
+                <signal name="Changed" handler="OnEdited" />
               </widget>
               <packing>
                 <property name="TopAttach">5</property>
@@ -262,6 +263,7 @@
                     <property name="CanFocus">True</property>
                     <property name="IsEditable">False</property>
                     <property name="InvisibleChar">●</property>
+                    <signal name="Changed" handler="OnEdited" />
                   </widget>
                   <packing>
                     <property name="Position">0</property>
@@ -310,6 +312,7 @@
                     <property name="CanFocus">True</property>
                     <property name="IsEditable">False</property>
                     <property name="InvisibleChar">●</property>
+                    <signal name="Changed" handler="OnEdited" />
                   </widget>
                   <packing>
                     <property name="Position">0</property>
@@ -489,6 +492,7 @@
                 <property name="StepIncrement">1</property>
                 <property name="ClimbRate">1</property>
                 <property name="Numeric">True</property>
+                <signal name="ValueChanged" handler="OnEdited" />
               </widget>
               <packing>
                 <property name="TopAttach">2</property>
@@ -512,6 +516,7 @@
                 <property name="CanFocus">True</property>
                 <property name="IsEditable">True</property>
                 <property name="InvisibleChar">●</property>
+                <signal name="Changed" handler="OnEdited" />
               </widget>
               <packing>
                 <property name="LeftAttach">1</property>
@@ -550,6 +555,7 @@
                 <property name="CanFocus">True</property>
                 <property name="IsEditable">True</property>
                 <property name="InvisibleChar">●</property>
+                <signal name="Changed" handler="OnEdited" />
               </widget>
               <packing>
                 <property name="TopAttach">4</property>
@@ -615,6 +621,7 @@
                 <property name="StepIncrement">1</property>
                 <property name="ClimbRate">1</property>
                 <property name="Numeric">True</property>
+                <signal name="ValueChanged" handler="OnEdited" />
               </widget>
               <packing>
                 <property name="TopAttach">3</property>
@@ -638,6 +645,7 @@
                 <property name="CanFocus">True</property>
                 <property name="IsEditable">True</property>
                 <property name="InvisibleChar">●</property>
+                <signal name="Changed" handler="OnEdited" />
               </widget>
               <packing>
                 <property name="TopAttach">1</property>
@@ -926,13 +934,15 @@
                                 <property name="Yalign">0</property>
                                 <property name="LeftPadding">12</property>
                                 <child>
-                                  <widget class="LongoMatch.Gui.Component.ProjectDetailsWidget" id="filedescriptionwidget3">
+                                  <widget class="LongoMatch.Gui.Component.ProjectDetailsWidget" id="projectdetails">
                                     <property name="MemberName" />
                                     <property name="Sensitive">False</property>
                                     <property name="Events">ButtonPressMask</property>
+                                    <property name="Edited">False</property>
                                     <property name="LocalGoals">0</property>
                                     <property name="VisitorGoals">0</property>
                                     <property name="Date">0</property>
+                                    <signal name="EditedEvent" handler="OnProjectdetailsEditedEvent" />
                                   </widget>
                                 </child>
                               </widget>
@@ -1141,6 +1151,7 @@
         <child>
           <widget class="LongoMatch.Gui.Component.ProjectDetailsWidget" id="fdwidget">
             <property name="MemberName">fdwidget</property>
+            <property name="Edited">False</property>
             <property name="LocalGoals">0</property>
             <property name="VisitorGoals">0</property>
             <property name="Date">0</property>

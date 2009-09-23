@@ -38,6 +38,7 @@ namespace LongoMatch.Gui.Dialog {
             // Container child dialog1_VBox.Gtk.Box+BoxChild
             this.fdwidget = new LongoMatch.Gui.Component.ProjectDetailsWidget();
             this.fdwidget.Name = "fdwidget";
+            this.fdwidget.Edited = false;
             this.fdwidget.LocalGoals = 0;
             this.fdwidget.VisitorGoals = 0;
             this.fdwidget.Date = new System.DateTime(0);

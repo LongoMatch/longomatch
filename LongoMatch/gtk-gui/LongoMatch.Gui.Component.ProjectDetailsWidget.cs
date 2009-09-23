@@ -494,7 +494,14 @@ namespace LongoMatch.Gui.Component {
             this.editbutton.Hide();
             this.videobitratelabel.Hide();
             this.Show();
+            this.visitorTeamEntry.Changed += new System.EventHandler(this.OnEdited);
+            this.visitorSpinButton.ValueChanged += new System.EventHandler(this.OnEdited);
+            this.seasonentry.Changed += new System.EventHandler(this.OnEdited);
+            this.localTeamEntry.Changed += new System.EventHandler(this.OnEdited);
+            this.localSpinButton.ValueChanged += new System.EventHandler(this.OnEdited);
+            this.dateEntry.Changed += new System.EventHandler(this.OnEdited);
             this.calendarbutton.Clicked += new System.EventHandler(this.OnCalendarbuttonClicked);
+            this.fileEntry.Changed += new System.EventHandler(this.OnEdited);
             this.openbutton.Clicked += new System.EventHandler(this.OnOpenbuttonClicked);
             this.tagscombobox.Changed += new System.EventHandler(this.OnCombobox1Changed);
             this.editbutton.Clicked += new System.EventHandler(this.OnEditbuttonClicked);
@@ -502,6 +509,7 @@ namespace LongoMatch.Gui.Component {
             this.visitorbutton.Clicked += new System.EventHandler(this.OnVisitorbuttonClicked);
             this.localcombobox.Changed += new System.EventHandler(this.OnLocalcomboboxChanged);
             this.localtemplatebutton.Clicked += new System.EventHandler(this.OnLocaltemplatebuttonClicked);
+            this.competitionentry.Changed += new System.EventHandler(this.OnEdited);
         }
     }
 }

@@ -32,7 +32,7 @@ using LongoMatch.Video.Utils;
 
 namespace LongoMatch.Gui.Component
 {
-
+	
 	public enum UseType{
 		NewCaptureProject,
 		NewFromFileProject,
@@ -43,15 +43,17 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class ProjectDetailsWidget : Gtk.Bin
 	{
+		public event EventHandler EditedEvent;
 		private Project project;
 		private LongoMatch.Video.Utils.PreviewMediaFile mFile;
+		private bool edited;
 		private CalendarPopup cp;
 		private Win32CalendarDialog win32CP;
 		private Sections actualSection;
 		private TeamTemplate actualVisitorTeam;
 		private TeamTemplate actualLocalTeam;
 		private UseType useType;		
-		
+
 		public ProjectDetailsWidget()
 		{	
 				
@@ -89,6 +91,11 @@ namespace LongoMatch.Gui.Component
 			}				
 		}
 		
+		public bool Edited{
+			set{edited=value;}
+			get{return edited;}
+		}
+		
 		public string LocalName {
 			get { return localTeamEntry.Text; }
 			set { this.localTeamEntry.Text = value;}
@@ -124,7 +131,7 @@ namespace LongoMatch.Gui.Component
 			set { fileEntry.Text = value;}
 		}
 		
-		public DateTime Date{
+		public DateTime Date{  
 			get {
 				//HACK See bug http://bugzilla.gnome.org/show_bug.cgi?id=592934
 				//dateEntry is not editable and we set the date manually
@@ -135,15 +142,15 @@ namespace LongoMatch.Gui.Component
 				}
 				catch{
 					date = DateTime.Now;
-				}				
+				}                               
 				return date;
 			}
 			
 			set {
 				dateEntry.Text = value.ToString(Catalog.GetString("MM/dd/yyyy"));
 			}
-		}
-		
+		}			
+			
 		public Sections Sections{
 			get {return this.actualSection;}
 			set {actualSection = value;}
@@ -185,6 +192,7 @@ namespace LongoMatch.Gui.Component
 			Sections = project.Sections;
 			LocalTeamTemplate = project.LocalTeamTemplate;
 			VisitorTeamTemplate = project.VisitorTeamTemplate;
+			Edited = false;
 		}
 		
 		public void UpdateProject(){
@@ -350,19 +358,6 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		protected virtual void OnEditbuttonClicked (object sender, System.EventArgs e)
-		{			
-			ProjectTemplateEditorDialog ted = new ProjectTemplateEditorDialog();
-			ted.TransientFor = (Window)Toplevel;
-			ted.Sections = Sections;
-			ted.Project = project;
-			
-			if (ted.Run() == (int)ResponseType.Apply){
-				this.Sections = ted.Sections;
-			}			
-			ted.Destroy();
-		}
-		
 		protected virtual void OnCombobox1Changed (object sender, System.EventArgs e)
 		{
 			SectionsReader reader = new SectionsReader(System.IO.Path.Combine(MainClass.TemplatesDir(),SectionsFile));			
@@ -380,6 +375,19 @@ namespace LongoMatch.Gui.Component
 			LocalTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(), LocalTeamTemplateFile));
 		}
 		
+		protected virtual void OnEditbuttonClicked (object sender, System.EventArgs e)
+		{			
+			ProjectTemplateEditorDialog ted = new ProjectTemplateEditorDialog();
+			ted.TransientFor = (Window)Toplevel;
+			ted.Sections = Sections;
+			ted.Project = project;
+			
+			if (ted.Run() == (int)ResponseType.Apply){
+				this.Sections = ted.Sections;
+			}			
+			ted.Destroy();
+			OnEdited(this,null);
+		}
 			
 		protected virtual void OnLocaltemplatebuttonClicked (object sender, System.EventArgs e){			
 			TeamTemplateEditor tted = new TeamTemplateEditor();
@@ -389,7 +397,8 @@ namespace LongoMatch.Gui.Component
 			if (tted.Run() == (int)ResponseType.Apply){
 				LocalTeamTemplate = tted.GetTeamTemplate();
 			}			
-			tted.Destroy();			
+			tted.Destroy();	
+			OnEdited(this,null);
 		}		
 
 		protected virtual void OnVisitorbuttonClicked (object sender, System.EventArgs e){
@@ -400,7 +409,13 @@ namespace LongoMatch.Gui.Component
 			if (tted.Run() == (int)ResponseType.Apply){
 				VisitorTeamTemplate = tted.GetTeamTemplate();
 			}			
-			tted.Destroy();			
-		}	
+			tted.Destroy();	
+			OnEdited(this,null);
+		}
+		protected virtual void OnEdited (object sender, System.EventArgs e){
+			Edited = true;
+			if (EditedEvent != null)
+				EditedEvent(this,null);
+		}
 	}			
-}
+}

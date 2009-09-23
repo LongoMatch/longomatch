@@ -40,39 +40,41 @@ namespace LongoMatch.Gui.Dialog
 		{
 			this.Build();
 			this.Fill();
-			this.filedescriptionwidget3.Use = LongoMatch.Gui.Component.UseType.EditProject;
+			this.projectdetails.Use = LongoMatch.Gui.Component.UseType.EditProject;
+			projectdetails.Edited = false;
 		}
 		
 		public void Fill(){
 			ArrayList allDB = MainClass.DB.GetAllDB();
 			projectlistwidget1.Fill(allDB);
 			projectlistwidget1.ClearSearch();
-			filedescriptionwidget3.Clear();
-			filedescriptionwidget3.Sensitive = false;
+			projectdetails.Clear();
+			projectdetails.Sensitive = false;
 			saveButton.Sensitive = false;
 			deleteButton.Sensitive = false;
 			originalFilePath=null;	
 		}
 		
 		private void SaveProject(){
-			Project project = filedescriptionwidget3.GetProject();
+			Project project = projectdetails.GetProject();
 						
 			if (project == null)
 				return;
 							
-			if (project.File.FilePath == originalFilePath)
+			if (project.File.FilePath == originalFilePath){
 				MainClass.DB.UpdateProject(project);
+				saveButton.Sensitive = false;
+			}
 			else{
 				try{
 					MainClass.DB.UpdateProject(project,originalFilePath);
+					saveButton.Sensitive = false;
 				}
 				catch{
 					MessagePopup.PopupMessage(this, MessageType.Warning, 
 					                          Catalog.GetString("A Project is already using this file."));
 				}
 			}
-			Fill();
-			
 		}
 
 
@@ -89,7 +91,7 @@ namespace LongoMatch.Gui.Dialog
 					MessageDialog md = new MessageDialog(this,DialogFlags.Modal,MessageType.Question,ButtonsType.YesNo,
 					                                     Catalog.GetString("Do yo really want to delete:")+"\n"+selectedProject.File.FilePath);
 					if (md.Run()== (int)ResponseType.Yes){
-						filedescriptionwidget3.Clear();
+						projectdetails.Clear();
 						MainClass.DB.RemoveProject(selectedProject);	
 						Fill();						
 					}
@@ -101,7 +103,8 @@ namespace LongoMatch.Gui.Dialog
 
 		protected virtual void OnSaveButtonPressed (object sender, System.EventArgs e)
 		{
-			SaveProject();			
+			SaveProject();		
+			projectdetails.Edited=false;
 		}		
 	
 
@@ -112,31 +115,37 @@ namespace LongoMatch.Gui.Dialog
 
 		protected virtual void OnProjectlistwidget1ProjectSelectedEvent (LongoMatch.DB.Project project)
 		{
-			if (edited){
+			if (projectdetails.Edited){
 				MessageDialog md = new MessageDialog((Window)this.Toplevel,DialogFlags.Modal,
 				                                     MessageType.Question, ButtonsType.YesNo,
 				                                     Catalog.GetString("The Project has been edited, do you want to save the changes?"));
-				if (md.Run() == (int)ResponseType.Yes)
+				if (md.Run() == (int)ResponseType.Yes){
 					SaveProject();
-				edited=false;
-					
+					projectdetails.Edited=false;	
+				}
+				md.Destroy();								
 			}
 			if (MainWindow.OpenedProject()!= null && project.Equals(MainWindow.OpenedProject())) {
 			
 				MessagePopup.PopupMessage(this, MessageType.Warning, 
 				                          Catalog.GetString("The Project you are trying to load is actually in use.")+"\n" +Catalog.GetString ("Close it first to edit it"));
-				filedescriptionwidget3.Clear();
-				filedescriptionwidget3.Sensitive = false;
+				projectdetails.Clear();
+				projectdetails.Sensitive = false;
 				saveButton.Sensitive = false;
 				deleteButton.Sensitive = false;				
 			}
 			else{
-				filedescriptionwidget3.Sensitive = true;
-				filedescriptionwidget3.SetProject(project);
+				projectdetails.Sensitive = true;
+				projectdetails.SetProject(project);
 				originalFilePath = project.File.FilePath;
-				saveButton.Sensitive = true;
-				deleteButton.Sensitive = true;
+				saveButton.Sensitive = false;
+				deleteButton.Sensitive = true;			
 			}
+		}
+
+		protected virtual void OnProjectdetailsEditedEvent (object sender, System.EventArgs e)
+		{
+			saveButton.Sensitive = true;
 		}		
 	}
 }

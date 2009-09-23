@@ -27,7 +27,7 @@ namespace LongoMatch.Gui.Dialog {
         
         private Gtk.Alignment GtkAlignment2;
         
-        private LongoMatch.Gui.Component.ProjectDetailsWidget filedescriptionwidget3;
+        private LongoMatch.Gui.Component.ProjectDetailsWidget projectdetails;
         
         private Gtk.Label GtkLabel6;
         
@@ -88,14 +88,15 @@ namespace LongoMatch.Gui.Dialog {
             this.GtkAlignment2.Name = "GtkAlignment2";
             this.GtkAlignment2.LeftPadding = ((uint)(12));
             // Container child GtkAlignment2.Gtk.Container+ContainerChild
-            this.filedescriptionwidget3 = new LongoMatch.Gui.Component.ProjectDetailsWidget();
-            this.filedescriptionwidget3.Sensitive = false;
-            this.filedescriptionwidget3.Events = ((Gdk.EventMask)(256));
-            this.filedescriptionwidget3.Name = "filedescriptionwidget3";
-            this.filedescriptionwidget3.LocalGoals = 0;
-            this.filedescriptionwidget3.VisitorGoals = 0;
-            this.filedescriptionwidget3.Date = new System.DateTime(0);
-            this.GtkAlignment2.Add(this.filedescriptionwidget3);
+            this.projectdetails = new LongoMatch.Gui.Component.ProjectDetailsWidget();
+            this.projectdetails.Sensitive = false;
+            this.projectdetails.Events = ((Gdk.EventMask)(256));
+            this.projectdetails.Name = "projectdetails";
+            this.projectdetails.Edited = false;
+            this.projectdetails.LocalGoals = 0;
+            this.projectdetails.VisitorGoals = 0;
+            this.projectdetails.Date = new System.DateTime(0);
+            this.GtkAlignment2.Add(this.projectdetails);
             this.frame1.Add(this.GtkAlignment2);
             this.GtkLabel6 = new Gtk.Label();
             this.GtkLabel6.Name = "GtkLabel6";
@@ -175,6 +176,7 @@ namespace LongoMatch.Gui.Dialog {
             this.DefaultHeight = 550;
             this.Show();
             this.projectlistwidget1.ProjectSelectedEvent += new LongoMatch.Gui.Component.ProjectSelectedHandler(this.OnProjectlistwidget1ProjectSelectedEvent);
+            this.projectdetails.EditedEvent += new System.EventHandler(this.OnProjectdetailsEditedEvent);
             this.saveButton.Pressed += new System.EventHandler(this.OnSaveButtonPressed);
             this.deleteButton.Pressed += new System.EventHandler(this.OnDeleteButtonPressed);
             this.buttonOk.Clicked += new System.EventHandler(this.OnButtonOkClicked);
