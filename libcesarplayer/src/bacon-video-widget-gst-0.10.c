@@ -1,9 +1,10 @@
 /* 
- * Copyright (C) 2003-2009 the GStreamer project
+ * Copyright (C) 2003-2007 the GStreamer project
  *      Julien Moutte <julien@moutte.net>
  *      Ronald Bultje <rbultje@ronald.bitfreak.net>
- *      Tim-Philipp Müller <tim centricular net>
- * Copyright (C) 2007-2009  Andoni Morales Alastruey <ylatuya@gmail.com> 
+ * Copyright (C) 2005-2008 Tim-Philipp Müller <tim centricular net>
+ * Copyright (C) 2009 Sebastian Dröge <sebastian.droege@collabora.co.uk>
+ * Copyright (C) 2009  Andoni Morales Alastruey <ylatuya@gmail.com> 
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
