@@ -75,6 +75,7 @@ namespace LongoMatch.Gui.Dialog
 					                          Catalog.GetString("A Project is already using this file."));
 				}
 			}
+			projectlistwidget1.QueueDraw();
 		}
 
 
