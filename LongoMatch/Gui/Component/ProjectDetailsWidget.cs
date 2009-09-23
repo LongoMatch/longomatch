@@ -47,6 +47,7 @@ namespace LongoMatch.Gui.Component
 		private Project project;
 		private LongoMatch.Video.Utils.PreviewMediaFile mFile;
 		private bool edited;
+		private DateTime date;
 		private CalendarPopup cp;
 		private Win32CalendarDialog win32CP;
 		private Sections actualSection;
@@ -132,22 +133,10 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		public DateTime Date{  
-			get {
-				//HACK See bug http://bugzilla.gnome.org/show_bug.cgi?id=592934
-				//dateEntry is not editable and we set the date manually
-				//Why do we get this error?
-				DateTime date;
-				try{
-					date = DateTime.Parse(dateEntry.Text);
-				}
-				catch{
-					date = DateTime.Now;
-				}                               
-				return date;
-			}
-			
+			get {return date;}			
 			set {
-				dateEntry.Text = value.ToString(Catalog.GetString("MM/dd/yyyy"));
+				date = value;
+				dateEntry.Text = value.ToShortDateString();
 			}
 		}			
 			

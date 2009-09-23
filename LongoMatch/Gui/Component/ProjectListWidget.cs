@@ -85,7 +85,7 @@ namespace LongoMatch.Gui.Component
 			text = text +"\n"+Catalog.GetString("<b>Season:</b>  ") + _project.Season;
 			text = text +"\n"+Catalog.GetString("<b>Competition:</b>  ") + _project.Competition;
 			text = text +"\n"+Catalog.GetString("<b>Result:</b>  ") + _project.LocalGoals+"-"+_project.VisitorGoals;
-			text = text +"\n"+Catalog.GetString("<b>Date:</b>  ") + _project.MatchDate.ToString(Catalog.GetString("MM/dd/yyyy"));
+			text = text +"\n"+Catalog.GetString("<b>Date:</b>  ") + _project.MatchDate.ToShortDateString();
 			
 			(cell as Gtk.CellRendererText).Markup = text;	
 		}
