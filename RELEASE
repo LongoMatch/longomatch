@@ -1,7 +1,7 @@
-LongoMatch-0.15.2 "Drawing cheese cakes" 
+LongoMatch-0.15.3 "Licencia para correr" 
 -------------------------------------------------
 
-The LongoMatch team is proud to announce the second release in the unstable 0.15
+The LongoMatch team is proud to announce the third release in the unstable 0.15
 LongoMatch series.
 
 Due to its dependency on GStreamer, The LongoMatch team strongly recommends users have
@@ -9,17 +9,15 @@ all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
 * Features of this release
-
- * Drawing tool for on-video annotations
- * Redesigned templates manager
+ * Usability improvements of the Projects Manager 
+ 
 
 * Bugs Fixed
 
- *  [#594161] Can't edit categories name in the treeview 
- *  [#594329] Cannot change the file associated to a project in the Projects Manager
- *  [#595397] Video editor stalls for some audio formats
- *  [#595110] Memory leak handling unamanged Pixbuf
- 
+ *  [#596187] GPL headers use the old FSF address 
+ *  [#596013] Removal of sections on a created project does not repect order 
+ *  [#]	      Buttons' label doesn't ellipsize and prevent the main window to shrink 
+
 * Features of the 0.15 series
 
  * Illimted number of tagging categories (previous version allows only 20)
@@ -33,6 +31,8 @@ experience.
  * Change the playrate of plays in the rendered clip
  * New output formats (TV, HD, FullHD)
  * New output audio and video codecs supports (Matroska+H264+AAC, AVI+XVID+MP3, OGG+Theora+Vorbis, MPEG2-PS+Mpeg2Video)
+ * Drawing tool for on-video annotations
+ * Redesigned templates manager
 	
 
 * Requirements

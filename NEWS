@@ -1,3 +1,15 @@
+===== LongoMatch 0.15.3 =====
+
+	== Features ==
+	
+	* Usability improvements in the Projects Manager 
+ 	
+ 	== Bugs Fixed ==
+ 	
+ 	*  [#596187] GPL headers use the old FSF address 
+ 	*  [#596013] Removal of sections on a created project does not repect order 
+ 	*  [#]       Buttons' label doesn't ellipsize and prevent the main window to shrink	
+ 	
 ===== LongoMatch 0.15.2 =====
 
 	== Features ==
