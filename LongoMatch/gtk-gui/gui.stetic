@@ -815,8 +815,8 @@
         <property name="MemberName" />
         <property name="NRows">5</property>
         <property name="NColumns">4</property>
-        <property name="RowSpacing">6</property>
-        <property name="ColumnSpacing">6</property>
+        <property name="RowSpacing">1</property>
+        <property name="ColumnSpacing">1</property>
         <child>
           <placeholder />
         </child>

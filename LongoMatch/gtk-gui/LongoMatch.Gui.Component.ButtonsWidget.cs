@@ -23,8 +23,8 @@ namespace LongoMatch.Gui.Component {
             // Container child LongoMatch.Gui.Component.ButtonsWidget.Gtk.Container+ContainerChild
             this.table1 = new Gtk.Table(((uint)(5)), ((uint)(4)), false);
             this.table1.Name = "table1";
-            this.table1.RowSpacing = ((uint)(6));
-            this.table1.ColumnSpacing = ((uint)(6));
+            this.table1.RowSpacing = ((uint)(1));
+            this.table1.ColumnSpacing = ((uint)(1));
             this.Add(this.table1);
             if ((this.Child != null)) {
                 this.Child.ShowAll();

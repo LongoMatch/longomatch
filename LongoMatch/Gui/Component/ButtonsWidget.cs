@@ -62,7 +62,10 @@ namespace LongoMatch.Gui.Component
 					uint col_left = (uint) i%table1.NColumns;
 					uint col_right = (uint) col_left+1 ;
 					
-					l.Text = sections.GetName(i);
+					l.Markup = sections.GetName(i);
+					l.Justify = Justification.Center;
+					l.Ellipsize = Pango.EllipsizeMode.Middle;
+					
 					b.Add(l);
 					b.Name = i.ToString();
 					b.Clicked += new EventHandler (OnButtonClicked);
@@ -81,6 +84,6 @@ namespace LongoMatch.Gui.Component
 			Widget w = (Button)sender;
 			if (NewMarkEvent != null && this.sections != null)
 				this.NewMarkEvent(int.Parse(w.Name));			
-		}		
+		}
 	}
 }
