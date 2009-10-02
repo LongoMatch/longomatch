@@ -8,6 +8,7 @@
       <itemgroup label="PlayerBin Properties">
         <property name="Rate" />
         <property name="LogoMode" />
+        <property name="ExpandLogo" />
       </itemgroup>
     </itemgroups>
     <signals>

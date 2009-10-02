@@ -110,6 +110,7 @@ enum
 {
   PROP_0,
   PROP_LOGO_MODE,
+  PROP_EXPAND_LOGO,
   PROP_POSITION,
   PROP_CURRENT_TIME,
   PROP_STREAM_LENGTH,
@@ -170,6 +171,7 @@ struct BaconVideoWidgetPrivate
 
   /* Other stuff */
   gboolean                     logo_mode;
+  gboolean					   expand_logo;
   gboolean                     cursor_shown;
   gboolean                     fullscreen_mode;
   gboolean                     auto_resize;
@@ -675,102 +677,78 @@ bacon_video_widget_expose_event (GtkWidget *widget, GdkEventExpose *event)
       guchar *pixels;
       int rowstride;
       gint width, height, alloc_width, alloc_height, logo_x, logo_y;
-      gfloat width_ratio, height_ratio;
+      gfloat ratio;
 
-      frame = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
-	  FALSE, 8, widget->allocation.width, widget->allocation.height);
-
+      /* Checking if allocated space is smaller than our logo */
+      
+      
       width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
       height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
       alloc_width = widget->allocation.width;
       alloc_height = widget->allocation.height;
 
-      /* Checking if allocated space is smaller than our logo */
-
-      if ((alloc_width < width) || (alloc_height < height)) {
-		width_ratio = (gfloat) alloc_width / (gfloat) width;
-		height_ratio = (gfloat) alloc_height / (gfloat) height;
-		width_ratio = MIN (width_ratio, height_ratio);
-		height_ratio = width_ratio;
-      } else
-		width_ratio = height_ratio = 1.0;
-
-      logo_x = (alloc_width / 2) - (width * width_ratio / 2);
-      logo_y = (alloc_height / 2) - (height * height_ratio / 2);
-
-      /* Scaling to available space */
-
-      gdk_pixbuf_composite (bvw->priv->logo_pixbuf,
-	  frame,
-	  0, 0,
-	  alloc_width, alloc_height,
-	  logo_x, logo_y, width_ratio, height_ratio, GDK_INTERP_BILINEAR, 255);
-
-      /* Drawing our frame */
-
-      rowstride = gdk_pixbuf_get_rowstride (frame);
-
-      pixels = gdk_pixbuf_get_pixels (frame) +
-	  rowstride * event->area.y + event->area.x * 3;
-
-      gdk_draw_rgb_image_dithalign (widget->window,
-	  widget->style->black_gc,
-	  event->area.x, event->area.y,
-	  event->area.width, event->area.height,
-	  GDK_RGB_DITHER_NORMAL, pixels,
-	  rowstride, event->area.x, event->area.y);
-
-      g_object_unref (frame);
-      /* draw logo here */
-      /*GdkPixbuf *logo = NULL;
-      gint s_width, s_height, w_width, w_height;
-      gfloat ratio;
-      GdkRegion *region;
-      GdkRectangle rect;
-
-      rect.x = rect.y = 0;
-      rect.width = widget->allocation.width;
-      rect.height = widget->allocation.height;
-      region = gdk_region_rectangle (&rect);
-
-      gdk_window_begin_paint_region (win, region);
-      gdk_region_destroy (region);
-
-      gdk_window_clear_area (win,
-			     0, 0,
-			     widget->allocation.width,
-			     widget->allocation.height);
-
-      s_width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
-      s_height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
-      w_width = widget->allocation.width;
-      w_height = widget->allocation.height;
-
-      if ((gfloat) w_width / s_width > (gfloat) w_height / s_height) {
-        ratio = (gfloat) w_height / s_height;
+      if ((gfloat) alloc_width / width > (gfloat) alloc_height / height) {
+        ratio = (gfloat) alloc_height / height;
       } else {
-        ratio = (gfloat) w_width / s_width;
+        ratio = (gfloat) alloc_width / width;
       }
 
-      s_width *= ratio;
-      s_height *= ratio;
+      width *= ratio;
+      height *= ratio;
 
-      if (s_width <= 1 || s_height <= 1) {
-        if (xoverlay != NULL)
-	  	gst_object_unref (xoverlay);
-		gdk_window_end_paint (win);
-		return TRUE;
+      logo_x = (alloc_width / 2) - (width / 2);
+      logo_y = (alloc_height / 2) - (height/ 2);
+
+
+ 		/* Drawing our frame */
+      
+      if (bvw->priv->expand_logo){
+      /* Scaling to available space */
+      
+      	frame = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
+	  		FALSE, 8, widget->allocation.width, widget->allocation.height);
+
+      	gdk_pixbuf_composite (bvw->priv->logo_pixbuf,
+	  	frame,
+	  	0, 0,
+	  	alloc_width, alloc_height,
+	  	logo_x, logo_y, ratio,ratio, GDK_INTERP_BILINEAR, 255);
+	  	
+     	rowstride = gdk_pixbuf_get_rowstride (frame);
+
+      	pixels = gdk_pixbuf_get_pixels (frame) +
+	  	rowstride * event->area.y + event->area.x * 3;
+
+      	gdk_draw_rgb_image_dithalign (widget->window,
+	  	widget->style->black_gc,
+	  	event->area.x, event->area.y,
+	  	event->area.width, event->area.height,
+	  	GDK_RGB_DITHER_NORMAL, pixels,
+	  	rowstride, event->area.x, event->area.y);
+
+      	g_object_unref (frame);
+      }else{
+	   	gdk_window_clear_area (win,
+			     	0, 0,
+			     	widget->allocation.width,
+			     	widget->allocation.height);
+
+      	if (width <= 1 || height <= 1) {
+        	if (xoverlay != NULL)
+	  		gst_object_unref (xoverlay);
+			gdk_window_end_paint (win);
+			return TRUE;
+      	}
+
+    	frame = gdk_pixbuf_scale_simple (bvw->priv->logo_pixbuf,
+          	width, height, GDK_INTERP_BILINEAR);
+
+      	gdk_draw_pixbuf (win, gtk_widget_get_style (widget)->fg_gc[0], frame,
+          0, 0, logo_x, logo_y,
+          width, height, GDK_RGB_DITHER_NONE, 0, 0);
+          
+      	g_object_unref (frame);
       }
-
-      logo = gdk_pixbuf_scale_simple (bvw->priv->logo_pixbuf,
-          s_width, s_height, GDK_INTERP_BILINEAR);
-
-      gdk_draw_pixbuf (win, gtk_widget_get_style (widget)->fg_gc[0], logo,
-          0, 0, (w_width - s_width) / 2, (w_height - s_height) / 2,
-          s_width, s_height, GDK_RGB_DITHER_NONE, 0, 0);
-
-      gdk_window_end_paint (win);
-      g_object_unref (logo);*/
     } else if (win) {
       /* No pixbuf, just draw a black background then */
       gdk_window_clear_area (win,
@@ -1007,6 +985,10 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                                    g_param_spec_boolean ("logo_mode", NULL,
                                                          NULL, FALSE,
                                                          G_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_EXPAND_LOGO,
+                                   g_param_spec_boolean ("expand_logo", NULL,
+                                                         NULL, TRUE,
+                                                         G_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_POSITION,
                                    g_param_spec_int ("position", NULL, NULL,
                                                      0, G_MAXINT, 0,
@@ -1165,7 +1147,7 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   priv->audiotags = NULL;
   priv->videotags = NULL;
   priv->zoom = 1.0;
-
+  priv->expand_logo=TRUE;
   priv->lock = g_mutex_new ();
 
   bvw->priv->missing_plugins = NULL;
@@ -1996,6 +1978,9 @@ bacon_video_widget_set_property (GObject * object, guint property_id,
       bacon_video_widget_set_logo_mode (bvw,
       g_value_get_boolean (value));
       break;
+    case PROP_EXPAND_LOGO:
+      bvw->priv->expand_logo=g_value_get_boolean (value);
+      break;
     case PROP_SHOW_CURSOR:
       bacon_video_widget_set_show_cursor (bvw,
       g_value_get_boolean (value));
@@ -2022,6 +2007,9 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
     case PROP_LOGO_MODE:
       g_value_set_boolean (value,
       bacon_video_widget_get_logo_mode (bvw));
+      break;
+    case PROP_EXPAND_LOGO:
+      g_value_set_boolean (value,bvw->priv->expand_logo);
       break;
     case PROP_POSITION:
       g_value_set_int64 (value, bacon_video_widget_get_position (bvw));

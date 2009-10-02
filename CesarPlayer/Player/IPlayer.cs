@@ -65,6 +65,11 @@ namespace LongoMatch.Video.Player
 			set;
 		}
 		
+		bool ExpandLogo{
+			get;
+			set;
+		}
+		
 		double Volume{
 			get;
 			set;

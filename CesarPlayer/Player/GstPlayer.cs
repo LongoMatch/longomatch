@@ -71,6 +71,21 @@ namespace LongoMatch.Video.Player {
 				bacon_video_widget_set_logo_mode(Handle, value);
 			}
 		}
+		
+		[GLib.Property ("expand_logo")]
+		public bool ExpandLogo {
+			get {
+				GLib.Value val = GetProperty ("expand_logo");
+				bool ret = (bool) val;
+				val.Dispose ();
+				return ret;
+			}
+			set {
+				GLib.Value val = new GLib.Value(value);
+				SetProperty("expand_logo", val);
+				val.Dispose ();
+			}
+		}
 
 		[DllImport("libcesarplayer.dll")]
 		static extern long bacon_video_widget_get_stream_length(IntPtr raw);

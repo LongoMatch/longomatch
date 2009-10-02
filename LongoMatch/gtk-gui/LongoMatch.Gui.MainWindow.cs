@@ -296,6 +296,7 @@ namespace LongoMatch.Gui {
             this.playerbin1.Name = "playerbin1";
             this.playerbin1.Rate = 0F;
             this.playerbin1.LogoMode = false;
+            this.playerbin1.ExpandLogo = false;
             this.hbox1.Add(this.playerbin1);
             Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.hbox1[this.playerbin1]));
             w10.Position = 1;

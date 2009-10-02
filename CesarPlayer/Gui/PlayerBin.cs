@@ -126,6 +126,11 @@ namespace LongoMatch.Gui
 			set{player.LogoMode = value;}
 		}		
 		
+		public bool ExpandLogo {
+			get{return player.ExpandLogo;}
+			set{player.ExpandLogo = value;}
+		}
+		
 		public Widget VideoWidget{
 			get{return ((Gtk.EventBox)player);}
 		}
