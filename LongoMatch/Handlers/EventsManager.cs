@@ -118,6 +118,7 @@ namespace LongoMatch
 			player.Next += OnNext;
 			player.Tick += OnTick;
 			player.SegmentClosedEvent += OnSegmentClosedEvent;
+			player.DrawFrame += OnDrawFrame;
 		}
 		
 		private void ProcessNewMarkEvent(int section,Time pos){
@@ -135,7 +136,7 @@ namespace LongoMatch
 					length = new Time((int)player.StreamLength);
 								
 				Time fStop = (stop > length) ? length: stop;
-				Pixbuf miniature = player.CurrentFrame;
+				Pixbuf miniature = player.CurrentMiniatureFrame;
 				MediaTimeNode tn = openedProject.AddTimeNode(section,fStart, fStop,miniature);	
 				treewidget.AddPlay(tn,section);
 				timeline.QueueDraw();
@@ -318,6 +319,15 @@ namespace LongoMatch
 		
 		protected virtual void OnApplyRate (PlayListTimeNode plNode){
 			plNode.Rate = player.Rate;
+		}
+		
+		protected virtual void OnDrawFrame (Pixbuf pixbuf){
+			DrawingTool dialog = new DrawingTool();
+			dialog.TransientFor = (Gtk.Window)player.Toplevel;
+			dialog.Image = pixbuf;
+			dialog.Run();
+			dialog.Destroy();
+			pixbuf.Dispose();
 		}
 		
 		protected virtual void OnPlayersTagged (MediaTimeNode tNode, Team team){

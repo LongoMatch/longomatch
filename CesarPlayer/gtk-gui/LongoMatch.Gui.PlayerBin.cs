@@ -25,6 +25,8 @@ namespace LongoMatch.Gui {
         
         private Gtk.Button closebutton;
         
+        private Gtk.Button drawbutton;
+        
         private Gtk.Button playbutton;
         
         private Gtk.Button pausebutton;
@@ -98,30 +100,54 @@ namespace LongoMatch.Gui {
             w10.Expand = false;
             w10.Fill = false;
             // Container child buttonsbox.Gtk.Box+BoxChild
+            this.drawbutton = new Gtk.Button();
+            this.drawbutton.CanFocus = true;
+            this.drawbutton.Name = "drawbutton";
+            this.drawbutton.UseUnderline = true;
+            // Container child drawbutton.Gtk.Container+ContainerChild
+            Gtk.Alignment w11 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            // Container child GtkAlignment1.Gtk.Container+ContainerChild
+            Gtk.HBox w12 = new Gtk.HBox();
+            w12.Spacing = 2;
+            // Container child GtkHBox1.Gtk.Container+ContainerChild
+            Gtk.Image w13 = new Gtk.Image();
+            w13.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-select-color", Gtk.IconSize.Menu, 16);
+            w12.Add(w13);
+            // Container child GtkHBox1.Gtk.Container+ContainerChild
+            Gtk.Label w15 = new Gtk.Label();
+            w12.Add(w15);
+            w11.Add(w12);
+            this.drawbutton.Add(w11);
+            this.buttonsbox.Add(this.drawbutton);
+            Gtk.Box.BoxChild w19 = ((Gtk.Box.BoxChild)(this.buttonsbox[this.drawbutton]));
+            w19.Position = 1;
+            w19.Expand = false;
+            w19.Fill = false;
+            // Container child buttonsbox.Gtk.Box+BoxChild
             this.playbutton = new Gtk.Button();
             this.playbutton.CanFocus = true;
             this.playbutton.Name = "playbutton";
             this.playbutton.UseUnderline = true;
             this.playbutton.Relief = ((Gtk.ReliefStyle)(2));
             // Container child playbutton.Gtk.Container+ContainerChild
-            Gtk.Alignment w11 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment.Gtk.Container+ContainerChild
-            Gtk.HBox w12 = new Gtk.HBox();
-            w12.Spacing = 2;
-            // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Image w13 = new Gtk.Image();
-            w13.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-play", Gtk.IconSize.Button, 20);
-            w12.Add(w13);
-            // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Label w15 = new Gtk.Label();
-            w12.Add(w15);
-            w11.Add(w12);
-            this.playbutton.Add(w11);
+            Gtk.Alignment w20 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            // Container child GtkAlignment2.Gtk.Container+ContainerChild
+            Gtk.HBox w21 = new Gtk.HBox();
+            w21.Spacing = 2;
+            // Container child GtkHBox2.Gtk.Container+ContainerChild
+            Gtk.Image w22 = new Gtk.Image();
+            w22.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-play", Gtk.IconSize.Button, 20);
+            w21.Add(w22);
+            // Container child GtkHBox2.Gtk.Container+ContainerChild
+            Gtk.Label w24 = new Gtk.Label();
+            w21.Add(w24);
+            w20.Add(w21);
+            this.playbutton.Add(w20);
             this.buttonsbox.Add(this.playbutton);
-            Gtk.Box.BoxChild w19 = ((Gtk.Box.BoxChild)(this.buttonsbox[this.playbutton]));
-            w19.Position = 1;
-            w19.Expand = false;
-            w19.Fill = false;
+            Gtk.Box.BoxChild w28 = ((Gtk.Box.BoxChild)(this.buttonsbox[this.playbutton]));
+            w28.Position = 2;
+            w28.Expand = false;
+            w28.Fill = false;
             // Container child buttonsbox.Gtk.Box+BoxChild
             this.pausebutton = new Gtk.Button();
             this.pausebutton.CanFocus = true;
@@ -129,24 +155,24 @@ namespace LongoMatch.Gui {
             this.pausebutton.UseUnderline = true;
             this.pausebutton.Relief = ((Gtk.ReliefStyle)(2));
             // Container child pausebutton.Gtk.Container+ContainerChild
-            Gtk.Alignment w20 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment.Gtk.Container+ContainerChild
-            Gtk.HBox w21 = new Gtk.HBox();
-            w21.Spacing = 2;
-            // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Image w22 = new Gtk.Image();
-            w22.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-pause", Gtk.IconSize.Button, 20);
-            w21.Add(w22);
-            // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Label w24 = new Gtk.Label();
-            w21.Add(w24);
-            w20.Add(w21);
-            this.pausebutton.Add(w20);
+            Gtk.Alignment w29 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            // Container child GtkAlignment3.Gtk.Container+ContainerChild
+            Gtk.HBox w30 = new Gtk.HBox();
+            w30.Spacing = 2;
+            // Container child GtkHBox3.Gtk.Container+ContainerChild
+            Gtk.Image w31 = new Gtk.Image();
+            w31.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-pause", Gtk.IconSize.Button, 20);
+            w30.Add(w31);
+            // Container child GtkHBox3.Gtk.Container+ContainerChild
+            Gtk.Label w33 = new Gtk.Label();
+            w30.Add(w33);
+            w29.Add(w30);
+            this.pausebutton.Add(w29);
             this.buttonsbox.Add(this.pausebutton);
-            Gtk.Box.BoxChild w28 = ((Gtk.Box.BoxChild)(this.buttonsbox[this.pausebutton]));
-            w28.Position = 2;
-            w28.Expand = false;
-            w28.Fill = false;
+            Gtk.Box.BoxChild w37 = ((Gtk.Box.BoxChild)(this.buttonsbox[this.pausebutton]));
+            w37.Position = 3;
+            w37.Expand = false;
+            w37.Fill = false;
             // Container child buttonsbox.Gtk.Box+BoxChild
             this.prevbutton = new Gtk.Button();
             this.prevbutton.CanFocus = true;
@@ -154,24 +180,24 @@ namespace LongoMatch.Gui {
             this.prevbutton.UseUnderline = true;
             this.prevbutton.Relief = ((Gtk.ReliefStyle)(2));
             // Container child prevbutton.Gtk.Container+ContainerChild
-            Gtk.Alignment w29 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment.Gtk.Container+ContainerChild
-            Gtk.HBox w30 = new Gtk.HBox();
-            w30.Spacing = 2;
-            // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Image w31 = new Gtk.Image();
-            w31.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-previous", Gtk.IconSize.Button, 20);
-            w30.Add(w31);
-            // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Label w33 = new Gtk.Label();
-            w30.Add(w33);
-            w29.Add(w30);
-            this.prevbutton.Add(w29);
+            Gtk.Alignment w38 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            // Container child GtkAlignment4.Gtk.Container+ContainerChild
+            Gtk.HBox w39 = new Gtk.HBox();
+            w39.Spacing = 2;
+            // Container child GtkHBox4.Gtk.Container+ContainerChild
+            Gtk.Image w40 = new Gtk.Image();
+            w40.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-previous", Gtk.IconSize.Button, 20);
+            w39.Add(w40);
+            // Container child GtkHBox4.Gtk.Container+ContainerChild
+            Gtk.Label w42 = new Gtk.Label();
+            w39.Add(w42);
+            w38.Add(w39);
+            this.prevbutton.Add(w38);
             this.buttonsbox.Add(this.prevbutton);
-            Gtk.Box.BoxChild w37 = ((Gtk.Box.BoxChild)(this.buttonsbox[this.prevbutton]));
-            w37.Position = 3;
-            w37.Expand = false;
-            w37.Fill = false;
+            Gtk.Box.BoxChild w46 = ((Gtk.Box.BoxChild)(this.buttonsbox[this.prevbutton]));
+            w46.Position = 4;
+            w46.Expand = false;
+            w46.Fill = false;
             // Container child buttonsbox.Gtk.Box+BoxChild
             this.nextbutton = new Gtk.Button();
             this.nextbutton.Sensitive = false;
@@ -180,38 +206,38 @@ namespace LongoMatch.Gui {
             this.nextbutton.UseUnderline = true;
             this.nextbutton.Relief = ((Gtk.ReliefStyle)(2));
             // Container child nextbutton.Gtk.Container+ContainerChild
-            Gtk.Alignment w38 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment.Gtk.Container+ContainerChild
-            Gtk.HBox w39 = new Gtk.HBox();
-            w39.Spacing = 2;
-            // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Image w40 = new Gtk.Image();
-            w40.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-next", Gtk.IconSize.Button, 20);
-            w39.Add(w40);
-            // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Label w42 = new Gtk.Label();
-            w39.Add(w42);
-            w38.Add(w39);
-            this.nextbutton.Add(w38);
+            Gtk.Alignment w47 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            // Container child GtkAlignment5.Gtk.Container+ContainerChild
+            Gtk.HBox w48 = new Gtk.HBox();
+            w48.Spacing = 2;
+            // Container child GtkHBox5.Gtk.Container+ContainerChild
+            Gtk.Image w49 = new Gtk.Image();
+            w49.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-next", Gtk.IconSize.Button, 20);
+            w48.Add(w49);
+            // Container child GtkHBox5.Gtk.Container+ContainerChild
+            Gtk.Label w51 = new Gtk.Label();
+            w48.Add(w51);
+            w47.Add(w48);
+            this.nextbutton.Add(w47);
             this.buttonsbox.Add(this.nextbutton);
-            Gtk.Box.BoxChild w46 = ((Gtk.Box.BoxChild)(this.buttonsbox[this.nextbutton]));
-            w46.Position = 4;
-            w46.Expand = false;
-            w46.Fill = false;
+            Gtk.Box.BoxChild w55 = ((Gtk.Box.BoxChild)(this.buttonsbox[this.nextbutton]));
+            w55.Position = 5;
+            w55.Expand = false;
+            w55.Fill = false;
             this.controlsbox.Add(this.buttonsbox);
-            Gtk.Box.BoxChild w47 = ((Gtk.Box.BoxChild)(this.controlsbox[this.buttonsbox]));
-            w47.Position = 0;
-            w47.Expand = false;
-            w47.Fill = false;
+            Gtk.Box.BoxChild w56 = ((Gtk.Box.BoxChild)(this.controlsbox[this.buttonsbox]));
+            w56.Position = 0;
+            w56.Expand = false;
+            w56.Fill = false;
             // Container child controlsbox.Gtk.Box+BoxChild
             this.tlabel = new Gtk.Label();
             this.tlabel.Name = "tlabel";
             this.tlabel.LabelProp = Mono.Unix.Catalog.GetString("Time:");
             this.controlsbox.Add(this.tlabel);
-            Gtk.Box.BoxChild w48 = ((Gtk.Box.BoxChild)(this.controlsbox[this.tlabel]));
-            w48.Position = 1;
-            w48.Expand = false;
-            w48.Fill = false;
+            Gtk.Box.BoxChild w57 = ((Gtk.Box.BoxChild)(this.controlsbox[this.tlabel]));
+            w57.Position = 1;
+            w57.Expand = false;
+            w57.Fill = false;
             // Container child controlsbox.Gtk.Box+BoxChild
             this.timescale = new Gtk.HScale(null);
             this.timescale.CanFocus = true;
@@ -224,15 +250,15 @@ namespace LongoMatch.Gui {
             this.timescale.Digits = 0;
             this.timescale.ValuePos = ((Gtk.PositionType)(2));
             this.controlsbox.Add(this.timescale);
-            Gtk.Box.BoxChild w49 = ((Gtk.Box.BoxChild)(this.controlsbox[this.timescale]));
-            w49.Position = 2;
+            Gtk.Box.BoxChild w58 = ((Gtk.Box.BoxChild)(this.controlsbox[this.timescale]));
+            w58.Position = 2;
             // Container child controlsbox.Gtk.Box+BoxChild
             this.timelabel = new Gtk.Label();
             this.timelabel.Name = "timelabel";
             this.controlsbox.Add(this.timelabel);
-            Gtk.Box.BoxChild w50 = ((Gtk.Box.BoxChild)(this.controlsbox[this.timelabel]));
-            w50.Position = 3;
-            w50.Expand = false;
+            Gtk.Box.BoxChild w59 = ((Gtk.Box.BoxChild)(this.controlsbox[this.timelabel]));
+            w59.Position = 3;
+            w59.Expand = false;
             // Container child controlsbox.Gtk.Box+BoxChild
             this.volumebutton = new Gtk.Button();
             this.volumebutton.CanFocus = true;
@@ -240,31 +266,31 @@ namespace LongoMatch.Gui {
             this.volumebutton.UseUnderline = true;
             this.volumebutton.Relief = ((Gtk.ReliefStyle)(2));
             // Container child volumebutton.Gtk.Container+ContainerChild
-            Gtk.Alignment w51 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment.Gtk.Container+ContainerChild
-            Gtk.HBox w52 = new Gtk.HBox();
-            w52.Spacing = 2;
-            // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Image w53 = new Gtk.Image();
-            w53.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_volume", Gtk.IconSize.Button, 20);
-            w52.Add(w53);
-            // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Label w55 = new Gtk.Label();
-            w52.Add(w55);
-            w51.Add(w52);
-            this.volumebutton.Add(w51);
+            Gtk.Alignment w60 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            // Container child GtkAlignment6.Gtk.Container+ContainerChild
+            Gtk.HBox w61 = new Gtk.HBox();
+            w61.Spacing = 2;
+            // Container child GtkHBox6.Gtk.Container+ContainerChild
+            Gtk.Image w62 = new Gtk.Image();
+            w62.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_volume", Gtk.IconSize.Button, 20);
+            w61.Add(w62);
+            // Container child GtkHBox6.Gtk.Container+ContainerChild
+            Gtk.Label w64 = new Gtk.Label();
+            w61.Add(w64);
+            w60.Add(w61);
+            this.volumebutton.Add(w60);
             this.controlsbox.Add(this.volumebutton);
-            Gtk.Box.BoxChild w59 = ((Gtk.Box.BoxChild)(this.controlsbox[this.volumebutton]));
-            w59.Position = 4;
-            w59.Expand = false;
-            w59.Fill = false;
+            Gtk.Box.BoxChild w68 = ((Gtk.Box.BoxChild)(this.controlsbox[this.volumebutton]));
+            w68.Position = 4;
+            w68.Expand = false;
+            w68.Fill = false;
             this.vbox2.Add(this.controlsbox);
-            Gtk.Box.BoxChild w60 = ((Gtk.Box.BoxChild)(this.vbox2[this.controlsbox]));
-            w60.Position = 1;
-            w60.Expand = false;
+            Gtk.Box.BoxChild w69 = ((Gtk.Box.BoxChild)(this.vbox2[this.controlsbox]));
+            w69.Position = 1;
+            w69.Expand = false;
             this.mainbox.Add(this.vbox2);
-            Gtk.Box.BoxChild w61 = ((Gtk.Box.BoxChild)(this.mainbox[this.vbox2]));
-            w61.Position = 0;
+            Gtk.Box.BoxChild w70 = ((Gtk.Box.BoxChild)(this.mainbox[this.vbox2]));
+            w70.Position = 0;
             // Container child mainbox.Gtk.Box+BoxChild
             this.vbox3 = new Gtk.VBox();
             this.vbox3.Name = "vbox3";
@@ -287,13 +313,13 @@ namespace LongoMatch.Gui {
             this.vscale1.Digits = 0;
             this.vscale1.ValuePos = ((Gtk.PositionType)(3));
             this.vbox3.Add(this.vscale1);
-            Gtk.Box.BoxChild w62 = ((Gtk.Box.BoxChild)(this.vbox3[this.vscale1]));
-            w62.Position = 0;
+            Gtk.Box.BoxChild w71 = ((Gtk.Box.BoxChild)(this.vbox3[this.vscale1]));
+            w71.Position = 0;
             this.mainbox.Add(this.vbox3);
-            Gtk.Box.BoxChild w63 = ((Gtk.Box.BoxChild)(this.mainbox[this.vbox3]));
-            w63.Position = 1;
-            w63.Expand = false;
-            w63.Fill = false;
+            Gtk.Box.BoxChild w72 = ((Gtk.Box.BoxChild)(this.mainbox[this.vbox3]));
+            w72.Position = 1;
+            w72.Expand = false;
+            w72.Fill = false;
             this.Add(this.mainbox);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
@@ -304,6 +330,7 @@ namespace LongoMatch.Gui {
             this.controlsbox.Hide();
             this.Show();
             this.closebutton.Clicked += new System.EventHandler(this.OnClosebuttonClicked);
+            this.drawbutton.Clicked += new System.EventHandler(this.OnDrawButtonClicked);
             this.playbutton.Clicked += new System.EventHandler(this.OnPlaybuttonClicked);
             this.pausebutton.Clicked += new System.EventHandler(this.OnPausebuttonClicked);
             this.prevbutton.Clicked += new System.EventHandler(this.OnPrevbuttonClicked);

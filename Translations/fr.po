@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2009-09-23 01:00:48+0200\n"
+"POT-Creation-Date: 2009-10-02 15:02:35+0200\n"
 "PO-Revision-Date: 2009-08-08 01:30:56+0200\n"
 "Last-Translator: Andoni Morales Alastruey <ylatuya@gmail.com>\n"
 "Language-Team: \n"
@@ -303,6 +303,7 @@ msgid "_Drawing Tool"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:181
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:31
 msgid "Drawing Tool"
 msgstr ""
 
@@ -370,19 +371,19 @@ msgstr ""
 msgid "Not defined"
 msgstr ""
 
-#: ../LongoMatch/Handlers/EventsManager.cs:161
+#: ../LongoMatch/Handlers/EventsManager.cs:162
 msgid "The video edition has finished successfully."
 msgstr ""
 
-#: ../LongoMatch/Handlers/EventsManager.cs:167
+#: ../LongoMatch/Handlers/EventsManager.cs:168
 msgid "An error has ocurred in the video editor."
 msgstr ""
 
-#: ../LongoMatch/Handlers/EventsManager.cs:168
+#: ../LongoMatch/Handlers/EventsManager.cs:169
 msgid "Please, retry again."
 msgstr ""
 
-#: ../LongoMatch/Handlers/EventsManager.cs:246
+#: ../LongoMatch/Handlers/EventsManager.cs:247
 msgid "Please, close the opened project to play the playlist."
 msgstr ""
 
@@ -432,29 +433,25 @@ msgstr ""
 msgid "This hotkey is already in use."
 msgstr ""
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:142
-#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:87
-msgid "MM/dd/yyyy"
-msgstr ""
-
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:290
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:287
+#: ../LongoMatch/Gui/Dialog/DrawingTool.cs:84
 msgid "Save File as..."
 msgstr ""
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:301
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:298
 msgid "Open file..."
 msgstr ""
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:318
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:315
 msgid "Analyzing video file:"
 msgstr ""
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:386
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:383
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:479
 msgid "Local Team Template"
 msgstr ""
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:397
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:395
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:407
 msgid "Visitor Team Template"
 msgstr ""
@@ -490,27 +487,43 @@ msgstr ""
 msgid "Photo:"
 msgstr ""
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:48
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:86
+msgid "<b>Tools</b>"
+msgstr ""
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:216
+msgid "<b>Width</b>"
+msgstr ""
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:225
 msgid "2 px"
 msgstr ""
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:49
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:226
 msgid "4 px"
 msgstr ""
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:50
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:227
 msgid "6 px"
 msgstr ""
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:51
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:228
 msgid "8 px"
 msgstr ""
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:52
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:229
 msgid "10 px"
 msgstr ""
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:171
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:241
+msgid "<b>Transparency</b>"
+msgstr ""
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:265
+msgid "<b>Colors</b>"
+msgstr ""
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:383
 msgid ""
 "Draw-><b> D</b>\n"
 "Clear-><b> C</b>\n"
@@ -616,31 +629,31 @@ msgstr ""
 msgid "Tag player"
 msgstr ""
 
-#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:70
+#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:74
 msgid "A Project is already using this file."
 msgstr "Un Projet use déjà ce fichier"
 
-#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:85
+#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:88
 msgid "This Project is actually in use."
 msgstr "Ce projet est actualment ouvert"
 
-#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:85
+#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:88
 msgid "Close it first to allow its removal from the database"
 msgstr "Fermer le pour le suprimer de la base de données"
 
-#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:89
+#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:92
 msgid "Do yo really want to delete:"
 msgstr "Voulez-vous suprimer:"
 
-#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:117
+#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:121
 msgid "The Project has been edited, do you want to save the changes?"
 msgstr "Le Projet a été édité, voulez-vous le sauvez?"
 
-#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:126
+#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:131
 msgid "The Project you are trying to load is actually in use."
 msgstr "Le projet que vous essayer de charger est actuellement ouvert."
 
-#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:126
+#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:131
 msgid "Close it first to edit it"
 msgstr "Fermez-le pour pouvoir l'éditer"
 
@@ -758,7 +771,7 @@ msgstr ""
 msgid "Save Video As ..."
 msgstr ""
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs:101
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs:102
 msgid "<b>Project Details</b>"
 msgstr ""
 
@@ -838,7 +851,11 @@ msgstr ""
 msgid "Categories Template"
 msgstr ""
 
-#: ../CesarPlayer/gtk-gui/LongoMatch.Gui.PlayerBin.cs:208
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:99
+msgid "button271"
+msgstr ""
+
+#: ../CesarPlayer/gtk-gui/LongoMatch.Gui.PlayerBin.cs:234
 msgid "Time:"
 msgstr ""
 

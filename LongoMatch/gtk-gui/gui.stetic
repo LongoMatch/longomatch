@@ -4053,13 +4053,237 @@ You can download it using this direct link:</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.DrawingToolBox" design-size="67 313">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.DrawingToolBox" design-size="86 440">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
       <widget class="Gtk.VBox" id="vbox2">
         <property name="MemberName" />
         <property name="Spacing">6</property>
+        <child>
+          <widget class="Gtk.Label" id="toolslabel">
+            <property name="MemberName" />
+            <property name="Xalign">0</property>
+            <property name="LabelProp" translatable="yes">&lt;b&gt;Tools&lt;/b&gt;</property>
+            <property name="UseMarkup">True</property>
+          </widget>
+          <packing>
+            <property name="Position">0</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Table" id="toolstable">
+            <property name="MemberName" />
+            <property name="NRows">3</property>
+            <property name="NColumns">2</property>
+            <property name="RowSpacing">6</property>
+            <property name="ColumnSpacing">6</property>
+            <child>
+              <widget class="Gtk.RadioButton" id="circlebutton">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="Label" translatable="yes" />
+                <property name="DrawIndicator">False</property>
+                <property name="HasLabel">False</property>
+                <property name="UseUnderline">True</property>
+                <property name="Group">tools</property>
+                <signal name="Toggled" handler="OnCirclebuttonToggled" />
+                <child>
+                  <widget class="Gtk.Image" id="image79">
+                    <property name="MemberName" />
+                    <property name="Pixbuf">stock:stock_draw-circle-unfilled Menu</property>
+                  </widget>
+                </child>
+              </widget>
+              <packing>
+                <property name="TopAttach">2</property>
+                <property name="BottomAttach">3</property>
+                <property name="LeftAttach">1</property>
+                <property name="RightAttach">2</property>
+                <property name="AutoSize">True</property>
+                <property name="YOptions">Fill</property>
+                <property name="XExpand">True</property>
+                <property name="XFill">True</property>
+                <property name="XShrink">False</property>
+                <property name="YExpand">False</property>
+                <property name="YFill">True</property>
+                <property name="YShrink">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.RadioButton" id="crossbutton">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="Label" translatable="yes" />
+                <property name="DrawIndicator">False</property>
+                <property name="HasLabel">False</property>
+                <property name="UseUnderline">True</property>
+                <property name="Group">tools</property>
+                <signal name="Toggled" handler="OnCrossbuttonToggled" />
+                <child>
+                  <widget class="Gtk.Image" id="image83">
+                    <property name="MemberName" />
+                    <property name="Pixbuf">stock:stock_draw-line-45 Menu</property>
+                  </widget>
+                </child>
+              </widget>
+              <packing>
+                <property name="TopAttach">1</property>
+                <property name="BottomAttach">2</property>
+                <property name="LeftAttach">1</property>
+                <property name="RightAttach">2</property>
+                <property name="AutoSize">True</property>
+                <property name="YOptions">Fill</property>
+                <property name="XExpand">True</property>
+                <property name="XFill">True</property>
+                <property name="XShrink">False</property>
+                <property name="YExpand">False</property>
+                <property name="YFill">True</property>
+                <property name="YShrink">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.RadioButton" id="eraserbutton">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="Label" translatable="yes" />
+                <property name="DrawIndicator">False</property>
+                <property name="HasLabel">False</property>
+                <property name="UseUnderline">True</property>
+                <property name="Group">tools</property>
+                <signal name="Toggled" handler="OnEraserbuttonToggled" />
+                <child>
+                  <widget class="Gtk.Image" id="image81">
+                    <property name="MemberName" />
+                    <property name="Pixbuf">stock:gtk-delete Menu</property>
+                  </widget>
+                </child>
+              </widget>
+              <packing>
+                <property name="LeftAttach">1</property>
+                <property name="RightAttach">2</property>
+                <property name="AutoSize">True</property>
+                <property name="YOptions">Fill</property>
+                <property name="XExpand">True</property>
+                <property name="XFill">True</property>
+                <property name="XShrink">False</property>
+                <property name="YExpand">False</property>
+                <property name="YFill">True</property>
+                <property name="YShrink">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.RadioButton" id="linebutton">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="Label" translatable="yes" />
+                <property name="DrawIndicator">False</property>
+                <property name="HasLabel">False</property>
+                <property name="UseUnderline">True</property>
+                <property name="Group">tools</property>
+                <signal name="Toggled" handler="OnLinebuttonToggled" />
+                <child>
+                  <widget class="Gtk.Image" id="image82">
+                    <property name="MemberName" />
+                    <property name="Pixbuf">stock:stock_draw-line-ends-with-arrow Menu</property>
+                  </widget>
+                </child>
+              </widget>
+              <packing>
+                <property name="TopAttach">1</property>
+                <property name="BottomAttach">2</property>
+                <property name="AutoSize">True</property>
+                <property name="YOptions">Fill</property>
+                <property name="XExpand">True</property>
+                <property name="XFill">True</property>
+                <property name="XShrink">False</property>
+                <property name="YExpand">False</property>
+                <property name="YFill">True</property>
+                <property name="YShrink">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.RadioButton" id="penbutton">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="Label" translatable="yes" />
+                <property name="DrawIndicator">False</property>
+                <property name="HasLabel">False</property>
+                <property name="UseUnderline">True</property>
+                <property name="Group">tools</property>
+                <signal name="Toggled" handler="OnPenbuttonToggled" />
+                <child>
+                  <widget class="Gtk.Image" id="image80">
+                    <property name="MemberName" />
+                    <property name="Pixbuf">stock:stock_draw-freeform-line Menu</property>
+                  </widget>
+                </child>
+              </widget>
+              <packing>
+                <property name="AutoSize">True</property>
+                <property name="YOptions">Fill</property>
+                <property name="XExpand">True</property>
+                <property name="XFill">True</property>
+                <property name="XShrink">False</property>
+                <property name="YExpand">False</property>
+                <property name="YFill">True</property>
+                <property name="YShrink">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.RadioButton" id="rectanglebutton">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="Label" translatable="yes" />
+                <property name="DrawIndicator">False</property>
+                <property name="HasLabel">False</property>
+                <property name="UseUnderline">True</property>
+                <property name="Group">tools</property>
+                <signal name="Toggled" handler="OnRectanglebuttonToggled" />
+                <child>
+                  <widget class="Gtk.Image" id="image84">
+                    <property name="MemberName" />
+                    <property name="Pixbuf">stock:stock_draw-rectangle-unfilled Menu</property>
+                  </widget>
+                </child>
+              </widget>
+              <packing>
+                <property name="TopAttach">2</property>
+                <property name="BottomAttach">3</property>
+                <property name="AutoSize">True</property>
+                <property name="YOptions">Fill</property>
+                <property name="XExpand">True</property>
+                <property name="XFill">True</property>
+                <property name="XShrink">False</property>
+                <property name="YExpand">False</property>
+                <property name="YFill">True</property>
+                <property name="YShrink">False</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">1</property>
+            <property name="AutoSize">False</property>
+            <property name="Expand">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="label3">
+            <property name="MemberName" />
+            <property name="Xalign">0</property>
+            <property name="LabelProp" translatable="yes">&lt;b&gt;Width&lt;/b&gt;</property>
+            <property name="UseMarkup">True</property>
+          </widget>
+          <packing>
+            <property name="Position">2</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
         <child>
           <widget class="Gtk.ComboBox" id="combobox1">
             <property name="MemberName" />
@@ -4073,14 +4297,61 @@ You can download it using this direct link:</property>
             <signal name="Changed" handler="OnCombobox1Changed" />
           </widget>
           <packing>
-            <property name="Position">0</property>
+            <property name="Position">3</property>
             <property name="AutoSize">True</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
           </packing>
         </child>
         <child>
-          <widget class="Gtk.Table" id="table1">
+          <widget class="Gtk.Label" id="transparencylabel">
+            <property name="MemberName" />
+            <property name="Xalign">0</property>
+            <property name="LabelProp" translatable="yes">&lt;b&gt;Transparency&lt;/b&gt;</property>
+            <property name="UseMarkup">True</property>
+          </widget>
+          <packing>
+            <property name="Position">4</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.SpinButton" id="spinbutton1">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Upper">100</property>
+            <property name="PageIncrement">10</property>
+            <property name="StepIncrement">1</property>
+            <property name="ClimbRate">1</property>
+            <property name="Numeric">True</property>
+            <property name="Value">80</property>
+            <signal name="Changed" handler="OnSpinbutton1Changed" />
+          </widget>
+          <packing>
+            <property name="Position">5</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="colorslabel">
+            <property name="MemberName" />
+            <property name="Xalign">0</property>
+            <property name="LabelProp" translatable="yes">&lt;b&gt;Colors&lt;/b&gt;</property>
+            <property name="UseMarkup">True</property>
+          </widget>
+          <packing>
+            <property name="Position">6</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Table" id="colorstable">
             <property name="MemberName" />
             <property name="NRows">3</property>
             <property name="NColumns">2</property>
@@ -4094,7 +4365,7 @@ You can download it using this direct link:</property>
                 <property name="HasLabel">True</property>
                 <property name="UseUnderline">True</property>
                 <property name="FocusOnClick">False</property>
-                <property name="Group">group1</property>
+                <property name="Group">colors</property>
                 <signal name="Toggled" handler="OnButtonToggled" />
               </widget>
               <packing>
@@ -4118,7 +4389,7 @@ You can download it using this direct link:</property>
                 <property name="HasLabel">True</property>
                 <property name="UseUnderline">True</property>
                 <property name="FocusOnClick">False</property>
-                <property name="Group">group1</property>
+                <property name="Group">colors</property>
                 <signal name="Toggled" handler="OnButtonToggled" />
               </widget>
               <packing>
@@ -4144,7 +4415,7 @@ You can download it using this direct link:</property>
                 <property name="HasLabel">True</property>
                 <property name="UseUnderline">True</property>
                 <property name="FocusOnClick">False</property>
-                <property name="Group">group1</property>
+                <property name="Group">colors</property>
                 <signal name="Toggled" handler="OnButtonToggled" />
               </widget>
               <packing>
@@ -4168,7 +4439,7 @@ You can download it using this direct link:</property>
                 <property name="HasLabel">True</property>
                 <property name="UseUnderline">True</property>
                 <property name="FocusOnClick">False</property>
-                <property name="Group">group1</property>
+                <property name="Group">colors</property>
                 <signal name="Toggled" handler="OnButtonToggled" />
               </widget>
               <packing>
@@ -4192,7 +4463,7 @@ You can download it using this direct link:</property>
                 <property name="HasLabel">True</property>
                 <property name="UseUnderline">True</property>
                 <property name="FocusOnClick">False</property>
-                <property name="Group">group1</property>
+                <property name="Group">colors</property>
                 <signal name="Toggled" handler="OnButtonToggled" />
               </widget>
               <packing>
@@ -4214,7 +4485,7 @@ You can download it using this direct link:</property>
                 <property name="HasLabel">True</property>
                 <property name="UseUnderline">True</property>
                 <property name="FocusOnClick">False</property>
-                <property name="Group">group1</property>
+                <property name="Group">colors</property>
                 <signal name="Toggled" handler="OnButtonToggled" />
               </widget>
               <packing>
@@ -4234,7 +4505,7 @@ You can download it using this direct link:</property>
             </child>
           </widget>
           <packing>
-            <property name="Position">1</property>
+            <property name="Position">7</property>
             <property name="AutoSize">True</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
@@ -4251,7 +4522,7 @@ You can download it using this direct link:</property>
             <signal name="Clicked" handler="OnClearbuttonClicked" />
           </widget>
           <packing>
-            <property name="Position">2</property>
+            <property name="Position">8</property>
             <property name="AutoSize">False</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
@@ -4268,14 +4539,11 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
             <property name="UseMarkup">True</property>
           </widget>
           <packing>
-            <property name="Position">3</property>
+            <property name="Position">9</property>
             <property name="AutoSize">True</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
           </packing>
-        </child>
-        <child>
-          <placeholder />
         </child>
       </widget>
     </child>
@@ -4431,6 +4699,144 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
             <property name="StockId">gtk-apply</property>
             <property name="ResponseId">-10</property>
             <property name="label">gtk-apply</property>
+          </widget>
+          <packing>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.DrawingWidget" design-size="300 300">
+    <property name="MemberName" />
+    <property name="Visible">False</property>
+    <child>
+      <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow">
+        <property name="MemberName" />
+        <property name="ShadowType">In</property>
+        <child>
+          <widget class="Gtk.Viewport" id="GtkViewport">
+            <property name="MemberName" />
+            <property name="ShadowType">None</property>
+            <child>
+              <widget class="Gtk.DrawingArea" id="drawingarea">
+                <property name="MemberName" />
+                <property name="Events">ButtonMotionMask, ButtonPressMask, ButtonReleaseMask</property>
+                <property name="ShowScrollbars">True</property>
+                <signal name="ExposeEvent" handler="OnDrawingareaExposeEvent" />
+                <signal name="ButtonPressEvent" handler="OnDrawingareaButtonPressEvent" />
+                <signal name="ButtonReleaseEvent" handler="OnDrawingareaButtonReleaseEvent" />
+                <signal name="MotionNotifyEvent" handler="OnDrawingareaMotionNotifyEvent" />
+                <signal name="SizeAllocated" handler="OnDrawingareaSizeAllocated" />
+                <signal name="ConfigureEvent" handler="OnDrawingareaConfigureEvent" />
+              </widget>
+            </child>
+          </widget>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.DrawingTool" design-size="600 521">
+    <property name="MemberName" />
+    <property name="Title" translatable="yes">Drawing Tool</property>
+    <property name="Icon">resource:longomatch.png</property>
+    <property name="WindowPosition">CenterOnParent</property>
+    <property name="Modal">True</property>
+    <property name="Gravity">Center</property>
+    <property name="SkipPagerHint">True</property>
+    <property name="SkipTaskbarHint">True</property>
+    <property name="Buttons">1</property>
+    <property name="HelpButton">False</property>
+    <property name="HasSeparator">False</property>
+    <child internal-child="VBox">
+      <widget class="Gtk.VBox" id="dialog1_VBox">
+        <property name="MemberName" />
+        <property name="BorderWidth">2</property>
+        <child>
+          <widget class="Gtk.HBox" id="hbox1">
+            <property name="MemberName" />
+            <property name="Spacing">6</property>
+            <child>
+              <widget class="Gtk.VBox" id="vbox2">
+                <property name="MemberName" />
+                <property name="Spacing">6</property>
+                <child>
+                  <widget class="LongoMatch.Gui.Component.DrawingToolBox" id="drawingtoolbox1">
+                    <property name="MemberName" />
+                    <property name="Events">ButtonPressMask</property>
+                    <signal name="LineWidthChanged" handler="OnDrawingtoolbox1LineWidthChanged" />
+                    <signal name="ColorChanged" handler="OnDrawingtoolbox1ColorChanged" />
+                    <signal name="VisibilityChanged" handler="OnDrawingtoolbox1VisibilityChanged" />
+                    <signal name="ClearDrawing" handler="OnDrawingtoolbox1ClearDrawing" />
+                  </widget>
+                  <packing>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Button" id="savebutton">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="UseStock">True</property>
+                    <property name="Type">StockItem</property>
+                    <property name="StockId">gtk-save</property>
+                    <signal name="Clicked" handler="OnSavebuttonClicked" />
+                    <property name="label">gtk-save</property>
+                  </widget>
+                  <packing>
+                    <property name="PackType">End</property>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">0</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="LongoMatch.Gui.Component.DrawingWidget" id="drawingwidget1">
+                <property name="MemberName" />
+                <property name="Events">ButtonPressMask</property>
+              </widget>
+              <packing>
+                <property name="Position">1</property>
+                <property name="AutoSize">True</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">0</property>
+            <property name="AutoSize">False</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+    <child internal-child="ActionArea">
+      <widget class="Gtk.HButtonBox" id="dialog1_ActionArea">
+        <property name="MemberName" />
+        <property name="Spacing">6</property>
+        <property name="BorderWidth">5</property>
+        <property name="Size">1</property>
+        <property name="LayoutStyle">End</property>
+        <child>
+          <widget class="Gtk.Button" id="button271">
+            <property name="MemberName" />
+            <property name="Visible">False</property>
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label" translatable="yes">button271</property>
+            <property name="UseUnderline">True</property>
+            <property name="ResponseId">0</property>
           </widget>
           <packing>
             <property name="Expand">False</property>

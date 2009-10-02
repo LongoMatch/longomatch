@@ -155,6 +155,10 @@
     <File name="gtk-gui/LongoMatch.Gui.Component.PlayersListTreeWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="gtk-gui/LongoMatch.Gui.Dialog.ProjectTemplateEditorDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="Gui/Dialog/TeamTemplateEditor.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.Gui.Component.DrawingWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Gui/Component/DrawingWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Gui/Dialog/DrawingTool.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />

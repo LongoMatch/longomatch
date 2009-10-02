@@ -15,6 +15,8 @@
         <signal name="ColorChanged" />
         <signal name="VisibilityChanged" />
         <signal name="ClearDrawing" />
+        <signal name="DrawToolChanged" />
+        <signal name="TransparencyChanged" />
       </itemgroup>
     </signals>
   </object>
@@ -201,10 +203,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Popup.TransparentDrawingArea" palette-category="General" allow-children="false" base-type="Gtk.Window">
-    <itemgroups />
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Component.PlaysListTreeWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>
@@ -236,5 +234,13 @@
         <signal name="EditedEvent" />
       </itemgroup>
     </signals>
+  </object>
+  <object type="LongoMatch.Gui.Popup.TransparentDrawingArea" palette-category="General" allow-children="false" base-type="Gtk.Window">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.DrawingWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
   </object>
 </objects>

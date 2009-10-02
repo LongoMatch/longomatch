@@ -40,6 +40,7 @@ namespace LongoMatch.Gui
 		public event ErrorHandler Error;
 		public event NextButtonClickedHandler Next;
 		public event PrevButtonClickedHandler Prev;
+		public event DrawFrameHandler DrawFrame;
 		
 		private const int THUMBNAIL_WIDTH = 50;
 		private TickHandler tickHandler;
@@ -106,12 +107,17 @@ namespace LongoMatch.Gui
 			}
 		}
 		
-		public Pixbuf CurrentFrame{
+		public Pixbuf CurrentMiniatureFrame{
 			get{
 				Pixbuf pixbuf = player.GetCurrentFrame(50,50);				
-				if (pixbuf != null)
-					return pixbuf;
-				else return null;
+				return pixbuf;
+			}
+		}
+		
+		public Pixbuf CurrentFrame{
+			get{
+				Pixbuf pixbuf = player.GetCurrentFrame();				
+				return pixbuf;
 			}
 		}
 		
@@ -487,6 +493,15 @@ namespace LongoMatch.Gui
 			else 
 				Pause();		
 		}
-#endregion		
+		
+		protected virtual void OnDrawButtonClicked (object sender, System.EventArgs e)
+		{
+			if (DrawFrame != null)
+				DrawFrame(CurrentFrame);
+		}
+		
+
+#endregion	
 	}
+
 }

@@ -15,9 +15,45 @@ namespace LongoMatch.Gui.Component {
         
         private Gtk.VBox vbox2;
         
+        private Gtk.Label toolslabel;
+        
+        private Gtk.Table toolstable;
+        
+        private Gtk.RadioButton circlebutton;
+        
+        private Gtk.Image image79;
+        
+        private Gtk.RadioButton crossbutton;
+        
+        private Gtk.Image image83;
+        
+        private Gtk.RadioButton eraserbutton;
+        
+        private Gtk.Image image81;
+        
+        private Gtk.RadioButton linebutton;
+        
+        private Gtk.Image image82;
+        
+        private Gtk.RadioButton penbutton;
+        
+        private Gtk.Image image80;
+        
+        private Gtk.RadioButton rectanglebutton;
+        
+        private Gtk.Image image84;
+        
+        private Gtk.Label label3;
+        
         private Gtk.ComboBox combobox1;
         
-        private Gtk.Table table1;
+        private Gtk.Label transparencylabel;
+        
+        private Gtk.SpinButton spinbutton1;
+        
+        private Gtk.Label colorslabel;
+        
+        private Gtk.Table colorstable;
         
         private Gtk.RadioButton bbutton;
         
@@ -45,6 +81,147 @@ namespace LongoMatch.Gui.Component {
             this.vbox2.Name = "vbox2";
             this.vbox2.Spacing = 6;
             // Container child vbox2.Gtk.Box+BoxChild
+            this.toolslabel = new Gtk.Label();
+            this.toolslabel.Name = "toolslabel";
+            this.toolslabel.Xalign = 0F;
+            this.toolslabel.LabelProp = Mono.Unix.Catalog.GetString("<b>Tools</b>");
+            this.toolslabel.UseMarkup = true;
+            this.vbox2.Add(this.toolslabel);
+            Gtk.Box.BoxChild w1 = ((Gtk.Box.BoxChild)(this.vbox2[this.toolslabel]));
+            w1.Position = 0;
+            w1.Expand = false;
+            w1.Fill = false;
+            // Container child vbox2.Gtk.Box+BoxChild
+            this.toolstable = new Gtk.Table(((uint)(3)), ((uint)(2)), false);
+            this.toolstable.Name = "toolstable";
+            this.toolstable.RowSpacing = ((uint)(6));
+            this.toolstable.ColumnSpacing = ((uint)(6));
+            // Container child toolstable.Gtk.Table+TableChild
+            this.circlebutton = new Gtk.RadioButton("");
+            this.circlebutton.CanFocus = true;
+            this.circlebutton.Name = "circlebutton";
+            this.circlebutton.DrawIndicator = false;
+            this.circlebutton.UseUnderline = true;
+            this.circlebutton.Group = new GLib.SList(System.IntPtr.Zero);
+            this.circlebutton.Remove(this.circlebutton.Child);
+            // Container child circlebutton.Gtk.Container+ContainerChild
+            this.image79 = new Gtk.Image();
+            this.image79.Name = "image79";
+            this.image79.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_draw-circle-unfilled", Gtk.IconSize.Menu, 16);
+            this.circlebutton.Add(this.image79);
+            this.toolstable.Add(this.circlebutton);
+            Gtk.Table.TableChild w3 = ((Gtk.Table.TableChild)(this.toolstable[this.circlebutton]));
+            w3.TopAttach = ((uint)(2));
+            w3.BottomAttach = ((uint)(3));
+            w3.LeftAttach = ((uint)(1));
+            w3.RightAttach = ((uint)(2));
+            w3.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child toolstable.Gtk.Table+TableChild
+            this.crossbutton = new Gtk.RadioButton("");
+            this.crossbutton.CanFocus = true;
+            this.crossbutton.Name = "crossbutton";
+            this.crossbutton.DrawIndicator = false;
+            this.crossbutton.UseUnderline = true;
+            this.crossbutton.Group = this.circlebutton.Group;
+            this.crossbutton.Remove(this.crossbutton.Child);
+            // Container child crossbutton.Gtk.Container+ContainerChild
+            this.image83 = new Gtk.Image();
+            this.image83.Name = "image83";
+            this.image83.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_draw-line-45", Gtk.IconSize.Menu, 16);
+            this.crossbutton.Add(this.image83);
+            this.toolstable.Add(this.crossbutton);
+            Gtk.Table.TableChild w5 = ((Gtk.Table.TableChild)(this.toolstable[this.crossbutton]));
+            w5.TopAttach = ((uint)(1));
+            w5.BottomAttach = ((uint)(2));
+            w5.LeftAttach = ((uint)(1));
+            w5.RightAttach = ((uint)(2));
+            w5.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child toolstable.Gtk.Table+TableChild
+            this.eraserbutton = new Gtk.RadioButton("");
+            this.eraserbutton.CanFocus = true;
+            this.eraserbutton.Name = "eraserbutton";
+            this.eraserbutton.DrawIndicator = false;
+            this.eraserbutton.UseUnderline = true;
+            this.eraserbutton.Group = this.circlebutton.Group;
+            this.eraserbutton.Remove(this.eraserbutton.Child);
+            // Container child eraserbutton.Gtk.Container+ContainerChild
+            this.image81 = new Gtk.Image();
+            this.image81.Name = "image81";
+            this.image81.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-delete", Gtk.IconSize.Menu, 16);
+            this.eraserbutton.Add(this.image81);
+            this.toolstable.Add(this.eraserbutton);
+            Gtk.Table.TableChild w7 = ((Gtk.Table.TableChild)(this.toolstable[this.eraserbutton]));
+            w7.LeftAttach = ((uint)(1));
+            w7.RightAttach = ((uint)(2));
+            w7.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child toolstable.Gtk.Table+TableChild
+            this.linebutton = new Gtk.RadioButton("");
+            this.linebutton.CanFocus = true;
+            this.linebutton.Name = "linebutton";
+            this.linebutton.DrawIndicator = false;
+            this.linebutton.UseUnderline = true;
+            this.linebutton.Group = this.circlebutton.Group;
+            this.linebutton.Remove(this.linebutton.Child);
+            // Container child linebutton.Gtk.Container+ContainerChild
+            this.image82 = new Gtk.Image();
+            this.image82.Name = "image82";
+            this.image82.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_draw-line-ends-with-arrow", Gtk.IconSize.Menu, 16);
+            this.linebutton.Add(this.image82);
+            this.toolstable.Add(this.linebutton);
+            Gtk.Table.TableChild w9 = ((Gtk.Table.TableChild)(this.toolstable[this.linebutton]));
+            w9.TopAttach = ((uint)(1));
+            w9.BottomAttach = ((uint)(2));
+            w9.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child toolstable.Gtk.Table+TableChild
+            this.penbutton = new Gtk.RadioButton("");
+            this.penbutton.CanFocus = true;
+            this.penbutton.Name = "penbutton";
+            this.penbutton.DrawIndicator = false;
+            this.penbutton.UseUnderline = true;
+            this.penbutton.Group = this.circlebutton.Group;
+            this.penbutton.Remove(this.penbutton.Child);
+            // Container child penbutton.Gtk.Container+ContainerChild
+            this.image80 = new Gtk.Image();
+            this.image80.Name = "image80";
+            this.image80.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_draw-freeform-line", Gtk.IconSize.Menu, 16);
+            this.penbutton.Add(this.image80);
+            this.toolstable.Add(this.penbutton);
+            Gtk.Table.TableChild w11 = ((Gtk.Table.TableChild)(this.toolstable[this.penbutton]));
+            w11.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child toolstable.Gtk.Table+TableChild
+            this.rectanglebutton = new Gtk.RadioButton("");
+            this.rectanglebutton.CanFocus = true;
+            this.rectanglebutton.Name = "rectanglebutton";
+            this.rectanglebutton.DrawIndicator = false;
+            this.rectanglebutton.UseUnderline = true;
+            this.rectanglebutton.Group = this.circlebutton.Group;
+            this.rectanglebutton.Remove(this.rectanglebutton.Child);
+            // Container child rectanglebutton.Gtk.Container+ContainerChild
+            this.image84 = new Gtk.Image();
+            this.image84.Name = "image84";
+            this.image84.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_draw-rectangle-unfilled", Gtk.IconSize.Menu, 16);
+            this.rectanglebutton.Add(this.image84);
+            this.toolstable.Add(this.rectanglebutton);
+            Gtk.Table.TableChild w13 = ((Gtk.Table.TableChild)(this.toolstable[this.rectanglebutton]));
+            w13.TopAttach = ((uint)(2));
+            w13.BottomAttach = ((uint)(3));
+            w13.YOptions = ((Gtk.AttachOptions)(4));
+            this.vbox2.Add(this.toolstable);
+            Gtk.Box.BoxChild w14 = ((Gtk.Box.BoxChild)(this.vbox2[this.toolstable]));
+            w14.Position = 1;
+            w14.Expand = false;
+            // Container child vbox2.Gtk.Box+BoxChild
+            this.label3 = new Gtk.Label();
+            this.label3.Name = "label3";
+            this.label3.Xalign = 0F;
+            this.label3.LabelProp = Mono.Unix.Catalog.GetString("<b>Width</b>");
+            this.label3.UseMarkup = true;
+            this.vbox2.Add(this.label3);
+            Gtk.Box.BoxChild w15 = ((Gtk.Box.BoxChild)(this.vbox2[this.label3]));
+            w15.Position = 2;
+            w15.Expand = false;
+            w15.Fill = false;
+            // Container child vbox2.Gtk.Box+BoxChild
             this.combobox1 = Gtk.ComboBox.NewText();
             this.combobox1.AppendText(Mono.Unix.Catalog.GetString("2 px"));
             this.combobox1.AppendText(Mono.Unix.Catalog.GetString("4 px"));
@@ -54,134 +231,176 @@ namespace LongoMatch.Gui.Component {
             this.combobox1.Name = "combobox1";
             this.combobox1.Active = 2;
             this.vbox2.Add(this.combobox1);
-            Gtk.Box.BoxChild w1 = ((Gtk.Box.BoxChild)(this.vbox2[this.combobox1]));
-            w1.Position = 0;
-            w1.Expand = false;
-            w1.Fill = false;
+            Gtk.Box.BoxChild w16 = ((Gtk.Box.BoxChild)(this.vbox2[this.combobox1]));
+            w16.Position = 3;
+            w16.Expand = false;
+            w16.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
-            this.table1 = new Gtk.Table(((uint)(3)), ((uint)(2)), false);
-            this.table1.Name = "table1";
-            this.table1.RowSpacing = ((uint)(6));
-            this.table1.ColumnSpacing = ((uint)(6));
-            // Container child table1.Gtk.Table+TableChild
+            this.transparencylabel = new Gtk.Label();
+            this.transparencylabel.Name = "transparencylabel";
+            this.transparencylabel.Xalign = 0F;
+            this.transparencylabel.LabelProp = Mono.Unix.Catalog.GetString("<b>Transparency</b>");
+            this.transparencylabel.UseMarkup = true;
+            this.vbox2.Add(this.transparencylabel);
+            Gtk.Box.BoxChild w17 = ((Gtk.Box.BoxChild)(this.vbox2[this.transparencylabel]));
+            w17.Position = 4;
+            w17.Expand = false;
+            w17.Fill = false;
+            // Container child vbox2.Gtk.Box+BoxChild
+            this.spinbutton1 = new Gtk.SpinButton(0, 100, 1);
+            this.spinbutton1.CanFocus = true;
+            this.spinbutton1.Name = "spinbutton1";
+            this.spinbutton1.Adjustment.PageIncrement = 10;
+            this.spinbutton1.ClimbRate = 1;
+            this.spinbutton1.Numeric = true;
+            this.spinbutton1.Value = 80;
+            this.vbox2.Add(this.spinbutton1);
+            Gtk.Box.BoxChild w18 = ((Gtk.Box.BoxChild)(this.vbox2[this.spinbutton1]));
+            w18.Position = 5;
+            w18.Expand = false;
+            w18.Fill = false;
+            // Container child vbox2.Gtk.Box+BoxChild
+            this.colorslabel = new Gtk.Label();
+            this.colorslabel.Name = "colorslabel";
+            this.colorslabel.Xalign = 0F;
+            this.colorslabel.LabelProp = Mono.Unix.Catalog.GetString("<b>Colors</b>");
+            this.colorslabel.UseMarkup = true;
+            this.vbox2.Add(this.colorslabel);
+            Gtk.Box.BoxChild w19 = ((Gtk.Box.BoxChild)(this.vbox2[this.colorslabel]));
+            w19.Position = 6;
+            w19.Expand = false;
+            w19.Fill = false;
+            // Container child vbox2.Gtk.Box+BoxChild
+            this.colorstable = new Gtk.Table(((uint)(3)), ((uint)(2)), false);
+            this.colorstable.Name = "colorstable";
+            this.colorstable.RowSpacing = ((uint)(6));
+            this.colorstable.ColumnSpacing = ((uint)(6));
+            // Container child colorstable.Gtk.Table+TableChild
             this.bbutton = new Gtk.RadioButton("");
             this.bbutton.Name = "bbutton";
             this.bbutton.DrawIndicator = false;
             this.bbutton.UseUnderline = true;
             this.bbutton.FocusOnClick = false;
             this.bbutton.Group = new GLib.SList(System.IntPtr.Zero);
-            this.table1.Add(this.bbutton);
-            Gtk.Table.TableChild w2 = ((Gtk.Table.TableChild)(this.table1[this.bbutton]));
-            w2.LeftAttach = ((uint)(1));
-            w2.RightAttach = ((uint)(2));
-            w2.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child table1.Gtk.Table+TableChild
+            this.colorstable.Add(this.bbutton);
+            Gtk.Table.TableChild w20 = ((Gtk.Table.TableChild)(this.colorstable[this.bbutton]));
+            w20.LeftAttach = ((uint)(1));
+            w20.RightAttach = ((uint)(2));
+            w20.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child colorstable.Gtk.Table+TableChild
             this.blbutton = new Gtk.RadioButton("");
             this.blbutton.Name = "blbutton";
             this.blbutton.DrawIndicator = false;
             this.blbutton.UseUnderline = true;
             this.blbutton.FocusOnClick = false;
             this.blbutton.Group = this.bbutton.Group;
-            this.table1.Add(this.blbutton);
-            Gtk.Table.TableChild w3 = ((Gtk.Table.TableChild)(this.table1[this.blbutton]));
-            w3.TopAttach = ((uint)(1));
-            w3.BottomAttach = ((uint)(2));
-            w3.LeftAttach = ((uint)(1));
-            w3.RightAttach = ((uint)(2));
-            w3.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child table1.Gtk.Table+TableChild
+            this.colorstable.Add(this.blbutton);
+            Gtk.Table.TableChild w21 = ((Gtk.Table.TableChild)(this.colorstable[this.blbutton]));
+            w21.TopAttach = ((uint)(1));
+            w21.BottomAttach = ((uint)(2));
+            w21.LeftAttach = ((uint)(1));
+            w21.RightAttach = ((uint)(2));
+            w21.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child colorstable.Gtk.Table+TableChild
             this.gbutton = new Gtk.RadioButton("");
             this.gbutton.Name = "gbutton";
             this.gbutton.DrawIndicator = false;
             this.gbutton.UseUnderline = true;
             this.gbutton.FocusOnClick = false;
             this.gbutton.Group = this.bbutton.Group;
-            this.table1.Add(this.gbutton);
-            Gtk.Table.TableChild w4 = ((Gtk.Table.TableChild)(this.table1[this.gbutton]));
-            w4.TopAttach = ((uint)(2));
-            w4.BottomAttach = ((uint)(3));
-            w4.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child table1.Gtk.Table+TableChild
+            this.colorstable.Add(this.gbutton);
+            Gtk.Table.TableChild w22 = ((Gtk.Table.TableChild)(this.colorstable[this.gbutton]));
+            w22.TopAttach = ((uint)(2));
+            w22.BottomAttach = ((uint)(3));
+            w22.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child colorstable.Gtk.Table+TableChild
             this.rbutton = new Gtk.RadioButton("");
             this.rbutton.Name = "rbutton";
             this.rbutton.DrawIndicator = false;
             this.rbutton.UseUnderline = true;
             this.rbutton.FocusOnClick = false;
             this.rbutton.Group = this.bbutton.Group;
-            this.table1.Add(this.rbutton);
-            Gtk.Table.TableChild w5 = ((Gtk.Table.TableChild)(this.table1[this.rbutton]));
-            w5.TopAttach = ((uint)(1));
-            w5.BottomAttach = ((uint)(2));
-            w5.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child table1.Gtk.Table+TableChild
+            this.colorstable.Add(this.rbutton);
+            Gtk.Table.TableChild w23 = ((Gtk.Table.TableChild)(this.colorstable[this.rbutton]));
+            w23.TopAttach = ((uint)(1));
+            w23.BottomAttach = ((uint)(2));
+            w23.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child colorstable.Gtk.Table+TableChild
             this.wbutton = new Gtk.RadioButton("");
             this.wbutton.Name = "wbutton";
             this.wbutton.DrawIndicator = false;
             this.wbutton.UseUnderline = true;
             this.wbutton.FocusOnClick = false;
             this.wbutton.Group = this.bbutton.Group;
-            this.table1.Add(this.wbutton);
-            Gtk.Table.TableChild w6 = ((Gtk.Table.TableChild)(this.table1[this.wbutton]));
-            w6.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child table1.Gtk.Table+TableChild
+            this.colorstable.Add(this.wbutton);
+            Gtk.Table.TableChild w24 = ((Gtk.Table.TableChild)(this.colorstable[this.wbutton]));
+            w24.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child colorstable.Gtk.Table+TableChild
             this.ybutton = new Gtk.RadioButton("");
             this.ybutton.Name = "ybutton";
             this.ybutton.DrawIndicator = false;
             this.ybutton.UseUnderline = true;
             this.ybutton.FocusOnClick = false;
             this.ybutton.Group = this.bbutton.Group;
-            this.table1.Add(this.ybutton);
-            Gtk.Table.TableChild w7 = ((Gtk.Table.TableChild)(this.table1[this.ybutton]));
-            w7.TopAttach = ((uint)(2));
-            w7.BottomAttach = ((uint)(3));
-            w7.LeftAttach = ((uint)(1));
-            w7.RightAttach = ((uint)(2));
-            w7.YOptions = ((Gtk.AttachOptions)(4));
-            this.vbox2.Add(this.table1);
-            Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(this.vbox2[this.table1]));
-            w8.Position = 1;
-            w8.Expand = false;
-            w8.Fill = false;
+            this.colorstable.Add(this.ybutton);
+            Gtk.Table.TableChild w25 = ((Gtk.Table.TableChild)(this.colorstable[this.ybutton]));
+            w25.TopAttach = ((uint)(2));
+            w25.BottomAttach = ((uint)(3));
+            w25.LeftAttach = ((uint)(1));
+            w25.RightAttach = ((uint)(2));
+            w25.YOptions = ((Gtk.AttachOptions)(4));
+            this.vbox2.Add(this.colorstable);
+            Gtk.Box.BoxChild w26 = ((Gtk.Box.BoxChild)(this.vbox2[this.colorstable]));
+            w26.Position = 7;
+            w26.Expand = false;
+            w26.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.clearbutton = new Gtk.Button();
             this.clearbutton.CanFocus = true;
             this.clearbutton.Name = "clearbutton";
             this.clearbutton.UseUnderline = true;
             // Container child clearbutton.Gtk.Container+ContainerChild
-            Gtk.Alignment w9 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            Gtk.Alignment w27 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
             // Container child GtkAlignment.Gtk.Container+ContainerChild
-            Gtk.HBox w10 = new Gtk.HBox();
-            w10.Spacing = 2;
+            Gtk.HBox w28 = new Gtk.HBox();
+            w28.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Image w11 = new Gtk.Image();
-            w11.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-clear", Gtk.IconSize.LargeToolbar, 24);
-            w10.Add(w11);
+            Gtk.Image w29 = new Gtk.Image();
+            w29.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-clear", Gtk.IconSize.LargeToolbar, 24);
+            w28.Add(w29);
             // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Label w13 = new Gtk.Label();
-            w10.Add(w13);
-            w9.Add(w10);
-            this.clearbutton.Add(w9);
+            Gtk.Label w31 = new Gtk.Label();
+            w28.Add(w31);
+            w27.Add(w28);
+            this.clearbutton.Add(w27);
             this.vbox2.Add(this.clearbutton);
-            Gtk.Box.BoxChild w17 = ((Gtk.Box.BoxChild)(this.vbox2[this.clearbutton]));
-            w17.Position = 2;
-            w17.Expand = false;
-            w17.Fill = false;
+            Gtk.Box.BoxChild w35 = ((Gtk.Box.BoxChild)(this.vbox2[this.clearbutton]));
+            w35.Position = 8;
+            w35.Expand = false;
+            w35.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.label1 = new Gtk.Label();
             this.label1.Name = "label1";
             this.label1.LabelProp = Mono.Unix.Catalog.GetString("Draw-><b> D</b>\nClear-><b> C</b>\nHide-><b> S</b>\nShow-><b> S</b>\n");
             this.label1.UseMarkup = true;
             this.vbox2.Add(this.label1);
-            Gtk.Box.BoxChild w18 = ((Gtk.Box.BoxChild)(this.vbox2[this.label1]));
-            w18.Position = 3;
-            w18.Expand = false;
-            w18.Fill = false;
+            Gtk.Box.BoxChild w36 = ((Gtk.Box.BoxChild)(this.vbox2[this.label1]));
+            w36.Position = 9;
+            w36.Expand = false;
+            w36.Fill = false;
             this.Add(this.vbox2);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
             this.Hide();
+            this.rectanglebutton.Toggled += new System.EventHandler(this.OnRectanglebuttonToggled);
+            this.penbutton.Toggled += new System.EventHandler(this.OnPenbuttonToggled);
+            this.linebutton.Toggled += new System.EventHandler(this.OnLinebuttonToggled);
+            this.eraserbutton.Toggled += new System.EventHandler(this.OnEraserbuttonToggled);
+            this.crossbutton.Toggled += new System.EventHandler(this.OnCrossbuttonToggled);
+            this.circlebutton.Toggled += new System.EventHandler(this.OnCirclebuttonToggled);
             this.combobox1.Changed += new System.EventHandler(this.OnCombobox1Changed);
+            this.spinbutton1.Changed += new System.EventHandler(this.OnSpinbutton1Changed);
             this.ybutton.Toggled += new System.EventHandler(this.OnButtonToggled);
             this.wbutton.Toggled += new System.EventHandler(this.OnButtonToggled);
             this.rbutton.Toggled += new System.EventHandler(this.OnButtonToggled);

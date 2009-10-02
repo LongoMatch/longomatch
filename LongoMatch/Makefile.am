@@ -100,6 +100,7 @@ FILES = \
 	gtk-gui/generated.cs \
 	gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs \
+	gtk-gui/LongoMatch.Gui.Component.DrawingWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs \
 	gtk-gui/LongoMatch.Gui.Component.NotesWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs \
@@ -112,6 +113,7 @@ FILES = \
 	gtk-gui/LongoMatch.Gui.Component.TeamTemplateWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TimeLineWidget.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.EditCategoryDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.EditPlayerDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs \
@@ -134,6 +136,7 @@ FILES = \
 	gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs \
 	Gui/Component/ButtonsWidget.cs \
 	Gui/Component/CategoryProperties.cs \
+	Gui/Component/DrawingWidget.cs \
 	Gui/Component/DrawingToolBox.cs \
 	Gui/Component/NotesWidget.cs \
 	Gui/Component/PlayerProperties.cs \
@@ -148,6 +151,7 @@ FILES = \
 	Gui/Component/TimeLineWidget.cs \
 	Gui/Component/TimeReferenceWidget.cs \
 	Gui/Component/TimeScale.cs \
+	Gui/Dialog/DrawingTool.cs \
 	Gui/Dialog/EditCategoryDialog.cs \
 	Gui/Dialog/EditPlayerDialog.cs \
 	Gui/Dialog/EntryDialog.cs \

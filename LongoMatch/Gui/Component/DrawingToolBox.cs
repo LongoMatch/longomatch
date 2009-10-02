@@ -24,15 +24,16 @@ using LongoMatch.Handlers;
 namespace LongoMatch.Gui.Component
 {
 	
-	
-	[System.ComponentModel.ToolboxItem(true)]
+	[System.ComponentModel.ToolboxItem(true)] 
 	public partial class DrawingToolBox : Gtk.Bin
 	{
 
 		public event LineWidthChangedHandler LineWidthChanged;
+		public event DrawToolChangedHandler DrawToolChanged;
 		public event ColorChangedHandler ColorChanged;
 		public event VisibilityChangedHandler VisibilityChanged;
 		public event ClearDrawingHandler ClearDrawing;
+		public event TransparencyChangedHandler TransparencyChanged;
 		
 		Gdk.Color normalColor;
 		Gdk.Color activeColor;		
@@ -46,6 +47,8 @@ namespace LongoMatch.Gui.Component
 			SetButtonColor(gbutton,"green");
 			SetButtonColor(blbutton,"blue");
 			SetButtonColor(ybutton,"yellow");
+			penbutton.Active = true;
+			rbutton.Active = true;
 		}
 		
 		public bool DrawingVisibility{
@@ -53,6 +56,17 @@ namespace LongoMatch.Gui.Component
 				if (VisibilityChanged != null)
 					VisibilityChanged(value);
 			}
+		}
+
+		public bool ToolsVisible{
+			set{
+				toolstable.Visible=value;
+				toolslabel.Visible= value;
+			}
+		}
+		
+		public bool InfoVisible{
+			set{label1.Visible=value;}
 		}
 		
 		private void SetButtonColor(Button button, string color){
@@ -73,18 +87,10 @@ namespace LongoMatch.Gui.Component
 			button.ModifyBg(StateType.Normal,normalColor);
 			button.ModifyBg(StateType.Active,activeColor);
 			button.ModifyBg(StateType.Selected,activeColor);
-			button.ModifyBg(StateType.Prelight,normalColor);
-			
-			
-		}
-		
-		protected virtual void OnClearbuttonClicked (object sender, System.EventArgs e)
-		{
-			if (ClearDrawing != null)
-				ClearDrawing();
+			button.ModifyBg(StateType.Prelight,normalColor);			
 		}
 
-		protected virtual void OnCombobox1Changed (object sender, System.EventArgs e)
+		protected virtual void OnCombobox1Changed(object sender, System.EventArgs e)
 		{
 			int lineWidth;
 			if (LineWidthChanged != null){
@@ -99,6 +105,53 @@ namespace LongoMatch.Gui.Component
 			if (ColorChanged != null && button.Active)
 				ColorChanged(button.Style.Background(StateType.Normal));
 		}
-	
+
+		protected virtual void OnCirclebuttonToggled (object sender, System.EventArgs e)
+		{
+			if (DrawToolChanged != null && (sender as RadioButton).Active)
+				DrawToolChanged(DrawTool.CIRCLE);
+		}
+
+		protected virtual void OnRectanglebuttonToggled (object sender, System.EventArgs e)
+		{
+			if (DrawToolChanged != null && (sender as RadioButton).Active)
+				DrawToolChanged(DrawTool.RECTANGLE);
+		}
+
+		protected virtual void OnLinebuttonToggled (object sender, System.EventArgs e)
+		{
+			if (DrawToolChanged != null && (sender as RadioButton).Active)
+				DrawToolChanged(DrawTool.LINE);
+		}
+
+		protected virtual void OnCrossbuttonToggled (object sender, System.EventArgs e)
+		{
+			if (DrawToolChanged != null && (sender as RadioButton).Active)
+				DrawToolChanged(DrawTool.CROSS);
+		}
+
+		protected virtual void OnEraserbuttonToggled (object sender, System.EventArgs e)
+		{
+			if (DrawToolChanged != null && (sender as RadioButton).Active)
+				DrawToolChanged(DrawTool.ERASER);
+		}
+
+		protected virtual void OnPenbuttonToggled (object sender, System.EventArgs e)
+		{
+			if (DrawToolChanged != null && (sender as RadioButton).Active)
+				DrawToolChanged(DrawTool.PEN);
+		}
+
+		protected virtual void OnClearbuttonClicked (object sender, System.EventArgs e)
+		{
+			if (ClearDrawing != null)
+				ClearDrawing();
+		}
+
+		protected virtual void OnSpinbutton1Changed (object sender, System.EventArgs e)
+		{
+			if (TransparencyChanged != null)
+				TransparencyChanged(spinbutton1.Value/100);
+		}	
 	}
 }

@@ -51,6 +51,8 @@ namespace LongoMatch.Handlers
 	public delegate void ApplyCurrentRateHandler (PlayListTimeNode plNode);
 	
 	//Drawing events
+	//Draw tool changed
+	public delegate void DrawToolChangedHandler (LongoMatch.Gui.Component.DrawTool drawTool);
 	//Paint color changed
 	public delegate void ColorChangedHandler (Gdk.Color color);
 	//Paint line width changed
@@ -59,6 +61,8 @@ namespace LongoMatch.Handlers
 	public delegate void VisibilityChangedHandler (bool visible);
 	//Clear drawings
 	public delegate void ClearDrawingHandler ();
+	//Transparency value changed
+	public delegate void TransparencyChangedHandler(double transparency);
 	
 	
 	//The position of the stream has changed

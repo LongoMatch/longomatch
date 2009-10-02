@@ -40,7 +40,8 @@ namespace LongoMatch.Handlers
 			toolBox.ColorChanged += new ColorChangedHandler(OnColorChanged);
 			toolBox.LineWidthChanged += new LineWidthChangedHandler(OnLineWidthChanged);
 			toolBox.VisibilityChanged += new VisibilityChangedHandler(OnVisibilityChanged);
-			toolBox.ClearDrawing += new ClearDrawingHandler(OnClearDrawing);			                                                               
+			toolBox.ClearDrawing += new ClearDrawingHandler(OnClearDrawing);
+			toolBox.ToolsVisible=false;
 		}
 		
 		public  void OnKeyPressEvent (object o, Gtk.KeyPressEventArgs args)
