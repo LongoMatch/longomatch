@@ -222,6 +222,7 @@ namespace LongoMatch.DB
 			Db4oFactory.Configure().ObjectClass(typeof(Time)).CascadeOnDelete(true);
 			Db4oFactory.Configure().ObjectClass(typeof(Team)).CascadeOnDelete(true);
 			Db4oFactory.Configure().ObjectClass(typeof(HotKey)).CascadeOnDelete(true);
+			Db4oFactory.Configure().ObjectClass(typeof(Player)).CascadeOnDelete(true);
 			Db4oFactory.Configure().ObjectClass(typeof(TeamTemplate)).CascadeOnDelete(true);
 		}
 		
