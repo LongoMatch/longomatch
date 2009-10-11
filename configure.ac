@@ -113,6 +113,7 @@ libcesarplayer/Makefile
 libcesarplayer/src/Makefile
 Makefile
 CesarPlayer/cesarplayer.pc
+CesarPlayer/CesarPlayer.dll.config
 LongoMatch/longomatch
 LongoMatch/AssemblyInfo.cs
 CesarPlayer/AssemblyInfo.cs

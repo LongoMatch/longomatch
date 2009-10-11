@@ -13,6 +13,8 @@ PROJECT_REFERENCES =
 BUILD_DIR = bin/Debug
 CESARPLAYER_DLL_MDB_SOURCE=bin/Debug/CesarPlayer.dll.mdb
 CESARPLAYER_DLL_MDB=$(BUILD_DIR)/CesarPlayer.dll.mdb
+CESARPLAYER_DLL_CONFIG_SOURCE = CesarPlayer.dll.config
+CESARPLAYER_DLL_CONFIG = $(BUILD_DIR)/CesarPlayer.dll.config
 
 endif
 
@@ -26,6 +28,8 @@ PROJECT_REFERENCES =
 BUILD_DIR = bin/Release
 CESARPLAYER_DLL_MDB_SOURCE=
 CESARPLAYER_DLL_MDB=
+CESARPLAYER_DLL_CONFIG_SOURCE = CesarPlayer.dll.config
+CESARPLAYER_DLL_CONFIG = $(BUILD_DIR)/CesarPlayer.dll.config
 
 
 endif
@@ -34,8 +38,8 @@ AL=al2
 SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
-	$(CESARPLAYER_DLL_MDB)
-
+	$(CESARPLAYER_DLL_MDB)\
+	$(CESARPLAYER_DLL_CONFIG)
 
 RESGEN=resgen2
 	
@@ -102,6 +106,7 @@ RESOURCES = \
 
 EXTRAS = \
 	cesarplayer.key\
+	CesarPlayer.dll.config\
 	AssemblyInfo.cs.in
 
 REFERENCES =  \
@@ -117,8 +122,7 @@ CLEANFILES = $(PROGRAMFILES)
 
 include $(top_srcdir)/Makefile.include
 
-
-
+$(eval $(call emit-deploy-target,CESARPLAYER_DLL_CONFIG))
 
 $(eval $(call emit_resgen_targets))
 $(build_xamlg_list): %.xaml.g.cs: %.xaml
