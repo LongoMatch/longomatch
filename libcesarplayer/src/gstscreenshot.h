@@ -23,11 +23,7 @@
 #include <gst/gst.h>
 
 G_BEGIN_DECLS
-
-GstBuffer *     bvw_frame_conv_convert  (GstBuffer *buf,
-                                         GstCaps   *to);
+  GstBuffer * bvw_frame_conv_convert (GstBuffer * buf, GstCaps * to);
 
 G_END_DECLS
-
 #endif /* __BVW_FRAME_CONV_H__ */
-

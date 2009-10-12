@@ -23,41 +23,41 @@
 #include <gst/gst.h>
 
 #ifdef WIN32
-	#define EXPORT __declspec (dllexport)
+#define EXPORT __declspec (dllexport)
 #else
-	#define EXPORT	
+#define EXPORT
 #endif
 
 G_BEGIN_DECLS
-
 #define GST_TYPE_SMART_VIDEO_SCALER             (gst_smart_video_scaler_get_type ())
 #define GST_SMART_VIDEO_SCALER(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GST_TYPE_SMART_VIDEO_SCALER, GstSmartVideoScaler))
 #define GST_SMART_VIDEO_SCALER_CLASS(klass)     (G_TYPE_CHECK_CLASS_CAST ((klass), GST_TYPE_SMART_VIDEO_SCALER, GstSmartVideoScalerClass))
 #define GST_IS_SMART_VIDEO_SCALER(obj)          (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GST_TYPE_SMART_VIDEO_SCALER))
 #define GST_IS_SMART_VIDEO_SCALER_CLASS(klass)  (G_TYPE_CHECK_CLASS_TYPE ((klass), GST_TYPE_SMART_VIDEO_SCALER))
 #define GST_SMART_VIDEO_SCALER_GET_CLASS(obj)   (G_TYPE_INSTANCE_GET_CLASS ((obj), GST_TYPE_SMART_VIDEO_SCALER, GstSmartVideoScalerClass))
-
 typedef struct _GstSmartVideoScalerClass GstSmartVideoScalerClass;
 typedef struct _GstSmartVideoScaler GstSmartVideoScaler;
 typedef struct _GstSmartVideoScalerPrivate GstSmartVideoScalerPrivate;
 
 struct _GstSmartVideoScalerClass
 {
-	GstBinClass parent_class;
+  GstBinClass parent_class;
 };
 
 struct _GstSmartVideoScaler
 {
-	GstBin parent_instance;
-	GstSmartVideoScalerPrivate *priv;
+  GstBin parent_instance;
+  GstSmartVideoScalerPrivate *priv;
 
-	
+
 };
 
-EXPORT GType gst_smart_video_scaler_get_type (void) G_GNUC_CONST;
-EXPORT GstSmartVideoScaler * gst_smart_video_scaler_new ();
-EXPORT void gst_smart_video_scaler_set_caps(GstSmartVideoScaler *gsvs, GstCaps *caps);
+EXPORT GType
+gst_smart_video_scaler_get_type (void)
+  G_GNUC_CONST;
+     EXPORT GstSmartVideoScaler *gst_smart_video_scaler_new ();
+     EXPORT void gst_smart_video_scaler_set_caps (GstSmartVideoScaler * gsvs,
+						  GstCaps * caps);
 
 G_END_DECLS
-
 #endif /* _GST_SMART_VIDEO_SCALER_H_ */

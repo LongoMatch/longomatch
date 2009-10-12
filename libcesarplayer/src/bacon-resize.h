@@ -26,31 +26,30 @@
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
-
 #define BACON_TYPE_RESIZE		(bacon_resize_get_type ())
 #define BACON_RESIZE(obj)		(G_TYPE_CHECK_INSTANCE_CAST ((obj), BACON_TYPE_RESIZE, BaconResize))
 #define BACON_RESIZE_CLASS(klass)	(G_TYPE_CHECK_CLASS_CAST ((klass), BACON_TYPE_RESIZE, BaconResizeClass))
 #define BACON_IS_RESIZE(obj)		(G_TYPE_CHECK_INSTANCE_TYPE ((obj), BACON_TYPE_RESIZE))
 #define BACON_IS_RESIZE_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE ((klass), BACON_TYPE_RESIZE))
+typedef struct BaconResize BaconResize;
+typedef struct BaconResizeClass BaconResizeClass;
+typedef struct BaconResizePrivate BaconResizePrivate;
 
-typedef struct BaconResize		BaconResize;
-typedef struct BaconResizeClass		BaconResizeClass;
-typedef struct BaconResizePrivate	BaconResizePrivate;
-
-struct BaconResize {
-	GObject parent;
-	BaconResizePrivate *priv;
+struct BaconResize
+{
+  GObject parent;
+  BaconResizePrivate *priv;
 };
 
-struct BaconResizeClass {
-	GObjectClass parent_class;
+struct BaconResizeClass
+{
+  GObjectClass parent_class;
 };
 
-GType bacon_resize_get_type	(void);
-BaconResize *bacon_resize_new	(GtkWidget *video_widget);
-void bacon_resize_resize	(BaconResize *resize);
-void bacon_resize_restore	(BaconResize *resize);
+GType bacon_resize_get_type (void);
+BaconResize *bacon_resize_new (GtkWidget * video_widget);
+void bacon_resize_resize (BaconResize * resize);
+void bacon_resize_restore (BaconResize * resize);
 
 G_END_DECLS
-
 #endif /* BACON_RESIZE_H */

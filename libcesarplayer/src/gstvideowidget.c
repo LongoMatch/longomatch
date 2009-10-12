@@ -96,27 +96,30 @@ gst_video_widget_update_cursor (GstVideoWidget * vw)
 
   if (vw->priv->cursor_visible)
     gdk_window_set_cursor (widget->window, NULL);
-  else {
+  else
+    {
 
-    GdkBitmap *empty_bitmap;
-    GdkColor useless;
-    GdkCursor *cursor;
-    char invisible_cursor_bits[] = { 0x0 };
+      GdkBitmap *empty_bitmap;
+      GdkColor useless;
+      GdkCursor *cursor;
+      char invisible_cursor_bits[] = { 0x0 };
 
-    useless.red = useless.green = useless.blue = useless.pixel = 0;
+      useless.red = useless.green = useless.blue = useless.pixel = 0;
 
-    empty_bitmap = gdk_bitmap_create_from_data (widget->window,
-	invisible_cursor_bits, 1, 1);
+      empty_bitmap = gdk_bitmap_create_from_data (widget->window,
+						  invisible_cursor_bits, 1,
+						  1);
 
-    cursor = gdk_cursor_new_from_pixmap (empty_bitmap,
-	empty_bitmap, &useless, &useless, 0, 0);
+      cursor = gdk_cursor_new_from_pixmap (empty_bitmap,
+					   empty_bitmap, &useless, &useless,
+					   0, 0);
 
-    gdk_window_set_cursor (widget->window, cursor);
+      gdk_window_set_cursor (widget->window, cursor);
 
-    gdk_cursor_unref (cursor);
+      gdk_cursor_unref (cursor);
 
-    g_object_unref (empty_bitmap);
-  }
+      g_object_unref (empty_bitmap);
+    }
 }
 
 /*
@@ -130,20 +133,24 @@ gst_video_widget_reorder_windows (GstVideoWidget * vw)
   g_return_if_fail (vw != NULL);
   g_return_if_fail (GST_IS_VIDEO_WIDGET (vw));
 
-  if ((vw->priv->logo_focused) && (GDK_IS_WINDOW (vw->priv->video_window))) {
-    gdk_window_hide (vw->priv->video_window);
-  } else if ((!vw->priv->logo_focused) &&
-      (GDK_IS_WINDOW (vw->priv->video_window))) {
-    gdk_window_show (vw->priv->video_window);
-  }
+  if ((vw->priv->logo_focused) && (GDK_IS_WINDOW (vw->priv->video_window)))
+    {
+      gdk_window_hide (vw->priv->video_window);
+    }
+  else if ((!vw->priv->logo_focused) &&
+	   (GDK_IS_WINDOW (vw->priv->video_window)))
+    {
+      gdk_window_show (vw->priv->video_window);
+    }
 
   if (GDK_IS_WINDOW (vw->priv->video_window))
     gdk_window_raise (vw->priv->video_window);
 
-  if (vw->priv->event_catcher) {
-    if (GDK_IS_WINDOW (vw->priv->event_window))
-      gdk_window_raise (vw->priv->event_window);
-  }
+  if (vw->priv->event_catcher)
+    {
+      if (GDK_IS_WINDOW (vw->priv->event_window))
+	gdk_window_raise (vw->priv->event_window);
+    }
 
   gtk_widget_queue_draw (GTK_WIDGET (vw));
 }
@@ -183,7 +190,7 @@ gst_video_widget_realize (GtkWidget * widget)
   attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
 
   widget->window = gdk_window_new (gtk_widget_get_parent_window (widget),
-      &attributes, attributes_mask);
+				   &attributes, attributes_mask);
 
   gdk_window_set_user_data (widget->window, widget);
 
@@ -200,7 +207,7 @@ gst_video_widget_realize (GtkWidget * widget)
   attributes_mask = GDK_WA_X | GDK_WA_Y;
 
   vw->priv->video_window = gdk_window_new (widget->window,
-      &attributes, attributes_mask);
+					   &attributes, attributes_mask);
 
   gdk_window_set_user_data (vw->priv->video_window, widget);
 
@@ -219,7 +226,7 @@ gst_video_widget_realize (GtkWidget * widget)
   attributes_mask = GDK_WA_X | GDK_WA_Y;
 
   vw->priv->event_window = gdk_window_new (widget->window,
-      &attributes, attributes_mask);
+					   &attributes, attributes_mask);
 
   gdk_window_set_user_data (vw->priv->event_window, widget);
 
@@ -256,17 +263,19 @@ gst_video_widget_unrealize (GtkWidget * widget)
 
   /* Destroying event window */
 
-  if (GDK_IS_WINDOW (vw->priv->event_window)) {
-    gdk_window_set_user_data (vw->priv->event_window, NULL);
-    gdk_window_destroy (vw->priv->event_window);
-    vw->priv->event_window = NULL;
-  }
+  if (GDK_IS_WINDOW (vw->priv->event_window))
+    {
+      gdk_window_set_user_data (vw->priv->event_window, NULL);
+      gdk_window_destroy (vw->priv->event_window);
+      vw->priv->event_window = NULL;
+    }
 
-  if (GDK_IS_WINDOW (vw->priv->video_window)) {
-    gdk_window_set_user_data (vw->priv->video_window, NULL);
-    gdk_window_destroy (vw->priv->video_window);
-    vw->priv->video_window = NULL;
-  }
+  if (GDK_IS_WINDOW (vw->priv->video_window))
+    {
+      gdk_window_set_user_data (vw->priv->video_window, NULL);
+      gdk_window_destroy (vw->priv->video_window);
+      vw->priv->video_window = NULL;
+    }
 
   /* Chaining up */
 
@@ -288,75 +297,87 @@ gst_video_widget_expose (GtkWidget * widget, GdkEventExpose * event)
   vw = GST_VIDEO_WIDGET (widget);
 
 
-  if (GTK_WIDGET_VISIBLE (widget) && GTK_WIDGET_MAPPED (widget)) {
-    if ((vw->priv->logo_focused) && (vw->priv->logo_pixbuf)) {
-      GdkPixbuf *frame;
-      guchar *pixels;
-      int rowstride;
-      gint width, height, alloc_width, alloc_height, logo_x, logo_y;
-      gfloat width_ratio, height_ratio;
+  if (GTK_WIDGET_VISIBLE (widget) && GTK_WIDGET_MAPPED (widget))
+    {
+      if ((vw->priv->logo_focused) && (vw->priv->logo_pixbuf))
+	{
+	  GdkPixbuf *frame;
+	  guchar *pixels;
+	  int rowstride;
+	  gint width, height, alloc_width, alloc_height, logo_x, logo_y;
+	  gfloat width_ratio, height_ratio;
 
-      frame = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
-	  FALSE, 8, widget->allocation.width, widget->allocation.height);
+	  frame = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
+				  FALSE, 8, widget->allocation.width,
+				  widget->allocation.height);
 
-      width = gdk_pixbuf_get_width (vw->priv->logo_pixbuf);
-      height = gdk_pixbuf_get_height (vw->priv->logo_pixbuf);
-      alloc_width = widget->allocation.width;
-      alloc_height = widget->allocation.height;
+	  width = gdk_pixbuf_get_width (vw->priv->logo_pixbuf);
+	  height = gdk_pixbuf_get_height (vw->priv->logo_pixbuf);
+	  alloc_width = widget->allocation.width;
+	  alloc_height = widget->allocation.height;
 
-      /* Checking if allocated space is smaller than our logo */
+	  /* Checking if allocated space is smaller than our logo */
 
-      if ((alloc_width < width) || (alloc_height < height)) {
-	width_ratio = (gfloat) alloc_width / (gfloat) width;
-	height_ratio = (gfloat) alloc_height / (gfloat) height;
-	width_ratio = MIN (width_ratio, height_ratio);
-	height_ratio = width_ratio;
-      } else
-	width_ratio = height_ratio = 1.0;
+	  if ((alloc_width < width) || (alloc_height < height))
+	    {
+	      width_ratio = (gfloat) alloc_width / (gfloat) width;
+	      height_ratio = (gfloat) alloc_height / (gfloat) height;
+	      width_ratio = MIN (width_ratio, height_ratio);
+	      height_ratio = width_ratio;
+	    }
+	  else
+	    width_ratio = height_ratio = 1.0;
 
-      logo_x = (alloc_width / 2) - (width * width_ratio / 2);
-      logo_y = (alloc_height / 2) - (height * height_ratio / 2);
+	  logo_x = (alloc_width / 2) - (width * width_ratio / 2);
+	  logo_y = (alloc_height / 2) - (height * height_ratio / 2);
 
-      /* Scaling to available space */
+	  /* Scaling to available space */
 
-      gdk_pixbuf_composite (vw->priv->logo_pixbuf,
-	  frame,
-	  0, 0,
-	  alloc_width, alloc_height,
-	  logo_x, logo_y, width_ratio, height_ratio, GDK_INTERP_BILINEAR, 255);
+	  gdk_pixbuf_composite (vw->priv->logo_pixbuf,
+				frame,
+				0, 0,
+				alloc_width, alloc_height,
+				logo_x, logo_y, width_ratio, height_ratio,
+				GDK_INTERP_BILINEAR, 255);
 
-      /* Drawing our frame */
+	  /* Drawing our frame */
 
-      rowstride = gdk_pixbuf_get_rowstride (frame);
+	  rowstride = gdk_pixbuf_get_rowstride (frame);
 
-      pixels = gdk_pixbuf_get_pixels (frame) +
-	  rowstride * event->area.y + event->area.x * 3;
+	  pixels = gdk_pixbuf_get_pixels (frame) +
+	    rowstride * event->area.y + event->area.x * 3;
 
-      gdk_draw_rgb_image_dithalign (widget->window,
-	  widget->style->black_gc,
-	  event->area.x, event->area.y,
-	  event->area.width, event->area.height,
-	  GDK_RGB_DITHER_NORMAL, pixels,
-	  rowstride, event->area.x, event->area.y);
+	  gdk_draw_rgb_image_dithalign (widget->window,
+					widget->style->black_gc,
+					event->area.x, event->area.y,
+					event->area.width, event->area.height,
+					GDK_RGB_DITHER_NORMAL, pixels,
+					rowstride, event->area.x,
+					event->area.y);
 
-      g_object_unref (frame);
-    } else {
-      gdk_draw_rectangle (widget->window, widget->style->black_gc, TRUE,
-	  event->area.x, event->area.y, event->area.width, event->area.height);
+	  g_object_unref (frame);
+	}
+      else
+	{
+	  gdk_draw_rectangle (widget->window, widget->style->black_gc, TRUE,
+			      event->area.x, event->area.y, event->area.width,
+			      event->area.height);
+	}
+
     }
 
-  }
+  if (GDK_IS_WINDOW (vw->priv->video_window))
+    {
+      gint pos_x, pos_y, width, height, depth;
 
-  if (GDK_IS_WINDOW (vw->priv->video_window)) {
-    gint pos_x, pos_y, width, height, depth;
-
-    gdk_window_get_geometry (vw->priv->video_window, &pos_x, &pos_y,
-	&width, &height, &depth);
-    if ((width != vw->priv->video_window_width) ||
-	(height != vw->priv->video_window_height)) {
-      gtk_widget_queue_resize (widget);
+      gdk_window_get_geometry (vw->priv->video_window, &pos_x, &pos_y,
+			       &width, &height, &depth);
+      if ((width != vw->priv->video_window_width) ||
+	  (height != vw->priv->video_window_height))
+	{
+	  gtk_widget_queue_resize (widget);
+	}
     }
-  }
 
   return FALSE;
 }
@@ -364,7 +385,8 @@ gst_video_widget_expose (GtkWidget * widget, GdkEventExpose * event)
 /* Size request for our widget */
 
 static void
-gst_video_widget_size_request (GtkWidget * widget, GtkRequisition * requisition)
+gst_video_widget_size_request (GtkWidget * widget,
+			       GtkRequisition * requisition)
 {
   GstVideoWidget *vw;
   gint width, height;
@@ -375,40 +397,49 @@ gst_video_widget_size_request (GtkWidget * widget, GtkRequisition * requisition)
 
   vw = GST_VIDEO_WIDGET (widget);
 
-  if ((!vw->priv->auto_resize) && (!vw->priv->scale_override)) {
-    requisition->width = vw->priv->width_mini;
-    requisition->height = vw->priv->height_mini;
-    return;
-  }
+  if ((!vw->priv->auto_resize) && (!vw->priv->scale_override))
+    {
+      requisition->width = vw->priv->width_mini;
+      requisition->height = vw->priv->height_mini;
+      return;
+    }
 
   if ((vw->priv->source_width) &&
-      (vw->priv->source_height) && (vw->priv->scale_factor)) {
-    temp = (vw->priv->scale_factor * vw->priv->source_width + 0.5);
-    width = (gint) temp > G_MAXINT ? G_MAXINT : (gint) temp;
-    temp = (vw->priv->scale_factor * vw->priv->source_height + 0.5);
-    height = (gint) temp > G_MAXINT ? G_MAXINT : (gint) temp;
+      (vw->priv->source_height) && (vw->priv->scale_factor))
+    {
+      temp = (vw->priv->scale_factor * vw->priv->source_width + 0.5);
+      width = (gint) temp > G_MAXINT ? G_MAXINT : (gint) temp;
+      temp = (vw->priv->scale_factor * vw->priv->source_height + 0.5);
+      height = (gint) temp > G_MAXINT ? G_MAXINT : (gint) temp;
 
-    /* don't make us want to be bigger than the screen */
+      /* don't make us want to be bigger than the screen */
 
-    if (width > gdk_screen_width ()) {
-      height = height * gdk_screen_width () / width;
-      width = gdk_screen_width ();
+      if (width > gdk_screen_width ())
+	{
+	  height = height * gdk_screen_width () / width;
+	  width = gdk_screen_width ();
+	}
+      if (height > gdk_screen_height ())
+	{
+	  width = width * gdk_screen_height () / height;
+	  height = gdk_screen_height ();
+	}
     }
-    if (height > gdk_screen_height ()) {
-      width = width * gdk_screen_height () / height;
-      height = gdk_screen_height ();
+  else
+    {
+      if (vw->priv->logo_pixbuf)
+	{
+	  width = gdk_pixbuf_get_width (vw->priv->logo_pixbuf);
+	  height = gdk_pixbuf_get_height (vw->priv->logo_pixbuf);
+	  vw->priv->width_mini = width;
+	  vw->priv->height_mini = height;
+	}
+      else
+	{
+	  width = 100;
+	  height = 100;
+	}
     }
-  } else {
-    if (vw->priv->logo_pixbuf) {
-      width = gdk_pixbuf_get_width (vw->priv->logo_pixbuf);
-      height = gdk_pixbuf_get_height (vw->priv->logo_pixbuf);
-      vw->priv->width_mini = width;
-      vw->priv->height_mini = height;
-    } else {
-      width = 100;
-      height = 100;
-    }
-  }
 
   if (width < vw->priv->width_mini)
     width = vw->priv->width_mini;
@@ -435,23 +466,30 @@ gst_video_widget_allocate (GtkWidget * widget, GtkAllocation * allocation)
 
   /* Choosing best ratio */
 
-  if (vw->priv->scale_override) {
-    /* Enforcing scale ratio taking the scale ratio from the priv structure */
-    scale_factor = vw->priv->scale_factor;
-  } else if (!vw->priv->auto_resize) {
-    /* Calculating optimal ratio to fit the allocated window */
-    if ((vw->priv->source_width) &&
-	(vw->priv->source_height) && (GDK_IS_WINDOW (vw->priv->video_window))) {
-      gfloat w_ratio, h_ratio;
-
-      w_ratio = (gfloat) allocation->width / vw->priv->source_width;
-      h_ratio = (gfloat) allocation->height / vw->priv->source_height;
-
-      scale_factor = MIN (w_ratio, h_ratio);
+  if (vw->priv->scale_override)
+    {
+      /* Enforcing scale ratio taking the scale ratio from the priv structure */
+      scale_factor = vw->priv->scale_factor;
     }
-  } else {
-    scale_factor = 1.0;
-  }
+  else if (!vw->priv->auto_resize)
+    {
+      /* Calculating optimal ratio to fit the allocated window */
+      if ((vw->priv->source_width) &&
+	  (vw->priv->source_height)
+	  && (GDK_IS_WINDOW (vw->priv->video_window)))
+	{
+	  gfloat w_ratio, h_ratio;
+
+	  w_ratio = (gfloat) allocation->width / vw->priv->source_width;
+	  h_ratio = (gfloat) allocation->height / vw->priv->source_height;
+
+	  scale_factor = MIN (w_ratio, h_ratio);
+	}
+    }
+  else
+    {
+      scale_factor = 1.0;
+    }
 
   /* Calculating width & height with optimal ratio */
 
@@ -462,64 +500,76 @@ gst_video_widget_allocate (GtkWidget * widget, GtkAllocation * allocation)
 
   /* When auto resizing we change allocation to our geometry except if our
      geometry violates the minimum one */
-  if (vw->priv->auto_resize) {
-    if (width < vw->priv->width_mini) {
-      allocation->width = vw->priv->width_mini;
-    } else {
-      allocation->width = width;
+  if (vw->priv->auto_resize)
+    {
+      if (width < vw->priv->width_mini)
+	{
+	  allocation->width = vw->priv->width_mini;
+	}
+      else
+	{
+	  allocation->width = width;
+	}
+      if (height < vw->priv->height_mini)
+	{
+	  allocation->height = vw->priv->height_mini;
+	}
+      else
+	{
+	  allocation->height = height;
+	}
     }
-    if (height < vw->priv->height_mini) {
-      allocation->height = vw->priv->height_mini;
-    } else {
-      allocation->height = height;
+  else
+    {				/* We do not want to shrink under our minimum geometry */
+      if (allocation->width < vw->priv->width_mini)
+	allocation->width = vw->priv->width_mini;
+      if (allocation->height < vw->priv->height_mini)
+	allocation->height = vw->priv->height_mini;
     }
-  } else {			/* We do not want to shrink under our minimum geometry */
-    if (allocation->width < vw->priv->width_mini)
-      allocation->width = vw->priv->width_mini;
-    if (allocation->height < vw->priv->height_mini)
-      allocation->height = vw->priv->height_mini;
-  }
 
   widget->allocation = *allocation;
 
-  if (GTK_WIDGET_REALIZED (widget)) {
-    gdk_window_move_resize (widget->window,
-	allocation->x, allocation->y, allocation->width, allocation->height);
+  if (GTK_WIDGET_REALIZED (widget))
+    {
+      gdk_window_move_resize (widget->window,
+			      allocation->x, allocation->y, allocation->width,
+			      allocation->height);
 
-    if (GDK_IS_WINDOW (vw->priv->event_window))
-      gdk_window_move_resize (vw->priv->event_window,
-	  0, 0, allocation->width, allocation->height);
+      if (GDK_IS_WINDOW (vw->priv->event_window))
+	gdk_window_move_resize (vw->priv->event_window,
+				0, 0, allocation->width, allocation->height);
 
-    /* X windows can only be resized to 1,1 not 0,0 so we have to handle
-       the case where source size is 0,0 (not set basically). So instead
-       of setting the video window to 0,0 we set it to 1,1 to match with
-       what X will really do. If we don't do that we have an infinite loop
-       with the expose event reacting on video window geometry changes. */
-    if (!width)
-      width = 1;
-    if (!height)
-      height = 1;
+      /* X windows can only be resized to 1,1 not 0,0 so we have to handle
+         the case where source size is 0,0 (not set basically). So instead
+         of setting the video window to 0,0 we set it to 1,1 to match with
+         what X will really do. If we don't do that we have an infinite loop
+         with the expose event reacting on video window geometry changes. */
+      if (!width)
+	width = 1;
+      if (!height)
+	height = 1;
 
-    vw->priv->video_window_width = width;
-    vw->priv->video_window_height = height;
+      vw->priv->video_window_width = width;
+      vw->priv->video_window_height = height;
 
-    if (GDK_IS_WINDOW (vw->priv->video_window)) {
-      gint video_x, video_y;
+      if (GDK_IS_WINDOW (vw->priv->video_window))
+	{
+	  gint video_x, video_y;
 
-      video_x = (allocation->width / 2) - (width / 2);
-      video_y = (allocation->height / 2) - (height / 2);
+	  video_x = (allocation->width / 2) - (width / 2);
+	  video_y = (allocation->height / 2) - (height / 2);
 
-      gdk_window_move_resize (vw->priv->video_window,
-	  video_x, video_y, width, height);
+	  gdk_window_move_resize (vw->priv->video_window,
+				  video_x, video_y, width, height);
+	}
     }
-  }
 }
 
 /* GstVideoWidget methods to set properties */
 
 static void
 gst_video_widget_set_property (GObject * object, guint prop_id,
-    const GValue * value, GParamSpec * pspec)
+			       const GValue * value, GParamSpec * pspec)
 {
   GstVideoWidget *vw;
 
@@ -527,7 +577,8 @@ gst_video_widget_set_property (GObject * object, guint prop_id,
 
   vw = GST_VIDEO_WIDGET (object);
 
-  switch (prop_id) {
+  switch (prop_id)
+    {
     case ARG_SCALE_FACTOR:
       vw->priv->scale_factor = g_value_get_float (value);
       vw->priv->scale_override = TRUE;
@@ -556,25 +607,25 @@ gst_video_widget_set_property (GObject * object, guint prop_id,
       vw->priv->source_height = g_value_get_int (value);
       break;
     case ARG_LOGO:
-    {
-      GdkPixbuf *image;
+      {
+	GdkPixbuf *image;
 
-      image = (GdkPixbuf *) g_value_get_object (value);
+	image = (GdkPixbuf *) g_value_get_object (value);
 
-      gst_video_widget_set_logo (vw, image);
-    }
+	gst_video_widget_set_logo (vw, image);
+      }
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
-  }
+    }
 }
 
 /* GstVideoWidget methods to get properties */
 
 static void
 gst_video_widget_get_property (GObject * object, guint prop_id,
-    GValue * value, GParamSpec * pspec)
+			       GValue * value, GParamSpec * pspec)
 {
   GstVideoWidget *vw;
 
@@ -582,7 +633,8 @@ gst_video_widget_get_property (GObject * object, guint prop_id,
 
   vw = GST_VIDEO_WIDGET (object);
 
-  switch (prop_id) {
+  switch (prop_id)
+    {
     case ARG_SCALE_FACTOR:
       g_value_set_float (value, vw->priv->scale_factor);
       break;
@@ -610,7 +662,7 @@ gst_video_widget_get_property (GObject * object, guint prop_id,
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
-  }
+    }
 }
 
 /* =========================================== */
@@ -636,57 +688,70 @@ gst_video_widget_class_init (GstVideoWidgetClass * klass)
   gobject_class->get_property = gst_video_widget_get_property;
 
   g_object_class_install_property (gobject_class,
-      ARG_SCALE_FACTOR,
-      g_param_spec_float ("scale_factor",
-	  "scale factor",
-	  "size the video should be scaled to",
-	  0, G_MAXFLOAT / G_MAXINT, 1, G_PARAM_READWRITE));
+				   ARG_SCALE_FACTOR,
+				   g_param_spec_float ("scale_factor",
+						       "scale factor",
+						       "size the video should be scaled to",
+						       0,
+						       G_MAXFLOAT / G_MAXINT,
+						       1, G_PARAM_READWRITE));
 
   g_object_class_install_property (gobject_class,
-      ARG_AUTO_RESIZE,
-      g_param_spec_boolean ("auto_resize",
-	  "auto resize",
-	  "Is the video widget resizing automatically",
-	  FALSE, G_PARAM_READWRITE));
+				   ARG_AUTO_RESIZE,
+				   g_param_spec_boolean ("auto_resize",
+							 "auto resize",
+							 "Is the video widget resizing automatically",
+							 FALSE,
+							 G_PARAM_READWRITE));
 
   g_object_class_install_property (gobject_class,
-      ARG_VISIBLE_CURSOR,
-      g_param_spec_boolean ("visible_cursor",
-	  "visible cursor",
-	  "Is the mouse pointer (cursor) visible or not",
-	  TRUE, G_PARAM_READWRITE));
+				   ARG_VISIBLE_CURSOR,
+				   g_param_spec_boolean ("visible_cursor",
+							 "visible cursor",
+							 "Is the mouse pointer (cursor) visible or not",
+							 TRUE,
+							 G_PARAM_READWRITE));
 
   g_object_class_install_property (gobject_class,
-      ARG_LOGO_FOCUSED,
-      g_param_spec_boolean ("logo_focused",
-	  "logo is focused",
-	  "Is the logo focused or not", TRUE, G_PARAM_READWRITE));
+				   ARG_LOGO_FOCUSED,
+				   g_param_spec_boolean ("logo_focused",
+							 "logo is focused",
+							 "Is the logo focused or not",
+							 TRUE,
+							 G_PARAM_READWRITE));
 
   g_object_class_install_property (gobject_class,
-      ARG_EVENT_CATCHER,
-      g_param_spec_boolean ("event_catcher",
-	  "Event catcher",
-	  "Should the widget catch events over the video window",
-	  TRUE, G_PARAM_READWRITE));
+				   ARG_EVENT_CATCHER,
+				   g_param_spec_boolean ("event_catcher",
+							 "Event catcher",
+							 "Should the widget catch events over the video window",
+							 TRUE,
+							 G_PARAM_READWRITE));
 
   g_object_class_install_property (gobject_class,
-      ARG_SOURCE_WIDTH,
-      g_param_spec_int ("source_width",
-	  "video source width",
-	  "Video playback source width", 0, G_MAXINT, 1, G_PARAM_READWRITE));
+				   ARG_SOURCE_WIDTH,
+				   g_param_spec_int ("source_width",
+						     "video source width",
+						     "Video playback source width",
+						     0, G_MAXINT, 1,
+						     G_PARAM_READWRITE));
 
   g_object_class_install_property (gobject_class,
-      ARG_SOURCE_HEIGHT,
-      g_param_spec_int ("source_height",
-	  "video source height",
-	  "Video playback source height", 0, G_MAXINT, 1, G_PARAM_READWRITE));
+				   ARG_SOURCE_HEIGHT,
+				   g_param_spec_int ("source_height",
+						     "video source height",
+						     "Video playback source height",
+						     0, G_MAXINT, 1,
+						     G_PARAM_READWRITE));
 
   g_object_class_install_property (gobject_class,
-      ARG_LOGO,
-      g_param_spec_object ("logo",
-	  "Logo",
-	  "Picture that should appear as a logo when no video",
-	  gdk_pixbuf_get_type (), G_PARAM_READWRITE));
+				   ARG_LOGO,
+				   g_param_spec_object ("logo",
+							"Logo",
+							"Picture that should appear as a logo when no video",
+							gdk_pixbuf_get_type
+							(),
+							G_PARAM_READWRITE));
 
   widget_class->realize = gst_video_widget_realize;
   widget_class->unrealize = gst_video_widget_unrealize;
@@ -755,18 +820,19 @@ gst_video_widget_get_video_window (GstVideoWidget * vw)
  **/
 gboolean
 gst_video_widget_set_source_size (GstVideoWidget * vw, guint width,
-    guint height)
+				  guint height)
 {
   g_return_val_if_fail (vw != NULL, FALSE);
   g_return_val_if_fail (GST_IS_VIDEO_WIDGET (vw), FALSE);
-  
-  
-  if (vw->priv->source_width != width || vw->priv->source_height != height) {
-    vw->priv->source_width = width;
-    vw->priv->source_height = height;
-    gtk_widget_queue_resize (GTK_WIDGET (vw));
-  }
- 
+
+
+  if (vw->priv->source_width != width || vw->priv->source_height != height)
+    {
+      vw->priv->source_width = width;
+      vw->priv->source_height = height;
+      gtk_widget_queue_resize (GTK_WIDGET (vw));
+    }
+
   return TRUE;
 }
 
@@ -785,7 +851,7 @@ gst_video_widget_set_source_size (GstVideoWidget * vw, guint width,
  **/
 gboolean
 gst_video_widget_get_source_size (GstVideoWidget * vw, guint * width,
-    guint * height)
+				  guint * height)
 {
   g_return_val_if_fail (vw != NULL, FALSE);
   g_return_val_if_fail (GST_IS_VIDEO_WIDGET (vw), FALSE);
@@ -815,7 +881,8 @@ gst_video_widget_get_source_size (GstVideoWidget * vw, guint * width,
  * Return value: a #gboolean indicating wether the call succeeded or not.
  **/
 gboolean
-gst_video_widget_set_minimum_size (GstVideoWidget * vw, gint width, gint height)
+gst_video_widget_set_minimum_size (GstVideoWidget * vw, gint width,
+				   gint height)
 {
   g_return_val_if_fail (vw != NULL, FALSE);
   g_return_val_if_fail (GST_IS_VIDEO_WIDGET (vw), FALSE);
@@ -842,7 +909,7 @@ gst_video_widget_set_minimum_size (GstVideoWidget * vw, gint width, gint height)
  **/
 gboolean
 gst_video_widget_get_minimum_size (GstVideoWidget * vw, gint * width,
-    gint * height)
+				   gint * height)
 {
   g_return_val_if_fail (vw != NULL, FALSE);
   g_return_val_if_fail (GST_IS_VIDEO_WIDGET (vw), FALSE);
@@ -950,7 +1017,8 @@ gst_video_widget_get_logo_focus (GstVideoWidget * vw)
  * Return value: a #gboolean indicating wether the call succeeded or not.
  **/
 gboolean
-gst_video_widget_set_event_catcher (GstVideoWidget * vw, gboolean event_catcher)
+gst_video_widget_set_event_catcher (GstVideoWidget * vw,
+				    gboolean event_catcher)
 {
   g_return_val_if_fail (vw != NULL, FALSE);
   g_return_val_if_fail (GST_IS_VIDEO_WIDGET (vw), FALSE);
@@ -1141,10 +1209,10 @@ gst_video_widget_get_logo (GstVideoWidget * vw)
   return vw->priv->logo_pixbuf;
 }
 
-void 
-gst_video_widget_force_expose(GtkWidget * widget, GdkEventExpose * event)
+void
+gst_video_widget_force_expose (GtkWidget * widget, GdkEventExpose * event)
 {
-	gst_video_widget_expose (widget, event);
+  gst_video_widget_expose (widget, event);
 }
 
 /* =========================================== */
@@ -1160,21 +1228,23 @@ gst_video_widget_get_type (void)
 {
   static GType vw_type = 0;
 
-  if (!vw_type) {
-    static const GTypeInfo vw_info = {
-      sizeof (GstVideoWidgetClass),
-      (GBaseInitFunc) NULL,
-      (GBaseFinalizeFunc) NULL,
-      (GClassInitFunc) gst_video_widget_class_init,
-      (GClassFinalizeFunc) NULL,
-      NULL /* class_data */ ,
-      sizeof (GstVideoWidget),
-      0 /* n_preallocs */ ,
-      (GInstanceInitFunc) gst_video_widget_init,
-    };
-    vw_type = g_type_register_static (GTK_TYPE_WIDGET,
-	"GstVideoWidget", &vw_info, (GTypeFlags) 0);
-  }
+  if (!vw_type)
+    {
+      static const GTypeInfo vw_info = {
+	sizeof (GstVideoWidgetClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gst_video_widget_class_init,
+	(GClassFinalizeFunc) NULL,
+	NULL /* class_data */ ,
+	sizeof (GstVideoWidget),
+	0 /* n_preallocs */ ,
+	(GInstanceInitFunc) gst_video_widget_init,
+      };
+      vw_type = g_type_register_static (GTK_TYPE_WIDGET,
+					"GstVideoWidget", &vw_info,
+					(GTypeFlags) 0);
+    }
   return vw_type;
 }
 

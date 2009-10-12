@@ -25,9 +25,9 @@
 #define _GST_VIDEO_CAPTURER_H_
 
 #ifdef WIN32
-	#define EXPORT __declspec (dllexport)
+#define EXPORT __declspec (dllexport)
 #else
-	#define EXPORT	
+#define EXPORT
 #endif
 
 #include <glib-object.h>
@@ -35,7 +35,6 @@
 
 
 G_BEGIN_DECLS
-
 #define GST_TYPE_VIDEO_CAPTURER             (gst_video_capturer_get_type ())
 #define GST_VIDEO_CAPTURER(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GST_TYPE_VIDEO_CAPTURER, GstVideoCapturer))
 #define GST_VIDEO_CAPTURER_CLASS(klass)     (G_TYPE_CHECK_CLASS_CAST ((klass), GST_TYPE_VIDEO_CAPTURER, GstVideoCapturerClass))
@@ -43,7 +42,6 @@ G_BEGIN_DECLS
 #define GST_IS_VIDEO_CAPTURER_CLASS(klass)  (G_TYPE_CHECK_CLASS_TYPE ((klass), GST_TYPE_VIDEO_CAPTURER))
 #define GST_VIDEO_CAPTURER_GET_CLASS(obj)   (G_TYPE_INSTANCE_GET_CLASS ((obj), GST_TYPE_VIDEO_CAPTURER, GstVideoCapturerClass))
 #define GVC_ERROR gst_video_capturer_error_quark ()
-
 typedef struct _GstVideoCapturerClass GstVideoCapturerClass;
 typedef struct _GstVideoCapturer GstVideoCapturer;
 typedef struct GstVideoCapturerPrivate GstVideoCapturerPrivate;
@@ -51,28 +49,33 @@ typedef struct GstVideoCapturerPrivate GstVideoCapturerPrivate;
 
 struct _GstVideoCapturerClass
 {
-	GtkHBoxClass parent_class;
-	
-	void (*error) (GstVideoCapturer *gvc, const char *message);
-	void (*percent_completed) (GstVideoCapturer *gvc, float percent);
+  GtkHBoxClass parent_class;
+
+  void (*error) (GstVideoCapturer * gvc, const char *message);
+  void (*percent_completed) (GstVideoCapturer * gvc, float percent);
 };
 
 struct _GstVideoCapturer
 {
-	GtkHBox parent_instance;
-	GstVideoCapturerPrivate *priv;
+  GtkHBox parent_instance;
+  GstVideoCapturerPrivate *priv;
 };
 
 
 
-EXPORT GType gst_video_capturer_get_type (void) G_GNUC_CONST;
+EXPORT GType
+gst_video_capturer_get_type (void)
+  G_GNUC_CONST;
 
-EXPORT void gst_video_capturer_init_backend (int *argc, char ***argv);
-EXPORT GstVideoCapturer * gst_video_capturer_new (GError ** err);
-EXPORT void gst_video_capturer_start(GstVideoCapturer *gvc);
-EXPORT void gst_video_capturer_cancel(GstVideoCapturer *gvc);
-EXPORT void gst_video_capturer_add_segment(GstVideoCapturer *gvc, gchar *file, gint64 start, gint64 duration, gdouble rate, gchar *title);
-EXPORT void gst_video_capturer_clear_segments_list(GstVideoCapturer *gvc);
+     EXPORT void gst_video_capturer_init_backend (int *argc, char ***argv);
+     EXPORT GstVideoCapturer *gst_video_capturer_new (GError ** err);
+     EXPORT void gst_video_capturer_start (GstVideoCapturer * gvc);
+     EXPORT void gst_video_capturer_cancel (GstVideoCapturer * gvc);
+     EXPORT void gst_video_capturer_add_segment (GstVideoCapturer * gvc,
+						 gchar * file, gint64 start,
+						 gint64 duration,
+						 gdouble rate, gchar * title);
+     EXPORT void gst_video_capturer_clear_segments_list (GstVideoCapturer *
+							 gvc);
 G_END_DECLS
-
 #endif /* _GST_VIDEO_CAPTURER_H_ */
