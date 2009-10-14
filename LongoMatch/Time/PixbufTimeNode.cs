@@ -28,8 +28,8 @@ namespace LongoMatch.TimeNodes
 	public class PixbufTimeNode : TimeNode
 	{
 		private byte[] thumbnailBuf;
-		private const int MAX_WIDTH=50;
-		private const int MAX_HEIGHT=50;
+		private const int MAX_WIDTH=100;
+		private const int MAX_HEIGHT=75;
 		#region Contructors
 		public PixbufTimeNode(){
 		}	

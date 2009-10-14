@@ -44,7 +44,7 @@ namespace LongoMatch.Gui
 		public event DrawFrameHandler DrawFrame;
 		public event SeekEventHandler SeekEvent;
 			
-		private const int THUMBNAIL_WIDTH = 50;
+		private const int THUMBNAIL_MAX_WIDTH = 100;
 		private TickHandler tickHandler;
 		private IPlayer player;
 		private long length=0;
@@ -111,7 +111,7 @@ namespace LongoMatch.Gui
 		
 		public Pixbuf CurrentMiniatureFrame{
 			get{
-				Pixbuf pixbuf = player.GetCurrentFrame(50,50);				
+				Pixbuf pixbuf = player.GetCurrentFrame(THUMBNAIL_MAX_WIDTH,THUMBNAIL_MAX_WIDTH);				
 				return pixbuf;
 			}
 		}

@@ -54,6 +54,7 @@ namespace LongoMatch.Gui.Component
 		//Using TimeNode as in the tree there are Media and Sections timenodes
 		private TimeNode selectedTimeNode;
 		private Color[] colors;
+		private bool editing;
 	
 		
 
@@ -74,34 +75,11 @@ namespace LongoMatch.Gui.Component
 			Gtk.CellRendererPixbuf miniatureCell = new Gtk.CellRendererPixbuf ();
 			nameColumn.PackStart (miniatureCell, true);
 			nameColumn.PackEnd (nameCell, true);
-			
-			Gtk.TreeViewColumn teamColumn = new Gtk.TreeViewColumn ();
-			teamColumn.Title = "Team";
-			Gtk.CellRendererText teamCell = new Gtk.CellRendererText ();
-			teamColumn.PackStart (teamCell, true);
- 
-			Gtk.TreeViewColumn startTimeColumn = new Gtk.TreeViewColumn ();
-			startTimeColumn.Title = "Start";
-			Gtk.CellRendererText startTimeCell = new Gtk.CellRendererText ();
-			startTimeColumn.PackStart (startTimeCell, true);
-			
-			Gtk.TreeViewColumn stopTimeColumn = new Gtk.TreeViewColumn ();
-			stopTimeColumn.Title = "Stop";
-			Gtk.CellRendererText stopTimeCell = new Gtk.CellRendererText ();
-			stopTimeColumn.PackStart (stopTimeCell, true);
-
+		
 			nameColumn.SetCellDataFunc (miniatureCell, new Gtk.TreeCellDataFunc(RenderMiniature));
 			nameColumn.SetCellDataFunc (nameCell, new Gtk.TreeCellDataFunc (RenderName));
-			teamColumn.SetCellDataFunc(teamCell, new Gtk.TreeCellDataFunc(RenderTeam));
-			startTimeColumn.SetCellDataFunc (startTimeCell, new Gtk.TreeCellDataFunc (RenderStartTime));
-			stopTimeColumn.SetCellDataFunc (stopTimeCell, new Gtk.TreeCellDataFunc (RenderStopTime));
-			
-			
+						
 			this.AppendColumn (nameColumn);
-			this.AppendColumn(teamColumn);
-			this.AppendColumn (startTimeColumn);
-			this.AppendColumn (stopTimeColumn);
-		
 		}
 		
 		public Color[]  Colors{
@@ -112,9 +90,7 @@ namespace LongoMatch.Gui.Component
 			set{addPLN.Sensitive=value;}
 		}
 		
-		private void SetMenu(){
-			
-			
+		private void SetMenu(){			
 			Menu teamMenu = new Menu();
 			local = new MenuItem(Catalog.GetString("Local Team"));
 			visitor = new MenuItem(Catalog.GetString("Visitor Team"));
@@ -180,74 +156,32 @@ namespace LongoMatch.Gui.Component
 				(cell as Gtk.CellRendererPixbuf).Pixbuf = null;
 				(cell as Gtk.CellRendererPixbuf).CellBackground = "white";
 			}
-		}
-		
-		private void RenderTeam (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
-		{
-			TimeNode tNode = (TimeNode) model.GetValue (iter, 0);
-	 
-			(cell as Gtk.CellRendererText).Text = tNode.Name;
-			
-			if (tNode is MediaTimeNode){
-				(cell as Gtk.CellRendererText).Text =((MediaTimeNode)tNode).Team.ToString().ToLowerInvariant();
-				(cell as Gtk.CellRendererText).BackgroundGdk = colors[GetSectionFromIter(iter)];
-				(cell as Gtk.CellRendererText).CellBackgroundGdk = colors[GetSectionFromIter(iter)];				
-			}
-			else {
-				(cell as Gtk.CellRendererText).Text = "";
-				(cell as Gtk.CellRendererText).Background = "white";
-				(cell as Gtk.CellRendererText).CellBackground = "white";
-			}			
-		}
-		
+		}		
+	
 		private void RenderName (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
+			string text = "";
 			TimeNode tNode = (TimeNode) model.GetValue (iter, 0);
-	 
-			(cell as Gtk.CellRendererText).Text = tNode.Name;
 			
-			if (tNode is MediaTimeNode){
+			//Handle special case in which we replace the test in the cell by the name of the TimeNode
+			//We need to check if we are editing and only change it for the path that's currently beeing edited
+		
+			if (editing && selectedIter.Equals(iter))
+				(cell as Gtk.CellRendererText).Markup = tNode.Name; 			
+			else if (tNode is MediaTimeNode){
 				(cell as Gtk.CellRendererText).BackgroundGdk = colors[GetSectionFromIter(iter)];
 				(cell as Gtk.CellRendererText).CellBackgroundGdk = colors[GetSectionFromIter(iter)];
+				(cell as Gtk.CellRendererText).Markup = Catalog.GetString("<b>Name: </b>")+tNode.Name+"\n"+
+					Catalog.GetString("<b>Team: </b>")+(tNode as MediaTimeNode).Team.ToString().ToLower()+"\n"+
+						Catalog.GetString("<b>Start: </b>")+tNode.Start.ToMSecondsString()+"\n"+
+						Catalog.GetString("<b>Stop: </b>")+tNode.Stop.ToMSecondsString();				                                                           
 			}
 			else{
 				(cell as Gtk.CellRendererText).Background = "white";
 				(cell as Gtk.CellRendererText).CellBackground = "white";
-			}			
-		}
- 
-		
-		private void RenderStartTime (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
-		{
-			TimeNode tNode = (TimeNode) model.GetValue (iter, 0);			
-
-			if (tNode is MediaTimeNode){
-				(cell as Gtk.CellRendererText).Text =tNode.Start.ToMSecondsString();
-				(cell as Gtk.CellRendererText).BackgroundGdk = colors[GetSectionFromIter(iter)];
-				(cell as Gtk.CellRendererText).CellBackgroundGdk = colors[GetSectionFromIter(iter)];
-				
-			}
-			else {
-				(cell as Gtk.CellRendererText).Text = "";
-				(cell as Gtk.CellRendererText).Background = "white";
-				(cell as Gtk.CellRendererText).CellBackground = "white";
-			}		
-		}
-		
-		private void RenderStopTime (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
-		{
-			TimeNode tNode = (TimeNode) model.GetValue (iter, 0);
-			if (tNode is MediaTimeNode){
-				(cell as Gtk.CellRendererText).Text = tNode.Stop.ToMSecondsString();
-				(cell as Gtk.CellRendererText).BackgroundGdk = colors[GetSectionFromIter(iter)];
-				(cell as Gtk.CellRendererText).CellBackgroundGdk = colors[GetSectionFromIter(iter)];
-			}
-			else {
-				(cell as Gtk.CellRendererText).Text = "";
-				(cell as Gtk.CellRendererText).Background = "white";
-				(cell as Gtk.CellRendererText).CellBackground = "white";
-			}
-		}
+				(cell as Gtk.CellRendererText).Markup =tNode.Name;
+			}	
+		}	
 		
 		private void OnNameCellEdited (object o, Gtk.EditedArgs args)
 		{
@@ -255,6 +189,7 @@ namespace LongoMatch.Gui.Component
 			this.Model.GetIter (out iter, new Gtk.TreePath (args.Path)); 
 			TimeNode tNode = (TimeNode)this.Model.GetValue (iter,0);
 			tNode.Name = args.NewText;
+			editing = false;
 			nameCell.Editable=false;
 			if (TimeNodeChanged != null)
 				TimeNodeChanged(tNode,args.NewText);
@@ -317,8 +252,10 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		protected virtual void OnEdit(object obj, EventArgs args){
+			editing = true;
 			nameCell.Editable = true;
-			this.SetCursor(path,  nameColumn, true);
+			nameCell.Markup = selectedTimeNode.Name;
+			SetCursor(path,  nameColumn, true);
 		}
 		
 		protected void OnTeamSelection(object obj, EventArgs args){

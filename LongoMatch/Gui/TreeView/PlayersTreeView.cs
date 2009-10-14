@@ -45,6 +45,7 @@ namespace LongoMatch.Gui.Component
 		private Gtk.TreeViewColumn nameColumn;
 		//Using TimeNode as in the tree there are Media and Sections timenodes
 		private TimeNode selectedTimeNode;
+		private bool editing;
 		
 		private Team team;
 
@@ -62,29 +63,12 @@ namespace LongoMatch.Gui.Component
 			nameCell.Edited += OnNameCellEdited;
 			Gtk.CellRendererPixbuf miniatureCell = new Gtk.CellRendererPixbuf ();
 			nameColumn.PackStart (miniatureCell, true);
-			nameColumn.PackEnd (nameCell, true);
-			
-
-			Gtk.TreeViewColumn startTimeColumn = new Gtk.TreeViewColumn ();
-			startTimeColumn.Title = "Start";
-			Gtk.CellRendererText startTimeCell = new Gtk.CellRendererText ();
-			startTimeColumn.PackStart (startTimeCell, true);
-			
-			Gtk.TreeViewColumn stopTimeColumn = new Gtk.TreeViewColumn ();
-			stopTimeColumn.Title = "Stop";
-			Gtk.CellRendererText stopTimeCell = new Gtk.CellRendererText ();
-			stopTimeColumn.PackStart (stopTimeCell, true);
+			nameColumn.PackEnd (nameCell, true);		
 
 			nameColumn.SetCellDataFunc (miniatureCell, new Gtk.TreeCellDataFunc(RenderMiniature));
 			nameColumn.SetCellDataFunc (nameCell, new Gtk.TreeCellDataFunc (RenderName));
-			startTimeColumn.SetCellDataFunc (startTimeCell, new Gtk.TreeCellDataFunc (RenderStartTime));
-			stopTimeColumn.SetCellDataFunc (stopTimeCell, new Gtk.TreeCellDataFunc (RenderStopTime));
 			
-			
-			this.AppendColumn (nameColumn);
-			this.AppendColumn (startTimeColumn);
-			this.AppendColumn (stopTimeColumn);
-		
+			AppendColumn (nameColumn);
 		}
 		
 		public Team Team{
@@ -176,35 +160,22 @@ namespace LongoMatch.Gui.Component
 		{
 			object item = model.GetValue (iter, 0);			
  			
-			if (item is MediaTimeNode)
- 				(cell as Gtk.CellRendererText).Text = (item as MediaTimeNode).Name;
+			if (item is MediaTimeNode){
+				MediaTimeNode tNode = item as MediaTimeNode;
+				if (editing && selectedIter.Equals(iter))
+					(cell as Gtk.CellRendererText).Markup = tNode.Name; 
+				else
+					(cell as Gtk.CellRendererText).Markup = Catalog.GetString("<b>Name: </b>")+tNode.Name+"\n"+
+						Catalog.GetString("<b>Start: </b>")+tNode.Start.ToMSecondsString()+"\n"+
+						Catalog.GetString("<b>Stop: </b>")+tNode.Stop.ToMSecondsString();
+			}
 			
 			else if (item is Player)
 				(cell as Gtk.CellRendererText).Text = (item as Player).Name;
-		}
- 
-		
-		private void RenderStartTime (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
-		{			
-			object item = model.GetValue (iter, 0);			
- 			
-			if (item is MediaTimeNode)
- 				(cell as Gtk.CellRendererText).Text = (item as MediaTimeNode).Start.ToMSecondsString();
-			else if (item is Player)
- 				(cell as Gtk.CellRendererText).Text = "";
-		}
-		
-		private void RenderStopTime (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
-		{
-			object item = model.GetValue (iter, 0);			
- 			
-			if (item is MediaTimeNode)
- 				(cell as Gtk.CellRendererText).Text = (item as MediaTimeNode).Stop.ToMSecondsString();
-			else if (item is Player)
- 				(cell as Gtk.CellRendererText).Text = "";
-		}
+		} 
 		
 		protected virtual void OnEdit(object obj, EventArgs args){
+			editing = true;
 			nameCell.Editable = true;
 			this.SetCursor(path,  nameColumn, true);
 		}
@@ -230,6 +201,7 @@ namespace LongoMatch.Gui.Component
 				player.Name = args.NewText;
 				nameCell.Editable=false;				
 			}
+			editing = false;
 		}
 			
 		
