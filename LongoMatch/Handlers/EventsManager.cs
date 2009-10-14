@@ -50,6 +50,7 @@ namespace LongoMatch
 		private NotesWidget notes;
 		private FramesSeriesCapturer fsc;
 		private FramesCaptureProgressDialog fcpd;
+		private VideoDrawingsManager drawingManager;
 		
 		// Current play loaded. null if no play is loaded
 		private TimeNode selectedTimeNode=null;
@@ -69,6 +70,7 @@ namespace LongoMatch
 			this.timeline = timeline;	
 			this.videoprogressbar = videoprogressbar;
 			this.notes = notes;
+			this.drawingManager = new VideoDrawingsManager(player);
 			
 			ConnectSignals();
 		}
@@ -190,6 +192,7 @@ namespace LongoMatch
 			player.SetStartStop(tNode.Start.MSeconds,tNode.Stop.MSeconds);		
 			notes.Visible = true;
 			notes.Play= tNode;
+			drawingManager.Play=tNode;
 		}
 		
 		
@@ -321,10 +324,14 @@ namespace LongoMatch
 			plNode.Rate = player.Rate;
 		}
 		
-		protected virtual void OnDrawFrame (Pixbuf pixbuf){
+		protected virtual void OnDrawFrame (Pixbuf pixbuf,int time){
 			DrawingTool dialog = new DrawingTool();
 			dialog.TransientFor = (Gtk.Window)player.Toplevel;
 			dialog.Image = pixbuf;
+			if (selectedTimeNode != null)
+				dialog.SetPlay((selectedTimeNode as MediaTimeNode),
+				                time);
+			player.Pause();
 			dialog.Run();
 			dialog.Destroy();
 			pixbuf.Dispose();

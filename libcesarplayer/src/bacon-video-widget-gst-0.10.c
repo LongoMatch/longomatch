@@ -150,6 +150,7 @@ struct BaconVideoWidgetPrivate
   guint update_id;
 
   GdkPixbuf *logo_pixbuf;
+  GdkPixbuf *drawing_pixbuf;
 
   gboolean media_has_video;
   gboolean media_has_audio;
@@ -172,6 +173,7 @@ struct BaconVideoWidgetPrivate
 
   /* Other stuff */
   gboolean logo_mode;
+  gboolean drawing_mode;
   gboolean expand_logo;
   gboolean cursor_shown;
   gboolean fullscreen_mode;
@@ -484,8 +486,8 @@ get_media_size (BaconVideoWidget * bvw, gint * width, gint * height)
 	    }
 	  else if (!gst_video_calculate_display_ratio (&num, &den,
 						       bvw->priv->video_width,
-						       bvw->
-						       priv->video_height,
+						       bvw->priv->
+						       video_height,
 						       movie_par_n,
 						       movie_par_d,
 						       disp_par_n,
@@ -709,8 +711,8 @@ bacon_video_widget_expose_event (GtkWidget * widget, GdkEventExpose * event)
     {
 #ifdef WIN32
       gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay,
-				    GDK_WINDOW_HWND (bvw->
-						     priv->video_window));
+				    GDK_WINDOW_HWND (bvw->priv->
+						     video_window));
 #else
       gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay,
 				    GDK_WINDOW_XID (bvw->priv->video_window));
@@ -730,6 +732,7 @@ bacon_video_widget_expose_event (GtkWidget * widget, GdkEventExpose * event)
       if (bvw->priv->logo_pixbuf != NULL)
 	{
 	  GdkPixbuf *frame;
+	  GdkPixbuf *drawing;
 	  guchar *pixels;
 	  int rowstride;
 	  gint width, height, alloc_width, alloc_height, logo_x, logo_y;
@@ -761,7 +764,7 @@ bacon_video_widget_expose_event (GtkWidget * widget, GdkEventExpose * event)
 
 	  /* Drawing our frame */
 
-	  if (bvw->priv->expand_logo)
+	  if (bvw->priv->expand_logo && !bvw->priv->drawing_mode)
 	    {
 	      /* Scaling to available space */
 
@@ -810,10 +813,22 @@ bacon_video_widget_expose_event (GtkWidget * widget, GdkEventExpose * event)
 	      frame = gdk_pixbuf_scale_simple (bvw->priv->logo_pixbuf,
 					       width, height,
 					       GDK_INTERP_BILINEAR);
-
 	      gdk_draw_pixbuf (win, gtk_widget_get_style (widget)->fg_gc[0],
 			       frame, 0, 0, logo_x, logo_y, width, height,
 			       GDK_RGB_DITHER_NONE, 0, 0);
+
+	      if (bvw->priv->drawing_mode
+		  && bvw->priv->drawing_pixbuf != NULL)
+		{
+		  drawing =
+		    gdk_pixbuf_scale_simple (bvw->priv->drawing_pixbuf, width,
+					     height, GDK_INTERP_BILINEAR);
+		  gdk_draw_pixbuf (win,
+				   gtk_widget_get_style (widget)->fg_gc[0],
+				   drawing, 0, 0, logo_x, logo_y, width,
+				   height, GDK_RGB_DITHER_NONE, 0, 0);
+		  g_object_unref (drawing);
+		}
 
 	      g_object_unref (frame);
 	    }
@@ -1242,7 +1257,6 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   priv->audiotags = NULL;
   priv->videotags = NULL;
   priv->zoom = 1.0;
-  priv->expand_logo = TRUE;
   priv->lock = g_mutex_new ();
 
   bvw->priv->missing_plugins = NULL;
@@ -1865,12 +1879,11 @@ got_video_size (BaconVideoWidget * bvw)
   msg = gst_message_new_application (GST_OBJECT (bvw->priv->play),
 				     gst_structure_new ("video-size", "width",
 							G_TYPE_INT,
-							bvw->
-							priv->video_width,
-							"height", G_TYPE_INT,
-							bvw->
-							priv->video_height,
-							NULL));
+							bvw->priv->
+							video_width, "height",
+							G_TYPE_INT,
+							bvw->priv->
+							video_height, NULL));
   gst_element_post_message (bvw->priv->play, msg);
 }
 
@@ -4089,6 +4102,31 @@ bacon_video_widget_get_logo_mode (BaconVideoWidget * bvw)
   return bvw->priv->logo_mode;
 }
 
+void
+bacon_video_widget_set_drawing_pixbuf (BaconVideoWidget * bvw,
+				       GdkPixbuf * drawing)
+{
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (drawing != NULL);
+
+  if (bvw->priv->drawing_pixbuf != NULL)
+    g_object_unref (bvw->priv->drawing_pixbuf);
+
+  g_object_ref (drawing);
+  bvw->priv->drawing_pixbuf = drawing;
+}
+
+void
+bacon_video_widget_set_drawing_mode (BaconVideoWidget * bvw,
+				     gboolean drawing_mode)
+{
+  g_return_if_fail (bvw != NULL);
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
+  bvw->priv->drawing_mode = drawing_mode;
+}
+
 /**
  * bacon_video_widget_pause:
  * @bvw: a #BaconVideoWidget
@@ -5879,8 +5917,8 @@ bvw_element_msg_sync (GstBus * bus, GstMessage * msg, gpointer data)
 
 #ifdef WIN32
       gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay,
-				    GDK_WINDOW_HWND (bvw->
-						     priv->video_window));
+				    GDK_WINDOW_HWND (bvw->priv->
+						     video_window));
 #else
       gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay,
 				    GDK_WINDOW_XID (bvw->priv->video_window));

@@ -7,7 +7,6 @@
     <itemgroups>
       <itemgroup label="PlayerBin Properties">
         <property name="Rate" />
-        <property name="LogoMode" />
         <property name="ExpandLogo" />
       </itemgroup>
     </itemgroups>
@@ -16,9 +15,11 @@
         <signal name="SegmentClosedEvent" />
         <signal name="Tick" />
         <signal name="Error" />
+        <signal name="StateChanged" />
         <signal name="Next" />
         <signal name="Prev" />
         <signal name="DrawFrame" />
+        <signal name="SeekEvent" />
       </itemgroup>
     </signals>
   </object>

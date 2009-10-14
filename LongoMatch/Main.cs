@@ -55,8 +55,7 @@ namespace LongoMatch
 			}
 					
 			//Iniciamos la internalización
-			Catalog.Init("longomatch",RelativeToPrefix("share/locale"));
-			
+			Catalog.Init("longomatch",RelativeToPrefix("share/locale"));			
 								
 			//Iniciamos la aplicación
 			Application.Init ();
@@ -64,15 +63,13 @@ namespace LongoMatch
 			GLib.ExceptionManager.UnhandledException += new GLib.UnhandledExceptionHandler(OnException);
 				
 			LongoMatch.Video.Player.GstPlayer.InitBackend("");
-			
-				
+							
 			//Comprobamos los archivos de inicio
 			CheckDirs();
 			CheckFiles();			
 			
 			//Iniciamos la base de datos
 			db = new DataBase(Path.Combine(DBDir(),"longomatch.db"));			
-		
 			
 			//Check for previous database
 			CheckOldFiles();
@@ -81,8 +78,7 @@ namespace LongoMatch
 				MainWindow win = new MainWindow ();
 				win.Show ();			
 				Application.Run ();
-			}
-			catch (Exception ex){
+			}catch (Exception ex){
 				ProcessExecutionError(ex);				
 			}			
 		}
@@ -93,8 +89,7 @@ namespace LongoMatch
 		
 		public static string HomeDir(){
 				return homeDirectory;	
-		}
-		
+		}		
 
 		public static string PlayListDir(){
 			return System.IO.Path.Combine (homeDirectory, "playlists");
@@ -183,12 +178,6 @@ namespace LongoMatch
 			get { return db;}
 		}
 		
-		/*private static void setGtkTheme(){
-			if (!System.IO.File.Exists(System.IO.Path.Combine(homeDirectory,"../../.gtkrc-2.0"))){
-			    System.IO.File.Copy(RelativeToPrefix("etc/gtk-2.0/gtkrc-2.0"),System.IO.Path.Combine(homeDirectory,"../../.gtkrc-2.0"),true);
-			}
-		}*/
-		
 		private static void SetUpWin32Config(){
 			Environment.SetEnvironmentVariable("GST_PLUGIN_PATH",RelativeToPrefix("lib\\gstreamer-0.10"));
 			baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../");
@@ -210,7 +199,7 @@ namespace LongoMatch
 			}		
 		}		
 			
-		private static void OnException(GLib.UnhandledExceptionArgs args){			
+		private static void OnException(GLib.UnhandledExceptionArgs args){
 			ProcessExecutionError((Exception)args.ExceptionObject);				
 		}
 		

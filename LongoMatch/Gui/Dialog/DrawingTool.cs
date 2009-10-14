@@ -21,6 +21,7 @@ using Gdk;
 using Gtk;
 using Mono.Unix;
 using LongoMatch.Gui.Component;
+using LongoMatch.TimeNodes;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -28,6 +29,8 @@ namespace LongoMatch.Gui.Dialog
 	
 	public partial class DrawingTool : Gtk.Dialog
 	{
+		private MediaTimeNode play;
+		private int stopTime;
 		
 		public DrawingTool()
 		{
@@ -39,9 +42,13 @@ namespace LongoMatch.Gui.Dialog
 		}
 		
 		public Pixbuf Image{
-			set{
-				drawingwidget1.SourceImage = value;			
-			}
+			set{drawingwidget1.SourceImage = value;}
+		}
+		
+		public void SetPlay(MediaTimeNode play,int stopTime){
+			this.play = play;	
+			this.stopTime = stopTime;
+			savetoprojectbutton.Visible = true;			
 		}
 
 		protected virtual void OnDrawingtoolbox1LineWidthChanged (int width)
@@ -98,6 +105,17 @@ namespace LongoMatch.Gui.Dialog
 				drawingwidget1.SaveAll(filename);
 			}
 			fChooser.Destroy();		
+		}
+
+		protected virtual void OnSavetoprojectbuttonClicked (object sender, System.EventArgs e)
+		{
+			string tempFile = System.IO.Path.GetTempFileName();
+			drawingwidget1.SaveDrawings(tempFile);
+			Pixbuf frame = new Pixbuf(tempFile);
+			play.KeyFrameDrawing =new Drawing(frame,stopTime);
+			drawingwidget1.SaveAll(tempFile);
+			frame.Dispose();
+			play.Miniature = new Pixbuf(tempFile);
 		}
 	}
 }

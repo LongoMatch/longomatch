@@ -70,7 +70,7 @@ namespace LongoMatch.Video.Player {
 			set  {
 				bacon_video_widget_set_logo_mode(Handle, value);
 			}
-		}
+		}			
 		
 		[GLib.Property ("expand_logo")]
 		public bool ExpandLogo {
@@ -1074,6 +1074,24 @@ namespace LongoMatch.Video.Player {
 				bacon_video_widget_set_logo_pixbuf(Handle, value == null ? IntPtr.Zero : value.Handle);
 			}
 		}
+		
+		[DllImport("libcesarplayer.dll")]
+		static extern void bacon_video_widget_set_drawing_pixbuf(IntPtr raw, IntPtr drawing_mode);
+
+		public Gdk.Pixbuf DrawingPixbuf {
+			set  {
+				bacon_video_widget_set_drawing_pixbuf(Handle, value == null ? IntPtr.Zero : value.Handle);
+			}
+		}
+		
+		[DllImport("libcesarplayer.dll")]
+		static extern void bacon_video_widget_set_drawing_mode(IntPtr raw, bool drawing_mode);
+
+		public bool DrawingMode {
+			set  {
+				bacon_video_widget_set_drawing_mode(Handle, value);
+			}
+		}
 
 		/*[DllImport("libcesarplayer.dll")]
 		static extern void bacon_video_widget_set_visuals_quality(IntPtr raw, int quality);
@@ -1122,6 +1140,8 @@ namespace LongoMatch.Video.Player {
 		public Gdk.Pixbuf GetCurrentFrame(int outwidth, int outheight) { 
 			IntPtr raw_ret = bacon_video_widget_get_current_frame(Handle);
 			Gdk.Pixbuf unmanaged = GLib.Object.GetObject(raw_ret) as Gdk.Pixbuf;
+			if (unmanaged == null)
+				return null;
 			Gdk.Pixbuf managed;
 			int h = unmanaged.Height;
 			int w = unmanaged.Width;

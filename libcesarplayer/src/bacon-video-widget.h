@@ -243,6 +243,14 @@ bacon_video_widget_error_quark (void)
 						double volume);
      EXPORT double bacon_video_widget_get_volume (BaconVideoWidget * bvw);
 
+/*Drawings Overlay*/
+     EXPORT void bacon_video_widget_set_drawing_pixbuf (BaconVideoWidget *
+							bvw,
+							GdkPixbuf * drawing);
+     EXPORT void bacon_video_widget_set_drawing_mode (BaconVideoWidget * bvw,
+						      gboolean drawing_mode);
+
+
 /* Properties */
      EXPORT void bacon_video_widget_set_logo (BaconVideoWidget * bvw,
 					      char *filename);

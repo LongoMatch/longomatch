@@ -214,7 +214,7 @@ namespace LongoMatch.Gui {
             this.hpaned = new Gtk.HPaned();
             this.hpaned.CanFocus = true;
             this.hpaned.Name = "hpaned";
-            this.hpaned.Position = 318;
+            this.hpaned.Position = 295;
             // Container child hpaned.Gtk.Paned+PanedChild
             this.leftbox = new Gtk.VBox();
             this.leftbox.Name = "leftbox";
@@ -272,7 +272,7 @@ namespace LongoMatch.Gui {
             this.hpaned1 = new Gtk.HPaned();
             this.hpaned1.CanFocus = true;
             this.hpaned1.Name = "hpaned1";
-            this.hpaned1.Position = 760;
+            this.hpaned1.Position = 795;
             // Container child hpaned1.Gtk.Paned+PanedChild
             this.vbox5 = new Gtk.VBox();
             this.vbox5.Name = "vbox5";
@@ -294,9 +294,8 @@ namespace LongoMatch.Gui {
             this.playerbin1 = new LongoMatch.Gui.PlayerBin();
             this.playerbin1.Events = ((Gdk.EventMask)(256));
             this.playerbin1.Name = "playerbin1";
-            this.playerbin1.Rate = 0F;
-            this.playerbin1.LogoMode = false;
-            this.playerbin1.ExpandLogo = false;
+            this.playerbin1.Rate = 1F;
+            this.playerbin1.ExpandLogo = true;
             this.hbox1.Add(this.playerbin1);
             Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.hbox1[this.playerbin1]));
             w10.Position = 1;
@@ -379,7 +378,7 @@ namespace LongoMatch.Gui {
                 this.Child.ShowAll();
             }
             this.DefaultWidth = 1259;
-            this.DefaultHeight = 590;
+            this.DefaultHeight = 761;
             this.leftbox.Hide();
             this.drawingtoolbox1.Hide();
             this.timelinewidget1.Hide();

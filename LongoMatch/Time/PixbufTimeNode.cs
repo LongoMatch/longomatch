@@ -28,7 +28,8 @@ namespace LongoMatch.TimeNodes
 	public class PixbufTimeNode : TimeNode
 	{
 		private byte[] thumbnailBuf;
-		
+		private const int MAX_WIDTH=50;
+		private const int MAX_HEIGHT=50;
 		#region Contructors
 		public PixbufTimeNode(){
 		}	
@@ -50,10 +51,33 @@ namespace LongoMatch.TimeNodes
 				if (thumbnailBuf != null)
 					return new Pixbuf(thumbnailBuf);
 				else return null;
-			}
-		}		
-		
-		
+			}set{
+				if (value != null)
+					ScaleAndSave(value);
+				else thumbnailBuf = null;
+			}			
+		}			
+				
 		#endregion
+		
+		private void ScaleAndSave(Pixbuf pixbuf) {
+			int ow,oh,h,w;
+			 
+			h = ow = pixbuf.Height;
+			w = oh = pixbuf.Width;
+			ow = MAX_WIDTH;
+			oh = MAX_HEIGHT;
+
+			if (w>MAX_WIDTH || h>MAX_HEIGHT){
+				double rate = (double)w/(double)h;				
+				if (h>w)
+					ow = (int) (oh * rate);
+				else
+					oh = (int) (ow / rate);
+				thumbnailBuf = pixbuf.ScaleSimple(ow,oh,Gdk.InterpType.Bilinear).SaveToBuffer("png");
+				pixbuf.Dispose();
+			}	
+			else thumbnailBuf =  pixbuf.SaveToBuffer("png");
+		}
 	}
 }

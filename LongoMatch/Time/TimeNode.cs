@@ -19,6 +19,8 @@
 //
 
 using System;
+using System.Collections.Generic;
+using LongoMatch.TimeNodes;
 
 namespace LongoMatch.TimeNodes
 {
@@ -35,8 +37,7 @@ namespace LongoMatch.TimeNodes
 		//Stores the stop time
 		private Time stop;
 		
-		
-		
+
 		public TimeNode(){
 		}
 		

@@ -98,7 +98,7 @@ namespace LongoMatch.DB
 					IObjectSet result = query.Execute();
 					while (result.HasNext()){
 						allDB.Add(result.Next());					
-					}
+					}					
 					return allDB;					
 				}				
 				finally
@@ -224,6 +224,7 @@ namespace LongoMatch.DB
 			Db4oFactory.Configure().ObjectClass(typeof(HotKey)).CascadeOnDelete(true);
 			Db4oFactory.Configure().ObjectClass(typeof(Player)).CascadeOnDelete(true);
 			Db4oFactory.Configure().ObjectClass(typeof(TeamTemplate)).CascadeOnDelete(true);
+			Db4oFactory.Configure().ObjectClass(typeof(Drawing)).CascadeOnDelete(true);
 		}
 		
 		private bool Exists(string filename){

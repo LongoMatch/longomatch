@@ -36,6 +36,7 @@ using LongoMatch.Handlers;
 using System.Reflection;
 
 
+
 namespace LongoMatch.Gui
 {	
 	[System.ComponentModel.Category("LongoMatch")]
@@ -53,7 +54,7 @@ namespace LongoMatch.Gui
 #region Constructors
 		public MainWindow() : 
 				base("LongoMatch")
-		{			
+		{	
 			this.Build();
 			
 			/*Updater updater = new Updater();
@@ -95,6 +96,7 @@ namespace LongoMatch.Gui
 		}
 		
 #endregion
+
 
 		
 #region Private Methods
@@ -396,6 +398,13 @@ namespace LongoMatch.Gui
 					else
 						playerbin1.SeekToNextFrame(true);
 				}
+				if (key == Gdk.Key.q){
+					playerbin1.LogoMode=true;
+				}
+				if (key == Gdk.Key.r){
+					playerbin1.LogoMode=false;
+				}
+				
 			}
 			return base.OnKeyPressEvent (evnt);
 		}

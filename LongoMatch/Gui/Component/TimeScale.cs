@@ -165,8 +165,7 @@ namespace LongoMatch.Gui.Component
 				using (Cairo.Context g = Gdk.CairoHelper.Create (win)){	
 					int height;
 					int width;	
-
-				
+			
 					win.Resize((int)(frames/pixelRatio), Allocation.Height);
 					win.GetSize(out width, out height);				
 				
@@ -179,7 +178,7 @@ namespace LongoMatch.Gui.Component
 							g.Color = new Cairo.Color (color.R+0.1, color.G+0.1,color.B+0.1, 1);				
 							g.LineJoin = LineJoin.Round;
 							g.StrokePreserve();
-							g.Color = color;						
+							g.Color = color;							
 							g.Fill();
 						}
 						else {
@@ -189,6 +188,11 @@ namespace LongoMatch.Gui.Component
 					//Then we draw the selected TimeNode over the others
 					if (hasSelectedTimeNode){					
 						DrawRoundedRectangle(g,selected.StartFrame/pixelRatio,3,selected.TotalFrames/pixelRatio,height-6,SECTION_HEIGHT/7);					
+						if (selected.HasKeyFrame){
+							g.MoveTo(selected.KeyFrame/pixelRatio,3);
+							g.LineTo(selected.KeyFrame/pixelRatio,SECTION_HEIGHT-3);
+							g.StrokePreserve();
+						}
 						g.Color = new Cairo.Color (0, 0, 0, 1);		
 						g.LineWidth = 3;
 						g.LineJoin = LineJoin.Round;
@@ -224,8 +228,7 @@ namespace LongoMatch.Gui.Component
 			else {
 				win.DrawLine(Style.DarkGC(StateType.Normal),0,0,width,0);
 				win.DrawLine(Style.DarkGC(StateType.Normal),
-				             (int)(currentFrame/pixelRatio),
-				             0,
+				             (int)(currentFrame/pixelRatio),0,
 				             (int)(currentFrame/pixelRatio),height);
 			}
 		}	
@@ -236,7 +239,9 @@ namespace LongoMatch.Gui.Component
 				foreach (MediaTimeNode tn in list){	
 					layout.Width = Pango.Units.FromPixels((int)(tn.TotalFrames/pixelRatio));
 					layout.SetMarkup (tn.Name);
-					GdkWindow.DrawLayout(Style.TextGC(StateType.Normal),(int)(tn.StartFrame/pixelRatio)+2,2,layout);
+					GdkWindow.DrawLayout(Style.TextGC(StateType.Normal),
+					                     (int)(tn.StartFrame/pixelRatio)+2,
+					                     2,layout);
 				}
 			}
 		}
@@ -254,8 +259,7 @@ namespace LongoMatch.Gui.Component
 					del.Activated += new EventHandler(OnDelete);				
 					deleteMenu.Append(del);
 					dic.Add(del,tn);					
-				}
-				
+				}				
 			}	
 			menu.ShowAll();
 			menu.Popup();		
@@ -266,6 +270,7 @@ namespace LongoMatch.Gui.Component
 				candidateTN = null;
 				foreach (MediaTimeNode tn in list){	
 					int pos = (int) (evnt.X*pixelRatio);
+					//Moving from the right side
 					if (Math.Abs(pos-tn.StopFrame) < 3*pixelRatio){
 						candidateStart = false;
 						candidateTN = tn;
@@ -275,6 +280,7 @@ namespace LongoMatch.Gui.Component
 						ReDraw();
 						break;
 					}
+					//Moving from the left side
 					else if (Math.Abs(pos-tn.StartFrame) < 3*pixelRatio){
 						candidateStart =true;
 						candidateTN = tn;
@@ -323,42 +329,47 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		protected override bool OnMotionNotifyEvent (EventMotion evnt)
-		{
-			uint pos = (uint) (evnt.X*pixelRatio);
+		{	
+			int pos = (int) (evnt.X*pixelRatio);			
 			
-			
-			if (movingLimit){				
-				
-				if (candidateStart && pos  > 0 && pos < candidateTN.StopFrame-10){
-					candidateTN.StartFrame = pos;					
-					if (TimeNodeChanged != null)
-						TimeNodeChanged(candidateTN,candidateTN.Start);
-				}
-				else if (!candidateStart && pos < frames && pos > candidateTN.StartFrame+10){
-					candidateTN.StopFrame = pos;					
-					if (TimeNodeChanged != null)
-						TimeNodeChanged(candidateTN,candidateTN.Stop);
-				}
-				
-				Gdk.Region region = GdkWindow.ClipRegion;
-				GdkWindow.InvalidateRegion(region,true);
-				GdkWindow.ProcessUpdates(true);			
-				
+			//If not moving don't do anything
+			if (!movingLimit){
 			}
+			//Moving Start time 
+			else if (candidateStart){
+				if (candidateTN.HasKeyFrame && pos > 0 && pos > candidateTN.KeyFrame-10)
+					candidateTN.StartFrame = candidateTN.KeyFrame-10;	
+				//Check not to go under start time nor 0
+				else if (pos  > 0 && pos < candidateTN.StopFrame-10)
+					candidateTN.StartFrame = (uint)pos;				
+				if (TimeNodeChanged != null)
+					TimeNodeChanged(candidateTN,candidateTN.Start);		
+			}
+			//Moving Stop time
+			else if(!candidateStart){
+				if (candidateTN.HasKeyFrame &&  pos < candidateTN.KeyFrame+10 )
+					candidateTN.StopFrame = candidateTN.KeyFrame+10;
+				//Check not to go under start time nor 0
+				else if (pos < frames && pos > candidateTN.StartFrame+10)
+					candidateTN.StopFrame = (uint) pos;				
+				if (TimeNodeChanged != null)
+					TimeNodeChanged(candidateTN,candidateTN.Stop);
+			}
+			
+			Gdk.Region region = GdkWindow.ClipRegion;
+			GdkWindow.InvalidateRegion(region,true);
+			GdkWindow.ProcessUpdates(true);			
+			
 			return base.OnMotionNotifyEvent (evnt);
 		}
 		
 		protected override bool OnButtonPressEvent (EventButton evnt)
 		{		
-			if (evnt.Button == 1){
-				ProcessButton1(evnt);	
-				
-				                                       
-			}
+			if (evnt.Button == 1)
+				ProcessButton1(evnt);
 			// On Right button pressed
-			else if (evnt.Button == 3){
+			else if (evnt.Button == 3)
 				ProcessButton3(evnt.X);
-			}
 			lastTime = evnt.Time;		
 			return base.OnButtonPressEvent (evnt);
 		}

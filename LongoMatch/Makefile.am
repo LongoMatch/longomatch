@@ -182,6 +182,7 @@ FILES = \
 	Handlers/EventsManager.cs \
 	Handlers/Handlers.cs \
 	Handlers/HotKeysManager.cs \
+	Handlers/VideoDrawingsManager.cs\
 	IO/CSVExport.cs \
 	IO/SectionsReader.cs \
 	IO/SectionsWriter.cs \
@@ -189,6 +190,7 @@ FILES = \
 	Main.cs \
 	Playlist/IPlayList.cs \
 	Playlist/PlayList.cs \
+	Time/Drawing.cs\
 	Time/HotKey.cs \
 	Time/MediaTimeNode.cs \
 	Time/PixbufTimeNode.cs \

@@ -65,6 +65,14 @@ namespace LongoMatch.Video.Player
 			set;
 		}
 		
+		bool DrawingMode {
+			set;
+		}
+		
+		Pixbuf DrawingPixbuf {
+			set;
+		}
+		
 		bool ExpandLogo{
 			get;
 			set;
@@ -80,6 +88,10 @@ namespace LongoMatch.Video.Player
 		}
 			
 		string Logo {
+			set;
+		}
+		
+		Pixbuf LogoPixbuf{
 			set;
 		}
 		

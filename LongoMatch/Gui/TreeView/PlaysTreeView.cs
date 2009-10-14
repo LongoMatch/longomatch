@@ -47,6 +47,7 @@ namespace LongoMatch.Gui.Component
 	    private	MenuItem visitor;
 		private MenuItem noTeam;
 		private MenuItem addPLN;
+		private MenuItem deleteKeyFrame;
 		private Gtk.CellRendererText nameCell;
 		private TreePath path;
 		private Gtk.TreeViewColumn nameColumn;
@@ -136,6 +137,7 @@ namespace LongoMatch.Gui.Component
 			MenuItem players = new MenuItem(Catalog.GetString("Tag player"));
 			players.Submenu = playersMenu;
 			MenuItem quit = new MenuItem(Catalog.GetString("Delete"));
+			deleteKeyFrame = new MenuItem(Catalog.GetString("Delete key frame"));
 			addPLN = new MenuItem(Catalog.GetString("Add to playlist"));
 			addPLN.Sensitive=false;
 			MenuItem snapshot = new MenuItem(Catalog.GetString("Export to PGN images"));
@@ -145,17 +147,19 @@ namespace LongoMatch.Gui.Component
 			menu.Append(players);
 			menu.Append(addPLN);
 			menu.Append(quit);
+			menu.Append(deleteKeyFrame);
 			menu.Append(snapshot);
 			 
-			name.Activated += new EventHandler(OnEdit);
-			local.Activated += new EventHandler(OnTeamSelection);
-			visitor.Activated += new EventHandler(OnTeamSelection);
-			noTeam.Activated += new EventHandler(OnTeamSelection);
-			localPlayers.Activated += new EventHandler(OnLocalPlayers);
-			visitorPlayers.Activated += new EventHandler (OnVisitorPlayers);
-			addPLN.Activated += new EventHandler(OnAdded);
-			quit.Activated += new EventHandler(OnDeleted);
-			snapshot.Activated += new EventHandler(OnSnapshot);
+			name.Activated += OnEdit;
+			local.Activated += OnTeamSelection;
+			visitor.Activated += OnTeamSelection;
+			noTeam.Activated += OnTeamSelection;
+			localPlayers.Activated += OnLocalPlayers;
+			visitorPlayers.Activated += OnVisitorPlayers;
+			addPLN.Activated += OnAdded;
+			quit.Activated += OnDeleted;
+			deleteKeyFrame.Activated += OnDeleteKeyFrame;
+			snapshot.Activated += OnSnapshot;
 			menu.ShowAll();		
 		}
 		
@@ -280,8 +284,10 @@ namespace LongoMatch.Gui.Component
 				if (path!=null){
 					this.Model.GetIter (out selectedIter,path); 
 					selectedTimeNode = (TimeNode)this.Model.GetValue (selectedIter, 0);
-					if (selectedTimeNode is MediaTimeNode )
+					if (selectedTimeNode is MediaTimeNode ){
+						deleteKeyFrame.Sensitive = (selectedTimeNode as MediaTimeNode).KeyFrameDrawing != null;
 					    menu.Popup();
+					}
 					else{
 						nameCell.Editable = true;
 						this.SetCursor(path,  nameColumn, true);
@@ -294,6 +300,20 @@ namespace LongoMatch.Gui.Component
 		protected void OnDeleted(object obj, EventArgs args){
 			if (TimeNodeDeleted != null)
 				TimeNodeDeleted((MediaTimeNode)selectedTimeNode,int.Parse(path.ToString().Split(':')[0]));
+		}
+		
+		protected void OnDeleteKeyFrame(object obj, EventArgs args){
+			MessageDialog md = new MessageDialog((Gtk.Window)Toplevel,
+			                                     DialogFlags.Modal,
+			                                     MessageType.Question,
+			                                     ButtonsType.YesNo,
+			                                     false,
+			                                     Catalog.GetString("Do you want to delete the key frame for this play?")
+			                                     );
+			if (md.Run() == (int)ResponseType.Yes)
+				//TODO also refresh the thumbnail
+				(selectedTimeNode as MediaTimeNode).KeyFrameDrawing = null;
+			md.Destroy();
 		}
 		
 		protected virtual void OnEdit(object obj, EventArgs args){

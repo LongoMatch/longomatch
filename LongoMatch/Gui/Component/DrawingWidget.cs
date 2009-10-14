@@ -156,16 +156,19 @@ namespace LongoMatch.Gui.Component
 			Save(filename,true,true);
 		}
 		
+		public void SaveDrawings(string filename){
+			Save(filename,false,true);
+		}
 		
 		private void Save(string filename,bool bSource,bool bDrawings){
 			Surface pngSurface = new ImageSurface (Format.ARGB32,sourceWidth,sourceHeight);
 			using (Context c = new Context(pngSurface)){
 				if (bSource){
-					c.SetSourceSurface(source,xOffset,yOffset);
+					c.SetSourceSurface(source,0,0);
 					c.Paint();
 				}
 				if (bDrawings){
-					c.SetSourceSurface(drawings,xOffset,yOffset);
+					c.SetSourceSurface(drawings,0,0);
 					c.PaintWithAlpha(transparency);
 				}
 			}

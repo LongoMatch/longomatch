@@ -38,10 +38,12 @@ namespace LongoMatch.Gui
 		public event SegmentClosedHandler SegmentClosedEvent;
 		public event TickHandler Tick;
 		public event ErrorHandler Error;
+		public event StateChangeHandler StateChanged;
 		public event NextButtonClickedHandler Next;
 		public event PrevButtonClickedHandler Prev;
 		public event DrawFrameHandler DrawFrame;
-		
+		public event SeekEventHandler SeekEvent;
+			
 		private const int THUMBNAIL_WIDTH = 50;
 		private TickHandler tickHandler;
 		private IPlayer player;
@@ -121,10 +123,21 @@ namespace LongoMatch.Gui
 			}
 		}
 		
-		public bool LogoMode {
-			get{return player.LogoMode;}
+		public Pixbuf LogoPixbuf{
+			set{player.LogoPixbuf = value;}
+		}
+		
+		public bool DrawingMode {
+			set{player.DrawingMode= value;}
+		}
+		
+		public Pixbuf DrawingPixbuf {
+			set{player.DrawingPixbuf=value;}
+		}
+		
+		public bool LogoMode{
 			set{player.LogoMode = value;}
-		}		
+		}
 		
 		public bool ExpandLogo {
 			get{return player.ExpandLogo;}
@@ -204,31 +217,47 @@ namespace LongoMatch.Gui
 		
 		public void SeekTo(long time, bool accurate){
 			player.SeekTime(time,1,accurate);
+			if (SeekEvent != null)
+				SeekEvent(time);
 		}
 		
 		public void SeekInSegment(long pos){
 			player.SeekInSegment(pos, GetRateFromScale());
+			if (SeekEvent != null)
+				SeekEvent(pos);
 		}
 		
 		public void SeekToNextFrame(bool in_segment){
-			if (segmentStopTime==0 | player.CurrentTime < segmentStopTime)
+			int currentTime = (int)player.CurrentTime;
+			if (segmentStopTime==0 | currentTime < segmentStopTime){
 				player.SeekToNextFrame( GetRateFromScale(), in_segment);
+				if (SeekEvent != null)
+					SeekEvent(currentTime );
+			}
+			
 		}
 		
 		public void SeekToPreviousFrame(bool in_segment){
-			if (player.CurrentTime > segmentStartTime){
+			long currentTime = player.CurrentTime;
+			if (currentTime> segmentStartTime){
 				player.SeekToPreviousFrame( GetRateFromScale(),in_segment);
+				if (SeekEvent != null)
+					SeekEvent(currentTime);
 			}
 		}
 		
 		public void UpdateSegmentStartTime (long start){
 			segmentStartTime = start;
-			player.SegmentStartUpdate(start, GetRateFromScale());						
+			player.SegmentStartUpdate(start, GetRateFromScale());
+			if (SeekEvent != null)
+				SeekEvent(start);
 		}
 		
 		public void UpdateSegmentStopTime (long stop){
 			segmentStopTime = stop;
 			player.SegmentStopUpdate(stop, GetRateFromScale());	
+			if (SeekEvent != null)
+				SeekEvent(stop);
 		}
 		
 		public void SetStartStop(long start, long stop){
@@ -316,6 +345,8 @@ namespace LongoMatch.Gui
 				playbutton.Show();
 				pausebutton.Hide();
 			}
+			if (StateChanged != null)
+				StateChanged(this,args);
 		}
 		
 		protected void OnReadyToSeek(object o, EventArgs args){
@@ -501,12 +532,26 @@ namespace LongoMatch.Gui
 		
 		protected virtual void OnDrawButtonClicked (object sender, System.EventArgs e)
 		{
-			if (DrawFrame != null)
-				DrawFrame(CurrentFrame);
+			int currentTime;
+			Pixbuf frame=null;
+			if (DrawFrame != null){
+				if (!InSegment())
+					DrawFrame(CurrentFrame,(int)AccurateCurrentTime);
+				else {
+					//We need an extra acurracy and we have to grant the frame 
+					//correspond to the instant we are assigning to this frame
+					//This process should be the same when when retrieving the 
+					//frame to paint over the drawings
+					currentTime = (int)AccurateCurrentTime;
+					Pause();
+					SeekInSegment(currentTime);
+					 //We have to wait untill the seek event is done to get a valid frame
+					while (frame == null)
+						frame = CurrentFrame;
+					DrawFrame(frame,currentTime);
+				}				
+			}				
 		}
-		
-
 #endregion	
 	}
-
 }

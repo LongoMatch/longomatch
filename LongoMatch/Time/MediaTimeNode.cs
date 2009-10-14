@@ -56,6 +56,9 @@ namespace LongoMatch.TimeNodes
 		private List<int> localPlayersList; //Used to multitag: one play and several players
 											// We use the int index of the player in the template,		
 		private List<int> visitorPlayersList;// because it's the only unmutable variable
+		
+		private Drawing keyFrame;
+		
 
 		
 #region Constructors	
@@ -109,8 +112,16 @@ namespace LongoMatch.TimeNodes
 				this.stopFrame = value;
 				this.Stop = new Time((int)(1000*value/fps));
 			}
-		}		
+		}
 		
+		public uint KeyFrame{
+			get {
+				if (HasKeyFrame)
+					return (uint) KeyFrameDrawing.StopTime*fps/1000;
+				else return 0;
+			}
+		}
+	
 		public bool Selected {
 			get {return selected;}
 			set{this.selected = value;}			
@@ -126,7 +137,17 @@ namespace LongoMatch.TimeNodes
 			get{return visitorPlayersList;}
 		}
 		
+		public Drawing KeyFrameDrawing{
+			set{keyFrame = value;}
+			get{return keyFrame;}
+		}
 		
+		public bool HasKeyFrame{
+			get{return keyFrame != null;}
+		}
+		
+		
+			
 		#endregion
 		
 		#region Public methods
@@ -150,8 +171,7 @@ namespace LongoMatch.TimeNodes
 		public void RemoveVisitorPlayer(int index){
 			visitorPlayersList.Remove(index);			
 		}
-		
+	
 		#endregion
-	}
-		
+	}		
 }
