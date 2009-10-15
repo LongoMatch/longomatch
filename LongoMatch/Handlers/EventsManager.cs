@@ -27,6 +27,7 @@ using LongoMatch.Video.Player;
 using LongoMatch.Video.Handlers;
 using LongoMatch.Video.Utils;
 using LongoMatch.Video.Editor;
+using LongoMatch.Video;
 using LongoMatch.Handlers;
 using LongoMatch.Gui;
 using Gtk;
@@ -324,17 +325,27 @@ namespace LongoMatch
 			plNode.Rate = player.Rate;
 		}
 		
-		protected virtual void OnDrawFrame (Pixbuf pixbuf,int time){
+		protected virtual void OnDrawFrame (int time){
+			Pixbuf pixbuf=null;
+			IFramesCapturer capturer;
 			DrawingTool dialog = new DrawingTool();
-			dialog.TransientFor = (Gtk.Window)player.Toplevel;
+			
+			if (selectedTimeNode == null)
+				player.SeekTo(time,true);
+			else
+				player.SeekTo(time,true);
+			while (pixbuf == null)
+				pixbuf = player.CurrentFrame;
+				
 			dialog.Image = pixbuf;
+			dialog.TransientFor = (Gtk.Window)player.Toplevel;
 			if (selectedTimeNode != null)
 				dialog.SetPlay((selectedTimeNode as MediaTimeNode),
 				                time);
 			player.Pause();
+			pixbuf.Dispose();
 			dialog.Run();
 			dialog.Destroy();
-			pixbuf.Dispose();
 		}
 		
 		protected virtual void OnPlayersTagged (MediaTimeNode tNode, Team team){

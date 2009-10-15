@@ -76,6 +76,11 @@ namespace LongoMatch.Gui.Component
 			preview=false;
 		}
 		
+		~DrawingWidget(){
+			source.Destroy();
+			drawings.Destroy();
+		}
+
 		public Pixbuf SourceImage{
 			set{
 				sourceWidth = value.Width;

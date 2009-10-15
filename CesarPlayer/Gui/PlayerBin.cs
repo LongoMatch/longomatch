@@ -117,10 +117,7 @@ namespace LongoMatch.Gui
 		}
 		
 		public Pixbuf CurrentFrame{
-			get{
-				Pixbuf pixbuf = player.GetCurrentFrame();				
-				return pixbuf;
-			}
+			get{return player.GetCurrentFrame();}
 		}
 		
 		public Pixbuf LogoPixbuf{
@@ -534,23 +531,8 @@ namespace LongoMatch.Gui
 		{
 			int currentTime;
 			Pixbuf frame=null;
-			if (DrawFrame != null){
-				if (!InSegment())
-					DrawFrame(CurrentFrame,(int)AccurateCurrentTime);
-				else {
-					//We need an extra acurracy and we have to grant the frame 
-					//correspond to the instant we are assigning to this frame
-					//This process should be the same when when retrieving the 
-					//frame to paint over the drawings
-					currentTime = (int)AccurateCurrentTime;
-					Pause();
-					SeekInSegment(currentTime);
-					 //We have to wait untill the seek event is done to get a valid frame
-					while (frame == null)
-						frame = CurrentFrame;
-					DrawFrame(frame,currentTime);
-				}				
-			}				
+			if (DrawFrame != null)
+				DrawFrame((int)AccurateCurrentTime);
 		}
 #endregion	
 	}

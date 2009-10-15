@@ -93,17 +93,20 @@ namespace LongoMatch.Handlers
 				
 		private void PrintDrawing(){
 			Pixbuf frame = null;
+			Pixbuf drawing = null;
 
 			player.Pause();
 			player.SeekInSegment(Drawing.StopTime);
 			while (frame == null)
 				frame = player.CurrentFrame;			
 			player.LogoPixbuf = frame;
-			frame.Dispose();
-			player.DrawingPixbuf = Drawing.Pixbuf;
+			drawing = Drawing.Pixbuf;
+			player.DrawingPixbuf = drawing; 
 			player.LogoMode = true;
 			player.DrawingMode = true;
 			inKeyFrame = true;
+			frame.Dispose();
+			drawing.Dispose();
 		}
 		
 		private void ResetPlayerWindow(){

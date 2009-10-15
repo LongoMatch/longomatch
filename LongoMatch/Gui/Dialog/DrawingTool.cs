@@ -41,6 +41,10 @@ namespace LongoMatch.Gui.Dialog
 			drawingtoolbox1.InfoVisible = false;
 		}
 		
+		~ DrawingTool(){
+			drawingwidget1.Destroy();
+		}
+		
 		public Pixbuf Image{
 			set{drawingwidget1.SourceImage = value;}
 		}
