@@ -1,3 +1,17 @@
+===== LongoMatch 0.15.4 =====
+
+	== Features ==
+	
+	* New drawing widget with specialized tools that allows to make drawings in a frame and save it in a file or
+	  in a play as a key frame. When this drawings are saved as key frame and the play is loaded, the player
+	  recall thme when it reaches the instant they belong to.
+	* Speeds improvements in retrieving projects from the database.
+	* Better readabilty of plays using bigger thumbnails and improving info layout
+ 	
+ 	== Bugs Fixed ==
+ 	
+ 	* [#598675] Memory leak handling Project objects  
+ 	
 ===== LongoMatch 0.15.3 =====
 
 	== Features ==
