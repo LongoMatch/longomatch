@@ -163,6 +163,11 @@
     <File name="Handlers/VideoDrawingsManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Time/DrawingsList.cs" subtype="Code" buildaction="Compile" />
     <File name="DB/ProjectDescription.cs" subtype="Code" buildaction="Compile" />
+    <File name="images/stock_draw-circle-unfilled.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="images/stock_draw-freeform-line.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="images/stock_draw-line-45.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="images/stock_draw-line-ends-with-arrow.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="images/stock_draw-rectangle-unfilled.png" subtype="Code" buildaction="EmbedAsResource" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />

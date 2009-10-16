@@ -208,7 +208,12 @@ DATA_FILES =
 RESOURCES = \
 	gtk-gui/objects.xml \
 	gtk-gui/gui.stetic\
-	images/longomatch.png,longomatch.png
+	images/longomatch.png,longomatch.png\
+	images/stock_draw-line-45.png\
+	images/stock_draw-circle-unfilled.png\
+	images/stock_draw-line-ends-with-arrow.png\
+	images/stock_draw-rectangle-unfilled.png\
+	images/stock_draw-freeform-line.png 
 
 EXTRAS = \
 	images/longomatch.png\

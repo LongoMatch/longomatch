@@ -4052,7 +4052,7 @@ You can download it using this direct link:</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.DrawingToolBox" design-size="86 440">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.DrawingToolBox" design-size="86 448">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -4085,6 +4085,7 @@ You can download it using this direct link:</property>
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Label" translatable="yes" />
+                <property name="Active">True</property>
                 <property name="DrawIndicator">False</property>
                 <property name="HasLabel">False</property>
                 <property name="UseUnderline">True</property>
@@ -4093,7 +4094,7 @@ You can download it using this direct link:</property>
                 <child>
                   <widget class="Gtk.Image" id="image79">
                     <property name="MemberName" />
-                    <property name="Pixbuf">stock:stock_draw-circle-unfilled Menu</property>
+                    <property name="Pixbuf">resource:stock_draw-circle-unfilled.png</property>
                   </widget>
                 </child>
               </widget>
@@ -4125,7 +4126,7 @@ You can download it using this direct link:</property>
                 <child>
                   <widget class="Gtk.Image" id="image83">
                     <property name="MemberName" />
-                    <property name="Pixbuf">stock:stock_draw-line-45 Menu</property>
+                    <property name="Pixbuf">resource:stock_draw-line-45.png</property>
                   </widget>
                 </child>
               </widget>
@@ -4187,7 +4188,7 @@ You can download it using this direct link:</property>
                 <child>
                   <widget class="Gtk.Image" id="image82">
                     <property name="MemberName" />
-                    <property name="Pixbuf">stock:stock_draw-line-ends-with-arrow Menu</property>
+                    <property name="Pixbuf">resource:stock_draw-line-ends-with-arrow.png</property>
                   </widget>
                 </child>
               </widget>
@@ -4217,7 +4218,7 @@ You can download it using this direct link:</property>
                 <child>
                   <widget class="Gtk.Image" id="image80">
                     <property name="MemberName" />
-                    <property name="Pixbuf">stock:stock_draw-freeform-line Menu</property>
+                    <property name="Pixbuf">resource:stock_draw-freeform-line.png</property>
                   </widget>
                 </child>
               </widget>
@@ -4245,7 +4246,7 @@ You can download it using this direct link:</property>
                 <child>
                   <widget class="Gtk.Image" id="image84">
                     <property name="MemberName" />
-                    <property name="Pixbuf">stock:stock_draw-rectangle-unfilled Menu</property>
+                    <property name="Pixbuf">resource:stock_draw-rectangle-unfilled.png</property>
                   </widget>
                 </child>
               </widget>
@@ -4360,6 +4361,7 @@ You can download it using this direct link:</property>
               <widget class="Gtk.RadioButton" id="bbutton">
                 <property name="MemberName" />
                 <property name="Label" translatable="yes" />
+                <property name="Active">True</property>
                 <property name="DrawIndicator">False</property>
                 <property name="HasLabel">True</property>
                 <property name="UseUnderline">True</property>
