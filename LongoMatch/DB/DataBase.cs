@@ -20,7 +20,7 @@
 
 using System;
 using System.IO;
-using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using Gdk;
 using Mono.Unix;
@@ -34,8 +34,6 @@ namespace LongoMatch.DB
 	
 	public sealed class DataBase
 	{
-		// Database container
-		private IObjectContainer db;
 		// File path of the database
 		private string file;
 		// Lock object 
@@ -52,7 +50,7 @@ namespace LongoMatch.DB
 			this.file = file;
 			if (!System.IO.File.Exists(file)){
 				// Create new DB and add version
-				db = Db4oFactory.OpenFile(file);
+				IObjectContainer db = Db4oFactory.OpenFile(file);
 				try{					
 					dbVersion= new Version(MAYOR,MINOR);
 					db.Set(dbVersion);
@@ -60,10 +58,9 @@ namespace LongoMatch.DB
 				finally{
 					db.Close();
 				}
-			}
-			
+			}			
 			else{
-				db = Db4oFactory.OpenFile(file);
+				IObjectContainer db = Db4oFactory.OpenFile(file);
 				try	{   				
 					IQuery query = db.Query();
 					query.Constrain(typeof(Version));
@@ -88,97 +85,107 @@ namespace LongoMatch.DB
 			get{return dbVersion;}
 		}
 		
-		public ArrayList GetAllDB(){			
+		public List<ProjectDescription> GetAllProjects(){			
 			lock(this.locker){
-				ArrayList allDB = new ArrayList();
-				db = Db4oFactory.OpenFile(file);
+				List<ProjectDescription> list = new List<ProjectDescription>();
+				IObjectContainer db = Db4oFactory.OpenFile(file);
+				db.Ext().Configure().ActivationDepth(1);
 				try	{   				
 					IQuery query = db.Query();
 					query.Constrain(typeof(Project));
 					IObjectSet result = query.Execute();
 					while (result.HasNext()){
-						allDB.Add(result.Next());					
-					}					
-					return allDB;					
+						Project p = (Project)result.Next();
+						db.Activate(p.File,3);
+						ProjectDescription pd = new ProjectDescription(p.File.FilePath,
+						                                               p.LocalName, p.VisitorName,
+						                                               p.Season,p.Competition,
+						                                               p.LocalGoals,p.VisitorGoals,
+						                                               p.MatchDate,p.File.Preview);
+						list.Add(pd);					
+					}		
+					return list;					
 				}				
 				finally
 				{
-					db.Close();
+					CloseDB(db);
 				}		
 			}
 		}
 		
 		public Project GetProject(String filename){
+			Project ret;
 			lock(this.locker){
-				db = Db4oFactory.OpenFile(file);
+				IObjectContainer db = Db4oFactory.OpenFile(file);
 				try	{   				
 					IQuery query = db.Query();
 					query.Constrain(typeof(Project));
 					query.Descend("file").Descend("filePath").Constrain(filename);
 					IObjectSet result = query.Execute();
-					return (Project)result.Next();
+					ret = (Project) db.Ext().PeekPersisted(result.Next(),10,true);
+					return ret;
 				}				
 				finally
 				{
-					db.Close();
+					CloseDB(db);
 				}
 			}
 		}
 		
 		public void AddProject (Project project){
 			lock(this.locker){
-				db = Db4oFactory.OpenFile(file);				
+				IObjectContainer db = Db4oFactory.OpenFile(file);				
 				try	
 				{
-					if (!this.Exists(project.File.FilePath)){
+					if (!this.Exists(project.File.FilePath,db)){
 						db.Set (project);
 						db.Commit();
 					}
 					else throw new Exception (Catalog.GetString("The Project for this video file already exists.")+"\n"+Catalog.GetString("Try to edit it whit the Database Manager"));
 				}				
 				finally {
-					db.Close();
+					CloseDB(db);
 				}
 			}			
 		}
 		
-		public void RemoveProject(Project project){
+		public void RemoveProject(string filePath){
 			lock(this.locker){
-				SetCascadeOptions();
-				db = Db4oFactory.OpenFile(file);
+				SetDeleteCascadeOptions();
+				IObjectContainer db = Db4oFactory.OpenFile(file);
 				try	{			
 					IQuery query = db.Query();
 					query.Constrain(typeof(Project));
-					query.Descend("file").Descend("filePath").Constrain(project.File.FilePath);
+					query.Descend("file").Descend("filePath").Constrain(filePath);
 					IObjectSet result = query.Execute();
-					project = (Project)result.Next();
+					Project project = (Project)result.Next();
 					db.Delete(project);   			
 					db.Commit();
 				}				
 				finally
 				{
-					db.Close();
+					CloseDB(db);
 				}
 			}
 		}
 		
 		public void UpdateProject(Project project, string previousFileName){
 			lock(this.locker){
-				bool error = false;
-				
+				bool error = false;				
 				// Configure db4o to cascade on delete for each one of the objects stored in a Project
-				SetCascadeOptions();
-				db = Db4oFactory.OpenFile(file);
+				SetUpdateCascadeOptions();
+				IObjectContainer db = Db4oFactory.OpenFile(file);
 				try	{
-					// We look for a project with that uses the same file
-					if (!Exists(project.File.FilePath)){
-						// Delete the old project
+					// We look for a project with the same filename
+					if (!Exists(project.File.FilePath,db)){
 						IQuery query = db.Query();
 						query.Constrain(typeof(Project));
 						query.Descend("file").Descend("filePath").Constrain(previousFileName);
 						IObjectSet result = query.Execute();  
+						//Get the stored object ID and bind it to "offline" modified
 						Project fd = (Project)result.Next();
-						db.Delete(fd);
+						long id = db.Ext().GetID(fd);
+						db.Ext().Bind(project,id);
 						// Add the updated project
 						db.Set(project);	
 						db.Commit();
@@ -187,7 +194,7 @@ namespace LongoMatch.DB
 						error = true;					
 				}
 				finally{
-					db.Close();
+					CloseDB(db);
 					if (error)
 						throw new Exception();
 				}
@@ -196,26 +203,32 @@ namespace LongoMatch.DB
 		
 		public void UpdateProject(Project project){
 			lock(this.locker){
-				SetCascadeOptions();				
-				db = Db4oFactory.OpenFile(file);
+				SetUpdateCascadeOptions();				
+				IObjectContainer db = Db4oFactory.OpenFile(file);
 				try	{				
 					IQuery query = db.Query();
 					query.Constrain(typeof(Project));
 					query.Descend("file").Descend("filePath").Constrain(project.File.FilePath);
 					IObjectSet result = query.Execute();  
 					Project fd = (Project)result.Next();
-					db.Delete(fd);
+					long id = db.Ext().GetID(fd);
+					db.Ext().Bind(project,id);
 					db.Set(project);		
 					db.Commit();
 				}				
 				finally
 				{
-					db.Close();
+					CloseDB(db);					
 				}
 			}			
 		}
 		
-		private void SetCascadeOptions(){
+		private void CloseDB(IObjectContainer db){
+			db.Ext().Purge();
+			db.Close();
+		}
+		
+		private void SetDeleteCascadeOptions(){
 			Db4oFactory.Configure().ObjectClass(typeof(Project)).CascadeOnDelete(true);
 			Db4oFactory.Configure().ObjectClass(typeof(Sections)).CascadeOnDelete(true);
 			Db4oFactory.Configure().ObjectClass(typeof(TimeNode)).CascadeOnDelete(true);
@@ -227,14 +240,24 @@ namespace LongoMatch.DB
 			Db4oFactory.Configure().ObjectClass(typeof(Drawing)).CascadeOnDelete(true);
 		}
 		
-		private bool Exists(string filename){
-			
+		private void SetUpdateCascadeOptions(){
+			Db4oFactory.Configure().ObjectClass(typeof(Project)).CascadeOnUpdate(true);
+			Db4oFactory.Configure().ObjectClass(typeof(Sections)).CascadeOnUpdate(true);
+			Db4oFactory.Configure().ObjectClass(typeof(TimeNode)).CascadeOnUpdate(true);
+			Db4oFactory.Configure().ObjectClass(typeof(Time)).CascadeOnUpdate(true);
+			Db4oFactory.Configure().ObjectClass(typeof(Team)).CascadeOnUpdate(true);
+			Db4oFactory.Configure().ObjectClass(typeof(HotKey)).CascadeOnUpdate(true);
+			Db4oFactory.Configure().ObjectClass(typeof(Player)).CascadeOnUpdate(true);
+			Db4oFactory.Configure().ObjectClass(typeof(TeamTemplate)).CascadeOnUpdate(true);
+			Db4oFactory.Configure().ObjectClass(typeof(Drawing)).CascadeOnUpdate(true);
+		}
+		
+		private bool Exists(string filename, IObjectContainer db){			
 			IQuery query = db.Query();
 			query.Constrain(typeof(Project));
 			query.Descend("file").Descend("filePath").Constrain(filename);
 			IObjectSet result = query.Execute();
 			return (result.HasNext());
 		}
-	}				
-
+	}
 }

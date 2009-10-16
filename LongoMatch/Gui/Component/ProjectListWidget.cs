@@ -19,7 +19,7 @@
 //
 
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using Mono.Unix;
 using Gtk;
@@ -31,7 +31,7 @@ using LongoMatch.DB;
 namespace LongoMatch.Gui.Component
 {
 	
-	public delegate void ProjectSelectedHandler (Project project);
+	public delegate void ProjectSelectedHandler (ProjectDescription project);
 	
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
@@ -69,81 +69,75 @@ namespace LongoMatch.Gui.Component
 		
 		private void RenderPixbuf (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			Project project = (Project) model.GetValue (iter, 0);			
- 			(cell as Gtk.CellRendererPixbuf).Pixbuf= project.File.Preview;			
+			ProjectDescription project = (ProjectDescription) model.GetValue (iter, 0);			
+ 			(cell as Gtk.CellRendererPixbuf).Pixbuf= project.Preview;			
 		}
 		private void RenderName (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			Project _project = (Project) model.GetValue (iter, 0);
-			string _filePath = _project.File.FilePath;	
-			string text;
+			ProjectDescription project = (ProjectDescription) model.GetValue (iter, 0);
+			string text;			
 			
-			
-			text = Catalog.GetString("<b>File:</b>  ") + System.IO.Path.GetFileName(_filePath.ToString());
-			text = text +"\n"+Catalog.GetString("<b>Local Team:</b>  ") + _project.LocalName;
-			text = text +"\n"+Catalog.GetString("<b>Visitor Team:</b>  ") + _project.VisitorName;
-			text = text +"\n"+Catalog.GetString("<b>Season:</b>  ") + _project.Season;
-			text = text +"\n"+Catalog.GetString("<b>Competition:</b>  ") + _project.Competition;
-			text = text +"\n"+Catalog.GetString("<b>Result:</b>  ") + _project.LocalGoals+"-"+_project.VisitorGoals;
-			text = text +"\n"+Catalog.GetString("<b>Date:</b>  ") + _project.MatchDate.ToShortDateString();
+			text = Catalog.GetString("<b>Title:</b>  ") + project.Title;
+			text = text +"\n"+Catalog.GetString("<b>Local Team:</b>  ") + project.LocalName;
+			text = text +"\n"+Catalog.GetString("<b>Visitor Team:</b>  ") + project.VisitorName;
+			text = text +"\n"+Catalog.GetString("<b>Season:</b>  ") + project.Season;
+			text = text +"\n"+Catalog.GetString("<b>Competition:</b>  ") + project.Competition;
+			text = text +"\n"+Catalog.GetString("<b>Result:</b>  ") + project.LocalGoals+"-"+ project.VisitorGoals;
+			text = text +"\n"+Catalog.GetString("<b>Date:</b>  ") + project.MatchDate.ToShortDateString();
 			
 			(cell as Gtk.CellRendererText).Markup = text;	
 		}
 				
-		public void Fill(ArrayList db){	
+		public void Fill(List<ProjectDescription> projectsList){	
 			projectsListStore.Clear();
-			db.Sort();
-				
-			foreach (Project _project in db){				
-				projectsListStore.AppendValues(_project);
+			projectsList.Sort();				
+			foreach (ProjectDescription project in projectsList){				
+				projectsListStore.AppendValues(project);
 			}
 		}
 		
-		public Project GetSelection(){
+		public ProjectDescription GetSelection(){
 			TreePath path;
 			TreeViewColumn col;
 			treeview.GetCursor(out path,out col);
-			return this.GetProject(path);
-			
+			return this.GetProject(path);			
 		}
 		
 		public void ClearSearch(){
 			filterEntry.Text="";
 		}
 		
-		private Project GetProject(TreePath path){
+		private ProjectDescription GetProject(TreePath path){
 			if (path != null){
 				Gtk.TreeIter iter;
 				filter.GetIter (out iter, path);
- 				Project project = (Project) filter.GetValue (iter, 0);
+ 				ProjectDescription project = (ProjectDescription) filter.GetValue (iter, 0);
 				return project;
 			}
 			else return null;			
 		}
 
-
 		protected virtual void OnTreeviewCursorChanged (object sender, System.EventArgs e)
 		{
 			TreeIter iter;
 			this.treeview.Selection.GetSelected(out iter);
-			Project selectedProject = (Project) filter.GetValue (iter, 0);
+			ProjectDescription selectedProject = (ProjectDescription) filter.GetValue (iter, 0);
 			if (ProjectSelectedEvent!=null)
 				ProjectSelectedEvent(selectedProject);
 		}
 
 		protected virtual void OnFilterentryChanged (object sender, System.EventArgs e)
 		{
-			filter.Refilter ();
-
+			filter.Refilter ();			
 		}
 		
 		private bool FilterTree (Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			Project project =(Project) model.GetValue (iter, 0); 
+			ProjectDescription project =(ProjectDescription) model.GetValue (iter, 0); 
 			
 			if (project == null)
 				return true;
- 
+			
 			if (filterEntry.Text == "")
 				return true;
  
@@ -159,10 +153,6 @@ namespace LongoMatch.Gui.Component
 				return true;
 			else
 				return false;
-	}
-
-		
-
-
+		}
 	}
 }

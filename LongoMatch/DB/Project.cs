@@ -35,8 +35,7 @@ namespace LongoMatch.DB
 	{
 		
 		private PreviewMediaFile file;
-		
-		
+				
 		private string title;
 				
 		private string localName;
@@ -60,9 +59,8 @@ namespace LongoMatch.DB
 		private TeamTemplate visitorTeamTemplate;
 		
 		private TeamTemplate localTeamTemplate;
-		
-		private List<MediaTimeNode>[] dataSectionArray;
-		
+		//Keep this fiel for DB retrocompatibility
+		private List<MediaTimeNode>[] dataSectionArray;		
 	
 		
 		public Project(PreviewMediaFile file, String localName, String visitorName, String season, String competition, int localGoals,
@@ -86,6 +84,65 @@ namespace LongoMatch.DB
 			}			
 			
 			this.Title = System.IO.Path.GetFileNameWithoutExtension(this.file.FilePath);			
+		}
+		
+		public void Clear(){
+			//Help the GC freeing objects
+			foreach (List<MediaTimeNode> list in sectionPlaysList)
+				list.Clear();	
+			sectionPlaysList.Clear();			
+			Sections.Clear();
+			visitorTeamTemplate.Clear();
+			localTeamTemplate.Clear();		
+			sectionPlaysList=null;			
+			Sections=null;
+			visitorTeamTemplate=null;
+			localTeamTemplate=null;	
+		}
+		
+		public PreviewMediaFile File {
+			get{return file;}
+			set{file=value;}
+		}	
+		
+		public String Title {
+			get{return title;}
+			set{title=value;}
+		}
+		
+		public String Season{
+			get{return season;}
+			set{season = value;}
+		}
+		
+		public String Competition{
+			get{return competition;}
+			set{competition= value;}
+		}
+		
+		public String LocalName {
+			get{ return localName;}
+			set{localName=value;}
+		}
+		
+		public String VisitorName {
+			get{ return visitorName;}
+			set{visitorName=value;}
+		}
+		
+		public int LocalGoals {
+			get{ return localGoals;}
+			set{localGoals=value;}
+		}
+		
+		public int VisitorGoals {
+			get{ return visitorGoals;}
+			set{visitorGoals=value;}
+		}	
+		
+		public DateTime MatchDate {
+			get{ return matchDate;}
+			set{ matchDate=value;}
 		}
 	
 		public Sections Sections{
@@ -112,26 +169,6 @@ namespace LongoMatch.DB
 			sections.AddSectionAtPos(tn,sectionIndex);
 		}
 		
-		public void DeleteSection(int sectionIndex){
-			if (sections.Count == 1)
-				throw new Exception ("You can't remove the last Section");
-			sections.RemoveSection(sectionIndex);
-			sectionPlaysList.RemoveAt(sectionIndex);			
-		}
-		
-		public string[] GetSectionsNames(){
-			return sections.GetSectionsNames();
-				
-		}
-		
-		public Time[] GetSectionsStartTimes(){
-			return sections.GetSectionsStartTimes();
-		}
-		
-		public Time[] GetSectionsStopTimes(){
-			return sections.GetSectionsStopTimes();
-		}
-
 		public MediaTimeNode AddTimeNode(int dataSection, Time start, Time stop,Pixbuf thumbnail) {
 			MediaTimeNode tn ;
 			List<MediaTimeNode> playsList= sectionPlaysList[dataSection];
@@ -141,12 +178,30 @@ namespace LongoMatch.DB
 			tn = new MediaTimeNode(name, start, stop,"",file.Fps,thumbnail);
 			playsList.Add(tn);			
 			return tn;
-
 		}
 
 		public void DeleteTimeNode(MediaTimeNode tNode,int section) {
 			sectionPlaysList[section].Remove(tNode);			
 		}
+		
+		public void DeleteSection(int sectionIndex){
+			if (sections.Count == 1)
+				throw new Exception ("You can't remove the last Section");
+			sections.RemoveSection(sectionIndex);
+			sectionPlaysList.RemoveAt(sectionIndex);			
+		}
+		
+		public string[] GetSectionsNames(){
+			return sections.GetSectionsNames();				
+		}
+		
+		public Time[] GetSectionsStartTimes(){
+			return sections.GetSectionsStartTimes();
+		}
+		
+		public Time[] GetSectionsStopTimes(){
+			return sections.GetSectionsStopTimes();
+		}	
 		
 		public TreeStore GetModel (){
 			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore (typeof (MediaTimeNode));
@@ -192,57 +247,11 @@ namespace LongoMatch.DB
 		public List<List<MediaTimeNode>> GetDataArray() {
 			return sectionPlaysList;
 		}
-	
-
-		public PreviewMediaFile File {
-			get{return file;}
-			set{file=value;}
-		}
 		
-	
-		
-		public String Title {
-			get{return title;}
-			set{title=value;}
-		}
-		
-		public String Season{
-			get{return season;}
-			set{season = value;}
-		}
-		
-		public String Competition{
-			get{return competition;}
-			set{competition= value;}
-		}
-		
-		public String LocalName {
-			get{ return localName;}
-			set{localName=value;}
-		}
-		
-		public String VisitorName {
-			get{ return visitorName;}
-			set{visitorName=value;}
-		}
-		
-		public int LocalGoals {
-			get{ return localGoals;}
-			set{localGoals=value;}
-		}
-		
-		public int VisitorGoals {
-			get{ return visitorGoals;}
-			set{visitorGoals=value;}
-		}
-	
-		
-		public DateTime MatchDate {
-			get{ return matchDate;}
-			set{ matchDate=value;}
-		}
-
 		public bool Equals(Project project){
+			if (project == null)
+				return false;
+			else
 			return this.File.FilePath.Equals(project.File.FilePath);
 		}
 		

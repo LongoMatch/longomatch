@@ -27,7 +27,7 @@ namespace LongoMatch.DB
 {
 	[Serializable]
 	
-	public class TeamTemplate 
+	public class TeamTemplate
 	{
 		private List<Player> playersList;
 	
@@ -37,6 +37,10 @@ namespace LongoMatch.DB
 		{
 			playersList = new List<Player>();	
 			
+		}
+		
+		public void Clear(){
+			playersList.Clear();
 		}
 		
 		public int PlayersCount{

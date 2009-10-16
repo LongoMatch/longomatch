@@ -1080,7 +1080,6 @@
           <widget class="LongoMatch.Gui.Component.ProjectListWidget" id="projectlistwidget">
             <property name="MemberName">projectlistwidget</property>
             <property name="Events">ButtonPressMask</property>
-            <signal name="ProjectSelectedEvent" handler="OnFiledatalistwidgetProjectSelectedEvent" />
           </widget>
           <packing>
             <property name="Position">0</property>
@@ -1119,9 +1118,9 @@
             <property name="CanFocus">True</property>
             <property name="UseStock">True</property>
             <property name="Type">StockItem</property>
-            <property name="StockId">gtk-ok</property>
+            <property name="StockId">gtk-open</property>
             <property name="ResponseId">-5</property>
-            <property name="label">gtk-ok</property>
+            <property name="label">gtk-open</property>
           </widget>
           <packing>
             <property name="Position">1</property>
@@ -1656,7 +1655,7 @@
           <widget class="Gtk.HPaned" id="hpaned">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="Position">295</property>
+            <property name="Position">299</property>
             <child>
               <widget class="Gtk.VBox" id="leftbox">
                 <property name="MemberName" />
@@ -1666,7 +1665,7 @@
                   <widget class="Gtk.Notebook" id="notebook1">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
-                    <property name="CurrentPage">2</property>
+                    <property name="CurrentPage">0</property>
                     <property name="TabPos">Bottom</property>
                     <child>
                       <widget class="LongoMatch.Gui.Component.PlaysListTreeWidget" id="treewidget1">
@@ -1735,7 +1734,7 @@
               <widget class="Gtk.HPaned" id="hpaned1">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Position">795</property>
+                <property name="Position">789</property>
                 <child>
                   <widget class="Gtk.VBox" id="vbox5">
                     <property name="MemberName" />

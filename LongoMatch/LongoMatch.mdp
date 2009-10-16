@@ -162,6 +162,7 @@
     <File name="Time/Drawing.cs" subtype="Code" buildaction="Compile" />
     <File name="Handlers/VideoDrawingsManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Time/DrawingsList.cs" subtype="Code" buildaction="Compile" />
+    <File name="DB/ProjectDescription.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />

@@ -93,6 +93,7 @@ FILES = \
 	Compat/0.0/Time/TimeNode.cs \
 	DB/DataBase.cs \
 	DB/Project.cs \
+	DB/ProjectDescription.cs\
 	DB/Sections.cs \
 	DB/Tag.cs \
 	DB/TagsTemplate.cs \

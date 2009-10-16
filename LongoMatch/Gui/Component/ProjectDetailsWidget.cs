@@ -56,8 +56,7 @@ namespace LongoMatch.Gui.Component
 		private UseType useType;		
 
 		public ProjectDetailsWidget()
-		{	
-				
+		{					
 			this.Build();
 			
 			//HACK:The calendar dialog does not respond on win32
@@ -195,8 +194,7 @@ namespace LongoMatch.Gui.Component
 			project.Season = seasonentry.Text;
 			project.Sections = Sections;
 			project.LocalTeamTemplate = LocalTeamTemplate;
-			project.VisitorTeamTemplate = VisitorTeamTemplate;
-			
+			project.VisitorTeamTemplate = VisitorTeamTemplate;			
 		}	
 		
 		public Project GetProject(){
@@ -224,16 +222,15 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		public void Clear(){			
-			this.LocalName = "";
-			this.VisitorName = "";
-			this.LocalGoals = 0;
-			this.VisitorGoals = 0;
-			this.Date = System.DateTime.Today;
-			this.Filename = "";
-			this.mFile = null;		
-		}
-		
-		
+			LocalName = "";
+			VisitorName = "";
+			LocalGoals = 0;
+			VisitorGoals = 0;
+			Date = System.DateTime.Today;
+			Filename = "";
+			mFile = null;	
+			edited = false;
+		}	
 		
 		private void FillSections(){
 			string[] allFiles;

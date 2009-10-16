@@ -39,6 +39,10 @@ namespace LongoMatch.DB
 			this.sectionsList = new List<SectionsTimeNode>();			
 		}
 		
+		public void Clear(){
+			sectionsList.Clear();
+		}
+		
 		public void AddSection(SectionsTimeNode tn){
 			sectionsList.Add(tn);
 		}	

@@ -85,10 +85,16 @@ namespace LongoMatch.Gui.Component
 		
 			
 		public Project Project{
-			set{ 
+			set{
 				project = value;
-				treeview.Model = project.GetModel();
-				treeview.Colors = project.Sections.GetColors();
+				if (project != null){					
+					treeview.Model = project.GetModel();
+					treeview.Colors = project.Sections.GetColors();
+				}
+				else{
+					treeview.Model = null;
+					treeview.Colors = null;
+				}
 			}			
 		}	
 		

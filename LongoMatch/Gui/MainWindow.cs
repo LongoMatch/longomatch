@@ -129,7 +129,7 @@ namespace LongoMatch.Gui
 						}
 						MakeActionsSensitive(true);
 						ShowWidgets();
-						hkManager.SetSections(project.Sections);
+						hkManager.Sections=project.Sections;
 						KeyPressEvent += hotkeysListener;
 					}
 					catch (GLib.GException ex){
@@ -143,16 +143,20 @@ namespace LongoMatch.Gui
 		
 		private void CloseActualProyect(){
 			Title = "LongoMatch";
+			ClearWidgets();
 			HideWidgets();
 			playerbin1.Close();			
 			playerbin1.LogoMode = true;
-			SaveDB();			
-			openedProject = null;	
-			eManager.OpenedProject = null;
+			SaveDB();
+			if (openedProject != null){
+				openedProject.Clear();
+				openedProject = null;	
+				eManager.OpenedProject = null;
+			}
 			selectedTimeNode = null;
 			MakeActionsSensitive(false);
-			KeyPressEvent -= hotkeysListener;
-			
+			hkManager.Sections = null;
+			KeyPressEvent -= hotkeysListener;			
 		}
 		
 		private void MakeActionsSensitive(bool sensitive){
@@ -174,11 +178,18 @@ namespace LongoMatch.Gui
 		
 		private void HideWidgets(){
 			leftbox.Hide();
+			rightvbox.Hide();
 			buttonswidget1.Hide();
 			timelinewidget1.Hide();
 		}
 				
-
+		private void ClearWidgets(){
+			buttonswidget1.Sections = null;
+			treewidget1.Project = null;
+			timelinewidget1.Project = null;
+			localplayerslisttreewidget.Clear();
+			visitorplayerslisttreewidget.Clear();
+		}
 		
 		private void SaveDB(){			
 			if (openedProject != null){
@@ -220,21 +231,15 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnOpenActivated (object sender, System.EventArgs e)
 		{
-			Project project;
+			ProjectDescription project=null;
 			OpenProjectDialog opd = new OpenProjectDialog();
 			opd.TransientFor = this;
-			int answer=opd.Run();
-			while (answer == (int)ResponseType.Reject){
+
+			if (opd.Run() == (int)ResponseType.Ok)
 				project = opd.GetSelection();
-				MainClass.DB.RemoveProject(project);
-				opd.Fill();
-				answer=opd.Run();
-			}
-			if (answer == (int)ResponseType.Ok){
-				project = opd.GetSelection();
-				SetProject(project);
-			}
 			opd.Destroy();
+			if (project != null)
+				SetProject(MainClass.DB.GetProject(project.File));
 		}
 
 		protected virtual void OnNewActivated (object sender, System.EventArgs e)
@@ -271,8 +276,6 @@ namespace LongoMatch.Gui
 		
 		protected virtual void OnCloseActivated (object sender, System.EventArgs e)
 		{
-
-			SaveDB();
 			CloseActualProyect();			
 		}
 
@@ -295,12 +298,9 @@ namespace LongoMatch.Gui
 			SaveDB();
 			// We never know...
 			System.Threading.Thread.Sleep(1000);
-			playerbin1.Dispose();
-			
-			Application.Quit();
-					
+			playerbin1.Dispose();			
+			Application.Quit();					
 		}
-
 
 		protected virtual void OnQuitActivated (object sender, System.EventArgs e)
 		{
@@ -357,9 +357,6 @@ namespace LongoMatch.Gui
 			CloseActualProyect();
 		}
 
-		
-
-
 		protected virtual void OnCaptureModeActionToggled (object sender, System.EventArgs e)
 		{			
 			if (((Gtk.ToggleAction)sender).Active){
@@ -386,25 +383,10 @@ namespace LongoMatch.Gui
 		{			
 			if (openedProject != null && evnt.State == ModifierType.None){
 				Gdk.Key key = evnt.Key;				
-				if (key == Gdk.Key.z){
-					if (selectedTimeNode == null)
-						playerbin1.SeekToPreviousFrame(false);
-					else
-						playerbin1.SeekToPreviousFrame(true);
-				}
-				if (key == Gdk.Key.x){
-					if (selectedTimeNode == null)
-						playerbin1.SeekToNextFrame(false);
-					else
-						playerbin1.SeekToNextFrame(true);
-				}
-				if (key == Gdk.Key.q){
-					playerbin1.LogoMode=true;
-				}
-				if (key == Gdk.Key.r){
-					playerbin1.LogoMode=false;
-				}
-				
+				if (key == Gdk.Key.z)				
+					playerbin1.SeekToPreviousFrame(selectedTimeNode != null);
+				if (key == Gdk.Key.x)
+					playerbin1.SeekToNextFrame(selectedTimeNode != null);			
 			}
 			return base.OnKeyPressEvent (evnt);
 		}
@@ -425,8 +407,7 @@ namespace LongoMatch.Gui
 			updater.Fill(version, URL);
 			updater.TransientFor = this;
 			updater.Run();
-			updater.Destroy();
-			
+			updater.Destroy();			
 		}
 		
 		protected virtual void OnDrawingToolActionToggled (object sender, System.EventArgs e)
@@ -492,7 +473,6 @@ GNU General Public License for more details.";
 		
 		protected override bool OnConfigureEvent (Gdk.EventConfigure evnt)
 		{
-			//playerbin1.RedrawLastFrame();
 			return base.OnConfigureEvent (evnt);
 		}
 		

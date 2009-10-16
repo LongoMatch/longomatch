@@ -122,16 +122,19 @@ namespace LongoMatch.Gui.Component {
 		
 		public Project Project{
 			set{
+				ResetGui();
+				
+				if (value == null){
+					sections = null;
+					tnArray = null;
+					tsArray=null;					
+					return;
+				}
+							
 				sections = value.Sections;
 				tnArray = value.GetDataArray();
-				tsArray = new TimeScale[sections.Count]; 				
-				
-				//Unrealize all children
-				foreach (Widget w in vbox1.AllChildren){
-					w.Unrealize();
-					vbox1.Remove(w);
-				}				
-				
+				tsArray = new TimeScale[sections.Count]; 	
+											
 				frames = value.File.GetFrames();
 				ushort fps = value.File.Fps;
 				
@@ -149,8 +152,15 @@ namespace LongoMatch.Gui.Component {
 					ts.Show();					
 				}
 				SetPixelRatio(3);
-			}
-			
+			}			
+		}
+		
+		private void ResetGui(){
+			//Unrealize all children
+			foreach (Widget w in vbox1.AllChildren){
+				vbox1.Remove(w);
+				w.Destroy();				
+			}	
 		}
 	
 		protected virtual void OnNewMark(int section, int frame){

@@ -43,13 +43,15 @@ namespace LongoMatch.Gui.Component
 		
 		public Sections Sections{
 			set{
-				this.sections = value;
-				int sectionsCount = value.Count;
-				
 				foreach (Widget w in table1.AllChildren){
-					w.Unrealize();
 					table1.Remove(w);
-				}
+					w.Destroy();					
+				}				
+				sections = value;
+				if (value == null)
+					return;
+				
+				int sectionsCount = value.Count;				
 				
 				table1.NColumns =(uint) 10;
 				table1.NRows =(uint) (sectionsCount/10);
@@ -77,7 +79,6 @@ namespace LongoMatch.Gui.Component
 				}
 			}			
 		}
-		
 
 		protected virtual void OnButtonClicked(object sender,  System.EventArgs e)
 		{

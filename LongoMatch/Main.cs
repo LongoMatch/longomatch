@@ -192,7 +192,7 @@ namespace LongoMatch
 			}
 			//No config file exists, use default
 			catch {
-				//Vista permissions doesn't not allow to use the 'etc' dir
+				//Vista permissions doesn't allow to use the 'etc' dir
 				//in the installation path. Use the default homeDirectory
 				//and let the user change it by hand
 				configDirectory=homeDirectory;
@@ -204,7 +204,8 @@ namespace LongoMatch
 		}
 		
 		private static void ProcessExecutionError(Exception ex){
-			if (MainWindow.OpenedProject() != null)
+			//Try to save the database before exiting
+			 if (MainWindow.OpenedProject() != null)
 				DB.UpdateProject(MainWindow.OpenedProject());
 			string logFile ="LongoMatch-" + DateTime.Now +".log";
 			string message;
@@ -215,12 +216,14 @@ namespace LongoMatch
 			logFile = System.IO.Path.Combine(HomeDir(),logFile); 
 			
 			if (ex.InnerException != null)
-				message = String.Format("{0}\n{1}\n{2}\n{3}",ex.Message,ex.Source,ex.StackTrace,ex.InnerException.StackTrace);
+				message = String.Format("{0}\n{1}\n{2}\n{3}\n{4}",ex.Message,ex.InnerException.Message,ex.Source,ex.StackTrace,ex.InnerException.StackTrace);
 			else
 				message = String.Format("{0}\n{1}\n{2}",ex.Message,ex.Source,ex.StackTrace);
 
 			using (StreamWriter s = new StreamWriter(logFile)){
 				s.WriteLine(message);
+				s.WriteLine("\n\n\nStackTrace:");
+				s.WriteLine(System.Environment.StackTrace);
 			}	 
 			//TODO Add bug reports link
 			MessagePopup.PopupMessage(null, MessageType.Error, 

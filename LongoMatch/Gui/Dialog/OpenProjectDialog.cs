@@ -29,30 +29,19 @@ namespace LongoMatch.Gui.Dialog
 	[System.ComponentModel.ToolboxItem(false)]
 	public partial class OpenProjectDialog : Gtk.Dialog
 	{
-
-
 		
 		public OpenProjectDialog()
 		{
 			this.Build();
-			this.Fill();
-			
-		}
-			
+			this.Fill();			
+		}			
 		
-		public Project GetSelection(){
+		public ProjectDescription GetSelection(){
 			return projectlistwidget.GetSelection();			
 		}
 		
 		public void Fill(){
-			projectlistwidget.Fill(MainClass.DB.GetAllDB());
+			projectlistwidget.Fill(MainClass.DB.GetAllProjects());
 		}
-
-		protected virtual void OnFiledatalistwidgetProjectSelectedEvent (Project project)
-		{
-			this.buttonOk.Activate();
-		}
-
-
 	}
 }

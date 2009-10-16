@@ -95,6 +95,11 @@ namespace LongoMatch.Gui.Component
 			set{playerstreeview.PlayListLoaded=value;}
 		}
 		
+		public void Clear(){
+			playerstreeview.Model = null;
+			template = null;
+		}
+		
 		protected virtual void OnTimeNodeSelected(MediaTimeNode tNode){
 			if (TimeNodeSelected != null)
 				TimeNodeSelected(tNode);

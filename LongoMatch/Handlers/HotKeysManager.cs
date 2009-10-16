@@ -39,16 +39,18 @@ namespace LongoMatch.Handlers
 			dic = new Dictionary<HotKey,int>();		
 		}		
 		
-		public void SetSections(Sections sections){
-			dic.Clear();
-			for (int i=0;i<sections.Count;i++){
-				if (sections.GetHotKey(i).Defined)	
-					if (!dic.ContainsKey(sections.GetHotKey(i)))
-						dic.Add(sections.GetHotKey(i),i);					
+		public Sections Sections{
+			set{
+				dic.Clear();
+				if (value == null)
+					return;
+				for (int i=0;i<value.Count;i++){
+					if (value.GetHotKey(i).Defined &&
+					    !dic.ContainsKey(value.GetHotKey(i)))	
+						dic.Add(value.GetHotKey(i),i);					
+				}
 			}
-					    
-		}
-		
+		}		
 		
 		public void KeyListener(object sender, KeyPressEventArgs args){
 			if ((args.Event.State  & (ModifierType.Mod1Mask | ModifierType.Mod5Mask | ModifierType.ShiftMask)) != 0){

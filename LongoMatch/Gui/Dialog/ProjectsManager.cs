@@ -19,7 +19,7 @@
 //
 
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using Gtk;
 using Mono.Unix;
 using LongoMatch.DB;
@@ -33,9 +33,9 @@ namespace LongoMatch.Gui.Dialog
 	public partial class ProjectsManager : Gtk.Dialog
 	{
 
-		public bool edited;
-		public string originalFilePath;
-		
+		private bool edited;
+		private string originalFilePath;
+				
 		public ProjectsManager()
 		{
 			this.Build();
@@ -45,8 +45,8 @@ namespace LongoMatch.Gui.Dialog
 		}
 		
 		public void Fill(){
-			ArrayList allDB = MainClass.DB.GetAllDB();
-			projectlistwidget1.Fill(allDB);
+			List<ProjectDescription> projectsList = MainClass.DB.GetAllProjects();
+			projectlistwidget1.Fill(projectsList);
 			projectlistwidget1.ClearSearch();
 			projectdetails.Clear();
 			projectdetails.Sensitive = false;
@@ -81,32 +81,34 @@ namespace LongoMatch.Gui.Dialog
 
 		protected virtual void OnDeleteButtonPressed (object sender, System.EventArgs e)
 		{
-			Project selectedProject = projectlistwidget1.GetSelection();
+			ProjectDescription selectedProject = projectlistwidget1.GetSelection();
 			if (selectedProject != null){
-				if (MainWindow.OpenedProject()!= null && selectedProject.Equals(MainWindow.OpenedProject())) {
-				
+				if (MainWindow.OpenedProject() != null &&selectedProject.File == MainWindow.OpenedProject().File.FilePath) {				
 					MessagePopup.PopupMessage(this, MessageType.Warning, 
-				                          Catalog.GetString("This Project is actually in use.")+"\n"+Catalog.GetString("Close it first to allow its removal from the database"));
+					                          Catalog.GetString("This Project is actually in use.")+"\n"+
+					                          Catalog.GetString("Close it first to allow its removal from the database"));
 				}
 				else {
-					MessageDialog md = new MessageDialog(this,DialogFlags.Modal,MessageType.Question,ButtonsType.YesNo,
-					                                     Catalog.GetString("Do yo really want to delete:")+"\n"+selectedProject.File.FilePath);
+					MessageDialog md = new MessageDialog(this,DialogFlags.Modal,
+					                                     MessageType.Question,
+					                                     ButtonsType.YesNo,
+					                                     Catalog.GetString("Do yo really want to delete:")+
+					                                     "\n"+selectedProject.File);
 					if (md.Run()== (int)ResponseType.Yes){
 						projectdetails.Clear();
-						MainClass.DB.RemoveProject(selectedProject);	
+						MainClass.DB.RemoveProject(selectedProject.File);	
 						Fill();						
 					}
 					md.Destroy();
 				}
 			}		
-		}	
-
+		}
 
 		protected virtual void OnSaveButtonPressed (object sender, System.EventArgs e)
 		{
 			SaveProject();		
 			projectdetails.Edited=false;
-		}		
+		}	
 	
 
 		protected virtual void OnButtonOkClicked (object sender, System.EventArgs e)
@@ -114,7 +116,7 @@ namespace LongoMatch.Gui.Dialog
 			this.Destroy();
 		}
 
-		protected virtual void OnProjectlistwidget1ProjectSelectedEvent (LongoMatch.DB.Project project)
+		protected virtual void OnProjectlistwidget1ProjectSelectedEvent (ProjectDescription project)
 		{
 			if (projectdetails.Edited){
 				MessageDialog md = new MessageDialog((Window)this.Toplevel,DialogFlags.Modal,
@@ -126,7 +128,7 @@ namespace LongoMatch.Gui.Dialog
 				}
 				md.Destroy();								
 			}
-			if (MainWindow.OpenedProject()!= null && project.Equals(MainWindow.OpenedProject())) {
+			if (MainWindow.OpenedProject() != null && project.File == MainWindow.OpenedProject().File.FilePath) {
 			
 				MessagePopup.PopupMessage(this, MessageType.Warning, 
 				                          Catalog.GetString("The Project you are trying to load is actually in use.")+"\n" +Catalog.GetString ("Close it first to edit it"));
@@ -137,8 +139,8 @@ namespace LongoMatch.Gui.Dialog
 			}
 			else{
 				projectdetails.Sensitive = true;
-				projectdetails.SetProject(project);
-				originalFilePath = project.File.FilePath;
+				projectdetails.SetProject(MainClass.DB.GetProject(project.File));
+				originalFilePath = project.File;
 				saveButton.Sensitive = false;
 				deleteButton.Sensitive = true;			
 			}
