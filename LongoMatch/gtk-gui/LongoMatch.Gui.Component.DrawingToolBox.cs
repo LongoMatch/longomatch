@@ -107,7 +107,7 @@ namespace LongoMatch.Gui.Component {
             // Container child circlebutton.Gtk.Container+ContainerChild
             this.image79 = new Gtk.Image();
             this.image79.Name = "image79";
-            this.image79.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_draw-circle-unfilled", Gtk.IconSize.Menu, 16);
+            this.image79.Pixbuf = Gdk.Pixbuf.LoadFromResource("stock_draw-circle-unfilled.png");
             this.circlebutton.Add(this.image79);
             this.toolstable.Add(this.circlebutton);
             Gtk.Table.TableChild w3 = ((Gtk.Table.TableChild)(this.toolstable[this.circlebutton]));
@@ -127,7 +127,7 @@ namespace LongoMatch.Gui.Component {
             // Container child crossbutton.Gtk.Container+ContainerChild
             this.image83 = new Gtk.Image();
             this.image83.Name = "image83";
-            this.image83.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_draw-line-45", Gtk.IconSize.Menu, 16);
+            this.image83.Pixbuf = Gdk.Pixbuf.LoadFromResource("stock_draw-line-45.png");
             this.crossbutton.Add(this.image83);
             this.toolstable.Add(this.crossbutton);
             Gtk.Table.TableChild w5 = ((Gtk.Table.TableChild)(this.toolstable[this.crossbutton]));
@@ -165,7 +165,7 @@ namespace LongoMatch.Gui.Component {
             // Container child linebutton.Gtk.Container+ContainerChild
             this.image82 = new Gtk.Image();
             this.image82.Name = "image82";
-            this.image82.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_draw-line-ends-with-arrow", Gtk.IconSize.Menu, 16);
+            this.image82.Pixbuf = Gdk.Pixbuf.LoadFromResource("stock_draw-line-ends-with-arrow.png");
             this.linebutton.Add(this.image82);
             this.toolstable.Add(this.linebutton);
             Gtk.Table.TableChild w9 = ((Gtk.Table.TableChild)(this.toolstable[this.linebutton]));
@@ -183,7 +183,7 @@ namespace LongoMatch.Gui.Component {
             // Container child penbutton.Gtk.Container+ContainerChild
             this.image80 = new Gtk.Image();
             this.image80.Name = "image80";
-            this.image80.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_draw-freeform-line", Gtk.IconSize.Menu, 16);
+            this.image80.Pixbuf = Gdk.Pixbuf.LoadFromResource("stock_draw-freeform-line.png");
             this.penbutton.Add(this.image80);
             this.toolstable.Add(this.penbutton);
             Gtk.Table.TableChild w11 = ((Gtk.Table.TableChild)(this.toolstable[this.penbutton]));
@@ -199,7 +199,7 @@ namespace LongoMatch.Gui.Component {
             // Container child rectanglebutton.Gtk.Container+ContainerChild
             this.image84 = new Gtk.Image();
             this.image84.Name = "image84";
-            this.image84.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_draw-rectangle-unfilled", Gtk.IconSize.Menu, 16);
+            this.image84.Pixbuf = Gdk.Pixbuf.LoadFromResource("stock_draw-rectangle-unfilled.png");
             this.rectanglebutton.Add(this.image84);
             this.toolstable.Add(this.rectanglebutton);
             Gtk.Table.TableChild w13 = ((Gtk.Table.TableChild)(this.toolstable[this.rectanglebutton]));
