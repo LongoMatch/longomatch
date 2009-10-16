@@ -189,7 +189,7 @@ namespace LongoMatch.Gui.Component
 				c.Operator = Operator.Over;
 			}else{
 				c.Color = new Cairo.Color(0,0,0,0);
-				c.LineWidth = lineWidth*2;
+				c.LineWidth = 20;
 				c.Operator = Operator.Source;
 			}
 		}
