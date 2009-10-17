@@ -2,14 +2,17 @@
 
 #Set-up environment variable 
 MINGW_PATH = C:/MinGW/bin
+MONO_INSTALL_PATH= C:/Mono-2.4
+MONO = $(MONO_INSTALL_PATH)/bin/mono.exe
+MKBUNDLE = $(MONO_INSTALL_PATH)/lib/mono/2.0/mkbundle.exe
+DB4O = LongoMatch/Win32/deps/Db4objects.Db4o.dll 
 GTK = c:\Mono-2.4
 GST = c:\gstreamer
 CC   = gcc.exe
 BASH = /bin/bash.exe
-BUNDLE = makebundle.sh
 OUTDIR = LongoMatch/Win32/bin
 RM = rm -f
-CSC = gmcs
+CSC = $(MONO_INSTALL_PATH)/bin/gmcs
 
 
 #libcesarplayer
@@ -91,7 +94,9 @@ CESARPLAYER_REFERENCES = \
 	-pkg:glib-sharp-2.0 \
 	
 #LongoMatch.exe
-LONGOMATCH=obj/LongoMatch.exe
+LONGOMATCH_PRE=obj/LongoMatch.exe
+LONGOMATCH_BUNDLED=obj/LongoMatchBundled.exe
+LONGOMATCH=$(OUTDIR)/LongoMatch.exe
 CSC_LONGOMATCH_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-main:LongoMatch.MainClass"
 LONGOMATCH_COMPILE_TARGET = winexe 
 LONGOMATCH_FILES = \
@@ -251,13 +256,17 @@ all: all-before ${BIN} bundle  all-after
 
 install: $(BIN)
 	cp $(BIN) "$(OUTDIR)"
-	cp obj/LongoMatch.exe "$(OUTDIR)"
+	cp $(LONGOMATCH) "$(OUTDIR)\LongoMatch.exe"
 
 clean: clean-custom
 	${RM} $(OBJ) $(BIN) obj/*
 
-bundle:$(BUNDLE) $(LONGOMATCH)
-	${BASH} $(BUNDLE)     
+bundle:$(LONGOMATCH_PRE)
+	windres LongoMatch/images/minilogo.rc obj/minilogo.o
+	cp $(DB4O) obj/.
+	export MONO_PATH=obj/ && $(MONO) $(MKBUNDLE) $(LONGOMATCH_PRE) --deps -c -o obj/temp.c -oo obj/temp.o
+	export PKG_CONFIG_PATH=$(MONO_INSTALL_PATH)/lib/pkgconfig/ && $(CC) -mno-cygwin -g -o $(LONGOMATCH_BUNDLED) -Wall obj/temp.c `pkg-config --cflags --libs mono|dos2unix`  obj/minilogo.o obj/temp.o 
+     
 
 $(BIN): $(LINKOBJ)	
 	$(CC) $(LDFLAGS) -o $(BIN) $(LINKOBJ) $(LIBS)
@@ -280,5 +289,5 @@ libcesarplayer/src/baconvideowidget-marshal.o:libcesarplayer/src/baconvideowidge
 $(CESARPLAYER):
 	cd CesarPlayer && $(CSC) $(CSC_CESARPLAYER_FLAGS) -out:../$(CESARPLAYER) -target:$(CESARPLAYER_COMPILE_TARGET) $(CESARPLAYER_FILES) $(CESARPLAYER_REFERENCES) $(CESARPLAYER_RESOURCES)
 
-$(LONGOMATCH):$(CESARPLAYER) 
-	cd LongoMatch && $(CSC) $(CSC_LONGOMATCH_FLAGS) -out:../$(LONGOMATCH) -target:$(LONGOMATCH_COMPILE_TARGET) $(LONGOMATCH_FILES) $(LONGOMATCH_REFERENCES) $(LONGOMATCH_RESOURCES)
+$(LONGOMATCH_PRE):$(CESARPLAYER) 
+	cd LongoMatch && $(CSC) $(CSC_LONGOMATCH_FLAGS) -out:../$(LONGOMATCH_PRE) -target:$(LONGOMATCH_COMPILE_TARGET) $(LONGOMATCH_FILES) $(LONGOMATCH_REFERENCES) $(LONGOMATCH_RESOURCES)
