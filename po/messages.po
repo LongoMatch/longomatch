@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "X-Generator: MonoDevelop Gettext addin\n"
 "Language-Team: \n"
-"PO-Revision-Date: 2009-10-17 01:05:00+0200\n"
-"POT-Creation-Date: 2009-10-17 01:04:57+0200\n"
+"PO-Revision-Date: 2009-10-18 16:39:35+0200\n"
+"POT-Creation-Date: 2009-10-18 16:39:34+0200\n"
 "Project-Id-Version: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -317,11 +317,13 @@ msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:248
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:94
+#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:80
 msgid "Local Team"
 msgstr ""
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:261
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:95
+#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:81
 msgid "Visitor Team"
 msgstr ""
 
@@ -566,28 +568,26 @@ msgid "Add to playlist"
 msgstr ""
 
 #: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:167
+#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:49
+#: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:70
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:173
-msgid "<b>Name: </b>"
+#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:45
+msgid "Name"
 msgstr ""
 
 #: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:168
+#: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:133
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:175
-msgid "<b>Start: </b>"
+msgid "Start"
 msgstr ""
 
 #: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:169
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:176
-msgid "<b>Stop: </b>"
+msgid "Stop"
 msgstr ""
 
 #: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:44
 msgid "Photo"
-msgstr ""
-
-#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:49
-#: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:70
-#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:45
-msgid "Name"
 msgstr ""
 
 #: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:60
@@ -604,11 +604,7 @@ msgid "Apply current play rate"
 msgstr ""
 
 #: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:132
-msgid "Title: "
-msgstr ""
-
-#: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:133
-msgid "Start: "
+msgid "Title"
 msgstr ""
 
 #: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:133
@@ -617,11 +613,15 @@ msgid " sec"
 msgstr ""
 
 #: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:134
-msgid "Duration: "
+msgid "Duration"
 msgstr ""
 
 #: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:135
-msgid "Play Rate: "
+msgid "Play Rate"
+msgstr ""
+
+#: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:138
+msgid "File not found"
 msgstr ""
 
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:96
@@ -649,7 +649,7 @@ msgid "Delete key frame"
 msgstr ""
 
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:174
-msgid "<b>Team: </b>"
+msgid "Team"
 msgstr ""
 
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:245
@@ -702,32 +702,20 @@ msgstr ""
 msgid "Filename"
 msgstr ""
 
-#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:79
-msgid "<b>Title:</b>  "
-msgstr ""
-
-#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:80
-msgid "<b>Local Team:</b>  "
-msgstr ""
-
-#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:81
-msgid "<b>Visitor Team:</b>  "
-msgstr ""
-
 #: ../LongoMatch/Gui/Component/ProjectListWidget.cs:82
-msgid "<b>Season:</b>  "
+msgid "Season"
 msgstr ""
 
 #: ../LongoMatch/Gui/Component/ProjectListWidget.cs:83
-msgid "<b>Competition:</b>  "
+msgid "Competition"
 msgstr ""
 
 #: ../LongoMatch/Gui/Component/ProjectListWidget.cs:84
-msgid "<b>Result:</b>  "
+msgid "Result"
 msgstr ""
 
 #: ../LongoMatch/Gui/Component/ProjectListWidget.cs:85
-msgid "<b>Date:</b>  "
+msgid "Date"
 msgstr ""
 
 #: ../LongoMatch/Gui/Dialog/TemplatesEditor.cs:54

@@ -2789,7 +2789,6 @@ Full HD 1080p (16:9 - 1920x1080)</property>
               <widget class="Gtk.Entry" id="entry1">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Text" translatable="yes">default</property>
                 <property name="IsEditable">True</property>
                 <property name="InvisibleChar">●</property>
               </widget>
@@ -2862,7 +2861,6 @@ Full HD 1080p (16:9 - 1920x1080)</property>
             <child>
               <widget class="Gtk.Label" id="playLabel">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">Default Play</property>
               </widget>
               <packing>
                 <property name="LeftAttach">1</property>
@@ -4288,7 +4286,7 @@ You can download it using this direct link:</property>
           <widget class="Gtk.ComboBox" id="combobox1">
             <property name="MemberName" />
             <property name="IsTextCombo">True</property>
-            <property name="Items" translatable="yes">2 px
+            <property name="Items">2 px
 4 px
 6 px
 8 px
@@ -4854,7 +4852,7 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
             <property name="Visible">False</property>
             <property name="CanFocus">True</property>
             <property name="Type">TextOnly</property>
-            <property name="Label" translatable="yes">button271</property>
+            <property name="Label" translatable="yes" />
             <property name="UseUnderline">True</property>
             <property name="ResponseId">0</property>
           </widget>

@@ -130,13 +130,13 @@ public class PlayListTreeView : Gtk.TreeView
 		private void RenderName (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			PlayListTimeNode tNode = (PlayListTimeNode) model.GetValue (iter, 0); 
-			(cell as Gtk.CellRendererText).Text = 	Catalog.GetString("Title: ")+tNode.Name +"\n"+
-													Catalog.GetString("Start: ")+tNode.Start.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
-													Catalog.GetString("Duration: ")+tNode.Duration.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
-													Catalog.GetString("Play Rate: ")+tNode.Rate.ToString();
+			(cell as Gtk.CellRendererText).Text = 	Catalog.GetString("Title")+": "+tNode.Name +"\n"+
+													Catalog.GetString("Start")+": "+tNode.Start.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
+													Catalog.GetString("Duration")+": "+tNode.Duration.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
+													Catalog.GetString("Play Rate")+": "+tNode.Rate.ToString();
 			if (!tNode.Valid){
 				(cell as Gtk.CellRendererText).Foreground = "red";	
-				(cell as Gtk.CellRendererText).Text += Catalog.GetString("\nFile not found: "+tNode.MediaFile.FilePath);
+				(cell as Gtk.CellRendererText).Text += "\n"+Catalog.GetString("File not found")+": "+tNode.MediaFile.FilePath;
 			}
 			else if (tNode == loadedTimeNode)
 				(cell as Gtk.CellRendererText).Foreground = "blue";

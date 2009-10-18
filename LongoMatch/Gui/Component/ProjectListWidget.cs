@@ -77,13 +77,13 @@ namespace LongoMatch.Gui.Component
 			ProjectDescription project = (ProjectDescription) model.GetValue (iter, 0);
 			string text;			
 			
-			text = Catalog.GetString("<b>Title:</b>  ") + project.Title;
-			text = text +"\n"+Catalog.GetString("<b>Local Team:</b>  ") + project.LocalName;
-			text = text +"\n"+Catalog.GetString("<b>Visitor Team:</b>  ") + project.VisitorName;
-			text = text +"\n"+Catalog.GetString("<b>Season:</b>  ") + project.Season;
-			text = text +"\n"+Catalog.GetString("<b>Competition:</b>  ") + project.Competition;
-			text = text +"\n"+Catalog.GetString("<b>Result:</b>  ") + project.LocalGoals+"-"+ project.VisitorGoals;
-			text = text +"\n"+Catalog.GetString("<b>Date:</b>  ") + project.MatchDate.ToShortDateString();
+			text = "<b>"+Catalog.GetString(Title)+":</b>  " + project.Title;
+			text = text +"\n"+"<b>"+Catalog.GetString("Local Team")+":</b>  " + project.LocalName;
+			text = text +"\n"+"<b>"+Catalog.GetString("Visitor Team")+":</b>  " + project.VisitorName;
+			text = text +"\n"+"<b>"+Catalog.GetString("Season")+":</b>  " + project.Season;
+			text = text +"\n"+"<b>"+Catalog.GetString("Competition")+":</b>  " + project.Competition;
+			text = text +"\n"+"<b>"+Catalog.GetString("Result")+":</b>  " + project.LocalGoals+"-"+ project.VisitorGoals;
+			text = text +"\n"+"<b>"+Catalog.GetString("Date")+":</b>  " + project.MatchDate.ToShortDateString();
 			
 			(cell as Gtk.CellRendererText).Markup = text;	
 		}

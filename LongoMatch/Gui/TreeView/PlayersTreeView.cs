@@ -165,9 +165,9 @@ namespace LongoMatch.Gui.Component
 				if (editing && selectedIter.Equals(iter))
 					(cell as Gtk.CellRendererText).Markup = tNode.Name; 
 				else
-					(cell as Gtk.CellRendererText).Markup = Catalog.GetString("<b>Name: </b>")+tNode.Name+"\n"+
-						Catalog.GetString("<b>Start: </b>")+tNode.Start.ToMSecondsString()+"\n"+
-						Catalog.GetString("<b>Stop: </b>")+tNode.Stop.ToMSecondsString();
+					(cell as Gtk.CellRendererText).Markup ="<b>"+ Catalog.GetString("Name")+": </b>"+tNode.Name+"\n"+
+						"<b>"+Catalog.GetString("Start")+": </b>"+tNode.Start.ToMSecondsString()+"\n"+
+						"<b>"+Catalog.GetString("Stop")+": </b>"+tNode.Stop.ToMSecondsString();
 			}
 			
 			else if (item is Player)

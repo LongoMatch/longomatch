@@ -1,38 +1,38 @@
 <Combine fileversion="2.0" description="LongoMatch : The Digital Coach" outputpath="build/bin/" releaseversion="0.9.0" name="LongoMatch">
   <Policies>
-    <StandardHeader inheritsSet="GPLv2License" />
-    <TextStylePolicy FileWidth="120" TabWidth="4" TabsToSpaces="False" NoTabsAfterNonTabs="False" RemoveTrailingWhitespace="False" EolMarker="Native" />
     <DotNetNamingPolicy DirectoryNamespaceAssociation="PrefixedHierarchical" ResourceNamePolicy="FileFormatDefault" />
+    <StandardHeader inheritsSet="GPLv2License" />
+    <VersionControlPolicy inheritsSet="Mono" />
     <ChangeLogPolicy UpdateMode="None" inheritsSet="Mono">
       <MessageStyle LineAlign="0" />
     </ChangeLogPolicy>
-    <VersionControlPolicy inheritsSet="Mono" />
+    <TextStylePolicy FileWidth="120" TabWidth="4" TabsToSpaces="False" NoTabsAfterNonTabs="False" RemoveTrailingWhitespace="False" EolMarker="Native" />
   </Policies>
   <Configurations active="Release">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="LongoMatch" configuration="Debug" />
       <Entry build="True" name="libcesarplayer" configuration="Debug" />
-      <Entry build="True" name="Translations" configuration="Debug" />
       <Entry build="True" name="CesarPlayer" configuration="Debug" />
+      <Entry build="True" name="Translations" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="LongoMatch" configuration="Release" />
       <Entry build="True" name="libcesarplayer" configuration="Release" />
-      <Entry build="True" name="Translations" configuration="Release" />
       <Entry build="True" name="CesarPlayer" configuration="Release" />
+      <Entry build="True" name="Translations" configuration="Release" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="LongoMatch" single="True">
     <Execute type="None" entry="LongoMatch" />
     <Execute type="None" entry="libcesarplayer" />
-    <Execute type="None" entry="Translations" />
     <Execute type="None" entry="CesarPlayer" />
+    <Execute type="None" entry="Translations" />
   </StartMode>
   <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="UpdateNearestChangeLog" />
   <Entries>
     <Entry filename="LongoMatch/LongoMatch.mdp" />
     <Entry filename="libcesarplayer/liblongomatch.mdp" />
-    <Entry filename="Translations/Translations.mdse" />
     <Entry filename="CesarPlayer/CesarPlayer.mdp" />
+    <Entry filename="po/Translations.mdse" />
   </Entries>
 </Combine>
