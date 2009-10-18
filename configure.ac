@@ -108,7 +108,7 @@ dnl package checks, per config
 AC_CONFIG_FILES([
 LongoMatch/Makefile
 CesarPlayer/Makefile
-Translations/Makefile
+po/Makefile
 libcesarplayer/Makefile
 libcesarplayer/src/Makefile
 Makefile

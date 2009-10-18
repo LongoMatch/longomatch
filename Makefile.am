@@ -3,11 +3,15 @@ EXTRA_DIST =  expansions.m4
 
 #Warning: This is an automatically generated file, do not edit!
 if ENABLE_DEBUG
- SUBDIRS =  libcesarplayer Translations CesarPlayer LongoMatch
+ SUBDIRS =  libcesarplayer CesarPlayer LongoMatch po
 endif
 if ENABLE_RELEASE
- SUBDIRS =  libcesarplayer Translations CesarPlayer LongoMatch
+ SUBDIRS =  libcesarplayer CesarPlayer LongoMatch po
 endif
+
+DISTCLEANFILES = 	intltool-extract\
+					intltool-merge\
+					intltool-update
 
 # Build ChangeLog from GIT history
 ChangeLog:

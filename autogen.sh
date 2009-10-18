@@ -67,7 +67,7 @@ esac
 
 (grep "^AM_PROG_LIBTOOL" $CONFIGURE >/dev/null) && {
     echo "Running $LIBTOOLIZE ..."
-    $LIBTOOLIZE --force --copy
+    $LIBTOOLIZE --force --copy --automake
 }
 
 echo "Running $ACLOCAL $aclocalinclude ..."
