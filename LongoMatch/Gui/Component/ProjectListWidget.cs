@@ -77,7 +77,7 @@ namespace LongoMatch.Gui.Component
 			ProjectDescription project = (ProjectDescription) model.GetValue (iter, 0);
 			string text;			
 			
-			text = "<b>"+Catalog.GetString(Title)+":</b>  " + project.Title;
+			text = "<b>"+Catalog.GetString("Title")+":</b>  " + project.Title;
 			text = text +"\n"+"<b>"+Catalog.GetString("Local Team")+":</b>  " + project.LocalName;
 			text = text +"\n"+"<b>"+Catalog.GetString("Visitor Team")+":</b>  " + project.VisitorName;
 			text = text +"\n"+"<b>"+Catalog.GetString("Season")+":</b>  " + project.Season;

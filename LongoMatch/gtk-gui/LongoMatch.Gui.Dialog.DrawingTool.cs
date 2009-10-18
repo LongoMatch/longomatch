@@ -140,7 +140,7 @@ namespace LongoMatch.Gui.Dialog {
             this.button271.CanFocus = true;
             this.button271.Name = "button271";
             this.button271.UseUnderline = true;
-            this.button271.Label = Mono.Unix.Catalog.GetString("button271");
+            this.button271.Label = "";
             this.AddActionWidget(this.button271, 0);
             Gtk.ButtonBox.ButtonBoxChild w25 = ((Gtk.ButtonBox.ButtonBoxChild)(w24[this.button271]));
             w25.Expand = false;

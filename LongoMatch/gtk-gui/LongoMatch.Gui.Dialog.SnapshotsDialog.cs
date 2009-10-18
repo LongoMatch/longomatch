@@ -52,7 +52,6 @@ namespace LongoMatch.Gui.Dialog {
             this.entry1 = new Gtk.Entry();
             this.entry1.CanFocus = true;
             this.entry1.Name = "entry1";
-            this.entry1.Text = Mono.Unix.Catalog.GetString("default");
             this.entry1.IsEditable = true;
             this.entry1.InvisibleChar = '●';
             this.table1.Add(this.entry1);
@@ -89,7 +88,6 @@ namespace LongoMatch.Gui.Dialog {
             // Container child table1.Gtk.Table+TableChild
             this.playLabel = new Gtk.Label();
             this.playLabel.Name = "playLabel";
-            this.playLabel.LabelProp = Mono.Unix.Catalog.GetString("Default Play");
             this.table1.Add(this.playLabel);
             Gtk.Table.TableChild w6 = ((Gtk.Table.TableChild)(this.table1[this.playLabel]));
             w6.LeftAttach = ((uint)(1));

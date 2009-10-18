@@ -4083,7 +4083,6 @@ You can download it using this direct link:</property>
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Label" translatable="yes" />
-                <property name="Active">True</property>
                 <property name="DrawIndicator">False</property>
                 <property name="HasLabel">False</property>
                 <property name="UseUnderline">True</property>
@@ -4359,7 +4358,6 @@ You can download it using this direct link:</property>
               <widget class="Gtk.RadioButton" id="bbutton">
                 <property name="MemberName" />
                 <property name="Label" translatable="yes" />
-                <property name="Active">True</property>
                 <property name="DrawIndicator">False</property>
                 <property name="HasLabel">True</property>
                 <property name="UseUnderline">True</property>
