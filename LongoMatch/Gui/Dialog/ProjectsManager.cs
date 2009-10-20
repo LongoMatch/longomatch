@@ -107,6 +107,7 @@ namespace LongoMatch.Gui.Dialog
 		{
 			SaveProject();		
 			projectdetails.Edited=false;
+			Fill();
 		}	
 	
 
