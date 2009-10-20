@@ -48,7 +48,8 @@ namespace LongoMatch.Gui.Component
 		
 		public void SetProject(Project project){
 			this.project = project;
-			Sections=project.Sections;			
+			if (project != null)
+				Sections=project.Sections;			
 		}			
 		
 		public Sections Sections{
