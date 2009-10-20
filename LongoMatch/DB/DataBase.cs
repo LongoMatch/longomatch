@@ -173,7 +173,7 @@ namespace LongoMatch.DB
 			lock(this.locker){
 				bool error = false;				
 				// Configure db4o to cascade on delete for each one of the objects stored in a Project
-				SetUpdateCascadeOptions();
+				SetDeleteCascadeOptions();
 				IObjectContainer db = Db4oFactory.OpenFile(file);
 				try	{
 					// We look for a project with the same filename
@@ -182,10 +182,9 @@ namespace LongoMatch.DB
 						query.Constrain(typeof(Project));
 						query.Descend("file").Descend("filePath").Constrain(previousFileName);
 						IObjectSet result = query.Execute();  
-						//Get the stored object ID and bind it to "offline" modified
+						//Get the stored project and replace it with the new one
 						Project fd = (Project)result.Next();
-						long id = db.Ext().GetID(fd);
-						db.Ext().Bind(project,id);
+						db.Delete(fd);						
 						// Add the updated project
 						db.Set(project);	
 						db.Commit();
@@ -203,16 +202,16 @@ namespace LongoMatch.DB
 		
 		public void UpdateProject(Project project){
 			lock(this.locker){
-				SetUpdateCascadeOptions();				
+				SetDeleteCascadeOptions();				
 				IObjectContainer db = Db4oFactory.OpenFile(file);
 				try	{				
 					IQuery query = db.Query();
 					query.Constrain(typeof(Project));
 					query.Descend("file").Descend("filePath").Constrain(project.File.FilePath);
 					IObjectSet result = query.Execute();  
+					//Get the stored project and replace it with the new one
 					Project fd = (Project)result.Next();
-					long id = db.Ext().GetID(fd);
-					db.Ext().Bind(project,id);
+					db.Delete(fd);	
 					db.Set(project);		
 					db.Commit();
 				}				
