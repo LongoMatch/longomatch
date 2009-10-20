@@ -327,7 +327,6 @@ namespace LongoMatch
 		
 		protected virtual void OnDrawFrame (int time){
 			Pixbuf pixbuf=null;
-			IFramesCapturer capturer;
 			DrawingTool dialog = new DrawingTool();
 			
 			if (selectedTimeNode == null)

@@ -160,7 +160,6 @@ namespace LongoMatch.Gui.Component
 	
 		private void RenderName (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			string text = "";
 			TimeNode tNode = (TimeNode) model.GetValue (iter, 0);
 			
 			//Handle special case in which we replace the test in the cell by the name of the TimeNode

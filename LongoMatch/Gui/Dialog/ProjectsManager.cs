@@ -33,7 +33,6 @@ namespace LongoMatch.Gui.Dialog
 	public partial class ProjectsManager : Gtk.Dialog
 	{
 
-		private bool edited;
 		private string originalFilePath;
 				
 		public ProjectsManager()
