@@ -1,7 +1,7 @@
-LongoMatch-0.15.3 "Licencia para correr" 
+LongoMatch-0.15.4 "I asked for chicken..." 
 -------------------------------------------------
 
-The LongoMatch team is proud to announce the third release in the unstable 0.15
+The LongoMatch team is proud to announce the fourth release in the unstable 0.15
 LongoMatch series.
 
 Due to its dependency on GStreamer, The LongoMatch team strongly recommends users have
@@ -9,14 +9,16 @@ all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
 * Features of this release
- * Usability improvements of the Projects Manager 
- 
+ * New drawing widget with specialized tools that allows to make drawings in a frame and save it in a file or
+   in a play as a key frame. When this drawings are saved as key frame and the play is loaded, the player
+   recall them when it reaches the instant they belong to.
+ * Speeds improvements in retrieving projects from the database.
+ * Better readabilty of plays using bigger thumbnails and improving info layout
 
 * Bugs Fixed
+ * [#598675] Memory leak handling Project objects
 
- *  [#596187] GPL headers use the old FSF address 
- *  [#596013] Removal of sections on a created project does not repect order 
- *  [#]	      Buttons' label doesn't ellipsize and prevent the main window to shrink 
+
 
 * Features of the 0.15 series
 
