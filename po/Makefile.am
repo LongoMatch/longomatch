@@ -13,7 +13,7 @@ BUILD_DIR = GMO
 INSTALL_DIR = $(DESTDIR)@expanded_datadir@/locale
 
 FILES = \
-	es.po
+	es_ES.po
 
 
 GMO_FILES = $(patsubst %.po,$(BUILD_DIR)/%.gmo,$(FILES))
