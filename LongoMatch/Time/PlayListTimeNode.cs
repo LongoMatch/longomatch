@@ -24,7 +24,8 @@ using LongoMatch.Video.Utils;
 
 namespace LongoMatch.TimeNodes
 {
-	
+	/*Used in a {@LongoMatch.PlayList.PlayList} to store a play or video segment
+	 */
 	[Serializable]
 	public class PlayListTimeNode : TimeNode
 	{
@@ -42,8 +43,8 @@ namespace LongoMatch.TimeNodes
 			
 		}
 		#endregion
-		#region  Properties
 		
+		#region  Properties		
 		public MediaFile MediaFile{
 			set{
 				//PlayListTimeNode is serializable and only primary classes
@@ -51,8 +52,8 @@ namespace LongoMatch.TimeNodes
 				//a new MediaFile object.
 				if (value is PreviewMediaFile){
 					MediaFile mf  = new MediaFile(value.FilePath,value.Length,value.Fps,
-					                          value.HasAudio,value.HasVideo,value.VideoCodec,
-					                          value.AudioCodec,value.VideoWidth,value.VideoHeight);
+					                              value.HasAudio,value.HasVideo,value.VideoCodec,
+					                              value.AudioCodec,value.VideoWidth,value.VideoHeight);
 					this.mediaFile= mf;
 				}
 				else this.mediaFile = value;
@@ -63,8 +64,7 @@ namespace LongoMatch.TimeNodes
 		public float Rate{
 			set{ this.rate = value;}
 			get{ return this.rate;}
-		}
-		
+		}		
 
 		public bool Valid{
 			get{return this.valid;}

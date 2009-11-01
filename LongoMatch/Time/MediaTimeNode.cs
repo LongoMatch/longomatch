@@ -30,11 +30,10 @@ namespace LongoMatch.TimeNodes
 		VISITOR = 2,
 	}
 	
-	/* MediaTimeNode is the main object of the database for {@LongoMatch}. It' s used to
-	       store the name of each reference point we want to remind with its start time
-	       and its stop time, and the data type it belowns to. When we mark a segment in the
-	       video, this object contains all the information we need to reproduce the
-	       video sequence again.
+	/* Plays are represented and stored in the database using {@MediaTimeNode} objects. 
+	       It stores the name and the start and stop {@Time} of a play and
+	       it's used to replay the video segment of the play. A play can have
+	       tagged several players storing the {@Player} number in a list.
 	 */
 	[Serializable]
 	public class  MediaTimeNode : PixbufTimeNode
@@ -53,7 +52,7 @@ namespace LongoMatch.TimeNodes
 		
 		private string notes;
 		
-		private List<int> localPlayersList; //Used to multitag: one play and several players
+		private List<int> localPlayersList; //Used for multitagging: one play and several players
 											// We use the int index of the player in the template,		
 		private List<int> visitorPlayersList;// because it's the only unmutable variable
 		
@@ -61,7 +60,7 @@ namespace LongoMatch.TimeNodes
 		
 
 		
-#region Constructors	
+		#region Constructors	
 		public MediaTimeNode(String name, Time start, Time stop,string notes, uint fps,Pixbuf thumbnail):base (name,start,stop,thumbnail) {
 			this.notes = notes;
 			this.team = Team.NONE;
@@ -73,31 +72,63 @@ namespace LongoMatch.TimeNodes
 		}
 		#endregion
 		
-		#region Properties 
-		
+		#region Properties 		
+		/**
+		 * Get/Set the notes of a play  
+		 * 
+		 * @returns Stop {@Time}
+		 */	
 		public string Notes {
 			get{return notes;}
 			set{notes = value;}
 		}
-				
+		
+		/**
+		 * Get/Set the {@Team}  
+		 * 
+		 * @returns Stop {@Time}
+		 */				
 		public Team Team{
 			get{return this.team;}
 			set{this.team = value;}				
 		}
 		
+		/**
+		 * Get/Set the frames per second. This value is taken from the 
+		 * video file properties and used to translate from seconds
+		 * to frames, for instance second 100 is equivalent to frame
+		 * 100*fps
+		 * 
+		 * @returns Stop {@Time}
+		 */	
 		public uint Fps{
 			get{return this.fps;}
 			set{this.fps = value;}
 		}
 		
+		/**
+		 * Get the central frame (stop-start)/2
+		 * 
+		 * @returns Stop {@Time}
+		 */
 		public uint CentralFrame{
 			get{ return this.StopFrame-((this.TotalFrames)/2);}
 		}
 		
+		/**
+		 * Get the numbers of frames between the start and stop time
+		 * 
+		 * @returns Stop {@Time}
+		 */
 		public uint TotalFrames{
 			get{return this.StopFrame-this.StartFrame;}
 		}
 		
+		/**
+		 * Get/Set the start frame
+		 * 
+		 * @returns Stop {@Time}
+		 */
 		public uint StartFrame {
 			get {return startFrame;}			
 			set { 
@@ -106,6 +137,11 @@ namespace LongoMatch.TimeNodes
 			}
 		}
 		
+		/**
+		 * Get/Set the stop frame
+		 * 
+		 * @returns Stop {@Time}
+		 */
 		public uint StopFrame {			
 			get {return stopFrame;}
 			set { 
@@ -114,6 +150,11 @@ namespace LongoMatch.TimeNodes
 			}
 		}
 		
+		/**
+		 * Get the key frame number if this play as key frame drawing or 0
+		 * 
+		 * @returns Stop {@Time}
+		 */
 		public uint KeyFrame{
 			get {
 				if (HasKeyFrame)
@@ -122,11 +163,21 @@ namespace LongoMatch.TimeNodes
 			}
 		}
 	
+		/**
+		 * Get/Set wheter a this play is actually loaded
+		 * 
+		 * @returns Stop {@Time}
+		 */
 		public bool Selected {
 			get {return selected;}
 			set{this.selected = value;}			
 		}
 		
+		/**
+		 * Get/Set 
+		 * 
+		 * @returns Stop {@Time}
+		 */
 		public List<int> LocalPlayers{
 			set {localPlayersList = value;}
 			get{return localPlayersList;}
@@ -144,34 +195,54 @@ namespace LongoMatch.TimeNodes
 		
 		public bool HasKeyFrame{
 			get{return keyFrame != null;}
-		}
-		
-		
-			
+		}			
 		#endregion
 		
 		#region Public methods
-		
+		/**
+		 * Returns true is the frame number is in the play span
+		 * 
+		 * @returns frame {@boo}
+		 */
 		public bool HasFrame(int frame){
 			return (frame>=startFrame && frame<stopFrame);
 		}
 		
+		/**
+		 * Adds a local player to the local team player's list 
+		 * 
+		 * @param index {@Player} number
+		 */
 		public void AddLocalPlayer(int index){
 			localPlayersList.Add(index);
 		}
 	
+		/**
+		 * Adds a visitor player to the visitor team player's list
+		 * 
+		 * @param index {@Player} number
+		 */
 		public void AddVisitorPlayer(int index){
 			visitorPlayersList.Add(index);			
 		}
 		
+		/**
+		 * Removes a local player from the local team player's list
+		 * 
+		 * @param index {@Player} number
+		 */
 		public void RemoveLocalPlayer(int index){
 			localPlayersList.Remove(index);
 		}
 	
+		/**
+		 * Removes a visitor player from the visitor team player's list
+		 * 
+		 * @param index {@Player} number
+		 */
 		public void RemoveVisitorPlayer(int index){
 			visitorPlayersList.Remove(index);			
 		}
-	
 		#endregion
 	}		
 }

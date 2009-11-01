@@ -21,7 +21,8 @@ using Gdk;
 
 namespace LongoMatch.TimeNodes
 {
-	
+	/* Represent a player in the database defined by its name, position in the field, number and photo
+	 */
 	[Serializable]
 	public class Player
 	{
@@ -29,7 +30,8 @@ namespace LongoMatch.TimeNodes
 		private string position;
 		private int number;
 		private byte[] photo;
-		
+
+		#region Constructors
 		public Player(string name, string position, int number, Pixbuf photo)
 		{
 			this.name = name;
@@ -37,7 +39,9 @@ namespace LongoMatch.TimeNodes
 			this.number = number;
 			Photo = photo;
 		}
-		
+		#endregion
+
+		#region Properties
 		public string Name{
 			get{return name;}
 			set{name=value;}
@@ -67,5 +71,6 @@ namespace LongoMatch.TimeNodes
 					photo=null;
 			}
 		}
+		#endregion
 	}
 }

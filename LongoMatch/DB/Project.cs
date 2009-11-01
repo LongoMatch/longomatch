@@ -62,9 +62,11 @@ namespace LongoMatch.DB
 		//Keep this fiel for DB retrocompatibility
 		private List<MediaTimeNode>[] dataSectionArray;		
 	
-		
-		public Project(PreviewMediaFile file, String localName, String visitorName, String season, String competition, int localGoals,
-		                int visitorGoals, DateTime matchDate, Sections sections, TeamTemplate localTeamTemplate, TeamTemplate visitorTeamTemplate) {
+		#region Constructors
+		public Project(PreviewMediaFile file, String localName, String visitorName, 
+		               String season, String competition, int localGoals,
+		               int visitorGoals, DateTime matchDate, Sections sections,
+		               TeamTemplate localTeamTemplate, TeamTemplate visitorTeamTemplate) {
 			
 			this.file = file;
 			this.localName = localName;
@@ -85,21 +87,9 @@ namespace LongoMatch.DB
 			
 			this.Title = System.IO.Path.GetFileNameWithoutExtension(this.file.FilePath);			
 		}
+		#endregion
 		
-		public void Clear(){
-			//Help the GC freeing objects
-			foreach (List<MediaTimeNode> list in sectionPlaysList)
-				list.Clear();	
-			sectionPlaysList.Clear();			
-			Sections.Clear();
-			visitorTeamTemplate.Clear();
-			localTeamTemplate.Clear();		
-			sectionPlaysList=null;			
-			Sections=null;
-			visitorTeamTemplate=null;
-			localTeamTemplate=null;	
-		}
-		
+		#region Properties	
 		public PreviewMediaFile File {
 			get{return file;}
 			set{file=value;}
@@ -158,6 +148,22 @@ namespace LongoMatch.DB
 		public TeamTemplate VisitorTeamTemplate{
 			get{return visitorTeamTemplate;}
 			set{visitorTeamTemplate=value;}
+		}
+		#endregion
+		
+		#region Public Methods
+		public void Clear(){
+			//Help the GC freeing objects
+			foreach (List<MediaTimeNode> list in sectionPlaysList)
+				list.Clear();	
+			sectionPlaysList.Clear();			
+			Sections.Clear();
+			visitorTeamTemplate.Clear();
+			localTeamTemplate.Clear();		
+			sectionPlaysList=null;			
+			Sections=null;
+			visitorTeamTemplate=null;
+			localTeamTemplate=null;	
 		}
 		
 		public void AddSection(SectionsTimeNode tn){
@@ -264,5 +270,6 @@ namespace LongoMatch.DB
 			else
 				throw new ArgumentException("object is not a Project and cannot be compared");    
 		}
+		#endregion
 	}
 }
