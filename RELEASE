@@ -4,20 +4,19 @@ LongoMatch-0.15.4 "I asked for chicken..."
 The LongoMatch team is proud to announce the fourth release in the unstable 0.15
 LongoMatch series.
 
-Due to its dependency on GStreamer, The LongoMatch team strongly recommends users have
+Due to its dependency on GStreamer, We strongly recommend to have
 all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
 * Features of this release
- * New drawing widget with specialized tools that allows to make drawings in a frame and save it in a file or
-   in a play as a key frame. When this drawings are saved as key frame and the play is loaded, the player
-   recall them when it reaches the instant they belong to.
+ * New drawing widget with specialized tools to make drawings in video frames. You can save it in a new file
+   or in a play as a key frame. When this drawings are saved as key frame and the play is loaded, the player
+   redraw them when it reaches the instants they were drawn.
  * Speeds improvements in retrieving projects from the database.
- * Better readabilty of plays using bigger thumbnails and improving info layout
+ * Better readabilty of plays using bigger thumbnails and improved information layout
 
 * Bugs Fixed
  * [#598675] Memory leak handling Project objects
-
 
 
 * Features of the 0.15 series
