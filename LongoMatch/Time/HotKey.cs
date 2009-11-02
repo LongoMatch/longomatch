@@ -28,25 +28,22 @@ using Mono.Unix;
 
 namespace LongoMatch.TimeNodes
 {
-	/* Represent a key combination shortcut used to tag plays using the keyboard
-	       using an int to map to a {@Gdk.Key} and another int to map to a {@Gdk.Modifier}.
-	       Only Shift and Alt can be used as modifiers.
-	       When a hotkey is not defined key and modifier are set to -1
-	 */
+	
 	public class HotKey : IEquatable<HotKey>
 	{
 		private int key;
 		private int modifier;
 	
-		#region Constructors
+#region Constructors
 		public HotKey()
 		{
 			this.key = -1;
 			this.modifier = -1;
 		}
-		#endregion		
+#endregion
+		
 	
-		#region Properties
+#region Properties
 		public Gdk.Key Key{
 			get{return (Gdk.Key)key;}
 			set{key = (int)value;}
@@ -60,25 +57,22 @@ namespace LongoMatch.TimeNodes
 		public Boolean Defined{
 			get{return (key!=-1 && modifier != -1);}
 		}
-		#endregion
 		
-		#region Public Methods
 		public bool Equals(HotKey hotkeyComp){
 			return (this.Key == hotkeyComp.Key && this.Modifier == hotkeyComp.Modifier);
 		}
-		#endregion 
 		
-		#region Operators		
 		static public bool operator == (HotKey hk1, HotKey hk2){
 			return hk1.Equals(hk2);
 		}
 		
 		static public bool operator != (HotKey hk1, HotKey hk2){
 			return !hk1.Equals(hk2);
-		}			
-		#endregion	
+		}
+			
+#endregion	
 		
-		#region Overrides
+#region Override
 		public override bool Equals (object obj)
 		{
 			HotKey hotkey= obj as HotKey;
@@ -92,6 +86,7 @@ namespace LongoMatch.TimeNodes
 		{
 			return key ^ modifier;
 		}
+
 		
 		public override string ToString ()
 		{
@@ -105,6 +100,7 @@ namespace LongoMatch.TimeNodes
 				
 			return string.Format("<{0}>+{1}", modifierS,(Key.ToString()).ToLower());
 		}
-		#endregion
+
+#endregion
 	}
 }

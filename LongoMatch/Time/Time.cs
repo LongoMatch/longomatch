@@ -23,8 +23,7 @@ using System;
 namespace LongoMatch.TimeNodes
 {
 	
-	/* Represents a time instant. It's used to standarize the time units 	       
-	 */
+	
 	public class Time :  IComparable
 	{
 		private int time;
@@ -41,8 +40,8 @@ namespace LongoMatch.TimeNodes
 			this.time = time;
 		}
 		#endregion
+		#region Properties
 		
-		#region Properties		
 		public int MSeconds {
 			get { return time;}
 			set { time = value;}
@@ -50,10 +49,11 @@ namespace LongoMatch.TimeNodes
 		
 		public int Seconds {
 			get { return time/SECONDS_TO_TIME;}
-		}		
-		#endregion
+		}
 		
-		#region Public methods		
+		#endregion
+		#region Public methods
+		
 		public  string ToSecondsString ()
 		{
 			int _h, _m, _s;
@@ -96,35 +96,39 @@ namespace LongoMatch.TimeNodes
 		public override int GetHashCode ()
 		{
 			return base.GetHashCode ();
-		}	
+		}
+
+		
 		
 		public int CompareTo(object obj) {
 			if(obj is Time) 
 			{
 				Time  otherTime = (Time) obj;
 				return MSeconds.CompareTo(otherTime.MSeconds);
-			}			
-			else throw new ArgumentException("Object is not a Temperature");    
-		}		
+			}
+			
+			else
+			{
+				throw new ArgumentException("Object is not a Temperature");
+			}    
+		}
+		
 		#endregion
 
-		#region Operators		
+		#region Operators
+		
 		public static bool operator < (Time t1,Time t2){
 			return t1.MSeconds < t2.MSeconds;
 		}
-		
 		public static bool operator > (Time t1,Time t2){
 			return t1.MSeconds > t2.MSeconds;
 		}
-		
 		public static bool operator <= (Time t1,Time t2){
 			return t1.MSeconds <= t2.MSeconds;
 		}
-		
 		public static bool operator >= (Time t1,Time t2){
 			return t1.MSeconds >= t2.MSeconds;
 		}
-		
 		public static Time operator +(Time t1,int t2){
 			return new Time(t1.MSeconds+t2);			
 		}
@@ -139,7 +143,9 @@ namespace LongoMatch.TimeNodes
 		
 		public  static Time operator -(Time t1,int t2){
 			return new Time(t1.MSeconds-t2);			
-		}		
+		}
+		
 		#endregion 
+
 	}
 }

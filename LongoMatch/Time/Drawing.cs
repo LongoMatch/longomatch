@@ -21,12 +21,6 @@ using Gdk;
 
 namespace LongoMatch.TimeNodes
 {
-	/* Represent a drawing in the database using a {@Gdk.Pixbuf} stored 
-	        in a bytes array in PNG format for serialization. {@Drawings}
-	        are used by {@MediaTimeNodes} to store the key frame drawing
-	        which stop time time is stored in a int value
-	 */
-	
 	[Serializable]
 	public class Drawing
 	{

@@ -28,7 +28,7 @@ namespace LongoMatch.TimeNodes
 	[Serializable]
 	public class TimeNode
 	{
-		//Stores the name of the play
+		//Stores the name of the refenrence point
 		private string name;
 
 		//Stores the start time
@@ -37,7 +37,7 @@ namespace LongoMatch.TimeNodes
 		//Stores the stop time
 		private Time stop;
 		
-		#region Constructors
+
 		public TimeNode(){
 		}
 		
@@ -47,33 +47,44 @@ namespace LongoMatch.TimeNodes
 			this.start = start;
 			this.stop = stop;				
 		}
-		#endregion
 		
-		#region Properties
 		/**
-		 * Set/Get the name 
+		 * Returns a String object that represents the name of the reference point
 		 * 
 		 * @returns name Name of the reference point
 		 */
 		public string Name {
-			get{return this.name;}
-			set{this.name=value;}
+			get{
+			return this.name;
+			}
+			set{
+			this.name=value;
+
+			}
 		}
 
+
+
 		/**
-		 * Set/Get the start {@Time}
+		 * Returns a Time object representing the start time of the video sequence
 		 * 
 		 * @returns Start time
 		 */
 		public Time Start{
-			get{return this.start;}			
-			set{ this.start=value;}			
+			get{
+			return this.start;
+			}
+			
+			set{ 
+				this.start=value;
+			}
+			
 		}
 
 		/**
-		 * Set/Get the stop 
+		 * Returns a Time object representing the stop time of the video sequence
 		 * 
-		 * @returns Stop {@Time}
+		 * @returns Stop time
 		 */
 		public Time Stop {
 			get{
@@ -84,26 +95,27 @@ namespace LongoMatch.TimeNodes
 			}
 		}
 		
-		/**
-		 * Get the duration defined like start {@Time} - stop {@Time} 
-		 * 
-		 * @returns Stop {@Time}
-		 */		
 		public Time Duration {
 			get {return Stop-Start;}
-		}		
-		#endregion	
+		}
+		
+		
 
-		#region Public methods
 		/**
-		 * Change the Start and Stop {@Time} 
+		 * Returns a String object that represents the name of the reference point
 		 * 
 		 * @returns name Name of the reference point
-		 */		
-		public void ChangeStartStop(Time start, Time stop) {
+		 */
+		public string toString() {
+			return name;
+		}
+		
+		public void changeStartStop(Time start, Time stop) {
 			this.start = start;
 			this.stop = stop;
 		}
-		#endregion	
+		
+		
+		
 	}
 }
