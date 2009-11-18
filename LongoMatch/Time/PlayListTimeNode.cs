@@ -1,4 +1,4 @@
-// PlayListTimeNode.cs 
+// PlayListTimeNode.cs
 //
 //  Copyright (C) 2007-2009 Andoni Morales Alastruey
 //
@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -24,7 +24,10 @@ using LongoMatch.Video.Utils;
 
 namespace LongoMatch.TimeNodes
 {
-	
+	/// <summary>
+	/// I am a special video segment used by <see cref="LongoMatch.Playlist.Playlist"/>.
+	/// I stores the information of the video file I belong to and that's why I am independent of any context.
+	/// </summary>
 	[Serializable]
 	public class PlayListTimeNode : TimeNode
 	{
@@ -33,43 +36,70 @@ namespace LongoMatch.TimeNodes
 		private bool valid=true; //True if the file exists
 
 		#region Constructors
-		public PlayListTimeNode(){
+		public PlayListTimeNode() {
 		}
-		
+
+		/// <summary>
+		///  Creates a new playlist element
+		/// </summary>
+		/// <param name="mediaFile">
+		/// A <see cref="MediaFile"/> with my video file's information
+		/// </param>
+		/// <param name="tNode">
+		/// A <see cref="MediaTimeNode"/> with the play I come from
+		/// </param>
 		public PlayListTimeNode(MediaFile mediaFile, MediaTimeNode tNode) : base(tNode.Name,tNode.Start,tNode.Stop)
 		{
 			MediaFile = mediaFile;
-			
+
 		}
 		#endregion
+
 		#region  Properties
-		
-		public MediaFile MediaFile{
-			set{
+		/// <value>
+		/// My video file
+		/// </value>
+		public MediaFile MediaFile {
+			set {
 				//PlayListTimeNode is serializable and only primary classes
 				//can be serialiazed. In case it's a PreviewMidaFile we create
 				//a new MediaFile object.
-				if (value is PreviewMediaFile){
+				if (value is PreviewMediaFile) {
 					MediaFile mf  = new MediaFile(value.FilePath,value.Length,value.Fps,
-					                          value.HasAudio,value.HasVideo,value.VideoCodec,
-					                          value.AudioCodec,value.VideoWidth,value.VideoHeight);
+					                              value.HasAudio,value.HasVideo,value.VideoCodec,
+					                              value.AudioCodec,value.VideoWidth,value.VideoHeight);
 					this.mediaFile= mf;
 				}
 				else this.mediaFile = value;
 			}
-			get{ return this.mediaFile;}
+			get {
+				return this.mediaFile;
+			}
 		}
-		
-		public float Rate{
-			set{ this.rate = value;}
-			get{ return this.rate;}
-		}
-		
 
-		public bool Valid{
-			get{return this.valid;}
-			set{this.valid = value;}
+		/// <value>
+		/// My play rate
+		/// </value>
+		public float Rate {
+			set {
+				this.rate = value;
+			}
+			get {
+				return this.rate;
+			}
 		}
-		#endregion		
+
+		//// <value>
+		/// I wont't be valid if my file doesn't exists
+		/// </value>
+		public bool Valid {
+			get {
+				return this.valid;
+			}
+			set {
+				this.valid = value;
+			}
+		}
+		#endregion
 	}
 }
