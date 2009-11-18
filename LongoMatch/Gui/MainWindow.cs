@@ -25,6 +25,7 @@ using System.IO;
 using GLib;
 using System.Threading;
 using Gdk;
+using LongoMatch.Common;
 using LongoMatch.DB;
 using LongoMatch.TimeNodes;
 using LongoMatch.Gui.Dialog;
@@ -247,7 +248,7 @@ namespace LongoMatch.Gui
 			Project project;
 			NewProjectDialog npd = new NewProjectDialog();
 			npd.TransientFor = this;
-			npd.Use = LongoMatch.Gui.Component.UseType.NewFromFileProject;
+			npd.Use = ProjectType.NewFileProject;
 			// Esperamos a que se pulse el boton aceptar y se cumplan las condiciones para
 			// crear un nuevo objeto del tipo Project
 			int response = npd.Run();

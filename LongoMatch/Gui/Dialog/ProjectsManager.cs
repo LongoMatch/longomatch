@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using Gtk;
 using Mono.Unix;
+using LongoMatch.Common;
 using LongoMatch.DB;
 using LongoMatch.Gui.Component;
 
@@ -39,7 +40,7 @@ namespace LongoMatch.Gui.Dialog
 		{
 			this.Build();
 			this.Fill();
-			this.projectdetails.Use = LongoMatch.Gui.Component.UseType.EditProject;
+			this.projectdetails.Use = ProjectType.EditProject;
 			projectdetails.Edited = false;
 		}
 

@@ -21,6 +21,7 @@
 using System;
 using Mono.Unix;
 using Gtk;
+using LongoMatch.Common;
 using LongoMatch.DB;
 using LongoMatch.Handlers;
 using LongoMatch.IO;
@@ -33,11 +34,7 @@ using LongoMatch.Video.Utils;
 namespace LongoMatch.Gui.Component
 {
 
-	public enum UseType {
-		NewCaptureProject,
-		NewFromFileProject,
-		EditProject,
-	}
+
 	//TODO añadir eventos de cambios para realizar el cambio directamente sobre el file data abierto
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
@@ -53,7 +50,7 @@ namespace LongoMatch.Gui.Component
 		private Sections actualSection;
 		private TeamTemplate actualVisitorTeam;
 		private TeamTemplate actualLocalTeam;
-		private UseType useType;
+		private ProjectType useType;
 
 		public ProjectDetailsWidget()
 		{
@@ -69,17 +66,17 @@ namespace LongoMatch.Gui.Component
 			FillSections();
 			FillTeamsTemplate();
 
-			this.Use=UseType.NewFromFileProject;
+			this.Use=ProjectType.NewFileProject;
 		}
 
-		public UseType Use {
+		public ProjectType Use {
 			set {
-				if (value == UseType.NewFromFileProject  || value == UseType.EditProject) {
+				if (value == ProjectType.NewFileProject  || value == ProjectType.EditProject) {
 					videobitratelabel.Hide();
 					bitratespinbutton.Hide();
 				}
 
-				if (value == UseType.EditProject) {
+				if (value == ProjectType.EditProject) {
 					tagscombobox.Visible = false;
 					localcombobox.Visible = false;
 					visitorcombobox.Visible = false;
@@ -251,7 +248,7 @@ namespace LongoMatch.Gui.Component
 
 		public Project GetProject() {
 			if (this.Filename != "") {
-				if (useType == UseType.NewFromFileProject) {
+				if (useType == ProjectType.NewFileProject) {
 					return new Project(mFile,
 					                   LocalName,
 					                   VisitorName,
@@ -333,7 +330,7 @@ namespace LongoMatch.Gui.Component
 		{
 			FileChooserDialog fChooser = null;
 
-			if (this.useType == UseType.NewCaptureProject) {
+			if (this.useType == ProjectType.NewCaptureProject) {
 				fChooser = new FileChooserDialog(Catalog.GetString("Save File as..."),
 				                                 (Gtk.Window)this.Toplevel,
 				                                 FileChooserAction.Save,

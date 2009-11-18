@@ -20,6 +20,7 @@
 
 using System;
 using LongoMatch.DB;
+using LongoMatch.Common;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -35,7 +36,7 @@ namespace LongoMatch.Gui.Dialog
 			fdwidget.Clear();
 		}
 
-		public LongoMatch.Gui.Component.UseType Use {
+		public ProjectType Use {
 			set {
 				this.fdwidget.Use = value;
 			}
