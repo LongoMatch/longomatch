@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -28,12 +28,12 @@ using LongoMatch.Gui.Dialog;
 
 namespace LongoMatch.Gui.Component
 {
-	
-	
-[System.ComponentModel.Category("LongoMatch")]
-[System.ComponentModel.ToolboxItem(true)]
-public class PlayListTreeView : Gtk.TreeView
-	{		
+
+
+	[System.ComponentModel.Category("LongoMatch")]
+	[System.ComponentModel.ToolboxItem(true)]
+	public class PlayListTreeView : Gtk.TreeView
+	{
 		private Menu menu;
 		private MenuItem setRate;
 		private ListStore ls;
@@ -41,17 +41,17 @@ public class PlayListTreeView : Gtk.TreeView
 		private PlayListTimeNode loadedTimeNode = null; //The play currently loaded in the player
 		private PlayListTimeNode selectedTimeNode = null; //The play selected in the tree
 		private TreeIter selectedIter;
-		
+
 		public event ApplyCurrentRateHandler ApplyCurrentRate;
-		
-		
-		public PlayListTreeView(){			
+
+
+		public PlayListTreeView() {
 
 			this.HeadersVisible = false;
 
 			ls = new ListStore(typeof(PlayListTimeNode));
-			this.Model = ls;		
-			
+			this.Model = ls;
+
 			menu = new Menu();
 			MenuItem title = new MenuItem(Catalog.GetString("Edit Title"));
 			title.Activated += new EventHandler(OnTitle);
@@ -64,85 +64,90 @@ public class PlayListTreeView : Gtk.TreeView
 			setRate.Show();
 			menu.Append(title);
 			menu.Append(setRate);
-			menu.Append(delete);		
-			
+			menu.Append(delete);
 
-			Gtk.TreeViewColumn nameColumn = new Gtk.TreeViewColumn ();			
-			nameColumn.Title = Catalog.GetString("Name");		
-			Gtk.CellRendererText nameCell = new Gtk.CellRendererText ();
-			nameColumn.PackStart (nameCell, true);
-			nameColumn.SetCellDataFunc (nameCell, new Gtk.TreeCellDataFunc (RenderName));			
-			this.AppendColumn (nameColumn);		
+
+			Gtk.TreeViewColumn nameColumn = new Gtk.TreeViewColumn();
+			nameColumn.Title = Catalog.GetString("Name");
+			Gtk.CellRendererText nameCell = new Gtk.CellRendererText();
+			nameColumn.PackStart(nameCell, true);
+			nameColumn.SetCellDataFunc(nameCell, new Gtk.TreeCellDataFunc(RenderName));
+			this.AppendColumn(nameColumn);
 		}
-		
-		public PlayList PlayList{
-			set{ this.playlist = value;}
-		}		
-		
-		public PlayListTimeNode LoadedPlay{
-			set { loadedTimeNode = value; this.QueueDraw();}
+
+		public PlayList PlayList {
+			set {
+				this.playlist = value;
+			}
 		}
-		
+
+		public PlayListTimeNode LoadedPlay {
+			set {
+				loadedTimeNode = value;
+				this.QueueDraw();
+			}
+		}
+
 		~PlayListTreeView()
 		{
 		}
-		
-		
-		protected override bool OnButtonPressEvent (EventButton evnt)
-		{			
-			if( (evnt.Type == EventType.ButtonPress) && (evnt.Button == 3) )
+
+
+		protected override bool OnButtonPressEvent(EventButton evnt)
+		{
+			if ((evnt.Type == EventType.ButtonPress) && (evnt.Button == 3))
 			{
-				TreePath path;				
+				TreePath path;
 				GetPathAtPos((int)evnt.X,(int)evnt.Y,out path);
-				if (path!=null){
-					ListStore list = ((ListStore)Model);					
-					Model.GetIter (out selectedIter,path); 
+				if (path!=null) {
+					ListStore list = ((ListStore)Model);
+					Model.GetIter(out selectedIter,path);
 					selectedTimeNode = (PlayListTimeNode)(list.GetValue(selectedIter,0));
 					setRate.Sensitive = selectedTimeNode == loadedTimeNode;
-				    menu.Popup();
+					menu.Popup();
 				}
 			}
-			return base.OnButtonPressEvent(evnt);								
+			return base.OnButtonPressEvent(evnt);
 		}
-		
-		protected void OnTitle (object o, EventArgs args){
+
+		protected void OnTitle(object o, EventArgs args) {
 			EntryDialog ed = new EntryDialog();
 			ed.Title = Catalog.GetString("Edit Title");
 			ed.Text = selectedTimeNode.Name;
-			if (ed.Run() == (int)ResponseType.Ok){
+			if (ed.Run() == (int)ResponseType.Ok) {
 				selectedTimeNode.Name = ed.Text;
 				this.QueueDraw();
 			}
-			ed.Destroy();			
+			ed.Destroy();
 		}
-		
-		protected void OnDelete(object obj, EventArgs args){
+
+		protected void OnDelete(object obj, EventArgs args) {
 			ListStore list = ((ListStore)Model);
 			playlist.Remove(selectedTimeNode);
-			list.Remove(ref selectedIter);		
+			list.Remove(ref selectedIter);
 		}
-		
-		protected void OnApplyRate(object obj, EventArgs args){
+
+		protected void OnApplyRate(object obj, EventArgs args) {
 			if (ApplyCurrentRate != null)
 				ApplyCurrentRate(selectedTimeNode);
 		}
-		
-		private void RenderName (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
+
+		private void RenderName(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			PlayListTimeNode tNode = (PlayListTimeNode) model.GetValue (iter, 0); 
+			PlayListTimeNode tNode = (PlayListTimeNode) model.GetValue(iter, 0);
 			(cell as Gtk.CellRendererText).Text = 	Catalog.GetString("Title")+": "+tNode.Name +"\n"+
-													Catalog.GetString("Start")+": "+tNode.Start.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
-													Catalog.GetString("Duration")+": "+tNode.Duration.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
-													Catalog.GetString("Play Rate")+": "+tNode.Rate.ToString();
-			if (!tNode.Valid){
-				(cell as Gtk.CellRendererText).Foreground = "red";	
+			                                       Catalog.GetString("Start")+": "+tNode.Start.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
+			                                       Catalog.GetString("Duration")+": "+tNode.Duration.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
+			                                       Catalog.GetString("Play Rate")+": "+tNode.Rate.ToString();
+			if (!tNode.Valid) {
+				(cell as Gtk.CellRendererText).Foreground = "red";
 				(cell as Gtk.CellRendererText).Text += "\n"+Catalog.GetString("File not found")+": "+tNode.MediaFile.FilePath;
 			}
 			else if (tNode == loadedTimeNode)
 				(cell as Gtk.CellRendererText).Foreground = "blue";
-			else 
+			else
 				(cell as Gtk.CellRendererText).Foreground = "black";
-			
+
 		}
 	}
 }

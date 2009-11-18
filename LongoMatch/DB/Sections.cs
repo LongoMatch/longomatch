@@ -218,7 +218,7 @@ namespace LongoMatch.DB
 		/// <returns>
 		/// A <see cref="SectionsTimeNode"/>
 		/// </returns>
-		public SectionsTimeNode GetTimeNode (int section) {
+		public SectionsTimeNode GetTimeNode(int section) {
 			return sectionsList [section];
 		}
 
@@ -231,7 +231,7 @@ namespace LongoMatch.DB
 		/// <returns>
 		/// A <see cref="System.String"/>: name of the category
 		/// </returns>
-		public string GetName (int section) {
+		public string GetName(int section) {
 			return sectionsList[section].Name;
 		}
 
@@ -244,7 +244,7 @@ namespace LongoMatch.DB
 		/// <returns>
 		/// A <see cref="Time"/>: start time
 		/// </returns>
-		public Time GetStartTime (int section) {
+		public Time GetStartTime(int section) {
 			return sectionsList[section].Start;
 		}
 
@@ -257,7 +257,7 @@ namespace LongoMatch.DB
 		/// <returns>
 		/// A <see cref="Time"/>: stop time
 		/// </returns>
-		public Time GetStopTime (int section) {
+		public Time GetStopTime(int section) {
 			return sectionsList[section].Stop;
 		}
 
@@ -270,7 +270,7 @@ namespace LongoMatch.DB
 		/// <returns>
 		/// A <see cref="Color"/>: color
 		/// </returns>
-		public Color GetColor (int section) {
+		public Color GetColor(int section) {
 			return sectionsList[section].Color;
 		}
 
@@ -283,7 +283,7 @@ namespace LongoMatch.DB
 		/// <returns>
 		/// A <see cref="HotKey"/>: hotkey for this category
 		/// </returns>
-		public HotKey GetHotKey (int section) {
+		public HotKey GetHotKey(int section) {
 			return sectionsList[section].HotKey;
 		}
 	}

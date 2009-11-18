@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -27,81 +27,83 @@ using LongoMatch.Gui.Dialog;
 
 namespace LongoMatch.Gui.Component
 {
-	
-	public delegate void HotKeyChangeHandler (HotKey prevHotKey, SectionsTimeNode newSection);
-	
+
+	public delegate void HotKeyChangeHandler(HotKey prevHotKey, SectionsTimeNode newSection);
+
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial  class CategoryProperties : Gtk.Bin
 	{
 
 		public event HotKeyChangeHandler HotKeyChanged;
-		
+
 		private SectionsTimeNode stn;
-		
+
 		public CategoryProperties()
 		{
 			this.Build();
-		}				
-		
-		public SectionsTimeNode Section
-		{
-			set{
-				stn = value;
-				UpdateGui();	
-			}			
-			get{return stn;	}
 		}
 
-		private void  UpdateGui(){
-			if ( stn != null){
+		public SectionsTimeNode Section
+		{
+			set {
+				stn = value;
+				UpdateGui();
+			}
+			get {
+				return stn;
+			}
+		}
+
+		private void  UpdateGui() {
+			if (stn != null) {
 				nameentry.Text = stn.Name;
 				timeadjustwidget1.SetTimeNode(stn);
 				colorbutton1.Color = stn.Color;
-				
-				if (stn.HotKey.Defined){
+
+				if (stn.HotKey.Defined) {
 					hotKeyLabel.Text = stn.HotKey.ToString();
 				}
-				else hotKeyLabel.Text = Catalog.GetString("none"); 
+				else hotKeyLabel.Text = Catalog.GetString("none");
 			}
-		}		
-		
-		protected virtual void OnChangebutonClicked (object sender, System.EventArgs e)
+		}
+
+		protected virtual void OnChangebutonClicked(object sender, System.EventArgs e)
 		{
 			HotKeySelectorDialog dialog = new HotKeySelectorDialog();
 			dialog.TransientFor=(Gtk.Window)this.Toplevel;
-			HotKey prevHotKey =  stn.HotKey;	
-			if (dialog.Run() == (int)ResponseType.Ok){							
-				stn.HotKey=dialog.HotKey;				
+			HotKey prevHotKey =  stn.HotKey;
+			if (dialog.Run() == (int)ResponseType.Ok) {
+				stn.HotKey=dialog.HotKey;
 				UpdateGui();
 			}
-			dialog.Destroy();	
+			dialog.Destroy();
 			if (HotKeyChanged != null)
-					HotKeyChanged(prevHotKey,stn);
+				HotKeyChanged(prevHotKey,stn);
 		}
-	
-		protected virtual void OnColorbutton1ColorSet (object sender, System.EventArgs e)
+
+		protected virtual void OnColorbutton1ColorSet(object sender, System.EventArgs e)
 		{
 			if (stn != null)
 				stn.Color=colorbutton1.Color;
 		}
 
-		protected virtual void OnTimeadjustwidget1LeadTimeChanged (object sender, System.EventArgs e)
+		protected virtual void OnTimeadjustwidget1LeadTimeChanged(object sender, System.EventArgs e)
 		{
-			stn.Start = timeadjustwidget1.GetStartTime();	
+			stn.Start = timeadjustwidget1.GetStartTime();
 		}
 
-		protected virtual void OnTimeadjustwidget1LagTimeChanged (object sender, System.EventArgs e)
-		{			
+		protected virtual void OnTimeadjustwidget1LagTimeChanged(object sender, System.EventArgs e)
+		{
 			stn.Stop= timeadjustwidget1.GetStopTime();
 		}
 
-		protected virtual void OnNameentryChanged (object sender, System.EventArgs e)
+		protected virtual void OnNameentryChanged(object sender, System.EventArgs e)
 		{
-			stn.Name = nameentry.Text;				
+			stn.Name = nameentry.Text;
 		}
-		
-	
+
+
 
 	}
 }

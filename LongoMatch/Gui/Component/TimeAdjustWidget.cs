@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -23,8 +23,8 @@ using LongoMatch.TimeNodes;
 
 namespace LongoMatch.Gui.Component
 {
-	
-	
+
+
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class TimeAdjustWidget : Gtk.Bin
@@ -32,32 +32,32 @@ namespace LongoMatch.Gui.Component
 
 		public event EventHandler LeadTimeChanged;
 		public event EventHandler LagTimeChanged;
-		
+
 		public TimeAdjustWidget()
 		{
 			this.Build();
 		}
-		
-		public void SetTimeNode(SectionsTimeNode tNode){
+
+		public void SetTimeNode(SectionsTimeNode tNode) {
 			spinbutton1.Value=tNode.Start.Seconds;
-			spinbutton2.Value=tNode.Stop.Seconds;			
-		}
-		
-		public Time GetStartTime(){
-			return new Time((int)(spinbutton1.Value)*Time.SECONDS_TO_TIME);
-		}
-		
-		public Time GetStopTime(){
-			return new Time ((int)(spinbutton2.Value)*Time.SECONDS_TO_TIME);
+			spinbutton2.Value=tNode.Stop.Seconds;
 		}
 
-		protected virtual void OnSpinbutton1ValueChanged (object sender, System.EventArgs e)
+		public Time GetStartTime() {
+			return new Time((int)(spinbutton1.Value)*Time.SECONDS_TO_TIME);
+		}
+
+		public Time GetStopTime() {
+			return new Time((int)(spinbutton2.Value)*Time.SECONDS_TO_TIME);
+		}
+
+		protected virtual void OnSpinbutton1ValueChanged(object sender, System.EventArgs e)
 		{
 			if (LeadTimeChanged != null)
 				LeadTimeChanged(this,new EventArgs());
 		}
 
-		protected virtual void OnSpinbutton2ValueChanged (object sender, System.EventArgs e)
+		protected virtual void OnSpinbutton2ValueChanged(object sender, System.EventArgs e)
 		{
 			if (LagTimeChanged != null)
 				LagTimeChanged(this,new EventArgs());

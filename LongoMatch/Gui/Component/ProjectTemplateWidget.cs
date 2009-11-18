@@ -10,7 +10,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -28,8 +28,8 @@ using LongoMatch.Gui.Dialog;
 
 namespace LongoMatch.Gui.Component
 {
-	
-	
+
+
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class ProjectTemplateWidget : Gtk.Bin
@@ -37,84 +37,90 @@ namespace LongoMatch.Gui.Component
 		private List<HotKey> hkList;
 		private Project project;
 		private Sections sections;
-		private SectionsTimeNode selectedSection;		
+		private SectionsTimeNode selectedSection;
 		private bool edited = false;
-		
+
 		public ProjectTemplateWidget()
 		{
 			this.Build();
 			hkList = new List<HotKey>();
 		}
-		
-		public void SetProject(Project project){
+
+		public void SetProject(Project project) {
 			this.project = project;
 			if (project != null)
-				Sections=project.Sections;			
-		}			
-		
-		public Sections Sections{
-			get{return sections;}
-			set{
+				Sections=project.Sections;
+		}
+
+		public Sections Sections {
+			get {
+				return sections;
+			}
+			set {
 				this.sections = value;
 				edited = false;
-				Gtk.TreeStore sectionsListStore = new Gtk.TreeStore (typeof (SectionsTimeNode));
+				Gtk.TreeStore sectionsListStore = new Gtk.TreeStore(typeof(SectionsTimeNode));
 				hkList.Clear();
-				for (int i=0;i<sections.Count;i++){
-					sectionsListStore.AppendValues (sections.GetSection(i));
-					try{
+				for (int i=0;i<sections.Count;i++) {
+					sectionsListStore.AppendValues(sections.GetSection(i));
+					try {
 						hkList.Add(sections.GetSection(i).HotKey);
-					}catch{}; //Do not add duplicated hotkeys
+					} catch {}; //Do not add duplicated hotkeys
 				}
 				sectionstreeview1.Model = sectionsListStore;
 				ButtonsSensitive = false;
 			}
 		}
-		
-		public bool Edited{
-			get{return edited;}
-			set{edited=value;}
+
+		public bool Edited {
+			get {
+				return edited;
+			}
+			set {
+				edited=value;
+			}
 		}
-		
-		private void UpdateModel(){
+
+		private void UpdateModel() {
 			Sections = Sections;
 		}
-		
-		private void AddSection (int index){
+
+		private void AddSection(int index) {
 			SectionsTimeNode tn;
 			HotKey hkey = new HotKey();
-			
+
 			Time start = new Time(10*Time.SECONDS_TO_TIME);
-			Time stop = new Time(10*Time.SECONDS_TO_TIME);			
-			
+			Time stop = new Time(10*Time.SECONDS_TO_TIME);
+
 			tn  = new SectionsTimeNode("New Section",start,stop,hkey,new Color(Byte.MaxValue,Byte.MinValue,Byte.MinValue));
-		
-			if (project != null){
+
+			if (project != null) {
 				project.AddSectionAtPos(tn,index);
 			}
-			else{				
+			else {
 				sections.AddSectionAtPos(tn,index);
-			}		
+			}
 			UpdateModel();
 			edited = true;
 		}
-		
-		private void RemoveSection(int index){
-			if(project!= null){
+
+		private void RemoveSection(int index) {
+			if (project!= null) {
 				MessageDialog dialog = new MessageDialog((Gtk.Window)this.Toplevel,DialogFlags.Modal,MessageType.Question,
-					                                         ButtonsType.YesNo,true,
-					                                         Catalog.GetString("You are about to delete a category and all the plays added to this category.Do you want to proceed?"));
-				if (dialog.Run() == (int)ResponseType.Yes) 
-				try{
-					project.DeleteSection(index);					
-				}catch{
-					MessagePopup.PopupMessage(this,MessageType.Warning,
-					                          Catalog.GetString("You can't delete the last section"));
-					dialog.Destroy();
-					return;
-				}
+				                ButtonsType.YesNo,true,
+				                Catalog.GetString("You are about to delete a category and all the plays added to this category.Do you want to proceed?"));
+				if (dialog.Run() == (int)ResponseType.Yes)
+					try {
+						project.DeleteSection(index);
+					} catch {
+						MessagePopup.PopupMessage(this,MessageType.Warning,
+						                          Catalog.GetString("You can't delete the last section"));
+						dialog.Destroy();
+						return;
+					}
 				dialog.Destroy();
 				sections=project.Sections;
-			}else{
+			} else {
 				sections.RemoveSection(index);
 			}
 			UpdateModel();
@@ -122,17 +128,17 @@ namespace LongoMatch.Gui.Component
 			selectedSection = null;
 			ButtonsSensitive=false;
 		}
-		
-		private bool ButtonsSensitive{
-			set{
+
+		private bool ButtonsSensitive {
+			set {
 				newprevbutton.Sensitive = value;
 				newafterbutton.Sensitive = value;
 				removebutton.Sensitive = value;
 				editbutton.Sensitive = value;
 			}
 		}
-		
-		private void EditSelectedSection(){
+
+		private void EditSelectedSection() {
 			EditCategoryDialog dialog = new EditCategoryDialog();
 			dialog.Section=selectedSection;
 			dialog.HotKeysList = hkList;
@@ -141,35 +147,35 @@ namespace LongoMatch.Gui.Component
 			dialog.Destroy();
 			edited = true;
 		}
-		
-		protected virtual void OnNewAfter(object sender, EventArgs args){
+
+		protected virtual void OnNewAfter(object sender, EventArgs args) {
 			AddSection(sections.SectionsTimeNodes.IndexOf(selectedSection)+1);
 		}
-		
-		protected virtual void OnNewBefore(object sender, EventArgs args){
+
+		protected virtual void OnNewBefore(object sender, EventArgs args) {
 			AddSection(sections.SectionsTimeNodes.IndexOf(selectedSection));
 		}
-		
-		protected virtual void OnRemove(object sender, EventArgs args){			
+
+		protected virtual void OnRemove(object sender, EventArgs args) {
 			RemoveSection(sections.SectionsTimeNodes.IndexOf(selectedSection));
 		}
-		
-		protected virtual void OnEdit(object sender, EventArgs args){			
-			EditSelectedSection();
-		}	
 
-		protected virtual void OnSectionstreeview1SectionClicked (LongoMatch.TimeNodes.SectionsTimeNode tNode)
+		protected virtual void OnEdit(object sender, EventArgs args) {
+			EditSelectedSection();
+		}
+
+		protected virtual void OnSectionstreeview1SectionClicked(LongoMatch.TimeNodes.SectionsTimeNode tNode)
 		{
 			EditSelectedSection();
 		}
 
-		protected virtual void OnSectionstreeview1SectionSelected (LongoMatch.TimeNodes.SectionsTimeNode tNode)
+		protected virtual void OnSectionstreeview1SectionSelected(LongoMatch.TimeNodes.SectionsTimeNode tNode)
 		{
 			selectedSection = tNode;
 			ButtonsSensitive = selectedSection != null;
 		}
 
-		protected virtual void OnKeyPressEvent (object o, Gtk.KeyPressEventArgs args)
+		protected virtual void OnKeyPressEvent(object o, Gtk.KeyPressEventArgs args)
 		{
 			if (args.Event.Key == Gdk.Key.Delete && selectedSection != null)
 				RemoveSection(sections.SectionsTimeNodes.IndexOf(selectedSection));

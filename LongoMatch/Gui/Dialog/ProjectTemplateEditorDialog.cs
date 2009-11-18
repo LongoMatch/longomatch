@@ -1,4 +1,4 @@
-// TemplateEditorDialog.cs 
+// TemplateEditorDialog.cs
 //
 //  Copyright (C) 2007-2009 Andoni Morales Alastruey
 //
@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -22,29 +22,35 @@ using LongoMatch.DB;
 
 namespace LongoMatch.Gui.Dialog
 {
-	
+
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(false)]
 	public partial class ProjectTemplateEditorDialog : Gtk.Dialog
 	{
-		
+
 		public ProjectTemplateEditorDialog()
 		{
-			this.Build();			
-		}
-		
-		public Project Project{
-			set {sectionspropertieswidget3.SetProject(value);}
-		}
-		
-		public Sections Sections{
-			set{this.sectionspropertieswidget3.Sections=value;}
-			get{return this.sectionspropertieswidget3.Sections;}
+			this.Build();
 		}
 
-		protected virtual void OnButtonOkClicked (object sender, System.EventArgs e)
+		public Project Project {
+			set {
+				sectionspropertieswidget3.SetProject(value);
+			}
+		}
+
+		public Sections Sections {
+			set {
+				this.sectionspropertieswidget3.Sections=value;
+			}
+			get {
+				return this.sectionspropertieswidget3.Sections;
+			}
+		}
+
+		protected virtual void OnButtonOkClicked(object sender, System.EventArgs e)
 		{
 		}
-	
+
 	}
 }

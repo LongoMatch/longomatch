@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -30,61 +30,61 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class ButtonsWidget : Gtk.Bin
 	{
-				
+
 		private Sections sections;
-	
+
 		public event NewMarkEventHandler NewMarkEvent;
 
-		
+
 		public ButtonsWidget()
-		{		
+		{
 			this.Build();
 		}
-		
-		public Sections Sections{
-			set{
-				foreach (Widget w in table1.AllChildren){
+
+		public Sections Sections {
+			set {
+				foreach (Widget w in table1.AllChildren) {
 					table1.Remove(w);
-					w.Destroy();					
-				}				
+					w.Destroy();
+				}
 				sections = value;
 				if (value == null)
 					return;
-				
-				int sectionsCount = value.Count;				
-				
+
+				int sectionsCount = value.Count;
+
 				table1.NColumns =(uint) 10;
-				table1.NRows =(uint) (sectionsCount/10);
-			
-				for( int i=0;i<sectionsCount;i++){
+				table1.NRows =(uint)(sectionsCount/10);
+
+				for (int i=0;i<sectionsCount;i++) {
 					Button b = new Button();
 					Label l = new Label();
-					uint row_top =(uint) (i/table1.NColumns);
+					uint row_top =(uint)(i/table1.NColumns);
 					uint row_bottom = (uint) row_top+1 ;
 					uint col_left = (uint) i%table1.NColumns;
 					uint col_right = (uint) col_left+1 ;
-					
+
 					l.Markup = sections.GetName(i);
 					l.Justify = Justification.Center;
 					l.Ellipsize = Pango.EllipsizeMode.Middle;
-					
+
 					b.Add(l);
 					b.Name = i.ToString();
-					b.Clicked += new EventHandler (OnButtonClicked);
+					b.Clicked += new EventHandler(OnButtonClicked);
 					l.Show();
 					b.Show();
-					
-					
-					table1.Attach(b,col_left,col_right,row_top,row_bottom);					
+
+
+					table1.Attach(b,col_left,col_right,row_top,row_bottom);
 				}
-			}			
+			}
 		}
 
 		protected virtual void OnButtonClicked(object sender,  System.EventArgs e)
 		{
 			Widget w = (Button)sender;
 			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(int.Parse(w.Name));			
+				this.NewMarkEvent(int.Parse(w.Name));
 		}
 	}
 }

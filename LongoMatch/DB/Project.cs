@@ -31,16 +31,16 @@ namespace LongoMatch.DB
 {
 
 	/// <summary>
-	/// I hold the information needed by a project and provide persistency using 
-	/// the db4o database. 
+	/// I hold the information needed by a project and provide persistency using
+	/// the db4o database.
 	/// I'm structured in the following way:
 	/// -Project Description (<see cref="LongoMatch.Utils.PreviewMediaFile"/>
-	/// -1 Categories Template	
+	/// -1 Categories Template
 	/// -1 Local Team Template
 	/// -1 Visitor Team Template
 	/// -1 list of <see cref="LongoMatch.TimeNodes.MediaTimeNode"/> for each category
 	/// </summary>
-	/// 
+	///
 	[Serializable]
 	public class Project : IComparable
 	{
@@ -74,7 +74,7 @@ namespace LongoMatch.DB
 		private List<MediaTimeNode>[] dataSectionArray;
 
 		/// <summary>
-		/// Creates a new project 
+		/// Creates a new project
 		/// </summary>
 		/// <param name="file">
 		/// A <see cref="PreviewMediaFile"/>: video file information
@@ -138,7 +138,7 @@ namespace LongoMatch.DB
 
 		#region Properties
 		/// <value>
-		/// Video File 
+		/// Video File
 		/// </value>
 		public PreviewMediaFile File {
 			get {
@@ -148,7 +148,7 @@ namespace LongoMatch.DB
 				file=value;
 			}
 		}
-		
+
 		/// <value>
 		/// Project title
 		/// </value>
@@ -210,7 +210,7 @@ namespace LongoMatch.DB
 		}
 
 		/// <value>
-		/// Local team goals 
+		/// Local team goals
 		/// </value>
 		public int LocalGoals {
 			get {
@@ -222,7 +222,7 @@ namespace LongoMatch.DB
 		}
 
 		/// <value>
-		/// Visitor team goals 
+		/// Visitor team goals
 		/// </value>
 		public int VisitorGoals {
 			get {
@@ -246,7 +246,7 @@ namespace LongoMatch.DB
 		}
 
 		/// <value>
-		/// Categories template 
+		/// Categories template
 		/// </value>
 		public Sections Sections {
 			get {
@@ -258,7 +258,7 @@ namespace LongoMatch.DB
 		}
 
 		/// <value>
-		/// Local team template 
+		/// Local team template
 		/// </value>
 		public TeamTemplate LocalTeamTemplate {
 			get {
@@ -270,7 +270,7 @@ namespace LongoMatch.DB
 		}
 
 		/// <value>
-		/// Visitor team template 
+		/// Visitor team template
 		/// </value>
 		public TeamTemplate VisitorTeamTemplate {
 			get {
@@ -284,7 +284,7 @@ namespace LongoMatch.DB
 
 		#region Public Methods
 		/// <summary>
-		/// Frees all the project's resources helping the GC 
+		/// Frees all the project's resources helping the GC
 		/// </summary>
 		public void Clear() {
 			//Help the GC freeing objects
@@ -299,9 +299,9 @@ namespace LongoMatch.DB
 			visitorTeamTemplate=null;
 			localTeamTemplate=null;
 		}
-		
+
 		/// <summary>
-		/// Adds a new analysis category to the project 
+		/// Adds a new analysis category to the project
 		/// </summary>
 		/// <param name="tn">
 		/// A <see cref="SectionsTimeNode"/>
@@ -316,7 +316,7 @@ namespace LongoMatch.DB
 		/// <param name="tn">
 		/// A <see cref="SectionsTimeNode"/>: category default values
 		/// </param>
-		/// <param name="sectionIndex"> 
+		/// <param name="sectionIndex">
 		/// A <see cref="System.Int32"/>: position index
 		/// </param>
 		public void AddSectionAtPos(SectionsTimeNode tn,int sectionIndex) {
@@ -325,7 +325,7 @@ namespace LongoMatch.DB
 		}
 
 		/// <summary>
-		/// Adds a new play to a given category 
+		/// Adds a new play to a given category
 		/// </summary>
 		/// <param name="dataSection">
 		/// A <see cref="System.Int32"/>: category index
@@ -337,7 +337,7 @@ namespace LongoMatch.DB
 		/// A <see cref="Time"/>: stop time of the play
 		/// </param>
 		/// <param name="thumbnail">
-		/// A <see cref="Pixbuf"/>: snapshot of the play 
+		/// A <see cref="Pixbuf"/>: snapshot of the play
 		/// </param>
 		/// <returns>
 		/// A <see cref="MediaTimeNode"/>: created play
@@ -354,7 +354,7 @@ namespace LongoMatch.DB
 		}
 
 		/// <summary>
-		/// Delete a play from the project 
+		/// Delete a play from the project
 		/// </summary>
 		/// <param name="tNode">
 		/// A <see cref="MediaTimeNode"/>: play to be deleted
@@ -367,20 +367,20 @@ namespace LongoMatch.DB
 		}
 
 		/// <summary>
-		/// Delete a category 
+		/// Delete a category
 		/// </summary>
 		/// <param name="sectionIndex">
 		/// A <see cref="System.Int32"/>: category index
 		/// </param>
 		public void DeleteSection(int sectionIndex) {
 			if (sections.Count == 1)
-				throw new Exception ("You can't remove the last Section");
+				throw new Exception("You can't remove the last Section");
 			sections.RemoveSection(sectionIndex);
 			sectionPlaysList.RemoveAt(sectionIndex);
 		}
 
 		/// <summary>
-		/// Return an array of strings with the categories names 
+		/// Return an array of strings with the categories names
 		/// </summary>
 		/// <returns>
 		/// A <see cref="System.String"/>
@@ -388,9 +388,9 @@ namespace LongoMatch.DB
 		public string[] GetSectionsNames() {
 			return sections.GetSectionsNames();
 		}
-		
+
 		/// <summary>
-		/// Return an array of <see cref="LongoMatch.TimeNodes.Time"/> with 
+		/// Return an array of <see cref="LongoMatch.TimeNodes.Time"/> with
 		/// the categories default lead time
 		/// </summary>
 		/// <returns>
@@ -398,10 +398,10 @@ namespace LongoMatch.DB
 		/// </returns>
 		public Time[] GetSectionsStartTimes() {
 			return sections.GetSectionsStartTimes();
-		}		
-		
+		}
+
 		/// <summary>
-		/// Return an array of <see cref="LongoMatch.TimeNodes.Time"/> with 
+		/// Return an array of <see cref="LongoMatch.TimeNodes.Time"/> with
 		/// the categories default lag time
 		/// </summary>
 		/// <returns>
@@ -412,18 +412,18 @@ namespace LongoMatch.DB
 		}
 
 		/// <summary>
-		/// Returns a <see cref="Gtk.TreeStore"/> in which project categories are 
+		/// Returns a <see cref="Gtk.TreeStore"/> in which project categories are
 		/// root nodes and their respectives plays child nodes
 		/// </summary>
 		/// <returns>
 		/// A <see cref="TreeStore"/>
 		/// </returns>
-		public TreeStore GetModel () {
-			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore (typeof (MediaTimeNode));
+		public TreeStore GetModel() {
+			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore(typeof(MediaTimeNode));
 			for (int i=0;i<sections.Count;i++) {
-				Gtk.TreeIter iter = dataFileListStore.AppendValues (sections.GetTimeNode(i));
+				Gtk.TreeIter iter = dataFileListStore.AppendValues(sections.GetTimeNode(i));
 				foreach (MediaTimeNode tNode in sectionPlaysList[i]) {
-					dataFileListStore.AppendValues (iter,tNode);
+					dataFileListStore.AppendValues(iter,tNode);
 				}
 			}
 			return dataFileListStore;
@@ -436,16 +436,16 @@ namespace LongoMatch.DB
 		/// <returns>
 		/// A <see cref="TreeStore"/>
 		/// </returns>
-		public TreeStore GetLocalTeamModel () {
+		public TreeStore GetLocalTeamModel() {
 			List<TreeIter> itersList = new List<TreeIter>();
-			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore (typeof (object));
+			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore(typeof(object));
 			for (int i=0;i<localTeamTemplate.PlayersCount;i++) {
-				itersList.Add(dataFileListStore.AppendValues (localTeamTemplate.GetPlayer(i)));
+				itersList.Add(dataFileListStore.AppendValues(localTeamTemplate.GetPlayer(i)));
 			}
 			for (int i=0;i<sections.Count;i++) {
 				foreach (MediaTimeNode tNode in sectionPlaysList[i]) {
 					foreach (int player in tNode.LocalPlayers)
-						dataFileListStore.AppendValues (itersList[player],tNode);
+						dataFileListStore.AppendValues(itersList[player],tNode);
 				}
 			}
 			return dataFileListStore;
@@ -458,21 +458,21 @@ namespace LongoMatch.DB
 		/// <returns>
 		/// A <see cref="TreeStore"/>
 		/// </returns>
-		public TreeStore GetVisitorTeamModel () {
+		public TreeStore GetVisitorTeamModel() {
 			List<TreeIter> itersList = new List<TreeIter>();
-			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore (typeof (object));
+			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore(typeof(object));
 			for (int i=0;i<visitorTeamTemplate.PlayersCount;i++) {
-				itersList.Add(dataFileListStore.AppendValues (visitorTeamTemplate.GetPlayer(i)));
+				itersList.Add(dataFileListStore.AppendValues(visitorTeamTemplate.GetPlayer(i)));
 			}
 			for (int i=0;i<sections.Count;i++) {
 				foreach (MediaTimeNode tNode in sectionPlaysList[i]) {
 					foreach (int player in tNode.VisitorPlayers)
-						dataFileListStore.AppendValues (itersList[player],tNode);
+						dataFileListStore.AppendValues(itersList[player],tNode);
 				}
 			}
 			return dataFileListStore;
 		}
-		
+
 		/// <summary>
 		/// Returns a list of plays' lists. Actually used by the timeline
 		/// </summary>

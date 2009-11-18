@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -24,63 +24,63 @@ using System.Xml;
 
 namespace LongoMatch.IO
 {
-	
-	
+
+
 	public class XMLReader
 	{
 		private XmlDocument configXml;
-		
+
 		#region Constructors
 		public XMLReader(string filePath)
 		{
 			configXml = new XmlDocument();
-			if (!File.Exists(filePath)){
+			if (!File.Exists(filePath)) {
 				//manejar el error!!!
 			}
-			
+
 			configXml.Load(filePath);
 		}
 		#endregion
 		#region Public methods
-		
-		public string GetStringValue(string section, string clave) 
-		{    
-    		XmlNode n;
-    		n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");
-			if (n!=null)
-    		 return  (string)(n.Attributes["value"].Value);
-    		else return null;			
-		}
-		
-		public int GetIntValue(string section, string clave) 
-		{    
-    		XmlNode n;
-    		n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");
-			if (n != null){
-				object result = n.Attributes["value"].Value;				
-				return int.Parse(result.ToString());
-    		}
-			else return -1;
-			
-		}
-		public bool GetBoolValue(string section, string clave){
-			XmlNode n;
-    		n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");
 
-			if (n != null){
+		public string GetStringValue(string section, string clave)
+		{
+			XmlNode n;
+			n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");
+			if (n!=null)
+				return (string)(n.Attributes["value"].Value);
+			else return null;
+		}
+
+		public int GetIntValue(string section, string clave)
+		{
+			XmlNode n;
+			n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");
+			if (n != null) {
+				object result = n.Attributes["value"].Value;
+				return int.Parse(result.ToString());
+			}
+			else return -1;
+
+		}
+		public bool GetBoolValue(string section, string clave) {
+			XmlNode n;
+			n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");
+
+			if (n != null) {
 				object result = n.Attributes["value"].Value;
 
 				return bool.Parse(result.ToString());
-    		}
+			}
 			else return false;
 		}
-		public ushort GetUShortValue(string section, string clave){
+		public ushort GetUShortValue(string section, string clave) {
 			XmlNode n;
-    		n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");
-			if (n != null){
-				object result = n.Attributes["value"].Value;				
+			n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");
+			if (n != null) {
+				object result = n.Attributes["value"].Value;
 				return ushort.Parse(result.ToString());
-    		}
+			}
 			else return 254;
 		}
 		#endregion

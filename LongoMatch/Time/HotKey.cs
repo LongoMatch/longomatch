@@ -103,7 +103,7 @@ namespace LongoMatch.TimeNodes
 		#endregion
 
 		#region Overrides
-		public override bool Equals (object obj)
+		public override bool Equals(object obj)
 		{
 			HotKey hotkey= obj as HotKey;
 			if (hotkey != null)
@@ -112,12 +112,12 @@ namespace LongoMatch.TimeNodes
 				return false;
 		}
 
-		public override int GetHashCode ()
+		public override int GetHashCode()
 		{
 			return key ^ modifier;
 		}
 
-		public override string ToString ()
+		public override string ToString()
 		{
 			string modifierS = Catalog.GetString("none");
 			if (!Defined)

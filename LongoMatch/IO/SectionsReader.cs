@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -28,32 +28,32 @@ using LongoMatch.TimeNodes;
 
 namespace LongoMatch.IO
 {
-	
-	
+
+
 	public class SectionsReader : XMLReader
 	{
-		
-#region Constructors
-		
-		public SectionsReader(string filePath) : base (filePath) 
-		{						
+
+		#region Constructors
+
+		public SectionsReader(string filePath) : base(filePath)
+		{
 		}
-#endregion		
-		
-#region Private methods
-		private string GetName(int section){
+		#endregion
+
+		#region Private methods
+		private string GetName(int section) {
 			return this.GetStringValue("configuration","Name"+(section));
 		}
-		
-		private Time GetStartTime(int section){
+
+		private Time GetStartTime(int section) {
 			return new Time(GetIntValue("configuration","Start"+(section))*Time.SECONDS_TO_TIME);
 		}
-		
-		private Time GetStopTime(int section){
+
+		private Time GetStopTime(int section) {
 			return new Time(GetIntValue("configuration","Stop"+(section))*Time.SECONDS_TO_TIME);
-		}		
-		
-		private Color GetColor(int section){
+		}
+
+		private Color GetColor(int section) {
 			ushort red,green,blue;
 			red = GetUShortValue("configuration","Red"+(section));
 			green = GetUShortValue("configuration","Green"+(section));
@@ -62,27 +62,27 @@ namespace LongoMatch.IO
 			col.Red = red;
 			col.Blue = blue;
 			col.Green = green;
-			return col;		
+			return col;
 		}
-		
-		private HotKey GetHotKey(int section){
+
+		private HotKey GetHotKey(int section) {
 			HotKey hotkey = new HotKey();
 			hotkey.Modifier= (ModifierType)GetIntValue("configuration","Modifier"+(section));
 			hotkey.Key = (Gdk.Key)GetIntValue("configuration","Key"+(section));
 			return hotkey;
 		}
-			
-#endregion		
 
-#region Public methods
-		public Sections GetSections(){
+		#endregion
+
+		#region Public methods
+		public Sections GetSections() {
 			Sections sections = new Sections();
 			bool tryNext = true;
 			string name;
-			SectionsTimeNode tn;			
-			for (int i=1;tryNext;i++){
+			SectionsTimeNode tn;
+			for (int i=1;tryNext;i++) {
 				name = GetName(i);
-				if (name != null){
+				if (name != null) {
 					tn = new SectionsTimeNode(name, GetStartTime(i), GetStopTime(i), GetHotKey(i), GetColor(i));
 					sections.AddSection(tn);
 				}
@@ -90,7 +90,7 @@ namespace LongoMatch.IO
 			}
 			return sections;
 		}
-#endregion
-		
+		#endregion
+
 	}
 }

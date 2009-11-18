@@ -10,7 +10,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -24,48 +24,50 @@ using LongoMatch.TimeNodes;
 
 namespace LongoMatch.Gui.Dialog
 {
-	
-	
+
+
 	public partial class HotKeySelectorDialog : Gtk.Dialog
 	{
 		HotKey hotKey;
-		
-#region Constructors
-		
+
+		#region Constructors
+
 		public HotKeySelectorDialog()
 		{
 			hotKey = new HotKey();
 			this.Build();
 		}
-#endregion
-		
-#region Properties
-		
-		public HotKey HotKey{
-			get{return this.hotKey;}
-		}		
-#endregion
-		
-#region Overrides
-		
-		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
+		#endregion
+
+		#region Properties
+
+		public HotKey HotKey {
+			get {
+				return this.hotKey;
+			}
+		}
+		#endregion
+
+		#region Overrides
+
+		protected override bool OnKeyPressEvent(Gdk.EventKey evnt)
 		{
 			Gdk.Key key = evnt.Key;
 			ModifierType modifier = evnt.State;
 
 			if ((modifier & (ModifierType.Mod1Mask | ModifierType.ShiftMask)) != 0
-				&& key != Gdk.Key.Shift_L 
-			    && key != Gdk.Key.Shift_R
-			    && key != Gdk.Key.Alt_L  )
+			                && key != Gdk.Key.Shift_L
+			                && key != Gdk.Key.Shift_R
+			                && key != Gdk.Key.Alt_L)
 			{
 				hotKey.Key = key;
 				hotKey.Modifier = modifier & (ModifierType.Mod1Mask | ModifierType.ShiftMask);
-				this.Respond (ResponseType.Ok);
+				this.Respond(ResponseType.Ok);
 			}
-			
-			return base.OnKeyPressEvent (evnt);
+
+			return base.OnKeyPressEvent(evnt);
 		}
-#endregion
+		#endregion
 
 	}
 }

@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -23,33 +23,33 @@ using LongoMatch.Handlers;
 
 namespace LongoMatch.Gui.Popup
 {
-	
+
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(false)]
 	public partial class CalendarPopup : Gtk.Window
 	{
- 
-		public event DateSelectedHandler DateSelectedEvent;		
+
+		public event DateSelectedHandler DateSelectedEvent;
 		private DateTime selectedDate;
 
-		
-		public CalendarPopup() : 
-				base(Gtk.WindowType.Toplevel)
+
+		public CalendarPopup() :
+		base(Gtk.WindowType.Toplevel)
 		{
 			this.Build();
-			
+
 		}
-		
-		public DateTime getSelectedDate(){
+
+		public DateTime getSelectedDate() {
 			return this.selectedDate;
 		}
 
-		protected virtual void OnFocusOutEvent (object o, Gtk.FocusOutEventArgs args)
+		protected virtual void OnFocusOutEvent(object o, Gtk.FocusOutEventArgs args)
 		{
 			this.Hide();
-		}	
+		}
 
-		protected virtual void OnCalendar1DaySelectedDoubleClick (object sender, System.EventArgs e)
+		protected virtual void OnCalendar1DaySelectedDoubleClick(object sender, System.EventArgs e)
 		{
 			this.selectedDate = calendar1.Date;
 			this.DateSelectedEvent(this.selectedDate);

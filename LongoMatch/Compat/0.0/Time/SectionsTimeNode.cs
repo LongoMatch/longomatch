@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -22,20 +22,24 @@ using System;
 
 namespace LongoMatch.Compat.v00.TimeNodes
 {
-	
-	
+
+
 	public class SectionsTimeNode:TimeNode
 	{
 		bool visible;
-		
-		public SectionsTimeNode(String name,Time start, Time stop,bool visible):base (name,start,stop)
+
+		public SectionsTimeNode(String name,Time start, Time stop,bool visible):base(name,start,stop)
 		{
 			this.visible = visible;
 		}
-		
-		public bool Visible{
-			get{return this.visible;}
-			set{this.visible = value;}
+
+		public bool Visible {
+			get {
+				return this.visible;
+			}
+			set {
+				this.visible = value;
+			}
 		}
 	}
 }

@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 //Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -27,8 +27,8 @@ using LongoMatch.TimeNodes;
 
 namespace LongoMatch.Gui.Component
 {
-	
-	
+
+
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class PlaysListTreeWidget : Gtk.Bin
@@ -43,96 +43,99 @@ namespace LongoMatch.Gui.Component
 
 		private Project project;
 
-		
+
 		public PlaysListTreeWidget()
-		{		
-			this.Build();		    
-			
+		{
+			this.Build();
+
 		}
-		
-		public void DeletePlay (MediaTimeNode play, int section){
-			if (project != null){
+
+		public void DeletePlay(MediaTimeNode play, int section) {
+			if (project != null) {
 				TreeIter iter;
 				TreeStore model = (TreeStore)treeview.Model;
-				model.GetIterFromString (out iter, section.ToString());
-				TreeIter child;						
+				model.GetIterFromString(out iter, section.ToString());
+				TreeIter child;
 				model.IterChildren(out child, iter);
 				// Searching the TimeNode to remove it
-				while (model.IterIsValid(child)){
-				    MediaTimeNode mtn = (MediaTimeNode) model.GetValue( child,0);
-					if(mtn == play){
-						model.Remove (ref child);
+				while (model.IterIsValid(child)) {
+					MediaTimeNode mtn = (MediaTimeNode) model.GetValue(child,0);
+					if (mtn == play) {
+						model.Remove(ref child);
 						break;
 					}
 					TreeIter prev = child;
 					model.IterNext(ref child);
 					if (prev.Equals(child))
 						break;
-				}				
-			}			
-		}		
-		
-		public void AddPlay(MediaTimeNode play,int  section){
-			if (project != null){
+				}
+			}
+		}
+
+		public void AddPlay(MediaTimeNode play,int  section) {
+			if (project != null) {
 				TreeIter iter;
 				TreeStore model = (TreeStore)treeview.Model;
-				model.GetIterFromString (out iter, section.ToString());
-				TimeNode stNode = (TimeNode)model.GetValue (iter,0);
+				model.GetIterFromString(out iter, section.ToString());
+				TimeNode stNode = (TimeNode)model.GetValue(iter,0);
 				if (project.Sections.GetTimeNode(section) == stNode)
-					model.AppendValues (iter,play);
-			}		
+					model.AppendValues(iter,play);
+			}
 		}
-		
-			
-		public Project Project{
-			set{
+
+
+		public Project Project {
+			set {
 				project = value;
-				if (project != null){					
+				if (project != null) {
 					treeview.Model = project.GetModel();
 					treeview.Colors = project.Sections.GetColors();
 				}
-				else{
+				else {
 					treeview.Model = null;
 					treeview.Colors = null;
 				}
-			}			
-		}	
-		
-		public bool PlayListLoaded{
-			set{treeview.PlayListLoaded=value;}
+			}
 		}
 
-		protected virtual void OnTimeNodeChanged(TimeNode tNode,object val){
+		public bool PlayListLoaded {
+			set {
+				treeview.PlayListLoaded=value;
+			}
+		}
+
+		protected virtual void OnTimeNodeChanged(TimeNode tNode,object val) {
 			if (TimeNodeChanged != null)
 				TimeNodeChanged(tNode,val);
 		}
-		
-		protected virtual void OnTimeNodeSelected(MediaTimeNode tNode){
+
+		protected virtual void OnTimeNodeSelected(MediaTimeNode tNode) {
 			if (TimeNodeSelected != null)
 				TimeNodeSelected(tNode);
 		}
-		
-		protected virtual void OnTimeNodeDeleted(MediaTimeNode tNode, int section){
+
+		protected virtual void OnTimeNodeDeleted(MediaTimeNode tNode, int section) {
 			if (TimeNodeDeleted != null)
 				TimeNodeDeleted(tNode,section);
 		}
 
-		protected virtual void OnPlayListNodeAdded (MediaTimeNode tNode)
+		protected virtual void OnPlayListNodeAdded(MediaTimeNode tNode)
 		{
 			if (PlayListNodeAdded != null)
 				PlayListNodeAdded(tNode);
 		}
 
-		protected virtual void OnTreeviewSnapshotSeriesEvent (LongoMatch.TimeNodes.MediaTimeNode tNode)
+		protected virtual void OnTreeviewSnapshotSeriesEvent(LongoMatch.TimeNodes.MediaTimeNode tNode)
 		{
 			if (SnapshotSeriesEvent != null)
 				SnapshotSeriesEvent(tNode);
-		}		
-		
-		protected virtual void OnTreeviewPlayersTagged (LongoMatch.TimeNodes.MediaTimeNode tNode, LongoMatch.TimeNodes.Team team)
+		}
+
+
+		protected virtual void OnTreeviewPlayersTagged(LongoMatch.TimeNodes.MediaTimeNode tNode, LongoMatch.TimeNodes.Team team)
 		{
 			if (PlayersTagged != null)
 				PlayersTagged(tNode,team);
-		}		
+		}
 	}
 }

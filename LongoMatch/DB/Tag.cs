@@ -43,7 +43,7 @@ namespace LongoMatch.DB
 			return (this.text == tagComp.Text);
 		}
 
-		public override bool Equals (object obj)
+		public override bool Equals(object obj)
 		{
 			Tag tag= obj as Tag;
 			if (tag != null)
@@ -52,7 +52,7 @@ namespace LongoMatch.DB
 				return false;
 		}
 
-		public override int GetHashCode ()
+		public override int GetHashCode()
 		{
 			return text.CompareTo("XXXXX") ^ 3 ;
 		}

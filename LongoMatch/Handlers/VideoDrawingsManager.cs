@@ -1,20 +1,20 @@
-// 
+//
 //  Copyright (C) 2009 Andoni Morales Alastruey
-// 
+//
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation; either version 2 of the License, or
 //  (at your option) any later version.
-// 
+//
 //  This program is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 //  GNU General Public License for more details.
-//  
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-// 
+//
 
 using System;
 using System.Collections.Generic;
@@ -28,8 +28,8 @@ using LongoMatch.Video.Handlers;
 
 namespace LongoMatch.Handlers
 {
-	
-	
+
+
 	public class VideoDrawingsManager
 	{
 		private PlayerBin player;
@@ -37,19 +37,19 @@ namespace LongoMatch.Handlers
 		private bool inKeyFrame;
 		private bool canStop;
 		private MediaTimeNode loadedPlay;
-					
+
 		public VideoDrawingsManager(PlayerBin player)
 		{
 			this.player = player;
 			timeout = 0;
 		}
-		
-		~ VideoDrawingsManager(){
+
+		~ VideoDrawingsManager() {
 			StopClock();
 		}
-		
-		public MediaTimeNode Play{
-			set{
+
+		public MediaTimeNode Play {
+			set {
 				loadedPlay = value;
 				inKeyFrame = false;
 				canStop = true;
@@ -58,102 +58,104 @@ namespace LongoMatch.Handlers
 				StartClock();
 			}
 		}
-		
-		private Drawing Drawing{
-			get{ return loadedPlay.KeyFrameDrawing;}
+
+		private Drawing Drawing {
+			get {
+				return loadedPlay.KeyFrameDrawing;
+			}
 		}
-		
-		private void StartClock(){
+
+		private void StartClock() {
 			if (timeout ==0)
-				timeout = GLib.Timeout.Add (20,CheckStopTime);
+				timeout = GLib.Timeout.Add(20,CheckStopTime);
 		}
-		
-		private void StopClock(){
-			if (timeout != 0){
+
+		private void StopClock() {
+			if (timeout != 0) {
 				GLib.Source.Remove(timeout);
 				timeout = 0;
 			}
 		}
-		
-		private void ConnectSignals(){
+
+		private void ConnectSignals() {
 			player.StateChanged += OnStateChanged;
 			player.SeekEvent += OnSeekEvent;
-			player.SegmentClosedEvent += OnSegmentCloseEvent;			
+			player.SegmentClosedEvent += OnSegmentCloseEvent;
 		}
-		
-		private void DisconnectSignals(){
+
+		private void DisconnectSignals() {
 			player.StateChanged -= OnStateChanged;
 			player.SeekEvent -= OnSeekEvent;
-			player.SegmentClosedEvent -= OnSegmentCloseEvent;			
+			player.SegmentClosedEvent -= OnSegmentCloseEvent;
 		}
-		
-		private int NextStopTime(){
+
+		private int NextStopTime() {
 			return Drawing.StopTime;
 		}
-				
-		private void PrintDrawing(){
+
+		private void PrintDrawing() {
 			Pixbuf frame = null;
 			Pixbuf drawing = null;
 
 			player.Pause();
 			player.SeekInSegment(Drawing.StopTime);
 			while (frame == null)
-				frame = player.CurrentFrame;			
+				frame = player.CurrentFrame;
 			player.LogoPixbuf = frame;
 			drawing = Drawing.Pixbuf;
-			player.DrawingPixbuf = drawing; 
+			player.DrawingPixbuf = drawing;
 			player.LogoMode = true;
 			player.DrawingMode = true;
 			inKeyFrame = true;
 			frame.Dispose();
 			drawing.Dispose();
 		}
-		
-		private void ResetPlayerWindow(){
+
+		private void ResetPlayerWindow() {
 			player.LogoMode = false;
 			player.DrawingMode = false;
 			player.SetLogo(System.IO.Path.Combine(MainClass.ImagesDir(),"background.png"));
 		}
-		
-		private bool CheckStopTime(){
+
+		private bool CheckStopTime() {
 			int currentTime = (int)player.AccurateCurrentTime;
 
 			if (Drawing == null || !canStop)
 				return true;
-			if ((currentTime)>NextStopTime()){
+			if ((currentTime)>NextStopTime()) {
 				StopClock();
 				PrintDrawing();
 			}
-			return true;	
+			return true;
 		}
-		
-		protected virtual void OnStateChanged (object sender, StateChangeArgs args){
+
+		protected virtual void OnStateChanged(object sender, StateChangeArgs args) {
 			//Check if we are currently paused displaying the key frame waiting for the user to
 			//go in to Play. If so we can stop
-			if (inKeyFrame){
+			if (inKeyFrame) {
 				ResetPlayerWindow();
-				inKeyFrame = false;				
+				inKeyFrame = false;
 			}
 		}
-		
-		protected virtual void OnSeekEvent (long time){
+
+		protected virtual void OnSeekEvent(long time) {
 			if (Drawing == null)
 				return;
-			if(inKeyFrame){
+			if (inKeyFrame) {
 				ResetPlayerWindow();
-				inKeyFrame = false;	
+				inKeyFrame = false;
 			}
 			canStop = time < Drawing.StopTime;
 			if (canStop)
 				StartClock();
 			else StopClock();
 		}
-		
-		protected virtual void OnSegmentCloseEvent(){
+
+		protected virtual void OnSegmentCloseEvent() {
 			ResetPlayerWindow();
 			DisconnectSignals();
-			StopClock();			
+			StopClock();
 		}
-		
+
 	}
 }

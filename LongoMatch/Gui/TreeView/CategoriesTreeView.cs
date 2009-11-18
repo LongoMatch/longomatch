@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -27,111 +27,111 @@ using LongoMatch.TimeNodes;
 
 namespace LongoMatch.Gui.Component
 {
-	
-	public delegate void SectionHandler (SectionsTimeNode tNode);
-	
+
+	public delegate void SectionHandler(SectionsTimeNode tNode);
+
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 	public class CategoriesTreeView : Gtk.TreeView
 	{
 		public event SectionHandler SectionClicked;
 		public event SectionHandler SectionSelected;
-		
-		public CategoriesTreeView(){
-			
+
+		public CategoriesTreeView() {
+
 			RowActivated += OnTreeviewRowActivated;
 			CursorChanged += OnCursorChanged;
-			
-			Gtk.TreeViewColumn nameColumn = new Gtk.TreeViewColumn ();
-			nameColumn.Title = Catalog.GetString("Name");
-			Gtk.CellRendererText nameCell = new Gtk.CellRendererText ();
-			nameColumn.PackStart (nameCell, true);
 
-			Gtk.TreeViewColumn startTimeColumn = new Gtk.TreeViewColumn ();
+			Gtk.TreeViewColumn nameColumn = new Gtk.TreeViewColumn();
+			nameColumn.Title = Catalog.GetString("Name");
+			Gtk.CellRendererText nameCell = new Gtk.CellRendererText();
+			nameColumn.PackStart(nameCell, true);
+
+			Gtk.TreeViewColumn startTimeColumn = new Gtk.TreeViewColumn();
 			startTimeColumn.Title = Catalog.GetString("Lead Time");
-			Gtk.CellRendererText startTimeCell = new Gtk.CellRendererText ();
-			startTimeColumn.PackStart (startTimeCell, true);
-			
-			Gtk.TreeViewColumn stopTimeColumn = new Gtk.TreeViewColumn ();
+			Gtk.CellRendererText startTimeCell = new Gtk.CellRendererText();
+			startTimeColumn.PackStart(startTimeCell, true);
+
+			Gtk.TreeViewColumn stopTimeColumn = new Gtk.TreeViewColumn();
 			stopTimeColumn.Title = Catalog.GetString("Lag Time");
-			Gtk.CellRendererText stopTimeCell = new Gtk.CellRendererText ();
-			stopTimeColumn.PackStart (stopTimeCell, true);		
-			
-			Gtk.TreeViewColumn colorColumn = new Gtk.TreeViewColumn ();
+			Gtk.CellRendererText stopTimeCell = new Gtk.CellRendererText();
+			stopTimeColumn.PackStart(stopTimeCell, true);
+
+			Gtk.TreeViewColumn colorColumn = new Gtk.TreeViewColumn();
 			colorColumn.Title = Catalog.GetString("Color");
-			Gtk.CellRendererText colorCell = new Gtk.CellRendererText ();
-			colorColumn.PackStart (colorCell, true);
-			
-			Gtk.TreeViewColumn hotKeyColumn = new Gtk.TreeViewColumn ();
+			Gtk.CellRendererText colorCell = new Gtk.CellRendererText();
+			colorColumn.PackStart(colorCell, true);
+
+			Gtk.TreeViewColumn hotKeyColumn = new Gtk.TreeViewColumn();
 			hotKeyColumn.Title = Catalog.GetString("Hotkey");
-			Gtk.CellRendererText hotKeyCell = new Gtk.CellRendererText ();
-			hotKeyColumn.PackStart (hotKeyCell, true);
-	
-			nameColumn.SetCellDataFunc (nameCell, new Gtk.TreeCellDataFunc (RenderName));
-			startTimeColumn.SetCellDataFunc (startTimeCell, new Gtk.TreeCellDataFunc (RenderStartTime));
-			stopTimeColumn.SetCellDataFunc (stopTimeCell, new Gtk.TreeCellDataFunc (RenderStopTime));
+			Gtk.CellRendererText hotKeyCell = new Gtk.CellRendererText();
+			hotKeyColumn.PackStart(hotKeyCell, true);
+
+			nameColumn.SetCellDataFunc(nameCell, new Gtk.TreeCellDataFunc(RenderName));
+			startTimeColumn.SetCellDataFunc(startTimeCell, new Gtk.TreeCellDataFunc(RenderStartTime));
+			stopTimeColumn.SetCellDataFunc(stopTimeCell, new Gtk.TreeCellDataFunc(RenderStopTime));
 			colorColumn.SetCellDataFunc(colorCell, new Gtk.TreeCellDataFunc(RenderColor));
 			hotKeyColumn.SetCellDataFunc(hotKeyCell, new Gtk.TreeCellDataFunc(RenderHotKey));
 
-			AppendColumn (nameColumn);
-			AppendColumn (startTimeColumn);
-			AppendColumn (stopTimeColumn);
+			AppendColumn(nameColumn);
+			AppendColumn(startTimeColumn);
+			AppendColumn(stopTimeColumn);
 			AppendColumn(colorColumn);
-			AppendColumn(hotKeyColumn);		
-		}					
-			
-		private void RenderName (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
-		{
-			SectionsTimeNode tNode = (SectionsTimeNode) model.GetValue (iter, 0);
-	 
-			(cell as Gtk.CellRendererText).Text = tNode.Name;						
+			AppendColumn(hotKeyColumn);
 		}
- 
-		
-		private void RenderStartTime (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
+
+		private void RenderName(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			SectionsTimeNode tNode = (SectionsTimeNode) model.GetValue (iter, 0);
-			
+			SectionsTimeNode tNode = (SectionsTimeNode) model.GetValue(iter, 0);
+
+			(cell as Gtk.CellRendererText).Text = tNode.Name;
+		}
+
+
+		private void RenderStartTime(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
+		{
+			SectionsTimeNode tNode = (SectionsTimeNode) model.GetValue(iter, 0);
+
 			(cell as Gtk.CellRendererText).Text =tNode.Start.Seconds.ToString();
 		}
-		
-		private void RenderStopTime (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
+
+		private void RenderStopTime(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			SectionsTimeNode tNode = (SectionsTimeNode) model.GetValue (iter, 0);
-			
+			SectionsTimeNode tNode = (SectionsTimeNode) model.GetValue(iter, 0);
+
 			(cell as Gtk.CellRendererText).Text = tNode.Stop.Seconds.ToString();
-		}	
-		
-		private void RenderColor (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
+		}
+
+		private void RenderColor(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			SectionsTimeNode tNode = (SectionsTimeNode) model.GetValue (iter, 0);
-			
+			SectionsTimeNode tNode = (SectionsTimeNode) model.GetValue(iter, 0);
+
 			(cell as Gtk.CellRendererText).CellBackgroundGdk = tNode.Color;
-		}	
-		
-		private void RenderHotKey (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
+		}
+
+		private void RenderHotKey(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			SectionsTimeNode tNode = (SectionsTimeNode) Model.GetValue (iter, 0);
-			
-			(cell as Gtk.CellRendererText).Text = tNode.HotKey.ToString();			
-		}	
-		
-		protected virtual void OnCursorChanged (object o, System.EventArgs e){
+			SectionsTimeNode tNode = (SectionsTimeNode) Model.GetValue(iter, 0);
+
+			(cell as Gtk.CellRendererText).Text = tNode.HotKey.ToString();
+		}
+
+		protected virtual void OnCursorChanged(object o, System.EventArgs e) {
 			TreeIter iter;
 			Selection.GetSelected(out iter);
-			SectionsTimeNode tNode = (SectionsTimeNode) Model.GetValue (iter, 0);
+			SectionsTimeNode tNode = (SectionsTimeNode) Model.GetValue(iter, 0);
 			if (SectionSelected != null)
 				SectionSelected(tNode);
 		}
-		
+
 		protected virtual void OnTreeviewRowActivated(object o, Gtk.RowActivatedArgs args)
 		{
 			Gtk.TreeIter iter;
-			Model.GetIter (out iter, args.Path);
-			SectionsTimeNode tNode = (SectionsTimeNode)Model.GetValue (iter, 0);
-			
+			Model.GetIter(out iter, args.Path);
+			SectionsTimeNode tNode = (SectionsTimeNode)Model.GetValue(iter, 0);
+
 			if (SectionClicked != null)
-				SectionClicked(tNode);				
+				SectionClicked(tNode);
 		}
 	}
 }

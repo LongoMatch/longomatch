@@ -31,7 +31,7 @@ namespace LongoMatch.DB
 			tagsList = new List<Tag>();
 		}
 
-		public bool AddTag (Tag tag) {
+		public bool AddTag(Tag tag) {
 			if (tagsList.Contains(tag))
 				return false;
 			else
@@ -39,7 +39,7 @@ namespace LongoMatch.DB
 			return true;
 		}
 
-		public bool removeTag (Tag tag) {
+		public bool removeTag(Tag tag) {
 			return tagsList.Remove(tag);
 		}
 	}

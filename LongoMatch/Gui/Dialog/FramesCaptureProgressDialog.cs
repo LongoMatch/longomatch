@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -27,42 +27,42 @@ using LongoMatch.Video.Handlers;
 
 namespace LongoMatch.Gui.Dialog
 {
-	
+
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(false)]
 	public partial class FramesCaptureProgressDialog : Gtk.Dialog
 	{
-		private FramesSeriesCapturer capturer;		
-		
+		private FramesSeriesCapturer capturer;
+
 		public FramesCaptureProgressDialog(FramesSeriesCapturer capturer)
 		{
 			this.Build();
 			this.Deletable = false;
 			this.capturer = capturer;
-			capturer.Progress += new FramesProgressHandler(Update);			
-			capturer.Start();	
-		}				
-		
-		protected virtual void Update (int actual, int total,Pixbuf frame){
-			if (actual <= total){
+			capturer.Progress += new FramesProgressHandler(Update);
+			capturer.Start();
+		}
+
+		protected virtual void Update(int actual, int total,Pixbuf frame) {
+			if (actual <= total) {
 				progressbar.Text= Catalog.GetString("Capturing frame: ")+actual+"/"+total;
 				progressbar.Fraction = (double)actual/(double)total;
-				if (frame != null){
+				if (frame != null) {
 					if (image.Pixbuf != null)
 						image.Pixbuf.Dispose();
 					image.Pixbuf = frame;
 				}
 			}
-			if (actual == total){
+			if (actual == total) {
 				progressbar.Text= Catalog.GetString("Done");
 				cancelbutton.Visible = false;
 				okbutton.Visible = true;
-			}				
+			}
 		}
 
-		protected virtual void OnButtonCancelClicked (object sender, System.EventArgs e)
+		protected virtual void OnButtonCancelClicked(object sender, System.EventArgs e)
 		{
 			capturer.Cancel();
-		}				
+		}
 	}
 }

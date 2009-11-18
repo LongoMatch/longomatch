@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -29,143 +29,147 @@ using LongoMatch.Compat.v00.TimeNodes;
 
 namespace LongoMatch.Compat.v00.PlayList
 {
-	
-	
+
+
 	public class PlayList: IPlayList
 	{
-		
+
 		private  List<PlayListTimeNode> list;
-		private static XmlSerializer ser; 
+		private static XmlSerializer ser;
 		private string filename = null;
 		private int indexSelection = 0;
-		
-		
-		public PlayList(){
+
+
+		public PlayList() {
 			ser = new XmlSerializer(typeof(List<PlayListTimeNode>),new Type[] {typeof(PlayListTimeNode)});
 			list = new List<PlayListTimeNode>();
 		}
-		
+
 		public PlayList(string file)
-		{				
+		{
 			ser = new XmlSerializer(typeof(List<PlayListTimeNode>),new Type[] {typeof(PlayListTimeNode)});
-		
+
 			//For new Play List
-			if (!System.IO.File.Exists(file)){
-			    list = new List<PlayListTimeNode>();
+			if (!System.IO.File.Exists(file)) {
+				list = new List<PlayListTimeNode>();
 				filename = file;
 			}
 			else
-				this.Load(file);			
+				this.Load(file);
 		}
-		
+
 		public int Count {
-			get{return this.list.Count;}
+			get {
+				return this.list.Count;
+			}
 		}
-		
-		public void Load(string file){
-			
-			using(FileStream strm = new FileStream(file, FileMode.Open, FileAccess.Read)) 
+
+		public void Load(string file) {
+
+			using(FileStream strm = new FileStream(file, FileMode.Open, FileAccess.Read))
 			{
-				list = ser.Deserialize(strm) as List<PlayListTimeNode>; 
-			}		
-			foreach (PlayListTimeNode plNode in list){
+				list = ser.Deserialize(strm) as List<PlayListTimeNode>;
+			}
+			foreach (PlayListTimeNode plNode in list) {
 				plNode.Valid = System.IO.File.Exists(plNode.FileName);
 			}
 			this.filename = file;
 		}
-		
-		public void Save(){
+
+		public void Save() {
 			this.Save(this.filename);
 		}
-		
-		public void Save(string file){
-			file = Path.ChangeExtension(file,"lgm");			
-			using (FileStream strm = new FileStream(file, FileMode.Create, FileAccess.Write))
+
+		public void Save(string file) {
+			file = Path.ChangeExtension(file,"lgm");
+			using(FileStream strm = new FileStream(file, FileMode.Create, FileAccess.Write))
 			{
 				ser.Serialize(strm, list);
 			}
-		} 
+		}
 
-		public bool isLoaded(){
+		public bool isLoaded() {
 			return this.filename != null;
 		}
-		
-		public int GetCurrentIndex(){
+
+		public int GetCurrentIndex() {
 			return this.indexSelection;
 		}
-		
-		public PlayListTimeNode Next(){
-			
+
+		public PlayListTimeNode Next() {
+
 			if (this.HasNext())
-				this.indexSelection++;	
+				this.indexSelection++;
 			return list[indexSelection];
 		}
-		
-		public PlayListTimeNode Prev(){
+
+		public PlayListTimeNode Prev() {
 			if (this.HasPrev())
 				this.indexSelection--;
 			return list[indexSelection];
 		}
-		
-		public void Add (PlayListTimeNode plNode){
+
+		public void Add(PlayListTimeNode plNode) {
 			this.list.Add(plNode);
 		}
-		
-		public void Remove(PlayListTimeNode plNode){
-			
+
+		public void Remove(PlayListTimeNode plNode) {
+
 			this.list.Remove(plNode);
 			if (this.GetCurrentIndex() >= list.Count)
 				this.indexSelection --;
 		}
-		
-		public PlayListTimeNode Select (int index){
+
+		public PlayListTimeNode Select(int index) {
 			this.indexSelection = index;
 			return this.list[index];
 		}
-		
-		public bool HasNext(){
+
+		public bool HasNext() {
 			return this.indexSelection < list.Count-1;
 		}
-		
-		public bool HasPrev(){
+
+		public bool HasPrev() {
 			return ! this.indexSelection.Equals(0);
 		}
-		
-		
-		public string File{
-			get {return this.filename;}
+
+
+		public string File {
+			get {
+				return this.filename;
+			}
 		}
-		
-		public ListStore GetModel (){
-			Gtk.ListStore listStore = new ListStore (typeof (PlayListTimeNode));
-			foreach (PlayListTimeNode plNode in list){
-				listStore.AppendValues (plNode);							
+
+		public ListStore GetModel() {
+			Gtk.ListStore listStore = new ListStore(typeof(PlayListTimeNode));
+			foreach (PlayListTimeNode plNode in list) {
+				listStore.AppendValues(plNode);
 			}
 			return listStore;
 		}
-		
-		
-		public void SetModel(ListStore listStore){
+
+
+		public void SetModel(ListStore listStore) {
 			TreeIter iter ;
 			listStore.GetIterFirst(out iter);
 			this.list.Clear();
-			while (listStore.IterIsValid(iter)){
-				this.list.Add(listStore.GetValue (iter, 0) as PlayListTimeNode);
+			while (listStore.IterIsValid(iter)) {
+				this.list.Add(listStore.GetValue(iter, 0) as PlayListTimeNode);
 				listStore.IterNext(ref iter);
 			}
-			
+
 		}
-		
-		public IEnumerator GetEnumerator(){
+
+		public IEnumerator GetEnumerator() {
 			return this.list.GetEnumerator();
 		}
-		
-		public IPlayList Copy(){
+
+		public IPlayList Copy() {
 			return (IPlayList)(this.MemberwiseClone());
 		}
-	
-	
-		
-		
+
+
+
+
 	}
 }

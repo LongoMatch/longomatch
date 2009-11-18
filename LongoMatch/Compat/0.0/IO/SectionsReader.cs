@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -28,51 +28,51 @@ using LongoMatch.Compat.v00.TimeNodes;
 
 namespace LongoMatch.Compat.v00.IO
 {
-	
-	
+
+
 	public class SectionsReader : LongoMatch.IO.XMLReader
 	{
-			
-		public SectionsReader(string filePath) : base (filePath) 
-		{						
+
+		public SectionsReader(string filePath) : base(filePath)
+		{
 		}
-		
-		private String[] GetNames(){
+
+		private String[] GetNames() {
 			String[] names = new String[20];
-			for (int i=0;i<20;i++){
+			for (int i=0;i<20;i++) {
 				names[i] = this.GetStringValue("configuration","Name"+(i+1));
 			}
 			return names;
 		}
-		
-		private Time[] GetStartTimes(){
+
+		private Time[] GetStartTimes() {
 			Time[] startTimes = new Time [20];
-			for (int i=0;i<20;i++){				
-				startTimes[i] = new Time(GetIntValue("configuration","Start"+(i+1))*Time.SECONDS_TO_TIME);		
+			for (int i=0;i<20;i++) {
+				startTimes[i] = new Time(GetIntValue("configuration","Start"+(i+1))*Time.SECONDS_TO_TIME);
 			}
-			return startTimes;		
+			return startTimes;
 		}
-		
-		private Time[] GetStopTimes(){
+
+		private Time[] GetStopTimes() {
 			Time[] stopTimes = new Time [20];
-			for (int i=0;i<20;i++){
+			for (int i=0;i<20;i++) {
 				stopTimes[i] = new Time(GetIntValue("configuration","Stop"+(i+1))*Time.SECONDS_TO_TIME);
 			}
-			return stopTimes;		
+			return stopTimes;
 		}
-		
-		private bool[] GetVisibility(){
+
+		private bool[] GetVisibility() {
 			bool[] visibility = new bool [20];
-			for (int i=0;i<20;i++){
+			for (int i=0;i<20;i++) {
 				visibility[i] = GetBoolValue("configuration","Visible"+(i+1));
 			}
-			return visibility;			
+			return visibility;
 		}
-		
-		private Color[] GetColors(){
+
+		private Color[] GetColors() {
 			Color[] colors = new Color[20];
 			ushort red,green,blue;
-			for (int i=0;i<20;i++){
+			for (int i=0;i<20;i++) {
 				red = GetUShortValue("configuration","Red"+(i+1));
 				green = GetUShortValue("configuration","Green"+(i+1));
 				blue = GetUShortValue("configuration","Blue"+(i+1));
@@ -80,19 +80,19 @@ namespace LongoMatch.Compat.v00.IO
 				col.Red = red;
 				col.Blue = blue;
 				col.Green = green;
-				colors[i] = col;					
+				colors[i] = col;
 			}
-			return colors;			
+			return colors;
 		}
-		
-		public Sections GetSections(){
+
+		public Sections GetSections() {
 			Sections sections = new Sections(20);
-			this.GetStartTimes();		
+			this.GetStartTimes();
 			sections.SetTimeNodes(this.GetNames(),this.GetStartTimes(),this.GetStopTimes(),this.GetVisibility());
 			sections.Colors = this.GetColors();
 			return sections;
 		}
-		
-		
+
+
 	}
 }

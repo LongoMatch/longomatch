@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -22,7 +22,7 @@ using System;
 
 namespace LongoMatch.Compat.v00.TimeNodes
 {
-	
+
 	[Serializable]
 	public class TimeNode
 	{
@@ -34,12 +34,12 @@ namespace LongoMatch.Compat.v00.TimeNodes
 
 		//Stores the stop time
 		private Time stop;
-		
-		
-		
-		public TimeNode(){
+
+
+
+		public TimeNode() {
 		}
-		
+
 		public TimeNode(String name,Time start, Time stop)
 		{
 			this.name = name;
@@ -51,21 +51,21 @@ namespace LongoMatch.Compat.v00.TimeNodes
 			else
 				this.stop = stop;
 				*/
-			
-			
+
+
 		}
-		
+
 		/**
 		 * Returns a String object that represents the name of the reference point
-		 * 
+		 *
 		 * @returns name Name of the reference point
 		 */
 		public string Name {
-			get{
-			return this.name;
+			get {
+				return this.name;
 			}
-			set{
-			this.name=value;
+			set {
+				this.name=value;
 
 			}
 		}
@@ -74,61 +74,63 @@ namespace LongoMatch.Compat.v00.TimeNodes
 
 		/**
 		 * Returns a Time object representing the start time of the video sequence
-		 * 
+		 *
 		 * @returns Start time
 		 */
-		public Time Start{
-			get{
-			return this.start;
+		public Time Start {
+			get {
+				return this.start;
 			}
-			
-			set{ 
+
+			set {
 				if (this.Stop != null && value >= this.Stop)
 					this.start = stop-500;
 				else
 					this.start=value;
 			}
-			
+
 		}
 
 		/**
 		 * Returns a Time object representing the stop time of the video sequence
-		 * 
+		 *
 		 * @returns Stop time
 		 */
 		public Time Stop {
-			get{
-			return stop;
+			get {
+				return stop;
 			}
-			set{ 
+			set {
 				if (this.Start != null && value<=this.Start)
 					this.stop =start+500;
 				else
 					this.stop = value;
 			}
 		}
-		
+
 		public Time Duration {
-			get {return Stop-Start;}
+			get {
+				return Stop-Start;
+			}
 		}
-		
-		
+
+
 
 		/**
 		 * Returns a String object that represents the name of the reference point
-		 * 
+		 *
 		 * @returns name Name of the reference point
 		 */
 		public string toString() {
 			return name;
 		}
-		
+
 		public void changeStartStop(Time start, Time stop) {
 			this.start = start;
 			this.stop = stop;
 		}
-		
-		
-		
+
+
+
 	}
 }

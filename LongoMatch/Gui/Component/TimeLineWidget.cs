@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -26,18 +26,18 @@ using LongoMatch.Handlers;
 using LongoMatch.TimeNodes;
 
 namespace LongoMatch.Gui.Component {
-	
+
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class TimeLineWidget : Gtk.Bin
 	{
-		
+
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event TimeNodeSelectedHandler TimeNodeSelected;
 		public event TimeNodeDeletedHandler TimeNodeDeleted;
 		public event NewMarkAtFrameEventHandler NewMarkEvent;
 		//public event PlayListNodeAddedHandler PlayListNodeAdded;
-		
+
 		private TimeScale[] tsArray;
 		private List<List<MediaTimeNode>> tnArray;
 		private Sections sections;
@@ -47,151 +47,155 @@ namespace LongoMatch.Gui.Component {
 		private MediaTimeNode selected;
 		private uint currentFrame;
 
-		
+
 		public TimeLineWidget()
 		{
-			this.Build();			
-			SetPixelRatio(10);			
-		}		
-		
-		public MediaTimeNode SelectedTimeNode{
-			get{return selected;}
-			set{
+			this.Build();
+			SetPixelRatio(10);
+		}
+
+		public MediaTimeNode SelectedTimeNode {
+			get {
+				return selected;
+			}
+			set {
 				selected = value;
-				if (tsArray != null && tnArray != null){
-					foreach (TimeScale  ts in tsArray){
-						ts.SelectedTimeNode = value;					
+				if (tsArray != null && tnArray != null) {
+					foreach (TimeScale  ts in tsArray) {
+						ts.SelectedTimeNode = value;
 					}
-				}				
-				if (selected != null){
+				}
+				if (selected != null) {
 					if (SelectedTimeNode.StartFrame/pixelRatio < GtkScrolledWindow.Hadjustment.Value ||
-					    SelectedTimeNode.StartFrame/pixelRatio > GtkScrolledWindow.Hadjustment.Value +
-					    GtkScrolledWindow.Allocation.Width - GtkScrolledWindow.VScrollbar.Allocation.Width)
+					                SelectedTimeNode.StartFrame/pixelRatio > GtkScrolledWindow.Hadjustment.Value +
+					                GtkScrolledWindow.Allocation.Width - GtkScrolledWindow.VScrollbar.Allocation.Width)
 						AdjustPostion(SelectedTimeNode.StartFrame);
 				}
 				QueueDraw();
 			}
 		}
-		
-		public uint CurrentFrame{
-			get{return currentFrame;}
-			set{
+
+		public uint CurrentFrame {
+			get {
+				return currentFrame;
+			}
+			set {
 				currentFrame = value;
-				
-				if (tsArray != null && tnArray != null){					
-					foreach (TimeScale  ts in tsArray){
-						ts.CurrentFrame = value;					
+
+				if (tsArray != null && tnArray != null) {
+					foreach (TimeScale  ts in tsArray) {
+						ts.CurrentFrame = value;
 					}
 					tr.CurrentFrame = value;
 				}
 				QueueDraw();
 			}
 		}
-		
-		public void AdjustPostion(uint currentframe){
+
+		public void AdjustPostion(uint currentframe) {
 			int visibleWidth;
 			int realWidth;
 			uint pos;
 			int scrollbarWidth;
-			if (Visible){				
+			if (Visible) {
 				scrollbarWidth= GtkScrolledWindow.VScrollbar.Allocation.Width;
 				visibleWidth = GtkScrolledWindow.Allocation.Width-scrollbarWidth;
-				realWidth = vbox1.Allocation.Width;				
+				realWidth = vbox1.Allocation.Width;
 				pos = currentframe/pixelRatio;
-							if (pos+visibleWidth < realWidth){
-					GtkScrolledWindow.Hadjustment.Value = pos;		
+				if (pos+visibleWidth < realWidth) {
+					GtkScrolledWindow.Hadjustment.Value = pos;
 				}
 				else {
 					GtkScrolledWindow.Hadjustment.Value = realWidth-visibleWidth-20;
 				}
-			}			
+			}
 		}
-		
-		
-		private void SetPixelRatio(uint pixelRatio){			
-			if (tsArray != null && tnArray != null){
+
+
+		private void SetPixelRatio(uint pixelRatio) {
+			if (tsArray != null && tnArray != null) {
 				this.pixelRatio = pixelRatio;
 				tr.PixelRatio = pixelRatio;
-				foreach (TimeScale  ts in tsArray){
-					ts.PixelRatio = pixelRatio;					
-				}	
-				vscale1.Value=pixelRatio;				
-			}		
+				foreach (TimeScale  ts in tsArray) {
+					ts.PixelRatio = pixelRatio;
+				}
+				vscale1.Value=pixelRatio;
+			}
 		}
-			
-		
-		public Project Project{
-			set{
+
+
+		public Project Project {
+			set {
 				ResetGui();
-				
-				if (value == null){
+
+				if (value == null) {
 					sections = null;
 					tnArray = null;
-					tsArray=null;					
+					tsArray=null;
 					return;
 				}
-							
+
 				sections = value.Sections;
 				tnArray = value.GetDataArray();
-				tsArray = new TimeScale[sections.Count]; 	
-											
+				tsArray = new TimeScale[sections.Count];
+
 				frames = value.File.GetFrames();
 				ushort fps = value.File.Fps;
-				
+
 				tr = new TimeReferenceWidget(frames,fps);
 				vbox1.PackStart(tr,false,false,0);
 				tr.Show();
-				for (int i=0; i<sections.Count; i++){
+				for (int i=0; i<sections.Count; i++) {
 					TimeScale ts = new TimeScale(i,tnArray[i],frames,sections.GetColor(i));
 					tsArray[i]=ts;
 					ts.TimeNodeChanged += new TimeNodeChangedHandler(OnTimeNodeChanged);
-					ts.TimeNodeSelected += new TimeNodeSelectedHandler (OnTimeNodeSelected);
+					ts.TimeNodeSelected += new TimeNodeSelectedHandler(OnTimeNodeSelected);
 					ts.TimeNodeDeleted += new TimeNodeDeletedHandler(OnTimeNodeDeleted);
 					ts.NewMarkAtFrameEvent += new NewMarkAtFrameEventHandler(OnNewMark);
-					vbox1.PackStart(ts,true,true,0);					
-					ts.Show();					
+					vbox1.PackStart(ts,true,true,0);
+					ts.Show();
 				}
 				SetPixelRatio(3);
-			}			
+			}
 		}
-		
-		private void ResetGui(){
+
+		private void ResetGui() {
 			//Unrealize all children
-			foreach (Widget w in vbox1.AllChildren){
+			foreach (Widget w in vbox1.AllChildren) {
 				vbox1.Remove(w);
-				w.Destroy();				
-			}	
+				w.Destroy();
+			}
 		}
-	
-		protected virtual void OnNewMark(int section, int frame){
+
+		protected virtual void OnNewMark(int section, int frame) {
 			if (NewMarkEvent != null)
 				NewMarkEvent(section,frame);
 		}
-		
-		protected virtual void OnTimeNodeChanged(TimeNode tn, object val){
-			if (TimeNodeChanged != null)			
+
+		protected virtual void OnTimeNodeChanged(TimeNode tn, object val) {
+			if (TimeNodeChanged != null)
 				TimeNodeChanged(tn,val);
 		}
-		
-		protected virtual void OnTimeNodeSelected(MediaTimeNode tn){
-			if (TimeNodeSelected != null)			
+
+		protected virtual void OnTimeNodeSelected(MediaTimeNode tn) {
+			if (TimeNodeSelected != null)
 				TimeNodeSelected(tn);
 		}
-		protected virtual void OnTimeNodeDeleted(MediaTimeNode tn, int section){
-			if (TimeNodeDeleted != null)			
+		protected virtual void OnTimeNodeDeleted(MediaTimeNode tn, int section) {
+			if (TimeNodeDeleted != null)
 				TimeNodeDeleted(tn,section);
-		}		
+		}
 
-		protected virtual void OnFitbuttonClicked (object sender, System.EventArgs e)
+		protected virtual void OnFitbuttonClicked(object sender, System.EventArgs e)
 		{
 			AdjustPostion(currentFrame);
 		}
 
-		protected virtual void OnVscale1ValueChanged (object sender, System.EventArgs e)
+		protected virtual void OnVscale1ValueChanged(object sender, System.EventArgs e)
 		{
-			SetPixelRatio((uint)(vscale1.Value)); 
+			SetPixelRatio((uint)(vscale1.Value));
 			QueueDraw();
-			AdjustPostion(currentFrame);			
+			AdjustPostion(currentFrame);
 		}
 	}
 }

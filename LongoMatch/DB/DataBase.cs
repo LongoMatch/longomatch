@@ -51,7 +51,7 @@ namespace LongoMatch.DB
 		private const int MINOR=1;
 
 		/// <summary>
-		/// Creates a proxy for the database 
+		/// Creates a proxy for the database
 		/// </summary>
 		/// <param name="file">
 		/// A <see cref="System.String"/> with the database file path
@@ -80,7 +80,7 @@ namespace LongoMatch.DB
 						dbVersion = (Version)result.Next();
 					}
 					else {
-						dbVersion = new Version (0,0);
+						dbVersion = new Version(0,0);
 					}
 				}
 				finally
@@ -93,19 +93,19 @@ namespace LongoMatch.DB
 		}
 
 		//// <value>
-		/// The database version 
+		/// The database version
 		/// </value>
 		public Version Version {
 			get {
 				return dbVersion;
 			}
 		}
-		
+
 		/// <summary>
-		/// Retrieve all the projects from the database. This method don't return the  
+		/// Retrieve all the projects from the database. This method don't return the
 		/// the whole <see cref="LongoMatch.DB.Project"/> but the projects fields to
-		/// create a <see cref="LongoMatch.DB.ProjectDescription"/> to make the seek 
-		/// faster. 
+		/// create a <see cref="LongoMatch.DB.ProjectDescription"/> to make the seek
+		/// faster.
 		/// </summary>
 		/// <returns>
 		/// A <see cref="List"/>
@@ -168,21 +168,21 @@ namespace LongoMatch.DB
 		}
 
 		/// <summary>
-		/// Add a project to the databse 
+		/// Add a project to the databse
 		/// </summary>
 		/// <param name="project">
 		/// A <see cref="Project"/> to add
 		/// </param>
-		public void AddProject (Project project) {
+		public void AddProject(Project project) {
 			lock (this.locker) {
 				IObjectContainer db = Db4oFactory.OpenFile(file);
 				try
 				{
 					if (!this.Exists(project.File.FilePath,db)) {
-						db.Set (project);
+						db.Set(project);
 						db.Commit();
 					}
-					else throw new Exception (Catalog.GetString("The Project for this video file already exists.")+"\n"+Catalog.GetString("Try to edit it whit the Database Manager"));
+					else throw new Exception(Catalog.GetString("The Project for this video file already exists.")+"\n"+Catalog.GetString("Try to edit it whit the Database Manager"));
 				}
 				finally {
 					CloseDB(db);
@@ -191,7 +191,7 @@ namespace LongoMatch.DB
 		}
 
 		/// <summary>
-		/// Delete a project from the database 
+		/// Delete a project from the database
 		/// </summary>
 		/// <param name="filePath">
 		/// A <see cref="System.String"/> with the project's video file path
@@ -219,7 +219,7 @@ namespace LongoMatch.DB
 		/// <summary>
 		/// Updates a project in the database. Because a <see cref="LongoMatch.DB.Project"/> has
 		/// many objects associated, a simple update would leave in the databse many orphaned objects.
-		/// Therefore we need to delete the old project a replace it with the changed one. We need to 
+		/// Therefore we need to delete the old project a replace it with the changed one. We need to
 		/// now the old file path associate to this project in case it has been changed in the update
 		/// </summary>
 		/// <param name="project">
@@ -260,7 +260,7 @@ namespace LongoMatch.DB
 		}
 
 		/// <summary>
-		/// Updates a project in the databse whose file path hasn't changed 
+		/// Updates a project in the databse whose file path hasn't changed
 		/// </summary>
 		/// <param name="project">
 		/// A <see cref="Project"/> to update

@@ -52,7 +52,7 @@ namespace LongoMatch.TimeNodes
 		/// <param name="thumbnail">
 		/// A <see cref="Pixbuf"/> with my preview
 		/// </param>
-		public PixbufTimeNode(string name, Time start, Time stop, Pixbuf thumbnail): base (name,start,stop)
+		public PixbufTimeNode(string name, Time start, Time stop, Pixbuf thumbnail): base(name,start,stop)
 		{
 			if (thumbnail != null) {
 				this.thumbnailBuf = thumbnail.SaveToBuffer("png");
@@ -91,9 +91,9 @@ namespace LongoMatch.TimeNodes
 			if (w>MAX_WIDTH || h>MAX_HEIGHT) {
 				double rate = (double)w/(double)h;
 				if (h>w)
-					ow = (int) (oh * rate);
+					ow = (int)(oh * rate);
 				else
-					oh = (int) (ow / rate);
+					oh = (int)(ow / rate);
 				thumbnailBuf = pixbuf.ScaleSimple(ow,oh,Gdk.InterpType.Bilinear).SaveToBuffer("png");
 				pixbuf.Dispose();
 			}

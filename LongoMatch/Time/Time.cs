@@ -80,7 +80,7 @@ namespace LongoMatch.TimeNodes
 		/// <returns>
 		/// A <see cref="System.String"/>
 		/// </returns>
-		public  string ToSecondsString ()
+		public  string ToSecondsString()
 		{
 			int _h, _m, _s;
 
@@ -89,10 +89,10 @@ namespace LongoMatch.TimeNodes
 			_s = ((time % 3600) % 60);
 
 			if (_h > 0)
-				return String.Format ("{0}:{1}:{2}", _h, _m.ToString ("d2"),
-				                      _s.ToString ("d2"));
+				return String.Format("{0}:{1}:{2}", _h, _m.ToString("d2"),
+				                     _s.ToString("d2"));
 
-			return String.Format ("{0}:{1}", _m, _s.ToString ("d2"));
+			return String.Format("{0}:{1}", _m, _s.ToString("d2"));
 		}
 
 		/// <summary>
@@ -101,7 +101,7 @@ namespace LongoMatch.TimeNodes
 		/// <returns>
 		/// A <see cref="System.String"/>
 		/// </returns>
-		public  string ToMSecondsString ()
+		public  string ToMSecondsString()
 		{
 			int _h, _m, _s,_ms,_time;
 			_time = time / 1000;
@@ -111,13 +111,13 @@ namespace LongoMatch.TimeNodes
 			_ms = ((time % 3600000)%60000)%1000;
 
 			//if (_h > 0)
-			return String.Format ("{0}:{1}:{2},{3}", _h, _m.ToString ("d2"),
-			                      _s.ToString ("d2"),_ms.ToString("d3"));
+			return String.Format("{0}:{1}:{2},{3}", _h, _m.ToString("d2"),
+			                     _s.ToString("d2"),_ms.ToString("d3"));
 
 			//return String.Format ("{0}:{1},{2}", _m, _s.ToString ("d2"),_ms.ToString("d3"));
 		}
 
-		public override bool Equals (object o)
+		public override bool Equals(object o)
 		{
 			if (o is Time) {
 				return ((Time)o).MSeconds == MSeconds;
@@ -125,9 +125,9 @@ namespace LongoMatch.TimeNodes
 			else return false;
 		}
 
-		public override int GetHashCode ()
+		public override int GetHashCode()
 		{
-			return base.GetHashCode ();
+			return base.GetHashCode();
 		}
 
 		public int CompareTo(object obj) {

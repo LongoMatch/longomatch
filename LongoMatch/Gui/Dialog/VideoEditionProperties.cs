@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -25,7 +25,7 @@ using LongoMatch.Video.Editor;
 
 namespace LongoMatch.Gui.Dialog
 {
-	
+
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(false)]
 	public partial class VideoEditionProperties : Gtk.Dialog
@@ -35,65 +35,81 @@ namespace LongoMatch.Gui.Dialog
 		private VideoCodec vcodec;
 		private AudioCodec acodec;
 		private VideoMuxer muxer;
-		
+
 		private const string MP4="MP4 (H.264+AAC)";
 		private const string AVI="AVI (Xvid+MP3)";
 		private const string OGG="OGG (Theora+Vorbis)";
 		private const string DVD="DVD (MPEG-2)";
-		
 
-#region Constructors
+
+		#region Constructors
 		public VideoEditionProperties()
 		{
 			this.Build();
 			formatcombobox.AppendText(MP4);
 			formatcombobox.AppendText(AVI);
-			if (System.Environment.OSVersion.Platform != PlatformID.Win32NT){
+			if (System.Environment.OSVersion.Platform != PlatformID.Win32NT) {
 				formatcombobox.AppendText(OGG);
-				formatcombobox.AppendText(DVD);			
-			}	
+				formatcombobox.AppendText(DVD);
+			}
 			formatcombobox.Active=0;
 		}
-#endregion
-		
-#region Properties
-		
-		public VideoQuality VideoQuality{
-			get{return vq;}
+		#endregion
+
+		#region Properties
+
+		public VideoQuality VideoQuality {
+			get {
+				return vq;
+			}
 		}
-		
-		public VideoCodec VideoCodec{
-			get{return vcodec;}
+
+		public VideoCodec VideoCodec {
+			get {
+				return vcodec;
+			}
 		}
-		
-		public AudioCodec AudioCodec{
-			get{return acodec;}
+
+		public AudioCodec AudioCodec {
+			get {
+				return acodec;
+			}
 		}
-		
-		public VideoMuxer VideoMuxer{
-			get{return muxer;}
+
+		public VideoMuxer VideoMuxer {
+			get {
+				return muxer;
+			}
 		}
-		
-		public string Filename{
-			get{return fileentry.Text;}
+
+		public string Filename {
+			get {
+				return fileentry.Text;
+			}
 		}
-		
-		public bool EnableAudio{
-			get{return audiocheckbutton.Active;}
+
+		public bool EnableAudio {
+			get {
+				return audiocheckbutton.Active;
+			}
 		}
-		
-		public bool TitleOverlay{
-			get{return descriptioncheckbutton.Active;}		
+
+		public bool TitleOverlay {
+			get {
+				return descriptioncheckbutton.Active;
+			}
 		}
-		
-		public VideoFormat VideoFormat{
-			get{return vf;}
+
+		public VideoFormat VideoFormat {
+			get {
+				return vf;
+			}
 		}
-#endregion Properties
-		
-#region Private Methods
-		
-		private string GetExtension(){
+		#endregion Properties
+
+		#region Private Methods
+
+		private string GetExtension() {
 			if (formatcombobox.ActiveText == MP4)
 				return "mkv";
 			else if (formatcombobox.ActiveText == OGG)
@@ -103,56 +119,56 @@ namespace LongoMatch.Gui.Dialog
 			else
 				return "mpg";
 		}
-		
-#endregion		
 
-		protected virtual void OnButtonOkClicked (object sender, System.EventArgs e)
+		#endregion
+
+		protected virtual void OnButtonOkClicked(object sender, System.EventArgs e)
 		{
-			if (qualitycombobox.ActiveText == Catalog.GetString("Low")){
+			if (qualitycombobox.ActiveText == Catalog.GetString("Low")) {
 				vq = VideoQuality.Low;
 			}
-			else if (qualitycombobox.ActiveText == Catalog.GetString("Normal")){
+			else if (qualitycombobox.ActiveText == Catalog.GetString("Normal")) {
 				vq = VideoQuality.Normal;
 			}
-			else if (qualitycombobox.ActiveText == Catalog.GetString("Good")){
+			else if (qualitycombobox.ActiveText == Catalog.GetString("Good")) {
 				vq = VideoQuality.Good;
 			}
-			else if (qualitycombobox.ActiveText == Catalog.GetString("Extra")){
+			else if (qualitycombobox.ActiveText == Catalog.GetString("Extra")) {
 				vq = VideoQuality.Extra;
 			}
-			
-			vf = (VideoFormat)sizecombobox.Active;				
-			
-			if (formatcombobox.ActiveText == MP4){
+
+			vf = (VideoFormat)sizecombobox.Active;
+
+			if (formatcombobox.ActiveText == MP4) {
 				vcodec = VideoCodec.H264;
 				acodec = AudioCodec.AAC;
 				muxer = VideoMuxer.MKV;
-			}	
-			else if (formatcombobox.ActiveText == OGG){
+			}
+			else if (formatcombobox.ActiveText == OGG) {
 				vcodec = VideoCodec.THEORA;
 				acodec = AudioCodec.VORBIS;
 				muxer = VideoMuxer.OGG;
-			}	
-			else if (formatcombobox.ActiveText == AVI){
+			}
+			else if (formatcombobox.ActiveText == AVI) {
 				vcodec = VideoCodec.XVID;
 				acodec = AudioCodec.MP3;
 				muxer = VideoMuxer.AVI;
 			}
-			else if (formatcombobox.ActiveText == DVD){
+			else if (formatcombobox.ActiveText == DVD) {
 				vcodec = VideoCodec.MPEG2_VIDEO;
 				acodec = AudioCodec.MPEG2_AUDIO;
 				muxer = VideoMuxer.DVD;
-			}						
+			}
 			Hide();
 		}
 
-		protected virtual void OnOpenbuttonClicked (object sender, System.EventArgs e)
+		protected virtual void OnOpenbuttonClicked(object sender, System.EventArgs e)
 		{
 			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Save Video As ..."),
-			                                                   this,
-			                                                   FileChooserAction.Save,
-			                                                   "gtk-cancel",ResponseType.Cancel,
-			                                                   "gtk-save",ResponseType.Accept);
+			                this,
+			                FileChooserAction.Save,
+			                "gtk-cancel",ResponseType.Cancel,
+			                "gtk-save",ResponseType.Accept);
 			fChooser.SetCurrentFolder(MainClass.VideosDir());
 			fChooser.CurrentName = "NewVideo."+GetExtension();
 			fChooser.DoOverwriteConfirmation = true;
@@ -160,13 +176,13 @@ namespace LongoMatch.Gui.Dialog
 			filter.Name = "Multimedia Files";
 			filter.AddPattern("*.mkv");
 			filter.AddPattern("*.ogg");
-		 	filter.AddPattern("*.avi");
+			filter.AddPattern("*.avi");
 			filter.AddPattern("*.mpg");
 			filter.AddPattern("*.vob");
 			fChooser.Filter = filter;
-			if (fChooser.Run() == (int)ResponseType.Accept){						
+			if (fChooser.Run() == (int)ResponseType.Accept) {
 				fileentry.Text = fChooser.Filename;
-			}		
+			}
 			fChooser.Destroy();
 		}
 	}

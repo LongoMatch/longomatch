@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -30,33 +30,33 @@ using LongoMatch.Compat.v00.TimeNodes;
 
 namespace LongoMatch.Compat.v00.DB
 {
-	
-	
+
+
 	public sealed class DataBase
 	{
 		// Database container
 		private IObjectContainer db;
 		// File path of the database
 		private string file;
-		
+
 		public DataBase(string file)
 		{
 			this.file = file;
 		}
-			
-		public ArrayList GetAllDB(){		
+
+		public ArrayList GetAllDB() {
 			ArrayList allDB = new ArrayList();
 			db = Db4oFactory.OpenFile(file);
-			try	{   				
+			try	{
 				IQuery query = db.Query();
 				query.Constrain(typeof(Project));
 				IObjectSet result = query.Execute();
 				while (result.HasNext())
-					allDB.Add(result.Next());					
-				return allDB;					
-			}finally{
+					allDB.Add(result.Next());
+				return allDB;
+			} finally {
 				db.Close();
-			}		
-		}		
+			}
+		}
 	}
 }

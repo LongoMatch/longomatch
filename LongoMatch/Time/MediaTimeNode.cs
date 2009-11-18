@@ -84,7 +84,7 @@ namespace LongoMatch.TimeNodes
 		/// A <see cref="Pixbuf"/> with the play's preview
 		/// </param>
 		#region Constructors
-		public MediaTimeNode(String name, Time start, Time stop,string notes, uint fps,Pixbuf thumbnail):base (name,start,stop,thumbnail) {
+		public MediaTimeNode(String name, Time start, Time stop,string notes, uint fps,Pixbuf thumbnail):base(name,start,stop,thumbnail) {
 			this.notes = notes;
 			this.team = Team.NONE;
 			this.fps = fps;

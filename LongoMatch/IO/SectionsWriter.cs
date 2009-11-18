@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -28,22 +28,22 @@ using Gdk;
 
 namespace LongoMatch.IO
 {
-	
-	
+
+
 	public class SectionsWriter
 	{
-		
 
-		
-		public static void CreateNewTemplate(string templateName){			
-			
+
+
+		public static void CreateNewTemplate(string templateName) {
+
 			XmlDocument configXml = new XmlDocument();
-			string fConfig = Path.Combine (MainClass.TemplatesDir(), templateName);
+			string fConfig = Path.Combine(MainClass.TemplatesDir(), templateName);
 			System.Text.StringBuilder sb = new System.Text.StringBuilder();
-            sb.Append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
-            sb.Append("<configuration>");
-            
-			for (int i=1;i<21;i++){
+			sb.Append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
+			sb.Append("<configuration>");
+
+			for (int i=1;i<21;i++) {
 				sb.Append("<add key=\"Name"+i+"\" value=\"Data "+i+"\" />");
 				sb.Append("<add key=\"Start"+i+"\" value=\"10\" />");
 				sb.Append("<add key=\"Stop"+i+"\" value=\"10\" />");
@@ -53,35 +53,35 @@ namespace LongoMatch.IO
 				sb.Append("<add key=\"Modifier"+i+"\" value=\"-1\" />");
 				sb.Append("<add key=\"Key"+i+"\" value=\"-1\" />");
 			}
-			
+
 			sb.Append("</configuration>");
 			configXml.LoadXml(sb.ToString());
-            configXml.Save(fConfig);			
+			configXml.Save(fConfig);
 		}
 
-		
-		public static void SetValue(XmlDocument configXml,string section, string clave, string valor) 
-		{    
-    		XmlNode n;
-    		n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");
-    		if( n != null )    {
-        		n.Attributes["value"].Value = valor;
-    		}
-		}
-		
 
-		
-		public static void UpdateTemplate(string templateName,Sections sections){
-			
-			string fConfig = Path.Combine (MainClass.TemplatesDir(), templateName);
+		public static void SetValue(XmlDocument configXml,string section, string clave, string valor)
+		{
+			XmlNode n;
+			n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");
+			if (n != null)    {
+				n.Attributes["value"].Value = valor;
+			}
+		}
+
+
+
+		public static void UpdateTemplate(string templateName,Sections sections) {
+
+			string fConfig = Path.Combine(MainClass.TemplatesDir(), templateName);
 			XmlDocument configXml = new XmlDocument();
 			int i=1;
-			
+
 			System.Text.StringBuilder sb = new System.Text.StringBuilder();
-            sb.Append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
-            sb.Append("<configuration>");
-            
-			foreach(SectionsTimeNode tn in sections.SectionsTimeNodes){
+			sb.Append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
+			sb.Append("<configuration>");
+
+			foreach (SectionsTimeNode tn in sections.SectionsTimeNodes) {
 				sb.Append(String.Format("<add key=\"Name{0}\" value=\"{1}\" />",i,tn.Name));
 				sb.Append(String.Format("<add key=\"Start{0}\" value=\"{1}\" />",i,tn.Start.Seconds));
 				sb.Append(String.Format("<add key=\"Stop{0}\" value=\"{1}\" />",i,tn.Stop.Seconds));
@@ -91,15 +91,15 @@ namespace LongoMatch.IO
 				sb.Append(String.Format("<add key=\"Modifier{0}\" value=\"{1}\" />",i,(int)(tn.HotKey.Modifier)));
 				sb.Append(String.Format("<add key=\"Key{0}\" value=\"{1}\" />",i,(int)(tn.HotKey.Key)));
 				i++;
-			}			
+			}
 			sb.Append("</configuration>");
 			configXml.LoadXml(sb.ToString());
-            configXml.Save(fConfig);	
+			configXml.Save(fConfig);
 		}
-		
-	
-		
-	
-		
+
+
+
+
+
 	}
 }

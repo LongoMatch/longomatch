@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -28,16 +28,16 @@ using LongoMatch.Compat.v00.TimeNodes;
 
 namespace LongoMatch.Compat.v00.DB
 {
-	
+
 	[Serializable]
 	public class Project : IComparable
 	{
-		
+
 		private MediaFile file;
-		
-		
+
+
 		private string title;
-				
+
 		private string localName;
 
 		private string visitorName;
@@ -45,41 +45,45 @@ namespace LongoMatch.Compat.v00.DB
 		private int localGoals;
 
 		private int visitorGoals;
-		
+
 		private DateTime matchDate;
-		
+
 		private Sections sections;
 
 		//This field is not used but must be kept for DataBase compatibility
 		private List<MediaTimeNode>[] dataSectionArray;
-		
-	
-		
+
+
+
 		public Project(MediaFile file, String localName, String visitorName, int localGoals,
-		                int visitorGoals, DateTime matchDate, Sections sections) {
+		               int visitorGoals, DateTime matchDate, Sections sections) {
 			List<MediaTimeNode> tnArray;
-			
+
 			this.file = file;
 			this.localName = localName;
 			this.visitorName = visitorName;
 			this.localGoals = localGoals;
 			this.visitorGoals = visitorGoals;
-			this.matchDate = matchDate;		
+			this.matchDate = matchDate;
 			this.sections = sections;
 			dataSectionArray = new List<MediaTimeNode>[20];
-			
-			for (int i=0;i<20;i++){
+
+			for (int i=0;i<20;i++) {
 				tnArray = new List<MediaTimeNode>();
 				dataSectionArray[i]=tnArray;
-			}			
-			this.Title = System.IO.Path.GetFileNameWithoutExtension(this.file.FilePath);			
+			}
+			this.Title = System.IO.Path.GetFileNameWithoutExtension(this.file.FilePath);
 
 		}
-	
-		public Sections Sections{
-			get{ return this.sections;}
-			set {this.sections = value;}
-			
+
+		public Sections Sections {
+			get {
+				return this.sections;
+			}
+			set {
+				this.sections = value;
+			}
+
 		}
 
 		public List<MediaTimeNode>[] GetDataArray() {
@@ -91,55 +95,83 @@ namespace LongoMatch.Compat.v00.DB
 		}*/
 
 		public MediaFile File {
-			get{return file;}
-			set{file=value;}
-		}
-		
-	
-		
-		public String Title {
-			get{return title;}
-			set{title=value;}
-		}
-		
-		public String LocalName {
-			get{ return localName;}
-			set{localName=value;}
-		}
-		
-		public String VisitorName {
-			get{ return visitorName;}
-			set{visitorName=value;}
-		}
-		
-		public int LocalGoals {
-			get{ return localGoals;}
-			set{localGoals=value;}
-		}
-		
-		public int VisitorGoals {
-			get{ return visitorGoals;}
-			set{visitorGoals=value;}
-		}
-	
-		
-		public DateTime MatchDate {
-			get{ return matchDate;}
-			set{ matchDate=value;}
+			get {
+				return file;
+			}
+			set {
+				file=value;
+			}
 		}
 
-		public bool Equals(Project project){
+
+
+		public String Title {
+			get {
+				return title;
+			}
+			set {
+				title=value;
+			}
+		}
+
+		public String LocalName {
+			get {
+				return localName;
+			}
+			set {
+				localName=value;
+			}
+		}
+
+		public String VisitorName {
+			get {
+				return visitorName;
+			}
+			set {
+				visitorName=value;
+			}
+		}
+
+		public int LocalGoals {
+			get {
+				return localGoals;
+			}
+			set {
+				localGoals=value;
+			}
+		}
+
+		public int VisitorGoals {
+			get {
+				return visitorGoals;
+			}
+			set {
+				visitorGoals=value;
+			}
+		}
+
+
+		public DateTime MatchDate {
+			get {
+				return matchDate;
+			}
+			set {
+				matchDate=value;
+			}
+		}
+
+		public bool Equals(Project project) {
 			return this.File.FilePath.Equals(project.File.FilePath);
 		}
-		
+
 		public int CompareTo(object obj) {
-			if(obj is Project) {
+			if (obj is Project) {
 				Project project = (Project) obj;
 
 				return this.File.FilePath.CompareTo(project.File.FilePath);
 			}
 			else
-				throw new ArgumentException("object is not a Project and cannot be compared");    
+				throw new ArgumentException("object is not a Project and cannot be compared");
 		}
 	}
 }

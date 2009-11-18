@@ -52,7 +52,7 @@ namespace LongoMatch.TimeNodes
 		/// <param name="color">
 		/// A <see cref="Color"/> that will be shared among plays tagged in my category
 		/// </param>
-		public SectionsTimeNode(String name,Time start, Time stop, HotKey hotkey, Color color):base (name,start,stop)
+		public SectionsTimeNode(String name,Time start, Time stop, HotKey hotkey, Color color):base(name,start,stop)
 		{
 			this.hotkey = hotkey;
 			this.color = color;

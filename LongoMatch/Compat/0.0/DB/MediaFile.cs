@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -23,17 +23,17 @@ using LongoMatch.Compat.v00.TimeNodes;
 
 namespace LongoMatch.Compat.v00.DB
 {
-	
-	
+
+
 	public class MediaFile
 	{
-		
+
 		string filePath;
 		Time length;
 		ushort fps;
 		bool hasAudio;
 		bool hasVideo;
-		
+
 		public MediaFile(string filePath,Time length,ushort fps,bool hasAudio, bool hasVideo)
 		{
 			this.filePath = filePath;
@@ -41,44 +41,63 @@ namespace LongoMatch.Compat.v00.DB
 			this.hasAudio = hasAudio;
 			this.hasVideo = hasVideo;
 			if (fps == 0)
-					//For audio Files
-					this.fps=25;
-				else
-					this.fps = fps;
+				//For audio Files
+				this.fps=25;
+			else
+				this.fps = fps;
 		}
-		
-		public string FilePath{
-			get {return this.filePath;}
-			set {this.filePath = value;}
+
+		public string FilePath {
+			get {
+				return this.filePath;
+			}
+			set {
+				this.filePath = value;
+			}
 		}
-		
-		public Time Length{
-			get {return this.length;}
-			set {this.length = value;}
+
+		public Time Length {
+			get {
+				return this.length;
+			}
+			set {
+				this.length = value;
+			}
 		}
-		
-		public bool HasVideo{
-			get { return this.hasVideo;}
-			set{this.hasVideo = value;}
+
+		public bool HasVideo {
+			get {
+				return this.hasVideo;
+			}
+			set {
+				this.hasVideo = value;
+			}
 		}
-		
-		public bool HasAudio{
-			get { return this.hasAudio;}
-			set{this.hasAudio = value;}
+
+		public bool HasAudio {
+			get {
+				return this.hasAudio;
+			}
+			set {
+				this.hasAudio = value;
+			}
 		}
-		
-		public ushort Fps{
-			get {return this.fps;}
+
+		public ushort Fps {
+			get {
+				return this.fps;
+			}
 			set {
 				if (value == 0)
 					//For audio Files
 					this.fps=25;
 				else
-					this.fps = value;}
+					this.fps = value;
+			}
 		}
-		
-		public uint GetFrames(){
-			return (uint) (Fps*Length.Seconds);
+
+		public uint GetFrames() {
+			return (uint)(Fps*Length.Seconds);
 		}
 	}
 }

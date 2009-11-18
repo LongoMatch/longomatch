@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 //Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -36,9 +36,9 @@ using Mono.Unix;
 
 namespace LongoMatch
 {
-	
-	
-	public class EventsManager 
+
+
+	public class EventsManager
 	{
 
 		private PlaysListTreeWidget treewidget;
@@ -52,12 +52,12 @@ namespace LongoMatch
 		private FramesSeriesCapturer fsc;
 		private FramesCaptureProgressDialog fcpd;
 		private VideoDrawingsManager drawingManager;
-		
+
 		// Current play loaded. null if no play is loaded
 		private TimeNode selectedTimeNode=null;
 		// current proyect in use
 		private Project openedProject;
-		
+
 		public EventsManager(PlaysListTreeWidget treewidget, PlayersListTreeWidget localPlayersList, PlayersListTreeWidget visitorPlayersList,
 		                     ButtonsWidget buttonswidget,PlayListWidget playlist, PlayerBin player,
 		                     TimeLineWidget timeline, ProgressBar videoprogressbar,NotesWidget notes)
@@ -68,64 +68,64 @@ namespace LongoMatch
 			this.buttonswidget = buttonswidget;
 			this.playlist = playlist;
 			this.player = player;
-			this.timeline = timeline;	
+			this.timeline = timeline;
 			this.videoprogressbar = videoprogressbar;
 			this.notes = notes;
 			this.drawingManager = new VideoDrawingsManager(player);
-			
+
 			ConnectSignals();
 		}
-		
-		public  Project OpenedProject{
-			set{
+
+		public  Project OpenedProject {
+			set {
 				openedProject = value;
 			}
 		}
-		
-		private void ConnectSignals(){
-			//Adding Handlers for each event		
-			
+
+		private void ConnectSignals() {
+			//Adding Handlers for each event
+
 			buttonswidget.NewMarkEvent += OnNewMark;
-			
+
 			treewidget.TimeNodeChanged += OnTimeNodeChanged;
 			localPlayersList.TimeNodeChanged += OnTimeNodeChanged;
 			visitorPlayersList.TimeNodeChanged += OnTimeNodeChanged;
 			timeline.TimeNodeChanged += OnTimeNodeChanged;
 			notes.TimeNodeChanged += OnTimeNodeChanged;
-			
+
 			treewidget.TimeNodeDeleted += OnTimeNodeDeleted;
 			timeline.TimeNodeDeleted += OnTimeNodeDeleted;
-			
-			treewidget.TimeNodeSelected += OnTimeNodeSelected;			
+
+			treewidget.TimeNodeSelected += OnTimeNodeSelected;
 			localPlayersList.TimeNodeSelected += OnTimeNodeSelected;
 			visitorPlayersList.TimeNodeSelected += OnTimeNodeSelected;
 			timeline.TimeNodeSelected += OnTimeNodeSelected;
-			
+
 			playlist.PlayListNodeSelected += OnPlayListNodeSelected;
 			playlist.Progress += OnProgress;
 			playlist.ApplyCurrentRate += OnApplyRate;
-			
+
 			treewidget.PlayListNodeAdded += OnPlayListNodeAdded;
 			localPlayersList.PlayListNodeAdded += OnPlayListNodeAdded;
 			visitorPlayersList.PlayListNodeAdded += OnPlayListNodeAdded;
-			
+
 			treewidget.PlayersTagged += OnPlayersTagged;
-			
+
 			treewidget.SnapshotSeriesEvent += OnSnapshotSeries;
 			localPlayersList.SnapshotSeriesEvent += OnSnapshotSeries;
 			visitorPlayersList.SnapshotSeriesEvent += OnSnapshotSeries;
 
 			timeline.NewMarkEvent += OnNewMarkAtFrame;
-			
+
 			player.Prev += OnPrev;
 			player.Next += OnNext;
 			player.Tick += OnTick;
 			player.SegmentClosedEvent += OnSegmentClosedEvent;
 			player.DrawFrame += OnDrawFrame;
 		}
-		
-		private void ProcessNewMarkEvent(int section,Time pos){
-			if (player != null && openedProject != null){
+
+		private void ProcessNewMarkEvent(int section,Time pos) {
+			if (player != null && openedProject != null) {
 				//Getting defualt star and stop gap for the section
 				Time startTime = openedProject.Sections.GetStartTime(section);
 				Time stopTime = openedProject.Sections.GetStopTime(section);
@@ -135,90 +135,90 @@ namespace LongoMatch
 				Time fStart = (start < new Time(0)) ? new Time(0) : start;
 				//La longitud tiene que ser en ms
 				Time length;
-				
-					length = new Time((int)player.StreamLength);
-								
+
+				length = new Time((int)player.StreamLength);
+
 				Time fStop = (stop > length) ? length: stop;
 				Pixbuf miniature = player.CurrentMiniatureFrame;
-				MediaTimeNode tn = openedProject.AddTimeNode(section,fStart, fStop,miniature);	
+				MediaTimeNode tn = openedProject.AddTimeNode(section,fStart, fStop,miniature);
 				treewidget.AddPlay(tn,section);
 				timeline.QueueDraw();
 			}
 		}
-		
-		protected virtual void OnProgress(float progress){
-			
-			if (progress > (float)EditorState.START && progress <= (float)EditorState.FINISHED && progress > videoprogressbar.Fraction ){				
+
+		protected virtual void OnProgress(float progress) {
+
+			if (progress > (float)EditorState.START && progress <= (float)EditorState.FINISHED && progress > videoprogressbar.Fraction) {
 				videoprogressbar.Fraction = progress;
 			}
-			
-			if (progress == (float)EditorState.CANCELED ){
+
+			if (progress == (float)EditorState.CANCELED) {
 				videoprogressbar.Hide();
 			}
-			
-			else if (progress == (float)EditorState.START ){
+
+			else if (progress == (float)EditorState.START) {
 				videoprogressbar.Show();
 				videoprogressbar.Fraction = 0;
 				videoprogressbar.Text = "Creating new video";
 			}
-			
-			else if (progress == (float)EditorState.FINISHED) {	
+
+			else if (progress == (float)EditorState.FINISHED) {
 				MessagePopup.PopupMessage(player, MessageType.Info,  Catalog.GetString("The video edition has finished successfully."));
-				videoprogressbar.Hide();				
-			}	
-			
-			else if (progress == (float)EditorState.ERROR) {	
-				MessagePopup.PopupMessage(player, MessageType.Error, 
+				videoprogressbar.Hide();
+			}
+
+			else if (progress == (float)EditorState.ERROR) {
+				MessagePopup.PopupMessage(player, MessageType.Error,
 				                          Catalog.GetString("An error has ocurred in the video editor.")
-				                          +Catalog.GetString("Please, retry again."));     
-				videoprogressbar.Hide();				
-			}	
+				                          +Catalog.GetString("Please, retry again."));
+				videoprogressbar.Hide();
+			}
 		}
-			
-	    protected virtual void OnNewMarkAtFrame(int section, int frame){
-			
+
+		protected virtual void OnNewMarkAtFrame(int section, int frame) {
+
 			Time pos = new Time(frame*1000/openedProject.File.Fps);
 			ProcessNewMarkEvent(section,pos);
 		}
-		
-		public virtual void OnNewMark(int i){
+
+		public virtual void OnNewMark(int i) {
 			Time pos = new Time((int)player.CurrentTime);
-			ProcessNewMarkEvent(i,pos);					
+			ProcessNewMarkEvent(i,pos);
 		}
-		
-		protected virtual void OnTimeNodeSelected (MediaTimeNode tNode)
-		{			
-			selectedTimeNode = tNode;			
+
+		protected virtual void OnTimeNodeSelected(MediaTimeNode tNode)
+		{
+			selectedTimeNode = tNode;
 			timeline.SelectedTimeNode = tNode;
-			player.SetStartStop(tNode.Start.MSeconds,tNode.Stop.MSeconds);		
+			player.SetStartStop(tNode.Start.MSeconds,tNode.Stop.MSeconds);
 			notes.Visible = true;
 			notes.Play= tNode;
 			drawingManager.Play=tNode;
 		}
-		
-		
-		protected virtual void OnTimeNodeChanged (TimeNode tNode, object val)
+
+
+		protected virtual void OnTimeNodeChanged(TimeNode tNode, object val)
 		{
-			//Si hemos modificado el valor de un nodo de tiempo a través del 
+			//Si hemos modificado el valor de un nodo de tiempo a través del
 			//widget de ajuste de tiempo posicionamos el reproductor en el punto
 			//
-			if (tNode is MediaTimeNode && val is Time ){	
-				if(tNode != selectedTimeNode)
+			if (tNode is MediaTimeNode && val is Time) {
+				if (tNode != selectedTimeNode)
 					OnTimeNodeSelected((MediaTimeNode)tNode);
 				Time pos = (Time)val;
-					if (pos == tNode.Start){					
-					    player.UpdateSegmentStartTime(pos.MSeconds);
-				    }				
-				    else{
-					    player.UpdateSegmentStopTime(pos.MSeconds);
-				    }
-			}	
-			else if (tNode is SectionsTimeNode){
+				if (pos == tNode.Start) {
+					player.UpdateSegmentStartTime(pos.MSeconds);
+				}
+				else {
+					player.UpdateSegmentStopTime(pos.MSeconds);
+				}
+			}
+			else if (tNode is SectionsTimeNode) {
 				buttonswidget.Sections = openedProject.Sections;
-			}			
+			}
 		}
-		
-		protected virtual void OnTimeNodeDeleted (MediaTimeNode tNode,int section)
+
+		protected virtual void OnTimeNodeDeleted(MediaTimeNode tNode,int section)
 		{
 			treewidget.DeletePlay(tNode,section);
 			foreach (int player in tNode.LocalPlayers)
@@ -228,145 +228,145 @@ namespace LongoMatch
 			openedProject.DeleteTimeNode(tNode,section);
 			this.player.CloseActualSegment();
 			timeline.QueueDraw();
-			MainClass.DB.UpdateProject(openedProject);			
+			MainClass.DB.UpdateProject(openedProject);
 		}
-		
-		
-		protected virtual void OnPlayListNodeAdded (MediaTimeNode tNode)
+
+
+		protected virtual void OnPlayListNodeAdded(MediaTimeNode tNode)
 		{
 			playlist.Add(new PlayListTimeNode(openedProject.File,tNode));
 		}
-		
-		
 
-		protected virtual void OnPlayListNodeSelected (PlayListTimeNode plNode, bool hasNext)
+
+
+		protected virtual void OnPlayListNodeSelected(PlayListTimeNode plNode, bool hasNext)
 		{
-			if (openedProject == null){
-				if (plNode.Valid){
+			if (openedProject == null) {
+				if (plNode.Valid) {
 					player.SetPlayListElement(plNode.MediaFile.FilePath,plNode.Start.MSeconds,plNode.Stop.MSeconds,plNode.Rate,hasNext);
 					selectedTimeNode = plNode;
 				}
 			}
 			else {
-				MessagePopup.PopupMessage(playlist, MessageType.Error, 
+				MessagePopup.PopupMessage(playlist, MessageType.Error,
 				                          Catalog.GetString("Please, close the opened project to play the playlist."));
 				playlist.Stop();
 			}
 		}
-		
-		protected virtual void OnPlayListSegmentDone ()
-		{	
+
+		protected virtual void OnPlayListSegmentDone()
+		{
 			playlist.Next();
 		}
 
-		protected virtual void OnSegmentClosedEvent ()
+		protected virtual void OnSegmentClosedEvent()
 		{
 			selectedTimeNode = null;
 			timeline.SelectedTimeNode = null;
 			notes.Visible = false;
 		}
-		
-		protected virtual void OnSnapshotSeries(MediaTimeNode tNode){
+
+		protected virtual void OnSnapshotSeries(MediaTimeNode tNode) {
 			SnapshotsDialog sd;
 			uint interval;
 			string seriesName;
 			string outDir;
-			
+
 			player.Pause();
-			
+
 			sd= new SnapshotsDialog();
 			sd.TransientFor= (Gtk.Window) treewidget.Toplevel;
 			sd.Play = tNode.Name;
-			
-			if (sd.Run() == (int)ResponseType.Ok){
-				sd.Destroy();				
+
+			if (sd.Run() == (int)ResponseType.Ok) {
+				sd.Destroy();
 				interval = sd.Interval;
-				seriesName = sd.SeriesName;			
-				outDir = System.IO.Path.Combine(MainClass.SnapshotsDir(),seriesName);				
+				seriesName = sd.SeriesName;
+				outDir = System.IO.Path.Combine(MainClass.SnapshotsDir(),seriesName);
 				fsc = new FramesSeriesCapturer(openedProject.File.FilePath,tNode.Start.MSeconds,tNode.Stop.MSeconds,interval,outDir);
 				fcpd = new FramesCaptureProgressDialog(fsc);
 				fcpd.TransientFor=(Gtk.Window) treewidget.Toplevel;
 				fcpd.Run();
 				fcpd.Destroy();
 			}
-			else 
+			else
 				sd.Destroy();
 		}
-		
 
-		protected virtual void OnNext ()
+
+		protected virtual void OnNext()
 		{
 			playlist.Next();
 		}
-		
-		protected virtual void OnPrev ()
+
+		protected virtual void OnPrev()
 		{
 			if (selectedTimeNode is MediaTimeNode)
-				player.SeekInSegment(selectedTimeNode.Start.MSeconds);				
+				player.SeekInSegment(selectedTimeNode.Start.MSeconds);
 			else if (selectedTimeNode is PlayListTimeNode)
 				playlist.Prev();
 			else if (selectedTimeNode == null)
-				player.SeekTo(0,false);			
+				player.SeekTo(0,false);
 		}
-		
-		protected virtual void OnTick (object o, LongoMatch.Video.Handlers.TickArgs args)
+
+		protected virtual void OnTick(object o, LongoMatch.Video.Handlers.TickArgs args)
 		{
 			if (args.CurrentTime != 0 && timeline != null && openedProject != null)
 				timeline.CurrentFrame=(uint)(args.CurrentTime * openedProject.File.Fps / 1000);
 		}
-		
-	
-		protected virtual void OnTimeline2PositionChanged (Time pos)
+
+
+		protected virtual void OnTimeline2PositionChanged(Time pos)
 		{
 			player.SeekInSegment(pos.MSeconds);
 		}
-		
-		protected virtual void OnApplyRate (PlayListTimeNode plNode){
+
+		protected virtual void OnApplyRate(PlayListTimeNode plNode) {
 			plNode.Rate = player.Rate;
 		}
-		
-		protected virtual void OnDrawFrame (int time){
+
+		protected virtual void OnDrawFrame(int time) {
 			Pixbuf pixbuf=null;
 			DrawingTool dialog = new DrawingTool();
-			
+
 			if (selectedTimeNode == null)
 				player.SeekTo(time,true);
 			else
 				player.SeekTo(time,true);
 			while (pixbuf == null)
 				pixbuf = player.CurrentFrame;
-				
+
 			dialog.Image = pixbuf;
 			dialog.TransientFor = (Gtk.Window)player.Toplevel;
 			if (selectedTimeNode != null)
 				dialog.SetPlay((selectedTimeNode as MediaTimeNode),
-				                time);
+				               time);
 			player.Pause();
 			pixbuf.Dispose();
 			dialog.Run();
 			dialog.Destroy();
 		}
-		
-		protected virtual void OnPlayersTagged (MediaTimeNode tNode, Team team){
+
+		protected virtual void OnPlayersTagged(MediaTimeNode tNode, Team team) {
 			PlayersSelectionDialog dialog = new PlayersSelectionDialog();
-			if (team == Team.LOCAL){
+			if (team == Team.LOCAL) {
 				dialog.SetPlayersInfo(openedProject.LocalTeamTemplate);
 				dialog.PlayersChecked = tNode.LocalPlayers;
-				if (dialog.Run() == (int) ResponseType.Ok){				
+				if (dialog.Run() == (int) ResponseType.Ok) {
 					tNode.LocalPlayers = dialog.PlayersChecked;
-					localPlayersList.UpdatePlaysList(openedProject.GetLocalTeamModel());					
+					localPlayersList.UpdatePlaysList(openedProject.GetLocalTeamModel());
 				}
 			}
-			
-			else if (team == Team.VISITOR){
+
+			else if (team == Team.VISITOR) {
 				dialog.SetPlayersInfo(openedProject.VisitorTeamTemplate);
 				dialog.PlayersChecked = tNode.VisitorPlayers;
-				if (dialog.Run() == (int) ResponseType.Ok){				
+				if (dialog.Run() == (int) ResponseType.Ok) {
 					tNode.VisitorPlayers = dialog.PlayersChecked;
 					visitorPlayersList.UpdatePlaysList(openedProject.GetVisitorTeamModel());
 				}
-			}			
-			dialog.Destroy();		         
-		}	
+			}
+			dialog.Destroy();
+		}
 	}
 }

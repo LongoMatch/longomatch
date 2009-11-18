@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -23,19 +23,21 @@ using System.Collections;
 using Gtk;
 using LongoMatch.TimeNodes;
 
-namespace LongoMatch.Playlist{
-		
+namespace LongoMatch.Playlist {
+
 	public interface IPlayList:IEnumerable
 	{
-		int Count {get;}
-		void Load (string path);
-		void Save (string path);
+		int Count {
+			get;
+		}
+		void Load(string path);
+		void Save(string path);
 		void Add(PlayListTimeNode plNode);
-		void Remove (PlayListTimeNode plNode);
+		void Remove(PlayListTimeNode plNode);
 		PlayListTimeNode Next();
 		PlayListTimeNode Prev();
-		PlayListTimeNode Select(int index);	
-		int GetCurrentIndex();		
+		PlayListTimeNode Select(int index);
+		int GetCurrentIndex();
 		bool HasNext();
 		bool HasPrev();
 		ListStore GetModel();

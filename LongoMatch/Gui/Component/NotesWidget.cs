@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -25,7 +25,7 @@ using LongoMatch.Handlers;
 
 namespace LongoMatch.Gui.Component
 {
-	
+
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class NotesWidget : Gtk.Bin
@@ -33,46 +33,46 @@ namespace LongoMatch.Gui.Component
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		TextBuffer buf;
 		MediaTimeNode play;
-		
+
 		public NotesWidget()
 		{
 			this.Build();
 			this.buf = textview1.Buffer;
-			buf.Changed += new EventHandler (OnEdition);
-			
+			buf.Changed += new EventHandler(OnEdition);
+
 		}
-		
-		public MediaTimeNode Play{
-			set{
+
+		public MediaTimeNode Play {
+			set {
 				play = value;
 				Notes = play.Notes;
 			}
 		}
 		string Notes {
-			set{
+			set {
 				buf.Clear();
-				buf.InsertAtCursor(value); 
+				buf.InsertAtCursor(value);
 			}
 			get {
-				return buf.GetText(buf.StartIter,buf.EndIter,true);		
+				return buf.GetText(buf.StartIter,buf.EndIter,true);
 			}
 		}
-		
-		protected virtual void OnEdition(object sender, EventArgs args){
-			if (Notes != play.Notes){
+
+		protected virtual void OnEdition(object sender, EventArgs args) {
+			if (Notes != play.Notes) {
 				savebutton.Sensitive = true;
 			}
 		}
 
-		protected virtual void OnSavebuttonClicked (object sender, System.EventArgs e)
+		protected virtual void OnSavebuttonClicked(object sender, System.EventArgs e)
 		{
-			if (play != null){
+			if (play != null) {
 				play.Notes=Notes;
 				if (TimeNodeChanged != null)
 					TimeNodeChanged(play,null);
 				savebutton.Sensitive = false;
 			}
-		}		
-		
+		}
+
 	}
 }

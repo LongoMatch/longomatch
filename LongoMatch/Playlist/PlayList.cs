@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -29,155 +29,161 @@ using LongoMatch.TimeNodes;
 using Mono.Unix;
 namespace LongoMatch.Playlist
 {
-	
-	
+
+
 	public class PlayList: IPlayList
 	{
-		
+
 		private  List<PlayListTimeNode> list;
-		private static XmlSerializer ser; 
+		private static XmlSerializer ser;
 		private string filename = null;
 		private int indexSelection = 0;
 		private Version version;
-		
+
 		#region Constructors
-		public PlayList(){
+		public PlayList() {
 			ser = new XmlSerializer(typeof(List<PlayListTimeNode>),new Type[] {typeof(PlayListTimeNode)});
 			list = new List<PlayListTimeNode>();
 			version = new Version(1,0);
 		}
-		
+
 		public PlayList(string file)
-		{				
+		{
 			ser = new XmlSerializer(typeof(List<PlayListTimeNode>),new Type[] {typeof(PlayListTimeNode)});
-		
+
 			//For new Play List
-			if (!System.IO.File.Exists(file)){
-			    list = new List<PlayListTimeNode>();
+			if (!System.IO.File.Exists(file)) {
+				list = new List<PlayListTimeNode>();
 				filename = file;
 			}
 			else
-				Load(file);	
-			
+				Load(file);
+
 			version = new Version(1,0);
 		}
 		#endregion
-		
+
 		#region Properties
-		
+
 		public int Count {
-			get{return list.Count;}
+			get {
+				return list.Count;
+			}
 		}
-		
-		public string File{
-			get {return filename;}
+
+		public string File {
+			get {
+				return filename;
+			}
 		}
-		
-		public Version Version{
-			get{return version;}
+
+		public Version Version {
+			get {
+				return version;
+			}
 		}
 		#endregion
-		
+
 		#region Public methods
-		
-		public void Load(string file){			
-			using(FileStream strm = new FileStream(file, FileMode.Open, FileAccess.Read)) 
+
+		public void Load(string file) {
+			using(FileStream strm = new FileStream(file, FileMode.Open, FileAccess.Read))
 			{
 				try {
-					list = ser.Deserialize(strm) as List<PlayListTimeNode>; 
+					list = ser.Deserialize(strm) as List<PlayListTimeNode>;
 				}
 				catch {
 					throw new Exception(Catalog.GetString("The file you are trying to load is not a valid playlist"));
 				}
-			}		
-			foreach (PlayListTimeNode plNode in list){
+			}
+			foreach (PlayListTimeNode plNode in list) {
 				plNode.Valid = System.IO.File.Exists(plNode.MediaFile.FilePath);
 			}
 			filename = file;
 		}
-		
-		public void Save(){
+
+		public void Save() {
 			Save(filename);
 		}
-		
-		public void Save(string file){
-			file = Path.ChangeExtension(file,"lgm");			
-			using (FileStream strm = new FileStream(file, FileMode.Create, FileAccess.Write))
+
+		public void Save(string file) {
+			file = Path.ChangeExtension(file,"lgm");
+			using(FileStream strm = new FileStream(file, FileMode.Create, FileAccess.Write))
 			{
 				ser.Serialize(strm, list);
 			}
-		} 
+		}
 
-		public bool isLoaded(){
+		public bool isLoaded() {
 			return filename != null;
 		}
-		
-		public int GetCurrentIndex(){
+
+		public int GetCurrentIndex() {
 			return indexSelection;
 		}
-		
-		public PlayListTimeNode Next(){			
+
+		public PlayListTimeNode Next() {
 			if (HasNext())
-				indexSelection++;	
+				indexSelection++;
 			return list[indexSelection];
 		}
-		
-		public PlayListTimeNode Prev(){
+
+		public PlayListTimeNode Prev() {
 			if (HasPrev())
 				indexSelection--;
 			return list[indexSelection];
 		}
-		
-		public void Add (PlayListTimeNode plNode){
+
+		public void Add(PlayListTimeNode plNode) {
 			list.Add(plNode);
 		}
-		
-		public void Remove(PlayListTimeNode plNode){
-			
+
+		public void Remove(PlayListTimeNode plNode) {
+
 			list.Remove(plNode);
 			if (GetCurrentIndex() >= list.Count)
 				indexSelection --;
 		}
-		
-		public PlayListTimeNode Select (int index){
+
+		public PlayListTimeNode Select(int index) {
 			indexSelection = index;
 			return list[index];
 		}
-		
-		public bool HasNext(){
+
+		public bool HasNext() {
 			return indexSelection < list.Count-1;
 		}
-		
-		public bool HasPrev(){
+
+		public bool HasPrev() {
 			return !indexSelection.Equals(0);
 		}
-				
-		public ListStore GetModel (){
-			Gtk.ListStore listStore = new ListStore (typeof (PlayListTimeNode));
-			foreach (PlayListTimeNode plNode in list){
-				listStore.AppendValues (plNode);							
+
+		public ListStore GetModel() {
+			Gtk.ListStore listStore = new ListStore(typeof(PlayListTimeNode));
+			foreach (PlayListTimeNode plNode in list) {
+				listStore.AppendValues(plNode);
 			}
 			return listStore;
-		}		
-		
-		public void SetModel(ListStore listStore){
+		}
+
+		public void SetModel(ListStore listStore) {
 			TreeIter iter ;
-			
+
 			listStore.GetIterFirst(out iter);
 			list.Clear();
-			while (listStore.IterIsValid(iter)){
-				list.Add(listStore.GetValue (iter, 0) as PlayListTimeNode);
+			while (listStore.IterIsValid(iter)) {
+				list.Add(listStore.GetValue(iter, 0) as PlayListTimeNode);
 				listStore.IterNext(ref iter);
-			}			
+			}
 		}
-		
-		public IEnumerator GetEnumerator(){
+
+		public IEnumerator GetEnumerator() {
 			return list.GetEnumerator();
 		}
-		
-		public IPlayList Copy(){
+
+		public IPlayList Copy() {
 			return (IPlayList)(MemberwiseClone());
-		}				
+		}
 		#endregion
 	}
 }

@@ -1,4 +1,4 @@
-// PlayListTimeNode.cs 
+// PlayListTimeNode.cs
 //
 //  Copyright (C) 2007-2009 Andoni Morales Alastruey
 //
@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -23,37 +23,45 @@ using Gdk;
 
 namespace LongoMatch.Compat.v00.TimeNodes
 {
-	
+
 	[Serializable]
 	public class PlayListTimeNode : PixbufTimeNode
 	{
 		private string fileName;
 		private bool valid=true;
 
-		
-		public PlayListTimeNode(){
+
+		public PlayListTimeNode() {
 		}
-		
+
 		public PlayListTimeNode(string fileName, MediaTimeNode tNode) : base(tNode.Name,tNode.Start,tNode.Stop,tNode.MiniaturePath)
 		{
 			this.fileName = fileName;
-			
+
 		}
-		public string FileName{
-			set{ this.fileName = value;}
-			get{ return this.fileName;}
+		public string FileName {
+			set {
+				this.fileName = value;
+			}
+			get {
+				return this.fileName;
+			}
 		}
-		
-		
-		public bool Valid{
-			get{return this.valid;}
-			set{this.valid = value;}
+
+
+		public bool Valid {
+			get {
+				return this.valid;
+			}
+			set {
+				this.valid = value;
+			}
 		}
-		
-	
-		
-		
-	
-		
+
+
+
+
+
+
 	}
 }
