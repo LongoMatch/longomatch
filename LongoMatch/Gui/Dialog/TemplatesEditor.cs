@@ -58,6 +58,7 @@ namespace LongoMatch.Gui.Dialog
 			templateFileColumn.SetCellDataFunc(templateFileCell, new Gtk.TreeCellDataFunc(RenderTemplateFile));
 			treeview.AppendColumn(templateFileColumn);
 			Use = type;
+			sectionspropertieswidget1.CanExport = false;
 		}
 
 		public UseType Use {

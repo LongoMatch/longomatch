@@ -36,7 +36,12 @@ namespace LongoMatch.Gui.Dialog {
             w1.Name = "dialog1_VBox";
             w1.BorderWidth = ((uint)(2));
             // Container child dialog1_VBox.Gtk.Box+BoxChild
-            this.fdwidget = null;
+            this.fdwidget = new LongoMatch.Gui.Component.ProjectDetailsWidget();
+            this.fdwidget.Name = "fdwidget";
+            this.fdwidget.Edited = false;
+            this.fdwidget.LocalGoals = 0;
+            this.fdwidget.VisitorGoals = 0;
+            this.fdwidget.Date = new System.DateTime(0);
             w1.Add(this.fdwidget);
             Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(w1[this.fdwidget]));
             w2.Position = 0;

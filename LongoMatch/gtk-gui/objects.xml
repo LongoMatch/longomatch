@@ -47,10 +47,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.PlayerProperties" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Component.PlayersTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
     <itemgroups />
     <signals>
@@ -177,14 +173,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.ProjectTemplateWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="ProjectTemplateWidget Properties">
-        <property name="Edited" />
-      </itemgroup>
-    </itemgroups>
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Component.PlayListWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>
@@ -208,6 +196,26 @@
       </itemgroup>
     </signals>
   </object>
+  <object type="LongoMatch.Gui.Popup.TransparentDrawingArea" palette-category="General" allow-children="false" base-type="Gtk.Window">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.DrawingWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.ProjectListWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="ProjectListWidget Signals">
+        <signal name="ProjectSelectedEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.PlayerProperties" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
   <object type="LongoMatch.Gui.Component.ProjectDetailsWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="ProjectDetailsWidget Properties">
@@ -227,20 +235,12 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Popup.TransparentDrawingArea" palette-category="General" allow-children="false" base-type="Gtk.Window">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.DrawingWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.ProjectListWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="ProjectListWidget Signals">
-        <signal name="ProjectSelectedEvent" />
+  <object type="LongoMatch.Gui.Component.ProjectTemplateWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="ProjectTemplateWidget Properties">
+        <property name="Edited" />
       </itemgroup>
-    </signals>
+    </itemgroups>
+    <signals />
   </object>
 </objects>

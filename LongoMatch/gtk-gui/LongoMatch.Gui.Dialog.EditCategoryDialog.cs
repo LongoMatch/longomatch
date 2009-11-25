@@ -31,7 +31,9 @@ namespace LongoMatch.Gui.Dialog {
             w1.Name = "dialog1_VBox";
             w1.BorderWidth = ((uint)(2));
             // Container child dialog1_VBox.Gtk.Box+BoxChild
-            this.timenodeproperties2 = null;
+            this.timenodeproperties2 = new LongoMatch.Gui.Component.CategoryProperties();
+            this.timenodeproperties2.Events = ((Gdk.EventMask)(256));
+            this.timenodeproperties2.Name = "timenodeproperties2";
             w1.Add(this.timenodeproperties2);
             Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(w1[this.timenodeproperties2]));
             w2.Position = 0;
@@ -57,7 +59,7 @@ namespace LongoMatch.Gui.Dialog {
                 this.Child.ShowAll();
             }
             this.DefaultWidth = 264;
-            this.DefaultHeight = 137;
+            this.DefaultHeight = 153;
             this.Show();
         }
     }

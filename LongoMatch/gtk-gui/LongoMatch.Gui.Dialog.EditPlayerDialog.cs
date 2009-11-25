@@ -33,7 +33,9 @@ namespace LongoMatch.Gui.Dialog {
             w1.Name = "dialog1_VBox";
             w1.BorderWidth = ((uint)(2));
             // Container child dialog1_VBox.Gtk.Box+BoxChild
-            this.playerproperties1 = null;
+            this.playerproperties1 = new LongoMatch.Gui.Component.PlayerProperties();
+            this.playerproperties1.Events = ((Gdk.EventMask)(256));
+            this.playerproperties1.Name = "playerproperties1";
             w1.Add(this.playerproperties1);
             Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(w1[this.playerproperties1]));
             w2.Position = 0;

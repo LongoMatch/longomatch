@@ -52,7 +52,9 @@ namespace LongoMatch.Gui.Dialog {
             this.vbox2.Name = "vbox2";
             this.vbox2.Spacing = 6;
             // Container child vbox2.Gtk.Box+BoxChild
-            this.drawingtoolbox1 = null;
+            this.drawingtoolbox1 = new LongoMatch.Gui.Component.DrawingToolBox();
+            this.drawingtoolbox1.Events = ((Gdk.EventMask)(256));
+            this.drawingtoolbox1.Name = "drawingtoolbox1";
             this.vbox2.Add(this.drawingtoolbox1);
             Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.vbox2[this.drawingtoolbox1]));
             w2.Position = 0;
@@ -65,14 +67,14 @@ namespace LongoMatch.Gui.Dialog {
             this.savetoprojectbutton.UseUnderline = true;
             // Container child savetoprojectbutton.Gtk.Container+ContainerChild
             Gtk.Alignment w3 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment1.Gtk.Container+ContainerChild
+            // Container child GtkAlignment2.Gtk.Container+ContainerChild
             Gtk.HBox w4 = new Gtk.HBox();
             w4.Spacing = 2;
-            // Container child GtkHBox1.Gtk.Container+ContainerChild
+            // Container child GtkHBox3.Gtk.Container+ContainerChild
             Gtk.Image w5 = new Gtk.Image();
             w5.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-save", Gtk.IconSize.Menu, 16);
             w4.Add(w5);
-            // Container child GtkHBox1.Gtk.Container+ContainerChild
+            // Container child GtkHBox3.Gtk.Container+ContainerChild
             Gtk.Label w7 = new Gtk.Label();
             w7.LabelProp = Mono.Unix.Catalog.GetString("Save to Project");
             w7.UseUnderline = true;
@@ -92,14 +94,14 @@ namespace LongoMatch.Gui.Dialog {
             this.savebutton.UseUnderline = true;
             // Container child savebutton.Gtk.Container+ContainerChild
             Gtk.Alignment w12 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment.Gtk.Container+ContainerChild
+            // Container child GtkAlignment1.Gtk.Container+ContainerChild
             Gtk.HBox w13 = new Gtk.HBox();
             w13.Spacing = 2;
-            // Container child GtkHBox.Gtk.Container+ContainerChild
+            // Container child GtkHBox2.Gtk.Container+ContainerChild
             Gtk.Image w14 = new Gtk.Image();
             w14.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-save", Gtk.IconSize.Menu, 16);
             w13.Add(w14);
-            // Container child GtkHBox.Gtk.Container+ContainerChild
+            // Container child GtkHBox2.Gtk.Container+ContainerChild
             Gtk.Label w16 = new Gtk.Label();
             w16.LabelProp = Mono.Unix.Catalog.GetString("Save to File");
             w16.UseUnderline = true;
@@ -118,7 +120,9 @@ namespace LongoMatch.Gui.Dialog {
             w21.Expand = false;
             w21.Fill = false;
             // Container child hbox1.Gtk.Box+BoxChild
-            this.drawingwidget1 = null;
+            this.drawingwidget1 = new LongoMatch.Gui.Component.DrawingWidget();
+            this.drawingwidget1.Events = ((Gdk.EventMask)(256));
+            this.drawingwidget1.Name = "drawingwidget1";
             this.hbox1.Add(this.drawingwidget1);
             Gtk.Box.BoxChild w22 = ((Gtk.Box.BoxChild)(this.hbox1[this.drawingwidget1]));
             w22.Position = 1;
@@ -149,6 +153,10 @@ namespace LongoMatch.Gui.Dialog {
             this.savetoprojectbutton.Hide();
             this.button271.Hide();
             this.Show();
+            this.drawingtoolbox1.LineWidthChanged += new LongoMatch.Handlers.LineWidthChangedHandler(this.OnDrawingtoolbox1LineWidthChanged);
+            this.drawingtoolbox1.ColorChanged += new LongoMatch.Handlers.ColorChangedHandler(this.OnDrawingtoolbox1ColorChanged);
+            this.drawingtoolbox1.VisibilityChanged += new LongoMatch.Handlers.VisibilityChangedHandler(this.OnDrawingtoolbox1VisibilityChanged);
+            this.drawingtoolbox1.ClearDrawing += new LongoMatch.Handlers.ClearDrawingHandler(this.OnDrawingtoolbox1ClearDrawing);
             this.savebutton.Clicked += new System.EventHandler(this.OnSavebuttonClicked);
             this.savetoprojectbutton.Clicked += new System.EventHandler(this.OnSavetoprojectbuttonClicked);
         }

@@ -69,7 +69,9 @@ namespace LongoMatch.Gui.Dialog {
             this.hpaned1.Name = "hpaned1";
             this.hpaned1.Position = 349;
             // Container child hpaned1.Gtk.Paned+PanedChild
-            this.projectlistwidget1 = null;
+            this.projectlistwidget1 = new LongoMatch.Gui.Component.ProjectListWidget();
+            this.projectlistwidget1.Events = ((Gdk.EventMask)(256));
+            this.projectlistwidget1.Name = "projectlistwidget1";
             this.hpaned1.Add(this.projectlistwidget1);
             Gtk.Paned.PanedChild w2 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.projectlistwidget1]));
             w2.Resize = false;
@@ -86,7 +88,14 @@ namespace LongoMatch.Gui.Dialog {
             this.GtkAlignment2.Name = "GtkAlignment2";
             this.GtkAlignment2.LeftPadding = ((uint)(12));
             // Container child GtkAlignment2.Gtk.Container+ContainerChild
-            this.projectdetails = null;
+            this.projectdetails = new LongoMatch.Gui.Component.ProjectDetailsWidget();
+            this.projectdetails.Sensitive = false;
+            this.projectdetails.Events = ((Gdk.EventMask)(256));
+            this.projectdetails.Name = "projectdetails";
+            this.projectdetails.Edited = false;
+            this.projectdetails.LocalGoals = 0;
+            this.projectdetails.VisitorGoals = 0;
+            this.projectdetails.Date = new System.DateTime(0);
             this.GtkAlignment2.Add(this.projectdetails);
             this.frame1.Add(this.GtkAlignment2);
             this.GtkLabel6 = new Gtk.Label();
@@ -166,6 +175,8 @@ namespace LongoMatch.Gui.Dialog {
             this.DefaultWidth = 804;
             this.DefaultHeight = 550;
             this.Show();
+            this.projectlistwidget1.ProjectSelectedEvent += new LongoMatch.Gui.Component.ProjectSelectedHandler(this.OnProjectlistwidget1ProjectSelectedEvent);
+            this.projectdetails.EditedEvent += new System.EventHandler(this.OnProjectdetailsEditedEvent);
             this.saveButton.Pressed += new System.EventHandler(this.OnSaveButtonPressed);
             this.deleteButton.Pressed += new System.EventHandler(this.OnDeleteButtonPressed);
             this.buttonOk.Clicked += new System.EventHandler(this.OnButtonOkClicked);

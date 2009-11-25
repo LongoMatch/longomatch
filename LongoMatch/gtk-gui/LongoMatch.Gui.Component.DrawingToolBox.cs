@@ -100,7 +100,6 @@ namespace LongoMatch.Gui.Component {
             this.circlebutton = new Gtk.RadioButton("");
             this.circlebutton.CanFocus = true;
             this.circlebutton.Name = "circlebutton";
-            this.circlebutton.Active = true;
             this.circlebutton.DrawIndicator = false;
             this.circlebutton.UseUnderline = true;
             this.circlebutton.Group = new GLib.SList(System.IntPtr.Zero);
@@ -279,7 +278,6 @@ namespace LongoMatch.Gui.Component {
             // Container child colorstable.Gtk.Table+TableChild
             this.bbutton = new Gtk.RadioButton("");
             this.bbutton.Name = "bbutton";
-            this.bbutton.Active = true;
             this.bbutton.DrawIndicator = false;
             this.bbutton.UseUnderline = true;
             this.bbutton.FocusOnClick = false;

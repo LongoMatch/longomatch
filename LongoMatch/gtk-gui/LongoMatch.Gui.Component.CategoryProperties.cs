@@ -71,7 +71,9 @@ namespace LongoMatch.Gui.Component {
             w3.Position = 0;
             w3.Fill = false;
             // Container child vbox3.Gtk.Box+BoxChild
-            this.timeadjustwidget1 = null;
+            this.timeadjustwidget1 = new LongoMatch.Gui.Component.TimeAdjustWidget();
+            this.timeadjustwidget1.Events = ((Gdk.EventMask)(256));
+            this.timeadjustwidget1.Name = "timeadjustwidget1";
             this.vbox3.Add(this.timeadjustwidget1);
             Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(this.vbox3[this.timeadjustwidget1]));
             w4.Position = 1;
@@ -141,6 +143,8 @@ namespace LongoMatch.Gui.Component {
             }
             this.Show();
             this.nameentry.Changed += new System.EventHandler(this.OnNameentryChanged);
+            this.timeadjustwidget1.LeadTimeChanged += new System.EventHandler(this.OnTimeadjustwidget1LeadTimeChanged);
+            this.timeadjustwidget1.LagTimeChanged += new System.EventHandler(this.OnTimeadjustwidget1LagTimeChanged);
             this.colorbutton1.ColorSet += new System.EventHandler(this.OnColorbutton1ColorSet);
             this.changebuton.Clicked += new System.EventHandler(this.OnChangebutonClicked);
         }

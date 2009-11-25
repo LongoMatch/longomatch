@@ -17,6 +17,7 @@
 //
 //
 using System;
+using System.IO;
 using System.Collections.Generic;
 using Gtk;
 using Mono.Unix;
@@ -24,6 +25,7 @@ using Gdk;
 using LongoMatch.DB;
 using LongoMatch.TimeNodes;
 using LongoMatch.Gui.Dialog;
+using LongoMatch.IO;
 
 
 namespace LongoMatch.Gui.Component
@@ -72,6 +74,12 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		public bool CanExport{
+			set{
+				hseparator1.Visible = value;
+				exportbutton.Visible = value;
+			}
+		}
 		public bool Edited {
 			get {
 				return edited;
@@ -147,6 +155,10 @@ namespace LongoMatch.Gui.Component
 			dialog.Destroy();
 			edited = true;
 		}
+		
+		private void SaveTemplate(string templateName){
+			SectionsWriter.UpdateTemplate(templateName+".sct", Sections);
+		}
 
 		protected virtual void OnNewAfter(object sender, EventArgs args) {
 			AddSection(sections.SectionsTimeNodes.IndexOf(selectedSection)+1);
@@ -179,6 +191,32 @@ namespace LongoMatch.Gui.Component
 		{
 			if (args.Event.Key == Gdk.Key.Delete && selectedSection != null)
 				RemoveSection(sections.SectionsTimeNodes.IndexOf(selectedSection));
+		}
+
+		protected virtual void OnExportbuttonClicked (object sender, System.EventArgs e)
+		{
+			EntryDialog dialog = new EntryDialog();
+			dialog.TransientFor = (Gtk.Window)this.Toplevel;
+			dialog.ShowCount = false;
+			dialog.Text = Catalog.GetString("newtemplate");
+			if (dialog.Run() == (int)ResponseType.Ok){
+				if (dialog.Text == "")
+					MessagePopup.PopupMessage(dialog, MessageType.Error,
+					                          Catalog.GetString("The template name is void."));
+				else if (File.Exists(System.IO.Path.Combine(MainClass.TemplatesDir(),dialog.Text+".sct"))){
+					MessageDialog md = new MessageDialog(null,
+					                                     DialogFlags.Modal,
+					                                     MessageType.Question,
+					                                     Gtk.ButtonsType.YesNo,
+					                                     Catalog.GetString("The template already exists.Do you want to overwrite it ")
+					                                   );
+					if (md.Run() == (int)ResponseType.Yes)
+						SaveTemplate(dialog.Text);
+					md.Destroy();
+				}					
+				else SaveTemplate(dialog.Text);
+			}	
+			dialog.Destroy();
 		}
 	}
 }

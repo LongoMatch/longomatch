@@ -31,20 +31,27 @@ namespace LongoMatch.Gui.Dialog
 		public ProjectTemplateEditorDialog()
 		{
 			this.Build();
+			projecttemplatewidget.CanExport = true;
 		}
 
 		public Project Project {
 			set {
-				sectionspropertieswidget3.SetProject(value);
+				projecttemplatewidget.SetProject(value);
 			}
 		}
 
 		public Sections Sections {
 			set {
-				this.sectionspropertieswidget3.Sections=value;
+				projecttemplatewidget.Sections=value;
 			}
 			get {
-				return this.sectionspropertieswidget3.Sections;
+				return projecttemplatewidget.Sections;
+			}
+		}
+		
+		public bool CanExport{
+			set{
+				projecttemplatewidget.CanExport = value;
 			}
 		}
 

@@ -1318,7 +1318,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.ProjectTemplateWidget" design-size="436 138">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.ProjectTemplateWidget" design-size="527 227">
     <property name="MemberName" />
     <signal name="KeyPressEvent" handler="OnKeyPressEvent" />
     <child>
@@ -1417,6 +1417,37 @@
               <packing>
                 <property name="Position">3</property>
                 <property name="AutoSize">False</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.HSeparator" id="hseparator1">
+                <property name="MemberName" />
+                <property name="Visible">False</property>
+              </widget>
+              <packing>
+                <property name="Position">4</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Button" id="exportbutton">
+                <property name="MemberName" />
+                <property name="Visible">False</property>
+                <property name="CanFocus">True</property>
+                <property name="Type">TextAndIcon</property>
+                <property name="Icon">stock:gtk-save-as Menu</property>
+                <property name="Label" translatable="yes">Export</property>
+                <property name="UseUnderline">True</property>
+                <signal name="Clicked" handler="OnExportbuttonClicked" />
+              </widget>
+              <packing>
+                <property name="PackType">End</property>
+                <property name="Position">5</property>
+                <property name="AutoSize">True</property>
                 <property name="Expand">False</property>
                 <property name="Fill">False</property>
               </packing>
@@ -2035,7 +2066,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.ProjectTemplateEditorDialog" design-size="470 243">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.ProjectTemplateEditorDialog" design-size="516 243">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Categories Template</property>
     <property name="Icon">stock:longomatch Dialog</property>
@@ -2052,7 +2083,7 @@
         <property name="MemberName" />
         <property name="BorderWidth">2</property>
         <child>
-          <widget class="LongoMatch.Gui.Component.ProjectTemplateWidget" id="sectionspropertieswidget3">
+          <widget class="LongoMatch.Gui.Component.ProjectTemplateWidget" id="projecttemplatewidget">
             <property name="MemberName" />
             <property name="Events">ButtonPressMask</property>
             <property name="Edited">False</property>
@@ -4545,7 +4576,7 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.EditCategoryDialog" design-size="264 137">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.EditCategoryDialog" design-size="264 153">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Category Details</property>
     <property name="Icon">resource:longomatch.png</property>

@@ -28,13 +28,19 @@ namespace LongoMatch.Gui.Component {
             this.scrolledwindow1.Name = "scrolledwindow1";
             this.scrolledwindow1.ShadowType = ((Gtk.ShadowType)(1));
             // Container child scrolledwindow1.Gtk.Container+ContainerChild
-            this.playerstreeview = null;
+            this.playerstreeview = new LongoMatch.Gui.Component.PlayersTreeView();
+            this.playerstreeview.CanFocus = true;
+            this.playerstreeview.Name = "playerstreeview";
             this.scrolledwindow1.Add(this.playerstreeview);
             this.Add(this.scrolledwindow1);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
             this.Show();
+            this.playerstreeview.TimeNodeSelected += new LongoMatch.Handlers.TimeNodeSelectedHandler(this.OnTimeNodeSelected);
+            this.playerstreeview.SnapshotSeriesEvent += new LongoMatch.Handlers.SnapshotSeriesHandler(this.OnSnapshotSeriesEvent);
+            this.playerstreeview.TimeNodeChanged += new LongoMatch.Handlers.TimeNodeChangedHandler(this.OnTimeNodeChanged);
+            this.playerstreeview.PlayListNodeAdded += new LongoMatch.Handlers.PlayListNodeAddedHandler(this.OnPlayerstreeviewPlayListNodeAdded);
         }
     }
 }

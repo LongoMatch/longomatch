@@ -13,7 +13,7 @@ namespace LongoMatch.Gui.Dialog {
     
     public partial class ProjectTemplateEditorDialog {
         
-        private LongoMatch.Gui.Component.ProjectTemplateWidget sectionspropertieswidget3;
+        private LongoMatch.Gui.Component.ProjectTemplateWidget projecttemplatewidget;
         
         private Gtk.Button buttonOk;
         
@@ -34,9 +34,12 @@ namespace LongoMatch.Gui.Dialog {
             w1.Name = "dialog1_VBox";
             w1.BorderWidth = ((uint)(2));
             // Container child dialog1_VBox.Gtk.Box+BoxChild
-            this.sectionspropertieswidget3 = null;
-            w1.Add(this.sectionspropertieswidget3);
-            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(w1[this.sectionspropertieswidget3]));
+            this.projecttemplatewidget = new LongoMatch.Gui.Component.ProjectTemplateWidget();
+            this.projecttemplatewidget.Events = ((Gdk.EventMask)(256));
+            this.projecttemplatewidget.Name = "projecttemplatewidget";
+            this.projecttemplatewidget.Edited = false;
+            w1.Add(this.projecttemplatewidget);
+            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(w1[this.projecttemplatewidget]));
             w2.Position = 0;
             // Internal child LongoMatch.Gui.Dialog.ProjectTemplateEditorDialog.ActionArea
             Gtk.HButtonBox w3 = this.ActionArea;
@@ -59,7 +62,7 @@ namespace LongoMatch.Gui.Dialog {
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 470;
+            this.DefaultWidth = 516;
             this.DefaultHeight = 243;
             this.Show();
         }

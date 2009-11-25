@@ -33,7 +33,10 @@ namespace LongoMatch.Gui.Dialog {
             w1.Name = "dialog1_VBox";
             w1.BorderWidth = ((uint)(2));
             // Container child dialog1_VBox.Gtk.Box+BoxChild
-            this.teamtemplatewidget1 = null;
+            this.teamtemplatewidget1 = new LongoMatch.Gui.Component.TeamTemplateWidget();
+            this.teamtemplatewidget1.Events = ((Gdk.EventMask)(256));
+            this.teamtemplatewidget1.Name = "teamtemplatewidget1";
+            this.teamtemplatewidget1.Edited = false;
             w1.Add(this.teamtemplatewidget1);
             Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(w1[this.teamtemplatewidget1]));
             w2.Position = 0;

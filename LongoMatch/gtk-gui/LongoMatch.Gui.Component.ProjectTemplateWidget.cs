@@ -29,6 +29,10 @@ namespace LongoMatch.Gui.Component {
         
         private Gtk.Button editbutton;
         
+        private Gtk.HSeparator hseparator1;
+        
+        private Gtk.Button exportbutton;
+        
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
             // Widget LongoMatch.Gui.Component.ProjectTemplateWidget
@@ -44,7 +48,9 @@ namespace LongoMatch.Gui.Component {
             this.scrolledwindow2.Name = "scrolledwindow2";
             this.scrolledwindow2.ShadowType = ((Gtk.ShadowType)(1));
             // Container child scrolledwindow2.Gtk.Container+ContainerChild
-            this.sectionstreeview1 = null;
+            this.sectionstreeview1 = new LongoMatch.Gui.Component.CategoriesTreeView();
+            this.sectionstreeview1.CanFocus = true;
+            this.sectionstreeview1.Name = "sectionstreeview1";
             this.scrolledwindow2.Add(this.sectionstreeview1);
             this.hbox1.Add(this.scrolledwindow2);
             Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.hbox1[this.scrolledwindow2]));
@@ -161,22 +167,62 @@ namespace LongoMatch.Gui.Component {
             w38.Position = 3;
             w38.Expand = false;
             w38.Fill = false;
-            this.hbox1.Add(this.vbox2);
-            Gtk.Box.BoxChild w39 = ((Gtk.Box.BoxChild)(this.hbox1[this.vbox2]));
-            w39.Position = 1;
+            // Container child vbox2.Gtk.Box+BoxChild
+            this.hseparator1 = new Gtk.HSeparator();
+            this.hseparator1.Name = "hseparator1";
+            this.vbox2.Add(this.hseparator1);
+            Gtk.Box.BoxChild w39 = ((Gtk.Box.BoxChild)(this.vbox2[this.hseparator1]));
+            w39.Position = 4;
             w39.Expand = false;
             w39.Fill = false;
+            // Container child vbox2.Gtk.Box+BoxChild
+            this.exportbutton = new Gtk.Button();
+            this.exportbutton.CanFocus = true;
+            this.exportbutton.Name = "exportbutton";
+            this.exportbutton.UseUnderline = true;
+            // Container child exportbutton.Gtk.Container+ContainerChild
+            Gtk.Alignment w40 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
+            Gtk.HBox w41 = new Gtk.HBox();
+            w41.Spacing = 2;
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Image w42 = new Gtk.Image();
+            w42.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-save-as", Gtk.IconSize.Menu, 16);
+            w41.Add(w42);
+            // Container child GtkHBox.Gtk.Container+ContainerChild
+            Gtk.Label w44 = new Gtk.Label();
+            w44.LabelProp = Mono.Unix.Catalog.GetString("Export");
+            w44.UseUnderline = true;
+            w41.Add(w44);
+            w40.Add(w41);
+            this.exportbutton.Add(w40);
+            this.vbox2.Add(this.exportbutton);
+            Gtk.Box.BoxChild w48 = ((Gtk.Box.BoxChild)(this.vbox2[this.exportbutton]));
+            w48.PackType = ((Gtk.PackType)(1));
+            w48.Position = 5;
+            w48.Expand = false;
+            w48.Fill = false;
+            this.hbox1.Add(this.vbox2);
+            Gtk.Box.BoxChild w49 = ((Gtk.Box.BoxChild)(this.hbox1[this.vbox2]));
+            w49.Position = 1;
+            w49.Expand = false;
+            w49.Fill = false;
             this.Add(this.hbox1);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
+            this.hseparator1.Hide();
+            this.exportbutton.Hide();
             this.Show();
             this.KeyPressEvent += new Gtk.KeyPressEventHandler(this.OnKeyPressEvent);
+            this.sectionstreeview1.SectionClicked += new LongoMatch.Gui.Component.SectionHandler(this.OnSectionstreeview1SectionClicked);
+            this.sectionstreeview1.SectionSelected += new LongoMatch.Gui.Component.SectionHandler(this.OnSectionstreeview1SectionSelected);
             this.newprevbutton.Clicked += new System.EventHandler(this.OnNewBefore);
             this.newafterbutton.Clicked += new System.EventHandler(this.OnNewAfter);
             this.newafterbutton.Activated += new System.EventHandler(this.OnNewBefore);
             this.removebutton.Clicked += new System.EventHandler(this.OnRemove);
             this.editbutton.Clicked += new System.EventHandler(this.OnEdit);
+            this.exportbutton.Clicked += new System.EventHandler(this.OnExportbuttonClicked);
         }
     }
 }

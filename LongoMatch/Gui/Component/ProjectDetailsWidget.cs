@@ -416,7 +416,7 @@ namespace LongoMatch.Gui.Component
 			ted.TransientFor = (Window)Toplevel;
 			ted.Sections = Sections;
 			ted.Project = project;
-
+			ted.CanExport = Use == ProjectType.EditProject;
 			if (ted.Run() == (int)ResponseType.Apply) {
 				this.Sections = ted.Sections;
 			}
@@ -429,6 +429,7 @@ namespace LongoMatch.Gui.Component
 			tted.TransientFor = (Window)Toplevel;
 			tted.Title=Catalog.GetString("Local Team Template");
 			tted.SetTeamTemplate(LocalTeamTemplate);
+			
 			if (tted.Run() == (int)ResponseType.Apply) {
 				LocalTeamTemplate = tted.GetTeamTemplate();
 			}

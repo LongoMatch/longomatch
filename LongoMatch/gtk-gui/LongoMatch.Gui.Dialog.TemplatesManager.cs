@@ -161,12 +161,20 @@ namespace LongoMatch.Gui.Dialog {
             this.hbox1.Name = "hbox1";
             this.hbox1.Spacing = 6;
             // Container child hbox1.Gtk.Box+BoxChild
-            this.sectionspropertieswidget1 = null;
+            this.sectionspropertieswidget1 = new LongoMatch.Gui.Component.ProjectTemplateWidget();
+            this.sectionspropertieswidget1.Sensitive = false;
+            this.sectionspropertieswidget1.Events = ((Gdk.EventMask)(256));
+            this.sectionspropertieswidget1.Name = "sectionspropertieswidget1";
+            this.sectionspropertieswidget1.Edited = false;
             this.hbox1.Add(this.sectionspropertieswidget1);
             Gtk.Box.BoxChild w32 = ((Gtk.Box.BoxChild)(this.hbox1[this.sectionspropertieswidget1]));
             w32.Position = 0;
             // Container child hbox1.Gtk.Box+BoxChild
-            this.teamtemplatewidget1 = null;
+            this.teamtemplatewidget1 = new LongoMatch.Gui.Component.TeamTemplateWidget();
+            this.teamtemplatewidget1.Sensitive = false;
+            this.teamtemplatewidget1.Events = ((Gdk.EventMask)(256));
+            this.teamtemplatewidget1.Name = "teamtemplatewidget1";
+            this.teamtemplatewidget1.Edited = false;
             this.hbox1.Add(this.teamtemplatewidget1);
             Gtk.Box.BoxChild w33 = ((Gtk.Box.BoxChild)(this.hbox1[this.teamtemplatewidget1]));
             w33.Position = 1;
@@ -197,6 +205,8 @@ namespace LongoMatch.Gui.Dialog {
             }
             this.DefaultWidth = 483;
             this.DefaultHeight = 336;
+            this.sectionspropertieswidget1.Hide();
+            this.teamtemplatewidget1.Hide();
             this.Show();
             this.treeview.RowActivated += new Gtk.RowActivatedHandler(this.OnTreeviewRowActivated);
             this.treeview.CursorChanged += new System.EventHandler(this.OnTreeviewCursorChanged);
