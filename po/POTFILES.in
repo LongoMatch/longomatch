@@ -1,6 +1,6 @@
 [encoding: UTF-8]
 LongoMatch/longomatch.desktop.in
-LongoMatch/AssemblyInfo.cs 
+LongoMatch/AssemblyInfo.cs.in 
 LongoMatch/Compat/0.0/DatabaseMigrator.cs 
 LongoMatch/Compat/0.0/DB/DataBase.cs 
 LongoMatch/Compat/0.0/DB/MediaFile.cs 
@@ -128,7 +128,7 @@ LongoMatch/Time/Time.cs
 LongoMatch/Time/TimeNode.cs 
 LongoMatch/Updates/Updater.cs 
 LongoMatch/Updates/XmlUpdateParser.cs
-CesarPlayer/AssemblyInfo.cs 
+CesarPlayer/AssemblyInfo.cs.in 
 CesarPlayer/gtk-gui/generated.cs 
 CesarPlayer/Handlers/ErrorHandler.cs 
 CesarPlayer/Handlers/Handlers.cs 
