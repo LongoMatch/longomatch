@@ -54,6 +54,17 @@ namespace LongoMatch.Gui.Dialog
 			deleteButton.Sensitive = false;
 			originalFilePath=null;
 		}
+		
+		private void PromptToSaveEditedProject(){			
+			MessageDialog md = new MessageDialog((Window)this.Toplevel,DialogFlags.Modal,
+			                                     MessageType.Question, ButtonsType.YesNo,
+			                                     Catalog.GetString("The Project has been edited, do you want to save the changes?"));
+			if (md.Run() == (int)ResponseType.Yes) {
+				SaveProject();
+				projectdetails.Edited=false;
+			}
+			md.Destroy();
+		}
 
 		private void SaveProject() {
 			Project project = projectdetails.GetProject();
@@ -114,21 +125,18 @@ namespace LongoMatch.Gui.Dialog
 
 		protected virtual void OnButtonOkClicked(object sender, System.EventArgs e)
 		{
+			if (projectdetails.Edited) {
+				PromptToSaveEditedProject();
+			}
 			this.Destroy();
 		}
 
 		protected virtual void OnProjectlistwidget1ProjectSelectedEvent(ProjectDescription project)
 		{
 			if (projectdetails.Edited) {
-				MessageDialog md = new MessageDialog((Window)this.Toplevel,DialogFlags.Modal,
-				                                     MessageType.Question, ButtonsType.YesNo,
-				                                     Catalog.GetString("The Project has been edited, do you want to save the changes?"));
-				if (md.Run() == (int)ResponseType.Yes) {
-					SaveProject();
-					projectdetails.Edited=false;
-				}
-				md.Destroy();
+				PromptToSaveEditedProject();
 			}
+			
 			if (MainWindow.OpenedProject() != null && project.File == MainWindow.OpenedProject().File.FilePath) {
 
 				MessagePopup.PopupMessage(this, MessageType.Warning,
