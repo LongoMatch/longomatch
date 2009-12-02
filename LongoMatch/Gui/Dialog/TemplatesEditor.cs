@@ -19,10 +19,10 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Gtk;
 using Mono.Unix;
-using System.Collections;
 using LongoMatch.DB;
 using LongoMatch.IO;
 
@@ -181,30 +181,47 @@ namespace LongoMatch.Gui.Dialog
 		{
 			string name;
 			int count;
+			string [] templates = null;
+			List<string> availableTemplates = new List<string>();
 			EntryDialog ed= new  EntryDialog();
 
 			ed.Title = Catalog.GetString("Template name");
-			if (useType == UseType.TeamTemplate)
-				ed.ShowCount=true;
+			
+			if (useType == UseType.TeamTemplate){
+				ed.ShowCount=true;				
+			}
+			
+			templates = System.IO.Directory.GetFiles(MainClass.TemplatesDir());
+			foreach (String text in templates){
+				string templateName = System.IO.Path.GetFileName(text);
+				if (templateName.EndsWith(fileExtension) && templateName != "default"+fileExtension)
+					availableTemplates.Add(templateName);					
+			}
+			ed.AvailableTemplates = availableTemplates; 
+
 
 			if (ed.Run() == (int)ResponseType.Ok) {
 				name = ed.Text;
 				count = ed.Count;
 				if (name == "") {
-					MessagePopup.PopupMessage(this, MessageType.Warning,
+					MessagePopup.PopupMessage(ed, MessageType.Warning,
 					                          Catalog.GetString("You cannot create a template with a void name"));
 					ed.Destroy();
 					return;
 				}
 				if (System.IO.File.Exists(System.IO.Path.Combine(MainClass.TemplatesDir(),name+fileExtension))) {
-					MessagePopup.PopupMessage(this, MessageType.Warning,
+					MessagePopup.PopupMessage(ed, MessageType.Warning,
 					                          Catalog.GetString("A template with this name already exists"));
 					ed.Destroy();
 					return;
-				}
-
-				if (useType == UseType.SectionsTemplate)
+				}	
+				
+				if (ed.SelectedTemplate != null)
+						System.IO.File.Copy(System.IO.Path.Combine(MainClass.TemplatesDir(),ed.SelectedTemplate),
+						                    System.IO.Path.Combine(MainClass.TemplatesDir(),name+fileExtension));
+				else if (useType == UseType.SectionsTemplate){
 					SectionsWriter.CreateNewTemplate(name+fileExtension);
+				}
 				else {
 					TeamTemplate tt = new TeamTemplate();
 					tt.CreateDefaultTemplate(count);
