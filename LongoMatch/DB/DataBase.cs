@@ -22,11 +22,13 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Reflection;
-using Gdk;
+using Gtk;
 using Mono.Unix;
 using Db4objects.Db4o;
 using Db4objects.Db4o.Query;
 using LongoMatch.TimeNodes;
+using LongoMatch.Gui;
+using LongoMatch.Video.Utils;
 
 namespace LongoMatch.DB
 {
@@ -112,6 +114,7 @@ namespace LongoMatch.DB
 		/// </returns>
 		public List<ProjectDescription> GetAllProjects() {
 			lock (this.locker) {
+				SetUpdateCascadeOptions();
 				List<ProjectDescription> list = new List<ProjectDescription>();
 				IObjectContainer db = Db4oFactory.OpenFile(file);
 				db.Ext().Configure().ActivationDepth(1);
@@ -120,14 +123,30 @@ namespace LongoMatch.DB
 					query.Constrain(typeof(Project));
 					IObjectSet result = query.Execute();
 					while (result.HasNext()) {
-						Project p = (Project)result.Next();
-						db.Activate(p.File,3);
-						ProjectDescription pd = new ProjectDescription(p.File.FilePath,
-						                p.LocalName, p.VisitorName,
-						                p.Season,p.Competition,
-						                p.LocalGoals,p.VisitorGoals,
-						                p.MatchDate,p.File.Preview);
-						list.Add(pd);
+						try{
+							Project p = (Project)result.Next();
+							try{
+								db.Activate(p.File,3);
+								//FIXME: It happens that the project's File object is set to null?¿?¿
+								// In that case, reset the value to let the user change it with the
+								// projects manager.
+								if (p.File.FilePath == null){}							
+							}catch{
+								MessagePopup.PopupMessage(null, MessageType.Warning, 
+								                          Catalog.GetString("Error retrieving the file info for project:")+" "+p.Title+"\n"+
+								                          Catalog.GetString("This value will be reset. Remember to change it later with the projects manager"));
+								p.File = new PreviewMediaFile(Catalog.GetString("Change Me"),0,0,false,false,"","",0,0,null);
+								db.Set(p);
+							}
+							ProjectDescription pd = new ProjectDescription(p.File.FilePath,
+							                                               p.LocalName, p.VisitorName,
+							                                               p.Season,p.Competition,
+							                                               p.LocalGoals,p.VisitorGoals,
+							                                               p.MatchDate,p.File.Preview);
+							list.Add(pd);
+						}catch{	
+							Console.WriteLine("Error retreiving project. Skip");
+						}
 					}
 					return list;
 				}
