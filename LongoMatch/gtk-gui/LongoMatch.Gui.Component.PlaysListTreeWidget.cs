@@ -46,6 +46,7 @@ namespace LongoMatch.Gui.Component {
             this.treeview.PlayListNodeAdded += new LongoMatch.Handlers.PlayListNodeAddedHandler(this.OnPlayListNodeAdded);
             this.treeview.SnapshotSeriesEvent += new LongoMatch.Handlers.SnapshotSeriesHandler(this.OnTreeviewSnapshotSeriesEvent);
             this.treeview.PlayersTagged += new LongoMatch.Handlers.PlayersTaggedHandler(this.OnTreeviewPlayersTagged);
+            this.treeview.TagPlay += new LongoMatch.Handlers.TagPlayHandler(this.OnTreeviewTagPlay);
         }
     }
 }

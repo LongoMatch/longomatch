@@ -41,6 +41,8 @@ namespace LongoMatch.Handlers
 	public delegate void TimeNodeDeletedHandler(MediaTimeNode tNode,int section);
 	//Players needs to be tagged
 	public delegate void PlayersTaggedHandler(MediaTimeNode tNode, Team team);
+	//Tag a play
+	public delegate void TagPlayHandler(MediaTimeNode tNode);
 
 	/*Playlist Events*/
 	//Add the a play to the opened playlist
@@ -73,10 +75,5 @@ namespace LongoMatch.Handlers
 	public delegate void SnapshotSeriesHandler(MediaTimeNode tNode);
 	//A new version of the software exists
 	public delegate void NewVersionHandler(Version version, string URL);
-
-
-
-
-
-
+	
 }

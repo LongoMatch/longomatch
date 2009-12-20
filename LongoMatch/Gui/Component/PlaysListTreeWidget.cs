@@ -40,6 +40,8 @@ namespace LongoMatch.Gui.Component
 		public event PlayListNodeAddedHandler PlayListNodeAdded;
 		public event SnapshotSeriesHandler SnapshotSeriesEvent;
 		public event PlayersTaggedHandler PlayersTagged;
+		public event TagPlayHandler TagPlay;
+
 
 		private Project project;
 
@@ -136,6 +138,12 @@ namespace LongoMatch.Gui.Component
 		{
 			if (PlayersTagged != null)
 				PlayersTagged(tNode,team);
+		}
+
+		protected virtual void OnTreeviewTagPlay (LongoMatch.TimeNodes.MediaTimeNode tNode)
+		{
+			if (TagPlay != null)
+				TagPlay(tNode);
 		}
 	}
 }

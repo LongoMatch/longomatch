@@ -41,11 +41,13 @@ namespace LongoMatch.Gui.Component
 		public event PlayListNodeAddedHandler PlayListNodeAdded;
 		public event SnapshotSeriesHandler SnapshotSeriesEvent;
 		public event PlayersTaggedHandler PlayersTagged;
+		public event TagPlayHandler TagPlay;
 
 		private Menu menu;
 		private MenuItem local;
 		private	MenuItem visitor;
 		private MenuItem noTeam;
+		private MenuItem tag;
 		private MenuItem addPLN;
 		private MenuItem deleteKeyFrame;
 		private MenuItem snapshot;
@@ -94,7 +96,11 @@ namespace LongoMatch.Gui.Component
 		}
 
 		private void SetMenu() {
-			Menu teamMenu = new Menu();
+			Menu teamMenu, playersMenu;
+			MenuItem localPlayers, visitorPlayers;
+			MenuItem team, quit;
+			
+			teamMenu = new Menu();
 			local = new MenuItem(Catalog.GetString("Local Team"));
 			visitor = new MenuItem(Catalog.GetString("Visitor Team"));
 			noTeam = new MenuItem(Catalog.GetString("No Team"));
@@ -102,34 +108,37 @@ namespace LongoMatch.Gui.Component
 			teamMenu .Append(visitor);
 			teamMenu .Append(noTeam);
 
-			Menu playersMenu = new Menu();
-			MenuItem localPlayers = new MenuItem(Catalog.GetString("Local team"));
-			MenuItem visitorPlayers = new MenuItem(Catalog.GetString("Visitor team"));
+			playersMenu = new Menu();
+			localPlayers = new MenuItem(Catalog.GetString("Local team"));
+			visitorPlayers = new MenuItem(Catalog.GetString("Visitor team"));
 			playersMenu.Append(localPlayers);
 			playersMenu.Append(visitorPlayers);
 
 			menu = new Menu();
 
 			name = new MenuItem(Catalog.GetString("Edit"));
-			MenuItem team = new MenuItem(Catalog.GetString("Team Selection"));
+			team = new MenuItem(Catalog.GetString("Team Selection"));
 			team.Submenu = teamMenu;
+			tag = new MenuItem(Catalog.GetString("Add tag"));
 			players = new MenuItem(Catalog.GetString("Tag player"));
 			players.Submenu = playersMenu;
-			MenuItem quit = new MenuItem(Catalog.GetString("Delete"));
+			quit = new MenuItem(Catalog.GetString("Delete"));
 			deleteKeyFrame = new MenuItem(Catalog.GetString("Delete key frame"));
 			addPLN = new MenuItem(Catalog.GetString("Add to playlist"));
 			addPLN.Sensitive=false;
 			snapshot = new MenuItem(Catalog.GetString("Export to PGN images"));
 
 			menu.Append(name);
-			menu.Append(team);
+			menu.Append(tag);
 			menu.Append(players);
+			menu.Append(team);
 			menu.Append(addPLN);
 			menu.Append(quit);
 			menu.Append(deleteKeyFrame);
 			menu.Append(snapshot);
 
 			name.Activated += OnEdit;
+			tag.Activated += OnTag;
 			local.Activated += OnTeamSelection;
 			visitor.Activated += OnTeamSelection;
 			noTeam.Activated += OnTeamSelection;
@@ -157,6 +166,7 @@ namespace LongoMatch.Gui.Component
 			name.Sensitive = !enabled;
 			snapshot.Sensitive = !enabled;
 			players.Sensitive = !enabled;
+			tag.Sensitive = !enabled;
 		}
 		
 		private void RenderMiniature(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
@@ -247,7 +257,6 @@ namespace LongoMatch.Gui.Component
 					paths = Selection.GetSelectedRows();
 				}
 				
-				Console.WriteLine(paths.Length);
 				if (paths.Length == 1) {
 					TimeNode selectedTimeNode = GetValueFromPath(paths[0]);
 					if (selectedTimeNode is MediaTimeNode) {
@@ -339,6 +348,11 @@ namespace LongoMatch.Gui.Component
 					PlayListNodeAdded(tNode);
 				}
 			}
+		}
+		
+		protected void OnTag (object obj, EventArgs args){
+			if (TagPlay != null)
+				TagPlay((MediaTimeNode)GetValueFromPath(Selection.GetSelectedRows()[0]));
 		}
 
 		protected void OnSnapshot(object obj, EventArgs args) {

@@ -58,6 +58,8 @@ namespace LongoMatch.TimeNodes
 		private List<int> localPlayersList; //Used for multitagging: one play and several players
 		// We use the int index of the player in the template,
 		private List<int> visitorPlayersList;// because it's the only unmutable variable
+		
+		private List<Tag> tagsList;
 
 		private Drawing keyFrame;
 
@@ -92,6 +94,7 @@ namespace LongoMatch.TimeNodes
 			this.stopFrame = (uint) this.Stop.MSeconds*fps/1000;
 			localPlayersList = new List<int>();
 			visitorPlayersList = new List<int>();
+			tagsList = new List<Tag>();
 		}
 		#endregion
 
@@ -245,6 +248,18 @@ namespace LongoMatch.TimeNodes
 				return keyFrame != null;
 			}
 		}
+		
+		//// <value>
+		/// Play's tags 
+		/// </value>
+		public List<Tag> Tags{
+			get{
+				return tagsList;
+			}
+			set{
+				tagsList = value;
+			}
+		}
 		#endregion
 
 		#region Public methods
@@ -299,6 +314,34 @@ namespace LongoMatch.TimeNodes
 		/// </param>
 		public void RemoveVisitorPlayer(int index) {
 			visitorPlayersList.Remove(index);
+		}
+		
+		/// <summary>
+		/// Adds a new tag to the play 
+		/// </summary>
+		/// <param name="tag">
+		/// A <see cref="Tag"/>: the tag to add
+		/// </param>
+		public void AddTag(Tag tag){
+			//From 0.15.5
+			if (tagsList == null)
+				tagsList = new List<Tag>();
+			if (!tagsList.Contains(tag))
+				tagsList.Add(tag);
+		}
+		
+		/// <summary>
+		/// Removes a tag to the play
+		/// </summary>
+		/// <param name="tag">
+		/// A <see cref="Tag"/>: the tag to remove
+		/// </param>
+		public void RemoveTag(Tag tag){
+			//From 0.15.5
+			if (tagsList == null)
+				tagsList = new List<Tag>();
+			if (tagsList.Contains(tag))
+				tagsList.Remove(tag);
 		}
 		#endregion
 	}

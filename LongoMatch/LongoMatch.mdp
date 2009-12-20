@@ -70,7 +70,6 @@
     <File name="gtk-gui/LongoMatch.Gui.Dialog.TemplatesManager.cs" subtype="Code" buildaction="Compile" />
     <File name="gtk-gui/LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="images/logo_48x48.png" subtype="Code" buildaction="Nothing" DeployService.RelativeDeployPath="icons/hicolor/48x48/longomatch.png" DeployService.TargetDirectoryId="CommonApplicationDataRoot" />
-    <File name="DB/Tag.cs" subtype="Code" buildaction="Compile" />
     <File name="DB/TagsTemplate.cs" subtype="Code" buildaction="Compile" />
     <File name="gtk-gui/LongoMatch.Gui.Dialog.Migrator.cs" subtype="Code" buildaction="Compile" />
     <File name="Compat/0.0/DatabaseMigrator.cs" subtype="Code" buildaction="Compile" />
@@ -169,6 +168,11 @@
     <File name="images/stock_draw-line-ends-with-arrow.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="images/stock_draw-rectangle-unfilled.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Common/Enums.cs" subtype="Code" buildaction="Compile" />
+    <File name="Time/Tag.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Gui/Component/TaggerWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Gui/Dialog/TaggerDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />

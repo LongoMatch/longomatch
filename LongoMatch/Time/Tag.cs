@@ -18,13 +18,14 @@
 
 using System;
 
-namespace LongoMatch.DB
+namespace LongoMatch.TimeNodes
 {
 
 
 	public class Tag
 	{
 		string text;
+		
 		public Tag(string text)
 		{
 			this.text=text;
@@ -35,12 +36,15 @@ namespace LongoMatch.DB
 				return text;
 			}
 			set {
-				text=value;
+				if (value == null)
+					text="";
+				else
+					text=value;
 			}
 		}
 
 		public bool Equals(Tag tagComp) {
-			return (this.text == tagComp.Text);
+			return (text == tagComp.Text);
 		}
 
 		public override bool Equals(object obj)
@@ -54,7 +58,7 @@ namespace LongoMatch.DB
 
 		public override int GetHashCode()
 		{
-			return text.CompareTo("XXXXX") ^ 3 ;
+			return text.GetHashCode();
 		}
 	}
 }

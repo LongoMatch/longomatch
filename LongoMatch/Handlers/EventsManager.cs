@@ -110,6 +110,7 @@ namespace LongoMatch
 			visitorPlayersList.PlayListNodeAdded += OnPlayListNodeAdded;
 
 			treewidget.PlayersTagged += OnPlayersTagged;
+			treewidget.TagPlay += OnTagPlay;
 
 			treewidget.SnapshotSeriesEvent += OnSnapshotSeries;
 			localPlayersList.SnapshotSeriesEvent += OnSnapshotSeries;
@@ -329,10 +330,7 @@ namespace LongoMatch
 			Pixbuf pixbuf=null;
 			DrawingTool dialog = new DrawingTool();
 
-			if (selectedTimeNode == null)
-				player.SeekTo(time,true);
-			else
-				player.SeekTo(time,true);
+			player.SeekTo(time,true);
 			while (pixbuf == null)
 				pixbuf = player.CurrentFrame;
 
@@ -345,6 +343,19 @@ namespace LongoMatch
 			pixbuf.Dispose();
 			dialog.Run();
 			dialog.Destroy();
+		}
+		
+		protected virtual void OnTagPlay(MediaTimeNode tNode){
+			TaggerDialog tagger = new TaggerDialog();
+			tagger.ProjectTags = openedProject.Tags;
+			tagger.Tags = tNode.Tags;
+			tagger.TransientFor = (Gtk.Window)player.Toplevel;
+			tagger.Run();
+			tNode.Tags = tagger.Tags;
+			foreach (Tag tag in tagger.Tags){
+				openedProject.Tags.AddTag(tag);
+			}
+			tagger.Destroy();
 		}
 
 		protected virtual void OnPlayersTagged(MediaTimeNode tNode, Team team) {

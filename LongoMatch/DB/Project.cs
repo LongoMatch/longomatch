@@ -70,6 +70,8 @@ namespace LongoMatch.DB
 		private TeamTemplate visitorTeamTemplate;
 
 		private TeamTemplate localTeamTemplate;
+		
+		private TagsTemplate tagsTemplate;
 		//Keep this fiel for DB retrocompatibility
 		private List<MediaTimeNode>[] dataSectionArray;
 
@@ -131,7 +133,8 @@ namespace LongoMatch.DB
 			for (int i=0;i<sections.Count;i++) {
 				sectionPlaysList.Add(new List<MediaTimeNode>());
 			}
-
+			
+			this.tagsTemplate = new TagsTemplate();
 			this.Title = System.IO.Path.GetFileNameWithoutExtension(this.file.FilePath);
 		}
 		#endregion
@@ -278,6 +281,21 @@ namespace LongoMatch.DB
 			}
 			set {
 				visitorTeamTemplate=value;
+			}
+		}
+		
+		/// <value>
+		/// Template with the project tags
+		/// </value>
+		public TagsTemplate Tags{
+			//Since 0.15.5
+			get{
+				if (tagsTemplate == null)
+					tagsTemplate = new TagsTemplate();
+				return tagsTemplate;
+			}
+			set{
+				tagsTemplate = value;
 			}
 		}
 		#endregion

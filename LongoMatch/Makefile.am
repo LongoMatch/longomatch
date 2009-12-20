@@ -96,7 +96,6 @@ FILES = \
 	DB/Project.cs \
 	DB/ProjectDescription.cs\
 	DB/Sections.cs \
-	DB/Tag.cs \
 	DB/TagsTemplate.cs \
 	DB/TeamTemplate.cs \
 	gtk-gui/generated.cs \
@@ -112,6 +111,7 @@ FILES = \
 	gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.ProjectTemplateWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TeamTemplateWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TimeLineWidget.cs \
@@ -128,6 +128,7 @@ FILES = \
 	gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.ProjectTemplateEditorDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.TeamTemplateEditor.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.TemplatesManager.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs \
@@ -148,6 +149,7 @@ FILES = \
 	Gui/Component/ProjectDetailsWidget.cs \
 	Gui/Component/ProjectListWidget.cs \
 	Gui/Component/ProjectTemplateWidget.cs \
+	Gui/Component/TaggerWidget.cs\
 	Gui/Component/TeamTemplateWidget.cs\
 	Gui/Component/TimeAdjustWidget.cs \
 	Gui/Component/TimeLineWidget.cs \
@@ -166,6 +168,7 @@ FILES = \
 	Gui/Dialog/ProjectsManager.cs \
 	Gui/Dialog/ProjectTemplateEditorDialog.cs \
 	Gui/Dialog/SnapshotsDialog.cs \
+	Gui/Dialog/TaggerDialog.cs \
 	Gui/Dialog/TemplatesEditor.cs \
 	Gui/Dialog/TeamTemplateEditor.cs\
 	Gui/Dialog/UpdateDialog.cs \
@@ -192,6 +195,7 @@ FILES = \
 	Main.cs \
 	Playlist/IPlayList.cs \
 	Playlist/PlayList.cs \
+	Time/Tag.cs \
 	Time/Drawing.cs\
 	Time/HotKey.cs \
 	Time/MediaTimeNode.cs \
