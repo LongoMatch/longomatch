@@ -25,7 +25,7 @@ using Gdk;
 namespace LongoMatch.Video.Utils
 {
 	
-	
+	[Serializable]
 	public class PreviewMediaFile:MediaFile
 	{
 		
