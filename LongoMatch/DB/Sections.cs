@@ -33,6 +33,7 @@ namespace LongoMatch.DB
 	/// respect the same index used in the plays list inside a project.
 	/// The <see cref="LongoMatch.DB.Project"/> must handle all the changes
 	/// </summary>
+	[Serializable]
 	public class Sections
 	{
 		private List<SectionsTimeNode> sectionsList;

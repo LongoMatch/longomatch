@@ -23,7 +23,7 @@ using LongoMatch.TimeNodes;
 namespace LongoMatch.DB
 {
 
-
+	[Serializable]
 	public class TagsTemplate
 	{
 		List<Tag> tagsList;

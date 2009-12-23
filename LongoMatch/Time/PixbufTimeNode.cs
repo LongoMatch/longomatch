@@ -28,6 +28,7 @@ namespace LongoMatch.TimeNodes
 	/// I am the base class for all the video segments.
 	/// I have a <see cref="Pixbuf"/> with a thumbnail of the video segment I represent
 	/// </summary>
+	[Serializable]
 	public class PixbufTimeNode : TimeNode
 	{
 		private byte[] thumbnailBuf;

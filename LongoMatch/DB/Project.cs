@@ -22,8 +22,11 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using Gtk;
 using Gdk;
+using Mono.Unix;
 using LongoMatch.TimeNodes;
 using LongoMatch.Video.Utils;
 
@@ -511,12 +514,32 @@ namespace LongoMatch.DB
 		public int CompareTo(object obj) {
 			if (obj is Project) {
 				Project project = (Project) obj;
-
 				return this.File.FilePath.CompareTo(project.File.FilePath);
 			}
 			else
 				throw new ArgumentException("object is not a Project and cannot be compared");
 		}
+		
+		public static void Export(Project project, string file) {
+			file = Path.ChangeExtension(file,"lpr");
+			IFormatter formatter = new BinaryFormatter();
+			using(Stream stream = new FileStream(file, FileMode.Create, FileAccess.Write, FileShare.None)){
+				formatter.Serialize(stream, project);			
+			}
+		}
+		
+		public static Project Import(string file) {
+			using(Stream stream = new FileStream(file, FileMode.Create, FileAccess.Write, FileShare.None))
+			{
+				try {
+					IFormatter formatter = new BinaryFormatter();
+					return (Project)formatter.Deserialize(stream);
+				}
+				catch {
+					throw new Exception(Catalog.GetString("The file you are trying to load is not a valid project"));
+				}
+			}			
+		}		
 		#endregion
 	}
 }

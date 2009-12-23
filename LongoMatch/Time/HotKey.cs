@@ -36,6 +36,7 @@ namespace LongoMatch.TimeNodes
 	/// modifiers to avoid interfering with ohter shortcuts. In case I'am not associated to any
 	/// key combinatio 'key' and 'modifier' will be set to -1
 	/// </summary>
+	[Serializable]
 	public class HotKey : IEquatable<HotKey>
 	{
 		private int key;

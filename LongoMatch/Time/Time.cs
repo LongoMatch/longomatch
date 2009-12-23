@@ -27,6 +27,7 @@ namespace LongoMatch.TimeNodes
 	/// I represent a time instant. Other objects uses me to maintain time units consitency.
 	/// I am expressed in miliseconds and I provide some helper methods for time conversion and representation
 	/// </summary>
+	[Serializable]
 	public class Time :  IComparable
 	{
 		private int time;

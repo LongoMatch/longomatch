@@ -19,6 +19,7 @@
 //
 
 using System;
+using System.Runtime.Serialization;
 using Gdk;
 
 namespace LongoMatch.TimeNodes
@@ -28,7 +29,8 @@ namespace LongoMatch.TimeNodes
 	/// I am a tagging category for the analysis. I contain the default values to creates plays
 	/// tagged in my category
 	/// </summary>
-	public class SectionsTimeNode:TimeNode
+	[Serializable]
+	public class SectionsTimeNode:TimeNode, ISerializable
 	{
 		HotKey hotkey;
 		Gdk.Color color;
@@ -57,6 +59,19 @@ namespace LongoMatch.TimeNodes
 			this.hotkey = hotkey;
 			this.color = color;
 		}
+		
+		// this constructor is automatically called during deserialization
+		public SectionsTimeNode(SerializationInfo info, StreamingContext context) {
+			Name = info.GetString("name");
+			Start = (Time)info.GetValue("start", typeof(Time));
+			Stop = (Time)info.GetValue("stop", typeof(Time));
+			HotKey = (HotKey)info.GetValue("hotkey", typeof(HotKey));
+			// read 'red', 'blue' and 'green' values and convert it to Gdk.Color
+			Color = new Color((byte)info.GetValue("red", typeof(ushort)),
+			                  (byte)info.GetValue("green", typeof(ushort)),
+			                  (byte)info.GetValue("blue", typeof(ushort)));
+			Console.WriteLine("Deserialize");
+		}
 		#endregion
 		#region  Properties
 
@@ -83,6 +98,18 @@ namespace LongoMatch.TimeNodes
 				this.color=value;
 			}
 		}
-		#endregion
+				
+		// this method is automatically called during serialization
+		public void GetObjectData(SerializationInfo info, StreamingContext context) {
+			Console.WriteLine("Serialize");
+			info.AddValue("name", Name);
+			info.AddValue("start", Start);
+			info.AddValue("stop", Stop);
+			info.AddValue("hotkey", hotkey);
+			info.AddValue("red", color.Red);
+			info.AddValue("blue", color.Green);
+			info.AddValue("green", color.Blue);
+		}
+		#endregion		
 	}
 }

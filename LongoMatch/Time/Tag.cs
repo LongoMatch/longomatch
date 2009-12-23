@@ -21,7 +21,7 @@ using System;
 namespace LongoMatch.TimeNodes
 {
 
-
+	[Serializable]
 	public class Tag
 	{
 		string text;
