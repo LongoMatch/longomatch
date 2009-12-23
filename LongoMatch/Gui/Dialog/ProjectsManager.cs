@@ -52,6 +52,7 @@ namespace LongoMatch.Gui.Dialog
 			projectdetails.Sensitive = false;
 			saveButton.Sensitive = false;
 			deleteButton.Sensitive = false;
+			exportbutton.Sensitive = false;
 			originalFilePath=null;
 		}
 		
@@ -145,6 +146,7 @@ namespace LongoMatch.Gui.Dialog
 				projectdetails.Sensitive = false;
 				saveButton.Sensitive = false;
 				deleteButton.Sensitive = false;
+				exportbutton.Sensitive = false;
 			}
 			else {
 				projectdetails.Sensitive = true;
@@ -152,12 +154,32 @@ namespace LongoMatch.Gui.Dialog
 				originalFilePath = project.File;
 				saveButton.Sensitive = false;
 				deleteButton.Sensitive = true;
+				exportbutton.Sensitive = true;
 			}
 		}
 
 		protected virtual void OnProjectdetailsEditedEvent(object sender, System.EventArgs e)
 		{
 			saveButton.Sensitive = true;
+		}
+		
+		protected virtual void OnExportbuttonClicked (object sender, System.EventArgs e)
+		{
+			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Save Project"),
+			                (Gtk.Window)Toplevel,
+			                FileChooserAction.Save,
+			                "gtk-cancel",ResponseType.Cancel,
+			                "gtk-save",ResponseType.Accept);
+			fChooser.SetCurrentFolder(MainClass.HomeDir());
+			FileFilter filter = new FileFilter();
+			filter.Name = "LongoMatch Project";
+			filter.AddPattern("*.lpr");
+
+			fChooser.AddFilter(filter);
+			if (fChooser.Run() == (int)ResponseType.Accept) {
+				Project.Export(projectdetails.GetProject(), fChooser.Filename);
+			}
+			fChooser.Destroy();
 		}
 	}
 }
