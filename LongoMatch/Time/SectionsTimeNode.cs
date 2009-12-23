@@ -70,7 +70,7 @@ namespace LongoMatch.TimeNodes
 			Color c = new Color();
 			c.Red = (ushort)info.GetValue("red", typeof(ushort));
 			c.Green = (ushort)info.GetValue("green", typeof(ushort));
-			c.Red = (ushort)info.GetValue("blue", typeof(ushort));
+			c.Blue = (ushort)info.GetValue("blue", typeof(ushort));
 			Color = c;
 		}
 		#endregion
@@ -107,8 +107,8 @@ namespace LongoMatch.TimeNodes
 			info.AddValue("stop", Stop);
 			info.AddValue("hotkey", hotkey);
 			info.AddValue("red", color.Red);
-			info.AddValue("blue", color.Green);
-			info.AddValue("green", color.Blue);
+			info.AddValue("green", color.Green);
+			info.AddValue("blue", color.Blue);
 		}
 		#endregion		
 	}
