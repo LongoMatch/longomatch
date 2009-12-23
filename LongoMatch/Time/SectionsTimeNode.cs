@@ -70,7 +70,6 @@ namespace LongoMatch.TimeNodes
 			Color = new Color((byte)info.GetValue("red", typeof(ushort)),
 			                  (byte)info.GetValue("green", typeof(ushort)),
 			                  (byte)info.GetValue("blue", typeof(ushort)));
-			Console.WriteLine("Deserialize");
 		}
 		#endregion
 		#region  Properties
