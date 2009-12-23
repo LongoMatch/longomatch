@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Gtk;
 using Gdk;
 using Mono.Unix;
@@ -105,9 +106,10 @@ namespace LongoMatch.TimeNodes
 		#region Overrides
 		public override bool Equals(object obj)
 		{
-			HotKey hotkey= obj as HotKey;
-			if (hotkey != null)
+			if (obj is HotKey){
+				HotKey hotkey= obj as HotKey;
 				return Equals(hotkey);
+			}
 			else
 				return false;
 		}
@@ -129,6 +131,6 @@ namespace LongoMatch.TimeNodes
 
 			return string.Format("<{0}>+{1}", modifierS,(Key.ToString()).ToLower());
 		}
-		#endregion
+		#endregion	
 	}
 }
