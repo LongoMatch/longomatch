@@ -529,7 +529,7 @@ namespace LongoMatch.DB
 		}
 		
 		public static Project Import(string file) {
-			using(Stream stream = new FileStream(file, FileMode.Create, FileAccess.Write, FileShare.None))
+			using(Stream stream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.None))
 			{
 				try {
 					IFormatter formatter = new BinaryFormatter();

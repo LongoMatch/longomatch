@@ -67,9 +67,11 @@ namespace LongoMatch.TimeNodes
 			Stop = (Time)info.GetValue("stop", typeof(Time));
 			HotKey = (HotKey)info.GetValue("hotkey", typeof(HotKey));
 			// read 'red', 'blue' and 'green' values and convert it to Gdk.Color
-			Color = new Color((byte)info.GetValue("red", typeof(ushort)),
-			                  (byte)info.GetValue("green", typeof(ushort)),
-			                  (byte)info.GetValue("blue", typeof(ushort)));
+			Color c = new Color();
+			c.Red = (ushort)info.GetValue("red", typeof(ushort));
+			c.Green = (ushort)info.GetValue("green", typeof(ushort));
+			c.Red = (ushort)info.GetValue("blue", typeof(ushort));
+			Color = c;
 		}
 		#endregion
 		#region  Properties
@@ -100,7 +102,6 @@ namespace LongoMatch.TimeNodes
 				
 		// this method is automatically called during serialization
 		public void GetObjectData(SerializationInfo info, StreamingContext context) {
-			Console.WriteLine("Serialize");
 			info.AddValue("name", Name);
 			info.AddValue("start", Start);
 			info.AddValue("stop", Stop);
