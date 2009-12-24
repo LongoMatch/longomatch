@@ -133,7 +133,7 @@ namespace LongoMatch.Gui.Component
 			if (tagsDict.TryGetValue(tag, out button))
 				button.Active = true;
 			else
-				AddTagWidget(new Tag(entry1.Text), true);	
+				AddTag(entry1.Text, true);	
 			entry1.Text = "";
 		}
 
