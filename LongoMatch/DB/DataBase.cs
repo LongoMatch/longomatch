@@ -305,6 +305,26 @@ namespace LongoMatch.DB
 				}
 			}
 		}
+		
+		/// <summary>
+		/// Checks if a project already exists in the DataBase with the same file 
+		/// </summary>
+		/// <param name="project">
+		/// A <see cref="Project"/> to compare
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/>
+		/// </returns>
+		public bool Exists(Project project){
+			IObjectContainer db = Db4oFactory.OpenFile(file);
+			try{
+				return Exists(project.File.FilePath, db);
+			}catch{
+				return false;
+			}finally{
+				CloseDB(db);
+			}				
+		}
 
 		private void CloseDB(IObjectContainer db) {
 			db.Ext().Purge();

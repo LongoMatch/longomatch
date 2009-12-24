@@ -1482,7 +1482,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="LongoMatch.Gui.MainWindow" design-size="1259 761">
+  <widget class="Gtk.Window" id="LongoMatch.Gui.MainWindow" design-size="1259 786">
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -1637,6 +1637,14 @@
         <property name="Active">False</property>
         <signal name="Toggled" handler="OnDrawingToolActionToggled" />
       </action>
+      <action id="ImportProjectAction">
+        <property name="Type">Action</property>
+        <property name="Accelerator">&lt;Control&gt;i</property>
+        <property name="Label" translatable="yes">_Import Project</property>
+        <property name="ShortLabel" translatable="yes">_Import Project</property>
+        <property name="StockId">stock-import</property>
+        <signal name="Activated" handler="OnImportProjectActionActivated" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">LongoMatch</property>
@@ -1661,6 +1669,8 @@
                     <node type="Menuitem" action="OpenProjectAction" />
                     <node type="Menuitem" action="SaveProjectAction" />
                     <node type="Menuitem" action="CloseProjectAction" />
+                    <node type="Separator" />
+                    <node type="Menuitem" action="ImportProjectAction" />
                     <node type="Separator" />
                     <node type="Menuitem" action="QuitAction" />
                   </node>
@@ -1705,7 +1715,7 @@
           <widget class="Gtk.HPaned" id="hpaned">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="Position">299</property>
+            <property name="Position">294</property>
             <child>
               <widget class="Gtk.VBox" id="leftbox">
                 <property name="MemberName" />
@@ -1784,7 +1794,7 @@
               <widget class="Gtk.HPaned" id="hpaned1">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Position">789</property>
+                <property name="Position">804</property>
                 <child>
                   <widget class="Gtk.VBox" id="vbox5">
                     <property name="MemberName" />

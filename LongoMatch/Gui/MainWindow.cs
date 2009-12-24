@@ -279,6 +279,52 @@ namespace LongoMatch.Gui
 		{
 			CloseActualProyect();
 		}
+		
+		protected virtual void OnImportProjectActionActivated (object sender, System.EventArgs e)
+		{
+			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Import Project"),
+			                (Gtk.Window)Toplevel,
+			                FileChooserAction.Open,
+			                "gtk-cancel",ResponseType.Cancel,
+			                "gtk-open",ResponseType.Accept);
+			fChooser.SetCurrentFolder(MainClass.HomeDir());
+			FileFilter filter = new FileFilter();
+			filter.Name = "LongoMatch Project";
+			filter.AddPattern("*.lpr");
+
+			fChooser.AddFilter(filter);
+			if (fChooser.Run() == (int)ResponseType.Accept) {
+				Project project;
+				try{
+					project = Project.Import(fChooser.Filename);
+					if (!MainClass.DB.Exists(project)){
+						MainClass.DB.AddProject(project);
+						MessagePopup.PopupMessage(this, MessageType.Info, 
+						                          Catalog.GetString("Project successfully imported."));
+					}
+					else{
+						MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel,
+						                       DialogFlags.Modal,
+						                       MessageType.Question,
+						                       Gtk.ButtonsType.YesNo,
+						                       Catalog.GetString("A project already exists for the file:")+project.File.FilePath+
+						                       "\n"+Catalog.GetString("Do you want to overwritte it?"));
+						md.Icon=Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Dialog, 48);
+						if (md.Run() == (int)ResponseType.Yes){
+							MainClass.DB.UpdateProject(project);
+						}
+						md.Destroy();						
+					}
+				}
+				catch (Exception ex){
+					MessagePopup.PopupMessage(this, MessageType.Error, ex.Message);
+					fChooser.Destroy();
+					return;
+				}
+			}
+			fChooser.Destroy();
+			
+		}
 
 		protected virtual void OnDatabaseManagerActivated(object sender, System.EventArgs e)
 		{
@@ -495,6 +541,7 @@ GNU General Public License for more details.";
 				System.Diagnostics.Process.Start("http://www.longomatch.ylatuya.es/documentation/manual.html");
 			} catch {}
 		}
-		#endregion
+
+		#endregion}
 	}
 }
