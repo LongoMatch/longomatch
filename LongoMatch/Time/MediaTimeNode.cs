@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections.Generic;
+using Mono.Unix;
 using Gdk;
 
 namespace LongoMatch.TimeNodes
@@ -343,6 +344,15 @@ namespace LongoMatch.TimeNodes
 			if (tagsList.Contains(tag))
 				tagsList.Remove(tag);
 		}
+		
+		public override string ToString ()
+		{
+			return  "<b>"+Catalog.GetString("Name")+": </b>"+Name+"\n"+
+				    "<b>"+Catalog.GetString("Team")+": </b>"+Team.ToString().ToLower()+"\n"+
+					"<b>"+Catalog.GetString("Start")+": </b>"+Start.ToMSecondsString()+"\n"+
+					"<b>"+Catalog.GetString("Stop")+": </b>"+Stop.ToMSecondsString();
+		}
+
 		#endregion
 	}
 }

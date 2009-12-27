@@ -51,5 +51,9 @@ namespace LongoMatch.DB
 		public int Count (){
 			return tagsList.Count;
 		}
+		
+		public IEnumerator<Tag> GetEnumerator(){
+			return tagsList.GetEnumerator();
+		}
 	}
 }

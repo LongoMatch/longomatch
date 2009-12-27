@@ -194,10 +194,7 @@ namespace LongoMatch.Gui.Component
 			else if (tNode is MediaTimeNode) {
 				(cell as Gtk.CellRendererText).BackgroundGdk = colors[GetSectionFromIter(iter)];
 				(cell as Gtk.CellRendererText).CellBackgroundGdk = colors[GetSectionFromIter(iter)];
-				(cell as Gtk.CellRendererText).Markup = "<b>"+Catalog.GetString("Name")+": </b>"+tNode.Name+"\n"+
-				                                        "<b>"+Catalog.GetString("Team")+": </b>"+(tNode as MediaTimeNode).Team.ToString().ToLower()+"\n"+
-				                                        "<b>"+Catalog.GetString("Start")+": </b>"+tNode.Start.ToMSecondsString()+"\n"+
-				                                        "<b>"+Catalog.GetString("Stop")+": </b>"+tNode.Stop.ToMSecondsString();
+				(cell as Gtk.CellRendererText).Markup = (tNode as MediaTimeNode).ToString();
 			}
 			else {
 				(cell as Gtk.CellRendererText).Background = "white";
