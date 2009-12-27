@@ -31,23 +31,12 @@ namespace LongoMatch.Gui.Component
 	public partial class TaggerWidget : Gtk.Bin
 	{
 		private Dictionary<Tag, CheckButton> tagsDict;
-		private List<Tag> tagsList;
-		private MediaTimeNode play;
-
 		
 		public TaggerWidget()
 		{
 			this.Build();
 			tagsDict = new Dictionary<Tag, CheckButton>();
-			tagsList = new List<Tag>();
 			table1.NColumns = 5;
-			play = null;
-		}
-		
-		public MediaTimeNode Play{
-			set{
-				play = value;
-			}
 		}
 		
 		public TagsTemplate ProjectsTags{
