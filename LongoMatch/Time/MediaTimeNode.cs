@@ -347,10 +347,15 @@ namespace LongoMatch.TimeNodes
 		
 		public override string ToString ()
 		{
+			String[] tags = new String[tagsList.Count];
+			for (int i=0; i<tagsList.Count; i++)
+				tags[i] = tagsList[i].Text;
+			
 			return  "<b>"+Catalog.GetString("Name")+": </b>"+Name+"\n"+
 				    "<b>"+Catalog.GetString("Team")+": </b>"+Team.ToString().ToLower()+"\n"+
 					"<b>"+Catalog.GetString("Start")+": </b>"+Start.ToMSecondsString()+"\n"+
-					"<b>"+Catalog.GetString("Stop")+": </b>"+Stop.ToMSecondsString();
+					"<b>"+Catalog.GetString("Stop")+": </b>"+Stop.ToMSecondsString()+"\n"+
+					"<b>"+Catalog.GetString("Tags")+": </b>"+ String.Join(" ; ", tags);
 		}
 
 		#endregion
