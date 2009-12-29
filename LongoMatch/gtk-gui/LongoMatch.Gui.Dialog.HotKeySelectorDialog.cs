@@ -35,7 +35,7 @@ namespace LongoMatch.Gui.Dialog {
             // Container child dialog1_VBox.Gtk.Box+BoxChild
             this.label1 = new Gtk.Label();
             this.label1.Name = "label1";
-            this.label1.LabelProp = Mono.Unix.Catalog.GetString("Press a key combination using  Shift or Alt keys");
+            this.label1.LabelProp = Mono.Unix.Catalog.GetString("Press a key combination using  Shift+key or Alt+key.\nHotkeys with a single key are also allowed with Ctrl+key.");
             w1.Add(this.label1);
             Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(w1[this.label1]));
             w2.Position = 0;
@@ -61,7 +61,7 @@ namespace LongoMatch.Gui.Dialog {
                 this.Child.ShowAll();
             }
             this.DefaultWidth = 385;
-            this.DefaultHeight = 79;
+            this.DefaultHeight = 94;
             this.Show();
         }
     }

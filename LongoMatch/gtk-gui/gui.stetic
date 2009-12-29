@@ -3331,7 +3331,7 @@ You can download it using this direct link:</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.HotKeySelectorDialog" design-size="385 79">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.HotKeySelectorDialog" design-size="385 94">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Select a HotKey</property>
     <property name="Icon">stock:longomatch Dialog</property>
@@ -3349,7 +3349,8 @@ You can download it using this direct link:</property>
         <child>
           <widget class="Gtk.Label" id="label1">
             <property name="MemberName" />
-            <property name="LabelProp" translatable="yes">Press a key combination using  Shift or Alt keys</property>
+            <property name="LabelProp" translatable="yes">Press a key combination using  Shift+key or Alt+key.
+Hotkeys with a single key are also allowed with Ctrl+key.</property>
           </widget>
           <packing>
             <property name="Position">0</property>

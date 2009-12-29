@@ -126,11 +126,13 @@ namespace LongoMatch.TimeNodes
 			if (!Defined)
 				return Catalog.GetString("Not defined");
 			if (Modifier == ModifierType.Mod1Mask)
-				modifierS = "Alt";
+				modifierS = "<Alt>+";
 			else if (Modifier == ModifierType.ShiftMask)
-				modifierS = "Shift";
+				modifierS = "<Shift>+";
+			else if (modifier == -1)
+				modifierS = "";
 
-			return string.Format("<{0}>+{1}", modifierS,(Key.ToString()).ToLower());
+			return string.Format("{0}{1}", modifierS,(Key.ToString()).ToLower());
 		}
 		#endregion	
 	}

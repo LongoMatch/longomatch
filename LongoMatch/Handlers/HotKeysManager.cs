@@ -39,6 +39,7 @@ namespace LongoMatch.Handlers
 			dic = new Dictionary<HotKey,int>();
 		}
 
+		// Set the active Hotkeys for the current project
 		public Sections Sections {
 			set {
 				dic.Clear();
@@ -52,22 +53,18 @@ namespace LongoMatch.Handlers
 			}
 		}
 
+		// Listen to key press events and fire a newMarkEvent event if the key combination
+		// is associated to a Category
 		public void KeyListener(object sender, KeyPressEventArgs args) {
-			if ((args.Event.State  & (ModifierType.Mod1Mask | ModifierType.Mod5Mask | ModifierType.ShiftMask)) != 0) {
-				int section=-1;
-				HotKey hotkey = new HotKey();
-				hotkey.Key=args.Event.Key;
-				hotkey.Modifier=args.Event.State & (ModifierType.Mod1Mask | ModifierType.Mod5Mask | ModifierType.ShiftMask);
-				if (dic.TryGetValue(hotkey,out section)) {
-					if (newMarkEvent != null) {
-						newMarkEvent(section);
-					}
+			int section=-1;
+			HotKey hotkey = new HotKey();
+			hotkey.Key=args.Event.Key;
+			hotkey.Modifier=args.Event.State & (ModifierType.Mod1Mask | ModifierType.Mod5Mask | ModifierType.ShiftMask);
+			if (dic.TryGetValue(hotkey,out section)) {
+				if (newMarkEvent != null) {
+					newMarkEvent(section);
 				}
 			}
 		}
-
-
-
-
 	}
 }

@@ -102,8 +102,5 @@ namespace LongoMatch.Gui.Component
 		{
 			stn.Name = nameentry.Text;
 		}
-
-
-
 	}
 }

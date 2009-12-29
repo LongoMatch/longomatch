@@ -54,11 +54,17 @@ namespace LongoMatch.Gui.Dialog
 		{
 			Gdk.Key key = evnt.Key;
 			ModifierType modifier = evnt.State;
-
-			if ((modifier & (ModifierType.Mod1Mask | ModifierType.ShiftMask)) != 0
+			
+			// Only react to {Shift|Alt|Ctrl}+key
+			// Ctrl is a modifier to select single keys
+			// Combination are allowed with Alt and Shift (Ctrl is not allowed to avoid
+			// conflicts with menus shortcuts)
+			if ((modifier & (ModifierType.Mod1Mask | ModifierType.ShiftMask | ModifierType.ControlMask)) != 0
 			                && key != Gdk.Key.Shift_L
 			                && key != Gdk.Key.Shift_R
-			                && key != Gdk.Key.Alt_L)
+			                && key != Gdk.Key.Alt_L
+			                && key != Gdk.Key.Control_L
+			                && key != Gdk.Key.Control_R)
 			{
 				hotKey.Key = key;
 				hotKey.Modifier = modifier & (ModifierType.Mod1Mask | ModifierType.ShiftMask);
