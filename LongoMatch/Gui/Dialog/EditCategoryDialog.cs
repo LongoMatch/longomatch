@@ -58,8 +58,10 @@ namespace LongoMatch.Gui.Dialog
 				section.HotKey=prevHotKey;
 				timenodeproperties2.Section=section; //Update Gui
 			}
-			else if (section.HotKey.Defined)
+			else if (section.HotKey.Defined){
+				hkList.Remove(prevHotKey);
 				hkList.Add(section.HotKey);
+			}
 		}
 	}
 }
