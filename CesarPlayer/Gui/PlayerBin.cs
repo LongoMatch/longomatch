@@ -531,8 +531,16 @@ namespace LongoMatch.Gui
 		{
 			int currentTime;
 			Pixbuf frame=null;
+			
+			currentTime = (int)AccurateCurrentTime;
+			// If the player has reached the end of the segment the current time
+			// will be unseekable and it's not possible to get a frame at this
+			// instant. If we exceed the segment stop time, decrease in a 
+			// milisecond the position. 
+			if (InSegment() && currentTime >= segmentStopTime)
+				currentTime -= 1;
 			if (DrawFrame != null)
-				DrawFrame((int)AccurateCurrentTime);
+				DrawFrame(currentTime);
 		}
 #endregion	
 	}
