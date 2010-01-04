@@ -22,6 +22,7 @@ using System;
 using System.Configuration;
 using System.IO;
 using System.Xml;
+using Mono.Unix;
 using LongoMatch.DB;
 using LongoMatch.TimeNodes;
 using Gdk;
@@ -52,6 +53,7 @@ namespace LongoMatch.IO
 				sb.Append("<add key=\"Blue"+i+"\" value=\"0\" />");
 				sb.Append("<add key=\"Modifier"+i+"\" value=\"-1\" />");
 				sb.Append("<add key=\"Key"+i+"\" value=\"-1\" />");
+				sb.Append("<add key=\"SortMethod"+i+"\" value=\""+Catalog.GetString("Sort by name")+"\" />");
 			}
 
 			sb.Append("</configuration>");
@@ -90,6 +92,7 @@ namespace LongoMatch.IO
 				sb.Append(String.Format("<add key=\"Blue{0}\" value=\"{1}\" />",i,tn.Color.Blue));
 				sb.Append(String.Format("<add key=\"Modifier{0}\" value=\"{1}\" />",i,(int)(tn.HotKey.Modifier)));
 				sb.Append(String.Format("<add key=\"Key{0}\" value=\"{1}\" />",i,(int)(tn.HotKey.Key)));
+				sb.Append(String.Format("<add key=\"SortMethod{0}\" value=\"{1}\" />",i,tn.SortingMethodString));
 				i++;
 			}
 			sb.Append("</configuration>");

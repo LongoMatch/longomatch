@@ -21,6 +21,7 @@
 using System;
 using System.Runtime.Serialization;
 using Gdk;
+using Mono.Unix;
 
 namespace LongoMatch.TimeNodes
 {
@@ -32,9 +33,18 @@ namespace LongoMatch.TimeNodes
 	[Serializable]
 	public class SectionsTimeNode:TimeNode, ISerializable
 	{
-		HotKey hotkey;
-		Gdk.Color color;
-
+		public enum SortMethod{
+			BY_NAME = 0,
+			BY_START_TIME = 1,
+			BY_STOP_TIME = 2,
+			BY_DURATION = 3
+		}
+		
+		private HotKey hotkey;
+		private Gdk.Color color;
+		private SortMethod sortMethod;
+		
+		
 		#region Constructors
 		/// <summary>
 		/// Creates a new category
@@ -58,6 +68,7 @@ namespace LongoMatch.TimeNodes
 		{
 			this.hotkey = hotkey;
 			this.color = color;
+			this.sortMethod = SortMethod.BY_NAME;
 		}
 		
 		// this constructor is automatically called during deserialization
@@ -81,10 +92,10 @@ namespace LongoMatch.TimeNodes
 		/// </value>
 		public HotKey HotKey {
 			get {
-				return this.hotkey;
+				return hotkey;
 			}
 			set {
-				this.hotkey = value;
+				hotkey = value;
 			}
 		}
 
@@ -93,13 +104,57 @@ namespace LongoMatch.TimeNodes
 		/// </value>
 		public Color Color {
 			get {
-				return this.color;
+				return color;
 			}
 			set {
-				this.color=value;
+				color=value;
 			}
 		}
-				
+		
+		//// <value>
+		/// Sort method used to sort plays for this category 
+		/// </value>
+		public SortMethod SortingMethod{
+			get{
+				// New in 0.15.6
+				try{
+					return sortMethod;
+				}
+				catch{
+					return SortMethod.BY_NAME;
+				}
+			}
+			set{
+				this.sortMethod = value;
+			}			
+		}
+			
+		public string SortingMethodString{
+			get{
+				switch (sortMethod){
+					case SortMethod.BY_NAME:
+						return Catalog.GetString("Sort by name");
+					case SortMethod.BY_START_TIME:
+						return Catalog.GetString("Sort by start time");
+					case SortMethod.BY_STOP_TIME:
+						return Catalog.GetString("Sort by stop time");
+					case SortMethod.BY_DURATION:
+						return Catalog.GetString("Sort by duration");
+					default:
+						return Catalog.GetString("Sort by name");
+				}						
+			}
+			set{			
+				if (value == Catalog.GetString("Sort by start time"))
+					sortMethod = SortMethod.BY_START_TIME;
+				else if (value == Catalog.GetString("Sort by stop time"))
+					sortMethod = SortMethod.BY_STOP_TIME;
+				else if (value == Catalog.GetString("Sort by duration"))
+					sortMethod = SortMethod.BY_DURATION;
+				else
+					sortMethod = SortMethod.BY_NAME;
+			}
+		}
 		// this method is automatically called during serialization
 		public void GetObjectData(SerializationInfo info, StreamingContext context) {
 			info.AddValue("name", Name);

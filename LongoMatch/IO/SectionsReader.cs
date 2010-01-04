@@ -71,6 +71,10 @@ namespace LongoMatch.IO
 			hotkey.Key = (Gdk.Key)GetIntValue("configuration","Key"+(section));
 			return hotkey;
 		}
+		
+		private String GetSortMethod(int section) {
+			return GetStringValue("configuration","SortMethod"+(section));
+		}
 
 		#endregion
 
@@ -84,6 +88,7 @@ namespace LongoMatch.IO
 				name = GetName(i);
 				if (name != null) {
 					tn = new SectionsTimeNode(name, GetStartTime(i), GetStopTime(i), GetHotKey(i), GetColor(i));
+					tn.SortingMethodString = GetSortMethod(i);
 					sections.AddSection(tn);
 				}
 				else tryNext=false;
