@@ -70,6 +70,7 @@ namespace LongoMatch.Gui
 			eManager = new EventsManager(treewidget1,
 			                             localplayerslisttreewidget,
 			                             visitorplayerslisttreewidget,
+			                             tagstreewidget1,
 			                             buttonswidget1,
 			                             playlistwidget2,
 			                             playerbin1,
@@ -123,6 +124,7 @@ namespace LongoMatch.Gui
 						treewidget1.Project=project;
 						localplayerslisttreewidget.SetTeam(project.LocalTeamTemplate,project.GetLocalTeamModel());
 						visitorplayerslisttreewidget.SetTeam(project.VisitorTeamTemplate,project.GetVisitorTeamModel());
+						tagstreewidget1.Project = project;
 						timelinewidget1.Project = project;
 						buttonswidget1.Sections = project.Sections;
 						if (project.File.HasVideo) {
@@ -187,6 +189,7 @@ namespace LongoMatch.Gui
 		private void ClearWidgets() {
 			buttonswidget1.Sections = null;
 			treewidget1.Project = null;
+			tagstreewidget1.Clear();
 			timelinewidget1.Project = null;
 			localplayerslisttreewidget.Clear();
 			visitorplayerslisttreewidget.Clear();

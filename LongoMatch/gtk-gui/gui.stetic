@@ -1715,7 +1715,7 @@
           <widget class="Gtk.HPaned" id="hpaned">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="Position">294</property>
+            <property name="Position">335</property>
             <child>
               <widget class="Gtk.VBox" id="leftbox">
                 <property name="MemberName" />
@@ -1725,7 +1725,7 @@
                   <widget class="Gtk.Notebook" id="notebook1">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
-                    <property name="CurrentPage">0</property>
+                    <property name="CurrentPage">3</property>
                     <property name="TabPos">Bottom</property>
                     <child>
                       <widget class="LongoMatch.Gui.Component.PlaysListTreeWidget" id="treewidget1">
@@ -1753,7 +1753,7 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.Label" id="label3">
+                      <widget class="Gtk.Label" id="label6">
                         <property name="MemberName" />
                         <property name="LabelProp" translatable="yes">Local Team</property>
                       </widget>
@@ -1779,6 +1779,24 @@
                         <property name="type">tab</property>
                       </packing>
                     </child>
+                    <child>
+                      <widget class="LongoMatch.Gui.Component.TagsTreeWidget" id="tagstreewidget1">
+                        <property name="MemberName" />
+                        <property name="Events">ButtonPressMask</property>
+                      </widget>
+                      <packing>
+                        <property name="Position">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Label" id="label7">
+                        <property name="MemberName" />
+                        <property name="LabelProp" translatable="yes">Tags</property>
+                      </widget>
+                      <packing>
+                        <property name="type">tab</property>
+                      </packing>
+                    </child>
                   </widget>
                   <packing>
                     <property name="Position">0</property>
@@ -1794,7 +1812,7 @@
               <widget class="Gtk.HPaned" id="hpaned1">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Position">804</property>
+                <property name="Position">770</property>
                 <child>
                   <widget class="Gtk.VBox" id="vbox5">
                     <property name="MemberName" />
@@ -5209,6 +5227,105 @@ You can add new tags using the text entry and clicking "Add Tag"</property>
           </packing>
         </child>
       </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.TagsTreeWidget" design-size="217 300">
+    <property name="MemberName" />
+    <property name="Visible">False</property>
+    <child>
+      <widget class="Gtk.VBox" id="vbox1">
+        <property name="MemberName" />
+        <property name="Spacing">6</property>
+        <child>
+          <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow">
+            <property name="MemberName" />
+            <property name="ShadowType">In</property>
+            <child>
+              <widget class="LongoMatch.Gui.Component.TagsTreeView" id="treeview">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="ShowScrollbars">True</property>
+                <signal name="TimeNodeChanged" handler="OnTimeNodeChanged" />
+                <signal name="TimeNodeSelected" handler="OnTimeNodeSelected" />
+                <signal name="PlayListNodeAdded" handler="OnPlayListNodeAdded" />
+                <signal name="SnapshotSeriesEvent" handler="OnSnapshotSeriesEvent" />
+              </widget>
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">0</property>
+            <property name="AutoSize">True</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.VBox" id="tagsvbox">
+            <property name="MemberName" />
+            <property name="Spacing">6</property>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">1</property>
+            <property name="AutoSize">False</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.HBox" id="hbox1">
+            <property name="MemberName" />
+            <property name="Spacing">6</property>
+            <child>
+              <widget class="Gtk.ComboBox" id="tagscombobox">
+                <property name="MemberName" />
+                <property name="IsTextCombo">True</property>
+                <property name="Items" translatable="yes" />
+              </widget>
+              <packing>
+                <property name="Position">0</property>
+                <property name="AutoSize">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Button" id="AddFilterButton">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="Type">TextAndIcon</property>
+                <property name="Icon">stock:gtk-add Menu</property>
+                <property name="Label" translatable="yes">Add Filter</property>
+                <property name="UseUnderline">True</property>
+                <signal name="Clicked" handler="OnAddFilter" />
+              </widget>
+              <packing>
+                <property name="Position">1</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">2</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Bin" id="LongoMatch.TagsTreeWidget" design-size="300 300">
+    <property name="MemberName" />
+    <property name="Visible">False</property>
+    <child>
+      <placeholder />
     </child>
   </widget>
 </stetic-interface>

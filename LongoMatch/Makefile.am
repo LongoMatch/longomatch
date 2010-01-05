@@ -112,6 +112,7 @@ FILES = \
 	gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.ProjectTemplateWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.TagsTreeWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TeamTemplateWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TimeLineWidget.cs \
@@ -150,6 +151,7 @@ FILES = \
 	Gui/Component/ProjectListWidget.cs \
 	Gui/Component/ProjectTemplateWidget.cs \
 	Gui/Component/TaggerWidget.cs\
+	Gui/Component/TagsTreeWidget.cs\
 	Gui/Component/TeamTemplateWidget.cs\
 	Gui/Component/TimeAdjustWidget.cs \
 	Gui/Component/TimeLineWidget.cs \
@@ -183,6 +185,7 @@ FILES = \
 	Gui/TreeView/PlayersTreeView.cs \
 	Gui/TreeView/PlayListTreeView.cs \
 	Gui/TreeView/PlaysTreeView.cs \
+	Gui/TreeView/TagsTreeView.cs \
 	Handlers/DrawingManager.cs \
 	Handlers/EventsManager.cs \
 	Handlers/Handlers.cs \

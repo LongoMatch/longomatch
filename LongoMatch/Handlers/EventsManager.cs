@@ -43,6 +43,7 @@ namespace LongoMatch
 
 		private PlaysListTreeWidget treewidget;
 		private PlayersListTreeWidget localPlayersList,visitorPlayersList;
+		private TagsTreeWidget tagsTreeWidget;
 		private ButtonsWidget buttonswidget;
 		private PlayListWidget playlist;
 		private PlayerBin player;
@@ -58,13 +59,15 @@ namespace LongoMatch
 		// current proyect in use
 		private Project openedProject;
 
-		public EventsManager(PlaysListTreeWidget treewidget, PlayersListTreeWidget localPlayersList, PlayersListTreeWidget visitorPlayersList,
-		                     ButtonsWidget buttonswidget,PlayListWidget playlist, PlayerBin player,
+		public EventsManager(PlaysListTreeWidget treewidget, PlayersListTreeWidget localPlayersList, 
+		                     PlayersListTreeWidget visitorPlayersList, TagsTreeWidget tagsTreeWidget,
+		                     ButtonsWidget buttonswidget, PlayListWidget playlist, PlayerBin player, 
 		                     TimeLineWidget timeline, ProgressBar videoprogressbar,NotesWidget notes)
 		{
 			this.treewidget = treewidget;
 			this.localPlayersList = localPlayersList;
 			this.visitorPlayersList = visitorPlayersList;
+			this.tagsTreeWidget = tagsTreeWidget;
 			this.buttonswidget = buttonswidget;
 			this.playlist = playlist;
 			this.player = player;
@@ -90,6 +93,7 @@ namespace LongoMatch
 			treewidget.TimeNodeChanged += OnTimeNodeChanged;
 			localPlayersList.TimeNodeChanged += OnTimeNodeChanged;
 			visitorPlayersList.TimeNodeChanged += OnTimeNodeChanged;
+			tagsTreeWidget.TimeNodeChanged += OnTimeNodeChanged;
 			timeline.TimeNodeChanged += OnTimeNodeChanged;
 			notes.TimeNodeChanged += OnTimeNodeChanged;
 
@@ -99,6 +103,7 @@ namespace LongoMatch
 			treewidget.TimeNodeSelected += OnTimeNodeSelected;
 			localPlayersList.TimeNodeSelected += OnTimeNodeSelected;
 			visitorPlayersList.TimeNodeSelected += OnTimeNodeSelected;
+			tagsTreeWidget.TimeNodeSelected += OnTimeNodeSelected;
 			timeline.TimeNodeSelected += OnTimeNodeSelected;
 
 			playlist.PlayListNodeSelected += OnPlayListNodeSelected;
@@ -108,6 +113,7 @@ namespace LongoMatch
 			treewidget.PlayListNodeAdded += OnPlayListNodeAdded;
 			localPlayersList.PlayListNodeAdded += OnPlayListNodeAdded;
 			visitorPlayersList.PlayListNodeAdded += OnPlayListNodeAdded;
+			tagsTreeWidget.PlayListNodeAdded += OnPlayListNodeAdded;
 
 			treewidget.PlayersTagged += OnPlayersTagged;
 			treewidget.TagPlay += OnTagPlay;
@@ -115,6 +121,7 @@ namespace LongoMatch
 			treewidget.SnapshotSeriesEvent += OnSnapshotSeries;
 			localPlayersList.SnapshotSeriesEvent += OnSnapshotSeries;
 			visitorPlayersList.SnapshotSeriesEvent += OnSnapshotSeries;
+			tagsTreeWidget.SnapshotSeriesEvent += OnSnapshotSeries;;
 
 			timeline.NewMarkEvent += OnNewMarkAtFrame;
 
@@ -143,6 +150,7 @@ namespace LongoMatch
 				Pixbuf miniature = player.CurrentMiniatureFrame;
 				MediaTimeNode tn = openedProject.AddTimeNode(section,fStart, fStop,miniature);
 				treewidget.AddPlay(tn,section);
+				tagsTreeWidget.AddPlay(tn);
 				timeline.QueueDraw();
 			}
 		}
@@ -197,7 +205,6 @@ namespace LongoMatch
 			drawingManager.Play=tNode;
 		}
 
-
 		protected virtual void OnTimeNodeChanged(TimeNode tNode, object val)
 		{
 			//Si hemos modificado el valor de un nodo de tiempo a través del
@@ -232,13 +239,10 @@ namespace LongoMatch
 			MainClass.DB.UpdateProject(openedProject);
 		}
 
-
 		protected virtual void OnPlayListNodeAdded(MediaTimeNode tNode)
 		{
 			playlist.Add(new PlayListTimeNode(openedProject.File,tNode));
 		}
-
-
 
 		protected virtual void OnPlayListNodeSelected(PlayListTimeNode plNode, bool hasNext)
 		{
@@ -294,7 +298,6 @@ namespace LongoMatch
 				sd.Destroy();
 		}
 
-
 		protected virtual void OnNext()
 		{
 			playlist.Next();
@@ -315,7 +318,6 @@ namespace LongoMatch
 			if (args.CurrentTime != 0 && timeline != null && openedProject != null)
 				timeline.CurrentFrame=(uint)(args.CurrentTime * openedProject.File.Fps / 1000);
 		}
-
 
 		protected virtual void OnTimeline2PositionChanged(Time pos)
 		{
