@@ -217,13 +217,11 @@ namespace LongoMatch.Gui.Component
 		
 		private bool SelectFunction(TreeSelection selection, TreeModel model, TreePath path, bool selected){
 			// Don't allow multiselect for categories
-			if (!selected &&  selection.GetSelectedRows().Length > 0){
-				if (selection.GetSelectedRows().Length == 1){
-					return !(GetValueFromPath(selection.GetSelectedRows()[0]) is SectionsTimeNode);
-				}
-				else{
-					return !(GetValueFromPath(path) is SectionsTimeNode);			
-				}					
+			if (!selected && selection.GetSelectedRows().Length > 0){
+				if (selection.GetSelectedRows().Length == 1 &&
+				    GetValueFromPath(selection.GetSelectedRows()[0]) is SectionsTimeNode)
+					return false;	
+				return !(GetValueFromPath(path) is SectionsTimeNode);										
 			}
 			// Always unselect
 			else
