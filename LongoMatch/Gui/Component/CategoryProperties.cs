@@ -60,6 +60,7 @@ namespace LongoMatch.Gui.Component
 				nameentry.Text = stn.Name;
 				timeadjustwidget1.SetTimeNode(stn);
 				colorbutton1.Color = stn.Color;
+				sortmethodcombobox.Active = (int)stn.SortingMethod;
 
 				if (stn.HotKey.Defined) {
 					hotKeyLabel.Text = stn.HotKey.ToString();
@@ -101,6 +102,11 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnNameentryChanged(object sender, System.EventArgs e)
 		{
 			stn.Name = nameentry.Text;
+		}
+
+		protected virtual void OnSortmethodcomboboxChanged (object sender, System.EventArgs e)
+		{
+			stn.SortingMethodString = sortmethodcombobox.ActiveText;
 		}
 	}
 }

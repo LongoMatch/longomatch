@@ -35,6 +35,12 @@ namespace LongoMatch.Gui.Component {
         
         private Gtk.Label label6;
         
+        private Gtk.HBox hbox1;
+        
+        private Gtk.Label label5;
+        
+        private Gtk.ComboBox sortmethodcombobox;
+        
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
             // Widget LongoMatch.Gui.Component.CategoryProperties
@@ -137,6 +143,35 @@ namespace LongoMatch.Gui.Component {
             Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.vbox3[this.hbox2]));
             w10.Position = 2;
             w10.Fill = false;
+            // Container child vbox3.Gtk.Box+BoxChild
+            this.hbox1 = new Gtk.HBox();
+            this.hbox1.Name = "hbox1";
+            this.hbox1.Spacing = 6;
+            // Container child hbox1.Gtk.Box+BoxChild
+            this.label5 = new Gtk.Label();
+            this.label5.Name = "label5";
+            this.label5.LabelProp = Mono.Unix.Catalog.GetString("Sort Method");
+            this.hbox1.Add(this.label5);
+            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.hbox1[this.label5]));
+            w11.Position = 0;
+            w11.Expand = false;
+            w11.Fill = false;
+            // Container child hbox1.Gtk.Box+BoxChild
+            this.sortmethodcombobox = Gtk.ComboBox.NewText();
+            this.sortmethodcombobox.AppendText(Mono.Unix.Catalog.GetString("Sort by name"));
+            this.sortmethodcombobox.AppendText(Mono.Unix.Catalog.GetString("Sort by start time"));
+            this.sortmethodcombobox.AppendText(Mono.Unix.Catalog.GetString("Sort by stop time"));
+            this.sortmethodcombobox.AppendText(Mono.Unix.Catalog.GetString("Sort by duration"));
+            this.sortmethodcombobox.Name = "sortmethodcombobox";
+            this.sortmethodcombobox.Active = 0;
+            this.hbox1.Add(this.sortmethodcombobox);
+            Gtk.Box.BoxChild w12 = ((Gtk.Box.BoxChild)(this.hbox1[this.sortmethodcombobox]));
+            w12.Position = 1;
+            this.vbox3.Add(this.hbox1);
+            Gtk.Box.BoxChild w13 = ((Gtk.Box.BoxChild)(this.vbox3[this.hbox1]));
+            w13.Position = 3;
+            w13.Expand = false;
+            w13.Fill = false;
             this.Add(this.vbox3);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
@@ -147,6 +182,7 @@ namespace LongoMatch.Gui.Component {
             this.timeadjustwidget1.LagTimeChanged += new System.EventHandler(this.OnTimeadjustwidget1LagTimeChanged);
             this.colorbutton1.ColorSet += new System.EventHandler(this.OnColorbutton1ColorSet);
             this.changebuton.Clicked += new System.EventHandler(this.OnChangebutonClicked);
+            this.sortmethodcombobox.Changed += new System.EventHandler(this.OnSortmethodcomboboxChanged);
         }
     }
 }

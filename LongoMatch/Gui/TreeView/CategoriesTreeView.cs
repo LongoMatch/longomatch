@@ -66,18 +66,26 @@ namespace LongoMatch.Gui.Component
 			hotKeyColumn.Title = Catalog.GetString("Hotkey");
 			Gtk.CellRendererText hotKeyCell = new Gtk.CellRendererText();
 			hotKeyColumn.PackStart(hotKeyCell, true);
+			
+			Gtk.TreeViewColumn sortMethodColumn = new Gtk.TreeViewColumn();
+			sortMethodColumn.Title = Catalog.GetString("Sort Method");
+			Gtk.CellRendererText sortMethodCell = new Gtk.CellRendererText();
+			sortMethodColumn.PackStart(sortMethodCell, true);
 
 			nameColumn.SetCellDataFunc(nameCell, new Gtk.TreeCellDataFunc(RenderName));
 			startTimeColumn.SetCellDataFunc(startTimeCell, new Gtk.TreeCellDataFunc(RenderStartTime));
 			stopTimeColumn.SetCellDataFunc(stopTimeCell, new Gtk.TreeCellDataFunc(RenderStopTime));
 			colorColumn.SetCellDataFunc(colorCell, new Gtk.TreeCellDataFunc(RenderColor));
 			hotKeyColumn.SetCellDataFunc(hotKeyCell, new Gtk.TreeCellDataFunc(RenderHotKey));
+			sortMethodColumn.SetCellDataFunc(sortMethodCell, new Gtk.TreeCellDataFunc(RenderSortMethod));
+
 
 			AppendColumn(nameColumn);
 			AppendColumn(startTimeColumn);
 			AppendColumn(stopTimeColumn);
 			AppendColumn(colorColumn);
 			AppendColumn(hotKeyColumn);
+			AppendColumn(sortMethodColumn);
 		}
 
 		private void RenderName(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
@@ -114,6 +122,13 @@ namespace LongoMatch.Gui.Component
 			SectionsTimeNode tNode = (SectionsTimeNode) Model.GetValue(iter, 0);
 
 			(cell as Gtk.CellRendererText).Text = tNode.HotKey.ToString();
+		}
+		
+		private void RenderSortMethod(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
+		{
+			SectionsTimeNode tNode = (SectionsTimeNode) Model.GetValue(iter, 0);
+
+			(cell as Gtk.CellRendererText).Text = tNode.SortingMethodString;
 		}
 
 		protected virtual void OnCursorChanged(object o, System.EventArgs e) {
