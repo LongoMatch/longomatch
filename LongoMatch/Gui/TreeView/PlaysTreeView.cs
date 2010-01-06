@@ -71,6 +71,7 @@ namespace LongoMatch.Gui.Component
 
 			nameColumn = new Gtk.TreeViewColumn();
 			nameColumn.Title = "Name";
+			nameColumn.SortOrder = SortType.Ascending;
 			nameCell = new Gtk.CellRendererText();
 			nameCell.Edited += OnNameCellEdited;
 			Gtk.CellRendererPixbuf miniatureCell = new Gtk.CellRendererPixbuf();
@@ -81,6 +82,19 @@ namespace LongoMatch.Gui.Component
 			nameColumn.SetCellDataFunc(nameCell, new Gtk.TreeCellDataFunc(RenderName));
 
 			this.AppendColumn(nameColumn);
+		}
+		
+		public TreeStore Model{
+			set{
+				if (value != null){
+					value.SetSortFunc(0, SortFunction);
+					value.SetSortColumnId(0,SortType.Ascending);
+				}
+				base.Model = value;					
+			}
+			get{
+				return (TreeStore)base.Model;
+			}
 		}
 
 		public Color[]  Colors {
@@ -152,14 +166,14 @@ namespace LongoMatch.Gui.Component
 		}
 
 		private int GetSectionFromIter(TreeIter iter) {
-			TreePath path = this.Model.GetPath(iter);
+			TreePath path = Model.GetPath(iter);
 			return int.Parse(path.ToString().Split(':')[0]);
 		}
 
 		private TimeNode GetValueFromPath(TreePath path){
 			Gtk.TreeIter iter;
 			Model.GetIter(out iter, path);
-			return (TimeNode)this.Model.GetValue(iter,0);					
+			return (TimeNode)Model.GetValue(iter,0);					
 		}	
 		
 		private void MultiSelectMenu (bool enabled){
@@ -167,6 +181,39 @@ namespace LongoMatch.Gui.Component
 			snapshot.Sensitive = !enabled;
 			players.Sensitive = !enabled;
 			tag.Sensitive = !enabled;
+		}
+		
+		private int SortFunction(TreeModel model, TreeIter a, TreeIter b){
+			TreeIter iter;
+			SectionsTimeNode category;
+			TimeNode tna;
+			TimeNode tnb;
+			
+			if (model == null)
+				return 0;
+			
+			// Don't sort categories
+			if (!model.GetPath(a).ToString().Contains(":"))
+				return int.Parse(model.GetPath(a).ToString()) 
+					- int.Parse(model.GetPath(b).ToString());			
+	
+			model.IterParent(out iter, a);
+			category = model.GetValue(iter,0) as SectionsTimeNode;
+			tna = model.GetValue (a, 0)as TimeNode;
+			tnb = model.GetValue (b, 0) as TimeNode;
+			
+			switch(category.SortingMethod){
+				case(SectionsTimeNode.SortMethod.BY_NAME):
+					return String.Compare(tna.Name, tnb.Name);
+				case(SectionsTimeNode.SortMethod.BY_START_TIME):
+					return (tna.Start - tnb.Start).MSeconds;
+				case(SectionsTimeNode.SortMethod.BY_STOP_TIME):
+					return (tna.Stop - tnb.Stop).MSeconds;
+				case(SectionsTimeNode.SortMethod.BY_DURATION):
+					return (tna.Duration - tnb.Duration).MSeconds;
+				default:
+					return 0;
+			}			
 		}
 		
 		private void RenderMiniature(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
@@ -206,13 +253,18 @@ namespace LongoMatch.Gui.Component
 		private void OnNameCellEdited(object o, Gtk.EditedArgs args)
 		{
 			Gtk.TreeIter iter;
-			this.Model.GetIter(out iter, new Gtk.TreePath(args.Path));
-			TimeNode tNode = (TimeNode)this.Model.GetValue(iter,0);
+			TimeNode tNode;
+			
+			Model.GetIter(out iter, new Gtk.TreePath(args.Path));
+			tNode = (TimeNode)this.Model.GetValue(iter,0);
 			tNode.Name = args.NewText;
 			editing = false;
 			nameCell.Editable=false;
 			if (TimeNodeChanged != null)
 				TimeNodeChanged(tNode,args.NewText);
+			
+			// Redorder plays
+			Model.SetSortFunc(0, SortFunction);
 		}
 		
 		private bool SelectFunction(TreeSelection selection, TreeModel model, TreePath path, bool selected){
