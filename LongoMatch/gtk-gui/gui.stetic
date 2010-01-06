@@ -5321,11 +5321,4 @@ You can add new tags using the text entry and clicking "Add Tag"</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.TagsTreeWidget" design-size="300 300">
-    <property name="MemberName" />
-    <property name="Visible">False</property>
-    <child>
-      <placeholder />
-    </child>
-  </widget>
 </stetic-interface>
