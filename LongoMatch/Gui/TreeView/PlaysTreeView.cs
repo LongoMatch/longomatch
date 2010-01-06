@@ -184,21 +184,35 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		private int SortFunction(TreeModel model, TreeIter a, TreeIter b){
-			TreeIter iter;
+			TreeStore store;
+			TimeNode tna, tnb;
+			TreeIter parent;
+			int depth;
 			SectionsTimeNode category;
-			TimeNode tna;
-			TimeNode tnb;
 			
 			if (model == null)
-				return 0;
+				return 0;	
 			
-			// Don't sort categories
-			if (!model.GetPath(a).ToString().Contains(":"))
+			store = model as TreeStore;
+			
+			// Retrieve the iter parent and its depth
+			// When a new play is inserted, one of the iters is not a valid
+			// in the model. Get the values from the valid one
+			if (store.IterIsValid(a)){
+				store.IterParent(out parent, a);
+				depth = store.IterDepth(a);
+			}
+			else{
+				store.IterParent(out parent, b);
+				depth = store.IterDepth(b);
+			}		
+			
+			// Dont't store categories
+			if (depth == 0)
 				return int.Parse(model.GetPath(a).ToString()) 
-					- int.Parse(model.GetPath(b).ToString());			
-	
-			model.IterParent(out iter, a);
-			category = model.GetValue(iter,0) as SectionsTimeNode;
+					- int.Parse(model.GetPath(b).ToString());
+			
+			category = model.GetValue(parent,0) as SectionsTimeNode;
 			tna = model.GetValue (a, 0)as TimeNode;
 			tnb = model.GetValue (b, 0) as TimeNode;
 			
