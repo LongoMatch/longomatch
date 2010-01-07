@@ -208,7 +208,7 @@ namespace LongoMatch.Gui.Component
 					                                     DialogFlags.Modal,
 					                                     MessageType.Question,
 					                                     Gtk.ButtonsType.YesNo,
-					                                     Catalog.GetString("The template already exists.Do you want to overwrite it ")
+					                                     Catalog.GetString("The template already exists.Do you want to overwrite it ?")
 					                                   );
 					if (md.Run() == (int)ResponseType.Yes)
 						SaveTemplate(dialog.Text);

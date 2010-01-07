@@ -39,7 +39,7 @@ namespace LongoMatch.Gui.Component {
             // Container child vbox2.Gtk.Box+BoxChild
             this.label1 = new Gtk.Label();
             this.label1.Name = "label1";
-            this.label1.LabelProp = Mono.Unix.Catalog.GetString("<b>This play hasn't been tagged yet.</b>\nYou can add new tags using the text entry and clicking \"Add Tag\"");
+            this.label1.LabelProp = Mono.Unix.Catalog.GetString("<b>You haven't tagged any play yet.</b>\nYou can add new tags using the text entry and clicking \"Add Tag\"");
             this.label1.UseMarkup = true;
             this.label1.Justify = ((Gtk.Justification)(2));
             this.vbox2.Add(this.label1);
