@@ -53,7 +53,7 @@ namespace LongoMatch.Gui.Component
 
 
 			Gtk.TreeViewColumn positionColumn = new Gtk.TreeViewColumn();
-			positionColumn.Title = "Position";
+			positionColumn.Title = Catalog.GetString("Position");
 			Gtk.CellRendererText positionCell = new Gtk.CellRendererText();
 			positionColumn.PackStart(positionCell, true);
 
