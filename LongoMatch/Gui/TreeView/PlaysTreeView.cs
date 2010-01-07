@@ -172,7 +172,7 @@ namespace LongoMatch.Gui.Component
 		}
 
 		private void SetCategoriesMenu(){
-			Action edit;			
+			Action edit, sortMenu;			
 			UIManager manager;
 			ActionGroup g;
 			
@@ -180,6 +180,7 @@ namespace LongoMatch.Gui.Component
 			g = new ActionGroup("CategoriesMenuGroup");
 			
 			edit = new Action("EditAction", Mono.Unix.Catalog.GetString("Edit name"), null, "gtk-edit");
+			sortMenu = new Action("SortMenuAction", Mono.Unix.Catalog.GetString("Sort Method"), null, null);
 			sortByName = new Gtk.RadioAction("SortByNameAction", Mono.Unix.Catalog.GetString("Sort by name"), null, null, 1);
 			sortByStart = new Gtk.RadioAction("SortByStartAction", Mono.Unix.Catalog.GetString("Sort by start time"), null, null, 2);
 			sortByStop = new Gtk.RadioAction("SortByStopAction", Mono.Unix.Catalog.GetString("Sort by stop time"), null, null, 3);
@@ -198,6 +199,7 @@ namespace LongoMatch.Gui.Component
 			
 			
 			g.Add(edit, null);
+			g.Add(sortMenu, null);
 			g.Add(sortByName, null);
 			g.Add(sortByStart, null);
 			g.Add(sortByStop, null);
@@ -208,10 +210,12 @@ namespace LongoMatch.Gui.Component
 			manager.AddUiFromString("<ui>"+
 			                        "  <popup action='CategoryMenu'>"+
 			                        "    <menuitem action='EditAction'/>"+
-			                        "    <menuitem action='SortByNameAction'/>"+
-			                        "    <menuitem action='SortByStartAction'/>"+
-			                        "    <menuitem action='SortByStopAction'/>"+
-			                        "    <menuitem action='SortByDurationAction'/>"+
+			                        "    <menu action='SortMenuAction'>"+
+			                        "      <menuitem action='SortByNameAction'/>"+
+			                        "      <menuitem action='SortByStartAction'/>"+
+			                        "      <menuitem action='SortByStopAction'/>"+
+			                        "      <menuitem action='SortByDurationAction'/>"+
+			                        "    </menu>"+
 			                        "  </popup>"+
 			                        "</ui>");
 			
