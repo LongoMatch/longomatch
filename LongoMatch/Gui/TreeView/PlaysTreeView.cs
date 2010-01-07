@@ -181,8 +181,8 @@ namespace LongoMatch.Gui.Component
 			
 			edit = new Action("EditAction", Mono.Unix.Catalog.GetString("Edit name"), null, "gtk-edit");
 			sortByName = new Gtk.RadioAction("SortByNameAction", Mono.Unix.Catalog.GetString("Sort by name"), null, null, 1);
-			sortByStart = new Gtk.RadioAction("SortByStartAction", Mono.Unix.Catalog.GetString("Sort by start"), null, null, 2);
-			sortByStop = new Gtk.RadioAction("SortByStopAction", Mono.Unix.Catalog.GetString("Sort by stop"), null, null, 3);
+			sortByStart = new Gtk.RadioAction("SortByStartAction", Mono.Unix.Catalog.GetString("Sort by start time"), null, null, 2);
+			sortByStop = new Gtk.RadioAction("SortByStopAction", Mono.Unix.Catalog.GetString("Sort by stop time"), null, null, 3);
 			sortByDuration = new Gtk.RadioAction("SortByDurationAction", Mono.Unix.Catalog.GetString("Sort by duration"), null, null, 3);
 			
 			edit.Activated += OnEdit;
