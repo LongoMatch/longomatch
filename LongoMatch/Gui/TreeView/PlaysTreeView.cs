@@ -185,13 +185,7 @@ namespace LongoMatch.Gui.Component
 			sortByStart = new Gtk.RadioAction("SortByStartAction", Mono.Unix.Catalog.GetString("Sort by start time"), null, null, 2);
 			sortByStop = new Gtk.RadioAction("SortByStopAction", Mono.Unix.Catalog.GetString("Sort by stop time"), null, null, 3);
 			sortByDuration = new Gtk.RadioAction("SortByDurationAction", Mono.Unix.Catalog.GetString("Sort by duration"), null, null, 3);
-			
-			edit.Activated += OnEdit;
-			sortByName.Activated += OnSortActivated;
-			sortByStart.Activated += OnSortActivated;
-			sortByStop.Activated += OnSortActivated;
-			sortByDuration.Activated += OnSortActivated;
-			
+				
 			sortByName.Group = new GLib.SList(System.IntPtr.Zero);
 			sortByStart.Group = sortByName.Group;
 			sortByStop.Group = sortByName.Group;
@@ -219,7 +213,13 @@ namespace LongoMatch.Gui.Component
 			                        "  </popup>"+
 			                        "</ui>");
 			
-			categoriesMenu = manager.GetWidget("/CategoryMenu") as Menu;			
+			categoriesMenu = manager.GetWidget("/CategoryMenu") as Menu;	
+			
+			edit.Activated += OnEdit;
+			sortByName.Activated += OnSortActivated;
+			sortByStart.Activated += OnSortActivated;
+			sortByStop.Activated += OnSortActivated;
+			sortByDuration.Activated += OnSortActivated;
 		}
 		
 		private void SetupSortMenu(SectionsTimeNode.SortMethod sortMethod){
