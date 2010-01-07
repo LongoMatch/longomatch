@@ -255,6 +255,9 @@ namespace LongoMatch.TimeNodes
 		/// </value>
 		public List<Tag> Tags{
 			get{
+				//From 0.10.5
+				if (tagsList == null)
+					tagsList = new List<Tag>();
 				return tagsList;
 			}
 			set{
@@ -347,9 +350,9 @@ namespace LongoMatch.TimeNodes
 		
 		public override string ToString ()
 		{
-			String[] tags = new String[tagsList.Count];
-			for (int i=0; i<tagsList.Count; i++)
-				tags[i] = tagsList[i].Text;
+			String[] tags = new String[Tags.Count];
+			for (int i=0; i<Tags.Count; i++)
+				tags[i] = Tags[i].Text;
 			
 			return  "<b>"+Catalog.GetString("Name")+": </b>"+Name+"\n"+
 				    "<b>"+Catalog.GetString("Team")+": </b>"+Team.ToString().ToLower()+"\n"+
