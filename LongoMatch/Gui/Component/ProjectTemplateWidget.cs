@@ -198,7 +198,7 @@ namespace LongoMatch.Gui.Component
 			EntryDialog dialog = new EntryDialog();
 			dialog.TransientFor = (Gtk.Window)this.Toplevel;
 			dialog.ShowCount = false;
-			dialog.Text = Catalog.GetString("newtemplate");
+			dialog.Text = Catalog.GetString("New template");
 			if (dialog.Run() == (int)ResponseType.Ok){
 				if (dialog.Text == "")
 					MessagePopup.PopupMessage(dialog, MessageType.Error,
