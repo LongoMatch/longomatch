@@ -1,3 +1,24 @@
+===== LongoMatch 0.15.5 =====
+
+	== Features ==
+	
+	* Plays are now sortable by name, start time, stop time and duration.
+	* Plays can be tagged.
+	* A new tab has been added to display plays filterd by tags.
+	* Tagging Hotkeys can use simple key instead of and Alt or Shift combination
+	* Projects can be imported/exported to/from files.
+	* Templates can be creating copying an existent one.
+	* Plays can be multiselected.
+ 	* A template from a project can be exported.
+	* Added German translation 
+	
+ 	== Bugs Fixed ==
+ 	
+ 	* [#603277] The projects manager does not ask to save an edited project when exiting
+ 	* [#603274] Enable multiple selection of plays
+	* [#603276] Use a template different from the default one when creating a new one
+	* [#603260] Ability to export/import projects to/from other machines
+
 ===== LongoMatch 0.15.4 =====
 
 	== Features ==

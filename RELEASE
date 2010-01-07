@@ -1,7 +1,7 @@
-LongoMatch-0.15.4 "I asked for chicken..." 
+LongoMatch-0.15.5 "In the mood for Barcelona" 
 -------------------------------------------------
 
-The LongoMatch team is proud to announce the fourth release in the unstable 0.15
+The LongoMatch team is proud to announce the fifth release in the unstable 0.15
 LongoMatch series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
@@ -9,14 +9,21 @@ all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
 * Features of this release
- * New drawing widget with specialized tools to make drawings in video frames. You can save it in a new file
-   or in a play as a key frame. When this drawings are saved as key frame and the play is loaded, the player
-   redraw them when it reaches the instants they were drawn.
- * Speeds improvements in retrieving projects from the database.
- * Better readabilty of plays using bigger thumbnails and improved information layout
+  * Plays are now sortable by name, start time, stop time and duration.
+  * Plays can be tagged.
+  * A new tab has been added to display plays filterd by tags.
+  * Tagging Hotkeys can use simple key instead of and Alt or Shift combination
+  * Projects can be imported/exported to/from files.
+  * Templates can be creating copying an existent one.
+  * Plays can be multiselected.
+  * A template from a project can be exported.
+  * Added German Translation
 
-* Bugs Fixed
- * [#598675] Memory leak handling Project objects
+*Bugs Fixed
+  * [#603277] The projects manager does not ask to save an edited project when exiting
+  * [#603274] Enable multiple selection of plays
+  * [#603276] Use a template different from the default one when creating a new one
+  * [#603260] Ability to export/import projects to/from other machines
 
 
 * Features of the 0.15 series
@@ -24,6 +31,9 @@ experience.
  * Illimted number of tagging categories (previous version allows only 20)
  * Support for team templates
  * Plays can be tagged to players
+ * Soft Tagging support
+ * Import/Export projects
+ * Orderable plays
  * HotKeys support	
  * Database migration tool
  * New video editor implemented using GNonLin (FFmpeg and Mencoder are not required anymore)
@@ -35,6 +45,16 @@ experience.
  * Drawing tool for on-video annotations
  * Redesigned templates manager
 	
+*Contributors to this Release:
+
+  * LongoMatch:
+	Andoni Morales Alastruey <ylatuya@gmail.com>
+  
+  * Translations:
+ 	* de: Mario Blättermann <mariobl@gnome.org>
+	* es: Andoni Morales Alastruey <ylatuya@gmail.com>
+
+
 
 * Requirements
  
