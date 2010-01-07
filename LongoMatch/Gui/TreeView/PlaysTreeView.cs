@@ -43,6 +43,7 @@ namespace LongoMatch.Gui.Component
 		public event PlayersTaggedHandler PlayersTagged;
 		public event TagPlayHandler TagPlay;
 
+		// Plays menu
 		private Menu menu;
 		private MenuItem local;
 		private	MenuItem visitor;
@@ -53,6 +54,10 @@ namespace LongoMatch.Gui.Component
 		private MenuItem snapshot;
 		private MenuItem name;
 		private MenuItem players;
+		
+		//Categories menu
+		private Menu categoriesMenu;
+		private RadioAction sortByName, sortByStart, sortByStop, sortByDuration;
 		
 		private Gtk.CellRendererText nameCell;
 		private Gtk.TreeViewColumn nameColumn;
@@ -66,6 +71,7 @@ namespace LongoMatch.Gui.Component
 			this.RowActivated += new RowActivatedHandler(OnTreeviewRowActivated);
 
 			SetMenu();
+			SetCategoriesMenu();
 
 			colors = new Color[20];
 
@@ -129,7 +135,7 @@ namespace LongoMatch.Gui.Component
 			playersMenu.Append(visitorPlayers);
 
 			menu = new Menu();
-
+			
 			name = new MenuItem(Catalog.GetString("Edit"));
 			team = new MenuItem(Catalog.GetString("Team Selection"));
 			team.Submenu = teamMenu;
@@ -165,6 +171,70 @@ namespace LongoMatch.Gui.Component
 			menu.ShowAll();
 		}
 
+		private void SetCategoriesMenu(){
+			Action edit;			
+			UIManager manager;
+			ActionGroup g;
+			
+			manager= new UIManager();
+			g = new ActionGroup("CategoriesMenuGroup");
+			
+			edit = new Action("EditAction", Mono.Unix.Catalog.GetString("Edit name"), null, "gtk-edit");
+			sortByName = new Gtk.RadioAction("SortByNameAction", Mono.Unix.Catalog.GetString("Sort by name"), null, null, 1);
+			sortByStart = new Gtk.RadioAction("SortByStartAction", Mono.Unix.Catalog.GetString("Sort by start"), null, null, 2);
+			sortByStop = new Gtk.RadioAction("SortByStopAction", Mono.Unix.Catalog.GetString("Sort by stop"), null, null, 3);
+			sortByDuration = new Gtk.RadioAction("SortByDurationAction", Mono.Unix.Catalog.GetString("Sort by duration"), null, null, 3);
+			
+			edit.Activated += OnEdit;
+			sortByName.Activated += OnSortActivated;
+			sortByStart.Activated += OnSortActivated;
+			sortByStop.Activated += OnSortActivated;
+			sortByDuration.Activated += OnSortActivated;
+			
+			sortByName.Group = new GLib.SList(System.IntPtr.Zero);
+			sortByStart.Group = sortByName.Group;
+			sortByStop.Group = sortByName.Group;
+			sortByDuration.Group = sortByName.Group;     
+			
+			
+			g.Add(edit, null);
+			g.Add(sortByName, null);
+			g.Add(sortByStart, null);
+			g.Add(sortByStop, null);
+			g.Add(sortByDuration, null);
+			
+			manager.InsertActionGroup(g,0);
+			
+			manager.AddUiFromString("<ui>"+
+			                        "  <popup action='CategoryMenu'>"+
+			                        "    <menuitem action='EditAction'/>"+
+			                        "    <menuitem action='SortByNameAction'/>"+
+			                        "    <menuitem action='SortByStartAction'/>"+
+			                        "    <menuitem action='SortByStopAction'/>"+
+			                        "    <menuitem action='SortByDurationAction'/>"+
+			                        "  </popup>"+
+			                        "</ui>");
+			
+			categoriesMenu = manager.GetWidget("/CategoryMenu") as Menu;			
+		}
+		
+		private void SetupSortMenu(SectionsTimeNode.SortMethod sortMethod){
+			switch (sortMethod) {
+				case SectionsTimeNode.SortMethod.BY_NAME:
+					sortByName.Active = true;		
+					break;					
+				case SectionsTimeNode.SortMethod.BY_START_TIME:
+					sortByStart.Active = true;
+					break;
+				case SectionsTimeNode.SortMethod.BY_STOP_TIME:
+					sortByStop.Active = true;	
+					break;
+				default:
+					sortByDuration.Active = true;
+					break;
+			}
+		}
+		
 		private int GetSectionFromIter(TreeIter iter) {
 			TreePath path = Model.GetPath(iter);
 			return int.Parse(path.ToString().Split(':')[0]);
@@ -230,6 +300,19 @@ namespace LongoMatch.Gui.Component
 			}			
 		}
 		
+		private bool SelectFunction(TreeSelection selection, TreeModel model, TreePath path, bool selected){
+			// Don't allow multiselect for categories
+			if (!selected && selection.GetSelectedRows().Length > 0){
+				if (selection.GetSelectedRows().Length == 1 &&
+				    GetValueFromPath(selection.GetSelectedRows()[0]) is SectionsTimeNode)
+					return false;	
+				return !(GetValueFromPath(path) is SectionsTimeNode);										
+			}
+			// Always unselect
+			else
+				return true;
+		}
+		
 		private void RenderMiniature(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			TimeNode tNode = (TimeNode) model.GetValue(iter, 0);
@@ -262,37 +345,7 @@ namespace LongoMatch.Gui.Component
 				(cell as Gtk.CellRendererText).CellBackground = "white";
 				(cell as Gtk.CellRendererText).Markup =tNode.Name;
 			}
-		}
-
-		private void OnNameCellEdited(object o, Gtk.EditedArgs args)
-		{
-			Gtk.TreeIter iter;
-			TimeNode tNode;
-			
-			Model.GetIter(out iter, new Gtk.TreePath(args.Path));
-			tNode = (TimeNode)this.Model.GetValue(iter,0);
-			tNode.Name = args.NewText;
-			editing = false;
-			nameCell.Editable=false;
-			if (TimeNodeChanged != null)
-				TimeNodeChanged(tNode,args.NewText);
-			
-			// Redorder plays
-			Model.SetSortFunc(0, SortFunction);
-		}
-		
-		private bool SelectFunction(TreeSelection selection, TreeModel model, TreePath path, bool selected){
-			// Don't allow multiselect for categories
-			if (!selected && selection.GetSelectedRows().Length > 0){
-				if (selection.GetSelectedRows().Length == 1 &&
-				    GetValueFromPath(selection.GetSelectedRows()[0]) is SectionsTimeNode)
-					return false;	
-				return !(GetValueFromPath(path) is SectionsTimeNode);										
-			}
-			// Always unselect
-			else
-				return true;
-		}
+		}	
 
 		protected virtual void OnTreeviewRowActivated(object o, Gtk.RowActivatedArgs args)
 		{
@@ -325,9 +378,9 @@ namespace LongoMatch.Gui.Component
 						MultiSelectMenu(false);
 						menu.Popup();
 					}
-					else {
-						nameCell.Editable = true;
-						this.SetCursor(paths[0],  nameColumn, true);
+					else{
+						SetupSortMenu((selectedTimeNode as SectionsTimeNode).SortingMethod);
+						categoriesMenu.Popup();
 					}
 				}
 				else if (paths.Length > 1){
@@ -338,6 +391,42 @@ namespace LongoMatch.Gui.Component
 			else 
 				base.OnButtonPressEvent(evnt);
 			return true;
+		}
+		
+		private void OnSortActivated (object o, EventArgs args){
+			SectionsTimeNode category;
+			RadioAction sender;
+			
+			sender = o as RadioAction;
+			category = GetValueFromPath(Selection.GetSelectedRows()[0]) as SectionsTimeNode;
+			
+			if (sender == sortByName)
+				category.SortingMethod = SectionsTimeNode.SortMethod.BY_NAME;
+			else if (sender == sortByStart)
+				category.SortingMethod = SectionsTimeNode.SortMethod.BY_START_TIME;
+			else if (sender == sortByStop)
+				category.SortingMethod = SectionsTimeNode.SortMethod.BY_STOP_TIME;
+			else 
+				category.SortingMethod = SectionsTimeNode.SortMethod.BY_DURATION;
+			// Redorder plays
+			Model.SetSortFunc(0, SortFunction);
+		}
+		
+		private void OnNameCellEdited(object o, Gtk.EditedArgs args)
+		{
+			Gtk.TreeIter iter;
+			TimeNode tNode;
+			
+			Model.GetIter(out iter, new Gtk.TreePath(args.Path));
+			tNode = (TimeNode)this.Model.GetValue(iter,0);
+			tNode.Name = args.NewText;
+			editing = false;
+			nameCell.Editable=false;
+			if (TimeNodeChanged != null)
+				TimeNodeChanged(tNode,args.NewText);
+			
+			// Redorder plays
+			Model.SetSortFunc(0, SortFunction);
 		}
 
 		protected void OnDeleted(object obj, EventArgs args) {
