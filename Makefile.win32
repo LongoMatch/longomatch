@@ -1,19 +1,16 @@
-
-
-#Set-up environment variable 
+#Set-up environment variables 
 MINGW_PATH = C:/MinGW/bin
-MONO_INSTALL_PATH= C:/Mono-2.4
+MONO_INSTALL_PATH= C:/Mono
 MONO = $(MONO_INSTALL_PATH)/bin/mono.exe
 MKBUNDLE = $(MONO_INSTALL_PATH)/lib/mono/2.0/mkbundle.exe
 DB4O = LongoMatch/Win32/deps/Db4objects.Db4o.dll 
-GTK = c:\Mono-2.4
+GTK = $(MONO_INSTALL_PATH)
 GST = c:\gstreamer
 CC   = gcc.exe
 BASH = /bin/bash.exe
 OUTDIR = LongoMatch/Win32/bin
 RM = rm -f
 CSC = $(MONO_INSTALL_PATH)/bin/gmcs
-
 
 #libcesarplayer
 LINKOBJ  =   libcesarplayer/src/gstscreenshot.o libcesarplayer/src/bacon-resize.o libcesarplayer/src/video-utils.o libcesarplayer/src/bacon-video-widget-gst-0.10.o libcesarplayer/src/baconvideowidget-marshal.o libcesarplayer/src/gst-video-editor.o
@@ -101,6 +98,7 @@ CSC_LONGOMATCH_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-main:Longo
 LONGOMATCH_COMPILE_TARGET = winexe 
 LONGOMATCH_FILES = \
 	AssemblyInfo.cs \
+	Common/Enums.cs \
 	Compat/0.0/DatabaseMigrator.cs \
 	Compat/0.0/DB/DataBase.cs \
 	Compat/0.0/DB/MediaFile.cs \
@@ -121,7 +119,6 @@ LONGOMATCH_FILES = \
 	DB/Project.cs \
 	DB/ProjectDescription.cs\
 	DB/Sections.cs \
-	DB/Tag.cs \
 	DB/TagsTemplate.cs \
 	DB/TeamTemplate.cs \
 	gtk-gui/generated.cs \
@@ -137,6 +134,8 @@ LONGOMATCH_FILES = \
 	gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.ProjectTemplateWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.TagsTreeWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TeamTemplateWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TimeLineWidget.cs \
@@ -153,6 +152,7 @@ LONGOMATCH_FILES = \
 	gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.ProjectTemplateEditorDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.TeamTemplateEditor.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.TemplatesManager.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs \
@@ -173,6 +173,8 @@ LONGOMATCH_FILES = \
 	Gui/Component/ProjectDetailsWidget.cs \
 	Gui/Component/ProjectListWidget.cs \
 	Gui/Component/ProjectTemplateWidget.cs \
+	Gui/Component/TaggerWidget.cs\
+	Gui/Component/TagsTreeWidget.cs\
 	Gui/Component/TeamTemplateWidget.cs\
 	Gui/Component/TimeAdjustWidget.cs \
 	Gui/Component/TimeLineWidget.cs \
@@ -191,6 +193,7 @@ LONGOMATCH_FILES = \
 	Gui/Dialog/ProjectsManager.cs \
 	Gui/Dialog/ProjectTemplateEditorDialog.cs \
 	Gui/Dialog/SnapshotsDialog.cs \
+	Gui/Dialog/TaggerDialog.cs \
 	Gui/Dialog/TemplatesEditor.cs \
 	Gui/Dialog/TeamTemplateEditor.cs\
 	Gui/Dialog/UpdateDialog.cs \
@@ -205,6 +208,7 @@ LONGOMATCH_FILES = \
 	Gui/TreeView/PlayersTreeView.cs \
 	Gui/TreeView/PlayListTreeView.cs \
 	Gui/TreeView/PlaysTreeView.cs \
+	Gui/TreeView/TagsTreeView.cs \
 	Handlers/DrawingManager.cs \
 	Handlers/EventsManager.cs \
 	Handlers/Handlers.cs \
@@ -224,6 +228,7 @@ LONGOMATCH_FILES = \
 	Time/Player.cs \
 	Time/PlayListTimeNode.cs \
 	Time/SectionsTimeNode.cs \
+	Time/Tag.cs \
 	Time/Time.cs \
 	Time/TimeNode.cs \
 	Updates/Updater.cs \
@@ -256,7 +261,7 @@ all: all-before ${BIN} bundle  all-after
 
 install: $(BIN)
 	cp $(BIN) "$(OUTDIR)"
-	cp $(LONGOMATCH) "$(OUTDIR)\LongoMatch.exe"
+	cp $(LONGOMATCH_BUNDLED) "$(OUTDIR)\LongoMatch.exe"
 
 clean: clean-custom
 	${RM} $(OBJ) $(BIN) obj/*
@@ -265,7 +270,7 @@ bundle:$(LONGOMATCH_PRE)
 	windres LongoMatch/images/minilogo.rc obj/minilogo.o
 	cp $(DB4O) obj/.
 	export MONO_PATH=obj/ && $(MONO) $(MKBUNDLE) $(LONGOMATCH_PRE) --deps -c -o obj/temp.c -oo obj/temp.o
-	export PKG_CONFIG_PATH=$(MONO_INSTALL_PATH)/lib/pkgconfig/ && $(CC) -mno-cygwin -g -o $(LONGOMATCH_BUNDLED) -Wall obj/temp.c `pkg-config --cflags --libs mono|dos2unix`  obj/minilogo.o obj/temp.o 
+	export PKG_CONFIG_PATH=$(MONO_INSTALL_PATH)/lib/pkgconfig/ && $(CC) -mno-cygwin -g -o $(LONGOMATCH_BUNDLED) -Wall obj/temp.c `pkg-config --cflags --libs mono`  obj/minilogo.o obj/temp.o 
      
 
 $(BIN): $(LINKOBJ)	
