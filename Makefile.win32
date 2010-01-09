@@ -3,12 +3,12 @@ MINGW_PATH = C:/MinGW/bin
 MONO_INSTALL_PATH= C:/Mono
 MONO = $(MONO_INSTALL_PATH)/bin/mono.exe
 MKBUNDLE = $(MONO_INSTALL_PATH)/lib/mono/2.0/mkbundle.exe
-DB4O = LongoMatch/Win32/deps/Db4objects.Db4o.dll 
+DB4O = win32/deps/Db4objects.Db4o.dll 
 GTK = $(MONO_INSTALL_PATH)
 GST = c:\gstreamer
 CC   = gcc.exe
 BASH = /bin/bash.exe
-OUTDIR = LongoMatch/Win32/bin
+OUTDIR = win32/dist/bin
 RM = rm -f
 CSC = $(MONO_INSTALL_PATH)/bin/gmcs
 
@@ -19,14 +19,14 @@ LIBS =  -L"LongoMatch/Win32/bin" -llibgstreamer-0.10 -llibgstvideo-0.10  -llibgs
 
 INCS =   -I"${GST}\include\gstreamer-0.10" -I"${GTK}\include" -I"${GTK}\include\gtk-2.0" -I"${GTK}\lib\gtk-2.0\include" -I"${GTK}\include\atk-1.0" -I"${GTK}\include\pango-1.0" -I"${GTK}\include\cairo" -I"${GTK}\include\glib-2.0" -I"${GTK}\include\glib-2.0\glib" -I"${GTK}\lib\glib-2.0" -I"${GTK}\lib\glib-2.0\include" -I"${GTK}\include\libxml2" 
 
-BIN  = obj/libcesarplayer.dll
+BIN  = win32/obj/libcesarplayer.dll
 
 CFLAGS = $(INCS) -DWIN32 -mms-bitfields -shared   -Wall 
 LDFLAGS =  -shared -Wl -mno-cygwin -mms-bitfields  --export-all-symbols --enable-auto-import
 
 
 #CesarPlayer
-CESARPLAYER=obj/CesarPlayer.dll
+CESARPLAYER=win32/obj/CesarPlayer.dll
 CSC_CESARPLAYER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ -unsafe
 CESARPLAYER_COMPILE_TARGET = library
 
@@ -91,8 +91,8 @@ CESARPLAYER_REFERENCES = \
 	-pkg:glib-sharp-2.0 \
 	
 #LongoMatch.exe
-LONGOMATCH_PRE=obj/LongoMatch.exe
-LONGOMATCH_BUNDLED=obj/LongoMatchBundled.exe
+LONGOMATCH_PRE=win32/obj/LongoMatch.exe
+LONGOMATCH_BUNDLED=win32/obj/LongoMatchBundled.exe
 LONGOMATCH=$(OUTDIR)/LongoMatch.exe
 CSC_LONGOMATCH_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-main:LongoMatch.MainClass"
 LONGOMATCH_COMPILE_TARGET = winexe 
@@ -251,8 +251,8 @@ LONGOMATCH_REFERENCES = \
 	-r:System \
 	-pkg:gtk-sharp-2.0 \
 	-pkg:glib-sharp-2.0 \
-	-r:../obj/CesarPlayer.dll \
-	-r:../LongoMatch/Win32/deps/Db4objects.Db4o.dll
+	-r:../win32/obj/CesarPlayer.dll \
+	-r:../win32/deps/Db4objects.Db4o.dll
 
 
 .PHONY: all all-before all-after clean clean-custom
@@ -264,13 +264,13 @@ install: $(BIN)
 	cp $(LONGOMATCH_BUNDLED) "$(OUTDIR)\LongoMatch.exe"
 
 clean: clean-custom
-	${RM} $(OBJ) $(BIN) obj/*
+	${RM} $(OBJ) $(BIN) win32/obj/*
 
 bundle:$(LONGOMATCH_PRE)
-	windres LongoMatch/images/minilogo.rc obj/minilogo.o
-	cp $(DB4O) obj/.
-	export MONO_PATH=obj/ && $(MONO) $(MKBUNDLE) $(LONGOMATCH_PRE) --deps -c -o obj/temp.c -oo obj/temp.o
-	export PKG_CONFIG_PATH=$(MONO_INSTALL_PATH)/lib/pkgconfig/ && $(CC) -mno-cygwin -g -o $(LONGOMATCH_BUNDLED) -Wall obj/temp.c `pkg-config --cflags --libs mono`  obj/minilogo.o obj/temp.o 
+	windres LongoMatch/images/minilogo.rc win32/obj/minilogo.o
+	cp $(DB4O) win32/obj/.
+	export MONO_PATH=win32/obj/ && $(MONO) $(MKBUNDLE) $(LONGOMATCH_PRE) --deps -c -o win32/obj/temp.c -oo win32/obj/temp.o
+	export PKG_CONFIG_PATH=$(MONO_INSTALL_PATH)/lib/pkgconfig/ && $(CC) -mno-cygwin -g -o $(LONGOMATCH_BUNDLED) -Wall win32/obj/temp.c `pkg-config --cflags --libs mono`  win32/obj/minilogo.o win32/obj/temp.o 
      
 
 $(BIN): $(LINKOBJ)	

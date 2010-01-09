@@ -1,0 +1,211 @@
+style "rezlooks-default"
+{
+  GtkButton      ::default_border    = { 0, 0, 0, 0 }
+  GtkRange       ::trough_border     = 0
+  GtkPaned       ::handle_size       = 6
+  GtkRange       ::slider_width      = 15
+  GtkRange       ::stepper_size      = 15
+
+  GtkScrollbar   ::min_slider_length = 30
+  GtkCheckButton ::indicator_size    = 14
+  GtkMenuBar     ::internal-padding  = 0
+  GtkTreeView    ::expander_size     = 14
+  GtkExpander    ::expander_size     = 16
+  GtkScale       ::slider-length     = 24
+  
+  xthickness = 1
+  ythickness = 1
+
+  fg[NORMAL]        = "#505050"
+  fg[PRELIGHT]      = "#505050"
+  fg[SELECTED]      = "#ffffff"
+  fg[ACTIVE]        = "#2a2a2a"
+  fg[INSENSITIVE]   = "#beb399"
+
+  bg[NORMAL]        = "#fbf8f1"
+  bg[PRELIGHT]      = "#fffefc"
+  bg[SELECTED]	    = "#6798cb"
+  bg[INSENSITIVE]   = "#f1efde"
+  bg[ACTIVE]        = "#f6efe0" # this (strangely) controls inactive tab BGs
+
+  base[NORMAL]      = "#ffffff"
+  base[PRELIGHT]    = "#729fcf"
+  base[ACTIVE]      = "#96b9d5"
+  base[SELECTED]    = "#6798cb"
+  base[INSENSITIVE] = "#fbf8f1"
+
+  text[NORMAL]      = "#505050"
+  text[PRELIGHT]    = "#505050"
+  text[ACTIVE]      = "#ffffff"
+  text[SELECTED]    = "#ffffff"
+  text[INSENSITIVE] = "#b1b1b1"
+
+  engine "rezlooks" 
+  {
+	scrollbar_color   = "#a7ccf4"
+    menubarstyle      = 1 # 0 = flat, 1 = gradient, 2 = stripes
+	menubaritemstyle  = 0 # 0 = flat, 1 = button-ish style
+	animation         = TRUE
+  }
+}
+
+
+style "rezlooks-wide" = "rezlooks-default"
+{
+  xthickness = 2
+  ythickness = 2
+}
+
+style "rezlooks-wider" = "rezlooks-default"
+{
+  xthickness = 3
+  ythickness = 3
+}
+
+style "rezlooks-button" = "rezlooks-wider"
+{
+  bg[NORMAL]        = "#f5f0e6"
+  bg[ACTIVE]	    = "#f0e9d8"
+}
+
+style "rezlooks-notebook" = "rezlooks-wide"
+{
+  base[SELECTED]  = "#9cbcdf"
+  bg[ACTIVE]      = "#f0e7d3"
+}
+
+style "rezlooks-tasklist" = "rezlooks-default"
+{
+  xthickness = 5
+  ythickness = 3
+}
+
+style "rezlooks-menu" = "rezlooks-default"
+{
+  xthickness = 2
+  ythickness = 1
+}
+
+style "rezlooks-menu-item" = "rezlooks-default"
+{
+  ythickness     = 3
+  fg[PRELIGHT]   = "#ffffff"
+  text[PRELIGHT] = "#ffffff"
+  base[PRELIGHT] = "#5a81b4"
+}
+
+style "rezlooks-menubar" = "rezlooks-default"
+{
+}
+
+style "rezlooks-menubar-item"
+{
+	ythickness = 4
+}
+
+style "rezlooks-tree" = "rezlooks-default"
+{
+  xthickness = 2
+  ythickness = 2
+  text[NORMAL] = "#505050"
+  GtkTreeView::odd_row_color = "#ffffff"
+  GtkTreeView::even_row_color = "#fdfdfd"
+}
+
+style "rezlooks-frame-title" = "rezlooks-default"
+{
+  fg[NORMAL] = "#505050"
+}
+
+style "rezlooks-tooltips" = "rezlooks-default"
+{
+  xthickness = 4
+  ythickness = 4
+  bg[NORMAL] = { 1.0,1.0,0.75 }
+}
+
+style "rezlooks-progressbar" = "rezlooks-wide"
+{
+  xthickness = 1
+  ythickness = 1
+  fg[PRELIGHT]  = "#ffffff"
+}
+
+style "rezlooks-combo" = "rezlooks-button"
+{
+}
+
+style "panel-menu"
+{
+}
+
+style "metacity-frame"
+{
+  # Normal base color
+  #bg[NORMAL]  = "#bbbbbb"
+
+  # Unfocused title background color
+  #bg[INSENSITIVE]  = { 0.8, 0.8, 0.8 }
+
+  # Unfocused title text color
+  #fg[INSENSITIVE]  = { 1.55, 1.55, 1.55 }
+
+  # Focused icon color
+  #fg[NORMAL]  = { 0.2, 0.2, 0.2 }
+
+  # Focused title background color
+  bg[SELECTED]  = "#5c82b5"
+
+  # Focused title text color
+  #fg[SELECTED]  = "#ffffff"
+}
+
+style "extra-view"
+{
+	bg[NORMAL] = "#729fcf"
+}
+
+# widget styles
+class "MetaFrames"     style "metacity-frame"
+class "GtkWidget"      style "rezlooks-default"
+class "GtkButton"      style "rezlooks-button"
+class "GtkScale"       style "rezlooks-button"
+class "GtkCombo"       style "rezlooks-button"
+class "GtkRange"       style "rezlooks-wide"
+class "GtkFrame"       style "rezlooks-wide"
+class "GtkMenu"        style "rezlooks-menu"
+class "GtkEntry"       style "rezlooks-wider"
+class "GtkMenuItem"    style "rezlooks-menu-item"
+class "GtkNotebook"    style "rezlooks-notebook"
+class "GtkProgressBar" style "rezlooks-progressbar"
+class "*MenuBar*"      style "rezlooks-menubar"
+
+widget_class "*MenuItem.*" style "rezlooks-menu-item"
+widget_class "*MenuBar.*"  style "rezlooks-menubar-item"
+widget_class "*.Panel*Menu*" style "panel-menu"
+widget_class "*Panel*GtkButton" style "panel"
+widget_class "*.Panel*Button*GtkLabel" style "panel"
+widget_class "*.Panel*GtkLabel" style "panel"
+
+# combobox stuff
+widget_class "*.GtkComboBox.GtkButton" style "rezlooks-combo"
+widget_class "*.GtkCombo.GtkButton"    style "rezlooks-combo"
+
+# tooltips stuff
+widget_class "*.tooltips.*.GtkToggleButton" style "rezlooks-tasklist"
+widget "gtk-tooltips" style "rezlooks-tooltips"
+
+#nautilus search stripe
+widget "*.nautilus-extra-view-widget" style:highest "extra-view"
+
+# treeview stuff
+widget_class "*.GtkTreeView.GtkButton" style "rezlooks-tree"
+widget_class "*.GtkCTree.GtkButton" style "rezlooks-tree"
+widget_class "*.GtkList.GtkButton" style "rezlooks-tree"
+widget_class "*.GtkCList.GtkButton" style "rezlooks-tree"
+widget_class "*.GtkFrame.GtkLabel" style "rezlooks-frame-title"
+
+# notebook stuff
+widget_class "*.GtkNotebook.*.GtkEventBox" style "rezlooks-notebook"
+widget_class "*.GtkNotebook.*.GtkViewport" style "rezlooks-notebook"
+

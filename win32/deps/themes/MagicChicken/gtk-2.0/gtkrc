@@ -1,0 +1,293 @@
+#
+# Magic Chicken Theme
+#
+# Copyright 2001, 2002 James M. Cape <jcape@ignore-your.tv>
+#
+
+
+style "mc_default" {
+	fg[NORMAL]				= "#000000"
+	bg[NORMAL]				= "#e0e0e0"
+	base[NORMAL]			= "#e0e0e0"
+
+	fg[PRELIGHT]			= "#000000"	
+	bg[PRELIGHT]			= "#f0f0f0"
+	base[PRELIGHT]			= "#f0f0f0"
+
+	fg[ACTIVE]				= "#ffffff"
+	text[ACTIVE]			= "#ffffff"
+	bg[ACTIVE]				= "#333333"
+	base[ACTIVE]			= "#333333"
+	
+	fg[INSENSITIVE]			= "#a0a0a0"
+	bg[INSENSITIVE]			= "#e0e0e0"
+	base[INSENSITIVE]		= "#e0e0e0"
+	text[INSENSITIVE]		= "#a0a0a0"
+
+	fg[SELECTED]			= "#ffffff"
+	bg[SELECTED]			= "#598787"
+	base[SELECTED]			= "#000000"
+	text[SELECTED] 			= "#ffffff"
+
+	engine "mgicchikn" {
+		grippy-style[ALL][ALL]					= { DOTS_OUT, 1.0 }
+		grippy-style[INSENSITIVE][ALL]			= { NONE, 1.0 }
+		stock-image-transparency[INSENSITIVE]	= 0.4
+		stock-image-saturation[INSENSITIVE]		= 0.0
+		stock-image-brightness[PRELIGHT]		= 1.2
+
+		shadow[INSENSITIVE][ALL]				= FLAT
+		shadow-width[INSENSITIVE][ALL]			= 1
+
+		font-shadow[INSENSITIVE]				= ETCHED_IN
+	}
+}
+
+style "mc_list" {
+	text[ACTIVE]		= "#ffffff"
+	base[ACTIVE]		= "#f0f0f0"
+
+	text[NORMAL]		= "#000000"
+	base[NORMAL]		= "#ffffff"
+
+	text[PRELIGHT]		= "#000000"
+	base[PRELIGHT]		= "#e0e0e0"
+
+	text[INSENSITIVE]	= "#000000"
+	base[INSENSITIVE]	= "#f0f0f0"
+
+	text[SELECTED]		= "#ffffff"
+	base[SELECTED]		= "#598787"
+}
+
+style "mc_entry" = "mc_list" {
+	text[INSENSITIVE]	= "#a0a0a0"
+	text[ACTIVE]		= "#ffffff"
+	base[ACTIVE]		= "#598787"
+
+	engine "mgicchikn" {
+		shadow-width[ALL][ALL]			= 3
+		shadow[ALL][ALL]				= SHARP_IN
+		shadow[INSENSITIVE][ALL]		= FLAT
+		shadow-width[INSENSITIVE][ALL]	= 1
+	}
+}
+
+style "mc_tooltips" {
+    bg[NORMAL]		= "#ffffff"
+    fg[NORMAL]		= "#000000"
+	engine "mgicchikn" {
+		shadow[ALL][ALL]	= FLAT
+		shadow-width[ALL][ALL]	= 1
+	}
+}
+
+style "mc_button" {
+    bg[NORMAL]					= "#f0f0f0"
+
+	fg[ACTIVE]					= "#ffffff"
+	bg[ACTIVE]					= "#333333"
+
+	fg[PRELIGHT]				= "#000000"
+    bg[PRELIGHT]				= "#f0f0f0"
+
+    bg[INSENSITIVE]				= "#f0f0f0"
+
+	fg[SELECTED]				= "#000000"
+	bg[SELECTED]				= "#598787"
+	base[SELECTED]				= "#000000"
+}
+
+style "mc_togglebutton" {
+	engine "mgicchikn" {
+		stock-image-brightness[ACTIVE]	= 1.0
+	}
+}
+
+style "mc_checkradio" {
+	fg[ACTIVE]			= "#000000"
+	text[ACTIVE]		= "#000000"
+	bg[ACTIVE]			= "#f0f0f0"
+	base[ACTIVE]		= "#ffffff"
+
+	fg[NORMAL]			= "#000000"
+	bg[NORMAL]			= "#f0f0f0"
+	text[NORMAL]		= "#000000"
+	base[NORMAL]		= "#ffffff"
+
+	fg[PRELIGHT]		= "#598787"
+	bg[PRELIGHT]		= "#f0f0f0"
+	text[PRELIGHT]		= "#000000"
+	base[PRELIGHT]		= "#ffffff"
+
+	fg[INSENSITIVE]		= "#a0a0a0"
+	bg[INSENSITIVE]		= "#f0f0f0"
+	text[INSENSITIVE]	= "#a0a0a0"
+	base[INSENSITIVE]	= "#f0f0f0"
+
+	engine "mgicchikn" {
+		shadow-width[PRELIGHT][ETCHED_OUT]	= 0
+		shadow[PRELIGHT][ETCHED_OUT]		= NONE
+
+		font-underline[PRELIGHT]			= SINGLE
+	}
+}
+
+style "mc_optionmenu" = "mc_button" {
+	bg[INSENSITIVE]				= "#f0f0f0"
+}
+
+style "mc_menu" {
+	bg[NORMAL]		= "#e0e0e0"
+    bg[PRELIGHT]	= "#598787"
+	fg[PRELIGHT]	= "#ffffff"
+
+	# Used to recolor check images
+	text[NORMAL]	= "#000000"
+	base[NORMAL]	= "#ffffff"
+
+	text[PRELIGHT]	= "#ffffff"
+	base[PRELIGHT]	= "#000000"
+}
+
+style "mc_real_menu" = "mc_menu" {
+	engine "mgicchikn" {
+		shadow[ALL][ALL]                = OUT
+	}
+}
+
+
+style "mc_menuitem" = "mc_menu" {
+	engine "mgicchikn" {
+		shadow[ALL][ALL]                		= NONE
+		shadow-width[PRELIGHT][ALL]				= 0
+		shadow-width[INSENSITIVE][ALL]			= 2
+		stock-image-transparency[INSENSITIVE]	= 0.33
+	}
+}
+
+
+style "mc_paned" {
+	bg[NORMAL]		= "#e0e0e0"
+	bg[PRELIGHT]	= "#f0f0f0"
+	bg[INSENSITIVE]	= "#e0e0e0"
+	bg[ACTIVE]		= "#e0e0e0"
+
+	engine "mgicchikn" {
+		grippy-style[ALL][ALL]					= { LINES_OUT, 0.33 }
+		grippy-style[INSENSITIVE][ALL]			= { NONE, 1.0 }
+	}
+}
+
+style "mc_range" = "mc_button" {
+	fg[ACTIVE]		= "#000000"
+    bg[ACTIVE]		= "#d0d0d0"
+
+	bg[NORMAL]		= "#f0f0f0"
+	bg[PRELIGHT]	= "#f0f0f0"
+
+	engine "mgicchikn" {
+		shadow-width[ACTIVE][ALL]	= 3
+		shadow[ACTIVE][ALL]			= ETCHED_IN
+		shadow[NORMAL][IN]			= ETCHED_IN
+
+		shadow[INSENSITIVE][ALL]	= FLAT
+		shadow-width[INSENSITIVE][ALL]	= 1
+	}
+}
+
+style "mc_slider" = "mc_range" {
+	engine "mgicchikn" {
+		shadow[INSENSITIVE][ALL]	= FLAT
+		shadow-width[INSENSITIVE][ALL]	= 1
+	}
+}
+
+style "mc_bar" = "mc_button" {
+    bg[NORMAL]		= "#ffffff"
+}
+
+style "mc_progbar" = "mc_bar" {
+	bg[PRELIGHT]	= "#598787"
+
+	engine "mgicchikn" {
+		shadow[ALL][ALL]		= IN
+		shadow[PRELIGHT][ALL]	= NONE
+		shadow-width[ALL][ALL]	= 2
+	}
+}
+
+style "mc_notebook" {
+	bg[ACTIVE]		= "#d0d0d0"
+	fg[ACTIVE]		= "#000000"
+
+	fg[NORMAL]		= "#000000"
+	bg[NORMAL]		= "#e9e9e9"
+
+	bg[INSENSITIVE]	= "#f0f0f0"
+}
+
+
+style "mc_cellrenderer" {
+	engine "mgicchikn" {
+		shadow[INSENSITIVE][ALL] = NONE
+	}
+}
+
+
+class "GtkWidget"				style "mc_default"
+
+class "GtkButton"				style "mc_button"
+class "GtkToggleButton"			style "mc_togglebutton"
+
+class "GtkCheckButton"			style "mc_checkradio"
+class "GtkRadioButton"			style "mc_checkradio"
+widget_class "*CheckButton.*"		style "mc_checkradio"
+widget_class "*RadioButton.*"		style "mc_checkradio"
+class "CDDBDisclosure"			style "mc_checkradio"
+widget_class "*isclosure*.*"		style "mc_checkradio"
+
+class "GtkNotebook"						style "mc_notebook"
+widget_class "*GtkNotebook*.*iewport"	style "mc_notebook"
+widget_class "*GtkNotebook*.*ventBox"	style "mc_notebook"
+
+class "GtkList"					style "mc_list"
+class "GtkTree"					style "mc_list"
+class "GtkCList"				style "mc_list"
+class "GtkCTree"				style "mc_list"
+class "GtkTreeView"				style "mc_list"
+class "GtkEntry"				style "mc_entry"
+class "GtkText"					style "mc_entry"
+class "GtkTextView"				style "mc_entry"
+class "GtkEditable"				style "mc_entry"
+
+class "GtkSpinButton"			style "mc_entry"
+class "GtkRange"				style "mc_range"
+class "GtkSlider"				style "mc_slider"
+class "GtkPaned"				style "mc_paned"
+
+class "GtkProgress"				style "mc_progbar"
+class "GtkTreeView"				style "mc_cellrenderer"
+
+widget "gtk-tooltips*"			style "mc_tooltips"
+
+
+# Special Widgets (makes Evo not look like crap or crash)
+#class "ETable"					style "mc_list"
+#class "EPaned"					style "mc_list"
+#class "ECanvas"					style "mc_list"
+#class "EReflow"					style "mc_list"
+#class "GtkHTML"					style "mc_list"
+#class "EelCList"				style "mc_list"
+#class "EelCTree"				style "mc_list"
+#class "EelList"					style "mc_list"
+
+class "GtkMenu"					style "mc_real_menu"
+class "GtkMenuItem"				style "mc_menuitem"
+class "GtkRadioMenuItem"		style "mc_menuitem"
+class "GtkCheckMenuItem"		style "mc_menuitem"
+class "GtkMenuShell"			style "mc_menu"
+class "GtkMenuBar"				style "mc_menu"
+
+widget_class "*MenuItem*.*"		style "mc_menuitem"
+# widget "*GtkOptionMenu*.*"		style "mc_optionmenu"

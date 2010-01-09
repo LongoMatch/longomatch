@@ -1,0 +1,95 @@
+# based on a clearlooks-ana style
+# contributed by Billy Cantrell
+# (and probably based on the original ana style)
+# modified by Dennis Möhlmann
+# for anachron engine
+
+style "anachron-default" {
+  GtkWidget::interior_focus=        1
+  GtkWidget::focus_padding=         1
+  GtkToolbar::internal-padding=     2
+  GtkMenuBar::internal-padding=     0
+
+  GtkPaned::handle_size=            6
+  GtkRange::trough_border=          1
+  GtkRange::slider_width=           15
+  GtkRange::stepper_size=           15
+  GtkScrollbar::min_slider_length=  30
+  GtkCheckButton::indicator_size=   12
+
+  GtkTreeView::expander_size=       14
+  GtkExpander::expander_size=       16
+
+  xthickness= 1
+  ythickness= 1
+
+  bg[NORMAL]=         "#eeedee"
+  bg[PRELIGHT]=       "#F3F3F5"
+  bg[ACTIVE]=         "#dad5da"
+  bg[SELECTED]=       "#b9b7b9"
+  bg[INSENSITIVE]=    "#ededed"
+
+  fg[NORMAL]=         "#232323"
+  fg[PRELIGHT]=       "#161666"
+  fg[ACTIVE]=         "#141414"
+  fg[SELECTED]=       "#232323"
+  fg[INSENSITIVE]=    "#646264"
+
+  base[SELECTED]=     "#B7B5BC"
+  base[INSENSITIVE]=  "#e7e5ec"
+  base[NORMAL]=       "#ffffff"
+  base[ACTIVE]=       "#CAC8CE"
+  base[PRELIGHT]=     "#b9b8be"
+
+  text[NORMAL]=       "#000000"
+  text[ACTIVE]=       "#454560"
+  text[PRELIGHT]=     "#554570"
+  text[SELECTED]=     "#554570"
+  text[INSENSITIVE]=  "#848484"
+
+  engine "anachron"  { }
+}
+class "GtkWidget" style "anachron-default"
+
+
+# have some space around tabbed notebooks and slightly darken notebooks
+style "anachron-tab" = "anachron-default" {
+  xthickness= 1
+  ythickness= 1
+  bg[NORMAL]= "#e8e7e6"  # active tab, notebook background
+  bg[ACTIVE]= "#d0cbd3"  # this is actually the color for inactive tabs. whatever..
+}
+class "GtkNotebook" style "anachron-tab"
+
+
+# slightly more reddish menubar
+style "anachron-menubar" = "anachron-default" {
+  bg[NORMAL]= "#e5dfe8"
+}
+class "GtkMenuBar" style "anachron-menubar"
+
+
+# some space around menuitems (also makes the menubar wider, compensated by internal-padding in default)
+style "anachron-menu-item" = "anachron-default" {
+  xthickness= 3
+  ythickness= 3
+  GtkWidget::focus-line-width=    2
+  GtkWidget::focus-line-pattern=  ""
+  GtkWidget::interior_focus=      0
+  GtkWidget::focus_padding=       0
+}
+class "GtkMenuItem" style "anachron-menu-item"
+widget_class "*.GtkMenuItem.*" style "anachron-menu-item"
+widget_class "*.GtkAccelMenuItem.*" style "anachron-menu-item"
+widget_class "*.GtkRadioMenuItem.*" style "anachron-menu-item"
+widget_class "*.GtkCheckMenuItem.*" style "anachron-menu-item"
+widget_class "*.GtkImageMenuItem.*" style "anachron-menu-item"
+widget_class "*.GtkSeparatorMenuItem.*" style "anachron-menu-item"
+
+
+# some space between menuitems and surrounding menu
+style "anachron-menu" = "anachron-default" {
+  xthickness= 3
+  ythickness= 3
+}
+class "GtkMenu" style "anachron-menu"

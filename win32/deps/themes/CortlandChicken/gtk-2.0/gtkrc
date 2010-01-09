@@ -1,0 +1,327 @@
+#
+# Cortland Chicken Theme
+#
+# Copyright 2002 James M. Cape <jcape@ignore-your.tv>
+#
+
+
+style "cc_default" {
+	fg[NORMAL]				= "#000000"
+	bg[NORMAL]				= "#e0e0e0"
+	base[NORMAL]			= "#e0e0e0"
+
+	fg[PRELIGHT]			= "#000000"	
+	bg[PRELIGHT]			= "#f0f0f0"
+	base[PRELIGHT]			= "#f0f0f0"
+
+	fg[ACTIVE]				= "#ffffff"
+	text[ACTIVE]			= "#ffffff"
+	bg[ACTIVE]				= "#333333"
+	base[ACTIVE]			= "#333333"
+	
+	fg[INSENSITIVE]			= "#a0a0a0"
+	bg[INSENSITIVE]			= "#e0e0e0"
+	base[INSENSITIVE]		= "#e0e0e0"
+	text[INSENSITIVE]		= "#a0a0a0"
+
+	fg[SELECTED]			= "#ffffff"
+	bg[SELECTED]			= "#5996dd"
+	base[SELECTED]			= "#000000"
+	text[SELECTED] 			= "#ffffff"
+
+	engine "mgicchikn" {
+		grippy-style[ALL][ALL]					= { DOTS_OUT, 1.0 }
+		grippy-style[INSENSITIVE][ALL]			= { NONE, 1.0 }
+		stock-image-transparency[INSENSITIVE]	= 0.4
+		stock-image-saturation[INSENSITIVE]		= 0.0
+		stock-image-brightness[PRELIGHT]		= 1.2
+
+		check-image[ALL][IN]					= "check-in.png"
+		check-image[ALL][OUT]					= "check-out.png"
+		radio-image[ALL][IN]					= "radio-in.png"
+		radio-image[ALL][OUT]					= "radio-out.png"
+		radio-image[ALL][ETCHED_IN]				= "radio-both.png"
+
+		shadow-width[ALL][OUT]					= 2
+		shadow-width[ALL][IN]					= 2
+		shadow[ALL][OUT]						= SHARP_OUT
+		shadow[ALL][IN]							= SHARP_IN
+		shadow[INSENSITIVE][ALL]				= FLAT
+		shadow-width[INSENSITIVE][ALL]			= 1
+
+		font-shadow[INSENSITIVE]				= ETCHED_IN
+	}
+}
+
+style "cc_list" {
+	text[ACTIVE]		= "#ffffff"
+	base[ACTIVE]		= "#f0f0f0"
+
+	text[NORMAL]		= "#000000"
+	base[NORMAL]		= "#ffffff"
+
+	base[PRELIGHT]		= "#e0e0e0"
+	text[INSENSITIVE]	= "#000000"
+	base[INSENSITIVE]	= "#f0f0f0"
+
+	text[SELECTED]		= "#ffffff"
+	base[SELECTED]		= "#5996dd"
+}
+
+style "cc_entry" = "cc_list" {
+	text[INSENSITIVE]	= "#a0a0a0"
+	text[ACTIVE]		= "#ffffff"
+	base[ACTIVE]		= "#5996dd"
+
+	engine "mgicchikn" {
+		shadow-width[ALL][ALL]			= 3
+		shadow[ALL][ALL]				= SHARP_IN
+		shadow[INSENSITIVE][ALL]		= FLAT
+		shadow-width[INSENSITIVE][ALL]	= 1
+	}
+}
+
+style "cc_tooltips" {
+    bg[NORMAL]		= "#ffffff"
+    fg[NORMAL]		= "#000000"
+	engine "mgicchikn" {
+		shadow[ALL][ALL]	= FLAT
+		shadow-width[ALL][ALL]	= 1
+	}
+}
+
+style "cc_button" {
+    bg[NORMAL]					= "#f0f0f0"
+
+	fg[ACTIVE]					= "#ffffff"
+	bg[ACTIVE]					= "#333333"
+
+	fg[PRELIGHT]				= "#000000"
+    bg[PRELIGHT]				= "#f0f0f0"
+
+    bg[INSENSITIVE]				= "#f0f0f0"
+
+	fg[SELECTED]				= "#000000"
+	bg[SELECTED]				= "#5996dd"
+	base[SELECTED]				= "#000000"
+
+	engine "mgicchikn" {
+		shadow-width[ALL][ALL]	= 3
+		shadow[ALL][OUT]		= ROUNDED_OUT
+		shadow[ALL][IN]			= ROUNDED_IN
+	}
+}
+
+style "cc_togglebutton" {
+	engine "mgicchikn" {
+		stock-image-brightness[ACTIVE]	= 1.0
+	}
+}
+
+style "cc_checkradio" = "cc_default" {
+	fg[ACTIVE]			= "#000000"
+	text[ACTIVE]		= "#000000"
+	bg[ACTIVE]			= "#f0f0f0"
+	base[ACTIVE]		= "#ffffff"
+
+	fg[NORMAL]			= "#000000"
+	bg[NORMAL]			= "#f0f0f0"
+	text[NORMAL]		= "#000000"
+	base[NORMAL]		= "#ffffff"
+
+	fg[PRELIGHT]		= "#3333ff"
+	bg[PRELIGHT]		= "#f0f0f0"
+	text[PRELIGHT]		= "#ffffff"
+	base[PRELIGHT]		= "#000000"
+
+	fg[INSENSITIVE]		= "#a0a0a0"
+	bg[INSENSITIVE]		= "#f0f0f0"
+	text[INSENSITIVE]	= "#a0a0a0"
+	base[INSENSITIVE]	= "#f0f0f0"
+
+	engine "mgicchikn" {
+		shadow-width[PRELIGHT][ETCHED_OUT]	= 0
+		shadow[PRELIGHT][ETCHED_OUT]		= NONE
+
+		font-underline[PRELIGHT]			= SINGLE
+	}
+}
+
+style "cc_optionmenu" = "cc_button" {
+	bg[INSENSITIVE]				= "#f0f0f0"
+}
+
+style "cc_menu" {
+	bg[NORMAL]		= "#f0f0f0"
+    bg[PRELIGHT]	= "#000000"
+	fg[PRELIGHT]	= "#ffffff"
+
+	# Used to recolor check images
+	text[NORMAL]	= "#000000"
+	base[NORMAL]	= "#ffffff"
+
+	text[PRELIGHT]	= "#ffffff"
+	base[PRELIGHT]	= "#000000"
+}
+
+style "cc_real_menu" = "cc_menu" {
+	engine "mgicchikn" {
+		shadow-width[ALL][ALL]			= 2
+		shadow[ALL][ALL]                = SHARP_OUT
+	}
+}
+
+
+style "cc_menuitem" = "cc_menu" {
+	engine "mgicchikn" {
+		shadow[ALL][ALL]                		= NONE
+		shadow-width[PRELIGHT][ALL]				= 0
+		shadow-width[INSENSITIVE][ALL]			= 2
+		stock-image-transparency[INSENSITIVE]	= 0.33
+	}
+}
+
+
+style "cc_paned" {
+	bg[NORMAL]		= "#e0e0e0"
+	bg[PRELIGHT]	= "#f0f0f0"
+	bg[INSENSITIVE]	= "#e0e0e0"
+	bg[ACTIVE]		= "#e0e0e0"
+
+	engine "mgicchikn" {
+		grippy-style[ALL][ALL]					= { LINES_OUT, 0.33 }
+		grippy-style[INSENSITIVE][ALL]			= { NONE, 1.0 }
+	}
+}
+
+style "cc_range" = "cc_button" {
+	fg[ACTIVE]		= "#000000"
+    bg[ACTIVE]		= "#d0d0d0"
+
+	bg[NORMAL]		= "#f0f0f0"
+	bg[PRELIGHT]	= "#f0f0f0"
+
+	engine "mgicchikn" {
+		shadow-width[ACTIVE][ALL]	= 3
+		shadow[ALL][OUT]			= SHARP_OUT
+		shadow[ACTIVE][ALL]			= SHARP_IN
+		shadow[NORMAL][IN]			= SHARP_IN
+
+		shadow[INSENSITIVE][ALL]	= FLAT
+		shadow-width[INSENSITIVE][ALL]	= 1
+	}
+}
+
+style "cc_slider" = "cc_range" {
+	engine "mgicchikn" {
+		shadow[INSENSITIVE][ALL]	= FLAT
+		shadow-width[INSENSITIVE][ALL]	= 1
+	}
+}
+
+style "cc_bar" = "cc_button" {
+    bg[NORMAL]		= "#ffffff"
+}
+
+style "cc_progbar" = "cc_bar" {
+	bg[PRELIGHT]	= "#5996dd"
+
+	engine "mgicchikn" {
+		shadow[ALL][ALL]		= SHARP_IN
+		shadow[PRELIGHT][ALL]	= NONE
+		shadow-width[ALL][ALL]	= 2
+	}
+}
+
+style "cc_notebook" {
+	bg[ACTIVE]		= "#d0d0d0"
+	fg[ACTIVE]		= "#000000"
+
+	fg[NORMAL]		= "#000000"
+	bg[NORMAL]		= "#e9e9e9"
+
+	bg[INSENSITIVE]	= "#f0f0f0"
+
+	engine "mgicchikn" {
+		shadow-width				= 2
+		shadow[ALL][OUT]			= ROUNDED_OUT
+		shadow[ALL][IN]				= ROUNDED_IN
+	}
+}
+
+
+style "cc_cellrenderer" {
+	engine "mgicchikn" {
+		shadow[INSENSITIVE][ALL]	= NONE
+		shadow-width[ALL][OUT]		= 1
+		shadow[ALL][OUT]			= OUT
+	}
+}
+
+style "cc_handlebox" = "cc_menu" {
+	bg[NORMAL]		= "#e0e0e0"
+
+	engine "mgicchikn" {
+		shadow-width		= 1
+		shadow[ALL][OUT]	= OUT
+		shadow[ALL][IN]		= IN
+	}
+}
+
+
+class "GtkWidget"				style "cc_default"
+
+class "GtkButton"				style "cc_button"
+class "GtkToggleButton"			style "cc_togglebutton"
+
+class "GtkCheckButton"			style "cc_checkradio"
+class "GtkRadioButton"			style "cc_checkradio"
+widget_class "*CheckButton.*"	style "cc_checkradio"
+widget_class "*RadioButton.*"	style "cc_checkradio"
+
+class "GtkNotebook"				style "cc_notebook"
+class "GtkList"					style "cc_list"
+class "GtkTree"					style "cc_list"
+class "GtkCList"				style "cc_list"
+class "GtkCTree"				style "cc_list"
+class "GtkTreeView"				style "cc_list"
+class "GtkEntry"				style "cc_entry"
+class "GtkText"					style "cc_entry"
+class "GtkTextView"				style "cc_entry"
+class "GtkEditable"				style "cc_entry"
+
+class "GtkSpinButton"			style "cc_entry"
+class "GtkRange"				style "cc_range"
+class "GtkSlider"				style "cc_slider"
+class "GtkPaned"				style "cc_paned"
+
+class "GtkProgress"				style "cc_progbar"
+class "GtkTreeView"				style "cc_cellrenderer"
+widget_class "*GtkTreeView.*"	style "cc_cellrenderer"
+
+widget "gtk-tooltips*"			style "cc_tooltips"
+
+
+# Special Widgets (makes Evo not look like crap or crash)
+#class "ETable"					style "cc_list"
+#class "EPaned"					style "cc_list"
+#class "ECanvas"					style "cc_list"
+#class "EReflow"					style "cc_list"
+#class "GtkHTML"					style "cc_list"
+#class "EelCList"				style "cc_list"
+#class "EelCTree"				style "cc_list"
+#class "EelList"					style "cc_list"
+
+class "GtkMenu"					style "cc_real_menu"
+class "GtkMenuItem"				style "cc_menuitem"
+class "GtkRadioMenuItem"		style "cc_menuitem"
+class "GtkCheckMenuItem"		style "cc_menuitem"
+class "GtkMenuShell"			style "cc_menu"
+class "GtkMenuBar"				style "cc_handlebox"
+class "GtkToolbar"				style "cc_handlebox"
+class "GtkHandleBox"			style "cc_handlebox"
+class "BonoboDockItem"			style "cc_handlebox"
+class "GnomeDockItem"			style "cc_handlebox"
+
+widget_class "*MenuItem*.*"		style "cc_menuitem"
+# widget "*GtkOptionMenu*.*"		style "cc_optionmenu"

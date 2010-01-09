@@ -1,0 +1,213 @@
+#Clearlooks-graphite by lokheed, a bit modified for my gFlat engine.
+
+style "gflat-default"
+{
+	GtkButton      			::default_border    	= { 0, 0, 0, 0 }
+	GtkPaned       			::handle_size       	= 6
+	GtkRange       			::trough_border     	= 0
+	GtkRange       			::slider_width      	= 15
+	GtkRange       			::stepper_size      	= 15
+
+	GtkScrollbar   			::min_slider_length 	= 30
+	GtkCheckButton 			::indicator_size    	= 13 	# Checkbox in menu
+	GtkMenuBar    			::internal-padding  	= 0
+	GtkTreeView    			::expander_size     	= 12 	# Expand arrows in list view
+	GtkTreeView			::odd_row_color 	= "#FFFFFF"
+	GtkExpander    			::expander_size     	= 16
+	GtkScale       			::slider-length     	= 22
+
+	#GtkMenuBar     		::shadow-type       			= GTK_SHADOW_OUT
+	#GtkToolbar     		::button-relief     			= GTK_RELIEF_NORMAL
+	#GtkScrollbar   		::has-secondary-forward-stepper 	= 1
+	#GtkScrollbar   		::has-secondary-backward-stepper 	= 1
+
+	GtkButton      			::child-displacement-x 	= 1
+	GtkButton      			::child-displacement-y 	= 1
+
+	xthickness = 1
+	ythickness = 1
+
+  fg[NORMAL]        		= "#353535" 	# foreground text
+  fg[PRELIGHT]      		= "#434343" 	# text on buttons (hover)
+  fg[ACTIVE]        		= "#434343" 	# text on unfocused tabs
+  fg[SELECTED]      		= "#000000" 	# selected text on lists
+  fg[INSENSITIVE]   		= "#b1b1b1" 	# greyed "unused" text
+
+  bg[NORMAL]			= "#ecedee" 	# entire background
+  bg[PRELIGHT]			= "#F7F7F7" 	# ???
+  bg[ACTIVE]			= "#e5e6e7" 	# Selected taskbar buttons & GTK Breadcrumb buttons
+  bg[SELECTED]			= "#68696b" 	# Menubar, Tabstrip, Checkbox, Radiobox & Focus ring
+  bg[INSENSITIVE]		= "#e2e3e4" 	# greyed buttons
+
+  base[NORMAL]			= "#FFFFFF" 	# window background
+  base[PRELIGHT]		= "#2d2d2e" 	# menubar outline colour
+  base[ACTIVE]			= "#68696b" 	# selected item background (out of focus)
+  base[SELECTED]		= "#68696b" 	# selected hilight,tab/slider background, & menu stripe
+  base[INSENSITIVE]		= "#e0e0e0" 	# greyed sliders
+
+  text[NORMAL]			= "#353535" 	# Text in textbox
+  text[PRELIGHT]		= "#353535" 	# Hover text (on buttons)
+  text[ACTIVE]			= "#FFFFFF" 	# greyed text out of use (on highlight)
+  text[SELECTED]		= "#FFFFFF" 	# selected text (on highlight)
+  text[INSENSITIVE]		= "#b1b1b1" 	# greyed text
+
+  engine "gflat" 
+  {
+	scrollbar_color   		= "#6A6868"
+	scrollbarstyle			= 0	  # 0 = strokes in the scrollbar, 1 = no strokes
+	button_colorborder		= 2	  # 0 = no colored borders on buttons, 1 = colored borders, 2 = only on prelight buttons, 3 = only on active or pressed buttons	
+	stroketransparency		= 3	  # sets the transparency of the scrollbar-strokes, 0 = 0% (background), 99 = 100% (white), a value from 100 to 199 sets the basecolor to black (useful if the scrollbar has a very bright color
+    	menubarstyle      		= 2       # 0 = flat, 1 = sunken, 2 = flat gradient
+    	menuitemstyle     		= 2       # 0 = flat, 1 = 3d-ish (gradient), 2 = 3d-ish (button)
+    	cornerstyle 			= 1       # 0 = rounded, 1 = not rounded
+    	listviewitemstyle 		= 0       # 0 = flat, 1 = 3d-ish (gradient)
+    	progressbarstyle  		= 0       # 0 = arrows, 1 = original gflat
+   	buttonstyle     		= 0       # 0 = flat, 1 = 3d-ish (gradient)
+	animation         		= TRUE
+  }
+}
+
+
+style "gflat-wide" = "gflat-default"
+{
+  xthickness = 2
+  ythickness = 2
+}
+
+style "gflat-wider" = "gflat-default"
+{
+  xthickness = 3
+  ythickness = 3
+}
+
+style "gflat-button" = "gflat-wider"
+{
+  bg[NORMAL]        	= "#ecedee"
+  bg[INSENSITIVE]   	= "#ecedee"
+  bg[PRELIGHT] 		= "#FBFBFB" # Hover for buttons, combo, & checkbox line
+}
+
+style "gflat-notebook" = "gflat-wide"
+{
+  bg[NORMAL]      	= "#e2e3e4" 	# inner window background colour
+  bg[INSENSITIVE] 	= "#e2e3e4"
+  bg[ACTIVE] 			= "#d4d5d6" 	# out of focus tabs
+}
+
+style "gflat-tasklist" = "gflat-default"
+{
+  xthickness = 5
+  ythickness = 3
+}
+
+style "gflat-menu" = "gflat-default"
+{
+  xthickness = 2
+  ythickness = 1
+  bg[NORMAL] = "#ecedee"
+}
+
+style "gflat-menubar-item" = "gflat-button"
+{
+  fg[PRELIGHT] = "#FFFFFF"
+}
+
+style "gflat-menu-item" = "gflat-default"
+{
+  xthickness 				= 2
+  ythickness 				= 3
+  fg[PRELIGHT] 		= "#FFFFFF"
+  text[PRELIGHT] 	= "#FFFFFF"
+}
+
+style "gflat-tree" = "gflat-default"
+{
+  xthickness = 2
+  ythickness = 2
+}
+
+style "gflat-frame-title" = "gflat-default"
+{
+  fg[NORMAL] = "#404040"
+}
+
+style "gflat-tooltips" = "gflat-default"
+{
+  xthickness = 2
+  ythickness = 2
+  bg[NORMAL] = "#FFFFFF"
+}
+
+style "gflat-progressbar" = "gflat-wide"
+{
+  xthickness = 1
+  ythickness = 1
+  fg[PRELIGHT]  = "#e2e2e2"
+}
+
+style "gflat-combo" = "gflat-button"
+{
+}
+
+style "gflat-menubar" = "blackrock-default"
+{
+  bg[NORMAL]   = "#DFDFDF"
+}
+
+style "metacity-frame"
+{
+  # Normal base color
+  #bg[NORMAL]  = "#bbbbbb"
+
+  # Unfocused title background color
+  #bg[INSENSITIVE]  = { 0.8, 0.8, 0.8 }
+
+  # Unfocused title text color
+  #fg[INSENSITIVE]  = { 1.55, 1.55, 1.55 }
+
+  # Focused icon color
+  #fg[NORMAL]  = { 0.2, 0.2, 0.2 }
+
+  # Focused title background color
+  bg[SELECTED]  = "#4d4e50"
+
+  # Focused title text color
+  fg[SELECTED]  = "#ffffff"
+}
+
+# widget styles
+class "MetaFrames" 	style "metacity-frame"
+class "GtkWidget" 	style "gflat-default"
+class "GtkButton" 	style "gflat-button"
+class "GtkCombo"  	style "gflat-button"
+class "GtkRange"  	style "gflat-wide"
+class "GtkFrame"  	style "gflat-wide"
+class "GtkMenu"   	style "gflat-menu"
+class "GtkEntry"  	style "gflat-wider"
+class "GtkMenuItem"    	style "gflat-menu-item"
+class "GtkNotebook"    	style "gflat-notebook"
+class "GtkProgressBar" 	style "gflat-progressbar"
+ 
+#class "GtkMenuBar" style "gflat-menubar"
+
+widget_class "*MenuItem.*" 					style "gflat-menu-item"
+#widget_class "*.GtkMenuBar.*MenuItem.*" 	style "gflat-menubar-item"
+
+# combobox stuff
+widget_class "*.GtkComboBox.GtkButton" 	style "gflat-combo"
+widget_class "*.GtkCombo.GtkButton"    	style "gflat-combo"
+
+# tooltips stuff
+widget_class "*.tooltips.*.GtkToggleButton"	style "gflat-tasklist"
+widget "gtk-tooltips" 								style "gflat-tooltips"
+
+# treeview stuff
+widget_class "*.GtkTreeView.GtkButton" 		style "gflat-tree"
+widget_class "*.GtkCTree.GtkButton" 			style "gflat-tree"
+widget_class "*.GtkList.GtkButton" 			style "gflat-tree"
+widget_class "*.GtkCList.GtkButton" 			style "gflat-tree"
+widget_class "*.GtkFrame.GtkLabel" 			style "gflat-frame-title"
+
+# notebook stuff
+widget_class "*.GtkNotebook.*.GtkEventBox" 	style "gflat-notebook"
+widget_class "*.GtkNotebook.*.GtkViewport" 	style "gflat-notebook"

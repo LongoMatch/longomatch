@@ -1,0 +1,20 @@
+# This is a stock iconrc file. Just replace the image names.
+
+style "icons" {
+	stock["gtk-goto-bottom"]	= {{"stock_bottom.png"}}
+	stock["gtk-goto-first"]		= {{"stock_first.png"}}
+	stock["gtk-goto-last"]		= {{"stock_last.png"}}
+	stock["gtk-goto-top"]		= {{"stock_top.png"}}
+	stock["gtk-go-back"]		= {{"stock_left.png"}}
+	stock["gtk-go-down"]		= {{"stock_down.png"}}
+	stock["gtk-go-forward"]		= {{"stock_right.png"}}
+	stock["gtk-go-up"] 		= {{"stock_up.png"}}
+	stock["gtk-no"]			= {{"stock_cancel.png"}}
+	stock["gtk-apply"]		= {{"stock_apply.png"}}
+	stock["gtk-cancel"]		= {{"stock_cancel.png"}}
+	stock["gtk-ok"]			= {{"stock_ok.png"}}
+	stock["gtk-yes"]		= {{"stock_apply.png"}}
+	stock["gtk-refresh"]		= {{"stock_refresh.png"}}
+}
+widget_class "GtkWidget" style "icons"
+class "GtkWidget" style "icons"

@@ -1,0 +1,122 @@
+#
+# Pretty Okayish Chicken Theme
+#
+# Copyright 2002 Toumas James M. Cape <jcape@ignore-your.tv>
+#
+
+
+style "oc_default" {
+  fg[NORMAL]       = "#000000"
+  fg[ACTIVE]       = "#000000"
+  fg[PRELIGHT]     = "#000000"
+  fg[SELECTED]     = "#FFFFFF"
+  fg[INSENSITIVE]  = "#999989" # 
+  bg[NORMAL]       = "#eeeee0" #
+  bg[ACTIVE]       = "#ddddcf" #
+  bg[PRELIGHT]     = "#f5f5ec" #
+  bg[SELECTED]     = "#a59db2" #
+  bg[INSENSITIVE]  = "#eeeee0" #
+  base[NORMAL]     = "#ffffff"
+  base[SELECTED]   = "#a59db2"
+  base[ACTIVE]     = "#d3c996"
+  base[PRELIGHT]   = "#E5E5F7"
+  base[INSENSITIVE]= "#ddddcf"
+  text[INSENSITIVE]= "#747474"
+  text[SELECTED]   = "#ffffff"
+  text[ACTIVE]     = "#000000"
+	engine "mgicchikn" {
+		grippy-style[ALL][ALL]					= { DOTS_OUT, 1.0 }
+		grippy-style[INSENSITIVE][ALL]			= { NONE, 1.0 }
+		stock-image-transparency[INSENSITIVE]	= 0.5
+		stock-image-saturation[INSENSITIVE]		= 0.0
+		stock-image-brightness[ACTIVE]			= 0.8
+		shadow[INSENSITIVE][ALL]				= FLAT
+		shadow-width[ALL][ALL]					= 1
+	}
+}
+
+style "oc_tooltips" {
+	engine "mgicchikn" {
+		shadow[ALL][ALL]	= FLAT
+	}
+}
+
+style "oc_checkradio" {
+	engine "mgicchikn" {
+		shadow[PRELIGHT][ETCHED_OUT]	= FLAT
+	}
+}
+
+style "oc_menu" {
+  bg[PRELIGHT]     = "#ccccbe" 
+}
+
+style "oc_real_menu" = "oc_menu" {
+	engine "mgicchikn" {
+		shadow[ALL][ALL]                = OUT
+	}
+}
+
+
+style "oc_menuitem" = "oc_menu" {
+	engine "mgicchikn" {
+		shadow[ALL][ALL]                = NONE
+		stock-image-transparency[INSENSITIVE]	= 0.2
+	}
+}
+
+
+style "oc_paned" {
+	engine "mgicchikn" {
+		grippy-style[ALL][ALL]					= { LINES_OUT, 0.33 }
+		grippy-style[INSENSITIVE][ALL]			= { NONE, 1.0 }
+	}
+}
+
+style "oc_range" {
+	engine "mgicchikn" {
+		shadow[ACTIVE][ALL]			= IN
+		shadow[NORMAL][IN]			= ETCHED_OUT
+
+		shadow[INSENSITIVE][ALL]	= FLAT
+	}
+}
+
+style "oc_bar" {
+    bg[NORMAL]		= "#ddddcf"
+}
+
+style "oc_progbar" = "oc_bar" {
+	engine "mgicchikn" {
+		shadow[ALL][ALL]		= IN
+		shadow[PRELIGHT][ALL]	= NONE
+	}
+}
+
+style "oc_cellrenderer" {
+	engine "mgicchikn" {
+		shadow[INSENSITIVE][ALL] = NONE
+	}
+}
+
+
+class "GtkWidget"				style "oc_default"
+
+class "GtkCheckButton"			style "oc_checkradio"
+class "GtkRadioButton"			style "oc_checkradio"
+class "GtkRange"				style "oc_range"
+class "GtkPaned"				style "oc_paned"
+class "GtkProgress"				style "oc_progbar"
+class "GtkTreeView"				style "oc_cellrenderer"
+
+widget "gtk-tooltips*"			style "oc_tooltips"
+
+class "GtkMenu"					style "oc_real_menu"
+class "GtkMenuItem"				style "oc_menuitem"
+class "GtkRadioMenuItem"		style "oc_menuitem"
+class "GtkCheckMenuItem"		style "oc_menuitem"
+class "GtkMenuShell"			style "oc_menu"
+class "GtkMenuBar"				style "oc_menu"
+
+widget_class "*MenuItem*.*"		style "oc_menuitem"
+# widget "*GtkOptionMenu*.*"		style "oc_optionmenu"
