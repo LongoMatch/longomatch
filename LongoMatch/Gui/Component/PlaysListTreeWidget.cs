@@ -20,6 +20,7 @@
 
 using System;
 using Gtk;
+using Gdk;
 using Mono.Unix;
 using LongoMatch.DB;
 using LongoMatch.Handlers;
@@ -75,13 +76,24 @@ namespace LongoMatch.Gui.Component
 		}
 
 		public void AddPlay(MediaTimeNode play,int  section) {
-			if (project != null) {
-				TreeIter iter;
-				TreeStore model = (TreeStore)treeview.Model;
-				model.GetIterFromString(out iter, section.ToString());
-				TimeNode stNode = (TimeNode)model.GetValue(iter,0);
-				if (project.Sections.GetTimeNode(section) == stNode)
-					model.AppendValues(iter,play);
+			TreeIter sectionIter, playIter;
+			TreePath playPath;
+			TreeStore model;
+			TimeNode stNode;
+			Rectangle cellArea;
+			
+			if (project == null)
+			return;
+					
+			model = (TreeStore)treeview.Model;
+			model.GetIterFromString(out sectionIter, section.ToString());
+			stNode = (TimeNode)model.GetValue(sectionIter,0);
+			if (project.Sections.GetTimeNode(section) == stNode){
+				playIter = model.AppendValues(sectionIter,play);
+				playPath = model.GetPath(playIter);
+				treeview.Selection.UnselectAll();				
+				treeview.ExpandToPath(playPath);
+				treeview.Selection.SelectIter(playIter);
 			}
 		}
 
