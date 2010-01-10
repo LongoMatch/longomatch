@@ -10,12 +10,12 @@ experience.
 
 * Features of this release
   * Plays are now sortable by name, start time, stop time and duration.
-  * Plays can be tagged.
+  * Plays can be multi-tagged.
   * A new tab has been added to display plays filterd by tags.
   * Tagging Hotkeys can use simple key instead of and Alt or Shift combination
   * Projects can be imported/exported to/from files.
-  * Templates can be creating copying an existent one.
-  * Plays can be multiselected.
+  * Templates can be created copying an existent one.
+  * Plays can be multiselected to easy taks like deleting several plays at once.
   * A template from a project can be exported.
   * Added German Translation
 
