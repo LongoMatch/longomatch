@@ -21,8 +21,11 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using Gtk;
 using LongoMatch.DB;
 using LongoMatch.TimeNodes;
+using LongoMatch.Gui;
+using Mono.Unix;
 
 namespace LongoMatch.IO
 {
@@ -44,18 +47,34 @@ namespace LongoMatch.IO
 		#region Public methods
 		public void WriteToFile() {
 			List<List<MediaTimeNode>> list;
+			Dictionary<Tag, List<MediaTimeNode>> dic;
 			string[] sectionNames;
 			TextWriter tx;
 
 			tx = new StreamWriter(outputFile);
 			list = project.GetDataArray();
 			sectionNames = project.GetSectionsNames();
+			
+			dic = new Dictionary<Tag, List<MediaTimeNode>>();
+			foreach (Tag tag in project.Tags){
+				dic.Add(tag, new List<MediaTimeNode>());
+			}
 
-			tx.WriteLine("Section;Name;Team;StartTime;StopTime;Duration");
-
+			// Write catagories table
+			tx.WriteLine(String.Format("{0};{1};{2};{3};{4};{5}",
+			             Catalog.GetString("Section"),
+			             Catalog.GetString("Name"),
+			             Catalog.GetString("Team"),
+			             Catalog.GetString("StartTime"),
+			             Catalog.GetString("StopTime"),
+			             Catalog.GetString("Duration")));
 			for (int i=0; i<list.Count; i++) {
 				string sectionName = sectionNames[i];
 				foreach (MediaTimeNode tn in list[i]) {
+					// Parse Play's tags
+					foreach (Tag t in tn.Tags)
+						dic[t].Add(tn);
+					
 					tx.WriteLine("\""+sectionName+"\";\""+
 					             tn.Name+"\";\""+
 					             tn.Team+"\";\""+
@@ -64,7 +83,32 @@ namespace LongoMatch.IO
 					             (tn.Stop-tn.Start).ToMSecondsString()+"\"");
 				}
 			}
+			tx.WriteLine();
+			tx.WriteLine();			
+			
+			// Write Tags table
+			tx.WriteLine(String.Format("{0};{1};{2};{3};{4};{5}",
+			             Catalog.GetString("Tag"),
+			             Catalog.GetString("Name"),
+			             Catalog.GetString("Team"),
+			             Catalog.GetString("StartTime"),
+			             Catalog.GetString("StopTime"),
+			             Catalog.GetString("Duration")));
+			foreach (KeyValuePair<Tag,List<MediaTimeNode>> pair in dic){
+				if (pair.Value.Count == 0)
+					break;				
+				foreach (MediaTimeNode tn in pair.Value) {
+					tx.WriteLine("\""+pair.Key.Text+"\";\""+
+					             tn.Name+"\";\""+
+					             tn.Team+"\";\""+
+					             tn.Start.ToMSecondsString()+"\";\""+
+					             tn.Stop.ToMSecondsString()+"\";\""+
+					             (tn.Stop-tn.Start).ToMSecondsString()+"\"");
+				}				
+			}			
 			tx.Close();
+			
+			MessagePopup.PopupMessage(null, MessageType.Info, Catalog.GetString("CSV exported successfully."));			
 		}
 		#endregion
 	}
