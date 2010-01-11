@@ -20,7 +20,6 @@
 
 using System;
 using Gtk;
-using Gdk;
 using Mono.Unix;
 using LongoMatch.DB;
 using LongoMatch.Handlers;
@@ -80,7 +79,6 @@ namespace LongoMatch.Gui.Component
 			TreePath playPath;
 			TreeStore model;
 			TimeNode stNode;
-			Rectangle cellArea;
 			
 			if (project == null)
 			return;

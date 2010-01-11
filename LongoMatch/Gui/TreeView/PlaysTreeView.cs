@@ -90,7 +90,7 @@ namespace LongoMatch.Gui.Component
 			this.AppendColumn(nameColumn);
 		}
 		
-		public TreeStore Model{
+		new public TreeStore Model{
 			set{
 				if (value != null){
 					value.SetSortFunc(0, SortFunction);
