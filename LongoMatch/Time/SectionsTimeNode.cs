@@ -116,7 +116,7 @@ namespace LongoMatch.TimeNodes
 		/// </value>
 		public SortMethod SortingMethod{
 			get{
-				// New in 0.15.6
+				// New in 0.15.5
 				try{
 					return sortMethod;
 				}
