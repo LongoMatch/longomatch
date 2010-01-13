@@ -40,6 +40,8 @@ MONO_DEPS = ['mono.dll', 'MonoPosixHelper.dll', 'pangosharpglue-2.dll', 'gtkshar
 
 IMAGES = ['background.png', 'longomatch.png']
 
+LINGUAS = ['es', 'de']
+
 # Set-up working folder
 root_dir = os.path.abspath(os.path.join(os.getcwd(), '..'))
 deps_dir = os.path.join(root_dir, 'win32', 'deps')
@@ -56,10 +58,11 @@ if os.path.exists(dist_dir):
 bin_dir = os.path.join (dist_dir, 'bin')
 etc_dir = os.path.join (dist_dir, 'etc')
 share_dir = os.path.join (dist_dir, 'share')
+locale_dir = os.path.join (share_dir, 'locale')
 lib_dir = os.path.join (dist_dir, 'lib')
 images_dir = os.path.join (share_dir, 'longomatch', 'images')
 
-for path in [dist_dir, bin_dir, etc_dir, images_dir, lib_dir]:
+for path in [dist_dir, bin_dir, etc_dir, images_dir, locale_dir, lib_dir]:
      try:
         os.makedirs(path)
      except:
@@ -79,6 +82,10 @@ for name in ['fonts', 'pango', 'gtk-2.0']:
                      os.path.join(etc_dir, name))
 shutil.copytree(os.path.join(GTK_PATH, 'lib', 'gtk-2.0'),
                 os.path.join(lib_dir, name))
+for name in LINGUAS:
+    shutil.copytree(os.path.join(GTK_PATH, 'share', 'locale', name),
+                    os.path.join(share_dir, 'locale', name))
+
 for name in GTK_DEPS:
     shutil.copy(os.path.join(GTK_PATH, 'bin', name), bin_dir)
 
