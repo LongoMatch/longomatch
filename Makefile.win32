@@ -8,25 +8,44 @@ GTK = $(MONO_INSTALL_PATH)
 GST = c:\gstreamer
 CC   = gcc.exe
 BASH = /bin/bash.exe
-OUTDIR = win32/dist/bin
+DIST_DIR = win32/dist
+BIN_DIR = ${DIST_DIR}/bin
+LOCALE_DIR =  ${DIST_DIR}/share/locale
+BUILD_DIR = win32/build
 RM = rm -f
 CSC = $(MONO_INSTALL_PATH)/bin/gmcs
 
+# i18n
+FILES = \
+	es.po \
+	de.po
+
+MO_FILES = $(foreach po,$(FILES), $(LOCALE_DIR)/$(basename $(po))/LC_MESSAGES/longomatch.mo)
+GMO_FILES = $(patsubst %.po, $(BUILD_DIR)/%.gmo,$(FILES))
+	
 #libcesarplayer
-LINKOBJ  =   libcesarplayer/src/gstscreenshot.o libcesarplayer/src/bacon-resize.o libcesarplayer/src/video-utils.o libcesarplayer/src/bacon-video-widget-gst-0.10.o libcesarplayer/src/baconvideowidget-marshal.o libcesarplayer/src/gst-video-editor.o
+LIBCESARPLAYER_SOURCES=\
+	libcesarplayer/src/gstscreenshot.c\
+	libcesarplayer/src/bacon-resize.c\
+	libcesarplayer/src/video-utils.c\
+	libcesarplayer/src/bacon-video-widget-gst-0.10.c\
+	libcesarplayer/src/baconvideowidget-marshal.c\
+	libcesarplayer/src/gst-video-editor.c
+	
+LINKOBJ  = $(patsubst libcesarplayer/src/%.c, $(BUILD_DIR)/%.o,$(LIBCESARPLAYER_SOURCES))
 
-LIBS =  -L"LongoMatch/Win32/bin" -llibgstreamer-0.10 -llibgstvideo-0.10  -llibgstaudio-0.10 -llibgstinterfaces-0.10 -llibgstpbutils-0.10 -llibgsttag-0.10 -limm32 -lshell32 -lole32 -luuid -lintl -llibcairo-2 -lpangowin32-1.0-0 -latk-1.0-0 -lgdk_pixbuf-2.0-0 -lgdk-win32-2.0-0 -lglib-2.0-0 -lgmodule-2.0-0 -lgobject-2.0-0 -lgio-2.0-0 -lgthread-2.0-0 -lgtk-win32-2.0-0  
+LIBS =  -L"${GST}/bin" -L"${GTK}/bin" -llibgstreamer-0.10 -llibgstvideo-0.10  -llibgstaudio-0.10 -llibgstinterfaces-0.10 -llibgstpbutils-0.10 -llibgsttag-0.10 -limm32 -lshell32 -lole32 -luuid -lintl -llibcairo-2 -lpangowin32-1.0-0 -latk-1.0-0 -lgdk_pixbuf-2.0-0 -lgdk-win32-2.0-0 -lglib-2.0-0 -lgmodule-2.0-0 -lgobject-2.0-0 -lgio-2.0-0 -lgthread-2.0-0 -lgtk-win32-2.0-0  
 
-INCS =   -I"${GST}\include\gstreamer-0.10" -I"${GTK}\include" -I"${GTK}\include\gtk-2.0" -I"${GTK}\lib\gtk-2.0\include" -I"${GTK}\include\atk-1.0" -I"${GTK}\include\pango-1.0" -I"${GTK}\include\cairo" -I"${GTK}\include\glib-2.0" -I"${GTK}\include\glib-2.0\glib" -I"${GTK}\lib\glib-2.0" -I"${GTK}\lib\glib-2.0\include" -I"${GTK}\include\libxml2" 
+INCS =   -I"${GST}\include\gstreamer-0.10" -I"${GST}\include\libxml2" -I"${GTK}\include" -I"${GTK}\include\gtk-2.0" -I"${GTK}\lib\gtk-2.0\include" -I"${GTK}\include\atk-1.0" -I"${GTK}\include\pango-1.0" -I"${GTK}\include\cairo" -I"${GTK}\include\glib-2.0" -I"${GTK}\include\glib-2.0\glib" -I"${GTK}\lib\glib-2.0" -I"${GTK}\lib\glib-2.0\include" -I"${GTK}\include\libxml2" 
 
-BIN  = win32/obj/libcesarplayer.dll
+LIBCESARPLAYER  = ${BUILD_DIR}/libcesarplayer.dll
 
 CFLAGS = $(INCS) -DWIN32 -mms-bitfields -shared   -Wall 
 LDFLAGS =  -shared -Wl -mno-cygwin -mms-bitfields  --export-all-symbols --enable-auto-import
 
 
 #CesarPlayer
-CESARPLAYER=win32/obj/CesarPlayer.dll
+CESARPLAYER=${BUILD_DIR}/CesarPlayer.dll
 CSC_CESARPLAYER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ -unsafe
 CESARPLAYER_COMPILE_TARGET = library
 
@@ -91,9 +110,9 @@ CESARPLAYER_REFERENCES = \
 	-pkg:glib-sharp-2.0 \
 	
 #LongoMatch.exe
-LONGOMATCH_PRE=win32/obj/LongoMatch.exe
-LONGOMATCH_BUNDLED=win32/obj/LongoMatchBundled.exe
-LONGOMATCH=$(OUTDIR)/LongoMatch.exe
+LONGOMATCH_PRE=${BUILD_DIR}/LongoMatch.exe
+LONGOMATCH_BUNDLED=${BUILD_DIR}/LongoMatchBundled.exe
+LONGOMATCH=$(BIN_DIR)/LongoMatch.exe
 CSC_LONGOMATCH_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-main:LongoMatch.MainClass"
 LONGOMATCH_COMPILE_TARGET = winexe 
 LONGOMATCH_FILES = \
@@ -251,45 +270,41 @@ LONGOMATCH_REFERENCES = \
 	-r:System \
 	-pkg:gtk-sharp-2.0 \
 	-pkg:glib-sharp-2.0 \
-	-r:../win32/obj/CesarPlayer.dll \
+	-r:../${BUILD_DIR}/CesarPlayer.dll \
 	-r:../win32/deps/Db4objects.Db4o.dll
 
 
 .PHONY: all all-before all-after clean clean-custom
 
-all: all-before ${BIN} bundle  all-after
+all: all-before ${GMO_FILES} ${LIBCESARPLAYER} bundle  all-after
 
-install: $(BIN)
-	cp $(BIN) "$(OUTDIR)"
-	cp $(LONGOMATCH_BUNDLED) "$(OUTDIR)\LongoMatch.exe"
+install: $(LIBCESARPLAYER) ${MO_FILES}
+	cp $(LIBCESARPLAYER) "$(BIN_DIR)"
+	cp $(LONGOMATCH_BUNDLED) "$(BIN_DIR)\LongoMatch.exe"
 
 clean: clean-custom
-	${RM} $(OBJ) $(BIN) win32/obj/*
+	${RM} -r  ${BUILD_DIR}/*
 
 bundle:$(LONGOMATCH_PRE)
-	windres LongoMatch/images/minilogo.rc win32/obj/minilogo.o
-	cp $(DB4O) win32/obj/.
-	export MONO_PATH=win32/obj/ && $(MONO) $(MKBUNDLE) $(LONGOMATCH_PRE) --deps -c -o win32/obj/temp.c -oo win32/obj/temp.o
-	export PKG_CONFIG_PATH=$(MONO_INSTALL_PATH)/lib/pkgconfig/ && $(CC) -mno-cygwin -g -o $(LONGOMATCH_BUNDLED) -Wall win32/obj/temp.c `pkg-config --cflags --libs mono`  win32/obj/minilogo.o win32/obj/temp.o 
+	windres LongoMatch/images/minilogo.rc ${BUILD_DIR}/minilogo.o
+	cp $(DB4O) ${BUILD_DIR}/.
+	export MONO_PATH=${BUILD_DIR}/ && $(MONO) $(MKBUNDLE) $(LONGOMATCH_PRE) --deps -c -o ${BUILD_DIR}/temp.c -oo ${BUILD_DIR}/temp.o
+	export PKG_CONFIG_PATH=$(MONO_INSTALL_PATH)/lib/pkgconfig/ && $(CC) -mno-cygwin -g -o $(LONGOMATCH_BUNDLED) -Wall ${BUILD_DIR}/temp.c `pkg-config --cflags --libs mono`  ${BUILD_DIR}/minilogo.o ${BUILD_DIR}/temp.o 
      
+$(GMO_FILES): $(BUILD_DIR)/%.gmo: po/%.po
+	mkdir -p $(BUILD_DIR)
+	msgfmt '$<' -o '$@'
+	
+$(MO_FILES): $(LOCALE_DIR)/%/LC_MESSAGES/longomatch.mo : $(BUILD_DIR)/%.gmo
+	mkdir -p $(dir $@)
+	cp '$<' '$@'
 
-$(BIN): $(LINKOBJ)	
-	$(CC) $(LDFLAGS) -o $(BIN) $(LINKOBJ) $(LIBS)
+$(LIBCESARPLAYER): $(LINKOBJ)	
+	$(CC) $(LDFLAGS) -o $(LIBCESARPLAYER) $(LINKOBJ) $(LIBS)
 
-libcesarplayer/src/bacon-resize.o:libcesarplayer/src/bacon-resize.c
-	$(CC) -c libcesarplayer/src/bacon-resize.c -o  libcesarplayer/src/bacon-resize.o $(CFLAGS)
-
-libcesarplayer/src/video-utils.o:libcesarplayer/src/video-utils.c
-	$(CC) -c libcesarplayer/src/video-utils.c -o libcesarplayer/src/video-utils.o $(CFLAGS)
-
-libcesarplayer/src/gst-video-editor.o:libcesarplayer/src/gst-video-editor.c
-	$(CC) -c libcesarplayer/src/gst-video-editor.c -o  libcesarplayer/src/gst-video-editor.o $(CFLAGS)
-
-libcesarplayer/src/bacon-video-widget-gst-0.10.o:libcesarplayer/src/bacon-video-widget-gst-0.10.c
-	$(CC) -c libcesarplayer/src/bacon-video-widget-gst-0.10.c -o libcesarplayer/src/bacon-video-widget-gst-0.10.o $(CFLAGS)
-
-libcesarplayer/src/baconvideowidget-marshal.o:libcesarplayer/src/baconvideowidget-marshal.c
-	$(CC) -c libcesarplayer/src/baconvideowidget-marshal.c -o libcesarplayer/src/baconvideowidget-marshal.o $(CFLAGS)
+$(LINKOBJ): $(BUILD_DIR)/%.o : libcesarplayer/src/%.c
+	mkdir -p $(BUILD_DIR)
+	$(CC) -c '$<' -o '$@' $(CFLAGS)
 
 $(CESARPLAYER):
 	cd CesarPlayer && $(CSC) $(CSC_CESARPLAYER_FLAGS) -out:../$(CESARPLAYER) -target:$(CESARPLAYER_COMPILE_TARGET) $(CESARPLAYER_FILES) $(CESARPLAYER_REFERENCES) $(CESARPLAYER_RESOURCES)
