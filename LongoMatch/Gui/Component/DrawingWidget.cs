@@ -93,10 +93,11 @@ namespace LongoMatch.Gui.Component
 				}
 				drawingarea.WidthRequest=sourceWidth;
 				drawingarea.HeightRequest=sourceHeight;
-				if (GdkWindow != null)
-					GdkWindow.Resize(sourceWidth,sourceHeight);
+				if (drawingarea.GdkWindow != null)
+				    drawingarea.GdkWindow.Resize(sourceWidth,sourceHeight);				
 				value.Dispose();
 				loaded = true;
+				QueueDraw();
 			}
 		}
 
@@ -373,7 +374,7 @@ namespace LongoMatch.Gui.Component
 			// We can't set the cursor until the Gdk.Window exists
 			DrawTool = selectedTool;
 			if (loaded)
-				GdkWindow.Resize(sourceWidth,sourceHeight);
+				drawingarea.GdkWindow.Resize(sourceWidth,sourceHeight);
 		}
 	}
 }
