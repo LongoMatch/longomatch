@@ -373,8 +373,6 @@ namespace LongoMatch.Gui.Component
 		{
 			// We can't set the cursor until the Gdk.Window exists
 			DrawTool = selectedTool;
-			if (loaded)
-				drawingarea.GdkWindow.Resize(sourceWidth,sourceHeight);
 		}
 	}
 }
