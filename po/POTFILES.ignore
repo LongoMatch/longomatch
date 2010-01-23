@@ -2,3 +2,5 @@
 ./win32/deps/themes/Cleanice/gtk-2.0/index.theme.in
 ./libcesarplayer/src/bacon-video-widget-gst-0.10.c
 ./libcesarplayer/src/video-utils.c 
+./CesarPlayer/Editor/GenericMerger.cs
+
