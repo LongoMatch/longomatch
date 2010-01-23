@@ -487,9 +487,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.";
 			about.Authors = new string[] {"Andoni Morales Alastruey"};
 			about.Artists = new string[] {"Bencomo González Marrero"};
-			about.TranslatorCredits = "Andoni Morales Alastruey (es)\n"+
-				"Mario Blättermann (de)\n"+
-				"Pavel Bárta (cs)\n";
+			about.TranslatorCredits = Constants.TRANSLATORS;
 			about.TransientFor = this;
 			Gtk.AboutDialog.SetUrlHook(delegate(AboutDialog dialog,string url) {
 				try {

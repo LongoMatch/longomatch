@@ -76,6 +76,7 @@ all: $(ASSEMBLY) $(COMMONAPPLICATIONDATAROOT_IMAGES)  $(COMMONAPPLICATIONDATAROO
 FILES = \
 	AssemblyInfo.cs \
 	Common/Enums.cs \
+	Common/Constants.cs \
 	Compat/0.0/DatabaseMigrator.cs \
 	Compat/0.0/DB/DataBase.cs \
 	Compat/0.0/DB/MediaFile.cs \
