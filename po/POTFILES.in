@@ -1,4 +1,5 @@
 [encoding: UTF-8]
+./LongoMatch/longomatch.desktop.in
 ./LongoMatch/Playlist/IPlayList.cs
 ./LongoMatch/Playlist/PlayList.cs
 ./LongoMatch/Time/DrawingsList.cs
