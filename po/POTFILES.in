@@ -153,7 +153,6 @@
 ./CesarPlayer/Editor/VideoSplitterType.cs
 ./CesarPlayer/Editor/AviMerger.cs
 ./CesarPlayer/Editor/IVideoSplitter.cs
-./CesarPlayer/Editor/GenericMerger.cs
 ./CesarPlayer/Editor/VideoQuality.cs
 ./CesarPlayer/Editor/VideoCodec.cs
 ./CesarPlayer/Editor/IVideoEditor.cs
