@@ -8,6 +8,7 @@ CONFIGURE=configure.ac
 : ${AUTOHEADER=autoheader}
 : ${AUTOMAKE=automake}
 : ${LIBTOOLIZE=libtoolize}
+: ${INTLTOOLIZE=intltoolize}
 : ${ACLOCAL=aclocal}
 : ${LIBTOOL=libtool}
 
@@ -47,6 +48,14 @@ DIE=0
   }
 }
 
+(grep "^IT_PROG_INTLTOOL" $CONFIGURE >/dev/null) && {
+  ($INTLTOOLIZE --version) < /dev/null > /dev/null 2>&1 || {
+    echo
+    echo "**Error**: You must have \`intltool' installed to compile $PROJECT."
+    DIE=1
+  }
+}
+
 if test "$DIE" -eq 1; then
         exit 1
 fi
@@ -68,6 +77,11 @@ esac
 (grep "^AM_PROG_LIBTOOL" $CONFIGURE >/dev/null) && {
     echo "Running $LIBTOOLIZE ..."
     $LIBTOOLIZE --force --copy --automake
+}
+
+(grep "^IT_PROG_INTLTOOL" $CONFIGURE >/dev/null) && {
+    echo "Running $INTLTOOLIZE ..."
+    $INTLTOOLIZE --force --copy --automake
 }
 
 echo "Running $ACLOCAL $aclocalinclude ..."

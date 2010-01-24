@@ -12,7 +12,6 @@ AC_PROG_CC
 AC_C_CONST
 AC_HEADER_STDC
 
-
 AM_PROG_LIBTOOL
 
 dnl pkg-config
@@ -26,6 +25,16 @@ SHAMROCK_EXPAND_BINDIR
 SHAMROCK_EXPAND_DATADIR
 
 AC_PROG_INSTALL
+
+#*******************************************************************************
+# Internationalization
+#*******************************************************************************
+GETTEXT_PACKAGE=longomatch
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [GETTEXT package name])
+
+IT_PROG_INTLTOOL([0.40.0])
+AM_GLIB_GNU_GETTEXT
 
 
 dnl Check for C# compiler
@@ -108,7 +117,7 @@ dnl package checks, per config
 AC_CONFIG_FILES([
 LongoMatch/Makefile
 CesarPlayer/Makefile
-po/Makefile
+po/Makefile.in
 libcesarplayer/Makefile
 libcesarplayer/src/Makefile
 Makefile
