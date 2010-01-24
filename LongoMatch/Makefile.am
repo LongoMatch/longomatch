@@ -1,7 +1,13 @@
 
-EXTRA_DIST =  
+EXTRA_DIST = \
+	$(desktop_in_files)
 
-# Warning: This is an automatically generated file, do not edit!
+
+@INTLTOOL_DESKTOP_RULE@
+desktopdir = $(datadir)/applications
+desktop_in_files = longomatch.desktop.in
+desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
+
 
 if ENABLE_DEBUG
 ASSEMBLY_COMPILER_COMMAND = $(CSC)
@@ -19,7 +25,6 @@ CESARPLAYER_DLL_MDB=$(BUILD_DIR)/CesarPlayer.dll.mdb
 LONGOMATCH_PNG_SOURCE=images/longomatch.png
 LONGOMATCH_EXE_MDB_SOURCE=bin/Debug/LongoMatch.exe.mdb
 LONGOMATCH_EXE_MDB = $(BUILD_DIR)/LongoMatch.exe.mdb
-LONGOMATCH_DESKTOP_SOURCE=longomatch.desktop
 BACKGROUND_PNG_SOURCE=images/background.png
 
 endif
@@ -39,7 +44,6 @@ LONGOMATCH_PNG_SOURCE=images/longomatch.png
 LONGOMATCH_LOGO_SOURCE=images/logo_48x48.png
 LONGOMATCH_EXE_MDB_SOURCE=
 LONGOMATCH_EXE_MDB = 
-LONGOMATCH_DESKTOP_SOURCE=longomatch.desktop
 CESARPLAYER_DLL_MDB_SOURCE=
 CESARPLAYER_DLL_MDB=
 BACKGROUND_PNG_SOURCE=images/background.png
@@ -228,7 +232,6 @@ EXTRAS = \
 	images/longomatch.png\
 	images/background.png\
 	images/logo_48x48.png \
-	longomatch.desktop\
 	longomatch.in\
 	AssemblyInfo.cs.in
 
@@ -250,7 +253,6 @@ include $(top_srcdir)/Makefile.include
 LONGOMATCH_PNG = $(BUILD_DIR)/images/longomatch.png
 LONGOMATCH_LOGO = $(BUILD_DIR)/icons/hicolor/48x48/apps/longomatch.png
 LONGOMATCH = $(BUILD_DIR)/longomatch
-LONGOMATCH_DESKTOP = $(BUILD_DIR)/longomatch.desktop
 BACKGROUND_PNG = $(BUILD_DIR)/images/background.png
 
 $(eval $(call emit-deploy-target,CESARPLAYER_DLL))

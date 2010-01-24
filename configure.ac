@@ -124,7 +124,7 @@ Makefile
 CesarPlayer/cesarplayer.pc
 CesarPlayer/CesarPlayer.dll.config
 LongoMatch/longomatch
-LongoMatch/longomatch.desktop
+LongoMatch/longomatch.desktop.in
 LongoMatch/AssemblyInfo.cs
 CesarPlayer/AssemblyInfo.cs
 ])

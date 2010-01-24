@@ -1,9 +1,0 @@
-[Desktop Entry]
-Version=1.0
-_Name=LongoMatch
-Type=Application
-Exec=longomatch
-Terminal=false
-Categories=Video;AudioVideo;Player;AudioVideoEditing;Recorder;AudioVideoEditing;Recorder;Player;Sports; 
-Icon=longomatch
-_Comment=Sports video analysis tool for coaches
