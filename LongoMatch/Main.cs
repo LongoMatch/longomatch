@@ -206,9 +206,6 @@ namespace LongoMatch
 		}
 
 		private static void ProcessExecutionError(Exception ex) {
-			//Try to save the database before exiting
-			if (MainWindow.OpenedProject() != null)
-				DB.UpdateProject(MainWindow.OpenedProject());
 			string logFile ="LongoMatch-" + DateTime.Now +".log";
 			string message;
 
