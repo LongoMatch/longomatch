@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: longomatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&component=general\n"
-"POT-Creation-Date: 2010-01-24 20:00+0000\n"
-"PO-Revision-Date: 2010-01-23 23:21+0100\n"
+"POT-Creation-Date: 2010-01-31 17:28+0000\n"
+"PO-Revision-Date: 2010-02-01 19:35+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr "LongoMatch"
 
 #: ../LongoMatch/longomatch.desktop.in.in.h:2
 msgid "LongoMatch: The Digital Coach"
-msgstr ""
+msgstr "LongoMatch: Digitální rozhodčí"
 
 #: ../LongoMatch/longomatch.desktop.in.in.h:3
 msgid "Sports video analysis tool for coaches"
@@ -1099,7 +1099,4 @@ msgstr "Čas:"
 #: ../CesarPlayer/Utils/MediaFile.cs:164
 msgid "Invalid video file:"
 msgstr "Neplatný soubor s videem:"
-
-#~ msgid "Error merging video segments. Please retry again"
-#~ msgstr "Chyba při spojování částí videa. Zkuste to prosím znovu."
 
