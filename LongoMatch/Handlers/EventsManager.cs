@@ -357,6 +357,7 @@ namespace LongoMatch
 			foreach (Tag tag in tagger.Tags){
 				openedProject.Tags.AddTag(tag);
 			}
+			tagsTreeWidget.UpdateTagsList();
 			tagger.Destroy();
 		}
 

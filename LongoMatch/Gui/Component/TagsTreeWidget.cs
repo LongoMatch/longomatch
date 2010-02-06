@@ -94,7 +94,7 @@ namespace LongoMatch.Gui.Component
 						foreach (MediaTimeNode tNode in list)
 							model.AppendValues(tNode);
 					}
-					FillCombobox();
+					UpdateTagsList();
 				}
 			}
 		}
@@ -105,7 +105,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		private void FillCombobox(){
+		public void UpdateTagsList(){
 			(tagscombobox.Model as ListStore).Clear();
 			foreach (Tag tag in project.Tags)
 				tagscombobox.AppendText(tag.Text);
@@ -158,7 +158,7 @@ namespace LongoMatch.Gui.Component
 			filter.Refilter();
 			foreach (Widget w in tagsvbox.Children)
 				tagsvbox.Remove(w);
-			FillCombobox();
+			UpdateTagsList();
 		}
 		
 		private bool FilterTree(Gtk.TreeModel model, Gtk.TreeIter iter)
