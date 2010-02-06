@@ -1492,14 +1492,14 @@
       <action id="NewPojectAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_New Project</property>
-        <property name="ShortLabel" translatable="yes">_New Poyect</property>
+        <property name="ShortLabel" translatable="yes">_New Project</property>
         <property name="StockId">gtk-new</property>
         <signal name="Activated" handler="OnNewActivated" />
       </action>
       <action id="OpenProjectAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_Open Project</property>
-        <property name="ShortLabel" translatable="yes">_Open Proyect</property>
+        <property name="ShortLabel" translatable="yes">_Open Project</property>
         <property name="StockId">gtk-open</property>
         <signal name="Activated" handler="OnOpenActivated" />
       </action>
@@ -1514,7 +1514,7 @@
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_Close Project</property>
         <property name="Sensitive">False</property>
-        <property name="ShortLabel" translatable="yes">_Close Proyect</property>
+        <property name="ShortLabel" translatable="yes">_Close Project</property>
         <property name="StockId">gtk-close</property>
         <signal name="Activated" handler="OnCloseActivated" />
       </action>

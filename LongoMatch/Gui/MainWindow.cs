@@ -137,7 +137,7 @@ namespace LongoMatch.Gui
 					}
 					catch (GLib.GException ex) {
 						MessagePopup.PopupMessage(this, MessageType.Error,
-						                          Catalog.GetString("An error ocurred opening this project:")+"\n"+ex.Message);
+						                          Catalog.GetString("An error occurred opening this project:")+"\n"+ex.Message);
 						CloseActualProyect();
 					}
 				}
@@ -311,7 +311,7 @@ namespace LongoMatch.Gui
 						                       MessageType.Question,
 						                       Gtk.ButtonsType.YesNo,
 						                       Catalog.GetString("A project already exists for the file:")+project.File.FilePath+
-						                       "\n"+Catalog.GetString("Do you want to overwritte it?"));
+						                       "\n"+Catalog.GetString("Do you want to overwrite it?"));
 						md.Icon=Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Dialog, 48);
 						if (md.Run() == (int)ResponseType.Yes){
 							MainClass.DB.UpdateProject(project);

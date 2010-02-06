@@ -104,7 +104,7 @@ namespace LongoMatch.Gui.Dialog
 					MessageDialog md = new MessageDialog(this,DialogFlags.Modal,
 					                                     MessageType.Question,
 					                                     ButtonsType.YesNo,
-					                                     Catalog.GetString("Do yo really want to delete:")+
+					                                     Catalog.GetString("Do you really want to delete:")+
 					                                     "\n"+selectedProject.File);
 					if (md.Run()== (int)ResponseType.Yes) {
 						projectdetails.Clear();

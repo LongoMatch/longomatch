@@ -178,7 +178,7 @@ namespace LongoMatch
 
 			else if (progress == (float)EditorState.ERROR) {
 				MessagePopup.PopupMessage(player, MessageType.Error,
-				                          Catalog.GetString("An error has ocurred in the video editor.")
+				                          Catalog.GetString("An error has occurred in the video editor.")
 				                          +Catalog.GetString("Please, retry again."));
 				videoprogressbar.Hide();
 			}

@@ -21,10 +21,12 @@ using System;
 namespace LongoMatch.Common
 {
 	class Constants{
-        	public const string TRANSLATORS = "Andoni Morales Alastruey (es)\n"+
-                                "Mario Blättermann (de)\n"+
-                                "Pavel Bárta (cs)\n"+
-				"Matej Urbančič (sl)\n";
+        	public const string TRANSLATORS = 
+@"Andoni Morales Alastruey (es)
+Mario Blättermann (de)
+Pavel Bárta (cs)
+Matej Urbančič (sl)";
+
 	}
 
 }
