@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: longomatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&component=general\n"
-"POT-Creation-Date: 2010-01-25 17:57+0000\n"
-"PO-Revision-Date: 2010-01-26 09:43+0100\n"
+"POT-Creation-Date: 2010-02-06 14:35+0000\n"
+"PO-Revision-Date: 2010-02-10 09:16+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -119,15 +119,15 @@ msgstr "Nekateri predmeti predhodne različice (podatkovna zbirka, predloge in s
 msgid "Do you want to import them?"
 msgstr "Ali jih želite uvoziti?"
 
-#: ../LongoMatch/Main.cs:232
+#: ../LongoMatch/Main.cs:229
 msgid "The application has finished with an unexpected error."
 msgstr "Program je končal z nepričakovano napako."
 
-#: ../LongoMatch/Main.cs:233
+#: ../LongoMatch/Main.cs:230
 msgid "A log has been saved at: "
 msgstr "Dnevnik je shranjen v:"
 
-#: ../LongoMatch/Main.cs:234
+#: ../LongoMatch/Main.cs:231
 msgid "Please, fill a bug report "
 msgstr "Izpolnite poročilo o hrošču"
 
@@ -140,7 +140,7 @@ msgid "If the location of the file has changed try to edit it with the database 
 msgstr "V primeru, da se je mesto datoteke spremenilo, je napako mogoče popraviti v uporavljalniku podatkovne zbirke."
 
 #: ../LongoMatch/Gui/MainWindow.cs:140
-msgid "An error ocurred opening this project:"
+msgid "An error occurred opening this project:"
 msgstr "Prišlo je do napake med odpiranjem projekta:"
 
 #: ../LongoMatch/Gui/MainWindow.cs:260
@@ -169,7 +169,7 @@ msgid "A project already exists for the file:"
 msgstr "Projekt te datoteke že obstaja:"
 
 #: ../LongoMatch/Gui/MainWindow.cs:314
-msgid "Do you want to overwritte it?"
+msgid "Do you want to overwrite it?"
 msgstr "Ali jo želite prepisati?"
 
 #: ../LongoMatch/Gui/MainWindow.cs:383
@@ -266,8 +266,8 @@ msgid "Close it first to allow its removal from the database"
 msgstr "Pred izbrisanjem iz zbirke, je treba predmet najprej zapreti."
 
 #: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:107
-msgid "Do yo really want to delete:"
-msgstr "Ali zares želite izbrisati:"
+msgid "Do you really want to delete:"
+msgstr "Ali res želite izbrisati:"
 
 #: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:144
 msgid "The Project you are trying to load is actually in use."
@@ -1036,7 +1036,7 @@ msgid "The video edition has finished successfully."
 msgstr "Urejanje videa je uspešno končano."
 
 #: ../LongoMatch/Handlers/EventsManager.cs:181
-msgid "An error has ocurred in the video editor."
+msgid "An error has occurred in the video editor."
 msgstr "Prišlo je do napake v urejevalniku videa."
 
 #: ../LongoMatch/Handlers/EventsManager.cs:182
@@ -1090,4 +1090,3 @@ msgstr "Neveljavna video datoteka:"
 
 #~ msgid "Error merging video segments. Please retry again"
 #~ msgstr "Napaka med združevanjem odsekov videa. Poskusite znova."
-
