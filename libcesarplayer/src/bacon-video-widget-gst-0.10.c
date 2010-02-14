@@ -707,18 +707,6 @@ bacon_video_widget_expose_event (GtkWidget * widget, GdkEventExpose * event)
   g_mutex_unlock (bvw->priv->lock);
 
 
-  if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay))
-    {
-#ifdef WIN32
-      gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay,
-				    GDK_WINDOW_HWND (bvw->priv->
-						     video_window));
-#else
-      gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay,
-				    GDK_WINDOW_XID (bvw->priv->video_window));
-#endif
-    }
-
   /* Start with a nice black canvas */
   win = gtk_widget_get_window (widget);
   gdk_draw_rectangle (win, gtk_widget_get_style (widget)->black_gc, TRUE, 0,
