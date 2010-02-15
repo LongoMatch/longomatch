@@ -145,9 +145,14 @@ namespace LongoMatch.Gui
 		}
 
 		private void CloseActualProyect() {
+			bool playlistVisible = playlistwidget2.Visible;
+			
 			Title = "LongoMatch";
 			ClearWidgets();
 			HideWidgets();
+			playlistwidget2.Visible = playlistVisible;
+			rightvbox.Visible = playlistVisible;
+			noteswidget1.Visible = false;
 			playerbin1.Close();
 			playerbin1.LogoMode = true;
 			SaveDB();
