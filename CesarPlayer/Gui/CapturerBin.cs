@@ -45,19 +45,22 @@ namespace LongoMatch.Gui
 		public string OutputFile {
 			set{
 				this.capturer.OutputFile= value;
-			}
-			
-		}
-		
+			}			
+		}		
 				
 		public uint VideoBitrate {
-			set{this.capturer.VideoBitrate=value;}
+			set{this.capturer.VideoBitrate=value;}			
 		}
 		
 		public uint AudioBitrate {
 			set{this.capturer.AudioBitrate=value;}
 		}
 		
+		public int CurrentTime {
+			get{
+				return capturer.CurrentTime;
+			}
+		}
 		public void TogglePause(){
 			this.capturer.TogglePause();
 		}
@@ -70,10 +73,6 @@ namespace LongoMatch.Gui
 			this.capturer.Stop();
 		}
 		
-		public void Run(){
-			this.capturer.Run();
-		}
-				
 		public void SetVideoEncoder(LongoMatch.Video.Capturer.GccVideoEncoderType type){
 			this.capturer.SetVideoEncoder(type);
 		}
@@ -99,8 +98,6 @@ namespace LongoMatch.Gui
 		protected virtual void OnStopbuttonClicked (object sender, System.EventArgs e)
 		{
 			this.Stop();
-		}
-		
-		
+		}		
 	}
 }

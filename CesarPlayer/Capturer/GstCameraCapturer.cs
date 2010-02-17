@@ -299,6 +299,15 @@ namespace LongoMatch.Video.Capturer {
 			bool ret = raw_ret;
 			return ret;
 		}
+		
+		[DllImport("libcesarplayer.dll")]
+		static extern int gst_camera_capturer_get_current_time(IntPtr raw);
+
+		public int CurrentTime{
+			get{
+				return gst_camera_capturer_get_current_time(Handle);
+			}
+		}
 
 		[DllImport("libcesarplayer.dll")]
 		static extern IntPtr gst_camera_capturer_get_type();
@@ -310,8 +319,8 @@ namespace LongoMatch.Video.Capturer {
 				return ret;
 			}
 		}
-
-
+		
+		
 		static GstCameraCapturer ()
 		{
 			LongoMatch.GtkSharp.Capturer.ObjectManager.Initialize ();
