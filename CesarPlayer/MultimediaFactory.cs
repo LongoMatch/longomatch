@@ -114,18 +114,5 @@ namespace LongoMatch.Video
 				return new GstCameraCapturer("test.avi");
 			}			
 		}
-		
-		/*public IMerger GetVideoMerger(VideoMuxer muxer){
-			if (muxer == VideoMuxer.AVI)
-				return new AvidemuxMerger();
-			else if (muxer == VideoMuxer.DVD)
-				return new AvidemuxMerger();
-			else if (muxer == VideoMuxer.MKV)
-				return new MatroskaMerger();
-			else if (muxer == VideoMuxer.OGG)
-				return new AvidemuxMerger(); 
-			else 
-				return new AvidemuxMerger();
-		}		*/
 	}
 }
