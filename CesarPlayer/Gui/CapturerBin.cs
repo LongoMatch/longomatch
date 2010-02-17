@@ -33,6 +33,8 @@ namespace LongoMatch.Gui
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class CapturerBin : Gtk.Bin
 	{
+		public event EventHandler StopEvent;
+		
 		ICapturer capturer;
 		
 		public CapturerBin()
@@ -123,6 +125,8 @@ namespace LongoMatch.Gui
 				recbutton.Visible = true;
 				pausebutton.Visible = false;
 				stopbutton.Visible = false;
+				if (StopEvent != null)
+					StopEvent(this, new EventArgs());
 			}
 		}				
 		
