@@ -25,8 +25,7 @@ namespace LongoMatch.Video.Capturer
 	
 	
 	public interface ICapturer
-	{
-		
+	{	
 		
 		uint EncodeWidth {
 			get ;
@@ -42,7 +41,6 @@ namespace LongoMatch.Video.Capturer
 			get ;
 			set ;
 		}
-
 				
 		uint VideoBitrate {
 			get;
@@ -53,8 +51,15 @@ namespace LongoMatch.Video.Capturer
 			get ;
 			set ;
 		}
+		
+		int CurrentTime {
+			get ;
+		}
+		
 		bool SetVideoEncoder(LongoMatch.Video.Capturer.GccVideoEncoderType type);
+		
 		bool SetAudioEncoder(LongoMatch.Video.Capturer.GccAudioEncoderType type);
+		
 		bool SetVideoMuxer(LongoMatch.Video.Capturer.GccVideoMuxerType type);
 		
 		void TogglePause();
@@ -62,7 +67,5 @@ namespace LongoMatch.Video.Capturer
 		void Start();
 		
 		void Stop();
-		
-		void Run();
 	}
 }
