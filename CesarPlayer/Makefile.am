@@ -79,6 +79,7 @@ FILES = \
 	Capturer/GccVideoMuxerType.cs \
 	Capturer/GstCameraCapturer.cs \
 	Capturer/ErrorHandler.cs \
+	Capturer/FakeCapturer.cs \
 	Capturer/ICapturer.cs \
 	Capturer/ObjectManager.cs \
 	Editor/ErrorHandler.cs \

@@ -1,0 +1,110 @@
+// 
+//  Copyright (C) 2010 Andoni Morales Alastruey
+// 
+//  This program is free software; you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation; either version 2 of the License, or
+//  (at your option) any later version.
+// 
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//  
+//  You should have received a copy of the GNU General Public License
+//  along with this program; if not, write to the Free Software
+//  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
+// 
+
+using System;
+using Mono.Unix;
+
+namespace LongoMatch.Video.Capturer
+{
+	
+	
+	public class FakeCapturer : Gtk.Bin, ICapturer
+	{
+		private DateTime lastStart;
+		private TimeSpan ellapsed;
+		private bool playing;
+		private bool started;
+		
+		public FakeCapturer()
+		{
+			lastStart = DateTime.Now;
+			ellapsed = new TimeSpan(0,0,0);
+			playing = false;
+			started = false;
+		}
+		
+		public int CurrentTime{
+			get{
+				if (!started)
+					return 0;
+				else if (playing)
+					return (ellapsed + (DateTime.Now - lastStart)).Milliseconds;
+				else
+					return ellapsed.Milliseconds; 
+			}
+		}
+		
+		public void TogglePause(){
+			if (!started)
+				return;
+			
+			if (playing){
+				playing = false;
+				ellapsed += DateTime.Now - lastStart;								
+			}
+			else{
+				playing = true;
+				lastStart = DateTime.Now;
+			}
+		}
+		
+		public void Start(){
+			lastStart = DateTime.Now;
+			started = true;
+		}
+		
+		public uint EncodeWidth {
+			get{return 0;} 
+			set{}
+		}
+
+		public uint EncodeHeight {
+			get{return 0;}
+			set{}
+		}
+		
+		public string OutputFile {
+			get {return Catalog.GetString("Fake live source");}
+			set {}
+		}
+				
+		public uint VideoBitrate {
+			get {return 0;}
+			set {}
+		}
+		
+		public uint AudioBitrate {
+			get {return 0;}
+			set {}
+		}
+		
+		public void Stop(){}		
+		
+		public bool SetVideoEncoder(LongoMatch.Video.Capturer.GccVideoEncoderType type){
+			return true;
+		}
+		
+		public bool SetAudioEncoder(LongoMatch.Video.Capturer.GccAudioEncoderType type){
+			return true;
+		}
+		
+		public bool SetVideoMuxer(LongoMatch.Video.Capturer.GccVideoMuxerType type){
+			return true;
+		}
+	}
+}
