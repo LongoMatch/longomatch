@@ -19,6 +19,7 @@
 //
 
 using System;
+using LongoMatch.Video.Handlers;
 
 namespace LongoMatch.Video.Capturer
 {
@@ -26,7 +27,8 @@ namespace LongoMatch.Video.Capturer
 	
 	public interface ICapturer
 	{	
-		
+		event EllpasedTimeHandler EllapsedTime;
+			
 		uint EncodeWidth {
 			get ;
 			set ;

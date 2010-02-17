@@ -18,6 +18,7 @@
 
 using System;
 using Mono.Unix;
+using LongoMatch.Video.Handlers;
 
 namespace LongoMatch.Video.Capturer
 {
@@ -25,6 +26,8 @@ namespace LongoMatch.Video.Capturer
 	
 	public class FakeCapturer : Gtk.Bin, ICapturer
 	{
+		public event EllpasedTimeHandler EllapsedTime;
+		
 		private DateTime lastStart;
 		private TimeSpan ellapsed;
 		private bool playing;

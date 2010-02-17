@@ -34,6 +34,7 @@ namespace LongoMatch.Video.Handlers
 	public delegate void ProgressHandler (float progress);
 	public delegate void FramesProgressHandler (int actual, int total,Pixbuf frame);
 	public delegate void DrawFrameHandler (int time);
+	public delegate void EllpasedTimeHandler (int ellapsedTime);
 
 	
 	
