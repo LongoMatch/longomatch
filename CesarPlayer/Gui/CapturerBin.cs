@@ -19,9 +19,10 @@
 //
 
 using System;
-using LongoMatch.Video.Capturer;
-using LongoMatch.Video;
 using Gtk;
+using LongoMatch.Video;
+using LongoMatch.Video.Capturer;
+using LongoMatch.Video.Utils;
 
 namespace LongoMatch.Gui
 {
@@ -46,7 +47,8 @@ namespace LongoMatch.Gui
 					capturerhbox.Remove(capturer as Gtk.Widget);
 				}
 				MultimediaFactory factory = new MultimediaFactory();
-				capturer = factory.getCapturer(value);			
+				capturer = factory.getCapturer(value);	
+				capturer.EllapsedTime += OnTick;
 				capturerhbox.Add((Widget)capturer);
 				((Widget)capturer).Show();
 			}
@@ -108,6 +110,10 @@ namespace LongoMatch.Gui
 		protected virtual void OnStopbuttonClicked (object sender, System.EventArgs e)
 		{
 			this.Stop();
-		}		
+		}				
+		
+		protected virtual void OnTick (int ellapsedTime){
+			timelabel.Text = "Time: " + TimeString.MSecondsToSecondsString(CurrentTime);
+		}
 	}
 }
