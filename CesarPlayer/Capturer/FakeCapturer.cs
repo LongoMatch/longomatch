@@ -18,6 +18,7 @@
 
 using System;
 using Mono.Unix;
+using GLib;
 using LongoMatch.Video.Handlers;
 
 namespace LongoMatch.Video.Capturer
@@ -32,13 +33,14 @@ namespace LongoMatch.Video.Capturer
 		private TimeSpan ellapsed;
 		private bool playing;
 		private bool started;
+		private uint timerID;
 		
 		public FakeCapturer()
 		{
 			lastStart = DateTime.Now;
 			ellapsed = new TimeSpan(0,0,0);
 			playing = false;
-			started = false;
+			started = false;			
 		}
 		
 		public int CurrentTime{
@@ -67,6 +69,7 @@ namespace LongoMatch.Video.Capturer
 		}
 		
 		public void Start(){
+			timerID = GLib.Timeout.Add(1000, OnTick);
 			lastStart = DateTime.Now;
 			started = true;
 		}
@@ -96,7 +99,9 @@ namespace LongoMatch.Video.Capturer
 			set {}
 		}
 		
-		public void Stop(){}		
+		public void Stop(){
+			GLib.Source.Remove(timerID);
+		}		
 		
 		public bool SetVideoEncoder(LongoMatch.Video.Capturer.GccVideoEncoderType type){
 			return true;
@@ -107,6 +112,12 @@ namespace LongoMatch.Video.Capturer
 		}
 		
 		public bool SetVideoMuxer(LongoMatch.Video.Capturer.GccVideoMuxerType type){
+			return true;
+		}
+		
+		protected virtual bool OnTick(){
+			if (EllapsedTime != null)
+				EllapsedTime(CurrentTime);
 			return true;
 		}
 	}
