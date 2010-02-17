@@ -75,6 +75,7 @@ FILES = \
 	Utils/TimeString.cs \
 	Capturer/GccAudioEncoderType.cs \
 	Capturer/GccError.cs \
+	Capturer/GccType.cs \
 	Capturer/GccVideoEncoderType.cs \
 	Capturer/GccVideoMuxerType.cs \
 	Capturer/GstCameraCapturer.cs \
