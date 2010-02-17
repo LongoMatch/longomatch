@@ -17,6 +17,8 @@ namespace LongoMatch.Gui {
         
         private Gtk.HBox capturerhbox;
         
+        private Gtk.HBox hbox1;
+        
         private Gtk.HBox buttonsbox;
         
         private Gtk.Button recbutton;
@@ -24,6 +26,8 @@ namespace LongoMatch.Gui {
         private Gtk.Button pausebutton;
         
         private Gtk.Button stopbutton;
+        
+        private Gtk.Label timelabel;
         
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
@@ -42,6 +46,10 @@ namespace LongoMatch.Gui {
             Gtk.Box.BoxChild w1 = ((Gtk.Box.BoxChild)(this.vbox1[this.capturerhbox]));
             w1.Position = 0;
             // Container child vbox1.Gtk.Box+BoxChild
+            this.hbox1 = new Gtk.HBox();
+            this.hbox1.Name = "hbox1";
+            this.hbox1.Spacing = 6;
+            // Container child hbox1.Gtk.Box+BoxChild
             this.buttonsbox = new Gtk.HBox();
             this.buttonsbox.Name = "buttonsbox";
             this.buttonsbox.Spacing = 6;
@@ -61,6 +69,7 @@ namespace LongoMatch.Gui {
             w3.Add(w4);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w6 = new Gtk.Label();
+            w6.LabelProp = "";
             w3.Add(w6);
             w2.Add(w3);
             this.recbutton.Add(w2);
@@ -85,6 +94,7 @@ namespace LongoMatch.Gui {
             w12.Add(w13);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w15 = new Gtk.Label();
+            w15.LabelProp = "";
             w12.Add(w15);
             w11.Add(w12);
             this.pausebutton.Add(w11);
@@ -109,6 +119,7 @@ namespace LongoMatch.Gui {
             w21.Add(w22);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w24 = new Gtk.Label();
+            w24.LabelProp = "";
             w21.Add(w24);
             w20.Add(w21);
             this.stopbutton.Add(w20);
@@ -117,11 +128,26 @@ namespace LongoMatch.Gui {
             w28.Position = 2;
             w28.Expand = false;
             w28.Fill = false;
-            this.vbox1.Add(this.buttonsbox);
-            Gtk.Box.BoxChild w29 = ((Gtk.Box.BoxChild)(this.vbox1[this.buttonsbox]));
-            w29.Position = 1;
+            this.hbox1.Add(this.buttonsbox);
+            Gtk.Box.BoxChild w29 = ((Gtk.Box.BoxChild)(this.hbox1[this.buttonsbox]));
+            w29.Position = 0;
             w29.Expand = false;
             w29.Fill = false;
+            // Container child hbox1.Gtk.Box+BoxChild
+            this.timelabel = new Gtk.Label();
+            this.timelabel.Name = "timelabel";
+            this.timelabel.Xalign = 1F;
+            this.timelabel.LabelProp = "Time: 0:00:00";
+            this.hbox1.Add(this.timelabel);
+            Gtk.Box.BoxChild w30 = ((Gtk.Box.BoxChild)(this.hbox1[this.timelabel]));
+            w30.PackType = ((Gtk.PackType)(1));
+            w30.Position = 1;
+            w30.Expand = false;
+            this.vbox1.Add(this.hbox1);
+            Gtk.Box.BoxChild w31 = ((Gtk.Box.BoxChild)(this.vbox1[this.hbox1]));
+            w31.Position = 1;
+            w31.Expand = false;
+            w31.Fill = false;
             this.Add(this.vbox1);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
