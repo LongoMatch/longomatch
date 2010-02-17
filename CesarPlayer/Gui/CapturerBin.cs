@@ -23,6 +23,7 @@ using Gtk;
 using LongoMatch.Video;
 using LongoMatch.Video.Capturer;
 using LongoMatch.Video.Utils;
+using Mono.Unix;
 
 namespace LongoMatch.Gui
 {
@@ -114,10 +115,15 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnStopbuttonClicked (object sender, System.EventArgs e)
 		{
-			Stop();
-			recbutton.Visible = true;
-			pausebutton.Visible = false;
-			stopbutton.Visible = false;
+			MessageDialog md = new MessageDialog((Window)this.Toplevel, DialogFlags.Modal, MessageType.Question, ButtonsType.YesNo,
+			                                     Catalog.GetString("You choosed stopping the current capture."+"\n"+
+			                                                       "Do you want to proceed?"));
+			if (md.Run() == (int)ResponseType.Yes){
+				Stop();
+				recbutton.Visible = true;
+				pausebutton.Visible = false;
+				stopbutton.Visible = false;
+			}
 		}				
 		
 		protected virtual void OnTick (int ellapsedTime){
