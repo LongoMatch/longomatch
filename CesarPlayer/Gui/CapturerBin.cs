@@ -36,10 +36,20 @@ namespace LongoMatch.Gui
 		public CapturerBin()
 		{
 			this.Build();
-			MultimediaFactory factory = new MultimediaFactory();
-			capturer = factory.getCapturer();			
-			this.capturerhbox.Add((Widget)capturer);
-			((Widget)capturer).Show();
+			Type = CapturerType.FAKE;		
+		}
+		
+		public CapturerType Type {
+			set{
+				if (capturer != null){
+					capturer.Stop();
+					capturerhbox.Remove(capturer as Gtk.Widget);
+				}
+				MultimediaFactory factory = new MultimediaFactory();
+				capturer = factory.getCapturer(value);			
+				capturerhbox.Add((Widget)capturer);
+				((Widget)capturer).Show();
+			}
 		}
 		 
 		public string OutputFile {
