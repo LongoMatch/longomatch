@@ -100,16 +100,24 @@ namespace LongoMatch.Gui
 		protected virtual void OnRecbuttonClicked (object sender, System.EventArgs e)
 		{
 			Start();
+			recbutton.Visible = false;
+			pausebutton.Visible = true;
+			stopbutton.Visible = true;
 		}
 
 		protected virtual void OnPausebuttonClicked (object sender, System.EventArgs e)
 		{
 			TogglePause();
+			recbutton.Visible = true;
+			pausebutton.Visible = false;			
 		}
 
 		protected virtual void OnStopbuttonClicked (object sender, System.EventArgs e)
 		{
 			Stop();
+			recbutton.Visible = true;
+			pausebutton.Visible = false;
+			stopbutton.Visible = false;
 		}				
 		
 		protected virtual void OnTick (int ellapsedTime){
