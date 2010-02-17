@@ -56,16 +56,16 @@ namespace LongoMatch.Gui
 		 
 		public string OutputFile {
 			set{
-				this.capturer.OutputFile= value;
+				capturer.OutputFile= value;
 			}			
 		}		
 				
 		public uint VideoBitrate {
-			set{this.capturer.VideoBitrate=value;}			
+			set{capturer.VideoBitrate=value;}			
 		}
 		
 		public uint AudioBitrate {
-			set{this.capturer.AudioBitrate=value;}
+			set{capturer.AudioBitrate=value;}
 		}
 		
 		public int CurrentTime {
@@ -74,42 +74,42 @@ namespace LongoMatch.Gui
 			}
 		}
 		public void TogglePause(){
-			this.capturer.TogglePause();
+			capturer.TogglePause();
 		}
 		
 		public void Start(){
-			this.capturer.Start();
+			capturer.Start();
 		}
 		
 		public void Stop(){
-			this.capturer.Stop();
+			capturer.Stop();
 		}
 		
 		public void SetVideoEncoder(LongoMatch.Video.Capturer.GccVideoEncoderType type){
-			this.capturer.SetVideoEncoder(type);
+			capturer.SetVideoEncoder(type);
 		}
 		
 		public void SetAudioEncoder(LongoMatch.Video.Capturer.GccAudioEncoderType type){
-			this.capturer.SetAudioEncoder(type);
+			capturer.SetAudioEncoder(type);
 		}
 		
 		public void SetVideoMuxer(LongoMatch.Video.Capturer.GccVideoMuxerType type){
-			this.capturer.SetVideoMuxer(type);
+			capturer.SetVideoMuxer(type);
 		}
 
 		protected virtual void OnRecbuttonClicked (object sender, System.EventArgs e)
 		{
-			this.Start();
+			Start();
 		}
 
 		protected virtual void OnPausebuttonClicked (object sender, System.EventArgs e)
 		{
-			this.TogglePause();
+			TogglePause();
 		}
 
 		protected virtual void OnStopbuttonClicked (object sender, System.EventArgs e)
 		{
-			this.Stop();
+			Stop();
 		}				
 		
 		protected virtual void OnTick (int ellapsedTime){
