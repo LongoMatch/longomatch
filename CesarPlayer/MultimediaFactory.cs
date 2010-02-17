@@ -36,82 +36,74 @@ namespace LongoMatch.Video
 		public MultimediaFactory()
 		{
 			oS = Environment.OSVersion;	
-		
 		}
 		
 		public IPlayer getPlayer(int width, int height){
-			
 			switch (oS.Platform) { 
-			 case PlatformID.Unix:
-				return new GstPlayer(width,height,GstUseType.Video);
+				case PlatformID.Unix:
+					return new GstPlayer(width,height,GstUseType.Video);
+					
+				case PlatformID.Win32NT:
+					return new GstPlayer(width,height,GstUseType.Video);
 				
-				
-			case PlatformID.Win32NT:
-				return new GstPlayer(width,height,GstUseType.Video);
-				//return new DSPlayer(UseType.Video);
-				
-				
-			 default:
-				return new GstPlayer(width,height,GstUseType.Video);
-				
-			}
-		
+				default:
+					return new GstPlayer(width,height,GstUseType.Video);
+			}		
 		}
 		
 		public IMetadataReader getMetadataReader(){
 			
 			switch (oS.Platform) { 
-			 case PlatformID.Unix:
-				return new GstPlayer(1,1,GstUseType.Metadata);
-				
-			case PlatformID.Win32NT:
-				return new GstPlayer(1,1,GstUseType.Metadata);
-				
-			 default:
-				return new GstPlayer(1,1,GstUseType.Metadata);
+				case PlatformID.Unix:
+					return new GstPlayer(1,1,GstUseType.Metadata);
+					
+				case PlatformID.Win32NT:
+					return new GstPlayer(1,1,GstUseType.Metadata);
+					
+				default:
+					return new GstPlayer(1,1,GstUseType.Metadata);
 			}
 		}
 		
 		public IFramesCapturer getFramesCapturer(){
-			
 			switch (oS.Platform) { 
-			 case PlatformID.Unix:
-				return new GstPlayer(1,1,GstUseType.Capture);
-				
-			case PlatformID.Win32NT:
-				return new GstPlayer(1,1,GstUseType.Capture);
-				
-			 default:
-				return new GstPlayer(1,1,GstUseType.Capture);
+				case PlatformID.Unix:
+					return new GstPlayer(1,1,GstUseType.Capture);
+					
+				case PlatformID.Win32NT:
+					return new GstPlayer(1,1,GstUseType.Capture);
+					
+				default:
+					return new GstPlayer(1,1,GstUseType.Capture);
 			}
 		}
 		
 		public IVideoEditor getVideoEditor(){
 			switch (oS.Platform) { 
-				
-			 case PlatformID.Unix:
-				return new GstVideoSplitter();
-				
-			case PlatformID.Win32NT:
-				return new GstVideoSplitter();	
-				
-			 default:
-				return new GstVideoSplitter();
+				case PlatformID.Unix:
+					return new GstVideoSplitter();
+					
+				case PlatformID.Win32NT:
+					return new GstVideoSplitter();	
+					
+				default:
+					return new GstVideoSplitter();
 			}
-		}
+		}	
 		
-		
-		public ICapturer getCapturer(){
-			switch (oS.Platform) { 
+		public ICapturer getCapturer(CapturerType type){
+			switch (type) { 
+				case CapturerType.FAKE:
+					return new FakeCapturer();
+					
+				case CapturerType.DVCAM:
+					return new GstCameraCapturer("test.avi");
 				
-			 case PlatformID.Unix:
-				return new GstCameraCapturer("test.avi");
-				
-			case PlatformID.Win32NT:
-				return new GstCameraCapturer("test.avi");	
-				
-			 default:
-				return new GstCameraCapturer("test.avi");
+				case CapturerType.WEBCAM:
+					return new FakeCapturer();
+									
+				default:
+					return new FakeCapturer();
 			}			
 		}
 	}
