@@ -88,6 +88,7 @@ namespace LongoMatch.Gui.Dialog {
             w4.Add(w5);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w7 = new Gtk.Label();
+            w7.LabelProp = "";
             w4.Add(w7);
             w3.Add(w4);
             this.newbutton.Add(w3);
@@ -114,6 +115,7 @@ namespace LongoMatch.Gui.Dialog {
             w13.Add(w14);
             // Container child GtkHBox1.Gtk.Container+ContainerChild
             Gtk.Label w16 = new Gtk.Label();
+            w16.LabelProp = "";
             w13.Add(w16);
             w12.Add(w13);
             this.deletebutton.Add(w12);
@@ -140,6 +142,7 @@ namespace LongoMatch.Gui.Dialog {
             w22.Add(w23);
             // Container child GtkHBox2.Gtk.Container+ContainerChild
             Gtk.Label w25 = new Gtk.Label();
+            w25.LabelProp = "";
             w22.Add(w25);
             w21.Add(w22);
             this.savebutton.Add(w21);

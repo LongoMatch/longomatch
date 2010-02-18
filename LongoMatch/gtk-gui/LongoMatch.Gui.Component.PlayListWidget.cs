@@ -101,6 +101,7 @@ namespace LongoMatch.Gui.Component {
             w8.Add(w9);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w11 = new Gtk.Label();
+            w11.LabelProp = "";
             w8.Add(w11);
             w7.Add(w8);
             this.newbutton.Add(w7);
@@ -123,6 +124,7 @@ namespace LongoMatch.Gui.Component {
             w17.Add(w18);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w20 = new Gtk.Label();
+            w20.LabelProp = "";
             w17.Add(w20);
             w16.Add(w17);
             this.openbutton.Add(w16);
@@ -145,6 +147,7 @@ namespace LongoMatch.Gui.Component {
             w26.Add(w27);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w29 = new Gtk.Label();
+            w29.LabelProp = "";
             w26.Add(w29);
             w25.Add(w26);
             this.savebutton.Add(w25);
@@ -167,6 +170,7 @@ namespace LongoMatch.Gui.Component {
             w35.Add(w36);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w38 = new Gtk.Label();
+            w38.LabelProp = "";
             w35.Add(w38);
             w34.Add(w35);
             this.newvideobutton.Add(w34);
@@ -189,6 +193,7 @@ namespace LongoMatch.Gui.Component {
             w44.Add(w45);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w47 = new Gtk.Label();
+            w47.LabelProp = "";
             w44.Add(w47);
             w43.Add(w44);
             this.closebutton.Add(w43);

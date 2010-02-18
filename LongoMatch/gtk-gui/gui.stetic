@@ -1319,6 +1319,7 @@
         <child>
           <widget class="Gtk.Label" id="startlabel">
             <property name="MemberName" />
+            <property name="LabelProp" translatable="yes" />
           </widget>
           <packing>
             <property name="LeftAttach">1</property>
@@ -3058,6 +3059,7 @@ Full HD 1080p (16:9 - 1920x1080)</property>
             <child>
               <widget class="Gtk.Label" id="playLabel">
                 <property name="MemberName" />
+                <property name="LabelProp" translatable="yes" />
               </widget>
               <packing>
                 <property name="LeftAttach">1</property>

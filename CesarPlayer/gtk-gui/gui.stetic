@@ -5,7 +5,7 @@
     <target-gtk-version>2.12</target-gtk-version>
   </configuration>
   <import>
-    <widget-library name="../a.dll" internal="true" />
+    <widget-library name="../bin/Release/CesarPlayer.dll" internal="true" />
   </import>
   <widget class="Gtk.Window" id="LongoMatch.Gui.VolumeWindow" design-size="31 204">
     <property name="MemberName" />
@@ -256,6 +256,7 @@
                 <child>
                   <widget class="Gtk.Label" id="timelabel">
                     <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes" />
                   </widget>
                   <packing>
                     <property name="Position">3</property>
@@ -381,6 +382,7 @@
                 <child>
                   <widget class="Gtk.Button" id="pausebutton">
                     <property name="MemberName" />
+                    <property name="Visible">False</property>
                     <property name="CanFocus">True</property>
                     <property name="Type">TextAndIcon</property>
                     <property name="Icon">stock:gtk-media-pause Button</property>
@@ -398,6 +400,7 @@
                 <child>
                   <widget class="Gtk.Button" id="stopbutton">
                     <property name="MemberName" />
+                    <property name="Visible">False</property>
                     <property name="CanFocus">True</property>
                     <property name="Type">TextAndIcon</property>
                     <property name="Icon">stock:gtk-media-stop Button</property>

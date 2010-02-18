@@ -54,6 +54,7 @@ namespace LongoMatch.Gui.Component {
             w2.Add(w3);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w5 = new Gtk.Label();
+            w5.LabelProp = "";
             w2.Add(w5);
             w1.Add(w2);
             this.fitbutton.Add(w1);

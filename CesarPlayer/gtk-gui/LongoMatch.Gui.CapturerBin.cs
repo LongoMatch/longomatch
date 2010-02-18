@@ -69,7 +69,6 @@ namespace LongoMatch.Gui {
             w3.Add(w4);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w6 = new Gtk.Label();
-            w6.LabelProp = "";
             w3.Add(w6);
             w2.Add(w3);
             this.recbutton.Add(w2);
@@ -94,7 +93,6 @@ namespace LongoMatch.Gui {
             w12.Add(w13);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w15 = new Gtk.Label();
-            w15.LabelProp = "";
             w12.Add(w15);
             w11.Add(w12);
             this.pausebutton.Add(w11);
@@ -119,7 +117,6 @@ namespace LongoMatch.Gui {
             w21.Add(w22);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w24 = new Gtk.Label();
-            w24.LabelProp = "";
             w21.Add(w24);
             w20.Add(w21);
             this.stopbutton.Add(w20);
@@ -152,6 +149,8 @@ namespace LongoMatch.Gui {
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
+            this.pausebutton.Hide();
+            this.stopbutton.Hide();
             this.Show();
             this.recbutton.Clicked += new System.EventHandler(this.OnRecbuttonClicked);
             this.pausebutton.Clicked += new System.EventHandler(this.OnPausebuttonClicked);

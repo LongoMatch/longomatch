@@ -80,6 +80,7 @@ namespace LongoMatch.Gui.Component {
             // Container child table1.Gtk.Table+TableChild
             this.startlabel = new Gtk.Label();
             this.startlabel.Name = "startlabel";
+            this.startlabel.LabelProp = "";
             this.table1.Add(this.startlabel);
             Gtk.Table.TableChild w5 = ((Gtk.Table.TableChild)(this.table1[this.startlabel]));
             w5.LeftAttach = ((uint)(1));

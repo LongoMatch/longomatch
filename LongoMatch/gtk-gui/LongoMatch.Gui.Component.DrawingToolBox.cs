@@ -370,6 +370,7 @@ namespace LongoMatch.Gui.Component {
             w28.Add(w29);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w31 = new Gtk.Label();
+            w31.LabelProp = "";
             w28.Add(w31);
             w27.Add(w28);
             this.clearbutton.Add(w27);
