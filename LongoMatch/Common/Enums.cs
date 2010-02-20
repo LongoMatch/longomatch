@@ -24,6 +24,7 @@ namespace LongoMatch.Common
 
 	public enum ProjectType {
 		NewCaptureProject,
+		NewFakeCaptureProject,
 		NewFileProject,
 		EditProject,
 	}
