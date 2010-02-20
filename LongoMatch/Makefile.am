@@ -130,6 +130,7 @@ FILES = \
 	gtk-gui/LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.ProjectTemplateEditorDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.TeamTemplateEditor.cs \
@@ -171,6 +172,7 @@ FILES = \
 	Gui/Dialog/PlayersSelectionDialog.cs \
 	Gui/Dialog/ProjectsManager.cs \
 	Gui/Dialog/ProjectTemplateEditorDialog.cs \
+	Gui/Dialog/ProjectSelectionDialog.cs \
 	Gui/Dialog/SnapshotsDialog.cs \
 	Gui/Dialog/TaggerDialog.cs \
 	Gui/Dialog/TemplatesEditor.cs \
