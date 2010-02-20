@@ -201,7 +201,7 @@ namespace LongoMatch.DB
 						db.Set(project);
 						db.Commit();
 					}
-					else throw new Exception(Catalog.GetString("The Project for this video file already exists.")+"\n"+Catalog.GetString("Try to edit it whit the Database Manager"));
+					else throw new Exception(Catalog.GetString("The Project for this video file already exists.")+"\n"+Catalog.GetString("Try to edit it with the Database Manager"));
 				}
 				finally {
 					CloseDB(db);

@@ -116,7 +116,7 @@ namespace LongoMatch.Gui.Component
 			if (project!= null) {
 				MessageDialog dialog = new MessageDialog((Gtk.Window)this.Toplevel,DialogFlags.Modal,MessageType.Question,
 				                ButtonsType.YesNo,true,
-				                Catalog.GetString("You are about to delete a category and all the plays added to this category.Do you want to proceed?"));
+				                Catalog.GetString("You are about to delete a category and all the plays added to this category. Do you want to proceed?"));
 				if (dialog.Run() == (int)ResponseType.Yes)
 					try {
 						project.DeleteSection(index);
