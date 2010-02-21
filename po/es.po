@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: LongoMatch 0.15\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&component=general\n"
-"POT-Creation-Date: 2010-02-06 14:35+0000\n"
-"PO-Revision-Date: 2010-02-15 21:43+0100\n"
+"POT-Creation-Date: 2010-02-20 19:07+0000\n"
+"PO-Revision-Date: 2010-02-21 11:31+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -142,50 +142,48 @@ msgstr ""
 "proyectos"
 
 #: ../LongoMatch/Gui/MainWindow.cs:140
-#| msgid "An error ocurred opening this project:"
 msgid "An error occurred opening this project:"
 msgstr "Ocurrió un error al abrir este proyecto:"
 
-#: ../LongoMatch/Gui/MainWindow.cs:260
+#: ../LongoMatch/Gui/MainWindow.cs:265
 #: ../LongoMatch/Gui/Component/PlayListWidget.cs:263
 msgid "Please, select a video file."
 msgstr "Seleccione un archivo de vídeo"
 
-#: ../LongoMatch/Gui/MainWindow.cs:273
+#: ../LongoMatch/Gui/MainWindow.cs:278
 msgid "This file is already used in a Project."
 msgstr "Este archivo ya está siendo usado por otro proyecto"
 
-#: ../LongoMatch/Gui/MainWindow.cs:273
+#: ../LongoMatch/Gui/MainWindow.cs:278
 msgid "Open the project, please."
 msgstr "Abra el proyecto."
 
-#: ../LongoMatch/Gui/MainWindow.cs:288
+#: ../LongoMatch/Gui/MainWindow.cs:293
 msgid "Import Project"
 msgstr "Importar un proyecto"
 
-#: ../LongoMatch/Gui/MainWindow.cs:306
+#: ../LongoMatch/Gui/MainWindow.cs:311
 msgid "Project successfully imported."
 msgstr "Proyecto importado satisfactoriamente"
 
-#: ../LongoMatch/Gui/MainWindow.cs:313
+#: ../LongoMatch/Gui/MainWindow.cs:318
 msgid "A project already exists for the file:"
 msgstr "Un proyecto ya existe para este archivo:"
 
-#: ../LongoMatch/Gui/MainWindow.cs:314
-#| msgid "Do you want to overwritte it?"
+#: ../LongoMatch/Gui/MainWindow.cs:319
 msgid "Do you want to overwrite it?"
 msgstr "¿Quiere sobreescribirlo?"
 
-#: ../LongoMatch/Gui/MainWindow.cs:383
+#: ../LongoMatch/Gui/MainWindow.cs:388
 #: ../LongoMatch/Gui/Component/PlayListWidget.cs:214
 msgid "Open playlist"
 msgstr "Abrir lista de reproducción"
 
-#: ../LongoMatch/Gui/MainWindow.cs:406
+#: ../LongoMatch/Gui/MainWindow.cs:411
 msgid "The actual project will be closed due to an error in the media player:"
 msgstr "El proyecto actual se cerrará debido a un error en el reproductor:"
 
-#: ../LongoMatch/Gui/MainWindow.cs:504
+#: ../LongoMatch/Gui/MainWindow.cs:509
 msgid "Select Export File"
 msgstr "Seleccionar el archivo para exportar"
 
@@ -270,7 +268,6 @@ msgid "Close it first to allow its removal from the database"
 msgstr "Ciérrelo primero para permitir eliminarlo de la base de datos"
 
 #: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:107
-#| msgid "Do yo really want to delete:"
 msgid "Do you really want to delete:"
 msgstr "Quiere eliminar:"
 
@@ -310,12 +307,15 @@ msgid "Visitor Team Template"
 msgstr "Plantilla del equipo visitante"
 
 #: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:119
+#| msgid ""
+#| "You are about to delete a category and all the plays added to this "
+#| "category.Do you want to proceed?"
 msgid ""
-"You are about to delete a category and all the plays added to this category."
+"You are about to delete a category and all the plays added to this category. "
 "Do you want to proceed?"
 msgstr ""
-"Está a punto de eliminar una categoría y todas sus jugadas. ¿Quiere "
-"continuar?"
+"Está a punto de eliminar una categoría y todas las jugadas añadidas a la "
+"categoría. ¿Quiere continuar?"
 
 #: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:125
 msgid "You can't delete the last section"
@@ -552,8 +552,9 @@ msgid "The Project for this video file already exists."
 msgstr "El proyecto para este archivo ya existe."
 
 #: ../LongoMatch/DB/DataBase.cs:204
-msgid "Try to edit it whit the Database Manager"
-msgstr "Intente editarlo con el Editor de proyectos"
+#| msgid "Try to edit it whit the Database Manager"
+msgid "Try to edit it with the Database Manager"
+msgstr "Intente editarlo con el Editor de la base de datos"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.ProjectTemplateEditorDialog.cs:24
 msgid "Categories Template"
@@ -689,19 +690,13 @@ msgid "_File"
 msgstr "_Archivo"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:122
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:123
 msgid "_New Project"
 msgstr "Proyecto _nuevo"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:123
-msgid "_New Poyect"
-msgstr "Proyecto _nuevo"
-
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:125
-msgid "_Open Project"
-msgstr "_Abrir proyecto"
-
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:126
-msgid "_Open Proyect"
+msgid "_Open Project"
 msgstr "_Abrir proyecto"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:128
@@ -710,11 +705,8 @@ msgid "_Quit"
 msgstr "_Salir"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:131
-msgid "_Close Project"
-msgstr "_Cerrar proyecto"
-
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:133
-msgid "_Close Proyect"
+msgid "_Close Project"
 msgstr "_Cerrar proyecto"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:135
@@ -1053,12 +1045,12 @@ msgid "The video edition has finished successfully."
 msgstr "La edición del vídeo ha finalizado con éxito."
 
 #: ../LongoMatch/Handlers/EventsManager.cs:181
-#| msgid "An error has ocurred in the video editor."
 msgid "An error has occurred in the video editor."
 msgstr "Ocurrió un error en el editor de vídeo."
 
 #: ../LongoMatch/Handlers/EventsManager.cs:182
-msgid "Please, retry again."
+#| msgid "Please, retry again."
+msgid "Please, try again."
 msgstr "Inténtelo de nuevo."
 
 #: ../LongoMatch/Handlers/EventsManager.cs:257
@@ -1103,3 +1095,12 @@ msgstr "Tiempo:"
 #: ../CesarPlayer/Utils/MediaFile.cs:164
 msgid "Invalid video file:"
 msgstr "Archivo de vídeo no válido:"
+
+#~ msgid "_New Poyect"
+#~ msgstr "Proyecto _nuevo"
+
+#~ msgid "_Open Proyect"
+#~ msgstr "_Abrir proyecto"
+
+#~ msgid "_Close Proyect"
+#~ msgstr "_Cerrar proyecto"
