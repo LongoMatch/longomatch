@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: longomatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&component=general\n"
-"POT-Creation-Date: 2010-02-06 14:35+0000\n"
-"PO-Revision-Date: 2010-02-10 09:16+0100\n"
+"POT-Creation-Date: 2010-02-21 16:13+0000\n"
+"PO-Revision-Date: 2010-02-22 08:14+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -143,45 +143,45 @@ msgstr "V primeru, da se je mesto datoteke spremenilo, je napako mogoče popravi
 msgid "An error occurred opening this project:"
 msgstr "Prišlo je do napake med odpiranjem projekta:"
 
-#: ../LongoMatch/Gui/MainWindow.cs:260
+#: ../LongoMatch/Gui/MainWindow.cs:265
 #: ../LongoMatch/Gui/Component/PlayListWidget.cs:263
 msgid "Please, select a video file."
 msgstr "Izberite video datoteko."
 
-#: ../LongoMatch/Gui/MainWindow.cs:273
+#: ../LongoMatch/Gui/MainWindow.cs:278
 msgid "This file is already used in a Project."
 msgstr "Datoteka je že v uporabi v projektu."
 
-#: ../LongoMatch/Gui/MainWindow.cs:273
+#: ../LongoMatch/Gui/MainWindow.cs:278
 msgid "Open the project, please."
 msgstr "Odpri projekt."
 
-#: ../LongoMatch/Gui/MainWindow.cs:288
+#: ../LongoMatch/Gui/MainWindow.cs:293
 msgid "Import Project"
 msgstr "Uvozi projekt"
 
-#: ../LongoMatch/Gui/MainWindow.cs:306
+#: ../LongoMatch/Gui/MainWindow.cs:311
 msgid "Project successfully imported."
 msgstr "Projekt je uspešno uvožen."
 
-#: ../LongoMatch/Gui/MainWindow.cs:313
+#: ../LongoMatch/Gui/MainWindow.cs:318
 msgid "A project already exists for the file:"
 msgstr "Projekt te datoteke že obstaja:"
 
-#: ../LongoMatch/Gui/MainWindow.cs:314
+#: ../LongoMatch/Gui/MainWindow.cs:319
 msgid "Do you want to overwrite it?"
 msgstr "Ali jo želite prepisati?"
 
-#: ../LongoMatch/Gui/MainWindow.cs:383
+#: ../LongoMatch/Gui/MainWindow.cs:388
 #: ../LongoMatch/Gui/Component/PlayListWidget.cs:214
 msgid "Open playlist"
 msgstr "Odpri seznam predvajanja"
 
-#: ../LongoMatch/Gui/MainWindow.cs:406
+#: ../LongoMatch/Gui/MainWindow.cs:411
 msgid "The actual project will be closed due to an error in the media player:"
 msgstr "Projekt bo končan zaradi napake predvajalnika:"
 
-#: ../LongoMatch/Gui/MainWindow.cs:504
+#: ../LongoMatch/Gui/MainWindow.cs:509
 msgid "Select Export File"
 msgstr "Izbor datoteke za izvoz"
 
@@ -305,8 +305,8 @@ msgid "Visitor Team Template"
 msgstr "Predloga gostujoče ekipe"
 
 #: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:119
-msgid "You are about to delete a category and all the plays added to this category.Do you want to proceed?"
-msgstr "Izbrisana bo kategorija in vse igre dodane tej kategoriji. Ali želite nadaljevati?"
+msgid "You are about to delete a category and all the plays added to this category. Do you want to proceed?"
+msgstr "Izbrisana bo kategorija in vse pripadajoče igre. Ali želite nadaljevati?"
 
 #: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:125
 msgid "You can't delete the last section"
@@ -536,8 +536,8 @@ msgid "The Project for this video file already exists."
 msgstr "Projekt za ta video že obstaja."
 
 #: ../LongoMatch/DB/DataBase.cs:204
-msgid "Try to edit it whit the Database Manager"
-msgstr "Poskusite urediti z uporavljalnikom podatkovne zbirke."
+msgid "Try to edit it with the Database Manager"
+msgstr "Poskusite urediti z upravljalnikom podatkovne zbirke."
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.ProjectTemplateEditorDialog.cs:24
 msgid "Categories Template"
@@ -673,20 +673,14 @@ msgid "_File"
 msgstr "_Datoteka"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:122
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:123
 msgid "_New Project"
 msgstr "_Nov projekt"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:123
-msgid "_New Poyect"
-msgstr "_Nov projekt"
-
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:125
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:126
 msgid "_Open Project"
 msgstr "Odpri projekt"
-
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:126
-msgid "_Open Proyect"
-msgstr "_Odpri projekt"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:128
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:129
@@ -694,12 +688,9 @@ msgid "_Quit"
 msgstr "_Končaj"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:131
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:133
 msgid "_Close Project"
 msgstr "Zapri projekt"
-
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:133
-msgid "_Close Proyect"
-msgstr "_Zapri projekt"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:135
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:136
@@ -1040,7 +1031,7 @@ msgid "An error has occurred in the video editor."
 msgstr "Prišlo je do napake v urejevalniku videa."
 
 #: ../LongoMatch/Handlers/EventsManager.cs:182
-msgid "Please, retry again."
+msgid "Please, try again."
 msgstr "Poskusite znova."
 
 #: ../LongoMatch/Handlers/EventsManager.cs:257
@@ -1088,5 +1079,12 @@ msgstr "Čas:"
 msgid "Invalid video file:"
 msgstr "Neveljavna video datoteka:"
 
+#~ msgid "_New Poyect"
+#~ msgstr "_Nov projekt"
+#~ msgid "_Open Proyect"
+#~ msgstr "_Odpri projekt"
+#~ msgid "_Close Proyect"
+#~ msgstr "_Zapri projekt"
 #~ msgid "Error merging video segments. Please retry again"
 #~ msgstr "Napaka med združevanjem odsekov videa. Poskusite znova."
+
