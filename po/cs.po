@@ -1,14 +1,14 @@
 # Czech translation of longomatch.
+# Copyright (C) 2009, 2010 the author(s) of longomatch.
+# This file is distributed under the same license as the longomatch package.
 # Pavel Bárta <BartyCok@email.cz>, 2009.
 # Marek Černocký <marek@manet.cz>, 2010.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: longomatch\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=longomatch&component=general\n"
-"POT-Creation-Date: 2010-01-31 17:28+0000\n"
-"PO-Revision-Date: 2010-02-01 19:35+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-03-01 21:55+0100\n"
+"PO-Revision-Date: 2010-02-22 15:49+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -118,15 +118,15 @@ msgstr ""
 msgid "Do you want to import them?"
 msgstr "Chcete jej importovat?"
 
-#: ../LongoMatch/Main.cs:232
+#: ../LongoMatch/Main.cs:229
 msgid "The application has finished with an unexpected error."
 msgstr "Program byl ukončen pro neočekávanou chybu."
 
-#: ../LongoMatch/Main.cs:233
+#: ../LongoMatch/Main.cs:230
 msgid "A log has been saved at: "
 msgstr "Protokol byl uložen do: "
 
-#: ../LongoMatch/Main.cs:234
+#: ../LongoMatch/Main.cs:231
 msgid "Please, fill a bug report "
 msgstr "Prosím vyplňte protokol chybového hlášení."
 
@@ -142,48 +142,48 @@ msgstr ""
 "Jestliže bylo změněno umístění souboru, opravte jej pomocí správce databáze."
 
 #: ../LongoMatch/Gui/MainWindow.cs:140
-msgid "An error ocurred opening this project:"
-msgstr "Nastala chyba při otevírání tohoto projektu:"
+msgid "An error occurred opening this project:"
+msgstr "Vyskytla se chyba při otevírání tohoto projektu:"
 
-#: ../LongoMatch/Gui/MainWindow.cs:260
+#: ../LongoMatch/Gui/MainWindow.cs:265
 #: ../LongoMatch/Gui/Component/PlayListWidget.cs:263
 msgid "Please, select a video file."
 msgstr "Vyberte prosím soubor s videem."
 
-#: ../LongoMatch/Gui/MainWindow.cs:273
+#: ../LongoMatch/Gui/MainWindow.cs:278
 msgid "This file is already used in a Project."
 msgstr "Tento soubor je již používán jiným projektem."
 
-#: ../LongoMatch/Gui/MainWindow.cs:273
+#: ../LongoMatch/Gui/MainWindow.cs:278
 msgid "Open the project, please."
 msgstr "Otevřete projekt prosím."
 
-#: ../LongoMatch/Gui/MainWindow.cs:288
+#: ../LongoMatch/Gui/MainWindow.cs:293
 msgid "Import Project"
 msgstr "Importovat projekt"
 
-#: ../LongoMatch/Gui/MainWindow.cs:306
+#: ../LongoMatch/Gui/MainWindow.cs:311
 msgid "Project successfully imported."
 msgstr "Projekt byl úspěšně importován."
 
-#: ../LongoMatch/Gui/MainWindow.cs:313
+#: ../LongoMatch/Gui/MainWindow.cs:318
 msgid "A project already exists for the file:"
 msgstr "Pro tento soubor již existuje projekt:"
 
-#: ../LongoMatch/Gui/MainWindow.cs:314
-msgid "Do you want to overwritte it?"
+#: ../LongoMatch/Gui/MainWindow.cs:319
+msgid "Do you want to overwrite it?"
 msgstr "Chcete jej přepsat?"
 
-#: ../LongoMatch/Gui/MainWindow.cs:383
+#: ../LongoMatch/Gui/MainWindow.cs:388
 #: ../LongoMatch/Gui/Component/PlayListWidget.cs:214
 msgid "Open playlist"
 msgstr "Otevřít seznam utkání"
 
-#: ../LongoMatch/Gui/MainWindow.cs:406
+#: ../LongoMatch/Gui/MainWindow.cs:411
 msgid "The actual project will be closed due to an error in the media player:"
 msgstr "Aktuální projekt bude kvůli chybě v přehrávači médií uzavřen:"
 
-#: ../LongoMatch/Gui/MainWindow.cs:504
+#: ../LongoMatch/Gui/MainWindow.cs:509
 msgid "Select Export File"
 msgstr "Vyberte soubor exportu"
 
@@ -268,8 +268,8 @@ msgid "Close it first to allow its removal from the database"
 msgstr "Abyste jej mohli odstranit z databáze, nejdříve jej zavřete."
 
 #: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:107
-msgid "Do yo really want to delete:"
-msgstr "Přejete si opravdu odstranit:"
+msgid "Do you really want to delete:"
+msgstr "Skutečně chcete odstranit:"
 
 #: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:144
 msgid "The Project you are trying to load is actually in use."
@@ -308,10 +308,10 @@ msgstr "Šablona hostujícího týmu"
 
 #: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:119
 msgid ""
-"You are about to delete a category and all the plays added to this category."
+"You are about to delete a category and all the plays added to this category. "
 "Do you want to proceed?"
 msgstr ""
-"Zvolili jste odstranění kategorie spolu se všemi zápasy v této kategorii "
+"Zvolili jste odstranění kategorie a všech zápasů zařazených v této kategorii "
 "Chcete pokračovat?"
 
 #: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:125
@@ -549,7 +549,7 @@ msgid "The Project for this video file already exists."
 msgstr "Projekt pro toto video již existuje."
 
 #: ../LongoMatch/DB/DataBase.cs:204
-msgid "Try to edit it whit the Database Manager"
+msgid "Try to edit it with the Database Manager"
 msgstr "Pokuste se o opravu pomocí správce databáze"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.ProjectTemplateEditorDialog.cs:24
@@ -686,19 +686,13 @@ msgid "_File"
 msgstr "_Soubor"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:122
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:123
 msgid "_New Project"
 msgstr "_Nový projekt"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:123
-msgid "_New Poyect"
-msgstr "_Nový projekt"
-
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:125
-msgid "_Open Project"
-msgstr "_Otevřít projekt"
-
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:126
-msgid "_Open Proyect"
+msgid "_Open Project"
 msgstr "_Otevřít projekt"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:128
@@ -707,11 +701,8 @@ msgid "_Quit"
 msgstr "_Ukončit"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:131
-msgid "_Close Project"
-msgstr "_Zavřít projekt"
-
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:133
-msgid "_Close Proyect"
+msgid "_Close Project"
 msgstr "_Zavřít projekt"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:135
@@ -1050,12 +1041,12 @@ msgid "The video edition has finished successfully."
 msgstr "Zpracování videa bylo úspěšně dokončeno."
 
 #: ../LongoMatch/Handlers/EventsManager.cs:181
-msgid "An error has ocurred in the video editor."
-msgstr "Nastala chyba ve video editoru."
+msgid "An error has occurred in the video editor."
+msgstr "Nastala chyba ve vedeo editoru."
 
 #: ../LongoMatch/Handlers/EventsManager.cs:182
-msgid "Please, retry again."
-msgstr "Zkuste o to prosím ještě jednou."
+msgid "Please, try again."
+msgstr "Zkuste to prosím znovu."
 
 #: ../LongoMatch/Handlers/EventsManager.cs:257
 msgid "Please, close the opened project to play the playlist."
@@ -1099,4 +1090,3 @@ msgstr "Čas:"
 #: ../CesarPlayer/Utils/MediaFile.cs:164
 msgid "Invalid video file:"
 msgstr "Neplatný soubor s videem:"
-
