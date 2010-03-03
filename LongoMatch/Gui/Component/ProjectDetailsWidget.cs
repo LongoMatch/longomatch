@@ -71,11 +71,16 @@ namespace LongoMatch.Gui.Component
 
 		public ProjectType Use {
 			set {
-				if (value == ProjectType.NewFileProject  || value == ProjectType.EditProject) {
-					videobitratelabel.Hide();
-					bitratespinbutton.Hide();
+				if (value == ProjectType.NewFileProject  || value == ProjectType.EditProject
+				    || value == ProjectType.NewFakeCaptureProject) {
+					videobitratelabel.Visible = false;
+					bitratespinbutton.Visible = false;					
 				}
-
+				if (value == ProjectType.EditProject
+				    || value == ProjectType.NewFakeCaptureProject) {
+					label6.Visible = false;
+					hbox4.Visible = false;
+				}
 				if (value == ProjectType.EditProject) {
 					tagscombobox.Visible = false;
 					localcombobox.Visible = false;
@@ -233,7 +238,11 @@ namespace LongoMatch.Gui.Component
 		}
 
 		public void UpdateProject() {
-			project.File= mFile;
+			if (useType == ProjectType.EditProject ||
+			    useType == ProjectType.NewFileProject)
+				project.File= mFile;
+			else
+				project.File = null;
 			project.LocalName = localTeamEntry.Text;
 			project.VisitorName = visitorTeamEntry.Text;
 			project.LocalGoals = (int)localSpinButton.Value;
@@ -247,8 +256,10 @@ namespace LongoMatch.Gui.Component
 		}
 
 		public Project GetProject() {
-			if (this.Filename != "") {
-				if (useType == ProjectType.NewFileProject) {
+			if (useType != ProjectType.EditProject) {
+				if (Filename == "" && useType == ProjectType.NewFileProject)
+					return null;
+				else {
 					return new Project(mFile,
 					                   LocalName,
 					                   VisitorName,
@@ -260,14 +271,12 @@ namespace LongoMatch.Gui.Component
 					                   Sections,
 					                   LocalTeamTemplate,
 					                   VisitorTeamTemplate);
-
-				}
-				else {
-					UpdateProject();
-					return project;
-				}
+				}				
 			}
-			else return null;
+			else {
+				UpdateProject();
+				return project;
+			}
 		}
 
 		public void Clear() {

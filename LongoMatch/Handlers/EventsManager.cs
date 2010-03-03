@@ -19,6 +19,7 @@
 //
 
 using System;
+using LongoMatch.Common;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.TimeNodes;
@@ -58,6 +59,7 @@ namespace LongoMatch
 		private TimeNode selectedTimeNode=null;
 		// current proyect in use
 		private Project openedProject;
+		private ProjectType projectType;
 
 		public EventsManager(PlaysListTreeWidget treewidget, PlayersListTreeWidget localPlayersList, 
 		                     PlayersListTreeWidget visitorPlayersList, TagsTreeWidget tagsTreeWidget,
@@ -82,6 +84,12 @@ namespace LongoMatch
 		public  Project OpenedProject {
 			set {
 				openedProject = value;
+			}
+		}
+		
+		public ProjectType OpenedProjectType{
+			set{
+				projectType = value;
 			}
 		}
 
