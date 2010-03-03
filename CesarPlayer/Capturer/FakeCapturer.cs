@@ -48,9 +48,9 @@ namespace LongoMatch.Video.Capturer
 				if (!started)
 					return 0;
 				else if (playing)
-					return (ellapsed + (DateTime.Now - lastStart)).Milliseconds;
+					return (int)(ellapsed + (DateTime.Now - lastStart)).TotalMilliseconds;
 				else
-					return ellapsed.Milliseconds; 
+					return (int)ellapsed.TotalMilliseconds; 
 			}
 		}
 		
@@ -69,8 +69,9 @@ namespace LongoMatch.Video.Capturer
 		}
 		
 		public void Start(){
-			timerID = GLib.Timeout.Add(1000, OnTick);
+			timerID = GLib.Timeout.Add(100, OnTick);
 			lastStart = DateTime.Now;
+			playing = true;
 			started = true;
 		}
 		
@@ -115,7 +116,7 @@ namespace LongoMatch.Video.Capturer
 			return true;
 		}
 		
-		protected virtual bool OnTick(){
+		protected virtual bool OnTick(){			
 			if (EllapsedTime != null)
 				EllapsedTime(CurrentTime);
 			return true;
