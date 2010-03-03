@@ -138,7 +138,7 @@ namespace LongoMatch.DB
 			}
 			
 			this.tagsTemplate = new TagsTemplate();
-			this.Title = System.IO.Path.GetFileNameWithoutExtension(this.file.FilePath);
+			this.Title = file == null ? "" : System.IO.Path.GetFileNameWithoutExtension(this.file.FilePath);
 		}
 		#endregion
 
