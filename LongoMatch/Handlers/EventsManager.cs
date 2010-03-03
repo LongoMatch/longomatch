@@ -155,7 +155,8 @@ namespace LongoMatch
 				length = new Time((int)player.StreamLength);
 
 				Time fStop = (stop > length) ? length: stop;
-				Pixbuf miniature = player.CurrentMiniatureFrame;
+				Pixbuf miniature = projectType == ProjectType.NewFakeCaptureProject ?
+						null : player.CurrentMiniatureFrame;
 				MediaTimeNode tn = openedProject.AddTimeNode(section,fStart, fStop,miniature);
 				treewidget.AddPlay(tn,section);
 				tagsTreeWidget.AddPlay(tn);
