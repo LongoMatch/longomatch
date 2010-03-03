@@ -27,5 +27,6 @@ namespace LongoMatch.Common
 		NewFakeCaptureProject,
 		NewFileProject,
 		EditProject,
+		None,
 	}
 }
