@@ -168,14 +168,7 @@ namespace LongoMatch.Gui
 			
 			Title = "LongoMatch";
 			ClearWidgets();
-			HideWidgets();			
-			if (openedProject != null) {
-				openedProject.Clear();
-				openedProject = null;
-				projectType = ProjectType.None;
-				eManager.OpenedProject = null;
-				eManager.OpenedProjectType = ProjectType.None;				
-			}
+			HideWidgets();	
 			if (projectType != ProjectType.NewFileProject){
 				playerbin1.Visible = true;
 				eManager.Capturer = null;
@@ -186,6 +179,13 @@ namespace LongoMatch.Gui
 				playerbin1.Close();
 				playerbin1.LogoMode = true;
 			}
+			if (openedProject != null) {
+				openedProject.Clear();
+				openedProject = null;
+				projectType = ProjectType.None;
+				eManager.OpenedProject = null;
+				eManager.OpenedProjectType = ProjectType.None;				
+			}			
 			playlistwidget2.Visible = playlistVisible;
 			rightvbox.Visible = playlistVisible;
 			noteswidget1.Visible = false;
