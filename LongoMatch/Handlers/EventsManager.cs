@@ -48,6 +48,7 @@ namespace LongoMatch
 		private ButtonsWidget buttonswidget;
 		private PlayListWidget playlist;
 		private PlayerBin player;
+		private CapturerBin capturer;
 		private TimeLineWidget timeline;
 		private ProgressBar videoprogressbar;
 		private NotesWidget notes;
@@ -88,8 +89,14 @@ namespace LongoMatch
 		}
 		
 		public ProjectType OpenedProjectType{
-			set{
+			set {
 				projectType = value;
+			}
+		}
+		
+		public CapturerBin Capturer{
+			set {
+				capturer = value;
 			}
 		}
 
@@ -142,22 +149,32 @@ namespace LongoMatch
 
 		private void ProcessNewMarkEvent(int section,Time pos) {
 			if (player != null && openedProject != null) {
-				//Getting defualt star and stop gap for the section
+				Time fStop;
+				Pixbuf miniature;
+				MediaTimeNode tn;
+				Time length;
+				
+				//Get the default lead and lag time for the section
 				Time startTime = openedProject.Sections.GetStartTime(section);
 				Time stopTime = openedProject.Sections.GetStopTime(section);
 				// Calculating borders of the segment depnding
 				Time start = pos - startTime;
 				Time stop = pos + stopTime;
 				Time fStart = (start < new Time(0)) ? new Time(0) : start;
-				//La longitud tiene que ser en ms
-				Time length;
-
-				length = new Time((int)player.StreamLength);
-
-				Time fStop = (stop > length) ? length: stop;
-				Pixbuf miniature = projectType == ProjectType.NewFakeCaptureProject ?
+				
+				if (projectType == ProjectType.NewFakeCaptureProject || 
+				    projectType == ProjectType.NewCaptureProject){
+					fStop = stop;					
+				}
+				else {
+					length = new Time((int)player.StreamLength);
+					fStop = (stop > length) ? length: stop;
+				}
+				
+				miniature = projectType == ProjectType.NewFakeCaptureProject ?
 						null : player.CurrentMiniatureFrame;
-				MediaTimeNode tn = openedProject.AddTimeNode(section,fStart, fStop,miniature);
+				
+				tn = openedProject.AddTimeNode(section,fStart, fStop,miniature);
 				treewidget.AddPlay(tn,section);
 				tagsTreeWidget.AddPlay(tn);
 				timeline.QueueDraw();
@@ -200,7 +217,13 @@ namespace LongoMatch
 		}
 
 		public virtual void OnNewMark(int i) {
-			Time pos = new Time((int)player.CurrentTime);
+			Time pos;
+			
+			if (projectType == ProjectType.NewFakeCaptureProject || 
+			    projectType == ProjectType.NewCaptureProject)
+				pos =  new Time((int)capturer.CurrentTime);
+			else 
+				pos = new Time((int)player.CurrentTime);
 			ProcessNewMarkEvent(i,pos);
 		}
 

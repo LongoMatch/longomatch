@@ -143,8 +143,9 @@ namespace LongoMatch.Gui
 					} 
 				}else {
 					Title = "LongoMatch";
-					playerbin1.Visible = false;
+					playerbin1.Visible = false;					
 					capturerBin = new CapturerBin();
+					eManager.Capturer = capturerBin;
 					hbox2.Add(capturerBin);
 					(capturerBin).Show();	
 				}
@@ -177,6 +178,7 @@ namespace LongoMatch.Gui
 			}
 			if (projectType != ProjectType.NewFileProject){
 				playerbin1.Visible = true;
+				eManager.Capturer = null;
 				if (capturerBin != null)
 					capturerBin.Destroy();			
 			}
