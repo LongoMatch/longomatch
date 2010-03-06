@@ -149,6 +149,9 @@ namespace LongoMatch.Gui
 					Title = "LongoMatch";
 					playerbin1.Visible = false;					
 					capturerBin = new CapturerBin();
+					capturerBin.CaptureFinished += delegate {
+						CloseActualProyect();	
+					};
 					eManager.Capturer = capturerBin;
 					hbox2.Add(capturerBin);
 					(capturerBin).Show();	
@@ -172,21 +175,25 @@ namespace LongoMatch.Gui
 		}
 
 		private void CloseActualProyect() {
-			bool playlistVisible = playlistwidget2.Visible;
+			bool playlistVisible = playlistwidget2.Visible;			
 			
-			Title = "LongoMatch";
-			ClearWidgets();
-			HideWidgets();	
 			if (projectType != ProjectType.NewFileProject){
+				if (projectType == ProjectType.NewFakeCaptureProject)
+					if (!SaveFakeLiveProject(openedProject))
+						return;
 				playerbin1.Visible = true;
 				eManager.Capturer = null;
 				if (capturerBin != null)
-					capturerBin.Destroy();			
-			}
+					capturerBin.Destroy();
+			}			
 			else {
 				playerbin1.Close();
 				playerbin1.LogoMode = true;
 			}
+			Title = "LongoMatch";
+			ClearWidgets();
+			HideWidgets();	
+			
 			if (openedProject != null) {
 				openedProject.Clear();
 				openedProject = null;
@@ -259,6 +266,33 @@ namespace LongoMatch.Gui
 				res = true;
 			}
 			md.Destroy();			
+			return res;
+		}
+		
+		private bool SaveFakeLiveProject(Project project){
+			bool res = false;
+			MessagePopup.PopupMessage(this.Toplevel, MessageType.Info, 
+			                          Catalog.GetString("The project will be saved to a file. To add it to the databse, use the "+
+			                                            "Import function after adding the associated video file to your computer."));
+			                                                                             
+			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Save Project"),
+			                (Gtk.Window)Toplevel,
+			                FileChooserAction.Save,
+			                "gtk-cancel",ResponseType.Cancel,
+			                "gtk-save",ResponseType.Accept);
+			fChooser.SetCurrentFolder(MainClass.HomeDir());
+			FileFilter filter = new FileFilter();
+			filter.Name = "LongoMatch Project";
+			filter.AddPattern("*.lpr");
+
+			fChooser.AddFilter(filter);
+			if (fChooser.Run() == (int)ResponseType.Accept) {
+				Project.Export(project, fChooser.Filename);
+				MessagePopup.PopupMessage(this.Toplevel, MessageType.Info, 
+				                          Catalog.GetString("Project saved successfully"));			  
+				res = true;
+			}
+			fChooser.Destroy();
 			return res;
 		}
 
