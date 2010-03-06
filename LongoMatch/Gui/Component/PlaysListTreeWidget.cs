@@ -42,15 +42,13 @@ namespace LongoMatch.Gui.Component
 		public event PlayersTaggedHandler PlayersTagged;
 		public event TagPlayHandler TagPlay;
 
-
 		private Project project;
-
 
 		public PlaysListTreeWidget()
 		{
 			this.Build();
 
-		}
+		}		
 
 		public void DeletePlay(MediaTimeNode play, int section) {
 			if (project != null) {
@@ -95,6 +93,11 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		public bool ProjectIsLive{
+			set{
+				treeview.ProjectIsLive = value;
+			}
+		}
 
 		public Project Project {
 			set {

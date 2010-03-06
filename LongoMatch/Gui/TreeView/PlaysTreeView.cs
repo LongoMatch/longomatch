@@ -63,8 +63,9 @@ namespace LongoMatch.Gui.Component
 		private Gtk.TreeViewColumn nameColumn;
 		private Color[] colors;
 		private bool editing;
+		private bool projectIsLive;
 
-
+		
 		public PlaysTreeView() {
 			Selection.Mode = SelectionMode.Multiple;
 			Selection.SelectFunction = SelectFunction;
@@ -72,6 +73,8 @@ namespace LongoMatch.Gui.Component
 
 			SetMenu();
 			SetCategoriesMenu();
+			ProjectIsLive = false;
+			PlayListLoaded = false;
 
 			colors = new Color[20];
 
@@ -103,6 +106,14 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		public bool ProjectIsLive{
+			set{
+				projectIsLive = value;
+				addPLN.Visible = !projectIsLive;
+				snapshot.Visible = !projectIsLive;
+			}
+		}
+		
 		public Color[]  Colors {
 			set {
 				this.colors = value;
@@ -111,7 +122,7 @@ namespace LongoMatch.Gui.Component
 
 		public bool PlayListLoaded {
 			set {
-				addPLN.Sensitive=value;
+				addPLN.Sensitive = value;
 			}
 		}
 
@@ -357,7 +368,8 @@ namespace LongoMatch.Gui.Component
 			this.Model.GetIter(out iter, args.Path);
 			TimeNode tNode = (TimeNode)this.Model.GetValue(iter, 0);
 
-			if (tNode is MediaTimeNode && TimeNodeSelected != null)
+			if (tNode is MediaTimeNode && TimeNodeSelected != null
+			    && !projectIsLive)
 				this.TimeNodeSelected((MediaTimeNode)tNode);
 		}
 

@@ -84,6 +84,12 @@ namespace LongoMatch.Gui.Component
 			model.AppendValues(play);
 			filter.Refilter();
 		}
+		
+		public bool ProjectIsLive{
+			set{
+				treeview.ProjectIsLive = value;
+			}
+		}
 
 		public Project Project {
 			set {

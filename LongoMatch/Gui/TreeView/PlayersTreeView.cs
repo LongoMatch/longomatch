@@ -40,12 +40,14 @@ namespace LongoMatch.Gui.Component
 		private TreeIter selectedIter;
 		private Menu menu;
 		private MenuItem addPLN;
+		private MenuItem snapshot;
 		private Gtk.CellRendererText nameCell;
 		private TreePath path;
 		private Gtk.TreeViewColumn nameColumn;
 		//Using TimeNode as in the tree there are Media and Sections timenodes
 		private TimeNode selectedTimeNode;
 		private bool editing;
+		private bool projectIsLive;
 
 		private Team team;
 
@@ -56,6 +58,8 @@ namespace LongoMatch.Gui.Component
 			this.RowActivated += new RowActivatedHandler(OnTreeviewRowActivated);
 
 			SetMenu();
+			ProjectIsLive = false;
+			PlayListLoaded = false;
 
 			nameColumn = new Gtk.TreeViewColumn();
 			nameColumn.Title = "Name";
@@ -79,20 +83,30 @@ namespace LongoMatch.Gui.Component
 				return team ;
 			}
 		}
+		
+		public bool ProjectIsLive{
+			set{
+				projectIsLive = value;
+				addPLN.Visible = !projectIsLive;
+				snapshot.Visible = !projectIsLive;
+			}
+		}
 
 		public bool PlayListLoaded {
 			set {
-				addPLN.Sensitive=value;
+				addPLN.Sensitive = value;
 			}
 		}
 
 		private void SetMenu() {
+			MenuItem name;
+			MenuItem delete; 
 
 			menu = new Menu();
 
-			MenuItem name = new MenuItem(Catalog.GetString("Edit"));
-			MenuItem delete = new MenuItem(Catalog.GetString("Delete"));
-			MenuItem snapshot = new MenuItem(Catalog.GetString("Export to PGN images"));
+			name = new MenuItem(Catalog.GetString("Edit"));
+			delete = new MenuItem(Catalog.GetString("Delete"));
+			snapshot = new MenuItem(Catalog.GetString("Export to PGN images"));
 			addPLN = new MenuItem(Catalog.GetString("Add to playlist"));
 			addPLN.Sensitive=false;
 
@@ -217,7 +231,8 @@ namespace LongoMatch.Gui.Component
 			this.Model.GetIter(out iter, args.Path);
 			item = this.Model.GetValue(iter, 0);
 
-			if (item is MediaTimeNode && TimeNodeSelected != null)
+			if (item is MediaTimeNode && TimeNodeSelected != null
+			    && !projectIsLive)
 				this.TimeNodeSelected(item as MediaTimeNode);
 		}
 	}

@@ -266,9 +266,11 @@ namespace LongoMatch
 			foreach (int player in tNode.VisitorPlayers)
 				visitorPlayersList.DeleteTimeNode(tNode,player);
 			openedProject.DeleteTimeNode(tNode,section);
-			this.player.CloseActualSegment();
-			timeline.QueueDraw();
-			MainClass.DB.UpdateProject(openedProject);
+			if (projectType == ProjectType.NewFileProject){
+				this.player.CloseActualSegment();
+				MainClass.DB.UpdateProject(openedProject);
+			}
+			timeline.QueueDraw();			
 		}
 
 		protected virtual void OnPlayListNodeAdded(MediaTimeNode tNode)

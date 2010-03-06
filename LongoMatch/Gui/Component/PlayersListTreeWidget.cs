@@ -49,6 +49,12 @@ namespace LongoMatch.Gui.Component
 				playerstreeview.Team = value;
 			}
 		}
+		
+		public bool ProjectIsLive{
+			set{
+				playerstreeview.ProjectIsLive = value;
+			}
+		}
 
 		public void DeleteTimeNode(MediaTimeNode tNode, int player) {
 			if (template != null) {

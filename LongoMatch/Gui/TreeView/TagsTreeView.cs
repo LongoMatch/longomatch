@@ -49,6 +49,7 @@ namespace LongoMatch.Gui.Component
 		private Gtk.CellRendererText nameCell;
 		private Gtk.TreeViewColumn nameColumn;
 		private bool editing;
+		private bool projectIsLive;
 		
 
 		public TagsTreeView() {			
@@ -56,6 +57,8 @@ namespace LongoMatch.Gui.Component
 			RowActivated += new RowActivatedHandler(OnTreeviewRowActivated);
 	
 			SetMenu();
+			PlayListLoaded = false;
+			ProjectIsLive = false;
 
 			nameColumn = new Gtk.TreeViewColumn();
 			nameColumn.Title = "Tag";
@@ -73,9 +76,17 @@ namespace LongoMatch.Gui.Component
 
 		public bool PlayListLoaded {
 			set {
-				addPLN.Sensitive=value;
+				addPLN.Sensitive = value;
 			}
-		}		
+		}	
+		
+		public bool ProjectIsLive{
+			set{
+				projectIsLive = value;
+				addPLN.Visible = !projectIsLive;
+				snapshot.Visible = !projectIsLive;
+			}
+		}
 
 		private void SetMenu() {
 			menu = new Menu();
@@ -96,7 +107,7 @@ namespace LongoMatch.Gui.Component
 			addPLN.Activated += new EventHandler(OnAdded);
 			snapshot.Activated += new EventHandler(OnSnapshot);
 			menu.ShowAll();
-		}
+		}		
 
 		private MediaTimeNode GetValueFromPath(TreePath path){
 			Gtk.TreeIter iter;
@@ -146,7 +157,7 @@ namespace LongoMatch.Gui.Component
 			Model.GetIter(out iter, args.Path);
 			MediaTimeNode tNode = Model.GetValue(iter, 0) as MediaTimeNode;
 
-			if (TimeNodeSelected != null)
+			if (TimeNodeSelected != null && !projectIsLive)
 				TimeNodeSelected(tNode);
 		}
 

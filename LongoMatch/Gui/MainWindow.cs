@@ -140,6 +140,10 @@ namespace LongoMatch.Gui
 						if (project.File.HasVideo)
 							playerbin1.LogoMode = false;
 						timelinewidget1.Project = project;
+						treewidget1.ProjectIsLive = false;
+						localplayerslisttreewidget.ProjectIsLive = false;
+						visitorplayerslisttreewidget.ProjectIsLive = false;
+						tagstreewidget1.ProjectIsLive = false;						
 					} 
 				}else {
 					Title = "LongoMatch";
@@ -148,6 +152,10 @@ namespace LongoMatch.Gui
 					eManager.Capturer = capturerBin;
 					hbox2.Add(capturerBin);
 					(capturerBin).Show();	
+					treewidget1.ProjectIsLive = true;
+					localplayerslisttreewidget.ProjectIsLive = true;
+					visitorplayerslisttreewidget.ProjectIsLive = true;
+					tagstreewidget1.ProjectIsLive = true;	
 				}
 				
 				playlistwidget2.Stop();
