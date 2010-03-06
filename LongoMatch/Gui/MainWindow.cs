@@ -164,7 +164,7 @@ namespace LongoMatch.Gui
 				visitorplayerslisttreewidget.SetTeam(project.VisitorTeamTemplate,project.GetVisitorTeamModel());
 				tagstreewidget1.Project = project;				
 				buttonswidget1.Sections = project.Sections;
-				MakeActionsSensitive(true);
+				MakeActionsSensitive(true,projectType);
 				ShowWidgets();
 				hkManager.Sections=project.Sections;
 				KeyPressEvent += hotkeysListener;
@@ -199,18 +199,19 @@ namespace LongoMatch.Gui
 			noteswidget1.Visible = false;
 			SaveDB();
 			selectedTimeNode = null;
-			MakeActionsSensitive(false);
+			MakeActionsSensitive(false, projectType);
 			hkManager.Sections = null;
 			KeyPressEvent -= hotkeysListener;
 		}
 
-		private void MakeActionsSensitive(bool sensitive) {
+		private void MakeActionsSensitive(bool sensitive, ProjectType projectType) {
+			bool sensitive2 = sensitive && projectType == ProjectType.NewFileProject;
 			CloseProjectAction.Sensitive=sensitive;
 			SaveProjectAction.Sensitive = sensitive;
-			CaptureModeAction.Sensitive = sensitive;
-			AnalyzeModeAction.Sensitive = sensitive;
-			ExportProjectToCSVFileAction.Sensitive = sensitive;
-			HideAllWidgetsAction.Sensitive=sensitive;
+			CaptureModeAction.Sensitive = sensitive2;
+			AnalyzeModeAction.Sensitive = sensitive2;
+			ExportProjectToCSVFileAction.Sensitive = sensitive2;
+			HideAllWidgetsAction.Sensitive=sensitive2;
 		}
 
 		private void ShowWidgets() {
