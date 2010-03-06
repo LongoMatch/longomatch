@@ -75,7 +75,6 @@ namespace LongoMatch.Gui.Dialog {
             this.fromfileradiobutton = new Gtk.RadioButton("");
             this.fromfileradiobutton.CanFocus = true;
             this.fromfileradiobutton.Name = "fromfileradiobutton";
-            this.fromfileradiobutton.Active = true;
             this.fromfileradiobutton.DrawIndicator = true;
             this.fromfileradiobutton.UseUnderline = true;
             this.fromfileradiobutton.Group = new GLib.SList(System.IntPtr.Zero);

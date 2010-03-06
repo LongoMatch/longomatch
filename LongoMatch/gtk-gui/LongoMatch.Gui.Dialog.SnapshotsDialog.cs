@@ -88,7 +88,6 @@ namespace LongoMatch.Gui.Dialog {
             // Container child table1.Gtk.Table+TableChild
             this.playLabel = new Gtk.Label();
             this.playLabel.Name = "playLabel";
-            this.playLabel.LabelProp = "";
             this.table1.Add(this.playLabel);
             Gtk.Table.TableChild w6 = ((Gtk.Table.TableChild)(this.table1[this.playLabel]));
             w6.LeftAttach = ((uint)(1));

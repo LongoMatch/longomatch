@@ -91,7 +91,7 @@ namespace LongoMatch.Gui {
         
         private Gtk.VBox vbox5;
         
-        private Gtk.HBox hbox1;
+        private Gtk.HBox hbox2;
         
         private LongoMatch.Gui.Component.DrawingToolBox drawingtoolbox1;
         
@@ -300,29 +300,29 @@ namespace LongoMatch.Gui {
             this.vbox5.Name = "vbox5";
             this.vbox5.Spacing = 6;
             // Container child vbox5.Gtk.Box+BoxChild
-            this.hbox1 = new Gtk.HBox();
-            this.hbox1.Name = "hbox1";
-            this.hbox1.Spacing = 6;
-            // Container child hbox1.Gtk.Box+BoxChild
+            this.hbox2 = new Gtk.HBox();
+            this.hbox2.Name = "hbox2";
+            this.hbox2.Spacing = 6;
+            // Container child hbox2.Gtk.Box+BoxChild
             this.drawingtoolbox1 = new LongoMatch.Gui.Component.DrawingToolBox();
             this.drawingtoolbox1.Events = ((Gdk.EventMask)(256));
             this.drawingtoolbox1.Name = "drawingtoolbox1";
-            this.hbox1.Add(this.drawingtoolbox1);
-            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.hbox1[this.drawingtoolbox1]));
+            this.hbox2.Add(this.drawingtoolbox1);
+            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.hbox2[this.drawingtoolbox1]));
             w10.Position = 0;
             w10.Expand = false;
             w10.Fill = false;
-            // Container child hbox1.Gtk.Box+BoxChild
+            // Container child hbox2.Gtk.Box+BoxChild
             this.playerbin1 = new LongoMatch.Gui.PlayerBin();
             this.playerbin1.Events = ((Gdk.EventMask)(256));
             this.playerbin1.Name = "playerbin1";
             this.playerbin1.Rate = 1F;
             this.playerbin1.ExpandLogo = true;
-            this.hbox1.Add(this.playerbin1);
-            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.hbox1[this.playerbin1]));
+            this.hbox2.Add(this.playerbin1);
+            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.hbox2[this.playerbin1]));
             w11.Position = 1;
-            this.vbox5.Add(this.hbox1);
-            Gtk.Box.BoxChild w12 = ((Gtk.Box.BoxChild)(this.vbox5[this.hbox1]));
+            this.vbox5.Add(this.hbox2);
+            Gtk.Box.BoxChild w12 = ((Gtk.Box.BoxChild)(this.vbox5[this.hbox2]));
             w12.Position = 0;
             // Container child vbox5.Gtk.Box+BoxChild
             this.timelinewidget1 = new LongoMatch.Gui.Component.TimeLineWidget();
