@@ -122,14 +122,14 @@ namespace LongoMatch.TimeNodes
 
 		public override string ToString()
 		{
-			string modifierS = Catalog.GetString("none");
+			string modifierS;
 			if (!Defined)
 				return Catalog.GetString("Not defined");
 			if (Modifier == ModifierType.Mod1Mask)
 				modifierS = "<Alt>+";
 			else if (Modifier == ModifierType.ShiftMask)
 				modifierS = "<Shift>+";
-			else if (modifier == -1)
+			else
 				modifierS = "";
 
 			return string.Format("{0}{1}", modifierS,(Key.ToString()).ToLower());
