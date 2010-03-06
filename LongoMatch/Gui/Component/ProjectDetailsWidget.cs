@@ -76,8 +76,7 @@ namespace LongoMatch.Gui.Component
 					videobitratelabel.Visible = false;
 					bitratespinbutton.Visible = false;					
 				}
-				if (value == ProjectType.EditProject
-				    || value == ProjectType.NewFakeCaptureProject) {
+				if (value == ProjectType.NewFakeCaptureProject) {
 					label6.Visible = false;
 					hbox4.Visible = false;
 				}
