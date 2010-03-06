@@ -256,7 +256,6 @@
                 <child>
                   <widget class="Gtk.Label" id="timelabel">
                     <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes" />
                   </widget>
                   <packing>
                     <property name="Position">3</property>

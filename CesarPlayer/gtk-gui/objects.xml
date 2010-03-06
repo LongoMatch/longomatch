@@ -23,7 +23,7 @@
     <itemgroups />
     <signals>
       <itemgroup label="CapturerBin Signals">
-        <signal name="StopEvent" />
+        <signal name="CaptureFinished" />
       </itemgroup>
     </signals>
   </object>

@@ -33,7 +33,7 @@ namespace LongoMatch.Gui
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class CapturerBin : Gtk.Bin
 	{
-		public event EventHandler StopEvent;
+		public event EventHandler CaptureFinished;
 		
 		ICapturer capturer;
 		
@@ -118,16 +118,17 @@ namespace LongoMatch.Gui
 		protected virtual void OnStopbuttonClicked (object sender, System.EventArgs e)
 		{
 			MessageDialog md = new MessageDialog((Window)this.Toplevel, DialogFlags.Modal, MessageType.Question, ButtonsType.YesNo,
-			                                     Catalog.GetString("You choosed stopping the current capture."+"\n"+
+			                                     Catalog.GetString("You are going to stop and finish the current capture."+"\n"+
 			                                                       "Do you want to proceed?"));
 			if (md.Run() == (int)ResponseType.Yes){
 				Stop();
 				recbutton.Visible = true;
 				pausebutton.Visible = false;
 				stopbutton.Visible = false;
-				if (StopEvent != null)
-					StopEvent(this, new EventArgs());
+				if (CaptureFinished != null)
+					CaptureFinished(this, new EventArgs());
 			}
+			md.Destroy();
 		}				
 		
 		protected virtual void OnTick (int ellapsedTime){
