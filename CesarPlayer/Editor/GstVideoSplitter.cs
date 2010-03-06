@@ -303,7 +303,11 @@ namespace LongoMatch.Video.Editor {
 		static extern void gst_video_editor_cancel(IntPtr raw);
 
 		public void Cancel() {
-			gst_video_editor_cancel(Handle);
+			// The handle might have already been dealocated
+			try{
+				gst_video_editor_cancel(Handle);
+			}catch{
+			}
 		}
 		
 		[DllImport("libcesarplayer.dll")]
