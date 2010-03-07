@@ -181,8 +181,7 @@ namespace LongoMatch.Gui
 			
 			if (projectType != ProjectType.NewFileProject){
 				if (projectType == ProjectType.NewFakeCaptureProject)
-					if (!SaveFakeLiveProject(openedProject))
-						return;
+					SaveFakeLiveProject(openedProject);
 				playerbin1.Visible = true;
 				eManager.Capturer = null;
 				if (capturerBin != null)
@@ -271,15 +270,14 @@ namespace LongoMatch.Gui
 			return res;
 		}
 		
-		private bool SaveFakeLiveProject(Project project){
-			bool res = false;
+		private void SaveFakeLiveProject(Project project){
 			MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel, DialogFlags.Modal, MessageType.Question, ButtonsType.OkCancel,
-			                                     Catalog.GetString("The project will be saved to a file.You can insert it later into the database using the "+
+			                                     Catalog.GetString("The project will be saved to a file. You can insert it later into the database using the "+
 			                                                       "Import function once you copied the video file to your computer.\n"+
 			                                                       "If you cancel this action all your changes will be lost!"));			                                           
 			if (md.Run() == (int)ResponseType.Cancel){
 				md.Destroy();
-				return true;
+				return;
 			}else
 				md.Destroy();
 			                                                                       
@@ -298,10 +296,8 @@ namespace LongoMatch.Gui
 				Project.Export(project, fChooser.Filename);
 				MessagePopup.PopupMessage(this.Toplevel, MessageType.Info, 
 				                          Catalog.GetString("Project saved successfully."));			  
-				res = true;
 			}
 			fChooser.Destroy();
-			return res;
 		}
 
 		#endregion
