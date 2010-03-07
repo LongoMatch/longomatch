@@ -261,22 +261,29 @@ namespace LongoMatch.Gui
 				return true;
 			MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel, DialogFlags.Modal, MessageType.Question, ButtonsType.YesNo,
 			                                     Catalog.GetString("A capture project is actually running."+
-			                                                       "This action will stop the ongoing capture and save the project"+"\n"+
+			                                                       "This action will stop the ongoing capture and save the project."+"\n"+
 			                                                       "Do you want to proceed?"));
 			if (md.Run() == (int)ResponseType.Yes){
+				md.Destroy();
 				CloseActualProyect();
 				res = true;
-			}
-			md.Destroy();			
+			} else
+				md.Destroy();			
 			return res;
 		}
 		
 		private bool SaveFakeLiveProject(Project project){
 			bool res = false;
-			MessagePopup.PopupMessage(this.Toplevel, MessageType.Info, 
-			                          Catalog.GetString("The project will be saved to a file. To insert it into the databse, use the "+
-			                                            "Import function after adding the associated video file to your computer."));
-			                                                                             
+			MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel, DialogFlags.Modal, MessageType.Question, ButtonsType.OkCancel,
+			                                     Catalog.GetString("The project will be saved to a file.You can insert it later into the database using the "+
+			                                                       "Import function once you copied the video file to your computer.\n"+
+			                                                       "If you cancel this action all your changes will be lost!"));			                                           
+			if (md.Run() == (int)ResponseType.Cancel){
+				md.Destroy();
+				return true;
+			}else
+				md.Destroy();
+			                                                                       
 			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Save Project"),
 			                (Gtk.Window)Toplevel,
 			                FileChooserAction.Save,
@@ -291,7 +298,7 @@ namespace LongoMatch.Gui
 			if (fChooser.Run() == (int)ResponseType.Accept) {
 				Project.Export(project, fChooser.Filename);
 				MessagePopup.PopupMessage(this.Toplevel, MessageType.Info, 
-				                          Catalog.GetString("Project saved successfully"));			  
+				                          Catalog.GetString("Project saved successfully."));			  
 				res = true;
 			}
 			fChooser.Destroy();
