@@ -38,12 +38,17 @@ namespace LongoMatch.Gui.Dialog
 
 		public ProjectType Use {
 			set {
-				this.fdwidget.Use = value;
+				fdwidget.Use = value;
 			}
 		}
-
-		public Project GetProject() {
-			return this.fdwidget.GetProject();
+		
+		public Project Project{
+			get {
+				return fdwidget.GetProject();
+			}
+			set{
+				fdwidget.SetProject(value);
+			}
 		}
 	}
 }

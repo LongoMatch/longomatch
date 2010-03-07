@@ -370,7 +370,7 @@ namespace LongoMatch.Gui
 			npd.TransientFor = this;
 			npd.Use = type;
 			int response = npd.Run();
-			while (response == (int)ResponseType.Ok && npd.GetProject() == null) {
+			while (response == (int)ResponseType.Ok && npd.Project == null) {
 				MessagePopup.PopupMessage(this, MessageType.Info,
 				                          Catalog.GetString("Please, select a video file."));
 				response=npd.Run();
@@ -378,7 +378,7 @@ namespace LongoMatch.Gui
 			npd.Destroy();
 			// Si se cumplen las condiciones y se ha pulsado el botón aceptar continuamos
 			if (response ==(int)ResponseType.Ok) {
-				project = npd.GetProject();
+				project = npd.Project;
 				if (type == ProjectType.NewFileProject) {
 					try {
 						MainClass.DB.AddProject(project);
