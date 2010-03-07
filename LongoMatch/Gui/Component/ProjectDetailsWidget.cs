@@ -237,9 +237,7 @@ namespace LongoMatch.Gui.Component
 		}
 
 		public void UpdateProject() {
-			if (useType == ProjectType.EditProject ||
-			    useType == ProjectType.NewFileProject)
-				project.File= mFile;			
+			project.File= mFile;			
 			project.LocalName = localTeamEntry.Text;
 			project.VisitorName = visitorTeamEntry.Text;
 			project.LocalGoals = (int)localSpinButton.Value;
