@@ -195,7 +195,7 @@ namespace LongoMatch.Gui
 			Title = "LongoMatch";
 			ClearWidgets();
 			HideWidgets();	
-			
+			SaveDB();
 			if (openedProject != null) {
 				openedProject.Clear();
 				openedProject = null;
@@ -205,8 +205,7 @@ namespace LongoMatch.Gui
 			}			
 			playlistwidget2.Visible = playlistVisible;
 			rightvbox.Visible = playlistVisible;
-			noteswidget1.Visible = false;
-			SaveDB();
+			noteswidget1.Visible = false;			
 			selectedTimeNode = null;
 			MakeActionsSensitive(false, projectType);
 			hkManager.Sections = null;
