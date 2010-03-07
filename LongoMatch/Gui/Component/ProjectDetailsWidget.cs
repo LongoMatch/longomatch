@@ -239,9 +239,7 @@ namespace LongoMatch.Gui.Component
 		public void UpdateProject() {
 			if (useType == ProjectType.EditProject ||
 			    useType == ProjectType.NewFileProject)
-				project.File= mFile;
-			else
-				project.File = null;
+				project.File= mFile;			
 			project.LocalName = localTeamEntry.Text;
 			project.VisitorName = visitorTeamEntry.Text;
 			project.LocalGoals = (int)localSpinButton.Value;
@@ -259,6 +257,11 @@ namespace LongoMatch.Gui.Component
 				if (Filename == "" && useType == ProjectType.NewFileProject)
 					return null;
 				else {
+					if (useType == ProjectType.NewFakeCaptureProject){
+						mFile = new PreviewMediaFile();
+						mFile.FilePath = Constants.FAKE_PROJECT;
+						mFile.Fps = 25;
+					}					
 					return new Project(mFile,
 					                   LocalName,
 					                   VisitorName,

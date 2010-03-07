@@ -21,7 +21,10 @@ using System;
 namespace LongoMatch.Common
 {
 	class Constants{
-        	public const string TRANSLATORS = 
+		
+		public const string FAKE_PROJECT = "@Fake Project@";
+		
+		public const string TRANSLATORS = 
 @"Andoni Morales Alastruey (es)
 Mario Blättermann (de)
 Pavel Bárta (cs)
