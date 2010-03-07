@@ -33,6 +33,7 @@ using LongoMatch.Gui.Popup;
 using LongoMatch.Video;
 using LongoMatch.Video.Capturer;
 using LongoMatch.Video.Player;
+using LongoMatch.Video.Utils;
 using LongoMatch.Updates;
 using LongoMatch.IO;
 using LongoMatch.Handlers;
@@ -273,7 +274,7 @@ namespace LongoMatch.Gui
 		private bool SaveFakeLiveProject(Project project){
 			bool res = false;
 			MessagePopup.PopupMessage(this.Toplevel, MessageType.Info, 
-			                          Catalog.GetString("The project will be saved to a file. To add it to the databse, use the "+
+			                          Catalog.GetString("The project will be saved to a file. To insert it into the databse, use the "+
 			                                            "Import function after adding the associated video file to your computer."));
 			                                                                             
 			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Save Project"),
@@ -401,6 +402,7 @@ namespace LongoMatch.Gui
 		
 		protected virtual void OnImportProjectActionActivated (object sender, System.EventArgs e)
 		{
+			NewProjectDialog npd=null;
 			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Import Project"),
 			                (Gtk.Window)Toplevel,
 			                FileChooserAction.Open,
@@ -410,39 +412,64 @@ namespace LongoMatch.Gui
 			FileFilter filter = new FileFilter();
 			filter.Name = "LongoMatch Project";
 			filter.AddPattern("*.lpr");
-
+			
 			fChooser.AddFilter(filter);
 			if (fChooser.Run() == (int)ResponseType.Accept) {
 				Project project;
+				string fileName = fChooser.Filename;				
+				fChooser.Destroy();
 				try{
-					project = Project.Import(fChooser.Filename);
-					if (!MainClass.DB.Exists(project)){
-						MainClass.DB.AddProject(project);
-						MessagePopup.PopupMessage(this, MessageType.Info, 
-						                          Catalog.GetString("Project successfully imported."));
-					}
-					else{
-						MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel,
-						                       DialogFlags.Modal,
-						                       MessageType.Question,
-						                       Gtk.ButtonsType.YesNo,
-						                       Catalog.GetString("A project already exists for the file:")+project.File.FilePath+
-						                       "\n"+Catalog.GetString("Do you want to overwrite it?"));
-						md.Icon=Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Dialog, 48);
-						if (md.Run() == (int)ResponseType.Yes){
-							MainClass.DB.UpdateProject(project);
-						}
-						md.Destroy();						
-					}
+					project = Project.Import(fileName);
 				}
 				catch (Exception ex){
-					MessagePopup.PopupMessage(this, MessageType.Error, ex.Message);
-					fChooser.Destroy();
+					MessagePopup.PopupMessage(this, MessageType.Error, ex.Message);					
 					return;
 				}
-			}
-			fChooser.Destroy();
-			
+				// If it's a fake live project prompt for a video file and
+				// create a new PreviewMediaFile for this project
+				if (project.File.FilePath == Constants.FAKE_PROJECT){
+					project.File = null;
+					npd = new NewProjectDialog();						
+					npd.TransientFor = this;
+					npd.Use = ProjectType.EditProject;
+					npd.Project = project;
+					int response = npd.Run();
+					while (response == (int)ResponseType.Ok && npd.Project == null) {
+						MessagePopup.PopupMessage(this, MessageType.Info,
+						                          Catalog.GetString("Please, select a video file."));
+						response=npd.Run();
+					}
+					if (response ==(int)ResponseType.Ok) {
+						project = npd.Project;
+						npd.Destroy();										
+					} else {							
+						npd.Destroy();
+						return;
+					}
+				}
+				// Try to add the project to the database and warn if a project 
+				// already exists in the database with the same file path
+				if (!MainClass.DB.Exists(project)){
+					MainClass.DB.AddProject(project);
+					MessagePopup.PopupMessage(this, MessageType.Info, 
+					                          Catalog.GetString("Project successfully imported."));
+				}
+				else{
+					MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel,
+					                                     DialogFlags.Modal,
+					                                     MessageType.Question,
+					                                     Gtk.ButtonsType.YesNo,
+					                                     Catalog.GetString("A project already exists for the file:")+project.File.FilePath+
+					                                     "\n"+Catalog.GetString("Do you want to overwrite it?"));
+					md.Icon=Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Dialog, 48);
+					if (md.Run() == (int)ResponseType.Yes){
+						MainClass.DB.UpdateProject(project);
+					}
+					md.Destroy();						
+					
+				}				
+			} else
+				fChooser.Destroy();
 		}
 
 		protected virtual void OnDatabaseManagerActivated(object sender, System.EventArgs e)
