@@ -222,7 +222,7 @@ namespace LongoMatch.Gui.Component
 		public void SetProject(Project project) {
 			this.project = project;
 			mFile = project.File;
-			Filename = mFile.FilePath;
+			Filename = mFile != null ? mFile.FilePath : "";
 			LocalName = project.LocalName;
 			VisitorName = project.VisitorName;
 			LocalGoals = project.LocalGoals;
