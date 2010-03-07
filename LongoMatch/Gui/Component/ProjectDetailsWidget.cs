@@ -274,6 +274,10 @@ namespace LongoMatch.Gui.Component
 				}				
 			}
 			else {
+				// New imported project from a fake live analysis will have a null File
+				// return null to force selecting a new file.
+				if (mFile == null)
+					return null;
 				UpdateProject();
 				return project;
 			}
