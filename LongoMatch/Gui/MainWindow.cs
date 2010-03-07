@@ -159,6 +159,7 @@ namespace LongoMatch.Gui
 					localplayerslisttreewidget.ProjectIsLive = true;
 					visitorplayerslisttreewidget.ProjectIsLive = true;
 					tagstreewidget1.ProjectIsLive = true;	
+					CaptureModeAction.Active = true;
 				}
 				
 				playlistwidget2.Stop();
@@ -185,7 +186,7 @@ namespace LongoMatch.Gui
 				eManager.Capturer = null;
 				if (capturerBin != null)
 					capturerBin.Destroy();
-			}			
+			}
 			else {
 				playerbin1.Close();
 				playerbin1.LogoMode = true;
