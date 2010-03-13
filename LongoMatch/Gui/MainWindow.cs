@@ -247,29 +247,41 @@ namespace LongoMatch.Gui
 			visitorplayerslisttreewidget.Clear();
 		}
 
-		private void SaveDB() {
+		private void SaveProject() {
 			if (openedProject != null && projectType == ProjectType.NewFileProject) {
 				MainClass.DB.UpdateProject(OpenedProject());
-			}
+			} else if (projectType == ProjectType.NewFakeCaptureProject)
+				SaveFakeLiveProject(openedProject);
 		}
 		
-		private bool FinishCapture(){
-			bool res=false;
+		private bool PromptCloseProject(){
+			int res;
+			EndCaptureDialog dialog;
 			
 			if (projectType == ProjectType.None || 
-			    projectType == ProjectType.NewFileProject)
+			    projectType == ProjectType.NewFileProject){
+				CloseOpenedProject(true);
 				return true;
-			MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel, DialogFlags.Modal, MessageType.Question, ButtonsType.YesNo,
-			                                     Catalog.GetString("A capture project is actually running."+
-			                                                       "This action will stop the ongoing capture and save the project."+"\n"+
-			                                                       "Do you want to proceed?"));
-			if (md.Run() == (int)ResponseType.Yes){
-				md.Destroy();
-				CloseActualProyect();
-				res = true;
-			} else
-				md.Destroy();			
-			return res;
+			}
+			
+			dialog = new EndCaptureDialog();
+			dialog.TransientFor = (Gtk.Window)this.Toplevel;			
+			res = dialog.Run();
+			dialog.Destroy();			
+			
+			/* Close project wihtout saving */
+			if (res == (int)EndCaptureResponse.Quit){
+				CloseOpenedProject(false);
+				return true;
+			}
+			/* Close and save project */
+			else if (res == (int)EndCaptureResponse.Save){
+				CloseOpenedProject(true);
+				return true;
+			}
+			else
+				/* Continue with the current project */
+				return false;			
 		}
 		
 		private void SaveFakeLiveProject(Project project){
@@ -335,7 +347,7 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnOpenActivated(object sender, System.EventArgs e)
 		{
-			if (!FinishCapture())
+			if (!PromptCloseProject())
 				return;
 			
 			ProjectDescription project=null;
@@ -356,7 +368,7 @@ namespace LongoMatch.Gui
 			ProjectSelectionDialog psd;
 			NewProjectDialog npd;
 			
-			if (!FinishCapture())
+			if (!PromptCloseProject())
 				return;
 			
 			// Show the project selection dialog
@@ -400,8 +412,7 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnCloseActivated(object sender, System.EventArgs e)
 		{
-			if (FinishCapture())
-				CloseOpenedProject(true);
+			PromptCloseProject();
 		}
 		
 		protected virtual void OnImportProjectActionActivated (object sender, System.EventArgs e)
@@ -491,7 +502,7 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnDeleteEvent(object o, Gtk.DeleteEventArgs args)
 		{
-			if (!FinishCapture())
+			if (!PromptCloseProject())
 				return;
 			playlistwidget2.StopEdition();
 			SaveProject();
@@ -503,7 +514,7 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnQuitActivated(object sender, System.EventArgs e)
 		{
-			if (!FinishCapture())
+			if (!PromptCloseProject())
 				return;
 			playlistwidget2.StopEdition();
 			SaveProject();
