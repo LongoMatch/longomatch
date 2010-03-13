@@ -20,6 +20,8 @@
 
 using System;
 using Gtk;
+using Gdk;
+using GLib;
 using LongoMatch.Video;
 using LongoMatch.Video.Capturer;
 using LongoMatch.Video.Utils;
@@ -35,13 +37,15 @@ namespace LongoMatch.Gui
 	{
 		public event EventHandler CaptureFinished;
 		
+		private Pixbuf logopix;
+		
 		ICapturer capturer;
 		
 		public CapturerBin()
 		{
 			this.Build();
-			Type = CapturerType.FAKE;		
-		}
+			Type = CapturerType.FAKE;	
+		}		
 		
 		public CapturerType Type {
 			set{
@@ -54,6 +58,17 @@ namespace LongoMatch.Gui
 				capturer.EllapsedTime += OnTick;
 				capturerhbox.Add((Widget)capturer);
 				((Widget)capturer).Show();
+			}
+		}
+		
+		public string Logo{
+			set{
+				try{
+					this.logopix = new Pixbuf(value);
+					Console.WriteLine("Setting logo");
+				}catch{
+					// Ignore errors if the file doesn't exists
+				}
 			}
 		}
 		 
@@ -117,7 +132,7 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnStopbuttonClicked (object sender, System.EventArgs e)
 		{
-			MessageDialog md = new MessageDialog((Window)this.Toplevel, DialogFlags.Modal, MessageType.Question, ButtonsType.YesNo,
+			MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel, DialogFlags.Modal, MessageType.Question, ButtonsType.YesNo,
 			                                     Catalog.GetString("You are going to stop and finish the current capture."+"\n"+
 			                                                       "Do you want to proceed?"));
 			if (md.Run() == (int)ResponseType.Yes){
@@ -133,6 +148,46 @@ namespace LongoMatch.Gui
 		
 		protected virtual void OnTick (int ellapsedTime){
 			timelabel.Text = "Time: " + TimeString.MSecondsToSecondsString(CurrentTime);
+		}
+		
+		protected virtual void OnLogodrawingareaExposeEvent (object o, Gtk.ExposeEventArgs args)
+		{	
+			Gdk.Window win;
+			Rectangle area;
+			Pixbuf frame;
+			Pixbuf drawing;
+			int width, height, allocWidth, allocHeight, logoX, logoY;
+			float ratio;
+			
+			if (logopix == null)
+				return;
+
+			win = logodrawingarea.GdkWindow;
+			width = logopix.Width;
+			height = logopix.Height;
+			allocWidth = logodrawingarea.Allocation.Width;
+			allocHeight = logodrawingarea.Allocation.Height;
+			area = args.Event.Area;
+			
+			/* Checking if allocated space is smaller than our logo */
+			if ((float) allocWidth / width > (float) allocHeight / height) {
+				ratio = (float) allocHeight / height;
+			} else {
+				ratio = (float) allocWidth / width;
+			}
+			width = (int) (width * ratio);
+			height = (int) (height * ratio);
+			
+			logoX = (allocWidth / 2) - (width / 2);
+			logoY = (allocHeight / 2) - (height / 2);
+
+			/* Drawing our frame */
+			frame = logopix.ScaleSimple(width, height, InterpType.Bilinear);
+			win.DrawPixbuf (this.Style.BlackGC, frame, 0, 0,
+			                logoX, logoY, width, height,
+			                RgbDither.Normal, 0, 0);
+			frame.Dispose();
+			return;
 		}
 	}
 }
