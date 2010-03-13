@@ -150,6 +150,7 @@ namespace LongoMatch.Gui
 					Title = "LongoMatch";
 					playerbin1.Visible = false;					
 					capturerBin = new CapturerBin();
+					capturerBin.Logo = System.IO.Path.Combine(MainClass.ImagesDir(),"background.png");
 					capturerBin.CaptureFinished += delegate {
 						CloseOpenedProject(true);	
 					};
