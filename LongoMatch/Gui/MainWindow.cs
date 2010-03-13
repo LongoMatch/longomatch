@@ -110,7 +110,7 @@ namespace LongoMatch.Gui
 		
 		#region Private Methods
 		private void SetProject(Project project, ProjectType projectType) {
-			CloseActualProyect();
+			CloseOpenedProject(true);
 			openedProject = project;
 			this.projectType = projectType;
 			eManager.OpenedProject = project;
@@ -121,7 +121,7 @@ namespace LongoMatch.Gui
 					if (!File.Exists(project.File.FilePath)) {
 						MessagePopup.PopupMessage(this, MessageType.Warning,
 						                          Catalog.GetString("The file associated to this project doesn't exist.")+"\n"+Catalog.GetString("If the location of the file has changed try to edit it with the database manager."));
-						CloseActualProyect();
+						CloseOpenedProject(true);
 					}
 					else {
 						Title = System.IO.Path.GetFileNameWithoutExtension(project.File.FilePath) + " - LongoMatch";
@@ -131,7 +131,7 @@ namespace LongoMatch.Gui
 						catch (GLib.GException ex) {
 							MessagePopup.PopupMessage(this, MessageType.Error,
 							                          Catalog.GetString("An error occurred opening this project:")+"\n"+ex.Message);
-							CloseActualProyect();
+							CloseOpenedProject(true);
 							return;
 						}
 						if (project.File.HasVideo)
@@ -151,7 +151,7 @@ namespace LongoMatch.Gui
 					playerbin1.Visible = false;					
 					capturerBin = new CapturerBin();
 					capturerBin.CaptureFinished += delegate {
-						CloseActualProyect();	
+						CloseOpenedProject(true);	
 					};
 					eManager.Capturer = capturerBin;
 					hbox2.Add(capturerBin);
@@ -176,12 +176,13 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		private void CloseActualProyect() {
+		private void CloseOpenedProject(bool save) {
 			bool playlistVisible = playlistwidget2.Visible;			
 			
+			if (save)
+				SaveProject();
+			
 			if (projectType != ProjectType.NewFileProject){
-				if (projectType == ProjectType.NewFakeCaptureProject)
-					SaveFakeLiveProject(openedProject);
 				playerbin1.Visible = true;
 				eManager.Capturer = null;
 				if (capturerBin != null)
@@ -194,7 +195,7 @@ namespace LongoMatch.Gui
 			Title = "LongoMatch";
 			ClearWidgets();
 			HideWidgets();	
-			SaveDB();
+			
 			if (openedProject != null) {
 				openedProject.Clear();
 				openedProject = null;
@@ -399,7 +400,7 @@ namespace LongoMatch.Gui
 		protected virtual void OnCloseActivated(object sender, System.EventArgs e)
 		{
 			if (FinishCapture())
-				CloseActualProyect();
+				CloseOpenedProject(true);
 		}
 		
 		protected virtual void OnImportProjectActionActivated (object sender, System.EventArgs e)
@@ -492,7 +493,7 @@ namespace LongoMatch.Gui
 			if (!FinishCapture())
 				return;
 			playlistwidget2.StopEdition();
-			SaveDB();
+			SaveProject();
 			// We never know...
 			System.Threading.Thread.Sleep(1000);
 			playerbin1.Dispose();
@@ -504,7 +505,7 @@ namespace LongoMatch.Gui
 			if (!FinishCapture())
 				return;
 			playlistwidget2.StopEdition();
-			SaveDB();
+			SaveProject();
 			// We never know...
 			System.Threading.Thread.Sleep(1000);
 			playerbin1.Dispose();
@@ -542,7 +543,7 @@ namespace LongoMatch.Gui
 			fChooser.AddFilter(filter);
 			if (fChooser.Run() == (int)ResponseType.Accept) {
 				if (openedProject != null)
-					CloseActualProyect();
+					CloseOpenedProject(true);
 				playlistwidget2.Load(fChooser.Filename);
 				PlaylistAction.Active = true;
 			}
@@ -553,7 +554,7 @@ namespace LongoMatch.Gui
 		{
 			MessagePopup.PopupMessage(this, MessageType.Info,
 			                          Catalog.GetString("The actual project will be closed due to an error in the media player:")+"\n" +args.Message);
-			CloseActualProyect();
+			CloseOpenedProject(true);
 		}
 
 		protected virtual void OnCaptureModeActionToggled(object sender, System.EventArgs e)
@@ -575,7 +576,7 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnSaveProjectActionActivated(object sender, System.EventArgs e)
 		{
-			SaveDB();
+			SaveProject();
 		}
 
 		protected override bool OnKeyPressEvent(EventKey evnt)
