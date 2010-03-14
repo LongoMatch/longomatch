@@ -285,10 +285,9 @@ namespace LongoMatch.Gui
 		}
 		
 		private void SaveFakeLiveProject(Project project){
-			MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel, DialogFlags.Modal, MessageType.Question, ButtonsType.OkCancel,
+			MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel, DialogFlags.Modal, MessageType.Info, ButtonsType.Ok,
 			                                     Catalog.GetString("The project will be saved to a file. You can insert it later into the database using the "+
-			                                                       "Import function once you copied the video file to your computer.\n"+
-			                                                       "If you cancel this action all your changes will be lost!"));			                                           
+			                                                       "\"Import project\" function once you copied the video file to your computer"));			                                           
 			if (md.Run() == (int)ResponseType.Cancel){
 				md.Destroy();
 				return;
