@@ -215,7 +215,8 @@ FILES = \
 	Time/Time.cs \
 	Time/TimeNode.cs \
 	Updates/Updater.cs \
-	Updates/XmlUpdateParser.cs
+	Updates/XmlUpdateParser.cs \
+	Utils/ProjectUtils.cs
 	
 DATA_FILES = 
 

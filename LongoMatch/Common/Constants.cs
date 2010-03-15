@@ -29,6 +29,10 @@ namespace LongoMatch.Common
 Mario Blättermann (de)
 Pavel Bárta (cs)
 Matej Urbančič (sl)";
+		
+		public const int THUMBNAIL_MAX_WIDTH = 100;
+		
+		public const int THUMBNAIL_MAX_HEIGHT = 100;
 
 	}
 

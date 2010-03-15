@@ -35,10 +35,12 @@ namespace LongoMatch.Gui.Dialog
 	{
 
 		private string originalFilePath;
+		private Project openedProject;
 
-		public ProjectsManager()
+		public ProjectsManager(Project openedProject)
 		{
 			this.Build();
+			this.openedProject = openedProject;
 			this.Fill();
 			this.projectdetails.Use = ProjectType.EditProject;
 			projectdetails.Edited = false;
@@ -95,7 +97,7 @@ namespace LongoMatch.Gui.Dialog
 		{
 			ProjectDescription selectedProject = projectlistwidget1.GetSelection();
 			if (selectedProject != null) {
-				if (MainWindow.OpenedProject() != null &&selectedProject.File == MainWindow.OpenedProject().File.FilePath) {
+				if (openedProject != null && selectedProject.File == openedProject.File.FilePath) {
 					MessagePopup.PopupMessage(this, MessageType.Warning,
 					                          Catalog.GetString("This Project is actually in use.")+"\n"+
 					                          Catalog.GetString("Close it first to allow its removal from the database"));
@@ -138,7 +140,7 @@ namespace LongoMatch.Gui.Dialog
 				PromptToSaveEditedProject();
 			}
 			
-			if (MainWindow.OpenedProject() != null && project.File == MainWindow.OpenedProject().File.FilePath) {
+			if (openedProject != null && project.File == openedProject.File.FilePath) {
 
 				MessagePopup.PopupMessage(this, MessageType.Warning,
 				                          Catalog.GetString("The Project you are trying to load is actually in use.")+"\n" +Catalog.GetString("Close it first to edit it"));
