@@ -16,8 +16,11 @@ LongoMatch/Main.cs
 LongoMatch/Updates/XmlUpdateParser.cs
 LongoMatch/Updates/Updater.cs
 LongoMatch/Gui/MainWindow.cs
+LongoMatch/Gui/Dialog/ProjectSelectionDialog.cs
+LongoMatch/Gui/Dialog/BusyDialog.cs
 LongoMatch/Gui/Dialog/TemplatesEditor.cs
 LongoMatch/Gui/Dialog/EditCategoryDialog.cs
+LongoMatch/Gui/Dialog/EndCaptureDialog.cs
 LongoMatch/Gui/Dialog/Win32CalendarDialog.cs
 LongoMatch/Gui/Dialog/FramesCaptureProgressDialog.cs
 LongoMatch/Gui/Dialog/VideoEditionProperties.cs
@@ -71,6 +74,9 @@ LongoMatch/DB/ProjectDescription.cs
 LongoMatch/DB/Sections.cs
 LongoMatch/Common/Enums.cs
 LongoMatch/AssemblyInfo.cs.in
+LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs
+LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs
+LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.BusyDialog.cs
 LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.ProjectTemplateEditorDialog.cs
 LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.TeamTemplateEditor.cs
 LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs
@@ -136,6 +142,7 @@ LongoMatch/IO/CSVExport.cs
 LongoMatch/IO/SectionsWriter.cs
 LongoMatch/IO/SectionsReader.cs
 LongoMatch/IO/XMLReader.cs
+LongoMatch/Utils/ProjectUtils.cs
 CesarPlayer/MultimediaFactory.cs
 CesarPlayer/Gui/PlayerBin.cs
 CesarPlayer/Gui/CapturerBin.cs
