@@ -17,6 +17,7 @@
 //
 
 using System;
+using Gdk;
 
 namespace LongoMatch.Common
 {
@@ -48,5 +49,19 @@ Matej Urbančič (sl)";
 		public const int THUMBNAIL_MAX_HEIGHT = 100;
 		
 		public const string WEBSITE = "http://www.longomatch.ylatuya.es";
+		
+		public const Key PREV_FRAME = Gdk.Key.z;
+
+		public const Key NEXT_FRAME = Gdk.Key.x;
+		
+		public const Key STEP_BACKWARD = Gdk.Key.a;
+		
+		public const Key STEP_FORWARD = Gdk.Key.s;		
+		
+		public const Key FRAMERATE_UP = Gdk.Key.n;
+		
+		public const Key FRAMERATE_DOWN = Gdk.Key.m;
+		
+		public const Key TOGGLE_PLAY = Gdk.Key.space;		
 	}
 }

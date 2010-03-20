@@ -465,10 +465,29 @@ namespace LongoMatch.Gui
 		{
 			if (openedProject != null && evnt.State == ModifierType.None) {
 				Gdk.Key key = evnt.Key;
-				if (key == Gdk.Key.z)
-					playerbin1.SeekToPreviousFrame(selectedTimeNode != null);
-				if (key == Gdk.Key.x)
-					playerbin1.SeekToNextFrame(selectedTimeNode != null);
+				switch (key){
+					case Constants.PREV_FRAME:
+						playerbin1.SeekToPreviousFrame(selectedTimeNode != null);
+						break;
+					case Constants.NEXT_FRAME:
+						playerbin1.SeekToNextFrame(selectedTimeNode != null);
+						break;
+					case Constants.STEP_FORWARD:
+						playerbin1.StepForward();
+						break;
+					case Constants.STEP_BACKWARD:
+						playerbin1.StepBackward();
+						break;
+					case Constants.FRAMERATE_UP:
+						playerbin1.FramerateUp();
+						break;
+					case Constants.FRAMERATE_DOWN:
+						playerbin1.FramerateDown();
+						break;
+					case Constants.TOGGLE_PLAY:
+						playerbin1.TogglePlay();
+						break;			
+				}					
 			}
 			return base.OnKeyPressEvent(evnt);
 		}

@@ -71,7 +71,7 @@ namespace LongoMatch.Gui
 			vwin.VolumeChanged += new VolumeChangedHandler(OnVolumeChanged);
 			controlsbox.Visible = false;	
 			UnSensitive();
-			timescale.Adjustment.PageIncrement = 0.0001;
+			timescale.Adjustment.PageIncrement = 0.01;
 			timescale.Adjustment.StepIncrement = 0.0001;
 		}
 		
@@ -173,6 +173,13 @@ namespace LongoMatch.Gui
 			player.Pause();
 		}		
 		
+		public void TogglePlay(){
+			if (player.Playing)
+				Pause();
+			else 
+				Play();
+		}
+		
 		public void SetLogo (string filename){
 			player.Logo=filename;
 		}
@@ -241,6 +248,28 @@ namespace LongoMatch.Gui
 				if (SeekEvent != null)
 					SeekEvent(currentTime);
 			}
+		}
+		
+		public void StepForward(){
+			seeking = true;
+			timescale.Adjustment.Value += timescale.Adjustment.PageIncrement;
+			OnTimescaleAdjustBounds(null, null);
+			seeking = false;
+		}
+		
+		public void StepBackward(){
+			seeking = true;
+			timescale.Adjustment.Value -= timescale.Adjustment.PageIncrement;
+			OnTimescaleAdjustBounds(null, null);
+			seeking = false;			
+		}
+		
+		public void FramerateUp(){
+			vscale1.Adjustment.Value += vscale1.Adjustment.StepIncrement;
+		}
+		
+		public void FramerateDown(){
+			vscale1.Adjustment.Value -= vscale1.Adjustment.StepIncrement;
 		}
 		
 		public void UpdateSegmentStartTime (long start){
@@ -326,7 +355,7 @@ namespace LongoMatch.Gui
 			playerWidget = (Widget)player;
 			playerWidget.ButtonPressEvent += new ButtonPressEventHandler(OnVideoboxButtonPressEvent);
 			playerWidget.Show();
-			videobox.Add(playerWidget);			
+			videobox.Add(playerWidget);	
 				
 		}
 		
@@ -385,7 +414,7 @@ namespace LongoMatch.Gui
 		protected virtual void OnTimescaleAdjustBounds(object o, Gtk.AdjustBoundsArgs args)
 		{
 			float pos;		
-				
+			
 			if (!seeking){
 				seeking = true;
 				IsPlayingPrevState = player.Playing;

@@ -59,6 +59,7 @@ namespace LongoMatch.Gui.Dialog {
             // Container child hbox1.Gtk.Box+BoxChild
             this.image61 = new Gtk.Image();
             this.image61.Name = "image61";
+            this.image61.Pixbuf = Gdk.Pixbuf.LoadFromResource("video.png");
             this.hbox1.Add(this.image61);
             Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.hbox1[this.image61]));
             w2.Position = 0;
@@ -67,6 +68,7 @@ namespace LongoMatch.Gui.Dialog {
             // Container child hbox1.Gtk.Box+BoxChild
             this.label1 = new Gtk.Label();
             this.label1.Name = "label1";
+            this.label1.Xalign = 0F;
             this.label1.LabelProp = Mono.Unix.Catalog.GetString("New project using a video file");
             this.hbox1.Add(this.label1);
             Gtk.Box.BoxChild w3 = ((Gtk.Box.BoxChild)(this.hbox1[this.label1]));
@@ -75,8 +77,10 @@ namespace LongoMatch.Gui.Dialog {
             this.fromfileradiobutton = new Gtk.RadioButton("");
             this.fromfileradiobutton.CanFocus = true;
             this.fromfileradiobutton.Name = "fromfileradiobutton";
+            this.fromfileradiobutton.Active = true;
             this.fromfileradiobutton.DrawIndicator = true;
             this.fromfileradiobutton.UseUnderline = true;
+            this.fromfileradiobutton.FocusOnClick = false;
             this.fromfileradiobutton.Group = new GLib.SList(System.IntPtr.Zero);
             this.hbox1.Add(this.fromfileradiobutton);
             Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(this.hbox1[this.fromfileradiobutton]));
@@ -95,6 +99,7 @@ namespace LongoMatch.Gui.Dialog {
             // Container child hbox2.Gtk.Box+BoxChild
             this.image62 = new Gtk.Image();
             this.image62.Name = "image62";
+            this.image62.Pixbuf = Gdk.Pixbuf.LoadFromResource("camera-video.png");
             this.hbox2.Add(this.image62);
             Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(this.hbox2[this.image62]));
             w6.Position = 0;
@@ -103,6 +108,7 @@ namespace LongoMatch.Gui.Dialog {
             // Container child hbox2.Gtk.Box+BoxChild
             this.label2 = new Gtk.Label();
             this.label2.Name = "label2";
+            this.label2.Xalign = 0F;
             this.label2.LabelProp = Mono.Unix.Catalog.GetString("Live project using a fake capture device");
             this.hbox2.Add(this.label2);
             Gtk.Box.BoxChild w7 = ((Gtk.Box.BoxChild)(this.hbox2[this.label2]));
@@ -127,6 +133,8 @@ namespace LongoMatch.Gui.Dialog {
             w1.Add(this.vbox2);
             Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(w1[this.vbox2]));
             w10.Position = 0;
+            w10.Expand = false;
+            w10.Fill = false;
             // Internal child LongoMatch.Gui.Dialog.ProjectSelectionDialog.ActionArea
             Gtk.HButtonBox w11 = this.ActionArea;
             w11.Name = "dialog1_ActionArea";
@@ -161,8 +169,8 @@ namespace LongoMatch.Gui.Dialog {
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 400;
-            this.DefaultHeight = 186;
+            this.DefaultWidth = 355;
+            this.DefaultHeight = 138;
             this.Show();
         }
     }
