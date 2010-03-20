@@ -56,8 +56,14 @@ namespace LongoMatch.Gui
 				MultimediaFactory factory = new MultimediaFactory();
 				capturer = factory.getCapturer(value);	
 				capturer.EllapsedTime += OnTick;
-				capturerhbox.Add((Widget)capturer);
-				((Widget)capturer).Show();
+				if (value != CapturerType.FAKE){
+					capturerhbox.Add((Widget)capturer);
+					(capturer as Widget).Visible = true;
+					capturerhbox.Visible = true;
+				}
+				else{
+					capturerhbox.Visible = false;
+				}
 			}
 		}
 		
@@ -65,9 +71,8 @@ namespace LongoMatch.Gui
 			set{
 				try{
 					this.logopix = new Pixbuf(value);
-					Console.WriteLine("Setting logo");
 				}catch{
-					// Ignore errors if the file doesn't exists
+					/* FIXME: Add log */
 				}
 			}
 		}
@@ -182,9 +187,12 @@ namespace LongoMatch.Gui
 			logoY = (allocHeight / 2) - (height / 2);
 
 			/* Drawing our frame */
-			frame = logopix.ScaleSimple(width, height, InterpType.Bilinear);
+			frame = new Pixbuf(Colorspace.Rgb, false, 8, allocWidth, allocHeight);
+			logopix.Composite(frame, 0, 0, allocWidth, allocHeight, logoX, logoY, 
+			                  ratio, ratio, InterpType.Bilinear, 255);
+			
 			win.DrawPixbuf (this.Style.BlackGC, frame, 0, 0,
-			                logoX, logoY, width, height,
+			                0, 0, allocWidth, allocHeight,
 			                RgbDither.Normal, 0, 0);
 			frame.Dispose();
 			return;

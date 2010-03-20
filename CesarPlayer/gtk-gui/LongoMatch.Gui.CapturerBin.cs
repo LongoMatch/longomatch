@@ -44,15 +44,15 @@ namespace LongoMatch.Gui {
             this.capturerhbox = new Gtk.HBox();
             this.capturerhbox.Name = "capturerhbox";
             this.capturerhbox.Spacing = 6;
-            // Container child capturerhbox.Gtk.Box+BoxChild
+            this.vbox1.Add(this.capturerhbox);
+            Gtk.Box.BoxChild w1 = ((Gtk.Box.BoxChild)(this.vbox1[this.capturerhbox]));
+            w1.Position = 0;
+            // Container child vbox1.Gtk.Box+BoxChild
             this.logodrawingarea = new Gtk.DrawingArea();
             this.logodrawingarea.Name = "logodrawingarea";
-            this.capturerhbox.Add(this.logodrawingarea);
-            Gtk.Box.BoxChild w1 = ((Gtk.Box.BoxChild)(this.capturerhbox[this.logodrawingarea]));
-            w1.Position = 1;
-            this.vbox1.Add(this.capturerhbox);
-            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.vbox1[this.capturerhbox]));
-            w2.Position = 0;
+            this.vbox1.Add(this.logodrawingarea);
+            Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(this.vbox1[this.logodrawingarea]));
+            w2.Position = 1;
             // Container child vbox1.Gtk.Box+BoxChild
             this.hbox2 = new Gtk.HBox();
             this.hbox2.Name = "hbox2";
@@ -150,7 +150,7 @@ namespace LongoMatch.Gui {
             w31.Expand = false;
             this.vbox1.Add(this.hbox2);
             Gtk.Box.BoxChild w32 = ((Gtk.Box.BoxChild)(this.vbox1[this.hbox2]));
-            w32.Position = 1;
+            w32.Position = 2;
             w32.Expand = false;
             w32.Fill = false;
             this.Add(this.vbox1);
