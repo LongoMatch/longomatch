@@ -183,6 +183,8 @@
     <File name="gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="Utils" subtype="Directory" buildaction="Compile" />
     <File name="Utils/ProjectUtils.cs" subtype="Code" buildaction="Compile" />
+    <File name="images/camera-video.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="images/video.png" subtype="Code" buildaction="EmbedAsResource" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />

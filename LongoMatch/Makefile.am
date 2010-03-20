@@ -228,7 +228,9 @@ RESOURCES = \
 	images/stock_draw-circle-unfilled.png\
 	images/stock_draw-line-ends-with-arrow.png\
 	images/stock_draw-rectangle-unfilled.png\
-	images/stock_draw-freeform-line.png 
+	images/stock_draw-freeform-line.png\
+	images/camera-video.png\
+	images/video.png 
 
 EXTRAS = \
 	images/longomatch.png\

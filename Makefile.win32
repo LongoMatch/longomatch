@@ -262,7 +262,10 @@ LONGOMATCH_RESOURCES = \
 	-resource:./images/stock_draw-circle-unfilled.png,stock_draw-circle-unfilled.png\
 	-resource:./images/stock_draw-line-ends-with-arrow.png,stock_draw-line-ends-with-arrow.png\
 	-resource:./images/stock_draw-rectangle-unfilled.png,stock_draw-rectangle-unfilled.png\
-	-resource:./images/stock_draw-freeform-line.png,stock_draw-freeform-line.png
+	-resource:./images/stock_draw-freeform-line.png,stock_draw-freeform-line.png\
+	-resource:./images/camera-video.png,camera-video.png\
+	-resource:./images/video.png,video.png\
+
 
 LONGOMATCH_REFERENCES = \
 	-r:Mono.Posix \
