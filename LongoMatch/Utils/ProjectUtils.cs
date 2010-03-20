@@ -242,9 +242,18 @@ namespace LongoMatch.Utils
 			fChooser.Destroy();
 		}
 		
-		public static void CreateThumbnails(Project project){
+		public static void CreateThumbnails(Window window, Project project){
 			MultimediaFactory factory;
 			IFramesCapturer capturer;
+			BusyDialog dialog;
+			
+			Console.WriteLine("start thumbnails");
+			
+			dialog = new BusyDialog();
+			dialog.TransientFor = window;
+			dialog.Message = Catalog.GetString("Creating video thumbnails. This can take a while."); 
+			dialog.Show();
+			dialog.Pulse();
 			
 			/* Create all the thumbnails */
 			factory = new MultimediaFactory();
@@ -257,6 +266,7 @@ namespace LongoMatch.Utils
 						                  true);
 						play.Miniature = capturer.GetCurrentFrame(Constants.THUMBNAIL_MAX_WIDTH,
 						                                          Constants.THUMBNAIL_MAX_HEIGHT);
+						dialog.Pulse();
 						
 					} catch {
 						/* FIXME: Add log */
@@ -264,6 +274,7 @@ namespace LongoMatch.Utils
 				}					
 			}	
 			capturer.Dispose();
+			dialog.Destroy();
 		}
 	}
 }

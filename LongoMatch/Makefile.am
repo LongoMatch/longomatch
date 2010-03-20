@@ -118,6 +118,7 @@ FILES = \
 	gtk-gui/LongoMatch.Gui.Component.TeamTemplateWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TimeLineWidget.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.BusyDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.EditCategoryDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.EditPlayerDialog.cs \
@@ -161,6 +162,7 @@ FILES = \
 	Gui/Component/TimeLineWidget.cs \
 	Gui/Component/TimeReferenceWidget.cs \
 	Gui/Component/TimeScale.cs \
+	Gui/Dialog/BusyDialog.cs \
 	Gui/Dialog/DrawingTool.cs \
 	Gui/Dialog/EditCategoryDialog.cs \
 	Gui/Dialog/EditPlayerDialog.cs \
