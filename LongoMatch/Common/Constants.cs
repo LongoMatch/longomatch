@@ -22,7 +22,20 @@ namespace LongoMatch.Common
 {
 	class Constants{
 		
+		public const string COPYRIGHT =  "Copyright ©2007-2010 Andoni Morales Alastruey";
+		
 		public const string FAKE_PROJECT = "@Fake Project@";
+		
+		public const string LICENSE =
+@"This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.";
 		
 		public const string TRANSLATORS = 
 @"Andoni Morales Alastruey (es)
@@ -33,7 +46,7 @@ Matej Urbančič (sl)";
 		public const int THUMBNAIL_MAX_WIDTH = 100;
 		
 		public const int THUMBNAIL_MAX_HEIGHT = 100;
-
+		
+		public const string WEBSITE = "http://www.longomatch.ylatuya.es";
 	}
-
 }

@@ -430,18 +430,9 @@ namespace LongoMatch.Gui
 			if (Environment.OSVersion.Platform == PlatformID.Unix)
 				about.ProgramName = "LongoMatch";
 			about.Version = String.Format("{0}.{1}.{2}",version.Major,version.Minor,version.Build);
-			about.Copyright = "Copyright ©2007-2009 Andoni Morales Alastruey";
-			about.Website = "http://www.longomatch.ylatuya.es";
-			about.License =
-			        @"This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.";
+			about.Copyright = Constants.COPYRIGHT;
+			about.Website = Constants.WEBSITE;
+			about.License = Constants.LICENSE;
 			about.Authors = new string[] {"Andoni Morales Alastruey"};
 			about.Artists = new string[] {"Bencomo González Marrero"};
 			about.TranslatorCredits = Constants.TRANSLATORS;
