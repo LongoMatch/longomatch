@@ -1801,6 +1801,12 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 				       GST_DEBUG_GRAPH_SHOW_ALL ^
 				       GST_DEBUG_GRAPH_SHOW_NON_DEFAULT_PARAMS,
 				       "totem-prerolled");
+        bvw->priv->stream_length = 0;
+        if (bacon_video_widget_get_stream_length (bvw) == 0)
+        {
+          GST_DEBUG ("Failed to query duration in PAUSED state?!");
+        }
+        break;
 	    bvw_update_stream_info (bvw);
 	    if (!bvw_check_missing_plugins_on_preroll (bvw))
 	      {
@@ -1847,12 +1853,12 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
     case GST_MESSAGE_DURATION:
       {
 	/* force _get_stream_length() to do new duration query */
-	bvw->priv->stream_length = 0;
+	/*bvw->priv->stream_length = 0;
 	if (bacon_video_widget_get_stream_length (bvw) == 0)
 	  {
 	    GST_DEBUG ("Failed to query duration after DURATION message?!");
 	  }
-	break;
+	break;*/
       }
 
     case GST_MESSAGE_CLOCK_PROVIDE:
