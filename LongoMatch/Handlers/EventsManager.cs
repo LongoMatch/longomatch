@@ -148,37 +148,40 @@ namespace LongoMatch
 		}
 
 		private void ProcessNewMarkEvent(int section,Time pos) {
-			if (player != null && openedProject != null) {
-				Time fStop;
-				Pixbuf miniature;
-				MediaTimeNode tn;
-				Time length;
-				
-				//Get the default lead and lag time for the section
-				Time startTime = openedProject.Sections.GetStartTime(section);
-				Time stopTime = openedProject.Sections.GetStopTime(section);
-				// Calculating borders of the segment depnding
-				Time start = pos - startTime;
-				Time stop = pos + stopTime;
-				Time fStart = (start < new Time(0)) ? new Time(0) : start;
-				
-				if (projectType == ProjectType.NewFakeCaptureProject || 
-				    projectType == ProjectType.NewCaptureProject){
-					fStop = stop;					
-				}
-				else {
-					length = new Time((int)player.StreamLength);
-					fStop = (stop > length) ? length: stop;
-				}
-				
-				miniature = projectType == ProjectType.NewFakeCaptureProject ?
-						null : player.CurrentMiniatureFrame;
-				
-				tn = openedProject.AddTimeNode(section,fStart, fStop,miniature);
-				treewidget.AddPlay(tn,section);
-				tagsTreeWidget.AddPlay(tn);
-				timeline.QueueDraw();
+			Time length, startTime, stopTime, start, stop, fStart, fStop;	
+			
+			if (player == null || openedProject == null)
+				return;
+						
+			//Get the default lead and lag time for the section
+			startTime = openedProject.Sections.GetStartTime(section);
+			stopTime = openedProject.Sections.GetStopTime(section);
+			// Calculating borders of the segment depnding
+			start = pos - startTime;
+			stop = pos + stopTime;
+			fStart = (start < new Time(0)) ? new Time(0) : start;
+			
+			if (projectType == ProjectType.NewFakeCaptureProject || 
+			    projectType == ProjectType.NewCaptureProject){
+				fStop = stop;					
 			}
+			else {
+				length = new Time((int)player.StreamLength);
+				fStop = (stop > length) ? length: stop;
+			}	
+			AddNewPlay(fStart, fStop, section);
+		}
+		
+		private void AddNewPlay(Time start, Time stop, int section){
+			Pixbuf miniature;
+			MediaTimeNode tn;
+		
+			miniature = projectType == ProjectType.NewFakeCaptureProject ?
+				null : player.CurrentMiniatureFrame;
+			tn = openedProject.AddTimeNode(section,fStart, fStop,miniature);
+			treewidget.AddPlay(tn,section);
+			tagsTreeWidget.AddPlay(tn);
+			timeline.QueueDraw();
 		}
 
 		protected virtual void OnProgress(float progress) {
