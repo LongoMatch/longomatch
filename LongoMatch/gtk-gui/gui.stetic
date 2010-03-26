@@ -812,71 +812,115 @@
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.ButtonsWidget" design-size="532 149">
     <property name="MemberName" />
     <child>
-      <widget class="Gtk.Table" id="table1">
+      <widget class="Gtk.VBox" id="vbox1">
         <property name="MemberName" />
-        <property name="NRows">5</property>
-        <property name="NColumns">4</property>
-        <property name="RowSpacing">1</property>
-        <property name="ColumnSpacing">1</property>
+        <property name="Spacing">6</property>
         <child>
-          <placeholder />
+          <widget class="Gtk.Button" id="cancelbutton">
+            <property name="MemberName" />
+            <property name="Visible">False</property>
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label" translatable="yes">Cancel</property>
+            <property name="UseUnderline">True</property>
+            <signal name="Clicked" handler="OnCancelbuttonClicked" />
+          </widget>
+          <packing>
+            <property name="Position">0</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
         </child>
         <child>
-          <placeholder />
+          <widget class="Gtk.Button" id="starttagbutton">
+            <property name="MemberName" />
+            <property name="Visible">False</property>
+            <property name="CanFocus">True</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label" translatable="yes">Tag new play</property>
+            <property name="UseUnderline">True</property>
+            <signal name="Clicked" handler="OnStartTagClicked" />
+          </widget>
+          <packing>
+            <property name="Position">1</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
         </child>
         <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
+          <widget class="Gtk.Table" id="table1">
+            <property name="MemberName" />
+            <property name="NRows">5</property>
+            <property name="NColumns">4</property>
+            <property name="RowSpacing">1</property>
+            <property name="ColumnSpacing">1</property>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">2</property>
+            <property name="AutoSize">True</property>
+          </packing>
         </child>
       </widget>
     </child>
@@ -1482,7 +1526,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="LongoMatch.Gui.MainWindow" design-size="1259 786">
+  <widget class="Gtk.Window" id="LongoMatch.Gui.MainWindow" design-size="1259 817">
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -1567,7 +1611,7 @@
         <property name="Active">False</property>
         <property name="Value">0</property>
         <property name="Group">group1</property>
-        <signal name="Toggled" handler="OnCaptureModeActionToggled" />
+        <signal name="Toggled" handler="OnViewToggled" />
       </action>
       <action id="AnalyzeModeAction">
         <property name="Type">Radio</property>
@@ -1645,6 +1689,17 @@
         <property name="StockId">stock-import</property>
         <signal name="Activated" handler="OnImportProjectActionActivated" />
       </action>
+      <action id="FreeCaptureModeAction">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes">Free Capture Mode</property>
+        <property name="Sensitive">False</property>
+        <property name="ShortLabel" translatable="yes">Free Capture Mode</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">group1</property>
+        <signal name="Toggled" handler="OnViewToggled" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">LongoMatch</property>
@@ -1688,6 +1743,7 @@
                     <node type="Menuitem" action="DrawingToolAction" />
                     <node type="Separator" />
                     <node type="Menuitem" action="CaptureModeAction" />
+                    <node type="Menuitem" action="FreeCaptureModeAction" />
                     <node type="Menuitem" action="AnalyzeModeAction" />
                   </node>
                   <node type="Menu" action="HelpAction">

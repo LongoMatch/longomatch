@@ -61,6 +61,7 @@ namespace LongoMatch
 		// current proyect in use
 		private Project openedProject;
 		private ProjectType projectType;
+		private Time startTime;
 
 		public EventsManager(PlaysListTreeWidget treewidget, PlayersListTreeWidget localPlayersList, 
 		                     PlayersListTreeWidget visitorPlayersList, TagsTreeWidget tagsTreeWidget,
@@ -104,6 +105,8 @@ namespace LongoMatch
 			//Adding Handlers for each event
 
 			buttonswidget.NewMarkEvent += OnNewMark;
+			buttonswidget.NewMarkStartEvent += OnNewMarkStart;
+			buttonswidget.NewMarkStopEvent += OnNewMarkStop;
 
 			treewidget.TimeNodeChanged += OnTimeNodeChanged;
 			localPlayersList.TimeNodeChanged += OnTimeNodeChanged;
@@ -178,7 +181,7 @@ namespace LongoMatch
 		
 			miniature = projectType == ProjectType.NewFakeCaptureProject ?
 				null : player.CurrentMiniatureFrame;
-			tn = openedProject.AddTimeNode(section,fStart, fStop,miniature);
+			tn = openedProject.AddTimeNode(section, start, stop,miniature);
 			treewidget.AddPlay(tn,section);
 			tagsTreeWidget.AddPlay(tn);
 			timeline.QueueDraw();
@@ -228,6 +231,32 @@ namespace LongoMatch
 			else 
 				pos = new Time((int)player.CurrentTime);
 			ProcessNewMarkEvent(i,pos);
+		}
+		
+		public virtual void OnNewMarkStart(){
+			startTime = new Time((int)player.CurrentTime);
+		}
+		
+		public virtual void OnNewMarkStop(int section){
+			int diff;
+			Time stopTime = new Time((int)player.CurrentTime);
+			
+			diff = stopTime.MSeconds - startTime.MSeconds;
+			
+			if (diff < 0){
+				MessagePopup.PopupMessage(buttonswidget, MessageType.Warning,
+				                          Catalog.GetString("The stop time is smaller than the start time."+
+				                                            "The play will not be added."));
+				return;
+			}
+			if (diff < 500){
+				int correction = 500 - diff;
+				if (startTime.MSeconds - correction > 0)
+					startTime = startTime - correction;
+				else 
+					stopTime = stopTime + correction;			
+			} 
+			AddNewPlay(startTime, stopTime, section);		
 		}
 
 		protected virtual void OnTimeNodeSelected(MediaTimeNode tNode)

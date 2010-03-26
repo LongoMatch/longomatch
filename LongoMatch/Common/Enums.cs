@@ -35,4 +35,9 @@ namespace LongoMatch.Common
 		Quit = 235,
 		Save = 236
 	}
+	
+	public enum TagMode {
+		Predifined,
+		Free
+	}
 }

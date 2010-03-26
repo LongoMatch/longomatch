@@ -21,7 +21,9 @@
 using System;
 using Gtk;
 using LongoMatch.DB;
+using LongoMatch.Common;
 using LongoMatch.Handlers;
+using LongoMatch.TimeNodes;
 using System.Collections.Generic;
 
 namespace LongoMatch.Gui.Component
@@ -31,14 +33,28 @@ namespace LongoMatch.Gui.Component
 	public partial class ButtonsWidget : Gtk.Bin
 	{
 
-		private Sections sections;
+		private Sections sections;		
+		private TagMode tagMode;
 
 		public event NewMarkEventHandler NewMarkEvent;
+		public event NewMarkStartHandler NewMarkStartEvent;
+		public event NewMarkStopHandler NewMarkStopEvent;
 
 
 		public ButtonsWidget()
 		{
 			this.Build();
+			Mode = TagMode.Predifined;
+		}
+		
+		public TagMode Mode{
+			set{
+				bool isPredef = (value == TagMode.Predifined);
+				table1.Visible = isPredef;
+				starttagbutton.Visible = !isPredef;
+				cancelbutton.Visible = false;
+				tagMode = value;				
+			}
 		}
 
 		public Sections Sections {
@@ -74,7 +90,6 @@ namespace LongoMatch.Gui.Component
 					l.Show();
 					b.Show();
 
-
 					table1.Attach(b,col_left,col_right,row_top,row_bottom);
 				}
 			}
@@ -82,9 +97,39 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnButtonClicked(object sender,  System.EventArgs e)
 		{
+			if (sections == null)
+				return;
 			Widget w = (Button)sender;
-			if (NewMarkEvent != null && this.sections != null)
-				this.NewMarkEvent(int.Parse(w.Name));
+			if (tagMode == TagMode.Predifined){
+				if (NewMarkEvent != null)
+					NewMarkEvent(int.Parse(w.Name));
+			} else {
+				starttagbutton.Visible = true;
+				table1.Visible = false;
+				cancelbutton.Visible = false;
+				if (NewMarkStopEvent != null)
+					NewMarkStopEvent(int.Parse(w.Name));
+			}			
+		}
+
+		protected virtual void OnStartTagClicked (object sender, System.EventArgs e)
+		{
+			if (sections == null)
+				return;
+			
+			starttagbutton.Visible = false;
+			table1.Visible = true;
+			cancelbutton.Visible = true;
+			
+			if (NewMarkStartEvent != null)
+				NewMarkStartEvent();
+		}
+
+		protected virtual void OnCancelbuttonClicked (object sender, System.EventArgs e)
+		{
+			starttagbutton.Visible = true;
+			table1.Visible = false;
+			cancelbutton.Visible = false;
 		}
 	}
 }

@@ -98,6 +98,8 @@ namespace LongoMatch.Gui
 
 			playerbin1.SetLogo(System.IO.Path.Combine(MainClass.ImagesDir(),"background.png"));
 			playerbin1.LogoMode = true;
+			
+			buttonswidget1.Mode = TagMode.Predifined;
 
 			playlistwidget2.SetPlayer(playerbin1);
 
@@ -216,6 +218,7 @@ namespace LongoMatch.Gui
 			CloseProjectAction.Sensitive=sensitive;
 			SaveProjectAction.Sensitive = sensitive;
 			CaptureModeAction.Sensitive = sensitive2;
+			FreeCaptureModeAction.Sensitive = sensitive2;
 			AnalyzeModeAction.Sensitive = sensitive2;
 			ExportProjectToCSVFileAction.Sensitive = sensitive2;
 			HideAllWidgetsAction.Sensitive=sensitive2;
@@ -223,7 +226,7 @@ namespace LongoMatch.Gui
 
 		private void ShowWidgets() {
 			leftbox.Show();
-			if (CaptureModeAction.Active)
+			if (CaptureModeAction.Active || FreeCaptureModeAction.Active)
 				buttonswidget1.Show();
 			else
 				timelinewidget1.Show();
@@ -395,7 +398,8 @@ namespace LongoMatch.Gui
 			if (openedProject != null) {
 				leftbox.Visible = !((Gtk.ToggleAction)sender).Active;
 				timelinewidget1.Visible = !((Gtk.ToggleAction)sender).Active && AnalyzeModeAction.Active;
-				buttonswidget1.Visible = !((Gtk.ToggleAction)sender).Active && CaptureModeAction.Active;
+				buttonswidget1.Visible = !((Gtk.ToggleAction)sender).Active && 
+					(CaptureModeAction.Active || CaptureModeAction.Active);
 				if (((Gtk.ToggleAction)sender).Active)
 					rightvbox.Visible = false;
 				else if (!((Gtk.ToggleAction)sender).Active && (playlistwidget2.Visible || noteswidget1.Visible))
@@ -403,17 +407,17 @@ namespace LongoMatch.Gui
 			}
 		}
 		
-		protected virtual void OnCaptureModeActionToggled(object sender, System.EventArgs e)
+		protected virtual void OnViewToggled(object sender, System.EventArgs e)
 		{
-			if (((Gtk.ToggleAction)sender).Active) {
-				buttonswidget1.Show();
-				timelinewidget1.Hide();
-			}
-			else {
-				buttonswidget1.Hide();
-				timelinewidget1.Show();
-			}
-		}		
+			/* this callback is triggered by Capture and Free Capture */
+			ToggleAction view = (Gtk.ToggleAction)sender;
+			buttonswidget1.Visible = view.Active;
+			timelinewidget1.Visible = !view.Active;
+			if (view == FreeCaptureModeAction)
+				buttonswidget1.Mode = TagMode.Free;
+			else 
+				buttonswidget1.Mode = TagMode.Predifined;			
+		}	
 		#endregion
 		#region Help
 		protected virtual void OnHelpAction1Activated(object sender, System.EventArgs e)
@@ -525,6 +529,7 @@ namespace LongoMatch.Gui
 		{
 			CloseAndQuit();
 		}
-		#endregion		
+
+		#endregion			}
 	}
 }

@@ -31,6 +31,10 @@ namespace LongoMatch.Handlers
 	public delegate void TimeNodeSelectedHandler(MediaTimeNode tNode);
 	//A new play needs to be create for a specific category at the current play time
 	public delegate void NewMarkEventHandler(int i);
+	//The start time of a new play has been signaled
+	public delegate void NewMarkStartHandler();
+	//The stop of a nes play has been signaled
+	public delegate void NewMarkStopHandler(int i);
 	//Several plays needs to be created for a several categories
 	public delegate void NewMarksEventHandler(List<int> sections);
 	//A need play needs to be created at precise frame
