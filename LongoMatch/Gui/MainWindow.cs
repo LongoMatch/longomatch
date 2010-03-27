@@ -117,7 +117,7 @@ namespace LongoMatch.Gui
 			eManager.OpenedProject = project;
 			eManager.OpenedProjectType = projectType;
 			if (project!=null) {
-				if (projectType == ProjectType.NewFileProject){
+				if (projectType == ProjectType.FileProject){
 					// Check if the file associated to the project exists
 					if (!File.Exists(project.File.FilePath)) {
 						MessagePopup.PopupMessage(this, MessageType.Warning,
@@ -184,7 +184,7 @@ namespace LongoMatch.Gui
 			if (save)
 				SaveProject();
 			
-			if (projectType != ProjectType.NewFileProject){
+			if (projectType != ProjectType.FileProject){
 				playerbin1.Visible = true;
 				eManager.Capturer = null;
 				if (capturerBin != null)
@@ -214,7 +214,7 @@ namespace LongoMatch.Gui
 		}
 
 		private void MakeActionsSensitive(bool sensitive, ProjectType projectType) {
-			bool sensitive2 = sensitive && projectType == ProjectType.NewFileProject;
+			bool sensitive2 = sensitive && projectType == ProjectType.FileProject;
 			CloseProjectAction.Sensitive=sensitive;
 			SaveProjectAction.Sensitive = sensitive;
 			CaptureModeAction.Sensitive = sensitive2;
@@ -249,9 +249,9 @@ namespace LongoMatch.Gui
 		}
 
 		private void SaveProject() {
-			if (openedProject != null && projectType == ProjectType.NewFileProject) {
+			if (openedProject != null && projectType == ProjectType.FileProject) {
 				MainClass.DB.UpdateProject(openedProject);
-			} else if (projectType == ProjectType.NewFakeCaptureProject)
+			} else if (projectType == ProjectType.FakeCaptureProject)
 				ProjectUtils.SaveFakeLiveProject(openedProject, this);
 		}
 		
@@ -262,7 +262,7 @@ namespace LongoMatch.Gui
 			if (openedProject == null)
 				return true;
 			
-			if (projectType == ProjectType.NewFileProject){
+			if (projectType == ProjectType.FileProject){
 				MessageDialog md = new MessageDialog(this, DialogFlags.Modal, 
 				                                     MessageType.Question, ButtonsType.OkCancel,
 				                                     Catalog.GetString("Do you want to close the current project?"));
@@ -331,7 +331,7 @@ namespace LongoMatch.Gui
 				project = opd.GetSelection();
 			opd.Destroy();
 			if (project != null)
-				SetProject(MainClass.DB.GetProject(project.File), ProjectType.NewFileProject);
+				SetProject(MainClass.DB.GetProject(project.File), ProjectType.FileProject);
 		}
 		
 		protected virtual void OnSaveProjectActionActivated(object sender, System.EventArgs e)

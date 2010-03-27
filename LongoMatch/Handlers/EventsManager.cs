@@ -164,8 +164,8 @@ namespace LongoMatch
 			stop = pos + stopTime;
 			fStart = (start < new Time(0)) ? new Time(0) : start;
 			
-			if (projectType == ProjectType.NewFakeCaptureProject || 
-			    projectType == ProjectType.NewCaptureProject){
+			if (projectType == ProjectType.FakeCaptureProject || 
+			    projectType == ProjectType.CaptureProject){
 				fStop = stop;					
 			}
 			else {
@@ -179,7 +179,7 @@ namespace LongoMatch
 			Pixbuf miniature;
 			MediaTimeNode tn;
 		
-			miniature = projectType == ProjectType.NewFakeCaptureProject ?
+			miniature = projectType == ProjectType.FakeCaptureProject ?
 				null : player.CurrentMiniatureFrame;
 			tn = openedProject.AddTimeNode(section, start, stop,miniature);
 			treewidget.AddPlay(tn,section);
@@ -225,8 +225,8 @@ namespace LongoMatch
 		public virtual void OnNewMark(int i) {
 			Time pos;
 			
-			if (projectType == ProjectType.NewFakeCaptureProject || 
-			    projectType == ProjectType.NewCaptureProject)
+			if (projectType == ProjectType.FakeCaptureProject || 
+			    projectType == ProjectType.CaptureProject)
 				pos =  new Time((int)capturer.CurrentTime);
 			else 
 				pos = new Time((int)player.CurrentTime);
@@ -298,7 +298,7 @@ namespace LongoMatch
 			foreach (int player in tNode.VisitorPlayers)
 				visitorPlayersList.DeleteTimeNode(tNode,player);
 			openedProject.DeleteTimeNode(tNode,section);
-			if (projectType == ProjectType.NewFileProject){
+			if (projectType == ProjectType.FileProject){
 				this.player.CloseActualSegment();
 				MainClass.DB.UpdateProject(openedProject);
 			}

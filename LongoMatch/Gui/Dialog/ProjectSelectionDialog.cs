@@ -34,9 +34,9 @@ namespace LongoMatch.Gui.Dialog
 		public ProjectType Type{
 			get{
 				if (fromfileradiobutton.Active)
-					return ProjectType.NewFileProject;
+					return ProjectType.FileProject;
 				else
-					return ProjectType.NewFakeCaptureProject;
+					return ProjectType.FakeCaptureProject;
 				
 			}
 		}

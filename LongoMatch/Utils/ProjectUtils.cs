@@ -210,7 +210,7 @@ namespace LongoMatch.Utils
 				}
 				response = npd.Run();
 			}				
-			if (projectType == ProjectType.NewFileProject) 
+			if (projectType == ProjectType.FileProject) 
 				/* We can safelly add the project since we already checked if 
 				 * it can can added */
 				MainClass.DB.AddProject(project);

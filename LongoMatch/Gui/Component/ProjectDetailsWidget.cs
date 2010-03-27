@@ -66,17 +66,17 @@ namespace LongoMatch.Gui.Component
 			FillSections();
 			FillTeamsTemplate();
 
-			this.Use=ProjectType.NewFileProject;
+			this.Use=ProjectType.FileProject;
 		}
 
 		public ProjectType Use {
 			set {
-				if (value == ProjectType.NewFileProject  || value == ProjectType.EditProject
-				    || value == ProjectType.NewFakeCaptureProject) {
+				if (value == ProjectType.FileProject  || value == ProjectType.EditProject
+				    || value == ProjectType.FakeCaptureProject) {
 					videobitratelabel.Visible = false;
 					bitratespinbutton.Visible = false;					
 				}
-				if (value == ProjectType.NewFakeCaptureProject) {
+				if (value == ProjectType.FakeCaptureProject) {
 					label6.Visible = false;
 					hbox4.Visible = false;
 				}
@@ -252,10 +252,10 @@ namespace LongoMatch.Gui.Component
 
 		public Project GetProject() {
 			if (useType != ProjectType.EditProject) {
-				if (Filename == "" && useType == ProjectType.NewFileProject)
+				if (Filename == "" && useType == ProjectType.FileProject)
 					return null;
 				else {
-					if (useType == ProjectType.NewFakeCaptureProject){
+					if (useType == ProjectType.FakeCaptureProject){
 						mFile = new PreviewMediaFile();
 						mFile.FilePath = Constants.FAKE_PROJECT;
 						mFile.Fps = 25;
@@ -343,7 +343,7 @@ namespace LongoMatch.Gui.Component
 		{
 			FileChooserDialog fChooser = null;
 
-			if (this.useType == ProjectType.NewCaptureProject) {
+			if (this.useType == ProjectType.CaptureProject) {
 				fChooser = new FileChooserDialog(Catalog.GetString("Save File as..."),
 				                                 (Gtk.Window)this.Toplevel,
 				                                 FileChooserAction.Save,
