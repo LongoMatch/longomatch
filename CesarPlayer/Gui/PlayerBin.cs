@@ -550,6 +550,10 @@ namespace LongoMatch.Gui
 		{
 			if(filename == null)
 				return;
+			/* FIXME: The pointer is grabbed when the event box is clicked.
+			 * Make sure to ungrab it in order to avoid clicks outisde the window
+			 * triggering this callback. This should be fixed properly.*/ 
+			Pointer.Ungrab(Gtk.Global.CurrentEventTime);
 			if (!player.Playing)
 				Play();
 			else 
