@@ -259,10 +259,20 @@ namespace LongoMatch.Gui
 			int res;
 			EndCaptureDialog dialog;
 			
-			if (projectType == ProjectType.None || 
-			    projectType == ProjectType.NewFileProject){
-				CloseOpenedProject(true);
+			if (openedProject == null)
 				return true;
+			
+			if (projectType == ProjectType.NewFileProject){
+				MessageDialog md = new MessageDialog(this, DialogFlags.Modal, 
+				                                     MessageType.Question, ButtonsType.OkCancel,
+				                                     Catalog.GetString("Do you want to close the current project?"));
+				res = md.Run();
+				md.Destroy();
+				if (res == (int)ResponseType.Ok){
+					CloseOpenedProject(true);
+					return true;
+				}
+				return false;
 			}
 			
 			dialog = new EndCaptureDialog();
