@@ -76,8 +76,10 @@ namespace LongoMatch.Gui
 					capturerhbox.Add((Widget)capturer);
 					(capturer as Widget).Visible = true;
 					capturerhbox.Visible = true;
+					logodrawingarea.Visible = false;
 				}
 				else{
+					logodrawingarea.Visible = true;
 					capturerhbox.Visible = false;
 				}
 				SetProperties();
