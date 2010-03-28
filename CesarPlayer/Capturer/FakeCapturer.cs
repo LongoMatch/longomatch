@@ -75,12 +75,12 @@ namespace LongoMatch.Video.Capturer
 			started = true;
 		}
 		
-		public uint EncodeWidth {
+		public uint OutputWidth {
 			get{return 0;} 
 			set{}
 		}
 
-		public uint EncodeHeight {
+		public uint OutputHeight {
 			get{return 0;}
 			set{}
 		}

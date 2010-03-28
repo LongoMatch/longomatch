@@ -29,12 +29,12 @@ namespace LongoMatch.Video.Capturer
 	{	
 		event EllpasedTimeHandler EllapsedTime;
 			
-		uint EncodeWidth {
+		uint OutputWidth {
 			get ;
 			set ;
 		}
 
-		uint EncodeHeight {
+		uint OutputHeight {
 			get;
 			set ;
 		}

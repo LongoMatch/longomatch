@@ -45,32 +45,32 @@ namespace LongoMatch.Video.Capturer {
 			if (error != IntPtr.Zero) throw new GLib.GException (error);
 		}
 
-		[GLib.Property ("encode_height")]
-		public uint EncodeHeight {
+		[GLib.Property ("output_height")]
+		public uint OutputHeight {
 			get {
-				GLib.Value val = GetProperty ("encode_height");
+				GLib.Value val = GetProperty ("output_height");
 				uint ret = (uint) val;
 				val.Dispose ();
 				return ret;
 			}
 			set {
 				GLib.Value val = new GLib.Value(value);
-				SetProperty("encode_height", val);
+				SetProperty("output_height", val);
 				val.Dispose ();
 			}
 		}
 
-		[GLib.Property ("encode_width")]
-		public uint EncodeWidth {
+		[GLib.Property ("output_width")]
+		public uint OutputWidth {
 			get {
-				GLib.Value val = GetProperty ("encode_width");
+				GLib.Value val = GetProperty ("output_width");
 				uint ret = (uint) val;
 				val.Dispose ();
 				return ret;
 			}
 			set {
 				GLib.Value val = new GLib.Value(value);
-				SetProperty("encode_width", val);
+				SetProperty("output_width", val);
 				val.Dispose ();
 			}
 		}
