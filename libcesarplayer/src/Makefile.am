@@ -29,8 +29,6 @@ libcesarplayer_la_SOURCES = \
 	bacon-video-widget-gst-0.10.c\
 	gstscreenshot.c \
 	gstscreenshot.h \
-	gst-video-capturer.c \
-	gst-video-capturer.h \
 	gst-video-editor.c\
 	gst-video-editor.h\
 	bacon-resize.c\
