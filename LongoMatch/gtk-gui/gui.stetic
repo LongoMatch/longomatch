@@ -5377,12 +5377,15 @@ You can add new tags using the text entry and clicking "Add Tag"</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.ProjectSelectionDialog" design-size="355 138">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.ProjectSelectionDialog" design-size="298 138">
     <property name="MemberName" />
     <property name="Title" translatable="yes">New Project</property>
     <property name="Icon">stock:longomatch Menu</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
+    <property name="Gravity">Center</property>
+    <property name="SkipPagerHint">True</property>
+    <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
     <property name="HasSeparator">False</property>
@@ -5399,45 +5402,29 @@ You can add new tags using the text entry and clicking "Add Tag"</property>
                 <property name="MemberName" />
                 <property name="Spacing">6</property>
                 <child>
+                  <widget class="Gtk.RadioButton" id="fromfileradiobutton">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="Label" translatable="yes">New project usng a video file</property>
+                    <property name="Active">True</property>
+                    <property name="DrawIndicator">True</property>
+                    <property name="HasLabel">True</property>
+                    <property name="UseUnderline">True</property>
+                    <property name="FocusOnClick">False</property>
+                    <property name="Group">project</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">False</property>
+                  </packing>
+                </child>
+                <child>
                   <widget class="Gtk.Image" id="image61">
                     <property name="MemberName" />
                     <property name="Pixbuf">resource:video.png</property>
                   </widget>
                   <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">True</property>
-                    <property name="Expand">False</property>
-                    <property name="Fill">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.Label" id="label1">
-                    <property name="MemberName" />
-                    <property name="Xalign">0</property>
-                    <property name="LabelProp" translatable="yes">New project using a video file</property>
-                  </widget>
-                  <packing>
                     <property name="Position">1</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.RadioButton" id="fromfileradiobutton">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Label" translatable="yes" />
-                    <property name="Active">True</property>
-                    <property name="DrawIndicator">True</property>
-                    <property name="HasLabel">False</property>
-                    <property name="UseUnderline">True</property>
-                    <property name="FocusOnClick">False</property>
-                    <property name="Group">project</property>
-                    <child>
-                      <placeholder />
-                    </child>
-                  </widget>
-                  <packing>
-                    <property name="Position">2</property>
                     <property name="AutoSize">False</property>
                     <property name="Expand">False</property>
                     <property name="Fill">False</property>
@@ -5456,43 +5443,27 @@ You can add new tags using the text entry and clicking "Add Tag"</property>
                 <property name="MemberName" />
                 <property name="Spacing">6</property>
                 <child>
+                  <widget class="Gtk.RadioButton" id="fakeliveradiobutton">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="Label" translatable="yes">Live project using a fake capture device</property>
+                    <property name="DrawIndicator">True</property>
+                    <property name="HasLabel">True</property>
+                    <property name="UseUnderline">True</property>
+                    <property name="Group">project</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">True</property>
+                  </packing>
+                </child>
+                <child>
                   <widget class="Gtk.Image" id="image62">
                     <property name="MemberName" />
                     <property name="Pixbuf">resource:camera-video.png</property>
                   </widget>
                   <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">True</property>
-                    <property name="Expand">False</property>
-                    <property name="Fill">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.Label" id="label2">
-                    <property name="MemberName" />
-                    <property name="Xalign">0</property>
-                    <property name="LabelProp" translatable="yes">Live project using a fake capture device</property>
-                  </widget>
-                  <packing>
                     <property name="Position">1</property>
-                    <property name="AutoSize">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.RadioButton" id="fakeliveradiobutton">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Label" translatable="yes" />
-                    <property name="DrawIndicator">True</property>
-                    <property name="HasLabel">False</property>
-                    <property name="UseUnderline">True</property>
-                    <property name="Group">project</property>
-                    <child>
-                      <placeholder />
-                    </child>
-                  </widget>
-                  <packing>
-                    <property name="Position">2</property>
                     <property name="AutoSize">False</property>
                     <property name="Expand">False</property>
                     <property name="Fill">False</property>
