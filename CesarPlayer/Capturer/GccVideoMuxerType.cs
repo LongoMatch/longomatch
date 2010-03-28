@@ -24,8 +24,9 @@ namespace LongoMatch.Video.Capturer {
 	public enum GccVideoMuxerType {
 
 		Avi,
+		Mp4,
 		Matroska,
-		Ogg,
+		Ogg,		
 	}
 #endregion
 }
