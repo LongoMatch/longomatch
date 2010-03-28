@@ -38,6 +38,14 @@ namespace LongoMatch.Gui
 		public event EventHandler CaptureFinished;
 		
 		private Pixbuf logopix;
+		private uint outputWidth;
+		private uint outputHeight;
+		private uint videoBitrate;
+		private uint audioBitrate;
+		private GccVideoEncoderType  videoEncoder;
+		private GccAudioEncoderType audioEncoder;
+		private GccVideoMuxerType videoMuxer;
+		private string outputFile;
 		
 		ICapturer capturer;
 		
@@ -45,6 +53,14 @@ namespace LongoMatch.Gui
 		{
 			this.Build();
 			Type = CapturerType.FAKE;	
+			outputWidth = 320;
+			outputHeight = 240;
+			videoBitrate = 1000;
+			audioBitrate = 128;
+			videoEncoder = GccVideoEncoderType.H264;
+			audioEncoder = GccAudioEncoderType.Aac;
+			videoMuxer = GccVideoMuxerType.Mp4;
+			outputFile = "";
 		}		
 		
 		public CapturerType Type {
@@ -64,6 +80,7 @@ namespace LongoMatch.Gui
 				else{
 					capturerhbox.Visible = false;
 				}
+				SetProperties();
 			}
 		}
 		
@@ -80,22 +97,56 @@ namespace LongoMatch.Gui
 		public string OutputFile {
 			set{
 				capturer.OutputFile= value;
+				outputFile = value;
 			}			
 		}		
 				
 		public uint VideoBitrate {
-			set{capturer.VideoBitrate=value;}			
+			set{
+				capturer.VideoBitrate=value;
+				videoBitrate = value;
+			}			
 		}
 		
 		public uint AudioBitrate {
-			set{capturer.AudioBitrate=value;}
+			set{
+				capturer.AudioBitrate=value;
+				audioBitrate = value;
+			}
 		}
 		
+		public uint OutputWidth {
+			set {
+				capturer.OutputWidth = value;
+				outputWidth = value;
+			}
+		} 
+		
+		public uint OutputHeight {
+			set {
+				capturer.OutputHeight = value;
+				outputHeight = value;
+			}
+		} 
+		
 		public int CurrentTime {
-			get{
+			get {
 				return capturer.CurrentTime;
 			}
 		}
+		
+		public CapturePropertiesStruct CaptureProperties{
+			set{
+				outputWidth = value.Width;
+				outputHeight = value.Height;
+				audioBitrate = value.AudioBitrate;
+				videoBitrate = value.VideoBitrate;
+				audioEncoder = value.AudioEncoder;
+				videoEncoder = value.VideoEncoder;
+				videoMuxer = value.Muxer;
+			}
+		}
+		
 		public void TogglePause(){
 			capturer.TogglePause();
 		}
@@ -114,14 +165,28 @@ namespace LongoMatch.Gui
 		
 		public void SetVideoEncoder(GccVideoEncoderType type){
 			capturer.SetVideoEncoder(type);
+			videoEncoder = type;
 		}
 		
-		public void SetAudioEncoder(LongoMatch.Video.Capturer.GccAudioEncoderType type){
+		public void SetAudioEncoder(GccAudioEncoderType type){
 			capturer.SetAudioEncoder(type);
+			audioEncoder = type;
 		}
 		
-		public void SetVideoMuxer(LongoMatch.Video.Capturer.GccVideoMuxerType type){
+		public void SetVideoMuxer(GccVideoMuxerType type){
 			capturer.SetVideoMuxer(type);
+			videoMuxer = type;
+		}
+		
+		private void SetProperties(){
+			capturer.OutputFile = outputFile;
+			capturer.OutputHeight = outputHeight;
+			capturer.OutputWidth = outputWidth;
+			capturer.SetVideoEncoder(videoEncoder);
+			capturer.SetAudioEncoder(audioEncoder);
+			capturer.SetVideoMuxer(videoMuxer);	
+			capturer.VideoBitrate = videoBitrate;
+			capturer.AudioBitrate = audioBitrate;
 		}
 
 		protected virtual void OnRecbuttonClicked (object sender, System.EventArgs e)
