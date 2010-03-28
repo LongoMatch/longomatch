@@ -68,6 +68,9 @@ namespace LongoMatch.Video.Capturer
 			}
 		}
 		
+		public void Run(){
+		}
+		
 		public void Start(){
 			timerID = GLib.Timeout.Add(100, OnTick);
 			lastStart = DateTime.Now;
