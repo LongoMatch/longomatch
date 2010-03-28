@@ -22,14 +22,14 @@
     <File name="src/macros.h" subtype="Code" buildaction="Nothing" />
     <File name="src/gstscreenshot.c" subtype="Code" buildaction="Compile" />
     <File name="src/gstscreenshot.h" subtype="Code" buildaction="Nothing" />
-    <File name="src/gst-video-capturer.c" subtype="Code" buildaction="Compile" />
-    <File name="src/gst-video-capturer.h" subtype="Code" buildaction="Nothing" />
     <File name="src/gst-video-editor.c" subtype="Code" buildaction="Compile" />
     <File name="src/gst-video-editor.h" subtype="Code" buildaction="Nothing" />
     <File name="src/bacon-resize.c" subtype="Code" buildaction="Compile" />
     <File name="src/bacon-resize.h" subtype="Code" buildaction="Nothing" />
     <File name="src/video-utils.c" subtype="Code" buildaction="Compile" />
     <File name="src/video-utils.h" subtype="Code" buildaction="Nothing" />
+    <File name="src/gst-camera-capturer.c" subtype="Code" buildaction="Compile" />
+    <File name="src/gst-camera-capturer.h" subtype="Code" buildaction="Nothing" />
   </Contents>
   <compiler ctype="GccCompiler" />
   <Packages>
