@@ -237,25 +237,6 @@ namespace LongoMatch.Video.Capturer {
 		}
 
 		[DllImport("libcesarplayer.dll")]
-		static extern bool gst_camera_capturer_set_video_muxer(IntPtr raw, int type);
-
-		public bool SetVideoMuxer(LongoMatch.Video.Capturer.GccVideoMuxerType type) {
-			bool raw_ret = gst_camera_capturer_set_video_muxer(Handle, (int) type);
-			bool ret = raw_ret;
-			return ret;
-		}
-
-		
-		[DllImport("libcesarplayer.dll")]
-		static extern bool gst_camera_capturer_set_video_encoder(IntPtr raw, int type);
-
-		public bool SetVideoEncoder(LongoMatch.Video.Capturer.GccVideoEncoderType type) {
-			bool raw_ret = gst_camera_capturer_set_video_encoder(Handle, (int) type);
-			bool ret = raw_ret;
-			return ret;
-		}
-
-		[DllImport("libcesarplayer.dll")]
 		static extern void gst_camera_capturer_init_backend(out int argc, IntPtr argv);
 
 		public static int InitBackend(string argv) {
@@ -293,12 +274,37 @@ namespace LongoMatch.Video.Capturer {
 		public void Run() {
 			gst_camera_capturer_run(Handle);
 		}
+		
+		[DllImport("libcesarplayer.dll")]
+		static extern bool gst_camera_capturer_set_video_muxer(IntPtr raw, int type, out IntPtr error);
+
+		public bool SetVideoMuxer(LongoMatch.Video.Capturer.GccVideoMuxerType type) {
+			IntPtr error = IntPtr.Zero;
+			bool raw_ret = gst_camera_capturer_set_video_muxer(Handle, (int) type, out error);
+			if (error != IntPtr.Zero) throw new GLib.GException (error);
+			bool ret = raw_ret;
+			return ret;
+		}
+
+		
+		[DllImport("libcesarplayer.dll")]
+		static extern bool gst_camera_capturer_set_video_encoder(IntPtr raw, int type, out IntPtr error);
+
+		public bool SetVideoEncoder(LongoMatch.Video.Capturer.GccVideoEncoderType type) {
+			IntPtr error = IntPtr.Zero;
+			bool raw_ret = gst_camera_capturer_set_video_encoder(Handle, (int) type, out error);
+			if (error != IntPtr.Zero) throw new GLib.GException (error);
+			bool ret = raw_ret;
+			return ret;
+		}
 
 		[DllImport("libcesarplayer.dll")]
-		static extern bool gst_camera_capturer_set_audio_encoder(IntPtr raw, int type);
+		static extern bool gst_camera_capturer_set_audio_encoder(IntPtr raw, int type, out IntPtr error);
 
 		public bool SetAudioEncoder(LongoMatch.Video.Capturer.GccAudioEncoderType type) {
-			bool raw_ret = gst_camera_capturer_set_audio_encoder(Handle, (int) type);
+			IntPtr error = IntPtr.Zero;			
+			bool raw_ret = gst_camera_capturer_set_audio_encoder(Handle, (int) type, out error);
+			if (error != IntPtr.Zero) throw new GLib.GException (error);
 			bool ret = raw_ret;
 			return ret;
 		}
