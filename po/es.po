@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: LongoMatch 0.15\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&component=general\n"
-"POT-Creation-Date: 2010-03-26 01:11+0000\n"
-"PO-Revision-Date: 2010-03-26 20:00+0100\n"
+"POT-Creation-Date: 2010-03-27 22:51+0000\n"
+"PO-Revision-Date: 2010-03-28 13:40+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -139,7 +139,12 @@ msgstr ""
 msgid "An error occurred opening this project:"
 msgstr "Ocurrió un error al abrir este proyecto:"
 
-#: ../LongoMatch/Gui/MainWindow.cs:464
+#: ../LongoMatch/Gui/MainWindow.cs:268
+#| msgid "Do you want to overwrite it?"
+msgid "Do you want to close the current project?"
+msgstr "¿Quiere cerrar el proyecto actual?"
+
+#: ../LongoMatch/Gui/MainWindow.cs:474
 msgid "The actual project will be closed due to an error in the media player:"
 msgstr "El proyecto actual se cerrará debido a un error en el reproductor:"
 
@@ -530,7 +535,6 @@ msgid "New Project"
 msgstr "Proyecto nuevo"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:72
-#| msgid "Please, select a video file."
 msgid "New project using a video file"
 msgstr "Proyecto nuevo usando un archivo de vídeo"
 
@@ -802,7 +806,6 @@ msgstr "_Importar proyecto"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:195
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:198
-#| msgid "Capture Mode"
 msgid "Free Capture Mode"
 msgstr "Modo de captura libre"
 
@@ -970,12 +973,10 @@ msgid "File name: "
 msgstr "Nombre del archivo:"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs:38
-#| msgid "Change"
 msgid "Cancel"
 msgstr "Cancelar"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs:49
-#| msgid "Tag play"
 msgid "Tag new play"
 msgstr "Etiquetar reproducción nueva"
 
@@ -1123,7 +1124,6 @@ msgstr ""
 "el archivo de vídeo en su equipo."
 
 #: ../LongoMatch/Utils/ProjectUtils.cs:63
-#| msgid "Project successfully imported."
 msgid "Project saved successfully."
 msgstr "Proyecto guardado satisfactoriamente."
 
@@ -1133,7 +1133,6 @@ msgid "Import Project"
 msgstr "Importar un proyecto"
 
 #: ../LongoMatch/Utils/ProjectUtils.cs:104
-#| msgid "Import Project"
 msgid "Error importing project:"
 msgstr "Error al importar el proyecto:"
 
@@ -1150,7 +1149,6 @@ msgid "Project successfully imported."
 msgstr "Proyecto importado satisfactoriamente"
 
 #: ../LongoMatch/Utils/ProjectUtils.cs:202
-#| msgid "This file is already used in a Project."
 msgid "This file is already used in another Project."
 msgstr "Este archivo ya está siendo usado en otro proyecto."
 
@@ -1167,9 +1165,6 @@ msgid "Creating video thumbnails. This can take a while."
 msgstr "Creando las miniaturas del vídeo. Esto puede llevar un tiempo."
 
 #: ../CesarPlayer/Gui/CapturerBin.cs:141
-#| msgid ""
-#| "You are about to delete a category and all the plays added to this "
-#| "category. Do you want to proceed?"
 msgid ""
 "You are going to stop and finish the current capture.\n"
 "Do you want to proceed?"
