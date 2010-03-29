@@ -40,9 +40,16 @@ GNU General Public License for more details.";
 		
 		public const string TRANSLATORS = 
 @"Andoni Morales Alastruey (es)
+Daniel Nylander (sv)
+Joe Hansen (da)
+Jorge González (es)
+Kenneth Nielsen (da)
+Kjartan Maraas (nb)
 Mario Blättermann (de)
+Matej Urbančič (sl)
+Marek Cernocky (cs)
 Pavel Bárta (cs)
-Matej Urbančič (sl)";
+Petr Kovar (cs)";
 		
 		public const int THUMBNAIL_MAX_WIDTH = 100;
 		
