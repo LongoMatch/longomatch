@@ -56,7 +56,7 @@ namespace LongoMatch.Gui.Dialog {
             this.hbox1.Name = "hbox1";
             this.hbox1.Spacing = 6;
             // Container child hbox1.Gtk.Box+BoxChild
-            this.fromfileradiobutton = new Gtk.RadioButton(Mono.Unix.Catalog.GetString("New project usng a video file"));
+            this.fromfileradiobutton = new Gtk.RadioButton(Mono.Unix.Catalog.GetString("New project using a video file"));
             this.fromfileradiobutton.CanFocus = true;
             this.fromfileradiobutton.Name = "fromfileradiobutton";
             this.fromfileradiobutton.Active = true;

@@ -5404,7 +5404,7 @@ You can add new tags using the text entry and clicking "Add Tag"</property>
                   <widget class="Gtk.RadioButton" id="fromfileradiobutton">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
-                    <property name="Label" translatable="yes">New project usng a video file</property>
+                    <property name="Label" translatable="yes">New project using a video file</property>
                     <property name="Active">True</property>
                     <property name="DrawIndicator">True</property>
                     <property name="HasLabel">True</property>
