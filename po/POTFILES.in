@@ -178,6 +178,7 @@ CesarPlayer/Handlers/TickHandler.cs
 CesarPlayer/Handlers/Handlers.cs
 CesarPlayer/Capturer/ErrorHandler.cs
 CesarPlayer/Capturer/GstCameraCapturer.cs
+CesarPlayer/Capturer/FakeCapturer.cs
 CesarPlayer/Capturer/ICapturer.cs
 CesarPlayer/Capturer/GccVideoEncoderType.cs
 CesarPlayer/Capturer/GccVideoMuxerType.cs
