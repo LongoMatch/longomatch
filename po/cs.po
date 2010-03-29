@@ -7,10 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: longomatch\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=longomatch&component=general\n"
-"POT-Creation-Date: 2010-03-28 10:18+0000\n"
-"PO-Revision-Date: 2010-03-27 19:20+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-03-29 17:46+0200\n"
+"PO-Revision-Date: 2010-03-29 07:57+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -142,10 +141,8 @@ msgid "An error occurred opening this project:"
 msgstr "Vyskytla se chyba při otevírání tohoto projektu:"
 
 #: ../LongoMatch/Gui/MainWindow.cs:268
-#, fuzzy
-#| msgid "Do you want to overwrite it?"
 msgid "Do you want to close the current project?"
-msgstr "Chcete jej přepsat?"
+msgstr "Chcete zavřít současný projekt?"
 
 #: ../LongoMatch/Gui/MainWindow.cs:474
 msgid "The actual project will be closed due to an error in the media player:"
@@ -1183,4 +1180,3 @@ msgstr "Čas:"
 #: ../CesarPlayer/Utils/MediaFile.cs:164
 msgid "Invalid video file:"
 msgstr "Neplatný soubor s videem:"
-
