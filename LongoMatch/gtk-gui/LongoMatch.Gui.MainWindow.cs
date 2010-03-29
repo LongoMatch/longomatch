@@ -193,7 +193,7 @@ namespace LongoMatch.Gui {
             this.ImportProjectAction.ShortLabel = Mono.Unix.Catalog.GetString("_Import Project");
             w1.Add(this.ImportProjectAction, "<Control>i");
             this.FreeCaptureModeAction = new Gtk.RadioAction("FreeCaptureModeAction", Mono.Unix.Catalog.GetString("Free Capture Mode"), null, null, 0);
-            this.FreeCaptureModeAction.Group = this.CaptureModeAction.Group;
+            this.FreeCaptureModeAction.Group = this.AnalyzeModeAction.Group;
             this.FreeCaptureModeAction.Sensitive = false;
             this.FreeCaptureModeAction.ShortLabel = Mono.Unix.Catalog.GetString("Free Capture Mode");
             w1.Add(this.FreeCaptureModeAction, null);
@@ -407,7 +407,7 @@ namespace LongoMatch.Gui {
                 this.Child.ShowAll();
             }
             this.DefaultWidth = 1259;
-            this.DefaultHeight = 817;
+            this.DefaultHeight = 848;
             this.leftbox.Hide();
             this.drawingtoolbox1.Hide();
             this.timelinewidget1.Hide();
@@ -417,7 +417,6 @@ namespace LongoMatch.Gui {
             this.rightvbox.Hide();
             this.videoprogressbar.Hide();
             this.Show();
-            this.DeleteEvent += new Gtk.DeleteEventHandler(this.OnDeleteEvent);
             this.NewPojectAction.Activated += new System.EventHandler(this.OnNewActivated);
             this.OpenProjectAction.Activated += new System.EventHandler(this.OnOpenActivated);
             this.QuitAction.Activated += new System.EventHandler(this.OnQuitActivated);
