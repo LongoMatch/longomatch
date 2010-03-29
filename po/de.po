@@ -6,8 +6,8 @@ msgstr ""
 "Project-Id-Version: longomatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&component=general\n"
-"POT-Creation-Date: 2010-03-27 22:51+0000\n"
-"PO-Revision-Date: 2010-03-28 19:49+0100\n"
+"POT-Creation-Date: 2010-03-29 20:34+0000\n"
+"PO-Revision-Date: 2010-03-29 22:57+0100\n"
 "Last-Translator: Mario Blättermann <mariobl@gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1186,6 +1186,10 @@ msgstr "Zeit:"
 #: ../CesarPlayer/Utils/MediaFile.cs:164
 msgid "Invalid video file:"
 msgstr "Ungültige Videodatei:"
+
+#: ../CesarPlayer/Capturer/FakeCapturer.cs:89
+msgid "Fake live source"
+msgstr "Simulierte Live-Quelle"
 
 #~ msgid "Open the project, please."
 #~ msgstr "Öffnen Sie bitte das Projekt."
