@@ -917,7 +917,7 @@ msgid ""
 "You can add new tags using the text entry and clicking \"Add Tag\""
 msgstr ""
 "<b>Ninguna jugada ha sido etiquetada todavía.</b>\n"
-"Puede añadir nuevas etiquetas usando la espacio inferior y pulsando «Añadir "
+"Puede añadir nuevas etiquetas usando el espacio inferior y pulsando «Añadir "
 "etiqueta»"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs:95
@@ -978,7 +978,7 @@ msgstr "Cancelar"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs:49
 msgid "Tag new play"
-msgstr "Etiquetar reproducción nueva"
+msgstr "Etiquetar jugada nueva"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.Migrator.cs:89
 msgid "<b>Data Base Migration</b>"
