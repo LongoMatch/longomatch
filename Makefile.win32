@@ -17,8 +17,13 @@ CSC = $(MONO_INSTALL_PATH)/bin/gmcs
 
 # i18n
 FILES = \
-	es.po \
-	de.po
+	cs.po\
+	da.po\
+	de.po\
+	es.po\
+	nb.po\
+	sl.po\
+	sv.po
 
 MO_FILES = $(foreach po,$(FILES), $(LOCALE_DIR)/$(basename $(po))/LC_MESSAGES/longomatch.mo)
 GMO_FILES = $(patsubst %.po, $(BUILD_DIR)/%.gmo,$(FILES))
@@ -77,8 +82,10 @@ CESARPLAYER_FILES = \
 	Utils/FramesCapturer.cs \
 	Utils/IMetadataReader.cs \
 	Utils/TimeString.cs \
+	Capturer/FakeCapturer.cs \
 	Capturer/GccAudioEncoderType.cs \
 	Capturer/GccError.cs \
+	Capturer/GccType.cs \
 	Capturer/GccVideoEncoderType.cs \
 	Capturer/GccVideoMuxerType.cs \
 	Capturer/GstCameraCapturer.cs \
@@ -159,9 +166,11 @@ LONGOMATCH_FILES = \
 	gtk-gui/LongoMatch.Gui.Component.TeamTemplateWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TimeLineWidget.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.BusyDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.EditCategoryDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.EditPlayerDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs \
@@ -200,9 +209,11 @@ LONGOMATCH_FILES = \
 	Gui/Component/TimeLineWidget.cs \
 	Gui/Component/TimeReferenceWidget.cs \
 	Gui/Component/TimeScale.cs \
+	Gui/Dialog/BusyDialog.cs \
 	Gui/Dialog/DrawingTool.cs \
 	Gui/Dialog/EditCategoryDialog.cs \
 	Gui/Dialog/EditPlayerDialog.cs \
+	Gui/Dialog/EndCaptureDialog.cs \
 	Gui/Dialog/EntryDialog.cs \
 	Gui/Dialog/FramesCaptureProgressDialog.cs \
 	Gui/Dialog/HotKeySelectorDialog.cs \
@@ -252,7 +263,8 @@ LONGOMATCH_FILES = \
 	Time/Time.cs \
 	Time/TimeNode.cs \
 	Updates/Updater.cs \
-	Updates/XmlUpdateParser.cs
+	Updates/XmlUpdateParser.cs\
+	Utils/ProjectUtils.cs
 
 LONGOMATCH_RESOURCES = \
 	-resource:./gtk-gui/objects.xml \
@@ -264,7 +276,7 @@ LONGOMATCH_RESOURCES = \
 	-resource:./images/stock_draw-rectangle-unfilled.png,stock_draw-rectangle-unfilled.png\
 	-resource:./images/stock_draw-freeform-line.png,stock_draw-freeform-line.png\
 	-resource:./images/camera-video.png,camera-video.png\
-	-resource:./images/video.png,video.png\
+	-resource:./images/video.png,video.png
 
 
 LONGOMATCH_REFERENCES = \

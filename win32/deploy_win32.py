@@ -40,7 +40,7 @@ MONO_DEPS = ['mono.dll', 'MonoPosixHelper.dll', 'pangosharpglue-2.dll', 'gtkshar
 
 IMAGES = ['background.png', 'longomatch.png']
 
-LINGUAS = ['es', 'de']
+LINGUAS = ['cs', 'da', 'de', 'es', 'nb', 'sl', 'sv']
 
 # Set-up working folder
 root_dir = os.path.abspath(os.path.join(os.getcwd(), '..'))
