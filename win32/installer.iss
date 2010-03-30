@@ -48,3 +48,6 @@ Name: "{commondesktop}\LongoMatch"; Filename: "{app}\bin\LongoMatch.exe"; Workin
 [Run]
 Filename: "{app}\bin\LongoMatch.exe"; WorkingDir: "{app}\bin";Description: "{cm:LaunchProgram,LongoMatch}"; Flags: nowait postinstall skipifsilent
 
+
+[InstallDelete] 
+Type: filesandordirs; Name:"{userdocs}\.gstreamer-0.10"
