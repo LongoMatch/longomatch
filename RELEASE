@@ -1,7 +1,7 @@
-LongoMatch-0.15.5 "In the mood for Barcelona" 
+LongoMatch-0.15.6 "Precaución amigo conductor" 
 -------------------------------------------------
 
-The LongoMatch team is proud to announce the fifth release in the unstable 0.15
+The LongoMatch team is proud to announce the sixth release in the unstable 0.15
 LongoMatch series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
@@ -9,41 +9,40 @@ all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
 * Features of this release
-  * Plays are now sortable by name, start time, stop time and duration.
-  * Plays can be multi-tagged.
-  * A new tab has been added to display plays filterd by tags.
-  * Tagging Hotkeys can use simple key instead of and Alt or Shift combination
-  * Projects can be imported/exported to/from files.
-  * Templates can be created copying an existent one.
-  * Plays can be multiselected to easy taks like deleting several plays at once.
-  * A template from a project can be exported.
-  * Added German Translation
+  * New tagging mode, to tag plays setting the start and stop time instead of using the default values.
+  * Live analysis support with a fake capture device.  
+  * Keys bindings for the media player. 
+  * Added Norwegian translation.
+  * Added Slovenian translation.
+  * Added Danish translation.
+  * Added Swedish translation.
 
 *Bugs Fixed
-  * [#603277] The projects manager does not ask to save an edited project when exiting
-  * [#603274] Enable multiple selection of plays
-  * [#603276] Use a template different from the default one when creating a new one
-  * [#603260] Ability to export/import projects to/from other machines
-
+  * [#614133] The drawing tool does not resize properly the image
+  * [#614135] Hotkeys ToString() prints 'none' if the hotkey has no modifier
+  * [#614136] The player grabs the pointer when clicked 
 
 * Features of the 0.15 series
-
- * Illimted number of tagging categories (previous version allows only 20)
- * Support for team templates
- * Plays can be tagged to players
- * Soft Tagging support
- * Import/Export projects
- * Orderable plays
- * HotKeys support	
- * Database migration tool
- * New video editor implemented using GNonLin (FFmpeg and Mencoder are not required anymore)
- * Video Editor with audio support
- * Overlay title of the play in rendered clips
- * Change the playrate of plays in the rendered clip
- * New output formats (TV, HD, FullHD)
- * New output audio and video codecs supports (Matroska+H264+AAC, AVI+XVID+MP3, OGG+Theora+Vorbis, MPEG2-PS+Mpeg2Video)
- * Drawing tool for on-video annotations
- * Redesigned templates manager
+ 
+  * New tagging mode, to tag plays setting the start and stop time instead of using the default values.
+  * Live analysis support with a fake capture device.  
+  * Keys bindings for the media player. 
+  * Illimted number of tagging categories (previous version allows only 20)
+  * Support for team templates
+  * Plays can be tagged to players
+  * Soft Tagging support
+  * Import/Export projects
+  * Orderable plays
+  * HotKeys support	
+  * Database migration tool
+  * New video editor implemented using GNonLin (FFmpeg and Mencoder are not required anymore)
+  * Video Editor with audio support
+  * Overlay title of the play in rendered clips
+  * Change the playrate of plays in the rendered clip
+  * New output formats (TV, HD, FullHD)
+  * New output audio and video codecs supports (Matroska+H264+AAC, AVI+XVID+MP3, OGG+Theora+Vorbis, MPEG2-PS+Mpeg2Video)
+  * Drawing tool for on-video annotations
+  * Redesigned templates manager
 	
 *Contributors to this Release:
 
@@ -51,9 +50,13 @@ experience.
 	Andoni Morales Alastruey <ylatuya@gmail.com>
   
   * Translations:
- 	* de: Mario Blättermann <mariobl@gnome.org>
-	* es: Andoni Morales Alastruey <ylatuya@gmail.com>
-
+	* cs: Marek Cernocky, Pavel Bárta, Petr Kovar
+	* da: Joe Hansen, Kenneth Nielsen
+ 	* de: Mario Blättermann 
+	* es: Andoni Morales Alastruey, Jorge González 
+	* nb: Kjartan Maraas 
+	* sl: Matej Urbančič
+	* sv: Daniel Nylander
 
 
 * Requirements

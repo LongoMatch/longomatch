@@ -1,3 +1,21 @@
+===== LongoMatch 0.15.6 =====
+
+	== Features ==
+
+	* New tagging mode, to tag plays setting the start and stop time instead of using the default values.
+	* Live analysis support with a fake capture device.  
+	* Keys bindings for the media player. 
+	* Added Norwegian translation.
+	* Added Slovenian translation.
+	* Added Danish translation.
+	* Added Swedish translation.
+		
+ 	== Bugs Fixed ==
+
+	* [#614133] The drawing tool does not resize properly the image
+	* [#614135] Hotkeys ToString() prints 'none' if the hotkey has no modifier
+	* [#614136] The player grabs the pointer when clicked
+
 ===== LongoMatch 0.15.5 =====
 
 	== Features ==
