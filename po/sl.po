@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: longomatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&component=general\n"
-"POT-Creation-Date: 2010-03-27 22:51+0000\n"
-"PO-Revision-Date: 2010-03-28 12:17+0100\n"
+"POT-Creation-Date: 2010-03-30 22:02+0000\n"
+"PO-Revision-Date: 2010-03-31 19:47+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -515,16 +515,18 @@ msgstr "Projekt za ta video že obstaja."
 msgid "Try to edit it with the Database Manager"
 msgstr "Poskusite urediti z upravljalnikom podatkovne zbirke."
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:42
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:38
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.NewProjectDialog.cs:26
 msgid "New Project"
 msgstr "Nov projekt"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:72
+#. Container child hbox1.Gtk.Box+BoxChild
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:59
 msgid "New project using a video file"
 msgstr "Nov projekt z novo video datoteko"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:112
+#. Container child hbox2.Gtk.Box+BoxChild
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:89
 msgid "Live project using a fake capture device"
 msgstr "Projekt v živo z uporabo lažne naprave za zajemanje"
 
@@ -1157,6 +1159,10 @@ msgstr "Čas:"
 #: ../CesarPlayer/Utils/MediaFile.cs:164
 msgid "Invalid video file:"
 msgstr "Neveljavna video datoteka:"
+
+#: ../CesarPlayer/Capturer/FakeCapturer.cs:89
+msgid "Fake live source"
+msgstr "Lažni vir v živo"
 
 #~ msgid "Open the project, please."
 #~ msgstr "Odpri projekt."
