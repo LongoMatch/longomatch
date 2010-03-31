@@ -82,6 +82,7 @@ FILES = \
 	Capturer/ErrorHandler.cs \
 	Capturer/FakeCapturer.cs \
 	Capturer/ICapturer.cs \
+	Capturer/LiveSourceTimer.cs \
 	Capturer/ObjectManager.cs \
 	Editor/ErrorHandler.cs \
 	Editor/IVideoEditor.cs \
