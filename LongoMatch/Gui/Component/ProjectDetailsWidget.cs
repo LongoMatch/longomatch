@@ -66,29 +66,37 @@ namespace LongoMatch.Gui.Component
 			FillSections();
 			FillTeamsTemplate();
 
-			this.Use=ProjectType.FileProject;
+			Use=ProjectType.FileProject;
 		}
 
 		public ProjectType Use {
 			set {
-				if (value == ProjectType.FileProject  || value == ProjectType.EditProject
-				    || value == ProjectType.FakeCaptureProject) {
-					videobitratelabel.Visible = false;
-					bitratespinbutton.Visible = false;					
-				}
-				if (value == ProjectType.FakeCaptureProject) {
-					label6.Visible = false;
-					hbox4.Visible = false;
-				}
-				if (value == ProjectType.EditProject) {
-					tagscombobox.Visible = false;
-					localcombobox.Visible = false;
-					visitorcombobox.Visible = false;
-				}
+				bool visible1 = value == ProjectType.CaptureProject; 
+				bool visible2 = value != ProjectType.FakeCaptureProject;
+				bool visible3 = value == ProjectType.EditProject;
+				bool visible4 = visible1 && Environment.OSVersion.Platform == PlatformID.Win32NT;
+				
+				videobitratelabel1.Visible = visible1;
+				videobitratespinbutton.Visible = visible1;	
+				audiobitratelabel.Visible = visible1;
+				audiobitratespinbutton.Visible = visible1;
+								
+				filelabel.Visible = visible2;
+				filehbox.Visible = visible2;
+				
+				tagscombobox.Visible = visible3;
+				localcombobox.Visible = visible3;
+				visitorcombobox.Visible = visible3;
+				
+				videodevice.Visible = visible4;
+				videodevicecombobox.Visible = visible4;
+				audiodevicelabel.Visible = visible4;
+				audiodevicecombobox.Visible = visible4;
+				
 				useType = value;
 			}
 			get {
-				return this.useType;
+				return useType;
 			}
 		}
 
@@ -106,7 +114,7 @@ namespace LongoMatch.Gui.Component
 				return localTeamEntry.Text;
 			}
 			set {
-				this.localTeamEntry.Text = value;
+				localTeamEntry.Text = value;
 			}
 		}
 
@@ -115,7 +123,7 @@ namespace LongoMatch.Gui.Component
 				return visitorTeamEntry.Text;
 			}
 			set {
-				this.visitorTeamEntry.Text = value;
+				visitorTeamEntry.Text = value;
 			}
 		}
 
@@ -142,7 +150,7 @@ namespace LongoMatch.Gui.Component
 				return (int)localSpinButton.Value;
 			}
 			set {
-				this.localSpinButton.Value = value;
+				localSpinButton.Value = value;
 			}
 		}
 
@@ -176,7 +184,7 @@ namespace LongoMatch.Gui.Component
 
 		public Sections Sections {
 			get {
-				return this.actualSection;
+				return actualSection;
 			}
 			set {
 				actualSection = value;
@@ -310,7 +318,7 @@ namespace LongoMatch.Gui.Component
 			}
 			tagscombobox.Active = index;
 			SectionsReader reader = new SectionsReader(System.IO.Path.Combine(MainClass.TemplatesDir(),SectionsFile));
-			this.Sections= reader.GetSections();
+			Sections= reader.GetSections();
 		}
 
 		private void FillTeamsTemplate() {
@@ -343,8 +351,8 @@ namespace LongoMatch.Gui.Component
 		{
 			FileChooserDialog fChooser = null;
 
-			if (this.useType == ProjectType.CaptureProject) {
-				fChooser = new FileChooserDialog(Catalog.GetString("Save File as..."),
+			if (useType == ProjectType.CaptureProject) {
+				fChooser = new FileChooserDialog(Catalog.GetString("Output file"),
 				                                 (Gtk.Window)this.Toplevel,
 				                                 FileChooserAction.Save,
 				                                 "gtk-cancel",ResponseType.Cancel,
@@ -431,7 +439,7 @@ namespace LongoMatch.Gui.Component
 			ted.Project = project;
 			ted.CanExport = Use == ProjectType.EditProject;
 			if (ted.Run() == (int)ResponseType.Apply) {
-				this.Sections = ted.Sections;
+				Sections = ted.Sections;
 			}
 			ted.Destroy();
 			OnEdited(this,null);

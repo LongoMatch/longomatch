@@ -244,6 +244,16 @@
       </itemgroup>
     </signals>
   </object>
+  <object type="LongoMatch.Gui.Component.ButtonsWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="ButtonsWidget Signals">
+        <signal name="NewMarkEvent" />
+        <signal name="NewMarkStartEvent" />
+        <signal name="NewMarkStopEvent" />
+      </itemgroup>
+    </signals>
+  </object>
   <object type="LongoMatch.Gui.Component.ProjectDetailsWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="ProjectDetailsWidget Properties">
@@ -260,16 +270,6 @@
     <signals>
       <itemgroup label="ProjectDetailsWidget Signals">
         <signal name="EditedEvent" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.ButtonsWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="ButtonsWidget Signals">
-        <signal name="NewMarkEvent" />
-        <signal name="NewMarkStartEvent" />
-        <signal name="NewMarkStopEvent" />
       </itemgroup>
     </signals>
   </object>
