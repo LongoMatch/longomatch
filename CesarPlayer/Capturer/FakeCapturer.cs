@@ -29,42 +29,20 @@ namespace LongoMatch.Video.Capturer
 	{
 		public event EllpasedTimeHandler EllapsedTime;
 		
-		private DateTime lastStart;
-		private TimeSpan ellapsed;
-		private bool playing;
-		private bool started;
-		private uint timerID;
+		private LiveSourceTimer timer;
 		
-		public FakeCapturer()
+		public FakeCapturer(): base ()
 		{
-			lastStart = DateTime.Now;
-			ellapsed = new TimeSpan(0,0,0);
-			playing = false;
-			started = false;			
+			timer = new LiveSourceTimer();	
+			timer.EllapsedTime += delegate(int ellapsedTime) {
+				if (EllapsedTime!= null)
+					EllapsedTime(ellapsedTime);
+			};
 		}
 		
 		public int CurrentTime{
 			get{
-				if (!started)
-					return 0;
-				else if (playing)
-					return (int)(ellapsed + (DateTime.Now - lastStart)).TotalMilliseconds;
-				else
-					return (int)ellapsed.TotalMilliseconds; 
-			}
-		}
-		
-		public void TogglePause(){
-			if (!started)
-				return;
-			
-			if (playing){
-				playing = false;
-				ellapsed += DateTime.Now - lastStart;								
-			}
-			else{
-				playing = true;
-				lastStart = DateTime.Now;
+				return timer.CurrentTime;
 			}
 		}
 		
@@ -72,11 +50,16 @@ namespace LongoMatch.Video.Capturer
 		}
 		
 		public void Start(){
-			timerID = GLib.Timeout.Add(100, OnTick);
-			lastStart = DateTime.Now;
-			playing = true;
-			started = true;
+			timer.Start();
 		}
+		
+		public void Stop(){
+			timer.Stop();
+		}			
+		
+		public void TogglePause(){
+			timer.TogglePause();
+		}		
 		
 		public uint OutputWidth {
 			get{return 0;} 
@@ -101,10 +84,6 @@ namespace LongoMatch.Video.Capturer
 		public uint AudioBitrate {
 			get {return 0;}
 			set {}
-		}
-		
-		public void Stop(){
-			GLib.Source.Remove(timerID);
 		}		
 		
 		public bool SetVideoEncoder(LongoMatch.Video.Capturer.GccVideoEncoderType type){
@@ -116,12 +95,6 @@ namespace LongoMatch.Video.Capturer
 		}
 		
 		public bool SetVideoMuxer(LongoMatch.Video.Capturer.GccVideoMuxerType type){
-			return true;
-		}
-		
-		protected virtual bool OnTick(){			
-			if (EllapsedTime != null)
-				EllapsedTime(CurrentTime);
 			return true;
 		}
 	}

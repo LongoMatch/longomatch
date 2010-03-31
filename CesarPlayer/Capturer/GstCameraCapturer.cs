@@ -27,6 +27,8 @@ namespace LongoMatch.Video.Capturer {
 	public  class GstCameraCapturer : Gtk.HBox, LongoMatch.Video.Capturer.ICapturer {
 		
 		public event EllpasedTimeHandler EllapsedTime;
+		
+		private LiveSourceTimer timer;
 
 		[Obsolete]
 		protected GstCameraCapturer(GLib.GType gtype) : base(gtype) {}
@@ -43,6 +45,12 @@ namespace LongoMatch.Video.Capturer {
 			IntPtr error = IntPtr.Zero;
 			Raw = gst_camera_capturer_new(GLib.Marshaller.StringToPtrGStrdup(filename), out error);
 			if (error != IntPtr.Zero) throw new GLib.GException (error);
+			
+			timer = new LiveSourceTimer();	
+			timer.EllapsedTime += delegate(int ellapsedTime) {
+				if (EllapsedTime!= null)
+					EllapsedTime(ellapsedTime);
+			};			
 		}
 
 		[GLib.Property ("output_height")]
@@ -249,6 +257,7 @@ namespace LongoMatch.Video.Capturer {
 		static extern void gst_camera_capturer_stop(IntPtr raw);
 
 		public void Stop() {
+			timer.Stop();
 			gst_camera_capturer_stop(Handle);
 		}
 
@@ -257,13 +266,21 @@ namespace LongoMatch.Video.Capturer {
 		static extern void gst_camera_capturer_toggle_pause(IntPtr raw);
 
 		public void TogglePause() {
+			timer.TogglePause();
 			gst_camera_capturer_toggle_pause(Handle);
 		}
-		
+	
+		public int CurrentTime{
+			get{
+				return timer.CurrentTime;
+			}
+		}
+
 		[DllImport("libcesarplayer.dll")]
 		static extern void gst_camera_capturer_start(IntPtr raw);
 
-		public void Start	() {
+		public void Start() {
+			timer.Start();
 			gst_camera_capturer_start(Handle);
 		}
 
@@ -309,15 +326,6 @@ namespace LongoMatch.Video.Capturer {
 			return ret;
 		}
 		
-		[DllImport("libcesarplayer.dll")]
-		static extern int gst_camera_capturer_get_current_time(IntPtr raw);
-
-		public int CurrentTime{
-			get{
-				return gst_camera_capturer_get_current_time(Handle);
-			}
-		}
-
 		[DllImport("libcesarplayer.dll")]
 		static extern IntPtr gst_camera_capturer_get_type();
 
