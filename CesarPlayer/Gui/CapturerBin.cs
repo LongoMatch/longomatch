@@ -52,7 +52,7 @@ namespace LongoMatch.Gui
 		public CapturerBin()
 		{
 			this.Build();
-			Type = CapturerType.FAKE;	
+				
 			outputWidth = 320;
 			outputHeight = 240;
 			videoBitrate = 1000;
@@ -61,6 +61,7 @@ namespace LongoMatch.Gui
 			audioEncoder = GccAudioEncoderType.Aac;
 			videoMuxer = GccVideoMuxerType.Mp4;
 			outputFile = "";
+			Type = CapturerType.FAKE;
 		}		
 		
 		public CapturerType Type {
