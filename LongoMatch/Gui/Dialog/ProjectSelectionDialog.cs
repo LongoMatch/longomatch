@@ -35,6 +35,8 @@ namespace LongoMatch.Gui.Dialog
 			get{
 				if (fromfileradiobutton.Active)
 					return ProjectType.FileProject;
+				else if (liveradiobutton.Active)
+					return ProjectType.CaptureProject;				
 				else
 					return ProjectType.FakeCaptureProject;
 				

@@ -23,6 +23,12 @@ namespace LongoMatch.Gui.Dialog {
         
         private Gtk.HBox hbox2;
         
+        private Gtk.RadioButton liveradiobutton;
+        
+        private Gtk.Image image63;
+        
+        private Gtk.HBox hbox3;
+        
         private Gtk.RadioButton fakeliveradiobutton;
         
         private Gtk.Image image62;
@@ -85,21 +91,21 @@ namespace LongoMatch.Gui.Dialog {
             this.hbox2.Name = "hbox2";
             this.hbox2.Spacing = 6;
             // Container child hbox2.Gtk.Box+BoxChild
-            this.fakeliveradiobutton = new Gtk.RadioButton(Mono.Unix.Catalog.GetString("Live project using a fake capture device"));
-            this.fakeliveradiobutton.CanFocus = true;
-            this.fakeliveradiobutton.Name = "fakeliveradiobutton";
-            this.fakeliveradiobutton.DrawIndicator = true;
-            this.fakeliveradiobutton.UseUnderline = true;
-            this.fakeliveradiobutton.Group = this.fromfileradiobutton.Group;
-            this.hbox2.Add(this.fakeliveradiobutton);
-            Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(this.hbox2[this.fakeliveradiobutton]));
+            this.liveradiobutton = new Gtk.RadioButton(Mono.Unix.Catalog.GetString("Live project using a capture device"));
+            this.liveradiobutton.CanFocus = true;
+            this.liveradiobutton.Name = "liveradiobutton";
+            this.liveradiobutton.DrawIndicator = true;
+            this.liveradiobutton.UseUnderline = true;
+            this.liveradiobutton.Group = this.fromfileradiobutton.Group;
+            this.hbox2.Add(this.liveradiobutton);
+            Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(this.hbox2[this.liveradiobutton]));
             w5.Position = 0;
             // Container child hbox2.Gtk.Box+BoxChild
-            this.image62 = new Gtk.Image();
-            this.image62.Name = "image62";
-            this.image62.Pixbuf = Gdk.Pixbuf.LoadFromResource("camera-video.png");
-            this.hbox2.Add(this.image62);
-            Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(this.hbox2[this.image62]));
+            this.image63 = new Gtk.Image();
+            this.image63.Name = "image63";
+            this.image63.Pixbuf = Gdk.Pixbuf.LoadFromResource("camera-video.png");
+            this.hbox2.Add(this.image63);
+            Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(this.hbox2[this.image63]));
             w6.Position = 1;
             w6.Expand = false;
             w6.Fill = false;
@@ -108,17 +114,45 @@ namespace LongoMatch.Gui.Dialog {
             w7.Position = 1;
             w7.Expand = false;
             w7.Fill = false;
-            w1.Add(this.vbox2);
-            Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(w1[this.vbox2]));
+            // Container child vbox2.Gtk.Box+BoxChild
+            this.hbox3 = new Gtk.HBox();
+            this.hbox3.Name = "hbox3";
+            this.hbox3.Spacing = 6;
+            // Container child hbox3.Gtk.Box+BoxChild
+            this.fakeliveradiobutton = new Gtk.RadioButton(Mono.Unix.Catalog.GetString("Live project using a fake capture device"));
+            this.fakeliveradiobutton.CanFocus = true;
+            this.fakeliveradiobutton.Name = "fakeliveradiobutton";
+            this.fakeliveradiobutton.DrawIndicator = true;
+            this.fakeliveradiobutton.UseUnderline = true;
+            this.fakeliveradiobutton.Group = this.fromfileradiobutton.Group;
+            this.hbox3.Add(this.fakeliveradiobutton);
+            Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(this.hbox3[this.fakeliveradiobutton]));
             w8.Position = 0;
-            w8.Expand = false;
-            w8.Fill = false;
+            // Container child hbox3.Gtk.Box+BoxChild
+            this.image62 = new Gtk.Image();
+            this.image62.Name = "image62";
+            this.image62.Pixbuf = Gdk.Pixbuf.LoadFromResource("camera-video.png");
+            this.hbox3.Add(this.image62);
+            Gtk.Box.BoxChild w9 = ((Gtk.Box.BoxChild)(this.hbox3[this.image62]));
+            w9.Position = 1;
+            w9.Expand = false;
+            w9.Fill = false;
+            this.vbox2.Add(this.hbox3);
+            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.vbox2[this.hbox3]));
+            w10.Position = 2;
+            w10.Expand = false;
+            w10.Fill = false;
+            w1.Add(this.vbox2);
+            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(w1[this.vbox2]));
+            w11.Position = 0;
+            w11.Expand = false;
+            w11.Fill = false;
             // Internal child LongoMatch.Gui.Dialog.ProjectSelectionDialog.ActionArea
-            Gtk.HButtonBox w9 = this.ActionArea;
-            w9.Name = "dialog1_ActionArea";
-            w9.Spacing = 6;
-            w9.BorderWidth = ((uint)(5));
-            w9.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
+            Gtk.HButtonBox w12 = this.ActionArea;
+            w12.Name = "dialog1_ActionArea";
+            w12.Spacing = 6;
+            w12.BorderWidth = ((uint)(5));
+            w12.LayoutStyle = ((Gtk.ButtonBoxStyle)(4));
             // Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
             this.buttonCancel = new Gtk.Button();
             this.buttonCancel.CanDefault = true;
@@ -128,9 +162,9 @@ namespace LongoMatch.Gui.Dialog {
             this.buttonCancel.UseUnderline = true;
             this.buttonCancel.Label = "gtk-cancel";
             this.AddActionWidget(this.buttonCancel, -6);
-            Gtk.ButtonBox.ButtonBoxChild w10 = ((Gtk.ButtonBox.ButtonBoxChild)(w9[this.buttonCancel]));
-            w10.Expand = false;
-            w10.Fill = false;
+            Gtk.ButtonBox.ButtonBoxChild w13 = ((Gtk.ButtonBox.ButtonBoxChild)(w12[this.buttonCancel]));
+            w13.Expand = false;
+            w13.Fill = false;
             // Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
             this.buttonOk = new Gtk.Button();
             this.buttonOk.CanDefault = true;
@@ -140,15 +174,15 @@ namespace LongoMatch.Gui.Dialog {
             this.buttonOk.UseUnderline = true;
             this.buttonOk.Label = "gtk-ok";
             this.AddActionWidget(this.buttonOk, -5);
-            Gtk.ButtonBox.ButtonBoxChild w11 = ((Gtk.ButtonBox.ButtonBoxChild)(w9[this.buttonOk]));
-            w11.Position = 1;
-            w11.Expand = false;
-            w11.Fill = false;
+            Gtk.ButtonBox.ButtonBoxChild w14 = ((Gtk.ButtonBox.ButtonBoxChild)(w12[this.buttonOk]));
+            w14.Position = 1;
+            w14.Expand = false;
+            w14.Fill = false;
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
             this.DefaultWidth = 298;
-            this.DefaultHeight = 138;
+            this.DefaultHeight = 176;
             this.Show();
         }
     }
