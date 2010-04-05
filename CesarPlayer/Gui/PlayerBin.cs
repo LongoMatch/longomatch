@@ -53,6 +53,7 @@ namespace LongoMatch.Gui
 		private long segmentStopTime;
 		private bool hasNext;
 		private bool seeking=false;
+		private double[] seeksQueue; 
 		private bool IsPlayingPrevState = false;
 		private float rate=1;
 		private double previousVLevel = 1;
@@ -61,6 +62,7 @@ namespace LongoMatch.Gui
 		//the player.mrl is diferent from the filename as it's an uri eg:file:///foo.avi
 		private string filename = null;
 		protected VolumeWindow vwin;
+		
 				
 #region Constructors		
 		public PlayerBin()
@@ -80,6 +82,9 @@ namespace LongoMatch.Gui
 			timescale.CanFocus = false;
 			vscale1.CanFocus = false;	
 			drawbutton.CanFocus = false;
+			seeksQueue = new double[2];
+			seeksQueue [0] = 0;
+			seeksQueue [1] = 0;
 		}
 		
 #endregion
@@ -258,17 +263,11 @@ namespace LongoMatch.Gui
 		}
 		
 		public void StepForward(){
-			seeking = true;
-			timescale.Adjustment.Value += timescale.Adjustment.PageIncrement;
-			OnTimescaleAdjustBounds(null, null);
-			seeking = false;
+			SeekFromTimescale(timescale.Value + timescale.Adjustment.PageIncrement);
 		}
 		
-		public void StepBackward(){
-			seeking = true;
-			timescale.Adjustment.Value -= timescale.Adjustment.PageIncrement;
-			OnTimescaleAdjustBounds(null, null);
-			seeking = false;			
+		public void StepBackward(){			
+			SeekFromTimescale(timescale.Value - timescale.Adjustment.PageIncrement);
 		}
 		
 		public void FramerateUp(){
@@ -366,6 +365,20 @@ namespace LongoMatch.Gui
 				
 		}
 		
+		private void SeekFromTimescale(double pos){						
+			if (InSegment()){
+				long seekPos = segmentStartTime + (long)(pos*(segmentStopTime-segmentStartTime));
+				player.SeekInSegment(seekPos, GetRateFromScale());	
+				timelabel.Text= TimeString.MSecondsToSecondsString(seekPos) + "/" + 
+					TimeString.MSecondsToSecondsString(segmentStopTime-segmentStartTime);
+			}
+			else {
+				player.Position = pos;
+				timelabel.Text= TimeString.MSecondsToSecondsString(player.CurrentTime) + "/" + slength;
+				Rate = 1;				
+			}	
+		}
+		
 #endregion
 		
 #region Callbacks
@@ -420,33 +433,30 @@ namespace LongoMatch.Gui
 		
 		protected virtual void OnTimescaleAdjustBounds(object o, Gtk.AdjustBoundsArgs args)
 		{
-			float pos;		
+			double pos;		
 			
 			if (!seeking){
 				seeking = true;
 				IsPlayingPrevState = player.Playing;
 				player.Tick -= tickHandler;
 				player.Pause();
+				seeksQueue [0] = 0;
+				seeksQueue [1] = 0;
 			}
-				
-			pos = (float)timescale.Value;			
 			
-			if (InSegment()){
-				long seekPos = segmentStartTime + (long)(pos*(segmentStopTime-segmentStartTime));
-				player.SeekInSegment(seekPos, GetRateFromScale());	
-				timelabel.Text= TimeString.MSecondsToSecondsString(seekPos) + "/" + 
-					TimeString.MSecondsToSecondsString(segmentStopTime-segmentStartTime);
-			}
-			else {
-				player.Position = pos;
-				timelabel.Text= TimeString.MSecondsToSecondsString(player.CurrentTime) + "/" + slength;
-				Rate = 1;				
-			}			
+			pos = timescale.Value;	
+			seeksQueue[0] = seeksQueue[1];
+			seeksQueue[1] = pos;
+			
+			SeekFromTimescale(pos);		
 		}		
 
 		protected virtual void OnTimescaleValueChanged(object sender, System.EventArgs e)
 		{
 			if (seeking){
+				/* Releasing the timescale always report value different from the real one. 
+				 * We need to cache previous position and seek again to the this position */				
+				SeekFromTimescale(seeksQueue[0]);
 				seeking=false;				
 				player.Tick += tickHandler;
 				if (IsPlayingPrevState)
