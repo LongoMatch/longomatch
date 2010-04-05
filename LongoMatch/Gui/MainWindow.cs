@@ -124,6 +124,7 @@ namespace LongoMatch.Gui
 						                          Catalog.GetString("The file associated to this project doesn't exist.")+"\n"
 						                          +Catalog.GetString("If the location of the file has changed try to edit it with the database manager."));
 						CloseOpenedProject(true);
+						return;
 					} else {
 						Title = System.IO.Path.GetFileNameWithoutExtension(project.File.FilePath) + " - LongoMatch";
 						try {
