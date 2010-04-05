@@ -232,7 +232,12 @@ namespace LongoMatch.Gui.Component
 		protected void OnSnapshot(object obj, EventArgs args) {
 			if (SnapshotSeriesEvent != null)
 				SnapshotSeriesEvent(GetValueFromPath(Selection.GetSelectedRows()[0]));
-		}			
+		}	
+		
+		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
+		{
+			return false;
+		}
 	}
 }
 

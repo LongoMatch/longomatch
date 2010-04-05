@@ -531,13 +531,12 @@ namespace LongoMatch.Gui
 			drawingtoolbox1.Visible = DrawingToolAction.Active;
 			drawingtoolbox1.DrawingVisibility = DrawingToolAction.Active;
 		}
-
+	
 		protected override bool OnDeleteEvent (Gdk.Event evnt)
 		{
 			CloseAndQuit();	
 			return true;
 		}
-
-		#endregion			}
+		#endregion			
 	}
 }

@@ -53,7 +53,6 @@ namespace LongoMatch.Gui.Component
 
 
 		public PlayersTreeView() {
-
 			team = Team.LOCAL;
 			this.RowActivated += new RowActivatedHandler(OnTreeviewRowActivated);
 
@@ -234,6 +233,11 @@ namespace LongoMatch.Gui.Component
 			if (item is MediaTimeNode && TimeNodeSelected != null
 			    && !projectIsLive)
 				this.TimeNodeSelected(item as MediaTimeNode);
+		}
+		
+		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
+		{
+			return false;
 		}
 	}
 }

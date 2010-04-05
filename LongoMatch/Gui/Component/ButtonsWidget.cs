@@ -83,10 +83,13 @@ namespace LongoMatch.Gui.Component
 					l.Markup = sections.GetName(i);
 					l.Justify = Justification.Center;
 					l.Ellipsize = Pango.EllipsizeMode.Middle;
+					l.CanFocus = false;
 
 					b.Add(l);
 					b.Name = i.ToString();
 					b.Clicked += new EventHandler(OnButtonClicked);
+					b.CanFocus = false;
+					
 					l.Show();
 					b.Show();
 

@@ -40,7 +40,6 @@ namespace LongoMatch.Gui.Component {
             this.vbox3.Spacing = 6;
             // Container child vbox3.Gtk.Box+BoxChild
             this.fitbutton = new Gtk.Button();
-            this.fitbutton.CanFocus = true;
             this.fitbutton.Name = "fitbutton";
             this.fitbutton.UseUnderline = true;
             // Container child fitbutton.Gtk.Container+ContainerChild
@@ -64,7 +63,6 @@ namespace LongoMatch.Gui.Component {
             w9.Fill = false;
             // Container child vbox3.Gtk.Box+BoxChild
             this.vscale1 = new Gtk.VScale(null);
-            this.vscale1.CanFocus = true;
             this.vscale1.Name = "vscale1";
             this.vscale1.UpdatePolicy = ((Gtk.UpdateType)(1));
             this.vscale1.Inverted = true;

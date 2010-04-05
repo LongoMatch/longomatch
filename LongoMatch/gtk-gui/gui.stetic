@@ -819,7 +819,6 @@
           <widget class="Gtk.Button" id="cancelbutton">
             <property name="MemberName" />
             <property name="Visible">False</property>
-            <property name="CanFocus">True</property>
             <property name="Type">TextOnly</property>
             <property name="Label" translatable="yes">Cancel</property>
             <property name="UseUnderline">True</property>
@@ -836,7 +835,6 @@
           <widget class="Gtk.Button" id="starttagbutton">
             <property name="MemberName" />
             <property name="Visible">False</property>
-            <property name="CanFocus">True</property>
             <property name="Type">TextOnly</property>
             <property name="Label" translatable="yes">Tag new play</property>
             <property name="UseUnderline">True</property>
@@ -2644,7 +2642,6 @@ new one.</property>
             <child>
               <widget class="Gtk.Button" id="fitbutton">
                 <property name="MemberName" />
-                <property name="CanFocus">True</property>
                 <property name="Type">TextAndIcon</property>
                 <property name="Icon">stock:gtk-zoom-fit Button</property>
                 <property name="Label" translatable="yes" />
@@ -2661,7 +2658,6 @@ new one.</property>
             <child>
               <widget class="Gtk.VScale" id="vscale1">
                 <property name="MemberName" />
-                <property name="CanFocus">True</property>
                 <property name="UpdatePolicy">Discontinuous</property>
                 <property name="Inverted">True</property>
                 <property name="Lower">1</property>
@@ -4335,7 +4331,6 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Label" translatable="yes" />
-                <property name="Active">True</property>
                 <property name="DrawIndicator">False</property>
                 <property name="HasLabel">False</property>
                 <property name="UseUnderline">True</property>

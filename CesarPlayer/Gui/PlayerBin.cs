@@ -73,6 +73,13 @@ namespace LongoMatch.Gui
 			UnSensitive();
 			timescale.Adjustment.PageIncrement = 0.01;
 			timescale.Adjustment.StepIncrement = 0.0001;
+			playbutton.CanFocus = false;
+			prevbutton.CanFocus = false;
+			nextbutton.CanFocus = false;
+			volumebutton.CanFocus = false;
+			timescale.CanFocus = false;
+			vscale1.CanFocus = false;	
+			drawbutton.CanFocus = false;
 		}
 		
 #endregion

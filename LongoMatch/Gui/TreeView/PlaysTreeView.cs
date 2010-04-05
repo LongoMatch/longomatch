@@ -91,6 +91,7 @@ namespace LongoMatch.Gui.Component
 			nameColumn.SetCellDataFunc(nameCell, new Gtk.TreeCellDataFunc(RenderName));
 
 			this.AppendColumn(nameColumn);
+			
 		}
 		
 		new public TreeStore Model{
@@ -536,5 +537,9 @@ namespace LongoMatch.Gui.Component
 				PlayersTagged((MediaTimeNode)GetValueFromPath(Selection.GetSelectedRows()[0]), Team.VISITOR);
 		}
 		
+		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
+		{
+			return false;
+		}		
 	}
 }

@@ -32,7 +32,6 @@ namespace LongoMatch.Gui.Component {
             this.vbox1.Spacing = 6;
             // Container child vbox1.Gtk.Box+BoxChild
             this.cancelbutton = new Gtk.Button();
-            this.cancelbutton.CanFocus = true;
             this.cancelbutton.Name = "cancelbutton";
             this.cancelbutton.UseUnderline = true;
             this.cancelbutton.Label = Mono.Unix.Catalog.GetString("Cancel");
@@ -43,7 +42,6 @@ namespace LongoMatch.Gui.Component {
             w1.Fill = false;
             // Container child vbox1.Gtk.Box+BoxChild
             this.starttagbutton = new Gtk.Button();
-            this.starttagbutton.CanFocus = true;
             this.starttagbutton.Name = "starttagbutton";
             this.starttagbutton.UseUnderline = true;
             this.starttagbutton.Label = Mono.Unix.Catalog.GetString("Tag new play");

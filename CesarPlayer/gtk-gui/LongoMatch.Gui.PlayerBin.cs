@@ -77,7 +77,6 @@ namespace LongoMatch.Gui {
             this.buttonsbox.Homogeneous = true;
             // Container child buttonsbox.Gtk.Box+BoxChild
             this.closebutton = new Gtk.Button();
-            this.closebutton.CanFocus = true;
             this.closebutton.Name = "closebutton";
             this.closebutton.UseUnderline = true;
             // Container child closebutton.Gtk.Container+ContainerChild
@@ -101,7 +100,6 @@ namespace LongoMatch.Gui {
             w10.Fill = false;
             // Container child buttonsbox.Gtk.Box+BoxChild
             this.drawbutton = new Gtk.Button();
-            this.drawbutton.CanFocus = true;
             this.drawbutton.Name = "drawbutton";
             this.drawbutton.UseUnderline = true;
             // Container child drawbutton.Gtk.Container+ContainerChild
@@ -125,7 +123,6 @@ namespace LongoMatch.Gui {
             w19.Fill = false;
             // Container child buttonsbox.Gtk.Box+BoxChild
             this.playbutton = new Gtk.Button();
-            this.playbutton.CanFocus = true;
             this.playbutton.Name = "playbutton";
             this.playbutton.UseUnderline = true;
             this.playbutton.Relief = ((Gtk.ReliefStyle)(2));
@@ -150,7 +147,6 @@ namespace LongoMatch.Gui {
             w28.Fill = false;
             // Container child buttonsbox.Gtk.Box+BoxChild
             this.pausebutton = new Gtk.Button();
-            this.pausebutton.CanFocus = true;
             this.pausebutton.Name = "pausebutton";
             this.pausebutton.UseUnderline = true;
             this.pausebutton.Relief = ((Gtk.ReliefStyle)(2));
@@ -175,7 +171,6 @@ namespace LongoMatch.Gui {
             w37.Fill = false;
             // Container child buttonsbox.Gtk.Box+BoxChild
             this.prevbutton = new Gtk.Button();
-            this.prevbutton.CanFocus = true;
             this.prevbutton.Name = "prevbutton";
             this.prevbutton.UseUnderline = true;
             this.prevbutton.Relief = ((Gtk.ReliefStyle)(2));
@@ -201,7 +196,6 @@ namespace LongoMatch.Gui {
             // Container child buttonsbox.Gtk.Box+BoxChild
             this.nextbutton = new Gtk.Button();
             this.nextbutton.Sensitive = false;
-            this.nextbutton.CanFocus = true;
             this.nextbutton.Name = "nextbutton";
             this.nextbutton.UseUnderline = true;
             this.nextbutton.Relief = ((Gtk.ReliefStyle)(2));
@@ -261,7 +255,6 @@ namespace LongoMatch.Gui {
             w59.Expand = false;
             // Container child controlsbox.Gtk.Box+BoxChild
             this.volumebutton = new Gtk.Button();
-            this.volumebutton.CanFocus = true;
             this.volumebutton.Name = "volumebutton";
             this.volumebutton.UseUnderline = true;
             this.volumebutton.Relief = ((Gtk.ReliefStyle)(2));

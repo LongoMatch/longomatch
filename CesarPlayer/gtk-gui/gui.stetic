@@ -108,7 +108,6 @@
                       <widget class="Gtk.Button" id="closebutton">
                         <property name="MemberName" />
                         <property name="Visible">False</property>
-                        <property name="CanFocus">True</property>
                         <property name="Type">TextAndIcon</property>
                         <property name="Icon">stock:gtk-close Dnd</property>
                         <property name="Label" translatable="yes" />
@@ -125,7 +124,6 @@
                     <child>
                       <widget class="Gtk.Button" id="drawbutton">
                         <property name="MemberName" />
-                        <property name="CanFocus">True</property>
                         <property name="Type">TextAndIcon</property>
                         <property name="Icon">stock:gtk-select-color Menu</property>
                         <property name="Label" translatable="yes" />
@@ -142,7 +140,6 @@
                     <child>
                       <widget class="Gtk.Button" id="playbutton">
                         <property name="MemberName" />
-                        <property name="CanFocus">True</property>
                         <property name="Type">TextAndIcon</property>
                         <property name="Icon">stock:gtk-media-play Button</property>
                         <property name="Label" translatable="yes" />
@@ -160,7 +157,6 @@
                     <child>
                       <widget class="Gtk.Button" id="pausebutton">
                         <property name="MemberName" />
-                        <property name="CanFocus">True</property>
                         <property name="Type">TextAndIcon</property>
                         <property name="Icon">stock:gtk-media-pause Button</property>
                         <property name="Label" translatable="yes" />
@@ -179,7 +175,6 @@
                       <widget class="Gtk.Button" id="prevbutton">
                         <property name="MemberName" />
                         <property name="Visible">False</property>
-                        <property name="CanFocus">True</property>
                         <property name="Type">TextAndIcon</property>
                         <property name="Icon">stock:gtk-media-previous Button</property>
                         <property name="Label" translatable="yes" />
@@ -199,7 +194,6 @@
                         <property name="MemberName" />
                         <property name="Visible">False</property>
                         <property name="Sensitive">False</property>
-                        <property name="CanFocus">True</property>
                         <property name="Type">TextAndIcon</property>
                         <property name="Icon">stock:gtk-media-next Button</property>
                         <property name="Label" translatable="yes" />
@@ -266,7 +260,6 @@
                 <child>
                   <widget class="Gtk.Button" id="volumebutton">
                     <property name="MemberName" />
-                    <property name="CanFocus">True</property>
                     <property name="Type">TextAndIcon</property>
                     <property name="Icon">stock:stock_volume Button</property>
                     <property name="Label" translatable="yes" />
@@ -374,7 +367,6 @@
                   <widget class="Gtk.Button" id="recbutton">
                     <property name="MemberName" />
                     <property name="Tooltip" translatable="yes">Start or continue capture</property>
-                    <property name="CanFocus">True</property>
                     <property name="Type">TextAndIcon</property>
                     <property name="Icon">stock:gtk-media-record Dialog</property>
                     <property name="Label" translatable="yes" />
@@ -393,7 +385,6 @@
                     <property name="MemberName" />
                     <property name="Visible">False</property>
                     <property name="Tooltip" translatable="yes">Pause capture</property>
-                    <property name="CanFocus">True</property>
                     <property name="Type">TextAndIcon</property>
                     <property name="Icon">stock:gtk-media-pause Dialog</property>
                     <property name="Label" translatable="yes" />
@@ -412,7 +403,6 @@
                     <property name="MemberName" />
                     <property name="Visible">False</property>
                     <property name="Tooltip" translatable="yes">Stop and close capture</property>
-                    <property name="CanFocus">True</property>
                     <property name="Type">TextAndIcon</property>
                     <property name="Icon">stock:gtk-media-stop Dialog</property>
                     <property name="Label" translatable="yes" />
