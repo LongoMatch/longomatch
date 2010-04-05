@@ -1739,7 +1739,6 @@
                     <node type="Menuitem" action="HideAllWidgetsAction" />
                     <node type="Separator" />
                     <node type="Menuitem" action="PlaylistAction" />
-                    <node type="Menuitem" action="DrawingToolAction" />
                     <node type="Separator" />
                     <node type="Menuitem" action="CaptureModeAction" />
                     <node type="Menuitem" action="FreeCaptureModeAction" />
@@ -4336,6 +4335,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Label" translatable="yes" />
+                <property name="Active">True</property>
                 <property name="DrawIndicator">False</property>
                 <property name="HasLabel">False</property>
                 <property name="UseUnderline">True</property>
@@ -4465,7 +4465,6 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                 <property name="Tooltip" translatable="yes">Pencil tool</property>
                 <property name="CanFocus">True</property>
                 <property name="Label" translatable="yes" />
-                <property name="Active">True</property>
                 <property name="DrawIndicator">False</property>
                 <property name="HasLabel">False</property>
                 <property name="UseUnderline">True</property>

@@ -70,11 +70,6 @@ namespace LongoMatch.Gui
 			
 			projectType = ProjectType.None;
 
-			if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
-				DrawingToolAction.Visible = false;
-				DrawingToolAction.DisconnectAccelerator();
-			}
-
 			eManager = new EventsManager(treewidget1,
 			                             localplayerslisttreewidget,
 			                             visitorplayerslisttreewidget,
