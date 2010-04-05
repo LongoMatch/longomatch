@@ -57,13 +57,11 @@ Petr Kovar (cs)";
 		
 		public const string WEBSITE = "http://www.longomatch.ylatuya.es";
 		
-		public const Key PREV_FRAME = Gdk.Key.Left;
-
-		public const Key NEXT_FRAME = Gdk.Key.Right;
+		public const ModifierType STEP = Gdk.ModifierType.ShiftMask;
 		
-		public const Key STEP_BACKWARD = Gdk.Key.a;
+		public const Key SEEK_BACKWARD = Gdk.Key.Left;
 		
-		public const Key STEP_FORWARD = Gdk.Key.s;		
+		public const Key SEEK_FORWARD = Gdk.Key.Right;		
 		
 		public const Key FRAMERATE_UP = Gdk.Key.Up;
 		

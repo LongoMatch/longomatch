@@ -470,41 +470,47 @@ namespace LongoMatch.Gui
 
 		protected override bool OnKeyPressEvent(EventKey evnt)
 		{
-			if (openedProject != null && evnt.State == ModifierType.None) {
-				Gdk.Key key = evnt.Key;
-				if (projectType == ProjectType.FileProject){
-					switch (key){
-						case Constants.PREV_FRAME:
-							playerbin1.SeekToPreviousFrame(selectedTimeNode != null);
-							break;
-						case Constants.NEXT_FRAME:
-							playerbin1.SeekToNextFrame(selectedTimeNode != null);
-							break;
-						case Constants.STEP_FORWARD:
+			Gdk.Key key = evnt.Key;
+			Gdk.ModifierType modifier = evnt.State;
+			bool ret;
+			
+			ret = base.OnKeyPressEvent(evnt);
+
+			if (openedProject == null)
+				return ret;
+			
+			if (projectType == ProjectType.FileProject){
+				switch (key){
+					case Constants.SEEK_FORWARD:
+						if (modifier == Constants.STEP)
 							playerbin1.StepForward();
-							break;
-						case Constants.STEP_BACKWARD:
+						else 
+							playerbin1.SeekToNextFrame(selectedTimeNode != null);						
+						break;
+					case Constants.SEEK_BACKWARD:
+						if (modifier == Constants.STEP)
 							playerbin1.StepBackward();
-							break;
-						case Constants.FRAMERATE_UP:
-							playerbin1.FramerateUp();
-							break;
-						case Constants.FRAMERATE_DOWN:
-							playerbin1.FramerateDown();
-							break;
-						case Constants.TOGGLE_PLAY:
-							playerbin1.TogglePlay();
-							break;			
-					}	
-				} else {
-					switch (key){
-						case Constants.TOGGLE_PLAY:
-							capturerBin.ToggleCapture();
-							break;			
-					}	
-				}
+						else 
+							playerbin1.SeekToPreviousFrame(selectedTimeNode != null);						
+						break;
+					case Constants.FRAMERATE_UP:
+						playerbin1.FramerateUp();
+						break;
+					case Constants.FRAMERATE_DOWN:
+						playerbin1.FramerateDown();
+						break;
+					case Constants.TOGGLE_PLAY:
+						playerbin1.TogglePlay();
+						break;			
+				}	
+			} else {
+				switch (key){
+					case Constants.TOGGLE_PLAY:
+						capturerBin.ToggleCapture();
+						break;			
+				}	
 			}
-			return base.OnKeyPressEvent(evnt);
+			return ret;
 		}
 
 		protected virtual void OnTimeNodeSelected(LongoMatch.TimeNodes.MediaTimeNode tNode)
