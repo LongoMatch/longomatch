@@ -126,7 +126,7 @@ namespace LongoMatch.Gui
 					MessagePopup.PopupMessage(this, MessageType.Warning,
 					                          Catalog.GetString("The file associated to this project doesn't exist.")+"\n"
 					                          +Catalog.GetString("If the location of the file has changed try to edit it with the database manager."));
-					CloseOpenedProject(true);
+					CloseOpenedProject(false);
 					return;
 				} else {
 					Title = System.IO.Path.GetFileNameWithoutExtension(project.File.FilePath) + " - LongoMatch";
@@ -136,7 +136,7 @@ namespace LongoMatch.Gui
 					catch (GLib.GException ex) {
 						MessagePopup.PopupMessage(this, MessageType.Error,
 						                          Catalog.GetString("An error occurred opening this project:")+"\n"+ex.Message);
-						CloseOpenedProject(true);
+						CloseOpenedProject(false);
 						return;
 					}
 					playerbin1.LogoMode = false;
@@ -162,7 +162,7 @@ namespace LongoMatch.Gui
 				visitorplayerslisttreewidget.ProjectIsLive = true;
 				tagstreewidget1.ProjectIsLive = true;	
 				CaptureModeAction.Active = true;
-			}
+			}	
 			
 			playlistwidget2.Stop();
 			treewidget1.Project=project;
