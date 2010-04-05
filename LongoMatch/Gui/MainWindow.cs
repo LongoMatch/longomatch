@@ -499,7 +499,7 @@ namespace LongoMatch.Gui
 				} else {
 					switch (key){
 						case Constants.TOGGLE_PLAY:
-							capturerBin.TogglePause();
+							capturerBin.ToggleCapture();
 							break;			
 					}	
 				}

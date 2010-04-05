@@ -54,18 +54,9 @@ namespace LongoMatch.Video.Capturer
 			}
 		}
 		
-		public void TogglePause(){
-			if (!started)
-				return;
-			
-			if (playing){
-				playing = false;
-				ellapsed += DateTime.Now - lastStart;								
-			}
-			else{
-				playing = true;
-				lastStart = DateTime.Now;
-			}
+		public void Pause(){
+			playing = false;
+			ellapsed += DateTime.Now - lastStart;								
 		}
 		
 		public void Start(){

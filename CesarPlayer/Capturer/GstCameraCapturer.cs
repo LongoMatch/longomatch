@@ -273,10 +273,10 @@ namespace LongoMatch.Video.Capturer {
 
 	
 		[DllImport("libcesarplayer.dll")]
-		static extern void gst_camera_capturer_toggle_pause(IntPtr raw);
+		static extern void gst_camera_capturer_pause(IntPtr raw);
 
-		public void TogglePause() {
-			gst_camera_capturer_toggle_pause(Handle);
+		public void Pause() {
+			gst_camera_capturer_pause(Handle);
 		}
 		
 		[DllImport("libcesarplayer.dll")]

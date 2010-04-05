@@ -546,7 +546,7 @@ gst_camera_capturer_start (GstCameraCapturer * gcc)
 
 
 void
-gst_camera_capturer_toggle_pause (GstCameraCapturer * gcc)
+gst_camera_capturer_pause (GstCameraCapturer * gcc)
 {
   g_return_if_fail (GST_IS_CAMERA_CAPTURER (gcc));
   g_signal_emit_by_name (G_OBJECT (gcc->priv->camerabin), "user-pause", 0, 0);

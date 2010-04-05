@@ -40,11 +40,12 @@ namespace LongoMatch.Gui
 		private Pixbuf logopix;
 		
 		ICapturer capturer;
+		bool capturing;
 		
 		public CapturerBin()
 		{
 			this.Build();
-			Type = CapturerType.FAKE;	
+			Type = CapturerType.FAKE;
 		}		
 		
 		public CapturerType Type {
@@ -64,6 +65,7 @@ namespace LongoMatch.Gui
 				else{
 					capturerhbox.Visible = false;
 				}
+				capturing = false;
 			}
 		}
 		
@@ -96,16 +98,32 @@ namespace LongoMatch.Gui
 				return capturer.CurrentTime;
 			}
 		}
-		public void TogglePause(){
-			capturer.TogglePause();
+		
+		public void ToggleCapture(){
+			if (capturing)
+				Pause();
+			else 
+				Start();
+		}
+		
+		public void Pause(){
+			recbutton.Visible = true;
+			pausebutton.Visible = false;
+			capturer.Pause();
+			capturing = false;
 		}
 		
 		public void Start(){
+			recbutton.Visible = false;
+			pausebutton.Visible = true;
+			stopbutton.Visible = true;
 			capturer.Start();
+			capturing = true;
 		}
 		
 		public void Stop(){
 			capturer.Stop();
+			capturing = false;
 		}
 		
 		public void SetVideoEncoder(LongoMatch.Video.Capturer.GccVideoEncoderType type){
@@ -122,17 +140,12 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnRecbuttonClicked (object sender, System.EventArgs e)
 		{
-			Start();
-			recbutton.Visible = false;
-			pausebutton.Visible = true;
-			stopbutton.Visible = true;
+			Start();			
 		}
 
 		protected virtual void OnPausebuttonClicked (object sender, System.EventArgs e)
 		{
-			TogglePause();
-			recbutton.Visible = true;
-			pausebutton.Visible = false;			
+			Pause();						
 		}
 
 		protected virtual void OnStopbuttonClicked (object sender, System.EventArgs e)

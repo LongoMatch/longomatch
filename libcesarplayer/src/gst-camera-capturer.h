@@ -126,7 +126,7 @@ gst_camera_capturer_get_type (void)
 							GError ** err);
      EXPORT void gst_camera_capturer_run (GstCameraCapturer * gcc);
      EXPORT void gst_camera_capturer_start (GstCameraCapturer * gcc);
-     EXPORT void gst_camera_capturer_toggle_pause (GstCameraCapturer * gcc);
+     EXPORT void gst_camera_capturer_pause (GstCameraCapturer * gcc);
      EXPORT void gst_camera_capturer_stop (GstCameraCapturer * gcc);
      EXPORT gboolean gst_camera_capturer_set_video_encoder (GstCameraCapturer
 							    * gcc,
