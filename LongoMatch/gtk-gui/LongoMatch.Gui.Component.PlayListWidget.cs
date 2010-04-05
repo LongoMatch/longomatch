@@ -87,6 +87,7 @@ namespace LongoMatch.Gui.Component {
             this.hbox2.Spacing = 6;
             // Container child hbox2.Gtk.Box+BoxChild
             this.newbutton = new Gtk.Button();
+            this.newbutton.TooltipMarkup = "Create a new playlist";
             this.newbutton.CanFocus = true;
             this.newbutton.Name = "newbutton";
             this.newbutton.UseUnderline = true;
@@ -109,6 +110,7 @@ namespace LongoMatch.Gui.Component {
             w15.Position = 0;
             // Container child hbox2.Gtk.Box+BoxChild
             this.openbutton = new Gtk.Button();
+            this.openbutton.TooltipMarkup = "Open a playlist";
             this.openbutton.CanFocus = true;
             this.openbutton.Name = "openbutton";
             this.openbutton.UseUnderline = true;
@@ -131,6 +133,7 @@ namespace LongoMatch.Gui.Component {
             w24.Position = 1;
             // Container child hbox2.Gtk.Box+BoxChild
             this.savebutton = new Gtk.Button();
+            this.savebutton.TooltipMarkup = "Save the playlist";
             this.savebutton.CanFocus = true;
             this.savebutton.Name = "savebutton";
             this.savebutton.UseUnderline = true;
@@ -153,6 +156,7 @@ namespace LongoMatch.Gui.Component {
             w33.Position = 2;
             // Container child hbox2.Gtk.Box+BoxChild
             this.newvideobutton = new Gtk.Button();
+            this.newvideobutton.TooltipMarkup = "Export the playlist to new video file";
             this.newvideobutton.CanFocus = true;
             this.newvideobutton.Name = "newvideobutton";
             this.newvideobutton.UseUnderline = true;
@@ -175,6 +179,7 @@ namespace LongoMatch.Gui.Component {
             w42.Position = 3;
             // Container child hbox2.Gtk.Box+BoxChild
             this.closebutton = new Gtk.Button();
+            this.closebutton.TooltipMarkup = "Cancel rendering";
             this.closebutton.CanFocus = true;
             this.closebutton.Name = "closebutton";
             this.closebutton.UseUnderline = true;

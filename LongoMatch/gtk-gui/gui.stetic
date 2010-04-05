@@ -2326,6 +2326,7 @@ new one.</property>
             <child>
               <widget class="Gtk.Button" id="newbutton">
                 <property name="MemberName" />
+                <property name="Tooltip" translatable="yes">Create a new playlist</property>
                 <property name="CanFocus">True</property>
                 <property name="Type">TextAndIcon</property>
                 <property name="Icon">stock:gtk-new Button</property>
@@ -2341,6 +2342,7 @@ new one.</property>
             <child>
               <widget class="Gtk.Button" id="openbutton">
                 <property name="MemberName" />
+                <property name="Tooltip" translatable="yes">Open a playlist</property>
                 <property name="CanFocus">True</property>
                 <property name="Type">TextAndIcon</property>
                 <property name="Icon">stock:gtk-open Button</property>
@@ -2356,6 +2358,7 @@ new one.</property>
             <child>
               <widget class="Gtk.Button" id="savebutton">
                 <property name="MemberName" />
+                <property name="Tooltip" translatable="yes">Save the playlist</property>
                 <property name="CanFocus">True</property>
                 <property name="Type">TextAndIcon</property>
                 <property name="Icon">stock:gtk-save Button</property>
@@ -2371,6 +2374,7 @@ new one.</property>
             <child>
               <widget class="Gtk.Button" id="newvideobutton">
                 <property name="MemberName" />
+                <property name="Tooltip" translatable="yes">Export the playlist to new video file</property>
                 <property name="CanFocus">True</property>
                 <property name="Type">TextAndIcon</property>
                 <property name="Icon">stock:gtk-media-record Button</property>
@@ -2387,6 +2391,7 @@ new one.</property>
               <widget class="Gtk.Button" id="closebutton">
                 <property name="MemberName" />
                 <property name="Visible">False</property>
+                <property name="Tooltip" translatable="yes">Cancel rendering</property>
                 <property name="CanFocus">True</property>
                 <property name="Type">TextAndIcon</property>
                 <property name="Icon">stock:gtk-close Button</property>
