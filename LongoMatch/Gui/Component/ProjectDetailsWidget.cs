@@ -376,6 +376,8 @@ namespace LongoMatch.Gui.Component
 						md.Icon=Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Dialog, 48);
 						md.Show();
 						mFile = LongoMatch.Video.Utils.PreviewMediaFile.GetMediaFile(filename);
+						if (!mFile.HasVideo || mFile.Length == 0 || mFile.VideoCodec == "")
+							throw new Exception(Catalog.GetString("This file doesn't contain a video stream."));
 						fileEntry.Text = filename;
 					}
 					catch (Exception ex) {
