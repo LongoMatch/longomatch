@@ -139,12 +139,7 @@ namespace LongoMatch.Gui
 						CloseOpenedProject(true);
 						return;
 					}
-					if (project.File.HasVideo)
-						playerbin1.LogoMode = true;
-					else
-						playerbin1.LogoMode = false;							
-					if (project.File.HasVideo)
-						playerbin1.LogoMode = false;
+					playerbin1.LogoMode = false;
 					timelinewidget1.Project = project;
 					treewidget1.ProjectIsLive = false;
 					localplayerslisttreewidget.ProjectIsLive = false;
