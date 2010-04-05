@@ -61,6 +61,7 @@ namespace LongoMatch.Gui.Component {
             this.vbox2.Spacing = 6;
             // Container child vbox2.Gtk.Box+BoxChild
             this.newprevbutton = new Gtk.Button();
+            this.newprevbutton.TooltipMarkup = "Insert a new category before the selected one";
             this.newprevbutton.Sensitive = false;
             this.newprevbutton.CanFocus = true;
             this.newprevbutton.Name = "newprevbutton";
@@ -88,6 +89,7 @@ namespace LongoMatch.Gui.Component {
             w11.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.newafterbutton = new Gtk.Button();
+            this.newafterbutton.TooltipMarkup = "Insert a new category after the selected one";
             this.newafterbutton.Sensitive = false;
             this.newafterbutton.CanFocus = true;
             this.newafterbutton.Name = "newafterbutton";
@@ -115,6 +117,7 @@ namespace LongoMatch.Gui.Component {
             w20.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.removebutton = new Gtk.Button();
+            this.removebutton.TooltipMarkup = "Remove the selected category";
             this.removebutton.Sensitive = false;
             this.removebutton.CanFocus = true;
             this.removebutton.Name = "removebutton";
@@ -142,6 +145,7 @@ namespace LongoMatch.Gui.Component {
             w29.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.editbutton = new Gtk.Button();
+            this.editbutton.TooltipMarkup = "Edit the selected category";
             this.editbutton.Sensitive = false;
             this.editbutton.CanFocus = true;
             this.editbutton.Name = "editbutton";
@@ -177,6 +181,7 @@ namespace LongoMatch.Gui.Component {
             w39.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.exportbutton = new Gtk.Button();
+            this.exportbutton.TooltipMarkup = "Export the template to a file";
             this.exportbutton.CanFocus = true;
             this.exportbutton.Name = "exportbutton";
             this.exportbutton.UseUnderline = true;

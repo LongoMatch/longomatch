@@ -1416,6 +1416,7 @@
               <widget class="Gtk.Button" id="newprevbutton">
                 <property name="MemberName" />
                 <property name="Sensitive">False</property>
+                <property name="Tooltip" translatable="yes">Insert a new category before the selected one</property>
                 <property name="CanFocus">True</property>
                 <property name="Type">TextAndIcon</property>
                 <property name="Icon">stock:gtk-goto-top Menu</property>
@@ -1434,6 +1435,7 @@
               <widget class="Gtk.Button" id="newafterbutton">
                 <property name="MemberName" />
                 <property name="Sensitive">False</property>
+                <property name="Tooltip" translatable="yes">Insert a new category after the selected one</property>
                 <property name="CanFocus">True</property>
                 <property name="Type">TextAndIcon</property>
                 <property name="Icon">stock:gtk-goto-bottom Menu</property>
@@ -1453,6 +1455,7 @@
               <widget class="Gtk.Button" id="removebutton">
                 <property name="MemberName" />
                 <property name="Sensitive">False</property>
+                <property name="Tooltip" translatable="yes">Remove the selected category</property>
                 <property name="CanFocus">True</property>
                 <property name="Type">TextAndIcon</property>
                 <property name="Icon">stock:gtk-remove Menu</property>
@@ -1471,6 +1474,7 @@
               <widget class="Gtk.Button" id="editbutton">
                 <property name="MemberName" />
                 <property name="Sensitive">False</property>
+                <property name="Tooltip" translatable="yes">Edit the selected category</property>
                 <property name="CanFocus">True</property>
                 <property name="Type">TextAndIcon</property>
                 <property name="Icon">stock:gtk-edit Menu</property>
@@ -1501,6 +1505,7 @@
               <widget class="Gtk.Button" id="exportbutton">
                 <property name="MemberName" />
                 <property name="Visible">False</property>
+                <property name="Tooltip" translatable="yes">Export the template to a file</property>
                 <property name="CanFocus">True</property>
                 <property name="Type">TextAndIcon</property>
                 <property name="Icon">stock:gtk-save-as Menu</property>
@@ -3243,7 +3248,7 @@ Full HD 1080p (16:9 - 1920x1080)</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.FramesCaptureProgressDialog" design-size="400 130">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.FramesCaptureProgressDialog" design-size="400 148">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Capture Progress</property>
     <property name="Icon">stock:longomatch Dialog</property>
@@ -4811,7 +4816,7 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.EditCategoryDialog" design-size="264 153">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.EditCategoryDialog" design-size="264 186">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Category Details</property>
     <property name="Icon">resource:longomatch.png</property>

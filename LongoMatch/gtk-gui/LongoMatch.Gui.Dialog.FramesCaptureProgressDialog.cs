@@ -97,7 +97,7 @@ namespace LongoMatch.Gui.Dialog {
                 this.Child.ShowAll();
             }
             this.DefaultWidth = 400;
-            this.DefaultHeight = 130;
+            this.DefaultHeight = 148;
             this.okbutton.Hide();
             this.Show();
             this.cancelbutton.Clicked += new System.EventHandler(this.OnButtonCancelClicked);
