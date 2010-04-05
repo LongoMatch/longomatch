@@ -110,6 +110,7 @@ namespace LongoMatch.Gui.Dialog {
             w5.Position = 0;
             // Container child vbox2.Gtk.Box+BoxChild
             this.saveButton = new Gtk.Button();
+            this.saveButton.TooltipMarkup = "Save the selected project";
             this.saveButton.Sensitive = false;
             this.saveButton.CanFocus = true;
             this.saveButton.Name = "saveButton";
@@ -123,6 +124,7 @@ namespace LongoMatch.Gui.Dialog {
             w6.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.deleteButton = new Gtk.Button();
+            this.deleteButton.TooltipMarkup = "Delete the selected project";
             this.deleteButton.Sensitive = false;
             this.deleteButton.CanFocus = true;
             this.deleteButton.Name = "deleteButton";
@@ -136,6 +138,7 @@ namespace LongoMatch.Gui.Dialog {
             w7.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.exportbutton = new Gtk.Button();
+            this.exportbutton.TooltipMarkup = "Export the selected project to a file";
             this.exportbutton.Sensitive = false;
             this.exportbutton.CanFocus = true;
             this.exportbutton.Name = "exportbutton";

@@ -1010,6 +1010,7 @@
                           <widget class="Gtk.Button" id="saveButton">
                             <property name="MemberName" />
                             <property name="Sensitive">False</property>
+                            <property name="Tooltip" translatable="yes">Save the selected project</property>
                             <property name="CanFocus">True</property>
                             <property name="UseStock">True</property>
                             <property name="Type">StockItem</property>
@@ -1028,6 +1029,7 @@
                           <widget class="Gtk.Button" id="deleteButton">
                             <property name="MemberName" />
                             <property name="Sensitive">False</property>
+                            <property name="Tooltip" translatable="yes">Delete the selected project</property>
                             <property name="CanFocus">True</property>
                             <property name="UseStock">True</property>
                             <property name="Type">StockItem</property>
@@ -1046,6 +1048,7 @@
                           <widget class="Gtk.Button" id="exportbutton">
                             <property name="MemberName" />
                             <property name="Sensitive">False</property>
+                            <property name="Tooltip" translatable="yes">Export the selected project to a file</property>
                             <property name="CanFocus">True</property>
                             <property name="Type">TextAndIcon</property>
                             <property name="Icon">stock:stock_export Menu</property>
