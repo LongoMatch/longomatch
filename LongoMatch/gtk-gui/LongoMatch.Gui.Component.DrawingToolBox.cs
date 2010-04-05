@@ -106,6 +106,7 @@ namespace LongoMatch.Gui.Component {
             this.circlebutton.Remove(this.circlebutton.Child);
             // Container child circlebutton.Gtk.Container+ContainerChild
             this.image79 = new Gtk.Image();
+            this.image79.TooltipMarkup = "Circle tool";
             this.image79.Name = "image79";
             this.image79.Pixbuf = Gdk.Pixbuf.LoadFromResource("stock_draw-circle-unfilled.png");
             this.circlebutton.Add(this.image79);
@@ -126,6 +127,7 @@ namespace LongoMatch.Gui.Component {
             this.crossbutton.Remove(this.crossbutton.Child);
             // Container child crossbutton.Gtk.Container+ContainerChild
             this.image83 = new Gtk.Image();
+            this.image83.TooltipMarkup = "Cross tool";
             this.image83.Name = "image83";
             this.image83.Pixbuf = Gdk.Pixbuf.LoadFromResource("stock_draw-line-45.png");
             this.crossbutton.Add(this.image83);
@@ -138,6 +140,7 @@ namespace LongoMatch.Gui.Component {
             w5.YOptions = ((Gtk.AttachOptions)(4));
             // Container child toolstable.Gtk.Table+TableChild
             this.eraserbutton = new Gtk.RadioButton("");
+            this.eraserbutton.TooltipMarkup = "Rubber tool";
             this.eraserbutton.CanFocus = true;
             this.eraserbutton.Name = "eraserbutton";
             this.eraserbutton.DrawIndicator = false;
@@ -164,6 +167,7 @@ namespace LongoMatch.Gui.Component {
             this.linebutton.Remove(this.linebutton.Child);
             // Container child linebutton.Gtk.Container+ContainerChild
             this.image82 = new Gtk.Image();
+            this.image82.TooltipMarkup = "Arrow line tool";
             this.image82.Name = "image82";
             this.image82.Pixbuf = Gdk.Pixbuf.LoadFromResource("stock_draw-line-ends-with-arrow.png");
             this.linebutton.Add(this.image82);
@@ -174,6 +178,7 @@ namespace LongoMatch.Gui.Component {
             w9.YOptions = ((Gtk.AttachOptions)(4));
             // Container child toolstable.Gtk.Table+TableChild
             this.penbutton = new Gtk.RadioButton("");
+            this.penbutton.TooltipMarkup = "Pencil tool";
             this.penbutton.CanFocus = true;
             this.penbutton.Name = "penbutton";
             this.penbutton.DrawIndicator = false;
@@ -182,6 +187,7 @@ namespace LongoMatch.Gui.Component {
             this.penbutton.Remove(this.penbutton.Child);
             // Container child penbutton.Gtk.Container+ContainerChild
             this.image80 = new Gtk.Image();
+            this.image80.TooltipMarkup = "Pencil";
             this.image80.Name = "image80";
             this.image80.Pixbuf = Gdk.Pixbuf.LoadFromResource("stock_draw-freeform-line.png");
             this.penbutton.Add(this.image80);
@@ -198,6 +204,7 @@ namespace LongoMatch.Gui.Component {
             this.rectanglebutton.Remove(this.rectanglebutton.Child);
             // Container child rectanglebutton.Gtk.Container+ContainerChild
             this.image84 = new Gtk.Image();
+            this.image84.TooltipMarkup = "Rectangle tool";
             this.image84.Name = "image84";
             this.image84.Pixbuf = Gdk.Pixbuf.LoadFromResource("stock_draw-rectangle-unfilled.png");
             this.rectanglebutton.Add(this.image84);
@@ -228,6 +235,7 @@ namespace LongoMatch.Gui.Component {
             this.combobox1.AppendText(Mono.Unix.Catalog.GetString("6 px"));
             this.combobox1.AppendText(Mono.Unix.Catalog.GetString("8 px"));
             this.combobox1.AppendText(Mono.Unix.Catalog.GetString("10 px"));
+            this.combobox1.TooltipMarkup = "Change the line's width";
             this.combobox1.Name = "combobox1";
             this.combobox1.Active = 2;
             this.vbox2.Add(this.combobox1);
@@ -248,6 +256,7 @@ namespace LongoMatch.Gui.Component {
             w17.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.spinbutton1 = new Gtk.SpinButton(0, 100, 1);
+            this.spinbutton1.TooltipMarkup = "Change the drawings' transparency";
             this.spinbutton1.CanFocus = true;
             this.spinbutton1.Name = "spinbutton1";
             this.spinbutton1.Adjustment.PageIncrement = 10;
@@ -356,6 +365,7 @@ namespace LongoMatch.Gui.Component {
             w26.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.clearbutton = new Gtk.Button();
+            this.clearbutton.TooltipMarkup = "Clear all drawings";
             this.clearbutton.CanFocus = true;
             this.clearbutton.Name = "clearbutton";
             this.clearbutton.UseUnderline = true;

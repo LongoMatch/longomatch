@@ -4344,6 +4344,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                 <child>
                   <widget class="Gtk.Image" id="image79">
                     <property name="MemberName" />
+                    <property name="Tooltip" translatable="yes">Circle tool</property>
                     <property name="Pixbuf">resource:stock_draw-circle-unfilled.png</property>
                   </widget>
                 </child>
@@ -4376,6 +4377,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                 <child>
                   <widget class="Gtk.Image" id="image83">
                     <property name="MemberName" />
+                    <property name="Tooltip" translatable="yes">Cross tool</property>
                     <property name="Pixbuf">resource:stock_draw-line-45.png</property>
                   </widget>
                 </child>
@@ -4398,6 +4400,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
             <child>
               <widget class="Gtk.RadioButton" id="eraserbutton">
                 <property name="MemberName" />
+                <property name="Tooltip" translatable="yes">Rubber tool</property>
                 <property name="CanFocus">True</property>
                 <property name="Label" translatable="yes" />
                 <property name="DrawIndicator">False</property>
@@ -4438,6 +4441,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                 <child>
                   <widget class="Gtk.Image" id="image82">
                     <property name="MemberName" />
+                    <property name="Tooltip" translatable="yes">Arrow line tool</property>
                     <property name="Pixbuf">resource:stock_draw-line-ends-with-arrow.png</property>
                   </widget>
                 </child>
@@ -4458,8 +4462,10 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
             <child>
               <widget class="Gtk.RadioButton" id="penbutton">
                 <property name="MemberName" />
+                <property name="Tooltip" translatable="yes">Pencil tool</property>
                 <property name="CanFocus">True</property>
                 <property name="Label" translatable="yes" />
+                <property name="Active">True</property>
                 <property name="DrawIndicator">False</property>
                 <property name="HasLabel">False</property>
                 <property name="UseUnderline">True</property>
@@ -4468,6 +4474,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                 <child>
                   <widget class="Gtk.Image" id="image80">
                     <property name="MemberName" />
+                    <property name="Tooltip" translatable="yes">Pencil</property>
                     <property name="Pixbuf">resource:stock_draw-freeform-line.png</property>
                   </widget>
                 </child>
@@ -4496,6 +4503,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                 <child>
                   <widget class="Gtk.Image" id="image84">
                     <property name="MemberName" />
+                    <property name="Tooltip" translatable="yes">Rectangle tool</property>
                     <property name="Pixbuf">resource:stock_draw-rectangle-unfilled.png</property>
                   </widget>
                 </child>
@@ -4537,6 +4545,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
         <child>
           <widget class="Gtk.ComboBox" id="combobox1">
             <property name="MemberName" />
+            <property name="Tooltip">Change the line's width</property>
             <property name="IsTextCombo">True</property>
             <property name="Items">2 px
 4 px
@@ -4570,6 +4579,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
         <child>
           <widget class="Gtk.SpinButton" id="spinbutton1">
             <property name="MemberName" />
+            <property name="Tooltip" translatable="yes">Change the drawings' transparency</property>
             <property name="CanFocus">True</property>
             <property name="Upper">100</property>
             <property name="PageIncrement">10</property>
@@ -4764,6 +4774,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
         <child>
           <widget class="Gtk.Button" id="clearbutton">
             <property name="MemberName" />
+            <property name="Tooltip" translatable="yes">Clear all drawings</property>
             <property name="CanFocus">True</property>
             <property name="Type">TextAndIcon</property>
             <property name="Icon">stock:gtk-clear LargeToolbar</property>
