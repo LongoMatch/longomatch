@@ -128,14 +128,9 @@ namespace LongoMatch.Video.Utils
 		
 			
 		public static MediaFile GetMediaFile(string filePath){
-			int duration;			
-			bool hasVideo;
-			bool hasAudio;
-			string audioCodec = "";
-			string videoCodec = "";
-			int fps=0;
-			int height=0;
-			int width=0;		
+			int duration, fps=0, height=0, width=0;			
+			bool hasVideo, hasAudio;
+			string audioCodec = "", videoCodec = "";
 			MultimediaFactory factory;
 			IMetadataReader reader = null;
 			
