@@ -5,11 +5,10 @@ _X-GNOME-FullName=LongoMatch: The Digital Coach
 Type=Application
 Exec=longomatch
 Terminal=false
-Categories=Video;AudioVideo;Player;AudioVideoEditing;Recorder;Sports; 
+Categories=Video;AudioVideo;Player;AudioVideoEditing;Recorder
 Icon=longomatch
 _Comment=Sports video analysis tool for coaches
 X-GNOME-Bugzilla-Bugzilla=GNOME
 X-GNOME-Bugzilla-Product=longomatch
 X-GNOME-Bugzilla-Component=general
 X-GNOME-Bugzilla-Version=@VERSION@
-
