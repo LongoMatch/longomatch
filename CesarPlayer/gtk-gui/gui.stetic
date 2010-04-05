@@ -373,6 +373,7 @@
                 <child>
                   <widget class="Gtk.Button" id="recbutton">
                     <property name="MemberName" />
+                    <property name="Tooltip" translatable="yes">Start or continue capture</property>
                     <property name="CanFocus">True</property>
                     <property name="Type">TextAndIcon</property>
                     <property name="Icon">stock:gtk-media-record Dialog</property>
@@ -391,6 +392,7 @@
                   <widget class="Gtk.Button" id="pausebutton">
                     <property name="MemberName" />
                     <property name="Visible">False</property>
+                    <property name="Tooltip" translatable="yes">Pause capture</property>
                     <property name="CanFocus">True</property>
                     <property name="Type">TextAndIcon</property>
                     <property name="Icon">stock:gtk-media-pause Dialog</property>
@@ -409,6 +411,7 @@
                   <widget class="Gtk.Button" id="stopbutton">
                     <property name="MemberName" />
                     <property name="Visible">False</property>
+                    <property name="Tooltip" translatable="yes">Stop and close capture</property>
                     <property name="CanFocus">True</property>
                     <property name="Type">TextAndIcon</property>
                     <property name="Icon">stock:gtk-media-stop Dialog</property>

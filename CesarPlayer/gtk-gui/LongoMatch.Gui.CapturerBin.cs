@@ -63,6 +63,7 @@ namespace LongoMatch.Gui {
             this.buttonsbox.Spacing = 6;
             // Container child buttonsbox.Gtk.Box+BoxChild
             this.recbutton = new Gtk.Button();
+            this.recbutton.TooltipMarkup = "Start or continue capture";
             this.recbutton.CanFocus = true;
             this.recbutton.Name = "recbutton";
             this.recbutton.UseUnderline = true;
@@ -87,6 +88,7 @@ namespace LongoMatch.Gui {
             w11.Fill = false;
             // Container child buttonsbox.Gtk.Box+BoxChild
             this.pausebutton = new Gtk.Button();
+            this.pausebutton.TooltipMarkup = "Pause capture";
             this.pausebutton.CanFocus = true;
             this.pausebutton.Name = "pausebutton";
             this.pausebutton.UseUnderline = true;
@@ -111,6 +113,7 @@ namespace LongoMatch.Gui {
             w20.Fill = false;
             // Container child buttonsbox.Gtk.Box+BoxChild
             this.stopbutton = new Gtk.Button();
+            this.stopbutton.TooltipMarkup = "Stop and close capture";
             this.stopbutton.CanFocus = true;
             this.stopbutton.Name = "stopbutton";
             this.stopbutton.UseUnderline = true;
