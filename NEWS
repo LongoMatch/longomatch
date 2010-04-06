@@ -1,11 +1,14 @@
 ===== LongoMatch 0.15.7 =====
 
- 	== Bugs Fixed ==
+	== Features ==
+	* Added tolltips to many widgets.
+	* Use the keyboard arrows for the player's keyboard shortcuts
+ 	
+        == Bugs Fixed ==
 
 	* Crash loading projects pointing to a file that doesn't exists
 	* The video player's timescale report a wrong value when releasing the mouse, sending wrong seeks
 	* Crash using files without video streams
-	* Some buttons doesn't have tooltips
 	* Arrows should be used for the player's keyboard shortcuts
 
 ===== LongoMatch 0.15.6 =====

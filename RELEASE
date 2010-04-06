@@ -2,18 +2,30 @@ LongoMatch-0.15.7 "Mariscada en Guarda"
 -------------------------------------------------
 
 The LongoMatch team is happy to announce the seventh release in the unstable 0.15
-LongoMatch series. This is a bugfix release, and you won't see any new feature.
+LongoMatch series. Note that the 0.15.6 release was not officially announced and
+is skipped because a major bug was found while uploading the release.
 
 Due to its dependency on GStreamer, We strongly recommend to have
 all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
+* Features of this release
+  * New tagging mode, to tag plays setting the start and stop time instead of using the default values.
+  * Live analysis support with a fake capture device.
+  * Keys bindings for the media player.
+  * Added tooltips to many widgets.
+  * Added Norwegian translation.
+  * Added Slovenian translation.
+  * Added Danish translation.
+  * Added Swedish translation.
+
 *Bugs Fixed
-  * Crash loading projects pointing to a file that doesn't exists 
-  * The video player's timescale report a wrong value when releasing the mouse, sending wrong seeks
-  * Crash using files with no video stream
-  * Some buttons doesn't have tooltips
-  * Arrows should be used for the player's keyboard shortcuts
+  * [#614133] The drawing tool does not resize properly the image
+  * [#614135] Hotkeys ToString() prints 'none' if the hotkey has no modifier
+  * [#614136] The player grabs the pointer when clicked
+  * [#615017] Crash loading projects pointing to a file that doesn't exists 
+  * [#615018] The video player's timescale report a wrong value when releasing the mouse, sending wrong seeks
+  * [#615019] Crash using files with no video stream
 
 * Features of the 0.15 series
  
