@@ -107,7 +107,7 @@ namespace LongoMatch.Gui.Dialog
 					                                     MessageType.Question,
 					                                     ButtonsType.YesNo,
 					                                     Catalog.GetString("Do you really want to delete:")+
-					                                     "\n"+selectedProject.File);
+					                                     "\n"+selectedProject.Title);
 					if (md.Run()== (int)ResponseType.Yes) {
 						projectdetails.Clear();
 						MainClass.DB.RemoveProject(selectedProject.File);
