@@ -137,7 +137,8 @@ EXPORT gboolean gst_camera_capturer_set_audio_encoder (GstCameraCapturer * gcc,
 EXPORT gboolean gst_camera_capturer_set_video_muxer (GstCameraCapturer * gcc,
                                                     GccVideoMuxerType type,
                                                     GError ** err);
-EXPORT GValueArray gst_camera_capturer_enum_devices (GstCameraCapturer * gcc);
+EXPORT GList* gst_camera_capturer_enum_audio_devices (void);
+EXPORT GList* gst_camera_capturer_enum_video_devices (void);
 
 G_END_DECLS
 #endif /* _GST_CAMERA_CAPTURER_H_ */

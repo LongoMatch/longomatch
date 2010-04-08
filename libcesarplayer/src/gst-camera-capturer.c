@@ -1034,21 +1034,6 @@ gst_camera_capturer_set_video_muxer (GstCameraCapturer * gcc,
   return TRUE;
 }
 
-GValueArray *
-gst_camera_capture_enum_devices (GstCameraCapturer * gcc)
-{
-  GstElement *videodevicesrc;
-  GstPropertyProbe *probe;
-  GValueArray *va;
-
-  videodevicesrc = gst_element_factory_make (VIDEOSRC, "source");
-  probe = GST_PROPERTY_PROBE (videodevicesrc);
-  va = gst_property_probe_get_values_name (probe, "device-name");
-  gst_element_set_state (videodevicesrc, GST_STATE_NULL);
-  gst_object_unref (GST_OBJECT (videodevicesrc));
-  return va;
-}
-
 static void
 gcc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 {
@@ -1207,3 +1192,48 @@ gcc_parse_video_stream_info (GstCaps * caps, GstCameraCapturer * gcc)
   }
   return 1;
 }
+
+GList* 
+gst_camera_capturer_enum_devices(gchar* device_name)
+{
+  GstElement* device; 
+  GstPropertyProbe* probe;
+  GValueArray* va; 
+  GList* list=NULL; 
+  guint i=0;  
+  
+  device = gst_element_factory_make (device_name, "source");
+  gst_element_set_state(device, GST_STATE_READY);
+  gst_element_get_state(device, NULL, NULL, 5 * GST_SECOND);
+  if (!device || !GST_IS_PROPERTY_PROBE(device))
+    goto finish;
+  probe = GST_PROPERTY_PROBE (device);
+  va = gst_property_probe_get_values_name (probe, "device-name");
+  if (!va)
+    goto finish;
+  for(i=0; i < va->n_values; ++i) {
+    GValue* v = g_value_array_get_nth(va, i);
+    list = g_list_append(list, g_string_new(g_value_get_string(v)));
+  }
+  g_value_array_free(va);
+ 
+finish:
+ {
+  gst_element_set_state (device, GST_STATE_NULL);
+  gst_object_unref(GST_OBJECT (device));
+  return list;
+ }
+}
+
+GList* 
+gst_camera_capturer_enum_video_devices(void)
+{
+  return gst_camera_capturer_enum_devices(VIDEOSRC); 
+}
+
+GList* 
+gst_camera_capturer_enum_audio_devices(void)
+{ 
+  return gst_camera_capturer_enum_devices(AUDIOSRC); 
+}
+
