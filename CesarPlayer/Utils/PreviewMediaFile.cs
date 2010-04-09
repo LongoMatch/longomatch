@@ -66,7 +66,7 @@ namespace LongoMatch.Video.Utils
 		}
 		
 		public new static PreviewMediaFile GetMediaFile(string filePath){
-			int duration;			
+			int duration=0;			
 			bool hasVideo;
 			bool hasAudio;
 			string audioCodec = "";
@@ -82,8 +82,7 @@ namespace LongoMatch.Video.Utils
 			try{
 				factory =  new MultimediaFactory();
 				reader = factory.getMetadataReader();
-				reader.Open(filePath);
-				duration = (int)reader.GetMetadata(GstMetadataType.Duration);						
+				reader.Open(filePath);				
 				hasVideo = (bool) reader.GetMetadata(GstMetadataType.HasVideo);
 				hasAudio = (bool) reader.GetMetadata(GstMetadataType.HasAudio);
 				if (hasAudio){
@@ -96,6 +95,9 @@ namespace LongoMatch.Video.Utils
 					thumbnailer.Open(filePath);
 					thumbnailer.SeekTime(1000,false);
 					preview = thumbnailer.GetCurrentFrame(THUMBNAIL_MAX_WIDTH,THUMBNAIL_MAX_HEIGHT);
+					duration = (int)(thumbnailer as GstPlayer).StreamLength;				/* On Windows some formats report a 0 duration, try a last time with the reader */
+					if (duration == 0)
+						duration = (int)reader.GetMetadata(GstMetadataType.Duration);
 					thumbnailer.Dispose();
 				}			
 				height = (int) reader.GetMetadata(GstMetadataType.DimensionY);

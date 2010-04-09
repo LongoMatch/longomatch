@@ -758,7 +758,7 @@ namespace LongoMatch.Video.Player {
 		[DllImport("libcesarplayer.dll")]
 		static extern IntPtr bacon_video_widget_get_backend_name(IntPtr raw);
 
-		public string BackendName { 
+		public string BackendName {
 			get {
 				IntPtr raw_ret = bacon_video_widget_get_backend_name(Handle);
 				string ret = GLib.Marshaller.PtrToStringGFree(raw_ret);
