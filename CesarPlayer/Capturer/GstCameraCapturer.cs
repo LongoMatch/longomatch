@@ -335,6 +335,26 @@ namespace LongoMatch.Video.Capturer {
 				GLib.GType ret = new GLib.GType(raw_ret);
 				return ret;
 			}
+		} 
+		
+		[DllImport("libcesarplayer.dll")]
+		static extern IntPtr gst_camera_capturer_enum_audio_devices();
+
+		public static string[] AudioDevices { 
+			get {
+				IntPtr raw_ret = gst_camera_capturer_enum_audio_devices();
+				return (string[])GLib.Marshaller.ListPtrToArray(raw_ret, typeof(GLib.List),  true, false, typeof(String));
+			}
+		}
+		
+		[DllImport("libcesarplayer.dll")]
+		static extern IntPtr gst_camera_capturer_enum_video_devices();
+
+		public static string[] VideoDevices { 
+			get {
+				IntPtr raw_ret = gst_camera_capturer_enum_video_devices();
+				return (string[])GLib.Marshaller.ListPtrToArray(raw_ret, typeof(GLib.List),  true, false, typeof(String));					
+			}
 		}
 		
 		
