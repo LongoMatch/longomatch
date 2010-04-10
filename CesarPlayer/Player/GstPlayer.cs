@@ -21,6 +21,7 @@ namespace LongoMatch.Video.Player {
 	using System;
 	using System.Collections;
 	using System.Runtime.InteropServices;
+	using LongoMatch.Video.Common;
 	using LongoMatch.Video.Handlers;
 	using LongoMatch.Video.Utils;
 
@@ -34,7 +35,7 @@ namespace LongoMatch.Video.Player {
 		[DllImport("libcesarplayer.dll")]
 		static extern unsafe IntPtr bacon_video_widget_new(int width, int height, int type, out IntPtr error);
 
-		public unsafe GstPlayer (int width, int height, LongoMatch.Video.Player.GstUseType type) : base (IntPtr.Zero)
+		public unsafe GstPlayer (int width, int height, PlayerUseType type) : base (IntPtr.Zero)
 		{
 			if (GetType () != typeof (GstPlayer)) {
 				throw new InvalidOperationException ("Can't override this constructor.");
@@ -934,7 +935,7 @@ namespace LongoMatch.Video.Player {
 		[DllImport("libcesarplayer.dll")]
 		static extern int bacon_video_widget_get_video_property(IntPtr raw, int type);
 
-		public int GetVideoProperty(GstVideoProperty type) {
+		public int GetVideoProperty(VideoProperty type) {
 			int raw_ret = bacon_video_widget_get_video_property(Handle, (int) type);
 			int ret = raw_ret;
 			return ret;
@@ -1042,17 +1043,10 @@ namespace LongoMatch.Video.Player {
 		[DllImport("libcesarplayer.dll")]
 		static extern bool bacon_video_widget_set_audio_out_type(IntPtr raw, int type);
 
-		public bool SetAudioOutType(GstAudioOutType type) {
+		public bool SetAudioOutType(AudioOutType type) {
 			bool raw_ret = bacon_video_widget_set_audio_out_type(Handle, (int) type);
 			bool ret = raw_ret;
 			return ret;
-		}
-
-		[DllImport("libcesarplayer.dll")]
-		static extern void bacon_video_widget_dvd_event(IntPtr raw, int type);
-
-		public void DvdEvent(GstDVDEvent type) {
-			bacon_video_widget_dvd_event(Handle, (int) type);
 		}
 
 		[DllImport("libcesarplayer.dll")]
@@ -1198,7 +1192,7 @@ namespace LongoMatch.Video.Player {
 		[DllImport("libcesarplayer.dll")]
 		static extern void bacon_video_widget_set_aspect_ratio(IntPtr raw, int ratio);
 
-		public LongoMatch.BvwAspectRatio AspectRatio { 
+		public AspectRatio AspectRatio { 
 			set {
 				bacon_video_widget_set_aspect_ratio(Handle, (int) value);
 			}
@@ -1207,7 +1201,7 @@ namespace LongoMatch.Video.Player {
 		[DllImport("libcesarplayer.dll")]
 		static extern void bacon_video_widget_set_video_property(IntPtr raw, int type, int value);
 
-		public void SetVideoProperty(GstVideoProperty type, int value) {
+		public void SetVideoProperty(VideoProperty type, int value) {
 			bacon_video_widget_set_video_property(Handle, (int) type, value);
 		}
 
@@ -1240,7 +1234,7 @@ namespace LongoMatch.Video.Player {
 		[DllImport("libcesarplayer.dll")]
 		static extern void bacon_video_widget_get_metadata(IntPtr raw, int type, IntPtr val);
 
-		public object GetMetadata(GstMetadataType type) {
+		public object GetMetadata(MetadataType type) {
 			GLib.Value val = new GLib.Value();
 			IntPtr native_value = GLib.Marshaller.StructureToPtrAlloc (val);
 			bacon_video_widget_get_metadata(Handle, (int) type, native_value);

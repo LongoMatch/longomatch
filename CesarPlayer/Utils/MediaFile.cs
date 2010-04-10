@@ -23,6 +23,7 @@ using Mono.Unix;
 using Gdk;
 using LongoMatch.Video;
 using LongoMatch.Video.Player;
+using LongoMatch.Video.Common;
 
 namespace LongoMatch.Video.Utils
 {
@@ -138,17 +139,17 @@ namespace LongoMatch.Video.Utils
 				factory =  new MultimediaFactory();
 				reader = factory.getMetadataReader();
 				reader.Open(filePath);
-				duration = (int)reader.GetMetadata(GstMetadataType.Duration);						
-				hasVideo = (bool) reader.GetMetadata(GstMetadataType.HasVideo);
-				hasAudio = (bool) reader.GetMetadata(GstMetadataType.HasAudio);
+				duration = (int)reader.GetMetadata(MetadataType.Duration);						
+				hasVideo = (bool) reader.GetMetadata(MetadataType.HasVideo);
+				hasAudio = (bool) reader.GetMetadata(MetadataType.HasAudio);
 				if (hasAudio)
-					audioCodec = (string) reader.GetMetadata(GstMetadataType.AudioCodec);					
+					audioCodec = (string) reader.GetMetadata(MetadataType.AudioEncoderType);					
 				if (hasVideo){
-					videoCodec = (string) reader.GetMetadata(GstMetadataType.VideoCodec);	
-					fps = (int) reader.GetMetadata(GstMetadataType.Fps);
+					videoCodec = (string) reader.GetMetadata(MetadataType.VideoEncoderType);	
+					fps = (int) reader.GetMetadata(MetadataType.Fps);
 				}			
-				height = (int) reader.GetMetadata(GstMetadataType.DimensionY);
-				width = (int) reader.GetMetadata (GstMetadataType.DimensionX);
+				height = (int) reader.GetMetadata(MetadataType.DimensionY);
+				width = (int) reader.GetMetadata (MetadataType.DimensionX);
 								
 				return new MediaFile(filePath,duration*1000,(ushort)fps,hasAudio,hasVideo,videoCodec,audioCodec,(uint)height,(uint)width);
 		

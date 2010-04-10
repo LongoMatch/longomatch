@@ -17,6 +17,7 @@
 // 
 
 using System;
+using LongoMatch.Video.Common;
 
 namespace LongoMatch.Video.Editor
 {
@@ -64,15 +65,15 @@ namespace LongoMatch.Video.Editor
 		
 		void SetSegment(string filePath, long start, long duration, double rate, string title, bool hasAudio);
 		
-		AudioCodec AudioCodec{
+		AudioEncoderType AudioEncoder{
 			set;
 		}
 		
-		VideoCodec VideoCodec{
+		VideoEncoderType VideoEncoder{
 			set;
 		}
 		
-		VideoMuxer VideoMuxer{
+		VideoMuxerType VideoMuxer{
 			set;
 		}		
 		

@@ -29,6 +29,7 @@ using LongoMatch.Video.Handlers;
 using LongoMatch.TimeNodes;
 using LongoMatch.Video.Player;
 using LongoMatch.Video;
+using LongoMatch.Video.Common;
 using LongoMatch.Gui;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Playlist;
@@ -281,8 +282,8 @@ namespace LongoMatch.Gui.Component
 					videoEditor.VideoQuality = vep.VideoQuality;
 					videoEditor.AudioQuality = AudioQuality.Good;
 					videoEditor.VideoFormat = vep.VideoFormat;
-					videoEditor.AudioCodec = vep.AudioCodec;
-					videoEditor.VideoCodec = vep.VideoCodec;
+					videoEditor.AudioEncoder = vep.AudioEncoderType;
+					videoEditor.VideoEncoder = vep.VideoEncoderType;
 					videoEditor.OutputFile = vep.Filename;
 					videoEditor.EnableTitle = vep.TitleOverlay;
 					videoEditor.EnableAudio = vep.EnableAudio;

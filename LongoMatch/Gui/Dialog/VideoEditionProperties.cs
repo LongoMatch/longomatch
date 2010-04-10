@@ -22,6 +22,7 @@ using System;
 using Gtk;
 using Mono.Unix;
 using LongoMatch.Video.Editor;
+using LongoMatch.Video.Common;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -32,9 +33,9 @@ namespace LongoMatch.Gui.Dialog
 	{
 		private VideoQuality vq;
 		private VideoFormat vf;
-		private VideoCodec vcodec;
-		private AudioCodec acodec;
-		private VideoMuxer muxer;
+		private VideoEncoderType vcodec;
+		private AudioEncoderType acodec;
+		private VideoMuxerType muxer;
 
 		private const string MP4="MP4 (H.264+AAC)";
 		private const string AVI="AVI (Xvid+MP3)";
@@ -64,19 +65,19 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 
-		public VideoCodec VideoCodec {
+		public VideoEncoderType VideoEncoderType {
 			get {
 				return vcodec;
 			}
 		}
 
-		public AudioCodec AudioCodec {
+		public AudioEncoderType AudioEncoderType {
 			get {
 				return acodec;
 			}
 		}
 
-		public VideoMuxer VideoMuxer {
+		public VideoMuxerType VideoMuxer {
 			get {
 				return muxer;
 			}
@@ -140,24 +141,24 @@ namespace LongoMatch.Gui.Dialog
 			vf = (VideoFormat)sizecombobox.Active;
 
 			if (formatcombobox.ActiveText == MP4) {
-				vcodec = VideoCodec.H264;
-				acodec = AudioCodec.AAC;
-				muxer = VideoMuxer.MKV;
+				vcodec = VideoEncoderType.H264;
+				acodec = AudioEncoderType.Aac;
+				muxer = VideoMuxerType.Matroska;
 			}
 			else if (formatcombobox.ActiveText == OGG) {
-				vcodec = VideoCodec.THEORA;
-				acodec = AudioCodec.VORBIS;
-				muxer = VideoMuxer.OGG;
+				vcodec = VideoEncoderType.Theora;
+				acodec = AudioEncoderType.Vorbis;
+				muxer = VideoMuxerType.Ogg;
 			}
 			else if (formatcombobox.ActiveText == AVI) {
-				vcodec = VideoCodec.XVID;
-				acodec = AudioCodec.MP3;
-				muxer = VideoMuxer.AVI;
+				vcodec = VideoEncoderType.Xvid;
+				acodec = AudioEncoderType.Mp3;
+				muxer = VideoMuxerType.Avi;
 			}
 			else if (formatcombobox.ActiveText == DVD) {
-				vcodec = VideoCodec.MPEG2_VIDEO;
-				acodec = AudioCodec.MPEG2_AUDIO;
-				muxer = VideoMuxer.DVD;
+				vcodec = VideoEncoderType.Mpeg2;
+				acodec = AudioEncoderType.Mp3;
+				muxer = VideoMuxerType.MpegPS;
 			}
 			Hide();
 		}

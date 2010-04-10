@@ -19,6 +19,7 @@
 using System;
 using Mono.Unix;
 using GLib;
+using LongoMatch.Video.Common;
 using LongoMatch.Video.Handlers;
 
 namespace LongoMatch.Video.Capturer
@@ -95,15 +96,15 @@ namespace LongoMatch.Video.Capturer
 			GLib.Source.Remove(timerID);
 		}		
 		
-		public bool SetVideoEncoder(LongoMatch.Video.Capturer.GccVideoEncoderType type){
+		public bool SetVideoEncoder(VideoEncoderType type){
 			return true;
 		}
 		
-		public bool SetAudioEncoder(LongoMatch.Video.Capturer.GccAudioEncoderType type){
+		public bool SetAudioEncoder(AudioEncoderType type){
 			return true;
 		}
 		
-		public bool SetVideoMuxer(LongoMatch.Video.Capturer.GccVideoMuxerType type){
+		public bool SetVideoMuxer(VideoMuxerType type){
 			return true;
 		}
 		

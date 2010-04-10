@@ -20,6 +20,7 @@
 
 using System;
 using LongoMatch.Video.Handlers;
+using LongoMatch.Video.Common;
 
 namespace LongoMatch.Video.Capturer
 {
@@ -58,11 +59,11 @@ namespace LongoMatch.Video.Capturer
 			get ;
 		}
 		
-		bool SetVideoEncoder(LongoMatch.Video.Capturer.GccVideoEncoderType type);
+		bool SetVideoEncoder(VideoEncoderType type);
 		
-		bool SetAudioEncoder(LongoMatch.Video.Capturer.GccAudioEncoderType type);
+		bool SetAudioEncoder(AudioEncoderType type);
 		
-		bool SetVideoMuxer(LongoMatch.Video.Capturer.GccVideoMuxerType type);
+		bool SetVideoMuxer(VideoMuxerType type);
 		
 		void Pause();
 		

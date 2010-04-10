@@ -20,6 +20,7 @@
 
 using System;
 using LongoMatch.Video.Player;
+using LongoMatch.Video.Common;
 
 
 namespace LongoMatch.Video.Utils
@@ -31,6 +32,6 @@ namespace LongoMatch.Video.Utils
 		bool Open(string mrl);
 		void Close();
 		void Dispose();
-		object GetMetadata(GstMetadataType type);
+		object GetMetadata(MetadataType type);
 	}
 }

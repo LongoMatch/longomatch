@@ -23,6 +23,7 @@ using Gtk;
 using Gdk;
 using GLib;
 using LongoMatch.Video;
+using LongoMatch.Video.Common;
 using LongoMatch.Video.Capturer;
 using LongoMatch.Video.Utils;
 using Mono.Unix;
@@ -126,15 +127,15 @@ namespace LongoMatch.Gui
 			capturing = false;
 		}
 		
-		public void SetVideoEncoder(LongoMatch.Video.Capturer.GccVideoEncoderType type){
+		public void SetVideoEncoder(VideoEncoderType type){
 			capturer.SetVideoEncoder(type);
 		}
 		
-		public void SetAudioEncoder(LongoMatch.Video.Capturer.GccAudioEncoderType type){
+		public void SetAudioEncoder(AudioEncoderType type){
 			capturer.SetAudioEncoder(type);
 		}
 		
-		public void SetVideoMuxer(LongoMatch.Video.Capturer.GccVideoMuxerType type){
+		public void SetVideoMuxer(VideoMuxerType type){
 			capturer.SetVideoMuxer(type);
 		}
 

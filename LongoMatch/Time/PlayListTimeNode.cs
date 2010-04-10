@@ -67,7 +67,7 @@ namespace LongoMatch.TimeNodes
 				if (value is PreviewMediaFile) {
 					MediaFile mf  = new MediaFile(value.FilePath,value.Length,value.Fps,
 					                              value.HasAudio,value.HasVideo,value.VideoCodec,
-					                              value.AudioCodec,value.VideoWidth,value.VideoHeight);
+					                              value.VideoCodec,value.VideoWidth,value.VideoHeight);
 					this.mediaFile= mf;
 				}
 				else this.mediaFile = value;

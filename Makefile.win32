@@ -61,14 +61,8 @@ CESARPLAYER_FILES = \
 	Handlers/Handlers.cs \
 	Handlers/TickHandler.cs \
 	Handlers/StateChangedHandler.cs \
-	Player/GstAspectRatio.cs \
-	Player/GstAudioOutType.cs \
-	Player/GstDVDEvent.cs \
 	Player/GstError.cs \
-	Player/GstMetadataType.cs \
 	Player/GstPlayer.cs \
-	Player/GstUseType.cs \
-	Player/GstVideoProperty.cs \
 	Player/IPlayer.cs \
 	Player/ObjectManager.cs \
 	gtk-gui/LongoMatch.Gui.CapturerBin.cs \
@@ -83,29 +77,17 @@ CESARPLAYER_FILES = \
 	Utils/IMetadataReader.cs \
 	Utils/TimeString.cs \
 	Capturer/FakeCapturer.cs \
-	Capturer/GccAudioEncoderType.cs \
-	Capturer/GccError.cs \
-	Capturer/GccType.cs \
-	Capturer/GccVideoEncoderType.cs \
-	Capturer/GccVideoMuxerType.cs \
 	Capturer/GstCameraCapturer.cs \
 	Capturer/ErrorHandler.cs \
 	Capturer/ICapturer.cs \
 	Capturer/ObjectManager.cs \
 	Editor/ErrorHandler.cs \
 	Editor/IVideoEditor.cs \
-	Editor/AudioQuality.cs \
-	Editor/VideoQuality.cs \
+	Editor/IVideoSplitter.cs \
 	Editor/PercentCompletedHandler.cs \
 	Editor/GstVideoSplitter.cs \
 	Editor/VideoSegment.cs \
 	Editor/EditorState.cs \
-	Editor/VideoFormat.cs \
-	Editor/VideoMuxer.cs \
-	Editor/VideoCodec.cs \
-	Editor/AudioCodec.cs \
-	Editor/IVideoSplitter.cs \
-	Editor/VideoSplitterType.cs \
 	Utils/MediaFile.cs \
 	Utils/PreviewMediaFile.cs
 	

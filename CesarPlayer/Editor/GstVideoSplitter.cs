@@ -23,6 +23,7 @@ namespace LongoMatch.Video.Editor {
 	using System;
 	using System.Collections;
 	using System.Runtime.InteropServices;
+	using LongoMatch.Video.Common;
 
 
 	public class GstVideoSplitter : GLib.Object, IVideoEditor, IVideoSplitter {
@@ -313,7 +314,7 @@ namespace LongoMatch.Video.Editor {
 		[DllImport("libcesarplayer.dll")]
 		static extern void gst_video_editor_set_video_encoder(IntPtr raw, out IntPtr error_ptr, int type);
 
-		public void SetVideoEncoder(out string error, VideoCodec codec) {
+		public void SetVideoEncoder(out string error, VideoEncoderType codec) {
 			IntPtr error_ptr = IntPtr.Zero;
 			gst_video_editor_set_video_encoder(Handle,out error_ptr,(int)codec);
 			if (error_ptr != IntPtr.Zero)
@@ -325,7 +326,7 @@ namespace LongoMatch.Video.Editor {
 		[DllImport("libcesarplayer.dll")]
 		static extern void gst_video_editor_set_audio_encoder(IntPtr raw, out IntPtr error_ptr, int type);
 
-		public void SetAudioEncoder(out string error, AudioCodec codec) {
+		public void SetAudioEncoder(out string error, AudioEncoderType codec) {
 			IntPtr error_ptr = IntPtr.Zero;
 			gst_video_editor_set_audio_encoder(Handle,out error_ptr,(int)codec);
 			if (error_ptr != IntPtr.Zero)
@@ -337,7 +338,7 @@ namespace LongoMatch.Video.Editor {
 		[DllImport("libcesarplayer.dll")]
 		static extern void gst_video_editor_set_video_muxer(IntPtr raw, out IntPtr error_ptr, int type);
 
-		public void SetVideoMuxer(out string error, VideoMuxer muxer) {
+		public void SetVideoMuxer(out string error, VideoMuxerType muxer) {
 			IntPtr error_ptr = IntPtr.Zero;
 			gst_video_editor_set_video_muxer(Handle,out error_ptr,(int)muxer);
 			if (error_ptr != IntPtr.Zero)
@@ -394,7 +395,7 @@ namespace LongoMatch.Video.Editor {
 			}
 		}
 		
-		public AudioCodec AudioCodec{
+		public AudioEncoderType AudioEncoder{
 			set{
 				string error;
 				SetAudioEncoder(out error,value);
@@ -403,7 +404,7 @@ namespace LongoMatch.Video.Editor {
 			}
 		}
 		
-		public VideoCodec VideoCodec{
+		public VideoEncoderType VideoEncoder{
 			set{
 				string error;
 				SetVideoEncoder(out error, value);
@@ -412,7 +413,7 @@ namespace LongoMatch.Video.Editor {
 			}
 		}
 		
-		public VideoMuxer VideoMuxer{
+		public VideoMuxerType VideoMuxer{
 			set{
 				string error;
 				SetVideoMuxer(out error,value);

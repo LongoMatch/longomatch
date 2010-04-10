@@ -23,6 +23,7 @@ using LongoMatch.Video.Capturer;
 using LongoMatch.Video.Player;
 using LongoMatch.Video.Editor;
 using LongoMatch.Video.Utils;
+using LongoMatch.Video.Common;
 
 namespace LongoMatch.Video
 {
@@ -41,13 +42,13 @@ namespace LongoMatch.Video
 		public IPlayer getPlayer(int width, int height){
 			switch (oS.Platform) { 
 				case PlatformID.Unix:
-					return new GstPlayer(width,height,GstUseType.Video);
+					return new GstPlayer(width,height,PlayerUseType.Video);
 					
 				case PlatformID.Win32NT:
-					return new GstPlayer(width,height,GstUseType.Video);
+					return new GstPlayer(width,height,PlayerUseType.Video);
 				
 				default:
-					return new GstPlayer(width,height,GstUseType.Video);
+					return new GstPlayer(width,height,PlayerUseType.Video);
 			}		
 		}
 		
@@ -55,26 +56,26 @@ namespace LongoMatch.Video
 			
 			switch (oS.Platform) { 
 				case PlatformID.Unix:
-					return new GstPlayer(1,1,GstUseType.Metadata);
+					return new GstPlayer(1,1,PlayerUseType.Metadata);
 					
 				case PlatformID.Win32NT:
-					return new GstPlayer(1,1,GstUseType.Metadata);
+					return new GstPlayer(1,1,PlayerUseType.Metadata);
 					
 				default:
-					return new GstPlayer(1,1,GstUseType.Metadata);
+					return new GstPlayer(1,1,PlayerUseType.Metadata);
 			}
 		}
 		
 		public IFramesCapturer getFramesCapturer(){
 			switch (oS.Platform) { 
 				case PlatformID.Unix:
-					return new GstPlayer(1,1,GstUseType.Capture);
+					return new GstPlayer(1,1,PlayerUseType.Capture);
 					
 				case PlatformID.Win32NT:
-					return new GstPlayer(1,1,GstUseType.Capture);
+					return new GstPlayer(1,1,PlayerUseType.Capture);
 					
 				default:
-					return new GstPlayer(1,1,GstUseType.Capture);
+					return new GstPlayer(1,1,PlayerUseType.Capture);
 			}
 		}
 		

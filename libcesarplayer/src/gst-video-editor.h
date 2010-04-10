@@ -69,26 +69,26 @@ typedef enum
 
 typedef enum
 {
-  THEORA = 1,
-  H264 = 2,
-  XVID = 3,
-  MPEG2_VIDEO = 4
-} GvsVideoCodec;
+  MPEG4,
+  XVID,
+  THEORA,
+  H264,
+  MPEG2_VIDEO,
+} GvsVideoEncoderType;
 
 typedef enum
 {
-  VORBIS = 1,
-  AAC = 2,
-  MP3 = 3,
-  MPEG2_AUDIO = 4
-} GvsAudioCodec;
+  MP3,
+  AAC,
+  VORBIS,
+} GvsAudioEncoderType;
 
 typedef enum
 {
-  MKV = 1,
-  AVI = 2,
-  DVD = 3,
-  OGG = 4
+  AVI,
+  MKV,
+  OGG,
+  DVD,
 } GvsVideoMuxer;
 
 
@@ -102,10 +102,10 @@ gst_video_editor_get_type (void)
      EXPORT void gst_video_editor_cancel (GstVideoEditor * gve);
      EXPORT void gst_video_editor_set_video_encoder (GstVideoEditor * gve,
 						     gchar ** err,
-						     GvsVideoCodec codec);
+						     GvsVideoEncoderType codec);
      EXPORT void gst_video_editor_set_audio_encoder (GstVideoEditor * gve,
 						     gchar ** err,
-						     GvsAudioCodec codec);
+						     GvsAudioEncoderType codec);
      EXPORT void gst_video_editor_set_video_muxer (GstVideoEditor * gve,
 						   gchar ** err,
 						   GvsVideoMuxer codec);

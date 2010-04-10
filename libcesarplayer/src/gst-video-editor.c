@@ -1022,7 +1022,7 @@ gst_video_editor_clear_segments_list (GstVideoEditor * gve)
 
 void
 gst_video_editor_set_video_encoder (GstVideoEditor * gve, gchar ** err,
-				    GvsVideoCodec codec)
+				    GvsVideoEncoderType codec)
 {
   GstElement *encoder = NULL;
   GstState cur_state;
@@ -1044,10 +1044,15 @@ gst_video_editor_set_video_encoder (GstVideoEditor * gve, gchar ** err,
 	  encoder = gst_element_factory_make (encoder_name, encoder_name);
 	  g_object_set (G_OBJECT (encoder), "pass", 17, NULL);	//Variable Bitrate-Pass 1
 	  break;
-	case XVID:
+	case MPEG4:
 	  encoder_name = "xvidenc";
 	  encoder = gst_element_factory_make (encoder_name, encoder_name);
 	  g_object_set (G_OBJECT (encoder), "pass", 1, NULL);	//Variable Bitrate-Pass 1
+	  break;
+	case XVID:
+	  encoder_name = "ffenc_mpeg4";
+	  encoder = gst_element_factory_make (encoder_name, encoder_name);
+	  g_object_set (G_OBJECT (encoder), "pass", 512, NULL);	//Variable Bitrate-Pass 1
 
 	  break;
 	case MPEG2_VIDEO:
@@ -1123,7 +1128,7 @@ gst_video_editor_set_video_encoder (GstVideoEditor * gve, gchar ** err,
 
 void
 gst_video_editor_set_audio_encoder (GstVideoEditor * gve, gchar ** err,
-				    GvsAudioCodec codec)
+				    GvsAudioEncoderType codec)
 {
   GstElement *encoder = NULL;
   GstState cur_state;
@@ -1159,11 +1164,6 @@ gst_video_editor_set_audio_encoder (GstVideoEditor * gve, gchar ** err,
 	  g_object_set (G_OBJECT (gve->priv->audiocapsfilter), "caps",
 			gst_caps_from_string (VORBIS_CAPS), NULL);
 	  break;
-	case MPEG2_AUDIO:
-	  encoder_name = "lame";
-	  encoder = gst_element_factory_make (encoder_name, encoder_name);
-	  g_object_set (G_OBJECT (gve->priv->audiocapsfilter), "caps",
-			gst_caps_from_string (LAME_CAPS), NULL);
 	default:
 	  gst_video_editor_set_enable_audio (gve, FALSE);
 	  break;

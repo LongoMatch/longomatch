@@ -1,8 +1,6 @@
 
 EXTRA_DIST =  
 
-# Warning: This is an automatically generated file, do not edit!
-
 if ENABLE_DEBUG
 ASSEMBLY_COMPILER_COMMAND = $(CSC)
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -unsafe -warn:4 -optimize+ -debug -define:DEBUG
@@ -48,18 +46,12 @@ all: $(ASSEMBLY) $(PROGRAMFILES)
 FILES = \
 	AssemblyInfo.cs \
 	gtk-gui/generated.cs \
+	Common/Enum.cs\
 	Handlers/ErrorHandler.cs \
 	Handlers/Handlers.cs \
 	Handlers/TickHandler.cs \
 	Handlers/StateChangedHandler.cs \
-	Player/GstAspectRatio.cs \
-	Player/GstAudioOutType.cs \
-	Player/GstDVDEvent.cs \
-	Player/GstError.cs \
-	Player/GstMetadataType.cs \
 	Player/GstPlayer.cs \
-	Player/GstUseType.cs \
-	Player/GstVideoProperty.cs \
 	Player/IPlayer.cs \
 	Player/ObjectManager.cs \
 	gtk-gui/LongoMatch.Gui.CapturerBin.cs \
@@ -73,11 +65,6 @@ FILES = \
 	Utils/FramesCapturer.cs \
 	Utils/IMetadataReader.cs \
 	Utils/TimeString.cs \
-	Capturer/GccAudioEncoderType.cs \
-	Capturer/GccError.cs \
-	Capturer/GccType.cs \
-	Capturer/GccVideoEncoderType.cs \
-	Capturer/GccVideoMuxerType.cs \
 	Capturer/GstCameraCapturer.cs \
 	Capturer/ErrorHandler.cs \
 	Capturer/FakeCapturer.cs \
@@ -85,18 +72,11 @@ FILES = \
 	Capturer/ObjectManager.cs \
 	Editor/ErrorHandler.cs \
 	Editor/IVideoEditor.cs \
-	Editor/AudioQuality.cs \
-	Editor/VideoQuality.cs \
+	Editor/IVideoSplitter.cs \
 	Editor/PercentCompletedHandler.cs \
 	Editor/GstVideoSplitter.cs \
 	Editor/VideoSegment.cs \
 	Editor/EditorState.cs \
-	Editor/VideoFormat.cs \
-	Editor/VideoMuxer.cs \
-	Editor/VideoCodec.cs \
-	Editor/AudioCodec.cs \
-	Editor/IVideoSplitter.cs \
-	Editor/VideoSplitterType.cs \
 	Utils/MediaFile.cs \
 	Utils/PreviewMediaFile.cs
 

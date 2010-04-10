@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections.Generic;
+using LongoMatch.Video.Common;
 
 namespace LongoMatch.Video.Editor
 {
@@ -41,15 +42,15 @@ namespace LongoMatch.Video.Editor
 			set;
 		}
 		
-		AudioCodec AudioCodec{
+		AudioEncoderType AudioEncoder{
 			set;
 		}
 		
-		VideoCodec VideoCodec{
+		VideoEncoderType VideoEncoder{
 			set;
 		}
 		
-		VideoMuxer VideoMuxer{
+		VideoMuxerType VideoMuxer{
 			set;
 		}		
 		
