@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: LongoMatch 0.15\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&component=general\n"
-"POT-Creation-Date: 2010-04-06 00:26+0000\n"
-"PO-Revision-Date: 2010-04-06 14:54+0200\n"
+"POT-Creation-Date: 2010-04-09 21:04+0000\n"
+"PO-Revision-Date: 2010-04-10 19:25+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -261,12 +261,17 @@ msgstr "Analizando archivo de vídeo:"
 msgid "This file doesn't contain a video stream."
 msgstr "Este archivo no contiene un flujo de vídeo."
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:445
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:382
+#| msgid "This file doesn't contain a video stream."
+msgid "This file contains a video stream but its length is 0."
+msgstr "Este archivo contiene un flujo de vídeo pero su longitud es 0."
+
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:449
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:480
 msgid "Local Team Template"
 msgstr "Plantilla del equipo local"
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:458
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:462
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:408
 msgid "Visitor Team Template"
 msgstr "Plantilla del equipo visitante"
@@ -1181,7 +1186,7 @@ msgstr ""
 msgid "Time:"
 msgstr "Tiempo:"
 
-#: ../CesarPlayer/Utils/PreviewMediaFile.cs:113
+#: ../CesarPlayer/Utils/PreviewMediaFile.cs:115
 #: ../CesarPlayer/Utils/MediaFile.cs:157
 msgid "Invalid video file:"
 msgstr "Archivo de vídeo no válido:"
