@@ -25,8 +25,8 @@ namespace LongoMatch.Video.Editor
 	
 	public interface IVideoSplitter
 	{
-		event LongoMatch.Video.Editor.PercentCompletedHandler PercentCompleted;	
-		event LongoMatch.Video.Editor.ErrorHandler Error;
+		event PercentCompletedHandler PercentCompleted;	
+		event ErrorHandler Error;
 		
 		bool EnableAudio{
 			set;

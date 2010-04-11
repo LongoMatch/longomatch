@@ -25,7 +25,7 @@ using LongoMatch.Gui.Dialog;
 using LongoMatch.TimeNodes;
 using LongoMatch.DB;
 using LongoMatch.Video.Player;
-using LongoMatch.Video.Handlers;
+using LongoMatch.Video.Common;
 using LongoMatch.Video.Utils;
 using LongoMatch.Video.Editor;
 using LongoMatch.Video;
@@ -379,7 +379,7 @@ namespace LongoMatch
 				player.SeekTo(0,false);
 		}
 
-		protected virtual void OnTick(object o, LongoMatch.Video.Handlers.TickArgs args)
+		protected virtual void OnTick(object o, TickArgs args)
 		{
 			if (args.CurrentTime != 0 && timeline != null && openedProject != null)
 				timeline.CurrentFrame=(uint)(args.CurrentTime * openedProject.File.Fps / 1000);

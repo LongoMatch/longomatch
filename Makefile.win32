@@ -57,11 +57,6 @@ CESARPLAYER_COMPILE_TARGET = library
 CESARPLAYER_FILES = \
 	AssemblyInfo.cs \
 	gtk-gui/generated.cs \
-	Handlers/ErrorHandler.cs \
-	Handlers/Handlers.cs \
-	Handlers/TickHandler.cs \
-	Handlers/StateChangedHandler.cs \
-	Player/GstError.cs \
 	Player/GstPlayer.cs \
 	Player/IPlayer.cs \
 	Player/ObjectManager.cs \
@@ -78,13 +73,10 @@ CESARPLAYER_FILES = \
 	Utils/TimeString.cs \
 	Capturer/FakeCapturer.cs \
 	Capturer/GstCameraCapturer.cs \
-	Capturer/ErrorHandler.cs \
 	Capturer/ICapturer.cs \
 	Capturer/ObjectManager.cs \
-	Editor/ErrorHandler.cs \
 	Editor/IVideoEditor.cs \
 	Editor/IVideoSplitter.cs \
-	Editor/PercentCompletedHandler.cs \
 	Editor/GstVideoSplitter.cs \
 	Editor/VideoSegment.cs \
 	Editor/EditorState.cs \

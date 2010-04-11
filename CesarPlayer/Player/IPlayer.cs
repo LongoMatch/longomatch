@@ -21,7 +21,7 @@
 using System;
 using Gtk;
 using Gdk;
-using LongoMatch.Video.Handlers;
+using LongoMatch.Video.Common;
 
 
 namespace LongoMatch.Video.Player
@@ -36,7 +36,7 @@ namespace LongoMatch.Video.Player
 	
 		event         ErrorHandler Error;
 		event         System.EventHandler Eos;
-		event         LongoMatch.Video.Handlers.StateChangeHandler StateChange;
+		event         StateChangeHandler StateChange;
 		event         TickHandler Tick;
 		event         System.EventHandler GotDuration;
 		event         System.EventHandler SegmentDone;

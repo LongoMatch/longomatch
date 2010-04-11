@@ -32,6 +32,7 @@ using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Popup;
 using LongoMatch.Video;
 using LongoMatch.Video.Capturer;
+using LongoMatch.Video.Common;
 using LongoMatch.Video.Player;
 using LongoMatch.Video.Utils;
 using LongoMatch.Updates;
@@ -461,7 +462,7 @@ namespace LongoMatch.Gui
 				hpaned.Position = args.Requisition.Width;
 		}		
 
-		protected virtual void OnPlayerbin1Error(object o,LongoMatch.Video.Handlers.ErrorArgs args)
+		protected virtual void OnPlayerbin1Error(object o, ErrorArgs args)
 		{
 			MessagePopup.PopupMessage(this, MessageType.Info,
 			                          Catalog.GetString("The actual project will be closed due to an error in the media player:")+"\n" +args.Message);

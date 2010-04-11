@@ -47,10 +47,7 @@ FILES = \
 	AssemblyInfo.cs \
 	gtk-gui/generated.cs \
 	Common/Enum.cs\
-	Handlers/ErrorHandler.cs \
-	Handlers/Handlers.cs \
-	Handlers/TickHandler.cs \
-	Handlers/StateChangedHandler.cs \
+	Common/Handlers.cs\
 	Player/GstPlayer.cs \
 	Player/IPlayer.cs \
 	Player/ObjectManager.cs \
@@ -66,15 +63,12 @@ FILES = \
 	Utils/IMetadataReader.cs \
 	Utils/TimeString.cs \
 	Capturer/GstCameraCapturer.cs \
-	Capturer/ErrorHandler.cs \
 	Capturer/FakeCapturer.cs \
 	Capturer/ICapturer.cs \
 	Capturer/ObjectManager.cs \
-	Editor/ErrorHandler.cs \
+	Editor/GstVideoSplitter.cs \
 	Editor/IVideoEditor.cs \
 	Editor/IVideoSplitter.cs \
-	Editor/PercentCompletedHandler.cs \
-	Editor/GstVideoSplitter.cs \
 	Editor/VideoSegment.cs \
 	Editor/EditorState.cs \
 	Utils/MediaFile.cs \

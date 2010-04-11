@@ -19,7 +19,6 @@
 //
 
 using System;
-using LongoMatch.Video.Handlers;
 using LongoMatch.Video.Common;
 
 namespace LongoMatch.Video.Capturer

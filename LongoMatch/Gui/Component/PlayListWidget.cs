@@ -25,7 +25,6 @@ using LongoMatch.Video.Editor;
 using Mono.Unix;
 using System.IO;
 using LongoMatch.Handlers;
-using LongoMatch.Video.Handlers;
 using LongoMatch.TimeNodes;
 using LongoMatch.Video.Player;
 using LongoMatch.Video;
@@ -45,7 +44,7 @@ namespace LongoMatch.Gui.Component
 	{
 		public event PlayListNodeSelectedHandler PlayListNodeSelected;
 		public event ApplyCurrentRateHandler ApplyCurrentRate;
-		public event LongoMatch.Video.Handlers.ProgressHandler Progress;
+		public event ProgressHandler Progress;
 
 		private PlayerBin player;
 		private PlayListTimeNode plNode;
@@ -194,7 +193,7 @@ namespace LongoMatch.Gui.Component
 
 		private void LoadEditor() {
 			videoEditor = factory.getVideoEditor();
-			videoEditor.Progress += new LongoMatch.Video.Handlers.ProgressHandler(OnProgress);
+			videoEditor.Progress += new ProgressHandler(OnProgress);
 		}
 
 		protected virtual void OnPlaylisttreeview1RowActivated(object o, Gtk.RowActivatedArgs args)

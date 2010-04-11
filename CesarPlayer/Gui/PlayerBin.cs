@@ -22,10 +22,10 @@ using Gtk;
 using Gdk;
 using Mono.Unix;
 using System.Runtime.InteropServices;
-using LongoMatch.Video.Handlers;
+using LongoMatch.Video;
+using LongoMatch.Video.Common;
 using LongoMatch.Video.Player;
 using LongoMatch.Video.Utils;
-using LongoMatch.Video;
 
 namespace LongoMatch.Gui
 {
@@ -353,7 +353,7 @@ namespace LongoMatch.Gui
 			
 			tickHandler = new TickHandler(OnTick);
 			player.Tick += tickHandler;
-			player.StateChange += new LongoMatch.Video.Handlers.StateChangeHandler(OnStateChanged);
+			player.StateChange += new StateChangeHandler(OnStateChanged);
 			player.Eos += new EventHandler (OnEndOfStream);
 			player.Error += new ErrorHandler (OnError);
 			player.ReadyToSeek += new EventHandler(OnReadyToSeek);
@@ -382,7 +382,7 @@ namespace LongoMatch.Gui
 #endregion
 		
 #region Callbacks
-		protected virtual void OnStateChanged(object o, LongoMatch.Video.Handlers.StateChangeArgs args){
+		protected virtual void OnStateChanged(object o, StateChangeArgs args){
 			if (args.Playing){
 				playbutton.Hide();
 				pausebutton.Show();

@@ -23,7 +23,7 @@ using Gtk;
 using Gdk;
 using Mono.Unix;
 using LongoMatch.Video.Utils;
-using LongoMatch.Video.Handlers;
+using LongoMatch.Video.Common;
 
 namespace LongoMatch.Gui.Dialog
 {

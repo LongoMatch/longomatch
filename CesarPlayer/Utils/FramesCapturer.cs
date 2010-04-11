@@ -24,7 +24,7 @@ using LongoMatch.Video;
 using Gdk;
 using Gtk;
 using System.Threading;
-using LongoMatch.Video.Handlers;
+using LongoMatch.Video.Common;
 
 namespace LongoMatch.Video.Utils
 {

@@ -28,7 +28,7 @@ namespace LongoMatch.Video.Editor
 	
 	public interface IVideoEditor
 	{
-		event LongoMatch.Video.Handlers.ProgressHandler Progress;		
+		event ProgressHandler Progress;		
 		
 		VideoQuality VideoQuality{
 			set;

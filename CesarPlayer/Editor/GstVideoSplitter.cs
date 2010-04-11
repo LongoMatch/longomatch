@@ -31,7 +31,7 @@ namespace LongoMatch.Video.Editor {
 		[DllImport("libcesarplayer.dll")]
 		static extern unsafe IntPtr gst_video_editor_new(out IntPtr err);
 
-		public event LongoMatch.Video.Handlers.ProgressHandler Progress;
+		public event ProgressHandler Progress;
 		
 		public unsafe GstVideoSplitter () : base (IntPtr.Zero)
 		{
@@ -198,13 +198,13 @@ namespace LongoMatch.Video.Editor {
 		}
 
 		[GLib.Signal("error")]
-		public event LongoMatch.Video.Editor.ErrorHandler Error {
+		public event ErrorHandler Error {
 			add {
-				GLib.Signal sig = GLib.Signal.Lookup (this, "error", typeof (LongoMatch.Video.Editor.ErrorArgs));
+				GLib.Signal sig = GLib.Signal.Lookup (this, "error", typeof (ErrorArgs));
 				sig.AddDelegate (value);
 			}
 			remove {
-				GLib.Signal sig = GLib.Signal.Lookup (this, "error", typeof (LongoMatch.Video.Editor.ErrorArgs));
+				GLib.Signal sig = GLib.Signal.Lookup (this, "error", typeof (ErrorArgs));
 				sig.RemoveDelegate (value);
 			}
 		}
@@ -248,13 +248,13 @@ namespace LongoMatch.Video.Editor {
 		}
 
 		[GLib.Signal("percent_completed")]
-		public event LongoMatch.Video.Editor.PercentCompletedHandler PercentCompleted {
+		public event PercentCompletedHandler PercentCompleted {
 			add {
-				GLib.Signal sig = GLib.Signal.Lookup (this, "percent_completed", typeof (LongoMatch.Video.Editor.PercentCompletedArgs));
+				GLib.Signal sig = GLib.Signal.Lookup (this, "percent_completed", typeof (PercentCompletedArgs));
 				sig.AddDelegate (value);
 			}
 			remove {
-				GLib.Signal sig = GLib.Signal.Lookup (this, "percent_completed", typeof (LongoMatch.Video.Editor.PercentCompletedArgs));
+				GLib.Signal sig = GLib.Signal.Lookup (this, "percent_completed", typeof (PercentCompletedArgs));
 				sig.RemoveDelegate (value);
 			}
 		}

@@ -20,7 +20,6 @@ using System;
 using Mono.Unix;
 using GLib;
 using LongoMatch.Video.Common;
-using LongoMatch.Video.Handlers;
 
 namespace LongoMatch.Video.Capturer
 {
