@@ -41,6 +41,7 @@ GNU General Public License for more details.";
 		public const string TRANSLATORS = 
 @"Andoni Morales Alastruey (es)
 Daniel Nylander (sv)
+Joan Charmant (fr)
 Joe Hansen (da)
 Jorge González (es)
 Kenneth Nielsen (da)
