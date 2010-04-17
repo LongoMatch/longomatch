@@ -81,7 +81,9 @@ CESARPLAYER_FILES = \
 	Editor/VideoSegment.cs \
 	Editor/EditorState.cs \
 	Utils/MediaFile.cs \
-	Utils/PreviewMediaFile.cs
+	Utils/PreviewMediaFile.cs\
+	Common/Enum.cs\
+	Common/Handlers.cs
 	
 
 CESARPLAYER_REFERENCES = \
