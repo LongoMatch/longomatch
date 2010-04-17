@@ -96,7 +96,7 @@ namespace LongoMatch.Video.Utils
 					thumbnailer.Open(filePath);
 					thumbnailer.SeekTime(1000,false);
 					preview = thumbnailer.GetCurrentFrame(THUMBNAIL_MAX_WIDTH,THUMBNAIL_MAX_HEIGHT);
-					duration = (int)(thumbnailer as GstPlayer).StreamLength;				/* On Windows some formats report a 0 duration, try a last time with the reader */
+					duration =(int) ((thumbnailer as GstPlayer).StreamLength/1000);				/* On Windows some formats report a 0 duration, try a last time with the reader */
 					if (duration == 0)
 						duration = (int)reader.GetMetadata(MetadataType.Duration);
 					thumbnailer.Dispose();
