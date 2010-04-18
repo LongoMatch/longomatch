@@ -145,11 +145,11 @@ namespace LongoMatch.Gui.Dialog {
             // Container child GtkAlignment8.Gtk.Container+ContainerChild
             Gtk.HBox w9 = new Gtk.HBox();
             w9.Spacing = 2;
-            // Container child GtkHBox12.Gtk.Container+ContainerChild
+            // Container child GtkHBox10.Gtk.Container+ContainerChild
             Gtk.Image w10 = new Gtk.Image();
             w10.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_export", Gtk.IconSize.Menu, 16);
             w9.Add(w10);
-            // Container child GtkHBox12.Gtk.Container+ContainerChild
+            // Container child GtkHBox10.Gtk.Container+ContainerChild
             Gtk.Label w12 = new Gtk.Label();
             w12.LabelProp = Mono.Unix.Catalog.GetString("_Export");
             w12.UseUnderline = true;

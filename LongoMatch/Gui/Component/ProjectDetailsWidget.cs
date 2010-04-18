@@ -29,7 +29,7 @@ using LongoMatch.Gui.Popup;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.TimeNodes;
 using LongoMatch.Video.Utils;
-
+using LongoMatch.Video.Capturer;
 
 namespace LongoMatch.Gui.Component
 {
@@ -51,7 +51,14 @@ namespace LongoMatch.Gui.Component
 		private TeamTemplate actualVisitorTeam;
 		private TeamTemplate actualLocalTeam;
 		private ProjectType useType;
-
+		private const string PAL_FORMAT = "640x480 (4:3)";
+		private const string PAL_3_4_FORMAT = "480x360 (4:3)";
+		private const string PAL_1_2_FORMAT = "320x240 (4:3)";
+		private const string AVI = "AVI (XVID + MP3)";
+		private const string MP4 = "MP4 (H264 + AAC)";
+		private const string OGG = "OGG (Theora + Vorbis)";
+		
+		
 		public ProjectDetailsWidget()
 		{
 			this.Build();
@@ -65,6 +72,7 @@ namespace LongoMatch.Gui.Component
 
 			FillSections();
 			FillTeamsTemplate();
+			FillFormats();
 
 			Use=ProjectType.FileProject;
 		}
@@ -76,11 +84,8 @@ namespace LongoMatch.Gui.Component
 				bool visible3 = value == ProjectType.EditProject;
 				bool visible4 = visible1 && Environment.OSVersion.Platform == PlatformID.Win32NT;
 				
-				videobitratelabel1.Visible = visible1;
-				videobitratespinbutton.Visible = visible1;	
-				audiobitratelabel.Visible = visible1;
-				audiobitratespinbutton.Visible = visible1;
-								
+				expander1.Visible = visible1;
+				
 				filelabel.Visible = visible2;
 				filehbox.Visible = visible2;
 				
@@ -209,6 +214,20 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		public string[] AudioDevices{
+			set {
+				foreach (string name in value)
+					audiodevicecombobox.AppendText(name);
+			}
+		}
+		
+		public string[] VideoDevices{
+			set {
+				foreach ( string name in value)
+					videodevicecombobox.AppendText(name);
+			}
+		}
+
 		private string SectionsFile {
 			get {
 				return tagscombobox.ActiveText + ".sct";
@@ -226,7 +245,50 @@ namespace LongoMatch.Gui.Component
 				return visitorcombobox.ActiveText + ".tem";
 			}
 		}
-
+		
+		public CapturePropertiesStruct CaptureProperties{
+			get{
+				CapturePropertiesStruct s = new CapturePropertiesStruct();
+				s.AudioBitrate = (uint)audiobitratespinbutton.Value;
+				s.VideoBitrate = (uint)videobitratespinbutton.Value;
+				s.AudioDevice = audiodevicecombobox.ActiveText;
+				s.VideoDevice =  videodevicecombobox.ActiveText;
+				switch (sizecombobox.ActiveText){
+					/* FIXME: Don't harcode size values */
+					case PAL_FORMAT:
+						s.Width = 640;
+						s.Height = 480;
+						break;
+					case PAL_1_2_FORMAT:
+						s.Width = 480;
+						s.Height = 320;
+						break;
+					case PAL_3_4_FORMAT:
+						s.Width = 320;
+						s.Height = 240;
+						break;
+				}
+				switch (videoformatcombobox.ActiveText){
+					case AVI:
+						s.VideoEncoder = GccVideoEncoderType.Xvid;
+						s.AudioEncoder = GccAudioEncoderType.Mp3;
+						s.Muxer = GccVideoMuxerType.Avi;
+						break;
+					case MP4:
+						s.VideoEncoder = GccVideoEncoderType.H264;
+						s.AudioEncoder = GccAudioEncoderType.Aac;
+						s.Muxer = GccVideoMuxerType.Mp4;
+						break;
+					case OGG:
+						s.VideoEncoder = GccVideoEncoderType.Theora;
+						s.AudioEncoder = GccAudioEncoderType.Vorbis;
+						s.Muxer = GccVideoMuxerType.Ogg;
+						break;
+				}
+				return s;
+			}
+		}
+		
 		public void SetProject(Project project) {
 			this.project = project;
 			mFile = project.File;
@@ -341,6 +403,18 @@ namespace LongoMatch.Gui.Component
 			visitorcombobox.Active = index;
 			LocalTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(),LocalTeamTemplateFile));
 			VisitorTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(),VisitorTeamTemplateFile));
+		}
+		
+		private void FillFormats(){
+			sizecombobox.AppendText(PAL_FORMAT);
+			sizecombobox.AppendText(PAL_3_4_FORMAT);
+			sizecombobox.AppendText(PAL_1_2_FORMAT);
+			sizecombobox.Active = 0;
+			
+			videoformatcombobox.AppendText(OGG);
+			videoformatcombobox.AppendText(MP4);
+			videoformatcombobox.AppendText(AVI);
+			videoformatcombobox.Active = 0;
 		}
 
 		protected virtual void OnDateSelected(DateTime dateTime) {

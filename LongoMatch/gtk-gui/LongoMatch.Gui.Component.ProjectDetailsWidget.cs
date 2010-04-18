@@ -17,14 +17,6 @@ namespace LongoMatch.Gui.Component {
         
         private Gtk.Table table1;
         
-        private Gtk.Label audiobitratelabel;
-        
-        private Gtk.SpinButton audiobitratespinbutton;
-        
-        private Gtk.ComboBox audiodevicecombobox;
-        
-        private Gtk.Label audiodevicelabel;
-        
         private Gtk.Entry competitionentry;
         
         private Gtk.Label Competitionlabel;
@@ -83,6 +75,28 @@ namespace LongoMatch.Gui.Component {
         
         private Gtk.Label seasonlabel;
         
+        private Gtk.SpinButton visitorSpinButton;
+        
+        private Gtk.Entry visitorTeamEntry;
+        
+        private Gtk.Label visitorteamtemplatelabel;
+        
+        private Gtk.Expander expander1;
+        
+        private Gtk.Table table2;
+        
+        private Gtk.Label audiobitratelabel;
+        
+        private Gtk.SpinButton audiobitratespinbutton;
+        
+        private Gtk.ComboBox audiodevicecombobox;
+        
+        private Gtk.Label audiodevicelabel;
+        
+        private Gtk.ComboBox sizecombobox;
+        
+        private Gtk.Label sizelabel;
+        
         private Gtk.Label videobitratelabel1;
         
         private Gtk.SpinButton videobitratespinbutton;
@@ -91,11 +105,11 @@ namespace LongoMatch.Gui.Component {
         
         private Gtk.ComboBox videodevicecombobox;
         
-        private Gtk.SpinButton visitorSpinButton;
+        private Gtk.ComboBox videoformatcombobox;
         
-        private Gtk.Entry visitorTeamEntry;
+        private Gtk.Label videoformatlabel;
         
-        private Gtk.Label visitorteamtemplatelabel;
+        private Gtk.Label GtkLabel5;
         
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
@@ -107,57 +121,10 @@ namespace LongoMatch.Gui.Component {
             this.vbox2.Name = "vbox2";
             this.vbox2.Spacing = 6;
             // Container child vbox2.Gtk.Box+BoxChild
-            this.table1 = new Gtk.Table(((uint)(15)), ((uint)(2)), false);
+            this.table1 = new Gtk.Table(((uint)(11)), ((uint)(2)), false);
             this.table1.Name = "table1";
             this.table1.RowSpacing = ((uint)(6));
             this.table1.ColumnSpacing = ((uint)(6));
-            // Container child table1.Gtk.Table+TableChild
-            this.audiobitratelabel = new Gtk.Label();
-            this.audiobitratelabel.Name = "audiobitratelabel";
-            this.audiobitratelabel.LabelProp = Mono.Unix.Catalog.GetString("Audio Bitrate (kbps):");
-            this.table1.Add(this.audiobitratelabel);
-            Gtk.Table.TableChild w1 = ((Gtk.Table.TableChild)(this.table1[this.audiobitratelabel]));
-            w1.TopAttach = ((uint)(14));
-            w1.BottomAttach = ((uint)(15));
-            w1.XOptions = ((Gtk.AttachOptions)(4));
-            w1.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child table1.Gtk.Table+TableChild
-            this.audiobitratespinbutton = new Gtk.SpinButton(0, 360, 1);
-            this.audiobitratespinbutton.CanFocus = true;
-            this.audiobitratespinbutton.Name = "audiobitratespinbutton";
-            this.audiobitratespinbutton.Adjustment.PageIncrement = 10;
-            this.audiobitratespinbutton.ClimbRate = 1;
-            this.audiobitratespinbutton.Numeric = true;
-            this.audiobitratespinbutton.Value = 64;
-            this.table1.Add(this.audiobitratespinbutton);
-            Gtk.Table.TableChild w2 = ((Gtk.Table.TableChild)(this.table1[this.audiobitratespinbutton]));
-            w2.TopAttach = ((uint)(14));
-            w2.BottomAttach = ((uint)(15));
-            w2.LeftAttach = ((uint)(1));
-            w2.RightAttach = ((uint)(2));
-            w2.XOptions = ((Gtk.AttachOptions)(0));
-            w2.YOptions = ((Gtk.AttachOptions)(0));
-            // Container child table1.Gtk.Table+TableChild
-            this.audiodevicecombobox = Gtk.ComboBox.NewText();
-            this.audiodevicecombobox.Name = "audiodevicecombobox";
-            this.table1.Add(this.audiodevicecombobox);
-            Gtk.Table.TableChild w3 = ((Gtk.Table.TableChild)(this.table1[this.audiodevicecombobox]));
-            w3.TopAttach = ((uint)(12));
-            w3.BottomAttach = ((uint)(13));
-            w3.LeftAttach = ((uint)(1));
-            w3.RightAttach = ((uint)(2));
-            w3.XOptions = ((Gtk.AttachOptions)(4));
-            w3.YOptions = ((Gtk.AttachOptions)(0));
-            // Container child table1.Gtk.Table+TableChild
-            this.audiodevicelabel = new Gtk.Label();
-            this.audiodevicelabel.Name = "audiodevicelabel";
-            this.audiodevicelabel.LabelProp = Mono.Unix.Catalog.GetString("Audio Device:");
-            this.table1.Add(this.audiodevicelabel);
-            Gtk.Table.TableChild w4 = ((Gtk.Table.TableChild)(this.table1[this.audiodevicelabel]));
-            w4.TopAttach = ((uint)(12));
-            w4.BottomAttach = ((uint)(13));
-            w4.XOptions = ((Gtk.AttachOptions)(4));
-            w4.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.competitionentry = new Gtk.Entry();
             this.competitionentry.CanFocus = true;
@@ -165,23 +132,23 @@ namespace LongoMatch.Gui.Component {
             this.competitionentry.IsEditable = true;
             this.competitionentry.InvisibleChar = '●';
             this.table1.Add(this.competitionentry);
-            Gtk.Table.TableChild w5 = ((Gtk.Table.TableChild)(this.table1[this.competitionentry]));
-            w5.TopAttach = ((uint)(5));
-            w5.BottomAttach = ((uint)(6));
-            w5.LeftAttach = ((uint)(1));
-            w5.RightAttach = ((uint)(2));
-            w5.XOptions = ((Gtk.AttachOptions)(4));
-            w5.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w1 = ((Gtk.Table.TableChild)(this.table1[this.competitionentry]));
+            w1.TopAttach = ((uint)(5));
+            w1.BottomAttach = ((uint)(6));
+            w1.LeftAttach = ((uint)(1));
+            w1.RightAttach = ((uint)(2));
+            w1.XOptions = ((Gtk.AttachOptions)(4));
+            w1.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.Competitionlabel = new Gtk.Label();
             this.Competitionlabel.Name = "Competitionlabel";
             this.Competitionlabel.LabelProp = Mono.Unix.Catalog.GetString("Competition:");
             this.table1.Add(this.Competitionlabel);
-            Gtk.Table.TableChild w6 = ((Gtk.Table.TableChild)(this.table1[this.Competitionlabel]));
-            w6.TopAttach = ((uint)(5));
-            w6.BottomAttach = ((uint)(6));
-            w6.XOptions = ((Gtk.AttachOptions)(4));
-            w6.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w2 = ((Gtk.Table.TableChild)(this.table1[this.Competitionlabel]));
+            w2.TopAttach = ((uint)(5));
+            w2.BottomAttach = ((uint)(6));
+            w2.XOptions = ((Gtk.AttachOptions)(4));
+            w2.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.filehbox = new Gtk.HBox();
             this.filehbox.Name = "filehbox";
@@ -193,8 +160,8 @@ namespace LongoMatch.Gui.Component {
             this.fileEntry.IsEditable = false;
             this.fileEntry.InvisibleChar = '●';
             this.filehbox.Add(this.fileEntry);
-            Gtk.Box.BoxChild w7 = ((Gtk.Box.BoxChild)(this.filehbox[this.fileEntry]));
-            w7.Position = 0;
+            Gtk.Box.BoxChild w3 = ((Gtk.Box.BoxChild)(this.filehbox[this.fileEntry]));
+            w3.Position = 0;
             // Container child filehbox.Gtk.Box+BoxChild
             this.openbutton = new Gtk.Button();
             this.openbutton.CanFocus = true;
@@ -203,27 +170,27 @@ namespace LongoMatch.Gui.Component {
             this.openbutton.UseUnderline = true;
             this.openbutton.Label = "gtk-open";
             this.filehbox.Add(this.openbutton);
-            Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(this.filehbox[this.openbutton]));
-            w8.Position = 1;
-            w8.Expand = false;
+            Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(this.filehbox[this.openbutton]));
+            w4.Position = 1;
+            w4.Expand = false;
             this.table1.Add(this.filehbox);
-            Gtk.Table.TableChild w9 = ((Gtk.Table.TableChild)(this.table1[this.filehbox]));
-            w9.TopAttach = ((uint)(10));
-            w9.BottomAttach = ((uint)(11));
-            w9.LeftAttach = ((uint)(1));
-            w9.RightAttach = ((uint)(2));
-            w9.XOptions = ((Gtk.AttachOptions)(4));
-            w9.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w5 = ((Gtk.Table.TableChild)(this.table1[this.filehbox]));
+            w5.TopAttach = ((uint)(10));
+            w5.BottomAttach = ((uint)(11));
+            w5.LeftAttach = ((uint)(1));
+            w5.RightAttach = ((uint)(2));
+            w5.XOptions = ((Gtk.AttachOptions)(4));
+            w5.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.filelabel = new Gtk.Label();
             this.filelabel.Name = "filelabel";
             this.filelabel.LabelProp = Mono.Unix.Catalog.GetString("File:");
             this.table1.Add(this.filelabel);
-            Gtk.Table.TableChild w10 = ((Gtk.Table.TableChild)(this.table1[this.filelabel]));
-            w10.TopAttach = ((uint)(10));
-            w10.BottomAttach = ((uint)(11));
-            w10.XOptions = ((Gtk.AttachOptions)(4));
-            w10.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w6 = ((Gtk.Table.TableChild)(this.table1[this.filelabel]));
+            w6.TopAttach = ((uint)(10));
+            w6.BottomAttach = ((uint)(11));
+            w6.XOptions = ((Gtk.AttachOptions)(4));
+            w6.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.hbox1 = new Gtk.HBox();
             this.hbox1.Name = "hbox1";
@@ -232,8 +199,8 @@ namespace LongoMatch.Gui.Component {
             this.localcombobox = Gtk.ComboBox.NewText();
             this.localcombobox.Name = "localcombobox";
             this.hbox1.Add(this.localcombobox);
-            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.hbox1[this.localcombobox]));
-            w11.Position = 0;
+            Gtk.Box.BoxChild w7 = ((Gtk.Box.BoxChild)(this.hbox1[this.localcombobox]));
+            w7.Position = 0;
             // Container child hbox1.Gtk.Box+BoxChild
             this.localtemplatebutton = new Gtk.Button();
             this.localtemplatebutton.CanFocus = true;
@@ -242,19 +209,19 @@ namespace LongoMatch.Gui.Component {
             this.localtemplatebutton.UseUnderline = true;
             this.localtemplatebutton.Label = "gtk-edit";
             this.hbox1.Add(this.localtemplatebutton);
-            Gtk.Box.BoxChild w12 = ((Gtk.Box.BoxChild)(this.hbox1[this.localtemplatebutton]));
-            w12.PackType = ((Gtk.PackType)(1));
-            w12.Position = 1;
-            w12.Expand = false;
-            w12.Fill = false;
+            Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(this.hbox1[this.localtemplatebutton]));
+            w8.PackType = ((Gtk.PackType)(1));
+            w8.Position = 1;
+            w8.Expand = false;
+            w8.Fill = false;
             this.table1.Add(this.hbox1);
-            Gtk.Table.TableChild w13 = ((Gtk.Table.TableChild)(this.table1[this.hbox1]));
-            w13.TopAttach = ((uint)(7));
-            w13.BottomAttach = ((uint)(8));
-            w13.LeftAttach = ((uint)(1));
-            w13.RightAttach = ((uint)(2));
-            w13.XOptions = ((Gtk.AttachOptions)(4));
-            w13.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w9 = ((Gtk.Table.TableChild)(this.table1[this.hbox1]));
+            w9.TopAttach = ((uint)(7));
+            w9.BottomAttach = ((uint)(8));
+            w9.LeftAttach = ((uint)(1));
+            w9.RightAttach = ((uint)(2));
+            w9.XOptions = ((Gtk.AttachOptions)(4));
+            w9.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.hbox2 = new Gtk.HBox();
             this.hbox2.Name = "hbox2";
@@ -263,8 +230,8 @@ namespace LongoMatch.Gui.Component {
             this.visitorcombobox = Gtk.ComboBox.NewText();
             this.visitorcombobox.Name = "visitorcombobox";
             this.hbox2.Add(this.visitorcombobox);
-            Gtk.Box.BoxChild w14 = ((Gtk.Box.BoxChild)(this.hbox2[this.visitorcombobox]));
-            w14.Position = 0;
+            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.hbox2[this.visitorcombobox]));
+            w10.Position = 0;
             // Container child hbox2.Gtk.Box+BoxChild
             this.visitorbutton = new Gtk.Button();
             this.visitorbutton.CanFocus = true;
@@ -273,19 +240,19 @@ namespace LongoMatch.Gui.Component {
             this.visitorbutton.UseUnderline = true;
             this.visitorbutton.Label = "gtk-edit";
             this.hbox2.Add(this.visitorbutton);
-            Gtk.Box.BoxChild w15 = ((Gtk.Box.BoxChild)(this.hbox2[this.visitorbutton]));
-            w15.PackType = ((Gtk.PackType)(1));
-            w15.Position = 1;
-            w15.Expand = false;
-            w15.Fill = false;
+            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.hbox2[this.visitorbutton]));
+            w11.PackType = ((Gtk.PackType)(1));
+            w11.Position = 1;
+            w11.Expand = false;
+            w11.Fill = false;
             this.table1.Add(this.hbox2);
-            Gtk.Table.TableChild w16 = ((Gtk.Table.TableChild)(this.table1[this.hbox2]));
-            w16.TopAttach = ((uint)(8));
-            w16.BottomAttach = ((uint)(9));
-            w16.LeftAttach = ((uint)(1));
-            w16.RightAttach = ((uint)(2));
-            w16.XOptions = ((Gtk.AttachOptions)(4));
-            w16.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w12 = ((Gtk.Table.TableChild)(this.table1[this.hbox2]));
+            w12.TopAttach = ((uint)(8));
+            w12.BottomAttach = ((uint)(9));
+            w12.LeftAttach = ((uint)(1));
+            w12.RightAttach = ((uint)(2));
+            w12.XOptions = ((Gtk.AttachOptions)(4));
+            w12.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.hbox3 = new Gtk.HBox();
             this.hbox3.Name = "hbox3";
@@ -294,8 +261,8 @@ namespace LongoMatch.Gui.Component {
             this.tagscombobox = Gtk.ComboBox.NewText();
             this.tagscombobox.Name = "tagscombobox";
             this.hbox3.Add(this.tagscombobox);
-            Gtk.Box.BoxChild w17 = ((Gtk.Box.BoxChild)(this.hbox3[this.tagscombobox]));
-            w17.Position = 0;
+            Gtk.Box.BoxChild w13 = ((Gtk.Box.BoxChild)(this.hbox3[this.tagscombobox]));
+            w13.Position = 0;
             // Container child hbox3.Gtk.Box+BoxChild
             this.editbutton = new Gtk.Button();
             this.editbutton.CanFocus = true;
@@ -304,19 +271,19 @@ namespace LongoMatch.Gui.Component {
             this.editbutton.UseUnderline = true;
             this.editbutton.Label = "gtk-edit";
             this.hbox3.Add(this.editbutton);
-            Gtk.Box.BoxChild w18 = ((Gtk.Box.BoxChild)(this.hbox3[this.editbutton]));
-            w18.PackType = ((Gtk.PackType)(1));
-            w18.Position = 1;
-            w18.Expand = false;
-            w18.Fill = false;
+            Gtk.Box.BoxChild w14 = ((Gtk.Box.BoxChild)(this.hbox3[this.editbutton]));
+            w14.PackType = ((Gtk.PackType)(1));
+            w14.Position = 1;
+            w14.Expand = false;
+            w14.Fill = false;
             this.table1.Add(this.hbox3);
-            Gtk.Table.TableChild w19 = ((Gtk.Table.TableChild)(this.table1[this.hbox3]));
-            w19.TopAttach = ((uint)(6));
-            w19.BottomAttach = ((uint)(7));
-            w19.LeftAttach = ((uint)(1));
-            w19.RightAttach = ((uint)(2));
-            w19.XOptions = ((Gtk.AttachOptions)(4));
-            w19.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w15 = ((Gtk.Table.TableChild)(this.table1[this.hbox3]));
+            w15.TopAttach = ((uint)(6));
+            w15.BottomAttach = ((uint)(7));
+            w15.LeftAttach = ((uint)(1));
+            w15.RightAttach = ((uint)(2));
+            w15.XOptions = ((Gtk.AttachOptions)(4));
+            w15.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.hbox5 = new Gtk.HBox();
             this.hbox5.Name = "hbox5";
@@ -327,99 +294,99 @@ namespace LongoMatch.Gui.Component {
             this.dateEntry.IsEditable = false;
             this.dateEntry.InvisibleChar = '●';
             this.hbox5.Add(this.dateEntry);
-            Gtk.Box.BoxChild w20 = ((Gtk.Box.BoxChild)(this.hbox5[this.dateEntry]));
-            w20.Position = 0;
+            Gtk.Box.BoxChild w16 = ((Gtk.Box.BoxChild)(this.hbox5[this.dateEntry]));
+            w16.Position = 0;
             // Container child hbox5.Gtk.Box+BoxChild
             this.calendarbutton = new Gtk.Button();
             this.calendarbutton.CanFocus = true;
             this.calendarbutton.Name = "calendarbutton";
             this.calendarbutton.UseUnderline = true;
             // Container child calendarbutton.Gtk.Container+ContainerChild
-            Gtk.Alignment w21 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            Gtk.Alignment w17 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
             // Container child GtkAlignment.Gtk.Container+ContainerChild
-            Gtk.HBox w22 = new Gtk.HBox();
-            w22.Spacing = 2;
+            Gtk.HBox w18 = new Gtk.HBox();
+            w18.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Image w23 = new Gtk.Image();
-            w23.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_calendar", Gtk.IconSize.Button, 20);
-            w22.Add(w23);
+            Gtk.Image w19 = new Gtk.Image();
+            w19.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_calendar", Gtk.IconSize.Button, 20);
+            w18.Add(w19);
             // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Label w25 = new Gtk.Label();
-            w25.LabelProp = Mono.Unix.Catalog.GetString("_Calendar");
-            w25.UseUnderline = true;
-            w22.Add(w25);
-            w21.Add(w22);
-            this.calendarbutton.Add(w21);
+            Gtk.Label w21 = new Gtk.Label();
+            w21.LabelProp = Mono.Unix.Catalog.GetString("_Calendar");
+            w21.UseUnderline = true;
+            w18.Add(w21);
+            w17.Add(w18);
+            this.calendarbutton.Add(w17);
             this.hbox5.Add(this.calendarbutton);
-            Gtk.Box.BoxChild w29 = ((Gtk.Box.BoxChild)(this.hbox5[this.calendarbutton]));
-            w29.Position = 1;
-            w29.Expand = false;
-            w29.Fill = false;
+            Gtk.Box.BoxChild w25 = ((Gtk.Box.BoxChild)(this.hbox5[this.calendarbutton]));
+            w25.Position = 1;
+            w25.Expand = false;
+            w25.Fill = false;
             this.table1.Add(this.hbox5);
-            Gtk.Table.TableChild w30 = ((Gtk.Table.TableChild)(this.table1[this.hbox5]));
-            w30.TopAttach = ((uint)(9));
-            w30.BottomAttach = ((uint)(10));
-            w30.LeftAttach = ((uint)(1));
-            w30.RightAttach = ((uint)(2));
-            w30.YOptions = ((Gtk.AttachOptions)(1));
+            Gtk.Table.TableChild w26 = ((Gtk.Table.TableChild)(this.table1[this.hbox5]));
+            w26.TopAttach = ((uint)(9));
+            w26.BottomAttach = ((uint)(10));
+            w26.LeftAttach = ((uint)(1));
+            w26.RightAttach = ((uint)(2));
+            w26.YOptions = ((Gtk.AttachOptions)(1));
             // Container child table1.Gtk.Table+TableChild
             this.label10 = new Gtk.Label();
             this.label10.Name = "label10";
             this.label10.LabelProp = Mono.Unix.Catalog.GetString("Visitor Team:");
             this.table1.Add(this.label10);
-            Gtk.Table.TableChild w31 = ((Gtk.Table.TableChild)(this.table1[this.label10]));
-            w31.TopAttach = ((uint)(1));
-            w31.BottomAttach = ((uint)(2));
-            w31.XOptions = ((Gtk.AttachOptions)(4));
-            w31.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w27 = ((Gtk.Table.TableChild)(this.table1[this.label10]));
+            w27.TopAttach = ((uint)(1));
+            w27.BottomAttach = ((uint)(2));
+            w27.XOptions = ((Gtk.AttachOptions)(4));
+            w27.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.label11 = new Gtk.Label();
             this.label11.Name = "label11";
             this.label11.LabelProp = Mono.Unix.Catalog.GetString("Local Goals:");
             this.table1.Add(this.label11);
-            Gtk.Table.TableChild w32 = ((Gtk.Table.TableChild)(this.table1[this.label11]));
-            w32.TopAttach = ((uint)(2));
-            w32.BottomAttach = ((uint)(3));
-            w32.XOptions = ((Gtk.AttachOptions)(4));
-            w32.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w28 = ((Gtk.Table.TableChild)(this.table1[this.label11]));
+            w28.TopAttach = ((uint)(2));
+            w28.BottomAttach = ((uint)(3));
+            w28.XOptions = ((Gtk.AttachOptions)(4));
+            w28.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.label12 = new Gtk.Label();
             this.label12.Name = "label12";
             this.label12.LabelProp = Mono.Unix.Catalog.GetString("Visitor Goals:");
             this.table1.Add(this.label12);
-            Gtk.Table.TableChild w33 = ((Gtk.Table.TableChild)(this.table1[this.label12]));
-            w33.TopAttach = ((uint)(3));
-            w33.BottomAttach = ((uint)(4));
-            w33.XOptions = ((Gtk.AttachOptions)(4));
-            w33.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w29 = ((Gtk.Table.TableChild)(this.table1[this.label12]));
+            w29.TopAttach = ((uint)(3));
+            w29.BottomAttach = ((uint)(4));
+            w29.XOptions = ((Gtk.AttachOptions)(4));
+            w29.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.label5 = new Gtk.Label();
             this.label5.Name = "label5";
             this.label5.LabelProp = Mono.Unix.Catalog.GetString("Date:");
             this.table1.Add(this.label5);
-            Gtk.Table.TableChild w34 = ((Gtk.Table.TableChild)(this.table1[this.label5]));
-            w34.TopAttach = ((uint)(9));
-            w34.BottomAttach = ((uint)(10));
-            w34.XOptions = ((Gtk.AttachOptions)(4));
-            w34.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w30 = ((Gtk.Table.TableChild)(this.table1[this.label5]));
+            w30.TopAttach = ((uint)(9));
+            w30.BottomAttach = ((uint)(10));
+            w30.XOptions = ((Gtk.AttachOptions)(4));
+            w30.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.label8 = new Gtk.Label();
             this.label8.Name = "label8";
             this.label8.LabelProp = Mono.Unix.Catalog.GetString("Local Team:");
             this.table1.Add(this.label8);
-            Gtk.Table.TableChild w35 = ((Gtk.Table.TableChild)(this.table1[this.label8]));
-            w35.XOptions = ((Gtk.AttachOptions)(4));
-            w35.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w31 = ((Gtk.Table.TableChild)(this.table1[this.label8]));
+            w31.XOptions = ((Gtk.AttachOptions)(4));
+            w31.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.label9 = new Gtk.Label();
             this.label9.Name = "label9";
             this.label9.LabelProp = Mono.Unix.Catalog.GetString("Categories Template:");
             this.table1.Add(this.label9);
-            Gtk.Table.TableChild w36 = ((Gtk.Table.TableChild)(this.table1[this.label9]));
-            w36.TopAttach = ((uint)(6));
-            w36.BottomAttach = ((uint)(7));
-            w36.XOptions = ((Gtk.AttachOptions)(4));
-            w36.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w32 = ((Gtk.Table.TableChild)(this.table1[this.label9]));
+            w32.TopAttach = ((uint)(6));
+            w32.BottomAttach = ((uint)(7));
+            w32.XOptions = ((Gtk.AttachOptions)(4));
+            w32.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.localSpinButton = new Gtk.SpinButton(0, 1000, 1);
             this.localSpinButton.CanFocus = true;
@@ -428,13 +395,13 @@ namespace LongoMatch.Gui.Component {
             this.localSpinButton.ClimbRate = 1;
             this.localSpinButton.Numeric = true;
             this.table1.Add(this.localSpinButton);
-            Gtk.Table.TableChild w37 = ((Gtk.Table.TableChild)(this.table1[this.localSpinButton]));
-            w37.TopAttach = ((uint)(2));
-            w37.BottomAttach = ((uint)(3));
-            w37.LeftAttach = ((uint)(1));
-            w37.RightAttach = ((uint)(2));
-            w37.XOptions = ((Gtk.AttachOptions)(1));
-            w37.YOptions = ((Gtk.AttachOptions)(1));
+            Gtk.Table.TableChild w33 = ((Gtk.Table.TableChild)(this.table1[this.localSpinButton]));
+            w33.TopAttach = ((uint)(2));
+            w33.BottomAttach = ((uint)(3));
+            w33.LeftAttach = ((uint)(1));
+            w33.RightAttach = ((uint)(2));
+            w33.XOptions = ((Gtk.AttachOptions)(1));
+            w33.YOptions = ((Gtk.AttachOptions)(1));
             // Container child table1.Gtk.Table+TableChild
             this.localTeamEntry = new Gtk.Entry();
             this.localTeamEntry.CanFocus = true;
@@ -442,19 +409,19 @@ namespace LongoMatch.Gui.Component {
             this.localTeamEntry.IsEditable = true;
             this.localTeamEntry.InvisibleChar = '●';
             this.table1.Add(this.localTeamEntry);
-            Gtk.Table.TableChild w38 = ((Gtk.Table.TableChild)(this.table1[this.localTeamEntry]));
-            w38.LeftAttach = ((uint)(1));
-            w38.RightAttach = ((uint)(2));
+            Gtk.Table.TableChild w34 = ((Gtk.Table.TableChild)(this.table1[this.localTeamEntry]));
+            w34.LeftAttach = ((uint)(1));
+            w34.RightAttach = ((uint)(2));
             // Container child table1.Gtk.Table+TableChild
             this.localteamtemplatelabel = new Gtk.Label();
             this.localteamtemplatelabel.Name = "localteamtemplatelabel";
             this.localteamtemplatelabel.LabelProp = Mono.Unix.Catalog.GetString("Visitor Team Template");
             this.table1.Add(this.localteamtemplatelabel);
-            Gtk.Table.TableChild w39 = ((Gtk.Table.TableChild)(this.table1[this.localteamtemplatelabel]));
-            w39.TopAttach = ((uint)(8));
-            w39.BottomAttach = ((uint)(9));
-            w39.XOptions = ((Gtk.AttachOptions)(4));
-            w39.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w35 = ((Gtk.Table.TableChild)(this.table1[this.localteamtemplatelabel]));
+            w35.TopAttach = ((uint)(8));
+            w35.BottomAttach = ((uint)(9));
+            w35.XOptions = ((Gtk.AttachOptions)(4));
+            w35.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.seasonentry = new Gtk.Entry();
             this.seasonentry.CanFocus = true;
@@ -462,70 +429,23 @@ namespace LongoMatch.Gui.Component {
             this.seasonentry.IsEditable = true;
             this.seasonentry.InvisibleChar = '●';
             this.table1.Add(this.seasonentry);
-            Gtk.Table.TableChild w40 = ((Gtk.Table.TableChild)(this.table1[this.seasonentry]));
-            w40.TopAttach = ((uint)(4));
-            w40.BottomAttach = ((uint)(5));
-            w40.LeftAttach = ((uint)(1));
-            w40.RightAttach = ((uint)(2));
-            w40.XOptions = ((Gtk.AttachOptions)(4));
-            w40.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w36 = ((Gtk.Table.TableChild)(this.table1[this.seasonentry]));
+            w36.TopAttach = ((uint)(4));
+            w36.BottomAttach = ((uint)(5));
+            w36.LeftAttach = ((uint)(1));
+            w36.RightAttach = ((uint)(2));
+            w36.XOptions = ((Gtk.AttachOptions)(4));
+            w36.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.seasonlabel = new Gtk.Label();
             this.seasonlabel.Name = "seasonlabel";
             this.seasonlabel.LabelProp = Mono.Unix.Catalog.GetString("Season:");
             this.table1.Add(this.seasonlabel);
-            Gtk.Table.TableChild w41 = ((Gtk.Table.TableChild)(this.table1[this.seasonlabel]));
-            w41.TopAttach = ((uint)(4));
-            w41.BottomAttach = ((uint)(5));
-            w41.XOptions = ((Gtk.AttachOptions)(4));
-            w41.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child table1.Gtk.Table+TableChild
-            this.videobitratelabel1 = new Gtk.Label();
-            this.videobitratelabel1.Name = "videobitratelabel1";
-            this.videobitratelabel1.LabelProp = Mono.Unix.Catalog.GetString("Video Bitrate (kbps):");
-            this.table1.Add(this.videobitratelabel1);
-            Gtk.Table.TableChild w42 = ((Gtk.Table.TableChild)(this.table1[this.videobitratelabel1]));
-            w42.TopAttach = ((uint)(13));
-            w42.BottomAttach = ((uint)(14));
-            w42.XOptions = ((Gtk.AttachOptions)(4));
-            w42.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child table1.Gtk.Table+TableChild
-            this.videobitratespinbutton = new Gtk.SpinButton(1000, 8000, 1);
-            this.videobitratespinbutton.CanFocus = true;
-            this.videobitratespinbutton.Name = "videobitratespinbutton";
-            this.videobitratespinbutton.Adjustment.PageIncrement = 10;
-            this.videobitratespinbutton.ClimbRate = 1;
-            this.videobitratespinbutton.Numeric = true;
-            this.videobitratespinbutton.Value = 4000;
-            this.table1.Add(this.videobitratespinbutton);
-            Gtk.Table.TableChild w43 = ((Gtk.Table.TableChild)(this.table1[this.videobitratespinbutton]));
-            w43.TopAttach = ((uint)(13));
-            w43.BottomAttach = ((uint)(14));
-            w43.LeftAttach = ((uint)(1));
-            w43.RightAttach = ((uint)(2));
-            w43.XOptions = ((Gtk.AttachOptions)(0));
-            w43.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child table1.Gtk.Table+TableChild
-            this.videodevice = new Gtk.Label();
-            this.videodevice.Name = "videodevice";
-            this.videodevice.LabelProp = Mono.Unix.Catalog.GetString("Video Device:");
-            this.table1.Add(this.videodevice);
-            Gtk.Table.TableChild w44 = ((Gtk.Table.TableChild)(this.table1[this.videodevice]));
-            w44.TopAttach = ((uint)(11));
-            w44.BottomAttach = ((uint)(12));
-            w44.XOptions = ((Gtk.AttachOptions)(4));
-            w44.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child table1.Gtk.Table+TableChild
-            this.videodevicecombobox = Gtk.ComboBox.NewText();
-            this.videodevicecombobox.Name = "videodevicecombobox";
-            this.table1.Add(this.videodevicecombobox);
-            Gtk.Table.TableChild w45 = ((Gtk.Table.TableChild)(this.table1[this.videodevicecombobox]));
-            w45.TopAttach = ((uint)(11));
-            w45.BottomAttach = ((uint)(12));
-            w45.LeftAttach = ((uint)(1));
-            w45.RightAttach = ((uint)(2));
-            w45.XOptions = ((Gtk.AttachOptions)(4));
-            w45.YOptions = ((Gtk.AttachOptions)(0));
+            Gtk.Table.TableChild w37 = ((Gtk.Table.TableChild)(this.table1[this.seasonlabel]));
+            w37.TopAttach = ((uint)(4));
+            w37.BottomAttach = ((uint)(5));
+            w37.XOptions = ((Gtk.AttachOptions)(4));
+            w37.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.visitorSpinButton = new Gtk.SpinButton(0, 1000, 1);
             this.visitorSpinButton.CanFocus = true;
@@ -534,13 +454,13 @@ namespace LongoMatch.Gui.Component {
             this.visitorSpinButton.ClimbRate = 1;
             this.visitorSpinButton.Numeric = true;
             this.table1.Add(this.visitorSpinButton);
-            Gtk.Table.TableChild w46 = ((Gtk.Table.TableChild)(this.table1[this.visitorSpinButton]));
-            w46.TopAttach = ((uint)(3));
-            w46.BottomAttach = ((uint)(4));
-            w46.LeftAttach = ((uint)(1));
-            w46.RightAttach = ((uint)(2));
-            w46.XOptions = ((Gtk.AttachOptions)(1));
-            w46.YOptions = ((Gtk.AttachOptions)(1));
+            Gtk.Table.TableChild w38 = ((Gtk.Table.TableChild)(this.table1[this.visitorSpinButton]));
+            w38.TopAttach = ((uint)(3));
+            w38.BottomAttach = ((uint)(4));
+            w38.LeftAttach = ((uint)(1));
+            w38.RightAttach = ((uint)(2));
+            w38.XOptions = ((Gtk.AttachOptions)(1));
+            w38.YOptions = ((Gtk.AttachOptions)(1));
             // Container child table1.Gtk.Table+TableChild
             this.visitorTeamEntry = new Gtk.Entry();
             this.visitorTeamEntry.CanFocus = true;
@@ -548,31 +468,183 @@ namespace LongoMatch.Gui.Component {
             this.visitorTeamEntry.IsEditable = true;
             this.visitorTeamEntry.InvisibleChar = '●';
             this.table1.Add(this.visitorTeamEntry);
-            Gtk.Table.TableChild w47 = ((Gtk.Table.TableChild)(this.table1[this.visitorTeamEntry]));
-            w47.TopAttach = ((uint)(1));
-            w47.BottomAttach = ((uint)(2));
-            w47.LeftAttach = ((uint)(1));
-            w47.RightAttach = ((uint)(2));
-            w47.XOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w39 = ((Gtk.Table.TableChild)(this.table1[this.visitorTeamEntry]));
+            w39.TopAttach = ((uint)(1));
+            w39.BottomAttach = ((uint)(2));
+            w39.LeftAttach = ((uint)(1));
+            w39.RightAttach = ((uint)(2));
+            w39.XOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.visitorteamtemplatelabel = new Gtk.Label();
             this.visitorteamtemplatelabel.Name = "visitorteamtemplatelabel";
             this.visitorteamtemplatelabel.LabelProp = Mono.Unix.Catalog.GetString("Local Team Template");
             this.table1.Add(this.visitorteamtemplatelabel);
-            Gtk.Table.TableChild w48 = ((Gtk.Table.TableChild)(this.table1[this.visitorteamtemplatelabel]));
-            w48.TopAttach = ((uint)(7));
-            w48.BottomAttach = ((uint)(8));
+            Gtk.Table.TableChild w40 = ((Gtk.Table.TableChild)(this.table1[this.visitorteamtemplatelabel]));
+            w40.TopAttach = ((uint)(7));
+            w40.BottomAttach = ((uint)(8));
+            w40.XOptions = ((Gtk.AttachOptions)(4));
+            w40.YOptions = ((Gtk.AttachOptions)(4));
+            this.vbox2.Add(this.table1);
+            Gtk.Box.BoxChild w41 = ((Gtk.Box.BoxChild)(this.vbox2[this.table1]));
+            w41.Position = 0;
+            // Container child vbox2.Gtk.Box+BoxChild
+            this.expander1 = new Gtk.Expander(null);
+            this.expander1.CanFocus = true;
+            this.expander1.Name = "expander1";
+            // Container child expander1.Gtk.Container+ContainerChild
+            this.table2 = new Gtk.Table(((uint)(6)), ((uint)(2)), false);
+            this.table2.Name = "table2";
+            this.table2.RowSpacing = ((uint)(6));
+            this.table2.ColumnSpacing = ((uint)(6));
+            // Container child table2.Gtk.Table+TableChild
+            this.audiobitratelabel = new Gtk.Label();
+            this.audiobitratelabel.Name = "audiobitratelabel";
+            this.audiobitratelabel.LabelProp = Mono.Unix.Catalog.GetString("Audio Bitrate (kbps):");
+            this.table2.Add(this.audiobitratelabel);
+            Gtk.Table.TableChild w42 = ((Gtk.Table.TableChild)(this.table2[this.audiobitratelabel]));
+            w42.TopAttach = ((uint)(5));
+            w42.BottomAttach = ((uint)(6));
+            w42.XOptions = ((Gtk.AttachOptions)(4));
+            w42.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.audiobitratespinbutton = new Gtk.SpinButton(0, 360, 1);
+            this.audiobitratespinbutton.CanFocus = true;
+            this.audiobitratespinbutton.Name = "audiobitratespinbutton";
+            this.audiobitratespinbutton.Adjustment.PageIncrement = 10;
+            this.audiobitratespinbutton.ClimbRate = 1;
+            this.audiobitratespinbutton.Numeric = true;
+            this.audiobitratespinbutton.Value = 64;
+            this.table2.Add(this.audiobitratespinbutton);
+            Gtk.Table.TableChild w43 = ((Gtk.Table.TableChild)(this.table2[this.audiobitratespinbutton]));
+            w43.TopAttach = ((uint)(5));
+            w43.BottomAttach = ((uint)(6));
+            w43.LeftAttach = ((uint)(1));
+            w43.RightAttach = ((uint)(2));
+            w43.XOptions = ((Gtk.AttachOptions)(1));
+            w43.YOptions = ((Gtk.AttachOptions)(1));
+            // Container child table2.Gtk.Table+TableChild
+            this.audiodevicecombobox = Gtk.ComboBox.NewText();
+            this.audiodevicecombobox.Name = "audiodevicecombobox";
+            this.table2.Add(this.audiodevicecombobox);
+            Gtk.Table.TableChild w44 = ((Gtk.Table.TableChild)(this.table2[this.audiodevicecombobox]));
+            w44.TopAttach = ((uint)(1));
+            w44.BottomAttach = ((uint)(2));
+            w44.LeftAttach = ((uint)(1));
+            w44.RightAttach = ((uint)(2));
+            w44.XOptions = ((Gtk.AttachOptions)(4));
+            w44.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.audiodevicelabel = new Gtk.Label();
+            this.audiodevicelabel.Name = "audiodevicelabel";
+            this.audiodevicelabel.LabelProp = Mono.Unix.Catalog.GetString("Audio Device:");
+            this.table2.Add(this.audiodevicelabel);
+            Gtk.Table.TableChild w45 = ((Gtk.Table.TableChild)(this.table2[this.audiodevicelabel]));
+            w45.TopAttach = ((uint)(1));
+            w45.BottomAttach = ((uint)(2));
+            w45.XOptions = ((Gtk.AttachOptions)(4));
+            w45.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.sizecombobox = Gtk.ComboBox.NewText();
+            this.sizecombobox.Name = "sizecombobox";
+            this.table2.Add(this.sizecombobox);
+            Gtk.Table.TableChild w46 = ((Gtk.Table.TableChild)(this.table2[this.sizecombobox]));
+            w46.TopAttach = ((uint)(3));
+            w46.BottomAttach = ((uint)(4));
+            w46.LeftAttach = ((uint)(1));
+            w46.RightAttach = ((uint)(2));
+            w46.XOptions = ((Gtk.AttachOptions)(4));
+            w46.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.sizelabel = new Gtk.Label();
+            this.sizelabel.Name = "sizelabel";
+            this.sizelabel.LabelProp = Mono.Unix.Catalog.GetString("Video Size:");
+            this.table2.Add(this.sizelabel);
+            Gtk.Table.TableChild w47 = ((Gtk.Table.TableChild)(this.table2[this.sizelabel]));
+            w47.TopAttach = ((uint)(3));
+            w47.BottomAttach = ((uint)(4));
+            w47.XOptions = ((Gtk.AttachOptions)(4));
+            w47.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.videobitratelabel1 = new Gtk.Label();
+            this.videobitratelabel1.Name = "videobitratelabel1";
+            this.videobitratelabel1.LabelProp = Mono.Unix.Catalog.GetString("Video Bitrate (kbps):");
+            this.table2.Add(this.videobitratelabel1);
+            Gtk.Table.TableChild w48 = ((Gtk.Table.TableChild)(this.table2[this.videobitratelabel1]));
+            w48.TopAttach = ((uint)(4));
+            w48.BottomAttach = ((uint)(5));
             w48.XOptions = ((Gtk.AttachOptions)(4));
             w48.YOptions = ((Gtk.AttachOptions)(4));
-            this.vbox2.Add(this.table1);
-            Gtk.Box.BoxChild w49 = ((Gtk.Box.BoxChild)(this.vbox2[this.table1]));
-            w49.Position = 0;
+            // Container child table2.Gtk.Table+TableChild
+            this.videobitratespinbutton = new Gtk.SpinButton(1000, 8000, 1);
+            this.videobitratespinbutton.CanFocus = true;
+            this.videobitratespinbutton.Name = "videobitratespinbutton";
+            this.videobitratespinbutton.Adjustment.PageIncrement = 10;
+            this.videobitratespinbutton.ClimbRate = 1;
+            this.videobitratespinbutton.Numeric = true;
+            this.videobitratespinbutton.Value = 4000;
+            this.table2.Add(this.videobitratespinbutton);
+            Gtk.Table.TableChild w49 = ((Gtk.Table.TableChild)(this.table2[this.videobitratespinbutton]));
+            w49.TopAttach = ((uint)(4));
+            w49.BottomAttach = ((uint)(5));
+            w49.LeftAttach = ((uint)(1));
+            w49.RightAttach = ((uint)(2));
+            w49.XOptions = ((Gtk.AttachOptions)(1));
+            w49.YOptions = ((Gtk.AttachOptions)(1));
+            // Container child table2.Gtk.Table+TableChild
+            this.videodevice = new Gtk.Label();
+            this.videodevice.Name = "videodevice";
+            this.videodevice.LabelProp = Mono.Unix.Catalog.GetString("Video Device:");
+            this.table2.Add(this.videodevice);
+            Gtk.Table.TableChild w50 = ((Gtk.Table.TableChild)(this.table2[this.videodevice]));
+            w50.XOptions = ((Gtk.AttachOptions)(4));
+            w50.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.videodevicecombobox = Gtk.ComboBox.NewText();
+            this.videodevicecombobox.Name = "videodevicecombobox";
+            this.table2.Add(this.videodevicecombobox);
+            Gtk.Table.TableChild w51 = ((Gtk.Table.TableChild)(this.table2[this.videodevicecombobox]));
+            w51.LeftAttach = ((uint)(1));
+            w51.RightAttach = ((uint)(2));
+            w51.XOptions = ((Gtk.AttachOptions)(4));
+            w51.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.videoformatcombobox = Gtk.ComboBox.NewText();
+            this.videoformatcombobox.Name = "videoformatcombobox";
+            this.table2.Add(this.videoformatcombobox);
+            Gtk.Table.TableChild w52 = ((Gtk.Table.TableChild)(this.table2[this.videoformatcombobox]));
+            w52.TopAttach = ((uint)(2));
+            w52.BottomAttach = ((uint)(3));
+            w52.LeftAttach = ((uint)(1));
+            w52.RightAttach = ((uint)(2));
+            w52.XOptions = ((Gtk.AttachOptions)(4));
+            w52.YOptions = ((Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.videoformatlabel = new Gtk.Label();
+            this.videoformatlabel.Name = "videoformatlabel";
+            this.videoformatlabel.LabelProp = Mono.Unix.Catalog.GetString("Video Format:");
+            this.table2.Add(this.videoformatlabel);
+            Gtk.Table.TableChild w53 = ((Gtk.Table.TableChild)(this.table2[this.videoformatlabel]));
+            w53.TopAttach = ((uint)(2));
+            w53.BottomAttach = ((uint)(3));
+            w53.XOptions = ((Gtk.AttachOptions)(4));
+            w53.YOptions = ((Gtk.AttachOptions)(4));
+            this.expander1.Add(this.table2);
+            this.GtkLabel5 = new Gtk.Label();
+            this.GtkLabel5.Name = "GtkLabel5";
+            this.GtkLabel5.LabelProp = Mono.Unix.Catalog.GetString("Video encoding  properties");
+            this.GtkLabel5.UseUnderline = true;
+            this.expander1.LabelWidget = this.GtkLabel5;
+            this.vbox2.Add(this.expander1);
+            Gtk.Box.BoxChild w55 = ((Gtk.Box.BoxChild)(this.vbox2[this.expander1]));
+            w55.Position = 1;
+            w55.Expand = false;
+            w55.Fill = false;
             this.Add(this.vbox2);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.audiodevicelabel.Hide();
             this.editbutton.Hide();
+            this.audiodevicelabel.Hide();
             this.videobitratelabel1.Hide();
             this.videodevice.Hide();
             this.Show();

@@ -73,6 +73,7 @@ FILES = \
 	Utils/FramesCapturer.cs \
 	Utils/IMetadataReader.cs \
 	Utils/TimeString.cs \
+	Capturer/CaptureProperties.cs \
 	Capturer/GccAudioEncoderType.cs \
 	Capturer/GccError.cs \
 	Capturer/GccType.cs \
