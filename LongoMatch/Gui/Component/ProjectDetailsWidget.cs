@@ -329,7 +329,10 @@ namespace LongoMatch.Gui.Component
 						mFile = new PreviewMediaFile();
 						mFile.FilePath = Constants.FAKE_PROJECT;
 						mFile.Fps = 25;
-					}					
+					} else if  (useType == ProjectType.CaptureProject){
+						mFile = new PreviewMediaFile();
+						mFile.FilePath = fileEntry.Text;
+					}
 					return new Project(mFile,
 					                   LocalName,
 					                   VisitorName,
