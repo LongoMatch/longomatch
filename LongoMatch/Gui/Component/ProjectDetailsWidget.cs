@@ -435,6 +435,7 @@ namespace LongoMatch.Gui.Component
 				                                 "gtk-cancel",ResponseType.Cancel,
 				                                 "gtk-save",ResponseType.Accept);
 				fChooser.SetCurrentFolder(MainClass.VideosDir());
+				fChooser.DoOverwriteConfirmation = true;
 				if (fChooser.Run() == (int)ResponseType.Accept)
 					fileEntry.Text = fChooser.Filename;
 				fChooser.Destroy();
