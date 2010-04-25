@@ -165,6 +165,10 @@ namespace LongoMatch.Gui
 		public void Run(){
 			capturer.Run();
 		}
+
+		public void Close(){
+			capturer.Close();
+		}
 		
 		public void SetVideoEncoder(GccVideoEncoderType type){
 			capturer.SetVideoEncoder(type);

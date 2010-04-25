@@ -49,6 +49,9 @@ namespace LongoMatch.Video.Capturer
 		public void Run(){
 		}
 		
+		public void Close(){
+		}
+		
 		public void Start(){
 			timer.Start();
 		}

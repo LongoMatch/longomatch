@@ -293,6 +293,13 @@ namespace LongoMatch.Video.Capturer {
 		}
 		
 		[DllImport("libcesarplayer.dll")]
+		static extern void gst_camera_capturer_close(IntPtr raw);
+
+		public void Close() {
+			gst_camera_capturer_close(Handle);
+		}		
+		
+		[DllImport("libcesarplayer.dll")]
 		static extern bool gst_camera_capturer_set_video_muxer(IntPtr raw, int type, out IntPtr error);
 
 		public bool SetVideoMuxer(LongoMatch.Video.Capturer.GccVideoMuxerType type) {
