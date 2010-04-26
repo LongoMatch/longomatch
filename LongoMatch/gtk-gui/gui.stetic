@@ -1765,7 +1765,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="LongoMatch.Gui.MainWindow" design-size="1259 817">
+  <widget class="Gtk.Window" id="LongoMatch.Gui.MainWindow" design-size="1259 848">
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -2010,7 +2010,7 @@
           <widget class="Gtk.HPaned" id="hpaned">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="Position">335</property>
+            <property name="Position">257</property>
             <child>
               <widget class="Gtk.VBox" id="leftbox">
                 <property name="MemberName" />
@@ -2107,13 +2107,13 @@
               <widget class="Gtk.HPaned" id="hpaned1">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Position">770</property>
+                <property name="Position">881</property>
                 <child>
                   <widget class="Gtk.VBox" id="vbox5">
                     <property name="MemberName" />
                     <property name="Spacing">6</property>
                     <child>
-                      <widget class="Gtk.HBox" id="hbox2">
+                      <widget class="Gtk.HBox" id="videowidgetsbox">
                         <property name="MemberName" />
                         <property name="Spacing">6</property>
                         <child>
@@ -2144,7 +2144,14 @@
                           </packing>
                         </child>
                         <child>
-                          <placeholder />
+                          <widget class="LongoMatch.Gui.CapturerBin" id="capturerBin">
+                            <property name="MemberName" />
+                            <property name="Events">ButtonPressMask</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">2</property>
+                            <property name="AutoSize">False</property>
+                          </packing>
                         </child>
                       </widget>
                       <packing>

@@ -56,7 +56,6 @@ namespace LongoMatch.Gui
 		private HotKeysManager hkManager;
 		private KeyPressEventHandler hotkeysListener;
 		
-		private CapturerBin capturerBin;		
 		
 		#region Constructors
 		public MainWindow() :
@@ -84,7 +83,8 @@ namespace LongoMatch.Gui
 			                             playerbin1,
 			                             timelinewidget1,
 			                             videoprogressbar,
-			                             noteswidget1);
+			                             noteswidget1,
+			                             capturerBin);
 
 			hkManager = new HotKeysManager();
 			// Listenning only when a project is loaded
@@ -98,6 +98,8 @@ namespace LongoMatch.Gui
 
 			playerbin1.SetLogo(System.IO.Path.Combine(MainClass.ImagesDir(),"background.png"));
 			playerbin1.LogoMode = true;
+			
+			capturerBin.Visible = false;
 			
 			buttonswidget1.Mode = TagMode.Predifined;
 
@@ -149,15 +151,18 @@ namespace LongoMatch.Gui
 					} 
 				}else {
 					Title = "LongoMatch";
-					playerbin1.Visible = false;					
-					capturerBin = new CapturerBin();
-					capturerBin.Logo = System.IO.Path.Combine(MainClass.ImagesDir(),"background.png");
 					capturerBin.CaptureFinished += delegate {
 						CloseOpenedProject(true);	
 					};
-					eManager.Capturer = capturerBin;
-					hbox2.Add(capturerBin);
-					(capturerBin).Show();	
+					if (projectType == ProjectType.CaptureProject){
+						capturerBin.OutputFile = project.File.FilePath;
+						capturerBin.CaptureProperties = props;
+						capturerBin.Type = CapturerType.DVCAM;
+					} else 
+						capturerBin.Type = CapturerType.FAKE;
+					playerbin1.Visible = false;
+					capturerBin.Visible = true;
+					capturerBin.Run ();
 					treewidget1.ProjectIsLive = true;
 					localplayerslisttreewidget.ProjectIsLive = true;
 					visitorplayerslisttreewidget.ProjectIsLive = true;
@@ -186,9 +191,8 @@ namespace LongoMatch.Gui
 			
 			if (projectType != ProjectType.FileProject){
 				playerbin1.Visible = true;
-				eManager.Capturer = null;
-				if (capturerBin != null)
-					capturerBin.Destroy();
+				capturerBin.Close();
+				capturerBin.Visible = false;
 			} else {
 				playerbin1.Close();
 				playerbin1.LogoMode = true;

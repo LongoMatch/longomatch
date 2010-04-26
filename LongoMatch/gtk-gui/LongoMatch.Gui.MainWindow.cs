@@ -93,11 +93,13 @@ namespace LongoMatch.Gui {
         
         private Gtk.VBox vbox5;
         
-        private Gtk.HBox hbox2;
+        private Gtk.HBox videowidgetsbox;
         
         private LongoMatch.Gui.Component.DrawingToolBox drawingtoolbox1;
         
         private LongoMatch.Gui.PlayerBin playerbin1;
+        
+        private LongoMatch.Gui.CapturerBin capturerBin;
         
         private LongoMatch.Gui.Component.TimeLineWidget timelinewidget1;
         
@@ -193,7 +195,7 @@ namespace LongoMatch.Gui {
             this.ImportProjectAction.ShortLabel = Mono.Unix.Catalog.GetString("_Import Project");
             w1.Add(this.ImportProjectAction, "<Control>i");
             this.FreeCaptureModeAction = new Gtk.RadioAction("FreeCaptureModeAction", Mono.Unix.Catalog.GetString("Free Capture Mode"), null, null, 0);
-            this.FreeCaptureModeAction.Group = this.CaptureModeAction.Group;
+            this.FreeCaptureModeAction.Group = this.AnalyzeModeAction.Group;
             this.FreeCaptureModeAction.Sensitive = false;
             this.FreeCaptureModeAction.ShortLabel = Mono.Unix.Catalog.GetString("Free Capture Mode");
             w1.Add(this.FreeCaptureModeAction, null);
@@ -230,7 +232,7 @@ namespace LongoMatch.Gui {
             this.hpaned = new Gtk.HPaned();
             this.hpaned.CanFocus = true;
             this.hpaned.Name = "hpaned";
-            this.hpaned.Position = 335;
+            this.hpaned.Position = 257;
             // Container child hpaned.Gtk.Paned+PanedChild
             this.leftbox = new Gtk.VBox();
             this.leftbox.Name = "leftbox";
@@ -301,36 +303,43 @@ namespace LongoMatch.Gui {
             this.hpaned1 = new Gtk.HPaned();
             this.hpaned1.CanFocus = true;
             this.hpaned1.Name = "hpaned1";
-            this.hpaned1.Position = 770;
+            this.hpaned1.Position = 881;
             // Container child hpaned1.Gtk.Paned+PanedChild
             this.vbox5 = new Gtk.VBox();
             this.vbox5.Name = "vbox5";
             this.vbox5.Spacing = 6;
             // Container child vbox5.Gtk.Box+BoxChild
-            this.hbox2 = new Gtk.HBox();
-            this.hbox2.Name = "hbox2";
-            this.hbox2.Spacing = 6;
-            // Container child hbox2.Gtk.Box+BoxChild
+            this.videowidgetsbox = new Gtk.HBox();
+            this.videowidgetsbox.Name = "videowidgetsbox";
+            this.videowidgetsbox.Spacing = 6;
+            // Container child videowidgetsbox.Gtk.Box+BoxChild
             this.drawingtoolbox1 = new LongoMatch.Gui.Component.DrawingToolBox();
             this.drawingtoolbox1.Events = ((Gdk.EventMask)(256));
             this.drawingtoolbox1.Name = "drawingtoolbox1";
-            this.hbox2.Add(this.drawingtoolbox1);
-            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.hbox2[this.drawingtoolbox1]));
+            this.videowidgetsbox.Add(this.drawingtoolbox1);
+            Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.videowidgetsbox[this.drawingtoolbox1]));
             w10.Position = 0;
             w10.Expand = false;
             w10.Fill = false;
-            // Container child hbox2.Gtk.Box+BoxChild
+            // Container child videowidgetsbox.Gtk.Box+BoxChild
             this.playerbin1 = new LongoMatch.Gui.PlayerBin();
             this.playerbin1.Events = ((Gdk.EventMask)(256));
             this.playerbin1.Name = "playerbin1";
             this.playerbin1.Rate = 1F;
             this.playerbin1.ExpandLogo = true;
-            this.hbox2.Add(this.playerbin1);
-            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.hbox2[this.playerbin1]));
+            this.videowidgetsbox.Add(this.playerbin1);
+            Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.videowidgetsbox[this.playerbin1]));
             w11.Position = 1;
-            this.vbox5.Add(this.hbox2);
-            Gtk.Box.BoxChild w12 = ((Gtk.Box.BoxChild)(this.vbox5[this.hbox2]));
-            w12.Position = 0;
+            // Container child videowidgetsbox.Gtk.Box+BoxChild
+            this.capturerBin = new LongoMatch.Gui.CapturerBin();
+            this.capturerBin.Events = ((Gdk.EventMask)(256));
+            this.capturerBin.Name = "capturerBin";
+            this.videowidgetsbox.Add(this.capturerBin);
+            Gtk.Box.BoxChild w12 = ((Gtk.Box.BoxChild)(this.videowidgetsbox[this.capturerBin]));
+            w12.Position = 2;
+            this.vbox5.Add(this.videowidgetsbox);
+            Gtk.Box.BoxChild w13 = ((Gtk.Box.BoxChild)(this.vbox5[this.videowidgetsbox]));
+            w13.Position = 0;
             // Container child vbox5.Gtk.Box+BoxChild
             this.timelinewidget1 = new LongoMatch.Gui.Component.TimeLineWidget();
             this.timelinewidget1.HeightRequest = 200;
@@ -338,21 +347,21 @@ namespace LongoMatch.Gui {
             this.timelinewidget1.Name = "timelinewidget1";
             this.timelinewidget1.CurrentFrame = ((uint)(0));
             this.vbox5.Add(this.timelinewidget1);
-            Gtk.Box.BoxChild w13 = ((Gtk.Box.BoxChild)(this.vbox5[this.timelinewidget1]));
-            w13.Position = 1;
-            w13.Expand = false;
+            Gtk.Box.BoxChild w14 = ((Gtk.Box.BoxChild)(this.vbox5[this.timelinewidget1]));
+            w14.Position = 1;
+            w14.Expand = false;
             // Container child vbox5.Gtk.Box+BoxChild
             this.buttonswidget1 = new LongoMatch.Gui.Component.ButtonsWidget();
             this.buttonswidget1.Events = ((Gdk.EventMask)(256));
             this.buttonswidget1.Name = "buttonswidget1";
             this.vbox5.Add(this.buttonswidget1);
-            Gtk.Box.BoxChild w14 = ((Gtk.Box.BoxChild)(this.vbox5[this.buttonswidget1]));
-            w14.Position = 2;
-            w14.Expand = false;
+            Gtk.Box.BoxChild w15 = ((Gtk.Box.BoxChild)(this.vbox5[this.buttonswidget1]));
+            w15.Position = 2;
+            w15.Expand = false;
             this.hpaned1.Add(this.vbox5);
-            Gtk.Paned.PanedChild w15 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.vbox5]));
-            w15.Resize = false;
-            w15.Shrink = false;
+            Gtk.Paned.PanedChild w16 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.vbox5]));
+            w16.Resize = false;
+            w16.Shrink = false;
             // Container child hpaned1.Gtk.Paned+PanedChild
             this.rightvbox = new Gtk.VBox();
             this.rightvbox.WidthRequest = 100;
@@ -363,27 +372,27 @@ namespace LongoMatch.Gui {
             this.noteswidget1.Events = ((Gdk.EventMask)(256));
             this.noteswidget1.Name = "noteswidget1";
             this.rightvbox.Add(this.noteswidget1);
-            Gtk.Box.BoxChild w16 = ((Gtk.Box.BoxChild)(this.rightvbox[this.noteswidget1]));
-            w16.Position = 1;
+            Gtk.Box.BoxChild w17 = ((Gtk.Box.BoxChild)(this.rightvbox[this.noteswidget1]));
+            w17.Position = 1;
             // Container child rightvbox.Gtk.Box+BoxChild
             this.playlistwidget2 = new LongoMatch.Gui.Component.PlayListWidget();
             this.playlistwidget2.WidthRequest = 100;
             this.playlistwidget2.Events = ((Gdk.EventMask)(256));
             this.playlistwidget2.Name = "playlistwidget2";
             this.rightvbox.Add(this.playlistwidget2);
-            Gtk.Box.BoxChild w17 = ((Gtk.Box.BoxChild)(this.rightvbox[this.playlistwidget2]));
-            w17.Position = 2;
+            Gtk.Box.BoxChild w18 = ((Gtk.Box.BoxChild)(this.rightvbox[this.playlistwidget2]));
+            w18.Position = 2;
             this.hpaned1.Add(this.rightvbox);
-            Gtk.Paned.PanedChild w18 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.rightvbox]));
-            w18.Resize = false;
-            w18.Shrink = false;
-            this.hpaned.Add(this.hpaned1);
-            Gtk.Paned.PanedChild w19 = ((Gtk.Paned.PanedChild)(this.hpaned[this.hpaned1]));
+            Gtk.Paned.PanedChild w19 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.rightvbox]));
             w19.Resize = false;
             w19.Shrink = false;
+            this.hpaned.Add(this.hpaned1);
+            Gtk.Paned.PanedChild w20 = ((Gtk.Paned.PanedChild)(this.hpaned[this.hpaned1]));
+            w20.Resize = false;
+            w20.Shrink = false;
             this.vbox1.Add(this.hpaned);
-            Gtk.Box.BoxChild w20 = ((Gtk.Box.BoxChild)(this.vbox1[this.hpaned]));
-            w20.Position = 1;
+            Gtk.Box.BoxChild w21 = ((Gtk.Box.BoxChild)(this.vbox1[this.hpaned]));
+            w21.Position = 1;
             // Container child vbox1.Gtk.Box+BoxChild
             this.statusbar1 = new Gtk.Statusbar();
             this.statusbar1.Name = "statusbar1";
@@ -393,21 +402,21 @@ namespace LongoMatch.Gui {
             this.videoprogressbar.Name = "videoprogressbar";
             this.videoprogressbar.Text = Mono.Unix.Catalog.GetString("Creating video...");
             this.statusbar1.Add(this.videoprogressbar);
-            Gtk.Box.BoxChild w21 = ((Gtk.Box.BoxChild)(this.statusbar1[this.videoprogressbar]));
-            w21.Position = 3;
-            w21.Expand = false;
-            w21.Fill = false;
-            this.vbox1.Add(this.statusbar1);
-            Gtk.Box.BoxChild w22 = ((Gtk.Box.BoxChild)(this.vbox1[this.statusbar1]));
-            w22.Position = 2;
+            Gtk.Box.BoxChild w22 = ((Gtk.Box.BoxChild)(this.statusbar1[this.videoprogressbar]));
+            w22.Position = 3;
             w22.Expand = false;
             w22.Fill = false;
+            this.vbox1.Add(this.statusbar1);
+            Gtk.Box.BoxChild w23 = ((Gtk.Box.BoxChild)(this.vbox1[this.statusbar1]));
+            w23.Position = 2;
+            w23.Expand = false;
+            w23.Fill = false;
             this.Add(this.vbox1);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
             this.DefaultWidth = 1259;
-            this.DefaultHeight = 817;
+            this.DefaultHeight = 848;
             this.leftbox.Hide();
             this.drawingtoolbox1.Hide();
             this.timelinewidget1.Hide();
