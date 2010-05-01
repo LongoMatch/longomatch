@@ -38,7 +38,6 @@ namespace LongoMatch.Gui.Dialog {
             this.Gravity = ((Gdk.Gravity)(5));
             this.SkipPagerHint = true;
             this.SkipTaskbarHint = true;
-            this.HasSeparator = false;
             // Internal child LongoMatch.Gui.Dialog.SnapshotsDialog.VBox
             Gtk.VBox w1 = this.VBox;
             w1.Name = "dialog1_VBox";
@@ -130,7 +129,7 @@ namespace LongoMatch.Gui.Dialog {
             w11.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w12 = new Gtk.Image();
-            w12.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-record", Gtk.IconSize.Button, 20);
+            w12.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-record", Gtk.IconSize.Button, 16);
             w11.Add(w12);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w14 = new Gtk.Label();

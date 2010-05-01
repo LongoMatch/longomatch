@@ -308,7 +308,7 @@ namespace LongoMatch.Gui.Component {
             w18.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w19 = new Gtk.Image();
-            w19.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_calendar", Gtk.IconSize.Button, 20);
+            w19.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_calendar", Gtk.IconSize.Button, 16);
             w18.Add(w19);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w21 = new Gtk.Label();

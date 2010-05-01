@@ -373,7 +373,7 @@ namespace LongoMatch.Gui {
             this.noteswidget1.Name = "noteswidget1";
             this.rightvbox.Add(this.noteswidget1);
             Gtk.Box.BoxChild w17 = ((Gtk.Box.BoxChild)(this.rightvbox[this.noteswidget1]));
-            w17.Position = 1;
+            w17.Position = 0;
             // Container child rightvbox.Gtk.Box+BoxChild
             this.playlistwidget2 = new LongoMatch.Gui.Component.PlayListWidget();
             this.playlistwidget2.WidthRequest = 100;
@@ -381,7 +381,7 @@ namespace LongoMatch.Gui {
             this.playlistwidget2.Name = "playlistwidget2";
             this.rightvbox.Add(this.playlistwidget2);
             Gtk.Box.BoxChild w18 = ((Gtk.Box.BoxChild)(this.rightvbox[this.playlistwidget2]));
-            w18.Position = 2;
+            w18.Position = 1;
             this.hpaned1.Add(this.rightvbox);
             Gtk.Paned.PanedChild w19 = ((Gtk.Paned.PanedChild)(this.hpaned1[this.rightvbox]));
             w19.Resize = false;
@@ -416,7 +416,7 @@ namespace LongoMatch.Gui {
                 this.Child.ShowAll();
             }
             this.DefaultWidth = 1259;
-            this.DefaultHeight = 848;
+            this.DefaultHeight = 853;
             this.leftbox.Hide();
             this.drawingtoolbox1.Hide();
             this.timelinewidget1.Hide();

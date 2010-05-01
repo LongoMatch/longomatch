@@ -27,7 +27,6 @@ namespace LongoMatch.Gui.Dialog {
             this.Gravity = ((Gdk.Gravity)(5));
             this.SkipPagerHint = true;
             this.SkipTaskbarHint = true;
-            this.HasSeparator = false;
             // Internal child LongoMatch.Gui.Dialog.Win32CalendarDialog.VBox
             Gtk.VBox w1 = this.VBox;
             w1.Name = "dialog1_VBox";
@@ -61,8 +60,8 @@ namespace LongoMatch.Gui.Dialog {
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 217;
-            this.DefaultHeight = 204;
+            this.DefaultWidth = 219;
+            this.DefaultHeight = 225;
             this.Show();
             this.calendar1.DaySelectedDoubleClick += new System.EventHandler(this.OnCalendar1DaySelectedDoubleClick);
             this.calendar1.DaySelected += new System.EventHandler(this.OnCalendar1DaySelected);

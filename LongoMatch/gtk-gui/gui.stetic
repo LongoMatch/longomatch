@@ -1175,7 +1175,6 @@
     <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">1</property>
     <property name="HelpButton">False</property>
-    <property name="HasSeparator">False</property>
     <child internal-child="VBox">
       <widget class="Gtk.VBox" id="dialog1_VBox">
         <property name="MemberName" />
@@ -1373,7 +1372,6 @@
     <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
-    <property name="HasSeparator">False</property>
     <child internal-child="VBox">
       <widget class="Gtk.VBox" id="dialog1_VBox">
         <property name="MemberName" />
@@ -1765,7 +1763,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="LongoMatch.Gui.MainWindow" design-size="1259 848">
+  <widget class="Gtk.Window" id="LongoMatch.Gui.MainWindow" design-size="1259 853">
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -2095,7 +2093,7 @@
                   </widget>
                   <packing>
                     <property name="Position">0</property>
-                    <property name="AutoSize">True</property>
+                    <property name="AutoSize">False</property>
                   </packing>
                 </child>
               </widget>
@@ -2199,17 +2197,14 @@
                     <property name="Visible">False</property>
                     <property name="Spacing">6</property>
                     <child>
-                      <placeholder />
-                    </child>
-                    <child>
                       <widget class="LongoMatch.Gui.Component.NotesWidget" id="noteswidget1">
                         <property name="MemberName" />
                         <property name="Visible">False</property>
                         <property name="Events">ButtonPressMask</property>
                       </widget>
                       <packing>
-                        <property name="Position">1</property>
-                        <property name="AutoSize">True</property>
+                        <property name="Position">0</property>
+                        <property name="AutoSize">False</property>
                       </packing>
                     </child>
                     <child>
@@ -2220,8 +2215,8 @@
                         <property name="Events">ButtonPressMask</property>
                       </widget>
                       <packing>
-                        <property name="Position">2</property>
-                        <property name="AutoSize">True</property>
+                        <property name="Position">1</property>
+                        <property name="AutoSize">False</property>
                       </packing>
                     </child>
                   </widget>
@@ -2239,7 +2234,7 @@
           </widget>
           <packing>
             <property name="Position">1</property>
-            <property name="AutoSize">True</property>
+            <property name="AutoSize">False</property>
           </packing>
         </child>
         <child>
@@ -2466,7 +2461,6 @@ Sort by duration</property>
     <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">1</property>
     <property name="HelpButton">False</property>
-    <property name="HasSeparator">False</property>
     <child internal-child="VBox">
       <widget class="Gtk.VBox" id="dialog1_VBox">
         <property name="MemberName" />
@@ -2549,8 +2543,6 @@ new one.</property>
                         <property name="MemberName" />
                         <property name="Sensitive">False</property>
                         <property name="CanFocus">True</property>
-                        <property name="Reorderable">True</property>
-                        <signal name="RowActivated" handler="OnPlaylisttreeview1RowActivated" />
                         <signal name="DragEnd" handler="OnPlaylisttreeview1DragEnd" />
                       </widget>
                       <packing>
@@ -2671,7 +2663,6 @@ new one.</property>
     <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
-    <property name="HasSeparator">False</property>
     <child internal-child="VBox">
       <widget class="Gtk.VBox" id="dialog1_VBox">
         <property name="MemberName" />
@@ -2971,7 +2962,7 @@ new one.</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.VideoEditionProperties" design-size="514 221">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.VideoEditionProperties" design-size="514 223">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Video Properties</property>
     <property name="Icon">stock:longomatch Dialog</property>
@@ -2982,7 +2973,6 @@ new one.</property>
     <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
-    <property name="HasSeparator">False</property>
     <child internal-child="VBox">
       <widget class="Gtk.VBox" id="dialog1_VBox">
         <property name="MemberName" />
@@ -3272,7 +3262,6 @@ Full HD 1080p (16:9 - 1920x1080)</property>
     <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">1</property>
     <property name="HelpButton">False</property>
-    <property name="HasSeparator">False</property>
     <child internal-child="VBox">
       <widget class="Gtk.VBox" id="dialog1_VBox">
         <property name="MemberName" />
@@ -3501,7 +3490,6 @@ Full HD 1080p (16:9 - 1920x1080)</property>
     <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
-    <property name="HasSeparator">False</property>
     <child internal-child="VBox">
       <widget class="Gtk.VBox" id="dialog1_VBox">
         <property name="MemberName" />
@@ -3588,7 +3576,6 @@ Full HD 1080p (16:9 - 1920x1080)</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Buttons">1</property>
     <property name="HelpButton">False</property>
-    <property name="HasSeparator">False</property>
     <child internal-child="VBox">
       <widget class="Gtk.VBox" id="dialog1_VBox">
         <property name="MemberName" />
@@ -3701,7 +3688,6 @@ You can download it using this direct link:</property>
     <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">1</property>
     <property name="HelpButton">False</property>
-    <property name="HasSeparator">False</property>
     <child internal-child="VBox">
       <widget class="Gtk.VBox" id="dialog1_VBox">
         <property name="MemberName" />
@@ -3992,7 +3978,6 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
     <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">1</property>
     <property name="HelpButton">False</property>
-    <property name="HasSeparator">False</property>
     <child internal-child="VBox">
       <widget class="Gtk.VBox" id="dialog1_VBox">
         <property name="MemberName" />
@@ -4106,6 +4091,8 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                   <packing>
                     <property name="Position">0</property>
                     <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
                   </packing>
                 </child>
                 <child>
@@ -4119,6 +4106,8 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                   <packing>
                     <property name="Position">1</property>
                     <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
                   </packing>
                 </child>
               </widget>
@@ -4188,7 +4177,6 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
     <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
-    <property name="HasSeparator">False</property>
     <child internal-child="VBox">
       <widget class="Gtk.VBox" id="dialog1_VBox">
         <property name="MemberName" />
@@ -4284,7 +4272,6 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
-    <property name="HasSeparator">False</property>
     <child internal-child="VBox">
       <widget class="Gtk.VBox" id="dialog1_VBox">
         <property name="MemberName" />
@@ -4474,7 +4461,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.Win32CalendarDialog" design-size="217 204">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.Win32CalendarDialog" design-size="219 225">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Calendar</property>
     <property name="Icon">stock:longomatch Menu</property>
@@ -4484,7 +4471,6 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
     <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">1</property>
     <property name="HelpButton">False</property>
-    <property name="HasSeparator">False</property>
     <child internal-child="VBox">
       <widget class="Gtk.VBox" id="dialog1_VBox">
         <property name="MemberName" />
@@ -5045,7 +5031,7 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.EditCategoryDialog" design-size="264 153">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.EditCategoryDialog" design-size="266 191">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Category Details</property>
     <property name="Icon">resource:longomatch.png</property>
@@ -5053,7 +5039,6 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
     <property name="Modal">True</property>
     <property name="Buttons">1</property>
     <property name="HelpButton">False</property>
-    <property name="HasSeparator">False</property>
     <child internal-child="VBox">
       <widget class="Gtk.VBox" id="dialog1_VBox">
         <property name="MemberName" />
@@ -5096,7 +5081,7 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.EditPlayerDialog" design-size="254 185">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.EditPlayerDialog" design-size="254 206">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Player Details</property>
     <property name="Icon">resource:longomatch.png</property>
@@ -5106,7 +5091,6 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
     <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">1</property>
     <property name="HelpButton">False</property>
-    <property name="HasSeparator">False</property>
     <child internal-child="VBox">
       <widget class="Gtk.VBox" id="dialog1_VBox">
         <property name="MemberName" />
@@ -5161,7 +5145,6 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
     <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">1</property>
     <property name="HelpButton">False</property>
-    <property name="HasSeparator">False</property>
     <child internal-child="VBox">
       <widget class="Gtk.VBox" id="dialog1_VBox">
         <property name="MemberName" />
@@ -5175,6 +5158,8 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
           <packing>
             <property name="Position">0</property>
             <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
           </packing>
         </child>
       </widget>
@@ -5234,7 +5219,7 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.DrawingTool" design-size="600 549">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.DrawingTool" design-size="600 579">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Drawing Tool</property>
     <property name="Icon">resource:longomatch.png</property>
@@ -5245,7 +5230,6 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
     <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">1</property>
     <property name="HelpButton">False</property>
-    <property name="HasSeparator">False</property>
     <child internal-child="VBox">
       <widget class="Gtk.VBox" id="dialog1_VBox">
         <property name="MemberName" />
@@ -5326,7 +5310,7 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
               </widget>
               <packing>
                 <property name="Position">1</property>
-                <property name="AutoSize">True</property>
+                <property name="AutoSize">False</property>
               </packing>
             </child>
           </widget>
@@ -5481,14 +5465,13 @@ You can add new tags using the text entry and clicking "Add Tag"</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.TaggerDialog" design-size="426 249">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.TaggerDialog" design-size="426 267">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Tag play</property>
     <property name="Icon">stock:longomatch Menu</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Buttons">1</property>
     <property name="HelpButton">False</property>
-    <property name="HasSeparator">False</property>
     <child internal-child="VBox">
       <widget class="Gtk.VBox" id="dialog1_VBox">
         <property name="MemberName" />
@@ -5501,6 +5484,8 @@ You can add new tags using the text entry and clicking "Add Tag"</property>
           <packing>
             <property name="Position">0</property>
             <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
           </packing>
         </child>
       </widget>
@@ -5623,7 +5608,7 @@ You can add new tags using the text entry and clicking "Add Tag"</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.ProjectSelectionDialog" design-size="298 176">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.ProjectSelectionDialog" design-size="298 179">
     <property name="MemberName" />
     <property name="Title" translatable="yes">New Project</property>
     <property name="Icon">stock:longomatch Menu</property>
@@ -5634,7 +5619,6 @@ You can add new tags using the text entry and clicking "Add Tag"</property>
     <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
-    <property name="HasSeparator">False</property>
     <child internal-child="VBox">
       <widget class="Gtk.VBox" id="dialog1_VBox">
         <property name="MemberName" />
@@ -5823,7 +5807,6 @@ You can add new tags using the text entry and clicking "Add Tag"</property>
     <property name="Modal">True</property>
     <property name="Buttons">1</property>
     <property name="HelpButton">False</property>
-    <property name="HasSeparator">False</property>
     <child internal-child="VBox">
       <widget class="Gtk.VBox" id="dialog1_VBox">
         <property name="MemberName" />

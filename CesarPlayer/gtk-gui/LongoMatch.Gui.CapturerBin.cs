@@ -92,14 +92,14 @@ namespace LongoMatch.Gui {
             this.pausebutton.UseUnderline = true;
             // Container child pausebutton.Gtk.Container+ContainerChild
             Gtk.Alignment w12 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment1.Gtk.Container+ContainerChild
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
             Gtk.HBox w13 = new Gtk.HBox();
             w13.Spacing = 2;
-            // Container child GtkHBox1.Gtk.Container+ContainerChild
+            // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w14 = new Gtk.Image();
             w14.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-pause", Gtk.IconSize.Dialog, 48);
             w13.Add(w14);
-            // Container child GtkHBox1.Gtk.Container+ContainerChild
+            // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w16 = new Gtk.Label();
             w13.Add(w16);
             w12.Add(w13);
@@ -116,14 +116,14 @@ namespace LongoMatch.Gui {
             this.stopbutton.UseUnderline = true;
             // Container child stopbutton.Gtk.Container+ContainerChild
             Gtk.Alignment w21 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment2.Gtk.Container+ContainerChild
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
             Gtk.HBox w22 = new Gtk.HBox();
             w22.Spacing = 2;
-            // Container child GtkHBox2.Gtk.Container+ContainerChild
+            // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w23 = new Gtk.Image();
             w23.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-stop", Gtk.IconSize.Dialog, 48);
             w22.Add(w23);
-            // Container child GtkHBox2.Gtk.Container+ContainerChild
+            // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w25 = new Gtk.Label();
             w22.Add(w25);
             w21.Add(w22);

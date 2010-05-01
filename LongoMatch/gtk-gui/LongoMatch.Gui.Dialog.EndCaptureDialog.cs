@@ -39,7 +39,6 @@ namespace LongoMatch.Gui.Dialog {
             this.Icon = Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Menu, 16);
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.Modal = true;
-            this.HasSeparator = false;
             // Internal child LongoMatch.Gui.Dialog.EndCaptureDialog.VBox
             Gtk.VBox w1 = this.VBox;
             w1.Name = "dialog1_VBox";
@@ -89,7 +88,7 @@ namespace LongoMatch.Gui.Dialog {
             w6.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w7 = new Gtk.Image();
-            w7.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-undo", Gtk.IconSize.Button, 20);
+            w7.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-undo", Gtk.IconSize.Button, 16);
             w6.Add(w7);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w9 = new Gtk.Label();
@@ -109,14 +108,14 @@ namespace LongoMatch.Gui.Dialog {
             this.quitbutton.UseUnderline = true;
             // Container child quitbutton.Gtk.Container+ContainerChild
             Gtk.Alignment w14 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment1.Gtk.Container+ContainerChild
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
             Gtk.HBox w15 = new Gtk.HBox();
             w15.Spacing = 2;
-            // Container child GtkHBox1.Gtk.Container+ContainerChild
+            // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w16 = new Gtk.Image();
-            w16.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-cancel", Gtk.IconSize.Button, 20);
+            w16.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-cancel", Gtk.IconSize.Button, 16);
             w15.Add(w16);
-            // Container child GtkHBox1.Gtk.Container+ContainerChild
+            // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w18 = new Gtk.Label();
             w18.LabelProp = Mono.Unix.Catalog.GetString("Cancel capture");
             w18.UseUnderline = true;
@@ -134,14 +133,14 @@ namespace LongoMatch.Gui.Dialog {
             this.savebutton.UseUnderline = true;
             // Container child savebutton.Gtk.Container+ContainerChild
             Gtk.Alignment w23 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment2.Gtk.Container+ContainerChild
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
             Gtk.HBox w24 = new Gtk.HBox();
             w24.Spacing = 2;
-            // Container child GtkHBox2.Gtk.Container+ContainerChild
+            // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w25 = new Gtk.Image();
-            w25.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-save", Gtk.IconSize.Button, 20);
+            w25.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-save", Gtk.IconSize.Button, 16);
             w24.Add(w25);
-            // Container child GtkHBox2.Gtk.Container+ContainerChild
+            // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w27 = new Gtk.Label();
             w27.LabelProp = Mono.Unix.Catalog.GetString("Stop capture and save project");
             w27.UseUnderline = true;

@@ -1,84 +1,84 @@
-<Project name="CesarPlayer" fileversion="2.0" language="C#" DefaultNamespace="longomatch" clr-version="Net_2_0" targetFramework="2.0" ctype="DotNetProject">
+<Project name="CesarPlayer" fileversion="2.0" DefaultNamespace="longomatch" language="C#" clr-version="Net_2_0" targetFramework="2.0" ctype="DotNetProject">
   <Configurations active="Release">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="." assemblyKeyFile="." assembly="a" />
+      <Output directory="." assembly="a" assemblyKeyFile="." />
       <Build debugmode="True" target="Library" />
-      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <Execution consolepause="True" runwithwarnings="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="True" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
-      <Output directory="bin/Release" assemblyKeyFile="." assembly="CesarPlayer.dll" />
+      <Output directory="bin/Release" assembly="CesarPlayer.dll" assemblyKeyFile="." />
       <Build debugmode="True" target="Library" />
-      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <Execution consolepause="True" runwithwarnings="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="True" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/objects.xml" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="gtk-gui/gui.stetic" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="gtk-gui/generated.cs" subtype="Code" buildaction="Compile" />
-    <File name="Handlers" subtype="Directory" buildaction="Compile" />
-    <File name="Handlers/ErrorHandler.cs" subtype="Code" buildaction="Compile" />
-    <File name="Handlers/Handlers.cs" subtype="Code" buildaction="Compile" />
-    <File name="Handlers/TickHandler.cs" subtype="Code" buildaction="Compile" />
-    <File name="Player" subtype="Directory" buildaction="Compile" />
-    <File name="Player/GstPlayer.cs" subtype="Code" buildaction="Compile" />
-    <File name="Player/IPlayer.cs" subtype="Code" buildaction="Compile" />
-    <File name="Player/GstUseType.cs" subtype="Code" buildaction="Compile" />
-    <File name="Handlers/StateChangedHandler.cs" subtype="Code" buildaction="Compile" />
-    <File name="cesarplayer.key" subtype="Code" buildaction="Nothing" />
-    <File name="Utils" subtype="Directory" buildaction="Compile" />
-    <File name="Utils/TimeString.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui" subtype="Directory" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.PlayerBin.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.VolumeWindow.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/VolumeWindow.cs" subtype="Code" buildaction="Compile" />
-    <File name="Capturer" subtype="Directory" buildaction="Compile" />
-    <File name="Capturer/ErrorHandler.cs" subtype="Code" buildaction="Compile" />
-    <File name="Capturer/ICapturer.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/CapturerBin.cs" subtype="Code" buildaction="Compile" />
-    <File name="MultimediaFactory.cs" subtype="Code" buildaction="Compile" />
-    <File name="Player/ObjectManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="Capturer/ObjectManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="Utils/IFramesCapturer.cs" subtype="Code" buildaction="Compile" />
-    <File name="Utils/FramesCapturer.cs" subtype="Code" buildaction="Compile" />
-    <File name="Utils/IMetadataReader.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/PlayerBin.cs" subtype="Code" buildaction="Compile" />
-    <File name="Capturer/GccAudioEncoderType.cs" subtype="Code" buildaction="Compile" />
-    <File name="Capturer/GccError.cs" subtype="Code" buildaction="Compile" />
-    <File name="Capturer/GccVideoEncoderType.cs" subtype="Code" buildaction="Compile" />
-    <File name="Capturer/GccVideoMuxerType.cs" subtype="Code" buildaction="Compile" />
-    <File name="Editor" subtype="Directory" buildaction="Compile" />
-    <File name="Editor/ErrorHandler.cs" subtype="Code" buildaction="Compile" />
-    <File name="Editor/IVideoEditor.cs" subtype="Code" buildaction="Compile" />
-    <File name="Editor/AudioQuality.cs" subtype="Code" buildaction="Compile" />
-    <File name="Editor/VideoQuality.cs" subtype="Code" buildaction="Compile" />
-    <File name="Editor/PercentCompletedHandler.cs" subtype="Code" buildaction="Compile" />
-    <File name="Editor/GstVideoSplitter.cs" subtype="Code" buildaction="Compile" />
-    <File name="Editor/VideoSegment.cs" subtype="Code" buildaction="Compile" />
-    <File name="Editor/EditorState.cs" subtype="Code" buildaction="Compile" />
-    <File name="Editor/VideoFormat.cs" subtype="Code" buildaction="Compile" />
-    <File name="Editor/VideoMuxer.cs" subtype="Code" buildaction="Compile" />
-    <File name="Editor/VideoCodec.cs" subtype="Code" buildaction="Compile" />
-    <File name="Editor/IMerger.cs" subtype="Code" buildaction="Compile" />
-    <File name="Editor/AudioCodec.cs" subtype="Code" buildaction="Compile" />
-    <File name="Editor/IVideoSplitter.cs" subtype="Code" buildaction="Compile" />
-    <File name="Editor/VideoSplitterType.cs" subtype="Code" buildaction="Compile" />
-    <File name="Utils/MediaFile.cs" subtype="Code" buildaction="Compile" />
-    <File name="Player/GstAspectRatio.cs" subtype="Code" buildaction="Compile" />
-    <File name="Player/GstAudioOutType.cs" subtype="Code" buildaction="Compile" />
-    <File name="Player/GstDVDEvent.cs" subtype="Code" buildaction="Compile" />
-    <File name="Player/GstError.cs" subtype="Code" buildaction="Compile" />
-    <File name="Player/GstMetadataType.cs" subtype="Code" buildaction="Compile" />
-    <File name="Player/GstVideoProperty.cs" subtype="Code" buildaction="Compile" />
-    <File name="Utils/PreviewMediaFile.cs" subtype="Code" buildaction="Compile" />
-    <File name="Capturer/FakeCapturer.cs" subtype="Code" buildaction="Compile" />
-    <File name="Capturer/GstCameraCapturer.cs" subtype="Code" buildaction="Compile" />
-    <File name="Capturer/GccType.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.CapturerBin.cs" subtype="Code" buildaction="Compile" />
-    <File name="Capturer/CaptureProperties.cs" subtype="Code" buildaction="Compile" />
-    <File name="Capturer/LiveSourceTimer.cs" subtype="Code" buildaction="Compile" />
+    <File subtype="Code" buildaction="Compile" name="AssemblyInfo.cs" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="gtk-gui/objects.xml" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="gtk-gui/gui.stetic" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/generated.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Handlers" />
+    <File subtype="Code" buildaction="Compile" name="Handlers/ErrorHandler.cs" />
+    <File subtype="Code" buildaction="Compile" name="Handlers/Handlers.cs" />
+    <File subtype="Code" buildaction="Compile" name="Handlers/TickHandler.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Player" />
+    <File subtype="Code" buildaction="Compile" name="Player/GstPlayer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Player/IPlayer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Player/GstUseType.cs" />
+    <File subtype="Code" buildaction="Compile" name="Handlers/StateChangedHandler.cs" />
+    <File subtype="Code" buildaction="Nothing" name="cesarplayer.key" />
+    <File subtype="Directory" buildaction="Compile" name="Utils" />
+    <File subtype="Code" buildaction="Compile" name="Utils/TimeString.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Gui" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.PlayerBin.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.VolumeWindow.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/VolumeWindow.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Capturer" />
+    <File subtype="Code" buildaction="Compile" name="Capturer/ErrorHandler.cs" />
+    <File subtype="Code" buildaction="Compile" name="Capturer/ICapturer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/CapturerBin.cs" />
+    <File subtype="Code" buildaction="Compile" name="MultimediaFactory.cs" />
+    <File subtype="Code" buildaction="Compile" name="Player/ObjectManager.cs" />
+    <File subtype="Code" buildaction="Compile" name="Capturer/ObjectManager.cs" />
+    <File subtype="Code" buildaction="Compile" name="Utils/IFramesCapturer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Utils/FramesCapturer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Utils/IMetadataReader.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/PlayerBin.cs" />
+    <File subtype="Code" buildaction="Compile" name="Capturer/GccAudioEncoderType.cs" />
+    <File subtype="Code" buildaction="Compile" name="Capturer/GccError.cs" />
+    <File subtype="Code" buildaction="Compile" name="Capturer/GccVideoEncoderType.cs" />
+    <File subtype="Code" buildaction="Compile" name="Capturer/GccVideoMuxerType.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Editor" />
+    <File subtype="Code" buildaction="Compile" name="Editor/ErrorHandler.cs" />
+    <File subtype="Code" buildaction="Compile" name="Editor/IVideoEditor.cs" />
+    <File subtype="Code" buildaction="Compile" name="Editor/AudioQuality.cs" />
+    <File subtype="Code" buildaction="Compile" name="Editor/VideoQuality.cs" />
+    <File subtype="Code" buildaction="Compile" name="Editor/PercentCompletedHandler.cs" />
+    <File subtype="Code" buildaction="Compile" name="Editor/GstVideoSplitter.cs" />
+    <File subtype="Code" buildaction="Compile" name="Editor/VideoSegment.cs" />
+    <File subtype="Code" buildaction="Compile" name="Editor/EditorState.cs" />
+    <File subtype="Code" buildaction="Compile" name="Editor/VideoFormat.cs" />
+    <File subtype="Code" buildaction="Compile" name="Editor/VideoMuxer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Editor/VideoCodec.cs" />
+    <File subtype="Code" buildaction="Compile" name="Editor/IMerger.cs" />
+    <File subtype="Code" buildaction="Compile" name="Editor/AudioCodec.cs" />
+    <File subtype="Code" buildaction="Compile" name="Editor/IVideoSplitter.cs" />
+    <File subtype="Code" buildaction="Compile" name="Editor/VideoSplitterType.cs" />
+    <File subtype="Code" buildaction="Compile" name="Utils/MediaFile.cs" />
+    <File subtype="Code" buildaction="Compile" name="Player/GstAspectRatio.cs" />
+    <File subtype="Code" buildaction="Compile" name="Player/GstAudioOutType.cs" />
+    <File subtype="Code" buildaction="Compile" name="Player/GstDVDEvent.cs" />
+    <File subtype="Code" buildaction="Compile" name="Player/GstError.cs" />
+    <File subtype="Code" buildaction="Compile" name="Player/GstMetadataType.cs" />
+    <File subtype="Code" buildaction="Compile" name="Player/GstVideoProperty.cs" />
+    <File subtype="Code" buildaction="Compile" name="Utils/PreviewMediaFile.cs" />
+    <File subtype="Code" buildaction="Compile" name="Capturer/FakeCapturer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Capturer/GstCameraCapturer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Capturer/GccType.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.CapturerBin.cs" />
+    <File subtype="Code" buildaction="Compile" name="Capturer/CaptureProperties.cs" />
+    <File subtype="Code" buildaction="Compile" name="Capturer/LiveSourceTimer.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
