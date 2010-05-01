@@ -214,18 +214,20 @@ static void
 gst_camera_capturer_apply_resolution (GstCameraCapturer * gcc)
 {
   GstCaps *caps;
-  gchar * caps_string;
-  
-  GST_INFO_OBJECT(gcc, "Changed video resolution to %dx%d@%d/%dfps",
+  gchar *caps_string;
+
+  GST_INFO_OBJECT (gcc, "Changed video resolution to %dx%d@%d/%dfps",
       gcc->priv->output_width, gcc->priv->output_height,
       gcc->priv->output_fps_n, gcc->priv->output_fps_d);
-  
-  caps_string = g_strdup_printf("video/x-raw-yuv, format=(fourcc)I420,width=(int)%d,height=(int)%d", 
+
+  caps_string =
+      g_strdup_printf
+      ("video/x-raw-yuv, format=(fourcc)I420,width=(int)%d,height=(int)%d",
       gcc->priv->output_width, gcc->priv->output_height);
-  caps = gst_caps_from_string(caps_string);
+  caps = gst_caps_from_string (caps_string);
   g_object_set (gcc->priv->camerabin, "filter-caps", caps, NULL);
-  gst_caps_unref(caps);
-  g_free(caps_string);
+  gst_caps_unref (caps);
+  g_free (caps_string);
 }
 
 static void
@@ -233,7 +235,8 @@ gst_camera_capturer_set_video_bit_rate (GstCameraCapturer * gcc, gint bitrate)
 {
   gcc->priv->video_bitrate = bitrate;
   g_object_set (gcc->priv->videoenc, "bitrate", gcc->priv->video_bitrate, NULL);
-  GST_INFO_OBJECT (gcc,"Changed video bitrate to :\n%d", gcc->priv->video_bitrate);
+  GST_INFO_OBJECT (gcc, "Changed video bitrate to :\n%d",
+      gcc->priv->video_bitrate);
 
 }
 
@@ -243,7 +246,8 @@ gst_camera_capturer_set_audio_bit_rate (GstCameraCapturer * gcc, gint bitrate)
 
   gcc->priv->audio_bitrate = bitrate;
   g_object_set (gcc->priv->audioenc, "bitrate", bitrate, NULL);
-  GST_INFO_OBJECT (gcc,"Changed audio bitrate to :\n%d", gcc->priv->audio_bitrate);
+  GST_INFO_OBJECT (gcc, "Changed audio bitrate to :\n%d",
+      gcc->priv->audio_bitrate);
 
 }
 
@@ -253,7 +257,7 @@ gst_camera_capturer_set_output_file (GstCameraCapturer * gcc,
 {
   gcc->priv->output_file = g_strdup (file);
   g_object_set (gcc->priv->camerabin, "filename", file, NULL);
-  GST_INFO_OBJECT (gcc,"Changed output filename to :\n%s", file);
+  GST_INFO_OBJECT (gcc, "Changed output filename to :\n%s", file);
 
 }
 
@@ -817,14 +821,14 @@ gboolean
 gst_camera_capture_videosrc_buffer_probe (GstPad * pad, GstBuffer * buf,
     gpointer data)
 {
-  GstCameraCapturer *gcc = GST_CAMERA_CAPTURER(data);
+  GstCameraCapturer *gcc = GST_CAMERA_CAPTURER (data);
 
-  if (gcc->priv->last_buffer){
-    gst_buffer_unref(gcc->priv->last_buffer);
+  if (gcc->priv->last_buffer) {
+    gst_buffer_unref (gcc->priv->last_buffer);
     gcc->priv->last_buffer = NULL;
   }
 
-  gst_buffer_ref(buf);
+  gst_buffer_ref (buf);
   gcc->priv->last_buffer = buf;
 
   return TRUE;
@@ -835,7 +839,7 @@ gst_camera_capturer_new (gchar * filename, GError ** err)
 {
   GstCameraCapturer *gcc = NULL;
   GstPad *videosrcpad;
-  gchar * plugin;
+  gchar *plugin;
 
   gcc = g_object_new (GST_TYPE_CAMERA_CAPTURER, NULL);
 
@@ -847,35 +851,35 @@ gst_camera_capturer_new (gchar * filename, GError ** err)
   }
 
   /* Setup */
-  GST_INFO_OBJECT (gcc,"Initializing camerabin");
+  GST_INFO_OBJECT (gcc, "Initializing camerabin");
   gcc->priv->camerabin = gst_element_factory_make ("camerabin", "camerabin");
   gst_bin_add (GST_BIN (gcc->priv->main_pipeline), gcc->priv->camerabin);
-  if (!gcc->priv->camerabin){
+  if (!gcc->priv->camerabin) {
     plugin = "camerabin";
     goto missing_plugin;
   }
-  GST_INFO_OBJECT (gcc,"Setting capture mode to \"video\"");
+  GST_INFO_OBJECT (gcc, "Setting capture mode to \"video\"");
   g_object_set (gcc->priv->camerabin, "mode", 1, NULL);
 
-  GST_INFO_OBJECT (gcc,"Setting video source ");
+  GST_INFO_OBJECT (gcc, "Setting video source ");
   gcc->priv->videosrc = gst_element_factory_make (VIDEOSRC, "videosource");
   g_object_set (gcc->priv->camerabin, "video-source", gcc->priv->videosrc,
       NULL);
-  if (!gcc->priv->videosrc){
+  if (!gcc->priv->videosrc) {
     plugin = VIDEOSRC;
     goto missing_plugin;
   }
   g_object_set (gcc->priv->videosrc, "do-timestamp", TRUE, NULL);
 
-  GST_INFO_OBJECT (gcc,"Setting audio source ");
+  GST_INFO_OBJECT (gcc, "Setting audio source ");
   gcc->priv->audiosrc = gst_element_factory_make (AUDIOSRC, "audiosource");
   g_object_set (gcc->priv->camerabin, "audio-source", gcc->priv->audiosrc,
       NULL);
-  if (!gcc->priv->audiosrc){
+  if (!gcc->priv->audiosrc) {
     plugin = AUDIOSRC;
     goto missing_plugin;
   }
-  GST_INFO_OBJECT (gcc,"Setting capture mode to \"video\"");
+  GST_INFO_OBJECT (gcc, "Setting capture mode to \"video\"");
   g_object_set (gcc->priv->camerabin, "mode", 1, NULL);
 
   g_object_set (gcc->priv->camerabin, "mute", TRUE, NULL);
@@ -884,7 +888,7 @@ gst_camera_capturer_new (gchar * filename, GError ** err)
   gui_thread = g_thread_self ();
 
   /*Connect bus signals */
-  GST_INFO_OBJECT (gcc,"Connecting bus signals");
+  GST_INFO_OBJECT (gcc, "Connecting bus signals");
   gcc->priv->bus = gst_element_get_bus (GST_ELEMENT (gcc->priv->main_pipeline));
   gst_bus_add_signal_watch (gcc->priv->bus);
   gcc->priv->sig_bus_async =
@@ -900,8 +904,8 @@ gst_camera_capturer_new (gchar * filename, GError ** err)
 
   /* Install pad probe to store the last buffer */
   videosrcpad = gst_element_get_pad (gcc->priv->videosrc, "src");
-  gst_pad_add_buffer_probe (videosrcpad, 
-    G_CALLBACK (gst_camera_capture_videosrc_buffer_probe), gcc);
+  gst_pad_add_buffer_probe (videosrcpad,
+      G_CALLBACK (gst_camera_capture_videosrc_buffer_probe), gcc);
   return gcc;
 
 /* Missing plugin */
@@ -909,7 +913,7 @@ missing_plugin:
   {
     g_set_error (err, GCC_ERROR, GCC_ERROR_PLUGIN_LOAD,
         ("Failed to create a GStreamer element. "
-            "The element \"%s\" is missing. " 
+            "The element \"%s\" is missing. "
             "Please check your GStreamer installation."), plugin);
     g_object_ref_sink (gcc);
     g_object_unref (gcc);
@@ -1008,8 +1012,7 @@ gst_camera_capturer_set_audio_encoder (GstCameraCapturer * gcc,
 
   switch (type) {
     case GCC_AUDIO_ENCODER_MP3:
-      gcc->priv->audioenc =
-          gst_element_factory_make ("lame", "audio-encoder");
+      gcc->priv->audioenc = gst_element_factory_make ("lame", "audio-encoder");
       name = "Mp3 audio encoder";
       break;
 
@@ -1109,7 +1112,7 @@ gcc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
 
     case GST_MESSAGE_EOS:
     {
-      GST_INFO_OBJECT (gcc,"EOS message");
+      GST_INFO_OBJECT (gcc, "EOS message");
       g_signal_emit (gcc, gcc_signals[SIGNAL_EOS], 0);
       break;
     }
@@ -1170,7 +1173,7 @@ gcc_update_interface_implementations (GstCameraCapturer * gcc)
     return;
   }
 
-  GST_INFO_OBJECT (gcc,"Retrieving xoverlay from bin ...");
+  GST_INFO_OBJECT (gcc, "Retrieving xoverlay from bin ...");
   element = gst_bin_get_by_interface (GST_BIN (gcc->priv->camerabin),
       GST_TYPE_X_OVERLAY);
 
@@ -1240,48 +1243,48 @@ gcc_parse_video_stream_info (GstCaps * caps, GstCameraCapturer * gcc)
   return 1;
 }
 
-GList* 
-gst_camera_capturer_enum_devices(gchar* device_name)
+GList *
+gst_camera_capturer_enum_devices (gchar * device_name)
 {
-  GstElement* device; 
-  GstPropertyProbe* probe;
-  GValueArray* va; 
-  GList* list=NULL; 
-  guint i=0;  
-  
+  GstElement *device;
+  GstPropertyProbe *probe;
+  GValueArray *va;
+  GList *list = NULL;
+  guint i = 0;
+
   device = gst_element_factory_make (device_name, "source");
-  gst_element_set_state(device, GST_STATE_READY);
-  gst_element_get_state(device, NULL, NULL, 5 * GST_SECOND);
-  if (!device || !GST_IS_PROPERTY_PROBE(device))
+  gst_element_set_state (device, GST_STATE_READY);
+  gst_element_get_state (device, NULL, NULL, 5 * GST_SECOND);
+  if (!device || !GST_IS_PROPERTY_PROBE (device))
     goto finish;
   probe = GST_PROPERTY_PROBE (device);
   va = gst_property_probe_get_values_name (probe, "device-name");
   if (!va)
     goto finish;
-  for(i=0; i < va->n_values; ++i) {
-    GValue* v = g_value_array_get_nth(va, i);
-    list = g_list_append(list, g_string_new(g_value_get_string(v)));
+  for (i = 0; i < va->n_values; ++i) {
+    GValue *v = g_value_array_get_nth (va, i);
+    list = g_list_append (list, g_string_new (g_value_get_string (v)));
   }
-  g_value_array_free(va);
- 
+  g_value_array_free (va);
+
 finish:
- {
-  gst_element_set_state (device, GST_STATE_NULL);
-  gst_object_unref(GST_OBJECT (device));
-  return list;
- }
+  {
+    gst_element_set_state (device, GST_STATE_NULL);
+    gst_object_unref (GST_OBJECT (device));
+    return list;
+  }
 }
 
-GList* 
-gst_camera_capturer_enum_video_devices(void)
+GList *
+gst_camera_capturer_enum_video_devices (void)
 {
-  return gst_camera_capturer_enum_devices(VIDEOSRC); 
+  return gst_camera_capturer_enum_devices (VIDEOSRC);
 }
 
-GList* 
-gst_camera_capturer_enum_audio_devices(void)
-{ 
-  return gst_camera_capturer_enum_devices(AUDIOSRC); 
+GList *
+gst_camera_capturer_enum_audio_devices (void)
+{
+  return gst_camera_capturer_enum_devices (AUDIOSRC);
 }
 
 gboolean
@@ -1292,12 +1295,11 @@ gst_camera_capturer_can_get_frames (GstCameraCapturer * gcc, GError ** error)
   g_return_val_if_fail (GST_IS_ELEMENT (gcc->priv->camerabin), FALSE);
 
   /* check for video */
-  if (!gcc->priv->media_has_video)
-    {
-      g_set_error_literal (error, GCC_ERROR, GCC_ERROR_GENERIC,
-			   "Media contains no supported video streams.");
-      return FALSE;
-    }
+  if (!gcc->priv->media_has_video) {
+    g_set_error_literal (error, GCC_ERROR, GCC_ERROR_GENERIC,
+        "Media contains no supported video streams.");
+    return FALSE;
+  }
   return TRUE;
 }
 
@@ -1331,12 +1333,11 @@ gst_camera_capturer_get_current_frame (GstCameraCapturer * gcc)
   gst_element_get_state (gcc->priv->camerabin, NULL, NULL, -1);
 
   /* no video info */
-  if (!gcc->priv->video_width || !gcc->priv->video_height)
-    {
-      GST_DEBUG ("Could not take screenshot: %s", "no video info");
-      g_warning ("Could not take screenshot: %s", "no video info");
-      return NULL;
-    }
+  if (!gcc->priv->video_width || !gcc->priv->video_height) {
+    GST_DEBUG ("Could not take screenshot: %s", "no video info");
+    g_warning ("Could not take screenshot: %s", "no video info");
+    return NULL;
+  }
 
   /* get frame */
   last_buffer = gcc->priv->last_buffer;
@@ -1356,25 +1357,22 @@ gst_camera_capturer_get_current_frame (GstCameraCapturer * gcc)
 
   /* convert to our desired format (RGB24) */
   to_caps = gst_caps_new_simple ("video/x-raw-rgb",
-				 "bpp", G_TYPE_INT, 24,
-				 "depth", G_TYPE_INT, 24,
-				 /* Note: we don't ask for a specific width/height here, so that
-				  * videoscale can adjust dimensions from a non-1/1 pixel aspect
-				  * ratio to a 1/1 pixel-aspect-ratio */
-				 "pixel-aspect-ratio", GST_TYPE_FRACTION, 1,
-				 1, "endianness", G_TYPE_INT, G_BIG_ENDIAN,
-				 "red_mask", G_TYPE_INT, 0xff0000,
-				 "green_mask", G_TYPE_INT, 0x00ff00,
-				 "blue_mask", G_TYPE_INT, 0x0000ff, NULL);
+      "bpp", G_TYPE_INT, 24, "depth", G_TYPE_INT, 24,
+      /* Note: we don't ask for a specific width/height here, so that
+       * videoscale can adjust dimensions from a non-1/1 pixel aspect
+       * ratio to a 1/1 pixel-aspect-ratio */
+      "pixel-aspect-ratio", GST_TYPE_FRACTION, 1,
+      1, "endianness", G_TYPE_INT, G_BIG_ENDIAN,
+      "red_mask", G_TYPE_INT, 0xff0000,
+      "green_mask", G_TYPE_INT, 0x00ff00,
+      "blue_mask", G_TYPE_INT, 0x0000ff, NULL);
 
-  if (gcc->priv->video_fps_n > 0 && gcc->priv->video_fps_d > 0)
-    {
-      gst_caps_set_simple (to_caps, "framerate", GST_TYPE_FRACTION,
-			   gcc->priv->video_fps_n, gcc->priv->video_fps_d,
-			   NULL);
-    }
+  if (gcc->priv->video_fps_n > 0 && gcc->priv->video_fps_d > 0) {
+    gst_caps_set_simple (to_caps, "framerate", GST_TYPE_FRACTION,
+        gcc->priv->video_fps_n, gcc->priv->video_fps_d, NULL);
+  }
 
-  GST_DEBUG ("frame caps: %" GST_PTR_FORMAT, 
+  GST_DEBUG ("frame caps: %" GST_PTR_FORMAT,
       GST_BUFFER_CAPS (gcc->priv->last_buffer));
   GST_DEBUG ("pixbuf caps: %" GST_PTR_FORMAT, to_caps);
 
@@ -1384,19 +1382,17 @@ gst_camera_capturer_get_current_frame (GstCameraCapturer * gcc)
   gst_caps_unref (to_caps);
   gst_buffer_unref (last_buffer);
 
-  if (!buf)
-    {
-      GST_DEBUG ("Could not take screenshot: %s", "conversion failed");
-      g_warning ("Could not take screenshot: %s", "conversion failed");
-      return NULL;
-    }
+  if (!buf) {
+    GST_DEBUG ("Could not take screenshot: %s", "conversion failed");
+    g_warning ("Could not take screenshot: %s", "conversion failed");
+    return NULL;
+  }
 
-  if (!GST_BUFFER_CAPS (buf))
-    {
-      GST_DEBUG ("Could not take screenshot: %s", "no caps on output buffer");
-      g_warning ("Could not take screenshot: %s", "no caps on output buffer");
-      return NULL;
-    }
+  if (!GST_BUFFER_CAPS (buf)) {
+    GST_DEBUG ("Could not take screenshot: %s", "no caps on output buffer");
+    g_warning ("Could not take screenshot: %s", "no caps on output buffer");
+    return NULL;
+  }
 
   s = gst_caps_get_structure (GST_BUFFER_CAPS (buf), 0);
   gst_structure_get_int (s, "width", &outwidth);
