@@ -5577,11 +5577,12 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), NULL);
 
-  /* when used as thumbnailer, wait for pending seeks to complete */
-  if (bvw->priv->use_type == BVW_USE_TYPE_CAPTURE)
-    {
-      gst_element_get_state (bvw->priv->play, NULL, NULL, -1);
-    }
+  /*[> when used as thumbnailer, wait for pending seeks to complete <]*/
+  /*if (bvw->priv->use_type == BVW_USE_TYPE_CAPTURE)*/
+    /*{*/
+      /*gst_element_get_state (bvw->priv->play, NULL, NULL, -1);*/
+    /*}*/
+  gst_element_get_state (bvw->priv->play, NULL, NULL, -1);
 
   /* no video info */
   if (!bvw->priv->video_width || !bvw->priv->video_height)
