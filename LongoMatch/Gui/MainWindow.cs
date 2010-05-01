@@ -1,4 +1,4 @@
-﻿// MainWindow.cs
+// MainWindow.cs
 //
 //  Copyright (C) 2007-2009 Andoni Morales Alastruey
 //
@@ -112,53 +112,60 @@ namespace LongoMatch.Gui
 		#endregion
 		
 		#region Private Methods
-		private void SetProject(Project project, ProjectType projectType, CapturePropertiesStruct props) {
-			CloseOpenedProject(true);
+		private void SetProject (Project project, ProjectType projectType, CapturePropertiesStruct props)
+		{
+			CloseOpenedProject (true);
 			openedProject = project;
 			this.projectType = projectType;
 			eManager.OpenedProject = project;
 			eManager.OpenedProjectType = projectType;
-			if (project!=null) {
-				if (projectType == ProjectType.FileProject){
+			if (project != null) {
+				if (projectType == ProjectType.FileProject) {
 					// Check if the file associated to the project exists
-					if (!File.Exists(project.File.FilePath)) {
-						MessagePopup.PopupMessage(this, MessageType.Warning,
-						                          Catalog.GetString("The file associated to this project doesn't exist.")+"\n"
-						                          +Catalog.GetString("If the location of the file has changed try to edit it with the database manager."));
-						CloseOpenedProject(true);
+					if (!File.Exists (project.File.FilePath)) {
+						MessagePopup.PopupMessage (this, MessageType.Warning,
+						                          Catalog.GetString ("The file associated to this project doesn't exist.") + "\n"
+						                          + Catalog.GetString ("If the location of the file has changed try to edit it with the database manager."));
+						CloseOpenedProject (true);
 					} else {
-						Title = System.IO.Path.GetFileNameWithoutExtension(project.File.FilePath) + " - LongoMatch";
+						Title = System.IO.Path.GetFileNameWithoutExtension (project.File.FilePath) + " - LongoMatch";
 						try {
-							playerbin1.Open(project.File.FilePath);							
+							playerbin1.Open (project.File.FilePath);
 						}
 						catch (GLib.GException ex) {
-							MessagePopup.PopupMessage(this, MessageType.Error,
-							                          Catalog.GetString("An error occurred opening this project:")+"\n"+ex.Message);
-							CloseOpenedProject(true);
+							MessagePopup.PopupMessage (this, MessageType.Error,
+							                          Catalog.GetString ("An error occurred opening this project:") + "\n" + ex.Message);
+							CloseOpenedProject (true);
 							return;
 						}
 						if (project.File.HasVideo)
 							playerbin1.LogoMode = true;
 						else
-							playerbin1.LogoMode = false;							
+							playerbin1.LogoMode = false;
 						if (project.File.HasVideo)
 							playerbin1.LogoMode = false;
 						timelinewidget1.Project = project;
 						treewidget1.ProjectIsLive = false;
 						localplayerslisttreewidget.ProjectIsLive = false;
 						visitorplayerslisttreewidget.ProjectIsLive = false;
-						tagstreewidget1.ProjectIsLive = false;						
-					} 
-				}else {
+						tagstreewidget1.ProjectIsLive = false;
+					}
+				} else {
 					Title = "LongoMatch";
 					capturerBin.CaptureFinished += delegate {
-						CloseOpenedProject(true);	
+						CloseOpenedProject (true); 
 					};
-					if (projectType == ProjectType.CaptureProject){
+					if (projectType == ProjectType.CaptureProject) {
 						capturerBin.OutputFile = project.File.FilePath;
 						capturerBin.CaptureProperties = props;
-						capturerBin.Type = CapturerType.DVCAM;
-					} else 
+						try {
+							capturerBin.Type = CapturerType.DVCAM;
+						} catch (Exception ex) {
+							MessagePopup.PopupMessage (this, MessageType.Error, ex.Message);
+							CloseOpenedProject (false);
+							return;
+						}
+					} else
 						capturerBin.Type = CapturerType.FAKE;
 					playerbin1.Visible = false;
 					capturerBin.Visible = true;
