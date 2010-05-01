@@ -20,6 +20,7 @@
 
 using System;
 using LongoMatch.Video.Handlers;
+using Gdk;
 
 namespace LongoMatch.Video.Capturer
 {
@@ -56,6 +57,10 @@ namespace LongoMatch.Video.Capturer
 		
 		int CurrentTime {
 			get ;
+		}
+		
+		Pixbuf CurrentFrame {
+			get;
 		}
 		
 		bool SetVideoEncoder(LongoMatch.Video.Capturer.GccVideoEncoderType type);

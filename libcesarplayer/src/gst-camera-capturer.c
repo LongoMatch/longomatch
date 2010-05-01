@@ -32,7 +32,7 @@
 
 #include "gst-camera-capturer.h"
 #include "gstvideowidget.h"
-
+#include "gstscreenshot.h"
 
 /*Default video source*/
 #ifdef WIN32
@@ -97,6 +97,8 @@ struct GstCameraCapturerPrivate
   gboolean media_has_video;
   gboolean media_has_audio;
 
+  /* Snapshots */
+  GstBuffer *last_buffer;
 
   /*GStreamer elements */
   GstElement *main_pipeline;
@@ -164,6 +166,7 @@ gst_camera_capturer_init (GstCameraCapturer * object)
   priv->output_fps_d = 1;
   priv->audio_bitrate = 128;
   priv->video_bitrate = 5000;
+  priv->last_buffer = NULL;
 
   priv->lock = g_mutex_new ();
 }
@@ -191,6 +194,9 @@ gst_camera_capturer_finalize (GObject * object)
     g_source_remove (gcc->priv->interface_update_id);
     gcc->priv->interface_update_id = 0;
   }
+
+  if (gcc->priv->last_buffer != NULL)
+    gst_buffer_unref (gcc->priv->last_buffer);
 
   if (gcc->priv->main_pipeline != NULL
       && GST_IS_ELEMENT (gcc->priv->main_pipeline)) {
@@ -807,10 +813,28 @@ gst_camera_capturer_error_quark (void)
   return q;
 }
 
+gboolean
+gst_camera_capture_videosrc_buffer_probe (GstPad * pad, GstBuffer * buf,
+    gpointer data)
+{
+  GstCameraCapturer *gcc = GST_CAMERA_CAPTURER(data);
+
+  if (gcc->priv->last_buffer){
+    gst_buffer_unref(gcc->priv->last_buffer);
+    gcc->priv->last_buffer = NULL;
+  }
+
+  gst_buffer_ref(buf);
+  gcc->priv->last_buffer = buf;
+
+  return TRUE;
+}
+
 GstCameraCapturer *
 gst_camera_capturer_new (gchar * filename, GError ** err)
 {
   GstCameraCapturer *gcc = NULL;
+  GstPad *videosrcpad;
   gchar * plugin;
 
   gcc = g_object_new (GST_TYPE_CAMERA_CAPTURER, NULL);
@@ -874,6 +898,10 @@ gst_camera_capturer_new (gchar * filename, GError ** err)
       g_signal_connect (gcc->priv->bus, "sync-message::element",
       G_CALLBACK (gcc_element_msg_sync), gcc);
 
+  /* Install pad probe to store the last buffer */
+  videosrcpad = gst_element_get_pad (gcc->priv->videosrc, "src");
+  gst_pad_add_buffer_probe (videosrcpad, 
+    G_CALLBACK (gst_camera_capture_videosrc_buffer_probe), gcc);
   return gcc;
 
 /* Missing plugin */
@@ -1256,3 +1284,135 @@ gst_camera_capturer_enum_audio_devices(void)
   return gst_camera_capturer_enum_devices(AUDIOSRC); 
 }
 
+gboolean
+gst_camera_capturer_can_get_frames (GstCameraCapturer * gcc, GError ** error)
+{
+  g_return_val_if_fail (gcc != NULL, FALSE);
+  g_return_val_if_fail (GST_IS_CAMERA_CAPTURER (gcc), FALSE);
+  g_return_val_if_fail (GST_IS_ELEMENT (gcc->priv->camerabin), FALSE);
+
+  /* check for video */
+  if (!gcc->priv->media_has_video)
+    {
+      g_set_error_literal (error, GCC_ERROR, GCC_ERROR_GENERIC,
+			   "Media contains no supported video streams.");
+      return FALSE;
+    }
+  return TRUE;
+}
+
+static void
+destroy_pixbuf (guchar * pix, gpointer data)
+{
+  gst_buffer_unref (GST_BUFFER (data));
+}
+
+void
+gst_camera_capturer_unref_pixbuf (GdkPixbuf * pixbuf)
+{
+  gdk_pixbuf_unref (pixbuf);
+}
+
+GdkPixbuf *
+gst_camera_capturer_get_current_frame (GstCameraCapturer * gcc)
+{
+  GstStructure *s;
+  GdkPixbuf *pixbuf;
+  GstBuffer *last_buffer;
+  GstBuffer *buf;
+  GstCaps *to_caps;
+  gint outwidth = 0;
+  gint outheight = 0;
+
+  g_return_val_if_fail (gcc != NULL, NULL);
+  g_return_val_if_fail (GST_IS_CAMERA_CAPTURER (gcc), NULL);
+  g_return_val_if_fail (GST_IS_ELEMENT (gcc->priv->camerabin), NULL);
+
+  gst_element_get_state (gcc->priv->camerabin, NULL, NULL, -1);
+
+  /* no video info */
+  if (!gcc->priv->video_width || !gcc->priv->video_height)
+    {
+      GST_DEBUG ("Could not take screenshot: %s", "no video info");
+      g_warning ("Could not take screenshot: %s", "no video info");
+      return NULL;
+    }
+
+  /* get frame */
+  last_buffer = gcc->priv->last_buffer;
+  gst_buffer_ref (last_buffer);
+
+  if (!last_buffer) {
+    GST_DEBUG ("Could not take screenshot: %s", "no last video frame");
+    g_warning ("Could not take screenshot: %s", "no last video frame");
+    return NULL;
+  }
+
+  if (GST_BUFFER_CAPS (last_buffer) == NULL) {
+    GST_DEBUG ("Could not take screenshot: %s", "no caps on buffer");
+    g_warning ("Could not take screenshot: %s", "no caps on buffer");
+    return NULL;
+  }
+
+  /* convert to our desired format (RGB24) */
+  to_caps = gst_caps_new_simple ("video/x-raw-rgb",
+				 "bpp", G_TYPE_INT, 24,
+				 "depth", G_TYPE_INT, 24,
+				 /* Note: we don't ask for a specific width/height here, so that
+				  * videoscale can adjust dimensions from a non-1/1 pixel aspect
+				  * ratio to a 1/1 pixel-aspect-ratio */
+				 "pixel-aspect-ratio", GST_TYPE_FRACTION, 1,
+				 1, "endianness", G_TYPE_INT, G_BIG_ENDIAN,
+				 "red_mask", G_TYPE_INT, 0xff0000,
+				 "green_mask", G_TYPE_INT, 0x00ff00,
+				 "blue_mask", G_TYPE_INT, 0x0000ff, NULL);
+
+  if (gcc->priv->video_fps_n > 0 && gcc->priv->video_fps_d > 0)
+    {
+      gst_caps_set_simple (to_caps, "framerate", GST_TYPE_FRACTION,
+			   gcc->priv->video_fps_n, gcc->priv->video_fps_d,
+			   NULL);
+    }
+
+  GST_DEBUG ("frame caps: %" GST_PTR_FORMAT, 
+      GST_BUFFER_CAPS (gcc->priv->last_buffer));
+  GST_DEBUG ("pixbuf caps: %" GST_PTR_FORMAT, to_caps);
+
+  /* bvw_frame_conv_convert () takes ownership of the buffer passed */
+  buf = bvw_frame_conv_convert (last_buffer, to_caps);
+
+  gst_caps_unref (to_caps);
+  gst_buffer_unref (last_buffer);
+
+  if (!buf)
+    {
+      GST_DEBUG ("Could not take screenshot: %s", "conversion failed");
+      g_warning ("Could not take screenshot: %s", "conversion failed");
+      return NULL;
+    }
+
+  if (!GST_BUFFER_CAPS (buf))
+    {
+      GST_DEBUG ("Could not take screenshot: %s", "no caps on output buffer");
+      g_warning ("Could not take screenshot: %s", "no caps on output buffer");
+      return NULL;
+    }
+
+  s = gst_caps_get_structure (GST_BUFFER_CAPS (buf), 0);
+  gst_structure_get_int (s, "width", &outwidth);
+  gst_structure_get_int (s, "height", &outheight);
+  g_return_val_if_fail (outwidth > 0 && outheight > 0, NULL);
+
+  /* create pixbuf from that - we don't want to use the gstreamer's buffer
+   * because the GTK# bindings won't call the destroy funtion */
+  pixbuf = gdk_pixbuf_new_from_data (GST_BUFFER_DATA (buf),
+      GDK_COLORSPACE_RGB, FALSE, 8, outwidth,
+      outheight, GST_ROUND_UP_4 (outwidth * 3), destroy_pixbuf, buf);
+
+  if (!pixbuf) {
+    GST_DEBUG ("Could not take screenshot: %s", "could not create pixbuf");
+    g_warning ("Could not take screenshot: %s", "could not create pixbuf");
+  }
+
+  return pixbuf;
+}

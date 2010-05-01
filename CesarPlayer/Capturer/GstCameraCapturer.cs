@@ -365,6 +365,23 @@ namespace LongoMatch.Video.Capturer {
 		}
 		
 		
+		[DllImport("libcesarplayer.dll")]
+		static extern IntPtr gst_camera_capturer_get_current_frame(IntPtr raw);
+		[DllImport("libcesarplayer.dll")]
+		static extern IntPtr gst_camera_capturer_unref_pixbuf(IntPtr raw);
+		
+		public Gdk.Pixbuf CurrentFrame {
+			get {
+				IntPtr raw_ret = gst_camera_capturer_get_current_frame (Handle);
+				Gdk.Pixbuf p = GLib.Object.GetObject (raw_ret) as Gdk.Pixbuf;
+				/* The refcount for p is now 2. We need to decrease the counter to 1
+				 * so that p.Dipose() sets it to 0 and triggers the pixbuf destroy function
+				 * that frees the associated data*/ 
+				gst_camera_capturer_unref_pixbuf (raw_ret);
+				return p;
+			}
+		}		
+		
 		static GstCameraCapturer ()
 		{
 			LongoMatch.GtkSharp.Capturer.ObjectManager.Initialize ();

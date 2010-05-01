@@ -19,6 +19,7 @@
 using System;
 using Mono.Unix;
 using GLib;
+using Gdk;
 using LongoMatch.Video.Handlers;
 
 namespace LongoMatch.Video.Capturer
@@ -89,6 +90,9 @@ namespace LongoMatch.Video.Capturer
 			set {}
 		}		
 		
+		public Pixbuf CurrentFrame {
+			get {return null;}
+		}
 		public bool SetVideoEncoder(LongoMatch.Video.Capturer.GccVideoEncoderType type){
 			return true;
 		}
