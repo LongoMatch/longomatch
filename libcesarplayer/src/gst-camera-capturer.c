@@ -811,25 +811,25 @@ GstCameraCapturer *
 gst_camera_capturer_new (gchar * filename, GError ** err)
 {
   GstCameraCapturer *gcc = NULL;
+  gchar * plugin;
 
   gcc = g_object_new (GST_TYPE_CAMERA_CAPTURER, NULL);
 
   gcc->priv->main_pipeline = gst_pipeline_new ("main_pipeline");
 
   if (!gcc->priv->main_pipeline) {
-    g_set_error (err, GCC_ERROR, GCC_ERROR_PLUGIN_LOAD,
-        ("Failed to create a GStreamer Bin. "
-            "Please check your GStreamer installation."));
-    g_object_ref_sink (gcc);
-    g_object_unref (gcc);
-    return NULL;
+    plugin = "pipeline";
+    goto missing_plugin;
   }
 
   /* Setup */
   GST_INFO_OBJECT (gcc,"Initializing camerabin");
   gcc->priv->camerabin = gst_element_factory_make ("camerabin", "camerabin");
   gst_bin_add (GST_BIN (gcc->priv->main_pipeline), gcc->priv->camerabin);
-
+  if (!gcc->priv->camerabin){
+    plugin = "camerabin";
+    goto missing_plugin;
+  }
   GST_INFO_OBJECT (gcc,"Setting capture mode to \"video\"");
   g_object_set (gcc->priv->camerabin, "mode", 1, NULL);
 
@@ -837,13 +837,20 @@ gst_camera_capturer_new (gchar * filename, GError ** err)
   gcc->priv->videosrc = gst_element_factory_make (VIDEOSRC, "videosource");
   g_object_set (gcc->priv->camerabin, "video-source", gcc->priv->videosrc,
       NULL);
+  if (!gcc->priv->videosrc){
+    plugin = VIDEOSRC;
+    goto missing_plugin;
+  }
   g_object_set (gcc->priv->videosrc, "do-timestamp", TRUE, NULL);
 
   GST_INFO_OBJECT (gcc,"Setting audio source ");
   gcc->priv->audiosrc = gst_element_factory_make (AUDIOSRC, "audiosource");
   g_object_set (gcc->priv->camerabin, "audio-source", gcc->priv->audiosrc,
       NULL);
-
+  if (!gcc->priv->audiosrc){
+    plugin = AUDIOSRC;
+    goto missing_plugin;
+  }
   GST_INFO_OBJECT (gcc,"Setting capture mode to \"video\"");
   g_object_set (gcc->priv->camerabin, "mode", 1, NULL);
 
@@ -868,6 +875,18 @@ gst_camera_capturer_new (gchar * filename, GError ** err)
       G_CALLBACK (gcc_element_msg_sync), gcc);
 
   return gcc;
+
+/* Missing plugin */
+missing_plugin:
+  {
+    g_set_error (err, GCC_ERROR, GCC_ERROR_PLUGIN_LOAD,
+        ("Failed to create a GStreamer element. "
+            "The element \"%s\" is missing. " 
+            "Please check your GStreamer installation."), plugin);
+    g_object_ref_sink (gcc);
+    g_object_unref (gcc);
+    return NULL;
+  }
 }
 
 void
