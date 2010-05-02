@@ -18,26 +18,19 @@
 //
 //
 
-using System;
-using Gtk;
-using Mono.Unix;
-using System.IO;
-using GLib;
-using System.Threading;
 using Gdk;
+using GLib;
+using Gtk;
 using LongoMatch.Common;
 using LongoMatch.DB;
-using LongoMatch.TimeNodes;
 using LongoMatch.Gui.Dialog;
-using LongoMatch.Gui.Popup;
-using LongoMatch.Video;
-using LongoMatch.Video.Capturer;
-using LongoMatch.Video.Player;
-using LongoMatch.Video.Utils;
-using LongoMatch.Updates;
-using LongoMatch.Utils;
-using LongoMatch.IO;
 using LongoMatch.Handlers;
+using LongoMatch.TimeNodes;
+using LongoMatch.Utils;
+using LongoMatch.Video.Capturer;
+using Mono.Unix;
+using System;
+using System.IO;
 using System.Reflection;
 
 
@@ -551,7 +544,6 @@ namespace LongoMatch.Gui
 		{
 			CloseAndQuit();
 		}
-
-		#endregion			}
+		#endregion	
 	}
 }
