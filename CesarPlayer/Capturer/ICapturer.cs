@@ -29,6 +29,7 @@ namespace LongoMatch.Video.Capturer
 	public interface ICapturer
 	{	
 		event EllpasedTimeHandler EllapsedTime;
+		event ErrorHandler Error;
 			
 		uint OutputWidth {
 			get ;

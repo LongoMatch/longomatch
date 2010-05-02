@@ -544,6 +544,13 @@ namespace LongoMatch.Gui
 		{
 			CloseAndQuit();
 		}
+		
+		protected virtual void OnCapturerBinError (object o, LongoMatch.Video.Capturer.ErrorArgs args)
+		{
+			MessagePopup.PopupMessage(this, MessageType.Info,
+			                          Catalog.GetString("An error occured in the video capturer and the current project will be closed:")+"\n" +args.Message);
+			CloseOpenedProject(true);
+		}
 		#endregion	
 	}
 }

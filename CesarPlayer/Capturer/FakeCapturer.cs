@@ -29,6 +29,7 @@ namespace LongoMatch.Video.Capturer
 	public class FakeCapturer : Gtk.Bin, ICapturer
 	{
 		public event EllpasedTimeHandler EllapsedTime;
+		public event ErrorHandler Error;
 		
 		private LiveSourceTimer timer;
 		

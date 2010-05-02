@@ -4,6 +4,7 @@
     <signals>
       <itemgroup label="CapturerBin Signals">
         <signal name="CaptureFinished" />
+        <signal name="Error" />
       </itemgroup>
     </signals>
   </object>

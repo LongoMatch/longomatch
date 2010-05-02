@@ -36,6 +36,7 @@ namespace LongoMatch.Gui
 	public partial class CapturerBin : Gtk.Bin
 	{
 		public event EventHandler CaptureFinished;
+		public event ErrorHandler Error;
 		
 		private Pixbuf logopix;
 		private uint outputWidth;
@@ -66,14 +67,16 @@ namespace LongoMatch.Gui
 		}		
 		
 		public CapturerType Type {
-			set{
-				if (capturer != null){
+			set {
+				if (capturer != null) {
+					capturer.Error -= OnError;
 					capturer.Stop();
 					capturerhbox.Remove(capturer as Gtk.Widget);
 				}
 				MultimediaFactory factory = new MultimediaFactory();
 				capturer = factory.getCapturer(value);	
 				capturer.EllapsedTime += OnTick;
+				capturer.Error += OnError;
 				if (value != CapturerType.FAKE){
 					capturerhbox.Add((Widget)capturer);
 					(capturer as Widget).Visible = true;
@@ -258,6 +261,12 @@ namespace LongoMatch.Gui
 		
 		protected virtual void OnTick (int ellapsedTime){
 			timelabel.Text = "Time: " + TimeString.MSecondsToSecondsString(CurrentTime);
+		}
+		
+		protected virtual void OnError (object o, ErrorArgs args)
+		{
+			if (Error != null)
+				Error (o, args);
 		}
 		
 		protected virtual void OnLogodrawingareaExposeEvent (object o, Gtk.ExposeEventArgs args)

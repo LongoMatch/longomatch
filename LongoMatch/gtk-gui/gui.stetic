@@ -2145,6 +2145,7 @@
                           <widget class="LongoMatch.Gui.CapturerBin" id="capturerBin">
                             <property name="MemberName" />
                             <property name="Events">ButtonPressMask</property>
+                            <signal name="Error" handler="OnCapturerBinError" />
                           </widget>
                           <packing>
                             <property name="Position">2</property>

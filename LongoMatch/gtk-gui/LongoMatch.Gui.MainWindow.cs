@@ -195,7 +195,7 @@ namespace LongoMatch.Gui {
             this.ImportProjectAction.ShortLabel = Mono.Unix.Catalog.GetString("_Import Project");
             w1.Add(this.ImportProjectAction, "<Control>i");
             this.FreeCaptureModeAction = new Gtk.RadioAction("FreeCaptureModeAction", Mono.Unix.Catalog.GetString("Free Capture Mode"), null, null, 0);
-            this.FreeCaptureModeAction.Group = this.AnalyzeModeAction.Group;
+            this.FreeCaptureModeAction.Group = this.CaptureModeAction.Group;
             this.FreeCaptureModeAction.Sensitive = false;
             this.FreeCaptureModeAction.ShortLabel = Mono.Unix.Catalog.GetString("Free Capture Mode");
             w1.Add(this.FreeCaptureModeAction, null);
@@ -448,6 +448,7 @@ namespace LongoMatch.Gui {
             this.treewidget1.TimeNodeSelected += new LongoMatch.Handlers.TimeNodeSelectedHandler(this.OnTimeNodeSelected);
             this.playerbin1.Error += new LongoMatch.Video.Handlers.ErrorHandler(this.OnPlayerbin1Error);
             this.playerbin1.SegmentClosedEvent += new LongoMatch.Video.Handlers.SegmentClosedHandler(this.OnSegmentClosedEvent);
+            this.capturerBin.Error += new LongoMatch.Video.Capturer.ErrorHandler(this.OnCapturerBinError);
             this.timelinewidget1.TimeNodeSelected += new LongoMatch.Handlers.TimeNodeSelectedHandler(this.OnTimeNodeSelected);
         }
     }
