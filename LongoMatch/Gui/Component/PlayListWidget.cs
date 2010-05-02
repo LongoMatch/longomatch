@@ -1,4 +1,4 @@
-﻿// PlayListWidget.cs
+// PlayListWidget.cs
 //
 //  Copyright (C) 2007-2009 Andoni Morales Alastruey
 //
@@ -56,12 +56,14 @@ namespace LongoMatch.Gui.Component
 		private MultimediaFactory factory;
 
 
-		public PlayListWidget()
+		public PlayListWidget ()
 		{
-			this.Build();
-			lock_node = new System.Object();
-			factory = new  MultimediaFactory();
-			playlisttreeview1.ApplyCurrentRate += new ApplyCurrentRateHandler(OnApplyRate);
+			this.Build ();
+			lock_node = new System.Object ();
+			factory = new MultimediaFactory ();
+			playlisttreeview1.Reorderable = true;
+			playlisttreeview1.RowActivated += OnPlaylisttreeview1RowActivated;
+			playlisttreeview1.ApplyCurrentRate += OnApplyRate;
 			savebutton.Sensitive = false;
 		}
 
