@@ -47,6 +47,7 @@ namespace LongoMatch.Gui
 		private GccAudioEncoderType audioEncoder;
 		private GccVideoMuxerType videoMuxer;
 		private string outputFile;
+		private bool capturing;
 		private const int THUMBNAIL_MAX_WIDTH = 100;		
 		
 		ICapturer capturer;
@@ -142,6 +143,12 @@ namespace LongoMatch.Gui
 			}
 		}
 		
+		public bool Capturing{
+			get{
+				return capturing;
+			}
+		}
+		
 		public CapturePropertiesStruct CaptureProperties{
 			set{
 				outputWidth = value.Width;
@@ -155,15 +162,18 @@ namespace LongoMatch.Gui
 		}
 		
 		public void TogglePause(){
+			capturing = !capturing;
 			capturer.TogglePause();
 		}
 		
 		public void Start(){
 			capturer.Start();
+			capturing = true;
 		}
 		
 		public void Stop(){
 			capturer.Stop();
+			capturing = false;
 		}
 		
 		public void Run(){
@@ -172,6 +182,7 @@ namespace LongoMatch.Gui
 
 		public void Close(){
 			capturer.Close();
+			capturing = false;
 		}
 		
 		public Pixbuf CurrentMiniatureFrame {

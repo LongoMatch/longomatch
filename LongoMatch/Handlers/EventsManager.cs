@@ -175,8 +175,15 @@ namespace LongoMatch
 			Pixbuf miniature;
 			MediaTimeNode tn;
 		
-			if (projectType == ProjectType.CaptureProject)
+			if (projectType == ProjectType.CaptureProject){
+				if (!capturer.Capturing){
+					MessagePopup.PopupMessage(capturer, MessageType.Info,
+					                          Catalog.GetString("You can't create a new play if the capturer "+
+					                                            "is not recording."));
+					return;
+				}
 				miniature = capturer.CurrentMiniatureFrame;
+			}
 			else if (projectType == ProjectType.FileProject)
 				miniature = player.CurrentMiniatureFrame;
 			else 
