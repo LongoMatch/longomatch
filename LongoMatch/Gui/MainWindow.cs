@@ -28,6 +28,7 @@ using LongoMatch.Handlers;
 using LongoMatch.TimeNodes;
 using LongoMatch.Utils;
 using LongoMatch.Video.Capturer;
+using LongoMatch.Video.Utils;
 using Mono.Unix;
 using System;
 using System.IO;
@@ -93,6 +94,8 @@ namespace LongoMatch.Gui
 			playerbin1.LogoMode = true;
 			
 			capturerBin.Visible = false;
+			capturerBin.CaptureFinished += delegate {
+						CloseOpenedProject (true);};
 			
 			buttonswidget1.Mode = TagMode.Predifined;
 
@@ -107,7 +110,9 @@ namespace LongoMatch.Gui
 		#region Private Methods
 		private void SetProject (Project project, ProjectType projectType, CapturePropertiesStruct props)
 		{
-			CloseOpenedProject (true);
+			if (openedProject != null)
+				CloseOpenedProject (true);
+
 			openedProject = project;
 			this.projectType = projectType;
 			eManager.OpenedProject = project;
@@ -145,9 +150,6 @@ namespace LongoMatch.Gui
 					}
 				} else {
 					Title = "LongoMatch";
-					capturerBin.CaptureFinished += delegate {
-						CloseOpenedProject (true); 
-					};
 					if (projectType == ProjectType.CaptureProject) {
 						capturerBin.OutputFile = project.File.FilePath;
 						capturerBin.CaptureProperties = props;
@@ -182,17 +184,50 @@ namespace LongoMatch.Gui
 				KeyPressEvent += hotkeysListener;
 			}
 		}
+		
+		private void SaveCaptureProject(){
+			PreviewMediaFile file;
+			Project newProject = openedProject;
+			string filePath = openedProject.File.FilePath;
+			
+			MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel, DialogFlags.Modal, MessageType.Info, ButtonsType.None,
+			                                     Catalog.GetString("Loading newly created project..."));
+			md.Show();
+
+			/* scan the new file to build a new PreviewMediaFile with all the metadata */
+			try{
+				file = PreviewMediaFile.GetMediaFile(filePath);		
+				openedProject.File = file;
+				MainClass.DB.AddProject(openedProject);
+			} catch (Exception ex){
+				string projectFile = filePath + "-" + DateTime.Now;
+				Project.Export(openedProject, projectFile);
+				MessagePopup.PopupMessage(this, MessageType.Error,
+				                          Catalog.GetString("An error occured saving the project:\n")+ex.Message+ "\n\n"+
+				                          Catalog.GetString("The video file and a backup of the project has been "+
+				                                            "saved. Try to import it later:\n")+
+				                          filePath+"\n"+projectFile);
+			}
+			/* we need to set the opened project to null to avoid calling again CloseOpendProject() */
+			openedProject = null;
+			SetProject(newProject, ProjectType.FileProject, new CapturePropertiesStruct());
+			md.Destroy();
+		}
 
 		private void CloseOpenedProject(bool save) {
-			bool playlistVisible = playlistwidget2.Visible;			
+			bool playlistVisible = playlistwidget2.Visible;	
 			
 			if (save)
 				SaveProject();
 			
 			if (projectType != ProjectType.FileProject){
-				playerbin1.Visible = true;
 				capturerBin.Close();
+				playerbin1.Visible = true;
 				capturerBin.Visible = false;
+				if (projectType != ProjectType.FileProject && openedProject != null){
+					SaveCaptureProject();
+					return;
+				}
 			} else {
 				playerbin1.Close();
 				playerbin1.LogoMode = true;

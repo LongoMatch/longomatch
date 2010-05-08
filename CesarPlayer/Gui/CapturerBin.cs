@@ -256,18 +256,25 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnStopbuttonClicked (object sender, System.EventArgs e)
 		{
+			int res;
+			
 			MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel, DialogFlags.Modal, MessageType.Question, ButtonsType.YesNo,
 			                                     Catalog.GetString("You are going to stop and finish the current capture."+"\n"+
 			                                                       "Do you want to proceed?"));
-			if (md.Run() == (int)ResponseType.Yes){
+			res = md.Run();
+			md.Destroy();
+			if (res == (int)ResponseType.Yes){
+				md = new MessageDialog((Gtk.Window)this.Toplevel, DialogFlags.Modal, MessageType.Info, ButtonsType.None,
+				                                     Catalog.GetString("Finalizing file. This can take a while"));
+				md.Show();
 				Stop();
+				md.Destroy();
 				recbutton.Visible = true;
 				pausebutton.Visible = false;
 				stopbutton.Visible = false;
 				if (CaptureFinished != null)
 					CaptureFinished(this, new EventArgs());
 			}
-			md.Destroy();
 		}				
 		
 		protected virtual void OnTick (int ellapsedTime){
