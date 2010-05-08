@@ -90,7 +90,10 @@ namespace LongoMatch.Gui
 				}
 				capturing = false;
 				SetProperties();
+				pausebutton.Visible = false;
+				stopbutton.Visible = false;
 			}
+
 		}
 		
 		public string Logo{
