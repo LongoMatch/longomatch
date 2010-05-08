@@ -1,4 +1,4 @@
-﻿// FileDescriptionWidget.cs
+// FileDescriptionWidget.cs
 //
 //  Copyright (C) 2007-2009 Andoni Morales Alastruey
 //
@@ -332,6 +332,7 @@ namespace LongoMatch.Gui.Component
 					} else if  (useType == ProjectType.CaptureProject){
 						mFile = new PreviewMediaFile();
 						mFile.FilePath = fileEntry.Text;
+						mFile.Fps = 25;
 					}
 					return new Project(mFile,
 					                   LocalName,
