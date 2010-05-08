@@ -24,7 +24,6 @@ namespace LongoMatch.Gui.Dialog {
             this.Title = Mono.Unix.Catalog.GetString("Tag play");
             this.Icon = Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Menu, 16);
             this.WindowPosition = ((Gtk.WindowPosition)(4));
-            this.HasSeparator = false;
             // Internal child LongoMatch.Gui.Dialog.TaggerDialog.VBox
             Gtk.VBox w1 = this.VBox;
             w1.Name = "dialog1_VBox";
@@ -36,6 +35,8 @@ namespace LongoMatch.Gui.Dialog {
             w1.Add(this.taggerwidget1);
             Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(w1[this.taggerwidget1]));
             w2.Position = 0;
+            w2.Expand = false;
+            w2.Fill = false;
             // Internal child LongoMatch.Gui.Dialog.TaggerDialog.ActionArea
             Gtk.HButtonBox w3 = this.ActionArea;
             w3.Name = "dialog1_ActionArea";
@@ -58,7 +59,7 @@ namespace LongoMatch.Gui.Dialog {
                 this.Child.ShowAll();
             }
             this.DefaultWidth = 426;
-            this.DefaultHeight = 249;
+            this.DefaultHeight = 267;
             this.Show();
         }
     }

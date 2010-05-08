@@ -59,7 +59,7 @@ struct _GstCameraCapturerClass
 
 struct _GstCameraCapturer
 {
-  GtkHBox parent_instance;
+  GtkEventBox parent;
   GstCameraCapturerPrivate *priv;
 };
 
@@ -112,36 +112,35 @@ typedef enum
 typedef enum
 {
   GCC_VIDEO_MUXER_AVI,
+  GCC_VIDEO_MUXER_MP4,
   GCC_VIDEO_MUXER_MATROSKA,
   GCC_VIDEO_MUXER_OGG
 } GccVideoMuxerType;
 
 
-EXPORT GType
-gst_camera_capturer_get_type (void)
-  G_GNUC_CONST;
+EXPORT GType gst_camera_capturer_get_type (void)  G_GNUC_CONST;
 
-     EXPORT void gst_camera_capturer_init_backend (int *argc, char ***argv);
-     EXPORT GstCameraCapturer *gst_camera_capturer_new (gchar * filename,
-							GError ** err);
-     EXPORT void gst_camera_capturer_run (GstCameraCapturer * gcc);
-     EXPORT void gst_camera_capturer_start (GstCameraCapturer * gcc);
-     EXPORT void gst_camera_capturer_pause (GstCameraCapturer * gcc);
-     EXPORT void gst_camera_capturer_stop (GstCameraCapturer * gcc);
-     EXPORT gboolean gst_camera_capturer_set_video_encoder (GstCameraCapturer
-							    * gcc,
-							    GccVideoEncoderType
-							    type);
-     EXPORT gboolean gst_camera_capturer_set_audio_encoder (GstCameraCapturer
-							    * gcc,
-							    GccAudioEncoderType
-							    type);
-     EXPORT gboolean gst_camera_capturer_set_video_muxer (GstCameraCapturer *
-							  gcc,
-							  GccVideoMuxerType
-							  type);
-
-
+EXPORT void gst_camera_capturer_init_backend (int *argc, char ***argv);
+EXPORT GstCameraCapturer *gst_camera_capturer_new (gchar * filename,
+                                                  GError ** err);
+EXPORT void gst_camera_capturer_run (GstCameraCapturer * gcc);
+EXPORT void gst_camera_capturer_close (GstCameraCapturer * gcc);
+EXPORT void gst_camera_capturer_start (GstCameraCapturer * gcc);
+EXPORT void gst_camera_capturer_toggle_pause (GstCameraCapturer * gcc);
+EXPORT void gst_camera_capturer_stop (GstCameraCapturer * gcc);
+EXPORT gboolean gst_camera_capturer_set_video_encoder (GstCameraCapturer * gcc,
+                                                      GccVideoEncoderType type,
+                                                      GError ** err);
+EXPORT gboolean gst_camera_capturer_set_audio_encoder (GstCameraCapturer * gcc,
+                                                      GccAudioEncoderType type,
+                                                      GError ** err);
+EXPORT gboolean gst_camera_capturer_set_video_muxer (GstCameraCapturer * gcc,
+                                                    GccVideoMuxerType type,
+                                                    GError ** err);
+EXPORT GList* gst_camera_capturer_enum_audio_devices (void);
+EXPORT GList* gst_camera_capturer_enum_video_devices (void);
+EXPORT GdkPixbuf* gst_camera_capturer_get_current_frame(GstCameraCapturer *gcc);
+EXPORT void gst_camera_capture_unref_pixbuf (GdkPixbuf * pixbuf);
 
 G_END_DECLS
 #endif /* _GST_CAMERA_CAPTURER_H_ */

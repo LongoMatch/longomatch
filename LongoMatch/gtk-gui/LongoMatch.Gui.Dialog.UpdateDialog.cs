@@ -31,7 +31,6 @@ namespace LongoMatch.Gui.Dialog {
             this.Name = "LongoMatch.Gui.Dialog.UpdateDialog";
             this.Icon = Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Dialog, 48);
             this.WindowPosition = ((Gtk.WindowPosition)(4));
-            this.HasSeparator = false;
             // Internal child LongoMatch.Gui.Dialog.UpdateDialog.VBox
             Gtk.VBox w1 = this.VBox;
             w1.Name = "dialog1_VBox";

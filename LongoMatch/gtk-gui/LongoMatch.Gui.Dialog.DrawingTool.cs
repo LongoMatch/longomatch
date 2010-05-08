@@ -38,7 +38,6 @@ namespace LongoMatch.Gui.Dialog {
             this.Gravity = ((Gdk.Gravity)(5));
             this.SkipPagerHint = true;
             this.SkipTaskbarHint = true;
-            this.HasSeparator = false;
             // Internal child LongoMatch.Gui.Dialog.DrawingTool.VBox
             Gtk.VBox w1 = this.VBox;
             w1.Name = "dialog1_VBox";
@@ -67,14 +66,14 @@ namespace LongoMatch.Gui.Dialog {
             this.savetoprojectbutton.UseUnderline = true;
             // Container child savetoprojectbutton.Gtk.Container+ContainerChild
             Gtk.Alignment w3 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment2.Gtk.Container+ContainerChild
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
             Gtk.HBox w4 = new Gtk.HBox();
             w4.Spacing = 2;
-            // Container child GtkHBox3.Gtk.Container+ContainerChild
+            // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w5 = new Gtk.Image();
             w5.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-save", Gtk.IconSize.Menu, 16);
             w4.Add(w5);
-            // Container child GtkHBox3.Gtk.Container+ContainerChild
+            // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w7 = new Gtk.Label();
             w7.LabelProp = Mono.Unix.Catalog.GetString("Save to Project");
             w7.UseUnderline = true;
@@ -94,14 +93,14 @@ namespace LongoMatch.Gui.Dialog {
             this.savebutton.UseUnderline = true;
             // Container child savebutton.Gtk.Container+ContainerChild
             Gtk.Alignment w12 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment1.Gtk.Container+ContainerChild
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
             Gtk.HBox w13 = new Gtk.HBox();
             w13.Spacing = 2;
-            // Container child GtkHBox2.Gtk.Container+ContainerChild
+            // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w14 = new Gtk.Image();
             w14.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-save", Gtk.IconSize.Menu, 16);
             w13.Add(w14);
-            // Container child GtkHBox2.Gtk.Container+ContainerChild
+            // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w16 = new Gtk.Label();
             w16.LabelProp = Mono.Unix.Catalog.GetString("Save to File");
             w16.UseUnderline = true;
@@ -149,7 +148,7 @@ namespace LongoMatch.Gui.Dialog {
                 this.Child.ShowAll();
             }
             this.DefaultWidth = 600;
-            this.DefaultHeight = 549;
+            this.DefaultHeight = 579;
             this.savetoprojectbutton.Hide();
             this.button271.Hide();
             this.Show();

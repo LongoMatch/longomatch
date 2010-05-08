@@ -27,6 +27,8 @@ namespace LongoMatch.Video.Capturer {
 	public  class GstCameraCapturer : Gtk.HBox, LongoMatch.Video.Capturer.ICapturer {
 		
 		public event EllpasedTimeHandler EllapsedTime;
+		
+		private LiveSourceTimer timer;
 
 		[Obsolete]
 		protected GstCameraCapturer(GLib.GType gtype) : base(gtype) {}
@@ -43,34 +45,40 @@ namespace LongoMatch.Video.Capturer {
 			IntPtr error = IntPtr.Zero;
 			Raw = gst_camera_capturer_new(GLib.Marshaller.StringToPtrGStrdup(filename), out error);
 			if (error != IntPtr.Zero) throw new GLib.GException (error);
+			
+			timer = new LiveSourceTimer();	
+			timer.EllapsedTime += delegate(int ellapsedTime) {
+				if (EllapsedTime!= null)
+					EllapsedTime(ellapsedTime);
+			};			
 		}
 
-		[GLib.Property ("encode_height")]
-		public uint EncodeHeight {
+		[GLib.Property ("output_height")]
+		public uint OutputHeight {
 			get {
-				GLib.Value val = GetProperty ("encode_height");
+				GLib.Value val = GetProperty ("output_height");
 				uint ret = (uint) val;
 				val.Dispose ();
 				return ret;
 			}
 			set {
 				GLib.Value val = new GLib.Value(value);
-				SetProperty("encode_height", val);
+				SetProperty("output_height", val);
 				val.Dispose ();
 			}
 		}
 
-		[GLib.Property ("encode_width")]
-		public uint EncodeWidth {
+		[GLib.Property ("output_width")]
+		public uint OutputWidth {
 			get {
-				GLib.Value val = GetProperty ("encode_width");
+				GLib.Value val = GetProperty ("output_width");
 				uint ret = (uint) val;
 				val.Dispose ();
 				return ret;
 			}
 			set {
 				GLib.Value val = new GLib.Value(value);
-				SetProperty("encode_width", val);
+				SetProperty("output_width", val);
 				val.Dispose ();
 			}
 		}
@@ -237,25 +245,6 @@ namespace LongoMatch.Video.Capturer {
 		}
 
 		[DllImport("libcesarplayer.dll")]
-		static extern bool gst_camera_capturer_set_video_muxer(IntPtr raw, int type);
-
-		public bool SetVideoMuxer(VideoMuxerType type) {
-			bool raw_ret = gst_camera_capturer_set_video_muxer(Handle, (int) type);
-			bool ret = raw_ret;
-			return ret;
-		}
-
-		
-		[DllImport("libcesarplayer.dll")]
-		static extern bool gst_camera_capturer_set_video_encoder(IntPtr raw, int type);
-
-		public bool SetVideoEncoder(VideoEncoderType type) {
-			bool raw_ret = gst_camera_capturer_set_video_encoder(Handle, (int) type);
-			bool ret = raw_ret;
-			return ret;
-		}
-
-		[DllImport("libcesarplayer.dll")]
 		static extern void gst_camera_capturer_init_backend(out int argc, IntPtr argv);
 
 		public static int InitBackend(string argv) {
@@ -268,21 +257,30 @@ namespace LongoMatch.Video.Capturer {
 		static extern void gst_camera_capturer_stop(IntPtr raw);
 
 		public void Stop() {
+			timer.Stop();
 			gst_camera_capturer_stop(Handle);
 		}
 
 	
 		[DllImport("libcesarplayer.dll")]
-		static extern void gst_camera_capturer_pause(IntPtr raw);
+		static extern void gst_camera_capturer_toggle_pause(IntPtr raw);
 
-		public void Pause() {
-			gst_camera_capturer_pause(Handle);
+		public void TogglePause() {
+			timer.TogglePause();
+			gst_camera_capturer_toggle_pause(Handle);
 		}
-		
+	
+		public int CurrentTime{
+			get{
+				return timer.CurrentTime;
+			}
+		}
+
 		[DllImport("libcesarplayer.dll")]
 		static extern void gst_camera_capturer_start(IntPtr raw);
 
-		public void Start	() {
+		public void Start() {
+			timer.Start();
 			gst_camera_capturer_start(Handle);
 		}
 
@@ -293,25 +291,48 @@ namespace LongoMatch.Video.Capturer {
 		public void Run() {
 			gst_camera_capturer_run(Handle);
 		}
+		
+		[DllImport("libcesarplayer.dll")]
+		static extern void gst_camera_capturer_close(IntPtr raw);
+
+		public void Close() {
+			gst_camera_capturer_close(Handle);
+		}		
+		
+		[DllImport("libcesarplayer.dll")]
+		static extern bool gst_camera_capturer_set_video_muxer(IntPtr raw, int type, out IntPtr error);
+
+		public bool SetVideoMuxer(VideoMuxerType type) {
+			IntPtr error = IntPtr.Zero;
+			bool raw_ret = gst_camera_capturer_set_video_muxer(Handle, (int) type, out error);
+			if (error != IntPtr.Zero) throw new GLib.GException (error);
+			bool ret = raw_ret;
+			return ret;
+		}
+
+		
+		[DllImport("libcesarplayer.dll")]
+		static extern bool gst_camera_capturer_set_video_encoder(IntPtr raw, int type, out IntPtr error);
+
+		public bool SetVideoEncoder(VideoEncoderType type) {
+			IntPtr error = IntPtr.Zero;
+			bool raw_ret = gst_camera_capturer_set_video_encoder(Handle, (int) type, out error);
+			if (error != IntPtr.Zero) throw new GLib.GException (error);
+			bool ret = raw_ret;
+			return ret;
+		}
 
 		[DllImport("libcesarplayer.dll")]
-		static extern bool gst_camera_capturer_set_audio_encoder(IntPtr raw, int type);
+		static extern bool gst_camera_capturer_set_audio_encoder(IntPtr raw, int type, out IntPtr error);
 
 		public bool SetAudioEncoder(AudioEncoderType type) {
-			bool raw_ret = gst_camera_capturer_set_audio_encoder(Handle, (int) type);
+			IntPtr error = IntPtr.Zero;			
+			bool raw_ret = gst_camera_capturer_set_audio_encoder(Handle, (int) type, out error);
+			if (error != IntPtr.Zero) throw new GLib.GException (error);
 			bool ret = raw_ret;
 			return ret;
 		}
 		
-		[DllImport("libcesarplayer.dll")]
-		static extern int gst_camera_capturer_get_current_time(IntPtr raw);
-
-		public int CurrentTime{
-			get{
-				return gst_camera_capturer_get_current_time(Handle);
-			}
-		}
-
 		[DllImport("libcesarplayer.dll")]
 		static extern IntPtr gst_camera_capturer_get_type();
 
@@ -321,8 +342,45 @@ namespace LongoMatch.Video.Capturer {
 				GLib.GType ret = new GLib.GType(raw_ret);
 				return ret;
 			}
+		} 
+		
+		[DllImport("libcesarplayer.dll")]
+		static extern IntPtr gst_camera_capturer_enum_audio_devices();
+
+		public static string[] AudioDevices { 
+			get {
+				IntPtr raw_ret = gst_camera_capturer_enum_audio_devices();
+				return (string[])GLib.Marshaller.ListPtrToArray(raw_ret, typeof(GLib.List),  true, false, typeof(String));
+			}
 		}
 		
+		[DllImport("libcesarplayer.dll")]
+		static extern IntPtr gst_camera_capturer_enum_video_devices();
+
+		public static string[] VideoDevices { 
+			get {
+				IntPtr raw_ret = gst_camera_capturer_enum_video_devices();
+				return (string[])GLib.Marshaller.ListPtrToArray(raw_ret, typeof(GLib.List),  true, false, typeof(String));					
+			}
+		}
+		
+		
+		[DllImport("libcesarplayer.dll")]
+		static extern IntPtr gst_camera_capturer_get_current_frame(IntPtr raw);
+		[DllImport("libcesarplayer.dll")]
+		static extern IntPtr gst_camera_capturer_unref_pixbuf(IntPtr raw);
+		
+		public Gdk.Pixbuf CurrentFrame {
+			get {
+				IntPtr raw_ret = gst_camera_capturer_get_current_frame (Handle);
+				Gdk.Pixbuf p = GLib.Object.GetObject (raw_ret) as Gdk.Pixbuf;
+				/* The refcount for p is now 2. We need to decrease the counter to 1
+				 * so that p.Dipose() sets it to 0 and triggers the pixbuf destroy function
+				 * that frees the associated data*/ 
+				gst_camera_capturer_unref_pixbuf (raw_ret);
+				return p;
+			}
+		}		
 		
 		static GstCameraCapturer ()
 		{

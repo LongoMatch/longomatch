@@ -1,204 +1,202 @@
-<Project name="LongoMatch" fileversion="2.0" language="C#" clr-version="Net_2_0" targetFramework="2.0" ctype="DotNetProject">
+<Project name="LongoMatch" fileversion="2.0" DefaultNamespace="LongoMatch" language="C#" clr-version="Net_2_0" targetFramework="3.5" ctype="DotNetProject">
   <Configurations active="Release">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="bin/Debug" assemblyKeyFile="." assembly="LongoMatch.exe" />
+      <Output directory="bin/Debug" assembly="LongoMatch.exe" assemblyKeyFile="." />
       <Build debugmode="True" target="WinExe" />
-      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
-      <EnvironmentVariables />
+      <Execution consolepause="True" runwithwarnings="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
-      <Output directory="bin/Release" assemblyKeyFile="/home/andoni/Proyectos/LongoMatch/LongoMatch/." assembly="LongoMatch.exe" />
+      <Output directory="bin/Release" assembly="LongoMatch.exe" assemblyKeyFile="/home/andoni/Proyectos/LongoMatch/LongoMatch/." />
       <Build debugmode="True" target="WinExe" />
-      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
-      <EnvironmentVariables />
+      <Execution consolepause="True" runwithwarnings="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="3" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" additionalargs="-win32icon:images/minilogo.ico" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="longomatch.desktop" subtype="Code" DeployService.TargetDirectoryId="Linux.DesktopApplications" buildaction="FileCopy" />
-    <File name="gtk-gui/generated.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/objects.xml" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="Main.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/gui.stetic" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="Gui" subtype="Directory" buildaction="Compile" />
-    <File name="Gui/MainWindow.cs" subtype="Code" buildaction="Compile" />
-    <File name="DB" subtype="Directory" buildaction="Compile" />
-    <File name="DB/Project.cs" subtype="Code" buildaction="Compile" />
-    <File name="DB/Sections.cs" subtype="Code" buildaction="Compile" />
-    <File name="DB/DataBase.cs" subtype="Code" buildaction="Compile" />
-    <File name="Handlers" subtype="Directory" buildaction="Compile" />
-    <File name="Handlers/Handlers.cs" subtype="Code" buildaction="Compile" />
-    <File name="IO" subtype="Directory" buildaction="Compile" />
-    <File name="IO/SectionsWriter.cs" subtype="Code" buildaction="Compile" />
-    <File name="IO/SectionsReader.cs" subtype="Code" buildaction="Compile" />
-    <File name="IO/XMLReader.cs" subtype="Code" buildaction="Compile" />
-    <File name="Time" subtype="Directory" buildaction="Compile" />
-    <File name="Time/MediaTimeNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="Time/PixbufTimeNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="Time/SectionsTimeNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="Time/TimeNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="Time/Time.cs" subtype="Code" buildaction="Compile" />
-    <File name="Time/PlayListTimeNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Popup.CalendarPopup.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Dialog.OpenProjectDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Dialog.NewProjectDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="images/longomatch.png" subtype="Code" buildaction="EmbedAsResource" DeployService.RelativeDeployPath="images/longomatch.png" DeployService.TargetDirectoryId="CommonApplicationDataRoot" />
-    <File name="images" subtype="Directory" buildaction="Compile" />
-    <File name="images/background.png" subtype="Code" DeployService.RelativeDeployPath="images/background.png" DeployService.TargetDirectoryId="CommonApplicationDataRoot" buildaction="FileCopy" />
-    <File name="gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Playlist" subtype="Directory" buildaction="Compile" />
-    <File name="Playlist/IPlayList.cs" subtype="Code" buildaction="Compile" />
-    <File name="Playlist/PlayList.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.MainWindow.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Updates" subtype="Directory" buildaction="Compile" />
-    <File name="Updates/Updater.cs" subtype="Code" buildaction="Compile" />
-    <File name="Updates/XmlUpdateParser.cs" subtype="Code" buildaction="Compile" />
-    <File name="IO/CSVExport.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Time/HotKey.cs" subtype="Code" buildaction="Compile" />
-    <File name="Handlers/EventsManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="Handlers/HotKeysManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="DB/TeamTemplate.cs" subtype="Code" buildaction="Compile" />
-    <File name="Time/Player.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Dialog.TeamTemplateEditor.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Dialog.TemplatesManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="images/logo_48x48.png" subtype="Code" buildaction="Nothing" DeployService.RelativeDeployPath="icons/hicolor/48x48/longomatch.png" DeployService.TargetDirectoryId="CommonApplicationDataRoot" />
-    <File name="DB/TagsTemplate.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Dialog.Migrator.cs" subtype="Code" buildaction="Compile" />
-    <File name="Compat/0.0/DatabaseMigrator.cs" subtype="Code" buildaction="Compile" />
-    <File name="Compat/0.0/PlayListMigrator.cs" subtype="Code" buildaction="Compile" />
-    <File name="Compat/0.0/DB/DataBase.cs" subtype="Code" buildaction="Compile" />
-    <File name="Compat/0.0/DB/MediaFile.cs" subtype="Code" buildaction="Compile" />
-    <File name="Compat/0.0/DB/Project.cs" subtype="Code" buildaction="Compile" />
-    <File name="Compat/0.0/DB/Sections.cs" subtype="Code" buildaction="Compile" />
-    <File name="Compat/0.0/Playlist/IPlayList.cs" subtype="Code" buildaction="Compile" />
-    <File name="Compat/0.0/Playlist/PlayList.cs" subtype="Code" buildaction="Compile" />
-    <File name="Compat/0.0/Time/MediaTimeNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="Compat/0.0/Time/PixbufTimeNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="Compat/0.0/Time/PlayListTimeNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="Compat/0.0/Time/SectionsTimeNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="Compat/0.0/Time/Time.cs" subtype="Code" buildaction="Compile" />
-    <File name="Compat/0.0/Time/TimeNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="Compat/0.0/TemplatesMigrator.cs" subtype="Code" buildaction="Compile" />
-    <File name="Compat/0.0/IO/SectionsReader.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Dialog.Win32CalendarDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/TransparentDrawingArea.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs" subtype="Code" buildaction="Compile" />
-    <File name="Handlers/DrawingManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Dialog.EditPlayerDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Dialog" subtype="Directory" buildaction="Compile" />
-    <File name="Gui/Dialog/EditPlayerDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Dialog/EditCategoryDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Dialog/EntryDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Dialog/NewProjectDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Dialog/OpenProjectDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Component" subtype="Directory" buildaction="Compile" />
-    <File name="Gui/Component/ProjectDetailsWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Component/ButtonsWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Component/DrawingToolBox.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Component/NotesWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Component.TimeLineWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Component.NotesWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Component.TeamTemplateWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Dialog/FramesCaptureProgressDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Dialog/HotKeySelectorDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Component/PlayerProperties.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/TreeView" subtype="Directory" buildaction="Compile" />
-    <File name="Gui/TreeView/PlayersTreeView.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/TreeView/PlayerPropertiesTreeView.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/TreeView/PlayListTreeView.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/TreeView/PlaysTreeView.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Dialog/PlayersSelectionDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Dialog/SnapshotsDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Dialog/UpdateDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Dialog/Win32CalendarDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Popup" subtype="Directory" buildaction="Compile" />
-    <File name="Gui/Popup/CalendarPopup.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Popup/MessagePopup.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Dialog/ProjectTemplateEditorDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Component/PlayersListTreeWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Dialog/ProjectsManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Component/PlayListWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Component/ProjectListWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Dialog/TemplatesEditor.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Component/ProjectTemplateWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/TreeView/CategoriesTreeView.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Dialog/Migrator.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Component/TimeLineWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Component/TimeScale.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Dialog/VideoEditionProperties.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Component/TimeReferenceWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Component/CategoryProperties.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Component/TeamTemplateWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Component/TimeAdjustWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Component/PlaysListTreeWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Component.ProjectTemplateWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Dialog.EditCategoryDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Component.PlaysListTreeWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Component.PlayersListTreeWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Dialog.ProjectTemplateEditorDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Dialog/TeamTemplateEditor.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Component.DrawingWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Component/DrawingWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Dialog/DrawingTool.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs" subtype="Code" buildaction="Compile" />
-    <File name="Time/Drawing.cs" subtype="Code" buildaction="Compile" />
-    <File name="Handlers/VideoDrawingsManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="Time/DrawingsList.cs" subtype="Code" buildaction="Compile" />
-    <File name="DB/ProjectDescription.cs" subtype="Code" buildaction="Compile" />
-    <File name="images/stock_draw-circle-unfilled.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="images/stock_draw-freeform-line.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="images/stock_draw-line-45.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="images/stock_draw-line-ends-with-arrow.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="images/stock_draw-rectangle-unfilled.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="Common/Enums.cs" subtype="Code" buildaction="Compile" />
-    <File name="Time/Tag.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Component/TaggerWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Dialog/TaggerDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/TreeView/TagsTreeView.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Component/TagsTreeWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Component.TagsTreeWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="Common/Constants.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Dialog/ProjectSelectionDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Dialog/EndCaptureDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Utils" subtype="Directory" buildaction="Compile" />
-    <File name="Utils/ProjectUtils.cs" subtype="Code" buildaction="Compile" />
-    <File name="images/camera-video.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="images/video.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="gtk-gui/LongoMatch.Gui.Dialog.BusyDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Gui/Dialog/BusyDialog.cs" subtype="Code" buildaction="Compile" />
+    <File subtype="Code" name="longomatch.desktop" DeployService.Deploy="True" DeployService.TargetDirectoryId="Linux.DesktopApplications" buildaction="FileCopy" />
+    <File subtype="Code" buildaction="Compile" name="AssemblyInfo.cs" />
+    <File subtype="Code" buildaction="Compile" name="Main.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Gui" />
+    <File subtype="Code" buildaction="Compile" name="Gui/MainWindow.cs" />
+    <File subtype="Directory" buildaction="Compile" name="DB" />
+    <File subtype="Code" buildaction="Compile" name="DB/Project.cs" />
+    <File subtype="Code" buildaction="Compile" name="DB/Sections.cs" />
+    <File subtype="Code" buildaction="Compile" name="DB/DataBase.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Handlers" />
+    <File subtype="Code" buildaction="Compile" name="Handlers/Handlers.cs" />
+    <File subtype="Directory" buildaction="Compile" name="IO" />
+    <File subtype="Code" buildaction="Compile" name="IO/SectionsWriter.cs" />
+    <File subtype="Code" buildaction="Compile" name="IO/SectionsReader.cs" />
+    <File subtype="Code" buildaction="Compile" name="IO/XMLReader.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Time" />
+    <File subtype="Code" buildaction="Compile" name="Time/MediaTimeNode.cs" />
+    <File subtype="Code" buildaction="Compile" name="Time/PixbufTimeNode.cs" />
+    <File subtype="Code" buildaction="Compile" name="Time/SectionsTimeNode.cs" />
+    <File subtype="Code" buildaction="Compile" name="Time/TimeNode.cs" />
+    <File subtype="Code" buildaction="Compile" name="Time/Time.cs" />
+    <File subtype="Code" buildaction="Compile" name="Time/PlayListTimeNode.cs" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="images/longomatch.png" DeployService.RelativeDeployPath="images/longomatch.png" DeployService.TargetDirectoryId="CommonApplicationDataRoot" />
+    <File subtype="Directory" buildaction="Compile" name="images" />
+    <File subtype="Code" name="images/background.png" DeployService.Deploy="True" DeployService.RelativeDeployPath="images/background.png" DeployService.TargetDirectoryId="CommonApplicationDataRoot" buildaction="FileCopy" />
+    <File subtype="Directory" buildaction="Compile" name="Playlist" />
+    <File subtype="Code" buildaction="Compile" name="Playlist/IPlayList.cs" />
+    <File subtype="Code" buildaction="Compile" name="Playlist/PlayList.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Updates" />
+    <File subtype="Code" buildaction="Compile" name="Updates/Updater.cs" />
+    <File subtype="Code" buildaction="Compile" name="Updates/XmlUpdateParser.cs" />
+    <File subtype="Code" buildaction="Compile" name="IO/CSVExport.cs" />
+    <File subtype="Code" buildaction="Compile" name="Time/HotKey.cs" />
+    <File subtype="Code" buildaction="Compile" name="Handlers/EventsManager.cs" />
+    <File subtype="Code" buildaction="Compile" name="Handlers/HotKeysManager.cs" />
+    <File subtype="Code" buildaction="Compile" name="DB/TeamTemplate.cs" />
+    <File subtype="Code" buildaction="Compile" name="Time/Player.cs" />
+    <File subtype="Code" buildaction="Nothing" name="images/logo_48x48.png" DeployService.RelativeDeployPath="icons/hicolor/48x48/longomatch.png" DeployService.TargetDirectoryId="CommonApplicationDataRoot" />
+    <File subtype="Code" buildaction="Compile" name="DB/TagsTemplate.cs" />
+    <File subtype="Code" buildaction="Compile" name="Compat/0.0/DatabaseMigrator.cs" />
+    <File subtype="Code" buildaction="Compile" name="Compat/0.0/PlayListMigrator.cs" />
+    <File subtype="Code" buildaction="Compile" name="Compat/0.0/DB/DataBase.cs" />
+    <File subtype="Code" buildaction="Compile" name="Compat/0.0/DB/MediaFile.cs" />
+    <File subtype="Code" buildaction="Compile" name="Compat/0.0/DB/Project.cs" />
+    <File subtype="Code" buildaction="Compile" name="Compat/0.0/DB/Sections.cs" />
+    <File subtype="Code" buildaction="Compile" name="Compat/0.0/Playlist/IPlayList.cs" />
+    <File subtype="Code" buildaction="Compile" name="Compat/0.0/Playlist/PlayList.cs" />
+    <File subtype="Code" buildaction="Compile" name="Compat/0.0/Time/MediaTimeNode.cs" />
+    <File subtype="Code" buildaction="Compile" name="Compat/0.0/Time/PixbufTimeNode.cs" />
+    <File subtype="Code" buildaction="Compile" name="Compat/0.0/Time/PlayListTimeNode.cs" />
+    <File subtype="Code" buildaction="Compile" name="Compat/0.0/Time/SectionsTimeNode.cs" />
+    <File subtype="Code" buildaction="Compile" name="Compat/0.0/Time/Time.cs" />
+    <File subtype="Code" buildaction="Compile" name="Compat/0.0/Time/TimeNode.cs" />
+    <File subtype="Code" buildaction="Compile" name="Compat/0.0/TemplatesMigrator.cs" />
+    <File subtype="Code" buildaction="Compile" name="Compat/0.0/IO/SectionsReader.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/TransparentDrawingArea.cs" />
+    <File subtype="Code" buildaction="Compile" name="Handlers/DrawingManager.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Gui/Dialog" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/EditPlayerDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/EditCategoryDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/EntryDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/NewProjectDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/OpenProjectDialog.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Gui/Component" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/ProjectDetailsWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/ButtonsWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/DrawingToolBox.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/NotesWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/FramesCaptureProgressDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/HotKeySelectorDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/PlayerProperties.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Gui/TreeView" />
+    <File subtype="Code" buildaction="Compile" name="Gui/TreeView/PlayersTreeView.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/TreeView/PlayerPropertiesTreeView.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/TreeView/PlayListTreeView.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/TreeView/PlaysTreeView.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/PlayersSelectionDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/SnapshotsDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/UpdateDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/Win32CalendarDialog.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Gui/Popup" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Popup/CalendarPopup.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Popup/MessagePopup.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/ProjectTemplateEditorDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/PlayersListTreeWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/ProjectsManager.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/PlayListWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/ProjectListWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/TemplatesEditor.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/ProjectTemplateWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/TreeView/CategoriesTreeView.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/Migrator.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/TimeLineWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/TimeScale.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/VideoEditionProperties.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/TimeReferenceWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/CategoryProperties.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/TeamTemplateWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/TimeAdjustWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/PlaysListTreeWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/TeamTemplateEditor.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/DrawingWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/DrawingTool.cs" />
+    <File subtype="Code" buildaction="Compile" name="Time/Drawing.cs" />
+    <File subtype="Code" buildaction="Compile" name="Handlers/VideoDrawingsManager.cs" />
+    <File subtype="Code" buildaction="Compile" name="Time/DrawingsList.cs" />
+    <File subtype="Code" buildaction="Compile" name="DB/ProjectDescription.cs" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="images/stock_draw-circle-unfilled.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="images/stock_draw-freeform-line.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="images/stock_draw-line-45.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="images/stock_draw-line-ends-with-arrow.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="images/stock_draw-rectangle-unfilled.png" />
+    <File subtype="Code" buildaction="Compile" name="Common/Enums.cs" />
+    <File subtype="Code" buildaction="Compile" name="Time/Tag.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/TaggerWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/TaggerDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/TreeView/TagsTreeView.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/TagsTreeWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="Common/Constants.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/ProjectSelectionDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/EndCaptureDialog.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Utils" />
+    <File subtype="Code" buildaction="Compile" name="Utils/ProjectUtils.cs" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="images/camera-video.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="images/video.png" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/BusyDialog.cs" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="gtk-gui/gui.stetic" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/generated.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlaysListTreeWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Popup.CalendarPopup.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.OpenProjectDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.NewProjectDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.ProjectTemplateWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.MainWindow.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.ProjectTemplateEditorDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.TimeLineWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.NotesWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.TeamTemplateWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.TemplatesManager.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlayersListTreeWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.Migrator.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.Win32CalendarDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.EditCategoryDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.EditPlayerDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.TeamTemplateEditor.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.DrawingWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.TagsTreeWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.BusyDialog.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-    <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <ProjectReference type="Gac" localcopy="True" refto="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Cairo, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-    <ProjectReference type="Gac" localcopy="True" refto="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Project" localcopy="True" refto="CesarPlayer" />
-    <ProjectReference type="Gac" localcopy="True" refto="Db4objects.Db4o, Version=6.0.1.0, Culture=neutral, PublicKeyToken=6199cd4f203aa8eb" />
+    <ProjectReference type="Gac" localcopy="True" refto="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Assembly" localcopy="True" specificVersion="False" refto="../../../../../usr/lib/mono/gac/Db4objects.Db4o/7.4.121.14026__6199cd4f203aa8eb/Db4objects.Db4o.dll" />
   </References>
   <LanguageParameters StartupObject="LongoMatch.MainClass" ApplicationIcon="." CodePage="65001" ctype="CSharpProjectParameters" />
   <Deployment.LinuxDeployData />

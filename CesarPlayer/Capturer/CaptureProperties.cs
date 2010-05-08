@@ -17,30 +17,22 @@
 // 
 
 using System;
-using LongoMatch.Common;
+using LongoMatch.Video.Common;
 
-namespace LongoMatch.Gui.Dialog
+namespace LongoMatch.Video.Capturer
 {
 	
 	
-	public partial class ProjectSelectionDialog : Gtk.Dialog
+	public struct CapturePropertiesStruct
 	{
-		
-		public ProjectSelectionDialog()
-		{
-			this.Build();
-		}
-		
-		public ProjectType Type{
-			get{
-				if (fromfileradiobutton.Active)
-					return ProjectType.FileProject;
-				else if (liveradiobutton.Active)
-					return ProjectType.CaptureProject;				
-				else
-					return ProjectType.FakeCaptureProject;
-				
-			}
-		}
+		public string VideoDevice;
+		public string AudioDevice;
+		public uint VideoBitrate;
+		public uint AudioBitrate;
+		public VideoEncoderType VideoEncoder;
+		public AudioEncoderType AudioEncoder;
+		public VideoMuxerType Muxer;
+		public uint Height;
+		public uint Width;
 	}
 }

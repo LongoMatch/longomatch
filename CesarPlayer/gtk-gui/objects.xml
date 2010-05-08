@@ -1,4 +1,13 @@
 <objects attr-sync="on">
+  <object type="LongoMatch.Gui.CapturerBin" palette-category="CesarPlayer" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="CapturerBin Signals">
+        <signal name="CaptureFinished" />
+        <signal name="Error" />
+      </itemgroup>
+    </signals>
+  </object>
   <object type="LongoMatch.Gui.PlayerBin" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="PlayerBin Properties">
@@ -16,14 +25,6 @@
         <signal name="Prev" />
         <signal name="DrawFrame" />
         <signal name="SeekEvent" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.CapturerBin" palette-category="CesarPlayer" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="CapturerBin Signals">
-        <signal name="CaptureFinished" />
       </itemgroup>
     </signals>
   </object>

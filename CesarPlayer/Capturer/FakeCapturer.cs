@@ -20,6 +20,7 @@ using System;
 using Mono.Unix;
 using GLib;
 using LongoMatch.Video.Common;
+using Gdk;
 
 namespace LongoMatch.Video.Capturer
 {
@@ -28,50 +29,49 @@ namespace LongoMatch.Video.Capturer
 	public class FakeCapturer : Gtk.Bin, ICapturer
 	{
 		public event EllpasedTimeHandler EllapsedTime;
+		public event ErrorHandler Error;
 		
-		private DateTime lastStart;
-		private TimeSpan ellapsed;
-		private bool playing;
-		private bool started;
-		private uint timerID;
+		private LiveSourceTimer timer;
 		
-		public FakeCapturer()
+		public FakeCapturer(): base ()
 		{
-			lastStart = DateTime.Now;
-			ellapsed = new TimeSpan(0,0,0);
-			playing = false;
-			started = false;			
+			timer = new LiveSourceTimer();	
+			timer.EllapsedTime += delegate(int ellapsedTime) {
+				if (EllapsedTime!= null)
+					EllapsedTime(ellapsedTime);
+			};
 		}
 		
 		public int CurrentTime{
 			get{
-				if (!started)
-					return 0;
-				else if (playing)
-					return (int)(ellapsed + (DateTime.Now - lastStart)).TotalMilliseconds;
-				else
-					return (int)ellapsed.TotalMilliseconds; 
+				return timer.CurrentTime;
 			}
 		}
 		
-		public void Pause(){
-			playing = false;
-			ellapsed += DateTime.Now - lastStart;								
+		public void Run(){
+		}
+		
+		public void Close(){
 		}
 		
 		public void Start(){
-			timerID = GLib.Timeout.Add(100, OnTick);
-			lastStart = DateTime.Now;
-			playing = true;
-			started = true;
+			timer.Start();
 		}
 		
-		public uint EncodeWidth {
+		public void Stop(){
+			timer.Stop();
+		}			
+		
+		public void TogglePause(){
+			timer.TogglePause();
+		}		
+		
+		public uint OutputWidth {
 			get{return 0;} 
 			set{}
 		}
 
-		public uint EncodeHeight {
+		public uint OutputHeight {
 			get{return 0;}
 			set{}
 		}
@@ -89,11 +89,11 @@ namespace LongoMatch.Video.Capturer
 		public uint AudioBitrate {
 			get {return 0;}
 			set {}
-		}
-		
-		public void Stop(){
-			GLib.Source.Remove(timerID);
 		}		
+		
+		public Pixbuf CurrentFrame {
+			get {return null;}
+		}
 		
 		public bool SetVideoEncoder(VideoEncoderType type){
 			return true;
@@ -104,12 +104,6 @@ namespace LongoMatch.Video.Capturer
 		}
 		
 		public bool SetVideoMuxer(VideoMuxerType type){
-			return true;
-		}
-		
-		protected virtual bool OnTick(){			
-			if (EllapsedTime != null)
-				EllapsedTime(CurrentTime);
 			return true;
 		}
 	}

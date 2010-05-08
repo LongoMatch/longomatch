@@ -27,7 +27,6 @@ namespace LongoMatch.Gui.Dialog {
             this.Gravity = ((Gdk.Gravity)(5));
             this.SkipPagerHint = true;
             this.SkipTaskbarHint = true;
-            this.HasSeparator = false;
             // Internal child LongoMatch.Gui.Dialog.TeamTemplateEditor.VBox
             Gtk.VBox w1 = this.VBox;
             w1.Name = "dialog1_VBox";
@@ -40,6 +39,8 @@ namespace LongoMatch.Gui.Dialog {
             w1.Add(this.teamtemplatewidget1);
             Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(w1[this.teamtemplatewidget1]));
             w2.Position = 0;
+            w2.Expand = false;
+            w2.Fill = false;
             // Internal child LongoMatch.Gui.Dialog.TeamTemplateEditor.ActionArea
             Gtk.HButtonBox w3 = this.ActionArea;
             w3.Name = "dialog1_ActionArea";

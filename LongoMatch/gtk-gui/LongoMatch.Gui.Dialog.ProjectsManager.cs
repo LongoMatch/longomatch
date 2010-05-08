@@ -52,7 +52,6 @@ namespace LongoMatch.Gui.Dialog {
             this.Gravity = ((Gdk.Gravity)(5));
             this.SkipPagerHint = true;
             this.SkipTaskbarHint = true;
-            this.HasSeparator = false;
             // Internal child LongoMatch.Gui.Dialog.ProjectsManager.VBox
             Gtk.VBox w1 = this.VBox;
             w1.Name = "dialog1_VBox";
@@ -145,14 +144,14 @@ namespace LongoMatch.Gui.Dialog {
             this.exportbutton.UseUnderline = true;
             // Container child exportbutton.Gtk.Container+ContainerChild
             Gtk.Alignment w8 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
-            // Container child GtkAlignment8.Gtk.Container+ContainerChild
+            // Container child GtkAlignment.Gtk.Container+ContainerChild
             Gtk.HBox w9 = new Gtk.HBox();
             w9.Spacing = 2;
-            // Container child GtkHBox14.Gtk.Container+ContainerChild
+            // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w10 = new Gtk.Image();
             w10.Pixbuf = Stetic.IconLoader.LoadIcon(this, "stock_export", Gtk.IconSize.Menu, 16);
             w9.Add(w10);
-            // Container child GtkHBox14.Gtk.Container+ContainerChild
+            // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w12 = new Gtk.Label();
             w12.LabelProp = Mono.Unix.Catalog.GetString("_Export");
             w12.UseUnderline = true;

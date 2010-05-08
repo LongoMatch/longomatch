@@ -25,7 +25,6 @@ namespace LongoMatch.Gui.Dialog {
             this.Icon = Gdk.Pixbuf.LoadFromResource("longomatch.png");
             this.WindowPosition = ((Gtk.WindowPosition)(4));
             this.Modal = true;
-            this.HasSeparator = false;
             // Internal child LongoMatch.Gui.Dialog.EditCategoryDialog.VBox
             Gtk.VBox w1 = this.VBox;
             w1.Name = "dialog1_VBox";
@@ -58,8 +57,8 @@ namespace LongoMatch.Gui.Dialog {
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
-            this.DefaultWidth = 264;
-            this.DefaultHeight = 186;
+            this.DefaultWidth = 266;
+            this.DefaultHeight = 191;
             this.Show();
         }
     }

@@ -1,4 +1,4 @@
-﻿// EventsManager.cs
+// EventsManager.cs
 //
 //  Copyright (C2007-2009 Andoni Morales Alastruey
 //
@@ -66,7 +66,8 @@ namespace LongoMatch
 		public EventsManager(PlaysListTreeWidget treewidget, PlayersListTreeWidget localPlayersList, 
 		                     PlayersListTreeWidget visitorPlayersList, TagsTreeWidget tagsTreeWidget,
 		                     ButtonsWidget buttonswidget, PlayListWidget playlist, PlayerBin player, 
-		                     TimeLineWidget timeline, ProgressBar videoprogressbar,NotesWidget notes)
+		                     TimeLineWidget timeline, ProgressBar videoprogressbar,NotesWidget notes,
+		                     CapturerBin capturer)
 		{
 			this.treewidget = treewidget;
 			this.localPlayersList = localPlayersList;
@@ -78,6 +79,7 @@ namespace LongoMatch
 			this.timeline = timeline;
 			this.videoprogressbar = videoprogressbar;
 			this.notes = notes;
+			this.capturer = capturer;
 			this.drawingManager = new VideoDrawingsManager(player);
 
 			ConnectSignals();
@@ -92,12 +94,6 @@ namespace LongoMatch
 		public ProjectType OpenedProjectType{
 			set {
 				projectType = value;
-			}
-		}
-		
-		public CapturerBin Capturer{
-			set {
-				capturer = value;
 			}
 		}
 
@@ -139,7 +135,7 @@ namespace LongoMatch
 			treewidget.SnapshotSeriesEvent += OnSnapshotSeries;
 			localPlayersList.SnapshotSeriesEvent += OnSnapshotSeries;
 			visitorPlayersList.SnapshotSeriesEvent += OnSnapshotSeries;
-			tagsTreeWidget.SnapshotSeriesEvent += OnSnapshotSeries;;
+			tagsTreeWidget.SnapshotSeriesEvent += OnSnapshotSeries;
 
 			timeline.NewMarkEvent += OnNewMarkAtFrame;
 
@@ -179,8 +175,19 @@ namespace LongoMatch
 			Pixbuf miniature;
 			MediaTimeNode tn;
 		
-			miniature = projectType == ProjectType.FakeCaptureProject ?
-				null : player.CurrentMiniatureFrame;
+			if (projectType == ProjectType.CaptureProject){
+				if (!capturer.Capturing){
+					MessagePopup.PopupMessage(capturer, MessageType.Info,
+					                          Catalog.GetString("You can't create a new play if the capturer "+
+					                                            "is not recording."));
+					return;
+				}
+				miniature = capturer.CurrentMiniatureFrame;
+			}
+			else if (projectType == ProjectType.FileProject)
+				miniature = player.CurrentMiniatureFrame;
+			else 
+				miniature = null;
 			tn = openedProject.AddTimeNode(section, start, stop,miniature);
 			treewidget.AddPlay(tn,section);
 			tagsTreeWidget.AddPlay(tn);

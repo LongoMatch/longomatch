@@ -1,4 +1,4 @@
-﻿// MainWindow.cs
+// MainWindow.cs
 //
 //  Copyright (C) 2007-2009 Andoni Morales Alastruey
 //
@@ -18,27 +18,22 @@
 //
 //
 
-using System;
-using Gtk;
-using Mono.Unix;
-using System.IO;
-using GLib;
-using System.Threading;
 using Gdk;
+using GLib;
+using Gtk;
 using LongoMatch.Common;
 using LongoMatch.DB;
-using LongoMatch.TimeNodes;
 using LongoMatch.Gui.Dialog;
-using LongoMatch.Gui.Popup;
-using LongoMatch.Video;
+using LongoMatch.Handlers;
+using LongoMatch.TimeNodes;
+using LongoMatch.Utils;
 using LongoMatch.Video.Capturer;
 using LongoMatch.Video.Common;
 using LongoMatch.Video.Player;
 using LongoMatch.Video.Utils;
-using LongoMatch.Updates;
-using LongoMatch.Utils;
-using LongoMatch.IO;
-using LongoMatch.Handlers;
+using Mono.Unix;
+using System;
+using System.IO;
 using System.Reflection;
 
 
@@ -57,7 +52,6 @@ namespace LongoMatch.Gui
 		private HotKeysManager hkManager;
 		private KeyPressEventHandler hotkeysListener;
 		
-		private CapturerBin capturerBin;		
 		
 		#region Constructors
 		public MainWindow() :
@@ -66,6 +60,7 @@ namespace LongoMatch.Gui
 			this.Build();
 
 			/*Updater updater = new Updater();
+			A
 			updater.NewVersion += new LongoMatch.Handlers.NewVersionHandler(OnUpdate);
 			updater.Run();*/
 			
@@ -80,7 +75,8 @@ namespace LongoMatch.Gui
 			                             playerbin1,
 			                             timelinewidget1,
 			                             videoprogressbar,
-			                             noteswidget1);
+			                             noteswidget1,
+			                             capturerBin);
 
 			hkManager = new HotKeysManager();
 			// Listenning only when a project is loaded
@@ -95,6 +91,10 @@ namespace LongoMatch.Gui
 			playerbin1.SetLogo(System.IO.Path.Combine(MainClass.ImagesDir(),"background.png"));
 			playerbin1.LogoMode = true;
 			
+			capturerBin.Visible = false;
+			capturerBin.CaptureFinished += delegate {
+						CloseOpenedProject (true);};
+			
 			buttonswidget1.Mode = TagMode.Predifined;
 
 			playlistwidget2.SetPlayer(playerbin1);
@@ -106,83 +106,126 @@ namespace LongoMatch.Gui
 		#endregion
 		
 		#region Private Methods
-		private void SetProject(Project project, ProjectType projectType) {
-			if (project == null)
-				return;
-			
-			CloseOpenedProject(true);
+		private void SetProject (Project project, ProjectType projectType, CapturePropertiesStruct props)
+		{
+			if (openedProject != null)
+				CloseOpenedProject (true);
+
 			openedProject = project;
 			this.projectType = projectType;
 			eManager.OpenedProject = project;
 			eManager.OpenedProjectType = projectType;
-			
-			if (projectType == ProjectType.FileProject){
-				// Check if the file associated to the project exists
-				if (!File.Exists(project.File.FilePath)) {
-					MessagePopup.PopupMessage(this, MessageType.Warning,
-					                          Catalog.GetString("The file associated to this project doesn't exist.")+"\n"
-					                          +Catalog.GetString("If the location of the file has changed try to edit it with the database manager."));
-					CloseOpenedProject(false);
-					return;
+			if (project != null) {
+				if (projectType == ProjectType.FileProject) {
+					// Check if the file associated to the project exists
+					if (!File.Exists (project.File.FilePath)) {
+						MessagePopup.PopupMessage (this, MessageType.Warning,
+						                          Catalog.GetString ("The file associated to this project doesn't exist.") + "\n"
+						                          + Catalog.GetString ("If the location of the file has changed try to edit it with the database manager."));
+						CloseOpenedProject (true);
+					} else {
+						Title = System.IO.Path.GetFileNameWithoutExtension (project.File.FilePath) + " - LongoMatch";
+						try {
+							playerbin1.Open (project.File.FilePath);
+						}
+						catch (GLib.GException ex) {
+							MessagePopup.PopupMessage (this, MessageType.Error,
+							                          Catalog.GetString ("An error occurred opening this project:") + "\n" + ex.Message);
+							CloseOpenedProject (true);
+							return;
+						}
+						if (project.File.HasVideo)
+							playerbin1.LogoMode = true;
+						else
+							playerbin1.LogoMode = false;
+						if (project.File.HasVideo)
+							playerbin1.LogoMode = false;
+						timelinewidget1.Project = project;
+						treewidget1.ProjectIsLive = false;
+						localplayerslisttreewidget.ProjectIsLive = false;
+						visitorplayerslisttreewidget.ProjectIsLive = false;
+						tagstreewidget1.ProjectIsLive = false;
+					}
 				} else {
-					Title = System.IO.Path.GetFileNameWithoutExtension(project.File.FilePath) + " - LongoMatch";
-					try {
-						playerbin1.Open(project.File.FilePath);							
-					}
-					catch (GLib.GException ex) {
-						MessagePopup.PopupMessage(this, MessageType.Error,
-						                          Catalog.GetString("An error occurred opening this project:")+"\n"+ex.Message);
-						CloseOpenedProject(false);
-						return;
-					}
-					playerbin1.LogoMode = false;
-					timelinewidget1.Project = project;
-					treewidget1.ProjectIsLive = false;
-					localplayerslisttreewidget.ProjectIsLive = false;
-					visitorplayerslisttreewidget.ProjectIsLive = false;
-					tagstreewidget1.ProjectIsLive = false;						
-				} 
-			}else {
-				Title = "LongoMatch";
-				playerbin1.Visible = false;					
-				capturerBin = new CapturerBin();
-				capturerBin.Logo = System.IO.Path.Combine(MainClass.ImagesDir(),"background.png");
-				capturerBin.CaptureFinished += delegate {
-					CloseOpenedProject(true);	
-				};
-				eManager.Capturer = capturerBin;
-				hbox2.Add(capturerBin);
-				(capturerBin).Show();	
-				treewidget1.ProjectIsLive = true;
-				localplayerslisttreewidget.ProjectIsLive = true;
-				visitorplayerslisttreewidget.ProjectIsLive = true;
-				tagstreewidget1.ProjectIsLive = true;	
-				CaptureModeAction.Active = true;
-			}	
-			
-			playlistwidget2.Stop();
-			treewidget1.Project=project;
-			localplayerslisttreewidget.SetTeam(project.LocalTeamTemplate,project.GetLocalTeamModel());
-			visitorplayerslisttreewidget.SetTeam(project.VisitorTeamTemplate,project.GetVisitorTeamModel());
-			tagstreewidget1.Project = project;				
-			buttonswidget1.Sections = project.Sections;
-			MakeActionsSensitive(true,projectType);
-			ShowWidgets();
-			hkManager.Sections=project.Sections;
-			KeyPressEvent += hotkeysListener;			
+					Title = "LongoMatch";
+					if (projectType == ProjectType.CaptureProject) {
+						capturerBin.OutputFile = project.File.FilePath;
+						capturerBin.CaptureProperties = props;
+						try {
+							capturerBin.Type = CapturerType.DVCAM;
+						} catch (Exception ex) {
+							MessagePopup.PopupMessage (this, MessageType.Error, ex.Message);
+							CloseOpenedProject (false);
+							return;
+						}
+					} else
+						capturerBin.Type = CapturerType.FAKE;
+					playerbin1.Visible = false;
+					capturerBin.Visible = true;
+					capturerBin.Run ();
+					treewidget1.ProjectIsLive = true;
+					localplayerslisttreewidget.ProjectIsLive = true;
+					visitorplayerslisttreewidget.ProjectIsLive = true;
+					tagstreewidget1.ProjectIsLive = true;	
+					CaptureModeAction.Active = true;
+				}
+				
+				playlistwidget2.Stop();
+				treewidget1.Project=project;
+				localplayerslisttreewidget.SetTeam(project.LocalTeamTemplate,project.GetLocalTeamModel());
+				visitorplayerslisttreewidget.SetTeam(project.VisitorTeamTemplate,project.GetVisitorTeamModel());
+				tagstreewidget1.Project = project;				
+				buttonswidget1.Sections = project.Sections;
+				MakeActionsSensitive(true,projectType);
+				ShowWidgets();
+				hkManager.Sections=project.Sections;
+				KeyPressEvent += hotkeysListener;
+			}
 		}
 		
+		private void SaveCaptureProject(){
+			PreviewMediaFile file;
+			Project newProject = openedProject;
+			string filePath = openedProject.File.FilePath;
+			
+			MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel, DialogFlags.Modal, MessageType.Info, ButtonsType.None,
+			                                     Catalog.GetString("Loading newly created project..."));
+			md.Show();
+
+			/* scan the new file to build a new PreviewMediaFile with all the metadata */
+			try{
+				file = PreviewMediaFile.GetMediaFile(filePath);		
+				openedProject.File = file;
+				MainClass.DB.AddProject(openedProject);
+			} catch (Exception ex){
+				string projectFile = filePath + "-" + DateTime.Now;
+				Project.Export(openedProject, projectFile);
+				MessagePopup.PopupMessage(this, MessageType.Error,
+				                          Catalog.GetString("An error occured saving the project:\n")+ex.Message+ "\n\n"+
+				                          Catalog.GetString("The video file and a backup of the project has been "+
+				                                            "saved. Try to import it later:\n")+
+				                          filePath+"\n"+projectFile);
+			}
+			/* we need to set the opened project to null to avoid calling again CloseOpendProject() */
+			openedProject = null;
+			SetProject(newProject, ProjectType.FileProject, new CapturePropertiesStruct());
+			md.Destroy();
+		}
+
 		private void CloseOpenedProject(bool save) {
-			bool playlistVisible = playlistwidget2.Visible;			
+			bool playlistVisible = playlistwidget2.Visible;	
 			
 			if (save)
 				SaveProject();
 			
 			if (projectType != ProjectType.FileProject){
+				capturerBin.Close();
 				playerbin1.Visible = true;
-				eManager.Capturer = null;
-				if (capturerBin != null)
-					capturerBin.Destroy();
+				capturerBin.Visible = false;
+				if (projectType != ProjectType.FileProject && openedProject != null){
+					SaveCaptureProject();
+					return;
+				}
 			} else {
 				playerbin1.Close();
 				playerbin1.LogoMode = true;
@@ -303,13 +346,14 @@ namespace LongoMatch.Gui
 		{
 			Project project;
 			ProjectType projectType;
+			CapturePropertiesStruct captureProps;
 			
 			if (!PromptCloseProject())
 				return;
 			
-			ProjectUtils.CreateNewProject(this, out project, out projectType);	
+			ProjectUtils.CreateNewProject(this, out project, out projectType, out captureProps);	
 			if (project != null)
-				SetProject(project, projectType);
+				SetProject(project, projectType, captureProps);
 		}
 		
 		protected virtual void OnOpenActivated(object sender, System.EventArgs e)
@@ -325,7 +369,7 @@ namespace LongoMatch.Gui
 				project = opd.GetSelection();
 			opd.Destroy();
 			if (project != null)
-				SetProject(MainClass.DB.GetProject(project.File), ProjectType.FileProject);
+				SetProject(MainClass.DB.GetProject(project.File), ProjectType.FileProject, new CapturePropertiesStruct());
 		}
 		
 		protected virtual void OnSaveProjectActionActivated(object sender, System.EventArgs e)
@@ -507,7 +551,7 @@ namespace LongoMatch.Gui
 			} else {
 				switch (key){
 					case Constants.TOGGLE_PLAY:
-						capturerBin.ToggleCapture();
+						capturerBin.TogglePause();
 						break;			
 				}	
 			}
@@ -544,6 +588,13 @@ namespace LongoMatch.Gui
 			CloseAndQuit();	
 			return true;
 		}
-		#endregion			
+		
+		protected virtual void OnCapturerBinError (object o, ErrorArgs args)
+		{
+			MessagePopup.PopupMessage(this, MessageType.Info,
+			                          Catalog.GetString("An error occured in the video capturer and the current project will be closed:")+"\n" +args.Message);
+			CloseOpenedProject(true);
+		}
+		#endregion	
 	}
 }

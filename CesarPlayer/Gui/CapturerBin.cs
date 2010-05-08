@@ -37,36 +37,59 @@ namespace LongoMatch.Gui
 	public partial class CapturerBin : Gtk.Bin
 	{
 		public event EventHandler CaptureFinished;
+		public event ErrorHandler Error;
 		
 		private Pixbuf logopix;
+		private uint outputWidth;
+		private uint outputHeight;
+		private uint videoBitrate;
+		private uint audioBitrate;
+		private VideoEncoderType  videoEncoder;
+		private AudioEncoderType audioEncoder;
+		private VideoMuxerType videoMuxer;
+		private string outputFile;
+		private bool capturing;
+		private const int THUMBNAIL_MAX_WIDTH = 100;		
 		
 		ICapturer capturer;
-		bool capturing;
 		
 		public CapturerBin()
 		{
 			this.Build();
+			outputWidth = 320;
+			outputHeight = 240;
+			videoBitrate = 1000;
+			audioBitrate = 128;
+			videoEncoder = VideoEncoderType.H264;
+			audioEncoder = AudioEncoderType.Aac;
+			videoMuxer = VideoMuxerType.Mp4;
+			outputFile = "";
 			Type = CapturerType.FAKE;
 		}		
 		
 		public CapturerType Type {
-			set{
-				if (capturer != null){
+			set {
+				if (capturer != null) {
+					capturer.Error -= OnError;
 					capturer.Stop();
 					capturerhbox.Remove(capturer as Gtk.Widget);
 				}
 				MultimediaFactory factory = new MultimediaFactory();
 				capturer = factory.getCapturer(value);	
 				capturer.EllapsedTime += OnTick;
+				capturer.Error += OnError;
 				if (value != CapturerType.FAKE){
 					capturerhbox.Add((Widget)capturer);
 					(capturer as Widget).Visible = true;
 					capturerhbox.Visible = true;
+					logodrawingarea.Visible = false;
 				}
 				else{
+					logodrawingarea.Visible = true;
 					capturerhbox.Visible = false;
 				}
 				capturing = false;
+				SetProperties();
 			}
 		}
 		
@@ -83,90 +106,184 @@ namespace LongoMatch.Gui
 		public string OutputFile {
 			set{
 				capturer.OutputFile= value;
+				outputFile = value;
 			}			
 		}		
 				
 		public uint VideoBitrate {
-			set{capturer.VideoBitrate=value;}			
+			set{
+				capturer.VideoBitrate=value;
+				videoBitrate = value;
+			}			
 		}
 		
 		public uint AudioBitrate {
-			set{capturer.AudioBitrate=value;}
+			set{
+				capturer.AudioBitrate=value;
+				audioBitrate = value;
+			}
 		}
 		
+		public uint OutputWidth {
+			set {
+				capturer.OutputWidth = value;
+				outputWidth = value;
+			}
+		} 
+		
+		public uint OutputHeight {
+			set {
+				capturer.OutputHeight = value;
+				outputHeight = value;
+			}
+		} 
+		
 		public int CurrentTime {
-			get{
+			get {
 				return capturer.CurrentTime;
 			}
 		}
 		
-		public void ToggleCapture(){
-			if (capturing)
-				Pause();
-			else 
-				Start();
+		public bool Capturing{
+			get{
+				return capturing;
+			}
 		}
 		
-		public void Pause(){
-			recbutton.Visible = true;
-			pausebutton.Visible = false;
-			capturer.Pause();
-			capturing = false;
+		public CapturePropertiesStruct CaptureProperties{
+			set{
+				outputWidth = value.Width;
+				outputHeight = value.Height;
+				audioBitrate = value.AudioBitrate;
+				videoBitrate = value.VideoBitrate;
+				audioEncoder = value.AudioEncoder;
+				videoEncoder = value.VideoEncoder;
+				videoMuxer = value.Muxer;
+			}
 		}
 		
 		public void Start(){
+			capturing = true;
 			recbutton.Visible = false;
 			pausebutton.Visible = true;
 			stopbutton.Visible = true;
 			capturer.Start();
-			capturing = true;
 		}
 		
-		public void Stop(){
-			capturer.Stop();
+		public void TogglePause(){
+			capturing = !capturing;
+			capturer.TogglePause();
+		}
+		
+		public void Stop() {
 			capturing = false;
+			capturer.Stop();
+		}
+		
+		public void Run(){
+			capturer.Run();
+		}
+
+		public void Close(){
+			capturer.Close();
+			capturing = false;
+		}
+		
+		public Pixbuf CurrentMiniatureFrame {
+			get {
+				int h, w;
+				double rate;
+				Pixbuf scaled_pix;
+				Pixbuf pix = capturer.CurrentFrame;
+				
+				if (pix == null)
+					return null;
+				
+				w = pix.Width;
+				h = pix.Height;
+				rate = (double)w / (double)h;
+				
+				if (h > w) {
+					w = (int)(THUMBNAIL_MAX_WIDTH * rate);
+					h = THUMBNAIL_MAX_WIDTH;
+				} else {
+					h = (int)(THUMBNAIL_MAX_WIDTH / rate);
+					w = THUMBNAIL_MAX_WIDTH;
+				}
+				scaled_pix = pix.ScaleSimple (w, h, Gdk.InterpType.Bilinear);
+				pix.Dispose();
+					
+				return scaled_pix;				                       
+			}
 		}
 		
 		public void SetVideoEncoder(VideoEncoderType type){
 			capturer.SetVideoEncoder(type);
+			videoEncoder = type;
 		}
 		
 		public void SetAudioEncoder(AudioEncoderType type){
 			capturer.SetAudioEncoder(type);
+			audioEncoder = type;
 		}
 		
 		public void SetVideoMuxer(VideoMuxerType type){
 			capturer.SetVideoMuxer(type);
+			videoMuxer = type;
+		}
+		
+		private void SetProperties(){
+			capturer.OutputFile = outputFile;
+			capturer.OutputHeight = outputHeight;
+			capturer.OutputWidth = outputWidth;
+			capturer.SetVideoEncoder(videoEncoder);
+			capturer.SetAudioEncoder(audioEncoder);
+			capturer.SetVideoMuxer(videoMuxer);	
+			capturer.VideoBitrate = videoBitrate;
+			capturer.AudioBitrate = audioBitrate;
 		}
 
 		protected virtual void OnRecbuttonClicked (object sender, System.EventArgs e)
 		{
-			Start();			
+			Start();	
 		}
 
 		protected virtual void OnPausebuttonClicked (object sender, System.EventArgs e)
 		{
-			Pause();						
+			TogglePause();						
 		}
 
 		protected virtual void OnStopbuttonClicked (object sender, System.EventArgs e)
 		{
+			int res;
+			
 			MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel, DialogFlags.Modal, MessageType.Question, ButtonsType.YesNo,
 			                                     Catalog.GetString("You are going to stop and finish the current capture."+"\n"+
 			                                                       "Do you want to proceed?"));
-			if (md.Run() == (int)ResponseType.Yes){
+			res = md.Run();
+			md.Destroy();
+			if (res == (int)ResponseType.Yes){
+				md = new MessageDialog((Gtk.Window)this.Toplevel, DialogFlags.Modal, MessageType.Info, ButtonsType.None,
+				                                     Catalog.GetString("Finalizing file. This can take a while"));
+				md.Show();
 				Stop();
+				md.Destroy();
 				recbutton.Visible = true;
 				pausebutton.Visible = false;
 				stopbutton.Visible = false;
 				if (CaptureFinished != null)
 					CaptureFinished(this, new EventArgs());
 			}
-			md.Destroy();
 		}				
 		
 		protected virtual void OnTick (int ellapsedTime){
 			timelabel.Text = "Time: " + TimeString.MSecondsToSecondsString(CurrentTime);
+		}
+		
+		protected virtual void OnError (object o, ErrorArgs args)
+		{
+			if (Error != null)
+				Error (o, args);
 		}
 		
 		protected virtual void OnLogodrawingareaExposeEvent (object o, Gtk.ExposeEventArgs args)

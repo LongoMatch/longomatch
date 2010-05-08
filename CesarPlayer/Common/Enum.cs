@@ -63,6 +63,7 @@ namespace LongoMatch.Video.Common
 	
 	public enum VideoMuxerType {
 		Avi,
+		Mp4, 
 		Matroska,
 		Ogg,
 		MpegPS,

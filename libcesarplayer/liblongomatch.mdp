@@ -3,33 +3,32 @@
     <Configuration name="Debug" SourceDirectory="." ctype="CProjectConfiguration">
       <Output directory="../LongoMatch/bin/Debug" output="libcesarplayer.dll" />
       <Build debugmode="True" target="SharedLibrary" />
-      <Execution runwithwarnings="True" consolepause="True" />
-      <EnvironmentVariables />
+      <Execution consolepause="True" runwithwarnings="True" />
       <CodeGeneration WarningLevel="Normal" WarningsAsErrors="False" OptimizationLevel="0" ExtraCompilerArguments="" ExtraLinkerArguments="" DefineSymbols="DEBUG MONODEVELOP" ctype="CCompilationParameters" />
     </Configuration>
     <Configuration name="Release" SourceDirectory="." ctype="CProjectConfiguration">
       <Output directory="../LongoMatch/bin/Release/" output="libcesarplayer.dll" />
       <Build debugmode="True" target="SharedLibrary" />
-      <Execution runwithwarnings="True" consolepause="True" />
+      <Execution consolepause="True" runwithwarnings="True" />
       <CodeGeneration WarningLevel="All" WarningsAsErrors="True" OptimizationLevel="3" ExtraCompilerArguments="" ExtraLinkerArguments="" DefineSymbols="MONODEVELOP" ctype="CCompilationParameters" />
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="src/bacon-video-widget.h" subtype="Code" buildaction="Nothing" />
-    <File name="src/bacon-video-widget-gst-0.10.c" subtype="Code" buildaction="Compile" />
-    <File name="src/baconvideowidget-marshal.c" subtype="Code" buildaction="Compile" />
-    <File name="src/baconvideowidget-marshal.h" subtype="Code" buildaction="Nothing" />
-    <File name="src/macros.h" subtype="Code" buildaction="Nothing" />
-    <File name="src/gstscreenshot.c" subtype="Code" buildaction="Compile" />
-    <File name="src/gstscreenshot.h" subtype="Code" buildaction="Nothing" />
-    <File name="src/gst-video-capturer.c" subtype="Code" buildaction="Compile" />
-    <File name="src/gst-video-capturer.h" subtype="Code" buildaction="Nothing" />
-    <File name="src/gst-video-editor.c" subtype="Code" buildaction="Compile" />
-    <File name="src/gst-video-editor.h" subtype="Code" buildaction="Nothing" />
-    <File name="src/bacon-resize.c" subtype="Code" buildaction="Compile" />
-    <File name="src/bacon-resize.h" subtype="Code" buildaction="Nothing" />
-    <File name="src/video-utils.c" subtype="Code" buildaction="Compile" />
-    <File name="src/video-utils.h" subtype="Code" buildaction="Nothing" />
+    <File subtype="Code" buildaction="Nothing" name="src/bacon-video-widget.h" />
+    <File subtype="Code" buildaction="Compile" name="src/bacon-video-widget-gst-0.10.c" />
+    <File subtype="Code" buildaction="Compile" name="src/baconvideowidget-marshal.c" />
+    <File subtype="Code" buildaction="Nothing" name="src/baconvideowidget-marshal.h" />
+    <File subtype="Code" buildaction="Nothing" name="src/macros.h" />
+    <File subtype="Code" buildaction="Compile" name="src/gstscreenshot.c" />
+    <File subtype="Code" buildaction="Nothing" name="src/gstscreenshot.h" />
+    <File subtype="Code" buildaction="Compile" name="src/gst-video-editor.c" />
+    <File subtype="Code" buildaction="Nothing" name="src/gst-video-editor.h" />
+    <File subtype="Code" buildaction="Compile" name="src/bacon-resize.c" />
+    <File subtype="Code" buildaction="Nothing" name="src/bacon-resize.h" />
+    <File subtype="Code" buildaction="Compile" name="src/video-utils.c" />
+    <File subtype="Code" buildaction="Nothing" name="src/video-utils.h" />
+    <File subtype="Code" buildaction="Compile" name="src/gst-camera-capturer.c" />
+    <File subtype="Code" buildaction="Nothing" name="src/gst-camera-capturer.h" />
   </Contents>
   <compiler ctype="GccCompiler" />
   <Packages>

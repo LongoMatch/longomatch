@@ -27,6 +27,7 @@ using LongoMatch.Gui.Dialog;
 using LongoMatch.IO;
 using LongoMatch.TimeNodes;
 using LongoMatch.Video;
+using LongoMatch.Video.Capturer;
 using LongoMatch.Video.Utils;
 
 namespace LongoMatch.Utils
@@ -162,7 +163,10 @@ namespace LongoMatch.Utils
 			                          Catalog.GetString("Project successfully imported."));			
 		}
 		
-		public static void CreateNewProject(Window window, out Project project, out ProjectType projectType){
+		public static void CreateNewProject(Window window, 
+		                                    out Project project, 
+		                                    out ProjectType projectType, 
+		                                    out CapturePropertiesStruct captureProps){
 			ProjectSelectionDialog psd;
 			NewProjectDialog npd;	
 			int response;
@@ -170,6 +174,7 @@ namespace LongoMatch.Utils
 			/* The out parameters must be set before leaving the method */
 			project = null;
 			projectType = ProjectType.None;
+			captureProps = new CapturePropertiesStruct();
 			
 			/* Show the project selection dialog */
 			psd = new ProjectSelectionDialog();
@@ -205,6 +210,7 @@ namespace LongoMatch.Utils
 				else {
 					/* We are now ready to create the new project */
 					project = npd.Project;
+					captureProps = npd.CaptureProperties;
 					npd.Destroy();
 					break;
 				}

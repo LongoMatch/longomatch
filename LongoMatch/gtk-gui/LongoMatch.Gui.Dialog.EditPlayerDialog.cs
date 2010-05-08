@@ -27,7 +27,6 @@ namespace LongoMatch.Gui.Dialog {
             this.Modal = true;
             this.SkipPagerHint = true;
             this.SkipTaskbarHint = true;
-            this.HasSeparator = false;
             // Internal child LongoMatch.Gui.Dialog.EditPlayerDialog.VBox
             Gtk.VBox w1 = this.VBox;
             w1.Name = "dialog1_VBox";
@@ -63,7 +62,7 @@ namespace LongoMatch.Gui.Dialog {
                 this.Child.ShowAll();
             }
             this.DefaultWidth = 254;
-            this.DefaultHeight = 185;
+            this.DefaultHeight = 206;
             this.Show();
         }
     }

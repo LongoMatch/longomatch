@@ -64,7 +64,6 @@ namespace LongoMatch.Gui.Dialog {
             this.Gravity = ((Gdk.Gravity)(5));
             this.SkipPagerHint = true;
             this.SkipTaskbarHint = true;
-            this.HasSeparator = false;
             // Internal child LongoMatch.Gui.Dialog.VideoEditionProperties.VBox
             Gtk.VBox w1 = this.VBox;
             w1.Name = "dialog1_VBox";
@@ -272,7 +271,7 @@ namespace LongoMatch.Gui.Dialog {
                 this.Child.ShowAll();
             }
             this.DefaultWidth = 514;
-            this.DefaultHeight = 221;
+            this.DefaultHeight = 223;
             this.Show();
             this.openbutton.Clicked += new System.EventHandler(this.OnOpenbuttonClicked);
             this.buttonOk.Clicked += new System.EventHandler(this.OnButtonOkClicked);
