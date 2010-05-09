@@ -93,7 +93,7 @@ namespace LongoMatch.Gui
 			
 			capturerBin.Visible = false;
 			capturerBin.CaptureFinished += delegate {
-						CloseOpenedProject (true);};
+						CloseCaptureProject();};
 			
 			buttonswidget1.Mode = TagMode.Predifined;
 
@@ -108,80 +108,77 @@ namespace LongoMatch.Gui
 		#region Private Methods
 		private void SetProject (Project project, ProjectType projectType, CapturePropertiesStruct props)
 		{
+			bool isLive = false;
+			
+			if (project == null)
+				return;
+			
 			if (openedProject != null)
 				CloseOpenedProject (true);
-
+			
 			openedProject = project;
 			this.projectType = projectType;
 			eManager.OpenedProject = project;
 			eManager.OpenedProjectType = projectType;
-			if (project != null) {
-				if (projectType == ProjectType.FileProject) {
-					// Check if the file associated to the project exists
-					if (!File.Exists (project.File.FilePath)) {
-						MessagePopup.PopupMessage (this, MessageType.Warning,
-						                          Catalog.GetString ("The file associated to this project doesn't exist.") + "\n"
-						                          + Catalog.GetString ("If the location of the file has changed try to edit it with the database manager."));
-						CloseOpenedProject (true);
-					} else {
-						Title = System.IO.Path.GetFileNameWithoutExtension (project.File.FilePath) + " - LongoMatch";
-						try {
-							playerbin1.Open (project.File.FilePath);
-						}
-						catch (GLib.GException ex) {
-							MessagePopup.PopupMessage (this, MessageType.Error,
-							                          Catalog.GetString ("An error occurred opening this project:") + "\n" + ex.Message);
-							CloseOpenedProject (true);
-							return;
-						}
-						if (project.File.HasVideo)
-							playerbin1.LogoMode = true;
-						else
-							playerbin1.LogoMode = false;
-						if (project.File.HasVideo)
-							playerbin1.LogoMode = false;
-						timelinewidget1.Project = project;
-						treewidget1.ProjectIsLive = false;
-						localplayerslisttreewidget.ProjectIsLive = false;
-						visitorplayerslisttreewidget.ProjectIsLive = false;
-						tagstreewidget1.ProjectIsLive = false;
-					}
-				} else {
-					Title = "LongoMatch";
-					if (projectType == ProjectType.CaptureProject) {
-						capturerBin.OutputFile = project.File.FilePath;
-						capturerBin.CaptureProperties = props;
-						try {
-							capturerBin.Type = CapturerType.DVCAM;
-						} catch (Exception ex) {
-							MessagePopup.PopupMessage (this, MessageType.Error, ex.Message);
-							CloseOpenedProject (false);
-							return;
-						}
-					} else
-						capturerBin.Type = CapturerType.FAKE;
-					playerbin1.Visible = false;
-					capturerBin.Visible = true;
-					capturerBin.Run ();
-					treewidget1.ProjectIsLive = true;
-					localplayerslisttreewidget.ProjectIsLive = true;
-					visitorplayerslisttreewidget.ProjectIsLive = true;
-					tagstreewidget1.ProjectIsLive = true;	
-					CaptureModeAction.Active = true;
+
+			if (projectType == ProjectType.FileProject) {
+				// Check if the file associated to the project exists
+				if (!File.Exists (project.File.FilePath)) {
+					MessagePopup.PopupMessage (this, MessageType.Warning,
+					                           Catalog.GetString ("The file associated to this project doesn't exist.") + "\n"
+					                           + Catalog.GetString ("If the location of the file has changed try to edit it with the database manager."));
+					CloseOpenedProject (true);
+					return;
 				}
+				Title = System.IO.Path.GetFileNameWithoutExtension (project.File.FilePath) + " - LongoMatch";
+				try {
+					playerbin1.Open (project.File.FilePath);
+				}
+				catch (GLib.GException ex) {
+					MessagePopup.PopupMessage (this, MessageType.Error,
+					                           Catalog.GetString ("An error occurred opening this project:") + "\n" + ex.Message);
+					CloseOpenedProject (true);
+						return;
+				}
+				playerbin1.LogoMode = false;
+				timelinewidget1.Project = project;
 				
-				playlistwidget2.Stop();
-				treewidget1.Project=project;
-				localplayerslisttreewidget.SetTeam(project.LocalTeamTemplate,project.GetLocalTeamModel());
-				visitorplayerslisttreewidget.SetTeam(project.VisitorTeamTemplate,project.GetVisitorTeamModel());
-				tagstreewidget1.Project = project;				
-				buttonswidget1.Sections = project.Sections;
-				MakeActionsSensitive(true,projectType);
-				ShowWidgets();
-				hkManager.Sections=project.Sections;
-				KeyPressEvent += hotkeysListener;
+			} else {
+				Title = "LongoMatch";
+				isLive = true;
+				if (projectType == ProjectType.CaptureProject) {
+					capturerBin.OutputFile = project.File.FilePath;
+					capturerBin.CaptureProperties = props;
+					try {
+						capturerBin.Type = CapturerType.DVCAM;
+					} catch (Exception ex) {
+						MessagePopup.PopupMessage (this, MessageType.Error, ex.Message);
+						CloseOpenedProject (false);
+						return;
+					}
+				} else
+					capturerBin.Type = CapturerType.FAKE;
+				playerbin1.Visible = false;
+				capturerBin.Visible = true;
+				capturerBin.Run ();
+				CaptureModeAction.Active = true;
 			}
-		}
+			
+			treewidget1.ProjectIsLive = isLive;
+			localplayerslisttreewidget.ProjectIsLive = isLive;
+			visitorplayerslisttreewidget.ProjectIsLive = isLive;
+			tagstreewidget1.ProjectIsLive = isLive;
+			playlistwidget2.Stop();
+			treewidget1.Project=project;
+			localplayerslisttreewidget.SetTeam(project.LocalTeamTemplate,project.GetLocalTeamModel());
+			visitorplayerslisttreewidget.SetTeam(project.VisitorTeamTemplate,project.GetVisitorTeamModel());
+			tagstreewidget1.Project = project;				
+			buttonswidget1.Sections = project.Sections;
+			hkManager.Sections=project.Sections;
+			KeyPressEvent += hotkeysListener;
+			MakeActionsSensitive(true,projectType);
+			ShowWidgets();
+	}
 		
 		private void SaveCaptureProject(){
 			PreviewMediaFile file;
@@ -211,36 +208,46 @@ namespace LongoMatch.Gui
 			SetProject(newProject, ProjectType.FileProject, new CapturePropertiesStruct());
 			md.Destroy();
 		}
+		
+		private void CloseCaptureProject (){
+			if (projectType == ProjectType.CaptureProject){
+				capturerBin.Close();
+				playerbin1.Visible = true;
+				capturerBin.Visible = false;;
+				SaveCaptureProject();
+			} else if (projectType == ProjectType.FakeCaptureProject){
+				CloseOpenedProject(true);
+			}
+		}
 
 		private void CloseOpenedProject(bool save) {
-			bool playlistVisible = playlistwidget2.Visible;	
-			
 			if (save)
 				SaveProject();
 			
-			if (projectType != ProjectType.FileProject){
+			if (projectType != ProjectType.FileProject)
 				capturerBin.Close();
-				playerbin1.Visible = true;
-				capturerBin.Visible = false;
-				if (projectType != ProjectType.FileProject && openedProject != null){
-					SaveCaptureProject();
-					return;
-				}
-			} else {
+			else 
 				playerbin1.Close();
-				playerbin1.LogoMode = true;
-			}
+			
+			if (openedProject != null)
+				openedProject.Clear();
+			openedProject = null;
+			projectType = ProjectType.None;
+			eManager.OpenedProject = null;
+			eManager.OpenedProjectType = ProjectType.None;				
+			ResetGUI();
+		}
+		
+		private void ResetGUI(){
+			bool playlistVisible = playlistwidget2.Visible;	
+
 			Title = "LongoMatch";
+			playerbin1.Visible = true;
+			playerbin1.LogoMode = true;
+			capturerBin.Visible = false;
 			ClearWidgets();
 			HideWidgets();	
 			
-			if (openedProject != null) {
-				openedProject.Clear();
-				openedProject = null;
-				projectType = ProjectType.None;
-				eManager.OpenedProject = null;
-				eManager.OpenedProjectType = ProjectType.None;				
-			}			
 			playlistwidget2.Visible = playlistVisible;
 			rightvbox.Visible = playlistVisible;
 			noteswidget1.Visible = false;			
