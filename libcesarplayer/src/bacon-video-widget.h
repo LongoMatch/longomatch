@@ -76,66 +76,6 @@ typedef struct
   void (*ready_to_seek) (BaconVideoWidget * bvw);
 } BaconVideoWidgetClass;
 
-/**
- * BvwError:
- * @BVW_ERROR_AUDIO_PLUGIN: Error loading audio output plugin or device.
- * @BVW_ERROR_NO_PLUGIN_FOR_FILE: A required GStreamer plugin or xine feature is missing.
- * @BVW_ERROR_VIDEO_PLUGIN: Error loading video output plugin or device.
- * @BVW_ERROR_AUDIO_BUSY: Audio output device is busy.
- * @BVW_ERROR_BROKEN_FILE: The movie file is broken and cannot be decoded.
- * @BVW_ERROR_FILE_GENERIC: A generic error for problems with movie files.
- * @BVW_ERROR_FILE_PERMISSION: Permission was refused to access the stream, or authentication was required.
- * @BVW_ERROR_FILE_ENCRYPTED: The stream is encrypted and cannot be played.
- * @BVW_ERROR_FILE_NOT_FOUND: The stream cannot be found.
- * @BVW_ERROR_DVD_ENCRYPTED: The DVD is encrypted and libdvdcss is not installed.
- * @BVW_ERROR_INVALID_DEVICE: The device given in an MRL (e.g. DVD drive or DVB tuner) did not exist.
- * @BVW_ERROR_DEVICE_BUSY: The device was busy.
- * @BVW_ERROR_UNKNOWN_HOST: The host for a given stream could not be resolved.
- * @BVW_ERROR_NETWORK_UNREACHABLE: The host for a given stream could not be reached.
- * @BVW_ERROR_CONNECTION_REFUSED: The server for a given stream refused the connection.
- * @BVW_ERROR_INVALID_LOCATION: An MRL was malformed, or CDDB playback was attempted (which is now unsupported).
- * @BVW_ERROR_GENERIC: A generic error occurred.
- * @BVW_ERROR_CODEC_NOT_HANDLED: The audio or video codec required by the stream is not supported.
- * @BVW_ERROR_AUDIO_ONLY: An audio-only stream could not be played due to missing audio output support.
- * @BVW_ERROR_CANNOT_CAPTURE: Error determining frame capture support for a video with bacon_video_widget_can_get_frames().
- * @BVW_ERROR_READ_ERROR: A generic error for problems reading streams.
- * @BVW_ERROR_PLUGIN_LOAD: A library or plugin could not be loaded.
- * @BVW_ERROR_EMPTY_FILE: A movie file was empty.
- *
- * Error codes for #BaconVideoWidget operations.
- **/
-typedef enum
-{
-  /* Plugins */
-  BVW_ERROR_AUDIO_PLUGIN,
-  BVW_ERROR_NO_PLUGIN_FOR_FILE,
-  BVW_ERROR_VIDEO_PLUGIN,
-  BVW_ERROR_AUDIO_BUSY,
-  /* File */
-  BVW_ERROR_BROKEN_FILE,
-  BVW_ERROR_FILE_GENERIC,
-  BVW_ERROR_FILE_PERMISSION,
-  BVW_ERROR_FILE_ENCRYPTED,
-  BVW_ERROR_FILE_NOT_FOUND,
-  /* Devices */
-  BVW_ERROR_DVD_ENCRYPTED,
-  BVW_ERROR_INVALID_DEVICE,
-  BVW_ERROR_DEVICE_BUSY,
-  /* Network */
-  BVW_ERROR_UNKNOWN_HOST,
-  BVW_ERROR_NETWORK_UNREACHABLE,
-  BVW_ERROR_CONNECTION_REFUSED,
-  /* Generic */
-  BVW_ERROR_INVALID_LOCATION,
-  BVW_ERROR_GENERIC,
-  BVW_ERROR_CODEC_NOT_HANDLED,
-  BVW_ERROR_AUDIO_ONLY,
-  BVW_ERROR_CANNOT_CAPTURE,
-  BVW_ERROR_READ_ERROR,
-  BVW_ERROR_PLUGIN_LOAD,
-  BVW_ERROR_EMPTY_FILE
-} BvwError;
-
 
 EXPORT GQuark
 bacon_video_widget_error_quark (void)

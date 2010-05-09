@@ -33,6 +33,7 @@
 #include <glib-object.h>
 #include <gtk/gtk.h>
 
+#include "common.h"
 
 G_BEGIN_DECLS
 #define GST_TYPE_VIDEO_EDITOR             (gst_video_editor_get_type ())
@@ -61,37 +62,6 @@ struct _GstVideoEditor
   GstVideoEditorPrivate *priv;
 };
 
-typedef enum
-{
-  GVC_ERROR_PLUGIN_LOAD,
-} GvcError;
-
-
-typedef enum
-{
-  MPEG4,
-  XVID,
-  THEORA,
-  H264,
-  MPEG2_VIDEO,
-} GvsVideoEncoderType;
-
-typedef enum
-{
-  MP3,
-  AAC,
-  VORBIS,
-} GvsAudioEncoderType;
-
-typedef enum
-{
-  AVI,
-  MKV,
-  OGG,
-  DVD,
-} GvsVideoMuxer;
-
-
 EXPORT GType
 gst_video_editor_get_type (void)
   G_GNUC_CONST;
@@ -102,13 +72,13 @@ gst_video_editor_get_type (void)
      EXPORT void gst_video_editor_cancel (GstVideoEditor * gve);
      EXPORT void gst_video_editor_set_video_encoder (GstVideoEditor * gve,
 						     gchar ** err,
-						     GvsVideoEncoderType codec);
+						     VideoEncoderType codec);
      EXPORT void gst_video_editor_set_audio_encoder (GstVideoEditor * gve,
 						     gchar ** err,
-						     GvsAudioEncoderType codec);
+						     AudioEncoderType codec);
      EXPORT void gst_video_editor_set_video_muxer (GstVideoEditor * gve,
 						   gchar ** err,
-						   GvsVideoMuxer codec);
+						   VideoMuxerType codec);
      EXPORT void gst_video_editor_clear_segments_list (GstVideoEditor * gve);
      EXPORT void gst_video_editor_add_segment (GstVideoEditor * gve,
 					       gchar * file, gint64 start,

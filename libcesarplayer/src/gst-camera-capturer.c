@@ -83,8 +83,8 @@ struct GstCameraCapturerPrivate
   guint output_fps_d;
   guint audio_bitrate;
   guint video_bitrate;
-  GccVideoEncoderType video_encoder_type;
-  GccAudioEncoderType audio_encoder_type;
+  VideoEncoderType video_encoder_type;
+  AudioEncoderType audio_encoder_type;
 
   /*Video input info */
   gint video_width;             /* Movie width */
@@ -245,7 +245,7 @@ gst_camera_capturer_set_audio_bit_rate (GstCameraCapturer * gcc, gint bitrate)
 {
 
   gcc->priv->audio_bitrate = bitrate;
-  if (gcc->priv->audio_encoder_type != GCC_AUDIO_ENCODER_MP3)
+  if (gcc->priv->audio_encoder_type != AUDIO_ENCODER_MP3)
     g_object_set (gcc->priv->audioenc, "bitrate", bitrate, NULL);
   else  
     g_object_set (gcc->priv->audioenc, "bitrate", 1000 * bitrate, NULL);
@@ -914,7 +914,7 @@ gst_camera_capturer_new (gchar * filename, GError ** err)
 /* Missing plugin */
 missing_plugin:
   {
-    g_set_error (err, GCC_ERROR, GCC_ERROR_PLUGIN_LOAD,
+    g_set_error (err, GCC_ERROR, ERROR_PLUGIN_LOAD,
         ("Failed to create a GStreamer element. "
             "The element \"%s\" is missing. "
             "Please check your GStreamer installation."), plugin);
@@ -961,41 +961,43 @@ gst_camera_capturer_stop (GstCameraCapturer * gcc)
 
 gboolean
 gst_camera_capturer_set_video_encoder (GstCameraCapturer * gcc,
-    GccVideoEncoderType type, GError ** err)
+    VideoEncoderType type, GError ** err)
 {
   gchar *name = NULL;
 
   g_return_val_if_fail (GST_IS_CAMERA_CAPTURER (gcc), FALSE);
 
   switch (type) {
-    case GCC_VIDEO_ENCODER_TYPE_MPEG4:
+    case VIDEO_ENCODER_MPEG4:
       gcc->priv->videoenc =
           gst_element_factory_make ("ffenc_mpeg4", "video-encoder");
       name = "FFmpeg mpeg4 video encoder";
       break;
 
-    case GCC_VIDEO_ENCODER_TYPE_XVID:
+    case VIDEO_ENCODER_XVID:
       gcc->priv->videoenc =
           gst_element_factory_make ("xvidenc", "video-encoder");
       name = "Xvid video encoder";
       break;
 
-    case GCC_VIDEO_ENCODER_TYPE_THEORA:
+    case VIDEO_ENCODER_H264:
+      gcc->priv->videoenc =
+          gst_element_factory_make ("x264enc", "video-encoder");
+      name = "X264 video encoder";
+      break;
+    
+    case VIDEO_ENCODER_THEORA:
+    default:
       gcc->priv->videoenc =
           gst_element_factory_make ("theoraenc", "video-encoder");
       name = "Theora video encoder";
       break;
 
-    case GCC_VIDEO_ENCODER_TYPE_H264:
-      gcc->priv->videoenc =
-          gst_element_factory_make ("x264enc", "video-encoder");
-      name = "X264 video encoder";
-      break;
   }
   if (!gcc->priv->videoenc) {
     g_set_error (err,
         GCC_ERROR,
-        GCC_ERROR_PLUGIN_LOAD,
+        ERROR_PLUGIN_LOAD,
         "Failed to create the %s element. "
         "Please check your GStreamer installation.", name);
   } else {
@@ -1007,24 +1009,24 @@ gst_camera_capturer_set_video_encoder (GstCameraCapturer * gcc,
 
 gboolean
 gst_camera_capturer_set_audio_encoder (GstCameraCapturer * gcc,
-    GccAudioEncoderType type, GError ** err)
+    AudioEncoderType type, GError ** err)
 {
   gchar *name = NULL;
 
   g_return_val_if_fail (GST_IS_CAMERA_CAPTURER (gcc), FALSE);
 
   switch (type) {
-    case GCC_AUDIO_ENCODER_MP3:
+    case AUDIO_ENCODER_MP3:
       gcc->priv->audioenc = gst_element_factory_make ("lame", "audio-encoder");
       name = "Mp3 audio encoder";
       break;
 
-    case GCC_AUDIO_ENCODER_AAC:
+    case AUDIO_ENCODER_AAC:
       gcc->priv->audioenc = gst_element_factory_make ("faac", "audio-encoder");
       name = "AAC audio encoder";
       break;
 
-    case GCC_AUDIO_ENCODER_VORBIS:
+    case AUDIO_ENCODER_VORBIS:
       gcc->priv->audioenc =
           gst_element_factory_make ("vorbisenc", "audio-encoder");
       name = "Vorbis audio encoder";
@@ -1034,7 +1036,7 @@ gst_camera_capturer_set_audio_encoder (GstCameraCapturer * gcc,
   if (!gcc->priv->audioenc) {
     g_set_error (err,
         GCC_ERROR,
-        GCC_ERROR_PLUGIN_LOAD,
+        ERROR_PLUGIN_LOAD,
         "Failed to create the %s element. "
         "Please check your GStreamer installation.", name);
   } else {
@@ -1047,36 +1049,37 @@ gst_camera_capturer_set_audio_encoder (GstCameraCapturer * gcc,
 
 gboolean
 gst_camera_capturer_set_video_muxer (GstCameraCapturer * gcc,
-    GccVideoMuxerType type, GError ** err)
+    VideoMuxerType type, GError ** err)
 {
   gchar *name = NULL;
 
   g_return_val_if_fail (GST_IS_CAMERA_CAPTURER (gcc), FALSE);
 
   switch (type) {
-    case GCC_VIDEO_MUXER_OGG:
+    case VIDEO_MUXER_OGG:
       name = "OGG muxer";
       gcc->priv->videomux = gst_element_factory_make ("oggmux", "video-muxer");
       break;
-    case GCC_VIDEO_MUXER_AVI:
+    case VIDEO_MUXER_AVI:
       name = "AVI muxer";
       gcc->priv->videomux = gst_element_factory_make ("avimux", "video-muxer");
       break;
-    case GCC_VIDEO_MUXER_MP4:
-      name = "MP4 muxer";
-      gcc->priv->videomux = gst_element_factory_make ("qtmux", "video-muxer");
-      break;
-    case GCC_VIDEO_MUXER_MATROSKA:
+    case VIDEO_MUXER_MATROSKA:
       name = "Matroska muxer";
       gcc->priv->videomux =
           gst_element_factory_make ("matroskamux", "video-muxer");
+      break;
+    case VIDEO_MUXER_MP4:
+    default:
+      name = "MP4 muxer";
+      gcc->priv->videomux = gst_element_factory_make ("qtmux", "video-muxer");
       break;
   }
 
   if (!gcc->priv->videomux) {
     g_set_error (err,
         GCC_ERROR,
-        GCC_ERROR_PLUGIN_LOAD,
+        ERROR_PLUGIN_LOAD,
         "Failed to create the %s element. "
         "Please check your GStreamer installation.", name);
   } else {
@@ -1299,7 +1302,7 @@ gst_camera_capturer_can_get_frames (GstCameraCapturer * gcc, GError ** error)
 
   /* check for video */
   if (!gcc->priv->media_has_video) {
-    g_set_error_literal (error, GCC_ERROR, GCC_ERROR_GENERIC,
+    g_set_error_literal (error, GCC_ERROR, ERROR_GENERIC,
         "Media contains no supported video streams.");
     return FALSE;
   }
