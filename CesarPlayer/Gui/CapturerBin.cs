@@ -48,6 +48,7 @@ namespace LongoMatch.Gui
 		private AudioEncoderType audioEncoder;
 		private VideoMuxerType videoMuxer;
 		private string outputFile;
+		private bool captureStarted;
 		private bool capturing;
 		private const int THUMBNAIL_MAX_WIDTH = 100;		
 		
@@ -88,6 +89,7 @@ namespace LongoMatch.Gui
 					logodrawingarea.Visible = true;
 					capturerhbox.Visible = false;
 				}
+				captureStarted = false;
 				capturing = false;
 				SetProperties();
 				pausebutton.Visible = false;
@@ -167,6 +169,7 @@ namespace LongoMatch.Gui
 		
 		public void Start(){
 			capturing = true;
+			captureStarted = true;
 			recbutton.Visible = false;
 			pausebutton.Visible = true;
 			stopbutton.Visible = true;
@@ -175,6 +178,8 @@ namespace LongoMatch.Gui
 		
 		public void TogglePause(){
 			capturing = !capturing;
+			recbutton.Visible = !capturing;
+			pausebutton.Visible = capturing;
 			capturer.TogglePause();
 		}
 		
@@ -248,12 +253,19 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnRecbuttonClicked (object sender, System.EventArgs e)
 		{
-			Start();	
+			if (captureStarted == true){
+				if (capturing)
+					return;
+				TogglePause();
+			}
+			else
+				Start();	
 		}
 
 		protected virtual void OnPausebuttonClicked (object sender, System.EventArgs e)
 		{
-			TogglePause();						
+			if (capturing)
+				TogglePause();						
 		}
 
 		protected virtual void OnStopbuttonClicked (object sender, System.EventArgs e)
