@@ -138,11 +138,16 @@ namespace LongoMatch.DB
 								p.File = new PreviewMediaFile(Catalog.GetString("Change Me"),0,0,false,false,"","",0,0,null);
 								db.Set(p);
 							}
-							ProjectDescription pd = new ProjectDescription(p.File.FilePath,
-							                                               p.LocalName, p.VisitorName,
-							                                               p.Season,p.Competition,
-							                                               p.LocalGoals,p.VisitorGoals,
-							                                               p.MatchDate,p.File.Preview);
+							ProjectDescription pd = new ProjectDescription {
+								File = p.File.FilePath,
+								LocalName= p.LocalName,
+								VisitorName = p.VisitorName,
+								Season = p.Season,
+								Competition = p.Competition,
+								LocalGoals = p.LocalGoals,
+								VisitorGoals = p.VisitorGoals,
+								MatchDate = p.MatchDate,
+								Preview = p.File.Preview};
 							list.Add(pd);
 						}catch{	
 							Console.WriteLine("Error retreiving project. Skip");

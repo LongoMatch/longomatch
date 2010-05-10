@@ -28,124 +28,57 @@ namespace LongoMatch.DB
 	/// </summary>
 	public class ProjectDescription :  IComparable
 	{
-		private string file;
-
-		private string localName;
-
-		private string visitorName;
-
-		private int localGoals;
-
-		private int visitorGoals;
-
-		private DateTime matchDate;
-
-		private string season;
-
-		private string competition;
-
-		private Pixbuf preview;
-
-		public ProjectDescription(string file, String localName, String visitorName, String season, String competition, int localGoals,
-		                          int visitorGoals, DateTime matchDate,Pixbuf preview)
-		{
-			this.file = file;
-			this.localName = localName;
-			this.visitorName = visitorName;
-			this.localGoals = localGoals;
-			this.visitorGoals = visitorGoals;
-			this.matchDate = matchDate;
-			this.season = season;
-			this.competition = competition;
-			this.preview = preview;
-		}
-
+		
 		public String Title {
 			get {
-				return System.IO.Path.GetFileNameWithoutExtension(file);
+				return System.IO.Path.GetFileNameWithoutExtension(File);
 			}
 		}
 
 		public String File {
-			get {
-				return file;
-			}
-			set {
-				file = value;
-			}
+			get;
+			set;
 		}
 
 		public String Season {
-			get {
-				return season;
-			}
-			set {
-				season = value;
-			}
+			get;
+			set;
 		}
 
 		public String Competition {
-			get {
-				return competition;
-			}
-			set {
-				competition= value;
-			}
+			get;
+			set;
 		}
 
 		public String LocalName {
-			get {
-				return localName;
-			}
-			set {
-				localName=value;
-			}
+			get;
+			set;
 		}
 
 		public String VisitorName {
-			get {
-				return visitorName;
-			}
-			set {
-				visitorName=value;
-			}
+			get;
+			set;
 		}
 
 		public int LocalGoals {
-			get {
-				return localGoals;
-			}
-			set {
-				localGoals=value;
-			}
+			get;
+			set;
 		}
 
 		public int VisitorGoals {
-			get {
-				return visitorGoals;
-			}
-			set {
-				visitorGoals=value;
-			}
+			get;
+			set;
 		}
 
 
 		public DateTime MatchDate {
-			get {
-				return matchDate;
-			}
-			set {
-				matchDate=value;
-			}
+			get;
+			set;
 		}
 
 		public Pixbuf Preview {
-			get {
-				return this.preview;
-			}
-			set {
-				preview = value;
-			}
+			get;
+			set;
 		}
 
 		public int CompareTo(object obj) {
