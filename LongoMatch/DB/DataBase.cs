@@ -147,7 +147,13 @@ namespace LongoMatch.DB
 								LocalGoals = p.LocalGoals,
 								VisitorGoals = p.VisitorGoals,
 								MatchDate = p.MatchDate,
-								Preview = p.File.Preview};
+								Preview = p.File.Preview,
+								VideoCodec = p.File.VideoCodec,
+								AudioCodec = p.File.AudioCodec,
+								Length = new Time((int)(p.File.Length/1000)),
+								Format = String.Format("{0}x{1}@{2}fps", 
+								                       p.File.VideoWidth, p.File.VideoHeight, p.File.Fps),
+							};
 							list.Add(pd);
 						}catch{	
 							Console.WriteLine("Error retreiving project. Skip");

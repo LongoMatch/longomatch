@@ -18,6 +18,7 @@
 
 using System;
 using Gdk;
+using LongoMatch.TimeNodes;
 
 namespace LongoMatch.DB
 {
@@ -77,6 +78,26 @@ namespace LongoMatch.DB
 		}
 
 		public Pixbuf Preview {
+			get;
+			set;
+		}
+		
+		public Time Length {
+			get;
+			set;
+		}
+		
+		public String VideoCodec {
+			get;
+			set;
+		}
+		
+		public String AudioCodec {
+			get;
+			set;
+		}
+		
+		public String Format {
 			get;
 			set;
 		}
