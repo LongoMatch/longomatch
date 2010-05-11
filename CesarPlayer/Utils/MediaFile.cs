@@ -148,8 +148,8 @@ namespace LongoMatch.Video.Utils
 					videoCodec = (string) reader.GetMetadata(MetadataType.VideoEncoderType);	
 					fps = (int) reader.GetMetadata(MetadataType.Fps);
 				}			
-				height = (int) reader.GetMetadata(MetadataType.DimensionY);
-				width = (int) reader.GetMetadata (MetadataType.DimensionX);
+				height = (int) reader.GetMetadata(MetadataType.DimensionX);
+				width = (int) reader.GetMetadata (MetadataType.DimensionY);
 								
 				return new MediaFile(filePath,duration*1000,(ushort)fps,hasAudio,hasVideo,videoCodec,audioCodec,(uint)height,(uint)width);
 		
