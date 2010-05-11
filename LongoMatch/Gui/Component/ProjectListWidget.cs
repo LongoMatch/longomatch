@@ -25,6 +25,8 @@ using Mono.Unix;
 using Gtk;
 using Db4objects.Db4o;
 using LongoMatch.DB;
+using LongoMatch.TimeNodes;
+using LongoMatch.Video.Utils;
 
 
 
@@ -54,11 +56,14 @@ namespace LongoMatch.Gui.Component
 			Gtk.TreeViewColumn fileDescriptionColumn = new Gtk.TreeViewColumn();
 			fileDescriptionColumn.Title = Catalog.GetString("Filename");
 			Gtk.CellRendererText filenameCell = new Gtk.CellRendererText();
+			Gtk.CellRendererText filePropertiesCell = new Gtk.CellRendererText();
 			Gtk.CellRendererPixbuf miniatureCell = new Gtk.CellRendererPixbuf();
 			fileDescriptionColumn.PackStart(miniatureCell,false);
 			fileDescriptionColumn.PackStart(filenameCell, true);
+			fileDescriptionColumn.PackStart(filePropertiesCell, true);
 
 			fileDescriptionColumn.SetCellDataFunc(filenameCell, new Gtk.TreeCellDataFunc(RenderName));
+			fileDescriptionColumn.SetCellDataFunc(filePropertiesCell, new Gtk.TreeCellDataFunc(RenderProperties));
 			fileDescriptionColumn.SetCellDataFunc(miniatureCell, new Gtk.TreeCellDataFunc(RenderPixbuf));
 
 			treeview.AppendColumn(fileDescriptionColumn);
@@ -72,14 +77,28 @@ namespace LongoMatch.Gui.Component
 			ProjectDescription project = (ProjectDescription) model.GetValue(iter, 0);
 			(cell as Gtk.CellRendererPixbuf).Pixbuf= project.Preview;
 		}
+		
+		private void RenderProperties(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
+		{
+			ProjectDescription project = (ProjectDescription) model.GetValue(iter, 0);
+			string text;
+
+			text = "\n"+"\n"+"\n"+"<b>"+Catalog.GetString("File length")+":</b>  " + project.Length.ToSecondsString();
+			text = text +"\n"+"<b>"+Catalog.GetString("Video codec")+":</b>  " + project.VideoCodec;
+			text = text +"\n"+"<b>"+Catalog.GetString("Audio codec")+":</b>  " + project.AudioCodec;
+			text = text +"\n"+"<b>"+Catalog.GetString("Format")+":</b>  " + project.Format;
+
+			(cell as Gtk.CellRendererText).Markup = text;
+		}
+		
 		private void RenderName(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			ProjectDescription project = (ProjectDescription) model.GetValue(iter, 0);
 			string text;
 
 			text = "<b>"+Catalog.GetString("Title")+":</b>  " + project.Title;
-			text = text +"\n"+"<b>"+Catalog.GetString("Local Team")+":</b>  " + project.LocalName;
-			text = text +"\n"+"<b>"+Catalog.GetString("Visitor Team")+":</b>  " + project.VisitorName;
+			text = text +"\n"+"<b>"+Catalog.GetString("Local team")+":</b>  " + project.LocalName;
+			text = text +"\n"+"<b>"+Catalog.GetString("Visitor team")+":</b>  " + project.VisitorName;
 			text = text +"\n"+"<b>"+Catalog.GetString("Season")+":</b>  " + project.Season;
 			text = text +"\n"+"<b>"+Catalog.GetString("Competition")+":</b>  " + project.Competition;
 			text = text +"\n"+"<b>"+Catalog.GetString("Result")+":</b>  " + project.LocalGoals+"-"+ project.VisitorGoals;
