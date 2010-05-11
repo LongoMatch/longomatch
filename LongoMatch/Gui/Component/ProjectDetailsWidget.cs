@@ -52,9 +52,9 @@ namespace LongoMatch.Gui.Component
 		private TeamTemplate actualVisitorTeam;
 		private TeamTemplate actualLocalTeam;
 		private ProjectType useType;
-		private const string PAL_FORMAT = "640x480 (4:3)";
-		private const string PAL_3_4_FORMAT = "480x360 (4:3)";
-		private const string PAL_1_2_FORMAT = "320x240 (4:3)";
+		private const string PAL_FORMAT = "720x576 (4:3)";
+		private const string PAL_3_4_FORMAT = "540x432 (4:3)";
+		private const string PAL_1_2_FORMAT = "360x288 (4:3)";
 		private const string AVI = "AVI (XVID + MP3)";
 		private const string MP4 = "MP4 (H264 + AAC)";
 		private const string OGG = "OGG (Theora + Vorbis)";
@@ -257,16 +257,20 @@ namespace LongoMatch.Gui.Component
 				switch (sizecombobox.ActiveText){
 					/* FIXME: Don't harcode size values */
 					case PAL_FORMAT:
-						s.Width = 640;
-						s.Height = 480;
-						break;
-					case PAL_1_2_FORMAT:
-						s.Width = 480;
-						s.Height = 320;
+						s.Width = 720;
+						s.Height = 576;
 						break;
 					case PAL_3_4_FORMAT:
-						s.Width = 320;
-						s.Height = 240;
+						s.Width = 540;
+						s.Height = 432;
+						break;
+					case PAL_1_2_FORMAT:
+						s.Width = 360;
+						s.Height = 288;
+						break;
+					default:
+						s.Width = 0;
+						s.Height = 0;
 						break;
 				}
 				switch (videoformatcombobox.ActiveText){
@@ -411,6 +415,7 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		private void FillFormats(){
+			sizecombobox.AppendText (Catalog.GetString("Keep original size"));
 			sizecombobox.AppendText(PAL_FORMAT);
 			sizecombobox.AppendText(PAL_3_4_FORMAT);
 			sizecombobox.AppendText(PAL_1_2_FORMAT);
@@ -419,7 +424,7 @@ namespace LongoMatch.Gui.Component
 			videoformatcombobox.AppendText(OGG);
 			videoformatcombobox.AppendText(MP4);
 			videoformatcombobox.AppendText(AVI);
-			videoformatcombobox.Active = 0;
+			videoformatcombobox.Active = 1;
 		}
 
 		protected virtual void OnDateSelected(DateTime dateTime) {
