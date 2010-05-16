@@ -853,7 +853,8 @@ gst_camera_capturer_set_source (GstCameraCapturer * gcc,
 #endif
       bin = g_strdup_printf ("%s ! queue ! video/x-dv "
           "! dvdemux name=demux .video ! queue "
-          "! ffdec_dv ! queue " " .demux ", source_element);
+          "! ffdec_dv ! queue ! ffmpegcolorspace ! videorate ! videoscale"
+          " .demux ", source_element);
       gcc->priv->videosrc = gst_parse_bin_from_description (bin, TRUE, err);
       gcc->priv->audiosrc = gcc->priv->videosrc;
     }
@@ -862,7 +863,7 @@ gst_camera_capturer_set_source (GstCameraCapturer * gcc,
 #ifdef WIN32
       source_element = "dshowvideosrc";
 #else
-      source_element = "v4l2src ";
+      source_element = "v4l2src ! ffmpegcolorspace ! videorate ! videoscale";
 #endif
       bin = g_strdup_printf ("%s", source_element);
       gcc->priv->videosrc = gst_parse_bin_from_description (bin, TRUE, err);
