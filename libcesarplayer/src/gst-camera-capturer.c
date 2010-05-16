@@ -50,6 +50,7 @@
 #include <gdk/gdkx.h>
 #endif
 
+#define DEFAULT_SOURCE_TYPE  GST_CAMERA_CAPTURE_SOURCE_TYPE_RAW
 
 /* Signals */
 enum
@@ -96,6 +97,7 @@ struct GstCameraCapturerPrivate
   gint video_fps_d;
   gboolean media_has_video;
   gboolean media_has_audio;
+  GstCameraCaptureSourceType source_type;
 
   /* Snapshots */
   GstBuffer *last_buffer;
@@ -104,6 +106,7 @@ struct GstCameraCapturerPrivate
   GstElement *main_pipeline;
   GstElement *camerabin;
   GstElement *videosrc;
+  GstElement *videofilter;
   GstElement *audiosrc;
   GstElement *videoenc;
   GstElement *audioenc;
@@ -147,7 +150,6 @@ static int gcc_parse_video_stream_info (GstCaps * caps,
 
 G_DEFINE_TYPE (GstCameraCapturer, gst_camera_capturer, GTK_TYPE_EVENT_BOX);
 
-
 static void
 gst_camera_capturer_init (GstCameraCapturer * object)
 {
@@ -167,6 +169,7 @@ gst_camera_capturer_init (GstCameraCapturer * object)
   priv->audio_bitrate = 128;
   priv->video_bitrate = 5000;
   priv->last_buffer = NULL;
+  priv->source_type = GST_CAMERA_CAPTURE_SOURCE_TYPE_RAW;
 
   priv->lock = g_mutex_new ();
 }
@@ -213,21 +216,14 @@ gst_camera_capturer_finalize (GObject * object)
 static void
 gst_camera_capturer_apply_resolution (GstCameraCapturer * gcc)
 {
-  GstCaps *caps;
-  gchar *caps_string;
-
   GST_INFO_OBJECT (gcc, "Changed video resolution to %dx%d@%d/%dfps",
       gcc->priv->output_width, gcc->priv->output_height,
       gcc->priv->output_fps_n, gcc->priv->output_fps_d);
 
-  caps_string =
-      g_strdup_printf
-      ("video/x-raw-yuv, format=(fourcc)I420,width=(int)%d,height=(int)%d",
-      gcc->priv->output_width, gcc->priv->output_height);
-  caps = gst_caps_from_string (caps_string);
-  g_object_set (gcc->priv->camerabin, "filter-caps", caps, NULL);
-  gst_caps_unref (caps);
-  g_free (caps_string);
+  g_signal_emit_by_name (G_OBJECT (gcc->priv->camerabin),
+      "set-video-resolution-fps", gcc->priv->output_width,
+      gcc->priv->output_height, gcc->priv->output_fps_n,
+      gcc->priv->output_fps_d);
 }
 
 static void
@@ -247,7 +243,7 @@ gst_camera_capturer_set_audio_bit_rate (GstCameraCapturer * gcc, gint bitrate)
   gcc->priv->audio_bitrate = bitrate;
   if (gcc->priv->audio_encoder_type != AUDIO_ENCODER_MP3)
     g_object_set (gcc->priv->audioenc, "bitrate", bitrate, NULL);
-  else  
+  else
     g_object_set (gcc->priv->audioenc, "bitrate", 1000 * bitrate, NULL);
   GST_INFO_OBJECT (gcc, "Changed audio bitrate to :\n%d",
       gcc->priv->audio_bitrate);
@@ -785,7 +781,6 @@ gst_camera_capturer_class_init (GstCameraCapturerClass * klass)
       g_param_spec_string ("output_file", NULL,
           NULL, FALSE, G_PARAM_READWRITE));
 
-
   /* Signals */
   gcc_signals[SIGNAL_ERROR] =
       g_signal_new ("error",
@@ -837,6 +832,49 @@ gst_camera_capture_videosrc_buffer_probe (GstPad * pad, GstBuffer * buf,
   return TRUE;
 }
 
+gboolean
+gst_camera_capturer_set_source (GstCameraCapturer * gcc,
+    GstCameraCaptureSourceType source_type, GError **err)
+{
+  gchar *bin;
+  gchar *source_element;
+
+  if (gcc->priv->source_type == source_type)
+    return TRUE;
+  gcc->priv->source_type = source_type;
+
+  switch (gcc->priv->source_type) {
+    case GST_CAMERA_CAPTURE_SOURCE_TYPE_DV:
+    {
+#ifdef WIN32
+      source_element = "dshowvideosrc";
+#else
+      source_element = "dv1394src";
+#endif
+      bin = g_strdup_printf ("%s ! queue ! video/x-dv "
+          "! dvdemux name=demux .video ! queue "
+          "! ffdec_dv ! queue " " .demux ", source_element);
+      gcc->priv->videosrc = gst_parse_bin_from_description (bin, TRUE, err);
+      gcc->priv->audiosrc = gcc->priv->videosrc;
+    }
+    case GST_CAMERA_CAPTURE_SOURCE_TYPE_RAW:
+    {
+#ifdef WIN32
+      source_element = "dshowvideosrc";
+#else
+      source_element = "v4l2src ";
+#endif
+      bin = g_strdup_printf ("%s", source_element);
+      gcc->priv->videosrc = gst_parse_bin_from_description (bin, TRUE, err);
+    }
+  }
+  if (*err) {
+    GST_ERROR_OBJECT (gcc, "Error changing source: %s", (*err)->message);
+    return FALSE;
+  }
+  return TRUE;
+}
+
 GstCameraCapturer *
 gst_camera_capturer_new (gchar * filename, GError ** err)
 {
@@ -864,28 +902,16 @@ gst_camera_capturer_new (gchar * filename, GError ** err)
   GST_INFO_OBJECT (gcc, "Setting capture mode to \"video\"");
   g_object_set (gcc->priv->camerabin, "mode", 1, NULL);
 
-  GST_INFO_OBJECT (gcc, "Setting video source ");
-  gcc->priv->videosrc = gst_element_factory_make (VIDEOSRC, "videosource");
+  GST_INFO_OBJECT (gcc, "Setting video/audio source ");
+  gst_camera_capturer_set_source (gcc, gcc->priv->source_type, err);
+  if (*err != NULL) {
+    return NULL;
+  }
   g_object_set (gcc->priv->camerabin, "video-source", gcc->priv->videosrc,
       NULL);
-  if (!gcc->priv->videosrc) {
-    plugin = VIDEOSRC;
-    goto missing_plugin;
-  }
-  g_object_set (gcc->priv->videosrc, "do-timestamp", TRUE, NULL);
 
-  GST_INFO_OBJECT (gcc, "Setting audio source ");
-  gcc->priv->audiosrc = gst_element_factory_make (AUDIOSRC, "audiosource");
-  g_object_set (gcc->priv->camerabin, "audio-source", gcc->priv->audiosrc,
-      NULL);
-  if (!gcc->priv->audiosrc) {
-    plugin = AUDIOSRC;
-    goto missing_plugin;
-  }
   GST_INFO_OBJECT (gcc, "Setting capture mode to \"video\"");
   g_object_set (gcc->priv->camerabin, "mode", 1, NULL);
-
-  g_object_set (gcc->priv->camerabin, "mute", TRUE, NULL);
 
   /* assume we're always called from the main Gtk+ GUI thread */
   gui_thread = g_thread_self ();
@@ -985,7 +1011,7 @@ gst_camera_capturer_set_video_encoder (GstCameraCapturer * gcc,
           gst_element_factory_make ("x264enc", "video-encoder");
       name = "X264 video encoder";
       break;
-    
+
     case VIDEO_ENCODER_THEORA:
     default:
       gcc->priv->videoenc =
@@ -1233,7 +1259,7 @@ gcc_parse_video_stream_info (GstCaps * caps, GstCameraCapturer * gcc)
   if (!(caps))
     return -1;
 
-  /* Get video decoder caps */
+  /* Get the source caps */
   s = gst_caps_get_structure (caps, 0);
   if (s) {
     /* We need at least width/height and framerate */
@@ -1243,7 +1269,7 @@ gcc_parse_video_stream_info (GstCaps * caps, GstCameraCapturer * gcc)
             && gst_structure_get_int (s, "width", &gcc->priv->video_width)
             && gst_structure_get_int (s, "height", &gcc->priv->video_height)))
       return -1;
-    /* Get the movie PAR if available */
+    /* Get the source PAR if available */
     gcc->priv->movie_par = gst_structure_get_value (s, "pixel-aspect-ratio");
   }
   return 1;

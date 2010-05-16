@@ -63,6 +63,12 @@ struct _GstCameraCapturer
   GstCameraCapturerPrivate *priv;
 };
 
+typedef enum
+{
+  GST_CAMERA_CAPTURE_SOURCE_TYPE_DV,
+  GST_CAMERA_CAPTURE_SOURCE_TYPE_RAW
+}GstCameraCaptureSourceType;
+
 EXPORT GType gst_camera_capturer_get_type (void)  G_GNUC_CONST;
 
 EXPORT void gst_camera_capturer_init_backend (int *argc, char ***argv);
@@ -82,6 +88,9 @@ EXPORT gboolean gst_camera_capturer_set_audio_encoder (GstCameraCapturer * gcc,
 EXPORT gboolean gst_camera_capturer_set_video_muxer (GstCameraCapturer * gcc,
                                                     VideoMuxerType type,
                                                     GError ** err);
+EXPORT gboolean gst_camera_capturer_set_source (GstCameraCapturer * gcc,
+                                                    GstCameraCaptureSourceType type,
+						    GError ** err);
 EXPORT GList* gst_camera_capturer_enum_audio_devices (void);
 EXPORT GList* gst_camera_capturer_enum_video_devices (void);
 EXPORT GdkPixbuf* gst_camera_capturer_get_current_frame(GstCameraCapturer *gcc);
