@@ -578,6 +578,7 @@ gst_camera_capturer_expose_event (GtkWidget * widget, GdkEventExpose * event)
     gcc_update_interface_implementations (gcc);
     g_object_get (gcc->priv->camerabin, "filter-caps", &caps, NULL);
     gcc_parse_video_stream_info (caps, gcc);
+    resize_video_window (gcc);
     gst_caps_unref (caps);
     xoverlay = gcc->priv->xoverlay;
   }
