@@ -71,7 +71,6 @@ namespace LongoMatch.Gui.Component {
             this.playlisttreeview1.Sensitive = false;
             this.playlisttreeview1.CanFocus = true;
             this.playlisttreeview1.Name = "playlisttreeview1";
-            this.playlisttreeview1.Reorderable = true;
             this.vbox1.Add(this.playlisttreeview1);
             Gtk.Box.BoxChild w3 = ((Gtk.Box.BoxChild)(this.vbox1[this.playlisttreeview1]));
             w3.Position = 1;
@@ -98,7 +97,7 @@ namespace LongoMatch.Gui.Component {
             w8.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w9 = new Gtk.Image();
-            w9.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-new", Gtk.IconSize.Button, 20);
+            w9.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-new", Gtk.IconSize.Button, 16);
             w8.Add(w9);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w11 = new Gtk.Label();
@@ -121,7 +120,7 @@ namespace LongoMatch.Gui.Component {
             w17.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w18 = new Gtk.Image();
-            w18.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-open", Gtk.IconSize.Button, 20);
+            w18.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-open", Gtk.IconSize.Button, 16);
             w17.Add(w18);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w20 = new Gtk.Label();
@@ -144,7 +143,7 @@ namespace LongoMatch.Gui.Component {
             w26.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w27 = new Gtk.Image();
-            w27.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-save", Gtk.IconSize.Button, 20);
+            w27.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-save", Gtk.IconSize.Button, 16);
             w26.Add(w27);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w29 = new Gtk.Label();
@@ -167,7 +166,7 @@ namespace LongoMatch.Gui.Component {
             w35.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w36 = new Gtk.Image();
-            w36.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-record", Gtk.IconSize.Button, 20);
+            w36.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-record", Gtk.IconSize.Button, 16);
             w35.Add(w36);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w38 = new Gtk.Label();
@@ -190,7 +189,7 @@ namespace LongoMatch.Gui.Component {
             w44.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w45 = new Gtk.Image();
-            w45.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-close", Gtk.IconSize.Button, 20);
+            w45.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-close", Gtk.IconSize.Button, 16);
             w44.Add(w45);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w47 = new Gtk.Label();
@@ -211,7 +210,6 @@ namespace LongoMatch.Gui.Component {
             }
             this.closebutton.Hide();
             this.Show();
-            this.playlisttreeview1.RowActivated += new Gtk.RowActivatedHandler(this.OnPlaylisttreeview1RowActivated);
             this.playlisttreeview1.DragEnd += new Gtk.DragEndHandler(this.OnPlaylisttreeview1DragEnd);
             this.newbutton.Clicked += new System.EventHandler(this.OnNewbuttonClicked);
             this.openbutton.Clicked += new System.EventHandler(this.OnOpenbuttonClicked);

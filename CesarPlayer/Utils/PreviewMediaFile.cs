@@ -101,8 +101,8 @@ namespace LongoMatch.Video.Utils
 						duration = (int)reader.GetMetadata(MetadataType.Duration);
 					thumbnailer.Dispose();
 				}			
-				height = (int) reader.GetMetadata(MetadataType.DimensionY);
-				width = (int) reader.GetMetadata (MetadataType.DimensionX);
+				height = (int) reader.GetMetadata(MetadataType.DimensionX);
+				width = (int) reader.GetMetadata (MetadataType.DimensionY);
 				reader.Close();	
 				reader.Dispose();	
 				

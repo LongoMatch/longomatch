@@ -20,6 +20,7 @@
 
 using System;
 using LongoMatch.Video.Common;
+using Gdk;
 
 namespace LongoMatch.Video.Capturer
 {
@@ -28,13 +29,14 @@ namespace LongoMatch.Video.Capturer
 	public interface ICapturer
 	{	
 		event EllpasedTimeHandler EllapsedTime;
+		event ErrorHandler Error;
 			
-		uint EncodeWidth {
+		uint OutputWidth {
 			get ;
 			set ;
 		}
 
-		uint EncodeHeight {
+		uint OutputHeight {
 			get;
 			set ;
 		}
@@ -58,16 +60,24 @@ namespace LongoMatch.Video.Capturer
 			get ;
 		}
 		
+		Pixbuf CurrentFrame {
+			get;
+		}
+		
 		bool SetVideoEncoder(VideoEncoderType type);
 		
 		bool SetAudioEncoder(AudioEncoderType type);
 		
 		bool SetVideoMuxer(VideoMuxerType type);
 		
-		void Pause();
+		void TogglePause();
 		
 		void Start();
 		
 		void Stop();
+		
+		void Run();
+		
+		void Close();
 	}
 }

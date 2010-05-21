@@ -62,9 +62,11 @@ FILES = \
 	Utils/FramesCapturer.cs \
 	Utils/IMetadataReader.cs \
 	Utils/TimeString.cs \
+	Capturer/CaptureProperties.cs \
 	Capturer/GstCameraCapturer.cs \
 	Capturer/FakeCapturer.cs \
 	Capturer/ICapturer.cs \
+	Capturer/LiveSourceTimer.cs \
 	Capturer/ObjectManager.cs \
 	Editor/GstVideoSplitter.cs \
 	Editor/IVideoEditor.cs \

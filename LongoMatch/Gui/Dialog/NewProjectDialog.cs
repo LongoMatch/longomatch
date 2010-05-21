@@ -21,6 +21,7 @@
 using System;
 using LongoMatch.DB;
 using LongoMatch.Common;
+using LongoMatch.Video.Capturer;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -48,6 +49,12 @@ namespace LongoMatch.Gui.Dialog
 			}
 			set{
 				fdwidget.SetProject(value);
+			}
+		}
+		
+		public CapturePropertiesStruct CaptureProperties{
+			get{
+				return fdwidget.CaptureProperties;
 			}
 		}
 	}

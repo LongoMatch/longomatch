@@ -1022,7 +1022,7 @@ gst_video_editor_clear_segments_list (GstVideoEditor * gve)
 
 void
 gst_video_editor_set_video_encoder (GstVideoEditor * gve, gchar ** err,
-				    GvsVideoEncoderType codec)
+				    VideoEncoderType codec)
 {
   GstElement *encoder = NULL;
   GstState cur_state;
@@ -1039,29 +1039,29 @@ gst_video_editor_set_video_encoder (GstVideoEditor * gve, gchar ** err,
     {
       switch (codec)
 	{
-	case H264:
+	case VIDEO_ENCODER_H264:
 	  encoder_name = "x264enc";
 	  encoder = gst_element_factory_make (encoder_name, encoder_name);
 	  g_object_set (G_OBJECT (encoder), "pass", 17, NULL);	//Variable Bitrate-Pass 1
 	  break;
-	case MPEG4:
+	case VIDEO_ENCODER_MPEG4:
 	  encoder_name = "xvidenc";
 	  encoder = gst_element_factory_make (encoder_name, encoder_name);
 	  g_object_set (G_OBJECT (encoder), "pass", 1, NULL);	//Variable Bitrate-Pass 1
 	  break;
-	case XVID:
+	case VIDEO_ENCODER_XVID:
 	  encoder_name = "ffenc_mpeg4";
 	  encoder = gst_element_factory_make (encoder_name, encoder_name);
 	  g_object_set (G_OBJECT (encoder), "pass", 512, NULL);	//Variable Bitrate-Pass 1
 
 	  break;
-	case MPEG2_VIDEO:
+	case VIDEO_ENCODER_MPEG2:
 	  encoder_name = "mpeg2enc";
 	  encoder = gst_element_factory_make (encoder_name, encoder_name);
 	  g_object_set (G_OBJECT (encoder), "format", 9, NULL);	//DVD compilant
 	  g_object_set (G_OBJECT (encoder), "framerate", 3, NULL);	//25 FPS (PAL/SECAM)    
 	  break;
-	case THEORA:
+	case VIDEO_ENCODER_THEORA:
 	  encoder_name = "theoraenc";
 	  encoder = gst_element_factory_make (encoder_name, encoder_name);
 	  break;
@@ -1128,7 +1128,7 @@ gst_video_editor_set_video_encoder (GstVideoEditor * gve, gchar ** err,
 
 void
 gst_video_editor_set_audio_encoder (GstVideoEditor * gve, gchar ** err,
-				    GvsAudioEncoderType codec)
+				    AudioEncoderType codec)
 {
   GstElement *encoder = NULL;
   GstState cur_state;
@@ -1145,20 +1145,20 @@ gst_video_editor_set_audio_encoder (GstVideoEditor * gve, gchar ** err,
     {
       switch (codec)
 	{
-	case AAC:
+	case AUDIO_ENCODER_AAC:
 	  encoder_name = "faac";
 	  encoder = gst_element_factory_make (encoder_name, encoder_name);
 	  g_object_set (G_OBJECT (gve->priv->audiocapsfilter), "caps",
 			gst_caps_from_string (FAAC_CAPS), NULL);
 	  break;
-	case MP3:
+	case AUDIO_ENCODER_MP3:
 	  encoder_name = "lame";
 	  encoder = gst_element_factory_make (encoder_name, encoder_name);
 	  g_object_set (G_OBJECT (encoder), "vbr", 4, NULL);	//Variable Bitrate
 	  g_object_set (G_OBJECT (gve->priv->audiocapsfilter), "caps",
 			gst_caps_from_string (LAME_CAPS), NULL);
 	  break;
-	case VORBIS:
+	case AUDIO_ENCODER_VORBIS:
 	  encoder_name = "vorbisenc";
 	  encoder = gst_element_factory_make (encoder_name, encoder_name);
 	  g_object_set (G_OBJECT (gve->priv->audiocapsfilter), "caps",
@@ -1190,7 +1190,7 @@ gst_video_editor_set_audio_encoder (GstVideoEditor * gve, gchar ** err,
 
 	  /*Add new encoder element */
 	  gve->priv->audioencoder = encoder;
-	  if (codec == MP3)
+	  if (codec == AUDIO_ENCODER_MP3)
 	    g_object_set (G_OBJECT (gve->priv->audioencoder), "bitrate",
 			  gve->priv->audio_bitrate / 1000, NULL);
 	  else
@@ -1234,7 +1234,7 @@ gst_video_editor_set_audio_encoder (GstVideoEditor * gve, gchar ** err,
 
 void
 gst_video_editor_set_video_muxer (GstVideoEditor * gve, gchar ** err,
-				  GvsVideoMuxer muxerType)
+				  VideoMuxerType muxerType)
 {
   GstElement *muxer = NULL;
   GstState cur_state;
@@ -1249,19 +1249,23 @@ gst_video_editor_set_video_muxer (GstVideoEditor * gve, gchar ** err,
     {
       switch (muxerType)
 	{
-	case MKV:
+	case VIDEO_MUXER_MATROSKA:
 	  muxer_name = "matroskamux";
 	  muxer = gst_element_factory_make ("matroskamux", muxer_name);
 	  break;
-	case AVI:
+	case VIDEO_MUXER_AVI:
 	  muxer_name = "avimux";
 	  muxer = gst_element_factory_make ("avimux", muxer_name);
 	  break;
-	case OGG:
+	case VIDEO_MUXER_OGG:
 	  muxer_name = "oggmux";
 	  muxer = gst_element_factory_make ("oggmux", muxer_name);
 	  break;
-	case DVD:
+	case VIDEO_MUXER_MP4:
+	  muxer_name = "qtmux";
+	  muxer = gst_element_factory_make ("qtmux", muxer_name);
+	  break;
+	case VIDEO_MUXER_MPEG_PS:
 	  muxer_name = "ffmux_dvd";
 	  //We don't want to mux anything yet as ffmux_dvd is buggy
 	  //FIXME: Until we don't have audio save the mpeg-ps stream without mux.
@@ -1351,7 +1355,7 @@ gst_video_editor_new (GError ** err)
 
   if (!gve->priv->main_pipeline)
     {
-      g_set_error (err, GVC_ERROR, GVC_ERROR_PLUGIN_LOAD,
+      g_set_error (err, GVC_ERROR, ERROR_PLUGIN_LOAD,
 		   ("Failed to create a GStreamer Bin. "
 		    "Please check your GStreamer installation."));
       g_object_ref_sink (gve);
@@ -1367,7 +1371,7 @@ gst_video_editor_new (GError ** err)
     gst_element_factory_make ("gnlcomposition", "gnl-audio-composition");
   if (!gve->priv->gnl_video_composition || !gve->priv->gnl_audio_composition)
     {
-      g_set_error (err, GVC_ERROR, GVC_ERROR_PLUGIN_LOAD,
+      g_set_error (err, GVC_ERROR, ERROR_PLUGIN_LOAD,
 		   ("Failed to create a Gnonlin element. "
 		    "Please check your GStreamer installation."));
       g_object_ref_sink (gve);

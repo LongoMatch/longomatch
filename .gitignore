@@ -1,3 +1,5 @@
+ChangeLog
+LongoMatch/bin
 LongoMatch.userprefs
 LongoMatch.usertasks
 Makefile
@@ -33,6 +35,8 @@ CesarPlayer/a.dll
 CesarPlayer/a.dll.mdb
 CesarPlayer/bin/
 CesarPlayer/cesarplayer.pc
+CesarPlayer/AssemblyInfo.cs
+LongoMatch/longomatch.desktop.in
 LongoMatch/AssemblyInfo.cs
 LongoMatch/Makefile.in
 LongoMatch/longomatch
@@ -53,4 +57,9 @@ log
 m4/
 po/GMO/
 po/Makefile.in
-
+po/Makefile.in.in
+po/*gmo
+po/*pot
+po/POTFILES
+po/stamp-it
+po/.intltool-merge-cache

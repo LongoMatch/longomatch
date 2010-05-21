@@ -1,4 +1,4 @@
-﻿// FileDescriptionWidget.cs
+// FileDescriptionWidget.cs
 //
 //  Copyright (C) 2007-2009 Andoni Morales Alastruey
 //
@@ -29,7 +29,8 @@ using LongoMatch.Gui.Popup;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.TimeNodes;
 using LongoMatch.Video.Utils;
-
+using LongoMatch.Video.Capturer;
+using LongoMatch.Video.Common;
 
 namespace LongoMatch.Gui.Component
 {
@@ -51,7 +52,14 @@ namespace LongoMatch.Gui.Component
 		private TeamTemplate actualVisitorTeam;
 		private TeamTemplate actualLocalTeam;
 		private ProjectType useType;
-
+		private const string PAL_FORMAT = "720x576 (4:3)";
+		private const string PAL_3_4_FORMAT = "540x432 (4:3)";
+		private const string PAL_1_2_FORMAT = "360x288 (4:3)";
+		private const string AVI = "AVI (XVID + MP3)";
+		private const string MP4 = "MP4 (H264 + AAC)";
+		private const string OGG = "OGG (Theora + Vorbis)";
+		
+		
 		public ProjectDetailsWidget()
 		{
 			this.Build();
@@ -65,30 +73,36 @@ namespace LongoMatch.Gui.Component
 
 			FillSections();
 			FillTeamsTemplate();
+			FillFormats();
 
-			this.Use=ProjectType.FileProject;
+			Use=ProjectType.FileProject;
 		}
 
 		public ProjectType Use {
 			set {
-				if (value == ProjectType.FileProject  || value == ProjectType.EditProject
-				    || value == ProjectType.FakeCaptureProject) {
-					videobitratelabel.Visible = false;
-					bitratespinbutton.Visible = false;					
-				}
-				if (value == ProjectType.FakeCaptureProject) {
-					label6.Visible = false;
-					hbox4.Visible = false;
-				}
-				if (value == ProjectType.EditProject) {
-					tagscombobox.Visible = false;
-					localcombobox.Visible = false;
-					visitorcombobox.Visible = false;
-				}
+				bool visible1 = value == ProjectType.CaptureProject; 
+				bool visible2 = value != ProjectType.FakeCaptureProject;
+				bool visible3 = value == ProjectType.EditProject;
+				bool visible4 = visible1 && Environment.OSVersion.Platform == PlatformID.Win32NT;
+				
+				expander1.Visible = visible1;
+				
+				filelabel.Visible = visible2;
+				filehbox.Visible = visible2;
+				
+				tagscombobox.Visible = visible3;
+				localcombobox.Visible = visible3;
+				visitorcombobox.Visible = visible3;
+				
+				videodevice.Visible = visible4;
+				videodevicecombobox.Visible = visible4;
+				audiodevicelabel.Visible = visible4;
+				audiodevicecombobox.Visible = visible4;
+				
 				useType = value;
 			}
 			get {
-				return this.useType;
+				return useType;
 			}
 		}
 
@@ -106,7 +120,7 @@ namespace LongoMatch.Gui.Component
 				return localTeamEntry.Text;
 			}
 			set {
-				this.localTeamEntry.Text = value;
+				localTeamEntry.Text = value;
 			}
 		}
 
@@ -115,7 +129,7 @@ namespace LongoMatch.Gui.Component
 				return visitorTeamEntry.Text;
 			}
 			set {
-				this.visitorTeamEntry.Text = value;
+				visitorTeamEntry.Text = value;
 			}
 		}
 
@@ -142,7 +156,7 @@ namespace LongoMatch.Gui.Component
 				return (int)localSpinButton.Value;
 			}
 			set {
-				this.localSpinButton.Value = value;
+				localSpinButton.Value = value;
 			}
 		}
 
@@ -176,7 +190,7 @@ namespace LongoMatch.Gui.Component
 
 		public Sections Sections {
 			get {
-				return this.actualSection;
+				return actualSection;
 			}
 			set {
 				actualSection = value;
@@ -201,6 +215,20 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		public string[] AudioDevices{
+			set {
+				foreach (string name in value)
+					audiodevicecombobox.AppendText(name);
+			}
+		}
+		
+		public string[] VideoDevices{
+			set {
+				foreach ( string name in value)
+					videodevicecombobox.AppendText(name);
+			}
+		}
+
 		private string SectionsFile {
 			get {
 				return tagscombobox.ActiveText + ".sct";
@@ -218,7 +246,54 @@ namespace LongoMatch.Gui.Component
 				return visitorcombobox.ActiveText + ".tem";
 			}
 		}
-
+		
+		public CapturePropertiesStruct CaptureProperties{
+			get{
+				CapturePropertiesStruct s = new CapturePropertiesStruct();
+				s.AudioBitrate = (uint)audiobitratespinbutton.Value;
+				s.VideoBitrate = (uint)videobitratespinbutton.Value;
+				s.AudioDevice = audiodevicecombobox.ActiveText;
+				s.VideoDevice =  videodevicecombobox.ActiveText;
+				switch (sizecombobox.ActiveText){
+					/* FIXME: Don't harcode size values */
+					case PAL_FORMAT:
+						s.Width = 720;
+						s.Height = 576;
+						break;
+					case PAL_3_4_FORMAT:
+						s.Width = 540;
+						s.Height = 432;
+						break;
+					case PAL_1_2_FORMAT:
+						s.Width = 360;
+						s.Height = 288;
+						break;
+					default:
+						s.Width = 0;
+						s.Height = 0;
+						break;
+				}
+				switch (videoformatcombobox.ActiveText){
+					case AVI:
+						s.VideoEncoder = VideoEncoderType.Xvid;
+						s.AudioEncoder = AudioEncoderType.Mp3;
+						s.Muxer = VideoMuxerType.Avi;
+						break;
+					case MP4:
+						s.VideoEncoder = VideoEncoderType.H264;
+						s.AudioEncoder = AudioEncoderType.Aac;
+						s.Muxer = VideoMuxerType.Mp4;
+						break;
+					case OGG:
+						s.VideoEncoder = VideoEncoderType.Theora;
+						s.AudioEncoder = AudioEncoderType.Vorbis;
+						s.Muxer = VideoMuxerType.Ogg;
+						break;
+				}
+				return s;
+			}
+		}
+		
 		public void SetProject(Project project) {
 			this.project = project;
 			mFile = project.File;
@@ -259,7 +334,11 @@ namespace LongoMatch.Gui.Component
 						mFile = new PreviewMediaFile();
 						mFile.FilePath = Constants.FAKE_PROJECT;
 						mFile.Fps = 25;
-					}					
+					} else if  (useType == ProjectType.CaptureProject){
+						mFile = new PreviewMediaFile();
+						mFile.FilePath = fileEntry.Text;
+						mFile.Fps = 25;
+					}
 					return new Project(mFile,
 					                   LocalName,
 					                   VisitorName,
@@ -310,7 +389,7 @@ namespace LongoMatch.Gui.Component
 			}
 			tagscombobox.Active = index;
 			SectionsReader reader = new SectionsReader(System.IO.Path.Combine(MainClass.TemplatesDir(),SectionsFile));
-			this.Sections= reader.GetSections();
+			Sections= reader.GetSections();
 		}
 
 		private void FillTeamsTemplate() {
@@ -334,6 +413,19 @@ namespace LongoMatch.Gui.Component
 			LocalTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(),LocalTeamTemplateFile));
 			VisitorTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(),VisitorTeamTemplateFile));
 		}
+		
+		private void FillFormats(){
+			sizecombobox.AppendText (Catalog.GetString("Keep original size"));
+			sizecombobox.AppendText(PAL_FORMAT);
+			sizecombobox.AppendText(PAL_3_4_FORMAT);
+			sizecombobox.AppendText(PAL_1_2_FORMAT);
+			sizecombobox.Active = 0;
+			
+			videoformatcombobox.AppendText(OGG);
+			videoformatcombobox.AppendText(MP4);
+			videoformatcombobox.AppendText(AVI);
+			videoformatcombobox.Active = 1;
+		}
 
 		protected virtual void OnDateSelected(DateTime dateTime) {
 			Date = dateTime;
@@ -343,13 +435,14 @@ namespace LongoMatch.Gui.Component
 		{
 			FileChooserDialog fChooser = null;
 
-			if (this.useType == ProjectType.CaptureProject) {
-				fChooser = new FileChooserDialog(Catalog.GetString("Save File as..."),
+			if (useType == ProjectType.CaptureProject) {
+				fChooser = new FileChooserDialog(Catalog.GetString("Output file"),
 				                                 (Gtk.Window)this.Toplevel,
 				                                 FileChooserAction.Save,
 				                                 "gtk-cancel",ResponseType.Cancel,
 				                                 "gtk-save",ResponseType.Accept);
 				fChooser.SetCurrentFolder(MainClass.VideosDir());
+				fChooser.DoOverwriteConfirmation = true;
 				if (fChooser.Run() == (int)ResponseType.Accept)
 					fileEntry.Text = fChooser.Filename;
 				fChooser.Destroy();
@@ -437,7 +530,7 @@ namespace LongoMatch.Gui.Component
 			ted.Project = project;
 			ted.CanExport = Use == ProjectType.EditProject;
 			if (ted.Run() == (int)ResponseType.Apply) {
-				this.Sections = ted.Sections;
+				Sections = ted.Sections;
 			}
 			ted.Destroy();
 			OnEdited(this,null);
