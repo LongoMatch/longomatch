@@ -169,7 +169,7 @@ gst_camera_capturer_init (GstCameraCapturer * object)
   priv->audio_bitrate = 128;
   priv->video_bitrate = 5000;
   priv->last_buffer = NULL;
-  priv->source_type = GST_CAMERA_CAPTURE_SOURCE_TYPE_RAW;
+  priv->source_type = GST_CAMERA_CAPTURE_SOURCE_TYPE_NONE;
 
   priv->lock = g_mutex_new ();
 }
@@ -860,6 +860,7 @@ gst_camera_capturer_set_source (GstCameraCapturer * gcc,
       gcc->priv->audiosrc = gcc->priv->videosrc;
     }
     case GST_CAMERA_CAPTURE_SOURCE_TYPE_RAW:
+    default:
     {
 #ifdef WIN32
       source_element = "dshowvideosrc";
@@ -905,7 +906,7 @@ gst_camera_capturer_new (gchar * filename, GError ** err)
   g_object_set (gcc->priv->camerabin, "mode", 1, NULL);
 
   GST_INFO_OBJECT (gcc, "Setting video/audio source ");
-  gst_camera_capturer_set_source (gcc, gcc->priv->source_type, err);
+  gst_camera_capturer_set_source (gcc, DEFAULT_SOURCE_TYPE, err);
   if (*err != NULL) {
     return NULL;
   }

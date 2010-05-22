@@ -65,8 +65,9 @@ struct _GstCameraCapturer
 
 typedef enum
 {
-  GST_CAMERA_CAPTURE_SOURCE_TYPE_DV,
-  GST_CAMERA_CAPTURE_SOURCE_TYPE_RAW
+  GST_CAMERA_CAPTURE_SOURCE_TYPE_NONE = 0,
+  GST_CAMERA_CAPTURE_SOURCE_TYPE_DV = 1,
+  GST_CAMERA_CAPTURE_SOURCE_TYPE_RAW = 2
 }GstCameraCaptureSourceType;
 
 EXPORT GType gst_camera_capturer_get_type (void)  G_GNUC_CONST;
