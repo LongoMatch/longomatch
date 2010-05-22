@@ -334,6 +334,17 @@ namespace LongoMatch.Video.Capturer {
 		}
 		
 		[DllImport("libcesarplayer.dll")]
+		static extern bool gst_camera_capturer_set_source(IntPtr raw, int type, out IntPtr error);
+
+		public bool SetSource(CapturerType type) {
+			IntPtr error = IntPtr.Zero;			
+			bool raw_ret = gst_camera_capturer_set_source(Handle, (int) type, out error);
+			if (error != IntPtr.Zero) throw new GLib.GException (error);
+			bool ret = raw_ret;
+			return ret;
+		}		
+		
+		[DllImport("libcesarplayer.dll")]
 		static extern IntPtr gst_camera_capturer_get_type();
 
 		public static new GLib.GType GType { 
