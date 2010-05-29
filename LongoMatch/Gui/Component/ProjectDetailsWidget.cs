@@ -327,7 +327,7 @@ namespace LongoMatch.Gui.Component
 
 		public Project GetProject() {
 			if (useType != ProjectType.EditProject) {
-				if (Filename == "" && useType == ProjectType.FileProject)
+				if (Filename == "" && useType != ProjectType.FakeCaptureProject)
 					return null;
 				else {
 					if (useType == ProjectType.FakeCaptureProject){
