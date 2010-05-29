@@ -36,10 +36,12 @@
 
 /*Default video source*/
 #ifdef WIN32
-#define VIDEOSRC "dshowvideosrc"
+#define DVVIDEOSRC "dshowvideosrc"
+#define RAWVIDEOSRC "dshowvideosrc"
 #define AUDIOSRC "dshowaudiosrc"
 #else
-#define VIDEOSRC "gconfvideosrc"
+#define DVVIDEOSRC "dv1394src"
+#define RAWVIDEOSRC "gconfvideosrc"
 #define AUDIOSRC "gconfaudiosrc"
 #endif
 
@@ -838,7 +840,6 @@ gst_camera_capturer_set_source (GstCameraCapturer * gcc,
     GstCameraCaptureSourceType source_type, GError **err)
 {
   gchar *bin;
-  gchar *source_element;
 
   if (gcc->priv->source_type == source_type)
     return TRUE;
@@ -847,28 +848,20 @@ gst_camera_capturer_set_source (GstCameraCapturer * gcc,
   switch (gcc->priv->source_type) {
     case GST_CAMERA_CAPTURE_SOURCE_TYPE_DV:
     {
-#ifdef WIN32
-      source_element = "dshowvideosrc";
-#else
-      source_element = "dv1394src";
-#endif
       bin = g_strdup_printf ("%s ! queue ! video/x-dv "
           "! dvdemux name=demux .video ! queue "
           "! ffdec_dv ! queue ! ffmpegcolorspace ! videorate ! videoscale"
-          " .demux ", source_element);
+          " .demux ", DVVIDEOSRC);
       gcc->priv->videosrc = gst_parse_bin_from_description (bin, TRUE, err);
       gcc->priv->audiosrc = gcc->priv->videosrc;
     }
     case GST_CAMERA_CAPTURE_SOURCE_TYPE_RAW:
     default:
     {
-#ifdef WIN32
-      source_element = "dshowvideosrc";
-#else
-      source_element = "v4l2src ! ffmpegcolorspace ! videorate ! videoscale";
-#endif
-      bin = g_strdup_printf ("%s", source_element);
+      bin = g_strdup_printf ("%s ! ffmpegcolorspace ! videorate ! videoscale",
+          RAWVIDEOSRC);
       gcc->priv->videosrc = gst_parse_bin_from_description (bin, TRUE, err);
+      gcc->priv->audiosrc = gst_element_factory_make (AUDIOSRC, "audiosource");
     }
   }
   if (*err) {
@@ -1313,7 +1306,7 @@ finish:
 GList *
 gst_camera_capturer_enum_video_devices (void)
 {
-  return gst_camera_capturer_enum_devices (VIDEOSRC);
+  return gst_camera_capturer_enum_devices (DVVIDEOSRC);
 }
 
 GList *
