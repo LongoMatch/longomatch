@@ -58,6 +58,7 @@ namespace LongoMatch.Gui.Component
 		private const string AVI = "AVI (XVID + MP3)";
 		private const string MP4 = "MP4 (H264 + AAC)";
 		private const string OGG = "OGG (Theora + Vorbis)";
+		private const string WEBM= "WebM (VP8 + Vorbis)";
 		
 		
 		public ProjectDetailsWidget()
@@ -289,6 +290,11 @@ namespace LongoMatch.Gui.Component
 						s.AudioEncoder = AudioEncoderType.Vorbis;
 						s.Muxer = VideoMuxerType.Ogg;
 						break;
+					case WEBM:
+						s.VideoEncoder = VideoEncoderType.VP8;
+						s.AudioEncoder = AudioEncoderType.Vorbis;
+						s.Muxer = VideoMuxerType.WebM;
+						break;
 				}
 				return s;
 			}
@@ -421,10 +427,11 @@ namespace LongoMatch.Gui.Component
 			sizecombobox.AppendText(PAL_1_2_FORMAT);
 			sizecombobox.Active = 0;
 			
+			videoformatcombobox.AppendText(WEBM);
 			videoformatcombobox.AppendText(OGG);
 			videoformatcombobox.AppendText(MP4);
 			videoformatcombobox.AppendText(AVI);
-			videoformatcombobox.Active = 1;
+			videoformatcombobox.Active = 0;
 		}
 
 		protected virtual void OnDateSelected(DateTime dateTime) {

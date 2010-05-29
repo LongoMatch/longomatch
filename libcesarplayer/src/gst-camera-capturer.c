@@ -1009,10 +1009,16 @@ gst_camera_capturer_set_video_encoder (GstCameraCapturer * gcc,
       break;
 
     case VIDEO_ENCODER_THEORA:
-    default:
       gcc->priv->videoenc =
           gst_element_factory_make ("theoraenc", "video-encoder");
       name = "Theora video encoder";
+      break;
+    
+    case VIDEO_ENCODER_VP8:
+    default:
+      gcc->priv->videoenc =
+          gst_element_factory_make ("vp8enc", "video-encoder");
+      name = "VP8 video encoder";
       break;
 
   }
@@ -1049,6 +1055,7 @@ gst_camera_capturer_set_audio_encoder (GstCameraCapturer * gcc,
       break;
 
     case AUDIO_ENCODER_VORBIS:
+    default:
       gcc->priv->audioenc =
           gst_element_factory_make ("vorbisenc", "audio-encoder");
       name = "Vorbis audio encoder";
@@ -1092,9 +1099,13 @@ gst_camera_capturer_set_video_muxer (GstCameraCapturer * gcc,
           gst_element_factory_make ("matroskamux", "video-muxer");
       break;
     case VIDEO_MUXER_MP4:
-    default:
       name = "MP4 muxer";
       gcc->priv->videomux = gst_element_factory_make ("qtmux", "video-muxer");
+      break;
+    case VIDEO_MUXER_WEBM:
+    default:
+      name = "WebM muxer";
+      gcc->priv->videomux = gst_element_factory_make ("webmmux", "video-muxer");
       break;
   }
 

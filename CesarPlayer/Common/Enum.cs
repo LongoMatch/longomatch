@@ -52,7 +52,8 @@ namespace LongoMatch.Video.Common
 		Xvid,
 		Theora,
 		H264,
-		Mpeg2
+		Mpeg2,
+		VP8,
 	}
 	
 	public enum AudioEncoderType {
@@ -67,6 +68,7 @@ namespace LongoMatch.Video.Common
 		Matroska,
 		Ogg,
 		MpegPS,
+		WebM,
 	}	
 	
 	public enum CapturerType{

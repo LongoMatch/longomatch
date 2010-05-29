@@ -40,6 +40,7 @@ namespace LongoMatch.Gui.Dialog
 		private const string MP4="MP4 (H.264+AAC)";
 		private const string AVI="AVI (Xvid+MP3)";
 		private const string OGG="OGG (Theora+Vorbis)";
+		private const string WEBM="WebM (VP8+Vorbis)";
 		private const string DVD="DVD (MPEG-2)";
 
 
@@ -47,6 +48,7 @@ namespace LongoMatch.Gui.Dialog
 		public VideoEditionProperties()
 		{
 			this.Build();
+			formatcombobox.AppendText(WEBM);
 			formatcombobox.AppendText(MP4);
 			formatcombobox.AppendText(AVI);
 			if (System.Environment.OSVersion.Platform != PlatformID.Win32NT) {
@@ -115,6 +117,8 @@ namespace LongoMatch.Gui.Dialog
 				return "mkv";
 			else if (formatcombobox.ActiveText == OGG)
 				return "ogg";
+			else if (formatcombobox.ActiveText == WEBM)
+				return "webm";
 			else if (formatcombobox.ActiveText == AVI)
 				return "avi";
 			else
@@ -149,6 +153,11 @@ namespace LongoMatch.Gui.Dialog
 				vcodec = VideoEncoderType.Theora;
 				acodec = AudioEncoderType.Vorbis;
 				muxer = VideoMuxerType.Ogg;
+			}
+			else if (formatcombobox.ActiveText == WEBM) {
+				vcodec = VideoEncoderType.VP8;
+				acodec = AudioEncoderType.Vorbis;
+				muxer = VideoMuxerType.WebM;
 			}
 			else if (formatcombobox.ActiveText == AVI) {
 				vcodec = VideoEncoderType.Xvid;

@@ -28,9 +28,9 @@
 #include "gst-video-editor.h"
 
 
-#define DEFAULT_VIDEO_ENCODER "theoraenc"
+#define DEFAULT_VIDEO_ENCODER "vp8enc"
 #define DEFAULT_AUDIO_ENCODER "vorbisenc"
-#define DEFAULT_VIDEO_MUXER "oggmux"
+#define DEFAULT_VIDEO_MUXER "webmmux"
 #define FONT_SIZE_FACTOR 0.03
 #define LAME_CAPS "audio/x-raw-int, rate=44100, channels=2, endianness=1234, signed=true, width=16, depth=16"
 #define VORBIS_CAPS "audio/x-raw-float, rate=44100, channels=2, endianness=1234, signed=true, width=32, depth=32"
@@ -1065,6 +1065,10 @@ gst_video_editor_set_video_encoder (GstVideoEditor * gve, gchar ** err,
 	  encoder_name = "theoraenc";
 	  encoder = gst_element_factory_make (encoder_name, encoder_name);
 	  break;
+	case VIDEO_ENCODER_VP8:
+	  encoder_name = "vp8enc";
+	  encoder = gst_element_factory_make (encoder_name, encoder_name);
+	  break;
 	}
 
       if (encoder)
@@ -1270,6 +1274,10 @@ gst_video_editor_set_video_muxer (GstVideoEditor * gve, gchar ** err,
 	  //We don't want to mux anything yet as ffmux_dvd is buggy
 	  //FIXME: Until we don't have audio save the mpeg-ps stream without mux.
 	  muxer = gst_element_factory_make ("ffmux_dvd", muxer_name);
+	  break;
+	case VIDEO_MUXER_WEBM:
+	  muxer_name = "webmmux";
+	  muxer = gst_element_factory_make ("webmmux", muxer_name);
 	  break;
 	}
 
