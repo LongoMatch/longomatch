@@ -40,4 +40,11 @@ namespace LongoMatch.Common
 		Predifined,
 		Free
 	}
+	
+	public enum SortMethodType{
+		SortByName = 0,
+		SortByStartTime = 1,
+		SortByStopTime = 2,
+		SortByDuration = 3
+	}
 }

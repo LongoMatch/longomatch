@@ -92,7 +92,7 @@ namespace LongoMatch.IO
 				sb.Append(String.Format("<add key=\"Blue{0}\" value=\"{1}\" />",i,tn.Color.Blue));
 				sb.Append(String.Format("<add key=\"Modifier{0}\" value=\"{1}\" />",i,(int)(tn.HotKey.Modifier)));
 				sb.Append(String.Format("<add key=\"Key{0}\" value=\"{1}\" />",i,(int)(tn.HotKey.Key)));
-				sb.Append(String.Format("<add key=\"SortMethod{0}\" value=\"{1}\" />",i,tn.SortingMethodString));
+				sb.Append(String.Format("<add key=\"SortMethod{0}\" value=\"{1}\" />",i,tn.SortMethodString));
 				i++;
 			}
 			sb.Append("</configuration>");

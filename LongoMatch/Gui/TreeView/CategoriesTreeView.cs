@@ -128,7 +128,7 @@ namespace LongoMatch.Gui.Component
 		{
 			SectionsTimeNode tNode = (SectionsTimeNode) Model.GetValue(iter, 0);
 
-			(cell as Gtk.CellRendererText).Text = tNode.SortingMethodString;
+			(cell as Gtk.CellRendererText).Text = tNode.SortMethodString;
 		}
 
 		protected virtual void OnCursorChanged(object o, System.EventArgs e) {

@@ -174,14 +174,6 @@
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.ProjectTemplateWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="ProjectTemplateWidget Properties">
-        <property name="Edited" />
-      </itemgroup>
-    </itemgroups>
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Component.PlaysListTreeWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>
@@ -272,5 +264,13 @@
         <signal name="EditedEvent" />
       </itemgroup>
     </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.ProjectTemplateWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="ProjectTemplateWidget Properties">
+        <property name="Edited" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
   </object>
 </objects>

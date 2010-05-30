@@ -25,6 +25,7 @@ using Gtk;
 using Mono.Unix;
 using LongoMatch.Handlers;
 using LongoMatch.TimeNodes;
+using LongoMatch.Common;
 
 namespace LongoMatch.Gui.Component
 {
@@ -234,15 +235,15 @@ namespace LongoMatch.Gui.Component
 			sortByDuration.Activated += OnSortActivated;
 		}
 		
-		private void SetupSortMenu(SectionsTimeNode.SortMethod sortMethod){
+		private void SetupSortMenu(SortMethodType sortMethod){
 			switch (sortMethod) {
-				case SectionsTimeNode.SortMethod.BY_NAME:
+				case SortMethodType.SortByName:
 					sortByName.Active = true;		
 					break;					
-				case SectionsTimeNode.SortMethod.BY_START_TIME:
+				case SortMethodType.SortByStartTime:
 					sortByStart.Active = true;
 					break;
-				case SectionsTimeNode.SortMethod.BY_STOP_TIME:
+				case SortMethodType.SortByStopTime:
 					sortByStop.Active = true;	
 					break;
 				default:
@@ -302,14 +303,14 @@ namespace LongoMatch.Gui.Component
 			tna = model.GetValue (a, 0)as TimeNode;
 			tnb = model.GetValue (b, 0) as TimeNode;
 			
-			switch(category.SortingMethod){
-				case(SectionsTimeNode.SortMethod.BY_NAME):
+			switch(category.SortMethod){
+				case(SortMethodType.SortByName):
 					return String.Compare(tna.Name, tnb.Name);
-				case(SectionsTimeNode.SortMethod.BY_START_TIME):
+				case(SortMethodType.SortByStartTime):
 					return (tna.Start - tnb.Start).MSeconds;
-				case(SectionsTimeNode.SortMethod.BY_STOP_TIME):
+				case(SortMethodType.SortByStopTime):
 					return (tna.Stop - tnb.Stop).MSeconds;
-				case(SectionsTimeNode.SortMethod.BY_DURATION):
+				case(SortMethodType.SortByDuration):
 					return (tna.Duration - tnb.Duration).MSeconds;
 				default:
 					return 0;
@@ -396,7 +397,7 @@ namespace LongoMatch.Gui.Component
 						menu.Popup();
 					}
 					else{
-						SetupSortMenu((selectedTimeNode as SectionsTimeNode).SortingMethod);
+						SetupSortMenu((selectedTimeNode as SectionsTimeNode).SortMethod);
 						categoriesMenu.Popup();
 					}
 				}
@@ -418,13 +419,13 @@ namespace LongoMatch.Gui.Component
 			category = GetValueFromPath(Selection.GetSelectedRows()[0]) as SectionsTimeNode;
 			
 			if (sender == sortByName)
-				category.SortingMethod = SectionsTimeNode.SortMethod.BY_NAME;
+				category.SortMethod = SortMethodType.SortByName;
 			else if (sender == sortByStart)
-				category.SortingMethod = SectionsTimeNode.SortMethod.BY_START_TIME;
+				category.SortMethod = SortMethodType.SortByName;
 			else if (sender == sortByStop)
-				category.SortingMethod = SectionsTimeNode.SortMethod.BY_STOP_TIME;
+				category.SortMethod = SortMethodType.SortByStopTime;
 			else 
-				category.SortingMethod = SectionsTimeNode.SortMethod.BY_DURATION;
+				category.SortMethod = SortMethodType.SortByDuration;
 			// Redorder plays
 			Model.SetSortFunc(0, SortFunction);
 		}
