@@ -89,9 +89,9 @@ namespace LongoMatch.Gui.Component {
         
         private Gtk.SpinButton audiobitratespinbutton;
         
-        private Gtk.ComboBox audiodevicecombobox;
+        private Gtk.Label device;
         
-        private Gtk.Label audiodevicelabel;
+        private Gtk.ComboBox devicecombobox;
         
         private Gtk.ComboBox sizecombobox;
         
@@ -100,10 +100,6 @@ namespace LongoMatch.Gui.Component {
         private Gtk.Label videobitratelabel1;
         
         private Gtk.SpinButton videobitratespinbutton;
-        
-        private Gtk.Label videodevice;
-        
-        private Gtk.ComboBox videodevicecombobox;
         
         private Gtk.ComboBox videoformatcombobox;
         
@@ -492,7 +488,7 @@ namespace LongoMatch.Gui.Component {
             this.expander1.CanFocus = true;
             this.expander1.Name = "expander1";
             // Container child expander1.Gtk.Container+ContainerChild
-            this.table2 = new Gtk.Table(((uint)(6)), ((uint)(2)), false);
+            this.table2 = new Gtk.Table(((uint)(5)), ((uint)(2)), false);
             this.table2.Name = "table2";
             this.table2.RowSpacing = ((uint)(6));
             this.table2.ColumnSpacing = ((uint)(6));
@@ -502,8 +498,8 @@ namespace LongoMatch.Gui.Component {
             this.audiobitratelabel.LabelProp = Mono.Unix.Catalog.GetString("Audio Bitrate (kbps):");
             this.table2.Add(this.audiobitratelabel);
             Gtk.Table.TableChild w42 = ((Gtk.Table.TableChild)(this.table2[this.audiobitratelabel]));
-            w42.TopAttach = ((uint)(5));
-            w42.BottomAttach = ((uint)(6));
+            w42.TopAttach = ((uint)(4));
+            w42.BottomAttach = ((uint)(5));
             w42.XOptions = ((Gtk.AttachOptions)(4));
             w42.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table2.Gtk.Table+TableChild
@@ -516,31 +512,27 @@ namespace LongoMatch.Gui.Component {
             this.audiobitratespinbutton.Value = 64;
             this.table2.Add(this.audiobitratespinbutton);
             Gtk.Table.TableChild w43 = ((Gtk.Table.TableChild)(this.table2[this.audiobitratespinbutton]));
-            w43.TopAttach = ((uint)(5));
-            w43.BottomAttach = ((uint)(6));
+            w43.TopAttach = ((uint)(4));
+            w43.BottomAttach = ((uint)(5));
             w43.LeftAttach = ((uint)(1));
             w43.RightAttach = ((uint)(2));
             w43.XOptions = ((Gtk.AttachOptions)(1));
             w43.YOptions = ((Gtk.AttachOptions)(1));
             // Container child table2.Gtk.Table+TableChild
-            this.audiodevicecombobox = Gtk.ComboBox.NewText();
-            this.audiodevicecombobox.Name = "audiodevicecombobox";
-            this.table2.Add(this.audiodevicecombobox);
-            Gtk.Table.TableChild w44 = ((Gtk.Table.TableChild)(this.table2[this.audiodevicecombobox]));
-            w44.TopAttach = ((uint)(1));
-            w44.BottomAttach = ((uint)(2));
-            w44.LeftAttach = ((uint)(1));
-            w44.RightAttach = ((uint)(2));
+            this.device = new Gtk.Label();
+            this.device.Name = "device";
+            this.device.LabelProp = Mono.Unix.Catalog.GetString("Device:");
+            this.table2.Add(this.device);
+            Gtk.Table.TableChild w44 = ((Gtk.Table.TableChild)(this.table2[this.device]));
             w44.XOptions = ((Gtk.AttachOptions)(4));
             w44.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table2.Gtk.Table+TableChild
-            this.audiodevicelabel = new Gtk.Label();
-            this.audiodevicelabel.Name = "audiodevicelabel";
-            this.audiodevicelabel.LabelProp = Mono.Unix.Catalog.GetString("Audio Device:");
-            this.table2.Add(this.audiodevicelabel);
-            Gtk.Table.TableChild w45 = ((Gtk.Table.TableChild)(this.table2[this.audiodevicelabel]));
-            w45.TopAttach = ((uint)(1));
-            w45.BottomAttach = ((uint)(2));
+            this.devicecombobox = Gtk.ComboBox.NewText();
+            this.devicecombobox.Name = "devicecombobox";
+            this.table2.Add(this.devicecombobox);
+            Gtk.Table.TableChild w45 = ((Gtk.Table.TableChild)(this.table2[this.devicecombobox]));
+            w45.LeftAttach = ((uint)(1));
+            w45.RightAttach = ((uint)(2));
             w45.XOptions = ((Gtk.AttachOptions)(4));
             w45.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table2.Gtk.Table+TableChild
@@ -548,8 +540,8 @@ namespace LongoMatch.Gui.Component {
             this.sizecombobox.Name = "sizecombobox";
             this.table2.Add(this.sizecombobox);
             Gtk.Table.TableChild w46 = ((Gtk.Table.TableChild)(this.table2[this.sizecombobox]));
-            w46.TopAttach = ((uint)(3));
-            w46.BottomAttach = ((uint)(4));
+            w46.TopAttach = ((uint)(2));
+            w46.BottomAttach = ((uint)(3));
             w46.LeftAttach = ((uint)(1));
             w46.RightAttach = ((uint)(2));
             w46.XOptions = ((Gtk.AttachOptions)(4));
@@ -560,8 +552,8 @@ namespace LongoMatch.Gui.Component {
             this.sizelabel.LabelProp = Mono.Unix.Catalog.GetString("Video Size:");
             this.table2.Add(this.sizelabel);
             Gtk.Table.TableChild w47 = ((Gtk.Table.TableChild)(this.table2[this.sizelabel]));
-            w47.TopAttach = ((uint)(3));
-            w47.BottomAttach = ((uint)(4));
+            w47.TopAttach = ((uint)(2));
+            w47.BottomAttach = ((uint)(3));
             w47.XOptions = ((Gtk.AttachOptions)(4));
             w47.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table2.Gtk.Table+TableChild
@@ -570,8 +562,8 @@ namespace LongoMatch.Gui.Component {
             this.videobitratelabel1.LabelProp = Mono.Unix.Catalog.GetString("Video Bitrate (kbps):");
             this.table2.Add(this.videobitratelabel1);
             Gtk.Table.TableChild w48 = ((Gtk.Table.TableChild)(this.table2[this.videobitratelabel1]));
-            w48.TopAttach = ((uint)(4));
-            w48.BottomAttach = ((uint)(5));
+            w48.TopAttach = ((uint)(3));
+            w48.BottomAttach = ((uint)(4));
             w48.XOptions = ((Gtk.AttachOptions)(4));
             w48.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table2.Gtk.Table+TableChild
@@ -584,50 +576,33 @@ namespace LongoMatch.Gui.Component {
             this.videobitratespinbutton.Value = 4000;
             this.table2.Add(this.videobitratespinbutton);
             Gtk.Table.TableChild w49 = ((Gtk.Table.TableChild)(this.table2[this.videobitratespinbutton]));
-            w49.TopAttach = ((uint)(4));
-            w49.BottomAttach = ((uint)(5));
+            w49.TopAttach = ((uint)(3));
+            w49.BottomAttach = ((uint)(4));
             w49.LeftAttach = ((uint)(1));
             w49.RightAttach = ((uint)(2));
             w49.XOptions = ((Gtk.AttachOptions)(1));
             w49.YOptions = ((Gtk.AttachOptions)(1));
             // Container child table2.Gtk.Table+TableChild
-            this.videodevice = new Gtk.Label();
-            this.videodevice.Name = "videodevice";
-            this.videodevice.LabelProp = Mono.Unix.Catalog.GetString("Video Device:");
-            this.table2.Add(this.videodevice);
-            Gtk.Table.TableChild w50 = ((Gtk.Table.TableChild)(this.table2[this.videodevice]));
-            w50.XOptions = ((Gtk.AttachOptions)(4));
-            w50.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child table2.Gtk.Table+TableChild
-            this.videodevicecombobox = Gtk.ComboBox.NewText();
-            this.videodevicecombobox.Name = "videodevicecombobox";
-            this.table2.Add(this.videodevicecombobox);
-            Gtk.Table.TableChild w51 = ((Gtk.Table.TableChild)(this.table2[this.videodevicecombobox]));
-            w51.LeftAttach = ((uint)(1));
-            w51.RightAttach = ((uint)(2));
-            w51.XOptions = ((Gtk.AttachOptions)(4));
-            w51.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child table2.Gtk.Table+TableChild
             this.videoformatcombobox = Gtk.ComboBox.NewText();
             this.videoformatcombobox.Name = "videoformatcombobox";
             this.table2.Add(this.videoformatcombobox);
-            Gtk.Table.TableChild w52 = ((Gtk.Table.TableChild)(this.table2[this.videoformatcombobox]));
-            w52.TopAttach = ((uint)(2));
-            w52.BottomAttach = ((uint)(3));
-            w52.LeftAttach = ((uint)(1));
-            w52.RightAttach = ((uint)(2));
-            w52.XOptions = ((Gtk.AttachOptions)(4));
-            w52.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w50 = ((Gtk.Table.TableChild)(this.table2[this.videoformatcombobox]));
+            w50.TopAttach = ((uint)(1));
+            w50.BottomAttach = ((uint)(2));
+            w50.LeftAttach = ((uint)(1));
+            w50.RightAttach = ((uint)(2));
+            w50.XOptions = ((Gtk.AttachOptions)(4));
+            w50.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table2.Gtk.Table+TableChild
             this.videoformatlabel = new Gtk.Label();
             this.videoformatlabel.Name = "videoformatlabel";
             this.videoformatlabel.LabelProp = Mono.Unix.Catalog.GetString("Video Format:");
             this.table2.Add(this.videoformatlabel);
-            Gtk.Table.TableChild w53 = ((Gtk.Table.TableChild)(this.table2[this.videoformatlabel]));
-            w53.TopAttach = ((uint)(2));
-            w53.BottomAttach = ((uint)(3));
-            w53.XOptions = ((Gtk.AttachOptions)(4));
-            w53.YOptions = ((Gtk.AttachOptions)(4));
+            Gtk.Table.TableChild w51 = ((Gtk.Table.TableChild)(this.table2[this.videoformatlabel]));
+            w51.TopAttach = ((uint)(1));
+            w51.BottomAttach = ((uint)(2));
+            w51.XOptions = ((Gtk.AttachOptions)(4));
+            w51.YOptions = ((Gtk.AttachOptions)(4));
             this.expander1.Add(this.table2);
             this.GtkLabel5 = new Gtk.Label();
             this.GtkLabel5.Name = "GtkLabel5";
@@ -635,18 +610,17 @@ namespace LongoMatch.Gui.Component {
             this.GtkLabel5.UseUnderline = true;
             this.expander1.LabelWidget = this.GtkLabel5;
             this.vbox2.Add(this.expander1);
-            Gtk.Box.BoxChild w55 = ((Gtk.Box.BoxChild)(this.vbox2[this.expander1]));
-            w55.Position = 1;
-            w55.Expand = false;
-            w55.Fill = false;
+            Gtk.Box.BoxChild w53 = ((Gtk.Box.BoxChild)(this.vbox2[this.expander1]));
+            w53.Position = 1;
+            w53.Expand = false;
+            w53.Fill = false;
             this.Add(this.vbox2);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
             this.editbutton.Hide();
-            this.audiodevicelabel.Hide();
+            this.device.Hide();
             this.videobitratelabel1.Hide();
-            this.videodevice.Hide();
             this.Show();
             this.visitorTeamEntry.Changed += new System.EventHandler(this.OnEdited);
             this.visitorSpinButton.ValueChanged += new System.EventHandler(this.OnEdited);

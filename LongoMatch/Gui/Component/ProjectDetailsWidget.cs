@@ -19,6 +19,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Mono.Unix;
 using Gtk;
 using LongoMatch.Common;
@@ -52,6 +53,7 @@ namespace LongoMatch.Gui.Component
 		private TeamTemplate actualVisitorTeam;
 		private TeamTemplate actualLocalTeam;
 		private ProjectType useType;
+		private List<object[]> videoDevices;
 		private const string PAL_FORMAT = "720x576 (4:3)";
 		private const string PAL_3_4_FORMAT = "540x432 (4:3)";
 		private const string PAL_1_2_FORMAT = "360x288 (4:3)";
@@ -71,10 +73,12 @@ namespace LongoMatch.Gui.Component
 				cp.Hide();
 				cp.DateSelectedEvent += new DateSelectedHandler(OnDateSelected);
 			}
-
+			
 			FillSections();
 			FillTeamsTemplate();
 			FillFormats();
+			
+			videoDevices = new List<object[]>();
 
 			Use=ProjectType.FileProject;
 		}
@@ -84,9 +88,6 @@ namespace LongoMatch.Gui.Component
 				bool visible1 = value == ProjectType.CaptureProject; 
 				bool visible2 = value != ProjectType.FakeCaptureProject;
 				bool visible3 = value == ProjectType.EditProject;
-				bool visible4 = visible1 && Environment.OSVersion.Platform == PlatformID.Win32NT;
-				
-				expander1.Visible = visible1;
 				
 				filelabel.Visible = visible2;
 				filehbox.Visible = visible2;
@@ -95,12 +96,14 @@ namespace LongoMatch.Gui.Component
 				localcombobox.Visible = visible3;
 				visitorcombobox.Visible = visible3;
 				
-				videodevice.Visible = visible4;
-				videodevicecombobox.Visible = visible4;
-				audiodevicelabel.Visible = visible4;
-				audiodevicecombobox.Visible = visible4;
+				expander1.Visible = visible1;
+				device.Visible = visible1;
+				devicecombobox.Visible = visible1;
 				
 				useType = value;
+				
+				if (useType == ProjectType.CaptureProject)
+					FillDevices();
 			}
 			get {
 				return useType;
@@ -216,20 +219,6 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public string[] AudioDevices{
-			set {
-				foreach (string name in value)
-					audiodevicecombobox.AppendText(name);
-			}
-		}
-		
-		public string[] VideoDevices{
-			set {
-				foreach ( string name in value)
-					videodevicecombobox.AppendText(name);
-			}
-		}
-
 		private string SectionsFile {
 			get {
 				return tagscombobox.ActiveText + ".sct";
@@ -253,8 +242,8 @@ namespace LongoMatch.Gui.Component
 				CapturePropertiesStruct s = new CapturePropertiesStruct();
 				s.AudioBitrate = (uint)audiobitratespinbutton.Value;
 				s.VideoBitrate = (uint)videobitratespinbutton.Value;
-				s.AudioDevice = audiodevicecombobox.ActiveText;
-				s.VideoDevice =  videodevicecombobox.ActiveText;
+				s.SourceType = (CapturerType)videoDevices[devicecombobox.Active][1];
+				s.DeviceID = (String)videoDevices[devicecombobox.Active][0];
 				switch (sizecombobox.ActiveText){
 					/* FIXME: Don't harcode size values */
 					case PAL_FORMAT:
@@ -432,6 +421,32 @@ namespace LongoMatch.Gui.Component
 			videoformatcombobox.AppendText(MP4);
 			videoformatcombobox.AppendText(AVI);
 			videoformatcombobox.Active = 0;
+		}
+		
+		private void FillDevices(){
+			/* Generate the list of devices and add the gconf one at the bottom
+			 * so that DV sources are always selected before */
+			foreach (string devName in GstCameraCapturer.VideoDevices)
+					videoDevices.Add(new object[2] {devName, CapturerType.DVCAM});
+			if (Environment.OSVersion.Platform == PlatformID.Unix){
+				videoDevices.Add(new object[2] {
+					Catalog.GetString("GConf configured device"),
+					CapturerType.WEBCAM});
+			}
+
+			foreach (object[] device in videoDevices){
+				string deviceElement;
+				if (Environment.OSVersion.Platform == PlatformID.Unix){
+					if ((int)device[1] == (int)CapturerType.DVCAM)
+						deviceElement = Catalog.GetString("DV camera");
+					else 
+						deviceElement = Catalog.GetString("GConf Source");
+				} else 
+					deviceElement = Catalog.GetString("DirectShow Source");
+				
+				devicecombobox.AppendText(device[0]+" ("+deviceElement+")");
+				devicecombobox.Active = 0;
+			}
 		}
 
 		protected virtual void OnDateSelected(DateTime dateTime) {
