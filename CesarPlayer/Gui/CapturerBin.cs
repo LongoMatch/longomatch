@@ -44,6 +44,8 @@ namespace LongoMatch.Gui
 		private uint outputHeight;
 		private uint videoBitrate;
 		private uint audioBitrate;
+		private CapturerType sourceType;
+		private string deviceID;
 		private VideoEncoderType  videoEncoder;
 		private AudioEncoderType audioEncoder;
 		private VideoMuxerType videoMuxer;
@@ -164,6 +166,8 @@ namespace LongoMatch.Gui
 				audioEncoder = value.AudioEncoder;
 				videoEncoder = value.VideoEncoder;
 				videoMuxer = value.Muxer;
+				sourceType = value.SourceType;
+				deviceID = value.DeviceID;
 			}
 		}
 		
@@ -247,6 +251,8 @@ namespace LongoMatch.Gui
 			capturer.SetVideoEncoder(videoEncoder);
 			capturer.SetAudioEncoder(audioEncoder);
 			capturer.SetVideoMuxer(videoMuxer);	
+			capturer.SetSource(sourceType);
+			capturer.DeviceID = deviceID;
 			capturer.VideoBitrate = videoBitrate;
 			capturer.AudioBitrate = audioBitrate;
 		}

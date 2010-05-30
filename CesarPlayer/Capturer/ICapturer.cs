@@ -64,11 +64,18 @@ namespace LongoMatch.Video.Capturer
 			get;
 		}
 		
+		string DeviceID {
+			set;
+			get;
+		}
+		
 		bool SetVideoEncoder(VideoEncoderType type);
 		
 		bool SetAudioEncoder(AudioEncoderType type);
 		
 		bool SetVideoMuxer(VideoMuxerType type);
+		
+		bool SetSource(CapturerType type);
 		
 		void TogglePause();
 		

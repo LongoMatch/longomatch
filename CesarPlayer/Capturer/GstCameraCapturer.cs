@@ -127,6 +127,21 @@ namespace LongoMatch.Video.Capturer {
 				val.Dispose ();
 			}
 		}
+		
+		[GLib.Property ("device_id")]
+		public string DeviceID {
+			get {
+				GLib.Value val = GetProperty ("device_id");
+				string ret = (string) val;
+				val.Dispose ();
+				return ret;
+			}
+			set {
+				GLib.Value val = new GLib.Value(value);
+				SetProperty("device_id", val);
+				val.Dispose ();
+			}
+		}
 
 		[GLib.CDeclCallback]
 		delegate void ErrorSignalDelegate (IntPtr arg0, IntPtr arg1, IntPtr gch);

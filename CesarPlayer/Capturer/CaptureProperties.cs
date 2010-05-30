@@ -25,8 +25,8 @@ namespace LongoMatch.Video.Capturer
 	
 	public struct CapturePropertiesStruct
 	{
-		public string VideoDevice;
-		public string AudioDevice;
+		public CapturerType SourceType;
+		public string DeviceID;
 		public uint VideoBitrate;
 		public uint AudioBitrate;
 		public VideoEncoderType VideoEncoder;

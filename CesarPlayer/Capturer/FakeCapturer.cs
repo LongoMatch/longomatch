@@ -95,6 +95,11 @@ namespace LongoMatch.Video.Capturer
 			get {return null;}
 		}
 		
+		public string DeviceID {
+			get {return "";}
+			set{}
+		}
+		
 		public bool SetVideoEncoder(VideoEncoderType type){
 			return true;
 		}
@@ -104,6 +109,10 @@ namespace LongoMatch.Video.Capturer
 		}
 		
 		public bool SetVideoMuxer(VideoMuxerType type){
+			return true;
+		}
+		
+		public bool SetSource(CapturerType type){
 			return true;
 		}
 	}

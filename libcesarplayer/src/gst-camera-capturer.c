@@ -72,6 +72,7 @@ enum
   PROP_VIDEO_BITRATE,
   PROP_AUDIO_BITRATE,
   PROP_OUTPUT_FILE,
+  PROP_DEVICE_ID,
   PROP_WITH_AUDIO
 };
 
@@ -80,6 +81,7 @@ struct GstCameraCapturerPrivate
 
   /*Encoding properties */
   gchar *output_file;
+  gchar *device_id;
   guint output_height;
   guint output_width;
   guint output_fps_n;
@@ -260,6 +262,24 @@ gst_camera_capturer_set_output_file (GstCameraCapturer * gcc,
   g_object_set (gcc->priv->camerabin, "filename", file, NULL);
   GST_INFO_OBJECT (gcc, "Changed output filename to :\n%s", file);
 
+}
+
+static void
+gst_camera_capturer_set_device_id (GstCameraCapturer * gcc,
+    const gchar * device_id)
+{
+  gcc->priv->device_id = g_strdup (device_id);
+#ifdef WIN32
+  /* On windows the source is always dshowvideosrc */
+  g_object_set (gcc->priv->videosrc, "device-name", device_id, NULL);
+#else
+  /* On linux it only makes sense to set the device id
+   * for the dv1394src element because the gconf one can be set 
+   * through gstreamer-properties */
+  if (gcc->priv->source_type == GST_CAMERA_CAPTURE_SOURCE_TYPE_DV)
+    g_object_set (gcc->priv->videosrc, "guid", device_id, NULL);
+#endif 
+  GST_INFO_OBJECT (gcc, "Changed device id/name to :\n%s", device_id);
 }
 
 /***********************************
@@ -705,6 +725,9 @@ gst_camera_capturer_set_property (GObject * object, guint property_id,
     case PROP_OUTPUT_FILE:
       gst_camera_capturer_set_output_file (gcc, g_value_get_string (value));
       break;
+    case PROP_DEVICE_ID:
+      gst_camera_capturer_set_device_id (gcc, g_value_get_string (value));
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -734,6 +757,9 @@ gst_camera_capturer_get_property (GObject * object, guint property_id,
       break;
     case PROP_OUTPUT_FILE:
       g_value_set_string (value, gcc->priv->output_file);
+      break;
+    case PROP_DEVICE_ID:
+      g_value_set_string (value, gcc->priv->device_id);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -782,6 +808,9 @@ gst_camera_capturer_class_init (GstCameraCapturerClass * klass)
           NULL, 12, G_MAXUINT, 128, G_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_OUTPUT_FILE,
       g_param_spec_string ("output_file", NULL,
+          NULL, FALSE, G_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_DEVICE_ID,
+      g_param_spec_string ("device_name", NULL,
           NULL, FALSE, G_PARAM_READWRITE));
 
   /* Signals */
