@@ -109,7 +109,7 @@ namespace LongoMatch.Gui.Dialog {
             w6.XOptions = ((Gtk.AttachOptions)(4));
             w6.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
-            this.playersspinbutton = new Gtk.SpinButton(1, 30, 1);
+            this.playersspinbutton = new Gtk.SpinButton(1, 100, 1);
             this.playersspinbutton.CanFocus = true;
             this.playersspinbutton.Name = "playersspinbutton";
             this.playersspinbutton.Adjustment.PageIncrement = 10;
