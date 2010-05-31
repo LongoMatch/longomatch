@@ -1321,10 +1321,10 @@ gst_camera_capturer_enum_devices (gchar * device_name)
   guint i = 0;
 
   device = gst_element_factory_make (device_name, "source");
-  gst_element_set_state (device, GST_STATE_READY);
-  gst_element_get_state (device, NULL, NULL, 5 * GST_SECOND);
   if (!device || !GST_IS_PROPERTY_PROBE (device))
     goto finish;
+  gst_element_set_state (device, GST_STATE_READY);
+  gst_element_get_state (device, NULL, NULL, 5 * GST_SECOND);
   probe = GST_PROPERTY_PROBE (device);
   va = gst_property_probe_get_values_name (probe, "device-name");
   if (!va)
