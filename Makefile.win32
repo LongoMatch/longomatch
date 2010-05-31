@@ -35,7 +35,8 @@ LIBCESARPLAYER_SOURCES=\
 	libcesarplayer/src/video-utils.c\
 	libcesarplayer/src/bacon-video-widget-gst-0.10.c\
 	libcesarplayer/src/baconvideowidget-marshal.c\
-	libcesarplayer/src/gst-video-editor.c
+	libcesarplayer/src/gst-video-editor.c\
+	libcesarplayer/src/gst-camera-capturer.c
 	
 LINKOBJ  = $(patsubst libcesarplayer/src/%.c, $(BUILD_DIR)/%.o,$(LIBCESARPLAYER_SOURCES))
 
@@ -71,9 +72,11 @@ CESARPLAYER_FILES = \
 	Utils/FramesCapturer.cs \
 	Utils/IMetadataReader.cs \
 	Utils/TimeString.cs \
+	Capturer/CaptureProperties.cs \
 	Capturer/FakeCapturer.cs \
 	Capturer/GstCameraCapturer.cs \
 	Capturer/ICapturer.cs \
+	Capturer/LiveSourceTimer.cs \
 	Capturer/ObjectManager.cs \
 	Editor/IVideoEditor.cs \
 	Editor/IVideoSplitter.cs \
