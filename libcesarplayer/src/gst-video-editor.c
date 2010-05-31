@@ -1363,7 +1363,7 @@ gst_video_editor_new (GError ** err)
 
   if (!gve->priv->main_pipeline)
     {
-      g_set_error (err, GVC_ERROR, ERROR_PLUGIN_LOAD,
+      g_set_error (err, GVC_ERROR, GST_ERROR_PLUGIN_LOAD,
 		   ("Failed to create a GStreamer Bin. "
 		    "Please check your GStreamer installation."));
       g_object_ref_sink (gve);
@@ -1379,7 +1379,7 @@ gst_video_editor_new (GError ** err)
     gst_element_factory_make ("gnlcomposition", "gnl-audio-composition");
   if (!gve->priv->gnl_video_composition || !gve->priv->gnl_audio_composition)
     {
-      g_set_error (err, GVC_ERROR, ERROR_PLUGIN_LOAD,
+      g_set_error (err, GVC_ERROR, GST_ERROR_PLUGIN_LOAD,
 		   ("Failed to create a Gnonlin element. "
 		    "Please check your GStreamer installation."));
       g_object_ref_sink (gve);

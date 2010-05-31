@@ -20,61 +20,61 @@
 
 /**
  * Error:
- * @ERROR_AUDIO_PLUGIN: Error loading audio output plugin or device.
- * @ERROR_NO_PLUGIN_FOR_FILE: A required GStreamer plugin or xine feature is missing.
- * @ERROR_VIDEO_PLUGIN: Error loading video output plugin or device.
- * @ERROR_AUDIO_BUSY: Audio output device is busy.
- * @ERROR_BROKEN_FILE: The movie file is broken and cannot be decoded.
- * @ERROR_FILE_GENERIC: A generic error for problems with movie files.
- * @ERROR_FILE_PERMISSION: Permission was refused to access the stream, or authentication was required.
- * @ERROR_FILE_ENCRYPTED: The stream is encrypted and cannot be played.
- * @ERROR_FILE_NOT_FOUND: The stream cannot be found.
- * @ERROR_DVD_ENCRYPTED: The DVD is encrypted and libdvdcss is not installed.
- * @ERROR_INVALID_DEVICE: The device given in an MRL (e.g. DVD drive or DVB tuner) did not exist.
- * @ERROR_DEVICE_BUSY: The device was busy.
- * @ERROR_UNKNOWN_HOST: The host for a given stream could not be resolved.
- * @ERROR_NETWORK_UNREACHABLE: The host for a given stream could not be reached.
- * @ERROR_CONNECTION_REFUSED: The server for a given stream refused the connection.
- * @ERROR_INVALID_LOCATION: An MRL was malformed, or CDDB playback was attempted (which is now unsupported).
- * @ERROR_GENERIC: A generic error occurred.
- * @ERROR_CODEC_NOT_HANDLED: The audio or video codec required by the stream is not supported.
- * @ERROR_AUDIO_ONLY: An audio-only stream could not be played due to missing audio output support.
- * @ERROR_CANNOT_CAPTURE: Error determining frame capture support for a video with bacon_video_widget_can_get_frames().
- * @ERROR_READ_ERROR: A generic error for problems reading streams.
- * @ERROR_PLUGIN_LOAD: A library or plugin could not be loaded.
- * @ERROR_EMPTY_FILE: A movie file was empty.
+ * @GST_ERROR_AUDIO_PLUGIN: Error loading audio output plugin or device.
+ * @GST_ERROR_NO_PLUGIN_FOR_FILE: A required GStreamer plugin or xine feature is missing.
+ * @GST_ERROR_VIDEO_PLUGIN: Error loading video output plugin or device.
+ * @GST_ERROR_AUDIO_BUSY: Audio output device is busy.
+ * @GST_ERROR_BROKEN_FILE: The movie file is broken and cannot be decoded.
+ * @GST_ERROR_FILE_GENERIC: A generic error for problems with movie files.
+ * @GST_ERROR_FILE_PERMISSION: Permission was refused to access the stream, or authentication was required.
+ * @GST_ERROR_FILE_ENCRYPTED: The stream is encrypted and cannot be played.
+ * @GST_ERROR_FILE_NOT_FOUND: The stream cannot be found.
+ * @GST_ERROR_DVD_ENCRYPTED: The DVD is encrypted and libdvdcss is not installed.
+ * @GST_ERROR_INVALID_DEVICE: The device given in an MRL (e.g. DVD drive or DVB tuner) did not exist.
+ * @GST_ERROR_DEVICE_BUSY: The device was busy.
+ * @GST_ERROR_UNKNOWN_HOST: The host for a given stream could not be resolved.
+ * @GST_ERROR_NETWORK_UNREACHABLE: The host for a given stream could not be reached.
+ * @GST_ERROR_CONNECTION_REFUSED: The server for a given stream refused the connection.
+ * @GST_ERROR_INVALID_LOCATION: An MRL was malformed, or CDDB playback was attempted (which is now unsupported).
+ * @GST_ERROR_GENERIC: A generic error occurred.
+ * @GST_ERROR_CODEC_NOT_HANDLED: The audio or video codec required by the stream is not supported.
+ * @GST_ERROR_AUDIO_ONLY: An audio-only stream could not be played due to missing audio output support.
+ * @GST_ERROR_CANNOT_CAPTURE: Error determining frame capture support for a video with bacon_video_widget_can_get_frames().
+ * @GST_ERROR_READ_ERROR: A generic error for problems reading streams.
+ * @GST_ERROR_PLUGIN_LOAD: A library or plugin could not be loaded.
+ * @GST_ERROR_EMPTY_FILE: A movie file was empty.
  *
  **/
 typedef enum
 {
   /* Plugins */
-  ERROR_AUDIO_PLUGIN,
-  ERROR_NO_PLUGIN_FOR_FILE,
-  ERROR_VIDEO_PLUGIN,
-  ERROR_AUDIO_BUSY,
+  GST_ERROR_AUDIO_PLUGIN,
+  GST_ERROR_NO_PLUGIN_FOR_FILE,
+  GST_ERROR_VIDEO_PLUGIN,
+  GST_ERROR_AUDIO_BUSY,
   /* File */
-  ERROR_BROKEN_FILE,
-  ERROR_FILE_GENERIC,
-  ERROR_FILE_PERMISSION,
-  ERROR_FILE_ENCRYPTED,
-  ERROR_FILE_NOT_FOUND,
+  GST_ERROR_BROKEN_FILE,
+  GST_ERROR_FILE_GENERIC,
+  GST_ERROR_FILE_PERMISSION,
+  GST_ERROR_FILE_ENCRYPTED,
+  GST_ERROR_FILE_NOT_FOUND,
   /* Devices */
-  ERROR_DVD_ENCRYPTED,
-  ERROR_INVALID_DEVICE,
-  ERROR_DEVICE_BUSY,
+  GST_ERROR_DVD_ENCRYPTED,
+  GST_ERROR_INVALID_DEVICE,
+  GST_ERROR_DEVICE_BUSY,
   /* Network */
-  ERROR_UNKNOWN_HOST,
-  ERROR_NETWORK_UNREACHABLE,
-  ERROR_CONNECTION_REFUSED,
+  GST_ERROR_UNKNOWN_HOST,
+  GST_ERROR_NETWORK_UNREACHABLE,
+  GST_ERROR_CONNECTION_REFUSED,
   /* Generic */
-  ERROR_INVALID_LOCATION,
-  ERROR_GENERIC,
-  ERROR_CODEC_NOT_HANDLED,
-  ERROR_AUDIO_ONLY,
-  ERROR_CANNOT_CAPTURE,
-  ERROR_READ_ERROR,
-  ERROR_PLUGIN_LOAD,
-  ERROR_EMPTY_FILE
+  GST_ERROR_INVALID_LOCATION,
+  GST_ERROR_GENERIC,
+  GST_ERROR_CODEC_NOT_HANDLED,
+  GST_ERROR_AUDIO_ONLY,
+  GST_ERROR_CANNOT_CAPTURE,
+  GST_ERROR_READ_ERROR,
+  GST_ERROR_PLUGIN_LOAD,
+  GST_ERROR_EMPTY_FILE
 } Error;
 
 

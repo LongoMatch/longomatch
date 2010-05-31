@@ -965,7 +965,7 @@ gst_camera_capturer_new (gchar * filename, GError ** err)
 /* Missing plugin */
 missing_plugin:
   {
-    g_set_error (err, GCC_ERROR, ERROR_PLUGIN_LOAD,
+    g_set_error (err, GCC_ERROR, GST_ERROR_PLUGIN_LOAD,
         ("Failed to create a GStreamer element. "
             "The element \"%s\" is missing. "
             "Please check your GStreamer installation."), plugin);
@@ -1054,7 +1054,7 @@ gst_camera_capturer_set_video_encoder (GstCameraCapturer * gcc,
   if (!gcc->priv->videoenc) {
     g_set_error (err,
         GCC_ERROR,
-        ERROR_PLUGIN_LOAD,
+        GST_ERROR_PLUGIN_LOAD,
         "Failed to create the %s element. "
         "Please check your GStreamer installation.", name);
   } else {
@@ -1094,7 +1094,7 @@ gst_camera_capturer_set_audio_encoder (GstCameraCapturer * gcc,
   if (!gcc->priv->audioenc) {
     g_set_error (err,
         GCC_ERROR,
-        ERROR_PLUGIN_LOAD,
+        GST_ERROR_PLUGIN_LOAD,
         "Failed to create the %s element. "
         "Please check your GStreamer installation.", name);
   } else {
@@ -1141,7 +1141,7 @@ gst_camera_capturer_set_video_muxer (GstCameraCapturer * gcc,
   if (!gcc->priv->videomux) {
     g_set_error (err,
         GCC_ERROR,
-        ERROR_PLUGIN_LOAD,
+        GST_ERROR_PLUGIN_LOAD,
         "Failed to create the %s element. "
         "Please check your GStreamer installation.", name);
   } else {
@@ -1364,7 +1364,7 @@ gst_camera_capturer_can_get_frames (GstCameraCapturer * gcc, GError ** error)
 
   /* check for video */
   if (!gcc->priv->media_has_video) {
-    g_set_error_literal (error, GCC_ERROR, ERROR_GENERIC,
+    g_set_error_literal (error, GCC_ERROR, GST_ERROR_GENERIC,
         "Media contains no supported video streams.");
     return FALSE;
   }

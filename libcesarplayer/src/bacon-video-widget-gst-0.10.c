@@ -2850,7 +2850,7 @@ bvw_error_from_gst_error (BaconVideoWidget * bvw, GstMessage * err_msg)
 	  (g_str_has_prefix (mrl, "dvd") ||
 	   g_str_has_prefix (mrl, "cd") || g_str_has_prefix (mrl, "vcd")))
 	{
-	  ret = g_error_new_literal (BVW_ERROR, ERROR_INVALID_DEVICE,
+	  ret = g_error_new_literal (BVW_ERROR, GST_ERROR_INVALID_DEVICE,
 				     e->message);
 	}
       else
@@ -2861,7 +2861,7 @@ bvw_error_from_gst_error (BaconVideoWidget * bvw, GstMessage * err_msg)
 	      if (GST_IS_BASE_AUDIO_SINK (err_msg->src))
 		{
 		  ret =
-		    g_error_new_literal (BVW_ERROR, ERROR_AUDIO_PLUGIN,
+		    g_error_new_literal (BVW_ERROR, GST_ERROR_AUDIO_PLUGIN,
 					 _
 					 ("The requested audio output was not found. "
 					  "Please select another audio output in the Multimedia "
@@ -2870,13 +2870,13 @@ bvw_error_from_gst_error (BaconVideoWidget * bvw, GstMessage * err_msg)
 	      else
 		{
 		  ret =
-		    g_error_new_literal (BVW_ERROR, ERROR_FILE_NOT_FOUND,
+		    g_error_new_literal (BVW_ERROR, GST_ERROR_FILE_NOT_FOUND,
 					 _("Location not found."));
 		}
 	    }
 	  else
 	    {
-	      ret = g_error_new_literal (BVW_ERROR, ERROR_FILE_PERMISSION,
+	      ret = g_error_new_literal (BVW_ERROR, GST_ERROR_FILE_PERMISSION,
 					 _("Could not open location; "
 					   "you might not have permission to open the file."));
 	    }
@@ -2890,7 +2890,7 @@ bvw_error_from_gst_error (BaconVideoWidget * bvw, GstMessage * err_msg)
 	{
 	  /* a somewhat evil check, but hey.. */
 	  ret = g_error_new_literal (BVW_ERROR,
-				     ERROR_VIDEO_PLUGIN,
+				     GST_ERROR_VIDEO_PLUGIN,
 				     _
 				     ("The video output is in use by another application. "
 				      "Please close other video applications, or select "
@@ -2899,7 +2899,7 @@ bvw_error_from_gst_error (BaconVideoWidget * bvw, GstMessage * err_msg)
       else if (GST_IS_BASE_AUDIO_SINK (err_msg->src))
 	{
 	  ret = g_error_new_literal (BVW_ERROR,
-				     ERROR_AUDIO_BUSY,
+				     GST_ERROR_AUDIO_BUSY,
 				     _
 				     ("The audio output is in use by another application. "
 				      "Please select another audio output in the Multimedia Systems Selector. "
@@ -2908,7 +2908,7 @@ bvw_error_from_gst_error (BaconVideoWidget * bvw, GstMessage * err_msg)
     }
   else if (e->domain == GST_RESOURCE_ERROR)
     {
-      ret = g_error_new_literal (BVW_ERROR, ERROR_FILE_GENERIC,
+      ret = g_error_new_literal (BVW_ERROR, GST_ERROR_FILE_GENERIC,
 				 e->message);
     }
   else if (is_error (e, CORE, MISSING_PLUGIN) ||
@@ -2946,14 +2946,14 @@ bvw_error_from_gst_error (BaconVideoWidget * bvw, GstMessage * err_msg)
 	      g_free (desc_list);
 	    }
 	  ret =
-	    g_error_new_literal (BVW_ERROR, ERROR_CODEC_NOT_HANDLED, msg);
+	    g_error_new_literal (BVW_ERROR, GST_ERROR_CODEC_NOT_HANDLED, msg);
 	  g_free (msg);
 	  g_strfreev (descs);
 	}
       else
 	{
 	  GST_LOG ("no missing plugin messages, posting generic error");
-	  ret = g_error_new_literal (BVW_ERROR, ERROR_CODEC_NOT_HANDLED,
+	  ret = g_error_new_literal (BVW_ERROR, GST_ERROR_CODEC_NOT_HANDLED,
 				     e->message);
 	}
     }
@@ -2962,26 +2962,26 @@ bvw_error_from_gst_error (BaconVideoWidget * bvw, GstMessage * err_msg)
     {
       if (src_typename)
 	{
-	  ret = g_error_new (BVW_ERROR, ERROR_CODEC_NOT_HANDLED, "%s: %s",
+	  ret = g_error_new (BVW_ERROR, GST_ERROR_CODEC_NOT_HANDLED, "%s: %s",
 			     src_typename, e->message);
 	}
       else
 	{
-	  ret = g_error_new_literal (BVW_ERROR, ERROR_CODEC_NOT_HANDLED,
+	  ret = g_error_new_literal (BVW_ERROR, GST_ERROR_CODEC_NOT_HANDLED,
 				     e->message);
 	}
     }
   else if (is_error (e, STREAM, FAILED) &&
 	   src_typename && strncmp (src_typename, "GstTypeFind", 11) == 0)
     {
-      ret = g_error_new_literal (BVW_ERROR, ERROR_READ_ERROR,
+      ret = g_error_new_literal (BVW_ERROR, GST_ERROR_READ_ERROR,
 				 _("Cannot play this file over the network. "
 				   "Try downloading it to disk first."));
     }
   else
     {
       /* generic error, no code; take message */
-      ret = g_error_new_literal (BVW_ERROR, ERROR_GENERIC, e->message);
+      ret = g_error_new_literal (BVW_ERROR, GST_ERROR_GENERIC, e->message);
     }
   g_error_free (e);
   bvw_clear_missing_plugins_messages (bvw);
@@ -3060,7 +3060,7 @@ poll_for_state_change_full (BaconVideoWidget * bvw, GstElement * element,
 	    GError *e = NULL;
 
 	    gst_message_unref (message);
-	    e = g_error_new_literal (BVW_ERROR, ERROR_FILE_GENERIC,
+	    e = g_error_new_literal (BVW_ERROR, GST_ERROR_FILE_GENERIC,
 				     _("Media file could not be played."));
 	    *err_msg =
 	      gst_message_new_error (GST_OBJECT (bvw->priv->play), e, NULL);
@@ -3222,7 +3222,7 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
 	      gchar *cur_dir = g_get_current_dir ();
 	      if (!cur_dir)
 		{
-		  g_set_error_literal (error, BVW_ERROR, ERROR_GENERIC,
+		  g_set_error_literal (error, BVW_ERROR, GST_ERROR_GENERIC,
 				       _
 				       ("Failed to retrieve working directory"));
 		  return FALSE;
@@ -5529,7 +5529,7 @@ bacon_video_widget_can_get_frames (BaconVideoWidget * bvw, GError ** error)
   if (!g_object_class_find_property
       (G_OBJECT_GET_CLASS (bvw->priv->play), "frame"))
     {
-      g_set_error_literal (error, BVW_ERROR, ERROR_GENERIC,
+      g_set_error_literal (error, BVW_ERROR, GST_ERROR_GENERIC,
 			   _("Too old version of GStreamer installed."));
       return FALSE;
     }
@@ -5537,7 +5537,7 @@ bacon_video_widget_can_get_frames (BaconVideoWidget * bvw, GError ** error)
   /* check for video */
   if (!bvw->priv->media_has_video)
     {
-      g_set_error_literal (error, BVW_ERROR, ERROR_GENERIC,
+      g_set_error_literal (error, BVW_ERROR, GST_ERROR_GENERIC,
 			   _("Media contains no supported video streams."));
       return FALSE;
     }
@@ -6003,7 +6003,7 @@ bacon_video_widget_new (int width, int height, BvwUseType type, GError ** err)
   if (!bvw->priv->play)
     {
 
-      g_set_error (err, BVW_ERROR, ERROR_PLUGIN_LOAD,
+      g_set_error (err, BVW_ERROR, GST_ERROR_PLUGIN_LOAD,
 		   _("Failed to create a GStreamer play object. "
 		     "Please check your GStreamer installation."));
       g_object_ref_sink (bvw);
@@ -6091,7 +6091,7 @@ bacon_video_widget_new (int width, int height, BvwUseType type, GError ** err)
 		{
 		  g_warning
 		    ("Should have gotten an error message, please file a bug.");
-		  g_set_error (err, BVW_ERROR, ERROR_VIDEO_PLUGIN,
+		  g_set_error (err, BVW_ERROR, GST_ERROR_VIDEO_PLUGIN,
 			       _
 			       ("Failed to open video output. It may not be available. "
 				"Please select another video output in the Multimedia "
@@ -6108,7 +6108,7 @@ bacon_video_widget_new (int width, int height, BvwUseType type, GError ** err)
     }
   else
     {
-      g_set_error (err, BVW_ERROR, ERROR_VIDEO_PLUGIN,
+      g_set_error (err, BVW_ERROR, GST_ERROR_VIDEO_PLUGIN,
 		   _("Could not find the video output. "
 		     "You may need to install additional GStreamer plugins, "
 		     "or select another video output in the Multimedia Systems "
@@ -6148,7 +6148,7 @@ bacon_video_widget_new (int width, int height, BvwUseType type, GError ** err)
 		{
 		  g_warning
 		    ("Should have gotten an error message, please file a bug.");
-		  g_set_error (err, BVW_ERROR, ERROR_AUDIO_PLUGIN,
+		  g_set_error (err, BVW_ERROR, GST_ERROR_AUDIO_PLUGIN,
 			       _
 			       ("Failed to open audio output. You may not have "
 				"permission to open the sound device, or the sound "
@@ -6173,7 +6173,7 @@ bacon_video_widget_new (int width, int height, BvwUseType type, GError ** err)
     }
   else
     {
-      g_set_error (err, BVW_ERROR, ERROR_AUDIO_PLUGIN,
+      g_set_error (err, BVW_ERROR, GST_ERROR_AUDIO_PLUGIN,
 		   _("Could not find the audio output. "
 		     "You may need to install additional GStreamer plugins, or "
 		     "select another audio output in the Multimedia Systems "
@@ -6234,7 +6234,7 @@ bacon_video_widget_new (int width, int height, BvwUseType type, GError ** err)
       if (ret != GST_STATE_CHANGE_SUCCESS)
 	{
 	  GST_WARNING ("Timeout setting videosink to READY");
-	  g_set_error (err, BVW_ERROR, ERROR_VIDEO_PLUGIN,
+	  g_set_error (err, BVW_ERROR, GST_ERROR_VIDEO_PLUGIN,
 		       _
 		       ("Failed to open video output. It may not be available. "
 			"Please select another video output in the Multimedia Systems Selector."));
