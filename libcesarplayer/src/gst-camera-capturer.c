@@ -1335,6 +1335,7 @@ gst_camera_capturer_enum_devices (gchar * device_name)
   GstElement *device;
   GstPropertyProbe *probe;
   GValueArray *va;
+  gchar *prop_name;
   GList *list = NULL;
   guint i = 0;
 
@@ -1344,9 +1345,18 @@ gst_camera_capturer_enum_devices (gchar * device_name)
   gst_element_set_state (device, GST_STATE_READY);
   gst_element_get_state (device, NULL, NULL, 5 * GST_SECOND);
   probe = GST_PROPERTY_PROBE (device);
-  va = gst_property_probe_get_values_name (probe, "device-name");
+
+  if (!g_strcmp0(device_name,"dv1394src"))
+    prop_name = "guid";
+  else if (!g_strcmp0(device_name,"v4l2src"))
+    prop_name = "device";
+  else
+    prop_name = "device-name";
+
+  va = gst_property_probe_get_values_name (probe, prop_name);
   if (!va)
     goto finish;
+
   for (i = 0; i < va->n_values; ++i) {
     GValue *v = g_value_array_get_nth (va, i);
     list = g_list_append (list, g_strdup(g_value_get_string (v)));
