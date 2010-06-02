@@ -303,8 +303,12 @@ gst_camera_capturer_set_device_id (GstCameraCapturer * gcc,
   /* On linux it only makes sense to set the device id
    * for the dv1394src element because the gconf one can be set 
    * through gstreamer-properties */
-  if (gcc->priv->source_type == GST_CAMERA_CAPTURE_SOURCE_TYPE_DV)
+  if (gcc->priv->source_type == GST_CAMERA_CAPTURE_SOURCE_TYPE_DV){
+    GstElement *source;
+
+    source = gst_bin_get_by_name (GST_BIN(gcc->priv->videosrc), "source_element");
     g_object_set (gcc->priv->videosrc, "guid", device_id, NULL);
+  }
 #endif 
   GST_INFO_OBJECT (gcc, "Changed device id/name to :\n%s", device_id);
 }
@@ -900,12 +904,66 @@ gst_camera_capture_videosrc_buffer_probe (GstPad * pad, GstBuffer * buf,
   return TRUE;
 }
 
+static void
+cb_new_pad (GstElement *element,
+	    GstPad     *pad,
+	    gpointer    data)
+{
+  GstCaps *caps;
+  const gchar *mime;
+  GstElement *sink;
+  GstBin *bin = GST_BIN(data);
+
+  caps = gst_pad_get_caps (pad);
+  mime = gst_structure_get_name (gst_caps_get_structure (caps, 0));
+  if (g_strrstr (mime, "video")) {
+    sink = gst_bin_get_by_name (bin, "source_video_sink");
+    gst_pad_link (pad, gst_element_get_pad (sink, "sink"));
+  }
+  if (g_strrstr (mime, "audio")) {
+    /* Not implemented yet */
+  }
+}
+
+static GstElement *
+gst_camera_capture_create_source_bin (GstCameraCapturer * gcc)
+{
+  GstElement *bin;
+  GstElement *source;
+  GstElement *decoder;
+  GstElement *deinterlacer;
+  GstElement *colorspace;
+  GstElement *videorate;
+  GstElement *videoscale;
+  GstPad *src_pad;
+
+  bin = gst_bin_new ("videosource");
+  source = gst_element_factory_make(DVVIDEOSRC, "source_device");
+  decoder = gst_element_factory_make("decodebin2", NULL);
+  deinterlacer = gst_element_factory_make("ffdeinterlace", "source_video_sink");
+  videorate = gst_element_factory_make("videorate", NULL);
+  colorspace = gst_element_factory_make("ffmpegcolorspace", NULL);
+  videoscale = gst_element_factory_make("videoscale", NULL);
+
+  gst_bin_add_many (GST_BIN(bin), source, decoder, deinterlacer,
+      colorspace, videorate, videoscale, NULL);
+  gst_element_link (source, decoder);
+  gst_element_link_many (deinterlacer, videorate, colorspace, videoscale, NULL);
+
+  g_signal_connect (decoder, "pad-added", G_CALLBACK(cb_new_pad), bin);
+
+  /* add ghostpad */
+  src_pad = gst_element_get_static_pad (videoscale, "src");
+  gst_element_add_pad (bin, gst_ghost_pad_new ("src", src_pad));
+  gst_object_unref (GST_OBJECT (src_pad));
+
+  return bin;
+}
+
 gboolean
 gst_camera_capturer_set_source (GstCameraCapturer * gcc,
     GstCameraCaptureSourceType source_type, GError **err)
 {
-  gchar *bin;
-
   if (gcc->priv->source_type == source_type)
     return TRUE;
   gcc->priv->source_type = source_type;
@@ -913,17 +971,13 @@ gst_camera_capturer_set_source (GstCameraCapturer * gcc,
   switch (gcc->priv->source_type) {
     case GST_CAMERA_CAPTURE_SOURCE_TYPE_DV:
     {
-      bin = g_strdup_printf ("%s ! queue ! video/x-dv "
-          "! dvdemux name=demux .video ! queue "
-          "! ffdec_dv ! queue ! ffmpegcolorspace ! videorate ! videoscale"
-          " .demux ", DVVIDEOSRC);
-      gcc->priv->videosrc = gst_parse_bin_from_description (bin, TRUE, err);
-      gcc->priv->audiosrc = gcc->priv->videosrc;
+      gcc->priv->videosrc = gst_camera_capture_create_source_bin (gcc);
+      /*gcc->priv->audiosrc = gcc->priv->videosrc;*/
     }
-    case GST_CAMERA_CAPTURE_SOURCE_TYPE_RAW:
+   case GST_CAMERA_CAPTURE_SOURCE_TYPE_RAW:
     default:
     {
-      bin = g_strdup_printf ("%s ! ffmpegcolorspace ! videorate ! videoscale",
+      gchar *bin = g_strdup_printf ("%s ! videorate ! ffmpegcolorspace ! videoscale",
           RAWVIDEOSRC);
       gcc->priv->videosrc = gst_parse_bin_from_description (bin, TRUE, err);
       gcc->priv->audiosrc = gst_element_factory_make (AUDIOSRC, "audiosource");
@@ -964,7 +1018,7 @@ gst_camera_capturer_new (gchar * filename, GError ** err)
   GST_INFO_OBJECT (gcc, "Setting capture mode to \"video\"");
   g_object_set (gcc->priv->camerabin, "mode", 1, NULL);
 
-  GST_INFO_OBJECT (gcc, "Setting video/audio source ");
+  GST_INFO_OBJECT (gcc, "Setting default video/audio source ");
   gst_camera_capturer_set_source (gcc, DEFAULT_SOURCE_TYPE, err);
   if (*err != NULL) {
     return NULL;
