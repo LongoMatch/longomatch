@@ -54,6 +54,16 @@
 
 #define DEFAULT_SOURCE_TYPE  GST_CAMERA_CAPTURE_SOURCE_TYPE_RAW
 
+typedef enum {
+  GST_CAMERABIN_FLAG_SOURCE_RESIZE               = (1 << 0),
+  GST_CAMERABIN_FLAG_SOURCE_COLOR_CONVERSION     = (1 << 1),
+  GST_CAMERABIN_FLAG_VIEWFINDER_COLOR_CONVERSION = (1 << 2),
+  GST_CAMERABIN_FLAG_VIEWFINDER_SCALE            = (1 << 3),
+  GST_CAMERABIN_FLAG_AUDIO_CONVERSION            = (1 << 4),
+  GST_CAMERABIN_FLAG_DISABLE_AUDIO               = (1 << 5),
+  GST_CAMERABIN_FLAG_IMAGE_COLOR_CONVERSION      = (1 << 6)
+} GstCameraBinFlags;
+
 /* Signals */
 enum
 {
@@ -906,6 +916,7 @@ gst_camera_capturer_new (gchar * filename, GError ** err)
   GstCameraCapturer *gcc = NULL;
   GstPad *videosrcpad;
   gchar *plugin;
+  gint flags = 0;
 
   gcc = g_object_new (GST_TYPE_CAMERA_CAPTURER, NULL);
 
@@ -937,6 +948,13 @@ gst_camera_capturer_new (gchar * filename, GError ** err)
 
   GST_INFO_OBJECT (gcc, "Setting capture mode to \"video\"");
   g_object_set (gcc->priv->camerabin, "mode", 1, NULL);
+
+  GST_INFO_OBJECT (gcc, "Setting capture mode to \"video\"");
+  flags =  GST_CAMERABIN_FLAG_DISABLE_AUDIO;
+#ifdef WIN32
+  flags |= GST_CAMERABIN_FLAG_VIEWFINDER_COLOR_CONVERSION;
+#endif
+  g_object_set (gcc->priv->camerabin, "flags", flags, NULL);
 
   /* assume we're always called from the main Gtk+ GUI thread */
   gui_thread = g_thread_self ();
