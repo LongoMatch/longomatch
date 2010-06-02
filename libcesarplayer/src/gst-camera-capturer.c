@@ -820,7 +820,7 @@ gst_camera_capturer_class_init (GstCameraCapturerClass * klass)
       g_param_spec_string ("output_file", NULL,
           NULL, FALSE, G_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_DEVICE_ID,
-      g_param_spec_string ("device_name", NULL,
+      g_param_spec_string ("device_id", NULL,
           NULL, FALSE, G_PARAM_READWRITE));
 
   /* Signals */
