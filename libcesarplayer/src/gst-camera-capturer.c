@@ -81,9 +81,9 @@ enum
   PROP_OUTPUT_WIDTH,
   PROP_VIDEO_BITRATE,
   PROP_AUDIO_BITRATE,
+  PROP_AUDIO_ENABLED,
   PROP_OUTPUT_FILE,
   PROP_DEVICE_ID,
-  PROP_WITH_AUDIO
 };
 
 struct GstCameraCapturerPrivate
@@ -98,6 +98,7 @@ struct GstCameraCapturerPrivate
   guint output_fps_d;
   guint audio_bitrate;
   guint video_bitrate;
+  gboolean audio_enabled;
   VideoEncoderType video_encoder_type;
   AudioEncoderType audio_encoder_type;
 
@@ -262,6 +263,22 @@ gst_camera_capturer_set_audio_bit_rate (GstCameraCapturer * gcc, gint bitrate)
   GST_INFO_OBJECT (gcc, "Changed audio bitrate to :\n%d",
       gcc->priv->audio_bitrate);
 
+}
+
+static void
+gst_camera_capturer_set_audio_enabled (GstCameraCapturer * gcc, gboolean enabled)
+{
+  gint flags;
+  gcc->priv->audio_enabled = enabled;
+
+  g_object_get (gcc->priv->main_pipeline, "flags", &flags, NULL);
+  if (!enabled){
+  flags &= ~GST_CAMERABIN_FLAG_DISABLE_AUDIO;
+  GST_INFO_OBJECT (gcc, "Audio disabled");
+  } else {
+  flags |= GST_CAMERABIN_FLAG_DISABLE_AUDIO;
+  GST_INFO_OBJECT (gcc, "Audio enabled");
+  }
 }
 
 static void
@@ -732,6 +749,9 @@ gst_camera_capturer_set_property (GObject * object, guint property_id,
     case PROP_AUDIO_BITRATE:
       gst_camera_capturer_set_audio_bit_rate (gcc, g_value_get_uint (value));
       break;
+    case PROP_AUDIO_ENABLED:
+      gst_camera_capturer_set_audio_enabled (gcc, g_value_get_boolean (value));
+      break;
     case PROP_OUTPUT_FILE:
       gst_camera_capturer_set_output_file (gcc, g_value_get_string (value));
       break;
@@ -764,6 +784,9 @@ gst_camera_capturer_get_property (GObject * object, guint property_id,
       break;
     case PROP_VIDEO_BITRATE:
       g_value_set_uint (value, gcc->priv->video_bitrate);
+      break;
+    case PROP_AUDIO_ENABLED:
+      g_value_set_boolean (value, gcc->priv->audio_enabled);
       break;
     case PROP_OUTPUT_FILE:
       g_value_set_string (value, gcc->priv->output_file);
@@ -816,6 +839,9 @@ gst_camera_capturer_class_init (GstCameraCapturerClass * klass)
   g_object_class_install_property (object_class, PROP_AUDIO_BITRATE,
       g_param_spec_uint ("audio_bitrate", NULL,
           NULL, 12, G_MAXUINT, 128, G_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_AUDIO_ENABLED,
+      g_param_spec_boolean ("audio_enabled", NULL,
+          NULL, FALSE, G_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_OUTPUT_FILE,
       g_param_spec_string ("output_file", NULL,
           NULL, FALSE, G_PARAM_READWRITE));
