@@ -1172,7 +1172,8 @@ gst_camera_capturer_set_audio_encoder (GstCameraCapturer * gcc,
 
   switch (type) {
     case AUDIO_ENCODER_MP3:
-      gcc->priv->audioenc = gst_element_factory_make ("lame", "audio-encoder");
+      gcc->priv->audioenc = gst_element_factory_make ("lamemp3enc", "audio-encoder");
+      g_object_set (gcc->priv->audioenc, "target", 0, NULL);
       name = "Mp3 audio encoder";
       break;
 
