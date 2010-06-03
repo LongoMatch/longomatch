@@ -436,6 +436,7 @@ namespace LongoMatch.Gui.Component
 
 			foreach (object[] device in videoDevices){
 				string deviceElement;
+				string deviceName;
 				if (Environment.OSVersion.Platform == PlatformID.Unix){
 					if ((int)device[1] == (int)CapturerType.DVCAM)
 						deviceElement = Catalog.GetString("DV camera");
@@ -443,8 +444,8 @@ namespace LongoMatch.Gui.Component
 						deviceElement = Catalog.GetString("GConf Source");
 				} else 
 					deviceElement = Catalog.GetString("DirectShow Source");
-				
-				devicecombobox.AppendText(device[0]+" ("+deviceElement+")");
+				deviceName = ((string)device[0] == "") ? Catalog.GetString("Unknown"): (string)device [0];
+				devicecombobox.AppendText(deviceName + " ("+deviceElement+")");
 				devicecombobox.Active = 0;
 			}
 		}
