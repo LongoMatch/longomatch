@@ -153,4 +153,10 @@ namespace LongoMatch.Video.Common
 		AudioSampleRate,
 		AudioChannels,
 	}
+	
+	public enum DeviceType {
+		Video,
+		Audio,
+		DV
+	}
 }

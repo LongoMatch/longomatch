@@ -74,6 +74,7 @@ FILES = \
 	Editor/IVideoSplitter.cs \
 	Editor/VideoSegment.cs \
 	Editor/EditorState.cs \
+	Utils/Device.cs \
 	Utils/MediaFile.cs \
 	Utils/PreviewMediaFile.cs
 
