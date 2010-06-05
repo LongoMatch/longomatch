@@ -46,6 +46,7 @@ all: $(ASSEMBLY) $(PROGRAMFILES)
 FILES = \
 	AssemblyInfo.cs \
 	gtk-gui/generated.cs \
+	Common/Constants.cs\
 	Common/Enum.cs\
 	Common/Handlers.cs\
 	Player/GstPlayer.cs \
