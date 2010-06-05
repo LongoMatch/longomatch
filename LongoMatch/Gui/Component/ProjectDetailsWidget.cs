@@ -61,6 +61,8 @@ namespace LongoMatch.Gui.Component
 		private const string MP4 = "MP4 (H264 + AAC)";
 		private const string OGG = "OGG (Theora + Vorbis)";
 		private const string WEBM= "WebM (VP8 + Vorbis)";
+		private const string DV_SOURCE = "DV Source";
+		private const string GCONF_SOURCE = "GConf Source";
 		
 		
 		public ProjectDetailsWidget()
@@ -285,6 +287,10 @@ namespace LongoMatch.Gui.Component
 						s.Muxer = VideoMuxerType.WebM;
 						break;
 				}
+				if (devicecombobox.ActiveText.Contains (Catalog.GetString(GCONF_SOURCE)))
+					s.SourceType = CapturerType.WEBCAM;
+				else
+					s.SourceType = CapturerType.DVCAM;
 				return s;
 			}
 		}
@@ -439,9 +445,9 @@ namespace LongoMatch.Gui.Component
 				string deviceName;
 				if (Environment.OSVersion.Platform == PlatformID.Unix){
 					if ((int)device[1] == (int)CapturerType.DVCAM)
-						deviceElement = Catalog.GetString("DV camera");
+						deviceElement = Catalog.GetString(DV_SOURCE);
 					else 
-						deviceElement = Catalog.GetString("GConf Source");
+						deviceElement = Catalog.GetString(GCONF_SOURCE);
 				} else 
 					deviceElement = Catalog.GetString("DirectShow Source");
 				deviceName = ((string)device[0] == "") ? Catalog.GetString("Unknown"): (string)device [0];
