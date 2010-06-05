@@ -57,10 +57,6 @@ namespace LongoMatch.Gui.Component
 		private const string PAL_FORMAT = "720x576 (4:3)";
 		private const string PAL_3_4_FORMAT = "540x432 (4:3)";
 		private const string PAL_1_2_FORMAT = "360x288 (4:3)";
-		private const string AVI = "AVI (XVID + MP3)";
-		private const string MP4 = "MP4 (H264 + AAC)";
-		private const string OGG = "OGG (Theora + Vorbis)";
-		private const string WEBM= "WebM (VP8 + Vorbis)";
 		private const string DV_SOURCE = "DV Source";
 		private const string GCONF_SOURCE = "GConf Source";
 		
@@ -266,22 +262,22 @@ namespace LongoMatch.Gui.Component
 						break;
 				}
 				switch (videoformatcombobox.ActiveText){
-					case AVI:
+					case Constants.AVI:
 						s.VideoEncoder = VideoEncoderType.Xvid;
 						s.AudioEncoder = AudioEncoderType.Mp3;
 						s.Muxer = VideoMuxerType.Avi;
 						break;
-					case MP4:
+					case Constants.MP4:
 						s.VideoEncoder = VideoEncoderType.H264;
 						s.AudioEncoder = AudioEncoderType.Aac;
 						s.Muxer = VideoMuxerType.Mp4;
 						break;
-					case OGG:
+					case Constants.OGG:
 						s.VideoEncoder = VideoEncoderType.Theora;
 						s.AudioEncoder = AudioEncoderType.Vorbis;
 						s.Muxer = VideoMuxerType.Ogg;
 						break;
-					case WEBM:
+					case Constants.WEBM:
 						s.VideoEncoder = VideoEncoderType.VP8;
 						s.AudioEncoder = AudioEncoderType.Vorbis;
 						s.Muxer = VideoMuxerType.WebM;
@@ -422,10 +418,10 @@ namespace LongoMatch.Gui.Component
 			sizecombobox.AppendText(PAL_1_2_FORMAT);
 			sizecombobox.Active = 0;
 			
-			videoformatcombobox.AppendText(WEBM);
-			videoformatcombobox.AppendText(OGG);
-			videoformatcombobox.AppendText(MP4);
-			videoformatcombobox.AppendText(AVI);
+			videoformatcombobox.AppendText(Constants.WEBM);
+			videoformatcombobox.AppendText(Constants.OGG);
+			videoformatcombobox.AppendText(Constants.MP4);
+			videoformatcombobox.AppendText(Constants.AVI);
 			videoformatcombobox.Active = 0;
 		}
 		

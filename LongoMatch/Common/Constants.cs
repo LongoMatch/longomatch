@@ -68,6 +68,13 @@ Petr Kovar (cs)";
 		
 		public const Key FRAMERATE_DOWN = Gdk.Key.Down;
 		
-		public const Key TOGGLE_PLAY = Gdk.Key.space;		
+		public const Key TOGGLE_PLAY = Gdk.Key.space;	
+		
+		/* Output formats */
+		public const string AVI = "AVI (XVID + MP3)";
+		public const string MP4  = "MP4 (H264 + AAC)";
+		public const string OGG  = "OGG (Theora + Vorbis)";
+		public const string WEBM = "WebM (VP8 + Vorbis)";
+		public const string DVD="DVD (MPEG-2 + MP3)";
 	}
 }

@@ -23,6 +23,7 @@ using Gtk;
 using Mono.Unix;
 using LongoMatch.Video.Editor;
 using LongoMatch.Video.Common;
+using LongoMatch.Common;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -37,23 +38,17 @@ namespace LongoMatch.Gui.Dialog
 		private AudioEncoderType acodec;
 		private VideoMuxerType muxer;
 
-		private const string MP4="MP4 (H.264+AAC)";
-		private const string AVI="AVI (Xvid+MP3)";
-		private const string OGG="OGG (Theora+Vorbis)";
-		private const string WEBM="WebM (VP8+Vorbis)";
-		private const string DVD="DVD (MPEG-2)";
-
 
 		#region Constructors
 		public VideoEditionProperties()
 		{
 			this.Build();
-			formatcombobox.AppendText(WEBM);
-			formatcombobox.AppendText(MP4);
-			formatcombobox.AppendText(AVI);
+			formatcombobox.AppendText(Constants.WEBM);
+			formatcombobox.AppendText(Constants.MP4);
+			formatcombobox.AppendText(Constants.AVI);
 			if (System.Environment.OSVersion.Platform != PlatformID.Win32NT) {
-				formatcombobox.AppendText(OGG);
-				formatcombobox.AppendText(DVD);
+				formatcombobox.AppendText(Constants.OGG);
+				formatcombobox.AppendText(Constants.DVD);
 			}
 			formatcombobox.Active=0;
 		}
@@ -113,13 +108,13 @@ namespace LongoMatch.Gui.Dialog
 		#region Private Methods
 
 		private string GetExtension() {
-			if (formatcombobox.ActiveText == MP4)
+			if (formatcombobox.ActiveText == Constants.MP4)
 				return "mkv";
-			else if (formatcombobox.ActiveText == OGG)
+			else if (formatcombobox.ActiveText == Constants.OGG)
 				return "ogg";
-			else if (formatcombobox.ActiveText == WEBM)
+			else if (formatcombobox.ActiveText == Constants.WEBM)
 				return "webm";
-			else if (formatcombobox.ActiveText == AVI)
+			else if (formatcombobox.ActiveText == Constants.AVI)
 				return "avi";
 			else
 				return "mpg";
@@ -144,27 +139,27 @@ namespace LongoMatch.Gui.Dialog
 
 			vf = (VideoFormat)sizecombobox.Active;
 
-			if (formatcombobox.ActiveText == MP4) {
+			if (formatcombobox.ActiveText == Constants.MP4) {
 				vcodec = VideoEncoderType.H264;
 				acodec = AudioEncoderType.Aac;
 				muxer = VideoMuxerType.Matroska;
 			}
-			else if (formatcombobox.ActiveText == OGG) {
+			else if (formatcombobox.ActiveText == Constants.OGG) {
 				vcodec = VideoEncoderType.Theora;
 				acodec = AudioEncoderType.Vorbis;
 				muxer = VideoMuxerType.Ogg;
 			}
-			else if (formatcombobox.ActiveText == WEBM) {
+			else if (formatcombobox.ActiveText == Constants.WEBM) {
 				vcodec = VideoEncoderType.VP8;
 				acodec = AudioEncoderType.Vorbis;
 				muxer = VideoMuxerType.WebM;
 			}
-			else if (formatcombobox.ActiveText == AVI) {
+			else if (formatcombobox.ActiveText == Constants.AVI) {
 				vcodec = VideoEncoderType.Xvid;
 				acodec = AudioEncoderType.Mp3;
 				muxer = VideoMuxerType.Avi;
 			}
-			else if (formatcombobox.ActiveText == DVD) {
+			else if (formatcombobox.ActiveText == Constants.DVD) {
 				vcodec = VideoEncoderType.Mpeg2;
 				acodec = AudioEncoderType.Mp3;
 				muxer = VideoMuxerType.MpegPS;
