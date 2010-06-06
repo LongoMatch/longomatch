@@ -238,9 +238,9 @@ namespace LongoMatch.Gui.Component
 				s.AudioBitrate = (uint)audiobitratespinbutton.Value;
 				s.VideoBitrate = (uint)videobitratespinbutton.Value;
 				if (videoDevices[devicecombobox.Active].DeviceType == DeviceType.DV)
-					s.SourceType =  CapturerType.DVCAM;
+					s.CaptureSourceType = CaptureSourceType.DV;
 				else 
-				    s.SourceType =  CapturerType.WEBCAM;		
+					s.CaptureSourceType = CaptureSourceType.Raw;
 				s.DeviceID = videoDevices[devicecombobox.Active].ID;
 				switch (sizecombobox.ActiveText){
 					/* FIXME: Don't harcode size values */
@@ -284,9 +284,9 @@ namespace LongoMatch.Gui.Component
 						break;
 				}
 				if (devicecombobox.ActiveText.Contains (Catalog.GetString(GCONF_SOURCE)))
-					s.SourceType = CapturerType.WEBCAM;
+					s.CaptureSourceType = CaptureSourceType.Raw;
 				else
-					s.SourceType = CapturerType.DVCAM;
+					s.CaptureSourceType = CaptureSourceType.DV;
 				return s;
 			}
 		}

@@ -72,9 +72,8 @@ namespace LongoMatch.Video.Common
 	}	
 	
 	public enum CapturerType{
-		FAKE,
-		DVCAM,
-		WEBCAM,
+		Fake,
+		Live,
 	}	
 
 	public enum VideoFormat {
@@ -158,5 +157,11 @@ namespace LongoMatch.Video.Common
 		Video,
 		Audio,
 		DV
+	}
+	
+	public enum CaptureSourceType {
+		None,
+		DV,
+		Raw,
 	}
 }

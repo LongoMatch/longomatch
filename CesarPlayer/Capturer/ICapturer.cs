@@ -75,7 +75,7 @@ namespace LongoMatch.Video.Capturer
 		
 		bool SetVideoMuxer(VideoMuxerType type);
 		
-		bool SetSource(CapturerType type);
+		bool SetSource(CaptureSourceType type);
 		
 		void TogglePause();
 		

@@ -44,7 +44,7 @@ namespace LongoMatch.Gui
 		private uint outputHeight;
 		private uint videoBitrate;
 		private uint audioBitrate;
-		private CapturerType sourceType;
+		private CaptureSourceType captureSourceType;
 		private string deviceID;
 		private VideoEncoderType  videoEncoder;
 		private AudioEncoderType audioEncoder;
@@ -67,7 +67,7 @@ namespace LongoMatch.Gui
 			audioEncoder = AudioEncoderType.Aac;
 			videoMuxer = VideoMuxerType.Mp4;
 			outputFile = "";
-			Type = CapturerType.FAKE;
+			Type = CapturerType.Live;
 		}		
 		
 		public CapturerType Type {
@@ -81,7 +81,7 @@ namespace LongoMatch.Gui
 				capturer = factory.getCapturer(value);	
 				capturer.EllapsedTime += OnTick;
 				capturer.Error += OnError;
-				if (value != CapturerType.FAKE){
+				if (value != CapturerType.Fake){
 					capturerhbox.Add((Widget)capturer);
 					(capturer as Widget).Visible = true;
 					capturerhbox.Visible = true;
@@ -166,7 +166,7 @@ namespace LongoMatch.Gui
 				audioEncoder = value.AudioEncoder;
 				videoEncoder = value.VideoEncoder;
 				videoMuxer = value.Muxer;
-				sourceType = value.SourceType;
+				captureSourceType = value.CaptureSourceType;
 				deviceID = value.DeviceID;
 			}
 		}
@@ -251,7 +251,7 @@ namespace LongoMatch.Gui
 			capturer.SetVideoEncoder(videoEncoder);
 			capturer.SetAudioEncoder(audioEncoder);
 			capturer.SetVideoMuxer(videoMuxer);	
-			capturer.SetSource(sourceType);
+			capturer.SetSource(captureSourceType);
 			capturer.DeviceID = deviceID;
 			capturer.VideoBitrate = videoBitrate;
 			capturer.AudioBitrate = audioBitrate;
@@ -311,7 +311,7 @@ namespace LongoMatch.Gui
 				capturer.Dispose();
 				capturer = null;
 			}
-			Type = CapturerType.FAKE;
+			Type = CapturerType.Fake;
 		}
 		
 		protected virtual void OnLogodrawingareaExposeEvent (object o, Gtk.ExposeEventArgs args)

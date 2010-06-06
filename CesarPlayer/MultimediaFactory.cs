@@ -1,4 +1,4 @@
-﻿// PlayerMaker.cs 
+// PlayerMaker.cs 
 //
 //  Copyright(C) 2007-2009 Andoni Morales Alastruey
 //
@@ -94,14 +94,11 @@ namespace LongoMatch.Video
 		
 		public ICapturer getCapturer(CapturerType type){
 			switch (type) { 
-				case CapturerType.FAKE:
+				case CapturerType.Fake:
 					return new FakeCapturer();
 					
-				case CapturerType.DVCAM:
+				case CapturerType.Live:
 					return new GstCameraCapturer("test.avi");
-				
-				case CapturerType.WEBCAM:
-					return new FakeCapturer();
 									
 				default:
 					return new FakeCapturer();

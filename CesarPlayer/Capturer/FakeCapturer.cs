@@ -112,7 +112,7 @@ namespace LongoMatch.Video.Capturer
 			return true;
 		}
 		
-		public bool SetSource(CapturerType type){
+		public bool SetSource(CaptureSourceType type){
 			return true;
 		}
 	}

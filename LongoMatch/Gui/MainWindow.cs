@@ -150,14 +150,14 @@ namespace LongoMatch.Gui
 					capturerBin.OutputFile = project.File.FilePath;
 					capturerBin.CaptureProperties = props;
 					try {
-						capturerBin.Type = CapturerType.DVCAM;
+						capturerBin.Type = CapturerType.Live;
 					} catch (Exception ex) {
 						MessagePopup.PopupMessage (this, MessageType.Error, ex.Message);
 						CloseOpenedProject (false);
 						return;
 					}
 				} else
-					capturerBin.Type = CapturerType.FAKE;
+					capturerBin.Type = CapturerType.Fake;
 				playerbin1.Visible = false;
 				capturerBin.Visible = true;
 				capturerBin.Run ();
