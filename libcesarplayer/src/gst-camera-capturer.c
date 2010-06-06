@@ -630,6 +630,10 @@ gst_camera_capturer_expose_event (GtkWidget * widget, GdkEventExpose * event)
   if (xoverlay == NULL) {
     gcc_update_interface_implementations (gcc);
     g_object_get (gcc->priv->camerabin, "filter-caps", &caps, NULL);
+    if (caps == NULL){
+      g_mutex_unlock (gcc->priv->lock);
+      return FALSE;
+    }
     gcc_parse_video_stream_info (caps, gcc);
     resize_video_window (gcc);
     gst_caps_unref (caps);
@@ -1366,6 +1370,8 @@ gcc_element_msg_sync (GstBus * bus, GstMessage * msg, gpointer data)
    * chance to set it before the video sink will create its own window */
   if (gst_structure_has_name (msg->structure, "prepare-xwindow-id")) {
     g_object_get (gcc->priv->camerabin, "filter-caps", &caps, NULL);
+    if (caps == NULL)
+      return;
     gcc_parse_video_stream_info (caps, gcc);
     gst_caps_unref (caps);
 
