@@ -305,6 +305,13 @@ namespace LongoMatch.Gui
 		{
 			if (Error != null)
 				Error (o, args);
+			/* On error, the capturer is not usable anymore. We reset everything
+			 * setting the fake capturer */
+			if (capturer != null){
+				capturer.Dispose();
+				capturer = null;
+			}
+			Type = CapturerType.FAKE;
 		}
 		
 		protected virtual void OnLogodrawingareaExposeEvent (object o, Gtk.ExposeEventArgs args)

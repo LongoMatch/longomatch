@@ -96,6 +96,7 @@ EXPORT GList* gst_camera_capturer_enum_audio_devices (void);
 EXPORT GList* gst_camera_capturer_enum_video_devices (void);
 EXPORT GdkPixbuf* gst_camera_capturer_get_current_frame(GstCameraCapturer *gcc);
 EXPORT void gst_camera_capture_unref_pixbuf (GdkPixbuf * pixbuf);
+EXPORT void gst_camera_capturer_finalize (GObject * object);
 
 G_END_DECLS
 #endif /* _GST_CAMERA_CAPTURER_H_ */

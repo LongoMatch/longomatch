@@ -86,5 +86,7 @@ namespace LongoMatch.Video.Capturer
 		void Run();
 		
 		void Close();
+		
+		void Dispose();
 	}
 }

@@ -189,7 +189,7 @@ gst_camera_capturer_init (GstCameraCapturer * object)
   priv->lock = g_mutex_new ();
 }
 
-static void
+void
 gst_camera_capturer_finalize (GObject * object)
 {
   GstCameraCapturer *gcc = (GstCameraCapturer *) object;
@@ -1269,9 +1269,12 @@ gcc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
   switch (msg_type) {
     case GST_MESSAGE_ERROR:
     {
-      gcc_error_msg (gcc, message);
-      if (gcc->priv->main_pipeline)
+      if (gcc->priv->main_pipeline){
+        gst_camera_capturer_stop (gcc);
+        gst_camera_capturer_close(gcc);
         gst_element_set_state (gcc->priv->main_pipeline, GST_STATE_NULL);
+      }
+      gcc_error_msg (gcc, message);
       break;
     }
 

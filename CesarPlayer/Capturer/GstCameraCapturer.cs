@@ -413,5 +413,15 @@ namespace LongoMatch.Video.Capturer {
 			LongoMatch.GtkSharp.Capturer.ObjectManager.Initialize ();
 		}
 #endregion
+		
+		[DllImport("libcesarplayer.dll")]
+		static extern IntPtr gst_camera_capturer_finalize(IntPtr raw);
+		
+		public override void Dispose ()
+		{
+			gst_camera_capturer_finalize (Handle);
+			base.Dispose ();
+		}
+
 	}
 }
