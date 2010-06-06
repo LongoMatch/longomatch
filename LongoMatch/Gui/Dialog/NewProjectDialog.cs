@@ -19,9 +19,11 @@
 //
 
 using System;
+using System.Collections.Generic;
 using LongoMatch.DB;
 using LongoMatch.Common;
 using LongoMatch.Video.Capturer;
+using LongoMatch.Video.Utils;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -49,6 +51,12 @@ namespace LongoMatch.Gui.Dialog
 			}
 			set{
 				fdwidget.SetProject(value);
+			}
+		}
+		
+		public List<Device> Devices {
+			set{
+				fdwidget.FillDevices(value);
 			}
 		}
 		

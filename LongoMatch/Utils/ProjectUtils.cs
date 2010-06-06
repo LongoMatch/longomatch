@@ -169,6 +169,7 @@ namespace LongoMatch.Utils
 		                                    out CapturePropertiesStruct captureProps){
 			ProjectSelectionDialog psd;
 			NewProjectDialog npd;	
+			List<Device> devices = null;
 			int response;
 			
 			/* The out parameters must be set before leaving the method */
@@ -185,11 +186,22 @@ namespace LongoMatch.Utils
 				return;
 			projectType = psd.Type;
 			
+			if (projectType == ProjectType.CaptureProject){
+				devices = Device.ListVideoDevices();
+				if (devices.Count == 0){
+					MessagePopup.PopupMessage(window, MessageType.Error,
+					                          Catalog.GetString("No capture devices were found."));
+					return;
+				}
+			}	
+			
 			/* Show the new project dialog and wait to get a valid project 
 			 * or quit if the user cancel it.*/
 			npd = new NewProjectDialog();
 			npd.TransientFor = window;
 			npd.Use = projectType;
+			if (projectType == ProjectType.CaptureProject)
+				npd.Devices = devices;
 			response = npd.Run();
 			while (true) {
 				/* User cancelled: quit */

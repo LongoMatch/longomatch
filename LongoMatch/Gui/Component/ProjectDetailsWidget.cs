@@ -53,7 +53,7 @@ namespace LongoMatch.Gui.Component
 		private TeamTemplate actualVisitorTeam;
 		private TeamTemplate actualLocalTeam;
 		private ProjectType useType;
-		private List<object[]> videoDevices;
+		private List<Device> videoDevices;
 		private const string PAL_FORMAT = "720x576 (4:3)";
 		private const string PAL_3_4_FORMAT = "540x432 (4:3)";
 		private const string PAL_1_2_FORMAT = "360x288 (4:3)";
@@ -76,7 +76,7 @@ namespace LongoMatch.Gui.Component
 			FillTeamsTemplate();
 			FillFormats();
 			
-			videoDevices = new List<object[]>();
+			videoDevices = new List<Device>();
 
 			Use=ProjectType.FileProject;
 		}
@@ -99,9 +99,6 @@ namespace LongoMatch.Gui.Component
 				devicecombobox.Visible = visible1;
 				
 				useType = value;
-				
-				if (useType == ProjectType.CaptureProject)
-					FillDevices();
 			}
 			get {
 				return useType;
@@ -240,8 +237,11 @@ namespace LongoMatch.Gui.Component
 				CapturePropertiesStruct s = new CapturePropertiesStruct();
 				s.AudioBitrate = (uint)audiobitratespinbutton.Value;
 				s.VideoBitrate = (uint)videobitratespinbutton.Value;
-				s.SourceType = (CapturerType)videoDevices[devicecombobox.Active][1];
-				s.DeviceID = (String)videoDevices[devicecombobox.Active][0];
+				if (videoDevices[devicecombobox.Active].DeviceType == DeviceType.DV)
+					s.SourceType =  CapturerType.DVCAM;
+				else 
+				    s.SourceType =  CapturerType.WEBCAM;		
+				s.DeviceID = videoDevices[devicecombobox.Active].ID;
 				switch (sizecombobox.ActiveText){
 					/* FIXME: Don't harcode size values */
 					case PAL_FORMAT:
@@ -369,6 +369,25 @@ namespace LongoMatch.Gui.Component
 			mFile = null;
 			edited = false;
 		}
+		
+		public void FillDevices(List<Device> devices){
+			videoDevices = devices;
+			
+			foreach (Device device in devices){
+				string deviceElement;
+				string deviceName;
+				if (Environment.OSVersion.Platform == PlatformID.Unix){
+					if (device.DeviceType == DeviceType.DV)
+						deviceElement = Catalog.GetString(DV_SOURCE);
+					else 
+						deviceElement = Catalog.GetString(GCONF_SOURCE);
+				} else 
+					deviceElement = Catalog.GetString("DirectShow Source");
+				deviceName = (device.ID == "") ? Catalog.GetString("Unknown"): device.ID;
+				devicecombobox.AppendText(deviceName + " ("+deviceElement+")");
+				devicecombobox.Active = 0;
+			}
+		}
 
 		private void FillSections() {
 			string[] allFiles;
@@ -425,33 +444,6 @@ namespace LongoMatch.Gui.Component
 			videoformatcombobox.Active = 0;
 		}
 		
-		private void FillDevices(){
-			/* Generate the list of devices and add the gconf one at the bottom
-			 * so that DV sources are always selected before */
-			foreach (string devName in GstCameraCapturer.VideoDevices)
-					videoDevices.Add(new object[2] {devName, CapturerType.DVCAM});
-			if (Environment.OSVersion.Platform == PlatformID.Unix){
-				videoDevices.Add(new object[2] {
-					Catalog.GetString("GConf configured device"),
-					CapturerType.WEBCAM});
-			}
-
-			foreach (object[] device in videoDevices){
-				string deviceElement;
-				string deviceName;
-				if (Environment.OSVersion.Platform == PlatformID.Unix){
-					if ((int)device[1] == (int)CapturerType.DVCAM)
-						deviceElement = Catalog.GetString(DV_SOURCE);
-					else 
-						deviceElement = Catalog.GetString(GCONF_SOURCE);
-				} else 
-					deviceElement = Catalog.GetString("DirectShow Source");
-				deviceName = ((string)device[0] == "") ? Catalog.GetString("Unknown"): (string)device [0];
-				devicecombobox.AppendText(deviceName + " ("+deviceElement+")");
-				devicecombobox.Active = 0;
-			}
-		}
-
 		protected virtual void OnDateSelected(DateTime dateTime) {
 			Date = dateTime;
 		}
