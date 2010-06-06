@@ -66,7 +66,7 @@ namespace LongoMatch.Gui.Component
 			this.Build();
 
 			//HACK:The calendar dialog does not respond on win32
-			if (Environment.OSVersion.Platform != PlatformID.Win32NT) {
+			if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
 				cp = new CalendarPopup();
 				cp.Hide();
 				cp.DateSelectedEvent += new DateSelectedHandler(OnDateSelected);
