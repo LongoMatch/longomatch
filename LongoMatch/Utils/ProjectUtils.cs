@@ -222,7 +222,8 @@ namespace LongoMatch.Utils
 				else {
 					/* We are now ready to create the new project */
 					project = npd.Project;
-					captureProps = npd.CaptureProperties;
+					if (projectType == ProjectType.CaptureProject)
+						captureProps = npd.CaptureProperties;
 					npd.Destroy();
 					break;
 				}
