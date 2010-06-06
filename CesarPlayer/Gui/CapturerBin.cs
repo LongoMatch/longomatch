@@ -40,16 +40,7 @@ namespace LongoMatch.Gui
 		public event ErrorHandler Error;
 		
 		private Pixbuf logopix;
-		private uint outputWidth;
-		private uint outputHeight;
-		private uint videoBitrate;
-		private uint audioBitrate;
-		private CaptureSourceType captureSourceType;
-		private string deviceID;
-		private VideoEncoderType  videoEncoder;
-		private AudioEncoderType audioEncoder;
-		private VideoMuxerType videoMuxer;
-		private string outputFile;
+		private CapturePropertiesStruct captureProps;
 		private bool captureStarted;
 		private bool capturing;
 		private const int THUMBNAIL_MAX_WIDTH = 100;		
@@ -59,14 +50,16 @@ namespace LongoMatch.Gui
 		public CapturerBin()
 		{
 			this.Build();
-			outputWidth = 320;
-			outputHeight = 240;
-			videoBitrate = 1000;
-			audioBitrate = 128;
-			videoEncoder = VideoEncoderType.H264;
-			audioEncoder = AudioEncoderType.Aac;
-			videoMuxer = VideoMuxerType.Mp4;
-			outputFile = "";
+			captureProps = new CapturePropertiesStruct();
+			captureProps.Width = 320;
+			captureProps.Height = 240;
+			captureProps.VideoBitrate = 1000;
+			captureProps.AudioBitrate = 128;
+			captureProps.VideoEncoder = VideoEncoderType.H264;
+			captureProps.AudioEncoder = AudioEncoderType.Aac;
+			captureProps.Muxer = VideoMuxerType.Mp4;
+			captureProps.OutputFile = "";
+			captureProps.CaptureSourceType = CaptureSourceType.Raw;
 			Type = CapturerType.Live;
 		}		
 		
@@ -109,41 +102,6 @@ namespace LongoMatch.Gui
 				}
 			}
 		}
-		 
-		public string OutputFile {
-			set{
-				capturer.OutputFile= value;
-				outputFile = value;
-			}			
-		}		
-				
-		public uint VideoBitrate {
-			set{
-				capturer.VideoBitrate=value;
-				videoBitrate = value;
-			}			
-		}
-		
-		public uint AudioBitrate {
-			set{
-				capturer.AudioBitrate=value;
-				audioBitrate = value;
-			}
-		}
-		
-		public uint OutputWidth {
-			set {
-				capturer.OutputWidth = value;
-				outputWidth = value;
-			}
-		} 
-		
-		public uint OutputHeight {
-			set {
-				capturer.OutputHeight = value;
-				outputHeight = value;
-			}
-		} 
 		
 		public int CurrentTime {
 			get {
@@ -159,15 +117,7 @@ namespace LongoMatch.Gui
 		
 		public CapturePropertiesStruct CaptureProperties{
 			set{
-				outputWidth = value.Width;
-				outputHeight = value.Height;
-				audioBitrate = value.AudioBitrate;
-				videoBitrate = value.VideoBitrate;
-				audioEncoder = value.AudioEncoder;
-				videoEncoder = value.VideoEncoder;
-				videoMuxer = value.Muxer;
-				captureSourceType = value.CaptureSourceType;
-				deviceID = value.DeviceID;
+				captureProps = value;
 			}
 		}
 		
@@ -229,32 +179,17 @@ namespace LongoMatch.Gui
 			}
 		}
 		
-		public void SetVideoEncoder(VideoEncoderType type){
-			capturer.SetVideoEncoder(type);
-			videoEncoder = type;
-		}
-		
-		public void SetAudioEncoder(AudioEncoderType type){
-			capturer.SetAudioEncoder(type);
-			audioEncoder = type;
-		}
-		
-		public void SetVideoMuxer(VideoMuxerType type){
-			capturer.SetVideoMuxer(type);
-			videoMuxer = type;
-		}
-		
 		private void SetProperties(){
-			capturer.OutputFile = outputFile;
-			capturer.OutputHeight = outputHeight;
-			capturer.OutputWidth = outputWidth;
-			capturer.SetVideoEncoder(videoEncoder);
-			capturer.SetAudioEncoder(audioEncoder);
-			capturer.SetVideoMuxer(videoMuxer);	
-			capturer.SetSource(captureSourceType);
-			capturer.DeviceID = deviceID;
-			capturer.VideoBitrate = videoBitrate;
-			capturer.AudioBitrate = audioBitrate;
+			capturer.OutputFile = captureProps.OutputFile;
+			capturer.OutputHeight = captureProps.Height;
+			capturer.OutputWidth = captureProps.Width;
+			capturer.SetVideoEncoder(captureProps.VideoEncoder);
+			capturer.SetAudioEncoder(captureProps.AudioEncoder);
+			capturer.SetVideoMuxer(captureProps.Muxer);	
+			capturer.SetSource(captureProps.CaptureSourceType);
+			capturer.DeviceID = captureProps.DeviceID;
+			capturer.VideoBitrate = captureProps.VideoBitrate;
+			capturer.AudioBitrate = captureProps.AudioBitrate;
 		}
 
 		protected virtual void OnRecbuttonClicked (object sender, System.EventArgs e)

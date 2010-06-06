@@ -235,6 +235,7 @@ namespace LongoMatch.Gui.Component
 		public CapturePropertiesStruct CaptureProperties{
 			get{
 				CapturePropertiesStruct s = new CapturePropertiesStruct();
+				s.OutputFile = fileEntry.Text;
 				s.AudioBitrate = (uint)audiobitratespinbutton.Value;
 				s.VideoBitrate = (uint)videobitratespinbutton.Value;
 				if (videoDevices[devicecombobox.Active].DeviceType == DeviceType.DV)

@@ -147,7 +147,6 @@ namespace LongoMatch.Gui
 				Title = "LongoMatch";
 				isLive = true;
 				if (projectType == ProjectType.CaptureProject) {
-					capturerBin.OutputFile = project.File.FilePath;
 					capturerBin.CaptureProperties = props;
 					try {
 						capturerBin.Type = CapturerType.Live;
