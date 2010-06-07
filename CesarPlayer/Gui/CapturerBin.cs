@@ -41,6 +41,7 @@ namespace LongoMatch.Gui
 		
 		private Pixbuf logopix;
 		private CapturePropertiesStruct captureProps;
+		private CapturerType capturerType;
 		private bool captureStarted;
 		private bool capturing;
 		private const int THUMBNAIL_MAX_WIDTH = 100;		
@@ -60,21 +61,19 @@ namespace LongoMatch.Gui
 			captureProps.Muxer = VideoMuxerType.Mp4;
 			captureProps.OutputFile = "";
 			captureProps.CaptureSourceType = CaptureSourceType.Raw;
-			Type = CapturerType.Live;
+			Type = CapturerType.Fake;
 		}		
 		
 		public CapturerType Type {
 			set {
-				if (capturer != null) {
-					capturer.Error -= OnError;
-					capturer.Stop();
-					capturerhbox.Remove(capturer as Gtk.Widget);
-				}
+				/* Close any previous instance of the capturer */
+				Close();
+
 				MultimediaFactory factory = new MultimediaFactory();
 				capturer = factory.getCapturer(value);	
 				capturer.EllapsedTime += OnTick;
-				capturer.Error += OnError;
 				if (value != CapturerType.Fake){
+					capturer.Error += OnError;
 					capturerhbox.Add((Widget)capturer);
 					(capturer as Widget).Visible = true;
 					capturerhbox.Visible = true;
@@ -84,11 +83,8 @@ namespace LongoMatch.Gui
 					logodrawingarea.Visible = true;
 					capturerhbox.Visible = false;
 				}
-				captureStarted = false;
-				capturing = false;
 				SetProperties();
-				pausebutton.Visible = false;
-				stopbutton.Visible = false;
+				capturerType = value;
 			}
 
 		}
@@ -105,6 +101,8 @@ namespace LongoMatch.Gui
 		
 		public int CurrentTime {
 			get {
+				if (capturer == null)
+					return -1;
 				return capturer.CurrentTime;
 			}
 		}
@@ -122,6 +120,9 @@ namespace LongoMatch.Gui
 		}
 		
 		public void Start(){
+			if (capturer == null)
+				return;
+			
 			capturing = true;
 			captureStarted = true;
 			recbutton.Visible = false;
@@ -131,6 +132,9 @@ namespace LongoMatch.Gui
 		}
 		
 		public void TogglePause(){
+			if (capturer == null)
+				return;
+			
 			capturing = !capturing;
 			recbutton.Visible = !capturing;
 			pausebutton.Visible = capturing;
@@ -138,17 +142,37 @@ namespace LongoMatch.Gui
 		}
 		
 		public void Stop() {
-			capturing = false;
-			capturer.Stop();
+			if (capturer != null){
+				capturing = false;
+				capturer.Stop();
+			}
 		}
 		
 		public void Run(){
-			capturer.Run();
+			if (capturer != null)
+				capturer.Run();
 		}
 
 		public void Close(){
-			capturer.Close();
+			/* resetting common properties */
+			pausebutton.Visible = false;
+			stopbutton.Visible = false;
+			captureStarted = false;
 			capturing = false;
+			
+			if (capturer == null)
+			return;
+			
+			/* stopping and closing capturer */
+			capturer.Stop();
+			capturer.Close();
+			if (capturerType == CapturerType.Live){
+				/* release and dispose live capturer */
+				capturer.Error -= OnError;
+				capturerhbox.Remove(capturer as Gtk.Widget);
+				capturer.Dispose();
+			}
+			capturer = null;
 		}
 		
 		public Pixbuf CurrentMiniatureFrame {
@@ -156,7 +180,12 @@ namespace LongoMatch.Gui
 				int h, w;
 				double rate;
 				Pixbuf scaled_pix;
-				Pixbuf pix = capturer.CurrentFrame;
+				Pixbuf pix;
+				
+				if (capturer == null)
+					return null;
+				
+				pix = capturer.CurrentFrame;
 				
 				if (pix == null)
 					return null;
@@ -180,6 +209,9 @@ namespace LongoMatch.Gui
 		}
 		
 		private void SetProperties(){
+			if (capturer == null)
+				return;
+			
 			capturer.OutputFile = captureProps.OutputFile;
 			capturer.OutputHeight = captureProps.Height;
 			capturer.OutputWidth = captureProps.Width;
@@ -194,6 +226,9 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnRecbuttonClicked (object sender, System.EventArgs e)
 		{
+			if (capturer == null)
+				return;
+			
 			if (captureStarted == true){
 				if (capturing)
 					return;
@@ -205,13 +240,16 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnPausebuttonClicked (object sender, System.EventArgs e)
 		{
-			if (capturing)
+			if (capturer != null && capturing)
 				TogglePause();						
 		}
 
 		protected virtual void OnStopbuttonClicked (object sender, System.EventArgs e)
 		{
 			int res;
+			
+			if (capturer == null)
+				return;
 			
 			MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel, DialogFlags.Modal, MessageType.Question, ButtonsType.YesNo,
 			                                     Catalog.GetString("You are going to stop and finish the current capture."+"\n"+
@@ -240,13 +278,8 @@ namespace LongoMatch.Gui
 		{
 			if (Error != null)
 				Error (o, args);
-			/* On error, the capturer is not usable anymore. We reset everything
-			 * setting the fake capturer */
-			if (capturer != null){
-				capturer.Dispose();
-				capturer = null;
-			}
-			Type = CapturerType.Fake;
+			
+			Close();
 		}
 		
 		protected virtual void OnLogodrawingareaExposeEvent (object o, Gtk.ExposeEventArgs args)
