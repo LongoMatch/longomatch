@@ -968,6 +968,9 @@ gboolean
 gst_camera_capturer_set_source (GstCameraCapturer * gcc,
     GstCameraCaptureSourceType source_type, GError **err)
 {
+  g_return_val_if_fail (gcc != NULL, FALSE);
+  g_return_val_if_fail (GST_IS_CAMERA_CAPTURER (gcc), FALSE);
+
   if (gcc->priv->source_type == source_type)
     return TRUE;
   gcc->priv->source_type = source_type;
@@ -1080,19 +1083,27 @@ missing_plugin:
 void
 gst_camera_capturer_run (GstCameraCapturer * gcc)
 {
+  g_return_if_fail (gcc != NULL);
+  g_return_if_fail (GST_IS_CAMERA_CAPTURER (gcc));
+
   gst_element_set_state (gcc->priv->main_pipeline, GST_STATE_PLAYING);
 }
 
 void
 gst_camera_capturer_close (GstCameraCapturer * gcc)
 {
+  g_return_if_fail (gcc != NULL);
+  g_return_if_fail (GST_IS_CAMERA_CAPTURER (gcc));
+
   gst_element_set_state (gcc->priv->main_pipeline, GST_STATE_NULL);
 }
 
 void
 gst_camera_capturer_start (GstCameraCapturer * gcc)
 {
+  g_return_if_fail (gcc != NULL);
   g_return_if_fail (GST_IS_CAMERA_CAPTURER (gcc));
+
   g_signal_emit_by_name (G_OBJECT (gcc->priv->camerabin), "capture-start", 0,
       0);
 }
@@ -1100,7 +1111,9 @@ gst_camera_capturer_start (GstCameraCapturer * gcc)
 void
 gst_camera_capturer_toggle_pause (GstCameraCapturer * gcc)
 {
+  g_return_if_fail (gcc != NULL);
   g_return_if_fail (GST_IS_CAMERA_CAPTURER (gcc));
+
   g_signal_emit_by_name (G_OBJECT (gcc->priv->camerabin), "capture-pause", 0,
       0);
 }
@@ -1108,7 +1121,9 @@ gst_camera_capturer_toggle_pause (GstCameraCapturer * gcc)
 void
 gst_camera_capturer_stop (GstCameraCapturer * gcc)
 {
+  g_return_if_fail (gcc != NULL);
   g_return_if_fail (GST_IS_CAMERA_CAPTURER (gcc));
+
   g_signal_emit_by_name (G_OBJECT (gcc->priv->camerabin), "capture-stop", 0, 0);
 }
 
@@ -1118,6 +1133,7 @@ gst_camera_capturer_set_video_encoder (GstCameraCapturer * gcc,
 {
   gchar *name = NULL;
 
+  g_return_val_if_fail (gcc != NULL, FALSE);
   g_return_val_if_fail (GST_IS_CAMERA_CAPTURER (gcc), FALSE);
 
   switch (type) {
@@ -1172,6 +1188,7 @@ gst_camera_capturer_set_audio_encoder (GstCameraCapturer * gcc,
 {
   gchar *name = NULL;
 
+  g_return_val_if_fail (gcc != NULL, FALSE);
   g_return_val_if_fail (GST_IS_CAMERA_CAPTURER (gcc), FALSE);
 
   switch (type) {
@@ -1214,6 +1231,7 @@ gst_camera_capturer_set_video_muxer (GstCameraCapturer * gcc,
 {
   gchar *name = NULL;
 
+  g_return_val_if_fail (gcc != NULL, FALSE);
   g_return_val_if_fail (GST_IS_CAMERA_CAPTURER (gcc), FALSE);
 
   switch (type) {
