@@ -273,7 +273,7 @@ gst_camera_capturer_set_audio_bit_rate (GstCameraCapturer * gcc, gint bitrate)
 {
 
   gcc->priv->audio_bitrate = bitrate;
-  if (gcc->priv->audio_encoder_type != AUDIO_ENCODER_MP3)
+  if (gcc->priv->audio_encoder_type == AUDIO_ENCODER_MP3)
     g_object_set (gcc->priv->audioenc, "bitrate", bitrate, NULL);
   else
     g_object_set (gcc->priv->audioenc, "bitrate", 1000 * bitrate, NULL);
