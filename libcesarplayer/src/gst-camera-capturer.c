@@ -1206,6 +1206,7 @@ gst_camera_capturer_set_video_encoder (GstCameraCapturer * gcc,
   } else {
     g_object_set (gcc->priv->camerabin, "video-encoder", gcc->priv->videoenc,
         NULL);
+    gcc->priv->video_encoder_type = type;
   }
   return TRUE;
 }
@@ -1248,6 +1249,7 @@ gst_camera_capturer_set_audio_encoder (GstCameraCapturer * gcc,
   } else {
     g_object_set (gcc->priv->camerabin, "audio-encoder", gcc->priv->audioenc,
         NULL);
+    gcc->priv->audio_encoder_type = type;
   }
 
   return TRUE;
