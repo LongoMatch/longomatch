@@ -579,8 +579,8 @@ gst_camera_capturer_realize (GtkWidget * widget)
   GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
 
   /* Connect to configure event on the top level window */
-  g_signal_connect (G_OBJECT (gtk_widget_get_toplevel (widget)),
-      "configure-event", G_CALLBACK (gst_camera_capturer_configure_event), gcc);
+  g_signal_connect (G_OBJECT (widget), "configure-event",
+      G_CALLBACK (gst_camera_capturer_configure_event), gcc);
 
   /* nice hack to show the logo fullsize, while still being resizable */
   get_media_size (GST_CAMERA_CAPTURER (widget), &w, &h);
