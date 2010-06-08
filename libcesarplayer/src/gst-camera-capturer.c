@@ -194,6 +194,7 @@ gst_camera_capturer_finalize (GObject * object)
 {
   GstCameraCapturer *gcc = (GstCameraCapturer *) object;
 
+  GST_DEBUG_OBJECT (gcc, "Finalizing.");
   if (gcc->priv->bus) {
     /* make bus drop all messages to make sure none of our callbacks is ever
      * called again (main loop might be run again to display error dialog) */
@@ -201,12 +202,28 @@ gst_camera_capturer_finalize (GObject * object)
 
     if (gcc->priv->sig_bus_async)
       g_signal_handler_disconnect (gcc->priv->bus, gcc->priv->sig_bus_async);
+
+    if (gcc->priv->sig_bus_sync)
+      g_signal_handler_disconnect (gcc->priv->bus, gcc->priv->sig_bus_sync);
+
     gst_object_unref (gcc->priv->bus);
     gcc->priv->bus = NULL;
   }
 
-  g_free (gcc->priv->output_file);
-  gcc->priv->output_file = NULL;
+  if (gcc->priv->output_file){
+    g_free (gcc->priv->output_file);
+    gcc->priv->output_file = NULL;
+  }
+
+  if (gcc->priv->device_id){
+    g_free (gcc->priv->device_id);
+    gcc->priv->device_id = NULL;
+  }
+
+  if (gcc->priv->logo_pixbuf){
+    g_object_unref (gcc->priv->logo_pixbuf);
+    gcc->priv->logo_pixbuf = NULL;
+  }
 
   if (gcc->priv->interface_update_id) {
     g_source_remove (gcc->priv->interface_update_id);
