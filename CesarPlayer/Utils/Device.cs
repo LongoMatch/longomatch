@@ -82,7 +82,7 @@ namespace LongoMatch.Video.Utils
 				devicesList.Add(new Device {
 					ID = Catalog.GetString("GConf configured device"),
 					IDProperty = "",
-					DeviceType = DeviceType.DV});
+					DeviceType = DeviceType.Video});
 			}			
 			return devicesList;
 		}
