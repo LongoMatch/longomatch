@@ -1157,31 +1157,42 @@ gst_camera_capturer_set_video_encoder (GstCameraCapturer * gcc,
     case VIDEO_ENCODER_MPEG4:
       gcc->priv->videoenc =
           gst_element_factory_make ("ffenc_mpeg4", "video-encoder");
+      g_object_set (gcc->priv->videoenc, "pass", "pass1",
+          "max-key-interval", -1, NULL);
       name = "FFmpeg mpeg4 video encoder";
       break;
 
     case VIDEO_ENCODER_XVID:
       gcc->priv->videoenc =
           gst_element_factory_make ("xvidenc", "video-encoder");
+      g_object_set (gcc->priv->videoenc, "pass", 1,
+          "profile", 146,
+          "max-key-interval", -1, NULL);
       name = "Xvid video encoder";
       break;
 
     case VIDEO_ENCODER_H264:
       gcc->priv->videoenc =
           gst_element_factory_make ("x264enc", "video-encoder");
+      g_object_set (gcc->priv->videoenc, "key-int-max", 25,
+          "pass", 17, NULL);
       name = "X264 video encoder";
       break;
 
     case VIDEO_ENCODER_THEORA:
       gcc->priv->videoenc =
           gst_element_factory_make ("theoraenc", "video-encoder");
+      g_object_set (gcc->priv->videoenc, "keyframe-auto", FALSE,
+          "keyframe-force", 25, NULL);
       name = "Theora video encoder";
       break;
-    
+
     case VIDEO_ENCODER_VP8:
     default:
       gcc->priv->videoenc =
           gst_element_factory_make ("vp8enc", "video-encoder");
+      g_object_set (gcc->priv->videoenc, "speed", 0,
+          "max-keyframe-distance", 25, NULL);
       name = "VP8 video encoder";
       break;
 
