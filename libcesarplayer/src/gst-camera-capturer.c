@@ -985,6 +985,8 @@ gboolean
 gst_camera_capturer_set_source (GstCameraCapturer * gcc,
     GstCameraCaptureSourceType source_type, GError **err)
 {
+  GstPad *videosrcpad;
+
   g_return_val_if_fail (gcc != NULL, FALSE);
   g_return_val_if_fail (GST_IS_CAMERA_CAPTURER (gcc), FALSE);
 
@@ -1013,6 +1015,11 @@ gst_camera_capturer_set_source (GstCameraCapturer * gcc,
     GST_ERROR_OBJECT (gcc, "Error changing source: %s", (*err)->message);
     return FALSE;
   }
+
+  /* Install pad probe to store the last buffer */
+  videosrcpad = gst_element_get_pad (gcc->priv->videosrc, "src");
+  gst_pad_add_buffer_probe (videosrcpad,
+      G_CALLBACK (gst_camera_capture_videosrc_buffer_probe), gcc);
   return TRUE;
 }
 
@@ -1020,7 +1027,6 @@ GstCameraCapturer *
 gst_camera_capturer_new (gchar * filename, GError ** err)
 {
   GstCameraCapturer *gcc = NULL;
-  GstPad *videosrcpad;
   gchar *plugin;
   gint flags = 0;
 
@@ -1080,10 +1086,6 @@ gst_camera_capturer_new (gchar * filename, GError ** err)
       g_signal_connect (gcc->priv->bus, "sync-message::element",
       G_CALLBACK (gcc_element_msg_sync), gcc);
 
-  /* Install pad probe to store the last buffer */
-  videosrcpad = gst_element_get_pad (gcc->priv->videosrc, "src");
-  gst_pad_add_buffer_probe (videosrcpad,
-      G_CALLBACK (gst_camera_capture_videosrc_buffer_probe), gcc);
   return gcc;
 
 /* Missing plugin */
