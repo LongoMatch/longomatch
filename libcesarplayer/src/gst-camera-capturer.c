@@ -997,6 +997,7 @@ gst_camera_capturer_set_source (GstCameraCapturer * gcc,
     {
       gcc->priv->videosrc = gst_camera_capture_create_source_bin (gcc);
       /*gcc->priv->audiosrc = gcc->priv->videosrc;*/
+      break;
     }
    case GST_CAMERA_CAPTURE_SOURCE_TYPE_RAW:
     default:
@@ -1005,6 +1006,7 @@ gst_camera_capturer_set_source (GstCameraCapturer * gcc,
           RAWVIDEOSRC);
       gcc->priv->videosrc = gst_parse_bin_from_description (bin, TRUE, err);
       gcc->priv->audiosrc = gst_element_factory_make (AUDIOSRC, "audiosource");
+      break;
     }
   }
   if (*err) {
