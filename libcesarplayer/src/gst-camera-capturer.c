@@ -1016,6 +1016,9 @@ gst_camera_capturer_set_source (GstCameraCapturer * gcc,
     return FALSE;
   }
 
+  g_object_set (gcc->priv->camerabin, "video-source", gcc->priv->videosrc,
+      NULL);
+
   /* Install pad probe to store the last buffer */
   videosrcpad = gst_element_get_pad (gcc->priv->videosrc, "src");
   gst_pad_add_buffer_probe (videosrcpad,
@@ -1055,8 +1058,6 @@ gst_camera_capturer_new (gchar * filename, GError ** err)
   if (*err != NULL) {
     return NULL;
   }
-  g_object_set (gcc->priv->camerabin, "video-source", gcc->priv->videosrc,
-      NULL);
 
   GST_INFO_OBJECT (gcc, "Setting capture mode to \"video\"");
   g_object_set (gcc->priv->camerabin, "mode", 1, NULL);
