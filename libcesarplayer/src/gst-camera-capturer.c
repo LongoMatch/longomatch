@@ -854,10 +854,10 @@ gst_camera_capturer_class_init (GstCameraCapturerClass * klass)
   /* Properties */
   g_object_class_install_property (object_class, PROP_OUTPUT_HEIGHT,
       g_param_spec_uint ("output_height", NULL,
-          NULL, 180, 5600, 576, G_PARAM_READWRITE));
+          NULL, 0, 5600, 576, G_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_OUTPUT_WIDTH,
       g_param_spec_uint ("output_width", NULL,
-          NULL, 180, 5600, 720, G_PARAM_READWRITE));
+          NULL, 0, 5600, 720, G_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_VIDEO_BITRATE,
       g_param_spec_uint ("video_bitrate", NULL,
           NULL, 100, G_MAXUINT, 1000, G_PARAM_READWRITE));
