@@ -1059,10 +1059,7 @@ gst_camera_capturer_new (gchar * filename, GError ** err)
     return NULL;
   }
 
-  GST_INFO_OBJECT (gcc, "Setting capture mode to \"video\"");
-  g_object_set (gcc->priv->camerabin, "mode", 1, NULL);
-
-  GST_INFO_OBJECT (gcc, "Setting capture mode to \"video\"");
+  GST_INFO_OBJECT (gcc, "Disabling audio");
   flags =  GST_CAMERABIN_FLAG_DISABLE_AUDIO;
 #ifdef WIN32
   flags |= GST_CAMERABIN_FLAG_VIEWFINDER_COLOR_CONVERSION;
