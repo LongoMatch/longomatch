@@ -937,6 +937,52 @@ cb_new_pad (GstElement *element,
   }
 }
 
+/* On linux GStreamer packages provided by distributions might still have the
+ * dv1394src clock bug and the dvdemuxer buffers duration bug. That's why we
+ * can't use decodebin2 and we need to force the use of ffdemux_dv */
+static GstElement *
+gst_camera_capture_create_dv1394_source_bin (GstCameraCapturer * gcc)
+{
+  GstElement *bin;
+  GstElement *source;
+  GstElement *demuxer;
+  GstElement *queue1;
+  GstElement *decoder;
+  GstElement *queue2;
+  GstElement *deinterlacer;
+  GstElement *colorspace;
+  GstElement *videorate;
+  GstElement *videoscale;
+  GstPad *src_pad;
+
+  bin = gst_bin_new ("videosource");
+  source = gst_element_factory_make(DVVIDEOSRC, "source_device");
+  demuxer = gst_element_factory_make("ffdemux_dv", NULL);
+  queue1 = gst_element_factory_make("queue", "source_video_sink");
+  decoder = gst_element_factory_make("ffdec_dvvideo", NULL);
+  queue2 = gst_element_factory_make("queue", "source_video_sink");
+  deinterlacer = gst_element_factory_make("ffdeinterlace", NULL);
+  videorate = gst_element_factory_make("videorate", NULL);
+  colorspace = gst_element_factory_make("ffmpegcolorspace", NULL);
+  videoscale = gst_element_factory_make("videoscale", NULL);
+
+  gst_bin_add_many (GST_BIN(bin), source, demuxer, queue1, decoder,
+      queue2, deinterlacer, colorspace, videorate, videoscale, NULL);
+  gst_element_link (source, demuxer);
+  gst_element_link_many (queue1, decoder, queue2, deinterlacer, videorate,
+      colorspace, videoscale, NULL);
+
+  g_signal_connect (demuxer, "pad-added", G_CALLBACK(cb_new_pad), bin);
+
+  /* add ghostpad */
+  src_pad = gst_element_get_static_pad (videoscale, "src");
+  gst_element_add_pad (bin, gst_ghost_pad_new ("src", src_pad));
+  gst_object_unref (GST_OBJECT (src_pad));
+
+  return bin;
+}
+
+#ifdef WIN32
 static GstElement *
 gst_camera_capture_create_source_bin (GstCameraCapturer * gcc)
 {
@@ -971,6 +1017,7 @@ gst_camera_capture_create_source_bin (GstCameraCapturer * gcc)
 
   return bin;
 }
+#endif
 
 gboolean
 gst_camera_capturer_set_source (GstCameraCapturer * gcc,
@@ -988,7 +1035,11 @@ gst_camera_capturer_set_source (GstCameraCapturer * gcc,
   switch (gcc->priv->source_type) {
     case GST_CAMERA_CAPTURE_SOURCE_TYPE_DV:
     {
+#ifdef WIN32
       gcc->priv->videosrc = gst_camera_capture_create_source_bin (gcc);
+#else
+      gcc->priv->videosrc = gst_camera_capture_create_dv1394_source_bin (gcc);
+#endif
       /*gcc->priv->audiosrc = gcc->priv->videosrc;*/
       break;
     }
