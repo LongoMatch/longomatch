@@ -160,8 +160,7 @@ static void gst_camera_capturer_set_property (GObject * object,
 static void gcc_element_msg_sync (GstBus * bus, GstMessage * msg,
     gpointer data);
 static void gcc_update_interface_implementations (GstCameraCapturer * gcc);
-static int gcc_parse_video_stream_info (GstCaps * caps,
-    GstCameraCapturer * gcc);
+static int gcc_get_video_stream_info (GstCameraCapturer * gcc);
 
 G_DEFINE_TYPE (GstCameraCapturer, gst_camera_capturer, GTK_TYPE_EVENT_BOX);
 
@@ -634,7 +633,6 @@ static gboolean
 gst_camera_capturer_expose_event (GtkWidget * widget, GdkEventExpose * event)
 {
   GstCameraCapturer *gcc = GST_CAMERA_CAPTURER (widget);
-  GstCaps *caps = NULL;
   GstXOverlay *xoverlay;
   gboolean draw_logo;
   GdkWindow *win;
@@ -646,14 +644,7 @@ gst_camera_capturer_expose_event (GtkWidget * widget, GdkEventExpose * event)
   xoverlay = gcc->priv->xoverlay;
   if (xoverlay == NULL) {
     gcc_update_interface_implementations (gcc);
-    g_object_get (gcc->priv->camerabin, "filter-caps", &caps, NULL);
-    if (caps == NULL){
-      g_mutex_unlock (gcc->priv->lock);
-      return FALSE;
-    }
-    gcc_parse_video_stream_info (caps, gcc);
     resize_video_window (gcc);
-    gst_caps_unref (caps);
     xoverlay = gcc->priv->xoverlay;
   }
   if (xoverlay != NULL)
@@ -1341,6 +1332,27 @@ gcc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       break;
     }
 
+    case GST_MESSAGE_STATE_CHANGED:
+    {
+      GstState old_state, new_state;
+
+      gst_message_parse_state_changed (message, &old_state, &new_state,
+          NULL);
+
+      if (old_state == new_state)
+        break;
+
+      /* we only care about playbin (pipeline) state changes */
+      if (GST_MESSAGE_SRC (message) != GST_OBJECT (gcc->priv->main_pipeline))
+        break;
+
+      if (old_state == GST_STATE_PAUSED && new_state == GST_STATE_PLAYING) {
+        gcc_get_video_stream_info (gcc);
+        resize_video_window (gcc);
+        gtk_widget_queue_draw (GTK_WIDGET(gcc));
+      }
+    }
+
     default:
       GST_LOG ("Unhandled message: %" GST_PTR_FORMAT, message);
       break;
@@ -1412,7 +1424,6 @@ static void
 gcc_element_msg_sync (GstBus * bus, GstMessage * msg, gpointer data)
 {
   GstCameraCapturer *gcc = GST_CAMERA_CAPTURER (data);
-  GstCaps *caps = NULL;
 
   g_assert (msg->type == GST_MESSAGE_ELEMENT);
 
@@ -1422,12 +1433,6 @@ gcc_element_msg_sync (GstBus * bus, GstMessage * msg, gpointer data)
   /* This only gets sent if we haven't set an ID yet. This is our last
    * chance to set it before the video sink will create its own window */
   if (gst_structure_has_name (msg->structure, "prepare-xwindow-id")) {
-    g_object_get (gcc->priv->camerabin, "filter-caps", &caps, NULL);
-    if (caps == NULL)
-      return;
-    gcc_parse_video_stream_info (caps, gcc);
-    gst_caps_unref (caps);
-
     g_mutex_lock (gcc->priv->lock);
     gcc_update_interface_implementations (gcc);
     g_mutex_unlock (gcc->priv->lock);
@@ -1446,12 +1451,19 @@ gcc_element_msg_sync (GstBus * bus, GstMessage * msg, gpointer data)
 }
 
 static int
-gcc_parse_video_stream_info (GstCaps * caps, GstCameraCapturer * gcc)
+gcc_get_video_stream_info (GstCameraCapturer * gcc)
 {
+  GstPad *sourcepad;
+  GstCaps *caps;
   GstStructure *s;
 
-  if (!(caps))
+  sourcepad = gst_element_get_pad (gcc->priv->videosrc, "src");
+  caps = gst_pad_get_negotiated_caps (sourcepad);
+
+  if (!(caps)){
+    GST_WARNING_OBJECT (gcc, "Could not get stream info");
     return -1;
+  }
 
   /* Get the source caps */
   s = gst_caps_get_structure (caps, 0);
