@@ -168,8 +168,6 @@ namespace LongoMatch.Gui.Dialog {
             this.hbox1.Add(this.sectionspropertieswidget1);
             Gtk.Box.BoxChild w32 = ((Gtk.Box.BoxChild)(this.hbox1[this.sectionspropertieswidget1]));
             w32.Position = 0;
-            w32.Expand = false;
-            w32.Fill = false;
             // Container child hbox1.Gtk.Box+BoxChild
             this.teamtemplatewidget1 = new LongoMatch.Gui.Component.TeamTemplateWidget();
             this.teamtemplatewidget1.Sensitive = false;
@@ -179,8 +177,6 @@ namespace LongoMatch.Gui.Dialog {
             this.hbox1.Add(this.teamtemplatewidget1);
             Gtk.Box.BoxChild w33 = ((Gtk.Box.BoxChild)(this.hbox1[this.teamtemplatewidget1]));
             w33.Position = 1;
-            w33.Expand = false;
-            w33.Fill = false;
             this.hpaned1.Add(this.hbox1);
             w1.Add(this.hpaned1);
             Gtk.Box.BoxChild w35 = ((Gtk.Box.BoxChild)(w1[this.hpaned1]));

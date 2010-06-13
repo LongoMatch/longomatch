@@ -87,7 +87,6 @@ namespace LongoMatch.Gui.Dialog {
             w4.TopAttach = ((uint)(2));
             w4.BottomAttach = ((uint)(3));
             w4.XOptions = ((Gtk.AttachOptions)(4));
-            w4.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.label2 = new Gtk.Label();
             this.label2.Name = "label2";
@@ -96,7 +95,6 @@ namespace LongoMatch.Gui.Dialog {
             this.table1.Add(this.label2);
             Gtk.Table.TableChild w5 = ((Gtk.Table.TableChild)(this.table1[this.label2]));
             w5.XOptions = ((Gtk.AttachOptions)(4));
-            w5.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.playerslabel = new Gtk.Label();
             this.playerslabel.Name = "playerslabel";
@@ -107,7 +105,6 @@ namespace LongoMatch.Gui.Dialog {
             w6.TopAttach = ((uint)(1));
             w6.BottomAttach = ((uint)(2));
             w6.XOptions = ((Gtk.AttachOptions)(4));
-            w6.YOptions = ((Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.playersspinbutton = new Gtk.SpinButton(1, 100, 1);
             this.playersspinbutton.CanFocus = true;
@@ -127,7 +124,6 @@ namespace LongoMatch.Gui.Dialog {
             w1.Add(this.table1);
             Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(w1[this.table1]));
             w8.Position = 0;
-            w8.Expand = false;
             // Container child dialog1_VBox.Gtk.Box+BoxChild
             this.combobox = Gtk.ComboBox.NewText();
             this.combobox.Sensitive = false;
@@ -172,7 +168,7 @@ namespace LongoMatch.Gui.Dialog {
                 this.Child.ShowAll();
             }
             this.DefaultWidth = 339;
-            this.DefaultHeight = 175;
+            this.DefaultHeight = 178;
             this.Show();
             this.checkbutton.Toggled += new System.EventHandler(this.OnCheckbuttonToggled);
         }

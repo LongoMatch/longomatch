@@ -97,7 +97,7 @@
     <signals>
       <itemgroup label="CategoriesTreeView Signals">
         <signal name="SectionClicked" />
-        <signal name="SectionSelected" />
+        <signal name="SectionsSelected" />
       </itemgroup>
     </signals>
   </object>
@@ -140,14 +140,6 @@
       </itemgroup>
     </itemgroups>
     <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.CategoryProperties" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="CategoryProperties Signals">
-        <signal name="HotKeyChanged" />
-      </itemgroup>
-    </signals>
   </object>
   <object type="LongoMatch.Gui.Component.TeamTemplateWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
@@ -272,5 +264,13 @@
       </itemgroup>
     </itemgroups>
     <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.CategoryProperties" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="CategoryProperties Signals">
+        <signal name="HotKeyChanged" />
+      </itemgroup>
+    </signals>
   </object>
 </objects>
