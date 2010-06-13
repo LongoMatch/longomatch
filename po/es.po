@@ -396,7 +396,7 @@ msgstr "Códec de vídeo"
 
 #: ../LongoMatch/Gui/Component/ProjectListWidget.cs:88
 msgid "Audio codec"
-msgstr "Códec de sonido"
+msgstr "Códec de audio"
 
 #: ../LongoMatch/Gui/Component/ProjectListWidget.cs:89
 msgid "Format"
@@ -1162,7 +1162,7 @@ msgstr "Abrir proyecto"
 #: ../LongoMatch/Handlers/EventsManager.cs:181
 msgid "You can't create a new play if the capturer is not recording."
 msgstr ""
-"No puede crear un nueva reproducción si el dispositivo de captura no está "
+"No puede crear un nueva jugada si el dispositivo de captura no está "
 "grabando."
 
 #: ../LongoMatch/Handlers/EventsManager.cs:214
