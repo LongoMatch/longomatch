@@ -393,7 +393,7 @@ get_media_size (GstCameraCapturer * gcc, gint * width, gint * height)
     disp_par_n = gst_value_get_fraction_numerator (disp_par);
     disp_par_d = gst_value_get_fraction_denominator (disp_par);
 
-    GST_DEBUG ("display PAR is %d/%d", disp_par_n, disp_par_d);
+    GST_DEBUG_OBJECT (gcc,"display PAR is %d/%d", disp_par_n, disp_par_d);
 
     /* Use the movie pixel aspect ratio if any */
     if (gcc->priv->movie_par) {
@@ -405,10 +405,10 @@ get_media_size (GstCameraCapturer * gcc, gint * width, gint * height)
       movie_par_d = 1;
     }
 
-    GST_DEBUG ("movie PAR is %d/%d", movie_par_n, movie_par_d);
+    GST_DEBUG_OBJECT (gcc,"movie PAR is %d/%d", movie_par_n, movie_par_d);
 
     if (gcc->priv->video_width == 0 || gcc->priv->video_height == 0) {
-      GST_DEBUG ("width and/or height 0, assuming 1/1 ratio");
+      GST_DEBUG_OBJECT (gcc,"width and/or height 0, assuming 1/1 ratio");
       num = 1;
       den = 1;
     } else if (!gst_video_calculate_display_ratio (&num, &den,
@@ -420,7 +420,7 @@ get_media_size (GstCameraCapturer * gcc, gint * width, gint * height)
       den = 1;
     }
 
-    GST_DEBUG ("calculated scaling ratio %d/%d for video %dx%d", num,
+    GST_DEBUG_OBJECT (gcc,"calculated scaling ratio %d/%d for video %dx%d", num,
         den, gcc->priv->video_width, gcc->priv->video_height);
 
     /* now find a width x height that respects this display ratio.
@@ -430,22 +430,22 @@ get_media_size (GstCameraCapturer * gcc, gint * width, gint * height)
     /* start with same height, because of interlaced video */
     /* check hd / den is an integer scale factor, and scale wd with the PAR */
     if (gcc->priv->video_height % den == 0) {
-      GST_DEBUG ("keeping video height");
+      GST_DEBUG_OBJECT (gcc,"keeping video height");
       gcc->priv->video_width_pixels =
           (guint) gst_util_uint64_scale (gcc->priv->video_height, num, den);
       gcc->priv->video_height_pixels = gcc->priv->video_height;
     } else if (gcc->priv->video_width % num == 0) {
-      GST_DEBUG ("keeping video width");
+      GST_DEBUG_OBJECT (gcc,"keeping video width");
       gcc->priv->video_width_pixels = gcc->priv->video_width;
       gcc->priv->video_height_pixels =
           (guint) gst_util_uint64_scale (gcc->priv->video_width, den, num);
     } else {
-      GST_DEBUG ("approximating while keeping video height");
+      GST_DEBUG_OBJECT (gcc,"approximating while keeping video height");
       gcc->priv->video_width_pixels =
           (guint) gst_util_uint64_scale (gcc->priv->video_height, num, den);
       gcc->priv->video_height_pixels = gcc->priv->video_height;
     }
-    GST_DEBUG ("scaling to %dx%d", gcc->priv->video_width_pixels,
+    GST_DEBUG_OBJECT (gcc,"scaling to %dx%d", gcc->priv->video_width_pixels,
         gcc->priv->video_height_pixels);
 
     *width = gcc->priv->video_width_pixels;
@@ -1437,7 +1437,7 @@ gcc_error_msg (GstCameraCapturer * gcc, GstMessage * msg)
 static gboolean
 gcc_update_interfaces_delayed (GstCameraCapturer * gcc)
 {
-  GST_DEBUG ("Delayed updating interface implementations");
+  GST_DEBUG_OBJECT (gcc,"Delayed updating interface implementations");
   g_mutex_lock (gcc->priv->lock);
   gcc_update_interface_implementations (gcc);
   gcc->priv->interface_update_id = 0;
@@ -1633,7 +1633,7 @@ gst_camera_capturer_get_current_frame (GstCameraCapturer * gcc)
 
   /* no video info */
   if (!gcc->priv->video_width || !gcc->priv->video_height) {
-    GST_DEBUG ("Could not take screenshot: %s", "no video info");
+    GST_DEBUG_OBJECT (gcc,"Could not take screenshot: %s", "no video info");
     g_warning ("Could not take screenshot: %s", "no video info");
     return NULL;
   }
@@ -1643,13 +1643,13 @@ gst_camera_capturer_get_current_frame (GstCameraCapturer * gcc)
   gst_buffer_ref (last_buffer);
 
   if (!last_buffer) {
-    GST_DEBUG ("Could not take screenshot: %s", "no last video frame");
+    GST_DEBUG_OBJECT (gcc,"Could not take screenshot: %s", "no last video frame");
     g_warning ("Could not take screenshot: %s", "no last video frame");
     return NULL;
   }
 
   if (GST_BUFFER_CAPS (last_buffer) == NULL) {
-    GST_DEBUG ("Could not take screenshot: %s", "no caps on buffer");
+    GST_DEBUG_OBJECT (gcc,"Could not take screenshot: %s", "no caps on buffer");
     g_warning ("Could not take screenshot: %s", "no caps on buffer");
     return NULL;
   }
@@ -1671,9 +1671,9 @@ gst_camera_capturer_get_current_frame (GstCameraCapturer * gcc)
         gcc->priv->video_fps_n, gcc->priv->video_fps_d, NULL);
   }
 
-  GST_DEBUG ("frame caps: %" GST_PTR_FORMAT,
+  GST_DEBUG_OBJECT (gcc,"frame caps: %" GST_PTR_FORMAT,
       GST_BUFFER_CAPS (gcc->priv->last_buffer));
-  GST_DEBUG ("pixbuf caps: %" GST_PTR_FORMAT, to_caps);
+  GST_DEBUG_OBJECT (gcc,"pixbuf caps: %" GST_PTR_FORMAT, to_caps);
 
   /* bvw_frame_conv_convert () takes ownership of the buffer passed */
   buf = bvw_frame_conv_convert (last_buffer, to_caps);
@@ -1682,13 +1682,13 @@ gst_camera_capturer_get_current_frame (GstCameraCapturer * gcc)
   gst_buffer_unref (last_buffer);
 
   if (!buf) {
-    GST_DEBUG ("Could not take screenshot: %s", "conversion failed");
+    GST_DEBUG_OBJECT (gcc,"Could not take screenshot: %s", "conversion failed");
     g_warning ("Could not take screenshot: %s", "conversion failed");
     return NULL;
   }
 
   if (!GST_BUFFER_CAPS (buf)) {
-    GST_DEBUG ("Could not take screenshot: %s", "no caps on output buffer");
+    GST_DEBUG_OBJECT (gcc,"Could not take screenshot: %s", "no caps on output buffer");
     g_warning ("Could not take screenshot: %s", "no caps on output buffer");
     return NULL;
   }
@@ -1705,7 +1705,7 @@ gst_camera_capturer_get_current_frame (GstCameraCapturer * gcc)
       outheight, GST_ROUND_UP_4 (outwidth * 3), destroy_pixbuf, buf);
 
   if (!pixbuf) {
-    GST_DEBUG ("Could not take screenshot: %s", "could not create pixbuf");
+    GST_DEBUG_OBJECT (gcc,"Could not take screenshot: %s", "could not create pixbuf");
     g_warning ("Could not take screenshot: %s", "could not create pixbuf");
   }
 
