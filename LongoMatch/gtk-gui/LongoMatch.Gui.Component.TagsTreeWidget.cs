@@ -27,6 +27,10 @@ namespace LongoMatch.Gui.Component {
         
         private Gtk.Button AddFilterButton;
         
+        private Gtk.HBox hbox2;
+        
+        private Gtk.ComboBox filtercombobox;
+        
         protected virtual void Build() {
             Stetic.Gui.Initialize(this);
             // Widget LongoMatch.Gui.Component.TagsTreeWidget
@@ -98,6 +102,21 @@ namespace LongoMatch.Gui.Component {
             w14.Position = 2;
             w14.Expand = false;
             w14.Fill = false;
+            // Container child vbox1.Gtk.Box+BoxChild
+            this.hbox2 = new Gtk.HBox();
+            this.hbox2.Name = "hbox2";
+            this.hbox2.Spacing = 6;
+            // Container child hbox2.Gtk.Box+BoxChild
+            this.filtercombobox = Gtk.ComboBox.NewText();
+            this.filtercombobox.Name = "filtercombobox";
+            this.hbox2.Add(this.filtercombobox);
+            Gtk.Box.BoxChild w15 = ((Gtk.Box.BoxChild)(this.hbox2[this.filtercombobox]));
+            w15.Position = 0;
+            this.vbox1.Add(this.hbox2);
+            Gtk.Box.BoxChild w16 = ((Gtk.Box.BoxChild)(this.vbox1[this.hbox2]));
+            w16.Position = 3;
+            w16.Expand = false;
+            w16.Fill = false;
             this.Add(this.vbox1);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
@@ -108,6 +127,7 @@ namespace LongoMatch.Gui.Component {
             this.treeview.PlayListNodeAdded += new LongoMatch.Handlers.PlayListNodeAddedHandler(this.OnPlayListNodeAdded);
             this.treeview.SnapshotSeriesEvent += new LongoMatch.Handlers.SnapshotSeriesHandler(this.OnSnapshotSeriesEvent);
             this.AddFilterButton.Clicked += new System.EventHandler(this.OnAddFilter);
+            this.filtercombobox.Changed += new System.EventHandler(this.OnFiltercomboboxChanged);
         }
     }
 }

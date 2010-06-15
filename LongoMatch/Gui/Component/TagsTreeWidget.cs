@@ -1,4 +1,4 @@
-﻿// TreeWidget.cs
+// TreeWidget.cs
 //
 //  Copyright(C) 20072009 Andoni Morales Alastruey
 //
@@ -28,6 +28,10 @@ using LongoMatch.TimeNodes;
 
 namespace LongoMatch.Gui.Component
 {
+	public enum FilterType {
+		OR = 0,
+		AND = 1
+	}
 
 
 	[System.ComponentModel.Category("LongoMatch")]
@@ -44,6 +48,9 @@ namespace LongoMatch.Gui.Component
 		private ListStore model;
 		private List<Tag> filterTags;
 		private Project project;
+		private FilterType filterType;
+		private const string orFilter =  "'OR' Filter";
+		private const string andFilter = "'AND' Filter";
 
 
 		public TagsTreeWidget()
@@ -54,6 +61,11 @@ namespace LongoMatch.Gui.Component
 			filter = new Gtk.TreeModelFilter(model, null);
 			filter.VisibleFunc = new Gtk.TreeModelFilterVisibleFunc(FilterTree);
 			treeview.Model = filter;
+			filtercombobox.InsertText ((int)FilterType.OR, Catalog.GetString(orFilter));
+			filtercombobox.InsertText ((int)FilterType.AND, Catalog.GetString(andFilter));
+			filtercombobox.Active = 0;
+			filterType = FilterType.OR;
+			
 		}
 		
 		public void Clear(){
@@ -178,11 +190,20 @@ namespace LongoMatch.Gui.Component
 
 			if (tNode == null)
 				return true;
-			foreach (Tag tag in tNode.Tags){
-				if (filterTags.Contains(tag))
-					return true;
+
+			if (filterType == FilterType.OR){
+				foreach (Tag tag in filterTags){
+					if (tNode.Tags.Contains(tag))
+						return true;
+				}
+				return false;
+			} else {
+				foreach (Tag tag in filterTags){
+					if (! tNode.Tags.Contains(tag))
+						return false;
+				}
+				return true;
 			}
-			return false;
 		}
 		
 		protected virtual void OnTimeNodeChanged(TimeNode tNode,object val) {
@@ -206,5 +227,13 @@ namespace LongoMatch.Gui.Component
 			if (SnapshotSeriesEvent != null)
 				SnapshotSeriesEvent(tNode);
 		}
+		
+		protected virtual void OnFiltercomboboxChanged (object sender, System.EventArgs e)
+		{
+			filterType = (FilterType) filtercombobox.Active;
+			filter.Refilter();
+		}
+		
+		
 	}
 }
