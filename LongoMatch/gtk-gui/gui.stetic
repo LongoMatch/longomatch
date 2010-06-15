@@ -1594,7 +1594,7 @@
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <signal name="SectionClicked" handler="OnSectionstreeview1SectionClicked" />
-                <signal name="SectionSelected" handler="OnSectionstreeview1SectionSelected" />
+                <signal name="SectionsSelected" handler="OnSectionstreeview1SectionsSelected" />
               </widget>
             </child>
           </widget>
@@ -4066,6 +4066,8 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                   <packing>
                     <property name="Position">1</property>
                     <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
                   </packing>
                 </child>
               </widget>

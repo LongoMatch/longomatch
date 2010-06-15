@@ -79,5 +79,10 @@ namespace LongoMatch.Handlers
 	public delegate void SnapshotSeriesHandler(MediaTimeNode tNode);
 	//A new version of the software exists
 	public delegate void NewVersionHandler(Version version, string URL);
+
+	
+	public delegate void SectionHandler(SectionsTimeNode tNode);
+	public delegate void SectionsHandler(List<SectionsTimeNode> tNodesList);
+	
 	
 }

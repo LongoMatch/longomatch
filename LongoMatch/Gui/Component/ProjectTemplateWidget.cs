@@ -39,7 +39,7 @@ namespace LongoMatch.Gui.Component
 		private List<HotKey> hkList;
 		private Project project;
 		private Sections sections;
-		private SectionsTimeNode selectedSection;
+		private List<SectionsTimeNode> selectedSections;
 		private bool edited = false;
 
 		public ProjectTemplateWidget()
@@ -112,28 +112,35 @@ namespace LongoMatch.Gui.Component
 			edited = true;
 		}
 
-		private void RemoveSection(int index) {
+		private void RemoveSelectedSections() {
 			if (project!= null) {
 				MessageDialog dialog = new MessageDialog((Gtk.Window)this.Toplevel,DialogFlags.Modal,MessageType.Question,
 				                ButtonsType.YesNo,true,
 				                Catalog.GetString("You are about to delete a category and all the plays added to this category. Do you want to proceed?"));
-				if (dialog.Run() == (int)ResponseType.Yes)
+				if (dialog.Run() == (int)ResponseType.Yes){
 					try {
-						project.DeleteSection(index);
+						foreach (SectionsTimeNode tNode in selectedSections)
+							project.DeleteSection(sections.SectionsTimeNodes.IndexOf(tNode));
 					} catch {
 						MessagePopup.PopupMessage(this,MessageType.Warning,
-						                          Catalog.GetString("You can't delete the last section"));
-						dialog.Destroy();
-						return;
+						                          Catalog.GetString("A template needs at least one category"));
 					}
+				}
 				dialog.Destroy();
 				sections=project.Sections;
 			} else {
-				sections.RemoveSection(index);
+				foreach (SectionsTimeNode tNode in selectedSections){
+					Console.WriteLine (Sections.Count);
+					if (sections.Count == 1){
+						MessagePopup.PopupMessage(this,MessageType.Warning,
+						                          Catalog.GetString("A template needs at least one category"));
+					} else 
+						sections.RemoveSection(sections.SectionsTimeNodes.IndexOf(tNode));
+				}
 			}
 			UpdateModel();
 			edited = true;
-			selectedSection = null;
+			selectedSections = null;
 			ButtonsSensitive=false;
 		}
 
@@ -148,7 +155,7 @@ namespace LongoMatch.Gui.Component
 
 		private void EditSelectedSection() {
 			EditCategoryDialog dialog = new EditCategoryDialog();
-			dialog.Section=selectedSection;
+			dialog.Section = selectedSections[0];
 			dialog.HotKeysList = hkList;
 			dialog.TransientFor = (Gtk.Window) Toplevel;
 			dialog.Run();
@@ -161,15 +168,15 @@ namespace LongoMatch.Gui.Component
 		}
 
 		protected virtual void OnNewAfter(object sender, EventArgs args) {
-			AddSection(sections.SectionsTimeNodes.IndexOf(selectedSection)+1);
+			AddSection(sections.SectionsTimeNodes.IndexOf(selectedSections[0])+1);
 		}
 
 		protected virtual void OnNewBefore(object sender, EventArgs args) {
-			AddSection(sections.SectionsTimeNodes.IndexOf(selectedSection));
+			AddSection(sections.SectionsTimeNodes.IndexOf(selectedSections[0]));
 		}
 
 		protected virtual void OnRemove(object sender, EventArgs args) {
-			RemoveSection(sections.SectionsTimeNodes.IndexOf(selectedSection));
+			RemoveSelectedSections();
 		}
 
 		protected virtual void OnEdit(object sender, EventArgs args) {
@@ -181,16 +188,26 @@ namespace LongoMatch.Gui.Component
 			EditSelectedSection();
 		}
 
-		protected virtual void OnSectionstreeview1SectionSelected(LongoMatch.TimeNodes.SectionsTimeNode tNode)
+		protected virtual void OnSectionstreeview1SectionsSelected (List<SectionsTimeNode> tNodesList)
 		{
-			selectedSection = tNode;
-			ButtonsSensitive = selectedSection != null;
+			selectedSections = tNodesList;
+			if (tNodesList.Count == 0)
+				ButtonsSensitive = false;
+			else if (tNodesList.Count == 1){
+				ButtonsSensitive = true;
+			}
+			else {
+				newprevbutton.Sensitive = false;
+				newafterbutton.Sensitive = false;
+				removebutton.Sensitive = true;
+				editbutton.Sensitive = false;
+			}
 		}
 
 		protected virtual void OnKeyPressEvent(object o, Gtk.KeyPressEventArgs args)
 		{
-			if (args.Event.Key == Gdk.Key.Delete && selectedSection != null)
-				RemoveSection(sections.SectionsTimeNodes.IndexOf(selectedSection));
+			if (args.Event.Key == Gdk.Key.Delete && selectedSections != null)
+				RemoveSelectedSections();
 		}
 
 		protected virtual void OnExportbuttonClicked (object sender, System.EventArgs e)
@@ -218,5 +235,6 @@ namespace LongoMatch.Gui.Component
 			}	
 			dialog.Destroy();
 		}
+		
 	}
 }

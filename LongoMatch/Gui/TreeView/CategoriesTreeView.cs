@@ -19,6 +19,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Gdk;
 using Gtk;
 using Mono.Unix;
@@ -28,19 +29,19 @@ using LongoMatch.TimeNodes;
 namespace LongoMatch.Gui.Component
 {
 
-	public delegate void SectionHandler(SectionsTimeNode tNode);
 
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 	public class CategoriesTreeView : Gtk.TreeView
 	{
 		public event SectionHandler SectionClicked;
-		public event SectionHandler SectionSelected;
+		public event SectionsHandler SectionsSelected;
 
 		public CategoriesTreeView() {
 
 			RowActivated += OnTreeviewRowActivated;
-			CursorChanged += OnCursorChanged;
+			Selection.Changed += OnSelectionChanged;
+			Selection.Mode =  SelectionMode.Multiple;
 
 			Gtk.TreeViewColumn nameColumn = new Gtk.TreeViewColumn();
 			nameColumn.Title = Catalog.GetString("Name");
@@ -131,12 +132,20 @@ namespace LongoMatch.Gui.Component
 			(cell as Gtk.CellRendererText).Text = tNode.SortMethodString;
 		}
 
-		protected virtual void OnCursorChanged(object o, System.EventArgs e) {
+		protected virtual void OnSelectionChanged(object o, System.EventArgs e) {
 			TreeIter iter;
-			Selection.GetSelected(out iter);
-			SectionsTimeNode tNode = (SectionsTimeNode) Model.GetValue(iter, 0);
-			if (SectionSelected != null)
-				SectionSelected(tNode);
+			List<SectionsTimeNode> list;
+			TreePath[] pathArray;
+			
+			list = new List<SectionsTimeNode>();
+			pathArray = Selection.GetSelectedRows();
+			
+			for (int i=0; i< pathArray.Length; i++){
+				Model.GetIterFromString (out iter, pathArray[i].ToString());
+				list.Add((SectionsTimeNode) Model.GetValue(iter, 0));
+			}
+			if (SectionsSelected != null)
+				SectionsSelected(list);
 		}
 
 		protected virtual void OnTreeviewRowActivated(object o, Gtk.RowActivatedArgs args)

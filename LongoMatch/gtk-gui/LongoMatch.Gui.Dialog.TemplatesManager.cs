@@ -177,6 +177,8 @@ namespace LongoMatch.Gui.Dialog {
             this.hbox1.Add(this.teamtemplatewidget1);
             Gtk.Box.BoxChild w33 = ((Gtk.Box.BoxChild)(this.hbox1[this.teamtemplatewidget1]));
             w33.Position = 1;
+            w33.Expand = false;
+            w33.Fill = false;
             this.hpaned1.Add(this.hbox1);
             w1.Add(this.hpaned1);
             Gtk.Box.BoxChild w35 = ((Gtk.Box.BoxChild)(w1[this.hpaned1]));
