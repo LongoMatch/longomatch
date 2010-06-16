@@ -960,7 +960,7 @@ gst_camera_capture_create_dv1394_source_bin (GstCameraCapturer * gcc)
   demuxer = gst_element_factory_make("ffdemux_dv", NULL);
   queue1 = gst_element_factory_make("queue", "source_video_sink");
   decoder = gst_element_factory_make("ffdec_dvvideo", NULL);
-  queue2 = gst_element_factory_make("queue", "source_video_sink");
+  queue2 = gst_element_factory_make("queue", NULL);
   deinterlacer = gst_element_factory_make("ffdeinterlace", NULL);
   videorate = gst_element_factory_make("videorate", NULL);
   colorspace = gst_element_factory_make("ffmpegcolorspace", NULL);
