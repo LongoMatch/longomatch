@@ -4,10 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: longomatch\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=longomatch&component=general\n"
-"POT-Creation-Date: 2010-06-08 21:47+0000\n"
-"PO-Revision-Date: 2010-06-12 20:51+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-06-16 20:56+0200\n"
+"PO-Revision-Date: 2010-06-16 20:56+0100\n"
 "Last-Translator: Mario Blättermann <mariobl@gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -73,7 +72,7 @@ msgstr "Nach Dauer sortieren"
 
 #: ../LongoMatch/Time/MediaTimeNode.cs:357
 #: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:50
-#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:46
+#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:47
 #: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:71
 #: ../LongoMatch/IO/CSVExport.cs:81 ../LongoMatch/IO/CSVExport.cs:136
 #: ../LongoMatch/IO/CSVExport.cs:162
@@ -328,19 +327,20 @@ msgstr ""
 "Sie sind im Begriff, eine Kategorie und alle zugehörigen Spiele zu entfernen. "
 "Wollen Sie den Vorgang fortsetzen?"
 
-#: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:125
-msgid "You can't delete the last section"
-msgstr "Sie können die letzte Sektion nicht entfernen"
+#: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:126
+#: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:136
+msgid "A template needs at least one category"
+msgstr "Eine Vorlage benötigt mindestens eine Kategorie"
 
-#: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:201
+#: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:218
 msgid "New template"
 msgstr "Neue Vorlage"
 
-#: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:205
+#: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:222
 msgid "The template name is void."
 msgstr "Der Vorlagenname ist leer."
 
-#: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:211
+#: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:228
 msgid "The template already exists.Do you want to overwrite it ?"
 msgstr "Die Vorlage existiert bereits. Wollen Sie sie überschreiben?"
 
@@ -498,7 +498,7 @@ msgid "Edit name"
 msgstr "Name bearbeiten"
 
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:196
-#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:71
+#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:72
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:153
 msgid "Sort Method"
 msgstr "Sortierungsmethode"
@@ -520,19 +520,19 @@ msgstr "Position"
 msgid "Number"
 msgstr "Nummer"
 
-#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:51
+#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:52
 msgid "Lead Time"
 msgstr "Zeit der Führung"
 
-#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:56
+#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:57
 msgid "Lag Time"
 msgstr "Zeit des Rückstandes"
 
-#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:61
+#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:62
 msgid "Color"
 msgstr "Farbe"
 
-#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:66
+#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:67
 msgid "Hotkey"
 msgstr "Kürzel"
 
@@ -900,7 +900,7 @@ msgid "TransparentDrawingArea"
 msgstr "TransparentDrawingArea"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:81
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:95
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:94
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:60
 msgid "Name:"
 msgstr "Name:"
@@ -933,7 +933,7 @@ msgstr "Vorlagenname wählen"
 msgid "Copy existent template:"
 msgstr "Vorhandene Vorlage kopieren:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:104
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:102
 msgid "Players:"
 msgstr "Spieler:"
 
@@ -1289,6 +1289,9 @@ msgstr "Ungültige Videodatei:"
 #: ../CesarPlayer/Capturer/FakeCapturer.cs:80
 msgid "Fake live source"
 msgstr "Simulierte Live-Quelle"
+
+#~ msgid "You can't delete the last section"
+#~ msgstr "Sie können die letzte Sektion nicht entfernen"
 
 #~ msgid "GConf configured device"
 #~ msgstr "Durch GConf konfiguriertes Gerät"
