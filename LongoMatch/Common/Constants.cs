@@ -42,6 +42,7 @@ GNU General Public License for more details.";
 @"Andoni Morales Alastruey (es)
 Daniel Nylander (sv)
 Joan Charmant (fr)
+João Paulo Azevedo (pt)
 Joe Hansen (da)
 Jorge González (es)
 Kenneth Nielsen (da)
