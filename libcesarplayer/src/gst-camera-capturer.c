@@ -1562,7 +1562,13 @@ gst_camera_capturer_enum_devices (gchar * device_name)
 
   for (i = 0; i < va->n_values; ++i) {
     GValue *v = g_value_array_get_nth (va, i);
-    list = g_list_append (list, g_strdup(g_value_get_string (v)));
+    GValue valstr = {0, };
+
+    g_value_init (&valstr, G_TYPE_STRING);
+    if (!g_value_transform (v, &valstr))
+      continue;
+    list = g_list_append (list, g_value_dup_string (&valstr));
+    g_value_unset (&valstr);
   }
   g_value_array_free (va);
 
