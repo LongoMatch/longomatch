@@ -130,7 +130,6 @@ namespace LongoMatch.Gui.Component
 				sections=project.Sections;
 			} else {
 				foreach (SectionsTimeNode tNode in selectedSections){
-					Console.WriteLine (Sections.Count);
 					if (sections.Count == 1){
 						MessagePopup.PopupMessage(this,MessageType.Warning,
 						                          Catalog.GetString("A template needs at least one category"));
