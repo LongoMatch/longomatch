@@ -323,7 +323,7 @@ gst_camera_capturer_set_device_id (GstCameraCapturer * gcc,
     GstElement *source;
 
     source = gst_bin_get_by_name (GST_BIN(gcc->priv->videosrc), "source_element");
-    g_object_set (gcc->priv->videosrc, "guid", device_id, NULL);
+    g_object_set (source, "guid", g_ascii_strtoull(device_id, NULL, 10), NULL);
   }
 #endif 
   GST_INFO_OBJECT (gcc, "Changed device id/name to :\n%s", device_id);
