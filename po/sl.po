@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: longomatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&component=general\n"
-"POT-Creation-Date: 2010-06-09 19:59+0000\n"
-"PO-Revision-Date: 2010-06-11 21:45+0100\n"
+"POT-Creation-Date: 2010-06-17 06:40+0000\n"
+"PO-Revision-Date: 2010-06-17 09:56+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -76,7 +76,7 @@ msgstr "Razvrsti po trajanju"
 
 #: ../LongoMatch/Time/MediaTimeNode.cs:357
 #: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:50
-#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:46
+#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:47
 #: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:71
 #: ../LongoMatch/IO/CSVExport.cs:81
 #: ../LongoMatch/IO/CSVExport.cs:136
@@ -313,19 +313,20 @@ msgstr "brez"
 msgid "You are about to delete a category and all the plays added to this category. Do you want to proceed?"
 msgstr "Izbrisana bo kategorija in vse pripadajoče igre. Ali želite nadaljevati?"
 
-#: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:125
-msgid "You can't delete the last section"
-msgstr "Ni mogoče izbrisati zadnjega odseka."
+#: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:126
+#: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:135
+msgid "A template needs at least one category"
+msgstr "Predloga zahteva vsaj eno kategorijo"
 
-#: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:201
+#: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:217
 msgid "New template"
 msgstr "Nova predloga"
 
-#: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:205
+#: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:221
 msgid "The template name is void."
 msgstr "Novo ime predloge je prazno."
 
-#: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:211
+#: ../LongoMatch/Gui/Component/ProjectTemplateWidget.cs:227
 msgid "The template already exists.Do you want to overwrite it ?"
 msgstr "Predloga že obstaja. Ali jo želite prepisati?"
 
@@ -479,7 +480,7 @@ msgid "Edit name"
 msgstr "Uredi ime"
 
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:196
-#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:71
+#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:72
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:153
 msgid "Sort Method"
 msgstr "Način razvrščanja"
@@ -501,19 +502,19 @@ msgstr "Položaj"
 msgid "Number"
 msgstr "Številka"
 
-#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:51
+#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:52
 msgid "Lead Time"
 msgstr "Čas prehitevanja"
 
-#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:56
+#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:57
 msgid "Lag Time"
 msgstr "Čas zaostajanja"
 
-#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:61
+#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:62
 msgid "Color"
 msgstr "Barva"
 
-#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:66
+#: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:67
 msgid "Hotkey"
 msgstr "Hitra tipka"
 
@@ -738,7 +739,7 @@ msgstr "Shrani v projekt"
 msgid "Save to File"
 msgstr "Shrani v datoteko"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TagsTreeWidget.cs:86
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TagsTreeWidget.cs:90
 msgid "Add Filter"
 msgstr "Dodaj filter"
 
@@ -873,7 +874,7 @@ msgid "TransparentDrawingArea"
 msgstr "ProzornoRisanoObmočje"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:81
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:95
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:94
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:60
 msgid "Name:"
 msgstr "Ime:"
@@ -906,7 +907,7 @@ msgstr "Izbor imena predloge"
 msgid "Copy existent template:"
 msgstr "Kopiraj obstoječo predlogo:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:104
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:102
 msgid "Players:"
 msgstr "Igralci:"
 
@@ -1256,6 +1257,8 @@ msgstr "Neveljavna video datoteka:"
 msgid "Fake live source"
 msgstr "Lažni vir v živo"
 
+#~ msgid "You can't delete the last section"
+#~ msgstr "Ni mogoče izbrisati zadnjega odseka."
 #~ msgid "GConf configured device"
 #~ msgstr "GConf nastavljena naprava"
 #~ msgid "DV camera"
