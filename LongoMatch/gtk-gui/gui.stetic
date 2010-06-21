@@ -942,7 +942,6 @@
                   <widget class="Gtk.TreeView" id="treeview">
                     <property name="MemberName">treeview</property>
                     <property name="CanFocus">True</property>
-                    <signal name="CursorChanged" handler="OnTreeviewCursorChanged" />
                   </widget>
                   <packing>
                     <property name="Position">1</property>
@@ -1120,7 +1119,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.ProjectsManager" design-size="804 555">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.ProjectsManager" design-size="804 597">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Projects Manager</property>
     <property name="Icon">stock:longomatch Dialog</property>
@@ -1152,7 +1151,7 @@
                       <widget class="LongoMatch.Gui.Component.ProjectListWidget" id="projectlistwidget1">
                         <property name="MemberName" />
                         <property name="Events">ButtonPressMask</property>
-                        <signal name="ProjectSelectedEvent" handler="OnProjectlistwidget1ProjectSelectedEvent" />
+                        <signal name="ProjectsSelected" handler="OnProjectlistwidget1ProjectsSelected" />
                       </widget>
                       <packing>
                         <property name="Resize">False</property>
@@ -1339,6 +1338,7 @@
           <widget class="LongoMatch.Gui.Component.ProjectListWidget" id="projectlistwidget">
             <property name="MemberName">projectlistwidget</property>
             <property name="Events">ButtonPressMask</property>
+            <signal name="ProjectsSelected" handler="OnProjectlistwidgetProjectsSelected" />
           </widget>
           <packing>
             <property name="Position">0</property>
@@ -1373,6 +1373,7 @@
         <child>
           <widget class="Gtk.Button" id="buttonOk">
             <property name="MemberName" />
+            <property name="Sensitive">False</property>
             <property name="CanDefault">True</property>
             <property name="CanFocus">True</property>
             <property name="UseStock">True</property>

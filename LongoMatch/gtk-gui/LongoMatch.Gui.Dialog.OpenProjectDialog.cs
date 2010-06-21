@@ -61,6 +61,7 @@ namespace LongoMatch.Gui.Dialog {
             w4.Fill = false;
             // Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
             this.buttonOk = new Gtk.Button();
+            this.buttonOk.Sensitive = false;
             this.buttonOk.CanDefault = true;
             this.buttonOk.CanFocus = true;
             this.buttonOk.Name = "buttonOk";
@@ -78,6 +79,7 @@ namespace LongoMatch.Gui.Dialog {
             this.DefaultWidth = 615;
             this.DefaultHeight = 359;
             this.Show();
+            this.projectlistwidget.ProjectsSelected += new LongoMatch.Handlers.ProjectsSelectedHandler(this.OnProjectlistwidgetProjectsSelected);
         }
     }
 }

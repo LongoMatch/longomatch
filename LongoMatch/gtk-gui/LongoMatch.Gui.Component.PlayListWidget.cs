@@ -97,7 +97,7 @@ namespace LongoMatch.Gui.Component {
             w8.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w9 = new Gtk.Image();
-            w9.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-new", Gtk.IconSize.Button, 16);
+            w9.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-new", Gtk.IconSize.Button, 20);
             w8.Add(w9);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w11 = new Gtk.Label();
@@ -120,7 +120,7 @@ namespace LongoMatch.Gui.Component {
             w17.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w18 = new Gtk.Image();
-            w18.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-open", Gtk.IconSize.Button, 16);
+            w18.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-open", Gtk.IconSize.Button, 20);
             w17.Add(w18);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w20 = new Gtk.Label();
@@ -143,7 +143,7 @@ namespace LongoMatch.Gui.Component {
             w26.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w27 = new Gtk.Image();
-            w27.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-save", Gtk.IconSize.Button, 16);
+            w27.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-save", Gtk.IconSize.Button, 20);
             w26.Add(w27);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w29 = new Gtk.Label();
@@ -166,7 +166,7 @@ namespace LongoMatch.Gui.Component {
             w35.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w36 = new Gtk.Image();
-            w36.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-record", Gtk.IconSize.Button, 16);
+            w36.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-media-record", Gtk.IconSize.Button, 20);
             w35.Add(w36);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w38 = new Gtk.Label();
@@ -189,7 +189,7 @@ namespace LongoMatch.Gui.Component {
             w44.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w45 = new Gtk.Image();
-            w45.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-close", Gtk.IconSize.Button, 16);
+            w45.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-close", Gtk.IconSize.Button, 20);
             w44.Add(w45);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w47 = new Gtk.Label();

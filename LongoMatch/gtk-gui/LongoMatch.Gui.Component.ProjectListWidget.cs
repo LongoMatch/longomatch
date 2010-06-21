@@ -83,7 +83,6 @@ namespace LongoMatch.Gui.Component {
             }
             this.Show();
             this.filterEntry.Changed += new System.EventHandler(this.OnFilterentryChanged);
-            this.treeview.CursorChanged += new System.EventHandler(this.OnTreeviewCursorChanged);
         }
     }
 }

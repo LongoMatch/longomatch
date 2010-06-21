@@ -204,9 +204,9 @@ namespace LongoMatch.Gui.Dialog {
                 this.Child.ShowAll();
             }
             this.DefaultWidth = 804;
-            this.DefaultHeight = 555;
+            this.DefaultHeight = 597;
             this.Show();
-            this.projectlistwidget1.ProjectSelectedEvent += new LongoMatch.Gui.Component.ProjectSelectedHandler(this.OnProjectlistwidget1ProjectSelectedEvent);
+            this.projectlistwidget1.ProjectsSelected += new LongoMatch.Handlers.ProjectsSelectedHandler(this.OnProjectlistwidget1ProjectsSelected);
             this.projectdetails.EditedEvent += new System.EventHandler(this.OnProjectdetailsEditedEvent);
             this.saveButton.Pressed += new System.EventHandler(this.OnSaveButtonPressed);
             this.deleteButton.Pressed += new System.EventHandler(this.OnDeleteButtonPressed);
