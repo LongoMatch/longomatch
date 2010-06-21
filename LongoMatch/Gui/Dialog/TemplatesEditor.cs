@@ -114,14 +114,10 @@ namespace LongoMatch.Gui.Dialog
 			SetSensitive(true);
 		}
 
-
-
 		private void UpdateTeamTemplate() {
 			SetTeamTemplate(TeamTemplate.LoadFromFile(templateName));
 			SetSensitive(true);
-
 		}
-
 
 		private void SetSensitive(bool sensitive) {
 			if (useType == UseType.SectionsTemplate)

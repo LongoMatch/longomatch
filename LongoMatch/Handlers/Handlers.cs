@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using LongoMatch;
+using LongoMatch.DB;
 using LongoMatch.TimeNodes;
 
 namespace LongoMatch.Handlers
@@ -84,5 +85,5 @@ namespace LongoMatch.Handlers
 	public delegate void SectionHandler(SectionsTimeNode tNode);
 	public delegate void SectionsHandler(List<SectionsTimeNode> tNodesList);
 	
-	
+	public delegate void ProjectsSelectedHandler(List<ProjectDescription> projects);
 }

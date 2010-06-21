@@ -19,6 +19,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Gtk;
 using LongoMatch.DB;
 
@@ -34,14 +35,22 @@ namespace LongoMatch.Gui.Dialog
 		{
 			this.Build();
 			this.Fill();
+			projectlistwidget.SelectionMode = SelectionMode.Single;
 		}
-
-		public ProjectDescription GetSelection() {
-			return projectlistwidget.GetSelection();
+		
+		public ProjectDescription SelectedProject {
+			get;
+			set;
 		}
 
 		public void Fill() {
 			projectlistwidget.Fill(MainClass.DB.GetAllProjects());
+		}
+		
+		protected virtual void OnProjectlistwidgetProjectsSelected (List<ProjectDescription> projects)
+		{
+			buttonOk.Sensitive =  (projects.Count == 1);
+			SelectedProject = projects[0];			
 		}
 	}
 }

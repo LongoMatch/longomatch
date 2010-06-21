@@ -372,7 +372,7 @@ namespace LongoMatch.Gui
 			opd.TransientFor = this;
 
 			if (opd.Run() == (int)ResponseType.Ok)
-				project = opd.GetSelection();
+				project = opd.SelectedProject;
 			opd.Destroy();
 			if (project != null)
 				SetProject(MainClass.DB.GetProject(project.File), ProjectType.FileProject, new CapturePropertiesStruct());
