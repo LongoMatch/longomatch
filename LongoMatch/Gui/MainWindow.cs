@@ -144,7 +144,7 @@ namespace LongoMatch.Gui
 				timelinewidget1.Project = project;
 				
 			} else {
-				Title = "LongoMatch";
+				Title = Constants.SOFTWARE_NAME;
 				isLive = true;
 				if (projectType == ProjectType.CaptureProject) {
 					capturerBin.CaptureProperties = props;
@@ -240,7 +240,7 @@ namespace LongoMatch.Gui
 		private void ResetGUI(){
 			bool playlistVisible = playlistwidget2.Visible;	
 
-			Title = "LongoMatch";
+			Title = Constants.SOFTWARE_NAME;
 			playerbin1.Visible = true;
 			playerbin1.LogoMode = true;
 			capturerBin.Visible = false;
@@ -477,7 +477,7 @@ namespace LongoMatch.Gui
 		protected virtual void OnHelpAction1Activated(object sender, System.EventArgs e)
 		{
 			try {
-				System.Diagnostics.Process.Start("http://www.longomatch.ylatuya.es/documentation/manual.html");
+				System.Diagnostics.Process.Start(Constants.MANUAL);
 			} catch {}
 		}
 		
@@ -486,7 +486,7 @@ namespace LongoMatch.Gui
 			Version version = Assembly.GetExecutingAssembly().GetName().Version;
 			Gtk.AboutDialog about = new AboutDialog();
 			if (Environment.OSVersion.Platform == PlatformID.Unix)
-				about.ProgramName = "LongoMatch";
+				about.ProgramName = Constants.PROJECT_NAME;
 			about.Version = String.Format("{0}.{1}.{2}",version.Major,version.Minor,version.Build);
 			about.Copyright = Constants.COPYRIGHT;
 			about.Website = Constants.WEBSITE;

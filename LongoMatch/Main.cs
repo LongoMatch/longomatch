@@ -1,4 +1,4 @@
-﻿// Main.cs
+// Main.cs
 //
 //  Copyright (C) 2007-2009 Andoni Morales Alastruey
 //
@@ -23,6 +23,7 @@ using System;
 using System.IO;
 using Gtk;
 using Mono.Unix;
+using LongoMatch.Common;
 using LongoMatch.Gui;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.DB;
@@ -48,14 +49,14 @@ namespace LongoMatch
 			baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../../");
 			homeDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.Personal);
 			configDirectory = System.IO.Path.Combine(homeDirectory,".longomatch");
-			homeDirectory = System.IO.Path.Combine(homeDirectory,"LongoMatch");
+			homeDirectory = System.IO.Path.Combine(homeDirectory,Constants.SOFTWARE_NAME);
 
 			if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
 				SetUpWin32Config();
 			}
 
 			//Iniciamos la internalización
-			Catalog.Init("longomatch",RelativeToPrefix("share/locale"));
+			Catalog.Init(Constants.SOFTWARE_NAME.ToLower(),RelativeToPrefix("share/locale"));
 
 			//Iniciamos la aplicación
 			Application.Init();
@@ -69,7 +70,7 @@ namespace LongoMatch
 			CheckFiles();
 
 			//Iniciamos la base de datos
-			db = new DataBase(Path.Combine(DBDir(),"longomatch.db"));
+			db = new DataBase(Path.Combine(DBDir(),Constants.DB_FILE));
 
 			//Check for previous database
 			CheckOldFiles();
@@ -206,7 +207,7 @@ namespace LongoMatch
 		}
 
 		private static void ProcessExecutionError(Exception ex) {
-			string logFile ="LongoMatch-" + DateTime.Now +".log";
+			string logFile = Constants.PROJECT_NAME + "-" + DateTime.Now +".log";
 			string message;
 
 			logFile = logFile.Replace("/","-");

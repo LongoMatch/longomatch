@@ -83,7 +83,7 @@ namespace LongoMatch.Utils
 			                                                   "gtk-open",ResponseType.Accept);
 			fChooser.SetCurrentFolder(MainClass.HomeDir());
 			filter = new FileFilter();
-			filter.Name = "LongoMatch Project";
+			filter.Name = Constants.PROJECT_NAME;
 			filter.AddPattern("*.lpr");			
 			fChooser.AddFilter(filter);
 			

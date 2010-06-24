@@ -22,6 +22,11 @@ using Gdk;
 namespace LongoMatch.Common
 {
 	class Constants{
+		public const string SOFTWARE_NAME = "LongoMatch";
+		
+		public const string PROJECT_NAME = SOFTWARE_NAME + " project";
+		
+		public const string DB_FILE = "longomatch.db";
 		
 		public const string COPYRIGHT =  "Copyright ©2007-2010 Andoni Morales Alastruey";
 		
@@ -58,6 +63,8 @@ Petr Kovar (cs)";
 		public const int THUMBNAIL_MAX_HEIGHT = 100;
 		
 		public const string WEBSITE = "http://www.longomatch.ylatuya.es";
+		
+		public const string MANUAL = "http://www.longomatch.ylatuya.es/documentation/manual.html";
 		
 		public const ModifierType STEP = Gdk.ModifierType.ShiftMask;
 		
