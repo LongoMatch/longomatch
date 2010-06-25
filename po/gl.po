@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: longomatch\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-21 14:11+0200\n"
-"PO-Revision-Date: 2010-06-21 14:19+0200\n"
+"POT-Creation-Date: 2010-06-25 22:34+0200\n"
+"PO-Revision-Date: 2010-06-25 22:35+0200\n"
 "Last-Translator: Fran Diéguez <frandieguez@ubuntu.com>\n"
-"Language-Team: Galician <gnome@g11.net>\n"
+"Language-Team: Galician <gnome@g11n.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\\\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Poedit-Language: Galician\n"
 
 #: ../LongoMatch/longomatch.desktop.in.in.h:1
@@ -101,7 +101,7 @@ msgstr "Deter"
 msgid "Tags"
 msgstr "Etiquetas"
 
-#: ../LongoMatch/Main.cs:163
+#: ../LongoMatch/Main.cs:164
 msgid ""
 "Some elements from the previous version (database, templates and/or "
 "playlists) have been found."
@@ -109,19 +109,19 @@ msgstr ""
 "Encontráronse algúns elementos da versión anterior (bases de datos, modelos "
 "e/ou listas de reprodución)."
 
-#: ../LongoMatch/Main.cs:164
+#: ../LongoMatch/Main.cs:165
 msgid "Do you want to import them?"
 msgstr "Desexa importalos?"
 
-#: ../LongoMatch/Main.cs:229
+#: ../LongoMatch/Main.cs:230
 msgid "The application has finished with an unexpected error."
 msgstr "O aplicativo terminou cun erro inesperado."
 
-#: ../LongoMatch/Main.cs:230
+#: ../LongoMatch/Main.cs:231
 msgid "A log has been saved at: "
 msgstr "Gardouse un rexistro en:"
 
-#: ../LongoMatch/Main.cs:231
+#: ../LongoMatch/Main.cs:232
 msgid "Please, fill a bug report "
 msgstr "Por favor, informe deste erro"
 
@@ -177,27 +177,27 @@ msgstr ""
 msgid "Templates Files"
 msgstr "Ficheiros de modelos"
 
-#: ../LongoMatch/Gui/Dialog/TemplatesEditor.cs:166
+#: ../LongoMatch/Gui/Dialog/TemplatesEditor.cs:162
 msgid "The template has been modified. Do you want to save it? "
 msgstr "O modelo foi modificado. Desexa gardalo?"
 
-#: ../LongoMatch/Gui/Dialog/TemplatesEditor.cs:188
+#: ../LongoMatch/Gui/Dialog/TemplatesEditor.cs:184
 msgid "Template name"
 msgstr "Nome do modelo"
 
-#: ../LongoMatch/Gui/Dialog/TemplatesEditor.cs:208
+#: ../LongoMatch/Gui/Dialog/TemplatesEditor.cs:204
 msgid "You cannot create a template with a void name"
 msgstr "Non pode crear un modelo sen nome"
 
-#: ../LongoMatch/Gui/Dialog/TemplatesEditor.cs:214
+#: ../LongoMatch/Gui/Dialog/TemplatesEditor.cs:210
 msgid "A template with this name already exists"
 msgstr "Xa existe un modelo con ese nome"
 
-#: ../LongoMatch/Gui/Dialog/TemplatesEditor.cs:240
+#: ../LongoMatch/Gui/Dialog/TemplatesEditor.cs:236
 msgid "You can't delete the 'default' template"
 msgstr "Non pode eliminar o modelo 'predefinido'"
 
-#: ../LongoMatch/Gui/Dialog/TemplatesEditor.cs:245
+#: ../LongoMatch/Gui/Dialog/TemplatesEditor.cs:241
 msgid "Do you really want to delete the template: "
 msgstr "Desexa realmente eliminar o modelo?:"
 
@@ -237,35 +237,35 @@ msgstr "Extra"
 msgid "Save Video As ..."
 msgstr "Gardar o vídeo como..."
 
-#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:64
+#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:70
 msgid "The Project has been edited, do you want to save the changes?"
 msgstr "O proxecto foi editado, desexa gardar os cambios?"
 
-#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:89
+#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:95
 msgid "A Project is already using this file."
 msgstr "Un proxecto está usando este ficheiro."
 
-#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:102
+#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:112
 msgid "This Project is actually in use."
 msgstr "Este proxecto está actualmente en uso."
 
-#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:103
+#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:113
 msgid "Close it first to allow its removal from the database"
 msgstr "Debe pechar o proxecto antes de eliminalo da base de datos"
 
-#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:109
+#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:119
 msgid "Do you really want to delete:"
 msgstr "Desexa realmente eliminalo:"
 
-#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:146
+#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:176
 msgid "The Project you are trying to load is actually in use."
 msgstr "O proxecto que está intentando cargar está actualmente en uso."
 
-#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:146
+#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:176
 msgid "Close it first to edit it"
 msgstr "Pécheo antes de editalo"
 
-#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:170
+#: ../LongoMatch/Gui/Dialog/ProjectsManager.cs:196
 #: ../LongoMatch/Utils/ProjectUtils.cs:50
 msgid "Save Project"
 msgstr "Gardar o proxecto"
@@ -376,54 +376,54 @@ msgstr "Seleccione un ficheiro de vídeo."
 msgid "Choose an image"
 msgstr "Escoller unha imaxe"
 
-#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:57
+#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:55
 msgid "Filename"
 msgstr "Nome do ficheiro"
 
-#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:86
+#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:119
 msgid "File length"
 msgstr "Lonxitude do ficheiro"
 
-#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:87
+#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:120
 msgid "Video codec"
 msgstr "Códec de vídeo"
 
-#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:88
+#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:121
 msgid "Audio codec"
 msgstr "Códec de son"
 
-#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:89
+#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:122
 msgid "Format"
 msgstr "Formato"
 
-#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:99
+#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:132
 #: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:138
 msgid "Title"
 msgstr "Título"
 
-#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:100
+#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:133
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:145
 msgid "Local team"
 msgstr "Equipo local"
 
-#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:101
+#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:134
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:146
 msgid "Visitor team"
 msgstr "Equipo visitante"
 
-#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:102
+#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:135
 msgid "Season"
 msgstr "Tempada"
 
-#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:103
+#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:136
 msgid "Competition"
 msgstr "Competición"
 
-#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:104
+#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:137
 msgid "Result"
 msgstr "Resultado"
 
-#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:105
+#: ../LongoMatch/Gui/Component/ProjectListWidget.cs:138
 msgid "Date"
 msgstr "Data"
 
@@ -523,8 +523,9 @@ msgid "Number"
 msgstr "Número"
 
 #: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:52
+#, fuzzy
 msgid "Lead Time"
-msgstr ""
+msgstr "Inicio"
 
 #: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:57
 msgid "Lag Time"
@@ -1143,12 +1144,14 @@ msgid "Video encoding  properties"
 msgstr "Propiedades de codificación de vídeo"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs:41
+#, fuzzy
 msgid "Lead time:"
-msgstr ""
+msgstr "Inicio:"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs:49
+#, fuzzy
 msgid "Lag time:"
-msgstr ""
+msgstr "Fin:"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.OpenProjectDialog.cs:26
 msgid "Open Project"
