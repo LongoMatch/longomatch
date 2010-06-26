@@ -1,4 +1,4 @@
-﻿// PlayerBin.cs 
+// PlayerBin.cs 
 //
 //  Copyright (C) 2007-2009 Andoni Morales Alastruey
 //
@@ -51,7 +51,6 @@ namespace LongoMatch.Gui
 		private string slength;
 		private long segmentStartTime;
 		private long segmentStopTime;
-		private bool hasNext;
 		private bool seeking=false;
 		private double[] seeksQueue; 
 		private bool IsPlayingPrevState = false;
@@ -205,7 +204,6 @@ namespace LongoMatch.Gui
 		}
 	
 		public void SetPlayListElement(string fileName,long start, long stop, float rate, bool hasNext){
-			this.hasNext = hasNext;
 			if (hasNext)
 				nextbutton.Sensitive = true;
 			else
@@ -303,7 +301,6 @@ namespace LongoMatch.Gui
 		
 		public void CloseActualSegment(){
 			closebutton.Hide();
-			hasNext = false;
 			segmentStartTime = 0;
 			segmentStopTime = 0;
 			vscale1.Value=25;
@@ -410,7 +407,6 @@ namespace LongoMatch.Gui
 			long currentTime = args.CurrentTime;
 			float currentposition = args.CurrentPosition;		
 			long streamLength = args.StreamLength;		
-			bool seekable = args.Seekable;
 			
 			//Console.WriteLine ("Current Time:{0}\n Length:{1}\n",currentTime, streamLength);
 			if (length != streamLength){							
@@ -580,7 +576,6 @@ namespace LongoMatch.Gui
 		protected virtual void OnDrawButtonClicked (object sender, System.EventArgs e)
 		{
 			int currentTime;
-			Pixbuf frame=null;
 			
 			currentTime = (int)AccurateCurrentTime;
 			// If the player has reached the end of the segment the current time

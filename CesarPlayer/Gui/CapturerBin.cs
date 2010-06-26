@@ -285,9 +285,7 @@ namespace LongoMatch.Gui
 		protected virtual void OnLogodrawingareaExposeEvent (object o, Gtk.ExposeEventArgs args)
 		{	
 			Gdk.Window win;
-			Rectangle area;
 			Pixbuf frame;
-			Pixbuf drawing;
 			int width, height, allocWidth, allocHeight, logoX, logoY;
 			float ratio;
 			
@@ -299,7 +297,6 @@ namespace LongoMatch.Gui
 			height = logopix.Height;
 			allocWidth = logodrawingarea.Allocation.Width;
 			allocHeight = logodrawingarea.Allocation.Height;
-			area = args.Event.Area;
 			
 			/* Checking if allocated space is smaller than our logo */
 			if ((float) allocWidth / width > (float) allocHeight / height) {

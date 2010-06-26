@@ -29,16 +29,12 @@ namespace LongoMatch.Compat.v00.DB
 	{
 		private SectionsTimeNode[] timeNodesArray;
 		private Color[] colorsArray;
-		private int visibleSections;
-		private int totalSections;
 
 
 		public Sections(int sections)
 		{
 			this.timeNodesArray = new SectionsTimeNode[sections];
 			this.colorsArray = new Color[sections];
-			this.totalSections = sections;
-			this.visibleSections = sections;
 			for (int i=0;i<20;i++) {
 				colorsArray[i] = new Color(254,0,0);
 				timeNodesArray[i] = null;

@@ -47,8 +47,6 @@ namespace LongoMatch.Compat
 
 		private string oldDBFile;
 
-		private string newDBFile;
-
 		private PreviewMediaFile file;
 
 		private Thread thread;
