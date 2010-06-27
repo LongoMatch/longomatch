@@ -95,7 +95,11 @@ namespace LongoMatch.Compat.v00.TimeNodes
 			}
 			else return false;
 		}
-
+		
+		public override int GetHashCode ()
+		{
+			return base.GetHashCode ();
+		}
 
 		public int CompareTo(object obj) {
 			if (obj is Time)
