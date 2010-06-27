@@ -173,6 +173,7 @@ namespace LongoMatch.Video.Player {
 			}
 		}
 
+#pragma warning disable 0169
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 		delegate void ReadyToSeekVMDelegate (IntPtr bvw);
 
@@ -754,6 +755,7 @@ namespace LongoMatch.Video.Player {
 				sig.RemoveDelegate (value);
 			}
 		}
+#pragma warning restore 0169
 
 		[DllImport("libcesarplayer.dll")]
 		static extern IntPtr bacon_video_widget_get_backend_name(IntPtr raw);

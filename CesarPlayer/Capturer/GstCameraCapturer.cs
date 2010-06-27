@@ -142,7 +142,8 @@ namespace LongoMatch.Video.Capturer {
 				val.Dispose ();
 			}
 		}
-
+		
+#pragma warning disable 0169
 		[GLib.CDeclCallback]
 		delegate void ErrorSignalDelegate (IntPtr arg0, IntPtr arg1, IntPtr gch);
 
@@ -258,6 +259,7 @@ namespace LongoMatch.Video.Capturer {
 				sig.RemoveDelegate (value);
 			}
 		}
+#pragma warning restore 0169
 
 		[DllImport("libcesarplayer.dll")]
 		static extern void gst_camera_capturer_init_backend(out int argc, IntPtr argv);

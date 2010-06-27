@@ -159,7 +159,7 @@ namespace LongoMatch.Video.Editor {
 		
 		
 		#region GSignals
-
+#pragma warning disable 0169
 		[GLib.CDeclCallback]
 		delegate void ErrorVMDelegate (IntPtr gvc, IntPtr message);
 
@@ -258,7 +258,7 @@ namespace LongoMatch.Video.Editor {
 				sig.RemoveDelegate (value);
 			}
 		}
-		
+#pragma warning restore 0169
 		#endregion
 		
 		#region Public Methods
