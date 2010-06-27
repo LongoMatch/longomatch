@@ -66,7 +66,7 @@ namespace LongoMatch.DB
 				IObjectContainer db = Db4oFactory.OpenFile(file);
 				try {
 					dbVersion= new Version(MAYOR,MINOR);
-					db.Set(dbVersion);
+					db.Store(dbVersion);
 				}
 				finally {
 					db.Close();
@@ -136,7 +136,7 @@ namespace LongoMatch.DB
 								                          Catalog.GetString("Error retrieving the file info for project:")+" "+p.Title+"\n"+
 								                          Catalog.GetString("This value will be reset. Remember to change it later with the projects manager"));
 								p.File = new PreviewMediaFile(Catalog.GetString("Change Me"),0,0,false,false,"","",0,0,null);
-								db.Set(p);
+								db.Store(p);
 							}
 							ProjectDescription pd = new ProjectDescription {
 								File = p.File.FilePath,
@@ -209,7 +209,7 @@ namespace LongoMatch.DB
 				try
 				{
 					if (!this.Exists(project.File.FilePath,db)) {
-						db.Set(project);
+						db.Store(project);
 						db.Commit();
 					}
 					else throw new Exception(Catalog.GetString("The Project for this video file already exists.")+"\n"+Catalog.GetString("Try to edit it with the Database Manager"));
@@ -275,7 +275,7 @@ namespace LongoMatch.DB
 						Project fd = (Project)result.Next();
 						db.Delete(fd);
 						// Add the updated project
-						db.Set(project);
+						db.Store(project);
 						db.Commit();
 					}
 					else
@@ -307,7 +307,7 @@ namespace LongoMatch.DB
 					//Get the stored project and replace it with the new one
 					Project fd = (Project)result.Next();
 					db.Delete(fd);
-					db.Set(project);
+					db.Store(project);
 					db.Commit();
 				}
 				finally
