@@ -76,7 +76,9 @@ namespace LongoMatch.DB
 		
 		private TagsTemplate tagsTemplate;
 		//Keep this fiel for DB retrocompatibility
+#pragma warning disable 0169
 		private List<MediaTimeNode>[] dataSectionArray;
+#pragma warning restore 0169
 
 		/// <summary>
 		/// Creates a new project
