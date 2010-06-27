@@ -184,7 +184,7 @@ namespace LongoMatch.Utils
 			psd.Destroy();
 			if (response != (int)ResponseType.Ok)		
 				return;
-			projectType = psd.Type;
+			projectType = psd.ProjectType;
 			
 			if (projectType == ProjectType.CaptureProject){
 				devices = Device.ListVideoDevices();
