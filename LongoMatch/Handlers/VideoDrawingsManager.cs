@@ -78,13 +78,13 @@ namespace LongoMatch.Handlers
 		}
 
 		private void ConnectSignals() {
-			player.StateChanged += OnStateChanged;
+			player.PlayStateChanged += OnStateChanged;
 			player.SeekEvent += OnSeekEvent;
 			player.SegmentClosedEvent += OnSegmentCloseEvent;
 		}
 
 		private void DisconnectSignals() {
-			player.StateChanged -= OnStateChanged;
+			player.PlayStateChanged -= OnStateChanged;
 			player.SeekEvent -= OnSeekEvent;
 			player.SegmentClosedEvent -= OnSegmentCloseEvent;
 		}

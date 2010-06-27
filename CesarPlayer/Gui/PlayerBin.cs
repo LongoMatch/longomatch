@@ -38,7 +38,7 @@ namespace LongoMatch.Gui
 		public event SegmentClosedHandler SegmentClosedEvent;
 		public event TickHandler Tick;
 		public event ErrorHandler Error;
-		public event StateChangeHandler StateChanged;
+		public event StateChangeHandler PlayStateChanged;
 		public event NextButtonClickedHandler Next;
 		public event PrevButtonClickedHandler Prev;
 		public event DrawFrameHandler DrawFrame;
@@ -388,8 +388,8 @@ namespace LongoMatch.Gui
 				playbutton.Show();
 				pausebutton.Hide();
 			}
-			if (StateChanged != null)
-				StateChanged(this,args);
+			if (PlayStateChanged != null)
+				PlayStateChanged(this,args);
 		}
 		
 		protected void OnReadyToSeek(object o, EventArgs args){
