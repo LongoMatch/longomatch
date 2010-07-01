@@ -130,7 +130,8 @@ namespace LongoMatch.Gui
 					CloseOpenedProject (true);
 					return;
 				}
-				Title = System.IO.Path.GetFileNameWithoutExtension (project.File.FilePath) + " - LongoMatch";
+				Title = System.IO.Path.GetFileNameWithoutExtension (project.File.FilePath) + 
+					" - " +	Constants.SOFTWARE_NAME;
 				try {
 					playerbin1.Open (project.File.FilePath);
 				}
