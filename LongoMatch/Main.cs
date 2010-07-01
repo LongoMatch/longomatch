@@ -207,7 +207,7 @@ namespace LongoMatch
 		}
 
 		private static void ProcessExecutionError(Exception ex) {
-			string logFile = Constants.PROJECT_NAME + "-" + DateTime.Now +".log";
+			string logFile = Constants.SOFTWARE_NAME + "-" + DateTime.Now +".log";
 			string message;
 
 			logFile = logFile.Replace("/","-");
