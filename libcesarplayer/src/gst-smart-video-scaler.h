@@ -54,10 +54,10 @@ struct _GstSmartVideoScaler
 
 EXPORT GType
 gst_smart_video_scaler_get_type (void)
-  G_GNUC_CONST;
+    G_GNUC_CONST;
      EXPORT GstSmartVideoScaler *gst_smart_video_scaler_new ();
      EXPORT void gst_smart_video_scaler_set_caps (GstSmartVideoScaler * gsvs,
-						  GstCaps * caps);
+    GstCaps * caps);
 
 G_END_DECLS
 #endif /* _GST_SMART_VIDEO_SCALER_H_ */

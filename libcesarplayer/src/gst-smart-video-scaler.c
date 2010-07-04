@@ -50,8 +50,8 @@ gst_smart_video_scaler_init (GstSmartVideoScaler * object)
 {
   GstSmartVideoScalerPrivate *priv;
   object->priv = priv =
-    G_TYPE_INSTANCE_GET_PRIVATE (object, GST_TYPE_SMART_VIDEO_SCALER,
-				 GstSmartVideoScalerPrivate);
+      G_TYPE_INSTANCE_GET_PRIVATE (object, GST_TYPE_SMART_VIDEO_SCALER,
+      GstSmartVideoScalerPrivate);
 
   priv->parin = g_new0 (GValue, 1);
   g_value_init (priv->parin, GST_TYPE_FRACTION);
@@ -80,14 +80,13 @@ gst_smart_video_scaler_finalize (GObject * object)
 {
   GstSmartVideoScaler *gsvs = (GstSmartVideoScaler *) object;
 
-  if (gsvs != NULL)
-    {
-      gst_element_set_state (GST_ELEMENT (gsvs), GST_STATE_NULL);
-      gst_object_unref (gsvs);
-      gsvs->priv->videoscale = NULL;
-      gsvs->priv->videobox = NULL;
-      gsvs->priv->capsfilter = NULL;
-    }
+  if (gsvs != NULL) {
+    gst_element_set_state (GST_ELEMENT (gsvs), GST_STATE_NULL);
+    gst_object_unref (gsvs);
+    gsvs->priv->videoscale = NULL;
+    gsvs->priv->videobox = NULL;
+    gsvs->priv->capsfilter = NULL;
+  }
 
   g_free (gsvs->priv->parin);
   g_free (gsvs->priv->parout);
@@ -103,8 +102,7 @@ gst_smart_video_scaler_class_init (GstSmartVideoScalerClass * klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   //GstBinClass* parent_class = GST_BIN_CLASS (klass);
 
-  g_type_class_add_private (object_class,
-			    sizeof (GstSmartVideoScalerPrivate));
+  g_type_class_add_private (object_class, sizeof (GstSmartVideoScalerPrivate));
 
   object_class->finalize = gst_smart_video_scaler_finalize;
 }
@@ -120,102 +118,91 @@ gsvs_compute_and_set_values (GstSmartVideoScaler * gsvs)
 
   /*Calculate the new values to set on capsfilter and videobox. */
   if (gsvs->priv->widthin == -1 || gsvs->priv->heightin == -1
-      || gsvs->priv->widthout == -1 || gsvs->priv->heightout == -1)
-    {
-      /* FIXME : should we reset videobox/capsfilter properties here ? */
-      GST_ERROR
-	("We don't have input and output caps, we can't calculate videobox values");
-      return;
-    }
+      || gsvs->priv->widthout == -1 || gsvs->priv->heightout == -1) {
+    /* FIXME : should we reset videobox/capsfilter properties here ? */
+    GST_ERROR
+        ("We don't have input and output caps, we can't calculate videobox values");
+    return;
+  }
 
   fdarin =
-    (gfloat) gst_value_get_fraction_numerator (gsvs->priv->darin) /
-    (gfloat) gst_value_get_fraction_denominator (gsvs->priv->darin);
+      (gfloat) gst_value_get_fraction_numerator (gsvs->priv->darin) /
+      (gfloat) gst_value_get_fraction_denominator (gsvs->priv->darin);
   fdarout =
-    (gfloat) gst_value_get_fraction_numerator (gsvs->priv->darout) /
-    (gfloat) gst_value_get_fraction_denominator (gsvs->priv->darout);
+      (gfloat) gst_value_get_fraction_numerator (gsvs->priv->darout) /
+      (gfloat) gst_value_get_fraction_denominator (gsvs->priv->darout);
   fparin =
-    (gfloat) gst_value_get_fraction_numerator (gsvs->priv->parin) /
-    (gfloat) gst_value_get_fraction_denominator (gsvs->priv->parin);
+      (gfloat) gst_value_get_fraction_numerator (gsvs->priv->parin) /
+      (gfloat) gst_value_get_fraction_denominator (gsvs->priv->parin);
   fparout =
-    (gfloat) gst_value_get_fraction_numerator (gsvs->priv->parout) /
-    (gfloat) gst_value_get_fraction_denominator (gsvs->priv->parout);
+      (gfloat) gst_value_get_fraction_numerator (gsvs->priv->parout) /
+      (gfloat) gst_value_get_fraction_denominator (gsvs->priv->parout);
   GST_INFO ("incoming width/height/PAR/DAR : %d/%d/%f/%f",
-	    gsvs->priv->widthin, gsvs->priv->heightin, fparin, fdarin);
+      gsvs->priv->widthin, gsvs->priv->heightin, fparin, fdarin);
   GST_INFO ("outgoing width/height/PAR/DAR : %d/%d/%f/%f",
-	    gsvs->priv->widthout, gsvs->priv->heightout, fparout, fdarout);
+      gsvs->priv->widthout, gsvs->priv->heightout, fparout, fdarout);
 
   /* for core <= 0.10.22 we always set caps != any, see 574805 for the
      details */
 
   gst_version (&mayor, &minor, &micro, &nano);
-  if (fdarin == fdarout && (mayor >= 0 && minor >= 10 && micro >= 23))
-    {
+  if (fdarin == fdarout && (mayor >= 0 && minor >= 10 && micro >= 23)) {
+    GST_INFO
+        ("We have same input and output caps, resetting capsfilter and videobox settings");
+    /* same DAR, set inputcaps on capsfilter, reset videobox values */
+    caps = gst_caps_new_any ();
+    left = 0;
+    right = 0;
+    top = 0;
+    bottom = 0;
+  } else {
+    gint par_d, par_n, dar_d, dar_n;
+    gint extra;
+    gchar scaps[200];
+
+    par_n = gst_value_get_fraction_numerator (gsvs->priv->parout);
+    par_d = gst_value_get_fraction_denominator (gsvs->priv->parout);
+    dar_n = gst_value_get_fraction_numerator (gsvs->priv->darin);
+    dar_d = gst_value_get_fraction_denominator (gsvs->priv->darin);
+
+    if (fdarin > fdarout) {
+      gint newheight;
+
       GST_INFO
-	("We have same input and output caps, resetting capsfilter and videobox settings");
-      /* same DAR, set inputcaps on capsfilter, reset videobox values */
-      caps = gst_caps_new_any ();
-      left = 0;
-      right = 0;
-      top = 0;
-      bottom = 0;
+          ("incoming DAR is greater that ougoing DAR. Adding top/bottom borders");
+      /* width, PAR stays the same as output
+         calculate newheight = (PAR * widthout) / DAR */
+      newheight = (par_n * gsvs->priv->widthout * dar_d) / (par_d * dar_n);
+      GST_INFO ("newheight should be %d", newheight);
+      extra = gsvs->priv->heightout - newheight;
+      top = extra / 2;
+      bottom = extra - top;     /* compensate for odd extra */
+      left = right = 0;
+      /*calculate filter caps */
+      g_sprintf (astr, "width=%d,height=%d", gsvs->priv->widthout, newheight);
+    } else {
+      gint newwidth;
+
+      GST_INFO
+          ("incoming DAR is smaller than outgoing DAR. Adding left/right borders");
+      /* height, PAR stays the same as output
+         calculate newwidth = (DAR * heightout) / PAR */
+      newwidth = (dar_n * gsvs->priv->heightout * par_n) / (dar_d * par_n);
+      GST_INFO ("newwidth should be %d", newwidth);
+      extra = gsvs->priv->widthout - newwidth;
+      left = extra / 2;
+      right = extra - left;     /* compensate for odd extra */
+      top = bottom = 0;
+      /* calculate filter caps */
+      g_sprintf (astr, "width=%d,height=%d", newwidth, gsvs->priv->heightout);
     }
-  else
-    {
-      gint par_d, par_n, dar_d, dar_n;
-      gint extra;
-      gchar scaps[200];
-
-      par_n = gst_value_get_fraction_numerator (gsvs->priv->parout);
-      par_d = gst_value_get_fraction_denominator (gsvs->priv->parout);
-      dar_n = gst_value_get_fraction_numerator (gsvs->priv->darin);
-      dar_d = gst_value_get_fraction_denominator (gsvs->priv->darin);
-
-      if (fdarin > fdarout)
-	{
-	  gint newheight;
-
-	  GST_INFO
-	    ("incoming DAR is greater that ougoing DAR. Adding top/bottom borders");
-	  /* width, PAR stays the same as output
-	     calculate newheight = (PAR * widthout) / DAR */
-	  newheight =
-	    (par_n * gsvs->priv->widthout * dar_d) / (par_d * dar_n);
-	  GST_INFO ("newheight should be %d", newheight);
-	  extra = gsvs->priv->heightout - newheight;
-	  top = extra / 2;
-	  bottom = extra - top;	/* compensate for odd extra */
-	  left = right = 0;
-	  /*calculate filter caps */
-	  g_sprintf (astr, "width=%d,height=%d", gsvs->priv->widthout,
-		     newheight);
-	}
-      else
-	{
-	  gint newwidth;
-
-	  GST_INFO
-	    ("incoming DAR is smaller than outgoing DAR. Adding left/right borders");
-	  /* height, PAR stays the same as output
-	     calculate newwidth = (DAR * heightout) / PAR */
-	  newwidth =
-	    (dar_n * gsvs->priv->heightout * par_n) / (dar_d * par_n);
-	  GST_INFO ("newwidth should be %d", newwidth);
-	  extra = gsvs->priv->widthout - newwidth;
-	  left = extra / 2;
-	  right = extra - left;	/* compensate for odd extra */
-	  top = bottom = 0;
-	  /* calculate filter caps */
-	  g_sprintf (astr, "width=%d,height=%d", newwidth,
-		     gsvs->priv->heightout);
-	}
-      g_sprintf (scaps, "video/x-raw-yuv,%s;video/x-raw-rgb,%s", astr, astr);
-      caps = gst_caps_from_string (scaps);
-    }
+    g_sprintf (scaps, "video/x-raw-yuv,%s;video/x-raw-rgb,%s", astr, astr);
+    caps = gst_caps_from_string (scaps);
+  }
 
   /* set properties on elements */
   GST_INFO ("About to set left/right/top/bottom : %d/%d/%d/%d", -left, -right,
-	    -top, -bottom);
+      -top, -bottom);
   g_object_set (G_OBJECT (gsvs->priv->videobox), "left", -left, NULL);
   g_object_set (G_OBJECT (gsvs->priv->videobox), "right", -right, NULL);
   g_object_set (G_OBJECT (gsvs->priv->videobox), "top", -top, NULL);
@@ -227,7 +214,7 @@ gsvs_compute_and_set_values (GstSmartVideoScaler * gsvs)
 
 static void
 gsvs_get_value_from_caps (GstCaps * caps, gboolean force, gint * width,
-			  gint * height, GValue ** par, GValue ** dar)
+    gint * height, GValue ** par, GValue ** dar)
 {
   GstStructure *str = NULL;
   const GValue *tmp_par = NULL;
@@ -238,32 +225,29 @@ gsvs_get_value_from_caps (GstCaps * caps, gboolean force, gint * width,
   gst_value_set_fraction (*par, 1, 1);
   gst_value_set_fraction (*dar, 1, 1);
 
-  if (force || (caps && gst_caps_is_fixed (caps)))
-    {
-      str = gst_caps_get_structure (caps, 0);
-      gst_structure_get_int (str, "width", &(*width));
-      gst_structure_get_int (str, "height", &(*height));
+  if (force || (caps && gst_caps_is_fixed (caps))) {
+    str = gst_caps_get_structure (caps, 0);
+    gst_structure_get_int (str, "width", &(*width));
+    gst_structure_get_int (str, "height", &(*height));
 
-      if (g_strrstr (gst_structure_get_name (str), "pixel-aspect-ratio"))
-	{
-	  tmp_par = gst_structure_get_value (str, "pixel-aspect-ratio");
-	  gst_value_set_fraction (*par,
-				  gst_value_get_fraction_numerator (tmp_par),
-				  gst_value_get_fraction_denominator
-				  (tmp_par));
-	}
-      num = gst_value_get_fraction_numerator (*par);
-      denom = gst_value_get_fraction_denominator (*par);
-      gst_value_set_fraction (*dar, *width * num, *height * denom);
+    if (g_strrstr (gst_structure_get_name (str), "pixel-aspect-ratio")) {
+      tmp_par = gst_structure_get_value (str, "pixel-aspect-ratio");
+      gst_value_set_fraction (*par,
+          gst_value_get_fraction_numerator (tmp_par),
+          gst_value_get_fraction_denominator (tmp_par));
     }
+    num = gst_value_get_fraction_numerator (*par);
+    denom = gst_value_get_fraction_denominator (*par);
+    gst_value_set_fraction (*dar, *width * num, *height * denom);
+  }
 }
 
 static gboolean
 gsvs_sink_set_caps (GstPad * pad, GstCaps * caps)
 {
   GstSmartVideoScaler *gsvs =
-    GST_SMART_VIDEO_SCALER (gst_element_get_parent
-			    (gst_pad_get_parent (pad)));
+      GST_SMART_VIDEO_SCALER (gst_element_get_parent
+      (gst_pad_get_parent (pad)));
   GstPad *videoscale_pad = NULL;
 
   videoscale_pad = gst_element_get_static_pad (GST_ELEMENT (gsvs), "sink");
@@ -272,8 +256,7 @@ gsvs_sink_set_caps (GstPad * pad, GstCaps * caps)
     return FALSE;
 
   gsvs_get_value_from_caps (caps, FALSE, &gsvs->priv->widthin,
-			    &gsvs->priv->heightin, &gsvs->priv->parin,
-			    &gsvs->priv->darin);
+      &gsvs->priv->heightin, &gsvs->priv->parin, &gsvs->priv->darin);
   gsvs_compute_and_set_values (gsvs);
 
   return TRUE;
@@ -285,8 +268,7 @@ gst_smart_video_scaler_set_caps (GstSmartVideoScaler * gsvs, GstCaps * caps)
   g_return_if_fail (GST_IS_SMART_VIDEO_SCALER (gsvs));
 
   gsvs_get_value_from_caps (caps, FALSE, &gsvs->priv->widthout,
-			    &gsvs->priv->heightout, &gsvs->priv->parout,
-			    &gsvs->priv->darout);
+      &gsvs->priv->heightout, &gsvs->priv->parout, &gsvs->priv->darout);
 
 }
 
@@ -301,30 +283,29 @@ gst_smart_video_scaler_new ()
 
   /*Create bin elements */
   gsvs->priv->videoscale =
-    gst_element_factory_make ("videoscale", "smart-videoscale");
+      gst_element_factory_make ("videoscale", "smart-videoscale");
   g_object_set (G_OBJECT (gsvs->priv->videoscale), "method", 1, NULL);
   gsvs->priv->capsfilter =
-    gst_element_factory_make ("capsfilter", "smart-capsfilter");
+      gst_element_factory_make ("capsfilter", "smart-capsfilter");
   gsvs->priv->videobox =
-    gst_element_factory_make ("videobox", "smart-videobox");
+      gst_element_factory_make ("videobox", "smart-videobox");
 
   /*Add and link elements */
   gst_bin_add_many (GST_BIN (gsvs), gsvs->priv->videoscale,
-		    gsvs->priv->capsfilter, gsvs->priv->videobox, NULL);
+      gsvs->priv->capsfilter, gsvs->priv->videobox, NULL);
   gst_element_link_many (gsvs->priv->videoscale, gsvs->priv->capsfilter,
-			 gsvs->priv->videobox, NULL);
+      gsvs->priv->videobox, NULL);
 
   /*Create bin sink pad */
   sink_pad = gst_element_get_static_pad (gsvs->priv->videoscale, "sink");
   gst_pad_set_active (sink_pad, TRUE);
   gst_element_add_pad (GST_ELEMENT (gsvs),
-		       gst_ghost_pad_new ("sink", sink_pad));
+      gst_ghost_pad_new ("sink", sink_pad));
 
   /*Creat bin src pad */
   src_pad = gst_element_get_static_pad (gsvs->priv->videobox, "src");
   gst_pad_set_active (src_pad, TRUE);
-  gst_element_add_pad (GST_ELEMENT (gsvs),
-		       gst_ghost_pad_new ("src", src_pad));
+  gst_element_add_pad (GST_ELEMENT (gsvs), gst_ghost_pad_new ("src", src_pad));
 
   gst_pad_set_setcaps_function (sink_pad, gsvs_sink_set_caps);
 

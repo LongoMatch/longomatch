@@ -67,48 +67,48 @@ GtkWidget *gst_video_widget_new (void);
 /* Set/Get video source size */
 
 gboolean gst_video_widget_set_source_size (GstVideoWidget * vw,
-					   guint width, guint height);
+    guint width, guint height);
 
 gboolean gst_video_widget_get_source_size (GstVideoWidget * vw,
-					   guint * width, guint * height);
+    guint * width, guint * height);
 
 /* Set/Get minimum video widget size */
 
 gboolean gst_video_widget_set_minimum_size (GstVideoWidget * vw,
-					    gint width, gint height);
+    gint width, gint height);
 
 gboolean gst_video_widget_get_minimum_size (GstVideoWidget * vw,
-					    gint * width, gint * height);
+    gint * width, gint * height);
 
 /* Set/Get mouse pointer visible or not */
 
 gboolean gst_video_widget_set_cursor_visible (GstVideoWidget * vw,
-					      gboolean visible);
+    gboolean visible);
 gboolean gst_video_widget_get_cursor_visible (GstVideoWidget * vw);
 
 /* Set/Get focus on logo or not */
 
 gboolean gst_video_widget_set_logo_focus (GstVideoWidget * vw,
-					  gboolean focused);
+    gboolean focused);
 gboolean gst_video_widget_get_logo_focus (GstVideoWidget * vw);
 
 /* Set/Get if the widget should catch events over embeded window */
 
 gboolean gst_video_widget_set_event_catcher (GstVideoWidget * vw,
-					     gboolean event_catcher);
+    gboolean event_catcher);
 gboolean gst_video_widget_get_event_catcher (GstVideoWidget * vw);
 
 /* Set/Get auto resize mode used by the widget */
 
 gboolean gst_video_widget_set_auto_resize (GstVideoWidget * vw,
-					   gboolean resize);
+    gboolean resize);
 gboolean gst_video_widget_get_auto_resize (GstVideoWidget * vw);
 
 /* Set/Get scale factor used by the widget */
 
 gboolean gst_video_widget_get_scale_override (GstVideoWidget * vw);
 gboolean gst_video_widget_set_scale_override (GstVideoWidget * vw,
-					      gboolean override);
+    gboolean override);
 gboolean gst_video_widget_set_scale (GstVideoWidget * vw, gfloat scale);
 gfloat gst_video_widget_get_scale (GstVideoWidget * vw);
 
@@ -120,7 +120,6 @@ void gst_video_widget_set_logo (GstVideoWidget * vw, GdkPixbuf * logo_pixbuf);
 GdkPixbuf *gst_video_widget_get_logo (GstVideoWidget * vw);
 
 /*Force the expose callback*/
-void gst_video_widget_force_expose (GtkWidget * widget,
-				    GdkEventExpose * event);
+void gst_video_widget_force_expose (GtkWidget * widget, GdkEventExpose * event);
 
 #endif /* __GST_VIDEO_WIDGET_H__ */

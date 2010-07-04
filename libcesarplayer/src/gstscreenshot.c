@@ -40,12 +40,12 @@ feed_fakesrc (GstElement * src, GstBuffer * buf, GstPad * pad, gpointer data)
   gst_buffer_set_caps (buf, GST_BUFFER_CAPS (in_buf));
 
   memcpy (GST_BUFFER_DATA (buf), GST_BUFFER_DATA (in_buf),
-	  GST_BUFFER_SIZE (in_buf));
+      GST_BUFFER_SIZE (in_buf));
 
   GST_BUFFER_SIZE (buf) = GST_BUFFER_SIZE (in_buf);
 
   GST_DEBUG ("feeding buffer %p, size %u, caps %" GST_PTR_FORMAT,
-	     buf, GST_BUFFER_SIZE (buf), GST_BUFFER_CAPS (buf));
+      buf, GST_BUFFER_SIZE (buf), GST_BUFFER_CAPS (buf));
 }
 
 static void
@@ -56,23 +56,22 @@ save_result (GstElement * sink, GstBuffer * buf, GstPad * pad, gpointer data)
   *p_buf = gst_buffer_ref (buf);
 
   GST_DEBUG ("received converted buffer %p with caps %" GST_PTR_FORMAT,
-	     *p_buf, GST_BUFFER_CAPS (*p_buf));
+      *p_buf, GST_BUFFER_CAPS (*p_buf));
 }
 
 static gboolean
 create_element (const gchar * factory_name, GstElement ** element,
-		GError ** err)
+    GError ** err)
 {
   *element = gst_element_factory_make (factory_name, NULL);
   if (*element)
     return TRUE;
 
-  if (err && *err == NULL)
-    {
-      *err = g_error_new (GST_CORE_ERROR, GST_CORE_ERROR_MISSING_PLUGIN,
-			  "cannot create element '%s' - please check your GStreamer installation",
-			  factory_name);
-    }
+  if (err && *err == NULL) {
+    *err = g_error_new (GST_CORE_ERROR, GST_CORE_ERROR_MISSING_PLUGIN,
+        "cannot create element '%s' - please check your GStreamer installation",
+        factory_name);
+  }
 
   return FALSE;
 }
@@ -97,35 +96,32 @@ bvw_frame_conv_convert (GstBuffer * buf, GstCaps * to_caps)
       !create_element ("videoscale", &vscale, &error) ||
       !create_element ("capsfilter", &filter1, &error) ||
       !create_element ("capsfilter", &filter2, &error) ||
-      !create_element ("fakesink", &sink, &error))
-    {
-      g_warning ("Could not take screenshot: %s", error->message);
-      g_error_free (error);
-      return NULL;
-    }
+      !create_element ("fakesink", &sink, &error)) {
+    g_warning ("Could not take screenshot: %s", error->message);
+    g_error_free (error);
+    return NULL;
+  }
 
   pipeline = gst_pipeline_new ("screenshot-pipeline");
-  if (pipeline == NULL)
-    {
-      g_warning ("Could not take screenshot: %s",
-		 "no pipeline (unknown error)");
-      return NULL;
-    }
+  if (pipeline == NULL) {
+    g_warning ("Could not take screenshot: %s", "no pipeline (unknown error)");
+    return NULL;
+  }
 
   GST_DEBUG ("adding elements");
   gst_bin_add_many (GST_BIN (pipeline), src, csp, filter1, vscale, filter2,
-		    sink, NULL);
+      sink, NULL);
 
   g_signal_connect (src, "handoff", G_CALLBACK (feed_fakesrc), buf);
 
   /* set to 'fixed' sizetype */
   g_object_set (src, "sizemax", GST_BUFFER_SIZE (buf), "sizetype", 2,
-		"num-buffers", 1, "signal-handoffs", TRUE, NULL);
+      "num-buffers", 1, "signal-handoffs", TRUE, NULL);
 
   /* adding this superfluous capsfilter makes linking cheaper */
   to_caps_no_par = gst_caps_copy (to_caps);
   gst_structure_remove_field (gst_caps_get_structure (to_caps_no_par, 0),
-			      "pixel-aspect-ratio");
+      "pixel-aspect-ratio");
   g_object_set (filter1, "caps", to_caps_no_par, NULL);
   gst_caps_unref (to_caps_no_par);
 
@@ -161,56 +157,44 @@ bvw_frame_conv_convert (GstBuffer * buf, GstCaps * to_caps)
 
   bus = gst_element_get_bus (pipeline);
   msg =
-    gst_bus_poll (bus, GST_MESSAGE_ERROR | GST_MESSAGE_EOS, 25 * GST_SECOND);
+      gst_bus_poll (bus, GST_MESSAGE_ERROR | GST_MESSAGE_EOS, 25 * GST_SECOND);
 
-  if (msg)
-    {
-      switch (GST_MESSAGE_TYPE (msg))
-	{
-	case GST_MESSAGE_EOS:
-	  {
-	    if (result)
-	      {
-		GST_DEBUG ("conversion successful: result = %p", result);
-	      }
-	    else
-	      {
-		GST_WARNING ("EOS but no result frame?!");
-	      }
-	    break;
-	  }
-	case GST_MESSAGE_ERROR:
-	  {
-	    gchar *dbg = NULL;
+  if (msg) {
+    switch (GST_MESSAGE_TYPE (msg)) {
+      case GST_MESSAGE_EOS:
+      {
+        if (result) {
+          GST_DEBUG ("conversion successful: result = %p", result);
+        } else {
+          GST_WARNING ("EOS but no result frame?!");
+        }
+        break;
+      }
+      case GST_MESSAGE_ERROR:
+      {
+        gchar *dbg = NULL;
 
-	    gst_message_parse_error (msg, &error, &dbg);
-	    if (error)
-	      {
-		g_warning ("Could not take screenshot: %s", error->message);
-		GST_DEBUG ("%s [debug: %s]", error->message,
-			   GST_STR_NULL (dbg));
-		g_error_free (error);
-	      }
-	    else
-	      {
-		g_warning ("Could not take screenshot (and NULL error!)");
-	      }
-	    g_free (dbg);
-	    result = NULL;
-	    break;
-	  }
-	default:
-	  {
-	    g_return_val_if_reached (NULL);
-	  }
-	}
+        gst_message_parse_error (msg, &error, &dbg);
+        if (error) {
+          g_warning ("Could not take screenshot: %s", error->message);
+          GST_DEBUG ("%s [debug: %s]", error->message, GST_STR_NULL (dbg));
+          g_error_free (error);
+        } else {
+          g_warning ("Could not take screenshot (and NULL error!)");
+        }
+        g_free (dbg);
+        result = NULL;
+        break;
+      }
+      default:
+      {
+        g_return_val_if_reached (NULL);
+      }
     }
-  else
-    {
-      g_warning ("Could not take screenshot: %s",
-		 "timeout during conversion");
-      result = NULL;
-    }
+  } else {
+    g_warning ("Could not take screenshot: %s", "timeout during conversion");
+    result = NULL;
+  }
 
   gst_element_set_state (pipeline, GST_STATE_NULL);
   gst_object_unref (pipeline);

@@ -82,17 +82,16 @@ totem_time_to_string (gint64 msecs)
   time = time - (min * 60);
   hour = time / (60 * 60);
 
-  if (hour > 0)
-    {
-      /* hour:minutes:seconds */
-      /* Translators: This is a time format, like "9:05:02" for 9
-       * hours, 5 minutes, and 2 seconds. You may change ":" to
-       * the separator that your locale uses or use "%Id" instead
-       * of "%d" if your locale uses localized digits.
-       */
-      return g_strdup_printf (C_ ("long time format", "%d:%02d:%02d"), hour,
-			      min, sec);
-    }
+  if (hour > 0) {
+    /* hour:minutes:seconds */
+    /* Translators: This is a time format, like "9:05:02" for 9
+     * hours, 5 minutes, and 2 seconds. You may change ":" to
+     * the separator that your locale uses or use "%Id" instead
+     * of "%d" if your locale uses localized digits.
+     */
+    return g_strdup_printf (C_ ("long time format", "%d:%02d:%02d"), hour,
+        min, sec);
+  }
 
   /* minutes:seconds */
   /* Translators: This is a time format, like "5:02" for 5
@@ -109,29 +108,22 @@ totem_string_to_time (const char *time_string)
   int sec, min, hour, args;
 
   args =
-    sscanf (time_string, C_ ("long time format", "%d:%02d:%02d"), &hour, &min,
-	    &sec);
+      sscanf (time_string, C_ ("long time format", "%d:%02d:%02d"), &hour, &min,
+      &sec);
 
-  if (args == 3)
-    {
-      /* Parsed all three arguments successfully */
-      return (hour * (60 * 60) + min * 60 + sec) * 1000;
-    }
-  else if (args == 2)
-    {
-      /* Only parsed the first two arguments; treat hour and min as min and sec, respectively */
-      return (hour * 60 + min) * 1000;
-    }
-  else if (args == 1)
-    {
-      /* Only parsed the first argument; treat hour as sec */
-      return hour * 1000;
-    }
-  else
-    {
-      /* Error! */
-      return -1;
-    }
+  if (args == 3) {
+    /* Parsed all three arguments successfully */
+    return (hour * (60 * 60) + min * 60 + sec) * 1000;
+  } else if (args == 2) {
+    /* Only parsed the first two arguments; treat hour and min as min and sec, respectively */
+    return (hour * 60 + min) * 1000;
+  } else if (args == 1) {
+    /* Only parsed the first argument; treat hour as sec */
+    return hour * 1000;
+  } else {
+    /* Error! */
+    return -1;
+  }
 }
 
 char *
@@ -153,26 +145,19 @@ totem_time_to_string_text (gint64 msecs)
 
   secs = g_strdup_printf (ngettext ("%d second", "%d seconds", sec), sec);
 
-  if (hour > 0)
-    {
-      /* hour:minutes:seconds */
-      string = g_strdup_printf (_("%s %s %s"), hours, mins, secs);
-    }
-  else if (min > 0)
-    {
-      /* minutes:seconds */
-      string = g_strdup_printf (_("%s %s"), mins, secs);
-    }
-  else if (sec > 0)
-    {
-      /* seconds */
-      string = g_strdup_printf (_("%s"), secs);
-    }
-  else
-    {
-      /* 0 seconds */
-      string = g_strdup (_("0 seconds"));
-    }
+  if (hour > 0) {
+    /* hour:minutes:seconds */
+    string = g_strdup_printf (_("%s %s %s"), hours, mins, secs);
+  } else if (min > 0) {
+    /* minutes:seconds */
+    string = g_strdup_printf (_("%s %s"), mins, secs);
+  } else if (sec > 0) {
+    /* seconds */
+    string = g_strdup_printf (_("%s"), secs);
+  } else {
+    /* 0 seconds */
+    string = g_strdup (_("0 seconds"));
+  }
 
   g_free (hours);
   g_free (mins);
@@ -198,8 +183,7 @@ cb_unset_size (gpointer data)
 }
 
 static void
-cb_set_preferred_size (GtkWidget * widget, GtkRequisition * req,
-		       gpointer data)
+cb_set_preferred_size (GtkWidget * widget, GtkRequisition * req, gpointer data)
 {
   TotemPrefSize *size = data;
 
@@ -219,14 +203,14 @@ totem_widget_set_preferred_size (GtkWidget * widget, gint width, gint height)
   size->width = width;
   size->height = height;
   size->sig_id = g_signal_connect (widget, "size-request",
-				   G_CALLBACK (cb_set_preferred_size), size);
+      G_CALLBACK (cb_set_preferred_size), size);
 
   gtk_widget_queue_resize (widget);
 }
 
 gboolean
 totem_ratio_fits_screen (GdkWindow * video_window, int video_width,
-			 int video_height, gfloat ratio)
+    int video_height, gfloat ratio)
 {
   GdkRectangle fullscreen_rect;
   int new_w, new_h;
@@ -240,14 +224,13 @@ totem_ratio_fits_screen (GdkWindow * video_window, int video_width,
 
   screen = gdk_drawable_get_screen (GDK_DRAWABLE (video_window));
   gdk_screen_get_monitor_geometry (screen,
-				   gdk_screen_get_monitor_at_window
-				   (screen, video_window), &fullscreen_rect);
+      gdk_screen_get_monitor_at_window
+      (screen, video_window), &fullscreen_rect);
 
   if (new_w > (fullscreen_rect.width - 128) ||
-      new_h > (fullscreen_rect.height - 128))
-    {
-      return FALSE;
-    }
+      new_h > (fullscreen_rect.height - 128)) {
+    return FALSE;
+  }
 
   return TRUE;
 }

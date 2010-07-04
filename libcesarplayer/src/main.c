@@ -29,15 +29,14 @@
 static int i = 0;
 static gboolean
 window_state_event (GtkWidget * widget, GdkEventWindowState * event,
-		    gpointer gvc)
+    gpointer gvc)
 {
   i++;
   g_print ("%d\n", i);
-  if (i == 3)
-    {
-      gst_video_capturer_rec (GST_VIDEO_CAPTURER (gvc));
+  if (i == 3) {
+    gst_video_capturer_rec (GST_VIDEO_CAPTURER (gvc));
 
-    }
+  }
   if (i == 5)
     gst_video_capturer_stop (GST_VIDEO_CAPTURER (gvc));
   return TRUE;
@@ -56,7 +55,7 @@ create_window (GstVideoCapturer * gvc)
   gtk_window_set_title (GTK_WINDOW (window), "Capturer");
 
   g_signal_connect (G_OBJECT (window), "window-state-event",
-		    G_CALLBACK (window_state_event), gvc);
+      G_CALLBACK (window_state_event), gvc);
 
 
   return window;
