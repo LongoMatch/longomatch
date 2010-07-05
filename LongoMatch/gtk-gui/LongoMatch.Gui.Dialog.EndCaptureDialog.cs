@@ -88,7 +88,7 @@ namespace LongoMatch.Gui.Dialog {
             w6.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w7 = new Gtk.Image();
-            w7.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-undo", Gtk.IconSize.Button, 20);
+            w7.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-undo", Gtk.IconSize.Button, 16);
             w6.Add(w7);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w9 = new Gtk.Label();
@@ -113,7 +113,7 @@ namespace LongoMatch.Gui.Dialog {
             w15.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w16 = new Gtk.Image();
-            w16.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-cancel", Gtk.IconSize.Button, 20);
+            w16.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-cancel", Gtk.IconSize.Button, 16);
             w15.Add(w16);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w18 = new Gtk.Label();
@@ -138,7 +138,7 @@ namespace LongoMatch.Gui.Dialog {
             w24.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w25 = new Gtk.Image();
-            w25.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-save", Gtk.IconSize.Button, 20);
+            w25.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-save", Gtk.IconSize.Button, 16);
             w24.Add(w25);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w27 = new Gtk.Label();

@@ -49,7 +49,7 @@ namespace LongoMatch.Gui.Component {
             w2.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w3 = new Gtk.Image();
-            w3.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-zoom-fit", Gtk.IconSize.Button, 20);
+            w3.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-zoom-fit", Gtk.IconSize.Button, 16);
             w2.Add(w3);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w5 = new Gtk.Label();

@@ -83,7 +83,7 @@ namespace LongoMatch.Gui.Dialog {
             w4.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w5 = new Gtk.Image();
-            w5.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-new", Gtk.IconSize.Button, 20);
+            w5.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-new", Gtk.IconSize.Button, 16);
             w4.Add(w5);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w7 = new Gtk.Label();
@@ -109,7 +109,7 @@ namespace LongoMatch.Gui.Dialog {
             w13.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w14 = new Gtk.Image();
-            w14.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-delete", Gtk.IconSize.Button, 20);
+            w14.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-delete", Gtk.IconSize.Button, 16);
             w13.Add(w14);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w16 = new Gtk.Label();
@@ -135,7 +135,7 @@ namespace LongoMatch.Gui.Dialog {
             w22.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Image w23 = new Gtk.Image();
-            w23.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-save", Gtk.IconSize.Button, 20);
+            w23.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-save", Gtk.IconSize.Button, 16);
             w22.Add(w23);
             // Container child GtkHBox.Gtk.Container+ContainerChild
             Gtk.Label w25 = new Gtk.Label();
@@ -177,8 +177,6 @@ namespace LongoMatch.Gui.Dialog {
             this.hbox1.Add(this.teamtemplatewidget1);
             Gtk.Box.BoxChild w33 = ((Gtk.Box.BoxChild)(this.hbox1[this.teamtemplatewidget1]));
             w33.Position = 1;
-            w33.Expand = false;
-            w33.Fill = false;
             this.hpaned1.Add(this.hbox1);
             w1.Add(this.hpaned1);
             Gtk.Box.BoxChild w35 = ((Gtk.Box.BoxChild)(w1[this.hpaned1]));
