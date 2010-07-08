@@ -58,6 +58,9 @@ CESARPLAYER_COMPILE_TARGET = library
 CESARPLAYER_FILES = \
 	AssemblyInfo.cs \
 	gtk-gui/generated.cs \
+	Common/Constants.cs\
+	Common/Enum.cs\
+	Common/Handlers.cs\
 	Player/GstPlayer.cs \
 	Player/IPlayer.cs \
 	Player/ObjectManager.cs \
@@ -73,28 +76,26 @@ CESARPLAYER_FILES = \
 	Utils/IMetadataReader.cs \
 	Utils/TimeString.cs \
 	Capturer/CaptureProperties.cs \
-	Capturer/FakeCapturer.cs \
 	Capturer/GstCameraCapturer.cs \
+	Capturer/FakeCapturer.cs \
 	Capturer/ICapturer.cs \
 	Capturer/LiveSourceTimer.cs \
 	Capturer/ObjectManager.cs \
+	Editor/GstVideoSplitter.cs \
 	Editor/IVideoEditor.cs \
 	Editor/IVideoSplitter.cs \
-	Editor/GstVideoSplitter.cs \
 	Editor/VideoSegment.cs \
 	Editor/EditorState.cs \
+	Utils/Device.cs \
 	Utils/MediaFile.cs \
-	Utils/PreviewMediaFile.cs\
-	Common/Enum.cs\
-	Common/Handlers.cs
-	
+	Utils/PreviewMediaFile.cs
 
 CESARPLAYER_REFERENCES = \
 	-r:Mono.Posix \
 	-r:System \
 	-pkg:gtk-sharp-2.0 \
 	-pkg:glib-sharp-2.0 \
-	
+
 #LongoMatch.exe
 LONGOMATCH_PRE=${BUILD_DIR}/LongoMatch.exe
 LONGOMATCH_BUNDLED=${BUILD_DIR}/LongoMatchBundled.exe
@@ -158,8 +159,8 @@ LONGOMATCH_FILES = \
 	gtk-gui/LongoMatch.Gui.Dialog.OpenProjectDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.ProjectTemplateEditorDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.TeamTemplateEditor.cs \
@@ -201,9 +202,9 @@ LONGOMATCH_FILES = \
 	Gui/Dialog/NewProjectDialog.cs \
 	Gui/Dialog/OpenProjectDialog.cs \
 	Gui/Dialog/PlayersSelectionDialog.cs \
-	Gui/Dialog/ProjectSelectionDialog.cs \
 	Gui/Dialog/ProjectsManager.cs \
 	Gui/Dialog/ProjectTemplateEditorDialog.cs \
+	Gui/Dialog/ProjectSelectionDialog.cs \
 	Gui/Dialog/SnapshotsDialog.cs \
 	Gui/Dialog/TaggerDialog.cs \
 	Gui/Dialog/TemplatesEditor.cs \
@@ -233,6 +234,7 @@ LONGOMATCH_FILES = \
 	Main.cs \
 	Playlist/IPlayList.cs \
 	Playlist/PlayList.cs \
+	Time/Tag.cs \
 	Time/Drawing.cs\
 	Time/HotKey.cs \
 	Time/MediaTimeNode.cs \
@@ -240,13 +242,11 @@ LONGOMATCH_FILES = \
 	Time/Player.cs \
 	Time/PlayListTimeNode.cs \
 	Time/SectionsTimeNode.cs \
-	Time/Tag.cs \
 	Time/Time.cs \
 	Time/TimeNode.cs \
 	Updates/Updater.cs \
-	Updates/XmlUpdateParser.cs\
+	Updates/XmlUpdateParser.cs \
 	Utils/ProjectUtils.cs
-
 LONGOMATCH_RESOURCES = \
 	-resource:./gtk-gui/objects.xml \
 	-resource:./gtk-gui/gui.stetic\
