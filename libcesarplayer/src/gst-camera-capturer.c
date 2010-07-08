@@ -1002,16 +1002,16 @@ gst_camera_capture_create_source_bin (GstCameraCapturer * gcc)
   bin = gst_bin_new ("videosource");
   source = gst_element_factory_make (DVVIDEOSRC, "source_device");
   decoder = gst_element_factory_make ("decodebin2", NULL);
-  deinterlacer =
-      gst_element_factory_make ("ffdeinterlace", "source_video_sink");
+  colorspace = gst_element_factory_make ("ffmpegcolorspace", 
+      "source_video_sink");
+  deinterlacer = gst_element_factory_make ("ffdeinterlace", NULL);
   videorate = gst_element_factory_make ("videorate", NULL);
-  colorspace = gst_element_factory_make ("ffmpegcolorspace", NULL);
   videoscale = gst_element_factory_make ("videoscale", NULL);
 
-  gst_bin_add_many (GST_BIN (bin), source, decoder, deinterlacer,
-      colorspace, videorate, videoscale, NULL);
+  gst_bin_add_many (GST_BIN (bin), source, decoder, colorspace,
+      deinterlacer, videorate, videoscale, NULL);
   gst_element_link (source, decoder);
-  gst_element_link_many (deinterlacer, videorate, colorspace, videoscale, NULL);
+  gst_element_link_many (colorspace, deinterlacer, videorate, videoscale, NULL);
 
   g_signal_connect (decoder, "pad-added", G_CALLBACK (cb_new_pad), bin);
 
