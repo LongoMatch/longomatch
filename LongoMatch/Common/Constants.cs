@@ -56,7 +56,8 @@ Mario Blättermann (de)
 Matej Urbančič (sl)
 Marek Cernocky (cs)
 Pavel Bárta (cs)
-Petr Kovar (cs)";
+Petr Kovar (cs)
+Xavier Queralt Mateu (ca)";
 		
 		public const int THUMBNAIL_MAX_WIDTH = 100;
 		
