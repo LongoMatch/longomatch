@@ -315,8 +315,12 @@ gst_camera_capturer_set_device_id (GstCameraCapturer * gcc,
 {
   gcc->priv->device_id = g_strdup (device_id);
 #ifdef WIN32
-  /* On windows the source is always dshowvideosrc */
-  g_object_set (gcc->priv->videosrc, "device-name", device_id, NULL);
+  {
+  GstElement *source;
+  source =
+      gst_bin_get_by_name (GST_BIN (gcc->priv->videosrc), "source_device");
+  g_object_set (source, "device-name", device_id, NULL);
+  }
 #else
   /* On linux it only makes sense to set the device id
    * for the dv1394src element because the gconf one can be set 
@@ -325,7 +329,7 @@ gst_camera_capturer_set_device_id (GstCameraCapturer * gcc,
     GstElement *source;
 
     source =
-        gst_bin_get_by_name (GST_BIN (gcc->priv->videosrc), "source_element");
+        gst_bin_get_by_name (GST_BIN (gcc->priv->videosrc), "source_device");
     g_object_set (source, "guid", g_ascii_strtoull (device_id, NULL, 10), NULL);
   }
 #endif
