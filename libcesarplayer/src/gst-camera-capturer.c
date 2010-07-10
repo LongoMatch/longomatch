@@ -1051,11 +1051,15 @@ gst_camera_capturer_set_source (GstCameraCapturer * gcc,
     case GST_CAMERA_CAPTURE_SOURCE_TYPE_RAW:
     default:
     {
+#ifdef WIN32
+      gcc->priv->videosrc = gst_camera_capture_create_source_bin (gcc);
+#else
       gchar *bin =
           g_strdup_printf ("%s ! videorate ! ffmpegcolorspace ! videoscale",
           RAWVIDEOSRC);
       gcc->priv->videosrc = gst_parse_bin_from_description (bin, TRUE, err);
       gcc->priv->audiosrc = gst_element_factory_make (AUDIOSRC, "audiosource");
+#endif
       break;
     }
   }
