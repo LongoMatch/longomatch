@@ -1243,7 +1243,7 @@ gst_camera_capturer_set_video_encoder (GstCameraCapturer * gcc,
     default:
       gcc->priv->videoenc =
           gst_element_factory_make ("vp8enc", "video-encoder");
-      g_object_set (gcc->priv->videoenc, "speed", 0,
+      g_object_set (gcc->priv->videoenc, "speed", 2,
           "max-keyframe-distance", 25, NULL);
       name = "VP8 video encoder";
       break;
