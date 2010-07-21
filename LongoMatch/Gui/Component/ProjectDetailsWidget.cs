@@ -243,6 +243,7 @@ namespace LongoMatch.Gui.Component
 				else 
 					s.CaptureSourceType = CaptureSourceType.Raw;
 				s.DeviceID = videoDevices[devicecombobox.Active].ID;
+				/* Get size info */
 				switch (sizecombobox.ActiveText){
 					/* FIXME: Don't harcode size values */
 					case PAL_FORMAT:
@@ -262,6 +263,7 @@ namespace LongoMatch.Gui.Component
 						s.Height = 0;
 						break;
 				}
+				/* Get video compresion format info */
 				switch (videoformatcombobox.ActiveText){
 					case Constants.AVI:
 						s.VideoEncoder = VideoEncoderType.Xvid;
