@@ -17,12 +17,15 @@ CSC = $(MONO_INSTALL_PATH)/bin/gmcs
 
 # i18n
 FILES = \
+	ca.po\
 	cs.po\
 	da.po\
 	de.po\
 	es.po\
 	nb.po\
 	sl.po\
+	pt.po\
+	fr.po\
 	sv.po
 
 MO_FILES = $(foreach po,$(FILES), $(LOCALE_DIR)/$(basename $(po))/LC_MESSAGES/longomatch.mo)
