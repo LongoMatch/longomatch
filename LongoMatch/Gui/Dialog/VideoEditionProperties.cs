@@ -43,10 +43,10 @@ namespace LongoMatch.Gui.Dialog
 		public VideoEditionProperties()
 		{
 			this.Build();
-			formatcombobox.AppendText(Constants.WEBM);
 			formatcombobox.AppendText(Constants.MP4);
 			formatcombobox.AppendText(Constants.AVI);
 			if (System.Environment.OSVersion.Platform != PlatformID.Win32NT) {
+				formatcombobox.AppendText(Constants.WEBM);
 				formatcombobox.AppendText(Constants.OGG);
 				formatcombobox.AppendText(Constants.DVD);
 			}

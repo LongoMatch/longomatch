@@ -433,11 +433,12 @@ namespace LongoMatch.Gui.Component
 			sizecombobox.AppendText(PAL_3_4_FORMAT);
 			sizecombobox.AppendText(PAL_1_2_FORMAT);
 			sizecombobox.Active = 0;
-			
-			videoformatcombobox.AppendText(Constants.WEBM);
+		
+			if (Environment.OSVersion.Platform != PlatformID.Win32NT)
+				videoformatcombobox.AppendText(Constants.WEBM);
+			videoformatcombobox.AppendText(Constants.AVI);
 			videoformatcombobox.AppendText(Constants.OGG);
 			videoformatcombobox.AppendText(Constants.MP4);
-			videoformatcombobox.AppendText(Constants.AVI);
 			videoformatcombobox.Active = 0;
 		}
 		
