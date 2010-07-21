@@ -33,7 +33,7 @@ for name in [MONO_PATH, GST_PATH, GTK_PATH]:
 
 GTK_DEPS = ['freetype6.dll', 'libatk-1.0-0.dll', 'libcairo-2.dll', 'libgailutil-18.dll',
             'libgdk_pixbuf-2.0-0.dll', 'libgdk-win32-2.0-0.dll', 'libgtk-win32-2.0-0.dll',
-            'libjpeg-7.dll', 'libpng12-0.dll', 'libtiff-3.dll', 'libtiffxx-3.dll', 'zlib1.dll' ]
+            'libpng14-14.dll', 'zlib1.dll' ]
 
 MONO_DEPS = ['mono.dll', 'MonoPosixHelper.dll', 'pangosharpglue-2.dll', 'gtksharpglue-2.dll',
              'glibsharpglue-2.dll', 'gdksharpglue-2.dll', 'atksharpglue-2.dll', 'intl.dll']
