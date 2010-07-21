@@ -284,10 +284,6 @@ namespace LongoMatch.Gui.Component
 						s.Muxer = VideoMuxerType.WebM;
 						break;
 				}
-				if (devicecombobox.ActiveText.Contains (Catalog.GetString(GCONF_SOURCE)))
-					s.CaptureSourceType = CaptureSourceType.Raw;
-				else
-					s.CaptureSourceType = CaptureSourceType.DV;
 				return s;
 			}
 		}
