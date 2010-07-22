@@ -238,10 +238,15 @@ namespace LongoMatch.Gui.Component
 				s.OutputFile = fileEntry.Text;
 				s.AudioBitrate = (uint)audiobitratespinbutton.Value;
 				s.VideoBitrate = (uint)videobitratespinbutton.Value;
-				if (videoDevices[devicecombobox.Active].DeviceType == DeviceType.DV)
-					s.CaptureSourceType = CaptureSourceType.DV;
-				else 
+				if (videoDevices[devicecombobox.Active].DeviceType == DeviceType.DV){
+					if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+						s.CaptureSourceType = CaptureSourceType.DShow;
+					else
+						s.CaptureSourceType = CaptureSourceType.DV;
+				}
+				else {
 					s.CaptureSourceType = CaptureSourceType.Raw;
+				}
 				s.DeviceID = videoDevices[devicecombobox.Active].ID;
 				/* Get size info */
 				switch (sizecombobox.ActiveText){

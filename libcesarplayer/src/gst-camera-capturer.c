@@ -986,9 +986,8 @@ gst_camera_capture_create_dv1394_source_bin (GstCameraCapturer * gcc)
   return bin;
 }
 
-#ifdef WIN32
 static GstElement *
-gst_camera_capture_create_source_bin (GstCameraCapturer * gcc)
+gst_camera_capture_create_dshow_source_bin (GstCameraCapturer * gcc)
 {
   GstElement *bin;
   GstElement *source;
@@ -1022,7 +1021,6 @@ gst_camera_capture_create_source_bin (GstCameraCapturer * gcc)
 
   return bin;
 }
-#endif
 
 gboolean
 gst_camera_capturer_set_source (GstCameraCapturer * gcc,
@@ -1040,26 +1038,24 @@ gst_camera_capturer_set_source (GstCameraCapturer * gcc,
   switch (gcc->priv->source_type) {
     case GST_CAMERA_CAPTURE_SOURCE_TYPE_DV:
     {
-#ifdef WIN32
-      gcc->priv->videosrc = gst_camera_capture_create_source_bin (gcc);
-#else
       gcc->priv->videosrc = gst_camera_capture_create_dv1394_source_bin (gcc);
-#endif
+      /*gcc->priv->audiosrc = gcc->priv->videosrc; */
+      break;
+    }
+    case GST_CAMERA_CAPTURE_SOURCE_TYPE_DSHOW:
+    {
+      gcc->priv->videosrc = gst_camera_capture_create_dshow_source_bin (gcc);
       /*gcc->priv->audiosrc = gcc->priv->videosrc; */
       break;
     }
     case GST_CAMERA_CAPTURE_SOURCE_TYPE_RAW:
     default:
     {
-#ifdef WIN32
-      gcc->priv->videosrc = gst_camera_capture_create_source_bin (gcc);
-#else
       gchar *bin =
           g_strdup_printf ("%s ! videorate ! ffmpegcolorspace ! videoscale",
           RAWVIDEOSRC);
       gcc->priv->videosrc = gst_parse_bin_from_description (bin, TRUE, err);
       gcc->priv->audiosrc = gst_element_factory_make (AUDIOSRC, "audiosource");
-#endif
       break;
     }
   }

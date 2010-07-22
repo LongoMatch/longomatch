@@ -163,5 +163,6 @@ namespace LongoMatch.Video.Common
 		None,
 		DV,
 		Raw,
+		DShow
 	}
 }
