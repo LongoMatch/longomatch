@@ -1214,7 +1214,7 @@ gst_camera_capturer_set_video_encoder (GstCameraCapturer * gcc,
     case VIDEO_ENCODER_MPEG4:
       gcc->priv->videoenc =
           gst_element_factory_make ("ffenc_mpeg4", "video-encoder");
-      g_object_set (gcc->priv->videoenc, "pass", "pass1",
+      g_object_set (gcc->priv->videoenc, "pass", 512,
           "max-key-interval", -1, NULL);
       name = "FFmpeg mpeg4 video encoder";
       break;
