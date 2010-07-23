@@ -271,7 +271,7 @@ namespace LongoMatch.Gui.Component
 				/* Get video compresion format info */
 				switch (videoformatcombobox.ActiveText){
 					case Constants.AVI:
-						s.VideoEncoder = VideoEncoderType.Xvid;
+						s.VideoEncoder = VideoEncoderType.Mpeg4;
 						s.AudioEncoder = AudioEncoderType.Mp3;
 						s.Muxer = VideoMuxerType.Avi;
 						break;
