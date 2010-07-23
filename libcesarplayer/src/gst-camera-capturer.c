@@ -52,7 +52,11 @@
 #include <gdk/gdkx.h>
 #endif
 
+#ifdef WIN32
+#define DEFAULT_SOURCE_TYPE  GST_CAMERA_CAPTURE_SOURCE_TYPE_DSHOW
+#else
 #define DEFAULT_SOURCE_TYPE  GST_CAMERA_CAPTURE_SOURCE_TYPE_RAW
+#endif
 
 typedef enum
 {
