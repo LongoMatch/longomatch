@@ -266,10 +266,13 @@ static void
 gst_camera_capturer_set_video_bit_rate (GstCameraCapturer * gcc, gint bitrate)
 {
   gcc->priv->video_bitrate = bitrate;
-  g_object_set (gcc->priv->videoenc, "bitrate", gcc->priv->video_bitrate, NULL);
+  if (gcc->priv->video_encoder_type == VIDEO_ENCODER_MPEG4 ||
+      gcc->priv->video_encoder_type == VIDEO_ENCODER_XVID)
+    g_object_set (gcc->priv->videoenc, "bitrate", bitrate * 1000, NULL);
+  else
+    g_object_set (gcc->priv->videoenc, "bitrate", gcc->priv->video_bitrate, NULL);
   GST_INFO_OBJECT (gcc, "Changed video bitrate to :\n%d",
       gcc->priv->video_bitrate);
-
 }
 
 static void
