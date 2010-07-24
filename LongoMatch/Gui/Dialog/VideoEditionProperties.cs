@@ -109,7 +109,7 @@ namespace LongoMatch.Gui.Dialog
 
 		private string GetExtension() {
 			if (formatcombobox.ActiveText == Constants.MP4)
-				return "mkv";
+				return "mp4";
 			else if (formatcombobox.ActiveText == Constants.OGG)
 				return "ogg";
 			else if (formatcombobox.ActiveText == Constants.WEBM)
