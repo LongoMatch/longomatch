@@ -265,7 +265,6 @@ namespace LongoMatch.Gui.Component
 				                          Catalog.GetString("Please, select a video file."));
 				response=vep.Run();
 			}
-			vep.Destroy();
 			if (response ==(int)ResponseType.Ok) {
 				//FIXME:Create a new instance of the video editor until we fix the audio swith enable/disabled
 				LoadEditor();
@@ -296,6 +295,7 @@ namespace LongoMatch.Gui.Component
 				catch (Exception ex) {
 					MessagePopup.PopupMessage(this, MessageType.Error, Catalog.GetString(ex.Message));
 				}
+			vep.Destroy();
 			}
 		}
 
