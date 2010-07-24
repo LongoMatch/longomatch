@@ -30,7 +30,7 @@
 
 #define DEFAULT_VIDEO_ENCODER "vp8enc"
 #define DEFAULT_AUDIO_ENCODER "vorbisenc"
-#define DEFAULT_VIDEO_MUXER "webmmux"
+#define DEFAULT_VIDEO_MUXER "matroskamux"
 #define FONT_SIZE_FACTOR 0.03
 #define LAME_CAPS "audio/x-raw-int, rate=44100, channels=2, endianness=1234, signed=true, width=16, depth=16"
 #define VORBIS_CAPS "audio/x-raw-float, rate=44100, channels=2, endianness=1234, signed=true, width=32, depth=32"
