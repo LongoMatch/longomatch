@@ -479,6 +479,7 @@ gve_apply_new_caps (GstVideoEditor * gve)
   caps = gst_caps_new_simple ("video/x-raw-yuv",
       "width", G_TYPE_INT, gve->priv->width,
       "height", G_TYPE_INT, gve->priv->height,
+      "pixel-aspect-ratio", GST_TYPE_FRACTION, 1, 1,
       "framerate", GST_TYPE_FRACTION, 25, 1, NULL);
 
   g_object_set (G_OBJECT (gve->priv->capsfilter), "caps", caps, NULL);
@@ -517,6 +518,7 @@ gve_create_video_encode_bin (GstVideoEditor * gve)
   g_object_set (G_OBJECT (gve->priv->textoverlay), "font-desc",
       "sans bold 20", "shaded-background", TRUE, "valignment", 2,
       "halignment", 2, NULL);
+  g_object_set (G_OBJECT (gve->priv->videoscale), "add-borders", TRUE, NULL);
   g_object_set (G_OBJECT (gve->priv->video_encoder), "bitrate",
       gve->priv->video_bitrate, NULL);
 
