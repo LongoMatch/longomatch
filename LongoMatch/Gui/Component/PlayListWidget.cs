@@ -320,10 +320,5 @@ namespace LongoMatch.Gui.Component
 			if (ApplyCurrentRate != null)
 				ApplyCurrentRate(plNode);
 		}
-
-		~PlayListWidget() {
-			videoEditor.Cancel();
-		}
-
 	}
 }
