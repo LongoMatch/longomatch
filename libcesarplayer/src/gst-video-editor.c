@@ -533,8 +533,8 @@ gve_create_video_encode_bin (GstVideoEditor * gve)
       gve->priv->textoverlay, gve->priv->queue, gve->priv->video_encoder, NULL);
   gst_element_link_many (gve->priv->identity,
       gve->priv->ffmpegcolorspace,
-      gve->priv->videorate,
       gve->priv->videoscale,
+      gve->priv->videorate,
       gve->priv->capsfilter,
       gve->priv->videobox,
       gve->priv->textoverlay, gve->priv->queue, gve->priv->video_encoder, NULL);
