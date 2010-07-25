@@ -61,7 +61,7 @@
 /* gtk+/gnome */
 #ifdef WIN32
 #include <gdk/gdkwin32.h>
-#define DEFAULT_VIDEO_SINK "directdrawsink"
+#define DEFAULT_VIDEO_SINK "autovideosink"
 #else
 #include <gdk/gdkx.h>
 #define DEFAULT_VIDEO_SINK "gconfvideosink"
