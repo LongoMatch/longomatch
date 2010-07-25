@@ -157,8 +157,10 @@ namespace LongoMatch.Gui
 			/* resetting common properties */
 			pausebutton.Visible = false;
 			stopbutton.Visible = false;
+			recbutton.Visible = true;
 			captureStarted = false;
 			capturing = false;
+			OnTick(0);
 			
 			if (capturer == null)
 			return;
