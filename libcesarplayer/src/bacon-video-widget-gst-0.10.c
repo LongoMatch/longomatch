@@ -5356,6 +5356,12 @@ bvw_element_msg_sync (GstBus * bus, GstMessage * msg, gpointer data)
     g_mutex_lock (bvw->priv->lock);
     bvw_update_interface_implementations (bvw);
     g_mutex_unlock (bvw->priv->lock);
+    
+    if (bvw->priv->xoverlay == NULL) {
+      GstObject *sender = GST_MESSAGE_SRC (msg);
+      if (sender && GST_IS_X_OVERLAY (sender))
+        bvw->priv->xoverlay = GST_X_OVERLAY (gst_object_ref (sender));
+    }
 
     g_return_if_fail (bvw->priv->xoverlay != NULL);
     g_return_if_fail (bvw->priv->video_window != NULL);
