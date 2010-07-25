@@ -96,7 +96,6 @@ struct GstVideoEditorPrivate
   GstElement *textoverlay;
   GstElement *videoscale;
   GstElement *capsfilter;
-  GstElement *videobox;
   GstElement *queue;
   GstElement *video_encoder;
 
@@ -507,7 +506,6 @@ gve_create_video_encode_bin (GstVideoEditor * gve)
   gve->priv->videorate = gst_element_factory_make ("videorate", "videorate");
   gve->priv->videoscale = gst_element_factory_make ("videoscale", "videoscale");
   gve->priv->capsfilter = gst_element_factory_make ("capsfilter", "capsfilter");
-  gve->priv->videobox = gst_element_factory_make ("videobox", "videobox");
   gve->priv->textoverlay =
       gst_element_factory_make ("textoverlay", "textoverlay");
   gve->priv->queue = gst_element_factory_make ("queue", "video-encode-queue");
@@ -529,14 +527,12 @@ gve_create_video_encode_bin (GstVideoEditor * gve)
       gve->priv->videorate,
       gve->priv->videoscale,
       gve->priv->capsfilter,
-      gve->priv->videobox,
       gve->priv->textoverlay, gve->priv->queue, gve->priv->video_encoder, NULL);
   gst_element_link_many (gve->priv->identity,
       gve->priv->ffmpegcolorspace,
       gve->priv->videoscale,
       gve->priv->videorate,
       gve->priv->capsfilter,
-      gve->priv->videobox,
       gve->priv->textoverlay, gve->priv->queue, gve->priv->video_encoder, NULL);
 
   /*Create bin sink pad */
