@@ -54,7 +54,7 @@ namespace LongoMatch.Utils
 			                "gtk-save",ResponseType.Accept);
 			fChooser.SetCurrentFolder(MainClass.HomeDir());
 			FileFilter filter = new FileFilter();
-			filter.Name = "LongoMatch Project";
+			filter.Name = Constants.PROJECT_NAME;
 			filter.AddPattern("*.lpr");
 
 			fChooser.AddFilter(filter);
