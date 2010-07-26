@@ -92,6 +92,7 @@ namespace LongoMatch.Gui
 			playerbin1.LogoMode = true;
 			
 			capturerBin.Visible = false;
+			playerbin1.Logo = System.IO.Path.Combine(MainClass.ImagesDir(),"background.png");
 			capturerBin.CaptureFinished += delegate {
 						CloseCaptureProject();};
 			
