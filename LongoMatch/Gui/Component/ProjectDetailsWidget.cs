@@ -85,7 +85,7 @@ namespace LongoMatch.Gui.Component
 			set {
 				bool visible1 = value == ProjectType.CaptureProject; 
 				bool visible2 = value != ProjectType.FakeCaptureProject;
-				bool visible3 = value == ProjectType.EditProject;
+				bool visible3 = value != ProjectType.EditProject;
 				
 				filelabel.Visible = visible2;
 				filehbox.Visible = visible2;
