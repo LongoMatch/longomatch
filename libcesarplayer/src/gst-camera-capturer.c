@@ -321,25 +321,6 @@ gst_camera_capturer_set_device_id (GstCameraCapturer * gcc,
     const gchar * device_id)
 {
   gcc->priv->device_id = g_strdup (device_id);
-#ifdef WIN32
-  {
-  GstElement *source;
-  source =
-      gst_bin_get_by_name (GST_BIN (gcc->priv->videosrc), "source_device");
-  g_object_set (source, "device-name", device_id, NULL);
-  }
-#else
-  /* On linux it only makes sense to set the device id
-   * for the dv1394src element because the gconf one can be set 
-   * through gstreamer-properties */
-  if (gcc->priv->source_type == GST_CAMERA_CAPTURE_SOURCE_TYPE_DV) {
-    GstElement *source;
-
-    source =
-        gst_bin_get_by_name (GST_BIN (gcc->priv->videosrc), "source_device");
-    g_object_set (source, "guid", g_ascii_strtoull (device_id, NULL, 10), NULL);
-  }
-#endif
   GST_INFO_OBJECT (gcc, "Changed device id/name to :\n%s", device_id);
 }
 
@@ -976,6 +957,11 @@ gst_camera_capture_create_dv1394_source_bin (GstCameraCapturer * gcc)
   videorate = gst_element_factory_make ("videorate", NULL);
   colorspace = gst_element_factory_make ("ffmpegcolorspace", NULL);
   videoscale = gst_element_factory_make ("videoscale", NULL);
+  
+  /* this property needs to be set before linking the element, where the device
+   * id configured in get_caps() */
+  g_object_set (G_OBJECT(source), "guid",
+      g_ascii_strtoull (gcc->priv->device_id, NULL, 0), NULL);
 
   gst_bin_add_many (GST_BIN (bin), source, demuxer, queue1, decoder,
       queue2, deinterlacer, colorspace, videorate, videoscale, NULL);
@@ -1013,6 +999,10 @@ gst_camera_capture_create_dshow_source_bin (GstCameraCapturer * gcc)
   deinterlacer = gst_element_factory_make ("ffdeinterlace", NULL);
   videorate = gst_element_factory_make ("videorate", NULL);
   videoscale = gst_element_factory_make ("videoscale", NULL);
+
+  /* this property needs to be set before linking the element, where the device
+   * id configured in get_caps() */
+  g_object_set (G_OBJECT(source), "device-name", gcc->priv->device_id, NULL);
 
   gst_bin_add_many (GST_BIN (bin), source, decoder, colorspace,
       deinterlacer, videorate, videoscale, NULL);
@@ -1108,11 +1098,6 @@ gst_camera_capturer_new (gchar * filename, GError ** err)
   GST_INFO_OBJECT (gcc, "Setting capture mode to \"video\"");
   g_object_set (gcc->priv->camerabin, "mode", 1, NULL);
 
-  GST_INFO_OBJECT (gcc, "Setting default video/audio source ");
-  gst_camera_capturer_set_source (gcc, DEFAULT_SOURCE_TYPE, err);
-  if (*err != NULL) {
-    return NULL;
-  }
 
   GST_INFO_OBJECT (gcc, "Disabling audio");
   flags = GST_CAMERABIN_FLAG_DISABLE_AUDIO;
@@ -1157,9 +1142,15 @@ missing_plugin:
 void
 gst_camera_capturer_run (GstCameraCapturer * gcc)
 {
+  GError *err = NULL;
+ 
   g_return_if_fail (gcc != NULL);
   g_return_if_fail (GST_IS_CAMERA_CAPTURER (gcc));
 
+  /* the source needs to be created before the 'device-is' is set
+   * because dshowsrcwrapper can't change the device-name after
+   * it has been linked for the first time */ 
+  gst_camera_capturer_set_source (gcc, DEFAULT_SOURCE_TYPE, &err);
   gst_element_set_state (gcc->priv->main_pipeline, GST_STATE_PLAYING);
 }
 
