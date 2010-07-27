@@ -144,7 +144,7 @@ namespace LongoMatch.Video.Capturer {
 		}
 		
 #pragma warning disable 0169
-		[GLib.CDeclCallback]
+		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 		delegate void ErrorSignalDelegate (IntPtr arg0, IntPtr arg1, IntPtr gch);
 
 		static void ErrorSignalCallback (IntPtr arg0, IntPtr arg1, IntPtr gch)
@@ -164,7 +164,7 @@ namespace LongoMatch.Video.Capturer {
 			}
 		}
 
-		[GLib.CDeclCallback]
+		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 		delegate void ErrorVMDelegate (IntPtr gcc, IntPtr message);
 
 		static ErrorVMDelegate ErrorVMCallback;
@@ -213,7 +213,7 @@ namespace LongoMatch.Video.Capturer {
 			}
 		}
 
-		[GLib.CDeclCallback]
+		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 		delegate void EosVMDelegate (IntPtr gcc);
 
 		static EosVMDelegate EosVMCallback;
