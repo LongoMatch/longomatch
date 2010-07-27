@@ -990,6 +990,7 @@ gst_camera_capture_create_dshow_source_bin (GstCameraCapturer * gcc)
   GstElement *videorate;
   GstElement *videoscale;
   GstPad *src_pad;
+  GstCaps *source_caps; 
 
   bin = gst_bin_new ("videosource");
   source = gst_element_factory_make (DVVIDEOSRC, "source_device");
@@ -1006,7 +1007,9 @@ gst_camera_capture_create_dshow_source_bin (GstCameraCapturer * gcc)
 
   gst_bin_add_many (GST_BIN (bin), source, decoder, colorspace,
       deinterlacer, videorate, videoscale, NULL);
-  gst_element_link (source, decoder);
+  source_caps = gst_caps_from_string ("video/x-dv, systemstream=true;" 
+      "video/x-raw-rgb; video/x-raw-yuv");
+  gst_element_link_filtered (source, decoder, source_caps);
   gst_element_link_many (colorspace, deinterlacer, videorate, videoscale, NULL);
 
   g_signal_connect (decoder, "pad-added", G_CALLBACK (cb_new_pad), bin);
