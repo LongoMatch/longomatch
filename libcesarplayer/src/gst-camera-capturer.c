@@ -31,7 +31,6 @@
 #include <gst/video/video.h>
 
 #include "gst-camera-capturer.h"
-#include "gstvideowidget.h"
 #include "gstscreenshot.h"
 
 /*Default video source*/
