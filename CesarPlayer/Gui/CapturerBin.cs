@@ -214,6 +214,7 @@ namespace LongoMatch.Gui
 			if (capturer == null)
 				return;
 			
+			capturer.DeviceID = captureProps.DeviceID;
 			capturer.OutputFile = captureProps.OutputFile;
 			capturer.OutputHeight = captureProps.Height;
 			capturer.OutputWidth = captureProps.Width;
@@ -221,7 +222,6 @@ namespace LongoMatch.Gui
 			capturer.SetAudioEncoder(captureProps.AudioEncoder);
 			capturer.SetVideoMuxer(captureProps.Muxer);	
 			capturer.SetSource(captureProps.CaptureSourceType);
-			capturer.DeviceID = captureProps.DeviceID;
 			capturer.VideoBitrate = captureProps.VideoBitrate;
 			capturer.AudioBitrate = captureProps.AudioBitrate;
 		}
