@@ -54,6 +54,7 @@ struct _GstCameraCapturerClass
 
   void (*eos) (GstCameraCapturer * gcc);
   void (*error) (GstCameraCapturer * gcc, const char *message);
+  void (*device_change) (GstCameraCapturer * gcc, gint *device_change);
   void (*invalidsource) (GstCameraCapturer * gcc);
 };
 

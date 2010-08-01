@@ -74,6 +74,7 @@ enum
   SIGNAL_ERROR,
   SIGNAL_EOS,
   SIGNAL_STATE_CHANGED,
+  SIGNAL_DEVICE_CHANGE,
   LAST_SIGNAL
 };
 
@@ -874,6 +875,14 @@ gst_camera_capturer_class_init (GstCameraCapturerClass * klass)
       G_SIGNAL_RUN_LAST,
       G_STRUCT_OFFSET (GstCameraCapturerClass, eos),
       NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
+
+  gcc_signals[SIGNAL_DEVICE_CHANGE] =
+      g_signal_new ("device-change",
+      G_TYPE_FROM_CLASS (object_class),
+      G_SIGNAL_RUN_LAST,
+      G_STRUCT_OFFSET (GstCameraCapturerClass, device_change),
+      NULL, NULL,
+      g_cclosure_marshal_VOID__INT, G_TYPE_NONE, 1, G_TYPE_INT);
 }
 
 void
@@ -1407,6 +1416,32 @@ gcc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
         resize_video_window (gcc);
         gtk_widget_queue_draw (GTK_WIDGET (gcc));
       }
+    }
+
+    case GST_MESSAGE_ELEMENT:
+    {
+      const GstStructure *s;
+      gint device_change = 0;
+
+      /* We only care about messages sent by the device source */
+      if (GST_MESSAGE_SRC (message) !=  GST_OBJECT (gcc->priv->device_source))
+        break;
+
+      s = gst_message_get_structure (message);
+      /* check if it's bus reset message and it contains the
+       * 'current-device-change' field */
+      if (g_strcmp0(gst_structure_get_name(s), "ieee1394-bus-reset"))
+        break;
+      if (!gst_structure_has_field (s, "current-device-change"))
+        break;
+
+
+      /* emit a signal if the device was connected or disconnected */
+      gst_structure_get_int (s, "current-device-change", &device_change);
+
+      if (device_change != 0)
+        g_signal_emit (gcc, gcc_signals[SIGNAL_DEVICE_CHANGE], 0, device_change);
+      break;
     }
 
     default:
