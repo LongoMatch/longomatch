@@ -39,6 +39,7 @@ namespace LongoMatch.Video.Common
 	public delegate void PercentCompletedHandler(object o, PercentCompletedArgs args);
 	public delegate void StateChangeHandler(object o, StateChangeArgs args);
 	public delegate void TickHandler(object o, TickArgs args);
+	public delegate void DeviceChangeHandler(object o, DeviceChangeArgs args);
 	
 	
 	
@@ -92,5 +93,14 @@ namespace LongoMatch.Video.Common
 				return (bool) Args[3];
 			}
 		}
+	}	
+
+	public class DeviceChangeArgs : GLib.SignalArgs {
+		public int DeviceChange{
+			get {
+				return (int) Args[0];
+			}
+		}
+
 	}	
 }

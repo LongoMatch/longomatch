@@ -212,6 +212,75 @@ namespace LongoMatch.Video.Capturer {
 				sig.RemoveDelegate (value);
 			}
 		}
+		
+		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+		delegate void DeviceChangeSignalDelegate (IntPtr arg0, int arg1, IntPtr gch);
+
+		static void DeviceChangeSignalCallback (IntPtr arg0, int arg1, IntPtr gch)
+		{
+			DeviceChangeArgs args = new DeviceChangeArgs ();
+			try {
+				GLib.Signal sig = ((GCHandle) gch).Target as GLib.Signal;
+				if (sig == null)
+					throw new Exception("Unknown signal GC handle received " + gch);
+
+				args.Args = new object[1];
+				args.Args[0] = arg1;
+				DeviceChangeHandler handler = (DeviceChangeHandler) sig.Handler;
+				handler (GLib.Object.GetObject (arg0), args);
+			} catch (Exception e) {
+				GLib.ExceptionManager.RaiseUnhandledException (e, false);
+			}
+		}
+
+		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+		delegate void DeviceChangeVMDelegate (IntPtr gcc, int deviceChange);
+
+		static DeviceChangeVMDelegate DeviceChangeVMCallback;
+
+		static void device_change_cb (IntPtr gcc, int deviceChange)
+		{
+			try {
+				GstCameraCapturer gcc_managed = GLib.Object.GetObject (gcc, false) as GstCameraCapturer;
+				gcc_managed.OnDeviceChange (deviceChange);
+			} catch (Exception e) {
+				GLib.ExceptionManager.RaiseUnhandledException (e, false);
+			}
+		}
+
+		private static void OverrideDeviceChange (GLib.GType gtype)
+		{
+			if (DeviceChangeVMCallback == null)
+				DeviceChangeVMCallback = new DeviceChangeVMDelegate (device_change_cb);
+			OverrideVirtualMethod (gtype, "device_change", DeviceChangeVMCallback);
+		}
+
+		[GLib.DefaultSignalHandler(Type=typeof(LongoMatch.Video.Capturer.GstCameraCapturer), ConnectionMethod="OverrideDeviceChange")]
+		protected virtual void OnDeviceChange (int deviceChange)
+		{
+			GLib.Value ret = GLib.Value.Empty;
+			GLib.ValueArray inst_and_params = new GLib.ValueArray (2);
+			GLib.Value[] vals = new GLib.Value [2];
+			vals [0] = new GLib.Value (this);
+			inst_and_params.Append (vals [0]);
+			vals [1] = new GLib.Value (deviceChange);
+			inst_and_params.Append (vals [1]);
+			g_signal_chain_from_overridden (inst_and_params.ArrayPtr, ref ret);
+			foreach (GLib.Value v in vals)
+				v.Dispose ();
+		}
+
+		[GLib.Signal("device_change")]
+		public event DeviceChangeHandler DeviceChange {
+			add {
+				GLib.Signal sig = GLib.Signal.Lookup (this, "device_change", new DeviceChangeSignalDelegate(DeviceChangeSignalCallback));
+				sig.AddDelegate (value);
+			}
+			remove {
+				GLib.Signal sig = GLib.Signal.Lookup (this, "device_change", new DeviceChangeSignalDelegate(DeviceChangeSignalCallback));
+				sig.RemoveDelegate (value);
+			}
+		}
 
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 		delegate void EosVMDelegate (IntPtr gcc);
