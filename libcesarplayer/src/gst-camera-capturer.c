@@ -125,6 +125,7 @@ struct GstCameraCapturerPrivate
   GstElement *main_pipeline;
   GstElement *camerabin;
   GstElement *videosrc;
+  GstElement *device_source;
   GstElement *videofilter;
   GstElement *audiosrc;
   GstElement *videoenc;
@@ -935,7 +936,6 @@ static GstElement *
 gst_camera_capture_create_dv1394_source_bin (GstCameraCapturer * gcc)
 {
   GstElement *bin;
-  GstElement *source;
   GstElement *demuxer;
   GstElement *queue1;
   GstElement *decoder;
@@ -947,7 +947,7 @@ gst_camera_capture_create_dv1394_source_bin (GstCameraCapturer * gcc)
   GstPad *src_pad;
 
   bin = gst_bin_new ("videosource");
-  source = gst_element_factory_make (DVVIDEOSRC, "source_device");
+  gcc->priv->device_source = gst_element_factory_make (DVVIDEOSRC, "source_device");
   demuxer = gst_element_factory_make ("ffdemux_dv", NULL);
   queue1 = gst_element_factory_make ("queue", "source_video_sink");
   decoder = gst_element_factory_make ("ffdec_dvvideo", NULL);
@@ -959,12 +959,12 @@ gst_camera_capture_create_dv1394_source_bin (GstCameraCapturer * gcc)
   
   /* this property needs to be set before linking the element, where the device
    * id configured in get_caps() */
-  g_object_set (G_OBJECT(source), "guid",
+  g_object_set (G_OBJECT(gcc->priv->device_source), "guid",
       g_ascii_strtoull (gcc->priv->device_id, NULL, 0), NULL);
 
-  gst_bin_add_many (GST_BIN (bin), source, demuxer, queue1, decoder,
+  gst_bin_add_many (GST_BIN (bin), gcc->priv->device_source, demuxer, queue1, decoder,
       queue2, deinterlacer, colorspace, videorate, videoscale, NULL);
-  gst_element_link (source, demuxer);
+  gst_element_link (gcc->priv->device_source, demuxer);
   gst_element_link_many (queue1, decoder, queue2, deinterlacer, videorate,
       colorspace, videoscale, NULL);
 
@@ -982,17 +982,16 @@ static GstElement *
 gst_camera_capture_create_dshow_source_bin (GstCameraCapturer * gcc)
 {
   GstElement *bin;
-  GstElement *source;
   GstElement *decoder;
   GstElement *deinterlacer;
   GstElement *colorspace;
   GstElement *videorate;
   GstElement *videoscale;
   GstPad *src_pad;
-  GstCaps *source_caps; 
+  GstCaps *source_caps;
 
   bin = gst_bin_new ("videosource");
-  source = gst_element_factory_make (DVVIDEOSRC, "source_device");
+  gcc->priv->device_source = gst_element_factory_make (DVVIDEOSRC, "source_device");
   decoder = gst_element_factory_make ("decodebin2", NULL);
   colorspace = gst_element_factory_make ("ffmpegcolorspace", 
       "source_video_sink");
@@ -1002,13 +1001,13 @@ gst_camera_capture_create_dshow_source_bin (GstCameraCapturer * gcc)
 
   /* this property needs to be set before linking the element, where the device
    * id configured in get_caps() */
-  g_object_set (G_OBJECT(source), "device-name", gcc->priv->device_id, NULL);
+  g_object_set (G_OBJECT(gcc->priv->device_source), "device-name", gcc->priv->device_id, NULL);
 
-  gst_bin_add_many (GST_BIN (bin), source, decoder, colorspace,
+  gst_bin_add_many (GST_BIN (bin), gcc->priv->device_source, decoder, colorspace,
       deinterlacer, videorate, videoscale, NULL);
   source_caps = gst_caps_from_string ("video/x-dv, systemstream=true;" 
       "video/x-raw-rgb; video/x-raw-yuv");
-  gst_element_link_filtered (source, decoder, source_caps);
+  gst_element_link_filtered (gcc->priv->device_source, decoder, source_caps);
   gst_element_link_many (colorspace, deinterlacer, videorate, videoscale, NULL);
 
   g_signal_connect (decoder, "pad-added", G_CALLBACK (cb_new_pad), bin);
@@ -1051,9 +1050,11 @@ gst_camera_capturer_set_source (GstCameraCapturer * gcc,
     default:
     {
       gchar *bin =
-          g_strdup_printf ("%s ! videorate ! ffmpegcolorspace ! videoscale",
-          RAWVIDEOSRC);
+          g_strdup_printf ("%s name=device_source ! videorate ! "
+              "ffmpegcolorspace ! videoscale", RAWVIDEOSRC);
       gcc->priv->videosrc = gst_parse_bin_from_description (bin, TRUE, err);
+      gcc->priv->device_source =
+          gst_bin_get_by_name (GST_BIN(gcc->priv->videosrc), "device_source");
       gcc->priv->audiosrc = gst_element_factory_make (AUDIOSRC, "audiosource");
       break;
     }
