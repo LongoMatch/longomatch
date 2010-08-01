@@ -74,6 +74,7 @@ namespace LongoMatch.Gui
 				capturer.EllapsedTime += OnTick;
 				if (value != CapturerType.Fake){
 					capturer.Error += OnError;
+					capturer.DeviceChange += OnDeviceChange;
 					capturerhbox.Add((Widget)capturer);
 					(capturer as Widget).Visible = true;
 					capturerhbox.Visible = true;
@@ -171,6 +172,7 @@ namespace LongoMatch.Gui
 			if (capturerType == CapturerType.Live){
 				/* release and dispose live capturer */
 				capturer.Error -= OnError;
+				capturer.DeviceChange += OnDeviceChange;
 				capturerhbox.Remove(capturer as Gtk.Widget);
 				capturer.Dispose();
 			}
@@ -282,6 +284,37 @@ namespace LongoMatch.Gui
 				Error (o, args);
 			
 			Close();
+		}
+		
+		protected virtual void OnDeviceChange (object o, DeviceChangeArgs args)
+		{
+			/* device disconnected, pause capture */
+			if (args.DeviceChange == -1){				
+				if (capturing) 
+					TogglePause();
+					
+				recbutton.Sensitive = false;
+				
+				MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel, DialogFlags.Modal,
+				                                     MessageType.Question, ButtonsType.Ok,
+				                                     Catalog.GetString("Device disconnected. " +
+				                                     	"The capture will be paused"));
+				md.Icon=Stetic.IconLoader.LoadIcon(md, "longomatch", Gtk.IconSize.Dialog, 48);
+				md.Run();
+				md.Destroy();			
+			} else {
+				recbutton.Sensitive = true;
+				MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel, DialogFlags.Modal,
+				                                     MessageType.Question, ButtonsType.YesNo,
+				                                     Catalog.GetString("Device reconnected." +
+				                                     	"Do you want to restart the capture?"));
+				md.Icon=Stetic.IconLoader.LoadIcon(md, "longomatch", Gtk.IconSize.Dialog, 48);
+				if (md.Run() == (int)ResponseType.Yes){
+					Console.WriteLine ("Accepted to toggle pause");
+					TogglePause();
+				}
+				md.Destroy();
+			}				
 		}
 		
 		protected virtual void OnLogodrawingareaExposeEvent (object o, Gtk.ExposeEventArgs args)

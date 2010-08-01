@@ -30,6 +30,7 @@ namespace LongoMatch.Video.Capturer
 	{	
 		event EllpasedTimeHandler EllapsedTime;
 		event ErrorHandler Error;
+		event DeviceChangeHandler DeviceChange;
 			
 		uint OutputWidth {
 			get ;
