@@ -1162,7 +1162,8 @@ gst_camera_capturer_run (GstCameraCapturer * gcc)
   /* the source needs to be created before the 'device-is' is set
    * because dshowsrcwrapper can't change the device-name after
    * it has been linked for the first time */ 
-  gst_camera_capturer_set_source (gcc, DEFAULT_SOURCE_TYPE, &err);
+  if (!gcc->priv->videosrc)
+    gst_camera_capturer_set_source (gcc, gcc->priv->source_type, &err);
   gst_element_set_state (gcc->priv->main_pipeline, GST_STATE_PLAYING);
 }
 
