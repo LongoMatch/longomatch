@@ -1013,7 +1013,8 @@ gst_video_editor_set_video_encoder (GstVideoEditor * gve, gchar ** err,
 
       /*Add new encoder element */
       gve->priv->video_encoder = encoder;
-      if (codec == VIDEO_ENCODER_XVID || codec == VIDEO_ENCODER_MPEG4)
+      if (codec == VIDEO_ENCODER_XVID || codec == VIDEO_ENCODER_MPEG4 ||
+          codec == VIDEO_ENCODER_VP8)
         g_object_set (G_OBJECT (gve->priv->video_encoder), "bitrate",
             gve->priv->video_bitrate * 1000, NULL);
       else {
