@@ -731,6 +731,12 @@ gve_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
           gve->priv->update_id = 0;
         }
       }
+      if (old_state == GST_STATE_NULL && new_state == GST_STATE_READY)
+        GST_DEBUG_BIN_TO_DOT_FILE(GST_BIN(gve->priv->main_pipeline), 
+            GST_DEBUG_GRAPH_SHOW_ALL, "gst-camera-capturer-null-to-ready");
+      if (old_state == GST_STATE_READY && new_state == GST_STATE_PAUSED)
+        GST_DEBUG_BIN_TO_DOT_FILE(GST_BIN(gve->priv->main_pipeline), 
+            GST_DEBUG_GRAPH_SHOW_ALL, "gst-camera-capturer-ready-to-paused");
       break;
     }
     case GST_MESSAGE_EOS:
