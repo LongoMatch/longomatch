@@ -22,9 +22,7 @@
 
 #include <string.h>
 #include <stdio.h>
-
 #include <gst/gst.h>
-
 #include "gst-video-editor.h"
 
 
@@ -115,7 +113,6 @@ struct GstVideoEditorPrivate
   gulong sig_bus_async;
 
   gint update_id;
-
 };
 
 static int gve_signals[LAST_SIGNAL] = { 0 };
@@ -167,7 +164,6 @@ gst_video_editor_init (GstVideoEditor * object)
   priv->stop_times = (gint64 *) malloc (200 * sizeof (gint64));
 
   priv->update_id = 0;
-
 }
 
 static void
@@ -218,7 +214,6 @@ gst_video_editor_class_init (GstVideoEditorClass * klass)
   object_class->finalize = gst_video_editor_finalize;
 
   /* Properties */
-
   g_object_class_install_property (object_class, PROP_ENABLE_AUDIO,
       g_param_spec_boolean ("enable-audio", NULL,
           NULL, TRUE, G_PARAM_READWRITE));
@@ -234,9 +229,11 @@ gst_video_editor_class_init (GstVideoEditorClass * klass)
   g_object_class_install_property (object_class, PROP_AUDIO_BITRATE,
       g_param_spec_int ("audio_bitrate", NULL,
           NULL, 12000, G_MAXINT, 128000, G_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_HEIGHT,
       g_param_spec_int ("height", NULL, NULL,
           240, 1080, 480, G_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_WIDTH,
       g_param_spec_int ("width", NULL, NULL, 320,
           1920, 720, G_PARAM_READWRITE));
@@ -259,7 +256,6 @@ gst_video_editor_class_init (GstVideoEditorClass * klass)
       G_SIGNAL_RUN_LAST,
       G_STRUCT_OFFSET (GstVideoEditorClass, percent_completed),
       NULL, NULL, g_cclosure_marshal_VOID__FLOAT, G_TYPE_NONE, 1, G_TYPE_FLOAT);
-
 }
 
 /* =========================================== */
@@ -312,7 +308,6 @@ gst_video_editor_set_enable_title (GstVideoEditor * gve, gboolean title_enabled)
   gve->priv->title_enabled = title_enabled;
   g_object_set (G_OBJECT (gve->priv->textoverlay), "silent",
       !gve->priv->title_enabled, NULL);
-
 }
 
 static void
@@ -460,13 +455,11 @@ gve_rewrite_headers (GstVideoEditor * gve)
 static void
 gve_set_tick_timeout (GstVideoEditor * gve, guint msecs)
 {
-  g_return_if_fail (GST_IS_VIDEO_EDITOR (gve));
+  g_return_if_fail (msecs > 0);
 
-  if (msecs > 0) {
-    GST_INFO ("adding tick timeout (at %ums)", msecs);
-    gve->priv->update_id =
-        g_timeout_add (msecs, (GSourceFunc) gve_query_timeout, gve);
-  }
+  GST_INFO ("adding tick timeout (at %ums)", msecs);
+  gve->priv->update_id =
+      g_timeout_add (msecs, (GSourceFunc) gve_query_timeout, gve);
 }
 
 static void
@@ -622,8 +615,6 @@ gst_video_editor_error_quark (void)
   return q;
 }
 
-
-
 /* =========================================== */
 /*                                             */
 /*                Callbacks                    */
@@ -732,10 +723,10 @@ gve_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
         }
       }
       if (old_state == GST_STATE_NULL && new_state == GST_STATE_READY)
-        GST_DEBUG_BIN_TO_DOT_FILE(GST_BIN(gve->priv->main_pipeline), 
+        GST_DEBUG_BIN_TO_DOT_FILE (GST_BIN (gve->priv->main_pipeline),
             GST_DEBUG_GRAPH_SHOW_ALL, "gst-camera-capturer-null-to-ready");
       if (old_state == GST_STATE_READY && new_state == GST_STATE_PAUSED)
-        GST_DEBUG_BIN_TO_DOT_FILE(GST_BIN(gve->priv->main_pipeline), 
+        GST_DEBUG_BIN_TO_DOT_FILE (GST_BIN (gve->priv->main_pipeline),
             GST_DEBUG_GRAPH_SHOW_ALL, "gst-camera-capturer-ready-to-paused");
       break;
     }
@@ -826,85 +817,77 @@ gst_video_editor_add_segment (GstVideoEditor * gve, gchar * file,
   GstElement *gnl_filesource = NULL;
   GstElement *audiotestsrc = NULL;
   GstCaps *filter = NULL;
-
   gchar *element_name = "";
   gint64 final_duration;
 
   g_return_if_fail (GST_IS_VIDEO_EDITOR (gve));
 
   gst_element_get_state (gve->priv->main_pipeline, &cur_state, NULL, 0);
-  if (cur_state <= GST_STATE_READY) {
-    final_duration = GST_MSECOND * duration / rate;
+  if (cur_state > GST_STATE_READY) {
+    GST_WARNING ("Segments can only be added for a state <= GST_STATE_READY");
+    return;
+  }
 
-    filter = gst_caps_from_string ("video/x-raw-rgb;video/x-raw-yuv");
+  final_duration = GST_MSECOND * duration / rate;
+
+  /* Video */
+  filter = gst_caps_from_string ("video/x-raw-rgb;video/x-raw-yuv");
+  element_name = g_strdup_printf ("gnlvideofilesource%d", gve->priv->segments);
+  gnl_filesource = gst_element_factory_make ("gnlfilesource", element_name);
+  g_object_set (G_OBJECT (gnl_filesource), "location", file,
+      "media-start", GST_MSECOND * start,
+      "media-duration", GST_MSECOND * duration,
+      "start", gve->priv->duration,
+      "duration", final_duration, "caps", filter, NULL);
+  if (gve->priv->segments == 0) {
+    g_object_set (G_OBJECT (gve->priv->textoverlay), "text", title, NULL);
+  }
+  gst_bin_add (GST_BIN (gve->priv->gnl_video_composition), gnl_filesource);
+  gve->priv->gnl_video_filesources =
+      g_list_append (gve->priv->gnl_video_filesources, gnl_filesource);
+
+  /* Audio */
+  if (hasAudio && rate == 1) {
     element_name =
-        g_strdup_printf ("gnlvideofilesource%d", gve->priv->segments);
+        g_strdup_printf ("gnlaudiofilesource%d", gve->priv->segments);
     gnl_filesource = gst_element_factory_make ("gnlfilesource", element_name);
     g_object_set (G_OBJECT (gnl_filesource), "location", file, NULL);
-    g_object_set (G_OBJECT (gnl_filesource), "media-start",
-        GST_MSECOND * start, NULL);
-    g_object_set (G_OBJECT (gnl_filesource), "media-duration",
-        GST_MSECOND * duration, NULL);
-    g_object_set (G_OBJECT (gnl_filesource), "start", gve->priv->duration,
-        NULL);
-    g_object_set (G_OBJECT (gnl_filesource), "duration", final_duration, NULL);
-    g_object_set (G_OBJECT (gnl_filesource), "caps", filter, NULL);
-    if (gve->priv->segments == 0) {
-      g_object_set (G_OBJECT (gve->priv->textoverlay), "text", title, NULL);
-    }
-    gst_bin_add (GST_BIN (gve->priv->gnl_video_composition), gnl_filesource);
-    gve->priv->gnl_video_filesources =
-        g_list_append (gve->priv->gnl_video_filesources, gnl_filesource);
+  } else {
+    /* If the file doesn't contain audio, something must be playing */
+    /* We use an audiotestsrc mutted and with a low priority */
+    element_name =
+        g_strdup_printf ("gnlaudiofakesource%d", gve->priv->segments);
+    gnl_filesource = gst_element_factory_make ("gnlsource", element_name);
+    element_name = g_strdup_printf ("audiotestsource%d", gve->priv->segments);
+    audiotestsrc = gst_element_factory_make ("audiotestsrc", element_name);
+    g_object_set (G_OBJECT (audiotestsrc), "volume", (double) 0, NULL);
+    gst_bin_add (GST_BIN (gnl_filesource), audiotestsrc);
+  }
+  filter = gst_caps_from_string ("audio/x-raw-float;audio/x-raw-int");
+  g_object_set (G_OBJECT (gnl_filesource),
+      "media-start", GST_MSECOND * start,
+      "media-duration", GST_MSECOND * duration,
+      "start", gve->priv->duration,
+      "duration", final_duration, "caps", filter, NULL);
+  gst_bin_add (GST_BIN (gve->priv->gnl_audio_composition), gnl_filesource);
+  gve->priv->gnl_audio_filesources =
+      g_list_append (gve->priv->gnl_audio_filesources, gnl_filesource);
 
+  gve->priv->duration += final_duration;
+  gve->priv->segments++;
 
+  gve->priv->titles = g_list_append (gve->priv->titles, title);
+  gve->priv->stop_times[gve->priv->segments - 1] = gve->priv->duration;
 
-    if (hasAudio && rate == 1) {
-      element_name =
-          g_strdup_printf ("gnlaudiofilesource%d", gve->priv->segments);
-      gnl_filesource = gst_element_factory_make ("gnlfilesource", element_name);
-      g_object_set (G_OBJECT (gnl_filesource), "location", file, NULL);
-    } else {
-      element_name =
-          g_strdup_printf ("gnlaudiofakesource%d", gve->priv->segments);
-      gnl_filesource = gst_element_factory_make ("gnlsource", element_name);
-      /* If the file doesn't contain audio, something must be playing */
-      /* We use an audiotestsrc mutted and with a low priority */
-      element_name = g_strdup_printf ("audiotestsource%d", gve->priv->segments);
-      audiotestsrc = gst_element_factory_make ("audiotestsrc", element_name);
-      g_object_set (G_OBJECT (audiotestsrc), "volume", (double) 0, NULL);
-      gst_bin_add (GST_BIN (gnl_filesource), audiotestsrc);
-    }
-    filter = gst_caps_from_string ("audio/x-raw-float;audio/x-raw-int");
-    g_object_set (G_OBJECT (gnl_filesource), "media-start",
-        GST_MSECOND * start, NULL);
-    g_object_set (G_OBJECT (gnl_filesource), "media-duration",
-        GST_MSECOND * duration, NULL);
-    g_object_set (G_OBJECT (gnl_filesource), "start", gve->priv->duration,
-        NULL);
-    g_object_set (G_OBJECT (gnl_filesource), "duration", final_duration, NULL);
-    g_object_set (G_OBJECT (gnl_filesource), "caps", filter, NULL);
-    gst_bin_add (GST_BIN (gve->priv->gnl_audio_composition), gnl_filesource);
-    gve->priv->gnl_audio_filesources =
-        g_list_append (gve->priv->gnl_audio_filesources, gnl_filesource);
-
-    gve->priv->duration += final_duration;
-    gve->priv->segments++;
-
-    gve->priv->titles = g_list_append (gve->priv->titles, title);
-    gve->priv->stop_times[gve->priv->segments - 1] = gve->priv->duration;
-
-    GST_INFO ("New segment: start={%" GST_TIME_FORMAT "} duration={%"
-        GST_TIME_FORMAT "} ", GST_TIME_ARGS (start * GST_MSECOND),
-        GST_TIME_ARGS (duration * GST_MSECOND));
-  } else
-    GST_WARNING ("Segments can only be added for a state <= GST_STATE_READY");
+  GST_INFO ("New segment: start={%" GST_TIME_FORMAT "} duration={%"
+      GST_TIME_FORMAT "} ", GST_TIME_ARGS (start * GST_MSECOND),
+      GST_TIME_ARGS (duration * GST_MSECOND));
   g_free (element_name);
 }
 
 void
 gst_video_editor_clear_segments_list (GstVideoEditor * gve)
 {
-
   GList *tmp = NULL;
 
   g_return_if_fail (GST_IS_VIDEO_EDITOR (gve));
@@ -960,96 +943,105 @@ gst_video_editor_set_video_encoder (GstVideoEditor * gve, gchar ** err,
 
   gst_element_get_state (gve->priv->main_pipeline, &cur_state, NULL, 0);
 
-  if (cur_state <= GST_STATE_READY) {
-    switch (codec) {
-      case VIDEO_ENCODER_H264:
-        encoder_name = "x264enc";
-        encoder = gst_element_factory_make (encoder_name, encoder_name);
-        g_object_set (G_OBJECT (encoder), "pass", 17, NULL);    //Variable Bitrate-Pass 1
-        break;
-      case VIDEO_ENCODER_MPEG4:
-        encoder_name = "xvidenc";
-        encoder = gst_element_factory_make (encoder_name, encoder_name);
-        g_object_set (G_OBJECT (encoder), "pass", 1, NULL);     //Variable Bitrate-Pass 1
-        break;
-      case VIDEO_ENCODER_XVID:
-        encoder_name = "ffenc_mpeg4";
-        encoder = gst_element_factory_make (encoder_name, encoder_name);
-        g_object_set (G_OBJECT (encoder), "pass", 512, NULL);   //Variable Bitrate-Pass 1
+  if (cur_state > GST_STATE_READY)
+    goto wrong_state;
 
-        break;
-      case VIDEO_ENCODER_MPEG2:
-        encoder_name = "mpeg2enc";
-        encoder = gst_element_factory_make (encoder_name, encoder_name);
-        g_object_set (G_OBJECT (encoder), "format", 9, NULL);   //DVD compilant
-        g_object_set (G_OBJECT (encoder), "framerate", 3, NULL);        //25 FPS (PAL/SECAM)    
-        break;
-      case VIDEO_ENCODER_THEORA:
-        encoder_name = "theoraenc";
-        encoder = gst_element_factory_make (encoder_name, encoder_name);
-        break;
-      case VIDEO_ENCODER_VP8:
-        encoder_name = "vp8enc";
-        encoder = gst_element_factory_make (encoder_name, encoder_name);
-        break;
-    }
+  switch (codec) {
+    case VIDEO_ENCODER_H264:
+      encoder_name = "x264enc";
+      encoder = gst_element_factory_make (encoder_name, encoder_name);
+      g_object_set (G_OBJECT (encoder), "pass", 17, NULL);      //Variable Bitrate-Pass 1
+      break;
+    case VIDEO_ENCODER_MPEG4:
+      encoder_name = "xvidenc";
+      encoder = gst_element_factory_make (encoder_name, encoder_name);
+      g_object_set (G_OBJECT (encoder), "pass", 1, NULL);       //Variable Bitrate-Pass 1
+      break;
+    case VIDEO_ENCODER_XVID:
+      encoder_name = "ffenc_mpeg4";
+      encoder = gst_element_factory_make (encoder_name, encoder_name);
+      g_object_set (G_OBJECT (encoder), "pass", 512, NULL);     //Variable Bitrate-Pass 1
+      break;
+    case VIDEO_ENCODER_MPEG2:
+      encoder_name = "mpeg2enc";
+      encoder = gst_element_factory_make (encoder_name, encoder_name);
+      g_object_set (G_OBJECT (encoder), "format", 9, NULL);     //DVD compilant
+      g_object_set (G_OBJECT (encoder), "framerate", 3, NULL);  //25 FPS (PAL/SECAM)    
+      break;
+    case VIDEO_ENCODER_THEORA:
+      encoder_name = "theoraenc";
+      encoder = gst_element_factory_make (encoder_name, encoder_name);
+      break;
+    case VIDEO_ENCODER_VP8:
+      encoder_name = "vp8enc";
+      encoder = gst_element_factory_make (encoder_name, encoder_name);
+      break;
+  }
 
-    if (encoder) {
-      if (!g_strcmp0
-          (gst_element_get_name (gve->priv->video_encoder), encoder_name)) {
-        GST_WARNING
-            ("The video encoder is not changed because it is already in use.");
-        gst_object_unref (encoder);
-        return;
-      }
+  if (!encoder)
+    goto no_encoder;
 
-      /*Remove old encoder element */
+  if (!g_strcmp0
+      (gst_element_get_name (gve->priv->video_encoder), encoder_name))
+    goto same_encoder;
 
-      gst_element_unlink (gve->priv->queue, gve->priv->video_encoder);
-      gst_element_unlink (gve->priv->vencode_bin, gve->priv->muxer);
-      gst_element_set_state (gve->priv->video_encoder, GST_STATE_NULL);
-      gst_bin_remove (GST_BIN (gve->priv->vencode_bin),
-          gve->priv->video_encoder);
+  /*Remove old encoder element */
+  gst_element_unlink (gve->priv->queue, gve->priv->video_encoder);
+  gst_element_unlink (gve->priv->vencode_bin, gve->priv->muxer);
+  gst_element_set_state (gve->priv->video_encoder, GST_STATE_NULL);
+  gst_bin_remove (GST_BIN (gve->priv->vencode_bin), gve->priv->video_encoder);
 
-      /*Add new encoder element */
-      gve->priv->video_encoder = encoder;
-      if (codec == VIDEO_ENCODER_XVID || codec == VIDEO_ENCODER_MPEG4 ||
-          codec == VIDEO_ENCODER_VP8)
-        g_object_set (G_OBJECT (gve->priv->video_encoder), "bitrate",
-            gve->priv->video_bitrate * 1000, NULL);
-      else {
-        g_object_set (G_OBJECT (gve->priv->video_encoder), "bitrate",
-            gve->priv->video_bitrate, NULL);
-      }
-      /*Add first to the encoder bin */
-      gst_bin_add (GST_BIN (gve->priv->vencode_bin), gve->priv->video_encoder);
-      gst_element_link (gve->priv->queue, gve->priv->video_encoder);
-      /*Remove old encoder bin's src pad */
-      oldsrcpad = gst_element_get_static_pad (gve->priv->vencode_bin, "src");
-      gst_pad_set_active (oldsrcpad, FALSE);
-      gst_element_remove_pad (gve->priv->vencode_bin, oldsrcpad);
-      /*Create new encoder bin's src pad */
-      srcpad = gst_element_get_static_pad (gve->priv->video_encoder, "src");
-      gst_pad_set_active (srcpad, TRUE);
-      gst_element_add_pad (gve->priv->vencode_bin,
-          gst_ghost_pad_new ("src", srcpad));
-      gst_element_link (gve->priv->vencode_bin, gve->priv->muxer);
+  /*Add new encoder element */
+  gve->priv->video_encoder = encoder;
+  if (codec == VIDEO_ENCODER_XVID || codec == VIDEO_ENCODER_MPEG4 ||
+      codec == VIDEO_ENCODER_VP8)
+    g_object_set (G_OBJECT (gve->priv->video_encoder), "bitrate",
+        gve->priv->video_bitrate * 1000, NULL);
+  else {
+    g_object_set (G_OBJECT (gve->priv->video_encoder), "bitrate",
+        gve->priv->video_bitrate, NULL);
+  }
+  /*Add first to the encoder bin */
+  gst_bin_add (GST_BIN (gve->priv->vencode_bin), gve->priv->video_encoder);
+  gst_element_link (gve->priv->queue, gve->priv->video_encoder);
+  /*Remove old encoder bin's src pad */
+  oldsrcpad = gst_element_get_static_pad (gve->priv->vencode_bin, "src");
+  gst_pad_set_active (oldsrcpad, FALSE);
+  gst_element_remove_pad (gve->priv->vencode_bin, oldsrcpad);
+  /*Create new encoder bin's src pad */
+  srcpad = gst_element_get_static_pad (gve->priv->video_encoder, "src");
+  gst_pad_set_active (srcpad, TRUE);
+  gst_element_add_pad (gve->priv->vencode_bin,
+      gst_ghost_pad_new ("src", srcpad));
+  gst_element_link (gve->priv->vencode_bin, gve->priv->muxer);
 
-      gve_rewrite_headers (gve);
-    }
+  gve_rewrite_headers (gve);
+  return;
 
-    else {
-      error =
-          g_strdup_printf
-          ("The %s encoder element is not avalaible. Check your GStreamer installation",
-          encoder_name);
-      GST_ERROR (error);
-      *err = g_strdup (error);
-      g_free (error);
-    }
-  } else
+wrong_state:
+  {
     GST_WARNING
         ("The video encoder cannot be changed for a state <= GST_STATE_READY");
+    return;
+  }
+no_encoder:
+  {
+    error =
+        g_strdup_printf
+        ("The %s encoder element is not avalaible. Check your GStreamer installation",
+        encoder_name);
+    GST_ERROR (error);
+    *err = g_strdup (error);
+    g_free (error);
+    return;
+  }
+same_encoder:
+  {
+    GST_WARNING
+        ("The video encoder is not changed because it is already in use.");
+    gst_object_unref (encoder);
+    return;
+  }
 }
 
 void
@@ -1067,86 +1059,95 @@ gst_video_editor_set_audio_encoder (GstVideoEditor * gve, gchar ** err,
 
   gst_element_get_state (gve->priv->main_pipeline, &cur_state, NULL, 0);
 
-  if (cur_state <= GST_STATE_READY) {
-    switch (codec) {
-      case AUDIO_ENCODER_AAC:
-        encoder_name = "faac";
-        encoder = gst_element_factory_make (encoder_name, encoder_name);
-        g_object_set (G_OBJECT (gve->priv->audiocapsfilter), "caps",
-            gst_caps_from_string (FAAC_CAPS), NULL);
-        break;
-      case AUDIO_ENCODER_MP3:
-        encoder_name = "lame";
-        encoder = gst_element_factory_make (encoder_name, encoder_name);
-        g_object_set (G_OBJECT (encoder), "vbr", 4, NULL);      //Variable Bitrate
-        g_object_set (G_OBJECT (gve->priv->audiocapsfilter), "caps",
-            gst_caps_from_string (LAME_CAPS), NULL);
-        break;
-      case AUDIO_ENCODER_VORBIS:
-        encoder_name = "vorbisenc";
-        encoder = gst_element_factory_make (encoder_name, encoder_name);
-        g_object_set (G_OBJECT (gve->priv->audiocapsfilter), "caps",
-            gst_caps_from_string (VORBIS_CAPS), NULL);
-        break;
-      default:
-        gst_video_editor_set_enable_audio (gve, FALSE);
-        break;
-    }
-    if (encoder) {
-      if (!g_strcmp0
-          (gst_element_get_name (gve->priv->audioencoder), encoder_name)) {
-        GST_WARNING
-            ("The audio encoder is not changed because it is already in use.");
-        gst_object_unref (encoder);
-        return;
-      }
+  if (cur_state > GST_STATE_READY)
+    goto wrong_state;
 
-      /*Remove old encoder element */
+  switch (codec) {
+    case AUDIO_ENCODER_AAC:
+      encoder_name = "faac";
+      encoder = gst_element_factory_make (encoder_name, encoder_name);
+      g_object_set (G_OBJECT (gve->priv->audiocapsfilter), "caps",
+          gst_caps_from_string (FAAC_CAPS), NULL);
+      break;
+    case AUDIO_ENCODER_MP3:
+      encoder_name = "lame";
+      encoder = gst_element_factory_make (encoder_name, encoder_name);
+      g_object_set (G_OBJECT (encoder), "vbr", 4, NULL);        //Variable Bitrate
+      g_object_set (G_OBJECT (gve->priv->audiocapsfilter), "caps",
+          gst_caps_from_string (LAME_CAPS), NULL);
+      break;
+    case AUDIO_ENCODER_VORBIS:
+      encoder_name = "vorbisenc";
+      encoder = gst_element_factory_make (encoder_name, encoder_name);
+      g_object_set (G_OBJECT (gve->priv->audiocapsfilter), "caps",
+          gst_caps_from_string (VORBIS_CAPS), NULL);
+      break;
+    default:
+      gst_video_editor_set_enable_audio (gve, FALSE);
+      break;
+  }
+  if (!encoder)
+    goto no_encoder;
 
-      gst_element_unlink (gve->priv->audioqueue, gve->priv->audioencoder);
-      if (gve->priv->audio_enabled)
-        gst_element_unlink (gve->priv->aencode_bin, gve->priv->muxer);
-      gst_element_set_state (gve->priv->audioencoder, GST_STATE_NULL);
-      gst_bin_remove (GST_BIN (gve->priv->aencode_bin),
-          gve->priv->audioencoder);
+  if (!g_strcmp0 (gst_element_get_name (gve->priv->audioencoder), encoder_name))
+    goto same_encoder;
 
-      /*Add new encoder element */
-      gve->priv->audioencoder = encoder;
-      if (codec == AUDIO_ENCODER_MP3)
-        g_object_set (G_OBJECT (gve->priv->audioencoder), "bitrate",
-            gve->priv->audio_bitrate / 1000, NULL);
-      else
-        g_object_set (G_OBJECT (gve->priv->audioencoder), "bitrate",
-            gve->priv->audio_bitrate, NULL);
-      /*Add first to the encoder bin */
-      gst_bin_add (GST_BIN (gve->priv->aencode_bin), gve->priv->audioencoder);
-      gst_element_link (gve->priv->audioqueue, gve->priv->audioencoder);
-      /*Remove old encoder bin's src pad */
-      oldsrcpad = gst_element_get_static_pad (gve->priv->aencode_bin, "src");
-      gst_pad_set_active (oldsrcpad, FALSE);
-      gst_element_remove_pad (gve->priv->aencode_bin, oldsrcpad);
-      /*Create new encoder bin's src pad */
-      srcpad = gst_element_get_static_pad (gve->priv->audioencoder, "src");
-      gst_pad_set_active (srcpad, TRUE);
-      gst_element_add_pad (gve->priv->aencode_bin,
-          gst_ghost_pad_new ("src", srcpad));
-      if (gve->priv->audio_enabled)
-        gst_element_link (gve->priv->aencode_bin, gve->priv->muxer);
-      gve_rewrite_headers (gve);
-    }
+  /*Remove old encoder element */
+  gst_element_unlink (gve->priv->audioqueue, gve->priv->audioencoder);
+  if (gve->priv->audio_enabled)
+    gst_element_unlink (gve->priv->aencode_bin, gve->priv->muxer);
+  gst_element_set_state (gve->priv->audioencoder, GST_STATE_NULL);
+  gst_bin_remove (GST_BIN (gve->priv->aencode_bin), gve->priv->audioencoder);
 
-    else {
-      error =
-          g_strdup_printf
-          ("The %s encoder element is not avalaible. Check your GStreamer installation",
-          encoder_name);
-      GST_ERROR (error);
-      *err = g_strdup (error);
-      g_free (error);
-    }
-  } else
+  /*Add new encoder element */
+  gve->priv->audioencoder = encoder;
+  if (codec == AUDIO_ENCODER_MP3)
+    g_object_set (G_OBJECT (gve->priv->audioencoder), "bitrate",
+        gve->priv->audio_bitrate / 1000, NULL);
+  else
+    g_object_set (G_OBJECT (gve->priv->audioencoder), "bitrate",
+        gve->priv->audio_bitrate, NULL);
+  /*Add first to the encoder bin */
+  gst_bin_add (GST_BIN (gve->priv->aencode_bin), gve->priv->audioencoder);
+  gst_element_link (gve->priv->audioqueue, gve->priv->audioencoder);
+  /*Remove old encoder bin's src pad */
+  oldsrcpad = gst_element_get_static_pad (gve->priv->aencode_bin, "src");
+  gst_pad_set_active (oldsrcpad, FALSE);
+  gst_element_remove_pad (gve->priv->aencode_bin, oldsrcpad);
+  /*Create new encoder bin's src pad */
+  srcpad = gst_element_get_static_pad (gve->priv->audioencoder, "src");
+  gst_pad_set_active (srcpad, TRUE);
+  gst_element_add_pad (gve->priv->aencode_bin,
+      gst_ghost_pad_new ("src", srcpad));
+  if (gve->priv->audio_enabled)
+    gst_element_link (gve->priv->aencode_bin, gve->priv->muxer);
+  gve_rewrite_headers (gve);
+  return;
+
+wrong_state:
+  {
     GST_WARNING
         ("The audio encoder cannot be changed for a state <= GST_STATE_READY");
+    return;
+  }
+no_encoder:
+  {
+    error =
+        g_strdup_printf
+        ("The %s encoder element is not avalaible. Check your GStreamer installation",
+        encoder_name);
+    GST_ERROR (error);
+    *err = g_strdup (error);
+    g_free (error);
+    return;
+  }
+same_encoder:
+  {
+    GST_WARNING
+        ("The audio encoder is not changed because it is already in use.");
+    gst_object_unref (encoder);
+    return;
+  }
 }
 
 void
@@ -1162,70 +1163,83 @@ gst_video_editor_set_video_muxer (GstVideoEditor * gve, gchar ** err,
 
   gst_element_get_state (gve->priv->main_pipeline, &cur_state, NULL, 0);
 
-  if (cur_state <= GST_STATE_READY) {
-    switch (muxerType) {
-      case VIDEO_MUXER_MATROSKA:
-        muxer_name = "matroskamux";
-        muxer = gst_element_factory_make ("matroskamux", muxer_name);
-        break;
-      case VIDEO_MUXER_AVI:
-        muxer_name = "avimux";
-        muxer = gst_element_factory_make ("avimux", muxer_name);
-        break;
-      case VIDEO_MUXER_OGG:
-        muxer_name = "oggmux";
-        muxer = gst_element_factory_make ("oggmux", muxer_name);
-        break;
-      case VIDEO_MUXER_MP4:
-        muxer_name = "qtmux";
-        muxer = gst_element_factory_make ("qtmux", muxer_name);
-        break;
-      case VIDEO_MUXER_MPEG_PS:
-        muxer_name = "ffmux_dvd";
-        //We don't want to mux anything yet as ffmux_dvd is buggy
-        //FIXME: Until we don't have audio save the mpeg-ps stream without mux.
-        muxer = gst_element_factory_make ("ffmux_dvd", muxer_name);
-        break;
-      case VIDEO_MUXER_WEBM:
-        muxer_name = "webmmux";
-        muxer = gst_element_factory_make ("webmmux", muxer_name);
-        break;
-    }
+  if (cur_state > GST_STATE_READY)
+    goto wrong_state;
 
-    if (muxer) {
-      if (!g_strcmp0 (gst_element_get_name (gve->priv->muxer), muxer_name)) {
-        GST_WARNING
-            ("Not changing the video muxer as the new one is the same in use.");
-        gst_object_unref (muxer);
-        return;
-      }
-      gst_element_unlink (gve->priv->vencode_bin, gve->priv->muxer);
-      if (gve->priv->audio_enabled)
-        gst_element_unlink (gve->priv->aencode_bin, gve->priv->muxer);
-      gst_element_unlink (gve->priv->muxer, gve->priv->file_sink);
-      gst_element_set_state (gve->priv->muxer, GST_STATE_NULL);
-      gst_bin_remove (GST_BIN (gve->priv->main_pipeline), gve->priv->muxer);
-      gst_bin_add (GST_BIN (gve->priv->main_pipeline), muxer);
-      gst_element_link_many (gve->priv->vencode_bin, muxer,
-          gve->priv->file_sink, NULL);
-      if (gve->priv->audio_enabled)
-        gst_element_link (gve->priv->aencode_bin, muxer);
-      gve->priv->muxer = muxer;
-      gve_rewrite_headers (gve);
-    }
+  switch (muxerType) {
+    case VIDEO_MUXER_MATROSKA:
+      muxer_name = "matroskamux";
+      muxer = gst_element_factory_make ("matroskamux", muxer_name);
+      break;
+    case VIDEO_MUXER_AVI:
+      muxer_name = "avimux";
+      muxer = gst_element_factory_make ("avimux", muxer_name);
+      break;
+    case VIDEO_MUXER_OGG:
+      muxer_name = "oggmux";
+      muxer = gst_element_factory_make ("oggmux", muxer_name);
+      break;
+    case VIDEO_MUXER_MP4:
+      muxer_name = "qtmux";
+      muxer = gst_element_factory_make ("qtmux", muxer_name);
+      break;
+    case VIDEO_MUXER_MPEG_PS:
+      muxer_name = "ffmux_dvd";
+      //We don't want to mux anything yet as ffmux_dvd is buggy
+      //FIXME: Until we don't have audio save the mpeg-ps stream without mux.
+      muxer = gst_element_factory_make ("ffmux_dvd", muxer_name);
+      break;
+    case VIDEO_MUXER_WEBM:
+      muxer_name = "webmmux";
+      muxer = gst_element_factory_make ("webmmux", muxer_name);
+      break;
+  }
 
-    else {
-      error =
-          g_strdup_printf
-          ("The %s muxer element is not avalaible. Check your GStreamer installation",
-          muxer_name);
-      GST_ERROR (error);
-      *err = g_strdup (error);
-      g_free (error);
-    }
-  } else
+  if (!muxer)
+    goto no_muxer;
+
+  if (!g_strcmp0 (gst_element_get_name (gve->priv->muxer), muxer_name))
+    goto same_muxer;
+
+  gst_element_unlink (gve->priv->vencode_bin, gve->priv->muxer);
+  if (gve->priv->audio_enabled)
+    gst_element_unlink (gve->priv->aencode_bin, gve->priv->muxer);
+  gst_element_unlink (gve->priv->muxer, gve->priv->file_sink);
+  gst_element_set_state (gve->priv->muxer, GST_STATE_NULL);
+  gst_bin_remove (GST_BIN (gve->priv->main_pipeline), gve->priv->muxer);
+  gst_bin_add (GST_BIN (gve->priv->main_pipeline), muxer);
+  gst_element_link_many (gve->priv->vencode_bin, muxer,
+      gve->priv->file_sink, NULL);
+  if (gve->priv->audio_enabled)
+    gst_element_link (gve->priv->aencode_bin, muxer);
+  gve->priv->muxer = muxer;
+  gve_rewrite_headers (gve);
+  return;
+
+wrong_state:
+  {
     GST_WARNING
         ("The video muxer cannot be changed for a state <= GST_STATE_READY");
+    return;
+  }
+no_muxer:
+  {
+    error =
+        g_strdup_printf
+        ("The %s muxer element is not avalaible. Check your GStreamer installation",
+        muxer_name);
+    GST_ERROR (error);
+    *err = g_strdup (error);
+    g_free (error);
+    return;
+  }
+same_muxer:
+  {
+    GST_WARNING
+        ("Not changing the video muxer as the new one is the same in use.");
+    gst_object_unref (muxer);
+    return;
+  }
 }
 
 void
@@ -1235,13 +1249,13 @@ gst_video_editor_start (GstVideoEditor * gve)
 
   gst_element_set_state (gve->priv->main_pipeline, GST_STATE_PLAYING);
   g_signal_emit (gve, gve_signals[SIGNAL_PERCENT_COMPLETED], 0, (gfloat) 0);
-
 }
 
 void
 gst_video_editor_cancel (GstVideoEditor * gve)
 {
   g_return_if_fail (GST_IS_VIDEO_EDITOR (gve));
+
   if (gve->priv->update_id > 0) {
     g_source_remove (gve->priv->update_id);
     gve->priv->update_id = 0;
@@ -1275,7 +1289,6 @@ gst_video_editor_new (GError ** err)
   }
 
   /* Create elements */
-
   gve->priv->gnl_video_composition =
       gst_element_factory_make ("gnlcomposition", "gnl-video-composition");
   gve->priv->gnl_audio_composition =
@@ -1296,12 +1309,10 @@ gst_video_editor_new (GError ** err)
   gve_create_audio_encode_bin (gve);
 
   /* Set elements properties */
-
   g_object_set (G_OBJECT (gve->priv->file_sink), "location",
       gve->priv->output_file, NULL);
 
   /* Link elements */
-
   gst_bin_add_many (GST_BIN (gve->priv->main_pipeline),
       gve->priv->gnl_video_composition,
       gve->priv->gnl_audio_composition,
@@ -1312,10 +1323,8 @@ gst_video_editor_new (GError ** err)
       gve->priv->muxer, gve->priv->file_sink, NULL);
   gst_element_link (gve->priv->aencode_bin, gve->priv->muxer);
 
-
   /*Connect bus signals */
-
-  /*We have to wait for a "new-decoded-pad" message to link the composition with
+  /*Wait for a "new-decoded-pad" message to link the composition with
      the encoder tail */
   gve->priv->bus = gst_element_get_bus (GST_ELEMENT (gve->priv->main_pipeline));
   g_signal_connect (gve->priv->gnl_video_composition, "pad-added",

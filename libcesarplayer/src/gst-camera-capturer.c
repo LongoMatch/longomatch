@@ -271,7 +271,8 @@ gst_camera_capturer_set_video_bit_rate (GstCameraCapturer * gcc, gint bitrate)
       gcc->priv->video_encoder_type == VIDEO_ENCODER_XVID)
     g_object_set (gcc->priv->videoenc, "bitrate", bitrate * 1000, NULL);
   else
-    g_object_set (gcc->priv->videoenc, "bitrate", gcc->priv->video_bitrate, NULL);
+    g_object_set (gcc->priv->videoenc, "bitrate", gcc->priv->video_bitrate,
+        NULL);
   GST_INFO_OBJECT (gcc, "Changed video bitrate to :\n%d",
       gcc->priv->video_bitrate);
 }
@@ -881,8 +882,7 @@ gst_camera_capturer_class_init (GstCameraCapturerClass * klass)
       G_TYPE_FROM_CLASS (object_class),
       G_SIGNAL_RUN_LAST,
       G_STRUCT_OFFSET (GstCameraCapturerClass, device_change),
-      NULL, NULL,
-      g_cclosure_marshal_VOID__INT, G_TYPE_NONE, 1, G_TYPE_INT);
+      NULL, NULL, g_cclosure_marshal_VOID__INT, G_TYPE_NONE, 1, G_TYPE_INT);
 }
 
 void
@@ -956,7 +956,8 @@ gst_camera_capture_create_dv1394_source_bin (GstCameraCapturer * gcc)
   GstPad *src_pad;
 
   bin = gst_bin_new ("videosource");
-  gcc->priv->device_source = gst_element_factory_make (DVVIDEOSRC, "source_device");
+  gcc->priv->device_source =
+      gst_element_factory_make (DVVIDEOSRC, "source_device");
   demuxer = gst_element_factory_make ("ffdemux_dv", NULL);
   queue1 = gst_element_factory_make ("queue", "source_video_sink");
   decoder = gst_element_factory_make ("ffdec_dvvideo", NULL);
@@ -965,14 +966,14 @@ gst_camera_capture_create_dv1394_source_bin (GstCameraCapturer * gcc)
   videorate = gst_element_factory_make ("videorate", NULL);
   colorspace = gst_element_factory_make ("ffmpegcolorspace", NULL);
   videoscale = gst_element_factory_make ("videoscale", NULL);
-  
+
   /* this property needs to be set before linking the element, where the device
    * id configured in get_caps() */
-  g_object_set (G_OBJECT(gcc->priv->device_source), "guid",
+  g_object_set (G_OBJECT (gcc->priv->device_source), "guid",
       g_ascii_strtoull (gcc->priv->device_id, NULL, 0), NULL);
 
-  gst_bin_add_many (GST_BIN (bin), gcc->priv->device_source, demuxer, queue1, decoder,
-      queue2, deinterlacer, colorspace, videorate, videoscale, NULL);
+  gst_bin_add_many (GST_BIN (bin), gcc->priv->device_source, demuxer, queue1,
+      decoder, queue2, deinterlacer, colorspace, videorate, videoscale, NULL);
   gst_element_link (gcc->priv->device_source, demuxer);
   gst_element_link_many (queue1, decoder, queue2, deinterlacer, videorate,
       colorspace, videoscale, NULL);
@@ -1000,9 +1001,10 @@ gst_camera_capture_create_dshow_source_bin (GstCameraCapturer * gcc)
   GstCaps *source_caps;
 
   bin = gst_bin_new ("videosource");
-  gcc->priv->device_source = gst_element_factory_make (DVVIDEOSRC, "source_device");
+  gcc->priv->device_source =
+      gst_element_factory_make (DVVIDEOSRC, "source_device");
   decoder = gst_element_factory_make ("decodebin2", NULL);
-  colorspace = gst_element_factory_make ("ffmpegcolorspace", 
+  colorspace = gst_element_factory_make ("ffmpegcolorspace",
       "source_video_sink");
   deinterlacer = gst_element_factory_make ("ffdeinterlace", NULL);
   videorate = gst_element_factory_make ("videorate", NULL);
@@ -1010,11 +1012,13 @@ gst_camera_capture_create_dshow_source_bin (GstCameraCapturer * gcc)
 
   /* this property needs to be set before linking the element, where the device
    * id configured in get_caps() */
-  g_object_set (G_OBJECT(gcc->priv->device_source), "device-name", gcc->priv->device_id, NULL);
+  g_object_set (G_OBJECT (gcc->priv->device_source), "device-name",
+      gcc->priv->device_id, NULL);
 
-  gst_bin_add_many (GST_BIN (bin), gcc->priv->device_source, decoder, colorspace,
-      deinterlacer, videorate, videoscale, NULL);
-  source_caps = gst_caps_from_string ("video/x-dv, systemstream=true;" 
+  gst_bin_add_many (GST_BIN (bin), gcc->priv->device_source, decoder,
+      colorspace, deinterlacer, videorate, videoscale, NULL);
+  source_caps =
+      gst_caps_from_string ("video/x-dv, systemstream=true;"
       "video/x-raw-rgb; video/x-raw-yuv");
   gst_element_link_filtered (gcc->priv->device_source, decoder, source_caps);
   gst_element_link_many (colorspace, deinterlacer, videorate, videoscale, NULL);
@@ -1060,10 +1064,10 @@ gst_camera_capturer_set_source (GstCameraCapturer * gcc,
     {
       gchar *bin =
           g_strdup_printf ("%s name=device_source ! videorate ! "
-              "ffmpegcolorspace ! videoscale", RAWVIDEOSRC);
+          "ffmpegcolorspace ! videoscale", RAWVIDEOSRC);
       gcc->priv->videosrc = gst_parse_bin_from_description (bin, TRUE, err);
       gcc->priv->device_source =
-          gst_bin_get_by_name (GST_BIN(gcc->priv->videosrc), "device_source");
+          gst_bin_get_by_name (GST_BIN (gcc->priv->videosrc), "device_source");
       gcc->priv->audiosrc = gst_element_factory_make (AUDIOSRC, "audiosource");
       break;
     }
@@ -1155,13 +1159,13 @@ void
 gst_camera_capturer_run (GstCameraCapturer * gcc)
 {
   GError *err = NULL;
- 
+
   g_return_if_fail (gcc != NULL);
   g_return_if_fail (GST_IS_CAMERA_CAPTURER (gcc));
 
   /* the source needs to be created before the 'device-is' is set
    * because dshowsrcwrapper can't change the device-name after
-   * it has been linked for the first time */ 
+   * it has been linked for the first time */
   if (!gcc->priv->videosrc)
     gst_camera_capturer_set_source (gcc, gcc->priv->source_type, &err);
   gst_element_set_state (gcc->priv->main_pipeline, GST_STATE_PLAYING);
@@ -1432,13 +1436,13 @@ gcc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       gint device_change = 0;
 
       /* We only care about messages sent by the device source */
-      if (GST_MESSAGE_SRC (message) !=  GST_OBJECT (gcc->priv->device_source))
+      if (GST_MESSAGE_SRC (message) != GST_OBJECT (gcc->priv->device_source))
         break;
 
       s = gst_message_get_structure (message);
       /* check if it's bus reset message and it contains the
        * 'current-device-change' field */
-      if (g_strcmp0(gst_structure_get_name(s), "ieee1394-bus-reset"))
+      if (g_strcmp0 (gst_structure_get_name (s), "ieee1394-bus-reset"))
         break;
       if (!gst_structure_has_field (s, "current-device-change"))
         break;
@@ -1448,7 +1452,8 @@ gcc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       gst_structure_get_int (s, "current-device-change", &device_change);
 
       if (device_change != 0)
-        g_signal_emit (gcc, gcc_signals[SIGNAL_DEVICE_CHANGE], 0, device_change);
+        g_signal_emit (gcc, gcc_signals[SIGNAL_DEVICE_CHANGE], 0,
+            device_change);
       break;
     }
 
@@ -1535,13 +1540,13 @@ gcc_element_msg_sync (GstBus * bus, GstMessage * msg, gpointer data)
     g_mutex_lock (gcc->priv->lock);
     gcc_update_interface_implementations (gcc);
     g_mutex_unlock (gcc->priv->lock);
-  
+
     if (gcc->priv->xoverlay == NULL) {
       GstObject *sender = GST_MESSAGE_SRC (msg);
       if (sender && GST_IS_X_OVERLAY (sender))
         gcc->priv->xoverlay = GST_X_OVERLAY (gst_object_ref (sender));
-    }  
-  
+    }
+
     g_return_if_fail (gcc->priv->xoverlay != NULL);
     g_return_if_fail (gcc->priv->video_window != NULL);
 
