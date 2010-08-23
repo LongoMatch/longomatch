@@ -295,7 +295,11 @@ namespace LongoMatch.Gui
 
 		private void SaveProject() {
 			if (openedProject != null && projectType == ProjectType.FileProject) {
-				MainClass.DB.UpdateProject(openedProject);
+				try {
+					MainClass.DB.UpdateProject(openedProject);
+				} catch (Exception e){
+					/* FIXME: Do log error */
+				}
 			} else if (projectType == ProjectType.FakeCaptureProject)
 				ProjectUtils.SaveFakeLiveProject(openedProject, this);
 		}
