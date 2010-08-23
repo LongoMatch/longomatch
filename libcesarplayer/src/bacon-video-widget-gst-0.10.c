@@ -3262,6 +3262,7 @@ bacon_video_widget_seek_to_previous_frame (BaconVideoWidget * bvw,
   gint fps;
   gint64 pos;
   gint64 final_pos;
+  guint8 seek_flags;
   gboolean ret;
 
   g_return_val_if_fail (bvw != NULL, FALSE);
@@ -3284,19 +3285,12 @@ bacon_video_widget_seek_to_previous_frame (BaconVideoWidget * bvw,
   if (bacon_video_widget_is_playing (bvw))
     bacon_video_widget_pause (bvw);
 
+  seek_flags = GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE;
   if (in_segment)
-    ret = gst_element_seek (bvw->priv->play, rate,
-        GST_FORMAT_TIME,
-        GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE |
-        GST_SEEK_FLAG_SEGMENT, GST_SEEK_TYPE_SET,
-        final_pos, GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
-
-  else
-    ret = gst_element_seek (bvw->priv->play, rate,
-        GST_FORMAT_TIME,
-        GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
-        GST_SEEK_TYPE_SET, final_pos, GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
-
+    seek_flags = seek_flags | GST_SEEK_FLAG_SEGMENT;
+  ret = gst_element_seek (bvw->priv->play, rate,
+      GST_FORMAT_TIME, seek_flags, GST_SEEK_TYPE_SET,
+      final_pos, GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
   gst_x_overlay_expose (bvw->priv->xoverlay);
 
 /*#ifdef WIN32
