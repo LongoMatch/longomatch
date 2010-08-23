@@ -272,11 +272,15 @@ namespace LongoMatch.DB
 						query.Descend("file").Descend("filePath").Constrain(previousFileName);
 						IObjectSet result = query.Execute();
 						//Get the stored project and replace it with the new one
-						Project fd = (Project)result.Next();
-						db.Delete(fd);
-						// Add the updated project
-						db.Store(project);
-						db.Commit();
+						if (result.Count == 1){
+							Project fd = (Project)result.Next();
+							db.Delete(fd);
+							// Add the updated project
+							db.Store(project);
+							db.Commit();
+						} else {
+							error = true;
+						}
 					}
 					else
 						error = true;
