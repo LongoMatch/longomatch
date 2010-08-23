@@ -3278,10 +3278,7 @@ bacon_video_widget_seek_to_previous_frame (BaconVideoWidget * bvw,
 
   if (pos == 0)
     return FALSE;
-/*#ifdef WIN32
-	bacon_video_widget_play(bvw);
-#endif
-*/
+  
   if (bacon_video_widget_is_playing (bvw))
     bacon_video_widget_pause (bvw);
 
@@ -3293,10 +3290,6 @@ bacon_video_widget_seek_to_previous_frame (BaconVideoWidget * bvw,
       final_pos, GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
   gst_x_overlay_expose (bvw->priv->xoverlay);
 
-/*#ifdef WIN32
-	bacon_video_widget_pause(bvw);
-#endif
-	*/
   return ret;
 }
 
@@ -3304,14 +3297,10 @@ gboolean
 bacon_video_widget_segment_stop_update (BaconVideoWidget * bvw, gint64 stop,
     gfloat rate)
 {
-
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
-/*#ifdef WIN32	
-		bacon_video_widget_play(bvw);
-		
-#endif*/
+
   gst_element_seek (bvw->priv->play, rate,
       GST_FORMAT_TIME,
       GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_SEGMENT |
@@ -3333,9 +3322,7 @@ bacon_video_widget_segment_start_update (BaconVideoWidget * bvw, gint64 start,
   g_return_val_if_fail (bvw != NULL, FALSE);
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
-/*#ifdef WIN32
-		bacon_video_widget_play(bvw);
-#endif*/
+
   gst_element_seek (bvw->priv->play, rate,
       GST_FORMAT_TIME,
       GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_SEGMENT |
@@ -3348,7 +3335,6 @@ bacon_video_widget_segment_start_update (BaconVideoWidget * bvw, gint64 start,
   gst_x_overlay_expose (bvw->priv->xoverlay);
 
   return TRUE;
-
 }
 
 
