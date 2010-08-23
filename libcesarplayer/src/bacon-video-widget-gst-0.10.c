@@ -3238,7 +3238,6 @@ gboolean
 bacon_video_widget_seek_to_next_frame (BaconVideoWidget * bvw, gfloat rate,
     gboolean in_segment)
 {
-
   gint fps;
   gint64 pos;
   gint64 final_pos;
@@ -3248,43 +3247,12 @@ bacon_video_widget_seek_to_next_frame (BaconVideoWidget * bvw, gfloat rate,
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-
-
-  //Round framerate to the nearest integer        
-  fps = (bvw->priv->video_fps_n + bvw->priv->video_fps_d / 2) /
-      bvw->priv->video_fps_d;
-  pos = bacon_video_widget_get_accurate_current_time (bvw);
-  if (pos == 0)
-    return FALSE;
-  final_pos = pos * GST_MSECOND + 1 * GST_SECOND / fps;
-
-/*#ifdef WIN32
-	bacon_video_widget_play(bvw);
-#endif*/
-
-  if (bacon_video_widget_is_playing (bvw))
-    bacon_video_widget_pause (bvw);
-  if (in_segment)
-    ret = gst_element_seek (bvw->priv->play, rate,
-        GST_FORMAT_TIME,
-        GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE |
-        GST_SEEK_FLAG_SEGMENT, GST_SEEK_TYPE_SET,
-        final_pos, GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
-
-  else
-    ret = gst_element_seek (bvw->priv->play, rate,
-        GST_FORMAT_TIME,
-        GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
-        GST_SEEK_TYPE_SET, final_pos, GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
+  gst_element_send_event(bvw->priv->play,
+      gst_event_new_step (GST_FORMAT_BUFFERS, 1, 1.0, TRUE, FALSE));
 
   gst_x_overlay_expose (bvw->priv->xoverlay);
 
-/*#ifdef WIN32
-	bacon_video_widget_pause(bvw);
-#endif
-*/
   return ret;
-
 }
 
 gboolean
