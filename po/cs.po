@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: longomatch\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-04 09:00+0200\n"
-"PO-Revision-Date: 2010-06-24 20:13+0200\n"
+"POT-Creation-Date: 2010-08-25 22:06+0200\n"
+"PO-Revision-Date: 2010-08-04 16:13+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1275,12 +1276,11 @@ msgstr "Zakončuje se soubor. To může chvíli trvat."
 
 #: ../CesarPlayer/Gui/CapturerBin.cs:300
 msgid "Device disconnected. The capture will be paused"
-msgstr ""
+msgstr "Zařízení je odpojeno. Nahrávání bude pozastaveno."
 
 #: ../CesarPlayer/Gui/CapturerBin.cs:309
-#, fuzzy
 msgid "Device reconnected.Do you want to restart the capture?"
-msgstr "V projektu byly provedeny změny. Přejete si změny uložit?"
+msgstr "Zařízení je znovu připojeno. Chcete znovu spustit nahrávání?"
 
 #: ../CesarPlayer/gtk-gui/LongoMatch.Gui.PlayerBin.cs:229
 msgid "Time:"
