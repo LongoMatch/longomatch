@@ -1202,6 +1202,13 @@ gst_camera_capturer_stop (GstCameraCapturer * gcc)
   g_return_if_fail (gcc != NULL);
   g_return_if_fail (GST_IS_CAMERA_CAPTURER (gcc));
 
+#ifdef WIN32
+  //On windows we can't handle device disconnections until dshowvideosrc
+  //supports it. When a device is disconnected, the source is locked
+  //in ::create(), blocking the streaming thread. We need to change its
+  //state to null, this way camerabin doesn't block in ::do_stop().
+  gst_element_set_state(gcc->priv->device_source, GST_STATE_NULL);
+#endif
   g_signal_emit_by_name (G_OBJECT (gcc->priv->camerabin), "capture-stop", 0, 0);
 }
 
