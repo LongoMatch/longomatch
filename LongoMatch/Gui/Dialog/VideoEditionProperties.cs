@@ -180,6 +180,7 @@ namespace LongoMatch.Gui.Dialog
 			FileFilter filter = new FileFilter();
 			filter.Name = "Multimedia Files";
 			filter.AddPattern("*.mkv");
+			filter.AddPattern("*.mp4");
 			filter.AddPattern("*.ogg");
 			filter.AddPattern("*.avi");
 			filter.AddPattern("*.mpg");
