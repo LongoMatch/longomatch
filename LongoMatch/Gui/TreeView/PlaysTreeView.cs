@@ -45,7 +45,7 @@ namespace LongoMatch.Gui.Component
 		public event TagPlayHandler TagPlay;
 
 		// Plays menu
-		private Menu menu;
+		private Menu menu, teamMenu;
 		private MenuItem local;
 		private	MenuItem visitor;
 		private MenuItem noTeam;
@@ -55,6 +55,8 @@ namespace LongoMatch.Gui.Component
 		private MenuItem snapshot;
 		private MenuItem name;
 		private MenuItem players;
+		private MenuItem localPlayers;
+		private MenuItem visitorPlayers;
 		
 		//Categories menu
 		private Menu categoriesMenu;
@@ -63,21 +65,28 @@ namespace LongoMatch.Gui.Component
 		private Gtk.CellRendererText nameCell;
 		private Gtk.TreeViewColumn nameColumn;
 		private Color[] colors;
+		private String[] teams_name;
 		private bool editing;
 		private bool projectIsLive;
 
+		private const string LOCAL_TEAM = "Local Team";
+		private const string VISITOR_TEAM = "Visitor Team";	
 		
 		public PlaysTreeView() {
 			Selection.Mode = SelectionMode.Multiple;
 			Selection.SelectFunction = SelectFunction;
 			this.RowActivated += new RowActivatedHandler(OnTreeviewRowActivated);
-
+			
 			SetMenu();
 			SetCategoriesMenu();
 			ProjectIsLive = false;
 			PlayListLoaded = false;
 
 			colors = new Color[20];
+			teams_name = new String[3];
+			teams_name[(int)Team.NONE] = Catalog.GetString(Catalog.GetString("None"));
+			teams_name[(int)Team.LOCAL] = Catalog.GetString(Catalog.GetString(LOCAL_TEAM));
+			teams_name[(int)Team.VISITOR] = Catalog.GetString(Catalog.GetString(VISITOR_TEAM));
 
 			nameColumn = new Gtk.TreeViewColumn();
 			nameColumn.Title = "Name";
@@ -121,29 +130,53 @@ namespace LongoMatch.Gui.Component
 				this.colors = value;
 			}
 		}
+		
+		public String LocalTeam {
+			set{
+				Label l1 = (local.Children[0] as Label);
+				Label l2 = (localPlayers.Children[0] as Label);
+				if (value == "")
+					l1.Text = l2.Text = Catalog.GetString(LOCAL_TEAM);
+				else {
+					l1.Text = l2.Text = value;
+				}
+				teams_name[(int)Team.LOCAL] = l1.Text; 
+			}
+		}
+		
+		public string VisitorTeam {
+			set{
+				Label l1 = (visitor.Children[0] as Label);
+				Label l2 = (visitorPlayers.Children[0] as Label);
+				if (value == "")
+					l1.Text = l2.Text = Catalog.GetString(VISITOR_TEAM);
+				else 
+					l1.Text = l2.Text = value;
+				teams_name[(int)Team.VISITOR] = l1.Text; 
+			}
+		}
 
 		public bool PlayListLoaded {
 			set {
 				addPLN.Sensitive = value;
 			}
 		}
-
+		
 		private void SetMenu() {
-			Menu teamMenu, playersMenu;
-			MenuItem localPlayers, visitorPlayers;
+			Menu playersMenu;
 			MenuItem team, quit;
 			
 			teamMenu = new Menu();
-			local = new MenuItem(Catalog.GetString("Local Team"));
-			visitor = new MenuItem(Catalog.GetString("Visitor Team"));
+			local = new MenuItem(Catalog.GetString(LOCAL_TEAM));
+			visitor = new MenuItem(Catalog.GetString(VISITOR_TEAM));
 			noTeam = new MenuItem(Catalog.GetString("No Team"));
 			teamMenu .Append(local);
 			teamMenu .Append(visitor);
 			teamMenu .Append(noTeam);
 
 			playersMenu = new Menu();
-			localPlayers = new MenuItem(Catalog.GetString("Local team"));
-			visitorPlayers = new MenuItem(Catalog.GetString("Visitor team"));
+			localPlayers = new MenuItem(Catalog.GetString(LOCAL_TEAM));
+			visitorPlayers = new MenuItem(Catalog.GetString(VISITOR_TEAM));
 			playersMenu.Append(localPlayers);
 			playersMenu.Append(visitorPlayers);
 
@@ -353,9 +386,10 @@ namespace LongoMatch.Gui.Component
 			if (editing && Selection.IterIsSelected(iter))
 				(cell as Gtk.CellRendererText).Markup = tNode.Name;
 			else if (tNode is MediaTimeNode) {
+				MediaTimeNode mTNode = (MediaTimeNode) tNode;
 				(cell as Gtk.CellRendererText).BackgroundGdk = colors[GetSectionFromIter(iter)];
 				(cell as Gtk.CellRendererText).CellBackgroundGdk = colors[GetSectionFromIter(iter)];
-				(cell as Gtk.CellRendererText).Markup = (tNode as MediaTimeNode).ToString();
+				(cell as Gtk.CellRendererText).Markup = mTNode.ToString(teams_name[(int)mTNode.Team]);
 			}
 			else {
 				(cell as Gtk.CellRendererText).Background = "white";

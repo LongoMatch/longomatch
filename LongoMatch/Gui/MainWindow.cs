@@ -121,7 +121,18 @@ namespace LongoMatch.Gui
 			this.projectType = projectType;
 			eManager.OpenedProject = project;
 			eManager.OpenedProjectType = projectType;
-
+			
+			/* Update tabs labels */
+			/* FIXME 1.0: Teams should have default names */
+			if (project.VisitorName == "")
+				visitorteamlabel.Text = Catalog.GetString("Visitor Team");
+			else
+				visitorteamlabel.Text = project.VisitorName;
+			if (project.LocalName == "")
+				localteamlabel.Text = Catalog.GetString("Local Team");
+			else
+				localteamlabel.Text = project.LocalName;
+				
 			if (projectType == ProjectType.FileProject) {
 				// Check if the file associated to the project exists
 				if (!File.Exists (project.File.FilePath)) {

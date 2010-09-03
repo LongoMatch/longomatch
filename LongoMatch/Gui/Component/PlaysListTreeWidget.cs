@@ -1,4 +1,4 @@
-﻿// TreeWidget.cs
+// TreeWidget.cs
 //
 //  Copyright(C) 20072009 Andoni Morales Alastruey
 //
@@ -105,6 +105,8 @@ namespace LongoMatch.Gui.Component
 				if (project != null) {
 					treeview.Model = project.GetModel();
 					treeview.Colors = project.Sections.GetColors();
+					treeview.VisitorTeam = project.VisitorName;
+					treeview.LocalTeam = project.LocalName;
 				}
 				else {
 					treeview.Model = null;

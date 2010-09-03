@@ -75,19 +75,19 @@ namespace LongoMatch.Gui {
         
         private LongoMatch.Gui.Component.PlaysListTreeWidget treewidget1;
         
-        private Gtk.Label label2;
+        private Gtk.Label playslabel;
         
         private LongoMatch.Gui.Component.PlayersListTreeWidget localplayerslisttreewidget;
         
-        private Gtk.Label label6;
+        private Gtk.Label localteamlabel;
         
         private LongoMatch.Gui.Component.PlayersListTreeWidget visitorplayerslisttreewidget;
         
-        private Gtk.Label label4;
+        private Gtk.Label visitorteamlabel;
         
         private LongoMatch.Gui.Component.TagsTreeWidget tagstreewidget1;
         
-        private Gtk.Label label7;
+        private Gtk.Label tagslabel;
         
         private Gtk.HPaned hpaned1;
         
@@ -241,7 +241,7 @@ namespace LongoMatch.Gui {
             this.notebook1 = new Gtk.Notebook();
             this.notebook1.CanFocus = true;
             this.notebook1.Name = "notebook1";
-            this.notebook1.CurrentPage = 3;
+            this.notebook1.CurrentPage = 0;
             this.notebook1.TabPos = ((Gtk.PositionType)(3));
             // Container child notebook1.Gtk.Notebook+NotebookChild
             this.treewidget1 = new LongoMatch.Gui.Component.PlaysListTreeWidget();
@@ -249,11 +249,11 @@ namespace LongoMatch.Gui {
             this.treewidget1.Name = "treewidget1";
             this.notebook1.Add(this.treewidget1);
             // Notebook tab
-            this.label2 = new Gtk.Label();
-            this.label2.Name = "label2";
-            this.label2.LabelProp = Mono.Unix.Catalog.GetString("Plays");
-            this.notebook1.SetTabLabel(this.treewidget1, this.label2);
-            this.label2.ShowAll();
+            this.playslabel = new Gtk.Label();
+            this.playslabel.Name = "playslabel";
+            this.playslabel.LabelProp = Mono.Unix.Catalog.GetString("Plays");
+            this.notebook1.SetTabLabel(this.treewidget1, this.playslabel);
+            this.playslabel.ShowAll();
             // Container child notebook1.Gtk.Notebook+NotebookChild
             this.localplayerslisttreewidget = new LongoMatch.Gui.Component.PlayersListTreeWidget();
             this.localplayerslisttreewidget.Events = ((Gdk.EventMask)(256));
@@ -262,11 +262,11 @@ namespace LongoMatch.Gui {
             Gtk.Notebook.NotebookChild w5 = ((Gtk.Notebook.NotebookChild)(this.notebook1[this.localplayerslisttreewidget]));
             w5.Position = 1;
             // Notebook tab
-            this.label6 = new Gtk.Label();
-            this.label6.Name = "label6";
-            this.label6.LabelProp = Mono.Unix.Catalog.GetString("Local Team");
-            this.notebook1.SetTabLabel(this.localplayerslisttreewidget, this.label6);
-            this.label6.ShowAll();
+            this.localteamlabel = new Gtk.Label();
+            this.localteamlabel.Name = "localteamlabel";
+            this.localteamlabel.LabelProp = Mono.Unix.Catalog.GetString("Local Team");
+            this.notebook1.SetTabLabel(this.localplayerslisttreewidget, this.localteamlabel);
+            this.localteamlabel.ShowAll();
             // Container child notebook1.Gtk.Notebook+NotebookChild
             this.visitorplayerslisttreewidget = new LongoMatch.Gui.Component.PlayersListTreeWidget();
             this.visitorplayerslisttreewidget.Events = ((Gdk.EventMask)(256));
@@ -275,11 +275,11 @@ namespace LongoMatch.Gui {
             Gtk.Notebook.NotebookChild w6 = ((Gtk.Notebook.NotebookChild)(this.notebook1[this.visitorplayerslisttreewidget]));
             w6.Position = 2;
             // Notebook tab
-            this.label4 = new Gtk.Label();
-            this.label4.Name = "label4";
-            this.label4.LabelProp = Mono.Unix.Catalog.GetString("Visitor Team");
-            this.notebook1.SetTabLabel(this.visitorplayerslisttreewidget, this.label4);
-            this.label4.ShowAll();
+            this.visitorteamlabel = new Gtk.Label();
+            this.visitorteamlabel.Name = "visitorteamlabel";
+            this.visitorteamlabel.LabelProp = Mono.Unix.Catalog.GetString("Visitor Team");
+            this.notebook1.SetTabLabel(this.visitorplayerslisttreewidget, this.visitorteamlabel);
+            this.visitorteamlabel.ShowAll();
             // Container child notebook1.Gtk.Notebook+NotebookChild
             this.tagstreewidget1 = new LongoMatch.Gui.Component.TagsTreeWidget();
             this.tagstreewidget1.Events = ((Gdk.EventMask)(256));
@@ -288,11 +288,11 @@ namespace LongoMatch.Gui {
             Gtk.Notebook.NotebookChild w7 = ((Gtk.Notebook.NotebookChild)(this.notebook1[this.tagstreewidget1]));
             w7.Position = 3;
             // Notebook tab
-            this.label7 = new Gtk.Label();
-            this.label7.Name = "label7";
-            this.label7.LabelProp = Mono.Unix.Catalog.GetString("Tags");
-            this.notebook1.SetTabLabel(this.tagstreewidget1, this.label7);
-            this.label7.ShowAll();
+            this.tagslabel = new Gtk.Label();
+            this.tagslabel.Name = "tagslabel";
+            this.tagslabel.LabelProp = Mono.Unix.Catalog.GetString("Tags");
+            this.notebook1.SetTabLabel(this.tagstreewidget1, this.tagslabel);
+            this.tagslabel.ShowAll();
             this.leftbox.Add(this.notebook1);
             Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(this.leftbox[this.notebook1]));
             w8.Position = 0;
