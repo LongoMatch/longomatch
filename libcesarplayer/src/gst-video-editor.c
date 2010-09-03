@@ -29,7 +29,7 @@
 #define DEFAULT_VIDEO_ENCODER "vp8enc"
 #define DEFAULT_AUDIO_ENCODER "vorbisenc"
 #define DEFAULT_VIDEO_MUXER "matroskamux"
-#define FONT_SIZE_FACTOR 0.03
+#define FONT_SIZE_FACTOR 0.05
 #define LAME_CAPS "audio/x-raw-int, rate=44100, channels=2, endianness=1234, signed=true, width=16, depth=16"
 #define VORBIS_CAPS "audio/x-raw-float, rate=44100, channels=2, endianness=1234, signed=true, width=32, depth=32"
 #define FAAC_CAPS "audio/x-raw-int, rate=44100, channels=2, endianness=1234, signed=true, width=16, depth=16"
@@ -482,7 +482,7 @@ gve_apply_new_caps (GstVideoEditor * gve)
   g_object_set (G_OBJECT (gve->priv->capsfilter), "caps", caps, NULL);
   font =
       g_strdup_printf ("sans bold %d",
-      (int) (gve->priv->width * FONT_SIZE_FACTOR));
+      (int) (gve->priv->height * FONT_SIZE_FACTOR));
   g_object_set (G_OBJECT (gve->priv->textoverlay), "font-desc", font, NULL);
   g_free (font);
   gst_caps_unref (caps);
