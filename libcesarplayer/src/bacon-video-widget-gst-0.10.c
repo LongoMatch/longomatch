@@ -3238,9 +3238,6 @@ gboolean
 bacon_video_widget_seek_to_next_frame (BaconVideoWidget * bvw, gfloat rate,
     gboolean in_segment)
 {
-  gint fps;
-  gint64 pos;
-  gint64 final_pos;
   gboolean ret;
 
   g_return_val_if_fail (bvw != NULL, FALSE);
