@@ -274,6 +274,7 @@ namespace LongoMatch.Gui.Dialog {
             this.DefaultHeight = 223;
             this.Show();
             this.openbutton.Clicked += new System.EventHandler(this.OnOpenbuttonClicked);
+            this.buttonCancel.Clicked += new System.EventHandler(this.OnButtonCancelClicked);
             this.buttonOk.Clicked += new System.EventHandler(this.OnButtonOkClicked);
         }
     }

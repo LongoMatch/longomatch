@@ -191,5 +191,11 @@ namespace LongoMatch.Gui.Dialog
 			}
 			fChooser.Destroy();
 		}
+		protected virtual void OnButtonCancelClicked (object sender, System.EventArgs e)
+		{
+			this.Destroy();
+		}
+		
+		
 	}
 }
