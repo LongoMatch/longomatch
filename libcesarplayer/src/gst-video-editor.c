@@ -96,6 +96,7 @@ struct GstVideoEditorPrivate
   GstElement *capsfilter;
   GstElement *queue;
   GstElement *video_encoder;
+  VideoEncoderType video_encoder_type;
 
   /* Audio */
   GstElement *audioidentity;
@@ -318,7 +319,11 @@ gst_video_editor_set_video_bit_rate (GstVideoEditor * gve, gint bitrate)
   gve->priv->video_bitrate = bitrate;
   gst_element_get_state (gve->priv->video_encoder, &cur_state, NULL, 0);
   if (cur_state <= GST_STATE_READY) {
-    g_object_set (gve->priv->video_encoder, "bitrate", bitrate, NULL);
+    if (gve->priv->video_encoder_type == VIDEO_ENCODER_THEORA ||
+        gve->priv->video_encoder_type == VIDEO_ENCODER_H264)
+      g_object_set (gve->priv->video_encoder, "bitrate", bitrate, NULL);
+    else
+      g_object_set (gve->priv->video_encoder, "bitrate", bitrate * 1000, NULL);
     GST_INFO ("Encoding video bitrate changed to :%d (kbps)\n", bitrate);
   }
 }
@@ -985,6 +990,8 @@ gst_video_editor_set_video_encoder (GstVideoEditor * gve, gchar ** err,
       (gst_element_get_name (gve->priv->video_encoder), encoder_name))
     goto same_encoder;
 
+  gve->priv->video_encoder_type = codec;
+
   /*Remove old encoder element */
   gst_element_unlink (gve->priv->queue, gve->priv->video_encoder);
   gst_element_unlink (gve->priv->vencode_bin, gve->priv->muxer);
@@ -993,14 +1000,13 @@ gst_video_editor_set_video_encoder (GstVideoEditor * gve, gchar ** err,
 
   /*Add new encoder element */
   gve->priv->video_encoder = encoder;
-  if (codec == VIDEO_ENCODER_XVID || codec == VIDEO_ENCODER_MPEG4 ||
-      codec == VIDEO_ENCODER_VP8)
-    g_object_set (G_OBJECT (gve->priv->video_encoder), "bitrate",
-        gve->priv->video_bitrate * 1000, NULL);
-  else {
+  if (codec == VIDEO_ENCODER_THEORA || codec == VIDEO_ENCODER_H264)
     g_object_set (G_OBJECT (gve->priv->video_encoder), "bitrate",
         gve->priv->video_bitrate, NULL);
-  }
+  else
+    g_object_set (G_OBJECT (gve->priv->video_encoder), "bitrate",
+        gve->priv->video_bitrate * 1000, NULL);
+  
   /*Add first to the encoder bin */
   gst_bin_add (GST_BIN (gve->priv->vencode_bin), gve->priv->video_encoder);
   gst_element_link (gve->priv->queue, gve->priv->video_encoder);
