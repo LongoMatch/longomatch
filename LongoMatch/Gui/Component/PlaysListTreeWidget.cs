@@ -48,7 +48,13 @@ namespace LongoMatch.Gui.Component
 		public PlaysListTreeWidget()
 		{
 			this.Build();
-
+			treeview.TimeNodeChanged += OnTimeNodeChanged;
+            treeview.TimeNodeSelected += OnTimeNodeSelected;
+            treeview.TimeNodeDeleted += OnTimeNodeDeleted;
+            treeview.PlayListNodeAdded += OnPlayListNodeAdded;
+            treeview.SnapshotSeriesEvent += OnSnapshotSeriesEvent;
+            treeview.PlayersTagged += OnPlayersTagged;
+            treeview.TagPlay += OnTagPlay;
 		}		
 
 		public void DeletePlay(MediaTimeNode play, int section) {
@@ -143,20 +149,19 @@ namespace LongoMatch.Gui.Component
 				PlayListNodeAdded(tNode);
 		}
 
-		protected virtual void OnTreeviewSnapshotSeriesEvent(LongoMatch.TimeNodes.MediaTimeNode tNode)
+		protected virtual void OnSnapshotSeriesEvent(LongoMatch.TimeNodes.MediaTimeNode tNode)
 		{
 			if (SnapshotSeriesEvent != null)
 				SnapshotSeriesEvent(tNode);
 		}
 
-
-		protected virtual void OnTreeviewPlayersTagged(LongoMatch.TimeNodes.MediaTimeNode tNode, Team team)
+		protected virtual void OnPlayersTagged(LongoMatch.TimeNodes.MediaTimeNode tNode, Team team)
 		{
 			if (PlayersTagged != null)
 				PlayersTagged(tNode,team);
 		}
 
-		protected virtual void OnTreeviewTagPlay (LongoMatch.TimeNodes.MediaTimeNode tNode)
+		protected virtual void OnTagPlay (LongoMatch.TimeNodes.MediaTimeNode tNode)
 		{
 			if (TagPlay != null)
 				TagPlay(tNode);

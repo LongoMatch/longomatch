@@ -65,6 +65,10 @@ namespace LongoMatch.Gui.Component
 			filtercombobox.InsertText ((int)FilterType.AND, Catalog.GetString(andFilter));
 			filtercombobox.Active = 0;
 			filterType = FilterType.OR;
+			treeview.TimeNodeChanged += OnTimeNodeChanged;
+            treeview.TimeNodeSelected += OnTimeNodeSelected;
+            treeview.PlayListNodeAdded += OnPlayListNodeAdded;
+            treeview.SnapshotSeriesEvent += OnSnapshotSeriesEvent;
 			
 		}
 		

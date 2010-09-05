@@ -23,6 +23,9 @@
         <signal name="TimeNodeChanged" />
         <signal name="SnapshotSeriesEvent" />
         <signal name="PlayListNodeAdded" />
+        <signal name="TimeNodeDeleted" />
+        <signal name="PlayersTagged" />
+        <signal name="TagPlay" />
       </itemgroup>
     </signals>
   </object>
@@ -54,17 +57,6 @@
         <signal name="SnapshotSeriesEvent" />
         <signal name="PlayersTagged" />
         <signal name="TagPlay" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.PlayersListTreeWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="PlayersListTreeWidget Signals">
-        <signal name="TimeNodeSelected" />
-        <signal name="TimeNodeChanged" />
-        <signal name="SnapshotSeriesEvent" />
-        <signal name="PlayListNodeAdded" />
       </itemgroup>
     </signals>
   </object>
@@ -141,11 +133,14 @@
   <object type="LongoMatch.Gui.Component.TagsTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
     <itemgroups />
     <signals>
-      <itemgroup label="TagsTreeView Signals">
+      <itemgroup label="ListTreeViewBase Signals">
         <signal name="TimeNodeChanged" />
         <signal name="TimeNodeSelected" />
+        <signal name="TimeNodeDeleted" />
         <signal name="PlayListNodeAdded" />
         <signal name="SnapshotSeriesEvent" />
+        <signal name="PlayersTagged" />
+        <signal name="TagPlay" />
       </itemgroup>
     </signals>
   </object>
@@ -202,17 +197,6 @@
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.TagsTreeWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="TagsTreeWidget Signals">
-        <signal name="TimeNodeSelected" />
-        <signal name="TimeNodeChanged" />
-        <signal name="PlayListNodeAdded" />
-        <signal name="SnapshotSeriesEvent" />
-      </itemgroup>
-    </signals>
-  </object>
   <object type="LongoMatch.Gui.Component.DrawingToolBox" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>
@@ -248,6 +232,17 @@
       </itemgroup>
     </signals>
   </object>
+  <object type="LongoMatch.Gui.Component.PlayersListTreeWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="PlayersListTreeWidget Signals">
+        <signal name="TimeNodeSelected" />
+        <signal name="TimeNodeChanged" />
+        <signal name="PlayListNodeAdded" />
+        <signal name="SnapshotSeriesEvent" />
+      </itemgroup>
+    </signals>
+  </object>
   <object type="LongoMatch.Gui.Component.PlaysListTreeWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>
@@ -259,6 +254,17 @@
         <signal name="SnapshotSeriesEvent" />
         <signal name="PlayersTagged" />
         <signal name="TagPlay" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.TagsTreeWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="TagsTreeWidget Signals">
+        <signal name="TimeNodeSelected" />
+        <signal name="TimeNodeChanged" />
+        <signal name="PlayListNodeAdded" />
+        <signal name="SnapshotSeriesEvent" />
       </itemgroup>
     </signals>
   </object>

@@ -122,10 +122,6 @@ namespace LongoMatch.Gui.Component {
                 this.Child.ShowAll();
             }
             this.Hide();
-            this.treeview.TimeNodeChanged += new LongoMatch.Handlers.TimeNodeChangedHandler(this.OnTimeNodeChanged);
-            this.treeview.TimeNodeSelected += new LongoMatch.Handlers.TimeNodeSelectedHandler(this.OnTimeNodeSelected);
-            this.treeview.PlayListNodeAdded += new LongoMatch.Handlers.PlayListNodeAddedHandler(this.OnPlayListNodeAdded);
-            this.treeview.SnapshotSeriesEvent += new LongoMatch.Handlers.SnapshotSeriesHandler(this.OnSnapshotSeriesEvent);
             this.AddFilterButton.Clicked += new System.EventHandler(this.OnAddFilter);
             this.filtercombobox.Changed += new System.EventHandler(this.OnFiltercomboboxChanged);
         }

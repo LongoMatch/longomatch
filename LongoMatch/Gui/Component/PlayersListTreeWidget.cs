@@ -43,6 +43,10 @@ namespace LongoMatch.Gui.Component
 		public PlayersListTreeWidget()
 		{
 			this.Build();
+			playerstreeview.TimeNodeChanged += OnTimeNodeChanged;
+            playerstreeview.TimeNodeSelected += OnTimeNodeSelected;
+            playerstreeview.PlayListNodeAdded += OnPlayListNodeAdded;
+            playerstreeview.SnapshotSeriesEvent += OnSnapshotSeriesEvent;
 		}
 
 		public Team Team {
@@ -128,7 +132,7 @@ namespace LongoMatch.Gui.Component
 				TimeNodeChanged(tNode, val);
 		}
 
-		protected virtual void OnPlayerstreeviewPlayListNodeAdded(LongoMatch.TimeNodes.MediaTimeNode tNode)
+		protected virtual void OnPlayListNodeAdded(LongoMatch.TimeNodes.MediaTimeNode tNode)
 		{
 			if (PlayListNodeAdded != null)
 				PlayListNodeAdded(tNode);
