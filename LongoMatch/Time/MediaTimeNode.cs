@@ -348,17 +348,22 @@ namespace LongoMatch.TimeNodes
 				tagsList.Remove(tag);
 		}
 		
-		public override string ToString ()
+		public string ToString (string team)
 		{
 			String[] tags = new String[Tags.Count];
+			
 			for (int i=0; i<Tags.Count; i++)
 				tags[i] = Tags[i].Text;
 			
 			return  "<b>"+Catalog.GetString("Name")+": </b>"+Name+"\n"+
-				    "<b>"+Catalog.GetString("Team")+": </b>"+Team.ToString().ToLower()+"\n"+
+				    "<b>"+Catalog.GetString("Team")+": </b>"+team+"\n"+
 					"<b>"+Catalog.GetString("Start")+": </b>"+Start.ToMSecondsString()+"\n"+
 					"<b>"+Catalog.GetString("Stop")+": </b>"+Stop.ToMSecondsString()+"\n"+
 					"<b>"+Catalog.GetString("Tags")+": </b>"+ String.Join(" ; ", tags);
+		}
+		
+		public override string ToString(){
+			return ToString(Team.ToString());
 		}
 
 		#endregion
