@@ -184,6 +184,7 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.BusyDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/TreeView/ListTreeViewBase.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />

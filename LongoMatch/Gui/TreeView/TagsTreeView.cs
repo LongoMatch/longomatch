@@ -18,12 +18,8 @@
 //
 //
 
-using System;
-using System.Collections.Generic;
 using Gdk;
 using Gtk;
-using Mono.Unix;
-using LongoMatch.Handlers;
 using LongoMatch.TimeNodes;
 
 namespace LongoMatch.Gui.Component
@@ -32,136 +28,16 @@ namespace LongoMatch.Gui.Component
 
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
-	public class TagsTreeView : Gtk.TreeView
+	public class TagsTreeView : ListTreeViewBase
 	{
 
-		public event TimeNodeChangedHandler TimeNodeChanged;
-		public event TimeNodeSelectedHandler TimeNodeSelected;
-		public event PlayListNodeAddedHandler PlayListNodeAdded;
-		public event SnapshotSeriesHandler SnapshotSeriesEvent;
-
-		private Menu menu;
-		private MenuItem addPLN;
-		private MenuItem name;
-		private MenuItem snapshot;
-		private MenuItem deleteKeyFrame;
-		
-		private Gtk.CellRendererText nameCell;
-		private Gtk.TreeViewColumn nameColumn;
-		private bool editing;
-		private bool projectIsLive;
-		
-
 		public TagsTreeView() {			
-			Selection.Mode = SelectionMode.Multiple;			
-			RowActivated += new RowActivatedHandler(OnTreeviewRowActivated);
-	
-			SetMenu();
-			PlayListLoaded = false;
-			ProjectIsLive = false;
-
-			nameColumn = new Gtk.TreeViewColumn();
-			nameColumn.Title = "Tag";
-			nameCell = new Gtk.CellRendererText();
-			nameCell.Edited += OnNameCellEdited;
-			Gtk.CellRendererPixbuf miniatureCell = new Gtk.CellRendererPixbuf();
-			nameColumn.PackStart(miniatureCell, true);
-			nameColumn.PackEnd(nameCell, true);
-
-			nameColumn.SetCellDataFunc(miniatureCell, new Gtk.TreeCellDataFunc(RenderMiniature));
-			nameColumn.SetCellDataFunc(nameCell, new Gtk.TreeCellDataFunc(RenderName));
-
-			AppendColumn(nameColumn);
+			tag.Visible = false;
+			players.Visible = false;
+			delete.Visible = false;
 		}
 
-		public bool PlayListLoaded {
-			set {
-				addPLN.Sensitive = value;
-			}
-		}	
-		
-		public bool ProjectIsLive{
-			set{
-				projectIsLive = value;
-				addPLN.Visible = !projectIsLive;
-				snapshot.Visible = !projectIsLive;
-			}
-		}
-
-		private void SetMenu() {
-			menu = new Menu();
-
-			name = new MenuItem(Catalog.GetString("Edit"));
-			deleteKeyFrame = new MenuItem(Catalog.GetString("Delete key frame"));
-			snapshot = new MenuItem(Catalog.GetString("Export to PGN images"));
-			addPLN = new MenuItem(Catalog.GetString("Add to playlist"));
-			addPLN.Sensitive=false;
-
-			menu.Append(name);
-			menu.Append(deleteKeyFrame);
-			menu.Append(addPLN);
-			menu.Append(snapshot);
-
-			name.Activated += new EventHandler(OnEdit);
-			deleteKeyFrame.Activated += OnDeleteKeyFrame;
-			addPLN.Activated += new EventHandler(OnAdded);
-			snapshot.Activated += new EventHandler(OnSnapshot);
-			menu.ShowAll();
-		}		
-
-		private MediaTimeNode GetValueFromPath(TreePath path){
-			Gtk.TreeIter iter;
-			Model.GetIter(out iter, path);
-			return Model.GetValue(iter,0) as MediaTimeNode;					
-		}	
-		
-		private void MultiSelectMenu (bool enabled){
-			name.Sensitive = !enabled;
-			snapshot.Sensitive = !enabled;
-		}
-		
-		private void RenderMiniature(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
-		{
-			MediaTimeNode tNode = model.GetValue(iter, 0) as MediaTimeNode;
-			(cell as Gtk.CellRendererPixbuf).Pixbuf = tNode.Miniature;
-		}
-
-		private void RenderName(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
-		{
-			MediaTimeNode tNode = (MediaTimeNode) model.GetValue(iter, 0);
-
-			//Handle special case in which we replace the text in the cell by the name of the TimeNode
-			//We need to check if we are editing and only change it for the path that's currently beeing edited
-
-			if (editing && Selection.IterIsSelected(iter))
-				(cell as Gtk.CellRendererText).Markup = tNode.Name;
-			else 
-				(cell as Gtk.CellRendererText).Markup = tNode.ToString();
-		}
-
-		private void OnNameCellEdited(object o, Gtk.EditedArgs args)
-		{
-			Gtk.TreeIter iter;
-			Model.GetIter(out iter, new Gtk.TreePath(args.Path));
-			MediaTimeNode tNode = Model.GetValue(iter,0) as MediaTimeNode;
-			tNode.Name = args.NewText;
-			editing = false;
-			nameCell.Editable=false;
-			if (TimeNodeChanged != null)
-				TimeNodeChanged(tNode,args.NewText);
-		}
-		
-		protected virtual void OnTreeviewRowActivated(object o, Gtk.RowActivatedArgs args)
-		{
-			Gtk.TreeIter iter;
-			Model.GetIter(out iter, args.Path);
-			MediaTimeNode tNode = Model.GetValue(iter, 0) as MediaTimeNode;
-
-			if (TimeNodeSelected != null && !projectIsLive)
-				TimeNodeSelected(tNode);
-		}
-
-		protected override bool OnButtonPressEvent(EventButton evnt)
+		override protected bool OnButtonPressEvent(EventButton evnt)
 		{			
 			TreePath[] paths = Selection.GetSelectedRows();
 			
@@ -176,7 +52,7 @@ namespace LongoMatch.Gui.Component
 				}
 				
 				if (paths.Length == 1) {
-					MediaTimeNode selectedTimeNode = GetValueFromPath(paths[0]);
+					MediaTimeNode selectedTimeNode = GetValueFromPath(paths[0]) as MediaTimeNode;
 					deleteKeyFrame.Sensitive = selectedTimeNode.KeyFrameDrawing != null;
 					MultiSelectMenu(false);
 					menu.Popup();
@@ -191,50 +67,11 @@ namespace LongoMatch.Gui.Component
 			return true;
 		}		
 		
-		protected void OnDeleteKeyFrame(object obj, EventArgs args) {
-			MessageDialog md = new MessageDialog((Gtk.Window)Toplevel,
-			                                     DialogFlags.Modal,
-			                                     MessageType.Question,
-			                                     ButtonsType.YesNo,
-			                                     false,
-			                                     Catalog.GetString("Do you want to delete the key frame for this play?")
-			                                    );
-			if (md.Run() == (int)ResponseType.Yes){
-				TreePath[] paths = Selection.GetSelectedRows();
-				for (int i=0; i<paths.Length; i++){	
-					MediaTimeNode tNode = GetValueFromPath(paths[i]);
-					tNode.KeyFrameDrawing = null;
-				}
-				// Refresh the thumbnails
-				QueueDraw();
-			}
-			md.Destroy();
-		}
-
-		protected virtual void OnEdit(object obj, EventArgs args) {
-			TreePath[] paths = Selection.GetSelectedRows();
-			editing = true;
-			nameCell.Editable = true;
-			nameCell.Markup = GetValueFromPath(paths[0]).Name;
-			SetCursor(paths[0],  nameColumn, true);
+		override protected bool SelectFunction(TreeSelection selection, TreeModel model, TreePath path, bool selected){
+			return true;
 		}
 		
-		protected void OnAdded(object obj, EventArgs args) {
-			if (PlayListNodeAdded != null){
-				TreePath[] paths = Selection.GetSelectedRows();
-				for (int i=0; i<paths.Length; i++){	
-					MediaTimeNode tNode = GetValueFromPath(paths[i]);
-					PlayListNodeAdded(tNode);
-				}
-			}
-		}
-		
-		protected void OnSnapshot(object obj, EventArgs args) {
-			if (SnapshotSeriesEvent != null)
-				SnapshotSeriesEvent(GetValueFromPath(Selection.GetSelectedRows()[0]));
-		}	
-		
-		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
+		override protected bool OnKeyPressEvent (Gdk.EventKey evnt)
 		{
 			return false;
 		}

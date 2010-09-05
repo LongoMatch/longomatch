@@ -18,14 +18,11 @@
 //
 //
 
-using System;
-using System.Collections.Generic;
 using Gdk;
 using Gtk;
-using Mono.Unix;
-using LongoMatch.Handlers;
-using LongoMatch.TimeNodes;
 using LongoMatch.Common;
+using LongoMatch.TimeNodes;
+using System;
 
 namespace LongoMatch.Gui.Component
 {
@@ -33,75 +30,16 @@ namespace LongoMatch.Gui.Component
 
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
-	public class PlaysTreeView : Gtk.TreeView
+	public class PlaysTreeView : ListTreeViewBase
 	{
 
-		public event TimeNodeChangedHandler TimeNodeChanged;
-		public event TimeNodeSelectedHandler TimeNodeSelected;
-		public event TimeNodeDeletedHandler TimeNodeDeleted;
-		public event PlayListNodeAddedHandler PlayListNodeAdded;
-		public event SnapshotSeriesHandler SnapshotSeriesEvent;
-		public event PlayersTaggedHandler PlayersTagged;
-		public event TagPlayHandler TagPlay;
 
-		// Plays menu
-		private Menu menu, teamMenu;
-		private MenuItem local;
-		private	MenuItem visitor;
-		private MenuItem noTeam;
-		private MenuItem tag;
-		private MenuItem addPLN;
-		private MenuItem deleteKeyFrame;
-		private MenuItem snapshot;
-		private MenuItem name;
-		private MenuItem players;
-		private MenuItem localPlayers;
-		private MenuItem visitorPlayers;
-		
 		//Categories menu
 		private Menu categoriesMenu;
 		private RadioAction sortByName, sortByStart, sortByStop, sortByDuration;
 		
-		private Gtk.CellRendererText nameCell;
-		private Gtk.TreeViewColumn nameColumn;
-		private Color[] colors;
-		private String[] teams_name;
-		private bool editing;
-		private bool projectIsLive;
-
-		private const string LOCAL_TEAM = "Local Team";
-		private const string VISITOR_TEAM = "Visitor Team";	
-		
 		public PlaysTreeView() {
-			Selection.Mode = SelectionMode.Multiple;
-			Selection.SelectFunction = SelectFunction;
-			this.RowActivated += new RowActivatedHandler(OnTreeviewRowActivated);
-			
-			SetMenu();
 			SetCategoriesMenu();
-			ProjectIsLive = false;
-			PlayListLoaded = false;
-
-			colors = new Color[20];
-			teams_name = new String[3];
-			teams_name[(int)Team.NONE] = Catalog.GetString(Catalog.GetString("None"));
-			teams_name[(int)Team.LOCAL] = Catalog.GetString(Catalog.GetString(LOCAL_TEAM));
-			teams_name[(int)Team.VISITOR] = Catalog.GetString(Catalog.GetString(VISITOR_TEAM));
-
-			nameColumn = new Gtk.TreeViewColumn();
-			nameColumn.Title = "Name";
-			nameColumn.SortOrder = SortType.Ascending;
-			nameCell = new Gtk.CellRendererText();
-			nameCell.Edited += OnNameCellEdited;
-			Gtk.CellRendererPixbuf miniatureCell = new Gtk.CellRendererPixbuf();
-			nameColumn.PackStart(miniatureCell, true);
-			nameColumn.PackEnd(nameCell, true);
-
-			nameColumn.SetCellDataFunc(miniatureCell, new Gtk.TreeCellDataFunc(RenderMiniature));
-			nameColumn.SetCellDataFunc(nameCell, new Gtk.TreeCellDataFunc(RenderName));
-
-			this.AppendColumn(nameColumn);
-			
 		}
 		
 		new public TreeStore Model{
@@ -113,108 +51,8 @@ namespace LongoMatch.Gui.Component
 				base.Model = value;					
 			}
 			get{
-				return (TreeStore)base.Model;
+				return base.Model as TreeStore;
 			}
-		}
-
-		public bool ProjectIsLive{
-			set{
-				projectIsLive = value;
-				addPLN.Visible = !projectIsLive;
-				snapshot.Visible = !projectIsLive;
-			}
-		}
-		
-		public Color[]  Colors {
-			set {
-				this.colors = value;
-			}
-		}
-		
-		public String LocalTeam {
-			set{
-				Label l1 = (local.Children[0] as Label);
-				Label l2 = (localPlayers.Children[0] as Label);
-				if (value == "")
-					l1.Text = l2.Text = Catalog.GetString(LOCAL_TEAM);
-				else {
-					l1.Text = l2.Text = value;
-				}
-				teams_name[(int)Team.LOCAL] = l1.Text; 
-			}
-		}
-		
-		public string VisitorTeam {
-			set{
-				Label l1 = (visitor.Children[0] as Label);
-				Label l2 = (visitorPlayers.Children[0] as Label);
-				if (value == "")
-					l1.Text = l2.Text = Catalog.GetString(VISITOR_TEAM);
-				else 
-					l1.Text = l2.Text = value;
-				teams_name[(int)Team.VISITOR] = l1.Text; 
-			}
-		}
-
-		public bool PlayListLoaded {
-			set {
-				addPLN.Sensitive = value;
-			}
-		}
-		
-		private void SetMenu() {
-			Menu playersMenu;
-			MenuItem team, quit;
-			
-			teamMenu = new Menu();
-			local = new MenuItem(Catalog.GetString(LOCAL_TEAM));
-			visitor = new MenuItem(Catalog.GetString(VISITOR_TEAM));
-			noTeam = new MenuItem(Catalog.GetString("No Team"));
-			teamMenu .Append(local);
-			teamMenu .Append(visitor);
-			teamMenu .Append(noTeam);
-
-			playersMenu = new Menu();
-			localPlayers = new MenuItem(Catalog.GetString(LOCAL_TEAM));
-			visitorPlayers = new MenuItem(Catalog.GetString(VISITOR_TEAM));
-			playersMenu.Append(localPlayers);
-			playersMenu.Append(visitorPlayers);
-
-			menu = new Menu();
-			
-			name = new MenuItem(Catalog.GetString("Edit"));
-			team = new MenuItem(Catalog.GetString("Team Selection"));
-			team.Submenu = teamMenu;
-			tag = new MenuItem(Catalog.GetString("Add tag"));
-			players = new MenuItem(Catalog.GetString("Tag player"));
-			players.Submenu = playersMenu;
-			quit = new MenuItem(Catalog.GetString("Delete"));
-			deleteKeyFrame = new MenuItem(Catalog.GetString("Delete key frame"));
-			addPLN = new MenuItem(Catalog.GetString("Add to playlist"));
-			addPLN.Sensitive=false;
-			snapshot = new MenuItem(Catalog.GetString("Export to PGN images"));
-
-			menu.Append(name);
-			menu.Append(tag);
-			menu.Append(players);
-			menu.Append(team);
-			menu.Append(addPLN);
-			menu.Append(quit);
-			menu.Append(deleteKeyFrame);
-			menu.Append(snapshot);
-
-			name.Activated += OnEdit;
-			tag.Activated += OnTag;
-			local.Activated += OnTeamSelection;
-			visitor.Activated += OnTeamSelection;
-			noTeam.Activated += OnTeamSelection;
-			localPlayers.Activated += OnLocalPlayers;
-			visitorPlayers.Activated += OnVisitorPlayers;
-			addPLN.Activated += OnAdded;
-			quit.Activated += OnDeleted;
-			deleteKeyFrame.Activated += OnDeleteKeyFrame;
-			snapshot.Activated += OnSnapshot;
-			menu.ShowAll();
 		}
 
 		private void SetCategoriesMenu(){
@@ -285,25 +123,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		private int GetSectionFromIter(TreeIter iter) {
-			TreePath path = Model.GetPath(iter);
-			return int.Parse(path.ToString().Split(':')[0]);
-		}
-
-		private TimeNode GetValueFromPath(TreePath path){
-			Gtk.TreeIter iter;
-			Model.GetIter(out iter, path);
-			return (TimeNode)Model.GetValue(iter,0);					
-		}	
-		
-		private void MultiSelectMenu (bool enabled){
-			name.Sensitive = !enabled;
-			snapshot.Sensitive = !enabled;
-			players.Sensitive = !enabled;
-			tag.Sensitive = !enabled;
-		}
-		
-		private int SortFunction(TreeModel model, TreeIter a, TreeIter b){
+		protected int SortFunction(TreeModel model, TreeIter a, TreeIter b){
 			TreeStore store;
 			TimeNode tna, tnb;
 			TreeIter parent;
@@ -350,101 +170,6 @@ namespace LongoMatch.Gui.Component
 			}			
 		}
 		
-		private bool SelectFunction(TreeSelection selection, TreeModel model, TreePath path, bool selected){
-			// Don't allow multiselect for categories
-			if (!selected && selection.GetSelectedRows().Length > 0){
-				if (selection.GetSelectedRows().Length == 1 &&
-				    GetValueFromPath(selection.GetSelectedRows()[0]) is SectionsTimeNode)
-					return false;	
-				return !(GetValueFromPath(path) is SectionsTimeNode);										
-			}
-			// Always unselect
-			else
-				return true;
-		}
-		
-		private void RenderMiniature(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
-		{
-			TimeNode tNode = (TimeNode) model.GetValue(iter, 0);
-			if (tNode is MediaTimeNode) {
-				(cell as Gtk.CellRendererPixbuf).Pixbuf = ((MediaTimeNode)tNode).Miniature;
-				(cell as Gtk.CellRendererPixbuf).CellBackgroundGdk = colors[GetSectionFromIter(iter)];
-			}
-			else {
-				(cell as Gtk.CellRendererPixbuf).Pixbuf = null;
-				(cell as Gtk.CellRendererPixbuf).CellBackground = "white";
-			}
-		}
-
-		private void RenderName(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
-		{
-			TimeNode tNode = (TimeNode) model.GetValue(iter, 0);
-
-			//Handle special case in which we replace the text in the cell by the name of the TimeNode
-			//We need to check if we are editing and only change it for the path that's currently beeing edited
-
-			if (editing && Selection.IterIsSelected(iter))
-				(cell as Gtk.CellRendererText).Markup = tNode.Name;
-			else if (tNode is MediaTimeNode) {
-				MediaTimeNode mTNode = (MediaTimeNode) tNode;
-				(cell as Gtk.CellRendererText).BackgroundGdk = colors[GetSectionFromIter(iter)];
-				(cell as Gtk.CellRendererText).CellBackgroundGdk = colors[GetSectionFromIter(iter)];
-				(cell as Gtk.CellRendererText).Markup = mTNode.ToString(teams_name[(int)mTNode.Team]);
-			}
-			else {
-				(cell as Gtk.CellRendererText).Background = "white";
-				(cell as Gtk.CellRendererText).CellBackground = "white";
-				(cell as Gtk.CellRendererText).Markup =tNode.Name;
-			}
-		}	
-
-		protected virtual void OnTreeviewRowActivated(object o, Gtk.RowActivatedArgs args)
-		{
-			Gtk.TreeIter iter;
-			this.Model.GetIter(out iter, args.Path);
-			TimeNode tNode = (TimeNode)this.Model.GetValue(iter, 0);
-
-			if (tNode is MediaTimeNode && TimeNodeSelected != null
-			    && !projectIsLive)
-				this.TimeNodeSelected((MediaTimeNode)tNode);
-		}
-
-		protected override bool OnButtonPressEvent(EventButton evnt)
-		{			
-			TreePath[] paths = Selection.GetSelectedRows();
-			
-			if ((evnt.Type == EventType.ButtonPress) && (evnt.Button == 3))
-			{
-				// We don't want to unselect the play when several
-				// plays are selected and we clik the right button
-				// For multiedition
-				if (paths.Length <= 1){
-					base.OnButtonPressEvent(evnt);
-					paths = Selection.GetSelectedRows();
-				}
-				
-				if (paths.Length == 1) {
-					TimeNode selectedTimeNode = GetValueFromPath(paths[0]);
-					if (selectedTimeNode is MediaTimeNode) {
-						deleteKeyFrame.Sensitive = (selectedTimeNode as MediaTimeNode).KeyFrameDrawing != null;
-						MultiSelectMenu(false);
-						menu.Popup();
-					}
-					else{
-						SetupSortMenu((selectedTimeNode as SectionsTimeNode).SortMethod);
-						categoriesMenu.Popup();
-					}
-				}
-				else if (paths.Length > 1){
-					MultiSelectMenu(true);
-					menu.Popup();								
-				}
-			}
-			else 
-				base.OnButtonPressEvent(evnt);
-			return true;
-		}
-		
 		private void OnSortActivated (object o, EventArgs args){
 			SectionsTimeNode category;
 			RadioAction sender;
@@ -464,112 +189,59 @@ namespace LongoMatch.Gui.Component
 			Model.SetSortFunc(0, SortFunction);
 		}
 		
-		private void OnNameCellEdited(object o, Gtk.EditedArgs args)
+		override protected bool SelectFunction(TreeSelection selection, TreeModel model, TreePath path, bool selected){
+			// Don't allow multiselect for categories
+			if (!selected && selection.GetSelectedRows().Length > 0){
+				if (selection.GetSelectedRows().Length == 1 &&
+				    GetValueFromPath(selection.GetSelectedRows()[0]) is SectionsTimeNode)
+					return false;	
+				return !(GetValueFromPath(path) is SectionsTimeNode);										
+			}
+			// Always unselect
+			else
+				return true;
+		}
+		
+		override protected void OnNameCellEdited(object o, Gtk.EditedArgs args)
 		{
-			Gtk.TreeIter iter;
-			TimeNode tNode;
-			
-			Model.GetIter(out iter, new Gtk.TreePath(args.Path));
-			tNode = (TimeNode)this.Model.GetValue(iter,0);
-			tNode.Name = args.NewText;
-			editing = false;
-			nameCell.Editable=false;
-			if (TimeNodeChanged != null)
-				TimeNodeChanged(tNode,args.NewText);
-			
-			// Redorder plays
+			base.OnNameCellEdited(o, args);
 			Model.SetSortFunc(0, SortFunction);
 		}
 
-		protected void OnDeleted(object obj, EventArgs args) {
-			if (TimeNodeDeleted == null)
-				return;
-			List<MediaTimeNode> list = new List<MediaTimeNode>();
+		override protected bool OnButtonPressEvent(EventButton evnt)
+		{			
 			TreePath[] paths = Selection.GetSelectedRows();
-			for (int i=0; i<paths.Length; i++){	
-				list.Add((MediaTimeNode)GetValueFromPath(paths[i]));
-			}
-			// When a TimeNode is deleted from the tree the path changes.
-			// We need first to retrieve all the TimeNodes to delete using the 
-			// current path of each one and then send the TimeNodeDeleted event
-			for (int i=0; i<paths.Length; i++){	
-				TimeNodeDeleted(list[i], int.Parse(paths[i].ToString().Split(':')[0]));
-			}			
-		}
-		
-		protected void OnDeleteKeyFrame(object obj, EventArgs args) {
-			MessageDialog md = new MessageDialog((Gtk.Window)Toplevel,
-			                                     DialogFlags.Modal,
-			                                     MessageType.Question,
-			                                     ButtonsType.YesNo,
-			                                     false,
-			                                     Catalog.GetString("Do you want to delete the key frame for this play?")
-			                                    );
-			if (md.Run() == (int)ResponseType.Yes){
-				TreePath[] paths = Selection.GetSelectedRows();
-				for (int i=0; i<paths.Length; i++){	
-					MediaTimeNode tNode = (MediaTimeNode)GetValueFromPath(paths[i]);
-					tNode.KeyFrameDrawing = null;
-				}
-				// Refresh the thumbnails
-				QueueDraw();
-			}
-			md.Destroy();
-		}
-
-		protected virtual void OnEdit(object obj, EventArgs args) {
-			TreePath[] paths = Selection.GetSelectedRows();
-			editing = true;
-			nameCell.Editable = true;
-			nameCell.Markup = GetValueFromPath(paths[0]).Name;
-			SetCursor(paths[0],  nameColumn, true);
-		}
-
-		protected void OnTeamSelection(object obj, EventArgs args) {
-			MenuItem sender = (MenuItem)obj;
-			Team team = Team.NONE;
-			if (sender == local)
-				team = Team.LOCAL;
-			else if (sender == visitor)
-				team = Team.VISITOR;
-			else if (sender == noTeam)
-				team = Team.NONE;
 			
-			TreePath[] paths = Selection.GetSelectedRows();
-			for (int i=0; i<paths.Length; i++){	
-					MediaTimeNode tNode = (MediaTimeNode)GetValueFromPath(paths[i]);
-					tNode.Team = team;
-			}
-		}
-
-		protected void OnAdded(object obj, EventArgs args) {
-			if (PlayListNodeAdded != null){
-				TreePath[] paths = Selection.GetSelectedRows();
-				for (int i=0; i<paths.Length; i++){	
-					MediaTimeNode tNode = (MediaTimeNode)GetValueFromPath(paths[i]);
-					PlayListNodeAdded(tNode);
+			if ((evnt.Type == EventType.ButtonPress) && (evnt.Button == 3))
+			{
+				// We don't want to unselect the play when several
+				// plays are selected and we clik the right button
+				// For multiedition
+				if (paths.Length <= 1){
+					base.OnButtonPressEvent(evnt);
+					paths = Selection.GetSelectedRows();
+				}
+				
+				if (paths.Length == 1) {
+					TimeNode selectedTimeNode = GetValueFromPath(paths[0]) as TimeNode;
+					if (selectedTimeNode is MediaTimeNode) {
+						deleteKeyFrame.Sensitive = (selectedTimeNode as MediaTimeNode).KeyFrameDrawing != null;
+						MultiSelectMenu(false);
+						menu.Popup();
+					}
+					else{
+						SetupSortMenu((selectedTimeNode as SectionsTimeNode).SortMethod);
+						categoriesMenu.Popup();
+					}
+				}
+				else if (paths.Length > 1){
+					MultiSelectMenu(true);
+					menu.Popup();								
 				}
 			}
-		}
-		
-		protected void OnTag (object obj, EventArgs args){
-			if (TagPlay != null)
-				TagPlay((MediaTimeNode)GetValueFromPath(Selection.GetSelectedRows()[0]));
-		}
-
-		protected void OnSnapshot(object obj, EventArgs args) {
-			if (SnapshotSeriesEvent != null)
-				SnapshotSeriesEvent((MediaTimeNode)GetValueFromPath(Selection.GetSelectedRows()[0]));
-		}
-
-		protected virtual void OnLocalPlayers(object o, EventArgs args) {
-			if (PlayersTagged != null)
-				PlayersTagged((MediaTimeNode)GetValueFromPath(Selection.GetSelectedRows()[0]), Team.LOCAL);
-		}
-
-		protected virtual void OnVisitorPlayers(object o, EventArgs args) {
-			if (PlayersTagged != null)
-				PlayersTagged((MediaTimeNode)GetValueFromPath(Selection.GetSelectedRows()[0]), Team.VISITOR);
+			else 
+				base.OnButtonPressEvent(evnt);
+			return true;
 		}
 		
 		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)

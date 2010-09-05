@@ -191,6 +191,7 @@ FILES = \
 	Gui/TreeView/CategoriesTreeView.cs \
 	Gui/TreeView/PlayerPropertiesTreeView.cs \
 	Gui/TreeView/PlayersTreeView.cs \
+	Gui/TreeView/ListTreeViewBase.cs \
 	Gui/TreeView/PlayListTreeView.cs \
 	Gui/TreeView/PlaysTreeView.cs \
 	Gui/TreeView/TagsTreeView.cs \
