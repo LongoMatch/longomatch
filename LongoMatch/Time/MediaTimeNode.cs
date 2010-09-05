@@ -22,14 +22,10 @@ using System;
 using System.Collections.Generic;
 using Mono.Unix;
 using Gdk;
+using LongoMatch.Common;
 
 namespace LongoMatch.TimeNodes
 {
-	public enum Team {
-		NONE = 0,
-		LOCAL = 1,
-		VISITOR = 2,
-	}
 
 	/// <summary>
 	/// I represent a Play in the game, that's why I'm probably the most

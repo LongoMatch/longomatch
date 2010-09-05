@@ -24,6 +24,7 @@ using Mono.Unix;
 using LongoMatch.DB;
 using LongoMatch.Handlers;
 using LongoMatch.TimeNodes;
+using LongoMatch.Common;
 
 namespace LongoMatch.Gui.Component
 {
@@ -149,7 +150,7 @@ namespace LongoMatch.Gui.Component
 		}
 
 
-		protected virtual void OnTreeviewPlayersTagged(LongoMatch.TimeNodes.MediaTimeNode tNode, LongoMatch.TimeNodes.Team team)
+		protected virtual void OnTreeviewPlayersTagged(LongoMatch.TimeNodes.MediaTimeNode tNode, Team team)
 		{
 			if (PlayersTagged != null)
 				PlayersTagged(tNode,team);

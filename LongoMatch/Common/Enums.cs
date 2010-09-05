@@ -47,4 +47,10 @@ namespace LongoMatch.Common
 		SortByStopTime = 2,
 		SortByDuration = 3
 	}
+	
+	public enum Team {
+		NONE = 0,
+		LOCAL = 1,
+		VISITOR = 2,
+	}
 }
