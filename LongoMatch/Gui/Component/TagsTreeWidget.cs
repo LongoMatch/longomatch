@@ -113,6 +113,8 @@ namespace LongoMatch.Gui.Component
 							model.AppendValues(tNode);
 					}
 					UpdateTagsList();
+					treeview.LocalTeam = value.LocalName;
+					treeview.VisitorTeam = value.VisitorName;
 				}
 			}
 		}
