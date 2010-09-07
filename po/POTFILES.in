@@ -60,6 +60,7 @@ LongoMatch/Gui/Component/TagsTreeWidget.cs
 LongoMatch/Gui/Component/TimeLineWidget.cs
 LongoMatch/Gui/Component/ButtonsWidget.cs
 LongoMatch/Gui/Component/TimeScale.cs
+LongoMatch/Gui/TreeView/ListTreeViewBase.cs
 LongoMatch/Gui/TreeView/PlaysTreeView.cs
 LongoMatch/Gui/TreeView/TagsTreeView.cs
 LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs
@@ -156,6 +157,7 @@ CesarPlayer/gtk-gui/LongoMatch.Gui.PlayerBin.cs
 CesarPlayer/gtk-gui/generated.cs
 CesarPlayer/gtk-gui/LongoMatch.Gui.CapturerBin.cs
 CesarPlayer/gtk-gui/LongoMatch.Gui.VolumeWindow.cs
+CesarPlayer/Utils/Device.cs
 CesarPlayer/Utils/IFramesCapturer.cs
 CesarPlayer/Utils/IMetadataReader.cs
 CesarPlayer/Utils/TimeString.cs
