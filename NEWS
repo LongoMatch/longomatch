@@ -1,3 +1,21 @@
+===== LongoMatch 0.16.0 "Arriba las cámaras, esto es un atraco!" =====
+
+	== Features ==
+	* Added live analisys support.
+	* Live capture from DV camcorders.
+	* Added vp8 and webm support.
+	* Added 'and' 'or' filter to tags' filter.
+	* Video editor keeps DAR adding black borders.
+	* Allow multideletion of projects and templates.
+	* Add file information in the projects list (codecs/lenght).
+	* Added catalan translation.
+
+        == Bugs Fixed ==
+
+  	* [#620656] Allow multiselection to delete projects.
+  	* [#620654] Change the plays filter to allow AND and OR
+	* bps/kbps fixes for several codecs.
+
 ===== LongoMatch 0.15.7 =====
 
 	== Features ==

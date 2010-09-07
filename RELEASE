@@ -1,60 +1,35 @@
-LongoMatch-0.15.7 "Mariscada en Guarda" 
+LongoMatch-0.16 "Arriba las cámaras, esto es un atraco!"
 -------------------------------------------------
 
-The LongoMatch team is happy to announce the seventh release in the unstable 0.15
-LongoMatch series. Note that the 0.15.6 release was not officially announced and
-is skipped because a major bug was found while uploading the release.
+The LongoMatch team is happy to announce the first release in the 0.16
+LongoMatch series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
 all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
 * Features of this release
-  * New tagging mode, to tag plays setting the start and stop time instead of using the default values.
-  * Live analysis support with a fake capture device.
-  * Keys bindings for the media player.
-  * Added tooltips to many widgets.
-  * Added Norwegian translation.
-  * Added Slovenian translation.
-  * Added Danish translation.
-  * Added Swedish translation.
+  * Added live analisys support.
+  * Live capture from DV camcorders.
+  * Added vp8 and webm support.
+  * Added 'and' 'or' filter to tags' filter.
+  * Video editor keeps DAR adding black borders.
+  * bps/kbps fixes for several codecs.
+  * Allow multideletion of projects and templates.
+  * Add file information in the projects list (codecs/lenght).
+  * Added catalan translation.
 
 *Bugs Fixed
-  * [#614133] The drawing tool does not resize properly the image
-  * [#614135] Hotkeys ToString() prints 'none' if the hotkey has no modifier
-  * [#614136] The player grabs the pointer when clicked
-  * [#615017] Crash loading projects pointing to a file that doesn't exists 
-  * [#615018] The video player's timescale report a wrong value when releasing the mouse, sending wrong seeks
-  * [#615019] Crash using files with no video stream
+  * [#620656] Allow multiselection to delete projects.
+  * [#620654] Change the plays filter to allow AND and OR
 
-* Features of the 0.15 series
- 
-  * New tagging mode, to tag plays setting the start and stop time instead of using the default values.
-  * Live analysis support with a fake capture device.  
-  * Keys bindings for the media player. 
-  * Illimted number of tagging categories (previous version allows only 20)
-  * Support for team templates
-  * Plays can be tagged to players
-  * Soft Tagging support
-  * Import/Export projects
-  * Orderable plays
-  * HotKeys support	
-  * Database migration tool
-  * New video editor implemented using GNonLin (FFmpeg and Mencoder are not required anymore)
-  * Video Editor with audio support
-  * Overlay title of the play in rendered clips
-  * Change the playrate of plays in the rendered clip
-  * New output formats (TV, HD, FullHD)
-  * New output audio and video codecs supports (Matroska+H264+AAC, AVI+XVID+MP3, OGG+Theora+Vorbis, MPEG2-PS+Mpeg2Video)
-  * Drawing tool for on-video annotations
-  * Redesigned templates manager
-	
 *Contributors to this Release:
 
   * LongoMatch:
 	Andoni Morales Alastruey <ylatuya@gmail.com>
 
   * Translations:
+  	* ca: Xavier Queralt
 	* cs: Marek Cernocky, Pavel Bárta, Petr Kovar
 	* da: Joe Hansen, Kenneth Nielsen
  	* de: Mario Blättermann
@@ -65,19 +40,19 @@ experience.
 
 
 * Requirements
- 
- * mono >= 2.0
- * mono-posix >= 2.0
- * mono-cairo >= 2.0
- * gstreamer >= 0.10.22
- * gnonlin >= 0.10.10
+
+ * mono >= 2.4
+ * mono-posix >= 2.4
+ * mono-cairo >= 2.4
+ * gstreamer >= 0.10.30
+ * gnonlin >= 0.10.15
  * gtk-sharp >= 2.12
- * db40 >= 6.0
+ * db40 >= 7.4
 
 
 * Download
   LongoMatch source tarballs are available on gnome FTP:
-   http://ftp.gnome.org/pub/GNOME/sources/longomatch/0.15/
+   http://ftp.gnome.org/pub/GNOME/sources/longomatch/0.16/
 
   See the website for distribution-specific packages.
 
