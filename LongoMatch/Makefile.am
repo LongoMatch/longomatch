@@ -249,7 +249,7 @@ REFERENCES =  \
 	$(GLIB_SHARP_20_LIBS) \
 	Mono.Cairo \
 	System \
-	$(DB4O_60_LIBS)
+	$(DB4O_74_LIBS)
 
 DLL_REFERENCES = 
 
