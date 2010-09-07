@@ -3,7 +3,7 @@
 	== Features ==
 	* Added tolltips to many widgets.
 	* Use the keyboard arrows for the player's keyboard shortcuts
- 	
+
         == Bugs Fixed ==
 
 	* Crash loading projects pointing to a file that doesn't exists
@@ -16,13 +16,13 @@
 	== Features ==
 
 	* New tagging mode, to tag plays setting the start and stop time instead of using the default values.
-	* Live analysis support with a fake capture device.  
-	* Keys bindings for the media player. 
+	* Live analysis support with a fake capture device.
+	* Keys bindings for the media player.
 	* Added Norwegian translation.
 	* Added Slovenian translation.
 	* Added Danish translation.
 	* Added Swedish translation.
-		
+
  	== Bugs Fixed ==
 
 	* [#614133] The drawing tool does not resize properly the image
@@ -32,7 +32,7 @@
 ===== LongoMatch 0.15.5 =====
 
 	== Features ==
-	
+
 	* Plays are now sortable by name, start time, stop time and duration.
 	* Plays can be tagged.
 	* A new tab has been added to display plays filterd by tags.
@@ -41,10 +41,10 @@
 	* Templates can be creating copying an existent one.
 	* Plays can be multiselected.
  	* A template from a project can be exported.
-	* Added German translation 
-	
+	* Added German translation
+
  	== Bugs Fixed ==
- 	
+
  	* [#603277] The projects manager does not ask to save an edited project when exiting
  	* [#603274] Enable multiple selection of plays
 	* [#603276] Use a template different from the default one when creating a new one
@@ -53,51 +53,51 @@
 ===== LongoMatch 0.15.4 =====
 
 	== Features ==
-	
+
 	* New drawing widget with specialized tools that allows to make drawings in a frame and save it in a file or
 	  in a play as a key frame. When this drawings are saved as key frame and the play is loaded, the player
 	  recall thme when it reaches the instant they belong to.
 	* Speeds improvements in retrieving projects from the database.
 	* Better readabilty of plays using bigger thumbnails and improving info layout
- 	
+
  	== Bugs Fixed ==
- 	
- 	* [#598675] Memory leak handling Project objects  
- 	
+
+ 	* [#598675] Memory leak handling Project objects
+
 ===== LongoMatch 0.15.3 =====
 
 	== Features ==
-	
-	* Usability improvements in the Projects Manager 
- 	
+
+	* Usability improvements in the Projects Manager
+
  	== Bugs Fixed ==
- 	
- 	*  [#596187] GPL headers use the old FSF address 
- 	*  [#596013] Removal of sections on a created project does not repect order 
- 	*  [#]       Buttons' label doesn't ellipsize and prevent the main window to shrink	
- 	
+
+ 	*  [#596187] GPL headers use the old FSF address
+ 	*  [#596013] Removal of sections on a created project does not repect order
+ 	*  [#]       Buttons' label doesn't ellipsize and prevent the main window to shrink
+
 ===== LongoMatch 0.15.2 =====
 
 	== Features ==
-	
+
 	* Drawing tool for on-video annotations
  	* Redesigned templates manager
- 	
+
  	== Bugs Fixed ==
- 	
- 	* [#594161] Can't edit categories name in the treeview 
+
+ 	* [#594161] Can't edit categories name in the treeview
  	* [#594329] Cannot change the file associated to a project in the Projects Manager
  	* [#595397] Video editor stalls for some audio formats
  	* [#595110] Memory leak handling unamanged Pixbuf
- 	
-===== LongoMatch 0.15.1 =====	
+
+===== LongoMatch 0.15.1 =====
 
 	== Features ==
 
 	* Illimted number of tagging categories (previous version allows only 20)
 	* Support for team templates
 	* Plays can be tagged to players
-	* HotKeys support	
+	* HotKeys support
 	* Database migration tool
 	* New video editor implemented using GNonLin (FFmpeg and Mencoder are not required anymore)
 	* Video Editor with audio support
@@ -105,19 +105,20 @@
 	* Change the playrate of plays in the rendered clip
 	* New output formats (TV, HD, FullHD)
 	* New output audio and video codecs supports (Matroska+H264+AAC, AVI+XVID+MP3, OGG+Theora+Vorbis, MPEG2-PS+Mpeg2Video)
-	
+
 	== Improvements ==
 
 	* Display the name of the play in the timeline
 	* Draw rounded rectangles in thetimeline
 	* Enable projects search
 	* Added image preview to projects
-	* Added "Competion" and "Season" properties to the Project's description	
+	* Added "Competion" and "Season" properties to the Project's description
 	* Multimedia player updated to playbin2
 	* Playlists elements can now have their own playrate
 	* Previsualization of captured frames
 	* Crash reports
 	* Many bug fixes!!!
+
 ===== LongoMatch 0.14.1 ====
 
 	* [#323] Crash whith no internet conexion

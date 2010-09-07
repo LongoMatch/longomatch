@@ -53,13 +53,13 @@ experience.
 
   * LongoMatch:
 	Andoni Morales Alastruey <ylatuya@gmail.com>
-  
+
   * Translations:
 	* cs: Marek Cernocky, Pavel Bárta, Petr Kovar
 	* da: Joe Hansen, Kenneth Nielsen
- 	* de: Mario Blättermann 
-	* es: Andoni Morales Alastruey, Jorge González 
-	* nb: Kjartan Maraas 
+ 	* de: Mario Blättermann
+	* es: Andoni Morales Alastruey, Jorge González
+	* nb: Kjartan Maraas
 	* sl: Matej Urbančič
 	* sv: Daniel Nylander
 
@@ -85,8 +85,8 @@ experience.
 
  * Information for users and developers can be found on the LongoMatch website :
   http://www.longomatch.ylatuya.es/
-     
+
  * Bugs and Features Requests
   http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch
-    
+
 
