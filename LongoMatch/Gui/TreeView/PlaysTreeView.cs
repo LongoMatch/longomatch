@@ -180,7 +180,7 @@ namespace LongoMatch.Gui.Component
 			if (sender == sortByName)
 				category.SortMethod = SortMethodType.SortByName;
 			else if (sender == sortByStart)
-				category.SortMethod = SortMethodType.SortByName;
+				category.SortMethod = SortMethodType.SortByStartTime;
 			else if (sender == sortByStop)
 				category.SortMethod = SortMethodType.SortByStopTime;
 			else 
