@@ -368,8 +368,8 @@ namespace LongoMatch.DB
 		public MediaTimeNode AddTimeNode(int dataSection, Time start, Time stop,Pixbuf thumbnail) {
 			MediaTimeNode tn ;
 			List<MediaTimeNode> playsList= sectionPlaysList[dataSection];
-			int count= playsList.Count+1;
-			string name = sections.GetName(dataSection) + " " +count;
+			string count= String.Format("{0:000}",playsList.Count+1);
+			string name = sections.GetName(dataSection) + " " + count;
 			// HACK: Used for capture where fps is not specified, asuming PAL@25fps
 			ushort fps = file != null ? file.Fps : (ushort)25;
 
