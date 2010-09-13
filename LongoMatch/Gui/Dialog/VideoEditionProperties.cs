@@ -142,7 +142,7 @@ namespace LongoMatch.Gui.Dialog
 			if (formatcombobox.ActiveText == Constants.MP4) {
 				vcodec = VideoEncoderType.H264;
 				acodec = AudioEncoderType.Aac;
-				muxer = VideoMuxerType.Matroska;
+				muxer = VideoMuxerType.Mp4;
 			}
 			else if (formatcombobox.ActiveText == Constants.OGG) {
 				vcodec = VideoEncoderType.Theora;
