@@ -220,6 +220,7 @@ LONGOMATCH_FILES = \
 	Gui/Popup/MessagePopup.cs \
 	Gui/TransparentDrawingArea.cs \
 	Gui/TreeView/CategoriesTreeView.cs \
+	Gui/TreeView/ListTreeViewBase.cs \
 	Gui/TreeView/PlayerPropertiesTreeView.cs \
 	Gui/TreeView/PlayersTreeView.cs \
 	Gui/TreeView/PlayListTreeView.cs \
