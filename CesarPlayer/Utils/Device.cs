@@ -80,7 +80,7 @@ namespace LongoMatch.Video.Utils
 			}
 			if (Environment.OSVersion.Platform == PlatformID.Unix){
 				devicesList.Add(new Device {
-					ID = Catalog.GetString("GConf configured device"),
+					ID = Catalog.GetString("Default device"),
 					IDProperty = "",
 					DeviceType = DeviceType.Video});
 			}			
