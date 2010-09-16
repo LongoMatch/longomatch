@@ -6,8 +6,8 @@ msgstr ""
 "Project-Id-Version: longomatch master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&component=general\n"
-"POT-Creation-Date: 2010-08-02 22:44+0000\n"
-"PO-Revision-Date: 2010-08-06 22:11+0100\n"
+"POT-Creation-Date: 2010-09-07 22:34+0000\n"
+"PO-Revision-Date: 2010-09-16 12:54+0100\n"
 "Last-Translator: Mario Blättermann <mariobl@gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -44,7 +44,7 @@ msgstr "Name"
 
 #: ../LongoMatch/Time/SectionsTimeNode.cs:131
 #: ../LongoMatch/Time/SectionsTimeNode.cs:139
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:197
+#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:68
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:161
 #: ../LongoMatch/IO/SectionsWriter.cs:56
 msgid "Sort by name"
@@ -52,26 +52,26 @@ msgstr "Nach Name sortieren"
 
 #: ../LongoMatch/Time/SectionsTimeNode.cs:133
 #: ../LongoMatch/Time/SectionsTimeNode.cs:143
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:198
+#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:69
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:162
 msgid "Sort by start time"
 msgstr "Nach Startzeit sortieren"
 
 #: ../LongoMatch/Time/SectionsTimeNode.cs:135
 #: ../LongoMatch/Time/SectionsTimeNode.cs:145
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:199
+#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:70
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:163
 msgid "Sort by stop time"
 msgstr "Nach Stoppzeit sortieren"
 
 #: ../LongoMatch/Time/SectionsTimeNode.cs:137
 #: ../LongoMatch/Time/SectionsTimeNode.cs:147
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:200
+#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:71
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:164
 msgid "Sort by duration"
 msgstr "Nach Dauer sortieren"
 
-#: ../LongoMatch/Time/MediaTimeNode.cs:357
+#: ../LongoMatch/Time/MediaTimeNode.cs:354
 #: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:50
 #: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:47
 #: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:71
@@ -80,21 +80,21 @@ msgstr "Nach Dauer sortieren"
 msgid "Name"
 msgstr "Name"
 
-#: ../LongoMatch/Time/MediaTimeNode.cs:358 ../LongoMatch/IO/CSVExport.cs:82
+#: ../LongoMatch/Time/MediaTimeNode.cs:355 ../LongoMatch/IO/CSVExport.cs:82
 #: ../LongoMatch/IO/CSVExport.cs:137 ../LongoMatch/IO/CSVExport.cs:163
 msgid "Team"
 msgstr "Mannschaft"
 
-#: ../LongoMatch/Time/MediaTimeNode.cs:359
+#: ../LongoMatch/Time/MediaTimeNode.cs:356
 #: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:139
 msgid "Start"
 msgstr "Start"
 
-#: ../LongoMatch/Time/MediaTimeNode.cs:360
+#: ../LongoMatch/Time/MediaTimeNode.cs:357
 msgid "Stop"
 msgstr "Stop"
 
-#: ../LongoMatch/Time/MediaTimeNode.cs:361
+#: ../LongoMatch/Time/MediaTimeNode.cs:358
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:293
 msgid "Tags"
 msgstr "Schlagwörter"
@@ -123,11 +123,21 @@ msgstr "Ein Protokoll wurde gespeichert in:"
 msgid "Please, fill a bug report "
 msgstr "Bitte verfassen Sie einen Fehlerbericht."
 
-#: ../LongoMatch/Gui/MainWindow.cs:129
+#: ../LongoMatch/Gui/MainWindow.cs:128
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:280
+msgid "Visitor Team"
+msgstr "Gastmannschaft"
+
+#: ../LongoMatch/Gui/MainWindow.cs:132
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:267
+msgid "Local Team"
+msgstr "Lokale Mannschaft"
+
+#: ../LongoMatch/Gui/MainWindow.cs:140
 msgid "The file associated to this project doesn't exist."
 msgstr "Die diesem Projekt zugeordnete Datei existiert nicht."
 
-#: ../LongoMatch/Gui/MainWindow.cs:130
+#: ../LongoMatch/Gui/MainWindow.cs:141
 msgid ""
 "If the location of the file has changed try to edit it with the database "
 "manager."
@@ -135,19 +145,19 @@ msgstr ""
 "Falls sich der Ort der Datei geändert hat, versuchen Sie sie mit der "
 "Datenbankverwaltung zu ändern."
 
-#: ../LongoMatch/Gui/MainWindow.cs:141
+#: ../LongoMatch/Gui/MainWindow.cs:152
 msgid "An error occurred opening this project:"
 msgstr "Ein Fehler ist beim Öffnen des Projekts aufgetreten:"
 
-#: ../LongoMatch/Gui/MainWindow.cs:190
+#: ../LongoMatch/Gui/MainWindow.cs:201
 msgid "Loading newly created project..."
 msgstr "Neu erzeugtes Projekt wird geladen …"
 
-#: ../LongoMatch/Gui/MainWindow.cs:202
+#: ../LongoMatch/Gui/MainWindow.cs:213
 msgid "An error occured saving the project:\n"
 msgstr "Ein Fehler ist beim Speichern des Projekts aufgetreten:\n"
 
-#: ../LongoMatch/Gui/MainWindow.cs:203
+#: ../LongoMatch/Gui/MainWindow.cs:214
 msgid ""
 "The video file and a backup of the project has been saved. Try to import it "
 "later:\n"
@@ -155,17 +165,17 @@ msgstr ""
 "Die Videodatei und eine Sicherung des Projekts wurden gespeichert. Versuchen "
 "Sie, diese später zu importieren:\n"
 
-#: ../LongoMatch/Gui/MainWindow.cs:313
+#: ../LongoMatch/Gui/MainWindow.cs:328
 msgid "Do you want to close the current project?"
 msgstr "Wollen Sie das aktuelle Projekt überschreiben?"
 
-#: ../LongoMatch/Gui/MainWindow.cs:520
+#: ../LongoMatch/Gui/MainWindow.cs:535
 msgid "The actual project will be closed due to an error in the media player:"
 msgstr ""
 "Das aktuelle Projekt wird wegen eines Fehlers in der Medienwiedergabe "
 "geschlossen:"
 
-#: ../LongoMatch/Gui/MainWindow.cs:603
+#: ../LongoMatch/Gui/MainWindow.cs:618
 msgid ""
 "An error occured in the video capturer and the current project will be closed:"
 msgstr ""
@@ -401,12 +411,10 @@ msgid "Title"
 msgstr "Titel"
 
 #: ../LongoMatch/Gui/Component/ProjectListWidget.cs:133
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:145
 msgid "Local team"
 msgstr "Lokale Mannschaft"
 
 #: ../LongoMatch/Gui/Component/ProjectListWidget.cs:134
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:146
 msgid "Visitor team"
 msgstr "Gastmannschaft"
 
@@ -438,76 +446,61 @@ msgstr "Neues Spiel hinzufügen"
 msgid "Delete "
 msgstr "Entfernen"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:137
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:267
-msgid "Local Team"
-msgstr "Lokale Mannschaft"
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:80
+msgid "None"
+msgstr "Nichts"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:138
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:280
-msgid "Visitor Team"
-msgstr "Gastmannschaft"
-
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:139
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:156
 msgid "No Team"
 msgstr "Keine Mannschaft"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:152
-#: ../LongoMatch/Gui/TreeView/TagsTreeView.cs:94
-#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:106
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:169
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectTemplateWidget.cs:164
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:153
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:170
 msgid "Team Selection"
 msgstr "Mannschaftsauswahl"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:155
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:172
 msgid "Add tag"
 msgstr "Schlagwort hinzufügen"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:156
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:173
 msgid "Tag player"
 msgstr "Spieler kennzeichnen"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:158
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:175
 #: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:59
-#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:107
 msgid "Delete"
 msgstr "Entfernen"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:159
-#: ../LongoMatch/Gui/TreeView/TagsTreeView.cs:95
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:176
 msgid "Delete key frame"
 msgstr "Schlüsselbild entfernen"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:160
-#: ../LongoMatch/Gui/TreeView/TagsTreeView.cs:97
-#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:109
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:177
 msgid "Add to playlist"
 msgstr "Zur Wiedergabeliste hinzufügen"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:162
-#: ../LongoMatch/Gui/TreeView/TagsTreeView.cs:96
-#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:108
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:179
 msgid "Export to PGN images"
 msgstr "Als PGN-Bilder exportieren"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:195
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:333
+msgid "Do you want to delete the key frame for this play?"
+msgstr "Wollen Sie das Schlüsselbild für dieses Spiel entfernen?"
+
+#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:66
 msgid "Edit name"
 msgstr "Name bearbeiten"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:196
+#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:67
 #: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:72
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:153
 msgid "Sort Method"
 msgstr "Sortierungsmethode"
-
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:472
-#: ../LongoMatch/Gui/TreeView/TagsTreeView.cs:200
-msgid "Do you want to delete the key frame for this play?"
-msgstr "Wollen Sie das Schlüsselbild für dieses Spiel entfernen?"
 
 #: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:45
 msgid "Photo"
@@ -569,11 +562,11 @@ msgstr "Datei nicht gefunden"
 msgid "The file you are trying to load is not a valid project"
 msgstr "Die zu ladende Datei ist kein gültiges Projekt"
 
-#: ../LongoMatch/DB/DataBase.cs:136
+#: ../LongoMatch/DB/DataBase.cs:137
 msgid "Error retrieving the file info for project:"
 msgstr "Fehler beim Ermitteln der Dateiinformationen für Projekt:"
 
-#: ../LongoMatch/DB/DataBase.cs:137
+#: ../LongoMatch/DB/DataBase.cs:138
 msgid ""
 "This value will be reset. Remember to change it later with the projects "
 "manager"
@@ -581,15 +574,15 @@ msgstr ""
 "Dieser Wert wird zurückgesetzt. Denken Sie daran, ihn später in der "
 "Projektverwaltung zu ändern."
 
-#: ../LongoMatch/DB/DataBase.cs:138
+#: ../LongoMatch/DB/DataBase.cs:139
 msgid "Change Me"
 msgstr "Ändern"
 
-#: ../LongoMatch/DB/DataBase.cs:215
+#: ../LongoMatch/DB/DataBase.cs:216
 msgid "The Project for this video file already exists."
 msgstr "Das Projekt für diese Videodatei existiert bereits."
 
-#: ../LongoMatch/DB/DataBase.cs:215
+#: ../LongoMatch/DB/DataBase.cs:216
 msgid "Try to edit it with the Database Manager"
 msgstr "Versuchen, mit der Datenbankverwaltung zu bearbeiten"
 
@@ -1291,6 +1284,10 @@ msgstr ""
 msgid "Time:"
 msgstr "Zeit:"
 
+#: ../CesarPlayer/Utils/Device.cs:83
+msgid "GConf configured device"
+msgstr "Durch GConf konfiguriertes Gerät"
+
 #: ../CesarPlayer/Utils/PreviewMediaFile.cs:116
 #: ../CesarPlayer/Utils/MediaFile.cs:158
 msgid "Invalid video file:"
@@ -1302,9 +1299,6 @@ msgstr "Simulierte Live-Quelle"
 
 #~ msgid "You can't delete the last section"
 #~ msgstr "Sie können die letzte Sektion nicht entfernen"
-
-#~ msgid "GConf configured device"
-#~ msgstr "Durch GConf konfiguriertes Gerät"
 
 #~ msgid "DV camera"
 #~ msgstr "DV-Kamera"
