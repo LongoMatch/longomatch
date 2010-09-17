@@ -7,15 +7,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: longomatch\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-25 22:06+0200\n"
-"PO-Revision-Date: 2010-08-04 16:13+0200\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=longomatch&component=general\n"
+"POT-Creation-Date: 2010-09-16 10:57+0000\n"
+"PO-Revision-Date: 2010-09-17 09:16+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
-"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2\n"
 "X-Poedit-Language: Czech\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -47,7 +48,7 @@ msgstr "název"
 
 #: ../LongoMatch/Time/SectionsTimeNode.cs:131
 #: ../LongoMatch/Time/SectionsTimeNode.cs:139
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:197
+#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:68
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:161
 #: ../LongoMatch/IO/SectionsWriter.cs:56
 msgid "Sort by name"
@@ -55,26 +56,26 @@ msgstr "Řadit podle názvu"
 
 #: ../LongoMatch/Time/SectionsTimeNode.cs:133
 #: ../LongoMatch/Time/SectionsTimeNode.cs:143
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:198
+#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:69
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:162
 msgid "Sort by start time"
 msgstr "Řadit podle času začátku"
 
 #: ../LongoMatch/Time/SectionsTimeNode.cs:135
 #: ../LongoMatch/Time/SectionsTimeNode.cs:145
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:199
+#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:70
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:163
 msgid "Sort by stop time"
 msgstr "Řadit podle času konce"
 
 #: ../LongoMatch/Time/SectionsTimeNode.cs:137
 #: ../LongoMatch/Time/SectionsTimeNode.cs:147
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:200
+#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:71
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:164
 msgid "Sort by duration"
 msgstr "Řadit podle délky"
 
-#: ../LongoMatch/Time/MediaTimeNode.cs:357
+#: ../LongoMatch/Time/MediaTimeNode.cs:354
 #: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:50
 #: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:47
 #: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:71
@@ -83,21 +84,21 @@ msgstr "Řadit podle délky"
 msgid "Name"
 msgstr "Jméno"
 
-#: ../LongoMatch/Time/MediaTimeNode.cs:358 ../LongoMatch/IO/CSVExport.cs:82
+#: ../LongoMatch/Time/MediaTimeNode.cs:355 ../LongoMatch/IO/CSVExport.cs:82
 #: ../LongoMatch/IO/CSVExport.cs:137 ../LongoMatch/IO/CSVExport.cs:163
 msgid "Team"
 msgstr "Tým"
 
-#: ../LongoMatch/Time/MediaTimeNode.cs:359
+#: ../LongoMatch/Time/MediaTimeNode.cs:356
 #: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:139
 msgid "Start"
 msgstr "Start"
 
-#: ../LongoMatch/Time/MediaTimeNode.cs:360
+#: ../LongoMatch/Time/MediaTimeNode.cs:357
 msgid "Stop"
 msgstr "Stop"
 
-#: ../LongoMatch/Time/MediaTimeNode.cs:361
+#: ../LongoMatch/Time/MediaTimeNode.cs:358
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:293
 msgid "Tags"
 msgstr "Značky"
@@ -126,30 +127,40 @@ msgstr "Protokol byl uložen do: "
 msgid "Please, fill a bug report "
 msgstr "Prosím vyplňte protokol chybového hlášení."
 
-#: ../LongoMatch/Gui/MainWindow.cs:129
+#: ../LongoMatch/Gui/MainWindow.cs:128
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:280
+msgid "Visitor Team"
+msgstr "Tým hostů"
+
+#: ../LongoMatch/Gui/MainWindow.cs:132
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:267
+msgid "Local Team"
+msgstr "Tým domácích"
+
+#: ../LongoMatch/Gui/MainWindow.cs:140
 msgid "The file associated to this project doesn't exist."
 msgstr "Soubor asociovaný s tímto projektem neexistuje."
 
-#: ../LongoMatch/Gui/MainWindow.cs:130
+#: ../LongoMatch/Gui/MainWindow.cs:141
 msgid ""
 "If the location of the file has changed try to edit it with the database "
 "manager."
 msgstr ""
 "Jestliže bylo změněno umístění souboru, opravte jej pomocí správce databáze."
 
-#: ../LongoMatch/Gui/MainWindow.cs:141
+#: ../LongoMatch/Gui/MainWindow.cs:152
 msgid "An error occurred opening this project:"
 msgstr "Vyskytla se chyba při otevírání tohoto projektu:"
 
-#: ../LongoMatch/Gui/MainWindow.cs:190
+#: ../LongoMatch/Gui/MainWindow.cs:201
 msgid "Loading newly created project..."
 msgstr "Načítá se nově vytvořený projekt…"
 
-#: ../LongoMatch/Gui/MainWindow.cs:202
+#: ../LongoMatch/Gui/MainWindow.cs:213
 msgid "An error occured saving the project:\n"
 msgstr "Vyskytla se chyba při ukládání projektu:\n"
 
-#: ../LongoMatch/Gui/MainWindow.cs:203
+#: ../LongoMatch/Gui/MainWindow.cs:214
 msgid ""
 "The video file and a backup of the project has been saved. Try to import it "
 "later:\n"
@@ -157,15 +168,15 @@ msgstr ""
 "Soubor s videem a záloha projektu byly uloženy. Zkuste je později "
 "naimportovat:\n"
 
-#: ../LongoMatch/Gui/MainWindow.cs:313
+#: ../LongoMatch/Gui/MainWindow.cs:328
 msgid "Do you want to close the current project?"
 msgstr "Chcete zavřít současný projekt?"
 
-#: ../LongoMatch/Gui/MainWindow.cs:520
+#: ../LongoMatch/Gui/MainWindow.cs:535
 msgid "The actual project will be closed due to an error in the media player:"
 msgstr "Aktuální projekt bude kvůli chybě v přehrávači médií uzavřen:"
 
-#: ../LongoMatch/Gui/MainWindow.cs:603
+#: ../LongoMatch/Gui/MainWindow.cs:618
 msgid ""
 "An error occured in the video capturer and the current project will be "
 "closed:"
@@ -400,12 +411,10 @@ msgid "Title"
 msgstr "Název"
 
 #: ../LongoMatch/Gui/Component/ProjectListWidget.cs:133
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:145
 msgid "Local team"
 msgstr "Domácí tým"
 
 #: ../LongoMatch/Gui/Component/ProjectListWidget.cs:134
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:146
 msgid "Visitor team"
 msgstr "Hostující tým"
 
@@ -437,76 +446,61 @@ msgstr "Přidat nové utkání"
 msgid "Delete "
 msgstr "Smazat "
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:137
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:267
-msgid "Local Team"
-msgstr "Tým domácích"
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:80
+msgid "None"
+msgstr "Žádný"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:138
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:280
-msgid "Visitor Team"
-msgstr "Tým hostů"
-
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:139
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:156
 msgid "No Team"
 msgstr "Žádný tým"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:152
-#: ../LongoMatch/Gui/TreeView/TagsTreeView.cs:94
-#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:106
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:169
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectTemplateWidget.cs:164
 msgid "Edit"
 msgstr "Upravit"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:153
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:170
 msgid "Team Selection"
 msgstr "Výběr týmu"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:155
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:172
 msgid "Add tag"
 msgstr "Přidat značku"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:156
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:173
 msgid "Tag player"
 msgstr "Označit hráče"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:158
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:175
 #: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:59
-#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:107
 msgid "Delete"
 msgstr "Odstranit"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:159
-#: ../LongoMatch/Gui/TreeView/TagsTreeView.cs:95
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:176
 msgid "Delete key frame"
 msgstr "Odstranit klíčový snímek"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:160
-#: ../LongoMatch/Gui/TreeView/TagsTreeView.cs:97
-#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:109
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:177
 msgid "Add to playlist"
 msgstr "Přidat do seznamu utkání"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:162
-#: ../LongoMatch/Gui/TreeView/TagsTreeView.cs:96
-#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:108
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:179
 msgid "Export to PGN images"
 msgstr "Export do obrázku PNG"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:195
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:333
+msgid "Do you want to delete the key frame for this play?"
+msgstr "Chcete opravdu odstranit klíčový snímek pro toto utkání?"
+
+#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:66
 msgid "Edit name"
 msgstr "Upravit název"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:196
+#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:67
 #: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:72
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:153
 msgid "Sort Method"
 msgstr "Způsob řazení"
-
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:472
-#: ../LongoMatch/Gui/TreeView/TagsTreeView.cs:200
-msgid "Do you want to delete the key frame for this play?"
-msgstr "Chcete opravdu odstranit klíčový snímek pro toto utkání?"
 
 #: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:45
 msgid "Photo"
@@ -568,11 +562,11 @@ msgstr "Soubor nenalezen"
 msgid "The file you are trying to load is not a valid project"
 msgstr "Soubor, který se pokoušíte načíst, není platný projekt"
 
-#: ../LongoMatch/DB/DataBase.cs:136
+#: ../LongoMatch/DB/DataBase.cs:137
 msgid "Error retrieving the file info for project:"
 msgstr "Chyby při získávání informací o souboru pro projekt:"
 
-#: ../LongoMatch/DB/DataBase.cs:137
+#: ../LongoMatch/DB/DataBase.cs:138
 msgid ""
 "This value will be reset. Remember to change it later with the projects "
 "manager"
@@ -580,15 +574,15 @@ msgstr ""
 "Tato hodnota bude vynulována. Nezapomeňte ji později změnit ve správci "
 "projektu."
 
-#: ../LongoMatch/DB/DataBase.cs:138
+#: ../LongoMatch/DB/DataBase.cs:139
 msgid "Change Me"
 msgstr "Změň mě"
 
-#: ../LongoMatch/DB/DataBase.cs:215
+#: ../LongoMatch/DB/DataBase.cs:216
 msgid "The Project for this video file already exists."
 msgstr "Projekt pro toto video již existuje."
 
-#: ../LongoMatch/DB/DataBase.cs:215
+#: ../LongoMatch/DB/DataBase.cs:216
 msgid "Try to edit it with the Database Manager"
 msgstr "Pokuste se o opravu pomocí správce databáze"
 
@@ -1286,6 +1280,10 @@ msgstr "Zařízení je znovu připojeno. Chcete znovu spustit nahrávání?"
 msgid "Time:"
 msgstr "Čas:"
 
+#: ../CesarPlayer/Utils/Device.cs:83
+msgid "Default device"
+msgstr "Výchozí zařízení"
+
 #: ../CesarPlayer/Utils/PreviewMediaFile.cs:116
 #: ../CesarPlayer/Utils/MediaFile.cs:158
 msgid "Invalid video file:"
@@ -1295,9 +1293,3 @@ msgstr "Neplatný soubor s videem:"
 msgid "Fake live source"
 msgstr "Simulovat živý zdroj"
 
-#~ msgid "You can't delete the last section"
-#~ msgstr "Poslední oddíl není možno odstranit"
-
-#~| msgid "Video Bitrate:"
-#~ msgid "Video Device:"
-#~ msgstr "Zařízení videa:"
