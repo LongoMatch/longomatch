@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: longomatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&component=general\n"
-"POT-Creation-Date: 2010-09-09 18:47+0000\n"
-"PO-Revision-Date: 2010-09-10 20:31+0100\n"
+"POT-Creation-Date: 2010-09-16 10:57+0000\n"
+"PO-Revision-Date: 2010-09-17 08:17+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -1250,8 +1250,8 @@ msgid "Time:"
 msgstr "Čas:"
 
 #: ../CesarPlayer/Utils/Device.cs:83
-msgid "GConf configured device"
-msgstr "GConf nastavljena naprava"
+msgid "Default device"
+msgstr "Privzeta naprava"
 
 #: ../CesarPlayer/Utils/PreviewMediaFile.cs:116
 #: ../CesarPlayer/Utils/MediaFile.cs:158
@@ -1262,22 +1262,32 @@ msgstr "Neveljavna video datoteka:"
 msgid "Fake live source"
 msgstr "Lažni vir v živo"
 
+#~ msgid "GConf configured device"
+#~ msgstr "GConf nastavljena naprava"
+
 #~ msgid "You can't delete the last section"
 #~ msgstr "Ni mogoče izbrisati zadnjega odseka."
+
 #~ msgid "DV camera"
 #~ msgstr "DV kamera"
+
 #~ msgid "GConf Source"
 #~ msgstr "Vir GConf"
+
 #~ msgid "Video Device:"
 #~ msgstr "Video naprava:"
+
 #~ msgid "Open the project, please."
 #~ msgstr "Odpri projekt."
+
 #~ msgid "_New Poyect"
 #~ msgstr "_Nov projekt"
+
 #~ msgid "_Open Proyect"
 #~ msgstr "_Odpri projekt"
+
 #~ msgid "_Close Proyect"
 #~ msgstr "_Zapri projekt"
+
 #~ msgid "Error merging video segments. Please retry again"
 #~ msgstr "Napaka med združevanjem odsekov videa. Poskusite znova."
-
