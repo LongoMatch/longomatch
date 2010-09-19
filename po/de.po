@@ -6,8 +6,8 @@ msgstr ""
 "Project-Id-Version: longomatch master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&component=general\n"
-"POT-Creation-Date: 2010-09-07 22:34+0000\n"
-"PO-Revision-Date: 2010-09-16 12:54+0100\n"
+"POT-Creation-Date: 2010-09-16 10:57+0000\n"
+"PO-Revision-Date: 2010-09-19 13:24+0100\n"
 "Last-Translator: Mario Blättermann <mariobl@gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1285,8 +1285,8 @@ msgid "Time:"
 msgstr "Zeit:"
 
 #: ../CesarPlayer/Utils/Device.cs:83
-msgid "GConf configured device"
-msgstr "Durch GConf konfiguriertes Gerät"
+msgid "Default device"
+msgstr "Standardgerät"
 
 #: ../CesarPlayer/Utils/PreviewMediaFile.cs:116
 #: ../CesarPlayer/Utils/MediaFile.cs:158
@@ -1296,6 +1296,9 @@ msgstr "Ungültige Videodatei:"
 #: ../CesarPlayer/Capturer/FakeCapturer.cs:81
 msgid "Fake live source"
 msgstr "Simulierte Live-Quelle"
+
+#~ msgid "GConf configured device"
+#~ msgstr "Durch GConf konfiguriertes Gerät"
 
 #~ msgid "You can't delete the last section"
 #~ msgstr "Sie können die letzte Sektion nicht entfernen"
