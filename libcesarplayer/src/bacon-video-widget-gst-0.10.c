@@ -1715,7 +1715,7 @@ got_time_tick (GstElement * play, gint64 time_nanos, BaconVideoWidget * bvw)
   GST_INFO ("%" GST_TIME_FORMAT ",%" GST_TIME_FORMAT " %s",
       GST_TIME_ARGS (bvw->priv->current_time),
       GST_TIME_ARGS (bvw->priv->stream_length),
-      (seekable) ? "TRUE" : "FALSE");
+      (seekable) ? "TRUE" : "FALSE"); 
 */
 
   g_signal_emit (bvw, bvw_signals[SIGNAL_TICK], 0,
@@ -3238,6 +3238,7 @@ gboolean
 bacon_video_widget_seek_to_next_frame (BaconVideoWidget * bvw, gfloat rate,
     gboolean in_segment)
 {
+  gint64 pos = -1;
   gboolean ret;
 
   g_return_val_if_fail (bvw != NULL, FALSE);
@@ -3246,6 +3247,9 @@ bacon_video_widget_seek_to_next_frame (BaconVideoWidget * bvw, gfloat rate,
 
   gst_element_send_event(bvw->priv->play,
       gst_event_new_step (GST_FORMAT_BUFFERS, 1, 1.0, TRUE, FALSE));
+
+  pos = bacon_video_widget_get_accurate_current_time (bvw);
+  got_time_tick (GST_ELEMENT (bvw->priv->play), pos * GST_MSECOND, bvw);
 
   gst_x_overlay_expose (bvw->priv->xoverlay);
 
@@ -3275,7 +3279,7 @@ bacon_video_widget_seek_to_previous_frame (BaconVideoWidget * bvw,
 
   if (pos == 0)
     return FALSE;
-  
+
   if (bacon_video_widget_is_playing (bvw))
     bacon_video_widget_pause (bvw);
 
@@ -3286,6 +3290,8 @@ bacon_video_widget_seek_to_previous_frame (BaconVideoWidget * bvw,
       GST_FORMAT_TIME, seek_flags, GST_SEEK_TYPE_SET,
       final_pos, GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
   gst_x_overlay_expose (bvw->priv->xoverlay);
+
+  got_time_tick (GST_ELEMENT (bvw->priv->play), pos * GST_MSECOND, bvw);
 
   return ret;
 }
