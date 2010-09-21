@@ -268,11 +268,11 @@ namespace LongoMatch.Gui.Component
 			}else if (o is Player) {
 				c.Background = "white";
 				c.CellBackground = "white";
-				c.Markup = (o as Player).Name;
+				c.Markup = String.Format("{0} ({1})", (o as Player).Name, Model.IterNChildren(iter));
 			}else if (o is SectionsTimeNode) {
-				c.Markup = (o as TimeNode).Name;
 				c.Background = "white";
 				c.CellBackground = "white";
+				c.Markup = String.Format("{0} ({1})", (o as TimeNode).Name, Model.IterNChildren(iter));
 			}
 		}	
 
