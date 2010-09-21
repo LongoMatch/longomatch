@@ -347,14 +347,9 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnEdit(object obj, EventArgs args) {
 			TreePath[] paths = Selection.GetSelectedRows();
-			object o = GetValueFromPath(paths[0]);
 			
 			editing = true;
 			nameCell.Editable = true;
-			if (o is Player)
-				nameCell.Markup = (o as Player).Name;
-			else 
-				nameCell.Markup = (o as TimeNode).Name;
 			SetCursor(paths[0],  nameColumn, true);
 		}
 
