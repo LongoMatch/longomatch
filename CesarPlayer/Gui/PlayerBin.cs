@@ -244,6 +244,8 @@ namespace LongoMatch.Gui
 		public void SeekToNextFrame(bool in_segment){
 			int currentTime = (int)player.CurrentTime;
 			if (segmentStopTime==0 | currentTime < segmentStopTime){
+				if (player.Playing)
+					player.Pause();
 				player.SeekToNextFrame( GetRateFromScale(), in_segment);
 				if (SeekEvent != null)
 					SeekEvent(currentTime );
@@ -254,6 +256,8 @@ namespace LongoMatch.Gui
 		public void SeekToPreviousFrame(bool in_segment){
 			long currentTime = player.CurrentTime;
 			if (currentTime> segmentStartTime){
+				if (player.Playing)
+					player.Pause();
 				player.SeekToPreviousFrame( GetRateFromScale(),in_segment);
 				if (SeekEvent != null)
 					SeekEvent(currentTime);
