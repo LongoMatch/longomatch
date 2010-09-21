@@ -356,7 +356,8 @@ namespace LongoMatch.Gui
 			player.ReadyToSeek += new EventHandler(OnReadyToSeek);
 			
 			playerWidget = (Widget)player;
-			playerWidget.ButtonPressEvent += new ButtonPressEventHandler(OnVideoboxButtonPressEvent);
+			playerWidget.ButtonPressEvent += OnVideoboxButtonPressEvent;
+			playerWidget.ScrollEvent += OnVideoboxScrollEvent;
 			playerWidget.Show();
 			videobox.Add(playerWidget);	
 				
@@ -571,6 +572,24 @@ namespace LongoMatch.Gui
 				Play();
 			else 
 				Pause();		
+		}
+		
+		protected virtual void OnVideoboxScrollEvent (object o, Gtk.ScrollEventArgs args)
+		{
+			switch (args.Event.Direction){
+				case ScrollDirection.Down:
+					SeekToPreviousFrame(InSegment());
+					break;
+				case ScrollDirection.Up:
+					SeekToNextFrame(InSegment());
+					break;
+				case ScrollDirection.Left:
+					StepBackward();
+					break;
+				case ScrollDirection.Right:
+					StepForward();
+					break;
+			}
 		}
 		
 		protected virtual void OnDrawButtonClicked (object sender, System.EventArgs e)
