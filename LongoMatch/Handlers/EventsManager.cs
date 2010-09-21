@@ -98,12 +98,14 @@ namespace LongoMatch
 		}
 
 		private void ConnectSignals() {
-			//Adding Handlers for each event
+			/* Adding Handlers for each event */
 
+			/* Connect new mark event */
 			buttonswidget.NewMarkEvent += OnNewMark;
 			buttonswidget.NewMarkStartEvent += OnNewMarkStart;
 			buttonswidget.NewMarkStopEvent += OnNewMarkStop;
-
+			
+			/* Connect TimeNodeChanged events */
 			treewidget.TimeNodeChanged += OnTimeNodeChanged;
 			localPlayersList.TimeNodeChanged += OnTimeNodeChanged;
 			visitorPlayersList.TimeNodeChanged += OnTimeNodeChanged;
@@ -111,34 +113,42 @@ namespace LongoMatch
 			timeline.TimeNodeChanged += OnTimeNodeChanged;
 			notes.TimeNodeChanged += OnTimeNodeChanged;
 
+			/* Connect TimeNodeDeleted events */
 			treewidget.TimeNodeDeleted += OnTimeNodeDeleted;
 			timeline.TimeNodeDeleted += OnTimeNodeDeleted;
 
+			/* Connect TimeNodeSelected events */
 			treewidget.TimeNodeSelected += OnTimeNodeSelected;
 			localPlayersList.TimeNodeSelected += OnTimeNodeSelected;
 			visitorPlayersList.TimeNodeSelected += OnTimeNodeSelected;
 			tagsTreeWidget.TimeNodeSelected += OnTimeNodeSelected;
 			timeline.TimeNodeSelected += OnTimeNodeSelected;
 
+			/* Connect playlist events */
 			playlist.PlayListNodeSelected += OnPlayListNodeSelected;
 			playlist.Progress += OnProgress;
 			playlist.ApplyCurrentRate += OnApplyRate;
 
+			/* Connect PlayListNodeAdded events */
 			treewidget.PlayListNodeAdded += OnPlayListNodeAdded;
 			localPlayersList.PlayListNodeAdded += OnPlayListNodeAdded;
 			visitorPlayersList.PlayListNodeAdded += OnPlayListNodeAdded;
 			tagsTreeWidget.PlayListNodeAdded += OnPlayListNodeAdded;
 
+			/* Connect tags events */
 			treewidget.PlayersTagged += OnPlayersTagged;
 			treewidget.TagPlay += OnTagPlay;
-
+			
+			/* Connect SnapshotSeries events */
 			treewidget.SnapshotSeriesEvent += OnSnapshotSeries;
 			localPlayersList.SnapshotSeriesEvent += OnSnapshotSeries;
 			visitorPlayersList.SnapshotSeriesEvent += OnSnapshotSeries;
 			tagsTreeWidget.SnapshotSeriesEvent += OnSnapshotSeries;
 
+			/* Connect timeline events */
 			timeline.NewMarkEvent += OnNewMarkAtFrame;
-
+			
+			/* Connect player events */
 			player.Prev += OnPrev;
 			player.Next += OnNext;
 			player.Tick += OnTick;
