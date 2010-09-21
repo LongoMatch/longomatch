@@ -248,24 +248,28 @@ namespace LongoMatch.Gui.Component
 			object o = model.GetValue(iter, 0);
 			var c = cell as CellRendererText;
 			
+			/* Handle special case in which we replace the text in the cell by the name of the TimeNode
+			 * We need to check if we are editing and only change it for the path that's currently beeing edited */
+			if (editing && Selection.IterIsSelected(iter)){
+				if (o is Player)
+					c.Markup = (o as Player).Name;
+				else
+					c.Markup = (o as TimeNode).Name;
+				return;
+			} 			
+			
 			if (o is MediaTimeNode){
-				//Handle special case in which we replace the text in the cell by the name of the TimeNode
-				//We need to check if we are editing and only change it for the path that's currently beeing edited
-				if (editing && Selection.IterIsSelected(iter)){
-					c.Markup = (o as MediaTimeNode).Name;
-				} else {
-					var mtn = o as MediaTimeNode;
-					/* FIXME: the colors array is set externally and might not match the model!!! */
-					if (colors !=null) {
-						Color col = colors[GetSectionFromIter(iter)];
-						c.CellBackgroundGdk = col;
-						c.BackgroundGdk = col;
-					} else{ 
-						c.Background = "white";
-						c.CellBackground = "white";
-					}
-					c.Markup = mtn.ToString(teams_name[(int)mtn.Team]);
-				}					
+				var mtn = o as MediaTimeNode;
+				/* FIXME: the colors array is set externally and might not match the model!!! */
+				if (colors !=null) {
+					Color col = colors[GetSectionFromIter(iter)];
+					c.CellBackgroundGdk = col;
+					c.BackgroundGdk = col;
+				} else{ 
+					c.Background = "white";
+					c.CellBackground = "white";
+				}
+				c.Markup = mtn.ToString(teams_name[(int)mtn.Team]);
 			}else if (o is Player) {
 				c.Background = "white";
 				c.CellBackground = "white";
