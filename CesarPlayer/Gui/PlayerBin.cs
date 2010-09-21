@@ -82,8 +82,8 @@ namespace LongoMatch.Gui
 			vscale1.CanFocus = false;	
 			drawbutton.CanFocus = false;
 			seeksQueue = new double[2];
-			seeksQueue [0] = 0;
-			seeksQueue [1] = 0;
+			seeksQueue [0] = -1;
+			seeksQueue [1] = -1;
 		}
 		
 #endregion
@@ -441,8 +441,8 @@ namespace LongoMatch.Gui
 				IsPlayingPrevState = player.Playing;
 				player.Tick -= tickHandler;
 				player.Pause();
-				seeksQueue [0] = 0;
-				seeksQueue [1] = 0;
+				seeksQueue [0] = -1;
+				seeksQueue [1] = -1;
 			}
 			
 			pos = timescale.Value;	
@@ -457,7 +457,7 @@ namespace LongoMatch.Gui
 			if (seeking){
 				/* Releasing the timescale always report value different from the real one. 
 				 * We need to cache previous position and seek again to the this position */				
-				SeekFromTimescale(seeksQueue[0]);
+				SeekFromTimescale(seeksQueue[0] != -1 ? seeksQueue[0] : seeksQueue[1]);
 				seeking=false;				
 				player.Tick += tickHandler;
 				if (IsPlayingPrevState)
