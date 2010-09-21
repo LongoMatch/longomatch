@@ -70,6 +70,7 @@ namespace LongoMatch.Gui.Component
 			Selection.Mode = SelectionMode.Multiple;
 			Selection.SelectFunction = SelectFunction;
 			RowActivated += new RowActivatedHandler(OnTreeviewRowActivated);
+			HeadersVisible = false;
 			
 			SetMenu();
 			ProjectIsLive = false;
