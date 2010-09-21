@@ -5,8 +5,8 @@
     <target-gtk-version>2.12</target-gtk-version>
   </configuration>
   <import>
-    <widget-library name="../../CesarPlayer/a.dll" />
-    <widget-library name="../bin/Debug/LongoMatch.exe" internal="true" />
+    <widget-library name="../../CesarPlayer/bin/Release/CesarPlayer.dll" />
+    <widget-library name="../bin/Release/LongoMatch.exe" internal="true" />
   </import>
   <icon-factory>
     <icon-set id="longomatch">
@@ -1782,6 +1782,7 @@
       </action>
       <action id="FullScreenAction">
         <property name="Type">Toggle</property>
+        <property name="Accelerator">&lt;Control&gt;&lt;Alt&gt;f</property>
         <property name="Label" translatable="yes">Full Screen</property>
         <property name="ShortLabel" translatable="yes">Full Screen</property>
         <property name="StockId">gtk-fullscreen</property>
@@ -1791,6 +1792,7 @@
       </action>
       <action id="PlaylistAction">
         <property name="Type">Toggle</property>
+        <property name="Accelerator">&lt;Control&gt;p</property>
         <property name="Label" translatable="yes">Playlist</property>
         <property name="ShortLabel" translatable="yes">Playlist</property>
         <property name="DrawAsRadio">False</property>
@@ -1799,6 +1801,7 @@
       </action>
       <action id="CaptureModeAction">
         <property name="Type">Radio</property>
+        <property name="Accelerator">&lt;Control&gt;c</property>
         <property name="Label" translatable="yes">Capture Mode</property>
         <property name="Sensitive">False</property>
         <property name="ShortLabel" translatable="yes">Capture Mode</property>
@@ -1810,6 +1813,7 @@
       </action>
       <action id="AnalyzeModeAction">
         <property name="Type">Radio</property>
+        <property name="Accelerator">&lt;Control&gt;a</property>
         <property name="Label" translatable="yes">Analyze Mode</property>
         <property name="Sensitive">False</property>
         <property name="ShortLabel" translatable="yes">Analyze Mode</property>
@@ -1886,6 +1890,7 @@
       </action>
       <action id="FreeCaptureModeAction">
         <property name="Type">Radio</property>
+        <property name="Accelerator">&lt;Control&gt;f</property>
         <property name="Label" translatable="yes">Free Capture Mode</property>
         <property name="Sensitive">False</property>
         <property name="ShortLabel" translatable="yes">Free Capture Mode</property>
