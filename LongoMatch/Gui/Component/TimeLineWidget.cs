@@ -52,6 +52,7 @@ namespace LongoMatch.Gui.Component {
 		{
 			this.Build();
 			SetPixelRatio(10);
+			vscale1.CanFocus = false;
 		}
 
 		public MediaTimeNode SelectedTimeNode {
