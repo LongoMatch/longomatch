@@ -35,7 +35,7 @@ namespace LongoMatch.Gui.Component
 
 
 		public PlayersTreeView() {
-			team = Team.LOCAL;
+			this.Team = Team.LOCAL;
 			tag.Visible = false;
 			players.Visible = false;
 			delete.Visible = false;
@@ -43,12 +43,8 @@ namespace LongoMatch.Gui.Component
 		}
 
 		public Team Team {
-			set {
-				team = value;
-			}
-			get {
-				return team ;
-			}
+			set;
+			get;
 		}
 		
 		new public TreeStore Model{
