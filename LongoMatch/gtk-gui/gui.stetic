@@ -4490,7 +4490,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.DrawingToolBox" design-size="86 448">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.DrawingToolBox" design-size="86 382">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -4715,6 +4715,35 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
           </packing>
         </child>
         <child>
+          <widget class="Gtk.Label" id="colorslabel">
+            <property name="MemberName" />
+            <property name="Xalign">0</property>
+            <property name="LabelProp" translatable="yes">&lt;b&gt;Color&lt;/b&gt;</property>
+            <property name="UseMarkup">True</property>
+          </widget>
+          <packing>
+            <property name="Position">2</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.ColorButton" id="colorbutton">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="Events">ButtonMotionMask, ButtonPressMask, ButtonReleaseMask</property>
+            <property name="Alpha">-1</property>
+            <signal name="ColorSet" handler="OnColorbuttonColorSet" />
+          </widget>
+          <packing>
+            <property name="Position">3</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
           <widget class="Gtk.Label" id="label3">
             <property name="MemberName" />
             <property name="Xalign">0</property>
@@ -4722,7 +4751,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
             <property name="UseMarkup">True</property>
           </widget>
           <packing>
-            <property name="Position">2</property>
+            <property name="Position">4</property>
             <property name="AutoSize">True</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
@@ -4742,7 +4771,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
             <signal name="Changed" handler="OnCombobox1Changed" />
           </widget>
           <packing>
-            <property name="Position">3</property>
+            <property name="Position">5</property>
             <property name="AutoSize">True</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
@@ -4756,7 +4785,7 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
             <property name="UseMarkup">True</property>
           </widget>
           <packing>
-            <property name="Position">4</property>
+            <property name="Position">6</property>
             <property name="AutoSize">True</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
@@ -4774,181 +4803,6 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
             <property name="Numeric">True</property>
             <property name="Value">80</property>
             <signal name="Changed" handler="OnSpinbutton1Changed" />
-          </widget>
-          <packing>
-            <property name="Position">5</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Label" id="colorslabel">
-            <property name="MemberName" />
-            <property name="Xalign">0</property>
-            <property name="LabelProp" translatable="yes">&lt;b&gt;Colors&lt;/b&gt;</property>
-            <property name="UseMarkup">True</property>
-          </widget>
-          <packing>
-            <property name="Position">6</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Table" id="colorstable">
-            <property name="MemberName" />
-            <property name="NRows">3</property>
-            <property name="NColumns">2</property>
-            <property name="RowSpacing">6</property>
-            <property name="ColumnSpacing">6</property>
-            <child>
-              <widget class="Gtk.RadioButton" id="bbutton">
-                <property name="MemberName" />
-                <property name="Label" translatable="yes" />
-                <property name="DrawIndicator">False</property>
-                <property name="HasLabel">True</property>
-                <property name="UseUnderline">True</property>
-                <property name="FocusOnClick">False</property>
-                <property name="Group">colors</property>
-                <signal name="Toggled" handler="OnButtonToggled" />
-              </widget>
-              <packing>
-                <property name="LeftAttach">1</property>
-                <property name="RightAttach">2</property>
-                <property name="AutoSize">True</property>
-                <property name="YOptions">Fill</property>
-                <property name="XExpand">True</property>
-                <property name="XFill">True</property>
-                <property name="XShrink">False</property>
-                <property name="YExpand">False</property>
-                <property name="YFill">True</property>
-                <property name="YShrink">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.RadioButton" id="blbutton">
-                <property name="MemberName" />
-                <property name="Label" translatable="yes" />
-                <property name="DrawIndicator">False</property>
-                <property name="HasLabel">True</property>
-                <property name="UseUnderline">True</property>
-                <property name="FocusOnClick">False</property>
-                <property name="Group">colors</property>
-                <signal name="Toggled" handler="OnButtonToggled" />
-              </widget>
-              <packing>
-                <property name="TopAttach">1</property>
-                <property name="BottomAttach">2</property>
-                <property name="LeftAttach">1</property>
-                <property name="RightAttach">2</property>
-                <property name="AutoSize">True</property>
-                <property name="YOptions">Fill</property>
-                <property name="XExpand">True</property>
-                <property name="XFill">True</property>
-                <property name="XShrink">False</property>
-                <property name="YExpand">False</property>
-                <property name="YFill">True</property>
-                <property name="YShrink">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.RadioButton" id="gbutton">
-                <property name="MemberName" />
-                <property name="Label" translatable="yes" />
-                <property name="DrawIndicator">False</property>
-                <property name="HasLabel">True</property>
-                <property name="UseUnderline">True</property>
-                <property name="FocusOnClick">False</property>
-                <property name="Group">colors</property>
-                <signal name="Toggled" handler="OnButtonToggled" />
-              </widget>
-              <packing>
-                <property name="TopAttach">2</property>
-                <property name="BottomAttach">3</property>
-                <property name="AutoSize">True</property>
-                <property name="YOptions">Fill</property>
-                <property name="XExpand">True</property>
-                <property name="XFill">True</property>
-                <property name="XShrink">False</property>
-                <property name="YExpand">False</property>
-                <property name="YFill">True</property>
-                <property name="YShrink">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.RadioButton" id="rbutton">
-                <property name="MemberName" />
-                <property name="Label" translatable="yes" />
-                <property name="DrawIndicator">False</property>
-                <property name="HasLabel">True</property>
-                <property name="UseUnderline">True</property>
-                <property name="FocusOnClick">False</property>
-                <property name="Group">colors</property>
-                <signal name="Toggled" handler="OnButtonToggled" />
-              </widget>
-              <packing>
-                <property name="TopAttach">1</property>
-                <property name="BottomAttach">2</property>
-                <property name="AutoSize">True</property>
-                <property name="YOptions">Fill</property>
-                <property name="XExpand">True</property>
-                <property name="XFill">True</property>
-                <property name="XShrink">False</property>
-                <property name="YExpand">False</property>
-                <property name="YFill">True</property>
-                <property name="YShrink">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.RadioButton" id="wbutton">
-                <property name="MemberName" />
-                <property name="Label" translatable="yes" />
-                <property name="DrawIndicator">False</property>
-                <property name="HasLabel">True</property>
-                <property name="UseUnderline">True</property>
-                <property name="FocusOnClick">False</property>
-                <property name="Group">colors</property>
-                <signal name="Toggled" handler="OnButtonToggled" />
-              </widget>
-              <packing>
-                <property name="AutoSize">True</property>
-                <property name="YOptions">Fill</property>
-                <property name="XExpand">True</property>
-                <property name="XFill">True</property>
-                <property name="XShrink">False</property>
-                <property name="YExpand">False</property>
-                <property name="YFill">True</property>
-                <property name="YShrink">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.RadioButton" id="ybutton">
-                <property name="MemberName" />
-                <property name="Label" translatable="yes" />
-                <property name="DrawIndicator">False</property>
-                <property name="HasLabel">True</property>
-                <property name="UseUnderline">True</property>
-                <property name="FocusOnClick">False</property>
-                <property name="Group">colors</property>
-                <signal name="Toggled" handler="OnButtonToggled" />
-              </widget>
-              <packing>
-                <property name="TopAttach">2</property>
-                <property name="BottomAttach">3</property>
-                <property name="LeftAttach">1</property>
-                <property name="RightAttach">2</property>
-                <property name="AutoSize">True</property>
-                <property name="YOptions">Fill</property>
-                <property name="XExpand">True</property>
-                <property name="XFill">True</property>
-                <property name="XShrink">False</property>
-                <property name="YExpand">False</property>
-                <property name="YFill">True</property>
-                <property name="YShrink">False</property>
-              </packing>
-            </child>
           </widget>
           <packing>
             <property name="Position">7</property>

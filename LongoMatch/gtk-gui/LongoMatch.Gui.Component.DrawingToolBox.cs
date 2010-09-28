@@ -43,6 +43,10 @@ namespace LongoMatch.Gui.Component {
         
         private Gtk.Image image84;
         
+        private Gtk.Label colorslabel;
+        
+        private Gtk.ColorButton colorbutton;
+        
         private Gtk.Label label3;
         
         private Gtk.ComboBox combobox1;
@@ -50,22 +54,6 @@ namespace LongoMatch.Gui.Component {
         private Gtk.Label transparencylabel;
         
         private Gtk.SpinButton spinbutton1;
-        
-        private Gtk.Label colorslabel;
-        
-        private Gtk.Table colorstable;
-        
-        private Gtk.RadioButton bbutton;
-        
-        private Gtk.RadioButton blbutton;
-        
-        private Gtk.RadioButton gbutton;
-        
-        private Gtk.RadioButton rbutton;
-        
-        private Gtk.RadioButton wbutton;
-        
-        private Gtk.RadioButton ybutton;
         
         private Gtk.Button clearbutton;
         
@@ -218,16 +206,37 @@ namespace LongoMatch.Gui.Component {
             w14.Position = 1;
             w14.Expand = false;
             // Container child vbox2.Gtk.Box+BoxChild
+            this.colorslabel = new Gtk.Label();
+            this.colorslabel.Name = "colorslabel";
+            this.colorslabel.Xalign = 0F;
+            this.colorslabel.LabelProp = Mono.Unix.Catalog.GetString("<b>Color</b>");
+            this.colorslabel.UseMarkup = true;
+            this.vbox2.Add(this.colorslabel);
+            Gtk.Box.BoxChild w15 = ((Gtk.Box.BoxChild)(this.vbox2[this.colorslabel]));
+            w15.Position = 2;
+            w15.Expand = false;
+            w15.Fill = false;
+            // Container child vbox2.Gtk.Box+BoxChild
+            this.colorbutton = new Gtk.ColorButton();
+            this.colorbutton.CanFocus = true;
+            this.colorbutton.Events = ((Gdk.EventMask)(784));
+            this.colorbutton.Name = "colorbutton";
+            this.vbox2.Add(this.colorbutton);
+            Gtk.Box.BoxChild w16 = ((Gtk.Box.BoxChild)(this.vbox2[this.colorbutton]));
+            w16.Position = 3;
+            w16.Expand = false;
+            w16.Fill = false;
+            // Container child vbox2.Gtk.Box+BoxChild
             this.label3 = new Gtk.Label();
             this.label3.Name = "label3";
             this.label3.Xalign = 0F;
             this.label3.LabelProp = Mono.Unix.Catalog.GetString("<b>Width</b>");
             this.label3.UseMarkup = true;
             this.vbox2.Add(this.label3);
-            Gtk.Box.BoxChild w15 = ((Gtk.Box.BoxChild)(this.vbox2[this.label3]));
-            w15.Position = 2;
-            w15.Expand = false;
-            w15.Fill = false;
+            Gtk.Box.BoxChild w17 = ((Gtk.Box.BoxChild)(this.vbox2[this.label3]));
+            w17.Position = 4;
+            w17.Expand = false;
+            w17.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.combobox1 = Gtk.ComboBox.NewText();
             this.combobox1.AppendText(Mono.Unix.Catalog.GetString("2 px"));
@@ -239,10 +248,10 @@ namespace LongoMatch.Gui.Component {
             this.combobox1.Name = "combobox1";
             this.combobox1.Active = 2;
             this.vbox2.Add(this.combobox1);
-            Gtk.Box.BoxChild w16 = ((Gtk.Box.BoxChild)(this.vbox2[this.combobox1]));
-            w16.Position = 3;
-            w16.Expand = false;
-            w16.Fill = false;
+            Gtk.Box.BoxChild w18 = ((Gtk.Box.BoxChild)(this.vbox2[this.combobox1]));
+            w18.Position = 5;
+            w18.Expand = false;
+            w18.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.transparencylabel = new Gtk.Label();
             this.transparencylabel.Name = "transparencylabel";
@@ -250,10 +259,10 @@ namespace LongoMatch.Gui.Component {
             this.transparencylabel.LabelProp = Mono.Unix.Catalog.GetString("<b>Transparency</b>");
             this.transparencylabel.UseMarkup = true;
             this.vbox2.Add(this.transparencylabel);
-            Gtk.Box.BoxChild w17 = ((Gtk.Box.BoxChild)(this.vbox2[this.transparencylabel]));
-            w17.Position = 4;
-            w17.Expand = false;
-            w17.Fill = false;
+            Gtk.Box.BoxChild w19 = ((Gtk.Box.BoxChild)(this.vbox2[this.transparencylabel]));
+            w19.Position = 6;
+            w19.Expand = false;
+            w19.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.spinbutton1 = new Gtk.SpinButton(0, 100, 1);
             this.spinbutton1.TooltipMarkup = "Change the drawings' transparency";
@@ -264,105 +273,10 @@ namespace LongoMatch.Gui.Component {
             this.spinbutton1.Numeric = true;
             this.spinbutton1.Value = 80;
             this.vbox2.Add(this.spinbutton1);
-            Gtk.Box.BoxChild w18 = ((Gtk.Box.BoxChild)(this.vbox2[this.spinbutton1]));
-            w18.Position = 5;
-            w18.Expand = false;
-            w18.Fill = false;
-            // Container child vbox2.Gtk.Box+BoxChild
-            this.colorslabel = new Gtk.Label();
-            this.colorslabel.Name = "colorslabel";
-            this.colorslabel.Xalign = 0F;
-            this.colorslabel.LabelProp = Mono.Unix.Catalog.GetString("<b>Colors</b>");
-            this.colorslabel.UseMarkup = true;
-            this.vbox2.Add(this.colorslabel);
-            Gtk.Box.BoxChild w19 = ((Gtk.Box.BoxChild)(this.vbox2[this.colorslabel]));
-            w19.Position = 6;
-            w19.Expand = false;
-            w19.Fill = false;
-            // Container child vbox2.Gtk.Box+BoxChild
-            this.colorstable = new Gtk.Table(((uint)(3)), ((uint)(2)), false);
-            this.colorstable.Name = "colorstable";
-            this.colorstable.RowSpacing = ((uint)(6));
-            this.colorstable.ColumnSpacing = ((uint)(6));
-            // Container child colorstable.Gtk.Table+TableChild
-            this.bbutton = new Gtk.RadioButton("");
-            this.bbutton.Name = "bbutton";
-            this.bbutton.DrawIndicator = false;
-            this.bbutton.UseUnderline = true;
-            this.bbutton.FocusOnClick = false;
-            this.bbutton.Group = new GLib.SList(System.IntPtr.Zero);
-            this.colorstable.Add(this.bbutton);
-            Gtk.Table.TableChild w20 = ((Gtk.Table.TableChild)(this.colorstable[this.bbutton]));
-            w20.LeftAttach = ((uint)(1));
-            w20.RightAttach = ((uint)(2));
-            w20.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child colorstable.Gtk.Table+TableChild
-            this.blbutton = new Gtk.RadioButton("");
-            this.blbutton.Name = "blbutton";
-            this.blbutton.DrawIndicator = false;
-            this.blbutton.UseUnderline = true;
-            this.blbutton.FocusOnClick = false;
-            this.blbutton.Group = this.bbutton.Group;
-            this.colorstable.Add(this.blbutton);
-            Gtk.Table.TableChild w21 = ((Gtk.Table.TableChild)(this.colorstable[this.blbutton]));
-            w21.TopAttach = ((uint)(1));
-            w21.BottomAttach = ((uint)(2));
-            w21.LeftAttach = ((uint)(1));
-            w21.RightAttach = ((uint)(2));
-            w21.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child colorstable.Gtk.Table+TableChild
-            this.gbutton = new Gtk.RadioButton("");
-            this.gbutton.Name = "gbutton";
-            this.gbutton.DrawIndicator = false;
-            this.gbutton.UseUnderline = true;
-            this.gbutton.FocusOnClick = false;
-            this.gbutton.Group = this.bbutton.Group;
-            this.colorstable.Add(this.gbutton);
-            Gtk.Table.TableChild w22 = ((Gtk.Table.TableChild)(this.colorstable[this.gbutton]));
-            w22.TopAttach = ((uint)(2));
-            w22.BottomAttach = ((uint)(3));
-            w22.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child colorstable.Gtk.Table+TableChild
-            this.rbutton = new Gtk.RadioButton("");
-            this.rbutton.Name = "rbutton";
-            this.rbutton.DrawIndicator = false;
-            this.rbutton.UseUnderline = true;
-            this.rbutton.FocusOnClick = false;
-            this.rbutton.Group = this.bbutton.Group;
-            this.colorstable.Add(this.rbutton);
-            Gtk.Table.TableChild w23 = ((Gtk.Table.TableChild)(this.colorstable[this.rbutton]));
-            w23.TopAttach = ((uint)(1));
-            w23.BottomAttach = ((uint)(2));
-            w23.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child colorstable.Gtk.Table+TableChild
-            this.wbutton = new Gtk.RadioButton("");
-            this.wbutton.Name = "wbutton";
-            this.wbutton.DrawIndicator = false;
-            this.wbutton.UseUnderline = true;
-            this.wbutton.FocusOnClick = false;
-            this.wbutton.Group = this.bbutton.Group;
-            this.colorstable.Add(this.wbutton);
-            Gtk.Table.TableChild w24 = ((Gtk.Table.TableChild)(this.colorstable[this.wbutton]));
-            w24.YOptions = ((Gtk.AttachOptions)(4));
-            // Container child colorstable.Gtk.Table+TableChild
-            this.ybutton = new Gtk.RadioButton("");
-            this.ybutton.Name = "ybutton";
-            this.ybutton.DrawIndicator = false;
-            this.ybutton.UseUnderline = true;
-            this.ybutton.FocusOnClick = false;
-            this.ybutton.Group = this.bbutton.Group;
-            this.colorstable.Add(this.ybutton);
-            Gtk.Table.TableChild w25 = ((Gtk.Table.TableChild)(this.colorstable[this.ybutton]));
-            w25.TopAttach = ((uint)(2));
-            w25.BottomAttach = ((uint)(3));
-            w25.LeftAttach = ((uint)(1));
-            w25.RightAttach = ((uint)(2));
-            w25.YOptions = ((Gtk.AttachOptions)(4));
-            this.vbox2.Add(this.colorstable);
-            Gtk.Box.BoxChild w26 = ((Gtk.Box.BoxChild)(this.vbox2[this.colorstable]));
-            w26.Position = 7;
-            w26.Expand = false;
-            w26.Fill = false;
+            Gtk.Box.BoxChild w20 = ((Gtk.Box.BoxChild)(this.vbox2[this.spinbutton1]));
+            w20.Position = 7;
+            w20.Expand = false;
+            w20.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.clearbutton = new Gtk.Button();
             this.clearbutton.TooltipMarkup = "Clear all drawings";
@@ -370,34 +284,34 @@ namespace LongoMatch.Gui.Component {
             this.clearbutton.Name = "clearbutton";
             this.clearbutton.UseUnderline = true;
             // Container child clearbutton.Gtk.Container+ContainerChild
-            Gtk.Alignment w27 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
+            Gtk.Alignment w21 = new Gtk.Alignment(0.5F, 0.5F, 0F, 0F);
             // Container child GtkAlignment.Gtk.Container+ContainerChild
-            Gtk.HBox w28 = new Gtk.HBox();
-            w28.Spacing = 2;
+            Gtk.HBox w22 = new Gtk.HBox();
+            w22.Spacing = 2;
             // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Image w29 = new Gtk.Image();
-            w29.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-clear", Gtk.IconSize.LargeToolbar, 24);
-            w28.Add(w29);
+            Gtk.Image w23 = new Gtk.Image();
+            w23.Pixbuf = Stetic.IconLoader.LoadIcon(this, "gtk-clear", Gtk.IconSize.LargeToolbar, 24);
+            w22.Add(w23);
             // Container child GtkHBox.Gtk.Container+ContainerChild
-            Gtk.Label w31 = new Gtk.Label();
-            w28.Add(w31);
-            w27.Add(w28);
-            this.clearbutton.Add(w27);
+            Gtk.Label w25 = new Gtk.Label();
+            w22.Add(w25);
+            w21.Add(w22);
+            this.clearbutton.Add(w21);
             this.vbox2.Add(this.clearbutton);
-            Gtk.Box.BoxChild w35 = ((Gtk.Box.BoxChild)(this.vbox2[this.clearbutton]));
-            w35.Position = 8;
-            w35.Expand = false;
-            w35.Fill = false;
+            Gtk.Box.BoxChild w29 = ((Gtk.Box.BoxChild)(this.vbox2[this.clearbutton]));
+            w29.Position = 8;
+            w29.Expand = false;
+            w29.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.label1 = new Gtk.Label();
             this.label1.Name = "label1";
             this.label1.LabelProp = Mono.Unix.Catalog.GetString("Draw-><b> D</b>\nClear-><b> C</b>\nHide-><b> S</b>\nShow-><b> S</b>\n");
             this.label1.UseMarkup = true;
             this.vbox2.Add(this.label1);
-            Gtk.Box.BoxChild w36 = ((Gtk.Box.BoxChild)(this.vbox2[this.label1]));
-            w36.Position = 9;
-            w36.Expand = false;
-            w36.Fill = false;
+            Gtk.Box.BoxChild w30 = ((Gtk.Box.BoxChild)(this.vbox2[this.label1]));
+            w30.Position = 9;
+            w30.Expand = false;
+            w30.Fill = false;
             this.Add(this.vbox2);
             if ((this.Child != null)) {
                 this.Child.ShowAll();
@@ -409,14 +323,9 @@ namespace LongoMatch.Gui.Component {
             this.eraserbutton.Toggled += new System.EventHandler(this.OnEraserbuttonToggled);
             this.crossbutton.Toggled += new System.EventHandler(this.OnCrossbuttonToggled);
             this.circlebutton.Toggled += new System.EventHandler(this.OnCirclebuttonToggled);
+            this.colorbutton.ColorSet += new System.EventHandler(this.OnColorbuttonColorSet);
             this.combobox1.Changed += new System.EventHandler(this.OnCombobox1Changed);
             this.spinbutton1.Changed += new System.EventHandler(this.OnSpinbutton1Changed);
-            this.ybutton.Toggled += new System.EventHandler(this.OnButtonToggled);
-            this.wbutton.Toggled += new System.EventHandler(this.OnButtonToggled);
-            this.rbutton.Toggled += new System.EventHandler(this.OnButtonToggled);
-            this.gbutton.Toggled += new System.EventHandler(this.OnButtonToggled);
-            this.blbutton.Toggled += new System.EventHandler(this.OnButtonToggled);
-            this.bbutton.Toggled += new System.EventHandler(this.OnButtonToggled);
             this.clearbutton.Clicked += new System.EventHandler(this.OnClearbuttonClicked);
         }
     }

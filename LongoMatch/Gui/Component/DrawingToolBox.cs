@@ -41,14 +41,8 @@ namespace LongoMatch.Gui.Component
 		public DrawingToolBox()
 		{
 			this.Build();
-			SetButtonColor(wbutton,"white");
-			SetButtonColor(bbutton,"black");
-			SetButtonColor(rbutton,"red");
-			SetButtonColor(gbutton,"green");
-			SetButtonColor(blbutton,"blue");
-			SetButtonColor(ybutton,"yellow");
 			penbutton.Active = true;
-			rbutton.Active = true;
+			colorbutton.Color = new Color(byte.MaxValue, byte.MinValue, byte.MinValue);/* red */
 		}
 
 		public bool DrawingVisibility {
@@ -71,27 +65,6 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		private void SetButtonColor(Button button, string color) {
-
-			string darkColor;
-
-			if (color == "yellow")
-				darkColor = "goldenrod";
-			else if (color == "white")
-				darkColor = "beige";
-			else if (color == "black")
-				darkColor = "black";
-			else
-				darkColor = "dark "+color;
-
-			Gdk.Color.Parse(color,ref normalColor);
-			Gdk.Color.Parse(darkColor,ref activeColor);
-			button.ModifyBg(StateType.Normal,normalColor);
-			button.ModifyBg(StateType.Active,activeColor);
-			button.ModifyBg(StateType.Selected,activeColor);
-			button.ModifyBg(StateType.Prelight,normalColor);
-		}
-
 		protected virtual void OnCombobox1Changed(object sender, System.EventArgs e)
 		{
 			int lineWidth;
@@ -99,13 +72,6 @@ namespace LongoMatch.Gui.Component
 				lineWidth = Int16.Parse(combobox1.ActiveText.Split(' ')[0]);
 				LineWidthChanged(lineWidth);
 			}
-		}
-
-		protected virtual void OnButtonToggled(object sender, System.EventArgs e)
-		{
-			RadioButton button = sender as RadioButton;
-			if (ColorChanged != null && button.Active)
-				ColorChanged(button.Style.Background(StateType.Normal));
 		}
 
 		protected virtual void OnCirclebuttonToggled(object sender, System.EventArgs e)
@@ -154,6 +120,12 @@ namespace LongoMatch.Gui.Component
 		{
 			if (TransparencyChanged != null)
 				TransparencyChanged(spinbutton1.Value/100);
+		}
+		
+		protected virtual void OnColorbuttonColorSet (object sender, System.EventArgs e)
+		{
+			if (ColorChanged != null)
+				ColorChanged(colorbutton.Color);
 		}
 	}
 }
