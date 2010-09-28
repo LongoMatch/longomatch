@@ -31,6 +31,7 @@ namespace LongoMatch.Gui.Component
 	{
 
 		private Team team;
+		private Menu playersMenu;
 
 
 		public PlayersTreeView() {
@@ -38,6 +39,7 @@ namespace LongoMatch.Gui.Component
 			tag.Visible = false;
 			players.Visible = false;
 			delete.Visible = false;
+			SetPlayersMenu();
 		}
 
 		public Team Team {
@@ -62,6 +64,31 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		private void SetPlayersMenu(){
+			Action edit;
+			UIManager manager;
+			ActionGroup g;
+			
+			manager= new UIManager();
+			g = new ActionGroup("PlayersMenuGroup");
+			
+			edit = new Action("EditAction", Mono.Unix.Catalog.GetString("Edit name"), null, "gtk-edit");
+			
+			g.Add(edit, null);
+			
+			manager.InsertActionGroup(g,0);
+			
+			manager.AddUiFromString("<ui>"+
+			                        "  <popup action='PlayersMenu'>"+
+			                        "    <menuitem action='EditAction'/>"+
+			                        "  </popup>"+
+			                        "</ui>");
+			
+			playersMenu = manager.GetWidget("/PlayersMenu") as Menu;	
+			
+			edit.Activated += OnEdit;
+		}
+		
 		protected int SortFunction(TreeModel model, TreeIter a, TreeIter b){
 			object oa;
 			object ob;
@@ -109,6 +136,8 @@ namespace LongoMatch.Gui.Component
 						deleteKeyFrame.Sensitive = (selectedTimeNode as MediaTimeNode).KeyFrameDrawing != null;
 						MultiSelectMenu(false);
 						menu.Popup();
+					} else {
+						playersMenu.Popup();
 					}
 				}
 				else if (paths.Length > 1){
