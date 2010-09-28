@@ -118,7 +118,9 @@ namespace LongoMatch.Gui.Component
 
 		public Gdk.Color LineColor {
 			set {
-				lineColor = new Cairo.Color(value.Red,value.Green,value.Blue);
+				lineColor = new Cairo.Color((double)value.Red/ushort.MaxValue,
+				                            (double)value.Green/ushort.MaxValue,
+				                            (double)value.Blue/ushort.MaxValue);
 			}
 		}
 
