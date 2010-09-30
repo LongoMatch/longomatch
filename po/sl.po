@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: longomatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&component=general\n"
-"POT-Creation-Date: 2010-09-16 10:57+0000\n"
-"PO-Revision-Date: 2010-09-17 08:17+0100\n"
+"POT-Creation-Date: 2010-09-29 20:50+0000\n"
+"PO-Revision-Date: 2010-09-30 14:01+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -427,53 +427,54 @@ msgstr "Dodaj igro"
 msgid "Delete "
 msgstr "Izbriši"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:80
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:81
 msgid "None"
 msgstr "Brez"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:156
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:157
 msgid "No Team"
 msgstr "Ni ekipe"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:169
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:170
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectTemplateWidget.cs:164
 msgid "Edit"
 msgstr "Uredi"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:170
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:171
 msgid "Team Selection"
 msgstr "Izbor ekipe"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:172
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:173
 msgid "Add tag"
 msgstr "Dodaj oznako"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:173
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:174
 msgid "Tag player"
 msgstr "Označi igralca"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:175
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:176
 #: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:59
 msgid "Delete"
 msgstr "Izbriši"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:176
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:177
 msgid "Delete key frame"
 msgstr "Izbriši sličice"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:177
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:178
 msgid "Add to playlist"
 msgstr "Dodaj na seznam predvajanja"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:179
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:180
 msgid "Export to PGN images"
 msgstr "Izvozi skice v PNG"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:333
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:338
 msgid "Do you want to delete the key frame for this play?"
 msgstr "Ali želite izbrisati sličico te igre?"
 
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:66
+#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:71
 msgid "Edit name"
 msgstr "Uredi ime"
 
@@ -612,43 +613,43 @@ msgstr "Zaustavi zajemanje in shrani projekt"
 msgid "Categories Template"
 msgstr "Predloga kategorij"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:87
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:75
 msgid "<b>Tools</b>"
 msgstr "<b>Orodja</b>"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:224
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:212
+msgid "<b>Color</b>"
+msgstr "<b>Barva</b>"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:233
 msgid "<b>Width</b>"
 msgstr "<b>Širina</b>"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:233
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:242
 msgid "2 px"
 msgstr "2 točki"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:234
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:243
 msgid "4 px"
 msgstr "4 točke"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:235
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:244
 msgid "6 px"
 msgstr "6 točk"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:236
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:245
 msgid "8 px"
 msgstr "8 točk"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:237
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:246
 msgid "10 px"
 msgstr "10 točk"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:250
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:259
 msgid "<b>Transparency</b>"
 msgstr "<b>Prozornost</b>"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:275
-msgid "<b>Colors</b>"
-msgstr "<b>Barve</b>"
-
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:394
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:308
 msgid ""
 "Draw-><b> D</b>\n"
 "Clear-><b> C</b>\n"
@@ -1120,27 +1121,27 @@ msgstr "Čas zaostajanja:"
 msgid "Open Project"
 msgstr "Odpri projekt"
 
-#: ../LongoMatch/Handlers/EventsManager.cs:181
+#: ../LongoMatch/Handlers/EventsManager.cs:191
 msgid "You can't create a new play if the capturer is not recording."
 msgstr "Ni mogoče ustvariti novega posnetka, če naprava za zajemanje ni zagnana."
 
-#: ../LongoMatch/Handlers/EventsManager.cs:214
+#: ../LongoMatch/Handlers/EventsManager.cs:224
 msgid "The video edition has finished successfully."
 msgstr "Urejanje videa je uspešno končano."
 
-#: ../LongoMatch/Handlers/EventsManager.cs:220
+#: ../LongoMatch/Handlers/EventsManager.cs:230
 msgid "An error has occurred in the video editor."
 msgstr "Prišlo je do napake v urejevalniku videa."
 
-#: ../LongoMatch/Handlers/EventsManager.cs:221
+#: ../LongoMatch/Handlers/EventsManager.cs:231
 msgid "Please, try again."
 msgstr "Poskusite znova."
 
-#: ../LongoMatch/Handlers/EventsManager.cs:255
+#: ../LongoMatch/Handlers/EventsManager.cs:266
 msgid "The stop time is smaller than the start time.The play will not be added."
 msgstr "Čas zaustavitve je krajši od časa začetka. Igra ne bo dodana."
 
-#: ../LongoMatch/Handlers/EventsManager.cs:330
+#: ../LongoMatch/Handlers/EventsManager.cs:341
 msgid "Please, close the opened project to play the playlist."
 msgstr "Zapreti je treba odprt projekt za predvajanje seznama."
 
