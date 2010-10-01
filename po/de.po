@@ -6,8 +6,8 @@ msgstr ""
 "Project-Id-Version: longomatch master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&component=general\n"
-"POT-Creation-Date: 2010-09-16 10:57+0000\n"
-"PO-Revision-Date: 2010-09-19 13:24+0100\n"
+"POT-Creation-Date: 2010-09-29 20:45+0000\n"
+"PO-Revision-Date: 2010-10-01 12:45+0100\n"
 "Last-Translator: Mario Blättermann <mariobl@gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -446,53 +446,54 @@ msgstr "Neues Spiel hinzufügen"
 msgid "Delete "
 msgstr "Entfernen"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:80
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:81
 msgid "None"
 msgstr "Nichts"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:156
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:157
 msgid "No Team"
 msgstr "Keine Mannschaft"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:169
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:170
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectTemplateWidget.cs:164
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:170
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:171
 msgid "Team Selection"
 msgstr "Mannschaftsauswahl"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:172
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:173
 msgid "Add tag"
 msgstr "Schlagwort hinzufügen"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:173
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:174
 msgid "Tag player"
 msgstr "Spieler kennzeichnen"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:175
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:176
 #: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:59
 msgid "Delete"
 msgstr "Entfernen"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:176
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:177
 msgid "Delete key frame"
 msgstr "Schlüsselbild entfernen"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:177
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:178
 msgid "Add to playlist"
 msgstr "Zur Wiedergabeliste hinzufügen"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:179
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:180
 msgid "Export to PGN images"
 msgstr "Als PGN-Bilder exportieren"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:333
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:338
 msgid "Do you want to delete the key frame for this play?"
 msgstr "Wollen Sie das Schlüsselbild für dieses Spiel entfernen?"
 
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:66
+#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:71
 msgid "Edit name"
 msgstr "Name bearbeiten"
 
@@ -637,43 +638,43 @@ msgstr "Aufnahme anhalten und Projekt speichern"
 msgid "Categories Template"
 msgstr "Kategorievorlage"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:87
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:75
 msgid "<b>Tools</b>"
 msgstr "<b>Werkzeuge</b>"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:224
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:212
+msgid "<b>Color</b>"
+msgstr "<b>Farbe</b>"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:233
 msgid "<b>Width</b>"
 msgstr "<b>Breite</b>"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:233
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:242
 msgid "2 px"
 msgstr "2 px"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:234
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:243
 msgid "4 px"
 msgstr "4 px"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:235
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:244
 msgid "6 px"
 msgstr "6 px"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:236
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:245
 msgid "8 px"
 msgstr "8 px"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:237
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:246
 msgid "10 px"
 msgstr "10 px"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:250
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:259
 msgid "<b>Transparency</b>"
 msgstr "<b>Transparenz</b>"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:275
-msgid "<b>Colors</b>"
-msgstr "<b>Farben</b>"
-
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:394
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:308
 msgid ""
 "Draw-><b> D</b>\n"
 "Clear-><b> C</b>\n"
@@ -1148,28 +1149,28 @@ msgstr "Zeit des Rückstands:"
 msgid "Open Project"
 msgstr "Projekt öffnen"
 
-#: ../LongoMatch/Handlers/EventsManager.cs:181
+#: ../LongoMatch/Handlers/EventsManager.cs:191
 msgid "You can't create a new play if the capturer is not recording."
 msgstr "Sie können kein neues Spiel erstellen, wenn die Aufnahme nicht läuft."
 
-#: ../LongoMatch/Handlers/EventsManager.cs:214
+#: ../LongoMatch/Handlers/EventsManager.cs:224
 msgid "The video edition has finished successfully."
 msgstr "Die Bearbeitung des Videos wurde erfolgreich abgeschlossen."
 
-#: ../LongoMatch/Handlers/EventsManager.cs:220
+#: ../LongoMatch/Handlers/EventsManager.cs:230
 msgid "An error has occurred in the video editor."
 msgstr "Ein Fehler ist im Video-Editor aufgetreten."
 
-#: ../LongoMatch/Handlers/EventsManager.cs:221
+#: ../LongoMatch/Handlers/EventsManager.cs:231
 msgid "Please, try again."
 msgstr "Bitte versuchen Sie es erneut."
 
-#: ../LongoMatch/Handlers/EventsManager.cs:255
+#: ../LongoMatch/Handlers/EventsManager.cs:266
 msgid "The stop time is smaller than the start time.The play will not be added."
 msgstr ""
 "Die Stoppzeit liegt vor der Startzeit. Das Spiel wird nicht hinzugefügt."
 
-#: ../LongoMatch/Handlers/EventsManager.cs:330
+#: ../LongoMatch/Handlers/EventsManager.cs:341
 msgid "Please, close the opened project to play the playlist."
 msgstr ""
 "Bitte schließen Sie das geöffnete Projekt, um die Wiedergabeliste abzuspielen."
