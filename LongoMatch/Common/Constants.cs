@@ -45,13 +45,16 @@ GNU General Public License for more details.";
 		
 		public const string TRANSLATORS = 
 @"Andoni Morales Alastruey (es)
+Bruno Brouard (fr)
 Daniel Nylander (sv)
+G. Baylard (fr)
 Joan Charmant (fr)
 João Paulo Azevedo (pt)
 Joe Hansen (da)
 Jorge González (es)
 Kenneth Nielsen (da)
 Kjartan Maraas (nb)
+Laurent Coudeur (fr)
 Marek Cernocky (cs)
 Mario Blättermann (de)
 Matej Urbančič (sl)
