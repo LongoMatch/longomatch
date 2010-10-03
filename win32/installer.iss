@@ -7,17 +7,17 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{473D1B4B-6BE6-4AAF-BDD0-F7C422A27FBD}
 AppName=LongoMatch
-AppVerName=LongoMatch 0.15.7
+AppVerName=LongoMatch 0.16.1
 AppPublisher=Ylatuya
 AppPublisherURL=http://www.longomatch.ylatuya.es
 AppSupportURL=http://www.longomatch.ylatuya.es
 AppUpdatesURL=http://www.longomatch.ylatuya.es
-DefaultDirName={pf}\LongoMatch-0.15
+DefaultDirName={pf}\LongoMatch-0.16
 DefaultGroupName=LongoMatch
 LicenseFile=.\COPYING.TXT
 SetupIconFile=..\LongoMatch\images\minilogo.ico
 OutputDir=.
-OutputBaseFilename=.\LongoMatch-0.15.7-2
+OutputBaseFilename=.\LongoMatch-0.16.1
 Compression=lzma
 SolidCompression=yes
 
