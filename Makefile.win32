@@ -22,6 +22,7 @@ FILES = \
 	da.po\
 	de.po\
 	es.po\
+	it.po\
 	nb.po\
 	sl.po\
 	pt.po\
