@@ -23,7 +23,7 @@ import sys
 import shutil
 
 MONO_PATH = 'c:\\mono'
-GST_PATH = 'c:\\gstreamer'
+GST_PATH = 'c:\\gstreamer.local'
 GTK_PATH = 'c:\\gtk'
 
 for name in [MONO_PATH, GST_PATH, GTK_PATH]:
