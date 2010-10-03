@@ -167,15 +167,17 @@ namespace LongoMatch.Gui
 			return;
 			
 			/* stopping and closing capturer */
-			capturer.Stop();
-			capturer.Close();
-			if (capturerType == CapturerType.Live){
-				/* release and dispose live capturer */
-				capturer.Error -= OnError;
-				capturer.DeviceChange += OnDeviceChange;
-				capturerhbox.Remove(capturer as Gtk.Widget);
-				capturer.Dispose();
-			}
+			try {
+				capturer.Stop();
+				capturer.Close();
+				if (capturerType == CapturerType.Live){
+					/* release and dispose live capturer */
+					capturer.Error -= OnError;
+					capturer.DeviceChange += OnDeviceChange;
+					capturerhbox.Remove(capturer as Gtk.Widget);
+					capturer.Dispose();
+				}
+			} catch (Exception e) {}
 			capturer = null;
 		}
 		
