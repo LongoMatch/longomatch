@@ -1,7 +1,7 @@
 LongoMatch-0.16 "Arriba las cámaras, esto es un atraco!"
 -------------------------------------------------
 
-The LongoMatch team is happy to announce the first release in the 0.16
+The LongoMatch team is happy to announce the second release in the 0.16
 LongoMatch series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
@@ -9,19 +9,15 @@ all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
 * Features of this release
-  * Added live analisys support.
-  * Live capture from DV camcorders.
-  * Added vp8 and webm support.
-  * Added 'and' 'or' filter to tags' filter.
-  * Video editor keeps DAR adding black borders.
-  * bps/kbps fixes for several codecs.
-  * Allow multideletion of projects and templates.
-  * Add file information in the projects list (codecs/lenght).
-  * Added catalan translation.
+	* Added italian translation
+	* Add plays count in the list
+	* Add accelerators for the different views
+	* Allow framestepping using the mouse scrolls
+	* Add a colors' selection button to the drawing tool
 
 *Bugs Fixed
-  * [#620656] Allow multiselection to delete projects.
-  * [#620654] Change the plays filter to allow AND and OR
+  * [#630954] Seeking clicking in the timescale seeks to the beginning of the file
+  * [#630956] Plays marked from the timescale doesn't take the screenshot at the right place
 
 *Contributors to this Release:
 
@@ -29,11 +25,13 @@ experience.
 	Andoni Morales Alastruey <ylatuya@gmail.com>
 
   * Translations:
-  	* ca: Xavier Queralt
+	* ca: Xavier Queralt
 	* cs: Marek Cernocky, Pavel Bárta, Petr Kovar
 	* da: Joe Hansen, Kenneth Nielsen
- 	* de: Mario Blättermann
+	* de: Mario Blättermann
 	* es: Andoni Morales Alastruey, Jorge González
+	* fr: Bruno Brouard, G. Baylard, Laurent Coudeur
+	* it: Maurizio Napolitano
 	* nb: Kjartan Maraas
 	* sl: Matej Urbančič
 	* sv: Daniel Nylander

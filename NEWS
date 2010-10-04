@@ -1,3 +1,18 @@
+===== LongoMatch 0.16.1 "Bully'92 DHB" =====
+
+	== Features ==
+
+	* Added italian translation
+	* Add plays count in the list
+	* Add accelerators for the different views
+	* Allow framestepping using the mouse scrolls
+	* Add a colors' selection button to the drawing tool
+
+        == Bugs Fixed ==
+
+	* [#630954] Seeking clicking in the timescale seeks to the beginning of the file
+	* [#630956] Plays marked from the timescale doesn't take the screenshot at the right place
+
 ===== LongoMatch 0.16.0 "Arriba las cámaras, esto es un atraco!" =====
 
 	== Features ==
