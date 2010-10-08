@@ -22,6 +22,8 @@ using Gtk;
 using Gdk;
 using Mono.Unix;
 using LongoMatch.TimeNodes;
+using LongoMatch.Gui.Popup;
+using LongoMatch.Gui.Dialog;
 
 namespace LongoMatch.Gui.Component
 {
@@ -34,10 +36,20 @@ namespace LongoMatch.Gui.Component
 		private const int THUMBNAIL_MAX_HEIGHT = 50;
 
 		private Player player;
+		private CalendarPopup cp;
 
 		public PlayerProperties()
 		{
 			this.Build();
+			//HACK:The calendar dialog does not respond on win32
+			if (Environment.OSVersion.Platform != PlatformID.Win32NT) {
+				cp = new CalendarPopup();
+				cp.Hide();
+				cp.DateSelectedEvent += delegate(DateTime selectedDate) {
+					Player.Birthday = selectedDate;
+					bdaylabel.Text = selectedDate.ToShortDateString();
+				};
+			}
 		}
 
 		public Player Player {
@@ -46,6 +58,8 @@ namespace LongoMatch.Gui.Component
 				nameentry.Text = value.Name;
 				positionentry.Text = value.Position;
 				numberspinbutton.Value = value.Number;
+				weightspinbutton.Value = value.Weight;
+				heightspinbutton.Value = value.Height;
 				image.Pixbuf = value.Photo;
 			}
 			get {
@@ -116,5 +130,32 @@ namespace LongoMatch.Gui.Component
 		{
 			player.Number =(int) numberspinbutton.Value;
 		}
+		
+		protected virtual void OnDatebuttonClicked (object sender, System.EventArgs e)
+		{
+			if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
+				var win32CP = new Win32CalendarDialog();
+				win32CP.TransientFor = (Gtk.Window)this.Toplevel;
+				win32CP.Run();
+				player.Birthday = win32CP.getSelectedDate();
+				bdaylabel.Text = win32CP.getSelectedDate().ToShortDateString();
+				win32CP.Destroy();
+			}
+			else {
+				cp.TransientFor=(Gtk.Window)this.Toplevel;
+				cp.Show();
+			}
+		}
+		
+		protected virtual void OnWeightspinbuttonValueChanged (object sender, System.EventArgs e)
+		{
+			player.Weight = (int)weightspinbutton.Value;
+		}
+		
+		protected virtual void OnHeightspinbuttonValueChanged (object sender, System.EventArgs e)
+		{
+			player.Height = (float)heightspinbutton.Value;
+		}
+		
 	}
 }
