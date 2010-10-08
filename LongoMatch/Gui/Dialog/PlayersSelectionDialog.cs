@@ -54,7 +54,7 @@ namespace LongoMatch.Gui.Dialog
 			for (int i=0;i<playersCount;i++) {
 				player = template.GetPlayer(i);
 				button = new CheckButton();
-				button.Label = player.Name;
+				button.Label = player.Number + "-" + player.Name;
 				button.Name = i.ToString();
 				button.Show();
 
