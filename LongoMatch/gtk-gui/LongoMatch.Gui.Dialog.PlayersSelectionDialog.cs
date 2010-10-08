@@ -35,7 +35,6 @@ namespace LongoMatch.Gui.Dialog {
             w1.BorderWidth = ((uint)(2));
             // Container child dialog1_VBox.Gtk.Box+BoxChild
             this.table1 = new Gtk.Table(((uint)(3)), ((uint)(3)), false);
-            this.table1.Name = "table1";
             this.table1.RowSpacing = ((uint)(6));
             this.table1.ColumnSpacing = ((uint)(6));
             w1.Add(this.table1);

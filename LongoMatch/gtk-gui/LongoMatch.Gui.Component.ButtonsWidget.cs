@@ -52,7 +52,6 @@ namespace LongoMatch.Gui.Component {
             w2.Fill = false;
             // Container child vbox1.Gtk.Box+BoxChild
             this.table1 = new Gtk.Table(((uint)(5)), ((uint)(4)), false);
-            this.table1.Name = "table1";
             this.table1.RowSpacing = ((uint)(1));
             this.table1.ColumnSpacing = ((uint)(1));
             this.vbox1.Add(this.table1);

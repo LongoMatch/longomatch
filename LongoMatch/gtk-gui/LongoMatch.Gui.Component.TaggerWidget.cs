@@ -55,7 +55,6 @@ namespace LongoMatch.Gui.Component {
             w2.ShadowType = ((Gtk.ShadowType)(0));
             // Container child GtkViewport.Gtk.Container+ContainerChild
             this.table1 = new Gtk.Table(((uint)(3)), ((uint)(3)), false);
-            this.table1.Name = "table1";
             this.table1.RowSpacing = ((uint)(6));
             this.table1.ColumnSpacing = ((uint)(6));
             w2.Add(this.table1);
