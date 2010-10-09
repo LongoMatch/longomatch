@@ -7,16 +7,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: longomatch\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=longomatch&component=general\n"
-"POT-Creation-Date: 2010-09-16 10:57+0000\n"
-"PO-Revision-Date: 2010-09-17 09:16+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-09 12:01+0200\n"
+"PO-Revision-Date: 2010-10-06 19:19+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2\n"
 "X-Poedit-Language: Czech\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -446,53 +445,54 @@ msgstr "Přidat nové utkání"
 msgid "Delete "
 msgstr "Smazat "
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:80
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:81
 msgid "None"
 msgstr "Žádný"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:156
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:157
 msgid "No Team"
 msgstr "Žádný tým"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:169
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:170
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectTemplateWidget.cs:164
 msgid "Edit"
 msgstr "Upravit"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:170
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:171
 msgid "Team Selection"
 msgstr "Výběr týmu"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:172
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:173
 msgid "Add tag"
 msgstr "Přidat značku"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:173
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:174
 msgid "Tag player"
 msgstr "Označit hráče"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:175
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:176
 #: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:59
 msgid "Delete"
 msgstr "Odstranit"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:176
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:177
 msgid "Delete key frame"
 msgstr "Odstranit klíčový snímek"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:177
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:178
 msgid "Add to playlist"
 msgstr "Přidat do seznamu utkání"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:179
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:180
 msgid "Export to PGN images"
 msgstr "Export do obrázku PNG"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:333
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:338
 msgid "Do you want to delete the key frame for this play?"
 msgstr "Chcete opravdu odstranit klíčový snímek pro toto utkání?"
 
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:66
+#: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:71
 msgid "Edit name"
 msgstr "Upravit název"
 
@@ -637,43 +637,43 @@ msgstr "Zastavit nahrávání a uložit projekt"
 msgid "Categories Template"
 msgstr "Šablona kategorií"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:87
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:75
 msgid "<b>Tools</b>"
 msgstr "<b>Nástroje</b>"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:224
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:212
+msgid "<b>Color</b>"
+msgstr "<b>Barva</b>"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:233
 msgid "<b>Width</b>"
 msgstr "<b>Šířka</b>"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:233
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:242
 msgid "2 px"
 msgstr "2 px"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:234
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:243
 msgid "4 px"
 msgstr "4 px"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:235
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:244
 msgid "6 px"
 msgstr "6 px"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:236
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:245
 msgid "8 px"
 msgstr "8 px"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:237
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:246
 msgid "10 px"
 msgstr "10 px"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:250
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:259
 msgid "<b>Transparency</b>"
 msgstr "<b>Průhlednost</b>"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:275
-msgid "<b>Colors</b>"
-msgstr "<b>Barvy</b>"
-
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:394
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:308
 msgid ""
 "Draw-><b> D</b>\n"
 "Clear-><b> C</b>\n"
@@ -1146,28 +1146,28 @@ msgstr "Doba ztráty:"
 msgid "Open Project"
 msgstr "Otevřít projekt"
 
-#: ../LongoMatch/Handlers/EventsManager.cs:181
+#: ../LongoMatch/Handlers/EventsManager.cs:191
 msgid "You can't create a new play if the capturer is not recording."
 msgstr "Nemůžete vytvořit nové utkání, když není zachytávané video ukládáno."
 
-#: ../LongoMatch/Handlers/EventsManager.cs:214
+#: ../LongoMatch/Handlers/EventsManager.cs:224
 msgid "The video edition has finished successfully."
 msgstr "Zpracování videa bylo úspěšně dokončeno."
 
-#: ../LongoMatch/Handlers/EventsManager.cs:220
+#: ../LongoMatch/Handlers/EventsManager.cs:230
 msgid "An error has occurred in the video editor."
 msgstr "Nastala chyba ve vedeo editoru."
 
-#: ../LongoMatch/Handlers/EventsManager.cs:221
+#: ../LongoMatch/Handlers/EventsManager.cs:231
 msgid "Please, try again."
 msgstr "Zkuste to prosím znovu."
 
-#: ../LongoMatch/Handlers/EventsManager.cs:255
+#: ../LongoMatch/Handlers/EventsManager.cs:266
 msgid ""
 "The stop time is smaller than the start time.The play will not be added."
 msgstr "Čas ukončení je menší než čas započetí. Utkání nebude přidáno."
 
-#: ../LongoMatch/Handlers/EventsManager.cs:330
+#: ../LongoMatch/Handlers/EventsManager.cs:341
 msgid "Please, close the opened project to play the playlist."
 msgstr "Abyste mohli přehrát seznam utkání, zavřete prosím otevřený projekt."
 
@@ -1256,7 +1256,7 @@ msgstr "Vyberte soubor exportu"
 msgid "Creating video thumbnails. This can take a while."
 msgstr "Vytvářejí se náhledy videa. To může chvíli trvat."
 
-#: ../CesarPlayer/Gui/CapturerBin.cs:259
+#: ../CesarPlayer/Gui/CapturerBin.cs:261
 msgid ""
 "You are going to stop and finish the current capture.\n"
 "Do you want to proceed?"
@@ -1264,15 +1264,15 @@ msgstr ""
 "Chystáte se zastavit a zakončit aktuální nahrávání.\n"
 "Opravdu to chcete provést?"
 
-#: ../CesarPlayer/Gui/CapturerBin.cs:265
+#: ../CesarPlayer/Gui/CapturerBin.cs:267
 msgid "Finalizing file. This can take a while"
 msgstr "Zakončuje se soubor. To může chvíli trvat."
 
-#: ../CesarPlayer/Gui/CapturerBin.cs:300
+#: ../CesarPlayer/Gui/CapturerBin.cs:302
 msgid "Device disconnected. The capture will be paused"
 msgstr "Zařízení je odpojeno. Nahrávání bude pozastaveno."
 
-#: ../CesarPlayer/Gui/CapturerBin.cs:309
+#: ../CesarPlayer/Gui/CapturerBin.cs:311
 msgid "Device reconnected.Do you want to restart the capture?"
 msgstr "Zařízení je znovu připojeno. Chcete znovu spustit nahrávání?"
 
@@ -1292,4 +1292,3 @@ msgstr "Neplatný soubor s videem:"
 #: ../CesarPlayer/Capturer/FakeCapturer.cs:81
 msgid "Fake live source"
 msgstr "Simulovat živý zdroj"
-
