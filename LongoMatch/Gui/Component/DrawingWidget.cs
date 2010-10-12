@@ -259,7 +259,29 @@ namespace LongoMatch.Gui.Component
 			c.Stroke();
 			c.Fill();
 		}
-
+		
+		private void Paint(Context c, double x1, double y1, double x2, double y2){
+			switch (selectedTool) {
+				case DrawTool.LINE:
+					DrawLine(c, x1, y1, x2, y2);
+					DrawArrow(c, x1, y1, x2, y2);
+					break;
+				case DrawTool.RECTANGLE:
+					DrawRectangle(c, x1, y1, x2, y2);
+					break;
+				case DrawTool.CIRCLE:
+					DrawCircle(c, x1, y1, x2, y2);
+					break;
+				case DrawTool.CROSS:
+					DrawCross(c, x1, y1, x2, y2);
+					break;
+				default:
+					lastx=0;
+					lasty=0;
+					break;
+			}
+		}
+		
 		protected virtual void OnDrawingareaExposeEvent(object o, Gtk.ExposeEventArgs args)
 		{
 			if (!loaded)
@@ -273,27 +295,10 @@ namespace LongoMatch.Gui.Component
 					c.SetSourceSurface(drawings,xOffset,yOffset);
 					c.PaintWithAlpha(transparency);
 				}
-
 				//Preview
-				if (preview) {
-					switch (selectedTool) {
-					case DrawTool.LINE:
-						DrawLine(c,initialPoint.X+xOffset,initialPoint.Y+yOffset,finalPoint.X+xOffset,finalPoint.Y+yOffset);
-						DrawArrow(c,initialPoint.X+xOffset,initialPoint.Y+yOffset,finalPoint.X+xOffset,finalPoint.Y+yOffset);
-						break;
-					case DrawTool.RECTANGLE:
-						DrawRectangle(c,initialPoint.X+xOffset,initialPoint.Y+yOffset,finalPoint.X+xOffset,finalPoint.Y+yOffset);
-						break;
-					case DrawTool.CIRCLE:
-						DrawCircle(c,initialPoint.X+xOffset,initialPoint.Y+yOffset,finalPoint.X+xOffset,finalPoint.Y+yOffset);
-						break;
-					case DrawTool.CROSS:
-						DrawCross(c,initialPoint.X+xOffset,initialPoint.Y+yOffset,finalPoint.X+xOffset,finalPoint.Y+yOffset);
-						break;
-					default:
-						break;
-					}
-				}
+				if (preview)
+					Paint(c, initialPoint.X+xOffset,initialPoint.Y+yOffset,
+					      finalPoint.X+xOffset,finalPoint.Y+yOffset);
 			}
 		}
 
@@ -319,25 +324,7 @@ namespace LongoMatch.Gui.Component
 			preview = false;
 			finalPoint = new Cairo.PointD(args.Event.X,args.Event.Y);
 			using(Context c = new Context(drawings)) {
-				switch (selectedTool) {
-				case DrawTool.LINE:
-					DrawLine(c,initialPoint.X,initialPoint.Y,finalPoint.X,finalPoint.Y);
-					DrawArrow(c,initialPoint.X,initialPoint.Y,finalPoint.X,finalPoint.Y);
-					break;
-				case DrawTool.RECTANGLE:
-					DrawRectangle(c,initialPoint.X,initialPoint.Y,finalPoint.X,finalPoint.Y);
-					break;
-				case DrawTool.CIRCLE:
-					DrawCircle(c,initialPoint.X,initialPoint.Y,finalPoint.X,finalPoint.Y);
-					break;
-				case DrawTool.CROSS:
-					DrawCross(c,initialPoint.X,initialPoint.Y,finalPoint.X,finalPoint.Y);
-					break;
-				default: //ERASER and PEN
-					lastx=0;
-					lasty=0;
-					break;
-				}
+				Paint (c, initialPoint.X,initialPoint.Y,finalPoint.X,finalPoint.Y);
 			}
 			QueueDraw();
 		}
