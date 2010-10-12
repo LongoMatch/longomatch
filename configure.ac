@@ -113,7 +113,7 @@ AC_CHECK_FUNCS([strchr strstr])
 
 dnl package checks, per config
 
-
+AC_CONFIG_FILES([env], [chmod +x env])
 AC_CONFIG_FILES([
 LongoMatch/Makefile
 CesarPlayer/Makefile
