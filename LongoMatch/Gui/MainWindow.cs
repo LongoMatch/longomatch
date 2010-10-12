@@ -503,7 +503,7 @@ namespace LongoMatch.Gui
 			Version version = Assembly.GetExecutingAssembly().GetName().Version;
 			Gtk.AboutDialog about = new AboutDialog();
 			if (Environment.OSVersion.Platform == PlatformID.Unix)
-				about.ProgramName = Constants.PROJECT_NAME;
+				about.ProgramName = Constants.SOFTWARE_NAME;
 			about.Version = String.Format("{0}.{1}.{2}",version.Major,version.Minor,version.Build);
 			about.Copyright = Constants.COPYRIGHT;
 			about.Website = Constants.WEBSITE;
