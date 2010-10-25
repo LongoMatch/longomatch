@@ -57,6 +57,7 @@ namespace LongoMatch.Gui.Component
 				this.player = value;
 				nameentry.Text = value.Name;
 				positionentry.Text = value.Position;
+				nationalityentry.Text = value.Nationality;
 				numberspinbutton.Value = value.Number;
 				weightspinbutton.Value = value.Weight;
 				heightspinbutton.Value = value.Height;
@@ -157,5 +158,9 @@ namespace LongoMatch.Gui.Component
 			player.Height = (float)heightspinbutton.Value;
 		}
 		
+		protected virtual void OnNationalityentryChanged (object sender, System.EventArgs e)
+		{
+			player.Nationality = nationalityentry.Text;
+		}
 	}
 }

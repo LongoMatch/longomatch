@@ -56,6 +56,11 @@ namespace LongoMatch.Gui.Component
 			Gtk.CellRendererText birthdayCell = new Gtk.CellRendererText();
 			birthdayColumn.PackStart(birthdayCell, true);
 			
+			Gtk.TreeViewColumn nationColumn = new Gtk.TreeViewColumn();
+			nationColumn.Title = Catalog.GetString("Nationality");
+			Gtk.CellRendererText nationCell = new Gtk.CellRendererText();
+			nationColumn.PackStart(nationCell, true);
+			
 			Gtk.TreeViewColumn heightColumn = new Gtk.TreeViewColumn();
 			heightColumn.Title = Catalog.GetString("Height");
 			Gtk.CellRendererText heightCell = new Gtk.CellRendererText();
@@ -78,6 +83,7 @@ namespace LongoMatch.Gui.Component
 
 			photoColumn.SetCellDataFunc(photoCell, new Gtk.TreeCellDataFunc(RenderPhoto));
 			nameColumn.SetCellDataFunc(nameCell, new Gtk.TreeCellDataFunc(RenderName));
+			nationColumn.SetCellDataFunc(nationCell, new Gtk.TreeCellDataFunc(RenderNationality));
 			positionColumn.SetCellDataFunc(positionCell, new Gtk.TreeCellDataFunc(RenderPosition));
 			numberColumn.SetCellDataFunc(numberCell, new Gtk.TreeCellDataFunc(RenderNumber));
 			heightColumn.SetCellDataFunc(heightCell, new Gtk.TreeCellDataFunc(RenderHeight));
@@ -91,6 +97,7 @@ namespace LongoMatch.Gui.Component
 			AppendColumn(heightColumn);
 			AppendColumn(weightColumn);
 			AppendColumn(birthdayColumn);
+			AppendColumn(nationColumn);
 		}
 
 		private void RenderPhoto(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
@@ -105,6 +112,13 @@ namespace LongoMatch.Gui.Component
 			Player player = (Player) model.GetValue(iter, 0);
 
 			(cell as Gtk.CellRendererText).Text = player.Name;
+		}
+
+		private void RenderNationality(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
+		{
+			Player player = (Player) model.GetValue(iter, 0);
+
+			(cell as Gtk.CellRendererText).Text = player.Nationality;
 		}
 
 		private void RenderPosition(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
