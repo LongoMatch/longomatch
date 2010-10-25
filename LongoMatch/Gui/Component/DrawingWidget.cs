@@ -206,7 +206,7 @@ namespace LongoMatch.Gui.Component
 				c.Color = lineColor;
 				c.LineWidth = lineWidth;
 				c.Operator = Operator.Over;
-				if (!dashed)
+				if (dashed)
 					c.SetDash(new double[]{10, 10}, 10);
 			} else {
 				c.Color = new Cairo.Color(0,0,0,0);
