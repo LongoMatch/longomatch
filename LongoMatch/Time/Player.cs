@@ -35,6 +35,7 @@ namespace LongoMatch.TimeNodes
 		private float height;
 		private int weight;
 		private DateTime birthday;
+		private String nationality;
 
 		/// <summary>
 		/// Creates a new player
@@ -44,6 +45,9 @@ namespace LongoMatch.TimeNodes
 		/// </param>
 		/// <param name="birthday">
 		/// A <see cref="DateTime"/> with my name
+		/// </param>
+		/// <param name="nationality">
+		/// A <see cref="System.String"/> with my nationality
 		/// </param>
 		/// <param name="height">
 		/// A <see cref="System.Float"/> with my height
@@ -61,11 +65,13 @@ namespace LongoMatch.TimeNodes
 		/// A <see cref="Pixbuf"/> with my photo
 		/// </param>
 		#region Constructors
-		public Player(string name, DateTime birthday, float height, int weight,
-		              string position, int number, Pixbuf photo)
+		public Player(string name, DateTime birthday, String nationality, 
+		              float height, int weight, string position,
+		              int number, Pixbuf photo)
 		{
 			this.name = name;
 			this.birthday = birthday;
+			this.nationality = nationality;
 			this.height = height;
 			this.weight = weight;
 			this.position = position;
@@ -138,6 +144,18 @@ namespace LongoMatch.TimeNodes
 			}
 			set {
 				birthday = value;
+			}
+		}
+		
+		/// <value>
+		/// My nationality
+		/// </value>
+		public String Nationality{
+			get {
+				return nationality;
+			}
+			set {
+				nationality = value;
 			}
 		}
 		
