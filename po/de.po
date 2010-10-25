@@ -6,8 +6,8 @@ msgstr ""
 "Project-Id-Version: longomatch master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&component=general\n"
-"POT-Creation-Date: 2010-09-29 20:45+0000\n"
-"PO-Revision-Date: 2010-10-01 12:45+0100\n"
+"POT-Creation-Date: 2010-10-16 17:51+0000\n"
+"PO-Revision-Date: 2010-10-25 19:46+0100\n"
 "Last-Translator: Mario Blättermann <mariobl@gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -316,12 +316,12 @@ msgid "This file contains a video stream but its length is 0."
 msgstr "Diese Datei enthält zwar einen Videostrom, der aber die Länge 0 hat."
 
 #: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:564
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:476
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:475
 msgid "Local Team Template"
 msgstr "Vorlage für lokale Mannschaft"
 
 #: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:577
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:414
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:413
 msgid "Visitor Team Template"
 msgstr "Vorlage für Gastmannschaft"
 
@@ -381,7 +381,7 @@ msgstr "Die Wiedergabeliste ist leer!"
 msgid "Please, select a video file."
 msgstr "Bitte wählen Sie eine Videodatei."
 
-#: ../LongoMatch/Gui/Component/PlayerProperties.cs:74
+#: ../LongoMatch/Gui/Component/PlayerProperties.cs:88
 msgid "Choose an image"
 msgstr "Bild auswählen"
 
@@ -507,11 +507,25 @@ msgstr "Sortierungsmethode"
 msgid "Photo"
 msgstr "Foto"
 
-#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:56
+#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:55
+msgid "Birth Day"
+msgstr "Geburtstag"
+
+#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:60
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:180
+msgid "Height"
+msgstr "Größe"
+
+#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:65
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:190
+msgid "Weight"
+msgstr "Gewicht"
+
+#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:70
 msgid "Position"
 msgstr "Position"
 
-#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:61
+#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:75
 msgid "Number"
 msgstr "Nummer"
 
@@ -731,19 +745,19 @@ msgstr "Spiel kennzeichnen"
 msgid "Projects Search:"
 msgstr "Projektsuche:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:66
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:65
 msgid "Play:"
 msgstr "Spiel:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:74
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:73
 msgid "Interval (frames/s):"
 msgstr "Intervall (Bilder/s):"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:82
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:81
 msgid "Series Name:"
 msgstr "Name der Serie:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:136
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:135
 msgid "Export to PNG images"
 msgstr "Als PNG-Bilder exportieren"
 
@@ -894,23 +908,32 @@ msgstr "Spieler-Details"
 msgid "TransparentDrawingArea"
 msgstr "TransparentDrawingArea"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:81
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:94
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:108
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:310
+msgid "_Calendar"
+msgstr "_Kalender"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:142
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:93
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:60
 msgid "Name:"
 msgstr "Name:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:89
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:150
 msgid "Position:"
 msgstr "Position:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:99
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:160
 msgid "Number:"
 msgstr "Nummer:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:109
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:170
 msgid "Photo:"
 msgstr "Foto:"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:200
+msgid "Birth day"
+msgstr "Geburtstag"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs:30
 msgid "Capture Progress"
@@ -924,11 +947,11 @@ msgstr "Kategorie-Details"
 msgid "Select template name"
 msgstr "Vorlagenname wählen"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:84
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:83
 msgid "Copy existent template:"
 msgstr "Vorhandene Vorlage kopieren:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:102
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:101
 msgid "Players:"
 msgstr "Spieler:"
 
@@ -989,7 +1012,7 @@ msgstr ""
 "Sie können neue Schlagwörter hinzufügen, indem Sie das\n"
 "Texteingabefeld benutzen und auf »Schlagwort hinzufügen« klicken."
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs:95
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs:94
 msgid "Add Tag"
 msgstr "Schlagwort hinzufügen"
 
@@ -1073,75 +1096,71 @@ msgstr "Ändern"
 msgid "HotKey:"
 msgstr "Kürzel:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:141
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:140
 msgid "Competition:"
 msgstr "Spiel:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:183
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:182
 msgid "File:"
 msgstr "Datei:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:311
-msgid "_Calendar"
-msgstr "_Kalender"
-
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:331
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:330
 msgid "Visitor Team:"
 msgstr "Gastmannschaft:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:341
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:340
 msgid "Local Goals:"
 msgstr "Lokale Tore:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:351
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:350
 msgid "Visitor Goals:"
 msgstr "Tore der Gäste:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:361
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:360
 msgid "Date:"
 msgstr "Datum:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:371
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:370
 msgid "Local Team:"
 msgstr "Lokale Mannschaft:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:379
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:378
 msgid "Categories Template:"
 msgstr "Kategorievorlage:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:438
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:437
 msgid "Season:"
 msgstr "Saison:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:498
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:497
 msgid "Audio Bitrate (kbps):"
 msgstr "Video-Bitrate (kbit/s):"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:524
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:523
 msgid "Device:"
 msgstr "Gerät:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:552
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:551
 msgid "Video Size:"
 msgstr "Videogröße:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:562
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:561
 msgid "Video Bitrate (kbps):"
 msgstr "Video-Bitrate (kbit/s):"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:599
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:598
 msgid "Video Format:"
 msgstr "Videoformat:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:609
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:608
 msgid "Video encoding  properties"
 msgstr "Eigenschaften der Video-Enkodierung"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs:41
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs:40
 msgid "Lead time:"
 msgstr "Zeit der Führung:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs:49
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs:48
 msgid "Lag time:"
 msgstr "Zeit des Rückstands:"
 
@@ -1260,7 +1279,7 @@ msgstr "Exportdatei auswählen"
 msgid "Creating video thumbnails. This can take a while."
 msgstr "Videovorschauen werden erstellt. Dies kann einige Zeit dauern."
 
-#: ../CesarPlayer/Gui/CapturerBin.cs:259
+#: ../CesarPlayer/Gui/CapturerBin.cs:261
 msgid ""
 "You are going to stop and finish the current capture.\n"
 "Do you want to proceed?"
@@ -1268,15 +1287,15 @@ msgstr ""
 "Sie sind im Begriff, die laufende Aufnahme anzuhalten und zu beenden.\n"
 "Wollen Sie den Vorgang fortsetzen?"
 
-#: ../CesarPlayer/Gui/CapturerBin.cs:265
+#: ../CesarPlayer/Gui/CapturerBin.cs:267
 msgid "Finalizing file. This can take a while"
 msgstr "Datei wird finalisiert. Dies kann einige Zeit dauern."
 
-#: ../CesarPlayer/Gui/CapturerBin.cs:300
+#: ../CesarPlayer/Gui/CapturerBin.cs:302
 msgid "Device disconnected. The capture will be paused"
 msgstr "Gerät wurde getrennt. Die Aufnahme wird unterbrochen."
 
-#: ../CesarPlayer/Gui/CapturerBin.cs:309
+#: ../CesarPlayer/Gui/CapturerBin.cs:311
 msgid "Device reconnected.Do you want to restart the capture?"
 msgstr ""
 "Das Gerät wurde erneut angeschlossen, wollen Sie die Aufnahme neu starten?"
