@@ -52,7 +52,7 @@ namespace LongoMatch.Gui.Component
 			nameColumn.PackStart(nameCell, true);
 			
 			Gtk.TreeViewColumn birthdayColumn = new Gtk.TreeViewColumn();
-			birthdayColumn.Title = Catalog.GetString("Birth Day");
+			birthdayColumn.Title = Catalog.GetString("Date of Birth");
 			Gtk.CellRendererText birthdayCell = new Gtk.CellRendererText();
 			birthdayColumn.PackStart(birthdayCell, true);
 			
