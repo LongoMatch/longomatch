@@ -1587,8 +1587,6 @@
               <widget class="LongoMatch.Gui.Component.CategoriesTreeView" id="sectionstreeview1">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <signal name="SectionClicked" handler="OnSectionstreeview1SectionClicked" />
-                <signal name="SectionsSelected" handler="OnSectionstreeview1SectionsSelected" />
               </widget>
             </child>
           </widget>
@@ -3693,13 +3691,13 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.PlayerProperties" design-size="270 224">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.PlayerProperties" design-size="270 253">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
       <widget class="Gtk.Table" id="table1">
         <property name="MemberName" />
-        <property name="NRows">7</property>
+        <property name="NRows">8</property>
         <property name="NColumns">2</property>
         <property name="RowSpacing">6</property>
         <property name="ColumnSpacing">6</property>
@@ -3735,8 +3733,8 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
             </child>
           </widget>
           <packing>
-            <property name="TopAttach">6</property>
-            <property name="BottomAttach">7</property>
+            <property name="TopAttach">7</property>
+            <property name="BottomAttach">8</property>
             <property name="LeftAttach">1</property>
             <property name="RightAttach">2</property>
             <property name="AutoSize">True</property>
@@ -3781,8 +3779,8 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
             </child>
           </widget>
           <packing>
-            <property name="TopAttach">5</property>
-            <property name="BottomAttach">6</property>
+            <property name="TopAttach">6</property>
+            <property name="BottomAttach">7</property>
             <property name="LeftAttach">1</property>
             <property name="RightAttach">2</property>
             <property name="AutoSize">True</property>
@@ -3886,8 +3884,8 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
             <property name="LabelProp" translatable="yes">Photo:</property>
           </widget>
           <packing>
-            <property name="TopAttach">6</property>
-            <property name="BottomAttach">7</property>
+            <property name="TopAttach">7</property>
+            <property name="BottomAttach">8</property>
             <property name="AutoSize">True</property>
             <property name="XOptions">Fill</property>
             <property name="YOptions">Fill</property>
@@ -3943,6 +3941,25 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
             <property name="LabelProp" translatable="yes">Birth day</property>
           </widget>
           <packing>
+            <property name="TopAttach">6</property>
+            <property name="BottomAttach">7</property>
+            <property name="AutoSize">True</property>
+            <property name="XOptions">Fill</property>
+            <property name="YOptions">Fill</property>
+            <property name="XExpand">False</property>
+            <property name="XFill">True</property>
+            <property name="XShrink">False</property>
+            <property name="YExpand">False</property>
+            <property name="YFill">True</property>
+            <property name="YShrink">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="label8">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">Nationality</property>
+          </widget>
+          <packing>
             <property name="TopAttach">5</property>
             <property name="BottomAttach">6</property>
             <property name="AutoSize">True</property>
@@ -3965,6 +3982,30 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
             <signal name="Changed" handler="OnNameentryChanged" />
           </widget>
           <packing>
+            <property name="LeftAttach">1</property>
+            <property name="RightAttach">2</property>
+            <property name="AutoSize">True</property>
+            <property name="XOptions">Fill</property>
+            <property name="YOptions">Fill</property>
+            <property name="XExpand">False</property>
+            <property name="XFill">True</property>
+            <property name="XShrink">False</property>
+            <property name="YExpand">False</property>
+            <property name="YFill">True</property>
+            <property name="YShrink">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Entry" id="nationalityentry">
+            <property name="MemberName" />
+            <property name="CanFocus">True</property>
+            <property name="IsEditable">True</property>
+            <property name="InvisibleChar">●</property>
+            <signal name="Changed" handler="OnNationalityentryChanged" />
+          </widget>
+          <packing>
+            <property name="TopAttach">5</property>
+            <property name="BottomAttach">6</property>
             <property name="LeftAttach">1</property>
             <property name="RightAttach">2</property>
             <property name="AutoSize">True</property>

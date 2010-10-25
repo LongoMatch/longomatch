@@ -220,8 +220,6 @@ namespace LongoMatch.Gui.Component {
             this.exportbutton.Hide();
             this.Show();
             this.KeyPressEvent += new Gtk.KeyPressEventHandler(this.OnKeyPressEvent);
-            this.sectionstreeview1.SectionClicked += new LongoMatch.Handlers.SectionHandler(this.OnSectionstreeview1SectionClicked);
-            this.sectionstreeview1.SectionsSelected += new LongoMatch.Handlers.SectionsHandler(this.OnSectionstreeview1SectionsSelected);
             this.newprevbutton.Clicked += new System.EventHandler(this.OnNewBefore);
             this.newafterbutton.Clicked += new System.EventHandler(this.OnNewAfter);
             this.newafterbutton.Activated += new System.EventHandler(this.OnNewBefore);
