@@ -7,15 +7,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: longomatch\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-09 12:01+0200\n"
-"PO-Revision-Date: 2010-10-06 19:19+0200\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=longomatch&component=general\n"
+"POT-Creation-Date: 2010-10-28 19:53+0000\n"
+"PO-Revision-Date: 2010-10-29 12:26+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
-"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2\n"
 "X-Poedit-Language: Czech\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -315,12 +316,12 @@ msgid "This file contains a video stream but its length is 0."
 msgstr "Tento soubor obsahuje proud videa, ale jeho délka je 0."
 
 #: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:564
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:476
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:475
 msgid "Local Team Template"
 msgstr "Šablona domácího týmu"
 
 #: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:577
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:414
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:413
 msgid "Visitor Team Template"
 msgstr "Šablona hostujícího týmu"
 
@@ -380,7 +381,7 @@ msgstr "Seznam utkání je prázdný!"
 msgid "Please, select a video file."
 msgstr "Vyberte prosím soubor s videem."
 
-#: ../LongoMatch/Gui/Component/PlayerProperties.cs:74
+#: ../LongoMatch/Gui/Component/PlayerProperties.cs:88
 msgid "Choose an image"
 msgstr "Vybrat obrázek"
 
@@ -506,11 +507,25 @@ msgstr "Způsob řazení"
 msgid "Photo"
 msgstr "Fotka"
 
-#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:56
+#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:55
+msgid "Birth Day"
+msgstr "Datum narození"
+
+#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:60
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:180
+msgid "Height"
+msgstr "Výška"
+
+#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:65
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:190
+msgid "Weight"
+msgstr "Váha"
+
+#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:70
 msgid "Position"
 msgstr "Pozice"
 
-#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:61
+#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:75
 msgid "Number"
 msgstr "Číslo"
 
@@ -728,19 +743,19 @@ msgstr "Označit utkání"
 msgid "Projects Search:"
 msgstr "Hledání projektu:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:66
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:65
 msgid "Play:"
 msgstr "Přehrát:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:74
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:73
 msgid "Interval (frames/s):"
 msgstr "Interval (snímků/s):"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:82
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:81
 msgid "Series Name:"
 msgstr "Název série:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:136
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:135
 msgid "Export to PNG images"
 msgstr "Export do obrázku PNG"
 
@@ -891,23 +906,32 @@ msgstr "Detaily hráče"
 msgid "TransparentDrawingArea"
 msgstr "TransparentDrawingArea"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:81
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:94
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:108
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:310
+msgid "_Calendar"
+msgstr "_Kalendář"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:142
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:93
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:60
 msgid "Name:"
 msgstr "Jméno:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:89
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:150
 msgid "Position:"
 msgstr "Pozice:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:99
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:160
 msgid "Number:"
 msgstr "Číslo:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:109
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:170
 msgid "Photo:"
 msgstr "Fotka:"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:200
+msgid "Birth day"
+msgstr "Datum narození"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs:30
 msgid "Capture Progress"
@@ -921,11 +945,11 @@ msgstr "Detaily kategorie"
 msgid "Select template name"
 msgstr "Vybrat název šablony"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:84
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:83
 msgid "Copy existent template:"
 msgstr "Kopírovat existující šablonu:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:102
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:101
 msgid "Players:"
 msgstr "Hráči:"
 
@@ -986,7 +1010,7 @@ msgstr ""
 "Nové značky můžete přidat pomocí textového vstupu a kliknutí na „Přidat "
 "značku“"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs:95
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs:94
 msgid "Add Tag"
 msgstr "Přidat značku"
 
@@ -1070,75 +1094,71 @@ msgstr "Změnit"
 msgid "HotKey:"
 msgstr "Klávesová zkratka:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:141
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:140
 msgid "Competition:"
 msgstr "Utkání:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:183
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:182
 msgid "File:"
 msgstr "Soubor:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:311
-msgid "_Calendar"
-msgstr "_Kalendář"
-
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:331
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:330
 msgid "Visitor Team:"
 msgstr "Tým hostů:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:341
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:340
 msgid "Local Goals:"
 msgstr "Góly domácích:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:351
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:350
 msgid "Visitor Goals:"
 msgstr "Góly hostů:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:361
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:360
 msgid "Date:"
 msgstr "Datum:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:371
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:370
 msgid "Local Team:"
 msgstr "Tým domácích:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:379
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:378
 msgid "Categories Template:"
 msgstr "Šablona kategorií:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:438
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:437
 msgid "Season:"
 msgstr "Sezóna:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:498
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:497
 msgid "Audio Bitrate (kbps):"
 msgstr "Datový tok zvuku (kb/s):"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:524
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:523
 msgid "Device:"
 msgstr "Zařízení:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:552
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:551
 msgid "Video Size:"
 msgstr "Velikost videa:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:562
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:561
 msgid "Video Bitrate (kbps):"
 msgstr "Datový tok videa (kb/s):"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:599
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:598
 msgid "Video Format:"
 msgstr "Formát videa:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:609
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:608
 msgid "Video encoding  properties"
 msgstr "Vlastnosti kódování videa"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs:41
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs:40
 msgid "Lead time:"
 msgstr "Doba vedení:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs:49
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs:48
 msgid "Lag time:"
 msgstr "Doba ztráty:"
 
@@ -1292,3 +1312,4 @@ msgstr "Neplatný soubor s videem:"
 #: ../CesarPlayer/Capturer/FakeCapturer.cs:81
 msgid "Fake live source"
 msgstr "Simulovat živý zdroj"
+
