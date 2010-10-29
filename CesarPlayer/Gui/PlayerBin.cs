@@ -152,6 +152,10 @@ namespace LongoMatch.Gui
 			set{player.ExpandLogo = value;}
 		}
 		
+		public bool Opened {
+		    get{return filename != null;}
+		}
+			
 		public Widget VideoWidget{
 			get{return ((Gtk.EventBox)player);}
 		}

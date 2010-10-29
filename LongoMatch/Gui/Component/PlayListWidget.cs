@@ -65,6 +65,12 @@ namespace LongoMatch.Gui.Component
 			playlisttreeview1.RowActivated += OnPlaylisttreeview1RowActivated;
 			playlisttreeview1.ApplyCurrentRate += OnApplyRate;
 			savebutton.Sensitive = false;
+			
+			newbutton.CanFocus = false;
+			openbutton.CanFocus = false;
+			savebutton.CanFocus = false;
+			newvideobutton.CanFocus = false;
+			closebutton.CanFocus = false;
 		}
 
 		public void SetPlayer(PlayerBin player) {

@@ -544,10 +544,11 @@ namespace LongoMatch.Gui
 			
 			ret = base.OnKeyPressEvent(evnt);
 
-			if (openedProject == null)
+			if (openedProject == null && !playerbin1.Opened)
 				return ret;
 			
-			if (projectType == ProjectType.FileProject){
+			if (projectType != ProjectType.CaptureProject &&
+			    projectType != ProjectType.FakeCaptureProject){
 				switch (key){
 					case Constants.SEEK_FORWARD:
 						if (modifier == Constants.STEP)

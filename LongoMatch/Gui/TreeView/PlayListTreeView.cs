@@ -149,5 +149,10 @@ namespace LongoMatch.Gui.Component
 				(cell as Gtk.CellRendererText).Foreground = "black";
 
 		}
+
+		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
+		{
+			return false;
+		}		
 	}
 }
