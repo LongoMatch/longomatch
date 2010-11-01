@@ -111,8 +111,8 @@ Compiling LongoMatch
     $ git clone git://git.gnome.org/longomatch /c/longomatch
   * Open a MSYS terminal (c:\msys\msys.bat)
   * Inside the terminal run:
-    $ cd /c/longomatch
-    $ python win32/deploy_win32.py
+    $ cd /c/longomatch/win32
+    $ python deploy_win32.py
   * This will create a deployment folder in win32/dist with all the dependecies
   * Compile LongoMatch:
     $ make -f Makefile.win32 clean
