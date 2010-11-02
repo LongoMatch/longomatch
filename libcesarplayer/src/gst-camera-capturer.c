@@ -1609,7 +1609,7 @@ gcc_get_video_stream_info (GstCameraCapturer * gcc)
   GstCaps *caps;
   GstStructure *s;
 
-  sourcepad = gst_element_get_pad (gcc->priv->videosrc, "src");
+  sourcepad = gst_element_get_pad (gcc->priv->videosrc, "video");
   caps = gst_pad_get_negotiated_caps (sourcepad);
 
   if (!(caps)) {
