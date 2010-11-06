@@ -45,6 +45,7 @@ GNU General Public License for more details.";
 		
 		public const string TRANSLATORS = 
 @"Andoni Morales Alastruey (es)
+Aron Xu (cn_ZH)
 Bruno Brouard (fr)
 Daniel Nylander (sv)
 G. Baylard (fr)
