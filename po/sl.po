@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: longomatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&component=general\n"
-"POT-Creation-Date: 2010-11-02 21:21+0000\n"
-"PO-Revision-Date: 2010-11-05 13:47+0100\n"
+"POT-Creation-Date: 2010-11-06 11:49+0000\n"
+"PO-Revision-Date: 2010-11-06 15:14+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
 "X-Poedit-Country: SLOVENIA\n"
 "X-Poedit-Language: Slovenian\n"
@@ -306,12 +306,12 @@ msgid "This file contains a video stream but its length is 0."
 msgstr "Datoteka vsebuje video pretok, vendar je dolžine 0."
 
 #: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:564
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:476
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:481
 msgid "Local Team Template"
 msgstr "Predloga domače ekipe"
 
 #: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:577
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:414
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:434
 msgid "Visitor Team Template"
 msgstr "Predloga gostujoče ekipe"
 
@@ -888,7 +888,7 @@ msgid "TransparentDrawingArea"
 msgstr "ProzornoRisanoObmočje"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:113
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:311
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:356
 msgid "_Calendar"
 msgstr "_Koledar"
 
@@ -1074,63 +1074,63 @@ msgstr "Spremeni"
 msgid "HotKey:"
 msgstr "Hitra tipka:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:141
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:143
 msgid "Competition:"
 msgstr "Tekmovanje:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:183
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:185
 msgid "File:"
 msgstr "Datoteka:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:331
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:303
+msgid "-"
+msgstr "-"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:376
 msgid "Visitor Team:"
 msgstr "Gostujoča ekipa:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:341
-msgid "Local Goals:"
-msgstr "Goli domačih:"
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:386
+msgid "Score:"
+msgstr "Rezultat:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:351
-msgid "Visitor Goals:"
-msgstr "Goli gostov:"
-
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:361
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:396
 msgid "Date:"
 msgstr "Datum:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:371
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:406
 msgid "Local Team:"
 msgstr "Krajevna ekipa:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:379
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:414
 msgid "Categories Template:"
 msgstr "Predloga kategorij:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:438
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:458
 msgid "Season:"
 msgstr "Sezona:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:498
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:503
 msgid "Audio Bitrate (kbps):"
 msgstr "Zvočna bitna hitrost (kbps):"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:524
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:529
 msgid "Device:"
 msgstr "Naprava:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:552
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:557
 msgid "Video Size:"
 msgstr "Velikost videa:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:562
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:567
 msgid "Video Bitrate (kbps):"
 msgstr "Bitna hitrost videa (kbps):"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:599
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:604
 msgid "Video Format:"
 msgstr "Video zapis:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:609
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:614
 msgid "Video encoding  properties"
 msgstr "Lastnosti kodiranja videa"
 
@@ -1288,35 +1288,30 @@ msgstr "Neveljavna video datoteka:"
 msgid "Fake live source"
 msgstr "Lažni vir v živo"
 
+#~ msgid "Local Goals:"
+#~ msgstr "Goli domačih:"
+#~ msgid "Visitor Goals:"
+#~ msgstr "Goli gostov:"
 #~ msgid "Birth Day"
 #~ msgstr "Rojstni dan"
-
 #~ msgid "GConf configured device"
 #~ msgstr "GConf nastavljena naprava"
-
 #~ msgid "You can't delete the last section"
 #~ msgstr "Ni mogoče izbrisati zadnjega odseka."
-
 #~ msgid "DV camera"
 #~ msgstr "DV kamera"
-
 #~ msgid "GConf Source"
 #~ msgstr "Vir GConf"
-
 #~ msgid "Video Device:"
 #~ msgstr "Video naprava:"
-
 #~ msgid "Open the project, please."
 #~ msgstr "Odpri projekt."
-
 #~ msgid "_New Poyect"
 #~ msgstr "_Nov projekt"
-
 #~ msgid "_Open Proyect"
 #~ msgstr "_Odpri projekt"
-
 #~ msgid "_Close Proyect"
 #~ msgstr "_Zapri projekt"
-
 #~ msgid "Error merging video segments. Please retry again"
 #~ msgstr "Napaka med združevanjem odsekov videa. Poskusite znova."
+
