@@ -1,4 +1,4 @@
-LongoMatch-0.16 "Arriba las cámaras, esto es un atraco!"
+LongoMatch-0.16.2 "Uuupps, lo volví a perder"
 -------------------------------------------------
 
 The LongoMatch team is happy to announce the second release in the 0.16
@@ -9,15 +9,13 @@ all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
 * Features of this release
-	* Added italian translation
-	* Add plays count in the list
-	* Add accelerators for the different views
-	* Allow framestepping using the mouse scrolls
-	* Add a colors' selection button to the drawing tool
+	* Added Dutch translation
+	* Added Chinese translation
+	* Added player shortcuts in playlist mode
+	* Added date of birth, size, weight and nationality fields to players
 
 *Bugs Fixed
-  * [#630954] Seeking clicking in the timescale seeks to the beginning of the file
-  * [#630956] Plays marked from the timescale doesn't take the screenshot at the right place
+  * Fix crash on Linux openning the calendar 
 
 *Contributors to this Release:
 
@@ -33,8 +31,10 @@ experience.
 	* fr: Bruno Brouard, G. Baylard, Laurent Coudeur
 	* it: Maurizio Napolitano
 	* nb: Kjartan Maraas
+	* nl: Peter Strikwerda 
 	* sl: Matej Urbančič
 	* sv: Daniel Nylander
+	* zh_CN: Aron Xu
 
 
 * Requirements

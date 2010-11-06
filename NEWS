@@ -1,3 +1,16 @@
+===== LongoMatch 0.16.2 "Uuups, lo volí a parder =====
+
+	== Features of this release ==
+
+	* Added Dutch translation
+	* Added Chinese translation
+	* Added player shortcuts in playlist mode
+	* Added date of birth, size, weight and nationality fields to players
+
+	== Bugs Fixed ==
+
+	* Fix crash on Linux openning the calendar 
+
 ===== LongoMatch 0.16.1 "Bully'92 DHB" =====
 
 	== Features ==
