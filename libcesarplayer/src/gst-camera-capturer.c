@@ -919,64 +919,29 @@ gst_camera_capture_videosrc_buffer_probe (GstPad * pad, GstBuffer * buf,
   return TRUE;
 }
 
-static gboolean
-add_audio_pad (GstBin * source_bin, GstPad * audio_src_pad)
-{
-  /* audio */
-  GstElement *audio_queue;
-  GstElement * audioconvert;
-  GstPad * queue_sink_pad;
-  GstPad * audioconvert_src_pad;
-  GstPad * ghost_pad;
-
-  audio_queue = gst_element_factory_make ("queue", "audio_queue");
-  audioconvert = gst_element_factory_make ("audioconvert", NULL);
-
-  gst_bin_add_many (source_bin, audio_queue, audioconvert, NULL);
-
-  gst_element_set_state (audio_queue, GST_STATE_PLAYING);
-  gst_element_set_state (audioconvert, GST_STATE_PLAYING);
-
-  queue_sink_pad = gst_element_get_static_pad (audio_queue, "sink");
-  gst_pad_link (audio_src_pad, queue_sink_pad);
-  gst_element_link (audio_queue, audioconvert);
-  gst_object_unref (GST_OBJECT (queue_sink_pad));
-
-  /* add ghostpad */
-  audioconvert_src_pad = gst_element_get_static_pad (audioconvert, "src");
-  ghost_pad = gst_ghost_pad_new ("audio", audioconvert_src_pad);
-  gst_pad_set_active(ghost_pad,TRUE);
-  gst_element_add_pad (GST_ELEMENT (source_bin), ghost_pad);
-  gst_object_unref (GST_OBJECT (audioconvert_src_pad));
-
-  return TRUE;
-}
-
 static void
 cb_new_pad (GstElement * element, GstPad * pad, gpointer data)
 {
   GstCaps *caps;
   const gchar *mime;
   GstElement *sink;
-  GstCameraCapturer *gcc = GST_CAMERA_CAPTURER (data);
+  GstBin *bin = GST_BIN (data);
 
   caps = gst_pad_get_caps (pad);
   mime = gst_structure_get_name (gst_caps_get_structure (caps, 0));
   if (g_strrstr (mime, "video")) {
-    sink = gst_bin_get_by_name (GST_BIN(gcc->priv->videosrc), "source_video_sink");
+    sink = gst_bin_get_by_name (bin, "source_video_sink");
     gst_pad_link (pad, gst_element_get_pad (sink, "sink"));
-  } else if (g_strrstr (mime, "audio")) {
-    add_audio_pad (GST_BIN(gcc->priv->videosrc), pad);
-    gcc->priv->audiosrc = gcc->priv->videosrc;
-    g_object_set (gcc->priv->camerabin, "audio-source", gcc->priv->audiosrc,
-        NULL);
+  }
+  if (g_strrstr (mime, "audio")) {
+    /* Not implemented yet */
   }
 }
 
 /* On linux GStreamer packages provided by distributions might still have the
  * dv1394src clock bug and the dvdemuxer buffers duration bug. That's why we
  * can't use decodebin2 and we need to force the use of ffdemux_dv */
-static gboolean
+static GstElement *
 gst_camera_capture_create_dv1394_source_bin (GstCameraCapturer * gcc)
 {
   GstElement *bin;
@@ -991,8 +956,6 @@ gst_camera_capture_create_dv1394_source_bin (GstCameraCapturer * gcc)
   GstPad *src_pad;
 
   bin = gst_bin_new ("videosource");
-  gcc->priv->videosrc = bin;
-
   gcc->priv->device_source =
       gst_element_factory_make (DVVIDEOSRC, "source_device");
   demuxer = gst_element_factory_make ("ffdemux_dv", NULL);
@@ -1015,22 +978,21 @@ gst_camera_capture_create_dv1394_source_bin (GstCameraCapturer * gcc)
   gst_element_link_many (queue1, decoder, queue2, deinterlacer, videorate,
       colorspace, videoscale, NULL);
 
-  g_signal_connect (demuxer, "pad-added", G_CALLBACK (cb_new_pad), gcc);
+  g_signal_connect (demuxer, "pad-added", G_CALLBACK (cb_new_pad), bin);
 
   /* add ghostpad */
   src_pad = gst_element_get_static_pad (videoscale, "src");
-  gst_element_add_pad (bin, gst_ghost_pad_new ("video", src_pad));
+  gst_element_add_pad (bin, gst_ghost_pad_new ("src", src_pad));
   gst_object_unref (GST_OBJECT (src_pad));
 
-  return TRUE;
+  return bin;
 }
 
-static gboolean
+static GstElement *
 gst_camera_capture_create_dshow_source_bin (GstCameraCapturer * gcc)
 {
   GstElement *bin;
   GstElement *decoder;
-  GstElement *video_queue;
   GstElement *deinterlacer;
   GstElement *colorspace;
   GstElement *videorate;
@@ -1039,15 +1001,11 @@ gst_camera_capture_create_dshow_source_bin (GstCameraCapturer * gcc)
   GstCaps *source_caps;
 
   bin = gst_bin_new ("videosource");
-  gcc->priv->videosrc = bin;
-
   gcc->priv->device_source =
       gst_element_factory_make (DVVIDEOSRC, "source_device");
   decoder = gst_element_factory_make ("decodebin2", NULL);
-  video_queue = gst_element_factory_make ("queue",
-      "source_video_sink");
   colorspace = gst_element_factory_make ("ffmpegcolorspace",
-      NULL);
+      "source_video_sink");
   deinterlacer = gst_element_factory_make ("ffdeinterlace", NULL);
   videorate = gst_element_factory_make ("videorate", NULL);
   videoscale = gst_element_factory_make ("videoscale", NULL);
@@ -1058,22 +1016,21 @@ gst_camera_capture_create_dshow_source_bin (GstCameraCapturer * gcc)
       gcc->priv->device_id, NULL);
 
   gst_bin_add_many (GST_BIN (bin), gcc->priv->device_source, decoder,
-      video_queue, colorspace, deinterlacer, videorate, videoscale, NULL);
+      colorspace, deinterlacer, videorate, videoscale, NULL);
   source_caps =
       gst_caps_from_string ("video/x-dv, systemstream=true;"
       "video/x-raw-rgb; video/x-raw-yuv");
   gst_element_link_filtered (gcc->priv->device_source, decoder, source_caps);
-  gst_element_link_many (video_queue, colorspace, deinterlacer,
-      videorate, videoscale, NULL);
+  gst_element_link_many (colorspace, deinterlacer, videorate, videoscale, NULL);
 
-  g_signal_connect (decoder, "pad-added", G_CALLBACK (cb_new_pad), gcc);
+  g_signal_connect (decoder, "pad-added", G_CALLBACK (cb_new_pad), bin);
 
   /* add ghostpad */
   src_pad = gst_element_get_static_pad (videoscale, "src");
-  gst_element_add_pad (bin, gst_ghost_pad_new ("video", src_pad));
+  gst_element_add_pad (bin, gst_ghost_pad_new ("src", src_pad));
   gst_object_unref (GST_OBJECT (src_pad));
 
-  return TRUE;
+  return bin;
 }
 
 gboolean
@@ -1092,12 +1049,14 @@ gst_camera_capturer_set_source (GstCameraCapturer * gcc,
   switch (gcc->priv->source_type) {
     case GST_CAMERA_CAPTURE_SOURCE_TYPE_DV:
     {
-      gst_camera_capture_create_dv1394_source_bin (gcc);
+      gcc->priv->videosrc = gst_camera_capture_create_dv1394_source_bin (gcc);
+      /*gcc->priv->audiosrc = gcc->priv->videosrc; */
       break;
     }
     case GST_CAMERA_CAPTURE_SOURCE_TYPE_DSHOW:
     {
-      gst_camera_capture_create_dshow_source_bin (gcc);
+      gcc->priv->videosrc = gst_camera_capture_create_dshow_source_bin (gcc);
+      /*gcc->priv->audiosrc = gcc->priv->videosrc; */
       break;
     }
     case GST_CAMERA_CAPTURE_SOURCE_TYPE_RAW:
@@ -1120,12 +1079,9 @@ gst_camera_capturer_set_source (GstCameraCapturer * gcc,
 
   g_object_set (gcc->priv->camerabin, "video-source", gcc->priv->videosrc,
       NULL);
-  if (gcc->priv->audiosrc)
-    g_object_set (gcc->priv->camerabin, "audio-source", gcc->priv->audiosrc,
-        NULL);
 
   /* Install pad probe to store the last buffer */
-  videosrcpad = gst_element_get_pad (gcc->priv->videosrc, "video");
+  videosrcpad = gst_element_get_pad (gcc->priv->videosrc, "src");
   gst_pad_add_buffer_probe (videosrcpad,
       G_CALLBACK (gst_camera_capture_videosrc_buffer_probe), gcc);
   return TRUE;
@@ -1159,6 +1115,8 @@ gst_camera_capturer_new (gchar * filename, GError ** err)
   g_object_set (gcc->priv->camerabin, "mode", 1, NULL);
 
 
+  GST_INFO_OBJECT (gcc, "Disabling audio");
+  flags = GST_CAMERABIN_FLAG_DISABLE_AUDIO;
 #ifdef WIN32
   flags |= GST_CAMERABIN_FLAG_VIEWFINDER_COLOR_CONVERSION;
 #endif
@@ -1609,7 +1567,7 @@ gcc_get_video_stream_info (GstCameraCapturer * gcc)
   GstCaps *caps;
   GstStructure *s;
 
-  sourcepad = gst_element_get_pad (gcc->priv->videosrc, "video");
+  sourcepad = gst_element_get_pad (gcc->priv->videosrc, "src");
   caps = gst_pad_get_negotiated_caps (sourcepad);
 
   if (!(caps)) {
