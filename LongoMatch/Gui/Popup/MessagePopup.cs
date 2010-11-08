@@ -42,7 +42,7 @@ namespace LongoMatch.Gui
 			                                     type,
 			                                     ButtonsType.Ok,
 			                                     errorMessage);
-			md.Icon=Stetic.IconLoader.LoadIcon(md, "longomatch", Gtk.IconSize.Dialog, 48);
+			md.Icon=Stetic.IconLoader.LoadIcon(md, "longomatch", Gtk.IconSize.Dialog);
 			md.Run();
 			md.Destroy();
 		}

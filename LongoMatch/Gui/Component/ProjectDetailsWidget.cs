@@ -488,7 +488,7 @@ namespace LongoMatch.Gui.Component
 						                       MessageType.Info,
 						                       Gtk.ButtonsType.None,
 						                       Catalog.GetString("Analyzing video file:")+"\n"+filename);
-						md.Icon=Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Dialog, 48);
+						md.Icon=Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Dialog);
 						md.Show();
 						mFile = LongoMatch.Video.Utils.PreviewMediaFile.GetMediaFile(filename);
 						if (!mFile.HasVideo || mFile.VideoCodec == "")

@@ -142,7 +142,7 @@ namespace LongoMatch.Utils
 				                                     Gtk.ButtonsType.YesNo,
 				                                     Catalog.GetString("A project already exists for the file:")+project.File.FilePath+
 				                                     "\n"+Catalog.GetString("Do you want to overwrite it?"));
-				md.Icon=Stetic.IconLoader.LoadIcon(window, "longomatch", Gtk.IconSize.Dialog, 48);
+				md.Icon=Stetic.IconLoader.LoadIcon(window, "longomatch", Gtk.IconSize.Dialog);
 				res = md.Run();
 				md.Destroy();
 				if (res != (int)ResponseType.Yes)

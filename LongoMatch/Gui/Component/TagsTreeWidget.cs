@@ -143,7 +143,7 @@ namespace LongoMatch.Gui.Component
 			box = new HBox();
 			box.Name = tag.Text;
 			b = new Button();
-			b.Image =  new Image(Stetic.IconLoader.LoadIcon(this, "gtk-delete", Gtk.IconSize.Menu, 16));
+			b.Image =  new Image(Stetic.IconLoader.LoadIcon(this, "gtk-delete", Gtk.IconSize.Menu));
 			b.Clicked += OnDeleteClicked;
 			l = new Label(tag.Text);
 			l.Justify = Justification.Left;

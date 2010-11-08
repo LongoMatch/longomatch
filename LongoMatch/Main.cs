@@ -163,7 +163,7 @@ namespace LongoMatch
 				                                     Gtk.ButtonsType.YesNo,
 				                                     Catalog.GetString("Some elements from the previous version (database, templates and/or playlists) have been found.")+"\n"+
 				                                     Catalog.GetString("Do you want to import them?"));
-				md.Icon=Stetic.IconLoader.LoadIcon(md, "longomatch", Gtk.IconSize.Dialog, 48);
+				md.Icon=Stetic.IconLoader.LoadIcon(md, "longomatch", Gtk.IconSize.Dialog);
 				if (md.Run()==(int)ResponseType.Yes) {
 					md.Destroy();
 					Migrator migrator = new Migrator(homeDirectory);
