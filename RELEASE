@@ -1,21 +1,16 @@
-LongoMatch-0.16.2 "Uuupps, lo volví a perder"
+LongoMatch-0.16.3 "Band of koalas"
 -------------------------------------------------
 
-The LongoMatch team is happy to announce the second release in the 0.16
+The LongoMatch team is happy to announce the  third release in the 0.16
 LongoMatch series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
 all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
-* Features of this release
-	* Added Dutch translation
-	* Added Chinese translation
-	* Added player shortcuts in playlist mode
-	* Added date of birth, size, weight and nationality fields to players
-
 *Bugs Fixed
-  * Fix crash on Linux openning the calendar 
+
+	* Fixed bug in the categories templates manager that prevents it from editing a category
 
 *Contributors to this Release:
 

@@ -1,3 +1,9 @@
+===== LongoMatch 0.16.3 "Band of koalas" =====
+
+	== Bugs Fixed ==
+
+	* Fixed bug in the categories templates manager that prevents it from editing a category
+
 ===== LongoMatch 0.16.2 "Uuups, lo volí a parder =====
 
 	== Features of this release ==
