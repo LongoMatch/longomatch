@@ -1581,6 +1581,8 @@
               <widget class="LongoMatch.Gui.Component.CategoriesTreeView" id="sectionstreeview1">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
+                <signal name="SectionClicked" handler="OnSectionstreeview1SectionClicked" />
+                <signal name="SectionsSelected" handler="OnSectionstreeview1SectionsSelected" />
               </widget>
             </child>
           </widget>

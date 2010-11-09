@@ -212,6 +212,8 @@ namespace LongoMatch.Gui.Component
 			this.exportbutton.Hide ();
 			this.Show ();
 			this.KeyPressEvent += new global::Gtk.KeyPressEventHandler (this.OnKeyPressEvent);
+			this.sectionstreeview1.SectionClicked += new global::LongoMatch.Handlers.SectionHandler (this.OnSectionstreeview1SectionClicked);
+			this.sectionstreeview1.SectionsSelected += new global::LongoMatch.Handlers.SectionsHandler (this.OnSectionstreeview1SectionsSelected);
 			this.newprevbutton.Clicked += new global::System.EventHandler (this.OnNewBefore);
 			this.newafterbutton.Clicked += new global::System.EventHandler (this.OnNewAfter);
 			this.newafterbutton.Activated += new global::System.EventHandler (this.OnNewBefore);
