@@ -263,7 +263,7 @@ namespace LongoMatch
 			
 			if (diff < 0){
 				MessagePopup.PopupMessage(buttonswidget, MessageType.Warning,
-				                          Catalog.GetString("The stop time is smaller than the start time."+
+				                          Catalog.GetString("The stop time is smaller than the start time. "+
 				                                            "The play will not be added."));
 				return;
 			}
