@@ -36,6 +36,8 @@ namespace LongoMatch.TimeNodes
 		private int weight;
 		private DateTime birthday;
 		private String nationality;
+		/* Added in 0.16.4 */
+		private bool discarded;
 
 		/// <summary>
 		/// Creates a new player
@@ -67,7 +69,7 @@ namespace LongoMatch.TimeNodes
 		#region Constructors
 		public Player(string name, DateTime birthday, String nationality, 
 		              float height, int weight, string position,
-		              int number, Pixbuf photo)
+		              int number, Pixbuf photo, bool discarded)
 		{
 			this.name = name;
 			this.birthday = birthday;
@@ -76,6 +78,7 @@ namespace LongoMatch.TimeNodes
 			this.weight = weight;
 			this.position = position;
 			this.number = number;
+			this.discarded = discarded;
 			Photo = photo;
 		}
 		#endregion
@@ -180,6 +183,20 @@ namespace LongoMatch.TimeNodes
 			}
 			set {
 				weight = value;
+			}
+		}
+		
+		/// <value>
+		/// A team can have several players, but not all of them
+		/// play in the same match,. This allow reusing the same
+		/// template in a team, definning if this plays plays or not.
+		/// </value>
+		public bool Discarded{
+			get {
+				return discarded;
+			}
+			set {
+				discarded = value;
 			}
 		}
 		#endregion

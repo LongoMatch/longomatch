@@ -51,8 +51,8 @@ namespace LongoMatch.Gui.Dialog
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.DefaultWidth = 254;
-			this.DefaultHeight = 206;
+			this.DefaultWidth = 257;
+			this.DefaultHeight = 355;
 			this.Show ();
 		}
 	}

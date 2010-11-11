@@ -36,11 +36,15 @@ namespace LongoMatch.Gui.Component
 
 		private global::Gtk.Label label8;
 
+		private global::Gtk.Label label9;
+
 		private global::Gtk.Entry nameentry;
 
 		private global::Gtk.Entry nationalityentry;
 
 		private global::Gtk.SpinButton numberspinbutton;
+
+		private global::Gtk.ComboBox playscombobox;
 
 		private global::Gtk.Entry positionentry;
 
@@ -53,7 +57,7 @@ namespace LongoMatch.Gui.Component
 			global::Stetic.BinContainer.Attach (this);
 			this.Name = "LongoMatch.Gui.Component.PlayerProperties";
 			// Container child LongoMatch.Gui.Component.PlayerProperties.Gtk.Container+ContainerChild
-			this.table1 = new global::Gtk.Table (((uint)(8)), ((uint)(2)), false);
+			this.table1 = new global::Gtk.Table (((uint)(9)), ((uint)(2)), false);
 			this.table1.Name = "table1";
 			this.table1.RowSpacing = ((uint)(6));
 			this.table1.ColumnSpacing = ((uint)(6));
@@ -81,8 +85,8 @@ namespace LongoMatch.Gui.Component
 			w2.Fill = false;
 			this.table1.Add (this.hbox1);
 			global::Gtk.Table.TableChild w3 = ((global::Gtk.Table.TableChild)(this.table1[this.hbox1]));
-			w3.TopAttach = ((uint)(7));
-			w3.BottomAttach = ((uint)(8));
+			w3.TopAttach = ((uint)(8));
+			w3.BottomAttach = ((uint)(9));
 			w3.LeftAttach = ((uint)(1));
 			w3.RightAttach = ((uint)(2));
 			w3.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -110,8 +114,8 @@ namespace LongoMatch.Gui.Component
 			w5.Fill = false;
 			this.table1.Add (this.hbox2);
 			global::Gtk.Table.TableChild w6 = ((global::Gtk.Table.TableChild)(this.table1[this.hbox2]));
-			w6.TopAttach = ((uint)(6));
-			w6.BottomAttach = ((uint)(7));
+			w6.TopAttach = ((uint)(7));
+			w6.BottomAttach = ((uint)(8));
 			w6.LeftAttach = ((uint)(1));
 			w6.RightAttach = ((uint)(2));
 			w6.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -127,8 +131,8 @@ namespace LongoMatch.Gui.Component
 			this.heightspinbutton.Value = 18;
 			this.table1.Add (this.heightspinbutton);
 			global::Gtk.Table.TableChild w7 = ((global::Gtk.Table.TableChild)(this.table1[this.heightspinbutton]));
-			w7.TopAttach = ((uint)(3));
-			w7.BottomAttach = ((uint)(4));
+			w7.TopAttach = ((uint)(4));
+			w7.BottomAttach = ((uint)(5));
 			w7.LeftAttach = ((uint)(1));
 			w7.RightAttach = ((uint)(2));
 			w7.XOptions = ((global::Gtk.AttachOptions)(4));
@@ -147,8 +151,8 @@ namespace LongoMatch.Gui.Component
 			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("Position:");
 			this.table1.Add (this.label2);
 			global::Gtk.Table.TableChild w9 = ((global::Gtk.Table.TableChild)(this.table1[this.label2]));
-			w9.TopAttach = ((uint)(1));
-			w9.BottomAttach = ((uint)(2));
+			w9.TopAttach = ((uint)(2));
+			w9.BottomAttach = ((uint)(3));
 			w9.XOptions = ((global::Gtk.AttachOptions)(4));
 			w9.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
@@ -157,8 +161,8 @@ namespace LongoMatch.Gui.Component
 			this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("Number:");
 			this.table1.Add (this.label3);
 			global::Gtk.Table.TableChild w10 = ((global::Gtk.Table.TableChild)(this.table1[this.label3]));
-			w10.TopAttach = ((uint)(2));
-			w10.BottomAttach = ((uint)(3));
+			w10.TopAttach = ((uint)(3));
+			w10.BottomAttach = ((uint)(4));
 			w10.XOptions = ((global::Gtk.AttachOptions)(4));
 			w10.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
@@ -167,8 +171,8 @@ namespace LongoMatch.Gui.Component
 			this.label4.LabelProp = global::Mono.Unix.Catalog.GetString ("Photo:");
 			this.table1.Add (this.label4);
 			global::Gtk.Table.TableChild w11 = ((global::Gtk.Table.TableChild)(this.table1[this.label4]));
-			w11.TopAttach = ((uint)(7));
-			w11.BottomAttach = ((uint)(8));
+			w11.TopAttach = ((uint)(8));
+			w11.BottomAttach = ((uint)(9));
 			w11.XOptions = ((global::Gtk.AttachOptions)(4));
 			w11.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
@@ -177,8 +181,8 @@ namespace LongoMatch.Gui.Component
 			this.label5.LabelProp = global::Mono.Unix.Catalog.GetString ("Height");
 			this.table1.Add (this.label5);
 			global::Gtk.Table.TableChild w12 = ((global::Gtk.Table.TableChild)(this.table1[this.label5]));
-			w12.TopAttach = ((uint)(3));
-			w12.BottomAttach = ((uint)(4));
+			w12.TopAttach = ((uint)(4));
+			w12.BottomAttach = ((uint)(5));
 			w12.XOptions = ((global::Gtk.AttachOptions)(4));
 			w12.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
@@ -187,8 +191,8 @@ namespace LongoMatch.Gui.Component
 			this.label6.LabelProp = global::Mono.Unix.Catalog.GetString ("Weight");
 			this.table1.Add (this.label6);
 			global::Gtk.Table.TableChild w13 = ((global::Gtk.Table.TableChild)(this.table1[this.label6]));
-			w13.TopAttach = ((uint)(4));
-			w13.BottomAttach = ((uint)(5));
+			w13.TopAttach = ((uint)(5));
+			w13.BottomAttach = ((uint)(6));
 			w13.XOptions = ((global::Gtk.AttachOptions)(4));
 			w13.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
@@ -197,8 +201,8 @@ namespace LongoMatch.Gui.Component
 			this.label7.LabelProp = global::Mono.Unix.Catalog.GetString ("Birth day");
 			this.table1.Add (this.label7);
 			global::Gtk.Table.TableChild w14 = ((global::Gtk.Table.TableChild)(this.table1[this.label7]));
-			w14.TopAttach = ((uint)(6));
-			w14.BottomAttach = ((uint)(7));
+			w14.TopAttach = ((uint)(7));
+			w14.BottomAttach = ((uint)(8));
 			w14.XOptions = ((global::Gtk.AttachOptions)(4));
 			w14.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
@@ -207,10 +211,20 @@ namespace LongoMatch.Gui.Component
 			this.label8.LabelProp = global::Mono.Unix.Catalog.GetString ("Nationality");
 			this.table1.Add (this.label8);
 			global::Gtk.Table.TableChild w15 = ((global::Gtk.Table.TableChild)(this.table1[this.label8]));
-			w15.TopAttach = ((uint)(5));
-			w15.BottomAttach = ((uint)(6));
+			w15.TopAttach = ((uint)(6));
+			w15.BottomAttach = ((uint)(7));
 			w15.XOptions = ((global::Gtk.AttachOptions)(4));
 			w15.YOptions = ((global::Gtk.AttachOptions)(4));
+			// Container child table1.Gtk.Table+TableChild
+			this.label9 = new global::Gtk.Label ();
+			this.label9.Name = "label9";
+			this.label9.LabelProp = global::Mono.Unix.Catalog.GetString ("Plays this match:");
+			this.table1.Add (this.label9);
+			global::Gtk.Table.TableChild w16 = ((global::Gtk.Table.TableChild)(this.table1[this.label9]));
+			w16.TopAttach = ((uint)(1));
+			w16.BottomAttach = ((uint)(2));
+			w16.XOptions = ((global::Gtk.AttachOptions)(4));
+			w16.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
 			this.nameentry = new global::Gtk.Entry ();
 			this.nameentry.CanFocus = true;
@@ -218,11 +232,11 @@ namespace LongoMatch.Gui.Component
 			this.nameentry.IsEditable = true;
 			this.nameentry.InvisibleChar = '●';
 			this.table1.Add (this.nameentry);
-			global::Gtk.Table.TableChild w16 = ((global::Gtk.Table.TableChild)(this.table1[this.nameentry]));
-			w16.LeftAttach = ((uint)(1));
-			w16.RightAttach = ((uint)(2));
-			w16.XOptions = ((global::Gtk.AttachOptions)(4));
-			w16.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w17 = ((global::Gtk.Table.TableChild)(this.table1[this.nameentry]));
+			w17.LeftAttach = ((uint)(1));
+			w17.RightAttach = ((uint)(2));
+			w17.XOptions = ((global::Gtk.AttachOptions)(4));
+			w17.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
 			this.nationalityentry = new global::Gtk.Entry ();
 			this.nationalityentry.CanFocus = true;
@@ -230,13 +244,13 @@ namespace LongoMatch.Gui.Component
 			this.nationalityentry.IsEditable = true;
 			this.nationalityentry.InvisibleChar = '●';
 			this.table1.Add (this.nationalityentry);
-			global::Gtk.Table.TableChild w17 = ((global::Gtk.Table.TableChild)(this.table1[this.nationalityentry]));
-			w17.TopAttach = ((uint)(5));
-			w17.BottomAttach = ((uint)(6));
-			w17.LeftAttach = ((uint)(1));
-			w17.RightAttach = ((uint)(2));
-			w17.XOptions = ((global::Gtk.AttachOptions)(4));
-			w17.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w18 = ((global::Gtk.Table.TableChild)(this.table1[this.nationalityentry]));
+			w18.TopAttach = ((uint)(6));
+			w18.BottomAttach = ((uint)(7));
+			w18.LeftAttach = ((uint)(1));
+			w18.RightAttach = ((uint)(2));
+			w18.XOptions = ((global::Gtk.AttachOptions)(4));
+			w18.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
 			this.numberspinbutton = new global::Gtk.SpinButton (0, 100, 1);
 			this.numberspinbutton.CanFocus = true;
@@ -245,12 +259,26 @@ namespace LongoMatch.Gui.Component
 			this.numberspinbutton.ClimbRate = 1;
 			this.numberspinbutton.Numeric = true;
 			this.table1.Add (this.numberspinbutton);
-			global::Gtk.Table.TableChild w18 = ((global::Gtk.Table.TableChild)(this.table1[this.numberspinbutton]));
-			w18.TopAttach = ((uint)(2));
-			w18.BottomAttach = ((uint)(3));
-			w18.LeftAttach = ((uint)(1));
-			w18.RightAttach = ((uint)(2));
-			w18.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w19 = ((global::Gtk.Table.TableChild)(this.table1[this.numberspinbutton]));
+			w19.TopAttach = ((uint)(3));
+			w19.BottomAttach = ((uint)(4));
+			w19.LeftAttach = ((uint)(1));
+			w19.RightAttach = ((uint)(2));
+			w19.YOptions = ((global::Gtk.AttachOptions)(4));
+			// Container child table1.Gtk.Table+TableChild
+			this.playscombobox = global::Gtk.ComboBox.NewText ();
+			this.playscombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Yes"));
+			this.playscombobox.AppendText (global::Mono.Unix.Catalog.GetString ("No"));
+			this.playscombobox.Name = "playscombobox";
+			this.playscombobox.Active = 0;
+			this.table1.Add (this.playscombobox);
+			global::Gtk.Table.TableChild w20 = ((global::Gtk.Table.TableChild)(this.table1[this.playscombobox]));
+			w20.TopAttach = ((uint)(1));
+			w20.BottomAttach = ((uint)(2));
+			w20.LeftAttach = ((uint)(1));
+			w20.RightAttach = ((uint)(2));
+			w20.XOptions = ((global::Gtk.AttachOptions)(4));
+			w20.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
 			this.positionentry = new global::Gtk.Entry ();
 			this.positionentry.CanFocus = true;
@@ -258,13 +286,13 @@ namespace LongoMatch.Gui.Component
 			this.positionentry.IsEditable = true;
 			this.positionentry.InvisibleChar = '●';
 			this.table1.Add (this.positionentry);
-			global::Gtk.Table.TableChild w19 = ((global::Gtk.Table.TableChild)(this.table1[this.positionentry]));
-			w19.TopAttach = ((uint)(1));
-			w19.BottomAttach = ((uint)(2));
-			w19.LeftAttach = ((uint)(1));
-			w19.RightAttach = ((uint)(2));
-			w19.XOptions = ((global::Gtk.AttachOptions)(4));
-			w19.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w21 = ((global::Gtk.Table.TableChild)(this.table1[this.positionentry]));
+			w21.TopAttach = ((uint)(2));
+			w21.BottomAttach = ((uint)(3));
+			w21.LeftAttach = ((uint)(1));
+			w21.RightAttach = ((uint)(2));
+			w21.XOptions = ((global::Gtk.AttachOptions)(4));
+			w21.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
 			this.weightspinbutton = new global::Gtk.SpinButton (0, 100, 1);
 			this.weightspinbutton.CanFocus = true;
@@ -274,13 +302,13 @@ namespace LongoMatch.Gui.Component
 			this.weightspinbutton.Numeric = true;
 			this.weightspinbutton.Value = 80;
 			this.table1.Add (this.weightspinbutton);
-			global::Gtk.Table.TableChild w20 = ((global::Gtk.Table.TableChild)(this.table1[this.weightspinbutton]));
-			w20.TopAttach = ((uint)(4));
-			w20.BottomAttach = ((uint)(5));
-			w20.LeftAttach = ((uint)(1));
-			w20.RightAttach = ((uint)(2));
-			w20.XOptions = ((global::Gtk.AttachOptions)(4));
-			w20.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w22 = ((global::Gtk.Table.TableChild)(this.table1[this.weightspinbutton]));
+			w22.TopAttach = ((uint)(5));
+			w22.BottomAttach = ((uint)(6));
+			w22.LeftAttach = ((uint)(1));
+			w22.RightAttach = ((uint)(2));
+			w22.XOptions = ((global::Gtk.AttachOptions)(4));
+			w22.YOptions = ((global::Gtk.AttachOptions)(4));
 			this.Add (this.table1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
@@ -288,6 +316,7 @@ namespace LongoMatch.Gui.Component
 			this.Hide ();
 			this.weightspinbutton.ValueChanged += new global::System.EventHandler (this.OnWeightspinbuttonValueChanged);
 			this.positionentry.Changed += new global::System.EventHandler (this.OnPositionentryChanged);
+			this.playscombobox.Changed += new global::System.EventHandler (this.OnPlayscomboboxChanged);
 			this.numberspinbutton.EditingDone += new global::System.EventHandler (this.OnNumberspinbuttonChanged);
 			this.numberspinbutton.ValueChanged += new global::System.EventHandler (this.OnNumberspinbuttonValueChanged);
 			this.nationalityentry.Changed += new global::System.EventHandler (this.OnNationalityentryChanged);

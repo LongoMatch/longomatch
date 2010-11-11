@@ -62,6 +62,7 @@ namespace LongoMatch.Gui.Component
 				weightspinbutton.Value = value.Weight;
 				heightspinbutton.Value = value.Height;
 				image.Pixbuf = value.Photo;
+				playscombobox.Active = value.Discarded ? 1 : 0;
 			}
 			get {
 				return player;
@@ -162,5 +163,12 @@ namespace LongoMatch.Gui.Component
 		{
 			player.Nationality = nationalityentry.Text;
 		}
+		
+		protected virtual void OnPlayscomboboxChanged (object sender, System.EventArgs e)
+		{
+			player.Discarded = playscombobox.ActiveText == Catalog.GetString("No");
+		}
+		
+		
 	}
 }
