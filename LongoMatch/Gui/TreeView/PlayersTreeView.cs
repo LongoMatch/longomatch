@@ -96,7 +96,7 @@ namespace LongoMatch.Gui.Component
 			ob = model.GetValue (b, 0);
 			
 			if (oa is Player)
-				return (oa as Player).Name.CompareTo((ob as Player).Name);
+				return (oa as Player).Number.CompareTo((ob as Player).Number);
 			else 
 				return (oa as TimeNode).Name.CompareTo((ob as TimeNode).Name);
 		}
