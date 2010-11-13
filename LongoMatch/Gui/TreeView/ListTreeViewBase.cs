@@ -88,8 +88,8 @@ namespace LongoMatch.Gui.Component
 			nameCell = new Gtk.CellRendererText();
 			nameCell.Edited += OnNameCellEdited;
 			Gtk.CellRendererPixbuf miniatureCell = new Gtk.CellRendererPixbuf();
-			nameColumn.PackStart(miniatureCell, true);
-			nameColumn.PackEnd(nameCell, true);
+			nameColumn.PackStart(nameCell, true);
+			nameColumn.PackEnd(miniatureCell, true);
 
 			nameColumn.SetCellDataFunc(miniatureCell, new Gtk.TreeCellDataFunc(RenderMiniature));
 			nameColumn.SetCellDataFunc(nameCell, new Gtk.TreeCellDataFunc(RenderName));
