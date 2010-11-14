@@ -464,13 +464,21 @@ namespace LongoMatch.DB
 		public TreeStore GetLocalTeamModel() {
 			List<TreeIter> itersList = new List<TreeIter>();
 			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore(typeof(object));
+			
+			itersList.Capacity = localTeamTemplate.PlayersCount;
 			for (int i=0;i<localTeamTemplate.PlayersCount;i++) {
-				itersList.Add(dataFileListStore.AppendValues(localTeamTemplate.GetPlayer(i)));
+				Player p = localTeamTemplate.GetPlayer(i);
+				if (p.Discarded)
+					itersList.Insert(i, TreeIter.Zero);
+				else
+					itersList.Insert(i, dataFileListStore.AppendValues(p));
 			}
 			for (int i=0;i<sections.Count;i++) {
 				foreach (MediaTimeNode tNode in sectionPlaysList[i]) {
-					foreach (int player in tNode.LocalPlayers)
-						dataFileListStore.AppendValues(itersList[player],tNode);
+					foreach (int player in tNode.LocalPlayers){
+						if (itersList[player].Stamp != TreeIter.Zero.Stamp)
+							dataFileListStore.AppendValues(itersList[player],tNode);
+					}
 				}
 			}
 			return dataFileListStore;
@@ -486,13 +494,21 @@ namespace LongoMatch.DB
 		public TreeStore GetVisitorTeamModel() {
 			List<TreeIter> itersList = new List<TreeIter>();
 			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore(typeof(object));
+			
+			itersList.Capacity = visitorTeamTemplate.PlayersCount;
 			for (int i=0;i<visitorTeamTemplate.PlayersCount;i++) {
-				itersList.Add(dataFileListStore.AppendValues(visitorTeamTemplate.GetPlayer(i)));
+				Player p = visitorTeamTemplate.GetPlayer(i);
+				if (p.Discarded)
+					itersList.Insert(i, TreeIter.Zero);
+				else
+					itersList.Insert(i, dataFileListStore.AppendValues(p));
 			}
 			for (int i=0;i<sections.Count;i++) {
 				foreach (MediaTimeNode tNode in sectionPlaysList[i]) {
-					foreach (int player in tNode.VisitorPlayers)
-						dataFileListStore.AppendValues(itersList[player],tNode);
+					foreach (int player in tNode.VisitorPlayers){
+						if (itersList[player].Stamp != TreeIter.Zero.Stamp)
+							dataFileListStore.AppendValues(itersList[player],tNode);
+					}
 				}
 			}
 			return dataFileListStore;

@@ -38,33 +38,36 @@ namespace LongoMatch.Gui.Dialog
 		}
 
 		public void SetPlayersInfo(TeamTemplate template) {
-			int playersCount;
 			CheckButton button;
 			Player player;
+			int playersCount=0;
 
 			if (this.template != null)
 				return;
 
 			this.template = template;
-			playersCount = template.PlayersCount;
 
-			table1.NColumns =(uint)(playersCount/10);
+			table1.NColumns =(uint)(template.PlayersCount/10);
 			table1.NRows =(uint) 10;
 
-			for (int i=0;i<playersCount;i++) {
+			for (int i=0;i<template.PlayersCount;i++) {
 				player = template.GetPlayer(i);
+				if (player.Discarded)
+					continue;
+
 				button = new CheckButton();
 				button.Label = player.Number + "-" + player.Name;
 				button.Name = i.ToString();
 				button.Show();
 
-				uint row_top =(uint)(i%table1.NRows);
+				uint row_top =(uint)(playersCount%table1.NRows);
 				uint row_bottom = (uint) row_top+1 ;
-				uint col_left = (uint) i/table1.NRows;
+				uint col_left = (uint) playersCount/table1.NRows;
 				uint col_right = (uint) col_left+1 ;
 
 				table1.Attach(button,col_left,col_right,row_top,row_bottom);
 				checkButtonsList.Add(button);
+				playersCount++;
 			}
 		}
 
