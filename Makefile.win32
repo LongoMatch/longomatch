@@ -24,10 +24,12 @@ FILES = \
 	es.po\
 	it.po\
 	nb.po\
+	nl.po\
 	sl.po\
 	pt.po\
 	fr.po\
-	sv.po
+	sv.po\
+	zh_CN.po\
 
 MO_FILES = $(foreach po,$(FILES), $(LOCALE_DIR)/$(basename $(po))/LC_MESSAGES/longomatch.mo)
 GMO_FILES = $(patsubst %.po, $(BUILD_DIR)/%.gmo,$(FILES))
