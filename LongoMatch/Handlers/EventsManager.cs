@@ -236,6 +236,7 @@ namespace LongoMatch
 		protected virtual void OnNewMarkAtFrame(int section, int frame) {
 
 			Time pos = new Time(frame*1000/openedProject.File.Fps);
+			player.CloseActualSegment();
 			player.SeekTo ((long)pos.MSeconds, true);
 			ProcessNewMarkEvent(section,pos);
 		}
