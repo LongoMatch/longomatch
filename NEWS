@@ -1,3 +1,16 @@
+===== LongoMatch 0.16.4 "Mario Kart is in the the house" =====
+
+	== Features of this release ==
+
+	* Select players from the template pool and only the one that are playing
+
+	== Bugs Fixed ==
+
+	* Bug 634499 - In the Plays List move the Name of the play closer to the expand/collapse arrow
+	* Bug 634494 - Choose players for a project from the template pool
+	* Bug 633495 - typo
+	* Fix hang creating new plays from the timeline when a play is loaded
+
 ===== LongoMatch 0.16.3 "Band of koalas" =====
 
 	== Bugs Fixed ==
