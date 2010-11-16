@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: longomatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&component=general\n"
-"POT-Creation-Date: 2010-11-11 22:31+0000\n"
-"PO-Revision-Date: 2010-11-13 11:26+0100\n"
+"POT-Creation-Date: 2010-11-14 20:51+0000\n"
+"PO-Revision-Date: 2010-11-16 13:40+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
 "X-Poedit-Country: SLOVENIA\n"
 "X-Poedit-Language: Slovenian\n"
@@ -363,9 +363,15 @@ msgstr "Seznam predvajanja je prazen!"
 msgid "Please, select a video file."
 msgstr "Izberite video datoteko."
 
-#: ../LongoMatch/Gui/Component/PlayerProperties.cs:89
+#: ../LongoMatch/Gui/Component/PlayerProperties.cs:90
 msgid "Choose an image"
 msgstr "Izbor slike"
+
+#: ../LongoMatch/Gui/Component/PlayerProperties.cs:169
+#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:128
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:271
+msgid "No"
+msgstr "Ne"
 
 #: ../LongoMatch/Gui/Component/ProjectListWidget.cs:55
 msgid "Filename"
@@ -490,31 +496,40 @@ msgid "Photo"
 msgstr "Fotografija"
 
 #: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:55
+msgid "Play this match"
+msgstr "Predvajaj posnetek"
+
+#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:60
 msgid "Date of Birth"
 msgstr "Datum rojstva"
 
-#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:60
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:207
+#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:65
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:211
 msgid "Nationality"
 msgstr "Narodnost"
 
-#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:65
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:177
+#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:70
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:181
 msgid "Height"
 msgstr "Višina"
 
-#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:70
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:187
+#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:75
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:191
 msgid "Weight"
 msgstr "Teža"
 
-#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:75
+#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:80
 msgid "Position"
 msgstr "Položaj"
 
-#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:80
+#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:85
 msgid "Number"
 msgstr "Številka"
+
+#: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:128
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:270
+msgid "Yes"
+msgstr "Da"
 
 #: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:52
 msgid "Lead Time"
@@ -561,7 +576,7 @@ msgstr "Hitrost predvajanja"
 msgid "File not found"
 msgstr "Datoteke ni mogoče najti"
 
-#: ../LongoMatch/DB/Project.cs:543
+#: ../LongoMatch/DB/Project.cs:559
 msgid "The file you are trying to load is not a valid project"
 msgstr "Datoteka izbrana za nalaganje, ni prava datoteka projekta."
 
@@ -887,32 +902,36 @@ msgstr "Podrobnosti igralca"
 msgid "TransparentDrawingArea"
 msgstr "ProzornoRisanoObmočje"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:105
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:109
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:348
 msgid "_Calendar"
 msgstr "_Koledar"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:139
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:143
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:86
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:52
 msgid "Name:"
 msgstr "Ime:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:147
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:151
 msgid "Position:"
 msgstr "Mesto:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:157
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:161
 msgid "Number:"
 msgstr "Številka:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:167
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:171
 msgid "Photo:"
 msgstr "Fotografija:"
 
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:197
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:201
 msgid "Birth day"
 msgstr "Rojstni dan"
+
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:221
+msgid "Plays this match:"
+msgstr "Predvaja izbrani posnetek"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs:22
 msgid "Capture Progress"
@@ -1290,28 +1309,39 @@ msgstr "Lažni vir v živo"
 
 #~ msgid "Local Goals:"
 #~ msgstr "Goli domačih:"
+
 #~ msgid "Visitor Goals:"
 #~ msgstr "Goli gostov:"
+
 #~ msgid "Birth Day"
 #~ msgstr "Rojstni dan"
+
 #~ msgid "GConf configured device"
 #~ msgstr "GConf nastavljena naprava"
+
 #~ msgid "You can't delete the last section"
 #~ msgstr "Ni mogoče izbrisati zadnjega odseka."
+
 #~ msgid "DV camera"
 #~ msgstr "DV kamera"
+
 #~ msgid "GConf Source"
 #~ msgstr "Vir GConf"
+
 #~ msgid "Video Device:"
 #~ msgstr "Video naprava:"
+
 #~ msgid "Open the project, please."
 #~ msgstr "Odpri projekt."
+
 #~ msgid "_New Poyect"
 #~ msgstr "_Nov projekt"
+
 #~ msgid "_Open Proyect"
 #~ msgstr "_Odpri projekt"
+
 #~ msgid "_Close Proyect"
 #~ msgstr "_Zapri projekt"
+
 #~ msgid "Error merging video segments. Please retry again"
 #~ msgstr "Napaka med združevanjem odsekov videa. Poskusite znova."
-
