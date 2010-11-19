@@ -7,15 +7,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: longomatch\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-16 19:38+0100\n"
-"PO-Revision-Date: 2010-11-12 18:25+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=longomatch&component=general\n"
+"POT-Creation-Date: 2010-11-16 19:59+0000\n"
+"PO-Revision-Date: 2010-11-17 07:28+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
-"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2\n"
 "X-Poedit-Language: Czech\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -387,9 +388,8 @@ msgstr "Vybrat obrázek"
 #: ../LongoMatch/Gui/Component/PlayerProperties.cs:169
 #: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:128
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:271
-#, fuzzy
 msgid "No"
-msgstr "Žádný"
+msgstr "Ne"
 
 #: ../LongoMatch/Gui/Component/ProjectListWidget.cs:55
 msgid "Filename"
@@ -514,9 +514,8 @@ msgid "Photo"
 msgstr "Fotka"
 
 #: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:55
-#, fuzzy
 msgid "Play this match"
-msgstr "Seznam utkání"
+msgstr "Hraje tento zápas"
 
 #: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:60
 msgid "Date of Birth"
@@ -548,7 +547,7 @@ msgstr "Číslo"
 #: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:128
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:270
 msgid "Yes"
-msgstr ""
+msgstr "Ano"
 
 #: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:52
 msgid "Lead Time"
@@ -956,7 +955,7 @@ msgstr "Datum narození"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:221
 msgid "Plays this match:"
-msgstr ""
+msgstr "Hraje tento zápas:"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs:22
 msgid "Capture Progress"
@@ -1207,12 +1206,12 @@ msgstr "Nastala chyba ve vedeo editoru."
 msgid "Please, try again."
 msgstr "Zkuste to prosím znovu."
 
-#: ../LongoMatch/Handlers/EventsManager.cs:266
+#: ../LongoMatch/Handlers/EventsManager.cs:267
 msgid ""
 "The stop time is smaller than the start time. The play will not be added."
 msgstr "Čas ukončení je menší než čas započetí. Utkání nebude přidáno."
 
-#: ../LongoMatch/Handlers/EventsManager.cs:341
+#: ../LongoMatch/Handlers/EventsManager.cs:342
 msgid "Please, close the opened project to play the playlist."
 msgstr "Abyste mohli přehrát seznam utkání, zavřete prosím otevřený projekt."
 
