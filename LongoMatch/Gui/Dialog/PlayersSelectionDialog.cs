@@ -50,7 +50,7 @@ namespace LongoMatch.Gui.Dialog
 			table1.NRows =(uint) 10;
 
 			foreach (Player player in template.PlayersList) {
-				if (player.Playing)
+				if (!player.Playing)
 					continue;
 
 				button = new CheckButton();
