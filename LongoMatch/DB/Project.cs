@@ -161,8 +161,9 @@ namespace LongoMatch.DB
 		/// <param name="section">
 		/// A <see cref="System.Int32"/>: category the play belongs to
 		/// </param>
-		public void RemovePlay(Play play) {
-			playsList.Remove(play);
+		public void RemovePlays(List<Play> plays) {
+			foreach (Play play in plays)
+				playsList.Remove(play);
 		}
 
 		/// <summary>
@@ -182,7 +183,7 @@ namespace LongoMatch.DB
 					where play.Category.UUID == category.UUID
 					select play;
 			/* Delete them */
-			foreach (var play in playsList)
+			foreach (var play in plays)
 				playsList.Remove(play);
 		}
 		

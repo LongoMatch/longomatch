@@ -183,10 +183,12 @@ namespace LongoMatch.Gui.Component {
 				ts.AddPlay(play);
 		}
 		
-		public void RemovePlay (Play play){
+		public void RemovePlays (List<Play> plays){
 			TimeScale ts;
-			if (tsList.TryGetValue(play.Category, out ts))
-				ts.RemovePlay(play);
+			foreach (Play play in plays){
+				if (tsList.TryGetValue(play.Category, out ts))
+					ts.RemovePlay(play);
+			}
 			
 		}
 		private void ResetGui() {
@@ -211,9 +213,9 @@ namespace LongoMatch.Gui.Component {
 			if (TimeNodeSelected != null)
 				TimeNodeSelected(tn);
 		}
-		protected virtual void OnTimeNodeDeleted(Play tn) {
+		protected virtual void OnTimeNodeDeleted(List<Play> plays) {
 			if (TimeNodeDeleted != null)
-				TimeNodeDeleted(tn);
+				TimeNodeDeleted(plays);
 		}
 
 		protected virtual void OnFitbuttonClicked(object sender, System.EventArgs e)

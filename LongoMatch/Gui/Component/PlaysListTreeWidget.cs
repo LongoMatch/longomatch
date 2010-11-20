@@ -19,6 +19,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Gtk;
 using Mono.Unix;
 using LongoMatch.DB;
@@ -57,27 +58,37 @@ namespace LongoMatch.Gui.Component
             treeview.TagPlay += OnTagPlay;
 		}
 
-		public void RemovePlay(Play play) {
-			if (project != null) {
-				TreeIter iter;
-				TreeIter child;
+		public void RemovePlays(List<Play> plays) {
+			TreeIter iter, child;
+			TreeStore model;
+			List<TreeIter> removeIters;
+			
+			if (project == null)
+				return;
+			
+			removeIters = new List<TreeIter>();
+			model = (TreeStore)treeview.Model;
+			model.GetIterFirst(out iter);
+			/* Scan all the tree and store the iter of each play 
+			 * we need to delete, but don't delete it yet so that
+			 * we don't alter the tree */
+			do{
+				if (!model.IterHasChild(iter))
+					continue;
 				
-				var category = play.Category;
-				var model = (TreeStore)treeview.Model;
-				model.GetIterFromString(out iter, CategoryPath(category));
 				model.IterChildren(out child, iter);
-				// Searching the TimeNode to remove it
-				while (model.IterIsValid(child)) {
-					Play mtn = (Play) model.GetValue(child,0);
-					if (mtn == play) {
-						model.Remove(ref child);
-						break;
+				do {
+					Play play = (Play) model.GetValue(child,0);
+					if (plays.Contains(play)) {
+						removeIters.Add(child);
 					}
-					TreeIter prev = child;
-					model.IterNext(ref child);
-					if (prev.Equals(child))
-						break;
-				}
+				} while (model.IterNext(ref child)); 
+			} while (model.IterNext(ref iter));
+			
+			/* Remove the selected iters now */
+			for (int i=0; i < removeIters.Count; i++){
+				iter = removeIters[i];
+				model.Remove(ref iter);
 			}
 		}
 
@@ -138,9 +149,9 @@ namespace LongoMatch.Gui.Component
 				TimeNodeSelected(tNode);
 		}
 
-		protected virtual void OnTimeNodeDeleted(Play tNode){
+		protected virtual void OnTimeNodeDeleted(List<Play> plays){
 			if (TimeNodeDeleted != null)
-				TimeNodeDeleted(tNode);
+				TimeNodeDeleted(plays);
 		}
 
 		protected virtual void OnPlayListNodeAdded(Play tNode)

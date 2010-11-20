@@ -19,6 +19,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using LongoMatch.Common;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Dialog;
@@ -308,18 +309,16 @@ namespace LongoMatch
 			}
 		}
 
-		protected virtual void OnTimeNodeDeleted(Play play)
+		protected virtual void OnTimeNodeDeleted(List<Play> plays)
 		{
-			treewidget.RemovePlay(play);
-			timeline.RemovePlay(play);
+			treewidget.RemovePlays(plays);
+			timeline.RemovePlays(plays);
+			tagsTreeWidget.RemovePlays(plays);
 
-			foreach (var player in play.LocalPlayers)
-				localPlayersList.RemovePlay(play ,player);
+			localPlayersList.RemovePlays(plays);
+			visitorPlayersList.RemovePlays(plays);
 
-			foreach (var player in play.VisitorPlayers)
-				visitorPlayersList.RemovePlay(play ,player);
-
-			openedProject.RemovePlay(play);
+			openedProject.RemovePlays(plays);
 			if (projectType == ProjectType.FileProject){
 				this.player.CloseActualSegment();
 				MainClass.DB.UpdateProject(openedProject);

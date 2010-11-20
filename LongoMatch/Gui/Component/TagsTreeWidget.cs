@@ -78,21 +78,26 @@ namespace LongoMatch.Gui.Component
 			filter.Refilter();
 		}
 
-		public void DeletePlay(Play play) {
-			if (project != null) {
-				TreeIter iter;
-				model.GetIterFirst(out iter);
-				while (model.IterIsValid(iter)) {
-					Play mtn = (Play) model.GetValue(iter,0);
-					if (mtn == play) {
-						model.Remove(ref iter);
-						break;
-					}
-					TreeIter prev = iter;
-					model.IterNext(ref iter);
-					if (prev.Equals(iter))
-						break;
+		public void RemovePlays(List<Play> plays) {
+			TreeIter iter;
+			List<TreeIter> removeIters;
+			
+			if (project == null)
+				return;
+			
+			removeIters = new List<TreeIter>();
+			model.GetIterFirst(out iter);
+			
+			do {
+				Play play = (Play) model.GetValue(iter,0);
+				if (plays.Contains(play)) {
+					removeIters.Add(iter);
 				}
+			} while (model.IterNext(ref iter)); 
+			
+			for (int i=0; i < removeIters.Count; i++){
+				iter = removeIters[i];
+				model.Remove(ref iter);
 			}
 		}
 

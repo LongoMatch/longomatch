@@ -17,6 +17,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Gtk;
 using Mono.Unix;
 using LongoMatch.DB;
@@ -61,39 +62,52 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void RemovePlay(Play tNode, Player player) {
-			/*if (template != null) {
+		public void RemovePlays(List<Play> plays) {
+			TreeIter iter, child;
+			TreeStore model;
+			List<TreeIter> removeIters;
+			
+			if (template == null)
+				return;
 				
-				TreeIter iter;
-				TreeStore model = (TreeStore)playerstreeview.Model;
-				model.GetIterFromString(out iter, player.ToString());
-				TreeIter child;
+			removeIters = new List<TreeIter>();
+			model = (TreeStore)playerstreeview.Model;
+			model.GetIterFirst(out iter);
+			do{
+				if (!model.IterHasChild(iter))
+					continue;
+				
 				model.IterChildren(out child, iter);
-				// Searching the TimeNode to remove it
-				while (model.IterIsValid(child)) {
-					Play mtn = (Play) model.GetValue(child,0);
-					if (mtn == tNode) {
-						model.Remove(ref child);
-						break;
+				do {
+					Play play = (Play) model.GetValue(child,0);
+					if (plays.Contains(play)) {
+						removeIters.Add(child);
 					}
-					TreeIter prev = child;
-					model.IterNext(ref child);
-					if (prev.Equals(child))
-						break;
-				}
-			}*/
+				} while (model.IterNext(ref child)); 
+			} while (model.IterNext(ref iter));
+			
+			for (int i=0; i < removeIters.Count; i++){
+				iter = removeIters[i];
+				model.Remove(ref iter);
+			}
 		}
 
 
 		public void AddPlay(Play play, Player player) {
-			/*if (template != null) {
-				TreeIter iter;
-				TreeStore model = (TreeStore)playerstreeview.Model;
-				model.GetIterFromString(out iter, playerindex.ToString());
-				Player player = (Player)model.GetValue(iter,0);
-				if (template.GetPlayer(playerindex) == player)
-					model.AppendValues(iter,tNode);
-			}*/
+			TreeIter iter;
+			TreeStore model;
+			bool found;
+				
+			if (template == null)
+				return;
+			model = (TreeStore)playerstreeview.Model;
+			model.GetIterFirst(out iter);
+			do{
+				if (model.GetValue(iter, 0) == player){
+					model.AppendValues(iter, player);
+					break;
+				}
+			} while (model.IterNext(ref iter));
 		}
 
 		public void SetTeam(TeamTemplate template, TreeStore model) {

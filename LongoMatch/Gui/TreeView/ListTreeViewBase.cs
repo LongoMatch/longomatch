@@ -207,11 +207,6 @@ namespace LongoMatch.Gui.Component
 			tag.Sensitive = !enabled;
 		}
 		
-		protected int GetSectionFromIter(TreeIter iter) {
-			TreePath path = Model.GetPath(iter);
-			return int.Parse(path.ToString().Split(':')[0]);
-		}
-		
 		protected object GetValueFromPath(TreePath path){
 			Gtk.TreeIter iter;
 			Model.GetIter(out iter, path);
@@ -311,20 +306,25 @@ namespace LongoMatch.Gui.Component
 		}
 
 		protected void OnDeleted(object obj, EventArgs args) {
-			if (TimeNodeDeleted == null)
-				return;
-			List<Play> list = new List<Play>();
+			List <Play> playsList = new List<Play>();
+			List <TreeIter> iters = new List<TreeIter>();
 			TreePath[] paths = Selection.GetSelectedRows();
-			for (int i=0; i<paths.Length; i++){	
-				list.Add((Play)GetValueFromPath(paths[i]));
+			
+			/* Get the iter for all of the paths first, because the path changes
+			 * each time a row is deleted */
+			foreach (var path in paths) {
+				TreeIter iter;
+				Model.GetIter(out iter, path);
+				playsList.Add((Play)Model.GetValue(iter, 0));
+				iters.Add(iter);
 			}
-			// When a TimeNode is deleted from the tree the path changes.
-			// We need first to retrieve all the TimeNodes to delete using the 
-			// current path of each one and then send the TimeNodeDeleted event
-			for (int i=0; i<paths.Length; i++){	
-				/*FIXME*/
-				//TimeNodeDeleted(list[i], int.Parse(paths[i].ToString().Split(':')[0]));
-			}			
+			/* Delete all the iters now */
+			for (int i=0; i< iters.Count; i++){
+				TreeIter iter = iters[i];
+				(Model as TreeStore).Remove(ref iter);
+			}
+			if (TimeNodeDeleted != null)
+				TimeNodeDeleted(playsList);
 		}
 
 		protected void OnDeleteKeyFrame(object obj, EventArgs args) {

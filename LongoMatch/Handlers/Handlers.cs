@@ -43,8 +43,8 @@ namespace LongoMatch.Handlers
 	public delegate void NewMarkAtFrameEventHandler(Category category,int frame);
 	//A play was edited
 	public delegate void TimeNodeChangedHandler(TimeNode tNode, object val);
-	//A play was deleted
-	public delegate void TimeNodeDeletedHandler(Play play);
+	//A list of plays was deleted
+	public delegate void TimeNodeDeletedHandler(List<Play> plays);
 	//Players needs to be tagged
 	public delegate void PlayersTaggedHandler(Play play, Team team);
 	//Tag a play

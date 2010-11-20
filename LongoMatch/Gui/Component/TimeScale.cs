@@ -292,7 +292,9 @@ namespace LongoMatch.Gui.Component
 			Play tNode;
 			dic.TryGetValue((MenuItem)obj, out tNode);
 			if (TimeNodeDeleted != null && tNode != null) {
-				TimeNodeDeleted(tNode);
+				var list = new List<Play>();
+				list.Add(tNode);
+				TimeNodeDeleted(list);
 			}
 		}
 
