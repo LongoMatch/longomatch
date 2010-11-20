@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using LongoMatch.TimeNodes;
@@ -44,6 +45,16 @@ namespace LongoMatch.DB
 		public List<Player> PlayersList{
 			get {
 				return playersList;
+			}
+		}
+		
+		public List<Player> PlayingPlayersList{
+			get {
+				var players = 
+					from player in playersList
+						where player.Playing == true
+						select player;
+				return players.ToList() as List<Player>;
 			}
 		}
 
