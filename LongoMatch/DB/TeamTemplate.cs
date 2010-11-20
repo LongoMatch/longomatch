@@ -83,13 +83,13 @@ namespace LongoMatch.DB
 		}
 		
 		private void CreateDefaultTemplate(int playersCount) {
-			for (int i=0; i<playersCount;i++) {
+			for (int i=1; i<=playersCount;i++) {
 				playersList.Add(new Player{
 					Name = "Player " + i,
 					Birthday = new DateTime(),
 					Height = 1.80f,
 					Weight = 80,
-					Number = 0,
+					Number = i,
 					Position = "",
 					Photo = null,
 					Playing = true,
