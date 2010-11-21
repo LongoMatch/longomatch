@@ -26,7 +26,7 @@ namespace LongoMatch.Common
 		
 		public const string PROJECT_NAME = SOFTWARE_NAME + " project";
 		
-		public const string DB_FILE = "longomatch.db";
+		public const string DB_FILE = "longomatch.1.db";
 		
 		public const string COPYRIGHT =  "Copyright ©2007-2010 Andoni Morales Alastruey";
 		

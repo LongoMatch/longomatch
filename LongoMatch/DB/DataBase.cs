@@ -49,9 +49,9 @@ namespace LongoMatch.DB
 
 		private Version dbVersion;
 
-		private const int MAYOR=0;
+		private const int MAYOR=1;
 
-		private const int MINOR=1;
+		private const int MINOR=0;
 
 		/// <summary>
 		/// Creates a proxy for the database
@@ -126,36 +126,36 @@ namespace LongoMatch.DB
 					while (result.HasNext()) {
 						try{
 							Project p = (Project)result.Next();
+							ProjectDescription desc = p.Description;
+							db.Activate(desc,3);
 							try{
-								db.Activate(p.File,3);
 								//FIXME: It happens that the project's File object is set to null?¿?¿
 								// In that case, reset the value to let the user change it with the
 								// projects manager.
-								if (p.File.FilePath == null){}							
+								if (desc.File.FilePath == null){}							
 							}catch{
 								MessagePopup.PopupMessage(null, MessageType.Warning, 
-								                          Catalog.GetString("Error retrieving the file info for project:")+" "+p.Title+"\n"+
-								                          Catalog.GetString("This value will be reset. Remember to change it later with the projects manager"));
-								p.File = new PreviewMediaFile(Catalog.GetString("Change Me"),0,0,false,false,"","",0,0,null);
-								db.Store(p);
+								                          Catalog.GetString("Error retrieving the file " +
+								                                            "info for project:")+
+								                          " "+ desc.Title+"\n"+
+								                          Catalog.GetString("This value will be reset. " +
+								                                            "Remember to change it later with the " +
+								                                            "projects manager"));
+								desc.File = new PreviewMediaFile{
+									FilePath = Catalog.GetString("Change Me"),
+									VideoHeight = 0,
+									VideoWidth = 0,
+									HasVideo = false,
+									HasAudio = false,
+									Length = 0,
+									Fps = 0, 
+									VideoCodec = "",
+									AudioCodec = "",
+									Preview = null,
+								};
+									db.Store(p);
 							}
-							ProjectDescription pd = new ProjectDescription {
-								File = p.File.FilePath,
-								LocalName= p.LocalName,
-								VisitorName = p.VisitorName,
-								Season = p.Season,
-								Competition = p.Competition,
-								LocalGoals = p.LocalGoals,
-								VisitorGoals = p.VisitorGoals,
-								MatchDate = p.MatchDate,
-								Preview = p.File.Preview,
-								VideoCodec = p.File.VideoCodec,
-								AudioCodec = p.File.AudioCodec,
-								Length = new Time((int)(p.File.Length/1000)),
-								Format = String.Format("{0}x{1}@{2}fps", 
-								                       p.File.VideoWidth, p.File.VideoHeight, p.File.Fps),
-							};
-							list.Add(pd);
+							list.Add(desc);
 						}catch{	
 							Console.WriteLine("Error retreiving project. Skip");
 						}
@@ -184,9 +184,7 @@ namespace LongoMatch.DB
 			lock (this.locker) {
 				IObjectContainer db = Db4oFactory.OpenFile(file);
 				try	{
-					IQuery query = db.Query();
-					query.Constrain(typeof(Project));
-					query.Descend("file").Descend("filePath").Constrain(filename);
+					IQuery query = GetQueryWithContrains(db, file);
 					IObjectSet result = query.Execute();
 					ret = (Project) db.Ext().PeekPersisted(result.Next(),10,true);
 					return ret;
@@ -209,7 +207,7 @@ namespace LongoMatch.DB
 				IObjectContainer db = Db4oFactory.OpenFile(file);
 				try
 				{
-					if (!this.Exists(project.File.FilePath,db)) {
+					if (!Exists(project.Description.File.FilePath,db)) {
 						db.Store(project);
 						db.Commit();
 					}
@@ -232,9 +230,7 @@ namespace LongoMatch.DB
 				SetDeleteCascadeOptions();
 				IObjectContainer db = Db4oFactory.OpenFile(file);
 				try	{
-					IQuery query = db.Query();
-					query.Constrain(typeof(Project));
-					query.Descend("file").Descend("filePath").Constrain(filePath);
+					IQuery query = GetQueryWithContrains(db, file);
 					IObjectSet result = query.Execute();
 					Project project = (Project)result.Next();
 					db.Delete(project);
@@ -267,10 +263,8 @@ namespace LongoMatch.DB
 				IObjectContainer db = Db4oFactory.OpenFile(file);
 				try	{
 					// We look for a project with the same filename
-					if (!Exists(project.File.FilePath,db)) {
-						IQuery query = db.Query();
-						query.Constrain(typeof(Project));
-						query.Descend("file").Descend("filePath").Constrain(previousFileName);
+					if (!Exists(project.Description.File.FilePath,db)) {
+						IQuery query = GetQueryWithContrains(db, file);
 						IObjectSet result = query.Execute();
 						//Get the stored project and replace it with the new one
 						if (result.Count == 1){
@@ -305,9 +299,7 @@ namespace LongoMatch.DB
 				SetDeleteCascadeOptions();
 				IObjectContainer db = Db4oFactory.OpenFile(file);
 				try	{
-					IQuery query = db.Query();
-					query.Constrain(typeof(Project));
-					query.Descend("file").Descend("filePath").Constrain(project.File.FilePath);
+					IQuery query = GetQueryWithContrains(db, file);
 					IObjectSet result = query.Execute();
 					//Get the stored project and replace it with the new one
 					Project fd = (Project)result.Next();
@@ -334,12 +326,19 @@ namespace LongoMatch.DB
 		public bool Exists(Project project){
 			IObjectContainer db = Db4oFactory.OpenFile(file);
 			try{
-				return Exists(project.File.FilePath, db);
+				return Exists(project.Description.File.FilePath, db);
 			}catch{
 				return false;
 			}finally{
 				CloseDB(db);
 			}				
+		}
+		
+		private IQuery GetQueryWithContrains(IObjectContainer db, string filename){
+			IQuery query = db.Query();
+			query.Constrain(typeof(Project));
+			query.Descend("description").Descend("file").Descend("filePath").Constrain(filename);
+			return query;
 		}
 
 		private void CloseDB(IObjectContainer db) {
@@ -349,25 +348,31 @@ namespace LongoMatch.DB
 
 		private void SetDeleteCascadeOptions() {
 			Db4oFactory.Configure().ObjectClass(typeof(Project)).CascadeOnDelete(true);
-			Db4oFactory.Configure().ObjectClass(typeof(Sections)).CascadeOnDelete(true);
+			Db4oFactory.Configure().ObjectClass(typeof(Categories)).CascadeOnDelete(true);
+			Db4oFactory.Configure().ObjectClass(typeof(Category)).CascadeOnDelete(true);
 			Db4oFactory.Configure().ObjectClass(typeof(TimeNode)).CascadeOnDelete(true);
+			Db4oFactory.Configure().ObjectClass(typeof(Play)).CascadeOnDelete(true);
 			Db4oFactory.Configure().ObjectClass(typeof(Time)).CascadeOnDelete(true);
 			Db4oFactory.Configure().ObjectClass(typeof(Team)).CascadeOnDelete(true);
 			Db4oFactory.Configure().ObjectClass(typeof(HotKey)).CascadeOnDelete(true);
 			Db4oFactory.Configure().ObjectClass(typeof(Player)).CascadeOnDelete(true);
+			Db4oFactory.Configure().ObjectClass(typeof(Tag)).CascadeOnDelete(true);
 			Db4oFactory.Configure().ObjectClass(typeof(TeamTemplate)).CascadeOnDelete(true);
 			Db4oFactory.Configure().ObjectClass(typeof(Drawing)).CascadeOnDelete(true);
 		}
 
 		private void SetUpdateCascadeOptions() {
 			Db4oFactory.Configure().ObjectClass(typeof(Project)).CascadeOnUpdate(true);
-			Db4oFactory.Configure().ObjectClass(typeof(Sections)).CascadeOnUpdate(true);
+			Db4oFactory.Configure().ObjectClass(typeof(Categories)).CascadeOnUpdate(true);
+			Db4oFactory.Configure().ObjectClass(typeof(Category)).CascadeOnUpdate(true);
 			Db4oFactory.Configure().ObjectClass(typeof(TimeNode)).CascadeOnUpdate(true);
+			Db4oFactory.Configure().ObjectClass(typeof(Play)).CascadeOnDelete(true);
 			Db4oFactory.Configure().ObjectClass(typeof(Time)).CascadeOnUpdate(true);
 			Db4oFactory.Configure().ObjectClass(typeof(Team)).CascadeOnUpdate(true);
 			Db4oFactory.Configure().ObjectClass(typeof(HotKey)).CascadeOnUpdate(true);
 			Db4oFactory.Configure().ObjectClass(typeof(Player)).CascadeOnUpdate(true);
 			Db4oFactory.Configure().ObjectClass(typeof(TeamTemplate)).CascadeOnUpdate(true);
+			Db4oFactory.Configure().ObjectClass(typeof(Tag)).CascadeOnDelete(true);
 			Db4oFactory.Configure().ObjectClass(typeof(Drawing)).CascadeOnUpdate(true);
 		}
 
