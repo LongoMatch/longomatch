@@ -107,12 +107,12 @@ namespace LongoMatch.Utils
 				return;
 			}
 			
-			isFake = (project.File.FilePath == Constants.FAKE_PROJECT);
+			isFake = (project.Description.File.FilePath == Constants.FAKE_PROJECT);
 			
 			/* If it's a fake live project prompt for a video file and
 			 * create a new PreviewMediaFile for this project */
 			if (isFake){				
-				project.File = null;
+				project.Description.File = null;
 				npd = new NewProjectDialog();						
 				npd.TransientFor = window;
 				npd.Use = ProjectType.EditProject;
@@ -140,8 +140,9 @@ namespace LongoMatch.Utils
 				                                     DialogFlags.Modal,
 				                                     MessageType.Question,
 				                                     Gtk.ButtonsType.YesNo,
-				                                     Catalog.GetString("A project already exists for the file:")+project.File.FilePath+
-				                                     "\n"+Catalog.GetString("Do you want to overwrite it?"));
+				                                     Catalog.GetString("A project already exists for the file:")+
+				                                     project.Description.File.FilePath+ "\n" +
+				                                     Catalog.GetString("Do you want to overwrite it?"));
 				md.Icon=Stetic.IconLoader.LoadIcon(window, "longomatch", Gtk.IconSize.Dialog);
 				res = md.Run();
 				md.Destroy();
@@ -277,21 +278,20 @@ namespace LongoMatch.Utils
 			/* Create all the thumbnails */
 			factory = new MultimediaFactory();
 			capturer = factory.getFramesCapturer();
-			capturer.Open (project.File.FilePath);
-			foreach (List<MediaTimeNode> list in project.GetDataArray()){
-				foreach (MediaTimeNode play in list){
-					try{
-						capturer.SeekTime(play.Start.MSeconds + ((play.Stop - play.Start).MSeconds/2),
-						                  true);
-						play.Miniature = capturer.GetCurrentFrame(Constants.THUMBNAIL_MAX_WIDTH,
-						                                          Constants.THUMBNAIL_MAX_HEIGHT);
-						dialog.Pulse();
-						
-					} catch {
+			capturer.Open (project.Description.File.FilePath);
+			foreach (Play play in project.AllPlays()){
+				try{
+					capturer.SeekTime(play.Start.MSeconds + ((play.Stop - play.Start).MSeconds/2),
+					                  true);
+					play.Miniature = capturer.GetCurrentFrame(Constants.THUMBNAIL_MAX_WIDTH,
+					                                          Constants.THUMBNAIL_MAX_HEIGHT);
+					dialog.Pulse();
+					
+				} catch {
 						/* FIXME: Add log */
-					}					
 				}					
-			}	
+			}					
+			
 			capturer.Dispose();
 			dialog.Destroy();
 		}
