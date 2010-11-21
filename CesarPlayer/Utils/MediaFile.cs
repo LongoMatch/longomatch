@@ -151,7 +151,9 @@ namespace LongoMatch.Video.Utils
 				height = (int) reader.GetMetadata(MetadataType.DimensionX);
 				width = (int) reader.GetMetadata (MetadataType.DimensionY);
 								
-				return new MediaFile(filePath,duration*1000,(ushort)fps,hasAudio,hasVideo,videoCodec,audioCodec,(uint)height,(uint)width);
+				return new MediaFile(filePath,duration*1000,(ushort)fps,
+				                     hasAudio,hasVideo,videoCodec,audioCodec,
+				                     (uint)height,(uint)width);
 		
 			}
 			catch (GLib.GException ex){
