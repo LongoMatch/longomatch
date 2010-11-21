@@ -55,18 +55,20 @@ namespace LongoMatch.Gui.Component
             treeview.SnapshotSeriesEvent += OnSnapshotSeriesEvent;
             treeview.PlayersTagged += OnPlayersTagged;
             treeview.TagPlay += OnTagPlay;
-		}		
+		}
 
-		public void DeletePlay(MediaTimeNode play, int section) {
+		public void RemovePlay(Play play) {
 			if (project != null) {
 				TreeIter iter;
-				TreeStore model = (TreeStore)treeview.Model;
-				model.GetIterFromString(out iter, section.ToString());
 				TreeIter child;
+				
+				var category = play.Category;
+				var model = (TreeStore)treeview.Model;
+				model.GetIterFromString(out iter, CategoryPath(category));
 				model.IterChildren(out child, iter);
 				// Searching the TimeNode to remove it
 				while (model.IterIsValid(child)) {
-					MediaTimeNode mtn = (MediaTimeNode) model.GetValue(child,0);
+					Play mtn = (Play) model.GetValue(child,0);
 					if (mtn == play) {
 						model.Remove(ref child);
 						break;
@@ -79,25 +81,20 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void AddPlay(MediaTimeNode play,int  section) {
-			TreeIter sectionIter, playIter;
-			TreePath playPath;
-			TreeStore model;
-			TimeNode stNode;
+		public void AddPlay(Play play) {
+			TreeIter categoryIter;
 			
 			if (project == null)
 			return;
-					
-			model = (TreeStore)treeview.Model;
-			model.GetIterFromString(out sectionIter, section.ToString());
-			stNode = (TimeNode)model.GetValue(sectionIter,0);
-			if (project.Sections.GetTimeNode(section) == stNode){
-				playIter = model.AppendValues(sectionIter,play);
-				playPath = model.GetPath(playIter);
-				treeview.Selection.UnselectAll();				
-				treeview.ExpandToPath(playPath);
-				treeview.Selection.SelectIter(playIter);
-			}
+			
+			var cat = play.Category;
+			var model = (TreeStore)treeview.Model;
+			model.GetIterFromString(out categoryIter, CategoryPath(cat));
+			var playIter = model.AppendValues(categoryIter,play);
+			var playPath = model.GetPath(playIter);
+			treeview.Selection.UnselectAll();				
+			treeview.ExpandToPath(playPath);
+			treeview.Selection.SelectIter(playIter);
 		}
 
 		public bool ProjectIsLive{
@@ -111,13 +108,12 @@ namespace LongoMatch.Gui.Component
 				project = value;
 				if (project != null) {
 					treeview.Model = project.GetModel();
-					treeview.Colors = project.Sections.GetColors();
-					treeview.VisitorTeam = project.VisitorName;
-					treeview.LocalTeam = project.LocalName;
+					treeview.Colors = true;
+					treeview.VisitorTeam = project.Description.VisitorName;
+					treeview.LocalTeam = project.Description.LocalName;
 				}
 				else {
 					treeview.Model = null;
-					treeview.Colors = null;
 				}
 			}
 		}
@@ -127,41 +123,45 @@ namespace LongoMatch.Gui.Component
 				treeview.PlayListLoaded=value;
 			}
 		}
+		
+		private string CategoryPath(Category cat){
+			return project.Categories.CategoriesList.IndexOf(cat).ToString();
+		}
 
 		protected virtual void OnTimeNodeChanged(TimeNode tNode,object val) {
 			if (TimeNodeChanged != null)
 				TimeNodeChanged(tNode,val);
 		}
 
-		protected virtual void OnTimeNodeSelected(MediaTimeNode tNode) {
+		protected virtual void OnTimeNodeSelected(Play tNode) {
 			if (TimeNodeSelected != null)
 				TimeNodeSelected(tNode);
 		}
 
-		protected virtual void OnTimeNodeDeleted(MediaTimeNode tNode, int section) {
+		protected virtual void OnTimeNodeDeleted(Play tNode){
 			if (TimeNodeDeleted != null)
-				TimeNodeDeleted(tNode,section);
+				TimeNodeDeleted(tNode);
 		}
 
-		protected virtual void OnPlayListNodeAdded(MediaTimeNode tNode)
+		protected virtual void OnPlayListNodeAdded(Play tNode)
 		{
 			if (PlayListNodeAdded != null)
 				PlayListNodeAdded(tNode);
 		}
 
-		protected virtual void OnSnapshotSeriesEvent(LongoMatch.TimeNodes.MediaTimeNode tNode)
+		protected virtual void OnSnapshotSeriesEvent(LongoMatch.TimeNodes.Play tNode)
 		{
 			if (SnapshotSeriesEvent != null)
 				SnapshotSeriesEvent(tNode);
 		}
 
-		protected virtual void OnPlayersTagged(LongoMatch.TimeNodes.MediaTimeNode tNode, Team team)
+		protected virtual void OnPlayersTagged(LongoMatch.TimeNodes.Play tNode, Team team)
 		{
 			if (PlayersTagged != null)
 				PlayersTagged(tNode,team);
 		}
 
-		protected virtual void OnTagPlay (LongoMatch.TimeNodes.MediaTimeNode tNode)
+		protected virtual void OnTagPlay (LongoMatch.TimeNodes.Play tNode)
 		{
 			if (TagPlay != null)
 				TagPlay(tNode);

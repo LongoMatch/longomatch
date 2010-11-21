@@ -32,7 +32,7 @@ namespace LongoMatch.Gui.Component
 	{
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		TextBuffer buf;
-		MediaTimeNode play;
+		Play play;
 
 		public NotesWidget()
 		{
@@ -42,7 +42,7 @@ namespace LongoMatch.Gui.Component
 
 		}
 
-		public MediaTimeNode Play {
+		public Play Play {
 			set {
 				play = value;
 				Notes = play.Notes;

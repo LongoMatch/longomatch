@@ -128,7 +128,7 @@ namespace LongoMatch.Gui.Component
 			TimeNode tna, tnb;
 			TreeIter parent;
 			int depth;
-			SectionsTimeNode category;
+			Category category;
 			
 			if (model == null)
 				return 0;	
@@ -152,7 +152,7 @@ namespace LongoMatch.Gui.Component
 				return int.Parse(model.GetPath(a).ToString()) 
 					- int.Parse(model.GetPath(b).ToString());
 			
-			category = model.GetValue(parent,0) as SectionsTimeNode;
+			category = model.GetValue(parent,0) as Category;
 			tna = model.GetValue (a, 0)as TimeNode;
 			tnb = model.GetValue (b, 0) as TimeNode;
 			
@@ -171,11 +171,11 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		private void OnSortActivated (object o, EventArgs args){
-			SectionsTimeNode category;
+			Category category;
 			RadioAction sender;
 			
 			sender = o as RadioAction;
-			category = GetValueFromPath(Selection.GetSelectedRows()[0]) as SectionsTimeNode;
+			category = GetValueFromPath(Selection.GetSelectedRows()[0]) as Category;
 			
 			if (sender == sortByName)
 				category.SortMethod = SortMethodType.SortByName;
@@ -193,9 +193,9 @@ namespace LongoMatch.Gui.Component
 			// Don't allow multiselect for categories
 			if (!selected && selection.GetSelectedRows().Length > 0){
 				if (selection.GetSelectedRows().Length == 1 &&
-				    GetValueFromPath(selection.GetSelectedRows()[0]) is SectionsTimeNode)
+				    GetValueFromPath(selection.GetSelectedRows()[0]) is Category)
 					return false;	
-				return !(GetValueFromPath(path) is SectionsTimeNode);										
+				return !(GetValueFromPath(path) is Category);										
 			}
 			// Always unselect
 			else
@@ -224,13 +224,13 @@ namespace LongoMatch.Gui.Component
 				
 				if (paths.Length == 1) {
 					TimeNode selectedTimeNode = GetValueFromPath(paths[0]) as TimeNode;
-					if (selectedTimeNode is MediaTimeNode) {
-						deleteKeyFrame.Sensitive = (selectedTimeNode as MediaTimeNode).KeyFrameDrawing != null;
+					if (selectedTimeNode is Play) {
+						deleteKeyFrame.Sensitive = (selectedTimeNode as Play).KeyFrameDrawing != null;
 						MultiSelectMenu(false);
 						menu.Popup();
 					}
 					else{
-						SetupSortMenu((selectedTimeNode as SectionsTimeNode).SortMethod);
+						SetupSortMenu((selectedTimeNode as Category).SortMethod);
 						categoriesMenu.Popup();
 					}
 				}

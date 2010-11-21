@@ -49,7 +49,6 @@ namespace LongoMatch.Gui.Component
 		
 		protected Gtk.CellRendererText nameCell;
 		protected Gtk.TreeViewColumn nameColumn;
-		protected Color[] colors;
 		protected String[] teams_name;
 		protected bool editing;
 		protected bool projectIsLive;
@@ -75,7 +74,6 @@ namespace LongoMatch.Gui.Component
 			SetMenu();
 			ProjectIsLive = false;
 			PlayListLoaded = false;
-			colors = null;
 
 			teams_name = new String[3];
 			teams_name[(int)Team.NONE] = Catalog.GetString(Catalog.GetString("None"));
@@ -98,17 +96,17 @@ namespace LongoMatch.Gui.Component
 
 		}
 
-		public Color[]  Colors {
-			set {
-				this.colors = value;
-			}
-		}
 		public bool ProjectIsLive{
 			set{
 				projectIsLive = value;
 				addPLN.Visible = !projectIsLive;
 				snapshot.Visible = !projectIsLive;
 			}
+		}
+		
+		public bool Colors{
+			get;
+			set;
 		}
 		
 		public String LocalTeam {
@@ -225,10 +223,10 @@ namespace LongoMatch.Gui.Component
 			var item = model.GetValue(iter, 0);
 			var c = cell as CellRendererPixbuf;
 
-			if (item is MediaTimeNode){
-				c.Pixbuf = (item as MediaTimeNode).Miniature;
-				if (colors !=null) {
-					c.CellBackgroundGdk = colors[GetSectionFromIter(iter)];
+			if (item is Play){
+				c.Pixbuf = (item as Play).Miniature;
+				if (Colors) {
+					c.CellBackgroundGdk = (item as Play).Category.Color;
 				} else{ 
 					c.CellBackground = "white";
 				}
@@ -258,11 +256,10 @@ namespace LongoMatch.Gui.Component
 				return;
 			} 			
 			
-			if (o is MediaTimeNode){
-				var mtn = o as MediaTimeNode;
-				/* FIXME: the colors array is set externally and might not match the model!!! */
-				if (colors !=null) {
-					Color col = colors[GetSectionFromIter(iter)];
+			if (o is Play){
+				var mtn = o as Play;
+				if (Colors) {
+					Color col = mtn.Category.Color;
 					c.CellBackgroundGdk = col;
 					c.BackgroundGdk = col;
 				} else{ 
@@ -274,7 +271,7 @@ namespace LongoMatch.Gui.Component
 				c.Background = "white";
 				c.CellBackground = "white";
 				c.Markup = String.Format("{0} ({1})", (o as Player).Name, Model.IterNChildren(iter));
-			}else if (o is SectionsTimeNode) {
+			}else if (o is Category) {
 				c.Background = "white";
 				c.CellBackground = "white";
 				c.Markup = String.Format("{0} ({1})", (o as TimeNode).Name, Model.IterNChildren(iter));
@@ -306,26 +303,27 @@ namespace LongoMatch.Gui.Component
 			this.Model.GetIter(out iter, args.Path);
 			object item = this.Model.GetValue(iter, 0);
 			
-			if (!(item is MediaTimeNode))
+			if (!(item is Play))
 				return;
 
 			if (TimeNodeSelected != null && !projectIsLive)
-				this.TimeNodeSelected(item as MediaTimeNode);
+				this.TimeNodeSelected(item as Play);
 		}
 
 		protected void OnDeleted(object obj, EventArgs args) {
 			if (TimeNodeDeleted == null)
 				return;
-			List<MediaTimeNode> list = new List<MediaTimeNode>();
+			List<Play> list = new List<Play>();
 			TreePath[] paths = Selection.GetSelectedRows();
 			for (int i=0; i<paths.Length; i++){	
-				list.Add((MediaTimeNode)GetValueFromPath(paths[i]));
+				list.Add((Play)GetValueFromPath(paths[i]));
 			}
 			// When a TimeNode is deleted from the tree the path changes.
 			// We need first to retrieve all the TimeNodes to delete using the 
 			// current path of each one and then send the TimeNodeDeleted event
 			for (int i=0; i<paths.Length; i++){	
-				TimeNodeDeleted(list[i], int.Parse(paths[i].ToString().Split(':')[0]));
+				/*FIXME*/
+				//TimeNodeDeleted(list[i], int.Parse(paths[i].ToString().Split(':')[0]));
 			}			
 		}
 
@@ -340,7 +338,7 @@ namespace LongoMatch.Gui.Component
 			if (md.Run() == (int)ResponseType.Yes){
 				TreePath[] paths = Selection.GetSelectedRows();
 				for (int i=0; i<paths.Length; i++){	
-					MediaTimeNode tNode = (MediaTimeNode)GetValueFromPath(paths[i]);
+					Play tNode = (Play)GetValueFromPath(paths[i]);
 					tNode.KeyFrameDrawing = null;
 				}
 				// Refresh the thumbnails
@@ -369,7 +367,7 @@ namespace LongoMatch.Gui.Component
 			
 			TreePath[] paths = Selection.GetSelectedRows();
 			for (int i=0; i<paths.Length; i++){	
-					MediaTimeNode tNode = (MediaTimeNode)GetValueFromPath(paths[i]);
+					Play tNode = (Play)GetValueFromPath(paths[i]);
 					tNode.Team = team;
 			}
 		}
@@ -378,7 +376,7 @@ namespace LongoMatch.Gui.Component
 			if (PlayListNodeAdded != null){
 				TreePath[] paths = Selection.GetSelectedRows();
 				for (int i=0; i<paths.Length; i++){	
-					MediaTimeNode tNode = (MediaTimeNode)GetValueFromPath(paths[i]);
+					Play tNode = (Play)GetValueFromPath(paths[i]);
 					PlayListNodeAdded(tNode);
 				}
 			}
@@ -386,22 +384,22 @@ namespace LongoMatch.Gui.Component
 		
 		protected void OnTag (object obj, EventArgs args){
 			if (TagPlay != null)
-				TagPlay((MediaTimeNode)GetValueFromPath(Selection.GetSelectedRows()[0]));
+				TagPlay((Play)GetValueFromPath(Selection.GetSelectedRows()[0]));
 		}
 
 		protected void OnSnapshot(object obj, EventArgs args) {
 			if (SnapshotSeriesEvent != null)
-				SnapshotSeriesEvent((MediaTimeNode)GetValueFromPath(Selection.GetSelectedRows()[0]));
+				SnapshotSeriesEvent((Play)GetValueFromPath(Selection.GetSelectedRows()[0]));
 		}
 
 		protected virtual void OnLocalPlayers(object o, EventArgs args) {
 			if (PlayersTagged != null)
-				PlayersTagged((MediaTimeNode)GetValueFromPath(Selection.GetSelectedRows()[0]), Team.LOCAL);
+				PlayersTagged((Play)GetValueFromPath(Selection.GetSelectedRows()[0]), Team.LOCAL);
 		}
 
 		protected virtual void OnVisitorPlayers(object o, EventArgs args) {
 			if (PlayersTagged != null)
-				PlayersTagged((MediaTimeNode)GetValueFromPath(Selection.GetSelectedRows()[0]), Team.VISITOR);
+				PlayersTagged((Play)GetValueFromPath(Selection.GetSelectedRows()[0]), Team.VISITOR);
 		}
 		
 		protected abstract bool SelectFunction(TreeSelection selection, TreeModel model, TreePath path, bool selected);

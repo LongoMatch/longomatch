@@ -38,17 +38,17 @@ namespace LongoMatch.Gui.Component
 			this.Build();
 		}
 
-		public void SetTimeNode(SectionsTimeNode tNode) {
+		public void SetTimeNode(Category tNode) {
 			spinbutton1.Value=tNode.Start.Seconds;
 			spinbutton2.Value=tNode.Stop.Seconds;
 		}
 
 		public Time GetStartTime() {
-			return new Time((int)(spinbutton1.Value)*Time.SECONDS_TO_TIME);
+			return new Time {Seconds = (int)(spinbutton1.Value)};
 		}
 
 		public Time GetStopTime() {
-			return new Time((int)(spinbutton2.Value)*Time.SECONDS_TO_TIME);
+			return new Time {Seconds = (int)(spinbutton2.Value)};
 		}
 
 		protected virtual void OnSpinbutton1ValueChanged(object sender, System.EventArgs e)

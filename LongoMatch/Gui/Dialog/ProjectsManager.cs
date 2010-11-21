@@ -25,6 +25,7 @@ using Mono.Unix;
 using LongoMatch.Common;
 using LongoMatch.DB;
 using LongoMatch.Gui.Component;
+using LongoMatch.Video.Utils;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -81,7 +82,7 @@ namespace LongoMatch.Gui.Dialog
 			if (project == null)
 				return;
 
-			if (project.File.FilePath == originalFilePath) {
+			if (project.Description.File.FilePath == originalFilePath) {
 				MainClass.DB.UpdateProject(project);
 				saveButton.Sensitive = false;
 			}
@@ -107,7 +108,8 @@ namespace LongoMatch.Gui.Dialog
 			    return;
 			
 			foreach (ProjectDescription selectedProject in selectedProjects) {
-				if (openedProject != null && selectedProject.File == openedProject.File.FilePath) {
+				if (openedProject != null &&
+				    selectedProject.File.FilePath == openedProject.Description.File.FilePath) {
 					MessagePopup.PopupMessage(this, MessageType.Warning,
 					                          Catalog.GetString("This Project is actually in use.")+"\n"+
 					                          Catalog.GetString("Close it first to allow its removal from the database"));
@@ -119,7 +121,7 @@ namespace LongoMatch.Gui.Dialog
 				                                     Catalog.GetString("Do you really want to delete:")+
 				                                     "\n"+selectedProject.Title);
 				if (md.Run()== (int)ResponseType.Yes) {
-					MainClass.DB.RemoveProject(selectedProject.File);
+					MainClass.DB.RemoveProject(selectedProject.File.FilePath);
 					deletedProjects.Add (selectedProject);
 				} 
 				md.Destroy();
@@ -171,15 +173,16 @@ namespace LongoMatch.Gui.Dialog
 			/* if only one project is selected try to load it in the editor */
 			project = projects[0];
 			
-			if (openedProject != null && project.File == openedProject.File.FilePath) {
+			if (openedProject != null && 
+			    project.File.FilePath == openedProject.Description.File.FilePath) {
 				MessagePopup.PopupMessage(this, MessageType.Warning,
 				                          Catalog.GetString("The Project you are trying to load is actually in use.")+"\n" +Catalog.GetString("Close it first to edit it"));
 				Clear();
 			}
 			else {
 				projectdetails.Sensitive = true;
-				projectdetails.SetProject(MainClass.DB.GetProject(project.File));
-				originalFilePath = project.File;
+				projectdetails.SetProject(MainClass.DB.GetProject(project.File.FilePath));
+				originalFilePath = project.File.FilePath;
 				saveButton.Sensitive = false;
 				deleteButton.Sensitive = true;
 				exportbutton.Sensitive = true;

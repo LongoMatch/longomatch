@@ -28,7 +28,7 @@ using LongoMatch.Gui.Dialog;
 namespace LongoMatch.Gui.Component
 {
 
-	public delegate void HotKeyChangeHandler(HotKey prevHotKey, SectionsTimeNode newSection);
+	public delegate void HotKeyChangeHandler(HotKey prevHotKey, Category newSection);
 
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
@@ -37,15 +37,14 @@ namespace LongoMatch.Gui.Component
 
 		public event HotKeyChangeHandler HotKeyChanged;
 
-		private SectionsTimeNode stn;
+		private Category stn;
 
 		public CategoryProperties()
 		{
 			this.Build();
 		}
 
-		public SectionsTimeNode Section
-		{
+		public Category Category{
 			set {
 				stn = value;
 				UpdateGui();

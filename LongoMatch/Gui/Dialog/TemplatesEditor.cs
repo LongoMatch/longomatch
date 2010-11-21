@@ -37,12 +37,12 @@ namespace LongoMatch.Gui.Dialog
 
 		public enum UseType {
 			TeamTemplate,
-			SectionsTemplate,
+			CategoriesTemplate,
 		}
 
 
 		private Gtk.ListStore dataFileListStore;
-		private Sections selectedSectionsTemplate;
+		private Categories selectedCategoriesTemplate;
 		private TeamTemplate selectedTeamTemplate;
 		private UseType useType;
 		private string templateName;
@@ -95,10 +95,10 @@ namespace LongoMatch.Gui.Dialog
 			(cell as Gtk.CellRendererText).Text = System.IO.Path.GetFileNameWithoutExtension(_templateFilePath.ToString());
 		}
 
-		public void SetSectionsTemplate(Sections sections) {
-			if (useType != UseType.SectionsTemplate)
+		public void SetCategoriesTemplate(Categories sections) {
+			if (useType != UseType.CategoriesTemplate)
 				return;
-			sectionspropertieswidget1.Sections=sections;
+			sectionspropertieswidget1.Categories=sections;
 		}
 
 		public void SetTeamTemplate(TeamTemplate template) {
@@ -107,10 +107,10 @@ namespace LongoMatch.Gui.Dialog
 			teamtemplatewidget1.TeamTemplate=template;
 		}
 
-		private void UpdateSections() {
-			SectionsReader sr = new SectionsReader(templateName);
-			selectedSectionsTemplate = sr.GetSections();
-			SetSectionsTemplate(sr.GetSections());
+		private void UpdateCategories() {
+			CategoriesReader sr = new CategoriesReader(templateName);
+			selectedCategoriesTemplate = sr.GetCategories();
+			SetCategoriesTemplate(sr.GetCategories());
 			SetSensitive(true);
 		}
 
@@ -120,7 +120,7 @@ namespace LongoMatch.Gui.Dialog
 		}
 
 		private void SetSensitive(bool sensitive) {
-			if (useType == UseType.SectionsTemplate)
+			if (useType == UseType.CategoriesTemplate)
 				sectionspropertieswidget1.Sensitive = true;
 			else
 				teamtemplatewidget1.Sensitive = true;
@@ -147,9 +147,9 @@ namespace LongoMatch.Gui.Dialog
 		}
 
 		private void SaveTemplate() {
-			if (useType == UseType.SectionsTemplate) {
-				selectedSectionsTemplate = sectionspropertieswidget1.Sections;
-				SectionsWriter.UpdateTemplate(templateName,selectedSectionsTemplate);
+			if (useType == UseType.CategoriesTemplate) {
+				selectedCategoriesTemplate = sectionspropertieswidget1.Categories;
+				CategoriesWriter.UpdateTemplate(templateName,selectedCategoriesTemplate);
 			}
 			else {
 				selectedTeamTemplate = teamtemplatewidget1.TeamTemplate;
@@ -215,12 +215,11 @@ namespace LongoMatch.Gui.Dialog
 				if (ed.SelectedTemplate != null)
 						System.IO.File.Copy(System.IO.Path.Combine(MainClass.TemplatesDir(),ed.SelectedTemplate),
 						                    System.IO.Path.Combine(MainClass.TemplatesDir(),name+fileExtension));
-				else if (useType == UseType.SectionsTemplate){
-					SectionsWriter.CreateNewTemplate(name+fileExtension);
+				else if (useType == UseType.CategoriesTemplate){
+					CategoriesWriter.CreateNewTemplate(name+fileExtension);
 				}
 				else {
-					TeamTemplate tt = new TeamTemplate();
-					tt.CreateDefaultTemplate(count);
+					TeamTemplate tt = TeamTemplate.DefautlTemplate(count);
 					tt.Save(System.IO.Path.Combine(MainClass.TemplatesDir(), name+fileExtension));
 				}
 
@@ -266,8 +265,8 @@ namespace LongoMatch.Gui.Dialog
 			treeview.Selection.GetSelected(out iter);
 			templateName = (string) this.dataFileListStore.GetValue(iter, 0);
 
-			if (useType == UseType.SectionsTemplate)
-				UpdateSections();
+			if (useType == UseType.CategoriesTemplate)
+				UpdateCategories();
 
 			else
 				UpdateTeamTemplate();
@@ -282,8 +281,8 @@ namespace LongoMatch.Gui.Dialog
 
 		protected virtual void OnTreeviewRowActivated(object o, Gtk.RowActivatedArgs args)
 		{
-			if (useType == UseType.SectionsTemplate)
-				UpdateSections();
+			if (useType == UseType.CategoriesTemplate)
+				UpdateCategories();
 			else
 				UpdateTeamTemplate();
 		}

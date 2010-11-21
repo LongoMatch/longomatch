@@ -49,7 +49,7 @@ namespace LongoMatch.Gui.Component
 		private DateTime date;
 		private CalendarPopup cp;
 		private Win32CalendarDialog win32CP;
-		private Sections actualSection;
+		private Categories actualCategory;
 		private TeamTemplate actualVisitorTeam;
 		private TeamTemplate actualLocalTeam;
 		private ProjectType useType;
@@ -187,12 +187,12 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public Sections Sections {
+		public Categories Categories {
 			get {
-				return actualSection;
+				return actualCategory;
 			}
 			set {
-				actualSection = value;
+				actualCategory = value;
 			}
 		}
 
@@ -297,31 +297,33 @@ namespace LongoMatch.Gui.Component
 		
 		public void SetProject(Project project) {
 			this.project = project;
-			mFile = project.File;
+			var desc = project.Description;
+			mFile = desc.File;
 			Filename = mFile != null ? mFile.FilePath : "";
-			LocalName = project.LocalName;
-			VisitorName = project.VisitorName;
-			LocalGoals = project.LocalGoals;
-			VisitorGoals = project.VisitorGoals;
-			Date = project.MatchDate;
-			Season = project.Season;
-			Competition = project.Competition;
-			Sections = project.Sections;
+			LocalName = desc.LocalName;
+			VisitorName = desc.VisitorName;
+			LocalGoals = desc.LocalGoals;
+			VisitorGoals = desc.VisitorGoals;
+			Date = desc.MatchDate;
+			Season = desc.Season;
+			Competition = desc.Competition;
+			Categories = project.Categories;
 			LocalTeamTemplate = project.LocalTeamTemplate;
 			VisitorTeamTemplate = project.VisitorTeamTemplate;
 			Edited = false;
 		}
 
 		public void UpdateProject() {
-			project.File= mFile;			
-			project.LocalName = localTeamEntry.Text;
-			project.VisitorName = visitorTeamEntry.Text;
-			project.LocalGoals = (int)localSpinButton.Value;
-			project.VisitorGoals = (int)visitorSpinButton.Value;
-			project.MatchDate = DateTime.Parse(dateEntry.Text);
-			project.Competition = competitionentry.Text;
-			project.Season = seasonentry.Text;
-			project.Sections = Sections;
+			var desc = project.Description;
+			desc.File= mFile;			
+			desc.LocalName = localTeamEntry.Text;
+			desc.VisitorName = visitorTeamEntry.Text;
+			desc.LocalGoals = (int)localSpinButton.Value;
+			desc.VisitorGoals = (int)visitorSpinButton.Value;
+			desc.MatchDate = DateTime.Parse(dateEntry.Text);
+			desc.Competition = competitionentry.Text;
+			desc.Season = seasonentry.Text;
+			project.Categories = Categories;
 			project.LocalTeamTemplate = LocalTeamTemplate;
 			project.VisitorTeamTemplate = VisitorTeamTemplate;
 		}
@@ -340,17 +342,21 @@ namespace LongoMatch.Gui.Component
 						mFile.FilePath = fileEntry.Text;
 						mFile.Fps = 25;
 					}
-					return new Project(mFile,
-					                   LocalName,
-					                   VisitorName,
-					                   Season,
-					                   Competition,
-					                   LocalGoals,
-					                   VisitorGoals,
-					                   Date,
-					                   Sections,
-					                   LocalTeamTemplate,
-					                   VisitorTeamTemplate);
+					var desc = new ProjectDescription {
+						File = mFile,
+						LocalName = LocalName,
+						VisitorName = VisitorName,
+						Season = Season,
+						Competition = Competition,
+						LocalGoals = LocalGoals,
+						MatchDate = Date
+					};
+					
+					return new Project{
+						Description = desc,
+						Categories = Categories,
+						LocalTeamTemplate = LocalTeamTemplate,
+						VisitorTeamTemplate = VisitorTeamTemplate};
 				}				
 			}
 			else {
@@ -408,8 +414,9 @@ namespace LongoMatch.Gui.Component
 				i++;
 			}
 			tagscombobox.Active = index;
-			SectionsReader reader = new SectionsReader(System.IO.Path.Combine(MainClass.TemplatesDir(),SectionsFile));
-			Sections= reader.GetSections();
+			var reader = new CategoriesReader(System.IO.Path.Combine(MainClass.TemplatesDir(),SectionsFile));
+			Categories = reader.GetCategories();
+			Console.WriteLine (Categories.Count);
 		}
 
 		private void FillTeamsTemplate() {
@@ -430,8 +437,10 @@ namespace LongoMatch.Gui.Component
 			}
 			localcombobox.Active = index;
 			visitorcombobox.Active = index;
-			LocalTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(),LocalTeamTemplateFile));
-			VisitorTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(),VisitorTeamTemplateFile));
+			LocalTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(),
+			                                                                     LocalTeamTemplateFile));
+			VisitorTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(),
+			                                                                       VisitorTeamTemplateFile));
 		}
 		
 		private void FillFormats(){
@@ -500,6 +509,7 @@ namespace LongoMatch.Gui.Component
 						md.Icon=Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Dialog);
 						md.Show();
 						mFile = LongoMatch.Video.Utils.PreviewMediaFile.GetMediaFile(filename);
+						Console.WriteLine (mFile.Length.ToString());
 						if (!mFile.HasVideo || mFile.VideoCodec == "")
 							throw new Exception(Catalog.GetString("This file doesn't contain a video stream."));
 						if (mFile.HasVideo && mFile.Length == 0)
@@ -538,30 +548,33 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnCombobox1Changed(object sender, System.EventArgs e)
 		{
-			SectionsReader reader = new SectionsReader(System.IO.Path.Combine(MainClass.TemplatesDir(),SectionsFile));
-			Sections= reader.GetSections();
+			var reader = new CategoriesReader(System.IO.Path.Combine(MainClass.TemplatesDir(),SectionsFile));
+			Categories = reader.GetCategories();
 		}
 
 		protected virtual void OnVisitorcomboboxChanged(object sender, System.EventArgs e)
 		{
-			VisitorTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(), VisitorTeamTemplateFile));
+			VisitorTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(), 
+			                                                                       VisitorTeamTemplateFile));
 		}
 
 
 		protected virtual void OnLocalcomboboxChanged(object sender, System.EventArgs e)
 		{
-			LocalTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(), LocalTeamTemplateFile));
+			LocalTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(), 
+			                                                                     LocalTeamTemplateFile));
 		}
 
 		protected virtual void OnEditbuttonClicked(object sender, System.EventArgs e)
 		{
 			ProjectTemplateEditorDialog ted = new ProjectTemplateEditorDialog();
 			ted.TransientFor = (Window)Toplevel;
-			ted.Sections = Sections;
+			Console.WriteLine (Categories.Count);
+			ted.Categories = Categories;
 			ted.Project = project;
 			ted.CanExport = Use == ProjectType.EditProject;
 			if (ted.Run() == (int)ResponseType.Apply) {
-				Sections = ted.Sections;
+				Categories = ted.Categories;
 			}
 			ted.Destroy();
 			OnEdited(this,null);

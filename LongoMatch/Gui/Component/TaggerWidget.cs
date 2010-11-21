@@ -77,16 +77,18 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		private void AddTag(string text, bool check){
-			Tag tag = new Tag(text);
+			Tag tag = new Tag {
+				Value = text,
+			};
 			if (tagsDict.ContainsKey(tag))
 				return;
 			AddTagWidget(tag, check);
 		}
 		
 		private void AddTagWidget(Tag tag, bool check){
-			CheckButton button = new CheckButton(tag.Text);					
-			button.Name = tag.Text;		
-			AddElementToTable(button);	
+			CheckButton button = new CheckButton(tag.Value);
+			button.Name = tag.Value;
+			AddElementToTable(button);
 			button.Active = check;
 			tagsDict.Add(tag, button);
 		}
@@ -118,7 +120,9 @@ namespace LongoMatch.Gui.Component
 				scrolledwindow1.Visible = true;
 				label1.Visible = false;
 			}
-			tag = new Tag(entry1.Text);
+			tag = new Tag{
+				Value = entry1.Text,
+			};
 			if (tagsDict.TryGetValue(tag, out button))
 				button.Active = true;
 			else

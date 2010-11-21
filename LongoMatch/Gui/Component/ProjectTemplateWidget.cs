@@ -1,4 +1,4 @@
-// SectionsPropertiesWidget.cs
+// CategoriesPropertiesWidget.cs
 //  Copyright (C) 2007-2009 Andoni Morales Alastruey
 //
 // This program is free software; you can redistribute it and/or modify
@@ -38,9 +38,8 @@ namespace LongoMatch.Gui.Component
 	{
 		private List<HotKey> hkList;
 		private Project project;
-		private Sections sections;
-		private List<SectionsTimeNode> selectedSections;
-		private bool edited = false;
+		private Categories categories;
+		private List<Category> selectedCategories;
 
 		public ProjectTemplateWidget()
 		{
@@ -48,28 +47,31 @@ namespace LongoMatch.Gui.Component
 			hkList = new List<HotKey>();
 		}
 
-		public void SetProject(Project project) {
-			this.project = project;
-			if (project != null)
-				Sections=project.Sections;
+		public Project Project {
+			set{
+				project = project;
+				if (project != null)
+					Categories = project.Categories;
+			}
 		}
 
-		public Sections Sections {
+		public Categories Categories {
 			get {
-				return sections;
+				return categories;
 			}
 			set {
-				this.sections = value;
-				edited = false;
-				Gtk.TreeStore sectionsListStore = new Gtk.TreeStore(typeof(SectionsTimeNode));
+				categories = value;
+				Edited = false;
+				Gtk.TreeStore categoriesListStore = new Gtk.TreeStore(typeof(Category));
 				hkList.Clear();
-				for (int i=0;i<sections.Count;i++) {
-					sectionsListStore.AppendValues(sections.GetSection(i));
+				
+				foreach (var cat in categories.CategoriesList){
+					categoriesListStore.AppendValues(cat);
 					try {
-						hkList.Add(sections.GetSection(i).HotKey);
+						hkList.Add(cat.HotKey);
 					} catch {}; //Do not add duplicated hotkeys
 				}
-				sectionstreeview1.Model = sectionsListStore;
+				categoriestreeview.Model = categoriesListStore;
 				ButtonsSensitive = false;
 			}
 		}
@@ -81,65 +83,68 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		public bool Edited {
-			get {
-				return edited;
-			}
-			set {
-				edited=value;
-			}
+			get;
+			set;
 		}
 
 		private void UpdateModel() {
-			Sections = Sections;
+			Categories = Categories;
 		}
 
-		private void AddSection(int index) {
-			SectionsTimeNode tn;
+		private void AddCategory(int index) {
+			Category tn;
 			HotKey hkey = new HotKey();
 
-			Time start = new Time(10*Time.SECONDS_TO_TIME);
-			Time stop = new Time(10*Time.SECONDS_TO_TIME);
+			Time start = new Time {MSeconds = 10*Time.SECONDS_TO_TIME};
+			Time stop = new Time {MSeconds = 10*Time.SECONDS_TO_TIME};
 
-			tn  = new SectionsTimeNode("New Section",start,stop,hkey,new Color(Byte.MaxValue,Byte.MinValue,Byte.MinValue));
+			tn  = new Category{
+				Name = "New Section",
+				Start = start,
+				Stop = stop,
+				HotKey = hkey,
+				Color =	new Color(Byte.MaxValue,Byte.MinValue,Byte.MinValue)
+			};
 
 			if (project != null) {
-				project.AddSectionAtPos(tn,index);
-			}
-			else {
-				sections.AddSectionAtPos(tn,index);
+				/* Editing a project template */
+				project.Categories.AddCategoryAtPos(index,tn);
+			} else {
+				/* Editing a template in the templates editor */
+				categories.AddCategoryAtPos(index,tn);
 			}
 			UpdateModel();
-			edited = true;
+			Edited = true;
 		}
 
-		private void RemoveSelectedSections() {
+		private void RemoveSelectedCategories() {
 			if (project!= null) {
 				MessageDialog dialog = new MessageDialog((Gtk.Window)this.Toplevel,DialogFlags.Modal,MessageType.Question,
 				                ButtonsType.YesNo,true,
 				                Catalog.GetString("You are about to delete a category and all the plays added to this category. Do you want to proceed?"));
 				if (dialog.Run() == (int)ResponseType.Yes){
 					try {
-						foreach (SectionsTimeNode tNode in selectedSections)
-							project.DeleteSection(sections.SectionsTimeNodes.IndexOf(tNode));
+						foreach (Category cat in selectedCategories)
+							project.Categories.RemoveCategory(cat);
 					} catch {
 						MessagePopup.PopupMessage(this,MessageType.Warning,
 						                          Catalog.GetString("A template needs at least one category"));
 					}
 				}
 				dialog.Destroy();
-				sections=project.Sections;
+				categories = project.Categories;
 			} else {
-				foreach (SectionsTimeNode tNode in selectedSections){
-					if (sections.Count == 1){
+				foreach (Category cat in selectedCategories){
+					if (categories.Count == 1){
 						MessagePopup.PopupMessage(this,MessageType.Warning,
 						                          Catalog.GetString("A template needs at least one category"));
 					} else 
-						sections.RemoveSection(sections.SectionsTimeNodes.IndexOf(tNode));
+						categories.RemoveCategory(cat);
 				}
 			}
 			UpdateModel();
-			edited = true;
-			selectedSections = null;
+			Edited = true;
+			selectedCategories = null;
 			ButtonsSensitive=false;
 		}
 
@@ -154,42 +159,42 @@ namespace LongoMatch.Gui.Component
 
 		private void EditSelectedSection() {
 			EditCategoryDialog dialog = new EditCategoryDialog();
-			dialog.Section = selectedSections[0];
+			dialog.Category = selectedCategories[0];
 			dialog.HotKeysList = hkList;
 			dialog.TransientFor = (Gtk.Window) Toplevel;
 			dialog.Run();
 			dialog.Destroy();
-			edited = true;
+			Edited = true;
 		}
 		
 		private void SaveTemplate(string templateName){
-			SectionsWriter.UpdateTemplate(templateName+".sct", Sections);
+			CategoriesWriter.UpdateTemplate(templateName+".sct", Categories);
 		}
 
 		protected virtual void OnNewAfter(object sender, EventArgs args) {
-			AddSection(sections.SectionsTimeNodes.IndexOf(selectedSections[0])+1);
+			AddCategory(categories.CategoriesList.IndexOf(selectedCategories[0])+1);
 		}
 
 		protected virtual void OnNewBefore(object sender, EventArgs args) {
-			AddSection(sections.SectionsTimeNodes.IndexOf(selectedSections[0]));
+			AddCategory(categories.CategoriesList.IndexOf(selectedCategories[0]));
 		}
 
 		protected virtual void OnRemove(object sender, EventArgs args) {
-			RemoveSelectedSections();
+			RemoveSelectedCategories();
 		}
 
 		protected virtual void OnEdit(object sender, EventArgs args) {
 			EditSelectedSection();
 		}
 
-		protected virtual void OnSectionstreeview1SectionClicked(LongoMatch.TimeNodes.SectionsTimeNode tNode)
+		protected virtual void OnCategoriestreeviewSectionClicked(LongoMatch.TimeNodes.Category tNode)
 		{
 			EditSelectedSection();
 		}
 
-		protected virtual void OnSectionstreeview1SectionsSelected (List<SectionsTimeNode> tNodesList)
+		protected virtual void OnCategoriestreeviewCategoriesSelected (List<Category> tNodesList)
 		{
-			selectedSections = tNodesList;
+			selectedCategories = tNodesList;
 			if (tNodesList.Count == 0)
 				ButtonsSensitive = false;
 			else if (tNodesList.Count == 1){
@@ -205,8 +210,8 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnKeyPressEvent(object o, Gtk.KeyPressEventArgs args)
 		{
-			if (args.Event.Key == Gdk.Key.Delete && selectedSections != null)
-				RemoveSelectedSections();
+			if (args.Event.Key == Gdk.Key.Delete && selectedCategories != null)
+				RemoveSelectedCategories();
 		}
 
 		protected virtual void OnExportbuttonClicked (object sender, System.EventArgs e)
@@ -225,7 +230,7 @@ namespace LongoMatch.Gui.Component
 					                                     MessageType.Question,
 					                                     Gtk.ButtonsType.YesNo,
 					                                     Catalog.GetString("The template already exists. " +
-					                                     	"Do you want to overwrite it ?")
+					                                                       "Do you want to overwrite it ?")
 					                                   );
 					if (md.Run() == (int)ResponseType.Yes)
 						SaveTemplate(dialog.Text);
@@ -235,6 +240,5 @@ namespace LongoMatch.Gui.Component
 			}	
 			dialog.Destroy();
 		}
-		
 	}
 }

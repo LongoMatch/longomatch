@@ -45,14 +45,14 @@ namespace LongoMatch.Gui.Component
 
 		private object locker;
 
-		private int section;
+		private Category category;
 		private Cairo.Color color;
-		private List<MediaTimeNode> list;
+		private List<Play> list;
 
-		private MediaTimeNode candidateTN;
+		private Play candidateTN;
 		private bool candidateStart;
 		private bool movingLimit;
-		private MediaTimeNode selected=null;
+		private Play selected=null;
 
 		private uint lastTime=0;
 		private uint currentFrame;
@@ -61,7 +61,7 @@ namespace LongoMatch.Gui.Component
 		private Menu menu;
 		private MenuItem delete;
 		private int cursorFrame;
-		private Dictionary<MenuItem,MediaTimeNode> dic;
+		private Dictionary<MenuItem,Play> dic;
 
 		private Pango.Layout layout;
 
@@ -71,9 +71,9 @@ namespace LongoMatch.Gui.Component
 		public event TimeNodeDeletedHandler TimeNodeDeleted;
 
 
-		public TimeScale(int section,List<MediaTimeNode> list, uint frames,Gdk.Color color)
+		public TimeScale(Category category, List<Play> list, uint frames)
 		{
-			this.section = section;
+			this.category = category;
 			this.frames = frames;
 			this.list = list;
 			HeightRequest= SECTION_HEIGHT;
@@ -82,7 +82,7 @@ namespace LongoMatch.Gui.Component
 			this.color.A = ALPHA;
 			Events = EventMask.PointerMotionMask | EventMask.ButtonPressMask | EventMask.ButtonReleaseMask ;
 
-			dic = new Dictionary<MenuItem,MediaTimeNode>();
+			dic = new Dictionary<MenuItem,Play>();
 
 			layout =  new Pango.Layout(PangoContext);
 			layout.Wrap = Pango.WrapMode.Char;
@@ -113,7 +113,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public MediaTimeNode SelectedTimeNode {
+		public Play SelectedTimeNode {
 			get {
 				return selected;
 			}
@@ -122,6 +122,14 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		public void AddPlay(Play play) {
+			list.Add(play);
+		}
+
+		public void RemovePlay(Play play) {
+			list.Remove(play);
+		}
+		
 		public void ReDraw() {
 			Gdk.Region region = GdkWindow.ClipRegion;
 			GdkWindow.InvalidateRegion(region,true);
@@ -130,16 +138,16 @@ namespace LongoMatch.Gui.Component
 
 
 		private void SetMenu() {
-			MenuItem newMediaTimeNode;
+			MenuItem newPlay;
 
 			menu = new Menu();
 			delete = new MenuItem(Catalog.GetString("Delete Play"));
-			newMediaTimeNode = new MenuItem(Catalog.GetString("Add New Play"));
+			newPlay = new MenuItem(Catalog.GetString("Add New Play"));
 
-			menu.Append(newMediaTimeNode);
+			menu.Append(newPlay);
 			menu.Append(delete);
 
-			newMediaTimeNode.Activated += new EventHandler(OnNewMediaTimeNode);
+			newPlay.Activated += new EventHandler(OnNewPlay);
 
 			menu.ShowAll();
 		}
@@ -157,7 +165,7 @@ namespace LongoMatch.Gui.Component
 
 					g.Operator = Operator.Over;
 
-					foreach (MediaTimeNode tn in list) {
+					foreach (Play tn in list) {
 						if (tn != selected) {
 							Cairo.Color borderColor = new Cairo.Color(color.R+0.1, color.G+0.1,color.B+0.1, 1);
 							CairoUtils.DrawRoundedRectangle(g,tn.StartFrame/pixelRatio,3,
@@ -207,7 +215,7 @@ namespace LongoMatch.Gui.Component
 
 		private void DrawTimeNodesName() {
 			lock (locker) {
-				foreach (MediaTimeNode tn in list) {
+				foreach (Play tn in list) {
 					layout.Width = Pango.Units.FromPixels((int)(tn.TotalFrames/pixelRatio));
 					layout.SetMarkup(tn.Name);
 					GdkWindow.DrawLayout(Style.TextGC(StateType.Normal),
@@ -222,7 +230,7 @@ namespace LongoMatch.Gui.Component
 			deleteMenu = new Menu();
 			delete.Submenu=deleteMenu;
 			dic.Clear();
-			foreach (MediaTimeNode tn in list) {
+			foreach (Play tn in list) {
 				//We scan all the time Nodes looking for one matching the cursor selectcio
 				//And we add them to the delete menu
 				if (tn.HasFrame(cursorFrame)) {
@@ -239,7 +247,7 @@ namespace LongoMatch.Gui.Component
 		private void ProcessButton1(EventButton evnt) {
 			if (lastTime != evnt.Time) {
 				candidateTN = null;
-				foreach (MediaTimeNode tn in list) {
+				foreach (Play tn in list) {
 					int pos = (int)(evnt.X*pixelRatio);
 					//Moving from the right side
 					if (Math.Abs(pos-tn.StopFrame) < 3*pixelRatio) {
@@ -265,7 +273,7 @@ namespace LongoMatch.Gui.Component
 			}
 			//On Double Click
 			else {
-				foreach (MediaTimeNode tn in list) {
+				foreach (Play tn in list) {
 					int pos = (int)(evnt.X*pixelRatio);
 					if (TimeNodeSelected!= null && tn.HasFrame(pos)) {
 						TimeNodeSelected(tn);
@@ -275,16 +283,16 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		protected void OnNewMediaTimeNode(object obj, EventArgs args) {
+		protected void OnNewPlay(object obj, EventArgs args) {
 			if (NewMarkAtFrameEvent != null)
-				NewMarkAtFrameEvent(section,cursorFrame);
+				NewMarkAtFrameEvent(category,cursorFrame);
 		}
 
 		protected void OnDelete(object obj, EventArgs args) {
-			MediaTimeNode tNode;
+			Play tNode;
 			dic.TryGetValue((MenuItem)obj, out tNode);
 			if (TimeNodeDeleted != null && tNode != null) {
-				TimeNodeDeleted(tNode, section);
+				TimeNodeDeleted(tNode);
 			}
 		}
 

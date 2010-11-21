@@ -1,4 +1,4 @@
-﻿// TimeReferenceWidget.cs
+// TimeReferenceWidget.cs
 //
 //  Copyright (C2007-2009 Andoni Morales Alastruey
 //

@@ -29,17 +29,16 @@ namespace LongoMatch.Gui.Dialog
 	public partial class PlayersSelectionDialog : Gtk.Dialog
 	{
 		TeamTemplate template;
-		Dictionary<int, CheckButton> checkButtonsDict;
+		Dictionary<CheckButton, Player> checkButtonsDict;
 
 		public PlayersSelectionDialog()
 		{
 			this.Build();
-			checkButtonsDict = new Dictionary<int, CheckButton>();
+			checkButtonsDict = new Dictionary<CheckButton, Player>();
 		}
 
 		public void SetPlayersInfo(TeamTemplate template) {
 			CheckButton button;
-			Player player;
 			int playersCount=0;
 
 			if (this.template != null)
@@ -50,14 +49,13 @@ namespace LongoMatch.Gui.Dialog
 			table1.NColumns =(uint)(template.PlayersCount/10);
 			table1.NRows =(uint) 10;
 
-			for (int i=0;i<template.PlayersCount;i++) {
-				player = template.GetPlayer(i);
-				if (player.Discarded)
+			foreach (Player player in template.PlayersList) {
+				if (player.Playing)
 					continue;
 
 				button = new CheckButton();
 				button.Label = player.Number + "-" + player.Name;
-				button.Name = i.ToString();
+				button.Name = playersCount.ToString();
 				button.Show();
 
 				uint row_top =(uint)(playersCount%table1.NRows);
@@ -66,21 +64,21 @@ namespace LongoMatch.Gui.Dialog
 				uint col_right = (uint) col_left+1 ;
 
 				table1.Attach(button,col_left,col_right,row_top,row_bottom);
-				checkButtonsDict.Add(i, button);
+				checkButtonsDict.Add(button, player);
 				playersCount++;
 			}
 		}
 
-		public List<int> PlayersChecked {
+		public List<Player> PlayersChecked {
 			set {
-				foreach (int player in checkButtonsDict.Keys)
-					checkButtonsDict[player].Active = value.Contains(player);
+				foreach (var pair in checkButtonsDict)
+					pair.Key.Active = value.Contains(pair.Value);
 			}
 			get {
-				List<int> playersList = new List<int>();
-				foreach (int player in checkButtonsDict.Keys) {
-					if (checkButtonsDict[player].Active)
-						playersList.Add (player);
+				List<Player> playersList = new List<Player>();
+				foreach (var pair in checkButtonsDict){
+					if (pair.Key.Active)
+						playersList.Add(pair.Value);
 				}
 				return playersList;
 			}

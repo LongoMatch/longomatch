@@ -36,16 +36,16 @@ namespace LongoMatch.Gui.Dialog
 
 		public Project Project {
 			set {
-				projecttemplatewidget.SetProject(value);
+				projecttemplatewidget.Project = value;
 			}
 		}
 
-		public Sections Sections {
+		public Categories Categories {
 			set {
-				projecttemplatewidget.Sections=value;
+				projecttemplatewidget.Categories =value;
 			}
 			get {
-				return projecttemplatewidget.Sections;
+				return projecttemplatewidget.Categories;
 			}
 		}
 		

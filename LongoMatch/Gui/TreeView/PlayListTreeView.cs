@@ -38,8 +38,8 @@ namespace LongoMatch.Gui.Component
 		private MenuItem setRate;
 		private ListStore ls;
 		private PlayList playlist;
-		private PlayListTimeNode loadedTimeNode = null; //The play currently loaded in the player
-		private PlayListTimeNode selectedTimeNode = null; //The play selected in the tree
+		private PlayListPlay loadedTimeNode = null; //The play currently loaded in the player
+		private PlayListPlay selectedTimeNode = null; //The play selected in the tree
 		private TreeIter selectedIter;
 
 		public event ApplyCurrentRateHandler ApplyCurrentRate;
@@ -49,7 +49,7 @@ namespace LongoMatch.Gui.Component
 
 			this.HeadersVisible = false;
 
-			ls = new ListStore(typeof(PlayListTimeNode));
+			ls = new ListStore(typeof(PlayListPlay));
 			this.Model = ls;
 
 			menu = new Menu();
@@ -81,7 +81,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public PlayListTimeNode LoadedPlay {
+		public PlayListPlay LoadedPlay {
 			set {
 				loadedTimeNode = value;
 				this.QueueDraw();
@@ -102,7 +102,7 @@ namespace LongoMatch.Gui.Component
 				if (path!=null) {
 					ListStore list = ((ListStore)Model);
 					Model.GetIter(out selectedIter,path);
-					selectedTimeNode = (PlayListTimeNode)(list.GetValue(selectedIter,0));
+					selectedTimeNode = (PlayListPlay)(list.GetValue(selectedIter,0));
 					setRate.Sensitive = selectedTimeNode == loadedTimeNode;
 					menu.Popup();
 				}
@@ -134,7 +134,7 @@ namespace LongoMatch.Gui.Component
 
 		private void RenderName(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			PlayListTimeNode tNode = (PlayListTimeNode) model.GetValue(iter, 0);
+			PlayListPlay tNode = (PlayListPlay) model.GetValue(iter, 0);
 			(cell as Gtk.CellRendererText).Text = 	Catalog.GetString("Title")+": "+tNode.Name +"\n"+
 			                                       Catalog.GetString("Start")+": "+tNode.Start.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
 			                                       Catalog.GetString("Duration")+": "+tNode.Duration.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+

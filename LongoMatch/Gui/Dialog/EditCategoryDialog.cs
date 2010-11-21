@@ -39,9 +39,9 @@ namespace LongoMatch.Gui.Dialog
 			timenodeproperties2.HotKeyChanged += OnHotKeyChanged;
 		}
 
-		public SectionsTimeNode Section {
+		public Category Category {
 			set {
-				timenodeproperties2.Section = value;
+				timenodeproperties2.Category = value;
 			}
 		}
 
@@ -51,16 +51,16 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 
-		protected virtual void OnHotKeyChanged(HotKey prevHotKey,SectionsTimeNode section) {
-			if (hkList.Contains(section.HotKey)) {
+		protected virtual void OnHotKeyChanged(HotKey prevHotKey, Category category) {
+			if (hkList.Contains(category.HotKey)) {
 				MessagePopup.PopupMessage(this,MessageType.Warning,
 				                          Catalog.GetString("This hotkey is already in use."));
-				section.HotKey=prevHotKey;
-				timenodeproperties2.Section=section; //Update Gui
+				category.HotKey=prevHotKey;
+				timenodeproperties2.Category = category; //Update Gui
 			}
-			else if (section.HotKey.Defined){
+			else if (category.HotKey.Defined){
 				hkList.Remove(prevHotKey);
-				hkList.Add(section.HotKey);
+				hkList.Add(category.HotKey);
 			}
 		}
 	}

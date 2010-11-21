@@ -124,28 +124,29 @@ namespace LongoMatch.Gui
 			
 			/* Update tabs labels */
 			/* FIXME 1.0: Teams should have default names */
-			if (project.VisitorName == "")
+			var desc = project.Description;
+			if (desc.VisitorName == "")
 				visitorteamlabel.Text = Catalog.GetString("Visitor Team");
 			else
-				visitorteamlabel.Text = project.VisitorName;
-			if (project.LocalName == "")
+				visitorteamlabel.Text = desc.VisitorName;
+			if (desc.LocalName == "")
 				localteamlabel.Text = Catalog.GetString("Local Team");
 			else
-				localteamlabel.Text = project.LocalName;
+				localteamlabel.Text = desc.LocalName;
 				
 			if (projectType == ProjectType.FileProject) {
 				// Check if the file associated to the project exists
-				if (!File.Exists (project.File.FilePath)) {
+				if (!File.Exists (desc.File.FilePath)) {
 					MessagePopup.PopupMessage (this, MessageType.Warning,
 					                           Catalog.GetString ("The file associated to this project doesn't exist.") + "\n"
 					                           + Catalog.GetString ("If the location of the file has changed try to edit it with the database manager."));
 					CloseOpenedProject (true);
 					return;
 				}
-				Title = System.IO.Path.GetFileNameWithoutExtension (project.File.FilePath) + 
+				Title = System.IO.Path.GetFileNameWithoutExtension (desc.File.FilePath) + 
 					" - " +	Constants.SOFTWARE_NAME;
 				try {
-					playerbin1.Open (project.File.FilePath);
+					playerbin1.Open (desc.File.FilePath);
 				}
 				catch (GLib.GException ex) {
 					MessagePopup.PopupMessage (this, MessageType.Error,
@@ -185,8 +186,8 @@ namespace LongoMatch.Gui
 			localplayerslisttreewidget.SetTeam(project.LocalTeamTemplate,project.GetLocalTeamModel());
 			visitorplayerslisttreewidget.SetTeam(project.VisitorTeamTemplate,project.GetVisitorTeamModel());
 			tagstreewidget1.Project = project;				
-			buttonswidget1.Sections = project.Sections;
-			hkManager.Sections=project.Sections;
+			buttonswidget1.Categories = project.Categories;
+			hkManager.Categories=project.Categories;
 			KeyPressEvent += hotkeysListener;
 			MakeActionsSensitive(true,projectType);
 			ShowWidgets();
@@ -195,7 +196,7 @@ namespace LongoMatch.Gui
 		private void SaveCaptureProject(){
 			PreviewMediaFile file;
 			Project newProject = openedProject;
-			string filePath = openedProject.File.FilePath;
+			string filePath = openedProject.Description.File.FilePath;
 			
 			MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel, DialogFlags.Modal, MessageType.Info, ButtonsType.None,
 			                                     Catalog.GetString("Loading newly created project..."));
@@ -204,7 +205,7 @@ namespace LongoMatch.Gui
 			/* scan the new file to build a new PreviewMediaFile with all the metadata */
 			try{
 				file = PreviewMediaFile.GetMediaFile(filePath);		
-				openedProject.File = file;
+				openedProject.Description.File = file;
 				MainClass.DB.AddProject(openedProject);
 			} catch (Exception ex){
 				string projectFile = filePath + "-" + DateTime.Now;
@@ -268,7 +269,7 @@ namespace LongoMatch.Gui
 			noteswidget1.Visible = false;			
 			selectedTimeNode = null;
 			MakeActionsSensitive(false, projectType);
-			hkManager.Sections = null;
+			hkManager.Categories = null;
 			KeyPressEvent -= hotkeysListener;
 		}
 
@@ -299,7 +300,7 @@ namespace LongoMatch.Gui
 		}
 
 		private void ClearWidgets() {
-			buttonswidget1.Sections = null;
+			buttonswidget1.Categories = null;
 			treewidget1.Project = null;
 			tagstreewidget1.Clear();
 			timelinewidget1.Project = null;
@@ -395,7 +396,7 @@ namespace LongoMatch.Gui
 				project = opd.SelectedProject;
 			opd.Destroy();
 			if (project != null)
-				SetProject(MainClass.DB.GetProject(project.File), ProjectType.FileProject, new CapturePropertiesStruct());
+				SetProject(MainClass.DB.GetProject(project.File.FilePath), ProjectType.FileProject, new CapturePropertiesStruct());
 		}
 		
 		protected virtual void OnSaveProjectActionActivated(object sender, System.EventArgs e)
@@ -428,7 +429,7 @@ namespace LongoMatch.Gui
 		
 		protected virtual void OnSectionsTemplatesManagerActivated(object sender, System.EventArgs e)
 		{
-			TemplatesManager tManager = new TemplatesManager(TemplatesManager.UseType.SectionsTemplate);
+			TemplatesManager tManager = new TemplatesManager(TemplatesManager.UseType.CategoriesTemplate);
 			tManager.TransientFor = this;
 			tManager.Show();
 		}
@@ -585,7 +586,7 @@ namespace LongoMatch.Gui
 			return ret;
 		}
 
-		protected virtual void OnTimeNodeSelected(LongoMatch.TimeNodes.MediaTimeNode tNode)
+		protected virtual void OnTimeNodeSelected(Play play)
 		{
 			rightvbox.Visible=true;
 		}

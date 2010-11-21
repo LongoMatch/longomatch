@@ -47,7 +47,7 @@ namespace LongoMatch.Gui.Component
 		public event ProgressHandler Progress;
 
 		private PlayerBin player;
-		private PlayListTimeNode plNode;
+		private PlayListPlay plNode;
 		private PlayList playList;
 		private uint timeout;
 		private object lock_node;
@@ -102,14 +102,14 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void Add(PlayListTimeNode plNode) {
+		public void Add(PlayListPlay plNode) {
 			if (playList!=null) {
 				Model.AppendValues(plNode);
 				playList.Add(plNode);
 			}
 		}
 
-		public PlayListTimeNode Next() {
+		public PlayListPlay Next() {
 			if (playList.HasNext()) {
 				plNode = playList.Next();
 				playlisttreeview1.Selection.SelectPath(new TreePath(playList.GetCurrentIndex().ToString()));
@@ -180,7 +180,7 @@ namespace LongoMatch.Gui.Component
 				return true;
 			}
 		}
-		private PlayListTimeNode SelectPlayListNode(TreePath path) {
+		private PlayListPlay SelectPlayListNode(TreePath path) {
 
 			plNode = playList.Select(Int32.Parse(path.ToString()));
 			if (PlayListNodeSelected != null && plNode.Valid) {
@@ -275,7 +275,7 @@ namespace LongoMatch.Gui.Component
 				//FIXME:Create a new instance of the video editor until we fix the audio swith enable/disabled
 				LoadEditor();
 				//videoEditor.ClearList();
-				foreach (PlayListTimeNode segment in playList) {
+				foreach (PlayListPlay segment in playList) {
 					if (segment.Valid)
 						videoEditor.AddSegment(segment.MediaFile.FilePath,
 						                       segment.Start.MSeconds,
@@ -322,7 +322,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		protected virtual void OnApplyRate(PlayListTimeNode plNode) {
+		protected virtual void OnApplyRate(PlayListPlay plNode) {
 			if (ApplyCurrentRate != null)
 				ApplyCurrentRate(plNode);
 		}

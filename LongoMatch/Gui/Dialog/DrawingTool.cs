@@ -29,7 +29,7 @@ namespace LongoMatch.Gui.Dialog
 
 	public partial class DrawingTool : Gtk.Dialog
 	{
-		private MediaTimeNode play;
+		private Play play;
 		private int stopTime;
 
 		public DrawingTool()
@@ -51,7 +51,7 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 
-		public void SetPlay(MediaTimeNode play,int stopTime) {
+		public void SetPlay(Play play,int stopTime) {
 			this.play = play;
 			this.stopTime = stopTime;
 			savetoprojectbutton.Visible = true;
@@ -118,7 +118,7 @@ namespace LongoMatch.Gui.Dialog
 			string tempFile = System.IO.Path.GetTempFileName();
 			drawingwidget1.SaveDrawings(tempFile);
 			Pixbuf frame = new Pixbuf(tempFile);
-			play.KeyFrameDrawing =new Drawing(frame,stopTime);
+			play.KeyFrameDrawing =new Drawing{ Pixbuf=frame, RenderTime = stopTime};
 			drawingwidget1.SaveAll(tempFile);
 			frame.Dispose();
 			play.Miniature = new Pixbuf(tempFile);

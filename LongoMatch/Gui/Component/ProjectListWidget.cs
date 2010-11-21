@@ -91,8 +91,9 @@ namespace LongoMatch.Gui.Component
 			projectsList = projects;
 			projectsList.Sort();
 			projectsListStore.Clear();
-			foreach (ProjectDescription project in projectsList)
+			foreach (ProjectDescription project in projectsList){
 				projectsListStore.AppendValues(project);
+			}
 			filter = new Gtk.TreeModelFilter(projectsListStore, null);
 			filter.VisibleFunc = new Gtk.TreeModelFilterVisibleFunc(FilterTree);
 			treeview.Model = filter;
@@ -116,7 +117,8 @@ namespace LongoMatch.Gui.Component
 			string text;
 			ProjectDescription project = (ProjectDescription) model.GetValue(iter, 0);
 			
-			text = "\n"+"\n"+"\n"+"<b>"+Catalog.GetString("File length")+":</b>  " + project.Length.ToSecondsString();
+			text = "\n"+"\n"+"\n"+"<b>"+Catalog.GetString("File length")+":</b>  " + 
+				(new Time {MSeconds = (int)project.File.Length}).ToSecondsString();
 			text = text +"\n"+"<b>"+Catalog.GetString("Video codec")+":</b>  " + project.VideoCodec;
 			text = text +"\n"+"<b>"+Catalog.GetString("Audio codec")+":</b>  " + project.AudioCodec;
 			text = text +"\n"+"<b>"+Catalog.GetString("Format")+":</b>  " + project.Format;

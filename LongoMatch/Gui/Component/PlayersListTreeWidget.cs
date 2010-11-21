@@ -61,8 +61,9 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void DeleteTimeNode(MediaTimeNode tNode, int player) {
-			if (template != null) {
+		public void RemovePlay(Play tNode, Player player) {
+			/*if (template != null) {
+				
 				TreeIter iter;
 				TreeStore model = (TreeStore)playerstreeview.Model;
 				model.GetIterFromString(out iter, player.ToString());
@@ -70,7 +71,7 @@ namespace LongoMatch.Gui.Component
 				model.IterChildren(out child, iter);
 				// Searching the TimeNode to remove it
 				while (model.IterIsValid(child)) {
-					MediaTimeNode mtn = (MediaTimeNode) model.GetValue(child,0);
+					Play mtn = (Play) model.GetValue(child,0);
 					if (mtn == tNode) {
 						model.Remove(ref child);
 						break;
@@ -80,19 +81,19 @@ namespace LongoMatch.Gui.Component
 					if (prev.Equals(child))
 						break;
 				}
-			}
+			}*/
 		}
 
 
-		public void AddTimeNode(MediaTimeNode tNode,int  playerindex) {
-			if (template != null) {
+		public void AddPlay(Play play, Player player) {
+			/*if (template != null) {
 				TreeIter iter;
 				TreeStore model = (TreeStore)playerstreeview.Model;
 				model.GetIterFromString(out iter, playerindex.ToString());
 				Player player = (Player)model.GetValue(iter,0);
 				if (template.GetPlayer(playerindex) == player)
 					model.AppendValues(iter,tNode);
-			}
+			}*/
 		}
 
 		public void SetTeam(TeamTemplate template, TreeStore model) {
@@ -115,24 +116,24 @@ namespace LongoMatch.Gui.Component
 			template = null;
 		}
 
-		protected virtual void OnTimeNodeSelected(MediaTimeNode tNode) {
+		protected virtual void OnTimeNodeSelected(Play tNode) {
 			if (TimeNodeSelected != null)
 				TimeNodeSelected(tNode);
 		}
 
-		protected virtual void OnSnapshotSeriesEvent(LongoMatch.TimeNodes.MediaTimeNode tNode)
+		protected virtual void OnSnapshotSeriesEvent(Play tNode)
 		{
 			if (SnapshotSeriesEvent != null)
 				SnapshotSeriesEvent(tNode);
 		}
 
-		protected virtual void OnTimeNodeChanged(LongoMatch.TimeNodes.TimeNode tNode, object val)
+		protected virtual void OnTimeNodeChanged(TimeNode tNode, object val)
 		{
 			if (TimeNodeChanged != null)
 				TimeNodeChanged(tNode, val);
 		}
 
-		protected virtual void OnPlayListNodeAdded(LongoMatch.TimeNodes.MediaTimeNode tNode)
+		protected virtual void OnPlayListNodeAdded(Play tNode)
 		{
 			if (PlayListNodeAdded != null)
 				PlayListNodeAdded(tNode);

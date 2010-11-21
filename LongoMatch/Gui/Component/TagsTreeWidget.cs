@@ -57,7 +57,7 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build();
 			filterTags = new List<Tag>();
-			model = new Gtk.ListStore(typeof(MediaTimeNode));			
+			model = new Gtk.ListStore(typeof(Play));			
 			filter = new Gtk.TreeModelFilter(model, null);
 			filter.VisibleFunc = new Gtk.TreeModelFilterVisibleFunc(FilterTree);
 			treeview.Model = filter;
@@ -78,12 +78,12 @@ namespace LongoMatch.Gui.Component
 			filter.Refilter();
 		}
 
-		public void DeletePlay(MediaTimeNode play) {
+		public void DeletePlay(Play play) {
 			if (project != null) {
 				TreeIter iter;
 				model.GetIterFirst(out iter);
 				while (model.IterIsValid(iter)) {
-					MediaTimeNode mtn = (MediaTimeNode) model.GetValue(iter,0);
+					Play mtn = (Play) model.GetValue(iter,0);
 					if (mtn == play) {
 						model.Remove(ref iter);
 						break;
@@ -96,7 +96,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void AddPlay(MediaTimeNode play) {
+		public void AddPlay(Play play) {
 			model.AppendValues(play);
 			filter.Refilter();
 		}
@@ -112,13 +112,12 @@ namespace LongoMatch.Gui.Component
 				project = value;
 				if (project != null) {
 					model.Clear();
-					foreach (List<MediaTimeNode> list in project.GetDataArray()){
-						foreach (MediaTimeNode tNode in list)
-							model.AppendValues(tNode);
-					}
+					foreach (Play play in value.AllPlays())
+						model.AppendValues(play);
+					
 					UpdateTagsList();
-					treeview.LocalTeam = value.LocalName;
-					treeview.VisitorTeam = value.VisitorName;
+					treeview.LocalTeam = project.Description.LocalName;
+					treeview.VisitorTeam = project.Description.VisitorName;
 				}
 			}
 		}
@@ -132,7 +131,7 @@ namespace LongoMatch.Gui.Component
 		public void UpdateTagsList(){
 			(tagscombobox.Model as ListStore).Clear();
 			foreach (Tag tag in project.Tags)
-				tagscombobox.AppendText(tag.Text);
+				tagscombobox.AppendText(tag.Value);
 		}
 		
 		private void AddFilterWidget(Tag tag){
@@ -141,11 +140,11 @@ namespace LongoMatch.Gui.Component
 			Label l;
 			
 			box = new HBox();
-			box.Name = tag.Text;
+			box.Name = tag.Value;
 			b = new Button();
 			b.Image =  new Image(Stetic.IconLoader.LoadIcon(this, "gtk-delete", Gtk.IconSize.Menu));
 			b.Clicked += OnDeleteClicked;
-			l = new Label(tag.Text);
+			l = new Label(tag.Value);
 			l.Justify = Justification.Left;
 			box.PackEnd(b,false,  false, 0);
 			box.PackStart(l,true, true, 0);
@@ -156,7 +155,7 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnDeleteClicked (object o, System.EventArgs e){
 			Widget parent = (o as Widget).Parent;
 		    tagscombobox.AppendText(parent.Name);
-			filterTags.Remove(new Tag(parent.Name));
+			filterTags.Remove(new Tag{Value = parent.Name});
 			filter.Refilter();
 			tagsvbox.Remove(parent);
 		}
@@ -167,7 +166,7 @@ namespace LongoMatch.Gui.Component
 			if (text == null || text == "")
 				return;
 			
-			Tag tag = new Tag(text);
+			Tag tag = new Tag{ Value = text};
 			if (!filterTags.Contains(tag)){
 				filterTags.Add(tag);
 				tagscombobox.RemoveText(tagscombobox.Active);
@@ -187,12 +186,12 @@ namespace LongoMatch.Gui.Component
 		
 		private bool FilterTree(Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			MediaTimeNode tNode;
+			Play tNode;
 			
 			if (filterTags.Count == 0)
 				return true;
 			
-			tNode = model.GetValue(iter, 0) as MediaTimeNode;
+			tNode = model.GetValue(iter, 0) as Play;
 
 			if (tNode == null)
 				return true;
@@ -217,18 +216,18 @@ namespace LongoMatch.Gui.Component
 				TimeNodeChanged(tNode,val);
 		}
 
-		protected virtual void OnTimeNodeSelected(MediaTimeNode tNode) {
+		protected virtual void OnTimeNodeSelected(Play tNode) {
 			if (TimeNodeSelected != null)
 				TimeNodeSelected(tNode);
 		}
 
-		protected virtual void OnPlayListNodeAdded(MediaTimeNode tNode)
+		protected virtual void OnPlayListNodeAdded(Play tNode)
 		{
 			if (PlayListNodeAdded != null)
 				PlayListNodeAdded(tNode);
 		}
 
-		protected virtual void OnSnapshotSeriesEvent(LongoMatch.TimeNodes.MediaTimeNode tNode)
+		protected virtual void OnSnapshotSeriesEvent(LongoMatch.TimeNodes.Play tNode)
 		{
 			if (SnapshotSeriesEvent != null)
 				SnapshotSeriesEvent(tNode);
