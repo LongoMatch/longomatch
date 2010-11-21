@@ -159,9 +159,9 @@ namespace LongoMatch
 				md.Icon=Stetic.IconLoader.LoadIcon(md, "longomatch", Gtk.IconSize.Dialog);
 				if (md.Run()==(int)ResponseType.Yes) {
 					md.Destroy();
-					Migrator migrator = new Migrator(homeDirectory);
-					migrator.Run();
-					migrator.Destroy();
+					//Migrator migrator = new Migrator(homeDirectory);
+					//migrator.Run();
+					//migrator.Destroy();
 				}
 				else
 					md.Destroy();
