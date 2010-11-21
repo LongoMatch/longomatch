@@ -28,6 +28,7 @@ namespace LongoMatch.DB
 	/// I'm used like a presentation card for projects. I speed up the retrieval
 	/// from the database be using only the field required to describe a project
 	/// </summary>
+	[Serializable]
 	public class ProjectDescription :  IComparable
 	{
 		

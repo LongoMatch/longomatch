@@ -42,6 +42,22 @@ namespace LongoMatch.TimeNodes
 		public Category (){
 			_UUID = System.Guid.NewGuid();
 		}
+		// this constructor is automatically called during deserialization
+		public Category(SerializationInfo info, StreamingContext context) {
+			_UUID = (Guid)info.GetValue("uuid", typeof(Guid));
+			Name = info.GetString("name");
+			Start = (Time)info.GetValue("start", typeof(Time));
+			Stop = (Time)info.GetValue("stop", typeof(Time));
+			HotKey = (HotKey)info.GetValue("hotkey", typeof(HotKey));
+			Position = info.GetInt32("position");
+			SortMethod = (SortMethodType)info.GetValue("sort_method", typeof(SortMethodType));
+			// read 'red', 'blue' and 'green' values and convert it to Gdk.Color
+			Color c = new Color();
+			c.Red = (ushort)info.GetValue("red", typeof(ushort));
+			c.Green = (ushort)info.GetValue("green", typeof(ushort));
+			c.Blue = (ushort)info.GetValue("blue", typeof(ushort));
+			Color = c;
+		}
 		#region  Properties
 		
 		/// <summary>
@@ -119,7 +135,6 @@ namespace LongoMatch.TimeNodes
 		public void GetObjectData(SerializationInfo info, StreamingContext context) {
 			info.AddValue("uuid", UUID);
 			info.AddValue("name", Name);
-			info.AddValue("name", Name);
 			info.AddValue("start", Start);
 			info.AddValue("stop", Stop);
 			info.AddValue("hotkey", HotKey);
@@ -127,6 +142,7 @@ namespace LongoMatch.TimeNodes
 			info.AddValue("red", Color.Red);
 			info.AddValue("green", Color.Green);
 			info.AddValue("blue", Color.Blue);
+			info.AddValue("sort_method", SortMethod);
 		}
 		#endregion	
 	}
