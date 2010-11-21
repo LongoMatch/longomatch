@@ -36,7 +36,7 @@ namespace LongoMatch.Handlers
 		private uint timeout;
 		private bool inKeyFrame;
 		private bool canStop;
-		private MediaTimeNode loadedPlay;
+		private Play loadedPlay;
 
 		public VideoDrawingsManager(PlayerBin player)
 		{
@@ -48,7 +48,7 @@ namespace LongoMatch.Handlers
 			StopClock();
 		}
 
-		public MediaTimeNode Play {
+		public Play Play {
 			set {
 				loadedPlay = value;
 				inKeyFrame = false;
@@ -90,7 +90,7 @@ namespace LongoMatch.Handlers
 		}
 
 		private int NextStopTime() {
-			return Drawing.StopTime;
+			return Drawing.RenderTime;
 		}
 
 		private void PrintDrawing() {
@@ -98,7 +98,7 @@ namespace LongoMatch.Handlers
 			Pixbuf drawing = null;
 
 			player.Pause();
-			player.SeekInSegment(Drawing.StopTime);
+			player.SeekInSegment(Drawing.RenderTime);
 			while (frame == null)
 				frame = player.CurrentFrame;
 			player.LogoPixbuf = frame;
@@ -145,7 +145,7 @@ namespace LongoMatch.Handlers
 				ResetPlayerWindow();
 				inKeyFrame = false;
 			}
-			canStop = time < Drawing.StopTime;
+			canStop = time < Drawing.RenderTime;
 			if (canStop)
 				StartClock();
 			else StopClock();
