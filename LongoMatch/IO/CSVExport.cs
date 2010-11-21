@@ -46,8 +46,8 @@ namespace LongoMatch.IO
 
 		#region Public methods
 		public void WriteToFile() {
-			List<List<MediaTimeNode>> list;
-			Dictionary<Tag, List<MediaTimeNode>> tagsDic;
+			/*List<List<Play>> list;
+			Dictionary<Tag, List<Play>> tagsDic;
 			List<Player> localPlayersList;
 			List<Player> visitorPlayersList;
 			Dictionary<Player, List<object[]>> localPlayersDic;
@@ -60,9 +60,9 @@ namespace LongoMatch.IO
 			list = project.GetDataArray();
 			sectionNames = project.GetSectionsNames();
 			
-			tagsDic = new Dictionary<Tag, List<MediaTimeNode>>();
+			tagsDic = new Dictionary<Tag, List<Play>>();
 			foreach (Tag tag in project.Tags)
-				tagsDic.Add(tag, new List<MediaTimeNode>());
+				tagsDic.Add(tag, new List<Play>());
 			
 			localPlayersList = project.LocalTeamTemplate.GetPlayersList();
 			localPlayersDic = new Dictionary<Player, List<object[]>>();
@@ -85,7 +85,7 @@ namespace LongoMatch.IO
 			             Catalog.GetString("Duration")));
 			for (int i=0; i<list.Count; i++) {
 				string sectionName = sectionNames[i];
-				foreach (MediaTimeNode tn in list[i]) {
+				foreach (Play tn in list[i]) {
 					// Parse Play's tags
 					foreach (Tag t in tn.Tags)
 						tagsDic[t].Add(tn);
@@ -123,13 +123,13 @@ namespace LongoMatch.IO
 			
 			tx.Close();
 			
-			MessagePopup.PopupMessage(null, MessageType.Info, Catalog.GetString("CSV exported successfully."));			
+			MessagePopup.PopupMessage(null, MessageType.Info, Catalog.GetString("CSV exported successfully."));	*/		
 		}
 		#endregion
 		
 		#region Private Methods
 		
-		private void WriteCatagoriesData(TextWriter tx, Dictionary<Tag, List<MediaTimeNode>> tagsDic){
+		private void WriteCatagoriesData(TextWriter tx, Dictionary<Tag, List<Play>> tagsDic){
 			// Write Tags table
 			tx.WriteLine(String.Format("{0};{1};{2};{3};{4};{5}",
 			             Catalog.GetString("Tag"),
@@ -138,11 +138,11 @@ namespace LongoMatch.IO
 			             Catalog.GetString("StartTime"),
 			             Catalog.GetString("StopTime"),
 			             Catalog.GetString("Duration")));
-			foreach (KeyValuePair<Tag,List<MediaTimeNode>> pair in tagsDic){
+			foreach (KeyValuePair<Tag,List<Play>> pair in tagsDic){
 				if (pair.Value.Count == 0)
 					continue;				
-				foreach (MediaTimeNode tn in pair.Value) {
-					tx.WriteLine("\""+pair.Key.Text+"\";\""+
+				foreach (Play tn in pair.Value) {
+					tx.WriteLine("\""+pair.Key.Value+"\";\""+
 					             tn.Name+"\";\""+
 					             tn.Team+"\";\""+
 					             tn.Start.ToMSecondsString()+"\";\""+
@@ -169,7 +169,7 @@ namespace LongoMatch.IO
 					continue;			
 				foreach (object[] o in pair.Value) {
 					string sectionName = (string)o[0];
-					MediaTimeNode tn = (MediaTimeNode)o[1];
+					Play tn = (Play)o[1];
 					tx.WriteLine("\""+pair.Key.Name+"\";\""+
 					             sectionName+"\";\""+
 					             tn.Name+"\";\""+

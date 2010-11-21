@@ -30,12 +30,12 @@ namespace LongoMatch.IO
 {
 
 
-	public class SectionsReader : XMLReader
+	public class CategoriesReader : XMLReader
 	{
 
 		#region Constructors
 
-		public SectionsReader(string filePath) : base(filePath)
+		public CategoriesReader(string filePath) : base(filePath)
 		{
 		}
 		#endregion
@@ -46,11 +46,11 @@ namespace LongoMatch.IO
 		}
 
 		private Time GetStartTime(int section) {
-			return new Time(GetIntValue("configuration","Start"+(section))*Time.SECONDS_TO_TIME);
+			return new Time {Seconds = GetIntValue("configuration","Start"+(section))};
 		}
 
 		private Time GetStopTime(int section) {
-			return new Time(GetIntValue("configuration","Stop"+(section))*Time.SECONDS_TO_TIME);
+			return new Time {Seconds = GetIntValue("configuration","Stop"+(section))};
 		}
 
 		private Color GetColor(int section) {
@@ -79,21 +79,26 @@ namespace LongoMatch.IO
 		#endregion
 
 		#region Public methods
-		public Sections GetSections() {
-			Sections sections = new Sections();
+		public Categories GetCategories() {
+			Categories categories = new Categories();
 			bool tryNext = true;
 			string name;
-			SectionsTimeNode tn;
+			Category cat;
 			for (int i=1;tryNext;i++) {
 				name = GetName(i);
 				if (name != null) {
-					tn = new SectionsTimeNode(name, GetStartTime(i), GetStopTime(i), GetHotKey(i), GetColor(i));
-					tn.SortMethodString = GetSortMethod(i);
-					sections.AddSection(tn);
+					cat = new Category{
+					                  Name = name,
+					                  Start = GetStartTime(i),
+					                  Stop = GetStopTime(i),
+					                  HotKey = GetHotKey(i), 
+					                  Color  = GetColor(i)};
+					cat.SortMethodString = GetSortMethod(i);
+					categories.AddCategory(cat);
 				}
 				else tryNext=false;
 			}
-			return sections;
+			return categories;
 		}
 		#endregion
 

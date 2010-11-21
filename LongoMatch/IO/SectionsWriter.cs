@@ -31,7 +31,7 @@ namespace LongoMatch.IO
 {
 
 
-	public class SectionsWriter
+	public class CategoriesWriter
 	{
 
 
@@ -73,7 +73,7 @@ namespace LongoMatch.IO
 
 
 
-		public static void UpdateTemplate(string templateName,Sections sections) {
+		public static void UpdateTemplate(string templateName,Categories categories) {
 
 			string fConfig = Path.Combine(MainClass.TemplatesDir(), templateName);
 			XmlDocument configXml = new XmlDocument();
@@ -83,26 +83,21 @@ namespace LongoMatch.IO
 			sb.Append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
 			sb.Append("<configuration>");
 
-			foreach (SectionsTimeNode tn in sections.SectionsTimeNodes) {
-				sb.Append(String.Format("<add key=\"Name{0}\" value=\"{1}\" />",i,tn.Name));
-				sb.Append(String.Format("<add key=\"Start{0}\" value=\"{1}\" />",i,tn.Start.Seconds));
-				sb.Append(String.Format("<add key=\"Stop{0}\" value=\"{1}\" />",i,tn.Stop.Seconds));
-				sb.Append(String.Format("<add key=\"Red{0}\" value=\"{1}\" />",i,tn.Color.Red));
-				sb.Append(String.Format("<add key=\"Green{0}\" value=\"{1}\" />",i,tn.Color.Green));
-				sb.Append(String.Format("<add key=\"Blue{0}\" value=\"{1}\" />",i,tn.Color.Blue));
-				sb.Append(String.Format("<add key=\"Modifier{0}\" value=\"{1}\" />",i,(int)(tn.HotKey.Modifier)));
-				sb.Append(String.Format("<add key=\"Key{0}\" value=\"{1}\" />",i,(int)(tn.HotKey.Key)));
-				sb.Append(String.Format("<add key=\"SortMethod{0}\" value=\"{1}\" />",i,tn.SortMethodString));
+			foreach (var cat in categories.CategoriesList) {
+				sb.Append(String.Format("<add key=\"Name{0}\" value=\"{1}\" />",i,cat.Name));
+				sb.Append(String.Format("<add key=\"Start{0}\" value=\"{1}\" />",i,cat.Start.Seconds));
+				sb.Append(String.Format("<add key=\"Stop{0}\" value=\"{1}\" />",i,cat.Stop.Seconds));
+				sb.Append(String.Format("<add key=\"Red{0}\" value=\"{1}\" />",i,cat.Color.Red));
+				sb.Append(String.Format("<add key=\"Green{0}\" value=\"{1}\" />",i,cat.Color.Green));
+				sb.Append(String.Format("<add key=\"Blue{0}\" value=\"{1}\" />",i,cat.Color.Blue));
+				sb.Append(String.Format("<add key=\"Modifier{0}\" value=\"{1}\" />",i,(int)(cat.HotKey.Modifier)));
+				sb.Append(String.Format("<add key=\"Key{0}\" value=\"{1}\" />",i,(int)(cat.HotKey.Key)));
+				sb.Append(String.Format("<add key=\"SortMethod{0}\" value=\"{1}\" />",i,cat.SortMethodString));
 				i++;
 			}
 			sb.Append("</configuration>");
 			configXml.LoadXml(sb.ToString());
 			configXml.Save(fConfig);
 		}
-
-
-
-
-
 	}
 }
