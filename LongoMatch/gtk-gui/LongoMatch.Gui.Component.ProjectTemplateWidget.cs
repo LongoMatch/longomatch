@@ -8,7 +8,7 @@ namespace LongoMatch.Gui.Component
 
 		private global::Gtk.ScrolledWindow scrolledwindow2;
 
-		private global::LongoMatch.Gui.Component.CategoriesTreeView sectionstreeview1;
+		private global::LongoMatch.Gui.Component.CategoriesTreeView categoriestreeview;
 
 		private global::Gtk.VBox vbox2;
 
@@ -40,10 +40,10 @@ namespace LongoMatch.Gui.Component
 			this.scrolledwindow2.Name = "scrolledwindow2";
 			this.scrolledwindow2.ShadowType = ((global::Gtk.ShadowType)(1));
 			// Container child scrolledwindow2.Gtk.Container+ContainerChild
-			this.sectionstreeview1 = new global::LongoMatch.Gui.Component.CategoriesTreeView ();
-			this.sectionstreeview1.CanFocus = true;
-			this.sectionstreeview1.Name = "sectionstreeview1";
-			this.scrolledwindow2.Add (this.sectionstreeview1);
+			this.categoriestreeview = new global::LongoMatch.Gui.Component.CategoriesTreeView ();
+			this.categoriestreeview.CanFocus = true;
+			this.categoriestreeview.Name = "categoriestreeview";
+			this.scrolledwindow2.Add (this.categoriestreeview);
 			this.hbox1.Add (this.scrolledwindow2);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.scrolledwindow2]));
 			w2.Position = 0;
@@ -212,8 +212,6 @@ namespace LongoMatch.Gui.Component
 			this.exportbutton.Hide ();
 			this.Show ();
 			this.KeyPressEvent += new global::Gtk.KeyPressEventHandler (this.OnKeyPressEvent);
-			this.sectionstreeview1.SectionClicked += new global::LongoMatch.Handlers.SectionHandler (this.OnSectionstreeview1SectionClicked);
-			this.sectionstreeview1.SectionsSelected += new global::LongoMatch.Handlers.SectionsHandler (this.OnSectionstreeview1SectionsSelected);
 			this.newprevbutton.Clicked += new global::System.EventHandler (this.OnNewBefore);
 			this.newafterbutton.Clicked += new global::System.EventHandler (this.OnNewAfter);
 			this.newafterbutton.Activated += new global::System.EventHandler (this.OnNewBefore);

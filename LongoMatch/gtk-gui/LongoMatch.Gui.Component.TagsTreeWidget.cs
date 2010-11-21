@@ -40,6 +40,7 @@ namespace LongoMatch.Gui.Component
 			this.treeview = new global::LongoMatch.Gui.Component.TagsTreeView ();
 			this.treeview.CanFocus = true;
 			this.treeview.Name = "treeview";
+			this.treeview.Colors = false;
 			this.GtkScrolledWindow.Add (this.treeview);
 			this.vbox1.Add (this.GtkScrolledWindow);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.GtkScrolledWindow]));

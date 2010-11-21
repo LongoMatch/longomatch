@@ -187,7 +187,7 @@ namespace LongoMatch.Gui
 			this.ImportProjectAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Import Project");
 			w1.Add (this.ImportProjectAction, "<Control>i");
 			this.FreeCaptureModeAction = new global::Gtk.RadioAction ("FreeCaptureModeAction", global::Mono.Unix.Catalog.GetString ("Free Capture Mode"), null, null, 0);
-			this.FreeCaptureModeAction.Group = this.CaptureModeAction.Group;
+			this.FreeCaptureModeAction.Group = this.AnalyzeModeAction.Group;
 			this.FreeCaptureModeAction.Sensitive = false;
 			this.FreeCaptureModeAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Free Capture Mode");
 			w1.Add (this.FreeCaptureModeAction, "<Control>f");
