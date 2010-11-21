@@ -31,21 +31,17 @@
     <File subtype="Code" buildaction="Compile" name="Gui/MainWindow.cs" />
     <File subtype="Directory" buildaction="Compile" name="DB" />
     <File subtype="Code" buildaction="Compile" name="DB/Project.cs" />
-    <File subtype="Code" buildaction="Compile" name="DB/Sections.cs" />
     <File subtype="Code" buildaction="Compile" name="DB/DataBase.cs" />
     <File subtype="Directory" buildaction="Compile" name="Handlers" />
     <File subtype="Code" buildaction="Compile" name="Handlers/Handlers.cs" />
     <File subtype="Directory" buildaction="Compile" name="IO" />
-    <File subtype="Code" buildaction="Compile" name="IO/SectionsWriter.cs" />
-    <File subtype="Code" buildaction="Compile" name="IO/SectionsReader.cs" />
-    <File subtype="Code" buildaction="Compile" name="IO/XMLReader.cs" />
     <File subtype="Directory" buildaction="Compile" name="Time" />
-    <File subtype="Code" buildaction="Compile" name="Time/MediaTimeNode.cs" />
+    <File subtype="Code" buildaction="Compile" name="Time/Play.cs" />
     <File subtype="Code" buildaction="Compile" name="Time/PixbufTimeNode.cs" />
-    <File subtype="Code" buildaction="Compile" name="Time/SectionsTimeNode.cs" />
+    <File subtype="Code" buildaction="Compile" name="Time/Category.cs" />
     <File subtype="Code" buildaction="Compile" name="Time/TimeNode.cs" />
     <File subtype="Code" buildaction="Compile" name="Time/Time.cs" />
-    <File subtype="Code" buildaction="Compile" name="Time/PlayListTimeNode.cs" />
+    <File subtype="Code" buildaction="Compile" name="Time/PlayListPlay.cs" />
     <File subtype="Code" buildaction="EmbedAsResource" name="images/longomatch.png" DeployService.RelativeDeployPath="images/longomatch.png" DeployService.TargetDirectoryId="CommonApplicationDataRoot" />
     <File subtype="Directory" buildaction="Compile" name="images" />
     <File subtype="Code" name="images/background.png" DeployService.Deploy="True" DeployService.RelativeDeployPath="images/background.png" DeployService.TargetDirectoryId="CommonApplicationDataRoot" buildaction="FileCopy" />
@@ -63,22 +59,6 @@
     <File subtype="Code" buildaction="Compile" name="Time/Player.cs" />
     <File subtype="Code" buildaction="Nothing" name="images/logo_48x48.png" DeployService.RelativeDeployPath="icons/hicolor/48x48/longomatch.png" DeployService.TargetDirectoryId="CommonApplicationDataRoot" />
     <File subtype="Code" buildaction="Compile" name="DB/TagsTemplate.cs" />
-    <File subtype="Code" buildaction="Compile" name="Compat/0.0/DatabaseMigrator.cs" />
-    <File subtype="Code" buildaction="Compile" name="Compat/0.0/PlayListMigrator.cs" />
-    <File subtype="Code" buildaction="Compile" name="Compat/0.0/DB/DataBase.cs" />
-    <File subtype="Code" buildaction="Compile" name="Compat/0.0/DB/MediaFile.cs" />
-    <File subtype="Code" buildaction="Compile" name="Compat/0.0/DB/Project.cs" />
-    <File subtype="Code" buildaction="Compile" name="Compat/0.0/DB/Sections.cs" />
-    <File subtype="Code" buildaction="Compile" name="Compat/0.0/Playlist/IPlayList.cs" />
-    <File subtype="Code" buildaction="Compile" name="Compat/0.0/Playlist/PlayList.cs" />
-    <File subtype="Code" buildaction="Compile" name="Compat/0.0/Time/MediaTimeNode.cs" />
-    <File subtype="Code" buildaction="Compile" name="Compat/0.0/Time/PixbufTimeNode.cs" />
-    <File subtype="Code" buildaction="Compile" name="Compat/0.0/Time/PlayListTimeNode.cs" />
-    <File subtype="Code" buildaction="Compile" name="Compat/0.0/Time/SectionsTimeNode.cs" />
-    <File subtype="Code" buildaction="Compile" name="Compat/0.0/Time/Time.cs" />
-    <File subtype="Code" buildaction="Compile" name="Compat/0.0/Time/TimeNode.cs" />
-    <File subtype="Code" buildaction="Compile" name="Compat/0.0/TemplatesMigrator.cs" />
-    <File subtype="Code" buildaction="Compile" name="Compat/0.0/IO/SectionsReader.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/TransparentDrawingArea.cs" />
     <File subtype="Code" buildaction="Compile" name="Handlers/DrawingManager.cs" />
     <File subtype="Directory" buildaction="Compile" name="Gui/Dialog" />
@@ -115,7 +95,6 @@
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/TemplatesEditor.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/ProjectTemplateWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/TreeView/CategoriesTreeView.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/Migrator.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/TimeLineWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/TimeScale.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/VideoEditionProperties.cs" />
@@ -179,7 +158,6 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.TemplatesManager.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlayersListTreeWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.Migrator.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.Win32CalendarDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs" />
@@ -198,6 +176,11 @@
     <File subtype="Code" buildaction="Compile" name="Gui/Component/CategoriesScale.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Cairo.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/GStreamer.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Compat" />
+    <File subtype="Code" buildaction="Compile" name="IO/XMLReader.cs" />
+    <File subtype="Code" buildaction="Compile" name="IO/SectionsReader.cs" />
+    <File subtype="Code" buildaction="Compile" name="IO/SectionsWriter.cs" />
+    <File subtype="Code" buildaction="Compile" name="DB/CategoriesTemplate.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
@@ -211,6 +194,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="../../../../../usr/lib/mono/gac/Db4objects.Db4o/7.4.121.14026__6199cd4f203aa8eb/Db4objects.Db4o.dll" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   </References>
   <LanguageParameters StartupObject="LongoMatch.MainClass" ApplicationIcon="." CodePage="65001" ctype="CSharpProjectParameters" />
 </Project>
