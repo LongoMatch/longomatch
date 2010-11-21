@@ -34,7 +34,7 @@ namespace LongoMatch.Playlist
 	public class PlayList: IPlayList
 	{
 
-		private  List<PlayListTimeNode> list;
+		private  List<PlayListPlay> list;
 		private static XmlSerializer ser;
 		private string filename = null;
 		private int indexSelection = 0;
@@ -42,18 +42,18 @@ namespace LongoMatch.Playlist
 
 		#region Constructors
 		public PlayList() {
-			ser = new XmlSerializer(typeof(List<PlayListTimeNode>),new Type[] {typeof(PlayListTimeNode)});
-			list = new List<PlayListTimeNode>();
+			ser = new XmlSerializer(typeof(List<PlayListPlay>),new Type[] {typeof(PlayListPlay)});
+			list = new List<PlayListPlay>();
 			version = new Version(1,0);
 		}
 
 		public PlayList(string file)
 		{
-			ser = new XmlSerializer(typeof(List<PlayListTimeNode>),new Type[] {typeof(PlayListTimeNode)});
+			ser = new XmlSerializer(typeof(List<PlayListPlay>),new Type[] {typeof(PlayListPlay)});
 
 			//For new Play List
 			if (!System.IO.File.Exists(file)) {
-				list = new List<PlayListTimeNode>();
+				list = new List<PlayListPlay>();
 				filename = file;
 			}
 			else
@@ -90,13 +90,13 @@ namespace LongoMatch.Playlist
 			using(FileStream strm = new FileStream(file, FileMode.Open, FileAccess.Read))
 			{
 				try {
-					list = ser.Deserialize(strm) as List<PlayListTimeNode>;
+					list = ser.Deserialize(strm) as List<PlayListPlay>;
 				}
 				catch {
 					throw new Exception(Catalog.GetString("The file you are trying to load is not a valid playlist"));
 				}
 			}
-			foreach (PlayListTimeNode plNode in list) {
+			foreach (PlayListPlay plNode in list) {
 				plNode.Valid = System.IO.File.Exists(plNode.MediaFile.FilePath);
 			}
 			filename = file;
@@ -122,30 +122,30 @@ namespace LongoMatch.Playlist
 			return indexSelection;
 		}
 
-		public PlayListTimeNode Next() {
+		public PlayListPlay Next() {
 			if (HasNext())
 				indexSelection++;
 			return list[indexSelection];
 		}
 
-		public PlayListTimeNode Prev() {
+		public PlayListPlay Prev() {
 			if (HasPrev())
 				indexSelection--;
 			return list[indexSelection];
 		}
 
-		public void Add(PlayListTimeNode plNode) {
+		public void Add(PlayListPlay plNode) {
 			list.Add(plNode);
 		}
 
-		public void Remove(PlayListTimeNode plNode) {
+		public void Remove(PlayListPlay plNode) {
 
 			list.Remove(plNode);
 			if (GetCurrentIndex() >= list.Count)
 				indexSelection --;
 		}
 
-		public PlayListTimeNode Select(int index) {
+		public PlayListPlay Select(int index) {
 			indexSelection = index;
 			return list[index];
 		}
@@ -159,8 +159,8 @@ namespace LongoMatch.Playlist
 		}
 
 		public ListStore GetModel() {
-			Gtk.ListStore listStore = new ListStore(typeof(PlayListTimeNode));
-			foreach (PlayListTimeNode plNode in list) {
+			Gtk.ListStore listStore = new ListStore(typeof(PlayListPlay));
+			foreach (PlayListPlay plNode in list) {
 				listStore.AppendValues(plNode);
 			}
 			return listStore;
@@ -172,7 +172,7 @@ namespace LongoMatch.Playlist
 			listStore.GetIterFirst(out iter);
 			list.Clear();
 			while (listStore.IterIsValid(iter)) {
-				list.Add(listStore.GetValue(iter, 0) as PlayListTimeNode);
+				list.Add(listStore.GetValue(iter, 0) as PlayListPlay);
 				listStore.IterNext(ref iter);
 			}
 		}
