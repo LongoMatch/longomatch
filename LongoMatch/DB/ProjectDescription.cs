@@ -78,11 +78,6 @@ namespace LongoMatch.DB
 			set;
 		}
 
-		public Pixbuf Preview {
-			get;
-			set;
-		}
-		
 		public String VideoCodec {
 			get;
 			set;
