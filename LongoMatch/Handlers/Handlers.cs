@@ -30,33 +30,33 @@ namespace LongoMatch.Handlers
 
 	/*Tagging Events*/
 	//A Play was selected
-	public delegate void TimeNodeSelectedHandler(MediaTimeNode tNode);
+	public delegate void TimeNodeSelectedHandler(Play play);
 	//A new play needs to be create for a specific category at the current play time
-	public delegate void NewMarkEventHandler(int i);
+	public delegate void NewMarkEventHandler(Category category);
 	//The start time of a new play has been signaled
 	public delegate void NewMarkStartHandler();
 	//The stop of a nes play has been signaled
-	public delegate void NewMarkStopHandler(int i);
+	public delegate void NewMarkStopHandler(Category category);
 	//Several plays needs to be created for a several categories
 	public delegate void NewMarksEventHandler(List<int> sections);
 	//A need play needs to be created at precise frame
-	public delegate void NewMarkAtFrameEventHandler(int i,int frame);
+	public delegate void NewMarkAtFrameEventHandler(Category category,int frame);
 	//A play was edited
 	public delegate void TimeNodeChangedHandler(TimeNode tNode, object val);
 	//A play was deleted
-	public delegate void TimeNodeDeletedHandler(MediaTimeNode tNode,int section);
+	public delegate void TimeNodeDeletedHandler(Play play);
 	//Players needs to be tagged
-	public delegate void PlayersTaggedHandler(MediaTimeNode tNode, Team team);
+	public delegate void PlayersTaggedHandler(Play play, Team team);
 	//Tag a play
-	public delegate void TagPlayHandler(MediaTimeNode tNode);
+	public delegate void TagPlayHandler(Play play);
 
 	/*Playlist Events*/
 	//Add the a play to the opened playlist
-	public delegate void PlayListNodeAddedHandler(MediaTimeNode tNode);
+	public delegate void PlayListNodeAddedHandler(Play play);
 	//A play list element is selected
-	public delegate void PlayListNodeSelectedHandler(PlayListTimeNode plNode, bool hasNext);
+	public delegate void PlayListNodeSelectedHandler(PlayListPlay play, bool hasNext);
 	//Save current playrate to a play list element
-	public delegate void ApplyCurrentRateHandler(PlayListTimeNode plNode);
+	public delegate void ApplyCurrentRateHandler(PlayListPlay play);
 
 	//Drawing events
 	//Draw tool changed
@@ -78,13 +78,13 @@ namespace LongoMatch.Handlers
 	//A date was selected
 	public delegate void DateSelectedHandler(DateTime selectedDate);
 	//Create snapshots for a play
-	public delegate void SnapshotSeriesHandler(MediaTimeNode tNode);
+	public delegate void SnapshotSeriesHandler(Play tNode);
 	//A new version of the software exists
 	public delegate void NewVersionHandler(Version version, string URL);
 
 	
-	public delegate void SectionHandler(SectionsTimeNode tNode);
-	public delegate void SectionsHandler(List<SectionsTimeNode> tNodesList);
+	public delegate void CategoryHandler(Category category);
+	public delegate void CategoriesHandler(List<Category> categoriesList);
 	
 	public delegate void ProjectsSelectedHandler(List<ProjectDescription> projects);
 }
