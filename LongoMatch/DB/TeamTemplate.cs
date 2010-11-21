@@ -22,6 +22,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using LongoMatch.TimeNodes;
+using LongoMatch.Common;
 
 namespace LongoMatch.DB
 {
@@ -34,6 +35,17 @@ namespace LongoMatch.DB
 		public TeamTemplate() {
 			playersList = new List<Player>();
 		}
+		
+		public String TeamName{
+			get;
+			set;
+		}
+
+		public List<Player> PlayersList{
+			get {
+				return playersList;
+			}
+		}
 
 		public void Clear() {
 			playersList.Clear();
@@ -45,29 +57,8 @@ namespace LongoMatch.DB
 			}
 		}
 
-		public void CreateDefaultTemplate(int playersCount) {
-			for (int i=0; i<playersCount;i++) {
-				playersList.Add(new Player("Player "+i, new DateTime(),"", 0,0,"",i,null, false));
-			}
-		}
-
 		public void AddPlayer(Player player) {
 			playersList.Add(player);
-		}
-
-		public void SetPlayersList(List<Player> playersList) {
-			this.playersList = playersList;
-		}
-
-		public Player GetPlayer(int index) {
-			if (index >= PlayersCount)
-				throw new Exception(String.Format("The actual team template doesn't have so many players. Requesting player {0} but players count is {1}",
-				                                  index, PlayersCount));
-			return playersList[index];
-		}
-
-		public List<Player> GetPlayersList() {
-			return playersList;
 		}
 
 		public void Save(string filepath) {
@@ -89,6 +80,21 @@ namespace LongoMatch.DB
 			TeamTemplate defaultTemplate = new TeamTemplate();
 			defaultTemplate.CreateDefaultTemplate(playersCount);
 			return defaultTemplate;
+		}
+		
+		private void CreateDefaultTemplate(int playersCount) {
+			for (int i=0; i<playersCount;i++) {
+				playersList.Add(new Player{
+					Name = "Player " + i,
+					Birthday = new DateTime(),
+					Height = 1.80f,
+					Weight = 80,
+					Number = 0,
+					Position = "",
+					Photo = null,
+					Playing = true,
+				});
+			}
 		}
 	}
 }
