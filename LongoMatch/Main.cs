@@ -135,13 +135,12 @@ namespace LongoMatch
 			string fConfig;
 			fConfig = System.IO.Path.Combine(TemplatesDir(),"default.sct");
 			if (!System.IO.File.Exists(fConfig)) {
-				SectionsWriter.CreateNewTemplate("default.sct");
+				CategoriesWriter.CreateNewTemplate("default.sct");
 			}
 
 			fConfig = System.IO.Path.Combine(TemplatesDir(),"default.tem");
 			if (!System.IO.File.Exists(fConfig)) {
-				TeamTemplate tt = new TeamTemplate();
-				tt.CreateDefaultTemplate(20);
+				TeamTemplate tt = TeamTemplate.DefautlTemplate(20);
 				tt.Save(fConfig);
 			}
 		}
