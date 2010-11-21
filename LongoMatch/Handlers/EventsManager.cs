@@ -156,34 +156,33 @@ namespace LongoMatch
 			player.DrawFrame += OnDrawFrame;
 		}
 
-		private void ProcessNewMarkEvent(int section,Time pos) {
+		private void ProcessNewMarkEvent(Category category,Time pos) {
 			Time length, startTime, stopTime, start, stop, fStart, fStop;	
 			
 			if (player == null || openedProject == null)
 				return;
 						
 			//Get the default lead and lag time for the section
-			startTime = openedProject.Sections.GetStartTime(section);
-			stopTime = openedProject.Sections.GetStopTime(section);
+			startTime = category.Start;
+			stopTime = category.Stop;
 			// Calculating borders of the segment depnding
 			start = pos - startTime;
 			stop = pos + stopTime;
-			fStart = (start < new Time(0)) ? new Time(0) : start;
+			fStart = (start < new Time {MSeconds =0}) ? new Time {MSeconds = 0} : start;
 			
 			if (projectType == ProjectType.FakeCaptureProject || 
 			    projectType == ProjectType.CaptureProject){
 				fStop = stop;					
 			}
 			else {
-				length = new Time((int)player.StreamLength);
+				length = new Time {MSeconds = (int)player.StreamLength};
 				fStop = (stop > length) ? length: stop;
 			}	
-			AddNewPlay(fStart, fStop, section);
+			AddNewPlay(fStart, fStop, category);
 		}
 		
-		private void AddNewPlay(Time start, Time stop, int section){
+		private void AddNewPlay(Time start, Time stop, Category category){
 			Pixbuf miniature;
-			MediaTimeNode tn;
 		
 			if (projectType == ProjectType.CaptureProject){
 				if (!capturer.Capturing){
@@ -198,9 +197,10 @@ namespace LongoMatch
 				miniature = player.CurrentMiniatureFrame;
 			else 
 				miniature = null;
-			tn = openedProject.AddTimeNode(section, start, stop,miniature);
-			treewidget.AddPlay(tn,section);
-			tagsTreeWidget.AddPlay(tn);
+			var play = openedProject.AddPlay(category, start, stop,miniature);
+			treewidget.AddPlay(play);
+			tagsTreeWidget.AddPlay(play);
+			timeline.AddPlay(play);
 			timeline.QueueDraw();
 		}
 
@@ -233,32 +233,31 @@ namespace LongoMatch
 			}
 		}
 
-		protected virtual void OnNewMarkAtFrame(int section, int frame) {
-
-			Time pos = new Time(frame*1000/openedProject.File.Fps);
+		protected virtual void OnNewMarkAtFrame(Category category, int frame) {
+			Time pos = new Time{ MSeconds = frame*1000/openedProject.Description.File.Fps};
 			player.CloseActualSegment();
 			player.SeekTo ((long)pos.MSeconds, true);
-			ProcessNewMarkEvent(section,pos);
+			ProcessNewMarkEvent(category,pos);
 		}
 
-		public virtual void OnNewMark(int i) {
+		public virtual void OnNewMark(Category category) {
 			Time pos;
 			
 			if (projectType == ProjectType.FakeCaptureProject || 
 			    projectType == ProjectType.CaptureProject)
-				pos =  new Time((int)capturer.CurrentTime);
+				pos =  new Time { MSeconds = (int)capturer.CurrentTime};
 			else 
-				pos = new Time((int)player.CurrentTime);
-			ProcessNewMarkEvent(i,pos);
+				pos = new Time {MSeconds = (int)player.CurrentTime};
+			ProcessNewMarkEvent(category,pos);
 		}
 		
 		public virtual void OnNewMarkStart(){
-			startTime = new Time((int)player.CurrentTime);
+			startTime = new Time {MSeconds = (int)player.CurrentTime};
 		}
 		
-		public virtual void OnNewMarkStop(int section){
+		public virtual void OnNewMarkStop(Category category){
 			int diff;
-			Time stopTime = new Time((int)player.CurrentTime);
+			Time stopTime = new Time {MSeconds = (int)player.CurrentTime};
 			
 			diff = stopTime.MSeconds - startTime.MSeconds;
 			
@@ -275,10 +274,10 @@ namespace LongoMatch
 				else 
 					stopTime = stopTime + correction;			
 			} 
-			AddNewPlay(startTime, stopTime, section);		
+			AddNewPlay(startTime, stopTime, category);		
 		}
 
-		protected virtual void OnTimeNodeSelected(MediaTimeNode tNode)
+		protected virtual void OnTimeNodeSelected(Play tNode)
 		{
 			selectedTimeNode = tNode;
 			timeline.SelectedTimeNode = tNode;
@@ -293,9 +292,9 @@ namespace LongoMatch
 			//Si hemos modificado el valor de un nodo de tiempo a través del
 			//widget de ajuste de tiempo posicionamos el reproductor en el punto
 			//
-			if (tNode is MediaTimeNode && val is Time) {
+			if (tNode is Play && val is Time) {
 				if (tNode != selectedTimeNode)
-					OnTimeNodeSelected((MediaTimeNode)tNode);
+					OnTimeNodeSelected((Play)tNode);
 				Time pos = (Time)val;
 				if (pos == tNode.Start) {
 					player.UpdateSegmentStartTime(pos.MSeconds);
@@ -304,19 +303,23 @@ namespace LongoMatch
 					player.UpdateSegmentStopTime(pos.MSeconds);
 				}
 			}
-			else if (tNode is SectionsTimeNode) {
-				buttonswidget.Sections = openedProject.Sections;
+			else if (tNode is Category) {
+				buttonswidget.Categories = openedProject.Categories;
 			}
 		}
 
-		protected virtual void OnTimeNodeDeleted(MediaTimeNode tNode,int section)
+		protected virtual void OnTimeNodeDeleted(Play play)
 		{
-			treewidget.DeletePlay(tNode,section);
-			foreach (int player in tNode.LocalPlayers)
-				localPlayersList.DeleteTimeNode(tNode,player);
-			foreach (int player in tNode.VisitorPlayers)
-				visitorPlayersList.DeleteTimeNode(tNode,player);
-			openedProject.DeleteTimeNode(tNode,section);
+			treewidget.RemovePlay(play);
+			timeline.RemovePlay(play);
+
+			foreach (var player in play.LocalPlayers)
+				localPlayersList.RemovePlay(play ,player);
+
+			foreach (var player in play.VisitorPlayers)
+				visitorPlayersList.RemovePlay(play ,player);
+
+			openedProject.RemovePlay(play);
 			if (projectType == ProjectType.FileProject){
 				this.player.CloseActualSegment();
 				MainClass.DB.UpdateProject(openedProject);
@@ -324,12 +327,18 @@ namespace LongoMatch
 			timeline.QueueDraw();			
 		}
 
-		protected virtual void OnPlayListNodeAdded(MediaTimeNode tNode)
+		protected virtual void OnPlayListNodeAdded(Play play)
 		{
-			playlist.Add(new PlayListTimeNode(openedProject.File,tNode));
+			playlist.Add(new PlayListPlay{
+				MediaFile = openedProject.Description.File,
+				Start = play.Start,
+				Stop = play.Stop,
+				Name = play.Name,
+				Rate = 1.0f,
+			});
 		}
 
-		protected virtual void OnPlayListNodeSelected(PlayListTimeNode plNode, bool hasNext)
+		protected virtual void OnPlayListNodeSelected(PlayListPlay plNode, bool hasNext)
 		{
 			if (openedProject == null) {
 				if (plNode.Valid) {
@@ -356,7 +365,7 @@ namespace LongoMatch
 			notes.Visible = false;
 		}
 
-		protected virtual void OnSnapshotSeries(MediaTimeNode tNode) {
+		protected virtual void OnSnapshotSeries(Play tNode) {
 			SnapshotsDialog sd;
 			uint interval;
 			string seriesName;
@@ -373,7 +382,9 @@ namespace LongoMatch
 				interval = sd.Interval;
 				seriesName = sd.SeriesName;
 				outDir = System.IO.Path.Combine(MainClass.SnapshotsDir(),seriesName);
-				fsc = new FramesSeriesCapturer(openedProject.File.FilePath,tNode.Start.MSeconds,tNode.Stop.MSeconds,interval,outDir);
+				fsc = new FramesSeriesCapturer(openedProject.Description.File.FilePath,
+				                               tNode.Start.MSeconds,tNode.Stop.MSeconds,
+				                               interval,outDir);
 				fcpd = new FramesCaptureProgressDialog(fsc);
 				fcpd.TransientFor=(Gtk.Window) treewidget.Toplevel;
 				fcpd.Run();
@@ -390,9 +401,9 @@ namespace LongoMatch
 
 		protected virtual void OnPrev()
 		{
-			if (selectedTimeNode is MediaTimeNode)
+			if (selectedTimeNode is Play)
 				player.SeekInSegment(selectedTimeNode.Start.MSeconds);
-			else if (selectedTimeNode is PlayListTimeNode)
+			else if (selectedTimeNode is PlayListPlay)
 				playlist.Prev();
 			else if (selectedTimeNode == null)
 				player.SeekTo(0,false);
@@ -401,7 +412,8 @@ namespace LongoMatch
 		protected virtual void OnTick(object o, TickArgs args)
 		{
 			if (args.CurrentTime != 0 && timeline != null && openedProject != null)
-				timeline.CurrentFrame=(uint)(args.CurrentTime * openedProject.File.Fps / 1000);
+				timeline.CurrentFrame=(uint)(args.CurrentTime * 
+				                             openedProject.Description.File.Fps / 1000);
 		}
 
 		protected virtual void OnTimeline2PositionChanged(Time pos)
@@ -409,7 +421,7 @@ namespace LongoMatch
 			player.SeekInSegment(pos.MSeconds);
 		}
 
-		protected virtual void OnApplyRate(PlayListTimeNode plNode) {
+		protected virtual void OnApplyRate(PlayListPlay plNode) {
 			plNode.Rate = player.Rate;
 		}
 
@@ -423,15 +435,15 @@ namespace LongoMatch
 			dialog.Image = pixbuf;
 			dialog.TransientFor = (Gtk.Window)player.Toplevel;
 			if (selectedTimeNode != null)
-				dialog.SetPlay((selectedTimeNode as MediaTimeNode),
+				dialog.SetPlay((selectedTimeNode as Play),
 				               time);
 			pixbuf.Dispose();
 			dialog.Run();
 			dialog.Destroy();
 		}
 		
-		protected virtual void OnTagPlay(MediaTimeNode tNode){
-			TaggerDialog tagger = new TaggerDialog();
+		protected virtual void OnTagPlay(Play tNode){
+			/*TaggerDialog tagger = new TaggerDialog();
 			tagger.ProjectTags = openedProject.Tags;
 			tagger.Tags = tNode.Tags;
 			tagger.TransientFor = (Gtk.Window)player.Toplevel;
@@ -441,10 +453,10 @@ namespace LongoMatch
 				openedProject.Tags.AddTag(tag);
 			}
 			tagsTreeWidget.UpdateTagsList();
-			tagger.Destroy();
+			tagger.Destroy();*/
 		}
 
-		protected virtual void OnPlayersTagged(MediaTimeNode tNode, Team team) {
+		protected virtual void OnPlayersTagged(Play tNode, Team team) {
 			PlayersSelectionDialog dialog = new PlayersSelectionDialog();
 			if (team == Team.LOCAL) {
 				dialog.SetPlayersInfo(openedProject.LocalTeamTemplate);
