@@ -24,52 +24,38 @@ namespace LongoMatch.TimeNodes
 {
 
 	/// <summary>
-	/// I represent a time instant. Other objects uses me to maintain time units consitency.
-	/// I am expressed in miliseconds and I provide some helper methods for time conversion and representation
+	/// Represents a time instant. Other objects uses it to keep consistency in the time units consitency.
+	/// It's expressed in miliseconds and provide some helper methods for time conversion and representation
 	/// </summary>
 	[Serializable]
 	public class Time :  IComparable
 	{
-		private int time;
 		private const int MS = 1000000 ;
 		public const int SECONDS_TO_TIME = 1000;
-
+	
 		#region Constructors
 		public Time() {
-			this.time = 0;
-		}
-
-		/// <summary>
-		/// Creates a new time instant
-		/// </summary>
-		/// <param name="time">
-		/// A <see cref="System.Int32"/> with the time expressed in miliseconds
-		/// </param>
-		public Time(int time)
-		{
-			this.time = time;
 		}
 		#endregion
 
-		//// <value>
+		//// <summary>
 		/// Time in miliseconds
-		/// </value>
+		/// </summary>
 		#region Properties
 		public int MSeconds {
-			get {
-				return time;
-			}
-			set {
-				time = value;
-			}
+			get;
+			set;
 		}
 
-		/// <value>
+		/// <summary>
 		/// Time in seconds
-		/// </value>
+		/// </summary>
 		public int Seconds {
 			get {
-				return time/SECONDS_TO_TIME;
+				return MSeconds/SECONDS_TO_TIME;
+			}
+			set {
+				MSeconds = value * SECONDS_TO_TIME;
 			}
 		}
 		#endregion
@@ -83,11 +69,12 @@ namespace LongoMatch.TimeNodes
 		/// </returns>
 		public  string ToSecondsString()
 		{
-			int _h, _m, _s;
+			int _h, _m, _s, _time;
 
-			_h = (time / 3600);
-			_m = ((time % 3600) / 60);
-			_s = ((time % 3600) % 60);
+			_time = MSeconds / 1000;
+			_h = (_time / 3600);
+			_m = ((_time % 3600) / 60);
+			_s = ((_time % 3600) % 60);
 
 			if (_h > 0)
 				return String.Format("{0}:{1}:{2}", _h, _m.ToString("d2"),
@@ -104,18 +91,10 @@ namespace LongoMatch.TimeNodes
 		/// </returns>
 		public  string ToMSecondsString()
 		{
-			int _h, _m, _s,_ms,_time;
-			_time = time / 1000;
-			_h = (_time / 3600);
-			_m = ((_time % 3600) / 60);
-			_s = ((_time % 3600) % 60);
-			_ms = ((time % 3600000)%60000)%1000;
+			int _ms ;
+			_ms = ((MSeconds % 3600000)%60000)%1000;
 
-			//if (_h > 0)
-			return String.Format("{0}:{1}:{2},{3}", _h, _m.ToString("d2"),
-			                     _s.ToString("d2"),_ms.ToString("d3"));
-
-			//return String.Format ("{0}:{1},{2}", _m, _s.ToString ("d2"),_ms.ToString("d3"));
+			return String.Format("{0},{1}", ToSecondsString(), _ms.ToString("d3"));
 		}
 
 		public override bool Equals(object o)
@@ -159,19 +138,19 @@ namespace LongoMatch.TimeNodes
 		}
 
 		public static Time operator +(Time t1,int t2) {
-			return new Time(t1.MSeconds+t2);
+			return new Time {MSeconds = t1.MSeconds+t2};
 		}
 
 		public static Time operator +(Time t1,Time t2) {
-			return new Time(t1.MSeconds+t2.MSeconds);
+			return new Time {MSeconds = t1.MSeconds+t2.MSeconds};
 		}
 
 		public  static Time operator -(Time t1,Time t2) {
-			return new Time(t1.MSeconds-t2.MSeconds);
+			return new Time {MSeconds = t1.MSeconds-t2.MSeconds};
 		}
 
 		public  static Time operator -(Time t1,int t2) {
-			return new Time(t1.MSeconds-t2);
+			return new Time {MSeconds = t1.MSeconds-t2};
 		}
 		#endregion
 	}

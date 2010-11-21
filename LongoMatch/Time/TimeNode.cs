@@ -26,82 +26,45 @@ namespace LongoMatch.TimeNodes
 {
 
 	/// <summary>
-	/// I am the base class for the time span related objects in the database.
-	/// I have a name that describe me and a start and stop <see cref="LongoMatch.TimeNodes.Time"/>
+	/// Base class for all the time span related objects in the database.
+	/// It has a name that describe it and a start and stop <see cref="LongoMatch.TimeNodes.Time"/>
 	/// </summary>
 	[Serializable]
 	public class TimeNode
 	{
-		private string name;
-
-		private Time start;
-
-		private Time stop;
-
 		#region Constructors
 		public TimeNode() {
-		}
-
-		/// <summary>
-		/// Creates a TimeNode object
-		/// </summary>
-		/// <param name="name">
-		/// A <see cref="System.String"/> with my name
-		/// </param>
-		/// <param name="start">
-		/// A <see cref="Time"/> with my start time
-		/// </param>
-		/// <param name="stop">
-		/// A <see cref="Time"/> with my stop time
-		/// </param>
-		public TimeNode(String name,Time start, Time stop)
-		{
-			this.name = name;
-			this.start = start;
-			this.stop = stop;
 		}
 		#endregion
 
 		#region Properties
-		/// <value>
-		/// A short description of myself
-		/// </value>
+		/// <summary>
+		/// A short description of the time node
+		/// </summary>
 		public string Name {
-			get {
-				return this.name;
-			}
-			set {
-				this.name=value;
-			}
+			get;
+			set;
 		}
 
-		//// <value>
-		/// My start time
-		/// </value>
+		/// <summary>
+		/// Start Time
+		/// </summary>
 		public Time Start {
-			get {
-				return this.start;
-			}
-			set {
-				this.start=value;
-			}
+			get;
+			set;
 		}
 
-		/// <value>
-		/// My stop time
-		/// </value>
+		/// <summary>
+		/// Stop time
+		/// </summary>
 		public Time Stop {
-			get {
-				return stop;
-			}
-			set {
-				this.stop = value;
-			}
+			get;
+			set;
 		}
 
-		/// <value>
-		/// My duration
-		/// </value>
+		/// <summary>
+		/// Duration (stop_time - start_time)
+		/// </summary>
 		public Time Duration {
 			get {
 				return Stop-Start;
@@ -109,21 +72,5 @@ namespace LongoMatch.TimeNodes
 		}
 		#endregion
 
-		#region Public methods
-
-		/// <summary>
-		/// Change my boundaries
-		/// </summary>
-		/// <param name="start">
-		/// My new start <see cref="Time"/>
-		/// </param>
-		/// <param name="stop">
-		/// My new stop <see cref="Time"/>
-		/// </param>
-		public void ChangeStartStop(Time start, Time stop) {
-			this.start = start;
-			this.stop = stop;
-		}
-		#endregion
 	}
 }

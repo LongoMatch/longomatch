@@ -24,27 +24,21 @@ namespace LongoMatch.TimeNodes
 	[Serializable]
 	public class Tag
 	{
-		string text;
-		
-		public Tag(string text)
-		{
-			this.text=text;
+		public Tag() {
 		}
 
-		public string Text {
-			get {
-				return text;
-			}
-			set {
-				if (value == null)
-					text="";
-				else
-					text=value;
-			}
+		public string SubCategory {
+			get;
+			set;
+		}
+		
+		public string Value {
+			get;
+			set;
 		}
 
 		public bool Equals(Tag tagComp) {
-			return (text == tagComp.Text);
+			return (SubCategory == tagComp.SubCategory && Value == tagComp.Value);
 		}
 
 		public override bool Equals(object obj)
@@ -58,7 +52,7 @@ namespace LongoMatch.TimeNodes
 
 		public override int GetHashCode()
 		{
-			return text.GetHashCode();
+			return SubCategory.GetHashCode() + Value.GetHashCode();
 		}
 	}
 }

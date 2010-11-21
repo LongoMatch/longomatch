@@ -21,28 +21,24 @@ using Gdk;
 
 namespace LongoMatch.TimeNodes
 {
-	/* Represent a drawing in the database using a {@Gdk.Pixbuf} stored
-	        in a bytes array in PNG format for serialization. {@Drawings}
-	        are used by {@MediaTimeNodes} to store the key frame drawing
-	        which stop time time is stored in a int value
-	 */
-
+	
 	[Serializable]
 	public class Drawing
 	{
 		private byte[] drawingBuf;
-		private readonly int stopTime;
 
-
+		/// <summary>
+		/// Represent a drawing in the database using a {@Gdk.Pixbuf} stored
+	    /// in a bytes array in PNG format for serialization. {@Drawings}
+	    /// are used by {@MediaTimeNodes} to store the key frame drawing
+	    /// which stop time is stored in a int value
+		/// </summary>
 		public Drawing() {
 		}
 
-		public Drawing(Pixbuf drawing,int stopTime)
-		{
-			Pixbuf = drawing;
-			this.stopTime = stopTime;
-		}
-
+		/// <summary>
+		/// Pixbuf with the drawing
+		/// </summary>
 		public Pixbuf Pixbuf {
 			get {
 				if (drawingBuf != null)
@@ -56,11 +52,13 @@ namespace LongoMatch.TimeNodes
 					drawingBuf = null;
 			}
 		}
-
-		public int StopTime {
-			get {
-				return stopTime;
-			}
+		
+		/// <summary>
+		/// Render time of the drawing
+		/// </summary>
+		public int RenderTime {
+			get;
+			set;
 		}
 	}
 }

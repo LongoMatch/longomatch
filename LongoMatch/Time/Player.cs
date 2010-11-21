@@ -18,6 +18,7 @@
 
 using System;
 using Gdk;
+using LongoMatch.Common;
 
 namespace LongoMatch.TimeNodes
 {
@@ -27,59 +28,11 @@ namespace LongoMatch.TimeNodes
 	[Serializable]
 	public class Player
 	{
-		private string name;
-		private string position;
-		private int number;
 		private byte[] photo;
-		/* Added in 0.16.1 */
-		private float height;
-		private int weight;
-		private DateTime birthday;
-		private String nationality;
-		/* Added in 0.16.4 */
-		private bool discarded;
 
-		/// <summary>
-		/// Creates a new player
-		/// </summary>
-		/// <param name="name">
-		/// A <see cref="System.String"/> with my name
-		/// </param>
-		/// <param name="birthday">
-		/// A <see cref="DateTime"/> with my name
-		/// </param>
-		/// <param name="nationality">
-		/// A <see cref="System.String"/> with my nationality
-		/// </param>
-		/// <param name="height">
-		/// A <see cref="System.Float"/> with my height
-		/// </param>
-		/// <param name="weight">
-		/// A <see cref="System.Int32"/> with my weight
-		/// </param>
-		/// <param name="position">
-		/// A <see cref="System.String"/> with my position in the field
-		/// </param>
-		/// <param name="number">
-		/// A <see cref="System.Int32"/> with my number
-		/// </param>
-		/// <param name="photo">
-		/// A <see cref="Pixbuf"/> with my photo
-		/// </param>
 		#region Constructors
-		public Player(string name, DateTime birthday, String nationality, 
-		              float height, int weight, string position,
-		              int number, Pixbuf photo, bool discarded)
+		public Player()
 		{
-			this.name = name;
-			this.birthday = birthday;
-			this.nationality = nationality;
-			this.height = height;
-			this.weight = weight;
-			this.position = position;
-			this.number = number;
-			this.discarded = discarded;
-			Photo = photo;
 		}
 		#endregion
 
@@ -88,36 +41,29 @@ namespace LongoMatch.TimeNodes
 		/// My name
 		/// </value>
 		public string Name {
-			get {
-				return name;
-			}
-			set {
-				name=value;
-			}
+			get;
+			set;
+		}
+		
+		public Team Team{
+			get;
+			set;
 		}
 
 		/// <value>
 		/// My position in the field
 		/// </value>
 		public string Position {
-			get {
-				return position;
-			}
-			set {
-				position=value;
-			}
+			get;
+			set;
 		}
 
 		/// <value>
 		/// My shirt number
 		/// </value>
 		public int Number {
-			get {
-				return number;
-			}
-			set {
-				number=value;
-			}
+			get;
+			set;
 		}
 
 		/// <value>
@@ -142,48 +88,37 @@ namespace LongoMatch.TimeNodes
 		/// My birthdayt
 		/// </value>
 		public DateTime Birthday{
-			get {
-				return birthday;
-			}
-			set {
-				birthday = value;
-			}
+			get;
+			set;
 		}
 		
 		/// <value>
 		/// My nationality
 		/// </value>
 		public String Nationality{
-			get {
-				return nationality;
-			}
-			set {
-				nationality = value;
-			}
+			get;
+			set;
 		}
 		
 		/// <value>
 		/// My height
 		/// </value>
 		public float Height{
-			get {
-				return height;
-			}
-			set {
-				height = value;
-			}
+			get;
+			set;
 		}
 
 		/// <value>
 		/// My Weight
 		/// </value>
 		public int Weight{
-			get {
-				return weight;
-			}
-			set {
-				weight = value;
-			}
+			get;
+			set;
+		}
+		
+		public bool Playing{
+			get;
+			set;
 		}
 		
 		/// <value>
@@ -192,12 +127,8 @@ namespace LongoMatch.TimeNodes
 		/// template in a team, definning if this plays plays or not.
 		/// </value>
 		public bool Discarded{
-			get {
-				return discarded;
-			}
-			set {
-				discarded = value;
-			}
+			get;
+			set;
 		}
 		#endregion
 	}

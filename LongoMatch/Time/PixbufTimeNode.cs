@@ -25,8 +25,8 @@ namespace LongoMatch.TimeNodes
 {
 
 	/// <summary>
-	/// I am the base class for all the video segments.
-	/// I have a <see cref="Pixbuf"/> with a thumbnail of the video segment I represent
+	/// Base class for all the video segments containing a snapshot
+	/// It has a <see cref="Gdk.Pixbuf"/> with a thumbnail of the video segment.
 	/// </summary>
 	[Serializable]
 	public class PixbufTimeNode : TimeNode
@@ -37,36 +37,12 @@ namespace LongoMatch.TimeNodes
 		#region Contructors
 		public PixbufTimeNode() {
 		}
-
-		/// <summary>
-		/// Creates a new PixbufTimeNode object
-		/// </summary>
-		/// <param name="name">
-		/// A <see cref="System.String"/> with my name
-		/// </param>
-		/// <param name="start">
-		/// A <see cref="Time"/> with my start time
-		/// </param>
-		/// <param name="stop">
-		/// A <see cref="Time"/> with my stop time
-		/// </param>
-		/// <param name="thumbnail">
-		/// A <see cref="Pixbuf"/> with my preview
-		/// </param>
-		public PixbufTimeNode(string name, Time start, Time stop, Pixbuf thumbnail): base(name,start,stop)
-		{
-			if (thumbnail != null) {
-				this.thumbnailBuf = thumbnail.SaveToBuffer("png");
-				thumbnail.Dispose();
-			}
-			else thumbnailBuf = null;
-		}
 		#endregion
 
 		#region Properties
-		/// <value>
+		/// <summary>
 		/// Segment thumbnail
-		/// </value>
+		/// </summary>
 		public Pixbuf Miniature {
 			get {
 				if (thumbnailBuf != null)
@@ -78,7 +54,6 @@ namespace LongoMatch.TimeNodes
 				else thumbnailBuf = null;
 			}
 		}
-
 		#endregion
 
 		private void ScaleAndSave(Pixbuf pixbuf) {

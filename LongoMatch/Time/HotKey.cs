@@ -31,10 +31,9 @@ namespace LongoMatch.TimeNodes
 {
 
 	/// <summary>
-	/// I am key combination used to tag plays using the keyboard. <see cref="LongoMatch.TimeNodes.SectionsTimeNodes"/>
-	/// uses me to create plays without using the mouse. I can only be used with Shith and Alt
-	/// modifiers to avoid interfering with ohter shortcuts. In case I'am not associated to any
-	/// key combinatio 'key' and 'modifier' will be set to -1
+	/// A key combination used to tag plays using the keyboard. <see cref="LongoMatch.TimeNodes.SectionsTimeNodes"/>
+	/// It can only be used with the Shith and Alt modifiers to avoid interfering with ohter shortcuts. 
+	/// 'key' and 'modifier' are set to -1 when it's initialized
 	/// </summary>
 	[Serializable]
 	public class HotKey : IEquatable<HotKey>
@@ -54,9 +53,9 @@ namespace LongoMatch.TimeNodes
 		#endregion
 
 		#region Properties
-		/// <value>
-		/// My keyboard key
-		/// </value>
+		/// <summary>
+		/// Gdk Key
+		/// </summary>
 		public Gdk.Key Key {
 			get {
 				return (Gdk.Key)key;
@@ -66,9 +65,9 @@ namespace LongoMatch.TimeNodes
 			}
 		}
 
-		/// <value>
-		/// My keyboard modifier. Only Alt and Shift can be used
-		/// </value>
+		/// <summary>
+		/// Key modifier. Only Alt and Shift can be used
+		/// </summary>
 		public Gdk.ModifierType Modifier {
 			get {
 				return (Gdk.ModifierType)modifier;
@@ -78,9 +77,9 @@ namespace LongoMatch.TimeNodes
 			}
 		}
 
-		/// <value>
-		/// Whether I am defined or not
-		/// </value>
+		/// <summary>
+		/// Get whether the hotkey is defined or not
+		/// </summary>
 		public Boolean Defined {
 			get {
 				return (key!=-1 && modifier != -1);
