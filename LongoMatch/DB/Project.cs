@@ -19,6 +19,7 @@
 //
 
 using System;
+using System.Linq;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using Gtk;
 using Gdk;
 using Mono.Unix;
+using LongoMatch.Common;
 using LongoMatch.TimeNodes;
 using LongoMatch.Video.Utils;
 
@@ -48,261 +50,56 @@ namespace LongoMatch.DB
 	public class Project : IComparable
 	{
 
-		private PreviewMediaFile file;
 
-		private string title;
+		private List<Play> playsList;
 
-		private string localName;
 
-		private string visitorName;
-
-		private int localGoals;
-
-		private int visitorGoals;
-
-		private DateTime matchDate;
-
-		private string season;
-
-		private string competition;
-
-		private Sections sections;
-
-		private List<List<MediaTimeNode>> sectionPlaysList;
-
-		private TeamTemplate visitorTeamTemplate;
-
-		private TeamTemplate localTeamTemplate;
-		
-		private TagsTemplate tagsTemplate;
-		//Keep this fiel for DB retrocompatibility
-#pragma warning disable 0169
-		private List<MediaTimeNode>[] dataSectionArray;
-#pragma warning restore 0169
-
-		/// <summary>
-		/// Creates a new project
-		/// </summary>
-		/// <param name="file">
-		/// A <see cref="PreviewMediaFile"/>: video file information
-		/// </param>
-		/// <param name="localName">
-		/// A <see cref="System.String"/>: local team's name
-		/// </param>
-		/// <param name="visitorName">
-		/// A <see cref="System.String"/>: visitor team's name
-		/// </param>
-		/// <param name="season">
-		/// A <see cref="System.String"/>: season information
-		/// </param>
-		/// <param name="competition">
-		/// A <see cref="System.String"/>: competition information
-		/// </param>
-		/// <param name="localGoals">
-		/// A <see cref="System.Int32"/>: local team's goals
-		/// </param>
-		/// <param name="visitorGoals">
-		/// A <see cref="System.Int32"/>: visitor team's goals
-		/// </param>
-		/// <param name="matchDate">
-		/// A <see cref="DateTime"/>: game date
-		/// </param>
-		/// <param name="sections">
-		/// A <see cref="Sections"/>: categories template
-		/// </param>
-		/// <param name="localTeamTemplate">
-		/// A <see cref="TeamTemplate"/>: local team template
-		/// </param>
-		/// <param name="visitorTeamTemplate">
-		/// A <see cref="TeamTemplate"/>: visitor team template
-		/// </param>
 		#region Constructors
-		public Project(PreviewMediaFile file, String localName, String visitorName,
-		               String season, String competition, int localGoals,
-		               int visitorGoals, DateTime matchDate, Sections sections,
-		               TeamTemplate localTeamTemplate, TeamTemplate visitorTeamTemplate) {
-
-			this.file = file;
-			this.localName = localName;
-			this.visitorName = visitorName;
-			this.localGoals = localGoals;
-			this.visitorGoals = visitorGoals;
-			this.matchDate = matchDate;
-			this.season = season;
-			this.competition = competition;
-			this.localTeamTemplate = localTeamTemplate;
-			this.visitorTeamTemplate = visitorTeamTemplate;
-			this.sections = sections;
-			this.sectionPlaysList = new List<List<MediaTimeNode>>();
-
-			for (int i=0;i<sections.Count;i++) {
-				sectionPlaysList.Add(new List<MediaTimeNode>());
-			}
-			
-			this.tagsTemplate = new TagsTemplate();
-			this.Title = file == null ? "" : System.IO.Path.GetFileNameWithoutExtension(this.file.FilePath);
+		public Project(){
+			playsList = new List<Play>();
+			Categories = new Categories();
+			LocalTeamTemplate = new TeamTemplate();
+			VisitorTeamTemplate = new TeamTemplate();
+			Tags = new TagsTemplate();
 		}
 		#endregion
 
 		#region Properties
-		/// <value>
-		/// Video File
-		/// </value>
-		public PreviewMediaFile File {
-			get {
-				return file;
-			}
-			set {
-				file=value;
-			}
-		}
-
-		/// <value>
-		/// Project title
-		/// </value>
-		public String Title {
-			get {
-				return title;
-			}
-			set {
-				title=value;
-			}
-		}
-
-		/// <value>
-		/// Season description
-		/// </value>
-		public String Season {
-			get {
-				return season;
-			}
-			set {
-				season = value;
-			}
-		}
-
-		/// <value>
-		/// Competition description
-		/// </value>
-		public String Competition {
-			get {
-				return competition;
-			}
-			set {
-				competition= value;
-			}
-		}
-
-		/// <value>
-		/// Local team name
-		/// </value>
-		public String LocalName {
-			get {
-				return localName;
-			}
-			set {
-				localName=value;
-			}
-		}
-
-		/// <value>
-		/// Visitor team name
-		/// </value>
-		public String VisitorName {
-			get {
-				return visitorName;
-			}
-			set {
-				visitorName=value;
-			}
-		}
-
-		/// <value>
-		/// Local team goals
-		/// </value>
-		public int LocalGoals {
-			get {
-				return localGoals;
-			}
-			set {
-				localGoals=value;
-			}
-		}
-
-		/// <value>
-		/// Visitor team goals
-		/// </value>
-		public int VisitorGoals {
-			get {
-				return visitorGoals;
-			}
-			set {
-				visitorGoals=value;
-			}
-		}
-
-		/// <value>
-		/// Game date
-		/// </value>
-		public DateTime MatchDate {
-			get {
-				return matchDate;
-			}
-			set {
-				matchDate=value;
-			}
+		
+		public ProjectDescription Description {
+			get;
+			set;
 		}
 
 		/// <value>
 		/// Categories template
 		/// </value>
-		public Sections Sections {
-			get {
-				return this.sections;
-			}
-			set {
-				this.sections = value;
-			}
+		public Categories Categories {
+			get;
+			set;
 		}
 
 		/// <value>
 		/// Local team template
 		/// </value>
 		public TeamTemplate LocalTeamTemplate {
-			get {
-				return localTeamTemplate;
-			}
-			set {
-				localTeamTemplate=value;
-			}
+			get;
+			set;
 		}
 
 		/// <value>
 		/// Visitor team template
 		/// </value>
 		public TeamTemplate VisitorTeamTemplate {
-			get {
-				return visitorTeamTemplate;
-			}
-			set {
-				visitorTeamTemplate=value;
-			}
+			get;
+			set;
 		}
 		
-		/// <value>
-		/// Template with the project tags
-		/// </value>
-		public TagsTemplate Tags{
-			//Since 0.15.5
-			get{
-				if (tagsTemplate == null)
-					tagsTemplate = new TagsTemplate();
-				return tagsTemplate;
-			}
-			set{
-				tagsTemplate = value;
-			}
+		public TagsTemplate Tags {
+			get;
+			set;
 		}
+		
 		#endregion
 
 		#region Public Methods
@@ -310,42 +107,12 @@ namespace LongoMatch.DB
 		/// Frees all the project's resources helping the GC
 		/// </summary>
 		public void Clear() {
-			//Help the GC freeing objects
-			foreach (List<MediaTimeNode> list in sectionPlaysList)
-				list.Clear();
-			sectionPlaysList.Clear();
-			Sections.Clear();
-			visitorTeamTemplate.Clear();
-			localTeamTemplate.Clear();
-			sectionPlaysList=null;
-			Sections=null;
-			visitorTeamTemplate=null;
-			localTeamTemplate=null;
+			playsList.Clear();
+			Categories.Clear();
+			VisitorTeamTemplate.Clear();
+			LocalTeamTemplate.Clear();
 		}
 
-		/// <summary>
-		/// Adds a new analysis category to the project
-		/// </summary>
-		/// <param name="tn">
-		/// A <see cref="SectionsTimeNode"/>
-		/// </param>
-		public void AddSection(SectionsTimeNode tn) {
-			AddSectionAtPos(tn,sections.Count);
-		}
-
-		/// <summary>
-		/// Add a new category to the project at a given position
-		/// </summary>
-		/// <param name="tn">
-		/// A <see cref="SectionsTimeNode"/>: category default values
-		/// </param>
-		/// <param name="sectionIndex">
-		/// A <see cref="System.Int32"/>: position index
-		/// </param>
-		public void AddSectionAtPos(SectionsTimeNode tn,int sectionIndex) {
-			sectionPlaysList.Insert(sectionIndex,new List<MediaTimeNode>());
-			sections.AddSectionAtPos(tn,sectionIndex);
-		}
 
 		/// <summary>
 		/// Adds a new play to a given category
@@ -365,17 +132,24 @@ namespace LongoMatch.DB
 		/// <returns>
 		/// A <see cref="MediaTimeNode"/>: created play
 		/// </returns>
-		public MediaTimeNode AddTimeNode(int dataSection, Time start, Time stop,Pixbuf thumbnail) {
-			MediaTimeNode tn ;
-			List<MediaTimeNode> playsList= sectionPlaysList[dataSection];
+		public Play AddPlay(Category category, Time start, Time stop,Pixbuf miniature) {
 			string count= String.Format("{0:000}",playsList.Count+1);
-			string name = sections.GetName(dataSection) + " " + count;
+			string name = String.Format("{0} {1}",category.Name, count);
 			// HACK: Used for capture where fps is not specified, asuming PAL@25fps
-			ushort fps = file != null ? file.Fps : (ushort)25;
+			ushort fps = Description.File != null ? Description.File.Fps : (ushort)25;
 
-			tn = new MediaTimeNode(name, start, stop,"",fps,thumbnail);
-			playsList.Add(tn);
-			return tn;
+			var play = new Play {
+				Name = name,
+				Start = start,
+				Stop = stop,
+				Category = category,
+				Team = Team.NONE,
+				Notes = "",
+				Miniature = miniature,
+				Fps = fps,
+			};
+			playsList.Add(play);
+			return play;
 		}
 
 		/// <summary>
@@ -387,8 +161,8 @@ namespace LongoMatch.DB
 		/// <param name="section">
 		/// A <see cref="System.Int32"/>: category the play belongs to
 		/// </param>
-		public void DeleteTimeNode(MediaTimeNode tNode,int section) {
-			sectionPlaysList[section].Remove(tNode);
+		public void RemovePlay(Play play) {
+			playsList.Remove(play);
 		}
 
 		/// <summary>
@@ -397,45 +171,33 @@ namespace LongoMatch.DB
 		/// <param name="sectionIndex">
 		/// A <see cref="System.Int32"/>: category index
 		/// </param>
-		public void DeleteSection(int sectionIndex) {
-			if (sections.Count == 1)
+		public void RemoveCategory(Category category) {
+			if (Categories.Count == 1)
 				throw new Exception("You can't remove the last Section");
-			sections.RemoveSection(sectionIndex);
-			sectionPlaysList.RemoveAt(sectionIndex);
+			Categories.RemoveCategory(category);
+			
+			/* query for all the plays with this Category */
+			var plays = 
+				from play in playsList
+					where play.Category.UUID == category.UUID
+					select play;
+			/* Delete them */
+			foreach (var play in playsList)
+				playsList.Remove(play);
 		}
-
-		/// <summary>
-		/// Return an array of strings with the categories names
-		/// </summary>
-		/// <returns>
-		/// A <see cref="System.String"/>
-		/// </returns>
-		public string[] GetSectionsNames() {
-			return sections.GetSectionsNames();
+		
+		public List<Play> PlaysInCategory (Category category){
+			Console.WriteLine ("Plays are " + playsList.Count);
+			return (from play in playsList
+			        where play.Category.UUID == category.UUID
+			        select play).ToList();
 		}
-
-		/// <summary>
-		/// Return an array of <see cref="LongoMatch.TimeNodes.Time"/> with
-		/// the categories default lead time
-		/// </summary>
-		/// <returns>
-		/// A <see cref="Time"/>
-		/// </returns>
-		public Time[] GetSectionsStartTimes() {
-			return sections.GetSectionsStartTimes();
+		
+		public List<Play> AllPlays (){
+			return (from play in playsList
+			        select play).ToList();
 		}
-
-		/// <summary>
-		/// Return an array of <see cref="LongoMatch.TimeNodes.Time"/> with
-		/// the categories default lag time
-		/// </summary>
-		/// <returns>
-		/// A <see cref="Time"/>
-		/// </returns>
-		public Time[] GetSectionsStopTimes() {
-			return sections.GetSectionsStopTimes();
-		}
-
+		
 		/// <summary>
 		/// Returns a <see cref="Gtk.TreeStore"/> in which project categories are
 		/// root nodes and their respectives plays child nodes
@@ -444,11 +206,24 @@ namespace LongoMatch.DB
 		/// A <see cref="TreeStore"/>
 		/// </returns>
 		public TreeStore GetModel() {
-			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore(typeof(MediaTimeNode));
-			for (int i=0;i<sections.Count;i++) {
-				Gtk.TreeIter iter = dataFileListStore.AppendValues(sections.GetTimeNode(i));
-				foreach (MediaTimeNode tNode in sectionPlaysList[i]) {
-					dataFileListStore.AppendValues(iter,tNode);
+			Dictionary<Category, TreeIter> itersDic = new Dictionary<Category, TreeIter>();
+			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore(typeof(Play));
+			
+			IEnumerable<IGrouping<Category, Play>> queryPlaysByCategory = 
+				from play in playsList
+					group play by play.Category;
+			
+			foreach (Category cat in Categories.CategoriesList){
+				Gtk.TreeIter iter = dataFileListStore.AppendValues(cat);
+				itersDic.Add(cat, iter);
+			} 
+			
+			foreach (var playsGroup in queryPlaysByCategory) {
+				Category cat = playsGroup.Key;
+				if (!itersDic.ContainsKey(cat))
+					continue;
+				foreach (Play play in playsGroup) {
+					dataFileListStore.AppendValues(itersDic[cat],play);
 				}
 			}
 			return dataFileListStore;
@@ -462,26 +237,7 @@ namespace LongoMatch.DB
 		/// A <see cref="TreeStore"/>
 		/// </returns>
 		public TreeStore GetLocalTeamModel() {
-			List<TreeIter> itersList = new List<TreeIter>();
-			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore(typeof(object));
-			
-			itersList.Capacity = localTeamTemplate.PlayersCount;
-			for (int i=0;i<localTeamTemplate.PlayersCount;i++) {
-				Player p = localTeamTemplate.GetPlayer(i);
-				if (p.Discarded)
-					itersList.Insert(i, TreeIter.Zero);
-				else
-					itersList.Insert(i, dataFileListStore.AppendValues(p));
-			}
-			for (int i=0;i<sections.Count;i++) {
-				foreach (MediaTimeNode tNode in sectionPlaysList[i]) {
-					foreach (int player in tNode.LocalPlayers){
-						if (itersList[player].Stamp != TreeIter.Zero.Stamp)
-							dataFileListStore.AppendValues(itersList[player],tNode);
-					}
-				}
-			}
-			return dataFileListStore;
+			return GetTeamModel(LocalTeamTemplate);
 		}
 
 		/// <summary>
@@ -492,49 +248,20 @@ namespace LongoMatch.DB
 		/// A <see cref="TreeStore"/>
 		/// </returns>
 		public TreeStore GetVisitorTeamModel() {
-			List<TreeIter> itersList = new List<TreeIter>();
-			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore(typeof(object));
-			
-			itersList.Capacity = visitorTeamTemplate.PlayersCount;
-			for (int i=0;i<visitorTeamTemplate.PlayersCount;i++) {
-				Player p = visitorTeamTemplate.GetPlayer(i);
-				if (p.Discarded)
-					itersList.Insert(i, TreeIter.Zero);
-				else
-					itersList.Insert(i, dataFileListStore.AppendValues(p));
-			}
-			for (int i=0;i<sections.Count;i++) {
-				foreach (MediaTimeNode tNode in sectionPlaysList[i]) {
-					foreach (int player in tNode.VisitorPlayers){
-						if (itersList[player].Stamp != TreeIter.Zero.Stamp)
-							dataFileListStore.AppendValues(itersList[player],tNode);
-					}
-				}
-			}
-			return dataFileListStore;
-		}
-
-		/// <summary>
-		/// Returns a list of plays' lists. Actually used by the timeline
-		/// </summary>
-		/// <returns>
-		/// A <see cref="List"/>
-		/// </returns>
-		public List<List<MediaTimeNode>> GetDataArray() {
-			return sectionPlaysList;
+			return GetTeamModel(VisitorTeamTemplate);
 		}
 
 		public bool Equals(Project project) {
 			if (project == null)
 				return false;
 			else
-				return this.File.FilePath.Equals(project.File.FilePath);
+				return Description.File.FilePath.Equals(project.Description.File.FilePath);
 		}
 
 		public int CompareTo(object obj) {
 			if (obj is Project) {
 				Project project = (Project) obj;
-				return this.File.FilePath.CompareTo(project.File.FilePath);
+				return Description.File.FilePath.CompareTo(project.Description.File.FilePath);
 			}
 			else
 				throw new ArgumentException("object is not a Project and cannot be compared");
@@ -543,23 +270,47 @@ namespace LongoMatch.DB
 		public static void Export(Project project, string file) {
 			file = Path.ChangeExtension(file,"lpr");
 			IFormatter formatter = new BinaryFormatter();
-			using(Stream stream = new FileStream(file, FileMode.Create, FileAccess.Write, FileShare.None)){
-				formatter.Serialize(stream, project);			
-			}
+			using(Stream stream = new FileStream(file, FileMode.Create, 
+			                                     FileAccess.Write, FileShare.None))
+				formatter.Serialize(stream, project);
 		}
 		
 		public static Project Import(string file) {
-			using(Stream stream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.None))
+			using(Stream stream = new FileStream(file, FileMode.Open, 
+			                                     FileAccess.Read, FileShare.None))
 			{
 				try {
 					IFormatter formatter = new BinaryFormatter();
 					return (Project)formatter.Deserialize(stream);
 				}
 				catch {
-					throw new Exception(Catalog.GetString("The file you are trying to load is not a valid project"));
+					throw new Exception(Catalog.GetString("The file you are trying to load " +
+						"is not a valid project"));
 				}
 			}			
 		}		
+		#endregion
+		
+		#region Private Methods
+		
+		private TreeStore GetTeamModel(TeamTemplate team){
+			TreeStore dataFileListStore = new TreeStore(typeof(object));
+			
+			/* For all the players in the team */
+			foreach (var player in team.PlayersList){
+				/* Add a root in the tree with the player */
+				var iter = dataFileListStore.AppendValues(player);
+				/* Query the plays where this player is in the list of players*/
+				var queryByPlayers = 
+					from play in playsList
+						where play.HasPlayer(player) == true 
+						select play;
+				/* Then add as children of the Player in the tree */
+				foreach (var play in queryByPlayers)
+					dataFileListStore.AppendValues(iter, play);
+			}
+			return dataFileListStore;
+		}
 		#endregion
 	}
 }

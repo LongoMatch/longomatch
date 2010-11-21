@@ -19,6 +19,7 @@
 using System;
 using Gdk;
 using LongoMatch.TimeNodes;
+using LongoMatch.Video.Utils;
 
 namespace LongoMatch.DB
 {
@@ -32,11 +33,11 @@ namespace LongoMatch.DB
 		
 		public String Title {
 			get {
-				return System.IO.Path.GetFileNameWithoutExtension(File);
+				return System.IO.Path.GetFileNameWithoutExtension(File.FilePath);
 			}
 		}
 
-		public String File {
+		public PreviewMediaFile File {
 			get;
 			set;
 		}
@@ -82,11 +83,6 @@ namespace LongoMatch.DB
 			set;
 		}
 		
-		public Time Length {
-			get;
-			set;
-		}
-		
 		public String VideoCodec {
 			get;
 			set;
@@ -98,15 +94,17 @@ namespace LongoMatch.DB
 		}
 		
 		public String Format {
-			get;
-			set;
+			get{
+				return String.Format("{0}x{1}@{2}fps", 
+				              File.VideoWidth, File.VideoHeight, File.Fps);
+			}
 		}
 
 		public int CompareTo(object obj) {
 			if (obj is ProjectDescription) {
 				ProjectDescription project = (ProjectDescription) obj;
 
-				return this.File.CompareTo(project.File);
+				return this.File.FilePath.CompareTo(project.File.FilePath);
 			}
 			else
 				throw new ArgumentException("object is not a ProjectDescription and cannot be compared");
