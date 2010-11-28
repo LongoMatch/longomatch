@@ -38,7 +38,6 @@ namespace LongoMatch.TimeNodes
 
 		#region Constructors
 		public Play(){
-			Tags = new List<Tag>();
 		}
 		#endregion
 
