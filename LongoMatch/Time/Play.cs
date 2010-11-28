@@ -38,7 +38,6 @@ namespace LongoMatch.TimeNodes
 
 		#region Constructors
 		public Play(){
-			Players = new List<Player>();
 			Tags = new List<Tag>();
 		}
 		#endregion
@@ -121,51 +120,21 @@ namespace LongoMatch.TimeNodes
 			get;
 			set;
 		}
-
-		/// <summary>
-		/// Get/Set a list of the players tagged to this play
-		/// </summary>
-		public List<Player> Players {
-			get;
-			set;
-		}
 	
 		/// <summary>
 		/// Gets a list of players for the local team 
 		/// </summary>
 		public List<Player> LocalPlayers {
-			get{
-				return 
-					(from player in Players
-					 where player.Team == Team.LOCAL
-					 select player
-					 ).ToList();
-			} 
-			/* FIXME: should an array for each team */
-			set {
-				var l = VisitorPlayers;
-				l.AddRange(value);
-				Players = l;
-			}
+			get;
+			set;
 		}
 	
 		/// <summary>
 		/// Gets a list of players for the visitor team 
 		/// </summary>
 		public List<Player> VisitorPlayers {
-			get{
-				return 
-					(from player in Players
-					 where player.Team == Team.VISITOR
-					 select player
-					 ).ToList();
-			}
-			
-			set {
-				var l = LocalPlayers;
-				l.AddRange(value);
-				Players = l;
-			}
+			get;
+			set;
 		}
 
 		/// <summary>
@@ -227,27 +196,7 @@ namespace LongoMatch.TimeNodes
 		}
 
 		public bool HasPlayer(Player player){
-			return Players.Contains(player);
-		}
-		
-		/// <summary>
-		/// Add a player to the player's list
-		/// </summary>
-		/// <param name="player">
-		/// The <see cref="LongoMatch.TimeNode.Player"/> to add
-		/// </param>
-		public void AddPlayer(Player player) {
-			Players.Add(player);
-		}
-
-		/// <summary>
-		/// Removes a player from the player's list
-		/// </summary>
-		/// <param name="player">
-		/// The <see cref="LongoMatch.TimeNode.Player"/> to remove
-		/// </param>
-		public void RemovePlayer(Player Player) {
-			Players.Remove(Player);
+			return LocalPlayers.Contains(player) || VisitorPlayers.Contains(player);
 		}
 		
 		/// <summary>
