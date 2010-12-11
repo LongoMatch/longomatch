@@ -46,59 +46,39 @@ namespace LongoMatch.TimeNodes
 		/// <summary>
 		/// Category in which this play is tagged 
 		/// </summary>
-		public Category Category {
-			get;
-			set;
-		}
+		public Category Category {get; set;}
 		
 		/// <summary>
 		/// A strng with the play's notes
 		/// </summary>
-		public string Notes {
-			get;
-			set;
-		}
+		public string Notes {get; set;}
 
 		/// <summary>
 		/// The <see cref="LongoMatch.TimeNode.Team"/> associated to this play
 		/// </summary>
-		public Team Team {
-			get;
-			set;
-		}
+		public Team Team {get; set;}
 
 		/// <summary>
 		/// Video framerate in frames per second. This value is taken from the
 		/// video file properties and used to translate from seconds
 		/// to frames: second 100 is equivalent to frame 100*fps
 		/// </summary>
-		public uint Fps {
-			get;
-			set;
-		}
+		public uint Fps {get; set;}
 
 		/// <summary>
 		/// Start frame number
 		/// </summary>
 		public uint StartFrame {
-			get {
-				return (uint) (Start.MSeconds * Fps / 1000);
-			}
-			set {
-				Start = new Time {MSeconds = (int)(1000 * value / Fps)};
-			}
+			get {return (uint) (Start.MSeconds * Fps / 1000);}
+			set {Start = new Time {MSeconds = (int)(1000 * value / Fps)};}
 		}
 
 		/// <summary>
 		/// Stop frame number
 		/// </summary>
 		public uint StopFrame {
-			get {
-				return (uint) (Stop.MSeconds * Fps / 1000);
-			}
-			set {
-				Stop = new Time {MSeconds = (int)(1000 * value / Fps)};
-			}
+			get {return (uint) (Stop.MSeconds * Fps / 1000);}
+			set {Stop = new Time {MSeconds = (int)(1000 * value / Fps)};}
 		}
 
 		/// <summary>
@@ -115,69 +95,48 @@ namespace LongoMatch.TimeNodes
 		/// <summary>
 		/// Get/Set wheter this play is actually loaded. Used in  <see cref="LongoMatch.Gui.Component.TimeScale">
 		/// </summary>
-		public bool Selected {
-			get;
-			set;
-		}
+		public bool Selected {get; set;}
 	
 		/// <summary>
 		/// Gets a list of players for the local team 
 		/// </summary>
-		public List<Player> LocalPlayers {
-			get;
-			set;
-		}
+		public List<Player> LocalPlayers {get; set;}
 	
 		/// <summary>
 		/// Gets a list of players for the visitor team 
 		/// </summary>
-		public List<Player> VisitorPlayers {
-			get;
-			set;
-		}
+		public List<Player> VisitorPlayers {get; set;}
 
 		/// <summary>
 		/// Get/Set the key frame's <see cref="LongoMatch.TimeNodes.Drawing"/>
 		/// </summary>
-		public Drawing KeyFrameDrawing {
-			get;
-			set;
-		}
+		public Drawing KeyFrameDrawing {get; set;}
 
 		/// <summary>
 		/// Get wether the play has defined a key frame
 		/// </summary>
 		public bool HasKeyFrame {
-			get {
-				return KeyFrameDrawing != null;
-			}
+			get {return KeyFrameDrawing != null;}
 		}
 		
 		/// <summary>
 		/// Central frame number using (stopFrame-startFrame)/2
 		/// </summary>
 		public uint CentralFrame {
-			get {
-				return StopFrame-((TotalFrames)/2);
-			}
+			get {return StopFrame-((TotalFrames)/2);}
 		}
 
 		/// <summary>
 		/// Number of frames inside the play's boundaries
 		/// </summary>
 		public uint TotalFrames {
-			get {
-				return StopFrame-StartFrame;
-			}
+			get {return StopFrame-StartFrame;}
 		}
 
 		//// <summary>
 		/// Play's tags 
 		/// </summary>
-		public List<Tag> Tags{
-			get;
-			set;
-		}
+		public List<Tag> Tags{get; set;}
 		#endregion
 
 		#region Public methods
