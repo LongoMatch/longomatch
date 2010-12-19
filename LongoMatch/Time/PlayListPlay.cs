@@ -19,6 +19,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Gdk;
 using LongoMatch.Video.Utils;
 
@@ -29,24 +30,13 @@ namespace LongoMatch.TimeNodes
 	/// It stores the information of the video file so that it can be used outside a project.
 	/// </summary>
 	[Serializable]
-	public class PlayListPlay : TimeNode
+	public class PlayListPlay : PixbufTimeNode
 	{
-		private PreviewMediaFile mediaFile;
-
 		#region Constructors
 		public PlayListPlay()
 		{
 		}
 		#endregion
-
-		#region  Properties
-		/// <summary>
-		/// Video file with snapshot preview
-		/// </value>
-		public PreviewMediaFile MediaFile {
-			set;
-			get;
-		}
 
 		/// <summary>
 		/// Play rate
@@ -56,13 +46,21 @@ namespace LongoMatch.TimeNodes
 			set;
 		}
 
-		//// <value>
+		//// <summary>
 		/// Defines it the file exists and thus, it can be used in the playlist
-		/// </value>
+		/// </summary>
 		public bool Valid {
 			get;
 			set;
 		}
+		
+		/// <summary>
+		/// List of drawings to be displayed 
+		/// </summary>
+		public DrawingsList Drawings {
+			get;
+			set;
+		} 
 		#endregion
 	}
 }
