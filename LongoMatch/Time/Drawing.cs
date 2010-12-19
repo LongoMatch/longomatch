@@ -60,5 +60,13 @@ namespace LongoMatch.TimeNodes
 			get;
 			set;
 		}
+	
+		/// <summary>
+		/// Time to pause the playback and display the drawing
+		/// </summary>
+		public int PauseTime {
+			set;
+			get;
+		}
 	}
 }
