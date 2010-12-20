@@ -1,4 +1,14 @@
 <Project name="libcesarplayer" fileversion="2.0" language="C" Target="Bin" Description="Gstreamer backend libraries for LongoMatch" ctype="CProject">
+  <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="Makefile.am" IsAutotoolsProject="True" RelativeConfigureInPath=".">
+    <BuildFilesVar />
+    <DeployFilesVar />
+    <ResourcesVar />
+    <OthersVar />
+    <GacRefVar />
+    <AsmRefVar />
+    <ProjectRefVar />
+  </MonoDevelop.Autotools.MakefileInfo>
+  <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="UseParentPolicy" />
   <Configurations active="Release">
     <Configuration name="Debug" SourceDirectory="." ctype="CProjectConfiguration">
       <Output directory="../LongoMatch/bin/Debug" output="libcesarplayer.dll" />
@@ -14,23 +24,27 @@
     </Configuration>
   </Configurations>
   <Contents>
-    <File subtype="Code" buildaction="Nothing" name="src/bacon-video-widget.h" />
-    <File subtype="Code" buildaction="Compile" name="src/bacon-video-widget-gst-0.10.c" />
-    <File subtype="Code" buildaction="Compile" name="src/baconvideowidget-marshal.c" />
-    <File subtype="Code" buildaction="Nothing" name="src/baconvideowidget-marshal.h" />
-    <File subtype="Code" buildaction="Nothing" name="src/macros.h" />
-    <File subtype="Code" buildaction="Compile" name="src/gstscreenshot.c" />
-    <File subtype="Code" buildaction="Nothing" name="src/gstscreenshot.h" />
-    <File subtype="Code" buildaction="Compile" name="src/gst-video-editor.c" />
-    <File subtype="Code" buildaction="Nothing" name="src/gst-video-editor.h" />
-    <File subtype="Code" buildaction="Compile" name="src/bacon-resize.c" />
-    <File subtype="Code" buildaction="Nothing" name="src/bacon-resize.h" />
-    <File subtype="Code" buildaction="Compile" name="src/video-utils.c" />
-    <File subtype="Code" buildaction="Nothing" name="src/video-utils.h" />
-    <File subtype="Code" buildaction="Compile" name="src/gst-camera-capturer.c" />
-    <File subtype="Code" buildaction="Nothing" name="src/gst-camera-capturer.h" />
+    <File subtype="Directory" buildaction="Nothing" name="." />
+    <File subtype="Code" buildaction="Compile" name="bacon-resize.c" />
+    <File subtype="Code" buildaction="Nothing" name="bacon-resize.h" />
+    <File subtype="Code" buildaction="Nothing" name="bacon-video-widget.h" />
+    <File subtype="Code" buildaction="Compile" name="bacon-video-widget-gst-0.10.c" />
+    <File subtype="Code" buildaction="Nothing" name="common.h" />
+    <File subtype="Code" buildaction="Compile" name="gst-camera-capturer.c" />
+    <File subtype="Code" buildaction="Nothing" name="gst-camera-capturer.h" />
+    <File subtype="Code" buildaction="Compile" name="gstscreenshot.c" />
+    <File subtype="Code" buildaction="Nothing" name="gstscreenshot.h" />
+    <File subtype="Code" buildaction="Compile" name="gst-smart-video-scaler.c" />
+    <File subtype="Code" buildaction="Nothing" name="gst-smart-video-scaler.h" />
+    <File subtype="Code" buildaction="Compile" name="gst-video-editor.c" />
+    <File subtype="Code" buildaction="Nothing" name="gst-video-editor.h" />
+    <File subtype="Code" buildaction="Compile" name="gstvideowidget.c" />
+    <File subtype="Code" buildaction="Nothing" name="gstvideowidget.h" />
+    <File subtype="Code" buildaction="Nothing" name="macros.h" />
+    <File subtype="Code" buildaction="Compile" name="main.c" />
+    <File subtype="Code" buildaction="Compile" name="video-utils.c" />
+    <File subtype="Code" buildaction="Nothing" name="video-utils.h" />
   </Contents>
-  <compiler ctype="GccCompiler" />
   <Packages>
     <Package file="/usr/lib/pkgconfig/gstreamer-0.10.pc" name="GStreamer" IsProject="False" />
     <Package file="/usr/lib/pkgconfig/gstreamer-audio-0.10.pc" name="GStreamer Audio library" IsProject="False" />
@@ -42,14 +56,5 @@
     <Package file="/usr/lib/pkgconfig/gtk+-2.0.pc" name="GTK+" IsProject="False" />
     <Package file="/usr/lib/pkgconfig/gstreamer-pbutils-0.10.pc" name="GStreamer Base Utils Library" IsProject="False" />
   </Packages>
-  <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="Makefile.am" IsAutotoolsProject="True" RelativeConfigureInPath=".">
-    <BuildFilesVar />
-    <DeployFilesVar />
-    <ResourcesVar />
-    <OthersVar />
-    <GacRefVar />
-    <AsmRefVar />
-    <ProjectRefVar />
-  </MonoDevelop.Autotools.MakefileInfo>
-  <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="UseParentPolicy" />
+  <compiler ctype="GccCompiler" />
 </Project>
