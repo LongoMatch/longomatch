@@ -38,6 +38,7 @@ namespace LongoMatch.TimeNodes
 		}
 		#endregion
 
+		#region Properties
 		/// <summary>
 		/// Play rate
 		/// </summary>
