@@ -40,6 +40,14 @@ namespace LongoMatch.TimeNodes
 
 		#region Properties
 		/// <summary>
+		/// Media File 
+		/// </summary>
+		public PreviewMediaFile MediaFile {
+			get;
+			set;
+		}
+		
+		/// <summary>
 		/// Play rate
 		/// </summary>
 		public float Rate {
