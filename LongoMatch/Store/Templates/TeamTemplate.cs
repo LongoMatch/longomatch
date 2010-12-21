@@ -67,14 +67,18 @@ namespace LongoMatch.Store.Templates
 			playersList.Add(player);
 		}
 
-		public static TeamTemplate DefaultTemplate(int playersCount) {
-			TeamTemplate defaultTemplate = new TeamTemplate();
-			defaultTemplate.FillDefaultTemplate(playersCount);
-			return defaultTemplate;
+		public void Save(string filePath){
+			Save(this, filePath);
 		}
 		
 		public static TeamTemplate Load(string filePath) {
 			return Load<TeamTemplate>(filePath);
+		}
+		
+		public static TeamTemplate DefaultTemplate(int playersCount) {
+			TeamTemplate defaultTemplate = new TeamTemplate();
+			defaultTemplate.FillDefaultTemplate(playersCount);
+			return defaultTemplate;
 		}
 		
 		private void FillDefaultTemplate(int playersCount) {

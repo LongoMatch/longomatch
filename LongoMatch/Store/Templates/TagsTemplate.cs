@@ -54,14 +54,19 @@ namespace LongoMatch.Store.Templates
 		public IEnumerator<Tag> GetEnumerator(){
 			return tagsList.GetEnumerator();
 		}
-		public static TagsTemplate DefaultTemplate() {
-			TagsTemplate defaultTemplate = new TagsTemplate();
-			defaultTemplate.FillDefaultTemplate();
-			return defaultTemplate;
+		
+		public void Save(string filePath){
+			Save(this, filePath);
 		}
 		
 		public static TagsTemplate Load(string filePath) {
 			return Load<TagsTemplate>(filePath);
+		}
+		
+		public static TagsTemplate DefaultTemplate() {
+			TagsTemplate defaultTemplate = new TagsTemplate();
+			defaultTemplate.FillDefaultTemplate();
+			return defaultTemplate;
 		}
 		
 		private void FillDefaultTemplate() {

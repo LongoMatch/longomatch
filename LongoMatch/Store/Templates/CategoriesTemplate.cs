@@ -174,6 +174,10 @@ namespace LongoMatch.Store.Templates
 			        select c.Stop).ToList();
 		}
 		
+		public void Save(string filePath){
+			Save(this, filePath);
+		}
+		
 		public static Categories Load(string filePath) {
 			return Load<Categories>(filePath);
 		}

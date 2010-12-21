@@ -15,18 +15,20 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
+using System;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
 namespace LongoMatch.Store.Templates
 {
+	[Serializable]
 	public abstract class Template
 	{
-		public void Save(string filepath) {
+		protected void Save<T>(T template, string filepath) {
 			IFormatter formatter = new  BinaryFormatter();
 			Stream stream = new FileStream(filepath, FileMode.Create, FileAccess.Write, FileShare.None);
-			formatter.Serialize(stream, this);
+			formatter.Serialize(stream, template);
 			stream.Close();
 		}
 
