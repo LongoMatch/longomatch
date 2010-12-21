@@ -21,7 +21,7 @@ using System;
 using Gtk;
 using Gdk;
 using Mono.Unix;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 using LongoMatch.Playlist;
 using LongoMatch.Handlers;
 using LongoMatch.Gui.Dialog;

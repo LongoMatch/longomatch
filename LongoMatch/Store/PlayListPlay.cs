@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using Gdk;
 using LongoMatch.Video.Utils;
 
-namespace LongoMatch.TimeNodes
+namespace LongoMatch.Store
 {
 	/// <summary>
 	/// Represents a video segment used by <see cref="LongoMatch.Playlist.Playlist"/>.

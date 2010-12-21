@@ -21,11 +21,9 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using Mono.Unix;
 using LongoMatch.Common;
-using LongoMatch.DB;
-using LongoMatch.Gui.Component;
-using LongoMatch.Video.Utils;
+using LongoMatch.Store;
+using Mono.Unix;
 
 namespace LongoMatch.Gui.Dialog
 {

@@ -23,7 +23,7 @@ using Gdk;
 using Gtk;
 using Mono.Unix;
 using LongoMatch.Handlers;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 
 namespace LongoMatch.Gui.Component
 {

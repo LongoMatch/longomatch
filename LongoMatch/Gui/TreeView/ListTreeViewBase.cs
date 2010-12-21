@@ -20,7 +20,7 @@ using Gdk;
 using Gtk;
 using LongoMatch.Common;
 using LongoMatch.Handlers;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 using Mono.Unix;
 using System;
 using System.Collections.Generic;

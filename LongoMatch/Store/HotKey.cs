@@ -27,11 +27,11 @@ using Gtk;
 using Gdk;
 using Mono.Unix;
 
-namespace LongoMatch.TimeNodes
+namespace LongoMatch.Store
 {
 
 	/// <summary>
-	/// A key combination used to tag plays using the keyboard. <see cref="LongoMatch.TimeNodes.SectionsTimeNodes"/>
+	/// A key combination used to tag plays using the keyboard. <see cref="LongoMatch.Store.SectionsTimeNodes"/>
 	/// It can only be used with the Shith and Alt modifiers to avoid interfering with ohter shortcuts. 
 	/// 'key' and 'modifier' are set to -1 when it's initialized
 	/// </summary>

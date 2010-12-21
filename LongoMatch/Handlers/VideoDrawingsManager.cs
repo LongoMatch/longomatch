@@ -19,7 +19,7 @@
 using System;
 using System.Collections.Generic;
 using Gdk;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 using LongoMatch.Gui;
 using LongoMatch.Video.Common;
 

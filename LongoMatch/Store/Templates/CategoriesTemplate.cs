@@ -22,9 +22,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Gdk;
 using LongoMatch.Common;
-using LongoMatch.TimeNodes;
 
-namespace LongoMatch.DB
+namespace LongoMatch.Store.Templates
 {
 
 	/// <summary>

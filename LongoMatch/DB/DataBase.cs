@@ -19,17 +19,16 @@
 //
 
 using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Reflection;
-using Gtk;
-using Mono.Unix;
 using Db4objects.Db4o;
 using Db4objects.Db4o.Query;
-using LongoMatch.TimeNodes;
-using LongoMatch.Gui;
-using LongoMatch.Video.Utils;
+using Gtk;
 using LongoMatch.Common;
+using LongoMatch.Gui;
+using LongoMatch.Store;
+using LongoMatch.Store.Templates;
+using LongoMatch.Video.Utils;
+using Mono.Unix;
 
 namespace LongoMatch.DB
 {

@@ -20,11 +20,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using Gtk;
-using Mono.Unix;
-using LongoMatch.DB;
 using LongoMatch.IO;
+using LongoMatch.Store.Templates;
+using Mono.Unix;
 
 namespace LongoMatch.Gui.Dialog
 {

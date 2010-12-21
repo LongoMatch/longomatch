@@ -20,7 +20,7 @@ using System;
 using Gdk;
 using LongoMatch.Common;
 
-namespace LongoMatch.TimeNodes
+namespace LongoMatch.Store
 {
 	/// <summary>
 	/// I am a player from a team

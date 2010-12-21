@@ -20,10 +20,9 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using Gdk;
-using LongoMatch.DB;
 using LongoMatch.Handlers;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
+using LongoMatch.Store.Templates;
 
 namespace LongoMatch.Gui.Component {
 

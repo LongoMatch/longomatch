@@ -16,11 +16,9 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 
-using System;
-using System.Collections.Generic;
 using Gtk;
-using LongoMatch.DB;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
+using LongoMatch.Store.Templates;
 
 
 namespace LongoMatch.Gui.Component
@@ -71,13 +69,13 @@ namespace LongoMatch.Gui.Component
 			edited = true;
 		}
 
-		protected virtual void OnPlayerpropertiestreeview1PlayerClicked(LongoMatch.TimeNodes.Player player)
+		protected virtual void OnPlayerpropertiestreeview1PlayerClicked(LongoMatch.Store.Player player)
 		{
 			selectedPlayer = player;
 			EditSelectedPlayer();
 		}
 
-		protected virtual void OnPlayerpropertiestreeview1PlayerSelected(LongoMatch.TimeNodes.Player player)
+		protected virtual void OnPlayerpropertiestreeview1PlayerSelected(LongoMatch.Store.Player player)
 		{
 			selectedPlayer = player;
 		}

@@ -19,7 +19,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace LongoMatch.TimeNodes
+namespace LongoMatch.Store
 {
 
 

@@ -25,7 +25,7 @@ using Mono.Unix;
 using Gdk;
 using LongoMatch.Common;
 
-namespace LongoMatch.TimeNodes
+namespace LongoMatch.Store
 {
 
 	/// <summary>
@@ -108,7 +108,7 @@ namespace LongoMatch.TimeNodes
 		public List<Player> VisitorPlayers {get; set;}
 
 		/// <summary>
-		/// Get/Set the key frame's <see cref="LongoMatch.TimeNodes.Drawing"/>
+		/// Get/Set the key frame's <see cref="LongoMatch.Store.Drawing"/>
 		/// </summary>
 		public Drawing KeyFrameDrawing {get; set;}
 

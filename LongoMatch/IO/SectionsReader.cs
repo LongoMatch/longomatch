@@ -19,12 +19,9 @@
 //
 
 using System;
-using System.Configuration;
-using System.IO;
-using System.Xml;
-using LongoMatch.DB;
 using Gdk;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
+using LongoMatch.Store.Templates;
 
 namespace LongoMatch.IO
 {

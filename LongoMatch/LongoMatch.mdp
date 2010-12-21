@@ -30,18 +30,11 @@
     <File subtype="Directory" buildaction="Compile" name="Gui" />
     <File subtype="Code" buildaction="Compile" name="Gui/MainWindow.cs" />
     <File subtype="Directory" buildaction="Compile" name="DB" />
-    <File subtype="Code" buildaction="Compile" name="DB/Project.cs" />
     <File subtype="Code" buildaction="Compile" name="DB/DataBase.cs" />
     <File subtype="Directory" buildaction="Compile" name="Handlers" />
     <File subtype="Code" buildaction="Compile" name="Handlers/Handlers.cs" />
     <File subtype="Directory" buildaction="Compile" name="IO" />
     <File subtype="Directory" buildaction="Compile" name="Time" />
-    <File subtype="Code" buildaction="Compile" name="Time/Play.cs" />
-    <File subtype="Code" buildaction="Compile" name="Time/PixbufTimeNode.cs" />
-    <File subtype="Code" buildaction="Compile" name="Time/Category.cs" />
-    <File subtype="Code" buildaction="Compile" name="Time/TimeNode.cs" />
-    <File subtype="Code" buildaction="Compile" name="Time/Time.cs" />
-    <File subtype="Code" buildaction="Compile" name="Time/PlayListPlay.cs" />
     <File subtype="Code" buildaction="EmbedAsResource" name="images/longomatch.png" DeployService.RelativeDeployPath="images/longomatch.png" DeployService.TargetDirectoryId="CommonApplicationDataRoot" />
     <File subtype="Directory" buildaction="Compile" name="images" />
     <File subtype="Code" name="images/background.png" DeployService.Deploy="True" DeployService.RelativeDeployPath="images/background.png" DeployService.TargetDirectoryId="CommonApplicationDataRoot" buildaction="FileCopy" />
@@ -52,13 +45,9 @@
     <File subtype="Code" buildaction="Compile" name="Updates/Updater.cs" />
     <File subtype="Code" buildaction="Compile" name="Updates/XmlUpdateParser.cs" />
     <File subtype="Code" buildaction="Compile" name="IO/CSVExport.cs" />
-    <File subtype="Code" buildaction="Compile" name="Time/HotKey.cs" />
     <File subtype="Code" buildaction="Compile" name="Handlers/EventsManager.cs" />
     <File subtype="Code" buildaction="Compile" name="Handlers/HotKeysManager.cs" />
-    <File subtype="Code" buildaction="Compile" name="DB/TeamTemplate.cs" />
-    <File subtype="Code" buildaction="Compile" name="Time/Player.cs" />
     <File subtype="Code" buildaction="Nothing" name="images/logo_48x48.png" DeployService.RelativeDeployPath="icons/hicolor/48x48/longomatch.png" DeployService.TargetDirectoryId="CommonApplicationDataRoot" />
-    <File subtype="Code" buildaction="Compile" name="DB/TagsTemplate.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/TransparentDrawingArea.cs" />
     <File subtype="Code" buildaction="Compile" name="Handlers/DrawingManager.cs" />
     <File subtype="Directory" buildaction="Compile" name="Gui/Dialog" />
@@ -106,17 +95,13 @@
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/TeamTemplateEditor.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/DrawingWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/DrawingTool.cs" />
-    <File subtype="Code" buildaction="Compile" name="Time/Drawing.cs" />
     <File subtype="Code" buildaction="Compile" name="Handlers/VideoDrawingsManager.cs" />
-    <File subtype="Code" buildaction="Compile" name="Time/DrawingsList.cs" />
-    <File subtype="Code" buildaction="Compile" name="DB/ProjectDescription.cs" />
     <File subtype="Code" buildaction="EmbedAsResource" name="images/stock_draw-circle-unfilled.png" />
     <File subtype="Code" buildaction="EmbedAsResource" name="images/stock_draw-freeform-line.png" />
     <File subtype="Code" buildaction="EmbedAsResource" name="images/stock_draw-line-45.png" />
     <File subtype="Code" buildaction="EmbedAsResource" name="images/stock_draw-line-ends-with-arrow.png" />
     <File subtype="Code" buildaction="EmbedAsResource" name="images/stock_draw-rectangle-unfilled.png" />
     <File subtype="Code" buildaction="Compile" name="Common/Enums.cs" />
-    <File subtype="Code" buildaction="Compile" name="Time/Tag.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/TaggerWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/TaggerDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/TreeView/TagsTreeView.cs" />
@@ -180,8 +165,42 @@
     <File subtype="Code" buildaction="Compile" name="IO/XMLReader.cs" />
     <File subtype="Code" buildaction="Compile" name="IO/SectionsReader.cs" />
     <File subtype="Code" buildaction="Compile" name="IO/SectionsWriter.cs" />
-    <File subtype="Code" buildaction="Compile" name="DB/CategoriesTemplate.cs" />
-    <File subtype="Code" buildaction="Compile" name="DB/Template.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Store" />
+    <File subtype="Directory" buildaction="Compile" name="Store/Template" />
+    <File subtype="Code" buildaction="Compile" name="Store/Template/CategoriesTemplate.cs" />
+    <File subtype="Directory" buildaction="Compile" name="DB" />
+    <File subtype="Code" buildaction="Compile" name="Store/Template/TagsTemplate.cs" />
+    <File subtype="Directory" buildaction="Compile" name="DB" />
+    <File subtype="Code" buildaction="Compile" name="Store/Template/TeamTemplate.cs" />
+    <File subtype="Directory" buildaction="Compile" name="DB" />
+    <File subtype="Code" buildaction="Compile" name="Store/Template/Template.cs" />
+    <File subtype="Directory" buildaction="Compile" name="DB" />
+    <File subtype="Code" buildaction="Compile" name="Store/Project.cs" />
+    <File subtype="Directory" buildaction="Compile" name="DB" />
+    <File subtype="Code" buildaction="Compile" name="Store/ProjectDescription.cs" />
+    <File subtype="Directory" buildaction="Compile" name="DB" />
+    <File subtype="Code" buildaction="Compile" name="Store/Category.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Time" />
+    <File subtype="Code" buildaction="Compile" name="Store/Drawing.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Time" />
+    <File subtype="Code" buildaction="Compile" name="Store/DrawingsList.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Time" />
+    <File subtype="Code" buildaction="Compile" name="Store/HotKey.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Time" />
+    <File subtype="Code" buildaction="Compile" name="Store/PixbufTimeNode.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Time" />
+    <File subtype="Code" buildaction="Compile" name="Store/Play.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Time" />
+    <File subtype="Code" buildaction="Compile" name="Store/Player.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Time" />
+    <File subtype="Code" buildaction="Compile" name="Store/PlayListPlay.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Time" />
+    <File subtype="Code" buildaction="Compile" name="Store/Tag.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Time" />
+    <File subtype="Code" buildaction="Compile" name="Store/Time.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Time" />
+    <File subtype="Code" buildaction="Compile" name="Store/TimeNode.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Time" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />

@@ -20,7 +20,7 @@
 
 using System;
 
-namespace LongoMatch.TimeNodes
+namespace LongoMatch.Store
 {
 
 	/// <summary>

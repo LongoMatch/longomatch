@@ -27,7 +27,7 @@ using Pango;
 using Mono.Unix;
 using LongoMatch.Common;
 using LongoMatch.Handlers;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 
 namespace LongoMatch.Gui.Component
 {

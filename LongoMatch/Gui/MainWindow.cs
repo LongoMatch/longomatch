@@ -18,23 +18,21 @@
 //
 //
 
+using System;
+using System.IO;
+using System.Reflection;
 using Gdk;
 using GLib;
 using Gtk;
 using LongoMatch.Common;
-using LongoMatch.DB;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Handlers;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 using LongoMatch.Utils;
 using LongoMatch.Video.Capturer;
 using LongoMatch.Video.Common;
-using LongoMatch.Video.Player;
 using LongoMatch.Video.Utils;
 using Mono.Unix;
-using System;
-using System.IO;
-using System.Reflection;
 
 
 

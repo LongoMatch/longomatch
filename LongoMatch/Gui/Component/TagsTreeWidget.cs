@@ -24,7 +24,7 @@ using Gtk;
 using Mono.Unix;
 using LongoMatch.DB;
 using LongoMatch.Handlers;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 
 namespace LongoMatch.Gui.Component
 {
@@ -232,7 +232,7 @@ namespace LongoMatch.Gui.Component
 				PlayListNodeAdded(tNode);
 		}
 
-		protected virtual void OnSnapshotSeriesEvent(LongoMatch.TimeNodes.Play tNode)
+		protected virtual void OnSnapshotSeriesEvent(LongoMatch.Store.Play tNode)
 		{
 			if (SnapshotSeriesEvent != null)
 				SnapshotSeriesEvent(tNode);

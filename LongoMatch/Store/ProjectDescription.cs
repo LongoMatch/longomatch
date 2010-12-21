@@ -17,11 +17,10 @@
 //
 
 using System;
-using Gdk;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 using LongoMatch.Video.Utils;
 
-namespace LongoMatch.DB
+namespace LongoMatch.Store
 {
 
 	/// <summary>

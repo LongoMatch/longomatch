@@ -1,5 +1,5 @@
 // 
-//  Copyright (C) 2009 Andoni Morales Alastruey
+//  Copyright (C) 2010 Andoni Morales Alastruey
 // 
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -15,38 +15,28 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
-using System;
-using System.Collections.Generic;
-using LongoMatch.Store;
-using LongoMatch.Store.Templates;
-
-namespace LongoMatch.Gui.Dialog
+namespace LongoMatch.Store.Templates
 {
-	
-	
-	public partial class TaggerDialog : Gtk.Dialog
+	public abstract class Template
 	{
-		
-		public TaggerDialog()
-		{
-			this.Build();
-			buttonOk.Visible = false;
+		public void Save(string filepath) {
+			IFormatter formatter = new  BinaryFormatter();
+			Stream stream = new FileStream(filepath, FileMode.Create, FileAccess.Write, FileShare.None);
+			formatter.Serialize(stream, this);
+			stream.Close();
 		}
-		
-		public TagsTemplate ProjectTags{
-			set{
-				taggerwidget1.ProjectsTags = value;
-			}
-		}
-		
-		public List<Tag> Tags{
-			set{
-				taggerwidget1.Tags = value;
-			}
-			get{
-				return taggerwidget1.Tags;
-			}
+
+		protected static T Load<T>(string filepath) {
+			IFormatter formatter = new BinaryFormatter();
+			Stream stream = new FileStream(filepath, FileMode.Open, FileAccess.Read, FileShare.Read);
+			var obj = formatter.Deserialize(stream);
+			stream.Close();
+			return (T)obj;
 		}
 	}
 }
+

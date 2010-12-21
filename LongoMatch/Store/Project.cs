@@ -19,20 +19,19 @@
 //
 
 using System;
-using System.Linq;
-using System.IO;
-using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using Gtk;
 using Gdk;
-using Mono.Unix;
+using Gtk;
 using LongoMatch.Common;
-using LongoMatch.TimeNodes;
-using LongoMatch.Video.Utils;
+using LongoMatch.Store;
+using LongoMatch.Store.Templates;
+using Mono.Unix;
 
-namespace LongoMatch.DB
+namespace LongoMatch.Store
 {
 
 	/// <summary>
@@ -43,7 +42,7 @@ namespace LongoMatch.DB
 	/// -1 Categories Template
 	/// -1 Local Team Template
 	/// -1 Visitor Team Template
-	/// -1 list of <see cref="LongoMatch.TimeNodes.MediaTimeNode"/> for each category
+	/// -1 list of <see cref="LongoMatch.Store.MediaTimeNode"/> for each category
 	/// </summary>
 	///
 	[Serializable]

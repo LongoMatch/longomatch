@@ -18,9 +18,8 @@
 
 using System;
 using System.Collections.Generic;
-using LongoMatch.TimeNodes;
 
-namespace LongoMatch.DB
+namespace LongoMatch.Store.Templates
 {
 
 	[Serializable]

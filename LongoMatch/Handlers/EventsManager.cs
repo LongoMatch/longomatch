@@ -18,22 +18,18 @@
 //
 //
 
-using System;
 using System.Collections.Generic;
+using Gdk;
+using Gtk;
 using LongoMatch.Common;
+using LongoMatch.Gui;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Dialog;
-using LongoMatch.TimeNodes;
-using LongoMatch.DB;
-using LongoMatch.Video.Player;
-using LongoMatch.Video.Common;
-using LongoMatch.Video.Utils;
-using LongoMatch.Video.Editor;
-using LongoMatch.Video;
 using LongoMatch.Handlers;
-using LongoMatch.Gui;
-using Gtk;
-using Gdk;
+using LongoMatch.Store;
+using LongoMatch.Video.Common;
+using LongoMatch.Video.Editor;
+using LongoMatch.Video.Utils;
 using Mono.Unix;
 
 namespace LongoMatch

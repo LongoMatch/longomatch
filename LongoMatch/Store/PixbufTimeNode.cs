@@ -21,7 +21,7 @@
 using System;
 using Gdk;
 
-namespace LongoMatch.TimeNodes
+namespace LongoMatch.Store
 {
 
 	/// <summary>

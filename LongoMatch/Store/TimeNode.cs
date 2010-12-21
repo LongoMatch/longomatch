@@ -20,14 +20,14 @@
 
 using System;
 using System.Collections.Generic;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 
-namespace LongoMatch.TimeNodes
+namespace LongoMatch.Store
 {
 
 	/// <summary>
 	/// Base class for all the time span related objects in the database.
-	/// It has a name that describe it and a start and stop <see cref="LongoMatch.TimeNodes.Time"/>
+	/// It has a name that describe it and a start and stop <see cref="LongoMatch.Store.Time"/>
 	/// </summary>
 	[Serializable]
 	public class TimeNode

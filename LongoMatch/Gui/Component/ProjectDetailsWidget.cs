@@ -20,18 +20,18 @@
 
 using System;
 using System.Collections.Generic;
-using Mono.Unix;
 using Gtk;
 using LongoMatch.Common;
-using LongoMatch.DB;
+using LongoMatch.Gui.Dialog;
+using LongoMatch.Gui.Popup;
 using LongoMatch.Handlers;
 using LongoMatch.IO;
-using LongoMatch.Gui.Popup;
-using LongoMatch.Gui.Dialog;
-using LongoMatch.TimeNodes;
-using LongoMatch.Video.Utils;
+using LongoMatch.Store;
+using LongoMatch.Store.Templates;
 using LongoMatch.Video.Capturer;
 using LongoMatch.Video.Common;
+using LongoMatch.Video.Utils;
+using Mono.Unix;
 
 namespace LongoMatch.Gui.Component
 {

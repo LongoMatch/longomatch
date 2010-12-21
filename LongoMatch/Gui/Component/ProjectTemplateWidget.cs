@@ -17,15 +17,15 @@
 //
 //
 using System;
-using System.IO;
 using System.Collections.Generic;
-using Gtk;
-using Mono.Unix;
+using System.IO;
 using Gdk;
-using LongoMatch.DB;
-using LongoMatch.TimeNodes;
+using Gtk;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.IO;
+using LongoMatch.Store;
+using LongoMatch.Store.Templates;
+using Mono.Unix;
 
 
 namespace LongoMatch.Gui.Component
@@ -187,7 +187,7 @@ namespace LongoMatch.Gui.Component
 			EditSelectedSection();
 		}
 
-		protected virtual void OnCategoriestreeviewSectionClicked(LongoMatch.TimeNodes.Category tNode)
+		protected virtual void OnCategoriestreeviewSectionClicked(LongoMatch.Store.Category tNode)
 		{
 			EditSelectedSection();
 		}

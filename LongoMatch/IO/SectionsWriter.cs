@@ -19,13 +19,11 @@
 //
 
 using System;
-using System.Configuration;
 using System.IO;
 using System.Xml;
 using Mono.Unix;
-using LongoMatch.DB;
-using LongoMatch.TimeNodes;
-using Gdk;
+using LongoMatch.Store;
+using LongoMatch.Store.Templates;
 
 namespace LongoMatch.IO
 {

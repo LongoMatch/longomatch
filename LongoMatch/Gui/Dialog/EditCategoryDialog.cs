@@ -19,7 +19,7 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 using LongoMatch.Handlers;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui;

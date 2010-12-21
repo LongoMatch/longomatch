@@ -22,14 +22,12 @@
 using System;
 using System.IO;
 using Gtk;
-using Mono.Unix;
 using LongoMatch.Common;
-using LongoMatch.Gui;
-using LongoMatch.Gui.Dialog;
 using LongoMatch.DB;
+using LongoMatch.Gui;
 using LongoMatch.IO;
-using LongoMatch.TimeNodes;
-using System.Runtime.InteropServices;
+using LongoMatch.Store.Templates;
+using Mono.Unix;
 
 namespace LongoMatch
 

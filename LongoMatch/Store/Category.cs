@@ -24,7 +24,7 @@ using Gdk;
 using Mono.Unix;
 using LongoMatch.Common;
 
-namespace LongoMatch.TimeNodes
+namespace LongoMatch.Store
 {
 
 	/// <summary>

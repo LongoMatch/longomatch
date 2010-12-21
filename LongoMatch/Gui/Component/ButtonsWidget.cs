@@ -19,12 +19,12 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Gtk;
-using LongoMatch.DB;
 using LongoMatch.Common;
 using LongoMatch.Handlers;
-using LongoMatch.TimeNodes;
-using System.Collections.Generic;
+using LongoMatch.Store;
+using LongoMatch.Store.Templates;
 
 namespace LongoMatch.Gui.Component
 {

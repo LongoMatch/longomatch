@@ -19,9 +19,8 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using LongoMatch.TimeNodes;
-using LongoMatch.DB;
-using LongoMatch.Handlers;
+using LongoMatch.Store;
+using LongoMatch.Store.Templates;
 
 namespace LongoMatch.Gui.Component
 {

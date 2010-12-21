@@ -25,7 +25,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 using Gtk;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 using Mono.Unix;
 namespace LongoMatch.Playlist
 {

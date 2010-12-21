@@ -21,7 +21,7 @@
 using System;
 using System.Collections;
 using Gtk;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 
 namespace LongoMatch.Playlist {
 

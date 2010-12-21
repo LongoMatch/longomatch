@@ -16,14 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 
-using System;
 using System.Collections.Generic;
 using Gtk;
-using Mono.Unix;
-using LongoMatch.DB;
-using LongoMatch.Handlers;
-using LongoMatch.TimeNodes;
 using LongoMatch.Common;
+using LongoMatch.Handlers;
+using LongoMatch.Store;
+using LongoMatch.Store.Templates;
 
 
 namespace LongoMatch.Gui.Component

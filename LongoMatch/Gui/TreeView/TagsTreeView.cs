@@ -20,7 +20,7 @@
 
 using Gdk;
 using Gtk;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 
 namespace LongoMatch.Gui.Component
 {

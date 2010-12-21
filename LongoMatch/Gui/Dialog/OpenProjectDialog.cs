@@ -18,10 +18,9 @@
 //
 //
 
-using System;
 using System.Collections.Generic;
 using Gtk;
-using LongoMatch.DB;
+using LongoMatch.Store;
 
 namespace LongoMatch.Gui.Dialog
 {

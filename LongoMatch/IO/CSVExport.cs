@@ -23,7 +23,7 @@ using System.IO;
 using System.Collections.Generic;
 using Gtk;
 using LongoMatch.DB;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 using LongoMatch.Gui;
 using Mono.Unix;
 
