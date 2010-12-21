@@ -25,11 +25,6 @@ SOURCES = \
 	Compat/0.0/Time/Time.cs \
 	Compat/0.0/Time/TimeNode.cs \
 	DB/DataBase.cs \
-	DB/Project.cs \
-	DB/ProjectDescription.cs\
-	DB/Sections.cs \
-	DB/TagsTemplate.cs \
-	DB/TeamTemplate.cs \
 	gtk-gui/generated.cs \
 	gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs \
@@ -56,7 +51,6 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.Migrator.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.NewProjectDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.OpenProjectDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs \
@@ -101,7 +95,6 @@ SOURCES = \
 	Gui/Dialog/EntryDialog.cs \
 	Gui/Dialog/FramesCaptureProgressDialog.cs \
 	Gui/Dialog/HotKeySelectorDialog.cs \
-	Gui/Dialog/Migrator.cs \
 	Gui/Dialog/NewProjectDialog.cs \
 	Gui/Dialog/OpenProjectDialog.cs \
 	Gui/Dialog/PlayersSelectionDialog.cs \
@@ -138,16 +131,23 @@ SOURCES = \
 	Main.cs \
 	Playlist/IPlayList.cs \
 	Playlist/PlayList.cs \
-	Time/Tag.cs \
-	Time/Drawing.cs\
-	Time/HotKey.cs \
-	Time/MediaTimeNode.cs \
-	Time/PixbufTimeNode.cs \
-	Time/Player.cs \
-	Time/PlayListTimeNode.cs \
-	Time/SectionsTimeNode.cs \
-	Time/Time.cs \
-	Time/TimeNode.cs \
+	Store/Category.cs \
+	Store/Drawing.cs \
+	Store/DrawingsList.cs \
+	Store/HotKey.cs \
+	Store/PixbufTimeNode.cs \
+	Store/Play.cs \
+	Store/PlayListPlay.cs \
+	Store/Player.cs \
+	Store/Project.cs \
+	Store/ProjectDescription.cs \
+	Store/Tag.cs \
+	Store/Time.cs \
+	Store/TimeNode.cs \
+	Store/Templates/CategoriesTemplate.cs \
+	Store/Templates/TagsTemplate.cs \
+	Store/Templates/TeamTemplate.cs \
+	Store/Templates/Template.cs \
 	Updates/Updater.cs \
 	Updates/XmlUpdateParser.cs \
 	Utils/ProjectUtils.cs
@@ -158,7 +158,6 @@ IMAGES = images/longomatch.png \
 LOGO = images/logo_48x48.png
 
 RESOURCES = \
-	gtk-gui/objects.xml \
 	gtk-gui/gui.stetic\
 	images/longomatch.png\
 	images/stock_draw-line-45.png\
