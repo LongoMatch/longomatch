@@ -29,7 +29,7 @@ namespace LongoMatch.DB
 {
 	[Serializable]
 
-	public class TeamTemplate
+	public class TeamTemplate: Template
 	{
 		private List<Player> playersList;
 
@@ -72,28 +72,17 @@ namespace LongoMatch.DB
 			playersList.Add(player);
 		}
 
-		public void Save(string filepath) {
-			IFormatter formatter = new BinaryFormatter();
-			Stream stream = new FileStream(filepath, FileMode.Create, FileAccess.Write, FileShare.None);
-			formatter.Serialize(stream, this);
-			stream.Close();
-		}
-
-		public static TeamTemplate LoadFromFile(string filepath) {
-			IFormatter formatter = new BinaryFormatter();
-			Stream stream = new FileStream(filepath, FileMode.Open, FileAccess.Read, FileShare.Read);
-			TeamTemplate obj = (TeamTemplate) formatter.Deserialize(stream);
-			stream.Close();
-			return obj;
-		}
-
-		public static TeamTemplate DefautlTemplate(int playersCount) {
+		public static TeamTemplate DefaultTemplate(int playersCount) {
 			TeamTemplate defaultTemplate = new TeamTemplate();
-			defaultTemplate.CreateDefaultTemplate(playersCount);
+			defaultTemplate.FillDefaultTemplate(playersCount);
 			return defaultTemplate;
 		}
 		
-		private void CreateDefaultTemplate(int playersCount) {
+		public static TeamTemplate Load(string filePath) {
+			return Load<TeamTemplate>(filePath);
+		}
+		
+		private void FillDefaultTemplate(int playersCount) {
 			for (int i=1; i<=playersCount;i++) {
 				playersList.Add(new Player{
 					Name = "Player " + i,

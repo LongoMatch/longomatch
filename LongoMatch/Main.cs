@@ -140,7 +140,7 @@ namespace LongoMatch
 
 			fConfig = System.IO.Path.Combine(TemplatesDir(),"default.tem");
 			if (!System.IO.File.Exists(fConfig)) {
-				TeamTemplate tt = TeamTemplate.DefautlTemplate(20);
+				TeamTemplate tt = TeamTemplate.DefaultTemplate(20);
 				tt.Save(fConfig);
 			}
 		}

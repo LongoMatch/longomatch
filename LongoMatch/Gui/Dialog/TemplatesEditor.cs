@@ -115,7 +115,7 @@ namespace LongoMatch.Gui.Dialog
 		}
 
 		private void UpdateTeamTemplate() {
-			SetTeamTemplate(TeamTemplate.LoadFromFile(templateName));
+			SetTeamTemplate(TeamTemplate.Load(templateName));
 			SetSensitive(true);
 		}
 
@@ -219,7 +219,7 @@ namespace LongoMatch.Gui.Dialog
 					CategoriesWriter.CreateNewTemplate(name+fileExtension);
 				}
 				else {
-					TeamTemplate tt = TeamTemplate.DefautlTemplate(count);
+					TeamTemplate tt = TeamTemplate.DefaultTemplate(count);
 					tt.Save(System.IO.Path.Combine(MainClass.TemplatesDir(), name+fileExtension));
 				}
 

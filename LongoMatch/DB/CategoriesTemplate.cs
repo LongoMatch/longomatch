@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gdk;
+using LongoMatch.Common;
 using LongoMatch.TimeNodes;
 
 namespace LongoMatch.DB
@@ -35,7 +36,7 @@ namespace LongoMatch.DB
 	/// The <see cref="LongoMatch.DB.Project"/> must handle all the changes
 	/// </summary>
 	[Serializable]
-	public class Categories
+	public class Categories: Template
 	{
 		private List<Category> categoriesList;
 
@@ -172,6 +173,33 @@ namespace LongoMatch.DB
 			return (from c in categoriesList
 			        orderby c.Position
 			        select c.Stop).ToList();
+		}
+		
+		public static Categories Load(string filePath) {
+			return Load<Categories>(filePath);
+		}
+		
+		public static Categories DefaultTemplate() {
+			Categories defaultTemplate = new Categories();
+			defaultTemplate.FillDefaultTemplate();
+			return defaultTemplate;
+		}
+
+		private void FillDefaultTemplate() {
+			Color c = new Color((Byte)255, (Byte)0, (Byte)0);
+			HotKey h = new HotKey();
+			
+			for (int i=1; i<=20;i++) {
+				AddCategory(new Category{
+					Name = "Category " + i,
+					Color = c, 
+					Start = new Time{Seconds = 10},
+					Stop = new Time {Seconds = 10},
+					SortMethod = SortMethodType.SortByStartTime,
+					HotKey = h,
+					Position = i-1,
+				});
+			}
 		}
 	}
 }

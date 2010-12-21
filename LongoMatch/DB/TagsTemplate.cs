@@ -24,7 +24,7 @@ namespace LongoMatch.DB
 {
 
 	[Serializable]
-	public class TagsTemplate
+	public class TagsTemplate: Template
 	{
 		List<Tag> tagsList;
 		public TagsTemplate()
@@ -54,6 +54,19 @@ namespace LongoMatch.DB
 		
 		public IEnumerator<Tag> GetEnumerator(){
 			return tagsList.GetEnumerator();
+		}
+		public static TagsTemplate DefaultTemplate() {
+			TagsTemplate defaultTemplate = new TagsTemplate();
+			defaultTemplate.FillDefaultTemplate();
+			return defaultTemplate;
+		}
+		
+		public static TagsTemplate Load(string filePath) {
+			return Load<TagsTemplate>(filePath);
+		}
+		
+		private void FillDefaultTemplate() {
+			//FIXME: To implement
 		}
 	}
 }

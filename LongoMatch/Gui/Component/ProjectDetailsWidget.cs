@@ -437,9 +437,9 @@ namespace LongoMatch.Gui.Component
 			}
 			localcombobox.Active = index;
 			visitorcombobox.Active = index;
-			LocalTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(),
+			LocalTeamTemplate = TeamTemplate.Load(System.IO.Path.Combine(MainClass.TemplatesDir(),
 			                                                                     LocalTeamTemplateFile));
-			VisitorTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(),
+			VisitorTeamTemplate = TeamTemplate.Load(System.IO.Path.Combine(MainClass.TemplatesDir(),
 			                                                                       VisitorTeamTemplateFile));
 		}
 		
@@ -554,14 +554,14 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnVisitorcomboboxChanged(object sender, System.EventArgs e)
 		{
-			VisitorTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(), 
+			VisitorTeamTemplate = TeamTemplate.Load(System.IO.Path.Combine(MainClass.TemplatesDir(), 
 			                                                                       VisitorTeamTemplateFile));
 		}
 
 
 		protected virtual void OnLocalcomboboxChanged(object sender, System.EventArgs e)
 		{
-			LocalTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(), 
+			LocalTeamTemplate = TeamTemplate.Load(System.IO.Path.Combine(MainClass.TemplatesDir(), 
 			                                                                     LocalTeamTemplateFile));
 		}
 
