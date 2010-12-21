@@ -8,7 +8,6 @@
     <AsmRefVar />
     <ProjectRefVar />
   </MonoDevelop.Autotools.MakefileInfo>
-  <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="UseParentPolicy" />
   <Configurations active="Release">
     <Configuration name="Debug" SourceDirectory="." ctype="CProjectConfiguration">
       <Output directory="../LongoMatch/bin/Debug" output="libcesarplayer.dll" />
@@ -41,7 +40,6 @@
     <File subtype="Code" buildaction="Compile" name="gstvideowidget.c" />
     <File subtype="Code" buildaction="Nothing" name="gstvideowidget.h" />
     <File subtype="Code" buildaction="Nothing" name="macros.h" />
-    <File subtype="Code" buildaction="Compile" name="main.c" />
     <File subtype="Code" buildaction="Compile" name="video-utils.c" />
     <File subtype="Code" buildaction="Nothing" name="video-utils.h" />
   </Contents>
