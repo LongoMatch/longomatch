@@ -38,6 +38,9 @@ namespace LongoMatch.Store
 
 		#region Constructors
 		public Play(){
+			LocalPlayers = new List<Player>();
+			VisitorPlayers = new List<Player>();
+			Tags = new List<Tag>();
 		}
 		#endregion
 
@@ -182,7 +185,7 @@ namespace LongoMatch.Store
 		public string ToString (string team)
 		{
 			String[] tags = new String[Tags.Count];
-			
+		
 			for (int i=0; i<Tags.Count; i++)
 				tags[i] = Tags[i].Value;
 			
