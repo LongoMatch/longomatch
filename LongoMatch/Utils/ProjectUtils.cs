@@ -267,8 +267,6 @@ namespace LongoMatch.Utils
 			IFramesCapturer capturer;
 			BusyDialog dialog;
 			
-			Console.WriteLine("start thumbnails");
-			
 			dialog = new BusyDialog();
 			dialog.TransientFor = window;
 			dialog.Message = Catalog.GetString("Creating video thumbnails. This can take a while."); 

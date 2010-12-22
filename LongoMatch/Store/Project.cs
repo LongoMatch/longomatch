@@ -187,7 +187,6 @@ namespace LongoMatch.Store
 		}
 		
 		public List<Play> PlaysInCategory (Category category){
-			Console.WriteLine ("Plays are " + playsList.Count);
 			return (from play in playsList
 			        where play.Category.UUID == category.UUID
 			        select play).ToList();

@@ -416,7 +416,6 @@ namespace LongoMatch.Gui.Component
 			tagscombobox.Active = index;
 			var reader = new CategoriesReader(System.IO.Path.Combine(MainClass.TemplatesDir(),SectionsFile));
 			Categories = reader.GetCategories();
-			Console.WriteLine (Categories.Count);
 		}
 
 		private void FillTeamsTemplate() {
@@ -509,7 +508,6 @@ namespace LongoMatch.Gui.Component
 						md.Icon=Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Dialog);
 						md.Show();
 						mFile = LongoMatch.Video.Utils.PreviewMediaFile.GetMediaFile(filename);
-						Console.WriteLine (mFile.Length.ToString());
 						if (!mFile.HasVideo || mFile.VideoCodec == "")
 							throw new Exception(Catalog.GetString("This file doesn't contain a video stream."));
 						if (mFile.HasVideo && mFile.Length == 0)
@@ -569,7 +567,6 @@ namespace LongoMatch.Gui.Component
 		{
 			ProjectTemplateEditorDialog ted = new ProjectTemplateEditorDialog();
 			ted.TransientFor = (Window)Toplevel;
-			Console.WriteLine (Categories.Count);
 			ted.Categories = Categories;
 			ted.Project = project;
 			ted.CanExport = Use == ProjectType.EditProject;
