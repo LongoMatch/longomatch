@@ -18,12 +18,13 @@
 
 using System;
 using System.Collections.Generic;
+using LongoMatch.Common;
 
 namespace LongoMatch.Store.Templates
 {
 
 	[Serializable]
-	public class TagsTemplate: Template
+	public class TagsTemplate: SerializableObject
 	{
 		List<Tag> tagsList;
 		public TagsTemplate()

@@ -167,10 +167,6 @@ namespace LongoMatch.Gui.Component
 			Edited = true;
 		}
 		
-		private void SaveTemplate(string templateName){
-			CategoriesWriter.UpdateTemplate(templateName+".sct", Categories);
-		}
-
 		protected virtual void OnNewAfter(object sender, EventArgs args) {
 			AddCategory(categories.CategoriesList.IndexOf(selectedCategories[0])+1);
 		}
@@ -233,10 +229,11 @@ namespace LongoMatch.Gui.Component
 					                                                       "Do you want to overwrite it ?")
 					                                   );
 					if (md.Run() == (int)ResponseType.Yes)
-						SaveTemplate(dialog.Text);
+						Categories.Save(dialog.Text);
 					md.Destroy();
 				}					
-				else SaveTemplate(dialog.Text);
+				else
+					Categories.Save(dialog.Text);
 			}	
 			dialog.Destroy();
 		}

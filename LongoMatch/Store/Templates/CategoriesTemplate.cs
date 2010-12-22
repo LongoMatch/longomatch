@@ -35,7 +35,7 @@ namespace LongoMatch.Store.Templates
 	/// The <see cref="LongoMatch.DB.Project"/> must handle all the changes
 	/// </summary>
 	[Serializable]
-	public class Categories: Template
+	public class Categories: SerializableObject
 	{
 		private List<Category> categoriesList;
 

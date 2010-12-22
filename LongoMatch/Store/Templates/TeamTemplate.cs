@@ -19,12 +19,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LongoMatch.Common;
 
 namespace LongoMatch.Store.Templates
 {
 	[Serializable]
 
-	public class TeamTemplate: Template
+	public class TeamTemplate: SerializableObject
 	{
 		private List<Player> playersList;
 

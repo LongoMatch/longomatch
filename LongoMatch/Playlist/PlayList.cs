@@ -26,31 +26,28 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 using Gtk;
 using LongoMatch.Store;
+using LongoMatch.Common;
 using Mono.Unix;
 namespace LongoMatch.Playlist
 {
 
 
-	public class PlayList: IPlayList
+	public class PlayList: SerializableObject,IPlayList
 	{
 
 		private  List<PlayListPlay> list;
-		private static XmlSerializer ser;
 		private string filename = null;
 		private int indexSelection = 0;
 		private Version version;
 
 		#region Constructors
 		public PlayList() {
-			ser = new XmlSerializer(typeof(List<PlayListPlay>),new Type[] {typeof(PlayListPlay)});
 			list = new List<PlayListPlay>();
 			version = new Version(1,0);
 		}
 
 		public PlayList(string file)
 		{
-			ser = new XmlSerializer(typeof(List<PlayListPlay>),new Type[] {typeof(PlayListPlay)});
-
 			//For new Play List
 			if (!System.IO.File.Exists(file)) {
 				list = new List<PlayListPlay>();
@@ -85,35 +82,18 @@ namespace LongoMatch.Playlist
 		#endregion
 
 		#region Public methods
-
-		public void Load(string file) {
-			using(FileStream strm = new FileStream(file, FileMode.Open, FileAccess.Read))
-			{
-				try {
-					list = ser.Deserialize(strm) as List<PlayListPlay>;
-				}
-				catch {
-					throw new Exception(Catalog.GetString("The file you are trying to load is not a valid playlist"));
-				}
-			}
-			foreach (PlayListPlay plNode in list) {
-				plNode.Valid = System.IO.File.Exists(plNode.MediaFile.FilePath);
-			}
-			filename = file;
+		public void Save(){
+			Save(File);
 		}
 
-		public void Save() {
-			Save(filename);
+		public void Save(string filePath){
+			Save(this, filePath);
 		}
-
-		public void Save(string file) {
-			file = Path.ChangeExtension(file,"lgm");
-			using(FileStream strm = new FileStream(file, FileMode.Create, FileAccess.Write))
-			{
-				ser.Serialize(strm, list);
-			}
+		
+		public static PlayList Load(string filePath) {
+			return Load<PlayList>(filePath);
 		}
-
+		
 		public bool isLoaded() {
 			return filename != null;
 		}

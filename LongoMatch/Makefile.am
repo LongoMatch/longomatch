@@ -24,6 +24,7 @@ SOURCES = \
 	Compat/0.0/Time/SectionsTimeNode.cs \
 	Compat/0.0/Time/Time.cs \
 	Compat/0.0/Time/TimeNode.cs \
+	Common/SerializableObject.cs \
 	DB/DataBase.cs \
 	gtk-gui/generated.cs \
 	gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs \
@@ -125,8 +126,6 @@ SOURCES = \
 	Handlers/HotKeysManager.cs \
 	Handlers/VideoDrawingsManager.cs\
 	IO/CSVExport.cs \
-	IO/SectionsReader.cs \
-	IO/SectionsWriter.cs \
 	IO/XMLReader.cs \
 	Main.cs \
 	Playlist/IPlayList.cs \
@@ -147,7 +146,6 @@ SOURCES = \
 	Store/Templates/CategoriesTemplate.cs \
 	Store/Templates/TagsTemplate.cs \
 	Store/Templates/TeamTemplate.cs \
-	Store/Templates/Template.cs \
 	Updates/Updater.cs \
 	Updates/XmlUpdateParser.cs \
 	Utils/ProjectUtils.cs

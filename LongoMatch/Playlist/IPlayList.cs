@@ -30,7 +30,6 @@ namespace LongoMatch.Playlist {
 		int Count {
 			get;
 		}
-		void Load(string path);
 		
 		void Save(string path);
 		

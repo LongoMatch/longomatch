@@ -21,7 +21,6 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using LongoMatch.IO;
 using LongoMatch.Store.Templates;
 using Mono.Unix;
 
@@ -107,14 +106,14 @@ namespace LongoMatch.Gui.Dialog
 		}
 
 		private void UpdateCategories() {
-			CategoriesReader sr = new CategoriesReader(templateName);
-			selectedCategoriesTemplate = sr.GetCategories();
-			SetCategoriesTemplate(sr.GetCategories());
+			selectedCategoriesTemplate = Categories.Load(templateName);
+			SetCategoriesTemplate(selectedCategoriesTemplate);
 			SetSensitive(true);
 		}
 
 		private void UpdateTeamTemplate() {
-			SetTeamTemplate(TeamTemplate.Load(templateName));
+			selectedTeamTemplate = TeamTemplate.Load(templateName);
+			SetTeamTemplate(selectedTeamTemplate);
 			SetSensitive(true);
 		}
 
@@ -148,7 +147,7 @@ namespace LongoMatch.Gui.Dialog
 		private void SaveTemplate() {
 			if (useType == UseType.CategoriesTemplate) {
 				selectedCategoriesTemplate = sectionspropertieswidget1.Categories;
-				CategoriesWriter.UpdateTemplate(templateName,selectedCategoriesTemplate);
+				selectedCategoriesTemplate.Save(templateName);
 			}
 			else {
 				selectedTeamTemplate = teamtemplatewidget1.TeamTemplate;
@@ -215,7 +214,8 @@ namespace LongoMatch.Gui.Dialog
 						System.IO.File.Copy(System.IO.Path.Combine(MainClass.TemplatesDir(),ed.SelectedTemplate),
 						                    System.IO.Path.Combine(MainClass.TemplatesDir(),name+fileExtension));
 				else if (useType == UseType.CategoriesTemplate){
-					CategoriesWriter.CreateNewTemplate(name+fileExtension);
+					Categories cat = Categories.DefaultTemplate();
+					cat.Save(name+fileExtension);
 				}
 				else {
 					TeamTemplate tt = TeamTemplate.DefaultTemplate(count);
