@@ -68,7 +68,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Clear the drawing list
 		/// </summary>
-		protected void Clear() {
+		public void Clear() {
 			drawingsList.Clear();
 		}
 

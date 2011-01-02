@@ -182,9 +182,7 @@ namespace LongoMatch.Gui.Component
 						CairoUtils.DrawRoundedRectangle(g,selected.StartFrame/pixelRatio,3,
 						                                selected.TotalFrames/pixelRatio,height-6,
 						                                SECTION_HEIGHT/7, color, borderColor);
-						if (selected.HasKeyFrame) {
-							g.Color = new Cairo.Color(0, 0, 1, 1);
-							g.LineWidth = 3;
+						if (selected.HasDrawing) {
 							g.MoveTo(selected.KeyFrame/pixelRatio,3);
 							g.LineTo(selected.KeyFrame/pixelRatio,SECTION_HEIGHT-3);
 							g.StrokePreserve();
@@ -318,7 +316,7 @@ namespace LongoMatch.Gui.Component
 			}
 			//Moving Start time
 			else if (candidateStart) {
-				if (candidateTN.HasKeyFrame && pos > 0 && pos > candidateTN.KeyFrame-10)
+				if (candidateTN.HasDrawings && pos > 0 && pos > candidateTN.KeyFrame-10)
 					candidateTN.StartFrame = candidateTN.KeyFrame-10;
 				//Check not to go under start time nor 0
 				else if (pos  > 0 && pos < candidateTN.StopFrame-10)
@@ -328,7 +326,7 @@ namespace LongoMatch.Gui.Component
 			}
 			//Moving Stop time
 			else if (!candidateStart) {
-				if (candidateTN.HasKeyFrame &&  pos < candidateTN.KeyFrame+10)
+				if (candidateTN.HasDrawings &&  pos < candidateTN.KeyFrame+10)
 					candidateTN.StopFrame = candidateTN.KeyFrame+10;
 				//Check not to go under start time nor 0
 				else if (pos < frames && pos > candidateTN.StartFrame+10)

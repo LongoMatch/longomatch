@@ -40,6 +40,7 @@ namespace LongoMatch.Store
 		public Play(){
 			LocalPlayers = new List<Player>();
 			VisitorPlayers = new List<Player>();
+			Drawings = new DrawingsList();
 			Tags = new List<Tag>();
 		}
 		#endregion
@@ -89,7 +90,7 @@ namespace LongoMatch.Store
 		/// </summary>
 		public uint KeyFrame {
 			get {
-				if (HasKeyFrame)
+				if (HasDrawings)
 					return (uint) KeyFrameDrawing.RenderTime * Fps / 1000;
 				else return 0;
 			}
@@ -111,15 +112,27 @@ namespace LongoMatch.Store
 		public List<Player> VisitorPlayers {get; set;}
 
 		/// <summary>
-		/// Get/Set the key frame's <see cref="LongoMatch.Store.Drawing"/>
+		/// List of drawings for this play
 		/// </summary>
-		public Drawing KeyFrameDrawing {get; set;}
-
+		public DrawingsList Drawings {get; set;}
+		
+		/* FIXME: Keep this until we support multiple drawings */
+		public Drawing KeyFrameDrawing {
+			get{
+				if (Drawings.Count > 0)
+					return Drawings.List[0];
+				else
+					return null;
+			}
+		}
+		
 		/// <summary>
-		/// Get wether the play has defined a key frame
+		/// Get wether the play has at least a frame drawing
 		/// </summary>
-		public bool HasKeyFrame {
-			get {return KeyFrameDrawing != null;}
+		public bool HasDrawings {
+			get {
+				return Drawings.Count > 0;
+			}
 		}
 		
 		/// <summary>

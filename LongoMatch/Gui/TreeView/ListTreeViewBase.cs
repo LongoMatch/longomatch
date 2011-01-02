@@ -339,7 +339,7 @@ namespace LongoMatch.Gui.Component
 				TreePath[] paths = Selection.GetSelectedRows();
 				for (int i=0; i<paths.Length; i++){	
 					Play tNode = (Play)GetValueFromPath(paths[i]);
-					tNode.KeyFrameDrawing = null;
+					tNode.Drawings.Clear();
 				}
 				// Refresh the thumbnails
 				QueueDraw();

@@ -129,7 +129,7 @@ namespace LongoMatch.Gui.Component
 				if (paths.Length == 1) {
 					TimeNode selectedTimeNode = GetValueFromPath(paths[0]) as TimeNode;
 					if (selectedTimeNode is Play) {
-						deleteKeyFrame.Sensitive = (selectedTimeNode as Play).KeyFrameDrawing != null;
+						deleteKeyFrame.Sensitive = (selectedTimeNode as Play).HasDrawings;
 						MultiSelectMenu(false);
 						menu.Popup();
 					} else {
