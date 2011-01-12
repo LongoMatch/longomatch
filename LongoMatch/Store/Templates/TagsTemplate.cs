@@ -63,15 +63,5 @@ namespace LongoMatch.Store.Templates
 		public static TagsTemplate Load(string filePath) {
 			return Load<TagsTemplate>(filePath);
 		}
-		
-		public static TagsTemplate DefaultTemplate() {
-			TagsTemplate defaultTemplate = new TagsTemplate();
-			defaultTemplate.FillDefaultTemplate();
-			return defaultTemplate;
-		}
-		
-		private void FillDefaultTemplate() {
-			//FIXME: To implement
-		}
 	}
 }
