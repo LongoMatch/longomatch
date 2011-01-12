@@ -19,6 +19,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Gdk;
 using Mono.Unix;
@@ -41,23 +42,9 @@ namespace LongoMatch.Store
 		#endregion
 		public Category (){
 			_UUID = System.Guid.NewGuid();
+			SubCategories = new List<SubCategory>();
 		}
-		// this constructor is automatically called during deserialization
-		public Category(SerializationInfo info, StreamingContext context) {
-			_UUID = (Guid)info.GetValue("uuid", typeof(Guid));
-			Name = info.GetString("name");
-			Start = (Time)info.GetValue("start", typeof(Time));
-			Stop = (Time)info.GetValue("stop", typeof(Time));
-			HotKey = (HotKey)info.GetValue("hotkey", typeof(HotKey));
-			Position = info.GetInt32("position");
-			SortMethod = (SortMethodType)info.GetValue("sort_method", typeof(SortMethodType));
-			// read 'red', 'blue' and 'green' values and convert it to Gdk.Color
-			Color c = new Color();
-			c.Red = (ushort)info.GetValue("red", typeof(ushort));
-			c.Green = (ushort)info.GetValue("green", typeof(ushort));
-			c.Blue = (ushort)info.GetValue("blue", typeof(ushort));
-			Color = c;
-		}
+		
 		#region  Properties
 		
 		/// <summary>
@@ -101,6 +88,26 @@ namespace LongoMatch.Store
 			set;
 		}
 		
+		public List<SubCategory> SubCategories {
+			get;
+			set;
+		}
+		
+		public bool FastTagLocalPlayers {
+			get;
+			set;
+		}
+		
+		public bool FastTagVisitorPlayers {
+			get;
+			set;
+		}
+		
+		public bool FastTagSubCategories {
+			get;
+			set;
+		}
+		
 		/// <summary>
 		/// Sort method string used for the UI
 		/// </summary>
@@ -131,6 +138,27 @@ namespace LongoMatch.Store
 			}
 		}
 		
+		// this constructor is automatically called during deserialization
+		public Category(SerializationInfo info, StreamingContext context) {
+			_UUID = (Guid)info.GetValue("uuid", typeof(Guid));
+			Name = info.GetString("name");
+			Start = (Time)info.GetValue("start", typeof(Time));
+			Stop = (Time)info.GetValue("stop", typeof(Time));
+			HotKey = (HotKey)info.GetValue("hotkey", typeof(HotKey));
+			SubCategories = (List<SubCategory>)info.GetValue("subcategories", typeof(List<SubCategory>));
+			Position = info.GetInt32("position");
+			SortMethod = (SortMethodType)info.GetValue("sort_method", typeof(SortMethodType));
+			FastTagLocalPlayers = info.GetBoolean("fast_local_players");
+			FastTagVisitorPlayers = info.GetBoolean("fast_visitor_players");
+			FastTagSubCategories = info.GetBoolean("fast_sub_cat");
+			// read 'red', 'blue' and 'green' values and convert it to Gdk.Color
+			Color c = new Color();
+			c.Red = (ushort)info.GetValue("red", typeof(ushort));
+			c.Green = (ushort)info.GetValue("green", typeof(ushort));
+			c.Blue = (ushort)info.GetValue("blue", typeof(ushort));
+			Color = c;
+		}
+		
 		// this method is automatically called during serialization
 		public void GetObjectData(SerializationInfo info, StreamingContext context) {
 			info.AddValue("uuid", UUID);
@@ -139,10 +167,14 @@ namespace LongoMatch.Store
 			info.AddValue("stop", Stop);
 			info.AddValue("hotkey", HotKey);
 			info.AddValue("position", Position);
+			info.AddValue("subcategories", SubCategories);
 			info.AddValue("red", Color.Red);
 			info.AddValue("green", Color.Green);
 			info.AddValue("blue", Color.Blue);
 			info.AddValue("sort_method", SortMethod);
+			info.AddValue("fast_local_players", FastTagLocalPlayers);
+			info.AddValue("fast_visitor_players", FastTagVisitorPlayers);
+			info.AddValue("fast_sub_cat", FastTagSubCategories);
 		}
 		#endregion	
 	}
