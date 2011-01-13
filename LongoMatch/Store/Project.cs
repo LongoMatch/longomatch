@@ -59,7 +59,6 @@ namespace LongoMatch.Store
 			Categories = new Categories();
 			LocalTeamTemplate = new TeamTemplate();
 			VisitorTeamTemplate = new TeamTemplate();
-			Tags = new TagsTemplate();
 		}
 		#endregion
 
@@ -90,11 +89,6 @@ namespace LongoMatch.Store
 		/// Visitor team template
 		/// </value>
 		public TeamTemplate VisitorTeamTemplate {
-			get;
-			set;
-		}
-		
-		public TagsTemplate Tags {
 			get;
 			set;
 		}
@@ -195,6 +189,13 @@ namespace LongoMatch.Store
 		public List<Play> AllPlays (){
 			return (from play in playsList
 			        select play).ToList();
+		}
+		
+		public List<Tag> Tags {
+			get {
+				/* FIXME: Fix that when I have decide what to do with tags*/
+				return new List<Tag>();
+			}
 		}
 		
 		/// <summary>
