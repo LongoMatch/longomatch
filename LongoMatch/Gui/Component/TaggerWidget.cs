@@ -38,24 +38,6 @@ namespace LongoMatch.Gui.Component
 			table1.NColumns = 5;
 		}
 		
-		public TagsTemplate ProjectsTags{
-			set{
-				int tagsCount = value.Count();
-				scrolledwindow1.Visible = tagsCount > 0;
-				label1.Visible = !(tagsCount > 0);
-							
-				tagsDict.Clear();				
-				
-				foreach (Widget w in table1.AllChildren){
-					w.Unrealize();
-					table1.Remove(w);
-				}
-				
-				for(int i=0;i<tagsCount;i++){
-					AddTagWidget(value.GetTag(i), false);			
-				}
-			}
-		}		
 		
 		public List<Tag> Tags{
 			set{

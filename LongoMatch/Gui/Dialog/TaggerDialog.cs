@@ -34,19 +34,5 @@ namespace LongoMatch.Gui.Dialog
 			buttonOk.Visible = false;
 		}
 		
-		public TagsTemplate ProjectTags{
-			set{
-				taggerwidget1.ProjectsTags = value;
-			}
-		}
-		
-		public List<Tag> Tags{
-			set{
-				taggerwidget1.Tags = value;
-			}
-			get{
-				return taggerwidget1.Tags;
-			}
-		}
 	}
 }
