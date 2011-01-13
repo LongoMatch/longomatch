@@ -24,44 +24,37 @@ namespace LongoMatch.Store.Templates
 {
 
 	[Serializable]
-	public class TagsTemplate: SerializableObject
+	public class SubCategoriesTemplate: SerializableObject
 	{
-		List<Tag> tagsList;
-		public TagsTemplate()
+		List<SubCategory> subCategories;
+		
+		public SubCategoriesTemplate()
 		{
-			tagsList = new List<Tag>();
+			subCategories = new List<SubCategory>();
 		}
 
-		public bool AddTag(Tag tag) {			
-			if (tagsList.Contains(tag))
+		public bool AddSubcategory(SubCategory subCat) {
+			if (subCategories.Contains(subCat))
 				return false;
 			else
-				tagsList.Add(tag);
+				subCategories.Add(subCat);
 			return true;
 		}
 
-		public bool RemoveTag (Tag tag) {
-			return tagsList.Remove(tag);
-		}
-		
-		public Tag GetTag(int index){
-			return tagsList[index];
+		public bool RemoveSubCategory (SubCategory subCat) {
+			return subCategories.Remove(subCat);
 		}
 		
 		public int Count (){
-			return tagsList.Count;
-		}
-		
-		public IEnumerator<Tag> GetEnumerator(){
-			return tagsList.GetEnumerator();
+			return subCategories.Count;
 		}
 		
 		public void Save(string filePath){
 			Save(this, filePath);
 		}
 		
-		public static TagsTemplate Load(string filePath) {
-			return Load<TagsTemplate>(filePath);
+		public static SubCategoriesTemplate Load(string filePath) {
+			return Load<SubCategoriesTemplate>(filePath);
 		}
 	}
 }

@@ -197,10 +197,11 @@
     <File subtype="Code" buildaction="Compile" name="Store/TimeNode.cs" />
     <File subtype="Directory" buildaction="Compile" name="Time" />
     <File subtype="Code" buildaction="Compile" name="Store/Templates/CategoriesTemplate.cs" />
-    <File subtype="Code" buildaction="Compile" name="Store/Templates/TagsTemplate.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Templates/TeamTemplate.cs" />
     <File subtype="Code" buildaction="Compile" name="IO/XMLReader.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/SerializableObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/SubCategory.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/Templates/SubCategoriesTemplates.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
