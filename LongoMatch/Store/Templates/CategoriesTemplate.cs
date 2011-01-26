@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gdk;
+using Mono.Unix;
 using LongoMatch.Common;
 
 namespace LongoMatch.Store.Templates
@@ -192,16 +193,49 @@ namespace LongoMatch.Store.Templates
 			Color c = new Color((Byte)255, (Byte)0, (Byte)0);
 			HotKey h = new HotKey();
 			
+						
 			for (int i=1; i<=20;i++) {
-				AddCategory(new Category{
+				PlayerSubCategory localplayers, visitorplayers;
+				TeamSubCategory team;
+				List<Team> teams, lplayers, vplayers;
+				
+				teams = new List<Team>();
+				teams.Add(Team.NONE);
+				teams.Add(Team.LOCAL);
+				teams.Add(Team.NONE);
+				team = new TeamSubCategory {
+					Name = Catalog.GetString("Team"),
+					Options = teams
+				};
+				
+				lplayers = new List<Team>();
+				lplayers.Add(Team.LOCAL);
+				localplayers = new PlayerSubCategory {
+					Name = Catalog.GetString("Local Team Players"),
+					Options = lplayers,
+				};
+				
+				vplayers = new List<Team>();
+				vplayers.Add(Team.VISITOR);
+				visitorplayers = new PlayerSubCategory {
+					Name = Catalog.GetString("Visitor Team Players"),
+					Options = vplayers,
+				};
+				
+				Category cat =  new Category{
 					Name = "Category " + i,
-					Color = c, 
+					Color = c,
 					Start = new Time{Seconds = 10},
 					Stop = new Time {Seconds = 10},
 					SortMethod = SortMethodType.SortByStartTime,
 					HotKey = h,
 					Position = i-1,
-				});
+					FastTagSubCategories = true
+				};
+				cat.SubCategories.Add(team);
+				cat.SubCategories.Add(localplayers);
+				cat.SubCategories.Add(visitorplayers);
+				AddCategory(cat);
 			}
 		}
 	}
