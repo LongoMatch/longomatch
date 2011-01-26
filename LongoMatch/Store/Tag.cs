@@ -17,6 +17,7 @@
 //
 
 using System;
+using LongoMatch.Common;
 
 namespace LongoMatch.Store
 {
@@ -27,7 +28,7 @@ namespace LongoMatch.Store
 		public Tag() {
 		}
 
-		public string SubCategory {
+		public string Name {
 			get;
 			set;
 		}
@@ -36,23 +37,29 @@ namespace LongoMatch.Store
 			get;
 			set;
 		}
-
-		public bool Equals(Tag tagComp) {
-			return (SubCategory == tagComp.SubCategory && Value == tagComp.Value);
+	}
+	
+	[Serializable]
+	public class PlayerTag:Tag
+	{
+		public PlayerTag() {
 		}
-
-		public override bool Equals(object obj)
-		{
-			Tag tag= obj as Tag;
-			if (tag != null)
-				return Equals(tag);
-			else
-				return false;
+		
+		public new Player Value {
+			get;
+			set;
 		}
-
-		public override int GetHashCode()
-		{
-			return SubCategory.GetHashCode() + Value.GetHashCode();
+	}
+	
+	[Serializable]
+	public class TeamTag:Tag
+	{
+		public TeamTag() {
+		}
+		
+		public new Team Value {
+			get;
+			set;
 		}
 	}
 }
