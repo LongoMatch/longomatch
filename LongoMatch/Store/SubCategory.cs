@@ -39,6 +39,11 @@ namespace LongoMatch.Store
 			get;
 			set;
 		}
+		
+		public bool FastTag {
+			get;
+			set;
+		}
 	}
 	
 	public class TagSubCategory: SubCategory

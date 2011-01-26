@@ -93,21 +93,6 @@ namespace LongoMatch.Store
 			set;
 		}
 		
-		public bool FastTagLocalPlayers {
-			get;
-			set;
-		}
-		
-		public bool FastTagVisitorPlayers {
-			get;
-			set;
-		}
-		
-		public bool FastTagSubCategories {
-			get;
-			set;
-		}
-		
 		/// <summary>
 		/// Sort method string used for the UI
 		/// </summary>
@@ -148,9 +133,6 @@ namespace LongoMatch.Store
 			SubCategories = (List<SubCategory>)info.GetValue("subcategories", typeof(List<SubCategory>));
 			Position = info.GetInt32("position");
 			SortMethod = (SortMethodType)info.GetValue("sort_method", typeof(SortMethodType));
-			FastTagLocalPlayers = info.GetBoolean("fast_local_players");
-			FastTagVisitorPlayers = info.GetBoolean("fast_visitor_players");
-			FastTagSubCategories = info.GetBoolean("fast_sub_cat");
 			// read 'red', 'blue' and 'green' values and convert it to Gdk.Color
 			Color c = new Color();
 			c.Red = (ushort)info.GetValue("red", typeof(ushort));
@@ -172,9 +154,6 @@ namespace LongoMatch.Store
 			info.AddValue("green", Color.Green);
 			info.AddValue("blue", Color.Blue);
 			info.AddValue("sort_method", SortMethod);
-			info.AddValue("fast_local_players", FastTagLocalPlayers);
-			info.AddValue("fast_visitor_players", FastTagVisitorPlayers);
-			info.AddValue("fast_sub_cat", FastTagSubCategories);
 		}
 		#endregion	
 	}

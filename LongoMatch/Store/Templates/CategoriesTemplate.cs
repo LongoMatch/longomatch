@@ -230,7 +230,6 @@ namespace LongoMatch.Store.Templates
 					SortMethod = SortMethodType.SortByStartTime,
 					HotKey = h,
 					Position = i-1,
-					FastTagSubCategories = true
 				};
 				cat.SubCategories.Add(team);
 				cat.SubCategories.Add(localplayers);
