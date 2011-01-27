@@ -23,14 +23,14 @@ namespace LongoMatch.Common
 {
 	public class SerializableObject
 	{
-		protected void Save<T>(T obj, string filepath) {
+		public static void Save<T>(T obj, string filepath) {
 			BinaryFormatter formatter = new  BinaryFormatter();
 			Stream stream = new FileStream(filepath, FileMode.Create, FileAccess.Write, FileShare.None);
 			formatter.Serialize(stream, obj);
 			stream.Close();
 		}
 
-		protected static T Load<T>(string filepath) {
+		public static T Load<T>(string filepath) {
 			BinaryFormatter formatter = new BinaryFormatter();
 			Stream stream = new FileStream(filepath, FileMode.Open, FileAccess.Read, FileShare.Read);
 			var obj = formatter.Deserialize(stream);

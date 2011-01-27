@@ -25,7 +25,7 @@ namespace LongoMatch.Store.Templates
 {
 	[Serializable]
 
-	public class TeamTemplate: SerializableObject
+	public class TeamTemplate
 	{
 		private List<Player> playersList;
 
@@ -69,11 +69,11 @@ namespace LongoMatch.Store.Templates
 		}
 
 		public void Save(string filePath){
-			Save(this, filePath);
+			SerializableObject.Save(this, filePath);
 		}
 		
 		public static TeamTemplate Load(string filePath) {
-			return Load<TeamTemplate>(filePath);
+			return SerializableObject.Load<TeamTemplate>(filePath);
 		}
 		
 		public static TeamTemplate DefaultTemplate(int playersCount) {

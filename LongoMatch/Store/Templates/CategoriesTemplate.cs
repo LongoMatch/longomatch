@@ -36,7 +36,7 @@ namespace LongoMatch.Store.Templates
 	/// The <see cref="LongoMatch.DB.Project"/> must handle all the changes
 	/// </summary>
 	[Serializable]
-	public class Categories: SerializableObject
+	public class Categories
 	{
 		private List<Category> categoriesList;
 
@@ -103,11 +103,11 @@ namespace LongoMatch.Store.Templates
 		}
 
 		public void Save(string filePath){
-			Save(this, filePath);
+			SerializableObject.Save(this, filePath);
 		}
 		
 		public static Categories Load(string filePath) {
-			return Load<Categories>(filePath);
+			return SerializableObject.Load<Categories>(filePath);
 		}
 		
 		public static Categories DefaultTemplate() {

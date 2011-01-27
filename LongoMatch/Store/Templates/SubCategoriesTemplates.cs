@@ -25,7 +25,7 @@ namespace LongoMatch.Store.Templates
 {
 
 	[Serializable]
-	public class SubCategoriesTemplate: SerializableObject
+	public class SubCategoriesTemplate
 	{
 		List<SubCategory> subCategories;
 		
@@ -51,11 +51,11 @@ namespace LongoMatch.Store.Templates
 		}
 		
 		public void Save(string filePath){
-			Save(this, filePath);
+			SerializableObject.Save(this, filePath);
 		}
 		
 		public static SubCategoriesTemplate Load(string filePath) {
-			return Load<SubCategoriesTemplate>(filePath);
+			return SerializableObject.Load<SubCategoriesTemplate>(filePath);
 		}
 	}
 }
