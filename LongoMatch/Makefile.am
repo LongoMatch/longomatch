@@ -131,6 +131,7 @@ SOURCES = \
 	Playlist/IPlayList.cs \
 	Playlist/PlayList.cs \
 	Store/Category.cs \
+	Store/SubCategory.cs \
 	Store/Drawing.cs \
 	Store/DrawingsList.cs \
 	Store/HotKey.cs \
@@ -144,7 +145,7 @@ SOURCES = \
 	Store/Time.cs \
 	Store/TimeNode.cs \
 	Store/Templates/CategoriesTemplate.cs \
-	Store/Templates/TagsTemplate.cs \
+	Store/Templates/SubCategoriesTemplate.cs \
 	Store/Templates/TeamTemplate.cs \
 	Updates/Updater.cs \
 	Updates/XmlUpdateParser.cs \
