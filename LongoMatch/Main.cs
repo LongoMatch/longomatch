@@ -45,6 +45,9 @@ namespace LongoMatch
 		{
 			SetupBaseDir();
 
+			Log.Debugging = Debugging;
+			Log.Information("Starting " + Constants.SOFTWARE_NAME);
+
 			//Iniciamos la internalización
 			Catalog.Init(Constants.SOFTWARE_NAME.ToLower(),RelativeToPrefix("share/locale"));
 
@@ -196,6 +199,25 @@ namespace LongoMatch
 				configDirectory = System.IO.Path.Combine(home,".longomatch");
 		}
 
+		private static bool? debugging = null;	
+		public static bool Debugging {
+			get {
+				if (debugging == null) {
+					debugging = EnvironmentIsSet ("LGM_DEBUG");
+				}
+				return debugging.Value;
+			}
+			set {
+				debugging = value;
+				Log.Debugging = Debugging;
+			}
+		}
+		
+		public static bool EnvironmentIsSet (string env)
+		{
+			return !String.IsNullOrEmpty (Environment.GetEnvironmentVariable (env));
+		}
+		
 		private static void OnException(GLib.UnhandledExceptionArgs args) {
 			ProcessExecutionError((Exception)args.ExceptionObject);
 		}
@@ -219,6 +241,7 @@ namespace LongoMatch
 				s.WriteLine("\n\n\nStackTrace:");
 				s.WriteLine(System.Environment.StackTrace);
 			}
+			Log.Exception (ex);
 			//TODO Add bug reports link
 			MessagePopup.PopupMessage(null, MessageType.Error,
 			                          Catalog.GetString("The application has finished with an unexpected error.")+"\n"+
