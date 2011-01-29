@@ -22,8 +22,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using Gdk;
 using Gtk;
 using LongoMatch.Common;
@@ -269,25 +267,17 @@ namespace LongoMatch.Store
 		
 		public static void Export(Project project, string file) {
 			file = Path.ChangeExtension(file,"lpr");
-			IFormatter formatter = new BinaryFormatter();
-			using(Stream stream = new FileStream(file, FileMode.Create, 
-			                                     FileAccess.Write, FileShare.None))
-				formatter.Serialize(stream, project);
+			SerializableObject.Save(project, file);
 		}
 		
 		public static Project Import(string file) {
-			using(Stream stream = new FileStream(file, FileMode.Open, 
-			                                     FileAccess.Read, FileShare.None))
-			{
-				try {
-					IFormatter formatter = new BinaryFormatter();
-					return (Project)formatter.Deserialize(stream);
-				}
-				catch {
-					throw new Exception(Catalog.GetString("The file you are trying to load " +
-						"is not a valid project"));
-				}
-			}			
+			try {
+				return SerializableObject.Load<Project>(file);
+			}
+			catch {
+				throw new Exception(Catalog.GetString("The file you are trying to load " +
+				                                      "is not a valid project"));
+			}
 		}		
 		#endregion
 		
