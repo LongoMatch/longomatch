@@ -24,6 +24,8 @@ SOURCES = \
 	Compat/0.0/Time/SectionsTimeNode.cs \
 	Compat/0.0/Time/Time.cs \
 	Compat/0.0/Time/TimeNode.cs \
+	Common/ConsoleCrayon.cs \
+	Common/Log.cs \
 	Common/SerializableObject.cs \
 	DB/DataBase.cs \
 	gtk-gui/generated.cs \

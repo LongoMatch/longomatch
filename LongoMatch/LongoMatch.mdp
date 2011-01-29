@@ -202,6 +202,8 @@
     <File subtype="Code" buildaction="Compile" name="Store/SubCategory.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Templates/SubCategoriesTemplate.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Templates/CategoriesTemplate.cs" />
+    <File subtype="Code" buildaction="Compile" name="Common/Log.cs" />
+    <File subtype="Code" buildaction="Compile" name="Common/ConsoleCrayon.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
