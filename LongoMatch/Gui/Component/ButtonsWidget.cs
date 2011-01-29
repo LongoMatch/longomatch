@@ -78,7 +78,7 @@ namespace LongoMatch.Gui.Component
 				for (int i=0;i<sectionsCount;i++) {
 					Button b = new Button();
 					Label l = new Label();
-					Category cat = value.CategoriesList[i];
+					Category cat = value[i];
 
 					uint row_top =(uint)(i/table1.NColumns);
 					uint row_bottom = (uint) row_top+1 ;

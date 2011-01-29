@@ -65,7 +65,7 @@ namespace LongoMatch.Gui.Component
 				Gtk.TreeStore categoriesListStore = new Gtk.TreeStore(typeof(Category));
 				hkList.Clear();
 				
-				foreach (var cat in categories.CategoriesList){
+				foreach (var cat in categories){
 					categoriesListStore.AppendValues(cat);
 					try {
 						hkList.Add(cat.HotKey);
@@ -108,10 +108,10 @@ namespace LongoMatch.Gui.Component
 
 			if (project != null) {
 				/* Editing a project template */
-				project.Categories.AddCategoryAtPos(index,tn);
+				project.Categories.Insert(index,tn);
 			} else {
 				/* Editing a template in the templates editor */
-				categories.AddCategoryAtPos(index,tn);
+				categories.Insert(index,tn);
 			}
 			UpdateModel();
 			Edited = true;
@@ -125,7 +125,7 @@ namespace LongoMatch.Gui.Component
 				if (dialog.Run() == (int)ResponseType.Yes){
 					try {
 						foreach (Category cat in selectedCategories)
-							project.Categories.RemoveCategory(cat);
+							project.Categories.Remove(cat);
 					} catch {
 						MessagePopup.PopupMessage(this,MessageType.Warning,
 						                          Catalog.GetString("A template needs at least one category"));
@@ -139,7 +139,7 @@ namespace LongoMatch.Gui.Component
 						MessagePopup.PopupMessage(this,MessageType.Warning,
 						                          Catalog.GetString("A template needs at least one category"));
 					} else 
-						categories.RemoveCategory(cat);
+						categories.Remove(cat);
 				}
 			}
 			UpdateModel();
@@ -168,11 +168,11 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		protected virtual void OnNewAfter(object sender, EventArgs args) {
-			AddCategory(categories.CategoriesList.IndexOf(selectedCategories[0])+1);
+			AddCategory(categories.IndexOf(selectedCategories[0])+1);
 		}
 
 		protected virtual void OnNewBefore(object sender, EventArgs args) {
-			AddCategory(categories.CategoriesList.IndexOf(selectedCategories[0]));
+			AddCategory(categories.IndexOf(selectedCategories[0]));
 		}
 
 		protected virtual void OnRemove(object sender, EventArgs args) {

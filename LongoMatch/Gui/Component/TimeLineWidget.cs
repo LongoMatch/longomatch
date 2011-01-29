@@ -164,7 +164,7 @@ namespace LongoMatch.Gui.Component {
 				vbox1.PackStart(tr,false,false,0);
 				tr.Show();
 				
-				foreach (Category cat in  categories.CategoriesList) {
+				foreach (Category cat in  categories) {
 					List<Play> playsList = value.PlaysInCategory(cat);
 					TimeScale ts = new TimeScale(cat, playsList,frames);
 					tsList[cat] = ts;

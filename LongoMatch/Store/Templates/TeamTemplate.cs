@@ -25,47 +25,23 @@ namespace LongoMatch.Store.Templates
 {
 	[Serializable]
 
-	public class TeamTemplate
+	public class TeamTemplate: List<Player>
 	{
-		private List<Player> playersList;
-
-		public TeamTemplate() {
-			playersList = new List<Player>();
-		}
+		public TeamTemplate() {}
 		
 		public String TeamName{
 			get;
 			set;
 		}
 
-		public List<Player> PlayersList{
-			get {
-				return playersList;
-			}
-		}
-		
 		public List<Player> PlayingPlayersList{
 			get {
 				var players = 
-					from player in playersList
+					from player in this
 						where player.Playing == true
 						select player;
 				return players.ToList() as List<Player>;
 			}
-		}
-
-		public void Clear() {
-			playersList.Clear();
-		}
-
-		public int PlayersCount {
-			get {
-				return playersList.Count;
-			}
-		}
-
-		public void AddPlayer(Player player) {
-			playersList.Add(player);
 		}
 
 		public void Save(string filePath){
@@ -83,8 +59,9 @@ namespace LongoMatch.Store.Templates
 		}
 		
 		private void FillDefaultTemplate(int playersCount) {
+			Clear();
 			for (int i=1; i<=playersCount;i++) {
-				playersList.Add(new Player{
+				Add(new Player{
 					Name = "Player " + i,
 					Birthday = new DateTime(),
 					Height = 1.80f,

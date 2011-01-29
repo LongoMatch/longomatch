@@ -44,7 +44,7 @@ namespace LongoMatch.Handlers
 				dic.Clear();
 				if (value == null)
 					return;
-				foreach (Category cat in value.CategoriesList) {
+				foreach (Category cat in value) {
 					if (cat.HotKey.Defined &&
 					                !dic.ContainsKey(cat.HotKey))
 						dic.Add(cat.HotKey, cat);

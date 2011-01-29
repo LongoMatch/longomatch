@@ -168,7 +168,7 @@ namespace LongoMatch.Store
 		public void RemoveCategory(Category category) {
 			if (Categories.Count == 1)
 				throw new Exception("You can't remove the last Section");
-			Categories.RemoveCategory(category);
+			Categories.Remove(category);
 			
 			/* query for all the plays with this Category */
 			var plays = 
@@ -213,7 +213,7 @@ namespace LongoMatch.Store
 				from play in playsList
 					group play by play.Category;
 			
-			foreach (Category cat in Categories.CategoriesList){
+			foreach (Category cat in Categories){
 				Gtk.TreeIter iter = dataFileListStore.AppendValues(cat);
 				itersDic.Add(cat, iter);
 			} 
@@ -297,7 +297,7 @@ namespace LongoMatch.Store
 			TreeStore dataFileListStore = new TreeStore(typeof(object));
 			
 			/* For all the players in the team */
-			foreach (var player in team.PlayersList){
+			foreach (var player in team){
 				/* Add a root in the tree with the player */
 				var iter = dataFileListStore.AppendValues(player);
 				/* Query the plays where this player is in the list of players*/

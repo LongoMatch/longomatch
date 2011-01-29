@@ -25,31 +25,11 @@ namespace LongoMatch.Store.Templates
 {
 
 	[Serializable]
-	public class SubCategoriesTemplate
+	public class SubCategoriesTemplate: List<SubCategory>
 	{
-		List<SubCategory> subCategories;
 		
-		public SubCategoriesTemplate()
-		{
-			subCategories = new List<SubCategory>();
-		}
+		public SubCategoriesTemplate() {}
 
-		public bool AddSubcategory(SubCategory subCat) {
-			if (subCategories.Contains(subCat))
-				return false;
-			else
-				subCategories.Add(subCat);
-			return true;
-		}
-
-		public bool RemoveSubCategory (SubCategory subCat) {
-			return subCategories.Remove(subCat);
-		}
-		
-		public int Count (){
-			return subCategories.Count;
-		}
-		
 		public void Save(string filePath){
 			SerializableObject.Save(this, filePath);
 		}

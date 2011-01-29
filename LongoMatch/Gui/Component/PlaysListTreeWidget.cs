@@ -136,7 +136,7 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		private string CategoryPath(Category cat){
-			return project.Categories.CategoriesList.IndexOf(cat).ToString();
+			return project.Categories.IndexOf(cat).ToString();
 		}
 
 		protected virtual void OnTimeNodeChanged(TimeNode tNode,object val) {

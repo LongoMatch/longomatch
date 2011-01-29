@@ -36,71 +36,13 @@ namespace LongoMatch.Store.Templates
 	/// The <see cref="LongoMatch.DB.Project"/> must handle all the changes
 	/// </summary>
 	[Serializable]
-	public class Categories
+	public class Categories: List<Category>
 	{
-		private List<Category> categoriesList;
-
 
 		/// <summary>
 		/// Creates a new template
 		/// </summary>
-		public Categories()
-		{
-			categoriesList = new List<Category>();
-		}
-
-		/// <summary>
-		/// Clear the template
-		/// </summary>
-		public void Clear() {
-			categoriesList.Clear();
-		}
-
-		/// <summary>
-		/// Adds a new analysis category to the template
-		/// </summary>
-		/// <param name="tn">
-		/// A <see cref="Category"/>: category to add
-		/// </param>
-		public void AddCategory(Category category) {
-			categoriesList.Add(category);
-		}
-		
-		public void AddCategoryAtPos(int pos, Category category) {
-			categoriesList.Insert(pos, category);
-		}
-
-		/// <summary>
-		/// Delete a category from the templates using the it's index
-		/// </summary>
-		/// <param name="index">
-		/// A <see cref="System.Int32"/>: position of the category to delete
-		/// </param>
-		public void RemoveCategory(Category category) {
-			categoriesList.Remove(category);
-		}
-
-		//// <value>
-		/// Number of categories
-		/// </value>
-		public int Count {
-			get {
-				return categoriesList.Count;
-			}
-		}
-
-		//// <value>
-		/// Ordered list with all the categories
-		/// </value>
-		public List<Category> CategoriesList {
-			set {
-				categoriesList.Clear();
-				categoriesList = value;
-			}
-			get {
-				return categoriesList;
-			}
-		}
+		public Categories() {}
 
 		public void Save(string filePath){
 			SerializableObject.Save(this, filePath);
@@ -161,7 +103,7 @@ namespace LongoMatch.Store.Templates
 				cat.SubCategories.Add(team);
 				cat.SubCategories.Add(localplayers);
 				cat.SubCategories.Add(visitorplayers);
-				AddCategory(cat);
+				Add(cat);
 			}
 		}
 	}
