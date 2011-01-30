@@ -174,7 +174,13 @@ namespace LongoMatch.Store
 				Tags.Remove(tag);
 		}
 		
-		public string ToString (string team)
+		public bool HasTag(String name, object val) {
+			return  (from tag in Tags
+					where (tag.Name == (string)name) && (tag.Value == val) 
+					select tag).Count() > 0;
+		}
+		
+		public override string ToString ()
 		{
 			String[] tags = new String[Tags.Count];
 		
