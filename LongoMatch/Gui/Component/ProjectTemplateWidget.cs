@@ -49,7 +49,7 @@ namespace LongoMatch.Gui.Component
 
 		public Project Project {
 			set{
-				project = project;
+				project = value;
 				if (project != null)
 					Categories = project.Categories;
 			}
