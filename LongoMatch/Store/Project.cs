@@ -134,7 +134,6 @@ namespace LongoMatch.Store
 				Start = start,
 				Stop = stop,
 				Category = category,
-				Team = Team.NONE,
 				Notes = "",
 				Miniature = miniature,
 				Fps = fps,
@@ -225,28 +224,6 @@ namespace LongoMatch.Store
 				}
 			}
 			return dataFileListStore;
-		}
-
-		/// <summary>
-		/// Returns a <see cref="Gtk.TreeStore"/> for the local team in which players
-		///  are root nodes and their respectives tagged plays child nodes
-		/// </summary>
-		/// <returns>
-		/// A <see cref="TreeStore"/>
-		/// </returns>
-		public TreeStore GetLocalTeamModel() {
-			return GetTeamModel(LocalTeamTemplate);
-		}
-
-		/// <summary>
-		/// Returns a <see cref="Gtk.TreeStore"/> for the visitor team in which players
-		///  are root nodes and their respectives tagged plays child nodes
-		/// </summary>
-		/// <returns>
-		/// A <see cref="TreeStore"/>
-		/// </returns>
-		public TreeStore GetVisitorTeamModel() {
-			return GetTeamModel(VisitorTeamTemplate);
 		}
 
 		public bool Equals(Project project) {

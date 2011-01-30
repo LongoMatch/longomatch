@@ -452,6 +452,7 @@ namespace LongoMatch
 		}
 
 		protected virtual void OnPlayersTagged(Play tNode, Team team) {
+		/*
 			PlayersSelectionDialog dialog = new PlayersSelectionDialog();
 			if (team == Team.LOCAL) {
 				dialog.SetPlayersInfo(openedProject.LocalTeamTemplate);
@@ -471,6 +472,7 @@ namespace LongoMatch
 				}
 			}
 			dialog.Destroy();
+			*/
 		}
 	}
 }

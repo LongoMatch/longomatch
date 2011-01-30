@@ -38,8 +38,6 @@ namespace LongoMatch.Store
 
 		#region Constructors
 		public Play(){
-			LocalPlayers = new List<Player>();
-			VisitorPlayers = new List<Player>();
 			Drawings = new DrawingsList();
 			Tags = new List<Tag>();
 		}
@@ -56,11 +54,6 @@ namespace LongoMatch.Store
 		/// A strng with the play's notes
 		/// </summary>
 		public string Notes {get; set;}
-
-		/// <summary>
-		/// The <see cref="LongoMatch.TimeNode.Team"/> associated to this play
-		/// </summary>
-		public Team Team {get; set;}
 
 		/// <summary>
 		/// Video framerate in frames per second. This value is taken from the
@@ -101,16 +94,6 @@ namespace LongoMatch.Store
 		/// </summary>
 		public bool Selected {get; set;}
 	
-		/// <summary>
-		/// Gets a list of players for the local team 
-		/// </summary>
-		public List<Player> LocalPlayers {get; set;}
-	
-		/// <summary>
-		/// Gets a list of players for the visitor team 
-		/// </summary>
-		public List<Player> VisitorPlayers {get; set;}
-
 		/// <summary>
 		/// List of drawings for this play
 		/// </summary>
@@ -169,10 +152,6 @@ namespace LongoMatch.Store
 			return (frame>=StartFrame && frame<StopFrame);
 		}
 
-		public bool HasPlayer(Player player){
-			return LocalPlayers.Contains(player) || VisitorPlayers.Contains(player);
-		}
-		
 		/// <summary>
 		/// Adds a new tag to the play 
 		/// </summary>
@@ -203,16 +182,10 @@ namespace LongoMatch.Store
 				tags[i] = Tags[i].Value;
 			
 			return  "<b>"+Catalog.GetString("Name")+": </b>"+Name+"\n"+
-				    "<b>"+Catalog.GetString("Team")+": </b>"+team+"\n"+
 					"<b>"+Catalog.GetString("Start")+": </b>"+Start.ToMSecondsString()+"\n"+
 					"<b>"+Catalog.GetString("Stop")+": </b>"+Stop.ToMSecondsString()+"\n"+
 					"<b>"+Catalog.GetString("Tags")+": </b>"+ String.Join(" ; ", tags);
 		}
-		
-		public override string ToString(){
-			return ToString(Team.ToString());
-		}
-
 		#endregion
 	}
 }

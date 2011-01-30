@@ -261,7 +261,8 @@ namespace LongoMatch.Gui.Component
 					c.Background = "white";
 					c.CellBackground = "white";
 				}
-				c.Markup = mtn.ToString(teams_name[(int)mtn.Team]);
+				// FIXME
+				//c.Markup = mtn.ToString(teams_name[(int)mtn.Team]);
 			}else if (o is Player) {
 				c.Background = "white";
 				c.CellBackground = "white";
@@ -368,7 +369,8 @@ namespace LongoMatch.Gui.Component
 			TreePath[] paths = Selection.GetSelectedRows();
 			for (int i=0; i<paths.Length; i++){	
 					Play tNode = (Play)GetValueFromPath(paths[i]);
-					tNode.Team = team;
+					//FIXME
+					//tNode.Team = team;
 			}
 		}
 

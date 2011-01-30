@@ -181,8 +181,6 @@ namespace LongoMatch.Gui
 			tagstreewidget1.ProjectIsLive = isLive;
 			playlistwidget2.Stop();
 			treewidget1.Project=project;
-			localplayerslisttreewidget.SetTeam(project.LocalTeamTemplate,project.GetLocalTeamModel());
-			visitorplayerslisttreewidget.SetTeam(project.VisitorTeamTemplate,project.GetVisitorTeamModel());
 			tagstreewidget1.Project = project;				
 			buttonswidget1.Categories = project.Categories;
 			hkManager.Categories=project.Categories;

@@ -131,10 +131,9 @@ namespace LongoMatch.IO
 		
 		private void WriteCatagoriesData(TextWriter tx, Dictionary<Tag, List<Play>> tagsDic){
 			// Write Tags table
-			tx.WriteLine(String.Format("{0};{1};{2};{3};{4};{5}",
+			tx.WriteLine(String.Format("{0};{1};{2};{3};{4}",
 			             Catalog.GetString("Tag"),
 			             Catalog.GetString("Name"),
-			             Catalog.GetString("Team"),
 			             Catalog.GetString("StartTime"),
 			             Catalog.GetString("StopTime"),
 			             Catalog.GetString("Duration")));
@@ -144,7 +143,6 @@ namespace LongoMatch.IO
 				foreach (Play tn in pair.Value) {
 					tx.WriteLine("\""+pair.Key.Value+"\";\""+
 					             tn.Name+"\";\""+
-					             tn.Team+"\";\""+
 					             tn.Start.ToMSecondsString()+"\";\""+
 					             tn.Stop.ToMSecondsString()+"\";\""+
 					             (tn.Stop-tn.Start).ToMSecondsString()+"\"");
@@ -173,7 +171,6 @@ namespace LongoMatch.IO
 					tx.WriteLine("\""+pair.Key.Name+"\";\""+
 					             sectionName+"\";\""+
 					             tn.Name+"\";\""+
-					             tn.Team+"\";\""+
 					             tn.Start.ToMSecondsString()+"\";\""+
 					             tn.Stop.ToMSecondsString()+"\";\""+
 					             (tn.Stop-tn.Start).ToMSecondsString()+"\"");
