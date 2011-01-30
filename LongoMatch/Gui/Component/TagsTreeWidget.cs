@@ -136,7 +136,7 @@ namespace LongoMatch.Gui.Component
 		public void UpdateTagsList(){
 			(tagscombobox.Model as ListStore).Clear();
 			foreach (Tag tag in project.Tags)
-				tagscombobox.AppendText(tag.Value);
+				tagscombobox.AppendText(tag.Value.ToString());
 		}
 		
 		private void AddFilterWidget(Tag tag){
@@ -145,11 +145,11 @@ namespace LongoMatch.Gui.Component
 			Label l;
 			
 			box = new HBox();
-			box.Name = tag.Value;
+			box.Name = tag.Value.ToString();
 			b = new Button();
 			b.Image =  new Image(Stetic.IconLoader.LoadIcon(this, "gtk-delete", Gtk.IconSize.Menu));
 			b.Clicked += OnDeleteClicked;
-			l = new Label(tag.Value);
+			l = new Label(tag.Value.ToString());
 			l.Justify = Justification.Left;
 			box.PackEnd(b,false,  false, 0);
 			box.PackStart(l,true, true, 0);

@@ -33,6 +33,23 @@ namespace LongoMatch.Store
 			set;
 		}
 		
+		public object Value {
+			get;
+			set;
+		}
+	}
+	
+	[Serializable]
+	public class StringTag
+	{
+		public StringTag() {
+		}
+
+		public string Name {
+			get;
+			set;
+		}
+		
 		public string Value {
 			get;
 			set;

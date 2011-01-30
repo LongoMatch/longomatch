@@ -179,7 +179,7 @@ namespace LongoMatch.Store
 			String[] tags = new String[Tags.Count];
 		
 			for (int i=0; i<Tags.Count; i++)
-				tags[i] = Tags[i].Value;
+				tags[i] = Tags[i].Value.ToString();
 			
 			return  "<b>"+Catalog.GetString("Name")+": </b>"+Name+"\n"+
 					"<b>"+Catalog.GetString("Start")+": </b>"+Start.ToMSecondsString()+"\n"+

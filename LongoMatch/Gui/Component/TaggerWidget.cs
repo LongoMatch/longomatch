@@ -67,8 +67,8 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		private void AddTagWidget(Tag tag, bool check){
-			CheckButton button = new CheckButton(tag.Value);
-			button.Name = tag.Value;
+			CheckButton button = new CheckButton(tag.Value.ToString());
+			button.Name = tag.Value.ToString();
 			AddElementToTable(button);
 			button.Active = check;
 			tagsDict.Add(tag, button);
