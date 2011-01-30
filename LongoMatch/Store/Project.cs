@@ -259,25 +259,39 @@ namespace LongoMatch.Store
 		#endregion
 		
 		#region Private Methods
+		private void  FillList<T>(List<T> options, String tagName, TreeStore store) {
+			foreach (var tagValue in options){
+				/* Add a root in the tree with the option name */
+				var iter = store.AppendValues(tagName);
+				var queryByTag = 
+					(from play in playsList
+						where play.HasTag(tagName, tagValue) == true 
+						select play);
+				/* Then add as children of the Player in the tree */
+				foreach (Play play in queryByTag)
+					store.AppendValues(iter, play);
+			}
+		}
 		
-		private TreeStore GetTeamModel(TeamTemplate team){
+		private TreeStore GetSubCategoryModel(TagSubCategory subcat){
 			TreeStore dataFileListStore = new TreeStore(typeof(object));
 			
-			/* For all the players in the team */
-			foreach (var player in team){
-				/* Add a root in the tree with the player */
-				var iter = dataFileListStore.AppendValues(player);
-				/* Query the plays where this player is in the list of players*/
-				var queryByPlayers = 
-					from play in playsList
-						where play.HasPlayer(player) == true 
-						select play;
-				/* Then add as children of the Player in the tree */
-				foreach (var play in queryByPlayers)
-					dataFileListStore.AppendValues(iter, play);
+			FillList (subcat.Options, subcat.Name, dataFileListStore);
+			return dataFileListStore;
+		}
+		
+		private TreeStore GetSubCategoryModel(PlayerSubCategory subcat){
+			TreeStore dataFileListStore = new TreeStore(typeof(object));
+			TeamTemplate template;
+			
+			foreach (Team team in subcat.Options){
+				if (team == Team.NONE)
+					continue;
+				template = team == Team.LOCAL?LocalTeamTemplate:VisitorTeamTemplate;
+				FillList(template, subcat.Name, dataFileListStore);
 			}
 			return dataFileListStore;
 		}
-		#endregion
+#endregion
 	}
 }
