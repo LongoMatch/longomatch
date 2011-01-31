@@ -23,7 +23,7 @@ using LongoMatch.Common;
 namespace LongoMatch.Store
 {
 	/// <summary>
-	/// I am a player from a team
+	/// Player of a team
 	/// </summary>
 	[Serializable]
 	public class Player
@@ -37,38 +37,33 @@ namespace LongoMatch.Store
 		#endregion
 
 		#region Properties
-		/// <value>
+		/// <summary>
 		/// My name
-		/// </value>
+		/// </summary>
 		public string Name {
 			get;
 			set;
 		}
-		
-		public Team Team{
-			get;
-			set;
-		}
 
-		/// <value>
+		/// <summary>
 		/// My position in the field
-		/// </value>
+		/// </summary>
 		public string Position {
 			get;
 			set;
 		}
 
-		/// <value>
+		/// <summary>
 		/// My shirt number
-		/// </value>
+		/// </summary>
 		public int Number {
 			get;
 			set;
 		}
 
-		/// <value>
+		/// <summary>
 		/// My photo
-		/// </value>
+		/// </summary>
 		public Pixbuf Photo {
 			get {
 				if (photo != null)
@@ -77,59 +72,51 @@ namespace LongoMatch.Store
 					return null;
 			}
 			set {
-				if (value != null)
-					photo=value.SaveToBuffer("png");
-				else
-					photo=null;
+				photo=value.SaveToBuffer("png");
 			}
 		}
 		
-		/// <value>
-		/// My birthdayt
-		/// </value>
+		/// <summary>
+		/// Date of birth
+		/// </summary>
 		public DateTime Birthday{
 			get;
 			set;
 		}
 		
-		/// <value>
-		/// My nationality
-		/// </value>
+		/// <summary>
+		/// Nationality
+		/// </summary>
 		public String Nationality{
 			get;
 			set;
 		}
 		
-		/// <value>
-		/// My height
-		/// </value>
+		/// <summary>
+		/// Height
+		/// </summary>
 		public float Height{
 			get;
 			set;
 		}
 
-		/// <value>
-		/// My Weight
-		/// </value>
+		/// <summary>
+		/// Weight
+		/// </summary>
 		public int Weight{
 			get;
 			set;
 		}
 		
+		/// <summary>
+		/// Whether this player is playing or not and shouldn't be added the 
+		/// list of taggable players 
+		/// </summary>
 		public bool Playing{
 			get;
 			set;
 		}
 		
-		/// <value>
-		/// A team can have several players, but not all of them
-		/// play in the same match,. This allow reusing the same
-		/// template in a team, definning if this plays plays or not.
-		/// </value>
-		public bool Discarded{
-			get;
-			set;
-		}
 		#endregion
 	}
 }
