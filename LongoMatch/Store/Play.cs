@@ -51,7 +51,7 @@ namespace LongoMatch.Store
 		public Category Category {get; set;}
 		
 		/// <summary>
-		/// A strng with the play's notes
+		/// A string with the play's notes
 		/// </summary>
 		public string Notes {get; set;}
 
@@ -174,6 +174,18 @@ namespace LongoMatch.Store
 				Tags.Remove(tag);
 		}
 		
+		/// <summary>
+		/// Return True if the play contains a similar tag 
+		/// </summary>
+		/// <param name="name">
+		/// A <see cref="String"/> with the tag name
+		/// </param>
+		/// <param name="val">
+		/// A <see cref="System.Object"/> with tag value
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/>
+		/// </returns>
 		public bool HasTag(String name, object val) {
 			return  (from tag in Tags
 					where (tag.Name == (string)name) && (tag.Value == val) 
