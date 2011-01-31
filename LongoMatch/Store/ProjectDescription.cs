@@ -24,55 +24,81 @@ namespace LongoMatch.Store
 {
 
 	/// <summary>
-	/// I'm used like a presentation card for projects. I speed up the retrieval
-	/// from the database be using only the field required to describe a project
+	/// Describes a project in LongoMatch.
 	/// </summary>
 	[Serializable]
 	public class ProjectDescription :  IComparable
 	{
 		
+		/// <summary>
+		/// Title of the project
+		/// </summary>
 		public String Title {
 			get {
 				return System.IO.Path.GetFileNameWithoutExtension(File.FilePath);
 			}
 		}
 
+		/// <summary>
+		/// Media file asigned to this project 
+		/// </summary>
 		public PreviewMediaFile File {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Season of the game 
+		/// </summary>
 		public String Season {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Comptetition of the game
+		/// </summary>
 		public String Competition {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Name of the local team
+		/// </summary>
 		public String LocalName {
 			get;
 			set;
 		}
 
+
+		/// <summary>
+		/// Name of the visitor team
+		/// </summary>
 		public String VisitorName {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Goals of the local team
+		/// </summary>
 		public int LocalGoals {
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Goals of the visitor team
+		/// </summary>
 		public int VisitorGoals {
 			get;
 			set;
 		}
 
-
+		/// <summary>
+		/// Date of the game
+		/// </summary>
 		public DateTime MatchDate {
 			get;
 			set;
@@ -88,6 +114,9 @@ namespace LongoMatch.Store
 			set;
 		}
 		
+		/// <summary>
+		/// String representing the video format like "widhtxheight@fps"
+		/// </summary>
 		public String Format {
 			get{
 				return String.Format("{0}x{1}@{2}fps", 
