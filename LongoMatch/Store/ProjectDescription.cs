@@ -104,16 +104,6 @@ namespace LongoMatch.Store
 			set;
 		}
 
-		public String VideoCodec {
-			get;
-			set;
-		}
-		
-		public String AudioCodec {
-			get;
-			set;
-		}
-		
 		/// <summary>
 		/// String representing the video format like "widhtxheight@fps"
 		/// </summary>

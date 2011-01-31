@@ -119,8 +119,8 @@ namespace LongoMatch.Gui.Component
 			
 			text = "\n"+"\n"+"\n"+"<b>"+Catalog.GetString("File length")+":</b>  " + 
 				(new Time {MSeconds = (int)project.File.Length}).ToSecondsString();
-			text = text +"\n"+"<b>"+Catalog.GetString("Video codec")+":</b>  " + project.VideoCodec;
-			text = text +"\n"+"<b>"+Catalog.GetString("Audio codec")+":</b>  " + project.AudioCodec;
+			text = text +"\n"+"<b>"+Catalog.GetString("Video codec")+":</b>  " + project.File.VideoCodec;
+			text = text +"\n"+"<b>"+Catalog.GetString("Audio codec")+":</b>  " + project.File.AudioCodec;
 			text = text +"\n"+"<b>"+Catalog.GetString("Format")+":</b>  " + project.Format;
 
 			(cell as Gtk.CellRendererText).Markup = text;
