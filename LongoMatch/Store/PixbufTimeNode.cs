@@ -49,9 +49,7 @@ namespace LongoMatch.Store
 					return new Pixbuf(thumbnailBuf);
 				else return null;
 			}set {
-				if (value != null)
-					ScaleAndSave(value);
-				else thumbnailBuf = null;
+				ScaleAndSave(value);
 			}
 		}
 		#endregion
