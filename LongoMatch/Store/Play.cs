@@ -103,7 +103,7 @@ namespace LongoMatch.Store
 		public Drawing KeyFrameDrawing {
 			get{
 				if (Drawings.Count > 0)
-					return Drawings.List[0];
+					return Drawings[0];
 				else
 					return null;
 			}

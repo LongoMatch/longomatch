@@ -23,15 +23,10 @@ namespace LongoMatch.Store
 {
 
 
-	public class DrawingsList
+	public class DrawingsList: SortedList<int, Drawing>
 	{
 
-		private SortedList<int,Drawing> drawingsList;
-
-		public DrawingsList()
-		{
-			drawingsList = new SortedList<int,Drawing>();
-		}
+		public DrawingsList() {}
 		
 		/// <summary>
 		/// Adds a new drawing to the list
@@ -44,12 +39,13 @@ namespace LongoMatch.Store
 		/// </returns>
 		public bool Add(Drawing drawing) {
 			int renderTime = drawing.RenderTime;
-			if (!drawingsList.ContainsKey(renderTime)) {
-				drawingsList.Add(renderTime,drawing);
+			if (!ContainsKey(renderTime)) {
+				base.Add(renderTime,drawing);
 				return true;
 			}
 			else return false;
 		}
+		
 
 		/// <summary>
 		/// Removes a drawing from the list
@@ -61,33 +57,7 @@ namespace LongoMatch.Store
 		/// A <see cref="System.Boolean"/>: true if was removed correctly
 		/// </returns>
 		public bool Remove(Drawing drawing) {
-			int renderTime = drawing.RenderTime;
-			return drawingsList.Remove(renderTime);
-		}
-
-		/// <summary>
-		/// Clear the drawing list
-		/// </summary>
-		public void Clear() {
-			drawingsList.Clear();
-		}
-
-		/// <summary>
-		/// The count of drawings
-		/// </summary>
-		public int Count {
-			get {
-				return drawingsList.Count;
-			}
-		}
-
-		/// <summary>
-		/// A list with all the render times
-		/// </summary>
-		public IList<int> RenderTime {
-			get {
-				return drawingsList.Keys;
-			}
+			return base.Remove(drawing.RenderTime);
 		}
 
 		/// <summary>
@@ -100,7 +70,7 @@ namespace LongoMatch.Store
 		/// A <see cref="System.Int32"/> with the render time
 		/// </returns>
 		public int GetRenderTime(int index) {
-			return drawingsList.Keys[index];
+			return Keys[index];
 		}
 
 		/// <summary>
@@ -113,17 +83,7 @@ namespace LongoMatch.Store
 		/// A <see cref="Drawing"/> with the render time
 		/// </returns>
 		public Drawing GetRenderDrawing(int index) {
-			return drawingsList.Values[index];
+			return Values[index];
 		}
-
-		/// <summary>
-		/// A list with all the drawings ordered by render time
-		/// </summary>
-		public SortedList<int,Drawing> List {
-			get{
-				return drawingsList;
-			}
-		}
-
 	}
 }
