@@ -25,6 +25,7 @@ using Gdk;
 using Gtk;
 using Pango;
 using Mono.Unix;
+using LongoMatch.Common;
 using LongoMatch.Handlers;
 using LongoMatch.TimeNodes;
 
@@ -77,7 +78,7 @@ namespace LongoMatch.Gui.Component
 			this.list = list;
 			HeightRequest= SECTION_HEIGHT;
 			Size((int)(frames/pixelRatio),SECTION_HEIGHT);
-			this.color = RGBToCairoColor(color);
+			this.color = CairoUtils.RGBToCairoColor(color);
 			this.color.A = ALPHA;
 			Events = EventMask.PointerMotionMask | EventMask.ButtonPressMask | EventMask.ButtonReleaseMask ;
 
@@ -127,31 +128,6 @@ namespace LongoMatch.Gui.Component
 			GdkWindow.ProcessUpdates(true);
 		}
 
-		private void DrawRoundedRectangle(Cairo.Context gr, double x, double y, double width, double height, double radius)
-		{
-			gr.Save();
-
-			if ((radius > height / 2) || (radius > width / 2))
-				radius = Math.Min(height / 2, width / 2);
-
-			gr.MoveTo(x, y + radius);
-			gr.Arc(x + radius, y + radius, radius, Math.PI, -Math.PI / 2);
-			gr.LineTo(x + width - radius, y);
-			gr.Arc(x + width - radius, y + radius, radius, -Math.PI / 2, 0);
-			gr.LineTo(x + width, y + height - radius);
-			gr.Arc(x + width - radius, y + height - radius, radius, 0, Math.PI / 2);
-			gr.LineTo(x + radius, y + height);
-			gr.Arc(x + radius, y + height - radius, radius, Math.PI / 2, Math.PI);
-			gr.ClosePath();
-			gr.Restore();
-		}
-
-
-		private Cairo.Color RGBToCairoColor(Gdk.Color gdkColor) {
-			return   new Cairo.Color((double)(gdkColor.Red)/ushort.MaxValue,
-			                         (double)(gdkColor.Green)/ushort.MaxValue,
-			                         (double)(gdkColor.Blue)/ushort.MaxValue);
-		}
 
 		private void SetMenu() {
 			MenuItem newMediaTimeNode;
@@ -183,13 +159,10 @@ namespace LongoMatch.Gui.Component
 
 					foreach (MediaTimeNode tn in list) {
 						if (tn != selected) {
-							DrawRoundedRectangle(g,tn.StartFrame/pixelRatio,3,tn.TotalFrames/pixelRatio,height-6,SECTION_HEIGHT/7);
-							g.LineWidth = 2;
-							g.Color = new Cairo.Color(color.R+0.1, color.G+0.1,color.B+0.1, 1);
-							g.LineJoin = LineJoin.Round;
-							g.StrokePreserve();
-							g.Color = color;
-							g.Fill();
+							Cairo.Color borderColor = new Cairo.Color(color.R+0.1, color.G+0.1,color.B+0.1, 1);
+							CairoUtils.DrawRoundedRectangle(g,tn.StartFrame/pixelRatio,3,
+							                                tn.TotalFrames/pixelRatio,height-6,
+							                                SECTION_HEIGHT/7, color, borderColor);
 						}
 						else {
 							hasSelectedTimeNode = true;
@@ -197,20 +170,15 @@ namespace LongoMatch.Gui.Component
 					}
 					//Then we draw the selected TimeNode over the others
 					if (hasSelectedTimeNode) {
-						DrawRoundedRectangle(g,selected.StartFrame/pixelRatio,3,selected.TotalFrames/pixelRatio,height-6,SECTION_HEIGHT/7);
+						Cairo.Color borderColor = new Cairo.Color(color.R+0.1, color.G+0.1,color.B+0.1, 1);
+						CairoUtils.DrawRoundedRectangle(g,selected.StartFrame/pixelRatio,3,
+						                                selected.TotalFrames/pixelRatio,height-6,
+						                                SECTION_HEIGHT/7, color, borderColor);
 						if (selected.HasKeyFrame) {
 							g.MoveTo(selected.KeyFrame/pixelRatio,3);
 							g.LineTo(selected.KeyFrame/pixelRatio,SECTION_HEIGHT-3);
 							g.StrokePreserve();
 						}
-						g.Color = new Cairo.Color(0, 0, 0, 1);
-						g.LineWidth = 3;
-						g.LineJoin = LineJoin.Round;
-						g.Operator = Operator.Source;
-						g.StrokePreserve();
-						g.Operator = Operator.Over;
-						g.Color = color;
-						g.Fill();
 					}
 					DrawLines(win,g,height,width);
 				}
@@ -219,20 +187,11 @@ namespace LongoMatch.Gui.Component
 
 		private void DrawLines(Gdk.Window win, Cairo.Context g, int height, int width) {
 			if (Environment.OSVersion.Platform == PlatformID.Unix) {
-				g.Operator = Operator.Over;
-				g.Color = new Cairo.Color(0,0,0);
-				g.LineWidth = 1;
-				g.MoveTo(currentFrame/pixelRatio,0);
-				g.LineTo(currentFrame/pixelRatio,height);
-				g.Stroke();
-				g.Color = new Cairo.Color(0,0,0);
-				g.LineWidth = 2;
-				g.MoveTo(0,0);
-				g.LineTo(width,0);
-				g.Stroke();
-				g.MoveTo(0,height);
-				g.LineTo(width,height);
-				g.Stroke();
+				Cairo.Color color = new Cairo.Color(0,0,0);
+				CairoUtils.DrawLine(g, currentFrame/pixelRatio,0,currentFrame/pixelRatio,height, 
+				                    1, color);
+				CairoUtils.DrawLine(g,0 ,0, width, 0, 1, color);
+				CairoUtils.DrawLine(g,0 ,height, width, height, 1, color);
 			}
 
 			else {

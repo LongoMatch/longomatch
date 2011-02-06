@@ -440,7 +440,6 @@ namespace LongoMatch.Gui
 			this.playerbin1.Error += new global::LongoMatch.Video.Common.ErrorHandler (this.OnPlayerbin1Error);
 			this.playerbin1.SegmentClosedEvent += new global::LongoMatch.Video.Common.SegmentClosedHandler (this.OnSegmentClosedEvent);
 			this.capturerBin.Error += new global::LongoMatch.Video.Common.ErrorHandler (this.OnCapturerBinError);
-			this.timelinewidget1.TimeNodeSelected += new global::LongoMatch.Handlers.TimeNodeSelectedHandler (this.OnTimeNodeSelected);
 		}
 	}
 }

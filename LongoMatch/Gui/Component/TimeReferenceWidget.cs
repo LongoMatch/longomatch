@@ -22,6 +22,7 @@ using System;
 using Gtk;
 using Gdk;
 using Cairo;
+using LongoMatch.Common;
 using LongoMatch.TimeNodes;
 using Pango;
 
@@ -34,27 +35,44 @@ namespace LongoMatch.Gui.Component
 	public partial class TimeReferenceWidget : Gtk.DrawingArea
 	{
 		private const int SECTION_HEIGHT = 30;
-		ushort frameRate;
-		uint currentFrame;
+		double scroll;
 		uint frames;
 		uint pixelRatio=10;//Número de frames por pixel
 		Pango.Layout layout;
 
-		public TimeReferenceWidget(uint frames,ushort frameRate)
+		public TimeReferenceWidget()
 		{
-			this.frameRate = frameRate;
-			this.frames = frames;
+			Frames = 1;
+			PixelRatio = 1;
+			FrameRate = 1;
+			
 			this.HeightRequest= SECTION_HEIGHT;
-			this.Size((int)(this.frames/pixelRatio),SECTION_HEIGHT);
 			layout = new Pango.Layout(this.PangoContext);
 		}
 
 		public uint CurrentFrame {
+			get;
+			set;
+		}
+		
+		public uint Frames {
+			set{
+				frames = value;
+			}
+		}
+		
+		public ushort FrameRate {
+			set;
+			get;
+		}
+		
+		public double Scroll {
 			get {
-				return this.currentFrame;
+				return scroll;
 			}
 			set {
-				this.currentFrame = value;
+				scroll = value;
+				QueueDraw();
 			}
 		}
 
@@ -63,8 +81,7 @@ namespace LongoMatch.Gui.Component
 				return pixelRatio;
 			}
 			set {
-				this.pixelRatio = value;
-				this.Size((int)(this.frames/pixelRatio),SECTION_HEIGHT);
+				pixelRatio = value;
 			}
 		}
 
@@ -83,79 +100,62 @@ namespace LongoMatch.Gui.Component
 				this.CairoDraw(evnt,height,width);
 			else
 				this.GdkDraw(evnt,height,width);
-
-
-
-
 			return base.OnExposeEvent(evnt);
 		}
+		
 		private void CairoDraw(EventExpose evnt,int height,int width) {
 			Time time = new Time();
 			using(Cairo.Context g = Gdk.CairoHelper.Create(evnt.Window)) {
-				// Drawing main line
-				g.Color = new Cairo.Color(0,0,0);
-				g.MoveTo(currentFrame/pixelRatio,height);
-				g.LineTo(currentFrame/pixelRatio+5,height-15);
-				g.LineTo(currentFrame/pixelRatio-5,height-15);
-				g.ClosePath();
-				g.Fill();
-				g.Stroke();
-				g.MoveTo(new PointD(0,height));
-				g.LineTo(new PointD(width,height));
-				g.LineWidth = 2;
-				g.Stroke();
-				g.MoveTo(new PointD(0,height-20));
+				Cairo.Color color = new Cairo.Color(0, 0, 0);
+				/* Drawing position triangle */
+				CairoUtils.DrawTriangle(g,CurrentFrame/pixelRatio-Scroll, height, 10, 15, color);
+				/* Draw '0' */
+				CairoUtils.DrawLine(g, 0-Scroll, height, width, height, 2, color);
+				g.MoveTo(new PointD(0-Scroll,height-20));
 				g.ShowText("0");
 
-				for (int i=10*frameRate; i<=frames/pixelRatio;) {
-					g.MoveTo(new PointD(i,height));
-					g.LineTo(new PointD(i,height-10));
-					g.LineWidth = 2;
-					g.Stroke();
-
-
-					g.MoveTo(new PointD(i-13,height-20));
-					time.MSeconds = (int)(i/frameRate*pixelRatio);
+				for (int i=10*FrameRate; i<=frames/pixelRatio;) {
+					CairoUtils.DrawLine(g, i-Scroll, height,i-Scroll,
+					                    height-10, 2, color);
+					g.MoveTo(new PointD(i-Scroll-13,height-20));
+					time.MSeconds = (int)(i/FrameRate*pixelRatio);
 					g.ShowText(time.ToSecondsString());
-					i=i+10*frameRate;
+					i=i+10*FrameRate;
 				}
 				for (int i=0; i<=frames/pixelRatio;) {
-					g.MoveTo(new PointD(i,height));
-					g.LineTo(new PointD(i,height-5));
-					g.LineWidth = 1;
-					g.Stroke();
-					i=i+frameRate;
+					CairoUtils.DrawLine(g, i-Scroll, height,i-Scroll,
+					                    height-5, 1, color);
+					i=i+FrameRate;
 				}
 			}
 		}
+		
 		private void GdkDraw(EventExpose evnt,int height,int width) {
 			Time time = new Time();
 			layout.SetMarkup("0");
 			this.GdkWindow.DrawLayout(this.Style.TextGC(StateType.Normal),0,height-23,layout);
 
-			Gdk.Point topL= new Gdk.Point((int)(currentFrame/pixelRatio-5),height-15);
-			Gdk.Point topR= new Gdk.Point((int)(currentFrame/pixelRatio+5),height-15);
-			Gdk.Point bottom= new Gdk.Point((int)(currentFrame/pixelRatio),height);
+			Gdk.Point topL= new Gdk.Point((int)(CurrentFrame/pixelRatio-Scroll-5),height-15);
+			Gdk.Point topR= new Gdk.Point((int)(CurrentFrame/pixelRatio-Scroll+5),height-15);
+			Gdk.Point bottom= new Gdk.Point((int)(CurrentFrame/pixelRatio-Scroll),height);
 			this.GdkWindow.DrawPolygon(this.Style.TextGC(StateType.Normal),true,new Gdk.Point[] {topL,topR,bottom});
 
-			for (int i=10*frameRate; i<=frames/pixelRatio;) {
+			for (int i=10*FrameRate; i<=frames/pixelRatio;) {
 				// Drawing separator line
-				evnt.Window.DrawLine(Style.DarkGC(StateType.Normal),i,height,i,height-10);
-				time.MSeconds = (int)(i/frameRate*pixelRatio);
+				evnt.Window.DrawLine(Style.DarkGC(StateType.Normal),i-(int)Scroll,height,i-(int)Scroll,height-10);
+				time.MSeconds = (int)(i/FrameRate*pixelRatio);
 				layout.SetMarkup(time.ToSecondsString());
-				this.GdkWindow.DrawLayout(this.Style.TextGC(StateType.Normal),i-13,height-23,layout);
+				this.GdkWindow.DrawLayout(this.Style.TextGC(StateType.Normal),i-(int)Scroll-13,height-23,layout);
 				//g.ShowText(time.ToSecondsString());
-				i=i+10*frameRate;
+				i=i+10*FrameRate;
 			}
 
 			for (int i=0; i<=frames/pixelRatio;) {
-				evnt.Window.DrawLine(Style.DarkGC(StateType.Normal),i,height,i,height-5);
-				i=i+frameRate;
+				evnt.Window.DrawLine(Style.DarkGC(StateType.Normal),i-(int)Scroll,height,i-(int)Scroll,height-5);
+				i=i+FrameRate;
 			}
 			// Drawing main line
 			evnt.Window.DrawLine(Style.DarkGC(StateType.Normal),0,height,width,height);
 		}
-
-
 	}
 }

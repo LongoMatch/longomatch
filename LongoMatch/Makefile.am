@@ -77,6 +77,7 @@ all: $(ASSEMBLY) $(COMMONAPPLICATIONDATAROOT_IMAGES)  $(COMMONAPPLICATIONDATAROO
 FILES = \
 	AssemblyInfo.cs \
 	Common/Enums.cs \
+	Common/Cairo.cs \
 	Common/Constants.cs \
 	Compat/0.0/DatabaseMigrator.cs \
 	Compat/0.0/DB/DataBase.cs \
@@ -144,6 +145,7 @@ FILES = \
 	gtk-gui/LongoMatch.Gui.Popup.CalendarPopup.cs \
 	gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs \
 	Gui/Component/ButtonsWidget.cs \
+	Gui/Component/CategoriesScale.cs \
 	Gui/Component/CategoryProperties.cs \
 	Gui/Component/DrawingWidget.cs \
 	Gui/Component/DrawingToolBox.cs \
