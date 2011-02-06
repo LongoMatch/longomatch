@@ -1,4 +1,14 @@
 <Project name="LongoMatch" fileversion="2.0" DefaultNamespace="LongoMatch" language="C#" clr-version="Net_2_0" targetFramework="3.5" ctype="DotNetProject">
+  <Deployment.LinuxDeployData />
+  <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="../CesarPlayer/Makefile.am" RelativeConfigureInPath="../">
+    <BuildFilesVar Name="FILES" />
+    <DeployFilesVar />
+    <ResourcesVar Name="RESOURCES" />
+    <OthersVar />
+    <GacRefVar Name="REFERENCES" />
+    <AsmRefVar Name="REFERENCES" />
+    <ProjectRefVar Name="REFERENCES" />
+  </MonoDevelop.Autotools.MakefileInfo>
   <Configurations active="Release">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="bin/Debug" assembly="LongoMatch.exe" assemblyKeyFile="." />
@@ -185,6 +195,8 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.BusyDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/TreeView/ListTreeViewBase.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/CategoriesScale.cs" />
+    <File subtype="Code" buildaction="Compile" name="Common/Cairo.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
@@ -197,17 +209,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <ProjectReference type="Assembly" localcopy="True" specificVersion="False" refto="../../../../../usr/lib/mono/gac/Db4objects.Db4o/7.4.121.14026__6199cd4f203aa8eb/Db4objects.Db4o.dll" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="../../../../../usr/lib/mono/gac/Db4objects.Db4o/7.4.121.14026__6199cd4f203aa8eb/Db4objects.Db4o.dll" />
   </References>
   <LanguageParameters StartupObject="LongoMatch.MainClass" ApplicationIcon="." CodePage="65001" ctype="CSharpProjectParameters" />
-  <Deployment.LinuxDeployData />
-  <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="../CesarPlayer/Makefile.am" RelativeConfigureInPath="../">
-    <BuildFilesVar Name="FILES" />
-    <DeployFilesVar />
-    <ResourcesVar Name="RESOURCES" />
-    <OthersVar />
-    <GacRefVar Name="REFERENCES" />
-    <AsmRefVar Name="REFERENCES" />
-    <ProjectRefVar Name="REFERENCES" />
-  </MonoDevelop.Autotools.MakefileInfo>
 </Project>

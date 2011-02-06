@@ -34,27 +34,44 @@ namespace LongoMatch.Gui.Component
 	public partial class TimeReferenceWidget : Gtk.DrawingArea
 	{
 		private const int SECTION_HEIGHT = 30;
-		ushort frameRate;
-		uint currentFrame;
+		double scroll;
 		uint frames;
 		uint pixelRatio=10;//Número de frames por pixel
 		Pango.Layout layout;
 
-		public TimeReferenceWidget(uint frames,ushort frameRate)
+		public TimeReferenceWidget()
 		{
-			this.frameRate = frameRate;
-			this.frames = frames;
+			Frames = 1;
+			PixelRatio = 1;
+			FrameRate = 1;
+			
 			this.HeightRequest= SECTION_HEIGHT;
-			this.Size((int)(this.frames/pixelRatio),SECTION_HEIGHT);
 			layout = new Pango.Layout(this.PangoContext);
 		}
 
 		public uint CurrentFrame {
+			get;
+			set;
+		}
+		
+		public uint Frames {
+			set{
+				frames = value;
+			}
+		}
+		
+		public ushort FrameRate {
+			set;
+			get;
+		}
+		
+		public double Scroll {
 			get {
-				return this.currentFrame;
+				return scroll;
 			}
 			set {
-				this.currentFrame = value;
+				scroll = value;
+				QueueDraw();
 			}
 		}
 
@@ -63,8 +80,7 @@ namespace LongoMatch.Gui.Component
 				return pixelRatio;
 			}
 			set {
-				this.pixelRatio = value;
-				this.Size((int)(this.frames/pixelRatio),SECTION_HEIGHT);
+				pixelRatio = value;
 			}
 		}
 

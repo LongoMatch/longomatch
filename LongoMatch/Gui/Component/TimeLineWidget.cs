@@ -42,6 +42,7 @@ namespace LongoMatch.Gui.Component {
 		private List<List<MediaTimeNode>> tnArray;
 		private Sections sections;
 		private TimeReferenceWidget tr;
+		CategoriesScale cs;
 		private uint frames;
 		private uint pixelRatio;
 		private MediaTimeNode selected;
@@ -52,9 +53,24 @@ namespace LongoMatch.Gui.Component {
 		{
 			this.Build();
 			SetPixelRatio(10);
-			vscale1.CanFocus = false;
+			zoomscale.CanFocus = false;
+			
+			GtkScrolledWindow.Vadjustment.ValueChanged += HandleScrollEvent;
+			GtkScrolledWindow.Hadjustment.ValueChanged += HandleScrollEvent;
+			
+			GtkScrolledWindow.HScrollbar.SizeAllocated += OnSizeAllocated;
+			
+			cs = new CategoriesScale();
+			cs.WidthRequest = 100;
+			categoriesbox.PackStart(cs, false, false, 0);
+			
+			tr = new TimeReferenceWidget();
+			timescalebox.PackStart(tr,false,false,0);
+			
+			tr.HeightRequest = 50 - leftbox.Spacing; 
+			toolsbox.HeightRequest = 50 - leftbox.Spacing;
 		}
-
+		
 		public MediaTimeNode SelectedTimeNode {
 			get {
 				return selected;
@@ -112,7 +128,6 @@ namespace LongoMatch.Gui.Component {
 			}
 		}
 
-
 		private void SetPixelRatio(uint pixelRatio) {
 			if (tsArray != null && tnArray != null) {
 				this.pixelRatio = pixelRatio;
@@ -120,7 +135,7 @@ namespace LongoMatch.Gui.Component {
 				foreach (TimeScale  ts in tsArray) {
 					ts.PixelRatio = pixelRatio;
 				}
-				vscale1.Value=pixelRatio;
+				zoomscale.Value=pixelRatio;
 			}
 		}
 
@@ -136,16 +151,18 @@ namespace LongoMatch.Gui.Component {
 					return;
 				}
 
+				frames = value.File.GetFrames();
 				sections = value.Sections;
 				tnArray = value.GetDataArray();
 				tsArray = new TimeScale[sections.Count];
 
-				frames = value.File.GetFrames();
-				ushort fps = value.File.Fps;
+				cs.Categories = sections;
+				cs.Show();
 
-				tr = new TimeReferenceWidget(frames,fps);
-				vbox1.PackStart(tr,false,false,0);
+				tr.Frames = frames;
+				tr.FrameRate = value.File.Fps;
 				tr.Show();
+				
 				for (int i=0; i<sections.Count; i++) {
 					TimeScale ts = new TimeScale(i,tnArray[i],frames,sections.GetColor(i));
 					tsArray[i]=ts;
@@ -192,11 +209,26 @@ namespace LongoMatch.Gui.Component {
 			AdjustPostion(currentFrame);
 		}
 
-		protected virtual void OnVscale1ValueChanged(object sender, System.EventArgs e)
+		protected virtual void OnZoomscaleValueChanged(object sender, System.EventArgs e)
 		{
-			SetPixelRatio((uint)(vscale1.Value));
+			SetPixelRatio((uint)(zoomscale.Value));
 			QueueDraw();
 			AdjustPostion(currentFrame);
+		}
+		
+		protected virtual void HandleScrollEvent (object sender, System.EventArgs args)
+		{
+			if (sender == GtkScrolledWindow.Vadjustment)
+				cs.Scroll = GtkScrolledWindow.Vadjustment.Value;
+			else if (sender == GtkScrolledWindow.Hadjustment)
+				tr.Scroll = GtkScrolledWindow.Hadjustment.Value;
+		}
+		
+		protected virtual void OnSizeAllocated (object sender, SizeAllocatedArgs e)
+		{
+			/* Align the categories list widget on top of the timeline's horizontal bar */
+			if (sender == GtkScrolledWindow.HScrollbar)
+				categoriesalignment1.BottomPadding = (uint) GtkScrolledWindow.HScrollbar.Allocation.Height;
 		}
 	}
 }
