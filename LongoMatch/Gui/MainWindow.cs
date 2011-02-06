@@ -309,7 +309,7 @@ namespace LongoMatch.Gui
 				try {
 					MainClass.DB.UpdateProject(openedProject);
 				} catch (Exception e){
-					/* FIXME: Do log error */
+					Log.Exception(e);
 				}
 			} else if (projectType == ProjectType.FakeCaptureProject)
 				ProjectUtils.SaveFakeLiveProject(openedProject, this);

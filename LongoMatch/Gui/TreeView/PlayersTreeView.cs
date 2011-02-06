@@ -30,7 +30,6 @@ namespace LongoMatch.Gui.Component
 	public partial class PlayersTreeView : ListTreeViewBase
 	{
 
-		private Team team;
 		private Menu playersMenu;
 
 

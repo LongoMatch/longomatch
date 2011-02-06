@@ -35,9 +35,6 @@ namespace LongoMatch.Gui.Component
 		public event ClearDrawingHandler ClearDrawing;
 		public event TransparencyChangedHandler TransparencyChanged;
 
-		Gdk.Color normalColor;
-		Gdk.Color activeColor;
-
 		public DrawingToolBox()
 		{
 			this.Build();

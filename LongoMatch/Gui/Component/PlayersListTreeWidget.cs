@@ -94,7 +94,6 @@ namespace LongoMatch.Gui.Component
 		public void AddPlay(Play play, Player player) {
 			TreeIter iter;
 			TreeStore model;
-			bool found;
 				
 			if (template == null)
 				return;
