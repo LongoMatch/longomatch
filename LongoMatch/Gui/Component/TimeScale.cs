@@ -170,11 +170,13 @@ namespace LongoMatch.Gui.Component
 					}
 					//Then we draw the selected TimeNode over the others
 					if (hasSelectedTimeNode) {
-						Cairo.Color borderColor = new Cairo.Color(color.R+0.1, color.G+0.1,color.B+0.1, 1);
+						Cairo.Color borderColor = new Cairo.Color(0, 0, 0, 1);
 						CairoUtils.DrawRoundedRectangle(g,selected.StartFrame/pixelRatio,3,
 						                                selected.TotalFrames/pixelRatio,height-6,
 						                                SECTION_HEIGHT/7, color, borderColor);
 						if (selected.HasKeyFrame) {
+							g.Color = new Cairo.Color(0, 0, 1, 1);
+							g.LineWidth = 3;
 							g.MoveTo(selected.KeyFrame/pixelRatio,3);
 							g.LineTo(selected.KeyFrame/pixelRatio,SECTION_HEIGHT-3);
 							g.StrokePreserve();
