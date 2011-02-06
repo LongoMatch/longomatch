@@ -78,7 +78,7 @@ namespace LongoMatch.Gui.Component
 			this.list = list;
 			HeightRequest= SECTION_HEIGHT;
 			Size((int)(frames/pixelRatio),SECTION_HEIGHT);
-			this.color = CairoUtils.RGBToCairoColor(color);
+			this.color = new Cairo.Color(0, 0, 1);
 			this.color.A = ALPHA;
 			Events = EventMask.PointerMotionMask | EventMask.ButtonPressMask | EventMask.ButtonReleaseMask ;
 
@@ -182,7 +182,7 @@ namespace LongoMatch.Gui.Component
 						CairoUtils.DrawRoundedRectangle(g,selected.StartFrame/pixelRatio,3,
 						                                selected.TotalFrames/pixelRatio,height-6,
 						                                SECTION_HEIGHT/7, color, borderColor);
-						if (selected.HasDrawing) {
+						if (selected.HasDrawings) {
 							g.MoveTo(selected.KeyFrame/pixelRatio,3);
 							g.LineTo(selected.KeyFrame/pixelRatio,SECTION_HEIGHT-3);
 							g.StrokePreserve();

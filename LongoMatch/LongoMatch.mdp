@@ -163,8 +163,6 @@
     <File subtype="Code" buildaction="Compile" name="Common/GStreamer.cs" />
     <File subtype="Directory" buildaction="Compile" name="Compat" />
     <File subtype="Code" buildaction="Compile" name="IO/XMLReader.cs" />
-    <File subtype="Code" buildaction="Compile" name="IO/SectionsReader.cs" />
-    <File subtype="Code" buildaction="Compile" name="IO/SectionsWriter.cs" />
     <File subtype="Directory" buildaction="Compile" name="Store" />
     <File subtype="Directory" buildaction="Compile" name="DB" />
     <File subtype="Directory" buildaction="Compile" name="DB" />
@@ -197,7 +195,6 @@
     <File subtype="Code" buildaction="Compile" name="Store/TimeNode.cs" />
     <File subtype="Directory" buildaction="Compile" name="Time" />
     <File subtype="Code" buildaction="Compile" name="Store/Templates/TeamTemplate.cs" />
-    <File subtype="Code" buildaction="Compile" name="IO/XMLReader.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/SerializableObject.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/SubCategory.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Templates/SubCategoriesTemplate.cs" />

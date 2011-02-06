@@ -125,7 +125,7 @@ namespace LongoMatch.Gui.Component
 		{
 			Player player = (Player) model.GetValue(iter, 0);
 
-			(cell as Gtk.CellRendererText).Text = player.Discarded ? Catalog.GetString("No") : Catalog.GetString("Yes");
+			(cell as Gtk.CellRendererText).Text = player.Playing ? Catalog.GetString("Yes") : Catalog.GetString("No");
 		}
 
 		private void RenderNationality(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)

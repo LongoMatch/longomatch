@@ -21,8 +21,8 @@ using Gtk;
 using Gdk;
 using Pango;
 using LongoMatch.Common;
-using LongoMatch.TimeNodes;
-using LongoMatch.DB;
+using LongoMatch.Store;
+using LongoMatch.Store.Templates;
 
 namespace LongoMatch.Gui.Component
 {
@@ -43,7 +43,7 @@ namespace LongoMatch.Gui.Component
 			layout.Alignment = Pango.Alignment.Left;
 		}
 		
-		public Sections Categories {
+		public Categories Categories {
 			get;
 			set;
 		}	
@@ -73,7 +73,7 @@ namespace LongoMatch.Gui.Component
 				return;
 			
 			using(Cairo.Context g = Gdk.CairoHelper.Create(win)) {
-				foreach (SectionsTimeNode cat in Categories.SectionsTimeNodes) {
+				foreach (Category cat in Categories) {
 					int y = LINE_WIDTH/2 + i * SECTION_HEIGHT - (int)Scroll;
 					CairoUtils.DrawRoundedRectangle (g, 2, y + 3 , Allocation.Width - 3,
 					                                 SECTION_HEIGHT - 3, SECTION_HEIGHT/7,

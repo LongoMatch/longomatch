@@ -149,7 +149,6 @@ namespace LongoMatch.Gui.Component {
 					return;
 				}
 				hasProject = true;
-				frames = value.File.GetFrames();
 				categories = value.Categories;
 				tsList = new Dictionary<Category, TimeScale>();
 				frames = value.Description.File.GetFrames();
@@ -159,9 +158,6 @@ namespace LongoMatch.Gui.Component {
 
 				tr.Frames = frames;
 				tr.FrameRate = value.Description.File.Fps;
-				ushort fps = value.Description.File.Fps;
-				tr = new TimeReferenceWidget(frames,fps);
-				vbox1.PackStart(tr,false,false,0);
 				tr.Show();
 				
 				foreach (Category cat in  categories) {
