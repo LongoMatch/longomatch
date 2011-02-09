@@ -1,7 +1,7 @@
-LongoMatch-0.16.4 "Mario Kart is in the house"
+LongoMatch-0.16.5 "M&B"
 -------------------------------------------------
 
-The LongoMatch team is happy to announce the fourth release in the 0.16
+The LongoMatch team is happy to announce the fifth release in the 0.16
 LongoMatch series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
@@ -10,14 +10,9 @@ experience.
 
 * Features
 
-	* Select players from the template pool and only the one that are playing
-
-* Bugs Fixed
-
-	* Bug 634499 - In the Plays List move the Name of the play closer to the expand/collapse arrow
-	* Bug 634494 - Choose players for a project from the template pool
-	* Bug 633495 - typo
-	* Fix hang created a new play from the timeline when a a play is loaded
+	* Added brazilian translation
+	* Add categories list to the timeline
+	* Timeline's time scale doesn't scroll anymore
 
 *Contributors to this Release:
 
