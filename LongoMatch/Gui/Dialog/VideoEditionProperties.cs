@@ -45,7 +45,7 @@ namespace LongoMatch.Gui.Dialog
 			this.Build();
 			formatcombobox.AppendText(Constants.MP4);
 			formatcombobox.AppendText(Constants.AVI);
-			if (System.Environment.OSVersion.Platform != PlatformID.Win32NT) {
+			if(System.Environment.OSVersion.Platform != PlatformID.Win32NT) {
 				formatcombobox.AppendText(Constants.WEBM);
 				formatcombobox.AppendText(Constants.OGG);
 				formatcombobox.AppendText(Constants.DVD);
@@ -108,13 +108,13 @@ namespace LongoMatch.Gui.Dialog
 		#region Private Methods
 
 		private string GetExtension() {
-			if (formatcombobox.ActiveText == Constants.MP4)
+			if(formatcombobox.ActiveText == Constants.MP4)
 				return "mp4";
-			else if (formatcombobox.ActiveText == Constants.OGG)
+			else if(formatcombobox.ActiveText == Constants.OGG)
 				return "ogg";
-			else if (formatcombobox.ActiveText == Constants.WEBM)
+			else if(formatcombobox.ActiveText == Constants.WEBM)
 				return "webm";
-			else if (formatcombobox.ActiveText == Constants.AVI)
+			else if(formatcombobox.ActiveText == Constants.AVI)
 				return "avi";
 			else
 				return "mpg";
@@ -124,42 +124,42 @@ namespace LongoMatch.Gui.Dialog
 
 		protected virtual void OnButtonOkClicked(object sender, System.EventArgs e)
 		{
-			if (qualitycombobox.ActiveText == Catalog.GetString("Low")) {
+			if(qualitycombobox.ActiveText == Catalog.GetString("Low")) {
 				vq = VideoQuality.Low;
 			}
-			else if (qualitycombobox.ActiveText == Catalog.GetString("Normal")) {
+			else if(qualitycombobox.ActiveText == Catalog.GetString("Normal")) {
 				vq = VideoQuality.Normal;
 			}
-			else if (qualitycombobox.ActiveText == Catalog.GetString("Good")) {
+			else if(qualitycombobox.ActiveText == Catalog.GetString("Good")) {
 				vq = VideoQuality.Good;
 			}
-			else if (qualitycombobox.ActiveText == Catalog.GetString("Extra")) {
+			else if(qualitycombobox.ActiveText == Catalog.GetString("Extra")) {
 				vq = VideoQuality.Extra;
 			}
 
 			vf = (VideoFormat)sizecombobox.Active;
 
-			if (formatcombobox.ActiveText == Constants.MP4) {
+			if(formatcombobox.ActiveText == Constants.MP4) {
 				vcodec = VideoEncoderType.H264;
 				acodec = AudioEncoderType.Aac;
 				muxer = VideoMuxerType.Mp4;
 			}
-			else if (formatcombobox.ActiveText == Constants.OGG) {
+			else if(formatcombobox.ActiveText == Constants.OGG) {
 				vcodec = VideoEncoderType.Theora;
 				acodec = AudioEncoderType.Vorbis;
 				muxer = VideoMuxerType.Ogg;
 			}
-			else if (formatcombobox.ActiveText == Constants.WEBM) {
+			else if(formatcombobox.ActiveText == Constants.WEBM) {
 				vcodec = VideoEncoderType.VP8;
 				acodec = AudioEncoderType.Vorbis;
 				muxer = VideoMuxerType.WebM;
 			}
-			else if (formatcombobox.ActiveText == Constants.AVI) {
+			else if(formatcombobox.ActiveText == Constants.AVI) {
 				vcodec = VideoEncoderType.Xvid;
 				acodec = AudioEncoderType.Mp3;
 				muxer = VideoMuxerType.Avi;
 			}
-			else if (formatcombobox.ActiveText == Constants.DVD) {
+			else if(formatcombobox.ActiveText == Constants.DVD) {
 				vcodec = VideoEncoderType.Mpeg2;
 				acodec = AudioEncoderType.Mp3;
 				muxer = VideoMuxerType.MpegPS;
@@ -186,16 +186,16 @@ namespace LongoMatch.Gui.Dialog
 			filter.AddPattern("*.mpg");
 			filter.AddPattern("*.vob");
 			fChooser.Filter = filter;
-			if (fChooser.Run() == (int)ResponseType.Accept) {
+			if(fChooser.Run() == (int)ResponseType.Accept) {
 				fileentry.Text = fChooser.Filename;
 			}
 			fChooser.Destroy();
 		}
-		protected virtual void OnButtonCancelClicked (object sender, System.EventArgs e)
+		protected virtual void OnButtonCancelClicked(object sender, System.EventArgs e)
 		{
 			this.Destroy();
 		}
-		
-		
+
+
 	}
 }

@@ -21,7 +21,7 @@ using Gdk;
 
 namespace LongoMatch.Store
 {
-	
+
 	[Serializable]
 	public class Drawing
 	{
@@ -29,9 +29,9 @@ namespace LongoMatch.Store
 
 		/// <summary>
 		/// Represent a drawing in the database using a {@Gdk.Pixbuf} stored
-	    /// in a bytes array in PNG format for serialization. {@Drawings}
-	    /// are used by {@MediaTimeNodes} to store the key frame drawing
-	    /// which stop time is stored in a int value
+		/// in a bytes array in PNG format for serialization. {@Drawings}
+		/// are used by {@MediaTimeNodes} to store the key frame drawing
+		/// which stop time is stored in a int value
 		/// </summary>
 		public Drawing() {
 		}
@@ -41,18 +41,18 @@ namespace LongoMatch.Store
 		/// </summary>
 		public Pixbuf Pixbuf {
 			get {
-				if (drawingBuf != null)
+				if(drawingBuf != null)
 					return new Pixbuf(drawingBuf);
 				else return null;
 			}
 			set {
-				if (value != null)
+				if(value != null)
 					drawingBuf = value.SaveToBuffer("png");
 				else
 					drawingBuf = null;
 			}
 		}
-		
+
 		/// <summary>
 		/// Render time of the drawing
 		/// </summary>
@@ -60,7 +60,7 @@ namespace LongoMatch.Store
 			get;
 			set;
 		}
-	
+
 		/// <summary>
 		/// Time to pause the playback and display the drawing
 		/// </summary>

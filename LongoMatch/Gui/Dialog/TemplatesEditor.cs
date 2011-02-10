@@ -62,7 +62,7 @@ namespace LongoMatch.Gui.Dialog
 		public UseType Use {
 			set {
 				useType = value;
-				if (useType == UseType.TeamTemplate) {
+				if(useType == UseType.TeamTemplate) {
 					fileExtension = ".tem";
 					teamtemplatewidget1.Visible = true;
 
@@ -81,7 +81,7 @@ namespace LongoMatch.Gui.Dialog
 
 			dataFileListStore = new Gtk.ListStore(typeof(string));
 
-			foreach (string filePath in allFiles) {
+			foreach(string filePath in allFiles) {
 				dataFileListStore.AppendValues(filePath);
 			}
 			treeview.Model = dataFileListStore;
@@ -94,13 +94,13 @@ namespace LongoMatch.Gui.Dialog
 		}
 
 		public void SetCategoriesTemplate(Categories sections) {
-			if (useType != UseType.CategoriesTemplate)
+			if(useType != UseType.CategoriesTemplate)
 				return;
 			sectionspropertieswidget1.Categories=sections;
 		}
 
 		public void SetTeamTemplate(TeamTemplate template) {
-			if (useType != UseType.TeamTemplate)
+			if(useType != UseType.TeamTemplate)
 				return;
 			teamtemplatewidget1.TeamTemplate=template;
 		}
@@ -118,7 +118,7 @@ namespace LongoMatch.Gui.Dialog
 		}
 
 		private void SetSensitive(bool sensitive) {
-			if (useType == UseType.CategoriesTemplate)
+			if(useType == UseType.CategoriesTemplate)
 				sectionspropertieswidget1.Sensitive = true;
 			else
 				teamtemplatewidget1.Sensitive = true;
@@ -132,9 +132,9 @@ namespace LongoMatch.Gui.Dialog
 			ListStore model = (ListStore)treeview.Model;
 
 			model.GetIterFirst(out iter);
-			while (model.IterIsValid(iter)) {
+			while(model.IterIsValid(iter)) {
 				tName = System.IO.Path.GetFileNameWithoutExtension((string) model.GetValue(iter,0));
-				if (tName == templateName) {
+				if(tName == templateName) {
 					//Do not delete 'this' as we want to change the class attribute
 					this.templateName = templateName = (string) this.dataFileListStore.GetValue(iter, 0);
 					treeview.SetCursor(model.GetPath(iter),null,false);
@@ -145,7 +145,7 @@ namespace LongoMatch.Gui.Dialog
 		}
 
 		private void SaveTemplate() {
-			if (useType == UseType.CategoriesTemplate) {
+			if(useType == UseType.CategoriesTemplate) {
 				selectedCategoriesTemplate = sectionspropertieswidget1.Categories;
 				selectedCategoriesTemplate.Save(templateName);
 			}
@@ -158,7 +158,7 @@ namespace LongoMatch.Gui.Dialog
 		private void PromptForSave() {
 			MessageDialog mes = new MessageDialog(this,DialogFlags.Modal,MessageType.Question,ButtonsType.YesNo,
 			                                      Catalog.GetString("The template has been modified. Do you want to save it? "));
-			if (mes.Run() == (int)ResponseType.Yes) {
+			if(mes.Run() == (int)ResponseType.Yes) {
 				SaveTemplate();
 			}
 			mes.Destroy();
@@ -180,40 +180,40 @@ namespace LongoMatch.Gui.Dialog
 			EntryDialog ed= new  EntryDialog();
 
 			ed.Title = Catalog.GetString("Template name");
-			
-			if (useType == UseType.TeamTemplate){
-				ed.ShowCount=true;				
+
+			if(useType == UseType.TeamTemplate) {
+				ed.ShowCount=true;
 			}
-			
+
 			templates = System.IO.Directory.GetFiles(MainClass.TemplatesDir());
-			foreach (String text in templates){
+			foreach(String text in templates) {
 				string templateName = System.IO.Path.GetFileName(text);
-				if (templateName.EndsWith(fileExtension) && templateName != "default"+fileExtension)
-					availableTemplates.Add(templateName);					
+				if(templateName.EndsWith(fileExtension) && templateName != "default"+fileExtension)
+					availableTemplates.Add(templateName);
 			}
-			ed.AvailableTemplates = availableTemplates; 
+			ed.AvailableTemplates = availableTemplates;
 
 
-			if (ed.Run() == (int)ResponseType.Ok) {
+			if(ed.Run() == (int)ResponseType.Ok) {
 				name = ed.Text;
 				count = ed.Count;
-				if (name == "") {
+				if(name == "") {
 					MessagePopup.PopupMessage(ed, MessageType.Warning,
 					                          Catalog.GetString("You cannot create a template with a void name"));
 					ed.Destroy();
 					return;
 				}
-				if (System.IO.File.Exists(System.IO.Path.Combine(MainClass.TemplatesDir(),name+fileExtension))) {
+				if(System.IO.File.Exists(System.IO.Path.Combine(MainClass.TemplatesDir(),name+fileExtension))) {
 					MessagePopup.PopupMessage(ed, MessageType.Warning,
 					                          Catalog.GetString("A template with this name already exists"));
 					ed.Destroy();
 					return;
-				}	
-				
-				if (ed.SelectedTemplate != null)
-						System.IO.File.Copy(System.IO.Path.Combine(MainClass.TemplatesDir(),ed.SelectedTemplate),
-						                    System.IO.Path.Combine(MainClass.TemplatesDir(),name+fileExtension));
-				else if (useType == UseType.CategoriesTemplate){
+				}
+
+				if(ed.SelectedTemplate != null)
+					System.IO.File.Copy(System.IO.Path.Combine(MainClass.TemplatesDir(),ed.SelectedTemplate),
+					                    System.IO.Path.Combine(MainClass.TemplatesDir(),name+fileExtension));
+				else if(useType == UseType.CategoriesTemplate) {
 					Categories cat = Categories.DefaultTemplate();
 					cat.Save(name+fileExtension);
 				}
@@ -230,7 +230,7 @@ namespace LongoMatch.Gui.Dialog
 
 		protected virtual void OnDeletebuttonClicked(object sender, System.EventArgs e)
 		{
-			if (System.IO.Path.GetFileNameWithoutExtension(templateName) =="default") {
+			if(System.IO.Path.GetFileNameWithoutExtension(templateName) =="default") {
 				MessagePopup.PopupMessage(this,MessageType.Warning,Catalog.GetString("You can't delete the 'default' template"));
 				return;
 			}
@@ -238,7 +238,7 @@ namespace LongoMatch.Gui.Dialog
 			MessageDialog mes = new MessageDialog(this,DialogFlags.Modal,MessageType.Warning,ButtonsType.YesNo,
 			                                      Catalog.GetString("Do you really want to delete the template: ")+
 			                                      System.IO.Path.GetFileNameWithoutExtension(templateName));
-			if (mes.Run() == (int)ResponseType.Yes) {
+			if(mes.Run() == (int)ResponseType.Yes) {
 				System.IO.File.Delete(templateName);
 				this.Fill();
 				//The default template is always there so we select this one.
@@ -258,13 +258,13 @@ namespace LongoMatch.Gui.Dialog
 		{
 			TreeIter iter;
 
-			if (sectionspropertieswidget1.Edited || teamtemplatewidget1.Edited)
+			if(sectionspropertieswidget1.Edited || teamtemplatewidget1.Edited)
 				PromptForSave();
 
 			treeview.Selection.GetSelected(out iter);
 			templateName = (string) this.dataFileListStore.GetValue(iter, 0);
 
-			if (useType == UseType.CategoriesTemplate)
+			if(useType == UseType.CategoriesTemplate)
 				UpdateCategories();
 
 			else
@@ -273,14 +273,14 @@ namespace LongoMatch.Gui.Dialog
 
 		protected virtual void OnButtonOkClicked(object sender, System.EventArgs e)
 		{
-			if (sectionspropertieswidget1.Edited)
+			if(sectionspropertieswidget1.Edited)
 				PromptForSave();
 			this.Destroy();
 		}
 
 		protected virtual void OnTreeviewRowActivated(object o, Gtk.RowActivatedArgs args)
 		{
-			if (useType == UseType.CategoriesTemplate)
+			if(useType == UseType.CategoriesTemplate)
 				UpdateCategories();
 			else
 				UpdateTeamTemplate();

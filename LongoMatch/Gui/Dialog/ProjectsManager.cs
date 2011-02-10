@@ -54,20 +54,20 @@ namespace LongoMatch.Gui.Dialog
 			Clear();
 			originalFilePath=null;
 		}
-		
-		private void Clear(){
+
+		private void Clear() {
 			projectdetails.Clear();
 			projectdetails.Sensitive = false;
 			saveButton.Sensitive = false;
 			deleteButton.Sensitive = false;
-			exportbutton.Sensitive = false;	
+			exportbutton.Sensitive = false;
 		}
-		
-		private void PromptToSaveEditedProject(){			
+
+		private void PromptToSaveEditedProject() {
 			MessageDialog md = new MessageDialog((Window)this.Toplevel,DialogFlags.Modal,
 			                                     MessageType.Question, ButtonsType.YesNo,
 			                                     Catalog.GetString("The Project has been edited, do you want to save the changes?"));
-			if (md.Run() == (int)ResponseType.Yes) {
+			if(md.Run() == (int)ResponseType.Yes) {
 				SaveProject();
 				projectdetails.Edited=false;
 			}
@@ -77,10 +77,10 @@ namespace LongoMatch.Gui.Dialog
 		private void SaveProject() {
 			Project project = projectdetails.GetProject();
 
-			if (project == null)
+			if(project == null)
 				return;
 
-			if (project.Description.File.FilePath == originalFilePath) {
+			if(project.Description.File.FilePath == originalFilePath) {
 				MainClass.DB.UpdateProject(project);
 				saveButton.Sensitive = false;
 			}
@@ -100,14 +100,14 @@ namespace LongoMatch.Gui.Dialog
 
 		protected virtual void OnDeleteButtonPressed(object sender, System.EventArgs e)
 		{
-		    List<ProjectDescription> deletedProjects = new List<ProjectDescription>();
-			
-			if (selectedProjects == null)
-			    return;
-			
-			foreach (ProjectDescription selectedProject in selectedProjects) {
-				if (openedProject != null &&
-				    selectedProject.File.FilePath == openedProject.Description.File.FilePath) {
+			List<ProjectDescription> deletedProjects = new List<ProjectDescription>();
+
+			if(selectedProjects == null)
+				return;
+
+			foreach(ProjectDescription selectedProject in selectedProjects) {
+				if(openedProject != null &&
+				                selectedProject.File.FilePath == openedProject.Description.File.FilePath) {
 					MessagePopup.PopupMessage(this, MessageType.Warning,
 					                          Catalog.GetString("This Project is actually in use.")+"\n"+
 					                          Catalog.GetString("Close it first to allow its removal from the database"));
@@ -118,13 +118,13 @@ namespace LongoMatch.Gui.Dialog
 				                                     ButtonsType.YesNo,
 				                                     Catalog.GetString("Do you really want to delete:")+
 				                                     "\n"+selectedProject.Title);
-				if (md.Run()== (int)ResponseType.Yes) {
+				if(md.Run()== (int)ResponseType.Yes) {
 					MainClass.DB.RemoveProject(selectedProject.File.FilePath);
-					deletedProjects.Add (selectedProject);
-				} 
+					deletedProjects.Add(selectedProject);
+				}
 				md.Destroy();
 			}
-			projectlistwidget1.RemoveProjects (deletedProjects);
+			projectlistwidget1.RemoveProjects(deletedProjects);
 			Clear();
 		}
 
@@ -138,7 +138,7 @@ namespace LongoMatch.Gui.Dialog
 
 		protected virtual void OnButtonOkClicked(object sender, System.EventArgs e)
 		{
-			if (projectdetails.Edited) {
+			if(projectdetails.Edited) {
 				PromptToSaveEditedProject();
 			}
 			this.Destroy();
@@ -147,32 +147,32 @@ namespace LongoMatch.Gui.Dialog
 		protected virtual void OnProjectlistwidget1ProjectsSelected(List<ProjectDescription> projects)
 		{
 			ProjectDescription project;
-			
+
 			/* prompt tp save the opened project if has changes */
-			if (projectdetails.Edited) {
+			if(projectdetails.Edited) {
 				PromptToSaveEditedProject();
 			}
-			
+
 			selectedProjects = projects;
-			
+
 			/* if no projects are selected clear everything */
-			if (projects.Count == 0){
+			if(projects.Count == 0) {
 				Clear();
 				return;
-			/* if more than one project is selected clear everything but keep 
-			 * the delete button and the export button sensitives */
-			} else if (projects.Count > 1){
+				/* if more than one project is selected clear everything but keep
+				 * the delete button and the export button sensitives */
+			} else if(projects.Count > 1) {
 				Clear();
 				deleteButton.Sensitive = true;
 				exportbutton.Sensitive = true;
 				return;
-			} 
-			
+			}
+
 			/* if only one project is selected try to load it in the editor */
 			project = projects[0];
-			
-			if (openedProject != null && 
-			    project.File.FilePath == openedProject.Description.File.FilePath) {
+
+			if(openedProject != null &&
+			                project.File.FilePath == openedProject.Description.File.FilePath) {
 				MessagePopup.PopupMessage(this, MessageType.Warning,
 				                          Catalog.GetString("The Project you are trying to load is actually in use.")+"\n" +Catalog.GetString("Close it first to edit it"));
 				Clear();
@@ -191,8 +191,8 @@ namespace LongoMatch.Gui.Dialog
 		{
 			saveButton.Sensitive = true;
 		}
-		
-		protected virtual void OnExportbuttonClicked (object sender, System.EventArgs e)
+
+		protected virtual void OnExportbuttonClicked(object sender, System.EventArgs e)
 		{
 			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Save Project"),
 			                (Gtk.Window)Toplevel,
@@ -205,7 +205,7 @@ namespace LongoMatch.Gui.Dialog
 			filter.AddPattern("*.lpr");
 
 			fChooser.AddFilter(filter);
-			if (fChooser.Run() == (int)ResponseType.Accept) {
+			if(fChooser.Run() == (int)ResponseType.Accept) {
 				Project.Export(projectdetails.GetProject(), fChooser.Filename);
 			}
 			fChooser.Destroy();

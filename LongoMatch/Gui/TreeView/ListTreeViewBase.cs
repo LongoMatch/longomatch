@@ -1,20 +1,20 @@
-// 
+//
 //  Copyright (C) 2010 Andoni Morales Alastruey
-// 
+//
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation; either version 2 of the License, or
 //  (at your option) any later version.
-// 
+//
 //  This program is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 //  GNU General Public License for more details.
-//  
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
-// 
+//
 
 using Gdk;
 using Gtk;
@@ -45,8 +45,8 @@ namespace LongoMatch.Gui.Component
 		protected MenuItem players;
 		protected MenuItem localPlayers;
 		protected MenuItem visitorPlayers;
-		
-		
+
+
 		protected Gtk.CellRendererText nameCell;
 		protected Gtk.TreeViewColumn nameColumn;
 		protected String[] teams_name;
@@ -54,8 +54,8 @@ namespace LongoMatch.Gui.Component
 		protected bool projectIsLive;
 
 		protected const string LOCAL_TEAM = "Local Team";
-		protected const string VISITOR_TEAM = "Visitor Team";	
-		
+		protected const string VISITOR_TEAM = "Visitor Team";
+
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event TimeNodeSelectedHandler TimeNodeSelected;
 		public event TimeNodeDeletedHandler TimeNodeDeleted;
@@ -64,13 +64,13 @@ namespace LongoMatch.Gui.Component
 		public event PlayersTaggedHandler PlayersTagged;
 		public event TagPlayHandler TagPlay;
 
-		public ListTreeViewBase ()
+		public ListTreeViewBase()
 		{
 			Selection.Mode = SelectionMode.Multiple;
 			Selection.SelectFunction = SelectFunction;
 			RowActivated += new RowActivatedHandler(OnTreeviewRowActivated);
 			HeadersVisible = false;
-			
+
 			SetMenu();
 			ProjectIsLive = false;
 			PlayListLoaded = false;
@@ -79,8 +79,8 @@ namespace LongoMatch.Gui.Component
 			teams_name[(int)Team.NONE] = Catalog.GetString(Catalog.GetString("None"));
 			teams_name[(int)Team.LOCAL] = Catalog.GetString(Catalog.GetString(LOCAL_TEAM));
 			teams_name[(int)Team.VISITOR] = Catalog.GetString(Catalog.GetString(VISITOR_TEAM));
-			
-			
+
+
 			nameColumn = new Gtk.TreeViewColumn();
 			nameColumn.Title = "Name";
 			nameCell = new Gtk.CellRendererText();
@@ -96,41 +96,41 @@ namespace LongoMatch.Gui.Component
 
 		}
 
-		public bool ProjectIsLive{
-			set{
+		public bool ProjectIsLive {
+			set {
 				projectIsLive = value;
 				addPLN.Visible = !projectIsLive;
 				snapshot.Visible = !projectIsLive;
 			}
 		}
-		
-		public bool Colors{
+
+		public bool Colors {
 			get;
 			set;
 		}
-		
+
 		public String LocalTeam {
-			set{
+			set {
 				Label l1 = (local.Children[0] as Label);
 				Label l2 = (localPlayers.Children[0] as Label);
-				if (value == "")
+				if(value == "")
 					l1.Text = l2.Text = Catalog.GetString(LOCAL_TEAM);
 				else {
 					l1.Text = l2.Text = value;
 				}
-				teams_name[(int)Team.LOCAL] = l1.Text; 
+				teams_name[(int)Team.LOCAL] = l1.Text;
 			}
 		}
-		
+
 		public string VisitorTeam {
-			set{
+			set {
 				Label l1 = (visitor.Children[0] as Label);
 				Label l2 = (visitorPlayers.Children[0] as Label);
-				if (value == "")
+				if(value == "")
 					l1.Text = l2.Text = Catalog.GetString(VISITOR_TEAM);
-				else 
+				else
 					l1.Text = l2.Text = value;
-				teams_name[(int)Team.VISITOR] = l1.Text; 
+				teams_name[(int)Team.VISITOR] = l1.Text;
 			}
 		}
 
@@ -139,16 +139,16 @@ namespace LongoMatch.Gui.Component
 				addPLN.Sensitive = value;
 			}
 		}
-		
-		protected void EmitTimeNodeChanged(TimeNode tn, object o){
-			if (TimeNodeChanged != null)
+
+		protected void EmitTimeNodeChanged(TimeNode tn, object o) {
+			if(TimeNodeChanged != null)
 				TimeNodeChanged(tn, o);
 		}
-		
+
 		protected void SetMenu() {
 			Menu playersMenu;
 			MenuItem team;
-			
+
 			teamMenu = new Menu();
 			local = new MenuItem(Catalog.GetString(LOCAL_TEAM));
 			visitor = new MenuItem(Catalog.GetString(VISITOR_TEAM));
@@ -164,7 +164,7 @@ namespace LongoMatch.Gui.Component
 			playersMenu.Append(visitorPlayers);
 
 			menu = new Menu();
-			
+
 			name = new MenuItem(Catalog.GetString("Edit"));
 			team = new MenuItem(Catalog.GetString("Team Selection"));
 			team.Submenu = teamMenu;
@@ -198,35 +198,35 @@ namespace LongoMatch.Gui.Component
 			deleteKeyFrame.Activated += OnDeleteKeyFrame;
 			snapshot.Activated += OnSnapshot;
 			menu.ShowAll();
-		}		
+		}
 
-		protected void MultiSelectMenu (bool enabled){
+		protected void MultiSelectMenu(bool enabled) {
 			name.Sensitive = !enabled;
 			snapshot.Sensitive = !enabled;
 			players.Sensitive = !enabled;
 			tag.Sensitive = !enabled;
 		}
-		
-		protected object GetValueFromPath(TreePath path){
+
+		protected object GetValueFromPath(TreePath path) {
 			Gtk.TreeIter iter;
 			Model.GetIter(out iter, path);
-			return Model.GetValue(iter,0);					
-		}	
-	
+			return Model.GetValue(iter,0);
+		}
+
 		protected void RenderMiniature(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			var item = model.GetValue(iter, 0);
 			var c = cell as CellRendererPixbuf;
 
-			if (item is Play){
+			if(item is Play) {
 				c.Pixbuf = (item as Play).Miniature;
-				if (Colors) {
+				if(Colors) {
 					c.CellBackgroundGdk = (item as Play).Category.Color;
-				} else{ 
+				} else {
 					c.CellBackground = "white";
 				}
 			}
-			else if (item is Player){
+			else if(item is Player) {
 				c.Pixbuf= (item as Player).Photo;
 				c.CellBackground = "white";
 			}
@@ -235,62 +235,62 @@ namespace LongoMatch.Gui.Component
 				c.CellBackground = "white";
 			}
 		}
-		
+
 		protected void RenderName(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			object o = model.GetValue(iter, 0);
 			var c = cell as CellRendererText;
-			
+
 			/* Handle special case in which we replace the text in the cell by the name of the TimeNode
 			 * We need to check if we are editing and only change it for the path that's currently beeing edited */
-			if (editing && Selection.IterIsSelected(iter)){
-				if (o is Player)
+			if(editing && Selection.IterIsSelected(iter)) {
+				if(o is Player)
 					c.Markup = (o as Player).Name;
 				else
 					c.Markup = (o as TimeNode).Name;
 				return;
-			} 			
-			
-			if (o is Play){
+			}
+
+			if(o is Play) {
 				var mtn = o as Play;
-				if (Colors) {
+				if(Colors) {
 					Color col = mtn.Category.Color;
 					c.CellBackgroundGdk = col;
 					c.BackgroundGdk = col;
-				} else{ 
+				} else {
 					c.Background = "white";
 					c.CellBackground = "white";
 				}
 				// FIXME
 				//c.Markup = mtn.ToString(teams_name[(int)mtn.Team]);
-			}else if (o is Player) {
+			} else if(o is Player) {
 				c.Background = "white";
 				c.CellBackground = "white";
 				c.Markup = String.Format("{0} ({1})", (o as Player).Name, Model.IterNChildren(iter));
-			}else if (o is Category) {
+			} else if(o is Category) {
 				c.Background = "white";
 				c.CellBackground = "white";
 				c.Markup = String.Format("{0} ({1})", (o as TimeNode).Name, Model.IterNChildren(iter));
 			}
-		}	
+		}
 
 		protected virtual void OnNameCellEdited(object o, Gtk.EditedArgs args)
 		{
 			Gtk.TreeIter iter;
 			object item;
-			
+
 			Model.GetIter(out iter, new Gtk.TreePath(args.Path));
 			item = this.Model.GetValue(iter,0);
-			
-			if (item is TimeNode){
+
+			if(item is TimeNode) {
 				(item as TimeNode).Name = args.NewText;
 				EmitTimeNodeChanged((item as TimeNode), args.NewText);
-			}else if (item is Player){
+			} else if(item is Player) {
 				(item as Player).Name = args.NewText;
 			}
 			editing = false;
 			nameCell.Editable=false;
-			
+
 		}
 
 		protected virtual void OnTreeviewRowActivated(object o, Gtk.RowActivatedArgs args)
@@ -298,11 +298,11 @@ namespace LongoMatch.Gui.Component
 			Gtk.TreeIter iter;
 			this.Model.GetIter(out iter, args.Path);
 			object item = this.Model.GetValue(iter, 0);
-			
-			if (!(item is Play))
+
+			if(!(item is Play))
 				return;
 
-			if (TimeNodeSelected != null && !projectIsLive)
+			if(TimeNodeSelected != null && !projectIsLive)
 				this.TimeNodeSelected(item as Play);
 		}
 
@@ -310,21 +310,21 @@ namespace LongoMatch.Gui.Component
 			List <Play> playsList = new List<Play>();
 			List <TreeIter> iters = new List<TreeIter>();
 			TreePath[] paths = Selection.GetSelectedRows();
-			
+
 			/* Get the iter for all of the paths first, because the path changes
 			 * each time a row is deleted */
-			foreach (var path in paths) {
+			foreach(var path in paths) {
 				TreeIter iter;
 				Model.GetIter(out iter, path);
 				playsList.Add((Play)Model.GetValue(iter, 0));
 				iters.Add(iter);
 			}
 			/* Delete all the iters now */
-			for (int i=0; i< iters.Count; i++){
+			for(int i=0; i< iters.Count; i++) {
 				TreeIter iter = iters[i];
 				(Model as TreeStore).Remove(ref iter);
 			}
-			if (TimeNodeDeleted != null)
+			if(TimeNodeDeleted != null)
 				TimeNodeDeleted(playsList);
 		}
 
@@ -336,9 +336,9 @@ namespace LongoMatch.Gui.Component
 			                                     false,
 			                                     Catalog.GetString("Do you want to delete the key frame for this play?")
 			                                    );
-			if (md.Run() == (int)ResponseType.Yes){
+			if(md.Run() == (int)ResponseType.Yes) {
 				TreePath[] paths = Selection.GetSelectedRows();
-				for (int i=0; i<paths.Length; i++){	
+				for(int i=0; i<paths.Length; i++) {
 					Play tNode = (Play)GetValueFromPath(paths[i]);
 					tNode.Drawings.Clear();
 				}
@@ -350,7 +350,7 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnEdit(object obj, EventArgs args) {
 			TreePath[] paths = Selection.GetSelectedRows();
-			
+
 			editing = true;
 			nameCell.Editable = true;
 			SetCursor(paths[0],  nameColumn, true);
@@ -359,51 +359,51 @@ namespace LongoMatch.Gui.Component
 		protected void OnTeamSelection(object obj, EventArgs args) {
 			MenuItem sender = (MenuItem)obj;
 			Team team = Team.NONE;
-			if (sender == local)
+			if(sender == local)
 				team = Team.LOCAL;
-			else if (sender == visitor)
+			else if(sender == visitor)
 				team = Team.VISITOR;
-			else if (sender == noTeam)
+			else if(sender == noTeam)
 				team = Team.NONE;
-			
+
 			TreePath[] paths = Selection.GetSelectedRows();
-			for (int i=0; i<paths.Length; i++){	
-					Play tNode = (Play)GetValueFromPath(paths[i]);
-					//FIXME
-					//tNode.Team = team;
+			for(int i=0; i<paths.Length; i++) {
+				Play tNode = (Play)GetValueFromPath(paths[i]);
+				//FIXME
+				//tNode.Team = team;
 			}
 		}
 
 		protected void OnAdded(object obj, EventArgs args) {
-			if (PlayListNodeAdded != null){
+			if(PlayListNodeAdded != null) {
 				TreePath[] paths = Selection.GetSelectedRows();
-				for (int i=0; i<paths.Length; i++){	
+				for(int i=0; i<paths.Length; i++) {
 					Play tNode = (Play)GetValueFromPath(paths[i]);
 					PlayListNodeAdded(tNode);
 				}
 			}
 		}
-		
-		protected void OnTag (object obj, EventArgs args){
-			if (TagPlay != null)
+
+		protected void OnTag(object obj, EventArgs args) {
+			if(TagPlay != null)
 				TagPlay((Play)GetValueFromPath(Selection.GetSelectedRows()[0]));
 		}
 
 		protected void OnSnapshot(object obj, EventArgs args) {
-			if (SnapshotSeriesEvent != null)
+			if(SnapshotSeriesEvent != null)
 				SnapshotSeriesEvent((Play)GetValueFromPath(Selection.GetSelectedRows()[0]));
 		}
 
 		protected virtual void OnLocalPlayers(object o, EventArgs args) {
-			if (PlayersTagged != null)
+			if(PlayersTagged != null)
 				PlayersTagged((Play)GetValueFromPath(Selection.GetSelectedRows()[0]), Team.LOCAL);
 		}
 
 		protected virtual void OnVisitorPlayers(object o, EventArgs args) {
-			if (PlayersTagged != null)
+			if(PlayersTagged != null)
 				PlayersTagged((Play)GetValueFromPath(Selection.GetSelectedRows()[0]), Team.VISITOR);
 		}
-		
+
 		protected abstract bool SelectFunction(TreeSelection selection, TreeModel model, TreePath path, bool selected);
 	}
 }

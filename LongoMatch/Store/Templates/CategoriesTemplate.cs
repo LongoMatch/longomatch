@@ -44,14 +44,14 @@ namespace LongoMatch.Store.Templates
 		/// </summary>
 		public Categories() {}
 
-		public void Save(string filePath){
+		public void Save(string filePath) {
 			SerializableObject.Save(this, filePath);
 		}
-		
+
 		public static Categories Load(string filePath) {
 			return SerializableObject.Load<Categories>(filePath);
 		}
-		
+
 		public static Categories DefaultTemplate() {
 			Categories defaultTemplate = new Categories();
 			defaultTemplate.FillDefaultTemplate();
@@ -61,13 +61,13 @@ namespace LongoMatch.Store.Templates
 		private void FillDefaultTemplate() {
 			Color c = new Color((Byte)255, (Byte)0, (Byte)0);
 			HotKey h = new HotKey();
-			
-						
-			for (int i=1; i<=20;i++) {
+
+
+			for(int i=1; i<=20; i++) {
 				PlayerSubCategory localplayers, visitorplayers;
 				TeamSubCategory team;
 				List<Team> teams, lplayers, vplayers;
-				
+
 				teams = new List<Team>();
 				teams.Add(Team.NONE);
 				teams.Add(Team.LOCAL);
@@ -76,22 +76,22 @@ namespace LongoMatch.Store.Templates
 					Name = Catalog.GetString("Team"),
 					Options = teams
 				};
-				
+
 				lplayers = new List<Team>();
 				lplayers.Add(Team.LOCAL);
 				localplayers = new PlayerSubCategory {
 					Name = Catalog.GetString("Local Team Players"),
 					Options = lplayers,
 				};
-				
+
 				vplayers = new List<Team>();
 				vplayers.Add(Team.VISITOR);
 				visitorplayers = new PlayerSubCategory {
 					Name = Catalog.GetString("Visitor Team Players"),
 					Options = vplayers,
 				};
-				
-				Category cat =  new Category{
+
+				Category cat =  new Category {
 					Name = "Category " + i,
 					Color = c,
 					Start = new Time{Seconds = 10},

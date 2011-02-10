@@ -50,43 +50,43 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build();
 			treeview.TimeNodeChanged += OnTimeNodeChanged;
-            treeview.TimeNodeSelected += OnTimeNodeSelected;
-            treeview.TimeNodeDeleted += OnTimeNodeDeleted;
-            treeview.PlayListNodeAdded += OnPlayListNodeAdded;
-            treeview.SnapshotSeriesEvent += OnSnapshotSeriesEvent;
-            treeview.PlayersTagged += OnPlayersTagged;
-            treeview.TagPlay += OnTagPlay;
+			treeview.TimeNodeSelected += OnTimeNodeSelected;
+			treeview.TimeNodeDeleted += OnTimeNodeDeleted;
+			treeview.PlayListNodeAdded += OnPlayListNodeAdded;
+			treeview.SnapshotSeriesEvent += OnSnapshotSeriesEvent;
+			treeview.PlayersTagged += OnPlayersTagged;
+			treeview.TagPlay += OnTagPlay;
 		}
 
 		public void RemovePlays(List<Play> plays) {
 			TreeIter iter, child;
 			TreeStore model;
 			List<TreeIter> removeIters;
-			
-			if (project == null)
+
+			if(project == null)
 				return;
-			
+
 			removeIters = new List<TreeIter>();
 			model = (TreeStore)treeview.Model;
 			model.GetIterFirst(out iter);
-			/* Scan all the tree and store the iter of each play 
+			/* Scan all the tree and store the iter of each play
 			 * we need to delete, but don't delete it yet so that
 			 * we don't alter the tree */
-			do{
-				if (!model.IterHasChild(iter))
+			do {
+				if(!model.IterHasChild(iter))
 					continue;
-				
+
 				model.IterChildren(out child, iter);
 				do {
 					Play play = (Play) model.GetValue(child,0);
-					if (plays.Contains(play)) {
+					if(plays.Contains(play)) {
 						removeIters.Add(child);
 					}
-				} while (model.IterNext(ref child)); 
-			} while (model.IterNext(ref iter));
-			
+				} while(model.IterNext(ref child));
+			} while(model.IterNext(ref iter));
+
 			/* Remove the selected iters now */
-			for (int i=0; i < removeIters.Count; i++){
+			for(int i=0; i < removeIters.Count; i++) {
 				iter = removeIters[i];
 				model.Remove(ref iter);
 			}
@@ -94,22 +94,22 @@ namespace LongoMatch.Gui.Component
 
 		public void AddPlay(Play play) {
 			TreeIter categoryIter;
-			
-			if (project == null)
-			return;
-			
+
+			if(project == null)
+				return;
+
 			var cat = play.Category;
 			var model = (TreeStore)treeview.Model;
 			model.GetIterFromString(out categoryIter, CategoryPath(cat));
 			var playIter = model.AppendValues(categoryIter,play);
 			var playPath = model.GetPath(playIter);
-			treeview.Selection.UnselectAll();				
+			treeview.Selection.UnselectAll();
 			treeview.ExpandToPath(playPath);
 			treeview.Selection.SelectIter(playIter);
 		}
 
-		public bool ProjectIsLive{
-			set{
+		public bool ProjectIsLive {
+			set {
 				treeview.ProjectIsLive = value;
 			}
 		}
@@ -117,7 +117,7 @@ namespace LongoMatch.Gui.Component
 		public Project Project {
 			set {
 				project = value;
-				if (project != null) {
+				if(project != null) {
 					treeview.Model = project.GetModel();
 					treeview.Colors = true;
 					treeview.VisitorTeam = project.Description.VisitorName;
@@ -134,47 +134,47 @@ namespace LongoMatch.Gui.Component
 				treeview.PlayListLoaded=value;
 			}
 		}
-		
-		private string CategoryPath(Category cat){
+
+		private string CategoryPath(Category cat) {
 			return project.Categories.IndexOf(cat).ToString();
 		}
 
 		protected virtual void OnTimeNodeChanged(TimeNode tNode,object val) {
-			if (TimeNodeChanged != null)
+			if(TimeNodeChanged != null)
 				TimeNodeChanged(tNode,val);
 		}
 
 		protected virtual void OnTimeNodeSelected(Play tNode) {
-			if (TimeNodeSelected != null)
+			if(TimeNodeSelected != null)
 				TimeNodeSelected(tNode);
 		}
 
-		protected virtual void OnTimeNodeDeleted(List<Play> plays){
-			if (TimeNodeDeleted != null)
+		protected virtual void OnTimeNodeDeleted(List<Play> plays) {
+			if(TimeNodeDeleted != null)
 				TimeNodeDeleted(plays);
 		}
 
 		protected virtual void OnPlayListNodeAdded(Play tNode)
 		{
-			if (PlayListNodeAdded != null)
+			if(PlayListNodeAdded != null)
 				PlayListNodeAdded(tNode);
 		}
 
 		protected virtual void OnSnapshotSeriesEvent(LongoMatch.Store.Play tNode)
 		{
-			if (SnapshotSeriesEvent != null)
+			if(SnapshotSeriesEvent != null)
 				SnapshotSeriesEvent(tNode);
 		}
 
 		protected virtual void OnPlayersTagged(LongoMatch.Store.Play tNode, Team team)
 		{
-			if (PlayersTagged != null)
+			if(PlayersTagged != null)
 				PlayersTagged(tNode,team);
 		}
 
-		protected virtual void OnTagPlay (LongoMatch.Store.Play tNode)
+		protected virtual void OnTagPlay(LongoMatch.Store.Play tNode)
 		{
-			if (TagPlay != null)
+			if(TagPlay != null)
 				TagPlay(tNode);
 		}
 	}

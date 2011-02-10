@@ -27,13 +27,13 @@ namespace LongoMatch.Store.Templates
 	[Serializable]
 	public class SubCategoriesTemplate: List<SubCategory>
 	{
-		
+
 		public SubCategoriesTemplate() {}
 
-		public void Save(string filePath){
+		public void Save(string filePath) {
 			SerializableObject.Save(this, filePath);
 		}
-		
+
 		public static SubCategoriesTemplate Load(string filePath) {
 			return SerializableObject.Load<SubCategoriesTemplate>(filePath);
 		}

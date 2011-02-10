@@ -54,7 +54,7 @@ namespace LongoMatch.Updates
 				update = parser.UpdateVersion;
 				downloadURL = parser.DownloadURL;
 			}
-			catch (Exception ex) {
+			catch(Exception ex) {
 				Console.WriteLine("Error downloading version file:\n"+ex);
 				update = actual;
 			}
@@ -72,21 +72,23 @@ namespace LongoMatch.Updates
 		}
 
 		private bool IsOutDated() {
-			if (update.Major > actual.Major)
+			if(update.Major > actual.Major)
 				return true;
-			else if (update.Minor > actual.Minor)
+			else if(update.Minor > actual.Minor)
 				return true;
-			else if (update.Build > actual.Build)
+			else if(update.Build > actual.Build)
 				return true;
 			else
 				return false;
 		}
 
 		private void CheckForUpdates() {
-			if (ConexionExists())
+			if(ConexionExists())
 				this.FetchNewVersion();
-			if (NewVersion != null && IsOutDated()) {
-				Gtk.Application.Invoke(delegate {this.NewVersion(update,downloadURL);});
+			if(NewVersion != null && IsOutDated()) {
+				Gtk.Application.Invoke(delegate {
+					this.NewVersion(update,downloadURL);
+				});
 			}
 		}
 		#endregion

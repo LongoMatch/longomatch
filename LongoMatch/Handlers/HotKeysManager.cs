@@ -42,10 +42,10 @@ namespace LongoMatch.Handlers
 		public Categories Categories {
 			set {
 				dic.Clear();
-				if (value == null)
+				if(value == null)
 					return;
-				foreach (Category cat in value) {
-					if (cat.HotKey.Defined &&
+				foreach(Category cat in value) {
+					if(cat.HotKey.Defined &&
 					                !dic.ContainsKey(cat.HotKey))
 						dic.Add(cat.HotKey, cat);
 				}
@@ -57,11 +57,11 @@ namespace LongoMatch.Handlers
 		public void KeyListener(object sender, KeyPressEventArgs args) {
 			Category cat = null;
 			HotKey hotkey = new HotKey();
-			
+
 			hotkey.Key=args.Event.Key;
 			hotkey.Modifier=args.Event.State & (ModifierType.Mod1Mask | ModifierType.Mod5Mask | ModifierType.ShiftMask);
-			if (dic.TryGetValue(hotkey, out cat)) {
-				if (newMarkEvent != null) {
+			if(dic.TryGetValue(hotkey, out cat)) {
+				if(newMarkEvent != null) {
 					newMarkEvent(cat);
 				}
 			}

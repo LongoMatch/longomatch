@@ -32,7 +32,7 @@ namespace LongoMatch.Store
 	{
 		private const int MS = 1000000 ;
 		public const int SECONDS_TO_TIME = 1000;
-	
+
 		#region Constructors
 		public Time() {
 		}
@@ -76,7 +76,7 @@ namespace LongoMatch.Store
 			_m = ((_time % 3600) / 60);
 			_s = ((_time % 3600) % 60);
 
-			if (_h > 0)
+			if(_h > 0)
 				return String.Format("{0}:{1}:{2}", _h, _m.ToString("d2"),
 				                     _s.ToString("d2"));
 
@@ -99,7 +99,7 @@ namespace LongoMatch.Store
 
 		public override bool Equals(object o)
 		{
-			if (o is Time) {
+			if(o is Time) {
 				return ((Time)o).MSeconds == MSeconds;
 			}
 			else return false;
@@ -111,7 +111,7 @@ namespace LongoMatch.Store
 		}
 
 		public int CompareTo(object obj) {
-			if (obj is Time)
+			if(obj is Time)
 			{
 				Time  otherTime = (Time) obj;
 				return MSeconds.CompareTo(otherTime.MSeconds);

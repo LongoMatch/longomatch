@@ -29,7 +29,7 @@ namespace LongoMatch.Store
 	[Serializable]
 	public class ProjectDescription :  IComparable
 	{
-		
+
 		/// <summary>
 		/// Title of the project
 		/// </summary>
@@ -40,7 +40,7 @@ namespace LongoMatch.Store
 		}
 
 		/// <summary>
-		/// Media file asigned to this project 
+		/// Media file asigned to this project
 		/// </summary>
 		public PreviewMediaFile File {
 			get;
@@ -48,7 +48,7 @@ namespace LongoMatch.Store
 		}
 
 		/// <summary>
-		/// Season of the game 
+		/// Season of the game
 		/// </summary>
 		public String Season {
 			get;
@@ -108,14 +108,14 @@ namespace LongoMatch.Store
 		/// String representing the video format like "widhtxheight@fps"
 		/// </summary>
 		public String Format {
-			get{
-				return String.Format("{0}x{1}@{2}fps", 
-				              File.VideoWidth, File.VideoHeight, File.Fps);
+			get {
+				return String.Format("{0}x{1}@{2}fps",
+				                     File.VideoWidth, File.VideoHeight, File.Fps);
 			}
 		}
 
 		public int CompareTo(object obj) {
-			if (obj is ProjectDescription) {
+			if(obj is ProjectDescription) {
 				ProjectDescription project = (ProjectDescription) obj;
 
 				return this.File.FilePath.CompareTo(project.File.FilePath);

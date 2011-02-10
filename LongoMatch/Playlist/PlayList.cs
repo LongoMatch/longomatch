@@ -49,7 +49,7 @@ namespace LongoMatch.Playlist
 		public PlayList(string file)
 		{
 			//For new Play List
-			if (!System.IO.File.Exists(file)) {
+			if(!System.IO.File.Exists(file)) {
 				list = new List<PlayListPlay>();
 				filename = file;
 			}
@@ -82,18 +82,18 @@ namespace LongoMatch.Playlist
 		#endregion
 
 		#region Public methods
-		public void Save(){
+		public void Save() {
 			Save(File);
 		}
 
-		public void Save(string filePath){
+		public void Save(string filePath) {
 			Save(this, filePath);
 		}
-		
+
 		public static PlayList Load(string filePath) {
 			return Load<PlayList>(filePath);
 		}
-		
+
 		public bool isLoaded() {
 			return filename != null;
 		}
@@ -103,13 +103,13 @@ namespace LongoMatch.Playlist
 		}
 
 		public PlayListPlay Next() {
-			if (HasNext())
+			if(HasNext())
 				indexSelection++;
 			return list[indexSelection];
 		}
 
 		public PlayListPlay Prev() {
-			if (HasPrev())
+			if(HasPrev())
 				indexSelection--;
 			return list[indexSelection];
 		}
@@ -121,7 +121,7 @@ namespace LongoMatch.Playlist
 		public void Remove(PlayListPlay plNode) {
 
 			list.Remove(plNode);
-			if (GetCurrentIndex() >= list.Count)
+			if(GetCurrentIndex() >= list.Count)
 				indexSelection --;
 		}
 
@@ -140,7 +140,7 @@ namespace LongoMatch.Playlist
 
 		public ListStore GetModel() {
 			Gtk.ListStore listStore = new ListStore(typeof(PlayListPlay));
-			foreach (PlayListPlay plNode in list) {
+			foreach(PlayListPlay plNode in list) {
 				listStore.AppendValues(plNode);
 			}
 			return listStore;
@@ -151,7 +151,7 @@ namespace LongoMatch.Playlist
 
 			listStore.GetIterFirst(out iter);
 			list.Clear();
-			while (listStore.IterIsValid(iter)) {
+			while(listStore.IterIsValid(iter)) {
 				list.Add(listStore.GetValue(iter, 0) as PlayListPlay);
 				listStore.IterNext(ref iter);
 			}

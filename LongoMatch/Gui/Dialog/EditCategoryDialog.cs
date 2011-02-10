@@ -52,13 +52,13 @@ namespace LongoMatch.Gui.Dialog
 		}
 
 		protected virtual void OnHotKeyChanged(HotKey prevHotKey, Category category) {
-			if (hkList.Contains(category.HotKey)) {
+			if(hkList.Contains(category.HotKey)) {
 				MessagePopup.PopupMessage(this,MessageType.Warning,
 				                          Catalog.GetString("This hotkey is already in use."));
 				category.HotKey=prevHotKey;
 				timenodeproperties2.Category = category; //Update Gui
 			}
-			else if (category.HotKey.Defined){
+			else if(category.HotKey.Defined) {
 				hkList.Remove(prevHotKey);
 				hkList.Add(category.HotKey);
 			}

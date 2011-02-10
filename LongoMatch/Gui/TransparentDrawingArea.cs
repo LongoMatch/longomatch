@@ -79,14 +79,14 @@ namespace LongoMatch.Gui.Popup
 		}
 
 		public void ToggleGrab() {
-			if (hardGrab)
+			if(hardGrab)
 				ReleaseGrab();
 			else
 				AcquireGrab();
 		}
 
 		public void ReleaseGrab() {
-			if (hardGrab) {
+			if(hardGrab) {
 				hardGrab=false;
 				Pointer.Ungrab(Gtk.Global.CurrentEventTime);
 			}
@@ -94,7 +94,7 @@ namespace LongoMatch.Gui.Popup
 
 		public void AcquireGrab() {
 			GrabStatus stat;
-			if (!hardGrab) {
+			if(!hardGrab) {
 				stat =Pointer.Grab(drawingarea.GdkWindow, false,
 				                   EventMask.ButtonMotionMask |
 				                   EventMask.ButtonPressMask |
@@ -102,7 +102,7 @@ namespace LongoMatch.Gui.Popup
 				                   targetWidget.GdkWindow,
 				                   new Gdk.Cursor(Gdk.CursorType.Pencil) /* data->paint_cursor */,
 				                   Gtk.Global.CurrentEventTime);
-				if (stat == GrabStatus.Success) {
+				if(stat == GrabStatus.Success) {
 					hardGrab=true;
 				}
 			}
@@ -125,7 +125,7 @@ namespace LongoMatch.Gui.Popup
 		}
 
 		private bool Reshape() {
-			if (modified)
+			if(modified)
 			{
 				ShapeCombineMask(shape, 0,0);
 				modified = false;
@@ -205,21 +205,21 @@ namespace LongoMatch.Gui.Popup
 
 		protected virtual void OnDrawingareaButtonPressEvent(object o, Gtk.ButtonPressEventArgs args)
 		{
-			if (!hardGrab)
+			if(!hardGrab)
 				return;
 			lastx = args.Event.X;
 			lasty = args.Event.Y;
 
-			if (args.Event.Button == 1)
+			if(args.Event.Button == 1)
 				DrawLine((int)args.Event.X, (int)args.Event.Y,(int) args.Event.X, (int)args.Event.Y);
 		}
 
 		protected virtual void OnDrawingareaMotionNotifyEvent(object o, Gtk.MotionNotifyEventArgs args)
 		{
-			if (!hardGrab)
+			if(!hardGrab)
 				return;
 
-			if (lastx==-1 || lasty==-1) {
+			if(lastx==-1 || lasty==-1) {
 				lastx = args.Event.X;
 				lasty = args.Event.Y;
 			}
@@ -245,7 +245,7 @@ namespace LongoMatch.Gui.Popup
 		protected override void  OnShown() {
 			//Prevent a dirty flash when the
 			//Window is created and hidden
-			if (targetWidget != null) {
+			if(targetWidget != null) {
 				base.OnShown();
 				timeoutId = GLib.Timeout.Add(20,Reshape);
 			}

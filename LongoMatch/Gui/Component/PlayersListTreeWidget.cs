@@ -43,9 +43,9 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build();
 			playerstreeview.TimeNodeChanged += OnTimeNodeChanged;
-            playerstreeview.TimeNodeSelected += OnTimeNodeSelected;
-            playerstreeview.PlayListNodeAdded += OnPlayListNodeAdded;
-            playerstreeview.SnapshotSeriesEvent += OnSnapshotSeriesEvent;
+			playerstreeview.TimeNodeSelected += OnTimeNodeSelected;
+			playerstreeview.PlayListNodeAdded += OnPlayListNodeAdded;
+			playerstreeview.SnapshotSeriesEvent += OnSnapshotSeriesEvent;
 		}
 
 		public Team Team {
@@ -53,9 +53,9 @@ namespace LongoMatch.Gui.Component
 				playerstreeview.Team = value;
 			}
 		}
-		
-		public bool ProjectIsLive{
-			set{
+
+		public bool ProjectIsLive {
+			set {
 				playerstreeview.ProjectIsLive = value;
 			}
 		}
@@ -64,27 +64,27 @@ namespace LongoMatch.Gui.Component
 			TreeIter iter, child;
 			TreeStore model;
 			List<TreeIter> removeIters;
-			
-			if (template == null)
+
+			if(template == null)
 				return;
-				
+
 			removeIters = new List<TreeIter>();
 			model = (TreeStore)playerstreeview.Model;
 			model.GetIterFirst(out iter);
-			do{
-				if (!model.IterHasChild(iter))
+			do {
+				if(!model.IterHasChild(iter))
 					continue;
-				
+
 				model.IterChildren(out child, iter);
 				do {
 					Play play = (Play) model.GetValue(child,0);
-					if (plays.Contains(play)) {
+					if(plays.Contains(play)) {
 						removeIters.Add(child);
 					}
-				} while (model.IterNext(ref child)); 
-			} while (model.IterNext(ref iter));
-			
-			for (int i=0; i < removeIters.Count; i++){
+				} while(model.IterNext(ref child));
+			} while(model.IterNext(ref iter));
+
+			for(int i=0; i < removeIters.Count; i++) {
 				iter = removeIters[i];
 				model.Remove(ref iter);
 			}
@@ -94,17 +94,17 @@ namespace LongoMatch.Gui.Component
 		public void AddPlay(Play play, Player player) {
 			TreeIter iter;
 			TreeStore model;
-				
-			if (template == null)
+
+			if(template == null)
 				return;
 			model = (TreeStore)playerstreeview.Model;
 			model.GetIterFirst(out iter);
-			do{
-				if (model.GetValue(iter, 0) == player){
+			do {
+				if(model.GetValue(iter, 0) == player) {
 					model.AppendValues(iter, player);
 					break;
 				}
-			} while (model.IterNext(ref iter));
+			} while(model.IterNext(ref iter));
 		}
 
 		public void SetTeam(TeamTemplate template, TreeStore model) {
@@ -128,25 +128,25 @@ namespace LongoMatch.Gui.Component
 		}
 
 		protected virtual void OnTimeNodeSelected(Play tNode) {
-			if (TimeNodeSelected != null)
+			if(TimeNodeSelected != null)
 				TimeNodeSelected(tNode);
 		}
 
 		protected virtual void OnSnapshotSeriesEvent(Play tNode)
 		{
-			if (SnapshotSeriesEvent != null)
+			if(SnapshotSeriesEvent != null)
 				SnapshotSeriesEvent(tNode);
 		}
 
 		protected virtual void OnTimeNodeChanged(TimeNode tNode, object val)
 		{
-			if (TimeNodeChanged != null)
+			if(TimeNodeChanged != null)
 				TimeNodeChanged(tNode, val);
 		}
 
 		protected virtual void OnPlayListNodeAdded(Play tNode)
 		{
-			if (PlayListNodeAdded != null)
+			if(PlayListNodeAdded != null)
 				PlayListNodeAdded(tNode);
 		}
 

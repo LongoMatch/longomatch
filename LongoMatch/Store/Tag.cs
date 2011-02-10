@@ -32,13 +32,13 @@ namespace LongoMatch.Store
 			get;
 			set;
 		}
-		
+
 		public object Value {
 			get;
 			set;
 		}
 	}
-	
+
 	[Serializable]
 	public class StringTag
 	{
@@ -49,31 +49,31 @@ namespace LongoMatch.Store
 			get;
 			set;
 		}
-		
+
 		public string Value {
 			get;
 			set;
 		}
 	}
-	
+
 	[Serializable]
 	public class PlayerTag:Tag
 	{
 		public PlayerTag() {
 		}
-		
+
 		public new Player Value {
 			get;
 			set;
 		}
 	}
-	
+
 	[Serializable]
 	public class TeamTag:Tag
 	{
 		public TeamTag() {
 		}
-		
+
 		public new Team Value {
 			get;
 			set;

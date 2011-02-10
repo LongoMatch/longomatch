@@ -41,16 +41,16 @@ namespace LongoMatch.Gui.Dialog
 			List<Player> playersList;
 			int i=0;
 
-			if (this.template != null)
+			if(this.template != null)
 				return;
 
 			this.template = template;
 			playersList = template.PlayingPlayersList;
-			
+
 			table1.NColumns =(uint)(playersList.Count/10);
 			table1.NRows =(uint) 10;
 
-			foreach (Player player in playersList) {
+			foreach(Player player in playersList) {
 				button = new CheckButton();
 				button.Label = player.Number + "-" + player.Name;
 				button.Name = i.ToString();
@@ -69,13 +69,13 @@ namespace LongoMatch.Gui.Dialog
 
 		public List<Player> PlayersChecked {
 			set {
-				foreach (var pair in checkButtonsDict)
+				foreach(var pair in checkButtonsDict)
 					pair.Key.Active = value.Contains(pair.Value);
 			}
 			get {
 				List<Player> playersList = new List<Player>();
-				foreach (var pair in checkButtonsDict){
-					if (pair.Key.Active)
+				foreach(var pair in checkButtonsDict) {
+					if(pair.Key.Active)
 						playersList.Add(pair.Value);
 				}
 				return playersList;

@@ -66,7 +66,7 @@ namespace LongoMatch.Store
 		/// </summary>
 		public Pixbuf Photo {
 			get {
-				if (photo != null)
+				if(photo != null)
 					return new Pixbuf(photo);
 				else
 					return null;
@@ -75,27 +75,27 @@ namespace LongoMatch.Store
 				photo=value.SaveToBuffer("png");
 			}
 		}
-		
+
 		/// <summary>
 		/// Date of birth
 		/// </summary>
-		public DateTime Birthday{
+		public DateTime Birthday {
 			get;
 			set;
 		}
-		
+
 		/// <summary>
 		/// Nationality
 		/// </summary>
-		public String Nationality{
+		public String Nationality {
 			get;
 			set;
 		}
-		
+
 		/// <summary>
 		/// Height
 		/// </summary>
-		public float Height{
+		public float Height {
 			get;
 			set;
 		}
@@ -103,20 +103,20 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Weight
 		/// </summary>
-		public int Weight{
+		public int Weight {
 			get;
 			set;
 		}
-		
+
 		/// <summary>
-		/// Whether this player is playing or not and shouldn't be added the 
-		/// list of taggable players 
+		/// Whether this player is playing or not and shouldn't be added the
+		/// list of taggable players
 		/// </summary>
-		public bool Playing{
+		public bool Playing {
 			get;
 			set;
 		}
-		
+
 		#endregion
 	}
 }

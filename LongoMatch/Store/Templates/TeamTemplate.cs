@@ -28,40 +28,40 @@ namespace LongoMatch.Store.Templates
 	public class TeamTemplate: List<Player>
 	{
 		public TeamTemplate() {}
-		
-		public String TeamName{
+
+		public String TeamName {
 			get;
 			set;
 		}
 
-		public List<Player> PlayingPlayersList{
+		public List<Player> PlayingPlayersList {
 			get {
-				var players = 
-					from player in this
-						where player.Playing == true
-						select player;
+				var players =
+				        from player in this
+				        where player.Playing == true
+				        select player;
 				return players.ToList() as List<Player>;
 			}
 		}
 
-		public void Save(string filePath){
+		public void Save(string filePath) {
 			SerializableObject.Save(this, filePath);
 		}
-		
+
 		public static TeamTemplate Load(string filePath) {
 			return SerializableObject.Load<TeamTemplate>(filePath);
 		}
-		
+
 		public static TeamTemplate DefaultTemplate(int playersCount) {
 			TeamTemplate defaultTemplate = new TeamTemplate();
 			defaultTemplate.FillDefaultTemplate(playersCount);
 			return defaultTemplate;
 		}
-		
+
 		private void FillDefaultTemplate(int playersCount) {
 			Clear();
-			for (int i=1; i<=playersCount;i++) {
-				Add(new Player{
+			for(int i=1; i<=playersCount; i++) {
+				Add(new Player {
 					Name = "Player " + i,
 					Birthday = new DateTime(),
 					Height = 1.80f,

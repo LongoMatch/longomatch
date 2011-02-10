@@ -49,9 +49,9 @@ namespace LongoMatch.Gui.Dialog
 				return projecttemplatewidget.Categories;
 			}
 		}
-		
-		public bool CanExport{
-			set{
+
+		public bool CanExport {
+			set {
 				projecttemplatewidget.CanExport = value;
 			}
 		}

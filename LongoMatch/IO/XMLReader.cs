@@ -34,7 +34,7 @@ namespace LongoMatch.IO
 		public XMLReader(string filePath)
 		{
 			configXml = new XmlDocument();
-			if (!File.Exists(filePath)) {
+			if(!File.Exists(filePath)) {
 				//manejar el error!!!
 			}
 
@@ -47,7 +47,7 @@ namespace LongoMatch.IO
 		{
 			XmlNode n;
 			n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");
-			if (n!=null)
+			if(n!=null)
 				return (string)(n.Attributes["value"].Value);
 			else return null;
 		}
@@ -56,7 +56,7 @@ namespace LongoMatch.IO
 		{
 			XmlNode n;
 			n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");
-			if (n != null) {
+			if(n != null) {
 				object result = n.Attributes["value"].Value;
 				return int.Parse(result.ToString());
 			}
@@ -67,7 +67,7 @@ namespace LongoMatch.IO
 			XmlNode n;
 			n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");
 
-			if (n != null) {
+			if(n != null) {
 				object result = n.Attributes["value"].Value;
 
 				return bool.Parse(result.ToString());
@@ -77,7 +77,7 @@ namespace LongoMatch.IO
 		public ushort GetUShortValue(string section, string clave) {
 			XmlNode n;
 			n = configXml.SelectSingleNode(section + "/add[@key=\"" + clave + "\"]");
-			if (n != null) {
+			if(n != null) {
 				object result = n.Attributes["value"].Value;
 				return ushort.Parse(result.ToString());
 			}

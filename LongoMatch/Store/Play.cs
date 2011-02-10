@@ -37,45 +37,62 @@ namespace LongoMatch.Store
 	{
 
 		#region Constructors
-		public Play(){
+		public Play() {
 			Drawings = new DrawingsList();
 			Tags = new List<Tag>();
 		}
 		#endregion
 
 		#region Properties
-		
+
 		/// <summary>
-		/// Category in which this play is tagged 
+		/// Category in which this play is tagged
 		/// </summary>
-		public Category Category {get; set;}
-		
+		public Category Category {
+			get;
+			set;
+		}
+
 		/// <summary>
 		/// A string with the play's notes
 		/// </summary>
-		public string Notes {get; set;}
+		public string Notes {
+			get;
+			set;
+		}
 
 		/// <summary>
 		/// Video framerate in frames per second. This value is taken from the
 		/// video file properties and used to translate from seconds
 		/// to frames: second 100 is equivalent to frame 100*fps
 		/// </summary>
-		public uint Fps {get; set;}
+		public uint Fps {
+			get;
+			set;
+		}
 
 		/// <summary>
 		/// Start frame number
 		/// </summary>
 		public uint StartFrame {
-			get {return (uint) (Start.MSeconds * Fps / 1000);}
-			set {Start = new Time {MSeconds = (int)(1000 * value / Fps)};}
+			get {
+				return (uint)(Start.MSeconds * Fps / 1000);
+			}
+			set {
+				Start = new Time {MSeconds = (int)(1000 * value / Fps)};
+			}
 		}
 
 		/// <summary>
 		/// Stop frame number
 		/// </summary>
 		public uint StopFrame {
-			get {return (uint) (Stop.MSeconds * Fps / 1000);}
-			set {Stop = new Time {MSeconds = (int)(1000 * value / Fps)};}
+			get {
+				return (uint)(Stop.MSeconds * Fps / 1000);
+			}
+			set {
+				Stop = new Time {MSeconds = (int)(1000 * value / Fps)};
+			}
 		}
 
 		/// <summary>
@@ -83,7 +100,7 @@ namespace LongoMatch.Store
 		/// </summary>
 		public uint KeyFrame {
 			get {
-				if (HasDrawings)
+				if(HasDrawings)
 					return (uint) KeyFrameDrawing.RenderTime * Fps / 1000;
 				else return 0;
 			}
@@ -92,23 +109,29 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Get/Set wheter this play is actually loaded. Used in  <see cref="LongoMatch.Gui.Component.TimeScale">
 		/// </summary>
-		public bool Selected {get; set;}
-	
+		public bool Selected {
+			get;
+			set;
+		}
+
 		/// <summary>
 		/// List of drawings for this play
 		/// </summary>
-		public DrawingsList Drawings {get; set;}
-		
+		public DrawingsList Drawings {
+			get;
+			set;
+		}
+
 		/* FIXME: Keep this until we support multiple drawings */
 		public Drawing KeyFrameDrawing {
-			get{
-				if (Drawings.Count > 0)
+			get {
+				if(Drawings.Count > 0)
 					return Drawings[0];
 				else
 					return null;
 			}
 		}
-		
+
 		/// <summary>
 		/// Get wether the play has at least a frame drawing
 		/// </summary>
@@ -117,25 +140,32 @@ namespace LongoMatch.Store
 				return Drawings.Count > 0;
 			}
 		}
-		
+
 		/// <summary>
 		/// Central frame number using (stopFrame-startFrame)/2
 		/// </summary>
 		public uint CentralFrame {
-			get {return StopFrame-((TotalFrames)/2);}
+			get {
+				return StopFrame-((TotalFrames)/2);
+			}
 		}
 
 		/// <summary>
 		/// Number of frames inside the play's boundaries
 		/// </summary>
 		public uint TotalFrames {
-			get {return StopFrame-StartFrame;}
+			get {
+				return StopFrame-StartFrame;
+			}
 		}
 
 		//// <summary>
-		/// Play's tags 
+		/// Play's tags
 		/// </summary>
-		public List<Tag> Tags{get; set;}
+		public List<Tag> Tags {
+			get;
+			set;
+		}
 		#endregion
 
 		#region Public methods
@@ -153,29 +183,29 @@ namespace LongoMatch.Store
 		}
 
 		/// <summary>
-		/// Adds a new tag to the play 
+		/// Adds a new tag to the play
 		/// </summary>
 		/// <param name="tag">
 		/// A <see cref="Tag"/>: the tag to add
 		/// </param>
-		public void AddTag(Tag tag){
-			if (!Tags.Contains(tag))
+		public void AddTag(Tag tag) {
+			if(!Tags.Contains(tag))
 				Tags.Add(tag);
 		}
-		
+
 		/// <summary>
 		/// Removes a tag to the play
 		/// </summary>
 		/// <param name="tag">
 		/// A <see cref="Tag"/>: the tag to remove
 		/// </param>
-		public void RemoveTag(Tag tag){
-			if (Tags.Contains(tag))
+		public void RemoveTag(Tag tag) {
+			if(Tags.Contains(tag))
 				Tags.Remove(tag);
 		}
-		
+
 		/// <summary>
-		/// Return True if the play contains a similar tag 
+		/// Return True if the play contains a similar tag
 		/// </summary>
 		/// <param name="name">
 		/// A <see cref="String"/> with the tag name
@@ -187,22 +217,22 @@ namespace LongoMatch.Store
 		/// A <see cref="System.Boolean"/>
 		/// </returns>
 		public bool HasTag(String name, object val) {
-			return  (from tag in Tags
-					where (tag.Name == (string)name) && (tag.Value == val) 
-					select tag).Count() > 0;
+			return (from tag in Tags
+			        where(tag.Name == (string)name) && (tag.Value == val)
+			        select tag).Count() > 0;
 		}
-		
-		public override string ToString ()
+
+		public override string ToString()
 		{
 			String[] tags = new String[Tags.Count];
-		
-			for (int i=0; i<Tags.Count; i++)
+
+			for(int i=0; i<Tags.Count; i++)
 				tags[i] = Tags[i].Value.ToString();
-			
+
 			return  "<b>"+Catalog.GetString("Name")+": </b>"+Name+"\n"+
-					"<b>"+Catalog.GetString("Start")+": </b>"+Start.ToMSecondsString()+"\n"+
-					"<b>"+Catalog.GetString("Stop")+": </b>"+Stop.ToMSecondsString()+"\n"+
-					"<b>"+Catalog.GetString("Tags")+": </b>"+ String.Join(" ; ", tags);
+			        "<b>"+Catalog.GetString("Start")+": </b>"+Start.ToMSecondsString()+"\n"+
+			        "<b>"+Catalog.GetString("Stop")+": </b>"+Stop.ToMSecondsString()+"\n"+
+			        "<b>"+Catalog.GetString("Tags")+": </b>"+ String.Join(" ; ", tags);
 		}
 		#endregion
 	}

@@ -40,13 +40,13 @@ namespace LongoMatch.Store
 
 		#region Properties
 		/// <summary>
-		/// Media File 
+		/// Media File
 		/// </summary>
 		public PreviewMediaFile MediaFile {
 			get;
 			set;
 		}
-		
+
 		/// <summary>
 		/// Play rate
 		/// </summary>
@@ -62,14 +62,14 @@ namespace LongoMatch.Store
 			get;
 			set;
 		}
-		
+
 		/// <summary>
-		/// List of drawings to be displayed 
+		/// List of drawings to be displayed
 		/// </summary>
 		public DrawingsList Drawings {
 			get;
 			set;
-		} 
+		}
 		#endregion
 	}
 }

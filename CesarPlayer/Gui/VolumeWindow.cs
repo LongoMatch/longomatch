@@ -1,4 +1,4 @@
-// VolumeWindow.cs 
+// VolumeWindow.cs
 //
 //  Copyright (C) 2007-2009 Andoni Morales Alastruey
 //
@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -22,25 +22,25 @@ using LongoMatch.Video.Common;
 
 namespace LongoMatch.Gui
 {
-	
-	
+
+
 	public partial class VolumeWindow : Gtk.Window
 	{
 
-	
-		
+
+
 		public event         VolumeChangedHandler VolumeChanged;
-		
-		
-		public VolumeWindow() : 
-				base(Gtk.WindowType.Toplevel)
+
+
+		public VolumeWindow() :
+		base(Gtk.WindowType.Toplevel)
 		{
 			this.Build();
 			volumescale.Adjustment.PageIncrement = 0.0001;
 			volumescale.Adjustment.StepIncrement = 0.0001;
 		}
-		
-		public void SetLevel(double level){
+
+		public void SetLevel(double level) {
 			volumescale.Value = level ;
 		}
 
@@ -59,12 +59,12 @@ namespace LongoMatch.Gui
 			VolumeChanged(volumescale.Value);
 		}
 
-		protected virtual void OnFocusOutEvent (object o, Gtk.FocusOutEventArgs args)
+		protected virtual void OnFocusOutEvent(object o, Gtk.FocusOutEventArgs args)
 		{
 			this.Hide();
 		}
 
 
-		
+
 	}
 }

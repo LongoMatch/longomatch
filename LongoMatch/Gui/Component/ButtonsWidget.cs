@@ -33,7 +33,7 @@ namespace LongoMatch.Gui.Component
 	public partial class ButtonsWidget : Gtk.Bin
 	{
 
-		private Categories categories;		
+		private Categories categories;
 		private TagMode tagMode;
 		private Dictionary<Widget, Category> buttonsDic;
 
@@ -48,34 +48,34 @@ namespace LongoMatch.Gui.Component
 			Mode = TagMode.Predifined;
 			buttonsDic = new Dictionary<Widget, Category>();
 		}
-		
-		public TagMode Mode{
-			set{
+
+		public TagMode Mode {
+			set {
 				bool isPredef = (value == TagMode.Predifined);
 				table1.Visible = isPredef;
 				starttagbutton.Visible = !isPredef;
 				cancelbutton.Visible = false;
-				tagMode = value;				
+				tagMode = value;
 			}
 		}
 
 		public Categories Categories {
 			set {
-				foreach (Widget w in table1.AllChildren) {
+				foreach(Widget w in table1.AllChildren) {
 					table1.Remove(w);
 					w.Destroy();
 				}
 				categories = value;
-				if (value == null)
+				if(value == null)
 					return;
-				
+
 				buttonsDic.Clear();
 				int sectionsCount = value.Count;
 
 				table1.NColumns =(uint) 10;
 				table1.NRows =(uint)(sectionsCount/10);
 
-				for (int i=0;i<sectionsCount;i++) {
+				for(int i=0; i<sectionsCount; i++) {
 					Button b = new Button();
 					Label l = new Label();
 					Category cat = value[i];
@@ -94,7 +94,7 @@ namespace LongoMatch.Gui.Component
 					b.Name = i.ToString();
 					b.Clicked += new EventHandler(OnButtonClicked);
 					b.CanFocus = false;
-					
+
 					l.Show();
 					b.Show();
 
@@ -107,35 +107,35 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnButtonClicked(object sender,  System.EventArgs e)
 		{
-			if (categories == null)
+			if(categories == null)
 				return;
 			Widget w = (Button)sender;
-			if (tagMode == TagMode.Predifined){
-				if (NewMarkEvent != null)
+			if(tagMode == TagMode.Predifined) {
+				if(NewMarkEvent != null)
 					NewMarkEvent(buttonsDic[w]);
 			} else {
 				starttagbutton.Visible = true;
 				table1.Visible = false;
 				cancelbutton.Visible = false;
-				if (NewMarkStopEvent != null)
+				if(NewMarkStopEvent != null)
 					NewMarkStopEvent(buttonsDic[w]);
-			}			
+			}
 		}
 
-		protected virtual void OnStartTagClicked (object sender, System.EventArgs e)
+		protected virtual void OnStartTagClicked(object sender, System.EventArgs e)
 		{
-			if (categories == null)
+			if(categories == null)
 				return;
-			
+
 			starttagbutton.Visible = false;
 			table1.Visible = true;
 			cancelbutton.Visible = true;
-			
-			if (NewMarkStartEvent != null)
+
+			if(NewMarkStartEvent != null)
 				NewMarkStartEvent();
 		}
 
-		protected virtual void OnCancelbuttonClicked (object sender, System.EventArgs e)
+		protected virtual void OnCancelbuttonClicked(object sender, System.EventArgs e)
 		{
 			starttagbutton.Visible = true;
 			table1.Visible = false;

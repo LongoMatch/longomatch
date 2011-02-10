@@ -32,7 +32,7 @@ namespace LongoMatch.Store
 
 	/// <summary>
 	/// A key combination used to tag plays using the keyboard. <see cref="LongoMatch.Store.SectionsTimeNodes"/>
-	/// It can only be used with the Shith and Alt modifiers to avoid interfering with ohter shortcuts. 
+	/// It can only be used with the Shith and Alt modifiers to avoid interfering with ohter shortcuts.
 	/// 'key' and 'modifier' are set to -1 when it's initialized
 	/// </summary>
 	[Serializable]
@@ -106,7 +106,7 @@ namespace LongoMatch.Store
 		#region Overrides
 		public override bool Equals(object obj)
 		{
-			if (obj is HotKey){
+			if(obj is HotKey) {
 				HotKey hotkey= obj as HotKey;
 				return Equals(hotkey);
 			}
@@ -122,17 +122,17 @@ namespace LongoMatch.Store
 		public override string ToString()
 		{
 			string modifierS;
-			if (!Defined)
+			if(!Defined)
 				return Catalog.GetString("Not defined");
-			if (Modifier == ModifierType.Mod1Mask)
+			if(Modifier == ModifierType.Mod1Mask)
 				modifierS = "<Alt>+";
-			else if (Modifier == ModifierType.ShiftMask)
+			else if(Modifier == ModifierType.ShiftMask)
 				modifierS = "<Shift>+";
 			else
 				modifierS = "";
 
 			return string.Format("{0}{1}", modifierS,(Key.ToString()).ToLower());
 		}
-		#endregion	
+		#endregion
 	}
 }

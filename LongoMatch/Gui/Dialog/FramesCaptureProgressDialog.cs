@@ -44,16 +44,16 @@ namespace LongoMatch.Gui.Dialog
 		}
 
 		protected virtual void Update(int actual, int total,Pixbuf frame) {
-			if (actual <= total) {
+			if(actual <= total) {
 				progressbar.Text= Catalog.GetString("Capturing frame: ")+actual+"/"+total;
 				progressbar.Fraction = (double)actual/(double)total;
-				if (frame != null) {
-					if (image.Pixbuf != null)
+				if(frame != null) {
+					if(image.Pixbuf != null)
 						image.Pixbuf.Dispose();
 					image.Pixbuf = frame;
 				}
 			}
-			if (actual == total) {
+			if(actual == total) {
 				progressbar.Text= Catalog.GetString("Done");
 				cancelbutton.Visible = false;
 				okbutton.Visible = true;

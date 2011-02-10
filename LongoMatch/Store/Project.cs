@@ -52,7 +52,7 @@ namespace LongoMatch.Store
 
 
 		#region Constructors
-		public Project(){
+		public Project() {
 			playsList = new List<Play>();
 			Categories = new Categories();
 			LocalTeamTemplate = new TeamTemplate();
@@ -61,7 +61,7 @@ namespace LongoMatch.Store
 		#endregion
 
 		#region Properties
-		
+
 		public ProjectDescription Description {
 			get;
 			set;
@@ -90,7 +90,7 @@ namespace LongoMatch.Store
 			get;
 			set;
 		}
-		
+
 		#endregion
 
 		#region Public Methods
@@ -152,7 +152,7 @@ namespace LongoMatch.Store
 		/// A <see cref="System.Int32"/>: category the play belongs to
 		/// </param>
 		public void RemovePlays(List<Play> plays) {
-			foreach (Play play in plays)
+			foreach(Play play in plays)
 				playsList.Remove(play);
 		}
 
@@ -163,38 +163,38 @@ namespace LongoMatch.Store
 		/// A <see cref="System.Int32"/>: category index
 		/// </param>
 		public void RemoveCategory(Category category) {
-			if (Categories.Count == 1)
+			if(Categories.Count == 1)
 				throw new Exception("You can't remove the last Section");
 			Categories.Remove(category);
-			
+
 			/* query for all the plays with this Category */
-			var plays = 
-				from play in playsList
-					where play.Category.UUID == category.UUID
-					select play;
+			var plays =
+			        from play in playsList
+			        where play.Category.UUID == category.UUID
+			        select play;
 			/* Delete them */
-			foreach (var play in plays)
+			foreach(var play in plays)
 				playsList.Remove(play);
 		}
-		
-		public List<Play> PlaysInCategory (Category category){
+
+		public List<Play> PlaysInCategory(Category category) {
 			return (from play in playsList
 			        where play.Category.UUID == category.UUID
 			        select play).ToList();
 		}
-		
-		public List<Play> AllPlays (){
+
+		public List<Play> AllPlays() {
 			return (from play in playsList
 			        select play).ToList();
 		}
-		
+
 		public List<Tag> Tags {
 			get {
 				/* FIXME: Fix that when I have decide what to do with tags*/
 				return new List<Tag>();
 			}
 		}
-		
+
 		/// <summary>
 		/// Returns a <see cref="Gtk.TreeStore"/> in which project categories are
 		/// root nodes and their respectives plays child nodes
@@ -205,21 +205,21 @@ namespace LongoMatch.Store
 		public TreeStore GetModel() {
 			Dictionary<Category, TreeIter> itersDic = new Dictionary<Category, TreeIter>();
 			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore(typeof(Play));
-			
-			IEnumerable<IGrouping<Category, Play>> queryPlaysByCategory = 
-				from play in playsList
-					group play by play.Category;
-			
-			foreach (Category cat in Categories){
+
+			IEnumerable<IGrouping<Category, Play>> queryPlaysByCategory =
+			        from play in playsList
+			        group play by play.Category;
+
+			foreach(Category cat in Categories) {
 				Gtk.TreeIter iter = dataFileListStore.AppendValues(cat);
 				itersDic.Add(cat, iter);
-			} 
-			
-			foreach (var playsGroup in queryPlaysByCategory) {
+			}
+
+			foreach(var playsGroup in queryPlaysByCategory) {
 				Category cat = playsGroup.Key;
-				if (!itersDic.ContainsKey(cat))
+				if(!itersDic.ContainsKey(cat))
 					continue;
-				foreach (Play play in playsGroup) {
+				foreach(Play play in playsGroup) {
 					dataFileListStore.AppendValues(itersDic[cat],play);
 				}
 			}
@@ -227,26 +227,26 @@ namespace LongoMatch.Store
 		}
 
 		public bool Equals(Project project) {
-			if (project == null)
+			if(project == null)
 				return false;
 			else
 				return Description.File.FilePath.Equals(project.Description.File.FilePath);
 		}
 
 		public int CompareTo(object obj) {
-			if (obj is Project) {
+			if(obj is Project) {
 				Project project = (Project) obj;
 				return Description.File.FilePath.CompareTo(project.Description.File.FilePath);
 			}
 			else
 				throw new ArgumentException("object is not a Project and cannot be compared");
 		}
-		
+
 		public static void Export(Project project, string file) {
 			file = Path.ChangeExtension(file,"lpr");
 			SerializableObject.Save(project, file);
 		}
-		
+
 		public static Project Import(string file) {
 			try {
 				return SerializableObject.Load<Project>(file);
@@ -255,43 +255,43 @@ namespace LongoMatch.Store
 				throw new Exception(Catalog.GetString("The file you are trying to load " +
 				                                      "is not a valid project"));
 			}
-		}		
+		}
 		#endregion
-		
+
 		#region Private Methods
 		private void  FillList<T>(List<T> options, String tagName, TreeStore store) {
-			foreach (var tagValue in options){
+			foreach(var tagValue in options) {
 				/* Add a root in the tree with the option name */
 				var iter = store.AppendValues(tagName);
-				var queryByTag = 
-					(from play in playsList
-						where play.HasTag(tagName, tagValue) == true 
-						select play);
+				var queryByTag =
+				        (from play in playsList
+				         where play.HasTag(tagName, tagValue) == true
+				         select play);
 				/* Then add as children of the Player in the tree */
-				foreach (Play play in queryByTag)
+				foreach(Play play in queryByTag)
 					store.AppendValues(iter, play);
 			}
 		}
-		
-		private TreeStore GetSubCategoryModel(TagSubCategory subcat){
+
+		private TreeStore GetSubCategoryModel(TagSubCategory subcat) {
 			TreeStore dataFileListStore = new TreeStore(typeof(object));
-			
-			FillList (subcat.Options, subcat.Name, dataFileListStore);
+
+			FillList(subcat.Options, subcat.Name, dataFileListStore);
 			return dataFileListStore;
 		}
-		
-		private TreeStore GetSubCategoryModel(PlayerSubCategory subcat){
+
+		private TreeStore GetSubCategoryModel(PlayerSubCategory subcat) {
 			TreeStore dataFileListStore = new TreeStore(typeof(object));
 			TeamTemplate template;
-			
-			foreach (Team team in subcat.Options){
-				if (team == Team.NONE)
+
+			foreach(Team team in subcat.Options) {
+				if(team == Team.NONE)
 					continue;
 				template = team == Team.LOCAL?LocalTeamTemplate:VisitorTeamTemplate;
 				FillList(template, subcat.Name, dataFileListStore);
 			}
 			return dataFileListStore;
 		}
-#endregion
+		#endregion
 	}
 }

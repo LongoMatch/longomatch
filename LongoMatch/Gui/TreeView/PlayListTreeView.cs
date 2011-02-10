@@ -95,11 +95,11 @@ namespace LongoMatch.Gui.Component
 
 		protected override bool OnButtonPressEvent(EventButton evnt)
 		{
-			if ((evnt.Type == EventType.ButtonPress) && (evnt.Button == 3))
+			if((evnt.Type == EventType.ButtonPress) && (evnt.Button == 3))
 			{
 				TreePath path;
 				GetPathAtPos((int)evnt.X,(int)evnt.Y,out path);
-				if (path!=null) {
+				if(path!=null) {
 					ListStore list = ((ListStore)Model);
 					Model.GetIter(out selectedIter,path);
 					selectedTimeNode = (PlayListPlay)(list.GetValue(selectedIter,0));
@@ -114,7 +114,7 @@ namespace LongoMatch.Gui.Component
 			EntryDialog ed = new EntryDialog();
 			ed.Title = Catalog.GetString("Edit Title");
 			ed.Text = selectedTimeNode.Name;
-			if (ed.Run() == (int)ResponseType.Ok) {
+			if(ed.Run() == (int)ResponseType.Ok) {
 				selectedTimeNode.Name = ed.Text;
 				this.QueueDraw();
 			}
@@ -128,7 +128,7 @@ namespace LongoMatch.Gui.Component
 		}
 
 		protected void OnApplyRate(object obj, EventArgs args) {
-			if (ApplyCurrentRate != null)
+			if(ApplyCurrentRate != null)
 				ApplyCurrentRate(selectedTimeNode);
 		}
 
@@ -136,23 +136,23 @@ namespace LongoMatch.Gui.Component
 		{
 			PlayListPlay tNode = (PlayListPlay) model.GetValue(iter, 0);
 			(cell as Gtk.CellRendererText).Text = 	Catalog.GetString("Title")+": "+tNode.Name +"\n"+
-			                                       Catalog.GetString("Start")+": "+tNode.Start.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
-			                                       Catalog.GetString("Duration")+": "+tNode.Duration.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
-			                                       Catalog.GetString("Play Rate")+": "+tNode.Rate.ToString();
-			if (!tNode.Valid) {
+			                                        Catalog.GetString("Start")+": "+tNode.Start.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
+			                                        Catalog.GetString("Duration")+": "+tNode.Duration.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
+			                                        Catalog.GetString("Play Rate")+": "+tNode.Rate.ToString();
+			if(!tNode.Valid) {
 				(cell as Gtk.CellRendererText).Foreground = "red";
 				(cell as Gtk.CellRendererText).Text += "\n"+Catalog.GetString("File not found")+": "+tNode.MediaFile.FilePath;
 			}
-			else if (tNode == loadedTimeNode)
+			else if(tNode == loadedTimeNode)
 				(cell as Gtk.CellRendererText).Foreground = "blue";
 			else
 				(cell as Gtk.CellRendererText).Foreground = "black";
 
 		}
 
-		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
+		protected override bool OnKeyPressEvent(Gdk.EventKey evnt)
 		{
 			return false;
-		}		
+		}
 	}
 }

@@ -29,25 +29,25 @@ namespace LongoMatch.Common
 		EditProject,
 		None,
 	}
-	
+
 	public enum EndCaptureResponse {
 		Return = 234,
 		Quit = 235,
 		Save = 236
 	}
-	
+
 	public enum TagMode {
 		Predifined,
 		Free
 	}
-	
-	public enum SortMethodType{
+
+	public enum SortMethodType {
 		SortByName = 0,
 		SortByStartTime = 1,
 		SortByStopTime = 2,
 		SortByDuration = 3
 	}
-	
+
 	public enum Team {
 		NONE = 0,
 		LOCAL = 1,

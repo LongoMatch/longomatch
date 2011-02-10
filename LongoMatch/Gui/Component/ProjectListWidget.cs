@@ -68,13 +68,13 @@ namespace LongoMatch.Gui.Component
 			treeview.EnableGridLines = TreeViewGridLines.Horizontal;
 			treeview.HeadersVisible = false;
 		}
-		
+
 		public SelectionMode SelectionMode {
 			set {
 				treeview.Selection.Mode = value;
 			}
 		}
-		
+
 		public void RemoveProjects(List<ProjectDescription> projects) {
 			/* FIXME: to delete projects from the treeview we need to remove the filter
 			 * and clear everything, otherwise we have seen several crashes trying
@@ -82,16 +82,16 @@ namespace LongoMatch.Gui.Component
 			 * it's safe. */
 			treeview.Model = projectsListStore;
 			projectsListStore.Clear();
-			foreach (ProjectDescription project in projects)
+			foreach(ProjectDescription project in projects)
 				projectsList.Remove(project);
 			Fill(projectsList);
 		}
-		
+
 		public void Fill(List<ProjectDescription> projects) {
 			projectsList = projects;
 			projectsList.Sort();
 			projectsListStore.Clear();
-			foreach (ProjectDescription project in projectsList){
+			foreach(ProjectDescription project in projectsList) {
 				projectsListStore.AppendValues(project);
 			}
 			filter = new Gtk.TreeModelFilter(projectsListStore, null);
@@ -108,24 +108,24 @@ namespace LongoMatch.Gui.Component
 		private void RenderPixbuf(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			ProjectDescription project = (ProjectDescription) model.GetValue(iter, 0);
-			
+
 			(cell as Gtk.CellRendererPixbuf).Pixbuf= project.File.Preview;
 		}
-		
+
 		private void RenderProperties(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			string text;
 			ProjectDescription project = (ProjectDescription) model.GetValue(iter, 0);
-			
-			text = "\n"+"\n"+"\n"+"<b>"+Catalog.GetString("File length")+":</b>  " + 
-				(new Time {MSeconds = (int)project.File.Length}).ToSecondsString();
+
+			text = "\n"+"\n"+"\n"+"<b>"+Catalog.GetString("File length")+":</b>  " +
+			       (new Time {MSeconds = (int)project.File.Length}).ToSecondsString();
 			text = text +"\n"+"<b>"+Catalog.GetString("Video codec")+":</b>  " + project.File.VideoCodec;
 			text = text +"\n"+"<b>"+Catalog.GetString("Audio codec")+":</b>  " + project.File.AudioCodec;
 			text = text +"\n"+"<b>"+Catalog.GetString("Format")+":</b>  " + project.Format;
 
 			(cell as Gtk.CellRendererText).Markup = text;
 		}
-		
+
 		private void RenderName(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			string text;
@@ -151,39 +151,39 @@ namespace LongoMatch.Gui.Component
 		{
 			ProjectDescription project =(ProjectDescription) model.GetValue(iter, 0);
 
-			if (project == null)
+			if(project == null)
 				return true;
 
-			if (filterEntry.Text == "")
+			if(filterEntry.Text == "")
 				return true;
 
-			if (project.Title.IndexOf(filterEntry.Text) > -1)
+			if(project.Title.IndexOf(filterEntry.Text) > -1)
 				return true;
-			else if (project.Season.IndexOf(filterEntry.Text) > -1)
+			else if(project.Season.IndexOf(filterEntry.Text) > -1)
 				return true;
-			else if (project.Competition.IndexOf(filterEntry.Text) > -1)
+			else if(project.Competition.IndexOf(filterEntry.Text) > -1)
 				return true;
-			else if (project.LocalName.IndexOf(filterEntry.Text) > -1)
+			else if(project.LocalName.IndexOf(filterEntry.Text) > -1)
 				return true;
-			else if (project.VisitorName.IndexOf(filterEntry.Text) > -1)
+			else if(project.VisitorName.IndexOf(filterEntry.Text) > -1)
 				return true;
 			else
 				return false;
 		}
-		
-		protected virtual void OnSelectionChanged (object o, EventArgs args){
+
+		protected virtual void OnSelectionChanged(object o, EventArgs args) {
 			TreeIter iter;
 			List<ProjectDescription> list;
 			TreePath[] pathArray;
-			
+
 			list = new List<ProjectDescription>();
 			pathArray = treeview.Selection.GetSelectedRows();
-			
-			for (int i=0; i< pathArray.Length; i++){
-				treeview.Model.GetIterFromString (out iter, pathArray[i].ToString());
+
+			for(int i=0; i< pathArray.Length; i++) {
+				treeview.Model.GetIterFromString(out iter, pathArray[i].ToString());
 				list.Add((ProjectDescription) treeview.Model.GetValue(iter, 0));
 			}
-			if (ProjectsSelected != null)
+			if(ProjectsSelected != null)
 				ProjectsSelected(list);
 		}
 	}

@@ -35,7 +35,7 @@ namespace LongoMatch.Updates
 		#region Constructors
 		public XmlUpdateParser(string file)
 		{
-			if (System.Environment.OSVersion.Platform == PlatformID.Win32NT)
+			if(System.Environment.OSVersion.Platform == PlatformID.Win32NT)
 				this.oSVersion = "win32";
 			else
 				this.oSVersion = "unix";

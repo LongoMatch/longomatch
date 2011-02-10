@@ -67,7 +67,7 @@ namespace LongoMatch.Gui.Component
 			hotKeyColumn.Title = Catalog.GetString("Hotkey");
 			Gtk.CellRendererText hotKeyCell = new Gtk.CellRendererText();
 			hotKeyColumn.PackStart(hotKeyCell, true);
-			
+
 			Gtk.TreeViewColumn sortMethodColumn = new Gtk.TreeViewColumn();
 			sortMethodColumn.Title = Catalog.GetString("Sort Method");
 			Gtk.CellRendererText sortMethodCell = new Gtk.CellRendererText();
@@ -124,7 +124,7 @@ namespace LongoMatch.Gui.Component
 
 			(cell as Gtk.CellRendererText).Text = tNode.HotKey.ToString();
 		}
-		
+
 		private void RenderSortMethod(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			Category tNode = (Category) Model.GetValue(iter, 0);
@@ -136,15 +136,15 @@ namespace LongoMatch.Gui.Component
 			TreeIter iter;
 			List<Category> list;
 			TreePath[] pathArray;
-			
+
 			list = new List<Category>();
 			pathArray = Selection.GetSelectedRows();
-			
-			for (int i=0; i< pathArray.Length; i++){
-				Model.GetIterFromString (out iter, pathArray[i].ToString());
+
+			for(int i=0; i< pathArray.Length; i++) {
+				Model.GetIterFromString(out iter, pathArray[i].ToString());
 				list.Add((Category) Model.GetValue(iter, 0));
 			}
-			if (CategoriesSelected != null)
+			if(CategoriesSelected != null)
 				CategoriesSelected(list);
 		}
 
@@ -154,7 +154,7 @@ namespace LongoMatch.Gui.Component
 			Model.GetIter(out iter, args.Path);
 			Category tNode = (Category)Model.GetValue(iter, 0);
 
-			if (CategoryClicked != null)
+			if(CategoryClicked != null)
 				CategoryClicked(tNode);
 		}
 	}

@@ -35,22 +35,22 @@ namespace LongoMatch.Store
 	[Serializable]
 	public class Category:TimeNode, ISerializable
 	{
-		
+
 		private Guid _UUID;
-		
+
 		#region Constructors
 		#endregion
-		public Category (){
+		public Category() {
 			_UUID = System.Guid.NewGuid();
 			SubCategories = new List<SubCategory>();
 		}
-		
+
 		#region  Properties
-		
+
 		/// <summary>
-		/// Unique ID for this category 
+		/// Unique ID for this category
 		/// </summary>
-		public Guid UUID{
+		public Guid UUID {
 			get {
 				return _UUID;
 			}
@@ -71,58 +71,58 @@ namespace LongoMatch.Store
 			get;
 			set;
 		}
-		
+
 		//// <summary>
-		/// Sort method used to sort plays for this category 
+		/// Sort method used to sort plays for this category
 		/// </summary>
-		public SortMethodType SortMethod{
+		public SortMethodType SortMethod {
 			get;
 			set;
 		}
-		
+
 		/// <summary>
-		/// Position of the category in the list of categories 
+		/// Position of the category in the list of categories
 		/// </summary>
-		public int Position{
+		public int Position {
 			get;
 			set;
 		}
-		
+
 		public List<SubCategory> SubCategories {
 			get;
 			set;
 		}
-		
+
 		/// <summary>
 		/// Sort method string used for the UI
 		/// </summary>
-		public string SortMethodString{
-			get{
-				switch (SortMethod){
-					case SortMethodType.SortByName:
-						return Catalog.GetString("Sort by name");
-					case SortMethodType.SortByStartTime:
-						return Catalog.GetString("Sort by start time");
-					case SortMethodType.SortByStopTime:
-						return Catalog.GetString("Sort by stop time");
-					case SortMethodType.SortByDuration:
-						return Catalog.GetString("Sort by duration");
-					default:
-						return Catalog.GetString("Sort by name");
-				}						
+		public string SortMethodString {
+			get {
+				switch(SortMethod) {
+				case SortMethodType.SortByName:
+					return Catalog.GetString("Sort by name");
+				case SortMethodType.SortByStartTime:
+					return Catalog.GetString("Sort by start time");
+				case SortMethodType.SortByStopTime:
+					return Catalog.GetString("Sort by stop time");
+				case SortMethodType.SortByDuration:
+					return Catalog.GetString("Sort by duration");
+				default:
+					return Catalog.GetString("Sort by name");
+				}
 			}
-			set{			
-				if (value == Catalog.GetString("Sort by start time"))
+			set {
+				if(value == Catalog.GetString("Sort by start time"))
 					SortMethod = SortMethodType.SortByStartTime;
-				else if (value == Catalog.GetString("Sort by stop time"))
+				else if(value == Catalog.GetString("Sort by stop time"))
 					SortMethod = SortMethodType.SortByStopTime;
-				else if (value == Catalog.GetString("Sort by duration"))
+				else if(value == Catalog.GetString("Sort by duration"))
 					SortMethod = SortMethodType.SortByDuration;
 				else
 					SortMethod = SortMethodType.SortByName;
 			}
 		}
-		
+
 		// this constructor is automatically called during deserialization
 		public Category(SerializationInfo info, StreamingContext context) {
 			_UUID = (Guid)info.GetValue("uuid", typeof(Guid));
@@ -140,7 +140,7 @@ namespace LongoMatch.Store
 			c.Blue = (ushort)info.GetValue("blue", typeof(ushort));
 			Color = c;
 		}
-		
+
 		// this method is automatically called during serialization
 		public void GetObjectData(SerializationInfo info, StreamingContext context) {
 			info.AddValue("uuid", UUID);
@@ -155,6 +155,6 @@ namespace LongoMatch.Store
 			info.AddValue("blue", Color.Blue);
 			info.AddValue("sort_method", SortMethod);
 		}
-		#endregion	
+		#endregion
 	}
 }

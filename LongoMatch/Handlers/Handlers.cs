@@ -82,9 +82,9 @@ namespace LongoMatch.Handlers
 	//A new version of the software exists
 	public delegate void NewVersionHandler(Version version, string URL);
 
-	
+
 	public delegate void CategoryHandler(Category category);
 	public delegate void CategoriesHandler(List<Category> categoriesList);
-	
+
 	public delegate void ProjectsSelectedHandler(List<ProjectDescription> projects);
 }

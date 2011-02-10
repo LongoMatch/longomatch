@@ -31,7 +31,7 @@ namespace LongoMatch.Gui.Dialog
 	{
 
 		bool showCount;
-		
+
 		public EntryDialog()
 		{
 			this.Build();
@@ -67,42 +67,42 @@ namespace LongoMatch.Gui.Dialog
 				return showCount;
 			}
 		}
-		
+
 		public List<string> AvailableTemplates {
 			set {
-				if (value.Count > 0){
-					foreach (String text in value)
+				if(value.Count > 0) {
+					foreach(String text in value)
 						combobox.AppendText(text);
 					setAvailableTemplatesVisible(true);
 					combobox.Active = 0;
 				}
 				else
 					setAvailableTemplatesVisible(false);
-			}		
+			}
 		}
-		
+
 		public string SelectedTemplate {
 			get {
-				if (checkbutton.Active)
+				if(checkbutton.Active)
 					return combobox.ActiveText;
 				else return null;
 			}
 		}
-		
-		private void setAvailableTemplatesVisible(bool visible){
+
+		private void setAvailableTemplatesVisible(bool visible) {
 			combobox.Visible = visible;
 			existentemplatelabel.Visible = visible;
 			checkbutton.Visible = visible;
 		}
 
-		protected virtual void OnCheckbuttonToggled (object sender, System.EventArgs e)
+		protected virtual void OnCheckbuttonToggled(object sender, System.EventArgs e)
 		{
 			bool active = checkbutton.Active;
-			if (ShowCount){
+			if(ShowCount) {
 				playerslabel.Sensitive = !active;
-				playersspinbutton.Sensitive = !active;				
+				playersspinbutton.Sensitive = !active;
 			}
-			combobox.Sensitive = active;			
+			combobox.Sensitive = active;
 		}
 	}
 }

@@ -44,7 +44,7 @@ namespace LongoMatch.Gui.Component
 			this.Build();
 		}
 
-		public Category Category{
+		public Category Category {
 			set {
 				stn = value;
 				UpdateGui();
@@ -55,13 +55,13 @@ namespace LongoMatch.Gui.Component
 		}
 
 		private void  UpdateGui() {
-			if (stn != null) {
+			if(stn != null) {
 				nameentry.Text = stn.Name;
 				timeadjustwidget1.SetTimeNode(stn);
 				colorbutton1.Color = stn.Color;
 				sortmethodcombobox.Active = (int)stn.SortMethod;
 
-				if (stn.HotKey.Defined) {
+				if(stn.HotKey.Defined) {
 					hotKeyLabel.Text = stn.HotKey.ToString();
 				}
 				else hotKeyLabel.Text = Catalog.GetString("none");
@@ -73,18 +73,18 @@ namespace LongoMatch.Gui.Component
 			HotKeySelectorDialog dialog = new HotKeySelectorDialog();
 			dialog.TransientFor=(Gtk.Window)this.Toplevel;
 			HotKey prevHotKey =  stn.HotKey;
-			if (dialog.Run() == (int)ResponseType.Ok) {
+			if(dialog.Run() == (int)ResponseType.Ok) {
 				stn.HotKey=dialog.HotKey;
 				UpdateGui();
 			}
 			dialog.Destroy();
-			if (HotKeyChanged != null)
+			if(HotKeyChanged != null)
 				HotKeyChanged(prevHotKey,stn);
 		}
 
 		protected virtual void OnColorbutton1ColorSet(object sender, System.EventArgs e)
 		{
-			if (stn != null)
+			if(stn != null)
 				stn.Color=colorbutton1.Color;
 		}
 
@@ -103,7 +103,7 @@ namespace LongoMatch.Gui.Component
 			stn.Name = nameentry.Text;
 		}
 
-		protected virtual void OnSortmethodcomboboxChanged (object sender, System.EventArgs e)
+		protected virtual void OnSortmethodcomboboxChanged(object sender, System.EventArgs e)
 		{
 			stn.SortMethodString = sortmethodcombobox.ActiveText;
 		}

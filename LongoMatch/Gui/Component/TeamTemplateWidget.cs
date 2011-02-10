@@ -45,7 +45,7 @@ namespace LongoMatch.Gui.Component
 				this.template= value;
 				edited = false;
 				Gtk.TreeStore playersListStore = new Gtk.TreeStore(typeof(Player));
-				foreach (Player player in template)
+				foreach(Player player in template)
 					playersListStore.AppendValues(player);
 				playerpropertiestreeview1.Model=playersListStore;
 			}

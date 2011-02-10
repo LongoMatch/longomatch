@@ -43,24 +43,24 @@ namespace LongoMatch.Gui.Dialog
 				fdwidget.Use = value;
 			}
 		}
-		
-		public Project Project{
+
+		public Project Project {
 			get {
 				return fdwidget.GetProject();
 			}
-			set{
+			set {
 				fdwidget.SetProject(value);
 			}
 		}
-		
+
 		public List<Device> Devices {
-			set{
+			set {
 				fdwidget.FillDevices(value);
 			}
 		}
-		
-		public CapturePropertiesStruct CaptureProperties{
-			get{
+
+		public CapturePropertiesStruct CaptureProperties {
+			get {
 				return fdwidget.CaptureProperties;
 			}
 		}

@@ -97,8 +97,8 @@ namespace LongoMatch.Gui.Component
 				}
 				drawingarea.WidthRequest=sourceWidth;
 				drawingarea.HeightRequest=sourceHeight;
-				if (drawingarea.GdkWindow != null)
-				    drawingarea.GdkWindow.Resize(sourceWidth,sourceHeight);				
+				if(drawingarea.GdkWindow != null)
+					drawingarea.GdkWindow.Resize(sourceWidth,sourceHeight);
 				value.Dispose();
 				loaded = true;
 				QueueDraw();
@@ -113,7 +113,7 @@ namespace LongoMatch.Gui.Component
 
 		public double Transparency {
 			set {
-				if (value >=0 && value <=1) {
+				if(value >=0 && value <=1) {
 					transparency = value;
 					drawingarea.QueueDraw();
 				}
@@ -131,7 +131,7 @@ namespace LongoMatch.Gui.Component
 		public DrawTool DrawTool {
 			set {
 				this.selectedTool = value;
-				switch (selectedTool) {
+				switch(selectedTool) {
 				case DrawTool.LINE:
 				case DrawTool.DASHED_LINE:
 					drawingarea.GdkWindow.Cursor = new Cursor(CursorType.DraftSmall);
@@ -187,11 +187,11 @@ namespace LongoMatch.Gui.Component
 		private void Save(string filename,bool bSource,bool bDrawings) {
 			Surface pngSurface = new ImageSurface(Format.ARGB32,sourceWidth,sourceHeight);
 			using(Context c = new Context(pngSurface)) {
-				if (bSource) {
+				if(bSource) {
 					c.SetSourceSurface(source,0,0);
 					c.Paint();
 				}
-				if (bDrawings) {
+				if(bDrawings) {
 					c.SetSourceSurface(drawings,0,0);
 					c.PaintWithAlpha(transparency);
 				}
@@ -202,21 +202,21 @@ namespace LongoMatch.Gui.Component
 		private void SetContextProperties(Context c, bool dashed) {
 			c.LineCap = LineCap.Round;
 			c.LineJoin = LineJoin.Round;
-			if (selectedTool != DrawTool.ERASER) {
+			if(selectedTool != DrawTool.ERASER) {
 				c.Color = lineColor;
 				c.LineWidth = lineWidth;
 				c.Operator = Operator.Over;
-				if (dashed)
-					c.SetDash(new double[]{10, 10}, 10);
+				if(dashed)
+					c.SetDash(new double[] {10, 10}, 10);
 			} else {
 				c.Color = new Cairo.Color(0,0,0,0);
 				c.LineWidth = 20;
 				c.Operator = Operator.Source;
 			}
 		}
-		
-		private void ResetDash(Context c){
-			c.SetDash(new Double[]{10,0}, 0);
+
+		private void ResetDash(Context c) {
+			c.SetDash(new Double[] {10,0}, 0);
 		}
 
 		private void DrawLine(Context c, bool dashed, double x1, double y1, double x2, double y2) {
@@ -276,57 +276,57 @@ namespace LongoMatch.Gui.Component
 			c.Fill();
 			ResetDash(c);
 		}
-		
-		private void Paint(Context c, double x1, double y1, double x2, double y2){
-			switch (selectedTool) {
-				case DrawTool.LINE:
-					DrawLine(c, false, x1, y1, x2, y2);
-					DrawArrow(c, x1, y1, x2, y2);
-					break;
-				case DrawTool.DASHED_LINE:
-					DrawLine(c, true, x1, y1, x2, y2);
-					DrawArrow(c, x1, y1, x2, y2);
-					break;
-				case DrawTool.RECTANGLE:
-					DrawRectangle(c, false, x1, y1, x2, y2);
-					break;
-				case DrawTool.DASHED_RECTANGLE:
-					DrawRectangle(c, true, x1, y1, x2, y2);
-					break;
-				case DrawTool.CIRCLE:
-					DrawCircle(c, false, x1, y1, x2, y2);
-					break;
-				case DrawTool.DASHED_CIRCLE:
-					DrawCircle(c, true, x1, y1, x2, y2);
-					break;
-				case DrawTool.CROSS:
-					DrawCross(c, false, x1, y1, x2, y2);
-					break;
-				case DrawTool.DASHED_CROSS:
-					DrawCross(c, true, x1, y1, x2, y2);
-					break;
-				default:
-					//lastx=0;
-					//lasty=0;
-					break;
+
+		private void Paint(Context c, double x1, double y1, double x2, double y2) {
+			switch(selectedTool) {
+			case DrawTool.LINE:
+				DrawLine(c, false, x1, y1, x2, y2);
+				DrawArrow(c, x1, y1, x2, y2);
+				break;
+			case DrawTool.DASHED_LINE:
+				DrawLine(c, true, x1, y1, x2, y2);
+				DrawArrow(c, x1, y1, x2, y2);
+				break;
+			case DrawTool.RECTANGLE:
+				DrawRectangle(c, false, x1, y1, x2, y2);
+				break;
+			case DrawTool.DASHED_RECTANGLE:
+				DrawRectangle(c, true, x1, y1, x2, y2);
+				break;
+			case DrawTool.CIRCLE:
+				DrawCircle(c, false, x1, y1, x2, y2);
+				break;
+			case DrawTool.DASHED_CIRCLE:
+				DrawCircle(c, true, x1, y1, x2, y2);
+				break;
+			case DrawTool.CROSS:
+				DrawCross(c, false, x1, y1, x2, y2);
+				break;
+			case DrawTool.DASHED_CROSS:
+				DrawCross(c, true, x1, y1, x2, y2);
+				break;
+			default:
+				//lastx=0;
+				//lasty=0;
+				break;
 			}
 		}
-		
+
 		protected virtual void OnDrawingareaExposeEvent(object o, Gtk.ExposeEventArgs args)
 		{
-			if (!loaded)
+			if(!loaded)
 				return;
 			drawingarea.GdkWindow.Clear();
-			
+
 			using(Context c = CairoHelper.Create(drawingarea.GdkWindow)) {
 				c.SetSourceSurface(source,xOffset,yOffset);
 				c.Paint();
-				if (visible) {
+				if(visible) {
 					c.SetSourceSurface(drawings,xOffset,yOffset);
 					c.PaintWithAlpha(transparency);
 				}
 				//Preview
-				if (preview)
+				if(preview)
 					Paint(c, initialPoint.X+xOffset,initialPoint.Y+yOffset,
 					      finalPoint.X+xOffset,finalPoint.Y+yOffset);
 			}
@@ -337,11 +337,11 @@ namespace LongoMatch.Gui.Component
 			preview = true;
 			initialPoint = new Cairo.PointD(args.Event.X,args.Event.Y);
 
-			if (selectedTool == DrawTool.PEN || selectedTool == DrawTool.ERASER) {
+			if(selectedTool == DrawTool.PEN || selectedTool == DrawTool.ERASER) {
 				lastx = args.Event.X;
 				lasty = args.Event.Y;
 
-				if (args.Event.Button == 1) {
+				if(args.Event.Button == 1) {
 					using(Context c = new Context(drawings)) {
 						DrawLine(c,false, args.Event.X,args.Event.Y,args.Event.X,args.Event.Y);
 					}
@@ -354,7 +354,7 @@ namespace LongoMatch.Gui.Component
 			preview = false;
 			finalPoint = new Cairo.PointD(args.Event.X,args.Event.Y);
 			using(Context c = new Context(drawings)) {
-				Paint (c, initialPoint.X,initialPoint.Y,finalPoint.X,finalPoint.Y);
+				Paint(c, initialPoint.X,initialPoint.Y,finalPoint.X,finalPoint.Y);
 			}
 			QueueDraw();
 		}
@@ -363,7 +363,7 @@ namespace LongoMatch.Gui.Component
 		{
 			finalPoint = new Cairo.PointD(args.Event.X,args.Event.Y);
 
-			if (selectedTool == DrawTool.PEN || selectedTool == DrawTool.ERASER) {
+			if(selectedTool == DrawTool.PEN || selectedTool == DrawTool.ERASER) {
 				using(Context c = new Context(drawings)) {
 					DrawLine(c,false,lastx,lasty,args.Event.X,args.Event.Y);
 				}
@@ -377,12 +377,12 @@ namespace LongoMatch.Gui.Component
 		{
 			// Center the source in the drawing area if its size
 			// is smaller than the drawing area one
-			if (args.Allocation.Width > sourceWidth)
+			if(args.Allocation.Width > sourceWidth)
 				xOffset = (Allocation.Width - sourceWidth) / 2;
 			else
 				xOffset = 0;
 
-			if (args.Allocation.Height > sourceHeight)
+			if(args.Allocation.Height > sourceHeight)
 				yOffset = (Allocation.Height -sourceHeight) / 2;
 			else
 				yOffset = 0;

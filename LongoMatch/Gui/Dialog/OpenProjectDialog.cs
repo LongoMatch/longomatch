@@ -36,7 +36,7 @@ namespace LongoMatch.Gui.Dialog
 			this.Fill();
 			projectlistwidget.SelectionMode = SelectionMode.Single;
 		}
-		
+
 		public ProjectDescription SelectedProject {
 			get;
 			set;
@@ -45,11 +45,11 @@ namespace LongoMatch.Gui.Dialog
 		public void Fill() {
 			projectlistwidget.Fill(MainClass.DB.GetAllProjects());
 		}
-		
-		protected virtual void OnProjectlistwidgetProjectsSelected (List<ProjectDescription> projects)
+
+		protected virtual void OnProjectlistwidgetProjectsSelected(List<ProjectDescription> projects)
 		{
-			buttonOk.Sensitive =  (projects.Count == 1);
-			SelectedProject = projects[0];			
+			buttonOk.Sensitive = (projects.Count == 1);
+			SelectedProject = projects[0];
 		}
 	}
 }

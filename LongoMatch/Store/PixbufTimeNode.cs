@@ -45,10 +45,10 @@ namespace LongoMatch.Store
 		/// </summary>
 		public Pixbuf Miniature {
 			get {
-				if (thumbnailBuf != null)
+				if(thumbnailBuf != null)
 					return new Pixbuf(thumbnailBuf);
 				else return null;
-			}set {
+			} set {
 				ScaleAndSave(value);
 			}
 		}
@@ -62,9 +62,9 @@ namespace LongoMatch.Store
 			ow = MAX_WIDTH;
 			oh = MAX_HEIGHT;
 
-			if (w>MAX_WIDTH || h>MAX_HEIGHT) {
+			if(w>MAX_WIDTH || h>MAX_HEIGHT) {
 				double rate = (double)w/(double)h;
-				if (h>w)
+				if(h>w)
 					ow = (int)(oh * rate);
 				else
 					oh = (int)(ow / rate);

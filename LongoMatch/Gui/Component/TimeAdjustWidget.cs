@@ -53,13 +53,13 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnSpinbutton1ValueChanged(object sender, System.EventArgs e)
 		{
-			if (LeadTimeChanged != null)
+			if(LeadTimeChanged != null)
 				LeadTimeChanged(this,new EventArgs());
 		}
 
 		protected virtual void OnSpinbutton2ValueChanged(object sender, System.EventArgs e)
 		{
-			if (LagTimeChanged != null)
+			if(LagTimeChanged != null)
 				LagTimeChanged(this,new EventArgs());
 		}
 	}

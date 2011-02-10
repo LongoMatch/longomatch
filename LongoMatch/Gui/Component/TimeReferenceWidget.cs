@@ -45,7 +45,7 @@ namespace LongoMatch.Gui.Component
 			Frames = 1;
 			PixelRatio = 1;
 			FrameRate = 1;
-			
+
 			this.HeightRequest= SECTION_HEIGHT;
 			layout = new Pango.Layout(this.PangoContext);
 		}
@@ -54,18 +54,18 @@ namespace LongoMatch.Gui.Component
 			get;
 			set;
 		}
-		
+
 		public uint Frames {
-			set{
+			set {
 				frames = value;
 			}
 		}
-		
+
 		public ushort FrameRate {
 			set;
 			get;
 		}
-		
+
 		public double Scroll {
 			get {
 				return scroll;
@@ -96,13 +96,13 @@ namespace LongoMatch.Gui.Component
 			win.Resize((int)(frames/pixelRatio), height);
 			win.GetSize(out width, out height);
 
-			if (Environment.OSVersion.Platform == PlatformID.Unix)
+			if(Environment.OSVersion.Platform == PlatformID.Unix)
 				this.CairoDraw(evnt,height,width);
 			else
 				this.GdkDraw(evnt,height,width);
 			return base.OnExposeEvent(evnt);
 		}
-		
+
 		private void CairoDraw(EventExpose evnt,int height,int width) {
 			Time time = new Time();
 			using(Cairo.Context g = Gdk.CairoHelper.Create(evnt.Window)) {
@@ -114,7 +114,7 @@ namespace LongoMatch.Gui.Component
 				g.MoveTo(new PointD(0-Scroll,height-20));
 				g.ShowText("0");
 
-				for (int i=10*FrameRate; i<=frames/pixelRatio;) {
+				for(int i=10*FrameRate; i<=frames/pixelRatio;) {
 					CairoUtils.DrawLine(g, i-Scroll, height,i-Scroll,
 					                    height-10, 2, color);
 					g.MoveTo(new PointD(i-Scroll-13,height-20));
@@ -122,14 +122,14 @@ namespace LongoMatch.Gui.Component
 					g.ShowText(time.ToSecondsString());
 					i=i+10*FrameRate;
 				}
-				for (int i=0; i<=frames/pixelRatio;) {
+				for(int i=0; i<=frames/pixelRatio;) {
 					CairoUtils.DrawLine(g, i-Scroll, height,i-Scroll,
 					                    height-5, 1, color);
 					i=i+FrameRate;
 				}
 			}
 		}
-		
+
 		private void GdkDraw(EventExpose evnt,int height,int width) {
 			Time time = new Time();
 			layout.SetMarkup("0");
@@ -140,7 +140,7 @@ namespace LongoMatch.Gui.Component
 			Gdk.Point bottom= new Gdk.Point((int)(CurrentFrame/pixelRatio-Scroll),height);
 			this.GdkWindow.DrawPolygon(this.Style.TextGC(StateType.Normal),true,new Gdk.Point[] {topL,topR,bottom});
 
-			for (int i=10*FrameRate; i<=frames/pixelRatio;) {
+			for(int i=10*FrameRate; i<=frames/pixelRatio;) {
 				// Drawing separator line
 				evnt.Window.DrawLine(Style.DarkGC(StateType.Normal),i-(int)Scroll,height,i-(int)Scroll,height-10);
 				time.MSeconds = (int)(i/FrameRate*pixelRatio);
@@ -150,7 +150,7 @@ namespace LongoMatch.Gui.Component
 				i=i+10*FrameRate;
 			}
 
-			for (int i=0; i<=frames/pixelRatio;) {
+			for(int i=0; i<=frames/pixelRatio;) {
 				evnt.Window.DrawLine(Style.DarkGC(StateType.Normal),i-(int)Scroll,height,i-(int)Scroll,height-5);
 				i=i+FrameRate;
 			}

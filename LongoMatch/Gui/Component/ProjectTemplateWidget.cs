@@ -48,9 +48,9 @@ namespace LongoMatch.Gui.Component
 		}
 
 		public Project Project {
-			set{
+			set {
 				project = value;
-				if (project != null)
+				if(project != null)
 					Categories = project.Categories;
 			}
 		}
@@ -64,8 +64,8 @@ namespace LongoMatch.Gui.Component
 				Edited = false;
 				Gtk.TreeStore categoriesListStore = new Gtk.TreeStore(typeof(Category));
 				hkList.Clear();
-				
-				foreach (var cat in categories){
+
+				foreach(var cat in categories) {
 					categoriesListStore.AppendValues(cat);
 					try {
 						hkList.Add(cat.HotKey);
@@ -76,8 +76,8 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public bool CanExport{
-			set{
+		public bool CanExport {
+			set {
 				hseparator1.Visible = value;
 				exportbutton.Visible = value;
 			}
@@ -98,7 +98,7 @@ namespace LongoMatch.Gui.Component
 			Time start = new Time {MSeconds = 10*Time.SECONDS_TO_TIME};
 			Time stop = new Time {MSeconds = 10*Time.SECONDS_TO_TIME};
 
-			tn  = new Category{
+			tn  = new Category {
 				Name = "New Section",
 				Start = start,
 				Stop = stop,
@@ -106,7 +106,7 @@ namespace LongoMatch.Gui.Component
 				Color =	new Color(Byte.MaxValue,Byte.MinValue,Byte.MinValue)
 			};
 
-			if (project != null) {
+			if(project != null) {
 				/* Editing a project template */
 				project.Categories.Insert(index,tn);
 			} else {
@@ -118,13 +118,13 @@ namespace LongoMatch.Gui.Component
 		}
 
 		private void RemoveSelectedCategories() {
-			if (project!= null) {
+			if(project!= null) {
 				MessageDialog dialog = new MessageDialog((Gtk.Window)this.Toplevel,DialogFlags.Modal,MessageType.Question,
 				                ButtonsType.YesNo,true,
 				                Catalog.GetString("You are about to delete a category and all the plays added to this category. Do you want to proceed?"));
-				if (dialog.Run() == (int)ResponseType.Yes){
+				if(dialog.Run() == (int)ResponseType.Yes) {
 					try {
-						foreach (Category cat in selectedCategories)
+						foreach(Category cat in selectedCategories)
 							project.Categories.Remove(cat);
 					} catch {
 						MessagePopup.PopupMessage(this,MessageType.Warning,
@@ -134,11 +134,11 @@ namespace LongoMatch.Gui.Component
 				dialog.Destroy();
 				categories = project.Categories;
 			} else {
-				foreach (Category cat in selectedCategories){
-					if (categories.Count == 1){
+				foreach(Category cat in selectedCategories) {
+					if(categories.Count == 1) {
 						MessagePopup.PopupMessage(this,MessageType.Warning,
 						                          Catalog.GetString("A template needs at least one category"));
-					} else 
+					} else
 						categories.Remove(cat);
 				}
 			}
@@ -166,7 +166,7 @@ namespace LongoMatch.Gui.Component
 			dialog.Destroy();
 			Edited = true;
 		}
-		
+
 		protected virtual void OnNewAfter(object sender, EventArgs args) {
 			AddCategory(categories.IndexOf(selectedCategories[0])+1);
 		}
@@ -188,12 +188,12 @@ namespace LongoMatch.Gui.Component
 			EditSelectedSection();
 		}
 
-		protected virtual void OnCategoriestreeviewCategoriesSelected (List<Category> tNodesList)
+		protected virtual void OnCategoriestreeviewCategoriesSelected(List<Category> tNodesList)
 		{
 			selectedCategories = tNodesList;
-			if (tNodesList.Count == 0)
+			if(tNodesList.Count == 0)
 				ButtonsSensitive = false;
-			else if (tNodesList.Count == 1){
+			else if(tNodesList.Count == 1) {
 				ButtonsSensitive = true;
 			}
 			else {
@@ -206,35 +206,35 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnKeyPressEvent(object o, Gtk.KeyPressEventArgs args)
 		{
-			if (args.Event.Key == Gdk.Key.Delete && selectedCategories != null)
+			if(args.Event.Key == Gdk.Key.Delete && selectedCategories != null)
 				RemoveSelectedCategories();
 		}
 
-		protected virtual void OnExportbuttonClicked (object sender, System.EventArgs e)
+		protected virtual void OnExportbuttonClicked(object sender, System.EventArgs e)
 		{
 			EntryDialog dialog = new EntryDialog();
 			dialog.TransientFor = (Gtk.Window)this.Toplevel;
 			dialog.ShowCount = false;
 			dialog.Text = Catalog.GetString("New template");
-			if (dialog.Run() == (int)ResponseType.Ok){
-				if (dialog.Text == "")
+			if(dialog.Run() == (int)ResponseType.Ok) {
+				if(dialog.Text == "")
 					MessagePopup.PopupMessage(dialog, MessageType.Error,
 					                          Catalog.GetString("The template name is void."));
-				else if (File.Exists(System.IO.Path.Combine(MainClass.TemplatesDir(),dialog.Text+".sct"))){
+				else if(File.Exists(System.IO.Path.Combine(MainClass.TemplatesDir(),dialog.Text+".sct"))) {
 					MessageDialog md = new MessageDialog(null,
 					                                     DialogFlags.Modal,
 					                                     MessageType.Question,
 					                                     Gtk.ButtonsType.YesNo,
 					                                     Catalog.GetString("The template already exists. " +
-					                                                       "Do you want to overwrite it ?")
-					                                   );
-					if (md.Run() == (int)ResponseType.Yes)
+					                                                     "Do you want to overwrite it ?")
+					                                    );
+					if(md.Run() == (int)ResponseType.Yes)
 						Categories.Save(dialog.Text);
 					md.Destroy();
-				}					
+				}
 				else
 					Categories.Save(dialog.Text);
-			}	
+			}
 			dialog.Destroy();
 		}
 	}

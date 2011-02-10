@@ -53,36 +53,36 @@ namespace LongoMatch.Gui.Component {
 			this.Build();
 			SetPixelRatio(10);
 			zoomscale.CanFocus = false;
-			
+
 			GtkScrolledWindow.Vadjustment.ValueChanged += HandleScrollEvent;
 			GtkScrolledWindow.Hadjustment.ValueChanged += HandleScrollEvent;
-			
+
 			GtkScrolledWindow.HScrollbar.SizeAllocated += OnSizeAllocated;
-			
+
 			cs = new CategoriesScale();
 			cs.WidthRequest = 100;
 			categoriesbox.PackStart(cs, false, false, 0);
-			
+
 			tr = new TimeReferenceWidget();
 			timescalebox.PackStart(tr,false,false,0);
-			
-			tr.HeightRequest = 50 - leftbox.Spacing; 
+
+			tr.HeightRequest = 50 - leftbox.Spacing;
 			toolsbox.HeightRequest = 50 - leftbox.Spacing;
 		}
-		
+
 		public Play SelectedTimeNode {
 			get {
 				return selected;
 			}
 			set {
-				if (!hasProject)
+				if(!hasProject)
 					return;
-					
+
 				selected = value;
-				foreach (TimeScale  ts in tsList.Values)
+				foreach(TimeScale  ts in tsList.Values)
 					ts.SelectedTimeNode = value;
-				if (selected != null) {
-					if (SelectedTimeNode.StartFrame/pixelRatio < GtkScrolledWindow.Hadjustment.Value ||
+				if(selected != null) {
+					if(SelectedTimeNode.StartFrame/pixelRatio < GtkScrolledWindow.Hadjustment.Value ||
 					                SelectedTimeNode.StartFrame/pixelRatio > GtkScrolledWindow.Hadjustment.Value +
 					                GtkScrolledWindow.Allocation.Width - GtkScrolledWindow.VScrollbar.Allocation.Width)
 						AdjustPostion(SelectedTimeNode.StartFrame);
@@ -96,11 +96,11 @@ namespace LongoMatch.Gui.Component {
 				return currentFrame;
 			}
 			set {
-				if (!hasProject)
+				if(!hasProject)
 					return;
-				
+
 				currentFrame = value;
-				foreach (TimeScale  ts in tsList.Values) 
+				foreach(TimeScale  ts in tsList.Values)
 					ts.CurrentFrame = value;
 				tr.CurrentFrame = value;
 				QueueDraw();
@@ -112,12 +112,12 @@ namespace LongoMatch.Gui.Component {
 			int realWidth;
 			uint pos;
 			int scrollbarWidth;
-			if (Visible) {
+			if(Visible) {
 				scrollbarWidth= GtkScrolledWindow.VScrollbar.Allocation.Width;
 				visibleWidth = GtkScrolledWindow.Allocation.Width-scrollbarWidth;
 				realWidth = vbox1.Allocation.Width;
 				pos = currentframe/pixelRatio;
-				if (pos+visibleWidth < realWidth) {
+				if(pos+visibleWidth < realWidth) {
 					GtkScrolledWindow.Hadjustment.Value = pos;
 				}
 				else {
@@ -127,12 +127,12 @@ namespace LongoMatch.Gui.Component {
 		}
 
 		private void SetPixelRatio(uint pixelRatio) {
-			if (!hasProject)
+			if(!hasProject)
 				return;
-			
+
 			this.pixelRatio = pixelRatio;
 			tr.PixelRatio = pixelRatio;
-			foreach (TimeScale  ts in tsList.Values)
+			foreach(TimeScale  ts in tsList.Values)
 				ts.PixelRatio = pixelRatio;
 			zoomscale.Value=pixelRatio;
 		}
@@ -141,7 +141,7 @@ namespace LongoMatch.Gui.Component {
 			set {
 				ResetGui();
 
-				if (value == null) {
+				if(value == null) {
 					categories = null;
 					tsList.Clear();
 					tsList=null;
@@ -159,8 +159,8 @@ namespace LongoMatch.Gui.Component {
 				tr.Frames = frames;
 				tr.FrameRate = value.Description.File.Fps;
 				tr.Show();
-				
-				foreach (Category cat in  categories) {
+
+				foreach(Category cat in  categories) {
 					List<Play> playsList = value.PlaysInCategory(cat);
 					TimeScale ts = new TimeScale(cat, playsList,frames);
 					tsList[cat] = ts;
@@ -175,44 +175,44 @@ namespace LongoMatch.Gui.Component {
 			}
 		}
 
-		public void AddPlay(Play play){
+		public void AddPlay(Play play) {
 			TimeScale ts;
-			if (tsList.TryGetValue(play.Category, out ts))
+			if(tsList.TryGetValue(play.Category, out ts))
 				ts.AddPlay(play);
 		}
-		
-		public void RemovePlays (List<Play> plays){
+
+		public void RemovePlays(List<Play> plays) {
 			TimeScale ts;
-			foreach (Play play in plays){
-				if (tsList.TryGetValue(play.Category, out ts))
+			foreach(Play play in plays) {
+				if(tsList.TryGetValue(play.Category, out ts))
 					ts.RemovePlay(play);
 			}
-			
+
 		}
 		private void ResetGui() {
 			//Unrealize all children
-			foreach (Widget w in vbox1.AllChildren) {
+			foreach(Widget w in vbox1.AllChildren) {
 				vbox1.Remove(w);
 				w.Destroy();
 			}
 		}
 
 		protected virtual void OnNewMark(Category category, int frame) {
-			if (NewMarkEvent != null)
+			if(NewMarkEvent != null)
 				NewMarkEvent(category,frame);
 		}
 
 		protected virtual void OnTimeNodeChanged(TimeNode tn, object val) {
-			if (TimeNodeChanged != null)
+			if(TimeNodeChanged != null)
 				TimeNodeChanged(tn,val);
 		}
 
 		protected virtual void OnTimeNodeSelected(Play tn) {
-			if (TimeNodeSelected != null)
+			if(TimeNodeSelected != null)
 				TimeNodeSelected(tn);
 		}
 		protected virtual void OnTimeNodeDeleted(List<Play> plays) {
-			if (TimeNodeDeleted != null)
+			if(TimeNodeDeleted != null)
 				TimeNodeDeleted(plays);
 		}
 
@@ -227,19 +227,19 @@ namespace LongoMatch.Gui.Component {
 			QueueDraw();
 			AdjustPostion(currentFrame);
 		}
-		
-		protected virtual void HandleScrollEvent (object sender, System.EventArgs args)
+
+		protected virtual void HandleScrollEvent(object sender, System.EventArgs args)
 		{
-			if (sender == GtkScrolledWindow.Vadjustment)
+			if(sender == GtkScrolledWindow.Vadjustment)
 				cs.Scroll = GtkScrolledWindow.Vadjustment.Value;
-			else if (sender == GtkScrolledWindow.Hadjustment)
+			else if(sender == GtkScrolledWindow.Hadjustment)
 				tr.Scroll = GtkScrolledWindow.Hadjustment.Value;
 		}
-		
-		protected virtual void OnSizeAllocated (object sender, SizeAllocatedArgs e)
+
+		protected virtual void OnSizeAllocated(object sender, SizeAllocatedArgs e)
 		{
 			/* Align the categories list widget on top of the timeline's horizontal bar */
-			if (sender == GtkScrolledWindow.HScrollbar)
+			if(sender == GtkScrolledWindow.HScrollbar)
 				categoriesalignment1.BottomPadding = (uint) GtkScrolledWindow.HScrollbar.Allocation.Height;
 		}
 	}

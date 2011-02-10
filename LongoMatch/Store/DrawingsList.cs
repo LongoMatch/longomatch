@@ -27,25 +27,25 @@ namespace LongoMatch.Store
 	{
 
 		public DrawingsList() {}
-		
+
 		/// <summary>
 		/// Adds a new drawing to the list
 		/// </summary>
 		/// <param name="drawing">
-		/// The <see cref="Drawing"/> to add 
+		/// The <see cref="Drawing"/> to add
 		/// </param>
 		/// <returns>
 		/// A <see cref="System.Boolean"/>: true if the frawing was added
 		/// </returns>
 		public bool Add(Drawing drawing) {
 			int renderTime = drawing.RenderTime;
-			if (!ContainsKey(renderTime)) {
+			if(!ContainsKey(renderTime)) {
 				base.Add(renderTime,drawing);
 				return true;
 			}
 			else return false;
 		}
-		
+
 
 		/// <summary>
 		/// Removes a drawing from the list
