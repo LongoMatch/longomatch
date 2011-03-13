@@ -74,6 +74,14 @@ namespace LongoMatch.Store
 			get;
 			set;
 		}
+		
+		public void Save(string filePath) {
+			SerializableObject.Save(this, filePath);
+		}
+
+		public static SubCategory Load(string filePath) {
+			return SerializableObject.Load<SubCategory>(filePath);
+		}
 	}
 
 	public class TagSubCategory: SubCategory
@@ -128,5 +136,6 @@ namespace LongoMatch.Store
 			set;
 		}
 	}
+	
 }
 
