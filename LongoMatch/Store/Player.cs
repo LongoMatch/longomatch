@@ -72,7 +72,10 @@ namespace LongoMatch.Store
 					return null;
 			}
 			set {
-				photo=value.SaveToBuffer("png");
+				if(value != null)
+					photo = value.SaveToBuffer("png");
+				else
+					photo = null;
 			}
 		}
 
