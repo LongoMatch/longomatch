@@ -35,6 +35,7 @@ namespace LongoMatch.Store
 	/// A sub category with name Type and a list of options will be added to the
 	/// Goal category to extends its tags.
 	/// </summary>
+	[Serializable]
 	public class SubCategory
 	{
 		public SubCategory() {
@@ -84,6 +85,7 @@ namespace LongoMatch.Store
 		}
 	}
 
+	[Serializable]
 	public class TagSubCategory: SubCategory
 	{
 		public TagSubCategory() {
@@ -99,6 +101,7 @@ namespace LongoMatch.Store
 	/// <summary>
 	/// SubCategory to tag Players
 	/// </summary>
+	[Serializable]
 	public class PlayerSubCategory: SubCategory
 	{
 		public PlayerSubCategory() {
@@ -120,6 +123,7 @@ namespace LongoMatch.Store
 	/// <summary>
 	/// SubCategory to tag teams
 	/// </summary>
+	[Serializable]
 	public class TeamSubCategory: SubCategory
 	{
 		public TeamSubCategory() {
