@@ -19,17 +19,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using LongoMatch.Common;
+using LongoMatch.Interfaces;
 
 namespace LongoMatch.Store.Templates
 {
 	[Serializable]
 
-	public class TeamTemplate: List<Player>
+	public class TeamTemplate: List<Player>, ITemplate
 	{
 		public TeamTemplate() {}
 
-		public String TeamName {
+		public String Name {
 			get;
 			set;
 		}

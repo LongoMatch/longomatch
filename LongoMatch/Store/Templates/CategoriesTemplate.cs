@@ -23,6 +23,7 @@ using System.Linq;
 using Gdk;
 using Mono.Unix;
 using LongoMatch.Common;
+using LongoMatch.Interfaces;
 
 namespace LongoMatch.Store.Templates
 {
@@ -36,7 +37,7 @@ namespace LongoMatch.Store.Templates
 	/// The <see cref="LongoMatch.DB.Project"/> must handle all the changes
 	/// </summary>
 	[Serializable]
-	public class Categories: List<Category>
+	public class Categories: List<Category>, ITemplate
 	{
 
 		/// <summary>
@@ -44,6 +45,10 @@ namespace LongoMatch.Store.Templates
 		/// </summary>
 		public Categories() {}
 
+		public string Name {
+			get;
+			set;
+		}
 		public void Save(string filePath) {
 			SerializableObject.Save(this, filePath);
 		}
@@ -66,30 +71,26 @@ namespace LongoMatch.Store.Templates
 			for(int i=1; i<=20; i++) {
 				PlayerSubCategory localplayers, visitorplayers;
 				TeamSubCategory team;
-				List<Team> teams, lplayers, vplayers;
 
-				teams = new List<Team>();
-				teams.Add(Team.NONE);
-				teams.Add(Team.LOCAL);
-				teams.Add(Team.NONE);
 				team = new TeamSubCategory {
 					Name = Catalog.GetString("Team"),
-					Options = teams
-				};
-
-				lplayers = new List<Team>();
-				lplayers.Add(Team.LOCAL);
+					AllowMultiple = false,
+					FastTag = true};
+				team.Add(Team.NONE);
+				team.Add(Team.LOCAL);
+				team.Add(Team.NONE);
+				
 				localplayers = new PlayerSubCategory {
 					Name = Catalog.GetString("Local Team Players"),
-					Options = lplayers,
-				};
-
-				vplayers = new List<Team>();
-				vplayers.Add(Team.VISITOR);
+					AllowMultiple = false,
+					FastTag = true};
+			    localplayers.Add(Team.LOCAL);
+			    
 				visitorplayers = new PlayerSubCategory {
 					Name = Catalog.GetString("Visitor Team Players"),
-					Options = vplayers,
-				};
+					AllowMultiple = false,
+					FastTag = true};
+				visitorplayers.Add(Team.VISITOR);	
 
 				Category cat =  new Category {
 					Name = "Category " + i,

@@ -19,23 +19,29 @@
 using System;
 using System.Collections.Generic;
 using LongoMatch.Common;
+using LongoMatch.Interfaces;
 using LongoMatch.Store;
 
 namespace LongoMatch.Store.Templates
 {
 
 	[Serializable]
-	public class SubCategoriesTemplate: List<SubCategory>
+	public class SubCategoryTemplate: TagSubCategory, ITemplate
 	{
 
-		public SubCategoriesTemplate() {}
+		public SubCategoryTemplate() {}
 
 		public void Save(string filePath) {
 			SerializableObject.Save(this, filePath);
 		}
 
-		public static SubCategoriesTemplate Load(string filePath) {
-			return SerializableObject.Load<SubCategoriesTemplate>(filePath);
+		public static SubCategoryTemplate Load(string filePath) {
+			return SerializableObject.Load<SubCategoryTemplate>(filePath);
+		}
+		
+		public static SubCategoryTemplate DefaultTemplate (int count) {
+			SubCategoryTemplate template = new SubCategoryTemplate();
+			return template;
 		}
 	}
 }
