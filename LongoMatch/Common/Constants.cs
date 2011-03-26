@@ -95,6 +95,9 @@ Xavier Queralt Mateu (ca)";
 		public const string WEBM = "WebM (VP8 + Vorbis)";
 		public const string DVD="DVD (MPEG-2 + MP3)";
 		
-		public const string SUBCAT_EXT = "subcat";
+		public const string TEMPLATES_DIR = "templates";
+		public const string TEAMS_TEMPLATE_EXT = ".ltt";
+		public const string CAT_TEMPLATE_EXT = ".lct";
+		public const string SUBCAT_TEMPLATE_EXT = ".lst";
 	}
 }
