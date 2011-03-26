@@ -27,6 +27,7 @@ using LongoMatch.DB;
 using LongoMatch.Gui;
 using LongoMatch.IO;
 using LongoMatch.Store.Templates;
+using LongoMatch.Services;
 using Mono.Unix;
 
 namespace LongoMatch
@@ -36,6 +37,7 @@ namespace LongoMatch
 	class MainClass
 	{
 		private static DataBase db;
+		public static TemplatesService ts;
 		private static string baseDirectory;
 		private static string homeDirectory;
 		private static string configDirectory;
@@ -62,7 +64,8 @@ namespace LongoMatch
 
 			//Comprobamos los archivos de inicio
 			CheckDirs();
-			CheckFiles();
+			
+			ts = new TemplatesService(configDirectory);
 
 			//Iniciamos la base de datos
 			db = new DataBase(Path.Combine(DBDir(),Constants.DB_FILE));
@@ -132,20 +135,6 @@ namespace LongoMatch
 				System.IO.Directory.CreateDirectory(TempVideosDir());
 		}
 
-		public static void CheckFiles() {
-			string fConfig;
-			fConfig = System.IO.Path.Combine(TemplatesDir(),"default.sct");
-			if(!System.IO.File.Exists(fConfig)) {
-				Categories cat = Categories.DefaultTemplate();
-				cat.Save("default.sct");
-			}
-
-			fConfig = System.IO.Path.Combine(TemplatesDir(),"default.tem");
-			if(!System.IO.File.Exists(fConfig)) {
-				TeamTemplate tt = TeamTemplate.DefaultTemplate(20);
-				tt.Save(fConfig);
-			}
-		}
 
 		public static void CheckOldFiles() {
 			string oldDBFile= System.IO.Path.Combine(homeDirectory, "db/db.yap");
