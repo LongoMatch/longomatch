@@ -23,7 +23,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Gdk;
 using Mono.Unix;
+
 using LongoMatch.Common;
+using LongoMatch.Interfaces;
 
 namespace LongoMatch.Store
 {
@@ -42,7 +44,7 @@ namespace LongoMatch.Store
 		#endregion
 		public Category() {
 			_UUID = System.Guid.NewGuid();
-			SubCategories = new List<SubCategory>();
+			SubCategories = new List<ISubCategory>();
 		}
 
 		#region  Properties
@@ -88,7 +90,7 @@ namespace LongoMatch.Store
 			set;
 		}
 
-		public List<SubCategory> SubCategories {
+		public List<ISubCategory> SubCategories {
 			get;
 			set;
 		}
@@ -130,7 +132,7 @@ namespace LongoMatch.Store
 			Start = (Time)info.GetValue("start", typeof(Time));
 			Stop = (Time)info.GetValue("stop", typeof(Time));
 			HotKey = (HotKey)info.GetValue("hotkey", typeof(HotKey));
-			SubCategories = (List<SubCategory>)info.GetValue("subcategories", typeof(List<SubCategory>));
+			SubCategories = (List<ISubCategory>)info.GetValue("subcategories", typeof(List<ISubCategory>));
 			Position = info.GetInt32("position");
 			SortMethod = (SortMethodType)info.GetValue("sort_method", typeof(SortMethodType));
 			// read 'red', 'blue' and 'green' values and convert it to Gdk.Color

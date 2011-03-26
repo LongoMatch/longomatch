@@ -25,6 +25,7 @@ using System.Linq;
 using Gdk;
 using Gtk;
 using LongoMatch.Common;
+using LongoMatch.Interfaces;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
 using Mono.Unix;
@@ -276,7 +277,7 @@ namespace LongoMatch.Store
 		private TreeStore GetSubCategoryModel(TagSubCategory subcat) {
 			TreeStore dataFileListStore = new TreeStore(typeof(object));
 
-			FillList(subcat.Options, subcat.Name, dataFileListStore);
+			FillList(subcat.ToList(), subcat.Name, dataFileListStore);
 			return dataFileListStore;
 		}
 
@@ -284,7 +285,7 @@ namespace LongoMatch.Store
 			TreeStore dataFileListStore = new TreeStore(typeof(object));
 			TeamTemplate template;
 
-			foreach(Team team in subcat.Options) {
+			foreach(Team team in subcat) {
 				if(team == Team.NONE)
 					continue;
 				template = team == Team.LOCAL?LocalTeamTemplate:VisitorTeamTemplate;

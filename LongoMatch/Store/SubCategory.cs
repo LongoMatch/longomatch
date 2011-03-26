@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using LongoMatch.Common;
+using LongoMatch.Interfaces;
 
 namespace LongoMatch.Store
 {
@@ -36,24 +37,15 @@ namespace LongoMatch.Store
 	/// Goal category to extends its tags.
 	/// </summary>
 	[Serializable]
-	public class SubCategory
+	public class SubCategory<T>: List<T>, ISubCategory
 	{
 		public SubCategory() {
-			Options = new List<object>();
 		}
 
 		/// <summary>
 		/// Name of the subcategory
 		/// </summary>
 		public String Name {
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// List of available options for the subcategory
-		/// </summary>
-		public List<object> Options {
 			get;
 			set;
 		}
@@ -76,70 +68,29 @@ namespace LongoMatch.Store
 			set;
 		}
 		
-		public void Save(string filePath) {
-			SerializableObject.Save(this, filePath);
-		}
-
-		public static SubCategory Load(string filePath) {
-			return SerializableObject.Load<SubCategory>(filePath);
-		}
 	}
 
 	[Serializable]
-	public class TagSubCategory: SubCategory
-	{
-		public TagSubCategory() {
-			Options = new List<string>();
-		}
-
-		public new List<string> Options {
-			get;
-			set;
-		}
-	}
+	public class TagSubCategory: SubCategory<string> {}
 
 	/// <summary>
 	/// SubCategory to tag Players
+	/// Stores a list of teams to be shown in the options.
+	/// The teams LOCAL, VISITOR will be then mapped to a list of players
+	/// for this team, so that a change in the team's templates will not
+	/// affect the list of available players.
 	/// </summary>
 	[Serializable]
-	public class PlayerSubCategory: SubCategory
-	{
-		public PlayerSubCategory() {
-			Options = new List<Team>();
-		}
-
-		/// <summary>
-		/// A list of options containing the teams to be shown in the options.
-		/// The teams LOCAL, VISITOR will be then mapped to a list of players
-		/// for this team, so that a change in the team's templates will not
-		/// affect the list of available players.
-		/// </summary>
-		public new List<Team> Options {
-			get;
-			set;
-		}
+	public class PlayerSubCategory: SubCategory<Team> {
+		public bool PositionFilter {get; set;}
 	}
 
 	/// <summary>
 	/// SubCategory to tag teams
+	/// A list of options containing the teams to be shown in the options.
+	/// The teams LOCAL, VISITOR and NONE are then mapped to real team names
+	/// so that a change in the name doesn't affect the category.
 	/// </summary>
 	[Serializable]
-	public class TeamSubCategory: SubCategory
-	{
-		public TeamSubCategory() {
-			Options = new List<Team>();
-		}
-
-		/// <summary>
-		/// A list of options containing the teams to be shown in the options.
-		/// The teams LOCAL, VISITOR and NONE are then mapped to real team names
-		/// so that a change in the name doesn't affect the category.
-		/// </summary>
-		public new List<Team> Options {
-			get;
-			set;
-		}
-	}
-	
+	public class TeamSubCategory: SubCategory<Team> {}
 }
-
