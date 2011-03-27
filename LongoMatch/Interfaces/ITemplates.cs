@@ -23,13 +23,13 @@ namespace LongoMatch.Interfaces
 	public interface ITemplate
 	{
 		void Save (string filename);
-		string Name {get;}
+		string Name {get; set;}
 	}
 	
 	public interface ITemplateProvider
 	{
 		void CheckDefaultTemplate();
-		string[] TemplatesNames {get;}
+		List<string> TemplatesNames {get;}
 		bool Exists(string name);
 		void Copy (string orig, string copy);
 		void Delete (string templateName);
