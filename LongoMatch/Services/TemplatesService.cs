@@ -103,7 +103,7 @@ namespace LongoMatch.Services
 			
 			path = GetPath("default");
 			if(!File.Exists(path)) {
-				Create("default");
+				Create("default", 20);
 			}
 		}
 		
