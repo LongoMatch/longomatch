@@ -21,7 +21,9 @@ using System.Collections.Generic;
 using System.IO;
 using Gdk;
 using Gtk;
+
 using LongoMatch.Gui.Dialog;
+using LongoMatch.Interfaces;
 using LongoMatch.IO;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
@@ -34,7 +36,7 @@ namespace LongoMatch.Gui.Component
 
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
-	public partial class ProjectTemplateWidget : Gtk.Bin
+	public partial class ProjectTemplateWidget : Gtk.Bin, ITemplateWidget<Categories>
 	{
 		private List<HotKey> hkList;
 		private Project project;
@@ -51,11 +53,11 @@ namespace LongoMatch.Gui.Component
 			set {
 				project = value;
 				if(project != null)
-					Categories = project.Categories;
+					Template = project.Categories;
 			}
 		}
 
-		public Categories Categories {
+		public Categories Template {
 			get {
 				return categories;
 			}
@@ -88,7 +90,7 @@ namespace LongoMatch.Gui.Component
 		}
 
 		private void UpdateModel() {
-			Categories = Categories;
+			Template = Template;
 		}
 
 		private void AddCategory(int index) {
@@ -229,11 +231,11 @@ namespace LongoMatch.Gui.Component
 					                                                     "Do you want to overwrite it ?")
 					                                    );
 					if(md.Run() == (int)ResponseType.Yes)
-						Categories.Save(dialog.Text);
+						Template.Save(dialog.Text);
 					md.Destroy();
 				}
 				else
-					Categories.Save(dialog.Text);
+					Template.Save(dialog.Text);
 			}
 			dialog.Destroy();
 		}
