@@ -46,6 +46,7 @@ namespace LongoMatch.Services
 			dict.Add(typeof(Categories),
 			         new TemplatesProvider<Categories> (basePath,
 			                                                 Constants.CAT_TEMPLATE_EXT));
+			CheckDefaultTemplates();
 		}
 		
 		private void CheckDefaultTemplates () {
@@ -93,28 +94,28 @@ namespace LongoMatch.Services
 			methodDefaultTemplate = typeof(T).GetMethod("DefaultTemplate");
 		}
 		
-		private string GetPath(string filename) {
-			return System.IO.Path.Combine(basePath, filename);
+		private string GetPath(string templateName) {
+			return System.IO.Path.Combine(basePath, templateName) + extension;
 		}
 		
 		public void CheckDefaultTemplate() {
 			string path;
 			
-			path = GetPath("default" + extension);
+			path = GetPath("default");
 			if(!File.Exists(path)) {
 				Create("default");
 			}
 		}
 		
 		public bool Exists (string name) {
-			return File.Exists(GetPath(name+extension));
+			return File.Exists(GetPath(name));
 		}
 		
 		public List<T> Templates{
 			get{
 				List<T> templates = new List<T>();
 				
-				foreach (string file in Directory.GetFiles (basePath, extension)) {
+				foreach (string file in TemplatesNames) {
 					try {
 						templates.Add(Load(file));
 					} catch (Exception ex) {
@@ -125,19 +126,25 @@ namespace LongoMatch.Services
 			}
 		}
 		
-		public string[] TemplatesNames{
+		public List<string> TemplatesNames{
 			get{
-				return Directory.GetFiles (basePath, extension);
+				List<string> l = new List<string>();
+				foreach (string path in Directory.GetFiles (basePath, "*" + extension)) {
+					l.Add (Path.GetFileNameWithoutExtension(path));
+				}
+				return l;
 			}
 		}
 		
 		public T Load (string name) {
 			Log.Information("Loading template " +  name);
-			return (T)methodLoad.Invoke(null, new object[] {name});
+			return (T)methodLoad.Invoke(null, new object[] {GetPath(name)});
 		}
 		
 		public void Save (ITemplate template) {
-			string filename = GetPath(template.Name);
+			string filename =  GetPath(template.Name);
+			
+			Log.Information("Saving template " + filename);
 			
 			if (File.Exists(filename)) {
 				throw new Exception (Catalog.GetString("A template already exixts with " +
@@ -168,9 +175,14 @@ namespace LongoMatch.Services
 		}
 		
 		public void Create (string templateName, params object[] list) {
+			/* Some templates don't need a count as a parameter but we include
+			 * so that all of them match the same signature */
+			if (list.Length == 0)
+				list = new object[] {0};
 			Log.Information(String.Format("Creating default {0} template", typeof(T)));
 			ITemplate t =(ITemplate)methodDefaultTemplate.Invoke(null, list);
-			t.Save(GetPath(templateName));
+			t.Name = templateName;
+			Save(t);
 		}
 	}
 }
