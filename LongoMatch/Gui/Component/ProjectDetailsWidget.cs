@@ -26,6 +26,7 @@ using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Popup;
 using LongoMatch.Handlers;
 using LongoMatch.IO;
+using LongoMatch.Interfaces;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
 using LongoMatch.Video.Capturer;
@@ -52,6 +53,8 @@ namespace LongoMatch.Gui.Component
 		private Categories actualCategory;
 		private TeamTemplate actualVisitorTeam;
 		private TeamTemplate actualLocalTeam;
+		private ITemplateProvider<Categories> tpc;
+		private ITemplateProvider<TeamTemplate> tpt;
 		private ProjectType useType;
 		private List<Device> videoDevices;
 		private const string PAL_FORMAT = "720x576 (4:3)";
@@ -71,8 +74,11 @@ namespace LongoMatch.Gui.Component
 				cp.Hide();
 				cp.DateSelectedEvent += new DateSelectedHandler(OnDateSelected);
 			}
+			
+			tpc = MainClass.ts.CategoriesTemplateProvider;
+			tpt = MainClass.ts.TeamTemplateProvider;
 
-			FillSections();
+			FillCategories();
 			FillTeamsTemplate();
 			FillFormats();
 
@@ -214,21 +220,21 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		private string SectionsFile {
+		private string SelectedCategory {
 			get {
-				return tagscombobox.ActiveText + ".sct";
+				return tagscombobox.ActiveText;
 			}
 		}
 
 		private string LocalTeamTemplateFile {
 			get {
-				return localcombobox.ActiveText + ".tem";
+				return localcombobox.ActiveText;
 			}
 		}
 
 		private string VisitorTeamTemplateFile {
 			get {
-				return visitorcombobox.ActiveText + ".tem";
+				return visitorcombobox.ActiveText;
 			}
 		}
 
@@ -400,46 +406,38 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		private void FillSections() {
-			string[] allFiles;
+		private void FillCategories() {
 			int i=0;
 			int index = 0;
 
-			allFiles = System.IO.Directory.GetFiles(MainClass.TemplatesDir(),"*.sct");
-			foreach(string filePath in allFiles) {
-				string fileName = System.IO	.Path.GetFileNameWithoutExtension(filePath);
-				tagscombobox.AppendText(fileName);
+			foreach(string template in  tpc.TemplatesNames) {
+				tagscombobox.AppendText(template);
 				//Setting the selected value to the default template
-				if(fileName == "default")
+				if(template == "default")
 					index = i;
 				i++;
 			}
 			tagscombobox.Active = index;
-			Categories = Categories.Load(System.IO.Path.Combine(MainClass.TemplatesDir(),SectionsFile));
+			Categories = tpc.Load(SelectedCategory);
 		}
 
 		private void FillTeamsTemplate() {
-			string[] allFiles;
 			int i=0;
 			int index = 0;
 
-			allFiles = System.IO.Directory.GetFiles(MainClass.TemplatesDir(),"*.tem");
-			foreach(string filePath in allFiles) {
-				string fileName = System.IO	.Path.GetFileNameWithoutExtension(filePath);
-				localcombobox.AppendText(fileName);
-				visitorcombobox.AppendText(fileName);
+			foreach(string template in tpt.TemplatesNames) {
+				localcombobox.AppendText(template);
+				visitorcombobox.AppendText(template);
 
 				//Setting the selected value to the default template
-				if(fileName == "default")
+				if(template == "default")
 					index = i;
 				i++;
 			}
 			localcombobox.Active = index;
 			visitorcombobox.Active = index;
-			LocalTeamTemplate = TeamTemplate.Load(System.IO.Path.Combine(MainClass.TemplatesDir(),
-			                                      LocalTeamTemplateFile));
-			VisitorTeamTemplate = TeamTemplate.Load(System.IO.Path.Combine(MainClass.TemplatesDir(),
-			                                        VisitorTeamTemplateFile));
+			LocalTeamTemplate = tpt.Load(LocalTeamTemplateFile);
+			VisitorTeamTemplate = tpt.Load(VisitorTeamTemplateFile);
 		}
 
 		private void FillFormats() {
@@ -546,20 +544,17 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnCombobox1Changed(object sender, System.EventArgs e)
 		{
-			Categories = Categories.Load(System.IO.Path.Combine(MainClass.TemplatesDir(),SectionsFile));
+			Categories = tpc.Load(SelectedCategory);
 		}
 
 		protected virtual void OnVisitorcomboboxChanged(object sender, System.EventArgs e)
 		{
-			VisitorTeamTemplate = TeamTemplate.Load(System.IO.Path.Combine(MainClass.TemplatesDir(),
-			                                        VisitorTeamTemplateFile));
+			VisitorTeamTemplate = tpt.Load(VisitorTeamTemplateFile);
 		}
-
 
 		protected virtual void OnLocalcomboboxChanged(object sender, System.EventArgs e)
 		{
-			LocalTeamTemplate = TeamTemplate.Load(System.IO.Path.Combine(MainClass.TemplatesDir(),
-			                                      LocalTeamTemplateFile));
+			LocalTeamTemplate = tpt.Load(LocalTeamTemplateFile);
 		}
 
 		protected virtual void OnEditbuttonClicked(object sender, System.EventArgs e)
@@ -580,10 +575,10 @@ namespace LongoMatch.Gui.Component
 			TeamTemplateEditor tted = new TeamTemplateEditor();
 			tted.TransientFor = (Window)Toplevel;
 			tted.Title=Catalog.GetString("Local Team Template");
-			tted.SetTeamTemplate(LocalTeamTemplate);
+			tted.Template = LocalTeamTemplate;
 
 			if(tted.Run() == (int)ResponseType.Apply) {
-				LocalTeamTemplate = tted.GetTeamTemplate();
+				LocalTeamTemplate = tted.Template;
 			}
 			tted.Destroy();
 			OnEdited(this,null);
@@ -593,9 +588,9 @@ namespace LongoMatch.Gui.Component
 			TeamTemplateEditor tted = new TeamTemplateEditor();
 			tted.TransientFor = (Window)Toplevel;
 			tted.Title=Catalog.GetString("Visitor Team Template");
-			tted.SetTeamTemplate(VisitorTeamTemplate);
+			tted.Template = VisitorTeamTemplate;
 			if(tted.Run() == (int)ResponseType.Apply) {
-				VisitorTeamTemplate = tted.GetTeamTemplate();
+				VisitorTeamTemplate = tted.Template;
 			}
 			tted.Destroy();
 			OnEdited(this,null);
