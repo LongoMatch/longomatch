@@ -47,6 +47,8 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build();
 			hkList = new List<HotKey>();
+			categoriestreeview.CategoryClicked += this.OnCategoriestreeviewSectionClicked;
+			categoriestreeview.CategoriesSelected += this.OnCategoriestreeviewCategoriesSelected;
 		}
 
 		public Project Project {
