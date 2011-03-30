@@ -28,6 +28,7 @@ using LongoMatch.Common;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
+using LongoMatch.Store.Templates;
 using LongoMatch.Utils;
 using LongoMatch.Video.Capturer;
 using LongoMatch.Video.Common;
@@ -426,14 +427,14 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnSectionsTemplatesManagerActivated(object sender, System.EventArgs e)
 		{
-			TemplatesManager tManager = new TemplatesManager(TemplatesManager.UseType.CategoriesTemplate);
+			var tManager = new TemplatesManager<Categories, Category>();
 			tManager.TransientFor = this;
 			tManager.Show();
 		}
 
 		protected virtual void OnTeamsTemplatesManagerActionActivated(object sender, System.EventArgs e)
 		{
-			TemplatesManager tManager = new TemplatesManager(TemplatesManager.UseType.TeamTemplate);
+			var tManager = new TemplatesManager<TeamTemplate, Player>();
 			tManager.TransientFor = this;
 			tManager.Show();
 		}
