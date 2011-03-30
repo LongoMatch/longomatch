@@ -22,6 +22,7 @@ using System.Reflection;
 using Mono.Unix;
 
 using LongoMatch.Common;
+using LongoMatch.Gui.Component;
 using LongoMatch.Interfaces;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
