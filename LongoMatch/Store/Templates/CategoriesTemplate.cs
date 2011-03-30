@@ -57,18 +57,18 @@ namespace LongoMatch.Store.Templates
 			return SerializableObject.Load<Categories>(filePath);
 		}
 
-		public static Categories DefaultTemplate() {
+		public static Categories DefaultTemplate(int count) {
 			Categories defaultTemplate = new Categories();
-			defaultTemplate.FillDefaultTemplate();
+			defaultTemplate.FillDefaultTemplate(count);
 			return defaultTemplate;
 		}
 
-		private void FillDefaultTemplate() {
+		private void FillDefaultTemplate(int count) {
 			Color c = new Color((Byte)255, (Byte)0, (Byte)0);
 			HotKey h = new HotKey();
 
 
-			for(int i=1; i<=20; i++) {
+			for(int i=1; i<=count; i++) {
 				PlayerSubCategory localplayers, visitorplayers;
 				TeamSubCategory team;
 

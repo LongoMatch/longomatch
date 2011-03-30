@@ -39,7 +39,7 @@ namespace LongoMatch.Store.Templates
 			return SerializableObject.Load<SubCategoryTemplate>(filePath);
 		}
 		
-		public static SubCategoryTemplate DefaultTemplate (int count) {
+		public static SubCategoryTemplate DefaultTemplate (int not_used) {
 			SubCategoryTemplate template = new SubCategoryTemplate();
 			return template;
 		}
