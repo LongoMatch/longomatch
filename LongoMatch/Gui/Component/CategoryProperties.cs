@@ -19,10 +19,15 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Gdk;
 using Gtk;
 using Mono.Unix;
+
+using LongoMatch.Interfaces;
+using LongoMatch.Services;
 using LongoMatch.Store;
+using LongoMatch.Store.Templates;
 using LongoMatch.Gui.Dialog;
 
 namespace LongoMatch.Gui.Component
@@ -37,32 +42,51 @@ namespace LongoMatch.Gui.Component
 
 		public event HotKeyChangeHandler HotKeyChanged;
 
-		private Category stn;
+		private Category cat;
+		private ITemplateProvider<SubCategoryTemplate, string> subcategoriesTemplates;
+		private Dictionary<string, TagSubCategory> subCategories;
 
 		public CategoryProperties()
 		{
 			this.Build();
+			subcategoriesTemplates = MainClass.ts.SubCategoriesTemplateProvider;
+			LoadSubcategories();
 		}
 
+		private void LoadSubcategories() {
+			foreach (TagSubCategory subcat in subcategoriesTemplates.Templates) {
+				subCategories.Add(subcat.Name, subcat);
+				subcatcombobox.AppendText(subcat.Name);
+			}
+			
+			/* We check here if the user already saved at least one category
+			 * to hide the big helper button.*/
+			if (subCategories.Count != 0) {
+				newfirstbutton.Visible = false;
+			} 
+		}
+			
 		public Category Category {
 			set {
-				stn = value;
+				cat = value;
 				UpdateGui();
 			}
 			get {
-				return stn;
+				return cat;
 			}
 		}
 
 		private void  UpdateGui() {
-			if(stn != null) {
-				nameentry.Text = stn.Name;
-				timeadjustwidget1.SetTimeNode(stn);
-				colorbutton1.Color = stn.Color;
-				sortmethodcombobox.Active = (int)stn.SortMethod;
+			if(cat != null) {
+				nameentry.Text = cat.Name;
+				
+				lagtimebutton.Value = cat.Start.Seconds;
+				leadtimebutton.Value = cat.Stop.Seconds;
+				colorbutton1.Color = cat.Color;
+				sortmethodcombobox.Active = (int)cat.SortMethod;
 
-				if(stn.HotKey.Defined) {
-					hotKeyLabel.Text = stn.HotKey.ToString();
+				if(cat.HotKey.Defined) {
+					hotKeyLabel.Text = cat.HotKey.ToString();
 				}
 				else hotKeyLabel.Text = Catalog.GetString("none");
 			}
@@ -72,40 +96,52 @@ namespace LongoMatch.Gui.Component
 		{
 			HotKeySelectorDialog dialog = new HotKeySelectorDialog();
 			dialog.TransientFor=(Gtk.Window)this.Toplevel;
-			HotKey prevHotKey =  stn.HotKey;
+			HotKey prevHotKey =  cat.HotKey;
 			if(dialog.Run() == (int)ResponseType.Ok) {
-				stn.HotKey=dialog.HotKey;
+				cat.HotKey=dialog.HotKey;
 				UpdateGui();
 			}
 			dialog.Destroy();
 			if(HotKeyChanged != null)
-				HotKeyChanged(prevHotKey,stn);
+				HotKeyChanged(prevHotKey,cat);
 		}
 
 		protected virtual void OnColorbutton1ColorSet(object sender, System.EventArgs e)
 		{
-			if(stn != null)
-				stn.Color=colorbutton1.Color;
+			if(cat != null)
+				cat.Color=colorbutton1.Color;
 		}
 
 		protected virtual void OnTimeadjustwidget1LeadTimeChanged(object sender, System.EventArgs e)
 		{
-			stn.Start = timeadjustwidget1.GetStartTime();
+			cat.Start = new Time{Seconds=(int)leadtimebutton.Value};
 		}
 
 		protected virtual void OnTimeadjustwidget1LagTimeChanged(object sender, System.EventArgs e)
 		{
-			stn.Stop= timeadjustwidget1.GetStopTime();
+			cat.Stop = new Time{Seconds=(int)lagtimebutton.Value};
 		}
 
 		protected virtual void OnNameentryChanged(object sender, System.EventArgs e)
 		{
-			stn.Name = nameentry.Text;
+			cat.Name = nameentry.Text;
 		}
 
 		protected virtual void OnSortmethodcomboboxChanged(object sender, System.EventArgs e)
 		{
-			stn.SortMethodString = sortmethodcombobox.ActiveText;
+			cat.SortMethodString = sortmethodcombobox.ActiveText;
+		}
+		
+		protected virtual void OnNewfirstbuttonClicked (object sender, System.EventArgs e)
+		{
+		}
+		
+		protected virtual void OnAddbuttonClicked (object sender, System.EventArgs e)
+		{
+		}
+		
+		protected virtual void OnNewbuttonClicked (object sender, System.EventArgs e)
+		{
 		}
 	}
 }

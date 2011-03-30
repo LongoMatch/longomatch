@@ -559,40 +559,41 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnEditbuttonClicked(object sender, System.EventArgs e)
 		{
-			ProjectTemplateEditorDialog ted = new ProjectTemplateEditorDialog();
-			ted.TransientFor = (Window)Toplevel;
-			ted.Categories = Categories;
-			ted.Project = project;
-			ted.CanExport = Use == ProjectType.EditProject;
-			if(ted.Run() == (int)ResponseType.Apply) {
-				Categories = ted.Categories;
+			var editor = new TemplateEditorDialog<Categories, Category>();
+			
+			editor.TransientFor = (Window)Toplevel;
+			editor.Template = Categories;
+			editor.InProject = true;
+			editor.CanExport = Use == ProjectType.EditProject;
+			if(editor.Run() == (int)ResponseType.Apply) {
+				Categories = editor.Template;
 			}
-			ted.Destroy();
+			editor.Destroy();
 			OnEdited(this,null);
 		}
 
 		protected virtual void OnLocaltemplatebuttonClicked(object sender, System.EventArgs e) {
-			TeamTemplateEditor tted = new TeamTemplateEditor();
-			tted.TransientFor = (Window)Toplevel;
-			tted.Title=Catalog.GetString("Local Team Template");
-			tted.Template = LocalTeamTemplate;
+			var editor = new TemplateEditorDialog<TeamTemplate, Player>();
+			editor.TransientFor = (Window)Toplevel;
+			editor.Title=Catalog.GetString("Local Team Template");
+			editor.Template = LocalTeamTemplate;
 
-			if(tted.Run() == (int)ResponseType.Apply) {
-				LocalTeamTemplate = tted.Template;
+			if(editor.Run() == (int)ResponseType.Apply) {
+				LocalTeamTemplate = editor.Template;
 			}
-			tted.Destroy();
+			editor.Destroy();
 			OnEdited(this,null);
 		}
 
 		protected virtual void OnVisitorbuttonClicked(object sender, System.EventArgs e) {
-			TeamTemplateEditor tted = new TeamTemplateEditor();
-			tted.TransientFor = (Window)Toplevel;
-			tted.Title=Catalog.GetString("Visitor Team Template");
-			tted.Template = VisitorTeamTemplate;
-			if(tted.Run() == (int)ResponseType.Apply) {
-				VisitorTeamTemplate = tted.Template;
+			var editor = new TemplateEditorDialog<TeamTemplate, Player>();
+			editor.TransientFor = (Window)Toplevel;
+			editor.Title=Catalog.GetString("Visitor Team Template");
+			editor.Template = VisitorTeamTemplate;
+			if(editor.Run() == (int)ResponseType.Apply) {
+				VisitorTeamTemplate = editor.Template;
 			}
-			tted.Destroy();
+			editor.Destroy();
 			OnEdited(this,null);
 		}
 
