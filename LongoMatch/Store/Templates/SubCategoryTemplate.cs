@@ -26,7 +26,7 @@ namespace LongoMatch.Store.Templates
 {
 
 	[Serializable]
-	public class SubCategoryTemplate: TagSubCategory, ITemplate
+	public class SubCategoryTemplate: TagSubCategory, ITemplate<string>
 	{
 
 		public SubCategoryTemplate() {}

@@ -53,8 +53,8 @@ namespace LongoMatch.Gui.Component
 		private Categories actualCategory;
 		private TeamTemplate actualVisitorTeam;
 		private TeamTemplate actualLocalTeam;
-		private ITemplateProvider<Categories> tpc;
-		private ITemplateProvider<TeamTemplate> tpt;
+		private ITemplateProvider<Categories, Category> tpc;
+		private ITemplateProvider<TeamTemplate, Player> tpt;
 		private ProjectType useType;
 		private List<Device> videoDevices;
 		private const string PAL_FORMAT = "720x576 (4:3)";

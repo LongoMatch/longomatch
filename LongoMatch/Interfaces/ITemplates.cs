@@ -26,6 +26,8 @@ namespace LongoMatch.Interfaces
 		string Name {get; set;}
 	}
 	
+	public interface ITemplate<T>: ITemplate, IList<T> {}
+	
 	public interface ITemplateProvider
 	{
 		void CheckDefaultTemplate();
@@ -36,14 +38,14 @@ namespace LongoMatch.Interfaces
 		void Create (string templateName, params object [] list);
 	}
 	
-	public interface ITemplateProvider<T>: ITemplateProvider where T: ITemplate
+	public interface ITemplateProvider<T, U>: ITemplateProvider where T: ITemplate<U>
 	{
 		List<T> Templates {get;}
 		T Load (string name);
-		void Save (ITemplate template);
+		void Save (ITemplate<U> template);
 	}
 	
-	public interface ITemplateWidget<T>
+	public interface ITemplateWidget<T, U> where T: ITemplate<U>
 	{
 		T Template {get; set;}
 	}

@@ -71,7 +71,7 @@ namespace LongoMatch.Store
 	}
 
 	[Serializable]
-	public class TagSubCategory: SubCategory<string> {}
+	public class TagSubCategory: SubCategory<string>, IList<string> {}
 
 	/// <summary>
 	/// SubCategory to tag Players

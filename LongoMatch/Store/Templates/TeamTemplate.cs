@@ -27,7 +27,7 @@ namespace LongoMatch.Store.Templates
 {
 	[Serializable]
 
-	public class TeamTemplate: List<Player>, ITemplate
+	public class TeamTemplate: List<Player>, ITemplate<Player>
 	{
 		public TeamTemplate() {}
 

@@ -38,13 +38,13 @@ namespace LongoMatch.Services
 		{
 			dict = new Dictionary<Type, ITemplateProvider>();
 			dict.Add(typeof(SubCategoryTemplate),
-			         new TemplatesProvider<SubCategoryTemplate> (basePath,
+			         new TemplatesProvider<SubCategoryTemplate, string> (basePath,
 			                                                 Constants.SUBCAT_TEMPLATE_EXT));
 			dict.Add(typeof(TeamTemplate),
-			         new TemplatesProvider<TeamTemplate> (basePath,
+			         new TemplatesProvider<TeamTemplate, Player> (basePath,
 			                                                 Constants.TEAMS_TEMPLATE_EXT));
 			dict.Add(typeof(Categories),
-			         new TemplatesProvider<Categories> (basePath,
+			         new TemplatesProvider<Categories, Category> (basePath,
 			                                                 Constants.CAT_TEMPLATE_EXT));
 			CheckDefaultTemplates();
 		}
@@ -54,32 +54,40 @@ namespace LongoMatch.Services
 				t.CheckDefaultTemplate();
 		}
 		
-		public ITemplateProvider<T> GetTemplateProvider<T>() where T: ITemplate {
+		public ITemplateProvider<T, U> GetTemplateProvider<T, U>() where T: ITemplate<U> {
 			if (dict.ContainsKey(typeof(T)))
-				return (ITemplateProvider<T>)dict[typeof(T)];
+				return (ITemplateProvider<T, U>)dict[typeof(T)];
 			return null;
 		}
 		
-		public ITemplateProvider<SubCategoryTemplate> SubCategoriesTemplateProvider {
+		public ITemplateWidget<T, U> GetTemplateEditor<T, U>() where T: ITemplate<U>{
+			if (typeof(T) == typeof(Categories))
+				return (ITemplateWidget<T, U>) new CategoriesTemplateEditorWidget ();
+			if (typeof(T) == typeof(TeamTemplate))
+				return (ITemplateWidget<T, U>) new TeamTemplateEditorWidget();
+			return null;
+		}
+		
+		public ITemplateProvider<SubCategoryTemplate, string> SubCategoriesTemplateProvider {
 			get {
-				return (ITemplateProvider<SubCategoryTemplate>) dict[typeof(SubCategoryTemplate)]; 
+				return (ITemplateProvider<SubCategoryTemplate, string>) dict[typeof(SubCategoryTemplate)]; 
 			}
 		}
 		
-		public ITemplateProvider<TeamTemplate> TeamTemplateProvider {
+		public ITemplateProvider<TeamTemplate, Player> TeamTemplateProvider {
 			get {
-				return (ITemplateProvider<TeamTemplate>) dict[typeof(TeamTemplate)]; 
+				return (ITemplateProvider<TeamTemplate, Player>) dict[typeof(TeamTemplate)]; 
 			}
 		}
 
-		public ITemplateProvider<Categories> CategoriesTemplateProvider {
+		public ITemplateProvider<Categories, Category> CategoriesTemplateProvider {
 			get {
-				return (ITemplateProvider<Categories>) dict[typeof(Categories)]; 
+				return (ITemplateProvider<Categories, Category>) dict[typeof(Categories)]; 
 			}
 		}
 	}
 	
-	public class TemplatesProvider<T>: ITemplateProvider<T> where T: ITemplate
+	public class TemplatesProvider<T, U>: ITemplateProvider<T, U> where T: ITemplate<U>
 	{
 		private readonly string basePath;
 		private readonly string extension;
@@ -141,7 +149,7 @@ namespace LongoMatch.Services
 			return (T)methodLoad.Invoke(null, new object[] {GetPath(name)});
 		}
 		
-		public void Save (ITemplate template) {
+		public void Save (ITemplate<U> template) {
 			string filename =  GetPath(template.Name);
 			
 			Log.Information("Saving template " + filename);
@@ -180,7 +188,7 @@ namespace LongoMatch.Services
 			if (list.Length == 0)
 				list = new object[] {0};
 			Log.Information(String.Format("Creating default {0} template", typeof(T)));
-			ITemplate t =(ITemplate)methodDefaultTemplate.Invoke(null, list);
+			ITemplate<U> t =(ITemplate<U>)methodDefaultTemplate.Invoke(null, list);
 			t.Name = templateName;
 			Save(t);
 		}
