@@ -18,6 +18,9 @@
 //
 //
 using System;
+using Gtk;
+
+using LongoMatch.Interfaces;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
 
@@ -26,38 +29,51 @@ namespace LongoMatch.Gui.Dialog
 
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(false)]
-	public partial class ProjectTemplateEditorDialog : Gtk.Dialog
+	public abstract partial class TemplateEditorDialog: Gtk.Dialog
 	{
-
-		public ProjectTemplateEditorDialog()
+		public TemplateEditorDialog()
 		{
 			this.Build();
-			projecttemplatewidget.CanExport = true;
 		}
-
-		public Project Project {
-			set {
-				projecttemplatewidget.Project = value;
-			}
+		
+		public void AddTemplateEditor (Widget w){
+			templateeditorbox.Add(w);
+			w.Show();
 		}
-
-		public Categories Categories {
-			set {
-				projecttemplatewidget.Categories =value;
-			}
-			get {
-				return projecttemplatewidget.Categories;
-			}
+	}
+	
+	public class TemplateEditorDialog<T, U> : TemplateEditorDialog where T: ITemplate<U> {
+		ITemplateWidget<T, U> templateEditor;
+		
+		public TemplateEditorDialog () {
+			templateEditor = MainClass.ts.GetTemplateEditor<T, U> ();
+			templateEditor.CanExport = true;
+			AddTemplateEditor ((Widget)templateEditor);
+			
 		}
-
+		
 		public bool CanExport {
 			set {
-				projecttemplatewidget.CanExport = value;
+				templateEditor.CanExport = value;
 			}
 		}
-
-		protected virtual void OnButtonOkClicked(object sender, System.EventArgs e)
-		{
+		
+		public bool InProject {
+			set{
+				templateEditor.InProject = value;
+			}
+			get{
+				return templateEditor.InProject;
+			}
+		}
+		
+		public T Template {
+			set {
+				templateEditor.Template =value;
+			}
+			get {
+				return templateEditor.Template;
+			}
 		}
 
 	}
