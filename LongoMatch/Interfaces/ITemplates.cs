@@ -48,6 +48,9 @@ namespace LongoMatch.Interfaces
 	public interface ITemplateWidget<T, U> where T: ITemplate<U>
 	{
 		T Template {get; set;}
+		bool Edited {get; set;}
+		bool CanExport {get; set;}
+		bool InProject {get; set;}
 	}
 }
 
