@@ -50,10 +50,12 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build();
 			subcategoriesTemplates = MainClass.ts.SubCategoriesTemplateProvider;
+			subCategories = new Dictionary<string, TagSubCategory>();
 			LoadSubcategories();
 		}
 
 		private void LoadSubcategories() {
+			subCategories.Clear();
 			foreach (TagSubCategory subcat in subcategoriesTemplates.Templates) {
 				subCategories.Add(subcat.Name, subcat);
 				subcatcombobox.AppendText(subcat.Name);
