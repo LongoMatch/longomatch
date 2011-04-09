@@ -35,6 +35,7 @@ namespace LongoMatch.Services
 	{
 		private Dictionary<Type, ITemplateProvider> dict;
 		private List<PlayerSubCategory> playerSubcatList;
+		private List<TeamSubCategory> teamSubcatList;
 		
 		public TemplatesService (string basePath)
 		{
@@ -49,7 +50,8 @@ namespace LongoMatch.Services
 			         new TemplatesProvider<Categories, Category> (basePath,
 			                                                 Constants.CAT_TEMPLATE_EXT));
 			CheckDefaultTemplates();
-			CreateDefaultSubCategories();
+			CreateDefaultPlayerSubCategories();
+			CreateDefaultTeamSubCategories();
 			
 		}
 		
@@ -58,7 +60,7 @@ namespace LongoMatch.Services
 				t.CheckDefaultTemplate();
 		}
 		
-		private void CreateDefaultSubCategories () {
+		private void CreateDefaultPlayerSubCategories () {
 			PlayerSubCategory subcat;
 			
 			/* Local team players */
@@ -80,6 +82,11 @@ namespace LongoMatch.Services
 			subcat.Add(Team.LOCAL);
 			subcat.Add(Team.VISITOR);
 			playerSubcatList.Add(subcat);
+		}
+
+		private void CreateDefaultTeamSubCategories () {
+			teamSubcatList = new List<TeamSubCategory>();
+			teamSubcatList.Add(new TeamSubCategory());
 		}
 		
 		public ITemplateProvider<T, U> GetTemplateProvider<T, U>() where T: ITemplate<U> {
@@ -117,6 +124,12 @@ namespace LongoMatch.Services
 		public List<PlayerSubCategory> PlayerSubcategories {
 			get{
 				return playerSubcatList;
+			}
+		}
+		
+		public List<TeamSubCategory> TeamSubcategories {
+			get{
+				return teamSubcatList;
 			}
 		}
 	}
