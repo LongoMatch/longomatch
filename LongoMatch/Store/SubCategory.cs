@@ -115,9 +115,7 @@ namespace LongoMatch.Store
 		public bool PositionFilter {get; set;}
 		
 		public override string ToMarkupString(){
-			string teams, markup;
-			
-			teams = "";
+			string teams = "";
 			if (this.Contains(Team.LOCAL))
 				teams += Catalog.GetString("Local ");
 			if (this.Contains(Team.VISITOR))
