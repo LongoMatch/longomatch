@@ -34,6 +34,7 @@ namespace LongoMatch.Services
 	public class TemplatesService
 	{
 		private Dictionary<Type, ITemplateProvider> dict;
+		private List<PlayerSubCategory> playerSubcatList;
 		
 		public TemplatesService (string basePath)
 		{
@@ -48,11 +49,37 @@ namespace LongoMatch.Services
 			         new TemplatesProvider<Categories, Category> (basePath,
 			                                                 Constants.CAT_TEMPLATE_EXT));
 			CheckDefaultTemplates();
+			CreateDefaultSubCategories();
+			
 		}
 		
 		private void CheckDefaultTemplates () {
 			foreach (ITemplateProvider t in dict.Values)
 				t.CheckDefaultTemplate();
+		}
+		
+		private void CreateDefaultSubCategories () {
+			PlayerSubCategory subcat;
+			
+			/* Local team players */
+			playerSubcatList = new List<PlayerSubCategory>();
+			subcat = new PlayerSubCategory{
+				Name=Catalog.GetString("Local team players"), AllowMultiple=true, FastTag=true};
+			subcat.Add(Team.LOCAL);
+			playerSubcatList.Add(subcat);
+
+			/* Visitor team players */
+			subcat = new PlayerSubCategory{
+				Name=Catalog.GetString("Visitor team players"), AllowMultiple=true, FastTag=true};
+			subcat.Add(Team.VISITOR);
+			playerSubcatList.Add(subcat);
+			
+			/* Local and Visitor team players */
+			subcat = new PlayerSubCategory{
+				Name=Catalog.GetString("All teams players"), AllowMultiple=true, FastTag=true};
+			subcat.Add(Team.LOCAL);
+			subcat.Add(Team.VISITOR);
+			playerSubcatList.Add(subcat);
 		}
 		
 		public ITemplateProvider<T, U> GetTemplateProvider<T, U>() where T: ITemplate<U> {
@@ -84,6 +111,12 @@ namespace LongoMatch.Services
 		public ITemplateProvider<Categories, Category> CategoriesTemplateProvider {
 			get {
 				return (ITemplateProvider<Categories, Category>) dict[typeof(Categories)]; 
+			}
+		}
+		
+		public List<PlayerSubCategory> PlayerSubcategories {
+			get{
+				return playerSubcatList;
 			}
 		}
 	}
@@ -195,4 +228,3 @@ namespace LongoMatch.Services
 		}
 	}
 }
-
