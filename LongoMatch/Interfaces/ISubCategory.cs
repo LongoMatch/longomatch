@@ -25,6 +25,9 @@ namespace LongoMatch.Interfaces
 		bool AllowMultiple {get; set;}
 		
 		bool FastTag {get; set;}
+		
+		string ToMarkupString();
+		
 	}
 }
 
