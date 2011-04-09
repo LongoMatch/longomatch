@@ -30,7 +30,7 @@ using LongoMatch.Video;
 using LongoMatch.Video.Capturer;
 using LongoMatch.Video.Utils;
 
-namespace LongoMatch.Utils
+namespace LongoMatch.Common
 {
 
 

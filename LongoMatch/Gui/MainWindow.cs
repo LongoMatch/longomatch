@@ -29,7 +29,6 @@ using LongoMatch.Gui.Dialog;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
-using LongoMatch.Utils;
 using LongoMatch.Video.Capturer;
 using LongoMatch.Video.Common;
 using LongoMatch.Video.Utils;
