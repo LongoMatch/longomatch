@@ -23,19 +23,30 @@ namespace LongoMatch.Common
 {
 	public class SerializableObject
 	{
-		public static void Save<T>(T obj, string filepath) {
+		public static void Save<T>(T obj, Stream stream) {
 			BinaryFormatter formatter = new  BinaryFormatter();
-			Stream stream = new FileStream(filepath, FileMode.Create, FileAccess.Write, FileShare.None);
 			formatter.Serialize(stream, obj);
-			stream.Close();
+		}
+		
+		public static void Save<T>(T obj, string filepath) {
+			Stream stream = new FileStream(filepath, FileMode.Create, FileAccess.Write, FileShare.None);
+			using (stream) {
+				Save<T> (obj, stream);
+				stream.Close();
+			}
 		}
 
-		public static T Load<T>(string filepath) {
+		public static T Load<T>(Stream stream) {
 			BinaryFormatter formatter = new BinaryFormatter();
-			Stream stream = new FileStream(filepath, FileMode.Open, FileAccess.Read, FileShare.Read);
 			var obj = formatter.Deserialize(stream);
-			stream.Close();
 			return (T)obj;
+		}
+		
+		public static T Load<T>(string filepath) {
+			Stream stream = new FileStream(filepath, FileMode.Open, FileAccess.Read, FileShare.Read);
+			using (stream) {
+				return Load<T> (stream);
+			}
 		}
 	}
 }
