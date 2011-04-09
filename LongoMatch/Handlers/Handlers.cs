@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using LongoMatch;
 using LongoMatch.DB;
+using LongoMatch.Interfaces;
 using LongoMatch.Store;
 using LongoMatch.Common;
 
@@ -85,6 +86,7 @@ namespace LongoMatch.Handlers
 
 	public delegate void CategoryHandler(Category category);
 	public delegate void CategoriesHandler(List<Category> categoriesList);
+	public delegate void SubCategoriesHandler(List<ISubCategory> subcat);
 
 	public delegate void ProjectsSelectedHandler(List<ProjectDescription> projects);
 }

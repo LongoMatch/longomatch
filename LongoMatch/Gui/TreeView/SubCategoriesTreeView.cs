@@ -16,10 +16,13 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
+using System.Collections.Generic;
+
 using Gtk;
 using Gdk;
 
 using LongoMatch.Interfaces;
+using LongoMatch.Handlers;
 
 namespace LongoMatch.Gui
 {
@@ -28,6 +31,8 @@ namespace LongoMatch.Gui
 	[System.ComponentModel.ToolboxItem(true)]
 	public class SubCategoriesTreeView: TreeView
 	{
+		public event SubCategoriesHandler SubCategoriesDeleted;
+		
 		private Menu menu;
 		private TreeIter selectedIter;
 		
@@ -52,6 +57,13 @@ namespace LongoMatch.Gui
 		}
 
 		protected void OnRemove(object obj, EventArgs args) {
+			/* FIXME: Support multiselection for multideletion */
+			List<ISubCategory> l = new List<ISubCategory>();
+				
+			if (this.SubCategoriesDeleted != null) {
+				l.Add((ISubCategory)Model.GetValue(selectedIter, 0));
+				SubCategoriesDeleted(l);
+			}
 			(Model as ListStore).Remove(ref selectedIter);
 		}
 		
