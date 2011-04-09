@@ -135,6 +135,15 @@ namespace LongoMatch.Store
 	/// </summary>
 	[Serializable]
 	public class TeamSubCategory: SubCategory<Team> {
+	
+		public TeamSubCategory() {
+			Name = Catalog.GetString("Team");
+			AllowMultiple=true;
+			FastTag=true;
+			Add(Team.LOCAL);
+			Add(Team.VISITOR);
+		}
+		
 		public override string ToMarkupString(){
 			return RenderDesc(Catalog.GetString("Team selection"), "");
 		}
