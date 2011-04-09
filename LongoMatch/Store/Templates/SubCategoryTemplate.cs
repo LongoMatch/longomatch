@@ -40,6 +40,7 @@ namespace LongoMatch.Store.Templates
 		}
 		
 		public static SubCategoryTemplate DefaultTemplate (int not_used) {
+			return new SubCategoryTemplate();
 		}
 	}
 }
