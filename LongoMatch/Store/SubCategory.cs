@@ -17,6 +17,8 @@
 //
 using System;
 using System.Collections.Generic;
+using Mono.Unix;
+
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
 
@@ -68,10 +70,37 @@ namespace LongoMatch.Store
 			set;
 		}
 		
+		protected string RenderDesc(string type, string values) {
+			string str;
+			
+			str = Catalog.GetString("Name: ");
+			str += Name + " \n"; 
+			str += Catalog.GetString("Type: " + type);
+			str += "\n";
+			str += values;
+			return str;
+		}
+		
+		public virtual string ToMarkupString(){
+			return this.ToString();
+		}
 	}
 
 	[Serializable]
-	public class TagSubCategory: SubCategory<string>, IList<string> {}
+	public class TagSubCategory: SubCategory<string> {
+	
+		public override string ToMarkupString(){
+			string tags = "";
+			
+			foreach (string tag in this) {
+				tags += tag + "";
+			}
+			return RenderDesc (Catalog.GetString("Tags list"),
+			                  Catalog.GetString("Tags:" + 
+			                  String.Format(" <b>{0}</b>", tags)));
+		}
+		
+	}
 
 	/// <summary>
 	/// SubCategory to tag Players
@@ -82,7 +111,22 @@ namespace LongoMatch.Store
 	/// </summary>
 	[Serializable]
 	public class PlayerSubCategory: SubCategory<Team> {
+	
 		public bool PositionFilter {get; set;}
+		
+		public override string ToMarkupString(){
+			string teams, markup;
+			
+			teams = "";
+			if (this.Contains(Team.LOCAL))
+				teams += Catalog.GetString("Local ");
+			if (this.Contains(Team.VISITOR))
+				teams += Catalog.GetString("Visitor");
+			
+			return RenderDesc(Catalog.GetString("List of players"),
+			                  Catalog.GetString("Teams:" + 
+			                  String.Format(" <b>{0}</b>", teams)));
+		}
 	}
 
 	/// <summary>
@@ -92,5 +136,9 @@ namespace LongoMatch.Store
 	/// so that a change in the name doesn't affect the category.
 	/// </summary>
 	[Serializable]
-	public class TeamSubCategory: SubCategory<Team> {}
+	public class TeamSubCategory: SubCategory<Team> {
+		public override string ToMarkupString(){
+			return RenderDesc(Catalog.GetString("Team selection"), "");
+		}
+	}
 }
