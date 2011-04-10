@@ -45,15 +45,7 @@ namespace LongoMatch
 
 		public static void Main(string[] args)
 		{
-			//Configuramos el directorio base de la ejecucuión y el directorio HOME
-			baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../../");
-			homeDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-			configDirectory = System.IO.Path.Combine(homeDirectory,".longomatch");
-			homeDirectory = System.IO.Path.Combine(homeDirectory,Constants.SOFTWARE_NAME);
-
-			if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
-				SetUpWin32Config();
-			}
+			SetupBaseDir();
 
 			//Iniciamos la internalización
 			Catalog.Init(Constants.SOFTWARE_NAME.ToLower(),RelativeToPrefix("share/locale"));
@@ -180,26 +172,27 @@ namespace LongoMatch
 				return db;
 			}
 		}
-
-		private static void SetUpWin32Config() {
-			Environment.SetEnvironmentVariable("GST_PLUGIN_PATH",RelativeToPrefix("lib\\gstreamer-0.10"));
-			baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../");
-
-			try {
-				StreamReader reader = new StreamReader(System.IO.Path.Combine(homeDirectory,WIN32_CONFIG_FILE));
-				homeDirectory = reader.ReadLine();
+		
+		private static void SetupBaseDir() {
+			string home;
+			
+			if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+				baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../");
+			else
+				baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../../");
+			
+			/* Check for the magic file PORTABLE to check if it's a portable version
+			 * and the config goes in the same folder as the binaries */
+			if (File.Exists(Constants.PROJECT_NAME))
+				home = baseDirectory;
+			else
+				home = System.Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+			
+			homeDirectory = System.IO.Path.Combine(homeDirectory,Constants.SOFTWARE_NAME);
+			if (Environment.OSVersion.Platform == PlatformID.Win32NT)
 				configDirectory = homeDirectory;
-				if (!System.IO.Directory.Exists(homeDirectory))
-					System.IO.Directory.CreateDirectory(homeDirectory);
-				reader.Close();
-			}
-			//No config file exists, use default
-			catch {
-				//Vista permissions doesn't allow to use the 'etc' dir
-				//in the installation path. Use the default homeDirectory
-				//and let the user change it by hand
-				configDirectory=homeDirectory;
-			}
+			else
+				configDirectory = System.IO.Path.Combine(home,".longomatch");
 		}
 
 		private static void OnException(GLib.UnhandledExceptionArgs args) {
