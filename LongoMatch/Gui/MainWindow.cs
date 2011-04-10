@@ -208,6 +208,9 @@ namespace LongoMatch.Gui
 				MainClass.DB.AddProject(openedProject);
 			} catch (Exception ex){
 				string projectFile = filePath + "-" + DateTime.Now;
+				projectFile = projectFile.Replace("-", "_");
+				projectFile = projectFile.Replace(" ", "_");
+				projectFile = projectFile.Replace(":", "_");
 				Project.Export(openedProject, projectFile);
 				MessagePopup.PopupMessage(this, MessageType.Error,
 				                          Catalog.GetString("An error occured saving the project:\n")+ex.Message+ "\n\n"+
