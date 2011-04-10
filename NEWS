@@ -1,3 +1,16 @@
+===== LongoMatch 0.16.6 "S.O.S." =====
+
+	== Features of this release ==
+
+	* Added turkish translation
+	* Add support for a portable version with no installation required
+	
+	== Bugs Fixed ==
+
+	* Drawing frame do not correspond to the one in the player by a few frames
+	* Project backup file is not saved when something wrong happened in the capture
+	* Index of tagged players is broken and results in wrong tagging
+
 ===== LongoMatch 0.16.5 "M&B" =====
 
 	== Features of this release ==

@@ -1,7 +1,7 @@
-LongoMatch-0.16.5 "M&B"
+LongoMatch-0.16.6 "S.O.S"
 -------------------------------------------------
 
-The LongoMatch team is happy to announce the fifth release in the 0.16
+The LongoMatch team is happy to announce the sixth release in the 0.16
 LongoMatch series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
@@ -10,9 +10,13 @@ experience.
 
 * Features
 
-	* Added brazilian translation
-	* Add categories list to the timeline
-	* Timeline's time scale doesn't scroll anymore
+	* Added turkish translation
+	* Add support for a portable version with no installation required
+
+* Bugs fixed
+	* Drawing frame do not correspond to the one in the player by a few frames
+	* Project backup file is not saved when something wrong happened in the capture
+	* Index of tagged players is broken and results in wrong tagging
 
 *Contributors to this Release:
 
