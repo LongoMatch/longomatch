@@ -43,6 +43,7 @@ namespace LongoMatch.Interfaces
 		List<T> Templates {get;}
 		T Load (string name);
 		void Save (ITemplate<U> template);
+		void Update (ITemplate<U> template);
 	}
 	
 	public interface ITemplateWidget<T, U> where T: ITemplate<U>
