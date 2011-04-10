@@ -417,16 +417,14 @@ namespace LongoMatch
 			Pixbuf pixbuf=null;
 			DrawingTool dialog = new DrawingTool();
 
-			player.SeekTo(time,true);
-			while (pixbuf == null)
-				pixbuf = player.CurrentFrame;
+			player.Pause();
+			pixbuf = player.CurrentFrame;
 
 			dialog.Image = pixbuf;
 			dialog.TransientFor = (Gtk.Window)player.Toplevel;
 			if (selectedTimeNode != null)
 				dialog.SetPlay((selectedTimeNode as MediaTimeNode),
 				               time);
-			player.Pause();
 			pixbuf.Dispose();
 			dialog.Run();
 			dialog.Destroy();
