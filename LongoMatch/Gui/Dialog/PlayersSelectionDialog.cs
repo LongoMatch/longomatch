@@ -29,12 +29,12 @@ namespace LongoMatch.Gui.Dialog
 	public partial class PlayersSelectionDialog : Gtk.Dialog
 	{
 		TeamTemplate template;
-		List<CheckButton> checkButtonsList;
+		Dictionary<int, CheckButton> checkButtonsDict;
 
 		public PlayersSelectionDialog()
 		{
 			this.Build();
-			checkButtonsList = new List<CheckButton>();
+			checkButtonsDict = new Dictionary<int, CheckButton>();
 		}
 
 		public void SetPlayersInfo(TeamTemplate template) {
@@ -66,22 +66,21 @@ namespace LongoMatch.Gui.Dialog
 				uint col_right = (uint) col_left+1 ;
 
 				table1.Attach(button,col_left,col_right,row_top,row_bottom);
-				checkButtonsList.Add(button);
+				checkButtonsDict.Add(i, button);
 				playersCount++;
 			}
 		}
 
 		public List<int> PlayersChecked {
 			set {
-				for (int i=0; i<checkButtonsList.Count; i++)
-					checkButtonsList[i].Active = value.Contains(i);
+				foreach (int player in checkButtonsDict.Keys)
+					checkButtonsDict[player].Active = value.Contains(player);
 			}
 			get {
 				List<int> playersList = new List<int>();
-				for (int i=0; i<checkButtonsList.Count; i++) {
-					if (checkButtonsList[i].Active) {
-						playersList.Add(i);
-					}
+				foreach (int player in checkButtonsDict.Keys) {
+					if (checkButtonsDict[player].Active)
+						playersList.Add (player);
 				}
 				return playersList;
 			}
