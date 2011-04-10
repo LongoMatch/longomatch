@@ -134,7 +134,7 @@ namespace LongoMatch.Gui.Dialog
 		
 		private void SaveTemplate() {
 			selectedTemplate = templatesWidget.Template;
-			templatesProvider.Save(selectedTemplate);
+			templatesProvider.Update(selectedTemplate);
 		}
 
 		private void SelectTemplate(string name) {

@@ -166,7 +166,7 @@ namespace LongoMatch.Gui.Component
 					                                    );
 					if(md.Run() == (int)ResponseType.Yes){
 						Template.Name = dialog.Text;
-						provider.Save (Template);
+						provider.Update (Template);
 					}
 					md.Destroy();
 				}

@@ -210,6 +210,14 @@ namespace LongoMatch.Services
 			template.Save(filename);
 		}
 		
+		public void Update (ITemplate<U> template) {
+			string filename =  GetPath(template.Name);
+			
+			Log.Information("Updating template " + filename);
+			/* Don't cach the Exception here to chain it up */
+			template.Save(filename);
+		}
+		
 		public void Copy(string orig, string copy) {
 			if (File.Exists(copy)) {
 				throw new Exception (Catalog.GetString("A template already exixts with " +
