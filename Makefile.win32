@@ -22,13 +22,16 @@ FILES = \
 	da.po\
 	de.po\
 	es.po\
+	fr.po\
+	gl.po\
 	it.po\
 	nb.po\
 	nl.po\
-	sl.po\
 	pt.po\
-	fr.po\
+	pt_BR.po\
+	sl.po\
 	sv.po\
+	tr.po\
 	zh_CN.po\
 
 MO_FILES = $(foreach po,$(FILES), $(LOCALE_DIR)/$(basename $(po))/LC_MESSAGES/longomatch.mo)
@@ -112,6 +115,7 @@ LONGOMATCH_FILES = \
 	AssemblyInfo.cs \
 	Common/Enums.cs \
 	Common/Constants.cs \
+	Common/Cairo.cs\
 	Compat/0.0/DatabaseMigrator.cs \
 	Compat/0.0/DB/DataBase.cs \
 	Compat/0.0/DB/MediaFile.cs \
@@ -179,6 +183,7 @@ LONGOMATCH_FILES = \
 	gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs \
 	Gui/Component/ButtonsWidget.cs \
 	Gui/Component/CategoryProperties.cs \
+	Gui/Component/CategoriesScale.cs \
 	Gui/Component/DrawingWidget.cs \
 	Gui/Component/DrawingToolBox.cs \
 	Gui/Component/NotesWidget.cs \
