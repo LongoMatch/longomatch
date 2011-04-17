@@ -183,12 +183,12 @@ namespace LongoMatch
 			
 			/* Check for the magic file PORTABLE to check if it's a portable version
 			 * and the config goes in the same folder as the binaries */
-			if (File.Exists(Constants.PROJECT_NAME))
+			if (File.Exists(System.IO.Path.Combine(baseDirectory, Constants.PORTABLE_FILE)))
 				home = baseDirectory;
 			else
 				home = System.Environment.GetFolderPath(Environment.SpecialFolder.Personal);
 			
-			homeDirectory = System.IO.Path.Combine(homeDirectory,Constants.SOFTWARE_NAME);
+			homeDirectory = System.IO.Path.Combine(home,Constants.SOFTWARE_NAME);
 			if (Environment.OSVersion.Platform == PlatformID.Win32NT)
 				configDirectory = homeDirectory;
 			else
