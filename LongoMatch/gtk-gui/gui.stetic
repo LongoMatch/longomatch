@@ -3871,13 +3871,13 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
           <widget class="Gtk.SpinButton" id="heightspinbutton">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="Upper">100</property>
-            <property name="PageIncrement">10</property>
-            <property name="StepIncrement">1</property>
+            <property name="Upper">10</property>
+            <property name="PageIncrement">1</property>
+            <property name="StepIncrement">0.1</property>
             <property name="ClimbRate">1</property>
             <property name="Digits">2</property>
             <property name="Numeric">True</property>
-            <property name="Value">18</property>
+            <property name="Value">1.8</property>
             <signal name="ValueChanged" handler="OnHeightspinbuttonValueChanged" />
           </widget>
           <packing>
@@ -4191,7 +4191,7 @@ No</property>
           <widget class="Gtk.SpinButton" id="weightspinbutton">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="Upper">100</property>
+            <property name="Upper">400</property>
             <property name="PageIncrement">10</property>
             <property name="StepIncrement">1</property>
             <property name="ClimbRate">1</property>
