@@ -1,3 +1,10 @@
+===== LongoMatch 0.16.7 "Wakamole" =====
+
+	== Bugs Fixed ==
+
+	* Fix environment initialization
+	* Set more realistic limits to players weight and height
+
 ===== LongoMatch 0.16.6 "S.O.S." =====
 
 	== Features of this release ==
