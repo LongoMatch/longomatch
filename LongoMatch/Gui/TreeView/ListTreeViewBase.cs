@@ -76,9 +76,9 @@ namespace LongoMatch.Gui.Component
 			PlayListLoaded = false;
 
 			teams_name = new String[3];
-			teams_name[(int)Team.NONE] = Catalog.GetString(Catalog.GetString("None"));
-			teams_name[(int)Team.LOCAL] = Catalog.GetString(Catalog.GetString(LOCAL_TEAM));
-			teams_name[(int)Team.VISITOR] = Catalog.GetString(Catalog.GetString(VISITOR_TEAM));
+			teams_name[(int)Team.NONE] = Catalog.GetString("None");
+			teams_name[(int)Team.LOCAL] = Catalog.GetString(LOCAL_TEAM);
+			teams_name[(int)Team.VISITOR] = Catalog.GetString(VISITOR_TEAM);
 
 
 			nameColumn = new Gtk.TreeViewColumn();
