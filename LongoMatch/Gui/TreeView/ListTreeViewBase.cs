@@ -261,8 +261,7 @@ namespace LongoMatch.Gui.Component
 					c.Background = "white";
 					c.CellBackground = "white";
 				}
-				// FIXME
-				//c.Markup = mtn.ToString(teams_name[(int)mtn.Team]);
+				c.Markup = mtn.ToString();
 			} else if(o is Player) {
 				c.Background = "white";
 				c.CellBackground = "white";
