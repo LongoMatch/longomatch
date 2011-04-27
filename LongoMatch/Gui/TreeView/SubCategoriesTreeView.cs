@@ -23,6 +23,7 @@ using Gdk;
 
 using LongoMatch.Interfaces;
 using LongoMatch.Handlers;
+using LongoMatch.Store;
 
 namespace LongoMatch.Gui
 {
@@ -32,9 +33,12 @@ namespace LongoMatch.Gui
 	public class SubCategoriesTreeView: TreeView
 	{
 		public event SubCategoriesHandler SubCategoriesDeleted;
+		public event SubCategoryHandler SubCategorySelected;
 		
 		private Menu menu;
+		private Gtk.Action edit;
 		private TreeIter selectedIter;
+		private ISubCategory selectedSubcat;
 		
 		public SubCategoriesTreeView ()
 		{	
@@ -54,6 +58,8 @@ namespace LongoMatch.Gui
 		}
 		
 		protected void OnEdit(object obj, EventArgs args) {
+			if (this.SubCategorySelected != null)
+				SubCategorySelected(selectedSubcat);
 		}
 
 		protected void OnRemove(object obj, EventArgs args) {
@@ -61,7 +67,7 @@ namespace LongoMatch.Gui
 			List<ISubCategory> l = new List<ISubCategory>();
 				
 			if (this.SubCategoriesDeleted != null) {
-				l.Add((ISubCategory)Model.GetValue(selectedIter, 0));
+				l.Add(selectedSubcat);
 				SubCategoriesDeleted(l);
 			}
 			(Model as ListStore).Remove(ref selectedIter);
@@ -74,7 +80,7 @@ namespace LongoMatch.Gui
 		}
 		
 		private void SetMenu() {
-			Gtk.Action edit, rmv;
+			Gtk.Action rmv;
 			UIManager manager;
 			ActionGroup g;
 
@@ -82,7 +88,7 @@ namespace LongoMatch.Gui
 			g = new ActionGroup("SubCategoriesMenuGroup");
 
 			edit = new Gtk.Action("EditAction", 
-			                      Mono.Unix.Catalog.GetString("Edit name"),
+			                      Mono.Unix.Catalog.GetString("Edit tags"),
 			                      null, "gtk-edit");
 			rmv = new Gtk.Action("RemoveAction", 
 			                        Mono.Unix.Catalog.GetString("Remove sub-category"), 
@@ -111,9 +117,12 @@ namespace LongoMatch.Gui
 			if((evnt.Type == EventType.ButtonPress) && (evnt.Button == 3))
 			{
 				TreePath path;
+				
 				GetPathAtPos((int)evnt.X,(int)evnt.Y,out path);
 				if(path!=null) {
 					Model.GetIter(out selectedIter,path);
+					selectedSubcat = (ISubCategory) Model.GetValue(selectedIter, 0);
+					edit.Sensitive = selectedSubcat is TagSubCategory;
 					menu.Popup();
 				}
 			}
