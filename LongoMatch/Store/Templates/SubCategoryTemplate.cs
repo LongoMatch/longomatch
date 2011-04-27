@@ -31,6 +31,8 @@ namespace LongoMatch.Store.Templates
 
 		public SubCategoryTemplate() {}
 
+		public SubCategoryTemplate(IEnumerable<string> tags): base (tags) {}
+
 		public void Save(string filePath) {
 			SerializableObject.Save(this, filePath);
 		}

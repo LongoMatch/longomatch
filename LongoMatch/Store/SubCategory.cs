@@ -41,8 +41,9 @@ namespace LongoMatch.Store
 	[Serializable]
 	public class SubCategory<T>: List<T>, ISubCategory
 	{
-		public SubCategory() {
-		}
+		public SubCategory() {}
+
+		public SubCategory(IEnumerable<T> list): base(list) {}
 
 		/// <summary>
 		/// Name of the subcategory
@@ -87,6 +88,10 @@ namespace LongoMatch.Store
 	[Serializable]
 	public class TagSubCategory: SubCategory<string> {
 	
+		public TagSubCategory () {}
+
+		public TagSubCategory (IEnumerable<string> tags): base(tags) {}
+		
 		public override string ToMarkupString(){
 			string tags = "";
 			
