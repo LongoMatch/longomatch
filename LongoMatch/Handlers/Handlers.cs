@@ -86,6 +86,7 @@ namespace LongoMatch.Handlers
 
 	public delegate void CategoryHandler(Category category);
 	public delegate void CategoriesHandler(List<Category> categoriesList);
+	public delegate void SubCategoryHandler(ISubCategory subcat);
 	public delegate void SubCategoriesHandler(List<ISubCategory> subcat);
 
 	public delegate void ProjectsSelectedHandler(List<ProjectDescription> projects);
