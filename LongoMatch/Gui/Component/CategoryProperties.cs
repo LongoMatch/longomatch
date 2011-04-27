@@ -51,20 +51,15 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build();
 			subcategoriestreeview1.SubCategoriesDeleted += OnSubcategoriesDeleted;
+			subcategoriestreeview1.SubCategorySelected += OnSubcategorySelected;
 			subcategoriesTemplates = MainClass.ts.SubCategoriesTemplateProvider;
 			LoadSubcategories();
 		}
 		
-		private void AppendSubCategories (List<ISubCategory> list, string typeDesc) {
-			foreach (var subcat in list) {
-				Log.Debug(String.Format("Adding {0} tag subcategory: {1}", typeDesc, subcat.Name));
-				model.AppendValues(String.Format("[{0}] {1}", typeDesc, subcat.Name),
-				                   subcat); 
-			}
-		}
-
 		private void LoadSubcategories() {
 			model = new ListStore(typeof(string), typeof(ISubCategory));
+			
+			model.AppendValues(Catalog.GetString("Create new..."), "");
 			foreach (TagSubCategory subcat in subcategoriesTemplates.Templates) {
 				Log.Debug("Adding tag subcategory: ", subcat.Name);
 				model.AppendValues(String.Format("[{0}] {1}", 
@@ -84,7 +79,7 @@ namespace LongoMatch.Gui.Component
 			var cell = new CellRendererText();
 			subcatcombobox.PackStart(cell, true);
 			subcatcombobox.AddAttribute(cell, "text", 0);
-			subcatcombobox.Active = 0;
+			subcatcombobox.Active = 1;
 		}
 			
 		public Category Category {
@@ -122,6 +117,15 @@ namespace LongoMatch.Gui.Component
 		private void RenderSubcat(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			(cell as Gtk.CellRendererText).Markup =(string)model.GetValue(iter, 0);
+		}
+		
+		private TagSubCategory EditSubCategoryTags (TagSubCategory template){
+			SubCategoryTagsEditor se =  new SubCategoryTagsEditor(template);
+			se.Run();
+			
+			var t = se.Template; 
+			se.Destroy();
+			return t;
 		}
 
 		protected virtual void OnChangebutonClicked(object sender, System.EventArgs e)
@@ -164,13 +168,13 @@ namespace LongoMatch.Gui.Component
 			cat.SortMethodString = sortmethodcombobox.ActiveText;
 		}
 		
+		protected virtual void OnSubcategorySelected(ISubCategory subcat) {
+			EditSubCategoryTags((TagSubCategory)subcat);
+		}
+		
 		protected virtual void OnSubcategoriesDeleted (List<ISubCategory> subcats)
 		{
 			Category.SubCategories.RemoveAll(s => subcats.Contains(s));
-		}
-		
-		protected virtual void OnNewfirstbuttonClicked (object sender, System.EventArgs e)
-		{
 		}
 		
 		protected virtual void OnAddbuttonClicked (object sender, System.EventArgs e)
@@ -185,13 +189,17 @@ namespace LongoMatch.Gui.Component
 			list.AppendValues(subcat);
 		}
 		
-		protected virtual void OnNewbuttonClicked (object sender, System.EventArgs e)
-		{
-		}
-		
 		protected virtual void OnSubcatcomboboxChanged (object sender, System.EventArgs e)
 		{
 			TreeIter iter;
+			
+			if (subcatcombobox.Active == 0) {
+				var template = EditSubCategoryTags(new SubCategoryTemplate()) as SubCategoryTemplate;
+				if (template.Count != 0)
+					subcategoriesTemplates.Save(template);
+				subcatcombobox.Active = 1;
+				return;
+			}
 			
 			subcatcombobox.GetActiveIter(out iter);
 			subcatnameentry.Text = (model.GetValue(iter, 1) as ISubCategory).Name;
