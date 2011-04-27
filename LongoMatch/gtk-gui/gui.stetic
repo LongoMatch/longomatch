@@ -2115,18 +2115,18 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.CategoryProperties" design-size="479 188">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.CategoryProperties" design-size="438 364">
     <property name="MemberName" />
     <child>
-      <widget class="Gtk.VBox" id="vbox3">
+      <widget class="Gtk.VBox" id="vbox2">
         <property name="MemberName" />
         <property name="Spacing">6</property>
         <child>
-          <widget class="Gtk.Frame" id="frame2">
+          <widget class="Gtk.Frame" id="frame4">
             <property name="MemberName" />
-            <property name="ShadowType">None</property>
+            <property name="ShadowType">In</property>
             <child>
-              <widget class="Gtk.Alignment" id="GtkAlignment5">
+              <widget class="Gtk.Alignment" id="GtkAlignment1">
                 <property name="MemberName" />
                 <property name="Xalign">0</property>
                 <property name="Yalign">0</property>
@@ -2151,12 +2151,12 @@
                         <property name="RightAttach">4</property>
                         <property name="AutoSize">False</property>
                         <property name="XOptions">Fill</property>
-                        <property name="YOptions">Fill</property>
+                        <property name="YOptions">0</property>
                         <property name="XExpand">False</property>
                         <property name="XFill">True</property>
                         <property name="XShrink">False</property>
                         <property name="YExpand">False</property>
-                        <property name="YFill">True</property>
+                        <property name="YFill">False</property>
                         <property name="YShrink">False</property>
                       </packing>
                     </child>
@@ -2187,7 +2187,7 @@
                           </widget>
                           <packing>
                             <property name="Position">1</property>
-                            <property name="AutoSize">True</property>
+                            <property name="AutoSize">False</property>
                             <property name="Expand">False</property>
                             <property name="Fill">False</property>
                           </packing>
@@ -2198,24 +2198,26 @@
                         <property name="BottomAttach">3</property>
                         <property name="LeftAttach">1</property>
                         <property name="RightAttach">2</property>
-                        <property name="AutoSize">True</property>
+                        <property name="AutoSize">False</property>
                         <property name="XOptions">Fill</property>
-                        <property name="YOptions">Fill</property>
+                        <property name="YOptions">0</property>
                         <property name="XExpand">False</property>
                         <property name="XFill">True</property>
                         <property name="XShrink">False</property>
                         <property name="YExpand">False</property>
-                        <property name="YFill">True</property>
+                        <property name="YFill">False</property>
                         <property name="YShrink">False</property>
                       </packing>
                     </child>
                     <child>
                       <widget class="Gtk.Label" id="label1">
                         <property name="MemberName" />
-                        <property name="LabelProp" translatable="yes">Name:</property>
+                        <property name="Xalign">0</property>
+                        <property name="LabelProp" translatable="yes">&lt;b&gt;Name:&lt;/b&gt;</property>
+                        <property name="UseMarkup">True</property>
                       </widget>
                       <packing>
-                        <property name="AutoSize">True</property>
+                        <property name="AutoSize">False</property>
                         <property name="XOptions">Fill</property>
                         <property name="YOptions">Fill</property>
                         <property name="XExpand">False</property>
@@ -2229,7 +2231,9 @@
                     <child>
                       <widget class="Gtk.Label" id="label4">
                         <property name="MemberName" />
-                        <property name="LabelProp" translatable="yes">Color:        </property>
+                        <property name="Xalign">0</property>
+                        <property name="LabelProp" translatable="yes">&lt;b&gt;Color:&lt;/b&gt;    </property>
+                        <property name="UseMarkup">True</property>
                       </widget>
                       <packing>
                         <property name="LeftAttach">2</property>
@@ -2248,12 +2252,14 @@
                     <child>
                       <widget class="Gtk.Label" id="label6">
                         <property name="MemberName" />
-                        <property name="LabelProp" translatable="yes">HotKey:</property>
+                        <property name="Xalign">0</property>
+                        <property name="LabelProp" translatable="yes">&lt;b&gt;HotKey:&lt;/b&gt;</property>
+                        <property name="UseMarkup">True</property>
                       </widget>
                       <packing>
                         <property name="TopAttach">2</property>
                         <property name="BottomAttach">3</property>
-                        <property name="AutoSize">True</property>
+                        <property name="AutoSize">False</property>
                         <property name="XOptions">Fill</property>
                         <property name="YOptions">Fill</property>
                         <property name="XExpand">False</property>
@@ -2267,12 +2273,14 @@
                     <child>
                       <widget class="Gtk.Label" id="label7">
                         <property name="MemberName" />
-                        <property name="LabelProp" translatable="yes">Lead time:</property>
+                        <property name="Xalign">0</property>
+                        <property name="LabelProp" translatable="yes">&lt;b&gt;Lead time:&lt;/b&gt;</property>
+                        <property name="UseMarkup">True</property>
                       </widget>
                       <packing>
                         <property name="TopAttach">1</property>
                         <property name="BottomAttach">2</property>
-                        <property name="AutoSize">True</property>
+                        <property name="AutoSize">False</property>
                         <property name="XOptions">Fill</property>
                         <property name="YOptions">Fill</property>
                         <property name="XExpand">False</property>
@@ -2286,7 +2294,9 @@
                     <child>
                       <widget class="Gtk.Label" id="label8">
                         <property name="MemberName" />
-                        <property name="LabelProp" translatable="yes">Lag time:</property>
+                        <property name="Xalign">0</property>
+                        <property name="LabelProp" translatable="yes">&lt;b&gt;Lag time:&lt;/b&gt;</property>
+                        <property name="UseMarkup">True</property>
                       </widget>
                       <packing>
                         <property name="TopAttach">1</property>
@@ -2307,7 +2317,9 @@
                     <child>
                       <widget class="Gtk.Label" id="label9">
                         <property name="MemberName" />
-                        <property name="LabelProp" translatable="yes">Sort Method</property>
+                        <property name="Xalign">0</property>
+                        <property name="LabelProp" translatable="yes">&lt;b&gt;Sort Method&lt;/b&gt;</property>
+                        <property name="UseMarkup">True</property>
                       </widget>
                       <packing>
                         <property name="TopAttach">2</property>
@@ -2387,10 +2399,9 @@
                       <packing>
                         <property name="LeftAttach">1</property>
                         <property name="RightAttach">2</property>
-                        <property name="AutoSize">True</property>
-                        <property name="XOptions">Fill</property>
+                        <property name="AutoSize">False</property>
                         <property name="YOptions">Fill</property>
-                        <property name="XExpand">False</property>
+                        <property name="XExpand">True</property>
                         <property name="XFill">True</property>
                         <property name="XShrink">False</property>
                         <property name="YExpand">False</property>
@@ -2414,14 +2425,14 @@ Sort by duration</property>
                         <property name="BottomAttach">3</property>
                         <property name="LeftAttach">3</property>
                         <property name="RightAttach">4</property>
-                        <property name="AutoSize">True</property>
+                        <property name="AutoSize">False</property>
                         <property name="XOptions">Fill</property>
-                        <property name="YOptions">Fill</property>
+                        <property name="YOptions">0</property>
                         <property name="XExpand">False</property>
                         <property name="XFill">True</property>
                         <property name="XShrink">False</property>
                         <property name="YExpand">False</property>
-                        <property name="YFill">True</property>
+                        <property name="YFill">False</property>
                         <property name="YShrink">False</property>
                       </packing>
                     </child>
@@ -2430,7 +2441,7 @@ Sort by duration</property>
               </widget>
             </child>
             <child>
-              <widget class="Gtk.Label" id="GtkLabel4">
+              <widget class="Gtk.Label" id="GtkLabel1">
                 <property name="MemberName" />
                 <property name="LabelProp" translatable="yes">&lt;b&gt;Properties&lt;/b&gt;</property>
                 <property name="UseMarkup">True</property>
@@ -2448,11 +2459,11 @@ Sort by duration</property>
           </packing>
         </child>
         <child>
-          <widget class="Gtk.Frame" id="frame1">
+          <widget class="Gtk.Frame" id="frame3">
             <property name="MemberName" />
-            <property name="ShadowType">None</property>
+            <property name="ShadowType">In</property>
             <child>
-              <widget class="Gtk.Alignment" id="GtkAlignment2">
+              <widget class="Gtk.Alignment" id="GtkAlignment3">
                 <property name="MemberName" />
                 <property name="Xalign">0</property>
                 <property name="Yalign">0</property>
@@ -2462,20 +2473,20 @@ Sort by duration</property>
                     <property name="MemberName" />
                     <property name="Spacing">6</property>
                     <child>
-                      <widget class="Gtk.Button" id="newfirstbutton">
+                      <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow">
                         <property name="MemberName" />
-                        <property name="CanFocus">True</property>
-                        <property name="Type">TextAndIcon</property>
-                        <property name="Icon">stock:gtk-new Menu</property>
-                        <property name="Label" translatable="yes">No sub categories available. Click here to create one.</property>
-                        <property name="UseUnderline">True</property>
-                        <signal name="Clicked" handler="OnNewfirstbuttonClicked" />
+                        <property name="ShadowType">In</property>
+                        <child>
+                          <widget class="LongoMatch.Gui.SubCategoriesTreeView" id="subcategoriestreeview1">
+                            <property name="MemberName" />
+                            <property name="CanFocus">True</property>
+                            <property name="ShowScrollbars">True</property>
+                          </widget>
+                        </child>
                       </widget>
                       <packing>
                         <property name="Position">0</property>
                         <property name="AutoSize">True</property>
-                        <property name="Expand">False</property>
-                        <property name="Fill">False</property>
                       </packing>
                     </child>
                     <child>
@@ -2483,44 +2494,90 @@ Sort by duration</property>
                         <property name="MemberName" />
                         <property name="Spacing">6</property>
                         <child>
-                          <widget class="Gtk.ComboBox" id="subcatcombobox">
+                          <widget class="Gtk.Frame" id="frame1">
                             <property name="MemberName" />
-                            <property name="IsTextCombo">True</property>
-                            <property name="Items" translatable="yes" />
+                            <property name="ShadowType">None</property>
+                            <child>
+                              <widget class="Gtk.Alignment" id="GtkAlignment4">
+                                <property name="MemberName" />
+                                <property name="Xalign">0</property>
+                                <property name="Yalign">0</property>
+                                <property name="LeftPadding">12</property>
+                                <child>
+                                  <widget class="Gtk.Entry" id="subcatnameentry">
+                                    <property name="MemberName" />
+                                    <property name="CanFocus">True</property>
+                                    <property name="IsEditable">True</property>
+                                    <property name="InvisibleChar">•</property>
+                                  </widget>
+                                </child>
+                              </widget>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Label" id="GtkLabel3">
+                                <property name="MemberName" />
+                                <property name="LabelProp" translatable="yes">&lt;b&gt;Sub category name&lt;/b&gt;</property>
+                                <property name="UseMarkup">True</property>
+                              </widget>
+                              <packing>
+                                <property name="type">label_item</property>
+                              </packing>
+                            </child>
                           </widget>
                           <packing>
                             <property name="Position">0</property>
-                            <property name="AutoSize">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Button" id="addbutton">
-                            <property name="MemberName" />
-                            <property name="Tooltip" translatable="yes">Add this subcategory</property>
-                            <property name="CanFocus">True</property>
-                            <property name="UseStock">True</property>
-                            <property name="Type">StockItem</property>
-                            <property name="StockId">gtk-add</property>
-                            <signal name="Clicked" handler="OnAddbuttonClicked" />
-                            <property name="label">gtk-add</property>
-                          </widget>
-                          <packing>
-                            <property name="Position">1</property>
                             <property name="AutoSize">True</property>
                             <property name="Expand">False</property>
                             <property name="Fill">False</property>
                           </packing>
                         </child>
                         <child>
-                          <widget class="Gtk.Button" id="newbutton">
+                          <widget class="Gtk.Frame" id="frame2">
                             <property name="MemberName" />
-                            <property name="Tooltip" translatable="yes">Create a new sub-category</property>
+                            <property name="ShadowType">None</property>
+                            <child>
+                              <widget class="Gtk.Alignment" id="GtkAlignment5">
+                                <property name="MemberName" />
+                                <property name="Xalign">0</property>
+                                <property name="Yalign">0</property>
+                                <property name="LeftPadding">12</property>
+                                <child>
+                                  <widget class="Gtk.ComboBox" id="subcatcombobox">
+                                    <property name="MemberName" />
+                                    <property name="IsTextCombo">False</property>
+                                    <property name="Items" translatable="yes" />
+                                    <signal name="Changed" handler="OnSubcatcomboboxChanged" />
+                                  </widget>
+                                </child>
+                              </widget>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Label" id="GtkLabel4">
+                                <property name="MemberName" />
+                                <property name="LabelProp" translatable="yes">&lt;b&gt;Sub category type&lt;/b&gt;</property>
+                                <property name="UseMarkup">True</property>
+                              </widget>
+                              <packing>
+                                <property name="type">label_item</property>
+                              </packing>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.Button" id="addbutton">
+                            <property name="MemberName" />
+                            <property name="Sensitive">False</property>
+                            <property name="Tooltip" translatable="yes">Add this subcategory</property>
                             <property name="CanFocus">True</property>
-                            <property name="UseStock">True</property>
-                            <property name="Type">StockItem</property>
-                            <property name="StockId">gtk-new</property>
-                            <signal name="Clicked" handler="OnNewbuttonClicked" />
-                            <property name="label">gtk-new</property>
+                            <property name="Type">TextAndIcon</property>
+                            <property name="Icon">stock:gtk-add Menu</property>
+                            <property name="Label" translatable="yes">_Add sub-category</property>
+                            <property name="UseUnderline">True</property>
+                            <signal name="Clicked" handler="OnAddbuttonClicked" />
                           </widget>
                           <packing>
                             <property name="Position">2</property>
@@ -2542,9 +2599,9 @@ Sort by duration</property>
               </widget>
             </child>
             <child>
-              <widget class="Gtk.Label" id="GtkLabel3">
+              <widget class="Gtk.Label" id="GtkLabel5">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">&lt;b&gt;Sub Categories&lt;/b&gt;</property>
+                <property name="LabelProp" translatable="yes">&lt;b&gt;Sub categories&lt;/b&gt;</property>
                 <property name="UseMarkup">True</property>
               </widget>
               <packing>
@@ -2555,8 +2612,6 @@ Sort by duration</property>
           <packing>
             <property name="Position">1</property>
             <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
           </packing>
         </child>
       </widget>
@@ -5993,6 +6048,171 @@ You can continue with the current capture, cancel it or save your project.
           <packing>
             <property name="Position">1</property>
             <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.SubCategoryTagsEditor" design-size="272 304">
+    <property name="MemberName" />
+    <property name="Title" translatable="yes">Edit sub category tags</property>
+    <property name="Icon">resource:longomatch.png</property>
+    <property name="WindowPosition">Center</property>
+    <property name="Modal">True</property>
+    <property name="Gravity">Center</property>
+    <property name="SkipPagerHint">True</property>
+    <property name="SkipTaskbarHint">True</property>
+    <property name="Buttons">1</property>
+    <property name="HelpButton">False</property>
+    <child internal-child="VBox">
+      <widget class="Gtk.VBox" id="dialog1_VBox">
+        <property name="MemberName" />
+        <property name="BorderWidth">2</property>
+        <child>
+          <widget class="Gtk.VBox" id="vbox2">
+            <property name="MemberName" />
+            <property name="Spacing">6</property>
+            <child>
+              <widget class="Gtk.HBox" id="hbox2">
+                <property name="MemberName" />
+                <property name="Spacing">6</property>
+                <child>
+                  <widget class="Gtk.Label" id="label1">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">Sub category name:</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Entry" id="nameentry">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="Text" translatable="yes">Goal type</property>
+                    <property name="IsEditable">True</property>
+                    <property name="InvisibleChar">•</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">True</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">0</property>
+                <property name="AutoSize">False</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.ScrolledWindow" id="scrolledwindow1">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <child>
+                  <widget class="Gtk.Viewport" id="GtkViewport">
+                    <property name="MemberName" />
+                    <property name="ShadowType">None</property>
+                    <child>
+                      <widget class="Gtk.VBox" id="tagsbox">
+                        <property name="MemberName" />
+                        <property name="Spacing">6</property>
+                        <child>
+                          <placeholder />
+                        </child>
+                        <child>
+                          <placeholder />
+                        </child>
+                        <child>
+                          <placeholder />
+                        </child>
+                        <child>
+                          <placeholder />
+                        </child>
+                      </widget>
+                    </child>
+                  </widget>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">1</property>
+                <property name="AutoSize">True</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.HBox" id="hbox1">
+                <property name="MemberName" />
+                <property name="Spacing">6</property>
+                <child>
+                  <widget class="Gtk.Entry" id="tagentry">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="Text" translatable="yes">Penalty</property>
+                    <property name="IsEditable">True</property>
+                    <property name="InvisibleChar">•</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Button" id="addtagbutton">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="Type">TextAndIcon</property>
+                    <property name="Icon">stock:gtk-add Menu</property>
+                    <property name="Label" translatable="yes">Add tag</property>
+                    <property name="UseUnderline">True</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">False</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">2</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">0</property>
+            <property name="AutoSize">True</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+    <child internal-child="ActionArea">
+      <widget class="Gtk.HButtonBox" id="dialog1_ActionArea">
+        <property name="MemberName" />
+        <property name="Spacing">10</property>
+        <property name="BorderWidth">5</property>
+        <property name="Size">1</property>
+        <property name="LayoutStyle">End</property>
+        <child>
+          <widget class="Gtk.Button" id="buttonOk">
+            <property name="MemberName" />
+            <property name="CanDefault">True</property>
+            <property name="CanFocus">True</property>
+            <property name="UseStock">True</property>
+            <property name="Type">StockItem</property>
+            <property name="StockId">gtk-ok</property>
+            <property name="ResponseId">-5</property>
+            <property name="label">gtk-ok</property>
+          </widget>
+          <packing>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
           </packing>
