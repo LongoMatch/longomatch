@@ -36,7 +36,6 @@ namespace LongoMatch.Gui.Component
 		public PlayersTreeView() {
 			this.Team = Team.LOCAL;
 			tag.Visible = false;
-			players.Visible = false;
 			delete.Visible = false;
 			SetPlayersMenu();
 		}

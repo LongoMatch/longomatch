@@ -42,10 +42,6 @@ namespace LongoMatch.Gui.Component
 		protected MenuItem deleteKeyFrame;
 		protected MenuItem snapshot;
 		protected MenuItem name;
-		protected MenuItem players;
-		protected MenuItem localPlayers;
-		protected MenuItem visitorPlayers;
-
 
 		protected Gtk.CellRendererText nameCell;
 		protected Gtk.TreeViewColumn nameColumn;
@@ -111,26 +107,24 @@ namespace LongoMatch.Gui.Component
 
 		public String LocalTeam {
 			set {
-				Label l1 = (local.Children[0] as Label);
-				Label l2 = (localPlayers.Children[0] as Label);
+				Label l = (local.Children[0] as Label);
 				if(value == "")
-					l1.Text = l2.Text = Catalog.GetString(LOCAL_TEAM);
+					l.Text = Catalog.GetString(LOCAL_TEAM);
 				else {
-					l1.Text = l2.Text = value;
+					l.Text = value;
 				}
-				teams_name[(int)Team.LOCAL] = l1.Text;
+				teams_name[(int)Team.LOCAL] = l.Text;
 			}
 		}
 
 		public string VisitorTeam {
 			set {
-				Label l1 = (visitor.Children[0] as Label);
-				Label l2 = (visitorPlayers.Children[0] as Label);
+				Label l = (visitor.Children[0] as Label);
 				if(value == "")
-					l1.Text = l2.Text = Catalog.GetString(VISITOR_TEAM);
+					l.Text = Catalog.GetString(VISITOR_TEAM);
 				else
-					l1.Text = l2.Text = value;
-				teams_name[(int)Team.VISITOR] = l1.Text;
+					l.Text = value;
+				teams_name[(int)Team.VISITOR] = l.Text;
 			}
 		}
 
@@ -146,7 +140,6 @@ namespace LongoMatch.Gui.Component
 		}
 
 		protected void SetMenu() {
-			Menu playersMenu;
 			MenuItem team;
 
 			teamMenu = new Menu();
@@ -157,20 +150,12 @@ namespace LongoMatch.Gui.Component
 			teamMenu .Append(visitor);
 			teamMenu .Append(noTeam);
 
-			playersMenu = new Menu();
-			localPlayers = new MenuItem(Catalog.GetString(LOCAL_TEAM));
-			visitorPlayers = new MenuItem(Catalog.GetString(VISITOR_TEAM));
-			playersMenu.Append(localPlayers);
-			playersMenu.Append(visitorPlayers);
-
 			menu = new Menu();
 
 			name = new MenuItem(Catalog.GetString("Edit"));
 			team = new MenuItem(Catalog.GetString("Team Selection"));
 			team.Submenu = teamMenu;
 			tag = new MenuItem(Catalog.GetString("Add tag"));
-			players = new MenuItem(Catalog.GetString("Tag player"));
-			players.Submenu = playersMenu;
 			delete = new MenuItem(Catalog.GetString("Delete"));
 			deleteKeyFrame = new MenuItem(Catalog.GetString("Delete key frame"));
 			addPLN = new MenuItem(Catalog.GetString("Add to playlist"));
@@ -179,7 +164,6 @@ namespace LongoMatch.Gui.Component
 
 			menu.Append(name);
 			menu.Append(tag);
-			menu.Append(players);
 			menu.Append(team);
 			menu.Append(addPLN);
 			menu.Append(delete);
@@ -191,8 +175,6 @@ namespace LongoMatch.Gui.Component
 			local.Activated += OnTeamSelection;
 			visitor.Activated += OnTeamSelection;
 			noTeam.Activated += OnTeamSelection;
-			localPlayers.Activated += OnLocalPlayers;
-			visitorPlayers.Activated += OnVisitorPlayers;
 			addPLN.Activated += OnAdded;
 			delete.Activated += OnDeleted;
 			deleteKeyFrame.Activated += OnDeleteKeyFrame;
@@ -203,7 +185,6 @@ namespace LongoMatch.Gui.Component
 		protected void MultiSelectMenu(bool enabled) {
 			name.Sensitive = !enabled;
 			snapshot.Sensitive = !enabled;
-			players.Sensitive = !enabled;
 			tag.Sensitive = !enabled;
 		}
 

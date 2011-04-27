@@ -33,7 +33,6 @@ namespace LongoMatch.Gui.Component
 
 		public TagsTreeView() {
 			tag.Visible = false;
-			players.Visible = false;
 			delete.Visible = false;
 		}
 
