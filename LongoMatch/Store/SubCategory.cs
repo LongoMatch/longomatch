@@ -73,10 +73,8 @@ namespace LongoMatch.Store
 		protected string RenderDesc(string type, string values) {
 			string str;
 			
-			str = Catalog.GetString("Name: ");
-			str += Name + " \n"; 
-			str += Catalog.GetString("Type: " + type);
-			str += "\n";
+			str = String.Format("{0}: {1} [{2}]\n", 
+			                    Catalog.GetString("Name"), Name, type);
 			str += values;
 			return str;
 		}
@@ -93,7 +91,10 @@ namespace LongoMatch.Store
 			string tags = "";
 			
 			foreach (string tag in this) {
-				tags += tag + "";
+				if (tags == "")
+					tags += tag;
+				else
+					tags += " - " + tag;
 			}
 			return RenderDesc (Catalog.GetString("Tags list"),
 			                  Catalog.GetString("Tags:" + 
