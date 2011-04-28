@@ -41,7 +41,11 @@ namespace LongoMatch.Store
 	[Serializable]
 	public class SubCategory<T>: List<T>, ISubCategory
 	{
-		public SubCategory() {}
+		public SubCategory() {
+			Name = "";
+			AllowMultiple = true;
+			FastTag = true;
+		}
 
 		public SubCategory(IEnumerable<T> list): base(list) {}
 
