@@ -261,7 +261,7 @@ namespace LongoMatch.Gui.Component
 			this.sortmethodcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Sort by stop time"));
 			this.sortmethodcombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Sort by duration"));
 			this.sortmethodcombobox.Name = "sortmethodcombobox";
-			this.sortmethodcombobox.Active = 0;
+			this.sortmethodcombobox.Active = 3;
 			this.table2.Add (this.sortmethodcombobox);
 			global::Gtk.Table.TableChild w14 = ((global::Gtk.Table.TableChild)(this.table2[this.sortmethodcombobox]));
 			w14.TopAttach = ((uint)(2));

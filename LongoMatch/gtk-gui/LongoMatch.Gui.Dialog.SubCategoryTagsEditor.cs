@@ -66,7 +66,7 @@ namespace LongoMatch.Gui.Dialog
 			this.fastcheckbutton.TooltipMarkup = "When this option is selected, the sub category can be tagged right after creating a new play";
 			this.fastcheckbutton.CanFocus = true;
 			this.fastcheckbutton.Name = "fastcheckbutton";
-			this.fastcheckbutton.Label = global::Mono.Unix.Catalog.GetString ("Fast tag");
+			this.fastcheckbutton.Label = global::Mono.Unix.Catalog.GetString ("Quick tag");
 			this.fastcheckbutton.Active = true;
 			this.fastcheckbutton.DrawIndicator = true;
 			this.fastcheckbutton.UseUnderline = true;
@@ -90,7 +90,7 @@ namespace LongoMatch.Gui.Dialog
 			this.multicheckbutton.TooltipMarkup = "This options allows you to select multiple tags instead of just one";
 			this.multicheckbutton.CanFocus = true;
 			this.multicheckbutton.Name = "multicheckbutton";
-			this.multicheckbutton.Label = global::Mono.Unix.Catalog.GetString ("Multiple selections");
+			this.multicheckbutton.Label = global::Mono.Unix.Catalog.GetString ("Allow multiple selections");
 			this.multicheckbutton.Active = true;
 			this.multicheckbutton.DrawIndicator = true;
 			this.multicheckbutton.UseUnderline = true;
@@ -224,7 +224,7 @@ namespace LongoMatch.Gui.Dialog
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.DefaultWidth = 294;
+			this.DefaultWidth = 326;
 			this.DefaultHeight = 304;
 			this.Show ();
 		}
