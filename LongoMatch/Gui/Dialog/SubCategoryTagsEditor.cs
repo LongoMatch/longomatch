@@ -17,6 +17,7 @@
 // 
 using System;
 using System.Collections.Generic;
+using Gdk;
 using Gtk;
 
 using LongoMatch.Store;
@@ -27,13 +28,18 @@ namespace LongoMatch.Gui.Dialog
 	{
 		private TagSubCategory template;
 		private Dictionary<string, Widget>  tagsDict;
+		private List<string> templates;
+		private Color templateExistsColor;
 		
 		public SubCategoryTagsEditor (TagSubCategory template)
 		{
 			this.Build ();
+			Gdk.Color.Parse("red", ref templateExistsColor);
+			templates = MainClass.ts.SubCategoriesTemplateProvider.TemplatesNames;
 			tagsDict = new Dictionary<string, Widget>();
 			addtagbutton.Clicked += OnAddTag;
 			tagentry.Activated += OnAddTag;
+			nameentry.Changed += OnNameChanged;
 			Template = template;
 		}
 		
@@ -48,6 +54,11 @@ namespace LongoMatch.Gui.Dialog
 				template.Name = nameentry.Text;
 				return template;
 			}
+		}
+		
+		public bool CheckName {
+			set;
+			get;
 		}
 		
 		private void RemoveTag (string tag) {
@@ -80,6 +91,18 @@ namespace LongoMatch.Gui.Dialog
 			tagsDict.Add(tag, box);
 			if (update)
 				template.Add(tag);
+		}
+		
+		protected virtual void OnNameChanged (object sender, EventArgs e)
+		{
+			if ((CheckName && templates.Contains(nameentry.Text)) ||
+			    nameentry.Text == "") {
+				nameentry.ModifyText(StateType.Normal, templateExistsColor);
+				buttonOk.Sensitive = false;
+			} else { 
+				nameentry.ModifyText(StateType.Normal);
+				buttonOk.Sensitive = true;
+			}
 		}
 		
 		protected virtual void OnAddTag (object sender, System.EventArgs e)

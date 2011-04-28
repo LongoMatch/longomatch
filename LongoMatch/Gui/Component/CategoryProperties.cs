@@ -119,12 +119,17 @@ namespace LongoMatch.Gui.Component
 			(cell as Gtk.CellRendererText).Markup =(string)model.GetValue(iter, 0);
 		}
 		
-		private TagSubCategory EditSubCategoryTags (TagSubCategory template){
+		private TagSubCategory EditSubCategoryTags (TagSubCategory template, bool checkName){
 			SubCategoryTagsEditor se =  new SubCategoryTagsEditor(template);
-			se.Run();
+			
+			se.CheckName = checkName;
+			int ret = se.Run();
 			
 			var t = se.Template; 
 			se.Destroy();
+			
+			if (ret != (int)ResponseType.Ok)
+				return null;
 			return t;
 		}
 
@@ -169,7 +174,7 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		protected virtual void OnSubcategorySelected(ISubCategory subcat) {
-			EditSubCategoryTags((TagSubCategory)subcat);
+			EditSubCategoryTags((TagSubCategory)subcat, false);
 		}
 		
 		protected virtual void OnSubcategoriesDeleted (List<ISubCategory> subcats)
@@ -194,9 +199,11 @@ namespace LongoMatch.Gui.Component
 			TreeIter iter;
 			
 			if (subcatcombobox.Active == 0) {
-				var template = EditSubCategoryTags(new SubCategoryTemplate()) as SubCategoryTemplate;
-				if (template.Count != 0)
-					subcategoriesTemplates.Save(template);
+				var template = EditSubCategoryTags(new SubCategoryTemplate(), true) as SubCategoryTemplate;
+				if (template == null || template.Count == 0)
+					return;
+				
+				subcategoriesTemplates.Save(template);
 				subcatcombobox.Active = 1;
 				return;
 			}
