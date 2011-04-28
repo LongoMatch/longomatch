@@ -203,6 +203,8 @@ namespace LongoMatch.Gui.Component
 				if (template == null || template.Count == 0)
 					return;
 				
+				model.AppendValues(String.Format("[{0}] {1}",Catalog.GetString("Tags"), template.Name),
+				                   template);
 				subcategoriesTemplates.Save(template);
 				subcatcombobox.Active = 1;
 				return;
