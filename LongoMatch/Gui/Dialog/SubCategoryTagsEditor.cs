@@ -40,6 +40,8 @@ namespace LongoMatch.Gui.Dialog
 			addtagbutton.Clicked += OnAddTag;
 			tagentry.Activated += OnAddTag;
 			nameentry.Changed += OnNameChanged;
+			multicheckbutton.Toggled += OnMultiToggled;
+			fastcheckbutton.Toggled += OnFastToggled;
 			Template = template;
 		}
 		
@@ -47,6 +49,9 @@ namespace LongoMatch.Gui.Dialog
 			set{
 				template = value;
 				nameentry.Text = template.Name;
+				fastcheckbutton.Active = template.FastTag;
+				multicheckbutton.Active = template.AllowMultiple;
+				
 				foreach (string tag in template)
 					AddTag(tag, false);
 			}
@@ -103,6 +108,17 @@ namespace LongoMatch.Gui.Dialog
 				nameentry.ModifyText(StateType.Normal);
 				buttonOk.Sensitive = true;
 			}
+		}
+		
+		protected virtual void OnMultiToggled (object sender, System.EventArgs e)
+		{
+			template.AllowMultiple = multicheckbutton.Active;
+		}
+		
+		protected virtual void OnFastToggled (object sender, System.EventArgs e)
+		{
+			template.FastTag = fastcheckbutton.Active;
+			
 		}
 		
 		protected virtual void OnAddTag (object sender, System.EventArgs e)
