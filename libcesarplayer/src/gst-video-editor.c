@@ -955,7 +955,8 @@ gst_video_editor_set_video_encoder (GstVideoEditor * gve, gchar ** err,
     case VIDEO_ENCODER_H264:
       encoder_name = "x264enc";
       encoder = gst_element_factory_make (encoder_name, encoder_name);
-      g_object_set (G_OBJECT (encoder), "pass", 17, NULL);      //Variable Bitrate-Pass 1
+      g_object_set (G_OBJECT (encoder), "pass", 17, NULL);       //Variable Bitrate-Pass 1
+      g_object_set (G_OBJECT (encoder), "speed-preset", 4, NULL);//"Faster" preset
       break;
     case VIDEO_ENCODER_MPEG4:
       encoder_name = "xvidenc";
@@ -980,6 +981,8 @@ gst_video_editor_set_video_encoder (GstVideoEditor * gve, gchar ** err,
     case VIDEO_ENCODER_VP8:
       encoder_name = "vp8enc";
       encoder = gst_element_factory_make (encoder_name, encoder_name);
+      g_object_set (G_OBJECT (encoder), "speed", 1, NULL);
+      g_object_set (G_OBJECT (encoder), "threads", 4, NULL);
       break;
   }
 
