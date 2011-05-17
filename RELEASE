@@ -1,7 +1,7 @@
-LongoMatch-0.16.7 "Wakamole"
+LongoMatch-0.16.8 "Una vaaaaca"
 -------------------------------------------------
 
-The LongoMatch team is happy to announce the seventh release in the 0.16
+The LongoMatch team is happy to announce the height release in the 0.16
 LongoMatch series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
@@ -10,8 +10,8 @@ experience.
 
 
 * Bugs fixed
-	* Fix environment initialization
-	* Set more realistic limits to players weight and height
+	* Really fix height and weight limits on win32
+	* Increase speed settings of the vp8 and h264 encoders
 
 *Contributors to this Release:
 

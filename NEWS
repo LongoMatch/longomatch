@@ -1,3 +1,18 @@
+===== LongoMatch 0.16.8 "Una vaaaaca" =====
+
+	== Bugs Fixed ==
+
+	* Really fix height and weight limits on win32
+	* Increase speed settings of the vp8 and h264 encoders
+
+===== LongoMatch 0.16.7 "Wakamole" =====
+
+	== Bugs Fixed ==
+
+	* Fix environment initialization
+	* Set more realistic limits to players weight and height
+
+
 ===== LongoMatch 0.16.7 "Wakamole" =====
 
 	== Bugs Fixed ==
