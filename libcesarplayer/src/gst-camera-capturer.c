@@ -1246,7 +1246,8 @@ gst_camera_capturer_set_video_encoder (GstCameraCapturer * gcc,
     case VIDEO_ENCODER_H264:
       gcc->priv->videoenc =
           gst_element_factory_make ("x264enc", "video-encoder");
-      g_object_set (gcc->priv->videoenc, "key-int-max", 25, "pass", 17, NULL);
+      g_object_set (gcc->priv->videoenc, "key-int-max", 25, "pass", 17,
+          "speed-preset", 3, NULL);
       name = "X264 video encoder";
       break;
 
@@ -1262,7 +1263,7 @@ gst_camera_capturer_set_video_encoder (GstCameraCapturer * gcc,
     default:
       gcc->priv->videoenc =
           gst_element_factory_make ("vp8enc", "video-encoder");
-      g_object_set (gcc->priv->videoenc, "speed", 2,
+      g_object_set (gcc->priv->videoenc, "speed", 2, "threads", 8,
           "max-keyframe-distance", 25, NULL);
       name = "VP8 video encoder";
       break;
