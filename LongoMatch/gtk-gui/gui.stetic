@@ -1715,7 +1715,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="LongoMatch.Gui.MainWindow" design-size="1259 853">
+  <widget class="Gtk.Window" id="LongoMatch.Gui.MainWindow" design-size="1445 853">
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -2060,7 +2060,7 @@
               <widget class="Gtk.HPaned" id="hpaned1">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Position">881</property>
+                <property name="Position">930</property>
                 <child>
                   <widget class="Gtk.VBox" id="vbox5">
                     <property name="MemberName" />
@@ -2226,7 +2226,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.CategoryProperties" design-size="284 120">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.CategoryProperties" design-size="373 120">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.VBox" id="vbox3">
@@ -3873,11 +3873,11 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
             <property name="CanFocus">True</property>
             <property name="Upper">10</property>
             <property name="PageIncrement">1</property>
-            <property name="StepIncrement">0.1</property>
+            <property name="StepIncrement">1</property>
             <property name="ClimbRate">1</property>
             <property name="Digits">2</property>
             <property name="Numeric">True</property>
-            <property name="Value">1.8</property>
+            <property name="Value">10</property>
             <signal name="ValueChanged" handler="OnHeightspinbuttonValueChanged" />
           </widget>
           <packing>
@@ -4841,6 +4841,7 @@ No</property>
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Label" translatable="yes" />
+                <property name="Active">True</property>
                 <property name="DrawIndicator">False</property>
                 <property name="HasLabel">False</property>
                 <property name="UseUnderline">True</property>

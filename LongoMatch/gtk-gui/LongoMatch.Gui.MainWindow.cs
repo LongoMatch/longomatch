@@ -295,7 +295,7 @@ namespace LongoMatch.Gui
 			this.hpaned1 = new global::Gtk.HPaned ();
 			this.hpaned1.CanFocus = true;
 			this.hpaned1.Name = "hpaned1";
-			this.hpaned1.Position = 881;
+			this.hpaned1.Position = 930;
 			// Container child hpaned1.Gtk.Paned+PanedChild
 			this.vbox5 = new global::Gtk.VBox ();
 			this.vbox5.Name = "vbox5";
@@ -407,7 +407,7 @@ namespace LongoMatch.Gui
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.DefaultWidth = 1259;
+			this.DefaultWidth = 1445;
 			this.DefaultHeight = 853;
 			this.leftbox.Hide ();
 			this.drawingtoolbox1.Hide ();
