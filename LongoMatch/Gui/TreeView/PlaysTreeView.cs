@@ -56,15 +56,15 @@ namespace LongoMatch.Gui.Component
 		}
 
 		private void SetCategoriesMenu(){
-			Action edit, sortMenu;			
+			Gtk.Action edit, sortMenu;			
 			UIManager manager;
 			ActionGroup g;
 			
 			manager= new UIManager();
 			g = new ActionGroup("CategoriesMenuGroup");
 			
-			edit = new Action("EditAction", Mono.Unix.Catalog.GetString("Edit name"), null, "gtk-edit");
-			sortMenu = new Action("SortMenuAction", Mono.Unix.Catalog.GetString("Sort Method"), null, null);
+			edit = new Gtk.Action("EditAction", Mono.Unix.Catalog.GetString("Edit name"), null, "gtk-edit");
+			sortMenu = new Gtk.Action("SortMenuAction", Mono.Unix.Catalog.GetString("Sort Method"), null, null);
 			sortByName = new Gtk.RadioAction("SortByNameAction", Mono.Unix.Catalog.GetString("Sort by name"), null, null, 1);
 			sortByStart = new Gtk.RadioAction("SortByStartAction", Mono.Unix.Catalog.GetString("Sort by start time"), null, null, 2);
 			sortByStop = new Gtk.RadioAction("SortByStopAction", Mono.Unix.Catalog.GetString("Sort by stop time"), null, null, 3);
