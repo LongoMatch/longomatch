@@ -1,19 +1,12 @@
-
 EXTRA_DIST =\
 		expansions.m4 \
 		env.in
 
-#Warning: This is an automatically generated file, do not edit!
-if ENABLE_DEBUG
- SUBDIRS =  libcesarplayer CesarPlayer LongoMatch po
-endif
-if ENABLE_RELEASE
- SUBDIRS =  libcesarplayer CesarPlayer LongoMatch po
-endif
+SUBDIRS = build libcesarplayer CesarPlayer LongoMatch po
 
 DISTCLEANFILES = 	intltool-extract\
-					intltool-merge\
-					intltool-update
+			intltool-merge\
+			intltool-update
 
 # Build ChangeLog from GIT history
 ChangeLog:

@@ -1,80 +1,8 @@
+ASSEMBLY = LongoMatch
+TARGET = exe
+LINK = $(REF_DEP_LONGOMATCH)
 
-EXTRA_DIST = \
-	$(desktop_in_files)
-
-
-@INTLTOOL_DESKTOP_RULE@
-desktopdir = $(datadir)/applications
-desktop_in_files = longomatch.desktop.in
-desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
-
-
-if ENABLE_DEBUG
-ASSEMBLY_COMPILER_COMMAND = $(CSC)
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ -debug -define:DEBUG "-main:LongoMatch.MainClass"
-ASSEMBLY = bin/Debug/LongoMatch.exe
-ASSEMBLY_MDB = $(ASSEMBLY).mdb
-COMPILE_TARGET = exe
-PROJECT_REFERENCES =  \
-	../CesarPlayer/bin/Debug/CesarPlayer.dll
-BUILD_DIR = bin/Debug
-CESARPLAYER_DLL_SOURCE=../CesarPlayer/bin/Debug/CesarPlayer.dll
-CESARPLAYER_DLL=$(BUILD_DIR)/CesarPlayer.dll
-CESARPLAYER_DLL_MDB_SOURCE=../CesarPlayer/bin/Debug/CesarPlayer.dll.mdb
-CESARPLAYER_DLL_MDB=$(BUILD_DIR)/CesarPlayer.dll.mdb
-LONGOMATCH_PNG_SOURCE=images/longomatch.png
-LONGOMATCH_EXE_MDB_SOURCE=bin/Debug/LongoMatch.exe.mdb
-LONGOMATCH_EXE_MDB = $(BUILD_DIR)/LongoMatch.exe.mdb
-BACKGROUND_PNG_SOURCE=images/background.png
-
-endif
-
-if ENABLE_RELEASE
-ASSEMBLY_COMPILER_COMMAND = $(CSC)
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-main:LongoMatch.MainClass"
-ASSEMBLY = bin/Release/LongoMatch.exe
-ASSEMBLY_MDB = $(ASSEMBLY).mdb
-COMPILE_TARGET = exe
-PROJECT_REFERENCES =  \
-	../CesarPlayer/bin/Release/CesarPlayer.dll
-BUILD_DIR = bin/Release
-CESARPLAYER_DLL_SOURCE=../CesarPlayer/bin/Release/CesarPlayer.dll
-CESARPLAYER_DLL=$(BUILD_DIR)/CesarPlayer.dll
-LONGOMATCH_PNG_SOURCE=images/longomatch.png
-LONGOMATCH_LOGO_SOURCE=images/logo_48x48.png
-LONGOMATCH_EXE_MDB_SOURCE=
-LONGOMATCH_EXE_MDB = 
-CESARPLAYER_DLL_MDB_SOURCE=
-CESARPLAYER_DLL_MDB=
-BACKGROUND_PNG_SOURCE=images/background.png
-
-endif
-
-AL=al2
-SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
-
-COMMONAPPLICATIONDATAROOT_IMAGES = \
-	$(LONGOMATCH_PNG) \
-	$(BACKGROUND_PNG)  
-
-COMMONAPPLICATIONDATAROOT_LOGO = \
-	$(LONGOMATCH_LOGO)
-	
-
-PROGRAMFILES = \
-	$(CESARPLAYER_DLL) \
-	$(LONGOMATCH_EXE_MDB) \
-	$(CESARPLAYER_DLL_MDB) 
-
-BINARIES = \
-	$(LONGOMATCH)  
-
-
-RESGEN=resgen2
-	
-all: $(ASSEMBLY) $(COMMONAPPLICATIONDATAROOT_IMAGES)  $(COMMONAPPLICATIONDATAROOT_LOGO) $(PROGRAMFILES) $(BINARIES)
-
-FILES = \
+SOURCES = \
 	AssemblyInfo.cs \
 	Common/Enums.cs \
 	Common/Cairo.cs \
@@ -222,13 +150,16 @@ FILES = \
 	Updates/Updater.cs \
 	Updates/XmlUpdateParser.cs \
 	Utils/ProjectUtils.cs
-	
-DATA_FILES = 
+
+IMAGES = images/longomatch.png \
+         images/background.png
+
+LOGO = images/logo_48x48.png
 
 RESOURCES = \
 	gtk-gui/objects.xml \
 	gtk-gui/gui.stetic\
-	images/longomatch.png,longomatch.png\
+	images/longomatch.png\
 	images/stock_draw-line-45.png\
 	images/stock_draw-circle-unfilled.png\
 	images/stock_draw-line-ends-with-arrow.png\
@@ -237,51 +168,13 @@ RESOURCES = \
 	images/camera-video.png\
 	images/video.png 
 
-EXTRAS = \
-	images/longomatch.png\
-	images/background.png\
-	images/logo_48x48.png \
+bin_SCRIPTS = longomatch
+
+DESKTOP_FILE = longomatch.desktop.in
+
+include $(top_srcdir)/build/build.mk
+
+EXTRA_DIST += \
 	longomatch.in\
 	AssemblyInfo.cs.in
 
-REFERENCES =  \
-	Mono.Posix \
-	System.Xml \
-	$(GTK_SHARP_20_LIBS) \
-	$(GLIB_SHARP_20_LIBS) \
-	Mono.Cairo \
-	System \
-	$(DB4O_74_LIBS)
-
-DLL_REFERENCES = 
-
-CLEANFILES = 	\
-		$(COMMONAPPLICATIONDATAROOT_IMAGES)\
-  		$(COMMONAPPLICATIONDATAROOT_LOGO)\
- 		$(PROGRAMFILES)\
-		$(BINARIES)\
-		longomatch.desktop
-
-include $(top_srcdir)/Makefile.include
-
-LONGOMATCH_PNG = $(BUILD_DIR)/images/longomatch.png
-LONGOMATCH_LOGO = $(BUILD_DIR)/icons/hicolor/48x48/apps/longomatch.png
-LONGOMATCH = $(BUILD_DIR)/longomatch
-BACKGROUND_PNG = $(BUILD_DIR)/images/background.png
-
-$(eval $(call emit-deploy-target,CESARPLAYER_DLL))
-$(eval $(call emit-deploy-target,LONGOMATCH_PNG))
-$(eval $(call emit-deploy-target,LONGOMATCH_LOGO))
-$(eval $(call emit-deploy-target,BACKGROUND_PNG))
-$(eval $(call emit-deploy-wrapper,LONGOMATCH,longomatch,x))
-$(eval $(call emit-deploy-target,CESARPLAYER_DLL_MDB))
-
-
-
-$(eval $(call emit_resgen_targets))
-$(build_xamlg_list): %.xaml.g.cs: %.xaml
-	xamlg '$<'
-
-$(ASSEMBLY) $(ASSEMBLY_MDB): $(build_sources) $(build_resources) $(build_datafiles) $(DLL_REFERENCES) $(PROJECT_REFERENCES) $(build_xamlg_list) $(build_satellite_assembly_list)
-	mkdir -p $(shell dirname $(ASSEMBLY))
-	$(ASSEMBLY_COMPILER_COMMAND) $(ASSEMBLY_COMPILER_FLAGS) -out:$(ASSEMBLY) -target:$(COMPILE_TARGET) $(build_sources_embed) $(build_resources_embed) $(build_references_ref)

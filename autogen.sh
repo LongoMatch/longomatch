@@ -18,7 +18,8 @@ test -z "$srcdir" && srcdir=.
 ORIGDIR=`pwd`
 cd $srcdir
 TEST_TYPE=-f
-aclocalinclude="-I . $ACLOCAL_FLAGS"
+aclocalinclude="-I build/m4/shamrock -I build/m4/shave $ACLOCAL_FLAGS"
+conf_flags="--enable-maintainer-mode"
 
 DIE=0
 
