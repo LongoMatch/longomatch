@@ -42,8 +42,10 @@ RESOURCES = \
 	gtk-gui/objects.xml \
 	gtk-gui/gui.stetic
 
+DLLCONFIG = CesarPlayer.dll.config
+
 include $(top_srcdir)/build/build.mk
 
 EXTRA_DIST += CesarPlayer.dll.config \
               AssemblyInfo.cs.in
-module_SCRIPTS += CesarPlayer.dll.config
+
