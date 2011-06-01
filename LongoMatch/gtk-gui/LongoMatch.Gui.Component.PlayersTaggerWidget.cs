@@ -4,9 +4,17 @@ namespace LongoMatch.Gui.Component
 {
 	public partial class PlayersTaggerWidget
 	{
-		private global::Gtk.ScrolledWindow scrolledwindow1;
+		private global::Gtk.Frame frame1;
 
-		private global::Gtk.Table table1;
+		private global::Gtk.Alignment GtkAlignment;
+
+		private global::Gtk.HBox hbox1;
+
+		private global::Gtk.Label playerslabel;
+
+		private global::Gtk.Button editbutton;
+
+		private global::Gtk.Label CategoryLabel;
 
 		protected virtual void Build ()
 		{
@@ -15,25 +23,50 @@ namespace LongoMatch.Gui.Component
 			global::Stetic.BinContainer.Attach (this);
 			this.Name = "LongoMatch.Gui.Component.PlayersTaggerWidget";
 			// Container child LongoMatch.Gui.Component.PlayersTaggerWidget.Gtk.Container+ContainerChild
-			this.scrolledwindow1 = new global::Gtk.ScrolledWindow ();
-			this.scrolledwindow1.CanFocus = true;
-			this.scrolledwindow1.Name = "scrolledwindow1";
-			this.scrolledwindow1.ShadowType = ((global::Gtk.ShadowType)(1));
-			// Container child scrolledwindow1.Gtk.Container+ContainerChild
-			global::Gtk.Viewport w1 = new global::Gtk.Viewport ();
-			w1.ShadowType = ((global::Gtk.ShadowType)(0));
-			// Container child GtkViewport.Gtk.Container+ContainerChild
-			this.table1 = new global::Gtk.Table (((uint)(3)), ((uint)(3)), false);
-			this.table1.Name = "table1";
-			this.table1.RowSpacing = ((uint)(6));
-			this.table1.ColumnSpacing = ((uint)(6));
-			w1.Add (this.table1);
-			this.scrolledwindow1.Add (w1);
-			this.Add (this.scrolledwindow1);
+			this.frame1 = new global::Gtk.Frame ();
+			this.frame1.Name = "frame1";
+			this.frame1.ShadowType = ((global::Gtk.ShadowType)(2));
+			// Container child frame1.Gtk.Container+ContainerChild
+			this.GtkAlignment = new global::Gtk.Alignment (0f, 0f, 1f, 1f);
+			this.GtkAlignment.Name = "GtkAlignment";
+			this.GtkAlignment.LeftPadding = ((uint)(12));
+			// Container child GtkAlignment.Gtk.Container+ContainerChild
+			this.hbox1 = new global::Gtk.HBox ();
+			this.hbox1.Name = "hbox1";
+			this.hbox1.Spacing = 6;
+			// Container child hbox1.Gtk.Box+BoxChild
+			this.playerslabel = new global::Gtk.Label ();
+			this.playerslabel.Name = "playerslabel";
+			this.playerslabel.Xalign = 0f;
+			this.playerslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("None");
+			this.hbox1.Add (this.playerslabel);
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.playerslabel]));
+			w1.Position = 0;
+			// Container child hbox1.Gtk.Box+BoxChild
+			this.editbutton = new global::Gtk.Button ();
+			this.editbutton.CanFocus = true;
+			this.editbutton.Name = "editbutton";
+			this.editbutton.UseStock = true;
+			this.editbutton.UseUnderline = true;
+			this.editbutton.Label = "gtk-edit";
+			this.hbox1.Add (this.editbutton);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.editbutton]));
+			w2.Position = 1;
+			w2.Expand = false;
+			w2.Fill = false;
+			this.GtkAlignment.Add (this.hbox1);
+			this.frame1.Add (this.GtkAlignment);
+			this.CategoryLabel = new global::Gtk.Label ();
+			this.CategoryLabel.Name = "CategoryLabel";
+			this.CategoryLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>GtkFrame</b>");
+			this.CategoryLabel.UseMarkup = true;
+			this.frame1.LabelWidget = this.CategoryLabel;
+			this.Add (this.frame1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
 			this.Hide ();
+			this.editbutton.Clicked += new global::System.EventHandler (this.OnEditClicked);
 		}
 	}
 }

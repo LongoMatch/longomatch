@@ -5402,52 +5402,38 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
         <property name="MemberName" />
         <property name="Spacing">6</property>
         <child>
-          <widget class="Gtk.ScrolledWindow" id="scrolledwindow1">
+          <widget class="Gtk.Table" id="table1">
             <property name="MemberName" />
-            <property name="Visible">False</property>
-            <property name="CanFocus">True</property>
-            <property name="ShadowType">In</property>
+            <property name="NRows">3</property>
+            <property name="NColumns">3</property>
+            <property name="RowSpacing">6</property>
+            <property name="ColumnSpacing">6</property>
             <child>
-              <widget class="Gtk.Viewport" id="GtkViewport">
-                <property name="MemberName" />
-                <property name="ShadowType">None</property>
-                <child>
-                  <widget class="Gtk.Table" id="table1">
-                    <property name="MemberName" />
-                    <property name="NRows">3</property>
-                    <property name="NColumns">3</property>
-                    <property name="RowSpacing">6</property>
-                    <property name="ColumnSpacing">6</property>
-                    <child>
-                      <placeholder />
-                    </child>
-                    <child>
-                      <placeholder />
-                    </child>
-                    <child>
-                      <placeholder />
-                    </child>
-                    <child>
-                      <placeholder />
-                    </child>
-                    <child>
-                      <placeholder />
-                    </child>
-                    <child>
-                      <placeholder />
-                    </child>
-                    <child>
-                      <placeholder />
-                    </child>
-                    <child>
-                      <placeholder />
-                    </child>
-                    <child>
-                      <placeholder />
-                    </child>
-                  </widget>
-                </child>
-              </widget>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
             </child>
           </widget>
           <packing>
@@ -5458,7 +5444,7 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.TaggerDialog" design-size="426 267">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.TaggerDialog" design-size="620 267">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Tag play</property>
     <property name="Icon">stock:longomatch Menu</property>
@@ -5470,13 +5456,74 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
         <property name="MemberName" />
         <property name="BorderWidth">2</property>
         <child>
-          <widget class="LongoMatch.Gui.Component.TaggerWidget" id="taggerwidget1">
+          <widget class="Gtk.HBox" id="hbox1">
             <property name="MemberName" />
-            <property name="Events">ButtonPressMask</property>
+            <property name="Spacing">6</property>
+            <child>
+              <widget class="Gtk.Notebook" id="notebook1">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="CurrentPage">0</property>
+                <child>
+                  <widget class="LongoMatch.Gui.Component.TaggerWidget" id="taggerwidget1">
+                    <property name="MemberName" />
+                    <property name="Events">ButtonPressMask</property>
+                  </widget>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="label1">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">page1</property>
+                  </widget>
+                  <packing>
+                    <property name="type">tab</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">0</property>
+                <property name="AutoSize">True</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Notebook" id="notebook2">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="CurrentPage">0</property>
+                <child>
+                  <widget class="Gtk.VBox" id="playersbox">
+                    <property name="MemberName" />
+                    <property name="Spacing">6</property>
+                    <child>
+                      <placeholder />
+                    </child>
+                    <child>
+                      <placeholder />
+                    </child>
+                    <child>
+                      <placeholder />
+                    </child>
+                  </widget>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="label2">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">page1</property>
+                  </widget>
+                  <packing>
+                    <property name="type">tab</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">1</property>
+                <property name="AutoSize">True</property>
+              </packing>
+            </child>
           </widget>
           <packing>
             <property name="Position">0</property>
-            <property name="AutoSize">False</property>
+            <property name="AutoSize">True</property>
           </packing>
         </child>
       </widget>
@@ -6264,66 +6311,13 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.PlayersTaggerWidget" design-size="300 300">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.PlayersTaggerWidget" design-size="300 40">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
-      <widget class="Gtk.ScrolledWindow" id="scrolledwindow1">
+      <widget class="Gtk.Frame" id="frame1">
         <property name="MemberName" />
-        <property name="CanFocus">True</property>
-        <property name="ShadowType">In</property>
-        <child>
-          <widget class="Gtk.Viewport" id="GtkViewport">
-            <property name="MemberName" />
-            <property name="ShadowType">None</property>
-            <child>
-              <widget class="Gtk.Table" id="table1">
-                <property name="MemberName" />
-                <property name="NRows">3</property>
-                <property name="NColumns">3</property>
-                <property name="RowSpacing">6</property>
-                <property name="ColumnSpacing">6</property>
-                <child>
-                  <placeholder />
-                </child>
-                <child>
-                  <placeholder />
-                </child>
-                <child>
-                  <placeholder />
-                </child>
-                <child>
-                  <placeholder />
-                </child>
-                <child>
-                  <placeholder />
-                </child>
-                <child>
-                  <placeholder />
-                </child>
-                <child>
-                  <placeholder />
-                </child>
-                <child>
-                  <placeholder />
-                </child>
-                <child>
-                  <placeholder />
-                </child>
-              </widget>
-            </child>
-          </widget>
-        </child>
-      </widget>
-    </child>
-  </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.StringTaggerWidget" design-size="300 98">
-    <property name="MemberName" />
-    <property name="Visible">False</property>
-    <child>
-      <widget class="Gtk.Frame" id="frame">
-        <property name="MemberName" />
-        <property name="ShadowType">None</property>
+        <property name="ShadowType">Out</property>
         <child>
           <widget class="Gtk.Alignment" id="GtkAlignment">
             <property name="MemberName" />
@@ -6331,9 +6325,92 @@ You can continue with the current capture, cancel it or save your project.
             <property name="Yalign">0</property>
             <property name="LeftPadding">12</property>
             <child>
-              <widget class="Gtk.HButtonBox" id="buttonsbox">
+              <widget class="Gtk.HBox" id="hbox1">
                 <property name="MemberName" />
-                <property name="Size">0</property>
+                <property name="Spacing">6</property>
+                <child>
+                  <widget class="Gtk.Label" id="label2">
+                    <property name="MemberName" />
+                    <property name="Xalign">0</property>
+                    <property name="LabelProp" translatable="yes">Players:</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="playerslabel">
+                    <property name="MemberName" />
+                    <property name="Xalign">0</property>
+                    <property name="LabelProp" translatable="yes">None</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Button" id="button5">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="UseStock">True</property>
+                    <property name="Type">StockItem</property>
+                    <property name="StockId">gtk-edit</property>
+                    <property name="label">gtk-edit</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">2</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+              </widget>
+            </child>
+          </widget>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="CategoryLabel">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">&lt;b&gt;GtkFrame&lt;/b&gt;</property>
+            <property name="UseMarkup">True</property>
+          </widget>
+          <packing>
+            <property name="type">label_item</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.StringTaggerWidget" design-size="300 33">
+    <property name="MemberName" />
+    <property name="Visible">False</property>
+    <child>
+      <widget class="Gtk.Frame" id="frame">
+        <property name="MemberName" />
+        <property name="ShadowType">Out</property>
+        <child>
+          <widget class="Gtk.Alignment" id="GtkAlignment">
+            <property name="MemberName" />
+            <property name="Xalign">0</property>
+            <property name="Yalign">0</property>
+            <property name="LeftPadding">12</property>
+            <child>
+              <widget class="Gtk.HBox" id="buttonsbox">
+                <property name="MemberName" />
+                <property name="Spacing">6</property>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <placeholder />
+                </child>
               </widget>
             </child>
           </widget>

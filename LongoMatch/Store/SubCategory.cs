@@ -41,6 +41,7 @@ namespace LongoMatch.Store
 	[Serializable]
 	public class SubCategory<T>: List<T>, ISubCategory
 	{
+
 		public SubCategory() {
 			Name = "";
 			AllowMultiple = true;
@@ -87,6 +88,7 @@ namespace LongoMatch.Store
 		public virtual string ToMarkupString(){
 			return this.ToString();
 		}
+		
 	}
 
 	[Serializable]

@@ -32,10 +32,7 @@ namespace LongoMatch.Gui.Component
 	public abstract class ListTreeViewBase:TreeView
 	{
 		// Plays menu
-		protected Menu menu, teamMenu;
-		protected MenuItem local;
-		protected MenuItem visitor;
-		protected MenuItem noTeam;
+		protected Menu menu;
 		protected MenuItem tag;
 		protected MenuItem delete;
 		protected MenuItem addPLN;
@@ -45,19 +42,14 @@ namespace LongoMatch.Gui.Component
 
 		protected Gtk.CellRendererText nameCell;
 		protected Gtk.TreeViewColumn nameColumn;
-		protected String[] teams_name;
 		protected bool editing;
 		protected bool projectIsLive;
-
-		protected const string LOCAL_TEAM = "Local Team";
-		protected const string VISITOR_TEAM = "Visitor Team";
 
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event TimeNodeSelectedHandler TimeNodeSelected;
 		public event TimeNodeDeletedHandler TimeNodeDeleted;
 		public event PlayListNodeAddedHandler PlayListNodeAdded;
 		public event SnapshotSeriesHandler SnapshotSeriesEvent;
-		public event PlayersTaggedHandler PlayersTagged;
 		public event TagPlayHandler TagPlay;
 
 		public ListTreeViewBase()
@@ -70,12 +62,6 @@ namespace LongoMatch.Gui.Component
 			SetMenu();
 			ProjectIsLive = false;
 			PlayListLoaded = false;
-
-			teams_name = new String[3];
-			teams_name[(int)Team.NONE] = Catalog.GetString("None");
-			teams_name[(int)Team.LOCAL] = Catalog.GetString(LOCAL_TEAM);
-			teams_name[(int)Team.VISITOR] = Catalog.GetString(VISITOR_TEAM);
-
 
 			nameColumn = new Gtk.TreeViewColumn();
 			nameColumn.Title = "Name";
@@ -105,29 +91,6 @@ namespace LongoMatch.Gui.Component
 			set;
 		}
 
-		public String LocalTeam {
-			set {
-				Label l = (local.Children[0] as Label);
-				if(value == "")
-					l.Text = Catalog.GetString(LOCAL_TEAM);
-				else {
-					l.Text = value;
-				}
-				teams_name[(int)Team.LOCAL] = l.Text;
-			}
-		}
-
-		public string VisitorTeam {
-			set {
-				Label l = (visitor.Children[0] as Label);
-				if(value == "")
-					l.Text = Catalog.GetString(VISITOR_TEAM);
-				else
-					l.Text = value;
-				teams_name[(int)Team.VISITOR] = l.Text;
-			}
-		}
-
 		public bool PlayListLoaded {
 			set {
 				addPLN.Sensitive = value;
@@ -142,20 +105,10 @@ namespace LongoMatch.Gui.Component
 		protected void SetMenu() {
 			MenuItem team;
 
-			teamMenu = new Menu();
-			local = new MenuItem(Catalog.GetString(LOCAL_TEAM));
-			visitor = new MenuItem(Catalog.GetString(VISITOR_TEAM));
-			noTeam = new MenuItem(Catalog.GetString("No Team"));
-			teamMenu .Append(local);
-			teamMenu .Append(visitor);
-			teamMenu .Append(noTeam);
-
 			menu = new Menu();
 
-			name = new MenuItem(Catalog.GetString("Edit"));
-			team = new MenuItem(Catalog.GetString("Team Selection"));
-			team.Submenu = teamMenu;
-			tag = new MenuItem(Catalog.GetString("Add tag"));
+			name = new MenuItem(Catalog.GetString("Edit name"));
+			tag = new MenuItem(Catalog.GetString("Edit tags"));
 			delete = new MenuItem(Catalog.GetString("Delete"));
 			deleteKeyFrame = new MenuItem(Catalog.GetString("Delete key frame"));
 			addPLN = new MenuItem(Catalog.GetString("Add to playlist"));
@@ -164,7 +117,6 @@ namespace LongoMatch.Gui.Component
 
 			menu.Append(name);
 			menu.Append(tag);
-			menu.Append(team);
 			menu.Append(addPLN);
 			menu.Append(delete);
 			menu.Append(deleteKeyFrame);
@@ -172,9 +124,6 @@ namespace LongoMatch.Gui.Component
 
 			name.Activated += OnEdit;
 			tag.Activated += OnTag;
-			local.Activated += OnTeamSelection;
-			visitor.Activated += OnTeamSelection;
-			noTeam.Activated += OnTeamSelection;
 			addPLN.Activated += OnAdded;
 			delete.Activated += OnDeleted;
 			deleteKeyFrame.Activated += OnDeleteKeyFrame;
@@ -336,24 +285,6 @@ namespace LongoMatch.Gui.Component
 			SetCursor(paths[0],  nameColumn, true);
 		}
 
-		protected void OnTeamSelection(object obj, EventArgs args) {
-			MenuItem sender = (MenuItem)obj;
-			Team team = Team.NONE;
-			if(sender == local)
-				team = Team.LOCAL;
-			else if(sender == visitor)
-				team = Team.VISITOR;
-			else if(sender == noTeam)
-				team = Team.NONE;
-
-			TreePath[] paths = Selection.GetSelectedRows();
-			for(int i=0; i<paths.Length; i++) {
-				Play tNode = (Play)GetValueFromPath(paths[i]);
-				//FIXME
-				//tNode.Team = team;
-			}
-		}
-
 		protected void OnAdded(object obj, EventArgs args) {
 			if(PlayListNodeAdded != null) {
 				TreePath[] paths = Selection.GetSelectedRows();
@@ -372,16 +303,6 @@ namespace LongoMatch.Gui.Component
 		protected void OnSnapshot(object obj, EventArgs args) {
 			if(SnapshotSeriesEvent != null)
 				SnapshotSeriesEvent((Play)GetValueFromPath(Selection.GetSelectedRows()[0]));
-		}
-
-		protected virtual void OnLocalPlayers(object o, EventArgs args) {
-			if(PlayersTagged != null)
-				PlayersTagged((Play)GetValueFromPath(Selection.GetSelectedRows()[0]), Team.LOCAL);
-		}
-
-		protected virtual void OnVisitorPlayers(object o, EventArgs args) {
-			if(PlayersTagged != null)
-				PlayersTagged((Play)GetValueFromPath(Selection.GetSelectedRows()[0]), Team.VISITOR);
 		}
 
 		protected abstract bool SelectFunction(TreeSelection selection, TreeModel model, TreePath path, bool selected);

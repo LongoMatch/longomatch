@@ -6,8 +6,6 @@ namespace LongoMatch.Gui.Component
 	{
 		private global::Gtk.VBox vbox2;
 
-		private global::Gtk.ScrolledWindow scrolledwindow1;
-
 		private global::Gtk.Table table1;
 
 		protected virtual void Build ()
@@ -21,28 +19,17 @@ namespace LongoMatch.Gui.Component
 			this.vbox2.Name = "vbox2";
 			this.vbox2.Spacing = 6;
 			// Container child vbox2.Gtk.Box+BoxChild
-			this.scrolledwindow1 = new global::Gtk.ScrolledWindow ();
-			this.scrolledwindow1.CanFocus = true;
-			this.scrolledwindow1.Name = "scrolledwindow1";
-			this.scrolledwindow1.ShadowType = ((global::Gtk.ShadowType)(1));
-			// Container child scrolledwindow1.Gtk.Container+ContainerChild
-			global::Gtk.Viewport w1 = new global::Gtk.Viewport ();
-			w1.ShadowType = ((global::Gtk.ShadowType)(0));
-			// Container child GtkViewport.Gtk.Container+ContainerChild
 			this.table1 = new global::Gtk.Table (((uint)(3)), ((uint)(3)), false);
 			this.table1.Name = "table1";
 			this.table1.RowSpacing = ((uint)(6));
 			this.table1.ColumnSpacing = ((uint)(6));
-			w1.Add (this.table1);
-			this.scrolledwindow1.Add (w1);
-			this.vbox2.Add (this.scrolledwindow1);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.scrolledwindow1]));
-			w4.Position = 0;
+			this.vbox2.Add (this.table1);
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.table1]));
+			w1.Position = 0;
 			this.Add (this.vbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.scrolledwindow1.Hide ();
 			this.Hide ();
 		}
 	}

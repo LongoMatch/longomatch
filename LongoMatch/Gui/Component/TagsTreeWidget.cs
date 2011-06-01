@@ -132,8 +132,6 @@ namespace LongoMatch.Gui.Component
 						model.AppendValues(play);
 
 					UpdateTagsList();
-					treeview.LocalTeam = project.Description.LocalName;
-					treeview.VisitorTeam = project.Description.VisitorName;
 				}
 			}
 		}

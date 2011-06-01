@@ -38,11 +38,7 @@ namespace LongoMatch.Store.Templates
 
 		public List<Player> PlayingPlayersList {
 			get {
-				var players =
-				        from player in this
-				        where player.Playing == true
-				        select player;
-				return players.ToList() as List<Player>;
+				return this.Where(p=>p.Playing).Select(p=>p).ToList();
 			}
 		}
 

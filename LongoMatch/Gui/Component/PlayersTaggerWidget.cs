@@ -17,69 +17,42 @@
 // 
 using System;
 using System.Collections.Generic;
-using Gtk;
+using System.Linq;
 
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
+using LongoMatch.Gui.Dialog;
 
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class PlayersTaggerWidget : Gtk.Bin
 	{
-		TeamTemplate template;
-		Dictionary<CheckButton, Player> checkButtonsDict;
-
-		public PlayersTaggerWidget ()
-		{
+		private List<PlayerTag> players;
+		private TeamTemplate template;
+		
+		public PlayersTaggerWidget (String subcategoryName, TeamTemplate template, List<PlayerTag> players) {
 			this.Build ();
-			checkButtonsDict = new Dictionary<CheckButton, Player>();
-		}
-
-		public void SetPlayersInfo(TeamTemplate template) {
-			CheckButton button;
-			List<Player> playersList;
-			int i=0;
-
-			if(this.template != null)
-				return;
-
+			this.players = players;
 			this.template = template;
-			playersList = template.PlayingPlayersList;
-
-			table1.NColumns =(uint)(playersList.Count/10);
-			table1.NRows =(uint) 10;
-
-			foreach(Player player in playersList) {
-				button = new CheckButton();
-				button.Label = player.Number + "-" + player.Name;
-				button.Name = i.ToString();
-				button.Show();
-
-				uint row_top =(uint)(i%table1.NRows);
-				uint row_bottom = (uint) row_top+1 ;
-				uint col_left = (uint) i/table1.NRows;
-				uint col_right = (uint) col_left+1 ;
-
-				table1.Attach(button,col_left,col_right,row_top,row_bottom);
-				checkButtonsDict.Add(button, player);
-				i++;
-			}
+			CategoryLabel.Markup = "<b>" + subcategoryName + "</b>";
+			LoadTagsLabel();
 		}
-
-		public List<Player> PlayersChecked {
-			set {
-				foreach(var pair in checkButtonsDict)
-					pair.Key.Active = value.Contains(pair.Value);
-			}
-			get {
-				List<Player> playersList = new List<Player>();
-				foreach(var pair in checkButtonsDict) {
-					if(pair.Key.Active)
-						playersList.Add(pair.Value);
-				}
-				return playersList;
-			}
+		
+		private void LoadTagsLabel () {
+			var playersNames = players.Select(p => p.Value.Name).ToArray();
+			playerslabel.Text = String.Join(" ; ", playersNames);
+		}
+		
+		protected virtual void OnEditClicked (object sender, System.EventArgs e)
+		{
+			PlayersSelectionDialog dialog = new PlayersSelectionDialog();
+			dialog.TransientFor = this.Toplevel as Gtk.Window;
+			dialog.Template = template;
+			dialog.SelectedPlayers = players;
+			dialog.Run();
+			dialog.Destroy();
+			LoadTagsLabel();
 		}
 	}
 }

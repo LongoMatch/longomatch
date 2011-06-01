@@ -41,7 +41,6 @@ namespace LongoMatch.Gui.Component
 		public event TimeNodeDeletedHandler TimeNodeDeleted;
 		public event PlayListNodeAddedHandler PlayListNodeAdded;
 		public event SnapshotSeriesHandler SnapshotSeriesEvent;
-		public event PlayersTaggedHandler PlayersTagged;
 		public event TagPlayHandler TagPlay;
 
 		private Project project;
@@ -54,7 +53,6 @@ namespace LongoMatch.Gui.Component
 			treeview.TimeNodeDeleted += OnTimeNodeDeleted;
 			treeview.PlayListNodeAdded += OnPlayListNodeAdded;
 			treeview.SnapshotSeriesEvent += OnSnapshotSeriesEvent;
-			treeview.PlayersTagged += OnPlayersTagged;
 			treeview.TagPlay += OnTagPlay;
 		}
 
@@ -120,8 +118,6 @@ namespace LongoMatch.Gui.Component
 				if(project != null) {
 					treeview.Model = project.GetModel();
 					treeview.Colors = true;
-					treeview.VisitorTeam = project.Description.VisitorName;
-					treeview.LocalTeam = project.Description.LocalName;
 				}
 				else {
 					treeview.Model = null;
@@ -164,12 +160,6 @@ namespace LongoMatch.Gui.Component
 		{
 			if(SnapshotSeriesEvent != null)
 				SnapshotSeriesEvent(tNode);
-		}
-
-		protected virtual void OnPlayersTagged(LongoMatch.Store.Play tNode, Team team)
-		{
-			if(PlayersTagged != null)
-				PlayersTagged(tNode,team);
 		}
 
 		protected virtual void OnTagPlay(LongoMatch.Store.Play tNode)

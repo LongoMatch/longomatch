@@ -133,7 +133,6 @@ namespace LongoMatch
 			tagsTreeWidget.PlayListNodeAdded += OnPlayListNodeAdded;
 
 			/* Connect tags events */
-			treewidget.PlayersTagged += OnPlayersTagged;
 			treewidget.TagPlay += OnTagPlay;
 
 			/* Connect SnapshotSeries events */
@@ -195,8 +194,7 @@ namespace LongoMatch
 			else
 				miniature = null;
 			var play = openedProject.AddPlay(category, start, stop,miniature);
-			TaggerDialog tg = new TaggerDialog(category, play.Tags);
-			tg.Run();
+			LaunchPlayTagger(play);
 			treewidget.AddPlay(play);
 			tagsTreeWidget.AddPlay(play);
 			timeline.AddPlay(play);
@@ -276,6 +274,14 @@ namespace LongoMatch
 			AddNewPlay(startTime, stopTime, category);
 		}
 
+		private void LaunchPlayTagger(Play play) {
+			TaggerDialog tg = new TaggerDialog(play.Category, play.Tags, play.Players,
+			                                   openedProject.LocalTeamTemplate, openedProject.VisitorTeamTemplate);
+			tg.TransientFor = (Gtk.Window)treewidget.Toplevel;
+			tg.Run();
+			tg.Destroy();
+		}
+		
 		protected virtual void OnTimeNodeSelected(Play tNode)
 		{
 			selectedTimeNode = tNode;
@@ -439,42 +445,8 @@ namespace LongoMatch
 			dialog.Destroy();
 		}
 
-		protected virtual void OnTagPlay(Play tNode) {
-			/*TaggerDialog tagger = new TaggerDialog();
-			tagger.ProjectTags = openedProject.Tags;
-			tagger.Tags = tNode.Tags;
-			tagger.TransientFor = (Gtk.Window)player.Toplevel;
-			tagger.Run();
-			tNode.Tags = tagger.Tags;
-			foreach (Tag tag in tagger.Tags){
-				openedProject.Tags.AddTag(tag);
-			}
-			tagsTreeWidget.UpdateTagsList();
-			tagger.Destroy();*/
-		}
-
-		protected virtual void OnPlayersTagged(Play tNode, Team team) {
-			/*
-				PlayersSelectionDialog dialog = new PlayersSelectionDialog();
-				if (team == Team.LOCAL) {
-					dialog.SetPlayersInfo(openedProject.LocalTeamTemplate);
-					dialog.PlayersChecked = tNode.LocalPlayers;
-					if (dialog.Run() == (int) ResponseType.Ok) {
-						tNode.LocalPlayers = dialog.PlayersChecked;
-						localPlayersList.UpdatePlaysList(openedProject.GetLocalTeamModel());
-					}
-				}
-
-				else if (team == Team.VISITOR) {
-					dialog.SetPlayersInfo(openedProject.VisitorTeamTemplate);
-					dialog.PlayersChecked = tNode.VisitorPlayers;
-					if (dialog.Run() == (int) ResponseType.Ok) {
-						tNode.VisitorPlayers = dialog.PlayersChecked;
-						visitorPlayersList.UpdatePlaysList(openedProject.GetVisitorTeamModel());
-					}
-				}
-				dialog.Destroy();
-				*/
+		protected virtual void OnTagPlay(Play play) {
+			LaunchPlayTagger(play);
 		}
 	}
 }

@@ -63,13 +63,13 @@ namespace LongoMatch.Gui.Component
 			var button = new CheckButton(tag.Value);
 			button.Toggled += delegate(object sender, EventArgs e) {
 				if (button.Active) {
-					if (tags.Contains(tag))
-					tags.Add(tag);
+					if (!tags.Contains(tag))
+						tags.Add(tag);
 				} else
 					tags.Remove(tag);
 			};
 			dict.Add(tag, button);
-			buttonsbox.PackStart(button, true, false, 0);
+			buttonsbox.PackStart(button, false, false, 0);
 			button.ShowAll();
 		} 
 		

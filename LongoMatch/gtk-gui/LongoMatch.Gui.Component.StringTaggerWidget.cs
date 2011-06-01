@@ -8,7 +8,7 @@ namespace LongoMatch.Gui.Component
 
 		private global::Gtk.Alignment GtkAlignment;
 
-		private global::Gtk.HButtonBox buttonsbox;
+		private global::Gtk.HBox buttonsbox;
 
 		private global::Gtk.Label titlelabel;
 
@@ -21,14 +21,15 @@ namespace LongoMatch.Gui.Component
 			// Container child LongoMatch.Gui.Component.StringTaggerWidget.Gtk.Container+ContainerChild
 			this.frame = new global::Gtk.Frame ();
 			this.frame.Name = "frame";
-			this.frame.ShadowType = ((global::Gtk.ShadowType)(0));
+			this.frame.ShadowType = ((global::Gtk.ShadowType)(2));
 			// Container child frame.Gtk.Container+ContainerChild
 			this.GtkAlignment = new global::Gtk.Alignment (0f, 0f, 1f, 1f);
 			this.GtkAlignment.Name = "GtkAlignment";
 			this.GtkAlignment.LeftPadding = ((uint)(12));
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			this.buttonsbox = new global::Gtk.HButtonBox ();
+			this.buttonsbox = new global::Gtk.HBox ();
 			this.buttonsbox.Name = "buttonsbox";
+			this.buttonsbox.Spacing = 6;
 			this.GtkAlignment.Add (this.buttonsbox);
 			this.frame.Add (this.GtkAlignment);
 			this.titlelabel = new global::Gtk.Label ();

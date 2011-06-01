@@ -355,7 +355,7 @@ namespace LongoMatch.DB
 			Db4oFactory.Configure().ObjectClass(typeof(Team)).CascadeOnDelete(true);
 			Db4oFactory.Configure().ObjectClass(typeof(HotKey)).CascadeOnDelete(true);
 			Db4oFactory.Configure().ObjectClass(typeof(Player)).CascadeOnDelete(true);
-			Db4oFactory.Configure().ObjectClass(typeof(Tag)).CascadeOnDelete(true);
+			Db4oFactory.Configure().ObjectClass(typeof(StringTag)).CascadeOnDelete(true);
 			Db4oFactory.Configure().ObjectClass(typeof(TeamTemplate)).CascadeOnDelete(true);
 			Db4oFactory.Configure().ObjectClass(typeof(Drawing)).CascadeOnDelete(true);
 		}
@@ -371,7 +371,7 @@ namespace LongoMatch.DB
 			Db4oFactory.Configure().ObjectClass(typeof(HotKey)).CascadeOnUpdate(true);
 			Db4oFactory.Configure().ObjectClass(typeof(Player)).CascadeOnUpdate(true);
 			Db4oFactory.Configure().ObjectClass(typeof(TeamTemplate)).CascadeOnUpdate(true);
-			Db4oFactory.Configure().ObjectClass(typeof(Tag)).CascadeOnDelete(true);
+			Db4oFactory.Configure().ObjectClass(typeof(StringTag)).CascadeOnDelete(true);
 			Db4oFactory.Configure().ObjectClass(typeof(Drawing)).CascadeOnUpdate(true);
 		}
 

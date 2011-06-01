@@ -129,7 +129,7 @@ namespace LongoMatch.IO
 
 		#region Private Methods
 
-		private void WriteCatagoriesData(TextWriter tx, Dictionary<Tag, List<Play>> tagsDic) {
+		/***private void WriteCatagoriesData(TextWriter tx, Dictionary<Tag, List<Play>> tagsDic) {
 			// Write Tags table
 			tx.WriteLine(String.Format("{0};{1};{2};{3};{4}",
 			                           Catalog.GetString("Tag"),
@@ -178,7 +178,7 @@ namespace LongoMatch.IO
 			}
 			tx.WriteLine();
 			tx.WriteLine();
-		}
+		}***/
 		#endregion
 	}
 }

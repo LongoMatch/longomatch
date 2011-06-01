@@ -266,7 +266,7 @@ namespace LongoMatch.Store
 			
 			foreach (var play in timeline) {
 				foreach (var player in play.Players.AllUniqueElements)
-					store.AppendValues(dict[player], new object[1] {play});
+					store.AppendValues(dict[player.Value], new object[1] {play});
 			}
 			return store;
 		}

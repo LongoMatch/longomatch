@@ -75,8 +75,8 @@ namespace LongoMatch.Store
 		
 		public List<W> GetTags(T subCategory) {
 			if (!Tags.ContainsKey(subCategory)) {
-				Log.Warning("Trying to get the tags of an unknow subcategory");
-				return new List<W>();
+				Log.Debug(String.Format("Adding subcategory {0} to store", subCategory.Name));
+				Tags[subCategory] = new List<W>();
 			}
 			return Tags[subCategory];			
 		}
@@ -86,9 +86,9 @@ namespace LongoMatch.Store
 	
 	public class StringTagStore: TagsStore<TagSubCategory, StringTag> {}
 	
-	public class PlayersTagStore: TagsStore<PlayerSubCategory, Player> {}
+	public class PlayersTagStore: TagsStore<PlayerSubCategory, PlayerTag> {}
 	
-	public class TeamsTagStore: TagsStore<PlayerSubCategory, Team> {}
+	public class TeamsTagStore: TagsStore<PlayerSubCategory, TeamTag> {}
 
 	
 	[Serializable]
@@ -101,23 +101,63 @@ namespace LongoMatch.Store
 			get;
 			set;
 		}
+		
 	}
 
 	[Serializable]
 	public class StringTag: Tag<string>
 	{
 		public StringTag() {}
+		
+		public override bool Equals (object obj)
+		{
+			StringTag tag = obj as StringTag;
+            if (tag == null)
+				return false;
+			return Value.Equals (tag.Value);
+		}
+		
+		public override int GetHashCode ()
+		{
+			return Value.GetHashCode ();
+		}
 	}
 
 	[Serializable]
 	public class PlayerTag: Tag<Player>
 	{
 		public PlayerTag() {}
+		
+		public override bool Equals (object obj)
+		{
+			PlayerTag tag = obj as PlayerTag;
+            if (tag == null)
+				return false;
+			return Value.Equals (tag.Value);
+		}
+		
+		public override int GetHashCode ()
+		{
+			return Value.GetHashCode ();
+		}
 	}
 
 	[Serializable]
 	public class TeamTag: Tag<Team>
 	{
 		public TeamTag() {}
+		
+		public override bool Equals (object obj)
+		{
+			TeamTag tag = obj as TeamTag;
+            if (tag == null)
+				return false;
+			return Value.Equals (tag.Value);
+		}
+		
+		public override int GetHashCode ()
+		{
+			return Value.GetHashCode ();
+		}
 	}
 }

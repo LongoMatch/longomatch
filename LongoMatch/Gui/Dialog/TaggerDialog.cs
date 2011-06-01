@@ -19,6 +19,9 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+
+using LongoMatch.Common;
+using LongoMatch.Gui.Component;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
 
@@ -28,24 +31,53 @@ namespace LongoMatch.Gui.Dialog
 
 	public partial class TaggerDialog : Gtk.Dialog
 	{
+		private TeamTemplate localTeamTemplate;
+		private TeamTemplate visitorTeamTemplate;
 
-		public TaggerDialog(Category cat, StringTagStore tags)
+		public TaggerDialog(Category cat, StringTagStore tags, PlayersTagStore players,
+		                    TeamTemplate localTeamTemplate, TeamTemplate visitorTeamTemplate)
 		{
 			this.Build();
-			buttonOk.Visible = false;
 			
+			this.localTeamTemplate = localTeamTemplate;
+			this.visitorTeamTemplate = visitorTeamTemplate;
+			
+			/* Iterate over all subcategories, adding a widget only for the FastTag ones */
 			foreach (var subcat in cat.SubCategories) {
-				if (subcat is TagSubCategory) {
+				if (subcat is SubCategoryTemplate) {
 					var tagcat = subcat as TagSubCategory;
-					if (!tags.Contains(tagcat))
-						continue;
-					AddSubcategory(tagcat, tags.GetTags(tagcat));
+					if (tagcat.FastTag)
+						AddTagSubcategory(tagcat, tags.GetTags(tagcat));
+				} else if (subcat is PlayerSubCategory) {
+					var tagcat = subcat as PlayerSubCategory;
+					if (tagcat.FastTag)
+						AddPlayerSubcategory(tagcat, players.GetTags(tagcat));
 				}
 			}
 		}
 		
-		public void AddSubcategory (TagSubCategory subcat, List<StringTag> tags){
+		public void AddTagSubcategory (TagSubCategory subcat, List<StringTag> tags){
+			/* the notebook starts invisible */
+			tagsnotebook.Visible = true;
 			taggerwidget1.AddSubCategory(subcat, tags);
 		}
+		
+		public void AddPlayerSubcategory (PlayerSubCategory subcat, List<PlayerTag> tags){
+			TeamTemplate template;
+			
+			/* the notebook starts invisible */
+			playersnotebook.Visible = true;
+			if (subcat.Contains(Team.LOCAL))
+				template = localTeamTemplate;
+			/* FIXME: Add support for subcategories with both teams */
+			//else if (subcat.Contains(Team.VISITOR))
+			else
+				template = visitorTeamTemplate;
+			
+			PlayersTaggerWidget widget = new PlayersTaggerWidget(subcat.Name, template, tags);
+			widget.Show();
+			playersbox.PackStart(widget, false, true, 0);
+		}
+
 	}
 }

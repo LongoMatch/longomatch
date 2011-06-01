@@ -17,7 +17,9 @@
 //
 
 using System.Collections.Generic;
+using System.Linq;
 using Gtk;
+
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
 
@@ -28,32 +30,50 @@ namespace LongoMatch.Gui.Dialog
 	public partial class PlayersSelectionDialog : Gtk.Dialog
 	{
 		TeamTemplate template;
-		Dictionary<CheckButton, Player> checkButtonsDict;
+		List<PlayerTag> selectedPlayers;
+		Dictionary<CheckButton, PlayerTag> checkButtonsDict;
 
 		public PlayersSelectionDialog()
 		{
 			this.Build();
-			checkButtonsDict = new Dictionary<CheckButton, Player>();
+			checkButtonsDict = new Dictionary<CheckButton, PlayerTag>();
+		}
+		
+		public TeamTemplate Template {
+			set{
+				SetPlayersInfo(value);
+			}
+		}
+		
+		public List<PlayerTag> SelectedPlayers {
+			set {
+				this.selectedPlayers = value;
+				foreach(var pair in checkButtonsDict)
+					pair.Key.Active = value.Contains(pair.Value);
+			}
+			get {
+				return selectedPlayers;
+			}
 		}
 
-		public void SetPlayersInfo(TeamTemplate template) {
-			CheckButton button;
-			List<Player> playersList;
+		private void SetPlayersInfo(TeamTemplate template) {
+			List<PlayerTag> playersList;
 			int i=0;
 
 			if(this.template != null)
 				return;
 
 			this.template = template;
-			playersList = template.PlayingPlayersList;
+			playersList = template.PlayingPlayersList.Select(p => new PlayerTag {Value=p}).ToList();
 
 			table1.NColumns =(uint)(playersList.Count/10);
 			table1.NRows =(uint) 10;
 
-			foreach(Player player in playersList) {
-				button = new CheckButton();
-				button.Label = player.Number + "-" + player.Name;
+			foreach(PlayerTag player in playersList) {
+				CheckButton button = new CheckButton();
+				button.Label = player.Value.Number + "-" + player.Value.Name;
 				button.Name = i.ToString();
+				button.Toggled += OnButtonToggled;
 				button.Show();
 
 				uint row_top =(uint)(i%table1.NRows);
@@ -66,20 +86,15 @@ namespace LongoMatch.Gui.Dialog
 				i++;
 			}
 		}
-
-		public List<Player> PlayersChecked {
-			set {
-				foreach(var pair in checkButtonsDict)
-					pair.Key.Active = value.Contains(pair.Value);
-			}
-			get {
-				List<Player> playersList = new List<Player>();
-				foreach(var pair in checkButtonsDict) {
-					if(pair.Key.Active)
-						playersList.Add(pair.Value);
-				}
-				return playersList;
-			}
+		
+		protected virtual void OnButtonToggled (object sender, System.EventArgs args) {
+			CheckButton button = sender as CheckButton;
+			PlayerTag player = checkButtonsDict[button];
+			
+			if (button.Active && !selectedPlayers.Contains(player))
+				selectedPlayers.Add(player);
+			else if (!button.Active)
+				selectedPlayers.Remove(player);
 		}
 	}
 }
