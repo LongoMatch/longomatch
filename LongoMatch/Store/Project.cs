@@ -48,12 +48,13 @@ namespace LongoMatch.Store
 	public class Project : IComparable
 	{
 
-
-		private List<Play> playsList;
+		private readonly Guid _UUID;
+		private List<Play> timeline;
 
 		#region Constructors
 		public Project() {
-			playsList = new List<Play>();
+			_UUID = System.Guid.NewGuid();
+			timeline = new List<Play>();
 			Categories = new Categories();
 			LocalTeamTemplate = new TeamTemplate();
 			VisitorTeamTemplate = new TeamTemplate();
@@ -62,6 +63,15 @@ namespace LongoMatch.Store
 
 		#region Properties
 
+		/// <summary>
+		/// Unique ID for the project
+		/// </summary>
+		public Guid UUID {
+			get {
+				return _UUID;
+			}
+		}
+		
 		public ProjectDescription Description {
 			get;
 			set;
@@ -98,7 +108,7 @@ namespace LongoMatch.Store
 		/// Frees all the project's resources helping the GC
 		/// </summary>
 		public void Clear() {
-			playsList.Clear();
+			timeline.Clear();
 			Categories.Clear();
 			VisitorTeamTemplate.Clear();
 			LocalTeamTemplate.Clear();
@@ -123,11 +133,9 @@ namespace LongoMatch.Store
 		/// <returns>
 		/// A <see cref="MediaTimeNode"/>: created play
 		/// </returns>
-		public Play AddPlay(Category category, Time start, Time stop,Pixbuf miniature) {
-			string count= String.Format("{0:000}",playsList.Count+1);
+		public Play AddPlay(Category category, Time start, Time stop, Pixbuf miniature) {
+			string count= String.Format("{0:000}",timeline.Count+1);
 			string name = String.Format("{0} {1}",category.Name, count);
-			// HACK: Used for capture where fps is not specified, asuming PAL@25fps
-			ushort fps = Description.File != null ? Description.File.Fps : (ushort)25;
 
 			var play = new Play {
 				Name = name,
@@ -136,9 +144,9 @@ namespace LongoMatch.Store
 				Category = category,
 				Notes = "",
 				Miniature = miniature,
-				Fps = fps,
+				Fps = Description.File.Fps,
 			};
-			playsList.Add(play);
+			timeline.Add(play);
 			return play;
 		}
 
@@ -153,7 +161,7 @@ namespace LongoMatch.Store
 		/// </param>
 		public void RemovePlays(List<Play> plays) {
 			foreach(Play play in plays)
-				playsList.Remove(play);
+				timeline.Remove(play);
 		}
 
 		/// <summary>
@@ -167,25 +175,15 @@ namespace LongoMatch.Store
 				throw new Exception("You can't remove the last Section");
 			Categories.Remove(category);
 
-			/* query for all the plays with this Category */
-			var plays =
-			        from play in playsList
-			        where play.Category.UUID == category.UUID
-			        select play;
-			/* Delete them */
-			foreach(var play in plays)
-				playsList.Remove(play);
+			timeline.RemoveAll(p => p.Category.UUID == category.UUID);
 		}
 
 		public List<Play> PlaysInCategory(Category category) {
-			return (from play in playsList
-			        where play.Category.UUID == category.UUID
-			        select play).ToList();
+			return timeline.Where(p => p.Category.UUID == category.UUID).ToList();
 		}
 
 		public List<Play> AllPlays() {
-			return (from play in playsList
-			        select play).ToList();
+			return timeline;
 		}
 
 		/// <summary>
@@ -199,15 +197,13 @@ namespace LongoMatch.Store
 			Dictionary<Category, TreeIter> itersDic = new Dictionary<Category, TreeIter>();
 			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore(typeof(Play));
 
-			IEnumerable<IGrouping<Category, Play>> queryPlaysByCategory =
-			        from play in playsList
-			        group play by play.Category;
-
 			foreach(Category cat in Categories) {
 				Gtk.TreeIter iter = dataFileListStore.AppendValues(cat);
 				itersDic.Add(cat, iter);
 			}
-
+			
+			var queryPlaysByCategory =
+				timeline.GroupBy(play => play.Category);
 			foreach(var playsGroup in queryPlaysByCategory) {
 				Category cat = playsGroup.Key;
 				if(!itersDic.ContainsKey(cat))
@@ -223,13 +219,13 @@ namespace LongoMatch.Store
 			if(project == null)
 				return false;
 			else
-				return Description.File.FilePath.Equals(project.Description.File.FilePath);
+				return UUID == project.UUID;
 		}
 
 		public int CompareTo(object obj) {
 			if(obj is Project) {
 				Project project = (Project) obj;
-				return Description.File.FilePath.CompareTo(project.Description.File.FilePath);
+				return UUID.CompareTo(project.UUID);
 			}
 			else
 				throw new ArgumentException("object is not a Project and cannot be compared");
@@ -268,7 +264,7 @@ namespace LongoMatch.Store
 				dict.Add(player, iter);
 			}
 			
-			foreach (var play in playsList) {
+			foreach (var play in timeline) {
 				foreach (var player in play.Players.AllUniqueElements)
 					store.AppendValues(dict[player], new object[1] {play});
 			}
