@@ -17,66 +17,107 @@
 //
 
 using System;
+using System.Linq;
+using System.Collections.Generic;
+
 using LongoMatch.Common;
+using LongoMatch.Interfaces;
 
 namespace LongoMatch.Store
 {
 
 	[Serializable]
-	public class Tag
+	public class TagsStore<T, W> where T:ISubCategory
+	{
+		public TagsStore(){
+			Tags = new Dictionary<T, List<W>>();
+		}
+		
+		private Dictionary<T, List<W>> Tags {
+			get;
+			set;
+		}
+		
+		public void Add(T subCategory, W tag) {
+			Log.Debug(String.Format("Adding tag {0} to subcategory{1}", subCategory, tag));
+			if (!Tags.ContainsKey(subCategory))
+				Tags.Add(subCategory, new List<W>());
+			Tags[subCategory].Add(tag);
+		}
+		
+		public void Remove(T subCategory, W tag) {
+			if (!Tags.ContainsKey(subCategory)) {
+				Log.Warning(String.Format("Trying to remove tag {0} from unknown subcategory{1}",
+				                          subCategory, tag));
+				return;
+			}
+			Tags[subCategory].Remove(tag);
+			if (Tags[subCategory].Count == 0)
+				Tags.Remove(subCategory);
+		}
+		
+		public bool Contains(T subCategory) {
+			return (Tags.ContainsKey(subCategory));
+		}
+		
+		public bool Contains(T subCategory, W tag) {
+			return (Contains(subCategory) && Tags[subCategory].Contains(tag));
+		}
+		
+		public List<W> AllUniqueElements {
+			get {
+				return (from list in Tags.Values
+				        from player in list
+				        group player by player into g
+				        select g.Key).ToList();
+			}
+		}
+		
+		public List<W> GetTags(T subCategory) {
+			if (!Tags.ContainsKey(subCategory)) {
+				Log.Warning("Trying to get the tags of an unknow subcategory");
+				return new List<W>();
+			}
+			return Tags[subCategory];			
+		}
+
+	}
+	
+	
+	public class StringTagStore: TagsStore<TagSubCategory, StringTag> {}
+	
+	public class PlayersTagStore: TagsStore<PlayerSubCategory, Player> {}
+	
+	public class TeamsTagStore: TagsStore<PlayerSubCategory, Team> {}
+
+	
+	[Serializable]
+	public class Tag<T>
 	{
 		public Tag() {
 		}
-
-		public string Name {
-			get;
-			set;
-		}
-
-		public object Value {
+		
+		public T Value {
 			get;
 			set;
 		}
 	}
 
 	[Serializable]
-	public class StringTag
+	public class StringTag: Tag<string>
 	{
-		public StringTag() {
-		}
-
-		public string Name {
-			get;
-			set;
-		}
-
-		public string Value {
-			get;
-			set;
-		}
+		public StringTag() {}
 	}
 
 	[Serializable]
-	public class PlayerTag:Tag
+	public class PlayerTag: Tag<Player>
 	{
-		public PlayerTag() {
-		}
-
-		public new Player Value {
-			get;
-			set;
-		}
+		public PlayerTag() {}
 	}
 
 	[Serializable]
-	public class TeamTag:Tag
+	public class TeamTag: Tag<Team>
 	{
-		public TeamTag() {
-		}
-
-		public new Team Value {
-			get;
-			set;
-		}
+		public TeamTag() {}
 	}
 }

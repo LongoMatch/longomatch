@@ -51,7 +51,6 @@ namespace LongoMatch.Store
 
 		private List<Play> playsList;
 
-
 		#region Constructors
 		public Project() {
 			playsList = new List<Play>();
@@ -189,13 +188,6 @@ namespace LongoMatch.Store
 			        select play).ToList();
 		}
 
-		public List<Tag> Tags {
-			get {
-				/* FIXME: Fix that when I have decide what to do with tags*/
-				return new List<Tag>();
-			}
-		}
-
 		/// <summary>
 		/// Returns a <see cref="Gtk.TreeStore"/> in which project categories are
 		/// root nodes and their respectives plays child nodes
@@ -260,38 +252,27 @@ namespace LongoMatch.Store
 		#endregion
 
 		#region Private Methods
-		private void  FillList<T>(List<T> options, String tagName, TreeStore store) {
-			foreach(var tagValue in options) {
-				/* Add a root in the tree with the option name */
-				var iter = store.AppendValues(tagName);
-				var queryByTag =
-				        (from play in playsList
-				         where play.HasTag(tagName, tagValue) == true
-				         select play);
-				/* Then add as children of the Player in the tree */
-				foreach(Play play in queryByTag)
-					store.AppendValues(iter, play);
-			}
-		}
-
-		private TreeStore GetSubCategoryModel(TagSubCategory subcat) {
-			TreeStore dataFileListStore = new TreeStore(typeof(object));
-
-			FillList(subcat.ToList(), subcat.Name, dataFileListStore);
-			return dataFileListStore;
-		}
-
-		private TreeStore GetSubCategoryModel(PlayerSubCategory subcat) {
-			TreeStore dataFileListStore = new TreeStore(typeof(object));
+		private TreeStore GetPlayersModel(Team team) {
+			Dictionary<Player, TreeIter> dict = new Dictionary<Player, TreeIter>();
+			TreeStore store = new TreeStore(typeof(object));
 			TeamTemplate template;
 
-			foreach(Team team in subcat) {
-				if(team == Team.NONE)
-					continue;
-				template = team == Team.LOCAL?LocalTeamTemplate:VisitorTeamTemplate;
-				FillList(template, subcat.Name, dataFileListStore);
+			if(team == Team.NONE)
+				return store;
+			
+			template = team == Team.LOCAL?LocalTeamTemplate:VisitorTeamTemplate;
+			
+			foreach(var player in template) {
+				/* Add a root in the tree with the option name */
+				var iter = store.AppendValues(player);
+				dict.Add(player, iter);
 			}
-			return dataFileListStore;
+			
+			foreach (var play in playsList) {
+				foreach (var player in play.Players.AllUniqueElements)
+					store.AppendValues(dict[player], new object[1] {play});
+			}
+			return store;
 		}
 		#endregion
 	}

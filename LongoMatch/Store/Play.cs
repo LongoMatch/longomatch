@@ -39,7 +39,9 @@ namespace LongoMatch.Store
 		#region Constructors
 		public Play() {
 			Drawings = new DrawingsList();
-			Tags = new List<Tag>();
+			Tags = new StringTagStore();
+			Players = new PlayersTagStore(); 
+			Teams = new TeamsTagStore();
 		}
 		#endregion
 
@@ -162,10 +164,21 @@ namespace LongoMatch.Store
 		//// <summary>
 		/// Play's tags
 		/// </summary>
-		public List<Tag> Tags {
+		public StringTagStore Tags {
 			get;
 			set;
 		}
+		
+		public PlayersTagStore Players {
+			get;
+			set;
+		}
+		
+		public TeamsTagStore Teams {
+			get;
+			set;
+		}
+		
 		#endregion
 
 		#region Public methods
@@ -181,58 +194,12 @@ namespace LongoMatch.Store
 		public bool HasFrame(int frame) {
 			return (frame>=StartFrame && frame<StopFrame);
 		}
-
-		/// <summary>
-		/// Adds a new tag to the play
-		/// </summary>
-		/// <param name="tag">
-		/// A <see cref="Tag"/>: the tag to add
-		/// </param>
-		public void AddTag(Tag tag) {
-			if(!Tags.Contains(tag))
-				Tags.Add(tag);
-		}
-
-		/// <summary>
-		/// Removes a tag to the play
-		/// </summary>
-		/// <param name="tag">
-		/// A <see cref="Tag"/>: the tag to remove
-		/// </param>
-		public void RemoveTag(Tag tag) {
-			if(Tags.Contains(tag))
-				Tags.Remove(tag);
-		}
-
-		/// <summary>
-		/// Return True if the play contains a similar tag
-		/// </summary>
-		/// <param name="name">
-		/// A <see cref="String"/> with the tag name
-		/// </param>
-		/// <param name="val">
-		/// A <see cref="System.Object"/> with tag value
-		/// </param>
-		/// <returns>
-		/// A <see cref="System.Boolean"/>
-		/// </returns>
-		public bool HasTag(String name, object val) {
-			return (from tag in Tags
-			        where(tag.Name == (string)name) && (tag.Value == val)
-			        select tag).Count() > 0;
-		}
-
+		
 		public override string ToString()
 		{
-			String[] tags = new String[Tags.Count];
-
-			for(int i=0; i<Tags.Count; i++)
-				tags[i] = Tags[i].Value.ToString();
-
 			return  "<b>"+Catalog.GetString("Name")+": </b>"+Name+"\n"+
 			        "<b>"+Catalog.GetString("Start")+": </b>"+Start.ToMSecondsString()+"\n"+
-			        "<b>"+Catalog.GetString("Stop")+": </b>"+Stop.ToMSecondsString()+"\n"+
-			        "<b>"+Catalog.GetString("Tags")+": </b>"+ String.Join(" ; ", tags);
+			        "<b>"+Catalog.GetString("Stop")+": </b>"+Stop.ToMSecondsString();
 		}
 		#endregion
 	}
