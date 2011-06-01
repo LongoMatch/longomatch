@@ -27,8 +27,6 @@ namespace LongoMatch.Gui.Dialog
 			w1.Add (this.taggerwidget1);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(w1[this.taggerwidget1]));
 			w2.Position = 0;
-			w2.Expand = false;
-			w2.Fill = false;
 			// Internal child LongoMatch.Gui.Dialog.TaggerDialog.ActionArea
 			global::Gtk.HButtonBox w3 = this.ActionArea;
 			w3.Name = "dialog1_ActionArea";

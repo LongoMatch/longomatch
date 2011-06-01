@@ -195,6 +195,8 @@ namespace LongoMatch
 			else
 				miniature = null;
 			var play = openedProject.AddPlay(category, start, stop,miniature);
+			TaggerDialog tg = new TaggerDialog(category, play.Tags);
+			tg.Run();
 			treewidget.AddPlay(play);
 			tagsTreeWidget.AddPlay(play);
 			timeline.AddPlay(play);

@@ -193,6 +193,10 @@
     <File subtype="Directory" buildaction="Compile" name="Utils" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/SubCategoryTagsEditor.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/PlayersTaggerWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlayersTaggerWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/StringTaggerWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.StringTaggerWidget.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />

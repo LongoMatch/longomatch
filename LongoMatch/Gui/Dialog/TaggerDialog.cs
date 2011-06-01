@@ -17,6 +17,7 @@
 //
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
@@ -28,11 +29,23 @@ namespace LongoMatch.Gui.Dialog
 	public partial class TaggerDialog : Gtk.Dialog
 	{
 
-		public TaggerDialog()
+		public TaggerDialog(Category cat, StringTagStore tags)
 		{
 			this.Build();
 			buttonOk.Visible = false;
+			
+			foreach (var subcat in cat.SubCategories) {
+				if (subcat is TagSubCategory) {
+					var tagcat = subcat as TagSubCategory;
+					if (!tags.Contains(tagcat))
+						continue;
+					AddSubcategory(tagcat, tags.GetTags(tagcat));
+				}
+			}
 		}
-
+		
+		public void AddSubcategory (TagSubCategory subcat, List<StringTag> tags){
+			taggerwidget1.AddSubCategory(subcat, tags);
+		}
 	}
 }

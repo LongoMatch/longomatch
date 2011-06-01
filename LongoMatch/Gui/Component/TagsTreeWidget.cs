@@ -33,6 +33,17 @@ namespace LongoMatch.Gui.Component
 		AND = 1
 	}
 
+	public class Tag:List<string> 
+	{
+		public string Value {
+			set {
+				
+			}
+			get {
+				return "";
+			}
+		}
+	}
 
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
@@ -135,8 +146,8 @@ namespace LongoMatch.Gui.Component
 
 		public void UpdateTagsList() {
 			(tagscombobox.Model as ListStore).Clear();
-			foreach(Tag tag in project.Tags)
-				tagscombobox.AppendText(tag.Value.ToString());
+			//foreach(Tag tag in project.Tags)
+			//	tagscombobox.AppendText(tag.Value.ToString());
 		}
 
 		private void AddFilterWidget(Tag tag) {
@@ -203,13 +214,13 @@ namespace LongoMatch.Gui.Component
 
 			if(filterType == FilterType.OR) {
 				foreach(Tag tag in filterTags) {
-					if(tNode.Tags.Contains(tag))
+				//	if(tNode.Tags.Contains(tag))
 						return true;
 				}
 				return false;
 			} else {
 				foreach(Tag tag in filterTags) {
-					if(! tNode.Tags.Contains(tag))
+					//if(! tNode.Tags.Contains(tag))
 						return false;
 				}
 				return true;
