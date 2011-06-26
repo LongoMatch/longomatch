@@ -50,23 +50,21 @@ AM_GLIB_GNU_GETTEXT
 dnl Mono and C# compiler
 dnl Check first for a 4.0 compiler or than fallback to 2.0
 SHAMROCK_CHECK_MONO_MODULE(2.4.0)
-AC_PATH_PROG(MCS, dmcs, no)
-	if test "x$MCS" = "xno"; then
-		unset ac_cv_path_MCS
-		SHAMROCK_FIND_MONO_2_0_COMPILER
-		SHAMROCK_CHECK_MONO_2_0_GAC_ASSEMBLIES([	
+PKG_CHECK_EXISTS([mono >= 2.8],
+		[SHAMROCK_FIND_MONO_4_0_COMPILER
+		SHAMROCK_CHECK_MONO_4_0_GAC_ASSEMBLIES([
 			System.Data
 			Mono.Cairo
 			Mono.Posix
-		])
-	else
-		AC_SUBST(MCS, ["$MCS"])
-		SHAMROCK_CHECK_MONO_4_0_GAC_ASSEMBLIES([	
+		])]
+,
+		[SHAMROCK_FIND_MONO_2_0_COMPILER
+		SHAMROCK_CHECK_MONO_2_0_GAC_ASSEMBLIES([
 			System.Data
 			Mono.Cairo
 			Mono.Posix
-		])
-	fi
+		])])
+AC_SUBST(MCS, ["$MCS"])
 SHAMROCK_FIND_MONO_RUNTIME
 
 dnl NUnit (optional)
