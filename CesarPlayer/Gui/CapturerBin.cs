@@ -301,7 +301,7 @@ namespace LongoMatch.Gui
 				                                     MessageType.Question, ButtonsType.Ok,
 				                                     Catalog.GetString("Device disconnected. " +
 				                                     	"The capture will be paused"));
-				md.Icon=Stetic.IconLoader.LoadIcon(md, "longomatch", Gtk.IconSize.Dialog, 48);
+				md.Icon=Stetic.IconLoader.LoadIcon(md, "longomatch", Gtk.IconSize.Dialog);
 				md.Run();
 				md.Destroy();			
 			} else {
@@ -310,7 +310,7 @@ namespace LongoMatch.Gui
 				                                     MessageType.Question, ButtonsType.YesNo,
 				                                     Catalog.GetString("Device reconnected." +
 				                                     	"Do you want to restart the capture?"));
-				md.Icon=Stetic.IconLoader.LoadIcon(md, "longomatch", Gtk.IconSize.Dialog, 48);
+				md.Icon=Stetic.IconLoader.LoadIcon(md, "longomatch", Gtk.IconSize.Dialog);
 				if (md.Run() == (int)ResponseType.Yes){
 					Console.WriteLine ("Accepted to toggle pause");
 					TogglePause();
