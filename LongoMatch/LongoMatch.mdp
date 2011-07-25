@@ -197,6 +197,7 @@
     <File subtype="Code" buildaction="Compile" name="Gui/TreeView/ListTreeViewBase.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/CategoriesScale.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Cairo.cs" />
+    <File subtype="Code" buildaction="Compile" name="Common/GStreamer.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />

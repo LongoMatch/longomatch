@@ -7,6 +7,7 @@ SOURCES = \
 	Common/Enums.cs \
 	Common/Cairo.cs \
 	Common/Constants.cs \
+	Common/GStreamer.cs \
 	Compat/0.0/DatabaseMigrator.cs \
 	Compat/0.0/DB/DataBase.cs \
 	Compat/0.0/DB/MediaFile.cs \

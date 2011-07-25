@@ -55,7 +55,9 @@ namespace LongoMatch
 
 			GLib.ExceptionManager.UnhandledException += new GLib.UnhandledExceptionHandler(OnException);
 
-			LongoMatch.Video.Player.GstPlayer.InitBackend("");
+			GStreamer.Init();
+			if (! GStreamer.CheckInstallation())
+				return;
 
 			//Comprobamos los archivos de inicio
 			CheckDirs();
@@ -178,7 +180,6 @@ namespace LongoMatch
 			
 			if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
 				baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../");
-				Environment.SetEnvironmentVariable("GST_PLUGIN_PATH",RelativeToPrefix("lib\\gstreamer-0.10"));
 			}
 			else
 				baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../../");
