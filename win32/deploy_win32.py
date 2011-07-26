@@ -1,7 +1,6 @@
 #!/usr/bin/env python
-# PiTiVi , Non-linear video editor
 #
-# Copyright (c) 2009, Andoni Morales Alastruey <ylatuya@gmail.com>
+# Copyright (c) 2011, Andoni Morales Alastruey <ylatuya@gmail.com>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -15,110 +14,203 @@
 #
 # You should have received a copy of the GNU Lesser General Public
 # License along with this program; if not, write to the
-# Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-# Boston, MA 02111-1307, USA.
+# Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+# Boston, MA 02110-1301, USA.
 
 import os
 import sys
 import shutil
+from optparse import OptionParser
 
-MONO_PATH = 'c:\\mono'
-GST_PATH = 'c:\\gstreamer.local'
-GTK_PATH = 'c:\\gtk'
-
-for name in [MONO_PATH, GST_PATH, GTK_PATH]:
-    if not os.path.exists(name):
-        print '%s not found' % name
-        exit(1)
+WINFORMS_DEPS = ['System.Windows.Forms\\2.0.0.0__b77a5c561934e089\\System.Windows.Forms.dll',
+                 'System.Drawing\\2.0.0.0__b03f5f7f11d50a3a\\System.Drawing.dll',
+                 'Accessibility\\2.0.0.0__b03f5f7f11d50a3a\\Accessibility.dll']
 
 GTK_DEPS = ['freetype6.dll', 'libatk-1.0-0.dll', 'libcairo-2.dll', 'libgailutil-18.dll',
             'libgdk_pixbuf-2.0-0.dll', 'libgdk-win32-2.0-0.dll', 'libgtk-win32-2.0-0.dll',
-            'libpng14-14.dll', 'zlib1.dll' ]
+            'libpng14-14.dll', 'libfontconfig-1.dll', 'libpango-1.0-0.dll', 'libpangoft2-1.0-0.dll',
+	    'libpangocairo-1.0-0.dll', 'libpangowin32-1.0-0.dll', 'zlib1.dll' ]
 
 MONO_DEPS = ['mono.dll', 'MonoPosixHelper.dll', 'pangosharpglue-2.dll', 'gtksharpglue-2.dll',
              'glibsharpglue-2.dll', 'gdksharpglue-2.dll', 'atksharpglue-2.dll', 'intl.dll']
 
+
+GST_EXT_DEPS = ['avcodec-gpl-52.dll', 'avcore-gpl-0.dll', 'avdevice-gpl-52.dll', 'avfilter-gpl-1.dll', 
+	    'avformat-gpl-52.dll', 'avutil-gpl-50.dll', 'libFLAC-8.dll', 'liba52-0.dll',
+	    'libbz2.dll', 'libdca-0.dll', 'libfaac-0.dll', 'libfaad-2.dll', 'libgcrypt-11.dll', 'libjpeg-8.dll',
+	    'libogg-0.dll', 'libmp3lame-0.dll', 'libmpeg2-0.dll', 'liborc-0.4-0.dll', 'librsvg-2-2.dll',
+	    'libxml2-2.dll', 'libschroedinger-1.0-0.dll', 'libsoup-2.4-1.dll', 'libtheora-0.dll',
+	    'libtheoradec-1.dll', 'libvorbisenc-2.dll', 'libvorbis-0.dll', 'libx264-107.dll',
+	    'libgpg-error-0.dll', 'libexpat-1.dll', 'libgnutls-26.dll', 'libcroco-0.6-3.dll',
+	    'libtasn1-3.dll', 'xvidcore.dll', 'z.dll']
+
+GST_PLUGINS_DEPS = ['libgnl.dll', 'libgsta52dec.dll', 'libgstadder.dll', 'libgstalpha.dll', 'libgstalphacolor.dll',
+		    'libgstasf.dll', 'libgstasfmux.dll', 'libgstaudioconvert.dll', 'libgstaudiorate.dll',
+		    'libgstaudioresample.dll', 'libgstaudiotestsrc.dll', 'libgstautoconvert.dll', 
+		    'libgstautodetect.dll', 'libgstavi.dll', 'libgstcairo.dll', 'libgstcamerabin.dll',
+		    'libgstcoreelements.dll', 'libgstd3dvideosink.dll', 'libgstdecodebin2.dll',
+		    'libgstdeinterlace.dll', 'libgstdirectsound.dll', 'libgstdirectsoundsrc.dll',
+		    'libgstdshowdecwrapper.dll', 'libgstdshowsrcwrapper.dll', 'libgstdtsdec.dll',
+		    'libgstfaac.dll', 'libgstfaad.dll', 'libgstffmpeg-gpl.dll', 'libgstffmpegcolorspace.dll',
+		    'libgstflac.dll', 'libgstflv.dll', 'libgstgio.dll', 'libgstjpeg.dll', 'libgstlame.dll',
+		    'libgstmatroska.dll', 'libgstmpeg2dec.dll', 'libgstmpeg4videoparse.dll',
+		    'libgstmpegaudioparse.dll', 'libgstmpegdemux.dll', 'libgstmpegstream.dll',
+		    'libgstmpegvideoparse.dll', 'libgstogg.dll', 'libgstplaybin.dll', 'libgstpng.dll',
+		    'libgstqtdemux.dll', 'libgstqtmux.dll', 'libgstrsvg.dll', 'libgstschro.dll',
+		    'libgstselector.dll', 'libgstsouphttpsrc.dll', 'libgsttheora.dll',
+		    'libgsttypefindfunctions.dll', 'libgstvideobalance.dll', 'libgstvideobox.dll',
+		    'libgstvideocrop.dll', 'libgstvideomixer.dll', 'libgstvideorate.dll',
+		    'libgstvideoscale.dll', 'libgstvideotestsrc.dll', 'libgstvolume.dll', 'libgstvorbis.dll',
+		    'libgstvp8.dll', 'libgstx264.dll', 'libgstxvid.dll']
+
+GST_BIN_DEPS = ['gst-inspect.exe', 'gst-launch.exe', 'gst-typefind.exe']
+
+GST_DLL_DEPS = ['libgstapp-0.10.dll', 'libgstaudio-0.10.dll', 'libgstbase-0.10.dll',
+		'libgstbasevideo-0.10.dll', 'libgstcdda-0.10.dll', 'libgstcontroller-0.10.dll',
+		'libgstdataprotocol-0.10.dll', 'libgstsdp-0.10.dll', 'libgstfft-0.10.dll',
+		'libgstinterfaces-0.10.dll', 'libgstnet-0.10.dll', 'libgstnetbuffer-0.10.dll',
+		'libgstpbutils-0.10.dll', 'libgstphotography-0.10.dll', 'libgstreamer-0.10.dll',
+		'libgsttag-0.10.dll', 'libgstrtsp-0.10.dll', 'libgstrtp-0.10.dll', 'libgstriff-0.10.dll',
+		'libgstvideo-0.10.dll']
+
+GLIB_DEPS = ['libgio-2.0-0.dll', 'libglib-2.0-0.dll', 'libgmodule-2.0-0.dll', 'libgobject-2.0-0.dll', 'libgthread-2.0-0.dll']
+
 IMAGES = ['background.png', 'longomatch.png']
 
-LINGUAS = ['cs', 'da', 'de', 'es', 'nb', 'sl', 'sv']
 
-# Set-up working folder
-root_dir = os.path.abspath(os.path.join(os.getcwd(), '..'))
-deps_dir = os.path.join(root_dir, 'win32', 'deps')
-# Create a Unix-like diretory tree to deploy LongoMatch
-print ('Create deployment tree')
-dist_dir = os.path.join (root_dir, 'win32', 'dist')
-if os.path.exists(dist_dir):
-     try:
-          shutil.rmtree(dist_dir)
-     except:
-          print "ERROR: Can't delete folder %s" % dist_dir
-          exit(1)
+class Deploy():
 
-bin_dir = os.path.join (dist_dir, 'bin')
-etc_dir = os.path.join (dist_dir, 'etc')
-share_dir = os.path.join (dist_dir, 'share')
-locale_dir = os.path.join (share_dir, 'locale')
-lib_dir = os.path.join (dist_dir, 'lib')
-images_dir = os.path.join (share_dir, 'longomatch', 'images')
+    def __init__(self, gst_path, gtk_path, mono_path):
+        self.gst_path = gst_path
+        self.gtk_path = gtk_path
+        self.mono_path = mono_path
+	self.check_paths()
+        self.set_path_variables()
+        self.create_deployment_folder()
+	self.deploy_glib()
+        self.deploy_gtk()
+        self.deploy_gstreamer()
+	self.deploy_mono()
+	self.deploy_images()
+	self.deploy_themes()
+        self.close()
 
-for path in [dist_dir, bin_dir, etc_dir, images_dir, locale_dir, lib_dir]:
-     try:
-        os.makedirs(path)
-     except:
-        pass
+    def close(self, message=None):
+        if message is not None:
+            print 'ERROR: %s' % message
+            exit(1)
+        else:
+            exit(0)
 
-print ('Deploying GStreamer dependencies')
-# Copy the gstreamer's binaries to the dist folder
-for name in os.listdir(os.path.join(GST_PATH, 'bin')):
-     shutil.copy (os.path.join(GST_PATH, 'bin', name), bin_dir)
-shutil.copytree(os.path.join(GST_PATH, 'lib', 'gstreamer-0.10'),
-                os.path.join(lib_dir, 'gstreamer-0.10'))
+    def check_paths(self):
+        for name in [self.mono_path, self.gst_path, self.gtk_path]:
+            if not os.path.exists(name):
+                self.close('%s not found' % name)
 
-print ('Deploying Gtk dependencies')
-# Copy Gtk deps to the dist folder
-for name in ['fonts', 'pango', 'gtk-2.0']:
-     shutil.copytree(os.path.join(GTK_PATH, 'etc', name),
-                     os.path.join(etc_dir, name))
-shutil.copytree(os.path.join(GTK_PATH, 'lib', 'gtk-2.0'),
-                os.path.join(lib_dir, name))
-for name in LINGUAS:
-    shutil.copytree(os.path.join(GTK_PATH, 'share', 'locale', name),
-                    os.path.join(share_dir, 'locale', name))
+    def set_path_variables(self):
+        self.curr_dir = os.getcwd()
+        if not self.curr_dir.endswith('win32'):
+            self.close("The script must be run from the 'win32' folder")
+        self.root_dir = os.path.abspath(os.path.join(self.curr_dir,'..'))
+        self.deps_dir = os.path.join(self.root_dir, 'win32', 'deps')
+        self.dist_dir = os.path.join(self.root_dir, 'win32', 'dist')
+        self.bin_dir = os.path.join(self.dist_dir, 'bin')
+        self.etc_dir = os.path.join(self.dist_dir, 'etc')
+        self.share_dir = os.path.join(self.dist_dir, 'share')
+        self.lib_dir = os.path.join(self.dist_dir, 'lib')
+        self.images_dir = os.path.join (self.share_dir, 'longomatch', 'images')
+        self.plugins_dir = os.path.join(self.lib_dir, 'gstreamer-0.10')
 
-for name in GTK_DEPS:
-    shutil.copy(os.path.join(GTK_PATH, 'bin', name), bin_dir)
+    def create_deployment_folder(self):
+        print 'Create deployment directory'
+        if os.path.exists(self.dist_dir):
+            try:
+                shutil.rmtree(self.dist_dir)
+            except :
+                self.close("ERROR: Can't delete folder %s" % self.dist_dir)
+        for path in [self.dist_dir, self.bin_dir, self.etc_dir,
+	             self.images_dir, self.lib_dir, self.plugins_dir]:
+            try:   
+                os.makedirs(path)
+	    except:
+	        pass
 
-print ('Deploying Mono dependences')
-# Copy Mono deps to the dist folder
-for name in MONO_DEPS:
-    shutil.copy(os.path.join(MONO_PATH, 'bin', name), bin_dir)
-# Gtk.sharp load them dinamically before 2.12.10.
-# FIXME: Delete that when gtk-sharp 2.12.10 is released
-for name in ['System.Windows.Forms\\2.0.0.0__b77a5c561934e089\\System.Windows.Forms.dll',
-             'System.Drawing\\2.0.0.0__b03f5f7f11d50a3a\\System.Drawing.dll',
-             'Accessibility\\2.0.0.0__b03f5f7f11d50a3a\\Accessibility.dll']:
-    shutil.copy(os.path.join(MONO_PATH, 'lib\\mono\\gac', name), bin_dir)
+    def deploy_gtk(self):
+        print 'Deploying Gtk dependencies'
+        # Copy Gtk files to the dist folder
+        for name in ['fonts', 'pango', 'gtk-2.0']:
+            shutil.copytree(os.path.join(self.gtk_path, 'etc', name),
+                     os.path.join(self.etc_dir, name))
+        shutil.copytree(os.path.join(self.gtk_path, 'lib', 'gtk-2.0'),
+            os.path.join(self.lib_dir, name))
+    	for name in GTK_DEPS:
+            shutil.copy(os.path.join(self.gtk_path, 'bin', name), self.bin_dir)
 
-print ('Deploying images')
-lgm_images_dir = os.path.join(root_dir, 'LongoMatch', 'Images')
-for name in IMAGES:
-    shutil.copy(os.path.join(lgm_images_dir, name), images_dir)
-shutil.copytree(os.path.join(deps_dir, 'icons'),
-                os.path.join(share_dir, 'icons'))
+    def deploy_mono(self):
+        print 'Deploying Mono dependences'
+        for name in MONO_DEPS:
+            shutil.copy(os.path.join(self.mono_path, 'bin', name), self.bin_dir)
+        # Gtk.sharp load them dinamically before 2.12.10.
+        # FIXME: Delete that when gtk-sharp 2.12.10 is released
+	for name in WINFORMS_DEPS:
+            shutil.copy(os.path.join(self.mono_path, 'lib\\mono\\gac', name), self.bin_dir)
 
-print ('Deploying theming support')
-deps_engines_dir = os.path.join(deps_dir, 'engines')
-for name in os.listdir(deps_engines_dir):
-    shutil.copy(os.path.join(deps_engines_dir, name),
-                os.path.join(lib_dir, 'gtk-2.0', '2.10.0', 'engines'))
-shutil.copytree(os.path.join(deps_dir, 'themes'),
-                os.path.join(share_dir, 'themes'))
-shutil.copy(os.path.join(deps_dir, 'gtkrc'),
-            os.path.join(etc_dir, 'gtk-2.0'))
-shutil.copy(os.path.join(deps_dir, 'ThemeSelector.exe'), bin_dir)
+    def deploy_themes(self):
+        print 'Deploying theming support'
+        deps_engines_dir = os.path.join(self.deps_dir, 'engines')
+        for filename in os.listdir(deps_engines_dir):
+            shutil.copy(os.path.join(deps_engines_dir, filename),
+                        os.path.join(self.lib_dir, 'gtk-2.0', '2.10.0', 'engines'))
+        shutil.copytree(os.path.join(self.deps_dir, 'themes'),
+                        os.path.join(self.share_dir, 'themes'))
+        shutil.copy(os.path.join(self.deps_dir, 'gtkrc'),
+                    os.path.join(self.etc_dir, 'gtk-2.0'))
+        shutil.copy(os.path.join(self.deps_dir, 'ThemeSelector.exe'), self.bin_dir)
+
+    def deploy_images(self):
+        print 'Deploying images'
+	lgm_images_dir = os.path.join(self.root_dir, 'LongoMatch', 'Images')
+        for name in IMAGES:
+            shutil.copy(os.path.join(lgm_images_dir, name), self.images_dir)
+        shutil.copytree(os.path.join(self.deps_dir, 'icons'),
+                        os.path.join(self.share_dir, 'icons'))
+
+    def deploy_glib(self):
+        print 'Deploying GLib dependencies'
+        for dll in GLIB_DEPS:
+            shutil.copy (os.path.join(self.gst_path, 'bin', dll), self.bin_dir)
+
+    def deploy_gstreamer(self):
+        print 'Deploying GStreamer dependencies'
+        for deps in [GST_BIN_DEPS, GST_EXT_DEPS, GST_DLL_DEPS]:
+            for dll in deps:
+                shutil.copy (os.path.join(self.gst_path, 'bin', dll), self.bin_dir)
+        for dll in GST_PLUGINS_DEPS:
+            shutil.copy (os.path.join(self.gst_path, 'lib', 'gstreamer-0.10', dll),
+		         self.plugins_dir)
+    
+     def deploy_longomatch(self):
+         pass
 
 
+def main():
+    usage = "usage: %prog [options]"
+    parser = OptionParser(usage)
+    parser.add_option("-g", "--gst-path", action="store",
+            dest="gst_path",default="c:\\gstreamer", type="string",
+            help="GStreamer installation path")
+    parser.add_option("-k", "--gtk-path", action="store",
+            dest="gtk_path",default="c:\\gtk", type="string",
+            help="GTK+ installation path")
+    parser.add_option("-m", "--mono-path", action="store",
+            dest="mono_path",default="c:\\mono", type="string",
+            help="MONO installation path")
+
+    (options, args) = parser.parse_args()
+    Deploy(options.gst_path, options.gtk_path, options.mono_path)
+
+if __name__ == "__main__":
+    main()
 
 
 
