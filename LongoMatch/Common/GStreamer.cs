@@ -95,13 +95,11 @@ namespace LongoMatch.Common
 		private static bool ElementExists (IntPtr registry, string element_name) {
 			bool ret = false;
 			
-			Console.WriteLine ("Checking plugin: " + element_name);
 			var feature = gst_registry_lookup_feature (registry, element_name);
 			if (feature != IntPtr.Zero){
 				ret = true;
 				gst_object_unref (feature);
 			}
-			Console.WriteLine ("Checking plugin: " + ret);
 			return ret;
 		}
 		
