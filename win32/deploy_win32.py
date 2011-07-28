@@ -50,7 +50,7 @@ GST_EXT_DEPS = ['avcodec-gpl-52.dll', 'avcore-gpl-0.dll', 'avdevice-gpl-52.dll',
         'libxml2-2.dll', 'libschroedinger-1.0-0.dll', 'libsoup-2.4-1.dll', 'libtheora-0.dll',
         'libtheoradec-1.dll', 'libvorbisenc-2.dll', 'libvorbis-0.dll', 'libx264-107.dll',
         'libgpg-error-0.dll', 'libexpat-1.dll', 'libgnutls-26.dll', 'libcroco-0.6-3.dll',
-        'libtasn1-3.dll', 'xvidcore.dll', 'z.dll']
+        'libtasn1-3.dll', 'xvidcore.dll', 'z.dll', 'pthreadGC2.dll', 'libiconv-2.dll']
 
 GST_PLUGINS_DEPS = ['libgnl.dll', 'libgsta52dec.dll', 'libgstadder.dll', 'libgstalpha.dll', 'libgstalphacolor.dll',
             'libgstasf.dll', 'libgstasfmux.dll', 'libgstaudioconvert.dll', 'libgstaudiorate.dll',
