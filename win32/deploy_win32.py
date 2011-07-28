@@ -20,6 +20,8 @@
 import os
 import sys
 import shutil
+import shlex
+import subprocess
 from optparse import OptionParser
 
 WINFORMS_DEPS = ['System.Windows.Forms\\2.0.0.0__b77a5c561934e089\\System.Windows.Forms.dll',
@@ -29,11 +31,17 @@ WINFORMS_DEPS = ['System.Windows.Forms\\2.0.0.0__b77a5c561934e089\\System.Window
 GTK_DEPS = ['freetype6.dll', 'libatk-1.0-0.dll', 'libcairo-2.dll', 'libgailutil-18.dll',
             'libgdk_pixbuf-2.0-0.dll', 'libgdk-win32-2.0-0.dll', 'libgtk-win32-2.0-0.dll',
             'libpng14-14.dll', 'libfontconfig-1.dll', 'libpango-1.0-0.dll', 'libpangoft2-1.0-0.dll',
-        'libpangocairo-1.0-0.dll', 'libpangowin32-1.0-0.dll', 'zlib1.dll' ]
+            'libpangocairo-1.0-0.dll', 'libpangowin32-1.0-0.dll', 'zlib1.dll' ]
 
 MONO_DEPS = ['mono.dll', 'MonoPosixHelper.dll', 'pangosharpglue-2.dll', 'gtksharpglue-2.dll',
              'glibsharpglue-2.dll', 'gdksharpglue-2.dll', 'atksharpglue-2.dll', 'intl.dll']
 
+MONO_LIB_DEPS = ['mscorlib.dll', 'Mono.Cairo.dll', 'System.dll', 'System.Configuration.dll',
+                 'System.Xml.dll', 'System.Security.dll', 'Mono.Security.dll', 'Mono.Posix.dll']
+
+MONO_GAC_DEPS = ['gdk-sharp', 'glib-sharp', 'pango-sharp', 'gtk-sharp', 'atk-sharp']
+
+GTK_GAC_V = '2.12.0.0__35e10195dab3c99f'
 
 GST_EXT_DEPS = ['avcodec-gpl-52.dll', 'avcore-gpl-0.dll', 'avdevice-gpl-52.dll', 'avfilter-gpl-1.dll', 
         'avformat-gpl-52.dll', 'avutil-gpl-50.dll', 'libFLAC-8.dll', 'liba52-0.dll',
@@ -97,6 +105,7 @@ class Deploy():
         self.deploy_msys()
         self.deploy_images()
         self.deploy_themes()
+        self.deploy_longomatch()
         self.close()
 
     def close(self, message=None):
@@ -125,6 +134,7 @@ class Deploy():
         self.lib_dir = os.path.join(self.dist_dir, 'lib')
         self.images_dir = os.path.join (self.share_dir, 'longomatch', 'images')
         self.plugins_dir = os.path.join(self.lib_dir, 'gstreamer-0.10')
+        self.mono_lib_dir = os.path.join(self.lib_dir, 'mono', '2.0')
 
     def create_deployment_folder(self):
         print 'Create deployment directory'
@@ -134,7 +144,8 @@ class Deploy():
             except :
                 self.close("ERROR: Can't delete folder %s" % self.dist_dir)
         for path in [self.dist_dir, self.bin_dir, self.etc_dir,
-                 self.images_dir, self.lib_dir, self.plugins_dir]:
+                     self.images_dir, self.lib_dir, self.plugins_dir,
+                     self.mono_lib_dir]:
             try:   
                 os.makedirs(path)
             except:
@@ -152,9 +163,18 @@ class Deploy():
             shutil.copy(os.path.join(self.gtk_path, 'bin', name), self.bin_dir)
 
     def deploy_mono(self):
-        print 'Deploying Mono dependences'
+        print 'Deploying Mono dependencies'
         for name in MONO_DEPS:
             shutil.copy(os.path.join(self.mono_path, 'bin', name), self.bin_dir)
+        shutil.copy(os.path.join(self.mono_path, 'lib', 'mono', '2.0', 'mscorlib.dll'),
+                        self.mono_lib_dir)
+        for name in MONO_LIB_DEPS:
+            shutil.copy(os.path.join(self.mono_path, 'lib', 'mono', '2.0', name),
+                        self.bin_dir)
+        for name in MONO_GAC_DEPS:
+            shutil.copy(os.path.join(self.mono_path, 'lib', 'mono', 'gac', name,
+                                     GTK_GAC_V, '%s.dll' % name),
+                        self.bin_dir)
         # Gtk.sharp load them dinamically before 2.12.10.
         # FIXME: Delete that when gtk-sharp 2.12.10 is released
         for name in WINFORMS_DEPS:
@@ -195,9 +215,13 @@ class Deploy():
                  self.plugins_dir)
     
     def deploy_longomatch(self):
-        pass
+        print 'Deploying LongoMatch'
+        args =shlex.split('make -f Makefile.win32 install')
+        p = subprocess.call(args, cwd=os.path.join(self.curr_dir, '..'))
+        shutil.copy(os.path.join(self.deps_dir, 'Db4objects.Db4o.dll'), self.bin_dir)
 
     def deploy_msys(self):
+        print 'Deploying msys'
         for dll in MSYS_DEPS:
             shutil.copy (os.path.join(self.msys_path, 'bin', dll), self.bin_dir)
          

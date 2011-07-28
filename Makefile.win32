@@ -116,6 +116,7 @@ LONGOMATCH_FILES = \
 	Common/Enums.cs \
 	Common/Constants.cs \
 	Common/Cairo.cs\
+	Common/GStreamer.cs\
 	Compat/0.0/DatabaseMigrator.cs \
 	Compat/0.0/DB/DataBase.cs \
 	Compat/0.0/DB/MediaFile.cs \
@@ -289,6 +290,7 @@ all: all-before ${GMO_FILES} ${LIBCESARPLAYER} bundle  all-after
 
 install: $(LIBCESARPLAYER) ${MO_FILES}
 	cp $(LIBCESARPLAYER) "$(BIN_DIR)"
+	cp $(CESARPLAYER) "$(BIN_DIR)"
 	cp $(LONGOMATCH_BUNDLED) "$(BIN_DIR)\LongoMatch.exe"
 
 clean: clean-custom
@@ -297,7 +299,7 @@ clean: clean-custom
 bundle:$(LONGOMATCH_PRE)
 	windres LongoMatch/images/minilogo.rc ${BUILD_DIR}/minilogo.o
 	cp $(DB4O) ${BUILD_DIR}/.
-	export MONO_PATH=${BUILD_DIR}/ && $(MONO) $(MKBUNDLE) $(LONGOMATCH_PRE) --deps -c -o ${BUILD_DIR}/temp.c -oo ${BUILD_DIR}/temp.o
+	export MONO_PATH=${BUILD_DIR}/ && $(MONO) $(MKBUNDLE) $(LONGOMATCH_PRE) -c -o ${BUILD_DIR}/temp.c -oo ${BUILD_DIR}/temp.o
 	export PKG_CONFIG_PATH=$(MONO_INSTALL_PATH)/lib/pkgconfig/ && $(CC) -mno-cygwin -g -o $(LONGOMATCH_BUNDLED) -Wall ${BUILD_DIR}/temp.c `pkg-config --cflags --libs mono`  ${BUILD_DIR}/minilogo.o ${BUILD_DIR}/temp.o 
      
 $(GMO_FILES): $(BUILD_DIR)/%.gmo: po/%.po
