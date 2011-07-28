@@ -29,49 +29,49 @@ WINFORMS_DEPS = ['System.Windows.Forms\\2.0.0.0__b77a5c561934e089\\System.Window
 GTK_DEPS = ['freetype6.dll', 'libatk-1.0-0.dll', 'libcairo-2.dll', 'libgailutil-18.dll',
             'libgdk_pixbuf-2.0-0.dll', 'libgdk-win32-2.0-0.dll', 'libgtk-win32-2.0-0.dll',
             'libpng14-14.dll', 'libfontconfig-1.dll', 'libpango-1.0-0.dll', 'libpangoft2-1.0-0.dll',
-	    'libpangocairo-1.0-0.dll', 'libpangowin32-1.0-0.dll', 'zlib1.dll' ]
+        'libpangocairo-1.0-0.dll', 'libpangowin32-1.0-0.dll', 'zlib1.dll' ]
 
 MONO_DEPS = ['mono.dll', 'MonoPosixHelper.dll', 'pangosharpglue-2.dll', 'gtksharpglue-2.dll',
              'glibsharpglue-2.dll', 'gdksharpglue-2.dll', 'atksharpglue-2.dll', 'intl.dll']
 
 
 GST_EXT_DEPS = ['avcodec-gpl-52.dll', 'avcore-gpl-0.dll', 'avdevice-gpl-52.dll', 'avfilter-gpl-1.dll', 
-	    'avformat-gpl-52.dll', 'avutil-gpl-50.dll', 'libFLAC-8.dll', 'liba52-0.dll',
-	    'libbz2.dll', 'libdca-0.dll', 'libfaac-0.dll', 'libfaad-2.dll', 'libgcrypt-11.dll', 'libjpeg-8.dll',
-	    'libogg-0.dll', 'libmp3lame-0.dll', 'libmpeg2-0.dll', 'liborc-0.4-0.dll', 'librsvg-2-2.dll',
-	    'libxml2-2.dll', 'libschroedinger-1.0-0.dll', 'libsoup-2.4-1.dll', 'libtheora-0.dll',
-	    'libtheoradec-1.dll', 'libvorbisenc-2.dll', 'libvorbis-0.dll', 'libx264-107.dll',
-	    'libgpg-error-0.dll', 'libexpat-1.dll', 'libgnutls-26.dll', 'libcroco-0.6-3.dll',
-	    'libtasn1-3.dll', 'xvidcore.dll', 'z.dll']
+        'avformat-gpl-52.dll', 'avutil-gpl-50.dll', 'libFLAC-8.dll', 'liba52-0.dll',
+        'libbz2.dll', 'libdca-0.dll', 'libfaac-0.dll', 'libfaad-2.dll', 'libgcrypt-11.dll', 'libjpeg-8.dll',
+        'libogg-0.dll', 'libmp3lame-0.dll', 'libmpeg2-0.dll', 'liborc-0.4-0.dll', 'librsvg-2-2.dll',
+        'libxml2-2.dll', 'libschroedinger-1.0-0.dll', 'libsoup-2.4-1.dll', 'libtheora-0.dll',
+        'libtheoradec-1.dll', 'libvorbisenc-2.dll', 'libvorbis-0.dll', 'libx264-107.dll',
+        'libgpg-error-0.dll', 'libexpat-1.dll', 'libgnutls-26.dll', 'libcroco-0.6-3.dll',
+        'libtasn1-3.dll', 'xvidcore.dll', 'z.dll']
 
 GST_PLUGINS_DEPS = ['libgnl.dll', 'libgsta52dec.dll', 'libgstadder.dll', 'libgstalpha.dll', 'libgstalphacolor.dll',
-		    'libgstasf.dll', 'libgstasfmux.dll', 'libgstaudioconvert.dll', 'libgstaudiorate.dll',
-		    'libgstaudioresample.dll', 'libgstaudiotestsrc.dll', 'libgstautoconvert.dll', 
-		    'libgstautodetect.dll', 'libgstavi.dll', 'libgstcairo.dll', 'libgstcamerabin.dll',
-		    'libgstcoreelements.dll', 'libgstd3dvideosink.dll', 'libgstdecodebin2.dll',
-		    'libgstdeinterlace.dll', 'libgstdirectsound.dll', 'libgstdirectsoundsrc.dll',
-		    'libgstdshowdecwrapper.dll', 'libgstdshowsrcwrapper.dll', 'libgstdtsdec.dll',
-		    'libgstfaac.dll', 'libgstfaad.dll', 'libgstffmpeg-gpl.dll', 'libgstffmpegcolorspace.dll',
-		    'libgstflac.dll', 'libgstflv.dll', 'libgstgio.dll', 'libgstjpeg.dll', 'libgstlame.dll',
-		    'libgstmatroska.dll', 'libgstmpeg2dec.dll', 'libgstmpeg4videoparse.dll',
-		    'libgstmpegaudioparse.dll', 'libgstmpegdemux.dll', 'libgstmpegstream.dll',
-		    'libgstmpegvideoparse.dll', 'libgstogg.dll', 'libgstplaybin.dll', 'libgstpng.dll',
-		    'libgstqtdemux.dll', 'libgstqtmux.dll', 'libgstrsvg.dll', 'libgstschro.dll',
-		    'libgstselector.dll', 'libgstsouphttpsrc.dll', 'libgsttheora.dll',
-		    'libgsttypefindfunctions.dll', 'libgstvideobalance.dll', 'libgstvideobox.dll',
-		    'libgstvideocrop.dll', 'libgstvideomixer.dll', 'libgstvideorate.dll',
-		    'libgstvideoscale.dll', 'libgstvideotestsrc.dll', 'libgstvolume.dll', 'libgstvorbis.dll',
-		    'libgstvp8.dll', 'libgstx264.dll', 'libgstxvid.dll']
+            'libgstasf.dll', 'libgstasfmux.dll', 'libgstaudioconvert.dll', 'libgstaudiorate.dll',
+            'libgstaudioresample.dll', 'libgstaudiotestsrc.dll', 'libgstautoconvert.dll', 
+            'libgstautodetect.dll', 'libgstavi.dll', 'libgstcairo.dll', 'libgstcamerabin.dll',
+            'libgstcoreelements.dll', 'libgstd3dvideosink.dll', 'libgstdecodebin2.dll',
+            'libgstdeinterlace.dll', 'libgstdirectsound.dll', 'libgstdirectsoundsrc.dll',
+            'libgstdshowdecwrapper.dll', 'libgstdshowsrcwrapper.dll', 'libgstdtsdec.dll',
+            'libgstfaac.dll', 'libgstfaad.dll', 'libgstffmpeg-gpl.dll', 'libgstffmpegcolorspace.dll',
+            'libgstflac.dll', 'libgstflv.dll', 'libgstgio.dll', 'libgstjpeg.dll', 'libgstlame.dll',
+            'libgstmatroska.dll', 'libgstmpeg2dec.dll', 'libgstmpeg4videoparse.dll',
+            'libgstmpegaudioparse.dll', 'libgstmpegdemux.dll', 'libgstmpegstream.dll',
+            'libgstmpegvideoparse.dll', 'libgstogg.dll', 'libgstplaybin.dll', 'libgstpng.dll',
+            'libgstqtdemux.dll', 'libgstqtmux.dll', 'libgstrsvg.dll', 'libgstschro.dll',
+            'libgstselector.dll', 'libgstsouphttpsrc.dll', 'libgsttheora.dll',
+            'libgsttypefindfunctions.dll', 'libgstvideobalance.dll', 'libgstvideobox.dll',
+            'libgstvideocrop.dll', 'libgstvideomixer.dll', 'libgstvideorate.dll',
+            'libgstvideoscale.dll', 'libgstvideotestsrc.dll', 'libgstvolume.dll', 'libgstvorbis.dll',
+            'libgstvp8.dll', 'libgstx264.dll', 'libgstxvid.dll']
 
 GST_BIN_DEPS = ['gst-inspect.exe', 'gst-launch.exe', 'gst-typefind.exe']
 
 GST_DLL_DEPS = ['libgstapp-0.10.dll', 'libgstaudio-0.10.dll', 'libgstbase-0.10.dll',
-		'libgstbasevideo-0.10.dll', 'libgstcdda-0.10.dll', 'libgstcontroller-0.10.dll',
-		'libgstdataprotocol-0.10.dll', 'libgstsdp-0.10.dll', 'libgstfft-0.10.dll',
-		'libgstinterfaces-0.10.dll', 'libgstnet-0.10.dll', 'libgstnetbuffer-0.10.dll',
-		'libgstpbutils-0.10.dll', 'libgstphotography-0.10.dll', 'libgstreamer-0.10.dll',
-		'libgsttag-0.10.dll', 'libgstrtsp-0.10.dll', 'libgstrtp-0.10.dll', 'libgstriff-0.10.dll',
-		'libgstvideo-0.10.dll']
+        'libgstbasevideo-0.10.dll', 'libgstcdda-0.10.dll', 'libgstcontroller-0.10.dll',
+        'libgstdataprotocol-0.10.dll', 'libgstsdp-0.10.dll', 'libgstfft-0.10.dll',
+        'libgstinterfaces-0.10.dll', 'libgstnet-0.10.dll', 'libgstnetbuffer-0.10.dll',
+        'libgstpbutils-0.10.dll', 'libgstphotography-0.10.dll', 'libgstreamer-0.10.dll',
+        'libgsttag-0.10.dll', 'libgstrtsp-0.10.dll', 'libgstrtp-0.10.dll', 'libgstriff-0.10.dll',
+        'libgstvideo-0.10.dll']
 
 GLIB_DEPS = ['libgio-2.0-0.dll', 'libglib-2.0-0.dll', 'libgmodule-2.0-0.dll', 'libgobject-2.0-0.dll', 'libgthread-2.0-0.dll']
 
@@ -87,16 +87,16 @@ class Deploy():
         self.gtk_path = gtk_path
         self.mono_path = mono_path
         self.msys_path = msys_path
-	self.check_paths()
+        self.check_paths()
         self.set_path_variables()
         self.create_deployment_folder()
-	self.deploy_glib()
+        self.deploy_glib()
         self.deploy_gtk()
         self.deploy_gstreamer()
-	self.deploy_mono()
-	self.deploy_msys()
-	self.deploy_images()
-	self.deploy_themes()
+        self.deploy_mono()
+        self.deploy_msys()
+        self.deploy_images()
+        self.deploy_themes()
         self.close()
 
     def close(self, message=None):
@@ -108,7 +108,7 @@ class Deploy():
 
     def check_paths(self):
         for name in [self.mono_path, self.gst_path, self.gtk_path,
-		     self.msys_path]:
+                     self.msys_path]:
             if not os.path.exists(name):
                 self.close('%s not found' % name)
 
@@ -134,11 +134,11 @@ class Deploy():
             except :
                 self.close("ERROR: Can't delete folder %s" % self.dist_dir)
         for path in [self.dist_dir, self.bin_dir, self.etc_dir,
-	             self.images_dir, self.lib_dir, self.plugins_dir]:
+                 self.images_dir, self.lib_dir, self.plugins_dir]:
             try:   
                 os.makedirs(path)
-	    except:
-	        pass
+            except:
+                pass
 
     def deploy_gtk(self):
         print 'Deploying Gtk dependencies'
@@ -148,7 +148,7 @@ class Deploy():
                      os.path.join(self.etc_dir, name))
         shutil.copytree(os.path.join(self.gtk_path, 'lib', 'gtk-2.0'),
             os.path.join(self.lib_dir, name))
-    	for name in GTK_DEPS:
+        for name in GTK_DEPS:
             shutil.copy(os.path.join(self.gtk_path, 'bin', name), self.bin_dir)
 
     def deploy_mono(self):
@@ -157,7 +157,7 @@ class Deploy():
             shutil.copy(os.path.join(self.mono_path, 'bin', name), self.bin_dir)
         # Gtk.sharp load them dinamically before 2.12.10.
         # FIXME: Delete that when gtk-sharp 2.12.10 is released
-	for name in WINFORMS_DEPS:
+        for name in WINFORMS_DEPS:
             shutil.copy(os.path.join(self.mono_path, 'lib\\mono\\gac', name), self.bin_dir)
 
     def deploy_themes(self):
@@ -174,7 +174,7 @@ class Deploy():
 
     def deploy_images(self):
         print 'Deploying images'
-	lgm_images_dir = os.path.join(self.root_dir, 'LongoMatch', 'Images')
+        lgm_images_dir = os.path.join(self.root_dir, 'LongoMatch', 'Images')
         for name in IMAGES:
             shutil.copy(os.path.join(lgm_images_dir, name), self.images_dir)
         shutil.copytree(os.path.join(self.deps_dir, 'icons'),
@@ -192,7 +192,7 @@ class Deploy():
                 shutil.copy (os.path.join(self.gst_path, 'bin', dll), self.bin_dir)
         for dll in GST_PLUGINS_DEPS:
             shutil.copy (os.path.join(self.gst_path, 'lib', 'gstreamer-0.10', dll),
-		         self.plugins_dir)
+                 self.plugins_dir)
     
     def deploy_longomatch(self):
         pass
@@ -223,6 +223,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
