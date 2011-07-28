@@ -75,15 +75,18 @@ GST_DLL_DEPS = ['libgstapp-0.10.dll', 'libgstaudio-0.10.dll', 'libgstbase-0.10.d
 
 GLIB_DEPS = ['libgio-2.0-0.dll', 'libglib-2.0-0.dll', 'libgmodule-2.0-0.dll', 'libgobject-2.0-0.dll', 'libgthread-2.0-0.dll']
 
+MSYS_DEPS = ['sh.exe', 'rxvt.exe', 'sh.exe', 'msys-1.0.dll', 'libW11.dll']
+
 IMAGES = ['background.png', 'longomatch.png']
 
 
 class Deploy():
 
-    def __init__(self, gst_path, gtk_path, mono_path):
+    def __init__(self, gst_path, gtk_path, mono_path, msys_path):
         self.gst_path = gst_path
         self.gtk_path = gtk_path
         self.mono_path = mono_path
+        self.msys_path = msys_path
 	self.check_paths()
         self.set_path_variables()
         self.create_deployment_folder()
@@ -91,6 +94,7 @@ class Deploy():
         self.deploy_gtk()
         self.deploy_gstreamer()
 	self.deploy_mono()
+	self.deploy_msys()
 	self.deploy_images()
 	self.deploy_themes()
         self.close()
@@ -103,7 +107,8 @@ class Deploy():
             exit(0)
 
     def check_paths(self):
-        for name in [self.mono_path, self.gst_path, self.gtk_path]:
+        for name in [self.mono_path, self.gst_path, self.gtk_path,
+		     self.msys_path]:
             if not os.path.exists(name):
                 self.close('%s not found' % name)
 
@@ -189,9 +194,13 @@ class Deploy():
             shutil.copy (os.path.join(self.gst_path, 'lib', 'gstreamer-0.10', dll),
 		         self.plugins_dir)
     
-     def deploy_longomatch(self):
-         pass
+    def deploy_longomatch(self):
+        pass
 
+    def deploy_msys(self):
+        for dll in MSYS_DEPS:
+            shutil.copy (os.path.join(self.msys_path, 'bin', dll), self.bin_dir)
+         
 
 def main():
     usage = "usage: %prog [options]"
@@ -204,10 +213,13 @@ def main():
             help="GTK+ installation path")
     parser.add_option("-m", "--mono-path", action="store",
             dest="mono_path",default="c:\\mono", type="string",
-            help="MONO installation path")
+            help="Mono installation path")
+    parser.add_option("-s", "--msys_path", action="store",
+            dest="msys_path",default="c:\\msys\\1.0", type="string",
+            help="MSYS installation path")
 
     (options, args) = parser.parse_args()
-    Deploy(options.gst_path, options.gtk_path, options.mono_path)
+    Deploy(options.gst_path, options.gtk_path, options.mono_path, options.msys_path)
 
 if __name__ == "__main__":
     main()
