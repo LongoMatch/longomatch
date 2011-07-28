@@ -43,11 +43,11 @@ Source: ".\dist\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs create
 [Icons]
 Name: "{group}\LongoMatch-0.15"; Filename: "{app}\bin\LongoMatch.exe" ;WorkingDir: "{app}\bin"
 Name: "{group}\Theme Selector"; Filename: "{app}\bin\ThemeSelector.exe" ;WorkingDir: "{app}\bin"
+Name: "{group}\X-Installation Checks (Use only to report installation errors)"; Filename: "{app}\bin\rxvt.exe"; Parameters:"-e ./sh checks.sh" ; WorkingDir: "{app}\bin" ; IconFileName: "{app}\share\chronojump\images\chronojump_icon.ico"
 Name: "{commondesktop}\LongoMatch"; Filename: "{app}\bin\LongoMatch.exe"; WorkingDir: "{app}\bin"; Tasks: desktopicon
 
 [Run]
 Filename: "{app}\bin\LongoMatch.exe"; WorkingDir: "{app}\bin";Description: "{cm:LaunchProgram,LongoMatch}"; Flags: nowait postinstall skipifsilent
-
 
 [InstallDelete] 
 Type: filesandordirs; Name:"{userdocs}\..\.gstreamer-0.10"

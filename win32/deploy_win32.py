@@ -219,6 +219,7 @@ class Deploy():
         args =shlex.split('make -f Makefile.win32 install')
         p = subprocess.call(args, cwd=os.path.join(self.curr_dir, '..'))
         shutil.copy(os.path.join(self.deps_dir, 'Db4objects.Db4o.dll'), self.bin_dir)
+        shutil.copy(os.path.join(self.curr_dir, 'checks.sh'), self.bin_dir)
 
     def deploy_msys(self):
         print 'Deploying msys'
