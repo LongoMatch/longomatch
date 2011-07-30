@@ -22,6 +22,7 @@ SOURCES = \
 	Utils/IFramesCapturer.cs \
 	Utils/FramesCapturer.cs \
 	Utils/IMetadataReader.cs \
+	Utils/MpegRemuxer.cs \
 	Utils/TimeString.cs \
 	Capturer/CaptureProperties.cs \
 	Capturer/GstCameraCapturer.cs \

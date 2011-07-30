@@ -164,6 +164,7 @@ CesarPlayer/Utils/TimeString.cs
 CesarPlayer/Utils/PreviewMediaFile.cs
 CesarPlayer/Utils/FramesCapturer.cs
 CesarPlayer/Utils/MediaFile.cs
+CesarPlayer/Utils/MpegRemuxer.cs
 CesarPlayer/Common/Enum.cs
 CesarPlayer/Common/Handlers.cs
 CesarPlayer/Capturer/GstCameraCapturer.cs

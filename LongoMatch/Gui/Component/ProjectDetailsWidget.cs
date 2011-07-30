@@ -482,6 +482,15 @@ namespace LongoMatch.Gui.Component
 					MessageDialog md=null;
 					string filename = fChooser.Filename;
 					fChooser.Destroy();
+					
+					if (MpegRemuxer.FileIsMpeg(filename) &&
+					    MpegRemuxer.AskForConversion(this.Toplevel as Gtk.Window)) {
+						var remux = new MpegRemuxer(filename);
+						var newFilename = remux.Remux(this.Toplevel as Gtk.Window);
+						if (newFilename != null)
+							filename = newFilename;
+					}
+					
 					try {
 						md = new MessageDialog((Gtk.Window)this.Toplevel,
 						                       DialogFlags.Modal,
