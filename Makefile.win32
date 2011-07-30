@@ -97,6 +97,7 @@ CESARPLAYER_FILES = \
 	Editor/EditorState.cs \
 	Utils/Device.cs \
 	Utils/MediaFile.cs \
+	Utils/MpegRemuxer.cs \
 	Utils/PreviewMediaFile.cs
 
 CESARPLAYER_REFERENCES = \
