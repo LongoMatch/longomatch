@@ -1,14 +1,14 @@
 # German translation of longomatch.
-# Mario Blättermann <mariobl@gnome.org>, 2009, 2010.
+# Mario Blättermann <mariobl@freenet.de>, 2009-2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: longomatch master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=longomatch&component=general\n"
-"POT-Creation-Date: 2010-11-14 20:51+0000\n"
-"PO-Revision-Date: 2010-12-16 20:19+0100\n"
-"Last-Translator: Mario Blättermann <mariobl@gnome.org>\n"
+"product=longomatch&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-07-30 12:32+0000\n"
+"PO-Revision-Date: 2011-07-30 21:21+0100\n"
+"Last-Translator: Mario Blättermann <mariobl@freenet.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -99,7 +99,7 @@ msgstr "Stop"
 msgid "Tags"
 msgstr "Schlagwörter"
 
-#: ../LongoMatch/Main.cs:164
+#: ../LongoMatch/Main.cs:158
 msgid ""
 "Some elements from the previous version (database, templates and/or "
 "playlists) have been found."
@@ -107,19 +107,19 @@ msgstr ""
 "Einige Elemente aus früheren Versionen wurden gefunden (Datenbank, Vorlagen, "
 "und/oder Wiedergabelisten)."
 
-#: ../LongoMatch/Main.cs:165
+#: ../LongoMatch/Main.cs:159
 msgid "Do you want to import them?"
 msgstr "Wollen Sie diese importieren?"
 
-#: ../LongoMatch/Main.cs:230
+#: ../LongoMatch/Main.cs:226
 msgid "The application has finished with an unexpected error."
 msgstr "Die Anwendung wurde mit einem unerwarteten Fehler beendet."
 
-#: ../LongoMatch/Main.cs:231
+#: ../LongoMatch/Main.cs:227
 msgid "A log has been saved at: "
 msgstr "Ein Protokoll wurde gespeichert in:"
 
-#: ../LongoMatch/Main.cs:232
+#: ../LongoMatch/Main.cs:228
 msgid "Please, fill a bug report "
 msgstr "Bitte verfassen Sie einen Fehlerbericht."
 
@@ -153,11 +153,11 @@ msgstr "Ein Fehler ist beim Öffnen des Projekts aufgetreten:"
 msgid "Loading newly created project..."
 msgstr "Neu erzeugtes Projekt wird geladen …"
 
-#: ../LongoMatch/Gui/MainWindow.cs:213
+#: ../LongoMatch/Gui/MainWindow.cs:216
 msgid "An error occured saving the project:\n"
 msgstr "Ein Fehler ist beim Speichern des Projekts aufgetreten:\n"
 
-#: ../LongoMatch/Gui/MainWindow.cs:214
+#: ../LongoMatch/Gui/MainWindow.cs:217
 msgid ""
 "The video file and a backup of the project has been saved. Try to import it "
 "later:\n"
@@ -165,17 +165,17 @@ msgstr ""
 "Die Videodatei und eine Sicherung des Projekts wurden gespeichert. Versuchen "
 "Sie, diese später zu importieren:\n"
 
-#: ../LongoMatch/Gui/MainWindow.cs:328
+#: ../LongoMatch/Gui/MainWindow.cs:331
 msgid "Do you want to close the current project?"
 msgstr "Wollen Sie das aktuelle Projekt überschreiben?"
 
-#: ../LongoMatch/Gui/MainWindow.cs:535
+#: ../LongoMatch/Gui/MainWindow.cs:538
 msgid "The actual project will be closed due to an error in the media player:"
 msgstr ""
 "Das aktuelle Projekt wird wegen eines Fehlers in der Medienwiedergabe "
 "geschlossen:"
 
-#: ../LongoMatch/Gui/MainWindow.cs:619
+#: ../LongoMatch/Gui/MainWindow.cs:622
 msgid ""
 "An error occured in the video capturer and the current project will be closed:"
 msgstr ""
@@ -303,24 +303,24 @@ msgstr "Ausgabedatei"
 msgid "Open file..."
 msgstr "Datei öffnen …"
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:490
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:499
 msgid "Analyzing video file:"
 msgstr "Videodatei wird analysiert:"
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:495
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:504
 msgid "This file doesn't contain a video stream."
 msgstr "Diese Datei enthält keinen Videostrom."
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:497
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:506
 msgid "This file contains a video stream but its length is 0."
 msgstr "Diese Datei enthält zwar einen Videostrom, der aber die Länge 0 hat."
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:564
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:573
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:473
 msgid "Local Team Template"
 msgstr "Vorlage für lokale Mannschaft"
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:577
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:586
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:426
 msgid "Visitor Team Template"
 msgstr "Vorlage für Gastmannschaft"
@@ -440,15 +440,15 @@ msgstr "Ergebnis"
 msgid "Date"
 msgstr "Datum"
 
-#: ../LongoMatch/Gui/Component/TimeScale.cs:160
+#: ../LongoMatch/Gui/Component/TimeScale.cs:136
 msgid "Delete Play"
 msgstr "Spiel entfernen"
 
-#: ../LongoMatch/Gui/Component/TimeScale.cs:161
+#: ../LongoMatch/Gui/Component/TimeScale.cs:137
 msgid "Add New Play"
 msgstr "Neues Spiel hinzufügen"
 
-#: ../LongoMatch/Gui/Component/TimeScale.cs:268
+#: ../LongoMatch/Gui/Component/TimeScale.cs:229
 msgid "Delete "
 msgstr "Entfernen"
 
@@ -1208,13 +1208,13 @@ msgstr "Ein Fehler ist im Video-Editor aufgetreten."
 msgid "Please, try again."
 msgstr "Bitte versuchen Sie es erneut."
 
-#: ../LongoMatch/Handlers/EventsManager.cs:266
+#: ../LongoMatch/Handlers/EventsManager.cs:267
 msgid ""
 "The stop time is smaller than the start time. The play will not be added."
 msgstr ""
 "Die Stoppzeit liegt vor der Startzeit. Das Spiel wird nicht hinzugefügt."
 
-#: ../LongoMatch/Handlers/EventsManager.cs:341
+#: ../LongoMatch/Handlers/EventsManager.cs:342
 msgid "Please, close the opened project to play the playlist."
 msgstr ""
 "Bitte schließen Sie das geöffnete Projekt, um die Wiedergabeliste abzuspielen."
@@ -1325,7 +1325,7 @@ msgid "Device reconnected.Do you want to restart the capture?"
 msgstr ""
 "Das Gerät wurde erneut angeschlossen, wollen Sie die Aufnahme neu starten?"
 
-#: ../CesarPlayer/gtk-gui/LongoMatch.Gui.PlayerBin.cs:229
+#: ../CesarPlayer/gtk-gui/LongoMatch.Gui.PlayerBin.cs:221
 msgid "Time:"
 msgstr "Zeit:"
 
@@ -1337,6 +1337,19 @@ msgstr "Standardgerät"
 #: ../CesarPlayer/Utils/MediaFile.cs:158
 msgid "Invalid video file:"
 msgstr "Ungültige Videodatei:"
+
+#. Create the dialog
+#: ../CesarPlayer/Utils/MpegRemuxer.cs:50
+msgid "Remuxing file..."
+msgstr "Datei wird remuxt …"
+
+#: ../CesarPlayer/Utils/MpegRemuxer.cs:126
+msgid ""
+"The file you are trying to load is not properly supported. Would you like to "
+"convert it into a more suitable format?"
+msgstr ""
+"Die von Ihnen zum Laden gewählte Datei wird nicht korrekt unterstützt. Wollen "
+"Sie sie in ein besser unterstütztes Format umwandeln?"
 
 #: ../CesarPlayer/Capturer/FakeCapturer.cs:81
 msgid "Fake live source"
