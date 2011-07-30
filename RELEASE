@@ -1,7 +1,7 @@
-LongoMatch-0.16.8 "Una vaaaaca"
--------------------------------------------------
+LongoMatch-0.16.9 "The yacth week"
+----------------------------------
 
-The LongoMatch team is happy to announce the height release in the 0.16
+The LongoMatch team is happy to announce the ninth release in the 0.16
 LongoMatch series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
@@ -9,9 +9,9 @@ all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
 
-* Bugs fixed
-	* Really fix height and weight limits on win32
-	* Increase speed settings of the vp8 and h264 encoders
+* Features
+	* Added a converter for Mpeg-TS muxed files
+	* Improved detection of installation errors on windows
 
 *Contributors to this Release:
 
@@ -42,6 +42,7 @@ experience.
  * gnonlin >= 0.10.15
  * gtk-sharp >= 2.12
  * db40 >= 7.4
+ * ffmpeg
 
 
 * Download

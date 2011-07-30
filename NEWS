@@ -1,3 +1,10 @@
+===== LongoMatch 0.16.9 "The yacth week" =====
+
+	== Features of this release ==
+
+	* Added a converter for Mpeg-TS muxed files
+	* Improved detection of installation errors on windows
+
 ===== LongoMatch 0.16.8 "Una vaaaaca" =====
 
 	== Bugs Fixed ==
