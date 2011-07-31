@@ -1,18 +1,18 @@
 # French translation of longomatch.
-# Copyright (C) 2010 Listed translators
+# Copyright (C) 2010-11 Listed translators
 # This file is distributed under the same license as the longomatch package.
 #
 # Laurent Coudeur <laurentc@iol.ie>, 2010.
 # G. Baylard <gerard.b@bbox.fr>, 2010.
-# Bruno Brouard <annoa.b@gmail.com>, 2010.
+# Bruno Brouard <annoa.b@gmail.com>, 2010-11.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=longomatch&component=general\n"
-"POT-Creation-Date: 2010-11-14 20:51+0000\n"
-"PO-Revision-Date: 2010-04-25 22:40+0100\n"
+"product=longomatch&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-07-30 12:32+0000\n"
+"PO-Revision-Date: 2011-07-31 16:48+0200\n"
 "Last-Translator: Bruno Brouard <annoa.b@gmail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -103,7 +103,7 @@ msgstr "Fin"
 msgid "Tags"
 msgstr "Étiquettes"
 
-#: ../LongoMatch/Main.cs:164
+#: ../LongoMatch/Main.cs:158
 msgid ""
 "Some elements from the previous version (database, templates and/or "
 "playlists) have been found."
@@ -111,19 +111,19 @@ msgstr ""
 "Certains éléments de la version précédente (base de données, modèles et/ou "
 "listes de lecture) ont été trouvés."
 
-#: ../LongoMatch/Main.cs:165
+#: ../LongoMatch/Main.cs:159
 msgid "Do you want to import them?"
 msgstr "Voulez-vous les importer ?"
 
-#: ../LongoMatch/Main.cs:230
+#: ../LongoMatch/Main.cs:226
 msgid "The application has finished with an unexpected error."
 msgstr "Le programme s'est terminé sur une erreur inattendue."
 
-#: ../LongoMatch/Main.cs:231
+#: ../LongoMatch/Main.cs:227
 msgid "A log has been saved at: "
 msgstr "Un journal a été enregistré sous : "
 
-#: ../LongoMatch/Main.cs:232
+#: ../LongoMatch/Main.cs:228
 msgid "Please, fill a bug report "
 msgstr "Veuillez remplir un rapport d'anomalie "
 
@@ -157,11 +157,11 @@ msgstr "Une erreur est survenue à l'ouverture de ce projet :"
 msgid "Loading newly created project..."
 msgstr "Chargement du nouveau projet créé..."
 
-#: ../LongoMatch/Gui/MainWindow.cs:213
+#: ../LongoMatch/Gui/MainWindow.cs:216
 msgid "An error occured saving the project:\n"
 msgstr "Une erreur est survenue à l'enregistrement du projet :\n"
 
-#: ../LongoMatch/Gui/MainWindow.cs:214
+#: ../LongoMatch/Gui/MainWindow.cs:217
 msgid ""
 "The video file and a backup of the project has been saved. Try to import it "
 "later:\n"
@@ -169,17 +169,17 @@ msgstr ""
 "Le fichier vidéo et une sauvegarde du projet ont été enregistrés. Essayez de "
 "l'importer plus tard :\n"
 
-#: ../LongoMatch/Gui/MainWindow.cs:328
+#: ../LongoMatch/Gui/MainWindow.cs:331
 msgid "Do you want to close the current project?"
 msgstr "Voulez-vous fermer le projet actuel ?"
 
-#: ../LongoMatch/Gui/MainWindow.cs:535
+#: ../LongoMatch/Gui/MainWindow.cs:538
 msgid "The actual project will be closed due to an error in the media player:"
 msgstr ""
 "Le projet actuel va être fermé à cause d'une erreur dans le lecteur de "
 "média :"
 
-#: ../LongoMatch/Gui/MainWindow.cs:619
+#: ../LongoMatch/Gui/MainWindow.cs:622
 msgid ""
 "An error occured in the video capturer and the current project will be "
 "closed:"
@@ -308,25 +308,25 @@ msgstr "Fichier de sortie"
 msgid "Open file..."
 msgstr "Ouvrir le fichier..."
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:490
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:499
 msgid "Analyzing video file:"
 msgstr "Analyse du fichier vidéo :"
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:495
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:504
 msgid "This file doesn't contain a video stream."
 msgstr "Ce fichier ne contient pas de flux vidéo."
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:497
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:506
 msgid "This file contains a video stream but its length is 0."
 msgstr ""
 "Ce fichier contient un flux vidéo, mais celui-ci est de longueur nulle."
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:564
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:573
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:473
 msgid "Local Team Template"
 msgstr "Modèle d'équipe locale"
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:577
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:586
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:426
 msgid "Visitor Team Template"
 msgstr "Modèle d'équipe visiteurs"
@@ -447,15 +447,15 @@ msgstr "Résultat"
 msgid "Date"
 msgstr "Date"
 
-#: ../LongoMatch/Gui/Component/TimeScale.cs:160
+#: ../LongoMatch/Gui/Component/TimeScale.cs:136
 msgid "Delete Play"
 msgstr "Supprimer l'action"
 
-#: ../LongoMatch/Gui/Component/TimeScale.cs:161
+#: ../LongoMatch/Gui/Component/TimeScale.cs:137
 msgid "Add New Play"
 msgstr "Ajouter une nouvelle action"
 
-#: ../LongoMatch/Gui/Component/TimeScale.cs:268
+#: ../LongoMatch/Gui/Component/TimeScale.cs:229
 msgid "Delete "
 msgstr "Supprimer "
 
@@ -1218,14 +1218,14 @@ msgstr "Une erreur est survenue dans l'éditeur vidéo."
 msgid "Please, try again."
 msgstr "Veuillez réessayer."
 
-#: ../LongoMatch/Handlers/EventsManager.cs:266
+#: ../LongoMatch/Handlers/EventsManager.cs:267
 msgid ""
 "The stop time is smaller than the start time. The play will not be added."
 msgstr ""
 "L'heure de fin est antérieure à l'heure de début. L'action ne sera pas "
 "ajoutée."
 
-#: ../LongoMatch/Handlers/EventsManager.cs:341
+#: ../LongoMatch/Handlers/EventsManager.cs:342
 msgid "Please, close the opened project to play the playlist."
 msgstr "Fermez le projet ouvert pour lire la liste de lecture."
 
@@ -1336,7 +1336,7 @@ msgstr "Périphérique déconnecté. La capture est en attente"
 msgid "Device reconnected.Do you want to restart the capture?"
 msgstr "Le périphérique connecté à nouveau. Voulez-vous reprendre la capture ?"
 
-#: ../CesarPlayer/gtk-gui/LongoMatch.Gui.PlayerBin.cs:229
+#: ../CesarPlayer/gtk-gui/LongoMatch.Gui.PlayerBin.cs:221
 msgid "Time:"
 msgstr "Heure :"
 
@@ -1349,7 +1349,19 @@ msgstr "Périphérique par défaut"
 msgid "Invalid video file:"
 msgstr "Fichier vidéo non valide :"
 
+#. Create the dialog
+#: ../CesarPlayer/Utils/MpegRemuxer.cs:50
+msgid "Remuxing file..."
+msgstr "Remultiplexage du fichier..."
+
+#: ../CesarPlayer/Utils/MpegRemuxer.cs:126
+msgid ""
+"The file you are trying to load is not properly supported. Would you like to "
+"convert it into a more suitable format?"
+msgstr ""
+"Le fichier que vous essayez de charger n'est pas pris en charge correctement. "
+"Voulez-vous le convertir dans un format plus approprié ?"
+
 #: ../CesarPlayer/Capturer/FakeCapturer.cs:81
 msgid "Fake live source"
 msgstr "Source en direct fictif"
-
