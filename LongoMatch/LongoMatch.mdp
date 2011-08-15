@@ -11,13 +11,13 @@
   </MonoDevelop.Autotools.MakefileInfo>
   <Configurations active="Release">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="bin/Debug" assembly="LongoMatch.exe" assemblyKeyFile="/home/andoni/Proyectos/longomatch/LongoMatch/." />
+      <Output directory="../bin" assembly="LongoMatch.exe" assemblyKeyFile="/home/andoni/Proyectos/longomatch/LongoMatch/." />
       <Build debugmode="True" target="WinExe" />
       <Execution consolepause="True" runwithwarnings="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
-      <Output directory="bin/Release" assembly="LongoMatch.exe" assemblyKeyFile="/home/andoni/Proyectos/LongoMatch/LongoMatch/." />
+      <Output directory="../bin" assembly="LongoMatch.exe" assemblyKeyFile="/home/andoni/Proyectos/LongoMatch/LongoMatch/." />
       <Build debugmode="True" target="WinExe" />
       <Execution consolepause="True" runwithwarnings="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="3" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" additionalargs="-win32icon:images/minilogo.ico" ctype="CSharpCompilerParameters" />
@@ -131,7 +131,6 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.TemplatesManager.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlayersListTreeWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.Win32CalendarDialog.cs" />
@@ -150,8 +149,6 @@
     <File subtype="Code" buildaction="Compile" name="Gui/TreeView/ListTreeViewBase.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/CategoriesScale.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Cairo.cs" />
-    <File subtype="Code" buildaction="Compile" name="Common/GStreamer.cs" />
-    <File subtype="Directory" buildaction="Compile" name="Compat" />
     <File subtype="Code" buildaction="Compile" name="IO/XMLReader.cs" />
     <File subtype="Directory" buildaction="Compile" name="Store" />
     <File subtype="Directory" buildaction="Compile" name="DB" />
@@ -197,6 +194,8 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlayersTaggerWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/StringTaggerWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.StringTaggerWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="Common/GStreamer.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.TemplatesManager.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />

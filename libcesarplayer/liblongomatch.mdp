@@ -16,7 +16,7 @@
       <CodeGeneration WarningLevel="Normal" WarningsAsErrors="False" OptimizationLevel="0" ExtraCompilerArguments="" ExtraLinkerArguments="" DefineSymbols="DEBUG MONODEVELOP" ctype="CCompilationParameters" />
     </Configuration>
     <Configuration name="Release" SourceDirectory="." ctype="CProjectConfiguration">
-      <Output directory="../LongoMatch/bin/Release/" output="libcesarplayer.dll" />
+      <Output directory="../bin" output="libcesarplayer.dll" />
       <Build debugmode="True" target="SharedLibrary" />
       <Execution consolepause="True" runwithwarnings="True" />
       <CodeGeneration WarningLevel="All" WarningsAsErrors="True" OptimizationLevel="3" ExtraCompilerArguments="" ExtraLinkerArguments="" DefineSymbols="MONODEVELOP" ctype="CCompilationParameters" />
@@ -44,15 +44,13 @@
     <File subtype="Code" buildaction="Nothing" name="video-utils.h" />
   </Contents>
   <Packages>
+    <Package file="/usr/lib/pkgconfig/gdk-2.0.pc" name="GDK" IsProject="False" />
     <Package file="/usr/lib/pkgconfig/gstreamer-0.10.pc" name="GStreamer" IsProject="False" />
     <Package file="/usr/lib/pkgconfig/gstreamer-audio-0.10.pc" name="GStreamer Audio library" IsProject="False" />
-    <Package file="/usr/lib/pkgconfig/gstreamer-interfaces-0.10.pc" name="GStreamer Interfaces Library" IsProject="False" />
     <Package file="/usr/lib/pkgconfig/gstreamer-video-0.10.pc" name="GStreamer Video Library" IsProject="False" />
-    <Package file="/usr/lib/pkgconfig/glib-2.0.pc" name="GLib" IsProject="False" />
-    <Package file="/usr/lib/pkgconfig/gobject-2.0.pc" name="GObject" IsProject="False" />
-    <Package file="/usr/lib/pkgconfig/gdk-2.0.pc" name="GDK" IsProject="False" />
     <Package file="/usr/lib/pkgconfig/gtk+-2.0.pc" name="GTK+" IsProject="False" />
-    <Package file="/usr/lib/pkgconfig/gstreamer-pbutils-0.10.pc" name="GStreamer Base Utils Library" IsProject="False" />
+    <Package file="/usr/lib/pkgconfig/gstreamer-interfaces-0.10.pc" name="GStreamer Interfaces Library" IsProject="False" />
+    <Package file="/usr/lib/pkgconfig/glib-2.0.pc" name="GLib" IsProject="False" />
   </Packages>
   <compiler ctype="GccCompiler" />
 </Project>

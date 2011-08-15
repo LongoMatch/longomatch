@@ -28,10 +28,6 @@ namespace LongoMatch.Gui.Dialog
 			this.Title = global::Mono.Unix.Catalog.GetString ("Tag play");
 			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Menu);
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
-			this.AllowShrink = true;
-			this.Gravity = ((global::Gdk.Gravity)(5));
-			this.SkipPagerHint = true;
-			this.SkipTaskbarHint = true;
 			// Internal child LongoMatch.Gui.Dialog.TaggerDialog.VBox
 			global::Gtk.VBox w1 = this.VBox;
 			w1.Name = "dialog1_VBox";
@@ -53,7 +49,7 @@ namespace LongoMatch.Gui.Dialog
 			// Notebook tab
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
-			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Tags");
+			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("page1");
 			this.tagsnotebook.SetTabLabel (this.taggerwidget1, this.label1);
 			this.label1.ShowAll ();
 			this.hbox1.Add (this.tagsnotebook);
@@ -72,7 +68,7 @@ namespace LongoMatch.Gui.Dialog
 			// Notebook tab
 			this.label2 = new global::Gtk.Label ();
 			this.label2.Name = "label2";
-			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("Players");
+			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("page1");
 			this.playersnotebook.SetTabLabel (this.playersbox, this.label2);
 			this.label2.ShowAll ();
 			this.hbox1.Add (this.playersnotebook);
@@ -102,10 +98,8 @@ namespace LongoMatch.Gui.Dialog
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.DefaultWidth = 511;
+			this.DefaultWidth = 620;
 			this.DefaultHeight = 267;
-			this.tagsnotebook.Hide ();
-			this.playersnotebook.Hide ();
 			this.Show ();
 		}
 	}

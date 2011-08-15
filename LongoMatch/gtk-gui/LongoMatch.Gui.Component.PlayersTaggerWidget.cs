@@ -10,9 +10,11 @@ namespace LongoMatch.Gui.Component
 
 		private global::Gtk.HBox hbox1;
 
+		private global::Gtk.Label label2;
+
 		private global::Gtk.Label playerslabel;
 
-		private global::Gtk.Button editbutton;
+		private global::Gtk.Button button5;
 
 		private global::Gtk.Label CategoryLabel;
 
@@ -35,25 +37,35 @@ namespace LongoMatch.Gui.Component
 			this.hbox1.Name = "hbox1";
 			this.hbox1.Spacing = 6;
 			// Container child hbox1.Gtk.Box+BoxChild
+			this.label2 = new global::Gtk.Label ();
+			this.label2.Name = "label2";
+			this.label2.Xalign = 0f;
+			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("Players:");
+			this.hbox1.Add (this.label2);
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.label2]));
+			w1.Position = 0;
+			w1.Expand = false;
+			w1.Fill = false;
+			// Container child hbox1.Gtk.Box+BoxChild
 			this.playerslabel = new global::Gtk.Label ();
 			this.playerslabel.Name = "playerslabel";
 			this.playerslabel.Xalign = 0f;
 			this.playerslabel.LabelProp = global::Mono.Unix.Catalog.GetString ("None");
 			this.hbox1.Add (this.playerslabel);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.playerslabel]));
-			w1.Position = 0;
-			// Container child hbox1.Gtk.Box+BoxChild
-			this.editbutton = new global::Gtk.Button ();
-			this.editbutton.CanFocus = true;
-			this.editbutton.Name = "editbutton";
-			this.editbutton.UseStock = true;
-			this.editbutton.UseUnderline = true;
-			this.editbutton.Label = "gtk-edit";
-			this.hbox1.Add (this.editbutton);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.editbutton]));
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.playerslabel]));
 			w2.Position = 1;
-			w2.Expand = false;
-			w2.Fill = false;
+			// Container child hbox1.Gtk.Box+BoxChild
+			this.button5 = new global::Gtk.Button ();
+			this.button5.CanFocus = true;
+			this.button5.Name = "button5";
+			this.button5.UseStock = true;
+			this.button5.UseUnderline = true;
+			this.button5.Label = "gtk-edit";
+			this.hbox1.Add (this.button5);
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.button5]));
+			w3.Position = 2;
+			w3.Expand = false;
+			w3.Fill = false;
 			this.GtkAlignment.Add (this.hbox1);
 			this.frame1.Add (this.GtkAlignment);
 			this.CategoryLabel = new global::Gtk.Label ();
@@ -66,7 +78,6 @@ namespace LongoMatch.Gui.Component
 				this.Child.ShowAll ();
 			}
 			this.Hide ();
-			this.editbutton.Clicked += new global::System.EventHandler (this.OnEditClicked);
 		}
 	}
 }
