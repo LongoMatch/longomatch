@@ -13,7 +13,6 @@ SOURCES = \
 	Common/Log.cs \
 	Common/ProjectUtils.cs \
 	Common/SerializableObject.cs \
-	DB/DataBase.cs \
 	gtk-gui/generated.cs \
 	gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs \
@@ -121,6 +120,7 @@ SOURCES = \
 	Main.cs \
 	Playlist/IPlayList.cs \
 	Playlist/PlayList.cs \
+	Services/DataBase.cs \
 	Services/TemplatesService.cs \
 	Store/Category.cs \
 	Store/Drawing.cs \

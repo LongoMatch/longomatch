@@ -30,7 +30,6 @@
     <File subtype="Directory" buildaction="Compile" name="Gui" />
     <File subtype="Code" buildaction="Compile" name="Gui/MainWindow.cs" />
     <File subtype="Directory" buildaction="Compile" name="DB" />
-    <File subtype="Code" buildaction="Compile" name="DB/DataBase.cs" />
     <File subtype="Directory" buildaction="Compile" name="Handlers" />
     <File subtype="Code" buildaction="Compile" name="Handlers/Handlers.cs" />
     <File subtype="Directory" buildaction="Compile" name="IO" />
@@ -196,6 +195,8 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.StringTaggerWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/GStreamer.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.TemplatesManager.cs" />
+    <File subtype="Code" buildaction="Compile" name="Services/DataBase.cs" />
+    <File subtype="Directory" buildaction="Compile" name="DB" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
