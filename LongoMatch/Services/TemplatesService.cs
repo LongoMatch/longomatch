@@ -193,7 +193,9 @@ namespace LongoMatch.Services
 		
 		public T Load (string name) {
 			Log.Information("Loading template " +  name);
-			return (T)methodLoad.Invoke(null, new object[] {GetPath(name)});
+			var template = (T)methodLoad.Invoke(null, new object[] {GetPath(name)});
+			template.Name = name;
+			return template;
 		}
 		
 		public void Save (ITemplate<U> template) {

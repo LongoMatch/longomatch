@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Mono.Unix;
 
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
@@ -29,13 +30,20 @@ namespace LongoMatch.Store.Templates
 
 	public class TeamTemplate: List<Player>, ITemplate<Player>
 	{
-		public TeamTemplate() {}
+		public TeamTemplate() {
+			TeamName = Catalog.GetString("default");
+		}
 
 		public String Name {
 			get;
 			set;
 		}
 
+		public String TeamName {
+			get;
+			set;
+		}
+		
 		public List<Player> PlayingPlayersList {
 			get {
 				return this.Where(p=>p.Playing).Select(p=>p).ToList();

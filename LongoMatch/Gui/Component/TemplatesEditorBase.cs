@@ -307,7 +307,7 @@ namespace LongoMatch.Gui.Component
 				foreach(Player player in template)
 					playersListStore.AppendValues(player);
 				treeview.Model=playersListStore;
-				teamentry.Text = template.Name;
+				teamentry.Text = template.TeamName;
 			}
 		}
 		
@@ -316,7 +316,7 @@ namespace LongoMatch.Gui.Component
 			Label label = new Label(Catalog.GetString("Team name")+":");
 			teamentry = new Entry ();
 			teamentry.Changed += delegate(object sender, EventArgs e) {
-				Template.Name = teamentry.Text;
+				Template.TeamName = teamentry.Text;
 			};
 		
 			box.PackStart (label, false, false, 0);
