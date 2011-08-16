@@ -15,8 +15,6 @@ THEME_ICONS_RELATIVE = $(subst $(srcdir)/ThemeIcons/, , $(THEME_ICONS_SOURCE))
 ASSEMBLY_EXTENSION = $(strip $(patsubst library, dll, $(TARGET)))
 ASSEMBLY_FILE = $(top_builddir)/bin/$(ASSEMBLY).$(ASSEMBLY_EXTENSION)
 
-DLLCONFIG_FILE = $(top_builddir)/bin/$(DLLCONFIG)
-
 INSTALL_DIR_RESOLVED = $(firstword $(subst , $(DEFAULT_INSTALL_DIR), $(INSTALL_DIR)))
 
 if ENABLE_TESTS
@@ -30,7 +28,7 @@ DEP_LINK = $(shell echo "$(LINK)" | $(UNIQUE_FILTER_PIPE) | sed s,-r:,,g | grep 
 OUTPUT_FILES = \
 	$(ASSEMBLY_FILE) \
 	$(ASSEMBLY_FILE).mdb \
-	$(DLLCONFIG_FILE)
+	$(DLLCONFIG)
 
 moduledir = $(INSTALL_DIR_RESOLVED)
 module_SCRIPTS = $(OUTPUT_FILES)
