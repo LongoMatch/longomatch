@@ -67,6 +67,10 @@ namespace LongoMatch.Gui.Component
 			w.Show();
 		}
 		
+		protected void AddUpperWidget (Widget w) {
+			upbox.PackStart(w, true, false, 0);
+		}
+		
 		protected bool ButtonsSensitive {
 			set {
 				newprevbutton.Sensitive = value;
@@ -281,12 +285,15 @@ namespace LongoMatch.Gui.Component
 	public class TeamTemplateEditorWidget: TemplatesEditorWidget<TeamTemplate, Player>
 	{	
 		private PlayerPropertiesTreeView treeview;
+		Entry teamentry;
 		
 		public TeamTemplateEditorWidget () {
 			treeview = new PlayerPropertiesTreeView(); 
 			treeview.PlayerClicked += this.OnPlayerClicked;
 			treeview.PlayerSelected += this.OnPlayersSelected;
 			AddTreeView(treeview);
+			AddTeamNamesWidget();
+			
 		}
 		
 		public override  TeamTemplate Template {
@@ -300,7 +307,22 @@ namespace LongoMatch.Gui.Component
 				foreach(Player player in template)
 					playersListStore.AppendValues(player);
 				treeview.Model=playersListStore;
+				teamentry.Text = template.Name;
 			}
+		}
+		
+		private void AddTeamNamesWidget () {
+			HBox box = new HBox();
+			Label label = new Label(Catalog.GetString("Team name")+":");
+			teamentry = new Entry ();
+			teamentry.Changed += delegate(object sender, EventArgs e) {
+				Template.Name = teamentry.Text;
+			};
+		
+			box.PackStart (label, false, false, 0);
+			box.PackEnd (teamentry, false, false, 0);
+			box.ShowAll();
+			AddUpperWidget(box);
 		}
 		
 		protected override void AddItem(int index) {
