@@ -6376,7 +6376,7 @@ You can continue with the current capture, cancel it or save your project.
                   </packing>
                 </child>
                 <child>
-                  <widget class="Gtk.Button" id="button5">
+                  <widget class="Gtk.Button" id="editbutton">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
                     <property name="UseStock">True</property>

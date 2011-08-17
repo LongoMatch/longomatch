@@ -33,6 +33,7 @@ namespace LongoMatch.Gui.Component
 		
 		public PlayersTaggerWidget (String subcategoryName, TeamTemplate template, List<PlayerTag> players) {
 			this.Build ();
+			editbutton.Clicked += OnEditClicked;
 			this.players = players;
 			this.template = template;
 			CategoryLabel.Markup = "<b>" + subcategoryName + "</b>";
