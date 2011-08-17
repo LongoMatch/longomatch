@@ -81,6 +81,30 @@ namespace LongoMatch.DB
 			}
 		}
 		
+		public void ListObjects() {
+			Dictionary<Type, int> dict = new Dictionary<Type, int>();
+			IObjectContainer db = Db4oFactory.OpenFile(file);
+			
+			IQuery query = db.Query();
+			query.Constrain(typeof(object));
+			IObjectSet result = query.Execute();
+			while(result.HasNext()) {
+				var res = result.Next();
+				Type type = res.GetType();
+				
+				if (dict.ContainsKey(type))
+					dict[type]++;
+				else
+					dict.Add(type, 1);
+				
+			}
+			foreach (Type t in dict.Keys) {
+				Log.Information(t.ToString()+":" + dict[t]);
+			}
+			CloseDB(db);
+			
+		}
+		
 		/// <summary>
 		/// Initialize the Database
 		/// </summary>
