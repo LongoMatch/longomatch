@@ -49,6 +49,7 @@ namespace LongoMatch.Store
 	{
 
 		private readonly Guid _UUID;
+		private ProjectDescription description;
 		private List<Play> timeline;
 
 		#region Constructors
@@ -73,8 +74,13 @@ namespace LongoMatch.Store
 		}
 		
 		public ProjectDescription Description {
-			get;
-			set;
+			get{
+				return description;
+			}
+			set {
+				value.UUID = UUID;
+				description = value;
+			}
 		}
 
 		/// <value>

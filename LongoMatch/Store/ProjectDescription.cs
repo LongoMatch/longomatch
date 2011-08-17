@@ -29,7 +29,14 @@ namespace LongoMatch.Store
 	[Serializable]
 	public class ProjectDescription :  IComparable
 	{
-
+		/// <summary>
+		/// Unique ID of the parent project
+		/// </summary>
+		public Guid UUID {
+			get;
+			set;
+		}
+		
 		/// <summary>
 		/// Title of the project
 		/// </summary>

@@ -386,7 +386,7 @@ namespace LongoMatch.Gui
 				project = opd.SelectedProject;
 			opd.Destroy();
 			if(project != null)
-				SetProject(MainClass.DB.GetProject(project.File.FilePath), ProjectType.FileProject, new CaptureSettings());
+				SetProject(MainClass.DB.GetProject(project.UUID), ProjectType.FileProject, new CaptureSettings());
 		}
 
 		protected virtual void OnSaveProjectActionActivated(object sender, System.EventArgs e)

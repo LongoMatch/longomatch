@@ -167,19 +167,21 @@ namespace LongoMatch.DB
 		/// <returns>
 		/// A <see cref="LongoMatch.DB.Project"/>
 		/// </returns>
-		public Project GetProject(String filename) {
-			Project ret;
+		public Project GetProject(Guid id) {
+			Project ret = null;
 			IObjectContainer db = Db4oFactory.OpenFile(file);
+			
 			try	{
-				IQuery query = GetQueryWithContrains(db, file);
+				IQuery query = GetQueryProjectById (db, id);
 				IObjectSet result = query.Execute();
 				ret = (Project) db.Ext().PeekPersisted(result.Next(),10,true);
-				return ret;
-			}
-			finally
-			{
+			} catch (Exception e) {
+				Log.Error("Could not get project with ID: " + id);
+				Log.Exception(e);
+			} finally {
 				CloseDB(db);
 			}
+			return ret;
 		}
 
 		/// <summary>
@@ -190,13 +192,12 @@ namespace LongoMatch.DB
 		/// </param>
 		public void AddProject(Project project) {
 			IObjectContainer db = Db4oFactory.OpenFile(file);
-			try
-			{
-				if(!Exists(project.Description.File.FilePath,db)) {
-					db.Store(project);
-					db.Commit();
-				}
-				else throw new Exception(Catalog.GetString("The Project for this video file already exists.")+"\n"+Catalog.GetString("Try to edit it with the Database Manager"));
+			try {
+				db.Store(project);
+				db.Commit();
+			} catch (Exception e) {
+				Log.Error("Could not add project");
+				Log.Exception(e);
 			}
 			finally {
 				CloseDB(db);
@@ -209,27 +210,28 @@ namespace LongoMatch.DB
 		/// <param name="filePath">
 		/// A <see cref="System.String"/> with the project's video file path
 		/// </param>
-		public void RemoveProject(string filePath) {
+		public void RemoveProject(Guid id) {
 			SetDeleteCascadeOptions();
 			IObjectContainer db = Db4oFactory.OpenFile(file);
 			try	{
-				IQuery query = GetQueryWithContrains(db, file);
+				IQuery query = GetQueryProjectById(db, id);
 				IObjectSet result = query.Execute();
 				Project project = (Project)result.Next();
 				db.Delete(project);
 				db.Commit();
-			}
-			finally
-			{
+			} catch (Exception e) {
+				Log.Error("Could not delete project");
+				Log.Exception(e);
+			} finally {
 				CloseDB(db);
 			}
+			ListObjects();
 		}
 
 		/// <summary>
 		/// Updates a project in the database. Because a <see cref="LongoMatch.DB.Project"/> has
 		/// many objects associated, a simple update would leave in the databse many orphaned objects.
-		/// Therefore we need to delete the old project a replace it with the changed one. We need to
-		/// now the old file path associate to this project in case it has been changed in the update
+		/// Therefore we need to delete the old project a replace it with the changed one.
 		/// </summary>
 		/// <param name="project">
 		/// A <see cref="Project"/> to update
@@ -237,57 +239,27 @@ namespace LongoMatch.DB
 		/// <param name="previousFileName">
 		/// A <see cref="System.String"/> with the old file path
 		/// </param>
-		public void UpdateProject(Project project, string previousFileName) {
-			bool error = false;
+		public void UpdateProject(Project project) {
 			// Configure db4o to cascade on delete for each one of the objects stored in a Project
 			SetDeleteCascadeOptions();
 			IObjectContainer db = Db4oFactory.OpenFile(file);
+			
 			try	{
-				// We look for a project with the same filename
-				if(!Exists(project.Description.File.FilePath,db)) {
-					IQuery query = GetQueryWithContrains(db, file);
-					IObjectSet result = query.Execute();
-					//Get the stored project and replace it with the new one
-					if(result.Count == 1) {
-						Project fd = (Project)result.Next();
-						db.Delete(fd);
-						// Add the updated project
-						db.Store(project);
-						db.Commit();
-					} else {
-						error = true;
-					}
-				}
-				else
-					error = true;
-			}
-			finally {
-				CloseDB(db);
-				if(error)
-					throw new Exception();
-			}
-		}
-
-		/// <summary>
-		/// Updates a project in the databse whose file path hasn't changed
-		/// </summary>
-		/// <param name="project">
-		/// A <see cref="Project"/> to update
-		/// </param>
-		public void UpdateProject(Project project) {
-			SetDeleteCascadeOptions();
-			IObjectContainer db = Db4oFactory.OpenFile(file);
-			try	{
-				IQuery query = GetQueryWithContrains(db, file);
+				IQuery query = GetQueryProjectById(db, project.UUID);
 				IObjectSet result = query.Execute();
 				//Get the stored project and replace it with the new one
-				Project fd = (Project)result.Next();
-				db.Delete(fd);
-				db.Store(project);
-				db.Commit();
-			}
-			finally
-			{
+				if(result.Count == 1) {
+					Project fd = (Project)result.Next();
+					db.Delete(fd);
+					db.Store(project);
+					db.Commit();
+				} else {
+					Log.Warning("Project with ID " + project.UUID + "not found");
+				}
+			} catch (Exception e) {
+				Log.Error("Could not update project");
+				Log.Exception(e);
+			} finally {
 				CloseDB(db);
 			}
 		}
@@ -302,14 +274,20 @@ namespace LongoMatch.DB
 		/// A <see cref="System.Boolean"/>
 		/// </returns>
 		public bool Exists(Project project) {
+			bool ret;
 			IObjectContainer db = Db4oFactory.OpenFile(file);
+		
 			try {
-				return Exists(project.Description.File.FilePath, db);
+				IQuery query = GetQueryProjectById(db, project.UUID);
+				IObjectSet result = query.Execute();
+				ret = result.HasNext();
 			} catch {
-				return false;
+				ret = false;
 			} finally {
 				CloseDB(db);
 			}
+			
+			return ret;
 		}
 		
 		private void CreateNewDB () {
@@ -385,14 +363,15 @@ namespace LongoMatch.DB
 				return;
 		
 			File.Move(file, Path.Combine(MainClass.DBDir(), backupFilename));
+			Log.Information ("Created backup for database at ", backupFilename);
 			lastBackup = new BackupDate {Date = now};
 			UpdateBackupDate();
 		}
 
-		private IQuery GetQueryWithContrains(IObjectContainer db, string filename) {
+		private IQuery GetQueryProjectById(IObjectContainer db, Guid id) {
 			IQuery query = db.Query();
 			query.Constrain(typeof(Project));
-			query.Descend("description").Descend("file").Descend("filePath").Constrain(filename);
+			query.Descend("_UUID").Constrain(id);
 			return query;
 		}
 
@@ -431,15 +410,7 @@ namespace LongoMatch.DB
 			Db4oFactory.Configure().ObjectClass(typeof(Drawing)).CascadeOnUpdate(true);
 		}
 
-		private bool Exists(string filename, IObjectContainer db) {
-			IQuery query = db.Query();
-			query.Constrain(typeof(Project));
-			query.Descend("file").Descend("filePath").Constrain(filename);
-			IObjectSet result = query.Execute();
-			return (result.HasNext());
-		}
-		
-		
+
 		/* Dummy class to allow having a single instance of BackupDateTime in the DB and make it
 		 * easIer to query */
 		protected class BackupDate 

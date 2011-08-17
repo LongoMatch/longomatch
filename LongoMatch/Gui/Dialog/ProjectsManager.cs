@@ -33,7 +33,6 @@ namespace LongoMatch.Gui.Dialog
 	public partial class ProjectsManager : Gtk.Dialog
 	{
 
-		private string originalFilePath;
 		private Project openedProject;
 		private List<ProjectDescription> selectedProjects;
 
@@ -52,7 +51,6 @@ namespace LongoMatch.Gui.Dialog
 			projectlistwidget1.ClearSearch();
 			projectlistwidget1.SelectionMode = SelectionMode.Multiple;
 			Clear();
-			originalFilePath=null;
 		}
 
 		private void Clear() {
@@ -80,20 +78,8 @@ namespace LongoMatch.Gui.Dialog
 			if(project == null)
 				return;
 
-			if(project.Description.File.FilePath == originalFilePath) {
-				MainClass.DB.UpdateProject(project);
-				saveButton.Sensitive = false;
-			}
-			else {
-				try {
-					MainClass.DB.UpdateProject(project,originalFilePath);
-					saveButton.Sensitive = false;
-				}
-				catch {
-					MessagePopup.PopupMessage(this, MessageType.Warning,
-					                          Catalog.GetString("A Project is already using this file."));
-				}
-			}
+			MainClass.DB.UpdateProject(project);
+			saveButton.Sensitive = false;
 			projectlistwidget1.QueueDraw();
 		}
 
@@ -119,7 +105,7 @@ namespace LongoMatch.Gui.Dialog
 				                                     Catalog.GetString("Do you really want to delete:")+
 				                                     "\n"+selectedProject.Title);
 				if(md.Run()== (int)ResponseType.Yes) {
-					MainClass.DB.RemoveProject(selectedProject.File.FilePath);
+					MainClass.DB.RemoveProject(selectedProject.UUID);
 					deletedProjects.Add(selectedProject);
 				}
 				md.Destroy();
@@ -179,8 +165,7 @@ namespace LongoMatch.Gui.Dialog
 			}
 			else {
 				projectdetails.Sensitive = true;
-				projectdetails.SetProject(MainClass.DB.GetProject(project.File.FilePath));
-				originalFilePath = project.File.FilePath;
+				projectdetails.SetProject(MainClass.DB.GetProject(project.UUID));
 				saveButton.Sensitive = false;
 				deleteButton.Sensitive = true;
 				exportbutton.Sensitive = true;
