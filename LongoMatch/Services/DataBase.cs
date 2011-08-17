@@ -130,57 +130,28 @@ namespace LongoMatch.DB
 		/// A <see cref="List"/>
 		/// </returns>
 		public List<ProjectDescription> GetAllProjects() {
-			SetUpdateCascadeOptions();
 			List<ProjectDescription> list = new List<ProjectDescription>();
 			IObjectContainer db = Db4oFactory.OpenFile(file);
-			db.Ext().Configure().ActivationDepth(1);
+			
 			try	{
 				IQuery query = db.Query();
-				query.Constrain(typeof(Project));
+				query.Constrain(typeof(ProjectDescription));
 				IObjectSet result = query.Execute();
 				while(result.HasNext()) {
 					try {
-						Project p = (Project)result.Next();
-						ProjectDescription desc = p.Description;
-						db.Activate(desc,3);
-						try{
-							//FIXME: It happens that the project's File object is set to null?¿?¿
-							// In that case, reset the value to let the user change it with the
-							// projects manager.
-							if(desc.File.FilePath == null) {}
-						} catch {
-							MessagePopup.PopupMessage(null, MessageType.Warning,
-							                          Catalog.GetString("Error retrieving the file " +
-							                                            "info for project:")+
-							                          " "+ desc.Title+"\n"+
-							                          Catalog.GetString("This value will be reset. " +
-							                                            "Remember to change it later with the " +
-							                                            "projects manager"));
-							desc.File = new PreviewMediaFile {
-								FilePath = Catalog.GetString("Change Me"),
-								VideoHeight = 0,
-								VideoWidth = 0,
-								HasVideo = false,
-								HasAudio = false,
-								Length = 0,
-								Fps = 0,
-								VideoCodec = "",
-								AudioCodec = "",
-								Preview = null,
-							};
-							db.Store(p);
-						}
+						ProjectDescription desc = (ProjectDescription)result.Next();
 						list.Add(desc);
-					} catch {
-						Console.WriteLine("Error retreiving project. Skip");
+					} catch (Exception e) {
+						Log.Warning("Error retreiving project. Skip");
+						Log.Exception(e);
 					}
 				}
-				return list;
 			}
 			finally
 			{
 				CloseDB(db);
 			}
+			return list;
 		}
 
 		/// <summary>
