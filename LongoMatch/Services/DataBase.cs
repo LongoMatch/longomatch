@@ -89,6 +89,8 @@ namespace LongoMatch.DB
 			if(!System.IO.File.Exists(file))
 				CreateNewDB();
 			
+			Log.Information ("Using database file: " + file);
+			
 			GetDBVersion();
 			GetBackupDate();
 			CheckDB();
@@ -298,6 +300,7 @@ namespace LongoMatch.DB
 				lastBackup = new BackupDate { Date = DateTime.UtcNow};
 				db.Store(dbVersion);
 				db.Store(lastBackup);
+				Log.Information("Created new database:" + file);
 			}
 			finally {
 				db.Close();
@@ -315,7 +318,7 @@ namespace LongoMatch.DB
 			BackupDate lastBackup = GetObject<BackupDate> ();
 			if (lastBackup == null)
 				lastBackup = new BackupDate {Date = DateTime.UtcNow};
-			Log.Information("Last DB backup: "+ lastBackup.Date.ToShortDateString());
+			Log.Information("DB last backup: "+ lastBackup.Date.ToShortDateString());
 		}
 		
 		private void UpdateBackupDate () {
