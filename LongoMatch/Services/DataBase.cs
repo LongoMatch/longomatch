@@ -377,35 +377,30 @@ namespace LongoMatch.DB
 			db.Ext().Purge();
 			db.Close();
 		}
+		
+		private List<Type> GetTypes() {
+			List<Type> types = new List<Type>();
+			types.Add(typeof(Project));
+			types.Add(typeof(ProjectDescription));
+			types.Add(typeof(Categories));
+			types.Add(typeof(TeamTemplate));
+			types.Add(typeof(Play));
+			types.Add(typeof(TimeNode));
+			types.Add(typeof(TeamTag));
+			types.Add(typeof(PlayerTag));
+			types.Add(typeof(StringTag));
+			types.Add(typeof(PlayersTagStore));
+			types.Add(typeof(TeamsTagStore));
+			types.Add(typeof(StringTagStore));
+			types.Add(typeof(DrawingsList));
 
-		private void SetDeleteCascadeOptions() {
-			Db4oFactory.Configure().ObjectClass(typeof(Project)).CascadeOnDelete(true);
-			Db4oFactory.Configure().ObjectClass(typeof(Categories)).CascadeOnDelete(true);
-			Db4oFactory.Configure().ObjectClass(typeof(Category)).CascadeOnDelete(true);
-			Db4oFactory.Configure().ObjectClass(typeof(TimeNode)).CascadeOnDelete(true);
-			Db4oFactory.Configure().ObjectClass(typeof(Play)).CascadeOnDelete(true);
-			Db4oFactory.Configure().ObjectClass(typeof(Time)).CascadeOnDelete(true);
-			Db4oFactory.Configure().ObjectClass(typeof(Team)).CascadeOnDelete(true);
-			Db4oFactory.Configure().ObjectClass(typeof(HotKey)).CascadeOnDelete(true);
-			Db4oFactory.Configure().ObjectClass(typeof(Player)).CascadeOnDelete(true);
-			Db4oFactory.Configure().ObjectClass(typeof(StringTag)).CascadeOnDelete(true);
-			Db4oFactory.Configure().ObjectClass(typeof(TeamTemplate)).CascadeOnDelete(true);
-			Db4oFactory.Configure().ObjectClass(typeof(Drawing)).CascadeOnDelete(true);
+			return types;
 		}
 
-		private void SetUpdateCascadeOptions() {
-			Db4oFactory.Configure().ObjectClass(typeof(Project)).CascadeOnUpdate(true);
-			Db4oFactory.Configure().ObjectClass(typeof(Categories)).CascadeOnUpdate(true);
-			Db4oFactory.Configure().ObjectClass(typeof(Category)).CascadeOnUpdate(true);
-			Db4oFactory.Configure().ObjectClass(typeof(TimeNode)).CascadeOnUpdate(true);
-			Db4oFactory.Configure().ObjectClass(typeof(Play)).CascadeOnDelete(true);
-			Db4oFactory.Configure().ObjectClass(typeof(Time)).CascadeOnUpdate(true);
-			Db4oFactory.Configure().ObjectClass(typeof(Team)).CascadeOnUpdate(true);
-			Db4oFactory.Configure().ObjectClass(typeof(HotKey)).CascadeOnUpdate(true);
-			Db4oFactory.Configure().ObjectClass(typeof(Player)).CascadeOnUpdate(true);
-			Db4oFactory.Configure().ObjectClass(typeof(TeamTemplate)).CascadeOnUpdate(true);
-			Db4oFactory.Configure().ObjectClass(typeof(StringTag)).CascadeOnDelete(true);
-			Db4oFactory.Configure().ObjectClass(typeof(Drawing)).CascadeOnUpdate(true);
+		private void SetDeleteCascadeOptions() {
+			foreach (Type type in GetTypes()) {
+				Db4oFactory.Configure().ObjectClass(type).CascadeOnDelete(true);
+			}
 		}
 
 
