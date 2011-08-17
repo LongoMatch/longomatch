@@ -59,9 +59,9 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 
-		public CapturePropertiesStruct CaptureProperties {
+		public CaptureSettings CaptureSettings {
 			get {
-				return fdwidget.CaptureProperties;
+				return fdwidget.CaptureSettings;
 			}
 		}
 	}

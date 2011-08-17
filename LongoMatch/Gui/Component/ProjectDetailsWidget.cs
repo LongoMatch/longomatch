@@ -38,7 +38,6 @@ namespace LongoMatch.Gui.Component
 {
 
 
-	//TODO añadir eventos de cambios para realizar el cambio directamente sobre el file data abierto
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class ProjectDetailsWidget : Gtk.Bin
@@ -57,9 +56,8 @@ namespace LongoMatch.Gui.Component
 		private ITemplateProvider<TeamTemplate, Player> tpt;
 		private ProjectType useType;
 		private List<Device> videoDevices;
-		private const string PAL_FORMAT = "720x576 (4:3)";
-		private const string PAL_3_4_FORMAT = "540x432 (4:3)";
-		private const string PAL_1_2_FORMAT = "360x288 (4:3)";
+		private ListStore videoStandardList;
+		private ListStore encProfileList;
 		private const string DV_SOURCE = "DV Source";
 		private const string GCONF_SOURCE = "GConf Source";
 
@@ -238,12 +236,15 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public CapturePropertiesStruct CaptureProperties {
+		public CaptureSettings CaptureSettings {
 			get {
-				CapturePropertiesStruct s = new CapturePropertiesStruct();
-				s.OutputFile = fileEntry.Text;
-				s.AudioBitrate = (uint)audiobitratespinbutton.Value;
-				s.VideoBitrate = (uint)videobitratespinbutton.Value;
+				TreeIter iter;
+				EncodingSettings encSettings = new EncodingSettings();
+				CaptureSettings s = new CaptureSettings();
+				
+				encSettings.OutputFile = fileEntry.Text;
+				encSettings.AudioBitrate = (uint)audiobitratespinbutton.Value;
+				encSettings.VideoBitrate = (uint)videobitratespinbutton.Value;
 				if(videoDevices[devicecombobox.Active].DeviceType == DeviceType.DV) {
 					if(Environment.OSVersion.Platform == PlatformID.Win32NT)
 						s.CaptureSourceType = CaptureSourceType.DShow;
@@ -254,49 +255,16 @@ namespace LongoMatch.Gui.Component
 					s.CaptureSourceType = CaptureSourceType.Raw;
 				}
 				s.DeviceID = videoDevices[devicecombobox.Active].ID;
+				
 				/* Get size info */
-				switch(sizecombobox.ActiveText) {
-					/* FIXME: Don't harcode size values */
-				case PAL_FORMAT:
-					s.Width = 720;
-					s.Height = 576;
-					break;
-				case PAL_3_4_FORMAT:
-					s.Width = 540;
-					s.Height = 432;
-					break;
-				case PAL_1_2_FORMAT:
-					s.Width = 360;
-					s.Height = 288;
-					break;
-				default:
-					s.Width = 0;
-					s.Height = 0;
-					break;
-				}
-				/* Get video compresion format info */
-				switch(videoformatcombobox.ActiveText) {
-				case Constants.AVI:
-					s.VideoEncoder = VideoEncoderType.Mpeg4;
-					s.AudioEncoder = AudioEncoderType.Mp3;
-					s.Muxer = VideoMuxerType.Avi;
-					break;
-				case Constants.MP4:
-					s.VideoEncoder = VideoEncoderType.H264;
-					s.AudioEncoder = AudioEncoderType.Aac;
-					s.Muxer = VideoMuxerType.Mp4;
-					break;
-				case Constants.OGG:
-					s.VideoEncoder = VideoEncoderType.Theora;
-					s.AudioEncoder = AudioEncoderType.Vorbis;
-					s.Muxer = VideoMuxerType.Ogg;
-					break;
-				case Constants.WEBM:
-					s.VideoEncoder = VideoEncoderType.VP8;
-					s.AudioEncoder = AudioEncoderType.Vorbis;
-					s.Muxer = VideoMuxerType.WebM;
-					break;
-				}
+				sizecombobox.GetActiveIter(out iter);
+				encSettings.VideoStandard = (VideoStandard) videoStandardList.GetValue(iter, 1);
+			
+				/* Get encoding profile info */
+				videoformatcombobox.GetActiveIter(out iter);
+				encSettings.EncodingProfile = (EncodingProfile) encProfileList.GetValue(iter, 1);
+				
+				s.EncodingSettings = encSettings;
 				return s;
 			}
 		}
@@ -441,17 +409,21 @@ namespace LongoMatch.Gui.Component
 		}
 
 		private void FillFormats() {
-			sizecombobox.AppendText(Catalog.GetString("Keep original size"));
-			sizecombobox.AppendText(PAL_FORMAT);
-			sizecombobox.AppendText(PAL_3_4_FORMAT);
-			sizecombobox.AppendText(PAL_1_2_FORMAT);
+			videoStandardList = new ListStore(typeof(string), typeof (VideoStandard));
+			videoStandardList.AppendValues(VideoStandards.Original.Name, VideoStandards.Original);
+			videoStandardList.AppendValues(VideoStandards.P240.Name, VideoStandards.P240);
+			videoStandardList.AppendValues(VideoStandards.P480.Name, VideoStandards.P480);
+			videoStandardList.AppendValues(VideoStandards.P720.Name, VideoStandards.P720);
+			videoStandardList.AppendValues(VideoStandards.P1080.Name, VideoStandards.P1080);
+			sizecombobox.Model = videoStandardList;
 			sizecombobox.Active = 0;
 
-			videoformatcombobox.AppendText(Constants.AVI);
+			encProfileList = new ListStore(typeof(string), typeof (EncodingProfile));
+			encProfileList.AppendValues(EncodingProfiles.MP4.Name, EncodingProfiles.MP4);
+			encProfileList.AppendValues(EncodingProfiles.Avi.Name, EncodingProfiles.Avi);
 			if(Environment.OSVersion.Platform != PlatformID.Win32NT)
-				videoformatcombobox.AppendText(Constants.WEBM);
-			videoformatcombobox.AppendText(Constants.OGG);
-			videoformatcombobox.AppendText(Constants.MP4);
+				encProfileList.AppendValues(EncodingProfiles.WebM.Name, EncodingProfiles.WebM);
+			videoformatcombobox.Model = encProfileList;
 			videoformatcombobox.Active = 0;
 		}
 

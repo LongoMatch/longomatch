@@ -5,15 +5,18 @@ LINK = $(REF_DEP_CESARPLAYER)
 
 SOURCES = \
 	AssemblyInfo.cs\
-	Capturer/CaptureProperties.cs\
 	Capturer/FakeCapturer.cs\
 	Capturer/GstCameraCapturer.cs\
 	Capturer/ICapturer.cs\
 	Capturer/LiveSourceTimer.cs\
 	Capturer/ObjectManager.cs\
+	Common/CaptureSettings.cs\
 	Common/Constants.cs\
+	Common/EncodingProfiles.cs\
+	Common/EncodingSettings.cs\
 	Common/Enum.cs\
 	Common/Handlers.cs\
+	Common/VideoStandards.cs\
 	Player/GstPlayer.cs \
 	Player/IPlayer.cs \
 	Player/ObjectManager.cs \

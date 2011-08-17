@@ -167,7 +167,7 @@ namespace LongoMatch.Common
 		public static void CreateNewProject(Window window,
 		                                    out Project project,
 		                                    out ProjectType projectType,
-		                                    out CapturePropertiesStruct captureProps) {
+		                                    out CaptureSettings captureSettings) {
 			ProjectSelectionDialog psd;
 			NewProjectDialog npd;
 			List<Device> devices = null;
@@ -176,7 +176,7 @@ namespace LongoMatch.Common
 			/* The out parameters must be set before leaving the method */
 			project = null;
 			projectType = ProjectType.None;
-			captureProps = new CapturePropertiesStruct();
+			captureSettings = new CaptureSettings();
 
 			/* Show the project selection dialog */
 			psd = new ProjectSelectionDialog();
@@ -224,7 +224,7 @@ namespace LongoMatch.Common
 					/* We are now ready to create the new project */
 					project = npd.Project;
 					if(projectType == ProjectType.CaptureProject)
-						captureProps = npd.CaptureProperties;
+						captureSettings = npd.CaptureSettings;
 					npd.Destroy();
 					break;
 				}

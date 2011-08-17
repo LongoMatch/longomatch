@@ -106,7 +106,7 @@ namespace LongoMatch.Gui
 		#endregion
 
 		#region Private Methods
-		private void SetProject(Project project, ProjectType projectType, CapturePropertiesStruct props)
+		private void SetProject(Project project, ProjectType projectType, CaptureSettings props)
 		{
 			bool isLive = false;
 
@@ -211,7 +211,7 @@ namespace LongoMatch.Gui
 			}
 			/* we need to set the opened project to null to avoid calling again CloseOpendProject() */
 			openedProject = null;
-			SetProject(newProject, ProjectType.FileProject, new CapturePropertiesStruct());
+			SetProject(newProject, ProjectType.FileProject, new CaptureSettings());
 			md.Destroy();
 		}
 
@@ -363,14 +363,14 @@ namespace LongoMatch.Gui
 		{
 			Project project;
 			ProjectType projectType;
-			CapturePropertiesStruct captureProps;
+			CaptureSettings captureSettings;
 
 			if(!PromptCloseProject())
 				return;
 
-			ProjectUtils.CreateNewProject(this, out project, out projectType, out captureProps);
+			ProjectUtils.CreateNewProject(this, out project, out projectType, out captureSettings);
 			if(project != null)
-				SetProject(project, projectType, captureProps);
+				SetProject(project, projectType, captureSettings);
 		}
 
 		protected virtual void OnOpenActivated(object sender, System.EventArgs e)
@@ -386,7 +386,7 @@ namespace LongoMatch.Gui
 				project = opd.SelectedProject;
 			opd.Destroy();
 			if(project != null)
-				SetProject(MainClass.DB.GetProject(project.File.FilePath), ProjectType.FileProject, new CapturePropertiesStruct());
+				SetProject(MainClass.DB.GetProject(project.File.FilePath), ProjectType.FileProject, new CaptureSettings());
 		}
 
 		protected virtual void OnSaveProjectActionActivated(object sender, System.EventArgs e)

@@ -22,18 +22,20 @@ using LongoMatch.Video.Common;
 namespace LongoMatch.Video.Capturer
 {
 
-
-	public struct CapturePropertiesStruct
+	public struct CaptureSettings
 	{
 		public CaptureSourceType CaptureSourceType;
-		public string OutputFile;
 		public string DeviceID;
-		public uint VideoBitrate;
-		public uint AudioBitrate;
-		public VideoEncoderType VideoEncoder;
-		public AudioEncoderType AudioEncoder;
-		public VideoMuxerType Muxer;
-		public uint Height;
-		public uint Width;
+		public EncodingSettings EncodingSettings;
+
+		public static CaptureSettings DefaultSettings() {
+			CaptureSettings settings = new CaptureSettings();
+			settings.CaptureSourceType = CaptureSourceType.Raw;
+			settings.EncodingSettings = new EncodingSettings(VideoStandards.P480_4_3,
+			                                                 EncodingProfiles.MP4,
+			                                                 25, 1, 1000, 128, "");
+			return settings;
+		}
 	}
+	
 }

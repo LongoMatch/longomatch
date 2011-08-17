@@ -40,7 +40,7 @@ namespace LongoMatch.Gui
 		public event ErrorHandler Error;
 
 		private Pixbuf logopix;
-		private CapturePropertiesStruct captureProps;
+		private CaptureSettings captureProps;
 		private CapturerType capturerType;
 		private bool captureStarted;
 		private bool capturing;
@@ -51,16 +51,7 @@ namespace LongoMatch.Gui
 		public CapturerBin()
 		{
 			this.Build();
-			captureProps = new CapturePropertiesStruct();
-			captureProps.Width = 320;
-			captureProps.Height = 240;
-			captureProps.VideoBitrate = 1000;
-			captureProps.AudioBitrate = 128;
-			captureProps.VideoEncoder = VideoEncoderType.H264;
-			captureProps.AudioEncoder = AudioEncoderType.Aac;
-			captureProps.Muxer = VideoMuxerType.Mp4;
-			captureProps.OutputFile = "";
-			captureProps.CaptureSourceType = CaptureSourceType.Raw;
+			captureProps = CaptureSettings.DefaultSettings();
 			Type = CapturerType.Fake;
 		}
 
@@ -114,7 +105,7 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public CapturePropertiesStruct CaptureProperties {
+		public CaptureSettings CaptureProperties {
 			set {
 				captureProps = value;
 			}
@@ -219,15 +210,15 @@ namespace LongoMatch.Gui
 				return;
 
 			capturer.DeviceID = captureProps.DeviceID;
-			capturer.OutputFile = captureProps.OutputFile;
-			capturer.OutputHeight = captureProps.Height;
-			capturer.OutputWidth = captureProps.Width;
-			capturer.SetVideoEncoder(captureProps.VideoEncoder);
-			capturer.SetAudioEncoder(captureProps.AudioEncoder);
-			capturer.SetVideoMuxer(captureProps.Muxer);
+			capturer.OutputFile = captureProps.EncodingSettings.OutputFile;
+			capturer.OutputHeight = captureProps.EncodingSettings.VideoStandard.Height;
+			capturer.OutputWidth = captureProps.EncodingSettings.VideoStandard.Width;
+			capturer.SetVideoEncoder(captureProps.EncodingSettings.EncodingProfile.VideoEncoder);
+			capturer.SetAudioEncoder(captureProps.EncodingSettings.EncodingProfile.AudioEncoder);
+			capturer.SetVideoMuxer(captureProps.EncodingSettings.EncodingProfile.Muxer);
 			capturer.SetSource(captureProps.CaptureSourceType);
-			capturer.VideoBitrate = captureProps.VideoBitrate;
-			capturer.AudioBitrate = captureProps.AudioBitrate;
+			capturer.VideoBitrate = captureProps.EncodingSettings.VideoBitrate;
+			capturer.AudioBitrate = captureProps.EncodingSettings.AudioBitrate;
 		}
 
 		protected virtual void OnRecbuttonClicked(object sender, System.EventArgs e)
