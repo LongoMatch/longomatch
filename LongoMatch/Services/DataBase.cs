@@ -20,6 +20,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.IO;
 using Db4objects.Db4o;
 using Db4objects.Db4o.Query;
 using Gtk;
@@ -43,15 +45,20 @@ namespace LongoMatch.DB
 	{
 		// File path of the database
 		private string file;
-		// Lock object
-		private object locker;
 
 		private Version dbVersion;
+		
+		private BackupDate lastBackup;
 
-		private const int MAYOR=1;
+		private const int MAYOR=2;
 
 		private const int MINOR=0;
+		
+		private TimeSpan maxDaysWithoutBackup = new TimeSpan(5, 0, 0, 0);
+		
+		private const string backupFilename = Constants.DB_FILE + ".backup";
 
+		
 		/// <summary>
 		/// Creates a proxy for the database
 		/// </summary>
@@ -61,40 +68,11 @@ namespace LongoMatch.DB
 		public DataBase(string file)
 		{
 			this.file = file;
-			if(!System.IO.File.Exists(file)) {
-				// Create new DB and add version
-				IObjectContainer db = Db4oFactory.OpenFile(file);
-				try {
-					dbVersion= new Version(MAYOR,MINOR);
-					db.Store(dbVersion);
-				}
-				finally {
-					db.Close();
-				}
-			}
-			else {
-				IObjectContainer db = Db4oFactory.OpenFile(file);
-				try	{
-					IQuery query = db.Query();
-					query.Constrain(typeof(Version));
-					IObjectSet result = query.Execute();
-					if(result.HasNext()) {
-						dbVersion = (Version)result.Next();
-					}
-					else {
-						dbVersion = new Version(0,0);
-					}
-				}
-				finally
-				{
-					db.Close();
-
-				}
-			}
-			locker = new object();
+			Init();
+			BackupDB();
 		}
-
-		//// <value>
+		
+		/// <value>
 		/// The database version
 		/// </value>
 		public Version Version {
@@ -102,7 +80,20 @@ namespace LongoMatch.DB
 				return dbVersion;
 			}
 		}
-
+		
+		/// <summary>
+		/// Initialize the Database
+		/// </summary>
+		public void Init() {
+			/* Create a new DB if it doesn't exists yet */
+			if(!System.IO.File.Exists(file))
+				CreateNewDB();
+			
+			GetDBVersion();
+			GetBackupDate();
+			CheckDB();
+		}
+		
 		/// <summary>
 		/// Retrieve all the projects from the database. This method don't return the
 		/// the whole <see cref="LongoMatch.DB.Project"/> but the projects fields to
@@ -113,58 +104,56 @@ namespace LongoMatch.DB
 		/// A <see cref="List"/>
 		/// </returns>
 		public List<ProjectDescription> GetAllProjects() {
-			lock(this.locker) {
-				SetUpdateCascadeOptions();
-				List<ProjectDescription> list = new List<ProjectDescription>();
-				IObjectContainer db = Db4oFactory.OpenFile(file);
-				db.Ext().Configure().ActivationDepth(1);
-				try	{
-					IQuery query = db.Query();
-					query.Constrain(typeof(Project));
-					IObjectSet result = query.Execute();
-					while(result.HasNext()) {
-						try {
-							Project p = (Project)result.Next();
-							ProjectDescription desc = p.Description;
-							db.Activate(desc,3);
-							try{
-								//FIXME: It happens that the project's File object is set to null?¿?¿
-								// In that case, reset the value to let the user change it with the
-								// projects manager.
-								if(desc.File.FilePath == null) {}
-							} catch {
-								MessagePopup.PopupMessage(null, MessageType.Warning,
-								                          Catalog.GetString("Error retrieving the file " +
-								                                          "info for project:")+
-								                          " "+ desc.Title+"\n"+
-								                          Catalog.GetString("This value will be reset. " +
-								                                          "Remember to change it later with the " +
-								                                          "projects manager"));
-								desc.File = new PreviewMediaFile {
-									FilePath = Catalog.GetString("Change Me"),
-									VideoHeight = 0,
-									VideoWidth = 0,
-									HasVideo = false,
-									HasAudio = false,
-									Length = 0,
-									Fps = 0,
-									VideoCodec = "",
-									AudioCodec = "",
-									Preview = null,
-								};
-								db.Store(p);
-							}
-							list.Add(desc);
+			SetUpdateCascadeOptions();
+			List<ProjectDescription> list = new List<ProjectDescription>();
+			IObjectContainer db = Db4oFactory.OpenFile(file);
+			db.Ext().Configure().ActivationDepth(1);
+			try	{
+				IQuery query = db.Query();
+				query.Constrain(typeof(Project));
+				IObjectSet result = query.Execute();
+				while(result.HasNext()) {
+					try {
+						Project p = (Project)result.Next();
+						ProjectDescription desc = p.Description;
+						db.Activate(desc,3);
+						try{
+							//FIXME: It happens that the project's File object is set to null?¿?¿
+							// In that case, reset the value to let the user change it with the
+							// projects manager.
+							if(desc.File.FilePath == null) {}
 						} catch {
-							Console.WriteLine("Error retreiving project. Skip");
+							MessagePopup.PopupMessage(null, MessageType.Warning,
+							                          Catalog.GetString("Error retrieving the file " +
+							                                            "info for project:")+
+							                          " "+ desc.Title+"\n"+
+							                          Catalog.GetString("This value will be reset. " +
+							                                            "Remember to change it later with the " +
+							                                            "projects manager"));
+							desc.File = new PreviewMediaFile {
+								FilePath = Catalog.GetString("Change Me"),
+								VideoHeight = 0,
+								VideoWidth = 0,
+								HasVideo = false,
+								HasAudio = false,
+								Length = 0,
+								Fps = 0,
+								VideoCodec = "",
+								AudioCodec = "",
+								Preview = null,
+							};
+							db.Store(p);
 						}
+						list.Add(desc);
+					} catch {
+						Console.WriteLine("Error retreiving project. Skip");
 					}
-					return list;
 				}
-				finally
-				{
-					CloseDB(db);
-				}
+				return list;
+			}
+			finally
+			{
+				CloseDB(db);
 			}
 		}
 
@@ -180,18 +169,16 @@ namespace LongoMatch.DB
 		/// </returns>
 		public Project GetProject(String filename) {
 			Project ret;
-			lock(this.locker) {
-				IObjectContainer db = Db4oFactory.OpenFile(file);
-				try	{
-					IQuery query = GetQueryWithContrains(db, file);
-					IObjectSet result = query.Execute();
-					ret = (Project) db.Ext().PeekPersisted(result.Next(),10,true);
-					return ret;
-				}
-				finally
-				{
-					CloseDB(db);
-				}
+			IObjectContainer db = Db4oFactory.OpenFile(file);
+			try	{
+				IQuery query = GetQueryWithContrains(db, file);
+				IObjectSet result = query.Execute();
+				ret = (Project) db.Ext().PeekPersisted(result.Next(),10,true);
+				return ret;
+			}
+			finally
+			{
+				CloseDB(db);
 			}
 		}
 
@@ -202,19 +189,17 @@ namespace LongoMatch.DB
 		/// A <see cref="Project"/> to add
 		/// </param>
 		public void AddProject(Project project) {
-			lock(this.locker) {
-				IObjectContainer db = Db4oFactory.OpenFile(file);
-				try
-				{
-					if(!Exists(project.Description.File.FilePath,db)) {
-						db.Store(project);
-						db.Commit();
-					}
-					else throw new Exception(Catalog.GetString("The Project for this video file already exists.")+"\n"+Catalog.GetString("Try to edit it with the Database Manager"));
+			IObjectContainer db = Db4oFactory.OpenFile(file);
+			try
+			{
+				if(!Exists(project.Description.File.FilePath,db)) {
+					db.Store(project);
+					db.Commit();
 				}
-				finally {
-					CloseDB(db);
-				}
+				else throw new Exception(Catalog.GetString("The Project for this video file already exists.")+"\n"+Catalog.GetString("Try to edit it with the Database Manager"));
+			}
+			finally {
+				CloseDB(db);
 			}
 		}
 
@@ -225,20 +210,18 @@ namespace LongoMatch.DB
 		/// A <see cref="System.String"/> with the project's video file path
 		/// </param>
 		public void RemoveProject(string filePath) {
-			lock(this.locker) {
-				SetDeleteCascadeOptions();
-				IObjectContainer db = Db4oFactory.OpenFile(file);
-				try	{
-					IQuery query = GetQueryWithContrains(db, file);
-					IObjectSet result = query.Execute();
-					Project project = (Project)result.Next();
-					db.Delete(project);
-					db.Commit();
-				}
-				finally
-				{
-					CloseDB(db);
-				}
+			SetDeleteCascadeOptions();
+			IObjectContainer db = Db4oFactory.OpenFile(file);
+			try	{
+				IQuery query = GetQueryWithContrains(db, file);
+				IObjectSet result = query.Execute();
+				Project project = (Project)result.Next();
+				db.Delete(project);
+				db.Commit();
+			}
+			finally
+			{
+				CloseDB(db);
 			}
 		}
 
@@ -255,35 +238,33 @@ namespace LongoMatch.DB
 		/// A <see cref="System.String"/> with the old file path
 		/// </param>
 		public void UpdateProject(Project project, string previousFileName) {
-			lock(this.locker) {
-				bool error = false;
-				// Configure db4o to cascade on delete for each one of the objects stored in a Project
-				SetDeleteCascadeOptions();
-				IObjectContainer db = Db4oFactory.OpenFile(file);
-				try	{
-					// We look for a project with the same filename
-					if(!Exists(project.Description.File.FilePath,db)) {
-						IQuery query = GetQueryWithContrains(db, file);
-						IObjectSet result = query.Execute();
-						//Get the stored project and replace it with the new one
-						if(result.Count == 1) {
-							Project fd = (Project)result.Next();
-							db.Delete(fd);
-							// Add the updated project
-							db.Store(project);
-							db.Commit();
-						} else {
-							error = true;
-						}
-					}
-					else
+			bool error = false;
+			// Configure db4o to cascade on delete for each one of the objects stored in a Project
+			SetDeleteCascadeOptions();
+			IObjectContainer db = Db4oFactory.OpenFile(file);
+			try	{
+				// We look for a project with the same filename
+				if(!Exists(project.Description.File.FilePath,db)) {
+					IQuery query = GetQueryWithContrains(db, file);
+					IObjectSet result = query.Execute();
+					//Get the stored project and replace it with the new one
+					if(result.Count == 1) {
+						Project fd = (Project)result.Next();
+						db.Delete(fd);
+						// Add the updated project
+						db.Store(project);
+						db.Commit();
+					} else {
 						error = true;
+					}
 				}
-				finally {
-					CloseDB(db);
-					if(error)
-						throw new Exception();
-				}
+				else
+					error = true;
+			}
+			finally {
+				CloseDB(db);
+				if(error)
+					throw new Exception();
 			}
 		}
 
@@ -294,22 +275,20 @@ namespace LongoMatch.DB
 		/// A <see cref="Project"/> to update
 		/// </param>
 		public void UpdateProject(Project project) {
-			lock(this.locker) {
-				SetDeleteCascadeOptions();
-				IObjectContainer db = Db4oFactory.OpenFile(file);
-				try	{
-					IQuery query = GetQueryWithContrains(db, file);
-					IObjectSet result = query.Execute();
-					//Get the stored project and replace it with the new one
-					Project fd = (Project)result.Next();
-					db.Delete(fd);
-					db.Store(project);
-					db.Commit();
-				}
-				finally
-				{
-					CloseDB(db);
-				}
+			SetDeleteCascadeOptions();
+			IObjectContainer db = Db4oFactory.OpenFile(file);
+			try	{
+				IQuery query = GetQueryWithContrains(db, file);
+				IObjectSet result = query.Execute();
+				//Get the stored project and replace it with the new one
+				Project fd = (Project)result.Next();
+				db.Delete(fd);
+				db.Store(project);
+				db.Commit();
+			}
+			finally
+			{
+				CloseDB(db);
 			}
 		}
 
@@ -331,6 +310,83 @@ namespace LongoMatch.DB
 			} finally {
 				CloseDB(db);
 			}
+		}
+		
+		private void CreateNewDB () {
+			// Create new DB and add version and last backup date
+			IObjectContainer db = Db4oFactory.OpenFile(file);
+			try {
+				dbVersion= new Version(MAYOR,MINOR);
+				lastBackup = new BackupDate { Date = DateTime.UtcNow};
+				db.Store(dbVersion);
+				db.Store(lastBackup);
+			}
+			finally {
+				db.Close();
+			}
+		}
+		
+		private void GetDBVersion () {
+			dbVersion = GetObject<Version>();
+			if (dbVersion == null)
+				dbVersion = new Version(MAYOR, MINOR);
+			Log.Information("DB version: "+ dbVersion.ToString());
+		}
+		
+		private void GetBackupDate () {
+			BackupDate lastBackup = GetObject<BackupDate> ();
+			if (lastBackup == null)
+				lastBackup = new BackupDate {Date = DateTime.UtcNow};
+			Log.Information("Last DB backup: "+ lastBackup.Date.ToShortDateString());
+		}
+		
+		private void UpdateBackupDate () {
+			UpdateObject(lastBackup);
+		}
+		
+		private T GetObject<T>() {
+			T ret = default(T);
+			IObjectContainer db = Db4oFactory.OpenFile(file);
+			try	{
+				IQuery query = db.Query();
+				query.Constrain(typeof(T));
+				IObjectSet result = query.Execute();
+				if(result.HasNext())
+					ret = (T) result.Next();
+			} finally {
+				db.Close();
+			}
+			return ret;
+		}
+		
+		private void UpdateObject<T>(this T element) {
+			IObjectContainer db = Db4oFactory.OpenFile(file);
+			try	{
+				IQuery query = db.Query();
+				query.Constrain(typeof(T));
+				IObjectSet result = query.Execute();
+				if(result.HasNext()) {
+					T obj = (T) result.Next();
+					obj = element;
+					db.Store(obj);
+				}
+			} finally {
+				db.Close();
+			}
+		}
+		
+		private void CheckDB() {
+			/* FIXME: Check for migrations here */
+		}
+		
+		private void BackupDB () {
+			DateTime now = DateTime.UtcNow;
+			if (lastBackup.Date + maxDaysWithoutBackup >= now)
+				return;
+		
+			File.Move(file, Path.Combine(MainClass.DBDir(), backupFilename));
+			lastBackup = new BackupDate {Date = now};
+			UpdateBackupDate();
 		}
 
 		private IQuery GetQueryWithContrains(IObjectContainer db, string filename) {
@@ -382,5 +438,19 @@ namespace LongoMatch.DB
 			IObjectSet result = query.Execute();
 			return (result.HasNext());
 		}
+		
+		
+		/* Dummy class to allow having a single instance of BackupDateTime in the DB and make it
+		 * easIer to query */
+		protected class BackupDate 
+		{
+			public DateTime Date {
+				get;
+				set;
+			}			
+		}
+		
 	}
+	
+	
 }
