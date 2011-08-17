@@ -310,7 +310,7 @@ namespace LongoMatch.DB
 		}
 		
 		private void GetBackupDate () {
-			BackupDate lastBackup = GetObject<BackupDate> ();
+			lastBackup = GetObject<BackupDate> ();
 			if (lastBackup == null)
 				lastBackup = new BackupDate {Date = DateTime.UtcNow};
 			Log.Information("DB last backup: "+ lastBackup.Date.ToShortDateString());
