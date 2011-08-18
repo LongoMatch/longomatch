@@ -198,6 +198,8 @@ namespace LongoMatch
 			treewidget.AddPlay(play);
 			tagsTreeWidget.AddPlay(play);
 			timeline.AddPlay(play);
+			/* FIXME: Check performance */
+			UpdateTeamsModels();
 			timeline.QueueDraw();
 		}
 
@@ -281,6 +283,15 @@ namespace LongoMatch
 			tg.Run();
 			tg.Destroy();
 		}
+
+		private void UpdateTeamsModels() {
+			TreeStore local, visitor;
+		
+			openedProject.GetPlayersModel (out local, out visitor);
+			localPlayersList.SetTeam(openedProject.LocalTeamTemplate, local);
+			visitorPlayersList.SetTeam(openedProject.VisitorTeamTemplate, visitor);
+		}
+
 		
 		protected virtual void OnTimeNodeSelected(Play tNode)
 		{
@@ -318,11 +329,10 @@ namespace LongoMatch
 			treewidget.RemovePlays(plays);
 			timeline.RemovePlays(plays);
 			tagsTreeWidget.RemovePlays(plays);
-
-			localPlayersList.RemovePlays(plays);
-			visitorPlayersList.RemovePlays(plays);
-
 			openedProject.RemovePlays(plays);
+
+			/* FIXME: Check performance */
+			UpdateTeamsModels();
 			if(projectType == ProjectType.FileProject) {
 				this.player.CloseActualSegment();
 				MainClass.DB.UpdateProject(openedProject);
