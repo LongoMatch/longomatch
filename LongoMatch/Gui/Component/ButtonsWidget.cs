@@ -85,7 +85,12 @@ namespace LongoMatch.Gui.Component
 					uint col_left = (uint) i%table1.NColumns;
 					uint col_right = (uint) col_left+1 ;
 
-					l.Markup = cat.Name;
+					string colorString = String.Format("#{0:X4}{1:X4}{2:X4}",
+					                                   cat.Color.Red,
+					                                   cat.Color.Green,
+					                                   cat.Color.Blue);
+					l.Markup = String.Format("<span foreground=\"{0}\">{1}</span>", 
+					                         colorString, cat.Name);
 					l.Justify = Justification.Center;
 					l.Ellipsize = Pango.EllipsizeMode.Middle;
 					l.CanFocus = false;
