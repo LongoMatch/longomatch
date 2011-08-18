@@ -22,8 +22,9 @@ using System.Collections.Generic;
 namespace LongoMatch.Store
 {
 
-
-	public class DrawingsList: SortedList<int, Drawing>
+	/* FIXME: This should be a sorted list, but db4o doesn't delete Drawing objects
+	 * in that case */
+	public class DrawingsList: Dictionary<int, Drawing>
 	{
 
 		public DrawingsList() {}
@@ -60,6 +61,7 @@ namespace LongoMatch.Store
 			return base.Remove(drawing.RenderTime);
 		}
 
+		/*
 		/// <summary>
 		/// Gets the render time for a drawing at a position in the list
 		/// </summary>
@@ -85,5 +87,6 @@ namespace LongoMatch.Store
 		public Drawing GetRenderDrawing(int index) {
 			return Values[index];
 		}
+		*/
 	}
 }
