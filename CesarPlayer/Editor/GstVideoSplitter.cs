@@ -26,7 +26,7 @@ namespace LongoMatch.Video.Editor {
 	using LongoMatch.Video.Common;
 
 
-	public class GstVideoSplitter : GLib.Object, IVideoEditor, IVideoSplitter {
+	public class GstVideoSplitter : GLib.Object, IVideoEditor {
 
 		[DllImport("libcesarplayer.dll")]
 		static extern unsafe IntPtr gst_video_editor_new(out IntPtr err);

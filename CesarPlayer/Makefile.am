@@ -30,7 +30,6 @@ SOURCES = \
 	MultimediaFactory.cs \
 	Editor/GstVideoSplitter.cs \
 	Editor/IVideoEditor.cs \
-	Editor/IVideoSplitter.cs \
 	Editor/VideoSegment.cs \
 	Editor/EditorState.cs \
 	Utils/Device.cs \

@@ -53,7 +53,6 @@
     <File subtype="Code" buildaction="Compile" name="Editor/GstVideoSplitter.cs" />
     <File subtype="Code" buildaction="Compile" name="Editor/VideoSegment.cs" />
     <File subtype="Code" buildaction="Compile" name="Editor/EditorState.cs" />
-    <File subtype="Code" buildaction="Compile" name="Editor/IVideoSplitter.cs" />
     <File subtype="Code" buildaction="Compile" name="Utils/MediaFile.cs" />
     <File subtype="Code" buildaction="Compile" name="Utils/PreviewMediaFile.cs" />
     <File subtype="Code" buildaction="Compile" name="Capturer/FakeCapturer.cs" />
