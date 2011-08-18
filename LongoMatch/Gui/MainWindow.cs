@@ -176,11 +176,21 @@ namespace LongoMatch.Gui
 			playlistwidget2.Stop();
 			treewidget1.Project=project;
 			tagstreewidget1.Project = project;
+			UpdateTeamsModels(project);
 			buttonswidget1.Categories = project.Categories;
 			hkManager.Categories=project.Categories;
 			KeyPressEvent += hotkeysListener;
 			MakeActionsSensitive(true,projectType);
 			ShowWidgets();
+		}
+		
+		private void UpdateTeamsModels(Project project) {
+			TreeStore local, visitor;
+			
+			project.GetPlayersModel (out local, out visitor);
+			localplayerslisttreewidget.SetTeam(project.LocalTeamTemplate, local);
+			visitorplayerslisttreewidget.SetTeam(project.VisitorTeamTemplate, visitor);
+			
 		}
 
 		private void SaveCaptureProject() {

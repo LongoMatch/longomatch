@@ -253,29 +253,36 @@ namespace LongoMatch.Store
 		}
 		#endregion
 
-		#region Private Methods
-		private TreeStore GetPlayersModel(Team team) {
-			Dictionary<Player, TreeIter> dict = new Dictionary<Player, TreeIter>();
-			TreeStore store = new TreeStore(typeof(object));
-			TeamTemplate template;
+		public void GetPlayersModel(out TreeStore localTeam, out TreeStore visitorTeam) {
+			Dictionary<Player, TreeIter> localDict = new Dictionary<Player, TreeIter>();
+			Dictionary<Player, TreeIter> visitorDict = new Dictionary<Player, TreeIter>();
+			
+			localTeam = new TreeStore(typeof(object));
+			visitorTeam = new TreeStore(typeof(object));
 
-			if(team == Team.NONE)
-				return store;
-			
-			template = team == Team.LOCAL?LocalTeamTemplate:VisitorTeamTemplate;
-			
-			foreach(var player in template) {
+			foreach(var player in LocalTeamTemplate) {
 				/* Add a root in the tree with the option name */
-				var iter = store.AppendValues(player);
-				dict.Add(player, iter);
+				var iter = localTeam.AppendValues(player);
+				localDict.Add(player, iter);
+			}
+			
+			foreach(var player in VisitorTeamTemplate) {
+				/* Add a root in the tree with the option name */
+				var iter = visitorTeam.AppendValues(player);
+				visitorDict.Add(player, iter);
 			}
 			
 			foreach (var play in timeline) {
-				foreach (var player in play.Players.AllUniqueElements)
-					store.AppendValues(dict[player.Value], new object[1] {play});
+				foreach (var player in play.Players.AllUniqueElements) {
+					if (localDict.ContainsKey(player.Value))
+						localTeam.AppendValues(localDict[player.Value], new object[1] {play});
+					else
+						visitorTeam.AppendValues(visitorDict[player.Value], new object[1] {play});
+				}
 			}
-			return store;
 		}
+
+		#region Private Methods
 		#endregion
 	}
 }
