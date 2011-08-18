@@ -76,8 +76,6 @@
     <itemgroups>
       <itemgroup label="ProjectDetailsWidget Properties">
         <property name="Edited" />
-        <property name="LocalName" />
-        <property name="VisitorName" />
         <property name="Season" />
         <property name="Competition" />
         <property name="LocalGoals" />

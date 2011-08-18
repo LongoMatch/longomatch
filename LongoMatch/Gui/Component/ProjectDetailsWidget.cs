@@ -118,24 +118,6 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public string LocalName {
-			get {
-				return localTeamEntry.Text;
-			}
-			set {
-				localTeamEntry.Text = value;
-			}
-		}
-
-		public string VisitorName {
-			get {
-				return visitorTeamEntry.Text;
-			}
-			set {
-				visitorTeamEntry.Text = value;
-			}
-		}
-
 		public string Season {
 			get {
 				return seasonentry.Text;
@@ -278,8 +260,6 @@ namespace LongoMatch.Gui.Component
 			var desc = project.Description;
 			mFile = desc.File;
 			Filename = mFile != null ? mFile.FilePath : "";
-			LocalName = desc.LocalName;
-			VisitorName = desc.VisitorName;
 			LocalGoals = desc.LocalGoals;
 			VisitorGoals = desc.VisitorGoals;
 			Date = desc.MatchDate;
@@ -294,8 +274,6 @@ namespace LongoMatch.Gui.Component
 		public void UpdateProject() {
 			var desc = project.Description;
 			desc.File= mFile;
-			desc.LocalName = localTeamEntry.Text;
-			desc.VisitorName = visitorTeamEntry.Text;
 			desc.LocalGoals = (int)localSpinButton.Value;
 			desc.VisitorGoals = (int)visitorSpinButton.Value;
 			desc.MatchDate = DateTime.Parse(dateEntry.Text);
@@ -322,8 +300,8 @@ namespace LongoMatch.Gui.Component
 					}
 					var desc = new ProjectDescription {
 						File = mFile,
-						LocalName = LocalName,
-						VisitorName = VisitorName,
+						VisitorName = VisitorTeamTemplate.TeamName,
+						LocalName = LocalTeamTemplate.TeamName,
 						Season = Season,
 						Competition = Competition,
 						LocalGoals = LocalGoals,
@@ -349,8 +327,6 @@ namespace LongoMatch.Gui.Component
 		}
 
 		public void Clear() {
-			LocalName = "";
-			VisitorName = "";
 			LocalGoals = 0;
 			VisitorGoals = 0;
 			Date = System.DateTime.Today;
