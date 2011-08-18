@@ -264,6 +264,10 @@ namespace LongoMatch.Gui.Component
 				videoformatcombobox.GetActiveIter(out iter);
 				encSettings.EncodingProfile = (EncodingProfile) encProfileList.GetValue(iter, 1);
 				
+				/* FIXME: Configure with the UI */
+				encSettings.Framerate_n = 25;
+				encSettings.Framerate_d = 1;
+				
 				s.EncodingSettings = encSettings;
 				return s;
 			}

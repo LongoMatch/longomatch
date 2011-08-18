@@ -76,14 +76,6 @@ namespace LongoMatch.Video.Common
 		Live,
 	}
 
-	public enum VideoFormat {
-		PORTABLE=0,
-		VGA=1,
-		TV=2,
-		HD720p=3,
-		HD1080p=4
-	}
-
 	public enum VideoQuality {
 		Low = 1000,
 		Normal = 3000,

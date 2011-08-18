@@ -66,11 +66,10 @@
     <File subtype="Code" buildaction="Compile" name="Utils/Device.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Constants.cs" />
     <File subtype="Code" buildaction="Compile" name="Utils/MpegRemuxer.cs" />
-    <File subtype="Code" buildaction="Compile" name="Common/VideoStandards.cs" />
+    <File subtype="Code" buildaction="Compile" name="Common/CaptureSettings.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/EncodingProfiles.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/EncodingSettings.cs" />
-    <File subtype="Code" buildaction="Compile" name="Common/CaptureSettings.cs" />
-    <File subtype="Directory" buildaction="Compile" name="Capturer" />
+    <File subtype="Code" buildaction="Compile" name="Common/VideoStandards.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

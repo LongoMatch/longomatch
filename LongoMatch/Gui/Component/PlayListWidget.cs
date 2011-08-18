@@ -266,7 +266,7 @@ namespace LongoMatch.Gui.Component
 			vep = new VideoEditionProperties();
 			vep.TransientFor = (Gtk.Window)this.Toplevel;
 			response = vep.Run();
-			while(response == (int)ResponseType.Ok && vep.Filename == "") {
+			while(response == (int)ResponseType.Ok && vep.EncodingSettings.OutputFile == "") {
 				MessagePopup.PopupMessage(this, MessageType.Warning,
 				                          Catalog.GetString("Please, select a video file."));
 				response=vep.Run();
@@ -285,15 +285,9 @@ namespace LongoMatch.Gui.Component
 						                       segment.MediaFile.HasAudio);
 				}
 				try {
-					videoEditor.VideoQuality = vep.VideoQuality;
-					videoEditor.AudioQuality = AudioQuality.Good;
-					videoEditor.VideoFormat = vep.VideoFormat;
-					videoEditor.AudioEncoder = vep.AudioEncoderType;
-					videoEditor.VideoEncoder = vep.VideoEncoderType;
-					videoEditor.OutputFile = vep.Filename;
+					videoEditor.EncodingSettings = vep.EncodingSettings;
 					videoEditor.EnableTitle = vep.TitleOverlay;
 					videoEditor.EnableAudio = vep.EnableAudio;
-					videoEditor.VideoMuxer = vep.VideoMuxer;
 					videoEditor.Start();
 					closebutton.Show();
 					newvideobutton.Hide();

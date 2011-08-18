@@ -108,13 +108,7 @@ namespace LongoMatch.Gui.Dialog
 			w5.Position = 0;
 			// Container child hbox4.Gtk.Box+BoxChild
 			this.sizecombobox = global::Gtk.ComboBox.NewText ();
-			this.sizecombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Portable (4:3 - 320x240)"));
-			this.sizecombobox.AppendText (global::Mono.Unix.Catalog.GetString ("VGA (4:3 - 640x480)"));
-			this.sizecombobox.AppendText (global::Mono.Unix.Catalog.GetString ("TV (4:3 - 720x576)"));
-			this.sizecombobox.AppendText (global::Mono.Unix.Catalog.GetString ("HD 720p (16:9 - 1280x720)"));
-			this.sizecombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Full HD 1080p (16:9 - 1920x1080)"));
 			this.sizecombobox.Name = "sizecombobox";
-			this.sizecombobox.Active = 1;
 			this.hbox4.Add (this.sizecombobox);
 			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.hbox4[this.sizecombobox]));
 			w6.Position = 1;
@@ -262,8 +256,8 @@ namespace LongoMatch.Gui.Dialog
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.DefaultWidth = 514;
-			this.DefaultHeight = 223;
+			this.DefaultWidth = 516;
+			this.DefaultHeight = 245;
 			this.Show ();
 			this.openbutton.Clicked += new global::System.EventHandler (this.OnOpenbuttonClicked);
 			this.buttonCancel.Clicked += new global::System.EventHandler (this.OnButtonCancelClicked);

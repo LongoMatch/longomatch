@@ -356,50 +356,20 @@ namespace LongoMatch.Video.Editor {
 			return argc;
 		}
 
-
-		public void SetSegment(string filePath, long start, long duration, double rate, string title, bool hasAudio) {
-			ClearList();
-			AddSegment(filePath, start, duration, rate, title,hasAudio);
-		}
-
-		public VideoQuality VideoQuality {
-			set {
-				VideoBitrate=(int)value;
+		public EncodingSettings EncodingSettings{
+			set{
+				AudioEncoder = value.EncodingProfile.AudioEncoder;
+				VideoEncoder = value.EncodingProfile.VideoEncoder;
+				VideoMuxer = value.EncodingProfile.Muxer;
+				Height = (int) value.VideoStandard.Height;
+				Width = (int) value.VideoStandard.Width;
+				VideoBitrate = (int) value.VideoBitrate;
+				AudioBitrate = (int) value.AudioBitrate;
+				OutputFile = value.OutputFile;
 			}
 		}
 
-		public AudioQuality AudioQuality {
-			set {
-				AudioBitrate = (int)value;
-			}
-		}
-
-		public VideoFormat VideoFormat {
-			set {
-				if(value == VideoFormat.PORTABLE) {
-					Height = 240;
-					Width = 320;
-				}
-				else if(value == VideoFormat.VGA) {
-					Height = 480 ;
-					Width = 640;
-				}
-				else if(value == VideoFormat.TV) {
-					Height = 576;
-					Width = 720;
-				}
-				else if(value == VideoFormat.HD720p) {
-					Height = 720;
-					Width = 1280;
-				}
-				else if(value == VideoFormat.HD1080p) {
-					Height = 1080;
-					Width = 1920;
-				}
-			}
-		}
-
-		public AudioEncoderType AudioEncoder {
+		private AudioEncoderType AudioEncoder {
 			set {
 				string error;
 				SetAudioEncoder(out error,value);
@@ -408,7 +378,7 @@ namespace LongoMatch.Video.Editor {
 			}
 		}
 
-		public VideoEncoderType VideoEncoder {
+		private VideoEncoderType VideoEncoder {
 			set {
 				string error;
 				SetVideoEncoder(out error, value);
@@ -417,7 +387,7 @@ namespace LongoMatch.Video.Editor {
 			}
 		}
 
-		public VideoMuxerType VideoMuxer {
+		private VideoMuxerType VideoMuxer {
 			set {
 				string error;
 				SetVideoMuxer(out error,value);

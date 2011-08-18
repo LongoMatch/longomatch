@@ -20,37 +20,39 @@ namespace LongoMatch.Video.Common
 {
 	public struct EncodingProfile
 	{
-		public EncodingProfile(string name,
-		                             VideoEncoderType videoEncoder,
-		                             AudioEncoderType audioEncoder,
-		                             VideoMuxerType muxer) {
+		public EncodingProfile(string name, string extension,
+		                       VideoEncoderType videoEncoder,
+		                       AudioEncoderType audioEncoder,
+		                       VideoMuxerType muxer) {
 		    Name = name;
+		    Extension = extension;
 			VideoEncoder = videoEncoder;
 			AudioEncoder = audioEncoder;
 			Muxer = muxer;
 		}
 		
 		public string Name;
+		public string Extension;
 		public VideoEncoderType VideoEncoder;
 		public AudioEncoderType AudioEncoder;
 		public VideoMuxerType Muxer;
 	}
 	
 	public class EncodingProfiles {
-		public static EncodingProfile WebM = new EncodingProfile("WebM (VP8 + Vorbis)",
-		                                                                     VideoEncoderType.VP8,
-		                                                                     AudioEncoderType.Vorbis,
-		                                                                     VideoMuxerType.WebM);
+		public static EncodingProfile WebM = new EncodingProfile("WebM (VP8 + Vorbis)", "webm",
+		                                                         VideoEncoderType.VP8,
+		                                                         AudioEncoderType.Vorbis,
+		                                                         VideoMuxerType.WebM);
 		                                                                     
-		public static EncodingProfile Avi = new EncodingProfile("AVI (Mpeg4 + MP3)",
-		                                                                     VideoEncoderType.Mpeg4,
-		                                                                     AudioEncoderType.Mp3,
-		                                                                     VideoMuxerType.Avi);
+		public static EncodingProfile Avi = new EncodingProfile("AVI (Mpeg4 + MP3)", "avi",
+		                                                        VideoEncoderType.Mpeg4,
+		                                                        AudioEncoderType.Mp3,
+		                                                        VideoMuxerType.Avi);
 
-		public static EncodingProfile MP4 = new EncodingProfile("MP4 (H264 + AAC)",
-		                                                                     VideoEncoderType.H264,
-		                                                                     AudioEncoderType.Aac,
-		                                                                     VideoMuxerType.Mp4);
+		public static EncodingProfile MP4 = new EncodingProfile("MP4 (H264 + AAC)", "mp4",
+		                                                        VideoEncoderType.H264,
+		                                                        AudioEncoderType.Aac,
+		                                                        VideoMuxerType.Mp4);
 	}
 	
 }

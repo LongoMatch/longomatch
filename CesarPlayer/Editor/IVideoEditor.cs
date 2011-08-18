@@ -30,34 +30,10 @@ namespace LongoMatch.Video.Editor
 	{
 		event ProgressHandler Progress;
 
-		VideoQuality VideoQuality {
+		EncodingSettings EncodingSettings{
 			set;
 		}
-
-		AudioQuality AudioQuality {
-			set;
-		}
-
-		VideoFormat VideoFormat {
-			set;
-		}
-
-		AudioEncoderType AudioEncoder {
-			set;
-		}
-
-		VideoEncoderType VideoEncoder {
-			set;
-		}
-
-		VideoMuxerType VideoMuxer {
-			set;
-		}
-
-		string OutputFile {
-			set;
-		}
-
+		
 		string TempDir {
 			set;
 		}
@@ -69,7 +45,6 @@ namespace LongoMatch.Video.Editor
 		bool EnableAudio {
 			set;
 		}
-
 
 		void AddSegment(string filePath, long start, long duration, double rate, string title, bool hasAudio) ;
 
