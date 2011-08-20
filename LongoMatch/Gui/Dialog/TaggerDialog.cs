@@ -39,12 +39,14 @@ namespace LongoMatch.Gui.Dialog
 		{
 			this.Build();
 			
+			tagsnotebook.Visible = false;
+			
 			this.localTeamTemplate = localTeamTemplate;
 			this.visitorTeamTemplate = visitorTeamTemplate;
 			
 			/* Iterate over all subcategories, adding a widget only for the FastTag ones */
 			foreach (var subcat in cat.SubCategories) {
-				if (subcat is SubCategoryTemplate) {
+				if (subcat is TagSubCategory) {
 					var tagcat = subcat as TagSubCategory;
 					if (tagcat.FastTag)
 						AddTagSubcategory(tagcat, tags.GetTags(tagcat));
