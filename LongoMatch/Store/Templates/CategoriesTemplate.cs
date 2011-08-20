@@ -70,15 +70,15 @@ namespace LongoMatch.Store.Templates
 
 			for(int i=1; i<=count; i++) {
 				PlayerSubCategory localplayers, visitorplayers;
+				TagSubCategory period;
 				TeamSubCategory team;
 
 				team = new TeamSubCategory {
 					Name = Catalog.GetString("Team"),
 					AllowMultiple = false,
 					FastTag = true};
-				team.Add(Team.NONE);
 				team.Add(Team.LOCAL);
-				team.Add(Team.NONE);
+				team.Add(Team.VISITOR);
 				
 				localplayers = new PlayerSubCategory {
 					Name = Catalog.GetString("Local Team Players"),
@@ -91,6 +91,14 @@ namespace LongoMatch.Store.Templates
 					AllowMultiple = false,
 					FastTag = true};
 				visitorplayers.Add(Team.VISITOR);	
+				
+				period = new TagSubCategory {
+					Name = Catalog.GetString("Period"),
+					AllowMultiple = false,
+					FastTag = true,
+				};
+				period.Add("1");
+				period.Add("2");
 
 				Category cat =  new Category {
 					Name = "Category " + i,
@@ -104,6 +112,7 @@ namespace LongoMatch.Store.Templates
 				cat.SubCategories.Add(team);
 				cat.SubCategories.Add(localplayers);
 				cat.SubCategories.Add(visitorplayers);
+				cat.SubCategories.Add(period);
 				Add(cat);
 			}
 		}
