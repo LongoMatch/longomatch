@@ -29,44 +29,41 @@ namespace LongoMatch.Store
 	[Serializable]
 	public class TagsStore<T, W> where T:ISubCategory
 	{
-		public TagsStore(){
-			Tags = new Dictionary<T, List<W>>();
-		}
+		private Dictionary<T, List<W>> tags;
 		
-		private Dictionary<T, List<W>> Tags {
-			get;
-			set;
+		public TagsStore(){
+			tags = new Dictionary<T, List<W>>();
 		}
 		
 		public void Add(T subCategory, W tag) {
 			Log.Debug(String.Format("Adding tag {0} to subcategory{1}", subCategory, tag));
-			if (!Tags.ContainsKey(subCategory))
-				Tags.Add(subCategory, new List<W>());
-			Tags[subCategory].Add(tag);
+			if (!tags.ContainsKey(subCategory))
+				tags.Add(subCategory, new List<W>());
+			tags[subCategory].Add(tag);
 		}
 		
 		public void Remove(T subCategory, W tag) {
-			if (!Tags.ContainsKey(subCategory)) {
+			if (!tags.ContainsKey(subCategory)) {
 				Log.Warning(String.Format("Trying to remove tag {0} from unknown subcategory{1}",
 				                          subCategory, tag));
 				return;
 			}
-			Tags[subCategory].Remove(tag);
-			if (Tags[subCategory].Count == 0)
-				Tags.Remove(subCategory);
+			tags[subCategory].Remove(tag);
+			if (tags[subCategory].Count == 0)
+				tags.Remove(subCategory);
 		}
 		
 		public bool Contains(T subCategory) {
-			return (Tags.ContainsKey(subCategory));
+			return (tags.ContainsKey(subCategory));
 		}
 		
 		public bool Contains(T subCategory, W tag) {
-			return (Contains(subCategory) && Tags[subCategory].Contains(tag));
+			return (Contains(subCategory) && tags[subCategory].Contains(tag));
 		}
 		
 		public List<W> AllUniqueElements {
 			get {
-				return (from list in Tags.Values
+				return (from list in tags.Values
 				        from player in list
 				        group player by player into g
 				        select g.Key).ToList();
@@ -74,11 +71,12 @@ namespace LongoMatch.Store
 		}
 		
 		public List<W> GetTags(T subCategory) {
-			if (!Tags.ContainsKey(subCategory)) {
+			Log.Error (tags.Keys.Count.ToString());
+			if (!tags.ContainsKey(subCategory)) {
 				Log.Debug(String.Format("Adding subcategory {0} to store", subCategory.Name));
-				Tags[subCategory] = new List<W>();
+				tags[subCategory] = new List<W>();
 			}
-			return Tags[subCategory];			
+			return tags[subCategory];			
 		}
 
 	}
