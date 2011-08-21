@@ -288,8 +288,8 @@ namespace LongoMatch
 			TreeStore local, visitor;
 		
 			openedProject.GetPlayersModel (out local, out visitor);
-			localPlayersList.SetTeam(openedProject.LocalTeamTemplate, local);
-			visitorPlayersList.SetTeam(openedProject.VisitorTeamTemplate, visitor);
+			localPlayersList.SetTeam(local);
+			visitorPlayersList.SetTeam(visitor);
 		}
 
 		

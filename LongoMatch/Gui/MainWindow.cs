@@ -188,8 +188,8 @@ namespace LongoMatch.Gui
 			TreeStore local, visitor;
 			
 			project.GetPlayersModel (out local, out visitor);
-			localplayerslisttreewidget.SetTeam(project.LocalTeamTemplate, local);
-			visitorplayerslisttreewidget.SetTeam(project.VisitorTeamTemplate, visitor);
+			localplayerslisttreewidget.SetTeam(local);
+			visitorplayerslisttreewidget.SetTeam(visitor);
 			
 		}
 

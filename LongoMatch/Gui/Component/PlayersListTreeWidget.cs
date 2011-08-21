@@ -37,8 +37,6 @@ namespace LongoMatch.Gui.Component
 		public event PlayListNodeAddedHandler PlayListNodeAdded;
 		public event SnapshotSeriesHandler SnapshotSeriesEvent;
 
-		private TeamTemplate template;
-
 		public PlayersListTreeWidget()
 		{
 			this.Build();
@@ -60,8 +58,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void SetTeam(TeamTemplate template, TreeStore model) {
-			this.template = template;
+		public void SetTeam(TreeStore model) {
 			playerstreeview.Model = model;
 		}
 
@@ -77,7 +74,6 @@ namespace LongoMatch.Gui.Component
 
 		public void Clear() {
 			playerstreeview.Model = null;
-			template = null;
 		}
 
 		protected virtual void OnTimeNodeSelected(Play tNode) {
