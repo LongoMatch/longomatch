@@ -88,13 +88,6 @@ Xavier Queralt Mateu (ca)";
 
 		public const Key TOGGLE_PLAY = Gdk.Key.space;
 
-		/* Output formats */
-		public const string AVI = "AVI (XVID + MP3)";
-		public const string MP4  = "MP4 (H264 + AAC)";
-		public const string OGG  = "OGG (Theora + Vorbis)";
-		public const string WEBM = "WebM (VP8 + Vorbis)";
-		public const string DVD="DVD (MPEG-2 + MP3)";
-		
 		public const string TEMPLATES_DIR = "templates";
 		public const string TEAMS_TEMPLATE_EXT = ".ltt";
 		public const string CAT_TEMPLATE_EXT = ".lct";
