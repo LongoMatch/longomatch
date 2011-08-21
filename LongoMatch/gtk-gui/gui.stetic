@@ -5430,7 +5430,7 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
                 <child>
                   <widget class="Gtk.Label" id="label1">
                     <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes">page1</property>
+                    <property name="LabelProp" translatable="yes">Tags</property>
                   </widget>
                   <packing>
                     <property name="type">tab</property>
@@ -5465,7 +5465,7 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
                 <child>
                   <widget class="Gtk.Label" id="label2">
                     <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes">page1</property>
+                    <property name="LabelProp" translatable="yes">Players</property>
                   </widget>
                   <packing>
                     <property name="type">tab</property>
