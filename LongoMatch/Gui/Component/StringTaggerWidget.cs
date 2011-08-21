@@ -29,6 +29,7 @@ namespace LongoMatch.Gui.Component
 	{
 		private Dictionary<StringTag, CheckButton> dict;
 		private List<StringTag> tags;
+		private RadioButton firstRB;
 		string subcategory;
 		
 		public StringTaggerWidget ()
@@ -42,7 +43,7 @@ namespace LongoMatch.Gui.Component
 				subcategory = value.Name;
 				Title = subcategory;
 				foreach (string tag in value)
-					AddTagWidget(new StringTag{Value=tag});
+					AddTagWidget(new StringTag{Value=tag}, !value.AllowMultiple);
 			}
 		}
 		
@@ -59,8 +60,18 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		private void AddTagWidget (StringTag tag){
-			var button = new CheckButton(tag.Value);
+		private void AddTagWidget (StringTag tag, bool radio){
+			CheckButton button;
+			
+			if (radio) {
+				if (firstRB == null) 
+					button = firstRB = new RadioButton (tag.Value);
+				else
+					button = new RadioButton(firstRB, tag.Value);
+			} else {
+				button = new CheckButton(tag.Value);
+			}
+			
 			button.Toggled += delegate(object sender, EventArgs e) {
 				if (button.Active) {
 					if (!tags.Contains(tag))

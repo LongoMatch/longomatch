@@ -32,11 +32,14 @@ namespace LongoMatch.Gui.Dialog
 		TeamTemplate template;
 		List<PlayerTag> selectedPlayers;
 		Dictionary<CheckButton, PlayerTag> checkButtonsDict;
-
-		public PlayersSelectionDialog()
+		bool useRadioButtons;
+		RadioButton firstRB;
+		
+		public PlayersSelectionDialog(bool useRadioButtons)
 		{
 			this.Build();
 			checkButtonsDict = new Dictionary<CheckButton, PlayerTag>();
+			this.useRadioButtons = useRadioButtons;
 		}
 		
 		public TeamTemplate Template {
@@ -70,7 +73,16 @@ namespace LongoMatch.Gui.Dialog
 			table1.NRows =(uint) 10;
 
 			foreach(PlayerTag player in playersList) {
-				CheckButton button = new CheckButton();
+				CheckButton button;
+				
+				if (useRadioButtons) {
+					if (firstRB == null)
+						button = firstRB = new RadioButton("");
+					else
+						button = new RadioButton(firstRB);
+				} else {
+					button = new CheckButton();
+				}
 				button.Label = player.Value.Number + "-" + player.Value.Name;
 				button.Name = i.ToString();
 				button.Toggled += OnButtonToggled;

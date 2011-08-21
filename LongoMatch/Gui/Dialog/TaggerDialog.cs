@@ -76,7 +76,8 @@ namespace LongoMatch.Gui.Dialog
 			else
 				template = visitorTeamTemplate;
 			
-			PlayersTaggerWidget widget = new PlayersTaggerWidget(subcat.Name, template, tags);
+			PlayersTaggerWidget widget = new PlayersTaggerWidget(subcat.Name, subcat.AllowMultiple,
+			                                                     template, tags);
 			widget.Show();
 			playersbox.PackStart(widget, false, true, 0);
 		}

@@ -30,12 +30,15 @@ namespace LongoMatch.Gui.Component
 	{
 		private List<PlayerTag> players;
 		private TeamTemplate template;
+		private bool allowMultiple;
 		
-		public PlayersTaggerWidget (String subcategoryName, TeamTemplate template, List<PlayerTag> players) {
+		public PlayersTaggerWidget (String subcategoryName, bool allowMultiple,
+		                            TeamTemplate template, List<PlayerTag> players) {
 			this.Build ();
 			editbutton.Clicked += OnEditClicked;
 			this.players = players;
 			this.template = template;
+			this.allowMultiple = allowMultiple;
 			CategoryLabel.Markup = "<b>" + subcategoryName + "</b>";
 			LoadTagsLabel();
 		}
@@ -47,7 +50,7 @@ namespace LongoMatch.Gui.Component
 		
 		protected virtual void OnEditClicked (object sender, System.EventArgs e)
 		{
-			PlayersSelectionDialog dialog = new PlayersSelectionDialog();
+			PlayersSelectionDialog dialog = new PlayersSelectionDialog(allowMultiple);
 			dialog.TransientFor = this.Toplevel as Gtk.Window;
 			dialog.Template = template;
 			dialog.SelectedPlayers = players;
