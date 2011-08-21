@@ -42,6 +42,8 @@
     <File subtype="Code" buildaction="Nothing" name="macros.h" />
     <File subtype="Code" buildaction="Compile" name="video-utils.c" />
     <File subtype="Code" buildaction="Nothing" name="video-utils.h" />
+    <File subtype="Code" buildaction="Compile" name="baconvideowidget-marshal.c" />
+    <File subtype="Code" buildaction="Nothing" name="baconvideowidget-marshal.h" />
   </Contents>
   <Packages>
     <Package file="/usr/lib/pkgconfig/gdk-2.0.pc" name="GDK" IsProject="False" />
@@ -51,6 +53,7 @@
     <Package file="/usr/lib/pkgconfig/gtk+-2.0.pc" name="GTK+" IsProject="False" />
     <Package file="/usr/lib/pkgconfig/gstreamer-interfaces-0.10.pc" name="GStreamer Interfaces Library" IsProject="False" />
     <Package file="/usr/lib/pkgconfig/glib-2.0.pc" name="GLib" IsProject="False" />
+    <Package file="/usr/lib/pkgconfig/gstreamer-pbutils-0.10.pc" name="GStreamer Base Utils Library" IsProject="False" />
   </Packages>
   <compiler ctype="GccCompiler" />
 </Project>
