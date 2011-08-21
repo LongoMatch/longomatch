@@ -260,4 +260,22 @@
       </itemgroup>
     </signals>
   </object>
+  <object type="LongoMatch.Gui.Component.TemplatesEditorBase" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="TemplatesEditorBase Properties">
+        <property name="CanExport" />
+        <property name="Edited" />
+        <property name="InProject" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.PlayersTaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.StringTaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
 </objects>
