@@ -97,6 +97,8 @@ namespace LongoMatch.Gui.Component
 				tagscombobox.Visible = visible3;
 				localcombobox.Visible = visible3;
 				visitorcombobox.Visible = visible3;
+				localteamlabel.Visible = !visible3;
+				visitorteamlabel.Visible = !visible3;
 
 				expander1.Visible = visible1;
 				device.Visible = visible1;
@@ -187,6 +189,7 @@ namespace LongoMatch.Gui.Component
 				return actualLocalTeam;
 			}
 			set {
+				localteamlabel.Text = value.TeamName;
 				actualLocalTeam = value;
 			}
 		}
@@ -196,6 +199,7 @@ namespace LongoMatch.Gui.Component
 				return actualVisitorTeam;
 			}
 			set {
+				visitorteamlabel.Text = value.TeamName;
 				actualVisitorTeam = value;
 			}
 		}
@@ -330,6 +334,8 @@ namespace LongoMatch.Gui.Component
 			LocalGoals = 0;
 			VisitorGoals = 0;
 			Date = System.DateTime.Today;
+			localteamlabel.Text = "";
+			visitorteamlabel.Text = "";
 			Filename = "";
 			mFile = null;
 			edited = false;

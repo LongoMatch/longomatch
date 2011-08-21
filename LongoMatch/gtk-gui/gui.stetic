@@ -157,6 +157,17 @@
                   </packing>
                 </child>
                 <child>
+                  <widget class="Gtk.Label" id="localteamlabel">
+                    <property name="MemberName" />
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
                   <widget class="Gtk.Button" id="localtemplatebutton">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
@@ -168,7 +179,7 @@
                   </widget>
                   <packing>
                     <property name="PackType">End</property>
-                    <property name="Position">1</property>
+                    <property name="Position">2</property>
                     <property name="AutoSize">True</property>
                     <property name="Expand">False</property>
                     <property name="Fill">False</property>
@@ -206,6 +217,17 @@
                   </packing>
                 </child>
                 <child>
+                  <widget class="Gtk.Label" id="visitorteamlabel">
+                    <property name="MemberName" />
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
                   <widget class="Gtk.Button" id="visitorbutton">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
@@ -217,7 +239,7 @@
                   </widget>
                   <packing>
                     <property name="PackType">End</property>
-                    <property name="Position">1</property>
+                    <property name="Position">2</property>
                     <property name="AutoSize">True</property>
                     <property name="Expand">False</property>
                     <property name="Fill">False</property>
