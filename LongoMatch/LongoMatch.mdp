@@ -197,6 +197,7 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.TemplatesManager.cs" />
     <File subtype="Code" buildaction="Compile" name="Services/DataBase.cs" />
     <File subtype="Directory" buildaction="Compile" name="DB" />
+    <File subtype="Code" buildaction="Compile" name="Store/TagStore.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />

@@ -27,69 +27,6 @@ namespace LongoMatch.Store
 {
 
 	[Serializable]
-	public class TagsStore<T, W> where T:ISubCategory
-	{
-		private Dictionary<T, List<W>> tags;
-		
-		public TagsStore(){
-			tags = new Dictionary<T, List<W>>();
-		}
-		
-		public void Add(T subCategory, W tag) {
-			Log.Debug(String.Format("Adding tag {0} to subcategory{1}", subCategory, tag));
-			if (!tags.ContainsKey(subCategory))
-				tags.Add(subCategory, new List<W>());
-			tags[subCategory].Add(tag);
-		}
-		
-		public void Remove(T subCategory, W tag) {
-			if (!tags.ContainsKey(subCategory)) {
-				Log.Warning(String.Format("Trying to remove tag {0} from unknown subcategory{1}",
-				                          subCategory, tag));
-				return;
-			}
-			tags[subCategory].Remove(tag);
-			if (tags[subCategory].Count == 0)
-				tags.Remove(subCategory);
-		}
-		
-		public bool Contains(T subCategory) {
-			return (tags.ContainsKey(subCategory));
-		}
-		
-		public bool Contains(T subCategory, W tag) {
-			return (Contains(subCategory) && tags[subCategory].Contains(tag));
-		}
-		
-		public List<W> AllUniqueElements {
-			get {
-				return (from list in tags.Values
-				        from player in list
-				        group player by player into g
-				        select g.Key).ToList();
-			}
-		}
-		
-		public List<W> GetTags(T subCategory) {
-			Log.Error (tags.Keys.Count.ToString());
-			if (!tags.ContainsKey(subCategory)) {
-				Log.Debug(String.Format("Adding subcategory {0} to store", subCategory.Name));
-				tags[subCategory] = new List<W>();
-			}
-			return tags[subCategory];			
-		}
-
-	}
-	
-	
-	public class StringTagStore: TagsStore<TagSubCategory, StringTag> {}
-	
-	public class PlayersTagStore: TagsStore<PlayerSubCategory, PlayerTag> {}
-	
-	public class TeamsTagStore: TagsStore<PlayerSubCategory, TeamTag> {}
-
-	
-	[Serializable]
 	public class Tag<T>
 	{
 		public Tag() {

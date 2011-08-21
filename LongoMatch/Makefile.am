@@ -134,6 +134,7 @@ SOURCES = \
 	Store/ProjectDescription.cs \
 	Store/SubCategory.cs \
 	Store/Tag.cs \
+	Store/TagStore.cs \
 	Store/Templates/CategoriesTemplate.cs \
 	Store/Templates/SubCategoryTemplate.cs \
 	Store/Templates/TeamTemplate.cs \
