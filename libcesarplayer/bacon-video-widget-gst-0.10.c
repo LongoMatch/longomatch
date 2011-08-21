@@ -64,7 +64,7 @@
 #define DEFAULT_VIDEO_SINK "autovideosink"
 #else
 #include <gdk/gdkx.h>
-#define DEFAULT_VIDEO_SINK "gconfvideosink"
+#define DEFAULT_VIDEO_SINK "gsettingsvideosink"
 #endif
 #include <gtk/gtk.h>
 #include <gio/gio.h>
@@ -5608,7 +5608,7 @@ bacon_video_widget_new (int width, int height, BvwUseType type, GError ** err)
       G_CALLBACK (bvw_element_msg_sync), bvw);
 
   if (GST_IS_BIN (video_sink)) {
-    /* video sink bins like gconfvideosink might remove their children and
+    /* video sink bins like gsettingsvideosink might remove their children and
      * create new ones when set to NULL state, and they are currently set
      * to NULL state whenever playbin re-creates its internal video bin
      * (it sets all elements to NULL state before gst_bin_remove()ing them) */
