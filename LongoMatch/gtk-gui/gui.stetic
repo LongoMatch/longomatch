@@ -1318,7 +1318,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.NewProjectDialog" design-size="384 451">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.NewProjectDialog" design-size="384 337">
     <property name="MemberName" />
     <property name="Title" translatable="yes">New Project</property>
     <property name="Icon">stock:longomatch Dialog</property>
@@ -5351,7 +5351,7 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.TaggerWidget" design-size="377 196">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.TaggerWidget" design-size="377 42">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -5395,7 +5395,9 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
           </widget>
           <packing>
             <property name="Position">0</property>
-            <property name="AutoSize">True</property>
+            <property name="AutoSize">False</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
           </packing>
         </child>
       </widget>

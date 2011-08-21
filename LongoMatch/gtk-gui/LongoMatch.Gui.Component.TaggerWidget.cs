@@ -26,6 +26,8 @@ namespace LongoMatch.Gui.Component
 			this.vbox2.Add (this.table1);
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.table1]));
 			w1.Position = 0;
+			w1.Expand = false;
+			w1.Fill = false;
 			this.Add (this.vbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
