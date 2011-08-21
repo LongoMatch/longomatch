@@ -391,10 +391,14 @@ namespace LongoMatch.Gui.Component
 		private void FillFormats() {
 			videoStandardList = new ListStore(typeof(string), typeof (VideoStandard));
 			videoStandardList.AppendValues(VideoStandards.Original.Name, VideoStandards.Original);
-			videoStandardList.AppendValues(VideoStandards.P240.Name, VideoStandards.P240);
-			videoStandardList.AppendValues(VideoStandards.P480.Name, VideoStandards.P480);
-			videoStandardList.AppendValues(VideoStandards.P720.Name, VideoStandards.P720);
-			videoStandardList.AppendValues(VideoStandards.P1080.Name, VideoStandards.P1080);
+			videoStandardList.AppendValues(VideoStandards.P240_4_3.Name, VideoStandards.P240_4_3);
+			videoStandardList.AppendValues(VideoStandards.P240_16_9.Name, VideoStandards.P240_16_9);
+			videoStandardList.AppendValues(VideoStandards.P480_4_3.Name, VideoStandards.P480_4_3);
+			videoStandardList.AppendValues(VideoStandards.P480_16_9.Name, VideoStandards.P480_16_9);
+			videoStandardList.AppendValues(VideoStandards.P720_4_3.Name, VideoStandards.P720_4_3);
+			videoStandardList.AppendValues(VideoStandards.P720_16_9.Name, VideoStandards.P720_16_9);
+			videoStandardList.AppendValues(VideoStandards.P1080_4_3.Name, VideoStandards.P1080_4_3);
+			videoStandardList.AppendValues(VideoStandards.P1080_16_9.Name, VideoStandards.P1080_16_9);
 			sizecombobox.Model = videoStandardList;
 			sizecombobox.Active = 0;
 
