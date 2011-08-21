@@ -67,7 +67,6 @@ namespace LongoMatch.Store
 		}
 		
 		public List<W> GetTags(T subCategory) {
-			Log.Error (tags.Keys.Count.ToString());
 			if (!tags.ContainsKey(subCategory)) {
 				Log.Debug(String.Format("Adding subcategory {0} to store", subCategory.Name));
 				tags[subCategory] = new List<W>();
