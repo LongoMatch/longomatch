@@ -40,8 +40,10 @@
 #define AUDIOSRC "dshowaudiosrc"
 #else
 #define DVVIDEOSRC "dv1394src"
-#define RAWVIDEOSRC "gconfvideosrc"
-#define AUDIOSRC "gconfaudiosrc"
+#define RAWVIDEOSRC "gsettingsvideosrc"
+#define AUDIOSRC "gsettingsaudiosrc"
+#define RAWVIDEOSRC_GCONF "gconfvideosrc"
+#define AUDIOSRC_GCONF "gconfaudiosrc"
 #endif
 
 /* gtk+/gnome */
@@ -1063,9 +1065,19 @@ gst_camera_capturer_set_source (GstCameraCapturer * gcc,
     case GST_CAMERA_CAPTURE_SOURCE_TYPE_RAW:
     default:
     {
+      gchar *videosrc = RAWVIDEOSRC;
+
+#ifndef WIN32
+      GstElementFactory *fact = gst_element_factory_find(RAWVIDEOSRC);
+      if (fact == NULL)
+        videosrc = RAWVIDEOSRC_GCONF;
+      else
+        gst_object_unref (fact);
+#endif
+
       gchar *bin =
           g_strdup_printf ("%s name=device_source ! videorate ! "
-          "ffmpegcolorspace ! videoscale", RAWVIDEOSRC);
+          "ffmpegcolorspace ! videoscale", videosrc);
       gcc->priv->videosrc = gst_parse_bin_from_description (bin, TRUE, err);
       gcc->priv->device_source =
           gst_bin_get_by_name (GST_BIN (gcc->priv->videosrc), "device_source");
