@@ -27,9 +27,14 @@ namespace LongoMatch.Store
 {
 
 	[Serializable]
-	public class Tag<T>
+	public class Tag<T>: ITag<T>
 	{
 		public Tag() {
+		}
+		
+		public ISubCategory SubCategory {
+			set;
+			get;
 		}
 		
 		public T Value {
@@ -49,7 +54,7 @@ namespace LongoMatch.Store
 			StringTag tag = obj as StringTag;
             if (tag == null)
 				return false;
-			return Value.Equals (tag.Value);
+			return Value.Equals (tag.Value) && SubCategory.Equals(tag.SubCategory);
 		}
 		
 		public override int GetHashCode ()
@@ -68,7 +73,7 @@ namespace LongoMatch.Store
 			PlayerTag tag = obj as PlayerTag;
             if (tag == null)
 				return false;
-			return Value.Equals (tag.Value);
+			return Value.Equals (tag.Value) && SubCategory.Equals(tag.SubCategory) ;
 		}
 		
 		public override int GetHashCode ()
@@ -87,7 +92,7 @@ namespace LongoMatch.Store
 			TeamTag tag = obj as TeamTag;
             if (tag == null)
 				return false;
-			return Value.Equals (tag.Value);
+			return Value.Equals (tag.Value) && SubCategory.Equals(tag.SubCategory);
 		}
 		
 		public override int GetHashCode ()

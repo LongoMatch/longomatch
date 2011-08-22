@@ -18,69 +18,67 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LongoMatch.Common;
 using LongoMatch.Interfaces;
+using LongoMatch.Store;
 
 namespace LongoMatch.Store
 {
 	[Serializable]
-	public class TagsStore<T, W> where T:ISubCategory
+	public class TagsStore<T, W> where T:ITag<W>
 	{
-		private Dictionary<T, List<W>> tags;
+		private List<T> tagsList;
 		
 		public TagsStore(){
-			tags = new Dictionary<T, List<W>>();
+			tagsList = new List<T>();
 		}
 		
-		public void Add(T subCategory, W tag) {
-			Log.Debug(String.Format("Adding tag {0} to subcategory{1}", subCategory, tag));
-			if (!tags.ContainsKey(subCategory))
-				tags.Add(subCategory, new List<W>());
-			tags[subCategory].Add(tag);
-		}
-		
-		public void Remove(T subCategory, W tag) {
-			if (!tags.ContainsKey(subCategory)) {
-				Log.Warning(String.Format("Trying to remove tag {0} from unknown subcategory{1}",
-				                          subCategory, tag));
-				return;
+		public List<T> Tags {
+			get{
+				return tagsList;
 			}
-			tags[subCategory].Remove(tag);
-			if (tags[subCategory].Count == 0)
-				tags.Remove(subCategory);
+			set {
+				tagsList = value;
+			}
 		}
 		
-		public bool Contains(T subCategory) {
-			return (tags.ContainsKey(subCategory));
+		public void Add(T tag) {
+			Log.Debug(String.Format("Adding tag {0} with subcategory{1}", tag, tag.SubCategory));
+			tagsList.Add(tag);
 		}
 		
-		public bool Contains(T subCategory, W tag) {
-			return (Contains(subCategory) && tags[subCategory].Contains(tag));
+		public void Remove(T tag) {
+			try {
+				tagsList.Remove (tag);
+			} catch (Exception e) {
+				Log.Warning("Error removing tag " + tag.ToString());
+				Log.Exception(e);
+			}
 		}
 		
-		public List<W> AllUniqueElements {
+		public bool Contains(T tag) {
+			return tagsList.Contains(tag);
+		}
+		
+		public List<T> AllUniqueElements {
 			get {
-				return (from list in tags.Values
-				        from player in list
-				        group player by player into g
+				return (from tag in tagsList
+				        group tag by tag into g
 				        select g.Key).ToList();
 			}
 		}
 		
-		public List<W> GetTags(T subCategory) {
-			if (!tags.ContainsKey(subCategory)) {
-				Log.Debug(String.Format("Adding subcategory {0} to store", subCategory.Name));
-				tags[subCategory] = new List<W>();
-			}
-			return tags[subCategory];			
+		public List<T> GetTags(ISubCategory subCategory) {
+			return (from tag in tagsList
+			        where tag.SubCategory.Equals(subCategory)
+			        select tag).ToList();
 		}
-
 	}
 	
+	public class StringTagStore: TagsStore<StringTag, string> {}
 	
-	public class StringTagStore: TagsStore<TagSubCategory, StringTag> {}
+	public class PlayersTagStore: TagsStore<PlayerTag, Player> {}
 	
-	public class PlayersTagStore: TagsStore<PlayerSubCategory, PlayerTag> {}
-	
-	public class TeamsTagStore: TagsStore<PlayerSubCategory, TeamTag> {}
+	public class TeamsTagStore: TagsStore<TeamTag, Team> {}
 }
 

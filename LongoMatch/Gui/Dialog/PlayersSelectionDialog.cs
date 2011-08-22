@@ -29,45 +29,35 @@ namespace LongoMatch.Gui.Dialog
 
 	public partial class PlayersSelectionDialog : Gtk.Dialog
 	{
-		TeamTemplate template;
-		List<PlayerTag> selectedPlayers;
-		Dictionary<CheckButton, PlayerTag> checkButtonsDict;
-		bool useRadioButtons;
-		RadioButton firstRB;
+		private PlayerSubCategory subcat;
+		private TeamTemplate template;
+		private PlayersTagStore players;
+		private Dictionary<CheckButton, PlayerTag> checkButtonsDict;
+		private RadioButton firstRB;
 		
-		public PlayersSelectionDialog(bool useRadioButtons)
+		public PlayersSelectionDialog(PlayerSubCategory subcat, TeamTemplate template,
+		                              PlayersTagStore players)
 		{
 			this.Build();
-			checkButtonsDict = new Dictionary<CheckButton, PlayerTag>();
-			this.useRadioButtons = useRadioButtons;
+			this.subcat = subcat;
+			this.template = template;
+			this.players = players;
+			SetPlayersInfo();
+			UpdateSelectedPlayers();
 		}
 		
-		public TeamTemplate Template {
-			set{
-				SetPlayersInfo(value);
-			}
-		}
-		
-		public List<PlayerTag> SelectedPlayers {
-			set {
-				this.selectedPlayers = value;
-				foreach(var pair in checkButtonsDict)
-					pair.Key.Active = value.Contains(pair.Value);
-			}
-			get {
-				return selectedPlayers;
+		private void UpdateSelectedPlayers () {
+			foreach(var pair in checkButtonsDict) {
+				pair.Key.Active = players.Contains(pair.Value);
 			}
 		}
 
-		private void SetPlayersInfo(TeamTemplate template) {
+		private void SetPlayersInfo() {
 			List<PlayerTag> playersList;
 			int i=0;
 
-			if(this.template != null)
-				return;
-
-			this.template = template;
-			playersList = template.PlayingPlayersList.Select(p => new PlayerTag {Value=p}).ToList();
+			checkButtonsDict = new Dictionary<CheckButton, PlayerTag>();
+			playersList = template.PlayingPlayersList.Select(p => new PlayerTag {Value=p, SubCategory=subcat}).ToList();
 
 			table1.NColumns =(uint)(playersList.Count/10);
 			table1.NRows =(uint) 10;
@@ -75,7 +65,7 @@ namespace LongoMatch.Gui.Dialog
 			foreach(PlayerTag player in playersList) {
 				CheckButton button;
 				
-				if (useRadioButtons) {
+				if (!subcat.AllowMultiple) {
 					if (firstRB == null)
 						button = firstRB = new RadioButton("");
 					else
@@ -103,10 +93,10 @@ namespace LongoMatch.Gui.Dialog
 			CheckButton button = sender as CheckButton;
 			PlayerTag player = checkButtonsDict[button];
 			
-			if (button.Active && !selectedPlayers.Contains(player))
-				selectedPlayers.Add(player);
+			if (button.Active && !players.Contains(player))
+				players.Add(player);
 			else if (!button.Active)
-				selectedPlayers.Remove(player);
+				players.Remove(player);
 		}
 	}
 }

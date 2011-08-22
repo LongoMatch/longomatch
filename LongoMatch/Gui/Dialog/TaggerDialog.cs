@@ -46,25 +46,25 @@ namespace LongoMatch.Gui.Dialog
 			
 			/* Iterate over all subcategories, adding a widget only for the FastTag ones */
 			foreach (var subcat in cat.SubCategories) {
+				if (!subcat.FastTag)
+					continue;
 				if (subcat is TagSubCategory) {
 					var tagcat = subcat as TagSubCategory;
-					if (tagcat.FastTag)
-						AddTagSubcategory(tagcat, tags.GetTags(tagcat));
+					AddTagSubcategory(tagcat, tags);
 				} else if (subcat is PlayerSubCategory) {
 					var tagcat = subcat as PlayerSubCategory;
-					if (tagcat.FastTag)
-						AddPlayerSubcategory(tagcat, players.GetTags(tagcat));
+					AddPlayerSubcategory(tagcat, players);
 				}
 			}
 		}
 		
-		public void AddTagSubcategory (TagSubCategory subcat, List<StringTag> tags){
+		public void AddTagSubcategory (TagSubCategory subcat, StringTagStore tags){
 			/* the notebook starts invisible */
 			tagsnotebook.Visible = true;
 			taggerwidget1.AddSubCategory(subcat, tags);
 		}
 		
-		public void AddPlayerSubcategory (PlayerSubCategory subcat, List<PlayerTag> tags){
+		public void AddPlayerSubcategory (PlayerSubCategory subcat, PlayersTagStore tags){
 			TeamTemplate template;
 			
 			/* the notebook starts invisible */
@@ -76,8 +76,7 @@ namespace LongoMatch.Gui.Dialog
 			else
 				template = visitorTeamTemplate;
 			
-			PlayersTaggerWidget widget = new PlayersTaggerWidget(subcat.Name, subcat.AllowMultiple,
-			                                                     template, tags);
+			PlayersTaggerWidget widget = new PlayersTaggerWidget(subcat, template, tags);
 			widget.Show();
 			playersbox.PackStart(widget, false, true, 0);
 		}

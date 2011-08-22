@@ -114,6 +114,7 @@ SOURCES = \
 	Handlers/HotKeysManager.cs \
 	Handlers/VideoDrawingsManager.cs \
 	Interfaces/ISubCategory.cs \
+	Interfaces/ITag.cs \
 	Interfaces/ITemplates.cs \
 	IO/CSVExport.cs \
 	IO/XMLReader.cs \

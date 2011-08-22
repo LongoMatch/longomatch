@@ -28,35 +28,31 @@ namespace LongoMatch.Gui.Component
 	public partial class StringTaggerWidget : Gtk.Bin
 	{
 		private Dictionary<StringTag, CheckButton> dict;
-		private List<StringTag> tags;
+		private StringTagStore tags;
 		private RadioButton firstRB;
-		string subcategory;
+		TagSubCategory subcategory;
 		
-		public StringTaggerWidget ()
+		public StringTaggerWidget (TagSubCategory subcategory, StringTagStore tags)
 		{
 			this.Build ();
+			this.subcategory = subcategory;
+			this.tags = tags;
+			PopulateGui();
+			UpdateTags();
+		}
+		
+		private void PopulateGui() {
+			Title = subcategory.Name;
 			dict = new Dictionary<StringTag, CheckButton>();
+			foreach (string tag in subcategory)
+				AddTagWidget(new StringTag{Value=tag, SubCategory=subcategory},
+				             !subcategory.AllowMultiple);
 		}
 		
-		public TagSubCategory SubCategory {
-			set {
-				subcategory = value.Name;
-				Title = subcategory;
-				foreach (string tag in value)
-					AddTagWidget(new StringTag{Value=tag}, !value.AllowMultiple);
-			}
-		}
-		
-		public List<StringTag> Tags {
-			set{
-				tags = value;
-				foreach (var tag in tags) {
-					if (dict.ContainsKey(tag)) 	
-						dict[tag].Active = true;
-				}
-			}
-			get {
-				return tags;
+		public void UpdateTags() {
+			foreach (var tag in tags.GetTags(subcategory)) {
+				if (dict.ContainsKey(tag)) 	
+					dict[tag].Active = true;
 			}
 		}
 		
