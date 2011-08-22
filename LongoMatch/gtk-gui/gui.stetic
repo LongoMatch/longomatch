@@ -1687,6 +1687,7 @@
         <property name="Label" translatable="yes">Export Project To CSV File</property>
         <property name="Sensitive">False</property>
         <property name="ShortLabel" translatable="yes">Export Project To CSV File</property>
+        <property name="Visible">False</property>
         <signal name="Activated" handler="OnExportProjectToCSVFileActionActivated" />
       </action>
       <action id="TeamsTemplatesManagerAction">
@@ -1876,6 +1877,7 @@
                     <child>
                       <widget class="LongoMatch.Gui.Component.TagsTreeWidget" id="tagstreewidget1">
                         <property name="MemberName" />
+                        <property name="Sensitive">False</property>
                         <property name="Events">ButtonPressMask</property>
                       </widget>
                       <packing>

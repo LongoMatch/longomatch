@@ -169,6 +169,7 @@ namespace LongoMatch.Gui
 			this.ExportProjectToCSVFileAction = new global::Gtk.Action ("ExportProjectToCSVFileAction", global::Mono.Unix.Catalog.GetString ("Export Project To CSV File"), null, null);
 			this.ExportProjectToCSVFileAction.Sensitive = false;
 			this.ExportProjectToCSVFileAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Export Project To CSV File");
+			this.ExportProjectToCSVFileAction.Visible = false;
 			w1.Add (this.ExportProjectToCSVFileAction, null);
 			this.TeamsTemplatesManagerAction = new global::Gtk.Action ("TeamsTemplatesManagerAction", global::Mono.Unix.Catalog.GetString ("Teams Templates Manager"), null, null);
 			this.TeamsTemplatesManagerAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Teams Templates Manager");
@@ -274,6 +275,7 @@ namespace LongoMatch.Gui
 			this.visitorteamlabel.ShowAll ();
 			// Container child notebook1.Gtk.Notebook+NotebookChild
 			this.tagstreewidget1 = new global::LongoMatch.Gui.Component.TagsTreeWidget ();
+			this.tagstreewidget1.Sensitive = false;
 			this.tagstreewidget1.Events = ((global::Gdk.EventMask)(256));
 			this.tagstreewidget1.Name = "tagstreewidget1";
 			this.notebook1.Add (this.tagstreewidget1);
