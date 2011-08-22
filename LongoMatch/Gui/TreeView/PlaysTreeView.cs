@@ -21,7 +21,7 @@
 using Gdk;
 using Gtk;
 using LongoMatch.Common;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 using System;
 
 namespace LongoMatch.Gui.Component
@@ -37,54 +37,54 @@ namespace LongoMatch.Gui.Component
 		//Categories menu
 		private Menu categoriesMenu;
 		private RadioAction sortByName, sortByStart, sortByStop, sortByDuration;
-		
+
 		public PlaysTreeView() {
 			SetCategoriesMenu();
 		}
-		
-		new public TreeStore Model{
-			set{
-				if (value != null){
+
+		new public TreeStore Model {
+			set {
+				if(value != null) {
 					value.SetSortFunc(0, SortFunction);
 					value.SetSortColumnId(0,SortType.Ascending);
 				}
-				base.Model = value;					
+				base.Model = value;
 			}
-			get{
+			get {
 				return base.Model as TreeStore;
 			}
 		}
 
-		private void SetCategoriesMenu(){
-			Gtk.Action edit, sortMenu;			
+		private void SetCategoriesMenu() {
+			Gtk.Action edit, sortMenu;
 			UIManager manager;
 			ActionGroup g;
-			
+
 			manager= new UIManager();
 			g = new ActionGroup("CategoriesMenuGroup");
-			
+
 			edit = new Gtk.Action("EditAction", Mono.Unix.Catalog.GetString("Edit name"), null, "gtk-edit");
 			sortMenu = new Gtk.Action("SortMenuAction", Mono.Unix.Catalog.GetString("Sort Method"), null, null);
 			sortByName = new Gtk.RadioAction("SortByNameAction", Mono.Unix.Catalog.GetString("Sort by name"), null, null, 1);
 			sortByStart = new Gtk.RadioAction("SortByStartAction", Mono.Unix.Catalog.GetString("Sort by start time"), null, null, 2);
 			sortByStop = new Gtk.RadioAction("SortByStopAction", Mono.Unix.Catalog.GetString("Sort by stop time"), null, null, 3);
 			sortByDuration = new Gtk.RadioAction("SortByDurationAction", Mono.Unix.Catalog.GetString("Sort by duration"), null, null, 3);
-				
+
 			sortByName.Group = new GLib.SList(System.IntPtr.Zero);
 			sortByStart.Group = sortByName.Group;
 			sortByStop.Group = sortByName.Group;
-			sortByDuration.Group = sortByName.Group;     
-			
-			
+			sortByDuration.Group = sortByName.Group;
+
+
 			g.Add(edit, null);
 			g.Add(sortMenu, null);
 			g.Add(sortByName, null);
 			g.Add(sortByStart, null);
 			g.Add(sortByStop, null);
 			g.Add(sortByDuration, null);
-			
+
 			manager.InsertActionGroup(g,0);
-			
+
 			manager.AddUiFromString("<ui>"+
 			                        "  <popup action='CategoryMenu'>"+
 			                        "    <menuitem action='EditAction'/>"+
@@ -96,112 +96,112 @@ namespace LongoMatch.Gui.Component
 			                        "    </menu>"+
 			                        "  </popup>"+
 			                        "</ui>");
-			
-			categoriesMenu = manager.GetWidget("/CategoryMenu") as Menu;	
-			
+
+			categoriesMenu = manager.GetWidget("/CategoryMenu") as Menu;
+
 			edit.Activated += OnEdit;
 			sortByName.Activated += OnSortActivated;
 			sortByStart.Activated += OnSortActivated;
 			sortByStop.Activated += OnSortActivated;
 			sortByDuration.Activated += OnSortActivated;
 		}
-		
-		private void SetupSortMenu(SortMethodType sortMethod){
-			switch (sortMethod) {
-				case SortMethodType.SortByName:
-					sortByName.Active = true;		
-					break;					
-				case SortMethodType.SortByStartTime:
-					sortByStart.Active = true;
-					break;
-				case SortMethodType.SortByStopTime:
-					sortByStop.Active = true;	
-					break;
-				default:
-					sortByDuration.Active = true;
-					break;
+
+		private void SetupSortMenu(SortMethodType sortMethod) {
+			switch(sortMethod) {
+			case SortMethodType.SortByName:
+				sortByName.Active = true;
+				break;
+			case SortMethodType.SortByStartTime:
+				sortByStart.Active = true;
+				break;
+			case SortMethodType.SortByStopTime:
+				sortByStop.Active = true;
+				break;
+			default:
+				sortByDuration.Active = true;
+				break;
 			}
 		}
-		
-		protected int SortFunction(TreeModel model, TreeIter a, TreeIter b){
+
+		protected int SortFunction(TreeModel model, TreeIter a, TreeIter b) {
 			TreeStore store;
 			TimeNode tna, tnb;
 			TreeIter parent;
 			int depth;
-			SectionsTimeNode category;
-			
-			if (model == null)
-				return 0;	
-			
+			Category category;
+
+			if(model == null)
+				return 0;
+
 			store = model as TreeStore;
-			
+
 			// Retrieve the iter parent and its depth
 			// When a new play is inserted, one of the iters is not a valid
 			// in the model. Get the values from the valid one
-			if (store.IterIsValid(a)){
+			if(store.IterIsValid(a)) {
 				store.IterParent(out parent, a);
 				depth = store.IterDepth(a);
 			}
-			else{
+			else {
 				store.IterParent(out parent, b);
 				depth = store.IterDepth(b);
-			}		
-			
+			}
+
 			// Dont't store categories
-			if (depth == 0)
-				return int.Parse(model.GetPath(a).ToString()) 
-					- int.Parse(model.GetPath(b).ToString());
-			
-			category = model.GetValue(parent,0) as SectionsTimeNode;
-			tna = model.GetValue (a, 0)as TimeNode;
-			tnb = model.GetValue (b, 0) as TimeNode;
-			
-			switch(category.SortMethod){
-				case(SortMethodType.SortByName):
-					return String.Compare(tna.Name, tnb.Name);
-				case(SortMethodType.SortByStartTime):
-					return (tna.Start - tnb.Start).MSeconds;
-				case(SortMethodType.SortByStopTime):
-					return (tna.Stop - tnb.Stop).MSeconds;
-				case(SortMethodType.SortByDuration):
-					return (tna.Duration - tnb.Duration).MSeconds;
-				default:
-					return 0;
-			}			
+			if(depth == 0)
+				return int.Parse(model.GetPath(a).ToString())
+				       - int.Parse(model.GetPath(b).ToString());
+
+			category = model.GetValue(parent,0) as Category;
+			tna = model.GetValue(a, 0)as TimeNode;
+			tnb = model.GetValue(b, 0) as TimeNode;
+
+			switch(category.SortMethod) {
+			case(SortMethodType.SortByName):
+				return String.Compare(tna.Name, tnb.Name);
+			case(SortMethodType.SortByStartTime):
+				return (tna.Start - tnb.Start).MSeconds;
+			case(SortMethodType.SortByStopTime):
+				return (tna.Stop - tnb.Stop).MSeconds;
+			case(SortMethodType.SortByDuration):
+				return (tna.Duration - tnb.Duration).MSeconds;
+			default:
+				return 0;
+			}
 		}
-		
-		private void OnSortActivated (object o, EventArgs args){
-			SectionsTimeNode category;
+
+		private void OnSortActivated(object o, EventArgs args) {
+			Category category;
 			RadioAction sender;
-			
+
 			sender = o as RadioAction;
-			category = GetValueFromPath(Selection.GetSelectedRows()[0]) as SectionsTimeNode;
-			
-			if (sender == sortByName)
+			category = GetValueFromPath(Selection.GetSelectedRows()[0]) as Category;
+
+			if(sender == sortByName)
 				category.SortMethod = SortMethodType.SortByName;
-			else if (sender == sortByStart)
+			else if(sender == sortByStart)
 				category.SortMethod = SortMethodType.SortByStartTime;
-			else if (sender == sortByStop)
+			else if(sender == sortByStop)
 				category.SortMethod = SortMethodType.SortByStopTime;
-			else 
+			else
 				category.SortMethod = SortMethodType.SortByDuration;
 			// Redorder plays
 			Model.SetSortFunc(0, SortFunction);
 		}
-		
-		override protected bool SelectFunction(TreeSelection selection, TreeModel model, TreePath path, bool selected){
+
+		override protected bool SelectFunction(TreeSelection selection, TreeModel model, TreePath path, bool selected) {
 			// Don't allow multiselect for categories
-			if (!selected && selection.GetSelectedRows().Length > 0){
-				if (selection.GetSelectedRows().Length == 1 &&
-				    GetValueFromPath(selection.GetSelectedRows()[0]) is SectionsTimeNode)
-					return false;	
-				return !(GetValueFromPath(path) is SectionsTimeNode);										
+			if(!selected && selection.GetSelectedRows().Length > 0) {
+				if(selection.GetSelectedRows().Length == 1 &&
+				                GetValueFromPath(selection.GetSelectedRows()[0]) is Category)
+					return false;
+				return !(GetValueFromPath(path) is Category);
 			}
 			// Always unselect
 			else
 				return true;
 		}
-		
+
 		override protected void OnNameCellEdited(object o, Gtk.EditedArgs args)
 		{
 			base.OnNameCellEdited(o, args);
@@ -209,44 +209,44 @@ namespace LongoMatch.Gui.Component
 		}
 
 		override protected bool OnButtonPressEvent(EventButton evnt)
-		{			
+		{
 			TreePath[] paths = Selection.GetSelectedRows();
-			
-			if ((evnt.Type == EventType.ButtonPress) && (evnt.Button == 3))
+
+			if((evnt.Type == EventType.ButtonPress) && (evnt.Button == 3))
 			{
 				// We don't want to unselect the play when several
 				// plays are selected and we clik the right button
 				// For multiedition
-				if (paths.Length <= 1){
+				if(paths.Length <= 1) {
 					base.OnButtonPressEvent(evnt);
 					paths = Selection.GetSelectedRows();
 				}
-				
-				if (paths.Length == 1) {
+
+				if(paths.Length == 1) {
 					TimeNode selectedTimeNode = GetValueFromPath(paths[0]) as TimeNode;
-					if (selectedTimeNode is MediaTimeNode) {
-						deleteKeyFrame.Sensitive = (selectedTimeNode as MediaTimeNode).KeyFrameDrawing != null;
+					if(selectedTimeNode is Play) {
+						deleteKeyFrame.Sensitive = (selectedTimeNode as Play).HasDrawings;
 						MultiSelectMenu(false);
 						menu.Popup();
 					}
-					else{
-						SetupSortMenu((selectedTimeNode as SectionsTimeNode).SortMethod);
+					else {
+						SetupSortMenu((selectedTimeNode as Category).SortMethod);
 						categoriesMenu.Popup();
 					}
 				}
-				else if (paths.Length > 1){
+				else if(paths.Length > 1) {
 					MultiSelectMenu(true);
-					menu.Popup();								
+					menu.Popup();
 				}
 			}
-			else 
+			else
 				base.OnButtonPressEvent(evnt);
 			return true;
 		}
-		
-		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
+
+		protected override bool OnKeyPressEvent(Gdk.EventKey evnt)
 		{
 			return false;
-		}		
+		}
 	}
 }

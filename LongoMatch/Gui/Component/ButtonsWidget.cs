@@ -19,12 +19,12 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Gtk;
-using LongoMatch.DB;
 using LongoMatch.Common;
 using LongoMatch.Handlers;
-using LongoMatch.TimeNodes;
-using System.Collections.Generic;
+using LongoMatch.Store;
+using LongoMatch.Store.Templates;
 
 namespace LongoMatch.Gui.Component
 {
@@ -33,8 +33,9 @@ namespace LongoMatch.Gui.Component
 	public partial class ButtonsWidget : Gtk.Bin
 	{
 
-		private Sections sections;		
+		private Categories categories;
 		private TagMode tagMode;
+		private Dictionary<Widget, Category> buttonsDic;
 
 		public event NewMarkEventHandler NewMarkEvent;
 		public event NewMarkStartHandler NewMarkStartEvent;
@@ -45,42 +46,51 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build();
 			Mode = TagMode.Predifined;
+			buttonsDic = new Dictionary<Widget, Category>();
 		}
-		
-		public TagMode Mode{
-			set{
+
+		public TagMode Mode {
+			set {
 				bool isPredef = (value == TagMode.Predifined);
 				table1.Visible = isPredef;
 				starttagbutton.Visible = !isPredef;
 				cancelbutton.Visible = false;
-				tagMode = value;				
+				tagMode = value;
 			}
 		}
 
-		public Sections Sections {
+		public Categories Categories {
 			set {
-				foreach (Widget w in table1.AllChildren) {
+				foreach(Widget w in table1.AllChildren) {
 					table1.Remove(w);
 					w.Destroy();
 				}
-				sections = value;
-				if (value == null)
+				categories = value;
+				if(value == null)
 					return;
 
+				buttonsDic.Clear();
 				int sectionsCount = value.Count;
 
 				table1.NColumns =(uint) 10;
 				table1.NRows =(uint)(sectionsCount/10);
 
-				for (int i=0;i<sectionsCount;i++) {
+				for(int i=0; i<sectionsCount; i++) {
 					Button b = new Button();
 					Label l = new Label();
+					Category cat = value[i];
+
 					uint row_top =(uint)(i/table1.NColumns);
 					uint row_bottom = (uint) row_top+1 ;
 					uint col_left = (uint) i%table1.NColumns;
 					uint col_right = (uint) col_left+1 ;
 
-					l.Markup = sections.GetName(i);
+					string colorString = String.Format("#{0:X4}{1:X4}{2:X4}",
+					                                   cat.Color.Red,
+					                                   cat.Color.Green,
+					                                   cat.Color.Blue);
+					l.Markup = String.Format("<span foreground=\"{0}\">{1}</span>", 
+					                         colorString, cat.Name);
 					l.Justify = Justification.Center;
 					l.Ellipsize = Pango.EllipsizeMode.Middle;
 					l.CanFocus = false;
@@ -89,46 +99,48 @@ namespace LongoMatch.Gui.Component
 					b.Name = i.ToString();
 					b.Clicked += new EventHandler(OnButtonClicked);
 					b.CanFocus = false;
-					
+
 					l.Show();
 					b.Show();
 
 					table1.Attach(b,col_left,col_right,row_top,row_bottom);
+
+					buttonsDic.Add(b, cat);
 				}
 			}
 		}
 
 		protected virtual void OnButtonClicked(object sender,  System.EventArgs e)
 		{
-			if (sections == null)
+			if(categories == null)
 				return;
 			Widget w = (Button)sender;
-			if (tagMode == TagMode.Predifined){
-				if (NewMarkEvent != null)
-					NewMarkEvent(int.Parse(w.Name));
+			if(tagMode == TagMode.Predifined) {
+				if(NewMarkEvent != null)
+					NewMarkEvent(buttonsDic[w]);
 			} else {
 				starttagbutton.Visible = true;
 				table1.Visible = false;
 				cancelbutton.Visible = false;
-				if (NewMarkStopEvent != null)
-					NewMarkStopEvent(int.Parse(w.Name));
-			}			
+				if(NewMarkStopEvent != null)
+					NewMarkStopEvent(buttonsDic[w]);
+			}
 		}
 
-		protected virtual void OnStartTagClicked (object sender, System.EventArgs e)
+		protected virtual void OnStartTagClicked(object sender, System.EventArgs e)
 		{
-			if (sections == null)
+			if(categories == null)
 				return;
-			
+
 			starttagbutton.Visible = false;
 			table1.Visible = true;
 			cancelbutton.Visible = true;
-			
-			if (NewMarkStartEvent != null)
+
+			if(NewMarkStartEvent != null)
 				NewMarkStartEvent();
 		}
 
-		protected virtual void OnCancelbuttonClicked (object sender, System.EventArgs e)
+		protected virtual void OnCancelbuttonClicked(object sender, System.EventArgs e)
 		{
 			starttagbutton.Visible = true;
 			table1.Visible = false;

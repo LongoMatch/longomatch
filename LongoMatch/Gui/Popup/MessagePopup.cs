@@ -32,7 +32,7 @@ namespace LongoMatch.Gui
 
 		public static void PopupMessage(Widget sender,MessageType type, String errorMessage) {
 			Window toplevel;
-			if (sender != null)
+			if(sender != null)
 				toplevel = (Window)sender.Toplevel;
 			else
 				toplevel = null;

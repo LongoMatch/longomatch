@@ -23,7 +23,7 @@ using Gdk;
 using Gtk;
 using Mono.Unix;
 using LongoMatch.Handlers;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 
 namespace LongoMatch.Gui.Component
 {
@@ -50,22 +50,22 @@ namespace LongoMatch.Gui.Component
 			nameColumn.Title = Catalog.GetString("Name");
 			Gtk.CellRendererText nameCell = new Gtk.CellRendererText();
 			nameColumn.PackStart(nameCell, true);
-			
+
 			Gtk.TreeViewColumn playsColumn = new Gtk.TreeViewColumn();
 			playsColumn.Title = Catalog.GetString("Play this match");
 			Gtk.CellRendererText playCell = new Gtk.CellRendererText();
 			playsColumn.PackStart(playCell, true);
-			
+
 			Gtk.TreeViewColumn birthdayColumn = new Gtk.TreeViewColumn();
 			birthdayColumn.Title = Catalog.GetString("Date of Birth");
 			Gtk.CellRendererText birthdayCell = new Gtk.CellRendererText();
 			birthdayColumn.PackStart(birthdayCell, true);
-			
+
 			Gtk.TreeViewColumn nationColumn = new Gtk.TreeViewColumn();
 			nationColumn.Title = Catalog.GetString("Nationality");
 			Gtk.CellRendererText nationCell = new Gtk.CellRendererText();
 			nationColumn.PackStart(nationCell, true);
-			
+
 			Gtk.TreeViewColumn heightColumn = new Gtk.TreeViewColumn();
 			heightColumn.Title = Catalog.GetString("Height");
 			Gtk.CellRendererText heightCell = new Gtk.CellRendererText();
@@ -75,7 +75,7 @@ namespace LongoMatch.Gui.Component
 			weightColumn.Title = Catalog.GetString("Weight");
 			Gtk.CellRendererText weightCell = new Gtk.CellRendererText();
 			weightColumn.PackStart(weightCell, true);
-			
+
 			Gtk.TreeViewColumn positionColumn = new Gtk.TreeViewColumn();
 			positionColumn.Title = Catalog.GetString("Position");
 			Gtk.CellRendererText positionCell = new Gtk.CellRendererText();
@@ -120,12 +120,12 @@ namespace LongoMatch.Gui.Component
 
 			(cell as Gtk.CellRendererText).Text = player.Name;
 		}
-		
+
 		private void RenderPlay(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			Player player = (Player) model.GetValue(iter, 0);
 
-			(cell as Gtk.CellRendererText).Text = player.Discarded ? Catalog.GetString("No") : Catalog.GetString("Yes");
+			(cell as Gtk.CellRendererText).Text = player.Playing ? Catalog.GetString("Yes") : Catalog.GetString("No");
 		}
 
 		private void RenderNationality(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
@@ -155,14 +155,14 @@ namespace LongoMatch.Gui.Component
 
 			(cell as Gtk.CellRendererText).Text = player.Height.ToString();
 		}
-		
+
 		private void RenderWeight(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			Player player = (Player) model.GetValue(iter, 0);
 
 			(cell as Gtk.CellRendererText).Text = player.Weight.ToString();
 		}
-		
+
 		private void RenderBirthday(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			Player player = (Player) model.GetValue(iter, 0);
@@ -175,7 +175,7 @@ namespace LongoMatch.Gui.Component
 			Gtk.TreeIter iter;
 			Model.GetIter(out iter, args.Path);
 			Player player = (Player) Model.GetValue(iter, 0);
-			if (PlayerClicked != null)
+			if(PlayerClicked != null)
 				PlayerClicked(player);
 		}
 	}

@@ -23,6 +23,7 @@ namespace LongoMatch.Gui.Component
 			this.playerstreeview = new global::LongoMatch.Gui.Component.PlayersTreeView ();
 			this.playerstreeview.CanFocus = true;
 			this.playerstreeview.Name = "playerstreeview";
+			this.playerstreeview.Colors = false;
 			this.scrolledwindow1.Add (this.playerstreeview);
 			this.Add (this.scrolledwindow1);
 			if ((this.Child != null)) {

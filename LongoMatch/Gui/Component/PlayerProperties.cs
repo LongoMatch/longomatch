@@ -21,7 +21,7 @@ using System.IO;
 using Gtk;
 using Gdk;
 using Mono.Unix;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 using LongoMatch.Gui.Popup;
 using LongoMatch.Gui.Dialog;
 
@@ -42,7 +42,7 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build();
 			//HACK:The calendar dialog does not respond on win32
-			if (Environment.OSVersion.Platform != PlatformID.Win32NT) {
+			if(Environment.OSVersion.Platform != PlatformID.Win32NT) {
 				cp = new CalendarPopup();
 				cp.Hide();
 				cp.DateSelectedEvent += delegate(DateTime selectedDate) {
@@ -62,7 +62,7 @@ namespace LongoMatch.Gui.Component
 				weightspinbutton.Value = value.Weight;
 				heightspinbutton.Value = value.Height;
 				image.Pixbuf = value.Photo;
-				playscombobox.Active = value.Discarded ? 1 : 0;
+				playscombobox.Active = value.Playing ? 0 : 1;
 			}
 			get {
 				return player;
@@ -93,17 +93,17 @@ namespace LongoMatch.Gui.Component
 			                "gtk-cancel",ResponseType.Cancel,
 			                "gtk-open",ResponseType.Accept);
 			fChooser.AddFilter(FileFilter);
-			if (fChooser.Run() == (int)ResponseType.Accept)	{
+			if(fChooser.Run() == (int)ResponseType.Accept)	{
 				// For Win32 compatibility we need to open the image file
 				// using a StreamReader. Gdk.Pixbuf(string filePath) uses GLib to open the
 				// input file and doesn't support Win32 files path encoding
 				file = new StreamReader(fChooser.Filename);
 				pimage= new Gdk.Pixbuf(file.BaseStream);
-				if (pimage != null) {
+				if(pimage != null) {
 					h = pimage.Height;
 					w = pimage.Width;
 					rate = (double)w/(double)h;
-					if (h>w)
+					if(h>w)
 						player.Photo = pimage.ScaleSimple((int)(THUMBNAIL_MAX_HEIGHT*rate),THUMBNAIL_MAX_HEIGHT,InterpType.Bilinear);
 					else
 						player.Photo = pimage.ScaleSimple(THUMBNAIL_MAX_WIDTH,(int)(THUMBNAIL_MAX_WIDTH/rate),InterpType.Bilinear);
@@ -132,10 +132,10 @@ namespace LongoMatch.Gui.Component
 		{
 			player.Number =(int) numberspinbutton.Value;
 		}
-		
-		protected virtual void OnDatebuttonClicked (object sender, System.EventArgs e)
+
+		protected virtual void OnDatebuttonClicked(object sender, System.EventArgs e)
 		{
-			if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
+			if(Environment.OSVersion.Platform == PlatformID.Win32NT) {
 				var win32CP = new Win32CalendarDialog();
 				win32CP.TransientFor = (Gtk.Window)this.Toplevel;
 				win32CP.Run();
@@ -148,27 +148,27 @@ namespace LongoMatch.Gui.Component
 				cp.Show();
 			}
 		}
-		
-		protected virtual void OnWeightspinbuttonValueChanged (object sender, System.EventArgs e)
+
+		protected virtual void OnWeightspinbuttonValueChanged(object sender, System.EventArgs e)
 		{
 			player.Weight = (int)weightspinbutton.Value;
 		}
-		
-		protected virtual void OnHeightspinbuttonValueChanged (object sender, System.EventArgs e)
+
+		protected virtual void OnHeightspinbuttonValueChanged(object sender, System.EventArgs e)
 		{
 			player.Height = (float)heightspinbutton.Value;
 		}
-		
-		protected virtual void OnNationalityentryChanged (object sender, System.EventArgs e)
+
+		protected virtual void OnNationalityentryChanged(object sender, System.EventArgs e)
 		{
 			player.Nationality = nationalityentry.Text;
 		}
-		
-		protected virtual void OnPlayscomboboxChanged (object sender, System.EventArgs e)
+
+		protected virtual void OnPlayscomboboxChanged(object sender, System.EventArgs e)
 		{
-			player.Discarded = playscombobox.ActiveText == Catalog.GetString("No");
+			player.Playing = playscombobox.ActiveText == Catalog.GetString("Yes");
 		}
-		
-		
+
+
 	}
 }

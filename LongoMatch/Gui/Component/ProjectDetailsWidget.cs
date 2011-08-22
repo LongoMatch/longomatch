@@ -20,24 +20,24 @@
 
 using System;
 using System.Collections.Generic;
-using Mono.Unix;
 using Gtk;
 using LongoMatch.Common;
-using LongoMatch.DB;
+using LongoMatch.Gui.Dialog;
+using LongoMatch.Gui.Popup;
 using LongoMatch.Handlers;
 using LongoMatch.IO;
-using LongoMatch.Gui.Popup;
-using LongoMatch.Gui.Dialog;
-using LongoMatch.TimeNodes;
-using LongoMatch.Video.Utils;
+using LongoMatch.Interfaces;
+using LongoMatch.Store;
+using LongoMatch.Store.Templates;
 using LongoMatch.Video.Capturer;
 using LongoMatch.Video.Common;
+using LongoMatch.Video.Utils;
+using Mono.Unix;
 
 namespace LongoMatch.Gui.Component
 {
 
 
-	//TODO añadir eventos de cambios para realizar el cambio directamente sobre el file data abierto
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class ProjectDetailsWidget : Gtk.Bin
@@ -49,33 +49,37 @@ namespace LongoMatch.Gui.Component
 		private DateTime date;
 		private CalendarPopup cp;
 		private Win32CalendarDialog win32CP;
-		private Sections actualSection;
+		private Categories actualCategory;
 		private TeamTemplate actualVisitorTeam;
 		private TeamTemplate actualLocalTeam;
+		private ITemplateProvider<Categories, Category> tpc;
+		private ITemplateProvider<TeamTemplate, Player> tpt;
 		private ProjectType useType;
 		private List<Device> videoDevices;
-		private const string PAL_FORMAT = "720x576 (4:3)";
-		private const string PAL_3_4_FORMAT = "540x432 (4:3)";
-		private const string PAL_1_2_FORMAT = "360x288 (4:3)";
+		private ListStore videoStandardList;
+		private ListStore encProfileList;
 		private const string DV_SOURCE = "DV Source";
 		private const string GCONF_SOURCE = "GConf Source";
-		
-		
+
+
 		public ProjectDetailsWidget()
 		{
 			this.Build();
 
 			//HACK:The calendar dialog does not respond on win32
-			if (Environment.OSVersion.Platform != PlatformID.Win32NT) {
+			if(Environment.OSVersion.Platform != PlatformID.Win32NT) {
 				cp = new CalendarPopup();
 				cp.Hide();
 				cp.DateSelectedEvent += new DateSelectedHandler(OnDateSelected);
 			}
 			
-			FillSections();
+			tpc = MainClass.ts.CategoriesTemplateProvider;
+			tpt = MainClass.ts.TeamTemplateProvider;
+
+			FillCategories();
 			FillTeamsTemplate();
 			FillFormats();
-			
+
 			videoDevices = new List<Device>();
 
 			Use=ProjectType.FileProject;
@@ -83,21 +87,23 @@ namespace LongoMatch.Gui.Component
 
 		public ProjectType Use {
 			set {
-				bool visible1 = value == ProjectType.CaptureProject; 
+				bool visible1 = value == ProjectType.CaptureProject;
 				bool visible2 = value != ProjectType.FakeCaptureProject;
 				bool visible3 = value != ProjectType.EditProject;
-				
+
 				filelabel.Visible = visible2;
 				filehbox.Visible = visible2;
-				
+
 				tagscombobox.Visible = visible3;
 				localcombobox.Visible = visible3;
 				visitorcombobox.Visible = visible3;
-				
+				localteamlabel.Visible = !visible3;
+				visitorteamlabel.Visible = !visible3;
+
 				expander1.Visible = visible1;
 				device.Visible = visible1;
 				devicecombobox.Visible = visible1;
-				
+
 				useType = value;
 			}
 			get {
@@ -111,24 +117,6 @@ namespace LongoMatch.Gui.Component
 			}
 			get {
 				return edited;
-			}
-		}
-
-		public string LocalName {
-			get {
-				return localTeamEntry.Text;
-			}
-			set {
-				localTeamEntry.Text = value;
-			}
-		}
-
-		public string VisitorName {
-			get {
-				return visitorTeamEntry.Text;
-			}
-			set {
-				visitorTeamEntry.Text = value;
 			}
 		}
 
@@ -187,12 +175,12 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public Sections Sections {
+		public Categories Categories {
 			get {
-				return actualSection;
+				return actualCategory;
 			}
 			set {
-				actualSection = value;
+				actualCategory = value;
 			}
 		}
 
@@ -201,6 +189,7 @@ namespace LongoMatch.Gui.Component
 				return actualLocalTeam;
 			}
 			set {
+				localteamlabel.Text = value.TeamName;
 				actualLocalTeam = value;
 			}
 		}
@@ -210,36 +199,40 @@ namespace LongoMatch.Gui.Component
 				return actualVisitorTeam;
 			}
 			set {
+				visitorteamlabel.Text = value.TeamName;
 				actualVisitorTeam = value;
 			}
 		}
 
-		private string SectionsFile {
+		private string SelectedCategory {
 			get {
-				return tagscombobox.ActiveText + ".sct";
+				return tagscombobox.ActiveText;
 			}
 		}
 
 		private string LocalTeamTemplateFile {
 			get {
-				return localcombobox.ActiveText + ".tem";
+				return localcombobox.ActiveText;
 			}
 		}
 
 		private string VisitorTeamTemplateFile {
 			get {
-				return visitorcombobox.ActiveText + ".tem";
+				return visitorcombobox.ActiveText;
 			}
 		}
-		
-		public CapturePropertiesStruct CaptureProperties{
-			get{
-				CapturePropertiesStruct s = new CapturePropertiesStruct();
-				s.OutputFile = fileEntry.Text;
-				s.AudioBitrate = (uint)audiobitratespinbutton.Value;
-				s.VideoBitrate = (uint)videobitratespinbutton.Value;
-				if (videoDevices[devicecombobox.Active].DeviceType == DeviceType.DV){
-					if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+
+		public CaptureSettings CaptureSettings {
+			get {
+				TreeIter iter;
+				EncodingSettings encSettings = new EncodingSettings();
+				CaptureSettings s = new CaptureSettings();
+				
+				encSettings.OutputFile = fileEntry.Text;
+				encSettings.AudioBitrate = (uint)audiobitratespinbutton.Value;
+				encSettings.VideoBitrate = (uint)videobitratespinbutton.Value;
+				if(videoDevices[devicecombobox.Active].DeviceType == DeviceType.DV) {
+					if(Environment.OSVersion.Platform == PlatformID.Win32NT)
 						s.CaptureSourceType = CaptureSourceType.DShow;
 					else
 						s.CaptureSourceType = CaptureSourceType.DV;
@@ -248,115 +241,89 @@ namespace LongoMatch.Gui.Component
 					s.CaptureSourceType = CaptureSourceType.Raw;
 				}
 				s.DeviceID = videoDevices[devicecombobox.Active].ID;
+				
 				/* Get size info */
-				switch (sizecombobox.ActiveText){
-					/* FIXME: Don't harcode size values */
-					case PAL_FORMAT:
-						s.Width = 720;
-						s.Height = 576;
-						break;
-					case PAL_3_4_FORMAT:
-						s.Width = 540;
-						s.Height = 432;
-						break;
-					case PAL_1_2_FORMAT:
-						s.Width = 360;
-						s.Height = 288;
-						break;
-					default:
-						s.Width = 0;
-						s.Height = 0;
-						break;
-				}
-				/* Get video compresion format info */
-				switch (videoformatcombobox.ActiveText){
-					case Constants.AVI:
-						s.VideoEncoder = VideoEncoderType.Mpeg4;
-						s.AudioEncoder = AudioEncoderType.Mp3;
-						s.Muxer = VideoMuxerType.Avi;
-						break;
-					case Constants.MP4:
-						s.VideoEncoder = VideoEncoderType.H264;
-						s.AudioEncoder = AudioEncoderType.Aac;
-						s.Muxer = VideoMuxerType.Mp4;
-						break;
-					case Constants.OGG:
-						s.VideoEncoder = VideoEncoderType.Theora;
-						s.AudioEncoder = AudioEncoderType.Vorbis;
-						s.Muxer = VideoMuxerType.Ogg;
-						break;
-					case Constants.WEBM:
-						s.VideoEncoder = VideoEncoderType.VP8;
-						s.AudioEncoder = AudioEncoderType.Vorbis;
-						s.Muxer = VideoMuxerType.WebM;
-						break;
-				}
+				sizecombobox.GetActiveIter(out iter);
+				encSettings.VideoStandard = (VideoStandard) videoStandardList.GetValue(iter, 1);
+			
+				/* Get encoding profile info */
+				videoformatcombobox.GetActiveIter(out iter);
+				encSettings.EncodingProfile = (EncodingProfile) encProfileList.GetValue(iter, 1);
+				
+				/* FIXME: Configure with the UI */
+				encSettings.Framerate_n = 25;
+				encSettings.Framerate_d = 1;
+				
+				s.EncodingSettings = encSettings;
 				return s;
 			}
 		}
-		
+
 		public void SetProject(Project project) {
 			this.project = project;
-			mFile = project.File;
+			var desc = project.Description;
+			mFile = desc.File;
 			Filename = mFile != null ? mFile.FilePath : "";
-			LocalName = project.LocalName;
-			VisitorName = project.VisitorName;
-			LocalGoals = project.LocalGoals;
-			VisitorGoals = project.VisitorGoals;
-			Date = project.MatchDate;
-			Season = project.Season;
-			Competition = project.Competition;
-			Sections = project.Sections;
+			LocalGoals = desc.LocalGoals;
+			VisitorGoals = desc.VisitorGoals;
+			Date = desc.MatchDate;
+			Season = desc.Season;
+			Competition = desc.Competition;
+			Categories = project.Categories;
 			LocalTeamTemplate = project.LocalTeamTemplate;
 			VisitorTeamTemplate = project.VisitorTeamTemplate;
 			Edited = false;
 		}
 
 		public void UpdateProject() {
-			project.File= mFile;			
-			project.LocalName = localTeamEntry.Text;
-			project.VisitorName = visitorTeamEntry.Text;
-			project.LocalGoals = (int)localSpinButton.Value;
-			project.VisitorGoals = (int)visitorSpinButton.Value;
-			project.MatchDate = DateTime.Parse(dateEntry.Text);
-			project.Competition = competitionentry.Text;
-			project.Season = seasonentry.Text;
-			project.Sections = Sections;
+			var desc = project.Description;
+			desc.File= mFile;
+			desc.LocalGoals = (int)localSpinButton.Value;
+			desc.VisitorGoals = (int)visitorSpinButton.Value;
+			desc.MatchDate = DateTime.Parse(dateEntry.Text);
+			desc.Competition = competitionentry.Text;
+			desc.Season = seasonentry.Text;
+			project.Categories = Categories;
 			project.LocalTeamTemplate = LocalTeamTemplate;
 			project.VisitorTeamTemplate = VisitorTeamTemplate;
 		}
 
 		public Project GetProject() {
-			if (useType != ProjectType.EditProject) {
-				if (Filename == "" && useType != ProjectType.FakeCaptureProject)
+			if(useType != ProjectType.EditProject) {
+				if(Filename == "" && useType != ProjectType.FakeCaptureProject)
 					return null;
 				else {
-					if (useType == ProjectType.FakeCaptureProject){
+					if(useType == ProjectType.FakeCaptureProject) {
 						mFile = new PreviewMediaFile();
 						mFile.FilePath = Constants.FAKE_PROJECT;
 						mFile.Fps = 25;
-					} else if  (useType == ProjectType.CaptureProject){
+					} else if(useType == ProjectType.CaptureProject) {
 						mFile = new PreviewMediaFile();
 						mFile.FilePath = fileEntry.Text;
 						mFile.Fps = 25;
 					}
-					return new Project(mFile,
-					                   LocalName,
-					                   VisitorName,
-					                   Season,
-					                   Competition,
-					                   LocalGoals,
-					                   VisitorGoals,
-					                   Date,
-					                   Sections,
-					                   LocalTeamTemplate,
-					                   VisitorTeamTemplate);
-				}				
+					var desc = new ProjectDescription {
+						File = mFile,
+						VisitorName = VisitorTeamTemplate.TeamName,
+						LocalName = LocalTeamTemplate.TeamName,
+						Season = Season,
+						Competition = Competition,
+						LocalGoals = LocalGoals,
+						MatchDate = Date
+					};
+
+					return new Project {
+						Description = desc,
+						Categories = Categories,
+						LocalTeamTemplate = LocalTeamTemplate,
+						VisitorTeamTemplate = VisitorTeamTemplate
+					};
+				}
 			}
 			else {
 				// New imported project from a fake live analysis will have a null File
 				// return null to force selecting a new file.
-				if (mFile == null)
+				if(mFile == null)
 					return null;
 				UpdateProject();
 				return project;
@@ -364,28 +331,28 @@ namespace LongoMatch.Gui.Component
 		}
 
 		public void Clear() {
-			LocalName = "";
-			VisitorName = "";
 			LocalGoals = 0;
 			VisitorGoals = 0;
 			Date = System.DateTime.Today;
+			localteamlabel.Text = "";
+			visitorteamlabel.Text = "";
 			Filename = "";
 			mFile = null;
 			edited = false;
 		}
-		
-		public void FillDevices(List<Device> devices){
+
+		public void FillDevices(List<Device> devices) {
 			videoDevices = devices;
-			
-			foreach (Device device in devices){
+
+			foreach(Device device in devices) {
 				string deviceElement;
 				string deviceName;
-				if (Environment.OSVersion.Platform == PlatformID.Unix){
-					if (device.DeviceType == DeviceType.DV)
+				if(Environment.OSVersion.Platform == PlatformID.Unix) {
+					if(device.DeviceType == DeviceType.DV)
 						deviceElement = Catalog.GetString(DV_SOURCE);
-					else 
+					else
 						deviceElement = Catalog.GetString(GCONF_SOURCE);
-				} else 
+				} else
 					deviceElement = Catalog.GetString("DirectShow Source");
 				deviceName = (device.ID == "") ? Catalog.GetString("Unknown"): device.ID;
 				devicecombobox.AppendText(deviceName + " ("+deviceElement+")");
@@ -393,62 +360,63 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		private void FillSections() {
-			string[] allFiles;
+		private void FillCategories() {
 			int i=0;
 			int index = 0;
 
-			allFiles = System.IO.Directory.GetFiles(MainClass.TemplatesDir(),"*.sct");
-			foreach (string filePath in allFiles) {
-				string fileName = System.IO	.Path.GetFileNameWithoutExtension(filePath);
-				tagscombobox.AppendText(fileName);
+			foreach(string template in  tpc.TemplatesNames) {
+				tagscombobox.AppendText(template);
 				//Setting the selected value to the default template
-				if (fileName == "default")
+				if(template == "default")
 					index = i;
 				i++;
 			}
 			tagscombobox.Active = index;
-			SectionsReader reader = new SectionsReader(System.IO.Path.Combine(MainClass.TemplatesDir(),SectionsFile));
-			Sections= reader.GetSections();
+			Categories = tpc.Load(SelectedCategory);
 		}
 
 		private void FillTeamsTemplate() {
-			string[] allFiles;
 			int i=0;
 			int index = 0;
 
-			allFiles = System.IO.Directory.GetFiles(MainClass.TemplatesDir(),"*.tem");
-			foreach (string filePath in allFiles) {
-				string fileName = System.IO	.Path.GetFileNameWithoutExtension(filePath);
-				localcombobox.AppendText(fileName);
-				visitorcombobox.AppendText(fileName);
+			foreach(string template in tpt.TemplatesNames) {
+				localcombobox.AppendText(template);
+				visitorcombobox.AppendText(template);
 
 				//Setting the selected value to the default template
-				if (fileName == "default")
+				if(template == "default")
 					index = i;
 				i++;
 			}
 			localcombobox.Active = index;
 			visitorcombobox.Active = index;
-			LocalTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(),LocalTeamTemplateFile));
-			VisitorTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(),VisitorTeamTemplateFile));
+			LocalTeamTemplate = tpt.Load(LocalTeamTemplateFile);
+			VisitorTeamTemplate = tpt.Load(VisitorTeamTemplateFile);
 		}
-		
-		private void FillFormats(){
-			sizecombobox.AppendText (Catalog.GetString("Keep original size"));
-			sizecombobox.AppendText(PAL_FORMAT);
-			sizecombobox.AppendText(PAL_3_4_FORMAT);
-			sizecombobox.AppendText(PAL_1_2_FORMAT);
+
+		private void FillFormats() {
+			videoStandardList = new ListStore(typeof(string), typeof (VideoStandard));
+			videoStandardList.AppendValues(VideoStandards.Original.Name, VideoStandards.Original);
+			videoStandardList.AppendValues(VideoStandards.P240_4_3.Name, VideoStandards.P240_4_3);
+			videoStandardList.AppendValues(VideoStandards.P240_16_9.Name, VideoStandards.P240_16_9);
+			videoStandardList.AppendValues(VideoStandards.P480_4_3.Name, VideoStandards.P480_4_3);
+			videoStandardList.AppendValues(VideoStandards.P480_16_9.Name, VideoStandards.P480_16_9);
+			videoStandardList.AppendValues(VideoStandards.P720_4_3.Name, VideoStandards.P720_4_3);
+			videoStandardList.AppendValues(VideoStandards.P720_16_9.Name, VideoStandards.P720_16_9);
+			videoStandardList.AppendValues(VideoStandards.P1080_4_3.Name, VideoStandards.P1080_4_3);
+			videoStandardList.AppendValues(VideoStandards.P1080_16_9.Name, VideoStandards.P1080_16_9);
+			sizecombobox.Model = videoStandardList;
 			sizecombobox.Active = 0;
-		
-			videoformatcombobox.AppendText(Constants.AVI);
-			if (Environment.OSVersion.Platform != PlatformID.Win32NT)
-				videoformatcombobox.AppendText(Constants.WEBM);
-			videoformatcombobox.AppendText(Constants.OGG);
-			videoformatcombobox.AppendText(Constants.MP4);
+
+			encProfileList = new ListStore(typeof(string), typeof (EncodingProfile));
+			encProfileList.AppendValues(EncodingProfiles.MP4.Name, EncodingProfiles.MP4);
+			encProfileList.AppendValues(EncodingProfiles.Avi.Name, EncodingProfiles.Avi);
+			if(Environment.OSVersion.Platform != PlatformID.Win32NT)
+				encProfileList.AppendValues(EncodingProfiles.WebM.Name, EncodingProfiles.WebM);
+			videoformatcombobox.Model = encProfileList;
 			videoformatcombobox.Active = 0;
 		}
-		
+
 		protected virtual void OnDateSelected(DateTime dateTime) {
 			Date = dateTime;
 		}
@@ -457,7 +425,7 @@ namespace LongoMatch.Gui.Component
 		{
 			FileChooserDialog fChooser = null;
 
-			if (useType == ProjectType.CaptureProject) {
+			if(useType == ProjectType.CaptureProject) {
 				fChooser = new FileChooserDialog(Catalog.GetString("Output file"),
 				                                 (Gtk.Window)this.Toplevel,
 				                                 FileChooserAction.Save,
@@ -465,7 +433,7 @@ namespace LongoMatch.Gui.Component
 				                                 "gtk-save",ResponseType.Accept);
 				fChooser.SetCurrentFolder(MainClass.VideosDir());
 				fChooser.DoOverwriteConfirmation = true;
-				if (fChooser.Run() == (int)ResponseType.Accept)
+				if(fChooser.Run() == (int)ResponseType.Accept)
 					fileEntry.Text = fChooser.Filename;
 				fChooser.Destroy();
 
@@ -478,7 +446,7 @@ namespace LongoMatch.Gui.Component
 
 				fChooser.SetCurrentFolder(System.Environment.GetFolderPath(Environment.SpecialFolder.Personal));
 
-				if (fChooser.Run() == (int)ResponseType.Accept) {
+				if(fChooser.Run() == (int)ResponseType.Accept) {
 					MessageDialog md=null;
 					string filename = fChooser.Filename;
 					fChooser.Destroy();
@@ -500,15 +468,15 @@ namespace LongoMatch.Gui.Component
 						md.Icon=Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Dialog);
 						md.Show();
 						mFile = LongoMatch.Video.Utils.PreviewMediaFile.GetMediaFile(filename);
-						if (!mFile.HasVideo || mFile.VideoCodec == "")
+						if(!mFile.HasVideo || mFile.VideoCodec == "")
 							throw new Exception(Catalog.GetString("This file doesn't contain a video stream."));
-						if (mFile.HasVideo && mFile.Length == 0)
+						if(mFile.HasVideo && mFile.Length == 0)
 							throw new Exception(Catalog.GetString("This file contains a video stream but its length is 0."));
-						
-							
+
+
 						fileEntry.Text = filename;
 					}
-					catch (Exception ex) {
+					catch(Exception ex) {
 						MessagePopup.PopupMessage(this, MessageType.Error,
 						                          ex.Message);
 					}
@@ -523,7 +491,7 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnCalendarbuttonClicked(object sender, System.EventArgs e)
 		{
-			if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
+			if(Environment.OSVersion.Platform == PlatformID.Win32NT) {
 				win32CP = new Win32CalendarDialog();
 				win32CP.TransientFor = (Gtk.Window)this.Toplevel;
 				win32CP.Run();
@@ -538,63 +506,62 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnCombobox1Changed(object sender, System.EventArgs e)
 		{
-			SectionsReader reader = new SectionsReader(System.IO.Path.Combine(MainClass.TemplatesDir(),SectionsFile));
-			Sections= reader.GetSections();
+			Categories = tpc.Load(SelectedCategory);
 		}
 
 		protected virtual void OnVisitorcomboboxChanged(object sender, System.EventArgs e)
 		{
-			VisitorTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(), VisitorTeamTemplateFile));
+			VisitorTeamTemplate = tpt.Load(VisitorTeamTemplateFile);
 		}
-
 
 		protected virtual void OnLocalcomboboxChanged(object sender, System.EventArgs e)
 		{
-			LocalTeamTemplate = TeamTemplate.LoadFromFile(System.IO.Path.Combine(MainClass.TemplatesDir(), LocalTeamTemplateFile));
+			LocalTeamTemplate = tpt.Load(LocalTeamTemplateFile);
 		}
 
 		protected virtual void OnEditbuttonClicked(object sender, System.EventArgs e)
 		{
-			ProjectTemplateEditorDialog ted = new ProjectTemplateEditorDialog();
-			ted.TransientFor = (Window)Toplevel;
-			ted.Sections = Sections;
-			ted.Project = project;
-			ted.CanExport = Use == ProjectType.EditProject;
-			if (ted.Run() == (int)ResponseType.Apply) {
-				Sections = ted.Sections;
+			var editor = new TemplateEditorDialog<Categories, Category>();
+			
+			editor.TransientFor = (Window)Toplevel;
+			editor.Template = Categories;
+			editor.InProject = true;
+			editor.CanExport = Use == ProjectType.EditProject;
+			if(editor.Run() == (int)ResponseType.Apply) {
+				Categories = editor.Template;
 			}
-			ted.Destroy();
+			editor.Destroy();
 			OnEdited(this,null);
 		}
 
 		protected virtual void OnLocaltemplatebuttonClicked(object sender, System.EventArgs e) {
-			TeamTemplateEditor tted = new TeamTemplateEditor();
-			tted.TransientFor = (Window)Toplevel;
-			tted.Title=Catalog.GetString("Local Team Template");
-			tted.SetTeamTemplate(LocalTeamTemplate);
-			
-			if (tted.Run() == (int)ResponseType.Apply) {
-				LocalTeamTemplate = tted.GetTeamTemplate();
+			var editor = new TemplateEditorDialog<TeamTemplate, Player>();
+			editor.TransientFor = (Window)Toplevel;
+			editor.Title=Catalog.GetString("Local Team Template");
+			editor.Template = LocalTeamTemplate;
+
+			if(editor.Run() == (int)ResponseType.Apply) {
+				LocalTeamTemplate = editor.Template;
 			}
-			tted.Destroy();
+			editor.Destroy();
 			OnEdited(this,null);
 		}
 
 		protected virtual void OnVisitorbuttonClicked(object sender, System.EventArgs e) {
-			TeamTemplateEditor tted = new TeamTemplateEditor();
-			tted.TransientFor = (Window)Toplevel;
-			tted.Title=Catalog.GetString("Visitor Team Template");
-			tted.SetTeamTemplate(VisitorTeamTemplate);
-			if (tted.Run() == (int)ResponseType.Apply) {
-				VisitorTeamTemplate = tted.GetTeamTemplate();
+			var editor = new TemplateEditorDialog<TeamTemplate, Player>();
+			editor.TransientFor = (Window)Toplevel;
+			editor.Title=Catalog.GetString("Visitor Team Template");
+			editor.Template = VisitorTeamTemplate;
+			if(editor.Run() == (int)ResponseType.Apply) {
+				VisitorTeamTemplate = editor.Template;
 			}
-			tted.Destroy();
+			editor.Destroy();
 			OnEdited(this,null);
 		}
 
 		protected virtual void OnEdited(object sender, System.EventArgs e) {
 			Edited = true;
-			if (EditedEvent != null)
+			if(EditedEvent != null)
 				EditedEvent(this,null);
 		}
 	}

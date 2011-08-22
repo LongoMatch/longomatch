@@ -46,15 +46,15 @@ namespace LongoMatch.Handlers
 
 		public  void OnKeyPressEvent(object o, Gtk.KeyPressEventArgs args)
 		{
-			if (!toolBox.Visible)
+			if(!toolBox.Visible)
 				return;
-			if (args.Event.Key== Gdk.Key.d) {
+			if(args.Event.Key== Gdk.Key.d) {
 				drawingArea.ToggleGrab();
 			}
-			else if (args.Event.Key== Gdk.Key.c) {
+			else if(args.Event.Key== Gdk.Key.c) {
 				drawingArea.Clear();
 			}
-			else if (args.Event.Key== Gdk.Key.s) {
+			else if(args.Event.Key== Gdk.Key.s) {
 				drawingArea.ToggleVisibility();
 			}
 		}
@@ -69,7 +69,7 @@ namespace LongoMatch.Handlers
 
 		protected virtual void OnVisibilityChanged(bool visible) {
 			drawingArea.Visible = visible;
-			if (!visible)
+			if(!visible)
 				drawingArea.Clear();
 		}
 

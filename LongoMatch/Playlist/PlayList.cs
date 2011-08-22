@@ -25,35 +25,32 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 using Gtk;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
+using LongoMatch.Common;
 using Mono.Unix;
 namespace LongoMatch.Playlist
 {
 
 
-	public class PlayList: IPlayList
+	public class PlayList: SerializableObject,IPlayList
 	{
 
-		private  List<PlayListTimeNode> list;
-		private static XmlSerializer ser;
+		private  List<PlayListPlay> list;
 		private string filename = null;
 		private int indexSelection = 0;
 		private Version version;
 
 		#region Constructors
 		public PlayList() {
-			ser = new XmlSerializer(typeof(List<PlayListTimeNode>),new Type[] {typeof(PlayListTimeNode)});
-			list = new List<PlayListTimeNode>();
+			list = new List<PlayListPlay>();
 			version = new Version(1,0);
 		}
 
 		public PlayList(string file)
 		{
-			ser = new XmlSerializer(typeof(List<PlayListTimeNode>),new Type[] {typeof(PlayListTimeNode)});
-
 			//For new Play List
-			if (!System.IO.File.Exists(file)) {
-				list = new List<PlayListTimeNode>();
+			if(!System.IO.File.Exists(file)) {
+				list = new List<PlayListPlay>();
 				filename = file;
 			}
 			else
@@ -85,33 +82,16 @@ namespace LongoMatch.Playlist
 		#endregion
 
 		#region Public methods
-
-		public void Load(string file) {
-			using(FileStream strm = new FileStream(file, FileMode.Open, FileAccess.Read))
-			{
-				try {
-					list = ser.Deserialize(strm) as List<PlayListTimeNode>;
-				}
-				catch {
-					throw new Exception(Catalog.GetString("The file you are trying to load is not a valid playlist"));
-				}
-			}
-			foreach (PlayListTimeNode plNode in list) {
-				plNode.Valid = System.IO.File.Exists(plNode.MediaFile.FilePath);
-			}
-			filename = file;
-		}
-
 		public void Save() {
-			Save(filename);
+			Save(File);
 		}
 
-		public void Save(string file) {
-			file = Path.ChangeExtension(file,"lgm");
-			using(FileStream strm = new FileStream(file, FileMode.Create, FileAccess.Write))
-			{
-				ser.Serialize(strm, list);
-			}
+		public void Save(string filePath) {
+			Save(this, filePath);
+		}
+
+		public static PlayList Load(string filePath) {
+			return Load<PlayList>(filePath);
 		}
 
 		public bool isLoaded() {
@@ -122,30 +102,30 @@ namespace LongoMatch.Playlist
 			return indexSelection;
 		}
 
-		public PlayListTimeNode Next() {
-			if (HasNext())
+		public PlayListPlay Next() {
+			if(HasNext())
 				indexSelection++;
 			return list[indexSelection];
 		}
 
-		public PlayListTimeNode Prev() {
-			if (HasPrev())
+		public PlayListPlay Prev() {
+			if(HasPrev())
 				indexSelection--;
 			return list[indexSelection];
 		}
 
-		public void Add(PlayListTimeNode plNode) {
+		public void Add(PlayListPlay plNode) {
 			list.Add(plNode);
 		}
 
-		public void Remove(PlayListTimeNode plNode) {
+		public void Remove(PlayListPlay plNode) {
 
 			list.Remove(plNode);
-			if (GetCurrentIndex() >= list.Count)
+			if(GetCurrentIndex() >= list.Count)
 				indexSelection --;
 		}
 
-		public PlayListTimeNode Select(int index) {
+		public PlayListPlay Select(int index) {
 			indexSelection = index;
 			return list[index];
 		}
@@ -159,8 +139,8 @@ namespace LongoMatch.Playlist
 		}
 
 		public ListStore GetModel() {
-			Gtk.ListStore listStore = new ListStore(typeof(PlayListTimeNode));
-			foreach (PlayListTimeNode plNode in list) {
+			Gtk.ListStore listStore = new ListStore(typeof(PlayListPlay));
+			foreach(PlayListPlay plNode in list) {
 				listStore.AppendValues(plNode);
 			}
 			return listStore;
@@ -171,8 +151,8 @@ namespace LongoMatch.Playlist
 
 			listStore.GetIterFirst(out iter);
 			list.Clear();
-			while (listStore.IterIsValid(iter)) {
-				list.Add(listStore.GetValue(iter, 0) as PlayListTimeNode);
+			while(listStore.IterIsValid(iter)) {
+				list.Add(listStore.GetValue(iter, 0) as PlayListPlay);
 				listStore.IterNext(ref iter);
 			}
 		}

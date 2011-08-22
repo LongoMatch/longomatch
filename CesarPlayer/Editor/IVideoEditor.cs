@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
@@ -24,60 +24,35 @@ using LongoMatch.Video.Common;
 
 namespace LongoMatch.Video.Editor
 {
-	
-	
+
+
 	public interface IVideoEditor
 	{
-		event ProgressHandler Progress;		
-		
-		VideoQuality VideoQuality{
+		event ProgressHandler Progress;
+
+		EncodingSettings EncodingSettings{
 			set;
 		}
 		
-		AudioQuality AudioQuality{
+		string TempDir {
 			set;
 		}
-		
-		VideoFormat VideoFormat{
+
+		bool EnableTitle {
 			set;
 		}
-		
-		AudioEncoderType AudioEncoder{
+
+		bool EnableAudio {
 			set;
 		}
-		
-		VideoEncoderType VideoEncoder{
-			set;
-		}
-		
-		VideoMuxerType VideoMuxer{
-			set;
-		}		
-		
-		string OutputFile{
-			set;
-		}
-		
-		string TempDir{
-			set;
-		}
-		
-		bool EnableTitle{
-			set;
-		}
-		
-		bool EnableAudio{
-			set;
-		}
-		
-			
-		void AddSegment (string filePath, long start, long duration, double rate, string title, bool hasAudio) ;
-		
+
+		void AddSegment(string filePath, long start, long duration, double rate, string title, bool hasAudio) ;
+
 		void ClearList();
-		
-		void Start();		
-		
+
+		void Start();
+
 		void Cancel();
-		
+
 	}
 }

@@ -24,7 +24,7 @@ using Gdk;
 using Gtk;
 using Mono.Unix;
 using LongoMatch.Handlers;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 
 namespace LongoMatch.Gui.Component
 {
@@ -34,8 +34,8 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public class CategoriesTreeView : Gtk.TreeView
 	{
-		public event SectionHandler SectionClicked;
-		public event SectionsHandler SectionsSelected;
+		public event CategoryHandler CategoryClicked;
+		public event CategoriesHandler CategoriesSelected;
 
 		public CategoriesTreeView() {
 
@@ -67,7 +67,7 @@ namespace LongoMatch.Gui.Component
 			hotKeyColumn.Title = Catalog.GetString("Hotkey");
 			Gtk.CellRendererText hotKeyCell = new Gtk.CellRendererText();
 			hotKeyColumn.PackStart(hotKeyCell, true);
-			
+
 			Gtk.TreeViewColumn sortMethodColumn = new Gtk.TreeViewColumn();
 			sortMethodColumn.Title = Catalog.GetString("Sort Method");
 			Gtk.CellRendererText sortMethodCell = new Gtk.CellRendererText();
@@ -91,7 +91,7 @@ namespace LongoMatch.Gui.Component
 
 		private void RenderName(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			SectionsTimeNode tNode = (SectionsTimeNode) model.GetValue(iter, 0);
+			Category tNode = (Category) model.GetValue(iter, 0);
 
 			(cell as Gtk.CellRendererText).Text = tNode.Name;
 		}
@@ -99,63 +99,63 @@ namespace LongoMatch.Gui.Component
 
 		private void RenderStartTime(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			SectionsTimeNode tNode = (SectionsTimeNode) model.GetValue(iter, 0);
+			Category tNode = (Category) model.GetValue(iter, 0);
 
 			(cell as Gtk.CellRendererText).Text =tNode.Start.Seconds.ToString();
 		}
 
 		private void RenderStopTime(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			SectionsTimeNode tNode = (SectionsTimeNode) model.GetValue(iter, 0);
+			Category tNode = (Category) model.GetValue(iter, 0);
 
 			(cell as Gtk.CellRendererText).Text = tNode.Stop.Seconds.ToString();
 		}
 
 		private void RenderColor(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			SectionsTimeNode tNode = (SectionsTimeNode) model.GetValue(iter, 0);
+			Category tNode = (Category) model.GetValue(iter, 0);
 
 			(cell as Gtk.CellRendererText).CellBackgroundGdk = tNode.Color;
 		}
 
 		private void RenderHotKey(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			SectionsTimeNode tNode = (SectionsTimeNode) Model.GetValue(iter, 0);
+			Category tNode = (Category) Model.GetValue(iter, 0);
 
 			(cell as Gtk.CellRendererText).Text = tNode.HotKey.ToString();
 		}
-		
+
 		private void RenderSortMethod(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			SectionsTimeNode tNode = (SectionsTimeNode) Model.GetValue(iter, 0);
+			Category tNode = (Category) Model.GetValue(iter, 0);
 
 			(cell as Gtk.CellRendererText).Text = tNode.SortMethodString;
 		}
 
 		protected virtual void OnSelectionChanged(object o, System.EventArgs e) {
 			TreeIter iter;
-			List<SectionsTimeNode> list;
+			List<Category> list;
 			TreePath[] pathArray;
-			
-			list = new List<SectionsTimeNode>();
+
+			list = new List<Category>();
 			pathArray = Selection.GetSelectedRows();
-			
-			for (int i=0; i< pathArray.Length; i++){
-				Model.GetIterFromString (out iter, pathArray[i].ToString());
-				list.Add((SectionsTimeNode) Model.GetValue(iter, 0));
+
+			for(int i=0; i< pathArray.Length; i++) {
+				Model.GetIterFromString(out iter, pathArray[i].ToString());
+				list.Add((Category) Model.GetValue(iter, 0));
 			}
-			if (SectionsSelected != null)
-				SectionsSelected(list);
+			if(CategoriesSelected != null)
+				CategoriesSelected(list);
 		}
 
 		protected virtual void OnTreeviewRowActivated(object o, Gtk.RowActivatedArgs args)
 		{
 			Gtk.TreeIter iter;
 			Model.GetIter(out iter, args.Path);
-			SectionsTimeNode tNode = (SectionsTimeNode)Model.GetValue(iter, 0);
+			Category tNode = (Category)Model.GetValue(iter, 0);
 
-			if (SectionClicked != null)
-				SectionClicked(tNode);
+			if(CategoryClicked != null)
+				CategoryClicked(tNode);
 		}
 	}
 }

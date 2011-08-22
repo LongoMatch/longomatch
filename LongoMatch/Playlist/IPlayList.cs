@@ -21,7 +21,7 @@
 using System;
 using System.Collections;
 using Gtk;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 
 namespace LongoMatch.Playlist {
 
@@ -30,17 +30,27 @@ namespace LongoMatch.Playlist {
 		int Count {
 			get;
 		}
-		void Load(string path);
+
 		void Save(string path);
-		void Add(PlayListTimeNode plNode);
-		void Remove(PlayListTimeNode plNode);
-		PlayListTimeNode Next();
-		PlayListTimeNode Prev();
-		PlayListTimeNode Select(int index);
+
+		void Add(PlayListPlay play);
+
+		void Remove(PlayListPlay play);
+
+		PlayListPlay Next();
+
+		PlayListPlay Prev();
+
+		PlayListPlay Select(int index);
+
 		int GetCurrentIndex();
+
 		bool HasNext();
+
 		bool HasPrev();
+
 		ListStore GetModel();
+
 		IPlayList Copy();
 	}
 }

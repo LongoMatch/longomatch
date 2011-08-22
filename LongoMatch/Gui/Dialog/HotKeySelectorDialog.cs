@@ -20,7 +20,7 @@
 using System;
 using Gtk;
 using Gdk;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -54,12 +54,12 @@ namespace LongoMatch.Gui.Dialog
 		{
 			Gdk.Key key = evnt.Key;
 			ModifierType modifier = evnt.State;
-			
+
 			// Only react to {Shift|Alt|Ctrl}+key
 			// Ctrl is a modifier to select single keys
 			// Combination are allowed with Alt and Shift (Ctrl is not allowed to avoid
 			// conflicts with menus shortcuts)
-			if ((modifier & (ModifierType.Mod1Mask | ModifierType.ShiftMask | ModifierType.ControlMask)) != 0
+			if((modifier & (ModifierType.Mod1Mask | ModifierType.ShiftMask | ModifierType.ControlMask)) != 0
 			                && key != Gdk.Key.Shift_L
 			                && key != Gdk.Key.Shift_R
 			                && key != Gdk.Key.Alt_L

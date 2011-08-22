@@ -44,7 +44,7 @@ namespace LongoMatch.Gui.Dialog
 
 		private void CheckDataBase(string oldHomeFolder) {
 			string oldDBFile = System.IO.Path.Combine(oldHomeFolder,"db/db.yap");
-			if (File.Exists(oldDBFile)) {
+			if(File.Exists(oldDBFile)) {
 				dbMigrator = new DatabaseMigrator(oldDBFile);
 				dbMigrator.ConversionProgressEvent += new ConversionProgressHandler(OnDBProgress);
 				dbMigrator.Start();
@@ -59,7 +59,7 @@ namespace LongoMatch.Gui.Dialog
 			string[] playlistFiles;
 
 			playlistFiles = Directory.GetFiles(System.IO.Path.Combine(oldHomeFolder,"playlists"),"*.lgm");
-			if (playlistFiles.Length != 0) {
+			if(playlistFiles.Length != 0) {
 				plMigrator = new PlayListMigrator(playlistFiles);
 				plMigrator.ConversionProgressEvent += new ConversionProgressHandler(OnPLProgress);
 				plMigrator.Start();
@@ -74,7 +74,7 @@ namespace LongoMatch.Gui.Dialog
 			string[] templatesFiles;
 
 			templatesFiles = Directory.GetFiles(System.IO.Path.Combine(oldHomeFolder,"templates"),"*.sct");
-			if (templatesFiles.Length != 0) {
+			if(templatesFiles.Length != 0) {
 				tpMigrator = new TemplatesMigrator(templatesFiles);
 				tpMigrator.ConversionProgressEvent += new ConversionProgressHandler(OnTPProgress);
 				tpMigrator.Start();
@@ -88,9 +88,9 @@ namespace LongoMatch.Gui.Dialog
 
 		protected void OnDBProgress(string progress) {
 			dbtextview.Buffer.Text+=progress+"\n";
-			if (progress == DatabaseMigrator.DONE) {
+			if(progress == DatabaseMigrator.DONE) {
 				dbFinished = true;
-				if (dbFinished && plFinished && tpFinished) {
+				if(dbFinished && plFinished && tpFinished) {
 					buttonCancel.Visible=false;
 					buttonOk.Visible=true;
 				}
@@ -99,9 +99,9 @@ namespace LongoMatch.Gui.Dialog
 
 		protected void OnPLProgress(string progress) {
 			pltextview.Buffer.Text+=progress+"\n";
-			if (progress == PlayListMigrator.DONE) {
+			if(progress == PlayListMigrator.DONE) {
 				plFinished = true;
-				if (dbFinished && plFinished && tpFinished) {
+				if(dbFinished && plFinished && tpFinished) {
 					buttonCancel.Visible=false;
 					buttonOk.Visible=true;
 				}
@@ -111,9 +111,9 @@ namespace LongoMatch.Gui.Dialog
 
 		protected void OnTPProgress(string progress) {
 			tptextview.Buffer.Text+=progress+"\n";
-			if (progress == TemplatesMigrator.DONE) {
+			if(progress == TemplatesMigrator.DONE) {
 				tpFinished = true;
-				if (dbFinished && plFinished && tpFinished) {
+				if(dbFinished && plFinished && tpFinished) {
 					buttonCancel.Visible=false;
 					buttonOk.Visible=true;
 				}
@@ -122,11 +122,11 @@ namespace LongoMatch.Gui.Dialog
 
 		protected virtual void OnButtonCancelClicked(object sender, System.EventArgs e)
 		{
-			if (dbMigrator != null)
+			if(dbMigrator != null)
 				dbMigrator.Cancel();
-			if (plMigrator != null)
+			if(plMigrator != null)
 				plMigrator.Cancel();
-			if (tpMigrator != null)
+			if(tpMigrator != null)
 				tpMigrator.Cancel();
 		}
 	}

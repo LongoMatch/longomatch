@@ -20,7 +20,7 @@
 
 using System;
 using Gtk;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 using LongoMatch.Handlers;
 
 namespace LongoMatch.Gui.Component
@@ -32,7 +32,7 @@ namespace LongoMatch.Gui.Component
 	{
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		TextBuffer buf;
-		MediaTimeNode play;
+		Play play;
 
 		public NotesWidget()
 		{
@@ -42,7 +42,7 @@ namespace LongoMatch.Gui.Component
 
 		}
 
-		public MediaTimeNode Play {
+		public Play Play {
 			set {
 				play = value;
 				Notes = play.Notes;
@@ -59,16 +59,16 @@ namespace LongoMatch.Gui.Component
 		}
 
 		protected virtual void OnEdition(object sender, EventArgs args) {
-			if (Notes != play.Notes) {
+			if(Notes != play.Notes) {
 				savebutton.Sensitive = true;
 			}
 		}
 
 		protected virtual void OnSavebuttonClicked(object sender, System.EventArgs e)
 		{
-			if (play != null) {
+			if(play != null) {
 				play.Notes=Notes;
-				if (TimeNodeChanged != null)
+				if(TimeNodeChanged != null)
 					TimeNodeChanged(play,null);
 				savebutton.Sensitive = false;
 			}

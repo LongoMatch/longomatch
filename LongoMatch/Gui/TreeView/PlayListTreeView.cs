@@ -21,7 +21,7 @@ using System;
 using Gtk;
 using Gdk;
 using Mono.Unix;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 using LongoMatch.Playlist;
 using LongoMatch.Handlers;
 using LongoMatch.Gui.Dialog;
@@ -38,8 +38,8 @@ namespace LongoMatch.Gui.Component
 		private MenuItem setRate;
 		private ListStore ls;
 		private PlayList playlist;
-		private PlayListTimeNode loadedTimeNode = null; //The play currently loaded in the player
-		private PlayListTimeNode selectedTimeNode = null; //The play selected in the tree
+		private PlayListPlay loadedTimeNode = null; //The play currently loaded in the player
+		private PlayListPlay selectedTimeNode = null; //The play selected in the tree
 		private TreeIter selectedIter;
 
 		public event ApplyCurrentRateHandler ApplyCurrentRate;
@@ -49,7 +49,7 @@ namespace LongoMatch.Gui.Component
 
 			this.HeadersVisible = false;
 
-			ls = new ListStore(typeof(PlayListTimeNode));
+			ls = new ListStore(typeof(PlayListPlay));
 			this.Model = ls;
 
 			menu = new Menu();
@@ -81,7 +81,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public PlayListTimeNode LoadedPlay {
+		public PlayListPlay LoadedPlay {
 			set {
 				loadedTimeNode = value;
 				this.QueueDraw();
@@ -95,14 +95,14 @@ namespace LongoMatch.Gui.Component
 
 		protected override bool OnButtonPressEvent(EventButton evnt)
 		{
-			if ((evnt.Type == EventType.ButtonPress) && (evnt.Button == 3))
+			if((evnt.Type == EventType.ButtonPress) && (evnt.Button == 3))
 			{
 				TreePath path;
 				GetPathAtPos((int)evnt.X,(int)evnt.Y,out path);
-				if (path!=null) {
+				if(path!=null) {
 					ListStore list = ((ListStore)Model);
 					Model.GetIter(out selectedIter,path);
-					selectedTimeNode = (PlayListTimeNode)(list.GetValue(selectedIter,0));
+					selectedTimeNode = (PlayListPlay)(list.GetValue(selectedIter,0));
 					setRate.Sensitive = selectedTimeNode == loadedTimeNode;
 					menu.Popup();
 				}
@@ -114,7 +114,7 @@ namespace LongoMatch.Gui.Component
 			EntryDialog ed = new EntryDialog();
 			ed.Title = Catalog.GetString("Edit Title");
 			ed.Text = selectedTimeNode.Name;
-			if (ed.Run() == (int)ResponseType.Ok) {
+			if(ed.Run() == (int)ResponseType.Ok) {
 				selectedTimeNode.Name = ed.Text;
 				this.QueueDraw();
 			}
@@ -128,31 +128,31 @@ namespace LongoMatch.Gui.Component
 		}
 
 		protected void OnApplyRate(object obj, EventArgs args) {
-			if (ApplyCurrentRate != null)
+			if(ApplyCurrentRate != null)
 				ApplyCurrentRate(selectedTimeNode);
 		}
 
 		private void RenderName(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			PlayListTimeNode tNode = (PlayListTimeNode) model.GetValue(iter, 0);
+			PlayListPlay tNode = (PlayListPlay) model.GetValue(iter, 0);
 			(cell as Gtk.CellRendererText).Text = 	Catalog.GetString("Title")+": "+tNode.Name +"\n"+
-			                                       Catalog.GetString("Start")+": "+tNode.Start.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
-			                                       Catalog.GetString("Duration")+": "+tNode.Duration.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
-			                                       Catalog.GetString("Play Rate")+": "+tNode.Rate.ToString();
-			if (!tNode.Valid) {
+			                                        Catalog.GetString("Start")+": "+tNode.Start.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
+			                                        Catalog.GetString("Duration")+": "+tNode.Duration.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
+			                                        Catalog.GetString("Play Rate")+": "+tNode.Rate.ToString();
+			if(!tNode.Valid) {
 				(cell as Gtk.CellRendererText).Foreground = "red";
 				(cell as Gtk.CellRendererText).Text += "\n"+Catalog.GetString("File not found")+": "+tNode.MediaFile.FilePath;
 			}
-			else if (tNode == loadedTimeNode)
+			else if(tNode == loadedTimeNode)
 				(cell as Gtk.CellRendererText).Foreground = "blue";
 			else
 				(cell as Gtk.CellRendererText).Foreground = "black";
 
 		}
 
-		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
+		protected override bool OnKeyPressEvent(Gdk.EventKey evnt)
 		{
 			return false;
-		}		
+		}
 	}
 }

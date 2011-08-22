@@ -18,10 +18,9 @@
 //
 //
 
-using System;
 using System.Collections.Generic;
-using LongoMatch.DB;
 using LongoMatch.Common;
+using LongoMatch.Store;
 using LongoMatch.Video.Capturer;
 using LongoMatch.Video.Utils;
 
@@ -44,25 +43,25 @@ namespace LongoMatch.Gui.Dialog
 				fdwidget.Use = value;
 			}
 		}
-		
-		public Project Project{
+
+		public Project Project {
 			get {
 				return fdwidget.GetProject();
 			}
-			set{
+			set {
 				fdwidget.SetProject(value);
 			}
 		}
-		
+
 		public List<Device> Devices {
-			set{
+			set {
 				fdwidget.FillDevices(value);
 			}
 		}
-		
-		public CapturePropertiesStruct CaptureProperties{
-			get{
-				return fdwidget.CaptureProperties;
+
+		public CaptureSettings CaptureSettings {
+			get {
+				return fdwidget.CaptureSettings;
 			}
 		}
 	}

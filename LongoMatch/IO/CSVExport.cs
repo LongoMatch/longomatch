@@ -23,7 +23,7 @@ using System.IO;
 using System.Collections.Generic;
 using Gtk;
 using LongoMatch.DB;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 using LongoMatch.Gui;
 using Mono.Unix;
 
@@ -46,8 +46,8 @@ namespace LongoMatch.IO
 
 		#region Public methods
 		public void WriteToFile() {
-			List<List<MediaTimeNode>> list;
-			Dictionary<Tag, List<MediaTimeNode>> tagsDic;
+			/*List<List<Play>> list;
+			Dictionary<Tag, List<Play>> tagsDic;
 			List<Player> localPlayersList;
 			List<Player> visitorPlayersList;
 			Dictionary<Player, List<object[]>> localPlayersDic;
@@ -59,21 +59,21 @@ namespace LongoMatch.IO
 			tx = new StreamWriter(outputFile);
 			list = project.GetDataArray();
 			sectionNames = project.GetSectionsNames();
-			
-			tagsDic = new Dictionary<Tag, List<MediaTimeNode>>();
+
+			tagsDic = new Dictionary<Tag, List<Play>>();
 			foreach (Tag tag in project.Tags)
-				tagsDic.Add(tag, new List<MediaTimeNode>());
-			
+				tagsDic.Add(tag, new List<Play>());
+
 			localPlayersList = project.LocalTeamTemplate.GetPlayersList();
 			localPlayersDic = new Dictionary<Player, List<object[]>>();
 			foreach (Player player in localPlayersList)
 				localPlayersDic.Add(player, new List<object[]>());
-			
+
 			visitorPlayersList =  project.VisitorTeamTemplate.GetPlayersList();
 			visitorPlayersDic = new Dictionary<Player, List<object[]>>();
 			foreach (Player player in visitorPlayersList)
 				visitorPlayersDic.Add(player, new List<object[]>());
-				
+
 
 			// Write catagories table
 			tx.WriteLine(String.Format("{0};{1};{2};{3};{4};{5}",
@@ -85,25 +85,25 @@ namespace LongoMatch.IO
 			             Catalog.GetString("Duration")));
 			for (int i=0; i<list.Count; i++) {
 				string sectionName = sectionNames[i];
-				foreach (MediaTimeNode tn in list[i]) {
+				foreach (Play tn in list[i]) {
 					// Parse Play's tags
 					foreach (Tag t in tn.Tags)
 						tagsDic[t].Add(tn);
-					
+
 					// Parse Players data
 					foreach (int playerNumber in tn.LocalPlayers){
 						object[] o = new object[2];
 						o[0] = sectionName;
 						o[1] = tn;
 						localPlayersDic[localPlayersList[playerNumber]].Add(o);
-					}					
+					}
 					foreach (int playerNumber in tn.VisitorPlayers){
 						object[] o = new object[2];
 						o[0] = sectionName;
 						o[1] = tn;
 						visitorPlayersDic[visitorPlayersList[playerNumber]].Add(o);
 					}
-					
+
 					tx.WriteLine("\""+sectionName+"\";\""+
 					             tn.Name+"\";\""+
 					             tn.Team+"\";\""+
@@ -113,48 +113,46 @@ namespace LongoMatch.IO
 				}
 			}
 			tx.WriteLine();
-			tx.WriteLine();			
-			
+			tx.WriteLine();
+
 			WriteCatagoriesData(tx, tagsDic);
-			
+
 			// Write local players data
 			WritePlayersData(tx, localPlayersDic);
 			WritePlayersData(tx, visitorPlayersDic);
-			
+
 			tx.Close();
-			
-			MessagePopup.PopupMessage(null, MessageType.Info, Catalog.GetString("CSV exported successfully."));			
+
+			MessagePopup.PopupMessage(null, MessageType.Info, Catalog.GetString("CSV exported successfully."));	*/
 		}
 		#endregion
-		
+
 		#region Private Methods
-		
-		private void WriteCatagoriesData(TextWriter tx, Dictionary<Tag, List<MediaTimeNode>> tagsDic){
+
+		/***private void WriteCatagoriesData(TextWriter tx, Dictionary<Tag, List<Play>> tagsDic) {
 			// Write Tags table
-			tx.WriteLine(String.Format("{0};{1};{2};{3};{4};{5}",
-			             Catalog.GetString("Tag"),
-			             Catalog.GetString("Name"),
-			             Catalog.GetString("Team"),
-			             Catalog.GetString("StartTime"),
-			             Catalog.GetString("StopTime"),
-			             Catalog.GetString("Duration")));
-			foreach (KeyValuePair<Tag,List<MediaTimeNode>> pair in tagsDic){
-				if (pair.Value.Count == 0)
-					continue;				
-				foreach (MediaTimeNode tn in pair.Value) {
-					tx.WriteLine("\""+pair.Key.Text+"\";\""+
+			tx.WriteLine(String.Format("{0};{1};{2};{3};{4}",
+			                           Catalog.GetString("Tag"),
+			                           Catalog.GetString("Name"),
+			                           Catalog.GetString("StartTime"),
+			                           Catalog.GetString("StopTime"),
+			                           Catalog.GetString("Duration")));
+			foreach(KeyValuePair<Tag,List<Play>> pair in tagsDic) {
+				if(pair.Value.Count == 0)
+					continue;
+				foreach(Play tn in pair.Value) {
+					tx.WriteLine("\""+pair.Key.Value+"\";\""+
 					             tn.Name+"\";\""+
-					             tn.Team+"\";\""+
 					             tn.Start.ToMSecondsString()+"\";\""+
 					             tn.Stop.ToMSecondsString()+"\";\""+
 					             (tn.Stop-tn.Start).ToMSecondsString()+"\"");
-				}				
+				}
 			}
 			tx.WriteLine();
-			tx.WriteLine();			
+			tx.WriteLine();
 		}
-		
-		private void WritePlayersData(TextWriter tx, Dictionary<Player, List<object[]>> playersDic){
+
+		private void WritePlayersData(TextWriter tx, Dictionary<Player, List<object[]>> playersDic) {
 			// Write Tags table
 			tx.WriteLine(String.Format("{0};{1};{2};{3};{4};{5};{6}",
 			                           Catalog.GetString("Player"),
@@ -164,24 +162,23 @@ namespace LongoMatch.IO
 			                           Catalog.GetString("StartTime"),
 			                           Catalog.GetString("StopTime"),
 			                           Catalog.GetString("Duration")));
-			foreach (KeyValuePair<Player,List<object[]>> pair in playersDic){
-				if (pair.Value.Count == 0)
-					continue;			
-				foreach (object[] o in pair.Value) {
+			foreach(KeyValuePair<Player,List<object[]>> pair in playersDic) {
+				if(pair.Value.Count == 0)
+					continue;
+				foreach(object[] o in pair.Value) {
 					string sectionName = (string)o[0];
-					MediaTimeNode tn = (MediaTimeNode)o[1];
+					Play tn = (Play)o[1];
 					tx.WriteLine("\""+pair.Key.Name+"\";\""+
 					             sectionName+"\";\""+
 					             tn.Name+"\";\""+
-					             tn.Team+"\";\""+
 					             tn.Start.ToMSecondsString()+"\";\""+
 					             tn.Stop.ToMSecondsString()+"\";\""+
 					             (tn.Stop-tn.Start).ToMSecondsString()+"\"");
-				}				
+				}
 			}
 			tx.WriteLine();
-			tx.WriteLine();			
-		}
+			tx.WriteLine();
+		}***/
 		#endregion
 	}
 }

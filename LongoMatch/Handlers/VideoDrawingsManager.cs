@@ -19,7 +19,7 @@
 using System;
 using System.Collections.Generic;
 using Gdk;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 using LongoMatch.Gui;
 using LongoMatch.Video.Common;
 
@@ -36,7 +36,7 @@ namespace LongoMatch.Handlers
 		private uint timeout;
 		private bool inKeyFrame;
 		private bool canStop;
-		private MediaTimeNode loadedPlay;
+		private Play loadedPlay;
 
 		public VideoDrawingsManager(PlayerBin player)
 		{
@@ -48,7 +48,7 @@ namespace LongoMatch.Handlers
 			StopClock();
 		}
 
-		public MediaTimeNode Play {
+		public Play Play {
 			set {
 				loadedPlay = value;
 				inKeyFrame = false;
@@ -66,12 +66,12 @@ namespace LongoMatch.Handlers
 		}
 
 		private void StartClock() {
-			if (timeout ==0)
+			if(timeout ==0)
 				timeout = GLib.Timeout.Add(20,CheckStopTime);
 		}
 
 		private void StopClock() {
-			if (timeout != 0) {
+			if(timeout != 0) {
 				GLib.Source.Remove(timeout);
 				timeout = 0;
 			}
@@ -90,7 +90,7 @@ namespace LongoMatch.Handlers
 		}
 
 		private int NextStopTime() {
-			return Drawing.StopTime;
+			return Drawing.RenderTime;
 		}
 
 		private void PrintDrawing() {
@@ -98,8 +98,8 @@ namespace LongoMatch.Handlers
 			Pixbuf drawing = null;
 
 			player.Pause();
-			player.SeekInSegment(Drawing.StopTime);
-			while (frame == null)
+			player.SeekInSegment(Drawing.RenderTime);
+			while(frame == null)
 				frame = player.CurrentFrame;
 			player.LogoPixbuf = frame;
 			drawing = Drawing.Pixbuf;
@@ -120,9 +120,9 @@ namespace LongoMatch.Handlers
 		private bool CheckStopTime() {
 			int currentTime = (int)player.AccurateCurrentTime;
 
-			if (Drawing == null || !canStop)
+			if(Drawing == null || !canStop)
 				return true;
-			if ((currentTime)>NextStopTime()) {
+			if((currentTime)>NextStopTime()) {
 				StopClock();
 				PrintDrawing();
 			}
@@ -132,21 +132,21 @@ namespace LongoMatch.Handlers
 		protected virtual void OnStateChanged(object sender, StateChangeArgs args) {
 			//Check if we are currently paused displaying the key frame waiting for the user to
 			//go in to Play. If so we can stop
-			if (inKeyFrame) {
+			if(inKeyFrame) {
 				ResetPlayerWindow();
 				inKeyFrame = false;
 			}
 		}
 
 		protected virtual void OnSeekEvent(long time) {
-			if (Drawing == null)
+			if(Drawing == null)
 				return;
-			if (inKeyFrame) {
+			if(inKeyFrame) {
 				ResetPlayerWindow();
 				inKeyFrame = false;
 			}
-			canStop = time < Drawing.StopTime;
-			if (canStop)
+			canStop = time < Drawing.RenderTime;
+			if(canStop)
 				StartClock();
 			else StopClock();
 		}

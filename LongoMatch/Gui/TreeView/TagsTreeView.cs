@@ -20,7 +20,7 @@
 
 using Gdk;
 using Gtk;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 
 namespace LongoMatch.Gui.Component
 {
@@ -31,47 +31,46 @@ namespace LongoMatch.Gui.Component
 	public class TagsTreeView : ListTreeViewBase
 	{
 
-		public TagsTreeView() {			
+		public TagsTreeView() {
 			tag.Visible = false;
-			players.Visible = false;
 			delete.Visible = false;
 		}
 
 		override protected bool OnButtonPressEvent(EventButton evnt)
-		{			
+		{
 			TreePath[] paths = Selection.GetSelectedRows();
-			
-			if ((evnt.Type == EventType.ButtonPress) && (evnt.Button == 3))
+
+			if((evnt.Type == EventType.ButtonPress) && (evnt.Button == 3))
 			{
 				// We don't want to unselect the play when several
 				// plays are selected and we clik the right button
 				// For multiedition
-				if (paths.Length <= 1){
+				if(paths.Length <= 1) {
 					base.OnButtonPressEvent(evnt);
 					paths = Selection.GetSelectedRows();
 				}
-				
-				if (paths.Length == 1) {
-					MediaTimeNode selectedTimeNode = GetValueFromPath(paths[0]) as MediaTimeNode;
+
+				if(paths.Length == 1) {
+					Play selectedTimeNode = GetValueFromPath(paths[0]) as Play;
 					deleteKeyFrame.Sensitive = selectedTimeNode.KeyFrameDrawing != null;
 					MultiSelectMenu(false);
 					menu.Popup();
 				}
-				else if (paths.Length > 1){
+				else if(paths.Length > 1) {
 					MultiSelectMenu(true);
-					menu.Popup();								
+					menu.Popup();
 				}
 			}
-			else 
+			else
 				base.OnButtonPressEvent(evnt);
 			return true;
-		}		
-		
-		override protected bool SelectFunction(TreeSelection selection, TreeModel model, TreePath path, bool selected){
+		}
+
+		override protected bool SelectFunction(TreeSelection selection, TreeModel model, TreePath path, bool selected) {
 			return true;
 		}
-		
-		override protected bool OnKeyPressEvent (Gdk.EventKey evnt)
+
+		override protected bool OnKeyPressEvent(Gdk.EventKey evnt)
 		{
 			return false;
 		}

@@ -22,14 +22,13 @@
 using System;
 using System.IO;
 using Gtk;
-using Mono.Unix;
 using LongoMatch.Common;
-using LongoMatch.Gui;
-using LongoMatch.Gui.Dialog;
 using LongoMatch.DB;
+using LongoMatch.Gui;
 using LongoMatch.IO;
-using LongoMatch.TimeNodes;
-using System.Runtime.InteropServices;
+using LongoMatch.Store.Templates;
+using LongoMatch.Services;
+using Mono.Unix;
 
 namespace LongoMatch
 
@@ -38,6 +37,7 @@ namespace LongoMatch
 	class MainClass
 	{
 		private static DataBase db;
+		public static TemplatesService ts;
 		private static string baseDirectory;
 		private static string homeDirectory;
 		private static string configDirectory;
@@ -46,6 +46,9 @@ namespace LongoMatch
 		public static void Main(string[] args)
 		{
 			SetupBaseDir();
+
+			Log.Debugging = Debugging;
+			Log.Information("Starting " + Constants.SOFTWARE_NAME);
 
 			//Iniciamos la internalización
 			Catalog.Init(Constants.SOFTWARE_NAME.ToLower(),RelativeToPrefix("share/locale"));
@@ -61,7 +64,8 @@ namespace LongoMatch
 
 			//Comprobamos los archivos de inicio
 			CheckDirs();
-			CheckFiles();
+			
+			ts = new TemplatesService(configDirectory);
 
 			//Iniciamos la base de datos
 			db = new DataBase(Path.Combine(DBDir(),Constants.DB_FILE));
@@ -73,7 +77,7 @@ namespace LongoMatch
 				MainWindow win = new MainWindow();
 				win.Show();
 				Application.Run();
-			} catch (Exception ex) {
+			} catch(Exception ex) {
 				ProcessExecutionError(ex);
 			}
 		}
@@ -115,42 +119,28 @@ namespace LongoMatch
 		}
 
 		public static void CheckDirs() {
-			if (!System.IO.Directory.Exists(homeDirectory))
+			if(!System.IO.Directory.Exists(homeDirectory))
 				System.IO.Directory.CreateDirectory(homeDirectory);
-			if (!System.IO.Directory.Exists(TemplatesDir()))
+			if(!System.IO.Directory.Exists(TemplatesDir()))
 				System.IO.Directory.CreateDirectory(TemplatesDir());
-			if (!System.IO.Directory.Exists(SnapshotsDir()))
+			if(!System.IO.Directory.Exists(SnapshotsDir()))
 				System.IO.Directory.CreateDirectory(SnapshotsDir());
-			if (!System.IO.Directory.Exists(PlayListDir()))
+			if(!System.IO.Directory.Exists(PlayListDir()))
 				System.IO.Directory.CreateDirectory(PlayListDir());
-			if (!System.IO.Directory.Exists(DBDir()))
+			if(!System.IO.Directory.Exists(DBDir()))
 				System.IO.Directory.CreateDirectory(DBDir());
-			if (!System.IO.Directory.Exists(VideosDir()))
+			if(!System.IO.Directory.Exists(VideosDir()))
 				System.IO.Directory.CreateDirectory(VideosDir());
-			if (!System.IO.Directory.Exists(TempVideosDir()))
+			if(!System.IO.Directory.Exists(TempVideosDir()))
 				System.IO.Directory.CreateDirectory(TempVideosDir());
 		}
 
-		public static void CheckFiles() {
-			string fConfig;
-			fConfig = System.IO.Path.Combine(TemplatesDir(),"default.sct");
-			if (!System.IO.File.Exists(fConfig)) {
-				SectionsWriter.CreateNewTemplate("default.sct");
-			}
-
-			fConfig = System.IO.Path.Combine(TemplatesDir(),"default.tem");
-			if (!System.IO.File.Exists(fConfig)) {
-				TeamTemplate tt = new TeamTemplate();
-				tt.CreateDefaultTemplate(20);
-				tt.Save(fConfig);
-			}
-		}
 
 		public static void CheckOldFiles() {
 			string oldDBFile= System.IO.Path.Combine(homeDirectory, "db/db.yap");
 			//We supose that if the conversion as already be done successfully,
 			//old DB file has been renamed to db.yap.bak
-			if (File.Exists(oldDBFile)) {
+			if(File.Exists(oldDBFile)) {
 				MessageDialog md = new MessageDialog(null,
 				                                     DialogFlags.Modal,
 				                                     MessageType.Question,
@@ -158,11 +148,11 @@ namespace LongoMatch
 				                                     Catalog.GetString("Some elements from the previous version (database, templates and/or playlists) have been found.")+"\n"+
 				                                     Catalog.GetString("Do you want to import them?"));
 				md.Icon=Stetic.IconLoader.LoadIcon(md, "longomatch", Gtk.IconSize.Dialog);
-				if (md.Run()==(int)ResponseType.Yes) {
+				if(md.Run()==(int)ResponseType.Yes) {
 					md.Destroy();
-					Migrator migrator = new Migrator(homeDirectory);
-					migrator.Run();
-					migrator.Destroy();
+					//Migrator migrator = new Migrator(homeDirectory);
+					//migrator.Run();
+					//migrator.Destroy();
 				}
 				else
 					md.Destroy();
@@ -198,6 +188,25 @@ namespace LongoMatch
 				configDirectory = System.IO.Path.Combine(home,".longomatch");
 		}
 
+		private static bool? debugging = null;	
+		public static bool Debugging {
+			get {
+				if(debugging == null) {
+					debugging = EnvironmentIsSet("LGM_DEBUG");
+				}
+				return debugging.Value;
+			}
+			set {
+				debugging = value;
+				Log.Debugging = Debugging;
+			}
+		}
+
+		public static bool EnvironmentIsSet(string env)
+		{
+			return !String.IsNullOrEmpty(Environment.GetEnvironmentVariable(env));
+		}
+
 		private static void OnException(GLib.UnhandledExceptionArgs args) {
 			ProcessExecutionError((Exception)args.ExceptionObject);
 		}
@@ -211,7 +220,7 @@ namespace LongoMatch
 			logFile = logFile.Replace(":","-");
 			logFile = System.IO.Path.Combine(HomeDir(),logFile);
 
-			if (ex.InnerException != null)
+			if(ex.InnerException != null)
 				message = String.Format("{0}\n{1}\n{2}\n{3}\n{4}",ex.Message,ex.InnerException.Message,ex.Source,ex.StackTrace,ex.InnerException.StackTrace);
 			else
 				message = String.Format("{0}\n{1}\n{2}",ex.Message,ex.Source,ex.StackTrace);
@@ -221,6 +230,7 @@ namespace LongoMatch
 				s.WriteLine("\n\n\nStackTrace:");
 				s.WriteLine(System.Environment.StackTrace);
 			}
+			Log.Exception(ex);
 			//TODO Add bug reports link
 			MessagePopup.PopupMessage(null, MessageType.Error,
 			                          Catalog.GetString("The application has finished with an unexpected error.")+"\n"+

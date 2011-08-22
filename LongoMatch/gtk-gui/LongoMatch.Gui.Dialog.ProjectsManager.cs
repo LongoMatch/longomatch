@@ -195,8 +195,8 @@ namespace LongoMatch.Gui.Dialog
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.DefaultWidth = 804;
-			this.DefaultHeight = 597;
+			this.DefaultWidth = 757;
+			this.DefaultHeight = 512;
 			this.Show ();
 			this.projectlistwidget1.ProjectsSelected += new global::LongoMatch.Handlers.ProjectsSelectedHandler (this.OnProjectlistwidget1ProjectsSelected);
 			this.projectdetails.EditedEvent += new global::System.EventHandler (this.OnProjectdetailsEditedEvent);

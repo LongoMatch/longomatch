@@ -21,7 +21,7 @@ using Gdk;
 using Gtk;
 using Mono.Unix;
 using LongoMatch.Gui.Component;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -29,7 +29,7 @@ namespace LongoMatch.Gui.Dialog
 
 	public partial class DrawingTool : Gtk.Dialog
 	{
-		private MediaTimeNode play;
+		private Play play;
 		private int stopTime;
 
 		public DrawingTool()
@@ -51,7 +51,7 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 
-		public void SetPlay(MediaTimeNode play,int stopTime) {
+		public void SetPlay(Play play,int stopTime) {
 			this.play = play;
 			this.stopTime = stopTime;
 			savetoprojectbutton.Visible = true;
@@ -104,9 +104,9 @@ namespace LongoMatch.Gui.Dialog
 			fChooser.Filter = filter;
 			fChooser.DoOverwriteConfirmation = true;
 
-			if (fChooser.Run() == (int)ResponseType.Accept) {
+			if(fChooser.Run() == (int)ResponseType.Accept) {
 				filename = fChooser.Filename;
-				if (System.IO.Path.GetExtension(filename) != "png")
+				if(System.IO.Path.GetExtension(filename) != "png")
 					filename += ".png";
 				drawingwidget1.SaveAll(filename);
 			}
@@ -118,7 +118,7 @@ namespace LongoMatch.Gui.Dialog
 			string tempFile = System.IO.Path.GetTempFileName();
 			drawingwidget1.SaveDrawings(tempFile);
 			Pixbuf frame = new Pixbuf(tempFile);
-			play.KeyFrameDrawing =new Drawing(frame,stopTime);
+			play.Drawings.Add(new Drawing { Pixbuf=frame, RenderTime = stopTime});
 			drawingwidget1.SaveAll(tempFile);
 			frame.Dispose();
 			play.Miniature = new Pixbuf(tempFile);

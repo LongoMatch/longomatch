@@ -19,16 +19,22 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Gdk;
 using Gtk;
 using Mono.Unix;
-using LongoMatch.TimeNodes;
+
+using LongoMatch.Common;
+using LongoMatch.Interfaces;
+using LongoMatch.Services;
+using LongoMatch.Store;
+using LongoMatch.Store.Templates;
 using LongoMatch.Gui.Dialog;
 
 namespace LongoMatch.Gui.Component
 {
 
-	public delegate void HotKeyChangeHandler(HotKey prevHotKey, SectionsTimeNode newSection);
+	public delegate void HotKeyChangeHandler(HotKey prevHotKey, Category newSection);
 
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
@@ -37,76 +43,176 @@ namespace LongoMatch.Gui.Component
 
 		public event HotKeyChangeHandler HotKeyChanged;
 
-		private SectionsTimeNode stn;
+		private Category cat;
+		private ITemplateProvider<SubCategoryTemplate, string> subcategoriesTemplates;
+		private ListStore model;
 
 		public CategoryProperties()
 		{
 			this.Build();
+			subcategoriestreeview1.SubCategoriesDeleted += OnSubcategoriesDeleted;
+			subcategoriestreeview1.SubCategorySelected += OnSubcategorySelected;
+			subcategoriesTemplates = MainClass.ts.SubCategoriesTemplateProvider;
+			LoadSubcategories();
 		}
-
-		public SectionsTimeNode Section
-		{
+		
+		private void LoadSubcategories() {
+			model = new ListStore(typeof(string), typeof(ISubCategory));
+			
+			model.AppendValues(Catalog.GetString("Create new..."), "");
+			foreach (TagSubCategory subcat in subcategoriesTemplates.Templates) {
+				Log.Debug("Adding tag subcategory: ", subcat.Name);
+				model.AppendValues(String.Format("[{0}] {1}", 
+				                                 Catalog.GetString("Tags"),
+				                                 subcat.Name),
+				                   subcat);
+			}
+			foreach (PlayerSubCategory subcat in MainClass.ts.PlayerSubcategories) {
+				Log.Debug("Adding player subcategory: ", subcat.Name);
+				model.AppendValues(String.Format("[{0}] {1}", 
+				                                 Catalog.GetString("Players"),
+				                                 subcat.Name),
+				                   subcat);
+			}
+			
+			subcatcombobox.Model = model;
+			var cell = new CellRendererText();
+			subcatcombobox.PackStart(cell, true);
+			subcatcombobox.AddAttribute(cell, "text", 0);
+			subcatcombobox.Active = 1;
+		}
+			
+		public Category Category {
 			set {
-				stn = value;
+				cat = value;
 				UpdateGui();
 			}
 			get {
-				return stn;
+				return cat;
 			}
 		}
 
 		private void  UpdateGui() {
-			if (stn != null) {
-				nameentry.Text = stn.Name;
-				timeadjustwidget1.SetTimeNode(stn);
-				colorbutton1.Color = stn.Color;
-				sortmethodcombobox.Active = (int)stn.SortMethod;
-
-				if (stn.HotKey.Defined) {
-					hotKeyLabel.Text = stn.HotKey.ToString();
-				}
-				else hotKeyLabel.Text = Catalog.GetString("none");
-			}
+			ListStore list;
+			
+			if(cat == null)
+				return;
+				
+			nameentry.Text = cat.Name;
+				
+			lagtimebutton.Value = cat.Start.Seconds;
+			leadtimebutton.Value = cat.Stop.Seconds;
+			colorbutton1.Color = cat.Color;
+			sortmethodcombobox.Active = (int)cat.SortMethod;
+			
+			if(cat.HotKey.Defined)
+				hotKeyLabel.Text = cat.HotKey.ToString();
+			else hotKeyLabel.Text = Catalog.GetString("none");
+			
+			list = subcategoriestreeview1.Model as ListStore;
+			foreach (ISubCategory subcat in cat.SubCategories)
+				list.AppendValues(subcat);
+		}
+		
+		private void RenderSubcat(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
+		{
+			(cell as Gtk.CellRendererText).Markup =(string)model.GetValue(iter, 0);
+		}
+		
+		private TagSubCategory EditSubCategoryTags (TagSubCategory template, bool checkName){
+			SubCategoryTagsEditor se =  new SubCategoryTagsEditor(template);
+			
+			se.CheckName = checkName;
+			int ret = se.Run();
+			
+			var t = se.Template; 
+			se.Destroy();
+			
+			if (ret != (int)ResponseType.Ok)
+				return null;
+			return t;
 		}
 
 		protected virtual void OnChangebutonClicked(object sender, System.EventArgs e)
 		{
 			HotKeySelectorDialog dialog = new HotKeySelectorDialog();
 			dialog.TransientFor=(Gtk.Window)this.Toplevel;
-			HotKey prevHotKey =  stn.HotKey;
-			if (dialog.Run() == (int)ResponseType.Ok) {
-				stn.HotKey=dialog.HotKey;
+			HotKey prevHotKey =  cat.HotKey;
+			if(dialog.Run() == (int)ResponseType.Ok) {
+				cat.HotKey=dialog.HotKey;
 				UpdateGui();
 			}
 			dialog.Destroy();
-			if (HotKeyChanged != null)
-				HotKeyChanged(prevHotKey,stn);
+			if(HotKeyChanged != null)
+				HotKeyChanged(prevHotKey,cat);
 		}
 
 		protected virtual void OnColorbutton1ColorSet(object sender, System.EventArgs e)
 		{
-			if (stn != null)
-				stn.Color=colorbutton1.Color;
+			if(cat != null)
+				cat.Color=colorbutton1.Color;
 		}
 
 		protected virtual void OnTimeadjustwidget1LeadTimeChanged(object sender, System.EventArgs e)
 		{
-			stn.Start = timeadjustwidget1.GetStartTime();
+			cat.Start = new Time{Seconds=(int)leadtimebutton.Value};
 		}
 
 		protected virtual void OnTimeadjustwidget1LagTimeChanged(object sender, System.EventArgs e)
 		{
-			stn.Stop= timeadjustwidget1.GetStopTime();
+			cat.Stop = new Time{Seconds=(int)lagtimebutton.Value};
 		}
 
 		protected virtual void OnNameentryChanged(object sender, System.EventArgs e)
 		{
-			stn.Name = nameentry.Text;
+			cat.Name = nameentry.Text;
 		}
 
-		protected virtual void OnSortmethodcomboboxChanged (object sender, System.EventArgs e)
+		protected virtual void OnSortmethodcomboboxChanged(object sender, System.EventArgs e)
 		{
-			stn.SortMethodString = sortmethodcombobox.ActiveText;
+			cat.SortMethodString = sortmethodcombobox.ActiveText;
+		}
+		
+		protected virtual void OnSubcategorySelected(ISubCategory subcat) {
+			EditSubCategoryTags((TagSubCategory)subcat, false);
+		}
+		
+		protected virtual void OnSubcategoriesDeleted (List<ISubCategory> subcats)
+		{
+			Category.SubCategories.RemoveAll(s => subcats.Contains(s));
+		}
+		
+		protected virtual void OnAddbuttonClicked (object sender, System.EventArgs e)
+		{
+			TreeIter iter;
+			
+			subcatcombobox.GetActiveIter(out iter);
+			ListStore list = subcategoriestreeview1.Model as ListStore;
+			var subcat = Cloner.Clone((ISubCategory)model.GetValue(iter, 1));
+			subcat.Name = subcatnameentry.Text;
+			Category.SubCategories.Add(subcat);
+			list.AppendValues(subcat);
+		}
+		
+		protected virtual void OnSubcatcomboboxChanged (object sender, System.EventArgs e)
+		{
+			TreeIter iter;
+			
+			if (subcatcombobox.Active == 0) {
+				var template = EditSubCategoryTags(new SubCategoryTemplate(), true) as SubCategoryTemplate;
+				if (template == null || template.Count == 0)
+					return;
+				
+				model.AppendValues(String.Format("[{0}] {1}",Catalog.GetString("Tags"), template.Name),
+				                   template);
+				subcategoriesTemplates.Save(template);
+				subcatcombobox.Active = 1;
+				return;
+			}
+			
+			subcatcombobox.GetActiveIter(out iter);
+			subcatnameentry.Text = (model.GetValue(iter, 1) as ISubCategory).Name;
+			addbutton.Sensitive = true;
 		}
 	}
 }

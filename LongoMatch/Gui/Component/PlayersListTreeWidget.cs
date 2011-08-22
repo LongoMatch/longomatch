@@ -16,13 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 
-using System;
+using System.Collections.Generic;
 using Gtk;
-using Mono.Unix;
-using LongoMatch.DB;
-using LongoMatch.Handlers;
-using LongoMatch.TimeNodes;
 using LongoMatch.Common;
+using LongoMatch.Handlers;
+using LongoMatch.Store;
+using LongoMatch.Store.Templates;
 
 
 namespace LongoMatch.Gui.Component
@@ -38,15 +37,13 @@ namespace LongoMatch.Gui.Component
 		public event PlayListNodeAddedHandler PlayListNodeAdded;
 		public event SnapshotSeriesHandler SnapshotSeriesEvent;
 
-		private TeamTemplate template;
-
 		public PlayersListTreeWidget()
 		{
 			this.Build();
 			playerstreeview.TimeNodeChanged += OnTimeNodeChanged;
-            playerstreeview.TimeNodeSelected += OnTimeNodeSelected;
-            playerstreeview.PlayListNodeAdded += OnPlayListNodeAdded;
-            playerstreeview.SnapshotSeriesEvent += OnSnapshotSeriesEvent;
+			playerstreeview.TimeNodeSelected += OnTimeNodeSelected;
+			playerstreeview.PlayListNodeAdded += OnPlayListNodeAdded;
+			playerstreeview.SnapshotSeriesEvent += OnSnapshotSeriesEvent;
 		}
 
 		public Team Team {
@@ -54,49 +51,14 @@ namespace LongoMatch.Gui.Component
 				playerstreeview.Team = value;
 			}
 		}
-		
-		public bool ProjectIsLive{
-			set{
+
+		public bool ProjectIsLive {
+			set {
 				playerstreeview.ProjectIsLive = value;
 			}
 		}
 
-		public void DeleteTimeNode(MediaTimeNode tNode, int player) {
-			if (template != null) {
-				TreeIter iter;
-				TreeStore model = (TreeStore)playerstreeview.Model;
-				model.GetIterFromString(out iter, player.ToString());
-				TreeIter child;
-				model.IterChildren(out child, iter);
-				// Searching the TimeNode to remove it
-				while (model.IterIsValid(child)) {
-					MediaTimeNode mtn = (MediaTimeNode) model.GetValue(child,0);
-					if (mtn == tNode) {
-						model.Remove(ref child);
-						break;
-					}
-					TreeIter prev = child;
-					model.IterNext(ref child);
-					if (prev.Equals(child))
-						break;
-				}
-			}
-		}
-
-
-		public void AddTimeNode(MediaTimeNode tNode,int  playerindex) {
-			if (template != null) {
-				TreeIter iter;
-				TreeStore model = (TreeStore)playerstreeview.Model;
-				model.GetIterFromString(out iter, playerindex.ToString());
-				Player player = (Player)model.GetValue(iter,0);
-				if (template.GetPlayer(playerindex) == player)
-					model.AppendValues(iter,tNode);
-			}
-		}
-
-		public void SetTeam(TeamTemplate template, TreeStore model) {
-			this.template = template;
+		public void SetTeam(TreeStore model) {
 			playerstreeview.Model = model;
 		}
 
@@ -112,29 +74,28 @@ namespace LongoMatch.Gui.Component
 
 		public void Clear() {
 			playerstreeview.Model = null;
-			template = null;
 		}
 
-		protected virtual void OnTimeNodeSelected(MediaTimeNode tNode) {
-			if (TimeNodeSelected != null)
+		protected virtual void OnTimeNodeSelected(Play tNode) {
+			if(TimeNodeSelected != null)
 				TimeNodeSelected(tNode);
 		}
 
-		protected virtual void OnSnapshotSeriesEvent(LongoMatch.TimeNodes.MediaTimeNode tNode)
+		protected virtual void OnSnapshotSeriesEvent(Play tNode)
 		{
-			if (SnapshotSeriesEvent != null)
+			if(SnapshotSeriesEvent != null)
 				SnapshotSeriesEvent(tNode);
 		}
 
-		protected virtual void OnTimeNodeChanged(LongoMatch.TimeNodes.TimeNode tNode, object val)
+		protected virtual void OnTimeNodeChanged(TimeNode tNode, object val)
 		{
-			if (TimeNodeChanged != null)
+			if(TimeNodeChanged != null)
 				TimeNodeChanged(tNode, val);
 		}
 
-		protected virtual void OnPlayListNodeAdded(LongoMatch.TimeNodes.MediaTimeNode tNode)
+		protected virtual void OnPlayListNodeAdded(Play tNode)
 		{
-			if (PlayListNodeAdded != null)
+			if(PlayListNodeAdded != null)
 				PlayListNodeAdded(tNode);
 		}
 

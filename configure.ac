@@ -97,7 +97,6 @@ build/m4/shave/shave
 build/m4/shave/shave-libtool
 
 libcesarplayer/Makefile
-libcesarplayer/src/Makefile
 
 CesarPlayer/Makefile
 CesarPlayer/cesarplayer.pc

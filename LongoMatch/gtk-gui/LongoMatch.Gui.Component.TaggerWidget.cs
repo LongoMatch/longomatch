@@ -6,17 +6,7 @@ namespace LongoMatch.Gui.Component
 	{
 		private global::Gtk.VBox vbox2;
 
-		private global::Gtk.Label label1;
-
-		private global::Gtk.ScrolledWindow scrolledwindow1;
-
 		private global::Gtk.Table table1;
-
-		private global::Gtk.HBox hbox1;
-
-		private global::Gtk.Entry entry1;
-
-		private global::Gtk.Button tagbutton;
 
 		protected virtual void Build ()
 		{
@@ -29,84 +19,20 @@ namespace LongoMatch.Gui.Component
 			this.vbox2.Name = "vbox2";
 			this.vbox2.Spacing = 6;
 			// Container child vbox2.Gtk.Box+BoxChild
-			this.label1 = new global::Gtk.Label ();
-			this.label1.Name = "label1";
-			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>You haven't tagged any play yet.</b>\nYou can add new tags using the text entry and clicking \"Add Tag\"");
-			this.label1.UseMarkup = true;
-			this.label1.Justify = ((global::Gtk.Justification)(2));
-			this.vbox2.Add (this.label1);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.label1]));
-			w1.Position = 0;
-			// Container child vbox2.Gtk.Box+BoxChild
-			this.scrolledwindow1 = new global::Gtk.ScrolledWindow ();
-			this.scrolledwindow1.CanFocus = true;
-			this.scrolledwindow1.Name = "scrolledwindow1";
-			this.scrolledwindow1.ShadowType = ((global::Gtk.ShadowType)(1));
-			// Container child scrolledwindow1.Gtk.Container+ContainerChild
-			global::Gtk.Viewport w2 = new global::Gtk.Viewport ();
-			w2.ShadowType = ((global::Gtk.ShadowType)(0));
-			// Container child GtkViewport.Gtk.Container+ContainerChild
 			this.table1 = new global::Gtk.Table (((uint)(3)), ((uint)(3)), false);
 			this.table1.Name = "table1";
 			this.table1.RowSpacing = ((uint)(6));
 			this.table1.ColumnSpacing = ((uint)(6));
-			w2.Add (this.table1);
-			this.scrolledwindow1.Add (w2);
-			this.vbox2.Add (this.scrolledwindow1);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.scrolledwindow1]));
-			w5.Position = 1;
-			// Container child vbox2.Gtk.Box+BoxChild
-			this.hbox1 = new global::Gtk.HBox ();
-			this.hbox1.Name = "hbox1";
-			this.hbox1.Spacing = 6;
-			// Container child hbox1.Gtk.Box+BoxChild
-			this.entry1 = new global::Gtk.Entry ();
-			this.entry1.CanFocus = true;
-			this.entry1.Name = "entry1";
-			this.entry1.IsEditable = true;
-			this.entry1.InvisibleChar = '•';
-			this.hbox1.Add (this.entry1);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.entry1]));
-			w6.Position = 0;
-			// Container child hbox1.Gtk.Box+BoxChild
-			this.tagbutton = new global::Gtk.Button ();
-			this.tagbutton.CanFocus = true;
-			this.tagbutton.Name = "tagbutton";
-			this.tagbutton.UseUnderline = true;
-			// Container child tagbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w7 = new global::Gtk.Alignment (0.5f, 0.5f, 0f, 0f);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w8 = new global::Gtk.HBox ();
-			w8.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w9 = new global::Gtk.Image ();
-			w9.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-add", global::Gtk.IconSize.Dialog);
-			w8.Add (w9);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w11 = new global::Gtk.Label ();
-			w11.LabelProp = global::Mono.Unix.Catalog.GetString ("Add Tag");
-			w11.UseUnderline = true;
-			w8.Add (w11);
-			w7.Add (w8);
-			this.tagbutton.Add (w7);
-			this.hbox1.Add (this.tagbutton);
-			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.tagbutton]));
-			w15.Position = 1;
-			w15.Expand = false;
-			w15.Fill = false;
-			this.vbox2.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbox1]));
-			w16.Position = 2;
-			w16.Expand = false;
-			w16.Fill = false;
+			this.vbox2.Add (this.table1);
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.table1]));
+			w1.Position = 0;
+			w1.Expand = false;
+			w1.Fill = false;
 			this.Add (this.vbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.scrolledwindow1.Hide ();
 			this.Hide ();
-			this.entry1.Activated += new global::System.EventHandler (this.OnEntry1Activated);
-			this.tagbutton.Clicked += new global::System.EventHandler (this.OnTagbuttonClicked);
 		}
 	}
 }

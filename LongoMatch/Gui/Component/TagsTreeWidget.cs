@@ -24,7 +24,7 @@ using Gtk;
 using Mono.Unix;
 using LongoMatch.DB;
 using LongoMatch.Handlers;
-using LongoMatch.TimeNodes;
+using LongoMatch.Store;
 
 namespace LongoMatch.Gui.Component
 {
@@ -33,6 +33,17 @@ namespace LongoMatch.Gui.Component
 		AND = 1
 	}
 
+	public class Tag:List<string> 
+	{
+		public string Value {
+			set {
+				
+			}
+			get {
+				return "";
+			}
+		}
+	}
 
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
@@ -57,52 +68,57 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build();
 			filterTags = new List<Tag>();
-			model = new Gtk.ListStore(typeof(MediaTimeNode));			
+			model = new Gtk.ListStore(typeof(Play));
 			filter = new Gtk.TreeModelFilter(model, null);
 			filter.VisibleFunc = new Gtk.TreeModelFilterVisibleFunc(FilterTree);
 			treeview.Model = filter;
-			filtercombobox.InsertText ((int)FilterType.OR, Catalog.GetString(orFilter));
-			filtercombobox.InsertText ((int)FilterType.AND, Catalog.GetString(andFilter));
+			filtercombobox.InsertText((int)FilterType.OR, Catalog.GetString(orFilter));
+			filtercombobox.InsertText((int)FilterType.AND, Catalog.GetString(andFilter));
 			filtercombobox.Active = 0;
 			filterType = FilterType.OR;
 			treeview.TimeNodeChanged += OnTimeNodeChanged;
-            treeview.TimeNodeSelected += OnTimeNodeSelected;
-            treeview.PlayListNodeAdded += OnPlayListNodeAdded;
-            treeview.SnapshotSeriesEvent += OnSnapshotSeriesEvent;
-			
+			treeview.TimeNodeSelected += OnTimeNodeSelected;
+			treeview.PlayListNodeAdded += OnPlayListNodeAdded;
+			treeview.SnapshotSeriesEvent += OnSnapshotSeriesEvent;
+
 		}
-		
-		public void Clear(){
+
+		public void Clear() {
 			model.Clear();
 			filterTags.Clear();
 			filter.Refilter();
 		}
 
-		public void DeletePlay(MediaTimeNode play) {
-			if (project != null) {
-				TreeIter iter;
-				model.GetIterFirst(out iter);
-				while (model.IterIsValid(iter)) {
-					MediaTimeNode mtn = (MediaTimeNode) model.GetValue(iter,0);
-					if (mtn == play) {
-						model.Remove(ref iter);
-						break;
-					}
-					TreeIter prev = iter;
-					model.IterNext(ref iter);
-					if (prev.Equals(iter))
-						break;
+		public void RemovePlays(List<Play> plays) {
+			TreeIter iter;
+			List<TreeIter> removeIters;
+
+			if(project == null)
+				return;
+
+			removeIters = new List<TreeIter>();
+			model.GetIterFirst(out iter);
+
+			do {
+				Play play = (Play) model.GetValue(iter,0);
+				if(plays.Contains(play)) {
+					removeIters.Add(iter);
 				}
+			} while(model.IterNext(ref iter));
+
+			for(int i=0; i < removeIters.Count; i++) {
+				iter = removeIters[i];
+				model.Remove(ref iter);
 			}
 		}
 
-		public void AddPlay(MediaTimeNode play) {
+		public void AddPlay(Play play) {
 			model.AppendValues(play);
 			filter.Refilter();
 		}
-		
-		public bool ProjectIsLive{
-			set{
+
+		public bool ProjectIsLive {
+			set {
 				treeview.ProjectIsLive = value;
 			}
 		}
@@ -110,15 +126,12 @@ namespace LongoMatch.Gui.Component
 		public Project Project {
 			set {
 				project = value;
-				if (project != null) {
+				if(project != null) {
 					model.Clear();
-					foreach (List<MediaTimeNode> list in project.GetDataArray()){
-						foreach (MediaTimeNode tNode in list)
-							model.AppendValues(tNode);
-					}
+					foreach(Play play in value.AllPlays())
+						model.AppendValues(play);
+
 					UpdateTagsList();
-					treeview.LocalTeam = value.LocalName;
-					treeview.VisitorTeam = value.VisitorName;
 				}
 			}
 		}
@@ -128,47 +141,47 @@ namespace LongoMatch.Gui.Component
 				treeview.PlayListLoaded=value;
 			}
 		}
-		
-		public void UpdateTagsList(){
+
+		public void UpdateTagsList() {
 			(tagscombobox.Model as ListStore).Clear();
-			foreach (Tag tag in project.Tags)
-				tagscombobox.AppendText(tag.Text);
+			//foreach(Tag tag in project.Tags)
+			//	tagscombobox.AppendText(tag.Value.ToString());
 		}
-		
-		private void AddFilterWidget(Tag tag){
+
+		private void AddFilterWidget(Tag tag) {
 			HBox box;
 			Button b;
 			Label l;
-			
+
 			box = new HBox();
-			box.Name = tag.Text;
+			box.Name = tag.Value.ToString();
 			b = new Button();
 			b.Image =  new Image(Stetic.IconLoader.LoadIcon(this, "gtk-delete", Gtk.IconSize.Menu));
 			b.Clicked += OnDeleteClicked;
-			l = new Label(tag.Text);
+			l = new Label(tag.Value.ToString());
 			l.Justify = Justification.Left;
 			box.PackEnd(b,false,  false, 0);
 			box.PackStart(l,true, true, 0);
 			tagsvbox.PackEnd(box);
 			box.ShowAll();
 		}
-		
-		protected virtual void OnDeleteClicked (object o, System.EventArgs e){
+
+		protected virtual void OnDeleteClicked(object o, System.EventArgs e) {
 			Widget parent = (o as Widget).Parent;
-		    tagscombobox.AppendText(parent.Name);
-			filterTags.Remove(new Tag(parent.Name));
+			tagscombobox.AppendText(parent.Name);
+			filterTags.Remove(new Tag {Value = parent.Name});
 			filter.Refilter();
 			tagsvbox.Remove(parent);
 		}
-			
-		protected virtual void OnAddFilter (object sender, System.EventArgs e)
+
+		protected virtual void OnAddFilter(object sender, System.EventArgs e)
 		{
 			string text = tagscombobox.ActiveText;
-			if (text == null || text == "")
+			if(text == null || text == "")
 				return;
-			
-			Tag tag = new Tag(text);
-			if (!filterTags.Contains(tag)){
+
+			Tag tag = new Tag { Value = text};
+			if(!filterTags.Contains(tag)) {
 				filterTags.Add(tag);
 				tagscombobox.RemoveText(tagscombobox.Active);
 				AddFilterWidget(tag);
@@ -176,70 +189,70 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		protected virtual void OnClearbuttonClicked (object sender, System.EventArgs e)
+		protected virtual void OnClearbuttonClicked(object sender, System.EventArgs e)
 		{
 			filterTags.Clear();
 			filter.Refilter();
-			foreach (Widget w in tagsvbox.Children)
+			foreach(Widget w in tagsvbox.Children)
 				tagsvbox.Remove(w);
 			UpdateTagsList();
 		}
-		
+
 		private bool FilterTree(Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			MediaTimeNode tNode;
-			
-			if (filterTags.Count == 0)
-				return true;
-			
-			tNode = model.GetValue(iter, 0) as MediaTimeNode;
+			Play tNode;
 
-			if (tNode == null)
+			if(filterTags.Count == 0)
 				return true;
 
-			if (filterType == FilterType.OR){
-				foreach (Tag tag in filterTags){
-					if (tNode.Tags.Contains(tag))
+			tNode = model.GetValue(iter, 0) as Play;
+
+			if(tNode == null)
+				return true;
+
+			if(filterType == FilterType.OR) {
+				foreach(Tag tag in filterTags) {
+				//	if(tNode.Tags.Contains(tag))
 						return true;
 				}
 				return false;
 			} else {
-				foreach (Tag tag in filterTags){
-					if (! tNode.Tags.Contains(tag))
+				foreach(Tag tag in filterTags) {
+					//if(! tNode.Tags.Contains(tag))
 						return false;
 				}
 				return true;
 			}
 		}
-		
+
 		protected virtual void OnTimeNodeChanged(TimeNode tNode,object val) {
-			if (TimeNodeChanged != null)
+			if(TimeNodeChanged != null)
 				TimeNodeChanged(tNode,val);
 		}
 
-		protected virtual void OnTimeNodeSelected(MediaTimeNode tNode) {
-			if (TimeNodeSelected != null)
+		protected virtual void OnTimeNodeSelected(Play tNode) {
+			if(TimeNodeSelected != null)
 				TimeNodeSelected(tNode);
 		}
 
-		protected virtual void OnPlayListNodeAdded(MediaTimeNode tNode)
+		protected virtual void OnPlayListNodeAdded(Play tNode)
 		{
-			if (PlayListNodeAdded != null)
+			if(PlayListNodeAdded != null)
 				PlayListNodeAdded(tNode);
 		}
 
-		protected virtual void OnSnapshotSeriesEvent(LongoMatch.TimeNodes.MediaTimeNode tNode)
+		protected virtual void OnSnapshotSeriesEvent(LongoMatch.Store.Play tNode)
 		{
-			if (SnapshotSeriesEvent != null)
+			if(SnapshotSeriesEvent != null)
 				SnapshotSeriesEvent(tNode);
 		}
-		
-		protected virtual void OnFiltercomboboxChanged (object sender, System.EventArgs e)
+
+		protected virtual void OnFiltercomboboxChanged(object sender, System.EventArgs e)
 		{
 			filterType = (FilterType) filtercombobox.Active;
 			filter.Refilter();
 		}
-		
-		
+
+
 	}
 }

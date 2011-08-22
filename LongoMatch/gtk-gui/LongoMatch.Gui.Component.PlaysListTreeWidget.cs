@@ -25,6 +25,7 @@ namespace LongoMatch.Gui.Component
 			this.treeview = new global::LongoMatch.Gui.Component.PlaysTreeView ();
 			this.treeview.CanFocus = true;
 			this.treeview.Name = "treeview";
+			this.treeview.Colors = false;
 			w1.Add (this.treeview);
 			this.scrolledwindow1.Add (w1);
 			this.Add (this.scrolledwindow1);

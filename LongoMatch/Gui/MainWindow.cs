@@ -18,23 +18,21 @@
 //
 //
 
+using System;
+using System.IO;
+using System.Reflection;
 using Gdk;
 using GLib;
 using Gtk;
 using LongoMatch.Common;
-using LongoMatch.DB;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Handlers;
-using LongoMatch.TimeNodes;
-using LongoMatch.Utils;
+using LongoMatch.Store;
+using LongoMatch.Store.Templates;
 using LongoMatch.Video.Capturer;
 using LongoMatch.Video.Common;
-using LongoMatch.Video.Player;
 using LongoMatch.Video.Utils;
 using Mono.Unix;
-using System;
-using System.IO;
-using System.Reflection;
 
 
 
@@ -51,8 +49,8 @@ namespace LongoMatch.Gui
 		private EventsManager eManager;
 		private HotKeysManager hkManager;
 		private KeyPressEventHandler hotkeysListener;
-		
-		
+
+
 		#region Constructors
 		public MainWindow() :
 		base("LongoMatch")
@@ -63,7 +61,7 @@ namespace LongoMatch.Gui
 			A
 			updater.NewVersion += new LongoMatch.Handlers.NewVersionHandler(OnUpdate);
 			updater.Run();*/
-			
+
 			projectType = ProjectType.None;
 
 			eManager = new EventsManager(treewidget1,
@@ -90,12 +88,13 @@ namespace LongoMatch.Gui
 
 			playerbin1.SetLogo(System.IO.Path.Combine(MainClass.ImagesDir(),"background.png"));
 			playerbin1.LogoMode = true;
-			
+
 			capturerBin.Visible = false;
 			capturerBin.Logo = System.IO.Path.Combine(MainClass.ImagesDir(),"background.png");
 			capturerBin.CaptureFinished += delegate {
-						CloseCaptureProject();};
-			
+				CloseCaptureProject();
+			};
+
 			buttonswidget1.Mode = TagMode.Predifined;
 
 			playlistwidget2.SetPlayer(playerbin1);
@@ -105,108 +104,110 @@ namespace LongoMatch.Gui
 		}
 
 		#endregion
-		
+
 		#region Private Methods
-		private void SetProject (Project project, ProjectType projectType, CapturePropertiesStruct props)
+		private void SetProject(Project project, ProjectType projectType, CaptureSettings props)
 		{
 			bool isLive = false;
-			
-			if (project == null)
+
+			if(project == null)
 				return;
-			
-			if (openedProject != null)
-				CloseOpenedProject (true);
-			
+
+			if(openedProject != null)
+				CloseOpenedProject(true);
+
 			openedProject = project;
 			this.projectType = projectType;
 			eManager.OpenedProject = project;
 			eManager.OpenedProjectType = projectType;
-			
+
 			/* Update tabs labels */
-			/* FIXME 1.0: Teams should have default names */
-			if (project.VisitorName == "")
-				visitorteamlabel.Text = Catalog.GetString("Visitor Team");
-			else
-				visitorteamlabel.Text = project.VisitorName;
-			if (project.LocalName == "")
-				localteamlabel.Text = Catalog.GetString("Local Team");
-			else
-				localteamlabel.Text = project.LocalName;
-				
-			if (projectType == ProjectType.FileProject) {
+			var desc = project.Description;
+			visitorteamlabel.Text = desc.VisitorName;
+			localteamlabel.Text = desc.LocalName;
+
+			if(projectType == ProjectType.FileProject) {
 				// Check if the file associated to the project exists
-				if (!File.Exists (project.File.FilePath)) {
-					MessagePopup.PopupMessage (this, MessageType.Warning,
-					                           Catalog.GetString ("The file associated to this project doesn't exist.") + "\n"
-					                           + Catalog.GetString ("If the location of the file has changed try to edit it with the database manager."));
-					CloseOpenedProject (true);
+				if(!File.Exists(desc.File.FilePath)) {
+					MessagePopup.PopupMessage(this, MessageType.Warning,
+					                          Catalog.GetString("The file associated to this project doesn't exist.") + "\n"
+					                          + Catalog.GetString("If the location of the file has changed try to edit it with the database manager."));
+					CloseOpenedProject(true);
 					return;
 				}
-				Title = System.IO.Path.GetFileNameWithoutExtension (project.File.FilePath) + 
-					" - " +	Constants.SOFTWARE_NAME;
+				Title = System.IO.Path.GetFileNameWithoutExtension(desc.File.FilePath) +
+				        " - " +	Constants.SOFTWARE_NAME;
 				try {
-					playerbin1.Open (project.File.FilePath);
+					playerbin1.Open(desc.File.FilePath);
 				}
-				catch (GLib.GException ex) {
-					MessagePopup.PopupMessage (this, MessageType.Error,
-					                           Catalog.GetString ("An error occurred opening this project:") + "\n" + ex.Message);
-					CloseOpenedProject (true);
-						return;
+				catch(GLib.GException ex) {
+					MessagePopup.PopupMessage(this, MessageType.Error,
+					                          Catalog.GetString("An error occurred opening this project:") + "\n" + ex.Message);
+					CloseOpenedProject(true);
+					return;
 				}
 				playerbin1.LogoMode = false;
 				timelinewidget1.Project = project;
-				
+
 			} else {
 				Title = Constants.SOFTWARE_NAME;
 				isLive = true;
-				if (projectType == ProjectType.CaptureProject) {
+				if(projectType == ProjectType.CaptureProject) {
 					capturerBin.CaptureProperties = props;
 					try {
 						capturerBin.Type = CapturerType.Live;
-					} catch (Exception ex) {
-						MessagePopup.PopupMessage (this, MessageType.Error, ex.Message);
-						CloseOpenedProject (false);
+					} catch(Exception ex) {
+						MessagePopup.PopupMessage(this, MessageType.Error, ex.Message);
+						CloseOpenedProject(false);
 						return;
 					}
 				} else
 					capturerBin.Type = CapturerType.Fake;
 				playerbin1.Visible = false;
 				capturerBin.Visible = true;
-				capturerBin.Run ();
+				capturerBin.Run();
 				CaptureModeAction.Active = true;
 			}
-			
+
 			treewidget1.ProjectIsLive = isLive;
 			localplayerslisttreewidget.ProjectIsLive = isLive;
 			visitorplayerslisttreewidget.ProjectIsLive = isLive;
 			tagstreewidget1.ProjectIsLive = isLive;
 			playlistwidget2.Stop();
 			treewidget1.Project=project;
-			localplayerslisttreewidget.SetTeam(project.LocalTeamTemplate,project.GetLocalTeamModel());
-			visitorplayerslisttreewidget.SetTeam(project.VisitorTeamTemplate,project.GetVisitorTeamModel());
-			tagstreewidget1.Project = project;				
-			buttonswidget1.Sections = project.Sections;
-			hkManager.Sections=project.Sections;
+			tagstreewidget1.Project = project;
+			UpdateTeamsModels(project);
+			buttonswidget1.Categories = project.Categories;
+			hkManager.Categories=project.Categories;
 			KeyPressEvent += hotkeysListener;
 			MakeActionsSensitive(true,projectType);
 			ShowWidgets();
-	}
+		}
 		
-		private void SaveCaptureProject(){
+		private void UpdateTeamsModels(Project project) {
+			TreeStore local, visitor;
+			
+			project.GetPlayersModel (out local, out visitor);
+			localplayerslisttreewidget.SetTeam(local);
+			visitorplayerslisttreewidget.SetTeam(visitor);
+			
+		}
+
+		private void SaveCaptureProject() {
 			PreviewMediaFile file;
 			Project newProject = openedProject;
-			string filePath = openedProject.File.FilePath;
-			
+			string filePath = openedProject.Description.File.FilePath;
+
 			MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel, DialogFlags.Modal, MessageType.Info, ButtonsType.None,
 			                                     Catalog.GetString("Loading newly created project..."));
 			md.Show();
 
 			/* scan the new file to build a new PreviewMediaFile with all the metadata */
-			try{
-				file = PreviewMediaFile.GetMediaFile(filePath);		
-				openedProject.File = file;
+			try {
+				file = PreviewMediaFile.GetMediaFile(filePath);
+				openedProject.Description.File = file;
 				MainClass.DB.AddProject(openedProject);
-			} catch (Exception ex){
+			} catch(Exception ex) {
 				string projectFile = filePath + "-" + DateTime.Now;
 				projectFile = projectFile.Replace("-", "_");
 				projectFile = projectFile.Replace(" ", "_");
@@ -215,60 +216,60 @@ namespace LongoMatch.Gui
 				MessagePopup.PopupMessage(this, MessageType.Error,
 				                          Catalog.GetString("An error occured saving the project:\n")+ex.Message+ "\n\n"+
 				                          Catalog.GetString("The video file and a backup of the project has been "+
-				                                            "saved. Try to import it later:\n")+
+				                                          "saved. Try to import it later:\n")+
 				                          filePath+"\n"+projectFile);
 			}
 			/* we need to set the opened project to null to avoid calling again CloseOpendProject() */
 			openedProject = null;
-			SetProject(newProject, ProjectType.FileProject, new CapturePropertiesStruct());
+			SetProject(newProject, ProjectType.FileProject, new CaptureSettings());
 			md.Destroy();
 		}
-		
-		private void CloseCaptureProject (){
-			if (projectType == ProjectType.CaptureProject){
+
+		private void CloseCaptureProject() {
+			if(projectType == ProjectType.CaptureProject) {
 				capturerBin.Close();
 				playerbin1.Visible = true;
 				capturerBin.Visible = false;;
 				SaveCaptureProject();
-			} else if (projectType == ProjectType.FakeCaptureProject){
+			} else if(projectType == ProjectType.FakeCaptureProject) {
 				CloseOpenedProject(true);
 			}
 		}
 
 		private void CloseOpenedProject(bool save) {
-			if (save)
+			if(save)
 				SaveProject();
-			
-			if (projectType != ProjectType.FileProject)
+
+			if(projectType != ProjectType.FileProject)
 				capturerBin.Close();
-			else 
+			else
 				playerbin1.Close();
-			
-			if (openedProject != null)
+
+			if(openedProject != null)
 				openedProject.Clear();
 			openedProject = null;
 			projectType = ProjectType.None;
 			eManager.OpenedProject = null;
-			eManager.OpenedProjectType = ProjectType.None;				
+			eManager.OpenedProjectType = ProjectType.None;
 			ResetGUI();
 		}
-		
-		private void ResetGUI(){
-			bool playlistVisible = playlistwidget2.Visible;	
+
+		private void ResetGUI() {
+			bool playlistVisible = playlistwidget2.Visible;
 
 			Title = Constants.SOFTWARE_NAME;
 			playerbin1.Visible = true;
 			playerbin1.LogoMode = true;
 			capturerBin.Visible = false;
 			ClearWidgets();
-			HideWidgets();	
-			
+			HideWidgets();
+
 			playlistwidget2.Visible = playlistVisible;
 			rightvbox.Visible = playlistVisible;
-			noteswidget1.Visible = false;			
+			noteswidget1.Visible = false;
 			selectedTimeNode = null;
 			MakeActionsSensitive(false, projectType);
-			hkManager.Sections = null;
+			hkManager.Categories = null;
 			KeyPressEvent -= hotkeysListener;
 		}
 
@@ -285,7 +286,7 @@ namespace LongoMatch.Gui
 
 		private void ShowWidgets() {
 			leftbox.Show();
-			if (CaptureModeAction.Active || FreeCaptureModeAction.Active)
+			if(CaptureModeAction.Active || FreeCaptureModeAction.Active)
 				buttonswidget1.Show();
 			else
 				timelinewidget1.Show();
@@ -299,7 +300,7 @@ namespace LongoMatch.Gui
 		}
 
 		private void ClearWidgets() {
-			buttonswidget1.Sections = null;
+			buttonswidget1.Categories = null;
 			treewidget1.Project = null;
 			tagstreewidget1.Clear();
 			timelinewidget1.Project = null;
@@ -308,63 +309,63 @@ namespace LongoMatch.Gui
 		}
 
 		private void SaveProject() {
-			if (openedProject != null && projectType == ProjectType.FileProject) {
+			if(openedProject != null && projectType == ProjectType.FileProject) {
 				try {
 					MainClass.DB.UpdateProject(openedProject);
-				} catch (Exception e){
-					/* FIXME: Do log error */
+				} catch(Exception e) {
+					Log.Exception(e);
 				}
-			} else if (projectType == ProjectType.FakeCaptureProject)
+			} else if(projectType == ProjectType.FakeCaptureProject)
 				ProjectUtils.SaveFakeLiveProject(openedProject, this);
 		}
-		
-		private bool PromptCloseProject(){
+
+		private bool PromptCloseProject() {
 			int res;
 			EndCaptureDialog dialog;
-			
-			if (openedProject == null)
+
+			if(openedProject == null)
 				return true;
-			
-			if (projectType == ProjectType.FileProject){
-				MessageDialog md = new MessageDialog(this, DialogFlags.Modal, 
+
+			if(projectType == ProjectType.FileProject) {
+				MessageDialog md = new MessageDialog(this, DialogFlags.Modal,
 				                                     MessageType.Question, ButtonsType.OkCancel,
 				                                     Catalog.GetString("Do you want to close the current project?"));
 				res = md.Run();
 				md.Destroy();
-				if (res == (int)ResponseType.Ok){
+				if(res == (int)ResponseType.Ok) {
 					CloseOpenedProject(true);
 					return true;
 				}
 				return false;
 			}
-			
+
 			dialog = new EndCaptureDialog();
-			dialog.TransientFor = (Gtk.Window)this.Toplevel;			
+			dialog.TransientFor = (Gtk.Window)this.Toplevel;
 			res = dialog.Run();
-			dialog.Destroy();			
-			
+			dialog.Destroy();
+
 			/* Close project wihtout saving */
-			if (res == (int)EndCaptureResponse.Quit){
+			if(res == (int)EndCaptureResponse.Quit) {
 				CloseOpenedProject(false);
 				return true;
-			} else if (res == (int)EndCaptureResponse.Save){
+			} else if(res == (int)EndCaptureResponse.Save) {
 				/* Close and save project */
 				CloseOpenedProject(true);
 				return true;
 			} else
 				/* Continue with the current project */
-				return false;			
+				return false;
 		}
-		
-		private void CloseAndQuit(){
-			if (!PromptCloseProject())
+
+		private void CloseAndQuit() {
+			if(!PromptCloseProject())
 				return;
 			playlistwidget2.StopEdition();
 			SaveProject();
 			playerbin1.Dispose();
 			Application.Quit();
 		}
-		#endregion	
+		#endregion
 
 		#region Callbacks
 		#region File
@@ -372,51 +373,51 @@ namespace LongoMatch.Gui
 		{
 			Project project;
 			ProjectType projectType;
-			CapturePropertiesStruct captureProps;
-			
-			if (!PromptCloseProject())
+			CaptureSettings captureSettings;
+
+			if(!PromptCloseProject())
 				return;
-			
-			ProjectUtils.CreateNewProject(this, out project, out projectType, out captureProps);	
-			if (project != null)
-				SetProject(project, projectType, captureProps);
+
+			ProjectUtils.CreateNewProject(this, out project, out projectType, out captureSettings);
+			if(project != null)
+				SetProject(project, projectType, captureSettings);
 		}
-		
+
 		protected virtual void OnOpenActivated(object sender, System.EventArgs e)
 		{
-			if (!PromptCloseProject())
+			if(!PromptCloseProject())
 				return;
-			
+
 			ProjectDescription project=null;
 			OpenProjectDialog opd = new OpenProjectDialog();
 			opd.TransientFor = this;
 
-			if (opd.Run() == (int)ResponseType.Ok)
+			if(opd.Run() == (int)ResponseType.Ok)
 				project = opd.SelectedProject;
 			opd.Destroy();
-			if (project != null)
-				SetProject(MainClass.DB.GetProject(project.File), ProjectType.FileProject, new CapturePropertiesStruct());
+			if(project != null)
+				SetProject(MainClass.DB.GetProject(project.UUID), ProjectType.FileProject, new CaptureSettings());
 		}
-		
+
 		protected virtual void OnSaveProjectActionActivated(object sender, System.EventArgs e)
 		{
 			SaveProject();
 		}
-		
+
 		protected virtual void OnCloseActivated(object sender, System.EventArgs e)
 		{
 			PromptCloseProject();
 		}
-		
-		protected virtual void OnImportProjectActionActivated (object sender, System.EventArgs e)
+
+		protected virtual void OnImportProjectActionActivated(object sender, System.EventArgs e)
 		{
 			ProjectUtils.ImportProject(this);
 		}
-		
+
 		protected virtual void OnQuitActivated(object sender, System.EventArgs e)
 		{
 			CloseAndQuit();
-		}	
+		}
 		#endregion
 		#region Tools
 		protected virtual void OnDatabaseManagerActivated(object sender, System.EventArgs e)
@@ -425,21 +426,21 @@ namespace LongoMatch.Gui
 			pm.TransientFor = this;
 			pm.Show();
 		}
-		
+
 		protected virtual void OnSectionsTemplatesManagerActivated(object sender, System.EventArgs e)
 		{
-			TemplatesManager tManager = new TemplatesManager(TemplatesManager.UseType.SectionsTemplate);
+			var tManager = new TemplatesManager<Categories, Category>();
 			tManager.TransientFor = this;
 			tManager.Show();
 		}
 
 		protected virtual void OnTeamsTemplatesManagerActionActivated(object sender, System.EventArgs e)
 		{
-			TemplatesManager tManager = new TemplatesManager(TemplatesManager.UseType.TeamTemplate);
+			var tManager = new TemplatesManager<TeamTemplate, Player>();
 			tManager.TransientFor = this;
 			tManager.Show();
 		}
-		
+
 		protected virtual void OnExportProjectToCSVFileActionActivated(object sender, System.EventArgs e)
 		{
 			ProjectUtils.ExportToCSV(this, openedProject);
@@ -450,7 +451,7 @@ namespace LongoMatch.Gui
 		{
 			playerbin1.FullScreen = ((Gtk.ToggleAction)sender).Active;
 		}
-		
+
 		protected virtual void OnPlaylistActionToggled(object sender, System.EventArgs e)
 		{
 			bool visible = ((Gtk.ToggleAction)sender).Active;
@@ -459,39 +460,39 @@ namespace LongoMatch.Gui
 			localplayerslisttreewidget.PlayListLoaded=visible;
 			visitorplayerslisttreewidget.PlayListLoaded=visible;
 
-			if (!visible && !noteswidget1.Visible) {
+			if(!visible && !noteswidget1.Visible) {
 				rightvbox.Visible = false;
 			}
-			else if (visible) {
+			else if(visible) {
 				rightvbox.Visible = true;
 			}
-		}	
-		
+		}
+
 		protected virtual void OnHideAllWidgetsActionToggled(object sender, System.EventArgs e)
 		{
-			if (openedProject != null) {
+			if(openedProject != null) {
 				leftbox.Visible = !((Gtk.ToggleAction)sender).Active;
 				timelinewidget1.Visible = !((Gtk.ToggleAction)sender).Active && AnalyzeModeAction.Active;
-				buttonswidget1.Visible = !((Gtk.ToggleAction)sender).Active && 
-					(CaptureModeAction.Active || CaptureModeAction.Active);
-				if (((Gtk.ToggleAction)sender).Active)
+				buttonswidget1.Visible = !((Gtk.ToggleAction)sender).Active &&
+				                         (CaptureModeAction.Active || CaptureModeAction.Active);
+				if(((Gtk.ToggleAction)sender).Active)
 					rightvbox.Visible = false;
-				else if (!((Gtk.ToggleAction)sender).Active && (playlistwidget2.Visible || noteswidget1.Visible))
+				else if(!((Gtk.ToggleAction)sender).Active && (playlistwidget2.Visible || noteswidget1.Visible))
 					rightvbox.Visible = true;
 			}
 		}
-		
+
 		protected virtual void OnViewToggled(object sender, System.EventArgs e)
 		{
 			/* this callback is triggered by Capture and Free Capture */
 			ToggleAction view = (Gtk.ToggleAction)sender;
 			buttonswidget1.Visible = view.Active;
 			timelinewidget1.Visible = !view.Active;
-			if (view == FreeCaptureModeAction)
+			if(view == FreeCaptureModeAction)
 				buttonswidget1.Mode = TagMode.Free;
-			else 
-				buttonswidget1.Mode = TagMode.Predifined;			
-		}	
+			else
+				buttonswidget1.Mode = TagMode.Predifined;
+		}
 		#endregion
 		#region Help
 		protected virtual void OnHelpAction1Activated(object sender, System.EventArgs e)
@@ -500,12 +501,12 @@ namespace LongoMatch.Gui
 				System.Diagnostics.Process.Start(Constants.MANUAL);
 			} catch {}
 		}
-		
+
 		protected virtual void OnAboutActionActivated(object sender, System.EventArgs e)
 		{
 			Version version = Assembly.GetExecutingAssembly().GetName().Version;
 			Gtk.AboutDialog about = new AboutDialog();
-			if (Environment.OSVersion.Platform == PlatformID.Unix)
+			if(Environment.OSVersion.Platform == PlatformID.Unix)
 				about.ProgramName = Constants.SOFTWARE_NAME;
 			about.Version = String.Format("{0}.{1}.{2}",version.Major,version.Minor,version.Build);
 			about.Copyright = Constants.COPYRIGHT;
@@ -524,13 +525,13 @@ namespace LongoMatch.Gui
 			about.Destroy();
 
 		}
-		#endregion			
+		#endregion
 
 		protected virtual void OnTimeprecisionadjustwidget1SizeRequested(object o, Gtk.SizeRequestedArgs args)
 		{
-			if (args.Requisition.Width>= hpaned.Position)
+			if(args.Requisition.Width>= hpaned.Position)
 				hpaned.Position = args.Requisition.Width;
-		}		
+		}
 
 		protected virtual void OnPlayerbin1Error(object o, ErrorArgs args)
 		{
@@ -544,55 +545,55 @@ namespace LongoMatch.Gui
 			Gdk.Key key = evnt.Key;
 			Gdk.ModifierType modifier = evnt.State;
 			bool ret;
-			
+
 			ret = base.OnKeyPressEvent(evnt);
 
-			if (openedProject == null && !playerbin1.Opened)
+			if(openedProject == null && !playerbin1.Opened)
 				return ret;
-			
-			if (projectType != ProjectType.CaptureProject &&
-			    projectType != ProjectType.FakeCaptureProject){
-				switch (key){
-					case Constants.SEEK_FORWARD:
-						if (modifier == Constants.STEP)
-							playerbin1.StepForward();
-						else 
-							playerbin1.SeekToNextFrame(selectedTimeNode != null);						
-						break;
-					case Constants.SEEK_BACKWARD:
-						if (modifier == Constants.STEP)
-							playerbin1.StepBackward();
-						else 
-							playerbin1.SeekToPreviousFrame(selectedTimeNode != null);						
-						break;
-					case Constants.FRAMERATE_UP:
-						playerbin1.FramerateUp();
-						break;
-					case Constants.FRAMERATE_DOWN:
-						playerbin1.FramerateDown();
-						break;
-					case Constants.TOGGLE_PLAY:
-						playerbin1.TogglePlay();
-						break;			
-				}	
+
+			if(projectType != ProjectType.CaptureProject &&
+			                projectType != ProjectType.FakeCaptureProject) {
+				switch(key) {
+				case Constants.SEEK_FORWARD:
+					if(modifier == Constants.STEP)
+						playerbin1.StepForward();
+					else
+						playerbin1.SeekToNextFrame(selectedTimeNode != null);
+					break;
+				case Constants.SEEK_BACKWARD:
+					if(modifier == Constants.STEP)
+						playerbin1.StepBackward();
+					else
+						playerbin1.SeekToPreviousFrame(selectedTimeNode != null);
+					break;
+				case Constants.FRAMERATE_UP:
+					playerbin1.FramerateUp();
+					break;
+				case Constants.FRAMERATE_DOWN:
+					playerbin1.FramerateDown();
+					break;
+				case Constants.TOGGLE_PLAY:
+					playerbin1.TogglePlay();
+					break;
+				}
 			} else {
-				switch (key){
-					case Constants.TOGGLE_PLAY:
-						capturerBin.TogglePause();
-						break;			
-				}	
+				switch(key) {
+				case Constants.TOGGLE_PLAY:
+					capturerBin.TogglePause();
+					break;
+				}
 			}
 			return ret;
 		}
 
-		protected virtual void OnTimeNodeSelected(LongoMatch.TimeNodes.MediaTimeNode tNode)
+		protected virtual void OnTimeNodeSelected(Play play)
 		{
 			rightvbox.Visible=true;
 		}
 
 		protected virtual void OnSegmentClosedEvent()
 		{
-			if (!playlistwidget2.Visible)
+			if(!playlistwidget2.Visible)
 				rightvbox.Visible=false;
 		}
 
@@ -609,19 +610,19 @@ namespace LongoMatch.Gui
 			drawingtoolbox1.Visible = DrawingToolAction.Active;
 			drawingtoolbox1.DrawingVisibility = DrawingToolAction.Active;
 		}
-	
-		protected override bool OnDeleteEvent (Gdk.Event evnt)
+
+		protected override bool OnDeleteEvent(Gdk.Event evnt)
 		{
-			CloseAndQuit();	
+			CloseAndQuit();
 			return true;
 		}
-		
-		protected virtual void OnCapturerBinError (object o, ErrorArgs args)
+
+		protected virtual void OnCapturerBinError(object o, ErrorArgs args)
 		{
 			MessagePopup.PopupMessage(this, MessageType.Info,
 			                          Catalog.GetString("An error occured in the video capturer and the current project will be closed:")+"\n" +args.Message);
 			CloseOpenedProject(true);
 		}
-		#endregion	
+		#endregion
 	}
 }

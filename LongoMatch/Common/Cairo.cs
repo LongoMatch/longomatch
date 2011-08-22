@@ -1,20 +1,20 @@
-// 
+//
 //  Copyright (C) 2011 Andoni Morales Alastruey
-// 
+//
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation; either version 2 of the License, or
 //  (at your option) any later version.
-// 
+//
 //  This program is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 //  GNU General Public License for more details.
-//  
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
-// 
+//
 using System;
 using Cairo;
 
@@ -22,13 +22,13 @@ namespace LongoMatch.Common
 {
 	public class CairoUtils
 	{
-		public static void DrawRoundedRectangle(Cairo.Context gr, double x, double y, 
+		public static void DrawRoundedRectangle(Cairo.Context gr, double x, double y,
 		                                        double width, double height, double radius,
 		                                        Cairo.Color color, Cairo.Color borderColor)
 		{
 			gr.Save();
 
-			if ((radius > height / 2) || (radius > width / 2))
+			if((radius > height / 2) || (radius > width / 2))
 				radius = Math.Min(height / 2, width / 2);
 
 			gr.MoveTo(x, y + radius);
@@ -41,17 +41,17 @@ namespace LongoMatch.Common
 			gr.Arc(x + radius, y + height - radius, radius, Math.PI / 2, Math.PI);
 			gr.ClosePath();
 			gr.Restore();
-			
+
 			gr.LineJoin = LineJoin.Round;
 			gr.Color = borderColor;
 			gr.StrokePreserve();
 			gr.Color = color;
 			gr.Fill();
 		}
-		
-		public static void DrawLine (Cairo.Context g, double x1, double y1,
-		                             double x2, double y2,
-		                             int width, Cairo.Color color) {
+
+		public static void DrawLine(Cairo.Context g, double x1, double y1,
+		                            double x2, double y2,
+		                            int width, Cairo.Color color) {
 			g.Color = color;
 			g.Operator = Operator.Over;
 			g.LineWidth = width;
@@ -59,9 +59,9 @@ namespace LongoMatch.Common
 			g.LineTo(x2,y2);
 			g.Stroke();
 		}
-		
-		public static void DrawTriangle(Cairo.Context g, double x, double y, 
-		                                int width, int height, Cairo.Color color){
+
+		public static void DrawTriangle(Cairo.Context g, double x, double y,
+		                                int width, int height, Cairo.Color color) {
 			g.Color = color;
 			g.MoveTo(x, y);
 			g.LineTo(x + width/2, y-height);
@@ -70,7 +70,7 @@ namespace LongoMatch.Common
 			g.Fill();
 			g.Stroke();
 		}
-		
+
 		public static Cairo.Color RGBToCairoColor(Gdk.Color gdkColor) {
 			return   new Cairo.Color((double)(gdkColor.Red)/ushort.MaxValue,
 			                         (double)(gdkColor.Green)/ushort.MaxValue,
