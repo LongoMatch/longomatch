@@ -277,7 +277,7 @@ namespace LongoMatch
 		}
 
 		private void LaunchPlayTagger(Play play) {
-			TaggerDialog tg = new TaggerDialog(play.Category, play.Tags, play.Players,
+			TaggerDialog tg = new TaggerDialog(play.Category, play.Tags, play.Players, play.Teams,
 			                                   openedProject.LocalTeamTemplate, openedProject.VisitorTeamTemplate);
 			tg.TransientFor = (Gtk.Window)treewidget.Toplevel;
 			tg.Run();

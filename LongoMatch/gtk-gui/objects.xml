@@ -278,4 +278,8 @@
     <itemgroups />
     <signals />
   </object>
+  <object type="LongoMatch.Gui.Component.TeamTaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
 </objects>

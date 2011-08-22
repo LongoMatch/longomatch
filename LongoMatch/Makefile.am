@@ -29,6 +29,7 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Component.StringTaggerWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TagsTreeWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.TeamTaggerWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TemplatesEditorBase.cs \
 	gtk-gui/LongoMatch.Gui.Component.TimeLineWidget.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.BusyDialog.cs \
@@ -71,6 +72,7 @@ SOURCES = \
 	Gui/Component/StringTaggerWidget.cs \
 	Gui/Component/TaggerWidget.cs \
 	Gui/Component/TagsTreeWidget.cs \
+	Gui/Component/TeamTaggerWidget.cs \
 	Gui/Component/TemplatesEditorBase.cs \
 	Gui/Component/TimeLineWidget.cs \
 	Gui/Component/TimeReferenceWidget.cs \

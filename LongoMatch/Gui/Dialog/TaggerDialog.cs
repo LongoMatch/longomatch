@@ -34,7 +34,7 @@ namespace LongoMatch.Gui.Dialog
 		private TeamTemplate localTeamTemplate;
 		private TeamTemplate visitorTeamTemplate;
 
-		public TaggerDialog(Category cat, StringTagStore tags, PlayersTagStore players,
+		public TaggerDialog(Category cat, StringTagStore tags, PlayersTagStore players, TeamsTagStore teams,
 		                    TeamTemplate localTeamTemplate, TeamTemplate visitorTeamTemplate)
 		{
 			this.Build();
@@ -54,8 +54,20 @@ namespace LongoMatch.Gui.Dialog
 				} else if (subcat is PlayerSubCategory) {
 					var tagcat = subcat as PlayerSubCategory;
 					AddPlayerSubcategory(tagcat, players);
+				} else if (subcat is TeamSubCategory) {
+					var tagcat = subcat as TeamSubCategory;
+					AddTeamSubcategory(tagcat, teams,
+					                   localTeamTemplate.TeamName,
+					                   visitorTeamTemplate.TeamName);
 				}
 			}
+		}
+		
+		public void AddTeamSubcategory (TeamSubCategory subcat, TeamsTagStore tags,
+		                                string localTeam, string visitorTeam){
+			/* the notebook starts invisible */
+			tagsnotebook.Visible = true;
+			taggerwidget1.AddTeamSubCategory(subcat, tags, localTeam, visitorTeam);
 		}
 		
 		public void AddTagSubcategory (TagSubCategory subcat, StringTagStore tags){
