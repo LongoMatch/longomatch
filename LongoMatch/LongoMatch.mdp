@@ -29,7 +29,6 @@
     <File subtype="Code" buildaction="Compile" name="Main.cs" />
     <File subtype="Directory" buildaction="Compile" name="Gui" />
     <File subtype="Code" buildaction="Compile" name="Gui/MainWindow.cs" />
-    <File subtype="Directory" buildaction="Compile" name="DB" />
     <File subtype="Directory" buildaction="Compile" name="Handlers" />
     <File subtype="Code" buildaction="Compile" name="Handlers/Handlers.cs" />
     <File subtype="Directory" buildaction="Compile" name="IO" />
@@ -104,7 +103,6 @@
     <File subtype="Code" buildaction="Compile" name="Common/Constants.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/ProjectSelectionDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/EndCaptureDialog.cs" />
-    <File subtype="Directory" buildaction="Compile" name="Utils" />
     <File subtype="Code" buildaction="EmbedAsResource" name="images/camera-video.png" />
     <File subtype="Code" buildaction="EmbedAsResource" name="images/video.png" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/BusyDialog.cs" />
@@ -150,14 +148,8 @@
     <File subtype="Code" buildaction="Compile" name="Common/Cairo.cs" />
     <File subtype="Code" buildaction="Compile" name="IO/XMLReader.cs" />
     <File subtype="Directory" buildaction="Compile" name="Store" />
-    <File subtype="Directory" buildaction="Compile" name="DB" />
-    <File subtype="Directory" buildaction="Compile" name="DB" />
-    <File subtype="Directory" buildaction="Compile" name="DB" />
-    <File subtype="Directory" buildaction="Compile" name="DB" />
     <File subtype="Code" buildaction="Compile" name="Store/Project.cs" />
-    <File subtype="Directory" buildaction="Compile" name="DB" />
     <File subtype="Code" buildaction="Compile" name="Store/ProjectDescription.cs" />
-    <File subtype="Directory" buildaction="Compile" name="DB" />
     <File subtype="Code" buildaction="Compile" name="Store/Category.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Drawing.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/DrawingsList.cs" />
@@ -184,9 +176,7 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.TemplateEditorDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/TreeView/SubCategoriesTreeView.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Cloner.cs" />
-    <File subtype="Directory" buildaction="Compile" name="Utils" />
     <File subtype="Code" buildaction="Compile" name="Common/ProjectUtils.cs" />
-    <File subtype="Directory" buildaction="Compile" name="Utils" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/SubCategoryTagsEditor.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/PlayersTaggerWidget.cs" />
@@ -196,7 +186,6 @@
     <File subtype="Code" buildaction="Compile" name="Common/GStreamer.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.TemplatesManager.cs" />
     <File subtype="Code" buildaction="Compile" name="Services/DataBase.cs" />
-    <File subtype="Directory" buildaction="Compile" name="DB" />
     <File subtype="Code" buildaction="Compile" name="Store/TagStore.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/ITag.cs" />
   </Contents>
