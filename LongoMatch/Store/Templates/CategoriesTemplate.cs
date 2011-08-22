@@ -82,13 +82,13 @@ namespace LongoMatch.Store.Templates
 				
 				localplayers = new PlayerSubCategory {
 					Name = Catalog.GetString("Local Team Players"),
-					AllowMultiple = false,
+					AllowMultiple = true,
 					FastTag = true};
 			    localplayers.Add(Team.LOCAL);
 			    
 				visitorplayers = new PlayerSubCategory {
 					Name = Catalog.GetString("Visitor Team Players"),
-					AllowMultiple = false,
+					AllowMultiple = true,
 					FastTag = true};
 				visitorplayers.Add(Team.VISITOR);	
 				
