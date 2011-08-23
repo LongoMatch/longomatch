@@ -130,6 +130,7 @@ LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs
 LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.NewProjectDialog.cs
 LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.OpenProjectDialog.cs
 LongoMatch/gtk-gui/LongoMatch.Gui.Component.TimeLineWidget.cs
+LongoMatch/gtk-gui/LongoMatch.Gui.Component.TeamTaggerWidget.cs
 LongoMatch/Handlers/VideoDrawingsManager.cs
 LongoMatch/Handlers/EventsManager.cs
 LongoMatch/Handlers/Handlers.cs
@@ -137,7 +138,6 @@ LongoMatch/Handlers/HotKeysManager.cs
 LongoMatch/Handlers/DrawingManager.cs
 LongoMatch/IO/CSVExport.cs
 LongoMatch/IO/XMLReader.cs
-LongoMatch/AssemblyInfo.cs
 LongoMatch/Interfaces/ISubCategory.cs
 LongoMatch/Interfaces/ITemplates.cs
 CesarPlayer/MultimediaFactory.cs
@@ -172,7 +172,6 @@ CesarPlayer/Capturer/FakeCapturer.cs
 CesarPlayer/Capturer/LiveSourceTimer.cs
 CesarPlayer/Capturer/ICapturer.cs
 CesarPlayer/Capturer/ObjectManager.cs
-CesarPlayer/AssemblyInfo.cs
 CesarPlayer/Player/GstPlayer.cs
 CesarPlayer/Player/IPlayer.cs
 CesarPlayer/Player/ObjectManager.cs
