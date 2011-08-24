@@ -104,6 +104,7 @@ namespace LongoMatch.Common
 				MessagePopup.PopupMessage(window, MessageType.Error,
 				                          Catalog.GetString("Error importing project:")+
 				                          "\n"+ex.Message);
+				Log.Exception(ex);
 				return;
 			}
 

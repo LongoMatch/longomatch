@@ -246,7 +246,8 @@ namespace LongoMatch.Store
 			try {
 				return SerializableObject.Load<Project>(file);
 			}
-			catch {
+			catch  (Exception e){
+				Log.Exception (e);
 				throw new Exception(Catalog.GetString("The file you are trying to load " +
 				                                      "is not a valid project"));
 			}
