@@ -152,7 +152,6 @@
     <File subtype="Code" buildaction="Compile" name="Store/ProjectDescription.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Category.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Drawing.cs" />
-    <File subtype="Code" buildaction="Compile" name="Store/DrawingsList.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/HotKey.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/PixbufTimeNode.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Play.cs" />

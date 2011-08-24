@@ -66,7 +66,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// List of drawings to be displayed
 		/// </summary>
-		public DrawingsList Drawings {
+		public List<Drawing> Drawings {
 			get;
 			set;
 		}

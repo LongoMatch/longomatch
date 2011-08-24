@@ -127,7 +127,6 @@ SOURCES = \
 	Services/TemplatesService.cs \
 	Store/Category.cs \
 	Store/Drawing.cs \
-	Store/DrawingsList.cs \
 	Store/HotKey.cs \
 	Store/PixbufTimeNode.cs \
 	Store/Play.cs \

@@ -3,7 +3,6 @@ LongoMatch/longomatch.desktop.in.in
 LongoMatch/Playlist/IPlayList.cs
 LongoMatch/Playlist/PlayList.cs
 LongoMatch/Store/PlayListPlay.cs
-LongoMatch/Store/DrawingsList.cs
 LongoMatch/Store/Time.cs
 LongoMatch/Store/Player.cs
 LongoMatch/Store/Project.cs

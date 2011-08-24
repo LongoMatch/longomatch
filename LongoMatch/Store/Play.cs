@@ -38,7 +38,7 @@ namespace LongoMatch.Store
 
 		#region Constructors
 		public Play() {
-			Drawings = new DrawingsList();
+			Drawings = new List<Drawing>();
 			Tags = new StringTagStore();
 			Players = new PlayersTagStore(); 
 			Teams = new TeamsTagStore();
@@ -119,7 +119,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// List of drawings for this play
 		/// </summary>
-		public DrawingsList Drawings {
+		public List<Drawing> Drawings {
 			get;
 			set;
 		}
@@ -128,7 +128,7 @@ namespace LongoMatch.Store
 		public Drawing KeyFrameDrawing {
 			get {
 				if(Drawings.Count > 0)
-					return Drawings.ElementAt(0).Value;
+					return Drawings.First();
 				else
 					return null;
 			}

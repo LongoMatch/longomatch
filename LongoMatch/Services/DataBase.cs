@@ -392,7 +392,6 @@ namespace LongoMatch.DB
 			types.Add(typeof(PlayersTagStore));
 			types.Add(typeof(TeamsTagStore));
 			types.Add(typeof(StringTagStore));
-			types.Add(typeof(DrawingsList));
 
 			return types;
 		}
