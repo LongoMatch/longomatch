@@ -21,6 +21,7 @@
 using Gdk;
 using Gtk;
 using LongoMatch.Common;
+using LongoMatch.Gui.Dialog;
 using LongoMatch.Store;
 using System;
 
@@ -32,7 +33,6 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public class PlaysTreeView : ListTreeViewBase
 	{
-
 
 		//Categories menu
 		private Menu categoriesMenu;
@@ -56,7 +56,7 @@ namespace LongoMatch.Gui.Component
 		}
 
 		private void SetCategoriesMenu() {
-			Gtk.Action edit, sortMenu;
+			Gtk.Action edit, editProp, sortMenu;
 			UIManager manager;
 			ActionGroup g;
 
@@ -69,6 +69,7 @@ namespace LongoMatch.Gui.Component
 			sortByStart = new Gtk.RadioAction("SortByStartAction", Mono.Unix.Catalog.GetString("Sort by start time"), null, null, 2);
 			sortByStop = new Gtk.RadioAction("SortByStopAction", Mono.Unix.Catalog.GetString("Sort by stop time"), null, null, 3);
 			sortByDuration = new Gtk.RadioAction("SortByDurationAction", Mono.Unix.Catalog.GetString("Sort by duration"), null, null, 3);
+			editProp = new Gtk.Action("EditPropAction", Mono.Unix.Catalog.GetString("Edit properties"), null, "gtk-edit");
 
 			sortByName.Group = new GLib.SList(System.IntPtr.Zero);
 			sortByStart.Group = sortByName.Group;
@@ -82,6 +83,7 @@ namespace LongoMatch.Gui.Component
 			g.Add(sortByStart, null);
 			g.Add(sortByStop, null);
 			g.Add(sortByDuration, null);
+			g.Add(editProp, null);
 
 			manager.InsertActionGroup(g,0);
 
@@ -94,6 +96,7 @@ namespace LongoMatch.Gui.Component
 			                        "      <menuitem action='SortByStopAction'/>"+
 			                        "      <menuitem action='SortByDurationAction'/>"+
 			                        "    </menu>"+
+			                        "    <menuitem action='EditPropAction'/>"+
 			                        "  </popup>"+
 			                        "</ui>");
 
@@ -104,6 +107,9 @@ namespace LongoMatch.Gui.Component
 			sortByStart.Activated += OnSortActivated;
 			sortByStop.Activated += OnSortActivated;
 			sortByDuration.Activated += OnSortActivated;
+			editProp.Activated += delegate(object sender, EventArgs e) {
+				EmitTimeNodeChanged(GetValueFromPath(Selection.GetSelectedRows()[0]) as Category);
+			};
 		}
 
 		private void SetupSortMenu(SortMethodType sortMethod) {
@@ -169,7 +175,7 @@ namespace LongoMatch.Gui.Component
 				return 0;
 			}
 		}
-
+		
 		private void OnSortActivated(object o, EventArgs args) {
 			Category category;
 			RadioAction sender;

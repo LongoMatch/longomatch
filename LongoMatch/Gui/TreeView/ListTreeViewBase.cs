@@ -142,6 +142,11 @@ namespace LongoMatch.Gui.Component
 			Model.GetIter(out iter, path);
 			return Model.GetValue(iter,0);
 		}
+		
+		protected void EmitTimeNodeChanged(TimeNode tNode) {
+			if (TimeNodeChanged != null)
+				TimeNodeChanged(tNode, tNode.Name);
+		}
 
 		protected void RenderMiniature(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{

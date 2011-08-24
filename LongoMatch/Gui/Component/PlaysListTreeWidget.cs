@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using Gtk;
 using Mono.Unix;
 using LongoMatch.DB;
+using LongoMatch.Gui.Dialog;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
 using LongoMatch.Common;
@@ -136,6 +137,12 @@ namespace LongoMatch.Gui.Component
 		}
 
 		protected virtual void OnTimeNodeChanged(TimeNode tNode,object val) {
+			if (tNode is Category) {
+				EditCategoryDialog dialog = new EditCategoryDialog();
+				dialog.Category = tNode as Category; 
+				dialog.Run();
+				dialog.Destroy();
+			}
 			if(TimeNodeChanged != null)
 				TimeNodeChanged(tNode,val);
 		}
