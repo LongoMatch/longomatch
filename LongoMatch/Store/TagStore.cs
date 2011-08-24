@@ -75,10 +75,13 @@ namespace LongoMatch.Store
 		}
 	}
 	
+	[Serializable]
 	public class StringTagStore: TagsStore<StringTag, string> {}
 	
+	[Serializable]
 	public class PlayersTagStore: TagsStore<PlayerTag, Player> {}
 	
+	[Serializable]
 	public class TeamsTagStore: TagsStore<TeamTag, Team> {}
 }
 
