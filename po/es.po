@@ -5,12 +5,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: longomatch.master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-08-23 19:48+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-08-24 22:03+0200\n"
 "PO-Revision-Date: 2011-08-24 17:18+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -30,7 +30,7 @@ msgstr "LongoMatch: el entrenador digital"
 msgid "Sports video analysis tool for coaches"
 msgstr "Herramienta de vídeo análisis para entrenadores"
 
-#: ../LongoMatch/Store/Project.cs:250
+#: ../LongoMatch/Store/Project.cs:251
 msgid "The file you are trying to load is not a valid project"
 msgstr "El archivo que intenta cargar no es un proyecto válido."
 
@@ -39,10 +39,8 @@ msgid "Not defined"
 msgstr "Sin definir"
 
 #: ../LongoMatch/Store/Templates/TeamTemplate.cs:34
-#, fuzzy
-#| msgid "Result"
 msgid "default"
-msgstr "Resultado"
+msgstr "por defecto"
 
 #: ../LongoMatch/Store/Templates/CategoriesTemplate.cs:77
 #: ../LongoMatch/Store/SubCategory.cs:152
@@ -50,12 +48,10 @@ msgid "Team"
 msgstr "Equipo"
 
 #: ../LongoMatch/Store/Templates/CategoriesTemplate.cs:84
-#| msgid "Local Team Template"
 msgid "Local Team Players"
 msgstr "Plantilla del equipo local"
 
 #: ../LongoMatch/Store/Templates/CategoriesTemplate.cs:90
-#| msgid "Visitor Team Template"
 msgid "Visitor Team Players"
 msgstr "Plantilla del equipo visitante"
 
@@ -80,37 +76,30 @@ msgid "Stop"
 msgstr "Fin"
 
 #: ../LongoMatch/Store/SubCategory.cs:110
-#| msgid "Tags"
 msgid "Tags list"
 msgstr "Lista de etiquetas"
 
 #: ../LongoMatch/Store/SubCategory.cs:111
-#| msgid "Tags"
 msgid "Tags:"
 msgstr "Etiquetas:"
 
 #: ../LongoMatch/Store/SubCategory.cs:132
-#| msgid "Local Team"
 msgid "Local "
 msgstr "Local "
 
 #: ../LongoMatch/Store/SubCategory.cs:134
-#| msgid "Visitor Team"
 msgid "Visitor"
 msgstr "Visitante"
 
 #: ../LongoMatch/Store/SubCategory.cs:136
-#| msgid "Tag players"
 msgid "List of players"
 msgstr "Lista de jugadores"
 
 #: ../LongoMatch/Store/SubCategory.cs:137
-#| msgid "Team"
 msgid "Teams:"
 msgstr "Equipos:"
 
 #: ../LongoMatch/Store/SubCategory.cs:160
-#| msgid "Team Selection"
 msgid "Team selection"
 msgstr "Selección de equipo"
 
@@ -143,27 +132,21 @@ msgid "name"
 msgstr "nombre"
 
 #: ../LongoMatch/Services/TemplatesService.cs:69
-#| msgid "Local Team Template"
 msgid "Local team players"
 msgstr "Plantilla del equipo local"
 
 #: ../LongoMatch/Services/TemplatesService.cs:75
-#| msgid "Visitor Team Template"
 msgid "Visitor team players"
 msgstr "Plantilla del equipo visitante"
 
 #: ../LongoMatch/Services/TemplatesService.cs:81
-#, fuzzy
-#| msgid "Tag players"
 msgid "All teams players"
-msgstr "Etiquetar jugadores"
+msgstr "Jugadores de ambos equipos"
 
 #: ../LongoMatch/Services/TemplatesService.cs:207
 #: ../LongoMatch/Services/TemplatesService.cs:225
-#, fuzzy
-#| msgid "A project already exists for the file:"
 msgid "A template already exixts with the name: "
-msgstr "Un proyecto ya existe para este archivo:"
+msgstr "Ya existe una plantilla con el nombre:"
 
 #: ../LongoMatch/Main.cs:148
 msgid ""
@@ -371,10 +354,8 @@ msgid "Visitor Team Template"
 msgstr "Plantilla del equipo visitante"
 
 #: ../LongoMatch/Gui/Component/CategoryProperties.cs:62
-#, fuzzy
-#| msgid "Creating video..."
 msgid "Create new..."
-msgstr "Creando vídeo"
+msgstr "Crear nueva..."
 
 #: ../LongoMatch/Gui/Component/CategoryProperties.cs:66
 #: ../LongoMatch/Gui/Component/CategoryProperties.cs:206
@@ -385,7 +366,6 @@ msgstr "Etiquetas"
 
 #: ../LongoMatch/Gui/Component/CategoryProperties.cs:73
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:71
-#| msgid "Players:"
 msgid "Players"
 msgstr "Jugadores"
 
@@ -415,8 +395,8 @@ msgid "The playlist is empty!"
 msgstr "La lista de reproducción está vacía"
 
 #: ../LongoMatch/Gui/Component/PlayListWidget.cs:271
-#: ../LongoMatch/Common/ProjectUtils.cs:127
-#: ../LongoMatch/Common/ProjectUtils.cs:216
+#: ../LongoMatch/Common/ProjectUtils.cs:128
+#: ../LongoMatch/Common/ProjectUtils.cs:217
 msgid "Please, select a video file."
 msgstr "Seleccione un archivo de vídeo"
 
@@ -456,7 +436,6 @@ msgid "A template needs at least one category"
 msgstr "Una plantilla necesita, al menos, una categoría"
 
 #: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:316
-#| msgid "Template name"
 msgid "Team name"
 msgstr "Nombre del equipo"
 
@@ -534,13 +513,12 @@ msgstr "Método de ordenación"
 
 #: ../LongoMatch/Gui/TreeView/SubCategoriesTreeView.cs:91
 #: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:111
-#| msgid "Edit name"
 msgid "Edit tags"
 msgstr "Editar etiquetas"
 
 #: ../LongoMatch/Gui/TreeView/SubCategoriesTreeView.cs:94
 msgid "Remove sub-category"
-msgstr ""
+msgstr "Eliminar subcategoría"
 
 #: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:45
 msgid "Photo"
@@ -668,35 +646,35 @@ msgstr "Importar un proyecto"
 msgid "Error importing project:"
 msgstr "Error al importar el proyecto:"
 
-#: ../LongoMatch/Common/ProjectUtils.cs:143
+#: ../LongoMatch/Common/ProjectUtils.cs:144
 msgid "A project already exists for the file:"
 msgstr "Un proyecto ya existe para este archivo:"
 
-#: ../LongoMatch/Common/ProjectUtils.cs:145
+#: ../LongoMatch/Common/ProjectUtils.cs:146
 msgid "Do you want to overwrite it?"
 msgstr "¿Quiere sobreescribirlo?"
 
-#: ../LongoMatch/Common/ProjectUtils.cs:164
+#: ../LongoMatch/Common/ProjectUtils.cs:165
 msgid "Project successfully imported."
 msgstr "Proyecto importado satisfactoriamente"
 
-#: ../LongoMatch/Common/ProjectUtils.cs:194
+#: ../LongoMatch/Common/ProjectUtils.cs:195
 msgid "No capture devices were found."
 msgstr "No se encontraron dispositivos de captura."
 
-#: ../LongoMatch/Common/ProjectUtils.cs:220
+#: ../LongoMatch/Common/ProjectUtils.cs:221
 msgid "This file is already used in another Project."
 msgstr "Este archivo ya está siendo usado en otro proyecto."
 
-#: ../LongoMatch/Common/ProjectUtils.cs:221
+#: ../LongoMatch/Common/ProjectUtils.cs:222
 msgid "Select a different one to continue."
 msgstr "Seleccionar uno diferente para continuar."
 
-#: ../LongoMatch/Common/ProjectUtils.cs:245
+#: ../LongoMatch/Common/ProjectUtils.cs:246
 msgid "Select Export File"
 msgstr "Seleccionar el archivo para exportar"
 
-#: ../LongoMatch/Common/ProjectUtils.cs:272
+#: ../LongoMatch/Common/ProjectUtils.cs:273
 msgid "Creating video thumbnails. This can take a while."
 msgstr "Creando las miniaturas del vídeo. Esto puede llevar un tiempo."
 
@@ -1014,27 +992,23 @@ msgstr "Juega este partido:"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:44
 msgid "Edit sub category tags"
-msgstr ""
+msgstr "Editar las etiquetas de la subcategoría"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:69
 msgid "Quick tag"
-msgstr ""
+msgstr "Etiquetado rápido"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:84
-#, fuzzy
-#| msgid "Sort by name"
 msgid "Sub category name:"
-msgstr "Ordenar por nombre"
+msgstr "Nombre de la subcategoría:"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:93
 msgid "Allow multiple selections"
-msgstr ""
+msgstr "Permitir selección múltiple"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:107
-#, fuzzy
-#| msgid "Local team"
 msgid "Goal type"
-msgstr "Equipo local"
+msgstr "Tipo de Gol"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:156
 msgid "Penalty"
@@ -1045,7 +1019,6 @@ msgid "Add tag"
 msgstr "Añadir etiqueta"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:197
-#| msgid "<b>Tools</b>"
 msgid "<b>Tags</b>"
 msgstr "<b>Etiquetas</b>"
 
@@ -1206,53 +1179,44 @@ msgid "<b>Name:</b>"
 msgstr "<b>Nombre:</b>"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:157
-#, fuzzy
-#| msgid "<b>Color</b>"
 msgid "<b>Color:</b>    "
-msgstr "<b>Color</b>"
+msgstr "<b>Color:</b>"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:169
-#| msgid "HotKey:"
 msgid "<b>HotKey:</b>"
 msgstr "<b>Tecla rápida:</b>"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:181
-#, fuzzy
-#| msgid "Lead time:"
 msgid "<b>Lead time:</b>"
-msgstr "Inicio:"
+msgstr "<b>Inicio:</b>"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:193
-#, fuzzy
-#| msgid "Lag time:"
 msgid "<b>Lag time:</b>"
-msgstr "Fin:"
+msgstr "<b>Fin:</b>"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:207
-#| msgid "Sort Method"
 msgid "<b>Sort Method</b>"
 msgstr "<b>Método de ordenación</b>"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:277
-#| msgid "<b>Project Details</b>"
 msgid "<b>Properties</b>"
 msgstr "<b>Propiedades</b>"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:331
 msgid "<b>Sub category name</b>"
-msgstr ""
+msgstr "Nombre de subcategoría"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:354
 msgid "<b>Sub category type</b>"
-msgstr ""
+msgstr "Tipo de subcategoría"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:378
 msgid "_Add sub-category"
-msgstr ""
+msgstr "_Añadir subcategoria"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:397
 msgid "<b>Sub categories</b>"
-msgstr ""
+msgstr "<b>Subcateriaa"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:131
 msgid "Competition:"
@@ -1407,7 +1371,6 @@ msgid ""
 msgstr ""
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2575
-#| msgid "File not found"
 msgid "Location not found."
 msgstr "Ubicación no encontrada."
 
@@ -1467,7 +1430,6 @@ msgid "Mono"
 msgstr "Mono"
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4601
-#| msgid "Stop"
 msgid "Stereo"
 msgstr "Estéreo"
 
@@ -1476,7 +1438,6 @@ msgid "Too old version of GStreamer installed."
 msgstr "Versión de GStreamer instalada muy antigua"
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4963
-#| msgid "This file doesn't contain a video stream."
 msgid "Media contains no supported video streams."
 msgstr "El archivo no contiene flujos de vídeo soportados."
 
@@ -1559,7 +1520,6 @@ msgstr[1] "%d minutos"
 
 #: ../libcesarplayer/video-utils.c:146
 #, c-format
-#| msgid " sec"
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d segundo"
@@ -1585,7 +1545,6 @@ msgstr "%s"
 
 #. 0 seconds
 #: ../libcesarplayer/video-utils.c:159
-#| msgid " sec"
 msgid "0 seconds"
 msgstr "0 segundos"
 
