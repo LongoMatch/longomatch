@@ -344,6 +344,7 @@ namespace LongoMatch
 		{
 			playlist.Add(new PlayListPlay {
 				MediaFile = openedProject.Description.File,
+				Drawings = play.Drawings,
 				Start = play.Start,
 				Stop = play.Stop,
 				Name = play.Name,
