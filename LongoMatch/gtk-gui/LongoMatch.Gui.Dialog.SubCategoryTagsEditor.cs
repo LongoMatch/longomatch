@@ -41,7 +41,7 @@ namespace LongoMatch.Gui.Dialog
 			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Dialog.SubCategoryTagsEditor
 			this.Name = "LongoMatch.Gui.Dialog.SubCategoryTagsEditor";
-			this.Title = global::Mono.Unix.Catalog.GetString ("Edit sub category tags");
+			this.Title = global::Mono.Unix.Catalog.GetString ("Edit subcategory tags");
 			this.Icon = global::Gdk.Pixbuf.LoadFromResource ("longomatch.png");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
 			this.Modal = true;
@@ -63,7 +63,7 @@ namespace LongoMatch.Gui.Dialog
 			this.table1.ColumnSpacing = ((uint)(6));
 			// Container child table1.Gtk.Table+TableChild
 			this.fastcheckbutton = new global::Gtk.CheckButton ();
-			this.fastcheckbutton.TooltipMarkup = "When this option is selected, the sub category can be tagged right after creating a new play";
+			this.fastcheckbutton.TooltipMarkup = "When this option is selected, the subcategory can be tagged right after creating a new play";
 			this.fastcheckbutton.CanFocus = true;
 			this.fastcheckbutton.Name = "fastcheckbutton";
 			this.fastcheckbutton.Label = global::Mono.Unix.Catalog.GetString ("Quick tag");
@@ -81,7 +81,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child table1.Gtk.Table+TableChild
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
-			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Sub category name:");
+			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Subcategory name:");
 			this.table1.Add (this.label1);
 			global::Gtk.Table.TableChild w3 = ((global::Gtk.Table.TableChild)(this.table1[this.label1]));
 			w3.YOptions = ((global::Gtk.AttachOptions)(4));

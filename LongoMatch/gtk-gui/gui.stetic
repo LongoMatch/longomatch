@@ -2475,7 +2475,7 @@ Sort by duration</property>
                             <child>
                               <widget class="Gtk.Label" id="GtkLabel3">
                                 <property name="MemberName" />
-                                <property name="LabelProp" translatable="yes">&lt;b&gt;Sub category name&lt;/b&gt;</property>
+                                <property name="LabelProp" translatable="yes">&lt;b&gt;Subcategory name&lt;/b&gt;</property>
                                 <property name="UseMarkup">True</property>
                               </widget>
                               <packing>
@@ -2513,7 +2513,7 @@ Sort by duration</property>
                             <child>
                               <widget class="Gtk.Label" id="GtkLabel4">
                                 <property name="MemberName" />
-                                <property name="LabelProp" translatable="yes">&lt;b&gt;Sub category type&lt;/b&gt;</property>
+                                <property name="LabelProp" translatable="yes">&lt;b&gt;Subcategory type&lt;/b&gt;</property>
                                 <property name="UseMarkup">True</property>
                               </widget>
                               <packing>
@@ -2534,7 +2534,7 @@ Sort by duration</property>
                             <property name="CanFocus">True</property>
                             <property name="Type">TextAndIcon</property>
                             <property name="Icon">stock:gtk-add Menu</property>
-                            <property name="Label" translatable="yes">_Add sub-category</property>
+                            <property name="Label" translatable="yes">_Add subcategory</property>
                             <property name="UseUnderline">True</property>
                             <signal name="Clicked" handler="OnAddbuttonClicked" />
                           </widget>
@@ -2560,7 +2560,7 @@ Sort by duration</property>
             <child>
               <widget class="Gtk.Label" id="GtkLabel5">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">&lt;b&gt;Sub categories&lt;/b&gt;</property>
+                <property name="LabelProp" translatable="yes">&lt;b&gt;Subcategories&lt;/b&gt;</property>
                 <property name="UseMarkup">True</property>
               </widget>
               <packing>
@@ -6002,7 +6002,7 @@ You can continue with the current capture, cancel it or save your project.
   </widget>
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.SubCategoryTagsEditor" design-size="326 304">
     <property name="MemberName" />
-    <property name="Title" translatable="yes">Edit sub category tags</property>
+    <property name="Title" translatable="yes">Edit subcategory tags</property>
     <property name="Icon">resource:longomatch.png</property>
     <property name="WindowPosition">Center</property>
     <property name="Modal">True</property>
@@ -6029,7 +6029,7 @@ You can continue with the current capture, cancel it or save your project.
                 <child>
                   <widget class="Gtk.CheckButton" id="fastcheckbutton">
                     <property name="MemberName" />
-                    <property name="Tooltip" translatable="yes">When this option is selected, the sub category can be tagged right after creating a new play</property>
+                    <property name="Tooltip" translatable="yes">When this option is selected, the subcategory can be tagged right after creating a new play</property>
                     <property name="CanFocus">True</property>
                     <property name="Label" translatable="yes">Quick tag</property>
                     <property name="Active">True</property>
@@ -6056,7 +6056,7 @@ You can continue with the current capture, cancel it or save your project.
                 <child>
                   <widget class="Gtk.Label" id="label1">
                     <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes">Sub category name:</property>
+                    <property name="LabelProp" translatable="yes">Subcategory name:</property>
                   </widget>
                   <packing>
                     <property name="AutoSize">False</property>

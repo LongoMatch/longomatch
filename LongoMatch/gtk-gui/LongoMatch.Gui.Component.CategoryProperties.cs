@@ -328,7 +328,7 @@ namespace LongoMatch.Gui.Component
 			this.frame1.Add (this.GtkAlignment4);
 			this.GtkLabel3 = new global::Gtk.Label ();
 			this.GtkLabel3.Name = "GtkLabel3";
-			this.GtkLabel3.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Sub category name</b>");
+			this.GtkLabel3.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Subcategory name</b>");
 			this.GtkLabel3.UseMarkup = true;
 			this.frame1.LabelWidget = this.GtkLabel3;
 			this.hbox3.Add (this.frame1);
@@ -351,7 +351,7 @@ namespace LongoMatch.Gui.Component
 			this.frame2.Add (this.GtkAlignment5);
 			this.GtkLabel4 = new global::Gtk.Label ();
 			this.GtkLabel4.Name = "GtkLabel4";
-			this.GtkLabel4.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Sub category type</b>");
+			this.GtkLabel4.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Subcategory type</b>");
 			this.GtkLabel4.UseMarkup = true;
 			this.frame2.LabelWidget = this.GtkLabel4;
 			this.hbox3.Add (this.frame2);
@@ -375,7 +375,7 @@ namespace LongoMatch.Gui.Component
 			w27.Add (w28);
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Label w30 = new global::Gtk.Label ();
-			w30.LabelProp = global::Mono.Unix.Catalog.GetString ("_Add sub-category");
+			w30.LabelProp = global::Mono.Unix.Catalog.GetString ("_Add subcategory");
 			w30.UseUnderline = true;
 			w27.Add (w30);
 			w26.Add (w27);
@@ -394,7 +394,7 @@ namespace LongoMatch.Gui.Component
 			this.frame3.Add (this.GtkAlignment3);
 			this.GtkLabel5 = new global::Gtk.Label ();
 			this.GtkLabel5.Name = "GtkLabel5";
-			this.GtkLabel5.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Sub categories</b>");
+			this.GtkLabel5.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Subcategories</b>");
 			this.GtkLabel5.UseMarkup = true;
 			this.frame3.LabelWidget = this.GtkLabel5;
 			this.vbox2.Add (this.frame3);
