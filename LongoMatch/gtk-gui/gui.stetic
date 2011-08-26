@@ -1639,10 +1639,10 @@
         <property name="Active">False</property>
         <signal name="Toggled" handler="OnPlaylistActionToggled" />
       </action>
-      <action id="CaptureModeAction">
+      <action id="TaggingViewAction">
         <property name="Type">Radio</property>
         <property name="Accelerator">&lt;Control&gt;c</property>
-        <property name="Label" translatable="yes">Capture Mode</property>
+        <property name="Label" translatable="yes">Tagging view</property>
         <property name="Sensitive">False</property>
         <property name="ShortLabel" translatable="yes">Capture Mode</property>
         <property name="DrawAsRadio">False</property>
@@ -1651,10 +1651,10 @@
         <property name="Group">group1</property>
         <signal name="Toggled" handler="OnViewToggled" />
       </action>
-      <action id="AnalyzeModeAction">
+      <action id="TimelineViewAction">
         <property name="Type">Radio</property>
         <property name="Accelerator">&lt;Control&gt;a</property>
-        <property name="Label" translatable="yes">Analyze Mode</property>
+        <property name="Label" translatable="yes">Timeline view</property>
         <property name="Sensitive">False</property>
         <property name="ShortLabel" translatable="yes">Analyze Mode</property>
         <property name="DrawAsRadio">False</property>
@@ -1729,10 +1729,10 @@
         <property name="StockId">stock-import</property>
         <signal name="Activated" handler="OnImportProjectActionActivated" />
       </action>
-      <action id="FreeCaptureModeAction">
+      <action id="ManualTaggingViewAction">
         <property name="Type">Radio</property>
         <property name="Accelerator">&lt;Control&gt;f</property>
-        <property name="Label" translatable="yes">Free Capture Mode</property>
+        <property name="Label" translatable="yes">Manual tagging view</property>
         <property name="Sensitive">False</property>
         <property name="ShortLabel" translatable="yes">Free Capture Mode</property>
         <property name="DrawAsRadio">False</property>
@@ -1781,9 +1781,9 @@
                     <node type="Separator" />
                     <node type="Menuitem" action="PlaylistAction" />
                     <node type="Separator" />
-                    <node type="Menuitem" action="CaptureModeAction" />
-                    <node type="Menuitem" action="FreeCaptureModeAction" />
-                    <node type="Menuitem" action="AnalyzeModeAction" />
+                    <node type="Menuitem" action="TaggingViewAction" />
+                    <node type="Menuitem" action="ManualTaggingViewAction" />
+                    <node type="Menuitem" action="TimelineViewAction" />
                   </node>
                   <node type="Menu" action="HelpAction">
                     <node type="Menuitem" action="AboutAction" />

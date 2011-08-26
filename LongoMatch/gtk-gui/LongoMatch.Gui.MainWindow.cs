@@ -28,9 +28,9 @@ namespace LongoMatch.Gui
 
 		private global::Gtk.ToggleAction PlaylistAction;
 
-		private global::Gtk.RadioAction CaptureModeAction;
+		private global::Gtk.RadioAction TaggingViewAction;
 
-		private global::Gtk.RadioAction AnalyzeModeAction;
+		private global::Gtk.RadioAction TimelineViewAction;
 
 		private global::Gtk.Action SaveProjectAction;
 
@@ -50,7 +50,7 @@ namespace LongoMatch.Gui
 
 		private global::Gtk.Action ImportProjectAction;
 
-		private global::Gtk.RadioAction FreeCaptureModeAction;
+		private global::Gtk.RadioAction ManualTaggingViewAction;
 
 		private global::Gtk.VBox vbox1;
 
@@ -146,16 +146,16 @@ namespace LongoMatch.Gui
 			this.PlaylistAction = new global::Gtk.ToggleAction ("PlaylistAction", global::Mono.Unix.Catalog.GetString ("Playlist"), null, null);
 			this.PlaylistAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Playlist");
 			w1.Add (this.PlaylistAction, "<Control>p");
-			this.CaptureModeAction = new global::Gtk.RadioAction ("CaptureModeAction", global::Mono.Unix.Catalog.GetString ("Capture Mode"), null, null, 0);
-			this.CaptureModeAction.Group = new global::GLib.SList (global::System.IntPtr.Zero);
-			this.CaptureModeAction.Sensitive = false;
-			this.CaptureModeAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Capture Mode");
-			w1.Add (this.CaptureModeAction, "<Control>c");
-			this.AnalyzeModeAction = new global::Gtk.RadioAction ("AnalyzeModeAction", global::Mono.Unix.Catalog.GetString ("Analyze Mode"), null, null, 0);
-			this.AnalyzeModeAction.Group = this.CaptureModeAction.Group;
-			this.AnalyzeModeAction.Sensitive = false;
-			this.AnalyzeModeAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Analyze Mode");
-			w1.Add (this.AnalyzeModeAction, "<Control>a");
+			this.TaggingViewAction = new global::Gtk.RadioAction ("TaggingViewAction", global::Mono.Unix.Catalog.GetString ("Tagging view"), null, null, 0);
+			this.TaggingViewAction.Group = new global::GLib.SList (global::System.IntPtr.Zero);
+			this.TaggingViewAction.Sensitive = false;
+			this.TaggingViewAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Capture Mode");
+			w1.Add (this.TaggingViewAction, "<Control>c");
+			this.TimelineViewAction = new global::Gtk.RadioAction ("TimelineViewAction", global::Mono.Unix.Catalog.GetString ("Timeline view"), null, null, 0);
+			this.TimelineViewAction.Group = this.TaggingViewAction.Group;
+			this.TimelineViewAction.Sensitive = false;
+			this.TimelineViewAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Analyze Mode");
+			w1.Add (this.TimelineViewAction, "<Control>a");
 			this.SaveProjectAction = new global::Gtk.Action ("SaveProjectAction", global::Mono.Unix.Catalog.GetString ("_Save Project"), null, "gtk-save");
 			this.SaveProjectAction.Sensitive = false;
 			this.SaveProjectAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Save Project");
@@ -187,11 +187,11 @@ namespace LongoMatch.Gui
 			this.ImportProjectAction = new global::Gtk.Action ("ImportProjectAction", global::Mono.Unix.Catalog.GetString ("_Import Project"), null, "stock-import");
 			this.ImportProjectAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Import Project");
 			w1.Add (this.ImportProjectAction, "<Control>i");
-			this.FreeCaptureModeAction = new global::Gtk.RadioAction ("FreeCaptureModeAction", global::Mono.Unix.Catalog.GetString ("Free Capture Mode"), null, null, 0);
-			this.FreeCaptureModeAction.Group = this.CaptureModeAction.Group;
-			this.FreeCaptureModeAction.Sensitive = false;
-			this.FreeCaptureModeAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Free Capture Mode");
-			w1.Add (this.FreeCaptureModeAction, "<Control>f");
+			this.ManualTaggingViewAction = new global::Gtk.RadioAction ("ManualTaggingViewAction", global::Mono.Unix.Catalog.GetString ("Manual tagging view"), null, null, 0);
+			this.ManualTaggingViewAction.Group = this.TaggingViewAction.Group;
+			this.ManualTaggingViewAction.Sensitive = false;
+			this.ManualTaggingViewAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Free Capture Mode");
+			w1.Add (this.ManualTaggingViewAction, "<Control>f");
 			this.UIManager.InsertActionGroup (w1, 0);
 			this.AddAccelGroup (this.UIManager.AccelGroup);
 			this.Name = "LongoMatch.Gui.MainWindow";
@@ -208,7 +208,7 @@ namespace LongoMatch.Gui
 			this.menubox.Name = "menubox";
 			this.menubox.Spacing = 6;
 			// Container child menubox.Gtk.Box+BoxChild
-			this.UIManager.AddUiFromString ("<ui><menubar name='menubar1'><menu name='FileAction' action='FileAction'><menuitem name='NewPojectAction' action='NewPojectAction'/><menuitem name='OpenProjectAction' action='OpenProjectAction'/><menuitem name='SaveProjectAction' action='SaveProjectAction'/><menuitem name='CloseProjectAction' action='CloseProjectAction'/><separator/><menuitem name='ImportProjectAction' action='ImportProjectAction'/><separator/><menuitem name='QuitAction' action='QuitAction'/></menu><menu name='ToolsAction' action='ToolsAction'><menuitem name='ProjectsManagerAction' action='ProjectsManagerAction'/><menuitem name='CategoriesTemplatesManagerAction' action='CategoriesTemplatesManagerAction'/><menuitem name='TeamsTemplatesManagerAction' action='TeamsTemplatesManagerAction'/><menuitem name='ExportProjectToCSVFileAction' action='ExportProjectToCSVFileAction'/></menu><menu name='ViewAction' action='ViewAction'><menuitem name='FullScreenAction' action='FullScreenAction'/><menuitem name='HideAllWidgetsAction' action='HideAllWidgetsAction'/><separator/><menuitem name='PlaylistAction' action='PlaylistAction'/><separator/><menuitem name='CaptureModeAction' action='CaptureModeAction'/><menuitem name='FreeCaptureModeAction' action='FreeCaptureModeAction'/><menuitem name='AnalyzeModeAction' action='AnalyzeModeAction'/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='AboutAction' action='AboutAction'/><menuitem name='HelpAction1' action='HelpAction1'/></menu></menubar></ui>");
+			this.UIManager.AddUiFromString ("<ui><menubar name='menubar1'><menu name='FileAction' action='FileAction'><menuitem name='NewPojectAction' action='NewPojectAction'/><menuitem name='OpenProjectAction' action='OpenProjectAction'/><menuitem name='SaveProjectAction' action='SaveProjectAction'/><menuitem name='CloseProjectAction' action='CloseProjectAction'/><separator/><menuitem name='ImportProjectAction' action='ImportProjectAction'/><separator/><menuitem name='QuitAction' action='QuitAction'/></menu><menu name='ToolsAction' action='ToolsAction'><menuitem name='ProjectsManagerAction' action='ProjectsManagerAction'/><menuitem name='CategoriesTemplatesManagerAction' action='CategoriesTemplatesManagerAction'/><menuitem name='TeamsTemplatesManagerAction' action='TeamsTemplatesManagerAction'/><menuitem name='ExportProjectToCSVFileAction' action='ExportProjectToCSVFileAction'/></menu><menu name='ViewAction' action='ViewAction'><menuitem name='FullScreenAction' action='FullScreenAction'/><menuitem name='HideAllWidgetsAction' action='HideAllWidgetsAction'/><separator/><menuitem name='PlaylistAction' action='PlaylistAction'/><separator/><menuitem name='TaggingViewAction' action='TaggingViewAction'/><menuitem name='ManualTaggingViewAction' action='ManualTaggingViewAction'/><menuitem name='TimelineViewAction' action='TimelineViewAction'/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='AboutAction' action='AboutAction'/><menuitem name='HelpAction1' action='HelpAction1'/></menu></menubar></ui>");
 			this.menubar1 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menubar1")));
 			this.menubar1.Name = "menubar1";
 			this.menubox.Add (this.menubar1);
@@ -428,7 +428,7 @@ namespace LongoMatch.Gui
 			this.CategoriesTemplatesManagerAction.Activated += new global::System.EventHandler (this.OnSectionsTemplatesManagerActivated);
 			this.FullScreenAction.Toggled += new global::System.EventHandler (this.OnFullScreenActionToggled);
 			this.PlaylistAction.Toggled += new global::System.EventHandler (this.OnPlaylistActionToggled);
-			this.CaptureModeAction.Toggled += new global::System.EventHandler (this.OnViewToggled);
+			this.TaggingViewAction.Toggled += new global::System.EventHandler (this.OnViewToggled);
 			this.SaveProjectAction.Activated += new global::System.EventHandler (this.OnSaveProjectActionActivated);
 			this.AboutAction.Activated += new global::System.EventHandler (this.OnAboutActionActivated);
 			this.ExportProjectToCSVFileAction.Activated += new global::System.EventHandler (this.OnExportProjectToCSVFileActionActivated);
@@ -437,7 +437,7 @@ namespace LongoMatch.Gui
 			this.HelpAction1.Activated += new global::System.EventHandler (this.OnHelpAction1Activated);
 			this.DrawingToolAction.Toggled += new global::System.EventHandler (this.OnDrawingToolActionToggled);
 			this.ImportProjectAction.Activated += new global::System.EventHandler (this.OnImportProjectActionActivated);
-			this.FreeCaptureModeAction.Toggled += new global::System.EventHandler (this.OnViewToggled);
+			this.ManualTaggingViewAction.Toggled += new global::System.EventHandler (this.OnViewToggled);
 			this.treewidget1.TimeNodeSelected += new global::LongoMatch.Handlers.TimeNodeSelectedHandler (this.OnTimeNodeSelected);
 			this.playerbin1.Error += new global::LongoMatch.Video.Common.ErrorHandler (this.OnPlayerbin1Error);
 			this.playerbin1.SegmentClosedEvent += new global::LongoMatch.Video.Common.SegmentClosedHandler (this.OnSegmentClosedEvent);
