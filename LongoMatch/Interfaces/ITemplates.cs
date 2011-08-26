@@ -17,6 +17,7 @@
 // 
 using System;
 using System.Collections.Generic;
+using LongoMatch.Store;
 	
 namespace LongoMatch.Interfaces
 {
@@ -51,7 +52,7 @@ namespace LongoMatch.Interfaces
 		T Template {get; set;}
 		bool Edited {get; set;}
 		bool CanExport {get; set;}
-		bool InProject {get; set;}
+		Project Project {get; set;}
 	}
 }
 

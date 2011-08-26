@@ -21,6 +21,7 @@
 using Gdk;
 using Gtk;
 using LongoMatch.Common;
+using LongoMatch.Handlers;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Store;
 using System;
@@ -33,6 +34,8 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public class PlaysTreeView : ListTreeViewBase
 	{
+		
+		public event TimeNodeChangedHandler EditProperties;
 
 		//Categories menu
 		private Menu categoriesMenu;
@@ -108,7 +111,7 @@ namespace LongoMatch.Gui.Component
 			sortByStop.Activated += OnSortActivated;
 			sortByDuration.Activated += OnSortActivated;
 			editProp.Activated += delegate(object sender, EventArgs e) {
-				EmitTimeNodeChanged(GetValueFromPath(Selection.GetSelectedRows()[0]) as Category);
+				EditProperties(GetValueFromPath(Selection.GetSelectedRows()[0]) as Category, null);
 			};
 		}
 

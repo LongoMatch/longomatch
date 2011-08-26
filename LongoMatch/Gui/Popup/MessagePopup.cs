@@ -30,8 +30,10 @@ namespace LongoMatch.Gui
 		{
 		}
 
-		public static void PopupMessage(Widget sender,MessageType type, String errorMessage) {
+		public static int PopupMessage(Widget sender,MessageType type, String errorMessage) {
 			Window toplevel;
+			int ret;
+			
 			if(sender != null)
 				toplevel = (Window)sender.Toplevel;
 			else
@@ -43,8 +45,9 @@ namespace LongoMatch.Gui
 			                                     ButtonsType.Ok,
 			                                     errorMessage);
 			md.Icon=Stetic.IconLoader.LoadIcon(md, "longomatch", Gtk.IconSize.Dialog);
-			md.Run();
+			ret = md.Run();
 			md.Destroy();
+			return ret;
 		}
 	}
 }

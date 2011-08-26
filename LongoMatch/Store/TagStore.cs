@@ -60,6 +60,10 @@ namespace LongoMatch.Store
 			return tagsList.Contains(tag);
 		}
 		
+		public void RemoveBySubcategory(ISubCategory subcat) {
+			tagsList.RemoveAll(t => t.SubCategory == subcat);
+		}
+		
 		public List<T> AllUniqueElements {
 			get {
 				return (from tag in tagsList

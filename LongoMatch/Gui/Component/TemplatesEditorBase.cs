@@ -52,12 +52,13 @@ namespace LongoMatch.Gui.Component
 				exportbutton.Visible = value;
 			}
 		}
+		
 		public bool Edited {
 			get;
 			set;
 		}
 		
-		public bool InProject {
+		public Project Project {
 			get;
 			set;
 		}
@@ -225,14 +226,14 @@ namespace LongoMatch.Gui.Component
 
 
 		protected override void RemoveSelected (){
-			if(InProject) {
+			if(Project != null) {
 				MessageDialog dialog = new MessageDialog((Gtk.Window)this.Toplevel,DialogFlags.Modal,MessageType.Question,
 				                                         ButtonsType.YesNo,true,
 				                                         Catalog.GetString("You are about to delete a category and all the plays added to this category. Do you want to proceed?"));
 				if(dialog.Run() == (int)ResponseType.Yes) {
 					try {
-						foreach(var item in selected)
-							template.Remove(item);
+						foreach(var cat in selected)
+							Project.RemoveCategory (cat);
 					} catch {
 						MessagePopup.PopupMessage(this,MessageType.Warning,
 						                          Catalog.GetString("A template needs at least one category"));

@@ -178,10 +178,24 @@ namespace LongoMatch.Store
 		/// </param>
 		public void RemoveCategory(Category category) {
 			if(Categories.Count == 1)
-				throw new Exception("You can't remove the last Section");
+				throw new Exception("You can't remove the last Category");
 			Categories.Remove(category);
 
 			timeline.RemoveAll(p => p.Category.UUID == category.UUID);
+		}
+		
+		public void DeleteSubcategoryTags(Category cat, List<ISubCategory> subcategories) {
+			foreach (var play in timeline.Where(p => p.Category == cat)) {
+				foreach (var subcat in subcategories) {
+					Log.Error(play.Name);
+					if (subcat is TagSubCategory)
+						play.Tags.RemoveBySubcategory(subcat);
+					else if (subcat is TeamSubCategory)
+						play.Teams.RemoveBySubcategory(subcat);
+					else if (subcat is PlayerSubCategory)
+						play.Players.RemoveBySubcategory(subcat);
+				}
+			}
 		}
 
 		public List<Play> PlaysInCategory(Category category) {

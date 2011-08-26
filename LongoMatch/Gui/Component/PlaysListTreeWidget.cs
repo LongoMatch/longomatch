@@ -54,6 +54,7 @@ namespace LongoMatch.Gui.Component
 			treeview.TimeNodeDeleted += OnTimeNodeDeleted;
 			treeview.PlayListNodeAdded += OnPlayListNodeAdded;
 			treeview.SnapshotSeriesEvent += OnSnapshotSeriesEvent;
+			treeview.EditProperties += OnEditProperties;
 			treeview.TagPlay += OnTagPlay;
 		}
 
@@ -135,14 +136,18 @@ namespace LongoMatch.Gui.Component
 		private string CategoryPath(Category cat) {
 			return project.Categories.IndexOf(cat).ToString();
 		}
+		
+		protected virtual void OnEditProperties(TimeNode tNode, object val) {
+			EditCategoryDialog dialog = new EditCategoryDialog();
+			dialog.Category = tNode as Category; 
+			dialog.Project = project;
+			dialog.Run();
+			dialog.Destroy();
+			if(TimeNodeChanged != null)
+				TimeNodeChanged(tNode, tNode.Name);
+		}
 
 		protected virtual void OnTimeNodeChanged(TimeNode tNode,object val) {
-			if (tNode is Category) {
-				EditCategoryDialog dialog = new EditCategoryDialog();
-				dialog.Category = tNode as Category; 
-				dialog.Run();
-				dialog.Destroy();
-			}
 			if(TimeNodeChanged != null)
 				TimeNodeChanged(tNode,val);
 		}

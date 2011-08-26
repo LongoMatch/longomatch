@@ -44,6 +44,12 @@ namespace LongoMatch.Gui.Dialog
 				timenodeproperties2.Category = value;
 			}
 		}
+		
+		public Project Project {
+			set {
+				timenodeproperties2.Project = value;
+			}
+		}
 
 		public List<HotKey> HotKeysList {
 			set {

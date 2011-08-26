@@ -416,6 +416,13 @@ namespace LongoMatch.Gui.Component
 			videoformatcombobox.Model = encProfileList;
 			videoformatcombobox.Active = 0;
 		}
+		
+		private void StartEditor(TemplateEditorDialog editor) {
+			editor.TransientFor = (Window)Toplevel;
+			editor.Run();
+			editor.Destroy();
+			OnEdited(this,null);
+		}
 
 		protected virtual void OnDateSelected(DateTime dateTime) {
 			Date = dateTime;
@@ -522,41 +529,32 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnEditbuttonClicked(object sender, System.EventArgs e)
 		{
 			var editor = new TemplateEditorDialog<Categories, Category>();
-			
-			editor.TransientFor = (Window)Toplevel;
 			editor.Template = Categories;
-			editor.InProject = true;
-			editor.CanExport = Use == ProjectType.EditProject;
-			if(editor.Run() == (int)ResponseType.Apply) {
-				Categories = editor.Template;
+			if (Use == ProjectType.EditProject) {
+				editor.Project = project;
+				editor.CanExport = true;
 			}
-			editor.Destroy();
-			OnEdited(this,null);
+			StartEditor(editor);
 		}
 
 		protected virtual void OnLocaltemplatebuttonClicked(object sender, System.EventArgs e) {
 			var editor = new TemplateEditorDialog<TeamTemplate, Player>();
-			editor.TransientFor = (Window)Toplevel;
-			editor.Title=Catalog.GetString("Local Team Template");
 			editor.Template = LocalTeamTemplate;
-
-			if(editor.Run() == (int)ResponseType.Apply) {
-				LocalTeamTemplate = editor.Template;
+			if (Use == ProjectType.EditProject) {
+				editor.Project = project;
+				editor.CanExport = true;
 			}
-			editor.Destroy();
-			OnEdited(this,null);
+			StartEditor(editor);
 		}
 
 		protected virtual void OnVisitorbuttonClicked(object sender, System.EventArgs e) {
 			var editor = new TemplateEditorDialog<TeamTemplate, Player>();
-			editor.TransientFor = (Window)Toplevel;
-			editor.Title=Catalog.GetString("Visitor Team Template");
 			editor.Template = VisitorTeamTemplate;
-			if(editor.Run() == (int)ResponseType.Apply) {
-				VisitorTeamTemplate = editor.Template;
+			if (Use == ProjectType.EditProject) {
+				editor.Project = project;
+				editor.CanExport = true;
 			}
-			editor.Destroy();
-			OnEdited(this,null);
+			StartEditor(editor);
 		}
 
 		protected virtual void OnEdited(object sender, System.EventArgs e) {

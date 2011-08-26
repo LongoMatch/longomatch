@@ -30,6 +30,7 @@ using LongoMatch.Services;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
 using LongoMatch.Gui.Dialog;
+using LongoMatch.Gui.Popup;
 
 namespace LongoMatch.Gui.Component
 {
@@ -90,6 +91,11 @@ namespace LongoMatch.Gui.Component
 			get {
 				return cat;
 			}
+		}
+		
+		public Project Project {
+			set;
+			get;
 		}
 
 		private void  UpdateGui() {
@@ -179,6 +185,14 @@ namespace LongoMatch.Gui.Component
 		
 		protected virtual void OnSubcategoriesDeleted (List<ISubCategory> subcats)
 		{
+			if (Project != null) {
+				int ret = MessagePopup.PopupMessage(this, MessageType.Question,
+				                                    Catalog.GetString("If you delete this subcategory you will loose" +
+				                                    	"all the tags associated with it. Do you want to proceed?"));
+				if (ret == (int)ResponseType.No)
+					return;
+				Project.DeleteSubcategoryTags(Category, subcats);
+			}
 			Category.SubCategories.RemoveAll(s => subcats.Contains(s));
 		}
 		

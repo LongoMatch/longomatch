@@ -58,12 +58,12 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 		
-		public bool InProject {
+		public Project Project {
 			set{
-				templateEditor.InProject = value;
+				templateEditor.Project = value;
 			}
 			get{
-				return templateEditor.InProject;
+				return templateEditor.Project;
 			}
 		}
 		
