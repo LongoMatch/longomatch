@@ -224,7 +224,6 @@ namespace LongoMatch.Gui.Component
 			Edited = true;
 		}
 
-
 		protected override void RemoveSelected (){
 			if(Project != null) {
 				MessageDialog dialog = new MessageDialog((Gtk.Window)this.Toplevel,DialogFlags.Modal,MessageType.Question,
@@ -351,6 +350,34 @@ namespace LongoMatch.Gui.Component
 		{
 			selected = new List<Player>();
 			selected.Add(player);
+		}
+		
+		protected override void RemoveSelected (){
+			if(Project != null) {
+				MessageDialog dialog = new MessageDialog((Gtk.Window)this.Toplevel,DialogFlags.Modal,MessageType.Question,
+				                                         ButtonsType.YesNo,true,
+				                                         Catalog.GetString("You are about to delete a player and all " +
+				                                         	"its tags. Do you want to proceed?"));
+				if(dialog.Run() == (int)ResponseType.Yes) {
+					try {
+						foreach(var player in selected)
+							Project.RemovePlayer (template, player);
+					} catch {
+						MessagePopup.PopupMessage(this,MessageType.Warning,
+						                          Catalog.GetString("A template needs at least one category"));
+					}
+				}
+				dialog.Destroy();
+			} else {
+				try {
+					foreach(var player in selected)
+					Template.Remove(player);
+				} catch {
+					MessagePopup.PopupMessage(this,MessageType.Warning,
+					                          Catalog.GetString("A template needs at least one category"));
+				}
+			}
+			base.RemoveSelected();
 		}
 	}
 }

@@ -184,6 +184,15 @@ namespace LongoMatch.Store
 			timeline.RemoveAll(p => p.Category.UUID == category.UUID);
 		}
 		
+		public void RemovePlayer(TeamTemplate template, Player player) {
+			if(template.Count == 1)
+				throw new Exception("You can't remove the last Player");
+			template.Remove(player);
+			foreach (var play in timeline) {
+				play.Players.RemoveByPlayer(player);
+			}
+		}
+		
 		public void DeleteSubcategoryTags(Category cat, List<ISubCategory> subcategories) {
 			foreach (var play in timeline.Where(p => p.Category == cat)) {
 				foreach (var subcat in subcategories) {

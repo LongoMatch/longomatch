@@ -27,7 +27,7 @@ namespace LongoMatch.Store
 	[Serializable]
 	public class TagsStore<T, W> where T:ITag<W>
 	{
-		private List<T> tagsList;
+		protected List<T> tagsList;
 		
 		public TagsStore(){
 			tagsList = new List<T>();
@@ -83,7 +83,13 @@ namespace LongoMatch.Store
 	public class StringTagStore: TagsStore<StringTag, string> {}
 	
 	[Serializable]
-	public class PlayersTagStore: TagsStore<PlayerTag, Player> {}
+	public class PlayersTagStore: TagsStore<PlayerTag, Player> {
+		
+		public void RemoveByPlayer(Player player) {
+			tagsList.RemoveAll(t => t.Value == player);
+		}
+		
+	}
 	
 	[Serializable]
 	public class TeamsTagStore: TagsStore<TeamTag, Team> {}
