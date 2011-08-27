@@ -61,8 +61,8 @@
 /* gtk+/gnome */
 #ifdef WIN32
 #include <gdk/gdkwin32.h>
-#define DEFAULT_VIDEO_SINK "d3dvideosink"
-#define BACKUP_VIDEO_SINK "dshowvideosink"
+#define DEFAULT_VIDEO_SINK "autovideosink"
+#define BACKUP_VIDEO_SINK "autovideosink"
 #else
 #include <gdk/gdkx.h>
 #define DEFAULT_VIDEO_SINK "gsettingsvideosink"
