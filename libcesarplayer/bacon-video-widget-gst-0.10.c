@@ -61,10 +61,12 @@
 /* gtk+/gnome */
 #ifdef WIN32
 #include <gdk/gdkwin32.h>
-#define DEFAULT_VIDEO_SINK "autovideosink"
+#define DEFAULT_VIDEO_SINK "d3dvideosink"
+#define BACKUP_VIDEO_SINK "dshowvideosink"
 #else
 #include <gdk/gdkx.h>
 #define DEFAULT_VIDEO_SINK "gsettingsvideosink"
+#define BACKUP_VIDEO_SINK "autovideosink"
 #endif
 #include <gtk/gtk.h>
 #include <gio/gio.h>
@@ -5454,7 +5456,7 @@ bacon_video_widget_new (int width, int height, BvwUseType type, GError ** err)
       gst_element_set_state (video_sink, GST_STATE_NULL);
       gst_object_unref (video_sink);
       /* Try again with autovideosink */
-      video_sink = gst_element_factory_make ("autovideosink", "video-sink");
+      video_sink = gst_element_factory_make (BACKUP_VIDEO_SINK, "video-sink");
       gst_element_set_bus (video_sink, bvw->priv->bus);
       ret = gst_element_set_state (video_sink, GST_STATE_READY);
       if (ret == GST_STATE_CHANGE_FAILURE) {
