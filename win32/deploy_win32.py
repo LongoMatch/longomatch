@@ -50,7 +50,8 @@ GST_EXT_DEPS = ['avcodec-gpl-52.dll', 'avcore-gpl-0.dll', 'avdevice-gpl-52.dll',
         'libxml2-2.dll', 'libschroedinger-1.0-0.dll', 'libsoup-2.4-1.dll', 'libtheora-0.dll',
         'libtheoradec-1.dll', 'libvorbisenc-2.dll', 'libvorbis-0.dll', 'libx264-107.dll',
         'libgpg-error-0.dll', 'libexpat-1.dll', 'libgnutls-26.dll', 'libcroco-0.6-3.dll',
-        'libtasn1-3.dll', 'xvidcore.dll', 'z.dll', 'pthreadGC2.dll', 'libiconv-2.dll']
+        'libtasn1-3.dll', 'xvidcore.dll', 'z.dll', 'pthreadGC2.dll', 'libiconv-2.dll',
+	'ffmpeg-gpl.exe', 'swscale-gpl-0.dll', 'libgcc_s_sjlj-1.dll']
 
 GST_PLUGINS_DEPS = ['libgnl.dll', 'libgsta52dec.dll', 'libgstadder.dll', 'libgstalpha.dll', 'libgstalphacolor.dll',
             'libgstasf.dll', 'libgstasfmux.dll', 'libgstaudioconvert.dll', 'libgstaudiorate.dll',
@@ -69,7 +70,7 @@ GST_PLUGINS_DEPS = ['libgnl.dll', 'libgsta52dec.dll', 'libgstadder.dll', 'libgst
             'libgsttypefindfunctions.dll', 'libgstvideobalance.dll', 'libgstvideobox.dll',
             'libgstvideocrop.dll', 'libgstvideomixer.dll', 'libgstvideorate.dll',
             'libgstvideoscale.dll', 'libgstvideotestsrc.dll', 'libgstvolume.dll', 'libgstvorbis.dll',
-            'libgstvp8.dll', 'libgstx264.dll', 'libgstxvid.dll']
+            'libgstvp8.dll', 'libgstx264.dll', 'libgstxvid.dll', 'libgstpango.dll', 'libgstdshowvideosink.dll']
 
 GST_BIN_DEPS = ['gst-inspect.exe', 'gst-launch.exe', 'gst-typefind.exe']
 
@@ -213,6 +214,8 @@ class Deploy():
         for dll in GST_PLUGINS_DEPS:
             shutil.copy (os.path.join(self.gst_path, 'lib', 'gstreamer-0.10', dll),
                  self.plugins_dir)
+        shutil.move(os.path.join(self.bin_dir, 'ffmpeg-gpl.exe'),
+                    os.path.join(self.bin_dir, 'ffmpeg.exe'))
     
     def deploy_longomatch(self):
         print 'Deploying LongoMatch'
