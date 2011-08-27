@@ -6,8 +6,8 @@ msgstr ""
 "Project-Id-Version: longomatch master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-08-23 19:48+0000\n"
-"PO-Revision-Date: 2011-08-24 20:19+0100\n"
+"POT-Creation-Date: 2011-08-27 09:31+0000\n"
+"PO-Revision-Date: 2011-08-27 18:27+0100\n"
 "Last-Translator: Mario Blättermann <mariobl@freenet.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr "LongoMatch: Der digitale Trainer"
 msgid "Sports video analysis tool for coaches"
 msgstr "Analyse von Sportvideos für Trainer"
 
-#: ../LongoMatch/Store/Project.cs:250
+#: ../LongoMatch/Store/Project.cs:274
 msgid "The file you are trying to load is not a valid project"
 msgstr "Die zu ladende Datei ist kein gültiges Projekt"
 
@@ -104,25 +104,25 @@ msgid "Team selection"
 msgstr "Mannschaftsauswahl"
 
 #: ../LongoMatch/Store/Category.cs:105 ../LongoMatch/Store/Category.cs:113
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:68
+#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:71
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:259
 msgid "Sort by name"
 msgstr "Nach Name sortieren"
 
 #: ../LongoMatch/Store/Category.cs:107 ../LongoMatch/Store/Category.cs:117
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:69
+#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:72
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:260
 msgid "Sort by start time"
 msgstr "Nach Startzeit sortieren"
 
 #: ../LongoMatch/Store/Category.cs:109 ../LongoMatch/Store/Category.cs:119
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:70
+#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:73
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:261
 msgid "Sort by stop time"
 msgstr "Nach Stoppzeit sortieren"
 
 #: ../LongoMatch/Store/Category.cs:111 ../LongoMatch/Store/Category.cs:121
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:71
+#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:74
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:262
 msgid "Sort by duration"
 msgstr "Nach Dauer sortieren"
@@ -221,7 +221,7 @@ msgstr ""
 "Ein Fehler trat in der Videoaufnahme auf, daher wird das aktuelle Projekt "
 "geschlossen:"
 
-#: ../LongoMatch/Gui/Dialog/EditCategoryDialog.cs:57
+#: ../LongoMatch/Gui/Dialog/EditCategoryDialog.cs:63
 msgid "This hotkey is already in use."
 msgstr "Dieses Kürzel wird bereits benutzt."
 
@@ -326,54 +326,54 @@ msgstr "DirectShow-Quelle"
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:429
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:436
 msgid "Output file"
 msgstr "Ausgabedatei"
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:441
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:448
 msgid "Open file..."
 msgstr "Datei öffnen …"
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:467
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:474
 msgid "Analyzing video file:"
 msgstr "Videodatei wird analysiert:"
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:472
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:479
 msgid "This file doesn't contain a video stream."
 msgstr "Diese Datei enthält keinen Videostrom."
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:474
+#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:481
 msgid "This file contains a video stream but its length is 0."
 msgstr "Diese Datei enthält zwar einen Videostrom, der aber die Länge 0 hat."
 
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:540
-msgid "Local Team Template"
-msgstr "Vorlage für lokale Mannschaft"
-
-#: ../LongoMatch/Gui/Component/ProjectDetailsWidget.cs:553
-msgid "Visitor Team Template"
-msgstr "Vorlage für Gastmannschaft"
-
-#: ../LongoMatch/Gui/Component/CategoryProperties.cs:62
+#: ../LongoMatch/Gui/Component/CategoryProperties.cs:63
 msgid "Create new..."
 msgstr "Neu erstellen …"
 
-#: ../LongoMatch/Gui/Component/CategoryProperties.cs:66
-#: ../LongoMatch/Gui/Component/CategoryProperties.cs:206
+#: ../LongoMatch/Gui/Component/CategoryProperties.cs:67
+#: ../LongoMatch/Gui/Component/CategoryProperties.cs:220
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:52
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:287
 msgid "Tags"
 msgstr "Schlagwörter"
 
-#: ../LongoMatch/Gui/Component/CategoryProperties.cs:73
+#: ../LongoMatch/Gui/Component/CategoryProperties.cs:74
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:71
 msgid "Players"
 msgstr "Spieler"
 
-#: ../LongoMatch/Gui/Component/CategoryProperties.cs:110
+#: ../LongoMatch/Gui/Component/CategoryProperties.cs:116
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:118
 msgid "none"
 msgstr "nichts"
+
+#: ../LongoMatch/Gui/Component/CategoryProperties.cs:190
+msgid ""
+"If you delete this subcategory you will looseall the tags associated with it. "
+"Do you want to proceed?"
+msgstr ""
+"Sie sind im Begriff, diese Unterkategorie und alle zugehörigen Schlagworte zu "
+"entfernen. Wollen Sie den Vorgang fortsetzen?"
 
 #: ../LongoMatch/Gui/Component/PlayListWidget.cs:92
 msgid ""
@@ -396,8 +396,8 @@ msgid "The playlist is empty!"
 msgstr "Die Wiedergabeliste ist leer!"
 
 #: ../LongoMatch/Gui/Component/PlayListWidget.cs:271
-#: ../LongoMatch/Common/ProjectUtils.cs:127
-#: ../LongoMatch/Common/ProjectUtils.cs:216
+#: ../LongoMatch/Common/ProjectUtils.cs:128
+#: ../LongoMatch/Common/ProjectUtils.cs:217
 msgid "Please, select a video file."
 msgstr "Bitte wählen Sie eine Videodatei."
 
@@ -411,15 +411,15 @@ msgstr "Bild auswählen"
 msgid "Yes"
 msgstr "Ja"
 
-#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:158
+#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:159
 msgid "New template"
 msgstr "Neue Vorlage"
 
-#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:162
+#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:163
 msgid "The template name is void."
 msgstr "Der Vorlagenname ist leer."
 
-#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:168
+#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:169
 msgid "The template already exists. Do you want to overwrite it ?"
 msgstr "Die Vorlage existiert bereits. Wollen Sie sie überschreiben?"
 
@@ -433,12 +433,21 @@ msgstr ""
 
 #: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:238
 #: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:246
+#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:367
+#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:377
 msgid "A template needs at least one category"
 msgstr "Eine Vorlage benötigt mindestens eine Kategorie"
 
 #: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:316
 msgid "Team name"
 msgstr "Mannschaftsname"
+
+#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:359
+msgid ""
+"You are about to delete a player and all its tags. Do you want to proceed?"
+msgstr ""
+"Sie sind im Begriff, einen Spieler und alle zugehörigen Schlagworte zu "
+"entfernen. Wollen Sie den Vorgang fortsetzen?"
 
 #: ../LongoMatch/Gui/Component/ProjectListWidget.cs:55
 msgid "Filename"
@@ -501,16 +510,20 @@ msgstr "Neues Spiel hinzufügen"
 msgid "Delete "
 msgstr "Entfernen"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:66
+#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:69
 #: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:110
 #: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:69
 msgid "Edit name"
 msgstr "Name bearbeiten"
 
-#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:67
+#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:70
 #: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:72
 msgid "Sort Method"
 msgstr "Sortierungsmethode"
+
+#: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:75
+msgid "Edit properties"
+msgstr "Eigenschaften bearbeiten"
 
 #: ../LongoMatch/Gui/TreeView/SubCategoriesTreeView.cs:91
 #: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:111
@@ -578,7 +591,7 @@ msgstr "Zur Wiedergabeliste hinzufügen"
 msgid "Export to PGN images"
 msgstr "Als PGN-Bilder exportieren"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:266
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:271
 msgid "Do you want to delete the key frame for this play?"
 msgstr "Wollen Sie das Schlüsselbild für dieses Spiel entfernen?"
 
@@ -647,35 +660,35 @@ msgstr "Projekt importieren"
 msgid "Error importing project:"
 msgstr "Fehler beim Importieren des Projekts:"
 
-#: ../LongoMatch/Common/ProjectUtils.cs:143
+#: ../LongoMatch/Common/ProjectUtils.cs:144
 msgid "A project already exists for the file:"
 msgstr "Das Projekt existiert bereits für Datei:"
 
-#: ../LongoMatch/Common/ProjectUtils.cs:145
+#: ../LongoMatch/Common/ProjectUtils.cs:146
 msgid "Do you want to overwrite it?"
 msgstr "Wollen Sie dieses überschreiben?"
 
-#: ../LongoMatch/Common/ProjectUtils.cs:164
+#: ../LongoMatch/Common/ProjectUtils.cs:165
 msgid "Project successfully imported."
 msgstr "Projekt wurde erfolgreich importiert."
 
-#: ../LongoMatch/Common/ProjectUtils.cs:194
+#: ../LongoMatch/Common/ProjectUtils.cs:195
 msgid "No capture devices were found."
 msgstr "Es wurden keine Aufnahmegeräte gefunden."
 
-#: ../LongoMatch/Common/ProjectUtils.cs:220
+#: ../LongoMatch/Common/ProjectUtils.cs:221
 msgid "This file is already used in another Project."
 msgstr "Diese Datei wird bereits in einem anderen Projekt verwendet."
 
-#: ../LongoMatch/Common/ProjectUtils.cs:221
+#: ../LongoMatch/Common/ProjectUtils.cs:222
 msgid "Select a different one to continue."
 msgstr "Wählen Sie eine andere, um fortzusetzen."
 
-#: ../LongoMatch/Common/ProjectUtils.cs:245
+#: ../LongoMatch/Common/ProjectUtils.cs:246
 msgid "Select Export File"
 msgstr "Exportdatei auswählen"
 
-#: ../LongoMatch/Common/ProjectUtils.cs:272
+#: ../LongoMatch/Common/ProjectUtils.cs:273
 msgid "Creating video thumbnails. This can take a while."
 msgstr "Videovorschauen werden erstellt. Dies kann einige Zeit dauern."
 
@@ -884,11 +897,17 @@ msgid "Playlist"
 msgstr "Wiedergabeliste"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:149
+msgid "Tagging view"
+msgstr "Schlagwort-Ansicht"
+
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:152
 msgid "Capture Mode"
 msgstr "Aufnahmemodus"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:154
+msgid "Timeline view"
+msgstr "Zeitlinien-Ansicht"
+
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:157
 msgid "Analyze Mode"
 msgstr "Analysemodus"
@@ -935,6 +954,9 @@ msgid "_Import Project"
 msgstr "Projekt _importieren"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:190
+msgid "Manual tagging view"
+msgstr "Manuelle Schlagwort-Ansicht"
+
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:193
 msgid "Free Capture Mode"
 msgstr "Freier Aufnahmemodus"
@@ -994,7 +1016,7 @@ msgid "Plays this match:"
 msgstr "Wiedergegeben wird:"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:44
-msgid "Edit sub category tags"
+msgid "Edit subcategory tags"
 msgstr "Schlagwörter für Unterkategorien bearbeiten"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:69
@@ -1002,7 +1024,7 @@ msgid "Quick tag"
 msgstr "Schnellkennzeichnung"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:84
-msgid "Sub category name:"
+msgid "Subcategory name:"
 msgstr "Name der Unterkategorie:"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:93
@@ -1208,19 +1230,19 @@ msgid "<b>Properties</b>"
 msgstr "<b>Eigenschaften</b>"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:331
-msgid "<b>Sub category name</b>"
+msgid "<b>Subcategory name</b>"
 msgstr "<b>Name der Unterkategorie</b>"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:354
-msgid "<b>Sub category type</b>"
+msgid "<b>Subcategory type</b>"
 msgstr "<b>Typ der Unterkategorie</b>"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:378
-msgid "_Add sub-category"
+msgid "_Add subcategory"
 msgstr "Unterk_ategorie hinzufügen"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:397
-msgid "<b>Sub categories</b>"
+msgid "<b>Subcategories</b>"
 msgstr "<b>Unterkategorien</b>"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:131
@@ -1309,7 +1331,7 @@ msgid ""
 msgstr ""
 "Die Stoppzeit liegt vor der Startzeit. Das Spiel wird nicht hinzugefügt."
 
-#: ../LongoMatch/Handlers/EventsManager.cs:364
+#: ../LongoMatch/Handlers/EventsManager.cs:365
 msgid "Please, close the opened project to play the playlist."
 msgstr ""
 "Bitte schließen Sie das geöffnete Projekt, um die Wiedergabeliste abzuspielen."
@@ -1369,7 +1391,7 @@ msgstr "Ungültige Videodatei:"
 msgid "Fake live source"
 msgstr "Simulierte Live-Quelle"
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2569
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2571
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -1377,17 +1399,17 @@ msgstr ""
 "Die angeforderte Audio-Ausgabe wurde nicht gefunden. Bitte wählen Sie in den "
 "Einstellungen des Multimedia-Systems eine andere aus."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2575
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2577
 msgid "Location not found."
 msgstr "Ort wurde nicht gefunden."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2579
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2581
 msgid "Could not open location; you might not have permission to open the file."
 msgstr ""
 "Der Ort konnte nicht geöffnet werden; möglicherweise besitzen Sie nicht die "
 "notwendigen Zugriffsrechte, um die Datei zu öffnen."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2591
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2593
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -1397,7 +1419,7 @@ msgstr ""
 "Sie alle anderen Video-Anwendungen oder wählen Sie in den Einstellungen des "
 "Multimedia-Systems eine andere Video-Ausgabe aus."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2598
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2600
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -1407,14 +1429,14 @@ msgstr ""
 "Sie in den Einstellungen des Multimedia-Systems eine andere Video-Ausgabe "
 "aus. Eventuell sollten Sie auch einen Sound-Server verwenden."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2617
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2623
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2619
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2625
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr ""
 "Zum Abspielen dieses Videos wird das nicht installierte Plugin %s benötigt."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2625
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2627
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -1427,42 +1449,42 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2651
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2653
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "Diese Datei kann nicht über Netzwerk abgespielt werden. Versuchen Sie die "
 "Datei vorher herunterzuladen und zu speichern."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2726
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2728
 msgid "Media file could not be played."
 msgstr "Mediendatei konnte nicht abgespielt werden."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2868
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2870
 msgid "Failed to retrieve working directory"
 msgstr "Arbeitsordner konnte nicht ermittelt werden"
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4597
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4599
 msgid "Surround"
 msgstr "Surround"
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4599
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4601
 msgid "Mono"
 msgstr "Mono"
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4601
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4603
 msgid "Stereo"
 msgstr "Stereo"
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4956
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4958
 msgid "Too old version of GStreamer installed."
 msgstr "Es ist eine zu alte Version von GStreamer installiert."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4963
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4965
 msgid "Media contains no supported video streams."
 msgstr "Die Medien enthalten keine unterstützten Videoströme."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5394
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5396
 #, c-format
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
@@ -1471,8 +1493,8 @@ msgstr ""
 "Es konnte kein GStreamer-Wiedergabeobjekt erzeugt werden. Bitte überprüfen "
 "Sie Ihre GStreamer-Installation."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5468
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5595
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5470
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5597
 #, c-format
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
@@ -1481,7 +1503,7 @@ msgstr ""
 "Die Video-Ausgabe konnte nicht geöffnet werden. Bitte wählen Sie in den "
 "Einstellungen des Multimedia-Systems eine andere Video-Ausgabe aus."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5480
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5482
 #, c-format
 msgid ""
 "Could not find the video output. You may need to install additional GStreamer "
@@ -1491,7 +1513,7 @@ msgstr ""
 "Sie weitere GStreamer-Plugins installieren oder in den Einstellungen des "
 "Multimedia-Systems eine andere Video-Ausgabe auswählen."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5516
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5518
 #, c-format
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
@@ -1503,7 +1525,7 @@ msgstr ""
 "nicht. Bitte wählen Sie in den Einstellungen des Multimedia-Systems eine "
 "andere Audio-Ausgabe aus."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5536
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5538
 #, c-format
 msgid ""
 "Could not find the audio output. You may need to install additional GStreamer "
@@ -1580,6 +1602,12 @@ msgstr "%s"
 #: ../libcesarplayer/video-utils.c:159
 msgid "0 seconds"
 msgstr "0 Sekunden"
+
+#~ msgid "Local Team Template"
+#~ msgstr "Vorlage für lokale Mannschaft"
+
+#~ msgid "Visitor Team Template"
+#~ msgstr "Vorlage für Gastmannschaft"
 
 #~ msgid "The file you are trying to load is not a valid playlist"
 #~ msgstr "Die zu ladende Datei ist keine gültige Wiedergabeliste"
