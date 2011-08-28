@@ -35,6 +35,7 @@ namespace LongoMatch.Store
 		#region Constructors
 		public PlayListPlay()
 		{
+			Valid = true;
 		}
 		#endregion
 
