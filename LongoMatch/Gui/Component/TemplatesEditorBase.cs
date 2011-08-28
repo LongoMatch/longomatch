@@ -117,6 +117,12 @@ namespace LongoMatch.Gui.Component
 		protected void UpdateModel() {
 			Template = Template;
 		}
+		
+		protected void AddItem(int item_index) {
+			Template.AddDefaultItem(item_index);
+			UpdateModel();
+			Edited = true;
+		}
 
 		protected virtual void RemoveSelected() {
 			UpdateModel();
@@ -127,8 +133,6 @@ namespace LongoMatch.Gui.Component
 
 		protected abstract void EditSelected();
 		
-		protected abstract void AddItem(int item);
-
 		protected override void OnNewAfter(object sender, EventArgs args) {
 			AddItem(template.IndexOf(selected[0])+1);
 		}
@@ -219,11 +223,6 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		protected override void AddItem(int index) {
-			UpdateModel();
-			Edited = true;
-		}
-
 		protected override void RemoveSelected (){
 			if(Project != null) {
 				MessageDialog dialog = new MessageDialog((Gtk.Window)this.Toplevel,DialogFlags.Modal,MessageType.Question,
@@ -325,11 +324,6 @@ namespace LongoMatch.Gui.Component
 			AddUpperWidget(box);
 		}
 		
-		protected override void AddItem(int index) {
-			UpdateModel();
-			Edited = true;
-		}
-
 		protected override void EditSelected() {
 			LongoMatch.Gui.Dialog.EditPlayerDialog dialog = new LongoMatch.Gui.Dialog.EditPlayerDialog();
 			dialog.Player=selected[0];

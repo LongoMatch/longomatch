@@ -53,6 +53,18 @@ namespace LongoMatch.Store.Templates
 		public void Save(string filePath) {
 			SerializableObject.Save(this, filePath);
 		}
+		
+		public void AddDefaultItem (int i) {
+			Insert(i, new Player {
+					Name = "Player " + i,
+					Birthday = new DateTime(),
+					Height = 1.80f,
+					Weight = 80,
+					Number = i,
+					Position = "",
+					Photo = null,
+					Playing = true,});
+		}
 
 		public static TeamTemplate Load(string filePath) {
 			return SerializableObject.Load<TeamTemplate>(filePath);
@@ -66,18 +78,8 @@ namespace LongoMatch.Store.Templates
 
 		private void FillDefaultTemplate(int playersCount) {
 			Clear();
-			for(int i=1; i<=playersCount; i++) {
-				Add(new Player {
-					Name = "Player " + i,
-					Birthday = new DateTime(),
-					Height = 1.80f,
-					Weight = 80,
-					Number = i,
-					Position = "",
-					Photo = null,
-					Playing = true,
-				});
-			}
+			for(int i=1; i<=playersCount; i++)
+				AddDefaultItem(i);
 		}
 	}
 }

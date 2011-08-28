@@ -27,7 +27,9 @@ namespace LongoMatch.Interfaces
 		string Name {get; set;}
 	}
 	
-	public interface ITemplate<T>: ITemplate, IList<T> {}
+	public interface ITemplate<T>: ITemplate, IList<T> {
+		void AddDefaultItem (int index);
+	}
 	
 	public interface ITemplateProvider
 	{

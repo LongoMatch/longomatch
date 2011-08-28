@@ -32,6 +32,10 @@ namespace LongoMatch.Store.Templates
 		public SubCategoryTemplate() {}
 
 		public SubCategoryTemplate(IEnumerable<string> tags): base (tags) {}
+		
+		public void AddDefaultItem (int index) {
+			throw new Exception("Not implemented yet");
+		}
 
 		public void Save(string filePath) {
 			SerializableObject.Save(this, filePath);

@@ -52,6 +52,56 @@ namespace LongoMatch.Store.Templates
 		public void Save(string filePath) {
 			SerializableObject.Save(this, filePath);
 		}
+		
+		public void AddDefaultItem (int index) {
+			PlayerSubCategory localplayers, visitorplayers;
+			TagSubCategory period;
+			TeamSubCategory team;
+			Color c = new Color((Byte)255, (Byte)0, (Byte)0);
+			HotKey h = new HotKey();
+			
+			team = new TeamSubCategory {
+				Name = Catalog.GetString("Team"),
+				AllowMultiple = false,
+				FastTag = true};
+			team.Add(Team.LOCAL);
+			team.Add(Team.VISITOR);
+			
+			localplayers = new PlayerSubCategory {
+				Name = Catalog.GetString("Local Team Players"),
+				AllowMultiple = true,
+				FastTag = true};
+			localplayers.Add(Team.LOCAL);
+			
+			visitorplayers = new PlayerSubCategory {
+				Name = Catalog.GetString("Visitor Team Players"),
+				AllowMultiple = true,
+				FastTag = true};
+			visitorplayers.Add(Team.VISITOR);	
+			
+			period = new TagSubCategory {
+				Name = Catalog.GetString("Period"),
+				AllowMultiple = false,
+				FastTag = true,
+			};
+			period.Add("1");
+			period.Add("2");
+			
+			Category cat =  new Category {
+				Name = "Category " + index,
+				Color = c,
+				Start = new Time{Seconds = 10},
+				Stop = new Time {Seconds = 10},
+				SortMethod = SortMethodType.SortByStartTime,
+				HotKey = h,
+				Position = index-1,
+			};
+			cat.SubCategories.Add(team);
+			cat.SubCategories.Add(localplayers);
+			cat.SubCategories.Add(visitorplayers);
+			cat.SubCategories.Add(period);
+			Insert(index, cat);
+		}
 
 		public static Categories Load(string filePath) {
 			return SerializableObject.Load<Categories>(filePath);
@@ -64,57 +114,8 @@ namespace LongoMatch.Store.Templates
 		}
 
 		private void FillDefaultTemplate(int count) {
-			Color c = new Color((Byte)255, (Byte)0, (Byte)0);
-			HotKey h = new HotKey();
-
-
-			for(int i=1; i<=count; i++) {
-				PlayerSubCategory localplayers, visitorplayers;
-				TagSubCategory period;
-				TeamSubCategory team;
-
-				team = new TeamSubCategory {
-					Name = Catalog.GetString("Team"),
-					AllowMultiple = false,
-					FastTag = true};
-				team.Add(Team.LOCAL);
-				team.Add(Team.VISITOR);
-				
-				localplayers = new PlayerSubCategory {
-					Name = Catalog.GetString("Local Team Players"),
-					AllowMultiple = true,
-					FastTag = true};
-			    localplayers.Add(Team.LOCAL);
-			    
-				visitorplayers = new PlayerSubCategory {
-					Name = Catalog.GetString("Visitor Team Players"),
-					AllowMultiple = true,
-					FastTag = true};
-				visitorplayers.Add(Team.VISITOR);	
-				
-				period = new TagSubCategory {
-					Name = Catalog.GetString("Period"),
-					AllowMultiple = false,
-					FastTag = true,
-				};
-				period.Add("1");
-				period.Add("2");
-
-				Category cat =  new Category {
-					Name = "Category " + i,
-					Color = c,
-					Start = new Time{Seconds = 10},
-					Stop = new Time {Seconds = 10},
-					SortMethod = SortMethodType.SortByStartTime,
-					HotKey = h,
-					Position = i-1,
-				};
-				cat.SubCategories.Add(team);
-				cat.SubCategories.Add(localplayers);
-				cat.SubCategories.Add(visitorplayers);
-				cat.SubCategories.Add(period);
-				Add(cat);
-			}
+			for(int i=1; i<=count; i++)
+				AddDefaultItem(i);
 		}
 	}
 }
