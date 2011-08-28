@@ -73,6 +73,7 @@ namespace LongoMatch.Gui.Dialog
 
 		private string GetExtension() {
 			TreeIter iter;
+			formatcombobox.GetActiveIter(out iter);
 			return ((EncodingProfile) encStore.GetValue(iter, 1)).Extension;
 		}
 
