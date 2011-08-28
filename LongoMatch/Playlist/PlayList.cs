@@ -78,6 +78,7 @@ namespace LongoMatch.Playlist
 				pl = new PlayList();
 			else
 				pl = SerializableObject.Load<PlayList>(filePath);
+			pl.Filename = filename;
 			return pl; 
 		}
 
