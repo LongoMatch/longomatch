@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
+using Gdk;
 using LongoMatch.Common;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
@@ -85,20 +86,22 @@ namespace LongoMatch.Gui.Component
 					uint col_left = (uint) i%table1.NColumns;
 					uint col_right = (uint) col_left+1 ;
 
-					string colorString = String.Format("#{0:X4}{1:X4}{2:X4}",
-					                                   cat.Color.Red,
-					                                   cat.Color.Green,
-					                                   cat.Color.Blue);
-					l.Markup = String.Format("<span foreground=\"{0}\">{1}</span>", 
-					                         colorString, cat.Name);
+					l.Markup = cat.Name;
 					l.Justify = Justification.Center;
 					l.Ellipsize = Pango.EllipsizeMode.Middle;
 					l.CanFocus = false;
+					
+					var c = new Color();
+					Color.Parse("black", ref c);
+					l.ModifyFg(StateType.Normal, c);
+					l.ModifyFg(StateType.Prelight, cat.Color);
+                    l.Markup = cat.Name;
 
 					b.Add(l);
 					b.Name = i.ToString();
 					b.Clicked += new EventHandler(OnButtonClicked);
 					b.CanFocus = false;
+					b.ModifyBg(StateType.Normal, cat.Color);
 
 					l.Show();
 					b.Show();
