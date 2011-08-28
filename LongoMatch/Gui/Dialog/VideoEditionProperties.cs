@@ -80,15 +80,14 @@ namespace LongoMatch.Gui.Dialog
 
 		private void FillVideoStandards() {
 			stdStore = new ListStore(typeof(string), typeof (VideoStandard));
-			stdStore.AppendValues(VideoStandards.Original.Name, VideoStandards.Original);
-			stdStore.AppendValues(VideoStandards.P240.Name, VideoStandards.P240_4_3);
-			stdStore.AppendValues(VideoStandards.P240.Name, VideoStandards.P240_16_9);
-			stdStore.AppendValues(VideoStandards.P480.Name, VideoStandards.P480_4_3);
-			stdStore.AppendValues(VideoStandards.P480.Name, VideoStandards.P480_16_9);
-			stdStore.AppendValues(VideoStandards.P720.Name, VideoStandards.P720_4_3);
-			stdStore.AppendValues(VideoStandards.P720.Name, VideoStandards.P720_16_9);
-			stdStore.AppendValues(VideoStandards.P1080.Name, VideoStandards.P1080_4_3);
-			stdStore.AppendValues(VideoStandards.P1080.Name, VideoStandards.P1080_16_9);
+			stdStore.AppendValues(VideoStandards.P240_4_3.Name, VideoStandards.P240_4_3);
+			stdStore.AppendValues(VideoStandards.P240_16_9.Name, VideoStandards.P240_16_9);
+			stdStore.AppendValues(VideoStandards.P480_4_3.Name, VideoStandards.P480_4_3);
+			stdStore.AppendValues(VideoStandards.P480_16_9.Name, VideoStandards.P480_16_9);
+			stdStore.AppendValues(VideoStandards.P720_4_3.Name, VideoStandards.P720_4_3);
+			stdStore.AppendValues(VideoStandards.P720_16_9.Name, VideoStandards.P720_16_9);
+			stdStore.AppendValues(VideoStandards.P1080_4_3.Name, VideoStandards.P1080_4_3);
+			stdStore.AppendValues(VideoStandards.P1080_16_9.Name, VideoStandards.P1080_16_9);
 			sizecombobox.Model = stdStore;
 			sizecombobox.Active = 0;
 		}
