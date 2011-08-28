@@ -24,6 +24,7 @@ using Gdk;
 using LongoMatch.Video.Editor;
 using Mono.Unix;
 using System.IO;
+using LongoMatch.Common;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
 using LongoMatch.Video.Player;
@@ -81,14 +82,15 @@ namespace LongoMatch.Gui.Component
 
 		public void Load(string filePath) {
 			try {
-				playList = new PlayList(filePath);
+				playList = PlayList.Load(filePath);
 				Model = playList.GetModel();
 				label1.Visible = false;
 				newvideobutton.Show();
 				playlisttreeview1.PlayList = playList;
 				playlisttreeview1.Sensitive = true;
 				savebutton.Sensitive = true;
-			} catch {
+			} catch (Exception e){
+				Log.Exception (e);
 				MessagePopup.PopupMessage(this,MessageType.Error,Catalog.GetString("The file you are trying to load is not a playlist or it's not compatible with the current version"));
 			}
 		}
@@ -193,8 +195,8 @@ namespace LongoMatch.Gui.Component
 		private FileFilter FileFilter {
 			get {
 				FileFilter filter = new FileFilter();
-				filter.Name = "LGM playlist";
-				filter.AddPattern("*.lgm");
+				filter.Name = Catalog.GetString("LongoMatch playlist");
+				filter.AddPattern("*" + Constants.PLAYLIST_EXT);
 				return filter;
 			}
 		}

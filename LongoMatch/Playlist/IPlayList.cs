@@ -35,7 +35,7 @@ namespace LongoMatch.Playlist {
 
 		void Add(PlayListPlay play);
 
-		void Remove(PlayListPlay play);
+		bool Remove(PlayListPlay play);
 
 		PlayListPlay Next();
 

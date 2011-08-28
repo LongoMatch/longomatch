@@ -32,46 +32,25 @@ namespace LongoMatch.Playlist
 {
 
 
-	public class PlayList: SerializableObject,IPlayList
+	[Serializable]
+	public class PlayList: List<PlayListPlay>, IPlayList
 	{
 
-		private  List<PlayListPlay> list;
-		private string filename = null;
 		private int indexSelection = 0;
 		private Version version;
 
 		#region Constructors
 		public PlayList() {
-			list = new List<PlayListPlay>();
-			version = new Version(1,0);
+			version = new Version(2,0);
 		}
 
-		public PlayList(string file)
-		{
-			//For new Play List
-			if(!System.IO.File.Exists(file)) {
-				list = new List<PlayListPlay>();
-				filename = file;
-			}
-			else
-				Load(file);
-
-			version = new Version(1,0);
-		}
 		#endregion
 
 		#region Properties
 
-		public int Count {
-			get {
-				return list.Count;
-			}
-		}
-
-		public string File {
-			get {
-				return filename;
-			}
+		public string Filename {
+			get;
+			set;
 		}
 
 		public Version Version {
@@ -83,19 +62,23 @@ namespace LongoMatch.Playlist
 
 		#region Public methods
 		public void Save() {
-			Save(File);
+			Save(Filename);
 		}
 
 		public void Save(string filePath) {
-			Save(this, filePath);
+			SerializableObject.Save(this, filePath);
 		}
 
 		public static PlayList Load(string filePath) {
-			return Load<PlayList>(filePath);
-		}
-
-		public bool isLoaded() {
-			return filename != null;
+			PlayList pl;
+			string filename = System.IO.Path.ChangeExtension(filePath, Constants.PLAYLIST_EXT);
+			
+			//For new Play List
+			if(!System.IO.File.Exists(filePath))
+				pl = new PlayList();
+			else
+				pl = SerializableObject.Load<PlayList>(filePath);
+			return pl; 
 		}
 
 		public int GetCurrentIndex() {
@@ -105,33 +88,29 @@ namespace LongoMatch.Playlist
 		public PlayListPlay Next() {
 			if(HasNext())
 				indexSelection++;
-			return list[indexSelection];
+			return this[indexSelection];
 		}
 
 		public PlayListPlay Prev() {
 			if(HasPrev())
 				indexSelection--;
-			return list[indexSelection];
+			return this[indexSelection];
 		}
 
-		public void Add(PlayListPlay plNode) {
-			list.Add(plNode);
-		}
-
-		public void Remove(PlayListPlay plNode) {
-
-			list.Remove(plNode);
-			if(GetCurrentIndex() >= list.Count)
+		public new bool Remove(PlayListPlay plNode) {
+			bool ret = base.Remove(plNode);
+			if(GetCurrentIndex() >= Count)
 				indexSelection --;
+			return ret;
 		}
 
 		public PlayListPlay Select(int index) {
 			indexSelection = index;
-			return list[index];
+			return this[index];
 		}
 
 		public bool HasNext() {
-			return indexSelection < list.Count-1;
+			return indexSelection < Count-1;
 		}
 
 		public bool HasPrev() {
@@ -140,7 +119,7 @@ namespace LongoMatch.Playlist
 
 		public ListStore GetModel() {
 			Gtk.ListStore listStore = new ListStore(typeof(PlayListPlay));
-			foreach(PlayListPlay plNode in list) {
+			foreach(PlayListPlay plNode in this) {
 				listStore.AppendValues(plNode);
 			}
 			return listStore;
@@ -150,15 +129,11 @@ namespace LongoMatch.Playlist
 			TreeIter iter ;
 
 			listStore.GetIterFirst(out iter);
-			list.Clear();
+			Clear();
 			while(listStore.IterIsValid(iter)) {
-				list.Add(listStore.GetValue(iter, 0) as PlayListPlay);
+				Add(listStore.GetValue(iter, 0) as PlayListPlay);
 				listStore.IterNext(ref iter);
 			}
-		}
-
-		public IEnumerator GetEnumerator() {
-			return list.GetEnumerator();
 		}
 
 		public IPlayList Copy() {
