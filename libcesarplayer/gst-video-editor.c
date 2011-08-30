@@ -324,7 +324,7 @@ gst_video_editor_set_video_bit_rate (GstVideoEditor * gve, gint bitrate)
       g_object_set (gve->priv->video_encoder, "bitrate", bitrate, NULL);
     else
       g_object_set (gve->priv->video_encoder, "bitrate", bitrate * 1000, NULL);
-    GST_INFO ("Encoding video bitrate changed to :%d (kbps)\n", bitrate);
+    GST_INFO_OBJECT (gve, "Encoding video bitrate changed to :%d (kbps)\n", bitrate);
   }
 }
 
@@ -337,7 +337,7 @@ gst_video_editor_set_audio_bit_rate (GstVideoEditor * gve, gint bitrate)
   gst_element_get_state (gve->priv->audioencoder, &cur_state, NULL, 0);
   if (cur_state <= GST_STATE_READY) {
     g_object_set (gve->priv->audioencoder, "bitrate", bitrate, NULL);
-    GST_INFO ("Encoding audio bitrate changed to :%d (bps)\n", bitrate);
+    GST_INFO_OBJECT (gve, "Encoding audio bitrate changed to :%d (bps)\n", bitrate);
   }
 }
 
@@ -366,7 +366,7 @@ gst_video_editor_set_output_file (GstVideoEditor * gve, const char *output_file)
     gst_element_set_state (gve->priv->file_sink, GST_STATE_NULL);
     g_object_set (gve->priv->file_sink, "location", gve->priv->output_file,
         NULL);
-    GST_INFO ("Ouput File changed to :%s\n", gve->priv->output_file);
+    GST_INFO_OBJECT (gve, "Ouput File changed to :%s\n", gve->priv->output_file);
   }
 }
 
@@ -479,6 +479,7 @@ gve_apply_new_caps (GstVideoEditor * gve)
       "pixel-aspect-ratio", GST_TYPE_FRACTION, 1, 1,
       "framerate", GST_TYPE_FRACTION, 25, 1, NULL);
 
+  GST_INFO_OBJECT(gve, "Changed caps: %s", gst_caps_to_string(caps));
   g_object_set (G_OBJECT (gve->priv->capsfilter), "caps", caps, NULL);
   font =
       g_strdup_printf ("sans bold %d",
@@ -897,6 +898,8 @@ gst_video_editor_clear_segments_list (GstVideoEditor * gve)
 
   g_return_if_fail (GST_IS_VIDEO_EDITOR (gve));
 
+  GST_INFO_OBJECT (gve, "Clearing list of segments");
+
   gst_video_editor_cancel (gve);
 
   tmp = gve->priv->gnl_video_filesources;
@@ -988,6 +991,8 @@ gst_video_editor_set_video_encoder (GstVideoEditor * gve, gchar ** err,
 
   if (!encoder)
     goto no_encoder;
+
+  GST_INFO_OBJECT(gve, "Changing video encoder: %s", encoder_name);
 
   if (!g_strcmp0
       (gst_element_get_name (gve->priv->video_encoder), encoder_name))
@@ -1098,6 +1103,8 @@ gst_video_editor_set_audio_encoder (GstVideoEditor * gve, gchar ** err,
   if (!encoder)
     goto no_encoder;
 
+  GST_INFO_OBJECT(gve, "Changing audio encoder: %s", encoder_name);
+
   if (!g_strcmp0 (gst_element_get_name (gve->priv->audioencoder), encoder_name))
     goto same_encoder;
 
@@ -1207,6 +1214,8 @@ gst_video_editor_set_video_muxer (GstVideoEditor * gve, gchar ** err,
   if (!muxer)
     goto no_muxer;
 
+  GST_INFO_OBJECT(gve, "Changing muxer: %s", muxer_name);
+
   if (!g_strcmp0 (gst_element_get_name (gve->priv->muxer), muxer_name))
     goto same_muxer;
 
@@ -1256,6 +1265,7 @@ gst_video_editor_start (GstVideoEditor * gve)
 {
   g_return_if_fail (GST_IS_VIDEO_EDITOR (gve));
 
+  GST_INFO_OBJECT(gve, "Starting");
   gst_element_set_state (gve->priv->main_pipeline, GST_STATE_PLAYING);
   g_signal_emit (gve, gve_signals[SIGNAL_PERCENT_COMPLETED], 0, (gfloat) 0);
 }
@@ -1265,6 +1275,7 @@ gst_video_editor_cancel (GstVideoEditor * gve)
 {
   g_return_if_fail (GST_IS_VIDEO_EDITOR (gve));
 
+  GST_INFO_OBJECT(gve, "Cancelling");
   if (gve->priv->update_id > 0) {
     g_source_remove (gve->priv->update_id);
     gve->priv->update_id = 0;
