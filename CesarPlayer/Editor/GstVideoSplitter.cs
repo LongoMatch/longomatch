@@ -275,7 +275,6 @@ namespace LongoMatch.Video.Editor {
 		}
 
 
-
 		[DllImport("libcesarplayer.dll")]
 		static extern void gst_video_editor_clear_segments_list(IntPtr raw);
 
@@ -289,7 +288,13 @@ namespace LongoMatch.Video.Editor {
 		public void AddSegment(string filePath, long start, long duration, double rate, string title, bool hasAudio) {
 			if(Environment.OSVersion.Platform == PlatformID.Win32NT)
 				filePath="file:///"+filePath;
-			gst_video_editor_add_segment(Handle, filePath, start, duration, rate, GLib.Marshaller.StringToPtrGStrdup(title), hasAudio);
+			Console.WriteLine (filePath);
+			Console.WriteLine (start);
+			Console.WriteLine (duration);
+			Console.WriteLine (rate);
+			Console.WriteLine (title);
+			Console.WriteLine (hasAudio);
+			gst_video_editor_add_segment(Handle, filePath, start, duration, rate, GLib.Marshaller.StringToPtrGStrdup(title), true);
 		}
 
 
@@ -358,14 +363,18 @@ namespace LongoMatch.Video.Editor {
 
 		public EncodingSettings EncodingSettings{
 			set{
-				AudioEncoder = value.EncodingProfile.AudioEncoder;
-				VideoEncoder = value.EncodingProfile.VideoEncoder;
-				VideoMuxer = value.EncodingProfile.Muxer;
-				Height = (int) value.VideoStandard.Height;
-				Width = (int) value.VideoStandard.Width;
+				/* FIXME: This should only be possible with the editor in the NULL state.
+				 * For now keep this exact order setting the properties in the editor,
+				 * otherwise it won't work */
 				VideoBitrate = (int) value.VideoBitrate;
 				AudioBitrate = (int) value.AudioBitrate;
+				Height = (int) value.VideoStandard.Height;
+				Width = (int) value.VideoStandard.Width;
+				AudioEncoder = value.EncodingProfile.AudioEncoder;
+				VideoEncoder = value.EncodingProfile.VideoEncoder;
 				OutputFile = value.OutputFile;
+				EnableAudio = false;
+				VideoMuxer = value.EncodingProfile.Muxer;
 			}
 		}
 
