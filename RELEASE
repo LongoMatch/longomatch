@@ -1,8 +1,13 @@
-LongoMatch-0.16.9 "The yacth week"
+LongoMatch-0.17.1 "Back to Madrid"
 ----------------------------------
 
-The LongoMatch team is happy to announce the ninth release in the 0.16
-LongoMatch series.
+The LongoMatch team is happy to announce the first release in the
+unstable 0.17 series.
+
+*** IMPORTANT NOTE ***
+The 0.17.x releases are considered unstable and they should only be
+installed for testing and debugging until the development is considered
+stable enough to release LongoMatch 0.18
 
 Due to its dependency on GStreamer, We strongly recommend to have
 all official latest gstreamer libraries and plugins installed for the best user
@@ -10,28 +15,19 @@ experience.
 
 
 * Features
-	* Added a converter for Mpeg-TS muxed files
-	* Improved detection of installation errors on windows
+	* Rewrite of the tagging subsystem with support for subcategories
+	* Improved tagging workflow
+	* Allow edition of categories in opened projects
+	* Colored buttons for tagging widgets
 
 *Contributors to this Release:
 
   * LongoMatch:
 	Andoni Morales Alastruey <ylatuya@gmail.com>
-
-  * Translations:
-	* ca: Xavier Queralt
-	* cs: Marek Cernocky, Pavel Bárta, Petr Kovar
-	* da: Joe Hansen, Kenneth Nielsen
-	* de: Mario Blättermann
-	* es: Andoni Morales Alastruey, Jorge González
-	* fr: Bruno Brouard, G. Baylard, Laurent Coudeur
-	* it: Maurizio Napolitano
-	* nb: Kjartan Maraas
-	* nl: Peter Strikwerda 
-	* sl: Matej Urbančič
-	* sv: Daniel Nylander
-	* zh_CN: Aron Xu
-
+	Bruno Brouard <annoa.b@gmail.com>
+	Daniel Mustieles <daniel.mustieles@gmail.com>
+	Marek Černocký <marek@manet.cz>
+	Mario Blättermann <mariobl@gnome.org>
 
 * Requirements
 

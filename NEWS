@@ -1,3 +1,12 @@
+===== LongoMatch 0.17.0 "Back to Madrid" =====
+
+	== Features of this release ==
+
+	* Rewrite of the tagging subsystem with support for subcategories
+	* Improved tagging workflow
+	* Allow edition of categories in opened projects
+	* Colored buttons for tagging widgets
+
 ===== LongoMatch 0.16.9 "The yacth week" =====
 
 	== Features of this release ==
