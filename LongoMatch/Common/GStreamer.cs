@@ -27,7 +27,7 @@ namespace LongoMatch.Common
 	{
 		
 		[DllImport("libgstreamer-0.10.dll") /* willfully unmapped */ ]
-		static extern void gst_init (string argv);
+		static extern void gst_init (int argc, string argv);
 		[DllImport("libgstreamer-0.10.dll") /* willfully unmapped */ ]
 		static extern IntPtr gst_registry_get_default ();
 		[DllImport("libgstreamer-0.10.dll") /* willfully unmapped */ ]
@@ -40,7 +40,7 @@ namespace LongoMatch.Common
 		
 		public static void Init() {
 			SetUpEnvironment ();
-			gst_init ("");
+			gst_init (0, "");
 		}
 		
 		public static bool CheckInstallation () {
