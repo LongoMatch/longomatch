@@ -4,10 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: longomatch master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-08-27 09:31+0000\n"
-"PO-Revision-Date: 2011-08-27 18:27+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-08-30 20:58+0000\n"
+"PO-Revision-Date: 2011-09-01 11:53+0100\n"
 "Last-Translator: Mario Blättermann <mariobl@freenet.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -42,24 +41,25 @@ msgstr "Nicht definiert"
 msgid "default"
 msgstr "Vorgabe"
 
-#: ../LongoMatch/Store/Templates/CategoriesTemplate.cs:77
+#: ../LongoMatch/Store/Templates/CategoriesTemplate.cs:64
 #: ../LongoMatch/Store/SubCategory.cs:152
 msgid "Team"
 msgstr "Mannschaft"
 
-#: ../LongoMatch/Store/Templates/CategoriesTemplate.cs:84
+#: ../LongoMatch/Store/Templates/CategoriesTemplate.cs:71
 msgid "Local Team Players"
 msgstr "Spieler der lokalen Mannschaft"
 
-#: ../LongoMatch/Store/Templates/CategoriesTemplate.cs:90
+#: ../LongoMatch/Store/Templates/CategoriesTemplate.cs:77
 msgid "Visitor Team Players"
 msgstr "Spieler der Gastmannschaft"
 
-#: ../LongoMatch/Store/Templates/CategoriesTemplate.cs:96
+#: ../LongoMatch/Store/Templates/CategoriesTemplate.cs:83
 msgid "Period"
 msgstr "Saison"
 
-#: ../LongoMatch/Store/Play.cs:200 ../LongoMatch/Store/SubCategory.cs:83
+#: ../LongoMatch/Store/Play.cs:200
+#: ../LongoMatch/Store/SubCategory.cs:83
 #: ../LongoMatch/Gui/TreeView/PlayerPropertiesTreeView.cs:50
 #: ../LongoMatch/Gui/TreeView/CategoriesTreeView.cs:47
 #: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:71
@@ -103,25 +103,29 @@ msgstr "Mannschaften:"
 msgid "Team selection"
 msgstr "Mannschaftsauswahl"
 
-#: ../LongoMatch/Store/Category.cs:105 ../LongoMatch/Store/Category.cs:113
+#: ../LongoMatch/Store/Category.cs:105
+#: ../LongoMatch/Store/Category.cs:113
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:71
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:259
 msgid "Sort by name"
 msgstr "Nach Name sortieren"
 
-#: ../LongoMatch/Store/Category.cs:107 ../LongoMatch/Store/Category.cs:117
+#: ../LongoMatch/Store/Category.cs:107
+#: ../LongoMatch/Store/Category.cs:117
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:72
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:260
 msgid "Sort by start time"
 msgstr "Nach Startzeit sortieren"
 
-#: ../LongoMatch/Store/Category.cs:109 ../LongoMatch/Store/Category.cs:119
+#: ../LongoMatch/Store/Category.cs:109
+#: ../LongoMatch/Store/Category.cs:119
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:73
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:261
 msgid "Sort by stop time"
 msgstr "Nach Stoppzeit sortieren"
 
-#: ../LongoMatch/Store/Category.cs:111 ../LongoMatch/Store/Category.cs:121
+#: ../LongoMatch/Store/Category.cs:111
+#: ../LongoMatch/Store/Category.cs:121
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:74
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:262
 msgid "Sort by duration"
@@ -149,12 +153,8 @@ msgid "A template already exixts with the name: "
 msgstr "Eine Vorlage dieses Namens existiert bereits:"
 
 #: ../LongoMatch/Main.cs:148
-msgid ""
-"Some elements from the previous version (database, templates and/or "
-"playlists) have been found."
-msgstr ""
-"Einige Elemente aus früheren Versionen wurden gefunden (Datenbank, Vorlagen, "
-"und/oder Wiedergabelisten)."
+msgid "Some elements from the previous version (database, templates and/or playlists) have been found."
+msgstr "Einige Elemente aus früheren Versionen wurden gefunden (Datenbank, Vorlagen, und/oder Wiedergabelisten)."
 
 #: ../LongoMatch/Main.cs:149
 msgid "Do you want to import them?"
@@ -177,12 +177,8 @@ msgid "The file associated to this project doesn't exist."
 msgstr "Die diesem Projekt zugeordnete Datei existiert nicht."
 
 #: ../LongoMatch/Gui/MainWindow.cs:134
-msgid ""
-"If the location of the file has changed try to edit it with the database "
-"manager."
-msgstr ""
-"Falls sich der Ort der Datei geändert hat, versuchen Sie ihn in der "
-"Datenbankverwaltung zu ändern."
+msgid "If the location of the file has changed try to edit it with the database manager."
+msgstr "Falls sich der Ort der Datei geändert hat, versuchen Sie ihn in der Datenbankverwaltung zu ändern."
 
 #: ../LongoMatch/Gui/MainWindow.cs:145
 msgid "An error occurred opening this project:"
@@ -197,12 +193,8 @@ msgid "An error occured saving the project:\n"
 msgstr "Ein Fehler ist beim Speichern des Projekts aufgetreten:\n"
 
 #: ../LongoMatch/Gui/MainWindow.cs:218
-msgid ""
-"The video file and a backup of the project has been saved. Try to import it "
-"later:\n"
-msgstr ""
-"Die Videodatei und eine Sicherung des Projekts wurden gespeichert. Versuchen "
-"Sie, diese später zu importieren:\n"
+msgid "The video file and a backup of the project has been saved. Try to import it later:\n"
+msgstr "Die Videodatei und eine Sicherung des Projekts wurden gespeichert. Versuchen Sie, diese später zu importieren:\n"
 
 #: ../LongoMatch/Gui/MainWindow.cs:332
 msgid "Do you want to close the current project?"
@@ -210,16 +202,11 @@ msgstr "Wollen Sie das aktuelle Projekt schließen?"
 
 #: ../LongoMatch/Gui/MainWindow.cs:539
 msgid "The actual project will be closed due to an error in the media player:"
-msgstr ""
-"Das aktuelle Projekt wird wegen eines Fehlers in der Medienwiedergabe "
-"geschlossen:"
+msgstr "Das aktuelle Projekt wird wegen eines Fehlers in der Medienwiedergabe geschlossen:"
 
 #: ../LongoMatch/Gui/MainWindow.cs:623
-msgid ""
-"An error occured in the video capturer and the current project will be closed:"
-msgstr ""
-"Ein Fehler trat in der Videoaufnahme auf, daher wird das aktuelle Projekt "
-"geschlossen:"
+msgid "An error occured in the video capturer and the current project will be closed:"
+msgstr "Ein Fehler trat in der Videoaufnahme auf, daher wird das aktuelle Projekt geschlossen:"
 
 #: ../LongoMatch/Gui/Dialog/EditCategoryDialog.cs:63
 msgid "This hotkey is already in use."
@@ -368,34 +355,31 @@ msgid "none"
 msgstr "nichts"
 
 #: ../LongoMatch/Gui/Component/CategoryProperties.cs:190
-msgid ""
-"If you delete this subcategory you will looseall the tags associated with it. "
-"Do you want to proceed?"
-msgstr ""
-"Sie sind im Begriff, diese Unterkategorie und alle zugehörigen Schlagworte zu "
-"entfernen. Wollen Sie den Vorgang fortsetzen?"
+msgid "If you delete this subcategory you will looseall the tags associated with it. Do you want to proceed?"
+msgstr "Sie sind im Begriff, diese Unterkategorie und alle zugehörigen Schlagworte zu entfernen. Wollen Sie den Vorgang fortsetzen?"
 
-#: ../LongoMatch/Gui/Component/PlayListWidget.cs:92
-msgid ""
-"The file you are trying to load is not a playlist or it's not compatible with "
-"the current version"
-msgstr ""
-"Die von Ihnen gewählte Datei ist keine Wiedergabeliste oder ist inkompatibel "
-"mit der aktuellen Version"
+#: ../LongoMatch/Gui/Component/PlayListWidget.cs:94
+msgid "The file you are trying to load is not a playlist or it's not compatible with the current version"
+msgstr "Die von Ihnen gewählte Datei ist keine Wiedergabeliste oder ist inkompatibel mit der aktuellen Version"
 
-#: ../LongoMatch/Gui/Component/PlayListWidget.cs:222
+#: ../LongoMatch/Gui/Component/PlayListWidget.cs:198
+#| msgid "LongoMatch"
+msgid "LongoMatch playlist"
+msgstr "LongoMatch-Wiedergabeliste"
+
+#: ../LongoMatch/Gui/Component/PlayListWidget.cs:224
 msgid "Open playlist"
 msgstr "Wiedergabeliste öffnen"
 
-#: ../LongoMatch/Gui/Component/PlayListWidget.cs:237
+#: ../LongoMatch/Gui/Component/PlayListWidget.cs:239
 msgid "New playlist"
 msgstr "Neue Wiedergabeliste"
 
-#: ../LongoMatch/Gui/Component/PlayListWidget.cs:262
+#: ../LongoMatch/Gui/Component/PlayListWidget.cs:264
 msgid "The playlist is empty!"
 msgstr "Die Wiedergabeliste ist leer!"
 
-#: ../LongoMatch/Gui/Component/PlayListWidget.cs:271
+#: ../LongoMatch/Gui/Component/PlayListWidget.cs:273
 #: ../LongoMatch/Common/ProjectUtils.cs:128
 #: ../LongoMatch/Common/ProjectUtils.cs:217
 msgid "Please, select a video file."
@@ -411,43 +395,36 @@ msgstr "Bild auswählen"
 msgid "Yes"
 msgstr "Ja"
 
-#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:159
+#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:163
 msgid "New template"
 msgstr "Neue Vorlage"
 
-#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:163
+#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:167
 msgid "The template name is void."
 msgstr "Der Vorlagenname ist leer."
 
-#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:169
+#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:173
 msgid "The template already exists. Do you want to overwrite it ?"
 msgstr "Die Vorlage existiert bereits. Wollen Sie sie überschreiben?"
 
-#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:231
-msgid ""
-"You are about to delete a category and all the plays added to this category. "
-"Do you want to proceed?"
-msgstr ""
-"Sie sind im Begriff, eine Kategorie und alle zugehörigen Spiele zu entfernen. "
-"Wollen Sie den Vorgang fortsetzen?"
+#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:230
+msgid "You are about to delete a category and all the plays added to this category. Do you want to proceed?"
+msgstr "Sie sind im Begriff, eine Kategorie und alle zugehörigen Spiele zu entfernen. Wollen Sie den Vorgang fortsetzen?"
 
-#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:238
-#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:246
-#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:367
-#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:377
+#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:237
+#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:245
+#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:361
+#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:371
 msgid "A template needs at least one category"
 msgstr "Eine Vorlage benötigt mindestens eine Kategorie"
 
-#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:316
+#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:315
 msgid "Team name"
 msgstr "Mannschaftsname"
 
-#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:359
-msgid ""
-"You are about to delete a player and all its tags. Do you want to proceed?"
-msgstr ""
-"Sie sind im Begriff, einen Spieler und alle zugehörigen Schlagworte zu "
-"entfernen. Wollen Sie den Vorgang fortsetzen?"
+#: ../LongoMatch/Gui/Component/TemplatesEditorBase.cs:353
+msgid "You are about to delete a player and all its tags. Do you want to proceed?"
+msgstr "Sie sind im Begriff, einen Spieler und alle zugehörigen Schlagworte zu entfernen. Wollen Sie den Vorgang fortsetzen?"
 
 #: ../LongoMatch/Gui/Component/ProjectListWidget.cs:55
 msgid "Filename"
@@ -638,14 +615,8 @@ msgid "File not found"
 msgstr "Datei nicht gefunden"
 
 #: ../LongoMatch/Common/ProjectUtils.cs:43
-msgid ""
-"The project will be saved to a file. You can insert it later into the "
-"database using the \"Import project\" function once you copied the video file "
-"to your computer"
-msgstr ""
-"Das Projekt wird in einer Datei gespeichert. Sie können es später mit der "
-"Funktion »Projekt importieren« zur Datenbank hinzufügen, sobald Sie die "
-"Videodatei auf Ihren Rechner kopiert haben."
+msgid "The project will be saved to a file. You can insert it later into the database using the \"Import project\" function once you copied the video file to your computer"
+msgstr "Das Projekt wird in einer Datei gespeichert. Sie können es später mit der Funktion »Projekt importieren« zur Datenbank hinzufügen, sobald Sie die Videodatei auf Ihren Rechner kopiert haben."
 
 #: ../LongoMatch/Common/ProjectUtils.cs:64
 msgid "Project saved successfully."
@@ -1099,15 +1070,12 @@ msgid ""
 "A capture project is actually running.\n"
 "You can continue with the current capture, cancel it or save your project. \n"
 "\n"
-"<b>Warning: If you cancel the current project all your changes will be lost.</"
-"b>"
+"<b>Warning: If you cancel the current project all your changes will be lost.</b>"
 msgstr ""
 "Ein Aufnahmeprojekt läuft derzeit.\n"
-"Sie können die aktuelle Aufnahme fortsetzen, abbrechen oder Ihr Projekt "
-"speichern.\n"
+"Sie können die aktuelle Aufnahme fortsetzen, abbrechen oder Ihr Projekt speichern.\n"
 "\n"
-"<b>Warnung: Falls Sie das aktuelle Projekt abbrechen, gehen alle "
-"vorgenommenen Änderungen verloren.</b>"
+"<b>Warnung: Falls Sie das aktuelle Projekt abbrechen, gehen alle vorgenommenen Änderungen verloren.</b>"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs:87
 msgid "Return"
@@ -1326,15 +1294,12 @@ msgid "Please, try again."
 msgstr "Bitte versuchen Sie es erneut."
 
 #: ../LongoMatch/Handlers/EventsManager.cs:265
-msgid ""
-"The stop time is smaller than the start time. The play will not be added."
-msgstr ""
-"Die Stoppzeit liegt vor der Startzeit. Das Spiel wird nicht hinzugefügt."
+msgid "The stop time is smaller than the start time. The play will not be added."
+msgstr "Die Stoppzeit liegt vor der Startzeit. Das Spiel wird nicht hinzugefügt."
 
 #: ../LongoMatch/Handlers/EventsManager.cs:365
 msgid "Please, close the opened project to play the playlist."
-msgstr ""
-"Bitte schließen Sie das geöffnete Projekt, um die Wiedergabeliste abzuspielen."
+msgstr "Bitte schließen Sie das geöffnete Projekt, um die Wiedergabeliste abzuspielen."
 
 #: ../CesarPlayer/Gui/CapturerBin.cs:252
 msgid ""
@@ -1354,8 +1319,7 @@ msgstr "Gerät wurde getrennt. Die Aufnahme wird unterbrochen."
 
 #: ../CesarPlayer/Gui/CapturerBin.cs:302
 msgid "Device reconnected.Do you want to restart the capture?"
-msgstr ""
-"Das Gerät wurde erneut angeschlossen, wollen Sie die Aufnahme neu starten?"
+msgstr "Das Gerät wurde erneut angeschlossen, wollen Sie die Aufnahme neu starten?"
 
 #: ../CesarPlayer/Common/VideoStandards.cs:37
 msgid "Keep original size"
@@ -1371,12 +1335,8 @@ msgid "Remuxing file..."
 msgstr "Datei wird remuxt …"
 
 #: ../CesarPlayer/Utils/MpegRemuxer.cs:126
-msgid ""
-"The file you are trying to load is not properly supported. Would you like to "
-"convert it into a more suitable format?"
-msgstr ""
-"Die von Ihnen zum Laden gewählte Datei wird nicht korrekt unterstützt. Wollen "
-"Sie sie in ein besser unterstütztes Format umwandeln?"
+msgid "The file you are trying to load is not properly supported. Would you like to convert it into a more suitable format?"
+msgstr "Die von Ihnen zum Laden gewählte Datei wird nicht korrekt unterstützt. Wollen Sie sie in ein besser unterstütztes Format umwandeln?"
 
 #: ../CesarPlayer/Utils/Device.cs:84
 msgid "Default device"
@@ -1392,12 +1352,8 @@ msgid "Fake live source"
 msgstr "Simulierte Live-Quelle"
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2571
-msgid ""
-"The requested audio output was not found. Please select another audio output "
-"in the Multimedia Systems Selector."
-msgstr ""
-"Die angeforderte Audio-Ausgabe wurde nicht gefunden. Bitte wählen Sie in den "
-"Einstellungen des Multimedia-Systems eine andere aus."
+msgid "The requested audio output was not found. Please select another audio output in the Multimedia Systems Selector."
+msgstr "Die angeforderte Audio-Ausgabe wurde nicht gefunden. Bitte wählen Sie in den Einstellungen des Multimedia-Systems eine andere aus."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2577
 msgid "Location not found."
@@ -1405,56 +1361,36 @@ msgstr "Ort wurde nicht gefunden."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2581
 msgid "Could not open location; you might not have permission to open the file."
-msgstr ""
-"Der Ort konnte nicht geöffnet werden; möglicherweise besitzen Sie nicht die "
-"notwendigen Zugriffsrechte, um die Datei zu öffnen."
+msgstr "Der Ort konnte nicht geöffnet werden; möglicherweise besitzen Sie nicht die notwendigen Zugriffsrechte, um die Datei zu öffnen."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2593
-msgid ""
-"The video output is in use by another application. Please close other video "
-"applications, or select another video output in the Multimedia Systems "
-"Selector."
-msgstr ""
-"Die Video-Ausgabe wird von einer anderen Anwendung verwendet. Bitte schließen "
-"Sie alle anderen Video-Anwendungen oder wählen Sie in den Einstellungen des "
-"Multimedia-Systems eine andere Video-Ausgabe aus."
+msgid "The video output is in use by another application. Please close other video applications, or select another video output in the Multimedia Systems Selector."
+msgstr "Die Video-Ausgabe wird von einer anderen Anwendung verwendet. Bitte schließen Sie alle anderen Video-Anwendungen oder wählen Sie in den Einstellungen des Multimedia-Systems eine andere Video-Ausgabe aus."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2600
-msgid ""
-"The audio output is in use by another application. Please select another "
-"audio output in the Multimedia Systems Selector. You may want to consider "
-"using a sound server."
-msgstr ""
-"Die Audio-Ausgabe wird von einer anderen Anwendung verwendet. Bitte wählen "
-"Sie in den Einstellungen des Multimedia-Systems eine andere Video-Ausgabe "
-"aus. Eventuell sollten Sie auch einen Sound-Server verwenden."
+msgid "The audio output is in use by another application. Please select another audio output in the Multimedia Systems Selector. You may want to consider using a sound server."
+msgstr "Die Audio-Ausgabe wird von einer anderen Anwendung verwendet. Bitte wählen Sie in den Einstellungen des Multimedia-Systems eine andere Video-Ausgabe aus. Eventuell sollten Sie auch einen Sound-Server verwenden."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2619
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2625
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
-msgstr ""
-"Zum Abspielen dieses Videos wird das nicht installierte Plugin %s benötigt."
+msgstr "Zum Abspielen dieses Videos wird das nicht installierte Plugin %s benötigt."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2627
 #, c-format
 msgid ""
-"The playback of this movie requires the following decoders which are not "
-"installed:\n"
+"The playback of this movie requires the following decoders which are not installed:\n"
 "\n"
 "%s"
 msgstr ""
-"Für das Abspielen dieses Videos werden folgende, nicht installierte Dekoder "
-"benötigt:\n"
+"Für das Abspielen dieses Videos werden folgende, nicht installierte Dekoder benötigt:\n"
 "\n"
 "%s"
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2653
-msgid ""
-"Cannot play this file over the network. Try downloading it to disk first."
-msgstr ""
-"Diese Datei kann nicht über Netzwerk abgespielt werden. Versuchen Sie die "
-"Datei vorher herunterzuladen und zu speichern."
+msgid "Cannot play this file over the network. Try downloading it to disk first."
+msgstr "Diese Datei kann nicht über Netzwerk abgespielt werden. Versuchen Sie die Datei vorher herunterzuladen und zu speichern."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2728
 msgid "Media file could not be played."
@@ -1486,54 +1422,29 @@ msgstr "Die Medien enthalten keine unterstützten Videoströme."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5396
 #, c-format
-msgid ""
-"Failed to create a GStreamer play object. Please check your GStreamer "
-"installation."
-msgstr ""
-"Es konnte kein GStreamer-Wiedergabeobjekt erzeugt werden. Bitte überprüfen "
-"Sie Ihre GStreamer-Installation."
+msgid "Failed to create a GStreamer play object. Please check your GStreamer installation."
+msgstr "Es konnte kein GStreamer-Wiedergabeobjekt erzeugt werden. Bitte überprüfen Sie Ihre GStreamer-Installation."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5470
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5597
 #, c-format
-msgid ""
-"Failed to open video output. It may not be available. Please select another "
-"video output in the Multimedia Systems Selector."
-msgstr ""
-"Die Video-Ausgabe konnte nicht geöffnet werden. Bitte wählen Sie in den "
-"Einstellungen des Multimedia-Systems eine andere Video-Ausgabe aus."
+msgid "Failed to open video output. It may not be available. Please select another video output in the Multimedia Systems Selector."
+msgstr "Die Video-Ausgabe konnte nicht geöffnet werden. Bitte wählen Sie in den Einstellungen des Multimedia-Systems eine andere Video-Ausgabe aus."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5482
 #, c-format
-msgid ""
-"Could not find the video output. You may need to install additional GStreamer "
-"plugins, or select another video output in the Multimedia Systems Selector."
-msgstr ""
-"Die angeforderte Video-Ausgabe wurde nicht gefunden. Möglicherweise müssen "
-"Sie weitere GStreamer-Plugins installieren oder in den Einstellungen des "
-"Multimedia-Systems eine andere Video-Ausgabe auswählen."
+msgid "Could not find the video output. You may need to install additional GStreamer plugins, or select another video output in the Multimedia Systems Selector."
+msgstr "Die angeforderte Video-Ausgabe wurde nicht gefunden. Möglicherweise müssen Sie weitere GStreamer-Plugins installieren oder in den Einstellungen des Multimedia-Systems eine andere Video-Ausgabe auswählen."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5518
 #, c-format
-msgid ""
-"Failed to open audio output. You may not have permission to open the sound "
-"device, or the sound server may not be running. Please select another audio "
-"output in the Multimedia Systems Selector."
-msgstr ""
-"Die Audio-Ausgabe konnte nicht geöffnet werden. Sie haben entweder nicht die "
-"notwendigen Rechte, um das Audio-Gerät zu öffnen oder Sound-Server läuft "
-"nicht. Bitte wählen Sie in den Einstellungen des Multimedia-Systems eine "
-"andere Audio-Ausgabe aus."
+msgid "Failed to open audio output. You may not have permission to open the sound device, or the sound server may not be running. Please select another audio output in the Multimedia Systems Selector."
+msgstr "Die Audio-Ausgabe konnte nicht geöffnet werden. Sie haben entweder nicht die notwendigen Rechte, um das Audio-Gerät zu öffnen oder Sound-Server läuft nicht. Bitte wählen Sie in den Einstellungen des Multimedia-Systems eine andere Audio-Ausgabe aus."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5538
 #, c-format
-msgid ""
-"Could not find the audio output. You may need to install additional GStreamer "
-"plugins, or select another audio output in the Multimedia Systems Selector."
-msgstr ""
-"Die angeforderte Audio-Ausgabe wurde nicht gefunden. Möglicherweise müssen "
-"Sie weitere GStreamer-Plugins installieren oder in den Einstellungen des "
-"Multimedia-Systems eine andere Audio-Ausgabe auswählen."
+msgid "Could not find the audio output. You may need to install additional GStreamer plugins, or select another audio output in the Multimedia Systems Selector."
+msgstr "Die angeforderte Audio-Ausgabe wurde nicht gefunden. Möglicherweise müssen Sie weitere GStreamer-Plugins installieren oder in den Einstellungen des Multimedia-Systems eine andere Audio-Ausgabe auswählen."
 
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "9:05:02" for 9
@@ -1541,7 +1452,8 @@ msgstr ""
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: ../libcesarplayer/video-utils.c:92 ../libcesarplayer/video-utils.c:111
+#: ../libcesarplayer/video-utils.c:92
+#: ../libcesarplayer/video-utils.c:111
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
