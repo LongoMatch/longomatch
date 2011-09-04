@@ -288,12 +288,6 @@ namespace LongoMatch.Video.Editor {
 		public void AddSegment(string filePath, long start, long duration, double rate, string title, bool hasAudio) {
 			if(Environment.OSVersion.Platform == PlatformID.Win32NT)
 				filePath="file:///"+filePath;
-			Console.WriteLine (filePath);
-			Console.WriteLine (start);
-			Console.WriteLine (duration);
-			Console.WriteLine (rate);
-			Console.WriteLine (title);
-			Console.WriteLine (hasAudio);
 			gst_video_editor_add_segment(Handle, filePath, start, duration, rate, GLib.Marshaller.StringToPtrGStrdup(title), true);
 		}
 
