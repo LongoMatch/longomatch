@@ -55,7 +55,7 @@ namespace LongoMatch.Store.Templates
 		}
 		
 		public void AddDefaultItem (int i) {
-			Insert(i, new Player {
+			Add(new Player {
 					Name = "Player " + i,
 					Birthday = new DateTime(),
 					Height = 1.80f,
