@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: longomatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-09-01 09:57+0000\n"
-"PO-Revision-Date: 2011-09-07 15:48+0100\n"
+"POT-Creation-Date: 2011-09-07 13:48+0000\n"
+"PO-Revision-Date: 2011-09-14 15:49+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: \n"
@@ -1000,24 +1000,20 @@ msgid "Edit subcategory tags"
 msgstr "Počisti lepljive oznake"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:69
-#, fuzzy
 msgid "Quick tag"
-msgstr "Oznaka objave:"
+msgstr "Hitra oznaka"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:84
-#, fuzzy
 msgid "Subcategory name:"
-msgstr "Ime pravila:"
+msgstr "Ime podrejene kategorije:"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:93
-#, fuzzy
 msgid "Allow multiple selections"
-msgstr "Odstrani vse izbore"
+msgstr "Dovoli več izborov"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:107
-#, fuzzy
 msgid "Goal type"
-msgstr "Vrsta _cilja:"
+msgstr "Vrsta cilja"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:156
 msgid "Penalty"
@@ -1028,9 +1024,8 @@ msgid "Add tag"
 msgstr "Dodaj oznako"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:197
-#, fuzzy
 msgid "<b>Tags</b>"
-msgstr "Oznake:"
+msgstr "<b>Oznake</b>"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs:22
 msgid "Capture Progress"
@@ -1064,7 +1059,7 @@ msgstr "Podrobnosti kategorije"
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.PlayersTaggerWidget.cs:73
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.TeamTaggerWidget.cs:37
 msgid "<b>GtkFrame</b>"
-msgstr ""
+msgstr "<b>GtkFrame</b>"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:32
 msgid "Select template name"
@@ -1232,7 +1227,7 @@ msgstr "_Dodaj zaznamek ..."
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:397
 msgid "<b>Subcategories</b>"
-msgstr ""
+msgstr "<b>Podrejene kategorije</b>"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:131
 msgid "Competition:"
@@ -1380,7 +1375,6 @@ msgid "The requested audio output was not found. Please select another audio out
 msgstr "Zahtevanega odvoda zvoka ni mogoče najti. Izberite drug odvod zvoka med sistemskimi nastavitvami."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2577
-#, fuzzy
 msgid "Location not found."
 msgstr "Mesta ni mogoče najti."
 
@@ -1401,12 +1395,9 @@ msgstr "Odvod zvoka uporablja drug program. Ustavite program, ki zaseda izhod, a
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2619
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2625
-#, fuzzy, c-format
+#, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
-msgstr ""
-"Predvajanje tega posnetka zahteva uporabo navedenih dekodirnikov, ki pa niso nameščeni:\n"
-"\n"
-"%s"
+msgstr "Predvajanje tega posnetka zahteva uporabo vstavka %s, ki pa ni nameščen."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2627
 #, c-format
@@ -1417,9 +1408,8 @@ msgid ""
 msgstr ""
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2653
-#, fuzzy
 msgid "Cannot play this file over the network. Try downloading it to disk first."
-msgstr "Ni mogoče predvajanje preko omrežja. Poskusite prenesti datoteko na disk."
+msgstr "Datoteke ni mogoče predvajati preko omrežja. Poskusite datoteko najprej prejeti na disk."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2728
 msgid "Media file could not be played."
@@ -1443,17 +1433,16 @@ msgstr "Stereo"
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4958
 msgid "Too old version of GStreamer installed."
-msgstr ""
+msgstr "Nameščena je prestara različica GStreamer."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4965
-#, fuzzy
 msgid "Media contains no supported video streams."
-msgstr "Posnetek ne vsebuje podprtih pretokov slike."
+msgstr "Predstavna vsebine ne vključuje podprtih pretokov slike."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5396
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to create a GStreamer play object. Please check your GStreamer installation."
-msgstr "Napaka med ustvarjanjem GStreamer predmeta predvajanja. Preverite nastavitve."
+msgstr "Napaka med ustvarjanjem predmeta predvajanja GStreamer. Preverite nastavitve."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5470
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5597
@@ -1462,19 +1451,19 @@ msgid "Failed to open video output. It may not be available. Please select anoth
 msgstr ""
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5482
-#, fuzzy, c-format
+#, c-format
 msgid "Could not find the video output. You may need to install additional GStreamer plugins, or select another video output in the Multimedia Systems Selector."
-msgstr "Ni mogoče najti odvoda zvoka. Naložiti je treba dodatne GStreamer vstavke ali pa je treba izbrati drug odvod slike med sistemskimi nastavitvami."
+msgstr "Ni mogoče najti odvoda slike. Naložiti je treba dodatne vstavke GStreamer ali pa je treba izbrati drug odvod slike med sistemskimi nastavitvami."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5518
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open audio output. You may not have permission to open the sound device, or the sound server may not be running. Please select another audio output in the Multimedia Systems Selector."
 msgstr "Napaka med odpiranjem zvočnega odvoda. Morda ni ustreznih sistemskih dovoljenj za odpiranje zvočne naprave ali pa zvočni strežnik ne deluje. Izberite drug zvočni odvod v sistemskih nastavitvah."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5538
-#, fuzzy, c-format
+#, c-format
 msgid "Could not find the audio output. You may need to install additional GStreamer plugins, or select another audio output in the Multimedia Systems Selector."
-msgstr "Ni mogoče najti odvoda zvoka. Naložiti je treba dodatne GStreamer vstavke ali pa je treba izbrati drug odvod slike med sistemskimi nastavitvami."
+msgstr "Ni mogoče najti odvoda zvoka. Naložiti je treba dodatne vstavke GStreamer ali pa je treba izbrati drug odvod zvoka med sistemskimi nastavitvami."
 
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "9:05:02" for 9
@@ -1542,13 +1531,12 @@ msgstr "%s:%s"
 
 #. seconds
 #: ../libcesarplayer/video-utils.c:156
-#, fuzzy, c-format
+#, c-format
 msgid "%s"
 msgstr "%s"
 
 #. 0 seconds
 #: ../libcesarplayer/video-utils.c:159
-#, fuzzy
 msgid "0 seconds"
 msgstr "0 sekund"
 
