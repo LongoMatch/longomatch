@@ -100,7 +100,7 @@ namespace LongoMatch.Store.Templates
 			cat.SubCategories.Add(localplayers);
 			cat.SubCategories.Add(visitorplayers);
 			cat.SubCategories.Add(period);
-			Add(cat);
+			Insert(index, cat);
 		}
 
 		public static Categories Load(string filePath) {
