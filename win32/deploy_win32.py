@@ -36,7 +36,7 @@ GTK_DEPS = ['freetype6.dll', 'libatk-1.0-0.dll', 'libcairo-2.dll', 'libgailutil-
 MONO_DEPS = ['mono.dll', 'MonoPosixHelper.dll', 'pangosharpglue-2.dll', 'gtksharpglue-2.dll',
              'glibsharpglue-2.dll', 'gdksharpglue-2.dll', 'atksharpglue-2.dll', 'intl.dll']
 
-MONO_LIB_DEPS = ['mscorlib.dll', 'Mono.Cairo.dll', 'System.dll', 'System.Configuration.dll',
+MONO_LIB_DEPS = ['mscorlib.dll', 'Mono.Cairo.dll', 'System.dll', 'System.Core.dll', 'System.Configuration.dll',
                  'System.Xml.dll', 'System.Security.dll', 'Mono.Security.dll', 'Mono.Posix.dll']
 
 MONO_GAC_DEPS = ['gdk-sharp', 'glib-sharp', 'pango-sharp', 'gtk-sharp', 'atk-sharp']
@@ -70,7 +70,8 @@ GST_PLUGINS_DEPS = ['libgnl.dll', 'libgsta52dec.dll', 'libgstadder.dll', 'libgst
             'libgsttypefindfunctions.dll', 'libgstvideobalance.dll', 'libgstvideobox.dll',
             'libgstvideocrop.dll', 'libgstvideomixer.dll', 'libgstvideorate.dll',
             'libgstvideoscale.dll', 'libgstvideotestsrc.dll', 'libgstvolume.dll', 'libgstvorbis.dll',
-            'libgstvp8.dll', 'libgstx264.dll', 'libgstxvid.dll', 'libgstpango.dll', 'libgstdshowvideosink.dll']
+            'libgstvp8.dll', 'libgstx264.dll', 'libgstxvid.dll', 'libgstpango.dll', 'libgstdshowvideosink.dll',
+	    'libgstadpcmdec.dll']
 
 GST_BIN_DEPS = ['gst-inspect.exe', 'gst-launch.exe', 'gst-typefind.exe']
 
@@ -84,7 +85,7 @@ GST_DLL_DEPS = ['libgstapp-0.10.dll', 'libgstaudio-0.10.dll', 'libgstbase-0.10.d
 
 GLIB_DEPS = ['libgio-2.0-0.dll', 'libglib-2.0-0.dll', 'libgmodule-2.0-0.dll', 'libgobject-2.0-0.dll', 'libgthread-2.0-0.dll']
 
-MSYS_DEPS = ['sh.exe', 'rxvt.exe', 'sh.exe', 'msys-1.0.dll', 'libW11.dll']
+MSYS_DEPS = ['sh.exe', 'rxvt.exe', 'sh.exe', 'msys-1.0.dll', 'msys-regex-1.dll', 'msys-termcap-0.dll']
 
 IMAGES = ['background.png', 'longomatch.png']
 
