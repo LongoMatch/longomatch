@@ -20,7 +20,7 @@
     <signals>
       <itemgroup label="PlayerPropertiesTreeView Signals">
         <signal name="PlayerClicked" />
-        <signal name="PlayerSelected" />
+        <signal name="PlayersSelected" />
       </itemgroup>
     </signals>
   </object>

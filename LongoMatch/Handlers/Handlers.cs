@@ -89,5 +89,8 @@ namespace LongoMatch.Handlers
 	public delegate void SubCategoryHandler(ISubCategory subcat);
 	public delegate void SubCategoriesHandler(List<ISubCategory> subcat);
 
+	public delegate void PlayerPropertiesHandler(Player player);
+	public delegate void PlayersPropertiesHandler(List<Player> players);
+	
 	public delegate void ProjectsSelectedHandler(List<ProjectDescription> projects);
 }

@@ -19,6 +19,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Gdk;
 using Gtk;
 using Mono.Unix;
@@ -28,18 +29,19 @@ using LongoMatch.Store;
 namespace LongoMatch.Gui.Component
 {
 
-	public delegate void PlayerPropertiesHandler(Player player);
 
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 	public class PlayerPropertiesTreeView : Gtk.TreeView
 	{
 		public event PlayerPropertiesHandler PlayerClicked;
-		public event PlayerPropertiesHandler PlayerSelected;
+		public event PlayersPropertiesHandler PlayersSelected;
 
 		public PlayerPropertiesTreeView() {
 
 			RowActivated += OnTreeviewRowActivated;
+			Selection.Changed += OnSelectionChanged;
+			Selection.Mode =  SelectionMode.Multiple;
 
 			Gtk.TreeViewColumn photoColumn = new Gtk.TreeViewColumn();
 			photoColumn.Title = Catalog.GetString("Photo");
@@ -168,6 +170,22 @@ namespace LongoMatch.Gui.Component
 			Player player = (Player) model.GetValue(iter, 0);
 
 			(cell as Gtk.CellRendererText).Text = player.Birthday.ToShortDateString();
+		}
+
+		protected virtual void OnSelectionChanged(object o, System.EventArgs e) {
+			TreeIter iter;
+			List<Player> list;
+			TreePath[] pathArray;
+
+			list = new List<Player>();
+			pathArray = Selection.GetSelectedRows();
+
+			for(int i=0; i< pathArray.Length; i++) {
+				Model.GetIterFromString(out iter, pathArray[i].ToString());
+				list.Add((Player) Model.GetValue(iter, 0));
+			}
+			if(PlayersSelected != null)
+				PlayersSelected(list);
 		}
 
 		protected virtual void OnTreeviewRowActivated(object o, Gtk.RowActivatedArgs args)

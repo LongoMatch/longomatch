@@ -289,7 +289,7 @@ namespace LongoMatch.Gui.Component
 		public TeamTemplateEditorWidget () {
 			treeview = new PlayerPropertiesTreeView(); 
 			treeview.PlayerClicked += this.OnPlayerClicked;
-			treeview.PlayerSelected += this.OnPlayersSelected;
+			treeview.PlayersSelected += this.OnPlayersSelected;
 			AddTreeView(treeview);
 			AddTeamNamesWidget();
 			
@@ -333,17 +333,24 @@ namespace LongoMatch.Gui.Component
 			Edited = true;
 		}
 
-		protected virtual void OnPlayerClicked(LongoMatch.Store.Player player)
+		protected virtual void OnPlayerClicked(Player player)
 		{
 			selected = new List<Player>();
 			selected.Add(player);
 			EditSelected();
 		}
 
-		protected virtual void OnPlayersSelected(LongoMatch.Store.Player player)
+		protected virtual void OnPlayersSelected(List<Player> players)
 		{
-			selected = new List<Player>();
-			selected.Add(player);
+			selected = players;
+			
+			if(selected.Count == 0) {
+				ButtonsSensitive = false;
+			} else if(selected.Count == 1) {
+				ButtonsSensitive = true;
+			} else {
+				MultipleSelection();
+			}
 		}
 		
 		protected override void RemoveSelected (){
