@@ -118,6 +118,7 @@ LONGOMATCH_FILES = \
 	Common/Constants.cs \
 	Common/Cairo.cs\
 	Common/GStreamer.cs\
+	Common/Images.cs\
 	Compat/0.0/DatabaseMigrator.cs \
 	Compat/0.0/DB/DataBase.cs \
 	Compat/0.0/DB/MediaFile.cs \

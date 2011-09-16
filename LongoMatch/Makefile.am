@@ -10,6 +10,7 @@ SOURCES = \
 	Common/Constants.cs \
 	Common/Enums.cs \
 	Common/GStreamer.cs \
+	Common/Images.cs \
 	Common/Log.cs \
 	Common/ProjectUtils.cs \
 	Common/SerializableObject.cs \

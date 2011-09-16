@@ -189,6 +189,7 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.TeamTaggerWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/TeamTaggerWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/ITag.cs" />
+    <File subtype="Code" buildaction="Compile" name="Common/Images.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />

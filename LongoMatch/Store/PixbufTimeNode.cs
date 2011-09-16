@@ -21,6 +21,8 @@
 using System;
 using Gdk;
 
+using LongoMatch.Common;
+
 namespace LongoMatch.Store
 {
 
@@ -49,29 +51,10 @@ namespace LongoMatch.Store
 					return new Pixbuf(thumbnailBuf);
 				else return null;
 			} set {
-				ScaleAndSave(value);
+				var pix = ImageUtils.Scale(value, MAX_WIDTH, MAX_HEIGHT);
+				thumbnailBuf = ImageUtils.Serialize(pix);
 			}
 		}
 		#endregion
-
-		private void ScaleAndSave(Pixbuf pixbuf) {
-			int ow,oh,h,w;
-
-			h = ow = pixbuf.Height;
-			w = oh = pixbuf.Width;
-			ow = MAX_WIDTH;
-			oh = MAX_HEIGHT;
-
-			if(w>MAX_WIDTH || h>MAX_HEIGHT) {
-				double rate = (double)w/(double)h;
-				if(h>w)
-					ow = (int)(oh * rate);
-				else
-					oh = (int)(ow / rate);
-				thumbnailBuf = pixbuf.ScaleSimple(ow,oh,Gdk.InterpType.Bilinear).SaveToBuffer("png");
-				pixbuf.Dispose();
-			}
-			else thumbnailBuf =  pixbuf.SaveToBuffer("png");
-		}
 	}
 }
