@@ -115,7 +115,7 @@ namespace LongoMatch.Store.Templates
 
 		private void FillDefaultTemplate(int count) {
 			for(int i=1; i<=count; i++)
-				AddDefaultItem(i);
+				AddDefaultItem(i-1);
 		}
 	}
 }
