@@ -16,7 +16,10 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
+using System.IO;
+using Gtk;
 using Gdk;
+using Mono.Unix;
 
 namespace LongoMatch.Common
 {
@@ -48,6 +51,37 @@ namespace LongoMatch.Common
 		
 		public static byte[] Serialize(Pixbuf pixbuf) {
 			return pixbuf.SaveToBuffer("png");
+		}
+		
+		public static FileFilter GetFileFilter() {
+			FileFilter filter = new FileFilter();
+			filter.Name = "Images";
+			filter.AddPattern("*.png");
+			filter.AddPattern("*.jpg");
+			filter.AddPattern("*.jpeg");
+			return filter;
+		}
+
+		public static Pixbuf OpenImage(Gtk.Window toplevel) {
+			Pixbuf pimage = null;
+			StreamReader file;
+			FileChooserDialog fChooser;
+			
+			fChooser = new FileChooserDialog(Catalog.GetString("Choose an image"),
+			                                 toplevel, FileChooserAction.Open,
+			                                 "gtk-cancel",ResponseType.Cancel,
+			                                 "gtk-open",ResponseType.Accept);
+			fChooser.AddFilter(GetFileFilter());
+			if(fChooser.Run() == (int)ResponseType.Accept)	{
+				// For Win32 compatibility we need to open the image file
+				// using a StreamReader. Gdk.Pixbuf(string filePath) uses GLib to open the
+				// input file and doesn't support Win32 files path encoding
+				file = new StreamReader(fChooser.Filename);
+				pimage= new Gdk.Pixbuf(file.BaseStream);
+				file.Close();
+			}
+			fChooser.Destroy();
+			return pimage;
 		}
 	}
 }
