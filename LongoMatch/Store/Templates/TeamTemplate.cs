@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mono.Unix;
+using Gdk;
 
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
@@ -30,6 +31,10 @@ namespace LongoMatch.Store.Templates
 
 	public class TeamTemplate: List<Player>, ITemplate<Player>
 	{
+		private byte[] thumbnailBuf;
+		private const int MAX_WIDTH=100;
+		private const int MAX_HEIGHT=75;
+		
 		public TeamTemplate() {
 			TeamName = Catalog.GetString("default");
 		}
@@ -42,6 +47,17 @@ namespace LongoMatch.Store.Templates
 		public String TeamName {
 			get;
 			set;
+		}
+		
+		public Pixbuf Shield {
+			get {
+				if(thumbnailBuf != null)
+					return new Pixbuf(thumbnailBuf);
+				else return null;
+			} set {
+				var pix = ImageUtils.Scale(value, MAX_WIDTH, MAX_HEIGHT);
+				thumbnailBuf = ImageUtils.Serialize(pix);
+			}
 		}
 		
 		public List<Player> PlayingPlayersList {
