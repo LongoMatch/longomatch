@@ -59,6 +59,7 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs \
 	Gui/Component/ButtonsWidget.cs \
 	Gui/Component/CategoriesScale.cs \
+	Gui/Component/CategoriesTemplateEditor.cs \
 	Gui/Component/CategoryProperties.cs \
 	Gui/Component/DrawingToolBox.cs \
 	Gui/Component/DrawingWidget.cs \
@@ -74,6 +75,7 @@ SOURCES = \
 	Gui/Component/TaggerWidget.cs \
 	Gui/Component/TagsTreeWidget.cs \
 	Gui/Component/TeamTaggerWidget.cs \
+	Gui/Component/TeamTemplateEditor.cs \
 	Gui/Component/TemplatesEditorBase.cs \
 	Gui/Component/TimeLineWidget.cs \
 	Gui/Component/TimeReferenceWidget.cs \
