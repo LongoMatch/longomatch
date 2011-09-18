@@ -1386,8 +1386,9 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.TemplatesEditorBase" design-size="514 227">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.TemplatesEditorBase" design-size="794 268">
     <property name="MemberName" />
+    <property name="WidthRequest">400</property>
     <signal name="KeyPressEvent" handler="OnKeyPressEvent" />
     <child>
       <widget class="Gtk.HBox" id="hbox1">
@@ -1397,20 +1398,6 @@
           <widget class="Gtk.VBox" id="mainbox">
             <property name="MemberName" />
             <property name="Spacing">6</property>
-            <child>
-              <widget class="Gtk.VBox" id="upbox">
-                <property name="MemberName" />
-                <property name="Spacing">6</property>
-                <child>
-                  <placeholder />
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">False</property>
-                <property name="Expand">False</property>
-              </packing>
-            </child>
             <child>
               <widget class="Gtk.ScrolledWindow" id="scrolledwindow2">
                 <property name="MemberName" />
@@ -1427,7 +1414,7 @@
                 </child>
               </widget>
               <packing>
-                <property name="Position">1</property>
+                <property name="Position">0</property>
                 <property name="AutoSize">True</property>
               </packing>
             </child>
@@ -1442,6 +1429,21 @@
             <property name="MemberName" />
             <property name="Spacing">6</property>
             <child>
+              <widget class="Gtk.VBox" id="upbox">
+                <property name="MemberName" />
+                <property name="Spacing">6</property>
+                <child>
+                  <placeholder />
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">0</property>
+                <property name="AutoSize">False</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
               <widget class="Gtk.Button" id="newprevbutton">
                 <property name="MemberName" />
                 <property name="Sensitive">False</property>
@@ -1454,7 +1456,7 @@
                 <signal name="Clicked" handler="OnNewBefore" />
               </widget>
               <packing>
-                <property name="Position">0</property>
+                <property name="Position">1</property>
                 <property name="AutoSize">False</property>
                 <property name="Expand">False</property>
                 <property name="Fill">False</property>
@@ -1474,7 +1476,7 @@
                 <signal name="Activated" handler="OnNewBefore" />
               </widget>
               <packing>
-                <property name="Position">1</property>
+                <property name="Position">2</property>
                 <property name="AutoSize">False</property>
                 <property name="Expand">False</property>
                 <property name="Fill">False</property>
@@ -1493,7 +1495,7 @@
                 <signal name="Clicked" handler="OnRemove" />
               </widget>
               <packing>
-                <property name="Position">2</property>
+                <property name="Position">3</property>
                 <property name="AutoSize">False</property>
                 <property name="Expand">False</property>
                 <property name="Fill">False</property>
@@ -1512,20 +1514,8 @@
                 <signal name="Clicked" handler="OnEdit" />
               </widget>
               <packing>
-                <property name="Position">3</property>
-                <property name="AutoSize">False</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.HSeparator" id="hseparator1">
-                <property name="MemberName" />
-                <property name="Visible">False</property>
-              </widget>
-              <packing>
                 <property name="Position">4</property>
-                <property name="AutoSize">True</property>
+                <property name="AutoSize">False</property>
                 <property name="Expand">False</property>
                 <property name="Fill">False</property>
               </packing>
@@ -1545,6 +1535,19 @@
               <packing>
                 <property name="PackType">End</property>
                 <property name="Position">5</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.HSeparator" id="hseparator1">
+                <property name="MemberName" />
+                <property name="Visible">False</property>
+              </widget>
+              <packing>
+                <property name="PackType">End</property>
+                <property name="Position">6</property>
                 <property name="AutoSize">True</property>
                 <property name="Expand">False</property>
                 <property name="Fill">False</property>
@@ -2576,7 +2579,7 @@ Sort by duration</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.TemplateEditorDialog" design-size="518 243">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.TemplateEditorDialog" design-size="713 373">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Categories Template</property>
     <property name="Icon">stock:longomatch Dialog</property>
@@ -4386,7 +4389,7 @@ No</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.TemplatesManager" design-size="483 336">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.TemplatesManager" design-size="866 336">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Templates Manager</property>
     <property name="Icon">stock:longomatch Dialog</property>

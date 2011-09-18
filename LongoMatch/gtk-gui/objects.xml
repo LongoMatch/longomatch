@@ -152,6 +152,7 @@
         <signal name="PlayListNodeAdded" />
         <signal name="SnapshotSeriesEvent" />
         <signal name="TagPlay" />
+        <signal name="EditProperties" />
       </itemgroup>
     </signals>
   </object>
@@ -240,17 +241,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.TagsTreeWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="TagsTreeWidget Signals">
-        <signal name="TimeNodeSelected" />
-        <signal name="TimeNodeChanged" />
-        <signal name="PlayListNodeAdded" />
-        <signal name="SnapshotSeriesEvent" />
-      </itemgroup>
-    </signals>
-  </object>
   <object type="LongoMatch.Gui.SubCategoriesTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
     <itemgroups />
     <signals>
@@ -265,7 +255,6 @@
       <itemgroup label="TemplatesEditorBase Properties">
         <property name="CanExport" />
         <property name="Edited" />
-        <property name="InProject" />
       </itemgroup>
     </itemgroups>
     <signals />
@@ -281,5 +270,16 @@
   <object type="LongoMatch.Gui.Component.TeamTaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.TagsTreeWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="TagsTreeWidget Signals">
+        <signal name="TimeNodeSelected" />
+        <signal name="TimeNodeChanged" />
+        <signal name="PlayListNodeAdded" />
+        <signal name="SnapshotSeriesEvent" />
+      </itemgroup>
+    </signals>
   </object>
 </objects>

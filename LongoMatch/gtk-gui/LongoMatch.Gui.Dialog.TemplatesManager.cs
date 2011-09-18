@@ -172,7 +172,7 @@ namespace LongoMatch.Gui.Dialog
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.DefaultWidth = 483;
+			this.DefaultWidth = 866;
 			this.DefaultHeight = 336;
 			this.Show ();
 			this.treeview.RowActivated += new global::Gtk.RowActivatedHandler (this.OnTreeviewRowActivated);
