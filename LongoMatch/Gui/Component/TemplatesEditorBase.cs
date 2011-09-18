@@ -21,13 +21,15 @@ using System.Collections.Generic;
 using System.IO;
 using Gdk;
 using Gtk;
+using Mono.Unix;
+using Stetic;
 
+using LongoMatch.Common;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Interfaces;
 using LongoMatch.IO;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
-using Mono.Unix;
 
 
 namespace LongoMatch.Gui.Component
@@ -283,8 +285,10 @@ namespace LongoMatch.Gui.Component
 	
 	public class TeamTemplateEditorWidget: TemplatesEditorWidget<TeamTemplate, Player>
 	{	
-		private PlayerPropertiesTreeView treeview;
+		PlayerPropertiesTreeView treeview;
 		Entry teamentry;
+		Gtk.Image shieldImage;
+		VBox box;
 		
 		public TeamTemplateEditorWidget () {
 			treeview = new PlayerPropertiesTreeView(); 
@@ -307,20 +311,44 @@ namespace LongoMatch.Gui.Component
 					playersListStore.AppendValues(player);
 				treeview.Model=playersListStore;
 				teamentry.Text = template.TeamName;
+				if (template.Shield != null) {
+					shieldImage.Pixbuf = template.Shield;
+				}
+				box.Sensitive = true;
 			}
 		}
 		
 		private void AddTeamNamesWidget () {
-			HBox box = new HBox();
-			Label label = new Label(Catalog.GetString("Team name")+":");
+			Gtk.Frame sframe, tframe;
+			EventBox ebox;
+			
+			sframe = new Gtk.Frame("<b>" + Catalog.GetString("Shield") + "</b>");
+			(sframe.LabelWidget as Label).UseMarkup = true;
+			sframe.ShadowType = ShadowType.None;
+			tframe = new Gtk.Frame("<b>" + Catalog.GetString("Team Name") + "</b>");
+			(tframe.LabelWidget as Label).UseMarkup = true;
+			tframe.ShadowType = ShadowType.None;
+			
+			ebox = new EventBox();
+			ebox.ButtonPressEvent += OnImageClicked;
+			
+			shieldImage = new Gtk.Image();
+			shieldImage.Pixbuf = IconLoader.LoadIcon(this, "gtk-execute", IconSize.Dialog);
+			box = new VBox();
+			
 			teamentry = new Entry ();
 			teamentry.Changed += delegate(object sender, EventArgs e) {
 				Template.TeamName = teamentry.Text;
 			};
-		
-			box.PackStart (label, false, false, 0);
-			box.PackEnd (teamentry, false, false, 0);
+			
+			sframe.Add(ebox);
+			ebox.Add(shieldImage);
+			tframe.Add(teamentry);
+			
+			box.PackStart (sframe, false, false, 0);
+			box.PackStart (tframe, false, false, 0);
 			box.ShowAll();
+			box.Sensitive = false;
 			AddUpperWidget(box);
 		}
 		
@@ -331,6 +359,17 @@ namespace LongoMatch.Gui.Component
 			dialog.Run();
 			dialog.Destroy();
 			Edited = true;
+		}
+		
+		protected virtual void OnImageClicked (object sender, EventArgs args)
+		{
+			Pixbuf shield;
+			
+			shield = ImageUtils.OpenImage((Gtk.Window)this.Toplevel);
+			if (shield != null) {
+				Template.Shield = shield;
+				shieldImage.Pixbuf = shield;
+			}
 		}
 
 		protected virtual void OnPlayerClicked(Player player)
