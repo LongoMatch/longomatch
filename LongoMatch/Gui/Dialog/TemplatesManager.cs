@@ -176,8 +176,11 @@ namespace LongoMatch.Gui.Dialog
 		{
 			string name;
 			int count;
+			bool showCount;
 			List<string> availableTemplates = new List<string>();
-			EntryDialog ed = new  EntryDialog{ShowCount = true,
+			
+			showCount = typeof(T) == typeof(TeamTemplate);
+			EntryDialog ed = new  EntryDialog{ShowCount = showCount,
 				Title = Catalog.GetString("Template name")};
 			
 			foreach(string templateName in templatesProvider.TemplatesNames) {
