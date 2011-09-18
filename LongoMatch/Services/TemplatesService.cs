@@ -233,7 +233,7 @@ namespace LongoMatch.Services
 		public void Delete (string templateName) {
 			try {
 				Log.Information("Deleting template " + templateName);
-				File.Delete (templateName);
+				File.Delete (GetPath(templateName));
 			} catch (Exception ex) {
 				Log.Exception (ex);
 			}
