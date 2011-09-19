@@ -28,6 +28,7 @@ using LongoMatch.Gui;
 using LongoMatch.IO;
 using LongoMatch.Store.Templates;
 using LongoMatch.Services;
+using LongoMatch.Services.JobsManager;
 using Mono.Unix;
 
 namespace LongoMatch

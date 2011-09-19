@@ -53,4 +53,12 @@ namespace LongoMatch.Common
 		LOCAL = 1,
 		VISITOR = 2,
 	}
+	
+	public enum JobState {
+		NotStarted,
+		Running,
+		Finished,
+		Cancelled,
+		Error,
+	}
 }

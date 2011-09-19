@@ -162,7 +162,7 @@
       <itemgroup label="PlayListWidget Signals">
         <signal name="PlayListNodeSelected" />
         <signal name="ApplyCurrentRate" />
-        <signal name="Progress" />
+        <signal name="NewRenderingJob" />
       </itemgroup>
     </signals>
   </object>
@@ -280,6 +280,24 @@
         <signal name="PlayListNodeAdded" />
         <signal name="SnapshotSeriesEvent" />
       </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.RenderingStateBar" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="RenderingStateBar Properties">
+        <property name="Fraction" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="RenderingStateBar Signals">
+        <signal name="Cancel" />
+        <signal name="ManageJobs" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.RenderingJobsTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
+    <itemgroups />
+    <signals>
     </signals>
   </object>
 </objects>

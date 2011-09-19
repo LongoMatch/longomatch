@@ -33,6 +33,7 @@ using LongoMatch.Video.Common;
 using LongoMatch.Gui;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Playlist;
+using LongoMatch.Services.JobsManager;
 
 
 
@@ -45,7 +46,7 @@ namespace LongoMatch.Gui.Component
 	{
 		public event PlayListNodeSelectedHandler PlayListNodeSelected;
 		public event ApplyCurrentRateHandler ApplyCurrentRate;
-		public event ProgressHandler Progress;
+		public event JobHandler NewRenderingJob;
 
 		private PlayerBin player;
 		private PlayListPlay plNode;
@@ -53,15 +54,11 @@ namespace LongoMatch.Gui.Component
 		private uint timeout;
 		private object lock_node;
 		private bool clock_started = false;
-		private IVideoEditor videoEditor;
-		private MultimediaFactory factory;
-
 
 		public PlayListWidget()
 		{
 			this.Build();
 			lock_node = new System.Object();
-			factory = new MultimediaFactory();
 			playlisttreeview1.Reorderable = true;
 			playlisttreeview1.RowActivated += OnPlaylisttreeview1RowActivated;
 			playlisttreeview1.ApplyCurrentRate += OnApplyRate;
@@ -71,12 +68,10 @@ namespace LongoMatch.Gui.Component
 			openbutton.CanFocus = false;
 			savebutton.CanFocus = false;
 			newvideobutton.CanFocus = false;
-			closebutton.CanFocus = false;
 		}
 
 		public void SetPlayer(PlayerBin player) {
 			this.player = player;
-			closebutton.Hide();
 			newvideobutton.Hide();
 		}
 
@@ -148,11 +143,6 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public void StopEdition() {
-			if(videoEditor != null)
-				videoEditor.Cancel();
-		}
-
 		public void Stop() {
 			StopClock();
 		}
@@ -199,11 +189,6 @@ namespace LongoMatch.Gui.Component
 				filter.AddPattern("*" + Constants.PLAYLIST_EXT);
 				return filter;
 			}
-		}
-
-		private void LoadEditor() {
-			videoEditor = factory.getVideoEditor();
-			videoEditor.Progress += new ProgressHandler(OnProgress);
 		}
 
 		protected virtual void OnPlaylisttreeview1RowActivated(object o, Gtk.RowActivatedArgs args)
@@ -274,48 +259,12 @@ namespace LongoMatch.Gui.Component
 				response=vep.Run();
 			}
 			if(response ==(int)ResponseType.Ok) {
-				//FIXME:Create a new instance of the video editor until we fix the audio swith enable/disabled
-				LoadEditor();
-				//videoEditor.ClearList();
-				foreach(PlayListPlay segment in playList) {
-					if(segment.Valid)
-						videoEditor.AddSegment(segment.MediaFile.FilePath,
-						                       segment.Start.MSeconds,
-						                       segment.Duration.MSeconds,
-						                       segment.Rate,
-						                       segment.Name,
-						                       segment.MediaFile.HasAudio);
+				Job job = new Job(playList, vep.EncodingSettings, vep.EnableAudio, vep.TitleOverlay);
+				if (NewRenderingJob != null) {
+					NewRenderingJob(job);
 				}
-				try {
-					videoEditor.EncodingSettings = vep.EncodingSettings;
-					videoEditor.EnableTitle = vep.TitleOverlay;
-					videoEditor.EnableAudio = vep.EnableAudio;
-					videoEditor.Start();
-					closebutton.Show();
-					newvideobutton.Hide();
-				}
-				catch(Exception ex) {
-					MessagePopup.PopupMessage(this, MessageType.Error, Catalog.GetString(ex.Message));
-				}
-				vep.Destroy();
 			}
-		}
-
-		protected virtual void OnClosebuttonClicked(object sender, System.EventArgs e)
-		{
-			videoEditor.Cancel();
-			closebutton.Hide();
-			newvideobutton.Show();
-		}
-
-		protected virtual void OnProgress(float progress) {
-			if(Progress!= null)
-				Progress(progress);
-
-			if(progress ==1) {
-				closebutton.Hide();
-				newvideobutton.Show();
-			}
+			vep.Destroy();
 		}
 
 		protected virtual void OnApplyRate(PlayListPlay plNode) {

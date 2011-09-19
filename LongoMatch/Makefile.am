@@ -2,6 +2,7 @@ ASSEMBLY = LongoMatch
 TARGET = exe
 LINK = $(REF_DEP_LONGOMATCH)
 
+
 SOURCES = \
 	AssemblyInfo.cs \
 	Common/Cairo.cs \
@@ -27,6 +28,7 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Component.PlaysListTreeWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.RenderingStateBar.cs \
 	gtk-gui/LongoMatch.Gui.Component.StringTaggerWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TagsTreeWidget.cs \
@@ -46,6 +48,7 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs \
@@ -64,6 +67,7 @@ SOURCES = \
 	Gui/Component/DrawingToolBox.cs \
 	Gui/Component/DrawingWidget.cs \
 	Gui/Component/NotesWidget.cs \
+	Gui/Component/RenderingStateBar.cs \
 	Gui/Component/PlayerProperties.cs \
 	Gui/Component/PlayersListTreeWidget.cs \
 	Gui/Component/PlayersTaggerWidget.cs \
@@ -93,6 +97,7 @@ SOURCES = \
 	Gui/Dialog/PlayersSelectionDialog.cs \
 	Gui/Dialog/ProjectSelectionDialog.cs \
 	Gui/Dialog/ProjectsManager.cs \
+	Gui/Dialog/RenderingJobsDialog.cs \
 	Gui/Dialog/SnapshotsDialog.cs \
 	Gui/Dialog/SubCategoryTagsEditor.cs \
 	Gui/Dialog/TaggerDialog.cs \
@@ -111,6 +116,7 @@ SOURCES = \
 	Gui/TreeView/PlayersTreeView.cs \
 	Gui/TreeView/PlayListTreeView.cs \
 	Gui/TreeView/PlaysTreeView.cs \
+	Gui/TreeView/RenderingJobsTreeView.cs \
 	Gui/TreeView/SubCategoriesTreeView.cs \
 	Gui/TreeView/TagsTreeView.cs \
 	Handlers/DrawingManager.cs \
@@ -127,6 +133,8 @@ SOURCES = \
 	Playlist/IPlayList.cs \
 	Playlist/PlayList.cs \
 	Services/DataBase.cs \
+	Services/JobsManager/Job.cs \
+	Services/JobsManager/RenderingJobsManager.cs \
 	Services/TemplatesService.cs \
 	Store/Category.cs \
 	Store/Drawing.cs \

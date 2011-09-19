@@ -25,6 +25,7 @@ using LongoMatch.DB;
 using LongoMatch.Interfaces;
 using LongoMatch.Store;
 using LongoMatch.Common;
+using LongoMatch.Services.JobsManager;
 
 namespace LongoMatch.Handlers
 {
@@ -93,4 +94,6 @@ namespace LongoMatch.Handlers
 	public delegate void PlayersPropertiesHandler(List<Player> players);
 	
 	public delegate void ProjectsSelectedHandler(List<ProjectDescription> projects);
+
+	public delegate void JobHandler(Job job);
 }

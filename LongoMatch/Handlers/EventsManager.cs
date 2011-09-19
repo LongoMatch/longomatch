@@ -47,7 +47,6 @@ namespace LongoMatch
 		private PlayerBin player;
 		private CapturerBin capturer;
 		private TimeLineWidget timeline;
-		private ProgressBar videoprogressbar;
 		private NotesWidget notes;
 		private FramesSeriesCapturer fsc;
 		private FramesCaptureProgressDialog fcpd;
@@ -63,8 +62,7 @@ namespace LongoMatch
 		public EventsManager(PlaysListTreeWidget treewidget, PlayersListTreeWidget localPlayersList,
 		                     PlayersListTreeWidget visitorPlayersList, TagsTreeWidget tagsTreeWidget,
 		                     ButtonsWidget buttonswidget, PlayListWidget playlist, PlayerBin player,
-		                     TimeLineWidget timeline, ProgressBar videoprogressbar,NotesWidget notes,
-		                     CapturerBin capturer)
+		                     TimeLineWidget timeline, NotesWidget notes, CapturerBin capturer)
 		{
 			this.treewidget = treewidget;
 			this.localPlayersList = localPlayersList;
@@ -74,7 +72,6 @@ namespace LongoMatch
 			this.playlist = playlist;
 			this.player = player;
 			this.timeline = timeline;
-			this.videoprogressbar = videoprogressbar;
 			this.notes = notes;
 			this.capturer = capturer;
 			this.drawingManager = new VideoDrawingsManager(player);
@@ -123,7 +120,6 @@ namespace LongoMatch
 
 			/* Connect playlist events */
 			playlist.PlayListNodeSelected += OnPlayListNodeSelected;
-			playlist.Progress += OnProgress;
 			playlist.ApplyCurrentRate += OnApplyRate;
 
 			/* Connect PlayListNodeAdded events */
@@ -201,35 +197,6 @@ namespace LongoMatch
 			/* FIXME: Check performance */
 			UpdateTeamsModels();
 			timeline.QueueDraw();
-		}
-
-		protected virtual void OnProgress(float progress) {
-
-			if(progress > (float)EditorState.START && progress <= (float)EditorState.FINISHED && progress > videoprogressbar.Fraction) {
-				videoprogressbar.Fraction = progress;
-			}
-
-			if(progress == (float)EditorState.CANCELED) {
-				videoprogressbar.Hide();
-			}
-
-			else if(progress == (float)EditorState.START) {
-				videoprogressbar.Show();
-				videoprogressbar.Fraction = 0;
-				videoprogressbar.Text = "Creating new video";
-			}
-
-			else if(progress == (float)EditorState.FINISHED) {
-				MessagePopup.PopupMessage(player, MessageType.Info,  Catalog.GetString("The video edition has finished successfully."));
-				videoprogressbar.Hide();
-			}
-
-			else if(progress == (float)EditorState.ERROR) {
-				MessagePopup.PopupMessage(player, MessageType.Error,
-				                          Catalog.GetString("An error has occurred in the video editor.")
-				                          +Catalog.GetString("Please, try again."));
-				videoprogressbar.Hide();
-			}
 		}
 
 		protected virtual void OnNewMarkAtFrame(Category category, int frame) {

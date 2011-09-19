@@ -29,6 +29,7 @@ using LongoMatch.Gui.Dialog;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
+using LongoMatch.Services.JobsManager;
 using LongoMatch.Video.Capturer;
 using LongoMatch.Video.Common;
 using LongoMatch.Video.Utils;
@@ -49,6 +50,7 @@ namespace LongoMatch.Gui
 		private EventsManager eManager;
 		private HotKeysManager hkManager;
 		private KeyPressEventHandler hotkeysListener;
+		RenderingJobsManager videoRenderer;
 
 
 		#region Constructors
@@ -72,7 +74,6 @@ namespace LongoMatch.Gui
 			                             playlistwidget2,
 			                             playerbin1,
 			                             timelinewidget1,
-			                             videoprogressbar,
 			                             noteswidget1,
 			                             capturerBin);
 
@@ -85,6 +86,7 @@ namespace LongoMatch.Gui
 			DrawingManager dManager = new DrawingManager(drawingtoolbox1,playerbin1.VideoWidget);
 			//Forward Key and Button events to the Drawing Manager
 			KeyPressEvent += new KeyPressEventHandler(dManager.OnKeyPressEvent);
+			
 
 			playerbin1.SetLogo(System.IO.Path.Combine(MainClass.ImagesDir(),"background.png"));
 			playerbin1.LogoMode = true;
@@ -95,6 +97,12 @@ namespace LongoMatch.Gui
 				CloseCaptureProject();
 			};
 
+			videoRenderer = new RenderingJobsManager(renderingstatebar1);
+			renderingstatebar1.ManageJobs += OnManageJobs;
+			playlistwidget2.NewRenderingJob += delegate(Job job) {
+				videoRenderer.AddJob(job);
+			};
+			
 			buttonswidget1.Mode = TagMode.Predifined;
 
 			playlistwidget2.SetPlayer(playerbin1);
@@ -106,6 +114,8 @@ namespace LongoMatch.Gui
 		#endregion
 
 		#region Private Methods
+		
+		
 		private void SetProject(Project project, ProjectType projectType, CaptureSettings props)
 		{
 			bool isLive = false;
@@ -360,7 +370,6 @@ namespace LongoMatch.Gui
 		private void CloseAndQuit() {
 			if(!PromptCloseProject())
 				return;
-			playlistwidget2.StopEdition();
 			SaveProject();
 			playerbin1.Dispose();
 			Application.Quit();
@@ -595,6 +604,13 @@ namespace LongoMatch.Gui
 		{
 			if(!playlistwidget2.Visible)
 				rightvbox.Visible=false;
+		}
+		
+		protected virtual void OnManageJobs (object sender, EventArgs args) {
+			RenderingJobsDialog dialog = new RenderingJobsDialog(videoRenderer);
+			dialog.TransientFor = (Gtk.Window) Toplevel;
+			dialog.Run();
+			dialog.Destroy();
 		}
 
 		protected virtual void OnUpdate(Version version, string URL) {

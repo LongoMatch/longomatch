@@ -24,8 +24,6 @@ namespace LongoMatch.Gui.Component
 
 		private global::Gtk.Button newvideobutton;
 
-		private global::Gtk.Button closebutton;
-
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -168,46 +166,21 @@ namespace LongoMatch.Gui.Component
 			this.hbox2.Add (this.newvideobutton);
 			global::Gtk.Box.BoxChild w42 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.newvideobutton]));
 			w42.Position = 3;
-			// Container child hbox2.Gtk.Box+BoxChild
-			this.closebutton = new global::Gtk.Button ();
-			this.closebutton.TooltipMarkup = "Cancel rendering";
-			this.closebutton.CanFocus = true;
-			this.closebutton.Name = "closebutton";
-			this.closebutton.UseUnderline = true;
-			// Container child closebutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w43 = new global::Gtk.Alignment (0.5f, 0.5f, 0f, 0f);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w44 = new global::Gtk.HBox ();
-			w44.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w45 = new global::Gtk.Image ();
-			w45.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-close", global::Gtk.IconSize.Button);
-			w44.Add (w45);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w47 = new global::Gtk.Label ();
-			w44.Add (w47);
-			w43.Add (w44);
-			this.closebutton.Add (w43);
-			this.hbox2.Add (this.closebutton);
-			global::Gtk.Box.BoxChild w51 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.closebutton]));
-			w51.Position = 4;
 			this.vbox2.Add (this.hbox2);
-			global::Gtk.Box.BoxChild w52 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbox2]));
-			w52.Position = 1;
-			w52.Expand = false;
-			w52.Fill = false;
+			global::Gtk.Box.BoxChild w43 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbox2]));
+			w43.Position = 1;
+			w43.Expand = false;
+			w43.Fill = false;
 			this.Add (this.vbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.closebutton.Hide ();
 			this.Show ();
 			this.playlisttreeview1.DragEnd += new global::Gtk.DragEndHandler (this.OnPlaylisttreeview1DragEnd);
 			this.newbutton.Clicked += new global::System.EventHandler (this.OnNewbuttonClicked);
 			this.openbutton.Clicked += new global::System.EventHandler (this.OnOpenbuttonClicked);
 			this.savebutton.Clicked += new global::System.EventHandler (this.OnSavebuttonClicked);
 			this.newvideobutton.Clicked += new global::System.EventHandler (this.OnNewvideobuttonClicked);
-			this.closebutton.Clicked += new global::System.EventHandler (this.OnClosebuttonClicked);
 		}
 	}
 }

@@ -192,6 +192,15 @@
     <File subtype="Code" buildaction="Compile" name="Common/Images.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/CategoriesTemplateEditor.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/TeamTemplateEditor.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Services/JobsManager" />
+    <File subtype="Code" buildaction="Compile" name="Services/JobsManager/RenderingJobsManager.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Services" />
+    <File subtype="Code" buildaction="Compile" name="Services/JobsManager/Job.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/RenderingStateBar.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.RenderingStateBar.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/TreeView/RenderingJobsTreeView.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/RenderingJobsDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />

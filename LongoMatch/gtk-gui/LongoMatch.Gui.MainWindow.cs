@@ -104,7 +104,7 @@ namespace LongoMatch.Gui
 
 		private global::Gtk.Statusbar statusbar1;
 
-		private global::Gtk.ProgressBar videoprogressbar;
+		private global::LongoMatch.Gui.Component.RenderingStateBar renderingstatebar1;
 
 		protected virtual void Build ()
 		{
@@ -234,7 +234,7 @@ namespace LongoMatch.Gui
 			this.notebook1 = new global::Gtk.Notebook ();
 			this.notebook1.CanFocus = true;
 			this.notebook1.Name = "notebook1";
-			this.notebook1.CurrentPage = 0;
+			this.notebook1.CurrentPage = 3;
 			this.notebook1.TabPos = ((global::Gtk.PositionType)(3));
 			// Container child notebook1.Gtk.Notebook+NotebookChild
 			this.treewidget1 = new global::LongoMatch.Gui.Component.PlaysListTreeWidget ();
@@ -392,12 +392,13 @@ namespace LongoMatch.Gui
 			this.statusbar1.Name = "statusbar1";
 			this.statusbar1.Spacing = 6;
 			// Container child statusbar1.Gtk.Box+BoxChild
-			this.videoprogressbar = new global::Gtk.ProgressBar ();
-			this.videoprogressbar.Name = "videoprogressbar";
-			this.videoprogressbar.Text = global::Mono.Unix.Catalog.GetString ("Creating video...");
-			this.statusbar1.Add (this.videoprogressbar);
-			global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.statusbar1[this.videoprogressbar]));
-			w22.Position = 3;
+			this.renderingstatebar1 = new global::LongoMatch.Gui.Component.RenderingStateBar ();
+			this.renderingstatebar1.Events = ((global::Gdk.EventMask)(256));
+			this.renderingstatebar1.Name = "renderingstatebar1";
+			this.renderingstatebar1.Fraction = 0;
+			this.statusbar1.Add (this.renderingstatebar1);
+			global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.statusbar1[this.renderingstatebar1]));
+			w22.Position = 2;
 			w22.Expand = false;
 			w22.Fill = false;
 			this.vbox1.Add (this.statusbar1);
@@ -418,7 +419,7 @@ namespace LongoMatch.Gui
 			this.noteswidget1.Hide ();
 			this.playlistwidget2.Hide ();
 			this.rightvbox.Hide ();
-			this.videoprogressbar.Hide ();
+			this.renderingstatebar1.Hide ();
 			this.Show ();
 			this.NewPojectAction.Activated += new global::System.EventHandler (this.OnNewActivated);
 			this.OpenProjectAction.Activated += new global::System.EventHandler (this.OnOpenActivated);
