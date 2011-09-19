@@ -18,6 +18,7 @@
 using System;
 namespace LongoMatch.Video.Common
 {
+	[Serializable]
 	public struct EncodingSettings
 	{
 		public EncodingSettings(VideoStandard videoStandard, EncodingProfile encodingProfile,

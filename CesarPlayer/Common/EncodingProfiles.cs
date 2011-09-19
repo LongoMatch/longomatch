@@ -18,6 +18,7 @@
 using System;
 namespace LongoMatch.Video.Common
 {
+	[Serializable]
 	public struct EncodingProfile
 	{
 		public EncodingProfile(string name, string extension,

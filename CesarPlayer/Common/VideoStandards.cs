@@ -20,6 +20,7 @@ using Mono.Unix;
 
 namespace LongoMatch.Video.Common
 {
+	[Serializable]
 	public struct VideoStandard
 	{
 		public VideoStandard(string name, uint height, uint width) {
