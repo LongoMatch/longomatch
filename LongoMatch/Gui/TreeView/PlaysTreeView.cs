@@ -38,7 +38,7 @@ namespace LongoMatch.Gui.Component
 		public event TimeNodeChangedHandler EditProperties;
 
 		//Categories menu
-		private Menu categoriesMenu;
+		Menu categoriesMenu;
 		private RadioAction sortByName, sortByStart, sortByStop, sortByDuration;
 
 		public PlaysTreeView() {

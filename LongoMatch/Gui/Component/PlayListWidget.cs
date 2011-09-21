@@ -241,8 +241,7 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnNewvideobuttonClicked(object sender, System.EventArgs e)
 		{
-			VideoEditionProperties vep;
-			int response;
+			Job job;
 
 			if(playList.Count == 0) {
 				MessagePopup.PopupMessage(this,MessageType.Warning,
@@ -250,21 +249,9 @@ namespace LongoMatch.Gui.Component
 				return;
 			}
 
-			vep = new VideoEditionProperties();
-			vep.TransientFor = (Gtk.Window)this.Toplevel;
-			response = vep.Run();
-			while(response == (int)ResponseType.Ok && vep.EncodingSettings.OutputFile == "") {
-				MessagePopup.PopupMessage(this, MessageType.Warning,
-				                          Catalog.GetString("Please, select a video file."));
-				response=vep.Run();
-			}
-			if(response ==(int)ResponseType.Ok) {
-				Job job = new Job(playList, vep.EncodingSettings, vep.EnableAudio, vep.TitleOverlay);
-				if (NewRenderingJob != null) {
+			job = GuiUtils.ConfigureRenderingJob(playList, this);
+			if (job != null && NewRenderingJob != null)
 					NewRenderingJob(job);
-				}
-			}
-			vep.Destroy();
 		}
 
 		protected virtual void OnApplyRate(PlayListPlay plNode) {

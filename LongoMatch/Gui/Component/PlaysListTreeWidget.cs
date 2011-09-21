@@ -26,7 +26,9 @@ using LongoMatch.DB;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
+using LongoMatch.Services.JobsManager;
 using LongoMatch.Common;
+using LongoMatch.Playlist;
 
 namespace LongoMatch.Gui.Component
 {
@@ -43,6 +45,7 @@ namespace LongoMatch.Gui.Component
 		public event PlayListNodeAddedHandler PlayListNodeAdded;
 		public event SnapshotSeriesHandler SnapshotSeriesEvent;
 		public event TagPlayHandler TagPlay;
+		public event JobHandler NewRenderingJob;
 
 		private Project project;
 
@@ -56,6 +59,7 @@ namespace LongoMatch.Gui.Component
 			treeview.SnapshotSeriesEvent += OnSnapshotSeriesEvent;
 			treeview.EditProperties += OnEditProperties;
 			treeview.TagPlay += OnTagPlay;
+			treeview.NewRenderingJob += OnNewRenderingJob;
 		}
 
 		public void RemovePlays(List<Play> plays) {
@@ -178,6 +182,24 @@ namespace LongoMatch.Gui.Component
 		{
 			if(TagPlay != null)
 				TagPlay(tNode);
+		}
+		
+		protected virtual void OnNewRenderingJob (object sender, EventArgs args)
+		{
+			Job job;
+			PlayList playlist = new PlayList();
+			TreePath[] paths = treeview.Selection.GetSelectedRows();
+
+			foreach(var path in paths) {
+				TreeIter iter;
+				
+				treeview.Model.GetIter(out iter, path);
+				playlist.Add(new PlayListPlay((Play)treeview.Model.GetValue(iter, 0),
+				                              project.Description.File, 1, true));
+			}
+			job = GuiUtils.ConfigureRenderingJob(playlist, this);
+			if (job != null && NewRenderingJob != null)
+					NewRenderingJob(job);
 		}
 	}
 }

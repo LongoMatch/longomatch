@@ -37,6 +37,18 @@ namespace LongoMatch.Store
 		{
 			Valid = true;
 		}
+		
+		public PlayListPlay(Play play, PreviewMediaFile mediaFile, float rate, bool valid)
+		{
+			Name = play.Name;
+			Start = play.Start;
+			Stop = play.Stop;
+			Miniature = play.Miniature;
+			Drawings = play.Drawings;
+			MediaFile = mediaFile;
+			Rate = rate;
+			Valid = valid;
+		}
 		#endregion
 
 		#region Properties

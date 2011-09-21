@@ -118,6 +118,7 @@
         <signal name="PlayListNodeAdded" />
         <signal name="SnapshotSeriesEvent" />
         <signal name="TagPlay" />
+        <signal name="NewRenderingJob" />
       </itemgroup>
     </signals>
   </object>
@@ -135,6 +136,7 @@
         <signal name="PlayListNodeAdded" />
         <signal name="SnapshotSeriesEvent" />
         <signal name="TagPlay" />
+        <signal name="NewRenderingJob" />
       </itemgroup>
     </signals>
   </object>
@@ -153,6 +155,7 @@
         <signal name="SnapshotSeriesEvent" />
         <signal name="TagPlay" />
         <signal name="EditProperties" />
+        <signal name="NewRenderingJob" />
       </itemgroup>
     </signals>
   </object>
@@ -192,6 +195,7 @@
         <signal name="PlayListNodeAdded" />
         <signal name="SnapshotSeriesEvent" />
         <signal name="TagPlay" />
+        <signal name="NewRenderingJob" />
       </itemgroup>
     </signals>
   </object>

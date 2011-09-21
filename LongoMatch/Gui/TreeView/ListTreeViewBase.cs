@@ -33,12 +33,7 @@ namespace LongoMatch.Gui.Component
 	{
 		// Plays menu
 		protected Menu menu;
-		protected MenuItem tag;
-		protected MenuItem delete;
-		protected MenuItem addPLN;
-		protected MenuItem deleteKeyFrame;
-		protected MenuItem snapshot;
-		protected MenuItem name;
+		protected MenuItem tag, delete, addPLN, deleteKeyFrame, snapshot, name, render;
 
 		protected Gtk.CellRendererText nameCell;
 		protected Gtk.TreeViewColumn nameColumn;
@@ -51,6 +46,7 @@ namespace LongoMatch.Gui.Component
 		public event PlayListNodeAddedHandler PlayListNodeAdded;
 		public event SnapshotSeriesHandler SnapshotSeriesEvent;
 		public event TagPlayHandler TagPlay;
+		public event EventHandler NewRenderingJob;
 
 		public ListTreeViewBase()
 		{
@@ -113,6 +109,7 @@ namespace LongoMatch.Gui.Component
 			deleteKeyFrame = new MenuItem(Catalog.GetString("Delete key frame"));
 			addPLN = new MenuItem(Catalog.GetString("Add to playlist"));
 			addPLN.Sensitive=false;
+			render = new MenuItem(Catalog.GetString("Export to video file"));
 			snapshot = new MenuItem(Catalog.GetString("Export to PGN images"));
 
 			menu.Append(name);
@@ -120,6 +117,7 @@ namespace LongoMatch.Gui.Component
 			menu.Append(addPLN);
 			menu.Append(delete);
 			menu.Append(deleteKeyFrame);
+			menu.Append(render);
 			menu.Append(snapshot);
 
 			name.Activated += OnEdit;
@@ -127,6 +125,7 @@ namespace LongoMatch.Gui.Component
 			addPLN.Activated += OnAdded;
 			delete.Activated += OnDeleted;
 			deleteKeyFrame.Activated += OnDeleteKeyFrame;
+			render.Activated += OnRender;
 			snapshot.Activated += OnSnapshot;
 			menu.ShowAll();
 		}
@@ -308,6 +307,11 @@ namespace LongoMatch.Gui.Component
 		protected void OnSnapshot(object obj, EventArgs args) {
 			if(SnapshotSeriesEvent != null)
 				SnapshotSeriesEvent((Play)GetValueFromPath(Selection.GetSelectedRows()[0]));
+		}
+		
+		protected void OnRender(object obj, EventArgs args) {
+			if (NewRenderingJob != null)
+				NewRenderingJob(this, null);
 		}
 
 		protected abstract bool SelectFunction(TreeSelection selection, TreeModel model, TreePath path, bool selected);

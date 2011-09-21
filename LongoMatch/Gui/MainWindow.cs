@@ -99,9 +99,8 @@ namespace LongoMatch.Gui
 
 			videoRenderer = new RenderingJobsManager(renderingstatebar1);
 			renderingstatebar1.ManageJobs += OnManageJobs;
-			playlistwidget2.NewRenderingJob += delegate(Job job) {
-				videoRenderer.AddJob(job);
-			};
+			playlistwidget2.NewRenderingJob += delegate(Job job) {videoRenderer.AddJob(job);};
+			treewidget1.NewRenderingJob += delegate(Job job) {videoRenderer.AddJob(job);};
 			
 			buttonswidget1.Mode = TagMode.Predifined;
 
