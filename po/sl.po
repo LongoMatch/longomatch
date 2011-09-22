@@ -8,31 +8,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: longomatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-09-22 10:51+0000\n"
-"PO-Revision-Date: 2011-09-22 13:21+0100\n"
+"POT-Creation-Date: 2011-09-22 19:04+0000\n"
+"PO-Revision-Date: 2011-09-22 22:19+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
 "X-Poedit-Country: SLOVENIA\n"
 "X-Poedit-Language: Slovenian\n"
 "X-Poedit-SourceCharset: utf-8\n"
-
-#: ../LongoMatch/longomatch.desktop.in.in.h:1
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:198
-msgid "LongoMatch"
-msgstr "LongoMatch"
-
-#: ../LongoMatch/longomatch.desktop.in.in.h:2
-msgid "LongoMatch: The Digital Coach"
-msgstr "LongoMatch: digitalni trener"
-
-#: ../LongoMatch/longomatch.desktop.in.in.h:3
-msgid "Sports video analysis tool for coaches"
-msgstr "Orodje za pomoč trenerjem pri analizi posnetkov tekem"
 
 #: ../CesarPlayer/Capturer/FakeCapturer.cs:86
 msgid "Fake live source"
@@ -94,7 +81,7 @@ msgstr "Mesta ni mogoče najti."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2581
 msgid "Could not open location; you might not have permission to open the file."
-msgstr "Mesta ni mogoče odpreti; morda nimate ustreznih pravic za odpiranej datoteke."
+msgstr "Mesta ni mogoče odpreti; morda nimate ustreznih pravic za odpiranje datoteke."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2593
 msgid "The video output is in use by another application. Please close other video applications, or select another video output in the Multimedia Systems Selector."
@@ -167,7 +154,7 @@ msgstr "Slikovnega izhoda ni mogoče odpreti. Morda ni na voljo. Izberite drug s
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5482
 #, c-format
 msgid "Could not find the video output. You may need to install additional GStreamer plugins, or select another video output in the Multimedia Systems Selector."
-msgstr "Slikovnega izhoda ni mogoče najti. Morda je traba namestiti dodatne vstavke za GStreamer ali pa izbrati drug slikovni izhod z izbirnikom predstavnih sistemov."
+msgstr "Slikovnega izhoda ni mogoče najti. Morda je treba namestiti dodatne vstavke za GStreamer ali pa izbrati drug slikovni izhod z izbirnikom predstavnih sistemov."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5518
 #, c-format
@@ -254,6 +241,12 @@ msgstr "%s"
 msgid "0 seconds"
 msgstr "0 sekund"
 
+#: ../LongoMatch/Common/GuiUtils.cs:43
+#: ../LongoMatch/Common/ProjectUtils.cs:128
+#: ../LongoMatch/Common/ProjectUtils.cs:217
+msgid "Please, select a video file."
+msgstr "Izberite video datoteko."
+
 #: ../LongoMatch/Common/Images.cs:70
 #: ../LongoMatch/Gui/Component/PlayerProperties.cs:90
 msgid "Choose an image"
@@ -280,12 +273,6 @@ msgstr "Uvozi projekt"
 #: ../LongoMatch/Common/ProjectUtils.cs:105
 msgid "Error importing project:"
 msgstr "Napaka med uvažanjem projekta:"
-
-#: ../LongoMatch/Common/ProjectUtils.cs:128
-#: ../LongoMatch/Common/ProjectUtils.cs:217
-#: ../LongoMatch/Gui/Component/PlayListWidget.cs:258
-msgid "Please, select a video file."
-msgstr "Izberite video datoteko."
 
 #: ../LongoMatch/Common/ProjectUtils.cs:144
 msgid "A project already exists for the file:"
@@ -1014,6 +1001,11 @@ msgstr "Pogled ročnega označevanja"
 msgid "Free Capture Mode"
 msgstr "Prosti način zajemanja"
 
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:198
+#: ../LongoMatch/longomatch.desktop.in.in.h:1
+msgid "LongoMatch"
+msgstr "LongoMatch"
+
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:247
 msgid "Plays"
 msgstr "Igre"
@@ -1065,7 +1057,7 @@ msgstr "Odpri seznam predvajanja"
 msgid "New playlist"
 msgstr "Nov seznam predvajanja"
 
-#: ../LongoMatch/Gui/Component/PlayListWidget.cs:249
+#: ../LongoMatch/Gui/Component/PlayListWidget.cs:248
 msgid "The playlist is empty!"
 msgstr "Seznam predvajanja je prazen!"
 
@@ -1254,39 +1246,39 @@ msgstr "Ali zares želite izbrisati predlogo:"
 msgid "Save Video As ..."
 msgstr "Shrani video kot ..."
 
-#: ../LongoMatch/Gui/MainWindow.cs:143
+#: ../LongoMatch/Gui/MainWindow.cs:142
 msgid "The file associated to this project doesn't exist."
 msgstr "Datoteka povezana s tem projektom ne obstaja."
 
-#: ../LongoMatch/Gui/MainWindow.cs:144
+#: ../LongoMatch/Gui/MainWindow.cs:143
 msgid "If the location of the file has changed try to edit it with the database manager."
 msgstr "V primeru, da se je mesto datoteke spremenilo, je napako mogoče popraviti v upravljalniku podatkovne zbirke."
 
-#: ../LongoMatch/Gui/MainWindow.cs:155
+#: ../LongoMatch/Gui/MainWindow.cs:154
 msgid "An error occurred opening this project:"
 msgstr "Prišlo je do napake med odpiranjem projekta:"
 
-#: ../LongoMatch/Gui/MainWindow.cs:212
+#: ../LongoMatch/Gui/MainWindow.cs:211
 msgid "Loading newly created project..."
 msgstr "Nalaganje na novo ustvarjenega projekta ..."
 
-#: ../LongoMatch/Gui/MainWindow.cs:227
+#: ../LongoMatch/Gui/MainWindow.cs:226
 msgid "An error occured saving the project:\n"
 msgstr "Prišlo je do napake med shranjevanjem projekta:\n"
 
-#: ../LongoMatch/Gui/MainWindow.cs:228
+#: ../LongoMatch/Gui/MainWindow.cs:227
 msgid "The video file and a backup of the project has been saved. Try to import it later:\n"
 msgstr "Video datoteka in varnostna kopija datoteke sta shranjeni. Poskusite ju uvoziti kasneje:\n"
 
-#: ../LongoMatch/Gui/MainWindow.cs:342
+#: ../LongoMatch/Gui/MainWindow.cs:341
 msgid "Do you want to close the current project?"
 msgstr "Ali zares želite zapreti trenutni projekt?"
 
-#: ../LongoMatch/Gui/MainWindow.cs:548
+#: ../LongoMatch/Gui/MainWindow.cs:547
 msgid "The actual project will be closed due to an error in the media player:"
 msgstr "Projekt bo končan zaradi napake predvajalnika:"
 
-#: ../LongoMatch/Gui/MainWindow.cs:639
+#: ../LongoMatch/Gui/MainWindow.cs:638
 msgid "An error occured in the video capturer and the current project will be closed:"
 msgstr "Prišlo je do napake med zajemanjem videa, zato bo projekt zaprt:"
 
@@ -1319,35 +1311,39 @@ msgstr "Hitra tipka"
 msgid "Sort Method"
 msgstr "Način razvrščanja"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:110
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:106
 #: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:69
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:69
 msgid "Edit name"
 msgstr "Uredi ime"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:111
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:107
 #: ../LongoMatch/Gui/TreeView/SubCategoriesTreeView.cs:91
 msgid "Edit tags"
 msgstr "Uredi oznake"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:112
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:108
 #: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:59
 msgid "Delete"
 msgstr "Izbriši"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:113
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:109
 msgid "Delete key frame"
 msgstr "Izbriši sličice"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:114
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:110
 msgid "Add to playlist"
 msgstr "Dodaj na seznam predvajanja"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:116
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:112
+msgid "Export to video file"
+msgstr "Izvoz v video datoteko"
+
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:113
 msgid "Export to PGN images"
 msgstr "Izvozi skice v PNG"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:271
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:270
 msgid "Do you want to delete the key frame for this play?"
 msgstr "Ali želite izbrisati sličico te igre?"
 
@@ -1429,6 +1425,14 @@ msgstr "Čas zaustavitve je pred začetkom. Igra ne bo dodana."
 #: ../LongoMatch/Handlers/EventsManager.cs:332
 msgid "Please, close the opened project to play the playlist."
 msgstr "Zapreti je treba odprt projekt za predvajanje seznama."
+
+#: ../LongoMatch/longomatch.desktop.in.in.h:2
+msgid "LongoMatch: The Digital Coach"
+msgstr "LongoMatch: digitalni trener"
+
+#: ../LongoMatch/longomatch.desktop.in.in.h:3
+msgid "Sports video analysis tool for coaches"
+msgstr "Orodje za pomoč trenerjem pri analizi posnetkov tekem"
 
 #: ../LongoMatch/Main.cs:149
 msgid "Some elements from the previous version (database, templates and/or playlists) have been found."
