@@ -1,5 +1,4 @@
 [encoding: UTF-8]
-LongoMatch/longomatch.desktop.in.in
 CesarPlayer/Capturer/FakeCapturer.cs
 CesarPlayer/Capturer/GstCameraCapturer.cs
 CesarPlayer/Capturer/ICapturer.cs
@@ -43,6 +42,7 @@ LongoMatch/Common/ConsoleCrayon.cs
 LongoMatch/Common/Constants.cs
 LongoMatch/Common/Enums.cs
 LongoMatch/Common/GStreamer.cs
+LongoMatch/Common/GuiUtils.cs
 LongoMatch/Common/Images.cs
 LongoMatch/Common/Log.cs
 LongoMatch/Common/ProjectUtils.cs
@@ -156,6 +156,7 @@ LongoMatch/Interfaces/ISubCategory.cs
 LongoMatch/Interfaces/ITemplates.cs
 LongoMatch/IO/CSVExport.cs
 LongoMatch/IO/XMLReader.cs
+LongoMatch/longomatch.desktop.in.in
 LongoMatch/Main.cs
 LongoMatch/Playlist/IPlayList.cs
 LongoMatch/Playlist/PlayList.cs
