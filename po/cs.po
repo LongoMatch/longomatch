@@ -97,7 +97,7 @@ msgstr ""
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2577
 msgid "Location not found."
-msgstr "Umístění nenalezeno"
+msgstr "Umístění nenalezeno."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2581
 msgid ""
