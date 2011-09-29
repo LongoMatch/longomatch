@@ -204,7 +204,7 @@ namespace LongoMatch.Services
 			Log.Information("Saving template " + filename);
 			
 			if (File.Exists(filename)) {
-				throw new Exception (Catalog.GetString("A template already exixts with " +
+				throw new Exception (Catalog.GetString("A template already exists with " +
 				                                       "the name: ") + filename);
 			}
 			
@@ -222,7 +222,7 @@ namespace LongoMatch.Services
 		
 		public void Copy(string orig, string copy) {
 			if (File.Exists(copy)) {
-				throw new Exception (Catalog.GetString("A template already exixts with " +
+				throw new Exception (Catalog.GetString("A template already exists with " +
 				                                       "the name: ") + copy);
 			}
 			
