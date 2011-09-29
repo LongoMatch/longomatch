@@ -69,7 +69,12 @@ namespace LongoMatch.DB
 		{
 			this.file = file;
 			Init();
-			BackupDB();
+			try {
+				BackupDB();
+			} catch (Exception e) {
+				Log.Error("Error creating databse backup");
+				Log.Exception(e);
+			}
 		}
 		
 		/// <value>
@@ -356,11 +361,16 @@ namespace LongoMatch.DB
 		}
 		
 		private void BackupDB () {
+			string backupFilepath;
 			DateTime now = DateTime.UtcNow;
 			if (lastBackup.Date + maxDaysWithoutBackup >= now)
 				return;
-		
-			File.Move(file, Path.Combine(MainClass.DBDir(), backupFilename));
+			
+			backupFilepath = Path.Combine(MainClass.DBDir(), backupFilename);
+			if (File.Exists(backupFilepath))
+				File.Delete(backupFilepath);
+
+			File.Move(file, backupFilepath);
 			Log.Information ("Created backup for database at ", backupFilename);
 			lastBackup = new BackupDate {Date = now};
 			UpdateBackupDate();
