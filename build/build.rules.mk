@@ -71,9 +71,6 @@ $(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(DEP_LINK)
 		-debug -target:$(TARGET) -out:$@ \
 		$(BUILD_DEFINES) $(ENABLE_TESTS_FLAG) $(ENABLE_ATK_FLAG) \
 		$(FILTERED_LINK) $(RESOURCES_BUILD) $(SOURCES_BUILD)
-	@if [ -e $(srcdir)/$(notdir $@.config) ]; then \
-		cp $(srcdir)/$(notdir $@.config) $(top_builddir)/bin; \
-	fi;
 	@if [ ! -z "$(EXTRA_BUNDLE)" ]; then \
 		cp $(EXTRA_BUNDLE) $(top_builddir)/bin; \
 	fi;
