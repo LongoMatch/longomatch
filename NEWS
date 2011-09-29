@@ -1,3 +1,15 @@
+===== LongoMatch 0.17.1 "El Hierro" =====
+
+	== Features of this release ==
+
+	* Added jobs manager to enqueue playlists renderings
+	* Allow rendering plays from the left-side list
+	* Added Esperanto translation
+
+	== Bugs Fixed ==
+	* Fixed deletion of templates
+	* Fixed creation of new players in the players template
+
 ===== LongoMatch 0.17.0 "Back to Madrid" =====
 
 	== Features of this release ==

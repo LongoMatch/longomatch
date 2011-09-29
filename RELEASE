@@ -1,4 +1,4 @@
-LongoMatch-0.17.1 "Back to Madrid"
+LongoMatch-0.17.1 "El hierro"
 ----------------------------------
 
 The LongoMatch team is happy to announce the first release in the
@@ -15,10 +15,13 @@ experience.
 
 
 * Features
-	* Rewrite of the tagging subsystem with support for subcategories
-	* Improved tagging workflow
-	* Allow edition of categories in opened projects
-	* Colored buttons for tagging widgets
+	* Added jobs manager to enqueue playlists renderings
+	* Allow rendering plays from the left-side list
+	* Added Esperanto translation
+
+* Bugs fixed
+	* Fixed deletion of templates
+	* Fixed creation of new players in the players template
 
 *Contributors to this Release:
 
@@ -26,8 +29,12 @@ experience.
 	Andoni Morales Alastruey <ylatuya@gmail.com>
 	Bruno Brouard <annoa.b@gmail.com>
 	Daniel Mustieles <daniel.mustieles@gmail.com>
+	Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>
 	Marek Černocký <marek@manet.cz>
 	Mario Blättermann <mariobl@gnome.org>
+	Martin Srebotnjak <miles@filmsi.net>
+	Matej Urbančič <mateju@svn.gnome.org>
+	Piotr Drąg <piotrdrag@gmail.com>
 
 * Requirements
 
