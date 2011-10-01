@@ -1,22 +1,22 @@
 #
-# Jorge González <jorgegonz@svn.gnome.org>, 2010.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011.
+# Jorge González <jorgegonz@svn.gnome.org>, 2010, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: longomatch.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-10-01 08:52+0000\n"
-"PO-Revision-Date: 2011-10-01 10:57+0200\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: Español <gnome-es-list@gnome.org>\n"
+"POT-Creation-Date: 2011-10-01 08:58+0000\n"
+"PO-Revision-Date: 2011-10-01 14:03+0200\n"
+"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
+"Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: \n"
 "X-Generator: MonoDevelop Gettext addin\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #: ../CesarPlayer/Capturer/FakeCapturer.cs:86
 msgid "Fake live source"
@@ -986,7 +986,7 @@ msgstr "Lista de reproducción"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:149
 msgid "Tagging view"
-msgstr ""
+msgstr "Vista de etiquetado"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:152
 msgid "Capture Mode"
@@ -1043,7 +1043,7 @@ msgstr "_Importar proyecto"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:190
 msgid "Manual tagging view"
-msgstr ""
+msgstr "Vista de etiquetado manual"
 
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:193
 msgid "Free Capture Mode"
