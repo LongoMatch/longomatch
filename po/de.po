@@ -6,8 +6,8 @@ msgstr ""
 "Project-Id-Version: longomatch master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-09-21 22:56+0000\n"
-"PO-Revision-Date: 2011-09-22 12:47+0100\n"
+"POT-Creation-Date: 2011-09-29 19:23+0000\n"
+"PO-Revision-Date: 2011-10-02 10:47+0100\n"
 "Last-Translator: Mario Blättermann <mariobl@freenet.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,19 +16,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "X-Poedit-Language: German\n"
 "X-Poedit-Country: GERMANY\n"
-
-#: ../LongoMatch/longomatch.desktop.in.in.h:1
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:198
-msgid "LongoMatch"
-msgstr "LongoMatch"
-
-#: ../LongoMatch/longomatch.desktop.in.in.h:2
-msgid "LongoMatch: The Digital Coach"
-msgstr "LongoMatch: Der digitale Trainer"
-
-#: ../LongoMatch/longomatch.desktop.in.in.h:3
-msgid "Sports video analysis tool for coaches"
-msgstr "Analyse von Sportvideos für Trainer"
 
 #: ../CesarPlayer/Capturer/FakeCapturer.cs:86
 msgid "Fake live source"
@@ -297,6 +284,11 @@ msgstr "%s"
 msgid "0 seconds"
 msgstr "0 Sekunden"
 
+#: ../LongoMatch/Common/GuiUtils.cs:43 ../LongoMatch/Common/ProjectUtils.cs:128
+#: ../LongoMatch/Common/ProjectUtils.cs:217
+msgid "Please, select a video file."
+msgstr "Bitte wählen Sie eine Videodatei."
+
 #: ../LongoMatch/Common/Images.cs:70
 #: ../LongoMatch/Gui/Component/PlayerProperties.cs:90
 msgid "Choose an image"
@@ -329,12 +321,6 @@ msgstr "Projekt importieren"
 #: ../LongoMatch/Common/ProjectUtils.cs:105
 msgid "Error importing project:"
 msgstr "Fehler beim Importieren des Projekts:"
-
-#: ../LongoMatch/Common/ProjectUtils.cs:128
-#: ../LongoMatch/Common/ProjectUtils.cs:217
-#: ../LongoMatch/Gui/Component/PlayListWidget.cs:258
-msgid "Please, select a video file."
-msgstr "Bitte wählen Sie eine Videodatei."
 
 #: ../LongoMatch/Common/ProjectUtils.cs:144
 msgid "A project already exists for the file:"
@@ -1064,6 +1050,11 @@ msgstr "Manuelle Schlagwort-Ansicht"
 msgid "Free Capture Mode"
 msgstr "Freier Aufnahmemodus"
 
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:198
+#: ../LongoMatch/longomatch.desktop.in.in.h:1
+msgid "LongoMatch"
+msgstr "LongoMatch"
+
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:247
 msgid "Plays"
 msgstr "Spiele"
@@ -1127,7 +1118,7 @@ msgstr "Wiedergabeliste öffnen"
 msgid "New playlist"
 msgstr "Neue Wiedergabeliste"
 
-#: ../LongoMatch/Gui/Component/PlayListWidget.cs:249
+#: ../LongoMatch/Gui/Component/PlayListWidget.cs:248
 msgid "The playlist is empty!"
 msgstr "Die Wiedergabeliste ist leer!"
 
@@ -1319,11 +1310,11 @@ msgstr "Wollen Sie wirklich die Vorlage löschen:"
 msgid "Save Video As ..."
 msgstr "Video speichern unter …"
 
-#: ../LongoMatch/Gui/MainWindow.cs:143
+#: ../LongoMatch/Gui/MainWindow.cs:142
 msgid "The file associated to this project doesn't exist."
 msgstr "Die diesem Projekt zugeordnete Datei existiert nicht."
 
-#: ../LongoMatch/Gui/MainWindow.cs:144
+#: ../LongoMatch/Gui/MainWindow.cs:143
 msgid ""
 "If the location of the file has changed try to edit it with the database "
 "manager."
@@ -1331,19 +1322,19 @@ msgstr ""
 "Falls sich der Ort der Datei geändert hat, versuchen Sie ihn in der "
 "Datenbankverwaltung zu ändern."
 
-#: ../LongoMatch/Gui/MainWindow.cs:155
+#: ../LongoMatch/Gui/MainWindow.cs:154
 msgid "An error occurred opening this project:"
 msgstr "Ein Fehler ist beim Öffnen des Projekts aufgetreten:"
 
-#: ../LongoMatch/Gui/MainWindow.cs:212
+#: ../LongoMatch/Gui/MainWindow.cs:211
 msgid "Loading newly created project..."
 msgstr "Neu erzeugtes Projekt wird geladen …"
 
-#: ../LongoMatch/Gui/MainWindow.cs:227
+#: ../LongoMatch/Gui/MainWindow.cs:226
 msgid "An error occured saving the project:\n"
 msgstr "Ein Fehler ist beim Speichern des Projekts aufgetreten:\n"
 
-#: ../LongoMatch/Gui/MainWindow.cs:228
+#: ../LongoMatch/Gui/MainWindow.cs:227
 msgid ""
 "The video file and a backup of the project has been saved. Try to import it "
 "later:\n"
@@ -1351,17 +1342,17 @@ msgstr ""
 "Die Videodatei und eine Sicherung des Projekts wurden gespeichert. Versuchen "
 "Sie, diese später zu importieren:\n"
 
-#: ../LongoMatch/Gui/MainWindow.cs:342
+#: ../LongoMatch/Gui/MainWindow.cs:341
 msgid "Do you want to close the current project?"
 msgstr "Wollen Sie das aktuelle Projekt schließen?"
 
-#: ../LongoMatch/Gui/MainWindow.cs:548
+#: ../LongoMatch/Gui/MainWindow.cs:547
 msgid "The actual project will be closed due to an error in the media player:"
 msgstr ""
 "Das aktuelle Projekt wird wegen eines Fehlers in der Medienwiedergabe "
 "geschlossen:"
 
-#: ../LongoMatch/Gui/MainWindow.cs:639
+#: ../LongoMatch/Gui/MainWindow.cs:638
 msgid ""
 "An error occured in the video capturer and the current project will be closed:"
 msgstr ""
@@ -1396,35 +1387,39 @@ msgstr "Kürzel"
 msgid "Sort Method"
 msgstr "Sortierungsmethode"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:110
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:106
 #: ../LongoMatch/Gui/TreeView/PlayersTreeView.cs:69
 #: ../LongoMatch/Gui/TreeView/PlaysTreeView.cs:69
 msgid "Edit name"
 msgstr "Name bearbeiten"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:111
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:107
 #: ../LongoMatch/Gui/TreeView/SubCategoriesTreeView.cs:91
 msgid "Edit tags"
 msgstr "Schlagwörter bearbeiten"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:112
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:108
 #: ../LongoMatch/Gui/TreeView/PlayListTreeView.cs:59
 msgid "Delete"
 msgstr "Entfernen"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:113
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:109
 msgid "Delete key frame"
 msgstr "Schlüsselbild entfernen"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:114
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:110
 msgid "Add to playlist"
 msgstr "Zur Wiedergabeliste hinzufügen"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:116
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:112
+msgid "Export to video file"
+msgstr "In eine Videodatei exportieren"
+
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:113
 msgid "Export to PGN images"
 msgstr "Als PGN-Bilder exportieren"
 
-#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:271
+#: ../LongoMatch/Gui/TreeView/ListTreeViewBase.cs:270
 msgid "Do you want to delete the key frame for this play?"
 msgstr "Wollen Sie das Schlüsselbild für dieses Spiel entfernen?"
 
@@ -1510,6 +1505,14 @@ msgid "Please, close the opened project to play the playlist."
 msgstr ""
 "Bitte schließen Sie das geöffnete Projekt, um die Wiedergabeliste abzuspielen."
 
+#: ../LongoMatch/longomatch.desktop.in.in.h:2
+msgid "LongoMatch: The Digital Coach"
+msgstr "LongoMatch: Der digitale Trainer"
+
+#: ../LongoMatch/longomatch.desktop.in.in.h:3
+msgid "Sports video analysis tool for coaches"
+msgstr "Analyse von Sportvideos für Trainer"
+
 #: ../LongoMatch/Main.cs:149
 msgid ""
 "Some elements from the previous version (database, templates and/or "
@@ -1568,7 +1571,7 @@ msgstr "Spieler aller Mannschaften"
 
 #: ../LongoMatch/Services/TemplatesService.cs:207
 #: ../LongoMatch/Services/TemplatesService.cs:225
-msgid "A template already exixts with the name: "
+msgid "A template already exists with the name: "
 msgstr "Eine Vorlage dieses Namens existiert bereits:"
 
 #: ../LongoMatch/Store/Category.cs:131
