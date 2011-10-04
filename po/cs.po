@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: longomatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-09-22 17:48+0000\n"
-"PO-Revision-Date: 2011-09-28 01:20+0200\n"
+"POT-Creation-Date: 2011-09-29 19:23+0000\n"
+"PO-Revision-Date: 2011-10-04 10:20+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,19 +19,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2\n"
-
-#: ../LongoMatch/longomatch.desktop.in.in.h:1
-#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:198
-msgid "LongoMatch"
-msgstr "LongoMatch"
-
-#: ../LongoMatch/longomatch.desktop.in.in.h:2
-msgid "LongoMatch: The Digital Coach"
-msgstr "LongoMatch: Digitální rozhodčí"
-
-#: ../LongoMatch/longomatch.desktop.in.in.h:3
-msgid "Sports video analysis tool for coaches"
-msgstr "Nástroj pro rozhodčí sloužící k analýze sportovních videí"
 
 #: ../CesarPlayer/Capturer/FakeCapturer.cs:86
 msgid "Fake live source"
@@ -119,9 +106,9 @@ msgid ""
 "audio output in the Multimedia Systems Selector. You may want to consider "
 "using a sound server."
 msgstr ""
-"Zvukový výstup je používán jinou aplikací. Vyberte prosím jiný zvukový výstup "
-"ve Výběru systému multimédií. Možná byste měli zvážit použití zvukového "
-"serveru."
+"Zvukový výstup je používán jinou aplikací. Vyberte prosím jiný zvukový "
+"výstup ve Výběru systému multimédií. Možná byste měli zvážit použití "
+"zvukového serveru."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2619
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2625
@@ -301,6 +288,12 @@ msgstr "%s"
 msgid "0 seconds"
 msgstr "0 sekund"
 
+#: ../LongoMatch/Common/GuiUtils.cs:43
+#: ../LongoMatch/Common/ProjectUtils.cs:128
+#: ../LongoMatch/Common/ProjectUtils.cs:217
+msgid "Please, select a video file."
+msgstr "Vyberte prosím soubor s videem."
+
 #: ../LongoMatch/Common/Images.cs:70
 #: ../LongoMatch/Gui/Component/PlayerProperties.cs:90
 msgid "Choose an image"
@@ -333,11 +326,6 @@ msgstr "Importovat projekt"
 #: ../LongoMatch/Common/ProjectUtils.cs:105
 msgid "Error importing project:"
 msgstr "Chyba při importu projektu:"
-
-#: ../LongoMatch/Common/ProjectUtils.cs:128
-#: ../LongoMatch/Common/ProjectUtils.cs:217
-msgid "Please, select a video file."
-msgstr "Vyberte prosím soubor s videem."
 
 #: ../LongoMatch/Common/ProjectUtils.cs:144
 msgid "A project already exists for the file:"
@@ -1065,6 +1053,11 @@ msgstr "Zobrazení pro ruční štítkování"
 msgid "Free Capture Mode"
 msgstr "Režim volného nahrávání"
 
+#: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:198
+#: ../LongoMatch/longomatch.desktop.in.in.h:1
+msgid "LongoMatch"
+msgstr "LongoMatch"
+
 #: ../LongoMatch/gtk-gui/LongoMatch.Gui.MainWindow.cs:247
 msgid "Plays"
 msgstr "Utkání"
@@ -1506,6 +1499,14 @@ msgstr "Čas ukončení je menší než čas započetí. Utkání nebude přidá
 msgid "Please, close the opened project to play the playlist."
 msgstr "Abyste mohli přehrát seznam utkání, zavřete prosím otevřený projekt."
 
+#: ../LongoMatch/longomatch.desktop.in.in.h:2
+msgid "LongoMatch: The Digital Coach"
+msgstr "LongoMatch: Digitální rozhodčí"
+
+#: ../LongoMatch/longomatch.desktop.in.in.h:3
+msgid "Sports video analysis tool for coaches"
+msgstr "Nástroj pro rozhodčí sloužící k analýze sportovních videí"
+
 #: ../LongoMatch/Main.cs:149
 msgid ""
 "Some elements from the previous version (database, templates and/or "
@@ -1564,8 +1565,9 @@ msgstr "Hráči všech týmů"
 
 #: ../LongoMatch/Services/TemplatesService.cs:207
 #: ../LongoMatch/Services/TemplatesService.cs:225
-msgid "A template already exixts with the name: "
-msgstr "Šablona s tímto názvem již existuje: "
+#| msgid "A template already exixts with the name: "
+msgid "A template already exists with the name: "
+msgstr "Již existuje šablona s názvem: "
 
 #: ../LongoMatch/Store/Category.cs:131
 msgid "name"
