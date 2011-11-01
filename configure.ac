@@ -1,7 +1,7 @@
 dnl Warning: This is an automatically generated file, do not edit!
 dnl Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.54])
-AC_INIT([LongoMatch], [0.17.1])
+AC_INIT([LongoMatch], [0.17.2])
 AM_INIT_AUTOMAKE([foreign])
 AM_MAINTAINER_MODE
 
@@ -98,11 +98,11 @@ build/m4/shave/shave-libtool
 
 libcesarplayer/Makefile
 
-CesarPlayer/Makefile
-CesarPlayer/cesarplayer.pc
-CesarPlayer/CesarPlayer.dll.config
-CesarPlayer/AssemblyInfo.cs
-
+LongoMatch.Core/Makefile
+LongoMatch.Multimedia/Makefile
+LongoMatch.GUI.Multimedia/Makefile
+LongoMatch.GUI/Makefile
+LongoMatch.Services/Makefile
 LongoMatch/Makefile
 LongoMatch/longomatch
 LongoMatch/longomatch.desktop.in

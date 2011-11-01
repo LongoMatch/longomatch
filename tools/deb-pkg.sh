@@ -38,6 +38,6 @@ echo "Create changelog dch --create --empty -v $PKG_VERSION~$DEB_RELEASE  --pack
 dch --create -v $PKG_VERSION~$DEB_RELEASE  --package $PKG_NAME --distribution $DIST
 dpkg-buildpackage -S
 cd $BUILD_DIR
-dput my-ppa $PKG_NAME\_$PKG_VERSION~$DEB_RELEASE\_source.changes
+dput ppa:ylatuya/longomatch-dev $PKG_NAME\_$PKG_VERSION~$DEB_RELEASE\_source.changes
 
 

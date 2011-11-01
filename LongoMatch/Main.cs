@@ -22,14 +22,12 @@
 using System;
 using System.IO;
 using Gtk;
-using LongoMatch.Common;
-using LongoMatch.DB;
-using LongoMatch.Gui;
-using LongoMatch.IO;
-using LongoMatch.Store.Templates;
-using LongoMatch.Services;
-using LongoMatch.Services.JobsManager;
 using Mono.Unix;
+
+using LongoMatch.Gui;
+using LongoMatch.Services;
+using LongoMatch.Common;
+using LongoMatch.Multimedia.Utils;
 
 namespace LongoMatch
 
@@ -37,175 +35,24 @@ namespace LongoMatch
 
 	class MainClass
 	{
-		private static DataBase db;
-		public static TemplatesService ts;
-		private static string baseDirectory;
-		private static string homeDirectory;
-		private static string configDirectory;
-		private const string WIN32_CONFIG_FILE = "longomatch.conf";
-
+		
 		public static void Main(string[] args)
 		{
-			SetupBaseDir();
-
-			Log.Debugging = Debugging;
-			Log.Information("Starting " + Constants.SOFTWARE_NAME);
-
-			//Iniciamos la internalización
-			Catalog.Init(Constants.SOFTWARE_NAME.ToLower(),RelativeToPrefix("share/locale"));
-
-			//Iniciamos la aplicación
-			Application.Init();
-
 			GLib.ExceptionManager.UnhandledException += new GLib.UnhandledExceptionHandler(OnException);
 
 			GStreamer.Init();
-			if (! GStreamer.CheckInstallation())
+			if (!GStreamer.CheckInstallation())
 				return;
 
-			//Comprobamos los archivos de inicio
-			CheckDirs();
-			
-			ts = new TemplatesService(configDirectory);
-
-			//Iniciamos la base de datos
-			db = new DataBase(Path.Combine(DBDir(),Constants.DB_FILE));
-
-			//Check for previous database
-			CheckOldFiles();
-
-			try {
+			//try {
+				Core.Init();
 				MainWindow win = new MainWindow();
 				win.Show();
+				Core.Start(win);
 				Application.Run();
-			} catch(Exception ex) {
-				ProcessExecutionError(ex);
-			}
-		}
-
-		public static string RelativeToPrefix(string relativePath) {
-			return System.IO.Path.Combine(baseDirectory, relativePath);
-		}
-
-		public static string HomeDir() {
-			return homeDirectory;
-		}
-
-		public static string PlayListDir() {
-			return System.IO.Path.Combine(homeDirectory, "playlists");
-		}
-
-		public static string SnapshotsDir() {
-			return System.IO.Path.Combine(homeDirectory, "snapshots");
-		}
-
-		public static string TemplatesDir() {
-			return System.IO.Path.Combine(configDirectory, "templates");
-		}
-
-		public static string VideosDir() {
-			return System.IO.Path.Combine(homeDirectory, "videos");
-		}
-
-		public static string TempVideosDir() {
-			return System.IO.Path.Combine(configDirectory, "temp");
-		}
-
-		public static string ImagesDir() {
-			return RelativeToPrefix("share/longomatch/images");
-		}
-
-		public static string DBDir() {
-			return System.IO.Path.Combine(configDirectory, "db");
-		}
-
-		public static void CheckDirs() {
-			if(!System.IO.Directory.Exists(homeDirectory))
-				System.IO.Directory.CreateDirectory(homeDirectory);
-			if(!System.IO.Directory.Exists(TemplatesDir()))
-				System.IO.Directory.CreateDirectory(TemplatesDir());
-			if(!System.IO.Directory.Exists(SnapshotsDir()))
-				System.IO.Directory.CreateDirectory(SnapshotsDir());
-			if(!System.IO.Directory.Exists(PlayListDir()))
-				System.IO.Directory.CreateDirectory(PlayListDir());
-			if(!System.IO.Directory.Exists(DBDir()))
-				System.IO.Directory.CreateDirectory(DBDir());
-			if(!System.IO.Directory.Exists(VideosDir()))
-				System.IO.Directory.CreateDirectory(VideosDir());
-			if(!System.IO.Directory.Exists(TempVideosDir()))
-				System.IO.Directory.CreateDirectory(TempVideosDir());
-		}
-
-
-		public static void CheckOldFiles() {
-			string oldDBFile= System.IO.Path.Combine(homeDirectory, "db/db.yap");
-			//We supose that if the conversion as already be done successfully,
-			//old DB file has been renamed to db.yap.bak
-			if(File.Exists(oldDBFile)) {
-				MessageDialog md = new MessageDialog(null,
-				                                     DialogFlags.Modal,
-				                                     MessageType.Question,
-				                                     Gtk.ButtonsType.YesNo,
-				                                     Catalog.GetString("Some elements from the previous version (database, templates and/or playlists) have been found.")+"\n"+
-				                                     Catalog.GetString("Do you want to import them?"));
-				md.Icon=Stetic.IconLoader.LoadIcon(md, "longomatch", Gtk.IconSize.Dialog);
-				if(md.Run()==(int)ResponseType.Yes) {
-					md.Destroy();
-					//Migrator migrator = new Migrator(homeDirectory);
-					//migrator.Run();
-					//migrator.Destroy();
-				}
-				else
-					md.Destroy();
-			}
-		}
-
-		public static DataBase DB {
-			get {
-				return db;
-			}
-		}
-		
-		private static void SetupBaseDir() {
-			string home;
-			
-			if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
-				baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../");
-			}
-			else
-				baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../../");
-			
-			/* Check for the magic file PORTABLE to check if it's a portable version
-			 * and the config goes in the same folder as the binaries */
-			if (File.Exists(System.IO.Path.Combine(baseDirectory, Constants.PORTABLE_FILE)))
-				home = baseDirectory;
-			else
-				home = System.Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-			
-			homeDirectory = System.IO.Path.Combine(home,Constants.SOFTWARE_NAME);
-			if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-				configDirectory = homeDirectory;
-			else
-				configDirectory = System.IO.Path.Combine(home,".longomatch");
-		}
-
-		private static bool? debugging = null;	
-		public static bool Debugging {
-			get {
-				if(debugging == null) {
-					debugging = EnvironmentIsSet("LGM_DEBUG");
-				}
-				return debugging.Value;
-			}
-			set {
-				debugging = value;
-				Log.Debugging = Debugging;
-			}
-		}
-
-		public static bool EnvironmentIsSet(string env)
-		{
-			return !String.IsNullOrEmpty(Environment.GetEnvironmentVariable(env));
+			//} catch(Exception ex) {
+			//	ProcessExecutionError(ex);
+			//}
 		}
 
 		private static void OnException(GLib.UnhandledExceptionArgs args) {
@@ -219,7 +66,7 @@ namespace LongoMatch
 			logFile = logFile.Replace("/","-");
 			logFile = logFile.Replace(" ","-");
 			logFile = logFile.Replace(":","-");
-			logFile = System.IO.Path.Combine(HomeDir(),logFile);
+			logFile = System.IO.Path.Combine(Config.HomeDir(),logFile);
 
 			if(ex.InnerException != null)
 				message = String.Format("{0}\n{1}\n{2}\n{3}\n{4}",ex.Message,ex.InnerException.Message,ex.Source,ex.StackTrace,ex.InnerException.StackTrace);

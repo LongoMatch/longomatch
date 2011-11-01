@@ -2,7 +2,16 @@ EXTRA_DIST =\
 		expansions.m4 \
 		env.in
 
-SUBDIRS = build libcesarplayer CesarPlayer LongoMatch po
+SUBDIRS = \
+	build \
+	libcesarplayer \
+	LongoMatch.Core \
+	LongoMatch.Multimedia \
+	LongoMatch.GUI.Multimedia \
+	LongoMatch.GUI \
+	LongoMatch.Services \
+	LongoMatch \
+	po
 
 DISTCLEANFILES = 	intltool-extract\
 			intltool-merge\

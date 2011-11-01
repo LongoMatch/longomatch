@@ -3,11 +3,11 @@
     <Configuration name="Release" ctype="TranslationProjectConfiguration" />
     <Configuration name="Debug" ctype="TranslationProjectConfiguration" />
   </Configurations>
-  <projectInformations>
-    <TranslationProjectInformation projectName="libcesarplayer" isIncluded="False" />
-  </projectInformations>
   <translations>
     <Translation isoCode="es" />
     <Translation isoCode="fr" />
   </translations>
+  <projectInformations>
+    <TranslationProjectInformation projectName="libcesarplayer" isIncluded="False" />
+  </projectInformations>
 </CombineEntry>

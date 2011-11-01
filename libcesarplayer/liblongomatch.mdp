@@ -1,16 +1,7 @@
 <Project name="libcesarplayer" fileversion="2.0" language="C" Target="Bin" Description="Gstreamer backend libraries for LongoMatch" ctype="CProject">
-  <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="Makefile.am" IsAutotoolsProject="True" RelativeConfigureInPath=".">
-    <BuildFilesVar />
-    <DeployFilesVar />
-    <ResourcesVar />
-    <OthersVar />
-    <GacRefVar />
-    <AsmRefVar />
-    <ProjectRefVar />
-  </MonoDevelop.Autotools.MakefileInfo>
   <Configurations active="Release">
     <Configuration name="Debug" SourceDirectory="." ctype="CProjectConfiguration">
-      <Output directory="../LongoMatch/bin/Debug" output="libcesarplayer.dll" />
+      <Output directory="../bin" output="libcesarplayer.dll" />
       <Build debugmode="True" target="SharedLibrary" />
       <Execution consolepause="True" runwithwarnings="True" />
       <CodeGeneration WarningLevel="Normal" WarningsAsErrors="False" OptimizationLevel="0" ExtraCompilerArguments="" ExtraLinkerArguments="" DefineSymbols="DEBUG MONODEVELOP" ctype="CCompilationParameters" />
@@ -45,6 +36,15 @@
     <File subtype="Code" buildaction="Compile" name="baconvideowidget-marshal.c" />
     <File subtype="Code" buildaction="Nothing" name="baconvideowidget-marshal.h" />
   </Contents>
+  <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="Makefile.am" IsAutotoolsProject="True" RelativeConfigureInPath=".">
+    <BuildFilesVar />
+    <DeployFilesVar />
+    <ResourcesVar />
+    <OthersVar />
+    <GacRefVar />
+    <AsmRefVar />
+    <ProjectRefVar />
+  </MonoDevelop.Autotools.MakefileInfo>
   <Packages>
     <Package file="/usr/lib/pkgconfig/gdk-2.0.pc" name="GDK" IsProject="False" />
     <Package file="/usr/lib/pkgconfig/gstreamer-0.10.pc" name="GStreamer" IsProject="False" />

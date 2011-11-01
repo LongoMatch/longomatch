@@ -5,6 +5,7 @@
 #include <glib/gi18n.h>
 #include <libintl.h>
 
+#include <gst/gst.h>
 #include <gdk/gdk.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -233,4 +234,10 @@ totem_ratio_fits_screen (GdkWindow * video_window, int video_width,
   }
 
   return TRUE;
+}
+
+void
+init_backend (int argc, char **argv)
+{
+  gst_init(&argc, &argv);
 }

@@ -1,7 +1,7 @@
 <Combine fileversion="2.0" description="LongoMatch : The Digital Coach" outputpath="build/bin/" releaseversion="0.9.0" name="LongoMatch">
   <Policies>
     <DotNetNamingPolicy DirectoryNamespaceAssociation="PrefixedHierarchical" ResourceNamePolicy="FileFormatDefault" />
-    <StandardHeader Text="&#xA; Copyright (C) ${Year} ${CopyrightHolder}&#xA;&#xA; This program is free software; you can redistribute it and/or modify&#xA; it under the terms of the GNU General Public License as published by&#xA; the Free Software Foundation; either version 2 of the License, or&#xA; (at your option) any later version.&#xA;&#xA; This program is distributed in the hope that it will be useful,&#xA; but WITHOUT ANY WARRANTY; without even the implied warranty of&#xA; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the&#xA; GNU General Public License for more details.&#xA; &#xA; You should have received a copy of the GNU General Public License&#xA; along with this program; if not, write to the Free Software&#xA; Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.&#xA;" inheritsSet="Apache2License" />
+    <StandardHeader Text="&#xA; Copyright (C) ${Year} ${CopyrightHolder}&#xA;&#xA; This program is free software; you can redistribute it and/or modify&#xA; it under the terms of the GNU General Public License as published by&#xA; the Free Software Foundation; either version 2 of the License, or&#xA; (at your option) any later version.&#xA;&#xA; This program is distributed in the hope that it will be useful,&#xA; but WITHOUT ANY WARRANTY; without even the implied warranty of&#xA; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the&#xA; GNU General Public License for more details.&#xA; &#xA; You should have received a copy of the GNU General Public License&#xA; along with this program; if not, write to the Free Software&#xA; Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.&#xA;" IncludeInNewFiles="True" />
     <VersionControlPolicy inheritsSet="Mono" />
     <ChangeLogPolicy UpdateMode="None" inheritsSet="Mono">
       <MessageStyle LineAlign="0" />
@@ -18,28 +18,40 @@
   </Policies>
   <Configurations active="Release">
     <Configuration name="Debug" ctype="CombineConfiguration">
-      <Entry build="True" name="LongoMatch" configuration="Debug" />
+      <Entry build="True" name="LongoMatch.GUI" configuration="Debug" />
       <Entry build="True" name="libcesarplayer" configuration="Debug" />
-      <Entry build="True" name="CesarPlayer" configuration="Debug" />
-      <Entry build="True" name="Translations" configuration="Debug" />
+      <Entry build="True" name="LongoMatch.Core" configuration="Debug" />
+      <Entry build="True" name="LongoMatch" configuration="Debug" />
+      <Entry build="True" name="LongoMatch.Multimedia" configuration="Debug" />
+      <Entry build="True" name="LongoMatch.Services" configuration="Debug" />
+      <Entry build="True" name="LongoMatch.GUI.Multimedia" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
-      <Entry build="True" name="LongoMatch" configuration="Release" />
+      <Entry build="True" name="LongoMatch.GUI" configuration="Release" />
       <Entry build="True" name="libcesarplayer" configuration="Release" />
-      <Entry build="True" name="CesarPlayer" configuration="Release" />
-      <Entry build="True" name="Translations" configuration="Release" />
+      <Entry build="True" name="LongoMatch.Core" configuration="Release" />
+      <Entry build="True" name="LongoMatch" configuration="Release" />
+      <Entry build="True" name="LongoMatch.Multimedia" configuration="Release" />
+      <Entry build="True" name="LongoMatch.Services" configuration="Release" />
+      <Entry build="True" name="LongoMatch.GUI.Multimedia" configuration="Release" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="LongoMatch" single="True">
-    <Execute type="None" entry="LongoMatch" />
+    <Execute type="None" entry="LongoMatch.GUI" />
     <Execute type="None" entry="libcesarplayer" />
-    <Execute type="None" entry="CesarPlayer" />
-    <Execute type="None" entry="Translations" />
+    <Execute type="None" entry="LongoMatch.Core" />
+    <Execute type="None" entry="LongoMatch" />
+    <Execute type="None" entry="LongoMatch.Multimedia" />
+    <Execute type="None" entry="LongoMatch.Services" />
+    <Execute type="None" entry="LongoMatch.GUI.Multimedia" />
   </StartMode>
   <Entries>
-    <Entry filename="LongoMatch/LongoMatch.mdp" />
+    <Entry filename="LongoMatch.GUI/LongoMatch.GUI.mdp" />
     <Entry filename="libcesarplayer/liblongomatch.mdp" />
-    <Entry filename="CesarPlayer/CesarPlayer.mdp" />
-    <Entry filename="po/Translations.mdse" />
+    <Entry filename="LongoMatch.Core/LongoMatch.Core.mdp" />
+    <Entry filename="LongoMatch/LongoMatch.mdp" />
+    <Entry filename="LongoMatch.Multimedia/LongoMatch.Multimedia.mdp" />
+    <Entry filename="LongoMatch.Services/LongoMatch.Services.mdp" />
+    <Entry filename="LongoMatch.GUI.Multimedia/LongoMatch.GUI.Multimedia.mdp" />
   </Entries>
 </Combine>
