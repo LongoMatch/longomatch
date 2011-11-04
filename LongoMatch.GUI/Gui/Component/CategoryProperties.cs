@@ -52,6 +52,8 @@ namespace LongoMatch.Gui.Component
 			this.Build();
 			subcategoriestreeview1.SubCategoriesDeleted += OnSubcategoriesDeleted;
 			subcategoriestreeview1.SubCategorySelected += OnSubcategorySelected;
+			leadtimebutton.ValueChanged += OnLeadTimeChanged;;
+			lagtimebutton.ValueChanged += OnLagTimeChanged;
 		}
 		
 		public ITemplateProvider<SubCategoryTemplate, string> Template {
@@ -167,12 +169,12 @@ namespace LongoMatch.Gui.Component
 				cat.Color=colorbutton1.Color;
 		}
 
-		protected virtual void OnTimeadjustwidget1LeadTimeChanged(object sender, System.EventArgs e)
+		protected virtual void OnLeadTimeChanged(object sender, System.EventArgs e)
 		{
 			cat.Start = new Time{Seconds=(int)leadtimebutton.Value};
 		}
 
-		protected virtual void OnTimeadjustwidget1LagTimeChanged(object sender, System.EventArgs e)
+		protected virtual void OnLagTimeChanged(object sender, System.EventArgs e)
 		{
 			cat.Stop = new Time{Seconds=(int)lagtimebutton.Value};
 		}
