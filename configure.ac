@@ -96,6 +96,7 @@ build/m4/Makefile
 build/m4/shave/shave
 build/m4/shave/shave-libtool
 
+images/Makefile
 libcesarplayer/Makefile
 
 LongoMatch.Core/Makefile

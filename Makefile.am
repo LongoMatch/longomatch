@@ -4,6 +4,7 @@ EXTRA_DIST =\
 
 SUBDIRS = \
 	build \
+	images \
 	libcesarplayer \
 	LongoMatch.Core \
 	LongoMatch.Multimedia \
