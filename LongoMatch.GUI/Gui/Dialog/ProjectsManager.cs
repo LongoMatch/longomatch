@@ -45,10 +45,11 @@ namespace LongoMatch.Gui.Dialog
 			this.openedProject = openedProject;
 			this.projectdetails.Use = ProjectType.EditProject;
 			this.DB = DB;
+			Fill();
 			projectdetails.Edited = false;
 		}
 
-		public void Fill() {
+		private void Fill() {
 			projectlistwidget1.Fill(DB.GetAllProjects());
 			projectlistwidget1.ClearSearch();
 			projectlistwidget1.SelectionMode = SelectionMode.Multiple;
