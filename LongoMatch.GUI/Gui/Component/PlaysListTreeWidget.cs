@@ -42,7 +42,7 @@ namespace LongoMatch.Gui.Component
 		public event PlayListNodeAddedHandler PlayListNodeAdded;
 		public event SnapshotSeriesHandler SnapshotSeriesEvent;
 		public event TagPlayHandler TagPlay;
-		public event NewJobHandler NewRenderingJob;
+		public event RenderPlaylistHandler RenderPlaylistEvent;
 
 		private Project project;
 
@@ -194,10 +194,9 @@ namespace LongoMatch.Gui.Component
 				playlist.Add(new PlayListPlay((Play)treeview.Model.GetValue(iter, 0),
 				                              project.Description.File, 1, true));
 			}
-			/* FIXME
-			job = GuiUtils.ConfigureRenderingJob(playlist, this);
-			if (job != null && NewRenderingJob != null)
-					NewRenderingJob(job); */
+			
+			if (RenderPlaylistEvent != null)
+				RenderPlaylistEvent(playlist);
 		}
 	}
 }

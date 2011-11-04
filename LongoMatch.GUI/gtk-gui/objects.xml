@@ -208,7 +208,6 @@
       <itemgroup label="PlayListWidget Signals">
         <signal name="PlayListNodeSelected" />
         <signal name="ApplyCurrentRate" />
-        <signal name="NewRenderingJob" />
         <signal name="OpenPlaylistEvent" />
         <signal name="NewPlaylistEvent" />
         <signal name="SavePlaylistEvent" />
@@ -311,7 +310,7 @@
         <signal name="PlayListNodeAdded" />
         <signal name="SnapshotSeriesEvent" />
         <signal name="TagPlay" />
-        <signal name="NewRenderingJob" />
+        <signal name="RenderPlaylistEvent" />
       </itemgroup>
     </signals>
   </object>

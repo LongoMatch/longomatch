@@ -35,11 +35,12 @@ namespace LongoMatch.Gui.Component
 	{
 		public event PlayListNodeSelectedHandler PlayListNodeSelected;
 		public event ApplyCurrentRateHandler ApplyCurrentRate;
-		public event NewJobHandler NewRenderingJob;
 		public event OpenPlaylistHandler OpenPlaylistEvent;
 		public event NewPlaylistHandler NewPlaylistEvent;
 		public event SavePlaylistHandler SavePlaylistEvent;
 		public event RenderPlaylistHandler RenderPlaylistEvent;
+		
+		IPlayList playlist;
 		
 		public PlayListWidget()
 		{
@@ -56,6 +57,7 @@ namespace LongoMatch.Gui.Component
 		}
 
 		public void Load(IPlayList playlist) {
+			this.playlist = playlist;
 			label1.Visible = false;
 			newvideobutton.Show();
 			playlisttreeview1.PlayList = playlist;
@@ -117,7 +119,7 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnNewvideobuttonClicked(object sender, System.EventArgs e)
 		{
 			if (RenderPlaylistEvent != null)
-				RenderPlaylistEvent();
+				RenderPlaylistEvent((PlayList)playlist);
 		}
 	}
 }

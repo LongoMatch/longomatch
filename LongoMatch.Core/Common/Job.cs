@@ -18,13 +18,14 @@
 using System;
 
 using LongoMatch.Common;
+using LongoMatch.Interfaces;
 
 namespace LongoMatch.Common
 {
 	[Serializable]
 	public class Job
 	{
-		public Job (PlayList playlist, EncodingSettings encSettings,
+		public Job (IPlayList playlist, EncodingSettings encSettings,
 		            bool enableAudio, bool overlayTitle)
 		{
 			Playlist = Cloner.Clone(playlist);
@@ -63,7 +64,7 @@ namespace LongoMatch.Common
 			}
 		}
 		
-		public PlayList Playlist{
+		public IPlayList Playlist{
 			get;
 			set;
 		}

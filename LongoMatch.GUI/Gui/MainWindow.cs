@@ -56,7 +56,7 @@ namespace LongoMatch.Gui
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		
 		/* Playlist */
-		public event NewJobHandler NewJobEvent;
+		public event RenderPlaylistHandler RenderPlaylistEvent;
 		public event PlayListNodeAddedHandler PlayListNodeAddedEvent;
 		public event PlayListNodeSelectedHandler PlayListNodeSelectedEvent;
 		public event OpenPlaylistHandler OpenPlaylistEvent;
@@ -217,8 +217,8 @@ namespace LongoMatch.Gui
 			visitorPlayersList.SnapshotSeriesEvent += EmitSnapshotSeries;
 			tagsList.SnapshotSeriesEvent += EmitSnapshotSeries;
 
-			playlist.NewRenderingJob += EmitNewJob;
-			playsList.NewRenderingJob += EmitNewJob;
+			playlist.RenderPlaylistEvent += EmitRenderPlaylist;
+			playsList.RenderPlaylistEvent += EmitRenderPlaylist;
 			
 			renderingstatebar1.ManageJobs += (e, o) => {EmitManageJobs();};
 			
@@ -663,9 +663,9 @@ namespace LongoMatch.Gui
 				NewTagStopEvent (category);
 		}
 		
-		private void EmitNewJob(Job job) {
-			if (NewJobEvent != null)
-				NewJobEvent(job);
+		private void EmitRenderPlaylist(IPlayList playlist) {
+			if (RenderPlaylistEvent != null)
+				RenderPlaylistEvent(playlist);
 		}
 		
 		private void EmitApplyRate(PlayListPlay plNode) {

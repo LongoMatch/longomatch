@@ -73,8 +73,6 @@ namespace LongoMatch.Handlers
 	public delegate void NewPlaylistHandler();
 	/* Save a playlist */
 	public delegate void SavePlaylistHandler();
-	/* Render a playlist */
-	public delegate void RenderPlaylistHandler();
 
 	/* Drawing events */
 	/* Draw tool changed */
@@ -97,7 +95,7 @@ namespace LongoMatch.Handlers
 	public delegate void SnapshotSeriesHandler(Play tNode);
 	
 	/* Add a new rendering job */
-	public delegate void NewJobHandler(Job job);
+	public delegate void RenderPlaylistHandler(IPlayList playlist);
 	 
 	/* A date was selected */
 	public delegate void DateSelectedHandler(DateTime selectedDate);

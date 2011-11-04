@@ -61,6 +61,8 @@ namespace LongoMatch.Services
 		}
 		
 		public void AddJob(Job job) {
+			if (job == null)
+				return;
 			jobs.Add(job);
 			pendingJobs.Add(job);
 			UpdateJobsStatus();
@@ -131,7 +133,7 @@ namespace LongoMatch.Services
 			dialog.Destroy();
 		}
 		
-		public static Job ConfigureRenderingJob (PlayList playlist, Gtk.Widget parent)
+		public static Job ConfigureRenderingJob (IPlayList playlist, Gtk.Widget parent)
 		{
 			VideoEditionProperties vep;
 			Job job = null;
@@ -193,7 +195,7 @@ namespace LongoMatch.Services
 			}
 			catch(Exception ex) {
 				Log.Exception(ex);
-				Log.Error("Error redering job: ", currentJob.Playlist.Filename);
+				Log.Error("Error redering job: ", currentJob.Name);
 				currentJob.State = JobState.Error;
 			}
 		}

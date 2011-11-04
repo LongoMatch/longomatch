@@ -77,7 +77,8 @@ namespace LongoMatch.Services
 
 			/* Start the rendering jobs manager */
 			videoRenderer = new RenderingJobsManager(mainWindow.RenderingStateBar);
-			mainWindow.NewJobEvent += (job) => {videoRenderer.AddJob(job);};
+			mainWindow.RenderPlaylistEvent += (playlist) => {
+				videoRenderer.AddJob(RenderingJobsManager.ConfigureRenderingJob(playlist, mainWindow));};
 			
 			projectsManager = new ProjectsManager(mainWindow);
 			projectsManager.OpenedProjectChanged += OnOpenedProjectChanged;
