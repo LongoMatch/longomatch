@@ -54,6 +54,7 @@ namespace LongoMatch.Services
 		public void ConnectSignals() {
 			mainWindow.NewProjectEvent += NewProject;
 			mainWindow.OpenProjectEvent += OpenProject;
+			mainWindow.CloseOpenedProjectEvent += CloseOpenedProject;
 			mainWindow.SaveProjectEvent += SaveProject;
 			mainWindow.ImportProjectEvent += ImportProject;
 			mainWindow.ExportProjectEvent += ExportProject;

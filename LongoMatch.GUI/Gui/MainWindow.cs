@@ -70,6 +70,7 @@ namespace LongoMatch.Gui
 		public event SaveProjectHandler SaveProjectEvent;
 		public event NewProjectHandler NewProjectEvent;
 		public event OpenProjectHandler OpenProjectEvent;
+		public event CloseOpenendProjectHandler CloseOpenedProjectEvent;
 		public event ImportProjectHandler ImportProjectEvent;
 		public event ExportProjectHandler ExportProjectEvent;
 		
@@ -300,24 +301,8 @@ namespace LongoMatch.Gui
 				capturer.Visible = false;;
 				EmitSaveProject();
 			} else if(projectType == ProjectType.FakeCaptureProject) {
-				CloseOpenedProject(true);
+				EmitCloseOpenedProject(true);
 			}
-		}
-
-		private void CloseOpenedProject(bool save) {
-			/* FIXME
-			 * EmitCloseOpenedProject(save);
-			 */
-			if(projectType != ProjectType.FileProject)
-				capturer.Close();
-			else
-				player.Close();
-
-			if(openedProject != null)
-				openedProject.Clear();
-			openedProject = null;
-			projectType = ProjectType.None;
-			ResetGUI();
 		}
 
 		private void ResetGUI() {
@@ -384,7 +369,7 @@ namespace LongoMatch.Gui
 				res = md.Run();
 				md.Destroy();
 				if(res == (int)ResponseType.Ok) {
-					CloseOpenedProject(true);
+					EmitCloseOpenedProject(true);
 					return true;
 				}
 				return false;
@@ -398,11 +383,11 @@ namespace LongoMatch.Gui
 
 			/* Close project wihtout saving */
 			if(res == (int)EndCaptureResponse.Quit) {
-				CloseOpenedProject(false);
+				EmitCloseOpenedProject(false);
 				return true;
 			} else if(res == (int)EndCaptureResponse.Save) {
 				/* Close and save project */
-				CloseOpenedProject(true);
+				EmitCloseOpenedProject(true);
 				return true;
 			} else
 				/* Continue with the current project */
@@ -507,7 +492,7 @@ namespace LongoMatch.Gui
 		{
 			MessagePopup.PopupMessage(this, MessageType.Info,
 			                          Catalog.GetString("The actual project will be closed due to an error in the media player:")+"\n" +args.Message);
-			CloseOpenedProject(true);
+			EmitCloseOpenedProject(true);
 		}
 
 		protected override bool OnKeyPressEvent(EventKey evnt)
@@ -603,7 +588,7 @@ namespace LongoMatch.Gui
 		{
 			MessagePopup.PopupMessage(this, MessageType.Info,
 			                          Catalog.GetString("An error occured in the video capturer and the current project will be closed:")+"\n" +args.Message);
-			CloseOpenedProject(true);
+			EmitCloseOpenedProject(true);
 		}
 		#endregion
 		
@@ -686,6 +671,14 @@ namespace LongoMatch.Gui
 		private void EmitNewProject() {
 			if (NewProjectEvent != null)
 				NewProjectEvent();
+		}
+
+		private void EmitCloseOpenedProject(bool save) {
+			if (CloseOpenedProjectEvent != null)
+				CloseOpenedProjectEvent(save);
+			openedProject = null;
+			projectType = ProjectType.None;
+			ResetGUI();
 		}
 		
 		private void EmitImportProject() {
