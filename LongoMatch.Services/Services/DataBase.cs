@@ -231,7 +231,6 @@ namespace LongoMatch.DB
 			} finally {
 				CloseDB(db);
 			}
-			ListObjects();
 		}
 
 		/// <summary>
