@@ -39,7 +39,7 @@ namespace LongoMatch.Gui.Dialog
 		IDatabase DB;
 		string homeDir = null;
 
-		public ProjectsManager(Project openedProject, IDatabase DB)
+		public ProjectsManager(Project openedProject, IDatabase DB, ITemplatesService ts)
 		{
 			this.Build();
 			this.openedProject = openedProject;
@@ -47,6 +47,7 @@ namespace LongoMatch.Gui.Dialog
 			this.DB = DB;
 			Fill();
 			projectdetails.Edited = false;
+			projectdetails.TemplatesService = ts; 
 		}
 
 		private void Fill() {

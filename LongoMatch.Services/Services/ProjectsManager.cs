@@ -514,7 +514,7 @@ namespace LongoMatch.Services
 		
 		protected void OpenProjectsManager()
 		{
-			Gui.Dialog.ProjectsManager pm = new Gui.Dialog.ProjectsManager(OpenedProject, Core.DB);
+			Gui.Dialog.ProjectsManager pm = new Gui.Dialog.ProjectsManager(OpenedProject, Core.DB, Core.TemplatesService);
 			pm.TransientFor = mainWindow;
 			pm.Show();
 		}
