@@ -72,7 +72,7 @@ namespace LongoMatch.Store.Templates
 		
 		public void AddDefaultItem (int i) {
 			Insert(i, new Player {
-					Name = "Player " + i+1,
+					Name = "Player " + (i+1).ToString(),
 					Birthday = new DateTime(),
 					Height = 1.80f,
 					Weight = 80,
