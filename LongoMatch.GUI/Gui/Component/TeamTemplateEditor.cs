@@ -115,7 +115,7 @@ namespace LongoMatch.Gui.Component
 			shield = ImageUtils.OpenImage((Gtk.Window)this.Toplevel);
 			if (shield != null) {
 				Template.Shield = shield;
-				shieldImage.Pixbuf = shield;
+				shieldImage.Pixbuf = Template.Shield;
 			}
 		}
 
