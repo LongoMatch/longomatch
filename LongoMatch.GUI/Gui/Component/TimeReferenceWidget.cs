@@ -118,7 +118,7 @@ namespace LongoMatch.Gui.Component
 					CairoUtils.DrawLine(g, i-Scroll, height,i-Scroll,
 					                    height-10, 2, color);
 					g.MoveTo(new PointD(i-Scroll-13,height-20));
-					time.MSeconds = (int)(i/FrameRate*pixelRatio);
+					time.Seconds = (int)(i/FrameRate*pixelRatio);
 					g.ShowText(time.ToSecondsString());
 					i=i+10*FrameRate;
 				}
@@ -143,7 +143,7 @@ namespace LongoMatch.Gui.Component
 			for(int i=10*FrameRate; i<=frames/pixelRatio;) {
 				// Drawing separator line
 				evnt.Window.DrawLine(Style.DarkGC(StateType.Normal),i-(int)Scroll,height,i-(int)Scroll,height-10);
-				time.MSeconds = (int)(i/FrameRate*pixelRatio);
+				time.Seconds = (int)(i/FrameRate*pixelRatio);
 				layout.SetMarkup(time.ToSecondsString());
 				this.GdkWindow.DrawLayout(this.Style.TextGC(StateType.Normal),i-(int)Scroll-13,height-23,layout);
 				//g.ShowText(time.ToSecondsString());
