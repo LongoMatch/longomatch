@@ -28,8 +28,9 @@ namespace LongoMatch.Gui.Component
 {
 	public class CategoriesTemplateEditorWidget: TemplatesEditorWidget<Categories, Category> 
 	{
-		private CategoriesTreeView categoriestreeview;
-		private List<HotKey> hkList;
+		CategoriesTreeView categoriestreeview;
+		List<HotKey> hkList;
+		GameUnitsEditor gameUnitsEditor;
 
 		public CategoriesTemplateEditorWidget (ITemplateProvider<Categories, Category> provider): base(provider)
 		{
@@ -37,7 +38,11 @@ namespace LongoMatch.Gui.Component
 			categoriestreeview = new CategoriesTreeView();
 			categoriestreeview.CategoryClicked += this.OnCategoryClicked;
 			categoriestreeview.CategoriesSelected += this.OnCategoriesSelected;
+			CurrentPage = 0;
+			FirstPageName = Catalog.GetString("Categories");
 			AddTreeView(categoriestreeview);
+			gameUnitsEditor = new GameUnitsEditor();
+			AddPage(gameUnitsEditor, "Game phases");
 		}
 		
 		public override Categories Template {
@@ -58,6 +63,7 @@ namespace LongoMatch.Gui.Component
 				}
 				categoriestreeview.Model = categoriesListStore;
 				ButtonsSensitive = false;
+				gameUnitsEditor.SetRootGameUnit(value.GameUnits);
 			}
 		}
 		

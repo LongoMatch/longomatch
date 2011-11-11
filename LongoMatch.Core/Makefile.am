@@ -31,6 +31,8 @@ SOURCES = \
 	Interfaces/ITemplatesService.cs \
 	Store/Category.cs \
 	Store/Drawing.cs \
+	Store/GameUnit.cs \
+	Store/GameUnitsList.cs \
 	Store/HotKey.cs \
 	Store/MediaFile.cs \
 	Store/PixbufTimeNode.cs \

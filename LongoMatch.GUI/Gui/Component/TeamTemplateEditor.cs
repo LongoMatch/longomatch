@@ -41,9 +41,9 @@ namespace LongoMatch.Gui.Component
 			treeview = new PlayerPropertiesTreeView(); 
 			treeview.PlayerClicked += this.OnPlayerClicked;
 			treeview.PlayersSelected += this.OnPlayersSelected;
+			FirstPageName = Catalog.GetString("Teams players");
 			AddTreeView(treeview);
 			AddTeamNamesWidget();
-			
 		}
 		
 		public override  TeamTemplate Template {

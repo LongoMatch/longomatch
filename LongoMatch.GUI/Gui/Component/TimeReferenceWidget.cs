@@ -95,7 +95,7 @@ namespace LongoMatch.Gui.Component
 			win.GetSize(out width, out height);
 			win.Resize((int)(frames/pixelRatio), height);
 			win.GetSize(out width, out height);
-
+			
 			if(Environment.OSVersion.Platform == PlatformID.Unix)
 				this.CairoDraw(evnt,height,width);
 			else

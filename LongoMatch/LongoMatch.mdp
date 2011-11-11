@@ -4,12 +4,18 @@
       <Output directory="../bin" assembly="LongoMatch" />
       <Build debugmode="True" target="Exe" />
       <Execution consolepause="False" runwithwarnings="True" runtime="MsNet" />
+      <EnvironmentVariables>
+        <Variable name="LGM_DEBUG" value="3" />
+      </EnvironmentVariables>
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" definesymbols="DEBUG" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
       <Output directory="../bin" assembly="LongoMatch" />
       <Build debugmode="False" target="Exe" />
       <Execution consolepause="False" runwithwarnings="True" runtime="MsNet" />
+      <EnvironmentVariables>
+        <Variable name="LGM_DEBUG" value="" />
+      </EnvironmentVariables>
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>

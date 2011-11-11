@@ -39,16 +39,32 @@ namespace LongoMatch.Store.Templates
 	[Serializable]
 	public class Categories: List<Category>, ITemplate, ITemplate<Category>
 	{
+		/* Database additions */
+		GameUnitsList gameUnits;
 
 		/// <summary>
 		/// Creates a new template
 		/// </summary>
-		public Categories() {}
+		public Categories() {
+		}
 
 		public string Name {
 			get;
 			set;
 		}
+		
+		public GameUnitsList GameUnits {
+			set {
+				gameUnits = value;
+			}
+			get {
+				if (gameUnits == null) {
+					gameUnits = new GameUnitsList();
+				}
+				return gameUnits;
+			}
+		}
+		
 		public void Save(string filePath) {
 			SerializableObject.Save(this, filePath);
 		}

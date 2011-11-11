@@ -59,13 +59,32 @@ namespace LongoMatch.Gui.Component
 			set;
 		}
 		
+		public int CurrentPage {
+			set {
+				notebook.CurrentPage = value;
+			}
+		}
+		
+		public string FirstPageName {
+			set {
+				(notebook.GetTabLabel(notebook.GetNthPage(0)) as Label).Text = value;
+			}
+		}
+		
 		protected void AddTreeView (Widget w) {
-			scrolledwindow2.Add(w);
+			scrolledwindow.Add(w);
 			w.Show();
 		}
 		
 		protected void AddUpperWidget (Widget w) {
 			upbox.PackStart(w, true, false, 0);
+		}
+		
+		protected void AddPage (Widget widget, string name) {
+			Label label = new Label(name);
+			widget.Show();
+			label.Show();
+			notebook.AppendPage(widget, label);
 		}
 		
 		protected bool ButtonsSensitive {

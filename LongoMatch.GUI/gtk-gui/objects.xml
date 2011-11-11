@@ -185,15 +185,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.TemplatesEditorBase" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="TemplatesEditorBase Properties">
-        <property name="CanExport" />
-        <property name="Edited" />
-      </itemgroup>
-    </itemgroups>
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Component.NotesWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>
@@ -229,21 +220,6 @@
       <itemgroup label="RenderingStateBar Signals">
         <signal name="Cancel" />
         <signal name="ManageJobs" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.TimeLineWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="TimeLineWidget Properties">
-        <property name="CurrentFrame" />
-      </itemgroup>
-    </itemgroups>
-    <signals>
-      <itemgroup label="TimeLineWidget Signals">
-        <signal name="TimeNodeChanged" />
-        <signal name="TimeNodeSelected" />
-        <signal name="TimeNodeDeleted" />
-        <signal name="NewMarkEvent" />
       </itemgroup>
     </signals>
   </object>
@@ -313,5 +289,37 @@
         <signal name="RenderPlaylistEvent" />
       </itemgroup>
     </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.TimeLineWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="TimeLineWidget Properties">
+        <property name="CurrentFrame" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="TimeLineWidget Signals">
+        <signal name="TimeNodeChanged" />
+        <signal name="TimeNodeSelected" />
+        <signal name="TimeNodeDeleted" />
+        <signal name="NewMarkEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.GameUnitsEditor" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.TemplatesEditorBase" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="TemplatesEditorBase Properties">
+        <property name="CanExport" />
+        <property name="Edited" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.GameUnitsEditor" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
   </object>
 </objects>
