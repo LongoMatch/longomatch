@@ -50,6 +50,7 @@ namespace LongoMatch.Gui
 		private global::LongoMatch.Gui.CapturerBin capturer;
 		private global::LongoMatch.Gui.Component.TimeLineWidget timeline;
 		private global::LongoMatch.Gui.Component.ButtonsWidget buttonswidget;
+		private global::LongoMatch.Gui.Component.GameUnitsTagger gameunitstaggerwidget1;
 		private global::Gtk.VBox rightvbox;
 		private global::LongoMatch.Gui.Component.NotesWidget notes;
 		private global::LongoMatch.Gui.Component.PlayListWidget playlist;
@@ -302,10 +303,18 @@ namespace LongoMatch.Gui
 			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.vbox5 [this.buttonswidget]));
 			w15.Position = 2;
 			w15.Expand = false;
+			// Container child vbox5.Gtk.Box+BoxChild
+			this.gameunitstaggerwidget1 = new global::LongoMatch.Gui.Component.GameUnitsTagger ();
+			this.gameunitstaggerwidget1.Events = ((global::Gdk.EventMask)(256));
+			this.gameunitstaggerwidget1.Name = "gameunitstaggerwidget1";
+			this.vbox5.Add (this.gameunitstaggerwidget1);
+			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox5 [this.gameunitstaggerwidget1]));
+			w16.Position = 3;
+			w16.Expand = false;
 			this.hpaned1.Add (this.vbox5);
-			global::Gtk.Paned.PanedChild w16 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.vbox5]));
-			w16.Resize = false;
-			w16.Shrink = false;
+			global::Gtk.Paned.PanedChild w17 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.vbox5]));
+			w17.Resize = false;
+			w17.Shrink = false;
 			// Container child hpaned1.Gtk.Paned+PanedChild
 			this.rightvbox = new global::Gtk.VBox ();
 			this.rightvbox.WidthRequest = 100;
@@ -316,27 +325,27 @@ namespace LongoMatch.Gui
 			this.notes.Events = ((global::Gdk.EventMask)(256));
 			this.notes.Name = "notes";
 			this.rightvbox.Add (this.notes);
-			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.rightvbox [this.notes]));
-			w17.Position = 0;
+			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.rightvbox [this.notes]));
+			w18.Position = 0;
 			// Container child rightvbox.Gtk.Box+BoxChild
 			this.playlist = new global::LongoMatch.Gui.Component.PlayListWidget ();
 			this.playlist.WidthRequest = 100;
 			this.playlist.Events = ((global::Gdk.EventMask)(256));
 			this.playlist.Name = "playlist";
 			this.rightvbox.Add (this.playlist);
-			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.rightvbox [this.playlist]));
-			w18.Position = 1;
+			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.rightvbox [this.playlist]));
+			w19.Position = 1;
 			this.hpaned1.Add (this.rightvbox);
-			global::Gtk.Paned.PanedChild w19 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.rightvbox]));
-			w19.Resize = false;
-			w19.Shrink = false;
-			this.hpaned.Add (this.hpaned1);
-			global::Gtk.Paned.PanedChild w20 = ((global::Gtk.Paned.PanedChild)(this.hpaned [this.hpaned1]));
+			global::Gtk.Paned.PanedChild w20 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.rightvbox]));
 			w20.Resize = false;
 			w20.Shrink = false;
+			this.hpaned.Add (this.hpaned1);
+			global::Gtk.Paned.PanedChild w21 = ((global::Gtk.Paned.PanedChild)(this.hpaned [this.hpaned1]));
+			w21.Resize = false;
+			w21.Shrink = false;
 			this.vbox1.Add (this.hpaned);
-			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hpaned]));
-			w21.Position = 1;
+			global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hpaned]));
+			w22.Position = 1;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.statusbar1 = new global::Gtk.Statusbar ();
 			this.statusbar1.Name = "statusbar1";
@@ -347,21 +356,21 @@ namespace LongoMatch.Gui
 			this.renderingstatebar1.Name = "renderingstatebar1";
 			this.renderingstatebar1.Fraction = 0;
 			this.statusbar1.Add (this.renderingstatebar1);
-			global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.statusbar1 [this.renderingstatebar1]));
-			w22.Position = 2;
-			w22.Expand = false;
-			w22.Fill = false;
-			this.vbox1.Add (this.statusbar1);
-			global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.statusbar1]));
+			global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.statusbar1 [this.renderingstatebar1]));
 			w23.Position = 2;
 			w23.Expand = false;
 			w23.Fill = false;
+			this.vbox1.Add (this.statusbar1);
+			global::Gtk.Box.BoxChild w24 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.statusbar1]));
+			w24.Position = 2;
+			w24.Expand = false;
+			w24.Fill = false;
 			this.Add (this.vbox1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
 			this.DefaultWidth = 1259;
-			this.DefaultHeight = 860;
+			this.DefaultHeight = 887;
 			this.leftbox.Hide ();
 			this.drawingtoolbox1.Hide ();
 			this.timeline.Hide ();

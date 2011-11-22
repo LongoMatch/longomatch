@@ -111,4 +111,10 @@ namespace LongoMatch.Common
 		Audio,
 		DV
 	}
+	
+	public enum GameUnitEventType {
+		Start, 
+		Stop,
+		Cancel
+	}
 }

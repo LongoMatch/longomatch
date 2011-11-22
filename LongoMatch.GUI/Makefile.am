@@ -10,6 +10,8 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs \
 	gtk-gui/LongoMatch.Gui.Component.DrawingWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.GameUnitsEditor.cs \
+	gtk-gui/LongoMatch.Gui.Component.GameUnitsTagger.cs \
+	gtk-gui/LongoMatch.Gui.Component.GameUnitWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.NotesWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayersListTreeWidget.cs \
@@ -57,6 +59,8 @@ SOURCES = \
 	Gui/Component/DrawingToolBox.cs \
 	Gui/Component/DrawingWidget.cs \
 	Gui/Component/GameUnitsEditor.cs \
+	Gui/Component/GameUnitsTagger.cs \
+	Gui/Component/GameUnitWidget.cs \
 	Gui/Component/NotesWidget.cs \
 	Gui/Component/PlayerProperties.cs \
 	Gui/Component/PlayersListTreeWidget.cs \

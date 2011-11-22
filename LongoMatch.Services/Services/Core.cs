@@ -33,6 +33,7 @@ namespace LongoMatch.Services
 		static TemplatesService ts;
 		static EventsManager eManager;
 		static HotKeysManager hkManager;
+		static GameUnitsManager guManager;
 		static MainWindow mainWindow;
 
 		public static void Init()
@@ -79,6 +80,9 @@ namespace LongoMatch.Services
 			videoRenderer = new RenderingJobsManager(mainWindow.RenderingStateBar);
 			mainWindow.RenderPlaylistEvent += (playlist) => {
 				videoRenderer.AddJob(RenderingJobsManager.ConfigureRenderingJob(playlist, mainWindow));};
+			
+			/* Start Game Units manager */
+			guManager = new GameUnitsManager(mainWindow, mainWindow.Player);
 			
 			projectsManager = new ProjectsManager(mainWindow);
 			projectsManager.OpenedProjectChanged += OnOpenedProjectChanged;
@@ -133,6 +137,8 @@ namespace LongoMatch.Services
 			
 			eManager.OpenedProject = project;
 			eManager.OpenedProjectType = projectType;
+			
+			guManager.OpenedProject = project;
 		}
 		
 		private static void SetupBaseDir() {

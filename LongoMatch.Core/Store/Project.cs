@@ -48,9 +48,9 @@ namespace LongoMatch.Store
 	public class Project : IComparable
 	{
 
-		private readonly Guid _UUID;
-		private ProjectDescription description;
-		private List<Play> timeline;
+		readonly Guid _UUID;
+		ProjectDescription description;
+		List<Play> timeline;
 
 		#region Constructors
 		public Project() {
@@ -106,7 +106,15 @@ namespace LongoMatch.Store
 			get;
 			set;
 		}
-
+		
+		public GameUnitsList  GameUnits {
+			set {
+				Categories.GameUnits = value;
+			}
+			get {
+				return Categories.GameUnits;
+			}
+		}
 		#endregion
 
 		#region Public Methods

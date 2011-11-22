@@ -118,4 +118,7 @@ namespace LongoMatch.Handlers
 	
 	/* A list of projects have been selected */
 	public delegate void ProjectsSelectedHandler(List<ProjectDescription> projects);
+	
+	/* Start/Stop/Cancel game units */
+	public delegate void GameUnitHandler(GameUnit gameUnit, GameUnitEventType eType);
 }

@@ -80,6 +80,9 @@ namespace LongoMatch.Gui
 		public event ManageCategoriesHandler ManageCategoriesEvent;
 		public event ManageProjects ManageProjectsEvent;
 		public event ApplyCurrentRateHandler ApplyRateEvent;
+		
+		/* Game Units events */
+		public event GameUnitHandler GameUnitEvent;
 
 		private static Project openedProject;
 		private ProjectType projectType;
@@ -164,6 +167,16 @@ namespace LongoMatch.Gui
 				return playlist;
 			}
 		}
+		
+		public void UpdateGameUnits (GameUnitsList gameUnits) {
+			if (gameUnits == null) {
+				gameunitstaggerwidget1.Visible = false;
+				return;
+			}
+			gameunitstaggerwidget1.Visible = true;
+			gameunitstaggerwidget1.GameUnits = gameUnits;
+		}
+		
 		#endregion
 		
 		#region Private Methods
@@ -224,6 +237,9 @@ namespace LongoMatch.Gui
 			renderingstatebar1.ManageJobs += (e, o) => {EmitManageJobs();};
 			
 			openAction.Activated += (sender, e) => {EmitSaveProject();};
+			
+			/* Game Units event */
+			gameunitstaggerwidget1.GameUnitEvent += EmitGameUnitEvent;
 		}
 		
 		private void ConnectMenuSignals() {
@@ -333,8 +349,10 @@ namespace LongoMatch.Gui
 
 		private void ShowWidgets() {
 			leftbox.Show();
-			if(TaggingViewAction.Active || ManualTaggingViewAction.Active)
+			if(TaggingViewAction.Active || ManualTaggingViewAction.Active) {
 				buttonswidget.Show();
+				gameunitstaggerwidget1.Show();
+			}
 			else
 				timeline.Show();
 		}
@@ -344,6 +362,7 @@ namespace LongoMatch.Gui
 			rightvbox.Hide();
 			buttonswidget.Hide();
 			timeline.Hide();
+			gameunitstaggerwidget1.Hide();
 		}
 
 		private void ClearWidgets() {
@@ -730,6 +749,11 @@ namespace LongoMatch.Gui
 		private void EmitSavePlaylist() {
 			if (SavePlaylistEvent != null)
 				SavePlaylistEvent();
+		}
+		
+		private void EmitGameUnitEvent(GameUnit gameUnit, GameUnitEventType eType) {
+			if (GameUnitEvent != null)
+				GameUnitEvent(gameUnit, eType);
 		}
 		#endregion
 	}

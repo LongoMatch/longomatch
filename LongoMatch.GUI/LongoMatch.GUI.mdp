@@ -139,6 +139,10 @@
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/camera-video.png" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/GameUnitsEditor.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.GameUnitsEditor.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/GameUnitWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.GameUnitWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/GameUnitsTagger.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.GameUnitsTagger.cs" />
   </Contents>
   <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="../CesarPlayer/Makefile.am" RelativeConfigureInPath="../">
     <BuildFilesVar Name="FILES" />

@@ -4,6 +4,7 @@ TARGET = library
 LINK = $(REF_DEP_LONGOMATCH_SERVICES)
 
 SOURCES = \
+	Services/GameUnitsManager.cs \
 	Services/PlaylistManager.cs \
 	Services/VideoDrawingsManager.cs \
 	Services/ProjectsManager.cs \
