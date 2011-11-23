@@ -1,4 +1,4 @@
-ASSEMBLY = LongoMatch.Core
+ASSEMBLY = LongoMatch
 TARGET = library
 
 LINK = $(REF_DEP_LONGOMATCH_CORE)
