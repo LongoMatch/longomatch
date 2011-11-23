@@ -77,7 +77,7 @@ namespace LongoMatch.Services
 			
 			start = gameUnitsStarted[gameUnit];
 			stop = new Time{MSeconds=(int)player.CurrentTime};
-			timeInfo = new GameUnit {Start=start, Stop=stop};
+			timeInfo = new TimelineNode {Start=start, Stop=stop};
 			
 			gameUnit.Add(timeInfo);
 			gameUnitsStarted.Remove(gameUnit);
