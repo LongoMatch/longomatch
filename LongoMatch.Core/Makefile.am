@@ -33,6 +33,7 @@ SOURCES = \
 	Store/Drawing.cs \
 	Store/GameUnit.cs \
 	Store/GameUnitsList.cs \
+	Store/TimelineNode.cs \
 	Store/HotKey.cs \
 	Store/MediaFile.cs \
 	Store/PixbufTimeNode.cs \

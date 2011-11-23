@@ -24,6 +24,7 @@ using System.Linq;
 using Mono.Unix;
 using Gdk;
 using LongoMatch.Common;
+using LongoMatch.Interfaces;
 
 namespace LongoMatch.Store
 {
@@ -33,7 +34,7 @@ namespace LongoMatch.Store
 	/// </summary>
 
 	[Serializable]
-	public class  Play : PixbufTimeNode
+	public class  Play : PixbufTimeNode, ITimelineNode
 	{
 
 		#region Constructors

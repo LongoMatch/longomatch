@@ -68,7 +68,7 @@ namespace LongoMatch.Services
 		}
 		
 		private void StopGameUnit(GameUnit gameUnit) {
-			TimeNode timeInfo;
+			TimelineNode timeInfo;
 			GameUnit projectGameUnit;
 			Time start, stop;
 			
@@ -77,7 +77,7 @@ namespace LongoMatch.Services
 			
 			start = gameUnitsStarted[gameUnit];
 			stop = new Time{MSeconds=(int)player.CurrentTime};
-			timeInfo = new TimeNode {Start=start, Stop=stop};
+			timeInfo = new GameUnit {Start=start, Stop=stop};
 			
 			gameUnit.Add(timeInfo);
 			gameUnitsStarted.Remove(gameUnit);

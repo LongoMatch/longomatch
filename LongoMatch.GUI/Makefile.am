@@ -52,6 +52,7 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.MainWindow.cs \
 	gtk-gui/LongoMatch.Gui.Popup.CalendarPopup.cs \
 	gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs \
+	Gui/Base/TimeScaleBase.cs \
 	Gui/Component/ButtonsWidget.cs \
 	Gui/Component/CategoriesScale.cs \
 	Gui/Component/CategoriesTemplateEditor.cs \

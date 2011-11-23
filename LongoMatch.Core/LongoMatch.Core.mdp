@@ -72,6 +72,8 @@
     <File subtype="Code" buildaction="Compile" name="Interfaces/IPlaylistWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/GameUnit.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/GameUnitsList.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/TimelineNode.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/ITimelineNode.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

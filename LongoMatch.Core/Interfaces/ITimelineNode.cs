@@ -1,5 +1,5 @@
 // 
-//  Copyright (C) 2011 andoni
+//  Copyright (C) 2011 Andoni Morales Alastruey
 // 
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,28 +16,23 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using System.Collections.Generic;
+using LongoMatch.Store;
 
-namespace LongoMatch.Store
+namespace LongoMatch.Interfaces
 {
-	[Serializable]
-	public class GameUnit: List<TimelineNode>
-	{
-		
-		public GameUnit (string name)
-		{
-			Name=name;
-		}
-		
-		public string Name {
-			get;
-			set;
-		}
-		
-		public override string ToString ()
-		{
-			return string.Format ("[GameUnit: Name={0}]", Name);
-		}	
+	public interface ITimelineNode
+	{	
+		string Name {get;set;}
+		Time Start {get;set;}
+		Time Stop {get;set;}
+		uint StartFrame {get; set;}
+		uint StopFrame {get; set;}
+		bool Selected {get; set;}
+		uint CentralFrame {get;}
+		uint TotalFrames {get;}
+		uint KeyFrame {get;}
+		bool HasDrawings {get;}
+		bool HasFrame(int frame);
 	}
 }
 
