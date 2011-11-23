@@ -21,7 +21,7 @@
       <Entry build="True" name="LongoMatch.GUI" configuration="Debug" />
       <Entry build="True" name="libcesarplayer" configuration="Debug" />
       <Entry build="True" name="LongoMatch.Core" configuration="Debug" />
-      <Entry build="True" name="LongoMatch" configuration="Debug" />
+      <Entry build="True" name="LongoMatchGtk" configuration="Debug" />
       <Entry build="True" name="LongoMatch.Multimedia" configuration="Debug" />
       <Entry build="True" name="LongoMatch.Services" configuration="Debug" />
       <Entry build="True" name="LongoMatch.GUI.Multimedia" configuration="Debug" />
@@ -30,17 +30,17 @@
       <Entry build="True" name="LongoMatch.GUI" configuration="Release" />
       <Entry build="True" name="libcesarplayer" configuration="Release" />
       <Entry build="True" name="LongoMatch.Core" configuration="Release" />
-      <Entry build="True" name="LongoMatch" configuration="Release" />
+      <Entry build="True" name="LongoMatchGtk" configuration="Release" />
       <Entry build="True" name="LongoMatch.Multimedia" configuration="Release" />
       <Entry build="True" name="LongoMatch.Services" configuration="Release" />
       <Entry build="True" name="LongoMatch.GUI.Multimedia" configuration="Release" />
     </Configuration>
   </Configurations>
-  <StartMode startupentry="LongoMatch" single="True">
+  <StartMode startupentry="LongoMatchGtk" single="True">
     <Execute type="None" entry="LongoMatch.GUI" />
     <Execute type="None" entry="libcesarplayer" />
     <Execute type="None" entry="LongoMatch.Core" />
-    <Execute type="None" entry="LongoMatch" />
+    <Execute type="None" entry="LongoMatchGtk" />
     <Execute type="None" entry="LongoMatch.Multimedia" />
     <Execute type="None" entry="LongoMatch.Services" />
     <Execute type="None" entry="LongoMatch.GUI.Multimedia" />
@@ -49,7 +49,7 @@
     <Entry filename="LongoMatch.GUI/LongoMatch.GUI.mdp" />
     <Entry filename="libcesarplayer/liblongomatch.mdp" />
     <Entry filename="LongoMatch.Core/LongoMatch.Core.mdp" />
-    <Entry filename="LongoMatch/LongoMatch.mdp" />
+    <Entry filename="LongoMatch/LongoMatchGtk.mdp" />
     <Entry filename="LongoMatch.Multimedia/LongoMatch.Multimedia.mdp" />
     <Entry filename="LongoMatch.Services/LongoMatch.Services.mdp" />
     <Entry filename="LongoMatch.GUI.Multimedia/LongoMatch.GUI.Multimedia.mdp" />
