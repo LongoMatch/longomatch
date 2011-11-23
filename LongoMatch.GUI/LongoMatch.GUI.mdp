@@ -146,6 +146,7 @@
     <File subtype="Code" buildaction="Compile" name="Gui/Base/TemplatesEditorBase.cs" />
     <File subtype="Directory" buildaction="Compile" name="Gui/Component" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Base.TemplatesEditorBase.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/GameUnitTimeScale.cs" />
   </Contents>
   <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="../CesarPlayer/Makefile.am" RelativeConfigureInPath="../">
     <BuildFilesVar Name="FILES" />
