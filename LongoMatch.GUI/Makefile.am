@@ -5,6 +5,7 @@ LINK = $(REF_DEP_LONGOMATCH_GUI)
 
 SOURCES = \
 	gtk-gui/generated.cs \
+	gtk-gui/LongoMatch.Gui.Base.TemplatesEditorBase.cs \
 	gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs \
 	gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs \
@@ -25,7 +26,6 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TagsTreeWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TeamTaggerWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.TemplatesEditorBase.cs \
 	gtk-gui/LongoMatch.Gui.Component.TimeLineWidget.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.BusyDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs \
@@ -53,6 +53,7 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Popup.CalendarPopup.cs \
 	gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs \
 	Gui/Base/TimeScaleBase.cs \
+	Gui/Base/TemplatesEditorBase.cs \
 	Gui/Component/ButtonsWidget.cs \
 	Gui/Component/CategoriesScale.cs \
 	Gui/Component/CategoriesTemplateEditor.cs \
@@ -76,7 +77,6 @@ SOURCES = \
 	Gui/Component/TagsTreeWidget.cs \
 	Gui/Component/TeamTaggerWidget.cs \
 	Gui/Component/TeamTemplateEditor.cs \
-	Gui/Component/TemplatesEditorBase.cs \
 	Gui/Component/TimeLineWidget.cs \
 	Gui/Component/TimeReferenceWidget.cs \
 	Gui/Component/TimeScale.cs \

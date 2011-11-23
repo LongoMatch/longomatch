@@ -27,6 +27,7 @@ SOURCES = \
 	Interfaces/IRenderingJobsManager.cs \
 	Interfaces/ISubCategory.cs \
 	Interfaces/ITag.cs \
+	Interfaces/ITimelineNode.cs \
 	Interfaces/ITemplates.cs \
 	Interfaces/ITemplatesService.cs \
 	Store/Category.cs \
