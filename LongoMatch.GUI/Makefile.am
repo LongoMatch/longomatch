@@ -62,7 +62,7 @@ SOURCES = \
 	Gui/Component/DrawingWidget.cs \
 	Gui/Component/GameUnitsEditor.cs \
 	Gui/Component/GameUnitsTagger.cs \
-	Gui/Component/GameUnitsTimeline.cs \
+	Gui/Component/GameUnitTimeScale.cs \
 	Gui/Component/GameUnitWidget.cs \
 	Gui/Component/NotesWidget.cs \
 	Gui/Component/PlayerProperties.cs \
