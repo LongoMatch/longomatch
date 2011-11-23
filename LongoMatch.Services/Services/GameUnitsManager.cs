@@ -69,7 +69,6 @@ namespace LongoMatch.Services
 		
 		private void StopGameUnit(GameUnit gameUnit) {
 			TimelineNode timeInfo;
-			GameUnit projectGameUnit;
 			Time start, stop;
 			
 			if (gameUnitsStarted.ContainsKey(gameUnit))

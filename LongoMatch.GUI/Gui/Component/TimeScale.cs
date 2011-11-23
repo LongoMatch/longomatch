@@ -40,7 +40,6 @@ namespace LongoMatch.Gui.Component
 	public class TimeScale : TimeScaleBase<Play>
 	{
 		private Category category;
-		private Cairo.Color color;
 		
 		public event NewTagAtFrameHandler NewMarkAtFrameEvent;
 		public event TimeNodeChangedHandler TimeNodeChanged;
