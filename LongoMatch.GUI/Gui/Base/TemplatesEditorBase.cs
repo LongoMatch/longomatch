@@ -26,7 +26,7 @@ using LongoMatch.Interfaces;
 using LongoMatch.Store;
 
 
-namespace LongoMatch.Gui.Component
+namespace LongoMatch.Gui.Base
 {
 
 

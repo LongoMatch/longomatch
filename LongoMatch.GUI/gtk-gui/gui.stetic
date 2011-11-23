@@ -1381,7 +1381,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.TemplatesEditorBase" design-size="794 268">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Base.TemplatesEditorBase" design-size="794 268">
     <property name="MemberName" />
     <property name="WidthRequest">400</property>
     <signal name="KeyPressEvent" handler="OnKeyPressEvent" />

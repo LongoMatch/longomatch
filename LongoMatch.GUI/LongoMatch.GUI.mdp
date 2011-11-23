@@ -50,7 +50,6 @@
     <File subtype="Code" buildaction="Compile" name="Gui/Component/PlayListWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/ProjectListWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/TemplatesManager.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Component/TemplatesEditorBase.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/TreeView/CategoriesTreeView.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/TimeLineWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/TimeScale.cs" />
@@ -106,7 +105,6 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.BusyDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/TreeView/ListTreeViewBase.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/CategoriesScale.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.TemplatesEditorBase.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.TemplateEditorDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/TreeView/SubCategoriesTreeView.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/SubCategoryTagsEditor.cs" />
@@ -145,7 +143,9 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.GameUnitsTagger.cs" />
     <File subtype="Directory" buildaction="Compile" name="Gui/Base" />
     <File subtype="Code" buildaction="Compile" name="Gui/Base/TimeScaleBase.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Base/TemplatesEditorBase.cs" />
     <File subtype="Directory" buildaction="Compile" name="Gui/Component" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Base.TemplatesEditorBase.cs" />
   </Contents>
   <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="../CesarPlayer/Makefile.am" RelativeConfigureInPath="../">
     <BuildFilesVar Name="FILES" />

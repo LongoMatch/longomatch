@@ -23,6 +23,7 @@ using Gtk;
 using Mono.Unix;
 using Stetic;
 using LongoMatch.Common;
+using LongoMatch.Gui.Base;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Interfaces;
 using LongoMatch.Store;
