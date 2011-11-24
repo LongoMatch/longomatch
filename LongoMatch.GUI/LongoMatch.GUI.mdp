@@ -80,7 +80,6 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.TimeLineWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.NotesWidget.cs" />
@@ -147,6 +146,8 @@
     <File subtype="Directory" buildaction="Compile" name="Gui/Component" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Base.TemplatesEditorBase.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/GameUnitTimeScale.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Base/TimelineWidgetBase.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Base.TimelineWidgetBase.cs" />
   </Contents>
   <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="../CesarPlayer/Makefile.am" RelativeConfigureInPath="../">
     <BuildFilesVar Name="FILES" />
