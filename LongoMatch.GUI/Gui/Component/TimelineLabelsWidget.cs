@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Collections.Generic;
 using Cairo;
 using Gtk;
 using Gdk;
@@ -26,26 +27,39 @@ using LongoMatch.Store.Templates;
 
 namespace LongoMatch.Gui.Component
 {
-	public class CategoriesScale: Gtk.DrawingArea
+	public class TimelineLabelsWidget: Gtk.DrawingArea
 	{
 		private const int SECTION_HEIGHT = 30;
 		private const int SECTION_WIDTH = 100;
 		private const int LINE_WIDTH = 2;
 		private double scroll;
 		Pango.Layout layout;
+		Dictionary<string, Gdk.Color> labelsDict;
 
 		[System.ComponentModel.Category("LongoMatch")]
 		[System.ComponentModel.ToolboxItem(true)]
-		public CategoriesScale()
+		public TimelineLabelsWidget()
 		{
 			layout =  new Pango.Layout(PangoContext);
 			layout.Wrap = Pango.WrapMode.Char;
 			layout.Alignment = Pango.Alignment.Left;
+			labelsDict = new Dictionary<string, Gdk.Color> ();
 		}
 
+		public List<string> Labels {
+			set {
+				labelsDict.Clear();
+				foreach (String label in value)
+					labelsDict.Add(label, Gdk.Color.Zero);
+			}
+		}
+		
 		public Categories Categories {
-			get;
-			set;
+			set {
+				labelsDict.Clear();
+				foreach (Category cat in value)
+					labelsDict.Add(cat.Name, cat.Color);
+			}
 		}
 
 		public double Scroll {
@@ -69,17 +83,17 @@ namespace LongoMatch.Gui.Component
 		private void DrawCategories(Gdk.Window win) {
 			int i = 0;
 
-			if(Categories == null)
+			if(labelsDict.Count == 0)
 				return;
 
 			using(Cairo.Context g = Gdk.CairoHelper.Create(win)) {
-				foreach(Category cat in Categories) {
+				foreach(String label in labelsDict.Keys) {
 					int y = LINE_WIDTH/2 + i * SECTION_HEIGHT - (int)Scroll;
 					CairoUtils.DrawRoundedRectangle(g, 2, y + 3 , Allocation.Width - 3,
 					                                SECTION_HEIGHT - 3, SECTION_HEIGHT/7,
-					                                CairoUtils.RGBToCairoColor(cat.Color),
-					                                CairoUtils.RGBToCairoColor(cat.Color));
-					DrawCairoText(cat.Name, 0 + 3, y + SECTION_HEIGHT / 2 - 5);
+					                                CairoUtils.RGBToCairoColor(labelsDict[label]),
+					                                CairoUtils.RGBToCairoColor(labelsDict[label]));
+					DrawCairoText(label, 0 + 3, y + SECTION_HEIGHT / 2 - 5);
 					i++;
 				}
 			}
@@ -92,4 +106,3 @@ namespace LongoMatch.Gui.Component
 		}
 	}
 }
-

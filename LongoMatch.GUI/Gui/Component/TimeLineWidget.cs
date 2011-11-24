@@ -19,6 +19,7 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Gtk;
 
 using LongoMatch.Gui.Base;
@@ -60,7 +61,7 @@ namespace LongoMatch.Gui.Component {
 				tsList.Clear(); 
 				frames = value.Description.File.GetFrames();
 
-				cs.Categories = categories;
+				cs.Labels = categories.Select(c => c.Name).ToList();
 				cs.Show();
 
 				tr.Frames = frames;

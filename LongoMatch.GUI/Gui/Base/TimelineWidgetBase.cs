@@ -29,7 +29,7 @@ namespace LongoMatch.Gui.Base
 	public partial class TimelineWidgetBase : Gtk.Bin
 	{
 		protected TimeReferenceWidget tr;
-		protected CategoriesScale cs;
+		protected TimelineLabelsWidget cs;
 		protected uint currentFrame, pixelRatio, frames;
 		protected bool loaded;
 		
@@ -38,7 +38,7 @@ namespace LongoMatch.Gui.Base
 			this.Build ();
 			
 			tr = new TimeReferenceWidget();
-			cs = new CategoriesScale();
+			cs = new TimelineLabelsWidget();
 			
 			cs.WidthRequest = 100;
 			toolsbox.HeightRequest = 50 - leftbox.Spacing;
