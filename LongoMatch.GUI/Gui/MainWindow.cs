@@ -87,6 +87,7 @@ namespace LongoMatch.Gui
 		private static Project openedProject;
 		private ProjectType projectType;
 		private TimeNode selectedTimeNode;
+		TimeLineWidget timeline;
 
 		#region Constructors
 		public MainWindow() :
@@ -96,6 +97,9 @@ namespace LongoMatch.Gui
 
 			projectType = ProjectType.None;
 
+			timeline = new TimeLineWidget();
+			downbox.PackStart(timeline, true, true, 0);
+			
 			player.SetLogo(System.IO.Path.Combine(Config.ImagesDir(),"background.png"));
 			player.LogoMode = true;
 			player.Tick += OnTick;

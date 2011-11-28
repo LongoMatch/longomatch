@@ -25,7 +25,6 @@ using Gtk;
 
 namespace LongoMatch.Gui.Base
 {
-	[System.ComponentModel.ToolboxItem(true)]
 	public partial class TimelineWidgetBase : Gtk.Bin
 	{
 		protected TimeReferenceWidget tr;
@@ -45,7 +44,7 @@ namespace LongoMatch.Gui.Base
 			tr.HeightRequest = 50 - leftbox.Spacing;
 			
 			categoriesbox.PackStart(cs, false, false, 0);
-			timelinebox.PackStart(tr,false,false,0);
+			timescalebox.PackStart(tr,false,false,0);
 			
 			zoomscale.CanFocus = false;
 			loaded = false;
@@ -116,7 +115,6 @@ namespace LongoMatch.Gui.Base
 		
 	}
 	
-	[System.ComponentModel.ToolboxItem(true)]
 	public partial class TimelineBase <W, Z> : TimelineWidgetBase where Z:ITimelineNode where W: TimeScaleBase<Z>
 	{
 		protected Dictionary<object, W> tsList;

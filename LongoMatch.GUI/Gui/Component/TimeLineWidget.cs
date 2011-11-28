@@ -52,7 +52,6 @@ namespace LongoMatch.Gui.Component {
 				if(value == null) {
 					categories = null;
 					tsList.Clear();
-					tsList=null;
 					loaded = false;
 					return;
 				}
@@ -61,7 +60,7 @@ namespace LongoMatch.Gui.Component {
 				tsList.Clear(); 
 				frames = value.Description.File.GetFrames();
 
-				cs.Labels = categories.Select(c => c.Name).ToList();
+				cs.Categories = categories;
 				cs.Show();
 
 				tr.Frames = frames;

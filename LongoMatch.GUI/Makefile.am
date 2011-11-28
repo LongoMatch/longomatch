@@ -56,7 +56,7 @@ SOURCES = \
 	Gui/Base/TimelineWidgetBase.cs \
 	Gui/Base/TimeScaleBase.cs \
 	Gui/Component/ButtonsWidget.cs \
-	Gui/Component/CategoriesScale.cs \
+	Gui/Component/TimelineLabelsWidget.cs \
 	Gui/Component/CategoriesTemplateEditor.cs \
 	Gui/Component/CategoryProperties.cs \
 	Gui/Component/DrawingToolBox.cs \
