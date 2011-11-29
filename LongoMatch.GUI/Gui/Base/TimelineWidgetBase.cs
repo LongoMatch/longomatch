@@ -124,6 +124,7 @@ namespace LongoMatch.Gui.Base
 		{
 			SetPixelRatio(10);
 			tsList = new Dictionary<object, W>();
+			ZoomScale.ValueChanged += (sender, e) => {SetPixelRatio((uint)ZoomScale.Value);};
 		}
 
 		public Z SelectedTimeNode {
