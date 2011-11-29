@@ -96,6 +96,7 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		void EmitGameUnitEvent (GameUnitEventType eType) {
+			Log.Debug("Emitting  GameUnitEvent of type: " + eType);
 			if (GameUnitEvent != null)
 				GameUnitEvent(GameUnit, eType);
 		}
