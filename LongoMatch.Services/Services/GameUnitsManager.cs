@@ -39,8 +39,12 @@ namespace LongoMatch.Services
 			this.player = player;
 			gameUnitsStarted = new Dictionary<GameUnit, Time>();
 			mainWindow.GameUnitEvent += HandleMainWindowGameUnitEvent;
+			mainWindow.UnitAdded += HandleUnitAdded;
+			mainWindow.UnitChanged += HandleUnitChanged;
+			mainWindow.UnitDeleted += HandleUnitDeleted;
+			mainWindow.UnitSelected += HandleUnitSelected;
 		}
-		
+
 		public Project OpenedProject{
 			set {
 				openedProject = value;
@@ -113,6 +117,32 @@ namespace LongoMatch.Services
 				break;
 			}
 			}
+		}
+		
+		void HandleUnitSelected (GameUnit gameUnit, TimelineNode unit)
+		{
+			unit.Selected = true;
+		}
+
+		void HandleUnitDeleted (GameUnit gameUnit, List<TimelineNode> units)
+		{
+			foreach (TimelineNode unit in units)
+				gameUnit.Remove(unit);
+		}
+
+		void HandleUnitChanged (GameUnit gameUnit, TimelineNode unit, Time time)
+		{
+			player.CloseActualSegment();
+			player.Pause();
+			player.SeekTo(time.MSeconds, true);
+		}
+
+		void HandleUnitAdded (GameUnit gameUnit, int frame)
+		{
+			var unit = new TimelineNode {Name=gameUnit.Name, Fps=openedProject.Description.File.Fps};
+			unit.StartFrame = (uint)(frame-50); 
+			unit.StopFrame = (uint)(frame+50);
+			gameUnit.Add(unit);
 		}
 	}
 }

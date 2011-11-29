@@ -28,6 +28,7 @@ namespace LongoMatch.Gui
 		private global::Gtk.ToggleAction DrawingToolAction;
 		private global::Gtk.Action ImportProjectAction;
 		private global::Gtk.RadioAction ManualTaggingViewAction;
+		private global::Gtk.RadioAction GameUnitsViewAction;
 		private global::Gtk.VBox vbox1;
 		private global::Gtk.VBox menubox;
 		private global::Gtk.MenuBar menubar1;
@@ -138,10 +139,15 @@ namespace LongoMatch.Gui
 			this.ImportProjectAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Import Project");
 			w1.Add (this.ImportProjectAction, "<Control>i");
 			this.ManualTaggingViewAction = new global::Gtk.RadioAction ("ManualTaggingViewAction", global::Mono.Unix.Catalog.GetString ("Manual tagging view"), null, null, 0);
-			this.ManualTaggingViewAction.Group = this.TaggingViewAction.Group;
+			this.ManualTaggingViewAction.Group = this.TimelineViewAction.Group;
 			this.ManualTaggingViewAction.Sensitive = false;
 			this.ManualTaggingViewAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Free Capture Mode");
 			w1.Add (this.ManualTaggingViewAction, "<Control>f");
+			this.GameUnitsViewAction = new global::Gtk.RadioAction ("GameUnitsViewAction", global::Mono.Unix.Catalog.GetString ("Game units view"), null, null, 0);
+			this.GameUnitsViewAction.Group = this.TimelineViewAction.Group;
+			this.GameUnitsViewAction.Sensitive = false;
+			this.GameUnitsViewAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Game units view");
+			w1.Add (this.GameUnitsViewAction, null);
 			this.UIManager.InsertActionGroup (w1, 0);
 			this.AddAccelGroup (this.UIManager.AccelGroup);
 			this.Name = "LongoMatch.Gui.MainWindow";
@@ -158,7 +164,7 @@ namespace LongoMatch.Gui
 			this.menubox.Name = "menubox";
 			this.menubox.Spacing = 6;
 			// Container child menubox.Gtk.Box+BoxChild
-			this.UIManager.AddUiFromString ("<ui><menubar name='menubar1'><menu name='FileAction' action='FileAction'><menuitem name='NewPojectAction' action='NewPojectAction'/><menuitem name='openAction' action='openAction'/><menuitem name='SaveProjectAction' action='SaveProjectAction'/><menuitem name='CloseProjectAction' action='CloseProjectAction'/><separator/><menuitem name='ImportProjectAction' action='ImportProjectAction'/><separator/><menuitem name='QuitAction' action='QuitAction'/></menu><menu name='ToolsAction' action='ToolsAction'><menuitem name='ProjectsManagerAction' action='ProjectsManagerAction'/><menuitem name='CategoriesTemplatesManagerAction' action='CategoriesTemplatesManagerAction'/><menuitem name='TeamsTemplatesManagerAction' action='TeamsTemplatesManagerAction'/><menuitem name='ExportProjectToCSVFileAction' action='ExportProjectToCSVFileAction'/></menu><menu name='ViewAction' action='ViewAction'><menuitem name='FullScreenAction' action='FullScreenAction'/><menuitem name='HideAllWidgetsAction' action='HideAllWidgetsAction'/><separator/><menuitem name='PlaylistAction' action='PlaylistAction'/><separator/><menuitem name='TaggingViewAction' action='TaggingViewAction'/><menuitem name='ManualTaggingViewAction' action='ManualTaggingViewAction'/><menuitem name='TimelineViewAction' action='TimelineViewAction'/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='AboutAction' action='AboutAction'/><menuitem name='HelpAction1' action='HelpAction1'/></menu></menubar></ui>");
+			this.UIManager.AddUiFromString ("<ui><menubar name='menubar1'><menu name='FileAction' action='FileAction'><menuitem name='NewPojectAction' action='NewPojectAction'/><menuitem name='openAction' action='openAction'/><menuitem name='SaveProjectAction' action='SaveProjectAction'/><menuitem name='CloseProjectAction' action='CloseProjectAction'/><separator/><menuitem name='ImportProjectAction' action='ImportProjectAction'/><separator/><menuitem name='QuitAction' action='QuitAction'/></menu><menu name='ToolsAction' action='ToolsAction'><menuitem name='ProjectsManagerAction' action='ProjectsManagerAction'/><menuitem name='CategoriesTemplatesManagerAction' action='CategoriesTemplatesManagerAction'/><menuitem name='TeamsTemplatesManagerAction' action='TeamsTemplatesManagerAction'/><menuitem name='ExportProjectToCSVFileAction' action='ExportProjectToCSVFileAction'/></menu><menu name='ViewAction' action='ViewAction'><menuitem name='FullScreenAction' action='FullScreenAction'/><menuitem name='HideAllWidgetsAction' action='HideAllWidgetsAction'/><separator/><menuitem name='PlaylistAction' action='PlaylistAction'/><separator/><menuitem name='TaggingViewAction' action='TaggingViewAction'/><menuitem name='ManualTaggingViewAction' action='ManualTaggingViewAction'/><menuitem name='TimelineViewAction' action='TimelineViewAction'/><menuitem name='GameUnitsViewAction' action='GameUnitsViewAction'/></menu><menu name='HelpAction' action='HelpAction'><menuitem name='AboutAction' action='AboutAction'/><menuitem name='HelpAction1' action='HelpAction1'/></menu></menubar></ui>");
 			this.menubar1 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menubar1")));
 			this.menubar1.Name = "menubar1";
 			this.menubox.Add (this.menubar1);
@@ -359,7 +365,7 @@ namespace LongoMatch.Gui
 				this.Child.ShowAll ();
 			}
 			this.DefaultWidth = 1224;
-			this.DefaultHeight = 670;
+			this.DefaultHeight = 681;
 			this.leftbox.Hide ();
 			this.drawingtoolbox1.Hide ();
 			this.buttonswidget.Hide ();
@@ -373,11 +379,13 @@ namespace LongoMatch.Gui
 			this.FullScreenAction.Toggled += new global::System.EventHandler (this.OnFullScreenActionToggled);
 			this.PlaylistAction.Toggled += new global::System.EventHandler (this.OnPlaylistActionToggled);
 			this.TaggingViewAction.Toggled += new global::System.EventHandler (this.OnViewToggled);
+			this.TimelineViewAction.Toggled += new global::System.EventHandler (this.OnViewToggled);
 			this.AboutAction.Activated += new global::System.EventHandler (this.OnAboutActionActivated);
 			this.HideAllWidgetsAction.Toggled += new global::System.EventHandler (this.OnHideAllWidgetsActionToggled);
 			this.HelpAction1.Activated += new global::System.EventHandler (this.OnHelpAction1Activated);
 			this.DrawingToolAction.Toggled += new global::System.EventHandler (this.OnDrawingToolActionToggled);
 			this.ManualTaggingViewAction.Toggled += new global::System.EventHandler (this.OnViewToggled);
+			this.GameUnitsViewAction.Toggled += new global::System.EventHandler (this.OnViewToggled);
 			this.playsList.TimeNodeSelected += new global::LongoMatch.Handlers.PlaySelectedHandler (this.OnTimeNodeSelected);
 			this.player.Error += new global::LongoMatch.Video.Common.ErrorHandler (this.OnPlayerbin1Error);
 			this.player.SegmentClosedEvent += new global::LongoMatch.Video.Common.SegmentClosedHandler (this.OnSegmentClosedEvent);

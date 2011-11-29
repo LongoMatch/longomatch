@@ -83,11 +83,16 @@ namespace LongoMatch.Gui
 		
 		/* Game Units events */
 		public event GameUnitHandler GameUnitEvent;
+		public event UnitChangedHandler UnitChanged;
+		public event UnitSelectedHandler UnitSelected;
+		public event UnitsDeletedHandler UnitDeleted;
+		public event UnitAddedHandler UnitAdded;
 
 		private static Project openedProject;
 		private ProjectType projectType;
 		private TimeNode selectedTimeNode;
 		TimeLineWidget timeline;
+		GameUnitsTimelineWidget guTimeline;
 
 		#region Constructors
 		public MainWindow() :
@@ -100,15 +105,16 @@ namespace LongoMatch.Gui
 			timeline = new TimeLineWidget();
 			downbox.PackStart(timeline, true, true, 0);
 			
+			guTimeline = new GameUnitsTimelineWidget ();
+			downbox.PackStart(guTimeline, true, true, 0);
+			
 			player.SetLogo(System.IO.Path.Combine(Config.ImagesDir(),"background.png"));
 			player.LogoMode = true;
 			player.Tick += OnTick;
 
 			capturer.Visible = false;
 			capturer.Logo = System.IO.Path.Combine(Config.ImagesDir(),"background.png");
-			capturer.CaptureFinished += delegate {
-				CloseCaptureProject();
-			};
+			capturer.CaptureFinished += (sender, e) => {CloseCaptureProject();};
 			
 			buttonswidget.Mode = TagMode.Predifined;
 			localPlayersList.Team = Team.LOCAL;
@@ -244,6 +250,10 @@ namespace LongoMatch.Gui
 			
 			/* Game Units event */
 			gameunitstaggerwidget1.GameUnitEvent += EmitGameUnitEvent;
+			guTimeline.UnitAdded += EmitUnitAdded;;
+			guTimeline.UnitDeleted += EmitUnitDeleted;
+			guTimeline.UnitSelected += EmitUnitSelected;
+			guTimeline.UnitChanged += EmitUnitChanged;
 		}
 		
 		private void ConnectMenuSignals() {
@@ -279,6 +289,7 @@ namespace LongoMatch.Gui
 				        " - " + Constants.SOFTWARE_NAME;
 				player.LogoMode = false;
 				timeline.Project = project;
+				guTimeline.Project = project;
 
 			} else {
 				Title = Constants.SOFTWARE_NAME;
@@ -346,6 +357,7 @@ namespace LongoMatch.Gui
 			SaveProjectAction.Sensitive = sensitive;
 			TaggingViewAction.Sensitive = sensitive2;
 			ManualTaggingViewAction.Sensitive = sensitive2;
+			GameUnitsViewAction.Sensitive = sensitive2;
 			TimelineViewAction.Sensitive = sensitive2;
 			ExportProjectToCSVFileAction.Sensitive = sensitive2;
 			HideAllWidgetsAction.Sensitive=sensitive2;
@@ -356,9 +368,12 @@ namespace LongoMatch.Gui
 			if(TaggingViewAction.Active || ManualTaggingViewAction.Active) {
 				buttonswidget.Show();
 				gameunitstaggerwidget1.Show();
-			}
-			else
+			} else if (TimelineViewAction.Active) {
 				timeline.Show();
+			} else if (GameUnitsViewAction.Active) {
+				gameunitstaggerwidget1.Show();
+				guTimeline.Show();
+			}
 		}
 
 		private void HideWidgets() {
@@ -367,6 +382,7 @@ namespace LongoMatch.Gui
 			buttonswidget.Hide();
 			timeline.Hide();
 			gameunitstaggerwidget1.Hide();
+			guTimeline.Hide();
 		}
 
 		private void ClearWidgets() {
@@ -476,6 +492,9 @@ namespace LongoMatch.Gui
 			timeline.Visible = !action.Active && TimelineViewAction.Active;
 			buttonswidget.Visible = !action.Active &&
 				(TaggingViewAction.Active || ManualTaggingViewAction.Active);
+			guTimeline.Visible = !action.Visible && GameUnitsViewAction.Active;
+			gameunitstaggerwidget1.Visible = !action.Active && (GameUnitsViewAction.Active || 
+				TaggingViewAction.Active || ManualTaggingViewAction.Active);
 			if(action.Active)
 				rightvbox.Visible = false;
 			else if(!action.Active && (playlist.Visible || notes.Visible))
@@ -484,11 +503,16 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnViewToggled(object sender, System.EventArgs e)
 		{
-			/* this callback is triggered by Capture and Free Capture */
-			ToggleAction view = sender as Gtk.ToggleAction;
-			buttonswidget.Visible = view.Active;
-			timeline.Visible = !view.Active;
-			if(view == ManualTaggingViewAction)
+			ToggleAction action = sender as Gtk.ToggleAction;
+			
+			if (!action.Active)
+				return;
+			
+			buttonswidget.Visible = action == ManualTaggingViewAction || sender == TaggingViewAction;
+			timeline.Visible = action == TimelineViewAction;
+			guTimeline.Visible = action == GameUnitsViewAction;
+			gameunitstaggerwidget1.Visible = buttonswidget.Visible || guTimeline.Visible;
+			if(action == ManualTaggingViewAction)
 				buttonswidget.Mode = TagMode.Free;
 			else
 				buttonswidget.Mode = TagMode.Predifined;
@@ -758,6 +782,26 @@ namespace LongoMatch.Gui
 		private void EmitGameUnitEvent(GameUnit gameUnit, GameUnitEventType eType) {
 			if (GameUnitEvent != null)
 				GameUnitEvent(gameUnit, eType);
+		}
+		
+		private void EmitUnitAdded(GameUnit gameUnit, int frame) {
+			if (UnitAdded != null)
+				UnitAdded(gameUnit, frame);
+		}
+		
+		private void EmitUnitDeleted(GameUnit gameUnit, List<TimelineNode> units) {
+			if (UnitDeleted != null)
+				UnitDeleted(gameUnit, units);
+		}
+		
+		private void EmitUnitSelected(GameUnit gameUnit, TimelineNode unit) {
+			if (UnitSelected != null)
+				UnitSelected(gameUnit, unit);
+		}
+		
+		private void EmitUnitChanged(GameUnit gameUnit, TimelineNode unit, Time time) {
+			if (UnitChanged != null)
+				UnitChanged(gameUnit, unit, time);
 		}
 		#endregion
 	}

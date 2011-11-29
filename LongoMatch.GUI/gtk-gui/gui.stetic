@@ -1587,7 +1587,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="LongoMatch.Gui.MainWindow" design-size="1224 670">
+  <widget class="Gtk.Window" id="LongoMatch.Gui.MainWindow" design-size="1224 681">
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -1683,6 +1683,7 @@
         <property name="Active">True</property>
         <property name="Value">0</property>
         <property name="Group">group1</property>
+        <signal name="Toggled" handler="OnViewToggled" />
       </action>
       <action id="SaveProjectAction">
         <property name="Type">Action</property>
@@ -1759,6 +1760,17 @@
         <property name="Group">group1</property>
         <signal name="Toggled" handler="OnViewToggled" />
       </action>
+      <action id="GameUnitsViewAction">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes">Game units view</property>
+        <property name="Sensitive">False</property>
+        <property name="ShortLabel" translatable="yes">Game units view</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">group1</property>
+        <signal name="Toggled" handler="OnViewToggled" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">LongoMatch</property>
@@ -1802,6 +1814,7 @@
                     <node type="Menuitem" action="TaggingViewAction" />
                     <node type="Menuitem" action="ManualTaggingViewAction" />
                     <node type="Menuitem" action="TimelineViewAction" />
+                    <node type="Menuitem" action="GameUnitsViewAction" />
                   </node>
                   <node type="Menu" action="HelpAction">
                     <node type="Menuitem" action="AboutAction" />
