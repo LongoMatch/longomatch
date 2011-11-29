@@ -148,6 +148,7 @@
     <File subtype="Code" buildaction="Compile" name="Gui/Component/GameUnitTimeScale.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Base/TimelineWidgetBase.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Base.TimelineWidgetBase.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/GameUnitsTimelineWidget.cs" />
   </Contents>
   <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="../CesarPlayer/Makefile.am" RelativeConfigureInPath="../">
     <BuildFilesVar Name="FILES" />
