@@ -29,8 +29,6 @@ using LongoMatch.Store.Templates;
 
 namespace LongoMatch.Gui.Component {
 
-	[System.ComponentModel.Category("LongoMatch")]
-	[System.ComponentModel.ToolboxItem(true)]
 	public class TimeLineWidget : TimelineBase<TimeScale, Play> 
 	{
 
