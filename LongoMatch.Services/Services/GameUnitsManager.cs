@@ -30,6 +30,7 @@ namespace LongoMatch.Services
 		PlayerBin player;
 		Project openedProject;
 		Dictionary<GameUnit, Time> gameUnitsStarted;
+		ushort fps;
 		
 		
 		public GameUnitsManager (MainWindow mainWindow, PlayerBin player)
@@ -37,14 +38,19 @@ namespace LongoMatch.Services
 			this.mainWindow = mainWindow;
 			this.player = player;
 			gameUnitsStarted = new Dictionary<GameUnit, Time>();
+			mainWindow.GameUnitEvent += HandleMainWindowGameUnitEvent;
 		}
 		
 		public Project OpenedProject{
 			set {
 				openedProject = value;
 				gameUnitsStarted.Clear();
-				if (openedProject != null)
-					mainWindow.UpdateGameUnits(value.GameUnits);
+				
+				if (openedProject == null)
+					return;
+				
+				fps = openedProject.Description.File.Fps;
+				mainWindow.UpdateGameUnits(value.GameUnits);
 			}
 		}
 	
@@ -56,6 +62,7 @@ namespace LongoMatch.Services
 			if (gameUnitsStarted.ContainsKey(gameUnit)){
 				Log.Warning("Trying to start a game unit that was already started");
 			} else {
+				gameUnitsStarted.Add(gameUnit, new Time{MSeconds=(int)player.CurrentTime});
 			}
 		}
 		
@@ -72,12 +79,14 @@ namespace LongoMatch.Services
 			TimelineNode timeInfo;
 			Time start, stop;
 			
-			if (gameUnitsStarted.ContainsKey(gameUnit))
+			if (!gameUnitsStarted.ContainsKey(gameUnit)) {
 				Log.Warning("Tryed to stop a game unit that was not started: " + gameUnit);
+				return;
+			}
 			
 			start = gameUnitsStarted[gameUnit];
 			stop = new Time{MSeconds=(int)player.CurrentTime};
-			timeInfo = new TimelineNode {Start=start, Stop=stop};
+			timeInfo = new TimelineNode {Name=gameUnit.Name, Fps=fps, Start=start, Stop=stop};
 			
 			gameUnit.Add(timeInfo);
 			gameUnitsStarted.Remove(gameUnit);
