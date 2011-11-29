@@ -122,9 +122,9 @@ namespace LongoMatch.Handlers
 	/* Start/Stop/Cancel game units */
 	public delegate void GameUnitHandler(GameUnit gameUnit, GameUnitEventType eType);
 	
-	public delegate void UnitChangeHandler (TimelineNode unit, Time time);
-	public delegate void UnitSelectedHandler (TimelineNode unit);
+	public delegate void UnitChangedHandler (GameUnit gameUnit, TimelineNode unit, Time time);
+	public delegate void UnitSelectedHandler (GameUnit gameUnit, TimelineNode unit);
 	public delegate void UnitAddedHandler (GameUnit gameUnit, int frame);
-	public delegate void UnitsDeletedHandler (List<TimelineNode> unit);
+	public delegate void UnitsDeletedHandler (GameUnit gameUnit, List<TimelineNode> unit);
 
 }

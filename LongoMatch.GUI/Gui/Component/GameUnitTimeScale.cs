@@ -40,7 +40,7 @@ namespace LongoMatch.Gui.Component
 	public class GameUnitTimeScale : TimeScaleBase<TimelineNode>
 	{
 		
-		public event UnitChangeHandler UnitChanged;
+		public event UnitChangedHandler UnitChanged;
 		public event UnitSelectedHandler UnitSelected;
 		public event UnitsDeletedHandler UnitDeleted;
 		public event UnitAddedHandler UnitAdded;
@@ -63,17 +63,17 @@ namespace LongoMatch.Gui.Component
 
 		override protected void HandleTimeNodeChanged(TimelineNode unit, Time time) {
 			if (UnitChanged != null)
-				UnitChanged(unit, time);
+				UnitChanged(gameUnit, unit, time);
 		}
 		
 		override protected void HandleTimeNodeSelected(TimelineNode unit) {
 			if (UnitSelected != null)
-				UnitSelected(unit);
+				UnitSelected(gameUnit, unit);
 		}
 		
 		override protected void HandleTimeNodeDeleted(List<TimelineNode> units) {
 			if (UnitDeleted != null)
-				UnitDeleted(units);
+				UnitDeleted(gameUnit, units);
 		}
 		
 		override protected void AddNewTimeNode() {
