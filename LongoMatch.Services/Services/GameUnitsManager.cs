@@ -65,6 +65,7 @@ namespace LongoMatch.Services
 			} else {
 				Log.Warning("Tryed to cancel a game unit that was not started: " + gameUnit);
 			}
+			Log.Debug("Cancelled pending unit for game unit:" + gameUnit);
 		}
 		
 		private void StopGameUnit(GameUnit gameUnit) {
@@ -80,10 +81,12 @@ namespace LongoMatch.Services
 			
 			gameUnit.Add(timeInfo);
 			gameUnitsStarted.Remove(gameUnit);
+			Log.Debug(String.Format("Added new unit:{0} to {1} ", timeInfo, gameUnit));
 		}
 
 		void HandleMainWindowGameUnitEvent (GameUnit gameUnit, LongoMatch.Common.GameUnitEventType eType)
 		{
+			Log.Debug("Received GameUnit event of type: " + eType);
 			switch (eType) {
 			case GameUnitEventType.Start:
 			{
