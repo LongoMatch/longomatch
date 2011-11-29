@@ -73,7 +73,7 @@ namespace LongoMatch.Gui.Component {
 					ts.TimeNodeSelected += new PlaySelectedHandler(OnTimeNodeSelected);
 					ts.TimeNodeDeleted += new PlaysDeletedHandler(OnTimeNodeDeleted);
 					ts.NewMarkAtFrameEvent += new NewTagAtFrameHandler(OnNewMark);
-					TimelineBox.PackStart(ts,true,true,0);
+					TimelineBox.PackStart(ts,false,true,0);
 					ts.Show();
 				}
 				SetPixelRatio(3);
