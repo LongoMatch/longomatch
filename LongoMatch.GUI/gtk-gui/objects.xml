@@ -289,31 +289,59 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Base.TimelineBase" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.Gui.Component.TagsTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
     <itemgroups>
-      <itemgroup label="TimelineBase Properties">
-        <property name="CurrentFrame" />
-      </itemgroup>
-    </itemgroups>
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.TimeLineWidget" palette-category="LongoMatch" allow-children="false" base-type="LongoMatch.Gui.Base.TimelineWidgetBase">
-    <itemgroups>
-      <itemgroup label="TimelineBase[LongoMatch.Gui.Component.TimeScale,LongoMatch.Store.Play] Properties">
-        <property name="CurrentFrame" />
+      <itemgroup label="ListTreeViewBase Properties">
+        <property name="Colors" />
       </itemgroup>
     </itemgroups>
     <signals>
-      <itemgroup label="TimeLineWidget Signals">
+      <itemgroup label="ListTreeViewBase Signals">
         <signal name="TimeNodeChanged" />
         <signal name="TimeNodeSelected" />
         <signal name="TimeNodeDeleted" />
-        <signal name="NewMarkEvent" />
+        <signal name="PlayListNodeAdded" />
+        <signal name="SnapshotSeriesEvent" />
+        <signal name="TagPlay" />
+        <signal name="NewRenderingJob" />
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Base.TimelineWidgetBase" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
+  <object type="LongoMatch.Gui.Component.PlaysTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
+    <itemgroups>
+      <itemgroup label="ListTreeViewBase Properties">
+        <property name="Colors" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="PlaysTreeView Signals">
+        <signal name="EditProperties" />
+        <signal name="TimeNodeChanged" />
+        <signal name="TimeNodeSelected" />
+        <signal name="TimeNodeDeleted" />
+        <signal name="PlayListNodeAdded" />
+        <signal name="SnapshotSeriesEvent" />
+        <signal name="TagPlay" />
+        <signal name="NewRenderingJob" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.PlayersTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
+    <itemgroups>
+      <itemgroup label="ListTreeViewBase Properties">
+        <property name="Colors" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="ListTreeViewBase Signals">
+        <signal name="TimeNodeChanged" />
+        <signal name="TimeNodeSelected" />
+        <signal name="TimeNodeDeleted" />
+        <signal name="PlayListNodeAdded" />
+        <signal name="SnapshotSeriesEvent" />
+        <signal name="TagPlay" />
+        <signal name="NewRenderingJob" />
+      </itemgroup>
+    </signals>
   </object>
 </objects>

@@ -1587,7 +1587,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="LongoMatch.Gui.MainWindow" design-size="1259 887">
+  <widget class="Gtk.Window" id="LongoMatch.Gui.MainWindow" design-size="1224 670">
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -1828,7 +1828,7 @@
           <widget class="Gtk.HPaned" id="hpaned">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="Position">257</property>
+            <property name="Position">161</property>
             <child>
               <widget class="Gtk.VBox" id="leftbox">
                 <property name="MemberName" />
@@ -1926,9 +1926,9 @@
               <widget class="Gtk.HPaned" id="hpaned1">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Position">881</property>
+                <property name="Position">834</property>
                 <child>
-                  <widget class="Gtk.VBox" id="vbox5">
+                  <widget class="Gtk.VBox" id="downbox">
                     <property name="MemberName" />
                     <property name="Spacing">6</property>
                     <child>
@@ -1980,27 +1980,13 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="LongoMatch.Gui.Component.TimeLineWidget" id="timeline">
-                        <property name="MemberName" />
-                        <property name="HeightRequest">200</property>
-                        <property name="Visible">False</property>
-                        <property name="Events">ButtonPressMask</property>
-                        <property name="CurrentFrame">0</property>
-                      </widget>
-                      <packing>
-                        <property name="Position">1</property>
-                        <property name="AutoSize">False</property>
-                        <property name="Expand">False</property>
-                      </packing>
-                    </child>
-                    <child>
                       <widget class="LongoMatch.Gui.Component.ButtonsWidget" id="buttonswidget">
                         <property name="MemberName" />
                         <property name="Visible">False</property>
                         <property name="Events">ButtonPressMask</property>
                       </widget>
                       <packing>
-                        <property name="Position">2</property>
+                        <property name="Position">1</property>
                         <property name="AutoSize">False</property>
                         <property name="Expand">False</property>
                       </packing>
@@ -2011,7 +1997,7 @@
                         <property name="Events">ButtonPressMask</property>
                       </widget>
                       <packing>
-                        <property name="Position">3</property>
+                        <property name="Position">2</property>
                         <property name="AutoSize">False</property>
                         <property name="Expand">False</property>
                       </packing>
@@ -6795,12 +6781,6 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
           </packing>
         </child>
       </widget>
-    </child>
-  </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.TimeLineWidget" design-size="535 229">
-    <property name="MemberName" />
-    <child>
-      <placeholder />
     </child>
   </widget>
 </stetic-interface>

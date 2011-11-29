@@ -1,5 +1,4 @@
-<Project name="LongoMatch.GUI" fileversion="2.0" DefaultNamespace="LongoMatch" language="C#" clr-version="Net_2_0" targetFramework="4.0" ctype="DotNetProject">
-  <Deployment.LinuxDeployData />
+<Project name="LongoMatch.GUI" fileversion="2.0" DefaultNamespace="LongoMatch" language="C#" targetFramework="4.0" ctype="DotNetProject">
   <Configurations active="Release">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="../bin" assembly="LongoMatch.Gui" assemblyKeyFile="/home/andoni/Proyectos/longomatch/LongoMatch/." />
@@ -150,15 +149,6 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Base.TimelineWidgetBase.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/GameUnitsTimelineWidget.cs" />
   </Contents>
-  <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="../CesarPlayer/Makefile.am" RelativeConfigureInPath="../">
-    <BuildFilesVar Name="FILES" />
-    <DeployFilesVar />
-    <ResourcesVar Name="RESOURCES" />
-    <OthersVar />
-    <GacRefVar Name="REFERENCES" />
-    <AsmRefVar Name="REFERENCES" />
-    <ProjectRefVar Name="REFERENCES" />
-  </MonoDevelop.Autotools.MakefileInfo>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
