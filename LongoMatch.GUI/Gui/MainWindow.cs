@@ -608,6 +608,7 @@ namespace LongoMatch.Gui
 			if(args.CurrentTime != 0 && timeline != null && openedProject != null)
 				timeline.CurrentFrame=(uint)(args.CurrentTime *
 				                             openedProject.Description.File.Fps / 1000);
+			gameunitstaggerwidget1.CurrentTime = new Time{MSeconds = (int)args.CurrentTime};
 		}
 
 		
