@@ -113,10 +113,12 @@ namespace LongoMatch.Gui.Base
 
 		public void AddTimeNode(T timeNode) {
 			list.Add(timeNode);
+			QueueDraw();
 		}
 
 		public void RemoveTimeNode(T timeNode) {
 			list.Remove(timeNode);
+			QueueDraw();
 		}
 
 		public void ReDraw() {
