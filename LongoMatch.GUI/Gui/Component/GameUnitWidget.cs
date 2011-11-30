@@ -56,9 +56,13 @@ namespace LongoMatch.Gui.Component
 		public Time CurrentTime {
 			set {
 				current = value;
-				if (start != null) 
+				if (start != null) {
+					Time ellapsed = value-start;
+					stopButton.Visible = ellapsed.MSeconds > 0;
 					label.Text = Catalog.GetString("Time" + ": " + (value-start).ToSecondsString());
-				else label.Text = "";
+				} else {
+					label.Text = "";
+				}
 			}
 		}
 		
@@ -110,8 +114,10 @@ namespace LongoMatch.Gui.Component
 				start = current;
 				eType = GameUnitEventType.Start;
 			}
-			else if (sender == stopButton)
+			else if (sender == stopButton) {
 				eType = GameUnitEventType.Stop;
+				start = null;
+			}
 			else
 				eType = GameUnitEventType.Cancel;
 			
