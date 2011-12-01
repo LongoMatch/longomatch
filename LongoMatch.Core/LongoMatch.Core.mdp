@@ -37,7 +37,6 @@
     <File subtype="Code" buildaction="Compile" name="Store/Templates/CategoriesTemplate.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Templates/SubCategoryTemplate.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Templates/TeamTemplate.cs" />
-    <File subtype="Code" buildaction="Compile" name="Store/Templates/Template.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/ISubCategory.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/ITag.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/ITemplates.cs" />
