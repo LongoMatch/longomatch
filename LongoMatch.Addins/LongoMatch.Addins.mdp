@@ -1,0 +1,26 @@
+<Project name="LongoMatch.Addins" fileversion="2.0" DefaultNamespace="LongoMatch.Addins" language="C#" targetFramework="4.0" ctype="DotNetProject">
+  <Configurations active="Release">
+    <Configuration name="Debug" ctype="DotNetProjectConfiguration">
+      <Output directory="../bin" assembly="LongoMatch.Addins" />
+      <Build debugmode="True" target="Library" />
+      <Execution consolepause="False" runwithwarnings="True" runtime="MsNet" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" definesymbols="DEBUG" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+    <Configuration name="Release" ctype="DotNetProjectConfiguration">
+      <Output directory="../bin" assembly="LongoMatch.Addins" />
+      <Build debugmode="False" target="Library" />
+      <Execution consolepause="False" runwithwarnings="True" runtime="MsNet" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+  </Configurations>
+  <Contents>
+    <File subtype="Code" buildaction="Compile" name="ExtensionPoints/IExportProject.cs" />
+    <File subtype="Code" buildaction="Compile" name="ExtensionPoints/IConfigModifier.cs" />
+    <File subtype="Code" buildaction="Compile" name="AddinsManager.cs" />
+    <File subtype="Directory" buildaction="Compile" name="." />
+  </Contents>
+  <References>
+    <ProjectReference type="Gac" localcopy="True" refto="Mono.Addins, Version=0.6.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+    <ProjectReference type="Project" localcopy="True" refto="LongoMatch.Core" />
+  </References>
+</Project>

@@ -30,5 +30,6 @@
     <ProjectReference type="Project" localcopy="True" refto="LongoMatch.Multimedia" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <ProjectReference type="Project" localcopy="True" refto="LongoMatch.Core" />
+    <ProjectReference type="Project" localcopy="True" refto="LongoMatch.Addins" />
   </References>
 </Project>

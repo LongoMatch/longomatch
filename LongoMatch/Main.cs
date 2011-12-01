@@ -24,6 +24,7 @@ using System.IO;
 using Gtk;
 using Mono.Unix;
 
+using LongoMatch.Addins;
 using LongoMatch.Interfaces.GUI;
 using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.Gui;
@@ -55,6 +56,8 @@ namespace LongoMatch
 
 			//try {
 				Core.Init();
+				AddinsManager manager = new AddinsManager(Path.Combine(Config.HomeDir(), "addins"));
+				manager.LoadConfigModifierAddins();
 			    GUIToolkit guiToolkit = new GUIToolkit();
 			    IMultimediaToolkit multimediaToolkit = new MultimediaFactory();
 				Core.Start(guiToolkit, multimediaToolkit);
