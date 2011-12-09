@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using System.IO;
 using Db4objects.Db4o;
 using Db4objects.Db4o.Query;
-using Gtk;
+
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
 using LongoMatch.Store;

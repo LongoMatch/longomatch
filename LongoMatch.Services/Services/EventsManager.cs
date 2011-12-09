@@ -20,19 +20,11 @@
 
 using System;
 using System.Collections.Generic;
-using Gdk;
-using Gtk;
 using LongoMatch.Common;
-using LongoMatch.Gui;
-using LongoMatch.Gui.Component;
-using LongoMatch.Gui.Dialog;
 using LongoMatch.Handlers;
 using LongoMatch.Interfaces;
+using LongoMatch.Interfaces.GUI;
 using LongoMatch.Store;
-using LongoMatch.Video.Common;
-using LongoMatch.Video.Editor;
-using LongoMatch.Video.Utils;
-using LongoMatch.Multimedia.Interfaces;
 using Mono.Unix;
 
 namespace LongoMatch.Services
@@ -42,8 +34,6 @@ namespace LongoMatch.Services
 	public class EventsManager
 	{
 
-		private FramesSeriesCapturer fsc;
-		private FramesCaptureProgressDialog fcpd;
 		private VideoDrawingsManager drawingManager;
 
 		/* Current play loaded. null if no play is loaded */
@@ -53,16 +43,18 @@ namespace LongoMatch.Services
 		ProjectType projectType;
 		Time startTime;
 		
-		MainWindow mainWindow;
-		PlayerBin player;
-		CapturerBin capturer;
+		IGUIToolkit guiToolkit;
+		IMainWindow mainWindow;
+		IPlayer player;
+		ICapturer capturer;
 
-		public EventsManager(MainWindow mainWindow)
+		public EventsManager(IGUIToolkit guiToolkit)
 		{
-			this.mainWindow = mainWindow;
-			this.player = mainWindow.Player;
-			this.capturer = mainWindow.Capturer;
-			this.drawingManager = new VideoDrawingsManager(player);
+			this.guiToolkit = guiToolkit;
+			mainWindow = guiToolkit.MainWindow;
+			player = mainWindow.Player;
+			capturer = mainWindow.Capturer;
+			drawingManager = new VideoDrawingsManager(player);
 			ConnectSignals();
 		}
 
@@ -129,16 +121,15 @@ namespace LongoMatch.Services
 		}
 
 		private void AddNewPlay(Time start, Time stop, Category category) {
-			Pixbuf miniature;
+			Image miniature;
 
 			Log.Debug(String.Format("New play created start:{0} stop:{1} category:{2}",
 									start, stop, category));
 			/* Get the current frame and get a thumbnail from it */
 			if(projectType == ProjectType.CaptureProject) {
 				if(!capturer.Capturing) {
-					MessagePopup.PopupMessage(capturer, MessageType.Info,
-					                          Catalog.GetString("You can't create a new play if the capturer "+
-					                                            "is not recording."));
+					guiToolkit.InfoMessage(Catalog.GetString("You can't create a new play if the capturer "+
+						"is not recording."));
 					return;
 				}
 				miniature = capturer.CurrentMiniatureFrame;
@@ -187,9 +178,8 @@ namespace LongoMatch.Services
 			diff = stopTime.MSeconds - startTime.MSeconds;
 
 			if(diff < 0) {
-				MessagePopup.PopupMessage(mainWindow, MessageType.Warning,
-				                          Catalog.GetString("The stop time is smaller than the start time. "+
-				                                            "The play will not be added."));
+				guiToolkit.WarningMessage(Catalog.GetString("The stop time is smaller than the start time. "+
+					"The play will not be added."));
 				return;
 			}
 			if(diff < 500) {
@@ -203,11 +193,7 @@ namespace LongoMatch.Services
 		}
 
 		private void LaunchPlayTagger(Play play) {
-			TaggerDialog tg = new TaggerDialog(play.Category, play.Tags, play.Players, play.Teams,
-			                                   openedProject.LocalTeamTemplate, openedProject.VisitorTeamTemplate);
-			tg.TransientFor = mainWindow as Gtk.Window;
-			tg.Run();
-			tg.Destroy();
+			guiToolkit.TagPlay(play, openedProject.LocalTeamTemplate, openedProject.VisitorTeamTemplate);
 		}
 
 		protected virtual void OnPlaySelected(Play play)
@@ -255,33 +241,9 @@ namespace LongoMatch.Services
 			selectedTimeNode = null;
 		}
 
-		protected virtual void OnSnapshotSeries(Play tNode) {
-			SnapshotsDialog sd;
-			uint interval;
-			string seriesName;
-			string outDir;
-
+		protected virtual void OnSnapshotSeries(Play play) {
 			player.Pause();
-
-			sd= new SnapshotsDialog();
-			sd.TransientFor= mainWindow as Gtk.Window;
-			sd.Play = tNode.Name;
-
-			if(sd.Run() == (int)ResponseType.Ok) {
-				sd.Destroy();
-				interval = sd.Interval;
-				seriesName = sd.SeriesName;
-				outDir = System.IO.Path.Combine(Config.SnapshotsDir(),seriesName);
-				fsc = new FramesSeriesCapturer(openedProject.Description.File.FilePath,
-				                               tNode.Start.MSeconds,tNode.Stop.MSeconds,
-				                               interval,outDir);
-				fcpd = new FramesCaptureProgressDialog(fsc);
-				fcpd.TransientFor = mainWindow as Gtk.Window;
-				fcpd.Run();
-				fcpd.Destroy();
-			}
-			else
-				sd.Destroy();
+			guiToolkit.ExportFrameSeries(openedProject, play, Config.SnapshotsDir());
 		}
 		
 		protected virtual void OnPrev()
@@ -298,20 +260,10 @@ namespace LongoMatch.Services
 		}
 
 		protected virtual void OnDrawFrame(int time) {
-			Pixbuf pixbuf=null;
-			DrawingTool dialog = new DrawingTool();
-
+			Image pixbuf = null;
 			player.Pause();
 			pixbuf = player.CurrentFrame;
-
-			dialog.Image = pixbuf;
-			dialog.TransientFor = (Gtk.Window)player.Toplevel;
-			if(selectedTimeNode != null)
-				dialog.SetPlay((selectedTimeNode as Play),
-				               time);
-			pixbuf.Dispose();
-			dialog.Run();
-			dialog.Destroy();
+			guiToolkit.DrawingTool(pixbuf, selectedTimeNode as Play, time);
 		}
 
 		protected virtual void OnTagPlay(Play play) {

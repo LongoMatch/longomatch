@@ -22,7 +22,6 @@ using System.Reflection;
 using Mono.Unix;
 
 using LongoMatch.Common;
-using LongoMatch.Gui.Component;
 using LongoMatch.Interfaces;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
@@ -43,12 +42,8 @@ namespace LongoMatch.Services
 			dict.Add(typeof(SubCategoryTemplate),
 			         new TemplatesProvider<SubCategoryTemplate, string> (basePath,
 			                                                 Constants.SUBCAT_TEMPLATE_EXT));
-			dict.Add(typeof(TeamTemplate),
-			         new TemplatesProvider<TeamTemplate, Player> (basePath,
-			                                                 Constants.TEAMS_TEMPLATE_EXT));
-			dict.Add(typeof(Categories),
-			         new TemplatesProvider<Categories, Category> (basePath,
-			                                                 Constants.CAT_TEMPLATE_EXT));
+			dict.Add(typeof(TeamTemplate), new TeamTemplatesProvider(basePath));
+			dict.Add(typeof(Categories), new CategoriesTemplatesProvider (basePath));
 			CheckDefaultTemplates();
 			CreateDefaultPlayerSubCategories();
 			CreateDefaultTeamSubCategories();
@@ -95,29 +90,21 @@ namespace LongoMatch.Services
 			return null;
 		}
 		
-		public ITemplateWidget<T, U> GetTemplateEditor<T, U>() where T: ITemplate<U>{
-			if (typeof(T) == typeof(Categories))
-				return (ITemplateWidget<T, U>) new CategoriesTemplateEditorWidget (CategoriesTemplateProvider);
-			if (typeof(T) == typeof(TeamTemplate))
-				return (ITemplateWidget<T, U>) new TeamTemplateEditorWidget(TeamTemplateProvider);
-			return null;
-		}
-		
-		public ITemplateProvider<SubCategoryTemplate, string> SubCategoriesTemplateProvider {
+		public ISubcategoriesTemplatesProvider SubCategoriesTemplateProvider {
 			get {
-				return (ITemplateProvider<SubCategoryTemplate, string>) dict[typeof(SubCategoryTemplate)]; 
+				return (ISubcategoriesTemplatesProvider) dict[typeof(SubCategoryTemplate)]; 
 			}
 		}
 		
-		public ITemplateProvider<TeamTemplate, Player> TeamTemplateProvider {
+		public ITeamTemplatesProvider TeamTemplateProvider {
 			get {
-				return (ITemplateProvider<TeamTemplate, Player>) dict[typeof(TeamTemplate)]; 
+				return (ITeamTemplatesProvider) dict[typeof(TeamTemplate)]; 
 			}
 		}
 
-		public ITemplateProvider<Categories, Category> CategoriesTemplateProvider {
+		public ICategoriesTemplatesProvider CategoriesTemplateProvider {
 			get {
-				return (ITemplateProvider<Categories, Category>) dict[typeof(Categories)]; 
+				return (ICategoriesTemplatesProvider) dict[typeof(Categories)]; 
 			}
 		}
 		
@@ -250,4 +237,22 @@ namespace LongoMatch.Services
 			Save(t);
 		}
 	}
+	
+	public class TeamTemplatesProvider: TemplatesProvider<TeamTemplate, Player>, ITeamTemplatesProvider
+	{
+		public TeamTemplatesProvider (string basePath): base (basePath, Constants.TEAMS_TEMPLATE_EXT) {}
+		 
+	} 
+	
+	public class CategoriesTemplatesProvider : TemplatesProvider<Categories, Category>, ICategoriesTemplatesProvider
+	{
+		public CategoriesTemplatesProvider (string basePath): base (basePath, Constants.CAT_TEMPLATE_EXT) {}
+		 
+	}
+	
+	public class SubCategoriesTemplatesProvider : TemplatesProvider<SubCategoryTemplate, string>, ISubcategoriesTemplatesProvider
+	{
+		public SubCategoriesTemplatesProvider (string basePath): base (basePath, Constants.SUBCAT_TEMPLATE_EXT) {}
+		 
+	} 
 }

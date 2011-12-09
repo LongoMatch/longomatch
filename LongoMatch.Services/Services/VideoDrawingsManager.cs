@@ -18,11 +18,12 @@
 
 using System;
 using System.Collections.Generic;
-using Gdk;
+using System.Threading;
+
+using LongoMatch.Common;
+using LongoMatch.Handlers;
+using LongoMatch.Interfaces.GUI;
 using LongoMatch.Store;
-using LongoMatch.Gui;
-using LongoMatch.Video.Common;
-using LongoMatch.Multimedia.Interfaces;
 
 namespace LongoMatch.Services
 {
@@ -30,16 +31,15 @@ namespace LongoMatch.Services
 
 	public class VideoDrawingsManager
 	{
-		PlayerBin player;
-		uint timeout;
+		IPlayer player;
+		Timer timeout;
 		bool inKeyFrame;
 		bool canStop;
 		Play loadedPlay;
 
-		public VideoDrawingsManager(PlayerBin player)
+		public VideoDrawingsManager(IPlayer player)
 		{
 			this.player = player;
-			timeout = 0;
 		}
 
 		~ VideoDrawingsManager() {
@@ -64,14 +64,15 @@ namespace LongoMatch.Services
 		}
 
 		private void StartClock() {
-			if(timeout ==0)
-				timeout = GLib.Timeout.Add(20,CheckStopTime);
+			if(timeout == null)
+				timeout = new Timer(new TimerCallback(CheckStopTime),
+					this, 20, 20);	
 		}
 
 		private void StopClock() {
-			if(timeout != 0) {
-				GLib.Source.Remove(timeout);
-				timeout = 0;
+			if(timeout != null) {
+				timeout.Dispose();
+				timeout = null;
 			}
 		}
 
@@ -92,8 +93,8 @@ namespace LongoMatch.Services
 		}
 
 		private void PrintDrawing() {
-			Pixbuf frame = null;
-			Pixbuf drawing = null;
+			Image frame = null;
+			Image drawing = null;
 
 			player.Pause();
 			player.SeekInSegment(Drawing.RenderTime);
@@ -115,19 +116,19 @@ namespace LongoMatch.Services
 			player.SetLogo(System.IO.Path.Combine(Config.ImagesDir(),"background.png"));
 		}
 
-		private bool CheckStopTime() {
+		private void CheckStopTime(object self) {
 			int currentTime = (int)player.AccurateCurrentTime;
 
 			if(Drawing == null || !canStop)
-				return true;
+				return;
 			if((currentTime)>NextStopTime()) {
 				StopClock();
 				PrintDrawing();
 			}
-			return true;
+			return;
 		}
 
-		protected virtual void OnStateChanged(object sender, StateChangeArgs args) {
+		protected virtual void OnStateChanged(object sender, bool playing) {
 			//Check if we are currently paused displaying the key frame waiting for the user to
 			//go in to Play. If so we can stop
 			if(inKeyFrame) {

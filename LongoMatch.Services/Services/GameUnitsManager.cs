@@ -19,21 +19,21 @@ using System;
 using System.Collections.Generic;
 
 using LongoMatch.Common;
-using LongoMatch.Gui;
+using LongoMatch.Interfaces.GUI;
 using LongoMatch.Store;
 
 namespace LongoMatch.Services
 {
 	public class GameUnitsManager
 	{
-		MainWindow mainWindow;
-		PlayerBin player;
+		IMainWindow mainWindow;
+		IPlayer player;
 		Project openedProject;
 		Dictionary<GameUnit, Time> gameUnitsStarted;
 		ushort fps;
 		
 		
-		public GameUnitsManager (MainWindow mainWindow, PlayerBin player)
+		public GameUnitsManager (IMainWindow mainWindow, IPlayer player)
 		{
 			this.mainWindow = mainWindow;
 			this.player = player;

@@ -19,8 +19,6 @@
 //
 //
 using System.Collections.Generic;
-using Gdk;
-using Gtk;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
 using LongoMatch.Handlers;
@@ -55,7 +53,7 @@ namespace LongoMatch.Services
 
 		// Listen to key press events and fire a newMarkEvent event if the key combination
 		// is associated to a Category
-		public void KeyListener(object sender, KeyPressEventArgs args) {
+	/*	public void KeyListener(object sender, KeyPressEventArgs args) {
 			Category cat = null;
 			HotKey hotkey = new HotKey();
 
@@ -66,6 +64,6 @@ namespace LongoMatch.Services
 					newMarkEvent(cat);
 				}
 			}
-		}
+		}*/
 	}
 }

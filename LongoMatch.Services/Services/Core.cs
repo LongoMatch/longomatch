@@ -17,10 +17,10 @@
 // 
 using System;
 using System.IO;
-using Gtk;
 using Mono.Unix;
 
-using LongoMatch.Gui;
+using LongoMatch.Interfaces.GUI;
+using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.DB;
 using LongoMatch.Common;
 using LongoMatch.Store;
@@ -34,7 +34,8 @@ namespace LongoMatch.Services
 		static EventsManager eManager;
 		static HotKeysManager hkManager;
 		static GameUnitsManager guManager;
-		static MainWindow mainWindow;
+		static IMainWindow mainWindow;
+		static IGUIToolkit guiToolkit;
 
 		public static void Init()
 		{
@@ -46,20 +47,18 @@ namespace LongoMatch.Services
 			/* Init internationalization support */
 			Catalog.Init(Constants.SOFTWARE_NAME.ToLower(),Config.RelativeToPrefix("share/locale"));
 
-			/* Init Gtk */
-			Application.Init();
-
 			/* Check default folders */
 			CheckDirs();
 		}
 
-		public static void Start(MainWindow mainWindow) {
-			Core.mainWindow = mainWindow;
-			StartServices(mainWindow);
-			BindEvents(mainWindow);
+		public static void Start(IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit) {
+			Core.guiToolkit = guiToolkit;
+			Core.mainWindow = guiToolkit.MainWindow;
+			StartServices(guiToolkit, multimediaToolkit);
+			BindEvents(Core.mainWindow);
 		}
 		
-		public static void StartServices(MainWindow mainWindow){
+		public static void StartServices(IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit){
 			RenderingJobsManager videoRenderer;
 			ProjectsManager projectsManager;
 				
@@ -70,25 +69,25 @@ namespace LongoMatch.Services
 			db = new DataBase(Path.Combine(Config.DBDir(),Constants.DB_FILE));
 			
 			/* Start the events manager */
-			eManager = new EventsManager(mainWindow);
+			eManager = new EventsManager(guiToolkit);
 
 			/* Start the hotkeys manager */
 			hkManager = new HotKeysManager();
 			hkManager.newMarkEvent += eManager.OnNewTag;
 
 			/* Start the rendering jobs manager */
-			videoRenderer = new RenderingJobsManager(mainWindow.RenderingStateBar);
+			videoRenderer = new RenderingJobsManager(multimediaToolkit, guiToolkit);
 			mainWindow.RenderPlaylistEvent += (playlist) => {
-				videoRenderer.AddJob(RenderingJobsManager.ConfigureRenderingJob(playlist, mainWindow));};
+				videoRenderer.AddJob(guiToolkit.ConfigureRenderingJob(playlist));};
 			
 			/* Start Game Units manager */
 			guManager = new GameUnitsManager(mainWindow, mainWindow.Player);
 			
-			projectsManager = new ProjectsManager(mainWindow);
+			projectsManager = new ProjectsManager(guiToolkit, multimediaToolkit);
 			projectsManager.OpenedProjectChanged += OnOpenedProjectChanged;
 		}
 		
-		public static void BindEvents(MainWindow mainWindow) {
+		public static void BindEvents(IMainWindow mainWindow) {
 			/* Connect player events */
 			/* FIXME:
 			player.Prev += OnPrev;
@@ -127,12 +126,20 @@ namespace LongoMatch.Services
 			}
 		}
 		
+		public static IGUIToolkit GUIToolkit {
+			get {
+				return guiToolkit;
+			}
+		}
+		
 		private static void OnOpenedProjectChanged (Project project, ProjectType projectType) {
 			if (project != null) {
 				hkManager.Categories=project.Categories;
+#if HAVE_GTK
 				mainWindow.KeyPressEvent -= hkManager.KeyListener;
 			} else {
 				mainWindow.KeyPressEvent += hkManager.KeyListener;
+#endif
 			}
 			
 			eManager.OpenedProject = project;

@@ -29,14 +29,9 @@
     <File subtype="Directory" buildaction="Compile" name="." />
   </Contents>
   <References>
-    <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <ProjectReference type="Project" localcopy="True" refto="LongoMatch.GUI" />
-    <ProjectReference type="Gac" localcopy="True" refto="Db4objects.Db4o, Version=7.4.121.14026, Culture=neutral, PublicKeyToken=6199cd4f203aa8eb" />
-    <ProjectReference type="Project" localcopy="True" refto="LongoMatch.Multimedia" />
-    <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <ProjectReference type="Project" localcopy="True" refto="LongoMatch.GUI.Multimedia" />
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <ProjectReference type="Project" localcopy="True" refto="LongoMatch.Core" />
+    <ProjectReference type="Gac" localcopy="True" refto="Db4objects.Db4o, Version=8.0.184.15484, Culture=neutral, PublicKeyToken=6199cd4f203aa8eb" />
   </References>
 </Project>

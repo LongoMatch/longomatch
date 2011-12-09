@@ -16,11 +16,10 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using Gtk;
+using System.Threading;
 
-using LongoMatch.Gui.Component;
-using LongoMatch.Gui;
 using LongoMatch.Interfaces;
+using LongoMatch.Interfaces.GUI;
 using LongoMatch.Store;
 using LongoMatch.Common;
 using Mono.Unix;
@@ -30,21 +29,23 @@ namespace LongoMatch.Services
 {
 	public class PlaylistManager
 	{
+		IGUIToolkit guiToolkit;
 		IPlaylistWidget playlistWidget;
 		IPlayList playlist;
-		PlayerBin player;
+		IPlayer player;
 		/* FIXME */
 		Project openedProject;
 		TimeNode selectedTimeNode;
 		
 		bool clockStarted;
-		uint timeout;
+		Timer timeout;
 		
-		public PlaylistManager (MainWindow mainWindow)
+		public PlaylistManager (IGUIToolkit guiToolkit)
 		{
-			playlistWidget = mainWindow.Playlist;
-			player = mainWindow.Player;
-			BindEvents(mainWindow, mainWindow.Player);
+			this.guiToolkit = guiToolkit;
+			playlistWidget = guiToolkit.MainWindow.Playlist;
+			player = guiToolkit.MainWindow.Player;
+			BindEvents(guiToolkit.MainWindow, guiToolkit.MainWindow.Player);
 		}
 		
 		public void Stop() {
@@ -57,12 +58,12 @@ namespace LongoMatch.Services
 				playlistWidget.Load(playlist);
 			} catch (Exception e){
 				Log.Exception (e);
-				MessagePopup.PopupMessage(playlistWidget as Gtk.Widget ,MessageType.Error, 
-				                          Catalog.GetString("The file you are trying to load is not a playlist or it's not compatible with the current version"));
+				guiToolkit.ErrorMessage(Catalog.GetString("The file you are trying to load " +
+					"is not a playlist or it's not compatible with the current version"));
 			}
 		}
 		
-		private void BindEvents(MainWindow mainWindow, PlayerBin player) {
+		private void BindEvents(IMainWindow mainWindow, IPlayer player) {
 			/* Track loaded element */
 			mainWindow.PlaySelectedEvent += (p) => {selectedTimeNode = p;};
 			player.SegmentClosedEvent += () => {selectedTimeNode = null;};
@@ -100,8 +101,7 @@ namespace LongoMatch.Services
 		
 		private bool Next() {
 			if(openedProject != null) {
-				MessagePopup.PopupMessage(playlistWidget as Gtk.Widget, MessageType.Error,
-				                          Catalog.GetString("Please, close the opened project to play the playlist."));
+				guiToolkit.ErrorMessage(Catalog.GetString("Please, close the opened project to play the playlist."));
 				Stop();
 				return false;
 			}
@@ -139,31 +139,22 @@ namespace LongoMatch.Services
 		
 		private void StartClock()	{
 			if(player!=null && !clockStarted) {
-				timeout = GLib.Timeout.Add(20,CheckStopTime);
+				timeout = new Timer(new TimerCallback(CheckStopTime), this, 20, 20);
 				clockStarted=true;
 			}
 		}
 
 		private void StopClock() {
 			if(clockStarted) {
-				GLib.Source.Remove(timeout);
+				timeout.Dispose();
 				clockStarted = false;
 			}
 		}
 
-		private bool CheckStopTime() {
+		private void CheckStopTime(object self) {
 			if(player.AccurateCurrentTime >= selectedTimeNode.Stop.MSeconds-200)
 				Next();
-			return true;
-		}
-		
-		private FileFilter FileFilter {
-			get {
-				FileFilter filter = new FileFilter();
-				filter.Name = Catalog.GetString("LongoMatch playlist");
-				filter.AddPattern("*" + Constants.PLAYLIST_EXT);
-				return filter;
-			}
+			return;
 		}
 		
 		protected virtual void OnPlayListNodeAdded(Play play)
@@ -187,32 +178,25 @@ namespace LongoMatch.Services
 
 		protected virtual void OnOpenPlaylist()
 		{
-			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Open playlist"),
-			                (Gtk.Window)(playlistWidget as Gtk.Widget).Toplevel,
-			                FileChooserAction.Open,
-			                "gtk-cancel",ResponseType.Cancel,
-			                "gtk-open",ResponseType.Accept);
-			fChooser.SetCurrentFolder(Config.PlayListDir());
-			fChooser.AddFilter(FileFilter);
-			fChooser.DoOverwriteConfirmation = true;
-			if(fChooser.Run() == (int)ResponseType.Accept)
-				Load(fChooser.Filename);
-			fChooser.Destroy();
+			string filename;
+			
+			filename = guiToolkit.OpenFile(Catalog.GetString("Open playlist"), null, Config.PlayListDir(),
+				Constants.PROJECT_NAME + Catalog.GetString("playlists"),
+				"*" + Constants.PLAYLIST_EXT);
+			if (filename != null)
+				Load(filename);
 		}
 
 		protected virtual void OnNewPlaylist()
 		{
-			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("New playlist"),
-			                (Gtk.Window)(playlistWidget as Gtk.Widget).Toplevel,
-			                FileChooserAction.Save,
-			                "gtk-cancel",ResponseType.Cancel,
-			                "gtk-save",ResponseType.Accept);
-			fChooser.SetCurrentFolder(Config.PlayListDir());
-			fChooser.AddFilter(FileFilter);
+			string filename;
+			
+			filename = guiToolkit.SaveFile(Catalog.GetString("New playlist"), null, Config.PlayListDir(),
+				Constants.PROJECT_NAME + Catalog.GetString("playlists"),
+				"*" + Constants.PLAYLIST_EXT);
 
-			if(fChooser.Run() == (int)ResponseType.Accept)
-				Load(fChooser.Filename);
-			fChooser.Destroy();
+			if (filename != null)
+				Load(filename);
 		}
 	}
 }
