@@ -58,7 +58,7 @@ namespace LongoMatch.Gui.Component
 			set {
 				labelsDict.Clear();
 				foreach (Category cat in value)
-					labelsDict.Add(cat.Name, cat.Color);
+					labelsDict.Add(cat.Name, Helpers.ToGdkColor(cat.Color));
 			}
 		}
 

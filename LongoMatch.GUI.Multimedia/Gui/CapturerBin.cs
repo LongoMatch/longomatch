@@ -20,9 +20,11 @@
 
 using System;
 using Gtk;
-using Gdk;
+
+using Image = LongoMatch.Common.Image;
 using LongoMatch.Common;
-using LongoMatch.Multimedia.Interfaces;
+using LongoMatch.Handlers;
+using LongoMatch.Interfaces.GUI;
 using LongoMatch.Video;
 using LongoMatch.Video.Common;
 using LongoMatch.Video.Capturer;
@@ -35,19 +37,19 @@ namespace LongoMatch.Gui
 
 	[System.ComponentModel.Category("CesarPlayer")]
 	[System.ComponentModel.ToolboxItem(true)]
-	public partial class CapturerBin : Gtk.Bin
+	public partial class CapturerBin : Gtk.Bin, ICapturer
 	{
 		public event EventHandler CaptureFinished;
-		public event ErrorHandler Error;
+		public event LongoMatch.Handlers.ErrorHandler Error;
 
-		private Pixbuf logopix;
+		private Image logopix;
 		private CaptureSettings captureProps;
 		private CapturerType capturerType;
 		private bool captureStarted;
 		private bool capturing;
 		private const int THUMBNAIL_MAX_WIDTH = 100;
 
-		ICapturer capturer;
+		LongoMatch.Multimedia.Interfaces.ICapturer capturer;
 
 		public CapturerBin()
 		{
@@ -62,7 +64,7 @@ namespace LongoMatch.Gui
 				Close();
 
 				MultimediaFactory factory = new MultimediaFactory();
-				capturer = factory.getCapturer(value);
+				capturer = factory.GetCapturer(value);
 				capturer.EllapsedTime += OnTick;
 				if(value != CapturerType.Fake) {
 					capturer.Error += OnError;
@@ -85,7 +87,7 @@ namespace LongoMatch.Gui
 		public string Logo {
 			set {
 				try {
-					this.logopix = new Pixbuf(value);
+					this.logopix = new Image(new Gdk.Pixbuf(value));
 				} catch {
 					/* FIXME: Add log */
 				}
@@ -173,36 +175,17 @@ namespace LongoMatch.Gui
 			capturer = null;
 		}
 
-		public Pixbuf CurrentMiniatureFrame {
+		public Image CurrentMiniatureFrame {
 			get {
-				int h, w;
-				double rate;
-				Pixbuf scaled_pix;
-				Pixbuf pix;
-
 				if(capturer == null)
 					return null;
 
-				pix = capturer.CurrentFrame;
+				Image image = new Image(capturer.CurrentFrame);
 
-				if(pix == null)
+				if(image.Value == null)
 					return null;
-
-				w = pix.Width;
-				h = pix.Height;
-				rate = (double)w / (double)h;
-
-				if(h > w) {
-					w = (int)(THUMBNAIL_MAX_WIDTH * rate);
-					h = THUMBNAIL_MAX_WIDTH;
-				} else {
-					h = (int)(THUMBNAIL_MAX_WIDTH / rate);
-					w = THUMBNAIL_MAX_WIDTH;
-				}
-				scaled_pix = pix.ScaleSimple(w, h, Gdk.InterpType.Bilinear);
-				pix.Dispose();
-
-				return scaled_pix;
+				image.Scale(THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_WIDTH);
+				return image;
 			}
 		}
 
@@ -275,7 +258,7 @@ namespace LongoMatch.Gui
 		protected virtual void OnError(object o, ErrorArgs args)
 		{
 			if(Error != null)
-				Error(o, args);
+				Error(o, args.Message);
 
 			Close();
 		}
@@ -314,16 +297,18 @@ namespace LongoMatch.Gui
 		protected virtual void OnLogodrawingareaExposeEvent(object o, Gtk.ExposeEventArgs args)
 		{
 			Gdk.Window win;
-			Pixbuf frame;
+			Gdk.Pixbuf logo, frame;
 			int width, height, allocWidth, allocHeight, logoX, logoY;
 			float ratio;
 
-			if(logopix == null)
+			logo = logopix.Value;
+			
+			if(logo == null)
 				return;
 
 			win = logodrawingarea.GdkWindow;
-			width = logopix.Width;
-			height = logopix.Height;
+			width = logo.Width;
+			height = logo.Height;
 			allocWidth = logodrawingarea.Allocation.Width;
 			allocHeight = logodrawingarea.Allocation.Height;
 
@@ -340,13 +325,13 @@ namespace LongoMatch.Gui
 			logoY = (allocHeight / 2) - (height / 2);
 
 			/* Drawing our frame */
-			frame = new Pixbuf(Colorspace.Rgb, false, 8, allocWidth, allocHeight);
-			logopix.Composite(frame, 0, 0, allocWidth, allocHeight, logoX, logoY,
-			                  ratio, ratio, InterpType.Bilinear, 255);
+			frame = new Gdk.Pixbuf(Gdk.Colorspace.Rgb, false, 8, allocWidth, allocHeight);
+			logo.Composite(frame, 0, 0, allocWidth, allocHeight, logoX, logoY,
+			                  ratio, ratio, Gdk.InterpType.Bilinear, 255);
 
 			win.DrawPixbuf(this.Style.BlackGC, frame, 0, 0,
 			               0, 0, allocWidth, allocHeight,
-			               RgbDither.Normal, 0, 0);
+			               Gdk.RgbDither.Normal, 0, 0);
 			frame.Dispose();
 			return;
 		}

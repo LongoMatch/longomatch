@@ -123,7 +123,6 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs" />
     <File subtype="Directory" buildaction="Compile" name="." />
     <File subtype="Directory" buildaction="Compile" name="." />
-    <File subtype="Directory" buildaction="Compile" name="." />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/About.cs" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/longomatch.png" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/stock_draw-circle-unfilled.png" />
@@ -148,6 +147,12 @@
     <File subtype="Code" buildaction="Compile" name="Gui/Base/TimelineWidgetBase.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Base.TimelineWidgetBase.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/GameUnitsTimelineWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/GUIToolkit.cs" />
+    <File subtype="Directory" buildaction="Compile" name="." />
+    <File subtype="Directory" buildaction="Compile" name=".." />
+    <File subtype="Directory" buildaction="Compile" name="Gui" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Helpers.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Cairo.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
@@ -162,6 +167,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Cairo, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   </References>
   <LanguageParameters ApplicationIcon="." CodePage="65001" ctype="CSharpProjectParameters" />
 </Project>

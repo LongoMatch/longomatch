@@ -42,7 +42,10 @@ namespace LongoMatch.Gui.Dialog
 		}
 		
 		private void UpdateModel() {
-			model = manager.Model;
+			TreeStore model = new TreeStore(typeof(Job));
+			
+			foreach (Job job in manager.Jobs)
+				model.AppendValues(job);
 			renderingjobstreeview2.Model = model;
 			QueueDraw();
 		}

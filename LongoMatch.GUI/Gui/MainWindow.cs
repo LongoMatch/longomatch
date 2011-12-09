@@ -24,25 +24,24 @@ using System.IO;
 using Gdk;
 using GLib;
 using Gtk;
+using Mono.Unix;
+
 using LongoMatch.Common;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Handlers;
 using LongoMatch.Interfaces;
+using LongoMatch.Interfaces.GUI;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
 using LongoMatch.Video.Common;
-
-using Mono.Unix;
 using LongoMatch.Gui.Component;
-using LongoMatch.Multimedia.Interfaces;
-
 
 
 namespace LongoMatch.Gui
 {
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(false)]
-	public partial class MainWindow : Gtk.Window
+	public partial class MainWindow : Gtk.Window, IMainWindow
 	{
 	
 		/* Tags */
@@ -154,25 +153,25 @@ namespace LongoMatch.Gui
 			timeline.QueueDraw();
 		}
 		
-		public RenderingStateBar RenderingStateBar{
+		public IRenderingStateBar RenderingStateBar{
 			get {
 				return renderingstatebar1;
 			}
 		}
 		
-		public PlayerBin Player{
+		public IPlayer Player{
 			get {
 				return player;
 			}
 		}
 		
-		public CapturerBin Capturer{
+		public ICapturer Capturer{
 			get {
 				return capturer;
 			}
 		}
 		
-		public PlayListWidget Playlist{
+		public IPlaylistWidget Playlist{
 			get {
 				return playlist;
 			}
@@ -268,14 +267,11 @@ namespace LongoMatch.Gui
 		}
 		
 		private void UpdateTeamsModels() {
-			TreeStore local, visitor;
-		
-			openedProject.GetPlayersModel (out local, out visitor);
-			localPlayersList.SetTeam(local);
-			visitorPlayersList.SetTeam(visitor);
+			localPlayersList.SetTeam(openedProject.LocalTeamTemplate, openedProject.AllPlays());
+			visitorPlayersList.SetTeam(openedProject.VisitorTeamTemplate, openedProject.AllPlays());
 		}
 
-		public bool SetProject(Project project, ProjectType projectType, CaptureSettings props)
+		public void SetProject(Project project, ProjectType projectType, CaptureSettings props)
 		{
 			bool isLive = false;
 			
@@ -310,21 +306,12 @@ namespace LongoMatch.Gui
 			tagsList.ProjectIsLive = isLive;
 			playsList.Project=project;
 			tagsList.Project = project;
-			UpdateTeamsModels(project);
+			UpdateTeamsModels();
 			buttonswidget.Categories = project.Categories;
 			MakeActionsSensitive(true,projectType);
 			ShowWidgets();
-			return true;
 		}
 		
-		private void UpdateTeamsModels(Project project) {
-			TreeStore local, visitor;
-			
-			project.GetPlayersModel (out local, out visitor);
-			localPlayersList.SetTeam(local);
-			visitorPlayersList.SetTeam(visitor);
-		}
-
 		private void CloseCaptureProject() {
 			if(projectType == ProjectType.CaptureProject) {
 				capturer.Close();
@@ -535,10 +522,10 @@ namespace LongoMatch.Gui
 		}
 		#endregion
 
-		protected virtual void OnPlayerbin1Error(object o, LongoMatch.Video.Common.ErrorArgs args)
+		protected virtual void OnPlayerbin1Error(object o, string message)
 		{
 			MessagePopup.PopupMessage(this, MessageType.Info,
-			                          Catalog.GetString("The actual project will be closed due to an error in the media player:")+"\n" +args.Message);
+			                          Catalog.GetString("The actual project will be closed due to an error in the media player:")+"\n" + message);
 			EmitCloseOpenedProject(true);
 		}
 
@@ -603,12 +590,13 @@ namespace LongoMatch.Gui
 			notes.Visible = false;
 		}
 		
-		protected virtual void OnTick(object o, TickArgs args)
+		protected virtual void OnTick(object o, long currentTime, long streamLength,
+			float currentPosition, bool seekable)
 		{
-			if(args.CurrentTime != 0 && timeline != null && openedProject != null)
-				timeline.CurrentFrame=(uint)(args.CurrentTime *
+			if(currentTime != 0 && timeline != null && openedProject != null)
+				timeline.CurrentFrame=(uint)(currentTime *
 				                             openedProject.Description.File.Fps / 1000);
-			gameunitstaggerwidget1.CurrentTime = new Time{MSeconds = (int)args.CurrentTime};
+			gameunitstaggerwidget1.CurrentTime = new Time{MSeconds = (int)currentTime};
 		}
 
 		
@@ -632,10 +620,11 @@ namespace LongoMatch.Gui
 			return true;
 		}
 
-		protected virtual void OnCapturerBinError(object o, LongoMatch.Video.Common.ErrorArgs args)
+		protected virtual void OnCapturerBinError(object o, string message)
 		{
 			MessagePopup.PopupMessage(this, MessageType.Info,
-			                          Catalog.GetString("An error occured in the video capturer and the current project will be closed:")+"\n" +args.Message);
+				Catalog.GetString("An error occured in the video capturer and" +
+				" the current project will be closed:")+"\n" + message);
 			EmitCloseOpenedProject(true);
 		}
 		#endregion

@@ -18,11 +18,13 @@
 
 using System;
 
+using LongoMatch.Interfaces.GUI;
+
 namespace LongoMatch.Gui.Dialog
 {
 
 
-	public partial class BusyDialog : Gtk.Window
+	public partial class BusyDialog : Gtk.Window, IBusyDialog
 	{
 
 		public BusyDialog() :

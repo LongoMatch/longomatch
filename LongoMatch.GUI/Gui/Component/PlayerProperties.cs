@@ -61,7 +61,7 @@ namespace LongoMatch.Gui.Component
 				numberspinbutton.Value = value.Number;
 				weightspinbutton.Value = value.Weight;
 				heightspinbutton.Value = value.Height;
-				image.Pixbuf = value.Photo;
+				image.Pixbuf = value.Photo.Value;
 				playscombobox.Active = value.Playing ? 0 : 1;
 			}
 			get {
@@ -84,8 +84,6 @@ namespace LongoMatch.Gui.Component
 		{
 			Pixbuf pimage;
 			StreamReader file;
-			int h,w;
-			double rate;
 
 			FileChooserDialog fChooser = new FileChooserDialog(Catalog.GetString("Choose an image"),
 			                (Gtk.Window)this.Toplevel,
@@ -100,14 +98,10 @@ namespace LongoMatch.Gui.Component
 				file = new StreamReader(fChooser.Filename);
 				pimage= new Gdk.Pixbuf(file.BaseStream);
 				if(pimage != null) {
-					h = pimage.Height;
-					w = pimage.Width;
-					rate = (double)w/(double)h;
-					if(h>w)
-						player.Photo = pimage.ScaleSimple((int)(THUMBNAIL_MAX_HEIGHT*rate),THUMBNAIL_MAX_HEIGHT,InterpType.Bilinear);
-					else
-						player.Photo = pimage.ScaleSimple(THUMBNAIL_MAX_WIDTH,(int)(THUMBNAIL_MAX_WIDTH/rate),InterpType.Bilinear);
-					image.Pixbuf = player.Photo;
+					var img = new LongoMatch.Common.Image(pimage);
+					img.Scale(THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT);
+					player.Photo = img;
+					image.Pixbuf = img.Value;
 				}
 			}
 			fChooser.Destroy();

@@ -66,8 +66,8 @@ namespace LongoMatch.Gui.Dialog
 			                && key != Gdk.Key.Control_L
 			                && key != Gdk.Key.Control_R)
 			{
-				hotKey.Key = key;
-				hotKey.Modifier = modifier & (ModifierType.Mod1Mask | ModifierType.ShiftMask);
+				hotKey.Key = (int)key;
+				hotKey.Modifier = (int) (modifier & (ModifierType.Mod1Mask | ModifierType.ShiftMask));
 				this.Respond(ResponseType.Ok);
 			}
 

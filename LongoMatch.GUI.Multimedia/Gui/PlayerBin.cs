@@ -22,6 +22,10 @@ using Gtk;
 using Gdk;
 using Mono.Unix;
 using System.Runtime.InteropServices;
+
+using Image = LongoMatch.Common.Image;
+using LongoMatch.Handlers;
+using LongoMatch.Interfaces.GUI;
 using LongoMatch.Multimedia.Interfaces;
 using LongoMatch.Video;
 using LongoMatch.Video.Common;
@@ -33,21 +37,21 @@ namespace LongoMatch.Gui
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 
-	public partial class PlayerBin : Gtk.Bin
+	public partial class PlayerBin : Gtk.Bin, LongoMatch.Interfaces.GUI.IPlayer
 	{
 
 		public event SegmentClosedHandler SegmentClosedEvent;
-		public event TickHandler Tick;
-		public event ErrorHandler Error;
-		public event StateChangeHandler PlayStateChanged;
+		public event LongoMatch.Handlers.TickHandler Tick;
+		public event LongoMatch.Handlers.ErrorHandler Error;
+		public event LongoMatch.Handlers.StateChangeHandler PlayStateChanged;
 		public event NextButtonClickedHandler Next;
 		public event PrevButtonClickedHandler Prev;
-		public event DrawFrameHandler DrawFrame;
+		public event LongoMatch.Handlers.DrawFrameHandler DrawFrame;
 		public event SeekEventHandler SeekEvent;
 
 		private const int THUMBNAIL_MAX_WIDTH = 100;
-		private TickHandler tickHandler;
-		private IPlayer player;
+		private LongoMatch.Video.Common.TickHandler tickHandler;
+		private LongoMatch.Multimedia.Interfaces.IPlayer player;
 		private long length=0;
 		private string slength;
 		private long segmentStartTime;
@@ -91,12 +95,6 @@ namespace LongoMatch.Gui
 
 		#region Properties
 
-		public IPlayer Player {
-			get {
-				return player;
-			}
-		}
-
 		public long AccurateCurrentTime {
 			get {
 				return player.AccurateCurrentTime;
@@ -133,20 +131,19 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public Pixbuf CurrentMiniatureFrame {
+		public Image CurrentMiniatureFrame {
 			get {
-				Pixbuf pixbuf = player.GetCurrentFrame(THUMBNAIL_MAX_WIDTH,THUMBNAIL_MAX_WIDTH);
-				return pixbuf;
+				return player.GetCurrentFrame(THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_WIDTH);
 			}
 		}
 
-		public Pixbuf CurrentFrame {
+		public Image CurrentFrame {
 			get {
 				return player.GetCurrentFrame();
 			}
 		}
 
-		public Pixbuf LogoPixbuf {
+		public Image LogoPixbuf {
 			set {
 				player.LogoPixbuf = value;
 			}
@@ -158,7 +155,7 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public Pixbuf DrawingPixbuf {
+		public Image DrawingPixbuf {
 			set {
 				player.DrawingPixbuf=value;
 			}
@@ -385,14 +382,14 @@ namespace LongoMatch.Gui
 			Widget playerWidget;
 
 			factory= new MultimediaFactory();
-			player = factory.getPlayer(320,280);
+			player = factory.GetPlayer(320,280);
 
-			tickHandler = new TickHandler(OnTick);
+			tickHandler = new LongoMatch.Video.Common.TickHandler(OnTick);
 			player.Tick += tickHandler;
-			player.StateChange += new StateChangeHandler(OnStateChanged);
-			player.Eos += new EventHandler(OnEndOfStream);
-			player.Error += new ErrorHandler(OnError);
-			player.ReadyToSeek += new EventHandler(OnReadyToSeek);
+			player.StateChange += OnStateChanged;
+			player.Eos += OnEndOfStream;
+			player.Error += OnError;
+			player.ReadyToSeek += OnReadyToSeek;
 
 			playerWidget = (Widget)player;
 			playerWidget.ButtonPressEvent += OnVideoboxButtonPressEvent;
@@ -429,7 +426,7 @@ namespace LongoMatch.Gui
 				pausebutton.Hide();
 			}
 			if(PlayStateChanged != null)
-				PlayStateChanged(this,args);
+				PlayStateChanged(this,args.Playing);
 		}
 
 		protected void OnReadyToSeek(object o, EventArgs args) {
@@ -463,7 +460,7 @@ namespace LongoMatch.Gui
 			timelabel.Text = TimeString.MSecondsToSecondsString(currentTime) + "/" + slength;
 			timescale.Value = currentposition;
 			if(Tick != null)
-				Tick(o,args);
+				Tick(o, args.CurrentTime, args.StreamLength, args.CurrentPosition, args.Seekable);
 
 		}
 
@@ -542,7 +539,7 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnError(object o, ErrorArgs args) {
 			if(Error != null)
-				Error(o,args);
+				Error(o, args.Message);
 		}
 
 		protected virtual void OnClosebuttonClicked(object sender, System.EventArgs e)

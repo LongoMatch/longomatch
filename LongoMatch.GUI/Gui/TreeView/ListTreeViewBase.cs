@@ -99,8 +99,6 @@ namespace LongoMatch.Gui.Component
 		}
 
 		protected void SetMenu() {
-			MenuItem team;
-
 			menu = new Menu();
 
 			name = new MenuItem(Catalog.GetString("Edit name"));
@@ -153,15 +151,15 @@ namespace LongoMatch.Gui.Component
 			var c = cell as CellRendererPixbuf;
 
 			if(item is Play) {
-				c.Pixbuf = (item as Play).Miniature;
+				c.Pixbuf = (item as Play).Miniature.Value;
 				if(Colors) {
-					c.CellBackgroundGdk = (item as Play).Category.Color;
+					c.CellBackgroundGdk = Helpers.ToGdkColor((item as Play).Category.Color);
 				} else {
 					c.CellBackground = "white";
 				}
 			}
 			else if(item is Player) {
-				c.Pixbuf= (item as Player).Photo;
+				c.Pixbuf= (item as Player).Photo.Value;
 				c.CellBackground = "white";
 			}
 			else {
@@ -188,7 +186,7 @@ namespace LongoMatch.Gui.Component
 			if(o is Play) {
 				var mtn = o as Play;
 				if(Colors) {
-					Color col = mtn.Category.Color;
+					Color col = Helpers.ToGdkColor(mtn.Category.Color);
 					c.CellBackgroundGdk = col;
 					c.BackgroundGdk = col;
 				} else {

@@ -26,6 +26,7 @@ using LongoMatch.Common;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
+using LongoMatch.Gui;
 
 namespace LongoMatch.Gui.Component
 {
@@ -94,14 +95,14 @@ namespace LongoMatch.Gui.Component
 					var c = new Color();
 					Color.Parse("black", ref c);
 					l.ModifyFg(StateType.Normal, c);
-					l.ModifyFg(StateType.Prelight, cat.Color);
+					l.ModifyFg(StateType.Prelight, Helpers.ToGdkColor(cat.Color));
                     l.Markup = cat.Name;
 
 					b.Add(l);
 					b.Name = i.ToString();
 					b.Clicked += new EventHandler(OnButtonClicked);
 					b.CanFocus = false;
-					b.ModifyBg(StateType.Normal, cat.Color);
+					b.ModifyBg(StateType.Normal, Helpers.ToGdkColor(cat.Color));
 
 					l.Show();
 					b.Show();

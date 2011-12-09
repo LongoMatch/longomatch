@@ -20,6 +20,8 @@ using System;
 using Gdk;
 using Gtk;
 using Mono.Unix;
+
+using Image = LongoMatch.Common.Image;
 using LongoMatch.Common;
 using LongoMatch.Gui.Component;
 using LongoMatch.Store;
@@ -63,9 +65,9 @@ namespace LongoMatch.Gui.Dialog
 			drawingwidget1.LineWidth = width;
 		}
 
-		protected virtual void OnDrawingtoolbox1ColorChanged(Gdk.Color color)
+		protected virtual void OnDrawingtoolbox1ColorChanged(System.Drawing.Color color)
 		{
-			drawingwidget1.LineColor = color;
+			drawingwidget1.LineColor = Helpers.ToGdkColor(color);
 		}
 
 		protected virtual void OnDrawingtoolbox1VisibilityChanged(bool visible)
@@ -119,10 +121,10 @@ namespace LongoMatch.Gui.Dialog
 			string tempFile = System.IO.Path.GetTempFileName();
 			drawingwidget1.SaveDrawings(tempFile);
 			Pixbuf frame = new Pixbuf(tempFile);
-			play.Drawings.Add(new Drawing { Pixbuf=frame, RenderTime = stopTime});
+			play.Drawings.Add(new Drawing { Pixbuf= new Image(frame), RenderTime = stopTime});
 			drawingwidget1.SaveAll(tempFile);
 			frame.Dispose();
-			play.Miniature = new Pixbuf(tempFile);
+			play.Miniature = new Image(new Pixbuf(tempFile));
 		}
 	}
 }

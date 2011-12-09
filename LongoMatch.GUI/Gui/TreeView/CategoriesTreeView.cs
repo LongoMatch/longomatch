@@ -25,6 +25,7 @@ using Gtk;
 using Mono.Unix;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
+using LongoMatch.Gui;
 
 namespace LongoMatch.Gui.Component
 {
@@ -115,7 +116,7 @@ namespace LongoMatch.Gui.Component
 		{
 			Category tNode = (Category) model.GetValue(iter, 0);
 
-			(cell as Gtk.CellRendererText).CellBackgroundGdk = tNode.Color;
+			(cell as Gtk.CellRendererText).CellBackgroundGdk = Helpers.ToGdkColor(tNode.Color);
 		}
 
 		private void RenderHotKey(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)

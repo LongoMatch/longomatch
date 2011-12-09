@@ -22,6 +22,8 @@ using System;
 using Gtk;
 using Gdk;
 using Mono.Unix;
+
+using LongoMatch.Handlers;
 using LongoMatch.Video.Utils;
 using LongoMatch.Video.Common;
 
@@ -39,18 +41,18 @@ namespace LongoMatch.Gui.Dialog
 			this.Build();
 			this.Deletable = false;
 			this.capturer = capturer;
-			capturer.Progress += new FramesProgressHandler(Update);
+			capturer.Progress += Update;
 			capturer.Start();
 		}
 
-		protected virtual void Update(int actual, int total,Pixbuf frame) {
+		protected virtual void Update(int actual, int total, LongoMatch.Common.Image frame) {
 			if(actual <= total) {
 				progressbar.Text= Catalog.GetString("Capturing frame: ")+actual+"/"+total;
 				progressbar.Fraction = (double)actual/(double)total;
 				if(frame != null) {
 					if(image.Pixbuf != null)
 						image.Pixbuf.Dispose();
-					image.Pixbuf = frame;
+					image.Pixbuf = frame.Value;
 				}
 			}
 			if(actual == total) {

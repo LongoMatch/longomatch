@@ -24,6 +24,7 @@ using LongoMatch.Common;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
 using LongoMatch.Interfaces;
+using LongoMatch.Interfaces.GUI;
 
 
 namespace LongoMatch.Gui.Component
@@ -63,7 +64,7 @@ namespace LongoMatch.Gui.Component
 			playlisttreeview1.PlayList = playlist;
 			playlisttreeview1.Sensitive = true;
 			savebutton.Sensitive = true;
-			Model = playlist.GetModel();
+			Model = GetModel(playlist);
 		}
 
 		public ListStore Model {
@@ -82,6 +83,14 @@ namespace LongoMatch.Gui.Component
 		public void SetActivePlay (PlayListPlay plNode, int index) {
 			playlisttreeview1.Selection.SelectPath(new TreePath(index.ToString()));
 			playlisttreeview1.LoadedPlay = plNode;
+		}
+		
+		ListStore GetModel(IPlayList playlist) {
+			ListStore listStore = new ListStore(typeof(PlayListPlay));
+			foreach(PlayListPlay plNode in playlist) {
+				listStore.AppendValues(plNode);
+			}
+			return listStore;
 		}
 
 		protected virtual void OnPlaylisttreeview1RowActivated(object o, Gtk.RowActivatedArgs args)

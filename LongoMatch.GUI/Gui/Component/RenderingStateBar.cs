@@ -16,10 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
+using LongoMatch.Interfaces.GUI;
+
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem(true)]
-	public partial class RenderingStateBar : Gtk.Bin
+	public partial class RenderingStateBar : Gtk.Bin, IRenderingStateBar
 	{
 		public event EventHandler Cancel;
 		public event EventHandler ManageJobs;

@@ -6,7 +6,6 @@
   </configuration>
   <import>
     <widget-library name="../../bin/LongoMatch.Multimedia.dll" />
-    <widget-library name="../../bin/LongoMatch.dll" />
     <widget-library name="../../bin/LongoMatch.GUI.Multimedia.dll" internal="true" />
   </import>
   <widget class="Gtk.Window" id="LongoMatch.Gui.VolumeWindow" design-size="31 204">

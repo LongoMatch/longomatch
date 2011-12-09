@@ -81,8 +81,8 @@ namespace LongoMatch.Gui.Component
 			set {
 				tpc = value.CategoriesTemplateProvider;
 				tpt = value.TeamTemplateProvider;
-				twc = value.GetTemplateEditor<Categories, Category> ();
-				twt = value.GetTemplateEditor<TeamTemplate, Player>();
+				twc = new CategoriesTemplateEditorWidget(tpc);
+				twt = new TeamTemplateEditorWidget(tpt);
 				FillCategories();
 				FillTeamsTemplate();
 			}
@@ -264,6 +264,8 @@ namespace LongoMatch.Gui.Component
 
 		public void SetProject(Project project) {
 			this.project = project;
+			if (project == null)
+				return;
 			var desc = project.Description;
 			mFile = desc.File;
 			Filename = mFile != null ? mFile.FilePath : "";

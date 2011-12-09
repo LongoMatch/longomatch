@@ -123,7 +123,7 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnColorbuttonColorSet(object sender, System.EventArgs e)
 		{
 			if(ColorChanged != null)
-				ColorChanged(colorbutton.Color);
+				ColorChanged(Helpers.ToDrawingColor(colorbutton.Color));
 		}
 	}
 }

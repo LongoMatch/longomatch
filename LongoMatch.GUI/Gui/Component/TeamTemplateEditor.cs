@@ -22,6 +22,8 @@ using Gdk;
 using Gtk;
 using Mono.Unix;
 using Stetic;
+
+using Image = LongoMatch.Common.Image;
 using LongoMatch.Common;
 using LongoMatch.Gui.Base;
 using LongoMatch.Gui.Dialog;
@@ -60,7 +62,7 @@ namespace LongoMatch.Gui.Component
 				treeview.Model=playersListStore;
 				teamentry.Text = template.TeamName;
 				if (template.Shield != null) {
-					shieldImage.Pixbuf = template.Shield;
+					shieldImage.Pixbuf = template.Shield.Value;
 				}
 				box.Sensitive = true;
 			}
@@ -113,10 +115,10 @@ namespace LongoMatch.Gui.Component
 		{
 			Pixbuf shield;
 			
-			shield = ImageUtils.OpenImage((Gtk.Window)this.Toplevel);
+			shield = Helpers.OpenImage((Gtk.Window)this.Toplevel);
 			if (shield != null) {
-				Template.Shield = shield;
-				shieldImage.Pixbuf = Template.Shield;
+				Template.Shield = new Image(shield);
+				shieldImage.Pixbuf = shield;
 			}
 		}
 

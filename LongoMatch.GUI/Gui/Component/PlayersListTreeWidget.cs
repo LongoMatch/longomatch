@@ -57,9 +57,25 @@ namespace LongoMatch.Gui.Component
 				playerstreeview.ProjectIsLive = value;
 			}
 		}
+		
+		public void SetTeam(TeamTemplate template, List<Play> plays) {
+			TreeStore team;
+			Dictionary<Player, TreeIter> playersDict = new Dictionary<Player, TreeIter>();
+			
+			team = new TreeStore(typeof(object));
 
-		public void SetTeam(TreeStore model) {
-			playerstreeview.Model = model;
+			foreach(var player in template) {
+				/* Add a root in the tree with the option name */
+				var iter = team.AppendValues(player);
+				playersDict.Add(player, iter);
+			}
+			
+			foreach (var play in plays) {
+				foreach (var player in play.Players.AllUniqueElements) {
+					if (playersDict.ContainsKey(player.Value))
+						team.AppendValues(playersDict[player.Value], new object[1] {play});
+				}
+			}
 		}
 
 		public void UpdatePlaysList(TreeStore model) {

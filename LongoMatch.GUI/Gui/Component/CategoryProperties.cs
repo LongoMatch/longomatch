@@ -118,7 +118,7 @@ namespace LongoMatch.Gui.Component
 				
 			lagtimebutton.Value = cat.Start.Seconds;
 			leadtimebutton.Value = cat.Stop.Seconds;
-			colorbutton1.Color = cat.Color;
+			colorbutton1.Color = Helpers.ToGdkColor(cat.Color);
 			sortmethodcombobox.Active = (int)cat.SortMethod;
 			
 			if(cat.HotKey.Defined)
@@ -166,7 +166,7 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnColorbutton1ColorSet(object sender, System.EventArgs e)
 		{
 			if(cat != null)
-				cat.Color=colorbutton1.Color;
+				cat.Color= Helpers.ToDrawingColor(colorbutton1.Color);
 		}
 
 		protected virtual void OnLeadTimeChanged(object sender, System.EventArgs e)

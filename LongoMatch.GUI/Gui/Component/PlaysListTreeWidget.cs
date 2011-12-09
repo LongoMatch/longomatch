@@ -119,7 +119,7 @@ namespace LongoMatch.Gui.Component
 			set {
 				project = value;
 				if(project != null) {
-					treeview.Model = project.GetModel();
+					treeview.Model = GetModel(project);
 					treeview.Colors = true;
 				}
 				else {
@@ -132,6 +132,27 @@ namespace LongoMatch.Gui.Component
 			set {
 				treeview.PlayListLoaded=value;
 			}
+		}
+		
+		private TreeStore GetModel(Project project){
+			Dictionary<Category, TreeIter> itersDic = new Dictionary<Category, TreeIter>();
+			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore(typeof(Play));
+
+			foreach(Category cat in project.Categories) {
+				Gtk.TreeIter iter = dataFileListStore.AppendValues(cat);
+				itersDic.Add(cat, iter);
+			}
+			
+			var queryPlaysByCategory = project.PlaysGroupedByCategory;
+			foreach(var playsGroup in queryPlaysByCategory) {
+				Category cat = playsGroup.Key;
+				if(!itersDic.ContainsKey(cat))
+					continue;
+				foreach(Play play in playsGroup) {
+					dataFileListStore.AppendValues(itersDic[cat],play);
+				}
+			}
+			return dataFileListStore;
 		}
 
 		private string CategoryPath(Category cat) {
@@ -183,7 +204,6 @@ namespace LongoMatch.Gui.Component
 		
 		protected virtual void OnNewRenderingJob (object sender, EventArgs args)
 		{
-			Job job;
 			PlayList playlist = new PlayList();
 			TreePath[] paths = treeview.Selection.GetSelectedRows();
 

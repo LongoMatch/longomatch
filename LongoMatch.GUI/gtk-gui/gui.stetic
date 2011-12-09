@@ -7,7 +7,6 @@
   <import>
     <widget-library name="../../bin/LongoMatch.GUI.Multimedia.dll" />
     <widget-library name="../../bin/LongoMatch.Multimedia.dll" />
-    <widget-library name="../../bin/LongoMatch.dll" />
     <widget-library name="../../bin/LongoMatch.Gui.dll" internal="true" />
   </import>
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.ProjectDetailsWidget" design-size="378 268">
