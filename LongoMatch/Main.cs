@@ -24,9 +24,13 @@ using System.IO;
 using Gtk;
 using Mono.Unix;
 
+using LongoMatch.Interfaces.GUI;
+using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.Gui;
 using LongoMatch.Services;
 using LongoMatch.Common;
+using LongoMatch.Video;
+using LongoMatch.Multimedia;
 using LongoMatch.Multimedia.Utils;
 
 namespace LongoMatch
@@ -38,17 +42,22 @@ namespace LongoMatch
 		
 		public static void Main(string[] args)
 		{
-			GLib.ExceptionManager.UnhandledException += new GLib.UnhandledExceptionHandler(OnException);
-
+			/* Init Gtk */
+			Application.Init();
+			
+			/* Init GStreamer */
 			GStreamer.Init();
 			if (!GStreamer.CheckInstallation())
 				return;
 
+			GLib.ExceptionManager.UnhandledException += new GLib.UnhandledExceptionHandler(OnException);
+
+
 			//try {
 				Core.Init();
-				MainWindow win = new MainWindow();
-				win.Show();
-				Core.Start(win);
+			    GUIToolkit guiToolkit = new GUIToolkit();
+			    IMultimediaToolkit multimediaToolkit = new MultimediaFactory();
+				Core.Start(guiToolkit, multimediaToolkit);
 				Application.Run();
 			//} catch(Exception ex) {
 			//	ProcessExecutionError(ex);
