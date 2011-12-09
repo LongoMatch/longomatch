@@ -17,7 +17,6 @@
 // 
 using System;
 using System.Collections.Generic;
-using Gtk;
 using LongoMatch.Common;
 
 namespace LongoMatch.Interfaces
@@ -32,7 +31,7 @@ namespace LongoMatch.Interfaces
 		void CancelJob(Job job);
 		void CancelAllJobs();
 		void AddJob(Job job);
-		TreeStore Model {get;}
+		List<Job> Jobs {get;}
 	}
 }
 

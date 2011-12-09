@@ -1,4 +1,4 @@
-// IPlayList.cs
+// IFramesCapturer.cs
 //
 //  Copyright (C) 2007-2009 Andoni Morales Alastruey
 //
@@ -19,39 +19,20 @@
 //
 
 using System;
-using System.Collections;
-using LongoMatch.Store;
 
-namespace LongoMatch.Interfaces {
+using LongoMatch.Common;
 
-	public interface IPlayList:IEnumerable
+namespace LongoMatch.Interfaces.Multimedia
+{
+
+
+	public interface IFramesCapturer
 	{
-		int Count {
-			get;
-		}
-		
-		void Save();
-		
-		void Save(string path);
-
-		void Add(PlayListPlay play);
-
-		bool Remove(PlayListPlay play);
-
-		PlayListPlay Next();
-
-		PlayListPlay Prev();
-
-		PlayListPlay Select(int index);
-
-		void Reorder(int indexIn, int indexOut);
-
-		int GetCurrentIndex();
-
-		bool HasNext();
-
-		bool HasPrev();
-
-		IPlayList Copy();
+		bool Open(string mrl);
+		bool SeekTime(long time, bool accurate);
+		void Pause();
+		void Dispose();
+		Image GetCurrentFrame(int outwidth, int outheight);
+		Image GetCurrentFrame();
 	}
 }

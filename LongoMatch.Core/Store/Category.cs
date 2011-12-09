@@ -19,9 +19,9 @@
 //
 
 using System;
+using System.Drawing;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using Gdk;
 using Mono.Unix;
 
 using LongoMatch.Common;
@@ -69,7 +69,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// A color to identify plays in this category
 		/// </summary>
-		public Color Color {
+		public  Color Color {
 			get;
 			set;
 		}
@@ -136,11 +136,10 @@ namespace LongoMatch.Store
 			Position = info.GetInt32("position");
 			SortMethod = (SortMethodType)info.GetValue("sort_method", typeof(SortMethodType));
 			// read 'red', 'blue' and 'green' values and convert it to Gdk.Color
-			Color c = new Color();
-			c.Red = (ushort)info.GetValue("red", typeof(ushort));
-			c.Green = (ushort)info.GetValue("green", typeof(ushort));
-			c.Blue = (ushort)info.GetValue("blue", typeof(ushort));
-			Color = c;
+			Color = Color.FromArgb(
+				(ushort)info.GetValue("red", typeof(ushort)),
+				(ushort)info.GetValue("green", typeof(ushort)),
+				(ushort)info.GetValue("blue", typeof(ushort)));
 		}
 
 		// this method is automatically called during serialization
@@ -152,9 +151,9 @@ namespace LongoMatch.Store
 			info.AddValue("hotkey", HotKey);
 			info.AddValue("position", Position);
 			info.AddValue("subcategories", SubCategories);
-			info.AddValue("red", Color.Red);
-			info.AddValue("green", Color.Green);
-			info.AddValue("blue", Color.Blue);
+			info.AddValue("red", Color.R);
+			info.AddValue("green", Color.G);
+			info.AddValue("blue", Color.B);
 			info.AddValue("sort_method", SortMethod);
 		}
 		#endregion

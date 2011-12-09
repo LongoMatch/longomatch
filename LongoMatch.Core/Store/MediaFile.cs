@@ -20,7 +20,8 @@
 
 using System;
 using Mono.Unix;
-using Gdk;
+
+using LongoMatch.Common;
 
 namespace LongoMatch.Store
 {
@@ -52,7 +53,7 @@ namespace LongoMatch.Store
 		                 string audioCodec,
 		                 uint videoWidth,
 		                 uint videoHeight, 
-		                 Pixbuf preview)
+		                 Image preview)
 		{
 			this.filePath = filePath;
 			this.length = length;
@@ -155,16 +156,15 @@ namespace LongoMatch.Store
 			}
 		}
 		
-		public Pixbuf Preview {
+		public Image Preview {
 			get {
 				if(thumbnailBuf != null)
-					return new Pixbuf(thumbnailBuf);
+					return Image.Deserialize(thumbnailBuf);
 				return null;
 			}
 			set {
 				if(value != null) {
-					thumbnailBuf = value.SaveToBuffer("png");
-					value.Dispose();
+					thumbnailBuf = value.Serialize();
 				} else
 					thumbnailBuf = null;
 			}

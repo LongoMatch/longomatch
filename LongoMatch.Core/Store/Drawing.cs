@@ -17,7 +17,9 @@
 //
 
 using System;
-using Gdk;
+using System.Drawing.Imaging;
+
+using LongoMatch.Common;
 
 namespace LongoMatch.Store
 {
@@ -39,17 +41,14 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Pixbuf with the drawing
 		/// </summary>
-		public Pixbuf Pixbuf {
+		public Image Pixbuf {
 			get {
 				if(drawingBuf != null)
-					return new Pixbuf(drawingBuf);
+					return Image.Deserialize(drawingBuf);
 				else return null;
 			}
 			set {
-				if(value != null)
-					drawingBuf = value.SaveToBuffer("png");
-				else
-					drawingBuf = null;
+				drawingBuf = value.Serialize();
 			}
 		}
 

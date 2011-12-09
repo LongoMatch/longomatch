@@ -19,7 +19,7 @@
 //
 
 using System;
-using Gdk;
+using System.IO;
 
 using LongoMatch.Common;
 
@@ -45,16 +45,16 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Segment thumbnail
 		/// </summary>
-		public Pixbuf Miniature {
+		public Image Miniature {
 			get {
 				if(thumbnailBuf != null)
-					return new Pixbuf(thumbnailBuf);
+					return Image.Deserialize(thumbnailBuf);
 				else return null;
 			} set {
-				var pix = ImageUtils.Scale(value, MAX_WIDTH, MAX_HEIGHT);
-				thumbnailBuf = ImageUtils.Serialize(pix);
+				thumbnailBuf = value.Serialize();
 			}
 		}
+		
 		#endregion
 	}
 }

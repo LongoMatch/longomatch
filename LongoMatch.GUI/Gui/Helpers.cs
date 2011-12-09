@@ -21,38 +21,10 @@ using Gtk;
 using Gdk;
 using Mono.Unix;
 
-namespace LongoMatch.Common
+namespace LongoMatch.Gui
 {
-	public class ImageUtils
+	public class Helpers
 	{
-		public static Pixbuf Scale(Pixbuf pixbuf, int max_width, int max_height) {
-			int ow,oh,h,w;
-
-			h = ow = pixbuf.Height;
-			w = oh = pixbuf.Width;
-			ow = max_width;
-			oh = max_height;
-
-			if(w>max_width || h>max_height) {
-				Pixbuf scalledPixbuf;
-				double rate = (double)w/(double)h;
-				
-				if(h>w)
-					ow = (int)(oh * rate);
-				else
-					oh = (int)(ow / rate);
-				scalledPixbuf = pixbuf.ScaleSimple(ow,oh,Gdk.InterpType.Bilinear);
-				pixbuf.Dispose();
-				return scalledPixbuf;
-			} else {
-				return pixbuf;
-			}
-		}
-		
-		public static byte[] Serialize(Pixbuf pixbuf) {
-			return pixbuf.SaveToBuffer("png");
-		}
-		
 		public static FileFilter GetFileFilter() {
 			FileFilter filter = new FileFilter();
 			filter.Name = "Images";
@@ -82,6 +54,38 @@ namespace LongoMatch.Common
 			}
 			fChooser.Destroy();
 			return pimage;
+		}
+		
+		public static Pixbuf Scale(Pixbuf pixbuf, int max_width, int max_height) {
+			int ow,oh,h,w;
+
+			h = ow = pixbuf.Height;
+			w = oh = pixbuf.Width;
+			ow = max_width;
+			oh = max_height;
+
+			if(w>max_width || h>max_height) {
+				Pixbuf scalledPixbuf;
+				double rate = (double)w/(double)h;
+				
+				if(h>w)
+					ow = (int)(oh * rate);
+				else
+					oh = (int)(ow / rate);
+				scalledPixbuf = pixbuf.ScaleSimple(ow,oh,Gdk.InterpType.Bilinear);
+				pixbuf.Dispose();
+				return scalledPixbuf;
+			} else {
+				return pixbuf;
+			}
+		}
+		
+		public static Color ToGdkColor(System.Drawing.Color color) {
+			return new Color((byte)color.R, (byte)color.G, (byte)color.B);
+		}
+		
+		public static System.Drawing.Color ToDrawingColor(Color color) {
+			return System.Drawing.Color.FromArgb((int)color.Red, (int)color.Green, (int)color.Blue);
 		}
 	}
 }

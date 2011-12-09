@@ -17,24 +17,21 @@
 // 
 using System;
 using System.Collections.Generic;
-using LongoMatch.Store;
-using LongoMatch.Store.Templates;
 
-namespace LongoMatch.Interfaces
+using LongoMatch.Common;
+using LongoMatch.Store;
+
+namespace LongoMatch.Interfaces.Multimedia
 {
-	public interface ITemplatesService
+	public interface IMultimediaToolkit
 	{
-		ITemplateProvider<T, U> GetTemplateProvider<T, U>() where T: ITemplate<U>;
+		IVideoEditor GetVideoEditor();
 		
-		ISubcategoriesTemplatesProvider SubCategoriesTemplateProvider {get;}
+		IFramesCapturer GetFramesCapturer();
 		
-		ITeamTemplatesProvider TeamTemplateProvider {get;}
+		MediaFile DiscoverFile(string path);
 		
-		ICategoriesTemplatesProvider CategoriesTemplateProvider {get;}
-		
-		List<PlayerSubCategory> PlayerSubcategories {get;}
-		
-		List<TeamSubCategory> TeamSubcategories {get;}
+		List<Device> VideoDevices {get;}
 	}
 }
 

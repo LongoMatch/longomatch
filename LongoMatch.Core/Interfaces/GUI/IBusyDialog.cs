@@ -16,25 +16,14 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using System.Collections.Generic;
-using LongoMatch.Store;
-using LongoMatch.Store.Templates;
 
-namespace LongoMatch.Interfaces
+namespace LongoMatch.Interfaces.GUI
 {
-	public interface ITemplatesService
+	public interface IBusyDialog
 	{
-		ITemplateProvider<T, U> GetTemplateProvider<T, U>() where T: ITemplate<U>;
-		
-		ISubcategoriesTemplatesProvider SubCategoriesTemplateProvider {get;}
-		
-		ITeamTemplatesProvider TeamTemplateProvider {get;}
-		
-		ICategoriesTemplatesProvider CategoriesTemplateProvider {get;}
-		
-		List<PlayerSubCategory> PlayerSubcategories {get;}
-		
-		List<TeamSubCategory> TeamSubcategories {get;}
+		void Pulse();
+		void Destroy();
+		void Show();
 	}
 }
 

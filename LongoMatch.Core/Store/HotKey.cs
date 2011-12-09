@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using Gdk;
 using Mono.Unix;
 
 namespace LongoMatch.Store
@@ -55,24 +54,24 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Gdk Key
 		/// </summary>
-		public Gdk.Key Key {
+		public int Key {
 			get {
-				return (Gdk.Key)key;
+				return key;
 			}
 			set {
-				key = (int)value;
+				key = value;
 			}
 		}
 
 		/// <summary>
 		/// Key modifier. Only Alt and Shift can be used
 		/// </summary>
-		public Gdk.ModifierType Modifier {
+		public int Modifier {
 			get {
-				return (Gdk.ModifierType)modifier;
+				return modifier;
 			}
 			set {
-				modifier= (int)value;
+				modifier = value;
 			}
 		}
 
@@ -123,9 +122,9 @@ namespace LongoMatch.Store
 			string modifierS;
 			if(!Defined)
 				return Catalog.GetString("Not defined");
-			if(Modifier == ModifierType.Mod1Mask)
+			if(Modifier == 3)//ModifierType.Mod1Mask)
 				modifierS = "<Alt>+";
-			else if(Modifier == ModifierType.ShiftMask)
+			else if(Modifier == 0)// ModifierType.ShiftMask)
 				modifierS = "<Shift>+";
 			else
 				modifierS = "";

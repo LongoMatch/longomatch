@@ -16,25 +16,18 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using System.Collections.Generic;
-using LongoMatch.Store;
-using LongoMatch.Store.Templates;
 
-namespace LongoMatch.Interfaces
+namespace LongoMatch.Interfaces.GUI
 {
-	public interface ITemplatesService
+	public interface IRenderingStateBar
 	{
-		ITemplateProvider<T, U> GetTemplateProvider<T, U>() where T: ITemplate<U>;
+		event EventHandler Cancel;
+		event EventHandler ManageJobs;
 		
-		ISubcategoriesTemplatesProvider SubCategoriesTemplateProvider {get;}
-		
-		ITeamTemplatesProvider TeamTemplateProvider {get;}
-		
-		ICategoriesTemplatesProvider CategoriesTemplateProvider {get;}
-		
-		List<PlayerSubCategory> PlayerSubcategories {get;}
-		
-		List<TeamSubCategory> TeamSubcategories {get;}
+		bool JobRunning {set;}
+		string Text {set;}
+		string ProgressText {set;}
+		double Fraction {set; get;}
 	}
 }
 

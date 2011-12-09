@@ -19,8 +19,9 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
-using Gdk;
+
 using Mono.Unix;
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
@@ -73,7 +74,7 @@ namespace LongoMatch.Store.Templates
 			PlayerSubCategory localplayers, visitorplayers;
 			TagSubCategory period;
 			TeamSubCategory team;
-			Color c = new Color((Byte)255, (Byte)0, (Byte)0);
+			Color c = Color.FromArgb(255, 0, 0);
 			HotKey h = new HotKey();
 			
 			team = new TeamSubCategory {

@@ -17,7 +17,6 @@
 //
 
 using System;
-using Gdk;
 using LongoMatch.Common;
 
 namespace LongoMatch.Store
@@ -64,16 +63,16 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// My photo
 		/// </summary>
-		public Pixbuf Photo {
+		public Image Photo {
 			get {
 				if(photo != null)
-					return new Pixbuf(photo);
+					return Image.Deserialize(photo);
 				else
 					return null;
 			}
 			set {
 				if(value != null)
-					photo = value.SaveToBuffer("png");
+					photo = value.Serialize();
 				else
 					photo = null;
 			}

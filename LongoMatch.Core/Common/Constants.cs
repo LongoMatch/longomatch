@@ -17,7 +17,9 @@
 //
 
 using System;
+#if HAVE_GTK
 using Gdk;
+#endif
 
 
 namespace LongoMatch.Common
@@ -77,6 +79,7 @@ Xavier Queralt Mateu (ca)";
 
 		public const string MANUAL = "http://www.longomatch.ylatuya.es/documentation/manual.html";
 
+#if HAVE_GTK
 		public const ModifierType STEP = Gdk.ModifierType.ShiftMask;
 
 		public const Key SEEK_BACKWARD = Gdk.Key.Left;
@@ -88,6 +91,7 @@ Xavier Queralt Mateu (ca)";
 		public const Key FRAMERATE_DOWN = Gdk.Key.Down;
 
 		public const Key TOGGLE_PLAY = Gdk.Key.space;
+#endif
 
 		public const string TEMPLATES_DIR = "templates";
 		public const string TEAMS_TEMPLATE_EXT = ".ltt";

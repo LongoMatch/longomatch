@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using LongoMatch.Store;
+using LongoMatch.Store.Templates;
 	
 namespace LongoMatch.Interfaces
 {
@@ -56,5 +57,12 @@ namespace LongoMatch.Interfaces
 		bool CanExport {get; set;}
 		Project Project {get; set;}
 	}
+	
+	public interface ICategoriesTemplatesProvider: ITemplateProvider<Categories, Category> {}
+	public interface ITeamTemplatesProvider: ITemplateProvider<TeamTemplate, Player> {}
+	public interface ISubcategoriesTemplatesProvider: ITemplateProvider<SubCategoryTemplate, string> {} 
+	
+	public interface ICategoriesTemplatesEditor: ITemplateWidget<Categories, Category> {}
+	public interface ITeamTemplatesEditor: ITemplateWidget<TeamTemplate, Player> {}
 }
 

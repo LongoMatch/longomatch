@@ -22,8 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Gdk;
-using Gtk;
+
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
 using LongoMatch.Store;
@@ -115,6 +114,12 @@ namespace LongoMatch.Store
 				return Categories.GameUnits;
 			}
 		}
+		
+		public IEnumerable<IGrouping<Category, Play>> PlaysGroupedByCategory {
+			get {
+				return timeline.GroupBy(play => play.Category);
+			}
+		}
 		#endregion
 
 		#region Public Methods
@@ -147,7 +152,7 @@ namespace LongoMatch.Store
 		/// <returns>
 		/// A <see cref="MediaTimeNode"/>: created play
 		/// </returns>
-		public Play AddPlay(Category category, Time start, Time stop, Pixbuf miniature) {
+		public Play AddPlay(Category category, Time start, Time stop, Image miniature) {
 			string count= String.Format("{0:000}",timeline.Count+1);
 			string name = String.Format("{0} {1}",category.Name, count);
 
@@ -163,7 +168,7 @@ namespace LongoMatch.Store
 			timeline.Add(play);
 			return play;
 		}
-
+		
 		/// <summary>
 		/// Delete a play from the project
 		/// </summary>
@@ -223,34 +228,6 @@ namespace LongoMatch.Store
 			return timeline;
 		}
 
-		/// <summary>
-		/// Returns a <see cref="Gtk.TreeStore"/> in which project categories are
-		/// root nodes and their respectives plays child nodes
-		/// </summary>
-		/// <returns>
-		/// A <see cref="TreeStore"/>
-		/// </returns>
-		public TreeStore GetModel() {
-			Dictionary<Category, TreeIter> itersDic = new Dictionary<Category, TreeIter>();
-			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore(typeof(Play));
-
-			foreach(Category cat in Categories) {
-				Gtk.TreeIter iter = dataFileListStore.AppendValues(cat);
-				itersDic.Add(cat, iter);
-			}
-			
-			var queryPlaysByCategory =
-				timeline.GroupBy(play => play.Category);
-			foreach(var playsGroup in queryPlaysByCategory) {
-				Category cat = playsGroup.Key;
-				if(!itersDic.ContainsKey(cat))
-					continue;
-				foreach(Play play in playsGroup) {
-					dataFileListStore.AppendValues(itersDic[cat],play);
-				}
-			}
-			return dataFileListStore;
-		}
 
 		public bool Equals(Project project) {
 			if(project == null)
@@ -283,38 +260,6 @@ namespace LongoMatch.Store
 				                                      "is not a valid project"));
 			}
 		}
-		#endregion
-
-		public void GetPlayersModel(out TreeStore localTeam, out TreeStore visitorTeam) {
-			Dictionary<Player, TreeIter> localDict = new Dictionary<Player, TreeIter>();
-			Dictionary<Player, TreeIter> visitorDict = new Dictionary<Player, TreeIter>();
-			
-			localTeam = new TreeStore(typeof(object));
-			visitorTeam = new TreeStore(typeof(object));
-
-			foreach(var player in LocalTeamTemplate) {
-				/* Add a root in the tree with the option name */
-				var iter = localTeam.AppendValues(player);
-				localDict.Add(player, iter);
-			}
-			
-			foreach(var player in VisitorTeamTemplate) {
-				/* Add a root in the tree with the option name */
-				var iter = visitorTeam.AppendValues(player);
-				visitorDict.Add(player, iter);
-			}
-			
-			foreach (var play in timeline) {
-				foreach (var player in play.Players.AllUniqueElements) {
-					if (localDict.ContainsKey(player.Value))
-						localTeam.AppendValues(localDict[player.Value], new object[1] {play});
-					else
-						visitorTeam.AppendValues(visitorDict[player.Value], new object[1] {play});
-				}
-			}
-		}
-
-		#region Private Methods
 		#endregion
 	}
 }

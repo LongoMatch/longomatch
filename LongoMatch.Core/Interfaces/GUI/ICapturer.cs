@@ -17,16 +17,28 @@
 // 
 using System;
 
-using LongoMatch.Interfaces;
-using LongoMatch.Store;
+using LongoMatch.Common;
+using LongoMatch.Handlers;
 
-namespace LongoMatch.Interfaces
+namespace LongoMatch.Interfaces.GUI
 {
-	public interface IPlaylistWidget
+	public interface ICapturer
 	{
-		void Load(IPlayList playlist);
-		void Add(PlayListPlay playlistPlay);
-		void SetActivePlay (PlayListPlay playlistplay, int index);
+		event EventHandler CaptureFinished;
+		event ErrorHandler Error;
+		
+		CapturerType Type {set;}
+		string Logo {set;}
+		int CurrentTime {get;}
+		bool Capturing {get;}
+		CaptureSettings CaptureProperties {set;}
+		Image CurrentMiniatureFrame {get;}
+
+		void Start();
+		void TogglePause();
+		void Stop();
+		void Run();
+		void Close();
 	}
 }
 

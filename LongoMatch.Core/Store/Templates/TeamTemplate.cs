@@ -20,7 +20,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mono.Unix;
-using Gdk;
 
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
@@ -49,14 +48,13 @@ namespace LongoMatch.Store.Templates
 			set;
 		}
 		
-		public Pixbuf Shield {
+		public Image Shield {
 			get {
 				if(thumbnailBuf != null)
-					return new Pixbuf(thumbnailBuf);
+					return Image.Deserialize(thumbnailBuf);
 				else return null;
 			} set {
-				var pix = ImageUtils.Scale(value, MAX_WIDTH, MAX_HEIGHT);
-				thumbnailBuf = ImageUtils.Serialize(pix);
+				thumbnailBuf = value.Serialize();
 			}
 		}
 		

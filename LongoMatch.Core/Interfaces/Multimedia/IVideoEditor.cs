@@ -1,4 +1,4 @@
-// IPlayList.cs
+// IVideoEditor.cs
 //
 //  Copyright (C) 2007-2009 Andoni Morales Alastruey
 //
@@ -19,39 +19,40 @@
 //
 
 using System;
-using System.Collections;
-using LongoMatch.Store;
+using System.Collections.Generic;
+using LongoMatch.Common;
+using LongoMatch.Handlers;
 
-namespace LongoMatch.Interfaces {
+namespace LongoMatch.Interfaces.Multimedia
+{
 
-	public interface IPlayList:IEnumerable
+	public interface IVideoEditor
 	{
-		int Count {
-			get;
+		event ProgressHandler Progress;
+
+		EncodingSettings EncodingSettings{
+			set;
 		}
 		
-		void Save();
-		
-		void Save(string path);
+		string TempDir {
+			set;
+		}
 
-		void Add(PlayListPlay play);
+		bool EnableTitle {
+			set;
+		}
 
-		bool Remove(PlayListPlay play);
+		bool EnableAudio {
+			set;
+		}
 
-		PlayListPlay Next();
+		void AddSegment(string filePath, long start, long duration, double rate, string title, bool hasAudio) ;
 
-		PlayListPlay Prev();
+		void ClearList();
 
-		PlayListPlay Select(int index);
+		void Start();
 
-		void Reorder(int indexIn, int indexOut);
+		void Cancel();
 
-		int GetCurrentIndex();
-
-		bool HasNext();
-
-		bool HasPrev();
-
-		IPlayList Copy();
 	}
 }

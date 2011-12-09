@@ -20,7 +20,6 @@
 
 using System;
 using System.Collections.Generic;
-using Gtk;
 using LongoMatch.Store;
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
@@ -134,7 +133,7 @@ namespace LongoMatch.Common
 			return !indexSelection.Equals(0);
 		}
 
-		public ListStore GetModel() {
+/*		public ListStore GetModel() {
 			Gtk.ListStore listStore = new ListStore(typeof(PlayListPlay));
 			foreach(PlayListPlay plNode in this) {
 				listStore.AppendValues(plNode);
@@ -152,6 +151,7 @@ namespace LongoMatch.Common
 				listStore.IterNext(ref iter);
 			}
 		}
+*/
 
 		public IPlayList Copy() {
 			return (IPlayList)(MemberwiseClone());

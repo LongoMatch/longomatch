@@ -4,22 +4,20 @@
       <Output directory="../bin" assembly="LongoMatch" />
       <Build debugmode="True" target="Library" />
       <Execution consolepause="False" runwithwarnings="True" runtime="MsNet" />
-      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" definesymbols="DEBUG" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" definesymbols="DEBUG HAVE_GTK" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
       <Output directory="../bin" assembly="LongoMatch" />
       <Build debugmode="False" target="Library" />
       <Execution consolepause="False" runwithwarnings="True" runtime="MsNet" />
-      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" definesymbols="HAVE_GTK" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
-    <File subtype="Code" buildaction="Compile" name="Common/Cairo.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Cloner.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/ConsoleCrayon.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Constants.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Enums.cs" />
-    <File subtype="Code" buildaction="Compile" name="Common/Images.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Log.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/SerializableObject.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Category.cs" />
@@ -69,18 +67,35 @@
     <File subtype="Code" buildaction="Compile" name="Config.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/ITemplatesService.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/IDatabase.cs" />
-    <File subtype="Code" buildaction="Compile" name="Interfaces/IPlaylistWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/GameUnit.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/GameUnitsList.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/TimelineNode.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/ITimelineNode.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Interfaces/GUI" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IRenderingStateBar.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IPlayer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Handlers/Multimedia.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IMainWindow.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/ICapturer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IPlaylistWidget.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Interfaces" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IGUIToolkit.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Interfaces/Multimedia" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/Multimedia/IMultimediaToolkit.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/Multimedia/IVideoEditor.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Interfaces" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IBusyDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/Multimedia/IFramesCapturer.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Common" />
+    <File subtype="Code" buildaction="Compile" name="Common/Image.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Common" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
-    <ProjectReference type="Gac" localcopy="True" refto="Mono.Cairo, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </References>

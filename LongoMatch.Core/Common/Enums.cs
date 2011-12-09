@@ -29,6 +29,11 @@ namespace LongoMatch.Common
 		EditProject,
 		None,
 	}
+	
+	public enum CapturerType {
+		Fake,
+		Live,
+	}
 
 	public enum EndCaptureResponse {
 		Return = 234,
@@ -116,5 +121,13 @@ namespace LongoMatch.Common
 		Start, 
 		Stop,
 		Cancel
+	}
+	
+	public enum EditorState
+	{
+		START = 0,
+		FINISHED = 1,
+		CANCELED = -1,
+		ERROR = -2
 	}
 }
