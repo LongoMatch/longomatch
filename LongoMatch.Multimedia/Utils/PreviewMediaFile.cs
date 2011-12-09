@@ -17,6 +17,7 @@
 //
 
 using System;
+using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.Multimedia.Interfaces;
 using LongoMatch.Store;
 using LongoMatch.Video;
@@ -44,14 +45,14 @@ namespace LongoMatch.Video.Utils
 			int fps=0;
 			int height=0;
 			int width=0;
-			Pixbuf preview=null;
+			LongoMatch.Common.Image preview=null;
 			MultimediaFactory factory;
 			IMetadataReader reader;
 			IFramesCapturer thumbnailer;
 
 			try {
 				factory =  new MultimediaFactory();
-				reader = factory.getMetadataReader();
+				reader = factory.GetMetadataReader();
 				reader.Open(filePath);
 				hasVideo = (bool) reader.GetMetadata(MetadataType.HasVideo);
 				hasAudio = (bool) reader.GetMetadata(MetadataType.HasAudio);
@@ -61,7 +62,7 @@ namespace LongoMatch.Video.Utils
 				if(hasVideo) {
 					VideoEncoderType = (string) reader.GetMetadata(MetadataType.VideoEncoderType);
 					fps = (int) reader.GetMetadata(MetadataType.Fps);
-					thumbnailer = factory.getFramesCapturer();
+					thumbnailer = factory.GetFramesCapturer();
 					thumbnailer.Open(filePath);
 					thumbnailer.SeekTime(1000,false);
 					preview = thumbnailer.GetCurrentFrame(THUMBNAIL_MAX_WIDTH,THUMBNAIL_MAX_HEIGHT);

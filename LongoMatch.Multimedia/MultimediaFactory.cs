@@ -19,9 +19,14 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
+using LongoMatch.Common;
+using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.Multimedia.Interfaces;
+using LongoMatch.Multimedia.Utils;
+using LongoMatch.Store;
 using LongoMatch.Video.Capturer;
 using LongoMatch.Video.Player;
 using LongoMatch.Video.Editor;
@@ -32,7 +37,7 @@ namespace LongoMatch.Video
 {
 
 
-	public class MultimediaFactory
+	public class MultimediaFactory: IMultimediaToolkit
 	{
 
 		OperatingSystem oS;
@@ -42,7 +47,7 @@ namespace LongoMatch.Video
 			oS = Environment.OSVersion;
 		}
 
-		public IPlayer getPlayer(int width, int height) {
+		public IPlayer GetPlayer(int width, int height) {
 			switch(oS.Platform) {
 			case PlatformID.Unix:
 				return new GstPlayer(width,height,PlayerUseType.Video);
@@ -55,7 +60,7 @@ namespace LongoMatch.Video
 			}
 		}
 
-		public IMetadataReader getMetadataReader() {
+		public IMetadataReader GetMetadataReader() {
 
 			switch(oS.Platform) {
 			case PlatformID.Unix:
@@ -69,7 +74,7 @@ namespace LongoMatch.Video
 			}
 		}
 
-		public IFramesCapturer getFramesCapturer() {
+		public IFramesCapturer GetFramesCapturer() {
 			switch(oS.Platform) {
 			case PlatformID.Unix:
 				return new GstPlayer(1,1,PlayerUseType.Capture);
@@ -82,7 +87,7 @@ namespace LongoMatch.Video
 			}
 		}
 
-		public IVideoEditor getVideoEditor() {
+		public IVideoEditor GetVideoEditor() {
 			switch(oS.Platform) {
 			case PlatformID.Unix:
 				return new GstVideoSplitter();
@@ -95,7 +100,7 @@ namespace LongoMatch.Video
 			}
 		}
 
-		public ICapturer getCapturer(CapturerType type) {
+		public ICapturer GetCapturer(CapturerType type) {
 			switch(type) {
 			case CapturerType.Fake:
 				return new FakeCapturer();
@@ -107,7 +112,17 @@ namespace LongoMatch.Video
 				return new FakeCapturer();
 			}
 		}
-
+		
+		public MediaFile DiscoverFile (string file) {
+			return PreviewMediaFile.DiscoverFile(file);
+		}	
+		
+		public List<Device> VideoDevices {
+			get {
+				return VideoDevice.ListVideoDevices();
+			}
+		}
+		
 		[DllImport("libcesarplayer.dll")]
 		static extern void gst_init (int argc, string argv);
 		public static void InitBackend() {

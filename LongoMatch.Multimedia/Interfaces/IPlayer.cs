@@ -20,19 +20,15 @@
 
 using System;
 using Gtk;
-using Gdk;
 using LongoMatch.Video.Common;
+using Image = LongoMatch.Common.Image;
 
 
 namespace LongoMatch.Multimedia.Interfaces
 {
 	public interface IPlayer
 	{
-
-
 		// Events
-
-
 		event         ErrorHandler Error;
 		event         System.EventHandler Eos;
 		event         StateChangeHandler StateChange;
@@ -68,7 +64,7 @@ namespace LongoMatch.Multimedia.Interfaces
 			set;
 		}
 
-		Pixbuf DrawingPixbuf {
+		Image DrawingPixbuf {
 			set;
 		}
 
@@ -90,7 +86,7 @@ namespace LongoMatch.Multimedia.Interfaces
 			set;
 		}
 
-		Pixbuf LogoPixbuf {
+		Image LogoPixbuf {
 			set;
 		}
 
@@ -135,9 +131,9 @@ namespace LongoMatch.Multimedia.Interfaces
 
 		bool SeekToPreviousFrame(float rate,bool in_segment);
 
-		Pixbuf GetCurrentFrame(int outwidth, int outheight);
+		Image GetCurrentFrame(int outwidth, int outheight);
 
-		Pixbuf GetCurrentFrame();
+		Image GetCurrentFrame();
 
 		void CancelProgramedStop();
 

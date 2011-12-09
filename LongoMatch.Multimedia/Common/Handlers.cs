@@ -22,19 +22,10 @@ using Gdk;
 namespace LongoMatch.Video.Common
 {
 
-	public delegate void PlayListSegmentDoneHandler();
-	public delegate void SegmentClosedHandler();
-	public delegate void SegmentDoneHandler();
-	public delegate void SeekEventHandler(long pos);
-	public delegate void VolumeChangedHandler(double level);
-	public delegate void NextButtonClickedHandler();
-	public delegate void PrevButtonClickedHandler();
 	public delegate void ProgressHandler(float progress);
-	public delegate void FramesProgressHandler(int actual, int total, Pixbuf frame);
+	public delegate void FramesProgressHandler(int actual, int total, Image frame);
 	public delegate void DrawFrameHandler(int time);
 	public delegate void EllpasedTimeHandler(int ellapsedTime);
-
-
 	public delegate void ErrorHandler(object o, ErrorArgs args);
 	public delegate void PercentCompletedHandler(object o, PercentCompletedArgs args);
 	public delegate void StateChangeHandler(object o, StateChangeArgs args);

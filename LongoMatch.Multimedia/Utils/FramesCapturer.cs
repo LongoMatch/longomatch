@@ -19,12 +19,12 @@
 //
 
 using System;
-using LongoMatch.Video.Utils;
-using LongoMatch.Video;
-using Gdk;
-using Gtk;
 using System.Threading;
-using LongoMatch.Multimedia.Interfaces;
+using Gtk;
+
+using LongoMatch.Common;
+using LongoMatch.Interfaces.Multimedia;
+using LongoMatch.Video;
 using LongoMatch.Video.Common;
 
 namespace LongoMatch.Video.Utils
@@ -44,12 +44,12 @@ namespace LongoMatch.Video.Utils
 		private const int THUMBNAIL_MAX_HEIGHT=250;
 		private const int THUMBNAIL_MAX_WIDTH=300;
 
-		public event FramesProgressHandler Progress;
+		public event LongoMatch.Handlers.FramesProgressHandler Progress;
 
 		public FramesSeriesCapturer(string videoFile,long start, long stop, uint interval, string outputDir)
 		{
 			MultimediaFactory mf= new MultimediaFactory();
-			this.capturer=mf.getFramesCapturer();
+			this.capturer=mf.GetFramesCapturer();
 			this.capturer.Open(videoFile);
 			this.start= start;
 			this.stop = stop;
@@ -70,8 +70,7 @@ namespace LongoMatch.Video.Utils
 
 		public void CaptureFrames() {
 			long pos;
-			Pixbuf frame;
-			Pixbuf scaledFrame=null;
+			LongoMatch.Common.Image frame;
 			int i = 0;
 
 			System.IO.Directory.CreateDirectory(outputDir);
@@ -87,20 +86,13 @@ namespace LongoMatch.Video.Utils
 					capturer.Pause();
 					frame = capturer.GetCurrentFrame();
 					if(frame != null) {
-						frame.Save(System.IO.Path.Combine(outputDir,seriesName+"_" + i +".png"),"png");
-						int h = frame.Height;
-						int w = frame.Width;
-						double rate = (double)w/(double)h;
-						if(h>w)
-							scaledFrame = frame.ScaleSimple((int)(THUMBNAIL_MAX_HEIGHT*rate),THUMBNAIL_MAX_HEIGHT,InterpType.Bilinear);
-						else
-							scaledFrame = frame.ScaleSimple(THUMBNAIL_MAX_WIDTH,(int)(THUMBNAIL_MAX_WIDTH/rate),InterpType.Bilinear);
-						frame.Dispose();
+						frame.Save(System.IO.Path.Combine(outputDir,seriesName+"_" + i +".png"));
+						frame.Scale(THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT);
 					}
 
 					if(Progress != null)
 						Application.Invoke(delegate {
-						Progress(i+1,totalFrames,scaledFrame);
+						Progress(i+1, totalFrames, frame);
 					});
 					pos += interval;
 					i++;

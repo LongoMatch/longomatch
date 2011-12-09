@@ -16,12 +16,10 @@
   <Contents>
     <File subtype="Code" buildaction="Compile" name="Player/GstPlayer.cs" />
     <File subtype="Code" buildaction="Compile" name="Player/ObjectManager.cs" />
-    <File subtype="Code" buildaction="Compile" name="Editor/EditorState.cs" />
     <File subtype="Code" buildaction="Compile" name="Editor/GstVideoSplitter.cs" />
     <File subtype="Code" buildaction="Compile" name="Editor/VideoSegment.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Constants.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Enum.cs" />
-    <File subtype="Code" buildaction="Compile" name="Common/Handlers.cs" />
     <File subtype="Directory" buildaction="Compile" name="Capturer" />
     <File subtype="Code" buildaction="Compile" name="Capturer/ObjectManager.cs" />
     <File subtype="Code" buildaction="Compile" name="Capturer/FakeCapturer.cs" />
@@ -50,11 +48,13 @@
     <File subtype="Directory" buildaction="Compile" name="Utils" />
     <File subtype="Directory" buildaction="Compile" name="Interfaces" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/ICapturer.cs" />
-    <File subtype="Code" buildaction="Compile" name="Interfaces/IFramesCapturer.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/IPlayer.cs" />
-    <File subtype="Code" buildaction="Compile" name="Interfaces/IVideoEditor.cs" />
     <File subtype="Code" buildaction="Compile" name="Utils/VideoDevice.cs" />
     <File subtype="Code" buildaction="Compile" name="Utils/GStreamer.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Interfaces" />
+    <File subtype="Directory" buildaction="Compile" name="Interfaces" />
+    <File subtype="Directory" buildaction="Compile" name="Interfaces" />
+    <File subtype="Code" buildaction="Compile" name="Common/Handlers.cs" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="libcesarplayer" />

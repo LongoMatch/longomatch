@@ -21,6 +21,7 @@ namespace LongoMatch.Video.Player {
 	using System;
 	using System.Collections;
 	using System.Runtime.InteropServices;
+	using LongoMatch.Interfaces.Multimedia;
 	using LongoMatch.Multimedia.Interfaces;
 	using LongoMatch.Video.Common;
 	using LongoMatch.Video.Utils;
@@ -1065,18 +1066,18 @@ namespace LongoMatch.Video.Player {
 		[DllImport("libcesarplayer.dll")]
 		static extern void bacon_video_widget_set_logo_pixbuf(IntPtr raw, IntPtr logo);
 
-		public Gdk.Pixbuf LogoPixbuf {
+		public LongoMatch.Common.Image LogoPixbuf {
 			set {
-				bacon_video_widget_set_logo_pixbuf(Handle, value == null ? IntPtr.Zero : value.Handle);
+				bacon_video_widget_set_logo_pixbuf(Handle, value.Value == null ? IntPtr.Zero : value.Value.Handle);
 			}
 		}
 
 		[DllImport("libcesarplayer.dll")]
 		static extern void bacon_video_widget_set_drawing_pixbuf(IntPtr raw, IntPtr drawing_mode);
 
-		public Gdk.Pixbuf DrawingPixbuf {
+		public LongoMatch.Common.Image DrawingPixbuf {
 			set  {
-				bacon_video_widget_set_drawing_pixbuf(Handle, value == null ? IntPtr.Zero : value.Handle);
+				bacon_video_widget_set_drawing_pixbuf(Handle, value.Value == null ? IntPtr.Zero : value.Value.Handle);
 			}
 		}
 
@@ -1133,7 +1134,7 @@ namespace LongoMatch.Video.Player {
 		static extern IntPtr bacon_video_widget_unref_pixbuf(IntPtr raw);
 
 
-		public Gdk.Pixbuf GetCurrentFrame(int outwidth, int outheight) {
+		public LongoMatch.Common.Image GetCurrentFrame(int outwidth, int outheight) {
 			IntPtr raw_ret = bacon_video_widget_get_current_frame(Handle);
 			Gdk.Pixbuf unmanaged = GLib.Object.GetObject(raw_ret) as Gdk.Pixbuf;
 			if(unmanaged == null)
@@ -1153,10 +1154,10 @@ namespace LongoMatch.Video.Player {
 			managed = unmanaged.ScaleSimple(outwidth,outheight,Gdk.InterpType.Bilinear);
 			unmanaged.Dispose();
 			bacon_video_widget_unref_pixbuf(raw_ret);
-			return managed;
+			return  new LongoMatch.Common.Image(managed);
 		}
 
-		public Gdk.Pixbuf GetCurrentFrame() {
+		public LongoMatch.Common.Image GetCurrentFrame() {
 			return GetCurrentFrame(-1,-1);
 		}
 
@@ -1411,6 +1412,6 @@ namespace LongoMatch.Video.Player {
 		public void CancelProgramedStop() {
 			this.SegmentSeek(this.CurrentTime,this.StreamLength,1);
 		}
-
+		
 	}
 }

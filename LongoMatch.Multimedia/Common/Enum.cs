@@ -47,10 +47,6 @@ namespace LongoMatch.Video.Common
 		EmptyFile,
 	}
 
-	public enum CapturerType {
-		Fake,
-		Live,
-	}
 
 	public enum VideoQuality {
 		Low = 1000,
