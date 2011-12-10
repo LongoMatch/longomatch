@@ -339,9 +339,11 @@ namespace LongoMatch.Services
 					out captureSettings);
 			} else if (projectType == ProjectType.FakeCaptureProject) {
 				project = guiToolkit.NewFakeProject(Core.DB, Core.TemplatesService);
-			} else {
+			} else if (projectType == ProjectType.FileProject) {
 				project = guiToolkit.NewFileProject(Core.DB, Core.TemplatesService);
 				Core.DB.AddProject(project);
+			} else {
+				project = null;
 			}
 			
 			if (project != null)
