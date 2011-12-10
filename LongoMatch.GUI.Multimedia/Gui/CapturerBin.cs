@@ -301,10 +301,10 @@ namespace LongoMatch.Gui
 			int width, height, allocWidth, allocHeight, logoX, logoY;
 			float ratio;
 
-			logo = logopix.Value;
-			
-			if(logo == null)
+			if(logopix == null)
 				return;
+			
+			logo = logopix.Value;
 
 			win = logodrawingarea.GdkWindow;
 			width = logo.Width;
