@@ -195,6 +195,7 @@ namespace LongoMatch.DB
 		public void AddProject(Project project) {
 			IObjectContainer db = Db4oFactory.OpenFile(file);
 			
+			project.Description.LastModified = DateTime.Now;
 			Log.Debug("Adding new project: " + project);
 			try {
 				db.Store(project);
@@ -249,6 +250,7 @@ namespace LongoMatch.DB
 			SetDeleteCascadeOptions();
 			IObjectContainer db = Db4oFactory.OpenFile(file);
 			
+			project.Description.LastModified = DateTime.Now;
 			Log.Debug("Updating project " + project);
 			try	{
 				IQuery query = GetQueryProjectById(db, project.UUID);

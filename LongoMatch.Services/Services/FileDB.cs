@@ -63,6 +63,8 @@ namespace LongoMatch.Services
 		
 		public void AddProject(Project project){
 			string path = Path.Combine(project_path, project.UUID.ToString());
+			
+			project.Description.LastModified = DateTime.Now;
 			if (File.Exists(path))
 				File.Delete(path);
 			SerializableObject.Save(project, path);
@@ -80,6 +82,7 @@ namespace LongoMatch.Services
 		}
 		
 		public void UpdateProject(Project project) {
+			project.Description.LastModified = DateTime.Now;
 			AddProject(project);
 		}
 		

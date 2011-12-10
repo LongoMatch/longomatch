@@ -119,6 +119,11 @@ namespace LongoMatch.Store
 				                     File.VideoWidth, File.VideoHeight, File.Fps);
 			}
 		}
+		
+		public DateTime LastModified {
+			get;
+			set;
+		}
 
 		public int CompareTo(object obj) {
 			if(obj is ProjectDescription) {
