@@ -61,7 +61,7 @@ namespace LongoMatch.Gui.Component
 				numberspinbutton.Value = value.Number;
 				weightspinbutton.Value = value.Weight;
 				heightspinbutton.Value = value.Height;
-				image.Pixbuf = value.Photo.Value;
+				image.Pixbuf = value.Photo != null ? value.Photo.Value :  null;
 				playscombobox.Active = value.Playing ? 0 : 1;
 			}
 			get {

@@ -113,7 +113,7 @@ namespace LongoMatch.Gui.Component
 		{
 			Player player = (Player) model.GetValue(iter, 0);
 
-			(cell as Gtk.CellRendererPixbuf).Pixbuf = player.Photo.Value;
+			(cell as Gtk.CellRendererPixbuf).Pixbuf = player.Photo != null ? player.Photo.Value : null;
 		}
 
 		private void RenderName(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)

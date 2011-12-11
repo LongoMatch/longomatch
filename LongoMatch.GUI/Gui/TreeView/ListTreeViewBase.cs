@@ -16,14 +16,16 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 
+using System;
+using System.Collections.Generic;
 using Gdk;
 using Gtk;
+using Mono.Unix;
+
+using Image = LongoMatch.Common.Image;
 using LongoMatch.Common;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
-using Mono.Unix;
-using System;
-using System.Collections.Generic;
 
 namespace LongoMatch.Gui.Component
 {
@@ -151,7 +153,8 @@ namespace LongoMatch.Gui.Component
 			var c = cell as CellRendererPixbuf;
 
 			if(item is Play) {
-				c.Pixbuf = (item as Play).Miniature.Value;
+				Image img = (item as Play).Miniature;
+				c.Pixbuf = img != null ? img.Value : null;
 				if(Colors) {
 					c.CellBackgroundGdk = Helpers.ToGdkColor((item as Play).Category.Color);
 				} else {
@@ -159,7 +162,8 @@ namespace LongoMatch.Gui.Component
 				}
 			}
 			else if(item is Player) {
-				c.Pixbuf= (item as Player).Photo.Value;
+				Image img = (item as Player).Photo;
+				c.Pixbuf = img != null ? img.Value : null;
 				c.CellBackground = "white";
 			}
 			else {

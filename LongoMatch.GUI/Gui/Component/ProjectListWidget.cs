@@ -107,7 +107,7 @@ namespace LongoMatch.Gui.Component
 		{
 			ProjectDescription project = (ProjectDescription) model.GetValue(iter, 0);
 
-			(cell as Gtk.CellRendererPixbuf).Pixbuf= project.File.Preview.Value;
+			(cell as Gtk.CellRendererPixbuf).Pixbuf= project.File.Preview != null ? project.File.Preview.Value : null;
 		}
 
 		private void RenderProperties(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
