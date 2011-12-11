@@ -37,7 +37,6 @@ namespace LongoMatch.Gui.Dialog
 		Project openedProject;
 		List<ProjectDescription> selectedProjects;
 		IDatabase DB;
-		string homeDir = null;
 
 		public ProjectsManager(Project openedProject, IDatabase DB, ITemplatesService ts)
 		{
@@ -188,7 +187,7 @@ namespace LongoMatch.Gui.Dialog
 			                FileChooserAction.Save,
 			                "gtk-cancel",ResponseType.Cancel,
 			                "gtk-save",ResponseType.Accept);
-			fChooser.SetCurrentFolder(homeDir);
+			fChooser.SetCurrentFolder(Config.HomeDir());
 			FileFilter filter = new FileFilter();
 			filter.Name = Constants.PROJECT_NAME;
 			filter.AddPattern("*.lpr");
