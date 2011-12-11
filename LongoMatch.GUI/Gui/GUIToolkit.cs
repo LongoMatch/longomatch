@@ -65,7 +65,7 @@ namespace LongoMatch.Gui
 		public bool QuestionMessage(string question, string title) {
 			MessageDialog md = new MessageDialog(mainWindow as Gtk.Window, DialogFlags.Modal,
 				MessageType.Question, Gtk.ButtonsType.YesNo, question);
-			md.Icon = Gtk.IconTheme.Default.LoadIcon("longomatch", 48, 0);
+			md.Icon = Stetic.IconLoader.LoadIcon(mainWindow as Widget, "longomatch", IconSize.Button);
 			var res = md.Run();
 			md.Destroy();
 			return (res == (int)ResponseType.Yes);
