@@ -29,6 +29,8 @@ namespace LongoMatch.Common
 
 	public class Image
 	{
+		const int DEFAULT_MAX_HEIGHT = 100;
+		const int DEFAULT_MAX_WIDTH = 100;
 		SImage image;
 		
 		public Image (SImage image)
@@ -44,6 +46,10 @@ namespace LongoMatch.Common
 		
 		public void Dispose() {
 			image.Dispose();
+		}
+		
+		public void Scale() {
+			Scale (DEFAULT_MAX_WIDTH, DEFAULT_MAX_HEIGHT);
 		}
 		
 		
