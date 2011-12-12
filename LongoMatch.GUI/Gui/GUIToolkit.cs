@@ -230,7 +230,7 @@ namespace LongoMatch.Gui
 		
 		public Project EditFakeProject(IDatabase db, Project project, ITemplatesService ts) {
 			CaptureSettings captureSettings = new CaptureSettings();
-			return NewProject(db, null, ProjectType.FakeCaptureProject, ts, null, out captureSettings);
+			return NewProject(db, project, ProjectType.EditProject, ts, null, out captureSettings);
 		}
 		
 		public IBusyDialog BusyDialog(string message) {
@@ -249,10 +249,10 @@ namespace LongoMatch.Gui
 			
 			npd.TransientFor = mainWindow as Gtk.Window;
 			npd.Use = type;
+			npd.TemplatesService = tps;
 			npd.Project = project;
 			if(type == ProjectType.CaptureProject)
 				npd.Devices = devices;
-			npd.TemplatesService = tps;
 			int response = npd.Run();
 			while(true) {
 				if(response != (int)ResponseType.Ok) {
@@ -285,10 +285,12 @@ namespace LongoMatch.Gui
 				button = "gtk-open";
 			
 			fChooser = new FileChooserDialog(title, mainWindow as Gtk.Window, action,
-			                                 "gtk-cancel",ResponseType.Cancel,
-			                                 button,ResponseType.Accept);
-			fChooser.SetCurrentFolder(defaultFolder);
-			fChooser.SetFilename(defaultName);
+				"gtk-cancel",ResponseType.Cancel, button, ResponseType.Accept);
+			
+			if (defaultFolder != null)
+				fChooser.SetCurrentFolder(defaultFolder);
+			if (defaultName != null)
+				fChooser.SetFilename(defaultName);
 			filter = new FileFilter();
 			filter.Name = filterName;
 			filter.AddPattern(extensionFilter);

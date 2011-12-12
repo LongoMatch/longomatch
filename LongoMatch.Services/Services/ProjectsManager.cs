@@ -116,24 +116,8 @@ namespace LongoMatch.Services
 			SetProject(project, ProjectType.FileProject, new CaptureSettings());
 		}
 	
-		private void SaveFakeLiveProject(Project project) {
-			Log.Debug("Saving fake live project " + project);
-			guiToolkit.InfoMessage(Catalog.GetString("The project will be saved to a file. " +
-				"You can insert it later into the database using the "+
-				"\"Import project\" function once you copied the video file " +
-				"to your computer"));
-
-			var filename = guiToolkit.SaveFile(Catalog.GetString("Save Project"), null, Config.HomeDir(),
-				Constants.PROJECT_NAME, "*.lpr");
-			if(filename != null) {
-				Project.Export(project, filename);
-				guiToolkit.InfoMessage(Catalog.GetString("Project saved successfully."));
-			}
-		}
-
 		private void ImportProject() {
 			Project project;
-			bool isFake, exists;
 			string fileName;
 
 			Log.Debug("Importing project");
@@ -156,16 +140,6 @@ namespace LongoMatch.Services
 				return;
 			}
 
-			isFake = (project.Description.File.FilePath == Constants.FAKE_PROJECT);
-
-			/* If it's a fake live project prompt for a video file and
-			 * create a new PreviewMediaFile for this project */
-			if(isFake) {
-				Log.Debug ("Importing fake live project");
-				project.Description.File = null;
-				project = guiToolkit.EditFakeProject(Core.DB, project, Core.TemplatesService);
-			}
-
 			/* If the project exists ask if we want to overwrite it */
 			if(Core.DB.Exists(project)) {
 				var res = guiToolkit.QuestionMessage(Catalog.GetString("A project already exists for the file:") +
@@ -173,16 +147,10 @@ namespace LongoMatch.Services
 					Catalog.GetString("Do you want to overwrite it?"), null);
 				if(!res)
 					return;
-				exists = true;
-			} else
-				exists = false;
-
-			if(isFake)
-				CreateThumbnails(project);
-			if(exists)
 				Core.DB.UpdateProject(project);
-			else
+			} else {
 				Core.DB.AddProject(project);
+			}
 
 			guiToolkit.InfoMessage(Catalog.GetString("Project successfully imported."));
 		}
@@ -313,7 +281,11 @@ namespace LongoMatch.Services
 					Log.Exception(e);
 				}
 			} else if (projectType == ProjectType.FakeCaptureProject) {
-				SaveFakeLiveProject(project);
+				try {
+					Core.DB.AddProject(project);
+				} catch (Exception e) {
+					Log.Exception(e);
+				}
 			} else if (projectType == ProjectType.CaptureProject) {
 				SaveCaptureProject(project);
 			}
@@ -351,11 +323,31 @@ namespace LongoMatch.Services
 		}
 		
 		protected void OpenProject() {
-			ProjectDescription project = null;
+			Project project = null;
+			ProjectDescription projectDescription = null;
 			
-			project = guiToolkit.SelectProject(Core.DB.GetAllProjects());
-			if(project != null)
-				SetProject(Core.DB.GetProject(project.UUID), ProjectType.FileProject, new CaptureSettings());
+			projectDescription = guiToolkit.SelectProject(Core.DB.GetAllProjects());
+			if (projectDescription == null)
+				return;
+
+			project = Core.DB.GetProject(projectDescription.UUID);
+
+			if (project.Description.File.FilePath == Constants.FAKE_PROJECT) {
+				/* If it's a fake live project prompt for a video file and
+				 * create a new PreviewMediaFile for this project and recreate the thumbnails */
+				Log.Debug ("Importing fake live project");
+				project.Description.File = null;
+				
+				guiToolkit.InfoMessage(
+					Catalog.GetString("You are opening a live project without any video file associated yet.") + 
+					"\n" + Catalog.GetString("Select a video file in the step."));
+				
+				project = guiToolkit.EditFakeProject(Core.DB, project, Core.TemplatesService);
+				if (project == null)
+					return;
+				CreateThumbnails(project);
+			}
+			SetProject(project, ProjectType.FileProject, new CaptureSettings());
 		}
 		
 		protected void ExportProject() {

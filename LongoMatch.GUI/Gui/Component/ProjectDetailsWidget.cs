@@ -377,7 +377,8 @@ namespace LongoMatch.Gui.Component
 				i++;
 			}
 			tagscombobox.Active = index;
-			Categories = tpc.Load(SelectedCategory);
+			if (Categories == null)
+				Categories = tpc.Load(SelectedCategory);
 		}
 
 		private void FillTeamsTemplate() {
@@ -395,8 +396,10 @@ namespace LongoMatch.Gui.Component
 			}
 			localcombobox.Active = index;
 			visitorcombobox.Active = index;
-			LocalTeamTemplate = tpt.Load(LocalTeamTemplateFile);
-			VisitorTeamTemplate = tpt.Load(VisitorTeamTemplateFile);
+			if (LocalTeamTemplate == null) {
+				LocalTeamTemplate = tpt.Load(LocalTeamTemplateFile);
+				VisitorTeamTemplate = tpt.Load(VisitorTeamTemplateFile);
+			}
 		}
 
 		private void FillFormats() {
