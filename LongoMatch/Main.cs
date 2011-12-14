@@ -54,7 +54,7 @@ namespace LongoMatch
 			GLib.ExceptionManager.UnhandledException += new GLib.UnhandledExceptionHandler(OnException);
 
 
-			//try {
+			try {
 				Core.Init();
 				AddinsManager manager = new AddinsManager(Path.Combine(Config.HomeDir(), "addins"));
 				manager.LoadConfigModifierAddins();
@@ -62,9 +62,9 @@ namespace LongoMatch
 			    IMultimediaToolkit multimediaToolkit = new MultimediaFactory();
 				Core.Start(guiToolkit, multimediaToolkit);
 				Application.Run();
-			//} catch(Exception ex) {
-			//	ProcessExecutionError(ex);
-			//}
+			} catch(Exception ex) {
+				ProcessExecutionError(ex);
+			}
 		}
 
 		private static void OnException(GLib.UnhandledExceptionArgs args) {
