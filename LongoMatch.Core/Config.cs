@@ -61,6 +61,10 @@ namespace LongoMatch
 		public static string RelativeToPrefix(string relativePath) {
 			return Path.Combine(baseDirectory, relativePath);
 		}
+		
+		
+		/* Properties */
+		public static bool useGameUnits = false;
 
 	}
 }

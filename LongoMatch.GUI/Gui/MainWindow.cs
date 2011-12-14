@@ -121,6 +121,9 @@ namespace LongoMatch.Gui
 			
 			ConnectSignals();
 			ConnectMenuSignals();
+			
+			if (!Config.useGameUnits)
+				GameUnitsViewAction.Visible = false;
 		}
 
 		#endregion
@@ -479,9 +482,11 @@ namespace LongoMatch.Gui
 			timeline.Visible = !action.Active && TimelineViewAction.Active;
 			buttonswidget.Visible = !action.Active &&
 				(TaggingViewAction.Active || ManualTaggingViewAction.Active);
-			guTimeline.Visible = !action.Visible && GameUnitsViewAction.Active;
-			gameunitstaggerwidget1.Visible = !action.Active && (GameUnitsViewAction.Active || 
-				TaggingViewAction.Active || ManualTaggingViewAction.Active);
+			if (Config.useGameUnits) {
+				guTimeline.Visible = !action.Visible && GameUnitsViewAction.Active;
+				gameunitstaggerwidget1.Visible = !action.Active && (GameUnitsViewAction.Active || 
+					TaggingViewAction.Active || ManualTaggingViewAction.Active);
+			}
 			if(action.Active)
 				rightvbox.Visible = false;
 			else if(!action.Active && (playlist.Visible || notes.Visible))
@@ -497,8 +502,10 @@ namespace LongoMatch.Gui
 			
 			buttonswidget.Visible = action == ManualTaggingViewAction || sender == TaggingViewAction;
 			timeline.Visible = action == TimelineViewAction;
-			guTimeline.Visible = action == GameUnitsViewAction;
-			gameunitstaggerwidget1.Visible = buttonswidget.Visible || guTimeline.Visible;
+			if (Config.useGameUnits) {
+				guTimeline.Visible = action == GameUnitsViewAction;
+				gameunitstaggerwidget1.Visible = buttonswidget.Visible || guTimeline.Visible;
+			}
 			if(action == ManualTaggingViewAction)
 				buttonswidget.Mode = TagMode.Free;
 			else
