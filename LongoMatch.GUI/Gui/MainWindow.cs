@@ -91,6 +91,7 @@ namespace LongoMatch.Gui
 		private ProjectType projectType;
 		private TimeNode selectedTimeNode;
 		TimeLineWidget timeline;
+		bool gameUnitsActionVisible;
 		GameUnitsTimelineWidget guTimeline;
 
 		#region Constructors
@@ -181,6 +182,8 @@ namespace LongoMatch.Gui
 		}
 		
 		public void UpdateGameUnits (GameUnitsList gameUnits) {
+			gameUnitsActionVisible = gameUnits != null && gameUnits.Count > 0;
+			GameUnitsViewAction.Sensitive = gameUnitsActionVisible;
 			if (gameUnits == null) {
 				gameunitstaggerwidget1.Visible = false;
 				return;
@@ -347,7 +350,7 @@ namespace LongoMatch.Gui
 			SaveProjectAction.Sensitive = sensitive;
 			TaggingViewAction.Sensitive = sensitive2;
 			ManualTaggingViewAction.Sensitive = sensitive2;
-			GameUnitsViewAction.Sensitive = sensitive2;
+			GameUnitsViewAction.Sensitive = sensitive2 && gameUnitsActionVisible;
 			TimelineViewAction.Sensitive = sensitive2;
 			ExportProjectToCSVFileAction.Sensitive = sensitive2;
 			HideAllWidgetsAction.Sensitive=sensitive2;
