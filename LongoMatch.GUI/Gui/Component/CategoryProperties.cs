@@ -61,6 +61,7 @@ namespace LongoMatch.Gui.Component
 				subcategoriesTemplates = value;
 			}
 		}
+
 		public List<PlayerSubCategory> PlayerSubcategories{
 			set{
 				LoadSubcategories(value);

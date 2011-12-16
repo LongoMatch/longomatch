@@ -2121,7 +2121,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.CategoryProperties" design-size="516 392">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.CategoryProperties" design-size="516 487">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.VBox" id="vbox2">
@@ -4950,7 +4950,7 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.EditCategoryDialog" design-size="522 280">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.EditCategoryDialog" design-size="522 538">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Category Details</property>
     <property name="Icon">resource:longomatch.png</property>

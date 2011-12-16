@@ -2,23 +2,30 @@
   <Configurations active="Release">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="../bin" assembly="LongoMatch.Addins.COE" />
-      <Build debugmode="True" target="Library" />
+      <Build debugmode="True" target="Exe" />
       <Execution consolepause="False" runwithwarnings="True" runtime="MsNet" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" definesymbols="DEBUG" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
       <Output directory="../bin" assembly="LongoMatch.Addins.COE" />
-      <Build debugmode="False" target="Library" />
+      <Build debugmode="False" target="Exe" />
       <Execution consolepause="False" runwithwarnings="True" runtime="MsNet" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
     <File subtype="Code" buildaction="Compile" name="GameUnitsEnabler.cs" />
+    <File subtype="Code" buildaction="Compile" name="ExcelExporter.cs" />
+    <File subtype="Code" buildaction="Compile" name="Assembly.cs" />
+    <File subtype="Code" buildaction="Compile" name="Main.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Addins, Version=0.6.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <ProjectReference type="Project" localcopy="True" refto="LongoMatch.Addins" />
     <ProjectReference type="Project" localcopy="True" refto="LongoMatch.Core" />
+    <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+    <ProjectReference type="Project" localcopy="True" refto="LongoMatch.Services" />
+    <ProjectReference specificVersion="False" type="Assembly" localcopy="True" refto="../../epplus/trunk/ExcelPackage/bin/Debug/EPPlus.dll" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   </References>
 </Project>

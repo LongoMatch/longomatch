@@ -318,14 +318,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.CategoryProperties" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="CategoryProperties Signals">
-        <signal name="HotKeyChanged" />
-      </itemgroup>
-    </signals>
-  </object>
   <object type="LongoMatch.Gui.Component.PlayerProperties" palette-category="General" allow-children="false" base-type="Gtk.Widget">
     <itemgroups />
     <signals />
@@ -341,6 +333,14 @@
         <signal name="SnapshotSeriesEvent" />
         <signal name="TagPlay" />
         <signal name="RenderPlaylistEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.CategoryProperties" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="CategoryProperties Signals">
+        <signal name="HotKeyChanged" />
       </itemgroup>
     </signals>
   </object>
