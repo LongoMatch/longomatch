@@ -183,28 +183,16 @@
   </object>
   <object type="LongoMatch.Gui.Base.TemplatesEditorWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
-      <itemgroup label="TemplatesEditorBase Properties">
-        <property name="CanExport" />
-        <property name="Edited" />
-      </itemgroup>
     </itemgroups>
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.CategoriesTemplateEditorWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
-      <itemgroup label="TemplatesEditorBase Properties">
-        <property name="CanExport" />
-        <property name="Edited" />
-      </itemgroup>
     </itemgroups>
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.TeamTemplateEditorWidget" palette-category="General" allow-children="false" base-type="LongoMatch.Gui.Base.TemplatesEditorBase">
     <itemgroups>
-      <itemgroup label="TemplatesEditorBase Properties">
-        <property name="CanExport" />
-        <property name="Edited" />
-      </itemgroup>
     </itemgroups>
     <signals />
   </object>

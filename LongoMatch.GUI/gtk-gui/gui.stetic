@@ -1586,7 +1586,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="LongoMatch.Gui.MainWindow" design-size="1224 681">
+  <widget class="Gtk.Window" id="LongoMatch.Gui.MainWindow" design-size="1224 686">
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -1770,6 +1770,26 @@
         <property name="Group">group1</property>
         <signal name="Toggled" handler="OnViewToggled" />
       </action>
+      <action id="ExportProjectAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Export Project</property>
+        <property name="ShortLabel" translatable="yes">Export Project</property>
+      </action>
+      <action id="ExportProjectAction1">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Export Project</property>
+        <property name="Sensitive">False</property>
+        <property name="ShortLabel" translatable="yes">Export Project</property>
+      </action>
+      <action id="Action">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+      </action>
+      <action id="ExportToProjectFileAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Export to project file</property>
+        <property name="ShortLabel" translatable="yes">Export to project file</property>
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">LongoMatch</property>
@@ -1802,7 +1822,9 @@
                     <node type="Menuitem" action="ProjectsManagerAction" />
                     <node type="Menuitem" action="CategoriesTemplatesManagerAction" />
                     <node type="Menuitem" action="TeamsTemplatesManagerAction" />
-                    <node type="Menuitem" action="ExportProjectToCSVFileAction" />
+                    <node type="Menu" action="ExportProjectAction1">
+                      <node type="Menuitem" action="ExportToProjectFileAction" />
+                    </node>
                   </node>
                   <node type="Menu" action="ViewAction">
                     <node type="Menuitem" action="FullScreenAction" />
