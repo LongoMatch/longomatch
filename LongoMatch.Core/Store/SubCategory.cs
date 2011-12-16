@@ -17,6 +17,7 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Mono.Unix;
 
 using LongoMatch.Common;
@@ -89,6 +90,9 @@ namespace LongoMatch.Store
 			return this.ToString();
 		}
 		
+		public List<string> ElementsDesc () {
+			return this.Select(e => e.ToString()).ToList();
+		}
 	}
 
 	[Serializable]

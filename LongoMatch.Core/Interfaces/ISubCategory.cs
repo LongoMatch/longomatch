@@ -16,6 +16,8 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
+using System.Collections.Generic;
+
 namespace LongoMatch.Interfaces
 {
 	public interface ISubCategory
@@ -28,6 +30,7 @@ namespace LongoMatch.Interfaces
 		
 		string ToMarkupString();
 		
+		List<string> ElementsDesc ();
 	}
 }
 
