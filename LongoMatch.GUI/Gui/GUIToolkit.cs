@@ -291,10 +291,12 @@ namespace LongoMatch.Gui
 				fChooser.SetCurrentFolder(defaultFolder);
 			if (defaultName != null)
 				fChooser.SetFilename(defaultName);
-			filter = new FileFilter();
-			filter.Name = filterName;
-			filter.AddPattern(extensionFilter);
-			fChooser.AddFilter(filter);	
+			if (filterName != null) {
+				filter = new FileFilter();
+				filter.Name = filterName;
+				filter.AddPattern(extensionFilter);
+				fChooser.AddFilter(filter);	
+			}
 			
 			if (fChooser.Run() != (int)ResponseType.Accept) 
 				path = null;
