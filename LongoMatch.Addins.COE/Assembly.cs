@@ -18,17 +18,6 @@
 using System;
 using Mono.Addins;
 
-using LongoMatch;
-using LongoMatch.Addins.ExtensionPoints;
-
-
-[Extension]
-public class GameUnitsEnabler: IConfigModifier
-{
-	public void ModifyConfig() {
-		LongoMatch.Config.useGameUnits = true;
-		Log.Information("Loading GameUnitsEnabler addin");
-		Log.Information("'useGameUnits' modified to " + LongoMatch.Config.useGameUnits);
-	}
-}
+[assembly:Addin]
+[assembly:AddinDependency ("LongoMatch", "1.0")]
 
