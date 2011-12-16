@@ -26,8 +26,9 @@ namespace LongoMatch.Addins.ExtensionPoints
 	[TypeExtensionPoint]
 	public interface IExportProject
 	{
-		void AddMenuEntry(IMainWindow mainWindow);
-		void ExportProject(Project project);
+		string GetMenuEntryName();
+		string GetMenuEntryShortName();
+		void ExportProject(Project project, string filename);
 	}
 }
 

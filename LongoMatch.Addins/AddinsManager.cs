@@ -21,6 +21,8 @@ using Mono.Addins;
 
 using LongoMatch;
 using LongoMatch.Addins.ExtensionPoints;
+using LongoMatch.Interfaces.GUI;
+using LongoMatch.Store;
 
 [assembly:AddinRoot ("LongoMatch", "1.0")]
 
@@ -41,8 +43,11 @@ namespace LongoMatch.Addins
 			}
 		}
 		
-		public void LoadExportProjectAddins() {
+		public void LoadExportProjectAddins(IMainWindow mainWindow) {
 			foreach (IExportProject exportProject in AddinManager.GetExtensionObjects<IExportProject> ()) {
+				mainWindow.AddExportEntry(exportProject.GetMenuEntryName(), exportProject.GetMenuEntryShortName(),
+					new Action<Project, string>(exportProject.ExportProject));
+			
 			}
 		}
 	}

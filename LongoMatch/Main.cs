@@ -60,6 +60,7 @@ namespace LongoMatch
 				manager.LoadConfigModifierAddins();
 			    GUIToolkit guiToolkit = new GUIToolkit();
 			    IMultimediaToolkit multimediaToolkit = new MultimediaFactory();
+			    manager.LoadExportProjectAddins(guiToolkit.MainWindow);
 				Core.Start(guiToolkit, multimediaToolkit);
 				Application.Run();
 			} catch(Exception ex) {

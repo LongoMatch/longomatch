@@ -89,17 +89,21 @@ namespace LongoMatch.Gui
 
 		private static Project openedProject;
 		private ProjectType projectType;
-		private TimeNode selectedTimeNode;
+		private TimeNode selectedTimeNode;		
+
 		TimeLineWidget timeline;
 		bool gameUnitsActionVisible;
 		GameUnitsTimelineWidget guTimeline;
+		IGUIToolkit guiToolKit;
 
 		#region Constructors
-		public MainWindow() :
+		public MainWindow(IGUIToolkit guiToolkit) :
 		base("LongoMatch")
 		{
 			this.Build();
 
+			this.guiToolKit = guiToolkit;
+			
 			projectType = ProjectType.None;
 
 			timeline = new TimeLineWidget();
@@ -192,6 +196,29 @@ namespace LongoMatch.Gui
 			gameunitstaggerwidget1.GameUnits = gameUnits;
 		}
 		
+		public void AddExportEntry (string name, string shortName, Action<Project, string> exportAction) {
+			string filename;
+			
+			MenuItem parent = (MenuItem) this.UIManager.GetWidget("/menubar1/ToolsAction/ExportProjectAction1");
+			
+			MenuItem item = new MenuItem(name);
+			item.Activated += (sender, e) => {
+				filename = guiToolKit.SaveFile(Catalog.GetString("Output file"), null,
+					Config.HomeDir(), null, null);
+				
+				if (filename == null)
+					return;
+				
+				try {
+					exportAction(openedProject, filename);
+					guiToolKit.InfoMessage(Catalog.GetString("Project exported successfully"));
+				}catch (Exception ex) {
+					guiToolKit.ErrorMessage(Catalog.GetString("Error exporting project"));
+					Log.Exception(ex);}};
+			item.Show();
+			(parent.Submenu as Menu).Append(item);
+		}
+		
 		#endregion
 		
 		#region Private Methods
@@ -265,7 +292,7 @@ namespace LongoMatch.Gui
 			SaveProjectAction.Activated += (o, e) => {EmitSaveProject();};
 			CloseProjectAction.Activated += (o, e) => {PromptCloseProject();};
 			ImportProjectAction.Activated += (o, e) => {EmitImportProject();};
-			ExportProjectToCSVFileAction.Activated += (o, e) => {EmitExportProject();};
+			ExportToProjectFileAction.Activated += (o, e) => {EmitExportProject();};
 			QuitAction.Activated += (o, e) => {CloseAndQuit();};
 			CategoriesTemplatesManagerAction.Activated += (o, e) => {EmitManageCategories();};
 			TeamsTemplatesManagerAction.Activated += (o, e) => {EmitManageTeams();};
@@ -285,6 +312,8 @@ namespace LongoMatch.Gui
 			var desc = project.Description;
 			visitorteamlabel.Text = desc.VisitorName;
 			localteamlabel.Text = desc.LocalName;
+			
+			ExportProjectAction1.Sensitive = true;
 			
 			if(projectType == ProjectType.FileProject) {
 				Title = System.IO.Path.GetFileNameWithoutExtension(desc.File.FilePath) +
@@ -352,7 +381,7 @@ namespace LongoMatch.Gui
 			ManualTaggingViewAction.Sensitive = sensitive2;
 			GameUnitsViewAction.Sensitive = sensitive2 && gameUnitsActionVisible;
 			TimelineViewAction.Sensitive = sensitive2;
-			ExportProjectToCSVFileAction.Sensitive = sensitive2;
+			ExportProjectAction1.Sensitive = sensitive2;
 			HideAllWidgetsAction.Sensitive=sensitive2;
 		}
 

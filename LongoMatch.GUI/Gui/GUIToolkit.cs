@@ -40,7 +40,7 @@ namespace LongoMatch.Gui
 		
 		public GUIToolkit ()
 		{
-			mainWindow = new MainWindow();
+			mainWindow = new MainWindow(this);
 			(mainWindow as MainWindow).Show();
 		}
 		
