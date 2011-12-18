@@ -18,7 +18,6 @@
 using System;
 using System.IO;
 using Mono.Unix;
-using Mono.Addins;
 
 using LongoMatch;
 using LongoMatch.DB;
