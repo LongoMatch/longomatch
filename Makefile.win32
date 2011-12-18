@@ -58,213 +58,232 @@ LIBCESARPLAYER  = ${BUILD_DIR}/libcesarplayer.dll
 CFLAGS = $(INCS) -DWIN32 -mms-bitfields -shared   -Wall 
 LDFLAGS =  -shared -Wl -mno-cygwin -mms-bitfields  --export-all-symbols --enable-auto-import
 
+CSC_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ -unsafe -define:HAVE_GTK
+LIBRARY_COMPILE_TARGET=library
 
-#CesarPlayer
-CESARPLAYER=${BUILD_DIR}/CesarPlayer.dll
-CSC_CESARPLAYER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ -unsafe
-CESARPLAYER_COMPILE_TARGET = library
+#LongoMatch.Addins
+LONGOMATCH_ADDINS=${BUILD_DIR}/LongoMatch.Addins.dll
 
-CESARPLAYER_FILES = \
-	AssemblyInfo.cs \
-	gtk-gui/generated.cs \
-	Common/Constants.cs\
-	Common/Enum.cs\
-	Common/Handlers.cs\
-	Player/GstPlayer.cs \
-	Player/IPlayer.cs \
-	Player/ObjectManager.cs \
-	gtk-gui/LongoMatch.Gui.CapturerBin.cs \
-	gtk-gui/LongoMatch.Gui.PlayerBin.cs \
-	gtk-gui/LongoMatch.Gui.VolumeWindow.cs \
-	Gui/CapturerBin.cs \
-	Gui/PlayerBin.cs \
-	Gui/VolumeWindow.cs \
-	MultimediaFactory.cs \
-	Utils/IFramesCapturer.cs \
-	Utils/FramesCapturer.cs \
-	Utils/IMetadataReader.cs \
-	Utils/TimeString.cs \
-	Capturer/CaptureProperties.cs \
-	Capturer/GstCameraCapturer.cs \
-	Capturer/FakeCapturer.cs \
-	Capturer/ICapturer.cs \
-	Capturer/LiveSourceTimer.cs \
-	Capturer/ObjectManager.cs \
-	Editor/GstVideoSplitter.cs \
-	Editor/IVideoEditor.cs \
-	Editor/IVideoSplitter.cs \
-	Editor/VideoSegment.cs \
-	Editor/EditorState.cs \
-	Utils/Device.cs \
-	Utils/MediaFile.cs \
-	Utils/MpegRemuxer.cs \
-	Utils/PreviewMediaFile.cs
+LONGOMATCH_ADDINS_FILES = \
+	AddinsManager.cs \
+	ExtensionPoints/IConfigModifier.cs \
+	ExtensionPoints/IExportProject.cs
 
-CESARPLAYER_REFERENCES = \
+LONGOMATCH_ADDINS_REFERENCES = \
+	-r:System \
+	-r:Mono.Posix \
+	-r:../${BUILD_DIR}/LongoMatch.Core.dll
+
+#LongoMatch.Core
+LONGOMATCH_CORE=${BUILD_DIR}/LongoMatch.Core.dll
+LONGOMATCH_CORE = library
+
+LONGOMATCH_CORE_FILES = \
+	CaptureSettings.cs \
+	Cloner.cs \
+	ConsoleCrayon.cs \
+	Constants.cs \
+	Device.cs \
+	EncodingProfiles.cs \
+	EncodingSettings.cs \
+	Enums.cs \
+	Image.cs \
+	Job.cs \
+	Log.cs \
+	PlayList.cs \
+	SerializableObject.cs \
+	VideoStandards.cs \
+	Config.cs \
+	Handlers/Handlers.cs \
+	Handlers/Multimedia.cs \
+	GUI/IBusyDialog.cs \
+	GUI/ICapturer.cs \
+	GUI/IGUIToolkit.cs \
+	GUI/IMainWindow.cs \
+	GUI/IPlayer.cs \
+	GUI/IPlaylistWidget.cs \
+	GUI/IRenderingStateBar.cs \
+	Multimedia/IFramesCapturer.cs \
+	Multimedia/IMultimediaToolkit.cs \
+	Multimedia/IVideoEditor.cs \
+	IDatabase.cs \
+	IPlayList.cs \
+	IRenderingJobsManager.cs \
+	ISubCategory.cs \
+	ITag.cs \
+	ITemplates.cs \
+	ITemplatesService.cs \
+	ITimelineNode.cs \
+	Category.cs \
+	Drawing.cs \
+	GameUnit.cs \
+	GameUnitsList.cs \
+	TimelineNode.cs \
+	HotKey.cs \
+	MediaFile.cs \
+	PixbufTimeNode.cs \
+	Play.cs \
+	Player.cs \
+	PlayListPlay.cs \
+	Project.cs \
+	ProjectDescription.cs \
+	SubCategory.cs \
+	Tag.cs \
+	TagStore.cs \
+	Templates/CategoriesTemplate.cs \
+	Templates/SubCategoryTemplate.cs \
+	Templates/TeamTemplate.cs \
+	Time.cs \
+	TimeNode.cs
+
+LONGOMATCH_CORE_REFERENCES = \
 	-r:Mono.Posix \
 	-r:System \
+	-r:System.Core \
+	-r:System.Drawing \
+	-r:System.Sml \
+	-pkg:gtk-sharp-2.0 \
+	-pkg:glib-sharp-2.0
+
+#LongoMatch.GUI
+LONGOMATCH_GUI=${BUILD_DIR}/LongoMatch.GUI.dll
+LONGOMATCH_GUI = library
+
+LONGOMATCH_GUI_FILES = \
+	gtk-gui/generated.cs \
+	LongoMatch.Gui.Base.TemplatesEditorBase.cs \
+	LongoMatch.Gui.Base.TimelineWidgetBase.cs \
+	LongoMatch.Gui.Component.ButtonsWidget.cs \
+	LongoMatch.Gui.Component.CategoryProperties.cs \
+	LongoMatch.Gui.Component.DrawingToolBox.cs \
+	LongoMatch.Gui.Component.DrawingWidget.cs \
+	LongoMatch.Gui.Component.GameUnitsEditor.cs \
+	LongoMatch.Gui.Component.GameUnitsTagger.cs \
+	LongoMatch.Gui.Component.GameUnitWidget.cs \
+	LongoMatch.Gui.Component.NotesWidget.cs \
+	LongoMatch.Gui.Component.PlayerProperties.cs \
+	LongoMatch.Gui.Component.PlayersListTreeWidget.cs \
+	LongoMatch.Gui.Component.PlayersTaggerWidget.cs \
+	LongoMatch.Gui.Component.PlayListWidget.cs \
+	LongoMatch.Gui.Component.PlaysListTreeWidget.cs \
+	LongoMatch.Gui.Component.ProjectDetailsWidget.cs \
+	LongoMatch.Gui.Component.ProjectListWidget.cs \
+	LongoMatch.Gui.Component.RenderingStateBar.cs \
+	LongoMatch.Gui.Component.StringTaggerWidget.cs \
+	LongoMatch.Gui.Component.TaggerWidget.cs \
+	LongoMatch.Gui.Component.TagsTreeWidget.cs \
+	LongoMatch.Gui.Component.TeamTaggerWidget.cs \
+	LongoMatch.Gui.Dialog.BusyDialog.cs \
+	LongoMatch.Gui.Dialog.DrawingTool.cs \
+	LongoMatch.Gui.Dialog.EditCategoryDialog.cs \
+	LongoMatch.Gui.Dialog.EditPlayerDialog.cs \
+	LongoMatch.Gui.Dialog.EndCaptureDialog.cs \
+	LongoMatch.Gui.Dialog.EntryDialog.cs \
+	LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs \
+	LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs \
+	LongoMatch.Gui.Dialog.NewProjectDialog.cs \
+	LongoMatch.Gui.Dialog.OpenProjectDialog.cs \
+	LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs \
+	LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs \
+	LongoMatch.Gui.Dialog.ProjectsManager.cs \
+	LongoMatch.Gui.Dialog.RenderingJobsDialog.cs \
+	LongoMatch.Gui.Dialog.SnapshotsDialog.cs \
+	LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs \
+	LongoMatch.Gui.Dialog.TaggerDialog.cs \
+	LongoMatch.Gui.Dialog.TemplateEditorDialog.cs \
+	LongoMatch.Gui.Dialog.TemplatesManager.cs \
+	LongoMatch.Gui.Dialog.UpdateDialog.cs \
+	LongoMatch.Gui.Dialog.VideoEditionProperties.cs \
+	LongoMatch.Gui.Dialog.Win32CalendarDialog.cs \
+	LongoMatch.Gui.MainWindow.cs \
+	LongoMatch.Gui.Popup.CalendarPopup.cs \
+	LongoMatch.Gui.Popup.TransparentDrawingArea.cs \
+	Base/TemplatesEditorBase.cs \
+	Base/TimelineWidgetBase.cs \
+	Base/TimeScaleBase.cs \
+	Component/ButtonsWidget.cs \
+	Component/CategoriesTemplateEditor.cs \
+	Component/CategoryProperties.cs \
+	Component/DrawingToolBox.cs \
+	Component/DrawingWidget.cs \
+	Component/GameUnitsEditor.cs \
+	Component/GameUnitsTagger.cs \
+	Component/GameUnitTimeScale.cs \
+	Component/GameUnitsTimelineWidget.cs \
+	Component/GameUnitWidget.cs \
+	Component/NotesWidget.cs \
+	Component/PlayerProperties.cs \
+	Component/PlayersListTreeWidget.cs \
+	Component/PlayersTaggerWidget.cs \
+	Component/PlayListWidget.cs \
+	Component/PlaysListTreeWidget.cs \
+	Component/ProjectDetailsWidget.cs \
+	Component/ProjectListWidget.cs \
+	Component/RenderingStateBar.cs \
+	Component/StringTaggerWidget.cs \
+	Component/TaggerWidget.cs \
+	Component/TagsTreeWidget.cs \
+	Component/TeamTaggerWidget.cs \
+	Component/TeamTemplateEditor.cs \
+	Component/TimelineLabelsWidget.cs \
+	Component/TimeLineWidget.cs \
+	Component/TimeReferenceWidget.cs \
+	Component/TimeScale.cs \
+	Dialog/About.cs \
+	Dialog/BusyDialog.cs \
+	Dialog/DrawingTool.cs \
+	Dialog/EditCategoryDialog.cs \
+	Dialog/EditPlayerDialog.cs \
+	Dialog/EndCaptureDialog.cs \
+	Dialog/EntryDialog.cs \
+	Dialog/FramesCaptureProgressDialog.cs \
+	Dialog/HotKeySelectorDialog.cs \
+	Dialog/NewProjectDialog.cs \
+	Dialog/OpenProjectDialog.cs \
+	Dialog/PlayersSelectionDialog.cs \
+	Dialog/ProjectSelectionDialog.cs \
+	Dialog/ProjectsManager.cs \
+	Dialog/RenderingJobsDialog.cs \
+	Dialog/SnapshotsDialog.cs \
+	Dialog/SubCategoryTagsEditor.cs \
+	Dialog/TaggerDialog.cs \
+	Dialog/TemplateEditorDialog.cs \
+	Dialog/TemplatesManager.cs \
+	Dialog/UpdateDialog.cs \
+	Dialog/VideoEditionProperties.cs \
+	Dialog/Win32CalendarDialog.cs \
+	Popup/CalendarPopup.cs \
+	Popup/MessagePopup.cs \
+	TransparentDrawingArea.cs \
+	TreeView/CategoriesTreeView.cs \
+	TreeView/ListTreeViewBase.cs \
+	TreeView/PlayerPropertiesTreeView.cs \
+	TreeView/PlayersTreeView.cs \
+	TreeView/PlayListTreeView.cs \
+	TreeView/PlaysTreeView.cs \
+	TreeView/RenderingJobsTreeView.cs \
+	TreeView/SubCategoriesTreeView.cs \
+	TreeView/TagsTreeView.cs \
+	Cairo.cs \
+	GUIToolkit.cs \
+	Helpers.cs \
+	MainWindow.cs
+
+LONGOMATCH_GUI_REFERENCES = \
+	-r:Mono.Posix \
+	-r:Mono.Cairo \
+	-r:System \
+	-r:System.Core \
+	-r:System.Drawing \
 	-pkg:gtk-sharp-2.0 \
 	-pkg:glib-sharp-2.0 \
+	-r:../${BUILD_DIR}/LongoMatch.Core.dll \
+	-r:../${BUILD_DIR}/LongoMatch.Multimedia.dll \
+	-r:../${BUILD_DIR}/LongoMatch.GUI.Multimedia.dll
 
-#LongoMatch.exe
-LONGOMATCH_PRE=${BUILD_DIR}/LongoMatch.exe
-LONGOMATCH_BUNDLED=${BUILD_DIR}/LongoMatchBundled.exe
-LONGOMATCH=$(BIN_DIR)/LongoMatch.exe
-CSC_LONGOMATCH_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-main:LongoMatch.MainClass"
-LONGOMATCH_COMPILE_TARGET = winexe 
-LONGOMATCH_FILES = \
-	AssemblyInfo.cs \
-	Common/Enums.cs \
-	Common/Constants.cs \
-	Common/Cairo.cs\
-	Common/GStreamer.cs\
-	Common/Images.cs\
-	Compat/0.0/DatabaseMigrator.cs \
-	Compat/0.0/DB/DataBase.cs \
-	Compat/0.0/DB/MediaFile.cs \
-	Compat/0.0/DB/Project.cs \
-	Compat/0.0/DB/Sections.cs \
-	Compat/0.0/IO/SectionsReader.cs \
-	Compat/0.0/Playlist/IPlayList.cs \
-	Compat/0.0/PlayListMigrator.cs \
-	Compat/0.0/Playlist/PlayList.cs \
-	Compat/0.0/TemplatesMigrator.cs \
-	Compat/0.0/Time/MediaTimeNode.cs \
-	Compat/0.0/Time/PixbufTimeNode.cs \
-	Compat/0.0/Time/PlayListTimeNode.cs \
-	Compat/0.0/Time/SectionsTimeNode.cs \
-	Compat/0.0/Time/Time.cs \
-	Compat/0.0/Time/TimeNode.cs \
-	DB/DataBase.cs \
-	DB/Project.cs \
-	DB/ProjectDescription.cs\
-	DB/Sections.cs \
-	DB/TagsTemplate.cs \
-	DB/TeamTemplate.cs \
-	gtk-gui/generated.cs \
-	gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs \
-	gtk-gui/LongoMatch.Gui.Component.DrawingWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs \
-	gtk-gui/LongoMatch.Gui.Component.NotesWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs \
-	gtk-gui/LongoMatch.Gui.Component.PlayersListTreeWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.PlaysListTreeWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.ProjectTemplateWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.TagsTreeWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.TeamTemplateWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.TimeAdjustWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.TimeLineWidget.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.BusyDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.EditCategoryDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.EditPlayerDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.Migrator.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.NewProjectDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.OpenProjectDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.ProjectTemplateEditorDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.TeamTemplateEditor.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.TemplatesManager.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.Win32CalendarDialog.cs \
-	gtk-gui/LongoMatch.Gui.MainWindow.cs \
-	gtk-gui/LongoMatch.Gui.Popup.CalendarPopup.cs \
-	gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs \
-	Gui/Component/ButtonsWidget.cs \
-	Gui/Component/CategoryProperties.cs \
-	Gui/Component/CategoriesScale.cs \
-	Gui/Component/DrawingWidget.cs \
-	Gui/Component/DrawingToolBox.cs \
-	Gui/Component/NotesWidget.cs \
-	Gui/Component/PlayerProperties.cs \
-	Gui/Component/PlayersListTreeWidget.cs \
-	Gui/Component/PlayListWidget.cs \
-	Gui/Component/PlaysListTreeWidget.cs \
-	Gui/Component/ProjectDetailsWidget.cs \
-	Gui/Component/ProjectListWidget.cs \
-	Gui/Component/ProjectTemplateWidget.cs \
-	Gui/Component/TaggerWidget.cs\
-	Gui/Component/TagsTreeWidget.cs\
-	Gui/Component/TeamTemplateWidget.cs\
-	Gui/Component/TimeAdjustWidget.cs \
-	Gui/Component/TimeLineWidget.cs \
-	Gui/Component/TimeReferenceWidget.cs \
-	Gui/Component/TimeScale.cs \
-	Gui/Dialog/BusyDialog.cs \
-	Gui/Dialog/DrawingTool.cs \
-	Gui/Dialog/EditCategoryDialog.cs \
-	Gui/Dialog/EditPlayerDialog.cs \
-	Gui/Dialog/EndCaptureDialog.cs \
-	Gui/Dialog/EntryDialog.cs \
-	Gui/Dialog/FramesCaptureProgressDialog.cs \
-	Gui/Dialog/HotKeySelectorDialog.cs \
-	Gui/Dialog/Migrator.cs \
-	Gui/Dialog/NewProjectDialog.cs \
-	Gui/Dialog/OpenProjectDialog.cs \
-	Gui/Dialog/PlayersSelectionDialog.cs \
-	Gui/Dialog/ProjectsManager.cs \
-	Gui/Dialog/ProjectTemplateEditorDialog.cs \
-	Gui/Dialog/ProjectSelectionDialog.cs \
-	Gui/Dialog/SnapshotsDialog.cs \
-	Gui/Dialog/TaggerDialog.cs \
-	Gui/Dialog/TemplatesEditor.cs \
-	Gui/Dialog/TeamTemplateEditor.cs\
-	Gui/Dialog/UpdateDialog.cs \
-	Gui/Dialog/VideoEditionProperties.cs \
-	Gui/Dialog/Win32CalendarDialog.cs \
-	Gui/MainWindow.cs \
-	Gui/Popup/CalendarPopup.cs \
-	Gui/Popup/MessagePopup.cs \
-	Gui/TransparentDrawingArea.cs \
-	Gui/TreeView/CategoriesTreeView.cs \
-	Gui/TreeView/ListTreeViewBase.cs \
-	Gui/TreeView/PlayerPropertiesTreeView.cs \
-	Gui/TreeView/PlayersTreeView.cs \
-	Gui/TreeView/PlayListTreeView.cs \
-	Gui/TreeView/PlaysTreeView.cs \
-	Gui/TreeView/TagsTreeView.cs \
-	Handlers/DrawingManager.cs \
-	Handlers/EventsManager.cs \
-	Handlers/Handlers.cs \
-	Handlers/HotKeysManager.cs \
-	Handlers/VideoDrawingsManager.cs\
-	IO/CSVExport.cs \
-	IO/SectionsReader.cs \
-	IO/SectionsWriter.cs \
-	IO/XMLReader.cs \
-	Main.cs \
-	Playlist/IPlayList.cs \
-	Playlist/PlayList.cs \
-	Time/Tag.cs \
-	Time/Drawing.cs\
-	Time/HotKey.cs \
-	Time/MediaTimeNode.cs \
-	Time/PixbufTimeNode.cs \
-	Time/Player.cs \
-	Time/PlayListTimeNode.cs \
-	Time/SectionsTimeNode.cs \
-	Time/Time.cs \
-	Time/TimeNode.cs \
-	Updates/Updater.cs \
-	Updates/XmlUpdateParser.cs \
-	Utils/ProjectUtils.cs
-LONGOMATCH_RESOURCES = \
-	-resource:./gtk-gui/objects.xml \
-	-resource:./gtk-gui/gui.stetic\
+LONGOMATCH_GUI_RESOURCES = \
+	-resource:./LongoMatch.Gui/gtk-gui/objects.xml \
+	-resource:./LongoMatch.Gui/gtk-gui/gui.stetic\
 	-resource:./images/longomatch.png,longomatch.png\
 	-resource:./images/stock_draw-line-45.png,stock_draw-line-45.png\
 	-resource:./images/stock_draw-circle-unfilled.png,stock_draw-circle-unfilled.png\
@@ -275,6 +294,98 @@ LONGOMATCH_RESOURCES = \
 	-resource:./images/video.png,video.png
 
 
+#LongoMatch.GUI.Multimedia
+LONGOMATCH_GUI_MULTIMEDIA=${BUILD_DIR}/LongoMatch.GUI.Multimedia.dll
+LONGOMATCH_GUI_MULTIMEDIA = library
+
+LONGOMATCH_GUI_MULTIMEDIA_FILES = \
+	LongoMatch.GUI.Multimedia/gtk-gui/generated.cs \
+	LongoMatch.GUI.Multimedia/LongoMatch.Gui.CapturerBin.cs \
+	LongoMatch.GUI.Multimedia/LongoMatch.Gui.PlayerBin.cs \
+	LongoMatch.GUI.Multimedia/LongoMatch.Gui.VolumeWindow.cs \
+	LongoMatch.GUI.Multimedia/CapturerBin.cs \
+	/PlayerBin.cs \
+	LongoMatch.GUI.Multimedia/VolumeWindow.cs
+
+LONGOMATCH_GUI_MULTIMEDIA_REFERENCES = \
+	-r:Mono.Posix \
+	-r:Mono.Cairo \
+	-r:System \
+	-r:System.Core \
+	-r:System.Drawing \
+	-pkg:gtk-sharp-2.0 \
+	-pkg:glib-sharp-2.0 \
+	-r:../${BUILD_DIR}/LongoMatch.Core.dll \
+	-r:../${BUILD_DIR}/LongoMatch.Multimedia.dll \
+	-r:../${BUILD_DIR}/LongoMatch.GUI.Multimedia.dll
+
+#LongoMatch.Multimedia
+LONGOMATCH_MULTIMEDIA=${BUILD_DIR}/LongoMatch.Multimedia.dll
+LONGOMATCH_MULTIMEDIA = library
+
+LONGOMATCH_MULTIMEDIA_FILES = \
+	Capturer/FakeCapturer.cs \
+	Capturer/GstCameraCapturer.cs \
+	Capturer/LiveSourceTimer.cs \
+	Capturer/ObjectManager.cs \
+	Common/Constants.cs \
+	Common/Enum.cs \
+	Common/Handlers.cs \
+	Editor/VideoSegment.cs \
+	Editor/GstVideoSplitter.cs \
+	Interfaces/ICapturer.cs \
+	Interfaces/IPlayer.cs \
+	Player/GstPlayer.cs \
+	Player/ObjectManager.cs \
+	Utils/FramesCapturer.cs \
+	Utils/GStreamer.cs \
+	Utils/IMetadataReader.cs \
+	Utils/MpegRemuxer.cs \
+	Utils/PreviewMediaFile.cs \
+	Utils/TimeString.cs \
+	Utils/VideoDevice.cs \
+	MultimediaFactory.cs
+
+LONGOMATCH_MULTIMEDIA_REFERENCES = \
+	-r:Mono.Posix \
+	-r:System \
+	-r:System.Core \
+	-pkg:gtk-sharp-2.0 \
+	-pkg:glib-sharp-2.0 \
+	-r:../${BUILD_DIR}/LongoMatch.Core.dll
+
+#LongoMatch.Services
+LONGOMATCH_SERVICES=${BUILD_DIR}/LongoMatch.Services.dll
+LONGOMATCH_SERVICES = library
+
+LONGOMATCH_SERVICES_FILES = \
+	LongoMatch.Services/Core.cs \
+	LongoMatch.Services/DataBase.cs \
+	LongoMatch.Services/EventsManager.cs \
+	LongoMatch.Services/GameUnitsManager.cs \
+	LongoMatch.Services/HotKeysManager.cs \
+	LongoMatch.Services/PlaylistManager.cs \
+	LongoMatch.Services/ProjectsManager.cs \
+	LongoMatch.Services/TemplatesService.cs \
+	LongoMatch.Services/RenderingJobsManager.cs \
+	LongoMatch.Services/VideoDrawingsManager.cs
+
+LONGOMATCH_SERVICES_REFERENCES = \
+	-r:Mono.Posix \
+	-r:System \
+	-r:System.Core \
+	-r:../${BUILD_DIR}/LongoMatch.Core.dll \
+	-r:../win32/deps/Db4objects.Db4o.dll
+
+#LongoMatch.exe
+LONGOMATCH_PRE=${BUILD_DIR}/LongoMatch.exe
+LONGOMATCH_BUNDLED=${BUILD_DIR}/LongoMatchBundled.exe
+LONGOMATCH=$(BIN_DIR)/LongoMatch.exe
+CSC_LONGOMATCH_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-main:LongoMatch.MainClass"
+LONGOMATCH_COMPILE_TARGET = winexe
+LONGOMATCH_FILES = \
+	Main.cs
+
 LONGOMATCH_REFERENCES = \
 	-r:Mono.Posix \
 	-r:System.Xml \
@@ -282,9 +393,11 @@ LONGOMATCH_REFERENCES = \
 	-r:System \
 	-pkg:gtk-sharp-2.0 \
 	-pkg:glib-sharp-2.0 \
-	-r:../${BUILD_DIR}/CesarPlayer.dll \
+	-r:../${BUILD_DIR}/LongoMatch.Addins.dll \
+	-r:../${BUILD_DIR}/LongoMatch.Core.dll \
+	-r:../${BUILD_DIR}/LongoMatch.Gui.dll \
+	-r:../${BUILD_DIR}/LongoMatch.Gui.Multimedia.dll \
 	-r:../win32/deps/Db4objects.Db4o.dll
-
 
 .PHONY: all all-before all-after clean clean-custom
 
@@ -319,8 +432,24 @@ $(LINKOBJ): $(BUILD_DIR)/%.o : libcesarplayer/src/%.c
 	mkdir -p $(BUILD_DIR)
 	$(CC) -c '$<' -o '$@' $(CFLAGS)
 
-$(CESARPLAYER):
-	cd CesarPlayer && $(CSC) $(CSC_CESARPLAYER_FLAGS) -out:../$(CESARPLAYER) -target:$(CESARPLAYER_COMPILE_TARGET) $(CESARPLAYER_FILES) $(CESARPLAYER_REFERENCES) $(CESARPLAYER_RESOURCES)
 
-$(LONGOMATCH_PRE):$(CESARPLAYER) 
+$(LONGOMATCH_CORE):
+	cd LONGOMATCH_CORE && $(CSC) $(CSC_FLAGS) -out:../$(LONGOMATCH_CORE) -target:$(LIBRARY_COMPILE_TARGET) $(LONGOMATCH_CORE_FILES) $(LONGOMATCH_CORE_REFERENCES) $(LONGOMATCH_CORE_REFERENCES)
+
+$(LONGOMATCH_SERVICES): $(LONGOMATCH_CORE)
+	cd LONGOMATCH_SERVICES && $(CSC) $(CSC_FLAGS) -out:../$(LONGOMATCH_SERVICES) -target:$(LIBRARY_COMPILE_TARGET) $(LONGOMATCH_SERVICES_FILES) $(LONGOMATCH_SERVICES_REFERENCES) $(LONGOMATCH_SERVICES_REFERENCES)
+
+$(LONGOMATCH_MULTIMEDIA): $(LONGOMATCH_CORE)
+	cd LONGOMATCH_MULTIMEDIA && $(CSC) $(CSC_FLAGS) -out:../$(LONGOMATCH_MULTIMEDIA) -target:$(LIBRARY_COMPILE_TARGET) $(LONGOMATCH_MULTIMEDIA_FILES) $(LONGOMATCH_MULTIMEDIA_REFERENCES) $(LONGOMATCH_MULTIMEDIA_RESOURCES)
+
+$(LONGOMATCH_GUI): $(LONGOMATCH_GUI_MULTIMEDIA)
+	cd LONGOMATCH_GUI && $(CSC) $(CSC_FLAGS) -out:../$(LONGOMATCH_GUI) -target:$(LIBRARY_COMPILE_TARGET) $(LONGOMATCH_GUI_FILES) $(LONGOMATCH_GUI_REFERENCES) $(LONGOMATCH_GUI_RESOURCES)
+
+$(LONGOMATCH_GUI_MULTIMEDIA): $(LONGOMATCH_MULTIMEDIA)
+	cd LONGOMATCH_GUI_MULTIMEDIA && $(CSC) $(CSC_FLAGS) -out:../$(LONGOMATCH_GUI_MULTIMEDIA) -target:$(LIBRARY_COMPILE_TARGET) $(LONGOMATCH_GUI_MULTIMEDIA_FILES) $(LONGOMATCH_GUI_MULTIMEDIA_REFERENCES) $(LONGOMATCH_GUI_MULTIMEDIA_RESOURCES)
+
+$(LONGOMATCH_ADDINS): $(LONGOMATCH_CORE)
+	cd LongoMatch.Addins && $(CSC) $(CSC_FLAGS) -out:../$(LONGOMATCH_ADDINS) -target:$(LIBRARY_COMPILE_TARGET) $(LONGOMATCH_ADDINS_FILES) $(LONGOMATCH_ADDINS_REFERENCES) $(LONGOMATCH_ADDINS_RESOURCES)
+
+$(LONGOMATCH_PRE):$(LONGOMATCH_SERVICES) 
 	cd LongoMatch && $(CSC) $(CSC_LONGOMATCH_FLAGS) -out:../$(LONGOMATCH_PRE) -target:$(LONGOMATCH_COMPILE_TARGET) $(LONGOMATCH_FILES) $(LONGOMATCH_REFERENCES) $(LONGOMATCH_RESOURCES)
