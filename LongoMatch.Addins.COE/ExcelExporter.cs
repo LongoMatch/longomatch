@@ -200,9 +200,9 @@ public class EPPLUSExporter {
 				subCatsDict.Add(subcat, row);
 				if (subcat is TeamSubCategory) {
 					row++;
-					SetSubcatentriesHeaders(ws, row, project.LocalTeamTemplate.Name);
+					SetSubcatentriesHeaders(ws, row, project.LocalTeamTemplate.TeamName);
 					row++;
-					SetSubcatentriesHeaders(ws, row, project.VisitorTeamTemplate.Name);
+					SetSubcatentriesHeaders(ws, row, project.VisitorTeamTemplate.TeamName);
 					
 				}
 				else if (subcat is TagSubCategory) {
