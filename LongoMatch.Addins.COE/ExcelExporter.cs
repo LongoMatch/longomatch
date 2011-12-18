@@ -23,12 +23,12 @@ using Mono.Addins;
 using Mono.Unix;
 
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 
 using LongoMatch;
 using LongoMatch.Addins.ExtensionPoints;
 using LongoMatch.Interfaces;
 using LongoMatch.Store;
-using OfficeOpenXml.Style;
 using LongoMatch.Common;
 
 [Extension]
@@ -123,6 +123,16 @@ public class EPPLUSExporter {
 		ws.Cells[row, 1, row, 3].Merge = true;
 	}
 	
+	void SetCellValue (ExcelWorksheet ws, int row, int time, int val) {
+		object prevVal = ws.Cells[row , time].Value;
+		if (prevVal is int)
+			ws.Cells[row, time].Value = ((int)prevVal) + val;
+		else
+			ws.Cells[row, time].Value =  val;
+		ws.Cells[row, time].Style.Fill.PatternType =  ExcelFillStyle.Solid;	
+		ws.Cells[row, time].Style.Fill.BackgroundColor.SetColor(Color.Red);
+	}
+	
 	int FillTimeline(ExcelWorksheet ws, int row) {
 		SetHeader(ws, row, Catalog.GetString("Timeline"));
 		
@@ -155,7 +165,6 @@ public class EPPLUSExporter {
 				
 				ws.Cells[row, start].Value = stop - start;
 				cols = ws.Cells[row, start, row, stop];
-				cols.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
 				cols.Style.Fill.PatternType =  ExcelFillStyle.Solid;	
 				cols.Style.Fill.BackgroundColor.SetColor(Color.Green);
 			}
@@ -196,18 +205,6 @@ public class EPPLUSExporter {
 					SetSubcatentriesHeaders(ws, row, project.VisitorTeamTemplate.Name);
 					
 				}
-				/*	
-			    else if (subcat is PlayerSubCategory) {
-					if ((subcat as PlayerSubCategory).Contains(Team.LOCAL)) {
-						row++;
-						SetSubcatentriesHeaders(ws, row, project.LocalTeamTemplate.Name);
-					}
-					if ((subcat as PlayerSubCategory).Contains(Team.VISITOR)) {
-						row++;
-						SetSubcatentriesHeaders(ws, row, project.VisitorTeamTemplate.Name);
-					}
-				} 
-				*/
 				else if (subcat is TagSubCategory) {
 					foreach (string s in subcat.ElementsDesc()) {
 						row++;
@@ -231,29 +228,23 @@ public class EPPLUSExporter {
 				/* Add the category's overal stats */
 				catRow = catsDict[ca];
 				time = TIMELINE_START + play.Start.Seconds; // /60;
-				object val = ws.Cells[catRow , time].Value;
-				if (val is int)
-					ws.Cells[catRow, time].Value = ((int)val) + 1;
-				else
-					ws.Cells[catRow, time].Value =  1;
+				SetCellValue(ws, catRow, time, 1);
 				
 				/* Add the tags stats */
 				foreach (StringTag tag in play.Tags.Tags) {
 					int subcatRow = subCatsDict[tag.SubCategory];
 					subcatRow += tag.SubCategory.ElementsDesc().IndexOf(tag.Value);
-					/* FIXME: add +1 to the previous results */
-					ws.Cells[subcatRow, time].Value = 1;
+					SetCellValue(ws, subcatRow, time, 1);
 				}
 				
 				/* Add the teams stats */
 				foreach (TeamTag tag in play.Teams.Tags) {
 					int subcatRow = subCatsDict[tag.SubCategory];
 					if (tag.Value == Team.LOCAL) {
-						ws.Cells[subcatRow + 1, time].Value = 1;
+						SetCellValue(ws, subcatRow + 1, time, 1);
 					} else if (tag.Value == Team.VISITOR) {
-						ws.Cells[subcatRow + 2, time].Value = 1;
+						SetCellValue(ws, subcatRow + 2, time, 1);
 					}
-					/* FIXME: add +1 to the previous results */
 				}
 			}
 		}
