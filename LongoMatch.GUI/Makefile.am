@@ -56,7 +56,6 @@ SOURCES = \
 	Gui/Base/TimelineWidgetBase.cs \
 	Gui/Base/TimeScaleBase.cs \
 	Gui/Component/ButtonsWidget.cs \
-	Gui/Component/TimelineLabelsWidget.cs \
 	Gui/Component/CategoriesTemplateEditor.cs \
 	Gui/Component/CategoryProperties.cs \
 	Gui/Component/DrawingToolBox.cs \
@@ -80,6 +79,7 @@ SOURCES = \
 	Gui/Component/TagsTreeWidget.cs \
 	Gui/Component/TeamTaggerWidget.cs \
 	Gui/Component/TeamTemplateEditor.cs \
+	Gui/Component/TimelineLabelsWidget.cs \
 	Gui/Component/TimeLineWidget.cs \
 	Gui/Component/TimeReferenceWidget.cs \
 	Gui/Component/TimeScale.cs \
@@ -106,7 +106,6 @@ SOURCES = \
 	Gui/Dialog/UpdateDialog.cs \
 	Gui/Dialog/VideoEditionProperties.cs \
 	Gui/Dialog/Win32CalendarDialog.cs \
-	Gui/MainWindow.cs \
 	Gui/Popup/CalendarPopup.cs \
 	Gui/Popup/MessagePopup.cs \
 	Gui/TransparentDrawingArea.cs \
@@ -118,7 +117,11 @@ SOURCES = \
 	Gui/TreeView/PlaysTreeView.cs \
 	Gui/TreeView/RenderingJobsTreeView.cs \
 	Gui/TreeView/SubCategoriesTreeView.cs \
-	Gui/TreeView/TagsTreeView.cs
+	Gui/TreeView/TagsTreeView.cs \
+	Gui/Cairo.cs \
+	Gui/GUIToolkit.cs \
+	Gui/Helpers.cs \
+	Gui/MainWindow.cs
 
 RESOURCES = \
 	$(top_srcdir)/images/longomatch.png\

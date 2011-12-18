@@ -67,7 +67,7 @@ $(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(DEP_LINK)
 		$(GMCS_FLAGS) \
 		$(ASSEMBLY_BUILD_FLAGS) \
 		-nowarn:0278 -nowarn:0078 $$warn -unsafe \
-		-define:HAVE_GTK_2_10 -define:NET_2_0 -codepage:utf8 \
+		-define:HAVE_GTK -codepage:utf8 \
 		-debug -target:$(TARGET) -out:$@ \
 		$(BUILD_DEFINES) $(ENABLE_TESTS_FLAG) $(ENABLE_ATK_FLAG) \
 		$(FILTERED_LINK) $(RESOURCES_BUILD) $(SOURCES_BUILD)

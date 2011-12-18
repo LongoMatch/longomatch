@@ -4,21 +4,17 @@ TARGET = library
 LINK = $(REF_DEP_LONGOMATCH_MULTIMEDIA)
 
 SOURCES = \
-	Capturer/GstCameraCapturer.cs \
 	Capturer/FakeCapturer.cs \
+	Capturer/GstCameraCapturer.cs \
 	Capturer/LiveSourceTimer.cs \
 	Capturer/ObjectManager.cs \
-	Common/Enum.cs \
 	Common/Constants.cs \
+	Common/Enum.cs \
 	Common/Handlers.cs \
-	Editor/EditorState.cs \
 	Editor/VideoSegment.cs \
 	Editor/GstVideoSplitter.cs \
-	Interfaces/IFramesCapturer.cs \
 	Interfaces/ICapturer.cs \
-	Interfaces/IVideoEditor.cs \
 	Interfaces/IPlayer.cs \
-	MultimediaFactory.cs \
 	Player/GstPlayer.cs \
 	Player/ObjectManager.cs \
 	Utils/FramesCapturer.cs \
@@ -27,7 +23,10 @@ SOURCES = \
 	Utils/MpegRemuxer.cs \
 	Utils/PreviewMediaFile.cs \
 	Utils/TimeString.cs \
-	Utils/VideoDevice.cs
+	Utils/VideoDevice.cs \
+	MultimediaFactory.cs
 
 
 include $(top_srcdir)/build/build.mk
+
+EXTRA_DIST += LongoMatch.Multimedia.dll.config

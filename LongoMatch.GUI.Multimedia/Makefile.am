@@ -18,4 +18,3 @@ RESOURCES = \
 
 include $(top_srcdir)/build/build.mk
 
-EXTRA_DIST += LongoMatch.Gui.Multimedia.dll.config
