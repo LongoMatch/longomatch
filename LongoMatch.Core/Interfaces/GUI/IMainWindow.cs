@@ -70,6 +70,8 @@ namespace LongoMatch.Interfaces.GUI
 		event UnitsDeletedHandler UnitDeleted;
 		event UnitAddedHandler UnitAdded;
 		
+		event KeyHandler KeyPressed;
+		
 		void SetProject(Project project, ProjectType projectType, CaptureSettings props);
 		void AddPlay(Play play);
 		void UpdateSelectedPlay (Play play);

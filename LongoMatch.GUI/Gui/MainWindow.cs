@@ -86,6 +86,8 @@ namespace LongoMatch.Gui
 		public event UnitSelectedHandler UnitSelected;
 		public event UnitsDeletedHandler UnitDeleted;
 		public event UnitAddedHandler UnitAdded;
+		
+		public event KeyHandler KeyPressed;
 
 		private static Project openedProject;
 		private ProjectType projectType;
@@ -286,7 +288,9 @@ namespace LongoMatch.Gui
 			guTimeline.UnitDeleted += EmitUnitDeleted;
 			guTimeline.UnitSelected += EmitUnitSelected;
 			guTimeline.UnitChanged += EmitUnitChanged;
-		}
+			
+			KeyPressEvent += (o, args) => (EmitKeyPressed(o, (int)args.Event.Key, (int)args.Event.Key));
+ 		}
 		
 		private void ConnectMenuSignals() {
 			SaveProjectAction.Activated += (o, e) => {EmitSaveProject();};
@@ -831,6 +835,11 @@ namespace LongoMatch.Gui
 		private void EmitUnitChanged(GameUnit gameUnit, TimelineNode unit, Time time) {
 			if (UnitChanged != null)
 				UnitChanged(gameUnit, unit, time);
+		}
+		
+		private void EmitKeyPressed(object sender, int key, int modifier) {
+			if (KeyPressed != null)
+				KeyPressed(sender, key, modifier);
 		}
 		#endregion
 	}

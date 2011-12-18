@@ -19,6 +19,12 @@
 //
 //
 using System.Collections.Generic;
+#if HAVE_GTK
+using Gtk;
+using Gdk;
+#endif
+
+using LongoMatch.Interfaces.GUI;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
 using LongoMatch.Handlers;
@@ -29,20 +35,26 @@ namespace LongoMatch.Services
 
 	public class HotKeysManager
 	{
-		private Dictionary<HotKey, Category> dic;
 		public event NewTagHandler newMarkEvent;
-
-		public HotKeysManager()
+		
+		Dictionary<HotKey, Category> dic;
+		bool ignoreKeys;
+		
+		public HotKeysManager(IMainWindow mainWindow)
 		{
 			dic = new Dictionary<HotKey,Category>();
+			mainWindow.KeyPressed += KeyListener;
 		}
 
 		// Set the active Hotkeys for the current project
 		public Categories Categories {
 			set {
 				dic.Clear();
-				if(value == null)
+				if(value == null) {
+					ignoreKeys = true;
 					return;
+				}
+				ignoreKeys = false;
 				foreach(Category cat in value) {
 					if(cat.HotKey.Defined &&
 					                !dic.ContainsKey(cat.HotKey))
@@ -51,19 +63,22 @@ namespace LongoMatch.Services
 			}
 		}
 
-		// Listen to key press events and fire a newMarkEvent event if the key combination
-		// is associated to a Category
-	/*	public void KeyListener(object sender, KeyPressEventArgs args) {
+		public void KeyListener(object sender, int key, int state) {
+			if (ignoreKeys)
+				return;
+			
+#if HAVE_GTK
 			Category cat = null;
 			HotKey hotkey = new HotKey();
 
-			hotkey.Key=args.Event.Key;
-			hotkey.Modifier=args.Event.State & (ModifierType.Mod1Mask | ModifierType.Mod5Mask | ModifierType.ShiftMask);
+			hotkey.Key= key;
+			hotkey.Modifier= (int) ((ModifierType)state & (ModifierType.Mod1Mask | ModifierType.Mod5Mask | ModifierType.ShiftMask));
 			if(dic.TryGetValue(hotkey, out cat)) {
 				if(newMarkEvent != null) {
 					newMarkEvent(cat);
 				}
+#endif
 			}
-		}*/
+		}
 	}
 }

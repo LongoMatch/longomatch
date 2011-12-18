@@ -126,5 +126,7 @@ namespace LongoMatch.Handlers
 	public delegate void UnitSelectedHandler (GameUnit gameUnit, TimelineNode unit);
 	public delegate void UnitAddedHandler (GameUnit gameUnit, int frame);
 	public delegate void UnitsDeletedHandler (GameUnit gameUnit, List<TimelineNode> unit);
+	
+	public delegate void KeyHandler (object sender, int key, int modifier);
 
 }

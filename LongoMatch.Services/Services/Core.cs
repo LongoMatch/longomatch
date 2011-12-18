@@ -75,7 +75,7 @@ namespace LongoMatch.Services
 			eManager = new EventsManager(guiToolkit);
 
 			/* Start the hotkeys manager */
-			hkManager = new HotKeysManager();
+			hkManager = new HotKeysManager(guiToolkit.MainWindow);
 			hkManager.newMarkEvent += eManager.OnNewTag;
 
 			/* Start the rendering jobs manager */
@@ -138,11 +138,8 @@ namespace LongoMatch.Services
 		private static void OnOpenedProjectChanged (Project project, ProjectType projectType) {
 			if (project != null) {
 				hkManager.Categories=project.Categories;
-#if HAVE_GTK
-				mainWindow.KeyPressEvent -= hkManager.KeyListener;
 			} else {
-				mainWindow.KeyPressEvent += hkManager.KeyListener;
-#endif
+				hkManager.Categories=null;
 			}
 			
 			eManager.OpenedProject = project;
