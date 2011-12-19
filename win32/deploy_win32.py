@@ -33,11 +33,12 @@ GTK_DEPS = ['freetype6.dll', 'libatk-1.0-0.dll', 'libcairo-2.dll', 'libgailutil-
             'libpng14-14.dll', 'libfontconfig-1.dll', 'libpango-1.0-0.dll', 'libpangoft2-1.0-0.dll',
             'libpangocairo-1.0-0.dll', 'libpangowin32-1.0-0.dll', 'zlib1.dll' ]
 
-MONO_DEPS = ['mono.dll', 'MonoPosixHelper.dll', 'pangosharpglue-2.dll', 'gtksharpglue-2.dll',
+MONO_DEPS = ['mono-2.0.dll', 'MonoPosixHelper.dll', 'pangosharpglue-2.dll', 'gtksharpglue-2.dll',
              'glibsharpglue-2.dll', 'gdksharpglue-2.dll', 'atksharpglue-2.dll', 'intl.dll']
 
 MONO_LIB_DEPS = ['mscorlib.dll', 'Mono.Cairo.dll', 'System.dll', 'System.Core.dll', 'System.Configuration.dll',
-                 'System.Xml.dll', 'System.Security.dll', 'Mono.Security.dll', 'Mono.Posix.dll']
+                 'System.Xml.dll', 'System.Security.dll', 'Mono.Security.dll', 'Mono.Posix.dll', 'WindowsBase.dll',
+		 'System.Xaml.dll']
 
 MONO_GAC_DEPS = ['gdk-sharp', 'glib-sharp', 'pango-sharp', 'gtk-sharp', 'atk-sharp']
 
@@ -136,7 +137,7 @@ class Deploy():
         self.lib_dir = os.path.join(self.dist_dir, 'lib')
         self.images_dir = os.path.join (self.share_dir, 'longomatch', 'images')
         self.plugins_dir = os.path.join(self.lib_dir, 'gstreamer-0.10')
-        self.mono_lib_dir = os.path.join(self.lib_dir, 'mono', '2.0')
+        self.mono_lib_dir = os.path.join(self.lib_dir, 'mono', '4.0')
 
     def create_deployment_folder(self):
         print 'Create deployment directory'
@@ -168,10 +169,10 @@ class Deploy():
         print 'Deploying Mono dependencies'
         for name in MONO_DEPS:
             shutil.copy(os.path.join(self.mono_path, 'bin', name), self.bin_dir)
-        shutil.copy(os.path.join(self.mono_path, 'lib', 'mono', '2.0', 'mscorlib.dll'),
+        shutil.copy(os.path.join(self.mono_path, 'lib', 'mono', '4.0', 'mscorlib.dll'),
                         self.mono_lib_dir)
         for name in MONO_LIB_DEPS:
-            shutil.copy(os.path.join(self.mono_path, 'lib', 'mono', '2.0', name),
+            shutil.copy(os.path.join(self.mono_path, 'lib', 'mono', '4.0', name),
                         self.bin_dir)
         for name in MONO_GAC_DEPS:
             shutil.copy(os.path.join(self.mono_path, 'lib', 'mono', 'gac', name,
@@ -181,6 +182,8 @@ class Deploy():
         # FIXME: Delete that when gtk-sharp 2.12.10 is released
         for name in WINFORMS_DEPS:
             shutil.copy(os.path.join(self.mono_path, 'lib\\mono\\gac', name), self.bin_dir)
+        shutil.copy(os.path.join(self.deps_dir, 'Mono.Addins.dll'), self.bin_dir)
+        shutil.copy(os.path.join(self.deps_dir, 'EPPlus.dll'), self.bin_dir)
 
     def deploy_themes(self):
         print 'Deploying theming support'
@@ -196,7 +199,7 @@ class Deploy():
 
     def deploy_images(self):
         print 'Deploying images'
-        lgm_images_dir = os.path.join(self.root_dir, 'LongoMatch', 'Images')
+        lgm_images_dir = os.path.join(self.root_dir, 'Images')
         for name in IMAGES:
             shutil.copy(os.path.join(lgm_images_dir, name), self.images_dir)
         shutil.copytree(os.path.join(self.deps_dir, 'icons'),
