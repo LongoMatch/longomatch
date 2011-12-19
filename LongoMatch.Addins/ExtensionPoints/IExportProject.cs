@@ -28,7 +28,7 @@ namespace LongoMatch.Addins.ExtensionPoints
 	{
 		string GetMenuEntryName();
 		string GetMenuEntryShortName();
-		void ExportProject(Project project, string filename);
+		void ExportProject(Project project, IGUIToolkit guiToolkit);
 	}
 }
 

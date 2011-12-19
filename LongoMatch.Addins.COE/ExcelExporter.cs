@@ -28,6 +28,7 @@ using OfficeOpenXml.Style;
 using LongoMatch;
 using LongoMatch.Addins.ExtensionPoints;
 using LongoMatch.Interfaces;
+using LongoMatch.Interfaces.GUI;
 using LongoMatch.Store;
 using LongoMatch.Common;
 
@@ -43,9 +44,23 @@ public class ExcelExporter:IExportProject
 		return "EPPLUSExport";
 	}
 	
-	public void ExportProject (Project project, string filename) {
-		EPPLUSExporter exporter = new EPPLUSExporter(project, filename);
-		exporter.Export();
+	public void ExportProject (Project project, IGUIToolkit guiToolkit) {
+		string filename = guiToolkit.SaveFile(Catalog.GetString("Output file"), null,
+			Config.HomeDir(), "Excel", ".xlsx");
+		
+		if (filename == null)
+			return;
+		
+		System.IO.Path.ChangeExtension(filename, ".xlsx");
+		
+		try {
+			EPPLUSExporter exporter = new EPPLUSExporter(project, filename);
+			exporter.Export();
+			guiToolkit.InfoMessage(Catalog.GetString("Project exported successfully"));
+		}catch (Exception ex) {
+			guiToolkit.ErrorMessage(Catalog.GetString("Error exporting project"));
+			Log.Exception(ex);
+		}
 	}
 }
 

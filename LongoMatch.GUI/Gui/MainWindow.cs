@@ -198,25 +198,13 @@ namespace LongoMatch.Gui
 			gameunitstaggerwidget1.GameUnits = gameUnits;
 		}
 		
-		public void AddExportEntry (string name, string shortName, Action<Project, string> exportAction) {
+		public void AddExportEntry (string name, string shortName, Action<Project, IGUIToolkit> exportAction) {
 			string filename;
 			
 			MenuItem parent = (MenuItem) this.UIManager.GetWidget("/menubar1/ToolsAction/ExportProjectAction1");
 			
 			MenuItem item = new MenuItem(name);
-			item.Activated += (sender, e) => {
-				filename = guiToolKit.SaveFile(Catalog.GetString("Output file"), null,
-					Config.HomeDir(), null, null);
-				
-				if (filename == null)
-					return;
-				
-				try {
-					exportAction(openedProject, filename);
-					guiToolKit.InfoMessage(Catalog.GetString("Project exported successfully"));
-				}catch (Exception ex) {
-					guiToolKit.ErrorMessage(Catalog.GetString("Error exporting project"));
-					Log.Exception(ex);}};
+			item.Activated += (sender, e) => (exportAction(openedProject, guiToolKit));
 			item.Show();
 			(parent.Submenu as Menu).Append(item);
 		}

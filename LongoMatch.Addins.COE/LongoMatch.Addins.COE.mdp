@@ -2,13 +2,13 @@
   <Configurations active="Release">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="../bin" assembly="LongoMatch.Addins.COE" />
-      <Build debugmode="True" target="Exe" />
+      <Build debugmode="True" target="Library" />
       <Execution consolepause="False" runwithwarnings="True" runtime="MsNet" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" definesymbols="DEBUG" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
       <Output directory="../bin" assembly="LongoMatch.Addins.COE" />
-      <Build debugmode="False" target="Exe" />
+      <Build debugmode="False" target="Library" />
       <Execution consolepause="False" runwithwarnings="True" runtime="MsNet" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
@@ -17,7 +17,6 @@
     <File subtype="Code" buildaction="Compile" name="GameUnitsEnabler.cs" />
     <File subtype="Code" buildaction="Compile" name="ExcelExporter.cs" />
     <File subtype="Code" buildaction="Compile" name="Assembly.cs" />
-    <File subtype="Code" buildaction="Compile" name="Main.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Addins, Version=0.6.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />

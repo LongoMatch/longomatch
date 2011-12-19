@@ -84,7 +84,7 @@ namespace LongoMatch.Interfaces.GUI
 		ICapturer Capturer{get;}
 		IPlaylistWidget Playlist{get;}
 		
-		void AddExportEntry (string name, string shortName, Action<Project, string> exportAction);
+		void AddExportEntry (string name, string shortName, Action<Project, IGUIToolkit> exportAction);
 	}
 }
 
