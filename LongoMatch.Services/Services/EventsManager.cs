@@ -134,8 +134,10 @@ namespace LongoMatch.Services
 				}
 				miniature = capturer.CurrentMiniatureFrame;
 			}
-			else if(projectType == ProjectType.FileProject)
+			else if(projectType == ProjectType.FileProject) {
 				miniature = player.CurrentMiniatureFrame;
+				player.Pause();
+			}
 			else
 				miniature = null;
 			
@@ -144,6 +146,9 @@ namespace LongoMatch.Services
 			mainWindow.AddPlay(play);
 			/* Tag subcategories of the new play */
 			LaunchPlayTagger(play);
+			if (projectType == ProjectType.FileProject) {
+				player.Play();
+			}
 		}
 
 		protected virtual void OnNewTagAtFrame(Category category, int frame) {
