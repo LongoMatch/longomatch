@@ -351,9 +351,25 @@ namespace LongoMatch.Services
 		}
 		
 		protected void ExportProject() {
-			/* FIXME:
-			 * ExportToCSV(this, openedProject);
-			 * */
+			if (OpenedProject == null) {
+				Log.Warning("Opened project is null and can't be exported");
+			}
+			
+			string filename = guiToolkit.SaveFile(Catalog.GetString("Save project"), null,
+				Config.HomeDir(), Constants.PROJECT_NAME, Constants.PROJECT_EXT);
+			
+			if (filename == null)
+				return;
+			
+			System.IO.Path.ChangeExtension(filename, Constants.PROJECT_EXT);
+			
+			try {
+				Project.Export(OpenedProject, filename);
+				guiToolkit.InfoMessage(Catalog.GetString("Project exported successfully"));
+			}catch (Exception ex) {
+				guiToolkit.ErrorMessage(Catalog.GetString("Error exporting project"));
+				Log.Exception(ex);
+			}
 		}
 		
 		protected void OpenCategoriesTemplatesManager()
