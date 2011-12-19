@@ -190,7 +190,7 @@ namespace LongoMatch.Gui.Dialog
 			fChooser.SetCurrentFolder(Config.HomeDir());
 			FileFilter filter = new FileFilter();
 			filter.Name = Constants.PROJECT_NAME;
-			filter.AddPattern("*.lpr");
+			filter.AddPattern(Constants.PROJECT_EXT);
 
 			fChooser.AddFilter(filter);
 			if(fChooser.Run() == (int)ResponseType.Accept) {

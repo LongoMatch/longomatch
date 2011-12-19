@@ -98,5 +98,6 @@ Xavier Queralt Mateu (ca)";
 		public const string CAT_TEMPLATE_EXT = ".lct";
 		public const string SUBCAT_TEMPLATE_EXT = ".lst";
 		public const string PLAYLIST_EXT = ".lpl";
+		public const string PROJECT_EXT = ".lgm";
 	}
 }
