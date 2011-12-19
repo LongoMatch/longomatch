@@ -314,8 +314,8 @@ namespace LongoMatch.Gui
 			
 			/* Update tabs labels */
 			var desc = project.Description;
-			visitorteamlabel.Text = desc.VisitorName;
-			localteamlabel.Text = desc.LocalName;
+			visitorteamlabel.Text = project.LocalTeamTemplate.TeamName;
+			localteamlabel.Text = project.LocalTeamTemplate.TeamName;
 			
 			ExportProjectAction1.Sensitive = true;
 			
@@ -355,7 +355,7 @@ namespace LongoMatch.Gui
 			if(projectType == ProjectType.CaptureProject) {
 				capturer.Close();
 				player.Visible = true;
-				capturer.Visible = false;;
+				capturer.Visible = false;
 				EmitSaveProject();
 			} else if(projectType == ProjectType.FakeCaptureProject) {
 				EmitCloseOpenedProject(true);
