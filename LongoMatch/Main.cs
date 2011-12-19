@@ -46,6 +46,8 @@ namespace LongoMatch
 			/* Init Gtk */
 			Application.Init();
 			
+			Core.Init();
+
 			/* Init GStreamer */
 			GStreamer.Init();
 			if (!GStreamer.CheckInstallation())
@@ -55,7 +57,6 @@ namespace LongoMatch
 
 
 			try {
-				Core.Init();
 				AddinsManager manager = new AddinsManager(Path.Combine(Config.HomeDir(), "addins"));
 				manager.LoadConfigModifierAddins();
 			    GUIToolkit guiToolkit = new GUIToolkit();
