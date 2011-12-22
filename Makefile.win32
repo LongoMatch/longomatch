@@ -81,6 +81,7 @@ LONGOMATCH_CORE=${BUILD_DIR}/LongoMatch.dll
 LONGOMATCH_CORE_FILES = \
 	Common/CaptureSettings.cs \
 	Common/Cloner.cs \
+	Common/Color.cs \
 	Common/ConsoleCrayon.cs \
 	Common/Constants.cs \
 	Common/Device.cs \
