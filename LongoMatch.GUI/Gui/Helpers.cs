@@ -21,6 +21,8 @@ using Gtk;
 using Gdk;
 using Mono.Unix;
 
+using LongoMatch.Common;
+
 namespace LongoMatch.Gui
 {
 	public class Helpers
@@ -81,11 +83,14 @@ namespace LongoMatch.Gui
 		}
 		
 		public static Color ToGdkColor(System.Drawing.Color color) {
-			return new Color((byte)color.R, (byte)color.G, (byte)color.B);
+			return new Color(color.R, color.G, color.B);
 		}
 		
 		public static System.Drawing.Color ToDrawingColor(Color color) {
-			return System.Drawing.Color.FromArgb((int)color.Red, (int)color.Green, (int)color.Blue);
+			return System.Drawing.Color.FromArgb(
+				ColorHelper.ShortToByte(color.Red),
+				ColorHelper.ShortToByte(color.Green),
+				ColorHelper.ShortToByte(color.Blue));
 		}
 	}
 }
