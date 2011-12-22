@@ -135,11 +135,10 @@ namespace LongoMatch.Store
 			SubCategories = (List<ISubCategory>)info.GetValue("subcategories", typeof(List<ISubCategory>));
 			Position = info.GetInt32("position");
 			SortMethod = (SortMethodType)info.GetValue("sort_method", typeof(SortMethodType));
-			// read 'red', 'blue' and 'green' values and convert it to Gdk.Color
-			Color = Color.FromArgb(
-				(ushort)info.GetValue("red", typeof(ushort)),
-				(ushort)info.GetValue("green", typeof(ushort)),
-				(ushort)info.GetValue("blue", typeof(ushort)));
+			Color = new Color.FromArgb(
+				ColorHelper.ShortToByte((ushort)info.GetValue("red", typeof(ushort))),
+				ColorHelper.ShortToByte((ushort)info.GetValue("green", typeof(ushort))),
+				ColorHelper.ShortToByte((ushort)info.GetValue("blue", typeof(ushort))));
 		}
 
 		// this method is automatically called during serialization
@@ -151,11 +150,13 @@ namespace LongoMatch.Store
 			info.AddValue("hotkey", HotKey);
 			info.AddValue("position", Position);
 			info.AddValue("subcategories", SubCategories);
-			info.AddValue("red", Color.R);
-			info.AddValue("green", Color.G);
-			info.AddValue("blue", Color.B);
+			/* Convert to ushort for backward compatibility */
+			info.AddValue("red", ColorHelper.ByteToShort(Color.R));
+			info.AddValue("green", ColorHelper.ByteToShort(Color.G));
+			info.AddValue("blue", ColorHelper.ByteToShort(Color.B));
 			info.AddValue("sort_method", SortMethod);
 		}
 		#endregion
+		
 	}
 }
