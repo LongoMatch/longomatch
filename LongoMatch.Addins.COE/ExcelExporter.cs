@@ -77,7 +77,7 @@ public class EPPLUSExporter {
 	public EPPLUSExporter(Project project, string filename) {
 		this.project = project;
 		this.filename = filename;
-		duration = (int) (project.Description.File.Length / 1000); // 60);
+		duration = (int) (project.Description.File.Length / 1000 / 60);
 	}
 	
 	public void Export() {
@@ -175,8 +175,8 @@ public class EPPLUSExporter {
 			foreach (TimelineNode unit in gu) {
 				int start, stop;
 				
-				start = TIMELINE_START + unit.Start.Seconds; // 60;
-				stop = TIMELINE_START + unit.Stop.Seconds; // 60;
+				start = TIMELINE_START + unit.Start.Seconds / 60;
+				stop = TIMELINE_START + unit.Stop.Seconds / 60;
 				
 				ws.Cells[row, start].Value = stop - start;
 				cols = ws.Cells[row, start, row, stop];
@@ -242,7 +242,7 @@ public class EPPLUSExporter {
 				
 				/* Add the category's overal stats */
 				catRow = catsDict[ca];
-				time = TIMELINE_START + play.Start.Seconds; // /60;
+				time = TIMELINE_START + play.Start.Seconds / 60;
 				SetCellValue(ws, catRow, time, 1);
 				
 				/* Add the tags stats */
