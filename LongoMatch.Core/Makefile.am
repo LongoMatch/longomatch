@@ -6,6 +6,7 @@ LINK = $(REF_DEP_LONGOMATCH_CORE)
 SOURCES = \
 	Common/CaptureSettings.cs \
 	Common/Cloner.cs \
+	Common/Color.cs \
 	Common/ConsoleCrayon.cs \
 	Common/Constants.cs \
 	Common/Device.cs \
