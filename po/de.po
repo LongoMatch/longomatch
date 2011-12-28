@@ -6,8 +6,8 @@ msgstr ""
 "Project-Id-Version: longomatch master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-12-18 21:38+0000\n"
-"PO-Revision-Date: 2011-12-19 21:12+0100\n"
+"POT-Creation-Date: 2011-12-19 23:47+0000\n"
+"PO-Revision-Date: 2011-12-28 11:29+0100\n"
 "Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -229,15 +229,15 @@ msgstr "%s"
 msgid "0 seconds"
 msgstr "0 Sekunden"
 
-#: ../LongoMatch/Main.cs:97
+#: ../LongoMatch/Main.cs:98
 msgid "The application has finished with an unexpected error."
 msgstr "Die Anwendung wurde mit einem unerwarteten Fehler beendet."
 
-#: ../LongoMatch/Main.cs:98
+#: ../LongoMatch/Main.cs:99
 msgid "A log has been saved at: "
 msgstr "Ein Protokoll wurde gespeichert in:"
 
-#: ../LongoMatch/Main.cs:99
+#: ../LongoMatch/Main.cs:100
 msgid "Please, fill a bug report "
 msgstr "Bitte verfassen Sie einen Fehlerbericht."
 
@@ -1108,7 +1108,6 @@ msgid "Unknown"
 msgstr "Unbekannt"
 
 #: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:444
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:208
 msgid "Output file"
 msgstr "Ausgabedatei"
 
@@ -1262,25 +1261,17 @@ msgstr "Der Vorlagenname ist leer."
 msgid "The template already exists. Do you want to overwrite it ?"
 msgstr "Die Vorlage existiert bereits. Wollen Sie sie überschreiben?"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:216
-msgid "Project exported successfully"
-msgstr "Projekt wurde erfolgreich exportiert"
-
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:218
-msgid "Error exporting project"
-msgstr "Fehler beim Exportieren des Projekts"
-
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:433
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:421
 msgid "Do you want to close the current project?"
 msgstr "Wollen Sie das aktuelle Projekt schließen?"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:571
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:559
 msgid "The actual project will be closed due to an error in the media player:"
 msgstr ""
 "Das aktuelle Projekt wird wegen eines Fehlers in der Medienwiedergabe "
 "geschlossen:"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:669
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:657
 msgid ""
 "An error occured in the video capturer and the current project will be closed:"
 msgstr ""
@@ -1602,6 +1593,18 @@ msgstr "Sie öffnen ein Live-Projekt, dem noch keine Videodatei zugeordnet ist."
 msgid "Select a video file in the step."
 msgstr "Bitte wählen Sie in diesem Schritt eine Videodatei aus."
 
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:358
+msgid "Save project"
+msgstr "Projekt speichern"
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:368
+msgid "Project exported successfully"
+msgstr "Projekt wurde erfolgreich exportiert"
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:370
+msgid "Error exporting project"
+msgstr "Fehler beim Exportieren des Projekts"
+
 #: ../LongoMatch.Services/Services/PlaylistManager.cs:61
 msgid ""
 "The file you are trying to load is not a playlist or it's not compatible with "
@@ -1649,7 +1652,7 @@ msgstr "Eine Vorlage dieses Namens existiert bereits:"
 msgid "You can't create a new play if the capturer is not recording."
 msgstr "Sie können kein neues Spiel erstellen, wenn die Aufnahme nicht läuft."
 
-#: ../LongoMatch.Services/Services/EventsManager.cs:181
+#: ../LongoMatch.Services/Services/EventsManager.cs:186
 msgid ""
 "The stop time is smaller than the start time. The play will not be added."
 msgstr ""
