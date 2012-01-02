@@ -58,7 +58,7 @@ namespace LongoMatch.Interfaces.GUI
 		Project EditFakeProject(IDatabase db, Project project, ITemplatesService ts);
 		
 		void OpenProjectsManager(Project openedProject, IDatabase db, ITemplatesService ts);
-		void OpenCategoriesTemplatesManager(ICategoriesTemplatesProvider tp);
+		void OpenCategoriesTemplatesManager(ITemplatesService ts);
 		void OpenTeamsTemplatesManager(ITeamTemplatesProvider tp);
 		
 		void ManageJobs(IRenderingJobsManager manager);

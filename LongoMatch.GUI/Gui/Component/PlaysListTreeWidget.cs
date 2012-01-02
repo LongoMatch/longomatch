@@ -24,7 +24,9 @@ using Gtk;
 using Mono.Unix;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Handlers;
+using LongoMatch.Interfaces;
 using LongoMatch.Store;
+using LongoMatch.Store.Templates;
 using LongoMatch.Common;
 
 namespace LongoMatch.Gui.Component
@@ -44,6 +46,10 @@ namespace LongoMatch.Gui.Component
 		public event TagPlayHandler TagPlay;
 		public event RenderPlaylistHandler RenderPlaylistEvent;
 
+		ITemplatesService ts;
+		ISubcategoriesTemplatesProvider subcatProvider;
+		List<PlayerSubCategory> playersSubcat;
+
 		private Project project;
 
 		public PlaysListTreeWidget()
@@ -57,6 +63,15 @@ namespace LongoMatch.Gui.Component
 			treeview.EditProperties += OnEditProperties;
 			treeview.TagPlay += OnTagPlay;
 			treeview.NewRenderingJob += OnNewRenderingJob;
+		}
+		
+		public ITemplatesService TemplatesService
+		{
+			set {
+				this.ts = ts;
+				this.subcatProvider = ts.SubCategoriesTemplateProvider;
+				this.playersSubcat = ts.PlayerSubcategories;
+			}
 		}
 
 		public void RemovePlays(List<Play> plays) {
@@ -160,7 +175,7 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		protected virtual void OnEditProperties(TimeNode tNode, object val) {
-			EditCategoryDialog dialog = new EditCategoryDialog();
+			EditCategoryDialog dialog = new EditCategoryDialog(ts);
 			dialog.Category = tNode as Category; 
 			dialog.Project = project;
 			dialog.Run();

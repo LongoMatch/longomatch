@@ -49,8 +49,9 @@ namespace LongoMatch.Gui.Component
 		Categories actualCategory;
 		TeamTemplate actualVisitorTeam;
 		TeamTemplate actualLocalTeam;
-		ITemplateProvider<Categories, Category> tpc;
-		ITemplateProvider<TeamTemplate, Player> tpt;
+		
+		ICategoriesTemplatesProvider tpc;
+		ITeamTemplatesProvider tpt;
 		ITemplateWidget<Categories, Category> twc;
 		ITemplateWidget<TeamTemplate, Player> twt;
 		ProjectType useType;
@@ -81,7 +82,7 @@ namespace LongoMatch.Gui.Component
 			set {
 				tpc = value.CategoriesTemplateProvider;
 				tpt = value.TeamTemplateProvider;
-				twc = new CategoriesTemplateEditorWidget(tpc);
+				twc = new CategoriesTemplateEditorWidget(value);
 				twt = new TeamTemplateEditorWidget(tpt);
 				FillCategories();
 				FillTeamsTemplate();

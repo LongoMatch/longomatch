@@ -25,6 +25,10 @@ using LongoMatch.Gui.Component;
 using LongoMatch.Gui;
 using Mono.Unix;
 
+using LongoMatch.Store;
+using LongoMatch.Store.Templates;
+using LongoMatch.Interfaces;
+
 namespace LongoMatch.Gui.Dialog
 {
 
@@ -33,10 +37,11 @@ namespace LongoMatch.Gui.Dialog
 	{
 		private List<HotKey> hkList;
 
-		public EditCategoryDialog()
+		public EditCategoryDialog(ITemplatesService ts)
 		{
 			this.Build();
 			timenodeproperties2.HotKeyChanged += OnHotKeyChanged;
+			timenodeproperties2.LoadSubcategories(ts);
 		}
 
 		public Category Category {

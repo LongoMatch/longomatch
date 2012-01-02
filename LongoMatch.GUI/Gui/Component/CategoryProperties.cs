@@ -44,7 +44,7 @@ namespace LongoMatch.Gui.Component
 		public event HotKeyChangeHandler HotKeyChanged;
 
 		private Category cat;
-		private ITemplateProvider<SubCategoryTemplate, string> subcategoriesTemplates;
+		private ISubcategoriesTemplatesProvider subcategoriesProvider;
 		private ListStore model;
 
 		public CategoryProperties()
@@ -56,23 +56,16 @@ namespace LongoMatch.Gui.Component
 			lagtimebutton.ValueChanged += OnLagTimeChanged;
 		}
 		
-		public ITemplateProvider<SubCategoryTemplate, string> Template {
-			set {
-				subcategoriesTemplates = value;
-			}
-		}
-
-		public List<PlayerSubCategory> PlayerSubcategories{
-			set{
-				LoadSubcategories(value);
-			}
+		public void LoadSubcategories(ITemplatesService ts) {
+			subcategoriesProvider = ts.SubCategoriesTemplateProvider;
+			LoadSubcategories(ts.PlayerSubcategories);
 		}
 		
 		private void LoadSubcategories(List<PlayerSubCategory> playerSubcategories) {
 			model = new ListStore(typeof(string), typeof(ISubCategory));
 			
 			model.AppendValues(Catalog.GetString("Create new..."), "");
-			foreach (TagSubCategory subcat in subcategoriesTemplates.Templates) {
+			foreach (TagSubCategory subcat in subcategoriesProvider.Templates) {
 				Log.Debug("Adding tag subcategory: ", subcat.Name);
 				model.AppendValues(String.Format("[{0}] {1}", 
 				                                 Catalog.GetString("Tags"),
@@ -137,7 +130,7 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		private TagSubCategory EditSubCategoryTags (TagSubCategory template, bool checkName){
-			SubCategoryTagsEditor se =  new SubCategoryTagsEditor(template, subcategoriesTemplates.TemplatesNames);
+			SubCategoryTagsEditor se =  new SubCategoryTagsEditor(template, subcategoriesProvider.TemplatesNames);
 			
 			se.CheckName = checkName;
 			int ret = se.Run();
@@ -230,7 +223,7 @@ namespace LongoMatch.Gui.Component
 				
 				model.AppendValues(String.Format("[{0}] {1}",Catalog.GetString("Tags"), template.Name),
 				                   template);
-				subcategoriesTemplates.Save(template);
+				subcategoriesProvider.Save(template);
 				subcatcombobox.Active = 1;
 				return;
 			}

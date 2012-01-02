@@ -171,16 +171,18 @@ namespace LongoMatch.Gui
 			return project;
 		}
 		
-		public void OpenCategoriesTemplatesManager(ICategoriesTemplatesProvider tp)
+		public void OpenCategoriesTemplatesManager(ITemplatesService ts)
 		{
-			var tManager = new TemplatesManager<Categories, Category> (tp, new CategoriesTemplateEditorWidget (tp));
+			var tManager = new TemplatesManager<Categories, Category> (ts.CategoriesTemplateProvider,
+			                                                           new CategoriesTemplateEditorWidget(ts));
 			tManager.TransientFor = mainWindow as Gtk.Window;
 			tManager.Show();
 		}
 
-		public void OpenTeamsTemplatesManager(ITeamTemplatesProvider tp)
+		public void OpenTeamsTemplatesManager(ITeamTemplatesProvider teamProvider)
 		{
-			var tManager = new TemplatesManager<TeamTemplate, Player>(tp, new TeamTemplateEditorWidget (tp));
+			var tManager = new TemplatesManager<TeamTemplate, Player> (teamProvider,
+			                                                           new TeamTemplateEditorWidget(teamProvider));
 			tManager.TransientFor = mainWindow as Gtk.Window;
 			tManager.Show();
 		}
@@ -267,6 +269,8 @@ namespace LongoMatch.Gui
 			}	
 			if (type == ProjectType.CaptureProject)
 				captureSettings = npd.CaptureSettings;
+			else
+				captureSettings = new CaptureSettings();
 			npd.Destroy();
 			return project;
 		}

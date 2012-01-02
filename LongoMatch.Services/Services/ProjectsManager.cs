@@ -374,7 +374,7 @@ namespace LongoMatch.Services
 		
 		protected void OpenCategoriesTemplatesManager()
 		{
-			guiToolkit.OpenCategoriesTemplatesManager (Core.TemplatesService.CategoriesTemplateProvider);
+			guiToolkit.OpenCategoriesTemplatesManager (Core.TemplatesService);
 		}
 
 		protected void OpenTeamsTemplatesManager()

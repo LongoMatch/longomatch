@@ -32,8 +32,10 @@ namespace LongoMatch.Gui.Component
 		CategoriesTreeView categoriestreeview;
 		List<HotKey> hkList;
 		GameUnitsEditor gameUnitsEditor;
+		
+		ITemplatesService ts;
 
-		public CategoriesTemplateEditorWidget (ITemplateProvider<Categories, Category> provider): base(provider)
+		public CategoriesTemplateEditorWidget (ITemplatesService ts): base(ts.CategoriesTemplateProvider)
 		{
 			hkList = new List<HotKey>();
 			categoriestreeview = new CategoriesTreeView();
@@ -46,6 +48,7 @@ namespace LongoMatch.Gui.Component
 			if (Config.useGameUnits) {
 				AddPage(gameUnitsEditor, "Game phases");
 			}
+			this.ts = ts;
 		}
 		
 		public override Categories Template {
@@ -98,7 +101,7 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		protected override void EditSelected() {
-			EditCategoryDialog dialog = new EditCategoryDialog();
+			EditCategoryDialog dialog = new EditCategoryDialog(ts);
 			dialog.Category = selected[0];
 			dialog.HotKeysList = hkList;
 			dialog.TransientFor = (Gtk.Window) Toplevel;
