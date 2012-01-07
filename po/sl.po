@@ -2,14 +2,14 @@
 # Copyright (C) 2009 longomatch COPYRIGHT HOLDER
 # This file is distributed under the same license as the longomatch package.
 #
-# Matej Urbančič <mateju@svn.gnome.org>, 2010.
+# Matej Urbančič <mateju@svn.gnome.org>, 2010 - 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: longomatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-12-23 16:41+0000\n"
-"PO-Revision-Date: 2011-12-26 17:37+0100\n"
+"POT-Creation-Date: 2012-01-07 17:50+0000\n"
+"PO-Revision-Date: 2012-01-07 21:58+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: \n"
@@ -215,6 +215,46 @@ msgstr "LongoMatch: digitalni trener"
 #: ../LongoMatch/longomatch.desktop.in.in.h:3
 msgid "Sports video analysis tool for coaches"
 msgstr "Orodje za pomoč trenerjem pri analizi posnetkov tekem"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:40
+msgid "Export project to Excel file"
+msgstr "Izvozi projekt v datoteko MS Excel"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:48
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:444
+msgid "Output file"
+msgstr "Odvodna datoteka"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:59
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:368
+msgid "Project exported successfully"
+msgstr "Projekt je uspešno izvižen"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:61
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:370
+msgid "Error exporting project"
+msgstr "Napaka med izvažanjem projekta"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:152
+msgid "Timeline"
+msgstr "Časovnica"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:162
+msgid "Game Units"
+msgstr "Delitev igre"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:163
+msgid "Duration (min)"
+msgstr "Trajanje (min)"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:274
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:43
+msgid "Categories"
+msgstr "Kategorije"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:275
+msgid "Count"
+msgstr "Števec"
 
 #: ../LongoMatch.Core/Store/Play.cs:200
 #: ../LongoMatch.Core/Store/SubCategory.cs:84
@@ -709,7 +749,7 @@ msgstr "Prosti način zajemanja"
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:150
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:153
 msgid "Game units view"
-msgstr "Poglejte delitve igre"
+msgstr "Pogled delitve igre"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:155
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:156
@@ -1057,10 +1097,6 @@ msgstr "Vir DirectShow"
 msgid "Unknown"
 msgstr "Neznano"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:444
-msgid "Output file"
-msgstr "Odvodna datoteka"
-
 #: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:456
 msgid "Open file..."
 msgstr "Odpri datoteko ..."
@@ -1076,10 +1112,6 @@ msgstr "Datoteka ne vsebuje video pretoka."
 #: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:489
 msgid "This file contains a video stream but its length is 0."
 msgstr "Datoteka vsebuje video pretok, vendar je dolžine 0."
-
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:43
-msgid "Categories"
-msgstr "Kategorije"
 
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:77
 msgid "You are about to delete a category and all the plays added to this category. Do you want to proceed?"
@@ -1517,14 +1549,6 @@ msgstr "Izberite video datoteko."
 #: ../LongoMatch.Services/Services/ProjectsManager.cs:358
 msgid "Save project"
 msgstr "Shrani projekt"
-
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:368
-msgid "Project exported successfully"
-msgstr "Projekt je uspešno izvižen"
-
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:370
-msgid "Error exporting project"
-msgstr "Napaka med izvažanjem projekta"
 
 #: ../LongoMatch.Services/Services/PlaylistManager.cs:61
 msgid "The file you are trying to load is not a playlist or it's not compatible with the current version"
