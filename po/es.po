@@ -1,14 +1,14 @@
 #
 # Jorge González <jorgegonz@svn.gnome.org>, 2010, 2011.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: longomatch.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-12-19 23:47+0000\n"
-"PO-Revision-Date: 2011-12-23 16:49+0100\n"
+"POT-Creation-Date: 2012-01-07 17:50+0000\n"
+"PO-Revision-Date: 2012-01-09 14:42+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -256,6 +256,50 @@ msgstr "LongoMatch: el entrenador digital"
 #: ../LongoMatch/longomatch.desktop.in.in.h:3
 msgid "Sports video analysis tool for coaches"
 msgstr "Herramienta de vídeo análisis para entrenadores"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:40
+#| msgid "Export to project file"
+msgid "Export project to Excel file"
+msgstr "Exportar proyecto a un archivo Excel"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:48
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:444
+msgid "Output file"
+msgstr "Archivo de salida"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:59
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:368
+msgid "Project exported successfully"
+msgstr "Proyecto exportado satisfactoriamente."
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:61
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:370
+msgid "Error exporting project"
+msgstr "Error al exportar el proyecto"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:152
+#| msgid "Timeline view"
+msgid "Timeline"
+msgstr "Cronología"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:162
+#| msgid "Game units view"
+msgid "Game Units"
+msgstr "Unidades de juego"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:163
+#| msgid "Duration"
+msgid "Duration (min)"
+msgstr "Duración (min)"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:274
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:43
+msgid "Categories"
+msgstr "Categorías"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:275
+msgid "Count"
+msgstr "Contar"
 
 #: ../LongoMatch.Core/Store/Play.cs:200
 #: ../LongoMatch.Core/Store/SubCategory.cs:84
@@ -756,13 +800,11 @@ msgstr "Vista de unidades de juego"
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:156
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:158
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:160
-#| msgid "Import Project"
 msgid "Export Project"
 msgstr "Exportar proyecto"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:164
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:165
-#| msgid "Export to video file"
 msgid "Export to project file"
 msgstr "Exportar a un archivo de proyecto"
 
@@ -1108,10 +1150,6 @@ msgstr "Origen «DirectShow»"
 msgid "Unknown"
 msgstr "Desconocido"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:444
-msgid "Output file"
-msgstr "Archivo de salida"
-
 #: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:456
 msgid "Open file..."
 msgstr "Abrir archivo…"
@@ -1127,11 +1165,6 @@ msgstr "Este archivo no contiene un flujo de vídeo."
 #: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:489
 msgid "This file contains a video stream but its length is 0."
 msgstr "Este archivo contiene un flujo de vídeo pero su longitud es 0."
-
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:43
-#| msgid "Category"
-msgid "Categories"
-msgstr "Categorías"
 
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:77
 msgid ""
@@ -1211,22 +1244,19 @@ msgstr "Fecha"
 
 #: ../LongoMatch.GUI/Gui/Component/GameUnitTimeScale.cs:53
 #: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:53
-#| msgid "Play:"
 msgid "play"
 msgstr "jugada"
 
 #: ../LongoMatch.GUI/Gui/Component/GameUnitWidget.cs:62
-#| msgid "Time:"
 msgid "Time: "
 msgstr "Tiempo:"
 
 #: ../LongoMatch.GUI/Gui/Component/PlayerProperties.cs:88
-#: ../LongoMatch.GUI/Gui/Helpers.cs:42
+#: ../LongoMatch.GUI/Gui/Helpers.cs:44
 msgid "Choose an image"
 msgstr "Elegir una imagen"
 
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:47
-#| msgid "Tag players"
 msgid "Teams players"
 msgstr "Equipos de jugadores"
 
@@ -1250,7 +1280,6 @@ msgid "Delete "
 msgstr "Borrar "
 
 #: ../LongoMatch.GUI/Gui/Base/TimeScaleBase.cs:143
-#| msgid "Add New Play"
 msgid "Add new "
 msgstr "Añadir nueva "
 
@@ -1528,7 +1557,6 @@ msgstr ""
 "convertirlo a un formato más adecuado?"
 
 #: ../LongoMatch.Multimedia/Utils/GStreamer.cs:112
-#| msgid "An error has occurred in the video editor."
 msgid "An error has been detected in the current installation."
 msgstr "Se ha detectado un error en la instalación actual."
 
@@ -1594,24 +1622,12 @@ msgid "You are opening a live project without any video file associated yet."
 msgstr "Está abriendo un proyecto «live» sin un archivo de vídeo asociado."
 
 #: ../LongoMatch.Services/Services/ProjectsManager.cs:343
-#| msgid "Please, select a video file."
 msgid "Select a video file in the step."
 msgstr "Seleccione un archivo de vídeo."
 
 #: ../LongoMatch.Services/Services/ProjectsManager.cs:358
-#| msgid "Save Project"
 msgid "Save project"
 msgstr "Guardar proyecto"
-
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:368
-#| msgid "Project saved successfully."
-msgid "Project exported successfully"
-msgstr "Proyecto exportado satisfactoriamente."
-
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:370
-#| msgid "Error importing project:"
-msgid "Error exporting project"
-msgstr "Error al exportar el proyecto"
 
 #: ../LongoMatch.Services/Services/PlaylistManager.cs:61
 msgid ""
@@ -1631,7 +1647,6 @@ msgstr "Abrir lista de reproducción"
 
 #: ../LongoMatch.Services/Services/PlaylistManager.cs:184
 #: ../LongoMatch.Services/Services/PlaylistManager.cs:195
-#| msgid "Playlist"
 msgid "playlists"
 msgstr "listas de reproducción"
 
