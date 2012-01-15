@@ -39,9 +39,7 @@ namespace LongoMatch.Services
 		public TemplatesService (string basePath)
 		{
 			dict = new Dictionary<Type, ITemplateProvider>();
-			dict.Add(typeof(SubCategoryTemplate),
-			         new TemplatesProvider<SubCategoryTemplate, string> (basePath,
-			                                                 Constants.SUBCAT_TEMPLATE_EXT));
+			dict.Add(typeof(SubCategoryTemplate), new SubCategoriesTemplatesProvider(basePath));
 			dict.Add(typeof(TeamTemplate), new TeamTemplatesProvider(basePath));
 			dict.Add(typeof(Categories), new CategoriesTemplatesProvider (basePath));
 			CheckDefaultTemplates();
