@@ -4,6 +4,8 @@ libcesarplayer/video-utils.c
 LongoMatch/Main.cs
 LongoMatch/longomatch.desktop.in.in
 LongoMatch.Addins.COE/ExcelExporter.cs
+LongoMatch.Addins.COE/ProjectStatsSheet.cs
+LongoMatch.Addins.COE/TeamStatsSheets.cs
 LongoMatch.Core/Handlers/Handlers.cs
 LongoMatch.Core/Handlers/Multimedia.cs
 LongoMatch.Core/Config.cs
