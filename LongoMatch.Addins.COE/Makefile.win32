@@ -10,6 +10,8 @@ LONGOMATCH_ADDINS_COE=${BUILD_DIR}/LongoMatch.Addins.COE.dll
 LONGOMATCH_ADDINS_COE_FILES = \
 	Assembly.cs \
        	ExcelExporter.cs \
+	ProjectStatsSheet.cs \
+	TeamStatsSheets.cs \
       	GameUnitsEnabler.cs
 
 LONGOMATCH_ADDINS_COE_REFERENCES = \
