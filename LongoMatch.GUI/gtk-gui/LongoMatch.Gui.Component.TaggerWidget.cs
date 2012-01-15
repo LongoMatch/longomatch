@@ -5,6 +5,13 @@ namespace LongoMatch.Gui.Component
 	public partial class TaggerWidget
 	{
 		private global::Gtk.VBox vbox2;
+		private global::Gtk.VBox vbox3;
+		private global::Gtk.Frame frame1;
+		private global::Gtk.Alignment GtkAlignment;
+		private global::Gtk.HBox hbox1;
+		private global::Gtk.CheckButton localcheckbutton;
+		private global::Gtk.CheckButton visitorcheckbutton;
+		private global::Gtk.Label GtkLabel1;
 		private global::Gtk.Table table1;
         
 		protected virtual void Build ()
@@ -18,15 +25,64 @@ namespace LongoMatch.Gui.Component
 			this.vbox2.Name = "vbox2";
 			this.vbox2.Spacing = 6;
 			// Container child vbox2.Gtk.Box+BoxChild
+			this.vbox3 = new global::Gtk.VBox ();
+			this.vbox3.Name = "vbox3";
+			this.vbox3.Spacing = 6;
+			// Container child vbox3.Gtk.Box+BoxChild
+			this.frame1 = new global::Gtk.Frame ();
+			this.frame1.Name = "frame1";
+			this.frame1.ShadowType = ((global::Gtk.ShadowType)(0));
+			// Container child frame1.Gtk.Container+ContainerChild
+			this.GtkAlignment = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
+			this.GtkAlignment.Name = "GtkAlignment";
+			this.GtkAlignment.LeftPadding = ((uint)(12));
+			// Container child GtkAlignment.Gtk.Container+ContainerChild
+			this.hbox1 = new global::Gtk.HBox ();
+			this.hbox1.Name = "hbox1";
+			this.hbox1.Spacing = 6;
+			// Container child hbox1.Gtk.Box+BoxChild
+			this.localcheckbutton = new global::Gtk.CheckButton ();
+			this.localcheckbutton.CanFocus = true;
+			this.localcheckbutton.Name = "localcheckbutton";
+			this.localcheckbutton.Label = "";
+			this.localcheckbutton.DrawIndicator = true;
+			this.localcheckbutton.UseUnderline = true;
+			this.hbox1.Add (this.localcheckbutton);
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.localcheckbutton]));
+			w1.Position = 0;
+			// Container child hbox1.Gtk.Box+BoxChild
+			this.visitorcheckbutton = new global::Gtk.CheckButton ();
+			this.visitorcheckbutton.CanFocus = true;
+			this.visitorcheckbutton.Name = "visitorcheckbutton";
+			this.visitorcheckbutton.Label = "";
+			this.visitorcheckbutton.DrawIndicator = true;
+			this.visitorcheckbutton.UseUnderline = true;
+			this.hbox1.Add (this.visitorcheckbutton);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.visitorcheckbutton]));
+			w2.Position = 1;
+			this.GtkAlignment.Add (this.hbox1);
+			this.frame1.Add (this.GtkAlignment);
+			this.GtkLabel1 = new global::Gtk.Label ();
+			this.GtkLabel1.Name = "GtkLabel1";
+			this.GtkLabel1.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Team</b>");
+			this.GtkLabel1.UseMarkup = true;
+			this.frame1.LabelWidget = this.GtkLabel1;
+			this.vbox3.Add (this.frame1);
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.frame1]));
+			w5.Position = 0;
+			w5.Expand = false;
+			w5.Fill = false;
+			// Container child vbox3.Gtk.Box+BoxChild
 			this.table1 = new global::Gtk.Table (((uint)(3)), ((uint)(3)), false);
 			this.table1.Name = "table1";
 			this.table1.RowSpacing = ((uint)(6));
 			this.table1.ColumnSpacing = ((uint)(6));
-			this.vbox2.Add (this.table1);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.table1]));
-			w1.Position = 0;
-			w1.Expand = false;
-			w1.Fill = false;
+			this.vbox3.Add (this.table1);
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.table1]));
+			w6.Position = 1;
+			this.vbox2.Add (this.vbox3);
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.vbox3]));
+			w7.Position = 0;
 			this.Add (this.vbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

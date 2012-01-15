@@ -77,13 +77,6 @@ namespace LongoMatch.Store.Templates
 			Color c = Color.FromArgb(255, 0, 0);
 			HotKey h = new HotKey();
 			
-			team = new TeamSubCategory {
-				Name = Catalog.GetString("Team"),
-				AllowMultiple = false,
-				FastTag = true};
-			team.Add(Team.LOCAL);
-			team.Add(Team.VISITOR);
-			
 			localplayers = new PlayerSubCategory {
 				Name = Catalog.GetString("Local Team Players"),
 				AllowMultiple = true,
@@ -113,7 +106,6 @@ namespace LongoMatch.Store.Templates
 				HotKey = h,
 				Position = index-1,
 			};
-			cat.SubCategories.Add(team);
 			cat.SubCategories.Add(localplayers);
 			cat.SubCategories.Add(visitorplayers);
 			cat.SubCategories.Add(period);

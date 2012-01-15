@@ -34,8 +34,7 @@ namespace LongoMatch.Gui.Dialog
 		private TeamTemplate localTeamTemplate;
 		private TeamTemplate visitorTeamTemplate;
 
-		public TaggerDialog(Category cat, StringTagStore tags, PlayersTagStore players, TeamsTagStore teams,
-		                    TeamTemplate localTeamTemplate, TeamTemplate visitorTeamTemplate)
+		public TaggerDialog(Play play, TeamTemplate localTeamTemplate, TeamTemplate visitorTeamTemplate)
 		{
 			this.Build();
 			
@@ -44,19 +43,21 @@ namespace LongoMatch.Gui.Dialog
 			this.localTeamTemplate = localTeamTemplate;
 			this.visitorTeamTemplate = visitorTeamTemplate;
 			
+			taggerwidget1.SetData(play, localTeamTemplate.TeamName, visitorTeamTemplate.TeamName);
+			
 			/* Iterate over all subcategories, adding a widget only for the FastTag ones */
-			foreach (var subcat in cat.SubCategories) {
+			foreach (var subcat in play.Category.SubCategories) {
 				if (!subcat.FastTag)
 					continue;
 				if (subcat is TagSubCategory) {
 					var tagcat = subcat as TagSubCategory;
-					AddTagSubcategory(tagcat, tags);
+					AddTagSubcategory(tagcat, play.Tags);
 				} else if (subcat is PlayerSubCategory) {
 					var tagcat = subcat as PlayerSubCategory;
-					AddPlayerSubcategory(tagcat, players);
+					AddPlayerSubcategory(tagcat, play.Players);
 				} else if (subcat is TeamSubCategory) {
 					var tagcat = subcat as TeamSubCategory;
-					AddTeamSubcategory(tagcat, teams,
+					AddTeamSubcategory(tagcat, play.Teams,
 					                   localTeamTemplate.TeamName,
 					                   visitorTeamTemplate.TeamName);
 				}

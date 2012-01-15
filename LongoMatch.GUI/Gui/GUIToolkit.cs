@@ -140,8 +140,7 @@ namespace LongoMatch.Gui
 		}
 		
 		public void TagPlay (Play play, TeamTemplate local, TeamTemplate visitor) {
-			TaggerDialog tg = new TaggerDialog(play.Category, play.Tags, play.Players, play.Teams,
-			                                   local, visitor);
+			TaggerDialog tg = new TaggerDialog(play, local, visitor);
 			tg.TransientFor = mainWindow as Gtk.Window;
 			tg.Run();
 			tg.Destroy();

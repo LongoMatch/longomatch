@@ -160,10 +160,12 @@ namespace LongoMatch.Store
 				return StopFrame-StartFrame;
 			}
 		}
+		
+		public Team Team {
+			get;
+			set;
+		}
 
-		//// <summary>
-		/// Play's tags
-		/// </summary>
 		public StringTagStore Tags {
 			get;
 			set;

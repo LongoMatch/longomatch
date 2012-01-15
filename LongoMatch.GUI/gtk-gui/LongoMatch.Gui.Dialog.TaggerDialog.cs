@@ -48,6 +48,8 @@ namespace LongoMatch.Gui.Dialog
 			this.hbox1.Add (this.tagsnotebook);
 			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.tagsnotebook]));
 			w3.Position = 0;
+			w3.Expand = false;
+			w3.Fill = false;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.playersnotebook = new global::Gtk.Notebook ();
 			this.playersnotebook.CanFocus = true;
