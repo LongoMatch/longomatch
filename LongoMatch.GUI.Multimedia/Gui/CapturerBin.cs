@@ -287,7 +287,6 @@ namespace LongoMatch.Gui
 				                                                     "Do you want to restart the capture?"));
 				md.Icon=Stetic.IconLoader.LoadIcon(md, "longomatch", Gtk.IconSize.Dialog);
 				if(md.Run() == (int)ResponseType.Yes) {
-					Console.WriteLine("Accepted to toggle pause");
 					TogglePause();
 				}
 				md.Destroy();
