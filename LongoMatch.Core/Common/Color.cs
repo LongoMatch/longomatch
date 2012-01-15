@@ -24,7 +24,6 @@ namespace LongoMatch.Common
 		
 		static public ushort ByteToShort (Byte val) {
 			var ret = (ushort) (((float)val) / byte.MaxValue * ushort.MaxValue);
-			Console.WriteLine ("IN byte" + val + "Out short" + ret);
 			return ret;
 		}
 		
