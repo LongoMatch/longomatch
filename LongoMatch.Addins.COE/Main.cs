@@ -39,7 +39,7 @@ class MainClass
 			Project p = db.GetProject(db.GetAllProjects()[0].UUID);
 			
 			ExcelExporter ee = new ExcelExporter();
-			ee.ExportProject(p, "/home/andoni/test.xls");
+			ee.ExportProject(p,  "/home/andoni/test.xls");
 		}
 	}
 }
