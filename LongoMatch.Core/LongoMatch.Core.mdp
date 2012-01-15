@@ -89,6 +89,12 @@
     <File subtype="Code" buildaction="Compile" name="Common/Image.cs" />
     <File subtype="Directory" buildaction="Compile" name="Common" />
     <File subtype="Code" buildaction="Compile" name="Common/Color.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Stats" />
+    <File subtype="Code" buildaction="Compile" name="Stats/ProjectStats.cs" />
+    <File subtype="Code" buildaction="Compile" name="Stats/CategoryStats.cs" />
+    <File subtype="Code" buildaction="Compile" name="Stats/PercentualStat.cs" />
+    <File subtype="Code" buildaction="Compile" name="Stats/Stat.cs" />
+    <File subtype="Code" buildaction="Compile" name="Stats/SubCategoryStat.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
