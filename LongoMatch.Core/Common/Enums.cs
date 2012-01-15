@@ -57,6 +57,7 @@ namespace LongoMatch.Common
 		NONE = 0,
 		LOCAL = 1,
 		VISITOR = 2,
+		BOTH = 3,
 	}
 	
 	public enum JobState {
