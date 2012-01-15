@@ -5208,7 +5208,7 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.TaggerWidget" design-size="377 42">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.TaggerWidget" design-size="377 91">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -6318,7 +6318,7 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.TeamTaggerWidget" design-size="300 25">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.TeamTaggerWidget" design-size="300 29">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>

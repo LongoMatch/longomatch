@@ -148,7 +148,7 @@ namespace LongoMatch.Gui
 			this.ManualTaggingViewAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Free Capture Mode");
 			w1.Add (this.ManualTaggingViewAction, "<Control>f");
 			this.GameUnitsViewAction = new global::Gtk.RadioAction ("GameUnitsViewAction", global::Mono.Unix.Catalog.GetString ("Game units view"), null, null, 0);
-			this.GameUnitsViewAction.Group = this.ManualTaggingViewAction.Group;
+			this.GameUnitsViewAction.Group = this.TimelineViewAction.Group;
 			this.GameUnitsViewAction.Sensitive = false;
 			this.GameUnitsViewAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Game units view");
 			w1.Add (this.GameUnitsViewAction, null);
