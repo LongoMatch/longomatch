@@ -6,10 +6,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: longomatch\n"
+"Project-Id-Version: longomatch master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-01-07 17:50+0000\n"
-"PO-Revision-Date: 2012-01-07 21:58+0100\n"
+"POT-Creation-Date: 2012-01-16 17:27+0000\n"
+"PO-Revision-Date: 2012-01-20 21:21+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: \n"
@@ -216,47 +216,84 @@ msgstr "LongoMatch: digitalni trener"
 msgid "Sports video analysis tool for coaches"
 msgstr "Orodje za pomoč trenerjem pri analizi posnetkov tekem"
 
-#: ../LongoMatch.Addins.COE/ExcelExporter.cs:40
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:41
 msgid "Export project to Excel file"
 msgstr "Izvozi projekt v datoteko MS Excel"
 
-#: ../LongoMatch.Addins.COE/ExcelExporter.cs:48
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:444
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:49
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:445
 msgid "Output file"
 msgstr "Odvodna datoteka"
 
-#: ../LongoMatch.Addins.COE/ExcelExporter.cs:59
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:60
 #: ../LongoMatch.Services/Services/ProjectsManager.cs:368
 msgid "Project exported successfully"
 msgstr "Projekt je uspešno izvižen"
 
-#: ../LongoMatch.Addins.COE/ExcelExporter.cs:61
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:62
 #: ../LongoMatch.Services/Services/ProjectsManager.cs:370
 msgid "Error exporting project"
 msgstr "Napaka med izvažanjem projekta"
 
-#: ../LongoMatch.Addins.COE/ExcelExporter.cs:152
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:93
+msgid "Project statistics"
+msgstr "Statistika projekta"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:98
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:232
+msgid "Local Team"
+msgstr "Domača ekipa"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:103
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:245
+msgid "Visitor Team"
+msgstr "Gostujoča ekipa"
+
+#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:63
+msgid "Project"
+msgstr "Projekt"
+
+#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:64
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:138
+msgid "Date"
+msgstr "Datum"
+
+#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:65
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:136
+msgid "Competition"
+msgstr "Tekmovanje"
+
+#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:66
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:135
+msgid "Season"
+msgstr "Sezona"
+
+#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:76
+msgid "Total"
+msgstr "Skupaj"
+
+#: ../LongoMatch.Addins.COE/TeamStatsSheets.cs:93
 msgid "Timeline"
 msgstr "Časovnica"
 
-#: ../LongoMatch.Addins.COE/ExcelExporter.cs:162
+#: ../LongoMatch.Addins.COE/TeamStatsSheets.cs:103
 msgid "Game Units"
 msgstr "Delitev igre"
 
-#: ../LongoMatch.Addins.COE/ExcelExporter.cs:163
+#: ../LongoMatch.Addins.COE/TeamStatsSheets.cs:104
 msgid "Duration (min)"
 msgstr "Trajanje (min)"
 
-#: ../LongoMatch.Addins.COE/ExcelExporter.cs:274
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:43
+#: ../LongoMatch.Addins.COE/TeamStatsSheets.cs:218
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:45
 msgid "Categories"
 msgstr "Kategorije"
 
-#: ../LongoMatch.Addins.COE/ExcelExporter.cs:275
+#: ../LongoMatch.Addins.COE/TeamStatsSheets.cs:219
 msgid "Count"
 msgstr "Števec"
 
-#: ../LongoMatch.Core/Store/Play.cs:200
+#: ../LongoMatch.Core/Store/Play.cs:202
 #: ../LongoMatch.Core/Store/SubCategory.cs:84
 #: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:48
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:73
@@ -264,29 +301,24 @@ msgstr "Števec"
 msgid "Name"
 msgstr "Ime"
 
-#: ../LongoMatch.Core/Store/Play.cs:201
+#: ../LongoMatch.Core/Store/Play.cs:203
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:140
 msgid "Start"
 msgstr "Začni"
 
-#: ../LongoMatch.Core/Store/Play.cs:202
+#: ../LongoMatch.Core/Store/Play.cs:204
 msgid "Stop"
 msgstr "Zaustavi"
 
 #: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:81
-#: ../LongoMatch.Core/Store/SubCategory.cs:156
-msgid "Team"
-msgstr "Ekipa"
-
-#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:88
 msgid "Local Team Players"
 msgstr "Igralci domače ekipe"
 
-#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:94
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:87
 msgid "Visitor Team Players"
 msgstr "Igralci gostujoče ekipe"
 
-#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:100
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:93
 msgid "Period"
 msgstr "Odmor"
 
@@ -349,6 +381,10 @@ msgstr "Seznam igralcev"
 #: ../LongoMatch.Core/Store/SubCategory.cs:141
 msgid "Teams:"
 msgstr "Ekipe:"
+
+#: ../LongoMatch.Core/Store/SubCategory.cs:156
+msgid "Team"
+msgstr "Ekipa"
 
 #: ../LongoMatch.Core/Store/SubCategory.cs:164
 msgid "Team selection"
@@ -427,13 +463,13 @@ msgstr "Označi igro"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:45
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:259
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:78
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:231
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:71
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:224
 msgid "Tags"
 msgstr "Oznake"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:64
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:85
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:66
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:78
 msgid "Players"
 msgstr "Igralci"
 
@@ -767,14 +803,6 @@ msgstr "Izvozi v datoteko projekta"
 msgid "Plays"
 msgstr "Igre"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:232
-msgid "Local Team"
-msgstr "Domača ekipa"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:245
-msgid "Visitor Team"
-msgstr "Gostujoča ekipa"
-
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs:31
 msgid "Projects Search:"
 msgstr "Iskanje projekta"
@@ -847,7 +875,7 @@ msgid "Capture Progress"
 msgstr "Napredek zajemanja"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:84
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:127
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:120
 msgid "none"
 msgstr "brez"
 
@@ -1026,6 +1054,10 @@ msgstr "Ime datoteke:"
 msgid "GtkButton"
 msgstr "GtkButton"
 
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs:67
+msgid "<b>Team</b>"
+msgstr "<b>Ekipa</b>"
+
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameUnitsEditor.cs:30
 msgid ""
 "<b>Game Units</b>: Games are usually divided in time by units. In sports like field hockey the game is divided in 2 halves but other sports like tenis have several types of units that are anidated, e.g. Set->Game->Point.\n"
@@ -1085,50 +1117,50 @@ msgid "Categories Template"
 msgstr "Predloga kategorij"
 
 #: ../LongoMatch.GUI/Gui/GUIToolkit.cs:105
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:261
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:262
 msgid "Please, select a video file."
 msgstr "Izberite video datoteko."
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:361
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:362
 msgid "DirectShow Source"
 msgstr "Vir DirectShow"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:362
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:363
 msgid "Unknown"
 msgstr "Neznano"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:456
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:457
 msgid "Open file..."
 msgstr "Odpri datoteko ..."
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:482
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:483
 msgid "Analyzing video file:"
 msgstr "Analiziranje video datoteke:"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:487
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:488
 msgid "This file doesn't contain a video stream."
 msgstr "Datoteka ne vsebuje video pretoka."
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:489
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:490
 msgid "This file contains a video stream but its length is 0."
 msgstr "Datoteka vsebuje video pretok, vendar je dolžine 0."
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:77
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:80
 msgid "You are about to delete a category and all the plays added to this category. Do you want to proceed?"
 msgstr "Izbrisana bo kategorija in vse pripadajoče igre. Ali želite nadaljevati?"
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:84
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:92
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:87
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:95
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:159
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:169
 msgid "A template needs at least one category"
 msgstr "Predloga zahteva vsaj eno kategorijo"
 
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:74
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:67
 msgid "Create new..."
 msgstr "Ustvari novo ..."
 
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:201
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:194
 msgid "If you delete this subcategory you will looseall the tags associated with it. Do you want to proceed?"
 msgstr "Če boste izbrisali to podrejeno kategorijo, boste izgubili vse oznake, vezane nanjo. Ali želite nadaljevati?"
 
@@ -1165,21 +1197,9 @@ msgstr "Domača ekipa"
 msgid "Visitor team"
 msgstr "Gostujoča ekipa"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:135
-msgid "Season"
-msgstr "Sezona"
-
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:136
-msgid "Competition"
-msgstr "Tekmovanje"
-
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:137
 msgid "Result"
 msgstr "Rezultat"
-
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:138
-msgid "Date"
-msgstr "Datum"
 
 #: ../LongoMatch.GUI/Gui/Component/GameUnitTimeScale.cs:53
 #: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:53
@@ -1288,7 +1308,7 @@ msgstr "Pred urejanjem je treba datoteko zapreti"
 msgid "Save Project"
 msgstr "Shrani projekt"
 
-#: ../LongoMatch.GUI/Gui/Dialog/EditCategoryDialog.cs:63
+#: ../LongoMatch.GUI/Gui/Dialog/EditCategoryDialog.cs:68
 msgid "This hotkey is already in use."
 msgstr "Hitra tipka je že v uporabi."
 
@@ -1571,20 +1591,20 @@ msgstr "seznami predvajanja"
 msgid "New playlist"
 msgstr "Nov seznam predvajanja"
 
-#: ../LongoMatch.Services/Services/TemplatesService.cs:64
+#: ../LongoMatch.Services/Services/TemplatesService.cs:62
 msgid "Local team players"
 msgstr "Igralci domače ekipe"
 
-#: ../LongoMatch.Services/Services/TemplatesService.cs:70
+#: ../LongoMatch.Services/Services/TemplatesService.cs:68
 msgid "Visitor team players"
 msgstr "Igralci gostujoče ekipe"
 
-#: ../LongoMatch.Services/Services/TemplatesService.cs:76
+#: ../LongoMatch.Services/Services/TemplatesService.cs:74
 msgid "All teams players"
 msgstr "Igralci vseh ekip"
 
-#: ../LongoMatch.Services/Services/TemplatesService.cs:194
-#: ../LongoMatch.Services/Services/TemplatesService.cs:212
+#: ../LongoMatch.Services/Services/TemplatesService.cs:192
+#: ../LongoMatch.Services/Services/TemplatesService.cs:210
 msgid "A template already exists with the name: "
 msgstr "Predloga s tem imenom že obstaja: "
 
