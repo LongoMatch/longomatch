@@ -18,30 +18,27 @@
 using System;
 using System.Collections.Generic;
 
-using LongoMatch.Interfaces;
+using LongoMatch.Store;
 
 namespace LongoMatch.Stats
 {
-	public class CategoryStats: Stat
+	public class PlayersStats
 	{
-		List <SubCategoryStat> subcatStats;
-		
-		public CategoryStats (string name, int totalCount, int localTeamCount, int visitorTeamCount):
-			base (name, totalCount, localTeamCount, visitorTeamCount)
+		public PlayersStats (string name, Dictionary<Player, int> playersStats)
 		{
-			subcatStats = new List<SubCategoryStat>();
+			Players = playersStats;
+			Name = name;
 		}
 		
-		public List<SubCategoryStat> SubcategoriesStats {
-			get {
-				return subcatStats;
-			}
+		public string Name {
+			get;
+			set;
 		}
 		
-		public void AddSubcatStat (SubCategoryStat subcatStat) {
-			subcatStats.Add(subcatStat);
+		public Dictionary<Player, int> Players {
+			get;
+			set;
 		}
-		
 	}
 }
 

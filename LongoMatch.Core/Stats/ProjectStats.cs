@@ -34,7 +34,6 @@ namespace LongoMatch.Stats
 		{
 			catStats = new List<CategoryStats>(); 
 			
-			UpdateStats (project);
 			
 			ProjectName = project.Description.Title;
 			Date = project.Description.MatchDate;
@@ -42,6 +41,8 @@ namespace LongoMatch.Stats
 			VisitorTeam = project.VisitorTeamTemplate.TeamName;
 			Competition = project.Description.Competition;
 			Season = project.Description.Season;
+			
+			UpdateStats (project);
 		}
 		
 		public string ProjectName {
@@ -110,19 +111,13 @@ namespace LongoMatch.Stats
 					 if (subcat is TagSubCategory) {
 						foreach (string option in subcat.ElementsDesc()) {
 							List<Play> subcatPlays;
-							int count;
 							StringTag tag;
 							
-							tag = new StringTag();
-							tag.SubCategory = subcat;
-							tag.Value = option;
-							
+							tag = new StringTag{SubCategory=subcat, Value=option};
 							subcatPlays = plays.Where(p => p.Tags.Tags.Contains(tag)).ToList();
-							count = subcatPlays.Count(); 
-							CountPlaysInTeam(subcatPlays, out localTeamCount, out visitorTeamCount);
-							PercentualStat pStat = new PercentualStat(option, count, localTeamCount,
-								visitorTeamCount, stats.TotalCount);
-							subcatStat.AddOptionStat(pStat);
+							GetSubcategoryStats(subcatPlays, subcatStat, option,
+								stats.TotalCount, out localTeamCount, out visitorTeamCount);
+							GetPlayersStats(project, subcatPlays, option, subcatStat, cat);
 						}
 					 } 
 					 
@@ -133,23 +128,65 @@ namespace LongoMatch.Stats
 						
 						foreach (Team team in teams) {
 							List<Play> subcatPlays;
-							int count;
 							TeamTag tag;
 							
-							tag = new TeamTag();
-							tag.SubCategory = subcat;
-							tag.Value = team;
-							
+							tag = new TeamTag{SubCategory=subcat, Value=team};
 							subcatPlays = plays.Where(p => p.Teams.Tags.Contains(tag)).ToList();
-							count = subcatPlays.Count(); 
-							CountPlaysInTeam(subcatPlays, out localTeamCount, out visitorTeamCount);
-							PercentualStat pStat = new PercentualStat(team.ToString(), count, localTeamCount,
-								visitorTeamCount, stats.TotalCount);
-							subcatStat.AddOptionStat(pStat);
+							GetSubcategoryStats(subcatPlays, subcatStat, team.ToString(),
+								stats.TotalCount, out localTeamCount, out visitorTeamCount);
 						}
-					 } 
+					 }
 				}
 			}
+		}
+		
+		void GetSubcategoryStats (List<Play> subcatPlays, SubCategoryStat subcatStat, string desc,
+			int totalCount, out int localTeamCount, out int visitorTeamCount)
+		{
+			int count;
+			
+			count = subcatPlays.Count(); 
+			CountPlaysInTeam(subcatPlays, out localTeamCount, out visitorTeamCount);
+			PercentualStat pStat = new PercentualStat(desc, count, localTeamCount,
+				visitorTeamCount, totalCount);
+			subcatStat.AddOptionStat(pStat);
+		}
+		
+		void GetPlayersStats (Project project, List<Play> subcatPlays, string optionName,
+			SubCategoryStat subcatStat, Category cat)
+		{
+			foreach (ISubCategory subcat in cat.SubCategories) {
+				PlayerSubCategory playerSubcat;
+				Dictionary<Player, int> localPlayerCount = new Dictionary<Player, int>();
+				Dictionary<Player, int> visitorPlayerCount = new Dictionary<Player, int>();
+				
+				if (!(subcat is PlayerSubCategory))
+					continue;
+				
+				playerSubcat = subcat as PlayerSubCategory;
+				
+				if (playerSubcat.Contains(Team.LOCAL) || playerSubcat.Contains(Team.BOTH)){
+					foreach (Player player in project.LocalTeamTemplate) {
+						localPlayerCount.Add(player, GetPlayerCount(subcatPlays, player, subcat as PlayerSubCategory));
+					}
+					subcatStat.AddPlayersStats(optionName, subcat.Name, Team.LOCAL, localPlayerCount);
+				}
+				
+				if (playerSubcat.Contains(Team.VISITOR) || playerSubcat.Contains(Team.BOTH)){
+					foreach (Player player in project.VisitorTeamTemplate) {
+						visitorPlayerCount.Add(player, GetPlayerCount(subcatPlays, player, subcat as PlayerSubCategory));
+					}
+					subcatStat.AddPlayersStats(optionName, subcat.Name, Team.VISITOR, visitorPlayerCount);
+				}
+			}
+		}
+		
+		int GetPlayerCount(List<Play> plays, Player player, PlayerSubCategory subcat)
+		{
+			PlayerTag tag;
+			
+			tag = new PlayerTag{SubCategory=subcat, Value=player};
+			return plays.Where(p => p.Players.Contains(tag)).Count();
 		}
 	}
 }

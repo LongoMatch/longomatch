@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 
+using LongoMatch.Common;
 using LongoMatch.Interfaces;
 using LongoMatch.Store;
 
@@ -27,11 +28,16 @@ namespace LongoMatch.Stats
 	{
 		
 		List<PercentualStat> optionStats;
+		Dictionary<string, List<PlayersStats>> localPlayersStats;
+		Dictionary<string, List<PlayersStats>> visitorPlayersStats;
 		
 		public SubCategoryStat (string name)
 		{
 			Name = name;
 			optionStats = new List<PercentualStat>();
+			localPlayersStats = new Dictionary<string, List<PlayersStats>>(); 
+			visitorPlayersStats = new Dictionary<string, List<PlayersStats>>(); 
+			
 		}
 		
 		public string Name {
@@ -45,8 +51,40 @@ namespace LongoMatch.Stats
 			}
 		}
 		
+		public Dictionary<string, List<PlayersStats>> LocalPlayersStats {
+			get {
+			 return localPlayersStats;
+			}
+		}
+		
+		public Dictionary<string, List<PlayersStats>> VisitorPlayersStats {
+			get {
+			 return visitorPlayersStats;
+			}
+		}
+		
 		public void AddOptionStat (PercentualStat stat) {
 			optionStats.Add(stat);
+		}
+		
+		public void AddPlayersStats (string optionName, string playerSubcatName, Team team,
+			Dictionary<Player, int> playersCount)
+		{
+			Dictionary<string, List<PlayersStats>> playersStats;
+			
+			if (team == Team.LOCAL)
+				playersStats = localPlayersStats;
+			else 
+				playersStats = visitorPlayersStats;
+				
+			PlayersStats stats = new PlayersStats(playerSubcatName, playersCount);
+			if (playersStats.ContainsKey(optionName)) {
+				playersStats[optionName].Add(stats);
+			} else{
+				List<PlayersStats> list = new List<PlayersStats>();
+				list.Add(stats);
+				playersStats.Add(optionName, list);
+			}
 		}
 	}
 }
