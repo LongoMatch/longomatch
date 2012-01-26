@@ -88,21 +88,27 @@ public class EPPLUSExporter {
 		}
 		
 		using (package = new ExcelPackage(newFile)) {
-			TeamStatsSheets teamStats;
+			TimelineSheet timeline;
+			TeamStatsSheet teamStats;
+			ProjectStats stats = new ProjectStats(project);
 			
 			ws = CreateSheet(package, Catalog.GetString("Project statistics"));
 			var statsSheet = new ProjectStatsSheet(ws, project);
-			statsSheet.Fill();
+			statsSheet.Fill(stats);
 			
 			ws = CreateSheet(package, project.LocalTeamTemplate.TeamName +
 				"(" + Catalog.GetString("Local Team") + ")");
-			teamStats = new TeamStatsSheets(ws, project, Team.LOCAL);
+			teamStats = new TeamStatsSheet(ws, stats, Team.LOCAL);
 			teamStats.Fill();
 			
 			ws = CreateSheet(package, project.VisitorTeamTemplate.TeamName +
 				"(" + Catalog.GetString("Visitor Team") + ")");
-			teamStats = new TeamStatsSheets(ws, project, Team.VISITOR);
+			teamStats = new TeamStatsSheet(ws, stats, Team.VISITOR);
 			teamStats.Fill();
+			
+			ws = CreateSheet(package, Catalog.GetString("Timeline"));
+			timeline = new TimelineSheet(ws, project);
+			timeline.Fill();
 			package.Save();
 		}
 	}

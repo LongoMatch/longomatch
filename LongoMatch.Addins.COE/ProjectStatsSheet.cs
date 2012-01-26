@@ -35,10 +35,9 @@ public class ProjectStatsSheet
 		this.ws = ws;
 	}
 	
-	public void Fill() {
+	public void Fill(ProjectStats stats) {
 		int row = 1;
 		
-		ProjectStats stats = new ProjectStats(project);
 		row = FillMatchDescription (ws, row, stats);
 		row += 3;
 		row = FillTeamsData (ws, row, stats);

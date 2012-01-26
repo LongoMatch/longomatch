@@ -28,20 +28,18 @@ using LongoMatch.Interfaces;
 using LongoMatch.Stats;
 using LongoMatch.Store;
 
-public class TeamStatsSheets
+public class TimelineSheet
 {
 	Project project;
 	ExcelWorksheet ws;
-	Team team;
 	int duration;
 	
 	const int TIMELINE_START = 6;
 	
-	public TeamStatsSheets (ExcelWorksheet ws, Project project, Team team)
+	public TimelineSheet (ExcelWorksheet ws, Project project)
 	{
 		this.project = project;
 		this.ws = ws;
-		this.team = team;
 		duration = (int) (project.Description.File.Length / 1000 / 60);
 	}
 	
@@ -180,9 +178,6 @@ public class TeamStatsSheets
 			foreach (Play play in project.PlaysInCategory(ca)) {
 				int time;
 				int catRow;
-				
-				if (!(play.Team == team || play.Team == Team.BOTH))
-					continue;
 				
 				/* Add the category's overal stats */
 				catRow = catsDict[ca];
