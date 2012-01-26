@@ -136,6 +136,8 @@ namespace LongoMatch.Gui.Dialog
 			encSettings.Framerate_n = 25;
 			encSettings.Framerate_d = 1;
 			
+			encSettings.TitleSize = 20; 
+			
 			Hide();
 		}
 

@@ -32,7 +32,7 @@ namespace LongoMatch.Common
 			settings.CaptureSourceType = CaptureSourceType.Raw;
 			settings.EncodingSettings = new EncodingSettings(VideoStandards.P480_4_3,
 			                                                 EncodingProfiles.MP4,
-			                                                 25, 1, 1000, 128, "");
+			                                                 25, 1, 1000, 128, "", 20);
 			return settings;
 		}
 	}

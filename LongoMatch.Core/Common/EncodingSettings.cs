@@ -23,7 +23,7 @@ namespace LongoMatch.Common
 	{
 		public EncodingSettings(VideoStandard videoStandard, EncodingProfile encodingProfile,
 		                        uint fr_n, uint fr_d, uint videoBitrate, uint audioBitrate, 
-		                        string outputFile) {
+		                        string outputFile, uint titleSize) {
 			VideoStandard = videoStandard;
 			EncodingProfile = encodingProfile;
 			Framerate_n = fr_n;
@@ -31,6 +31,7 @@ namespace LongoMatch.Common
 			AudioBitrate = audioBitrate;
 			VideoBitrate = videoBitrate;
 			OutputFile = outputFile;
+			TitleSize = titleSize;
 		}
 		
 		public VideoStandard VideoStandard;
@@ -40,6 +41,7 @@ namespace LongoMatch.Common
 		public uint VideoBitrate;
 		public uint AudioBitrate;
 		public string OutputFile;
+		public uint TitleSize;
 	}
 }
 

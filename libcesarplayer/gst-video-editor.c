@@ -56,7 +56,8 @@ enum
   PROP_AUDIO_BITRATE,
   PROP_HEIGHT,
   PROP_WIDTH,
-  PROP_OUTPUT_FILE
+  PROP_OUTPUT_FILE,
+  PROP_TITLE_SIZE
 };
 
 struct GstVideoEditorPrivate
@@ -77,6 +78,7 @@ struct GstVideoEditorPrivate
   gint video_bitrate;
   gint width;
   gint height;
+  gint title_size;
 
   /* Bins */
   GstElement *main_pipeline;
@@ -129,6 +131,7 @@ static void gst_video_editor_set_property (GObject * object,
     guint property_id, const GValue * value, GParamSpec * pspec);
 static gboolean gve_query_timeout (GstVideoEditor * gve);
 static void gve_apply_new_caps (GstVideoEditor * gve);
+static void gve_apply_title_size (GstVideoEditor * gve);
 static void gve_rewrite_headers (GstVideoEditor * gve);
 G_DEFINE_TYPE (GstVideoEditor, gst_video_editor, G_TYPE_OBJECT);
 
@@ -154,6 +157,7 @@ gst_video_editor_init (GstVideoEditor * object)
   priv->video_bitrate = 5000;
   priv->height = 540;
   priv->width = 720;
+  priv->title_size = 20;
   priv->title_enabled = TRUE;
   priv->audio_enabled = TRUE;
 
@@ -238,6 +242,10 @@ gst_video_editor_class_init (GstVideoEditorClass * klass)
   g_object_class_install_property (object_class, PROP_WIDTH,
       g_param_spec_int ("width", NULL, NULL, 320,
           1920, 720, G_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_TITLE_SIZE,
+      g_param_spec_int ("title-size", NULL, NULL,
+          10, 100, 20, G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_OUTPUT_FILE,
       g_param_spec_string ("output_file", NULL, NULL, "", G_PARAM_READWRITE));
@@ -355,6 +363,12 @@ gst_video_editor_set_height (GstVideoEditor * gve, gint height)
   gve_apply_new_caps (gve);
 }
 
+gst_video_editor_set_title_size (GstVideoEditor * gve, gint size)
+{
+  gve->priv->title_size = size;
+  gve_apply_title_size (gve);
+}
+
 static void
 gst_video_editor_set_output_file (GstVideoEditor * gve, const char *output_file)
 {
@@ -396,6 +410,9 @@ gst_video_editor_set_property (GObject * object, guint property_id,
       break;
     case PROP_HEIGHT:
       gst_video_editor_set_height (gve, g_value_get_int (value));
+      break;
+    case PROP_TITLE_SIZE:
+      gst_video_editor_set_title_size (gve, g_value_get_int (value));
       break;
     case PROP_OUTPUT_FILE:
       gst_video_editor_set_output_file (gve, g_value_get_string (value));
@@ -481,12 +498,17 @@ gve_apply_new_caps (GstVideoEditor * gve)
 
   GST_INFO_OBJECT(gve, "Changed caps: %s", gst_caps_to_string(caps));
   g_object_set (G_OBJECT (gve->priv->capsfilter), "caps", caps, NULL);
-  font =
-      g_strdup_printf ("sans bold %d",
-      (int) (gve->priv->height * FONT_SIZE_FACTOR));
+  gst_caps_unref (caps);
+}
+
+static void
+gve_apply_title_size (GstVideoEditor * gve)
+{
+  gchar *font;
+
+  font = g_strdup_printf ("sans bold %d", gve->priv->title_size);
   g_object_set (G_OBJECT (gve->priv->textoverlay), "font-desc", font, NULL);
   g_free (font);
-  gst_caps_unref (caps);
 }
 
 static void
