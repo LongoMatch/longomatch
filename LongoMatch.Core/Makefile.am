@@ -40,6 +40,12 @@ SOURCES = \
 	Interfaces/ITemplates.cs \
 	Interfaces/ITemplatesService.cs \
 	Interfaces/ITimelineNode.cs \
+	Stats/CategoryStats.cs \
+	Stats/PercentualStat.cs \
+	Stats/PlayersStats.cs \
+	Stats/ProjectStats.cs \
+	Stats/Stat.cs \
+	Stats/SubCategoryStat.cs \
 	Store/Category.cs \
 	Store/Drawing.cs \
 	Store/GameUnit.cs \
