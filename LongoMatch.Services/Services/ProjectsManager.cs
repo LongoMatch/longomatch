@@ -313,7 +313,8 @@ namespace LongoMatch.Services
 				project = guiToolkit.NewFakeProject(Core.DB, Core.TemplatesService);
 			} else if (projectType == ProjectType.FileProject) {
 				project = guiToolkit.NewFileProject(Core.DB, Core.TemplatesService);
-				Core.DB.AddProject(project);
+				if (project != null)
+					Core.DB.AddProject(project);
 			} else {
 				project = null;
 			}
