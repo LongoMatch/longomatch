@@ -97,6 +97,8 @@ namespace LongoMatch.Gui
 		bool gameUnitsActionVisible;
 		GameUnitsTimelineWidget guTimeline;
 		IGUIToolkit guiToolKit;
+		Gtk.Window playerWindow;
+		bool detachedPlayer;
 
 		#region Constructors
 		public MainWindow(IGUIToolkit guiToolkit) :
@@ -117,6 +119,7 @@ namespace LongoMatch.Gui
 			player.SetLogo(System.IO.Path.Combine(Config.ImagesDir(),"background.png"));
 			player.LogoMode = true;
 			player.Tick += OnTick;
+			player.Detach += (sender, e) => DetachPlayer(true);
 
 			capturer.Visible = false;
 			capturer.Logo = System.IO.Path.Combine(Config.ImagesDir(),"background.png");
@@ -131,6 +134,7 @@ namespace LongoMatch.Gui
 			
 			if (!Config.useGameUnits)
 				GameUnitsViewAction.Visible = false;
+			
 		}
 
 		#endregion
@@ -294,6 +298,43 @@ namespace LongoMatch.Gui
 		private void UpdateTeamsModels() {
 			localPlayersList.SetTeam(openedProject.LocalTeamTemplate, openedProject.AllPlays());
 			visitorPlayersList.SetTeam(openedProject.VisitorTeamTemplate, openedProject.AllPlays());
+		}
+		
+		void DetachPlayer (bool detach) {
+			if (detach == detachedPlayer)
+				return;
+				
+			if (detach) {
+				Log.Debug("Detaching player");
+				playerWindow = new Gtk.Window(Constants.SOFTWARE_NAME);
+				playerWindow.Icon = Stetic.IconLoader.LoadIcon(this, "longomatch", IconSize.Button);
+				playerWindow.DeleteEvent += (o, args) => DetachPlayer(false);
+				playerWindow.Show();
+				this.player.Reparent(playerWindow);
+				detachedPlayer = true;
+				buttonswidget.Visible = true;
+				timeline.Visible = true;
+				if (Config.useGameUnits) {
+					guTimeline.Visible = true;
+					gameunitstaggerwidget1.Visible = true;
+				}
+			} else {
+				ToggleAction action;
+				
+				Log.Debug("Attaching player again");
+				this.player.Reparent(this.videowidgetsbox);
+				detachedPlayer = false;
+				
+				if (ManualTaggingViewAction.Active)
+					action = ManualTaggingViewAction;
+				else if (TimelineViewAction.Active)
+					action = TimelineViewAction;
+				else if (GameUnitsViewAction.Active)
+					action = GameUnitsViewAction;
+				else
+					action = TaggingViewAction;
+				OnViewToggled(action, new EventArgs());
+			}
 		}
 
 		public void SetProject(Project project, ProjectType projectType, CaptureSettings props)

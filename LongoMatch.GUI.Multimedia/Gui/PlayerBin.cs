@@ -48,6 +48,7 @@ namespace LongoMatch.Gui
 		public event PrevButtonClickedHandler Prev;
 		public event LongoMatch.Handlers.DrawFrameHandler DrawFrame;
 		public event SeekEventHandler SeekEvent;
+		public event EventHandler Detach;
 
 		private const int THUMBNAIL_MAX_WIDTH = 100;
 		private LongoMatch.Video.Common.TickHandler tickHandler;
@@ -420,6 +421,11 @@ namespace LongoMatch.Gui
 				timelabel.Text= TimeString.MSecondsToSecondsString(player.CurrentTime) + "/" + slength;
 				Rate = 1;
 			}
+		}
+		
+		void EmitDetach () {
+			if (Detach != null)
+				Detach(this, new EventArgs());
 		}
 		
 		#endregion

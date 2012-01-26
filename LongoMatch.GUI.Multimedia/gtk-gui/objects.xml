@@ -25,6 +25,7 @@
         <signal name="Prev" />
         <signal name="DrawFrame" />
         <signal name="SeekEvent" />
+        <signal name="Detach" />
       </itemgroup>
     </signals>
   </object>
