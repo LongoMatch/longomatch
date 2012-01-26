@@ -62,24 +62,25 @@ namespace LongoMatch.Gui.Component
 			TreeStore team;
 			Dictionary<Player, TreeIter> playersDict = new Dictionary<Player, TreeIter>();
 			
+			Log.Debug("Updating teams models with template:" + template);
 			team = new TreeStore(typeof(object));
 
 			foreach(var player in template) {
 				/* Add a root in the tree with the option name */
 				var iter = team.AppendValues(player);
 				playersDict.Add(player, iter);
+				Log.Debug("Adding new player to the model: " + player);
 			}
 			
 			foreach (var play in plays) {
 				foreach (var player in play.Players.AllUniqueElements) {
-					if (playersDict.ContainsKey(player.Value))
+					if (playersDict.ContainsKey(player.Value)) {
 						team.AppendValues(playersDict[player.Value], new object[1] {play});
+						Log.Debug("Adding new play to player: " + player);
+					}
 				}
 			}
-		}
-
-		public void UpdatePlaysList(TreeStore model) {
-			playerstreeview.Model = model;
+			playerstreeview.Model = team;
 		}
 
 		public bool PlayListLoaded {
