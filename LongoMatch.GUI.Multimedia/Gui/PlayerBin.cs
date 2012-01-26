@@ -297,11 +297,11 @@ namespace LongoMatch.Gui
 		}
 
 		public void StepForward() {
-			SeekFromTimescale(timescale.Value + timescale.Adjustment.PageIncrement);
+			Jump((int)jumpspinbutton.Value);
 		}
 
 		public void StepBackward() {
-			SeekFromTimescale(timescale.Value - timescale.Adjustment.PageIncrement);
+			Jump(-(int)jumpspinbutton.Value);
 		}
 
 		public void FramerateUp() {
@@ -398,6 +398,15 @@ namespace LongoMatch.Gui
 			videobox.Add(playerWidget);
 
 		}
+		
+		void Jump(int jump) {
+			long pos = Math.Max(CurrentTime + (jump * 1000), 0);
+			Log.Debug(String.Format("Stepping {0} seconds from {1} to {2}", jump, CurrentTime, pos));
+			if (InSegment())
+				SeekInSegment(pos);
+			else
+				SeekTo(pos, true);
+		}
 
 		private void SeekFromTimescale(double pos) {
 			if(InSegment()) {
@@ -412,7 +421,7 @@ namespace LongoMatch.Gui
 				Rate = 1;
 			}
 		}
-
+		
 		#endregion
 
 		#region Callbacks
