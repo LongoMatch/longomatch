@@ -28,6 +28,7 @@ namespace LongoMatch.Interfaces.GUI
 	public interface IGUIToolkit
 	{
 		IMainWindow MainWindow {get;}
+		Version Version {get;}
 	
 		/* Messages */
 		void InfoMessage(string message);

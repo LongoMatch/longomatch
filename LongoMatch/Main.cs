@@ -21,6 +21,7 @@
 
 using System;
 using System.IO;
+using System.Reflection;
 using Gtk;
 using Mono.Unix;
 
@@ -54,12 +55,12 @@ namespace LongoMatch
 				return;
 
 			GLib.ExceptionManager.UnhandledException += new GLib.UnhandledExceptionHandler(OnException);
-
+			Version version = Assembly.GetExecutingAssembly().GetName().Version;
 
 			try {
 				AddinsManager manager = new AddinsManager(Path.Combine(Config.HomeDir(), "addins"));
 				manager.LoadConfigModifierAddins();
-			    GUIToolkit guiToolkit = new GUIToolkit();
+			    GUIToolkit guiToolkit = new GUIToolkit(version);
 			    IMultimediaToolkit multimediaToolkit = new MultimediaFactory();
 			    manager.LoadExportProjectAddins(guiToolkit.MainWindow);
 				Core.Start(guiToolkit, multimediaToolkit);

@@ -38,8 +38,9 @@ namespace LongoMatch.Gui
 	{
 		IMainWindow mainWindow;
 		
-		public GUIToolkit ()
+		public GUIToolkit (Version version)
 		{
+			Version = version;
 			mainWindow = new MainWindow(this);
 			(mainWindow as MainWindow).Show();
 		}
@@ -48,6 +49,11 @@ namespace LongoMatch.Gui
 			get {
 				return mainWindow;
 			}
+		}
+		
+		public Version Version {
+			get;
+			set;
 		}
 		
 		public void InfoMessage(string message) {

@@ -25,11 +25,9 @@ namespace LongoMatch.Gui.Dialog
 {
 	public class AboutDialog: Gtk.AboutDialog
 	{
-		public AboutDialog ()
+		public AboutDialog (Version version)
 		{
-			Version version = Assembly.GetExecutingAssembly().GetName().Version;
-			if(Environment.OSVersion.Platform == PlatformID.Unix)
-				ProgramName = Constants.SOFTWARE_NAME;
+			ProgramName = Constants.SOFTWARE_NAME;
 			Version = String.Format("{0}.{1}.{2}",version.Major,version.Minor,version.Build);
 			Copyright = Constants.COPYRIGHT;
 			Website = Constants.WEBSITE;
