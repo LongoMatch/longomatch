@@ -117,8 +117,8 @@ namespace LongoMatch.Gui.Component
 				
 			nameentry.Text = cat.Name;
 				
-			lagtimebutton.Value = cat.Start.Seconds;
-			leadtimebutton.Value = cat.Stop.Seconds;
+			leadtimebutton.Value = cat.Start.Seconds;
+			lagtimebutton.Value = cat.Stop.Seconds;
 			colorbutton1.Color = Helpers.ToGdkColor(cat.Color);
 			sortmethodcombobox.Active = (int)cat.SortMethod;
 			
