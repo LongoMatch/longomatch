@@ -209,8 +209,6 @@ namespace LongoMatch.Gui
 		}
 		
 		public void AddExportEntry (string name, string shortName, Action<Project, IGUIToolkit> exportAction) {
-			string filename;
-			
 			MenuItem parent = (MenuItem) this.UIManager.GetWidget("/menubar1/ToolsAction/ExportProjectAction1");
 			
 			MenuItem item = new MenuItem(name);
