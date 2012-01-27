@@ -191,6 +191,12 @@ namespace LongoMatch.Gui
 			}
 		}
 		
+		public ITemplatesService TemplatesService {
+			set {
+				playsList.TemplatesService = value;
+			}
+		}
+		
 		public void UpdateGameUnits (GameUnitsList gameUnits) {
 			gameUnitsActionVisible = gameUnits != null && gameUnits.Count > 0;
 			GameUnitsViewAction.Sensitive = gameUnitsActionVisible;

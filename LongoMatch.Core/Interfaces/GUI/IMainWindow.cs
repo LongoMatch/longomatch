@@ -83,6 +83,7 @@ namespace LongoMatch.Interfaces.GUI
 		IPlayer Player{get;}
 		ICapturer Capturer{get;}
 		IPlaylistWidget Playlist{get;}
+		ITemplatesService TemplatesService{set;}
 		
 		void AddExportEntry (string name, string shortName, Action<Project, IGUIToolkit> exportAction);
 	}

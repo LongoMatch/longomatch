@@ -66,6 +66,7 @@ namespace LongoMatch.Services
 				
 			/* Start TemplatesService */
 			ts = new TemplatesService(Config.configDirectory);
+			Core.mainWindow.TemplatesService = ts;
 
 			/* Start DB services */
 			db = new DataBase(Path.Combine(Config.DBDir(),Constants.DB_FILE));

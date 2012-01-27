@@ -47,8 +47,6 @@ namespace LongoMatch.Gui.Component
 		public event RenderPlaylistHandler RenderPlaylistEvent;
 
 		ITemplatesService ts;
-		ISubcategoriesTemplatesProvider subcatProvider;
-		List<PlayerSubCategory> playersSubcat;
 
 		private Project project;
 
@@ -68,9 +66,7 @@ namespace LongoMatch.Gui.Component
 		public ITemplatesService TemplatesService
 		{
 			set {
-				this.ts = ts;
-				this.subcatProvider = ts.SubCategoriesTemplateProvider;
-				this.playersSubcat = ts.PlayerSubcategories;
+				ts = value;
 			}
 		}
 
