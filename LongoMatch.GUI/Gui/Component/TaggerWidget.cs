@@ -38,8 +38,6 @@ namespace LongoMatch.Gui.Component
 			this.Build();
 			table1.NColumns = 1;
 			table1.NRows = 1;
-			localcheckbutton.Toggled += OnCheckbuttonToggled;
-			visitorcheckbutton.Toggled += OnCheckbuttonToggled;
 		}
 		
 		public void SetData (Play play, string localTeam, string visitorTeam) {
@@ -48,6 +46,8 @@ namespace LongoMatch.Gui.Component
 			visitorcheckbutton.Label = visitorTeam;
 			localcheckbutton.Active = play.Team == Team.LOCAL || play.Team == Team.BOTH;
 			visitorcheckbutton.Active = play.Team == Team.VISITOR || play.Team == Team.BOTH;
+			localcheckbutton.Toggled += OnCheckbuttonToggled;
+			visitorcheckbutton.Toggled += OnCheckbuttonToggled;
 		}
 		
 		public void AddSubCategory(TagSubCategory subcat, StringTagStore tags){
@@ -78,6 +78,7 @@ namespace LongoMatch.Gui.Component
 				else
 					play.Team = Team.NONE;
 			}
+			Log.Debug("Team tagged: " + play.Team);
 		}
 	}
 }
