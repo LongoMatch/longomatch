@@ -83,6 +83,8 @@ namespace LongoMatch.Gui
 			playbutton.CanFocus = false;
 			prevbutton.CanFocus = false;
 			nextbutton.CanFocus = false;
+			jumpspinbutton.CanFocus = false;
+			detachbutton.CanFocus = false;
 			volumebutton.CanFocus = false;
 			timescale.CanFocus = false;
 			vscale1.CanFocus = false;
@@ -90,6 +92,7 @@ namespace LongoMatch.Gui
 			seeksQueue = new double[2];
 			seeksQueue [0] = -1;
 			seeksQueue [1] = -1;
+			detachbutton.Clicked += (sender, e) => EmitDetach();
 		}
 
 		#endregion
