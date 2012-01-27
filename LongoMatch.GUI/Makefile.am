@@ -18,6 +18,7 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayersListTreeWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayersTaggerWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.PlayersTagger.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlaysListTreeWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs \
@@ -37,7 +38,6 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.NewProjectDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.OpenProjectDialog.cs \
-	gtk-gui/LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs \
@@ -69,6 +69,7 @@ SOURCES = \
 	Gui/Component/PlayerProperties.cs \
 	Gui/Component/PlayersListTreeWidget.cs \
 	Gui/Component/PlayersTaggerWidget.cs \
+	Gui/Component/PlayersTagger.cs \
 	Gui/Component/PlayListWidget.cs \
 	Gui/Component/PlaysListTreeWidget.cs \
 	Gui/Component/ProjectDetailsWidget.cs \
@@ -94,7 +95,6 @@ SOURCES = \
 	Gui/Dialog/HotKeySelectorDialog.cs \
 	Gui/Dialog/NewProjectDialog.cs \
 	Gui/Dialog/OpenProjectDialog.cs \
-	Gui/Dialog/PlayersSelectionDialog.cs \
 	Gui/Dialog/ProjectSelectionDialog.cs \
 	Gui/Dialog/ProjectsManager.cs \
 	Gui/Dialog/RenderingJobsDialog.cs \

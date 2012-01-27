@@ -28,33 +28,16 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class PlayersTaggerWidget : Gtk.Bin
 	{
-		private PlayerSubCategory subcat;
-		private PlayersTagStore players;
-		private TeamTemplate template;
+		PlayersTagger tagger;
 		
 		public PlayersTaggerWidget (PlayerSubCategory subcat, TeamTemplate template,
 		                            PlayersTagStore players) {
 			this.Build ();
-			this.subcat = subcat;
-			this.players = players;
-			this.template = template;
 			CategoryLabel.Markup = "<b>" + subcat.Name + "</b>";
-			LoadTagsLabel();
-			editbutton.Clicked += OnEditClicked;
-		}
-		
-		private void LoadTagsLabel () {
-			var playersNames = players.GetTags(subcat).Select(p => p.Value.Name).ToArray();
-			playerslabel.Text = String.Join(" ; ", playersNames);
-		}
-		
-		protected virtual void OnEditClicked (object sender, System.EventArgs e)
-		{
-			PlayersSelectionDialog dialog = new PlayersSelectionDialog(subcat, template, players);
-			dialog.TransientFor = this.Toplevel as Gtk.Window;
-			dialog.Run();
-			dialog.Destroy();
-			LoadTagsLabel();
+			tagger = new PlayersTagger();
+			tagger.Load(subcat, template, players);
+			tagger.Show();
+			GtkAlignment.Add(tagger);
 		}
 	}
 }

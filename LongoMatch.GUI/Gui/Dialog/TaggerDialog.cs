@@ -91,7 +91,7 @@ namespace LongoMatch.Gui.Dialog
 			
 			PlayersTaggerWidget widget = new PlayersTaggerWidget(subcat, template, tags);
 			widget.Show();
-			playersbox.PackStart(widget, false, true, 0);
+			playersbox.PackStart(widget, true, true, 0);
 		}
 
 	}

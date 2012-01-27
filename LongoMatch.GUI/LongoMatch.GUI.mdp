@@ -36,7 +36,6 @@
     <File subtype="Code" buildaction="Compile" name="Gui/TreeView/PlayerPropertiesTreeView.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/TreeView/PlayListTreeView.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/TreeView/PlaysTreeView.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/PlayersSelectionDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/SnapshotsDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/UpdateDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/Win32CalendarDialog.cs" />
@@ -87,7 +86,6 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlayersListTreeWidget.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.Win32CalendarDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs" />
@@ -153,6 +151,8 @@
     <File subtype="Directory" buildaction="Compile" name="Gui" />
     <File subtype="Code" buildaction="Compile" name="Gui/Helpers.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Cairo.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/PlayersTagger.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlayersTagger.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
