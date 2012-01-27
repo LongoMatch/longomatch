@@ -304,14 +304,15 @@ namespace LongoMatch.Gui
 			if (detach == detachedPlayer)
 				return;
 				
+			detachedPlayer = detach;
+			
 			if (detach) {
 				Log.Debug("Detaching player");
 				playerWindow = new Gtk.Window(Constants.SOFTWARE_NAME);
 				playerWindow.Icon = Stetic.IconLoader.LoadIcon(this, "longomatch", IconSize.Button);
 				playerWindow.DeleteEvent += (o, args) => DetachPlayer(false);
 				playerWindow.Show();
-				this.player.Reparent(playerWindow);
-				detachedPlayer = true;
+				player.Reparent(playerWindow);
 				buttonswidget.Visible = true;
 				timeline.Visible = true;
 				if (Config.useGameUnits) {
@@ -322,8 +323,8 @@ namespace LongoMatch.Gui
 				ToggleAction action;
 				
 				Log.Debug("Attaching player again");
-				this.player.Reparent(this.videowidgetsbox);
-				detachedPlayer = false;
+				player.Reparent(this.videowidgetsbox);
+				playerWindow.Destroy();
 				
 				if (ManualTaggingViewAction.Active)
 					action = ManualTaggingViewAction;
@@ -404,6 +405,8 @@ namespace LongoMatch.Gui
 			notes.Visible = false;
 			selectedTimeNode = null;
 			MakeActionsSensitive(false, projectType);
+			if (detachedPlayer)
+				DetachPlayer(false);
 		}
 
 		private void MakeActionsSensitive(bool sensitive, ProjectType projectType) {
