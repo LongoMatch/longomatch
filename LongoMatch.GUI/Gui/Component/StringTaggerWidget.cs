@@ -50,7 +50,14 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		public void UpdateTags() {
-			foreach (var tag in tags.GetTags(subcategory)) {
+			List<StringTag> stringTags = tags.GetTags(subcategory);
+			
+			/* Set a default value */
+			if (stringTags.Count == 0) {
+				stringTags.Add(new StringTag{Value=subcategory[0], SubCategory=subcategory});
+			}
+			
+			foreach (var tag in stringTags) {
 				if (dict.ContainsKey(tag)) 	
 					dict[tag].Active = true;
 			}
