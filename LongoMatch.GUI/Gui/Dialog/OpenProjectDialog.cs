@@ -48,7 +48,11 @@ namespace LongoMatch.Gui.Dialog
 		protected virtual void OnProjectlistwidgetProjectsSelected(List<ProjectDescription> projects)
 		{
 			buttonOk.Sensitive = (projects.Count == 1);
-			SelectedProject = projects[0];
+			if (projects.Count > 0) {
+				SelectedProject = projects[0];
+			} else {
+				SelectedProject = null;
+			}
 		}
 	}
 }
