@@ -89,6 +89,7 @@ namespace LongoMatch.Gui.Component
 			w2.Fill = false;
 			// Container child hbox5.Gtk.Box+BoxChild
 			this.changebuton = new global::Gtk.Button ();
+			this.changebuton.Sensitive = false;
 			this.changebuton.CanFocus = true;
 			this.changebuton.Name = "changebuton";
 			this.changebuton.UseUnderline = true;

@@ -56,6 +56,13 @@ namespace LongoMatch.Gui.Component
 			lagtimebutton.ValueChanged += OnLagTimeChanged;
 		}
 		
+		public bool CanChangeHotkey {
+			set {
+				if (value == true)
+					changebuton.Sensitive = true;
+			}
+		}
+		
 		public void LoadSubcategories(ITemplatesService ts) {
 			subcategoriesProvider = ts.SubCategoriesTemplateProvider;
 			LoadSubcategories(ts.PlayerSubcategories);

@@ -59,6 +59,7 @@ namespace LongoMatch.Gui.Dialog
 		public List<HotKey> HotKeysList {
 			set {
 				hkList = value;
+				timenodeproperties2.CanChangeHotkey = hkList != null;
 			}
 		}
 
