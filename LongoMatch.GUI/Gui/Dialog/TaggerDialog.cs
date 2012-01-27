@@ -78,18 +78,16 @@ namespace LongoMatch.Gui.Dialog
 		}
 		
 		public void AddPlayerSubcategory (PlayerSubCategory subcat, PlayersTagStore tags){
-			TeamTemplate template;
+			TeamTemplate local=null, visitor=null;
 			
 			/* the notebook starts invisible */
 			playersnotebook.Visible = true;
 			if (subcat.Contains(Team.LOCAL))
-				template = localTeamTemplate;
-			/* FIXME: Add support for subcategories with both teams */
-			//else if (subcat.Contains(Team.VISITOR))
-			else
-				template = visitorTeamTemplate;
+				local = localTeamTemplate;
+			if (subcat.Contains(Team.VISITOR))
+				visitor = visitorTeamTemplate;
 			
-			PlayersTaggerWidget widget = new PlayersTaggerWidget(subcat, template, tags);
+			PlayersTaggerWidget widget = new PlayersTaggerWidget(subcat, local, visitor, tags);
 			widget.Show();
 			playersbox.PackStart(widget, true, true, 0);
 		}

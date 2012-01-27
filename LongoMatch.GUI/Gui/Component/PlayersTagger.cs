@@ -29,7 +29,7 @@ namespace LongoMatch.Gui.Component
 	public partial class PlayersTagger : Gtk.Bin
 	{
 		PlayerSubCategory subcat;
-		TeamTemplate template;
+		TeamTemplate local, visitor;
 		PlayersTagStore players;
 		Dictionary<CheckButton, PlayerTag> checkButtonsDict;
 		RadioButton firstRB;
@@ -40,31 +40,39 @@ namespace LongoMatch.Gui.Component
 			this.Build ();
 		}
 		
-		public void Load (PlayerSubCategory subcat, TeamTemplate template,
-			PlayersTagStore players)
+		public void Load (PlayerSubCategory subcat, TeamTemplate local,
+			TeamTemplate visitor, PlayersTagStore players)
 		{
 			this.subcat = subcat;
-			this.template = template;
+			this.local = local;
+			this.visitor = visitor;
 			this.players = players;
 			SetPlayersInfo();
 			UpdateSelectedPlayers();
 		}
 
-		private void UpdateSelectedPlayers () {
+		void UpdateSelectedPlayers () {
 			foreach(var pair in checkButtonsDict) {
 				pair.Key.Active = players.Contains(pair.Value);
 			}
 		}
 
-		private void SetPlayersInfo() {
+		void SetPlayersInfo() {
+			checkButtonsDict = new Dictionary<CheckButton, PlayerTag>();
+			if (local != null)
+				SetPlayersInfo(localtable, local);
+			if (visitor != null)
+				SetPlayersInfo(visitortable, visitor);
+		}
+		
+		void SetPlayersInfo(Table table, TeamTemplate template) {
 			List<PlayerTag> playersList;
 			int i=0;
 
-			checkButtonsDict = new Dictionary<CheckButton, PlayerTag>();
 			playersList = template.PlayingPlayersList.Select(p => new PlayerTag {Value=p, SubCategory=subcat}).ToList();
 
-			table1.NRows =(uint)(playersList.Count/DEFAULT_WIDTH);
-			table1.NColumns =(uint) DEFAULT_WIDTH;
+			table.NRows =(uint)(playersList.Count/DEFAULT_WIDTH);
+			table.NColumns =(uint) DEFAULT_WIDTH;
 
 			foreach(PlayerTag player in playersList) {
 				CheckButton button;
@@ -82,12 +90,12 @@ namespace LongoMatch.Gui.Component
 				button.Toggled += OnButtonToggled;
 				button.Show();
 
-				uint row_top =(uint)(i%table1.NRows);
+				uint row_top =(uint)(i%localtable.NRows);
 				uint row_bottom = (uint) row_top+1 ;
-				uint col_left = (uint) i/table1.NRows;
+				uint col_left = (uint) i/localtable.NRows;
 				uint col_right = (uint) col_left+1 ;
 
-				table1.Attach(button,col_left,col_right,row_top,row_bottom);
+				table.Attach(button,col_left,col_right,row_top,row_bottom);
 				checkButtonsDict.Add(button, player);
 				i++;
 			}

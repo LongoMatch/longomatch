@@ -4,7 +4,10 @@ namespace LongoMatch.Gui.Component
 {
 	public partial class PlayersTagger
 	{
-		private global::Gtk.Table table1;
+		private global::Gtk.VBox vbox4;
+		private global::Gtk.Table localtable;
+		private global::Gtk.HSeparator hseparator1;
+		private global::Gtk.Table visitortable;
         
 		protected virtual void Build ()
 		{
@@ -13,11 +16,34 @@ namespace LongoMatch.Gui.Component
 			global::Stetic.BinContainer.Attach (this);
 			this.Name = "LongoMatch.Gui.Component.PlayersTagger";
 			// Container child LongoMatch.Gui.Component.PlayersTagger.Gtk.Container+ContainerChild
-			this.table1 = new global::Gtk.Table (((uint)(3)), ((uint)(3)), false);
-			this.table1.Name = "table1";
-			this.table1.RowSpacing = ((uint)(6));
-			this.table1.ColumnSpacing = ((uint)(6));
-			this.Add (this.table1);
+			this.vbox4 = new global::Gtk.VBox ();
+			this.vbox4.Name = "vbox4";
+			this.vbox4.Spacing = 6;
+			// Container child vbox4.Gtk.Box+BoxChild
+			this.localtable = new global::Gtk.Table (((uint)(3)), ((uint)(3)), false);
+			this.localtable.Name = "localtable";
+			this.localtable.RowSpacing = ((uint)(6));
+			this.localtable.ColumnSpacing = ((uint)(6));
+			this.vbox4.Add (this.localtable);
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.localtable]));
+			w1.Position = 0;
+			// Container child vbox4.Gtk.Box+BoxChild
+			this.hseparator1 = new global::Gtk.HSeparator ();
+			this.hseparator1.Name = "hseparator1";
+			this.vbox4.Add (this.hseparator1);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.hseparator1]));
+			w2.Position = 1;
+			w2.Expand = false;
+			w2.Fill = false;
+			// Container child vbox4.Gtk.Box+BoxChild
+			this.visitortable = new global::Gtk.Table (((uint)(3)), ((uint)(3)), false);
+			this.visitortable.Name = "visitortable";
+			this.visitortable.RowSpacing = ((uint)(6));
+			this.visitortable.ColumnSpacing = ((uint)(6));
+			this.vbox4.Add (this.visitortable);
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.visitortable]));
+			w3.Position = 2;
+			this.Add (this.vbox4);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}

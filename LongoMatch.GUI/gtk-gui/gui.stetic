@@ -6760,38 +6760,99 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
-      <widget class="Gtk.Table" id="table1">
+      <widget class="Gtk.VBox" id="vbox4">
         <property name="MemberName" />
-        <property name="NRows">3</property>
-        <property name="NColumns">3</property>
-        <property name="RowSpacing">6</property>
-        <property name="ColumnSpacing">6</property>
+        <property name="Spacing">6</property>
         <child>
-          <placeholder />
+          <widget class="Gtk.Table" id="localtable">
+            <property name="MemberName" />
+            <property name="NRows">3</property>
+            <property name="NColumns">3</property>
+            <property name="RowSpacing">6</property>
+            <property name="ColumnSpacing">6</property>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">0</property>
+            <property name="AutoSize">True</property>
+          </packing>
         </child>
         <child>
-          <placeholder />
+          <widget class="Gtk.HSeparator" id="hseparator1">
+            <property name="MemberName" />
+          </widget>
+          <packing>
+            <property name="Position">1</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
         </child>
         <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
+          <widget class="Gtk.Table" id="visitortable">
+            <property name="MemberName" />
+            <property name="NRows">3</property>
+            <property name="NColumns">3</property>
+            <property name="RowSpacing">6</property>
+            <property name="ColumnSpacing">6</property>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">2</property>
+            <property name="AutoSize">True</property>
+          </packing>
         </child>
       </widget>
     </child>

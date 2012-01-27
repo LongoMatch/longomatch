@@ -30,12 +30,13 @@ namespace LongoMatch.Gui.Component
 	{
 		PlayersTagger tagger;
 		
-		public PlayersTaggerWidget (PlayerSubCategory subcat, TeamTemplate template,
-		                            PlayersTagStore players) {
+		public PlayersTaggerWidget (PlayerSubCategory subcat, TeamTemplate local,
+			TeamTemplate visitor, PlayersTagStore players)
+		{
 			this.Build ();
 			CategoryLabel.Markup = "<b>" + subcat.Name + "</b>";
 			tagger = new PlayersTagger();
-			tagger.Load(subcat, template, players);
+			tagger.Load(subcat, local, visitor, players);
 			tagger.Show();
 			GtkAlignment.Add(tagger);
 		}
