@@ -24,6 +24,9 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Mono.Unix;
+#if HAVE_GTK
+using Gdk;
+#endif
 
 namespace LongoMatch.Store
 {
@@ -119,17 +122,20 @@ namespace LongoMatch.Store
 
 		public override string ToString()
 		{
-			string modifierS;
+			string modifierS = "";
+				
 			if(!Defined)
 				return Catalog.GetString("Not defined");
-			if(Modifier == 3)//ModifierType.Mod1Mask)
-				modifierS = "<Alt>+";
-			else if(Modifier == 0)// ModifierType.ShiftMask)
-				modifierS = "<Shift>+";
-			else
-				modifierS = "";
 
+#if HAVE_GTK
+			if(Modifier == (int)ModifierType.Mod1Mask)
+				modifierS = "<Alt>+";
+			else if(Modifier == (int)ModifierType.ShiftMask)
+				modifierS = "<Shift>+";
+			return string.Format("{0}{1}", modifierS,((Gdk.Key)Key).ToString().ToLower());
+#else
 			return string.Format("{0}{1}", modifierS,(Key.ToString()).ToLower());
+#endif
 		}
 		#endregion
 	}
