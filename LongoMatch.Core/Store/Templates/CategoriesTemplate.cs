@@ -73,7 +73,6 @@ namespace LongoMatch.Store.Templates
 		public void AddDefaultItem (int index) {
 			PlayerSubCategory localplayers, visitorplayers;
 			TagSubCategory period;
-			TeamSubCategory team;
 			Color c = Color.FromArgb(255, 0, 0);
 			HotKey h = new HotKey();
 			
