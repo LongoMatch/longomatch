@@ -103,6 +103,11 @@ namespace LongoMatch.Gui
 			VideoEditionProperties vep;
 			Job job = null;
 			int response;
+			
+			if (playlist.Count == 0) {
+				WarningMessage(Catalog.GetString("The playlist you want to render is empty."));
+				return null;
+			}
 
 			vep = new VideoEditionProperties();
 			vep.TransientFor = mainWindow as Gtk.Window;
