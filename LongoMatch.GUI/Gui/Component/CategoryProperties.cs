@@ -127,6 +127,7 @@ namespace LongoMatch.Gui.Component
 			else hotKeyLabel.Text = Catalog.GetString("none");
 			
 			list = subcategoriestreeview1.Model as ListStore;
+			list.Clear();
 			foreach (ISubCategory subcat in cat.SubCategories)
 				list.AppendValues(subcat);
 		}
