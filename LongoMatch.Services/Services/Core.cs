@@ -36,6 +36,8 @@ namespace LongoMatch.Services
 		static EventsManager eManager;
 		static HotKeysManager hkManager;
 		static GameUnitsManager guManager;
+		static PlaylistManager plManager;
+		static RenderingJobsManager videoRenderer;
 		static IMainWindow mainWindow;
 		static IGUIToolkit guiToolkit;
 
@@ -61,7 +63,6 @@ namespace LongoMatch.Services
 		}
 		
 		public static void StartServices(IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit){
-			RenderingJobsManager videoRenderer;
 			ProjectsManager projectsManager;
 				
 			/* Start TemplatesService */
@@ -80,16 +81,17 @@ namespace LongoMatch.Services
 
 			/* Start the rendering jobs manager */
 			videoRenderer = new RenderingJobsManager(multimediaToolkit, guiToolkit);
-			mainWindow.RenderPlaylistEvent += (playlist) => {
-				videoRenderer.AddJob(guiToolkit.ConfigureRenderingJob(playlist));};
 			
 			/* Start Game Units manager */
 			guManager = new GameUnitsManager(mainWindow, mainWindow.Player);
 			
+			/* Start playlists manager */
+			plManager = new PlaylistManager(guiToolkit, videoRenderer);
+			
 			projectsManager = new ProjectsManager(guiToolkit, multimediaToolkit);
 			projectsManager.OpenedProjectChanged += OnOpenedProjectChanged;
 		}
-		
+
 		public static void BindEvents(IMainWindow mainWindow) {
 			/* Connect player events */
 			/* FIXME:
@@ -146,6 +148,7 @@ namespace LongoMatch.Services
 			eManager.OpenedProjectType = projectType;
 			
 			guManager.OpenedProject = project;
+			plManager.OpenedProject = project;
 		}
 		
 		private static void SetupBaseDir() {

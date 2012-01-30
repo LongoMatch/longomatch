@@ -33,15 +33,16 @@ namespace LongoMatch.Services
 		IPlaylistWidget playlistWidget;
 		IPlayList playlist;
 		IPlayer player;
+		IRenderingJobsManager videoRenderer;
 		/* FIXME */
-		Project openedProject;
 		TimeNode selectedTimeNode;
 		
 		bool clockStarted;
 		Timer timeout;
 		
-		public PlaylistManager (IGUIToolkit guiToolkit)
+		public PlaylistManager (IGUIToolkit guiToolkit, IRenderingJobsManager videoRenderer)
 		{
+			this.videoRenderer = videoRenderer;
 			this.guiToolkit = guiToolkit;
 			playlistWidget = guiToolkit.MainWindow.Playlist;
 			player = guiToolkit.MainWindow.Player;
@@ -50,6 +51,11 @@ namespace LongoMatch.Services
 		
 		public void Stop() {
 			StopClock();
+		}
+		
+		public Project OpenedProject {
+			get;
+			set;
 		}
 		
 		public void Load(string filePath) {
@@ -77,6 +83,7 @@ namespace LongoMatch.Services
 			mainWindow.PlayListNodeAddedEvent += OnPlayListNodeAdded;
 			mainWindow.PlayListNodeSelectedEvent += LoadPlaylistPlay;
 			mainWindow.ApplyRateEvent += (p) => {p.Rate = player.Rate;};
+			mainWindow.RenderPlaylistEvent += OnRenderPlaylistEvent;
 			
 			/* Handle Next/Prev from the player */
 			player.Next += () => {Next();};
@@ -93,6 +100,13 @@ namespace LongoMatch.Services
 		
 		private void LoadPlaylistPlay(PlayListPlay play)
 		{
+			if(OpenedProject != null) {
+				guiToolkit.ErrorMessage(Catalog.GetString(
+					"Please, close the opened project to play the playlist."));
+				Stop();
+				return;
+			}
+			
 			StartClock();
 			player.SetPlayListElement(play.MediaFile.FilePath, play.Start.MSeconds,
 			                          play.Stop.MSeconds, play.Rate, playlist.HasNext());
@@ -100,12 +114,6 @@ namespace LongoMatch.Services
 		}
 		
 		private bool Next() {
-			if(openedProject != null) {
-				guiToolkit.ErrorMessage(Catalog.GetString("Please, close the opened project to play the playlist."));
-				Stop();
-				return false;
-			}
-			
 			if (!playlist.HasNext()) {
 				Stop();
 				return false;
@@ -157,10 +165,17 @@ namespace LongoMatch.Services
 			return;
 		}
 		
+		protected virtual void OnRenderPlaylistEvent (IPlayList playlist)
+		{
+			Job job = guiToolkit.ConfigureRenderingJob(playlist);
+			if (job != null)
+				videoRenderer.AddJob(job);
+		}
+		
 		protected virtual void OnPlayListNodeAdded(Play play)
 		{
 			Add(new PlayListPlay {
-				MediaFile = openedProject.Description.File,
+				MediaFile = OpenedProject.Description.File,
 				Drawings = play.Drawings,
 				Start = play.Start,
 				Stop = play.Stop,
