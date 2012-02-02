@@ -681,12 +681,13 @@ namespace LongoMatch.Gui
 		protected virtual void OnTick(object o, long currentTime, long streamLength,
 			float currentPosition, bool seekable)
 		{
-			if(currentTime != 0 && timeline != null && openedProject != null)
-				timeline.CurrentFrame=(uint)(currentTime *
-				                             openedProject.Description.File.Fps / 1000);
+			if(currentTime != 0 && timeline != null && openedProject != null) {
+				uint frame = (uint)(currentTime * openedProject.Description.File.Fps / 1000);
+				timeline.CurrentFrame = frame;
+				guTimeline.CurrentFrame = frame;
+			}
 			gameunitstaggerwidget1.CurrentTime = new Time{MSeconds = (int)currentTime};
 		}
-
 		
 		protected virtual void OnUpdate(Version version, string URL) {
 			LongoMatch.Gui.Dialog.UpdateDialog updater = new LongoMatch.Gui.Dialog.UpdateDialog();
