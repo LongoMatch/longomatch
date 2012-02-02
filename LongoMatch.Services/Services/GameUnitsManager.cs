@@ -122,6 +122,7 @@ namespace LongoMatch.Services
 		void HandleUnitSelected (GameUnit gameUnit, TimelineNode unit)
 		{
 			unit.Selected = true;
+			player.SetStartStop(unit.Start.MSeconds, unit.Stop.MSeconds);
 		}
 
 		void HandleUnitDeleted (GameUnit gameUnit, List<TimelineNode> units)
