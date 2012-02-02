@@ -311,12 +311,21 @@ namespace LongoMatch.Gui
 			detachedPlayer = detach;
 			
 			if (detach) {
+				EventBox box;
 				Log.Debug("Detaching player");
+				
 				playerWindow = new Gtk.Window(Constants.SOFTWARE_NAME);
 				playerWindow.Icon = Stetic.IconLoader.LoadIcon(this, "longomatch", IconSize.Button);
 				playerWindow.DeleteEvent += (o, args) => DetachPlayer(false);
+				box = new EventBox();
+				
+				box.KeyPressEvent += (o, args) => OnKeyPressEvent(args.Event);
+				playerWindow.Add(box);
+				
+				box.Show();
 				playerWindow.Show();
-				player.Reparent(playerWindow);
+				
+				player.Reparent(box);
 				buttonswidget.Visible = true;
 				timeline.Visible = true;
 				if (Config.useGameUnits) {
