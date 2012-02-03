@@ -5,7 +5,7 @@ LongoMatch/Main.cs
 LongoMatch/longomatch.desktop.in.in
 LongoMatch.Addins.COE/ExcelExporter.cs
 LongoMatch.Addins.COE/ProjectStatsSheet.cs
-LongoMatch.Addins.COE/TeamStatsSheets.cs
+LongoMatch.Addins.COE/TimelineSheet.cs
 LongoMatch.Core/Handlers/Handlers.cs
 LongoMatch.Core/Handlers/Multimedia.cs
 LongoMatch.Core/Config.cs
@@ -92,7 +92,6 @@ LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Base.TimelineWidgetBase.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.RenderingStateBar.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameUnitsTagger.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayersListTreeWidget.cs
-LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs
@@ -155,7 +154,6 @@ LongoMatch.GUI/Gui/Dialog/HotKeySelectorDialog.cs
 LongoMatch.GUI/Gui/Dialog/TaggerDialog.cs
 LongoMatch.GUI/Gui/Dialog/DrawingTool.cs
 LongoMatch.GUI/Gui/Dialog/SnapshotsDialog.cs
-LongoMatch.GUI/Gui/Dialog/PlayersSelectionDialog.cs
 LongoMatch.GUI/Gui/Dialog/OpenProjectDialog.cs
 LongoMatch.GUI/Gui/Dialog/ProjectSelectionDialog.cs
 LongoMatch.GUI/Gui/Dialog/NewProjectDialog.cs
