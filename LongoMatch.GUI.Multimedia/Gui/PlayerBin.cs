@@ -567,6 +567,8 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnPrevbuttonClicked(object sender, System.EventArgs e)
 		{
+			if (InSegment())
+				SeekInSegment (segmentStartTime);
 			if(Prev != null)
 				Prev();
 		}

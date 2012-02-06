@@ -253,10 +253,6 @@ namespace LongoMatch.Services
 		
 		protected virtual void OnPrev()
 		{
-			if(selectedTimeNode is Play)
-				player.SeekInSegment(selectedTimeNode.Start.MSeconds);
-			else if(selectedTimeNode == null)
-				player.SeekTo(0,false);
 		}
 
 		protected virtual void OnTimeline2PositionChanged(Time pos)
