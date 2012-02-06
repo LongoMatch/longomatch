@@ -31,7 +31,6 @@ namespace LongoMatch.Gui.Component
 			this.frame.Add (this.GtkAlignment);
 			this.titlelabel = new global::Gtk.Label ();
 			this.titlelabel.Name = "titlelabel";
-			this.titlelabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>GtkFrame</b>");
 			this.titlelabel.UseMarkup = true;
 			this.frame.LabelWidget = this.titlelabel;
 			this.Add (this.frame);

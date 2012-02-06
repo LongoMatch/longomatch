@@ -153,7 +153,6 @@
                 <child>
                   <widget class="Gtk.Label" id="localteamlabel">
                     <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes" />
                   </widget>
                   <packing>
                     <property name="Position">1</property>
@@ -214,7 +213,6 @@
                 <child>
                   <widget class="Gtk.Label" id="visitorteamlabel">
                     <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes" />
                   </widget>
                   <packing>
                     <property name="Position">1</property>
@@ -1580,7 +1578,6 @@
         <child>
           <widget class="Gtk.Label" id="label1">
             <property name="MemberName" />
-            <property name="LabelProp" translatable="yes" />
           </widget>
           <packing>
             <property name="type">tab</property>
@@ -1589,7 +1586,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="LongoMatch.Gui.MainWindow" design-size="1224 686">
+  <widget class="Gtk.Window" id="LongoMatch.Gui.MainWindow" design-size="1342 686">
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -1963,7 +1960,7 @@
               <widget class="Gtk.HPaned" id="hpaned1">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Position">834</property>
+                <property name="Position">952</property>
                 <child>
                   <widget class="Gtk.VBox" id="downbox">
                     <property name="MemberName" />
@@ -3415,7 +3412,6 @@ Extra</property>
             <child>
               <widget class="Gtk.Label" id="playLabel">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes" />
               </widget>
               <packing>
                 <property name="LeftAttach">1</property>
@@ -3862,7 +3858,6 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
             <child>
               <widget class="Gtk.Label" id="bdaylabel">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes" />
               </widget>
               <packing>
                 <property name="Position">0</property>
@@ -5822,7 +5817,6 @@ You can continue with the current capture, cancel it or save your project.
         <child>
           <widget class="Gtk.Label" id="messagelabel">
             <property name="MemberName" />
-            <property name="LabelProp" translatable="yes" />
           </widget>
           <packing>
             <property name="Position">0</property>
@@ -6130,7 +6124,6 @@ You can continue with the current capture, cancel it or save your project.
         <child>
           <widget class="Gtk.Label" id="CategoryLabel">
             <property name="MemberName" />
-            <property name="LabelProp" translatable="yes" />
             <property name="UseMarkup">True</property>
           </widget>
           <packing>
@@ -6216,7 +6209,6 @@ You can continue with the current capture, cancel it or save your project.
         <child>
           <widget class="Gtk.Label" id="titlelabel">
             <property name="MemberName" />
-            <property name="LabelProp" translatable="yes" />
             <property name="UseMarkup">True</property>
           </widget>
           <packing>

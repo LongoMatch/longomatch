@@ -25,7 +25,6 @@ namespace LongoMatch.Gui.Component
 			this.frame1.Add (this.GtkAlignment);
 			this.CategoryLabel = new global::Gtk.Label ();
 			this.CategoryLabel.Name = "CategoryLabel";
-			this.CategoryLabel.LabelProp = "";
 			this.CategoryLabel.UseMarkup = true;
 			this.frame1.LabelWidget = this.CategoryLabel;
 			this.Add (this.frame1);

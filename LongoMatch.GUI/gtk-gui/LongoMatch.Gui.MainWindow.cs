@@ -143,12 +143,12 @@ namespace LongoMatch.Gui
 			this.ImportProjectAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Import Project");
 			w1.Add (this.ImportProjectAction, "<Control>i");
 			this.ManualTaggingViewAction = new global::Gtk.RadioAction ("ManualTaggingViewAction", global::Mono.Unix.Catalog.GetString ("Manual tagging view"), null, null, 0);
-			this.ManualTaggingViewAction.Group = this.TaggingViewAction.Group;
+			this.ManualTaggingViewAction.Group = this.TimelineViewAction.Group;
 			this.ManualTaggingViewAction.Sensitive = false;
 			this.ManualTaggingViewAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Free Capture Mode");
 			w1.Add (this.ManualTaggingViewAction, "<Control>f");
 			this.GameUnitsViewAction = new global::Gtk.RadioAction ("GameUnitsViewAction", global::Mono.Unix.Catalog.GetString ("Game units view"), null, null, 0);
-			this.GameUnitsViewAction.Group = this.TaggingViewAction.Group;
+			this.GameUnitsViewAction.Group = this.TimelineViewAction.Group;
 			this.GameUnitsViewAction.Sensitive = false;
 			this.GameUnitsViewAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Game units view");
 			w1.Add (this.GameUnitsViewAction, null);
@@ -269,7 +269,7 @@ namespace LongoMatch.Gui
 			this.hpaned1 = new global::Gtk.HPaned ();
 			this.hpaned1.CanFocus = true;
 			this.hpaned1.Name = "hpaned1";
-			this.hpaned1.Position = 834;
+			this.hpaned1.Position = 952;
 			// Container child hpaned1.Gtk.Paned+PanedChild
 			this.downbox = new global::Gtk.VBox ();
 			this.downbox.Name = "downbox";
@@ -380,7 +380,7 @@ namespace LongoMatch.Gui
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.DefaultWidth = 1224;
+			this.DefaultWidth = 1342;
 			this.DefaultHeight = 686;
 			this.leftbox.Hide ();
 			this.drawingtoolbox1.Hide ();
