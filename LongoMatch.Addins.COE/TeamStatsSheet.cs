@@ -64,6 +64,9 @@ public class TeamStatsSheet
 				else 
 					playersStats = subcatStats.VisitorPlayersStats;
 				
+				if (playersStats.Count == 0)
+					continue;
+				
 				foreach (string option in playersStats.Keys) {
 					List<PlayersStats> pStatsList = playersStats[option];
 					if (pStatsList.Count > 1) {

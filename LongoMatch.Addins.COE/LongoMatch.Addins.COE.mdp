@@ -20,6 +20,7 @@
     <File subtype="Code" buildaction="Compile" name="ProjectStatsSheet.cs" />
     <File subtype="Code" buildaction="Compile" name="TimelineSheet.cs" />
     <File subtype="Code" buildaction="Compile" name="TeamStatsSheet.cs" />
+    <File subtype="Code" buildaction="Compile" name="GameUnitsStatsSheet.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Addins, Version=0.6.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />

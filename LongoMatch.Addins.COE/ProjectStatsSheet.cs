@@ -63,6 +63,9 @@ public class ProjectStatsSheet
 		row = FillInfoData (ws, row, Catalog.GetString("Date"), stats.Date.ToShortDateString());
 		row = FillInfoData (ws, row, Catalog.GetString("Competition"), stats.Competition);
 		row = FillInfoData (ws, row, Catalog.GetString("Season"), stats.Season);
+		row = FillInfoData (ws, row, Catalog.GetString("Local team"), stats.LocalTeam);
+		row = FillInfoData (ws, row, Catalog.GetString("Visitor team"), stats.VisitorTeam);
+		row = FillInfoData (ws, row, Catalog.GetString("Result"), stats.Results);
 		return row;
 	}
 	

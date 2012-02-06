@@ -112,13 +112,13 @@ public class TimelineSheet
 			cols.Dispose();
 			
 			foreach (TimelineNode unit in gu) {
-				int start, stop;
+				float start, stop;
 				
-				start = TIMELINE_START + unit.Start.Seconds / 60;
-				stop = TIMELINE_START + unit.Stop.Seconds / 60;
+				start = TIMELINE_START + unit.Start.Seconds / (float) 60;
+				stop = TIMELINE_START + unit.Stop.Seconds / (float) 60;
 				
-				ws.Cells[row, start].Value = stop - start;
-				cols = ws.Cells[row, start, row, stop];
+				ws.Cells[row, (int) start].Value = stop - start;
+				cols = ws.Cells[row, (int)start, row, (int)stop];
 				cols.Style.Fill.PatternType =  ExcelFillStyle.Solid;	
 				cols.Style.Fill.BackgroundColor.SetColor(Color.Green);
 			}
@@ -150,21 +150,12 @@ public class TimelineSheet
 				
 				row++;
 				SetColoredHeaders(ws, row, subcat.Name, 3, 5, Color.DeepSkyBlue, false);
-				
 				subCatsDict.Add(subcat, row);
-				/*if (subcat is TeamSubCategory) {
+				
+				foreach (string s in subcat.ElementsDesc()) {
 					row++;
-					SetSubcatentriesHeaders(ws, row, project.LocalTeamTemplate.TeamName);
-					row++;
-					SetSubcatentriesHeaders(ws, row, project.VisitorTeamTemplate.TeamName);
-					
+					SetSubcatentriesHeaders(ws, row, s);
 				}
-				else if (subcat is PlayerSubCategory) { */
-					foreach (string s in subcat.ElementsDesc()) {
-						row++;
-						SetSubcatentriesHeaders(ws, row, s);
-					}
-				//}
 			}
 			row++;
 		}

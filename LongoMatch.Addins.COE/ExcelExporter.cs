@@ -90,6 +90,7 @@ public class EPPLUSExporter {
 		using (package = new ExcelPackage(newFile)) {
 			TimelineSheet timeline;
 			TeamStatsSheet teamStats;
+			GameUnitsStatsSheet gu;
 			ProjectStats stats = new ProjectStats(project);
 			
 			ws = CreateSheet(package, Catalog.GetString("Project statistics"));
@@ -109,6 +110,11 @@ public class EPPLUSExporter {
 			ws = CreateSheet(package, Catalog.GetString("Timeline"));
 			timeline = new TimelineSheet(ws, project);
 			timeline.Fill();
+			
+			ws = CreateSheet(package, Catalog.GetString("Game units"));
+			gu = new GameUnitsStatsSheet(ws, stats);
+			gu.Fill();
+			
 			package.Save();
 		}
 	}
