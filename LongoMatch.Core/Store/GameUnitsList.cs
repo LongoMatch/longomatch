@@ -56,6 +56,10 @@ namespace LongoMatch.Store
 				return null;
 			return this[index+1];
 		}
+		
+		public GameUnit GetLast() {
+			return this[this.Count-1];
+		}
 	}
 }
 
