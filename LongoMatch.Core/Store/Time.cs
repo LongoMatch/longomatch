@@ -36,6 +36,10 @@ namespace LongoMatch.Store
 		#region Constructors
 		public Time() {
 		}
+		
+		public Time(int mSeconds) {
+			MSeconds = mSeconds;
+		}
 		#endregion
 
 		//// <summary>
