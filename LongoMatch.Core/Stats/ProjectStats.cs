@@ -41,7 +41,7 @@ namespace LongoMatch.Stats
 			VisitorTeam = project.VisitorTeamTemplate.TeamName;
 			Competition = project.Description.Competition;
 			Season = project.Description.Season;
-			
+			Results = String.Format("{0}-{1}", project.Description.LocalGoals, project.Description.VisitorGoals);
 			UpdateStats (project);
 		}
 		
