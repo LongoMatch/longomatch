@@ -156,6 +156,10 @@ namespace LongoMatch.Store
 		public  static Time operator -(Time t1,int t2) {
 			return new Time {MSeconds = t1.MSeconds-t2};
 		}
+		
+		public static Time operator *(Time t1, double t2) {
+			return new Time {MSeconds = (int) (t1.MSeconds * t2)};
+		}
 		#endregion
 	}
 }
