@@ -29,11 +29,11 @@ namespace LongoMatch.Stats
 	public class ProjectStats
 	{
 		List<CategoryStats> catStats;
+		GameUnitsStats guStats;
 		
 		public ProjectStats (Project project)
 		{
-			catStats = new List<CategoryStats>(); 
-			
+			catStats = new List<CategoryStats>();
 			
 			ProjectName = project.Description.Title;
 			Date = project.Description.MatchDate;
@@ -43,6 +43,7 @@ namespace LongoMatch.Stats
 			Season = project.Description.Season;
 			Results = String.Format("{0}-{1}", project.Description.LocalGoals, project.Description.VisitorGoals);
 			UpdateStats (project);
+			UpdateGameUnitsStats (project);
 		}
 		
 		public string ProjectName {
@@ -75,15 +76,30 @@ namespace LongoMatch.Stats
 			set;
 		}
 		
+		public string Results {
+			get;
+			set;
+		}
+		
 		public List<CategoryStats> CategoriesStats {
 			get {
 				return catStats;
 			}
 		}
 		
+		public GameUnitsStats GameUnitsStats {
+			get {
+				return guStats;
+			}
+		}
+		
 		void CountPlaysInTeam (List<Play> plays, out int localTeamCount, out int visitorTeamCount) {
 			localTeamCount = plays.Where(p => p.Team == Team.LOCAL || p.Team == Team.BOTH).Count();
 			visitorTeamCount = plays.Where(p => p.Team == Team.VISITOR || p.Team == Team.BOTH).Count();
+		}
+		
+		void UpdateGameUnitsStats (Project project) {
+			guStats = new GameUnitsStats(project.GameUnits, (int)project.Description.File.Length);
 		}
 		
 		void UpdateStats (Project project) {

@@ -41,6 +41,8 @@ SOURCES = \
 	Interfaces/ITemplatesService.cs \
 	Interfaces/ITimelineNode.cs \
 	Stats/CategoryStats.cs \
+	Stats/GameUnitStats.cs \
+	Stats/GameUnitsStats.cs \
 	Stats/PercentualStat.cs \
 	Stats/PlayersStats.cs \
 	Stats/ProjectStats.cs \
