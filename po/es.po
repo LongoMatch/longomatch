@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: longomatch.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-02-06 02:12+0000\n"
-"PO-Revision-Date: 2012-02-06 12:17+0100\n"
+"POT-Creation-Date: 2012-02-06 18:58+0000\n"
+"PO-Revision-Date: 2012-02-07 11:25+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -296,9 +296,46 @@ msgid "Timeline"
 msgstr "Cronología"
 
 #: ../LongoMatch.Addins.COE/ExcelExporter.cs:114
-#| msgid "Game Units"
 msgid "Game units"
 msgstr "Unidades de juego"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:56
+#: ../LongoMatch.Core/Store/Play.cs:202
+#: ../LongoMatch.Core/Store/SubCategory.cs:84
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:48
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:73
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:52
+msgid "Name"
+msgstr "Nombre"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:57
+#: ../LongoMatch.Addins.COE/TimelineSheet.cs:205
+msgid "Count"
+msgstr "Contar"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:58
+#| msgid "Total"
+msgid "Total Time"
+msgstr "Tiempo total"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:59
+#| msgid "Lead Time"
+msgid "Played Time"
+msgstr "Tiempo jugado"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:60
+#| msgid "Lead Time"
+msgid "Paused Time"
+msgstr "Tiempo pausado"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:62
+msgid "Average"
+msgstr "Media"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:64
+#| msgid "Duration"
+msgid "Deviation"
+msgstr "Desviación"
 
 #: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:62
 msgid "Project"
@@ -350,18 +387,6 @@ msgstr "Duración (min)"
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:45
 msgid "Categories"
 msgstr "Categorías"
-
-#: ../LongoMatch.Addins.COE/TimelineSheet.cs:205
-msgid "Count"
-msgstr "Contar"
-
-#: ../LongoMatch.Core/Store/Play.cs:202
-#: ../LongoMatch.Core/Store/SubCategory.cs:84
-#: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:48
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:73
-#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:52
-msgid "Name"
-msgstr "Nombre"
 
 #: ../LongoMatch.Core/Store/Play.cs:203
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:140
@@ -1176,7 +1201,6 @@ msgid "Categories Template"
 msgstr "Plantilla de categorías"
 
 #: ../LongoMatch.GUI/Gui/GUIToolkit.cs:108
-#| msgid "The playlist is empty!"
 msgid "The playlist you want to render is empty."
 msgstr "La lista de reproducción que quiere renderizar está vacía"
 
