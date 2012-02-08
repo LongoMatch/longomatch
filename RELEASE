@@ -1,7 +1,7 @@
-LongoMatch-0.17.3 "Madrid"
+LongoMatch-0.17.4 "Re-Madrid"
 ----------------------------------
 
-The LongoMatch team is happy to announce the third release in the
+The LongoMatch team is happy to announce the fourth release in the
 unstable 0.17 series.
 
 *** IMPORTANT NOTE ***
@@ -21,6 +21,7 @@ experience.
 
 
 * Bugs fixed
+	* Fix  launch script
 	* Fixed several bugs with templates and subcategories
 
 *Contributors to this Release:
