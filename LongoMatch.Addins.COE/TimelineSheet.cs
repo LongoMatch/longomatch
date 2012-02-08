@@ -106,7 +106,7 @@ public class TimelineSheet
 			ExcelRange cols;
 			
 			SetColoredHeaders(ws, row, gu.Name, 3, 5, Color.DeepSkyBlue, true);
-			cols = ws.Cells[row, TIMELINE_START, row, duration];
+			cols = ws.Cells[row, TIMELINE_START, row, TIMELINE_START + duration];
 			cols.Style.Fill.PatternType = ExcelFillStyle.Solid;
 			cols.Style.Fill.BackgroundColor.SetColor(Color.Red);
 			cols.Dispose();
@@ -119,6 +119,8 @@ public class TimelineSheet
 				
 				ws.Cells[row, (int) start].Value = stop - start;
 				
+				if (start > stop)
+					continue;
 				if ((int)start == (int)stop)
 					cols = ws.Cells [row, (int) start];
 				else
