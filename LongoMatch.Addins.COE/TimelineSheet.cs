@@ -118,7 +118,11 @@ public class TimelineSheet
 				stop = TIMELINE_START + unit.Stop.Seconds / (float) 60;
 				
 				ws.Cells[row, (int) start].Value = stop - start;
-				cols = ws.Cells[row, (int)start, row, (int)stop];
+				
+				if ((int)start == (int)stop)
+					cols = ws.Cells [row, (int) start];
+				else
+					cols = ws.Cells[row, (int)start, row, (int)stop];
 				cols.Style.Fill.PatternType =  ExcelFillStyle.Solid;	
 				cols.Style.Fill.BackgroundColor.SetColor(Color.Green);
 			}
