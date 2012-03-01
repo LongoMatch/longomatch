@@ -35,12 +35,13 @@ public class TimelineSheet
 	int duration;
 	
 	const int TIMELINE_START = 6;
+	const int TIMESCALE = 10;
 	
 	public TimelineSheet (ExcelWorksheet ws, Project project)
 	{
 		this.project = project;
 		this.ws = ws;
-		duration = (int) (project.Description.File.Length / 1000 / 60);
+		duration = (int) (project.Description.File.Length / 1000 / TIMESCALE);
 	}
 	
 	public void Fill() {
@@ -114,8 +115,8 @@ public class TimelineSheet
 			foreach (TimelineNode unit in gu) {
 				float start, stop;
 				
-				start = TIMELINE_START + unit.Start.Seconds / (float) 60;
-				stop = TIMELINE_START + unit.Stop.Seconds / (float) 60;
+				start = TIMELINE_START + unit.Start.Seconds / (float) TIMESCALE;
+				stop = TIMELINE_START + unit.Stop.Seconds / (float) TIMESCALE;
 				
 				ws.Cells[row, (int) start].Value = stop - start;
 				
@@ -178,7 +179,7 @@ public class TimelineSheet
 				
 				/* Add the category's overal stats */
 				catRow = catsDict[ca];
-				time = TIMELINE_START + play.Start.Seconds / 60;
+				time = TIMELINE_START + play.Start.Seconds / TIMESCALE;
 				SetCellValue(ws, catRow, time, 1);
 				
 				/* Add the tags stats */
