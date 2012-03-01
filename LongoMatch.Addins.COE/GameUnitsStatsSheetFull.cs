@@ -25,12 +25,12 @@ using OfficeOpenXml.Style;
 using LongoMatch.Stats;
 using LongoMatch.Store;
 
-public class GameUnitsStatsSheet
+public class GameUnitsStatsSheetFull
 {
 	ProjectStats stats;
 	ExcelWorksheet ws;
 	
-	public GameUnitsStatsSheet (ExcelWorksheet ws, ProjectStats stats)
+	public GameUnitsStatsSheetFull (ExcelWorksheet ws, ProjectStats stats)
 	{
 		this.stats = stats;
 		this.ws = ws;
@@ -39,13 +39,8 @@ public class GameUnitsStatsSheet
 	public void Fill() {
 		int row = 1;
 		
-		SetColoredHeader(Catalog.GetString("Game Units"), 1, 1, 5);
-		row++;
-		
-		
-		row = FillGameStats (stats.GameUnitsStats, row);
-		row = FillFirstLevelGameUnitsStats (stats.GameUnitsStats, row);
 		row = FillGameUnitsStats (stats.GameUnitsStats, row);
+		row = FillFirstLevelGameUnitsStats (stats.GameUnitsStats, row);
 	}
 	
 	void SetColoredHeader (string title, int row, int column, int width=1) {
@@ -56,50 +51,19 @@ public class GameUnitsStatsSheet
 		 ws.Cells[row, column, row, column + width - 1].Merge = true;	
 		}
 	}
-
-	int FillGameStats (GameUnitsStats stats, int row)
-	{
-		Dictionary<GameUnit, GameUnitStatsNode> gameUnitsNodes  = stats.GameUnitNodes;
-
-		SetColoredHeader(Catalog.GetString("Duration"), row, 2);
-		SetColoredHeader(Catalog.GetString("Played Time"), row, 3);
-		row++;
-		foreach (GameUnit gu in gameUnitsNodes.Keys) {
-			ws.Cells[row, 1].Value = Catalog.GetString("Match");
-			ws.Cells[row, 2].Value = gameUnitsNodes[gu].Duration / 1000;
-			ws.Cells[row, 3].Value = gameUnitsNodes[gu].PlayingTime / 1000;
-			row++;
-			break;
-		}
-		row ++;
-		return row;
-	}
-	
-	int FillFirstLevelGameUnitsStats (GameUnitsStats stats, int row) {
-		int i=1;
-		stats.GameNode.Sort((a, b) => (a.Node.Start - b.Node.Start).MSeconds);
-		
-		SetColoredHeader(Catalog.GetString("Duration"), row, 2);
-		SetColoredHeader(Catalog.GetString("Played Time"), row, 3);
-		row++;
-		foreach (GameUnitStatsNode node in stats.GameNode){
-			ws.Cells[row, 1].Value = node.Name + ' ' + i;
-			ws.Cells[row, 2].Value = node.Duration / 1000;
-			ws.Cells[row, 3].Value = node.PlayingTime / 1000;
-			i++;
-			row++;
-		}
-		row ++;
-		return row;
-	}
 	
 	int FillHeaders (int row) {
-		SetColoredHeader(Catalog.GetString("Name"), row, 1);
-		SetColoredHeader(Catalog.GetString("Count"), row, 2);
-		SetColoredHeader(Catalog.GetString("Played Time"), row, 3);
-		SetColoredHeader(Catalog.GetString("Average"), row, 4);
-		SetColoredHeader(Catalog.GetString("Deviation"), row , 5);
-		row ++;
+		SetColoredHeader(Catalog.GetString("Name"), 1, 1);
+		SetColoredHeader(Catalog.GetString("Count"), 1, 2);
+		SetColoredHeader(Catalog.GetString("Total Time"), 1, 3, 2);
+		SetColoredHeader(Catalog.GetString("Played Time"), 1, 5, 2);
+		SetColoredHeader(Catalog.GetString("Paused Time"), 1, 7, 2);
+		for (int i=3; i<9; i++) {
+			SetColoredHeader(Catalog.GetString("Average"), 2, i);
+			i++;
+			SetColoredHeader(Catalog.GetString("Deviation"), 2, i);
+		}
+		row += 2;
 		return row;
 	}
 	
@@ -116,11 +80,26 @@ public class GameUnitsStatsSheet
 	int FillStats (string name, GameUnitStatsNode guStats, int row) {
 		ws.Cells[row, 1].Value = name;
 		ws.Cells[row, 2].Value = guStats.Count;
-		ws.Cells[row, 3].Value = guStats.PlayingTime / (float)1000;
-		ws.Cells[row, 4].Value = guStats.PlayingTimeStdDeviation / 1000;
-		ws.Cells[row, 5].Value = guStats.AveragePlayingTime / 1000;
+		ws.Cells[row, 3].Value = guStats.AverageDuration / (float)1000;
+		ws.Cells[row, 4].Value = guStats.DurationTimeStdDeviation / 1000;
+		ws.Cells[row, 5].Value = guStats.AveragePlayingTime / (float)1000;
+		ws.Cells[row, 6].Value = guStats.PlayingTimeStdDeviation / 1000;
+		ws.Cells[row, 7].Value = guStats.AveragePausedTime / (float)1000;
+		ws.Cells[row, 8].Value = guStats.PausedTimeStdDeviation / 1000;
 		row ++;
 		return row;
 	}
 	
+	int FillFirstLevelGameUnitsStats (GameUnitsStats stats, int row) {
+		int i=1;
+		
+		row += 2;
+		stats.GameNode.Sort((a, b) => (a.Node.Start - b.Node.Start).MSeconds);
+		
+		foreach (GameUnitStatsNode node in stats.GameNode){
+			row = FillStats (node.Name + " " + i, node, row);
+			i++;
+		}
+		return row;
+	}
 }
