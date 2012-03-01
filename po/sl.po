@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: longomatch master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-02-08 01:53+0000\n"
-"PO-Revision-Date: 2012-02-23 20:19+0100\n"
+"POT-Creation-Date: 2012-03-01 19:23+0000\n"
+"PO-Revision-Date: 2012-03-01 21:19+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: \n"
@@ -250,7 +250,7 @@ msgid "Visitor Team"
 msgstr "Gostujoča ekipa"
 
 #: ../LongoMatch.Addins.COE/ExcelExporter.cs:110
-#: ../LongoMatch.Addins.COE/TimelineSheet.cs:91
+#: ../LongoMatch.Addins.COE/TimelineSheet.cs:92
 msgid "Timeline"
 msgstr "Časovnica"
 
@@ -258,7 +258,30 @@ msgstr "Časovnica"
 msgid "Game units"
 msgstr "Delitev igre"
 
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:56
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:42
+#: ../LongoMatch.Addins.COE/TimelineSheet.cs:102
+msgid "Game Units"
+msgstr "Delitev igre"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:64
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:82
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:141
+msgid "Duration"
+msgstr "Trajanje"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:65
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:83
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:99
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:59
+msgid "Played Time"
+msgstr "Igrani čas"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:68
+msgid "Match"
+msgstr "Tekma"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:97
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:56
 #: ../LongoMatch.Core/Store/Play.cs:202
 #: ../LongoMatch.Core/Store/SubCategory.cs:84
 #: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:48
@@ -267,30 +290,29 @@ msgstr "Delitev igre"
 msgid "Name"
 msgstr "Ime"
 
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:57
-#: ../LongoMatch.Addins.COE/TimelineSheet.cs:211
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:98
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:57
+#: ../LongoMatch.Addins.COE/TimelineSheet.cs:212
 msgid "Count"
 msgstr "Števec"
 
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:58
-msgid "Total Time"
-msgstr "Skupni čas"
-
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:59
-msgid "Played Time"
-msgstr "Igrani čas"
-
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:60
-msgid "Paused Time"
-msgstr "Čas premora"
-
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:62
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:100
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:62
 msgid "Average"
 msgstr "Povprečje"
 
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:64
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:101
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:64
 msgid "Deviation"
 msgstr "Standardni odklon"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:58
+msgid "Total Time"
+msgstr "Skupni čas"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:60
+msgid "Paused Time"
+msgstr "Čas premora"
 
 #: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:62
 msgid "Project"
@@ -330,15 +352,11 @@ msgstr "Rezultat"
 msgid "Total"
 msgstr "Skupaj"
 
-#: ../LongoMatch.Addins.COE/TimelineSheet.cs:101
-msgid "Game Units"
-msgstr "Delitev igre"
-
-#: ../LongoMatch.Addins.COE/TimelineSheet.cs:102
+#: ../LongoMatch.Addins.COE/TimelineSheet.cs:103
 msgid "Duration (min)"
 msgstr "Trajanje (min)"
 
-#: ../LongoMatch.Addins.COE/TimelineSheet.cs:210
+#: ../LongoMatch.Addins.COE/TimelineSheet.cs:211
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:45
 msgid "Categories"
 msgstr "Kategorije"
@@ -1402,10 +1420,6 @@ msgstr "Uporabi trenutno hitrost predvajanja"
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:141
 msgid " sec"
 msgstr " sek"
-
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:141
-msgid "Duration"
-msgstr "Trajanje"
 
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:142
 msgid "Play Rate"
