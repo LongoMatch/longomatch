@@ -357,7 +357,7 @@ namespace LongoMatch.Gui
 			
 			/* Update tabs labels */
 			var desc = project.Description;
-			visitorteamlabel.Text = project.LocalTeamTemplate.TeamName;
+			visitorteamlabel.Text = project.VisitorTeamTemplate.TeamName;
 			localteamlabel.Text = project.LocalTeamTemplate.TeamName;
 			
 			ExportProjectAction1.Sensitive = true;
