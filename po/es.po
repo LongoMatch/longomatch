@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: longomatch.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-02-06 18:58+0000\n"
-"PO-Revision-Date: 2012-02-07 11:25+0100\n"
+"POT-Creation-Date: 2012-03-01 19:23+0000\n"
+"PO-Revision-Date: 2012-03-02 13:59+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -291,7 +291,7 @@ msgid "Visitor Team"
 msgstr "Equipo visitante"
 
 #: ../LongoMatch.Addins.COE/ExcelExporter.cs:110
-#: ../LongoMatch.Addins.COE/TimelineSheet.cs:91
+#: ../LongoMatch.Addins.COE/TimelineSheet.cs:92
 msgid "Timeline"
 msgstr "Cronología"
 
@@ -299,7 +299,31 @@ msgstr "Cronología"
 msgid "Game units"
 msgstr "Unidades de juego"
 
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:56
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:42
+#: ../LongoMatch.Addins.COE/TimelineSheet.cs:102
+msgid "Game Units"
+msgstr "Unidades de juego"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:64
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:82
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:141
+msgid "Duration"
+msgstr "Duración"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:65
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:83
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:99
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:59
+msgid "Played Time"
+msgstr "Tiempo jugado"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:68
+#| msgid "LongoMatch"
+msgid "Match"
+msgstr "Coincidencia"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:97
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:56
 #: ../LongoMatch.Core/Store/Play.cs:202
 #: ../LongoMatch.Core/Store/SubCategory.cs:84
 #: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:48
@@ -308,34 +332,29 @@ msgstr "Unidades de juego"
 msgid "Name"
 msgstr "Nombre"
 
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:57
-#: ../LongoMatch.Addins.COE/TimelineSheet.cs:205
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:98
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:57
+#: ../LongoMatch.Addins.COE/TimelineSheet.cs:212
 msgid "Count"
 msgstr "Contar"
 
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:58
-#| msgid "Total"
-msgid "Total Time"
-msgstr "Tiempo total"
-
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:59
-#| msgid "Lead Time"
-msgid "Played Time"
-msgstr "Tiempo jugado"
-
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:60
-#| msgid "Lead Time"
-msgid "Paused Time"
-msgstr "Tiempo pausado"
-
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:62
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:100
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:62
 msgid "Average"
 msgstr "Media"
 
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:64
-#| msgid "Duration"
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:101
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:64
 msgid "Deviation"
 msgstr "Desviación"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:58
+msgid "Total Time"
+msgstr "Tiempo total"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:60
+msgid "Paused Time"
+msgstr "Tiempo pausado"
 
 #: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:62
 msgid "Project"
@@ -375,15 +394,11 @@ msgstr "Resultado"
 msgid "Total"
 msgstr "Total"
 
-#: ../LongoMatch.Addins.COE/TimelineSheet.cs:101
-msgid "Game Units"
-msgstr "Unidades de juego"
-
-#: ../LongoMatch.Addins.COE/TimelineSheet.cs:102
+#: ../LongoMatch.Addins.COE/TimelineSheet.cs:103
 msgid "Duration (min)"
 msgstr "Duración (min)"
 
-#: ../LongoMatch.Addins.COE/TimelineSheet.cs:204
+#: ../LongoMatch.Addins.COE/TimelineSheet.cs:211
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:45
 msgid "Categories"
 msgstr "Categorías"
@@ -1469,10 +1484,6 @@ msgstr "Guardar la velocidad de reproducción actual"
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:141
 msgid " sec"
 msgstr " seg"
-
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:141
-msgid "Duration"
-msgstr "Duración"
 
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:142
 msgid "Play Rate"
