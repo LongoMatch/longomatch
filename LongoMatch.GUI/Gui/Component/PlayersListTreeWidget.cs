@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 
+using System;
 using System.Collections.Generic;
 using Gtk;
 using LongoMatch.Common;
@@ -36,6 +37,7 @@ namespace LongoMatch.Gui.Component
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event PlayListNodeAddedHandler PlayListNodeAdded;
 		public event SnapshotSeriesHandler SnapshotSeriesEvent;
+		public event RenderPlaylistHandler RenderPlaylistEvent;
 
 		public PlayersListTreeWidget()
 		{
@@ -44,6 +46,13 @@ namespace LongoMatch.Gui.Component
 			playerstreeview.TimeNodeSelected += OnTimeNodeSelected;
 			playerstreeview.PlayListNodeAdded += OnPlayListNodeAdded;
 			playerstreeview.SnapshotSeriesEvent += OnSnapshotSeriesEvent;
+			playerstreeview.NewRenderingJob += OnNewRenderingJob;
+			
+		}
+		
+		public Project Project {
+			set;
+			get;
 		}
 
 		public Team Team {
@@ -114,6 +123,23 @@ namespace LongoMatch.Gui.Component
 		{
 			if(PlayListNodeAdded != null)
 				PlayListNodeAdded(tNode);
+		}
+		
+		protected virtual void OnNewRenderingJob (object sender, EventArgs args)
+		{
+			PlayList playlist = new PlayList();
+			TreePath[] paths = playerstreeview.Selection.GetSelectedRows();
+
+			foreach(var path in paths) {
+				TreeIter iter;
+				
+				playerstreeview.Model.GetIter(out iter, path);
+				playlist.Add(new PlayListPlay((Play)playerstreeview.Model.GetValue(iter, 0),
+				                              Project.Description.File, 1, true));
+			}
+			
+			if (RenderPlaylistEvent != null)
+				RenderPlaylistEvent(playlist);
 		}
 
 	}

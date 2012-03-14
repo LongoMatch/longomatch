@@ -273,6 +273,8 @@ namespace LongoMatch.Gui
 
 			playlist.RenderPlaylistEvent += EmitRenderPlaylist;
 			playsList.RenderPlaylistEvent += EmitRenderPlaylist;
+			localPlayersList.RenderPlaylistEvent += EmitRenderPlaylist;
+			visitorPlayersList.RenderPlaylistEvent += EmitRenderPlaylist;
 			
 			renderingstatebar1.ManageJobs += (e, o) => {EmitManageJobs();};
 			
@@ -388,6 +390,8 @@ namespace LongoMatch.Gui
 			tagsList.ProjectIsLive = isLive;
 			playsList.Project=project;
 			tagsList.Project = project;
+			visitorPlayersList.Project = project;
+			localPlayersList.Project = project;
 			UpdateTeamsModels();
 			buttonswidget.Categories = project.Categories;
 			MakeActionsSensitive(true,projectType);
