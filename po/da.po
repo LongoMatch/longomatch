@@ -1,14 +1,18 @@
 # Danish translation for longomatch.
-# Copyright (C) 2011 longomatch og nedenstående oversættere.
+# Copyright (C) 2012 longomatch og nedenstående oversættere.
 # This file is distributed under the same license as the longomatch package.
-# Joe Hansen (joedalton2@yahoo.dk), 2010, 2011.
+# Joe Hansen (joedalton2@yahoo.dk), 2010, 2011, 2012.
+#
+# play -> kamp
+# game -> spil (med en undtagelse i selve forklaringsteksten, hvor der er brugt kamp)
+# Der er mellemrum mellem teksten og ...
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: longomatch master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-02 12:51+0100\n"
-"PO-Revision-Date: 2011-09-29 11:00+0000\n"
+"POT-Creation-Date: 2012-03-21 10:22+0100\n"
+"PO-Revision-Date: 2012-03-20 11:00+0000\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -229,15 +233,15 @@ msgstr "%s"
 msgid "0 seconds"
 msgstr "0 sekunder"
 
-#: ../LongoMatch/Main.cs:98
+#: ../LongoMatch/Main.cs:99
 msgid "The application has finished with an unexpected error."
 msgstr "Programmet lukkede ned med en uventet fejl."
 
-#: ../LongoMatch/Main.cs:99
+#: ../LongoMatch/Main.cs:100
 msgid "A log has been saved at: "
 msgstr "En log er blevet gemt til: "
 
-#: ../LongoMatch/Main.cs:100
+#: ../LongoMatch/Main.cs:101
 msgid "Please, fill a bug report "
 msgstr "Udfyld venligst en fejlrapport "
 
@@ -254,7 +258,78 @@ msgstr "LongoMatch: Den digitale træner"
 msgid "Sports video analysis tool for coaches"
 msgstr "Værktøj til videoanalyse for sportstrænere"
 
-#: ../LongoMatch.Core/Store/Play.cs:200
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:41
+msgid "Export project to Excel file"
+msgstr "Eksporter projekt til Excelfil"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:49
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:445
+msgid "Output file"
+msgstr "Uddatafil"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:60
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:369
+msgid "Project exported successfully"
+msgstr "Projektet eksporteret"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:62
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:371
+msgid "Error exporting project"
+msgstr "Fejl under eksport af projekt"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:96
+#, fuzzy
+msgid "Project statistics"
+msgstr "<b>Projektdetaljer</b>"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:101
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:232
+msgid "Local Team"
+msgstr "Hjemmehold"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:106
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:245
+msgid "Visitor Team"
+msgstr "Udehold"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:110
+#: ../LongoMatch.Addins.COE/TimelineSheet.cs:92
+msgid "Timeline"
+msgstr "Tidslinje"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:114
+#, fuzzy
+msgid "Game units"
+msgstr "Spilopdelinger"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:42
+#: ../LongoMatch.Addins.COE/TimelineSheet.cs:102
+msgid "Game Units"
+msgstr "Spilopdelinger"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:64
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:82
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:141
+msgid "Duration"
+msgstr "Varighed"
+
+# den tid en kamp varer? Længde, varighed  (men der er også en streng der hedder duration.
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:65
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:83
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:99
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:59
+#, fuzzy
+msgid "Played Time"
+msgstr "Varighed"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:68
+#, fuzzy
+msgid "Match"
+msgstr "LongoMatch"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:97
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:56
+#: ../LongoMatch.Core/Store/Play.cs:202
 #: ../LongoMatch.Core/Store/SubCategory.cs:84
 #: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:48
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:73
@@ -262,29 +337,101 @@ msgstr "Værktøj til videoanalyse for sportstrænere"
 msgid "Name"
 msgstr "Navn"
 
-#: ../LongoMatch.Core/Store/Play.cs:201
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:98
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:57
+#: ../LongoMatch.Addins.COE/TimelineSheet.cs:212
+msgid "Count"
+msgstr "Antal"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:100
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:62
+msgid "Average"
+msgstr ""
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:101
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:64
+#, fuzzy
+msgid "Deviation"
+msgstr "Varighed"
+
+# den resterende tid af en kamp?
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:58
+#, fuzzy
+msgid "Total Time"
+msgstr "Resterende tid"
+
+# den tid en kamp varer? Længde, varighed  (men der er også en streng der hedder duration.
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:60
+#, fuzzy
+msgid "Paused Time"
+msgstr "Varighed"
+
+#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:62
+#, fuzzy
+msgid "Project"
+msgstr "Nyt projekt"
+
+#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:63
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:138
+msgid "Date"
+msgstr "Dato"
+
+#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:64
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:136
+msgid "Competition"
+msgstr "Konkurrence"
+
+#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:65
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:135
+msgid "Season"
+msgstr "Sæson"
+
+#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:66
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:133
+msgid "Local team"
+msgstr "Hjemmehold"
+
+#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:67
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:134
+msgid "Visitor team"
+msgstr "Udehold"
+
+#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:68
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:137
+msgid "Result"
+msgstr "Resultat"
+
+#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:78
+msgid "Total"
+msgstr ""
+
+#: ../LongoMatch.Addins.COE/TimelineSheet.cs:103
+msgid "Duration (min)"
+msgstr "Varighed (min)"
+
+#: ../LongoMatch.Addins.COE/TimelineSheet.cs:211
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:45
+msgid "Categories"
+msgstr "Kategorier"
+
+#: ../LongoMatch.Core/Store/Play.cs:203
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:140
 msgid "Start"
 msgstr "Start"
 
-#: ../LongoMatch.Core/Store/Play.cs:202
+#: ../LongoMatch.Core/Store/Play.cs:204
 msgid "Stop"
 msgstr "Stop"
 
-#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:81
-#: ../LongoMatch.Core/Store/SubCategory.cs:156
-msgid "Team"
-msgstr "Hold"
-
-#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:88
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:80
 msgid "Local Team Players"
 msgstr "Hjemmeholdets spillere"
 
-#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:94
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:86
 msgid "Visitor Team Players"
 msgstr "Udeholdets spillere"
 
-#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:100
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:92
 msgid "Period"
 msgstr "Periode"
 
@@ -294,28 +441,28 @@ msgstr "standard"
 
 #: ../LongoMatch.Core/Store/Category.cs:105
 #: ../LongoMatch.Core/Store/Category.cs:113
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:225
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:226
 #: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:71
 msgid "Sort by name"
 msgstr "Sorter efter navn"
 
 #: ../LongoMatch.Core/Store/Category.cs:107
 #: ../LongoMatch.Core/Store/Category.cs:117
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:226
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:227
 #: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:72
 msgid "Sort by start time"
 msgstr "Sorter efter starttidspunkt"
 
 #: ../LongoMatch.Core/Store/Category.cs:109
 #: ../LongoMatch.Core/Store/Category.cs:119
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:227
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:228
 #: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:73
 msgid "Sort by stop time"
 msgstr "Sorter efter stoptidspunkt"
 
 #: ../LongoMatch.Core/Store/Category.cs:111
 #: ../LongoMatch.Core/Store/Category.cs:121
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:228
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:229
 #: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:74
 msgid "Sort by duration"
 msgstr "Sorter efter varighed"
@@ -348,6 +495,10 @@ msgstr "Liste af spillere"
 msgid "Teams:"
 msgstr "Hold:"
 
+#: ../LongoMatch.Core/Store/SubCategory.cs:156
+msgid "Team"
+msgstr "Hold"
+
 #: ../LongoMatch.Core/Store/SubCategory.cs:164
 msgid "Team selection"
 msgstr "Valg af hold"
@@ -356,7 +507,7 @@ msgstr "Valg af hold"
 msgid "The file you are trying to load is not a valid project"
 msgstr "Filen du forsøger at indlæse er ikke et gyldigt projekt"
 
-#: ../LongoMatch.Core/Store/HotKey.cs:124
+#: ../LongoMatch.Core/Store/HotKey.cs:128
 msgid "Not defined"
 msgstr "Ikke defineret"
 
@@ -416,8 +567,6 @@ msgid "_Export"
 msgstr "_Eksporter"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.StringTaggerWidget.cs:34
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayersTaggerWidget.cs:67
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTaggerWidget.cs:34
 msgid "<b>GtkFrame</b>"
 msgstr "<b>GtkFrame</b>"
 
@@ -428,11 +577,11 @@ msgstr "Mærk kamp"
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:45
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:259
 #: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:78
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:231
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:232
 msgid "Tags"
 msgstr "Mærker"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:64
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:66
 #: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:85
 msgid "Players"
 msgstr "Spillere"
@@ -450,15 +599,6 @@ msgstr "Nyt projekt"
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EditCategoryDialog.cs:15
 msgid "Category Details"
 msgstr "Kategoridetaljer"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayersTaggerWidget.cs:37
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:85
-msgid "Players:"
-msgstr "Spillere:"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayersTaggerWidget.cs:47
-msgid "None"
-msgstr "Ingen"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs:26
 msgid "Cancel"
@@ -754,33 +894,23 @@ msgstr "Ubegrænset optagelsestilstand"
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:150
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:153
 msgid "Game units view"
-msgstr ""
+msgstr "Visning af spilopdelinger"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:155
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:156
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:158
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:160
-#, fuzzy
 msgid "Export Project"
-msgstr "Importer projekt"
+msgstr "Eksporter projekt"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:164
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:165
-#, fuzzy
 msgid "Export to project file"
-msgstr "Eksporter til videofil"
+msgstr "Eksporter til projektfil"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:219
 msgid "Plays"
 msgstr "Kampe"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:232
-msgid "Local Team"
-msgstr "Hjemmehold"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:245
-msgid "Visitor Team"
-msgstr "Udehold"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs:31
 msgid "Projects Search:"
@@ -846,9 +976,9 @@ msgstr "Vælg skabelonnavn"
 msgid "Copy existent template:"
 msgstr "Kopier eksisterende skabelon:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.PlayersSelectionDialog.cs:16
-msgid "Tag players"
-msgstr "Mærk spillere"
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:85
+msgid "Players:"
+msgstr "Spillere:"
 
 # optagelsesfremgang
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs:18
@@ -860,19 +990,19 @@ msgstr "Optagelse i gang"
 msgid "none"
 msgstr "ingen"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:95
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:96
 msgid "Change"
 msgstr "Ændring"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:113
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:114
 msgid "<b>Name:</b>"
 msgstr "<b>Navn:</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:123
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:124
 msgid "<b>Color:</b>    "
 msgstr "<b>Farve:</b>    "
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:135
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:136
 msgid "<b>HotKey:</b>"
 msgstr "<b>Genvejstast:</b>"
 
@@ -914,35 +1044,35 @@ msgstr "<b>Genvejstast:</b>"
 # finishes i.e. distribution after a tackle is made
 # "Lead time" kan vedrøre indledning, optakt, opbygning, det som sker på forkant.
 # Mine bud ville være: Optaktstid Afrundingstid
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:147
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:148
 msgid "<b>Lead time:</b>"
 msgstr "<b>Optaktstid:</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:159
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:160
 msgid "<b>Lag time:</b>"
 msgstr "<b>Afrundingstid:</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:173
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:174
 msgid "<b>Sort Method</b>"
 msgstr "<b>Sorteringsmetode</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:243
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:244
 msgid "<b>Properties</b>"
 msgstr "<b>Egenskaber</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:297
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:298
 msgid "<b>Subcategory name</b>"
 msgstr "<b>Navn for underkategori</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:320
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:321
 msgid "<b>Subcategory type</b>"
 msgstr "<b>Type for underkategori</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:344
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:345
 msgid "_Add subcategory"
 msgstr "_Tilføj underkategori"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:363
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:364
 msgid "<b>Subcategories</b>"
 msgstr "<b>Underkategorier</b>"
 
@@ -1078,7 +1208,12 @@ msgstr "Filnavn: "
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameUnitWidget.cs:35
 msgid "GtkButton"
-msgstr ""
+msgstr "GtkButton"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs:67
+#, fuzzy
+msgid "<b>Team</b>"
+msgstr "<b>Mærker</b>"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameUnitsEditor.cs:30
 msgid ""
@@ -1089,10 +1224,16 @@ msgid ""
 "Defining <b> Game Units </b> will help you during the analysis to indentify "
 "the tagged plays in the the phases of the game."
 msgstr ""
+"<b>Spilopdelinger</b>: Kampe deles normalt op i enheder. I sportsgrene som "
+"hockey deles kampen op i 2 halvlege, men i andre sportsgrene som f.eks. "
+"tennis er der flere opdelinger som gennemspilles, f.eks. Point->Parti->Sæt.\n"
+"\n"
+"Definering af <b> spilopdelinger </b> vil hjælpe dig under analysen med at "
+"identificere de opmærkede kampe i spillets faser."
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameUnitsEditor.cs:101
 msgid "Add game unit"
-msgstr ""
+msgstr "Tilføj spilopdeling"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.OpenProjectDialog.cs:16
 msgid "Open Project"
@@ -1138,45 +1279,40 @@ msgstr "<b>Mærker</b>"
 msgid "Categories Template"
 msgstr "Skabelon for kategorier"
 
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:105
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:261
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:108
+msgid "The playlist you want to render is empty."
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:116
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:273
 msgid "Please, select a video file."
 msgstr "Vælg venligst en videofil."
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:361
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:362
 msgid "DirectShow Source"
 msgstr "Kilde for DirectShow"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:362
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:363
 msgid "Unknown"
 msgstr "Ukendt"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:444
-msgid "Output file"
-msgstr "Uddatafil"
-
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:456
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:457
 msgid "Open file..."
 msgstr "Åbn fil..."
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:482
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:483
 msgid "Analyzing video file:"
 msgstr "Analyserer videofil:"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:487
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:488
 msgid "This file doesn't contain a video stream."
 msgstr "Denne fil indeholder ikke en videostrøm."
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:489
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:490
 msgid "This file contains a video stream but its length is 0."
 msgstr "Denne fil indeholder en videostrøm men videostrømmens længde er 0."
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:43
-#, fuzzy
-msgid "Categories"
-msgstr "Kategoridetaljer"
-
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:77
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:80
 msgid ""
 "You are about to delete a category and all the plays added to this category. "
 "Do you want to proceed?"
@@ -1184,8 +1320,8 @@ msgstr ""
 "Du er ved at slette en kategori, og alle de kampe som er tilføjet denne "
 "kategori. Vil du fortsætte?"
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:84
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:92
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:87
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:95
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:159
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:169
 msgid "A template needs at least one category"
@@ -1196,7 +1332,7 @@ msgid "Create new..."
 msgstr "Opret ny..."
 
 # engelsk fejl looseall
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:201
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:202
 msgid ""
 "If you delete this subcategory you will looseall the tags associated with "
 "it. Do you want to proceed?"
@@ -1229,40 +1365,15 @@ msgstr "Format"
 msgid "Title"
 msgstr "Titel"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:133
-msgid "Local team"
-msgstr "Hjemmehold"
-
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:134
-msgid "Visitor team"
-msgstr "Udehold"
-
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:135
-msgid "Season"
-msgstr "Sæson"
-
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:136
-msgid "Competition"
-msgstr "Konkurrence"
-
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:137
-msgid "Result"
-msgstr "Resultat"
-
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:138
-msgid "Date"
-msgstr "Dato"
-
+# uafklaret eller afspil/spil
 #: ../LongoMatch.GUI/Gui/Component/GameUnitTimeScale.cs:53
 #: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:53
-#, fuzzy
 msgid "play"
-msgstr "Mærk kamp"
+msgstr "kamp"
 
 #: ../LongoMatch.GUI/Gui/Component/GameUnitWidget.cs:62
-#, fuzzy
 msgid "Time: "
-msgstr "Tid:"
+msgstr "Tid: "
 
 #: ../LongoMatch.GUI/Gui/Component/PlayerProperties.cs:88
 #: ../LongoMatch.GUI/Gui/Helpers.cs:44
@@ -1270,9 +1381,8 @@ msgid "Choose an image"
 msgstr "Vælg et billede"
 
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:47
-#, fuzzy
 msgid "Teams players"
-msgstr "Mærk spillere"
+msgstr "Holdenes spillere"
 
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:75
 msgid "Shield"
@@ -1294,9 +1404,8 @@ msgid "Delete "
 msgstr "Slet "
 
 #: ../LongoMatch.GUI/Gui/Base/TimeScaleBase.cs:143
-#, fuzzy
 msgid "Add new "
-msgstr "Tilføj ny kamp"
+msgstr "Tilføj ny "
 
 #: ../LongoMatch.GUI/Gui/Base/TemplatesEditorBase.cs:178
 msgid "New template"
@@ -1310,16 +1419,16 @@ msgstr "Skabelonnavnet er ugyldigt."
 msgid "The template already exists. Do you want to overwrite it ?"
 msgstr "Skabelonen findes allerede. Ønsker du at overskrive den?"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:421
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:482
 msgid "Do you want to close the current project?"
 msgstr "Vil du lukke det aktuelle projekt?"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:559
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:620
 msgid "The actual project will be closed due to an error in the media player:"
 msgstr ""
 "Det aktuelle projekt vil blive lukket på grund af en fejl i medieafspilleren:"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:657
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:719
 msgid ""
 "An error occured in the video capturer and the current project will be "
 "closed:"
@@ -1334,13 +1443,13 @@ msgstr "Optager ramme: "
 msgid "Done"
 msgstr "Færdig"
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:144
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:146
 msgid "Save Video As ..."
-msgstr "Gem video som..."
+msgstr "Gem video som ..."
 
 #: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:101
 msgid "Save File as..."
-msgstr "Gem fil som..."
+msgstr "Gem fil som ..."
 
 #: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:70
 msgid "The Project has been edited, do you want to save the changes?"
@@ -1370,7 +1479,7 @@ msgstr "Luk projektet først for at redigere det"
 msgid "Save Project"
 msgstr "Gem projekt"
 
-#: ../LongoMatch.GUI/Gui/Dialog/EditCategoryDialog.cs:63
+#: ../LongoMatch.GUI/Gui/Dialog/EditCategoryDialog.cs:69
 msgid "This hotkey is already in use."
 msgstr "Genvejstasten er allerede i brug."
 
@@ -1443,10 +1552,6 @@ msgstr "Anvend aktuel afspilningshastighed"
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:141
 msgid " sec"
 msgstr " sek"
-
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:141
-msgid "Duration"
-msgstr "Varighed"
 
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:142
 msgid "Play Rate"
@@ -1528,7 +1633,11 @@ msgstr "Jobnavn"
 msgid "State"
 msgstr "Tilstand"
 
-#: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerBin.cs:205
+#: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerBin.cs:253
+msgid "Jump (s):"
+msgstr ""
+
+#: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerBin.cs:280
 msgid "Time:"
 msgstr "Tid:"
 
@@ -1571,7 +1680,7 @@ msgstr "Ugyldig videofil:"
 #. Create the dialog
 #: ../LongoMatch.Multimedia/Utils/MpegRemuxer.cs:50
 msgid "Remuxing file..."
-msgstr "Remuxer fil..."
+msgstr "Remuxer fil ..."
 
 #: ../LongoMatch.Multimedia/Utils/MpegRemuxer.cs:126
 msgid ""
@@ -1582,9 +1691,8 @@ msgstr ""
 "konvertere den til et mere egnet format?"
 
 #: ../LongoMatch.Multimedia/Utils/GStreamer.cs:112
-#, fuzzy
 msgid "An error has been detected in the current installation."
-msgstr "Der opstod en fejl i videoredigeringen."
+msgstr "En fejl er blevet detekteret i den aktuelle installation."
 
 #: ../LongoMatch.Services/Services/ProjectsManager.cs:108
 msgid "An error occured saving the project:\n"
@@ -1645,32 +1753,20 @@ msgstr "Opretter videominiaturebilleder. Dette kan tage et stykke tid."
 msgid "No capture devices were found."
 msgstr "Ingen optagelsesenheder blev fundet."
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:342
-msgid "You are opening a live project without any video file associated yet."
-msgstr ""
-
 #: ../LongoMatch.Services/Services/ProjectsManager.cs:343
-#, fuzzy
-msgid "Select a video file in the step."
-msgstr "Vælg venligst en videofil."
+msgid "You are opening a live project without any video file associated yet."
+msgstr "Du åbner et live projekt uden nogen videofiler associeret."
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:358
-#, fuzzy
+# i trinnet, nok bedre med undervejs
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:344
+msgid "Select a video file in the step."
+msgstr "Vælg en videofil undervejs."
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:359
 msgid "Save project"
 msgstr "Gem projekt"
 
-# ændret til bestemt form her.
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:368
-#, fuzzy
-msgid "Project exported successfully"
-msgstr "Projektet gemt."
-
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:370
-#, fuzzy
-msgid "Error exporting project"
-msgstr "Fejl under import af projekt:"
-
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:61
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:67
 msgid ""
 "The file you are trying to load is not a playlist or it's not compatible "
 "with the current version"
@@ -1678,40 +1774,37 @@ msgstr ""
 "Filen du forsøger at indlæse er ikke en afspilningsliste eller er ikke "
 "kompatibel med den aktuelle version"
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:104
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:105
 msgid "Please, close the opened project to play the playlist."
 msgstr "Luk venligst det åbnede projekt for at igangsætte afspilningslisten."
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:183
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:198
 msgid "Open playlist"
 msgstr "Åbn afspilningsliste"
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:184
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:195
-#, fuzzy
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:199
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:210
 msgid "playlists"
-msgstr "Afspilningsliste"
+msgstr "afspilningslister"
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:194
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:209
 msgid "New playlist"
 msgstr "Ny afspilningsliste"
 
-#: ../LongoMatch.Services/Services/TemplatesService.cs:64
+#: ../LongoMatch.Services/Services/TemplatesService.cs:62
 msgid "Local team players"
 msgstr "Hjemmeholdets spillere"
 
-#: ../LongoMatch.Services/Services/TemplatesService.cs:70
+#: ../LongoMatch.Services/Services/TemplatesService.cs:68
 msgid "Visitor team players"
 msgstr "Udeholdets spillere"
 
-#: ../LongoMatch.Services/Services/TemplatesService.cs:76
+#: ../LongoMatch.Services/Services/TemplatesService.cs:74
 msgid "All teams players"
 msgstr "Alle holds spillere"
 
-# engelsk fejl
-#: ../LongoMatch.Services/Services/TemplatesService.cs:194
-#: ../LongoMatch.Services/Services/TemplatesService.cs:212
-#, fuzzy
+#: ../LongoMatch.Services/Services/TemplatesService.cs:192
+#: ../LongoMatch.Services/Services/TemplatesService.cs:210
 msgid "A template already exists with the name: "
 msgstr "En skabelon findes allerede med navnet: "
 
@@ -1746,42 +1839,8 @@ msgstr "Der opstod en fejl i videoredigeringen."
 msgid "Please, try again."
 msgstr "Prøv igen."
 
-#~ msgid ""
-#~ "The project will be saved to a file. You can insert it later into the "
-#~ "database using the \"Import project\" function once you copied the video "
-#~ "file to your computer"
-#~ msgstr ""
-#~ "Projektet vil blive gemt til en fil. Du kan indsætte projektet senere i "
-#~ "databasen med brug af funktionen \"Importer projekt\", når du har "
-#~ "kopieret videofilen til din computer."
+#~ msgid "None"
+#~ msgstr "Ingen"
 
-#~ msgid "This file is already used in another Project."
-#~ msgstr "Denne fil er allerede brugt i et andet projekt."
-
-#~ msgid "Select a different one to continue."
-#~ msgstr "Vælg en anden for at fortsætte."
-
-#~ msgid "Select Export File"
-#~ msgstr "Vælg eksportfil"
-
-#~ msgid "LongoMatch playlist"
-#~ msgstr "Afspilningsliste for LongoMatch"
-
-#~ msgid "The playlist is empty!"
-#~ msgstr "Afspilningslisten er tom!"
-
-#~ msgid "Delete Play"
-#~ msgstr "Slet kamp"
-
-#~ msgid "Loading newly created project..."
-#~ msgstr "Indlæser netop oprettet projekt..."
-
-#~ msgid ""
-#~ "Some elements from the previous version (database, templates and/or "
-#~ "playlists) have been found."
-#~ msgstr ""
-#~ "Nogle elementer fra den forrige version (database, skabeloner og/eller "
-#~ "afspilningslister) er blevet fundet."
-
-#~ msgid "Do you want to import them?"
-#~ msgstr "Ønsker du at importere dem?"
+#~ msgid "Tag players"
+#~ msgstr "Mærk spillere"
