@@ -51,7 +51,7 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		public void AddSubCategory(TagSubCategory subcat, StringTagStore tags){
-			if (tags.Tags.Count == 0)
+			if (subcat.Count == 0)
 				return;
 			StringTaggerWidget tagger = new StringTaggerWidget(subcat, tags);
 			table1.Attach(tagger,0, 1, table1.NRows-1, table1.NRows);
