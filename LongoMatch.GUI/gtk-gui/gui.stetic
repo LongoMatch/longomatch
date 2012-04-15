@@ -9,6 +9,13 @@
     <widget-library name="../../bin/LongoMatch.Multimedia.dll" />
     <widget-library name="../../bin/LongoMatch.Gui.dll" internal="true" />
   </import>
+  <icon-factory>
+    <icon-set id="longomatch">
+      <source>
+        <property name="Image">resource:longomatch.png</property>
+      </source>
+    </icon-set>
+  </icon-factory>
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.ProjectDetailsWidget" design-size="378 268">
     <property name="MemberName" />
     <child>
