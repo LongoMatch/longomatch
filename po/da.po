@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: longomatch master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-21 10:22+0100\n"
-"PO-Revision-Date: 2012-03-20 11:00+0000\n"
+"POT-Creation-Date: 2012-04-21 17:29+0200\n"
+"PO-Revision-Date: 2012-04-14 11:00+0000\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -278,9 +278,8 @@ msgid "Error exporting project"
 msgstr "Fejl under eksport af projekt"
 
 #: ../LongoMatch.Addins.COE/ExcelExporter.cs:96
-#, fuzzy
 msgid "Project statistics"
-msgstr "<b>Projektdetaljer</b>"
+msgstr "Projektstatistik"
 
 #: ../LongoMatch.Addins.COE/ExcelExporter.cs:101
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:232
@@ -298,7 +297,6 @@ msgid "Timeline"
 msgstr "Tidslinje"
 
 #: ../LongoMatch.Addins.COE/ExcelExporter.cs:114
-#, fuzzy
 msgid "Game units"
 msgstr "Spilopdelinger"
 
@@ -318,14 +316,12 @@ msgstr "Varighed"
 #: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:83
 #: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:99
 #: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:59
-#, fuzzy
 msgid "Played Time"
 msgstr "Varighed"
 
 #: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:68
-#, fuzzy
 msgid "Match"
-msgstr "LongoMatch"
+msgstr "Match"
 
 #: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:97
 #: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:56
@@ -346,30 +342,24 @@ msgstr "Antal"
 #: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:100
 #: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:62
 msgid "Average"
-msgstr ""
+msgstr "Gennemsnit"
 
 #: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:101
 #: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:64
-#, fuzzy
 msgid "Deviation"
-msgstr "Varighed"
+msgstr "Afvigelse"
 
-# den resterende tid af en kamp?
 #: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:58
-#, fuzzy
 msgid "Total Time"
-msgstr "Resterende tid"
+msgstr "Samlet tid"
 
-# den tid en kamp varer? Længde, varighed  (men der er også en streng der hedder duration.
 #: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:60
-#, fuzzy
 msgid "Paused Time"
-msgstr "Varighed"
+msgstr "Pausetid"
 
 #: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:62
-#, fuzzy
 msgid "Project"
-msgstr "Nyt projekt"
+msgstr "Projekt"
 
 #: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:63
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:138
@@ -403,7 +393,7 @@ msgstr "Resultat"
 
 #: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:78
 msgid "Total"
-msgstr ""
+msgstr "I alt"
 
 #: ../LongoMatch.Addins.COE/TimelineSheet.cs:103
 msgid "Duration (min)"
@@ -1077,11 +1067,11 @@ msgid "<b>Subcategories</b>"
 msgstr "<b>Underkategorier</b>"
 
 # Er det ikke nærmere "Nyt projekt ud fra videofil", "Nyt projekt med
-# basis i en videofil"?
+# basis i en videofil"?   Nyt projekt der bruger en videofil
 #. Container child hbox1.Gtk.Box+BoxChild
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:45
 msgid "New project using a video file"
-msgstr "Nyt projekt der bruger en videofil."
+msgstr "Nyt projekt ud fra videofil"
 
 #. Container child hbox2.Gtk.Box+BoxChild
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:75
@@ -1211,9 +1201,8 @@ msgid "GtkButton"
 msgstr "GtkButton"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs:67
-#, fuzzy
 msgid "<b>Team</b>"
-msgstr "<b>Mærker</b>"
+msgstr "<b>Hold</b>"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameUnitsEditor.cs:30
 msgid ""
@@ -1281,7 +1270,7 @@ msgstr "Skabelon for kategorier"
 
 #: ../LongoMatch.GUI/Gui/GUIToolkit.cs:108
 msgid "The playlist you want to render is empty."
-msgstr ""
+msgstr "Afspilningslisten du ønsker at optegne er tom."
 
 #: ../LongoMatch.GUI/Gui/GUIToolkit.cs:116
 #: ../LongoMatch.GUI/Gui/GUIToolkit.cs:273
@@ -1635,7 +1624,7 @@ msgstr "Tilstand"
 
 #: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerBin.cs:253
 msgid "Jump (s):"
-msgstr ""
+msgstr "Hop (s):"
 
 #: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerBin.cs:280
 msgid "Time:"
