@@ -54,7 +54,9 @@ namespace LongoMatch.Gui.Component
 			
 			/* Set a default value */
 			if (stringTags.Count == 0) {
-				stringTags.Add(new StringTag{Value=subcategory[0], SubCategory=subcategory});
+				StringTag tag = new StringTag{Value=subcategory[0], SubCategory=subcategory}; 
+				tags.Add(tag);
+				stringTags.Add(tag);
 			}
 			
 			foreach (var tag in stringTags) {
