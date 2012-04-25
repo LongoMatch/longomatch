@@ -5,7 +5,7 @@ Maintainer: Andoni Morales Alastruey <ylatuya@gmail.com>
 Build-Depends: debhelper (>= 7), cdbs, autotools-dev,
  libgtk2.0-cil-dev,libgtk2.0-dev, libdb4o-cil-dev,
  mono-devel, cli-common-dev, libgstreamer0.10-dev,
- libgstreamer-plugins-base0.10-dev
+ libgstreamer-plugins-base0.10-dev, libmono-addins-cil-dev
 Standards-Version: 3.8.0
 
 Package: longomatch
@@ -13,7 +13,7 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, gstreamer0.10-plugins-good,
  gstreamer0.10-plugins-bad, gstreamer0.10-plugins-ugly, gstreamer0.10-ffmpeg,
  gstreamer0.10-gnonlin, libdb4o7.4-cil, libgtk2.0-cil, libmono2.0-cil,
- ffmpeg
+ ffmpeg, libmono-addins0.2-cil
 Description: Sports video analysis software
  Sports video analysis tool for coaches and sports scientists,
  to assist them on making games video analysis. It simplifies
