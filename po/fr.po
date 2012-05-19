@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-04-25 09:13+0000\n"
+"POT-Creation-Date: 2012-05-12 19:41+0000\n"
 "PO-Revision-Date: 2012-04-24 16:48+0200\n"
 "Last-Translator: Alain Lojewski <allomervan@gmail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -296,7 +296,7 @@ msgstr "Équipe visiteurs"
 #: ../LongoMatch.Addins.COE/ExcelExporter.cs:110
 #: ../LongoMatch.Addins.COE/TimelineSheet.cs:92
 msgid "Timeline"
-msgstr "Fiche horaire"
+msgstr "Piste de montage"
 
 #: ../LongoMatch.Addins.COE/ExcelExporter.cs:114
 msgid "Game units"
@@ -818,7 +818,7 @@ msgstr "Mode capture"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:109
 msgid "Timeline view"
-msgstr "Affichage de la fiche horaire"
+msgstr "Affichage de la piste de montage"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:112
 msgid "Analyze Mode"
