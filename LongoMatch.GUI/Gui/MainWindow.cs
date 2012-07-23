@@ -126,9 +126,6 @@ namespace LongoMatch.Gui
 			capturer.CaptureFinished += (sender, e) => {CloseCaptureProject();};
 			
 			buttonswidget.Mode = TagMode.Predifined;
-			localPlayersList.Team = Team.LOCAL;
-			visitorPlayersList.Team = Team.VISITOR;
-			
 			ConnectSignals();
 			ConnectMenuSignals();
 			
@@ -141,11 +138,8 @@ namespace LongoMatch.Gui
 		
 		#region Plubic Methods
 		public void AddPlay(Play play) {
-			playsList.AddPlay(play);
-			tagsList.AddPlay(play);
+			playsSelection.AddPlay(play);
 			timeline.AddPlay(play);
-			/* FIXME: Check performance */
-			UpdateTeamsModels();
 			timeline.QueueDraw();
 		}
 		
@@ -160,10 +154,8 @@ namespace LongoMatch.Gui
 		}
 		
 		public void DeletePlays (List<Play> plays) {
-			playsList.RemovePlays(plays);
+			playsSelection.RemovePlays(plays);
 			timeline.RemovePlays(plays);
-			tagsList.RemovePlays(plays);
-			UpdateTeamsModels();
 			timeline.QueueDraw();
 		}
 		
@@ -193,7 +185,7 @@ namespace LongoMatch.Gui
 		
 		public ITemplatesService TemplatesService {
 			set {
-				playsList.TemplatesService = value;
+				playsSelection.TemplatesService = value;
 			}
 		}
 		
@@ -231,22 +223,15 @@ namespace LongoMatch.Gui
 			timeline.NewMarkEvent += EmitNewTagAtFrame;
 
 			/* Connect TimeNodeChanged events */
-			playsList.TimeNodeChanged += EmitTimeNodeChanged;
-			localPlayersList.TimeNodeChanged += EmitTimeNodeChanged;
-			visitorPlayersList.TimeNodeChanged += EmitTimeNodeChanged;
-			tagsList.TimeNodeChanged += EmitTimeNodeChanged;
 			timeline.TimeNodeChanged += EmitTimeNodeChanged;
 			notes.TimeNodeChanged += EmitTimeNodeChanged;
 
 			/* Connect TimeNodeDeleted events */
-			playsList.TimeNodeDeleted += EmitPlaysDeleted;
+			playsSelection.PlaysDeleted += EmitPlaysDeleted;
 			timeline.TimeNodeDeleted += EmitPlaysDeleted;
 
 			/* Connect TimeNodeSelected events */
-			playsList.TimeNodeSelected += OnTimeNodeSelected;
-			localPlayersList.TimeNodeSelected += OnTimeNodeSelected;
-			visitorPlayersList.TimeNodeSelected += OnTimeNodeSelected;
-			tagsList.TimeNodeSelected += OnTimeNodeSelected;
+			playsSelection.PlaySelected += OnTimeNodeSelected;
 			timeline.TimeNodeSelected += OnTimeNodeSelected;
 
 			/* Connect playlist events */
@@ -257,24 +242,16 @@ namespace LongoMatch.Gui
 			playlist.SavePlaylistEvent += EmitSavePlaylist;
 
 			/* Connect PlayListNodeAdded events */
-			playsList.PlayListNodeAdded += OnPlayListNodeAdded;
-			localPlayersList.PlayListNodeAdded += OnPlayListNodeAdded;
-			visitorPlayersList.PlayListNodeAdded += OnPlayListNodeAdded;
-			tagsList.PlayListNodeAdded += OnPlayListNodeAdded;
+			playsSelection.PlayListNodeAdded += OnPlayListNodeAdded;
 
 			/* Connect tags events */
-			playsList.TagPlay += EmitTagPlay;
+			playsSelection.TagPlay += EmitTagPlay;
 
 			/* Connect SnapshotSeries events */
-			playsList.SnapshotSeriesEvent += EmitSnapshotSeries;
-			localPlayersList.SnapshotSeriesEvent += EmitSnapshotSeries;
-			visitorPlayersList.SnapshotSeriesEvent += EmitSnapshotSeries;
-			tagsList.SnapshotSeriesEvent += EmitSnapshotSeries;
+			playsSelection.SnapshotSeries += EmitSnapshotSeries;
 
 			playlist.RenderPlaylistEvent += EmitRenderPlaylist;
-			playsList.RenderPlaylistEvent += EmitRenderPlaylist;
-			localPlayersList.RenderPlaylistEvent += EmitRenderPlaylist;
-			visitorPlayersList.RenderPlaylistEvent += EmitRenderPlaylist;
+			playsSelection.RenderPlaylist += EmitRenderPlaylist;
 			
 			renderingstatebar1.ManageJobs += (e, o) => {EmitManageJobs();};
 			
@@ -299,11 +276,6 @@ namespace LongoMatch.Gui
 			CategoriesTemplatesManagerAction.Activated += (o, e) => {EmitManageCategories();};
 			TeamsTemplatesManagerAction.Activated += (o, e) => {EmitManageTeams();};
 			ProjectsManagerAction.Activated += (o, e) => {EmitManageProjects();};
-		}
-		
-		private void UpdateTeamsModels() {
-			localPlayersList.SetTeam(openedProject.LocalTeamTemplate, openedProject.AllPlays());
-			visitorPlayersList.SetTeam(openedProject.VisitorTeamTemplate, openedProject.AllPlays());
 		}
 		
 		void DetachPlayer (bool detach) {
@@ -359,8 +331,6 @@ namespace LongoMatch.Gui
 			
 			/* Update tabs labels */
 			var desc = project.Description;
-			visitorteamlabel.Text = project.VisitorTeamTemplate.TeamName;
-			localteamlabel.Text = project.LocalTeamTemplate.TeamName;
 			
 			ExportProjectAction1.Sensitive = true;
 			
@@ -384,15 +354,7 @@ namespace LongoMatch.Gui
 			openedProject = project;
 			this.projectType = projectType;
 			
-			playsList.ProjectIsLive = isLive;
-			localPlayersList.ProjectIsLive = isLive;
-			visitorPlayersList.ProjectIsLive = isLive;
-			tagsList.ProjectIsLive = isLive;
-			playsList.Project=project;
-			tagsList.Project = project;
-			visitorPlayersList.Project = project;
-			localPlayersList.Project = project;
-			UpdateTeamsModels();
+			playsSelection.SetProject(project, isLive);
 			buttonswidget.Categories = project.Categories;
 			MakeActionsSensitive(true,projectType);
 			ShowWidgets();
@@ -462,11 +424,7 @@ namespace LongoMatch.Gui
 
 		private void ClearWidgets() {
 			buttonswidget.Categories = null;
-			playsList.Project = null;
-			tagsList.Clear();
-			timeline.Project = null;
-			localPlayersList.Clear();
-			visitorPlayersList.Clear();
+			playsSelection.Clear();
 		}
 
 		private bool PromptCloseProject() {
@@ -545,9 +503,7 @@ namespace LongoMatch.Gui
 		{
 			bool visible = (sender as Gtk.ToggleAction).Active;
 			playlist.Visible=visible;
-			playsList.PlayListLoaded=visible;
-			localPlayersList.PlayListLoaded=visible;
-			visitorPlayersList.PlayListLoaded=visible;
+			playsSelection.PlayListLoaded=visible;
 
 			if(!visible && !notes.Visible) {
 				rightvbox.Visible = false;
