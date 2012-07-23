@@ -13,7 +13,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Button AddFilterButton;
 		private global::Gtk.HBox hbox2;
 		private global::Gtk.ComboBox filtercombobox;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

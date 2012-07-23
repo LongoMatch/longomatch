@@ -18,7 +18,7 @@ namespace LongoMatch.Gui.Dialog
 		private global::Gtk.Button exportbutton;
 		private global::Gtk.HSeparator hseparator3;
 		private global::Gtk.Button buttonOk;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

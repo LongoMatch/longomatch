@@ -13,7 +13,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.HBox hbox1;
 		private global::Gtk.Entry entry1;
 		private global::Gtk.Button addbutton;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

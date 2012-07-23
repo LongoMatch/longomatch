@@ -13,7 +13,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.CheckButton visitorcheckbutton;
 		private global::Gtk.Label GtkLabel1;
 		private global::Gtk.Table table1;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

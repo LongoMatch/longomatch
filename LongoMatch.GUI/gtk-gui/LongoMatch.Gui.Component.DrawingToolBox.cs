@@ -27,7 +27,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.SpinButton spinbutton1;
 		private global::Gtk.Button clearbutton;
 		private global::Gtk.Label label1;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

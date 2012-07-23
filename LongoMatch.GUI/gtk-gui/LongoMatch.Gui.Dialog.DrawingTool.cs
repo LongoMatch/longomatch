@@ -11,7 +11,7 @@ namespace LongoMatch.Gui.Dialog
 		private global::Gtk.Button savebutton;
 		private global::LongoMatch.Gui.Component.DrawingWidget drawingwidget1;
 		private global::Gtk.Button button271;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

@@ -6,7 +6,7 @@ namespace LongoMatch.Gui.Component
 	{
 		private global::Gtk.HBox gameunitsbox;
 		private global::Gtk.Button button1;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

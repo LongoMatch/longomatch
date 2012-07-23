@@ -8,7 +8,7 @@ namespace LongoMatch.Gui
 		private global::Gtk.Button morebutton;
 		private global::Gtk.VScale volumescale;
 		private global::Gtk.Button lessbutton;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

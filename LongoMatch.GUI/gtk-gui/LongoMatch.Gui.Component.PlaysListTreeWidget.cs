@@ -6,7 +6,7 @@ namespace LongoMatch.Gui.Component
 	{
 		private global::Gtk.ScrolledWindow scrolledwindow1;
 		private global::LongoMatch.Gui.Component.PlaysTreeView treeview;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

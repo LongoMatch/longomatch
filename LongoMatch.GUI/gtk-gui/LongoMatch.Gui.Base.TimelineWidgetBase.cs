@@ -18,7 +18,7 @@ namespace LongoMatch.Gui.Base
 		private global::Gtk.VBox timescalebox;
 		private global::Gtk.ScrolledWindow GtkScrolledWindow;
 		private global::Gtk.VBox timelinebox;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

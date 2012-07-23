@@ -13,7 +13,7 @@ namespace LongoMatch.Gui.Dialog
 		private global::Gtk.Button savebutton;
 		private global::Gtk.HBox templateditorbox;
 		private global::Gtk.Button buttonOk;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

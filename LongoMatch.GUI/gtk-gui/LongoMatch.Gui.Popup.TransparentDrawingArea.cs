@@ -5,7 +5,7 @@ namespace LongoMatch.Gui.Popup
 	public partial class TransparentDrawingArea
 	{
 		private global::Gtk.DrawingArea drawingarea;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

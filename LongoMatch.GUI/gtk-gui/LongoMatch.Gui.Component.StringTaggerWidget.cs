@@ -8,7 +8,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Alignment GtkAlignment;
 		private global::Gtk.HBox buttonsbox;
 		private global::Gtk.Label titlelabel;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

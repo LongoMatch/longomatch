@@ -13,7 +13,7 @@ namespace LongoMatch.Gui
 		private global::Gtk.Button pausebutton;
 		private global::Gtk.Button stopbutton;
 		private global::Gtk.Label timelabel;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

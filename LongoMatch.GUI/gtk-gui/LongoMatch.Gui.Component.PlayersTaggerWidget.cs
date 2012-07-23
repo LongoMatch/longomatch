@@ -7,7 +7,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Frame frame1;
 		private global::Gtk.Alignment GtkAlignment;
 		private global::Gtk.Label CategoryLabel;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

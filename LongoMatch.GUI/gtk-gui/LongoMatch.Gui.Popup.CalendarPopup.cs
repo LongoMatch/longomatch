@@ -5,7 +5,7 @@ namespace LongoMatch.Gui.Popup
 	public partial class CalendarPopup
 	{
 		private global::Gtk.Calendar calendar1;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

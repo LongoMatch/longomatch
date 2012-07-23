@@ -8,7 +8,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.ScrolledWindow scrolledwindow1;
 		private global::Gtk.TextView textview1;
 		private global::Gtk.Button savebutton;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

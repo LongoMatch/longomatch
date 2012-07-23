@@ -12,7 +12,7 @@ namespace LongoMatch.Gui.Dialog
 		private global::Gtk.Button cancelbutton;
 		private global::Gtk.Button retrybutton;
 		private global::Gtk.Button buttonOk;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

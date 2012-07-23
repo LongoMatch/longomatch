@@ -8,7 +8,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Button cancelbutton;
 		private global::Gtk.Button starttagbutton;
 		private global::Gtk.Table table1;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

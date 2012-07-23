@@ -12,7 +12,7 @@ namespace LongoMatch.Gui.Dialog
 		private global::Gtk.Label playLabel;
 		private global::Gtk.SpinButton spinbutton1;
 		private global::Gtk.Button button22;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

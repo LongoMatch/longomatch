@@ -5,7 +5,7 @@ namespace LongoMatch.Gui.Component
 	public partial class GameUnitsTagger
 	{
 		private global::Gtk.HBox gameunitsbox1;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

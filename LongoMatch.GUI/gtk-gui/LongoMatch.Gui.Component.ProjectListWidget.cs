@@ -10,7 +10,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Entry filterEntry;
 		private global::Gtk.ScrolledWindow scrolledwindow2;
 		private global::Gtk.TreeView treeview;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

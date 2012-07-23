@@ -20,7 +20,7 @@ namespace LongoMatch.Gui.Dialog
 		private global::Gtk.Button addtagbutton;
 		private global::Gtk.Label GtkLabel4;
 		private global::Gtk.Button buttonOk;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

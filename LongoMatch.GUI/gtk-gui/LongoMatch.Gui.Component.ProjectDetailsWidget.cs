@@ -50,7 +50,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.ComboBox videoformatcombobox;
 		private global::Gtk.Label videoformatlabel;
 		private global::Gtk.Label GtkLabel5;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

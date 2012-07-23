@@ -10,7 +10,7 @@ namespace LongoMatch.Gui.Dialog
 		private global::Gtk.Label label6;
 		private global::Gtk.Label label7;
 		private global::Gtk.Button buttonOk;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

@@ -26,7 +26,7 @@ namespace LongoMatch.Gui
 		private global::Gtk.Label timelabel;
 		private global::Gtk.Button volumebutton;
 		private global::Gtk.Button detachbutton;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

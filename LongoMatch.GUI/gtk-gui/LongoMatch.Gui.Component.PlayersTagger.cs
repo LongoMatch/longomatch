@@ -8,7 +8,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Table localtable;
 		private global::Gtk.HSeparator hseparator1;
 		private global::Gtk.Table visitortable;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

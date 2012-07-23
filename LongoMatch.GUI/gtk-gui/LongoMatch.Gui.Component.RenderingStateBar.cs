@@ -8,7 +8,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Button statebutton;
 		private global::Gtk.ProgressBar progressbar;
 		private global::Gtk.Button cancellbutton;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

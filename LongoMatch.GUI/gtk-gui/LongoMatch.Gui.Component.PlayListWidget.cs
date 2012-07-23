@@ -14,7 +14,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Button openbutton;
 		private global::Gtk.Button savebutton;
 		private global::Gtk.Button newvideobutton;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

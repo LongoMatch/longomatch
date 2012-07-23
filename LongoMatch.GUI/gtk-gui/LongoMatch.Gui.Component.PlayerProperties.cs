@@ -27,7 +27,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.ComboBox playscombobox;
 		private global::Gtk.Entry positionentry;
 		private global::Gtk.SpinButton weightspinbutton;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

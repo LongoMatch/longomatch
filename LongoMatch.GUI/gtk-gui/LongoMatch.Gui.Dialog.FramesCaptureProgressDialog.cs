@@ -9,7 +9,7 @@ namespace LongoMatch.Gui.Dialog
 		private global::Gtk.Image image;
 		private global::Gtk.Button okbutton;
 		private global::Gtk.Button cancelbutton;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
