@@ -90,10 +90,10 @@ namespace LongoMatch.Gui.Component
 				button.Toggled += OnButtonToggled;
 				button.Show();
 
-				uint row_top =(uint)(i%localtable.NRows);
-				uint row_bottom = (uint) row_top+1 ;
-				uint col_left = (uint) i/localtable.NRows;
-				uint col_right = (uint) col_left+1 ;
+				uint row_top =(uint)(i / table.NColumns);
+				uint row_bottom = (uint) row_top + 1 ;
+				uint col_left = (uint) i % table.NColumns;
+				uint col_right = (uint) col_left + 1 ;
 
 				table.Attach(button,col_left,col_right,row_top,row_bottom);
 				checkButtonsDict.Add(button, player);
