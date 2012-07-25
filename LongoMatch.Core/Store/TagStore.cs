@@ -77,6 +77,11 @@ namespace LongoMatch.Store
 			        where tag.SubCategory.Equals(subCategory)
 			        select tag).ToList();
 		}
+		
+		public List<W> GetTagsValues() {
+			return (from tag in tagsList
+			        select tag.Value).ToList();
+		}
 	}
 	
 	[Serializable]

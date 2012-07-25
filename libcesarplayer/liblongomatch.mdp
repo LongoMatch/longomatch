@@ -10,7 +10,7 @@
       <Output directory="../bin" output="libcesarplayer.dll" />
       <Build debugmode="True" target="SharedLibrary" />
       <Execution consolepause="True" runwithwarnings="True" />
-      <CodeGeneration WarningLevel="All" WarningsAsErrors="True" OptimizationLevel="3" ExtraCompilerArguments="" ExtraLinkerArguments="" DefineSymbols="MONODEVELOP" ctype="CCompilationParameters" />
+      <CodeGeneration WarningLevel="All" WarningsAsErrors="False" OptimizationLevel="3" ExtraCompilerArguments="" ExtraLinkerArguments="" DefineSymbols="MONODEVELOP" ctype="CCompilationParameters" />
     </Configuration>
   </Configurations>
   <Contents>

@@ -194,7 +194,8 @@ namespace LongoMatch.Services
 
 			OpenedProject = project;
 			OpenedProjectType = projectType;
-			mainWindow.SetProject(project, projectType, props);
+			PlaysFilter filter = new PlaysFilter(project);
+			mainWindow.SetProject(project, projectType, props, filter);
 			EmitProjectChanged();
 			return true;
 		}

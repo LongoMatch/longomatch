@@ -129,4 +129,7 @@ namespace LongoMatch.Handlers
 	
 	public delegate void KeyHandler (object sender, int key, int modifier);
 
+	/* The plays filter was updated */	
+	public delegate void FilterUpdatedHandler ();
+
 }

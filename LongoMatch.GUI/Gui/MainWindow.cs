@@ -325,7 +325,7 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public void SetProject(Project project, ProjectType projectType, CaptureSettings props)
+		public void SetProject(Project project, ProjectType projectType, CaptureSettings props, PlaysFilter filter)
 		{
 			bool isLive = false;
 			
@@ -354,7 +354,8 @@ namespace LongoMatch.Gui
 			openedProject = project;
 			this.projectType = projectType;
 			
-			playsSelection.SetProject(project, isLive);
+			filter.FilterUpdated += OnFilterUpdated;
+			playsSelection.SetProject(project, isLive, filter);
 			buttonswidget.Categories = project.Categories;
 			MakeActionsSensitive(true,projectType);
 			ShowWidgets();
@@ -675,6 +676,10 @@ namespace LongoMatch.Gui
 				Catalog.GetString("An error occured in the video capturer and" +
 				" the current project will be closed:")+"\n" + message);
 			EmitCloseOpenedProject(true);
+		}
+		
+		protected virtual void OnFilterUpdated()
+		{
 		}
 		#endregion
 		

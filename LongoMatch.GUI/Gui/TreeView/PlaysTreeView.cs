@@ -57,7 +57,7 @@ namespace LongoMatch.Gui.Component
 				return base.Model as TreeStore;
 			}
 		}
-
+		
 		private void SetCategoriesMenu() {
 			Gtk.Action edit, editProp, sortMenu;
 			UIManager manager;
@@ -132,7 +132,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		protected int SortFunction(TreeModel model, TreeIter a, TreeIter b) {
+		protected override int SortFunction(TreeModel model, TreeIter a, TreeIter b) {
 			TreeStore store;
 			TimeNode tna, tnb;
 			TreeIter parent;

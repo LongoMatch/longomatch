@@ -11,6 +11,10 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Label localPlaysList;
 		private global::LongoMatch.Gui.Component.PlayersListTreeWidget visitorPlayersList;
 		private global::Gtk.Label visitorPlaysList;
+		private global::LongoMatch.Gui.Component.PlayersFilter playersfilter;
+		private global::Gtk.Label label4;
+		private global::LongoMatch.Gui.Component.CategoriesFilter categoriesfilter;
+		private global::Gtk.Label label5;
 		
 		protected virtual void Build ()
 		{
@@ -22,7 +26,7 @@ namespace LongoMatch.Gui.Component
 			this.notebook1 = new global::Gtk.Notebook ();
 			this.notebook1.CanFocus = true;
 			this.notebook1.Name = "notebook1";
-			this.notebook1.CurrentPage = 2;
+			this.notebook1.CurrentPage = 4;
 			this.notebook1.TabPos = ((global::Gtk.PositionType)(3));
 			// Container child notebook1.Gtk.Notebook+NotebookChild
 			this.playsList = new global::LongoMatch.Gui.Component.PlaysListTreeWidget ();
@@ -59,6 +63,32 @@ namespace LongoMatch.Gui.Component
 			this.visitorPlaysList.Name = "visitorPlaysList";
 			this.notebook1.SetTabLabel (this.visitorPlayersList, this.visitorPlaysList);
 			this.visitorPlaysList.ShowAll ();
+			// Container child notebook1.Gtk.Notebook+NotebookChild
+			this.playersfilter = new global::LongoMatch.Gui.Component.PlayersFilter ();
+			this.playersfilter.Events = ((global::Gdk.EventMask)(256));
+			this.playersfilter.Name = "playersfilter";
+			this.notebook1.Add (this.playersfilter);
+			global::Gtk.Notebook.NotebookChild w4 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.playersfilter]));
+			w4.Position = 3;
+			// Notebook tab
+			this.label4 = new global::Gtk.Label ();
+			this.label4.Name = "label4";
+			this.label4.LabelProp = global::Mono.Unix.Catalog.GetString ("Players filter");
+			this.notebook1.SetTabLabel (this.playersfilter, this.label4);
+			this.label4.ShowAll ();
+			// Container child notebook1.Gtk.Notebook+NotebookChild
+			this.categoriesfilter = new global::LongoMatch.Gui.Component.CategoriesFilter ();
+			this.categoriesfilter.Events = ((global::Gdk.EventMask)(256));
+			this.categoriesfilter.Name = "categoriesfilter";
+			this.notebook1.Add (this.categoriesfilter);
+			global::Gtk.Notebook.NotebookChild w5 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.categoriesfilter]));
+			w5.Position = 4;
+			// Notebook tab
+			this.label5 = new global::Gtk.Label ();
+			this.label5.Name = "label5";
+			this.label5.LabelProp = global::Mono.Unix.Catalog.GetString ("Categories filter");
+			this.notebook1.SetTabLabel (this.categoriesfilter, this.label5);
+			this.label5.ShowAll ();
 			this.Add (this.notebook1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

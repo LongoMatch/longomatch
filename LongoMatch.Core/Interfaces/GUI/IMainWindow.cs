@@ -72,7 +72,7 @@ namespace LongoMatch.Interfaces.GUI
 		
 		event KeyHandler KeyPressed;
 		
-		void SetProject(Project project, ProjectType projectType, CaptureSettings props);
+		void SetProject(Project project, ProjectType projectType, CaptureSettings props, PlaysFilter filter);
 		void AddPlay(Play play);
 		void UpdateSelectedPlay (Play play);
 		void UpdateCategories (Categories categories);

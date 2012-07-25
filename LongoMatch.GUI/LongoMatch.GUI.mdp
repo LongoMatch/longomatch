@@ -59,8 +59,6 @@
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/DrawingTool.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/TaggerWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/TaggerDialog.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/TreeView/TagsTreeView.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Component/TagsTreeWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/ProjectSelectionDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/EndCaptureDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/BusyDialog.cs" />
@@ -95,7 +93,6 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.TagsTreeWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.BusyDialog.cs" />
@@ -153,8 +150,12 @@
     <File subtype="Code" buildaction="Compile" name="Gui/Cairo.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/PlayersTagger.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlayersTagger.cs" />
-    <File subtype="Code" buildaction="Compile" name="PlaysSelectionWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/PlayersFilter.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlayersFilter.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/CategoriesFilter.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.CategoriesFilter.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/PlaysSelectionWidget.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

@@ -48,7 +48,7 @@ namespace LongoMatch.Gui.Component
 		
 		#region Plubic Methods
 		
-		public void SetProject(Project project, bool isLive) {
+		public void SetProject(Project project, bool isLive, PlaysFilter filter) {
 			this.project = project;
 			playsList.ProjectIsLive = isLive;
 			localPlayersList.ProjectIsLive = isLive;
@@ -58,7 +58,12 @@ namespace LongoMatch.Gui.Component
 			localPlayersList.Project = project;
 			visitorPlaysList.LabelProp = project.VisitorTeamTemplate.TeamName;
 			localPlaysList.LabelProp = project.LocalTeamTemplate.TeamName;
+			playsList.Filter = filter;
+			localPlayersList.Filter = filter;
+			visitorPlayersList.Filter = filter;
 			UpdateTeamsModels();
+			playersfilter.SetFilter(filter, project.LocalTeamTemplate, project.VisitorTeamTemplate);
+			categoriesfilter.SetFilter(filter, project.Categories);
 		}
 		
 		public void Clear() {

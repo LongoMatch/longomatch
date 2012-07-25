@@ -41,6 +41,9 @@ namespace LongoMatch.Gui.Component
 		protected Gtk.TreeViewColumn nameColumn;
 		protected bool editing;
 		protected bool projectIsLive;
+		
+		TreeModelFilter modelFilter;
+		PlaysFilter filter;
 
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event PlaySelectedHandler TimeNodeSelected;
@@ -95,6 +98,34 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
+		public PlaysFilter Filter {
+			set {
+				filter = value;
+				filter.FilterUpdated += OnFilterUpdated;
+			}
+			get {
+				return filter;
+			}
+		}
+
+		new public TreeStore Model {
+			set {
+				if(value != null) {
+					modelFilter = new TreeModelFilter (value, null);
+					modelFilter.VisibleFunc = new TreeModelFilterVisibleFunc (FilterFunction);
+					value.SetSortFunc(0, SortFunction);
+					value.SetSortColumnId(0,SortType.Ascending);
+					// Assign the filter as our tree's model
+					base.Model = modelFilter;
+				} else {
+					base.Model = null;
+				}
+			}
+			get {
+				return (base.Model as TreeModelFilter).ChildModel as TreeStore;
+			}
+		}
+
 		protected void EmitTimeNodeChanged(TimeNode tn, object o) {
 			if(TimeNodeChanged != null)
 				TimeNodeChanged(tn, o);
@@ -138,8 +169,8 @@ namespace LongoMatch.Gui.Component
 
 		protected object GetValueFromPath(TreePath path) {
 			Gtk.TreeIter iter;
-			Model.GetIter(out iter, path);
-			return Model.GetValue(iter,0);
+			modelFilter.GetIter(out iter, path);
+			return modelFilter.GetValue(iter,0);
 		}
 		
 		protected void EmitTimeNodeChanged(TimeNode tNode) {
@@ -201,21 +232,28 @@ namespace LongoMatch.Gui.Component
 			} else if(o is Player) {
 				c.Background = "white";
 				c.CellBackground = "white";
-				c.Markup = String.Format("{0} ({1})", (o as Player).Name, Model.IterNChildren(iter));
+				c.Markup = String.Format("{0} ({1})", (o as Player).Name, modelFilter.IterNChildren(iter));
 			} else if(o is Category) {
 				c.Background = "white";
 				c.CellBackground = "white";
-				c.Markup = String.Format("{0} ({1})", (o as TimeNode).Name, Model.IterNChildren(iter));
+				c.Markup = String.Format("{0} ({1})", (o as TimeNode).Name, modelFilter.IterNChildren(iter));
 			}
 		}
 
+		protected bool FilterFunction(TreeModel model, TreeIter iter) {
+			if (Filter == null)
+				return true;
+			object o = model.GetValue(iter, 0);
+			return Filter.IsVisible(o);
+		}	
+		
 		protected virtual void OnNameCellEdited(object o, Gtk.EditedArgs args)
 		{
 			Gtk.TreeIter iter;
 			object item;
 
-			Model.GetIter(out iter, new Gtk.TreePath(args.Path));
-			item = this.Model.GetValue(iter,0);
+			modelFilter.GetIter(out iter, new Gtk.TreePath(args.Path));
+			item = modelFilter.GetValue(iter,0);
 
 			if(item is TimeNode) {
 				(item as TimeNode).Name = args.NewText;
@@ -231,8 +269,8 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnTreeviewRowActivated(object o, Gtk.RowActivatedArgs args)
 		{
 			Gtk.TreeIter iter;
-			this.Model.GetIter(out iter, args.Path);
-			object item = this.Model.GetValue(iter, 0);
+			modelFilter.GetIter(out iter, args.Path);
+			object item = modelFilter.GetValue(iter, 0);
 
 			if(!(item is Play))
 				return;
@@ -250,14 +288,14 @@ namespace LongoMatch.Gui.Component
 			 * each time a row is deleted */
 			foreach(var path in paths) {
 				TreeIter iter;
-				Model.GetIter(out iter, path);
-				playsList.Add((Play)Model.GetValue(iter, 0));
+				modelFilter.GetIter(out iter, path);
+				playsList.Add((Play)modelFilter.GetValue(iter, 0));
 				iters.Add(iter);
 			}
 			/* Delete all the iters now */
 			for(int i=0; i< iters.Count; i++) {
 				TreeIter iter = iters[i];
-				(Model as TreeStore).Remove(ref iter);
+				Model.Remove(ref iter);
 			}
 			if(TimeNodeDeleted != null)
 				TimeNodeDeleted(playsList);
@@ -316,6 +354,12 @@ namespace LongoMatch.Gui.Component
 				NewRenderingJob(this, null);
 		}
 
+		protected void OnFilterUpdated() {
+			modelFilter.Refilter();
+		}
+		
 		protected abstract bool SelectFunction(TreeSelection selection, TreeModel model, TreePath path, bool selected);
+		protected abstract int SortFunction(TreeModel model, TreeIter a, TreeIter b);
+		
 	}
 }

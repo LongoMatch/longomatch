@@ -45,19 +45,6 @@ namespace LongoMatch.Gui.Component
 			get;
 		}
 
-		new public TreeStore Model {
-			set {
-				if(value != null) {
-					value.SetSortFunc(0, SortFunction);
-					value.SetSortColumnId(0,SortType.Ascending);
-				}
-				base.Model = value;
-			}
-			get {
-				return base.Model as TreeStore;
-			}
-		}
-
 		private void SetPlayersMenu() {
 			Action edit;
 			UIManager manager;
@@ -83,7 +70,7 @@ namespace LongoMatch.Gui.Component
 			edit.Activated += OnEdit;
 		}
 
-		protected int SortFunction(TreeModel model, TreeIter a, TreeIter b) {
+		protected override int SortFunction(TreeModel model, TreeIter a, TreeIter b) {
 			object oa;
 			object ob;
 

@@ -67,6 +67,12 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
+		public PlaysFilter Filter {
+			set{
+				playerstreeview.Filter = value;
+			}
+		}
+
 		public void SetTeam(TeamTemplate template, List<Play> plays) {
 			TreeStore team;
 			Dictionary<Player, TreeIter> playersDict = new Dictionary<Player, TreeIter>();

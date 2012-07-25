@@ -69,6 +69,12 @@ namespace LongoMatch.Gui.Component
 				ts = value;
 			}
 		}
+		
+		public PlaysFilter Filter {
+			set{
+				treeview.Filter = value;
+			}
+		}
 
 		public void RemovePlays(List<Play> plays) {
 			TreeIter iter, child;
