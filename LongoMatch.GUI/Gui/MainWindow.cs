@@ -102,9 +102,10 @@ namespace LongoMatch.Gui
 
 		#region Constructors
 		public MainWindow(IGUIToolkit guiToolkit) :
-		base("LongoMatch")
+		base(Constants.SOFTWARE_NAME)
 		{
 			this.Build();
+			Title = Constants.SOFTWARE_NAME;
 
 			this.guiToolKit = guiToolkit;
 			

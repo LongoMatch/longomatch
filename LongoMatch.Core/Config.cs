@@ -18,6 +18,8 @@
 using System;
 using System.IO;
 
+using LongoMatch.Common;
+
 namespace LongoMatch
 {
 	public class Config
@@ -51,7 +53,8 @@ namespace LongoMatch
 		}
 
 		public static string ImagesDir() {
-			return RelativeToPrefix("share/longomatch/images");
+			return RelativeToPrefix(String.Format("share/{0}/images",
+						Constants.SOFTWARE_NAME.ToLower()));
 		}
 
 		public static string DBDir() {

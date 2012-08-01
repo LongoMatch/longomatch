@@ -171,7 +171,8 @@ namespace LongoMatch.Services
 			if (Environment.OSVersion.Platform == PlatformID.Win32NT)
 				Config.configDirectory = Config.homeDirectory;
 			else
-				Config.configDirectory = System.IO.Path.Combine(home,".longomatch");
+				Config.configDirectory = System.IO.Path.Combine(home,"." +
+					Constants.SOFTWARE_NAME.ToLower());
 		}
 
 		private static bool? debugging = null;	
