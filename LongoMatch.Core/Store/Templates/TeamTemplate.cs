@@ -35,7 +35,7 @@ namespace LongoMatch.Store.Templates
 		private const int MAX_HEIGHT=100;
 		
 		public TeamTemplate() {
-			TeamName = Catalog.GetString("default");
+			TeamName = Catalog.GetString("Team");
 		}
 
 		public String Name {

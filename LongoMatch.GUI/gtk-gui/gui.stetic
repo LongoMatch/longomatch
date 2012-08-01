@@ -4352,7 +4352,7 @@ No</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.Win32CalendarDialog" design-size="219 225">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.Win32CalendarDialog" design-size="259 258">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Calendar</property>
     <property name="Icon">stock:longomatch Menu</property>
@@ -4427,7 +4427,7 @@ No</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.DrawingToolBox" design-size="94 398">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.DrawingToolBox" design-size="94 430">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -4460,6 +4460,7 @@ No</property>
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Label" translatable="yes" />
+                <property name="Active">True</property>
                 <property name="DrawIndicator">False</property>
                 <property name="HasLabel">False</property>
                 <property name="UseUnderline">True</property>
@@ -6670,14 +6671,14 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.PlaysSelectionWidget" design-size="355 495">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.PlaysSelectionWidget" design-size="568 495">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
       <widget class="Gtk.Notebook" id="notebook1">
         <property name="MemberName" />
         <property name="CanFocus">True</property>
-        <property name="CurrentPage">4</property>
+        <property name="CurrentPage">2</property>
         <property name="TabPos">Bottom</property>
         <child>
           <widget class="LongoMatch.Gui.Component.PlaysListTreeWidget" id="playsList">
@@ -6728,74 +6729,7 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
             <property name="type">tab</property>
           </packing>
         </child>
-        <child>
-          <widget class="LongoMatch.Gui.Component.PlayersFilter" id="playersfilter">
-            <property name="MemberName" />
-            <property name="Events">ButtonPressMask</property>
-          </widget>
-          <packing>
-            <property name="Position">3</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Label" id="label4">
-            <property name="MemberName" />
-            <property name="LabelProp" translatable="yes">Players filter</property>
-          </widget>
-          <packing>
-            <property name="type">tab</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="LongoMatch.Gui.Component.CategoriesFilter" id="categoriesfilter">
-            <property name="MemberName" />
-            <property name="Events">ButtonPressMask</property>
-          </widget>
-          <packing>
-            <property name="Position">4</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Label" id="label5">
-            <property name="MemberName" />
-            <property name="LabelProp" translatable="yes">Categories filter</property>
-          </widget>
-          <packing>
-            <property name="type">tab</property>
-          </packing>
-        </child>
       </widget>
-    </child>
-  </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.PlayersFilter" design-size="300 300">
-    <property name="MemberName" />
-    <property name="Visible">False</property>
-    <child>
-      <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow">
-        <property name="MemberName" />
-        <property name="ShadowType">In</property>
-        <child>
-          <widget class="Gtk.TreeView" id="tree">
-            <property name="MemberName" />
-            <property name="CanFocus">True</property>
-            <property name="ShowScrollbars">True</property>
-          </widget>
-        </child>
-      </widget>
-    </child>
-  </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.CategoriesFilter" design-size="300 300">
-    <property name="MemberName" />
-    <property name="Visible">False</property>
-    <child>
-      <placeholder />
-    </child>
-  </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.CategoriesFilter" design-size="300 300">
-    <property name="MemberName" />
-    <property name="Visible">False</property>
-    <child>
-      <placeholder />
     </child>
   </widget>
 </stetic-interface>

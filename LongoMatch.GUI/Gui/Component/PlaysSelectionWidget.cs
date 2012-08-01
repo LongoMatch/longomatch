@@ -17,6 +17,8 @@
 // 
 using System;
 using System.Collections.Generic;
+using Mono.Unix;
+using Gtk;
 
 using LongoMatch.Common;
 using LongoMatch.Handlers;
@@ -37,12 +39,15 @@ namespace LongoMatch.Gui.Component
 		public event TagPlayHandler TagPlay;
 		
 		Project project;
+		PlayersFilterTreeView playersfilter;
+		CategoriesFilterTreeView categoriesfilter;
 		
 		public PlaysSelectionWidget ()
 		{
 			this.Build ();
 			localPlayersList.Team = Team.LOCAL;
 			visitorPlayersList.Team = Team.VISITOR;
+			AddFilters();
 			ConnectSignals();
 		}
 		
@@ -62,8 +67,8 @@ namespace LongoMatch.Gui.Component
 			localPlayersList.Filter = filter;
 			visitorPlayersList.Filter = filter;
 			UpdateTeamsModels();
-			playersfilter.SetFilter(filter, project.LocalTeamTemplate, project.VisitorTeamTemplate);
-			categoriesfilter.SetFilter(filter, project.Categories);
+			playersfilter.SetFilter(filter, project);
+			categoriesfilter.SetFilter(filter, project);
 		}
 		
 		public void Clear() {
@@ -96,6 +101,20 @@ namespace LongoMatch.Gui.Component
 			UpdateTeamsModels();
 		}
 		#endregion
+		
+		void AddFilters() {
+			ScrolledWindow s1 = new ScrolledWindow();
+			ScrolledWindow s2 = new ScrolledWindow();
+			
+			playersfilter = new PlayersFilterTreeView();
+			categoriesfilter = new CategoriesFilterTreeView();
+			
+			s1.Add(categoriesfilter);
+			s2.Add(playersfilter);
+			notebook1.AppendPage(s1, new Gtk.Label(Catalog.GetString("Categories filter")));
+			notebook1.AppendPage(s2, new Gtk.Label(Catalog.GetString("Players filter")));
+			notebook1.ShowAll();
+		}
 		
 		private void ConnectSignals() {
 			playsList.TimeNodeDeleted += EmitPlaysDeleted;

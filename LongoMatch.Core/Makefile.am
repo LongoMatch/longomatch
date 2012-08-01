@@ -17,6 +17,7 @@ SOURCES = \
 	Common/Job.cs \
 	Common/Log.cs \
 	Common/PlayList.cs \
+	Common/PlaysFilter.cs \
 	Common/SerializableObject.cs \
 	Common/VideoStandards.cs \
 	Config.cs \

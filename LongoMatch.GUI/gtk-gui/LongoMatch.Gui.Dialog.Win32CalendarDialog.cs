@@ -51,8 +51,8 @@ namespace LongoMatch.Gui.Dialog
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.DefaultWidth = 219;
-			this.DefaultHeight = 225;
+			this.DefaultWidth = 259;
+			this.DefaultHeight = 258;
 			this.Show ();
 			this.calendar1.DaySelectedDoubleClick += new global::System.EventHandler (this.OnCalendar1DaySelectedDoubleClick);
 			this.calendar1.DaySelected += new global::System.EventHandler (this.OnCalendar1DaySelected);

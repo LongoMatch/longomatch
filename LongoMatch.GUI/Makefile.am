@@ -17,6 +17,7 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Component.NotesWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayersListTreeWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayersTaggerWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayersTagger.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs \
@@ -26,7 +27,6 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Component.RenderingStateBar.cs \
 	gtk-gui/LongoMatch.Gui.Component.StringTaggerWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.TagsTreeWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TeamTaggerWidget.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.BusyDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs \
@@ -68,6 +68,7 @@ SOURCES = \
 	Gui/Component/NotesWidget.cs \
 	Gui/Component/PlayerProperties.cs \
 	Gui/Component/PlayersListTreeWidget.cs \
+	Gui/Component/PlaysSelectionWidget.cs \
 	Gui/Component/PlayersTaggerWidget.cs \
 	Gui/Component/PlayersTagger.cs \
 	Gui/Component/PlayListWidget.cs \
@@ -77,7 +78,6 @@ SOURCES = \
 	Gui/Component/RenderingStateBar.cs \
 	Gui/Component/StringTaggerWidget.cs \
 	Gui/Component/TaggerWidget.cs \
-	Gui/Component/TagsTreeWidget.cs \
 	Gui/Component/TeamTaggerWidget.cs \
 	Gui/Component/TeamTemplateEditor.cs \
 	Gui/Component/TimelineLabelsWidget.cs \
@@ -109,15 +109,17 @@ SOURCES = \
 	Gui/Popup/CalendarPopup.cs \
 	Gui/Popup/MessagePopup.cs \
 	Gui/TransparentDrawingArea.cs \
+	Gui/TreeView/CategoriesFilterTreeView.cs \
 	Gui/TreeView/CategoriesTreeView.cs \
+	Gui/TreeView/FilterBaseView.cs \
 	Gui/TreeView/ListTreeViewBase.cs \
+	Gui/TreeView/PlayersFilterTreeView.cs \
 	Gui/TreeView/PlayerPropertiesTreeView.cs \
 	Gui/TreeView/PlayersTreeView.cs \
 	Gui/TreeView/PlayListTreeView.cs \
 	Gui/TreeView/PlaysTreeView.cs \
 	Gui/TreeView/RenderingJobsTreeView.cs \
 	Gui/TreeView/SubCategoriesTreeView.cs \
-	Gui/TreeView/TagsTreeView.cs \
 	Gui/Cairo.cs \
 	Gui/GUIToolkit.cs \
 	Gui/Helpers.cs \

@@ -151,11 +151,10 @@
     <File subtype="Code" buildaction="Compile" name="Gui/Component/PlayersTagger.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlayersTagger.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Component/PlayersFilter.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlayersFilter.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Component/CategoriesFilter.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.CategoriesFilter.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/PlaysSelectionWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/TreeView/PlayersFilterTreeView.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/TreeView/FilterBaseView.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/TreeView/CategoriesFilterTreeView.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
