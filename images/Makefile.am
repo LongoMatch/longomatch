@@ -6,4 +6,6 @@ DISTCLEANFILES =\
 	stock_draw-line-ends-with-arrow.png \
 	camera-video.png \
 	stock_draw-circle-unfilled.png \
-	stock_draw-line-45.png
+	stock_draw-line-45.png \
+	48x48/longomatch.png \
+	scalable/longomatch.svg
