@@ -1690,7 +1690,7 @@ destroy_pixbuf (guchar * pix, gpointer data)
 void
 gst_camera_capturer_unref_pixbuf (GdkPixbuf * pixbuf)
 {
-  gdk_pixbuf_unref (pixbuf);
+  g_object_unref (pixbuf);
 }
 
 GdkPixbuf *

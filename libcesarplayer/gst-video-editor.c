@@ -363,6 +363,7 @@ gst_video_editor_set_height (GstVideoEditor * gve, gint height)
   gve_apply_new_caps (gve);
 }
 
+static void
 gst_video_editor_set_title_size (GstVideoEditor * gve, gint size)
 {
   gve->priv->title_size = size;
@@ -488,7 +489,6 @@ static void
 gve_apply_new_caps (GstVideoEditor * gve)
 {
   GstCaps *caps;
-  gchar *font;
 
   caps = gst_caps_new_simple ("video/x-raw-yuv",
       "width", G_TYPE_INT, gve->priv->width,
