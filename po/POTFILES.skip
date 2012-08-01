@@ -4,3 +4,8 @@ libcesarplayer/src/video-utils.c
 LongoMatch/Time/DrawingsList.cs
 LongoMatch/longomatch.desktop.in
 LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.Migrator.cs
+LongoMatch.Addins.COE/ExcelExporter.cs
+LongoMatch.Addins.COE/GameUnitsStatsSheet.cs
+LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs
+LongoMatch.Addins.COE/ProjectStatsSheet.cs
+LongoMatch.Addins.COE/TimelineSheet.cs

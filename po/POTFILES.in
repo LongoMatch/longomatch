@@ -3,11 +3,6 @@ libcesarplayer/bacon-video-widget-gst-0.10.c
 libcesarplayer/video-utils.c
 LongoMatch/longomatch.desktop.in.in
 LongoMatch/Main.cs
-LongoMatch.Addins.COE/ExcelExporter.cs
-LongoMatch.Addins.COE/GameUnitsStatsSheet.cs
-LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs
-LongoMatch.Addins.COE/ProjectStatsSheet.cs
-LongoMatch.Addins.COE/TimelineSheet.cs
 LongoMatch.Core/Common/CaptureSettings.cs
 LongoMatch.Core/Common/Cloner.cs
 LongoMatch.Core/Common/ConsoleCrayon.cs
@@ -137,7 +132,6 @@ LongoMatch.GUI/Gui/Component/ProjectListWidget.cs
 LongoMatch.GUI/Gui/Component/RenderingStateBar.cs
 LongoMatch.GUI/Gui/Component/StringTaggerWidget.cs
 LongoMatch.GUI/Gui/Component/TaggerWidget.cs
-LongoMatch.GUI/Gui/Component/TagsTreeWidget.cs
 LongoMatch.GUI/Gui/Component/TeamTaggerWidget.cs
 LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs
 LongoMatch.GUI/Gui/Component/TimelineLabelsWidget.cs
@@ -182,7 +176,6 @@ LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs
 LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs
 LongoMatch.GUI/Gui/TreeView/RenderingJobsTreeView.cs
 LongoMatch.GUI/Gui/TreeView/SubCategoriesTreeView.cs
-LongoMatch.GUI/Gui/TreeView/TagsTreeView.cs
 LongoMatch.GUI.Multimedia/gtk-gui/generated.cs
 LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs
 LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerBin.cs
