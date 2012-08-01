@@ -27,8 +27,6 @@ using LongoMatch.Store.Templates;
 namespace LongoMatch.Gui.Component
 {
 
-	[System.ComponentModel.Category("LongoMatch")]
-	[System.ComponentModel.ToolboxItem(true)]
 	public abstract class FilterTreeViewBase: TreeView
 	{
 		protected Menu playersMenu;
