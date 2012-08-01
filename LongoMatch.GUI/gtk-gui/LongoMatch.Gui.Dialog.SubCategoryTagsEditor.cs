@@ -27,7 +27,7 @@ namespace LongoMatch.Gui.Dialog
 			// Widget LongoMatch.Gui.Dialog.SubCategoryTagsEditor
 			this.Name = "LongoMatch.Gui.Dialog.SubCategoryTagsEditor";
 			this.Title = global::Mono.Unix.Catalog.GetString ("Edit subcategory tags");
-			this.Icon = global::Gdk.Pixbuf.LoadFromResource ("longomatch.png");
+			this.Icon = global::Gdk.Pixbuf.LoadFromResource ("logo.svg");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
 			this.Modal = true;
 			this.Gravity = ((global::Gdk.Gravity)(5));

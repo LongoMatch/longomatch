@@ -119,7 +119,7 @@
     <File subtype="Directory" buildaction="Compile" name="." />
     <File subtype="Directory" buildaction="Compile" name="." />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/About.cs" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/longomatch.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/logo.svg" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/stock_draw-circle-unfilled.png" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/stock_draw-freeform-line.png" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/stock_draw-line-45.png" />

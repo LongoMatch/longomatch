@@ -12,7 +12,7 @@
   <icon-factory>
     <icon-set id="longomatch">
       <source>
-        <property name="Image">resource:longomatch.png</property>
+        <property name="Image">resource:logo.svg</property>
       </source>
     </icon-set>
   </icon-factory>
@@ -4790,7 +4790,7 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.EditCategoryDialog" design-size="522 538">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Category Details</property>
-    <property name="Icon">resource:longomatch.png</property>
+    <property name="Icon">resource:logo.svg</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
     <property name="Buttons">1</property>
@@ -4840,7 +4840,7 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.EditPlayerDialog" design-size="257 355">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Player Details</property>
-    <property name="Icon">resource:longomatch.png</property>
+    <property name="Icon">resource:logo.svg</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
     <property name="SkipPagerHint">True</property>
@@ -4921,7 +4921,7 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.DrawingTool" design-size="600 579">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Drawing Tool</property>
-    <property name="Icon">resource:longomatch.png</property>
+    <property name="Icon">resource:logo.svg</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
     <property name="Gravity">Center</property>
@@ -5662,7 +5662,7 @@ You can continue with the current capture, cancel it or save your project.
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.SubCategoryTagsEditor" design-size="326 304">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Edit subcategory tags</property>
-    <property name="Icon">resource:longomatch.png</property>
+    <property name="Icon">resource:logo.svg</property>
     <property name="WindowPosition">Center</property>
     <property name="Modal">True</property>
     <property name="Gravity">Center</property>
@@ -6091,7 +6091,7 @@ You can continue with the current capture, cancel it or save your project.
   </widget>
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.RenderingJobsDialog" design-size="400 212">
     <property name="MemberName" />
-    <property name="Icon">resource:longomatch.png</property>
+    <property name="Icon">resource:logo.svg</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Modal">True</property>
     <property name="Gravity">Center</property>

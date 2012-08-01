@@ -6,7 +6,7 @@ SOURCES = \
 	AssemblyInfo.cs \
 	Main.cs
 
-IMAGES = $(top_srcdir)/images/longomatch.png \
+IMAGES = $(top_srcdir)/images/logo.svg \
          $(top_srcdir)/images/background.png
 
 LOGO_48 = $(top_srcdir)/images/48x48/longomatch.png

@@ -126,7 +126,7 @@ SOURCES = \
 	Gui/MainWindow.cs
 
 RESOURCES = \
-	$(top_srcdir)/images/longomatch.png\
+	$(top_srcdir)/images/logo.svg\
 	$(top_srcdir)/images/stock_draw-line-45.png\
 	$(top_srcdir)/images/stock_draw-circle-unfilled.png\
 	$(top_srcdir)/images/stock_draw-line-ends-with-arrow.png\

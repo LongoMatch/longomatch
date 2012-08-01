@@ -1,5 +1,5 @@
 DISTCLEANFILES =\
-	longomatch.png \
+	logo.svg \
 	video.png \
 	stock_draw-freeform-line.png \
 	stock_draw-rectangle-unfilled.png \
@@ -7,5 +7,5 @@ DISTCLEANFILES =\
 	camera-video.png \
 	stock_draw-circle-unfilled.png \
 	stock_draw-line-45.png \
-	48x48/longomatch.png \
+	48x48/longomatch.svg \
 	scalable/longomatch.svg

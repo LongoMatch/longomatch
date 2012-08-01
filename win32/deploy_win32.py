@@ -88,7 +88,7 @@ GLIB_DEPS = ['libgio-2.0-0.dll', 'libglib-2.0-0.dll', 'libgmodule-2.0-0.dll', 'l
 
 MSYS_DEPS = ['sh.exe', 'rxvt.exe', 'sh.exe', 'msys-1.0.dll', 'msys-regex-1.dll', 'msys-termcap-0.dll']
 
-IMAGES = ['background.png', 'longomatch.png']
+IMAGES = ['background.png', 'logo.svg']
 
 
 class Deploy():

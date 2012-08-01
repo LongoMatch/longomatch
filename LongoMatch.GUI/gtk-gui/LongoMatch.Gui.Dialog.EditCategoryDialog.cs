@@ -13,7 +13,7 @@ namespace LongoMatch.Gui.Dialog
 			// Widget LongoMatch.Gui.Dialog.EditCategoryDialog
 			this.Name = "LongoMatch.Gui.Dialog.EditCategoryDialog";
 			this.Title = global::Mono.Unix.Catalog.GetString ("Category Details");
-			this.Icon = global::Gdk.Pixbuf.LoadFromResource ("longomatch.png");
+			this.Icon = global::Gdk.Pixbuf.LoadFromResource ("logo.svg");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			this.Modal = true;
 			// Internal child LongoMatch.Gui.Dialog.EditCategoryDialog.VBox

@@ -18,7 +18,7 @@ namespace LongoMatch.Gui.Dialog
 			// Widget LongoMatch.Gui.Dialog.DrawingTool
 			this.Name = "LongoMatch.Gui.Dialog.DrawingTool";
 			this.Title = global::Mono.Unix.Catalog.GetString ("Drawing Tool");
-			this.Icon = global::Gdk.Pixbuf.LoadFromResource ("longomatch.png");
+			this.Icon = global::Gdk.Pixbuf.LoadFromResource ("logo.svg");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			this.Modal = true;
 			this.Gravity = ((global::Gdk.Gravity)(5));

@@ -292,7 +292,7 @@ LONGOMATCH_GUI_REFERENCES = \
 LONGOMATCH_GUI_RESOURCES = \
 	-resource:./gtk-gui/objects.xml \
 	-resource:./gtk-gui/gui.stetic\
-	-resource:./../images/longomatch.png,longomatch.png\
+	-resource:./../images/logo.svg,logo.svg\
 	-resource:./../images/stock_draw-line-45.png,stock_draw-line-45.png\
 	-resource:./../images/stock_draw-circle-unfilled.png,stock_draw-circle-unfilled.png\
 	-resource:./../images/stock_draw-line-ends-with-arrow.png,stock_draw-line-ends-with-arrow.png\
