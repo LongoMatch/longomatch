@@ -41,7 +41,10 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 imagesdir = @datadir@/@PACKAGE@/images
 images_DATA = $(IMAGES)
 
-logodir = @datadir@/icons/hicolor/48x48/apps
+logo_48dir = @datadir@/icons/hicolor/48x48/apps
+logo_48_DATA = $(LOGO_48)
+
+logodir = @datadir@/icons/hicolor/scalable/apps
 logo_DATA = $(LOGO)
 
 all: $(ASSEMBLY_FILE) theme-icons

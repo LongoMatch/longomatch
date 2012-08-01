@@ -9,7 +9,8 @@ SOURCES = \
 IMAGES = $(top_srcdir)/images/longomatch.png \
          $(top_srcdir)/images/background.png
 
-LOGO = $(top_srcdir)/images/logo_48x48.png
+LOGO_48 = $(top_srcdir)/images/48x48/longomatch.png
+LOGO = $(top_srcdir)/images/scalable/longomatch.svg
 
 bin_SCRIPTS = longomatch
 
