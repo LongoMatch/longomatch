@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: longomatch.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-07-25 12:43+0000\n"
-"PO-Revision-Date: 2012-07-26 10:48+0200\n"
+"POT-Creation-Date: 2012-08-01 22:26+0000\n"
+"PO-Revision-Date: 2012-08-07 20:57+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: MonoDevelop Gettext addin\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Generator: Gtranslator 2.91.5\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2571
 msgid ""
@@ -112,7 +112,7 @@ msgstr "Versión de GStreamer instalada muy antigua"
 msgid "Media contains no supported video streams."
 msgstr "El archivo no contiene flujos de vídeo soportados."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5396
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5395
 #, c-format
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
@@ -121,8 +121,8 @@ msgstr ""
 "Falló al crear el objeto de reproducción GStreamer. Compruebe su instalación "
 "de GStreamer."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5470
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5597
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5469
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5596
 #, c-format
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
@@ -131,7 +131,7 @@ msgstr ""
 "Falló al abrir la salida de vídeo. Puede que no esté disponible. Seleccione "
 "otra salida de vídeo en el Selector de sistemas multimedia"
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5482
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5481
 #, c-format
 msgid ""
 "Could not find the video output. You may need to install additional "
@@ -142,7 +142,7 @@ msgstr ""
 "complementos adicionales de GStreamer, o seleccionar otra salida de vídeo en "
 "el Selector de sistemas multimedia."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5518
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5517
 #, c-format
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
@@ -153,7 +153,7 @@ msgstr ""
 "dispositivo de sonido, o el servidor de sonido quizá no esté funcionando. "
 "Seleccione otra salida de sonido en el Selector de sistemas multimedia."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5538
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5537
 #, c-format
 msgid ""
 "Could not find the audio output. You may need to install additional "
@@ -232,18 +232,6 @@ msgstr "%s"
 msgid "0 seconds"
 msgstr "0 segundos"
 
-#: ../LongoMatch/Main.cs:99
-msgid "The application has finished with an unexpected error."
-msgstr "El programa ha terminado con error inesperado"
-
-#: ../LongoMatch/Main.cs:100
-msgid "A log has been saved at: "
-msgstr "Se ha guardado un registro en:"
-
-#: ../LongoMatch/Main.cs:101
-msgid "Please, fill a bug report "
-msgstr "Envíe un informe de fallos "
-
 #: ../LongoMatch/longomatch.desktop.in.in.h:1
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:162
 msgid "LongoMatch"
@@ -257,148 +245,17 @@ msgstr "LongoMatch: el entrenador digital"
 msgid "Sports video analysis tool for coaches"
 msgstr "Herramienta de vídeo análisis para entrenadores"
 
-#: ../LongoMatch.Addins.COE/ExcelExporter.cs:41
-msgid "Export project to Excel file"
-msgstr "Exportar proyecto a un archivo Excel"
+#: ../LongoMatch/Main.cs:99
+msgid "The application has finished with an unexpected error."
+msgstr "El programa ha terminado con error inesperado"
 
-#: ../LongoMatch.Addins.COE/ExcelExporter.cs:49
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:445
-msgid "Output file"
-msgstr "Archivo de salida"
+#: ../LongoMatch/Main.cs:100
+msgid "A log has been saved at: "
+msgstr "Se ha guardado un registro en:"
 
-#: ../LongoMatch.Addins.COE/ExcelExporter.cs:60
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:370
-msgid "Project exported successfully"
-msgstr "Proyecto exportado satisfactoriamente."
-
-#: ../LongoMatch.Addins.COE/ExcelExporter.cs:62
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:372
-msgid "Error exporting project"
-msgstr "Error al exportar el proyecto"
-
-#: ../LongoMatch.Addins.COE/ExcelExporter.cs:96
-msgid "Project statistics"
-msgstr "Estadísticas del proyecto"
-
-#: ../LongoMatch.Addins.COE/ExcelExporter.cs:101
-msgid "Local Team"
-msgstr "Equipo local"
-
-#: ../LongoMatch.Addins.COE/ExcelExporter.cs:106
-msgid "Visitor Team"
-msgstr "Equipo visitante"
-
-#: ../LongoMatch.Addins.COE/ExcelExporter.cs:110
-#: ../LongoMatch.Addins.COE/TimelineSheet.cs:92
-msgid "Timeline"
-msgstr "Cronología"
-
-#: ../LongoMatch.Addins.COE/ExcelExporter.cs:114
-msgid "Game units"
-msgstr "Unidades de juego"
-
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:42
-#: ../LongoMatch.Addins.COE/TimelineSheet.cs:102
-msgid "Game Units"
-msgstr "Unidades de juego"
-
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:64
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:82
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:141
-msgid "Duration"
-msgstr "Duración"
-
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:65
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:83
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:99
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:59
-msgid "Played Time"
-msgstr "Tiempo jugado"
-
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:68
-msgid "Match"
-msgstr "Coincidencia"
-
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:97
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:56
-#: ../LongoMatch.Core/Store/Play.cs:202
-#: ../LongoMatch.Core/Store/SubCategory.cs:84
-#: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:48
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:73
-#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:52
-msgid "Name"
-msgstr "Nombre"
-
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:98
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:57
-#: ../LongoMatch.Addins.COE/TimelineSheet.cs:212
-msgid "Count"
-msgstr "Contar"
-
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:100
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:62
-msgid "Average"
-msgstr "Media"
-
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:101
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:64
-msgid "Deviation"
-msgstr "Desviación"
-
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:58
-msgid "Total Time"
-msgstr "Tiempo total"
-
-#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:60
-msgid "Paused Time"
-msgstr "Tiempo pausado"
-
-#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:62
-msgid "Project"
-msgstr "Proyecto"
-
-#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:63
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:138
-msgid "Date"
-msgstr "Fecha"
-
-#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:64
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:136
-msgid "Competition"
-msgstr "Competición"
-
-#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:65
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:135
-msgid "Season"
-msgstr "Temporada"
-
-#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:66
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:133
-msgid "Local team"
-msgstr "Equipo local"
-
-#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:67
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:134
-msgid "Visitor team"
-msgstr "Equipo visitante"
-
-#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:68
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:137
-msgid "Result"
-msgstr "Resultado"
-
-#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:78
-msgid "Total"
-msgstr "Total"
-
-#: ../LongoMatch.Addins.COE/TimelineSheet.cs:103
-msgid "Duration (min)"
-msgstr "Duración (min)"
-
-#: ../LongoMatch.Addins.COE/TimelineSheet.cs:211
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:45
-msgid "Categories"
-msgstr "Categorías"
+#: ../LongoMatch/Main.cs:101
+msgid "Please, fill a bug report "
+msgstr "Envíe un informe de fallos "
 
 #: ../LongoMatch.Core/Common/VideoStandards.cs:38
 msgid "Keep original size"
@@ -440,6 +297,14 @@ msgstr "nombre"
 msgid "Not defined"
 msgstr "Sin definir"
 
+#: ../LongoMatch.Core/Store/Play.cs:202
+#: ../LongoMatch.Core/Store/SubCategory.cs:84
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:48
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:52
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:73
+msgid "Name"
+msgstr "Nombre"
+
 #: ../LongoMatch.Core/Store/Play.cs:203
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:140
 msgid "Start"
@@ -478,6 +343,7 @@ msgid "Teams:"
 msgstr "Equipos:"
 
 #: ../LongoMatch.Core/Store/SubCategory.cs:156
+#: ../LongoMatch.Core/Store/Templates/TeamTemplate.cs:38
 msgid "Team"
 msgstr "Equipo"
 
@@ -496,10 +362,6 @@ msgstr "Plantilla del equipo visitante"
 #: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:92
 msgid "Period"
 msgstr "Período"
-
-#: ../LongoMatch.Core/Store/Templates/TeamTemplate.cs:38
-msgid "default"
-msgstr "por defecto"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Base.TemplatesEditorBase.cs:94
 msgid "New Before"
@@ -721,19 +583,9 @@ msgstr ""
 "de reproducción\n"
 "o crear una nueva."
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs:39
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs:35
 msgid "Plays"
 msgstr "Jugadas"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs:76
-#| msgid "Players"
-msgid "Players filter"
-msgstr "Filtro de jugadores"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs:89
-#| msgid "Categories Template"
-msgid "Categories filter"
-msgstr "Filtro de categorías"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:86
 msgid "Competition:"
@@ -1238,16 +1090,9 @@ msgstr "Borrar "
 msgid "Add new "
 msgstr "Añadir nueva "
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesFilter.cs:53
-#| msgid "Categories"
-msgid "Category"
-msgstr "Categoría"
-
-#: ../LongoMatch.GUI/Gui/Component/CategoriesFilter.cs:59
-#: ../LongoMatch.GUI/Gui/Component/PlayersFilter.cs:62
-#| msgid "Add Filter"
-msgid "Filter"
-msgstr "Filtro"
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:45
+msgid "Categories"
+msgstr "Categorías"
 
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:80
 msgid ""
@@ -1290,9 +1135,13 @@ msgstr "Tiempo:"
 msgid "Choose an image"
 msgstr "Elegir una imagen"
 
-#: ../LongoMatch.GUI/Gui/Component/PlayersFilter.cs:56
-msgid "Player"
-msgstr "Jugador"
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:114
+msgid "Categories filter"
+msgstr "Filtro de categorías"
+
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:115
+msgid "Players filter"
+msgstr "Filtro de jugadores"
 
 #: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:362
 msgid "DirectShow Source"
@@ -1301,6 +1150,10 @@ msgstr "Origen «DirectShow»"
 #: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:363
 msgid "Unknown"
 msgstr "Desconocido"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:445
+msgid "Output file"
+msgstr "Archivo de salida"
 
 #: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:457
 msgid "Open file..."
@@ -1342,6 +1195,30 @@ msgstr "Formato"
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:139
 msgid "Title"
 msgstr "Título"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:133
+msgid "Local team"
+msgstr "Equipo local"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:134
+msgid "Visitor team"
+msgstr "Equipo visitante"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:135
+msgid "Season"
+msgstr "Temporada"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:136
+msgid "Competition"
+msgstr "Competición"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:137
+msgid "Result"
+msgstr "Resultado"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:138
+msgid "Date"
+msgstr "Fecha"
 
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:47
 msgid "Teams players"
@@ -1462,6 +1339,10 @@ msgstr ""
 "Ocurrió un error en el dispositivo de captura de vídeo y se cerrará el "
 "proyecto actual:"
 
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:38
+msgid "Category"
+msgstr "Categoría"
+
 #: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:53
 msgid "Lead Time"
 msgstr "Inicio"
@@ -1483,71 +1364,34 @@ msgstr "Tecla rápida"
 msgid "Sort Method"
 msgstr "Método de ordenación"
 
+#: ../LongoMatch.GUI/Gui/TreeView/FilterBaseView.cs:59
+msgid "Visible"
+msgstr "Visible"
+
+#: ../LongoMatch.GUI/Gui/TreeView/FilterBaseView.cs:77
+#| msgid "Select a HotKey"
+msgid "Select all"
+msgstr "Seleccionar todo"
+
+#: ../LongoMatch.GUI/Gui/TreeView/FilterBaseView.cs:78
+msgid "Unselect all"
+msgstr "Deseleccionar todo"
+
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:137
 #: ../LongoMatch.GUI/Gui/TreeView/PlayersTreeView.cs:56
 #: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:69
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:137
 msgid "Edit name"
 msgstr "Editar nombre"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:58
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:116
-msgid "Edit Title"
-msgstr "Editar título"
-
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:61
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:139
-msgid "Delete"
-msgstr "Borrar"
-
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:64
-msgid "Apply current play rate"
-msgstr "Guardar la velocidad de reproducción actual"
-
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:140
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:141
-msgid " sec"
-msgstr " seg"
-
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:142
-msgid "Play Rate"
-msgstr "Velocidad de reproducción"
-
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:145
-msgid "File not found"
-msgstr "No se encontró el archivo"
-
-#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:75
-msgid "Edit properties"
-msgstr "Editar propiedades"
-
-#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:47
-msgid "Photo"
-msgstr "Foto"
-
-#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:57
-msgid "Play this match"
-msgstr "Juega este partido"
-
-#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:62
-msgid "Date of Birth"
-msgstr "Fecha de nacimiento"
-
-#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:82
-msgid "Position"
-msgstr "Posición"
-
-#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:87
-msgid "Number"
-msgstr "Dorsal"
-
-#: ../LongoMatch.GUI/Gui/TreeView/SubCategoriesTreeView.cs:91
 #: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:138
+#: ../LongoMatch.GUI/Gui/TreeView/SubCategoriesTreeView.cs:91
 msgid "Edit tags"
 msgstr "Editar etiquetas"
 
-#: ../LongoMatch.GUI/Gui/TreeView/SubCategoriesTreeView.cs:94
-msgid "Remove sub-category"
-msgstr "Eliminar subcategoría"
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:139
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:61
+msgid "Delete"
+msgstr "Borrar"
 
 #: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:140
 msgid "Delete key frame"
@@ -1569,6 +1413,56 @@ msgstr "Exportar a fotogramas PNG"
 msgid "Do you want to delete the key frame for this play?"
 msgstr "¿Quiere eliminar el fotograma clave de esta jugada? "
 
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:47
+msgid "Photo"
+msgstr "Foto"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:57
+msgid "Play this match"
+msgstr "Juega este partido"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:62
+msgid "Date of Birth"
+msgstr "Fecha de nacimiento"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:82
+msgid "Position"
+msgstr "Posición"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:87
+msgid "Number"
+msgstr "Dorsal"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:58
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:116
+msgid "Edit Title"
+msgstr "Editar título"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:64
+msgid "Apply current play rate"
+msgstr "Guardar la velocidad de reproducción actual"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:140
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:141
+msgid " sec"
+msgstr " seg"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:141
+msgid "Duration"
+msgstr "Duración"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:142
+msgid "Play Rate"
+msgstr "Velocidad de reproducción"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:145
+msgid "File not found"
+msgstr "No se encontró el archivo"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:75
+msgid "Edit properties"
+msgstr "Editar propiedades"
+
 #: ../LongoMatch.GUI/Gui/TreeView/RenderingJobsTreeView.cs:34
 msgid "Job name"
 msgstr "Nombre del trabajo"
@@ -1576,6 +1470,10 @@ msgstr "Nombre del trabajo"
 #: ../LongoMatch.GUI/Gui/TreeView/RenderingJobsTreeView.cs:39
 msgid "State"
 msgstr "Estado"
+
+#: ../LongoMatch.GUI/Gui/TreeView/SubCategoriesTreeView.cs:94
+msgid "Remove sub-category"
+msgstr "Eliminar subcategoría"
 
 #: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerBin.cs:253
 msgid "Jump (s):"
@@ -1605,18 +1503,18 @@ msgstr "Dispositivo desconectado. Se pausará la captura."
 msgid "Device reconnected.Do you want to restart the capture?"
 msgstr "Dispositivo reconectado. ¿Quiere reiniciar la captura?"
 
+#: ../LongoMatch.Multimedia/Capturer/FakeCapturer.cs:88
+msgid "Fake live source"
+msgstr "Fuente en falso directo"
+
 #: ../LongoMatch.Multimedia/Capturer/GstCameraCapturer.cs:517
 #: ../LongoMatch.Multimedia/Utils/VideoDevice.cs:53
 msgid "Default device"
 msgstr "Dispositivo predeterminado"
 
-#: ../LongoMatch.Multimedia/Capturer/FakeCapturer.cs:88
-msgid "Fake live source"
-msgstr "Fuente en falso directo"
-
-#: ../LongoMatch.Multimedia/Utils/PreviewMediaFile.cs:85
-msgid "Invalid video file:"
-msgstr "Archivo de vídeo no válido:"
+#: ../LongoMatch.Multimedia/Utils/GStreamer.cs:112
+msgid "An error has been detected in the current installation."
+msgstr "Se ha detectado un error en la instalación actual."
 
 #. Create the dialog
 #: ../LongoMatch.Multimedia/Utils/MpegRemuxer.cs:50
@@ -1631,9 +1529,46 @@ msgstr ""
 "El archivo que intenta cargar no está soportado adecuadamente. ¿Quiere "
 "convertirlo a un formato más adecuado?"
 
-#: ../LongoMatch.Multimedia/Utils/GStreamer.cs:112
-msgid "An error has been detected in the current installation."
-msgstr "Se ha detectado un error en la instalación actual."
+#: ../LongoMatch.Multimedia/Utils/PreviewMediaFile.cs:85
+msgid "Invalid video file:"
+msgstr "Archivo de vídeo no válido:"
+
+#: ../LongoMatch.Services/Services/EventsManager.cs:131
+msgid "You can't create a new play if the capturer is not recording."
+msgstr ""
+"No puede crear un nueva jugada si el dispositivo de captura no está grabando."
+
+#: ../LongoMatch.Services/Services/EventsManager.cs:186
+msgid ""
+"The stop time is smaller than the start time. The play will not be added."
+msgstr ""
+"El tiempo de detención es inferior que el tiempo de inicio. No se añadirá la "
+"reproducción."
+
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:67
+msgid ""
+"The file you are trying to load is not a playlist or it's not compatible "
+"with the current version"
+msgstr ""
+"El archivo que intenta cargar no es una lista de reproducción o no es "
+"compatible con esta versión."
+
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:105
+msgid "Please, close the opened project to play the playlist."
+msgstr "Cierre el proyecto actual para reproducir la lista de reproducción."
+
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:198
+msgid "Open playlist"
+msgstr "Abrir lista de reproducción"
+
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:199
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:210
+msgid "playlists"
+msgstr "listas de reproducción"
+
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:209
+msgid "New playlist"
+msgstr "Nueva lista de reproducción"
 
 #: ../LongoMatch.Services/Services/ProjectsManager.cs:108
 msgid "An error occured saving the project:\n"
@@ -1704,59 +1639,13 @@ msgstr "Seleccione un archivo de vídeo."
 msgid "Save project"
 msgstr "Guardar proyecto"
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:67
-msgid ""
-"The file you are trying to load is not a playlist or it's not compatible "
-"with the current version"
-msgstr ""
-"El archivo que intenta cargar no es una lista de reproducción o no es "
-"compatible con esta versión."
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:370
+msgid "Project exported successfully"
+msgstr "Proyecto exportado satisfactoriamente."
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:105
-msgid "Please, close the opened project to play the playlist."
-msgstr "Cierre el proyecto actual para reproducir la lista de reproducción."
-
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:198
-msgid "Open playlist"
-msgstr "Abrir lista de reproducción"
-
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:199
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:210
-msgid "playlists"
-msgstr "listas de reproducción"
-
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:209
-msgid "New playlist"
-msgstr "Nueva lista de reproducción"
-
-#: ../LongoMatch.Services/Services/TemplatesService.cs:62
-msgid "Local team players"
-msgstr "Plantilla del equipo local"
-
-#: ../LongoMatch.Services/Services/TemplatesService.cs:68
-msgid "Visitor team players"
-msgstr "Plantilla del equipo visitante"
-
-#: ../LongoMatch.Services/Services/TemplatesService.cs:74
-msgid "All teams players"
-msgstr "Jugadores de ambos equipos"
-
-#: ../LongoMatch.Services/Services/TemplatesService.cs:192
-#: ../LongoMatch.Services/Services/TemplatesService.cs:210
-msgid "A template already exists with the name: "
-msgstr "Ya existe una plantilla con el nombre: "
-
-#: ../LongoMatch.Services/Services/EventsManager.cs:131
-msgid "You can't create a new play if the capturer is not recording."
-msgstr ""
-"No puede crear un nueva jugada si el dispositivo de captura no está grabando."
-
-#: ../LongoMatch.Services/Services/EventsManager.cs:186
-msgid ""
-"The stop time is smaller than the start time. The play will not be added."
-msgstr ""
-"El tiempo de detención es inferior que el tiempo de inicio. No se añadirá la "
-"reproducción."
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:372
+msgid "Error exporting project"
+msgstr "Error al exportar el proyecto"
 
 #: ../LongoMatch.Services/Services/RenderingJobsManager.cs:176
 msgid "Rendering"
@@ -1777,6 +1666,84 @@ msgstr "Ocurrió un error en el editor de vídeo."
 #: ../LongoMatch.Services/Services/RenderingJobsManager.cs:221
 msgid "Please, try again."
 msgstr "Inténtelo de nuevo."
+
+#: ../LongoMatch.Services/Services/TemplatesService.cs:62
+msgid "Local team players"
+msgstr "Plantilla del equipo local"
+
+#: ../LongoMatch.Services/Services/TemplatesService.cs:68
+msgid "Visitor team players"
+msgstr "Plantilla del equipo visitante"
+
+#: ../LongoMatch.Services/Services/TemplatesService.cs:74
+msgid "All teams players"
+msgstr "Jugadores de ambos equipos"
+
+#: ../LongoMatch.Services/Services/TemplatesService.cs:192
+#: ../LongoMatch.Services/Services/TemplatesService.cs:210
+msgid "A template already exists with the name: "
+msgstr "Ya existe una plantilla con el nombre: "
+
+#~ msgid "Export project to Excel file"
+#~ msgstr "Exportar proyecto a un archivo Excel"
+
+#~ msgid "Project statistics"
+#~ msgstr "Estadísticas del proyecto"
+
+#~ msgid "Local Team"
+#~ msgstr "Equipo local"
+
+#~ msgid "Visitor Team"
+#~ msgstr "Equipo visitante"
+
+#~ msgid "Timeline"
+#~ msgstr "Cronología"
+
+#~ msgid "Game units"
+#~ msgstr "Unidades de juego"
+
+#~ msgid "Game Units"
+#~ msgstr "Unidades de juego"
+
+#~ msgid "Played Time"
+#~ msgstr "Tiempo jugado"
+
+#~ msgid "Match"
+#~ msgstr "Coincidencia"
+
+#~ msgid "Count"
+#~ msgstr "Contar"
+
+#~ msgid "Average"
+#~ msgstr "Media"
+
+#~ msgid "Deviation"
+#~ msgstr "Desviación"
+
+#~ msgid "Total Time"
+#~ msgstr "Tiempo total"
+
+#~ msgid "Paused Time"
+#~ msgstr "Tiempo pausado"
+
+#~ msgid "Project"
+#~ msgstr "Proyecto"
+
+#~ msgid "Total"
+#~ msgstr "Total"
+
+#~ msgid "Duration (min)"
+#~ msgstr "Duración (min)"
+
+#~ msgid "default"
+#~ msgstr "por defecto"
+
+#~| msgid "Add Filter"
+#~ msgid "Filter"
+#~ msgstr "Filtro"
+
+#~ msgid "Player"
+#~ msgstr "Jugador"
 
 #~ msgid "None"
 #~ msgstr "Ninguno"
