@@ -29,8 +29,6 @@ namespace LongoMatch.Common
 
 	public class Image
 	{
-		const int DEFAULT_MAX_HEIGHT = 100;
-		const int DEFAULT_MAX_WIDTH = 100;
 		SImage image;
 		
 		public Image (SImage image)
@@ -49,7 +47,7 @@ namespace LongoMatch.Common
 		}
 		
 		public void Scale() {
-			Scale (DEFAULT_MAX_WIDTH, DEFAULT_MAX_HEIGHT);
+			Scale (Constants.THUMBNAIL_MAX_WIDTH, Constants.THUMBNAIL_MAX_HEIGHT);
 		}
 		
 		
@@ -77,6 +75,19 @@ namespace LongoMatch.Common
 		public void Save (string filename) {
 			image.Save(filename, "png");
 		}
+		
+		public int Width {
+			get {
+				return image.Width;
+			}
+		}
+		
+		public int Height {
+			get {
+				return image.Height;
+			}
+		}
+		
 #else
 		public byte[] Serialize () {
 			if (image == null)
