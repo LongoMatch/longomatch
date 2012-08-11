@@ -102,10 +102,16 @@ namespace LongoMatch.Gui.Component
 			set {
 				filter = value;
 				filter.FilterUpdated += OnFilterUpdated;
+				Refilter();
 			}
 			get {
 				return filter;
 			}
+		}
+		
+		public void Refilter() {
+			if (modelFilter != null)
+				modelFilter.Refilter();
 		}
 
 		new public TreeStore Model {
@@ -342,6 +348,7 @@ namespace LongoMatch.Gui.Component
 		protected void OnTag(object obj, EventArgs args) {
 			if(TagPlay != null)
 				TagPlay((Play)GetValueFromPath(Selection.GetSelectedRows()[0]));
+			Refilter();
 		}
 
 		protected void OnSnapshot(object obj, EventArgs args) {

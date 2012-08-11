@@ -100,9 +100,19 @@ namespace LongoMatch.Common
 			} else if (o is Category) {
 				return VisibleCategories.Contains(o as Category);
 			} else if (o is Play) {
+				bool cat_match, player_match;
 				Play play = o as Play;
-				return VisiblePlayers.Intersect(play.Players.GetTagsValues()).Count() != 0 &&
-					VisibleCategories.Contains(play.Category);
+				
+				cat_match = VisibleCategories.Contains(play.Category);
+				if (!cat_match)
+					return false;
+				
+				if (play.Players.Tags.Count == 0)
+					player_match = true;
+				else
+					player_match = VisiblePlayers.Intersect(play.Players.GetTagsValues()).Count() != 0;
+				
+				return player_match && cat_match;
 			} else {
 				return false;
 			}
