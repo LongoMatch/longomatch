@@ -115,6 +115,7 @@ namespace LongoMatch.Video.Common
 		AudioEncoderType,
 		AudioSampleRate,
 		AudioChannels,
+		Par,
 	}
 
 	

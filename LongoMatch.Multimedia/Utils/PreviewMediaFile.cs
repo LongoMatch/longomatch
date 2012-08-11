@@ -45,6 +45,7 @@ namespace LongoMatch.Video.Utils
 			int fps=0;
 			int height=0;
 			int width=0;
+			double par = 1;
 			LongoMatch.Common.Image preview=null;
 			MultimediaFactory factory;
 			IMetadataReader reader;
@@ -73,13 +74,14 @@ namespace LongoMatch.Video.Utils
 				}
 				height = (int) reader.GetMetadata(MetadataType.DimensionX);
 				width = (int) reader.GetMetadata(MetadataType.DimensionY);
+				par = (double) reader.GetMetadata(MetadataType.Par);
 				reader.Close();
 				reader.Dispose();
 				return new LongoMatch.Store.MediaFile(filePath,duration*1000,
 				                     (ushort)fps,hasAudio,
 				                     hasVideo,VideoEncoderType,
 				                     AudioEncoderType,(uint)height,
-				                     (uint)width,preview);
+				                     (uint)width, par, preview);
 			}
 			catch(GLib.GException ex) {
 				throw new Exception(Catalog.GetString("Invalid video file:")+"\n"+ex.Message);

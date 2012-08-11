@@ -39,6 +39,7 @@ namespace LongoMatch.Store
 		string audioCodec;
 		uint videoHeight;
 		uint videoWidth;
+		double par;
 		byte[] thumbnailBuf;
 
 
@@ -53,6 +54,7 @@ namespace LongoMatch.Store
 		                 string audioCodec,
 		                 uint videoWidth,
 		                 uint videoHeight, 
+		                 double par,
 		                 Image preview)
 		{
 			this.filePath = filePath;
@@ -69,6 +71,7 @@ namespace LongoMatch.Store
 			else
 				this.fps = fps;
 			this.Preview = preview;
+			Par = par;
 		}
 
 		public string FilePath {
@@ -153,6 +156,17 @@ namespace LongoMatch.Store
 					this.fps=25;
 				else
 					this.fps = value;
+			}
+		}
+		
+		public double Par {
+			get {
+				if (par == null)
+					return 1;
+				return par;
+			}
+			set {
+				par = value;
 			}
 		}
 		

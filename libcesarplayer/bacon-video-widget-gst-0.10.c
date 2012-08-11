@@ -4391,7 +4391,8 @@ static struct _metadata_map_info
   BVW_INFO_AUDIO_BITRATE, "audio-bitrate"}, {
   BVW_INFO_AUDIO_CODEC, "audio-codec"}, {
   BVW_INFO_AUDIO_SAMPLE_RATE, "samplerate"}, {
-  BVW_INFO_AUDIO_CHANNELS, "channels"}
+  BVW_INFO_AUDIO_CHANNELS, "channels"}, {
+  BVW_INFO_PAR, "pixel-aspect-ratio"}
 };
 
 static const gchar *
@@ -4624,6 +4625,37 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
     g_value_set_string (value, NULL);
     g_free (string);
   }
+
+  return;
+}
+
+static void
+bacon_video_widget_get_metadata_double (BaconVideoWidget * bvw,
+    BvwMetadataType type, GValue * value)
+{
+  gdouble metadata_double = 0;
+
+  g_value_init (value, G_TYPE_DOUBLE);
+
+  if (bvw->priv->play == NULL) {
+    g_value_set_double (value, 0);
+    return;
+  }
+
+  switch (type) {
+    case BVW_INFO_PAR:
+    {
+      int movie_par_n = gst_value_get_fraction_numerator (bvw->priv->movie_par);
+      int movie_par_d = gst_value_get_fraction_denominator (bvw->priv->movie_par);
+      metadata_double = (gdouble) movie_par_n / (gdouble) movie_par_d;
+      break;
+    }
+    default:
+      g_assert_not_reached();
+  }
+
+  g_value_set_double (value, metadata_double);
+  GST_DEBUG ("%s = %f", get_metadata_type_name (type), metadata_double);
 
   return;
 }
@@ -4921,6 +4953,8 @@ bacon_video_widget_get_metadata (BaconVideoWidget * bvw,
           g_value_take_object (value, pixbuf);
       }
     }
+    case BVW_INFO_PAR:
+      bacon_video_widget_get_metadata_double (bvw, type, value);
       break;
     default:
       g_return_if_reached ();
