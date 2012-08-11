@@ -28,6 +28,7 @@ namespace LongoMatch.Store
 	public class Drawing
 	{
 		private byte[] drawingBuf;
+		private const int DEFAULT_PAUSE_TIME = 5000;
 
 		/// <summary>
 		/// Represent a drawing in the database using a {@Gdk.Pixbuf} stored
@@ -36,6 +37,7 @@ namespace LongoMatch.Store
 		/// which stop time is stored in a int value
 		/// </summary>
 		public Drawing() {
+			PauseTime = DEFAULT_PAUSE_TIME;
 		}
 
 		/// <summary>
