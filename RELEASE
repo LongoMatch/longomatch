@@ -1,7 +1,7 @@
-LongoMatch-0.17.4 "Re-Madrid"
+LongoMatch-0.17.6 "Fuerteventura"
 ----------------------------------
 
-The LongoMatch team is happy to announce the fourth release in the
+The LongoMatch team is happy to announce the fifth release in the
 unstable 0.17 series.
 
 *** IMPORTANT NOTE ***
@@ -15,14 +15,8 @@ experience.
 
 
 * Features
-	* Video player can detached from the main window
-	* Video player seek steps can be configured in seconds
-	* Tag window shows players in list instead of a new window
-
-
-* Bugs fixed
-	* Fix  launch script
-	* Fixed several bugs with templates and subcategories
+	* Export Drawings to video files
+	* Add filters for plays
 
 *Contributors to this Release:
 

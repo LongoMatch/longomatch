@@ -1,3 +1,22 @@
+===== LongoMatch 0.17.6 "Fuerteventura" =====
+
+	== Features of this release ==
+
+	* Export Drawings to video files
+	* Add filters for plays
+
+===== LongoMatch 0.17.4 "Re-madrid" =====
+
+	== Features of this release ==
+
+	* Video player can detached from the main window
+	* Video player seek steps can be configured in seconds
+	* Tag window shows players in list instead of a new window
+
+	== Bugs Fixed ==
+	* Fix  launch script
+	* Fixed several bugs with templates and subcategories
+
 ===== LongoMatch 0.17.1 "El Hierro" =====
 
 	== Features of this release ==
