@@ -34,8 +34,7 @@ namespace LongoMatch.Store
 	public class PixbufTimeNode : TimeNode
 	{
 		private byte[] thumbnailBuf;
-		private const int MAX_WIDTH=100;
-		private const int MAX_HEIGHT=75;
+		
 		#region Contructors
 		public PixbufTimeNode() {
 		}
@@ -51,7 +50,15 @@ namespace LongoMatch.Store
 					return Image.Deserialize(thumbnailBuf);
 				else return null;
 			} set {
-				thumbnailBuf = value == null ? null: value.Serialize();
+				if (value == null)
+					thumbnailBuf = null;
+				else {
+					if (value.Height > Constants.THUMBNAIL_MAX_HEIGHT ||
+					    value.Width > Constants.THUMBNAIL_MAX_WIDTH) {
+						value.Scale(Constants.THUMBNAIL_MAX_WIDTH, Constants.THUMBNAIL_MAX_HEIGHT);
+					}
+					thumbnailBuf = value.Serialize();
+				}
 			}
 		}
 		
