@@ -12,8 +12,8 @@ Package: longomatch
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, gstreamer0.10-plugins-good,
  gstreamer0.10-plugins-bad, gstreamer0.10-plugins-ugly, gstreamer0.10-ffmpeg,
- gstreamer0.10-gnonlin, libdb4o7.4-cil, libgtk2.0-cil, libmono2.0-cil,
- ffmpeg, libmono-addins0.2-cil
+ gstreamer0.10-gnonlin, libdb4o8.0-cil, libgtk2.0-cil, libmono2.0-cil,
+ libav-tools, libmono-addins0.2-cil
 Description: Sports video analysis software
  Sports video analysis tool for coaches and sports scientists,
  to assist them on making games video analysis. It simplifies
