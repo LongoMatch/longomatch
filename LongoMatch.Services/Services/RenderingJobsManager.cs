@@ -32,6 +32,7 @@ namespace LongoMatch.Services
 		/* List of pending jobs */
 		List<Job> jobs, pendingJobs;
 		IVideoEditor videoEditor;
+		IFramesCapturer capturer;
 		Job currentJob;
 		IRenderingStateBar stateBar;
 		IMultimediaToolkit multimediaToolkit;
@@ -42,6 +43,7 @@ namespace LongoMatch.Services
 			this.guiToolkit = guiToolkit;
 			this.multimediaToolkit = multimediaToolkit; 
 			this.stateBar = guiToolkit.MainWindow.RenderingStateBar;
+			capturer = multimediaToolkit.GetFramesCapturer();
 			jobs = new List<Job>();
 			pendingJobs = new List<Job>();
 			stateBar.Cancel += (sender, e) => CancelCurrentJob();
@@ -126,14 +128,57 @@ namespace LongoMatch.Services
 		
 		private void LoadJob(Job job) {
 			foreach(PlayListPlay segment in job.Playlist) {
-				if(segment.Valid)
-					videoEditor.AddSegment(segment.MediaFile.FilePath,
-					                       segment.Start.MSeconds,
-					                       segment.Duration.MSeconds,
-					                       segment.Rate,
-					                       segment.Name,
-					                       segment.MediaFile.HasAudio);
+				if (!ProcessSegment(segment))
+					continue;
 			}
+		}
+		
+		private bool ProcessSegment(PlayListPlay segment) {
+			if(!segment.Valid)
+				return false;
+			
+			Log.Debug(String.Format("Adding segment with {0} drawings", segment.Drawings.Count));
+			if (segment.Drawings.Count >= 1) {
+				Drawing drawing = segment.Drawings[0];
+				string image_path = CreateStillImage(segment.MediaFile.FilePath, drawing);
+				
+				videoEditor.AddSegment(segment.MediaFile.FilePath,
+				                       segment.Start.MSeconds,
+				                       drawing.RenderTime - segment.Start.MSeconds,
+				                       segment.Rate,
+				                       segment.Name,
+				                       segment.MediaFile.HasAudio);
+				videoEditor.AddImageSegment(image_path,
+				                            drawing.RenderTime,
+				                            drawing.PauseTime,
+				                            segment.Name);
+				videoEditor.AddSegment(segment.MediaFile.FilePath,
+				                       drawing.RenderTime,
+				                       segment.Stop.MSeconds - drawing.RenderTime,
+				                       segment.Rate,
+				                       segment.Name,
+				                       segment.MediaFile.HasAudio);
+			} else {
+				videoEditor.AddSegment(segment.MediaFile.FilePath,
+				                       segment.Start.MSeconds,
+				                       segment.Duration.MSeconds,
+				                       segment.Rate,
+				                       segment.Name,
+				                       segment.MediaFile.HasAudio);
+			}
+			return true;
+		}
+		
+		private string CreateStillImage(string filename, Drawing drawing) {
+			Image frame, final_image;
+			string path = System.IO.Path.GetTempFileName();
+			
+			capturer.Open(filename);
+			capturer.SeekTime(drawing.RenderTime, true);
+			frame = capturer.GetCurrentFrame();
+			final_image = Image.Composite(frame, drawing.Pixbuf);
+			final_image.Save(path);
+			return path;
 		}
 		
 		private void CloseAndNext() {

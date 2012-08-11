@@ -856,15 +856,17 @@ gst_video_editor_add_segment (GstVideoEditor * gve, gchar * file,
     return;
   }
 
-  final_duration = GST_MSECOND * duration / rate;
+  start = GST_MSECOND * start;
+  duration = GST_MSECOND * duration;
+  final_duration = duration / rate;
 
   /* Video */
   filter = gst_caps_from_string ("video/x-raw-rgb;video/x-raw-yuv");
   element_name = g_strdup_printf ("gnlvideofilesource%d", gve->priv->segments);
   gnl_filesource = gst_element_factory_make ("gnlfilesource", element_name);
   g_object_set (G_OBJECT (gnl_filesource), "location", file,
-      "media-start", GST_MSECOND * start,
-      "media-duration", GST_MSECOND * duration,
+      "media-start", start,
+      "media-duration", duration,
       "start", gve->priv->duration,
       "duration", final_duration, "caps", filter, NULL);
   if (gve->priv->segments == 0) {
@@ -893,13 +895,17 @@ gst_video_editor_add_segment (GstVideoEditor * gve, gchar * file,
   }
   filter = gst_caps_from_string ("audio/x-raw-float;audio/x-raw-int");
   g_object_set (G_OBJECT (gnl_filesource),
-      "media-start", GST_MSECOND * start,
-      "media-duration", GST_MSECOND * duration,
+      "media-start", start,
+      "media-duration", duration,
       "start", gve->priv->duration,
       "duration", final_duration, "caps", filter, NULL);
   gst_bin_add (GST_BIN (gve->priv->gnl_audio_composition), gnl_filesource);
   gve->priv->gnl_audio_filesources =
       g_list_append (gve->priv->gnl_audio_filesources, gnl_filesource);
+
+  GST_INFO ("New segment: start={%" GST_TIME_FORMAT "} duration={%"
+      GST_TIME_FORMAT "} ", GST_TIME_ARGS (gve->priv->duration),
+      GST_TIME_ARGS (final_duration));
 
   gve->priv->duration += final_duration;
   gve->priv->segments++;
@@ -907,10 +913,87 @@ gst_video_editor_add_segment (GstVideoEditor * gve, gchar * file,
   gve->priv->titles = g_list_append (gve->priv->titles, title);
   gve->priv->stop_times[gve->priv->segments - 1] = gve->priv->duration;
 
-  GST_INFO ("New segment: start={%" GST_TIME_FORMAT "} duration={%"
-      GST_TIME_FORMAT "} ", GST_TIME_ARGS (start * GST_MSECOND),
-      GST_TIME_ARGS (duration * GST_MSECOND));
   g_free (element_name);
+}
+
+
+void
+gst_video_editor_add_image_segment (GstVideoEditor * gve, gchar * file,
+    guint64 start, gint64 duration, gchar * title)
+{
+  GstState cur_state;
+  GstElement *gnl_filesource = NULL;
+  GstElement *imagesourcebin = NULL;
+  GstElement *filesource = NULL;
+  GstElement *decoder = NULL;
+  GstElement *colorspace = NULL;
+  GstElement *imagefreeze = NULL;
+  GstElement *audiotestsrc = NULL;
+  GstCaps *filter = NULL;
+  gchar *element_name = NULL;
+  gchar *desc = NULL;
+
+  g_return_if_fail (GST_IS_VIDEO_EDITOR (gve));
+
+  gst_element_get_state (gve->priv->main_pipeline, &cur_state, NULL, 0);
+  if (cur_state > GST_STATE_READY) {
+    GST_WARNING ("Segments can only be added for a state <= GST_STATE_READY");
+    return;
+  }
+
+  duration = duration * GST_MSECOND;
+  start = start * GST_MSECOND;
+
+  /* Video */
+  /* gnlsource */
+  filter = gst_caps_from_string ("video/x-raw-rgb;video/x-raw-yuv");
+  element_name = g_strdup_printf ("gnlvideofilesource%d", gve->priv->segments);
+  gnl_filesource = gst_element_factory_make ("gnlsource", element_name);
+  g_object_set (G_OBJECT (gnl_filesource),
+      "media-start", start,
+      "media-duration", duration,
+      "start", gve->priv->duration,
+      "duration", duration, "caps", filter, NULL);
+  g_free(element_name);
+  /* filesrc ! pngdec ! ffmpegcolorspace ! imagefreeze */
+  desc = g_strdup_printf("filesrc location=%s ! pngdec ! videoscale ! ffmpegcolorspace ! video/x-raw-rgb, pixel-aspect-ratio=1/1 ! imagefreeze  ", file);
+  imagesourcebin = gst_parse_bin_from_description(desc, TRUE, NULL);
+  g_free(desc);
+  gst_bin_add (GST_BIN (gnl_filesource), imagesourcebin);
+  gst_bin_add (GST_BIN (gve->priv->gnl_video_composition), gnl_filesource);
+  gve->priv->gnl_video_filesources =
+      g_list_append (gve->priv->gnl_video_filesources, gnl_filesource);
+
+  /* Audio */
+  element_name =
+      g_strdup_printf ("gnlaudiofakesource%d", gve->priv->segments);
+  gnl_filesource = gst_element_factory_make ("gnlsource", element_name);
+  g_free (element_name);
+  element_name = g_strdup_printf ("audiotestsource%d", gve->priv->segments);
+  audiotestsrc = gst_element_factory_make ("audiotestsrc", element_name);
+  g_free (element_name);
+  g_object_set (G_OBJECT (audiotestsrc), "volume", (double) 0, NULL);
+  gst_bin_add (GST_BIN (gnl_filesource), audiotestsrc);
+  filter = gst_caps_from_string ("audio/x-raw-float;audio/x-raw-int");
+  g_object_set (G_OBJECT (gnl_filesource),
+      "media-start", start,
+      "media-duration", duration,
+      "start", gve->priv->duration,
+      "duration", duration, "caps", filter, NULL);
+  gst_bin_add (GST_BIN (gve->priv->gnl_audio_composition), gnl_filesource);
+  gve->priv->gnl_audio_filesources =
+      g_list_append (gve->priv->gnl_audio_filesources, gnl_filesource);
+
+  GST_INFO ("New segment: start={%" GST_TIME_FORMAT "} duration={%"
+      GST_TIME_FORMAT "} ", GST_TIME_ARGS (gve->priv->duration),
+      GST_TIME_ARGS (duration));
+
+  gve->priv->duration += duration;
+  gve->priv->segments++;
+
+  gve->priv->titles = g_list_append (gve->priv->titles, title);
+  gve->priv->stop_times[gve->priv->segments - 1] = gve->priv->duration;
+
 }
 
 void

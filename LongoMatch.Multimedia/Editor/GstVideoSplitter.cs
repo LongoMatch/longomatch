@@ -295,6 +295,12 @@ namespace LongoMatch.Video.Editor {
 			gst_video_editor_add_segment(Handle, filePath, start, duration, rate, GLib.Marshaller.StringToPtrGStrdup(title), true);
 		}
 
+		[DllImport("libcesarplayer.dll")]
+		static extern void gst_video_editor_add_image_segment(IntPtr raw, string file_path, long start, long duration, IntPtr title);
+
+		public void AddImageSegment(string filePath, long start, long duration, string title) {
+			gst_video_editor_add_image_segment(Handle, filePath, start, duration, GLib.Marshaller.StringToPtrGStrdup(title));
+		}
 
 		[DllImport("libcesarplayer.dll")]
 		static extern void gst_video_editor_start(IntPtr raw);

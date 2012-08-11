@@ -47,6 +47,8 @@ namespace LongoMatch.Interfaces.Multimedia
 		}
 
 		void AddSegment(string filePath, long start, long duration, double rate, string title, bool hasAudio) ;
+		
+		void AddImageSegment(string filePath, long start, long duration, string title) ;
 
 		void ClearList();
 

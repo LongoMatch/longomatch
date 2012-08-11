@@ -88,6 +88,16 @@ namespace LongoMatch.Common
 			}
 		}
 		
+		public static Image Composite(Image image1, Image image2) {
+			SImage dest = new SImage(image1.Value.Colorspace, true, image1.Value.BitsPerSample,
+			                         image1.Width, image1.Height);
+			image1.Value.Composite(dest, 0, 0, image2.Width, image2.Height, 0, 0, 1, 1,
+			                       Gdk.InterpType.Bilinear, 255);
+			image2.Value.Composite(dest, 0, 0, image2.Width, image2.Height, 0, 0, 1, 1,
+			                       Gdk.InterpType.Bilinear, 255);
+			return new Image(dest);
+		}
+		
 #else
 		public byte[] Serialize () {
 			if (image == null)
