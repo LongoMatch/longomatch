@@ -1,0 +1,1635 @@
+# Hungarian translation of longomatch
+# Copyright (C) 2012. Free Software Foundation, Inc.
+# This file is distributed under the same license as the longomatch package.
+#
+# SP <rugbystat at freemail dot hu>
+# Gabor Kelemen <kelemeng at gnome dot hu>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: longomatch master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2012-08-01 23:05+0000\n"
+"PO-Revision-Date: 2012-08-12 02:31+0200\n"
+"Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
+"Language-Team: Magyar <gnome-hu-list at gnome dot org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.0\n"
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2571
+msgid ""
+"The requested audio output was not found. Please select another audio output "
+"in the Multimedia Systems Selector."
+msgstr ""
+"A kért hangkimenet nem található. Válasszon másik hangkimenetet a "
+"Multimédiarendszer-választóban."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2577
+msgid "Location not found."
+msgstr "A hely nem található."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2581
+msgid "Could not open location; you might not have permission to open the file."
+msgstr "A hely nem nyitható meg; lehet, hogy nincs jogosultsága megnyitni a fájlt."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2593
+msgid ""
+"The video output is in use by another application. Please close other video "
+"applications, or select another video output in the Multimedia Systems "
+"Selector."
+msgstr ""
+"A videokimenetet egy másik alkalmazás használja. Zárja be a többi videoalkalmazást, vagy válasszon másik "
+"videokimenetet a Multimédiarendszer-választóban."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2600
+msgid ""
+"The audio output is in use by another application. Please select another "
+"audio output in the Multimedia Systems Selector. You may want to consider "
+"using a sound server."
+msgstr ""
+"A hangkimenetet egy másik alkalmazás használja. Válasszon másik "
+"hangkimenetet a Multimédiarendszer-választóban. Fontolja meg egy "
+"hangkiszolgáló használatát."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2619
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2625
+#, c-format
+msgid "The playback of this movie requires a %s plugin which is not installed."
+msgstr "Ezen film lejátszása egy %s bővítményt igényel, amely nincs telepítve."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2627
+#, c-format
+msgid ""
+"The playback of this movie requires the following decoders which are not "
+"installed:\n"
+"\n"
+"%s"
+msgstr ""
+"Ezen film lejátszása egy a következő dekódolókat igényli, amelyek nincsenek "
+"telepítve:\n"
+"\n"
+"%s"
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2653
+msgid "Cannot play this file over the network. Try downloading it to disk first."
+msgstr ""
+"Ez a fájl nem játszható le a hálózaton keresztül. Próbálja előbb letölteni a "
+"lemezre."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2728
+msgid "Media file could not be played."
+msgstr "A médiafájl nem játszható le."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2870
+msgid "Failed to retrieve working directory"
+msgstr "A munkakönyvtár lekérése sikertelen"
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4599
+msgid "Surround"
+msgstr "Térhatású"
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4601
+msgid "Mono"
+msgstr "Mono"
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4603
+msgid "Stereo"
+msgstr "Sztereó"
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4958
+msgid "Too old version of GStreamer installed."
+msgstr "A GStreamer telepített verziója túl régi."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4965
+msgid "Media contains no supported video streams."
+msgstr "A média nem tartalmaz támogatott videofolyamot."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5395
+#, c-format
+msgid ""
+"Failed to create a GStreamer play object. Please check your GStreamer "
+"installation."
+msgstr ""
+"Nem sikerült GStreamer-lejátszóobjektumot létrehozni. Kérem ellenőrizze a "
+"GStreamer telepítését."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5469
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5596
+#, c-format
+msgid ""
+"Failed to open video output. It may not be available. Please select another "
+"video output in the Multimedia Systems Selector."
+msgstr ""
+"A videokimenet megnyitása sikertelen, lehet hogy nem áll rendelkezésre. "
+"Válasszon másik videokimenetet a Multimédiarendszer-választóban."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5481
+#, c-format
+msgid ""
+"Could not find the video output. You may need to install additional "
+"GStreamer plugins, or select another video output in the Multimedia Systems "
+"Selector."
+msgstr ""
+"Nem található a videokimenet. Lehet, hogy további GStreamer bővítményeket "
+"kell telepítenie, vagy válasszon másik videokimenetet a Multimédiarendszer-választóban."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5517
+#, c-format
+msgid ""
+"Failed to open audio output. You may not have permission to open the sound "
+"device, or the sound server may not be running. Please select another audio "
+"output in the Multimedia Systems Selector."
+msgstr ""
+"A hangkimenet megnyitása sikertelen. Lehet, hogy nincs jogosultsága a "
+"hangeszköz megnyitásához vagy a hangkiszolgáló nem fut. Válasszon "
+"másik hangkimenetet a Multimédiarendszer-választóban."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5537
+#, c-format
+msgid ""
+"Could not find the audio output. You may need to install additional "
+"GStreamer plugins, or select another audio output in the Multimedia Systems "
+"Selector."
+msgstr ""
+"A hangkimenet nem található. Lehet, hogy további GStreamer bővítményeket "
+"kell telepítenie, vagy válasszon másik hangkimenetet a Multimédiarendszer-választóban."
+
+#. hour:minutes:seconds
+#. Translators: This is a time format, like "9:05:02" for 9
+#. * hours, 5 minutes, and 2 seconds. You may change ":" to
+#. * the separator that your locale uses or use "%Id" instead
+#. * of "%d" if your locale uses localized digits.
+#.
+#: ../libcesarplayer/video-utils.c:93 ../libcesarplayer/video-utils.c:112
+#, c-format
+msgctxt "long time format"
+msgid "%d:%02d:%02d"
+msgstr "%d.%02d.%02d"
+
+#. minutes:seconds
+#. Translators: This is a time format, like "5:02" for 5
+#. * minutes and 2 seconds. You may change ":" to the
+#. * separator that your locale uses or use "%Id" instead of
+#. * "%d" if your locale uses localized digits.
+#.
+#: ../libcesarplayer/video-utils.c:103
+#, c-format
+msgctxt "short time format"
+msgid "%d:%02d"
+msgstr "%d.%02d"
+
+#: ../libcesarplayer/video-utils.c:143
+#, c-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d óra"
+msgstr[1] "%d óra"
+
+#: ../libcesarplayer/video-utils.c:145
+#, c-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d perc"
+msgstr[1] "%d perc"
+
+#: ../libcesarplayer/video-utils.c:147
+#, c-format
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "%d másodperc"
+msgstr[1] "%d másodperc"
+
+#. hour:minutes:seconds
+#: ../libcesarplayer/video-utils.c:151
+#, c-format
+msgid "%s %s %s"
+msgstr "%s %s %s"
+
+#. minutes:seconds
+#: ../libcesarplayer/video-utils.c:154
+#, c-format
+msgid "%s %s"
+msgstr "%s %s"
+
+#. seconds
+#: ../libcesarplayer/video-utils.c:157
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#. 0 seconds
+#: ../libcesarplayer/video-utils.c:160
+msgid "0 seconds"
+msgstr "0 másodperc"
+
+#: ../LongoMatch/longomatch.desktop.in.in.h:1
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:162
+msgid "LongoMatch"
+msgstr "LongoMatch"
+
+#: ../LongoMatch/longomatch.desktop.in.in.h:2
+msgid "LongoMatch: The Digital Coach"
+msgstr "LongoMatch digitális edző"
+
+#: ../LongoMatch/longomatch.desktop.in.in.h:3
+msgid "Sports video analysis tool for coaches"
+msgstr "Sportvideo-elemző eszköz edzőknek"
+
+#: ../LongoMatch/Main.cs:99
+msgid "The application has finished with an unexpected error."
+msgstr ""
+
+#: ../LongoMatch/Main.cs:100
+msgid "A log has been saved at: "
+msgstr ""
+
+#: ../LongoMatch/Main.cs:101
+msgid "Please, fill a bug report "
+msgstr ""
+
+#: ../LongoMatch.Core/Common/VideoStandards.cs:38
+msgid "Keep original size"
+msgstr "Eredeti méret megtartása"
+
+#: ../LongoMatch.Core/Store/Category.cs:105
+#: ../LongoMatch.Core/Store/Category.cs:113
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:226
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:71
+msgid "Sort by name"
+msgstr ""
+
+#: ../LongoMatch.Core/Store/Category.cs:107
+#: ../LongoMatch.Core/Store/Category.cs:117
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:227
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:72
+msgid "Sort by start time"
+msgstr ""
+
+#: ../LongoMatch.Core/Store/Category.cs:109
+#: ../LongoMatch.Core/Store/Category.cs:119
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:228
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:73
+msgid "Sort by stop time"
+msgstr ""
+
+#: ../LongoMatch.Core/Store/Category.cs:111
+#: ../LongoMatch.Core/Store/Category.cs:121
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:229
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:74
+msgid "Sort by duration"
+msgstr ""
+
+#: ../LongoMatch.Core/Store/Category.cs:131
+msgid "name"
+msgstr "név"
+
+#: ../LongoMatch.Core/Store/HotKey.cs:128
+msgid "Not defined"
+msgstr "Nincs megadva"
+
+#: ../LongoMatch.Core/Store/Play.cs:202
+#: ../LongoMatch.Core/Store/SubCategory.cs:84
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:48
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:52
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:73
+msgid "Name"
+msgstr "Név"
+
+#: ../LongoMatch.Core/Store/Play.cs:203
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:140
+msgid "Start"
+msgstr "Kezdés"
+
+#: ../LongoMatch.Core/Store/Play.cs:204
+msgid "Stop"
+msgstr "Leállítás"
+
+#: ../LongoMatch.Core/Store/Project.cs:259
+msgid "The file you are trying to load is not a valid project"
+msgstr ""
+
+#: ../LongoMatch.Core/Store/SubCategory.cs:114
+msgid "Tags list"
+msgstr ""
+
+#: ../LongoMatch.Core/Store/SubCategory.cs:115
+msgid "Tags:"
+msgstr "Címkék:"
+
+#: ../LongoMatch.Core/Store/SubCategory.cs:136
+msgid "Local "
+msgstr "Helyi "
+
+#: ../LongoMatch.Core/Store/SubCategory.cs:138
+msgid "Visitor"
+msgstr "Vendég"
+
+#: ../LongoMatch.Core/Store/SubCategory.cs:140
+msgid "List of players"
+msgstr ""
+
+#: ../LongoMatch.Core/Store/SubCategory.cs:141
+msgid "Teams:"
+msgstr "Csapatok:"
+
+#: ../LongoMatch.Core/Store/SubCategory.cs:156
+#: ../LongoMatch.Core/Store/Templates/TeamTemplate.cs:38
+msgid "Team"
+msgstr "Csapat"
+
+#: ../LongoMatch.Core/Store/SubCategory.cs:164
+msgid "Team selection"
+msgstr ""
+
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:80
+msgid "Local Team Players"
+msgstr "Helyi csapat játékosai"
+
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:86
+msgid "Visitor Team Players"
+msgstr "Vendég csapat játékosai"
+
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:92
+msgid "Period"
+msgstr "Időszak"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Base.TemplatesEditorBase.cs:94
+msgid "New Before"
+msgstr "Új elé"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Base.TemplatesEditorBase.cs:122
+msgid "New After"
+msgstr "Új mögé"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Base.TemplatesEditorBase.cs:150
+msgid "Remove"
+msgstr "Eltávolítás"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Base.TemplatesEditorBase.cs:178
+msgid "Edit"
+msgstr "Szerkesztés"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Base.TemplatesEditorBase.cs:205
+msgid "Export"
+msgstr "Exportálás"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs:26
+msgid "Cancel"
+msgstr "Mégse"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs:36
+msgid "Tag new play"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:84
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:127
+msgid "none"
+msgstr "nincs"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:96
+msgid "Change"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:114
+msgid "<b>Name:</b>"
+msgstr "<b>Név:</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:124
+msgid "<b>Color:</b>    "
+msgstr "<b>Szín:</b>    "
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:136
+msgid "<b>HotKey:</b>"
+msgstr "<b>Gyorsbillentyű:</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:148
+msgid "<b>Lead time:</b>"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:160
+msgid "<b>Lag time:</b>"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:174
+msgid "<b>Sort Method</b>"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:244
+msgid "<b>Properties</b>"
+msgstr "<b>Tulajdonságok</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:298
+msgid "<b>Subcategory name</b>"
+msgstr "<b>Alkategória neve</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:321
+msgid "<b>Subcategory type</b>"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:345
+msgid "_Add subcategory"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:364
+msgid "<b>Subcategories</b>"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:45
+msgid "<b>Tools</b>"
+msgstr "<b>Eszközök</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:182
+msgid "<b>Color</b>"
+msgstr "<b>Szín</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:203
+msgid "<b>Width</b>"
+msgstr "<b>Szélesség</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:212
+msgid "2 px"
+msgstr "2 pont"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:213
+msgid "4 px"
+msgstr "4 pont"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:214
+msgid "6 px"
+msgstr "6 pont"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:215
+msgid "8 px"
+msgstr "8 pont"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:216
+msgid "10 px"
+msgstr "10 pont"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:229
+msgid "<b>Transparency</b>"
+msgstr "<b>Átlátszóság</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:278
+msgid ""
+"Draw-><b> D</b>\n"
+"Clear-><b> C</b>\n"
+"Hide-><b> S</b>\n"
+"Show-><b> S</b>\n"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameUnitsEditor.cs:30
+msgid ""
+"<b>Game Units</b>: Games are usually divided in time by units. In sports "
+"like field hockey the game is divided in 2 halves but other sports like "
+"tenis have several types of units that are anidated, e.g. Set->Game->Point.\n"
+"\n"
+"Defining <b> Game Units </b> will help you during the analysis to indentify "
+"the tagged plays in the the phases of the game."
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameUnitsEditor.cs:101
+msgid "Add game unit"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameUnitWidget.cs:35
+msgid "GtkButton"
+msgstr "GtkButton"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:87
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:313
+msgid "_Calendar"
+msgstr "_Naptár"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:121
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:77
+msgid "Name:"
+msgstr "Név:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:129
+msgid "Position:"
+msgstr "Pozíció:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:139
+msgid "Number:"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:149
+msgid "Photo:"
+msgstr "Fénykép:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:159
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:72
+msgid "Height"
+msgstr "Magasság"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:169
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:77
+msgid "Weight"
+msgstr "Súly"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:179
+msgid "Birth day"
+msgstr "Születésnap"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:189
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:67
+msgid "Nationality"
+msgstr "Nemzetiség"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:199
+msgid "Plays this match:"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:248
+#: ../LongoMatch.GUI/Gui/Component/PlayerProperties.cs:163
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:130
+msgid "Yes"
+msgstr "Igen"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:249
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:130
+msgid "No"
+msgstr "Nem"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs:44
+msgid ""
+"Load a playlist\n"
+"or create a \n"
+"new one."
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs:35
+msgid "Plays"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:86
+msgid "Competition:"
+msgstr "Bajnokság:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:128
+msgid "File:"
+msgstr "Fájl:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:260
+msgid "-"
+msgstr "-"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:333
+msgid "Visitor Team:"
+msgstr "Vendég csapat:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:343
+msgid "Score:"
+msgstr "Pont:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:353
+msgid "Date:"
+msgstr "Dátum:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:363
+msgid "Local Team:"
+msgstr "Hazai csapat:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:371
+msgid "Categories Template:"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:395
+msgid "Season:"
+msgstr "Idény:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:417
+msgid "Audio Bitrate (kbps):"
+msgstr "Hang bitsebessége (kbps):"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:443
+msgid "Device:"
+msgstr "Eszköz:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:471
+msgid "Video Size:"
+msgstr "Videoméret:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:481
+msgid "Video Bitrate (kbps):"
+msgstr "Videó bitsebessége (kbps):"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:518
+msgid "Video Format:"
+msgstr "Videoformátum:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:528
+msgid "Video encoding  properties"
+msgstr "Videokódolás tulajdonságai"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs:31
+msgid "Projects Search:"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.StringTaggerWidget.cs:34
+msgid "<b>GtkFrame</b>"
+msgstr "<b>GtkFrame</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs:67
+msgid "<b>Team</b>"
+msgstr "<b>Csapat</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:20
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:132
+msgid "Drawing Tool"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:64
+msgid "Save to Project"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:91
+msgid "Save to File"
+msgstr "Mentés fájlba"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EditCategoryDialog.cs:15
+msgid "Category Details"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EditPlayerDialog.cs:15
+msgid "Player Details"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs:50
+msgid ""
+"A capture project is actually running.\n"
+"You can continue with the current capture, cancel it or save your project. \n"
+"\n"
+"<b>Warning: If you cancel the current project all your changes will be lost."
+"</b>"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs:79
+msgid "Return"
+msgstr "Vissza"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs:104
+msgid "Cancel capture"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs:129
+msgid "Stop capture and save project"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:23
+msgid "Select template name"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:67
+msgid "Copy existent template:"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:85
+msgid "Players:"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs:18
+msgid "Capture Progress"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs:15
+msgid "Select a HotKey"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs:28
+msgid ""
+"Press a key combination using  Shift+key or Alt+key.\n"
+"Hotkeys with a single key are also allowed with Ctrl+key."
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.NewProjectDialog.cs:16
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:25
+msgid "New Project"
+msgstr "Új projekt"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.OpenProjectDialog.cs:16
+msgid "Open Project"
+msgstr "Projekt megnyitása"
+
+#. Container child hbox1.Gtk.Box+BoxChild
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:45
+msgid "New project using a video file"
+msgstr ""
+
+#. Container child hbox2.Gtk.Box+BoxChild
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:75
+msgid "Live project using a capture device"
+msgstr ""
+
+#. Container child hbox3.Gtk.Box+BoxChild
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:103
+msgid "Live project using a fake capture device"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs:27
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:81
+msgid "Projects Manager"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs:83
+msgid "<b>Project Details</b>"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs:135
+msgid "_Export"
+msgstr "Exportálás"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs:67
+msgid "C_lear finished jobs"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs:93
+msgid "_Cancel job"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs:119
+msgid "Retry job"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:51
+msgid "Play:"
+msgstr "Lejátszás:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:59
+msgid "Interval (frames/s):"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:67
+msgid "Series Name:"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:121
+msgid "Export to PNG images"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:29
+msgid "Edit subcategory tags"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:54
+msgid "Quick tag"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:69
+msgid "Subcategory name:"
+msgstr "Alkategória neve:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:78
+msgid "Allow multiple selections"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:92
+msgid "Goal type"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:141
+msgid "Penalty"
+msgstr "Büntető"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:163
+msgid "Add tag"
+msgstr "Címke hozzáadása"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:182
+msgid "<b>Tags</b>"
+msgstr "<b>Címkék</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:21
+msgid "Tag play"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:45
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:78
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:232
+msgid "Tags"
+msgstr "Címkék"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:66
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:85
+msgid "Players"
+msgstr "Játékosok"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TemplateEditorDialog.cs:15
+msgid "Categories Template"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TemplatesManager.cs:22
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:85
+msgid "Templates Manager"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs:32
+msgid ""
+"\n"
+"A new version of LongoMatch has been released at www.ylatuya.es!\n"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs:42
+msgid "The new version is "
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs:52
+msgid ""
+"\n"
+"You can download it using this direct link:"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs:62
+msgid "label7"
+msgstr "label7"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:33
+msgid "Video Properties"
+msgstr "Videó tulajdonságai"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:57
+msgid "Video Quality:"
+msgstr "Videó minősége:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:63
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:108
+msgid "Low"
+msgstr "Alacsony"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:64
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:112
+msgid "Normal"
+msgstr "Normál"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:65
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:116
+msgid "Good"
+msgstr "Jó"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:66
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:120
+msgid "Extra"
+msgstr "Extra"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:86
+msgid "Size: "
+msgstr "Méret: "
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:110
+msgid "Ouput Format:"
+msgstr "Kimeneti formátum:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:133
+msgid "Enable Title Overlay"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:144
+msgid "Enable Audio (Experimental)"
+msgstr "Hang engedélyezése (kísérleti)"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:162
+msgid "File name: "
+msgstr "Fájlnév: "
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.Win32CalendarDialog.cs:15
+msgid "Calendar"
+msgstr "Naptár"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:62
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:63
+msgid "_File"
+msgstr "_Fájl"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:65
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:66
+msgid "_New Project"
+msgstr "Új _projekt"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:68
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:69
+msgid "_Open Project"
+msgstr "Projekt _megnyitása"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:71
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:72
+msgid "_Quit"
+msgstr "_Kilépés"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:74
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:76
+msgid "_Close Project"
+msgstr "Projekt be_zárása"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:78
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:79
+msgid "_Tools"
+msgstr "_Eszközök"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:82
+msgid "Database Manager"
+msgstr "Adatbázis-kezelő"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:84
+msgid "Categories Templates Manager"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:87
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:88
+msgid "_View"
+msgstr "Nézet"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:90
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:91
+msgid "Full Screen"
+msgstr "Teljes képernyő"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:93
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:94
+msgid "Playlist"
+msgstr "Lejátszólista"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:96
+msgid "Tagging view"
+msgstr "Címkéző nézet"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:99
+msgid "Capture Mode"
+msgstr "Felvételi mód"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:101
+msgid "Timeline view"
+msgstr "Idősáv nézet"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:104
+msgid "Analyze Mode"
+msgstr "Elemző mód"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:106
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:108
+msgid "_Save Project"
+msgstr "Projekt me_ntése"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:110
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:111
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:128
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:129
+msgid "_Help"
+msgstr "_Súgó"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:113
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:114
+msgid "_About"
+msgstr "_Névjegy"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:116
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:118
+msgid "Export Project To CSV File"
+msgstr "Projekt exportálása CSV fájlba"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:121
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:122
+msgid "Teams Templates Manager"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:124
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:126
+msgid "Hide All Widgets"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:131
+msgid "_Drawing Tool"
+msgstr "_Rajzeszköz"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:134
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:135
+msgid "_Import Project"
+msgstr "Pr_ojekt importálása"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:137
+msgid "Manual tagging view"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:140
+msgid "Free Capture Mode"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:142
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:145
+msgid "Game units view"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:147
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:148
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:150
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:152
+msgid "Export Project"
+msgstr "Projekt exportálása"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:156
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:157
+msgid "Export to project file"
+msgstr "Exportálás projektfájlba"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs:14
+msgid "TransparentDrawingArea"
+msgstr "TransparentDrawingArea"
+
+#: ../LongoMatch.GUI/Gui/Base/TemplatesEditorBase.cs:178
+msgid "New template"
+msgstr "Új sablon"
+
+#: ../LongoMatch.GUI/Gui/Base/TemplatesEditorBase.cs:182
+msgid "The template name is void."
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Base/TemplatesEditorBase.cs:188
+msgid "The template already exists. Do you want to overwrite it ?"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Base/TimeScaleBase.cs:142
+#: ../LongoMatch.GUI/Gui/Base/TimeScaleBase.cs:228
+msgid "Delete "
+msgstr "Törlés "
+
+#: ../LongoMatch.GUI/Gui/Base/TimeScaleBase.cs:143
+msgid "Add new "
+msgstr "Új hozzáadása "
+
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:45
+msgid "Categories"
+msgstr "Kategóriák"
+
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:80
+msgid ""
+"You are about to delete a category and all the plays added to this category. "
+"Do you want to proceed?"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:87
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:95
+#: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:159
+#: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:169
+msgid "A template needs at least one category"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:74
+msgid "Create new..."
+msgstr "Új létrehozása…"
+
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:202
+msgid ""
+"If you delete this subcategory you will looseall the tags associated with "
+"it. Do you want to proceed?"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Component/GameUnitTimeScale.cs:53
+#: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:53
+msgid "play"
+msgstr "lejátszás"
+
+#: ../LongoMatch.GUI/Gui/Component/GameUnitWidget.cs:62
+msgid "Time: "
+msgstr "Idő: "
+
+#: ../LongoMatch.GUI/Gui/Component/PlayerProperties.cs:88
+#: ../LongoMatch.GUI/Gui/Helpers.cs:44
+msgid "Choose an image"
+msgstr "Válasszon egy képet"
+
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:114
+msgid "Categories filter"
+msgstr "Kategóriaszűrő"
+
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:115
+msgid "Players filter"
+msgstr "Játékosszűrő"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:362
+msgid "DirectShow Source"
+msgstr "DirectShow forrás"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:363
+msgid "Unknown"
+msgstr "Ismeretlen"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:445
+msgid "Output file"
+msgstr "Kimeneti fájl"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:457
+msgid "Open file..."
+msgstr "Fájl megnyitása…"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:483
+msgid "Analyzing video file:"
+msgstr "Videofájl elemzése:"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:488
+msgid "This file doesn't contain a video stream."
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:490
+msgid "This file contains a video stream but its length is 0."
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:53
+msgid "Filename"
+msgstr "Fájlnév"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:118
+msgid "File length"
+msgstr "Fájl hossza"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:120
+msgid "Video codec"
+msgstr "Videokodek"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:121
+msgid "Audio codec"
+msgstr "Hangkodek"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:122
+msgid "Format"
+msgstr "Formátum"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:132
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:139
+msgid "Title"
+msgstr "Cím"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:133
+msgid "Local team"
+msgstr "Hazai csapat"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:134
+msgid "Visitor team"
+msgstr "Vendég csapat"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:135
+msgid "Season"
+msgstr "Idény"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:136
+msgid "Competition"
+msgstr "Bajnokság"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:137
+msgid "Result"
+msgstr "Eredmény"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:138
+msgid "Date"
+msgstr "Dátum"
+
+#: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:47
+msgid "Teams players"
+msgstr "Csapatok játékosai"
+
+#: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:75
+msgid "Shield"
+msgstr "Címer"
+
+#: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:78
+msgid "Team Name"
+msgstr "Csapatnév"
+
+#: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:151
+msgid "You are about to delete a player and all its tags. Do you want to proceed?"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:101
+msgid "Save File as..."
+msgstr "Fájl mentése másként…"
+
+#: ../LongoMatch.GUI/Gui/Dialog/EditCategoryDialog.cs:69
+msgid "This hotkey is already in use."
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/FramesCaptureProgressDialog.cs:50
+msgid "Capturing frame: "
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/FramesCaptureProgressDialog.cs:59
+msgid "Done"
+msgstr "Kész"
+
+#: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:70
+msgid "The Project has been edited, do you want to save the changes?"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:101
+msgid "This Project is actually in use."
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:102
+msgid "Close it first to allow its removal from the database"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:108
+msgid "Do you really want to delete:"
+msgstr "Biztosan törli:"
+
+#: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:166
+msgid "The Project you are trying to load is actually in use."
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:166
+msgid "Close it first to edit it"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:185
+msgid "Save Project"
+msgstr "Projekt mentése"
+
+#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:92
+msgid "Templates Files"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:163
+msgid "The template has been modified. Do you want to save it? "
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:186
+msgid "Template name"
+msgstr "Sablon neve"
+
+#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:199
+msgid "You cannot create a template with a void name"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:204
+msgid "A template with this name already exists"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:225
+msgid "You can't delete the 'default' template"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:230
+msgid "Do you really want to delete the template: "
+msgstr "Biztosan törölni akarja a sablont: "
+
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:146
+msgid "Save Video As ..."
+msgstr "Videó mentése másként…"
+
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:108
+msgid "The playlist you want to render is empty."
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:116
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:273
+msgid "Please, select a video file."
+msgstr "Válasszon egy videofájlt."
+
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:442
+msgid "Do you want to close the current project?"
+msgstr "Biztosan bezárja az aktuális projektet?"
+
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:578
+msgid "The actual project will be closed due to an error in the media player:"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:677
+msgid ""
+"An error occured in the video capturer and the current project will be "
+"closed:"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:38
+msgid "Category"
+msgstr "Kategória"
+
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:53
+msgid "Lead Time"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:58
+msgid "Lag Time"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:63
+msgid "Color"
+msgstr "Szín"
+
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:68
+msgid "Hotkey"
+msgstr "Billentyűkombináció"
+
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:73
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:70
+msgid "Sort Method"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/TreeView/FilterBaseView.cs:59
+msgid "Visible"
+msgstr "Látható"
+
+#: ../LongoMatch.GUI/Gui/TreeView/FilterBaseView.cs:77
+msgid "Select all"
+msgstr "Összes kijelölése"
+
+#: ../LongoMatch.GUI/Gui/TreeView/FilterBaseView.cs:78
+msgid "Unselect all"
+msgstr "Kijelölés törlése"
+
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:137
+#: ../LongoMatch.GUI/Gui/TreeView/PlayersTreeView.cs:56
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:69
+msgid "Edit name"
+msgstr "Név szerkesztése"
+
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:138
+#: ../LongoMatch.GUI/Gui/TreeView/SubCategoriesTreeView.cs:91
+msgid "Edit tags"
+msgstr "Címkék szerkesztése"
+
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:139
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:61
+msgid "Delete"
+msgstr "Törlés"
+
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:140
+msgid "Delete key frame"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:141
+msgid "Add to playlist"
+msgstr "Hozzáadás a lejátszólistához"
+
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:143
+msgid "Export to video file"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:144
+msgid "Export to PGN images"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:310
+msgid "Do you want to delete the key frame for this play?"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:47
+msgid "Photo"
+msgstr "Fénykép"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:57
+msgid "Play this match"
+msgstr "Mérkőzés lejátszása"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:62
+msgid "Date of Birth"
+msgstr "Születési dátum"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:82
+msgid "Position"
+msgstr "Pozíció"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:87
+msgid "Number"
+msgstr "Szám"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:58
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:116
+msgid "Edit Title"
+msgstr "Cím szerkesztése"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:64
+msgid "Apply current play rate"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:140
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:141
+msgid " sec"
+msgstr " mp"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:141
+msgid "Duration"
+msgstr "Hossz"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:142
+msgid "Play Rate"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:145
+msgid "File not found"
+msgstr "A fájl nem található"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:75
+msgid "Edit properties"
+msgstr "Tulajdonságok szerkesztése"
+
+#: ../LongoMatch.GUI/Gui/TreeView/RenderingJobsTreeView.cs:34
+msgid "Job name"
+msgstr "Feladatnév"
+
+#: ../LongoMatch.GUI/Gui/TreeView/RenderingJobsTreeView.cs:39
+msgid "State"
+msgstr "Állapot"
+
+#: ../LongoMatch.GUI/Gui/TreeView/SubCategoriesTreeView.cs:94
+msgid "Remove sub-category"
+msgstr "Alkategória eltávolítása"
+
+#: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerBin.cs:253
+msgid "Jump (s):"
+msgstr ""
+
+#: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerBin.cs:280
+msgid "Time:"
+msgstr "Idő:"
+
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:236
+msgid ""
+"You are going to stop and finish the current capture.\n"
+"Do you want to proceed?"
+msgstr ""
+
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:242
+msgid "Finalizing file. This can take a while"
+msgstr ""
+
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:277
+msgid "Device disconnected. The capture will be paused"
+msgstr ""
+
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:286
+msgid "Device reconnected.Do you want to restart the capture?"
+msgstr ""
+
+#: ../LongoMatch.Multimedia/Capturer/FakeCapturer.cs:88
+msgid "Fake live source"
+msgstr ""
+
+#: ../LongoMatch.Multimedia/Capturer/GstCameraCapturer.cs:517
+#: ../LongoMatch.Multimedia/Utils/VideoDevice.cs:53
+msgid "Default device"
+msgstr "Alapértelmezett eszköz"
+
+#: ../LongoMatch.Multimedia/Utils/GStreamer.cs:112
+msgid "An error has been detected in the current installation."
+msgstr ""
+
+#. Create the dialog
+#: ../LongoMatch.Multimedia/Utils/MpegRemuxer.cs:50
+msgid "Remuxing file..."
+msgstr ""
+
+#: ../LongoMatch.Multimedia/Utils/MpegRemuxer.cs:126
+msgid ""
+"The file you are trying to load is not properly supported. Would you like to "
+"convert it into a more suitable format?"
+msgstr ""
+
+#: ../LongoMatch.Multimedia/Utils/PreviewMediaFile.cs:85
+msgid "Invalid video file:"
+msgstr "Érvénytelen videofájl:"
+
+#: ../LongoMatch.Services/Services/EventsManager.cs:131
+msgid "You can't create a new play if the capturer is not recording."
+msgstr ""
+
+#: ../LongoMatch.Services/Services/EventsManager.cs:186
+msgid "The stop time is smaller than the start time. The play will not be added."
+msgstr ""
+
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:67
+msgid ""
+"The file you are trying to load is not a playlist or it's not compatible "
+"with the current version"
+msgstr ""
+"A fájl nem található a lejátszólistában vagy nem kompatibilis "
+"az aktuális verzióval"
+
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:105
+msgid "Please, close the opened project to play the playlist."
+msgstr ""
+
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:198
+msgid "Open playlist"
+msgstr "Lejátszólista megnyitása"
+
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:199
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:210
+msgid "playlists"
+msgstr "lejátszólisták"
+
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:209
+msgid "New playlist"
+msgstr "Új lejátszólista"
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:108
+msgid "An error occured saving the project:\n"
+msgstr "Hiba történt a projekt mentésekor:\n"
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:109
+msgid ""
+"The video file and a backup of the project has been saved. Try to import it "
+"later:\n"
+msgstr ""
+
+#. Show a file chooser dialog to select the file to import
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:125
+msgid "Import Project"
+msgstr "Projekt importálása"
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:137
+msgid "Error importing project:"
+msgstr "Hiba a projekt importálásakor"
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:145
+msgid "A project already exists for the file:"
+msgstr ""
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:147
+msgid "Do you want to overwrite it?"
+msgstr "Biztosan felülírja?"
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:155
+msgid "Project successfully imported."
+msgstr "A projekt sikeresen importálva."
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:166
+msgid "The file associated to this project doesn't exist."
+msgstr ""
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:167
+msgid ""
+"If the location of the file has changed try to edit it with the database "
+"manager."
+msgstr ""
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:175
+msgid "An error occurred opening this project:"
+msgstr ""
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:234
+msgid "Creating video thumbnails. This can take a while."
+msgstr ""
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:308
+msgid "No capture devices were found."
+msgstr ""
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:344
+msgid "You are opening a live project without any video file associated yet."
+msgstr ""
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:345
+msgid "Select a video file in the step."
+msgstr ""
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:360
+msgid "Save project"
+msgstr "Projekt mentése"
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:370
+msgid "Project exported successfully"
+msgstr "A projekt sikeresen exportálva"
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:372
+msgid "Error exporting project"
+msgstr "Hiba a projekt exportálásakor"
+
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:176
+msgid "Rendering"
+msgstr "Renderelés"
+
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:181
+msgid "Rendering queue"
+msgstr "Renderelési sor"
+
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:182
+msgid "Pending"
+msgstr "Folyamatban"
+
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:220
+msgid "An error has occurred in the video editor."
+msgstr "Hiba történt a videoszerkesztőben."
+
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:221
+msgid "Please, try again."
+msgstr "Próbálja újra."
+
+#: ../LongoMatch.Services/Services/TemplatesService.cs:62
+msgid "Local team players"
+msgstr "Helyi csapat játékosai"
+
+#: ../LongoMatch.Services/Services/TemplatesService.cs:68
+msgid "Visitor team players"
+msgstr "Vendég csapat játékosai"
+
+#: ../LongoMatch.Services/Services/TemplatesService.cs:74
+msgid "All teams players"
+msgstr "Mindkét csapat játékosai"
+
+#: ../LongoMatch.Services/Services/TemplatesService.cs:192
+#: ../LongoMatch.Services/Services/TemplatesService.cs:210
+msgid "A template already exists with the name: "
+msgstr ""
+
+
