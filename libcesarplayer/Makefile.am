@@ -42,6 +42,10 @@ libcesarplayer_la_SOURCES = \
 
 libcesarplayer_la_LDFLAGS = \
 	$(CESARPLAYER_LIBS)
+
+if PLATFORM_WIN32
+libcesarplayer_la_LDFLAGS += -no-undefined
+endif
 	
 CLEANFILES = $(BUILT_SOURCES)
 	

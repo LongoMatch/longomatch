@@ -87,6 +87,18 @@ AC_SUBST(CESARPLAYER_LIBS)
 
 #SHAVE_INIT([build/m4/shave], [enable])
 
+AC_MSG_CHECKING([if building for some Win32 platform])
+case "$host" in
+  *-*-mingw*|*-*-cygwin*)
+    platform_win32=yes
+    ;;
+  *)
+    platform_win32=no
+    ;;
+esac
+AC_MSG_RESULT($platform_win32)
+AM_CONDITIONAL(PLATFORM_WIN32, test x$platform_win32 = xyes)
+
 dnl package checks, per config
 
 AC_CONFIG_FILES([env], [chmod +x env])
