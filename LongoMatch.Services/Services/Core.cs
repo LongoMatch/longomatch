@@ -154,11 +154,7 @@ namespace LongoMatch.Services
 		private static void SetupBaseDir() {
 			string home;
 			
-			if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
-				Config.baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../");
-			}
-			else
-				Config.baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../../");
+			Config.baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../../");
 			
 			/* Check for the magic file PORTABLE to check if it's a portable version
 			 * and the config goes in the same folder as the binaries */
