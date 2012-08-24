@@ -152,6 +152,7 @@ struct BaconVideoWidgetPrivate
   char *mrl;
 
   GstElement *play;
+  GstElement *video_sink;
   GstXOverlay *xoverlay;        /* protect with lock */
   GstColorBalance *balance;     /* protect with lock */
   GstNavigation *navigation;    /* protect with lock */
@@ -3250,7 +3251,7 @@ bacon_video_widget_seek_to_next_frame (BaconVideoWidget * bvw, gfloat rate,
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
-  gst_element_send_event(bvw->priv->play,
+  gst_element_send_event(bvw->priv->video_sink,
       gst_event_new_step (GST_FORMAT_BUFFERS, 1, 1.0, TRUE, FALSE));
 
   pos = bacon_video_widget_get_accurate_current_time (bvw);
@@ -5506,6 +5507,8 @@ bacon_video_widget_new (int width, int height, BvwUseType type, GError ** err)
         }
         goto sink_error;
       }
+    } else {
+      bvw->priv->video_sink = video_sink;
     }
   } else {
     g_set_error (err, BVW_ERROR, GST_ERROR_VIDEO_PLUGIN,
