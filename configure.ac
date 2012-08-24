@@ -87,17 +87,26 @@ AC_SUBST(CESARPLAYER_LIBS)
 
 #SHAVE_INIT([build/m4/shave], [enable])
 
-AC_MSG_CHECKING([if building for some Win32 platform])
+AC_MSG_CHECKING([for the OS type])
+ostype=""
+
 case "$host" in
   *-*-mingw*|*-*-cygwin*)
-    platform_win32=yes
+    ostype=Windows
     ;;
-  *)
-    platform_win32=no
+  *-*-darwin*)
+    ostype=OS_X
+    ;;
+  *-*-linux*)
+    ostype=Linux
     ;;
 esac
-AC_MSG_RESULT($platform_win32)
-AM_CONDITIONAL(PLATFORM_WIN32, test x$platform_win32 = xyes)
+AM_CONDITIONAL(OSTYPE_WINDOWS, test x$ostype = xWindows)
+AM_CONDITIONAL(OSTYPE_OS_X, test x$ostype = xOS_X)
+AM_CONDITIONAL(OSTYPE_LINUX, test x$ostype = xLinux)
+AC_MSG_RESULT($ostype)
+
+AM_CONDITIONAL(ENABLE_TESTS, False)
 
 dnl package checks, per config
 

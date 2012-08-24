@@ -4,7 +4,13 @@
 AM_CPPFLAGS = \
 	-DPACKAGE_SRC_DIR=\""$(srcdir)"\" \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
+	-x objective-c \
 	$(CESARPLAYER_CFLAGS)
+
+if OSTYPE_OS_X
+AM_CPPFLAGS += \
+	-x objective-c
+endif
 
 AM_CFLAGS =\
 	 -Wall\
@@ -43,7 +49,7 @@ libcesarplayer_la_SOURCES = \
 libcesarplayer_la_LDFLAGS = \
 	$(CESARPLAYER_LIBS)
 
-if PLATFORM_WIN32
+if OSTYPE_WINDOWS
 libcesarplayer_la_LDFLAGS += -no-undefined
 endif
 	
