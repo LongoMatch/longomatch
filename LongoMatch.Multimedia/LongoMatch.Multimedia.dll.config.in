@@ -1,3 +1,6 @@
 <configuration>
         <dllmap dll="libcesarplayer.dll" target="@expanded_libdir@/@PACKAGE@/libcesarplayer.so.0"/>
+        <dllmap os="windows" dll="libcesarplayer.dll" target="libcesarplayer-0.dll"/>
+        <dllmap dll="libgstreamer.dll" target="libgstreamer-0.10.so.0"/>
+        <dllmap os="windows" dll="libgstreamer-0.10.dll" target="libgstreamer-0.10-0.dll"/>
 </configuration>
