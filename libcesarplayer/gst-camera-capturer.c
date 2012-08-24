@@ -47,11 +47,15 @@
 #endif
 
 /* gtk+/gnome */
-#ifdef WIN32
-#include <gdk/gdkwin32.h>
-#else
+#include <gdk/gdk.h>
+#if defined (GDK_WINDOWING_X11)
 #include <gdk/gdkx.h>
+#elif defined (GDK_WINDOWING_WIN32)
+#include <gdk/gdkwin32.h>
+#elif defined (GDK_WINDOWING_QUARTZ)
+#include <gdk/gdkquartz.h>
 #endif
+#include <gtk/gtk.h>
 
 #ifdef WIN32
 #define DEFAULT_SOURCE_TYPE  GST_CAMERA_CAPTURE_SOURCE_TYPE_DSHOW
@@ -653,13 +657,7 @@ gst_camera_capturer_expose_event (GtkWidget * widget, GdkEventExpose * event)
 
   if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay)) {
     gdk_window_show (gcc->priv->video_window);
-#ifdef WIN32
-    gst_x_overlay_set_xwindow_id (gcc->priv->xoverlay,
-        GDK_WINDOW_HWND (gcc->priv->video_window));
-#else
-    gst_x_overlay_set_xwindow_id (gcc->priv->xoverlay,
-        GDK_WINDOW_XID (gcc->priv->video_window));
-#endif
+    gst_set_window_handle (gcc->priv->xoverlay,gcc->priv->video_window);
   }
 
   /* Start with a nice black canvas */
@@ -1564,13 +1562,7 @@ gcc_element_msg_sync (GstBus * bus, GstMessage * msg, gpointer data)
     g_return_if_fail (gcc->priv->xoverlay != NULL);
     g_return_if_fail (gcc->priv->video_window != NULL);
 
-#ifdef WIN32
-    gst_x_overlay_set_xwindow_id (gcc->priv->xoverlay,
-        GDK_WINDOW_HWND (gcc->priv->video_window));
-#else
-    gst_x_overlay_set_xwindow_id (gcc->priv->xoverlay,
-        GDK_WINDOW_XID (gcc->priv->video_window));
-#endif
+    gst_set_window_handle (gcc->priv->xoverlay,gcc->priv->video_window);
   }
 }
 

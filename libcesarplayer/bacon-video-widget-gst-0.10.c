@@ -59,16 +59,24 @@
 #include <math.h>
 
 /* gtk+/gnome */
-#ifdef WIN32
+#include <gdk/gdk.h>
+#if defined (GDK_WINDOWING_X11)
+#include <gdk/gdkx.h>
+#elif defined (GDK_WINDOWING_WIN32)
 #include <gdk/gdkwin32.h>
+#elif defined (GDK_WINDOWING_QUARTZ)
+#include <gdk/gdkquartz.h>
+#endif
+#include <gtk/gtk.h>
+
+
+#ifdef WIN32
 #define DEFAULT_VIDEO_SINK "autovideosink"
 #define BACKUP_VIDEO_SINK "autovideosink"
 #else
-#include <gdk/gdkx.h>
 #define DEFAULT_VIDEO_SINK "gsettingsvideosink"
 #define BACKUP_VIDEO_SINK "autovideosink"
 #endif
-#include <gtk/gtk.h>
 #include <gio/gio.h>
 #include <glib/gi18n.h>
 
@@ -532,6 +540,7 @@ bacon_video_widget_realize (GtkWidget * widget)
   bvw->priv->video_window = gdk_window_new (window,
       &attributes, attributes_mask);
   gdk_window_set_user_data (bvw->priv->video_window, widget);
+  gdk_window_ensure_native(bvw->priv->video_window);
 
   gdk_color_parse ("black", &colour);
   gdk_colormap_alloc_color (gtk_widget_get_colormap (widget),
@@ -653,13 +662,7 @@ bacon_video_widget_expose_event (GtkWidget * widget, GdkEventExpose * event)
 
 
   if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay)) {
-#ifdef WIN32
-    gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay,
-        GDK_WINDOW_HWND (bvw->priv->video_window));
-#else
-    gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay,
-        GDK_WINDOW_XID (bvw->priv->video_window));
-#endif
+    gst_set_window_handle(xoverlay, bvw->priv->video_window);
   }
 
   /* Start with a nice black canvas */
@@ -5352,13 +5355,7 @@ bvw_element_msg_sync (GstBus * bus, GstMessage * msg, gpointer data)
     g_return_if_fail (bvw->priv->xoverlay != NULL);
     g_return_if_fail (bvw->priv->video_window != NULL);
 
-#ifdef WIN32
-    gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay,
-        GDK_WINDOW_HWND (bvw->priv->video_window));
-#else
-    gst_x_overlay_set_xwindow_id (bvw->priv->xoverlay,
-        GDK_WINDOW_XID (bvw->priv->video_window));
-#endif
+  gst_set_window_handle(bvw->priv->xoverlay, bvw->priv->video_window);
 
   }
 }
