@@ -171,7 +171,7 @@ namespace LongoMatch.Services
 		
 		private string CreateStillImage(string filename, Drawing drawing) {
 			Image frame, final_image;
-			string path = System.IO.Path.GetTempFileName();
+			string path = System.IO.Path.GetTempFileName().Replace(@"\", @"\\");
 			
 			capturer.Open(filename);
 			capturer.SeekTime(drawing.RenderTime, true);
