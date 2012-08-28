@@ -26,6 +26,8 @@ SOURCES = \
 	Utils/VideoDevice.cs \
 	MultimediaFactory.cs
 
+DLLCONFIG = LongoMatch.Multimedia.dll.config
+
 
 include $(top_srcdir)/build/build.mk
 
