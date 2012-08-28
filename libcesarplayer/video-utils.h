@@ -2,7 +2,15 @@
 #include <gst/gst.h>
 #include <gst/interfaces/xoverlay.h>
 #include <gdk/gdk.h>
+#if defined (GDK_WINDOWING_X11)
+#include <gdk/gdkx.h>
+#elif defined (GDK_WINDOWING_WIN32)
+#include <gdk/gdkwin32.h>
+#elif defined (GDK_WINDOWING_QUARTZ)
+#include <gdk/gdkquartz.h>
+#endif
 #include <gtk/gtk.h>
+
 
 #ifdef WIN32
 #define EXPORT __declspec (dllexport)
