@@ -1,0 +1,1735 @@
+# Greek translation for longomatch.
+# Copyright (C) 2012 longomatch's COPYRIGHT HOLDER
+# This file is distributed under the same license as the longomatch package.
+# Tom Tryfonidis <tomtryf@gmail.com>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: longomatch master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2012-05-19 18:52+0000\n"
+"PO-Revision-Date: 2012-07-30 18:43+0200\n"
+"Last-Translator: Tom Tryfonidis <tomtryf@gmail.com>\n"
+"Language-Team: Greek <team@lists.gnome.gr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2571
+#, fuzzy
+msgid "The requested audio output was not found. Please select another audio output in the Multimedia Systems Selector."
+msgstr "Η απαιτούμενη έξοδος ήχου δε βρέθηκε. Παρακαλώ επιλέξτε μια άλλη έξοδο ήχου από τον Επιλογέα συστημάτων πολυμέσων."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2577
+msgid "Location not found."
+msgstr "Δε βρέθηκε η τοποθεσία."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2581
+#, fuzzy
+msgid "Could not open location; you might not have permission to open the file."
+msgstr "Είναι αδύνατο το άνοιγμα της τοποθεσίας· ίσως δεν έχετε τα δικαιώματα για να ανοίξετε το αρχείο."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2593
+#, fuzzy
+msgid "The video output is in use by another application. Please close other video applications, or select another video output in the Multimedia Systems Selector."
+msgstr "Η έξοδος βίντεο χρησιμοποιείται από άλλη εφαρμογή. Παρακαλώ κλείστε τις άλλες εφαρμογές βίντεο, ή επιλέξτε μια άλλη έξοδο βίντεο από τον Επιλογέα συστημάτων πολυμέσων."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2600
+#, fuzzy
+msgid "The audio output is in use by another application. Please select another audio output in the Multimedia Systems Selector. You may want to consider using a sound server."
+msgstr "Η έξοδος ήχου χρησιμοποιείται από άλλη εφαρμογή. Παρακαλώ κλείστε τις άλλες εφαρμογές ήχου, ή επιλέξτε μια άλλη έξοδο ήχου από τον Επιλογέα συστημάτων πολυμέσων. Ίσως να πρέπει να χρησιμοποιήσετε ένα εξυπηρετητή ήχου."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2619
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2625
+#, fuzzy, c-format
+msgid "The playback of this movie requires a %s plugin which is not installed."
+msgstr "Η αναπαραγωγή αυτής της ταινίας απαιτεί την πρόσθετη λειτουργία %s, η οποία δεν είναι εγκατεστημένη."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2627
+#, c-format
+msgid ""
+"The playback of this movie requires the following decoders which are not installed:\n"
+"\n"
+"%s"
+msgstr ""
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2653
+#, fuzzy
+msgid "Cannot play this file over the network. Try downloading it to disk first."
+msgstr "Αδυναμία αναπαραγωγής αυτού του αρχείου μέσω δικτύου. Μεταφορτώστε το στο δίσκο πρώτα."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2728
+#, fuzzy
+msgid "Media file could not be played."
+msgstr "Δε βρέθηκε το ζητούμενο αρχείο"
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2870
+#, fuzzy
+msgid "Failed to retrieve working directory"
+msgstr "Δημιουργία του %s ... Αποτυχία κατά τη δημιουργία καταλόγου"
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4599
+msgid "Surround"
+msgstr "Περιφερειακό"
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4601
+msgid "Mono"
+msgstr "Μονοφωνικό"
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4603
+msgid "Stereo"
+msgstr "Στερεοφωνικό"
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4958
+msgid "Too old version of GStreamer installed."
+msgstr ""
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4965
+#, fuzzy
+msgid "Media contains no supported video streams."
+msgstr "Το αρχείο περιέχει μη υποστηριζόμενες ροές βίντεο."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5396
+#, fuzzy, c-format
+msgid "Failed to create a GStreamer play object. Please check your GStreamer installation."
+msgstr "Αδυναμία δημιουργίας αντικειμένου αναπαραγωγής GStreamer. Παρακαλώ ελέγξτε την εγκατάσταση του GStreamer."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5470
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5597
+#, c-format
+msgid "Failed to open video output. It may not be available. Please select another video output in the Multimedia Systems Selector."
+msgstr ""
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5482
+#, fuzzy, c-format
+msgid "Could not find the video output. You may need to install additional GStreamer plugins, or select another video output in the Multimedia Systems Selector."
+msgstr "Η απαιτούμενη έξοδος ήχου δε βρέθηκε. Ίσως να χρειαστεί να εγκαταστήσετε πρόσθετες λειτουργίες GStreamer ή να επιλέξετε μια άλλη έξοδο ήχου από τον Επιλογέα συστημάτων πολυμέσων."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5518
+#, fuzzy, c-format
+msgid "Failed to open audio output. You may not have permission to open the sound device, or the sound server may not be running. Please select another audio output in the Multimedia Systems Selector."
+msgstr "Αποτυχία ανοίγματος εξόδου ήχου. Μπορεί να μην έχετε τα απαραίτητα δικαιώματα για να ανοίξετε τη συσκευή ήχου, ή να μην εκτελείται ο εξυπηρετητής ήχου. Παρακαλώ επιλέξτε μια άλλη έξοδο βίντεο από τον Επιλογέα συστημάτων πολυμέσων."
+
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:5538
+#, fuzzy, c-format
+msgid "Could not find the audio output. You may need to install additional GStreamer plugins, or select another audio output in the Multimedia Systems Selector."
+msgstr "Η απαιτούμενη έξοδος ήχου δε βρέθηκε. Ίσως να χρειαστεί να εγκαταστήσετε πρόσθετες λειτουργίες GStreamer ή να επιλέξετε μια άλλη έξοδο ήχου από τον Επιλογέα συστημάτων πολυμέσων."
+
+#. hour:minutes:seconds
+#. Translators: This is a time format, like "9:05:02" for 9
+#. * hours, 5 minutes, and 2 seconds. You may change ":" to
+#. * the separator that your locale uses or use "%Id" instead
+#. * of "%d" if your locale uses localized digits.
+#.
+#: ../libcesarplayer/video-utils.c:93
+#: ../libcesarplayer/video-utils.c:112
+#, c-format
+msgctxt "long time format"
+msgid "%d:%02d:%02d"
+msgstr "%d:%02d:%02d"
+
+#. minutes:seconds
+#. Translators: This is a time format, like "5:02" for 5
+#. * minutes and 2 seconds. You may change ":" to the
+#. * separator that your locale uses or use "%Id" instead of
+#. * "%d" if your locale uses localized digits.
+#.
+#: ../libcesarplayer/video-utils.c:103
+#, c-format
+msgctxt "short time format"
+msgid "%d:%02d"
+msgstr "%d:%02d"
+
+#: ../libcesarplayer/video-utils.c:143
+#, c-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d ώρα"
+msgstr[1] "%d ώρες"
+
+#: ../libcesarplayer/video-utils.c:145
+#, c-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d λεπτό"
+msgstr[1] "%d λεπτά"
+
+#: ../libcesarplayer/video-utils.c:147
+#, c-format
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "%d δευτερόλεπτο"
+msgstr[1] "%d δευτερόλεπτα"
+
+#. hour:minutes:seconds
+#: ../libcesarplayer/video-utils.c:151
+#, c-format
+msgid "%s %s %s"
+msgstr "%s %s %s"
+
+#. minutes:seconds
+#: ../libcesarplayer/video-utils.c:154
+#, c-format
+msgid "%s %s"
+msgstr "%s %s"
+
+#. seconds
+#: ../libcesarplayer/video-utils.c:157
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#. 0 seconds
+#: ../libcesarplayer/video-utils.c:160
+msgid "0 seconds"
+msgstr "0 δευτερόλεπτα"
+
+#: ../LongoMatch/Main.cs:99
+msgid "The application has finished with an unexpected error."
+msgstr "Τερματίστηκε η εφαρμογή με ένα απροσδόκητο σφάλμα."
+
+#: ../LongoMatch/Main.cs:100
+msgid "A log has been saved at: "
+msgstr "Ένα αρχείο καταγραφής αποθηκεύτηκε στο:"
+
+#: ../LongoMatch/Main.cs:101
+msgid "Please, fill a bug report "
+msgstr "Παρακαλώ, κάντε μια αναφορά σφάλματος"
+
+#: ../LongoMatch/longomatch.desktop.in.in.h:1
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:170
+msgid "LongoMatch"
+msgstr "LongoMatch"
+
+#: ../LongoMatch/longomatch.desktop.in.in.h:2
+msgid "LongoMatch: The Digital Coach"
+msgstr "LongoMatch: Ο ψηφιακός προπονητής"
+
+#: ../LongoMatch/longomatch.desktop.in.in.h:3
+msgid "Sports video analysis tool for coaches"
+msgstr ""
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:41
+msgid "Export project to Excel file"
+msgstr "Εξαγωγή έργου σε αρχείο Excel"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:49
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:445
+msgid "Output file"
+msgstr "Αρχείο εξόδου"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:60
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:369
+msgid "Project exported successfully"
+msgstr "Επιτυχής εξαγωγή έργου"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:62
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:371
+msgid "Error exporting project"
+msgstr "Σφάλμα κατά την εξαγωγή του έργου"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:96
+msgid "Project statistics"
+msgstr "Στατιστικά έργου"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:101
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:232
+msgid "Local Team"
+msgstr "Τοπική ομάδα"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:106
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:245
+msgid "Visitor Team"
+msgstr "Φιλοξενούμενη ομάδα"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:110
+#: ../LongoMatch.Addins.COE/TimelineSheet.cs:92
+#, fuzzy
+msgid "Timeline"
+msgstr "Χρονογραμμή"
+
+#: ../LongoMatch.Addins.COE/ExcelExporter.cs:114
+#, fuzzy
+msgid "Game units"
+msgstr "Μονάδες _γωνιών:"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:42
+#: ../LongoMatch.Addins.COE/TimelineSheet.cs:102
+#, fuzzy
+msgid "Game Units"
+msgstr "Μονάδες _γωνιών:"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:64
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:82
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:141
+msgid "Duration"
+msgstr "Διάρκεια"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:65
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:83
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:99
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:59
+#, fuzzy
+msgid "Played Time"
+msgstr "Βήμα χρόνου"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:68
+msgid "Match"
+msgstr "Παιχνίδι"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:97
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:56
+#: ../LongoMatch.Core/Store/Play.cs:202
+#: ../LongoMatch.Core/Store/SubCategory.cs:84
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:48
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:73
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:52
+msgid "Name"
+msgstr "Όνομα"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:98
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:57
+#: ../LongoMatch.Addins.COE/TimelineSheet.cs:212
+msgid "Count"
+msgstr "Μέτρηση"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:100
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:62
+msgid "Average"
+msgstr "Μέσος όρος"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheet.cs:101
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:64
+#, fuzzy
+msgid "Deviation"
+msgstr "Κατώφλι απόκλισης:"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:58
+msgid "Total Time"
+msgstr "Συνολικός χρόνος"
+
+#: ../LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs:60
+#, fuzzy
+msgid "Paused Time"
+msgstr "Βήμα χρόνου"
+
+#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:62
+msgid "Project"
+msgstr "Έργο"
+
+#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:63
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:138
+msgid "Date"
+msgstr "Ημερομηνία"
+
+#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:64
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:136
+msgid "Competition"
+msgstr "Ανταγωνισμός"
+
+#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:65
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:135
+msgid "Season"
+msgstr "Εποχή"
+
+#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:66
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:133
+msgid "Local team"
+msgstr "Τοπική ομάδα"
+
+#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:67
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:134
+msgid "Visitor team"
+msgstr "Φιλοξενούμενη ομάδα"
+
+#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:68
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:137
+msgid "Result"
+msgstr "Αποτέλεσμα"
+
+#: ../LongoMatch.Addins.COE/ProjectStatsSheet.cs:78
+msgid "Total"
+msgstr "Σύνολο"
+
+#: ../LongoMatch.Addins.COE/TimelineSheet.cs:103
+msgid "Duration (min)"
+msgstr "Διάρκεια (λεπτά)"
+
+#: ../LongoMatch.Addins.COE/TimelineSheet.cs:211
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:45
+msgid "Categories"
+msgstr "Κατηγορίες"
+
+#: ../LongoMatch.Core/Store/Play.cs:203
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:140
+msgid "Start"
+msgstr "Έναρξη"
+
+#: ../LongoMatch.Core/Store/Play.cs:204
+msgid "Stop"
+msgstr "Διακοπή"
+
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:80
+msgid "Local Team Players"
+msgstr "Παίχτες τοπικής ομάδας"
+
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:86
+msgid "Visitor Team Players"
+msgstr "Παίχτες φιλοξενούμενης ομάδας"
+
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:92
+msgid "Period"
+msgstr "Περίοδος"
+
+#: ../LongoMatch.Core/Store/Templates/TeamTemplate.cs:38
+msgid "default"
+msgstr "προεπιλεγμένο"
+
+#: ../LongoMatch.Core/Store/Category.cs:105
+#: ../LongoMatch.Core/Store/Category.cs:113
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:226
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:71
+msgid "Sort by name"
+msgstr "Ταξινόμηση κατά όνομα"
+
+#: ../LongoMatch.Core/Store/Category.cs:107
+#: ../LongoMatch.Core/Store/Category.cs:117
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:227
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:72
+msgid "Sort by start time"
+msgstr "Ταξινόμηση κατά ώρα έναρξης"
+
+#: ../LongoMatch.Core/Store/Category.cs:109
+#: ../LongoMatch.Core/Store/Category.cs:119
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:228
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:73
+msgid "Sort by stop time"
+msgstr "Ταξινόμηση κατά ώρα διακοπής"
+
+#: ../LongoMatch.Core/Store/Category.cs:111
+#: ../LongoMatch.Core/Store/Category.cs:121
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:229
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:74
+msgid "Sort by duration"
+msgstr "Ταξινόμηση κατά διάρκεια"
+
+#: ../LongoMatch.Core/Store/Category.cs:131
+msgid "name"
+msgstr "όνομα"
+
+#: ../LongoMatch.Core/Store/SubCategory.cs:114
+msgid "Tags list"
+msgstr "Λίστα κατηγοριών"
+
+#: ../LongoMatch.Core/Store/SubCategory.cs:115
+msgid "Tags:"
+msgstr "Ετικέτες:"
+
+#: ../LongoMatch.Core/Store/SubCategory.cs:136
+msgid "Local "
+msgstr "Τοπική"
+
+#: ../LongoMatch.Core/Store/SubCategory.cs:138
+msgid "Visitor"
+msgstr "Επισκέπτης"
+
+#: ../LongoMatch.Core/Store/SubCategory.cs:140
+msgid "List of players"
+msgstr "Λίστα παιχτών"
+
+#: ../LongoMatch.Core/Store/SubCategory.cs:141
+msgid "Teams:"
+msgstr "Ομάδες:"
+
+#: ../LongoMatch.Core/Store/SubCategory.cs:156
+msgid "Team"
+msgstr "Ομάδα"
+
+#: ../LongoMatch.Core/Store/SubCategory.cs:164
+msgid "Team selection"
+msgstr "Επιλογή ομάδας"
+
+#: ../LongoMatch.Core/Store/Project.cs:259
+msgid "The file you are trying to load is not a valid project"
+msgstr ""
+
+#: ../LongoMatch.Core/Store/HotKey.cs:128
+#, fuzzy
+msgid "Not defined"
+msgstr "το %s δεν προσδιορίστικε στο <%s>"
+
+#: ../LongoMatch.Core/Common/VideoStandards.cs:38
+#, fuzzy
+msgid "Keep original size"
+msgstr "Συνολικό αρχικού μεγέθους"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs:14
+msgid "TransparentDrawingArea"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Base.TemplatesEditorBase.cs:94
+msgid "New Before"
+msgstr "Νέο πριν"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Base.TemplatesEditorBase.cs:122
+msgid "New After"
+msgstr "Νέο μετά"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Base.TemplatesEditorBase.cs:150
+msgid "Remove"
+msgstr "Αφαίρεση"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Base.TemplatesEditorBase.cs:178
+msgid "Edit"
+msgstr "Επεξεργασία"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Base.TemplatesEditorBase.cs:205
+msgid "Export"
+msgstr "Εξαγωγή"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs:15
+msgid "Select a HotKey"
+msgstr "Επιλέξτε ένα Hotkey"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs:28
+msgid ""
+"Press a key combination using  Shift+key or Alt+key.\n"
+"Hotkeys with a single key are also allowed with Ctrl+key."
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs:27
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:89
+msgid "Projects Manager"
+msgstr "Διαχειριστής έργων"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs:83
+msgid "<b>Project Details</b>"
+msgstr "<b>Λεπτμέρειες έργου</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs:135
+msgid "_Export"
+msgstr "_Εξαγωγή"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.StringTaggerWidget.cs:34
+msgid "<b>GtkFrame</b>"
+msgstr "<b>GtkFrame</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:21
+#, fuzzy
+msgid "Tag play"
+msgstr "Παίξε “%s”"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:45
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:259
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:78
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:232
+msgid "Tags"
+msgstr "Ετικέτες"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:66
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:85
+msgid "Players"
+msgstr "Παίκτες"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TemplatesManager.cs:22
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:93
+#, fuzzy
+msgid "Templates Manager"
+msgstr "Διαχειριστής πρόσθετων λειτουργιών"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.NewProjectDialog.cs:16
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:25
+msgid "New Project"
+msgstr "Νέο έργο"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EditCategoryDialog.cs:15
+msgid "Category Details"
+msgstr "Λεπτομέρειες κατηγορίας"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs:26
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs:36
+#, fuzzy
+msgid "Tag new play"
+msgstr "Δημιουργία νέας ετικέτας..."
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EditPlayerDialog.cs:15
+msgid "Player Details"
+msgstr "Λεπτομέρειες παίχτη"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:86
+msgid "Competition:"
+msgstr "Ανταγωνισμός:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:128
+msgid "File:"
+msgstr "Αρχείο:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:260
+msgid "-"
+msgstr "-"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:313
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:87
+msgid "_Calendar"
+msgstr "_Ημερολόγιο"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:333
+msgid "Visitor Team:"
+msgstr "Φιλοξενούμενη ομάδα:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:343
+msgid "Score:"
+msgstr "Βαθμολογία:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:353
+msgid "Date:"
+msgstr "Ημερομηνία:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:363
+msgid "Local Team:"
+msgstr "Τοπική ομάδα:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:371
+#, fuzzy
+msgid "Categories Template:"
+msgstr "Ακριβές πρότυπο (Exact Template)"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:395
+msgid "Season:"
+msgstr "Εποχή:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:417
+#, fuzzy
+msgid "Audio Bitrate (kbps):"
+msgstr "Ρυθμός δυαδικών ψηφίων ήχου σε kBit/sec"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:443
+msgid "Device:"
+msgstr "Συσκευή:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:471
+msgid "Video Size:"
+msgstr "Μέγεθος βίντεο:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:481
+#, fuzzy
+msgid "Video Bitrate (kbps):"
+msgstr "Ρυθμός δυαδικών ψηφίων βίντεο σε kBit/sec"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:518
+msgid "Video Format:"
+msgstr "Μορφή βίντεο:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:528
+#, fuzzy
+msgid "Video encoding  properties"
+msgstr "κωδικοποίηση_πλαισίου_βίντεο_%06d"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs:44
+msgid ""
+"Load a playlist\n"
+"or create a \n"
+"new one."
+msgstr ""
+"Φορτώστε μια λίστα αναπαραγωγής\n"
+"ή δημιουργήστε\n"
+"μια νέα."
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:45
+msgid "<b>Tools</b>"
+msgstr "<b>Εργαλεία</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:182
+msgid "<b>Color</b>"
+msgstr "<b>Χρώμα</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:203
+msgid "<b>Width</b>"
+msgstr "<b>Πλάτος</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:212
+msgid "2 px"
+msgstr "2 px"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:213
+msgid "4 px"
+msgstr "4 px"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:214
+msgid "6 px"
+msgstr "6 px"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:215
+msgid "8 px"
+msgstr "8 px"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:216
+msgid "10 px"
+msgstr "10 px"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:229
+msgid "<b>Transparency</b>"
+msgstr "<b>Διαφάνεια</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs:278
+msgid ""
+"Draw-><b> D</b>\n"
+"Clear-><b> C</b>\n"
+"Hide-><b> S</b>\n"
+"Show-><b> S</b>\n"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.Win32CalendarDialog.cs:15
+msgid "Calendar"
+msgstr "Ημερολόγιο"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs:32
+msgid ""
+"\n"
+"A new version of LongoMatch has been released at www.ylatuya.es!\n"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs:42
+msgid "The new version is "
+msgstr "Η νέα έκδοση είναι"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs:52
+msgid ""
+"\n"
+"You can download it using this direct link:"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs:62
+msgid "label7"
+msgstr "label7"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:70
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:71
+msgid "_File"
+msgstr "Α_ρχείο"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:73
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:74
+msgid "_New Project"
+msgstr "_Νέα έργο"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:76
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:77
+msgid "_Open Project"
+msgstr "Άνοιγ_μα έργου"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:79
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:80
+msgid "_Quit"
+msgstr "Έ_ξοδος"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:82
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:84
+msgid "_Close Project"
+msgstr "Κλεί_σιμο έργου"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:86
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:87
+msgid "_Tools"
+msgstr "_Εργαλεία"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:90
+msgid "Database Manager"
+msgstr "Διαχειριστής βάσης δεδομένων"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:92
+#, fuzzy
+msgid "Categories Templates Manager"
+msgstr "Ενέργειες διαχειριστή έργου"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:95
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:96
+msgid "_View"
+msgstr "_Προβολή"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:98
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:99
+msgid "Full Screen"
+msgstr "Πλήρης οθόνη"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:101
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:102
+msgid "Playlist"
+msgstr "Λίστα αναπαραγωγής"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:104
+#, fuzzy
+msgid "Tagging view"
+msgstr "Χωρίς προβολή"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:107
+#, fuzzy
+msgid "Capture Mode"
+msgstr "Λειτουργία ανακατέματος"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:109
+#, fuzzy
+msgid "Timeline view"
+msgstr "Χωρίς προβολή"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:112
+#, fuzzy
+msgid "Analyze Mode"
+msgstr "Λειτουργία ανακατέματος"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:114
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:116
+msgid "_Save Project"
+msgstr "_Αποθήκευση έργου"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:118
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:119
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:136
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:137
+msgid "_Help"
+msgstr "Βοή_θεια"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:121
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:122
+msgid "_About"
+msgstr "Πε_ρί"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:124
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:126
+#, fuzzy
+msgid "Export Project To CSV File"
+msgstr "Αδυναμία ανάλυσης αρχείου έργου"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:129
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:130
+#, fuzzy
+msgid "Teams Templates Manager"
+msgstr "Ενέργειες διαχειριστή έργου"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:132
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:134
+#, fuzzy
+msgid "Hide All Widgets"
+msgstr "Απόκρυψη όλων των κομματιών"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:139
+#, fuzzy
+msgid "_Drawing Tool"
+msgstr "Ένα απλό εργαλείο διανυσματικής σχεδίασης"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:140
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:20
+#, fuzzy
+msgid "Drawing Tool"
+msgstr "Ένα απλό εργαλείο διανυσματικής σχεδίασης"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:142
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:143
+#, fuzzy
+msgid "_Import Project"
+msgstr "Εισαγωγή έργου"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:145
+#, fuzzy
+msgid "Manual tagging view"
+msgstr "Απ_λή προβολή πρόσθετων λειτουργιών"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:148
+#, fuzzy
+msgid "Free Capture Mode"
+msgstr "Εναλλαγή κατάστασης πλήρους οθόνης"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:150
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:153
+#, fuzzy
+msgid "Game units view"
+msgstr "Προβολή βοήθειας για αυτό το παιχνίδι"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:155
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:156
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:158
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:160
+msgid "Export Project"
+msgstr "Εξαγωγή έργου"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:164
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:165
+msgid "Export to project file"
+msgstr "Εξαγωγή σε αρχείο έργου"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:219
+#, fuzzy
+msgid "Plays"
+msgstr "Αναπαραγωγές"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs:31
+msgid "Projects Search:"
+msgstr "Εύρεση έργου:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:121
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:77
+msgid "Name:"
+msgstr "Όνομα:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:129
+msgid "Position:"
+msgstr "Θέση:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:139
+msgid "Number:"
+msgstr "Αριθμός:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:149
+msgid "Photo:"
+msgstr "Φωτογραφία:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:159
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:72
+msgid "Height"
+msgstr "Ύψος"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:169
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:77
+msgid "Weight"
+msgstr "Βάρος"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:179
+#, fuzzy
+msgid "Birth day"
+msgstr "%d ημέρα πριν"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:189
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:67
+msgid "Nationality"
+msgstr "Εθνικότητα"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:199
+#, fuzzy
+msgid "Plays this match:"
+msgstr "Δεν βρέθηκε αντιστοιχία"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:248
+#: ../LongoMatch.GUI/Gui/Component/PlayerProperties.cs:163
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:130
+msgid "Yes"
+msgstr "Ναι"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:249
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:130
+msgid "No"
+msgstr "Όχι"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:23
+#, fuzzy
+msgid "Select template name"
+msgstr "Επιλογή ονόματος αρχείου διανύσματος"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:67
+#, fuzzy
+msgid "Copy existent template:"
+msgstr "Αποθήκευση ως Προ_τύπου"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs:85
+msgid "Players:"
+msgstr "Παίκτες:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs:18
+#, fuzzy
+msgid "Capture Progress"
+msgstr "μπάρα προόδου"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:84
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:127
+msgid "none"
+msgstr "κανένα"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:96
+msgid "Change"
+msgstr "Αλλαγή"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:114
+msgid "<b>Name:</b>"
+msgstr "<b>Όνομα:</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:124
+msgid "<b>Color:</b>    "
+msgstr "<b>Χρώμα:</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:136
+msgid "<b>HotKey:</b>"
+msgstr "<b>HotKey:</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:148
+#, fuzzy
+msgid "<b>Lead time:</b>"
+msgstr "Βήμα χρόνου"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:160
+#, fuzzy
+msgid "<b>Lag time:</b>"
+msgstr "Βήμα χρόνου"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:174
+#, fuzzy
+msgid "<b>Sort Method</b>"
+msgstr "Μέθοδος τεμαχισμού"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:244
+msgid "<b>Properties</b>"
+msgstr "<b>Ιδιότητες:</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:298
+msgid "<b>Subcategory name</b>"
+msgstr "<b>Όνομα υποκατηγορίας</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:321
+msgid "<b>Subcategory type</b>"
+msgstr "<b>Τύπος υποκατηγορίας</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:345
+msgid "_Add subcategory"
+msgstr "Προσ_θήκη υποκατηγορίας"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:364
+msgid "<b>Subcategories</b>"
+msgstr "<b>Υπερκατηγορίες</b>"
+
+#. Container child hbox1.Gtk.Box+BoxChild
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:45
+#, fuzzy
+msgid "New project using a video file"
+msgstr "Επιλογή βίντεο χρησιμοποιώντας περιηγητή αρχείου"
+
+#. Container child hbox2.Gtk.Box+BoxChild
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:75
+msgid "Live project using a capture device"
+msgstr ""
+
+#. Container child hbox3.Gtk.Box+BoxChild
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:103
+msgid "Live project using a fake capture device"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:51
+msgid "Play:"
+msgstr "Αναπαραγωγή:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:59
+#, fuzzy
+msgid "Interval (frames/s):"
+msgstr "Διπλασιασμός πλαισίων..."
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:67
+#, fuzzy
+msgid "Series Name:"
+msgstr "Όνομα προφίλ"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs:121
+#, fuzzy
+msgid "Export to PNG images"
+msgstr "Πάρα πολλές εικόνες προς εξαγωγή"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs:67
+#, fuzzy
+msgid "C_lear finished jobs"
+msgstr "Ενεργές εργασίες εκτυπωτή"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs:93
+msgid "_Cancel job"
+msgstr "Ακύρ_ωση εργασίας"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs:119
+#, fuzzy
+msgid "Retry job"
+msgstr "Τίτλος εργασίας"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:64
+msgid "Save to Project"
+msgstr "Αποθήκευση σε έργο"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:91
+msgid "Save to File"
+msgstr "Αποθήκευση σε αρχείο"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs:50
+msgid ""
+"A capture project is actually running.\n"
+"You can continue with the current capture, cancel it or save your project. \n"
+"\n"
+"<b>Warning: If you cancel the current project all your changes will be lost.</b>"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs:79
+msgid "Return"
+msgstr "Επιστροφή"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs:104
+msgid "Cancel capture"
+msgstr "Ακύρωση λήψης"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs:129
+msgid "Stop capture and save project"
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:33
+msgid "Video Properties"
+msgstr "Ιδιότητες βίντεο"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:57
+msgid "Video Quality:"
+msgstr "Ποιότητα βίντεο:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:63
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:108
+msgid "Low"
+msgstr "Χαμηλή"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:64
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:112
+msgid "Normal"
+msgstr "Κανονική"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:65
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:116
+msgid "Good"
+msgstr "Καλή"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:66
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:120
+#, fuzzy
+msgid "Extra"
+msgstr "Πρόσθετο"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:86
+msgid "Size: "
+msgstr "Μέγεθος:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:110
+#, fuzzy
+msgid "Ouput Format:"
+msgstr "Μορφή βίντεο:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:133
+#, fuzzy
+msgid "Enable Title Overlay"
+msgstr "Προβολή του τίτλου της πρόσθετης λειτουργίας"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:144
+#, fuzzy
+msgid "Enable Audio (Experimental)"
+msgstr "Εκτέλεσε τις δραστηριότητες πειραματισμού"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:162
+msgid "File name: "
+msgstr "Όνομα αρχείου:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameUnitWidget.cs:35
+msgid "GtkButton"
+msgstr "GtkButton"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs:67
+msgid "<b>Team</b>"
+msgstr "<b>Ομάδα</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameUnitsEditor.cs:30
+msgid ""
+"<b>Game Units</b>: Games are usually divided in time by units. In sports like field hockey the game is divided in 2 halves but other sports like tenis have several types of units that are anidated, e.g. Set->Game->Point.\n"
+"\n"
+"Defining <b> Game Units </b> will help you during the analysis to indentify the tagged plays in the the phases of the game."
+msgstr ""
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameUnitsEditor.cs:101
+#, fuzzy
+msgid "Add game unit"
+msgstr "Προσθήκη νέας μονάδας"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.OpenProjectDialog.cs:16
+msgid "Open Project"
+msgstr "Άνοιγμα έργου"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TagsTreeWidget.cs:75
+msgid "Add Filter"
+msgstr "Προσθήκη φίλτρου"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:29
+#, fuzzy
+msgid "Edit subcategory tags"
+msgstr "Αρχικοποίηση καρφιτσωμένων ετικετών"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:54
+#, fuzzy
+msgid "Quick tag"
+msgstr "Ετικέτα έκδοσης:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:69
+msgid "Subcategory name:"
+msgstr "Όνομα υποκατηγορίας:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:78
+#, fuzzy
+msgid "Allow multiple selections"
+msgstr "_Λήψη πολλαπλών φωτογραφιών"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:92
+msgid "Goal type"
+msgstr "Τύπος γκολ"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:141
+msgid "Penalty"
+msgstr "Πέναλτι"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:163
+msgid "Add tag"
+msgstr "Προσθήκη ετικέτας"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:182
+msgid "<b>Tags</b>"
+msgstr "<b>Ετικέτες</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TemplateEditorDialog.cs:15
+#, fuzzy
+msgid "Categories Template"
+msgstr "Ακριβές πρότυπο (Exact Template)"
+
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:108
+msgid "The playlist you want to render is empty."
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:116
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:273
+#, fuzzy
+msgid "Please, select a video file."
+msgstr "Επιλογή βίντεο χρησιμοποιώντας περιηγητή αρχείου"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:362
+#, fuzzy
+msgid "DirectShow Source"
+msgstr "Αρχείο πηγαίου κώδικα:"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:363
+msgid "Unknown"
+msgstr "Άγνωστο"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:457
+msgid "Open file..."
+msgstr "Άνοιγμα αρχείου..."
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:483
+#, fuzzy
+msgid "Analyzing video file:"
+msgstr "Σφάλμα κατά την ανάλυση του αρχείου."
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:488
+msgid "This file doesn't contain a video stream."
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:490
+msgid "This file contains a video stream but its length is 0."
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:80
+msgid "You are about to delete a category and all the plays added to this category. Do you want to proceed?"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:87
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:95
+#: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:159
+#: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:169
+msgid "A template needs at least one category"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:74
+msgid "Create new..."
+msgstr "Δημιουργία νέου..."
+
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:202
+msgid "If you delete this subcategory you will looseall the tags associated with it. Do you want to proceed?"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:53
+msgid "Filename"
+msgstr "Όνομα αρχείου"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:118
+msgid "File length"
+msgstr "Διάρκεια αρχείου"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:120
+msgid "Video codec"
+msgstr "Κωδικοποιητής - αποκωδικοποιητής βίντεο"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:121
+msgid "Audio codec"
+msgstr "Κωδικοποιητής-αποκωδικοποιητής ήχου"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:122
+msgid "Format"
+msgstr "Μορφή"
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:132
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:139
+msgid "Title"
+msgstr "Τίτλος"
+
+#: ../LongoMatch.GUI/Gui/Component/GameUnitTimeScale.cs:53
+#: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:53
+msgid "play"
+msgstr "αναπαραγωγή"
+
+#: ../LongoMatch.GUI/Gui/Component/GameUnitWidget.cs:62
+msgid "Time: "
+msgstr "Χρόνος: "
+
+#: ../LongoMatch.GUI/Gui/Component/PlayerProperties.cs:88
+#: ../LongoMatch.GUI/Gui/Helpers.cs:44
+msgid "Choose an image"
+msgstr "Επιλέξτε μια εικόνα"
+
+#: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:47
+msgid "Teams players"
+msgstr "Παίκτες ομάδων"
+
+#: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:75
+msgid "Shield"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:78
+msgid "Team Name"
+msgstr "Όνομα ομάδας"
+
+#: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:151
+msgid "You are about to delete a player and all its tags. Do you want to proceed?"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Base/TimeScaleBase.cs:142
+#: ../LongoMatch.GUI/Gui/Base/TimeScaleBase.cs:228
+msgid "Delete "
+msgstr "Διαγραφή"
+
+#: ../LongoMatch.GUI/Gui/Base/TimeScaleBase.cs:143
+msgid "Add new "
+msgstr "Προσθήκη νέας"
+
+#: ../LongoMatch.GUI/Gui/Base/TemplatesEditorBase.cs:178
+msgid "New template"
+msgstr "Νέο πρότυπο"
+
+#: ../LongoMatch.GUI/Gui/Base/TemplatesEditorBase.cs:182
+msgid "The template name is void."
+msgstr "Το όνομα του προτύπου είναι κενό."
+
+#: ../LongoMatch.GUI/Gui/Base/TemplatesEditorBase.cs:188
+#, fuzzy
+msgid "The template already exists. Do you want to overwrite it ?"
+msgstr "Υπάρχει ήδη το αρχείο \"%s\". Θέλετε να το αντικαταστήσετε;"
+
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:482
+#, fuzzy
+msgid "Do you want to close the current project?"
+msgstr "Θέλετε να επαναφορτώσετε το τρέχον έργο;"
+
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:620
+msgid "The actual project will be closed due to an error in the media player:"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:719
+msgid "An error occured in the video capturer and the current project will be closed:"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/FramesCaptureProgressDialog.cs:50
+#, fuzzy
+msgid "Capturing frame: "
+msgstr "πλαίσιο επιφάνειας εργασίας"
+
+#: ../LongoMatch.GUI/Gui/Dialog/FramesCaptureProgressDialog.cs:59
+msgid "Done"
+msgstr "Έγινε"
+
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:146
+msgid "Save Video As ..."
+msgstr "Αποθήκευση βίντεο ως…"
+
+#: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:101
+msgid "Save File as..."
+msgstr "Αποθήκευση αρχείου ως..."
+
+#: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:70
+msgid "The Project has been edited, do you want to save the changes?"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:101
+#, fuzzy
+msgid "This Project is actually in use."
+msgstr "Το όνομα αυτό χρησιμοποιείται ήδη"
+
+#: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:102
+msgid "Close it first to allow its removal from the database"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:108
+#, fuzzy
+msgid "Do you really want to delete:"
+msgstr "Θέλετε πραγματικά να διαγράψετε το \"%s\";"
+
+#: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:166
+msgid "The Project you are trying to load is actually in use."
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:166
+msgid "Close it first to edit it"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:185
+msgid "Save Project"
+msgstr "Αποθήκευση έργου"
+
+#: ../LongoMatch.GUI/Gui/Dialog/EditCategoryDialog.cs:69
+#, fuzzy
+msgid "This hotkey is already in use."
+msgstr "Το όνομα αυτό χρησιμοποιείται ήδη"
+
+#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:92
+#, fuzzy
+msgid "Templates Files"
+msgstr "_Πρόσφατα αρχεία"
+
+#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:163
+#, fuzzy
+msgid "The template has been modified. Do you want to save it? "
+msgstr "Τροποποιήθηκε το αρχείο %s. Θέλετε να το επαναφορτώσετε;"
+
+#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:186
+#, fuzzy
+msgid "Template name"
+msgstr "Όνομα προφίλ"
+
+#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:199
+msgid "You cannot create a template with a void name"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:204
+#, fuzzy
+msgid "A template with this name already exists"
+msgstr "Ένα Gallery με αυτό το όνομα υπάρχει ήδη"
+
+#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:225
+msgid "You can't delete the 'default' template"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:230
+#, fuzzy
+msgid "Do you really want to delete the template: "
+msgstr "Σίγουρα να διαγραφεί η επιλεγμένη ταυτότητα;"
+
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:53
+#, fuzzy
+msgid "Lead Time"
+msgstr "Βήμα χρόνου"
+
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:58
+#, fuzzy
+msgid "Lag Time"
+msgstr "Βήμα χρόνου"
+
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:63
+msgid "Color"
+msgstr "Χρώμα"
+
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:68
+msgid "Hotkey"
+msgstr "Hotkey"
+
+#: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:73
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:70
+msgid "Sort Method"
+msgstr "Μέθοδος ταξινόμησης"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:58
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:116
+msgid "Edit Title"
+msgstr "Επεξεργασία τίτλου"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:61
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:108
+msgid "Delete"
+msgstr "Διαγραφή"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:64
+msgid "Apply current play rate"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:140
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:141
+msgid " sec"
+msgstr "δευτ"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:142
+msgid "Play Rate"
+msgstr "Ρυθμός αναπαραγωγής"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:145
+msgid "File not found"
+msgstr "Το αρχείο δε βρέθηκε"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayersTreeView.cs:69
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:69
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:106
+msgid "Edit name"
+msgstr "Επεξεργασία ονόματος"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:75
+msgid "Edit properties"
+msgstr "Επεξεργασία ιδιοτήτων"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:47
+msgid "Photo"
+msgstr "Φωτογραφία"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:57
+msgid "Play this match"
+msgstr "Αναπαραγωγή αυτού του αγώνα"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:62
+msgid "Date of Birth"
+msgstr "Ημερομηνία γέννησης"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:82
+msgid "Position"
+msgstr "Θέση"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:87
+msgid "Number"
+msgstr "Αριθμός"
+
+#: ../LongoMatch.GUI/Gui/TreeView/SubCategoriesTreeView.cs:91
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:107
+msgid "Edit tags"
+msgstr "Επεξεργασία ετικετών"
+
+#: ../LongoMatch.GUI/Gui/TreeView/SubCategoriesTreeView.cs:94
+msgid "Remove sub-category"
+msgstr "Αφαίρεση υπο κατηγορίας"
+
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:109
+#, fuzzy
+msgid "Delete key frame"
+msgstr "Επιβεβαίωση διαγραφής πλαισίου"
+
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:110
+msgid "Add to playlist"
+msgstr "Προσθήκη στη λίστα αναπαραγωγής"
+
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:112
+msgid "Export to video file"
+msgstr "Εξαγωγή σε αρχείο βίντεο"
+
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:113
+msgid "Export to PGN images"
+msgstr "Εξαγωγή σε εικόνες PGN"
+
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:272
+msgid "Do you want to delete the key frame for this play?"
+msgstr ""
+
+#: ../LongoMatch.GUI/Gui/TreeView/RenderingJobsTreeView.cs:34
+msgid "Job name"
+msgstr "Όνομα εργασίας"
+
+#: ../LongoMatch.GUI/Gui/TreeView/RenderingJobsTreeView.cs:39
+msgid "State"
+msgstr "Κατάσταση"
+
+#: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerBin.cs:253
+#, fuzzy
+msgid "Jump (s):"
+msgstr "Jump button"
+
+#: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerBin.cs:280
+msgid "Time:"
+msgstr "Χρόνος:"
+
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:236
+msgid ""
+"You are going to stop and finish the current capture.\n"
+"Do you want to proceed?"
+msgstr ""
+
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:242
+msgid "Finalizing file. This can take a while"
+msgstr ""
+
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:277
+msgid "Device disconnected. The capture will be paused"
+msgstr ""
+
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:286
+msgid "Device reconnected.Do you want to restart the capture?"
+msgstr ""
+
+#: ../LongoMatch.Multimedia/Capturer/GstCameraCapturer.cs:517
+#: ../LongoMatch.Multimedia/Utils/VideoDevice.cs:53
+msgid "Default device"
+msgstr "Προεπιλεγμένη συσκευή"
+
+#: ../LongoMatch.Multimedia/Capturer/FakeCapturer.cs:88
+#, fuzzy
+msgid "Fake live source"
+msgstr "Επικεφαλίδες Source/Header:"
+
+#: ../LongoMatch.Multimedia/Utils/PreviewMediaFile.cs:85
+msgid "Invalid video file:"
+msgstr "Μη έγκυρο αρχείο βίντεο:"
+
+#. Create the dialog
+#: ../LongoMatch.Multimedia/Utils/MpegRemuxer.cs:50
+#, fuzzy
+msgid "Remuxing file..."
+msgstr "Αρχείο συγχρονισμού"
+
+#: ../LongoMatch.Multimedia/Utils/MpegRemuxer.cs:126
+msgid "The file you are trying to load is not properly supported. Would you like to convert it into a more suitable format?"
+msgstr ""
+
+#: ../LongoMatch.Multimedia/Utils/GStreamer.cs:112
+msgid "An error has been detected in the current installation."
+msgstr ""
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:108
+#, fuzzy
+msgid "An error occured saving the project:\n"
+msgstr "Σφάλμα κατά τη φόρτωση της εργασίας"
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:109
+msgid "The video file and a backup of the project has been saved. Try to import it later:\n"
+msgstr ""
+
+#. Show a file chooser dialog to select the file to import
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:125
+msgid "Import Project"
+msgstr "Εισαγωγή έργου"
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:137
+msgid "Error importing project:"
+msgstr "Σφάλμα κατά την εισαγωγή του έργου:"
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:145
+msgid "A project already exists for the file:"
+msgstr "Υπάρχει ήδη ένα έργο για το αρχείο:"
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:147
+msgid "Do you want to overwrite it?"
+msgstr "Θέλετε να αντικατασταθεί;"
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:155
+msgid "Project successfully imported."
+msgstr "Το έργο εισήχθηκε με επιτυχία."
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:166
+msgid "The file associated to this project doesn't exist."
+msgstr ""
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:167
+msgid "If the location of the file has changed try to edit it with the database manager."
+msgstr ""
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:175
+msgid "An error occurred opening this project:"
+msgstr "Συνέβηκε ένα σφάλμα κατά το άνοιγμα του έργου:"
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:233
+msgid "Creating video thumbnails. This can take a while."
+msgstr ""
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:307
+msgid "No capture devices were found."
+msgstr "Δε βρέθηκαν συσκευές σύλληψης"
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:343
+msgid "You are opening a live project without any video file associated yet."
+msgstr ""
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:344
+#, fuzzy
+msgid "Select a video file in the step."
+msgstr "Επιλογή βίντεο χρησιμοποιώντας περιηγητή αρχείου"
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:359
+msgid "Save project"
+msgstr "Αποθήκευση έργου"
+
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:67
+msgid "The file you are trying to load is not a playlist or it's not compatible with the current version"
+msgstr ""
+
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:105
+msgid "Please, close the opened project to play the playlist."
+msgstr ""
+
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:198
+msgid "Open playlist"
+msgstr "Άνοιγμα λίστας αναπαραγωγής"
+
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:199
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:210
+msgid "playlists"
+msgstr "λίστες αναπαραγωγής"
+
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:209
+msgid "New playlist"
+msgstr "Νέα λίστα αναπαραγωγής"
+
+#: ../LongoMatch.Services/Services/TemplatesService.cs:62
+#, fuzzy
+msgid "Local team players"
+msgstr "Αριθμός ανθρώπων"
+
+#: ../LongoMatch.Services/Services/TemplatesService.cs:68
+#, fuzzy
+msgid "Visitor team players"
+msgstr "Αριθμός ανθρώπων"
+
+#: ../LongoMatch.Services/Services/TemplatesService.cs:74
+#, fuzzy
+msgid "All teams players"
+msgstr "Αριθμός ανθρώπων"
+
+#: ../LongoMatch.Services/Services/TemplatesService.cs:192
+#: ../LongoMatch.Services/Services/TemplatesService.cs:210
+#, fuzzy
+msgid "A template already exists with the name: "
+msgstr "Υπάρχει ήδη χρήστης με το όνομα '%s'."
+
+#: ../LongoMatch.Services/Services/EventsManager.cs:131
+msgid "You can't create a new play if the capturer is not recording."
+msgstr ""
+
+#: ../LongoMatch.Services/Services/EventsManager.cs:186
+msgid "The stop time is smaller than the start time. The play will not be added."
+msgstr ""
+
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:176
+#, fuzzy
+msgid "Rendering"
+msgstr "Απόδοση"
+
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:181
+#, fuzzy
+msgid "Rendering queue"
+msgstr "Ουρά εργασιών %s"
+
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:182
+msgid "Pending"
+msgstr "Εκκρεμεί"
+
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:220
+msgid "An error has occurred in the video editor."
+msgstr ""
+
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:221
+msgid "Please, try again."
+msgstr "Παρακαλώ, προσπαθήστε ξανά."
+
