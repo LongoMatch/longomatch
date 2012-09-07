@@ -154,7 +154,7 @@ namespace LongoMatch.Services
 		private static void SetupBaseDir() {
 			string home;
 			
-			if (Environment.OSVersion.Platform != PlatformID.Linux)
+			if (Environment.OSVersion.Platform != PlatformID.Unix)
 				Config.baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../");
 			else
 				Config.baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../../");
