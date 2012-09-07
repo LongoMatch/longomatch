@@ -155,8 +155,11 @@ namespace LongoMatch.Services
 			string home;
 			
 			Config.baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../");
-			if (!System.IO.File.Exists(System.IO.Path.Combine(Config.baseDirectory, "share", "longomatch")))
+			if (!System.IO.Directory.Exists(System.IO.Path.Combine(Config.baseDirectory, "share", "longomatch"))) {
 				Config.baseDirectory = System.IO.Path.Combine(Config.baseDirectory, "../");
+			}
+			if (!System.IO.Directory.Exists(System.IO.Path.Combine(Config.baseDirectory, "share", "longomatch")))
+				throw new Exception("Aborting: Prefix directory not found");
 			
 			/* Check for the magic file PORTABLE to check if it's a portable version
 			 * and the config goes in the same folder as the binaries */
