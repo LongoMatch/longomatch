@@ -154,8 +154,8 @@ namespace LongoMatch.Services
 		private static void SetupBaseDir() {
 			string home;
 			
-			if (Environment.OSVersion.Platform == PlatformID.MacOSX) ||
-				Environment.OSVersion.Platform != PlatformID.Win32NT) {
+			if (Environment.OSVersion.Platform == PlatformID.MacOSX ||
+				Environment.OSVersion.Platform == PlatformID.Win32NT) {
 				Config.baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../");
 			else
 				Config.baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../../");
