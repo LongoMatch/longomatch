@@ -93,11 +93,14 @@ ostype=""
 case "$host" in
   *-*-mingw*|*-*-cygwin*)
     ostype=Windows
+    AC_DEFINE(OSTYPE_WINDOWS)
     ;;
   *-*-darwin*)
+    AC_DEFINE(OSTYPE_OS_X)
     ostype=OS_X
     ;;
   *-*-linux*)
+    AC_DEFINE(OSTYPE_LINUX)
     ostype=Linux
     ;;
 esac

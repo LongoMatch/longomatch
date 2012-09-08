@@ -70,10 +70,13 @@
 #include <gtk/gtk.h>
 
 
-#ifdef WIN32
+#if defined(OSTYPE_WINDOWS)
 #define DEFAULT_VIDEO_SINK "autovideosink"
 #define BACKUP_VIDEO_SINK "autovideosink"
-#else
+#elif defined(OSTYPE_OS_X)
+#define DEFAULT_VIDEO_SINK "autovideosink"
+#define BACKUP_VIDEO_SINK "autovideosink"
+#elif defined(OSTYPE_LINUX)
 #define DEFAULT_VIDEO_SINK "gsettingsvideosink"
 #define BACKUP_VIDEO_SINK "autovideosink"
 #endif

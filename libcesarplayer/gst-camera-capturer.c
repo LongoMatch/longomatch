@@ -34,11 +34,15 @@
 #include "gstscreenshot.h"
 
 /*Default video source*/
-#ifdef WIN32
+#if defined(OSTYPE_WINDOWS)
 #define DVVIDEOSRC "dshowvideosrc"
 #define RAWVIDEOSRC "dshowvideosrc"
 #define AUDIOSRC "dshowaudiosrc"
-#else
+#elif defined(OSTYPE_OS_X)
+#define DVVIDEOSRC "osxvideosrc"
+#define RAWVIDEOSRC "osxvideosrc"
+#define AUDIOSRC "osxaudiosrc"
+#elif defined(OSTYPE_LINUX)
 #define DVVIDEOSRC "dv1394src"
 #define RAWVIDEOSRC "gsettingsvideosrc"
 #define AUDIOSRC "gsettingsaudiosrc"
@@ -1065,7 +1069,7 @@ gst_camera_capturer_set_source (GstCameraCapturer * gcc,
     {
       gchar *videosrc = RAWVIDEOSRC;
 
-#ifndef WIN32
+#if defined(OSTYPE_WINDOWS)
       GstElementFactory *fact = gst_element_factory_find(RAWVIDEOSRC);
       if (fact == NULL)
         videosrc = RAWVIDEOSRC_GCONF;
