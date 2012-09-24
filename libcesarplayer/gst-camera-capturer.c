@@ -1069,7 +1069,7 @@ gst_camera_capturer_set_source (GstCameraCapturer * gcc,
     {
       gchar *videosrc = RAWVIDEOSRC;
 
-#if defined(OSTYPE_WINDOWS)
+#if defined(OSTYPE_LINUX)
       GstElementFactory *fact = gst_element_factory_find(RAWVIDEOSRC);
       if (fact == NULL)
         videosrc = RAWVIDEOSRC_GCONF;
