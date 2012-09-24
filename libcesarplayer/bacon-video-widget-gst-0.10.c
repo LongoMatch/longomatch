@@ -772,8 +772,12 @@ bacon_video_widget_expose_event (GtkWidget * widget, GdkEventExpose * event)
     }
   } else {
     /* no logo, pass the expose to gst */
-    if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay))
+    if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay)){
       gst_x_overlay_expose (xoverlay);
+#ifdef OSTYPE_WINDOWS
+      bacon_video_widget_show (widget);
+#endif
+    }
     else {
       /* No xoverlay to expose yet */
       gdk_window_clear_area (win,
