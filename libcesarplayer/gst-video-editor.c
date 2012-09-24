@@ -1066,12 +1066,12 @@ gst_video_editor_set_video_encoder (GstVideoEditor * gve, gchar ** err,
       g_object_set (G_OBJECT (encoder), "pass", 17, NULL);       //Variable Bitrate-Pass 1
       g_object_set (G_OBJECT (encoder), "speed-preset", 4, NULL);//"Faster" preset
       break;
-    case VIDEO_ENCODER_MPEG4:
+    case VIDEO_ENCODER_XVID:
       encoder_name = "xvidenc";
       encoder = gst_element_factory_make (encoder_name, encoder_name);
       g_object_set (G_OBJECT (encoder), "pass", 1, NULL);       //Variable Bitrate-Pass 1
       break;
-    case VIDEO_ENCODER_XVID:
+    case VIDEO_ENCODER_MPEG4:
       encoder_name = "ffenc_mpeg4";
       encoder = gst_element_factory_make (encoder_name, encoder_name);
       g_object_set (G_OBJECT (encoder), "pass", 512, NULL);     //Variable Bitrate-Pass 1
