@@ -4,7 +4,6 @@
 AM_CPPFLAGS = \
 	-DPACKAGE_SRC_DIR=\""$(srcdir)"\" \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
-	-x objective-c \
 	$(CESARPLAYER_CFLAGS)
 
 if OSTYPE_OS_X

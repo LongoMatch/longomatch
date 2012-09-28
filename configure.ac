@@ -109,7 +109,7 @@ AM_CONDITIONAL(OSTYPE_OS_X, test x$ostype = xOS_X)
 AM_CONDITIONAL(OSTYPE_LINUX, test x$ostype = xLinux)
 AC_MSG_RESULT($ostype)
 
-AM_CONDITIONAL(ENABLE_TESTS, False)
+AM_CONDITIONAL(ENABLE_TESTS, test x = y)
 
 dnl package checks, per config
 
