@@ -104,6 +104,8 @@ namespace LongoMatch.Gui
 		public MainWindow(IGUIToolkit guiToolkit) :
 		base(Constants.SOFTWARE_NAME)
 		{
+			Screen screen;
+			
 			this.Build();
 			Title = Constants.SOFTWARE_NAME;
 
@@ -133,6 +135,8 @@ namespace LongoMatch.Gui
 			if (!Config.useGameUnits)
 				GameUnitsViewAction.Visible = false;
 			
+			screen = Display.Default.DefaultScreen;
+			this.Resize(screen.Width * 80 / 100, screen.Height * 80 / 100);
 		}
 
 		#endregion
