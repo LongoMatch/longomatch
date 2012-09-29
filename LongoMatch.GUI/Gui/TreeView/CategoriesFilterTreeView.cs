@@ -51,47 +51,42 @@ namespace LongoMatch.Gui.Component
 				TreeIter catIter;
 				
 				catIter = store.AppendValues(cat, filter.VisibleCategories.Contains(cat));
-				/*
 				foreach (var subcat in cat.SubCategories) {
 					TreeIter subcatIter;
 					if (subcat is TagSubCategory) {
 						subcatIter = store.AppendValues(catIter, subcat, true);
-						Console.WriteLine (subcat.Name);
 						foreach (string desc in subcat.ElementsDesc()) {
-							store.AppendValues(subcatIter, new StringObject{Value=desc}, true);
+							store.AppendValues(subcatIter, new StringObject{Value=desc, SubCategory=subcat, Category=cat}, true);
 						}
 					}
 				}
-				*/
-				
 			}
 			Model = store;
 		}
- 
-		protected override void HandleFilterCellToggled (object o, ToggledArgs args)
-		{
-			Gtk.TreeIter iter;
-			
-			if (store.GetIterFromString(out iter, args.Path))
-			{
-				object obj = store.GetValue(iter, 0);
-				Category cat = obj as Category;
-				if (cat == null)
-					return;
-					
-				bool active = !((bool) store.GetValue(iter, 1));
-				
-				if (active) {
-					filter.UnFilterCategory(cat);
-				} else {
-					filter.FilterCategory(cat);
-				}
-			
-				store.SetValue(iter, 1, active);
-				filter.Update();
-			}
-		}
 		
+		protected override void UpdateSelection(TreeIter iter, bool active) {
+			TreeIter child;
+			
+			object o = store.GetValue(iter, 0);
+			
+			if (o is StringObject) {
+				StringObject so = o as StringObject;
+				
+				filter.FilterSubCategory(so.Category, so.SubCategory, so.Value, active);
+			} else {
+				/* don't do anything here and let the children do the filtering */
+			}
+			store.SetValue(iter, 1, active);
+			
+			/* Check/Uncheck all children */
+			store.IterChildren(out child, iter);
+			while (store.IterIsValid(child)) {
+				UpdateSelection(child, active);
+				store.IterNext(ref child);
+			}
+			filter.Update();
+		}
+ 
 		protected override void RenderColumn (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
 		{
 			object obj = store.GetValue(iter, 0);
@@ -113,12 +108,21 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		protected override void Select(bool select_all) {
+			TreeIter iter;
+			
+			store.GetIterFirst(out iter);
+			while (store.IterIsValid(iter)){
+				UpdateSelection(iter, select_all);
+				store.IterNext(ref iter);
+			}
 		}
 	}
 	
 	class StringObject
 	{
 		public string Value {get;set;}
+		public ISubCategory SubCategory {get;set;}
+		public Category Category {get;set;}
 	}
 }
 

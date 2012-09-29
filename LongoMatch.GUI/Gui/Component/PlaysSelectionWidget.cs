@@ -39,6 +39,7 @@ namespace LongoMatch.Gui.Component
 		public event TagPlayHandler TagPlay;
 		
 		Project project;
+		PlaysFilter filter;
 		PlayersFilterTreeView playersfilter;
 		CategoriesFilterTreeView categoriesfilter;
 		
@@ -55,6 +56,7 @@ namespace LongoMatch.Gui.Component
 		
 		public void SetProject(Project project, bool isLive, PlaysFilter filter) {
 			this.project = project;
+			this.filter = filter;
 			playsList.ProjectIsLive = isLive;
 			localPlayersList.ProjectIsLive = isLive;
 			visitorPlayersList.ProjectIsLive = isLive;
@@ -180,6 +182,26 @@ namespace LongoMatch.Gui.Component
 			if (TagPlay != null)
 				TagPlay (play);
 			UpdateTeamsModels();
+		}
+
+		protected void OnCategoriesFiltersbuttonClicked (object sender, System.EventArgs e)
+		{
+			if (catfiltersbutton.Active) {
+				catfiltersbutton.Label = Catalog.GetString("Disable categories filters");
+			} else {
+				catfiltersbutton.Label = Catalog.GetString("Enable categories filters");
+			}
+			filter.CategoriesFilterEnabled = catfiltersbutton.Active;
+		}
+		
+		protected void OnPlayersFiltersbuttonClicked (object sender, System.EventArgs e)
+		{
+			if (playersfiltersbutton.Active) {
+				playersfiltersbutton.Label = Catalog.GetString("Disable players filters");
+			} else {
+				playersfiltersbutton.Label = Catalog.GetString("Enable players filters");
+			}
+			filter.PlayersFilterEnabled = playersfiltersbutton.Active;
 		}
 	}
 }

@@ -19,8 +19,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using LongoMatch.Interfaces;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
+using LongoMatch.Store.Templates;
 
 namespace LongoMatch.Common
 {
@@ -29,29 +31,57 @@ namespace LongoMatch.Common
 		
 		public event FilterUpdatedHandler FilterUpdated;
 		
-		List<Category> categoriesFilter;
+		bool playersFiltered, categoriesFiltered;
+		Dictionary<Category, List<SubCategoryTags>> categoriesFilter;
 		List<Player> playersFilter;
 		Project project;
 		
 		public PlaysFilter (Project project)
 		{
 			this.project = project;
-			categoriesFilter = new List<Category>();
+			categoriesFilter = new Dictionary<Category, List<SubCategoryTags>>();
 			playersFilter = new List<Player>(); 
 			ClearAll();
+		}
+		
+		public bool PlayersFilterEnabled {
+			get {
+				return  playersFiltered;
+			}
+			set {
+				playersFiltered = value;
+				if (playersFiltered)
+					Update();
+			}
+		}
+		
+		public bool CategoriesFilterEnabled {
+			get {
+				return  categoriesFiltered;
+			}
+			set {
+				categoriesFiltered = value;
+				if (categoriesFiltered)
+					Update();
+			}
 		}
 		
 		public void Update () {
 			EmitFilterUpdated();
 		}
 		
-		public void ClearPlayersFilter () {
+		public void ClearCategoriesFilter () {
 			categoriesFilter.Clear();
-			foreach (var cat in project.Categories)
-				categoriesFilter.Add(cat);
+			foreach (var cat in project.Categories) {
+				List<SubCategoryTags> list = new List<SubCategoryTags>(); 
+				foreach (var subcat in cat.SubCategories) {
+					list.Add(new SubCategoryTags{SubCategory = subcat});
+				}
+				categoriesFilter.Add(cat, list);
+			}
 		}
 		
-		public void ClearCategoriesFilter () {
+		public void ClearPlayersFilter () {
 			playersFilter.Clear();
 			foreach (var player in project.LocalTeamTemplate)
 				playersFilter.Add(player);
@@ -73,18 +103,18 @@ namespace LongoMatch.Common
 				playersFilter.Add(player);
 		}
 		
-		public void FilterCategory (Category category) {
-			categoriesFilter.Remove(category);
-		}
-		
-		public void UnFilterCategory(Category category) {
-			if (!categoriesFilter.Contains(category))
-				categoriesFilter.Add(category);
+		public void FilterSubCategory (Category cat, ISubCategory subcat, string option, bool filtered) {
+			SubCategoryTags tsub = categoriesFilter[cat].Find(s => s.SubCategory == subcat);
+			if (filtered) {
+				tsub.Add(option);
+			} else {
+				tsub.Remove(option);
+			}
 		}
 		
 		public List<Category> VisibleCategories {
 			get {
-				return categoriesFilter;
+				return categoriesFilter.Keys.ToList();
 			}
 		}
 		
@@ -95,32 +125,50 @@ namespace LongoMatch.Common
 		}
 		
 		public bool IsVisible(object o) {
-			if (o is Player) {
+			if (o is Player && PlayersFilterEnabled) {
 				return VisiblePlayers.Contains(o as Player);
-			} else if (o is Category) {
-				return VisibleCategories.Contains(o as Category);
 			} else if (o is Play) {
-				bool cat_match, player_match;
+				bool cat_match=true, player_match=true;
 				Play play = o as Play;
 				
-				cat_match = VisibleCategories.Contains(play.Category);
-				if (!cat_match)
-					return false;
+				if (CategoriesFilterEnabled) {
+					cat_match = false;
+					foreach (var subcat in categoriesFilter[play.Category]) {
+						foreach (var option in subcat) {
+							StringTag tag = new StringTag{SubCategory=subcat.SubCategory, Value=option};
+							Console.WriteLine("Trying to find match for tag " +  subcat.SubCategory.Name + " " + option);
+							if (play.Tags.Contains(tag)) {
+								foreach (StringTag t in play.Tags.Tags) {
+									Console.WriteLine(String.Format("TAG  {0} {1} equals? {2}", t.SubCategory.Name, t.Value, t == tag));
+								}
+								Console.WriteLine("Found match for tag " +  subcat.SubCategory.Name + " " + option);
+								cat_match = true;
+								break;
+							}
+						}
+						if (cat_match)
+							break;
+					}
+				}
 				
-				if (play.Players.Tags.Count == 0)
-					player_match = true;
-				else
+				if (PlayersFilterEnabled)
 					player_match = VisiblePlayers.Intersect(play.Players.GetTagsValues()).Count() != 0;
 				
 				return player_match && cat_match;
-			} else {
-				return false;
 			}
+			return true;
 		}
 		
 		void EmitFilterUpdated () {
 			if (FilterUpdated != null)
 				FilterUpdated ();
+		}
+	}
+	
+	class SubCategoryTags: List<string> {
+		public ISubCategory SubCategory {
+			get;
+			set;
 		}
 	}
 }

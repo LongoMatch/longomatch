@@ -47,6 +47,16 @@ namespace LongoMatch.Gui.Component
 			FillTree();
 		}
 		
+		public new TreeModel Model {
+			set{
+				base.Model = value;
+				store = value as TreeStore;
+			}
+			get {
+				return base.Model;
+			}
+		}
+		
 		private void PrepareTree () {
 			TreeViewColumn nameColumn = new TreeViewColumn ();
 			CellRendererText nameCell = new CellRendererText ();
@@ -101,9 +111,21 @@ namespace LongoMatch.Gui.Component
 				playersMenu.Popup();
 			return base.OnButtonPressEvent (evnt);
 		}
+		
+		protected void HandleFilterCellToggled (object o, ToggledArgs args)
+		{
+			Gtk.TreeIter iter;
+			
+			if (store.GetIterFromString(out iter, args.Path))
+			{
+				bool active = !((bool) store.GetValue(iter, 1));
+				UpdateSelection(iter, active);
+			}
+		}
+		
 
 		protected abstract void FillTree ();
-		protected abstract void HandleFilterCellToggled (object o, ToggledArgs args);
+		protected abstract void UpdateSelection (TreeIter iter, bool active); 
 		protected abstract void RenderColumn (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter);
 		protected abstract void Select(bool select_all);
 	}

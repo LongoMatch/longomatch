@@ -6674,58 +6674,158 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
-      <widget class="Gtk.Notebook" id="notebook1">
+      <widget class="Gtk.HBox" id="hbox1">
         <property name="MemberName" />
-        <property name="CanFocus">True</property>
-        <property name="CurrentPage">2</property>
-        <property name="TabPos">Bottom</property>
+        <property name="Spacing">6</property>
         <child>
-          <widget class="LongoMatch.Gui.Component.PlaysListTreeWidget" id="playsList">
+          <widget class="Gtk.Notebook" id="notebook2">
             <property name="MemberName" />
-            <property name="Events">ButtonPressMask</property>
-          </widget>
-        </child>
-        <child>
-          <widget class="Gtk.Label" id="playsList1">
-            <property name="MemberName" />
-            <property name="LabelProp" translatable="yes">Plays</property>
+            <property name="CanFocus">True</property>
+            <property name="CurrentPage">1</property>
+            <property name="TabPos">Left</property>
+            <child>
+              <widget class="Gtk.Notebook" id="notebook1">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="CurrentPage">2</property>
+                <property name="TabPos">Bottom</property>
+                <child>
+                  <widget class="LongoMatch.Gui.Component.PlaysListTreeWidget" id="playsList">
+                    <property name="MemberName" />
+                    <property name="Events">ButtonPressMask</property>
+                  </widget>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="playsList1">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">Plays</property>
+                  </widget>
+                  <packing>
+                    <property name="type">tab</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="LongoMatch.Gui.Component.PlayersListTreeWidget" id="localPlayersList">
+                    <property name="MemberName" />
+                    <property name="Events">ButtonPressMask</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="localPlaysList">
+                    <property name="MemberName" />
+                  </widget>
+                  <packing>
+                    <property name="type">tab</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="LongoMatch.Gui.Component.PlayersListTreeWidget" id="visitorPlayersList">
+                    <property name="MemberName" />
+                    <property name="Events">ButtonPressMask</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="visitorPlaysList">
+                    <property name="MemberName" />
+                  </widget>
+                  <packing>
+                    <property name="type">tab</property>
+                  </packing>
+                </child>
+              </widget>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="label1">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">  Plays Selection   </property>
+                <property name="Justify">Center</property>
+                <property name="Angle">90</property>
+              </widget>
+              <packing>
+                <property name="type">tab</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.VBox" id="vbox2">
+                <property name="MemberName" />
+                <property name="Spacing">6</property>
+                <child>
+                  <widget class="Gtk.Notebook" id="filtersnotebook">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="CurrentPage">0</property>
+                    <property name="TabPos">Bottom</property>
+                    <child>
+                      <placeholder />
+                    </child>
+                    <child>
+                      <placeholder />
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.ToggleButton" id="catfiltersbutton">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="Type">TextAndIcon</property>
+                    <property name="Icon">stock:gtk-find Menu</property>
+                    <property name="Label" translatable="yes">Activate categories filters</property>
+                    <property name="UseUnderline">True</property>
+                    <signal name="Clicked" handler="OnCategoriesFiltersbuttonClicked" />
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.ToggleButton" id="playersfiltersbutton">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="Type">TextAndIcon</property>
+                    <property name="Icon">stock:gtk-find Menu</property>
+                    <property name="Label" translatable="yes">Activate players filters</property>
+                    <property name="UseUnderline">True</property>
+                    <signal name="Clicked" handler="OnPlayersFiltersbuttonClicked" />
+                  </widget>
+                  <packing>
+                    <property name="Position">2</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">1</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="label2">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">  Filters  </property>
+                <property name="Angle">90</property>
+              </widget>
+              <packing>
+                <property name="type">tab</property>
+              </packing>
+            </child>
           </widget>
           <packing>
-            <property name="type">tab</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="LongoMatch.Gui.Component.PlayersListTreeWidget" id="localPlayersList">
-            <property name="MemberName" />
-            <property name="Events">ButtonPressMask</property>
-          </widget>
-          <packing>
-            <property name="Position">1</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Label" id="localPlaysList">
-            <property name="MemberName" />
-          </widget>
-          <packing>
-            <property name="type">tab</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="LongoMatch.Gui.Component.PlayersListTreeWidget" id="visitorPlayersList">
-            <property name="MemberName" />
-            <property name="Events">ButtonPressMask</property>
-          </widget>
-          <packing>
-            <property name="Position">2</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Label" id="visitorPlaysList">
-            <property name="MemberName" />
-          </widget>
-          <packing>
-            <property name="type">tab</property>
+            <property name="Position">0</property>
+            <property name="AutoSize">True</property>
           </packing>
         </child>
       </widget>

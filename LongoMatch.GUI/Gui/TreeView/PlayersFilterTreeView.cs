@@ -67,19 +67,8 @@ namespace LongoMatch.Gui.Component
 			Model = store;
 		}
  
-		protected override void HandleFilterCellToggled (object o, ToggledArgs args)
-		{
-			Gtk.TreeIter iter;
-			TreeStore store = Model as TreeStore;
-			
-			if (store.GetIterFromString(out iter, args.Path))
-			{
-				bool active = !((bool) store.GetValue(iter, 1));
-				UpdateSelection(iter, active);
-			}
-		}
 		
-		void UpdateSelection(TreeIter iter, bool active) {
+		protected override void UpdateSelection(TreeIter iter, bool active) {
 			TreeStore store = Model as TreeStore;
 			Player player = (Player) store.GetValue(iter, 0);
 			

@@ -28,9 +28,6 @@
  */
 
 
-
-
-
 #include <gst/gst.h>
 
 /* GStreamer Interfaces */
