@@ -4,6 +4,8 @@ namespace LongoMatch.Gui.Component
 {
 	public partial class PlaysSelectionWidget
 	{
+		private global::Gtk.HBox hbox1;
+		private global::Gtk.Notebook notebook2;
 		private global::Gtk.Notebook notebook1;
 		private global::LongoMatch.Gui.Component.PlaysListTreeWidget playsList;
 		private global::Gtk.Label playsList1;
@@ -11,6 +13,9 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Label localPlaysList;
 		private global::LongoMatch.Gui.Component.PlayersListTreeWidget visitorPlayersList;
 		private global::Gtk.Label visitorPlaysList;
+		private global::Gtk.Label label1;
+		private global::Gtk.Notebook filtersnotebook;
+		private global::Gtk.Label label2;
 		
 		protected virtual void Build ()
 		{
@@ -19,10 +24,20 @@ namespace LongoMatch.Gui.Component
 			global::Stetic.BinContainer.Attach (this);
 			this.Name = "LongoMatch.Gui.Component.PlaysSelectionWidget";
 			// Container child LongoMatch.Gui.Component.PlaysSelectionWidget.Gtk.Container+ContainerChild
+			this.hbox1 = new global::Gtk.HBox ();
+			this.hbox1.Name = "hbox1";
+			this.hbox1.Spacing = 6;
+			// Container child hbox1.Gtk.Box+BoxChild
+			this.notebook2 = new global::Gtk.Notebook ();
+			this.notebook2.CanFocus = true;
+			this.notebook2.Name = "notebook2";
+			this.notebook2.CurrentPage = 1;
+			this.notebook2.TabPos = ((global::Gtk.PositionType)(0));
+			// Container child notebook2.Gtk.Notebook+NotebookChild
 			this.notebook1 = new global::Gtk.Notebook ();
 			this.notebook1.CanFocus = true;
 			this.notebook1.Name = "notebook1";
-			this.notebook1.CurrentPage = 2;
+			this.notebook1.CurrentPage = 1;
 			this.notebook1.TabPos = ((global::Gtk.PositionType)(3));
 			// Container child notebook1.Gtk.Notebook+NotebookChild
 			this.playsList = new global::LongoMatch.Gui.Component.PlaysListTreeWidget ();
@@ -59,7 +74,34 @@ namespace LongoMatch.Gui.Component
 			this.visitorPlaysList.Name = "visitorPlaysList";
 			this.notebook1.SetTabLabel (this.visitorPlayersList, this.visitorPlaysList);
 			this.visitorPlaysList.ShowAll ();
-			this.Add (this.notebook1);
+			this.notebook2.Add (this.notebook1);
+			// Notebook tab
+			this.label1 = new global::Gtk.Label ();
+			this.label1.Name = "label1";
+			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Plays Selection");
+			this.label1.Angle = 90;
+			this.notebook2.SetTabLabel (this.notebook1, this.label1);
+			this.label1.ShowAll ();
+			// Container child notebook2.Gtk.Notebook+NotebookChild
+			this.filtersnotebook = new global::Gtk.Notebook ();
+			this.filtersnotebook.CanFocus = true;
+			this.filtersnotebook.Name = "filtersnotebook";
+			this.filtersnotebook.CurrentPage = 0;
+			this.filtersnotebook.TabPos = ((global::Gtk.PositionType)(3));
+			this.notebook2.Add (this.filtersnotebook);
+			global::Gtk.Notebook.NotebookChild w5 = ((global::Gtk.Notebook.NotebookChild)(this.notebook2 [this.filtersnotebook]));
+			w5.Position = 1;
+			// Notebook tab
+			this.label2 = new global::Gtk.Label ();
+			this.label2.Name = "label2";
+			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("Filters");
+			this.label2.Angle = 90;
+			this.notebook2.SetTabLabel (this.filtersnotebook, this.label2);
+			this.label2.ShowAll ();
+			this.hbox1.Add (this.notebook2);
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.notebook2]));
+			w6.Position = 0;
+			this.Add (this.hbox1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}

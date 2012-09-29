@@ -111,9 +111,9 @@ namespace LongoMatch.Gui.Component
 			
 			s1.Add(categoriesfilter);
 			s2.Add(playersfilter);
-			notebook1.AppendPage(s1, new Gtk.Label(Catalog.GetString("Categories filter")));
-			notebook1.AppendPage(s2, new Gtk.Label(Catalog.GetString("Players filter")));
-			notebook1.ShowAll();
+			filtersnotebook.AppendPage(s1, new Gtk.Label(Catalog.GetString("Categories filter")));
+			filtersnotebook.AppendPage(s2, new Gtk.Label(Catalog.GetString("Players filter")));
+			filtersnotebook.ShowAll();
 		}
 		
 		private void ConnectSignals() {
