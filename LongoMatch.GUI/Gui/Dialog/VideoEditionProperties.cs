@@ -89,7 +89,7 @@ namespace LongoMatch.Gui.Dialog
 			stdStore.AppendValues(VideoStandards.P1080_4_3.Name, VideoStandards.P1080_4_3);
 			stdStore.AppendValues(VideoStandards.P1080_16_9.Name, VideoStandards.P1080_16_9);
 			sizecombobox.Model = stdStore;
-			sizecombobox.Active = 0;
+			sizecombobox.Active = 2;
 		}
 
 		private void FillEncodingProfiles() {
