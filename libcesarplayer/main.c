@@ -17,6 +17,9 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* Compile with:
+ * gcc -o test main.c gst-camera-capturer.c video-utils.c gstscreenshot.c `pkg-config --cflags --libs gstreamer-0.10 gstreamer-interfaces-0.10 gstreamer-video-0.10 gtk+-2.0` -DOSTYPE_LINUX -O0
+ */
 
 #include <gtk/gtk.h>
 #include <stdlib.h>

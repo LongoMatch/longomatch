@@ -259,9 +259,6 @@ static GThread *gui_thread;
 
 static int bvw_signals[LAST_SIGNAL] = { 0 };
 
-GST_DEBUG_CATEGORY (_totem_gst_debug_cat);
-#define GST_CAT_DEFAULT _totem_gst_debug_cat
-
 
 typedef gchar *(*MsgToStrFunc) (GstMessage * msg);
 
@@ -5404,13 +5401,6 @@ bacon_video_widget_new (int width, int height, BvwUseType type, GError ** err)
   BaconVideoWidget *bvw;
   GstElement *audio_sink = NULL, *video_sink = NULL;
   gchar *version_str;
-
-#ifndef GST_DISABLE_GST_INFO
-  if (_totem_gst_debug_cat == NULL) {
-    GST_DEBUG_CATEGORY_INIT (_totem_gst_debug_cat, "totem", 0,
-        "Totem GStreamer Backend");
-  }
-#endif
 
   version_str = gst_version_string ();
   GST_INFO ("Initialised %s", version_str);

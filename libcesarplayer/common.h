@@ -104,3 +104,4 @@ typedef enum
   VIDEO_MUXER_MPEG_PS,
   VIDEO_MUXER_WEBM
 } VideoMuxerType;
+

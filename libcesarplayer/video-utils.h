@@ -34,7 +34,8 @@ void totem_widget_set_preferred_size (GtkWidget * widget, gint width,
 gboolean totem_ratio_fits_screen (GdkWindow * window, int video_width,
     int video_height, gfloat ratio);
 
-EXPORT void init_backend (int argc, char **argv);
-EXPORT void gst_set_window_handle (GstXOverlay *overlay, GdkWindow *window);
+void init_backend (int argc, char **argv);
+void gst_set_window_handle (GstXOverlay *overlay, GdkWindow *window);
+void init_debug();
 
 
