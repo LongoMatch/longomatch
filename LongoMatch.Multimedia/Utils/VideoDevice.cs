@@ -28,35 +28,33 @@ namespace LongoMatch.Multimedia.Utils
 	public class VideoDevice
 	{
 		
-		static public List<Device> ListVideoDevices (){
+		static public List<Device> ListVideoDevices() {
 			List<Device> devicesList  = new List<Device>();
-			
-			/* Generate the list of devices and add the gconf one at the bottom
-			 * so that DV sources are always selected before, at least on Linux, 
-			 * since on Windows both raw an dv sources are listed from the same
-			 * source element (dshowvideosrc) */
-			foreach (string devName in GstCameraCapturer.VideoDevices){
-				string idProp;
-				
-				if (Environment.OSVersion.Platform == PlatformID.Unix)
-					idProp = VideoConstants.DV1394SRC_PROP;
-				else 
-					idProp = VideoConstants.DSHOWVIDEOSINK_PROP;
-				
+
+			/* Generate the list of devices, on the supported platforms
+			 * and extra DV device for the dv1394src element and the default
+			 * OS source for all of them */
+			foreach(string devName in GstCameraCapturer.VideoDevices) {
+				CaptureSourceType source;
+
+				if(Environment.OSVersion.Platform == PlatformID.Unix)
+					source = CaptureSourceType.DV;
+				else
+					source = CaptureSourceType.System;
+
 				devicesList.Add(new Device {
 					ID = devName,
-					IDProperty = idProp,
-					DeviceType = DeviceType.DV});
+					DeviceType = source,
+				});
 			}
-			if (Environment.OSVersion.Platform == PlatformID.Unix){
+			if(Environment.OSVersion.Platform != PlatformID.Win32NT) {
 				devicesList.Add(new Device {
 					ID = Catalog.GetString("Default device"),
-					IDProperty = "",
-					DeviceType = DeviceType.Video});
-			}			
+					DeviceType = CaptureSourceType.System
+				});
+			}
 			return devicesList;
 		}
-
 	}
 }
 

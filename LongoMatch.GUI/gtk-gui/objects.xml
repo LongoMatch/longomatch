@@ -244,23 +244,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.ProjectDetailsWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="ProjectDetailsWidget Properties">
-        <property name="Edited" />
-        <property name="Season" />
-        <property name="Competition" />
-        <property name="LocalGoals" />
-        <property name="VisitorGoals" />
-        <property name="Date" />
-      </itemgroup>
-    </itemgroups>
-    <signals>
-      <itemgroup label="ProjectDetailsWidget Signals">
-        <signal name="EditedEvent" />
-      </itemgroup>
-    </signals>
-  </object>
   <object type="LongoMatch.Gui.Component.PlayersFilterTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
     <itemgroups />
     <signals />
@@ -275,6 +258,23 @@
         <signal name="SnapshotSeries" />
         <signal name="RenderPlaylist" />
         <signal name="TagPlay" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.ProjectDetailsWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="ProjectDetailsWidget Properties">
+        <property name="Edited" />
+        <property name="Season" />
+        <property name="Competition" />
+        <property name="LocalGoals" />
+        <property name="VisitorGoals" />
+        <property name="Date" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="ProjectDetailsWidget Signals">
+        <signal name="EditedEvent" />
       </itemgroup>
     </signals>
   </object>

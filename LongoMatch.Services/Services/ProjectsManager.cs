@@ -111,8 +111,7 @@ namespace LongoMatch.Services
 					filePath+"\n"+projectFile);
 			}
 			/* we need to set the opened project to null to avoid calling again CloseOpendProject() */
-			/* FIXME: */
-			//project = null;
+			OpenedProject = null;
 			SetProject(project, ProjectType.FileProject, new CaptureSettings());
 		}
 	

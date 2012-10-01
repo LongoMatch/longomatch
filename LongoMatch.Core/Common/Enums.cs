@@ -108,14 +108,7 @@ namespace LongoMatch.Common
 	public enum CaptureSourceType {
 		None,
 		DV,
-		Raw,
-		DShow
-	}
-	
-	public enum DeviceType {
-		Video,
-		Audio,
-		DV
+		System,
 	}
 	
 	public enum GameUnitEventType {

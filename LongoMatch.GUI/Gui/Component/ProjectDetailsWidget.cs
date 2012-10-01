@@ -235,15 +235,7 @@ namespace LongoMatch.Gui.Component
 				encSettings.OutputFile = fileEntry.Text;
 				encSettings.AudioBitrate = (uint)audiobitratespinbutton.Value;
 				encSettings.VideoBitrate = (uint)videobitratespinbutton.Value;
-				if(videoDevices[devicecombobox.Active].DeviceType == DeviceType.DV) {
-					if(Environment.OSVersion.Platform == PlatformID.Win32NT)
-						s.CaptureSourceType = CaptureSourceType.DShow;
-					else
-						s.CaptureSourceType = CaptureSourceType.DV;
-				}
-				else {
-					s.CaptureSourceType = CaptureSourceType.Raw;
-				}
+				s.CaptureSourceType = videoDevices[devicecombobox.Active].DeviceType;
 				s.DeviceID = videoDevices[devicecombobox.Active].ID;
 				
 				/* Get size info */
@@ -354,12 +346,15 @@ namespace LongoMatch.Gui.Component
 				string deviceElement;
 				string deviceName;
 				if(Environment.OSVersion.Platform == PlatformID.Unix) {
-					if(device.DeviceType == DeviceType.DV)
+					if(device.DeviceType == CaptureSourceType.DV)
 						deviceElement = Catalog.GetString(DV_SOURCE);
 					else
 						deviceElement = Catalog.GetString(GCONF_SOURCE);
-				} else
+				} else if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
 					deviceElement = Catalog.GetString("DirectShow Source");
+				} else {
+					deviceElement = Catalog.GetString("OS X Source");
+				}
 				deviceName = (device.ID == "") ? Catalog.GetString("Unknown"): device.ID;
 				devicecombobox.AppendText(deviceName + " ("+deviceElement+")");
 				devicecombobox.Active = 0;

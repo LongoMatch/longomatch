@@ -32,9 +32,9 @@ namespace LongoMatch.Common
 		}
 
 		/// <summary>
-		/// Device Type among Video, Audio or DV (for dv cameras)
+		/// Capture source type
 		/// </summary>
-		public DeviceType DeviceType {
+		public CaptureSourceType DeviceType {
 			get;
 			set;
 		}
@@ -47,15 +47,5 @@ namespace LongoMatch.Common
 			get;
 			set;
 		}
-
-		/// <summary>
-		/// The name of the gstreamer element property used to set the device
-		/// </summary>
-
-		public string IDProperty {
-			get;
-			set;
-		}
-
 	}
 }

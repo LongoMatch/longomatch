@@ -54,6 +54,7 @@
     <Package file="/usr/lib/pkgconfig/gstreamer-interfaces-0.10.pc" name="GStreamer Interfaces Library" IsProject="False" />
     <Package file="/usr/lib/pkgconfig/glib-2.0.pc" name="GLib" IsProject="False" />
     <Package file="/usr/lib/pkgconfig/gstreamer-pbutils-0.10.pc" name="GStreamer Base Utils Library" IsProject="False" />
+    <Package file="/usr/lib/pkgconfig/gstreamer-app-0.10.pc" name="GStreamer APP" IsProject="False" />
   </Packages>
   <compiler ctype="GccCompiler" />
 </Project>
