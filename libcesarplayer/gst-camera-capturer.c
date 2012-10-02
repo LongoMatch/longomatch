@@ -261,6 +261,7 @@ gst_camera_capturer_finalize (GObject * object)
 
   if (gcc->priv->main_pipeline != NULL
       && GST_IS_ELEMENT (gcc->priv->main_pipeline)) {
+    gst_element_set_state (gcc->priv->main_pipeline, GST_STATE_NULL);
     gst_object_unref (gcc->priv->main_pipeline);
     gcc->priv->main_pipeline = NULL;
   }
