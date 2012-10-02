@@ -25,8 +25,9 @@
 #include <string.h>
 
 #include "gstscreenshot.h"
-#include "video-utils.h"
 
+GST_DEBUG_CATEGORY_EXTERN (_totem_gst_debug_cat);
+#define GST_CAT_DEFAULT _totem_gst_debug_cat
 
 static void
 feed_fakesrc (GstElement * src, GstBuffer * buf, GstPad * pad, gpointer data)
