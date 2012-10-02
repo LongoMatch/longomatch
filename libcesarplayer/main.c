@@ -39,6 +39,10 @@ window_state_event (GtkWidget * widget, GdkEventWindowState * event,
 
   }
   if (i == 5)
+    gst_camera_capturer_toggle_pause (GST_CAMERA_CAPTURER (gvc));
+  if (i == 6)
+    gst_camera_capturer_toggle_pause (GST_CAMERA_CAPTURER (gvc));
+  if (i == 7)
     gst_camera_capturer_stop (GST_CAMERA_CAPTURER (gvc));
   return TRUE;
 }
