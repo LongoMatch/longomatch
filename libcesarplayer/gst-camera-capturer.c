@@ -408,7 +408,7 @@ gst_camera_capturer_realize (GtkWidget * widget)
   gcc->priv->video_window = gdk_window_new (window,
       &attributes, attributes_mask);
   gdk_window_set_user_data (gcc->priv->video_window, widget);
-  gdk_window_ensure_native(bvw->priv->video_window);
+  gdk_window_ensure_native (gcc->priv->video_window);
 
   gdk_color_parse ("black", &colour);
   gdk_colormap_alloc_color (gtk_widget_get_colormap (widget),
