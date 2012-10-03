@@ -1418,6 +1418,17 @@ gst_camera_capturer_link_preview (GstCameraCapturer *gcc)
   gst_element_set_state(gcc->priv->decoder_bin, GST_STATE_PLAYING);
 }
 
+static gboolean
+cb_last_buffer (GstPad *pad, GstBuffer *buf, GstCameraCapturer *gcc){
+  if (buf != NULL) {
+    if (gcc->priv->last_buffer != NULL)
+      gst_buffer_unref(buf);
+    gst_buffer_ref(buf);
+    gcc->priv->last_buffer = buf;
+  }
+  return TRUE;
+}
+
 static void
 cb_new_prev_pad (GstElement * element, GstPad * pad, GstElement *bin)
 {
@@ -1432,7 +1443,7 @@ static void
 gst_camera_capturer_create_preview(GstCameraCapturer *gcc)
 {
   GstElement *v_decoder, *video_bin;
-  GstPad *video_pad;
+  GstPad *video_pad, *last_buf_pad;
 
   v_decoder = gst_element_factory_make("decodebin2", "preview-decoder");
 
@@ -1443,6 +1454,10 @@ gst_camera_capturer_create_preview(GstCameraCapturer *gcc)
   gst_bin_add_many (GST_BIN(gcc->priv->preview_bin), v_decoder, video_bin, NULL);
 
   g_signal_connect (v_decoder, "pad-added", G_CALLBACK (cb_new_prev_pad), video_bin);
+
+  video_pad = gst_element_get_static_pad(video_bin, "sink");
+  gst_pad_add_buffer_probe (video_pad, (GCallback) cb_last_buffer, gcc);
+  gst_object_unref(video_pad);
 
   /* Create ghost pads */
   video_pad = gst_element_get_static_pad (v_decoder, "sink");
