@@ -2017,7 +2017,8 @@ gst_camera_capturer_enum_devices (gchar * device_name)
 
   if (!g_strcmp0 (device_name, "dv1394src"))
     prop_name = "guid";
-  else if (!g_strcmp0 (device_name, "v4l2src"))
+  else if (!g_strcmp0 (device_name, "v4l2src") ||
+      !g_strcmp0 (device_name, "osxvideosrc"))
     prop_name = "device";
   else
     prop_name = "device-name";
