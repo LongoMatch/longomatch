@@ -67,7 +67,7 @@ namespace LongoMatch.Gui
 			this.vscale1.UpdatePolicy = ((global::Gtk.UpdateType)(1));
 			this.vscale1.Inverted = true;
 			this.vscale1.Adjustment.Lower = 1;
-			this.vscale1.Adjustment.Upper = 28;
+			this.vscale1.Adjustment.Upper = 30;
 			this.vscale1.Adjustment.PageIncrement = 3;
 			this.vscale1.Adjustment.PageSize = 1;
 			this.vscale1.Adjustment.StepIncrement = 1;

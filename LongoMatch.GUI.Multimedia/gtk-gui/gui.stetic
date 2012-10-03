@@ -118,7 +118,7 @@
                     <property name="UpdatePolicy">Discontinuous</property>
                     <property name="Inverted">True</property>
                     <property name="Lower">1</property>
-                    <property name="Upper">28</property>
+                    <property name="Upper">30</property>
                     <property name="PageIncrement">3</property>
                     <property name="PageSize">1</property>
                     <property name="StepIncrement">1</property>
