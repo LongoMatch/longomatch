@@ -345,15 +345,15 @@ namespace LongoMatch.Gui.Component
 			foreach(Device device in devices) {
 				string deviceElement;
 				string deviceName;
-				if(Environment.OSVersion.Platform == PlatformID.Unix) {
+				if(Environment.OSVersion.Platform == PlatformID.MacOSX) {
+					deviceElement = Catalog.GetString("OS X Source");
+				} else if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
+					deviceElement = Catalog.GetString("DirectShow Source");
+				} else {
 					if(device.DeviceType == CaptureSourceType.DV)
 						deviceElement = Catalog.GetString(DV_SOURCE);
 					else
 						deviceElement = Catalog.GetString(GCONF_SOURCE);
-				} else if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
-					deviceElement = Catalog.GetString("DirectShow Source");
-				} else {
-					deviceElement = Catalog.GetString("OS X Source");
 				}
 				deviceName = (device.ID == "") ? Catalog.GetString("Unknown"): device.ID;
 				devicecombobox.AppendText(deviceName + " ("+deviceElement+")");

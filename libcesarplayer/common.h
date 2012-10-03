@@ -38,7 +38,7 @@
 #define SYSVIDEOSRC "dshowvideosrc"
 #define AUDIOSRC "dshowaudiosrc"
 #elif defined(OSTYPE_OS_X)
-#define DVVIDEOSRC "dv1394src"
+#define DVVIDEOSRC "osxvideosrc"
 #define SYSVIDEOSRC "osxvideosrc"
 #define AUDIOSRC "osxaudiosrc"
 #elif defined(OSTYPE_LINUX)
