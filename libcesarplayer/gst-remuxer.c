@@ -29,8 +29,8 @@
 
 #include "gst-remuxer.h"
 
-GST_DEBUG_CATEGORY (_cesarplayer_gst_debug_cat);
-#define GST_CAT_DEFAULT _cesarplayer_gst_debug_cat
+GST_DEBUG_CATEGORY (_remuxer_gst_debug_cat);
+#define GST_CAT_DEFAULT _remuxer_gst_debug_cat
 
 /* Signals */
 enum
@@ -576,8 +576,8 @@ gst_remuxer_new (gchar * input_file, gchar *output_file, GError ** err)
   GstRemuxer *remuxer = NULL;
 
 #ifndef GST_DISABLE_GST_INFO
-  if (_cesarplayer_gst_debug_cat == NULL) {
-    GST_DEBUG_CATEGORY_INIT (_cesarplayer_gst_debug_cat, "longomatch", 0,
+  if (_remuxer_gst_debug_cat == NULL) {
+    GST_DEBUG_CATEGORY_INIT (_remuxer_gst_debug_cat, "longomatch", 0,
         "LongoMatch GStreamer Backend");
   }
 #endif
