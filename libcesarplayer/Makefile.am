@@ -37,6 +37,8 @@ libcesarplayer_la_SOURCES = \
 	gstscreenshot.h \
 	gst-camera-capturer.c\
 	gst-camera-capturer.h\
+	gst-remuxer.c\
+	gst-remuxer.h\
 	gst-video-editor.c\
 	gst-video-editor.h\
 	bacon-resize.c\
