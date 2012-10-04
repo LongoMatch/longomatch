@@ -369,6 +369,7 @@ gst_remuxer_pad_added_cb (GstElement *demuxer, GstPad *pad,
       gst_structure_get_int (s, "mpegversion", &version);
       if (version == 4) {
         /* FIXME: aacparse doesn't seem to support adts to raw conversion */
+        //parser = gst_element_factory_make ("aacparse", NULL);
         parser = gst_parse_bin_from_description ("faad ! faac", TRUE, NULL);
       } else if (version == 3) {
         parser = gst_element_factory_make("mp3parse", "audio-parser");
@@ -376,9 +377,9 @@ gst_remuxer_pad_added_cb (GstElement *demuxer, GstPad *pad,
         parser = gst_element_factory_make("mpegaudioparse", "audio-parser");
       }
     } else if (g_strrstr (mime, "audio/x-eac3")) {
-      parser = gst_parse_bin_from_description ("ffdec_eac3 ! faac", TRUE, NULL);
+      parser = gst_element_factory_make ("ac3parse", NULL);
     } else if (g_strrstr (mime, "audio/x-ac3")) {
-      parser = gst_parse_bin_from_description ("ffdec_ac3 ! faac", TRUE, NULL);
+      parser = gst_element_factory_make ("ac3parse", NULL);
     }
     remuxer->priv->audio_linked = TRUE;
   }
@@ -586,7 +587,7 @@ gst_remuxer_new (gchar * input_file, gchar *output_file, GError ** err)
 
   remuxer->priv->input_file = input_file;
   remuxer->priv->output_file = output_file;
-  remuxer->priv->video_muxer_type = VIDEO_MUXER_MP4;
+  remuxer->priv->video_muxer_type = VIDEO_MUXER_MATROSKA;
 
   gst_remuxer_initialize (remuxer);
 
