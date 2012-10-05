@@ -30,6 +30,7 @@ using LongoMatch.Store;
 using LongoMatch.Video.Capturer;
 using LongoMatch.Video.Player;
 using LongoMatch.Video.Editor;
+using LongoMatch.Video.Remuxer;
 using LongoMatch.Video.Utils;
 using LongoMatch.Video.Common;
 
@@ -111,6 +112,10 @@ namespace LongoMatch.Video
 			default:
 				return new FakeCapturer();
 			}
+		}
+		
+		public IRemuxer GetRemuxer(string inputFile, string outputFile) {
+			return new GstRemuxer (inputFile, outputFile);
 		}
 		
 		public MediaFile DiscoverFile (string file) {

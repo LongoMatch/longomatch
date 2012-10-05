@@ -15,6 +15,7 @@ SOURCES = \
 	Editor/GstVideoSplitter.cs \
 	Interfaces/ICapturer.cs \
 	Interfaces/IPlayer.cs \
+	Interfaces/IRemuxer.cs \
 	Player/GstPlayer.cs \
 	Player/ObjectManager.cs \
 	Remuxer/GstRemuxer.cs \
