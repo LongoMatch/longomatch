@@ -25,6 +25,12 @@
 #ifndef _GST_REMUXER_H_
 #define _GST_REMUXER_H_
 
+#ifdef WIN32
+#define EXPORT __declspec (dllexport)
+#else
+#define EXPORT
+#endif
+
 #include <gst/gst.h>
 #include "common.h"
 
@@ -55,12 +61,12 @@ struct _GstRemuxer
   GstRemuxerPrivate *priv;
 };
 
-GType gst_remuxer_get_type (void) G_GNUC_CONST;
+EXPORT GType gst_remuxer_get_type (void) G_GNUC_CONST;
 
-void gst_remuxer_init_backend (int *argc, char ***argv);
-GstRemuxer *gst_remuxer_new (gchar *in_filename, gchar *out_filename, GError ** err);
-void gst_remuxer_start (GstRemuxer * remuxer);
-void gst_remuxer_cancel (GstRemuxer * remuxer);
+EXPORT void gst_remuxer_init_backend (int *argc, char ***argv);
+EXPORT GstRemuxer *gst_remuxer_new (gchar *in_filename, gchar *out_filename, GError ** err);
+EXPORT void gst_remuxer_start (GstRemuxer * remuxer);
+EXPORT void gst_remuxer_cancel (GstRemuxer * remuxer);
 
 G_END_DECLS
 #endif /* _GST_REMUXER_H_ */
