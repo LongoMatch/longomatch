@@ -35,6 +35,8 @@
     <File subtype="Code" buildaction="Nothing" name="video-utils.h" />
     <File subtype="Code" buildaction="Compile" name="baconvideowidget-marshal.c" />
     <File subtype="Code" buildaction="Nothing" name="baconvideowidget-marshal.h" />
+    <File subtype="Code" buildaction="Compile" name="gst-remuxer.c" />
+    <File subtype="Code" buildaction="Nothing" name="gst-remuxer.h" />
   </Contents>
   <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="Makefile.am" IsAutotoolsProject="True" RelativeConfigureInPath=".">
     <BuildFilesVar />

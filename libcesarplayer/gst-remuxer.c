@@ -156,7 +156,7 @@ gst_remuxer_class_init (GstRemuxerClass * klass)
         g_cclosure_marshal_VOID__STRING, G_TYPE_NONE, 1, G_TYPE_STRING);
 
   remuxer_signals[SIGNAL_PERCENT] =
-      g_signal_new ("percent-completed",
+      g_signal_new ("percent_completed",
         G_TYPE_FROM_CLASS (object_class),
         G_SIGNAL_RUN_LAST,
         G_STRUCT_OFFSET (GstRemuxerClass, percent_completed),

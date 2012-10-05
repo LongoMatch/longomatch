@@ -60,7 +60,7 @@ main (int argc, char *argv[])
 
   loop = g_main_loop_new (NULL, FALSE);
 
-  g_signal_connect (remuxer, "percent-completed",
+  g_signal_connect (remuxer, "percent_completed",
       G_CALLBACK (percent_done_cb), loop);
   g_signal_connect (remuxer, "error",
       G_CALLBACK (error_cb), loop);

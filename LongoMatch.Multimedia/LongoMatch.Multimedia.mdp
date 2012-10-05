@@ -55,6 +55,9 @@
     <File subtype="Directory" buildaction="Compile" name="Interfaces" />
     <File subtype="Directory" buildaction="Compile" name="Interfaces" />
     <File subtype="Code" buildaction="Compile" name="Common/Handlers.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Remuxer" />
+    <File subtype="Code" buildaction="Compile" name="Remuxer/GstRemuxer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Remuxer/ObjectManager.cs" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="libcesarplayer" />

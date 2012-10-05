@@ -17,6 +17,8 @@ SOURCES = \
 	Interfaces/IPlayer.cs \
 	Player/GstPlayer.cs \
 	Player/ObjectManager.cs \
+	Remuxer/GstRemuxer.cs \
+	Remuxer/ObjectManager.cs \
 	Utils/FramesCapturer.cs \
 	Utils/GStreamer.cs \
 	Utils/IMetadataReader.cs \
