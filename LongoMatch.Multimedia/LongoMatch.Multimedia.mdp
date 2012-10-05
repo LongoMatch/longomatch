@@ -58,7 +58,6 @@
     <File subtype="Directory" buildaction="Compile" name="Remuxer" />
     <File subtype="Code" buildaction="Compile" name="Remuxer/GstRemuxer.cs" />
     <File subtype="Code" buildaction="Compile" name="Remuxer/ObjectManager.cs" />
-    <File subtype="Code" buildaction="Compile" name="Interfaces/IRemuxer.cs" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="libcesarplayer" />

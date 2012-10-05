@@ -32,6 +32,7 @@ SOURCES = \
 	Interfaces/GUI/IRenderingStateBar.cs \
 	Interfaces/Multimedia/IFramesCapturer.cs \
 	Interfaces/Multimedia/IMultimediaToolkit.cs \
+	Interfaces/Multimedia/IRemuxer.cs \
 	Interfaces/Multimedia/IVideoEditor.cs \
 	Interfaces/IDatabase.cs \
 	Interfaces/IPlayList.cs \
