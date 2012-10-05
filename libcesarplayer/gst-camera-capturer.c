@@ -939,6 +939,7 @@ cb_new_pad (GstElement * element, GstPad * pad, GstCameraCapturer *gcc)
     epad = gst_element_get_static_pad(sink, "sink");
     gst_pad_link (pad, epad);
     gst_object_unref(epad);
+    gst_object_unref (sink);
   }
   gst_caps_unref(caps);
 }
@@ -1579,6 +1580,9 @@ gst_camera_capturer_create_video_source (GstCameraCapturer * gcc,
   gst_camera_capturer_update_device_id(gcc);
 
   GST_INFO_OBJECT(gcc, "Created video source %s", source_desc);
+
+  gst_object_unref (gcc->priv->source);
+  gst_object_unref (typefind);
 
   return TRUE;
 }
@@ -2297,7 +2301,7 @@ gst_camera_capturer_stop (GstCameraCapturer * gcc)
   //supports it. When a device is disconnected, the source is locked
   //in ::create(), blocking the streaming thread. We need to change its
   //state to null, this way camerabin doesn't block in ::do_stop().
-  gst_element_set_state(gcc->priv->device_source, GST_STATE_NULL);
+  gst_element_set_state(gcc->priv->source, GST_STATE_NULL);
 #endif
 
   GST_INFO_OBJECT(gcc, "Closing capture");
