@@ -1604,7 +1604,6 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
         if (bacon_video_widget_get_stream_length (bvw) == 0) {
           GST_DEBUG ("Failed to query duration in PAUSED state?!");
         }
-        break;
         bvw_update_stream_info (bvw);
         if (!bvw_check_missing_plugins_on_preroll (bvw)) {
           /* show a non-fatal warning message if we can't decode the video */
