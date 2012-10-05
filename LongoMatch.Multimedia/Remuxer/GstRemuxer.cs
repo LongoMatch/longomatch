@@ -23,7 +23,6 @@ namespace LongoMatch.Video.Remuxer {
 	using Mono.Unix;
 	
 	using LongoMatch.Common;
-	using LongoMatch.Handlers;
 	using LongoMatch.Video.Common;
 	using LongoMatch.Interfaces.Multimedia;
 	
@@ -32,6 +31,7 @@ namespace LongoMatch.Video.Remuxer {
 	public  class GstRemuxer : GLib.Object, IRemuxer {
 
 		public event LongoMatch.Handlers.ProgressHandler Progress;
+		public event LongoMatch.Handlers.ErrorHandler Error;
 
 		[DllImport("libcesarplayer.dll")]
 		static extern unsafe IntPtr gst_remuxer_new(IntPtr input_file, IntPtr output_file, out IntPtr err);
@@ -50,6 +50,11 @@ namespace LongoMatch.Video.Remuxer {
 				if(Progress!= null)
 					Progress(args.Percent);
 			};
+			
+			GstError += delegate(object o, ErrorArgs args) {
+				if (Error != null)
+					Error (this, args.Message);
+			};
 		}
 
 #pragma warning disable 0169
@@ -67,7 +72,7 @@ namespace LongoMatch.Video.Remuxer {
 
 				args.Args = new object[1];
 				args.Args[0] = GLib.Marshaller.Utf8PtrToString(arg1);
-				LongoMatch.Video.Common.ErrorHandler handler = (LongoMatch.Video.Common.ErrorHandler) sig.Handler;
+				ErrorHandler handler = (ErrorHandler) sig.Handler;
 				handler(GLib.Object.GetObject(arg0), args);
 			} catch(Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException(e, false);
@@ -112,7 +117,7 @@ namespace LongoMatch.Video.Remuxer {
 		}
 
 		[GLib.Signal("error")]
-		public event LongoMatch.Handlers.ErrorHandler Error {
+		public event ErrorHandler GstError {
 			add {
 				GLib.Signal sig = GLib.Signal.Lookup(this, "error", new ErrorSignalDelegate(ErrorSignalCallback));
 				sig.AddDelegate(value);
@@ -163,7 +168,7 @@ namespace LongoMatch.Video.Remuxer {
 		}
 
 		[GLib.Signal("percent_completed")]
-		public event LongoMatch.Video.Common.PercentCompletedHandler PercentCompleted {
+		public event PercentCompletedHandler PercentCompleted {
 			add {
 				GLib.Signal sig = GLib.Signal.Lookup(this, "percent_completed", typeof(PercentCompletedArgs));
 				sig.AddDelegate(value);
@@ -184,10 +189,10 @@ namespace LongoMatch.Video.Remuxer {
 
 
 		[DllImport("libcesarplayer.dll")]
-		static extern void gst_camera_capturer_start(IntPtr raw);
+		static extern void gst_remuxer_start(IntPtr raw);
 
 		public void Start() {
-			gst_camera_capturer_start(Handle);
+			gst_remuxer_start(Handle);
 		}
 
 		static GstRemuxer()
