@@ -84,10 +84,8 @@ namespace LongoMatch.Gui.Component
 					CairoHelper.SetSourcePixbuf(sourceCR,value,0,0);
 					sourceCR.Paint();
 				}
-				drawingarea.WidthRequest=sourceWidth;
-				drawingarea.HeightRequest=sourceHeight;
-				if(drawingarea.GdkWindow != null)
-					drawingarea.GdkWindow.Resize(sourceWidth,sourceHeight);
+				drawingarea.WidthRequest = sourceWidth;
+				drawingarea.HeightRequest = sourceHeight;
 				value.Dispose();
 				loaded = true;
 				QueueDraw();

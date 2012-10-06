@@ -50,6 +50,10 @@ namespace LongoMatch.Gui.Dialog
 
 		public Pixbuf Image {
 			set {
+				Screen screen = Display.Default.DefaultScreen;
+				int width = Math.Min(screen.Width, value.Width + vbox2.Allocation.Width + 10);
+				int height = Math.Min(screen.Height, value.Height + 20);
+				this.Resize(width, height);
 				drawingwidget1.SourceImage = value;
 			}
 		}
