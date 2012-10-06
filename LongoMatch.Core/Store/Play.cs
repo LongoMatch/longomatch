@@ -131,6 +131,8 @@ namespace LongoMatch.Store
 					return Drawings.First();
 				else
 					return null;
+			} set {
+				Drawings[0] = value;
 			}
 		}
 
