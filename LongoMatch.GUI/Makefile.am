@@ -41,6 +41,7 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.ShortcutsHelpDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs \
@@ -98,6 +99,7 @@ SOURCES = \
 	Gui/Dialog/ProjectSelectionDialog.cs \
 	Gui/Dialog/ProjectsManager.cs \
 	Gui/Dialog/RenderingJobsDialog.cs \
+	Gui/Dialog/ShortcutsHelpDialog.cs \
 	Gui/Dialog/SnapshotsDialog.cs \
 	Gui/Dialog/SubCategoryTagsEditor.cs \
 	Gui/Dialog/TaggerDialog.cs \

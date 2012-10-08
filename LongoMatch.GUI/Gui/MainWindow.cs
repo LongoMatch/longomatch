@@ -574,6 +574,15 @@ namespace LongoMatch.Gui
 			about.Run();
 			about.Destroy();
 		}
+		
+		protected void OnDialogInfoActionActivated (object sender, System.EventArgs e)
+		{
+			var info = new LongoMatch.Gui.Dialog.ShortcutsHelpDialog();
+			info.TransientFor = this;
+			info.Run();
+			info.Destroy();
+		}
+		
 		#endregion
 
 		protected virtual void OnPlayerbin1Error(object o, string message)
