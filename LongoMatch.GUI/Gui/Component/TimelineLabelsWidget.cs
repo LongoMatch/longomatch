@@ -34,7 +34,7 @@ namespace LongoMatch.Gui.Component
 		private const int LINE_WIDTH = 2;
 		private double scroll;
 		Pango.Layout layout;
-		Dictionary<string, Gdk.Color> labelsDict;
+		Dictionary<Label, Gdk.Color> labelsDict;
 
 		[System.ComponentModel.Category("LongoMatch")]
 		[System.ComponentModel.ToolboxItem(true)]
@@ -43,14 +43,14 @@ namespace LongoMatch.Gui.Component
 			layout =  new Pango.Layout(PangoContext);
 			layout.Wrap = Pango.WrapMode.Char;
 			layout.Alignment = Pango.Alignment.Left;
-			labelsDict = new Dictionary<string, Gdk.Color> ();
+			labelsDict = new Dictionary<Label, Gdk.Color> ();
 		}
 
 		public List<string> Labels {
 			set {
 				labelsDict.Clear();
 				foreach (String label in value)
-					labelsDict.Add(label, Gdk.Color.Zero);
+					labelsDict.Add(new Label(label), Gdk.Color.Zero);
 			}
 		}
 		
@@ -58,7 +58,7 @@ namespace LongoMatch.Gui.Component
 			set {
 				labelsDict.Clear();
 				foreach (Category cat in value)
-					labelsDict.Add(cat.Name, Helpers.ToGdkColor(cat.Color));
+					labelsDict.Add(new Label(cat.Name), Helpers.ToGdkColor(cat.Color));
 			}
 		}
 
@@ -87,13 +87,13 @@ namespace LongoMatch.Gui.Component
 				return;
 
 			using(Cairo.Context g = Gdk.CairoHelper.Create(win)) {
-				foreach(String label in labelsDict.Keys) {
+				foreach(Label label in labelsDict.Keys) {
 					int y = LINE_WIDTH/2 + i * SECTION_HEIGHT - (int)Scroll;
 					CairoUtils.DrawRoundedRectangle(g, 2, y + 3 , Allocation.Width - 3,
 					                                SECTION_HEIGHT - 3, SECTION_HEIGHT/7,
 					                                CairoUtils.RGBToCairoColor(labelsDict[label]),
 					                                CairoUtils.RGBToCairoColor(labelsDict[label]));
-					DrawCairoText(label, 0 + 3, y + SECTION_HEIGHT / 2 - 5);
+					DrawCairoText(label.Text, 0 + 3, y + SECTION_HEIGHT / 2 - 5);
 					i++;
 				}
 			}
@@ -104,5 +104,17 @@ namespace LongoMatch.Gui.Component
 			DrawCategories(evnt.Window);
 			return base.OnExposeEvent(evnt);
 		}
+		
+		private class Label {
+			public Label(string label) {
+				Text = label;
+			}
+			
+			public string Text {
+				get;
+				set;
+			}
+		}
 	}
+	
 }
