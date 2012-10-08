@@ -152,6 +152,7 @@ LongoMatch.GUI/Gui/Dialog/OpenProjectDialog.cs
 LongoMatch.GUI/Gui/Dialog/ProjectSelectionDialog.cs
 LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs
 LongoMatch.GUI/Gui/Dialog/RenderingJobsDialog.cs
+LongoMatch.GUI/Gui/Dialog/ShortcutsHelpDialog.cs
 LongoMatch.GUI/Gui/Dialog/SnapshotsDialog.cs
 LongoMatch.GUI/Gui/Dialog/SubCategoryTagsEditor.cs
 LongoMatch.GUI/Gui/Dialog/TaggerDialog.cs
