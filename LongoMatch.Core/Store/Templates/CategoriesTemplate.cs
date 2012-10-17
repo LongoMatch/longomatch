@@ -69,12 +69,10 @@ namespace LongoMatch.Store.Templates
 		public void Save(string filePath) {
 			SerializableObject.Save(this, filePath);
 		}
-		
-		public void AddDefaultItem (int index) {
+	
+		public void AddDefaultSubcategories (Category cat) {
 			PlayerSubCategory localplayers, visitorplayers;
 			TagSubCategory period;
-			Color c = Color.FromArgb(255, 0, 0);
-			HotKey h = new HotKey();
 			
 			localplayers = new PlayerSubCategory {
 				Name = Catalog.GetString("Local Team Players"),
@@ -95,6 +93,15 @@ namespace LongoMatch.Store.Templates
 			};
 			period.Add("1");
 			period.Add("2");
+			cat.SubCategories.Add(localplayers);
+			cat.SubCategories.Add(visitorplayers);
+			cat.SubCategories.Add(period);
+		}	
+		
+		public void AddDefaultItem (int index) {
+			Color c = Color.FromArgb(255, 0, 0);
+			HotKey h = new HotKey();
+			
 			
 			Category cat =  new Category {
 				Name = "Category " + index,
@@ -105,9 +112,7 @@ namespace LongoMatch.Store.Templates
 				HotKey = h,
 				Position = index-1,
 			};
-			cat.SubCategories.Add(localplayers);
-			cat.SubCategories.Add(visitorplayers);
-			cat.SubCategories.Add(period);
+			AddDefaultSubcategories(cat);
 			Insert(index, cat);
 		}
 

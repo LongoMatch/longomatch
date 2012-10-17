@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using LongoMatch.Interfaces;
+using LongoMatch.Interfaces.GUI;
 using LongoMatch.Store;
 using LongoMatch.Common;
 
@@ -51,7 +52,8 @@ namespace LongoMatch.Handlers
 	public delegate void OpenProjectHandler();
 	public delegate void CloseOpenendProjectHandler(bool save);
 	public delegate void NewProjectHandler();
-	public delegate void ImportProjectHandler();
+	public delegate void ImportProjectHandler(string name, string filterName, string filter,
+	                                          Func <string, Project> importProjectFunc, bool requiresNewFile);
 	public delegate void ExportProjectHandler();
 	
 	/* GUI */

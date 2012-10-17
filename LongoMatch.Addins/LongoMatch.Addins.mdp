@@ -18,6 +18,7 @@
     <File subtype="Code" buildaction="Compile" name="ExtensionPoints/IConfigModifier.cs" />
     <File subtype="Code" buildaction="Compile" name="AddinsManager.cs" />
     <File subtype="Directory" buildaction="Compile" name="." />
+    <File subtype="Code" buildaction="Compile" name="ExtensionPoints/IImportProject.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Addins, Version=0.6.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />

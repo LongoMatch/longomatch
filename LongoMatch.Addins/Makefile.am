@@ -6,6 +6,7 @@ LINK = $(REF_DEP_LONGOMATCH_ADDINS)
 SOURCES = \
 	AddinsManager.cs \
 	ExtensionPoints/IConfigModifier.cs \
+	ExtensionPoints/IImportProject.cs \
 	ExtensionPoints/IExportProject.cs
 
 RESOURCES =

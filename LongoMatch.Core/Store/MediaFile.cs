@@ -161,7 +161,7 @@ namespace LongoMatch.Store
 		
 		public double Par {
 			get {
-				if (par == null)
+				if (par == 0)
 					return 1;
 				return par;
 			}

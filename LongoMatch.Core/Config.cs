@@ -56,6 +56,15 @@ namespace LongoMatch
 			return RelativeToPrefix(String.Format("share/{0}/images",
 						Constants.SOFTWARE_NAME.ToLower()));
 		}
+		
+		public static string PluginsDir() {
+			return RelativeToPrefix(String.Format("share/{0}/plugins",
+						Constants.SOFTWARE_NAME.ToLower()));
+		}
+		
+		public static string PluginsConfigDir() {
+			return Path.Combine(configDirectory, "addins");
+		}
 
 		public static string DBDir() {
 			return Path.Combine(configDirectory, "db");

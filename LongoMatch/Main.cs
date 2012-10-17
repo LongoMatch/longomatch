@@ -58,11 +58,12 @@ namespace LongoMatch
 			Version version = Assembly.GetExecutingAssembly().GetName().Version;
 
 			try {
-				AddinsManager manager = new AddinsManager(Path.Combine(Config.HomeDir(), "addins"));
+				AddinsManager manager = new AddinsManager(Config.PluginsConfigDir(), Config.PluginsDir());
 				manager.LoadConfigModifierAddins();
 			    GUIToolkit guiToolkit = new GUIToolkit(version);
 			    IMultimediaToolkit multimediaToolkit = new MultimediaFactory();
 			    manager.LoadExportProjectAddins(guiToolkit.MainWindow);
+			    manager.LoadImportProjectAddins(guiToolkit.MainWindow);
 				Core.Start(guiToolkit, multimediaToolkit);
 				Application.Run();
 			} catch(Exception ex) {

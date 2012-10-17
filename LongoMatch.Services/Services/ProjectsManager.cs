@@ -115,14 +115,15 @@ namespace LongoMatch.Services
 			SetProject(project, ProjectType.FileProject, new CaptureSettings());
 		}
 	
-		private void ImportProject() {
+		private void ImportProject(string name, string filterName, string filter,
+		                           Func<string, Project> importProject, bool requiresNewFile) {
 			Project project;
 			string fileName;
 
 			Log.Debug("Importing project");
 			/* Show a file chooser dialog to select the file to import */
-			fileName = guiToolkit.OpenFile(Catalog.GetString("Import Project"), null,
-				Config.HomeDir(), Constants.PROJECT_NAME, "*lpr");
+			fileName = guiToolkit.OpenFile(name, null,
+				Config.HomeDir(), filterName, filter);
 				
 			if(fileName == null)
 				return;
@@ -130,7 +131,7 @@ namespace LongoMatch.Services
 			/* try to import the project and show a message error is the file
 			 * is not a valid project */
 			try {
-				project = Project.Import(fileName);
+				project = importProject(fileName);
 			}
 			catch(Exception ex) {
 				guiToolkit.ErrorMessage(Catalog.GetString("Error importing project:") +
@@ -139,6 +140,27 @@ namespace LongoMatch.Services
 				return;
 			}
 
+			if (requiresNewFile) {
+				string videofile;
+				
+				guiToolkit.InfoMessage (Catalog.GetString("This project doesn't have any file associated.\n" +
+				                                          "Select one in the next window"));
+				videofile = guiToolkit.OpenFile(Catalog.GetString("Select a video file"), null,
+				                                                 Config.HomeDir(), null, null);
+				if (videofile == null) {
+					guiToolkit.ErrorMessage (Catalog.GetString("Could not import project, you need a video file"));
+					return;
+				} else {
+					try {
+						project.Description.File = multimediaToolkit.DiscoverFile(videofile);
+					} catch (Exception ex) {
+						guiToolkit.ErrorMessage (ex.Message);
+						return;
+					}
+					CreateThumbnails (project);
+				}
+			}
+			
 			/* If the project exists ask if we want to overwrite it */
 			if(Core.DB.Exists(project)) {
 				var res = guiToolkit.QuestionMessage(Catalog.GetString("A project already exists for the file:") +

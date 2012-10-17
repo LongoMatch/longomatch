@@ -1804,6 +1804,11 @@
         <property name="StockId">gtk-dialog-info</property>
         <signal name="Activated" handler="OnDialogInfoActionActivated" />
       </action>
+      <action id="ImportFromFileAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Import from file</property>
+        <property name="ShortLabel" translatable="yes">Import from file</property>
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">LongoMatch</property>
@@ -1828,7 +1833,9 @@
                     <node type="Menuitem" action="SaveProjectAction" />
                     <node type="Menuitem" action="CloseProjectAction" />
                     <node type="Separator" />
-                    <node type="Menuitem" action="ImportProjectAction" />
+                    <node type="Menu" action="ImportProjectAction">
+                      <node type="Menuitem" action="ImportFromFileAction" />
+                    </node>
                     <node type="Separator" />
                     <node type="Menuitem" action="QuitAction" />
                   </node>

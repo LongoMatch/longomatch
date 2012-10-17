@@ -214,6 +214,14 @@ namespace LongoMatch.Gui
 			(parent.Submenu as Menu).Append(item);
 		}
 		
+		public void AddImportEntry (string name, string shortName, Action<string, IGUIToolkit> importAction) {
+			MenuItem parent = (MenuItem) this.UIManager.GetWidget("/menubar1/ToolsAction/ImportProjectAction1");
+			
+			MenuItem item = new MenuItem(name);
+			item.Activated += (sender, e) => (importAction(null, guiToolKit));
+			item.Show();
+			(parent.Submenu as Menu).Append(item);
+		}
 		#endregion
 		
 		#region Private Methods
@@ -275,7 +283,7 @@ namespace LongoMatch.Gui
 		private void ConnectMenuSignals() {
 			SaveProjectAction.Activated += (o, e) => {EmitSaveProject();};
 			CloseProjectAction.Activated += (o, e) => {PromptCloseProject();};
-			ImportProjectAction.Activated += (o, e) => {EmitImportProject();};
+		    ImportFromFileAction.Activated += (o, e) => {EmitImportProject();};
 			ExportToProjectFileAction.Activated += (o, e) => {EmitExportProject();};
 			QuitAction.Activated += (o, e) => {CloseAndQuit();};
 			CategoriesTemplatesManagerAction.Activated += (o, e) => {EmitManageCategories();};
@@ -866,6 +874,8 @@ namespace LongoMatch.Gui
 			if (KeyPressed != null)
 				KeyPressed(sender, key, modifier);
 		}
+
+
 		#endregion
 	}
 }

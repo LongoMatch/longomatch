@@ -86,6 +86,8 @@ namespace LongoMatch.Interfaces.GUI
 		ITemplatesService TemplatesService{set;}
 		
 		void AddExportEntry (string name, string shortName, Action<Project, IGUIToolkit> exportAction);
+		void AddImportEntry (string name, string shortName, string filterName, string filter,
+		                     Func<string, Project> importFunc, bool requiresNewFile);
 	}
 }
 

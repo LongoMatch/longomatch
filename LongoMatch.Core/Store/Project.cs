@@ -169,6 +169,10 @@ namespace LongoMatch.Store
 			return play;
 		}
 		
+		public void AddPlay (Play play) {
+			timeline.Add(play);
+		}
+		
 		/// <summary>
 		/// Delete a play from the project
 		/// </summary>

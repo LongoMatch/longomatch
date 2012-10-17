@@ -30,10 +30,10 @@ namespace LongoMatch.Addins
 {
 	public class AddinsManager
 	{
-		public AddinsManager (string addinsPath)
+		public AddinsManager (string configPath, string searchPath)
 		{
-			Log.Information("Initializing addins at path: " + addinsPath);
-			AddinManager.Initialize (addinsPath);
+			Log.Information("Initializing addins at path: " + searchPath);
+			AddinManager.Initialize (configPath, searchPath);
 			AddinManager.Registry.Update();
 		}
 		
@@ -47,7 +47,13 @@ namespace LongoMatch.Addins
 			foreach (IExportProject exportProject in AddinManager.GetExtensionObjects<IExportProject> ()) {
 				mainWindow.AddExportEntry(exportProject.GetMenuEntryName(), exportProject.GetMenuEntryShortName(),
 					new Action<Project, IGUIToolkit>(exportProject.ExportProject));
-			
+			}
+		}
+		
+		public void LoadImportProjectAddins(IMainWindow mainWindow) {
+			foreach (IImportProject importProject in AddinManager.GetExtensionObjects<IImportProject> ()) {
+				mainWindow.AddImportEntry(importProject.GetMenuEntryName(), importProject.GetMenuEntryShortName(),
+				    importProject.GetFilterName(), importProject.GetFilter(), importProject.ImportProject, true);
 			}
 		}
 	}
