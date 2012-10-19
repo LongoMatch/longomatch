@@ -1833,9 +1833,7 @@
                     <node type="Menuitem" action="SaveProjectAction" />
                     <node type="Menuitem" action="CloseProjectAction" />
                     <node type="Separator" />
-                    <node type="Menu" action="ImportProjectAction">
-                      <node type="Menuitem" action="ImportFromFileAction" />
-                    </node>
+                    <node type="Menu" action="ImportProjectAction" />
                     <node type="Separator" />
                     <node type="Menuitem" action="QuitAction" />
                   </node>

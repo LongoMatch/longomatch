@@ -135,6 +135,9 @@ namespace LongoMatch.Gui
 			if (!Config.useGameUnits)
 				GameUnitsViewAction.Visible = false;
 			
+			AddImportEntry(Catalog.GetString("Import file project"), "ImportFileProject",
+			               Constants.PROJECT_NAME, "*" + Constants.PROJECT_EXT, Project.Import,
+			               false);
 			screen = Display.Default.DefaultScreen;
 			this.Resize(screen.Width * 80 / 100, screen.Height * 80 / 100);
 		}
@@ -214,11 +217,13 @@ namespace LongoMatch.Gui
 			(parent.Submenu as Menu).Append(item);
 		}
 		
-		public void AddImportEntry (string name, string shortName, Action<string, IGUIToolkit> importAction) {
-			MenuItem parent = (MenuItem) this.UIManager.GetWidget("/menubar1/ToolsAction/ImportProjectAction1");
+		public void AddImportEntry (string name, string shortName, string filterName,
+		                            string filter, Func<string, Project> importFunc,
+		                            bool requiresNewFile) {
+			MenuItem parent = (MenuItem) this.UIManager.GetWidget("/menubar1/FileAction/ImportProjectAction");
 			
 			MenuItem item = new MenuItem(name);
-			item.Activated += (sender, e) => (importAction(null, guiToolKit));
+			item.Activated += (sender, e) => (EmitImportProject(name, filterName, filter, importFunc, requiresNewFile));
 			item.Show();
 			(parent.Submenu as Menu).Append(item);
 		}
@@ -283,7 +288,6 @@ namespace LongoMatch.Gui
 		private void ConnectMenuSignals() {
 			SaveProjectAction.Activated += (o, e) => {EmitSaveProject();};
 			CloseProjectAction.Activated += (o, e) => {PromptCloseProject();};
-		    ImportFromFileAction.Activated += (o, e) => {EmitImportProject();};
 			ExportToProjectFileAction.Activated += (o, e) => {EmitExportProject();};
 			QuitAction.Activated += (o, e) => {CloseAndQuit();};
 			CategoriesTemplatesManagerAction.Activated += (o, e) => {EmitManageCategories();};
@@ -794,9 +798,10 @@ namespace LongoMatch.Gui
 			ResetGUI();
 		}
 		
-		private void EmitImportProject() {
+		private void EmitImportProject(string name, string filterName, string filter,
+		                               Func<string, Project> func, bool requiresNewFile) {
 			if (ImportProjectEvent != null)
-				ImportProjectEvent();
+				ImportProjectEvent(name, filterName, filter, func, requiresNewFile);
 		}
 		
 		private void EmitOpenProject() {
