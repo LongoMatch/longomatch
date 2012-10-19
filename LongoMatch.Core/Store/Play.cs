@@ -42,6 +42,7 @@ namespace LongoMatch.Store
 			Tags = new StringTagStore();
 			Players = new PlayersTagStore(); 
 			Teams = new TeamsTagStore();
+			Fps = 25;
 		}
 		#endregion
 
