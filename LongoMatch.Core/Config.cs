@@ -58,7 +58,7 @@ namespace LongoMatch
 		}
 		
 		public static string PluginsDir() {
-			return RelativeToPrefix(String.Format("share/{0}/plugins",
+			return RelativeToPrefix(String.Format("lib/{0}/plugins",
 						Constants.SOFTWARE_NAME.ToLower()));
 		}
 		
