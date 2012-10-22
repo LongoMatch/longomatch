@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: longomatch.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-10-08 21:02+0000\n"
-"PO-Revision-Date: 2012-10-13 13:06+0200\n"
+"POT-Creation-Date: 2012-10-19 15:34+0000\n"
+"PO-Revision-Date: 2012-10-22 10:25+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
+"Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Gtranslator 2.91.5\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2565
 msgid ""
@@ -233,7 +233,7 @@ msgid "0 seconds"
 msgstr "0 segundos"
 
 #: ../LongoMatch/longomatch.desktop.in.in.h:1
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:166
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:170
 msgid "LongoMatch"
 msgstr "LongoMatch"
 
@@ -245,15 +245,15 @@ msgstr "LongoMatch: el entrenador digital"
 msgid "Sports video analysis tool for coaches"
 msgstr "Herramienta de vídeo análisis para entrenadores"
 
-#: ../LongoMatch/Main.cs:99
+#: ../LongoMatch/Main.cs:100
 msgid "The application has finished with an unexpected error."
 msgstr "El programa ha terminado con error inesperado"
 
-#: ../LongoMatch/Main.cs:100
+#: ../LongoMatch/Main.cs:101
 msgid "A log has been saved at: "
 msgstr "Se ha guardado un registro en:"
 
-#: ../LongoMatch/Main.cs:101
+#: ../LongoMatch/Main.cs:102
 msgid "Please, fill a bug report "
 msgstr "Envíe un informe de fallos "
 
@@ -314,7 +314,7 @@ msgstr "Inicio"
 msgid "Stop"
 msgstr "Fin"
 
-#: ../LongoMatch.Core/Store/Project.cs:259
+#: ../LongoMatch.Core/Store/Project.cs:263
 msgid "The file you are trying to load is not a valid project"
 msgstr "El archivo que intenta cargar no es un proyecto válido."
 
@@ -351,15 +351,15 @@ msgstr "Equipo"
 msgid "Team selection"
 msgstr "Selección de equipo"
 
-#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:80
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:78
 msgid "Local Team Players"
 msgstr "Plantilla del equipo local"
 
-#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:86
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:84
 msgid "Visitor Team Players"
 msgstr "Plantilla del equipo visitante"
 
-#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:92
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:90
 msgid "Period"
 msgstr "Período"
 
@@ -592,17 +592,14 @@ msgid "  Plays Selection   "
 msgstr "  Reproduce la selección   "
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs:118
-#| msgid "Categories filter"
 msgid "Activate categories filters"
 msgstr "Activar filtros de categorías"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs:144
-#| msgid "Players filter"
 msgid "Activate players filters"
 msgstr "Activar filtros de jugadores"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs:160
-#| msgid "Filter"
 msgid "  Filters  "
 msgstr "  Filtros "
 
@@ -679,7 +676,7 @@ msgid "<b>Team</b>"
 msgstr "<b>Equipo</b>"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:20
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:133
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:134
 msgid "Drawing Tool"
 msgstr "Herramienta de dibujo"
 
@@ -777,7 +774,7 @@ msgid "Live project using a fake capture device"
 msgstr "Proyecto en directo usando un dispositivo capturador falso"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs:27
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:82
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:83
 msgid "Projects Manager"
 msgstr "Gestor de _proyectos"
 
@@ -869,7 +866,7 @@ msgid "Categories Template"
 msgstr "Plantilla de categorías"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TemplatesManager.cs:22
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:86
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:87
 msgid "Templates Manager"
 msgstr "Gestor de plantillas"
 
@@ -949,145 +946,151 @@ msgstr "Nombre del archivo:"
 msgid "Calendar"
 msgstr "Calendario"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:63
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:64
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:65
 msgid "_File"
 msgstr "_Archivo"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:66
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:67
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:68
 msgid "_New Project"
 msgstr "Proyecto _nuevo"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:69
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:70
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:71
 msgid "_Open Project"
 msgstr "_Abrir proyecto"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:72
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:73
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:74
 msgid "_Quit"
 msgstr "_Salir"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:75
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:77
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:76
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:78
 msgid "_Close Project"
 msgstr "_Cerrar proyecto"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:79
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:80
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:81
 msgid "_Tools"
 msgstr "_Herramientas"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:83
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:84
 msgid "Database Manager"
 msgstr "Gestor de la _base de datos"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:85
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:86
 msgid "Categories Templates Manager"
 msgstr "Gestor de plantillas de categorías"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:88
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:89
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:90
 msgid "_View"
 msgstr "_Ver"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:91
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:92
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:93
 msgid "Full Screen"
 msgstr "Pantalla completa"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:94
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:95
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:96
 msgid "Playlist"
 msgstr "Lista de reproducción"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:97
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:98
 msgid "Tagging view"
 msgstr "Vista de etiquetado"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:100
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:101
 msgid "Capture Mode"
 msgstr "Modo captura"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:102
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:103
 msgid "Timeline view"
 msgstr "Vista de cronología"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:105
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:106
 msgid "Analyze Mode"
 msgstr "Modo análisis"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:107
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:109
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:108
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:110
 msgid "_Save Project"
 msgstr "_Guardar proyecto"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:111
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:112
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:129
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:113
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:130
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:131
 msgid "_Help"
 msgstr "Ay_uda"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:114
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:115
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:116
 msgid "_About"
 msgstr "Acerca _de"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:117
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:119
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:118
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:120
 msgid "Export Project To CSV File"
 msgstr "Exportar proyecto a archivo CSV"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:122
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:123
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:124
 msgid "Teams Templates Manager"
 msgstr "Gestor de plantillas de equipos"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:125
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:127
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:126
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:128
 msgid "Hide All Widgets"
 msgstr "Esconder todo"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:132
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:133
 msgid "_Drawing Tool"
 msgstr "Herramienta de _dibujo"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:135
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:136
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:137
 msgid "_Import Project"
 msgstr "_Importar proyecto"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:138
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:139
 msgid "Manual tagging view"
 msgstr "Vista de etiquetado manual"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:141
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:142
 msgid "Free Capture Mode"
 msgstr "Modo de captura libre"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:143
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:146
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:144
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:147
 msgid "Game units view"
 msgstr "Vista de unidades de juego"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:148
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:149
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:151
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:153
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:150
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:152
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:154
 msgid "Export Project"
 msgstr "Exportar proyecto"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:157
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:158
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:159
 msgid "Export to project file"
 msgstr "Exportar a un archivo de proyecto"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:160
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:161
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:162
 msgid "Shortcuts"
 msgstr "Atajos"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:164
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:165
+#| msgid "Import Project"
+msgid "Import from file"
+msgstr "Importar desde un archivo"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs:14
 msgid "TransparentDrawingArea"
@@ -1168,27 +1171,22 @@ msgid "Players filter"
 msgstr "Filtro de jugadores"
 
 #: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:190
-#| msgid "Categories filter"
 msgid "Disable categories filters"
 msgstr "Desactivar filtro de categorías"
 
 #: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:192
-#| msgid "Categories filter"
 msgid "Enable categories filters"
 msgstr "Activar filtro de categorías"
 
 #: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:200
-#| msgid "Players filter"
 msgid "Disable players filters"
 msgstr "Desactivar filtro de jugadores"
 
 #: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:202
-#| msgid "Players filter"
 msgid "Enable players filters"
 msgstr "Activar filtro de jugadores"
 
 #: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:349
-#| msgid "GConf Source"
 msgid "OS X Source"
 msgstr "Origen OS X"
 
@@ -1400,15 +1398,20 @@ msgstr "La lista de reproducción que quiere renderizar está vacía"
 msgid "Please, select a video file."
 msgstr "Seleccione un archivo de vídeo"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:446
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:138
+#| msgid "Import Project"
+msgid "Import file project"
+msgstr "Importar archivo de proyecto"
+
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:458
 msgid "Do you want to close the current project?"
 msgstr "¿Quiere cerrar el proyecto actual?"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:591
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:603
 msgid "The actual project will be closed due to an error in the media player:"
 msgstr "El proyecto actual se cerrará debido a un error en el reproductor:"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:690
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:702
 msgid ""
 "An error occured in the video capturer and the current project will be "
 "closed:"
@@ -1657,32 +1660,45 @@ msgstr ""
 "Se han guardado el archivo de vídeo y el respaldo del proyecto. Inténtelo "
 "importar más tarde:\n"
 
-#. Show a file chooser dialog to select the file to import
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:124
-msgid "Import Project"
-msgstr "Importar un proyecto"
-
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:136
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:137
 msgid "Error importing project:"
 msgstr "Error al importar el proyecto:"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:144
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:146
+msgid ""
+"This project doesn't have any file associated.\n"
+"Select one in the next window"
+msgstr ""
+"Este proyecto no tiene ningún archivo asociado.\n"
+"Seleccione uno en la siguiente ventana"
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:148
+#| msgid "Please, select a video file."
+msgid "Select a video file"
+msgstr "Seleccionar un archivo de vídeo"
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:151
+#| msgid "New project using a video file"
+msgid "Could not import project, you need a video file"
+msgstr "No se pudo importar el proyecto, necesita un archivo de vídeo"
+
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:166
 msgid "A project already exists for the file:"
 msgstr "Un proyecto ya existe para este archivo:"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:146
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:168
 msgid "Do you want to overwrite it?"
 msgstr "¿Quiere sobreescribirlo?"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:154
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:176
 msgid "Project successfully imported."
 msgstr "Proyecto importado satisfactoriamente"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:165
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:187
 msgid "The file associated to this project doesn't exist."
 msgstr "El archivo asociado a este proyecto no existe."
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:166
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:188
 msgid ""
 "If the location of the file has changed try to edit it with the database "
 "manager."
@@ -1690,35 +1706,35 @@ msgstr ""
 "Si el archivo ha sido cambiado de sitio, intente editarlo con el gestor de "
 "proyectos"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:174
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:196
 msgid "An error occurred opening this project:"
 msgstr "Ocurrió un error al abrir este proyecto:"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:233
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:255
 msgid "Creating video thumbnails. This can take a while."
 msgstr "Creando las miniaturas del vídeo. Esto puede llevar un tiempo."
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:307
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:329
 msgid "No capture devices were found."
 msgstr "No se encontraron dispositivos de captura."
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:343
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:365
 msgid "You are opening a live project without any video file associated yet."
 msgstr "Está abriendo un proyecto «live» sin un archivo de vídeo asociado."
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:344
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:366
 msgid "Select a video file in the step."
 msgstr "Seleccione un archivo de vídeo."
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:359
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:381
 msgid "Save project"
 msgstr "Guardar proyecto"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:369
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:391
 msgid "Project exported successfully"
 msgstr "Proyecto exportado satisfactoriamente."
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:371
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:393
 msgid "Error exporting project"
 msgstr "Error al exportar el proyecto"
 
