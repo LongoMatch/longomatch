@@ -27,7 +27,6 @@
       <Entry build="True" name="LongoMatch.GUI.Multimedia" configuration="Debug" />
       <Entry build="True" name="LongoMatch.Addins" configuration="Debug" />
       <Entry build="True" name="LongoMatch.Addins.COE" configuration="Debug" />
-      <Entry build="True" name="LongoMatch.Plugins" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="LongoMatch.GUI" configuration="Release" />
@@ -39,7 +38,6 @@
       <Entry build="True" name="LongoMatch.GUI.Multimedia" configuration="Release" />
       <Entry build="True" name="LongoMatch.Addins" configuration="Release" />
       <Entry build="True" name="LongoMatch.Addins.COE" configuration="Release" />
-      <Entry build="True" name="LongoMatch.Plugins" configuration="Release" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="LongoMatchGtk" single="True">
@@ -52,7 +50,6 @@
     <Execute type="None" entry="LongoMatch.GUI.Multimedia" />
     <Execute type="None" entry="LongoMatch.Addins" />
     <Execute type="None" entry="LongoMatch.Addins.COE" />
-    <Execute type="None" entry="LongoMatch.Plugins" />
   </StartMode>
   <Entries>
     <Entry filename="LongoMatch.GUI/LongoMatch.GUI.mdp" />
@@ -64,6 +61,5 @@
     <Entry filename="LongoMatch.GUI.Multimedia/LongoMatch.GUI.Multimedia.mdp" />
     <Entry filename="LongoMatch.Addins/LongoMatch.Addins.mdp" />
     <Entry filename="LongoMatch.Addins.COE/LongoMatch.Addins.COE.mdp" />
-    <Entry filename="LongoMatch.Plugins/LongoMatch.Plugins.mdp" />
   </Entries>
 </Combine>
