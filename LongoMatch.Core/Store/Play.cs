@@ -133,7 +133,10 @@ namespace LongoMatch.Store
 				else
 					return null;
 			} set {
-				Drawings[0] = value;
+				if (Drawings.Count == 0)
+					Drawings.Add (value);
+				else
+					Drawings[0] = value;
 			}
 		}
 
