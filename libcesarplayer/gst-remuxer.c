@@ -225,6 +225,7 @@ gst_remuxer_fix_video_ts (GstPad *pad, GstBuffer *buf, GstRemuxer *remuxer)
   } else {
     remuxer->priv->last_video_buf_ts = GST_BUFFER_TIMESTAMP (buf);
   }
+  return TRUE;
 }
 
 static gboolean
@@ -238,6 +239,7 @@ gst_remuxer_pad_added_cb (GstElement *demuxer, GstPad *pad,
   const GstStructure *s;
   gchar *muxer_pad_name = NULL;
   const gchar *mime;
+  gboolean is_video;
 
   caps = gst_pad_get_caps_reffed (pad);
   s = gst_caps_get_structure (caps, 0);
@@ -255,7 +257,7 @@ gst_remuxer_pad_added_cb (GstElement *demuxer, GstPad *pad,
       parser_pad = gst_element_get_static_pad (parser, "src");
       gst_pad_add_buffer_probe (parser_pad, (GCallback)gst_remuxer_fix_video_ts, remuxer);
     }
-    remuxer->priv->video_linked = TRUE;
+    is_video = TRUE;
   } else if (g_strrstr (mime, "audio") && !remuxer->priv->audio_linked) {
     muxer_pad_name = "audio_%d";
     if (g_strrstr (mime, "audio/mpeg")) {
@@ -275,7 +277,7 @@ gst_remuxer_pad_added_cb (GstElement *demuxer, GstPad *pad,
     } else if (g_strrstr (mime, "audio/x-ac3")) {
       parser = gst_element_factory_make ("ac3parse", NULL);
     }
-    remuxer->priv->audio_linked = TRUE;
+    is_video = FALSE;
   }
 
   if (muxer_pad_name == NULL) {
@@ -298,6 +300,21 @@ gst_remuxer_pad_added_cb (GstElement *demuxer, GstPad *pad,
     muxer_pad = gst_element_get_compatible_pad (muxer, pad, caps);
   }
 
+  if (!muxer_pad) {
+    gchar *msg;
+
+    msg = g_strdup_printf ("File with %s type %s is not supported",
+        is_video ? "video" : "audio", mime);
+    g_signal_emit (remuxer, remuxer_signals[SIGNAL_ERROR], 0, msg);
+    g_free (msg);
+    gst_remuxer_cancel (remuxer);
+    return TRUE;
+  } else {
+    if (is_video)
+      remuxer->priv->video_linked = TRUE;
+    else
+      remuxer->priv->audio_linked = TRUE;
+  }
   queue = gst_element_factory_make ("queue2", NULL);
   gst_bin_add (GST_BIN(remuxer->priv->main_pipeline), queue);
   gst_element_set_state (queue, GST_STATE_PLAYING);
@@ -320,13 +337,28 @@ gst_remuxer_have_type_cb (GstElement *typefind, guint prob,
     GstCaps *caps, GstRemuxer *remuxer)
 {
   GstElement *demuxer = NULL;
+  GstElement *parser = NULL;
+  GstStructure *structure;
   const gchar *mime;
 
-  mime = gst_structure_get_name (gst_caps_get_structure (caps, 0));
+  structure = gst_caps_get_structure (caps, 0);
+  mime = gst_structure_get_name (structure);
   GST_INFO_OBJECT (remuxer, "Found mime type: %s", mime);
 
   if (g_strrstr (mime, "video/mpegts")) {
-    demuxer = gst_element_factory_make("tsdemux", NULL);
+    GST_INFO_OBJECT (remuxer, "Using tsdemux as demuxer");
+    demuxer = gst_element_factory_make ("tsdemux", NULL);
+  } else if (g_strrstr (mime, "video/mpeg")) {
+    gboolean sysstream;
+
+    if (gst_structure_get_boolean (structure, "systemstream", &sysstream) &&
+        !sysstream) {
+      GST_INFO_OBJECT (remuxer, "Using mpegvideoparse as demuxer");
+      parser = gst_element_factory_make ("mpegvideoparse", NULL);
+    } else {
+      GST_INFO_OBJECT (remuxer, "Using mpegpsdemux as demuxer");
+      demuxer = gst_element_factory_make ("mpegpsdemux", NULL);
+    }
   }
 
   if (demuxer) {
@@ -334,6 +366,12 @@ gst_remuxer_have_type_cb (GstElement *typefind, guint prob,
     gst_element_link (typefind, demuxer);
     g_signal_connect (demuxer, "pad-added",
         G_CALLBACK (gst_remuxer_pad_added_cb), remuxer);
+  } else if (parser) {
+    GstPad *pad;
+    gst_bin_add (GST_BIN(remuxer->priv->main_pipeline), parser);
+    gst_element_link (typefind, parser);
+    pad = gst_element_get_static_pad (parser, "src");
+    gst_remuxer_pad_added_cb (parser, pad, remuxer);
   } else {
     gchar *msg;
 
