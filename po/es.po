@@ -589,7 +589,7 @@ msgstr "Jugadas"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs:84
 msgid "  Plays Selection   "
-msgstr "  Reproduce la selección   "
+msgstr "  Selección de jugadas   "
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs:118
 msgid "Activate categories filters"
