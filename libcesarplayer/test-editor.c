@@ -18,7 +18,7 @@
  */
 
 /* Compile with:
- * gcc -o test-editor test-remuxer.c gst-remuxer.c `pkg-config --cflags --libs gstreamer-0.10` -DOSTYPE_LINUX -O0 -g
+ * gcc -o test-editor test-editor.c gst-video-editor.c `pkg-config --cflags --libs gstreamer-0.10` -DOSTYPE_LINUX -O0 -g
  */
 
 #include <stdlib.h>
@@ -35,8 +35,9 @@ percent_done_cb (GstVideoEditor *remuxer, gfloat percent, GstVideoEditor *editor
     g_print("SUCESS!\n");
     g_main_loop_quit (loop);
   } else {
-    g_print("----> %f%%", percent);
+    g_print("----> %f%%\n", percent);
   }
+  return TRUE;
 }
 
 static gboolean
@@ -75,19 +76,21 @@ main (int argc, char *argv[])
   }
 
   editor = gst_video_editor_new (NULL);
-  gst_video_editor_set_video_encoder (editor, &err, video_encoder);
-  if (err != NULL)
-    goto error;
   gst_video_editor_set_audio_encoder (editor, &err, audio_encoder);
   if (err != NULL)
     goto error;
+  gst_video_editor_set_video_encoder (editor, &err, video_encoder);
+  if (err != NULL)
+    goto error;
+  g_object_set (editor, "output_file", output_file,
+      "width", 320, "height", 240, "enable-audio", FALSE,
+      "enable-title", TRUE, "video-bitrate", 1000, "audio-bitrate", 200000,
+      NULL);
   gst_video_editor_set_video_muxer (editor, &err, video_muxer);
   if (err != NULL)
     goto error;
   gst_video_editor_add_segment (editor, input_file, 5000, 50000,
       (gdouble) 1, "Test", TRUE);
-  g_object_set (editor, "output_file", output_file,
-      "width", 320, "height", 240, "enable-audio", FALSE, NULL);
 
   loop = g_main_loop_new (NULL, FALSE);
   g_signal_connect (editor, "error", G_CALLBACK (error_cb), editor);
