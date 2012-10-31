@@ -250,7 +250,7 @@ namespace LongoMatch.Store
 		}
 
 		public static void Export(Project project, string file) {
-			file = Path.ChangeExtension(file,"lpr");
+			file = Path.ChangeExtension(file, Constants.PROJECT_EXT);
 			SerializableObject.Save(project, file);
 		}
 
