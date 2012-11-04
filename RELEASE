@@ -1,13 +1,8 @@
-LongoMatch-0.17.6 "Fuerteventura"
+LongoMatch-0.18.0 "House warming"
 ----------------------------------
 
-The LongoMatch team is happy to announce the fifth release in the
-unstable 0.17 series.
-
-*** IMPORTANT NOTE ***
-The 0.17.x releases are considered unstable and they should only be
-installed for testing and debugging until the development is considered
-stable enough to release LongoMatch 0.18
+The LongoMatch team is happy to announce the first release in the
+stable 0.18 series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
 all official latest gstreamer libraries and plugins installed for the best user
@@ -15,8 +10,20 @@ experience.
 
 
 * Features
+	* Added support for mac OS X
+	* New remuxer using GStreamer (drops all the dependencies in ffmpeg)
+	* Rewrite the video capturer to support recording without re-encoding
+	  for supported formats
 	* Export Drawings to video files
-	* Add filters for plays
+	* Rewrite of the tagging subsystem with support for subcategories
+	* Improved tagging workflow
+	* Allow edition of categories in opened projects
+	* Colored buttons for tagging widgets
+	* Add subcategories filters for plays
+	* Video player can be detached from the main window
+	* Video player seek steps can be configured in seconds
+	* Added jobs manager to enqueue playlists renderings
+	* Allow rendering plays from the left-side list
 
 *Contributors to this Release:
 
@@ -24,12 +31,17 @@ experience.
 	Andoni Morales Alastruey <ylatuya@gmail.com>
 	Bruno Brouard <annoa.b@gmail.com>
 	Daniel Mustieles <daniel.mustieles@gmail.com>
+	Gabor Kelemen <kelemeng@gnome.hu>
+	Joe Hansen <joedalton2@yahoo.dk>
+	Jorge González <jorgegonz@svn.gnome.org>
 	Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>
 	Marek Černocký <marek@manet.cz>
-	Mario Blättermann <mariobl@gnome.org>
+	Mario Blättermann <mario.blaettermann@gmail.com>
 	Martin Srebotnjak <miles@filmsi.net>
 	Matej Urbančič <mateju@svn.gnome.org>
 	Piotr Drąg <piotrdrag@gmail.com>
+	Tom Tryfonidis <tomtryf@gmail.com>
+	bbscouting <bbcoach@live.com>
 
 * Requirements
 
@@ -40,12 +52,11 @@ experience.
  * gnonlin >= 0.10.15
  * gtk-sharp >= 2.12
  * db40 >= 7.4
- * ffmpeg
 
 
 * Download
   LongoMatch source tarballs are available on gnome FTP:
-   http://ftp.gnome.org/pub/GNOME/sources/longomatch/0.16/
+   http://ftp.gnome.org/pub/GNOME/sources/longomatch/0.18/
 
   See the website for distribution-specific packages.
 

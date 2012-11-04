@@ -1,3 +1,13 @@
+===== LongoMatch 0.18.0 "House warming" =====
+
+	== Features of this release ==
+
+	* Added support for Mac OS X
+	* Added a new remuxer using GStreamer instead of ffmpeg
+	* Rewrite the video capturer to support recording without re-encoding
+	  for supported formats
+	* Fixed several bugs and stabilize release
+
 ===== LongoMatch 0.17.6 "Fuerteventura" =====
 
 	== Features of this release ==
