@@ -63,7 +63,8 @@ gboolean totem_ratio_fits_screen (GdkWindow * window, int video_width,
     int video_height, gfloat ratio);
 
 void init_backend (int argc, char **argv);
-void gst_set_window_handle (GstXOverlay *overlay, GdkWindow *window);
+guintptr gst_get_window_handle (GdkWindow *window);
+void gst_set_window_handle (GstXOverlay *overlay, guintptr window_handle);
 void init_debug();
 
 

@@ -52,13 +52,13 @@ typedef struct BaconVideoWidgetPrivate BaconVideoWidgetPrivate;
 
 typedef struct
 {
-  GtkEventBox parent;
+  GtkDrawingArea parent;
   BaconVideoWidgetPrivate *priv;
 } BaconVideoWidget;
 
 typedef struct
 {
-  GtkEventBoxClass parent_class;
+  GtkDrawingAreaClass parent_class;
 
   void (*error) (BaconVideoWidget * bvw, const char *message);
   void (*eos) (BaconVideoWidget * bvw);

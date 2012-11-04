@@ -262,24 +262,27 @@ totem_ratio_fits_screen (GdkWindow * video_window, int video_width,
   return TRUE;
 }
 
-void
-gst_set_window_handle(GstXOverlay *xoverlay, GdkWindow *window)
+guintptr
+gst_get_window_handle(GdkWindow *window)
 {
   guintptr window_handle;
 
   /* Retrieve window handler from GDK */
 #if defined (GDK_WINDOWING_WIN32)
   window_handle = (guintptr)GDK_WINDOW_HWND (window);
-  gst_x_overlay_set_window_handle (xoverlay, window_handle);
 #elif defined (GDK_WINDOWING_QUARTZ)
   window_handle = gdk_quartz_window_get_nsview (window);
-  gst_x_overlay_set_window_handle (xoverlay, window_handle);
 #elif defined (GDK_WINDOWING_X11)
-  gdk_threads_enter ();
   window_handle = GDK_WINDOW_XID (window);
-  gst_x_overlay_set_window_handle (xoverlay, window_handle);
-  gdk_threads_leave ();
 #endif
+
+  return window_handle;
+}
+
+void
+gst_set_window_handle(GstXOverlay *xoverlay, guintptr window_handle)
+{
+  gst_x_overlay_set_window_handle (xoverlay, window_handle);
 }
 
 void

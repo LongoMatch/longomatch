@@ -45,7 +45,7 @@ libcesarplayer_la_SOURCES = \
 	bacon-resize.h\
 	video-utils.c\
 	video-utils.h\
-	macros.h 
+	macros.h
 
 libcesarplayer_la_LDFLAGS = \
 	$(CESARPLAYER_LIBS)
