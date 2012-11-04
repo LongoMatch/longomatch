@@ -737,7 +737,7 @@ bvw_handle_application_message (BaconVideoWidget * bvw, GstMessage * msg)
   if (strcmp (msg_name, "stream-changed") == 0) {
     bvw_update_stream_info (bvw);
   } else {
-    g_message ("Unhandled application message %s", msg_name);
+    GST_DEBUG ("Unhandled application message %s", msg_name);
   }
 }
 
