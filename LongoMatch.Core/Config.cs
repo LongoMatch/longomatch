@@ -41,7 +41,7 @@ namespace LongoMatch
 		}
 
 		public static string TemplatesDir() {
-			return Path.Combine(configDirectory, "templates");
+			return Path.Combine(homeDirectory, "templates");
 		}
 
 		public static string VideosDir() {
