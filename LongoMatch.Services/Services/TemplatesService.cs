@@ -128,7 +128,7 @@ namespace LongoMatch.Services
 		
 		public TemplatesProvider (string basePath, string extension)
 		{
-			this.basePath = System.IO.Path.Combine(basePath, Constants.TEMPLATES_DIR);
+			this.basePath = basePath;
 			this.extension = extension;
 			methodLoad = typeof(T).GetMethod("Load");
 			methodDefaultTemplate = typeof(T).GetMethod("DefaultTemplate");

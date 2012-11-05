@@ -66,7 +66,7 @@ namespace LongoMatch.Services
 			ProjectsManager projectsManager;
 				
 			/* Start TemplatesService */
-			ts = new TemplatesService(Config.configDirectory);
+			ts = new TemplatesService(Config.TemplatesDir());
 			Core.mainWindow.TemplatesService = ts;
 
 			/* Start DB services */
