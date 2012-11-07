@@ -105,6 +105,8 @@ namespace LongoMatch.Gui.Component
 
 		private void CairoDraw(EventExpose evnt,int height,int width) {
 			Time time = new Time();
+			
+			width = Math.Min (width,this.Allocation.Width);
 			using(Cairo.Context g = Gdk.CairoHelper.Create(evnt.Window)) {
 				Cairo.Color color = new Cairo.Color(0, 0, 0);
 				/* Drawing position triangle */
@@ -132,6 +134,7 @@ namespace LongoMatch.Gui.Component
 
 		private void GdkDraw(EventExpose evnt,int height,int width) {
 			Time time = new Time();
+			width = Math.Min (width,this.Allocation.Width);
 			layout.SetMarkup("0");
 			this.GdkWindow.DrawLayout(this.Style.TextGC(StateType.Normal),0,height-23,layout);
 
