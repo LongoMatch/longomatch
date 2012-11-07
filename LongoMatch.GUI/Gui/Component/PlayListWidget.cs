@@ -50,6 +50,7 @@ namespace LongoMatch.Gui.Component
 			playlisttreeview1.RowActivated += OnPlaylisttreeview1RowActivated;
 			playlisttreeview1.ApplyCurrentRate += OnApplyRate;
 			savebutton.Sensitive = false;
+			newvideobutton.Sensitive = false;
 
 			newbutton.CanFocus = false;
 			openbutton.CanFocus = false;
@@ -64,6 +65,7 @@ namespace LongoMatch.Gui.Component
 			playlisttreeview1.PlayList = playlist;
 			playlisttreeview1.Sensitive = true;
 			savebutton.Sensitive = true;
+			newbutton.Sensitive = true;
 			Model = GetModel(playlist);
 		}
 
