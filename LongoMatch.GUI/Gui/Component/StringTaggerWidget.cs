@@ -27,9 +27,11 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class StringTaggerWidget : Gtk.Bin
 	{
-		private Dictionary<StringTag, CheckButton> dict;
-		private StringTagStore tags;
-		private RadioButton firstRB;
+		Dictionary<StringTag, CheckButton> dict;
+		StringTagStore tags;
+		RadioButton firstRB;
+		uint count;
+		const uint BUTTONS_PER_ROW = 3;
 		TagSubCategory subcategory;
 		
 		public StringTaggerWidget (TagSubCategory subcategory, StringTagStore tags)
@@ -37,6 +39,8 @@ namespace LongoMatch.Gui.Component
 			this.Build ();
 			this.subcategory = subcategory;
 			this.tags = tags;
+			count = 0;
+			table.NColumns = 3;
 			PopulateGui();
 			UpdateTags();
 		}
@@ -67,6 +71,7 @@ namespace LongoMatch.Gui.Component
 		
 		private void AddTagWidget (StringTag tag, bool radio){
 			CheckButton button;
+			uint row, col;
 			
 			if (radio) {
 				if (firstRB == null) 
@@ -85,8 +90,11 @@ namespace LongoMatch.Gui.Component
 					tags.Remove(tag);
 			};
 			dict.Add(tag, button);
-			buttonsbox.PackStart(button, false, false, 0);
+			row = count / BUTTONS_PER_ROW;
+			col = count % BUTTONS_PER_ROW;
+			table.Attach (button, row, row+1, col, col+1);
 			button.ShowAll();
+			count ++;
 		} 
 		
 		private string Title {

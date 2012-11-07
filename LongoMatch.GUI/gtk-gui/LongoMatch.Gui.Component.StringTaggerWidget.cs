@@ -6,7 +6,7 @@ namespace LongoMatch.Gui.Component
 	{
 		private global::Gtk.Frame frame;
 		private global::Gtk.Alignment GtkAlignment;
-		private global::Gtk.HBox buttonsbox;
+		private global::Gtk.Table table;
 		private global::Gtk.Label titlelabel;
 		
 		protected virtual void Build ()
@@ -24,10 +24,11 @@ namespace LongoMatch.Gui.Component
 			this.GtkAlignment.Name = "GtkAlignment";
 			this.GtkAlignment.LeftPadding = ((uint)(12));
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			this.buttonsbox = new global::Gtk.HBox ();
-			this.buttonsbox.Name = "buttonsbox";
-			this.buttonsbox.Spacing = 6;
-			this.GtkAlignment.Add (this.buttonsbox);
+			this.table = new global::Gtk.Table (((uint)(3)), ((uint)(3)), false);
+			this.table.Name = "table";
+			this.table.RowSpacing = ((uint)(6));
+			this.table.ColumnSpacing = ((uint)(6));
+			this.GtkAlignment.Add (this.table);
 			this.frame.Add (this.GtkAlignment);
 			this.titlelabel = new global::Gtk.Label ();
 			this.titlelabel.Name = "titlelabel";
