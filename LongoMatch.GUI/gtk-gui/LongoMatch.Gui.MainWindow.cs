@@ -240,6 +240,7 @@ namespace LongoMatch.Gui
 			this.player.Name = "player";
 			this.player.Rate = 1F;
 			this.player.ExpandLogo = true;
+			this.player.Detached = false;
 			this.videowidgetsbox.Add (this.player);
 			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.videowidgetsbox [this.player]));
 			w7.Position = 1;

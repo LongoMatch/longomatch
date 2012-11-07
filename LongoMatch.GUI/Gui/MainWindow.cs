@@ -122,7 +122,7 @@ namespace LongoMatch.Gui
 			player.SetLogo(System.IO.Path.Combine(Config.ImagesDir(),"background.png"));
 			player.LogoMode = true;
 			player.Tick += OnTick;
-			player.Detach += (sender, e) => DetachPlayer(true);
+			player.Detach += DetachPlayer;
 
 			capturer.Visible = false;
 			capturer.Logo = System.IO.Path.Combine(Config.ImagesDir(),"background.png");
@@ -341,6 +341,7 @@ namespace LongoMatch.Gui
 					action = TaggingViewAction;
 				OnViewToggled(action, new EventArgs());
 			}
+			player.Detached = detach;
 		}
 
 		public void SetProject(Project project, ProjectType projectType, CaptureSettings props, PlaysFilter filter)

@@ -133,5 +133,6 @@ namespace LongoMatch.Handlers
 
 	/* The plays filter was updated */	
 	public delegate void FilterUpdatedHandler ();
-
+	
+	public delegate void DetachPlayerHandler (bool detach);
 }

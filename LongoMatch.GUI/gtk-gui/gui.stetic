@@ -1935,6 +1935,7 @@
                             <property name="Events">ButtonPressMask</property>
                             <property name="Rate">1</property>
                             <property name="ExpandLogo">True</property>
+                            <property name="Detached">False</property>
                             <signal name="Error" handler="OnPlayerbin1Error" />
                             <signal name="SegmentClosedEvent" handler="OnSegmentClosedEvent" />
                           </widget>

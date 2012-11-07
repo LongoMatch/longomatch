@@ -13,6 +13,7 @@
       <itemgroup label="PlayerBin Properties">
         <property name="Rate" />
         <property name="ExpandLogo" />
+        <property name="Detached" />
       </itemgroup>
     </itemgroups>
     <signals>

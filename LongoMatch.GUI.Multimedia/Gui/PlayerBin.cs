@@ -48,7 +48,7 @@ namespace LongoMatch.Gui
 		public event PrevButtonClickedHandler Prev;
 		public event LongoMatch.Handlers.DrawFrameHandler DrawFrame;
 		public event SeekEventHandler SeekEvent;
-		public event EventHandler Detach;
+		public event DetachPlayerHandler Detach;
 
 		private const int THUMBNAIL_MAX_WIDTH = 100;
 		private LongoMatch.Video.Common.TickHandler tickHandler;
@@ -190,6 +190,11 @@ namespace LongoMatch.Gui
 			get {
 				return ((Gtk.EventBox)player);
 			}
+		}
+		
+		public bool Detached {
+			get;
+			set;
 		}
 		#endregion
 
@@ -428,7 +433,7 @@ namespace LongoMatch.Gui
 		
 		void EmitDetach () {
 			if (Detach != null)
-				Detach(this, new EventArgs());
+				Detach(!Detached);
 		}
 		
 		#endregion
