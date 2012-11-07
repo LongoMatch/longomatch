@@ -52,8 +52,7 @@ namespace LongoMatch.Gui.Component
 		
 		ICategoriesTemplatesProvider tpc;
 		ITeamTemplatesProvider tpt;
-		ITemplateWidget<Categories, Category> twc;
-		ITemplateWidget<TeamTemplate, Player> twt;
+		ITemplatesService service;
 		ProjectType useType;
 		List<Device> videoDevices;
 		ListStore videoStandardList;
@@ -82,8 +81,7 @@ namespace LongoMatch.Gui.Component
 			set {
 				tpc = value.CategoriesTemplateProvider;
 				tpt = value.TeamTemplateProvider;
-				twc = new CategoriesTemplateEditorWidget(value);
-				twt = new TeamTemplateEditorWidget(tpt);
+				service = value;
 				FillCategories();
 				FillTeamsTemplate();
 			}
@@ -532,7 +530,8 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnEditbuttonClicked(object sender, System.EventArgs e)
 		{
-			var editor = new TemplateEditorDialog<Categories, Category>(twc);
+			var editor = new TemplateEditorDialog<Categories, Category>(
+				new CategoriesTemplateEditorWidget(service));
 			editor.Template = Categories;
 			if (Use == ProjectType.EditProject) {
 				editor.Project = project;
@@ -542,7 +541,8 @@ namespace LongoMatch.Gui.Component
 		}
 
 		protected virtual void OnLocaltemplatebuttonClicked(object sender, System.EventArgs e) {
-			var editor = new TemplateEditorDialog<TeamTemplate, Player>(twt);
+			var editor = new TemplateEditorDialog<TeamTemplate, Player>(
+				new TeamTemplateEditorWidget(tpt));
 			editor.Template = LocalTeamTemplate;
 			if (Use == ProjectType.EditProject) {
 				editor.Project = project;
@@ -552,7 +552,8 @@ namespace LongoMatch.Gui.Component
 		}
 
 		protected virtual void OnVisitorbuttonClicked(object sender, System.EventArgs e) {
-			var editor = new TemplateEditorDialog<TeamTemplate, Player>(twt);
+			var editor = new TemplateEditorDialog<TeamTemplate, Player>(
+				new TeamTemplateEditorWidget(tpt));
 			editor.Template = VisitorTeamTemplate;
 			if (Use == ProjectType.EditProject) {
 				editor.Project = project;
