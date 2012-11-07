@@ -50,7 +50,7 @@ typedef struct GstCameraCapturerPrivate GstCameraCapturerPrivate;
 
 struct _GstCameraCapturerClass
 {
-  GtkHBoxClass parent_class;
+  GtkDrawingAreaClass parent_class;
 
   void (*eos) (GstCameraCapturer * gcc);
   void (*error) (GstCameraCapturer * gcc, const char *message);
@@ -60,7 +60,7 @@ struct _GstCameraCapturerClass
 
 struct _GstCameraCapturer
 {
-  GtkEventBox parent;
+  GtkDrawingArea parent;
   GstCameraCapturerPrivate *priv;
 };
 
