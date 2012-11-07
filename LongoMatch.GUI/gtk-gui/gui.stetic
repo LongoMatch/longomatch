@@ -3166,15 +3166,12 @@ Extra</property>
                     <property name="MemberName" />
                     <property name="Spacing">6</property>
                     <child>
-                      <widget class="Gtk.Entry" id="fileentry">
+                      <widget class="Gtk.Label" id="filelabel">
                         <property name="MemberName" />
-                        <property name="CanFocus">True</property>
-                        <property name="IsEditable">False</property>
-                        <property name="InvisibleChar">●</property>
                       </widget>
                       <packing>
                         <property name="Position">0</property>
-                        <property name="AutoSize">True</property>
+                        <property name="AutoSize">False</property>
                       </packing>
                     </child>
                     <child>
@@ -3197,7 +3194,7 @@ Extra</property>
                   </widget>
                   <packing>
                     <property name="Position">1</property>
-                    <property name="AutoSize">True</property>
+                    <property name="AutoSize">False</property>
                   </packing>
                 </child>
               </widget>

@@ -130,7 +130,7 @@ namespace LongoMatch.Gui.Dialog
 			formatcombobox.GetActiveIter(out iter);
 			encSettings.EncodingProfile = (EncodingProfile) encStore.GetValue(iter, 1);
 			
-			encSettings.OutputFile = fileentry.Text;
+			encSettings.OutputFile = filelabel.Text;
 			
 			/* FIXME: Configure with the UI */
 			encSettings.Framerate_n = 25;
@@ -161,7 +161,7 @@ namespace LongoMatch.Gui.Dialog
 			filter.AddPattern("*.vob");
 			fChooser.Filter = filter;
 			if(fChooser.Run() == (int)ResponseType.Accept) {
-				fileentry.Text = fChooser.Filename;
+				filelabel.Text = fChooser.Filename;
 			}
 			fChooser.Destroy();
 		}

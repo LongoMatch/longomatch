@@ -20,7 +20,7 @@ namespace LongoMatch.Gui.Dialog
 		private global::Gtk.HBox hbox1;
 		private global::Gtk.Label filenamelabel;
 		private global::Gtk.HBox hbox3;
-		private global::Gtk.Entry fileentry;
+		private global::Gtk.Label filelabel;
 		private global::Gtk.Button openbutton;
 		private global::Gtk.Button buttonCancel;
 		private global::Gtk.Button buttonOk;
@@ -170,13 +170,10 @@ namespace LongoMatch.Gui.Dialog
 			this.hbox3.Name = "hbox3";
 			this.hbox3.Spacing = 6;
 			// Container child hbox3.Gtk.Box+BoxChild
-			this.fileentry = new global::Gtk.Entry ();
-			this.fileentry.CanFocus = true;
-			this.fileentry.Name = "fileentry";
-			this.fileentry.IsEditable = false;
-			this.fileentry.InvisibleChar = '●';
-			this.hbox3.Add (this.fileentry);
-			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.fileentry]));
+			this.filelabel = new global::Gtk.Label ();
+			this.filelabel.Name = "filelabel";
+			this.hbox3.Add (this.filelabel);
+			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.filelabel]));
 			w15.Position = 0;
 			// Container child hbox3.Gtk.Box+BoxChild
 			this.openbutton = new global::Gtk.Button ();
