@@ -135,6 +135,8 @@ namespace LongoMatch.Gui
 			if (!Config.useGameUnits)
 				GameUnitsViewAction.Visible = false;
 			
+			MenuItem parent = ImportProjectActionMenu;
+			parent.Submenu = new Menu();
 			AddImportEntry(Catalog.GetString("Import file project"), "ImportFileProject",
 			               Constants.PROJECT_NAME + " (" + Constants.PROJECT_EXT + ")",
 			               "*" + Constants.PROJECT_EXT, Project.Import,
@@ -221,8 +223,7 @@ namespace LongoMatch.Gui
 		public void AddImportEntry (string name, string shortName, string filterName,
 		                            string filter, Func<string, Project> importFunc,
 		                            bool requiresNewFile) {
-			MenuItem parent = (MenuItem) this.UIManager.GetWidget("/menubar1/FileAction/ImportProjectAction");
-			
+			MenuItem parent = ImportProjectActionMenu;
 			MenuItem item = new MenuItem(name);
 			item.Activated += (sender, e) => (EmitImportProject(name, filterName, filter, importFunc, requiresNewFile));
 			item.Show();
@@ -231,6 +232,12 @@ namespace LongoMatch.Gui
 		#endregion
 		
 		#region Private Methods
+		
+		MenuItem ImportProjectActionMenu {
+			get {
+				return (MenuItem) this.UIManager.GetWidget("/menubar1/FileAction/ImportProjectAction");
+			}
+		}
 		
 		private void ConnectSignals() {
 			/* Adding Handlers for each event */
