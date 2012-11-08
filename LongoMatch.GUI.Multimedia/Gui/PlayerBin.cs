@@ -210,6 +210,7 @@ namespace LongoMatch.Gui
 			catch {
 				//We handle this error async
 			}
+			detachbutton.Sensitive = true;
 		}
 
 		public void Play() {
@@ -261,6 +262,7 @@ namespace LongoMatch.Gui
 			segmentStopTime = stop;
 			player.LogoMode = false;
 			Rate = rate;
+			detachbutton.Sensitive = false;
 		}
 
 		public void Close() {
