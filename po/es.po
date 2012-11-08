@@ -1273,7 +1273,7 @@ msgstr "Equipos de jugadores"
 
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:75
 msgid "Shield"
-msgstr "Blindar"
+msgstr "Escudo"
 
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:78
 msgid "Team Name"
