@@ -1131,6 +1131,11 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       }
 
 
+      if (old_state == GST_STATE_NULL && new_state == GST_STATE_READY) {
+        bvw->priv->xoverlay = GST_X_OVERLAY (gst_bin_get_by_interface (
+            GST_BIN (bvw->priv->play), GST_TYPE_X_OVERLAY));
+      }
+
       if (old_state == GST_STATE_READY && new_state == GST_STATE_PAUSED) {
         GST_DEBUG_BIN_TO_DOT_FILE (GST_BIN_CAST (bvw->priv->play),
             GST_DEBUG_GRAPH_SHOW_ALL ^
