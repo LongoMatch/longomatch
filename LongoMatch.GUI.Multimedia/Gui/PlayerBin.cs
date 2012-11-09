@@ -256,7 +256,10 @@ namespace LongoMatch.Gui
 				//Wait until the pipeline is prerolled and ready to seek
 				pendingSeek = new object[3] {start,stop,rate};
 			}
-			else player.SegmentSeek(start,stop,rate);
+			else {
+			 player.SegmentSeek(start,stop,rate);
+			 player.Play();
+			}
 
 			segmentStartTime = start;
 			segmentStopTime = stop;

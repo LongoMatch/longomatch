@@ -43,6 +43,8 @@ namespace LongoMatch.Interfaces {
 		PlayListPlay Prev();
 
 		PlayListPlay Select(int index);
+		
+		void SetActive(PlayListPlay play);
 
 		void Reorder(int indexIn, int indexOut);
 

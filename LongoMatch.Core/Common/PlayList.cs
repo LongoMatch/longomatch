@@ -125,6 +125,10 @@ namespace LongoMatch.Common
 			return this[index];
 		}
 
+		public void SetActive (PlayListPlay play) {
+			indexSelection = IndexOf(play);
+		}
+		
 		public bool HasNext() {
 			return indexSelection < Count-1;
 		}

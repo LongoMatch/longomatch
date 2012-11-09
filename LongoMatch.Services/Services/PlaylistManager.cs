@@ -111,6 +111,8 @@ namespace LongoMatch.Services
 			player.SetPlayListElement(play.MediaFile.FilePath, play.Start.MSeconds,
 			                          play.Stop.MSeconds, play.Rate, playlist.HasNext());
 			selectedTimeNode = play;
+			playlist.SetActive (play);
+			playlistWidget.SetActivePlay(play, playlist.GetCurrentIndex());
 		}
 		
 		private bool Next() {
@@ -120,7 +122,6 @@ namespace LongoMatch.Services
 			}
 			
 			var plNode = playlist.Next();
-			playlistWidget.SetActivePlay(plNode, playlist.GetCurrentIndex());
 			
 			if (!plNode.Valid)
 				return Next();
@@ -134,8 +135,6 @@ namespace LongoMatch.Services
 			if ((player.AccurateCurrentTime - selectedTimeNode.Start.MSeconds) < 500) {
 				if (playlist.HasPrev()) {
 					var play = playlist.Prev();
-					playlistWidget.SetActivePlay(selectedTimeNode as PlayListPlay,
-					                             playlist.GetCurrentIndex());
 					LoadPlaylistPlay(play);
 				}
 			} else {
