@@ -1,3 +1,13 @@
+===== LongoMatch 0.18.1 "Piramides" =====
+
+	== Bugs fixed ==
+
+	* Templates widgets disapear
+	* Playlist not working
+	* Timeline is printed outside the widget boundaries
+	* Use a label for the file path in the video edition dialog
+	* Remove the empty entry that was created for import projects
+
 ===== LongoMatch 0.18.0 "House warming" =====
 
 	== Features of this release ==

@@ -1,4 +1,4 @@
-LongoMatch-0.18.0 "House warming"
+LongoMatch-0.18.1 "Piramides"
 ----------------------------------
 
 The LongoMatch team is happy to announce the first release in the
@@ -8,40 +8,18 @@ Due to its dependency on GStreamer, We strongly recommend to have
 all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
-
-* Features
-	* Added support for mac OS X
-	* New remuxer using GStreamer (drops all the dependencies in ffmpeg)
-	* Rewrite the video capturer to support recording without re-encoding
-	  for supported formats
-	* Export Drawings to video files
-	* Rewrite of the tagging subsystem with support for subcategories
-	* Improved tagging workflow
-	* Allow edition of categories in opened projects
-	* Colored buttons for tagging widgets
-	* Add subcategories filters for plays
-	* Video player can be detached from the main window
-	* Video player seek steps can be configured in seconds
-	* Added jobs manager to enqueue playlists renderings
-	* Allow rendering plays from the left-side list
+* Bugs fixed
+	* Templates widgets disapear
+	* Playlist not working
+	* Timeline is printed outside the widget boundaries
+	* Use a label for the file path in the video edition dialog
+	* Remove the empty entry that was created for import projects
 
 *Contributors to this Release:
 
   * LongoMatch:
 	Andoni Morales Alastruey <ylatuya@gmail.com>
-	Bruno Brouard <annoa.b@gmail.com>
-	Daniel Mustieles <daniel.mustieles@gmail.com>
-	Gabor Kelemen <kelemeng@gnome.hu>
-	Joe Hansen <joedalton2@yahoo.dk>
-	Jorge González <jorgegonz@svn.gnome.org>
-	Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>
 	Marek Černocký <marek@manet.cz>
-	Mario Blättermann <mario.blaettermann@gmail.com>
-	Martin Srebotnjak <miles@filmsi.net>
-	Matej Urbančič <mateju@svn.gnome.org>
-	Piotr Drąg <piotrdrag@gmail.com>
-	Tom Tryfonidis <tomtryf@gmail.com>
-	bbscouting <bbcoach@live.com>
 
 * Requirements
 
