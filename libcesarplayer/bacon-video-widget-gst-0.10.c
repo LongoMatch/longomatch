@@ -168,6 +168,8 @@ struct BaconVideoWidgetPrivate
 
   gboolean got_redirect;
 
+  GtkWidget *video_da;
+  GtkWidget *logo_da;
   guintptr window_handle;
   GdkCursor *cursor;
 
@@ -360,9 +362,8 @@ bacon_video_widget_configure_event (GtkWidget * widget,
 }
 
 static void
-bacon_video_widget_realize_event (GtkWidget * widget)
+bacon_video_widget_realize_event (GtkWidget * widget, BaconVideoWidget *bvw)
 {
-  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
   GdkWindow *window = gtk_widget_get_window (widget);
 
   if (!gdk_window_ensure_native (window))
@@ -376,10 +377,54 @@ bacon_video_widget_realize_event (GtkWidget * widget)
 }
 
 static gboolean
-bacon_video_widget_expose_event (GtkWidget * widget, GdkEventExpose * event)
+bacon_video_widget_video_expose_event (GtkWidget * widget, GdkEventExpose * event,
+    BaconVideoWidget *bvw)
 {
-  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
   GstXOverlay *xoverlay;
+  GdkWindow *win;
+
+  if (event && event->count > 0)
+    return TRUE;
+
+  if (event == NULL)
+    return TRUE;
+
+  g_mutex_lock (bvw->priv->lock);
+
+  xoverlay = bvw->priv->xoverlay;
+  if (xoverlay != NULL) {
+    gst_object_ref (xoverlay);
+    gst_set_window_handle (xoverlay, bvw->priv->window_handle);
+  }
+
+  if (bvw->priv->logo_mode)
+    goto exit;
+
+  /* no logo, pass the expose to gst */
+  if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay)){
+    g_object_set (GST_ELEMENT (bvw->priv->xoverlay), "force-aspect-ratio", TRUE, NULL);
+    gst_x_overlay_expose (xoverlay);
+  }
+  else {
+    /* No xoverlay to expose yet */
+    win = gtk_widget_get_window (bvw->priv->video_da);
+    gdk_window_clear_area (win,
+      0, 0, widget->allocation.width, widget->allocation.height);
+  }
+
+exit:
+
+  if (xoverlay != NULL)
+    gst_object_unref (xoverlay);
+
+  g_mutex_unlock (bvw->priv->lock);
+  return TRUE;
+}
+
+static gboolean
+bacon_video_widget_logo_expose_event (GtkWidget * widget, GdkEventExpose * event,
+    BaconVideoWidget *bvw)
+{
   gboolean draw_logo;
   GdkWindow *win;
 
@@ -389,125 +434,110 @@ bacon_video_widget_expose_event (GtkWidget * widget, GdkEventExpose * event)
   if (event == NULL)
     return TRUE;
 
-  xoverlay = bvw->priv->xoverlay;
-  if (xoverlay != NULL) {
-    gst_object_ref (xoverlay);
-    gst_set_window_handle (xoverlay, bvw->priv->window_handle);
-  }
-
-  win = gtk_widget_get_window (widget);
+  g_mutex_lock (bvw->priv->lock);
 
   /* if there's only audio and no visualisation, draw the logo as well */
   draw_logo = bvw->priv->media_has_audio && !bvw->priv->media_has_video;
 
-  if (bvw->priv->logo_mode || draw_logo) {
-    /* Start with a nice black canvas */
-    gdk_draw_rectangle (win, gtk_widget_get_style (widget)->black_gc, TRUE, 0,
-        0, widget->allocation.width, widget->allocation.height);
+  if (!bvw->priv->logo_mode && !draw_logo)
+    goto exit;
 
-    if (bvw->priv->logo_pixbuf != NULL) {
-      GdkPixbuf *frame;
-      GdkPixbuf *drawing;
-      guchar *pixels;
-      int rowstride;
-      gint width, height, alloc_width, alloc_height, logo_x, logo_y;
-      gfloat ratio;
+  win = gtk_widget_get_window (bvw->priv->logo_da);
 
-      /* Checking if allocated space is smaller than our logo */
+  /* Start with a nice black canvas */
+  gdk_draw_rectangle (win, gtk_widget_get_style (widget)->black_gc, TRUE, 0,
+      0, widget->allocation.width, widget->allocation.height);
+
+  if (bvw->priv->logo_pixbuf != NULL) {
+    GdkPixbuf *frame;
+    GdkPixbuf *drawing;
+    guchar *pixels;
+    int rowstride;
+    gint width, height, alloc_width, alloc_height, logo_x, logo_y;
+    gfloat ratio;
+
+    /* Checking if allocated space is smaller than our logo */
 
 
-      width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
-      height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
-      alloc_width = widget->allocation.width;
-      alloc_height = widget->allocation.height;
+    width = gdk_pixbuf_get_width (bvw->priv->logo_pixbuf);
+    height = gdk_pixbuf_get_height (bvw->priv->logo_pixbuf);
+    alloc_width = widget->allocation.width;
+    alloc_height = widget->allocation.height;
 
-      if ((gfloat) alloc_width / width > (gfloat) alloc_height / height) {
-        ratio = (gfloat) alloc_height / height;
-      } else {
-        ratio = (gfloat) alloc_width / width;
+    if ((gfloat) alloc_width / width > (gfloat) alloc_height / height) {
+      ratio = (gfloat) alloc_height / height;
+    } else {
+      ratio = (gfloat) alloc_width / width;
+    }
+
+    width *= ratio;
+    height *= ratio;
+
+    logo_x = (alloc_width / 2) - (width / 2);
+    logo_y = (alloc_height / 2) - (height / 2);
+
+
+    /* Drawing our frame */
+
+    if (bvw->priv->expand_logo && !bvw->priv->drawing_mode) {
+      /* Scaling to available space */
+
+      frame = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
+          FALSE, 8, widget->allocation.width, widget->allocation.height);
+
+      gdk_pixbuf_composite (bvw->priv->logo_pixbuf,
+          frame,
+          0, 0,
+          alloc_width, alloc_height,
+          logo_x, logo_y, ratio, ratio, GDK_INTERP_BILINEAR, 255);
+
+      rowstride = gdk_pixbuf_get_rowstride (frame);
+
+      pixels = gdk_pixbuf_get_pixels (frame) +
+          rowstride * event->area.y + event->area.x * 3;
+
+      gdk_draw_rgb_image_dithalign (widget->window,
+          widget->style->black_gc,
+          event->area.x, event->area.y,
+          event->area.width,
+          event->area.height,
+          GDK_RGB_DITHER_NORMAL, pixels,
+          rowstride, event->area.x, event->area.y);
+
+      g_object_unref (frame);
+    } else {
+      if (width <= 1 || height <= 1) {
+        gdk_window_end_paint (win);
+        goto exit;
       }
 
-      width *= ratio;
-      height *= ratio;
+      frame = gdk_pixbuf_scale_simple (bvw->priv->logo_pixbuf,
+          width, height, GDK_INTERP_BILINEAR);
+      gdk_draw_pixbuf (win, gtk_widget_get_style (widget)->fg_gc[0],
+          frame, 0, 0, logo_x, logo_y, width, height,
+          GDK_RGB_DITHER_NONE, 0, 0);
 
-      logo_x = (alloc_width / 2) - (width / 2);
-      logo_y = (alloc_height / 2) - (height / 2);
-
-
-      /* Drawing our frame */
-
-      if (bvw->priv->expand_logo && !bvw->priv->drawing_mode) {
-        /* Scaling to available space */
-
-        frame = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
-            FALSE, 8, widget->allocation.width, widget->allocation.height);
-
-        gdk_pixbuf_composite (bvw->priv->logo_pixbuf,
-            frame,
-            0, 0,
-            alloc_width, alloc_height,
-            logo_x, logo_y, ratio, ratio, GDK_INTERP_BILINEAR, 255);
-
-        rowstride = gdk_pixbuf_get_rowstride (frame);
-
-        pixels = gdk_pixbuf_get_pixels (frame) +
-            rowstride * event->area.y + event->area.x * 3;
-
-        gdk_draw_rgb_image_dithalign (widget->window,
-            widget->style->black_gc,
-            event->area.x, event->area.y,
-            event->area.width,
-            event->area.height,
-            GDK_RGB_DITHER_NORMAL, pixels,
-            rowstride, event->area.x, event->area.y);
-
-        g_object_unref (frame);
-      } else {
-        if (width <= 1 || height <= 1) {
-          if (xoverlay != NULL)
-            gst_object_unref (xoverlay);
-          gdk_window_end_paint (win);
-          return TRUE;
-        }
-
-        frame = gdk_pixbuf_scale_simple (bvw->priv->logo_pixbuf,
-            width, height, GDK_INTERP_BILINEAR);
-        gdk_draw_pixbuf (win, gtk_widget_get_style (widget)->fg_gc[0],
-            frame, 0, 0, logo_x, logo_y, width, height,
-            GDK_RGB_DITHER_NONE, 0, 0);
-
-        if (bvw->priv->drawing_mode && bvw->priv->drawing_pixbuf != NULL) {
-          drawing =
-              gdk_pixbuf_scale_simple (bvw->priv->drawing_pixbuf, width,
-              height, GDK_INTERP_BILINEAR);
-          gdk_draw_pixbuf (win,
-              gtk_widget_get_style (widget)->fg_gc[0],
-              drawing, 0, 0, logo_x, logo_y, width,
-              height, GDK_RGB_DITHER_NONE, 0, 0);
-          g_object_unref (drawing);
-        }
-
-        g_object_unref (frame);
+      if (bvw->priv->drawing_mode && bvw->priv->drawing_pixbuf != NULL) {
+        drawing =
+            gdk_pixbuf_scale_simple (bvw->priv->drawing_pixbuf, width,
+            height, GDK_INTERP_BILINEAR);
+        gdk_draw_pixbuf (win,
+            gtk_widget_get_style (widget)->fg_gc[0],
+            drawing, 0, 0, logo_x, logo_y, width,
+            height, GDK_RGB_DITHER_NONE, 0, 0);
+        g_object_unref (drawing);
       }
-    } else if (win) {
-      /* No pixbuf, just draw a black background then */
-      gdk_window_clear_area (win,
-          0, 0, widget->allocation.width, widget->allocation.height);
+
+      g_object_unref (frame);
     }
-  } else {
-    /* no logo, pass the expose to gst */
-    if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay)){
-      gst_x_overlay_expose (xoverlay);
-    }
-    else {
-      /* No xoverlay to expose yet */
-      gdk_window_clear_area (win,
-          0, 0, widget->allocation.width, widget->allocation.height);
-    }
+  } else if (win) {
+    /* No pixbuf, just draw a black background then */
+    gdk_window_clear_area (win,
+        0, 0, widget->allocation.width, widget->allocation.height);
   }
-  if (xoverlay != NULL)
-    gst_object_unref (xoverlay);
 
+exit:
+  g_mutex_unlock (bvw->priv->lock);
   return TRUE;
 }
 
@@ -529,14 +559,10 @@ static void
 bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 {
   GObjectClass *object_class;
-  GtkWidgetClass *widget_class;
 
   object_class = (GObjectClass *) klass;
-  widget_class = (GtkWidgetClass *) klass;
 
   parent_class = g_type_class_peek_parent (klass);
-
-  widget_class->expose_event = bacon_video_widget_expose_event;
 
   g_type_class_add_private (object_class, sizeof (BaconVideoWidgetPrivate));
 
@@ -681,7 +707,6 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   BaconVideoWidgetPrivate *priv;
 
   GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_CAN_FOCUS);
-  GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
 
   bvw->priv = priv =
       G_TYPE_INSTANCE_GET_PRIVATE (bvw, BACON_TYPE_VIDEO_WIDGET,
@@ -697,12 +722,27 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   bvw->priv->missing_plugins = NULL;
   bvw->priv->plugin_install_in_progress = FALSE;
 
-  gtk_widget_add_events (GTK_WIDGET (bvw),
+  bvw->priv->video_da = gtk_drawing_area_new ();
+  bvw->priv->logo_da = gtk_drawing_area_new ();
+
+  GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw->priv->video_da), GTK_DOUBLE_BUFFERED);
+
+  gtk_box_pack_start (GTK_BOX (bvw), bvw->priv->video_da, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (bvw), bvw->priv->logo_da, TRUE, TRUE, 0);
+
+  gtk_widget_add_events (GTK_WIDGET (bvw->priv->video_da),
       GDK_POINTER_MOTION_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK
       | GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);
 
-  g_signal_connect (GTK_WIDGET (bvw), "realize",
-      G_CALLBACK (bacon_video_widget_realize_event), NULL);
+  g_signal_connect (GTK_WIDGET (bvw->priv->video_da), "realize",
+      G_CALLBACK (bacon_video_widget_realize_event), bvw);
+
+  g_signal_connect (GTK_WIDGET (bvw->priv->logo_da), "expose-event",
+      G_CALLBACK (bacon_video_widget_logo_expose_event), bvw);
+  g_signal_connect (GTK_WIDGET (bvw->priv->video_da), "expose-event",
+      G_CALLBACK (bacon_video_widget_video_expose_event), bvw);
+
+  bacon_video_widget_set_logo_mode (bvw, TRUE);
 }
 
 static gboolean bvw_query_timeout (BaconVideoWidget * bvw);
@@ -1446,10 +1486,6 @@ bacon_video_widget_finalize (GObject * object)
 
   g_free (bvw->priv->mrl);
   bvw->priv->mrl = NULL;
-
-
-
-
 
   if (bvw->priv->play != NULL && GST_IS_ELEMENT (bvw->priv->play)) {
     gst_element_set_state (bvw->priv->play, GST_STATE_NULL);
@@ -3144,22 +3180,28 @@ bacon_video_widget_set_logo_mode (BaconVideoWidget * bvw, gboolean logo_mode)
 
   logo_mode = logo_mode != FALSE;
 
+  g_mutex_lock (bvw->priv->lock);
+
   if (priv->logo_mode != logo_mode) {
     priv->logo_mode = logo_mode;
 
     if (logo_mode) {
-      /*gdk_window_hide (priv->video_window);*/
-      GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
+      gtk_widget_show (priv->logo_da);
+      gtk_widget_hide (priv->video_da);
     } else {
-      /*gdk_window_show (priv->video_window);*/
-      GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);
+      gtk_widget_show (priv->video_da);
+      gtk_widget_hide (priv->logo_da);
     }
+
+    g_mutex_unlock (bvw->priv->lock);
 
     g_object_notify (G_OBJECT (bvw), "logo_mode");
     g_object_notify (G_OBJECT (bvw), "seekable");
 
     /* Queue a redraw of the widget */
     gtk_widget_queue_draw (GTK_WIDGET (bvw));
+  } else {
+    g_mutex_unlock (bvw->priv->lock);
   }
 }
 
@@ -4439,7 +4481,7 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
 /*                                             */
 /* =========================================== */
 
-G_DEFINE_TYPE (BaconVideoWidget, bacon_video_widget, GTK_TYPE_DRAWING_AREA)
+G_DEFINE_TYPE (BaconVideoWidget, bacon_video_widget, GTK_TYPE_HBOX)
 /* applications must use exactly one of bacon_video_widget_get_option_group()
  * OR bacon_video_widget_init_backend(), but not both */
 /**
@@ -4555,6 +4597,8 @@ bacon_video_widget_new (int width, int height, BvwUseType type, GError ** err)
 
   /* show the gui. */
   gtk_widget_show_all (GTK_WIDGET(bvw));
+
+  bacon_video_widget_set_logo_mode (bvw, TRUE);
 
   bvw->priv->use_type = type;
 
