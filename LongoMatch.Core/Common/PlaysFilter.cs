@@ -72,10 +72,15 @@ namespace LongoMatch.Common
 			categoriesFilter.Clear();
 			foreach (var cat in project.Categories) {
 				List<SubCategoryTags> list = new List<SubCategoryTags>(); 
-				foreach (var subcat in cat.SubCategories) {
-					list.Add(new SubCategoryTags{SubCategory = subcat});
-				}
 				categoriesFilter.Add(cat, list);
+				foreach (var subcat in cat.SubCategories) {
+					if (subcat is TagSubCategory) {
+					SubCategoryTags subcatTags = new SubCategoryTags{SubCategory = subcat};
+					list.Add(subcatTags);
+					foreach (var option in subcat as TagSubCategory)
+						subcatTags.Add (option);
+					}
+				}
 			}
 		}
 		
