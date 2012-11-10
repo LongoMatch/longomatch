@@ -128,8 +128,11 @@ namespace LongoMatch.Common
 		}
 		
 		public bool IsVisible(object o) {
-			if (o is Player && PlayersFilterEnabled) {
-				return VisiblePlayers.Contains(o as Player);
+			if (o is Player) {
+				if (PlayersFilterEnabled)
+					return VisiblePlayers.Contains(o as Player);
+				else
+					return true;
 			} else if (o is Play) {
 				bool cat_match=true, player_match=true;
 				Play play = o as Play;
@@ -137,20 +140,23 @@ namespace LongoMatch.Common
 				if (CategoriesFilterEnabled) {
 					cat_match = false;
 					foreach (var subcat in categoriesFilter[play.Category]) {
+						bool match = false;
 						foreach (var option in subcat) {
 							StringTag tag = new StringTag{SubCategory=subcat.SubCategory, Value=option};
-							Console.WriteLine("Trying to find match for tag " +  subcat.SubCategory.Name + " " + option);
 							if (play.Tags.Contains(tag)) {
-								foreach (StringTag t in play.Tags.Tags) {
-									Console.WriteLine(String.Format("TAG  {0} {1} equals? {2}", t.SubCategory.Name, t.Value, t == tag));
-								}
-								Console.WriteLine("Found match for tag " +  subcat.SubCategory.Name + " " + option);
-								cat_match = true;
+								match = true;
 								break;
 							}
 						}
-						if (cat_match)
+						/* A single match in a subcategory is not enough as we want to filter
+						 * all plays that have Period=1 and Type=Stroke. So if there is a match
+						 * for Period we want a match for Type too */
+						if (!match && subcat.Count != 0) {
+							cat_match = false;
 							break;
+						}
+						if (match)
+							cat_match = true;
 					}
 				}
 				
