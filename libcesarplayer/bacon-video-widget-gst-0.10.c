@@ -352,6 +352,7 @@ bacon_video_widget_configure_event (GtkWidget * widget,
   xoverlay = bvw->priv->xoverlay;
 
   if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay)) {
+    g_object_set (GST_ELEMENT (bvw->priv->xoverlay), "force-aspect-ratio", TRUE, NULL);
     gst_x_overlay_expose (xoverlay);
   }
 
