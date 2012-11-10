@@ -50,8 +50,7 @@ namespace LongoMatch.Common
 			}
 			set {
 				playersFiltered = value;
-				if (playersFiltered)
-					Update();
+				Update();
 			}
 		}
 		
@@ -61,8 +60,7 @@ namespace LongoMatch.Common
 			}
 			set {
 				categoriesFiltered = value;
-				if (categoriesFiltered)
-					Update();
+				Update();
 			}
 		}
 		
