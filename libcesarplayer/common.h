@@ -22,10 +22,10 @@
 
 /* Default video/audio sinks */
 #if defined(OSTYPE_WINDOWS)
-#define DEFAULT_VIDEO_SINK "autovideosink"
+#define DEFAULT_VIDEO_SINK "d3dvideosink"
 #define BACKUP_VIDEO_SINK "autovideosink"
 #elif defined(OSTYPE_OS_X)
-#define DEFAULT_VIDEO_SINK "autovideosink"
+#define DEFAULT_VIDEO_SINK "osxvideosink"
 #define BACKUP_VIDEO_SINK "autovideosink"
 #elif defined(OSTYPE_LINUX)
 #define DEFAULT_VIDEO_SINK "gsettingsvideosink"
