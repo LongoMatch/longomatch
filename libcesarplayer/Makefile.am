@@ -41,8 +41,6 @@ libcesarplayer_la_SOURCES = \
 	gst-remuxer.h\
 	gst-video-editor.c\
 	gst-video-editor.h\
-	bacon-resize.c\
-	bacon-resize.h\
 	video-utils.c\
 	video-utils.h\
 	macros.h
