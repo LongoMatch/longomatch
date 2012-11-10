@@ -90,8 +90,8 @@ namespace LongoMatch.Gui.Component
 					tags.Remove(tag);
 			};
 			dict.Add(tag, button);
-			row = count / BUTTONS_PER_ROW;
-			col = count % BUTTONS_PER_ROW;
+			row = count % BUTTONS_PER_ROW;
+			col = count / BUTTONS_PER_ROW;
 			table.Attach (button, row, row+1, col, col+1);
 			button.ShowAll();
 			count ++;
