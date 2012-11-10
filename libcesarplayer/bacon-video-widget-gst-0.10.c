@@ -77,7 +77,6 @@
 #include "baconvideowidget-marshal.h"
 #include "common.h"
 #include "gstscreenshot.h"
-#include "bacon-resize.h"
 #include "video-utils.h"
 
 #define DEFAULT_HEIGHT 420
@@ -221,8 +220,6 @@ struct BaconVideoWidgetPrivate
   GList *missing_plugins;       /* GList of GstMessages */
   gboolean plugin_install_in_progress;
 
-  /* Bacon resize */
-  BaconResize *bacon_resize;
 };
 
 static void bacon_video_widget_set_property (GObject * object,
@@ -3355,29 +3352,29 @@ bacon_video_widget_get_volume (BaconVideoWidget * bvw)
  *
  * Fullscreen rendering is done only when possible, as xvidmode is required.
  **/
-void
-bacon_video_widget_set_fullscreen (BaconVideoWidget * bvw, gboolean fullscreen)
-{
-  gboolean have_xvidmode;
+/*void*/
+/*bacon_video_widget_set_fullscreen (BaconVideoWidget * bvw, gboolean fullscreen)*/
+/*{*/
+  /*gboolean have_xvidmode;*/
 
-  g_return_if_fail (bvw != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  /*g_return_if_fail (bvw != NULL);*/
+  /*g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));*/
 
-  g_object_get (G_OBJECT (bvw->priv->bacon_resize),
-      "have-xvidmode", &have_xvidmode, NULL);
+  /*g_object_get (G_OBJECT (bvw->priv->bacon_resize),*/
+      /*"have-xvidmode", &have_xvidmode, NULL);*/
 
-  if (have_xvidmode == FALSE)
-    return;
+  /*if (have_xvidmode == FALSE)*/
+    /*return;*/
 
-  bvw->priv->fullscreen_mode = fullscreen;
+  /*bvw->priv->fullscreen_mode = fullscreen;*/
 
-  if (fullscreen == FALSE) {
-    bacon_resize_restore (bvw->priv->bacon_resize);
-    /* Turn fullscreen on when we have xvidmode */
-  } else if (have_xvidmode != FALSE) {
-    bacon_resize_resize (bvw->priv->bacon_resize);
-  }
-}
+  /*if (fullscreen == FALSE) {*/
+    /*bacon_resize_restore (bvw->priv->bacon_resize);*/
+    /*[> Turn fullscreen on when we have xvidmode <]*/
+  /*} else if (have_xvidmode != FALSE) {*/
+    /*bacon_resize_resize (bvw->priv->bacon_resize);*/
+  /*}*/
+/*}*/
 
 
 /**
