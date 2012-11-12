@@ -1,7 +1,7 @@
 LongoMatch-0.18.1 "Piramides"
 ----------------------------------
 
-The LongoMatch team is happy to announce the first release in the
+The LongoMatch team is happy to announce the second release in the
 stable 0.18 series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
@@ -9,11 +9,8 @@ all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
 * Bugs fixed
-	* Templates widgets disapear
-	* Playlist not working
-	* Timeline is printed outside the widget boundaries
-	* Use a label for the file path in the video edition dialog
-	* Remove the empty entry that was created for import projects
+	* Drawings not displayed on OS X
+	* Filters not filtering categories with more than one subcategory
 
 *Contributors to this Release:
 

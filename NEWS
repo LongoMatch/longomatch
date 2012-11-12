@@ -1,3 +1,10 @@
+===== LongoMatch 0.18.2 "Acacias" =====
+
+	== Bugs fixed ==
+
+	* Drawings not displayed on OS X
+	* Filters not filtering categories with more than one subcategory
+
 ===== LongoMatch 0.18.1 "Piramides" =====
 
 	== Bugs fixed ==
