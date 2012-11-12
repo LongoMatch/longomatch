@@ -65,7 +65,7 @@ namespace LongoMatch.Gui.Component
 			playlisttreeview1.PlayList = playlist;
 			playlisttreeview1.Sensitive = true;
 			savebutton.Sensitive = true;
-			newbutton.Sensitive = true;
+			newvideobutton.Sensitive = true;
 			Model = GetModel(playlist);
 		}
 
