@@ -342,25 +342,6 @@ bvw_error_msg (BaconVideoWidget * bvw, GstMessage * msg)
   g_free (dbg);
 }
 
-static gboolean
-bacon_video_widget_configure_event (GtkWidget * widget,
-    GdkEventConfigure * event, BaconVideoWidget * bvw)
-{
-  GstXOverlay *xoverlay = NULL;
-
-  g_return_val_if_fail (bvw != NULL, FALSE);
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
-
-  xoverlay = bvw->priv->xoverlay;
-
-  if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay)) {
-    g_object_set (GST_ELEMENT (bvw->priv->xoverlay), "force-aspect-ratio", TRUE, NULL);
-    gst_x_overlay_expose (xoverlay);
-  }
-
-  return FALSE;
-}
-
 static void
 bacon_video_widget_realize_event (GtkWidget * widget, BaconVideoWidget *bvw)
 {
@@ -369,56 +350,7 @@ bacon_video_widget_realize_event (GtkWidget * widget, BaconVideoWidget *bvw)
   if (!gdk_window_ensure_native (window))
     g_error ("Couldn't create native window needed for GstXOverlay!");
 
-  /* Connect to configure event on the top level window */
-  g_signal_connect (G_OBJECT (gtk_widget_get_toplevel (widget)),
-      "configure-event", G_CALLBACK (bacon_video_widget_configure_event), bvw);
-
   bvw->priv->window_handle = gst_get_window_handle (window);
-}
-
-static gboolean
-bacon_video_widget_video_expose_event (GtkWidget * widget, GdkEventExpose * event,
-    BaconVideoWidget *bvw)
-{
-  GstXOverlay *xoverlay;
-  GdkWindow *win;
-
-  if (event && event->count > 0)
-    return TRUE;
-
-  if (event == NULL)
-    return TRUE;
-
-  g_mutex_lock (bvw->priv->lock);
-
-  xoverlay = bvw->priv->xoverlay;
-  if (xoverlay != NULL) {
-    gst_object_ref (xoverlay);
-    gst_set_window_handle (xoverlay, bvw->priv->window_handle);
-  }
-
-  if (bvw->priv->logo_mode)
-    goto exit;
-
-  /* no logo, pass the expose to gst */
-  if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay)){
-    g_object_set (GST_ELEMENT (bvw->priv->xoverlay), "force-aspect-ratio", TRUE, NULL);
-    gst_x_overlay_expose (xoverlay);
-  }
-  else {
-    /* No xoverlay to expose yet */
-    win = gtk_widget_get_window (bvw->priv->video_da);
-    gdk_window_clear_area (win,
-      0, 0, widget->allocation.width, widget->allocation.height);
-  }
-
-exit:
-
-  if (xoverlay != NULL)
-    gst_object_unref (xoverlay);
-
-  g_mutex_unlock (bvw->priv->lock);
-  return TRUE;
 }
 
 static gboolean
@@ -537,6 +469,56 @@ bacon_video_widget_logo_expose_event (GtkWidget * widget, GdkEventExpose * event
   }
 
 exit:
+  g_mutex_unlock (bvw->priv->lock);
+  return TRUE;
+}
+
+static gboolean
+bacon_video_widget_video_expose_event (GtkWidget * widget, GdkEventExpose * event,
+    BaconVideoWidget *bvw)
+{
+  GstXOverlay *xoverlay;
+  GdkWindow *win;
+
+  if (event && event->count > 0)
+    return TRUE;
+
+  if (event == NULL)
+    return TRUE;
+
+  g_mutex_lock (bvw->priv->lock);
+
+  xoverlay = bvw->priv->xoverlay;
+  if (xoverlay != NULL) {
+    gst_object_ref (xoverlay);
+    gst_set_window_handle (xoverlay, bvw->priv->window_handle);
+  }
+
+  if (bvw->priv->logo_mode) {
+#if defined (GDK_WINDOWING_X11)
+    g_mutex_unlock (bvw->priv->lock);
+    bacon_video_widget_logo_expose_event (widget, event, bvw);
+    g_mutex_lock (bvw->priv->lock);
+#endif
+    goto exit;
+  }
+
+  /* no logo, pass the expose to gst */
+  if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay)){
+    gst_x_overlay_expose (xoverlay);
+  }
+  else {
+    /* No xoverlay to expose yet */
+    win = gtk_widget_get_window (bvw->priv->video_da);
+    gdk_window_clear_area (win,
+      0, 0, widget->allocation.width, widget->allocation.height);
+  }
+
+exit:
+
+  if (xoverlay != NULL)
+    gst_object_unref (xoverlay);
+
   g_mutex_unlock (bvw->priv->lock);
   return TRUE;
 }
@@ -723,12 +705,20 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   bvw->priv->plugin_install_in_progress = FALSE;
 
   bvw->priv->video_da = gtk_drawing_area_new ();
-  bvw->priv->logo_da = gtk_drawing_area_new ();
-
+  gtk_box_pack_start (GTK_BOX (bvw), bvw->priv->video_da, TRUE, TRUE, 0);
+  gtk_widget_show (bvw->priv->video_da);
   GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw->priv->video_da), GTK_DOUBLE_BUFFERED);
 
-  gtk_box_pack_start (GTK_BOX (bvw), bvw->priv->video_da, TRUE, TRUE, 0);
+#if defined (GDK_WINDOWING_X11)
+  bvw->priv->logo_da = bvw->priv->video_da;
+#else
+  bvw->priv->logo_da = gtk_drawing_area_new ();
   gtk_box_pack_start (GTK_BOX (bvw), bvw->priv->logo_da, TRUE, TRUE, 0);
+  gtk_widget_show (bvw->priv->logo_da);
+
+  g_signal_connect (GTK_WIDGET (bvw->priv->logo_da), "expose-event",
+      G_CALLBACK (bacon_video_widget_logo_expose_event), bvw);
+#endif
 
   gtk_widget_add_events (GTK_WIDGET (bvw->priv->video_da),
       GDK_POINTER_MOTION_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK
@@ -737,8 +727,6 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   g_signal_connect (GTK_WIDGET (bvw->priv->video_da), "realize",
       G_CALLBACK (bacon_video_widget_realize_event), bvw);
 
-  g_signal_connect (GTK_WIDGET (bvw->priv->logo_da), "expose-event",
-      G_CALLBACK (bacon_video_widget_logo_expose_event), bvw);
   g_signal_connect (GTK_WIDGET (bvw->priv->video_da), "expose-event",
       G_CALLBACK (bacon_video_widget_video_expose_event), bvw);
 
@@ -1166,12 +1154,6 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       } else if (new_state > GST_STATE_PAUSED) {
         bvw_reconfigure_tick_timeout (bvw, 200);
         g_signal_emit (bvw, bvw_signals[SIGNAL_STATE_CHANGE], 0, TRUE);
-      }
-
-
-      if (old_state == GST_STATE_NULL && new_state == GST_STATE_READY) {
-        bvw->priv->xoverlay = GST_X_OVERLAY (gst_bin_get_by_interface (
-            GST_BIN (bvw->priv->play), GST_TYPE_X_OVERLAY));
       }
 
       if (old_state == GST_STATE_READY && new_state == GST_STATE_PAUSED) {
@@ -3186,11 +3168,19 @@ bacon_video_widget_set_logo_mode (BaconVideoWidget * bvw, gboolean logo_mode)
     priv->logo_mode = logo_mode;
 
     if (logo_mode) {
+#if !defined (GDK_WINDOWING_X11)
       gtk_widget_show (priv->logo_da);
       gtk_widget_hide (priv->video_da);
+#else
+      GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw->priv->video_da), GTK_DOUBLE_BUFFERED);
+#endif
     } else {
+#if !defined (GDK_WINDOWING_X11)
       gtk_widget_show (priv->video_da);
       gtk_widget_hide (priv->logo_da);
+#else
+      GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw->priv->video_da), GTK_DOUBLE_BUFFERED);
+#endif
     }
 
     g_mutex_unlock (bvw->priv->lock);
@@ -4542,20 +4532,25 @@ bvw_element_msg_sync (GstBus * bus, GstMessage * msg, gpointer data)
   /* This only gets sent if we haven't set an ID yet. This is our last
    * chance to set it before the video sink will create its own window */
   if (gst_structure_has_name (msg->structure, "prepare-xwindow-id")) {
+    GstObject *sender = GST_MESSAGE_SRC (msg);
+
     GST_INFO ("Handling sync prepare-xwindow-id message");
 
-    if (bvw->priv->xoverlay == NULL) {
-      GstObject *sender = GST_MESSAGE_SRC (msg);
-      if (sender && GST_IS_X_OVERLAY (sender))
-        bvw->priv->xoverlay = GST_X_OVERLAY (gst_object_ref (sender));
+    g_mutex_lock (bvw->priv->lock);
+
+    if (bvw->priv->xoverlay != NULL) {
+      gst_object_unref (bvw->priv->xoverlay);
     }
+
+    if (sender && GST_IS_X_OVERLAY (sender))
+      bvw->priv->xoverlay = GST_X_OVERLAY (gst_object_ref (sender));
 
     g_return_if_fail (bvw->priv->xoverlay != NULL);
     g_return_if_fail (bvw->priv->window_handle != 0);
 
     g_object_set (GST_ELEMENT (bvw->priv->xoverlay), "force-aspect-ratio", TRUE, NULL);
     gst_set_window_handle(bvw->priv->xoverlay, bvw->priv->window_handle);
-    gtk_widget_queue_draw (GTK_WIDGET(bvw));
+    g_mutex_unlock (bvw->priv->lock);
   }
 }
 
