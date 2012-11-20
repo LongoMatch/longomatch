@@ -495,7 +495,7 @@ bacon_video_widget_video_expose_event (GtkWidget * widget, GdkEventExpose * even
   }
 
   if (bvw->priv->logo_mode) {
-#if defined (GDK_WINDOWING_X11)
+#if !defined (GDK_WINDOWING_QUARTZ)
     g_mutex_unlock (bvw->priv->lock);
     bacon_video_widget_logo_expose_event (widget, event, bvw);
     g_mutex_lock (bvw->priv->lock);
@@ -709,15 +709,15 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   gtk_widget_show (bvw->priv->video_da);
   GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (bvw->priv->video_da), GTK_DOUBLE_BUFFERED);
 
-#if defined (GDK_WINDOWING_X11)
-  bvw->priv->logo_da = bvw->priv->video_da;
-#else
+#if defined (GDK_WINDOWING_QUARTZ)
   bvw->priv->logo_da = gtk_drawing_area_new ();
   gtk_box_pack_start (GTK_BOX (bvw), bvw->priv->logo_da, TRUE, TRUE, 0);
   gtk_widget_show (bvw->priv->logo_da);
 
   g_signal_connect (GTK_WIDGET (bvw->priv->logo_da), "expose-event",
       G_CALLBACK (bacon_video_widget_logo_expose_event), bvw);
+#else
+  bvw->priv->logo_da = bvw->priv->video_da;
 #endif
 
   gtk_widget_add_events (GTK_WIDGET (bvw->priv->video_da),
@@ -3168,14 +3168,14 @@ bacon_video_widget_set_logo_mode (BaconVideoWidget * bvw, gboolean logo_mode)
     priv->logo_mode = logo_mode;
 
     if (logo_mode) {
-#if !defined (GDK_WINDOWING_X11)
+#if defined (GDK_WINDOWING_QUARTZ)
       gtk_widget_show (priv->logo_da);
       gtk_widget_hide (priv->video_da);
 #else
       GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw->priv->video_da), GTK_DOUBLE_BUFFERED);
 #endif
     } else {
-#if !defined (GDK_WINDOWING_X11)
+#if defined (GDK_WINDOWING_QUARTZ)
       gtk_widget_show (priv->video_da);
       gtk_widget_hide (priv->logo_da);
 #else
