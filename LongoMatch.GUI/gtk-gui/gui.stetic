@@ -1930,28 +1930,15 @@
                           </packing>
                         </child>
                         <child>
-                          <widget class="LongoMatch.Gui.PlayerBin" id="player">
+                          <widget class="LongoMatch.Gui.PlayerCapturerBin" id="playercapturer">
                             <property name="MemberName" />
                             <property name="Events">ButtonPressMask</property>
-                            <property name="Rate">1</property>
-                            <property name="ExpandLogo">True</property>
                             <property name="Detached">False</property>
-                            <signal name="Error" handler="OnPlayerbin1Error" />
-                            <signal name="SegmentClosedEvent" handler="OnSegmentClosedEvent" />
+                            <property name="ExpandLogo">False</property>
+                            <property name="Rate">0</property>
                           </widget>
                           <packing>
                             <property name="Position">1</property>
-                            <property name="AutoSize">True</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="LongoMatch.Gui.CapturerBin" id="capturer">
-                            <property name="MemberName" />
-                            <property name="Events">ButtonPressMask</property>
-                            <signal name="Error" handler="OnCapturerBinError" />
-                          </widget>
-                          <packing>
-                            <property name="Position">2</property>
                             <property name="AutoSize">False</property>
                           </packing>
                         </child>
@@ -6713,7 +6700,7 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
           <widget class="Gtk.Notebook" id="notebook2">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="CurrentPage">1</property>
+            <property name="CurrentPage">0</property>
             <property name="TabPos">Left</property>
             <child>
               <widget class="Gtk.Notebook" id="notebook1">

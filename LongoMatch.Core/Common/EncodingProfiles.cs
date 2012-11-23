@@ -54,6 +54,16 @@ namespace LongoMatch.Common
 		                                                        VideoEncoderType.H264,
 		                                                        AudioEncoderType.Aac,
 		                                                        VideoMuxerType.Mp4);
+		                                                        
+		public static EncodingProfile MatroskaMpeg4 = new EncodingProfile("Matroska (Mpeg4 + Vorbis)", "avi",
+		                                                        VideoEncoderType.Mpeg4,
+		                                                        AudioEncoderType.Vorbis,
+		                                                        VideoMuxerType.Matroska);
+
+		public static EncodingProfile MatroskaH264 = new EncodingProfile("Matroska (H264 + AAC)", "mp4",
+		                                                        VideoEncoderType.H264,
+		                                                        AudioEncoderType.Aac,
+		                                                        VideoMuxerType.Matroska);
 	}
 	
 }

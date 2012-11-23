@@ -31,9 +31,10 @@ namespace LongoMatch.Interfaces.GUI
 		event PrevButtonClickedHandler Prev;
 		event DrawFrameHandler DrawFrame;
 		event SeekEventHandler SeekEvent;
+		event DetachPlayerHandler Detach;
 		
 		long AccurateCurrentTime {get;}
-		long CurrentTime {get;}
+		int CurrentTime {get;}
 		long StreamLength {get;}
 		
 		Image CurrentMiniatureFrame {get;}
@@ -46,6 +47,7 @@ namespace LongoMatch.Interfaces.GUI
 		bool Opened {get;}
 		bool FullScreen {set;}
 		float Rate {get;set;}
+		bool Detached {get;set;}
 
 		void Open(string mrl);
 		void Play();

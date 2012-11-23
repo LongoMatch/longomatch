@@ -45,8 +45,7 @@ namespace LongoMatch.Gui
 		private global::Gtk.VBox downbox;
 		private global::Gtk.HBox videowidgetsbox;
 		private global::LongoMatch.Gui.Component.DrawingToolBox drawingtoolbox1;
-		private global::LongoMatch.Gui.PlayerBin player;
-		private global::LongoMatch.Gui.CapturerBin capturer;
+		private global::LongoMatch.Gui.PlayerCapturerBin playercapturer;
 		private global::LongoMatch.Gui.Component.ButtonsWidget buttonswidget;
 		private global::LongoMatch.Gui.Component.GameUnitsTagger gameunitstaggerwidget1;
 		private global::Gtk.VBox rightvbox;
@@ -137,12 +136,12 @@ namespace LongoMatch.Gui
 			this.ImportProjectAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Import Project");
 			w1.Add (this.ImportProjectAction, "<Control>i");
 			this.ManualTaggingViewAction = new global::Gtk.RadioAction ("ManualTaggingViewAction", global::Mono.Unix.Catalog.GetString ("Manual tagging view"), null, null, 0);
-			this.ManualTaggingViewAction.Group = this.TaggingViewAction.Group;
+			this.ManualTaggingViewAction.Group = this.TimelineViewAction.Group;
 			this.ManualTaggingViewAction.Sensitive = false;
 			this.ManualTaggingViewAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Free Capture Mode");
 			w1.Add (this.ManualTaggingViewAction, "<Control>f");
 			this.GameUnitsViewAction = new global::Gtk.RadioAction ("GameUnitsViewAction", global::Mono.Unix.Catalog.GetString ("Game units view"), null, null, 0);
-			this.GameUnitsViewAction.Group = this.TaggingViewAction.Group;
+			this.GameUnitsViewAction.Group = this.ManualTaggingViewAction.Group;
 			this.GameUnitsViewAction.Sensitive = false;
 			this.GameUnitsViewAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Game units view");
 			w1.Add (this.GameUnitsViewAction, null);
@@ -235,45 +234,38 @@ namespace LongoMatch.Gui
 			w6.Expand = false;
 			w6.Fill = false;
 			// Container child videowidgetsbox.Gtk.Box+BoxChild
-			this.player = new global::LongoMatch.Gui.PlayerBin ();
-			this.player.Events = ((global::Gdk.EventMask)(256));
-			this.player.Name = "player";
-			this.player.Rate = 1F;
-			this.player.ExpandLogo = true;
-			this.player.Detached = false;
-			this.videowidgetsbox.Add (this.player);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.videowidgetsbox [this.player]));
+			this.playercapturer = new global::LongoMatch.Gui.PlayerCapturerBin ();
+			this.playercapturer.Events = ((global::Gdk.EventMask)(256));
+			this.playercapturer.Name = "playercapturer";
+			this.playercapturer.Detached = false;
+			this.playercapturer.ExpandLogo = false;
+			this.playercapturer.Rate = 0F;
+			this.videowidgetsbox.Add (this.playercapturer);
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.videowidgetsbox [this.playercapturer]));
 			w7.Position = 1;
-			// Container child videowidgetsbox.Gtk.Box+BoxChild
-			this.capturer = new global::LongoMatch.Gui.CapturerBin ();
-			this.capturer.Events = ((global::Gdk.EventMask)(256));
-			this.capturer.Name = "capturer";
-			this.videowidgetsbox.Add (this.capturer);
-			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.videowidgetsbox [this.capturer]));
-			w8.Position = 2;
 			this.downbox.Add (this.videowidgetsbox);
-			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.downbox [this.videowidgetsbox]));
-			w9.Position = 0;
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.downbox [this.videowidgetsbox]));
+			w8.Position = 0;
 			// Container child downbox.Gtk.Box+BoxChild
 			this.buttonswidget = new global::LongoMatch.Gui.Component.ButtonsWidget ();
 			this.buttonswidget.Events = ((global::Gdk.EventMask)(256));
 			this.buttonswidget.Name = "buttonswidget";
 			this.downbox.Add (this.buttonswidget);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.downbox [this.buttonswidget]));
-			w10.Position = 1;
-			w10.Expand = false;
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.downbox [this.buttonswidget]));
+			w9.Position = 1;
+			w9.Expand = false;
 			// Container child downbox.Gtk.Box+BoxChild
 			this.gameunitstaggerwidget1 = new global::LongoMatch.Gui.Component.GameUnitsTagger ();
 			this.gameunitstaggerwidget1.Events = ((global::Gdk.EventMask)(256));
 			this.gameunitstaggerwidget1.Name = "gameunitstaggerwidget1";
 			this.downbox.Add (this.gameunitstaggerwidget1);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.downbox [this.gameunitstaggerwidget1]));
-			w11.Position = 2;
-			w11.Expand = false;
+			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.downbox [this.gameunitstaggerwidget1]));
+			w10.Position = 2;
+			w10.Expand = false;
 			this.hpaned1.Add (this.downbox);
-			global::Gtk.Paned.PanedChild w12 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.downbox]));
-			w12.Resize = false;
-			w12.Shrink = false;
+			global::Gtk.Paned.PanedChild w11 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.downbox]));
+			w11.Resize = false;
+			w11.Shrink = false;
 			// Container child hpaned1.Gtk.Paned+PanedChild
 			this.rightvbox = new global::Gtk.VBox ();
 			this.rightvbox.WidthRequest = 100;
@@ -284,27 +276,27 @@ namespace LongoMatch.Gui
 			this.notes.Events = ((global::Gdk.EventMask)(256));
 			this.notes.Name = "notes";
 			this.rightvbox.Add (this.notes);
-			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.rightvbox [this.notes]));
-			w13.Position = 0;
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.rightvbox [this.notes]));
+			w12.Position = 0;
 			// Container child rightvbox.Gtk.Box+BoxChild
 			this.playlist = new global::LongoMatch.Gui.Component.PlayListWidget ();
 			this.playlist.WidthRequest = 100;
 			this.playlist.Events = ((global::Gdk.EventMask)(256));
 			this.playlist.Name = "playlist";
 			this.rightvbox.Add (this.playlist);
-			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.rightvbox [this.playlist]));
-			w14.Position = 1;
+			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.rightvbox [this.playlist]));
+			w13.Position = 1;
 			this.hpaned1.Add (this.rightvbox);
-			global::Gtk.Paned.PanedChild w15 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.rightvbox]));
+			global::Gtk.Paned.PanedChild w14 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.rightvbox]));
+			w14.Resize = false;
+			w14.Shrink = false;
+			this.hpaned.Add (this.hpaned1);
+			global::Gtk.Paned.PanedChild w15 = ((global::Gtk.Paned.PanedChild)(this.hpaned [this.hpaned1]));
 			w15.Resize = false;
 			w15.Shrink = false;
-			this.hpaned.Add (this.hpaned1);
-			global::Gtk.Paned.PanedChild w16 = ((global::Gtk.Paned.PanedChild)(this.hpaned [this.hpaned1]));
-			w16.Resize = false;
-			w16.Shrink = false;
 			this.vbox1.Add (this.hpaned);
-			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hpaned]));
-			w17.Position = 1;
+			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hpaned]));
+			w16.Position = 1;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.statusbar1 = new global::Gtk.Statusbar ();
 			this.statusbar1.Name = "statusbar1";
@@ -315,15 +307,15 @@ namespace LongoMatch.Gui
 			this.renderingstatebar1.Name = "renderingstatebar1";
 			this.renderingstatebar1.Fraction = 0;
 			this.statusbar1.Add (this.renderingstatebar1);
-			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.statusbar1 [this.renderingstatebar1]));
+			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.statusbar1 [this.renderingstatebar1]));
+			w17.Position = 2;
+			w17.Expand = false;
+			w17.Fill = false;
+			this.vbox1.Add (this.statusbar1);
+			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.statusbar1]));
 			w18.Position = 2;
 			w18.Expand = false;
 			w18.Fill = false;
-			this.vbox1.Add (this.statusbar1);
-			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.statusbar1]));
-			w19.Position = 2;
-			w19.Expand = false;
-			w19.Fill = false;
 			this.Add (this.vbox1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
@@ -351,9 +343,6 @@ namespace LongoMatch.Gui
 			this.ManualTaggingViewAction.Toggled += new global::System.EventHandler (this.OnViewToggled);
 			this.GameUnitsViewAction.Toggled += new global::System.EventHandler (this.OnViewToggled);
 			this.dialogInfoAction.Activated += new global::System.EventHandler (this.OnDialogInfoActionActivated);
-			this.player.Error += new global::LongoMatch.Handlers.ErrorHandler (this.OnPlayerbin1Error);
-			this.player.SegmentClosedEvent += new global::LongoMatch.Handlers.SegmentClosedHandler (this.OnSegmentClosedEvent);
-			this.capturer.Error += new global::LongoMatch.Handlers.ErrorHandler (this.OnCapturerBinError);
 		}
 	}
 }

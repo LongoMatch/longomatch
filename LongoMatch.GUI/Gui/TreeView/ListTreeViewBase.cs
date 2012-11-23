@@ -281,7 +281,7 @@ namespace LongoMatch.Gui.Component
 			if(!(item is Play))
 				return;
 
-			if(TimeNodeSelected != null && !projectIsLive)
+			if(TimeNodeSelected != null)
 				this.TimeNodeSelected(item as Play);
 		}
 

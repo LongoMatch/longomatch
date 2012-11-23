@@ -119,14 +119,14 @@ namespace LongoMatch.Gui
 			guTimeline = new GameUnitsTimelineWidget ();
 			downbox.PackStart(guTimeline, true, true, 0);
 			
-			player.SetLogo(System.IO.Path.Combine(Config.ImagesDir(),"background.png"));
-			player.LogoMode = true;
-			player.Tick += OnTick;
-			player.Detach += DetachPlayer;
+			playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
+			playercapturer.SetLogo(System.IO.Path.Combine(Config.ImagesDir(),"background.png"));
+			playercapturer.LogoMode = true;
+			playercapturer.Tick += OnTick;
+			playercapturer.Detach += DetachPlayer;
 
-			capturer.Visible = false;
-			capturer.Logo = System.IO.Path.Combine(Config.ImagesDir(),"background.png");
-			capturer.CaptureFinished += (sender, e) => {CloseCaptureProject();};
+			playercapturer.Logo = System.IO.Path.Combine(Config.ImagesDir(),"background.png");
+			playercapturer.CaptureFinished += (sender, e) => {CloseCaptureProject();};
 			
 			buttonswidget.Mode = TagMode.Predifined;
 			ConnectSignals();
@@ -178,13 +178,13 @@ namespace LongoMatch.Gui
 		
 		public IPlayer Player{
 			get {
-				return player;
+				return playercapturer;
 			}
 		}
 		
 		public ICapturer Capturer{
 			get {
-				return capturer;
+				return playercapturer;
 			}
 		}
 		
@@ -324,7 +324,7 @@ namespace LongoMatch.Gui
 				box.Show();
 				playerWindow.Show();
 				
-				player.Reparent(box);
+				playercapturer.Reparent(box);
 				buttonswidget.Visible = true;
 				timeline.Visible = true;
 				if (Config.useGameUnits) {
@@ -335,7 +335,7 @@ namespace LongoMatch.Gui
 				ToggleAction action;
 				
 				Log.Debug("Attaching player again");
-				player.Reparent(this.videowidgetsbox);
+				playercapturer.Reparent(this.videowidgetsbox);
 				playerWindow.Destroy();
 				
 				if (ManualTaggingViewAction.Active)
@@ -348,7 +348,7 @@ namespace LongoMatch.Gui
 					action = TaggingViewAction;
 				OnViewToggled(action, new EventArgs());
 			}
-			player.Detached = detach;
+			playercapturer.Detached = detach;
 		}
 
 		public void SetProject(Project project, ProjectType projectType, CaptureSettings props, PlaysFilter filter)
@@ -363,17 +363,19 @@ namespace LongoMatch.Gui
 			if(projectType == ProjectType.FileProject) {
 				Title = System.IO.Path.GetFileNameWithoutExtension(desc.File.FilePath) +
 				        " - " + Constants.SOFTWARE_NAME;
-				player.LogoMode = false;
+				playercapturer.LogoMode = false;
 				timeline.Project = project;
 				guTimeline.Project = project;
 
 			} else {
 				Title = Constants.SOFTWARE_NAME;
 				isLive = true;
-				if(projectType == ProjectType.FakeCaptureProject)
-					capturer.Type = CapturerType.Fake;
-				player.Visible = false;
-				capturer.Visible = true;
+				if(projectType == ProjectType.FakeCaptureProject) {
+					playercapturer.Type = CapturerType.Fake;
+					playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Capturer;
+				} else {
+					playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.PreviewCapturer;
+				}
 				TaggingViewAction.Active = true;
 			}
 			
@@ -389,9 +391,8 @@ namespace LongoMatch.Gui
 		
 		private void CloseCaptureProject() {
 			if(projectType == ProjectType.CaptureProject) {
-				capturer.Close();
-				player.Visible = true;
-				capturer.Visible = false;
+				playercapturer.Close();
+				playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
 				EmitSaveProject();
 			} else if(projectType == ProjectType.FakeCaptureProject) {
 				EmitCloseOpenedProject(true);
@@ -401,9 +402,8 @@ namespace LongoMatch.Gui
 		private void ResetGUI() {
 			bool playlistVisible = playlist.Visible;
 			Title = Constants.SOFTWARE_NAME;
-			player.Visible = true;
-			player.LogoMode = true;
-			capturer.Visible = false;
+			playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
+			playercapturer.LogoMode = true;
 			ClearWidgets();
 			HideWidgets();
 			playlist.Visible = playlistVisible;
@@ -497,7 +497,7 @@ namespace LongoMatch.Gui
 			if(!PromptCloseProject())
 				return;
 			EmitSaveProject();
-			player.Dispose();
+			playercapturer.Dispose();
 			Application.Quit();
 		}
 		
@@ -523,7 +523,7 @@ namespace LongoMatch.Gui
 		#region View
 		protected virtual void OnFullScreenActionToggled(object sender, System.EventArgs e)
 		{
-			player.FullScreen = (sender as Gtk.ToggleAction).Active;
+			playercapturer.FullScreen = (sender as Gtk.ToggleAction).Active;
 		}
 
 		protected virtual void OnPlaylistActionToggled(object sender, System.EventArgs e)
@@ -621,7 +621,7 @@ namespace LongoMatch.Gui
 
 			ret = base.OnKeyPressEvent(evnt);
 
-			if(openedProject == null && !player.Opened)
+			if(openedProject == null && !playercapturer.Opened)
 				return ret;
 
 			if(projectType != ProjectType.CaptureProject &&
@@ -629,30 +629,30 @@ namespace LongoMatch.Gui
 				switch(key) {
 				case Constants.SEEK_FORWARD:
 					if(modifier == Constants.STEP)
-						player.StepForward();
+						playercapturer.StepForward();
 					else
-						player.SeekToNextFrame(selectedTimeNode != null);
+						playercapturer.SeekToNextFrame(selectedTimeNode != null);
 					break;
 				case Constants.SEEK_BACKWARD:
 					if(modifier == Constants.STEP)
-						player.StepBackward();
+						playercapturer.StepBackward();
 					else
-						player.SeekToPreviousFrame(selectedTimeNode != null);
+						playercapturer.SeekToPreviousFrame(selectedTimeNode != null);
 					break;
 				case Constants.FRAMERATE_UP:
-					player.FramerateUp();
+					playercapturer.FramerateUp();
 					break;
 				case Constants.FRAMERATE_DOWN:
-					player.FramerateDown();
+					playercapturer.FramerateDown();
 					break;
 				case Constants.TOGGLE_PLAY:
-					player.TogglePlay();
+					playercapturer.TogglePlay();
 					break;
 				}
 			} else {
 				switch(key) {
 				case Constants.TOGGLE_PLAY:
-					capturer.TogglePause();
+					playercapturer.TogglePause();
 					break;
 				}
 			}

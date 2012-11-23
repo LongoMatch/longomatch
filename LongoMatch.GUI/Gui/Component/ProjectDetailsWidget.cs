@@ -411,10 +411,9 @@ namespace LongoMatch.Gui.Component
 			sizecombobox.Active = 0;
 
 			encProfileList = new ListStore(typeof(string), typeof (EncodingProfile));
-			encProfileList.AppendValues(EncodingProfiles.MP4.Name, EncodingProfiles.MP4);
-			encProfileList.AppendValues(EncodingProfiles.Avi.Name, EncodingProfiles.Avi);
-			if(Environment.OSVersion.Platform != PlatformID.Win32NT)
-				encProfileList.AppendValues(EncodingProfiles.WebM.Name, EncodingProfiles.WebM);
+			encProfileList.AppendValues(EncodingProfiles.MatroskaH264.Name, EncodingProfiles.MatroskaH264);
+			encProfileList.AppendValues(EncodingProfiles.MatroskaMpeg4.Name, EncodingProfiles.MatroskaMpeg4);
+			encProfileList.AppendValues(EncodingProfiles.WebM.Name, EncodingProfiles.WebM);
 			videoformatcombobox.Model = encProfileList;
 			videoformatcombobox.Active = 0;
 		}

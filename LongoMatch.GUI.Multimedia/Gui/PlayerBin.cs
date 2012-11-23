@@ -105,9 +105,9 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public long CurrentTime {
+		public int CurrentTime {
 			get {
-				return player.CurrentTime;
+				return (int) player.CurrentTime;
 			}
 		}
 

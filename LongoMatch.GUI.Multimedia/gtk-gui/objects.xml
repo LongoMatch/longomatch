@@ -30,4 +30,27 @@
       </itemgroup>
     </signals>
   </object>
+  <object type="LongoMatch.Gui.PlayerCapturerBin" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="PlayerCapturerBin Properties">
+        <property name="Detached" />
+        <property name="ExpandLogo" />
+        <property name="Rate" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="PlayerCapturerBin Signals">
+        <signal name="Error" />
+        <signal name="CaptureFinished" />
+        <signal name="SegmentClosedEvent" />
+        <signal name="Tick" />
+        <signal name="PlayStateChanged" />
+        <signal name="Next" />
+        <signal name="Prev" />
+        <signal name="DrawFrame" />
+        <signal name="SeekEvent" />
+        <signal name="Detach" />
+      </itemgroup>
+    </signals>
+  </object>
 </objects>
