@@ -2763,16 +2763,6 @@ bacon_video_widget_segment_seek (BaconVideoWidget * bvw, gint64 start,
   GST_LOG ("Segment seeking from %" GST_TIME_FORMAT,
       GST_TIME_ARGS (start * GST_MSECOND));
 
-
-  if (start > bvw->priv->stream_length
-      && bvw->priv->stream_length > 0
-      && !g_str_has_prefix (bvw->priv->mrl, "dvd:")
-      && !g_str_has_prefix (bvw->priv->mrl, "vcd:")) {
-    if (bvw->priv->eos_id == 0)
-      bvw->priv->eos_id = g_idle_add (bvw_signal_eos_delayed, bvw);
-    return TRUE;
-  }
-
   got_time_tick (bvw->priv->play, start * GST_MSECOND, bvw);
   gst_element_seek (bvw->priv->play, rate,
       GST_FORMAT_TIME,
