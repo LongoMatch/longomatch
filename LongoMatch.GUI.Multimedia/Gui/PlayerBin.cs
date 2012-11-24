@@ -67,6 +67,7 @@ namespace LongoMatch.Gui
 		//the player.mrl is diferent from the filename as it's an uri eg:file:///foo.avi
 		private string filename = null;
 		protected VolumeWindow vwin;
+		bool readyToSeek = false;
 
 
 		#region Constructors
@@ -211,6 +212,7 @@ namespace LongoMatch.Gui
 				//We handle this error async
 			}
 			detachbutton.Sensitive = true;
+			readyToSeek = false;
 		}
 
 		public void Play() {
@@ -345,8 +347,12 @@ namespace LongoMatch.Gui
 			segmentStopTime = stop;
 			closebutton.Show();
 			vscale1.Value = 25;
-			player.SegmentSeek(start,stop, GetRateFromScale());
-			player.Play();
+			if (readyToSeek) {
+				player.SegmentSeek(start, stop, GetRateFromScale());
+				player.Play();
+			} else {
+				pendingSeek = new object[3] {start, stop, GetRateFromScale()};
+			}
 		}
 
 		public void CloseActualSegment() {
@@ -458,13 +464,13 @@ namespace LongoMatch.Gui
 		}
 
 		protected void OnReadyToSeek(object o, EventArgs args) {
+			readyToSeek = true;
 			if(pendingSeek != null) {
 				player.SegmentSeek((long)pendingSeek[0],
 				                   (long)pendingSeek[1],
 				                   (float)pendingSeek[2]);
 				player.Play();
 				pendingSeek = null;
-
 			}
 		}
 
