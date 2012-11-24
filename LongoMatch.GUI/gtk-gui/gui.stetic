@@ -2283,7 +2283,7 @@
                       <widget class="Gtk.SpinButton" id="lagtimebutton">
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
-                        <property name="Upper">100</property>
+                        <property name="Upper">1000</property>
                         <property name="PageIncrement">1</property>
                         <property name="StepIncrement">1</property>
                         <property name="ClimbRate">1</property>
@@ -2308,7 +2308,7 @@
                       <widget class="Gtk.SpinButton" id="leadtimebutton">
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
-                        <property name="Upper">100</property>
+                        <property name="Upper">1000</property>
                         <property name="PageIncrement">1</property>
                         <property name="StepIncrement">1</property>
                         <property name="ClimbRate">1</property>

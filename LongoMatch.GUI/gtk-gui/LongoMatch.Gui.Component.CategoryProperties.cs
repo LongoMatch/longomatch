@@ -182,7 +182,7 @@ namespace LongoMatch.Gui.Component
 			w10.XOptions = ((global::Gtk.AttachOptions)(4));
 			w10.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table2.Gtk.Table+TableChild
-			this.lagtimebutton = new global::Gtk.SpinButton (0, 100, 1);
+			this.lagtimebutton = new global::Gtk.SpinButton (0, 1000, 1);
 			this.lagtimebutton.CanFocus = true;
 			this.lagtimebutton.Name = "lagtimebutton";
 			this.lagtimebutton.Adjustment.PageIncrement = 1;
@@ -196,7 +196,7 @@ namespace LongoMatch.Gui.Component
 			w11.RightAttach = ((uint)(4));
 			w11.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table2.Gtk.Table+TableChild
-			this.leadtimebutton = new global::Gtk.SpinButton (0, 100, 1);
+			this.leadtimebutton = new global::Gtk.SpinButton (0, 1000, 1);
 			this.leadtimebutton.CanFocus = true;
 			this.leadtimebutton.Name = "leadtimebutton";
 			this.leadtimebutton.Adjustment.PageIncrement = 1;
