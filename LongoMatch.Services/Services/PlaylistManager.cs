@@ -94,8 +94,12 @@ namespace LongoMatch.Services
 		}
 		
 		private void Add(PlayListPlay plNode) {
-			playlist.Add(plNode);
-			playlistWidget.Add(plNode);
+			if (playlist == null) {
+				guiToolkit.InfoMessage(Catalog.GetString("You have not loaded any playlist yet."));
+			} else {
+				playlist.Add(plNode);
+				playlistWidget.Add(plNode);
+			}
 		}
 		
 		private void LoadPlaylistPlay(PlayListPlay play)
