@@ -41,6 +41,8 @@ namespace LongoMatch.Store
 		/// </summary>
 		public String Title {
 			get {
+				if (File == null)
+					return "";
 				return System.IO.Path.GetFileNameWithoutExtension(File.FilePath);
 			}
 		}
@@ -115,6 +117,8 @@ namespace LongoMatch.Store
 		/// </summary>
 		public String Format {
 			get {
+				if (File == null)
+					return "";
 				return String.Format("{0}x{1}@{2}fps",
 				                     File.VideoWidth, File.VideoHeight, File.Fps);
 			}
@@ -128,7 +132,9 @@ namespace LongoMatch.Store
 		public int CompareTo(object obj) {
 			if(obj is ProjectDescription) {
 				ProjectDescription project = (ProjectDescription) obj;
-
+				
+				if (File == null || project.File == null)
+					return UUID.CompareTo(project.UUID);
 				return this.File.FilePath.CompareTo(project.File.FilePath);
 			}
 			else
