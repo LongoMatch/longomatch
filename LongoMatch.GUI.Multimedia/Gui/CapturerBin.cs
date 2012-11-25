@@ -130,6 +130,16 @@ namespace LongoMatch.Gui
 			if(capturer == null)
 				return;
 
+			if (capturing) {
+				MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel, DialogFlags.Modal,
+				                                     MessageType.Question, ButtonsType.YesNo,
+				                                     Catalog.GetString("Do you want to pause the recording?"));
+				var res = md.Run();
+				md.Destroy();
+				if(res == (int)ResponseType.No) {
+					return;
+				}
+			}				
 			capturing = !capturing;
 			recbutton.Visible = !capturing;
 			pausebutton.Visible = capturing;
