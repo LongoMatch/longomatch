@@ -1303,6 +1303,7 @@ gst_video_editor_set_video_muxer (GstVideoEditor * gve, gchar ** err,
     case VIDEO_MUXER_MP4:
       muxer_name = "qtmux";
       muxer = gst_element_factory_make ("qtmux", muxer_name);
+      g_object_set (muxer, "faststart", TRUE, NULL);
       break;
     case VIDEO_MUXER_MPEG_PS:
       muxer_name = "ffmux_dvd";
