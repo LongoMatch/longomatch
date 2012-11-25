@@ -1,3 +1,14 @@
+===== LongoMatch 0.18.2 "Mandarinas" =====
+
+	== Features ==
+	* Support reviewing plays in live analysis without stopping the recording
+
+	== Bugs fixed ==
+
+	* Fix exception in projects with null File
+	* Record button is not visible in the playlists widget
+	* Put headers at the beginning of MP4 files
+
 ===== LongoMatch 0.18.2 "Acacias" =====
 
 	== Bugs fixed ==

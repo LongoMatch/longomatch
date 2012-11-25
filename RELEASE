@@ -1,22 +1,27 @@
 LongoMatch-0.18.1 "Piramides"
 ----------------------------------
 
-The LongoMatch team is happy to announce the second release in the
+The LongoMatch team is happy to announce the third release in the
 stable 0.18 series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
 all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
+* Features
+	* Support reviewing plays in live analysis without stopping the recording
+
 * Bugs fixed
-	* Drawings not displayed on OS X
-	* Filters not filtering categories with more than one subcategory
+
+	* Fix exception in projects with null File
+	* Record button is not visible in the playlists widget
+	* Put headers at the beginning of MP4 files
+* Bugs fixed
 
 *Contributors to this Release:
 
   * LongoMatch:
 	Andoni Morales Alastruey <ylatuya@gmail.com>
-	Marek Černocký <marek@manet.cz>
 
 * Requirements
 
