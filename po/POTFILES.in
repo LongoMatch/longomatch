@@ -180,6 +180,7 @@ LongoMatch.GUI/Gui/TreeView/SubCategoriesTreeView.cs
 LongoMatch.GUI.Multimedia/gtk-gui/generated.cs
 LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.CapturerBin.cs
 LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerBin.cs
+LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerCapturerBin.cs
 LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.VolumeWindow.cs
 LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs
 LongoMatch.GUI.Multimedia/Gui/PlayerBin.cs
