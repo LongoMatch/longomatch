@@ -48,6 +48,7 @@ namespace LongoMatch.Interfaces.GUI
 		bool FullScreen {set;}
 		float Rate {get;set;}
 		bool Detached {get;set;}
+		bool SeekingEnabled {set;}
 
 		void Open(string mrl);
 		void Play();

@@ -126,6 +126,12 @@ namespace LongoMatch.Gui
 				vscale1.Value = (int)(value*25);
 			}
 		}
+		
+		public bool SeekingEnabled {
+			set {
+				timescale.Sensitive = value;
+			}
+		}
 
 		public bool FullScreen {
 			set {
@@ -244,6 +250,7 @@ namespace LongoMatch.Gui
 			SetSensitive();
 			timescale.Value=0;
 			timelabel.Text="";
+			SeekingEnabled = true;
 			player.CancelProgramedStop();
 		}
 
