@@ -157,6 +157,21 @@ namespace LongoMatch.Video.Editor {
 				val.Dispose();
 			}
 		}
+		
+		[GLib.Property("title-size")]
+		public int TitleSize {
+			get {
+				GLib.Value val = GetProperty("title-size");
+				int ret = (int) val;
+				val.Dispose();
+				return ret;
+			}
+			set {
+				GLib.Value val = new GLib.Value(value);
+				SetProperty("title-size", val);
+				val.Dispose();
+			}
+		}
 
 		#endregion
 
@@ -379,6 +394,7 @@ namespace LongoMatch.Video.Editor {
 				OutputFile = value.OutputFile;
 				EnableAudio = false;
 				VideoMuxer = value.EncodingProfile.Muxer;
+				TitleSize = 14;
 			}
 		}
 

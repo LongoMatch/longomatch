@@ -29,7 +29,6 @@
 #define DEFAULT_VIDEO_ENCODER "vp8enc"
 #define DEFAULT_AUDIO_ENCODER "vorbisenc"
 #define DEFAULT_VIDEO_MUXER "matroskamux"
-#define FONT_SIZE_FACTOR 0.05
 #define LAME_CAPS "audio/x-raw-int, rate=44100, channels=2, endianness=1234, signed=true, width=16, depth=16"
 #define VORBIS_CAPS "audio/x-raw-float, rate=44100, channels=2, endianness=1234, signed=true, width=32, depth=32"
 #define FAAC_CAPS "audio/x-raw-int, rate=44100, channels=2, endianness=1234, signed=true, width=16, depth=16"
@@ -245,7 +244,7 @@ gst_video_editor_class_init (GstVideoEditorClass * klass)
 
   g_object_class_install_property (object_class, PROP_TITLE_SIZE,
       g_param_spec_int ("title-size", NULL, NULL,
-          10, 100, 20, G_PARAM_READWRITE));
+          1, 100, 20, G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_OUTPUT_FILE,
       g_param_spec_string ("output_file", NULL, NULL, "", G_PARAM_READWRITE));
