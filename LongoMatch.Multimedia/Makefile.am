@@ -19,6 +19,7 @@ SOURCES = \
 	Player/ObjectManager.cs \
 	Remuxer/GstRemuxer.cs \
 	Remuxer/ObjectManager.cs \
+	Utils/AsfRemuxer.cs \
 	Utils/FramesCapturer.cs \
 	Utils/GStreamer.cs \
 	Utils/IMetadataReader.cs \

@@ -348,6 +348,9 @@ gst_remuxer_have_type_cb (GstElement *typefind, guint prob,
   if (g_strrstr (mime, "video/mpegts")) {
     GST_INFO_OBJECT (remuxer, "Using tsdemux as demuxer");
     demuxer = gst_element_factory_make ("tsdemux", NULL);
+  } else if (g_strrstr (mime, "video/x-ms-asf")) {
+    GST_INFO_OBJECT (remuxer, "Using asfdemux as demuxer");
+    demuxer = gst_element_factory_make ("asfdemux", NULL);
   } else if (g_strrstr (mime, "video/mpeg")) {
     gboolean sysstream;
 

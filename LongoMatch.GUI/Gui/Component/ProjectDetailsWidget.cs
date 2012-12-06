@@ -467,6 +467,14 @@ namespace LongoMatch.Gui.Component
 							filename = newFilename;
 					}
 					
+					if (AsfRemuxer.FileIsAsf(filename) &&
+					    MpegRemuxer.AskForConversion(this.Toplevel as Gtk.Window)) {
+						var remux = new AsfRemuxer(filename);
+						var newFilename = remux.Remux(this.Toplevel as Gtk.Window);
+						if (newFilename != null)
+							filename = newFilename;
+					}
+					
 					try {
 						md = new MessageDialog((Gtk.Window)this.Toplevel,
 						                       DialogFlags.Modal,
