@@ -18,7 +18,7 @@
  */
 
 /* Compile with:
- * gcc -o test-editor test-editor.c gst-video-editor.c `pkg-config --cflags --libs gstreamer-0.10` -DOSTYPE_LINUX -O0 -g
+ * gcc -o test-editor test-editor.c gst-video-editor.c `pkg-config --cflags --libs gstreamer-0.10 gtk+-2.0` -DOSTYPE_LINUX -O0 -g
  */
 
 #include <stdlib.h>
@@ -56,15 +56,18 @@ main (int argc, char *argv[])
   AudioEncoderType audio_encoder;
   gchar *input_file, *output_file;
   gchar *err = NULL;
+  guint64 start, stop;
 
   gst_video_editor_init_backend (&argc, &argv);
 
-  if (argc != 4) {
-    g_print("Usage: test-remuxer input_file output_file format\n");
+  if (argc != 6) {
+    g_print("Usage: test-remuxer input_file output_file format start stop\n");
     return 1;
   }
   input_file = argv[1];
   output_file = argv[2];
+  start = (guint64) g_strtod (argv[3], NULL);
+  stop = (guint64) g_strtod (argv[4], NULL);
 
   if (!g_strcmp0(argv[3], "mp4")) {
     video_encoder = VIDEO_ENCODER_H264;
@@ -89,7 +92,7 @@ main (int argc, char *argv[])
   gst_video_editor_set_video_muxer (editor, &err, video_muxer);
   if (err != NULL)
     goto error;
-  gst_video_editor_add_segment (editor, input_file, 5000, 50000,
+  gst_video_editor_add_segment (editor, input_file, start, stop,
       (gdouble) 1, "Test", TRUE);
 
   loop = g_main_loop_new (NULL, FALSE);
