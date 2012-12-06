@@ -17,32 +17,30 @@
 // 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using Mono.Unix;
 using GLib;
 using Gtk;
-
-using LongoMatch.Interfaces.Multimedia;
 
 namespace LongoMatch.Video.Utils
 {
 	public class MpegRemuxer
 	{
-		static string[] EXTENSIONS =  {"mts", "m2ts", "m2t", "ts", "mpeg", "mpg"};
-		string filepath;
-		string newFilepath;
-		Dialog dialog;
-		ProgressBar pb;
-		IRemuxer remuxer;
-		IMultimediaToolkit multimedia;
-		uint timeout;
-		bool cancelled;
+		private static string[] EXTENSIONS =  {"mts", "m2ts", "m2t", "ts", "mpeg", "mpg"};
+		private string filepath;
+		private string newFilepath;
+		private Dialog dialog;
+		private ProgressBar pb;
+		private System.Threading.Thread remuxThread;
+		private uint timeout;
+		private bool cancelled;
 		
 		public MpegRemuxer (string filepath)
 		{
 			this.filepath = filepath;
-			this.multimedia = new MultimediaFactory();
-			newFilepath = Path.ChangeExtension(filepath, "webm");
+			newFilepath = Path.ChangeExtension(filepath, "mp4");
 		}
 		
 		public string Remux(Window parent) {
@@ -61,28 +59,21 @@ namespace LongoMatch.Video.Utils
 			
 			/* Add a button to cancell the task */
 			cancellButton = new Button("gtk-cancel");
-			cancellButton.Clicked += (sender, e) => Cancel (); 
+			cancellButton.Clicked += OnStop; 
 			cancellButton.Show();
 			dialog.VBox.Add(cancellButton);
+			
+			/* Start the remux task in a separate thread */
+			remuxThread = new System.Threading.Thread(new ThreadStart(RemuxTask));
+			remuxThread.Start();
 			
 			/* Add a timeout to refresh the progress bar */ 
 			pb.Pulse();
 			timeout = GLib.Timeout.Add (1000, new GLib.TimeoutHandler (Update));
 			
-			remuxer = multimedia.GetRemuxer(filepath, newFilepath);
-			remuxer.Progress += HandleRemuxerProgress;;
-			remuxer.Start();
-			
 			/* Wait until the thread call Destroy on the dialog */
 			dialog.Run();
 			return cancelled ? null : newFilepath;
-		}
-
-		void HandleRemuxerProgress (float progress)
-		{
-			if (progress == 1) {
-				Stop ();
-			}
 		}
 		
 		private bool Update() {
@@ -91,11 +82,33 @@ namespace LongoMatch.Video.Utils
 		}
 		
 		private void Stop() {
+			if (cancelled) {
+				if (remuxThread.IsAlive)
+					remuxThread.Interrupt();
+				File.Delete (newFilepath);
+			}
 			GLib.Source.Remove (timeout);
 			dialog.Destroy();
 		}
 		
-		void Cancel() {
+		private void RemuxTask(){
+			/* ffmpeg looks like the easiest and more accurate way to do the remux */
+			ProcessStartInfo startInfo = new ProcessStartInfo();
+			startInfo.CreateNoWindow = true;
+			startInfo.UseShellExecute = false;
+			startInfo.FileName = "ffmpeg";
+			startInfo.Arguments = String.Format("-i {0} -vcodec copy -acodec copy -y -sn {1} ",
+			                                    filepath, newFilepath);
+			using (System.Diagnostics.Process exeProcess = System.Diagnostics.Process.Start(startInfo))
+			{
+				exeProcess.WaitForExit();
+				Application.Invoke (delegate {
+					Stop();
+				});
+			}
+		}
+		
+		private void OnStop (object sender, System.EventArgs args) {
 			cancelled = true;
 			Stop();
 		}
