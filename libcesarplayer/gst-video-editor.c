@@ -131,7 +131,7 @@ static void gst_video_editor_set_property (GObject * object,
     guint property_id, const GValue * value, GParamSpec * pspec);
 static gboolean gve_query_timeout (GstVideoEditor * gve);
 static void gve_apply_new_caps (GstVideoEditor * gve);
-static void gve_apply_title_size (GstVideoEditor * gve);
+static void gve_apply_title_size (GstVideoEditor * gve, gint size);
 static void gve_rewrite_headers (GstVideoEditor * gve);
 G_DEFINE_TYPE (GstVideoEditor, gst_video_editor, G_TYPE_OBJECT);
 
@@ -367,7 +367,7 @@ static void
 gst_video_editor_set_title_size (GstVideoEditor * gve, gint size)
 {
   gve->priv->title_size = size;
-  gve_apply_title_size (gve);
+  gve_apply_title_size (gve, size);
 }
 
 static void
@@ -502,13 +502,32 @@ gve_apply_new_caps (GstVideoEditor * gve)
 }
 
 static void
-gve_apply_title_size (GstVideoEditor * gve)
+gve_apply_title_size (GstVideoEditor * gve, gint size)
 {
   gchar *font;
 
-  font = g_strdup_printf ("sans bold %d", gve->priv->title_size);
-  g_object_set (G_OBJECT (gve->priv->textoverlay), "font-desc", font, NULL);
+  font = g_strdup_printf ("sans bold %d", size);
+  g_object_set (G_OBJECT (gve->priv->textoverlay), "font-desc", font,
+        "auto-resize", TRUE, "wrap-mode", 0, NULL);
   g_free (font);
+}
+
+static void
+gve_set_overlay_title (GstVideoEditor *gve, gchar *title)
+{
+  glong length;
+
+  if (title == NULL)
+    return;
+
+  g_object_set (G_OBJECT (gve->priv->textoverlay), "text", title, NULL);
+
+  length = g_utf8_strlen (title, -1);
+  if (length * gve->priv->title_size > gve->priv->width) {
+    gve_apply_title_size (gve, gve->priv->width / length - 1);
+  } else {
+    gve_apply_title_size (gve, gve->priv->title_size);
+  }
 }
 
 static void
@@ -818,11 +837,12 @@ gve_query_timeout (GstVideoEditor * gve)
 
   if (gst_element_query_position (gve->priv->video_encoder, &fmt, &pos)) {
     if (stop_time - pos <= 0) {
+
       gve->priv->active_segment++;
       title =
           (gchar *) g_list_nth_data (gve->priv->titles,
           gve->priv->active_segment);
-      g_object_set (G_OBJECT (gve->priv->textoverlay), "text", title, NULL);
+      gve_set_overlay_title (gve, title);
     }
   }
 
@@ -870,7 +890,7 @@ gst_video_editor_add_segment (GstVideoEditor * gve, gchar * file,
       "start", gve->priv->duration,
       "duration", final_duration, "caps", filter, NULL);
   if (gve->priv->segments == 0) {
-    g_object_set (G_OBJECT (gve->priv->textoverlay), "text", title, NULL);
+    gve_set_overlay_title (gve, title);
   }
   gst_bin_add (GST_BIN (gve->priv->gnl_video_composition), gnl_filesource);
   gve->priv->gnl_video_filesources =
