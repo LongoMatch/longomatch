@@ -28,19 +28,21 @@ namespace LongoMatch.Video.Utils
 {
 	public class MpegRemuxer
 	{
-		private static string[] EXTENSIONS =  {"mts", "m2ts", "m2t", "ts", "mpeg", "mpg"};
-		private string filepath;
-		private string newFilepath;
-		private Dialog dialog;
-		private ProgressBar pb;
-		private System.Threading.Thread remuxThread;
-		private uint timeout;
-		private bool cancelled;
+		static string[] EXTENSIONS =  {"mts", "m2ts", "m2t", "ts", "mpeg", "mpg"};
+		const string FORMAT = "mp4";
+		const string BACKUP_FORMAT = "mkv";
+		string filepath;
+		string newFilepath;
+		Dialog dialog;
+		ProgressBar pb;
+		System.Threading.Thread remuxThread;
+		uint timeout;
+		bool cancelled;
 		
 		public MpegRemuxer (string filepath)
 		{
 			this.filepath = filepath;
-			newFilepath = Path.ChangeExtension(filepath, "mp4");
+			newFilepath = Path.ChangeExtension(filepath, FORMAT);
 		}
 		
 		public string Remux(Window parent) {
@@ -91,8 +93,8 @@ namespace LongoMatch.Video.Utils
 			dialog.Destroy();
 		}
 		
-		private void RemuxTask(){
-			/* ffmpeg looks like the easiest and more accurate way to do the remux */
+		private int LaunchRemuxer () {
+			int ret = 1;
 			ProcessStartInfo startInfo = new ProcessStartInfo();
 			startInfo.CreateNoWindow = true;
 			startInfo.UseShellExecute = false;
@@ -102,10 +104,24 @@ namespace LongoMatch.Video.Utils
 			using (System.Diagnostics.Process exeProcess = System.Diagnostics.Process.Start(startInfo))
 			{
 				exeProcess.WaitForExit();
-				Application.Invoke (delegate {
-					Stop();
-				});
+				ret = exeProcess.ExitCode;
 			}
+			return ret;
+		}
+		
+		private void RemuxTask(){
+			int ret;
+			ret = LaunchRemuxer ();
+			if (ret != 0) {
+				/* Try with the backup format instead */
+				System.IO.File.Delete (newFilepath);
+				newFilepath = Path.ChangeExtension(filepath, BACKUP_FORMAT);
+				ret = LaunchRemuxer ();
+			}
+			
+			if (ret != 0)
+				cancelled = true;
+			Application.Invoke (delegate {Stop();});
 		}
 		
 		private void OnStop (object sender, System.EventArgs args) {
