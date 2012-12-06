@@ -554,8 +554,7 @@ gve_create_video_encode_bin (GstVideoEditor * gve)
 
   g_object_set (G_OBJECT (gve->priv->identity), "single-segment", TRUE, NULL);
   g_object_set (G_OBJECT (gve->priv->textoverlay), "font-desc",
-      "sans bold 20", "shaded-background", TRUE, "valignment", 2,
-      "halignment", 2, NULL);
+      "sans bold 20", "valignment", 2, "halignment", 2, NULL);
   g_object_set (G_OBJECT (gve->priv->videoscale), "add-borders", TRUE, NULL);
   g_object_set (G_OBJECT (gve->priv->video_encoder), "bitrate",
       gve->priv->video_bitrate, NULL);
