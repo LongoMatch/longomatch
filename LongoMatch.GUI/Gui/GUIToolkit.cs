@@ -134,9 +134,9 @@ namespace LongoMatch.Gui
 			sd.Play = play.Name;
 
 			if(sd.Run() == (int)ResponseType.Ok) {
-				sd.Destroy();
 				interval = sd.Interval;
 				seriesName = sd.SeriesName;
+				sd.Destroy();
 				outDir = System.IO.Path.Combine(snapshotsDir, seriesName);
 				var fsc = new FramesSeriesCapturer(openedProject.Description.File.FilePath,
 				                               play.Start.MSeconds, play.Stop.MSeconds,
