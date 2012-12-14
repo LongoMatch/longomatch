@@ -41,8 +41,8 @@ namespace LongoMatch.Gui.Component
 		IPlayList playlist;
 		PlayListPlay loadedPlay = null; //The play currently loaded in the player
 		PlayListPlay selectedPlay = null; //The play selected in the tree
+		int preDragPos = 0;
 		TreeIter selectedIter;
-		TreePath pathIn, pathOut;
 
 		public event ApplyCurrentRateHandler ApplyCurrentRate;
 
@@ -158,15 +158,28 @@ namespace LongoMatch.Gui.Component
 		
 		protected override void OnDragBegin (DragContext context)
 		{
-			pathIn = Selection.GetSelectedRows()[0];
+			Model.GetIter(out selectedIter, Selection.GetSelectedRows()[0]);
+			selectedPlay = (PlayListPlay) Model.GetValue(selectedIter, 0);
+			preDragPos = Model.GetPath(selectedIter).Indices[0];
+			Console.WriteLine (Model.GetPath(selectedIter));
 			base.OnDragBegin (context);
 		}
 		
 		protected override void OnDragEnd (DragContext context)
 		{
+			TreeIter iter;
+			int postDragPos = -1;
+			
+			Model.GetIterFirst (out iter);
+			do {
+				if (Model.GetValue (iter, 0) == selectedPlay) {
+					postDragPos = Model.GetPath (iter).Indices[0];
+					break;
+				}
+			} while (Model.IterNext(ref iter));
+			
+			playlist.Reorder(preDragPos, postDragPos);
 			base.OnDragEnd (context);
-			pathOut = Selection.GetSelectedRows()[0];
-			playlist.Reorder(pathIn.Indices[0], pathOut.Indices[0]);
 		}
 	}
 }
