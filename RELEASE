@@ -1,7 +1,7 @@
-LongoMatch-0.18.1 "Piramides"
-----------------------------------
+LongoMatch-0.18.4 "Alatriste"
+-----------------------------
 
-The LongoMatch team is happy to announce the third release in the
+The LongoMatch team is happy to announce the fourth release in the
 stable 0.18 series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
@@ -9,14 +9,14 @@ all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
 * Features
-	* Support reviewing plays in live analysis without stopping the recording
+	* Support for capture from USB cameras
 
 * Bugs fixed
 
-	* Fix exception in projects with null File
-	* Record button is not visible in the playlists widget
-	* Put headers at the beginning of MP4 files
-* Bugs fixed
+	* Fix plays reordering in the playlist
+	* Fix device selection in Windows
+	* Fix segfault exporting files with titles too long
+	* Fix output path of snapshots
 
 *Contributors to this Release:
 

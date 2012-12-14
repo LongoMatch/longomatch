@@ -1,4 +1,17 @@
-===== LongoMatch 0.18.2 "Mandarinas" =====
+===== LongoMatch 0.18.4 "Mandarinas" =====
+
+	== Features ==
+
+	* Support for capture from USB cameras
+
+	== Bugs fixed ==
+
+	* Fix plays reordering in the playlist
+	* Fix device selection in Windows
+	* Fix segfault exporting files with titles too long
+	* Fix output path of snapshots
+
+===== LongoMatch 0.18.3 "Mandarinas" =====
 
 	== Features ==
 	* Support reviewing plays in live analysis without stopping the recording
