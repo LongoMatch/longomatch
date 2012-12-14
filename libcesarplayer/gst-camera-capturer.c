@@ -1316,7 +1316,14 @@ gst_camera_capturer_create_video_source (GstCameraCapturer * gcc,
       g_assert_not_reached();
   }
 
-  source_str = g_strdup_printf("%s name=source ! typefind name=typefind", source_desc);
+  /* HACK: dshowvideosrc's device must be set before linking the element
+   * since the device is set in getcaps and can't be changed later */
+  if (!g_strcmp0 (gcc->priv->source_element_name, "dshowvideosrc"))
+    source_str = g_strdup_printf("%s device-name=\"%s\" name=source ! typefind name=typefind",
+        source_desc, gcc->priv->device_id);
+  else
+    source_str = g_strdup_printf("%s name=source ! typefind name=typefind", source_desc);
+  GST_INFO_OBJECT(gcc, "Created video source %s", source_str);
   gcc->priv->source_bin = gst_parse_bin_from_description(source_str, TRUE, NULL);
   g_free(source_str);
   if (!gcc->priv->source_bin) {
