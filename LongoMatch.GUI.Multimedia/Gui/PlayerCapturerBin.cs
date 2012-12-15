@@ -231,7 +231,7 @@ namespace LongoMatch.Gui
 		
 		public bool FullScreen {
 			set {
-				playerbin.FullScreen = true;
+				playerbin.FullScreen = value;
 			}
 		}
 		
