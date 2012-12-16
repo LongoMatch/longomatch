@@ -199,6 +199,7 @@ LongoMatch.Multimedia/Interfaces/IPlayer.cs
 LongoMatch.Multimedia/MultimediaFactory.cs
 LongoMatch.Multimedia/Player/GstPlayer.cs
 LongoMatch.Multimedia/Player/ObjectManager.cs
+LongoMatch.Multimedia/Utils/AsfRemuxer.cs
 LongoMatch.Multimedia/Utils/FramesCapturer.cs
 LongoMatch.Multimedia/Utils/GStreamer.cs
 LongoMatch.Multimedia/Utils/IMetadataReader.cs
