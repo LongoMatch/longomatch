@@ -27,6 +27,7 @@ namespace LongoMatch
 		public static string baseDirectory;
 		public static string homeDirectory;
 		public static string configDirectory;
+		public static bool fastTagging = false;
 		
 		public static string HomeDir() {
 			return homeDirectory;
@@ -72,6 +73,15 @@ namespace LongoMatch
 		
 		public static string RelativeToPrefix(string relativePath) {
 			return Path.Combine(baseDirectory, relativePath);
+		}
+		
+		public static bool FastTagging {
+			get {
+				return fastTagging;
+			}
+			set {
+				fastTagging = value;
+			}
 		}
 		
 		

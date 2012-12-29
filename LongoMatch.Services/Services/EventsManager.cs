@@ -145,7 +145,8 @@ namespace LongoMatch.Services
 			var play = openedProject.AddPlay(category, start, stop,miniature);
 			mainWindow.AddPlay(play);
 			/* Tag subcategories of the new play */
-			LaunchPlayTagger(play);
+			if (!Config.FastTagging)
+				LaunchPlayTagger(play);
 			if (projectType == ProjectType.FileProject) {
 				player.Play();
 			}

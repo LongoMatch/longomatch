@@ -1809,6 +1809,14 @@
         <property name="Label" translatable="yes">Import from file</property>
         <property name="ShortLabel" translatable="yes">Import from file</property>
       </action>
+      <action id="TagSubcategoriesAction">
+        <property name="Type">Toggle</property>
+        <property name="Label" translatable="yes">Tag subcategories</property>
+        <property name="ShortLabel" translatable="yes">Tag subcategories</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">True</property>
+        <signal name="Toggled" handler="OnTagSubcategoriesActionToggled" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">LongoMatch</property>
@@ -1851,6 +1859,7 @@
                     <node type="Separator" />
                     <node type="Menuitem" action="PlaylistAction" />
                     <node type="Separator" />
+                    <node type="Menuitem" action="TagSubcategoriesAction" />
                     <node type="Menuitem" action="TaggingViewAction" />
                     <node type="Menuitem" action="ManualTaggingViewAction" />
                     <node type="Menuitem" action="TimelineViewAction" />

@@ -521,6 +521,11 @@ namespace LongoMatch.Gui
 		#endregion
 		
 		#region View
+		protected void OnTagSubcategoriesActionToggled (object sender, System.EventArgs e)
+		{
+			Config.FastTagging = !TagSubcategoriesAction.Active;
+		}
+
 		protected virtual void OnFullScreenActionToggled(object sender, System.EventArgs e)
 		{
 			playercapturer.FullScreen = (sender as Gtk.ToggleAction).Active;
