@@ -153,7 +153,7 @@ namespace LongoMatch.Store
 		/// A <see cref="MediaTimeNode"/>: created play
 		/// </returns>
 		public Play AddPlay(Category category, Time start, Time stop, Image miniature) {
-			string count= String.Format("{0:000}",timeline.Count+1);
+			string count= String.Format("{0:000}", PlaysInCategory (category).Count + 1);
 			string name = String.Format("{0} {1}",category.Name, count);
 
 			var play = new Play {
