@@ -139,6 +139,7 @@ typedef enum
   CAPTURE_SOURCE_TYPE_NONE = 0,
   CAPTURE_SOURCE_TYPE_DV = 1,
   CAPTURE_SOURCE_TYPE_SYSTEM = 2,
+  CAPTURE_SOURCE_TYPE_URI = 3,
 } CaptureSourceType;
 
 #endif
