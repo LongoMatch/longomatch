@@ -210,9 +210,11 @@ namespace LongoMatch.Services
 				videoEditor.Start();
 			}
 			catch(Exception ex) {
-				Log.Exception(ex);
-				Log.Error("Error redering job: ", currentJob.Name);
+				videoEditor.Cancel();
 				currentJob.State = JobState.Error;
+				Log.Exception(ex);
+				Log.Error("Error rendering job: ", currentJob.Name);
+				guiToolkit.ErrorMessage (Catalog.GetString("Error rendering job: ") + ex.Message);
 			}
 		}
 		
