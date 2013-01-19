@@ -29,6 +29,12 @@ REF_DEP_LONGOMATCH_ADDINS = \
                      $(LINK_MONO_ADDINS) \
                      $(LINK_LONGOMATCH_CORE)
 
+REF_DEP_LONGOMATCH_PLUGINS = \
+                     $(LINK_MONO_ADDINS) \
+                     $(LINK_MONO_POSIX) \
+                     $(LINK_LONGOMATCH_CORE) \
+                     $(LINK_LONGOMATCH_ADDINS)
+
 REF_DEP_LONGOMATCH_CORE = \
                      $(LINK_SYSTEM_DRAWING) \
                      $(LINK_MONO_POSIX) \

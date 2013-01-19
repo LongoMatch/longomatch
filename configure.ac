@@ -131,6 +131,7 @@ LongoMatch.Multimedia/Makefile
 LongoMatch.Multimedia/LongoMatch.Multimedia.dll.config
 LongoMatch.GUI.Multimedia/Makefile
 LongoMatch.GUI/Makefile
+LongoMatch.Plugins/Makefile
 LongoMatch.Services/Makefile
 LongoMatch/Makefile
 LongoMatch/longomatch

@@ -11,6 +11,7 @@ SUBDIRS = \
 	LongoMatch.Multimedia \
 	LongoMatch.GUI.Multimedia \
 	LongoMatch.GUI \
+	LongoMatch.Plugins \
 	LongoMatch.Services \
 	LongoMatch \
 	po
