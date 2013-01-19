@@ -207,6 +207,7 @@ LongoMatch.Multimedia/Utils/MpegRemuxer.cs
 LongoMatch.Multimedia/Utils/PreviewMediaFile.cs
 LongoMatch.Multimedia/Utils/TimeString.cs
 LongoMatch.Multimedia/Utils/VideoDevice.cs
+LongoMatch.Plugins/CSVExporter.cs
 LongoMatch.Services/Services/Core.cs
 LongoMatch.Services/Services/DataBase.cs
 LongoMatch.Services/Services/EventsManager.cs
