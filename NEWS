@@ -1,4 +1,17 @@
-===== LongoMatch 0.18.4 "Mandarinas" =====
+===== LongoMatch 0.18.5 "Menisco" =====
+
+	== Features ==
+
+	* Export project to CSV format
+	* Add support for disabling subcategories
+
+	== Bugs fixed ==
+
+	* Fix full screen mode
+	* Fix count creating plays
+	* Show a dialog when the rendering fails
+
+===== LongoMatch 0.18.4 "Alatriste" =====
 
 	== Features ==
 
