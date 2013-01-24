@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: longomatch.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-12-29 13:48+0000\n"
-"PO-Revision-Date: 2013-01-08 17:08+0100\n"
+"POT-Creation-Date: 2013-01-19 16:37+0000\n"
+"PO-Revision-Date: 2013-01-24 16:35+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -1093,7 +1093,6 @@ msgstr "Importar desde un archivo"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:167
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:169
-#| msgid "_Add subcategory"
 msgid "Tag subcategories"
 msgstr "Etiquetar subcategorías"
 
@@ -1204,6 +1203,7 @@ msgid "Unknown"
 msgstr "Desconocido"
 
 #: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:437
+#: ../LongoMatch.Plugins/CSVExporter.cs:46
 msgid "Output file"
 msgstr "Archivo de salida"
 
@@ -1625,6 +1625,21 @@ msgstr "Archivo de vídeo no válido:"
 msgid "Default device"
 msgstr "Dispositivo predeterminado"
 
+#: ../LongoMatch.Plugins/CSVExporter.cs:38
+#| msgid "Export Project To CSV File"
+msgid "Export project to CSV file"
+msgstr "Exportar proyecto a un archivo CSV"
+
+#: ../LongoMatch.Plugins/CSVExporter.cs:57
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:391
+msgid "Project exported successfully"
+msgstr "Proyecto exportado satisfactoriamente."
+
+#: ../LongoMatch.Plugins/CSVExporter.cs:59
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:393
+msgid "Error exporting project"
+msgstr "Error al exportar el proyecto"
+
 #: ../LongoMatch.Services/Services/EventsManager.cs:131
 msgid "You can't create a new play if the capturer is not recording."
 msgstr ""
@@ -1746,31 +1761,27 @@ msgstr "Seleccione un archivo de vídeo."
 msgid "Save project"
 msgstr "Guardar proyecto"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:391
-msgid "Project exported successfully"
-msgstr "Proyecto exportado satisfactoriamente."
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:217
+msgid "Error rendering job: "
+msgstr "Error al renderizar el trabajo: "
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:393
-msgid "Error exporting project"
-msgstr "Error al exportar el proyecto"
-
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:221
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:223
 msgid "Rendering"
 msgstr "Renderizando"
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:226
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:228
 msgid "Rendering queue"
 msgstr "Cola de renderizado"
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:227
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:229
 msgid "Pending"
 msgstr "Pendiente"
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:265
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:267
 msgid "An error has occurred in the video editor."
 msgstr "Ocurrió un error en el editor de vídeo."
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:266
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:268
 msgid "Please, try again."
 msgstr "Inténtelo de nuevo."
 
