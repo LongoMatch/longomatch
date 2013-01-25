@@ -1,5 +1,5 @@
 // 
-//  Copyright (C) 2011 Andoni Morales Alastruey
+//  Copyright (C) 2013 Andoni Morales Alastruey
 // 
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,26 +17,42 @@
 // 
 using System;
 using System.Collections.Generic;
-using LongoMatch.Store;
-using LongoMatch.Store.Templates;
+using System.Drawing;
 
-namespace LongoMatch.Interfaces
+namespace LongoMatch.Common
 {
-	public interface ITemplatesService
+	public class Coordinates: List<Point>
 	{
-		ITemplateProvider<T, U> GetTemplateProvider<T, U>() where T: ITemplate<U>;
+		public Coordinates ()
+		{
+		}
 		
-		ISubcategoriesTemplatesProvider SubCategoriesTemplateProvider {get;}
+		public override bool Equals (object obj)
+		{
+			Coordinates c = obj as Coordinates;
+            if (c == null)
+				return false;
+				
+			if (c.Count != Count)
+				return false;
+			
+			for (int i=0; i<Count; i++) {
+				if (c[i].X != this[i].X || c[i].Y != this[i].X)
+					return false;
+			}
+			return true;
+		}
 		
-		ITeamTemplatesProvider TeamTemplateProvider {get;}
-		
-		ICategoriesTemplatesProvider CategoriesTemplateProvider {get;}
-		
-		List<PlayerSubCategory> PlayerSubcategories {get;}
-		
-		List<TeamSubCategory> TeamSubcategories {get;}
-		
-		List<CoordinatesSubCategory> CoordinatesSubcategories {get;}
+		public override int GetHashCode ()
+		{
+			string s = "";
+			
+			for (int i=0; i<Count; i++) {
+				s += this[i].X.ToString() +  this[i].Y.ToString();
+			}
+			
+			return int.Parse(s);
+		}
 	}
 }
 

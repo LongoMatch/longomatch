@@ -164,4 +164,21 @@ namespace LongoMatch.Store
 			return RenderDesc(Catalog.GetString("Team selection"), "");
 		}
 	}
+	
+	/// <summary>
+	/// SubCategory to tag locations or trajectories in the game field
+	/// </summary>
+	[Serializable]
+	public class CoordinatesSubCategory: SubCategory<Coordinates> {
+	
+		/* Use 1 for locations or 2 for trajectories */
+		public int NumCoordinates {
+			get;
+			set;
+		}
+		
+		public override string ToMarkupString(){
+			return RenderDesc(Catalog.GetString("Coordinates"), "");
+		}
+	}
 }

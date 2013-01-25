@@ -131,7 +131,13 @@ namespace LongoMatch.Gui.Dialog
 		}
 		
 		private void UpdateSelectedTemplate() {
-			templatesWidget.Template = templatesProvider.Load(templateName); 
+			try {
+				templatesWidget.Template = templatesProvider.Load(templateName); 
+			} catch (Exception e) {
+				Log.Exception (e);
+				MessagePopup.PopupMessage(this.Toplevel, Gtk.MessageType.Error,
+				                          "Error loading template");
+			}
 		}
 		
 		private void SaveTemplate() {

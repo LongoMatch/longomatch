@@ -98,5 +98,8 @@ namespace LongoMatch.Store
 	
 	[Serializable]
 	public class TeamsTagStore: TagsStore<TeamTag, Team> {}
+	
+	[Serializable]
+	public class CoordinatesTagStore: TagsStore<CoordinatesTag, Coordinates> {}
 }
 

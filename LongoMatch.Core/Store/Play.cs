@@ -187,6 +187,11 @@ namespace LongoMatch.Store
 			set;
 		}
 		
+		public CoordinatesTagStore Coordinates {
+			get;
+			set;
+		}
+		
 		#endregion
 
 		#region Public methods

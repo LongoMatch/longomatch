@@ -66,6 +66,11 @@ namespace LongoMatch.Store.Templates
 			}
 		}
 		
+		public LongoMatch.Common.Image FieldBackgroundImage {
+			get;
+			set;
+		}
+		
 		public void Save(string filePath) {
 			SerializableObject.Save(this, filePath);
 		}

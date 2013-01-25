@@ -9,6 +9,7 @@ SOURCES = \
 	Common/Color.cs \
 	Common/ConsoleCrayon.cs \
 	Common/Constants.cs \
+	Common/Coordinates.cs \
 	Common/Device.cs \
 	Common/EncodingProfiles.cs \
 	Common/EncodingSettings.cs \

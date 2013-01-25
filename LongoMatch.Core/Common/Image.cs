@@ -27,6 +27,7 @@ namespace LongoMatch.Common
 	using SImage = System.Drawing.Image;
 #endif
 
+	[Serializable]
 	public class Image
 	{
 		SImage image;

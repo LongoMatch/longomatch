@@ -100,4 +100,23 @@ namespace LongoMatch.Store
 			return Value.GetHashCode ();
 		}
 	}
+	
+	[Serializable]
+	public class CoordinatesTag: Tag<Coordinates>
+	{
+		public CoordinatesTag() {}
+		
+		public override bool Equals (object obj)
+		{
+			CoordinatesTag tag = obj as CoordinatesTag;
+            if (tag == null)
+				return false;
+			return Value.Equals (tag.Value) && SubCategory.Equals(tag.SubCategory);
+		}
+		
+		public override int GetHashCode ()
+		{
+			return Value.GetHashCode ();
+		}
+	}
 }
