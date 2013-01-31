@@ -290,6 +290,8 @@ namespace LongoMatch.Gui
 			guTimeline.UnitSelected += EmitUnitSelected;
 			guTimeline.UnitChanged += EmitUnitChanged;
 			
+			playercapturer.Error += OnMultimediaError;
+			
 			KeyPressEvent += (o, args) => (EmitKeyPressed(o, (int)args.Event.Key, (int)args.Event.Key));
  		}
 		
@@ -612,13 +614,6 @@ namespace LongoMatch.Gui
 		
 		#endregion
 
-		protected virtual void OnPlayerbin1Error(object o, string message)
-		{
-			MessagePopup.PopupMessage(this, MessageType.Info,
-			                          Catalog.GetString("The actual project will be closed due to an error in the media player:")+"\n" + message);
-			EmitCloseOpenedProject(true);
-		}
-
 		protected override bool OnKeyPressEvent(EventKey evnt)
 		{
 			Gdk.Key key = evnt.Key;
@@ -712,10 +707,10 @@ namespace LongoMatch.Gui
 			return true;
 		}
 
-		protected virtual void OnCapturerBinError(object o, string message)
+		protected virtual void OnMultimediaError(object o, string message)
 		{
-			MessagePopup.PopupMessage(this, MessageType.Info,
-				Catalog.GetString("An error occured in the video capturer and" +
+			MessagePopup.PopupMessage(this, MessageType.Error,
+				Catalog.GetString("The following error happened and" +
 				" the current project will be closed:")+"\n" + message);
 			EmitCloseOpenedProject(true);
 		}
