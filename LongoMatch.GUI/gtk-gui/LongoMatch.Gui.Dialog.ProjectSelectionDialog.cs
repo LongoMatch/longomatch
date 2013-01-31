@@ -14,6 +14,9 @@ namespace LongoMatch.Gui.Dialog
 		private global::Gtk.HBox hbox3;
 		private global::Gtk.RadioButton fakeliveradiobutton;
 		private global::Gtk.Image image62;
+		private global::Gtk.HBox ipcamerabox;
+		private global::Gtk.RadioButton uriliveradiobutton;
+		private global::Gtk.Image image64;
 		private global::Gtk.Button buttonCancel;
 		private global::Gtk.Button buttonOk;
 		
@@ -45,7 +48,6 @@ namespace LongoMatch.Gui.Dialog
 			this.fromfileradiobutton = new global::Gtk.RadioButton (global::Mono.Unix.Catalog.GetString ("New project using a video file"));
 			this.fromfileradiobutton.CanFocus = true;
 			this.fromfileradiobutton.Name = "fromfileradiobutton";
-			this.fromfileradiobutton.Active = true;
 			this.fromfileradiobutton.DrawIndicator = true;
 			this.fromfileradiobutton.UseUnderline = true;
 			this.fromfileradiobutton.FocusOnClick = false;
@@ -123,17 +125,45 @@ namespace LongoMatch.Gui.Dialog
 			w10.Position = 2;
 			w10.Expand = false;
 			w10.Fill = false;
-			w1.Add (this.vbox2);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(w1 [this.vbox2]));
+			// Container child vbox2.Gtk.Box+BoxChild
+			this.ipcamerabox = new global::Gtk.HBox ();
+			this.ipcamerabox.Name = "ipcamerabox";
+			this.ipcamerabox.Spacing = 6;
+			// Container child ipcamerabox.Gtk.Box+BoxChild
+			this.uriliveradiobutton = new global::Gtk.RadioButton (global::Mono.Unix.Catalog.GetString ("Live project using an IP camera"));
+			this.uriliveradiobutton.CanFocus = true;
+			this.uriliveradiobutton.Name = "uriliveradiobutton";
+			this.uriliveradiobutton.DrawIndicator = true;
+			this.uriliveradiobutton.UseUnderline = true;
+			this.uriliveradiobutton.Group = this.fromfileradiobutton.Group;
+			this.ipcamerabox.Add (this.uriliveradiobutton);
+			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.ipcamerabox [this.uriliveradiobutton]));
 			w11.Position = 0;
-			w11.Expand = false;
-			w11.Fill = false;
+			// Container child ipcamerabox.Gtk.Box+BoxChild
+			this.image64 = new global::Gtk.Image ();
+			this.image64.Name = "image64";
+			this.image64.Pixbuf = global::Gdk.Pixbuf.LoadFromResource ("camera-video.png");
+			this.ipcamerabox.Add (this.image64);
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.ipcamerabox [this.image64]));
+			w12.Position = 1;
+			w12.Expand = false;
+			w12.Fill = false;
+			this.vbox2.Add (this.ipcamerabox);
+			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.ipcamerabox]));
+			w13.Position = 3;
+			w13.Expand = false;
+			w13.Fill = false;
+			w1.Add (this.vbox2);
+			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(w1 [this.vbox2]));
+			w14.Position = 0;
+			w14.Expand = false;
+			w14.Fill = false;
 			// Internal child LongoMatch.Gui.Dialog.ProjectSelectionDialog.ActionArea
-			global::Gtk.HButtonBox w12 = this.ActionArea;
-			w12.Name = "dialog1_ActionArea";
-			w12.Spacing = 6;
-			w12.BorderWidth = ((uint)(5));
-			w12.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
+			global::Gtk.HButtonBox w15 = this.ActionArea;
+			w15.Name = "dialog1_ActionArea";
+			w15.Spacing = 6;
+			w15.BorderWidth = ((uint)(5));
+			w15.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.buttonCancel = new global::Gtk.Button ();
 			this.buttonCancel.CanDefault = true;
@@ -143,9 +173,9 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonCancel.UseUnderline = true;
 			this.buttonCancel.Label = "gtk-cancel";
 			this.AddActionWidget (this.buttonCancel, -6);
-			global::Gtk.ButtonBox.ButtonBoxChild w13 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w12 [this.buttonCancel]));
-			w13.Expand = false;
-			w13.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w16 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w15 [this.buttonCancel]));
+			w16.Expand = false;
+			w16.Fill = false;
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.buttonOk = new global::Gtk.Button ();
 			this.buttonOk.CanDefault = true;
@@ -155,15 +185,15 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonOk.UseUnderline = true;
 			this.buttonOk.Label = "gtk-ok";
 			this.AddActionWidget (this.buttonOk, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w14 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w12 [this.buttonOk]));
-			w14.Position = 1;
-			w14.Expand = false;
-			w14.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w17 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w15 [this.buttonOk]));
+			w17.Position = 1;
+			w17.Expand = false;
+			w17.Fill = false;
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.DefaultWidth = 332;
-			this.DefaultHeight = 183;
+			this.DefaultWidth = 348;
+			this.DefaultHeight = 220;
 			this.Show ();
 		}
 	}

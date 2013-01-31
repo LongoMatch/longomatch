@@ -87,6 +87,7 @@ namespace LongoMatch
 		
 		/* Properties */
 		public static bool useGameUnits = false;
+		public static bool useUriCapture = false;
 
 	}
 }

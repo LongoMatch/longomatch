@@ -29,6 +29,7 @@ namespace LongoMatch.Gui.Dialog
 		public ProjectSelectionDialog()
 		{
 			this.Build();
+			ipcamerabox.Visible = Config.useUriCapture;
 		}
 
 		public ProjectType ProjectType {
@@ -37,9 +38,12 @@ namespace LongoMatch.Gui.Dialog
 					return ProjectType.FileProject;
 				else if(liveradiobutton.Active)
 					return ProjectType.CaptureProject;
-				else
+				else if (fakeliveradiobutton.Active)
 					return ProjectType.FakeCaptureProject;
-
+				else if (uriliveradiobutton.Active)
+					return ProjectType.URICaptureProject;
+				else
+					throw new Exception ("Unkown project type");
 			}
 		}
 	}

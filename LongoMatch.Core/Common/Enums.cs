@@ -24,6 +24,7 @@ namespace LongoMatch.Common
 
 	public enum ProjectType {
 		CaptureProject,
+		URICaptureProject,
 		FakeCaptureProject,
 		FileProject,
 		EditProject,
@@ -109,6 +110,7 @@ namespace LongoMatch.Common
 		None,
 		DV,
 		System,
+		URI,
 	}
 	
 	public enum GameUnitEventType {

@@ -219,7 +219,8 @@
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.TeamTemplateEditorWidget" palette-category="General" allow-children="false" base-type="LongoMatch.Gui.Base.TemplatesEditorBase">
-    <itemgroups />
+    <itemgroups>
+    </itemgroups>
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.StringTaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
@@ -297,6 +298,29 @@
         <signal name="PlayListNodeAdded" />
         <signal name="SnapshotSeriesEvent" />
         <signal name="RenderPlaylistEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.CategoriesTemplateEditorWidget" palette-category="General" allow-children="false" base-type="LongoMatch.Gui.Base.TemplatesEditorBase">
+    <itemgroups>
+    </itemgroups>
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.PlayersTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
+    <itemgroups>
+      <itemgroup label="ListTreeViewBase Properties">
+        <property name="Colors" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="ListTreeViewBase Signals">
+        <signal name="TimeNodeChanged" />
+        <signal name="TimeNodeSelected" />
+        <signal name="TimeNodeDeleted" />
+        <signal name="PlayListNodeAdded" />
+        <signal name="SnapshotSeriesEvent" />
+        <signal name="TagPlay" />
+        <signal name="NewRenderingJob" />
       </itemgroup>
     </signals>
   </object>

@@ -199,7 +199,8 @@ namespace LongoMatch.Services
 				}
 
 			} else {
-				if(projectType == ProjectType.CaptureProject) {
+				if(projectType == ProjectType.CaptureProject ||
+				   projectType == ProjectType.URICaptureProject) {
 					Capturer.CaptureProperties = props;
 					try {
 						Capturer.Type = CapturerType.Live;
@@ -308,7 +309,8 @@ namespace LongoMatch.Services
 				} catch (Exception e) {
 					Log.Exception(e);
 				}
-			} else if (projectType == ProjectType.CaptureProject) {
+			} else if (projectType == ProjectType.CaptureProject ||
+			           projectType == ProjectType.URICaptureProject) {
 				SaveCaptureProject(project);
 			}
 		}
@@ -337,6 +339,9 @@ namespace LongoMatch.Services
 				project = guiToolkit.NewFileProject(Core.DB, Core.TemplatesService);
 				if (project != null)
 					Core.DB.AddProject(project);
+			} else if (projectType == ProjectType.URICaptureProject) {
+				project = guiToolkit.NewURICaptureProject(Core.DB, Core.TemplatesService,
+				                                          out captureSettings);
 			} else {
 				project = null;
 			}

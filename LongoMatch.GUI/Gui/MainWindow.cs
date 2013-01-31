@@ -390,7 +390,8 @@ namespace LongoMatch.Gui
 		}
 		
 		private void CloseCaptureProject() {
-			if(projectType == ProjectType.CaptureProject) {
+			if(projectType == ProjectType.CaptureProject ||
+			   projectType == ProjectType.URICaptureProject) {
 				playercapturer.Close();
 				playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
 				EmitSaveProject();
@@ -630,7 +631,8 @@ namespace LongoMatch.Gui
 				return ret;
 
 			if(projectType != ProjectType.CaptureProject &&
-			                projectType != ProjectType.FakeCaptureProject) {
+			   projectType != ProjectType.URICaptureProject &&
+			   projectType != ProjectType.FakeCaptureProject) {
 				switch(key) {
 				case Constants.SEEK_FORWARD:
 					if(modifier == Constants.STEP)

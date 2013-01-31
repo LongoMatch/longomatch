@@ -54,6 +54,8 @@ namespace LongoMatch.Interfaces.GUI
 		
 		Project NewCaptureProject(IDatabase db, ITemplatesService ts,
 			List<LongoMatch.Common.Device> devices, out CaptureSettings captureSettings);
+		Project NewURICaptureProject(IDatabase db, ITemplatesService ts,
+			out CaptureSettings captureSettings);
 		Project NewFakeProject(IDatabase db, ITemplatesService ts);
 		Project NewFileProject(IDatabase db, ITemplatesService ts);
 		Project EditFakeProject(IDatabase db, Project project, ITemplatesService ts);

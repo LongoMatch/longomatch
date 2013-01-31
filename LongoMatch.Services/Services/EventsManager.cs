@@ -111,7 +111,8 @@ namespace LongoMatch.Services
 			fStart = (start < new Time {MSeconds =0}) ? new Time {MSeconds = 0} : start;
 
 			if(projectType == ProjectType.FakeCaptureProject ||
-			   projectType == ProjectType.CaptureProject) {
+			   projectType == ProjectType.CaptureProject ||
+			   projectType == ProjectType.URICaptureProject) {
 				fStop = stop;
 			} else {
 				length = new Time {MSeconds = (int)player.StreamLength};
@@ -126,7 +127,7 @@ namespace LongoMatch.Services
 			Log.Debug(String.Format("New play created start:{0} stop:{1} category:{2}",
 									start, stop, category));
 			/* Get the current frame and get a thumbnail from it */
-			if(projectType == ProjectType.CaptureProject) {
+			if(projectType == ProjectType.CaptureProject || projectType == ProjectType.URICaptureProject) {
 				if(!capturer.Capturing) {
 					guiToolkit.InfoMessage(Catalog.GetString("You can't create a new play if the capturer "+
 						"is not recording."));
@@ -164,7 +165,8 @@ namespace LongoMatch.Services
 			Time pos;
 
 			if(projectType == ProjectType.FakeCaptureProject ||
-			   projectType == ProjectType.CaptureProject) {
+			   projectType == ProjectType.CaptureProject ||
+			   projectType == ProjectType.URICaptureProject) {
 				pos =  new Time { MSeconds = (int)capturer.CurrentTime};
 			} else {
 				pos = new Time {MSeconds = (int)player.CurrentTime};

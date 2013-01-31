@@ -230,6 +230,12 @@ namespace LongoMatch.Gui
 			return NewProject(db, null, ProjectType.CaptureProject, ts, devices, out captureSettings);
 		}
 		
+		public Project NewURICaptureProject(IDatabase db, ITemplatesService ts,
+		                                    out CaptureSettings captureSettings)
+		{
+			return NewProject(db, null, ProjectType.URICaptureProject, ts, null, out captureSettings);
+		}
+		
 		public Project NewFakeProject(IDatabase db, ITemplatesService ts) {
 			CaptureSettings captureSettings = new CaptureSettings();
 			return NewProject(db, null, ProjectType.FakeCaptureProject, ts, null, out captureSettings);
@@ -277,7 +283,7 @@ namespace LongoMatch.Gui
 					break;
 				}
 			}	
-			if (type == ProjectType.CaptureProject)
+			if (type == ProjectType.CaptureProject || type == ProjectType.URICaptureProject)
 				captureSettings = npd.CaptureSettings;
 			else
 				captureSettings = new CaptureSettings();

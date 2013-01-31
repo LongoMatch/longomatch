@@ -89,22 +89,31 @@ namespace LongoMatch.Gui.Component
 		
 		public ProjectType Use {
 			set {
-				bool visible1 = value == ProjectType.CaptureProject;
-				bool visible2 = value != ProjectType.FakeCaptureProject;
-				bool visible3 = value != ProjectType.EditProject;
+				bool deviceVisible, encodingVisible, fileVisible, editionVisible, uriVisible;
+				
+				deviceVisible = value == ProjectType.CaptureProject;
+				encodingVisible = (value == ProjectType.CaptureProject ||
+				                   value == ProjectType.URICaptureProject);
+				fileVisible = value != ProjectType.FakeCaptureProject;
+				editionVisible = value != ProjectType.EditProject;
+				uriVisible = value == ProjectType.URICaptureProject;
 
-				filelabel.Visible = visible2;
-				filehbox.Visible = visible2;
+				filelabel.Visible = fileVisible;
+				filehbox.Visible = fileVisible;
 
-				tagscombobox.Visible = visible3;
-				localcombobox.Visible = visible3;
-				visitorcombobox.Visible = visible3;
-				localteamlabel.Visible = !visible3;
-				visitorteamlabel.Visible = !visible3;
+				tagscombobox.Visible = editionVisible;
+				localcombobox.Visible = editionVisible;
+				visitorcombobox.Visible = editionVisible;
+				localteamlabel.Visible = !editionVisible;
+				visitorteamlabel.Visible = !editionVisible;
 
-				expander1.Visible = visible1;
-				device.Visible = visible1;
-				devicecombobox.Visible = visible1;
+				expander1.Visible = encodingVisible;
+				
+				device.Visible = deviceVisible;
+				devicecombobox.Visible = deviceVisible;
+				
+				urilabel.Visible = uriVisible;
+				urientry.Visible = uriVisible;
 
 				useType = value;
 			}
@@ -233,8 +242,13 @@ namespace LongoMatch.Gui.Component
 				encSettings.OutputFile = fileEntry.Text;
 				encSettings.AudioBitrate = (uint)audiobitratespinbutton.Value;
 				encSettings.VideoBitrate = (uint)videobitratespinbutton.Value;
-				s.CaptureSourceType = videoDevices[devicecombobox.Active].DeviceType;
-				s.DeviceID = videoDevices[devicecombobox.Active].ID;
+				if (useType == ProjectType.CaptureProject) {
+					s.CaptureSourceType = videoDevices[devicecombobox.Active].DeviceType;
+					s.DeviceID = videoDevices[devicecombobox.Active].ID;
+				} else if (useType == ProjectType.URICaptureProject) {
+					s.CaptureSourceType = CaptureSourceType.URI;
+					s.DeviceID = urientry.Text;
+				}
 				
 				/* Get size info */
 				sizecombobox.GetActiveIter(out iter);
@@ -286,14 +300,17 @@ namespace LongoMatch.Gui.Component
 
 		public Project GetProject() {
 			if(useType != ProjectType.EditProject) {
-				if(Filename == "" && useType != ProjectType.FakeCaptureProject)
+				if(Filename == "" && useType != ProjectType.FakeCaptureProject) {
 					return null;
-				else {
+				} else if(urientry.Text == "" && useType == ProjectType.URICaptureProject) {
+					return null;
+				} else {
 					if(useType == ProjectType.FakeCaptureProject) {
 						mFile = new MediaFile();
 						mFile.FilePath = Constants.FAKE_PROJECT;
 						mFile.Fps = 25;
-					} else if(useType == ProjectType.CaptureProject) {
+					} else if(useType == ProjectType.CaptureProject ||
+					          useType == ProjectType.URICaptureProject) {
 						mFile = new MediaFile();
 						mFile.FilePath = fileEntry.Text;
 						mFile.Fps = 25;
@@ -433,7 +450,7 @@ namespace LongoMatch.Gui.Component
 		{
 			FileChooserDialog fChooser = null;
 
-			if(useType == ProjectType.CaptureProject) {
+			if(useType == ProjectType.CaptureProject || useType == ProjectType.URICaptureProject) {
 				fChooser = new FileChooserDialog(Catalog.GetString("Output file"),
 				                                 (Gtk.Window)this.Toplevel,
 				                                 FileChooserAction.Save,
