@@ -292,7 +292,7 @@ namespace LongoMatch.Gui
 			
 			playercapturer.Error += OnMultimediaError;
 			
-			KeyPressEvent += (o, args) => (EmitKeyPressed(o, (int)args.Event.Key, (int)args.Event.Key));
+			KeyPressEvent += (o, args) => (EmitKeyPressed(o, (int)args.Event.Key, (int)args.Event.State));
  		}
 		
 		private void ConnectMenuSignals() {
