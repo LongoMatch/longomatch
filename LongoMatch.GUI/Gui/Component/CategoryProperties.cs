@@ -87,13 +87,13 @@ namespace LongoMatch.Gui.Component
 				                                 subcat.Name),
 				                   subcat);
 			}
-			foreach (CoordinatesSubCategory subcat in coordinatesSubcategories) {
+			/*foreach (CoordinatesSubCategory subcat in coordinatesSubcategories) {
 				Log.Debug("Adding coordinates subcategory: ", subcat.Name);
 				model.AppendValues(String.Format("[{0}] {1}", 
 				                                 Catalog.GetString("Coordinates"),
 				                                 subcat.Name),
 				                   subcat);
-			}
+			}*/
 			
 			subcatcombobox.Model = model;
 			var cell = new CellRendererText();
