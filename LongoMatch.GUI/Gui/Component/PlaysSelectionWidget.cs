@@ -33,6 +33,7 @@ namespace LongoMatch.Gui.Component
 	
 		public event PlaysDeletedHandler PlaysDeleted;
 		public event PlaySelectedHandler PlaySelected;
+		public event PlayCategoryChangedHandler PlayCategoryChanged;
 		public event PlayListNodeAddedHandler PlayListNodeAdded;
 		public event SnapshotSeriesHandler SnapshotSeries;
 		public event RenderPlaylistHandler RenderPlaylist;
@@ -142,6 +143,9 @@ namespace LongoMatch.Gui.Component
 			playsList.RenderPlaylistEvent += EmitRenderPlaylist;
 			localPlayersList.RenderPlaylistEvent += EmitRenderPlaylist;
 			visitorPlayersList.RenderPlaylistEvent += EmitRenderPlaylist;
+			
+			/* Connect PlayCategoryChanged events */
+			playsList.PlayCategoryChanged += EmitPlayCategoryChanged;
  		}
  		
 		private void UpdateTeamsModels() {
@@ -176,6 +180,12 @@ namespace LongoMatch.Gui.Component
 		{
 			if (PlayListNodeAdded != null)
 				PlayListNodeAdded(play);
+		}
+		
+		protected virtual void EmitPlayCategoryChanged(Play play, Category cat)
+		{
+			if(PlayCategoryChanged != null)
+				PlayCategoryChanged(play, cat);
 		}
 		
 		private void EmitTagPlay(Play play) {

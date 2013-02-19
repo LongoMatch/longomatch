@@ -34,21 +34,24 @@ namespace LongoMatch.Gui.Component
 	public abstract class ListTreeViewBase:TreeView
 	{
 		// Plays menu
-		protected Menu menu;
-		protected MenuItem tag, delete, addPLN, deleteKeyFrame, snapshot, name, render;
+		protected Menu menu, catMenu;
+		protected MenuItem tag, delete, addPLN, deleteKeyFrame, snapshot, name, render, moveCat;
 
 		protected Gtk.CellRendererText nameCell;
 		protected Gtk.TreeViewColumn nameColumn;
 		protected bool editing;
 		protected bool projectIsLive;
+		protected bool enableCategoryMove = false;
 		
 		TreeModelFilter modelFilter;
 		PlaysFilter filter;
+		Dictionary<MenuItem, Category> catsDict;
 
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event PlaySelectedHandler TimeNodeSelected;
 		public event PlaysDeletedHandler TimeNodeDeleted;
 		public event PlayListNodeAddedHandler PlayListNodeAdded;
+		public event PlayCategoryChangedHandler PlayCategoryChanged;
 		public event SnapshotSeriesHandler SnapshotSeriesEvent;
 		public event TagPlayHandler TagPlay;
 		public event EventHandler NewRenderingJob;
@@ -114,6 +117,23 @@ namespace LongoMatch.Gui.Component
 				modelFilter.Refilter();
 		}
 
+		public Project Project {
+			set {
+				if (!enableCategoryMove)
+					return;
+				catsDict = new Dictionary<MenuItem, Category>();
+				catMenu = new Menu();
+				foreach (Category cat in value.Categories) {
+					var item = new MenuItem (cat.Name);
+					catMenu.Append (item);
+					catsDict.Add(item, cat);
+					item.Activated += OnCatChanged; 
+				}
+				catMenu.ShowAll();
+				moveCat.Submenu = catMenu;
+			}
+		}
+		
 		new public TreeStore Model {
 			set {
 				if(value != null) {
@@ -148,7 +168,8 @@ namespace LongoMatch.Gui.Component
 			addPLN.Sensitive=false;
 			render = new MenuItem(Catalog.GetString("Export to video file"));
 			snapshot = new MenuItem(Catalog.GetString("Export to PGN images"));
-
+			moveCat = new MenuItem(Catalog.GetString("Move to category"));
+			
 			menu.Append(name);
 			menu.Append(tag);
 			menu.Append(addPLN);
@@ -156,6 +177,7 @@ namespace LongoMatch.Gui.Component
 			menu.Append(deleteKeyFrame);
 			menu.Append(render);
 			menu.Append(snapshot);
+			menu.Append(moveCat);
 
 			name.Activated += OnEdit;
 			tag.Activated += OnTag;
@@ -359,6 +381,12 @@ namespace LongoMatch.Gui.Component
 		protected void OnRender(object obj, EventArgs args) {
 			if (NewRenderingJob != null)
 				NewRenderingJob(this, null);
+		}
+		
+		protected void OnCatChanged(object obj, EventArgs args) {
+			if (PlayCategoryChanged != null)
+				PlayCategoryChanged((Play)GetValueFromPath(Selection.GetSelectedRows()[0]),
+				                    catsDict[obj as MenuItem]);
 		}
 
 		protected void OnFilterUpdated() {

@@ -42,6 +42,7 @@ namespace LongoMatch.Gui.Component
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event PlaysDeletedHandler TimeNodeDeleted;
 		public event PlayListNodeAddedHandler PlayListNodeAdded;
+		public event PlayCategoryChangedHandler PlayCategoryChanged;
 		public event SnapshotSeriesHandler SnapshotSeriesEvent;
 		public event TagPlayHandler TagPlay;
 		public event RenderPlaylistHandler RenderPlaylistEvent;
@@ -59,6 +60,7 @@ namespace LongoMatch.Gui.Component
 			treeview.PlayListNodeAdded += OnPlayListNodeAdded;
 			treeview.SnapshotSeriesEvent += OnSnapshotSeriesEvent;
 			treeview.EditProperties += OnEditProperties;
+			treeview.PlayCategoryChanged += OnPlayCategoryChanged;
 			treeview.TagPlay += OnTagPlay;
 			treeview.NewRenderingJob += OnNewRenderingJob;
 		}
@@ -138,6 +140,7 @@ namespace LongoMatch.Gui.Component
 				if(project != null) {
 					treeview.Model = GetModel(project);
 					treeview.Colors = true;
+					treeview.Project = value;
 				}
 				else {
 					treeview.Model = null;
@@ -205,6 +208,12 @@ namespace LongoMatch.Gui.Component
 		{
 			if(PlayListNodeAdded != null)
 				PlayListNodeAdded(tNode);
+		}
+		
+		protected virtual void OnPlayCategoryChanged(Play play, Category cat)
+		{
+			if(PlayCategoryChanged != null)
+				PlayCategoryChanged(play, cat);
 		}
 
 		protected virtual void OnSnapshotSeriesEvent(LongoMatch.Store.Play tNode)

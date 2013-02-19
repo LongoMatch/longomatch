@@ -42,6 +42,7 @@ namespace LongoMatch.Gui.Component
 		private RadioAction sortByName, sortByStart, sortByStop, sortByDuration;
 
 		public PlaysTreeView() {
+			enableCategoryMove = true;
 			SetCategoriesMenu();
 		}
 

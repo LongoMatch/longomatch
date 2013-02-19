@@ -96,6 +96,7 @@ namespace LongoMatch.Gui.Component
 				}
 			}
 			playerstreeview.Model = team;
+			playerstreeview.Project = Project;
 		}
 
 		public bool PlayListLoaded {

@@ -45,6 +45,8 @@ namespace LongoMatch.Handlers
 	public delegate void PlaysDeletedHandler(List<Play> plays);
 	/* Tag a play */
 	public delegate void TagPlayHandler(Play play);
+	/* Change the Play's category */
+	public delegate void PlayCategoryChangedHandler(Play play, Category cat);
 	
 	/* Project Events */
 	public delegate void SaveProjectHandler(Project project, ProjectType projectType);

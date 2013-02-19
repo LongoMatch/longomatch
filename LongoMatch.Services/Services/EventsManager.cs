@@ -81,6 +81,7 @@ namespace LongoMatch.Services
 			mainWindow.TimeNodeChanged += OnTimeNodeChanged;
 			mainWindow.PlaysDeletedEvent += OnPlaysDeleted;
 			mainWindow.PlaySelectedEvent += OnPlaySelected;
+			mainWindow.PlayCategoryChanged += OnPlayCategoryChanged;
 
 			/* Connect playlist events */
 			mainWindow.PlayListNodeSelectedEvent += (tn) => {selectedTimeNode = tn;};
@@ -273,6 +274,19 @@ namespace LongoMatch.Services
 
 		protected virtual void OnTagPlay(Play play) {
 			LaunchPlayTagger(play);
+		}
+		
+		protected virtual void OnPlayCategoryChanged(Play play, Category cat)
+		{
+			List<Play> plays = new List<Play>();
+			plays.Add(play);
+			OnPlaysDeleted(plays);
+			var newplay = openedProject.AddPlay(cat, play.Start, play.Stop, play.Miniature);
+			newplay.Name = play.Name;
+			newplay.Notes = play.Notes;
+			newplay.Drawings = play.Drawings;
+			mainWindow.AddPlay(newplay);
+			Core.DB.UpdateProject (openedProject);
 		}
 	}
 }

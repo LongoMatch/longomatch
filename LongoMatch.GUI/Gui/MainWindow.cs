@@ -53,6 +53,7 @@ namespace LongoMatch.Gui
 		public event TagPlayHandler TagPlayEvent;
 		public event PlaysDeletedHandler PlaysDeletedEvent;
 		public event TimeNodeChangedHandler TimeNodeChanged;
+		public event PlayCategoryChangedHandler PlayCategoryChanged;
 		
 		/* Playlist */
 		public event RenderPlaylistHandler RenderPlaylistEvent;
@@ -259,6 +260,9 @@ namespace LongoMatch.Gui
 			/* Connect TimeNodeSelected events */
 			playsSelection.PlaySelected += OnTimeNodeSelected;
 			timeline.TimeNodeSelected += OnTimeNodeSelected;
+			
+			/* Connect PlayCategoryChanged events */
+			playsSelection.PlayCategoryChanged += EmitPlayCategoryChanged;
 
 			/* Connect playlist events */
 			playlist.PlayListNodeSelected += EmitPlayListNodeSelected;
@@ -737,6 +741,12 @@ namespace LongoMatch.Gui
 		{
 			if (PlaysDeletedEvent != null)
 				PlaysDeletedEvent(plays);
+		}
+		
+		protected virtual void EmitPlayCategoryChanged(Play play, Category cat)
+		{
+			if(PlayCategoryChanged != null)
+				PlayCategoryChanged(play, cat);
 		}
 
 		private void OnPlayListNodeAdded(Play play)
