@@ -46,7 +46,7 @@ namespace LongoMatch.Interfaces.GUI
 			
 		IBusyDialog BusyDialog(string message);
 			
-		Job ConfigureRenderingJob (IPlayList playlist);
+		List<Job> ConfigureRenderingJob (IPlayList playlist);
 		void ExportFrameSeries(Project openenedProject, Play play, string snapshotDir);
 		
 		ProjectDescription SelectProject(List<ProjectDescription> projects);

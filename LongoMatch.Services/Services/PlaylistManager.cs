@@ -17,6 +17,7 @@
 // 
 using System;
 using System.Threading;
+using System.Collections.Generic;
 
 using LongoMatch.Interfaces;
 using LongoMatch.Interfaces.GUI;
@@ -170,8 +171,8 @@ namespace LongoMatch.Services
 		
 		protected virtual void OnRenderPlaylistEvent (IPlayList playlist)
 		{
-			Job job = guiToolkit.ConfigureRenderingJob(playlist);
-			if (job != null)
+			List<Job> jobs = guiToolkit.ConfigureRenderingJob(playlist);
+			foreach (Job job in jobs)
 				videoRenderer.AddJob(job);
 		}
 		

@@ -17,6 +17,7 @@
 // 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Gtk;
 using Gdk;
 using Mono.Unix;
@@ -98,10 +99,10 @@ namespace LongoMatch.Gui
 				extensionFilter, FileChooserAction.Open);
 		}
 		
-		public Job ConfigureRenderingJob (IPlayList playlist)
+		public List<Job> ConfigureRenderingJob (IPlayList playlist)
 		{
 			VideoEditionProperties vep;
-			Job job = null;
+			List<Job> jobs = new List<Job>();
 			int response;
 			
 			if (playlist.Count == 0) {
@@ -112,14 +113,38 @@ namespace LongoMatch.Gui
 			vep = new VideoEditionProperties();
 			vep.TransientFor = mainWindow as Gtk.Window;
 			response = vep.Run();
-			while(response == (int)ResponseType.Ok && vep.EncodingSettings.OutputFile == "") {
-				WarningMessage(Catalog.GetString("Please, select a video file."));
-				response=vep.Run();
+			while(response == (int)ResponseType.Ok) {
+				if (!vep.SplitFiles && vep.EncodingSettings.OutputFile == "") {
+					WarningMessage(Catalog.GetString("Please, select a video file."));
+					response=vep.Run();
+				} else if (vep.SplitFiles && vep.OutputDir == "") {
+					WarningMessage(Catalog.GetString("Please, select an output directory."));
+					response=vep.Run();
+				} else {
+					break;
+				}
 			}
-			if(response ==(int)ResponseType.Ok)
-				job = new Job(playlist, vep.EncodingSettings, vep.EnableAudio, vep.TitleOverlay);
+			if(response ==(int)ResponseType.Ok) {
+				if (!vep.SplitFiles) {
+					jobs.Add(new Job(playlist, vep.EncodingSettings,
+					                   vep.EnableAudio, vep.TitleOverlay));
+				} else {
+					int i = 0;
+					foreach (PlayListPlay play in playlist) {
+						EncodingSettings settings = vep.EncodingSettings;
+						PlayList pl = new PlayList();
+						string filename = String.Format ("{0}-{1}.{2}", play.Name, i.ToString("d4"),
+						                                 settings.EncodingProfile.Extension);
+						
+						pl.Add(play);
+						settings.OutputFile = Path.Combine (vep.OutputDir, filename);
+						jobs.Add(new Job(pl, settings, vep.EnableAudio, vep.TitleOverlay));
+						i++;
+					}
+				}
+			}
 			vep.Destroy();
-			return job;
+			return jobs;
 		}
 		
 		public void ExportFrameSeries(Project openedProject, Play play, string snapshotsDir) {

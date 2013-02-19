@@ -65,6 +65,16 @@ namespace LongoMatch.Gui.Dialog
 				return descriptioncheckbutton.Active;
 			}
 		}
+		
+		public String OutputDir {
+			get;
+			set;
+		}
+		
+		public bool SplitFiles {
+			get;
+			set;
+		}
 
 		#endregion Properties
 
@@ -165,11 +175,34 @@ namespace LongoMatch.Gui.Dialog
 			}
 			fChooser.Destroy();
 		}
+		
 		protected virtual void OnButtonCancelClicked(object sender, System.EventArgs e)
 		{
 			this.Destroy();
 		}
 
 
+		protected void OnSplitfilesbuttonClicked (object sender, System.EventArgs e)
+		{
+			dirbox.Visible = splitfilesbutton.Active;
+			filebox.Visible = !splitfilesbutton.Active;
+			SplitFiles = splitfilesbutton.Active;
+		}
+
+		protected void OnOpendirbuttonClicked (object sender, System.EventArgs e)
+		{
+			FileChooserDialog fChooser = new  FileChooserDialog(Catalog.GetString("Output folder ..."),
+			                this,
+			                FileChooserAction.SelectFolder,
+			                "gtk-cancel",ResponseType.Cancel,
+			                "gtk-open",ResponseType.Accept);
+			fChooser.SetCurrentFolder(Config.VideosDir());
+			fChooser.CurrentName = "Playlist";
+			if(fChooser.Run() == (int)ResponseType.Accept) {
+				dirlabel.Text = fChooser.Filename;
+				OutputDir = fChooser.Filename;
+			}
+			fChooser.Destroy();
+		}
 	}
 }

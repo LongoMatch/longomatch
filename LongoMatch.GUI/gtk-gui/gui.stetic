@@ -3015,7 +3015,7 @@ new one.</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.VideoEditionProperties" design-size="516 245">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.VideoEditionProperties" design-size="516 309">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Video Properties</property>
     <property name="Icon">stock:longomatch Dialog</property>
@@ -3185,7 +3185,24 @@ Extra</property>
               </packing>
             </child>
             <child>
-              <widget class="Gtk.HBox" id="hbox1">
+              <widget class="Gtk.CheckButton" id="splitfilesbutton">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="Label" translatable="yes">Split output in one file per playlist element</property>
+                <property name="DrawIndicator">True</property>
+                <property name="HasLabel">True</property>
+                <property name="UseUnderline">True</property>
+                <signal name="Clicked" handler="OnSplitfilesbuttonClicked" />
+              </widget>
+              <packing>
+                <property name="Position">4</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.HBox" id="filebox">
                 <property name="MemberName" />
                 <property name="Spacing">6</property>
                 <child>
@@ -3238,7 +3255,68 @@ Extra</property>
                 </child>
               </widget>
               <packing>
-                <property name="Position">4</property>
+                <property name="Position">5</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.HBox" id="dirbox">
+                <property name="MemberName" />
+                <property name="Visible">False</property>
+                <property name="Spacing">6</property>
+                <child>
+                  <widget class="Gtk.Label" id="directorynamelabel1">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">Directory name: </property>
+                  </widget>
+                  <packing>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">False</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.HBox" id="hbox8">
+                    <property name="MemberName" />
+                    <property name="Spacing">6</property>
+                    <child>
+                      <widget class="Gtk.Label" id="dirlabel">
+                        <property name="MemberName" />
+                      </widget>
+                      <packing>
+                        <property name="Position">0</property>
+                        <property name="AutoSize">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Button" id="opendirbutton">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="UseStock">True</property>
+                        <property name="Type">StockItem</property>
+                        <property name="StockId">gtk-save-as</property>
+                        <signal name="Clicked" handler="OnOpendirbuttonClicked" />
+                        <property name="label">gtk-save-as</property>
+                      </widget>
+                      <packing>
+                        <property name="Position">1</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">False</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">6</property>
                 <property name="AutoSize">True</property>
                 <property name="Expand">False</property>
                 <property name="Fill">False</property>
