@@ -114,8 +114,8 @@ namespace LongoMatch.Video
 			}
 		}
 		
-		public IRemuxer GetRemuxer(string inputFile, string outputFile) {
-			return new GstRemuxer (inputFile, outputFile);
+		public IRemuxer GetRemuxer(string inputFile, string outputFile, VideoMuxerType muxer) {
+			return new GstRemuxer (inputFile, outputFile, muxer);
 		}
 		
 		public MediaFile DiscoverFile (string file) {

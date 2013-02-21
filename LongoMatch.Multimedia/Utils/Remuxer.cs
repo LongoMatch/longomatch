@@ -23,12 +23,12 @@ using GLib;
 using Gtk;
 
 using LongoMatch.Interfaces.Multimedia;
+using LongoMatch.Common;
 
 namespace LongoMatch.Video.Utils
 {
-	public class AsfRemuxer
+	public class Remuxer
 	{
-		static string[] EXTENSIONS =  {"asf", "wmv"};
 		string filepath;
 		string newFilepath;
 		Dialog dialog;
@@ -37,16 +37,23 @@ namespace LongoMatch.Video.Utils
 		IMultimediaToolkit multimedia;
 		uint timeout;
 		bool cancelled;
+		VideoMuxerType muxer;
+		Window parent;
 		
-		public AsfRemuxer (string filepath)
+		public Remuxer (string filepath, string newFilepath, VideoMuxerType targetMuxer)
 		{
 			this.filepath = filepath;
+			this.newFilepath = newFilepath;
 			this.multimedia = new MultimediaFactory();
-			newFilepath = Path.ChangeExtension(filepath, "webm");
+			this.muxer = targetMuxer;
 		}
 		
 		public string Remux(Window parent) {
+			VBox box;
+			Label label;
 			Button cancellButton;
+			
+			this.parent = parent;
 			
 			/* Create the dialog */
 			dialog = new Dialog(Catalog.GetString("Remuxing file..."), parent, DialogFlags.Modal);
@@ -54,10 +61,14 @@ namespace LongoMatch.Video.Utils
 			dialog.AllowShrink = false;
 			dialog.Deletable = false;
 			
-			/* Add a progress bar */
+			/* Add label and progress bar */
+			box = new VBox();
+			label = new Label(Catalog.GetString("Remuxing file, this might take while..."));
+			box.PackStart(label);
 			pb = new ProgressBar();
-			pb.Show();
-			dialog.VBox.Add(pb);
+			box.PackStart(pb);
+			box.ShowAll();
+			dialog.VBox.Add(box);
 			
 			/* Add a button to cancell the task */
 			cancellButton = new Button("gtk-cancel");
@@ -69,8 +80,9 @@ namespace LongoMatch.Video.Utils
 			pb.Pulse();
 			timeout = GLib.Timeout.Add (1000, new GLib.TimeoutHandler (Update));
 			
-			remuxer = multimedia.GetRemuxer(filepath, newFilepath);
-			remuxer.Progress += HandleRemuxerProgress;;
+			remuxer = multimedia.GetRemuxer(filepath, newFilepath, muxer);
+			remuxer.Progress += HandleRemuxerProgress;
+			remuxer.Error += HandleRemuxerError;
 			remuxer.Start();
 			
 			/* Wait until the thread call Destroy on the dialog */
@@ -78,11 +90,39 @@ namespace LongoMatch.Video.Utils
 			return cancelled ? null : newFilepath;
 		}
 
+		void HandleRemuxerError (object o, string error)
+		{
+			Cancel();
+			MessageDialog md = new MessageDialog(parent, DialogFlags.Modal, MessageType.Error,
+			                                     ButtonsType.Ok,
+			                                     Catalog.GetString("Error remuxing file:" + "\n" + error));
+			md.Run();
+			md.Destroy();
+		}
+
 		void HandleRemuxerProgress (float progress)
 		{
 			if (progress == 1) {
 				Stop ();
 			}
+		}
+		
+		static protected string GetExtension (VideoMuxerType muxer) {
+			switch (muxer) {
+			case VideoMuxerType.Avi:
+				return "avi";
+			case VideoMuxerType.Matroska:
+				return "mkv";
+			case VideoMuxerType.Mp4:
+				return "mp4";
+			case VideoMuxerType.MpegPS:
+				return "mpeg";
+			case VideoMuxerType.Ogg:
+				return "ogg";
+			case VideoMuxerType.WebM:
+				return "webm";
+			}
+			throw new Exception("Muxer format not supported");
 		}
 		
 		private bool Update() {
@@ -99,13 +139,7 @@ namespace LongoMatch.Video.Utils
 			cancelled = true;
 			Stop();
 		}
-		
-		public static bool FileIsAsf(string filepath) {
-			string extension = Path.GetExtension(filepath).Replace(".", "").ToLower();
-			var extensions = new List<string> (AsfRemuxer.EXTENSIONS);
-			return extensions.Contains(extension);
-		}
-		
+	
 		public static bool AskForConversion(Window parent) {
 			bool ret;
 			MessageDialog md = new MessageDialog(parent, DialogFlags.Modal, MessageType.Question,
@@ -119,5 +153,23 @@ namespace LongoMatch.Video.Utils
 			
 			return ret;
 		}
+	}
+	
+	public class AsfRemuxer: Remuxer
+	{
+		static string[] EXTENSIONS = {"asf", "wmv"};
+		
+		public AsfRemuxer (string filepath): base(filepath,
+		                                          Path.ChangeExtension(filepath, GetExtension(VideoMuxerType.Matroska)),
+		                                          VideoMuxerType.Matroska)
+		{
+		}
+		
+		public static bool FileIsAsf(string filepath) {
+			string extension = Path.GetExtension(filepath).Replace(".", "").ToLower();
+			var extensions = new List<string> (AsfRemuxer.EXTENSIONS);
+			return extensions.Contains(extension);
+		}
+		
 	}
 }

@@ -200,16 +200,23 @@ namespace LongoMatch.Gui
 		}
 
 		private void SetProperties() {
+			VideoMuxerType muxer;
+			
 			if(capturer == null)
 				return;
-
+			
+			/* We need to use Matroska for live replay and remux when the capture is done */
+			muxer = captureProps.EncodingSettings.EncodingProfile.Muxer;
+			if (muxer == VideoMuxerType.Avi || muxer == VideoMuxerType.Mp4)
+				muxer = VideoMuxerType.Matroska;
+				
 			capturer.DeviceID = captureProps.DeviceID;
 			capturer.OutputFile = captureProps.EncodingSettings.OutputFile;
 			capturer.OutputHeight = captureProps.EncodingSettings.VideoStandard.Height;
 			capturer.OutputWidth = captureProps.EncodingSettings.VideoStandard.Width;
 			capturer.SetVideoEncoder(captureProps.EncodingSettings.EncodingProfile.VideoEncoder);
 			capturer.SetAudioEncoder(captureProps.EncodingSettings.EncodingProfile.AudioEncoder);
-			capturer.SetVideoMuxer(captureProps.EncodingSettings.EncodingProfile.Muxer);
+			capturer.SetVideoMuxer(muxer);
 			capturer.SetSource(captureProps.CaptureSourceType);
 			capturer.VideoBitrate = captureProps.EncodingSettings.VideoBitrate;
 			capturer.AudioBitrate = captureProps.EncodingSettings.AudioBitrate;
@@ -248,16 +255,41 @@ namespace LongoMatch.Gui
 			res = md.Run();
 			md.Destroy();
 			if(res == (int)ResponseType.Yes) {
-				md = new MessageDialog((Gtk.Window)this.Toplevel, DialogFlags.Modal, MessageType.Info, ButtonsType.None,
-				                       Catalog.GetString("Finalizing file. This can take a while"));
-				md.Show();
 				Stop();
-				md.Destroy();
 				recbutton.Visible = true;
 				pausebutton.Visible = false;
 				stopbutton.Visible = false;
+				
+				RemuxOutputFile (captureProps.EncodingSettings);
+				
 				if(CaptureFinished != null)
 					CaptureFinished(this, new EventArgs());
+			}
+		}
+		
+		void RemuxOutputFile (EncodingSettings settings) {
+			VideoMuxerType muxer;
+				
+			/* We need to remux to the original format */
+			muxer = settings.EncodingProfile.Muxer;
+			if (muxer == VideoMuxerType.Avi || muxer == VideoMuxerType.Mp4) {
+				string outFile = settings.OutputFile;
+				string tmpFile = settings.OutputFile;
+				
+				while (System.IO.File.Exists (tmpFile)) {
+					tmpFile = tmpFile + ".tmp";
+				}
+				
+				System.IO.File.Move (outFile, tmpFile);
+				Remuxer remuxer = new Remuxer(tmpFile, outFile, muxer);
+				
+				/* Remuxing suceed, delete old file */
+				if (remuxer.Remux(this.Toplevel as Gtk.Window) == outFile) {
+					System.IO.File.Delete (tmpFile);
+				} else {
+					System.IO.File.Delete (outFile);
+					System.IO.File.Move (tmpFile, outFile);
+				}
 			}
 		}
 

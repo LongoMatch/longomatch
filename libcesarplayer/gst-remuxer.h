@@ -64,7 +64,8 @@ struct _GstRemuxer
 EXPORT GType gst_remuxer_get_type (void) G_GNUC_CONST;
 
 EXPORT void gst_remuxer_init_backend (int *argc, char ***argv);
-EXPORT GstRemuxer *gst_remuxer_new (gchar *in_filename, gchar *out_filename, GError ** err);
+EXPORT GstRemuxer *gst_remuxer_new (gchar *in_filename, gchar *out_filename,
+                                    VideoMuxerType muxer, GError ** err);
 EXPORT void gst_remuxer_start (GstRemuxer * remuxer);
 EXPORT void gst_remuxer_cancel (GstRemuxer * remuxer);
 

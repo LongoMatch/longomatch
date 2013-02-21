@@ -34,16 +34,17 @@ namespace LongoMatch.Video.Remuxer {
 		public event LongoMatch.Handlers.ErrorHandler Error;
 
 		[DllImport("libcesarplayer.dll")]
-		static extern unsafe IntPtr gst_remuxer_new(IntPtr input_file, IntPtr output_file, out IntPtr err);
+		static extern unsafe IntPtr gst_remuxer_new(IntPtr input_file, IntPtr output_file, VideoMuxerType muxer, out IntPtr err);
 
-		public unsafe GstRemuxer(string inputFile, string outputFile) : base(IntPtr.Zero)
+		public unsafe GstRemuxer(string inputFile, string outputFile, VideoMuxerType muxer) : base(IntPtr.Zero)
 		{
 			if(GetType() != typeof(GstRemuxer)) {
 				throw new InvalidOperationException("Can't override this constructor.");
 			}
 			IntPtr error = IntPtr.Zero;
 			Raw = gst_remuxer_new(GLib.Marshaller.StringToPtrGStrdup(inputFile),
-			                              GLib.Marshaller.StringToPtrGStrdup(outputFile), out error);
+			                      GLib.Marshaller.StringToPtrGStrdup(outputFile),
+			                      muxer, out error);
 			if(error != IntPtr.Zero) throw new GLib.GException(error);
 			
 			PercentCompleted += delegate(object o, PercentCompletedArgs args) {

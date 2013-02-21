@@ -351,6 +351,9 @@ gst_remuxer_have_type_cb (GstElement *typefind, guint prob,
   } else if (g_strrstr (mime, "video/x-ms-asf")) {
     GST_INFO_OBJECT (remuxer, "Using asfdemux as demuxer");
     demuxer = gst_element_factory_make ("asfdemux", NULL);
+  } else if (g_strrstr (mime, "video/x-matroska")) {
+    GST_INFO_OBJECT (remuxer, "Using mastroskademux as demuxer");
+    demuxer = gst_element_factory_make ("matroskademux", NULL);
   } else if (g_strrstr (mime, "video/mpeg")) {
     gboolean sysstream;
 
@@ -507,7 +510,8 @@ gst_remuxer_cancel (GstRemuxer * remuxer)
 }
 
 GstRemuxer *
-gst_remuxer_new (gchar * input_file, gchar *output_file, GError ** err)
+gst_remuxer_new (gchar * input_file, gchar *output_file,
+    VideoMuxerType muxer, GError ** err)
 {
   GstRemuxer *remuxer = NULL;
 
@@ -522,7 +526,7 @@ gst_remuxer_new (gchar * input_file, gchar *output_file, GError ** err)
 
   remuxer->priv->input_file = input_file;
   remuxer->priv->output_file = output_file;
-  remuxer->priv->video_muxer_type = VIDEO_MUXER_MATROSKA;
+  remuxer->priv->video_muxer_type = muxer;
 
   gst_remuxer_initialize (remuxer);
 
