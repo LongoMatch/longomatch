@@ -1,3 +1,15 @@
+===== LongoMatch 0.18.6 "Elíptica" =====
+
+	== Features ==
+
+	* Enable moving plays between categories
+	* Add support to split rendered playlists in one file per element
+
+	== Bugs fixed ==
+
+	* Make CSV exports available for Mac OS X
+	* Fix use of tagging hotkeys
+
 ===== LongoMatch 0.18.5 "Menisco" =====
 
 	== Features ==

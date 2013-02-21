@@ -1,7 +1,7 @@
-LongoMatch-0.18.5 "Menisco"
+LongoMatch-0.18.6 "Elíptica"
 -----------------------------
 
-The LongoMatch team is happy to announce the fifth release in the
+The LongoMatch team is happy to announce the sixth release in the
 stable 0.18 series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
@@ -9,14 +9,13 @@ all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
 * Features
-	* Export project to CSV format
-	* Add support for disabling subcategories
+	* Enable moving plays between categories
+	* Add support to split rendered playlists in one file per element
 
 * Bugs fixed
 
-	* Fix full screen mode
-	* Fix count creating plays
-	* Show a dialog when the rendering fails
+	* Make CSV exports available for Mac OS X
+	* Fix use of tagging hotkeys
 
 *Contributors to this Release:
 
