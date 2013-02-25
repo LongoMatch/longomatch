@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: longomatch.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-01-31 19:08+0000\n"
-"PO-Revision-Date: 2013-02-01 10:02+0100\n"
+"POT-Creation-Date: 2013-02-21 17:08+0000\n"
+"PO-Revision-Date: 2013-02-25 12:13+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -264,28 +264,28 @@ msgstr "Mantener tamaño original"
 #: ../LongoMatch.Core/Store/Category.cs:105
 #: ../LongoMatch.Core/Store/Category.cs:113
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:226
-#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:71
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:72
 msgid "Sort by name"
 msgstr "Ordenar por nombre"
 
 #: ../LongoMatch.Core/Store/Category.cs:107
 #: ../LongoMatch.Core/Store/Category.cs:117
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:227
-#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:72
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:73
 msgid "Sort by start time"
 msgstr "Ordenar por tiempo de inicio"
 
 #: ../LongoMatch.Core/Store/Category.cs:109
 #: ../LongoMatch.Core/Store/Category.cs:119
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:228
-#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:73
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:74
 msgid "Sort by stop time"
 msgstr "Ordenar por tiempo de fin"
 
 #: ../LongoMatch.Core/Store/Category.cs:111
 #: ../LongoMatch.Core/Store/Category.cs:121
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:229
-#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:74
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:75
 msgid "Sort by duration"
 msgstr "Ordenar por duración"
 
@@ -352,7 +352,6 @@ msgid "Team selection"
 msgstr "Selección de equipo"
 
 #: ../LongoMatch.Core/Store/SubCategory.cs:181
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:93
 msgid "Coordinates"
 msgstr "Coordenadas"
 
@@ -773,18 +772,17 @@ msgid "New project using a video file"
 msgstr "Proyecto nuevo usando un archivo de vídeo"
 
 #. Container child hbox2.Gtk.Box+BoxChild
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:77
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:78
 msgid "Live project using a capture device"
 msgstr "Proyecto en directo usando un dispositivo de captura"
 
 #. Container child hbox3.Gtk.Box+BoxChild
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:105
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:106
 msgid "Live project using a fake capture device"
 msgstr "Proyecto en directo usando un dispositivo capturador falso"
 
 #. Container child ipcamerabox.Gtk.Box+BoxChild
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:133
-#| msgid "Live project using a capture device"
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:134
 msgid "Live project using an IP camera"
 msgstr "Proyecto en directo usando una cámara IP"
 
@@ -909,53 +907,62 @@ msgstr ""
 msgid "label7"
 msgstr "etiqueta7"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:33
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:39
 msgid "Video Properties"
 msgstr "Propiedades del vídeo"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:57
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:63
 msgid "Video Quality:"
 msgstr "Calidad del vídeo:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:63
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:108
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:69
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:118
 msgid "Low"
 msgstr "Baja"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:64
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:112
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:70
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:122
 msgid "Normal"
 msgstr "Normal"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:65
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:116
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:71
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:126
 msgid "Good"
 msgstr "Buena"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:66
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:120
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:72
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:130
 msgid "Extra"
 msgstr "Extra"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:86
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:92
 msgid "Size: "
 msgstr "Tamaño:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:110
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:116
 msgid "Ouput Format:"
 msgstr "Formato de salida:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:133
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:139
 msgid "Enable Title Overlay"
 msgstr "Sobreimprimir título"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:144
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:150
 msgid "Enable Audio (Experimental)"
 msgstr "Activar sonido (experimental)"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:162
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:165
+msgid "Split output in one file per playlist element"
+msgstr "Dividir la salida en un archivo por cada lista de reproducción"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:180
 msgid "File name: "
 msgstr "Nombre del archivo:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:223
+#| msgid "Subcategory name:"
+msgid "Directory name: "
+msgstr "Nombre de la carpeta:"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.Win32CalendarDialog.cs:15
 msgid "Calendar"
@@ -1181,27 +1188,27 @@ msgstr "Tiempo:"
 msgid "Choose an image"
 msgstr "Elegir una imagen"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:116
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:117
 msgid "Categories filter"
 msgstr "Filtro de categorías"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:117
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:118
 msgid "Players filter"
 msgstr "Filtro de jugadores"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:190
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:200
 msgid "Disable categories filters"
 msgstr "Desactivar filtro de categorías"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:192
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:202
 msgid "Enable categories filters"
 msgstr "Activar filtro de categorías"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:200
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:210
 msgid "Disable players filters"
 msgstr "Desactivar filtro de jugadores"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:202
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:212
 msgid "Enable players filters"
 msgstr "Activar filtro de jugadores"
 
@@ -1405,31 +1412,38 @@ msgstr "No puede eliminar la plantilla predeterminada"
 msgid "Do you really want to delete the template: "
 msgstr "Quiere eliminar la plantilla: "
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:146
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:156
 msgid "Save Video As ..."
 msgstr "Guardar vídeo como…"
 
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:108
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:194
+#| msgid "Output file"
+msgid "Output folder ..."
+msgstr "Carpeta de salida…"
+
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:109
 msgid "The playlist you want to render is empty."
 msgstr "La lista de reproducción que quiere renderizar está vacía"
 
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:116
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:279
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:118
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:304
 msgid "Please, select a video file."
 msgstr "Seleccione un archivo de vídeo"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:140
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:121
+#| msgid "Please, select a video file."
+msgid "Please, select an output directory."
+msgstr "Seleccione una carpeta de salida"
+
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:141
 msgid "Import file project"
 msgstr "Importar archivo de proyecto"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:470
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:474
 msgid "Do you want to close the current project?"
 msgstr "¿Quiere cerrar el proyecto actual?"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:713
-#| msgid ""
-#| "An error occured in the video capturer and the current project will be "
-#| "closed:"
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:717
 msgid "The following error happened and the current project will be closed:"
 msgstr "Ocurrió el siguiente error y se cerrará el proyecto actual:"
 
@@ -1454,7 +1468,7 @@ msgid "Hotkey"
 msgstr "Tecla rápida"
 
 #: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:73
-#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:70
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:71
 msgid "Sort Method"
 msgstr "Método de ordenación"
 
@@ -1470,39 +1484,44 @@ msgstr "Seleccionar todo"
 msgid "Unselect all"
 msgstr "Deseleccionar todo"
 
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:143
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:163
 #: ../LongoMatch.GUI/Gui/TreeView/PlayersTreeView.cs:56
-#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:69
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:70
 msgid "Edit name"
 msgstr "Editar nombre"
 
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:144
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:164
 #: ../LongoMatch.GUI/Gui/TreeView/SubCategoriesTreeView.cs:91
 msgid "Edit tags"
 msgstr "Editar etiquetas"
 
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:145
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:165
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:61
 msgid "Delete"
 msgstr "Borrar"
 
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:146
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:166
 msgid "Delete key frame"
 msgstr "Borrar fotograma clave"
 
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:147
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:167
 msgid "Add to playlist"
 msgstr "Añadir a la lista de reproducción"
 
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:149
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:169
 msgid "Export to video file"
 msgstr "Exportar a un archivo de vídeo"
 
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:150
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:170
 msgid "Export to PGN images"
 msgstr "Exportar a fotogramas PNG"
 
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:316
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:171
+#| msgid "Remove sub-category"
+msgid "Move to category"
+msgstr "Mover a la categoría"
+
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:338
 msgid "Do you want to delete the key frame for this play?"
 msgstr "¿Quiere eliminar el fotograma clave de esta jugada? "
 
@@ -1554,7 +1573,7 @@ msgstr "Velocidad de reproducción"
 msgid "File not found"
 msgstr "No se encontró el archivo"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:75
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:76
 msgid "Edit properties"
 msgstr "Editar propiedades"
 
@@ -1586,7 +1605,7 @@ msgstr "Volver al directo"
 msgid "Do you want to pause the recording?"
 msgstr "¿Quiere pausar la grabación?"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:246
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:253
 msgid ""
 "You are going to stop and finish the current capture.\n"
 "Do you want to proceed?"
@@ -1594,15 +1613,11 @@ msgstr ""
 "Está a punto de detener y finalizar la captura actual.\n"
 "¿Quiere continuar?"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:252
-msgid "Finalizing file. This can take a while"
-msgstr "Finalizando el archivo. Esto puede llevar un tiempo."
-
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:287
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:319
 msgid "Device disconnected. The capture will be paused"
 msgstr "Dispositivo desconectado. Se pausará la captura."
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:296
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:328
 msgid "Device reconnected.Do you want to restart the capture?"
 msgstr "Dispositivo reconectado. ¿Quiere reiniciar la captura?"
 
@@ -1611,12 +1626,22 @@ msgid "Fake live source"
 msgstr "Fuente en falso directo"
 
 #. Create the dialog
-#: ../LongoMatch.Multimedia/Utils/AsfRemuxer.cs:52
+#: ../LongoMatch.Multimedia/Utils/Remuxer.cs:59
 #: ../LongoMatch.Multimedia/Utils/MpegRemuxer.cs:52
 msgid "Remuxing file..."
 msgstr "Remultiplexando archivo…"
 
-#: ../LongoMatch.Multimedia/Utils/AsfRemuxer.cs:113
+#: ../LongoMatch.Multimedia/Utils/Remuxer.cs:66
+#| msgid "Finalizing file. This can take a while"
+msgid "Remuxing file, this might take while..."
+msgstr "Remultiplexando archivo, esto puede llevar un tiempo."
+
+#: ../LongoMatch.Multimedia/Utils/Remuxer.cs:98
+#| msgid "Remuxing file..."
+msgid "Error remuxing file:\n"
+msgstr "Error al remultiplexar archivo:\n"
+
+#: ../LongoMatch.Multimedia/Utils/Remuxer.cs:147
 #: ../LongoMatch.Multimedia/Utils/MpegRemuxer.cs:145
 msgid ""
 "The file you are trying to load is not properly supported. Would you like to "
@@ -1651,19 +1676,19 @@ msgstr "Proyecto exportado satisfactoriamente."
 msgid "Error exporting project"
 msgstr "Error al exportar el proyecto"
 
-#: ../LongoMatch.Services/Services/EventsManager.cs:132
+#: ../LongoMatch.Services/Services/EventsManager.cs:133
 msgid "You can't create a new play if the capturer is not recording."
 msgstr ""
 "No puede crear un nueva jugada si el dispositivo de captura no está grabando."
 
-#: ../LongoMatch.Services/Services/EventsManager.cs:190
+#: ../LongoMatch.Services/Services/EventsManager.cs:191
 msgid ""
 "The stop time is smaller than the start time. The play will not be added."
 msgstr ""
 "El tiempo de detención es inferior que el tiempo de inicio. No se añadirá la "
 "reproducción."
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:67
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:68
 msgid ""
 "The file you are trying to load is not a playlist or it's not compatible "
 "with the current version"
@@ -1671,24 +1696,24 @@ msgstr ""
 "El archivo que intenta cargar no es una lista de reproducción o no es "
 "compatible con esta versión."
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:98
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:99
 msgid "You have not loaded any playlist yet."
 msgstr "Todavía no ha cargado ninguna lista de reproducción."
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:109
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:110
 msgid "Please, close the opened project to play the playlist."
 msgstr "Cierre el proyecto actual para reproducir la lista de reproducción."
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:201
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:202
 msgid "Open playlist"
 msgstr "Abrir lista de reproducción"
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:202
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:213
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:203
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:214
 msgid "playlists"
 msgstr "listas de reproducción"
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:212
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:213
 msgid "New playlist"
 msgstr "Nueva lista de reproducción"
 
