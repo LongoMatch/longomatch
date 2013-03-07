@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: longomatch master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-01-24 15:42+0000\n"
-"PO-Revision-Date: 2013-01-28 13:04+0100\n"
+"POT-Creation-Date: 2013-02-25 11:17+0000\n"
+"PO-Revision-Date: 2013-03-07 22:11+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -269,28 +269,28 @@ msgstr "Ohrani izvorno velikost"
 #: ../LongoMatch.Core/Store/Category.cs:105
 #: ../LongoMatch.Core/Store/Category.cs:113
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:226
-#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:71
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:72
 msgid "Sort by name"
 msgstr "Razvrsti po imenu"
 
 #: ../LongoMatch.Core/Store/Category.cs:107
 #: ../LongoMatch.Core/Store/Category.cs:117
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:227
-#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:72
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:73
 msgid "Sort by start time"
 msgstr "Razvrsti po začetnem času"
 
 #: ../LongoMatch.Core/Store/Category.cs:109
 #: ../LongoMatch.Core/Store/Category.cs:119
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:228
-#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:73
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:74
 msgid "Sort by stop time"
 msgstr "Razvrsti po končnem času"
 
 #: ../LongoMatch.Core/Store/Category.cs:111
 #: ../LongoMatch.Core/Store/Category.cs:121
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:229
-#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:74
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:75
 msgid "Sort by duration"
 msgstr "Razvrsti po trajanju"
 
@@ -302,7 +302,7 @@ msgstr "ime"
 msgid "Not defined"
 msgstr "Ni določeno"
 
-#: ../LongoMatch.Core/Store/Play.cs:208
+#: ../LongoMatch.Core/Store/Play.cs:213
 #: ../LongoMatch.Core/Store/SubCategory.cs:84
 #: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:48
 #: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:52
@@ -310,12 +310,12 @@ msgstr "Ni določeno"
 msgid "Name"
 msgstr "Ime"
 
-#: ../LongoMatch.Core/Store/Play.cs:209
+#: ../LongoMatch.Core/Store/Play.cs:214
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:140
 msgid "Start"
 msgstr "Začni"
 
-#: ../LongoMatch.Core/Store/Play.cs:210
+#: ../LongoMatch.Core/Store/Play.cs:215
 msgid "Stop"
 msgstr "Zaustavi"
 
@@ -356,15 +356,19 @@ msgstr "Ekipa"
 msgid "Team selection"
 msgstr "Izbor ekipe"
 
-#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:78
+#: ../LongoMatch.Core/Store/SubCategory.cs:181
+msgid "Coordinates"
+msgstr "Koordinate"
+
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:83
 msgid "Local Team Players"
 msgstr "Igralci domače ekipe"
 
-#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:84
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:89
 msgid "Visitor Team Players"
 msgstr "Igralci gostujoče ekipe"
 
-#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:90
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:95
 msgid "Period"
 msgstr "Odmor"
 
@@ -397,7 +401,7 @@ msgid "Tag new play"
 msgstr "Označi novo igro"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:84
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:127
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:135
 msgid "none"
 msgstr "brez"
 
@@ -523,7 +527,7 @@ msgid "GtkButton"
 msgstr "GtkButton"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:87
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:313
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:315
 msgid "_Calendar"
 msgstr "_Koledar"
 
@@ -608,63 +612,67 @@ msgstr "Omogoči filtre igralcev"
 msgid "  Filters  "
 msgstr "  Filtri  "
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:86
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:88
 msgid "Competition:"
 msgstr "Tekmovanje:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:128
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:130
 msgid "File:"
 msgstr "Datoteka:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:260
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:262
 msgid "-"
 msgstr "-"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:333
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:335
 msgid "Visitor Team:"
 msgstr "Gostujoča ekipa:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:343
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:345
 msgid "Score:"
 msgstr "Rezultat:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:353
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:355
 msgid "Date:"
 msgstr "Datum:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:363
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:365
 msgid "Local Team:"
 msgstr "Krajevna ekipa:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:371
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:373
 msgid "Categories Template:"
 msgstr "Predloga kategorij:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:395
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:397
 msgid "Season:"
 msgstr "Sezona:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:417
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:421
+msgid "URL:"
+msgstr "Naslov URL:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:443
 msgid "Audio Bitrate (kbps):"
 msgstr "Zvočna bitna hitrost (kbps):"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:443
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:469
 msgid "Device:"
 msgstr "Naprava:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:471
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:497
 msgid "Video Size:"
 msgstr "Velikost videa:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:481
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:507
 msgid "Video Bitrate (kbps):"
 msgstr "Bitna hitrost videa (kbps):"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:518
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:544
 msgid "Video Format:"
 msgstr "Video zapis:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:528
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:554
 msgid "Video encoding  properties"
 msgstr "Lastnosti kodiranja videa"
 
@@ -757,7 +765,7 @@ msgstr ""
 "Hitre tipke z določeno enojno tipkko so prav tako dovoljene."
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.NewProjectDialog.cs:16
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:25
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:28
 msgid "New Project"
 msgstr "Nov projekt"
 
@@ -766,19 +774,24 @@ msgid "Open Project"
 msgstr "Odpri projekt"
 
 #. Container child hbox1.Gtk.Box+BoxChild
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:45
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:48
 msgid "New project using a video file"
 msgstr "Nov projekt z novo video datoteko"
 
 #. Container child hbox2.Gtk.Box+BoxChild
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:75
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:78
 msgid "Live project using a capture device"
 msgstr "Projekt v živo z uporabo naprave za zajemanje"
 
 #. Container child hbox3.Gtk.Box+BoxChild
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:103
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:106
 msgid "Live project using a fake capture device"
 msgstr "Projekt v živo z uporabo lažne naprave za zajemanje"
+
+#. Container child ipcamerabox.Gtk.Box+BoxChild
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:134
+msgid "Live project using an IP camera"
+msgstr "Projekt v živo z uporabo kamere in protokola IP"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs:27
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:83
@@ -858,13 +871,13 @@ msgid "Tag play"
 msgstr "Označi igro"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:45
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:78
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:232
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:79
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:240
 msgid "Tags"
 msgstr "Oznake"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:66
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:85
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:86
 msgid "Players"
 msgstr "Igralci"
 
@@ -901,53 +914,61 @@ msgstr ""
 msgid "label7"
 msgstr "oznaka7"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:33
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:39
 msgid "Video Properties"
 msgstr "Lastnosti videa"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:57
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:63
 msgid "Video Quality:"
 msgstr "Kakovost videa:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:63
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:108
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:69
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:118
 msgid "Low"
 msgstr "Nizko"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:64
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:112
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:70
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:122
 msgid "Normal"
 msgstr "Običajno"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:65
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:116
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:71
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:126
 msgid "Good"
 msgstr "Dobro"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:66
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:120
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:72
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:130
 msgid "Extra"
 msgstr "Izjemno"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:86
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:92
 msgid "Size: "
 msgstr "Velikost:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:110
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:116
 msgid "Ouput Format:"
 msgstr "Odvodni zapis:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:133
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:139
 msgid "Enable Title Overlay"
 msgstr "Omogoči prekrivanje naslovov"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:144
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:150
 msgid "Enable Audio (Experimental)"
 msgstr "Omogoči zvok (preizkusno)"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:162
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:165
+msgid "Split output in one file per playlist element"
+msgstr "Razdeli odvod v eno datoteko na predmet seznama predvajanja"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:180
 msgid "File name: "
 msgstr "Ime datoteke:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:223
+msgid "Directory name: "
+msgstr "Ime mape:"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.Win32CalendarDialog.cs:15
 msgid "Calendar"
@@ -1146,11 +1167,11 @@ msgstr ""
 msgid "A template needs at least one category"
 msgstr "Predloga zahteva vsaj eno kategorijo"
 
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:74
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:75
 msgid "Create new..."
 msgstr "Ustvari novo ..."
 
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:202
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:210
 msgid ""
 "If you delete this subcategory you will looseall the tags associated with "
 "it. Do you want to proceed?"
@@ -1172,60 +1193,60 @@ msgstr "Čas: "
 msgid "Choose an image"
 msgstr "Izbor slike"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:116
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:117
 msgid "Categories filter"
 msgstr "Filter kategorij"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:117
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:118
 msgid "Players filter"
 msgstr "Filter igralcev"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:190
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:200
 msgid "Disable categories filters"
 msgstr "Onemogoči filtre kategorij"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:192
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:202
 msgid "Enable categories filters"
 msgstr "Omogoči filtre kategorij"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:200
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:210
 msgid "Disable players filters"
 msgstr "Onemogoči filtre igralcev"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:202
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:212
 msgid "Enable players filters"
 msgstr "Omogoči filtre igralcev"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:347
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:364
 msgid "OS X Source"
 msgstr "Vir OS X"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:349
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:366
 msgid "DirectShow Source"
 msgstr "Vir DirectShow"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:356
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:373
 msgid "Unknown"
 msgstr "Neznano"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:437
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:454
 #: ../LongoMatch.Plugins/CSVExporter.cs:46
 msgid "Output file"
 msgstr "Odvodna datoteka"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:449
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:466
 msgid "Open file..."
 msgstr "Odpri datoteko ..."
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:483
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:500
 msgid "Analyzing video file:"
 msgstr "Analiziranje video datoteke:"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:488
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:505
 msgid "This file doesn't contain a video stream."
 msgstr "Datoteka ne vsebuje video pretoka."
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:490
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:507
 msgid "This file contains a video stream but its length is 0."
 msgstr "Datoteka vsebuje video pretok, vendar je dolžine 0."
 
@@ -1373,60 +1394,62 @@ msgstr "Zmanjšana hitrost predvajanja"
 msgid "Templates Files"
 msgstr "Datotek predlog"
 
-#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:163
+#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:169
 msgid "The template has been modified. Do you want to save it? "
 msgstr "Predloga je bila spremenjena. Ali jo želite shraniti?"
 
-#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:186
+#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:192
 msgid "Template name"
 msgstr "Ime predloge"
 
-#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:199
+#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:205
 msgid "You cannot create a template with a void name"
 msgstr "Ni mogoče ustvariti predloge brez imena."
 
-#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:204
+#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:210
 msgid "A template with this name already exists"
 msgstr "Predloga s tem imenom že obstaja."
 
-#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:225
+#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:231
 msgid "You can't delete the 'default' template"
 msgstr "Ni mogoče izbrisati 'privzete' predloge."
 
-#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:230
+#: ../LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs:236
 msgid "Do you really want to delete the template: "
 msgstr "Ali zares želite izbrisati predlogo:"
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:146
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:156
 msgid "Save Video As ..."
 msgstr "Shrani video kot ..."
 
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:108
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:194
+msgid "Output folder ..."
+msgstr "Izhodna mapa ..."
+
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:109
 msgid "The playlist you want to render is empty."
 msgstr "Seznam predvajanja za izriz je prazen!"
 
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:116
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:273
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:118
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:304
 msgid "Please, select a video file."
 msgstr "Izberite video datoteko."
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:140
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:121
+msgid "Please, select an output directory."
+msgstr "Določite privzete odvodne mape"
+
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:141
 msgid "Import file project"
 msgstr "Uvozi datoteko projekta"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:467
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:474
 msgid "Do you want to close the current project?"
 msgstr "Ali zares želite zapreti trenutni projekt?"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:617
-msgid "The actual project will be closed due to an error in the media player:"
-msgstr "Projekt bo končan zaradi napake predvajalnika:"
-
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:716
-msgid ""
-"An error occured in the video capturer and the current project will be "
-"closed:"
-msgstr "Prišlo je do napake med zajemanjem videa, zato bo projekt zaprt:"
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:717
+msgid "The following error happened and the current project will be closed:"
+msgstr "Prišlo je do napake, zato bo projekt zaprt:"
 
 #: ../LongoMatch.GUI/Gui/TreeView/CategoriesFilterTreeView.cs:38
 msgid "Category"
@@ -1449,7 +1472,7 @@ msgid "Hotkey"
 msgstr "Hitra tipka"
 
 #: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:73
-#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:70
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:71
 msgid "Sort Method"
 msgstr "Način razvrščanja"
 
@@ -1465,39 +1488,43 @@ msgstr "Izberi vse"
 msgid "Unselect all"
 msgstr "Odstrani izbor vsega"
 
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:143
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:163
 #: ../LongoMatch.GUI/Gui/TreeView/PlayersTreeView.cs:56
-#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:69
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:70
 msgid "Edit name"
 msgstr "Uredi ime"
 
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:144
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:164
 #: ../LongoMatch.GUI/Gui/TreeView/SubCategoriesTreeView.cs:91
 msgid "Edit tags"
 msgstr "Uredi oznake"
 
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:145
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:165
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:61
 msgid "Delete"
 msgstr "Izbriši"
 
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:146
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:166
 msgid "Delete key frame"
 msgstr "Izbriši sličice"
 
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:147
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:167
 msgid "Add to playlist"
 msgstr "Dodaj na seznam predvajanja"
 
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:149
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:169
 msgid "Export to video file"
 msgstr "Izvoz v video datoteko"
 
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:150
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:170
 msgid "Export to PGN images"
 msgstr "Izvozi skice v PNG"
 
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:316
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:171
+msgid "Move to category"
+msgstr "Premakni v kategorijo"
+
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:338
 msgid "Do you want to delete the key frame for this play?"
 msgstr "Ali želite izbrisati sličico te igre?"
 
@@ -1513,7 +1540,9 @@ msgstr "Predvajaj posnetek"
 msgid "Date of Birth"
 msgstr "Datum rojstva"
 
+#. Position
 #: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:82
+#: ../LongoMatch.Services/Services/TemplatesService.cs:88
 msgid "Position"
 msgstr "Položaj"
 
@@ -1547,7 +1576,7 @@ msgstr "Hitrost predvajanja"
 msgid "File not found"
 msgstr "Datoteke ni mogoče najti"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:75
+#: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:76
 msgid "Edit properties"
 msgstr "Uredi lastnosti"
 
@@ -1579,7 +1608,7 @@ msgstr "Nazaj na zapisovanje v živo"
 msgid "Do you want to pause the recording?"
 msgstr "Ali želite narediti premor snemanja?"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:246
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:253
 msgid ""
 "You are going to stop and finish the current capture.\n"
 "Do you want to proceed?"
@@ -1587,15 +1616,11 @@ msgstr ""
 "Zaustavljeno in končano bo trenutno zajemanje.\n"
 "Ali želite nadaljevati?"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:252
-msgid "Finalizing file. This can take a while"
-msgstr "Zaključevanje datoteke. Postopek je lahko dolgotrajen."
-
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:287
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:319
 msgid "Device disconnected. The capture will be paused"
 msgstr "Naprava ni povezana. Zajemanje bo prekinjeno."
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:296
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:328
 msgid "Device reconnected.Do you want to restart the capture?"
 msgstr "Naprava je ponovno povezana. Ali želite ponovno začeti zajemanje?"
 
@@ -1604,12 +1629,22 @@ msgid "Fake live source"
 msgstr "Lažni vir v živo"
 
 #. Create the dialog
-#: ../LongoMatch.Multimedia/Utils/AsfRemuxer.cs:52
+#: ../LongoMatch.Multimedia/Utils/Remuxer.cs:59
 #: ../LongoMatch.Multimedia/Utils/MpegRemuxer.cs:52
 msgid "Remuxing file..."
 msgstr "Ponovno zvijanje datoteke ..."
 
-#: ../LongoMatch.Multimedia/Utils/AsfRemuxer.cs:113
+#: ../LongoMatch.Multimedia/Utils/Remuxer.cs:66
+#, fuzzy
+msgid "Remuxing file, this might take while..."
+msgstr "Zaključevanje datoteke. Postopek je lahko dolgotrajen."
+
+#: ../LongoMatch.Multimedia/Utils/Remuxer.cs:98
+#, fuzzy
+msgid "Error remuxing file:\n"
+msgstr "Napaka med branjem datoteke %s: %s"
+
+#: ../LongoMatch.Multimedia/Utils/Remuxer.cs:147
 #: ../LongoMatch.Multimedia/Utils/MpegRemuxer.cs:145
 msgid ""
 "The file you are trying to load is not properly supported. Would you like to "
@@ -1635,26 +1670,26 @@ msgid "Export project to CSV file"
 msgstr "Izvozi projekt v datoteko CSV"
 
 #: ../LongoMatch.Plugins/CSVExporter.cs:57
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:391
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:396
 msgid "Project exported successfully"
 msgstr "Projekt je uspešno izvižen"
 
 #: ../LongoMatch.Plugins/CSVExporter.cs:59
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:393
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:398
 msgid "Error exporting project"
 msgstr "Napaka med izvažanjem projekta"
 
-#: ../LongoMatch.Services/Services/EventsManager.cs:131
+#: ../LongoMatch.Services/Services/EventsManager.cs:133
 msgid "You can't create a new play if the capturer is not recording."
 msgstr ""
 "Ni mogoče ustvariti novega posnetka, če naprava za zajemanje ni zagnana."
 
-#: ../LongoMatch.Services/Services/EventsManager.cs:188
+#: ../LongoMatch.Services/Services/EventsManager.cs:191
 msgid ""
 "The stop time is smaller than the start time. The play will not be added."
 msgstr "Čas zaustavitve je pred začetkom. Igra ne bo dodana."
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:67
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:68
 msgid ""
 "The file you are trying to load is not a playlist or it's not compatible "
 "with the current version"
@@ -1662,24 +1697,24 @@ msgstr ""
 "Datoteka izbrana za nalaganje, ni pravi seznam predvajanja ali pa datoteka "
 "ni skladna s trenutno različico programa."
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:98
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:99
 msgid "You have not loaded any playlist yet."
 msgstr "Ni še naloženega nobenega seznama predvajanja."
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:109
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:110
 msgid "Please, close the opened project to play the playlist."
 msgstr "Zapreti je treba odprt projekt za predvajanje seznama."
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:201
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:202
 msgid "Open playlist"
 msgstr "Odpri seznam predvajanja"
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:202
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:213
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:203
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:214
 msgid "playlists"
 msgstr "seznami predvajanja"
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:212
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:213
 msgid "New playlist"
 msgstr "Nov seznam predvajanja"
 
@@ -1743,23 +1778,23 @@ msgstr ""
 msgid "An error occurred opening this project:"
 msgstr "Prišlo je do napake med odpiranjem projekta:"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:255
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:256
 msgid "Creating video thumbnails. This can take a while."
 msgstr "Ustvarjanje sličic video posnetka. Postopek je lahko dolgotrajen."
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:329
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:331
 msgid "No capture devices were found."
 msgstr "Ni mogoče najti naprave za zajemanje."
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:365
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:370
 msgid "You are opening a live project without any video file associated yet."
 msgstr "Odpirate živi projekt brez povezanih video datotek."
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:366
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:371
 msgid "Select a video file in the step."
 msgstr "Izberite video datoteko."
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:381
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:386
 msgid "Save project"
 msgstr "Shrani projekt"
 
@@ -1787,22 +1822,31 @@ msgstr "Prišlo je do napake v urejevalniku videa."
 msgid "Please, try again."
 msgstr "Poskusite znova."
 
-#: ../LongoMatch.Services/Services/TemplatesService.cs:62
+#: ../LongoMatch.Services/Services/TemplatesService.cs:64
 msgid "Local team players"
 msgstr "Igralci domače ekipe"
 
-#: ../LongoMatch.Services/Services/TemplatesService.cs:68
+#: ../LongoMatch.Services/Services/TemplatesService.cs:70
 msgid "Visitor team players"
 msgstr "Igralci gostujoče ekipe"
 
-#: ../LongoMatch.Services/Services/TemplatesService.cs:74
+#: ../LongoMatch.Services/Services/TemplatesService.cs:76
 msgid "All teams players"
 msgstr "Igralci vseh ekip"
 
-#: ../LongoMatch.Services/Services/TemplatesService.cs:192
-#: ../LongoMatch.Services/Services/TemplatesService.cs:210
+#. Trajectory
+#: ../LongoMatch.Services/Services/TemplatesService.cs:92
+msgid "Trajectory"
+msgstr "Trajektorije"
+
+#: ../LongoMatch.Services/Services/TemplatesService.cs:214
+#: ../LongoMatch.Services/Services/TemplatesService.cs:232
 msgid "A template already exists with the name: "
 msgstr "Predloga s tem imenom že obstaja: "
+
+#~ msgid ""
+#~ "The actual project will be closed due to an error in the media player:"
+#~ msgstr "Projekt bo končan zaradi napake predvajalnika:"
 
 #~ msgid "Export project to Excel file"
 #~ msgstr "Izvozi projekt v datoteko MS Excel"
