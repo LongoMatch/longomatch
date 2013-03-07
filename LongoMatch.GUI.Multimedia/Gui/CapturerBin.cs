@@ -259,8 +259,9 @@ namespace LongoMatch.Gui
 				recbutton.Visible = true;
 				pausebutton.Visible = false;
 				stopbutton.Visible = false;
-				
-				RemuxOutputFile (captureProps.EncodingSettings);
+			
+				if (capturerType == CapturerType.Live)	
+					RemuxOutputFile (captureProps.EncodingSettings);
 				
 				if(CaptureFinished != null)
 					CaptureFinished(this, new EventArgs());
