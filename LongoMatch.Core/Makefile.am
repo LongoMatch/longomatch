@@ -34,6 +34,7 @@ SOURCES = \
 	Interfaces/Multimedia/IFramesCapturer.cs \
 	Interfaces/Multimedia/IMultimediaToolkit.cs \
 	Interfaces/Multimedia/IRemuxer.cs \
+	Interfaces/Multimedia/IVideoConverter.cs \
 	Interfaces/Multimedia/IVideoEditor.cs \
 	Interfaces/IDatabase.cs \
 	Interfaces/IPlayList.cs \

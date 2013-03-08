@@ -102,6 +102,9 @@ namespace LongoMatch.Handlers
 	/* Add a new rendering job */
 	public delegate void RenderPlaylistHandler(IPlayList playlist);
 	 
+	/* Convert a video file */
+	public delegate void ConvertVideoFilesHandler (List<MediaFile> inputFiles, EncodingSettings encSettings);
+	
 	/* A date was selected */
 	public delegate void DateSelectedHandler(DateTime selectedDate);
 	

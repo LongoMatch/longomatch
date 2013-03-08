@@ -126,4 +126,9 @@ namespace LongoMatch.Common
 		CANCELED = -1,
 		ERROR = -2
 	}
+	
+	public enum JobType {
+		VideoEdition,
+		VideoConversion
+	}
 }

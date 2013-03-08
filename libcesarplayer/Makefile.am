@@ -41,6 +41,8 @@ libcesarplayer_la_SOURCES = \
 	gst-remuxer.h\
 	gst-video-editor.c\
 	gst-video-editor.h\
+	gst-video-encoder.c\
+	gst-video-encoder.h\
 	video-utils.c\
 	video-utils.h\
 	macros.h
@@ -57,3 +59,6 @@ CLEANFILES = $(BUILT_SOURCES)
 EXTRA_DIST = \
 	baconvideowidget-marshal.list
 
+
+test-encoder: test-encoder.c gst-video-encoder.c
+	${CC} -o test-encoder test-encoder.c gst-video-encoder.c $(CESARPLAYER_CFLAGS) $(CESARPLAYER_LIBS) -O0 -g

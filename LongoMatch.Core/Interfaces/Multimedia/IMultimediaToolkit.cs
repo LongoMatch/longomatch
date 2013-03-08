@@ -27,6 +27,8 @@ namespace LongoMatch.Interfaces.Multimedia
 	{
 		IVideoEditor GetVideoEditor();
 		
+		IVideoConverter GetVideoConverter (string filename);
+		
 		IFramesCapturer GetFramesCapturer();
 		
 		IRemuxer GetRemuxer(string inputFile, string outputFile, VideoMuxerType muxer);

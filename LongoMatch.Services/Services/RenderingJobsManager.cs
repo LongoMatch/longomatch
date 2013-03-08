@@ -32,6 +32,7 @@ namespace LongoMatch.Services
 		/* List of pending jobs */
 		List<Job> jobs, pendingJobs;
 		IVideoEditor videoEditor;
+		IVideoConverter videoConverter;
 		IFramesCapturer capturer;
 		Job currentJob;
 		IRenderingStateBar stateBar;
@@ -48,6 +49,10 @@ namespace LongoMatch.Services
 			pendingJobs = new List<Job>();
 			stateBar.Cancel += (sender, e) => CancelCurrentJob();
 			stateBar.ManageJobs += (sender, e) => ManageJobs();
+			guiToolkit.MainWindow.ConvertVideoFilesEvent += delegate(List<MediaFile> inputFiles, EncodingSettings encSettings) {
+				ConversionJob job = new ConversionJob(inputFiles, encSettings);
+				AddJob (job);
+			};; 
 		}
 		
 		public List<Job> Jobs {
@@ -107,8 +112,14 @@ namespace LongoMatch.Services
 			if (currentJob != job) 
 				return;
 			
-			videoEditor.Progress -= OnProgress;
-			videoEditor.Cancel();
+			if (job is EditionJob) {
+				videoEditor.Progress -= OnProgress;
+				videoEditor.Cancel();
+			} else {
+				videoConverter.Progress -= OnProgress;
+				videoConverter.Error -= OnError;
+				videoConverter.Cancel();
+			}
 			job.State = JobState.Cancelled;
 			RemoveCurrentFromPending();
 			UpdateJobsStatus();
@@ -126,10 +137,55 @@ namespace LongoMatch.Services
 			guiToolkit.ManageJobs(this);
 		}
 		
-		private void LoadJob(Job job) {
+		private void LoadConversionJob (ConversionJob job) {
+			videoConverter = multimediaToolkit.GetVideoConverter(job.EncodingSettings.OutputFile);
+			videoConverter.Progress += OnProgress;
+			videoConverter.EncodingSettings = job.EncodingSettings;
+			videoConverter.Error += OnError;
+			
+			foreach(MediaFile file in job.InputFiles) {
+				videoConverter.AddFile (file.FilePath, file.Length);
+			}
+			
+			try {
+				videoConverter.Start();
+			} catch(Exception ex) {
+				videoConverter.Cancel();
+				job.State = JobState.Error;
+				Log.Exception(ex);
+				Log.Error("Error rendering job: ", job.Name);
+				guiToolkit.ErrorMessage (Catalog.GetString("Error rendering job: ") + ex.Message);
+			}
+		}
+
+		void OnError (object o, string message)
+		{
+			Log.Error("Error rendering job: ", currentJob.Name);
+			guiToolkit.ErrorMessage(Catalog.GetString("An error has occurred in the video renderer.")
+			                        + " " + Catalog.GetString("Please, try again."));
+		}
+		
+		private void LoadEditionJob(EditionJob job) {
+			videoEditor = multimediaToolkit.GetVideoEditor();
+			videoEditor.Progress += OnProgress;
+			
 			foreach(PlayListPlay segment in job.Playlist) {
 				if (!ProcessSegment(segment))
 					continue;
+			}
+			
+			try {
+				videoEditor.EncodingSettings = job.EncodingSettings;
+				videoEditor.EnableTitle = job.OverlayTitle;
+				videoEditor.EnableAudio = job.EnableAudio;
+				videoEditor.Start();
+			}
+			catch(Exception ex) {
+				videoEditor.Cancel();
+				job.State = JobState.Error;
+				Log.Exception(ex);
+				Log.Error("Error rendering job: ", job.Name);
+				guiToolkit.ErrorMessage (Catalog.GetString("Error rendering job: ") + ex.Message);
 			}
 		}
 		
@@ -198,23 +254,11 @@ namespace LongoMatch.Services
 				return;
 			}
 			
-			videoEditor = multimediaToolkit.GetVideoEditor();
-			videoEditor.Progress += OnProgress;
 			currentJob = pendingJobs[0];
-			LoadJob(currentJob);
-			
-			try {
-				videoEditor.EncodingSettings = currentJob.EncodingSettings;
-				videoEditor.EnableTitle = currentJob.OverlayTitle;
-				videoEditor.EnableAudio = currentJob.EnableAudio;
-				videoEditor.Start();
-			}
-			catch(Exception ex) {
-				videoEditor.Cancel();
-				currentJob.State = JobState.Error;
-				Log.Exception(ex);
-				Log.Error("Error rendering job: ", currentJob.Name);
-				guiToolkit.ErrorMessage (Catalog.GetString("Error rendering job: ") + ex.Message);
+			if (currentJob is EditionJob) {
+				LoadEditionJob(currentJob as EditionJob);
+			} else {
+				LoadConversionJob(currentJob as ConversionJob);
 			}
 		}
 		
@@ -256,7 +300,11 @@ namespace LongoMatch.Services
 
 			else if(progress == (float)EditorState.FINISHED) {
 				Log.Debug ("Job finished successfully");
-				videoEditor.Progress -= OnProgress;
+				if (currentJob is EditionJob) {
+					videoEditor.Progress -= OnProgress;
+				} else {
+					videoConverter.Progress -= OnProgress;
+				}
 				UpdateProgress(progress);
 				currentJob.State = JobState.Finished;
 				CloseAndNext();

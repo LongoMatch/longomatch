@@ -28,7 +28,6 @@ namespace LongoMatch.Gui.Dialog
 	public partial class RenderingJobsDialog : Gtk.Dialog
 	{
 		IRenderingJobsManager manager;
-		TreeStore model;
 		
 		public RenderingJobsDialog (IRenderingJobsManager manager)
 		{

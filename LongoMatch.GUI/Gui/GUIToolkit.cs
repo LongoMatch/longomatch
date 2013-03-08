@@ -107,10 +107,10 @@ namespace LongoMatch.Gui
 				extensionFilter, FileChooserAction.Open);
 		}
 		
-		public List<Job> ConfigureRenderingJob (IPlayList playlist)
+		public List<EditionJob> ConfigureRenderingJob (IPlayList playlist)
 		{
 			VideoEditionProperties vep;
-			List<Job> jobs = new List<Job>();
+			List<EditionJob> jobs = new List<EditionJob>();
 			int response;
 			
 			if (playlist.Count == 0) {
@@ -134,8 +134,8 @@ namespace LongoMatch.Gui
 			}
 			if(response ==(int)ResponseType.Ok) {
 				if (!vep.SplitFiles) {
-					jobs.Add(new Job(playlist, vep.EncodingSettings,
-					                   vep.EnableAudio, vep.TitleOverlay));
+					jobs.Add(new EditionJob(playlist, vep.EncodingSettings,
+					                        vep.EnableAudio, vep.TitleOverlay));
 				} else {
 					int i = 0;
 					foreach (PlayListPlay play in playlist) {
@@ -146,7 +146,7 @@ namespace LongoMatch.Gui
 						
 						pl.Add(play);
 						settings.OutputFile = Path.Combine (vep.OutputDir, filename);
-						jobs.Add(new Job(pl, settings, vep.EnableAudio, vep.TitleOverlay));
+						jobs.Add(new EditionJob(pl, settings, vep.EnableAudio, vep.TitleOverlay));
 						i++;
 					}
 				}

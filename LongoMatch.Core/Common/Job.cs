@@ -16,22 +16,20 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
+using System.Collections.Generic;
 
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
+using LongoMatch.Store;
 
 namespace LongoMatch.Common
 {
 	[Serializable]
 	public class Job
 	{
-		public Job (IPlayList playlist, EncodingSettings encSettings,
-		            bool enableAudio, bool overlayTitle)
+		public Job (EncodingSettings encSettings)
 		{
-			Playlist = Cloner.Clone(playlist);
 			EncodingSettings = encSettings;
-			EnableAudio = enableAudio;
-			OverlayTitle = overlayTitle;
 			State = JobState.NotStarted;
 		}
 		
@@ -64,12 +62,23 @@ namespace LongoMatch.Common
 			}
 		}
 		
-		public IPlayList Playlist{
+		public EncodingSettings EncodingSettings {
 			get;
 			set;
 		}
+	}
+	
+	public class EditionJob: Job
+	{
+		public EditionJob (IPlayList playlist, EncodingSettings encSettings,
+		                   bool enableAudio = false, bool overlayTitle = false): base (encSettings)
+		{
+			Playlist = Cloner.Clone(playlist);
+			EnableAudio = enableAudio;
+			OverlayTitle = overlayTitle;
+		}
 		
-		public EncodingSettings EncodingSettings {
+		public IPlayList Playlist{
 			get;
 			set;
 		}
@@ -80,6 +89,19 @@ namespace LongoMatch.Common
 		}
 		
 		public bool OverlayTitle {
+			get;
+			set;
+		}
+	}
+	
+	public class ConversionJob: Job
+	{
+		public ConversionJob (List<MediaFile> files, EncodingSettings encSettings): base (encSettings)
+		{
+			InputFiles = files;
+		}
+		
+		public List<MediaFile> InputFiles {
 			get;
 			set;
 		}

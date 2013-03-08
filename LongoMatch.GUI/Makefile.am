@@ -48,6 +48,7 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Dialog.TemplateEditorDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.TemplatesManager.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.Win32CalendarDialog.cs \
 	gtk-gui/LongoMatch.Gui.MainWindow.cs \
@@ -107,6 +108,7 @@ SOURCES = \
 	Gui/Dialog/TemplatesManager.cs \
 	Gui/Dialog/UpdateDialog.cs \
 	Gui/Dialog/VideoEditionProperties.cs \
+	Gui/Dialog/VideoConversionTool.cs \
 	Gui/Dialog/Win32CalendarDialog.cs \
 	Gui/Popup/CalendarPopup.cs \
 	Gui/Popup/MessagePopup.cs \

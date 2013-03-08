@@ -63,6 +63,9 @@ namespace LongoMatch.Gui
 		public event NewPlaylistHandler NewPlaylistEvent;
 		public event SavePlaylistHandler SavePlaylistEvent; 
 		
+		/* Video Converter */
+		public event ConvertVideoFilesHandler ConvertVideoFilesEvent;
+		
 		/* Snapshots */
 		public event SnapshotSeriesHandler SnapshotSeriesEvent;
 		
@@ -527,6 +530,20 @@ namespace LongoMatch.Gui
 		}
 		#endregion
 		
+		#region Tool
+		protected void OnVideoConverterToolActionActivated (object sender, System.EventArgs e)
+		{
+			int res;
+			VideoConversionTool converter = new VideoConversionTool();
+			res = converter.Run ();
+			converter.Destroy();
+			if (res == (int) ResponseType.Ok) {
+				if (ConvertVideoFilesEvent != null)
+					ConvertVideoFilesEvent (converter.Files, converter.EncodingSettings);
+			}
+		}
+		#endregion
+		
 		#region View
 		protected void OnTagSubcategoriesActionToggled (object sender, System.EventArgs e)
 		{
@@ -900,7 +917,6 @@ namespace LongoMatch.Gui
 			if (KeyPressed != null)
 				KeyPressed(sender, key, modifier);
 		}
-
 
 		#endregion
 	}

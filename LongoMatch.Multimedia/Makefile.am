@@ -11,6 +11,8 @@ SOURCES = \
 	Common/Constants.cs \
 	Common/Enum.cs \
 	Common/Handlers.cs \
+	Converter/GstVideoConverter.cs \
+	Converter/ObjectManager.cs \
 	Editor/VideoSegment.cs \
 	Editor/GstVideoSplitter.cs \
 	Interfaces/ICapturer.cs \

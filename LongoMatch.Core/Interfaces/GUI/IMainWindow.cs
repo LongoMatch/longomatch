@@ -73,6 +73,9 @@ namespace LongoMatch.Interfaces.GUI
 		
 		event KeyHandler KeyPressed;
 		
+		/* Convert Video Files */
+		event ConvertVideoFilesHandler ConvertVideoFilesEvent;
+		
 		void SetProject(Project project, ProjectType projectType, CaptureSettings props, PlaysFilter filter);
 		void AddPlay(Play play);
 		void UpdateSelectedPlay (Play play);
