@@ -16,7 +16,6 @@
   <Contents>
     <File subtype="Code" buildaction="Compile" name="Assembly.cs" />
     <File subtype="Code" buildaction="Compile" name="CSVExporter.cs" />
-    <File subtype="Code" buildaction="Compile" name="URICaptureEnabler.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

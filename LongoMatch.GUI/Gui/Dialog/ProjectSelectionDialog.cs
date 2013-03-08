@@ -29,7 +29,6 @@ namespace LongoMatch.Gui.Dialog
 		public ProjectSelectionDialog()
 		{
 			this.Build();
-			ipcamerabox.Visible = Config.useUriCapture;
 		}
 
 		public ProjectType ProjectType {

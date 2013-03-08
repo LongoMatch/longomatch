@@ -8,10 +8,6 @@ SOURCES = \
 	Assembly.cs \
 	CSVExporter.cs
 
-if ENABLE_URI_CAPTURE
-SOURCES += URICaptureEnabler.cs
-endif
-
 RESOURCES =
 
 include $(top_srcdir)/build/build.mk

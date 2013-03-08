@@ -111,10 +111,6 @@ AC_MSG_RESULT($ostype)
 
 AM_CONDITIONAL(ENABLE_TESTS, test x = y)
 
-AC_ARG_ENABLE([uri-capture],
-              AS_HELP_STRING([--enable-uri-capture], [Enables uri capture for IP cameras]))
-AM_CONDITIONAL(ENABLE_URI_CAPTURE, test x$enable_uri_capture == xyes)
-
 dnl package checks, per config
 
 AC_CONFIG_FILES([env], [chmod +x env])
