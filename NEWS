@@ -1,3 +1,13 @@
+===== LongoMatch 0.18.7 "La Manga" =====
+
+	== Features ==
+
+	* Live analysis from IP cameras
+
+	== Bugs fixed ==
+
+	* Fix Exception finishing in the simulation mode
+
 ===== LongoMatch 0.18.6 "Elíptica" =====
 
 	== Features ==
