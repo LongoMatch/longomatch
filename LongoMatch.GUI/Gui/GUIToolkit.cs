@@ -133,7 +133,7 @@ namespace LongoMatch.Gui
 					foreach (PlayListPlay play in playlist) {
 						EncodingSettings settings = vep.EncodingSettings;
 						PlayList pl = new PlayList();
-						string filename = String.Format ("{0}-{1}.{2}", play.Name, i.ToString("d4"),
+						string filename = String.Format ("{0}-{1}.{2}", i.ToString("d4"), play.Name,
 						                                 settings.EncodingProfile.Extension);
 						
 						pl.Add(play);
