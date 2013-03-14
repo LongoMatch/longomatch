@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: longomatch master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-02-25 11:17+0000\n"
-"PO-Revision-Date: 2013-03-07 22:11+0100\n"
+"POT-Creation-Date: 2013-03-07 21:11+0000\n"
+"PO-Revision-Date: 2013-03-14 20:43+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -1635,14 +1635,12 @@ msgid "Remuxing file..."
 msgstr "Ponovno zvijanje datoteke ..."
 
 #: ../LongoMatch.Multimedia/Utils/Remuxer.cs:66
-#, fuzzy
 msgid "Remuxing file, this might take while..."
-msgstr "Zaključevanje datoteke. Postopek je lahko dolgotrajen."
+msgstr "Ponovno zvijanje datoteke. Postopek je lahko dolgotrajen."
 
 #: ../LongoMatch.Multimedia/Utils/Remuxer.cs:98
-#, fuzzy
 msgid "Error remuxing file:\n"
-msgstr "Napaka med branjem datoteke %s: %s"
+msgstr "Napaka med ponovnem zvijanju datoteke:\n"
 
 #: ../LongoMatch.Multimedia/Utils/Remuxer.cs:147
 #: ../LongoMatch.Multimedia/Utils/MpegRemuxer.cs:145
@@ -1843,104 +1841,3 @@ msgstr "Trajektorije"
 #: ../LongoMatch.Services/Services/TemplatesService.cs:232
 msgid "A template already exists with the name: "
 msgstr "Predloga s tem imenom že obstaja: "
-
-#~ msgid ""
-#~ "The actual project will be closed due to an error in the media player:"
-#~ msgstr "Projekt bo končan zaradi napake predvajalnika:"
-
-#~ msgid "Export project to Excel file"
-#~ msgstr "Izvozi projekt v datoteko MS Excel"
-
-#~ msgid "Project statistics"
-#~ msgstr "Statistika projekta"
-
-#~ msgid "Local Team"
-#~ msgstr "Domača ekipa"
-
-#~ msgid "Visitor Team"
-#~ msgstr "Gostujoča ekipa"
-
-#~ msgid "Timeline"
-#~ msgstr "Časovnica"
-
-#~ msgid "Game units"
-#~ msgstr "Delitev igre"
-
-#~ msgid "Game Units"
-#~ msgstr "Delitev igre"
-
-#~ msgid "Played Time"
-#~ msgstr "Igrani čas"
-
-#~ msgid "Match"
-#~ msgstr "Tekma"
-
-#~ msgid "Count"
-#~ msgstr "Števec"
-
-#~ msgid "Average"
-#~ msgstr "Povprečje"
-
-#~ msgid "Deviation"
-#~ msgstr "Standardni odklon"
-
-#~ msgid "Total Time"
-#~ msgstr "Skupni čas"
-
-#~ msgid "Paused Time"
-#~ msgstr "Čas premora"
-
-#~ msgid "Project"
-#~ msgstr "Projekt"
-
-#~ msgid "Total"
-#~ msgstr "Skupaj"
-
-#~ msgid "Duration (min)"
-#~ msgstr "Trajanje (min)"
-
-#~ msgid "default"
-#~ msgstr "privzeto"
-
-#~ msgid "None"
-#~ msgstr "Brez"
-
-#~ msgid "Tag players"
-#~ msgstr "Označi igralce"
-
-#~ msgid ""
-#~ "The project will be saved to a file. You can insert it later into the "
-#~ "database using the \"Import project\" function once you copied the video "
-#~ "file to your computer"
-#~ msgstr ""
-#~ "Projekt bo shranjen v datoteko. Kasneje jo je mogoče vstaviti v "
-#~ "podatkovno zbirko preko \"uvoza projekta\" po tem, ko je video datoteka "
-#~ "kopirana na krajevni računalnik."
-
-#~ msgid "This file is already used in another Project."
-#~ msgstr "Ta datoteka je že uporabljena v drugem projektu."
-
-#~ msgid "Select a different one to continue."
-#~ msgstr "Izberite drugo možnost za nadaljevanje."
-
-#~ msgid "Select Export File"
-#~ msgstr "Izbor datoteke za izvoz"
-
-#~ msgid "LongoMatch playlist"
-#~ msgstr "Seznam LongoMatch"
-
-#~ msgid "Delete Play"
-#~ msgstr "Izbriši igro"
-
-#~ msgid "Loading newly created project..."
-#~ msgstr "Nalaganje na novo ustvarjenega projekta ..."
-
-#~ msgid ""
-#~ "Some elements from the previous version (database, templates and/or "
-#~ "playlists) have been found."
-#~ msgstr ""
-#~ "Nekateri predmeti predhodne različice (podatkovna zbirka, predloge in "
-#~ "seznami predvajanja) so še vedno ohranjeni."
-
-#~ msgid "Do you want to import them?"
-#~ msgstr "Ali jih želite uvoziti?"
