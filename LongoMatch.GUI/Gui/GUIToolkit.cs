@@ -37,6 +37,7 @@ namespace LongoMatch.Gui
 {
 	public class GUIToolkit: IGUIToolkit
 	{
+		static GUIToolkit instance;
 		IMainWindow mainWindow;
 		
 		public GUIToolkit (Version version)
@@ -44,6 +45,13 @@ namespace LongoMatch.Gui
 			Version = version;
 			mainWindow = new MainWindow(this);
 			(mainWindow as MainWindow).Show();
+			instance = this;
+		}
+		
+		public static GUIToolkit Instance {
+			get {
+				return instance;
+			}
 		}
 		
 		public IMainWindow MainWindow{
