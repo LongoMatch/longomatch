@@ -73,6 +73,12 @@ namespace LongoMatch.Gui.Base
 			}
 		}
 		
+		public Button FitButton {
+			get {
+				return fitbutton;
+			}
+		}
+		
 		public Alignment Alignment {
 			get{
 				return categoriesalignment1;
@@ -125,6 +131,7 @@ namespace LongoMatch.Gui.Base
 			SetPixelRatio(10);
 			tsList = new Dictionary<object, W>();
 			ZoomScale.ValueChanged += (sender, e) => {SetPixelRatio((uint)ZoomScale.Value);};
+			FitButton.Clicked += (sender, e) => AdjustPostion (currentFrame);
 		}
 
 		public Z SelectedTimeNode {
@@ -181,11 +188,6 @@ namespace LongoMatch.Gui.Base
 				TimelineBox.Remove(w);
 				w.Destroy();
 			}
-		}
-
-		protected virtual void OnFitbuttonClicked(object sender, System.EventArgs e)
-		{
-			AdjustPostion(currentFrame);
 		}
 
 		protected virtual void OnZoomscaleValueChanged(object sender, System.EventArgs e)
