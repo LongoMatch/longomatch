@@ -152,7 +152,6 @@ namespace LongoMatch.Services
 			if (projectType == ProjectType.FileProject) {
 				player.Play();
 			}
-			Core.DB.UpdateProject (openedProject);
 		}
 
 		protected virtual void OnNewTagAtFrame(Category category, int frame) {
