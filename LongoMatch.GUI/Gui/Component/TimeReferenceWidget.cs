@@ -82,6 +82,7 @@ namespace LongoMatch.Gui.Component
 			}
 			set {
 				pixelRatio = value;
+				QueueDraw();
 			}
 		}
 
