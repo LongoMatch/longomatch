@@ -101,6 +101,7 @@ LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TemplateEditorDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TemplatesManager.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.UpdateDialog.cs
+LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.Win32CalendarDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs
@@ -160,6 +161,7 @@ LongoMatch.GUI/Gui/Dialog/TemplateEditorDialog.cs
 LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs
 LongoMatch.GUI/Gui/Dialog/UpdateDialog.cs
 LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs
+LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs
 LongoMatch.GUI/Gui/Dialog/Win32CalendarDialog.cs
 LongoMatch.GUI/Gui/GUIToolkit.cs
 LongoMatch.GUI/Gui/Helpers.cs
