@@ -233,7 +233,7 @@ namespace LongoMatch.Video.Converter {
 		
 		public void AddFile (string filename, long duration) {
 			if (!filename.StartsWith(Uri.UriSchemeFile)) {
-				filename = "file://" + filename;
+				filename = "file:///" + filename;
 			}
 			IntPtr file = GLib.Marshaller.StringToPtrGStrdup(filename);
 			gst_video_encoder_add_file (Handle, file, duration);
