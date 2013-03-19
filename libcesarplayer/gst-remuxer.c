@@ -450,6 +450,7 @@ remuxer_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
     case GST_MESSAGE_EOS:
     {
       GST_INFO_OBJECT (remuxer, "EOS message");
+      gst_remuxer_cancel (remuxer);
       g_signal_emit (remuxer, remuxer_signals[SIGNAL_PERCENT], 0, (gfloat) 1);
       break;
     }

@@ -150,6 +150,7 @@ namespace LongoMatch.Gui
 			if(capturer != null) {
 				capturing = false;
 				capturer.Stop();
+				capturer.Close();
 			}
 		}
 
