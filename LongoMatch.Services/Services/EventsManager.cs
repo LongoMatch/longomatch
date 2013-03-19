@@ -148,7 +148,7 @@ namespace LongoMatch.Services
 			mainWindow.AddPlay(play);
 			/* Tag subcategories of the new play */
 			if (!Config.FastTagging)
-				LaunchPlayTagger(play);
+				LaunchPlayTagger(play, false);
 			if (projectType == ProjectType.FileProject) {
 				player.Play();
 			}
@@ -201,8 +201,9 @@ namespace LongoMatch.Services
 			AddNewPlay(startTime, stopTime, category);
 		}
 
-		private void LaunchPlayTagger(Play play) {
-			guiToolkit.TagPlay(play, openedProject.LocalTeamTemplate, openedProject.VisitorTeamTemplate);
+		private void LaunchPlayTagger(Play play, bool showAllTags) {
+			guiToolkit.TagPlay(play, openedProject.LocalTeamTemplate,
+			                   openedProject.VisitorTeamTemplate, showAllTags);
 		}
 
 		protected virtual void OnPlaySelected(Play play)
@@ -272,7 +273,7 @@ namespace LongoMatch.Services
 		}
 
 		protected virtual void OnTagPlay(Play play) {
-			LaunchPlayTagger(play);
+			LaunchPlayTagger(play, true);
 		}
 		
 		protected virtual void OnPlayCategoryChanged(Play play, Category cat)

@@ -33,8 +33,10 @@ namespace LongoMatch.Gui.Dialog
 	{
 		private TeamTemplate localTeamTemplate;
 		private TeamTemplate visitorTeamTemplate;
-
-		public TaggerDialog(Play play, TeamTemplate localTeamTemplate, TeamTemplate visitorTeamTemplate)
+		bool showAllSubcateogires;
+		
+		public TaggerDialog(Play play, TeamTemplate localTeamTemplate,
+		                    TeamTemplate visitorTeamTemplate, bool showAllSubcategories)
 		{
 			this.Build();
 			
@@ -47,7 +49,7 @@ namespace LongoMatch.Gui.Dialog
 			
 			/* Iterate over all subcategories, adding a widget only for the FastTag ones */
 			foreach (var subcat in play.Category.SubCategories) {
-				if (!subcat.FastTag)
+				if (!subcat.FastTag && !showAllSubcategories)
 					continue;
 				if (subcat is TagSubCategory) {
 					var tagcat = subcat as TagSubCategory;

@@ -66,7 +66,7 @@ namespace LongoMatch.Interfaces.GUI
 		
 		void ManageJobs(IRenderingJobsManager manager);
 		
-		void TagPlay(Play play, TeamTemplate local, TeamTemplate visitor);
+		void TagPlay(Play play, TeamTemplate local, TeamTemplate visitor, bool showAllTags);
 		void DrawingTool(Image pixbuf, Play play, int stopTime);
 	}
 }
