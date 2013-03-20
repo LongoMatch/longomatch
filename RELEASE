@@ -1,7 +1,7 @@
-LongoMatch-0.18.7 "La Manga"
+LongoMatch-0.18.8 "Buzón"
 -----------------------------
 
-The LongoMatch team is happy to announce the seventh release in the
+The LongoMatch team is happy to announce the eight release in the
 stable 0.18 series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
@@ -9,11 +9,15 @@ all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
 * Features
-	* Live analysis from IP cameras
+	* Video joiner/converter for HD camera files
 
 * Bugs fixed
 
-	* Fix Exception finishing in the simulation mode
+	* Fix timeline drawing with live capture tags
+	* Fix remuxing step for live capture in windows
+	* Show subcategories withouth the "Quick Tag" option tagging from the plays list
+	* Fix sequence numbering for exported playlists
+	* Don't save the project each time we create tag a new play
 
 *Contributors to this Release:
 

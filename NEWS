@@ -1,3 +1,17 @@
+===== LongoMatch 0.18.8 "Buzón" =====
+
+	== Features ==
+
+	* Video joiner/converter for HD camera files
+
+	== Bugs fixed ==
+
+	* Fix timeline drawing with live capture tags
+	* Fix remuxing step for live capture in windows
+	* Show subcategories withouth the "Quick Tag" option tagging from the plays list
+	* Fix sequence numbering for exported playlists
+	* Don't save the project each time we create tag a new play
+
 ===== LongoMatch 0.18.7 "La Manga" =====
 
 	== Features ==
