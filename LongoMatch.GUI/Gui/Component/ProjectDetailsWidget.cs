@@ -287,6 +287,13 @@ namespace LongoMatch.Gui.Component
 
 		public void UpdateProject() {
 			var desc = project.Description;
+			/* In case the framerate changed, update each play with the new
+			 * framerate */
+			if (desc.File.Fps != mFile.Fps) {
+				foreach (Play play in project.AllPlays ()) {
+					play.Fps = mFile.Fps;
+				}
+			}
 			desc.File= mFile;
 			desc.LocalGoals = (int)localSpinButton.Value;
 			desc.VisitorGoals = (int)visitorSpinButton.Value;

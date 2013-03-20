@@ -98,6 +98,9 @@ namespace LongoMatch.Services
 			try {
 				Log.Debug("Reloading saved file: " + filePath);
 				project.Description.File = multimediaToolkit.DiscoverFile(filePath);
+				foreach (Play play in project.AllPlays ()) {
+					play.Fps = project.Description.File.Fps;
+				}
 				Core.DB.AddProject(project);
 			} catch(Exception ex) {
 				Log.Exception(ex);
