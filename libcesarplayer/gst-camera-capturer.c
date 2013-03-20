@@ -703,34 +703,37 @@ cb_new_pad (GstElement * element, GstPad * pad, GstCameraCapturer *gcc)
 static void
 gst_camera_capturer_create_encoder_bin (GstCameraCapturer *gcc)
 {
-  GstElement *colorspace, *videoscale;
+  GstElement *colorspace, *videoscale, *videorate;
   GstCaps *caps;
   GstPad *v_sink_pad;
-  gchar *caps_str;
 
   GST_INFO_OBJECT (gcc, "Creating encoder bin");
   gcc->priv->encoder_bin = gst_bin_new ("encoder_bin");
 
   colorspace = gst_element_factory_make("ffmpegcolorspace", NULL);
   videoscale = gst_element_factory_make("videoscale", NULL);
+  videorate = gst_element_factory_make("videorate", NULL);
   gcc->priv->video_filter = gst_element_factory_make("capsfilter", NULL);
   gcc->priv->filesink = gst_element_factory_make("filesink", NULL);
 
   /* Set caps for the encoding resolution */
-  if (gcc->priv->output_width != 0 && gcc->priv->output_height != 0) {
-    caps_str = g_strdup_printf("video/x-raw-yuv, width=%d, height=%d",
-        gcc->priv->output_width, gcc->priv->output_height);
-    caps = gst_caps_from_string(caps_str);
-    g_object_set(gcc->priv->video_filter, "caps", caps, NULL);
-    gst_caps_unref(caps);
-    g_free(caps_str);
+  caps = gst_caps_new_simple ("video/x-raw-yuv", "framerate",
+      GST_TYPE_FRACTION, 25, 1, NULL);
+  if (gcc->priv->output_width != 0) {
+    gst_caps_set_simple (caps, "width", G_TYPE_INT, gcc->priv->output_width,
+        NULL);
   }
+  if (gcc->priv->output_height != 0) {
+    gst_caps_set_simple (caps, "height", G_TYPE_INT, gcc->priv->output_height,
+        NULL);
+  }
+  g_object_set(gcc->priv->video_filter, "caps", caps, NULL);
 
   gst_bin_add_many(GST_BIN(gcc->priv->encoder_bin), videoscale,
-      colorspace, gcc->priv->video_filter, gcc->priv->video_enc,
+      colorspace, videorate, gcc->priv->video_filter, gcc->priv->video_enc,
       gcc->priv->muxer, gcc->priv->filesink, NULL);
 
-  gst_element_link_many(videoscale, colorspace, gcc->priv->video_filter,
+  gst_element_link_many(videoscale, colorspace, videorate, gcc->priv->video_filter,
       gcc->priv->video_enc, gcc->priv->muxer, NULL);
   gst_element_link(gcc->priv->muxer, gcc->priv->filesink);
 
