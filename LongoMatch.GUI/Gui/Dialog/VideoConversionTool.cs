@@ -32,11 +32,11 @@ namespace LongoMatch.Gui.Dialog
 	{
 		ListStore store;
 		string outputFile;
-		List<MediaFile> files;
 		
 		public VideoConversionTool ()
 		{
 			this.Build ();
+			hbox2.Visible = false;
 			SetTreeView ();
 			buttonOk.Sensitive = false;
 			Files = new List<MediaFile>();
