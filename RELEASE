@@ -1,23 +1,17 @@
-LongoMatch-0.18.8 "Buzón"
+LongoMatch-0.18.9 "Tarántula"
 -----------------------------
 
-The LongoMatch team is happy to announce the eight release in the
+The LongoMatch team is happy to announce the ninth release in the
 stable 0.18 series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
 all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
-* Features
-	* Video joiner/converter for HD camera files
-
 * Bugs fixed
 
-	* Fix timeline drawing with live capture tags
-	* Fix remuxing step for live capture in windows
-	* Show subcategories withouth the "Quick Tag" option tagging from the plays list
-	* Fix sequence numbering for exported playlists
-	* Don't save the project each time we create tag a new play
+	* Fix deadlock in the video conversion tool
+	* Fix mpeg-ts video files inspection on windows
 
 *Contributors to this Release:
 

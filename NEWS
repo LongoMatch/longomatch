@@ -1,3 +1,10 @@
+===== LongoMatch 0.18.9 "Tarántula" =====
+
+	== Bugs fixed ==
+
+	* Fix deadlock in the video conversion tool
+	* Fix mpeg-ts video files inspection on windows
+
 ===== LongoMatch 0.18.8 "Buzón" =====
 
 	== Features ==
