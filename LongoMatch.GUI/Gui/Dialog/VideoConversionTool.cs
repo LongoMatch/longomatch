@@ -70,14 +70,14 @@ namespace LongoMatch.Gui.Dialog
 		
 		protected void OnAddbuttonClicked (object sender, System.EventArgs e)
 		{
-			string path = GUIToolkit.Instance.OpenFile (Catalog.GetString("Add file"), null,
-			                                            Config.HomeDir(), null, null);
+			List<string> paths = GUIToolkit.Instance.OpenFiles (Catalog.GetString("Add file"), null,
+			                                                    Config.HomeDir(), null, null);
 			try {
-				if (path == null)
-					return;
-				MediaFile file = PreviewMediaFile.DiscoverFile(path);
-				store.AppendValues (file);
-				Files.Add (file);
+				foreach (string path in paths) {
+					MediaFile file = PreviewMediaFile.DiscoverFile(path);
+					store.AppendValues (file);
+					Files.Add (file);
+				}
 			} catch (Exception ex) {
 				GUIToolkit.Instance.ErrorMessage (ex.Message);
 			}
