@@ -107,6 +107,13 @@ namespace LongoMatch.Gui
 				extensionFilter, FileChooserAction.Open);
 		}
 		
+		public List<string> OpenFiles(string title, string defaultName, string defaultFolder,
+			string filterName, string extensionFilter)
+		{
+			return MultiFileChooser(title, defaultName, defaultFolder, filterName,
+				extensionFilter, FileChooserAction.Open);
+		}
+		
 		public List<EditionJob> ConfigureRenderingJob (IPlayList playlist)
 		{
 			VideoEditionProperties vep;
@@ -325,12 +332,24 @@ namespace LongoMatch.Gui
 		}
 		
 		string  FileChooser(string title, string defaultName,
-			string defaultFolder, string filterName, string extensionFilter,
-			FileChooserAction action)
+		                    string defaultFolder, string filterName, string extensionFilter,
+		                    FileChooserAction action)
+		{
+			List<string> res = MultiFileChooser(title, defaultName, defaultFolder, filterName,
+			                              extensionFilter, action, false);
+			if (res.Count == 1)
+				return res[0];
+			return null;
+		}
+		
+		List<string>  MultiFileChooser(string title, string defaultName,
+		                               string defaultFolder, string filterName, string extensionFilter,
+		                               FileChooserAction action, bool allowMultiple=true)
 		{
 			FileChooserDialog fChooser;
 			FileFilter filter;
-			string button, path;
+			string button;
+			List<string> path;
 			
 			if (action == FileChooserAction.Save)
 				button = "gtk-save";
@@ -339,7 +358,8 @@ namespace LongoMatch.Gui
 			
 			fChooser = new FileChooserDialog(title, mainWindow as Gtk.Window, action,
 				"gtk-cancel",ResponseType.Cancel, button, ResponseType.Accept);
-			
+				
+			fChooser.SelectMultiple = allowMultiple;
 			if (defaultFolder != null)
 				fChooser.SetCurrentFolder(defaultFolder);
 			if (defaultName != null)
@@ -352,9 +372,9 @@ namespace LongoMatch.Gui
 			}
 			
 			if (fChooser.Run() != (int)ResponseType.Accept) 
-				path = null;
+				path = new List<string>();
 			else
-				path = fChooser.Filename;
+				path =  new List<string>(fChooser.Filenames);
 			
 			fChooser.Destroy();
 			return path;

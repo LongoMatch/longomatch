@@ -41,6 +41,8 @@ namespace LongoMatch.Interfaces.GUI
 			string filterName, string extensionFilter);
 		string OpenFile(string title, string defaultName, string defaultFolder,
 			string filterName, string extensionFilter);
+		List<string> OpenFiles(string title, string defaultName, string defaultFolder,
+			string filterName, string extensionFilter);
 		string SelectFolder(string title, string defaultName, string defaultFolder,
 			string filterName, string extensionFilter);
 			
