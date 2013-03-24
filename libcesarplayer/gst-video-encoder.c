@@ -232,6 +232,7 @@ gst_video_encoder_create_encoder_bin (GstVideoEncoder *gve)
   /* Increase audio queue size for h264 encoding as the encoder queues 2 seconds
    * of video */
   g_object_set (aqueue, "max-size-time", 5 * GST_SECOND, NULL);
+  g_object_set (aqueue, "max-size-buffers", 0, NULL);
 
   /* Set caps for the encoding resolution */
   video_caps = gst_caps_new_simple ("video/x-raw-yuv", NULL);
