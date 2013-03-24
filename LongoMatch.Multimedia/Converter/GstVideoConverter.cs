@@ -38,6 +38,10 @@ namespace LongoMatch.Video.Converter {
 
 		[DllImport("libcesarplayer.dll")]
 		static extern unsafe IntPtr gst_video_encoder_new(IntPtr filename, out IntPtr err);
+		
+		[Obsolete]
+		protected GstVideoConverter(GLib.GType gtype) : base(gtype) {}
+		public GstVideoConverter(IntPtr raw) : base(raw) {}
 
 		public unsafe GstVideoConverter(string filename) : base(IntPtr.Zero)
 		{
