@@ -363,12 +363,12 @@ namespace LongoMatch.Gui
 			if (defaultFolder != null)
 				fChooser.SetCurrentFolder(defaultFolder);
 			if (defaultName != null)
-				fChooser.SetFilename(defaultName);
+				fChooser.CurrentName = defaultName;
 			if (filterName != null) {
 				filter = new FileFilter();
 				filter.Name = filterName;
 				filter.AddPattern(extensionFilter);
-				fChooser.AddFilter(filter);	
+				fChooser.Filter = filter;
 			}
 			
 			if (fChooser.Run() != (int)ResponseType.Accept) 
