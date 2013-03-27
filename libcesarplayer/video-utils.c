@@ -293,7 +293,7 @@ init_backend (int argc, char **argv)
 
 GstDiscovererResult
 lgm_discover_uri (
-    const gchar *uri, guint64 *duration, guint *width,
+    const gchar *filename, guint64 *duration, guint *width,
     guint *height, guint *fps_n, guint *fps_d, guint *par_n, guint *par_d,
     gchar **container, gchar **video_codec, gchar **audio_codec,
     GError **err)
@@ -305,16 +305,41 @@ lgm_discover_uri (
   GstDiscovererVideoInfo *vinfo = NULL;
   GstDiscovererAudioInfo *ainfo = NULL;
   GstDiscovererResult ret;
+  gchar *uri, *path;
+
+  if (!gst_uri_is_valid (filename)) {
+    if (!g_path_is_absolute (filename)) {
+      gchar *cur_dir;
+
+      cur_dir = g_get_current_dir ();
+      path = g_build_filename (cur_dir, filename, NULL);
+      g_free (cur_dir);
+    } else {
+      path = g_strdup (filename);
+    }
+
+    uri = g_filename_to_uri (path, NULL, err);
+    g_free (path);
+    path = NULL;
+
+    if (*err) {
+      return GST_DISCOVERER_URI_INVALID;
+    }
+  } else {
+    uri = g_strdup (filename);
+  }
 
   *duration = *width = *height = *fps_n = *fps_d = *par_n = *par_d = 0;
   *container = *audio_codec = *video_codec = NULL;
 
   discoverer = gst_discoverer_new (4 * GST_SECOND, err);
   if (*err != NULL) {
+    g_free (uri);
     return GST_DISCOVERER_ERROR;
   }
 
   info = gst_discoverer_discover_uri (discoverer, uri, err);
+  g_free (uri);
   if (*err != NULL) {
     if (info != NULL) {
       return gst_discoverer_info_get_result (info);
