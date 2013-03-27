@@ -35,6 +35,7 @@ namespace LongoMatch.Store
 		ushort fps;
 		bool hasAudio;
 		bool hasVideo;
+		string container;
 		string videoCodec;
 		string audioCodec;
 		uint videoHeight;
@@ -50,6 +51,7 @@ namespace LongoMatch.Store
 		                 ushort fps,
 		                 bool hasAudio,
 		                 bool hasVideo,
+		                 string container,
 		                 string videoCodec,
 		                 string audioCodec,
 		                 uint videoWidth,
@@ -61,6 +63,7 @@ namespace LongoMatch.Store
 			this.length = length;
 			this.hasAudio = hasAudio;
 			this.hasVideo = hasVideo;
+			this.container = container;
 			this.videoCodec = videoCodec;
 			this.audioCodec = audioCodec;
 			this.videoHeight = videoHeight;
@@ -107,6 +110,15 @@ namespace LongoMatch.Store
 			}
 			set {
 				this.hasAudio = value;
+			}
+		}
+		
+		public string Container {
+			get {
+				return this.container;
+			}
+			set {
+				this.container = value;
 			}
 		}
 
