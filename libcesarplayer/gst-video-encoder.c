@@ -59,6 +59,8 @@ struct GstVideoEncoderPrivate
   GstElement *encoder_bin;
   GstElement *video_enc;
   GstElement *audio_enc;
+  GstElement *vqueue;
+  GstElement *aqueue;
   GstElement *muxer;
   GstElement *filesink;
 
@@ -227,12 +229,13 @@ gst_video_encoder_create_encoder_bin (GstVideoEncoder *gve)
   vqueue = gst_element_factory_make ("queue", "video_queue");
   a_identity = gst_element_factory_make ("identity", "audio_identity");
   v_identity = gst_element_factory_make ("identity", "video_identity");
+  gve->priv->aqueue = aqueue;
+  gve->priv->vqueue = vqueue;
 
 
   /* Increase audio queue size for h264 encoding as the encoder queues 2 seconds
    * of video */
   g_object_set (aqueue, "max-size-time", 5 * GST_SECOND, NULL);
-  g_object_set (aqueue, "max-size-buffers", 0, NULL);
 
   /* Set caps for the encoding resolution */
   video_caps = gst_caps_new_simple ("video/x-raw-yuv", NULL);
@@ -400,6 +403,13 @@ gst_video_encoder_select_next_file (GstVideoEncoder *gve)
     gst_video_encoder_create_source (gve, (gchar *) gve->priv->current_file->data);
   } else {
     GST_INFO_OBJECT (gve, "No more files, sending EOS");
+    /* Enlarge queues to avoid deadlocks */
+    g_object_set (gve->priv->aqueue, "max-size-time", 0, NULL);
+    g_object_set (gve->priv->aqueue, "max-size-bytes", 0, NULL);
+    g_object_set (gve->priv->aqueue, "max-size-buffers", 0, NULL);
+    g_object_set (gve->priv->vqueue, "max-size-time", 0, NULL);
+    g_object_set (gve->priv->vqueue, "max-size-bytes", 0, NULL);
+    g_object_set (gve->priv->vqueue, "max-size-buffers", 0, NULL);
     gst_pad_send_event (audio_pad, gst_event_new_eos());
     gst_pad_send_event (video_pad, gst_event_new_eos());
   }
