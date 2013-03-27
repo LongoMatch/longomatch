@@ -29,6 +29,7 @@
 
 #include <gst/gst.h>
 #include <gst/interfaces/xoverlay.h>
+#include <gst/pbutils/pbutils.h>
 #include <gdk/gdk.h>
 #if defined (GDK_WINDOWING_X11)
 #include <gdk/gdkx.h>
@@ -67,4 +68,7 @@ guintptr gst_get_window_handle (GdkWindow *window);
 void gst_set_window_handle (GstXOverlay *overlay, guintptr window_handle);
 void init_debug();
 
-
+GstDiscovererResult lgm_discover_uri (const gchar *uri, guint64 *duration,
+    guint *width, guint *height, guint *fps_n, guint *fps_d, guint *par_n,
+    guint *par_d, gchar **container, gchar **video_codec, gchar **audio_codec,
+    GError **err);

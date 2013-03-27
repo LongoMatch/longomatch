@@ -290,3 +290,103 @@ init_backend (int argc, char **argv)
 {
   gst_init(&argc, &argv);
 }
+
+GstDiscovererResult
+lgm_discover_uri (
+    const gchar *uri, guint64 *duration, guint *width,
+    guint *height, guint *fps_n, guint *fps_d, guint *par_n, guint *par_d,
+    gchar **container, gchar **video_codec, gchar **audio_codec,
+    GError **err)
+{
+  GstDiscoverer *discoverer;
+  GstDiscovererInfo *info;
+  GList *videos = NULL, *audios = NULL;
+  GstDiscovererStreamInfo *sinfo = NULL;
+  GstDiscovererVideoInfo *vinfo = NULL;
+  GstDiscovererAudioInfo *ainfo = NULL;
+  GstDiscovererResult ret;
+
+  *duration = *width = *height = *fps_n = *fps_d = *par_n = *par_d = 0;
+  *container = *audio_codec = *video_codec = NULL;
+
+  discoverer = gst_discoverer_new (4 * GST_SECOND, err);
+  if (*err != NULL) {
+    return GST_DISCOVERER_ERROR;
+  }
+
+  info = gst_discoverer_discover_uri (discoverer, uri, err);
+  if (*err != NULL) {
+    if (info != NULL) {
+      return gst_discoverer_info_get_result (info);
+    } else {
+      return GST_DISCOVERER_ERROR;
+    }
+  }
+
+  sinfo = gst_discoverer_info_get_stream_info (info);
+  g_print ("%s\n", gst_discoverer_stream_info_get_stream_type_nick (sinfo));
+  *duration = gst_discoverer_info_get_duration (info);
+
+  if (GST_IS_DISCOVERER_CONTAINER_INFO (sinfo)) {
+    GstCaps *caps;
+
+    caps = gst_discoverer_stream_info_get_caps (
+        GST_DISCOVERER_STREAM_INFO(sinfo));
+    *container = gst_pb_utils_get_codec_description (caps);
+    gst_caps_unref (caps);
+  }
+
+  if (GST_IS_DISCOVERER_AUDIO_INFO (sinfo)) {
+    ainfo = GST_DISCOVERER_AUDIO_INFO (sinfo);
+  } else {
+    audios = gst_discoverer_info_get_audio_streams (info);
+    if (audios != NULL) {
+      ainfo = audios->data;
+    }
+  }
+
+  if (ainfo != NULL) {
+    GstCaps *caps;
+
+    caps = gst_discoverer_stream_info_get_caps (
+        GST_DISCOVERER_STREAM_INFO (ainfo));
+    *audio_codec = gst_pb_utils_get_codec_description (caps);
+    gst_caps_unref (caps);
+  }
+  if (audios != NULL) {
+    gst_discoverer_stream_info_list_free (audios);
+  }
+
+  if (GST_IS_DISCOVERER_VIDEO_INFO (sinfo)) {
+    vinfo = GST_DISCOVERER_VIDEO_INFO (sinfo);
+  } else {
+    videos = gst_discoverer_info_get_video_streams (info);
+    if (videos != NULL) {
+      vinfo = videos->data;
+    }
+  }
+
+  if (vinfo != NULL) {
+    GstCaps *caps;
+
+    caps = gst_discoverer_stream_info_get_caps (
+        GST_DISCOVERER_STREAM_INFO (vinfo));
+    *video_codec = gst_pb_utils_get_codec_description (caps);
+    gst_caps_unref (caps);
+    *height = gst_discoverer_video_info_get_height (vinfo);
+    *width = gst_discoverer_video_info_get_width (vinfo);
+    *fps_n = gst_discoverer_video_info_get_framerate_num (vinfo);
+    *fps_d = gst_discoverer_video_info_get_framerate_denom (vinfo);
+    *par_n = gst_discoverer_video_info_get_par_num (vinfo);
+    *par_d = gst_discoverer_video_info_get_par_denom (vinfo);
+  }
+  if (videos != NULL) {
+    gst_discoverer_stream_info_list_free (videos);
+  }
+
+  ret = gst_discoverer_info_get_result (info);
+  gst_discoverer_info_unref (info);
+  g_object_unref (discoverer);
+
+  return ret;
+}

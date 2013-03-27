@@ -62,3 +62,6 @@ EXTRA_DIST = \
 
 test-encoder: test-encoder.c gst-video-encoder.c
 	${CC} -o test-encoder test-encoder.c gst-video-encoder.c $(CESARPLAYER_CFLAGS) $(CESARPLAYER_LIBS) -O0 -g
+
+test-discoverer: test-discoverer.c video-utils.c
+	${CC} -o test-discoverer test-discoverer.c video-utils.c $(CESARPLAYER_CFLAGS) $(CESARPLAYER_LIBS) -O0 -g
