@@ -429,8 +429,8 @@ namespace LongoMatch.Gui
 			bool sensitive2 = sensitive && projectType == ProjectType.FileProject;
 			CloseProjectAction.Sensitive=sensitive;
 			SaveProjectAction.Sensitive = sensitive;
-			TaggingViewAction.Sensitive = sensitive2;
-			ManualTaggingViewAction.Sensitive = sensitive2;
+			TaggingViewAction.Sensitive = sensitive;
+			ManualTaggingViewAction.Sensitive = sensitive;
 			GameUnitsViewAction.Sensitive = sensitive2 && gameUnitsActionVisible;
 			TimelineViewAction.Sensitive = sensitive2;
 			ExportProjectAction1.Sensitive = sensitive2;
