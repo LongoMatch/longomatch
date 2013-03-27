@@ -72,14 +72,22 @@ namespace LongoMatch.Gui.Dialog
 		{
 			List<string> paths = GUIToolkit.Instance.OpenFiles (Catalog.GetString("Add file"), null,
 			                                                    Config.HomeDir(), null, null);
-			try {
-				foreach (string path in paths) {
+			List<string> errors = new List<string>();
+			foreach (string path in paths) {
+				try {
 					MediaFile file = PreviewMediaFile.DiscoverFile(path);
 					store.AppendValues (file);
 					Files.Add (file);
+				} catch (Exception) {
+					errors.Add (path);
 				}
-			} catch (Exception ex) {
-				GUIToolkit.Instance.ErrorMessage (ex.Message);
+			}
+			if (errors.Count != 0) {
+				string s = Catalog.GetString("Error adding files:");
+				foreach (string p in errors) {
+					s += '\n' + p;
+				}
+				GUIToolkit.Instance.ErrorMessage (s);
 			}
 			CheckStatus ();
 		}
