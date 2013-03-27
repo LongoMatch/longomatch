@@ -106,7 +106,7 @@ namespace LongoMatch.Services
 				Log.Exception(ex);
 				Log.Debug ("Backing up project to file");
 				string projectFile = filePath + "-" + DateTime.Now;
-				projectFile = projectFile.Replace("-", "_").Replace(" ", "_").Replace(":", "_");
+				projectFile = projectFile.Replace("-", "_").Replace(" ", "_").Replace(":", "_").Replace("/", "_");
 				Project.Export(OpenedProject, projectFile);
 				guiToolkit.ErrorMessage(Catalog.GetString("An error occured saving the project:\n")+ex.Message+ "\n\n"+
 					Catalog.GetString("The video file and a backup of the project has been "+
