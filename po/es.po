@@ -1450,7 +1450,7 @@ msgstr "Añadir archivo"
 #: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:86
 #| msgid "Error remuxing file:\n"
 msgid "Error adding files:"
-msgstr "Error al añadir los archivos:\n"
+msgstr "Error al añadir los archivos:"
 
 #: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:110
 msgid "MP4 file"
