@@ -353,7 +353,6 @@ lgm_discover_uri (
   }
 
   sinfo = gst_discoverer_info_get_stream_info (info);
-  g_print ("%s\n", gst_discoverer_stream_info_get_stream_type_nick (sinfo));
   *duration = gst_discoverer_info_get_duration (info);
 
   if (GST_IS_DISCOVERER_CONTAINER_INFO (sinfo)) {
