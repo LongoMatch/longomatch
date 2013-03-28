@@ -307,7 +307,11 @@ lgm_discover_uri (
   GstDiscovererResult ret;
   gchar *uri, *path;
 
+#ifdef G_OS_WIN32
+  if (g_path_is_absolute(filename) || !gst_uri_is_valid (filename)) {
+#else
   if (!gst_uri_is_valid (filename)) {
+#endif
     if (!g_path_is_absolute (filename)) {
       gchar *cur_dir;
 
