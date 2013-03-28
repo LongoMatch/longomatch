@@ -24,6 +24,7 @@
 #include <gtk/gtk.h>
 
 #include "gst-video-encoder.h"
+#include "video-utils.h"
 
 
 GST_DEBUG_CATEGORY (_video_encoder_gst_debug_cat);
@@ -735,11 +736,16 @@ gst_video_encoder_start (GstVideoEncoder * gve)
 void
 gst_video_encoder_add_file (GstVideoEncoder * gve, const gchar *file, guint64 duration)
 {
+  gchar *uri;
   g_return_if_fail (gve != NULL);
   g_return_if_fail (GST_IS_VIDEO_ENCODER (gve));
 
   GST_INFO_OBJECT(gve, "Adding file %s", file);
-  gve->priv->input_files = g_list_append (gve->priv->input_files, g_strdup(file));
+  uri = lgm_filename_to_uri (file);
+  if (uri == NULL) {
+    GST_ERROR_OBJECT(gve, "Invalid filename %s", file);
+  }
+  gve->priv->input_files = g_list_append (gve->priv->input_files, uri);
   gve->priv->total_duration += duration * GST_MSECOND;
 }
 

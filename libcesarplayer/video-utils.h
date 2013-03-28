@@ -67,8 +67,9 @@ void init_backend (int argc, char **argv);
 guintptr gst_get_window_handle (GdkWindow *window);
 void gst_set_window_handle (GstXOverlay *overlay, guintptr window_handle);
 void init_debug();
+gchar * lgm_filename_to_uri (const gchar *filena);
 
-GstDiscovererResult lgm_discover_uri (const gchar *uri, guint64 *duration,
+EXPORT GstDiscovererResult lgm_discover_uri (const gchar *uri, guint64 *duration,
     guint *width, guint *height, guint *fps_n, guint *fps_d, guint *par_n,
     guint *par_d, gchar **container, gchar **video_codec, gchar **audio_codec,
     GError **err);

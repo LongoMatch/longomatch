@@ -291,21 +291,11 @@ init_backend (int argc, char **argv)
   gst_init(&argc, &argv);
 }
 
-GstDiscovererResult
-lgm_discover_uri (
-    const gchar *filename, guint64 *duration, guint *width,
-    guint *height, guint *fps_n, guint *fps_d, guint *par_n, guint *par_d,
-    gchar **container, gchar **video_codec, gchar **audio_codec,
-    GError **err)
+gchar *
+lgm_filename_to_uri (const gchar *filename)
 {
-  GstDiscoverer *discoverer;
-  GstDiscovererInfo *info;
-  GList *videos = NULL, *audios = NULL;
-  GstDiscovererStreamInfo *sinfo = NULL;
-  GstDiscovererVideoInfo *vinfo = NULL;
-  GstDiscovererAudioInfo *ainfo = NULL;
-  GstDiscovererResult ret;
   gchar *uri, *path;
+  GError *err = NULL;
 
 #ifdef G_OS_WIN32
   if (g_path_is_absolute(filename) || !gst_uri_is_valid (filename)) {
@@ -322,15 +312,39 @@ lgm_discover_uri (
       path = g_strdup (filename);
     }
 
-    uri = g_filename_to_uri (path, NULL, err);
+    uri = g_filename_to_uri (path, NULL, &err);
     g_free (path);
     path = NULL;
 
-    if (*err) {
-      return GST_DISCOVERER_URI_INVALID;
+    if (err != NULL) {
+      g_error_free (err);
+      return NULL;
     }
   } else {
     uri = g_strdup (filename);
+  }
+  return uri;
+}
+
+GstDiscovererResult
+lgm_discover_uri (
+    const gchar *filename, guint64 *duration, guint *width,
+    guint *height, guint *fps_n, guint *fps_d, guint *par_n, guint *par_d,
+    gchar **container, gchar **video_codec, gchar **audio_codec,
+    GError **err)
+{
+  GstDiscoverer *discoverer;
+  GstDiscovererInfo *info;
+  GList *videos = NULL, *audios = NULL;
+  GstDiscovererStreamInfo *sinfo = NULL;
+  GstDiscovererVideoInfo *vinfo = NULL;
+  GstDiscovererAudioInfo *ainfo = NULL;
+  GstDiscovererResult ret;
+  gchar *uri;
+
+  uri = lgm_filename_to_uri (filename);
+  if (uri == NULL) {
+    return GST_DISCOVERER_URI_INVALID;
   }
 
   *duration = *width = *height = *fps_n = *fps_d = *par_n = *par_d = 0;
