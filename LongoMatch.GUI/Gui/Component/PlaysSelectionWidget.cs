@@ -61,17 +61,17 @@ namespace LongoMatch.Gui.Component
 			playsList.ProjectIsLive = isLive;
 			localPlayersList.ProjectIsLive = isLive;
 			visitorPlayersList.ProjectIsLive = isLive;
+			playsList.Filter = filter;
+			localPlayersList.Filter = filter;
+			visitorPlayersList.Filter = filter;
+			playersfilter.SetFilter(filter, project);
+			categoriesfilter.SetFilter(filter, project);
 			playsList.Project=project;
 			visitorPlayersList.Project = project;
 			localPlayersList.Project = project;
 			visitorPlaysList.LabelProp = project.VisitorTeamTemplate.TeamName;
 			localPlaysList.LabelProp = project.LocalTeamTemplate.TeamName;
-			playsList.Filter = filter;
-			localPlayersList.Filter = filter;
-			visitorPlayersList.Filter = filter;
 			UpdateTeamsModels();
-			playersfilter.SetFilter(filter, project);
-			categoriesfilter.SetFilter(filter, project);
 		}
 		
 		public void Clear() {
