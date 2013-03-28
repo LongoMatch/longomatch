@@ -405,12 +405,10 @@ gst_video_encoder_select_next_file (GstVideoEncoder *gve)
   } else {
     GST_INFO_OBJECT (gve, "No more files, sending EOS");
     /* Enlarge queues to avoid deadlocks */
-    g_object_set (gve->priv->aqueue, "max-size-time", 0, NULL);
-    g_object_set (gve->priv->aqueue, "max-size-bytes", 0, NULL);
-    g_object_set (gve->priv->aqueue, "max-size-buffers", 0, NULL);
-    g_object_set (gve->priv->vqueue, "max-size-time", 0, NULL);
-    g_object_set (gve->priv->vqueue, "max-size-bytes", 0, NULL);
-    g_object_set (gve->priv->vqueue, "max-size-buffers", 0, NULL);
+    g_object_set (gve->priv->aqueue, "max-size-time", 0,
+        "max-size-bytes", 0, "max-size-buffers", 0, NULL);
+    g_object_set (gve->priv->vqueue, "max-size-time", 0,
+        "max-size-bytes", 0, "max-size-buffers", 0, NULL);
     gst_pad_send_event (audio_pad, gst_event_new_eos());
     gst_pad_send_event (video_pad, gst_event_new_eos());
   }
