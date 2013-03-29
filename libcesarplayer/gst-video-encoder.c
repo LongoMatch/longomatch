@@ -69,7 +69,10 @@ struct GstVideoEncoderPrivate
   GstBus *bus;
   gulong sig_bus_async;
 
-  gboolean drained;
+  gboolean video_drained;
+  gboolean audio_drained;
+  GstPad *video_pad;
+  GstPad *audio_pad;
   GstClockTime total_duration;
   guint update_id;
 };
@@ -309,6 +312,14 @@ cb_handle_eos (GstPad *pad, GstEvent *event, GstVideoEncoder *gve)
   if (event->type == GST_EVENT_EOS) {
     GST_DEBUG_OBJECT (gve, "Dropping EOS on pad %s:%s",
         GST_DEBUG_PAD_NAME (pad));
+    if (pad == gve->priv->audio_pad) {
+      gve->priv->audio_drained = TRUE;
+    } else if (pad == gve->priv->video_pad) {
+      gve->priv->video_drained = TRUE;
+    }
+    if (gve->priv->audio_drained && gve->priv->video_drained) {
+      g_idle_add ((GSourceFunc)gst_video_encoder_select_next_file, gve);
+    }
     return FALSE;
   }
   return TRUE;
@@ -321,6 +332,7 @@ cb_new_pad (GstElement *decodebin, GstPad *pad, GstVideoEncoder *gve)
   GstCaps *caps;
   const GstStructure *s;
   const gchar *mime;
+  gboolean is_video;
 
   caps = gst_pad_get_caps_reffed (pad);
   s = gst_caps_get_structure (caps, 0);
@@ -328,8 +340,10 @@ cb_new_pad (GstElement *decodebin, GstPad *pad, GstVideoEncoder *gve)
 
   if (g_strrstr (mime, "video")) {
     epad = gst_element_get_static_pad (gve->priv->encoder_bin, "video");
+    is_video = TRUE;
   } else if (g_strrstr (mime, "audio")) {
     epad = gst_element_get_static_pad (gve->priv->encoder_bin, "audio");
+    is_video = FALSE;
   }
 
   if (epad && !gst_pad_is_linked (epad)) {
@@ -337,20 +351,17 @@ cb_new_pad (GstElement *decodebin, GstPad *pad, GstVideoEncoder *gve)
     if (gst_pad_link (pad, epad)) {
       g_signal_emit (gve, gve_signals[SIGNAL_ERROR], 0, "Error linking pads");
     } else {
+      if (is_video) {
+        gve->priv->video_pad = pad;
+      } else {
+        gve->priv->audio_pad = pad;
+      }
       gst_pad_add_event_probe (pad, G_CALLBACK (cb_handle_eos), gve);
     }
   } else {
     GST_INFO_OBJECT (gve, "Dropping pad with caps %" GST_PTR_FORMAT, caps);
   }
   gst_caps_unref (caps);
-}
-
-static void
-cb_drained (GstElement *decodebin, GstVideoEncoder *gve) {
-  if (!gve->priv->drained) {
-    g_idle_add ((GSourceFunc)gst_video_encoder_select_next_file, gve);
-  }
-  gve->priv->drained = TRUE;
 }
 
 static void
@@ -365,10 +376,10 @@ gst_video_encoder_create_source (GstVideoEncoder *gve, gchar *location)
   gve->priv->source_bin = gst_element_factory_make ("uridecodebin", NULL);
   g_object_set (gve->priv->source_bin, "uri", location, NULL);
   g_signal_connect (gve->priv->source_bin, "pad-added", G_CALLBACK (cb_new_pad), gve);
-  g_signal_connect (gve->priv->source_bin, "drained", G_CALLBACK (cb_drained), gve);
   gst_bin_add (GST_BIN(gve->priv->main_pipeline), gve->priv->source_bin);
   gst_element_sync_state_with_parent (gve->priv->source_bin);
-  gve->priv->drained = FALSE;
+  gve->priv->audio_drained = FALSE;
+  gve->priv->video_drained = FALSE;
 }
 
 static gboolean
