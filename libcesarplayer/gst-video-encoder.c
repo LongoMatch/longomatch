@@ -229,8 +229,8 @@ gst_video_encoder_create_encoder_bin (GstVideoEncoder *gve)
   audioconvert = gst_element_factory_make("audioconvert", NULL);
   audioresample = gst_element_factory_make("audioresample", NULL);
   gve->priv->filesink = gst_element_factory_make("filesink", NULL);
-  aqueue = gst_element_factory_make ("queue", "audio_queue");
-  vqueue = gst_element_factory_make ("queue", "video_queue");
+  aqueue = gst_element_factory_make ("queue2", "audio_queue");
+  vqueue = gst_element_factory_make ("queue2", "video_queue");
   a_identity = gst_element_factory_make ("identity", "audio_identity");
   v_identity = gst_element_factory_make ("identity", "video_identity");
   gve->priv->aqueue = aqueue;
