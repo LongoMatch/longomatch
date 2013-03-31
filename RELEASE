@@ -1,17 +1,21 @@
-LongoMatch-0.18.9 "Tarántula"
+LongoMatch-0.18.10 "EHL"
 -----------------------------
 
-The LongoMatch team is happy to announce the ninth release in the
+The LongoMatch team is happy to announce the tenth release in the
 stable 0.18 series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
 all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
+* Features
+	* Add a new media discoverer based on GstDiscoverer
+
 * Bugs fixed
 
-	* Fix deadlock in the video conversion tool
-	* Fix mpeg-ts video files inspection on windows
+	* Fix more deadlocks in the video conversion tool
+	* Fix name of exported project files with dates
+	* Fix exception in filter after reloading projects
 
 *Contributors to this Release:
 
