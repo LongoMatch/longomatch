@@ -7,51 +7,69 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: longomatch master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-03-27 20:56+0000\n"
-"PO-Revision-Date: 2013-03-28 08:49+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=longomatch&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2013-03-28 17:08+0000\n"
+"PO-Revision-Date: 2013-03-31 20:04+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
+"%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Generator: Poedit 1.5.4\n"
-"X-Poedit-Language: Slovenian\n"
-"X-Poedit-Country: SLOVENIA\n"
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2118
-msgid "The requested audio output was not found. Please select another audio output in the Multimedia Systems Selector."
-msgstr "Zahtevanega zvočnega izhoda ni mogoče najti. Izberite drug zvočni izhod z izbirnikom predstavnih sistemov."
+msgid ""
+"The requested audio output was not found. Please select another audio output "
+"in the Multimedia Systems Selector."
+msgstr ""
+"Zahtevanega zvočnega izhoda ni mogoče najti. Izberite drug zvočni izhod z "
+"izbirnikom predstavnih sistemov."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2124
 msgid "Location not found."
 msgstr "Mesta ni mogoče najti."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2128
-msgid "Could not open location; you might not have permission to open the file."
-msgstr "Mesta ni mogoče odpreti; morda ni ustreznih pravic za odpiranje datoteke."
+msgid ""
+"Could not open location; you might not have permission to open the file."
+msgstr ""
+"Mesta ni mogoče odpreti; morda ni ustreznih pravic za odpiranje datoteke."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2140
-msgid "The video output is in use by another application. Please close other video applications, or select another video output in the Multimedia Systems Selector."
-msgstr "Zvočni izhod že uporablja drug program. Zaprite te programe z videom, ali pa izberite drug zvočni izhod z izbirnikom predstavnih sistemov."
+msgid ""
+"The video output is in use by another application. Please close other video "
+"applications, or select another video output in the Multimedia Systems "
+"Selector."
+msgstr ""
+"Zvočni izhod že uporablja drug program. Zaprite te programe z videom, ali pa "
+"izberite drug zvočni izhod z izbirnikom predstavnih sistemov."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2147
-msgid "The audio output is in use by another application. Please select another audio output in the Multimedia Systems Selector. You may want to consider using a sound server."
-msgstr "Zvočni izhod že uporablja drug program. Izberite drug zvočni izhod z izbirnikom predstavnih sistemov. Razmislite o uporabi zvočnega strežnika."
+msgid ""
+"The audio output is in use by another application. Please select another "
+"audio output in the Multimedia Systems Selector. You may want to consider "
+"using a sound server."
+msgstr ""
+"Zvočni izhod že uporablja drug program. Izberite drug zvočni izhod z "
+"izbirnikom predstavnih sistemov. Razmislite o uporabi zvočnega strežnika."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2166
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2172
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
-msgstr "Predvajanje tega posnetka zahteva uporabo vstavka %s, ki pa ni nameščen."
+msgstr ""
+"Predvajanje tega posnetka zahteva uporabo vstavka %s, ki pa ni nameščen."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2174
 #, c-format
 msgid ""
-"The playback of this movie requires the following decoders which are not installed:\n"
+"The playback of this movie requires the following decoders which are not "
+"installed:\n"
 "\n"
 "%s"
 msgstr ""
@@ -60,8 +78,11 @@ msgstr ""
 "%s"
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2200
-msgid "Cannot play this file over the network. Try downloading it to disk first."
-msgstr "Datoteke ni mogoče predvajati prek omrežja. Poskusite jo najprej prejeti na disk."
+msgid ""
+"Cannot play this file over the network. Try downloading it to disk first."
+msgstr ""
+"Datoteke ni mogoče predvajati prek omrežja. Poskusite jo najprej prejeti na "
+"disk."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2275
 msgid "Media file could not be played."
@@ -93,29 +114,54 @@ msgstr "Posnetek ne vsebuje podprtih pretokov slike."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4596
 #, c-format
-msgid "Failed to create a GStreamer play object. Please check your GStreamer installation."
-msgstr "Napaka med ustvarjanjem predmeta predvajanja GStreamer. Preverite namestitev programa GStreamer."
+msgid ""
+"Failed to create a GStreamer play object. Please check your GStreamer "
+"installation."
+msgstr ""
+"Napaka med ustvarjanjem predmeta predvajanja GStreamer. Preverite namestitev "
+"programa GStreamer."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4669
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4798
 #, c-format
-msgid "Failed to open video output. It may not be available. Please select another video output in the Multimedia Systems Selector."
-msgstr "Slikovnega izhoda ni mogoče odpreti. Morda ni na voljo. Izberite drug slikovni izhod z izbirnikom predstavnih sistemov."
+msgid ""
+"Failed to open video output. It may not be available. Please select another "
+"video output in the Multimedia Systems Selector."
+msgstr ""
+"Slikovnega izhoda ni mogoče odpreti. Morda ni na voljo. Izberite drug "
+"slikovni izhod z izbirnikom predstavnih sistemov."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4683
 #, c-format
-msgid "Could not find the video output. You may need to install additional GStreamer plugins, or select another video output in the Multimedia Systems Selector."
-msgstr "Slikovnega izhoda ni mogoče najti. Morda je treba namestiti dodatne vstavke za GStreamer ali pa izbrati drug slikovni izhod z izbirnikom predstavnih sistemov."
+msgid ""
+"Could not find the video output. You may need to install additional "
+"GStreamer plugins, or select another video output in the Multimedia Systems "
+"Selector."
+msgstr ""
+"Slikovnega izhoda ni mogoče najti. Morda je treba namestiti dodatne vstavke "
+"za GStreamer ali pa izbrati drug slikovni izhod z izbirnikom predstavnih "
+"sistemov."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4719
 #, c-format
-msgid "Failed to open audio output. You may not have permission to open the sound device, or the sound server may not be running. Please select another audio output in the Multimedia Systems Selector."
-msgstr "Napaka med odpiranjem zvočnega izhoda. Morda ni ustreznih dovoljenj za odpiranje zvočne naprave ali pa zvočni strežnik ni zagnan. Izberite drug zvočni izhod z izbirnikom predstavnih sistemov."
+msgid ""
+"Failed to open audio output. You may not have permission to open the sound "
+"device, or the sound server may not be running. Please select another audio "
+"output in the Multimedia Systems Selector."
+msgstr ""
+"Napaka med odpiranjem zvočnega izhoda. Morda ni ustreznih dovoljenj za "
+"odpiranje zvočne naprave ali pa zvočni strežnik ni zagnan. Izberite drug "
+"zvočni izhod z izbirnikom predstavnih sistemov."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4739
 #, c-format
-msgid "Could not find the audio output. You may need to install additional GStreamer plugins, or select another audio output in the Multimedia Systems Selector."
-msgstr "Zvočnega izhoda ni mogoče najti. Naložiti je treba dodatne vstavke GStreamer ali pa izbrati drug zvokovni izhod z izbirnikom predstavnih sistemov."
+msgid ""
+"Could not find the audio output. You may need to install additional "
+"GStreamer plugins, or select another audio output in the Multimedia Systems "
+"Selector."
+msgstr ""
+"Zvočnega izhoda ni mogoče najti. Naložiti je treba dodatne vstavke GStreamer "
+"ali pa izbrati drug zvokovni izhod z izbirnikom predstavnih sistemov."
 
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "9:05:02" for 9
@@ -123,8 +169,7 @@ msgstr "Zvočnega izhoda ni mogoče najti. Naložiti je treba dodatne vstavke GS
 #. * the separator that your locale uses or use "%Id" instead
 #. * of "%d" if your locale uses localized digits.
 #.
-#: ../libcesarplayer/video-utils.c:119
-#: ../libcesarplayer/video-utils.c:138
+#: ../libcesarplayer/video-utils.c:119 ../libcesarplayer/video-utils.c:138
 #, c-format
 msgctxt "long time format"
 msgid "%d:%02d:%02d"
@@ -458,13 +503,20 @@ msgstr ""
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameUnitsEditor.cs:30
 msgid ""
-"<b>Game Units</b>: Games are usually divided in time by units. In sports like field hockey the game is divided in 2 halves but other sports like tenis have several types of units that are anidated, e.g. Set->Game->Point.\n"
+"<b>Game Units</b>: Games are usually divided in time by units. In sports "
+"like field hockey the game is divided in 2 halves but other sports like "
+"tenis have several types of units that are anidated, e.g. Set->Game->Point.\n"
 "\n"
-"Defining <b> Game Units </b> will help you during the analysis to indentify the tagged plays in the the phases of the game."
+"Defining <b> Game Units </b> will help you during the analysis to indentify "
+"the tagged plays in the the phases of the game."
 msgstr ""
-"<b>Delitev igre</b>: igre so običajno razdeljene na časovna obdobja. Pri nekaterih športih je čas razdeljen na polčase, tretjine ali četrtine, pri drugih pa čas ne igra vloge ampak je cilj doseči določeno število točk, ki jih je mogoče opredeliti med nastavitvami.\n"
+"<b>Delitev igre</b>: igre so običajno razdeljene na časovna obdobja. Pri "
+"nekaterih športih je čas razdeljen na polčase, tretjine ali četrtine, pri "
+"drugih pa čas ne igra vloge ampak je cilj doseči določeno število točk, ki "
+"jih je mogoče opredeliti med nastavitvami.\n"
 "\n"
-"Določevanje <b>delitve igre</b> je pomembno pri proučevanju in določevanju iger in faz igre."
+"Določevanje <b>delitve igre</b> je pomembno pri proučevanju in določevanju "
+"iger in faz igre."
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameUnitsEditor.cs:101
 msgid "Add game unit"
@@ -662,12 +714,15 @@ msgid ""
 "A capture project is actually running.\n"
 "You can continue with the current capture, cancel it or save your project. \n"
 "\n"
-"<b>Warning: If you cancel the current project all your changes will be lost.</b>"
+"<b>Warning: If you cancel the current project all your changes will be lost."
+"</b>"
 msgstr ""
 "Projekt zajemanja je že zagnan.\n"
-"Mogoče je nadaljevati z zajemanjem, preklicati opravilo ali pa shraniti projekt. \n"
+"Mogoče je nadaljevati z zajemanjem, preklicati opravilo ali pa shraniti "
+"projekt. \n"
 "\n"
-"<b>Opozorilo: v kolikor je projekt preklican, bodo vse trenutne spremembe izgubljene.</b>"
+"<b>Opozorilo: v kolikor je projekt preklican, bodo vse trenutne spremembe "
+"izgubljene.</b>"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs:79
 msgid "Return"
@@ -1114,8 +1169,11 @@ msgid "Categories"
 msgstr "Kategorije"
 
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:80
-msgid "You are about to delete a category and all the plays added to this category. Do you want to proceed?"
-msgstr "Izbrisana bo kategorija in vse pripadajoče igre. Ali želite nadaljevati?"
+msgid ""
+"You are about to delete a category and all the plays added to this category. "
+"Do you want to proceed?"
+msgstr ""
+"Izbrisana bo kategorija in vse pripadajoče igre. Ali želite nadaljevati?"
 
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:87
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:95
@@ -1129,8 +1187,12 @@ msgid "Create new..."
 msgstr "Ustvari novo ..."
 
 #: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:210
-msgid "If you delete this subcategory you will looseall the tags associated with it. Do you want to proceed?"
-msgstr "Če boste izbrisali to podrejeno kategorijo, boste izgubili vse oznake, vezane nanjo. Ali želite nadaljevati?"
+msgid ""
+"If you delete this subcategory you will looseall the tags associated with "
+"it. Do you want to proceed?"
+msgstr ""
+"Če boste izbrisali to podrejeno kategorijo, boste izgubili vse oznake, "
+"vezane nanjo. Ali želite nadaljevati?"
 
 #: ../LongoMatch.GUI/Gui/Component/GameUnitTimeScale.cs:53
 #: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:53
@@ -1265,8 +1327,11 @@ msgid "Team Name"
 msgstr "Ime ekipe"
 
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:151
-msgid "You are about to delete a player and all its tags. Do you want to proceed?"
-msgstr "Izbrisali boste prevajalnik in vse pripadajoče oznake. Ali želite nadaljevati?"
+msgid ""
+"You are about to delete a player and all its tags. Do you want to proceed?"
+msgstr ""
+"Izbrisali boste prevajalnik in vse pripadajoče oznake. Ali želite "
+"nadaljevati?"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DrawingTool.cs:105
 msgid "Save File as..."
@@ -1386,7 +1451,6 @@ msgid "Add file"
 msgstr "Dodaj datoteko"
 
 #: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:86
-#| msgid "Error remuxing file:\n"
 msgid "Error adding files:"
 msgstr "Napaka med dodajanjem datotek:"
 
@@ -1612,8 +1676,12 @@ msgstr "Napaka med ponovnem zvijanju datoteke:\n"
 
 #: ../LongoMatch.Multimedia/Utils/Remuxer.cs:147
 #: ../LongoMatch.Multimedia/Utils/MpegRemuxer.cs:145
-msgid "The file you are trying to load is not properly supported. Would you like to convert it into a more suitable format?"
-msgstr "Vrsta datoteke, ki jo želite naložiti, ni popolnoma podprta. Ali jo želite pretvoriti v ustrezen zapis?"
+msgid ""
+"The file you are trying to load is not properly supported. Would you like to "
+"convert it into a more suitable format?"
+msgstr ""
+"Vrsta datoteke, ki jo želite naložiti, ni popolnoma podprta. Ali jo želite "
+"pretvoriti v ustrezen zapis?"
 
 #: ../LongoMatch.Multimedia/Utils/GStreamer.cs:112
 msgid "An error has been detected in the current installation."
@@ -1643,15 +1711,21 @@ msgstr "Napaka med izvažanjem projekta"
 
 #: ../LongoMatch.Services/Services/EventsManager.cs:133
 msgid "You can't create a new play if the capturer is not recording."
-msgstr "Ni mogoče ustvariti novega posnetka, če naprava za zajemanje ni zagnana."
+msgstr ""
+"Ni mogoče ustvariti novega posnetka, če naprava za zajemanje ni zagnana."
 
 #: ../LongoMatch.Services/Services/EventsManager.cs:190
-msgid "The stop time is smaller than the start time. The play will not be added."
+msgid ""
+"The stop time is smaller than the start time. The play will not be added."
 msgstr "Čas zaustavitve je pred začetkom. Igra ne bo dodana."
 
 #: ../LongoMatch.Services/Services/PlaylistManager.cs:68
-msgid "The file you are trying to load is not a playlist or it's not compatible with the current version"
-msgstr "Datoteka izbrana za nalaganje, ni pravi seznam predvajanja ali pa datoteka ni skladna s trenutno različico programa."
+msgid ""
+"The file you are trying to load is not a playlist or it's not compatible "
+"with the current version"
+msgstr ""
+"Datoteka izbrana za nalaganje, ni pravi seznam predvajanja ali pa datoteka "
+"ni skladna s trenutno različico programa."
 
 #: ../LongoMatch.Services/Services/PlaylistManager.cs:99
 msgid "You have not loaded any playlist yet."
@@ -1679,8 +1753,12 @@ msgid "An error occured saving the project:\n"
 msgstr "Prišlo je do napake med shranjevanjem projekta:\n"
 
 #: ../LongoMatch.Services/Services/ProjectsManager.cs:112
-msgid "The video file and a backup of the project has been saved. Try to import it later:\n"
-msgstr "Video datoteka in varnostna kopija datoteke sta shranjeni. Poskusite ju uvoziti kasneje:\n"
+msgid ""
+"The video file and a backup of the project has been saved. Try to import it "
+"later:\n"
+msgstr ""
+"Video datoteka in varnostna kopija datoteke sta shranjeni. Poskusite ju "
+"uvoziti kasneje:\n"
 
 #: ../LongoMatch.Services/Services/ProjectsManager.cs:140
 msgid "Error importing project:"
@@ -1719,8 +1797,12 @@ msgid "The file associated to this project doesn't exist."
 msgstr "Datoteka povezana s tem projektom ne obstaja."
 
 #: ../LongoMatch.Services/Services/ProjectsManager.cs:191
-msgid "If the location of the file has changed try to edit it with the database manager."
-msgstr "V primeru, da se je mesto datoteke spremenilo, je napako mogoče popraviti v upravljalniku podatkovne zbirke."
+msgid ""
+"If the location of the file has changed try to edit it with the database "
+"manager."
+msgstr ""
+"V primeru, da se je mesto datoteke spremenilo, je napako mogoče popraviti v "
+"upravljalniku podatkovne zbirke."
 
 #: ../LongoMatch.Services/Services/ProjectsManager.cs:199
 msgid "An error occurred opening this project:"
@@ -1797,4 +1879,3 @@ msgstr "Trajektorije"
 #: ../LongoMatch.Services/Services/TemplatesService.cs:232
 msgid "A template already exists with the name: "
 msgstr "Predloga s tem imenom že obstaja: "
-
