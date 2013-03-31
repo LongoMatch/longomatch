@@ -7232,15 +7232,15 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
                 <property name="MemberName" />
                 <property name="Spacing">6</property>
                 <child>
-                  <widget class="Gtk.HBox" id="hbox2">
+                  <widget class="Gtk.HBox" id="hbox4">
                     <property name="MemberName" />
                     <property name="Homogeneous">True</property>
                     <property name="Spacing">6</property>
                     <child>
-                      <widget class="Gtk.Label" id="label1">
+                      <widget class="Gtk.Label" id="label2">
                         <property name="MemberName" />
                         <property name="Xalign">0</property>
-                        <property name="LabelProp" translatable="yes">Video Quality:</property>
+                        <property name="LabelProp" translatable="yes">Output size: </property>
                       </widget>
                       <packing>
                         <property name="Position">0</property>
@@ -7248,14 +7248,10 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.ComboBox" id="qualitycombobox">
+                      <widget class="Gtk.ComboBox" id="sizecombobox">
                         <property name="MemberName" />
                         <property name="IsTextCombo">True</property>
-                        <property name="Items" translatable="yes">Low
-Normal
-Good
-Extra</property>
-                        <property name="Active">1</property>
+                        <property name="Items" />
                       </widget>
                       <packing>
                         <property name="Position">1</property>

@@ -12,9 +12,9 @@ namespace LongoMatch.Gui.Dialog
 		private global::Gtk.Button addbutton;
 		private global::Gtk.Button removebutton;
 		private global::Gtk.VBox vbox4;
-		private global::Gtk.HBox hbox2;
-		private global::Gtk.Label label1;
-		private global::Gtk.ComboBox qualitycombobox;
+		private global::Gtk.HBox hbox4;
+		private global::Gtk.Label label2;
+		private global::Gtk.ComboBox sizecombobox;
 		private global::Gtk.HBox filebox;
 		private global::Gtk.Label filenamelabel;
 		private global::Gtk.HBox hbox3;
@@ -101,31 +101,26 @@ namespace LongoMatch.Gui.Dialog
 			this.vbox4.Name = "vbox4";
 			this.vbox4.Spacing = 6;
 			// Container child vbox4.Gtk.Box+BoxChild
-			this.hbox2 = new global::Gtk.HBox ();
-			this.hbox2.Name = "hbox2";
-			this.hbox2.Homogeneous = true;
-			this.hbox2.Spacing = 6;
-			// Container child hbox2.Gtk.Box+BoxChild
-			this.label1 = new global::Gtk.Label ();
-			this.label1.Name = "label1";
-			this.label1.Xalign = 0F;
-			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Video Quality:");
-			this.hbox2.Add (this.label1);
-			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.label1]));
+			this.hbox4 = new global::Gtk.HBox ();
+			this.hbox4.Name = "hbox4";
+			this.hbox4.Homogeneous = true;
+			this.hbox4.Spacing = 6;
+			// Container child hbox4.Gtk.Box+BoxChild
+			this.label2 = new global::Gtk.Label ();
+			this.label2.Name = "label2";
+			this.label2.Xalign = 0F;
+			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("Output size: ");
+			this.hbox4.Add (this.label2);
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.label2]));
 			w8.Position = 0;
-			// Container child hbox2.Gtk.Box+BoxChild
-			this.qualitycombobox = global::Gtk.ComboBox.NewText ();
-			this.qualitycombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Low"));
-			this.qualitycombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Normal"));
-			this.qualitycombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Good"));
-			this.qualitycombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Extra"));
-			this.qualitycombobox.Name = "qualitycombobox";
-			this.qualitycombobox.Active = 1;
-			this.hbox2.Add (this.qualitycombobox);
-			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.qualitycombobox]));
+			// Container child hbox4.Gtk.Box+BoxChild
+			this.sizecombobox = global::Gtk.ComboBox.NewText ();
+			this.sizecombobox.Name = "sizecombobox";
+			this.hbox4.Add (this.sizecombobox);
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.sizecombobox]));
 			w9.Position = 1;
-			this.vbox4.Add (this.hbox2);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.hbox2]));
+			this.vbox4.Add (this.hbox4);
+			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.hbox4]));
 			w10.Position = 0;
 			w10.Expand = false;
 			w10.Fill = false;

@@ -31,13 +31,14 @@ namespace LongoMatch.Gui.Dialog
 	public partial class VideoConversionTool : Gtk.Dialog
 	{
 		ListStore store;
+		ListStore stdStore;
 		string outputFile;
 		
 		public VideoConversionTool ()
 		{
 			this.Build ();
-			hbox2.Visible = false;
 			SetTreeView ();
+			FillStandards();
 			buttonOk.Sensitive = false;
 			Files = new List<MediaFile>();
 		}
@@ -66,6 +67,14 @@ namespace LongoMatch.Gui.Dialog
 			
 			store = new ListStore(typeof(PreviewMediaFile));
 			treeview1.Model = store;
+		}
+		
+		void FillStandards () {
+			stdStore = new ListStore(typeof(string), typeof (VideoStandard));
+			stdStore.AppendValues(VideoStandards.P720.Name, VideoStandards.P720);
+			stdStore.AppendValues(VideoStandards.P480.Name, VideoStandards.P480);
+			sizecombobox.Model = stdStore;
+			sizecombobox.Active = 0;
 		}
 		
 		protected void OnAddbuttonClicked (object sender, System.EventArgs e)
@@ -127,9 +136,14 @@ namespace LongoMatch.Gui.Dialog
 		protected void OnButtonOkClicked (object sender, System.EventArgs e)
 		{
 			EncodingSettings encSettings;
+			TreeIter iter;
+			VideoStandard std;
 			
-			encSettings = new EncodingSettings(VideoStandards.P720, EncodingProfiles.MP4,
-			                                    25, 1, 4000, 128, outputFile, 0);
+			sizecombobox.GetActiveIter(out iter);
+			std = (VideoStandard) stdStore.GetValue(iter, 1);
+			
+			encSettings = new EncodingSettings(std, EncodingProfiles.MP4, 25, 1, 4000,
+			                                   128, outputFile, 0);
 			EncodingSettings = encSettings;
 			Respond (ResponseType.Ok);
 		}
