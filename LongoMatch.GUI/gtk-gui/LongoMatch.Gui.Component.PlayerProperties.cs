@@ -272,7 +272,7 @@ namespace LongoMatch.Gui.Component
 			w21.XOptions = ((global::Gtk.AttachOptions)(4));
 			w21.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
-			this.weightspinbutton = new global::Gtk.SpinButton (0, 100, 1);
+			this.weightspinbutton = new global::Gtk.SpinButton (0, 1000, 1);
 			this.weightspinbutton.CanFocus = true;
 			this.weightspinbutton.Name = "weightspinbutton";
 			this.weightspinbutton.Adjustment.PageIncrement = 10;
