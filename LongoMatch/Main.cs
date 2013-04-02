@@ -84,10 +84,11 @@ namespace LongoMatch
 			logFile = logFile.Replace(":","-");
 			logFile = System.IO.Path.Combine(Config.HomeDir(),logFile);
 
+			message = SysInfo.PrintInfo(Assembly.GetExecutingAssembly().GetName().Version);
 			if(ex.InnerException != null)
-				message = String.Format("{0}\n{1}\n{2}\n{3}\n{4}",ex.Message,ex.InnerException.Message,ex.Source,ex.StackTrace,ex.InnerException.StackTrace);
+				message += String.Format("{0}\n{1}\n{2}\n{3}\n{4}",ex.Message,ex.InnerException.Message,ex.Source,ex.StackTrace,ex.InnerException.StackTrace);
 			else
-				message = String.Format("{0}\n{1}\n{2}",ex.Message,ex.Source,ex.StackTrace);
+				message += String.Format("{0}\n{1}\n{2}",ex.Message,ex.Source,ex.StackTrace);
 
 			using(StreamWriter s = new StreamWriter(logFile)) {
 				s.WriteLine(message);

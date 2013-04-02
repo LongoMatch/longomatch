@@ -20,6 +20,7 @@ SOURCES = \
 	Common/PlayList.cs \
 	Common/PlaysFilter.cs \
 	Common/SerializableObject.cs \
+	Common/SysInfo.cs \
 	Common/VideoStandards.cs \
 	Config.cs \
 	Handlers/Handlers.cs \
