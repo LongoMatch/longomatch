@@ -48,7 +48,7 @@ namespace LongoMatch.Video.Utils
 		                                           out IntPtr audio_codec,
 		                                           out IntPtr err);
 		
-		public static MediaFile DiscoverFile(string filePath) {
+		public static MediaFile DiscoverFile(string filePath, bool takeScreenshot = true) {
 			long duration = 0;
 			uint width, height, fps_n, fps_d, par_n, par_d, ret, fps = 0;
 			string container, audio_codec, video_codec;
@@ -79,12 +79,14 @@ namespace LongoMatch.Video.Utils
 			if(has_video) {
 				fps = fps_n / fps_d;
 				par =  (float)par_n / par_d;
-				factory = new MultimediaFactory ();
-				thumbnailer = factory.GetFramesCapturer();
-				thumbnailer.Open(filePath);
-				thumbnailer.SeekTime(1000,false);
-				preview = thumbnailer.GetCurrentFrame(THUMBNAIL_MAX_WIDTH,THUMBNAIL_MAX_HEIGHT);
-				thumbnailer.Dispose();
+				if(takeScreenshot) {
+					factory = new MultimediaFactory ();
+					thumbnailer = factory.GetFramesCapturer();
+					thumbnailer.Open(filePath);
+					thumbnailer.SeekTime(1000,false);
+					preview = thumbnailer.GetCurrentFrame(THUMBNAIL_MAX_WIDTH,THUMBNAIL_MAX_HEIGHT);
+					thumbnailer.Dispose();
+				}
 			}
 			
 			return new LongoMatch.Store.MediaFile(filePath, duration, (ushort)fps, has_audio, has_video,

@@ -84,7 +84,7 @@ namespace LongoMatch.Gui.Dialog
 			List<string> errors = new List<string>();
 			foreach (string path in paths) {
 				try {
-					MediaFile file = PreviewMediaFile.DiscoverFile(path);
+					MediaFile file = PreviewMediaFile.DiscoverFile(path, false);
 					store.AppendValues (file);
 					Files.Add (file);
 				} catch (Exception) {
