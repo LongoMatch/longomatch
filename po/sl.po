@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2013-04-02 21:28+0000\n"
-"PO-Revision-Date: 2013-03-31 20:04+0100\n"
+"PO-Revision-Date: 2013-04-04 21:53+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -919,10 +919,9 @@ msgid "Video converter tool"
 msgstr "Orodje za pretvorbo videa"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:112
-#, fuzzy
 #| msgid "Output file"
 msgid "Output size: "
-msgstr "Odvodna datoteka"
+msgstr "Odvodna velikost:"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:134
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:180
