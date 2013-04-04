@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: longomatch master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-03-28 17:08+0000\n"
+"POT-Creation-Date: 2013-04-02 21:28+0000\n"
 "PO-Revision-Date: 2013-03-31 20:04+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
@@ -250,15 +250,15 @@ msgstr "LongoMatch: digitalni trener"
 msgid "Sports video analysis tool for coaches"
 msgstr "Orodje za pomoč trenerjem pri analizi posnetkov tekem"
 
-#: ../LongoMatch/Main.cs:100
+#: ../LongoMatch/Main.cs:101
 msgid "The application has finished with an unexpected error."
 msgstr "Program je končal z nepričakovano napako."
 
-#: ../LongoMatch/Main.cs:101
+#: ../LongoMatch/Main.cs:102
 msgid "A log has been saved at: "
 msgstr "Dnevnik je shranjen v:"
 
-#: ../LongoMatch/Main.cs:102
+#: ../LongoMatch/Main.cs:103
 msgid "Please, fill a bug report "
 msgstr "Izpolnite poročilo o hrošču"
 
@@ -919,35 +919,12 @@ msgid "Video converter tool"
 msgstr "Orodje za pretvorbo videa"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:112
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:63
-msgid "Video Quality:"
-msgstr "Kakovost videa:"
+#, fuzzy
+#| msgid "Output file"
+msgid "Output size: "
+msgstr "Odvodna datoteka"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:118
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:69
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:118
-msgid "Low"
-msgstr "Nizko"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:119
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:70
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:122
-msgid "Normal"
-msgstr "Običajno"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:120
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:71
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:126
-msgid "Good"
-msgstr "Dobro"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:121
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:72
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:130
-msgid "Extra"
-msgstr "Izjemno"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:139
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:134
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:180
 msgid "File name: "
 msgstr "Ime datoteke: "
@@ -955,6 +932,30 @@ msgstr "Ime datoteke: "
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:39
 msgid "Video Properties"
 msgstr "Lastnosti videa"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:63
+msgid "Video Quality:"
+msgstr "Kakovost videa:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:69
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:118
+msgid "Low"
+msgstr "Nizko"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:70
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:122
+msgid "Normal"
+msgstr "Običajno"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:71
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:126
+msgid "Good"
+msgstr "Dobro"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:72
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:130
+msgid "Extra"
+msgstr "Izjemno"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:92
 msgid "Size: "
@@ -1441,20 +1442,20 @@ msgstr "Shrani video kot ..."
 msgid "Output folder ..."
 msgstr "Izhodna mapa ..."
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:61
+#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:62
 msgid "Input files"
 msgstr "Dovodne datoteke"
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:73
-#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:107
+#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:82
+#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:116
 msgid "Add file"
 msgstr "Dodaj datoteko"
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:86
+#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:95
 msgid "Error adding files:"
 msgstr "Napaka med dodajanjem datotek:"
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:110
+#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:119
 msgid "MP4 file"
 msgstr "Datoteka MP4"
 
