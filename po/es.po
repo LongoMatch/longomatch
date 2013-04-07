@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: longomatch.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-03-27 20:56+0000\n"
-"PO-Revision-Date: 2013-03-28 17:35+0100\n"
+"POT-Creation-Date: 2013-04-02 21:28+0000\n"
+"PO-Revision-Date: 2013-04-07 18:59+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -245,15 +245,15 @@ msgstr "LongoMatch: el entrenador digital"
 msgid "Sports video analysis tool for coaches"
 msgstr "Herramienta de vídeo análisis para entrenadores"
 
-#: ../LongoMatch/Main.cs:100
+#: ../LongoMatch/Main.cs:101
 msgid "The application has finished with an unexpected error."
 msgstr "El programa ha terminado con error inesperado"
 
-#: ../LongoMatch/Main.cs:101
+#: ../LongoMatch/Main.cs:102
 msgid "A log has been saved at: "
 msgstr "Se ha guardado un registro en:"
 
-#: ../LongoMatch/Main.cs:102
+#: ../LongoMatch/Main.cs:103
 msgid "Please, fill a bug report "
 msgstr "Envíe un informe de fallos "
 
@@ -908,40 +908,15 @@ msgid "label7"
 msgstr "etiqueta7"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:31
-#| msgid "Video Properties"
 msgid "Video converter tool"
 msgstr "Herramienta de conversión de vídeo"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:112
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:63
-msgid "Video Quality:"
-msgstr "Calidad del vídeo:"
+#| msgid "Output file"
+msgid "Output size: "
+msgstr "Tamaño de la salida:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:118
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:69
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:118
-msgid "Low"
-msgstr "Baja"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:119
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:70
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:122
-msgid "Normal"
-msgstr "Normal"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:120
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:71
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:126
-msgid "Good"
-msgstr "Buena"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:121
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:72
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:130
-msgid "Extra"
-msgstr "Extra"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:139
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:134
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:180
 msgid "File name: "
 msgstr "Nombre del archivo:"
@@ -949,6 +924,30 @@ msgstr "Nombre del archivo:"
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:39
 msgid "Video Properties"
 msgstr "Propiedades del vídeo"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:63
+msgid "Video Quality:"
+msgstr "Calidad del vídeo:"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:69
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:118
+msgid "Low"
+msgstr "Baja"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:70
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:122
+msgid "Normal"
+msgstr "Normal"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:71
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:126
+msgid "Good"
+msgstr "Buena"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:72
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:130
+msgid "Extra"
+msgstr "Extra"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:92
 msgid "Size: "
@@ -1130,7 +1129,6 @@ msgstr "Etiquetar subcategorías"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:172
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:173
-#| msgid "Video Properties"
 msgid "Video Converter Tool"
 msgstr "Herramienta de conversión de vídeo"
 
@@ -1436,23 +1434,20 @@ msgstr "Guardar vídeo como…"
 msgid "Output folder ..."
 msgstr "Carpeta de salida…"
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:61
-#| msgid "Output file"
+#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:62
 msgid "Input files"
 msgstr "Archivos de entrada"
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:73
-#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:107
-#| msgid "Add new "
+#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:82
+#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:116
 msgid "Add file"
 msgstr "Añadir archivo"
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:86
-#| msgid "Error remuxing file:\n"
+#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:95
 msgid "Error adding files:"
 msgstr "Error al añadir los archivos:"
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:110
+#: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:119
 msgid "MP4 file"
 msgstr "Archivo MP4"
 
@@ -1834,7 +1829,6 @@ msgid "Error rendering job: "
 msgstr "Error al renderizar el trabajo: "
 
 #: ../LongoMatch.Services/Services/RenderingJobsManager.cs:164
-#| msgid "An error has occurred in the video editor."
 msgid "An error has occurred in the video renderer."
 msgstr "Ocurrió un error en el renderizador de vídeo."
 
