@@ -40,6 +40,7 @@ error_cb (GstVideoEncoder *remuxer, gchar *error, GstVideoEncoder *editor)
 {
     g_print("ERROR: %s\n", error);
     g_main_loop_quit (loop);
+    return TRUE;
 }
 
 int
@@ -49,9 +50,8 @@ main (int argc, char *argv[])
   VideoEncoderType video_encoder;
   VideoMuxerType video_muxer;
   AudioEncoderType audio_encoder;
-  gchar *input_file, *output_file;
+  gchar *output_file;
   GError *err = NULL;
-  guint64 start, stop;
   gint i;
 
   gst_video_encoder_init_backend (&argc, &argv);
@@ -62,7 +62,6 @@ main (int argc, char *argv[])
   }
 
   output_file = argv[1];
-  input_file = argv[1];
 
   video_encoder = VIDEO_ENCODER_H264;
   video_muxer = VIDEO_MUXER_MP4;
@@ -84,10 +83,5 @@ main (int argc, char *argv[])
   g_main_loop_run (loop);
 
   return 0;
-
-error:
-  g_print ("ERROR: %s", err->message);
-  return 1;
-
 }
 
