@@ -664,6 +664,8 @@ gst_camera_capturer_update_device_id (GstCameraCapturer *gcc)
     prop_name = "guid";
   else if (!g_strcmp0 (gcc->priv->source_element_name, "v4l2src"))
     prop_name = "device";
+  else if (!g_strcmp0 (gcc->priv->source_element_name, "filesrc"))
+    prop_name = "location";
   else if (!g_strcmp0 (gcc->priv->source_element_name, "gsettingsvideosrc"))
     prop_name = NULL;
   else
@@ -1378,6 +1380,11 @@ gst_camera_capturer_create_video_source (GstCameraCapturer * gcc,
       gst_camera_capturer_prepare_uri_source (gcc);
       gst_camera_capturer_create_remainig (gcc);
       return TRUE;
+    case CAPTURE_SOURCE_TYPE_FILE:
+      GST_INFO_OBJECT(gcc, "Creating file video source");
+      source_desc = "filesrc";
+      gcc->priv->source_element_name = source_desc;
+      break;
     default:
       g_assert_not_reached();
   }
@@ -1839,6 +1846,8 @@ gst_camera_capturer_enum_devices (gchar * device_name)
   else if (!g_strcmp0 (device_name, "v4l2src") ||
       !g_strcmp0 (device_name, "osxvideosrc"))
     prop_name = "device";
+  else if (!g_strcmp0 (device_name, "filesrc"))
+    prop_name = "location";
   else
     prop_name = "device-name";
 
