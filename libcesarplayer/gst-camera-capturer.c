@@ -873,7 +873,7 @@ gst_camera_capturer_prepare_uri_source (GstCameraCapturer *gcc)
 static GstElement *
 gst_camera_capturer_prepare_dv_source (GstCameraCapturer *gcc)
 {
-  GstElement *bin, *decodebin, *deinterlacer;
+  GstElement *bin, *decodebin, *colorspace, *deinterlacer;
   GstPad *video_pad, *src_pad;
 
   GST_INFO_OBJECT (gcc, "Creating dv source");
@@ -883,9 +883,11 @@ gst_camera_capturer_prepare_dv_source (GstCameraCapturer *gcc)
   gcc->priv->source_decoder_bin = gst_bin_new ("decoder");
   bin = gcc->priv->source_decoder_bin;
   decodebin = gst_element_factory_make ("decodebin2", NULL);
-  deinterlacer = gst_element_factory_make ("ffdeinterlace", "video-pad");
+  colorspace = gst_element_factory_make ("ffmpegcolorspace", "video-pad");
+  deinterlacer = gst_element_factory_make ("ffdeinterlace", NULL);
 
-  gst_bin_add_many (GST_BIN (bin), decodebin, deinterlacer, NULL);
+  gst_bin_add_many (GST_BIN (bin), decodebin, colorspace, deinterlacer, NULL);
+  gst_element_link (colorspace, deinterlacer);
 
   /* add ghostpad */
   video_pad = gst_element_get_static_pad (deinterlacer, "src");
