@@ -1262,7 +1262,7 @@ gst_camera_capturer_create_preview(GstCameraCapturer *gcc)
   v_decoder = gst_element_factory_make("decodebin2", "preview-decoder");
 
   video_bin = gst_parse_bin_from_description(
-      "videoscale ! ffmpegcolorspace ! autovideosink name=videosink", TRUE, NULL);
+      "videoscale ! ffmpegcolorspace ! " DEFAULT_VIDEO_SINK " name=videosink sync=false", TRUE, NULL);
 
   gcc->priv->preview_bin = gst_bin_new("preview_bin");
   gst_bin_add_many (GST_BIN(gcc->priv->preview_bin), v_decoder, video_bin, NULL);
