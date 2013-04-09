@@ -1395,7 +1395,9 @@ gst_camera_capturer_create_video_source (GstCameraCapturer * gcc,
    * since the device is set in getcaps and can't be changed later */
   if (!g_strcmp0 (gcc->priv->source_element_name, "dshowvideosrc")) {
     source_str = g_strdup_printf("%s device-name=\"%s\" name=source ! "
-        "typefind name=typefind", source_desc, gcc->priv->device_id);
+        "video/x-raw-yuv; video/x-raw-rgb; "
+        "video/x-dv, systemstream=(boolean)True "
+        "! typefind name=typefind", source_desc, gcc->priv->device_id);
   } else {
     source_str = g_strdup_printf("%s name=source %s ! typefind name=typefind",
         source_desc, filter);
