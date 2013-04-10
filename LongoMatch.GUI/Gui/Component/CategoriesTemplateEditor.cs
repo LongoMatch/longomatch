@@ -45,7 +45,7 @@ namespace LongoMatch.Gui.Component
 			FirstPageName = Catalog.GetString("Categories");
 			AddTreeView(categoriestreeview);
 			gameUnitsEditor = new GameUnitsEditor();
-			if (Config.useGameUnits) {
+			if (Config.UseGameUnits) {
 				AddPage(gameUnitsEditor, "Game phases");
 			}
 			this.ts = ts;

@@ -75,7 +75,7 @@ namespace LongoMatch.Multimedia.Utils
 		}
 		
 		private static string GetGstDirectory () {
-			return Path.Combine (Config.HomeDir(), GST_DIRECTORY);
+			return Path.Combine (Config.HomeDir, GST_DIRECTORY);
 		}
 		
 		private static string GetRegistryPath() {

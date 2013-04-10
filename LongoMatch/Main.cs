@@ -58,7 +58,7 @@ namespace LongoMatch
 			Version version = Assembly.GetExecutingAssembly().GetName().Version;
 
 			try {
-				AddinsManager manager = new AddinsManager(Config.PluginsConfigDir(), Config.PluginsDir());
+				AddinsManager manager = new AddinsManager(Config.PluginsConfigDir, Config.PluginsDir);
 				manager.LoadConfigModifierAddins();
 			    GUIToolkit guiToolkit = new GUIToolkit(version);
 			    IMultimediaToolkit multimediaToolkit = new MultimediaFactory();
@@ -82,7 +82,7 @@ namespace LongoMatch
 			logFile = logFile.Replace("/","-");
 			logFile = logFile.Replace(" ","-");
 			logFile = logFile.Replace(":","-");
-			logFile = System.IO.Path.Combine(Config.HomeDir(),logFile);
+			logFile = System.IO.Path.Combine(Config.HomeDir,logFile);
 
 			message = SysInfo.PrintInfo(Assembly.GetExecutingAssembly().GetName().Version);
 			if(ex.InnerException != null)

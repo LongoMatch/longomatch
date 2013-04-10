@@ -151,7 +151,7 @@ namespace LongoMatch.Gui.Dialog
 				this.Child.ShowAll ();
 			}
 			this.DefaultWidth = 339;
-			this.DefaultHeight = 178;
+			this.DefaultHeight = 195;
 			this.Show ();
 			this.checkbutton.Toggled += new global::System.EventHandler (this.OnCheckbuttonToggled);
 		}

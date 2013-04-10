@@ -128,7 +128,7 @@ namespace LongoMatch.Services
 			Log.Debug("Importing project");
 			/* Show a file chooser dialog to select the file to import */
 			fileName = guiToolkit.OpenFile(name, null,
-				Config.HomeDir(), filterName, filter);
+				Config.HomeDir, filterName, filter);
 				
 			if(fileName == null)
 				return;
@@ -151,7 +151,7 @@ namespace LongoMatch.Services
 				guiToolkit.InfoMessage (Catalog.GetString("This project doesn't have any file associated.\n" +
 				                                          "Select one in the next window"));
 				videofile = guiToolkit.OpenFile(Catalog.GetString("Select a video file"), null,
-				                                                 Config.HomeDir(), null, null);
+				                                                 Config.HomeDir, null, null);
 				if (videofile == null) {
 					guiToolkit.ErrorMessage (Catalog.GetString("Could not import project, you need a video file"));
 					return;
@@ -389,7 +389,7 @@ namespace LongoMatch.Services
 			}
 			
 			string filename = guiToolkit.SaveFile(Catalog.GetString("Save project"), null,
-				Config.HomeDir(), Constants.PROJECT_NAME, Constants.PROJECT_EXT);
+				Config.HomeDir, Constants.PROJECT_NAME, Constants.PROJECT_EXT);
 			
 			if (filename == null)
 				return;

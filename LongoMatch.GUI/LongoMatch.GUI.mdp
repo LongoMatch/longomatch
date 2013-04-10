@@ -159,6 +159,8 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.ShortcutsHelpDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/VideoConversionTool.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/DatabasesManager.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

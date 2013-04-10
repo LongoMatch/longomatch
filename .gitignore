@@ -46,10 +46,11 @@ Makefile.in
 aclocal.m4
 configure
 install-sh
+libcesarplayer/test-*
 libcesarplayer/Makefile.in
 libcesarplayer/libcesarplayer.md.pc
-libcesarplayer/deps/
-libcesarplayer/libs/
+libcesarplayer/.deps/
+libcesarplayer/.libs/
 libcesarplayer/Makefile.in
 libcesarplayer/baconvideowidget-marshal.c
 libcesarplayer/baconvideowidget-marshal.h

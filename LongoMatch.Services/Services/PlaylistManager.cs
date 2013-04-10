@@ -199,7 +199,7 @@ namespace LongoMatch.Services
 		{
 			string filename;
 			
-			filename = guiToolkit.OpenFile(Catalog.GetString("Open playlist"), null, Config.PlayListDir(),
+			filename = guiToolkit.OpenFile(Catalog.GetString("Open playlist"), null, Config.PlayListDir,
 				Constants.PROJECT_NAME + Catalog.GetString("playlists"),
 				"*" + Constants.PLAYLIST_EXT);
 			if (filename != null)
@@ -210,7 +210,7 @@ namespace LongoMatch.Services
 		{
 			string filename;
 			
-			filename = guiToolkit.SaveFile(Catalog.GetString("New playlist"), null, Config.PlayListDir(),
+			filename = guiToolkit.SaveFile(Catalog.GetString("New playlist"), null, Config.PlayListDir,
 				Constants.PROJECT_NAME + Catalog.GetString("playlists"),
 				"*" + Constants.PLAYLIST_EXT);
 

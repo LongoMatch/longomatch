@@ -25,14 +25,15 @@ using LongoMatch.Common;
 using LongoMatch.Interfaces.GUI;
 using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.Store;
+using LongoMatch.Interfaces;
 
 
 namespace LongoMatch.Services
 {
 	public class Core
 	{
-		static DataBase db;
 		static TemplatesService ts;
+		static DataBaseManager dbManager;
 		static EventsManager eManager;
 		static HotKeysManager hkManager;
 		static GameUnitsManager guManager;
@@ -53,6 +54,9 @@ namespace LongoMatch.Services
 
 			/* Check default folders */
 			CheckDirs();
+			
+			/* Load user config */
+			Config.Load();
 		}
 
 		public static void Start(IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit) {
@@ -66,11 +70,12 @@ namespace LongoMatch.Services
 			ProjectsManager projectsManager;
 				
 			/* Start TemplatesService */
-			ts = new TemplatesService(Config.TemplatesDir());
+			ts = new TemplatesService(Config.TemplatesDir);
 			Core.mainWindow.TemplatesService = ts;
 
 			/* Start DB services */
-			db = new DataBase(Path.Combine(Config.DBDir(),Constants.DB_FILE));
+			dbManager = new DataBaseManager (Config.DBDir, guiToolkit);
+			dbManager.SetActiveByName (Config.CurrentDatabase);
 			
 			/* Start the events manager */
 			eManager = new EventsManager(guiToolkit);
@@ -103,25 +108,25 @@ namespace LongoMatch.Services
 		}
 
 		public static void CheckDirs() {
-			if(!System.IO.Directory.Exists(Config.HomeDir()))
-				System.IO.Directory.CreateDirectory(Config.HomeDir());
-			if(!System.IO.Directory.Exists(Config.TemplatesDir()))
-				System.IO.Directory.CreateDirectory(Config.TemplatesDir());
-			if(!System.IO.Directory.Exists(Config.SnapshotsDir()))
-				System.IO.Directory.CreateDirectory(Config.SnapshotsDir());
-			if(!System.IO.Directory.Exists(Config.PlayListDir()))
-				System.IO.Directory.CreateDirectory(Config.PlayListDir());
-			if(!System.IO.Directory.Exists(Config.DBDir()))
-				System.IO.Directory.CreateDirectory(Config.DBDir());
-			if(!System.IO.Directory.Exists(Config.VideosDir()))
-				System.IO.Directory.CreateDirectory(Config.VideosDir());
-			if(!System.IO.Directory.Exists(Config.TempVideosDir()))
-				System.IO.Directory.CreateDirectory(Config.TempVideosDir());
+			if(!System.IO.Directory.Exists(Config.HomeDir))
+				System.IO.Directory.CreateDirectory(Config.HomeDir);
+			if(!System.IO.Directory.Exists(Config.TemplatesDir))
+				System.IO.Directory.CreateDirectory(Config.TemplatesDir);
+			if(!System.IO.Directory.Exists(Config.SnapshotsDir))
+				System.IO.Directory.CreateDirectory(Config.SnapshotsDir);
+			if(!System.IO.Directory.Exists(Config.PlayListDir))
+				System.IO.Directory.CreateDirectory(Config.PlayListDir);
+			if(!System.IO.Directory.Exists(Config.DBDir))
+				System.IO.Directory.CreateDirectory(Config.DBDir);
+			if(!System.IO.Directory.Exists(Config.VideosDir))
+				System.IO.Directory.CreateDirectory(Config.VideosDir);
+			if(!System.IO.Directory.Exists(Config.TempVideosDir))
+				System.IO.Directory.CreateDirectory(Config.TempVideosDir);
 		}
 
-		public static DataBase DB {
+		public static IDatabase DB {
 			get {
-				return db;
+				return dbManager.ActiveDB;
 			}
 		}
 		

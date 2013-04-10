@@ -107,7 +107,7 @@ namespace LongoMatch.Gui.Dialog
 			                                 FileChooserAction.Save,
 			                                 "gtk-cancel",ResponseType.Cancel,
 			                                 "gtk-save",ResponseType.Accept);
-			fChooser.SetCurrentFolder(Config.SnapshotsDir());
+			fChooser.SetCurrentFolder(Config.SnapshotsDir);
 			fChooser.Filter = filter;
 			fChooser.DoOverwriteConfirmation = true;
 

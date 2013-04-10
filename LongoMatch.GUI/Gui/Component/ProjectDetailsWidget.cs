@@ -463,7 +463,7 @@ namespace LongoMatch.Gui.Component
 				                                 FileChooserAction.Save,
 				                                 "gtk-cancel",ResponseType.Cancel,
 				                                 "gtk-save",ResponseType.Accept);
-				fChooser.SetCurrentFolder(Config.VideosDir());
+				fChooser.SetCurrentFolder(Config.VideosDir);
 				fChooser.DoOverwriteConfirmation = true;
 				if(fChooser.Run() == (int)ResponseType.Accept)
 					fileEntry.Text = fChooser.Filename;

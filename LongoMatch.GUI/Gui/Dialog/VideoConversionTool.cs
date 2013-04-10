@@ -80,7 +80,7 @@ namespace LongoMatch.Gui.Dialog
 		protected void OnAddbuttonClicked (object sender, System.EventArgs e)
 		{
 			List<string> paths = GUIToolkit.Instance.OpenFiles (Catalog.GetString("Add file"), null,
-			                                                    Config.HomeDir(), null, null);
+			                                                    Config.HomeDir, null, null);
 			List<string> errors = new List<string>();
 			foreach (string path in paths) {
 				try {
@@ -115,7 +115,7 @@ namespace LongoMatch.Gui.Dialog
 		{
 			string path = GUIToolkit.Instance.SaveFile (Catalog.GetString("Add file"),
 			                                            "NewVideo.mp4",
-			                                            Config.VideosDir(),
+			                                            Config.VideosDir,
 			                                            Catalog.GetString("MP4 file"),
 			                                            "mp4");
 			outputFile = System.IO.Path.ChangeExtension (path, "mp4");

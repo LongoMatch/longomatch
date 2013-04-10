@@ -62,6 +62,7 @@ namespace LongoMatch.Interfaces.GUI
 		event ManageTeamsHandler ManageTeamsEvent;
 		event ManageCategoriesHandler ManageCategoriesEvent;
 		event ManageProjects ManageProjectsEvent;
+		event ManageDatabases ManageDatabasesEvent;
 		event ApplyCurrentRateHandler ApplyRateEvent;
 		
 		/* Game Units events */

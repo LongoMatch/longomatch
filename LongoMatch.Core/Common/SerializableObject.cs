@@ -18,34 +18,59 @@
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml.Serialization;
 
 namespace LongoMatch.Common
 {
 	public class SerializableObject
 	{
-		public static void Save<T>(T obj, Stream stream) {
-			BinaryFormatter formatter = new  BinaryFormatter();
-			formatter.Serialize(stream, obj);
+		public enum SerializationType {
+			Binary,
+			Xml
 		}
 		
-		public static void Save<T>(T obj, string filepath) {
+		public static void Save<T>(T obj, Stream stream,
+		                           SerializationType type=SerializationType.Binary) {
+			switch (type) {
+			case SerializationType.Binary:
+				BinaryFormatter formatter = new  BinaryFormatter();
+				formatter.Serialize(stream, obj);
+				break;
+			case SerializationType.Xml:
+				XmlSerializer xmlformatter = new XmlSerializer(typeof(T));
+				xmlformatter.Serialize(stream, obj);
+				break;
+			}
+		}
+		
+		public static void Save<T>(T obj, string filepath,
+		                           SerializationType type=SerializationType.Binary) {
 			Stream stream = new FileStream(filepath, FileMode.Create, FileAccess.Write, FileShare.None);
 			using (stream) {
-				Save<T> (obj, stream);
+				Save<T> (obj, stream, type);
 				stream.Close();
 			}
 		}
 
-		public static T Load<T>(Stream stream) {
-			BinaryFormatter formatter = new BinaryFormatter();
-			var obj = formatter.Deserialize(stream);
-			return (T)obj;
+		public static T Load<T>(Stream stream,
+		                        SerializationType type=SerializationType.Binary) {
+			switch (type) {
+			case SerializationType.Binary:
+				BinaryFormatter formatter = new BinaryFormatter();
+				return (T)formatter.Deserialize(stream);
+			case SerializationType.Xml:
+				XmlSerializer xmlformatter = new XmlSerializer(typeof(T));
+				return (T) xmlformatter.Deserialize(stream);
+			default:
+				throw new Exception();
+			}
 		}
 		
-		public static T Load<T>(string filepath) {
+		public static T Load<T>(string filepath,
+		                        SerializationType type=SerializationType.Binary) {
 			Stream stream = new FileStream(filepath, FileMode.Open, FileAccess.Read, FileShare.Read);
 			using (stream) {
-				return Load<T> (stream);
+				return Load<T> (stream, type);
 			}
 		}
 	}

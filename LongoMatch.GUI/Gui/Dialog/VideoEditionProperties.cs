@@ -158,7 +158,7 @@ namespace LongoMatch.Gui.Dialog
 			                FileChooserAction.Save,
 			                "gtk-cancel",ResponseType.Cancel,
 			                "gtk-save",ResponseType.Accept);
-			fChooser.SetCurrentFolder(Config.VideosDir());
+			fChooser.SetCurrentFolder(Config.VideosDir);
 			fChooser.CurrentName = "NewVideo."+GetExtension();
 			fChooser.DoOverwriteConfirmation = true;
 			FileFilter filter = new FileFilter();
@@ -196,7 +196,7 @@ namespace LongoMatch.Gui.Dialog
 			                FileChooserAction.SelectFolder,
 			                "gtk-cancel",ResponseType.Cancel,
 			                "gtk-open",ResponseType.Accept);
-			fChooser.SetCurrentFolder(Config.VideosDir());
+			fChooser.SetCurrentFolder(Config.VideosDir);
 			fChooser.CurrentName = "Playlist";
 			if(fChooser.Run() == (int)ResponseType.Accept) {
 				dirlabel.Text = fChooser.Filename;

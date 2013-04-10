@@ -253,7 +253,7 @@ namespace LongoMatch.Services
 
 		protected virtual void OnSnapshotSeries(Play play) {
 			player.Pause();
-			guiToolkit.ExportFrameSeries(openedProject, play, Config.SnapshotsDir());
+			guiToolkit.ExportFrameSeries(openedProject, play, Config.SnapshotsDir);
 		}
 		
 		protected virtual void OnPrev()

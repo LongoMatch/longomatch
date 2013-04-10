@@ -1,5 +1,5 @@
 // 
-//  Copyright (C) 2011 Andoni Morales Alastruey
+//  Copyright (C) 2013 Andoni Morales Alastruey
 // 
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,33 +17,16 @@
 // 
 using System;
 using System.Collections.Generic;
-using LongoMatch.Store;
 
 namespace LongoMatch.Interfaces
 {
-	public interface IDatabase
+	public interface IDataBaseManager
 	{
-		List<ProjectDescription> GetAllProjects();
-
-		Project GetProject(Guid id);
-		
-		void AddProject(Project project);
-		
-		void RemoveProject(Guid id);
-		
-		void UpdateProject(Project project);
-		
-		bool Exists(Project project);
-		
-		bool Backup ();
-		
-		bool Delete ();
-		
-		string Name {get;}
-		
-		DateTime LastBackup {get;}
-		
-		int Count {get;}
+		void SetActiveByName (string name);
+		IDatabase Add (string name);
+		bool Delete (IDatabase db);
+		IDatabase ActiveDB { get; set; }
+		List<IDatabase> Databases { get; set; }
 	}
 }
 

@@ -14,7 +14,7 @@
       <Build debugmode="False" target="Exe" />
       <Execution consolepause="False" runwithwarnings="True" runtime="MsNet" />
       <EnvironmentVariables>
-        <Variable name="LGM_DEBUG" value="" />
+        <Variable name="LGM_DEBUG" value="3" />
       </EnvironmentVariables>
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>

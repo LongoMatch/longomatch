@@ -244,6 +244,14 @@ namespace LongoMatch.Gui
 			pm.Show();
 		}
 		
+		public void OpenDatabasesManager(IDataBaseManager manager)
+		{
+			DatabasesManager dm = new DatabasesManager (manager);
+			dm.TransientFor = mainWindow as Gtk.Window;
+			dm.Run();
+			dm.Destroy();
+		}
+		
 		public void ManageJobs(IRenderingJobsManager manager) {
 			RenderingJobsDialog dialog = new RenderingJobsDialog(manager);
 			dialog.TransientFor = mainWindow as Gtk.Window;

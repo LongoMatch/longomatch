@@ -38,6 +38,7 @@ SOURCES = \
 	Interfaces/Multimedia/IVideoConverter.cs \
 	Interfaces/Multimedia/IVideoEditor.cs \
 	Interfaces/IDatabase.cs \
+	Interfaces/IDataBaseManager.cs \
 	Interfaces/IPlayList.cs \
 	Interfaces/IRenderingJobsManager.cs \
 	Interfaces/ISubCategory.cs \

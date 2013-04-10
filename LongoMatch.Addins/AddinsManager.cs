@@ -39,21 +39,36 @@ namespace LongoMatch.Addins
 		
 		public void LoadConfigModifierAddins() {
 			foreach (IConfigModifier configModifier in AddinManager.GetExtensionObjects<IConfigModifier> ()) {
-				configModifier.ModifyConfig();
+				try {
+					configModifier.ModifyConfig();
+				} catch (Exception ex) {
+					Log.Error ("Error loading config modifier");
+					Log.Exception (ex);
+				}
 			}
 		}
 		
 		public void LoadExportProjectAddins(IMainWindow mainWindow) {
 			foreach (IExportProject exportProject in AddinManager.GetExtensionObjects<IExportProject> ()) {
-				mainWindow.AddExportEntry(exportProject.GetMenuEntryName(), exportProject.GetMenuEntryShortName(),
-					new Action<Project, IGUIToolkit>(exportProject.ExportProject));
+				try {
+					mainWindow.AddExportEntry(exportProject.GetMenuEntryName(), exportProject.GetMenuEntryShortName(),
+					                          new Action<Project, IGUIToolkit>(exportProject.ExportProject));
+				} catch (Exception ex) {
+					Log.Error ("Error adding export entry");
+					Log.Exception (ex);
+				}
 			}
 		}
 		
 		public void LoadImportProjectAddins(IMainWindow mainWindow) {
 			foreach (IImportProject importProject in AddinManager.GetExtensionObjects<IImportProject> ()) {
-				mainWindow.AddImportEntry(importProject.GetMenuEntryName(), importProject.GetMenuEntryShortName(),
-				    importProject.GetFilterName(), importProject.GetFilter(), importProject.ImportProject, true);
+				try{
+					mainWindow.AddImportEntry(importProject.GetMenuEntryName(), importProject.GetMenuEntryShortName(),
+					                          importProject.GetFilterName(), importProject.GetFilter(), importProject.ImportProject, true);
+				} catch (Exception ex) {
+					Log.Error ("Error adding import entry");
+					Log.Exception (ex);
+				}
 			}
 		}
 	}

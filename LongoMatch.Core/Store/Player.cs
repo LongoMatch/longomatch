@@ -121,7 +121,7 @@ namespace LongoMatch.Store
 		
 		public override string ToString ()
 		{
-			return String.Format("{0} ({1})", Name, Number);
+			return String.Format("{0} - {1}", Number, Name);
 		}
 
 		#endregion

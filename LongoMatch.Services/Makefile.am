@@ -6,6 +6,7 @@ LINK = $(REF_DEP_LONGOMATCH_SERVICES)
 SOURCES = \
 	Services/Core.cs \
 	Services/DataBase.cs \
+	Services/DataBaseManager.cs \
 	Services/EventsManager.cs \
 	Services/GameUnitsManager.cs \
 	Services/HotKeysManager.cs \

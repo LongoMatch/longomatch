@@ -113,7 +113,7 @@ namespace LongoMatch.Services
 		private void ResetPlayerWindow() {
 			player.LogoMode = false;
 			player.DrawingMode = false;
-			player.SetLogo(System.IO.Path.Combine(Config.ImagesDir(),"background.png"));
+			player.SetLogo(System.IO.Path.Combine(Config.ImagesDir,"background.png"));
 		}
 
 		private void CheckStopTime(object self) {

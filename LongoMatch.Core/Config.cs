@@ -24,70 +24,159 @@ namespace LongoMatch
 {
 	public class Config
 	{
-		public static string baseDirectory;
 		public static string homeDirectory;
+		public static string baseDirectory;
 		public static string configDirectory;
-		public static bool fastTagging = false;
+		static ConfigState state;
 		
-		public static string HomeDir() {
-			return homeDirectory;
-		}
-
-		public static string PlayListDir() {
-			return Path.Combine(homeDirectory, "playlists");
-		}
-
-		public static string SnapshotsDir() {
-			return Path.Combine(homeDirectory, "snapshots");
-		}
-
-		public static string TemplatesDir() {
-			return Path.Combine(homeDirectory, "templates");
-		}
-
-		public static string VideosDir() {
-			return Path.Combine(homeDirectory, "videos");
-		}
-
-		public static string TempVideosDir() {
-			return Path.Combine(configDirectory, "temp");
-		}
-
-		public static string ImagesDir() {
-			return RelativeToPrefix(String.Format("share/{0}/images",
-						Constants.SOFTWARE_NAME.ToLower()));
+		public static void Load () {
+			if (File.Exists(Config.ConfigFile)) {
+				Log.Information ("Loading config from " + Config.ConfigFile);
+				try {
+					state = SerializableObject.Load<ConfigState>(Config.ConfigFile, SerializableObject.SerializationType.Xml);
+				} catch (Exception ex) {
+					Log.Error ("Error loading config");
+					Log.Exception (ex);
+				}
+			}
+			
+			if (state == null) {
+				Log.Information ("Creating new config at " + Config.ConfigFile);
+				state = new ConfigState();
+				Save ();
+			}
 		}
 		
-		public static string PluginsDir() {
-			return RelativeToPrefix(String.Format("lib/{0}/plugins",
-						Constants.SOFTWARE_NAME.ToLower()));
+		public static void Save () {
+			try {
+				SerializableObject.Save(state, Config.ConfigFile, SerializableObject.SerializationType.Xml); 
+			} catch (Exception ex) {
+				Log.Error ("Errro saving config");
+				Log.Exception (ex);
+			}
 		}
 		
-		public static string PluginsConfigDir() {
-			return Path.Combine(configDirectory, "addins");
+		public static string ConfigFile {
+			get {
+				string filename = Constants.SOFTWARE_NAME.ToLower() + ".config";
+				return Path.Combine(Config.ConfigDir, filename);
+			}
+		}
+		
+		public static string HomeDir {
+			get {
+				return homeDirectory;
+			}
 		}
 
-		public static string DBDir() {
-			return Path.Combine(configDirectory, "db");
+		public static string BaseDir {
+			set {
+				baseDirectory = value;
+			}
+		}
+		
+		public static string ConfigDir {
+			set {
+				configDirectory = value;
+			}
+			get {
+				return configDirectory;
+			}
+		}
+		
+		public static string PlayListDir {
+			get {
+				return Path.Combine(homeDirectory, "playlists");
+			}
+		}
+
+		public static string SnapshotsDir {
+			get {
+				return Path.Combine(homeDirectory, "snapshots");
+			}
+		}
+
+		public static string TemplatesDir {
+			get {
+				return Path.Combine(homeDirectory, "templates");
+			}
+		}
+
+		public static string VideosDir {
+			get {
+				return Path.Combine(homeDirectory, "videos");
+			}
+		}
+
+		public static string TempVideosDir {
+			get {
+				return Path.Combine(configDirectory, "temp");
+			}
+		}
+
+		public static string ImagesDir {
+			get {
+				return RelativeToPrefix(String.Format("share/{0}/images",
+				                                      Constants.SOFTWARE_NAME.ToLower()));
+			}
+		}
+		
+		public static string PluginsDir {
+			get {
+				return RelativeToPrefix(String.Format("lib/{0}/plugins",
+				                                      Constants.SOFTWARE_NAME.ToLower()));
+			}
+		}
+		
+		public static string PluginsConfigDir {
+			get {
+				return Path.Combine(configDirectory, "addins");
+			}
+		}
+
+		public static string DBDir {
+			get {
+				return Path.Combine(configDirectory, "db");
+			}
 		}
 		
 		public static string RelativeToPrefix(string relativePath) {
 			return Path.Combine(baseDirectory, relativePath);
 		}
 		
+		#region Properties
 		public static bool FastTagging {
 			get {
-				return fastTagging;
+				return state.fastTagging;
 			}
 			set {
-				fastTagging = value;
+				state.fastTagging = value;
+				Save ();
 			}
 		}
 		
+		public static bool UseGameUnits {
+			get;
+			set;
+		}
 		
-		/* Properties */
-		public static bool useGameUnits = false;
+		public static string CurrentDatabase {
+			get {
+				return state.currentDatabase;
+			}
+			set {
+				state.currentDatabase = value;
+				Save ();
+			}
+		}
+		#endregion
 
+	}
+	
+	[Serializable]
+	public class ConfigState{
+		public bool fastTagging=false;
+		public string currentDatabase=Constants.DEFAULT_DB_NAME;
 	}
 }
 

@@ -187,7 +187,7 @@ namespace LongoMatch.Gui.Dialog
 			                FileChooserAction.Save,
 			                "gtk-cancel",ResponseType.Cancel,
 			                "gtk-save",ResponseType.Accept);
-			fChooser.SetCurrentFolder(Config.HomeDir());
+			fChooser.SetCurrentFolder(Config.HomeDir);
 			FileFilter filter = new FileFilter();
 			filter.Name = Constants.PROJECT_NAME;
 			filter.AddPattern(Constants.PROJECT_EXT);

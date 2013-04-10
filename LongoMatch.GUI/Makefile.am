@@ -29,6 +29,7 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TeamTaggerWidget.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.BusyDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.EditCategoryDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.EditPlayerDialog.cs \
@@ -88,6 +89,7 @@ SOURCES = \
 	Gui/Component/TimeScale.cs \
 	Gui/Dialog/About.cs \
 	Gui/Dialog/BusyDialog.cs \
+	Gui/Dialog/DatabasesManager.cs \
 	Gui/Dialog/DrawingTool.cs \
 	Gui/Dialog/EditCategoryDialog.cs \
 	Gui/Dialog/EditPlayerDialog.cs \
