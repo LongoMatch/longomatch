@@ -322,13 +322,24 @@ namespace LongoMatch.DB
 		
 		private void GetBackupDate () {
 			lastBackup = GetObject<BackupDate> ();
-			if (lastBackup == null)
+			if (lastBackup == null) {
 				lastBackup = new BackupDate {Date = DateTime.UtcNow};
+				UpdateBackupDate(true);
+			}
 			Log.Information("DB last backup: "+ lastBackup.Date.ToShortDateString());
 		}
 		
-		private void UpdateBackupDate () {
-			UpdateObject(lastBackup);
+		private void UpdateBackupDate (bool create) {
+			if (create) {
+			IObjectContainer db = Db4oFactory.OpenFile(file);
+				try	{
+					db.Store(lastBackup);
+				} finally {
+					db.Close();
+				}
+			} else {
+				UpdateObject(lastBackup);
+			}
 		}
 		
 		private T GetObject<T>() {
