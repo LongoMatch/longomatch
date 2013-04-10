@@ -387,10 +387,16 @@ namespace LongoMatch.DB
 			if (File.Exists(backupFilepath))
 				File.Delete(backupFilepath);
 
-			File.Move(file, backupFilepath);
-			Log.Information ("Created backup for database at ", backupFilename);
-			lastBackup = new BackupDate {Date = now};
-			UpdateBackupDate();
+			try {
+				File.Copy(file, backupFilepath);
+				Log.Information ("Created backup for database at ", backupFilename);
+				lastBackup = new BackupDate {Date = now};
+				UpdateBackupDate(false);
+			} catch (Exception ex) {
+				Log.Error("Could not create backup");
+				Log.Exception(ex);
+			}
+			
 		}
 
 		private IQuery GetQueryProjectById(IObjectContainer db, Guid id) {
