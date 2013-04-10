@@ -46,6 +46,7 @@ namespace LongoMatch.Gui.Dialog
 			this.visitorTeamTemplate = visitorTeamTemplate;
 			
 			taggerwidget1.SetData(play, localTeamTemplate.TeamName, visitorTeamTemplate.TeamName);
+			playersnotebook.Visible = false;
 			
 			/* Iterate over all subcategories, adding a widget only for the FastTag ones */
 			foreach (var subcat in play.Category.SubCategories) {
@@ -55,6 +56,8 @@ namespace LongoMatch.Gui.Dialog
 					var tagcat = subcat as TagSubCategory;
 					AddTagSubcategory(tagcat, play.Tags);
 				} else if (subcat is PlayerSubCategory) {
+					playersnotebook.Visible = false;
+					hbox1.SetChildPacking(tagsnotebook, false, false, 0, Gtk.PackType.Start);
 					var tagcat = subcat as PlayerSubCategory;
 					AddPlayerSubcategory(tagcat, play.Players);
 				} else if (subcat is TeamSubCategory) {

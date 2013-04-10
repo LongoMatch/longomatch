@@ -5303,7 +5303,7 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.TaggerDialog" design-size="620 278">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.TaggerDialog" design-size="636 278">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Tag play</property>
     <property name="Icon">stock:longomatch Menu</property>
@@ -5341,9 +5341,7 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
               </widget>
               <packing>
                 <property name="Position">0</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
+                <property name="AutoSize">False</property>
               </packing>
             </child>
             <child>
