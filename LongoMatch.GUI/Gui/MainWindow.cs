@@ -385,7 +385,6 @@ namespace LongoMatch.Gui
 				} else {
 					playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.PreviewCapturer;
 				}
-				TaggingViewAction.Active = true;
 			}
 			
 			openedProject = project;
