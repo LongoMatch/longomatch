@@ -27,6 +27,7 @@ using Mono.Unix;
 using LongoMatch.Interfaces;
 using LongoMatch.Gui.Component;
 using LongoMatch.Store.Templates;
+using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -135,8 +136,7 @@ namespace LongoMatch.Gui.Dialog
 				templatesWidget.Template = templatesProvider.Load(templateName); 
 			} catch (Exception e) {
 				Log.Exception (e);
-				MessagePopup.PopupMessage(this.Toplevel, Gtk.MessageType.Error,
-				                          "Error loading template");
+				MessagesHelpers.ErrorMessage(this, "Error loading template");
 			}
 		}
 		
@@ -163,15 +163,11 @@ namespace LongoMatch.Gui.Dialog
 		}
 
 		private void PromptForSave() {
-			MessageDialog mes = new MessageDialog(this,DialogFlags.Modal,
-			                                      MessageType.Question,
-			                                      ButtonsType.YesNo,
-			                                      Catalog.GetString("The template has been modified. " +
-			                                                        "Do you want to save it? "));
-			if(mes.Run() == (int)ResponseType.Yes) {
+			var msg = Catalog.GetString("The template has been modified. " +
+			                            "Do you want to save it? ");
+			if (MessagesHelpers.QuestionMessage (this, msg)) {
 				SaveTemplate();
 			}
-			mes.Destroy();
 		}
 
 		protected override void OnSavebuttonClicked(object sender, System.EventArgs e)
@@ -201,13 +197,13 @@ namespace LongoMatch.Gui.Dialog
 				name = ed.Text;
 				count = ed.Count;
 				if(name == "") {
-					MessagePopup.PopupMessage(ed, MessageType.Warning,
-					                          Catalog.GetString("You cannot create a template with a void name"));
+					MessagesHelpers.WarningMessage(ed,
+					                               Catalog.GetString("You cannot create a template with a void name"));
 					ed.Destroy();
 					return;
 				} else if (templatesProvider.Exists(name)) {
-					MessagePopup.PopupMessage(ed, MessageType.Warning,
-					                          Catalog.GetString("A template with this name already exists"));
+					MessagesHelpers.WarningMessage (ed,
+					                                Catalog.GetString("A template with this name already exists"));
 					ed.Destroy();
 					return;
 				}
@@ -227,8 +223,8 @@ namespace LongoMatch.Gui.Dialog
 		protected override void OnDeletebuttonClicked(object sender, System.EventArgs e)
 		{
 			if(templateName =="default") {
-				MessagePopup.PopupMessage(this,MessageType.Warning,
-				                          Catalog.GetString("You can't delete the 'default' template"));
+				MessagesHelpers.WarningMessage(this,
+				                               Catalog.GetString("You can't delete the 'default' template"));
 				return;
 			}
 

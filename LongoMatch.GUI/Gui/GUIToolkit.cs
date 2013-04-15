@@ -32,6 +32,7 @@ using LongoMatch.Gui.Popup;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
 using LongoMatch.Video.Utils;
+using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui
 {
@@ -65,53 +66,56 @@ namespace LongoMatch.Gui
 			set;
 		}
 		
-		public void InfoMessage(string message) {
-			MessagePopup.PopupMessage(mainWindow as Gtk.Widget, Gtk.MessageType.Info, message);
+		public void InfoMessage(string message, Widget parent=null) {
+			if (parent == null)
+				parent = mainWindow as Widget;
+			MessagesHelpers.InfoMessage(parent, message);
 		}
 		
-		public void ErrorMessage(string message) {
-			MessagePopup.PopupMessage(mainWindow as Gtk.Widget, Gtk.MessageType.Error, message);
+		public void ErrorMessage(string message, Widget parent=null) {
+			if (parent == null)
+				parent = mainWindow as Widget;
+			MessagesHelpers.ErrorMessage (parent, message);
 		}
 		
-		public void WarningMessage(string message) {
-			MessagePopup.PopupMessage(mainWindow as Gtk.Widget, Gtk.MessageType.Warning, message);
+		public void WarningMessage(string message, Widget parent=null) {
+			if (parent == null)
+				parent = mainWindow as Widget;
+			MessagesHelpers.WarningMessage (parent, message);
 		}
 		
-		public bool QuestionMessage(string question, string title) {
-			MessageDialog md = new MessageDialog(mainWindow as Gtk.Window, DialogFlags.Modal,
-				MessageType.Question, Gtk.ButtonsType.YesNo, question);
-			md.Icon = Stetic.IconLoader.LoadIcon(mainWindow as Widget, "longomatch", IconSize.Button);
-			var res = md.Run();
-			md.Destroy();
-			return (res == (int)ResponseType.Yes);
+		public bool QuestionMessage(string question, string title, Widget parent=null) {
+			if (parent == null)
+				parent = mainWindow as Widget;
+			return MessagesHelpers.QuestionMessage (parent, question, title);
 		}
 		
 		public string SaveFile(string title, string defaultName, string defaultFolder,
-			string filterName, string extensionFilter)
+			string filterName, string[] extensionFilter)
 		{
-			return FileChooser(title, defaultName, defaultFolder, filterName,
-				extensionFilter, FileChooserAction.Save);
+			return FileChooserHelper.SaveFile (mainWindow as Widget, title, defaultName,
+			                                   defaultFolder, filterName, extensionFilter);
 		}
 		
 		public string SelectFolder(string title, string defaultName, string defaultFolder,
-			string filterName, string extensionFilter)
+			string filterName, string[] extensionFilter)
 		{
-			return FileChooser(title, defaultName, defaultFolder, filterName,
-				extensionFilter, FileChooserAction.SelectFolder);
+			return FileChooserHelper.SelectFolder (mainWindow as Widget, title, defaultName,
+			                                       defaultFolder, filterName, extensionFilter);
 		}
 		
 		public string OpenFile(string title, string defaultName, string defaultFolder,
-			string filterName, string extensionFilter)
+			string filterName, string[] extensionFilter)
 		{
-			return FileChooser(title, defaultName, defaultFolder, filterName,
-				extensionFilter, FileChooserAction.Open);
+			return FileChooserHelper.OpenFile (mainWindow as Widget, title, defaultName,
+			                                   defaultFolder, filterName, extensionFilter);
 		}
 		
 		public List<string> OpenFiles(string title, string defaultName, string defaultFolder,
-			string filterName, string extensionFilter)
+			string filterName, string[] extensionFilter)
 		{
-			return MultiFileChooser(title, defaultName, defaultFolder, filterName,
-				extensionFilter, FileChooserAction.Open);
+			return FileChooserHelper.OpenFiles (mainWindow as Widget, title, defaultName,
+			                                    defaultFolder, filterName, extensionFilter);
 		}
 		
 		public List<EditionJob> ConfigureRenderingJob (IPlayList playlist)
@@ -339,54 +343,6 @@ namespace LongoMatch.Gui
 			return project;
 		}
 		
-		string  FileChooser(string title, string defaultName,
-		                    string defaultFolder, string filterName, string extensionFilter,
-		                    FileChooserAction action)
-		{
-			List<string> res = MultiFileChooser(title, defaultName, defaultFolder, filterName,
-			                              extensionFilter, action, false);
-			if (res.Count == 1)
-				return res[0];
-			return null;
-		}
-		
-		List<string>  MultiFileChooser(string title, string defaultName,
-		                               string defaultFolder, string filterName, string extensionFilter,
-		                               FileChooserAction action, bool allowMultiple=true)
-		{
-			FileChooserDialog fChooser;
-			FileFilter filter;
-			string button;
-			List<string> path;
-			
-			if (action == FileChooserAction.Save)
-				button = "gtk-save";
-			else
-				button = "gtk-open";
-			
-			fChooser = new FileChooserDialog(title, mainWindow as Gtk.Window, action,
-				"gtk-cancel",ResponseType.Cancel, button, ResponseType.Accept);
-				
-			fChooser.SelectMultiple = allowMultiple;
-			if (defaultFolder != null)
-				fChooser.SetCurrentFolder(defaultFolder);
-			if (defaultName != null)
-				fChooser.CurrentName = defaultName;
-			if (filterName != null) {
-				filter = new FileFilter();
-				filter.Name = filterName;
-				filter.AddPattern(extensionFilter);
-				fChooser.Filter = filter;
-			}
-			
-			if (fChooser.Run() != (int)ResponseType.Accept) 
-				path = new List<string>();
-			else
-				path =  new List<string>(fChooser.Filenames);
-			
-			fChooser.Destroy();
-			return path;
-		}
 	}
 }
 

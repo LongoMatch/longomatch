@@ -201,7 +201,7 @@ namespace LongoMatch.Services
 			
 			filename = guiToolkit.OpenFile(Catalog.GetString("Open playlist"), null, Config.PlayListDir,
 				Constants.PROJECT_NAME + Catalog.GetString("playlists"),
-				"*" + Constants.PLAYLIST_EXT);
+				new string [] {"*" + Constants.PLAYLIST_EXT});
 			if (filename != null)
 				Load(filename);
 		}
@@ -212,7 +212,7 @@ namespace LongoMatch.Services
 			
 			filename = guiToolkit.SaveFile(Catalog.GetString("New playlist"), null, Config.PlayListDir,
 				Constants.PROJECT_NAME + Catalog.GetString("playlists"),
-				"*" + Constants.PLAYLIST_EXT);
+				new string [] {"*" + Constants.PLAYLIST_EXT});
 
 			if (filename != null)
 				Load(filename);

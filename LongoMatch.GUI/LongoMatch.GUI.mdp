@@ -41,7 +41,6 @@
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/Win32CalendarDialog.cs" />
     <File subtype="Directory" buildaction="Compile" name="Gui/Popup" />
     <File subtype="Code" buildaction="Compile" name="Gui/Popup/CalendarPopup.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Popup/MessagePopup.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/TemplateEditorDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/PlayersListTreeWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/ProjectsManager.cs" />
@@ -146,7 +145,6 @@
     <File subtype="Directory" buildaction="Compile" name="." />
     <File subtype="Directory" buildaction="Compile" name=".." />
     <File subtype="Directory" buildaction="Compile" name="Gui" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Helpers.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Cairo.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/PlayersTagger.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlayersTagger.cs" />
@@ -161,6 +159,10 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/DatabasesManager.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Gui/Helpers" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Helpers/Misc.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Helpers/FileChooserHelper.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Helpers/MessagesHelpers.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

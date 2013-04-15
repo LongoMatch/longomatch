@@ -30,6 +30,7 @@ using LongoMatch.Store;
 using LongoMatch.Store.Templates;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Popup;
+using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
@@ -127,7 +128,7 @@ namespace LongoMatch.Gui.Component
 				
 			leadtimebutton.Value = cat.Start.Seconds;
 			lagtimebutton.Value = cat.Stop.Seconds;
-			colorbutton1.Color = Helpers.ToGdkColor(cat.Color);
+			colorbutton1.Color = Helpers.Misc.ToGdkColor(cat.Color);
 			sortmethodcombobox.Active = (int)cat.SortMethod;
 			
 			if(cat.HotKey.Defined)
@@ -176,7 +177,7 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnColorbutton1ColorSet(object sender, System.EventArgs e)
 		{
 			if(cat != null)
-				cat.Color= Helpers.ToDrawingColor(colorbutton1.Color);
+				cat.Color= Helpers.Misc.ToDrawingColor(colorbutton1.Color);
 		}
 
 		protected virtual void OnLeadTimeChanged(object sender, System.EventArgs e)
@@ -206,11 +207,11 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnSubcategoriesDeleted (List<ISubCategory> subcats)
 		{
 			if (Project != null) {
-				int ret = MessagePopup.PopupMessage(this, MessageType.Question,
-				                                    Catalog.GetString("If you delete this subcategory you will loose" +
-				                                    	"all the tags associated with it. Do you want to proceed?"));
-				if (ret == (int)ResponseType.No)
+				var msg = Catalog.GetString("If you delete this subcategory you will loose" +
+				                            "all the tags associated with it. Do you want to proceed?");
+				if (!MessagesHelpers.QuestionMessage (this, msg)) {
 					return;
+				}
 				Project.DeleteSubcategoryTags(Category, subcats);
 			}
 			Category.SubCategories.RemoveAll(s => subcats.Contains(s));

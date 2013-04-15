@@ -7,6 +7,7 @@
   <import>
     <widget-library name="../../bin/LongoMatch.GUI.Multimedia.dll" />
     <widget-library name="../../bin/LongoMatch.Multimedia.dll" />
+    <widget-library name="../../bin/LongoMatch.dll" />
     <widget-library name="../../bin/LongoMatch.Gui.dll" internal="true" />
   </import>
   <icon-factory>
@@ -2816,7 +2817,7 @@ new one.</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.EntryDialog" design-size="339 178">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.EntryDialog" design-size="339 195">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Select template name</property>
     <property name="Icon">stock:longomatch Dialog</property>

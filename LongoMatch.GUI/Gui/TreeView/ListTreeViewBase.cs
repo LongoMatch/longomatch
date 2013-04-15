@@ -26,6 +26,7 @@ using Image = LongoMatch.Common.Image;
 using LongoMatch.Common;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
+using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
@@ -215,7 +216,7 @@ namespace LongoMatch.Gui.Component
 				Image img = (item as Play).Miniature;
 				c.Pixbuf = img != null ? img.Value : null;
 				if(Colors) {
-					c.CellBackgroundGdk = Helpers.ToGdkColor((item as Play).Category.Color);
+					c.CellBackgroundGdk = Helpers.Misc.ToGdkColor((item as Play).Category.Color);
 				} else {
 					c.CellBackground = "white";
 				}
@@ -249,7 +250,7 @@ namespace LongoMatch.Gui.Component
 			if(o is Play) {
 				var mtn = o as Play;
 				if(Colors) {
-					Color col = Helpers.ToGdkColor(mtn.Category.Color);
+					Color col = Helpers.Misc.ToGdkColor(mtn.Category.Color);
 					c.CellBackgroundGdk = col;
 					c.BackgroundGdk = col;
 				} else {
@@ -330,14 +331,8 @@ namespace LongoMatch.Gui.Component
 		}
 
 		protected void OnDeleteKeyFrame(object obj, EventArgs args) {
-			MessageDialog md = new MessageDialog((Gtk.Window)Toplevel,
-			                                     DialogFlags.Modal,
-			                                     MessageType.Question,
-			                                     ButtonsType.YesNo,
-			                                     false,
-			                                     Catalog.GetString("Do you want to delete the key frame for this play?")
-			                                    );
-			if(md.Run() == (int)ResponseType.Yes) {
+			var msg = Catalog.GetString("Do you want to delete the key frame for this play?");
+			if (MessagesHelpers.QuestionMessage (Toplevel, msg)) {
 				TreePath[] paths = Selection.GetSelectedRows();
 				for(int i=0; i<paths.Length; i++) {
 					Play tNode = (Play)GetValueFromPath(paths[i]);
@@ -346,7 +341,6 @@ namespace LongoMatch.Gui.Component
 				// Refresh the thumbnails
 				QueueDraw();
 			}
-			md.Destroy();
 		}
 
 		protected virtual void OnEdit(object obj, EventArgs args) {

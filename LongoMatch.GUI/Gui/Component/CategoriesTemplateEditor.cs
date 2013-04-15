@@ -24,6 +24,7 @@ using LongoMatch.Gui.Dialog;
 using LongoMatch.Interfaces;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
+using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
@@ -75,24 +76,21 @@ namespace LongoMatch.Gui.Component
 		
 		protected override void RemoveSelected (){
 			if(Project != null) {
-				MessageDialog dialog = new MessageDialog((Gtk.Window)this.Toplevel,DialogFlags.Modal,MessageType.Question,
-				                                         ButtonsType.YesNo,true,
-				                                         Catalog.GetString("You are about to delete a category and all the plays added to this category. Do you want to proceed?"));
-				if(dialog.Run() == (int)ResponseType.Yes) {
+				var msg = Catalog.GetString("You are about to delete a category and all the plays added to this category. Do you want to proceed?");
+				if (MessagesHelpers.QuestionMessage (this, msg)) {
 					try {
 						foreach(var cat in selected)
 							Project.RemoveCategory (cat);
 					} catch {
-						MessagePopup.PopupMessage(this,MessageType.Warning,
-						                          Catalog.GetString("A template needs at least one category"));
+						MessagesHelpers.WarningMessage (this,
+						                                Catalog.GetString("A template needs at least one category"));
 					}
 				}
-				dialog.Destroy();
 			} else {
 				foreach(Category cat in selected) {
 					if(template.Count == 1) {
-						MessagePopup.PopupMessage(this,MessageType.Warning,
-						                          Catalog.GetString("A template needs at least one category"));
+						MessagesHelpers.WarningMessage (this,
+						                                Catalog.GetString("A template needs at least one category"));
 					} else
 						template.Remove(cat);
 				}

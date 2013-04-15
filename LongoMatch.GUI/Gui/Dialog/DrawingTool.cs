@@ -25,6 +25,7 @@ using Image = LongoMatch.Common.Image;
 using LongoMatch.Common;
 using LongoMatch.Gui.Component;
 using LongoMatch.Store;
+using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -71,7 +72,7 @@ namespace LongoMatch.Gui.Dialog
 
 		protected virtual void OnDrawingtoolbox1ColorChanged(System.Drawing.Color color)
 		{
-			drawingwidget1.LineColor = Helpers.ToGdkColor(color);
+			drawingwidget1.LineColor = Helpers.Misc.ToGdkColor(color);
 		}
 
 		protected virtual void OnDrawingtoolbox1VisibilityChanged(bool visible)
@@ -97,27 +98,14 @@ namespace LongoMatch.Gui.Dialog
 		protected virtual void OnSavebuttonClicked(object sender, System.EventArgs e)
 		{
 			string filename;
-			FileChooserDialog fChooser;
-			FileFilter filter = new FileFilter();
-			filter.Name = "PNG Images";
-			filter.AddPattern("*.png");
-
-			fChooser = new FileChooserDialog(Catalog.GetString("Save File as..."),
-			                                 (Gtk.Window)this.Toplevel,
-			                                 FileChooserAction.Save,
-			                                 "gtk-cancel",ResponseType.Cancel,
-			                                 "gtk-save",ResponseType.Accept);
-			fChooser.SetCurrentFolder(Config.SnapshotsDir);
-			fChooser.Filter = filter;
-			fChooser.DoOverwriteConfirmation = true;
-
-			if(fChooser.Run() == (int)ResponseType.Accept) {
-				filename = fChooser.Filename;
+			
+			filename = FileChooserHelper.OpenFile (this, Catalog.GetString("Save File as..."),
+			                                       null, Config.SnapshotsDir, "PNG Images", new string[] {"*.png"});
+			if (filename != null) {
 				if(System.IO.Path.GetExtension(filename) != "png")
 					filename += ".png";
 				drawingwidget1.SaveAll(filename);
 			}
-			fChooser.Destroy();
 		}
 
 		protected virtual void OnSavetoprojectbuttonClicked(object sender, System.EventArgs e)

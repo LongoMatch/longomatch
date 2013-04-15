@@ -34,6 +34,7 @@ using LongoMatch.Common;
 using LongoMatch.Video;
 using LongoMatch.Multimedia;
 using LongoMatch.Multimedia.Utils;
+using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch
 
@@ -97,10 +98,10 @@ namespace LongoMatch
 			}
 			Log.Exception(ex);
 			//TODO Add bug reports link
-			MessagePopup.PopupMessage(null, MessageType.Error,
-			                          Catalog.GetString("The application has finished with an unexpected error.")+"\n"+
-			                          Catalog.GetString("A log has been saved at: ")+logFile+ "\n"+
-			                          Catalog.GetString("Please, fill a bug report "));
+			MessagesHelpers.ErrorMessage (null,
+			                              Catalog.GetString("The application has finished with an unexpected error.")+"\n"+
+			                              Catalog.GetString("A log has been saved at: ")+logFile+ "\n"+
+			                              Catalog.GetString("Please, fill a bug report "));
 
 			Application.Quit();
 		}

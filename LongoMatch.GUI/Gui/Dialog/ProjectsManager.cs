@@ -25,6 +25,7 @@ using LongoMatch.Common;
 using LongoMatch.Interfaces;
 using LongoMatch.Store;
 using Mono.Unix;
+using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -65,14 +66,11 @@ namespace LongoMatch.Gui.Dialog
 		}
 
 		private void PromptToSaveEditedProject() {
-			MessageDialog md = new MessageDialog((Window)this.Toplevel,DialogFlags.Modal,
-			                                     MessageType.Question, ButtonsType.YesNo,
-			                                     Catalog.GetString("The Project has been edited, do you want to save the changes?"));
-			if(md.Run() == (int)ResponseType.Yes) {
+			var msg = Catalog.GetString("The Project has been edited, do you want to save the changes?");
+			if (MessagesHelpers.QuestionMessage (this, msg)) {
 				SaveProject();
 				projectdetails.Edited=false;
 			}
-			md.Destroy();
 		}
 
 		private void SaveProject() {
@@ -97,21 +95,16 @@ namespace LongoMatch.Gui.Dialog
 			foreach(ProjectDescription selectedProject in selectedProjects) {
 				if(openedProject != null &&
 				                selectedProject.File.FilePath == openedProject.Description.File.FilePath) {
-					MessagePopup.PopupMessage(this, MessageType.Warning,
+					MessagesHelpers.WarningMessage (this,
 					                          Catalog.GetString("This Project is actually in use.")+"\n"+
 					                          Catalog.GetString("Close it first to allow its removal from the database"));
 					continue;
 				}
-				MessageDialog md = new MessageDialog(this,DialogFlags.Modal,
-				                                     MessageType.Question,
-				                                     ButtonsType.YesNo,
-				                                     Catalog.GetString("Do you really want to delete:")+
-				                                     "\n"+selectedProject.Title);
-				if(md.Run()== (int)ResponseType.Yes) {
+				var msg = Catalog.GetString("Do you really want to delete:") + "\n" + selectedProject.Title;
+				if (MessagesHelpers.QuestionMessage (this, msg)) {
 					DB.RemoveProject(selectedProject.UUID);
 					deletedProjects.Add(selectedProject);
 				}
-				md.Destroy();
 			}
 			projectlistwidget1.RemoveProjects(deletedProjects);
 			Clear();
@@ -162,8 +155,8 @@ namespace LongoMatch.Gui.Dialog
 
 			if(openedProject != null &&
 			                project.File.FilePath == openedProject.Description.File.FilePath) {
-				MessagePopup.PopupMessage(this, MessageType.Warning,
-				                          Catalog.GetString("The Project you are trying to load is actually in use.")+"\n" +Catalog.GetString("Close it first to edit it"));
+				MessagesHelpers.WarningMessage (this,
+				                                Catalog.GetString("The Project you are trying to load is actually in use.")+"\n" +Catalog.GetString("Close it first to edit it"));
 				Clear();
 			}
 			else {

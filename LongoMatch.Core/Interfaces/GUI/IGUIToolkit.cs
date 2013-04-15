@@ -16,12 +16,14 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
+using Gtk;
 using System.Collections.Generic;
 
 using LongoMatch.Interfaces;
 using LongoMatch.Common;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
+using Image = LongoMatch.Common.Image;
 
 namespace LongoMatch.Interfaces.GUI
 {
@@ -31,20 +33,20 @@ namespace LongoMatch.Interfaces.GUI
 		Version Version {get;}
 	
 		/* Messages */
-		void InfoMessage(string message);
-		void WarningMessage(string message);
-		void ErrorMessage(string message);
-		bool QuestionMessage(string message, string title);
+		void InfoMessage(string message, Widget parent=null);
+		void WarningMessage(string message, Widget parent=null);
+		void ErrorMessage(string message, Widget parent=null);
+		bool QuestionMessage(string message, string title, Widget parent=null);
 		
 		/* Files/Folders IO */
 		string SaveFile(string title, string defaultName, string defaultFolder,
-			string filterName, string extensionFilter);
+			string filterName, string[] extensionFilter);
 		string OpenFile(string title, string defaultName, string defaultFolder,
-			string filterName, string extensionFilter);
+			string filterName, string[] extensionFilter);
 		List<string> OpenFiles(string title, string defaultName, string defaultFolder,
-			string filterName, string extensionFilter);
+			string filterName, string[] extensionFilter);
 		string SelectFolder(string title, string defaultName, string defaultFolder,
-			string filterName, string extensionFilter);
+			string filterName, string[] extensionFilter);
 			
 		IBusyDialog BusyDialog(string message);
 			

@@ -127,8 +127,8 @@ namespace LongoMatch.Services
 
 			Log.Debug("Importing project");
 			/* Show a file chooser dialog to select the file to import */
-			fileName = guiToolkit.OpenFile(name, null,
-				Config.HomeDir, filterName, filter);
+			fileName = guiToolkit.OpenFile(name, null, Config.HomeDir, filterName,
+			                               new string[] {filter});
 				
 			if(fileName == null)
 				return;
@@ -389,7 +389,7 @@ namespace LongoMatch.Services
 			}
 			
 			string filename = guiToolkit.SaveFile(Catalog.GetString("Save project"), null,
-				Config.HomeDir, Constants.PROJECT_NAME, Constants.PROJECT_EXT);
+				Config.HomeDir, Constants.PROJECT_NAME, new string[] {Constants.PROJECT_EXT});
 			
 			if (filename == null)
 				return;

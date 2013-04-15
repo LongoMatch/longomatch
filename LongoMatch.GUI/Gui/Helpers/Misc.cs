@@ -23,9 +23,9 @@ using Mono.Unix;
 
 using LongoMatch.Common;
 
-namespace LongoMatch.Gui
+namespace LongoMatch.Gui.Helpers
 {
-	public class Helpers
+	public class Misc
 	{
 		public static FileFilter GetFileFilter() {
 			FileFilter filter = new FileFilter();

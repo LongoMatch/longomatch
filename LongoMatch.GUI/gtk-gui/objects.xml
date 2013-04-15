@@ -118,15 +118,6 @@
     </itemgroups>
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Base.TemplatesEditorBase" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="TemplatesEditorBase Properties">
-        <property name="CanExport" />
-        <property name="Edited" />
-      </itemgroup>
-    </itemgroups>
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Component.GameUnitTimeScale" palette-category="LongoMatch" allow-children="false" base-type="Gtk.DrawingArea">
     <itemgroups>
       <itemgroup label="TimeScaleBase[LongoMatch.Store.TimelineNode] Properties">
@@ -175,14 +166,6 @@
   <object type="LongoMatch.Gui.Component.TaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.CategoryProperties" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="CategoryProperties Signals">
-        <signal name="HotKeyChanged" />
-      </itemgroup>
-    </signals>
   </object>
   <object type="LongoMatch.Gui.Component.PlayersTagger" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
@@ -344,5 +327,22 @@
         <signal name="EditedEvent" />
       </itemgroup>
     </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.CategoryProperties" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="CategoryProperties Signals">
+        <signal name="HotKeyChanged" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Base.TemplatesEditorBase" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="TemplatesEditorBase Properties">
+        <property name="CanExport" />
+        <property name="Edited" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
   </object>
 </objects>

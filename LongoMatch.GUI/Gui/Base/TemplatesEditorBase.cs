@@ -24,6 +24,7 @@ using Mono.Unix;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Interfaces;
 using LongoMatch.Store;
+using LongoMatch.Gui.Helpers;
 
 
 namespace LongoMatch.Gui.Base
@@ -178,21 +179,14 @@ namespace LongoMatch.Gui.Base
 			dialog.Text = Catalog.GetString("New template");
 			if(dialog.Run() == (int)ResponseType.Ok) {
 				if(dialog.Text == "")
-					MessagePopup.PopupMessage(dialog, MessageType.Error,
-					                          Catalog.GetString("The template name is void."));
+					MessagesHelpers.ErrorMessage (dialog, Catalog.GetString("The template name is void."));
 				else if(provider.Exists(dialog.Text)) {
-					MessageDialog md = new MessageDialog(null,
-					                                     DialogFlags.Modal,
-					                                     MessageType.Question,
-					                                     Gtk.ButtonsType.YesNo,
-					                                     Catalog.GetString("The template already exists. " +
-					                                                     "Do you want to overwrite it ?")
-					                                    );
-					if(md.Run() == (int)ResponseType.Yes){
+					var msg = Catalog.GetString("The template already exists. " +
+					                            "Do you want to overwrite it ?");
+					if (MessagesHelpers.QuestionMessage (this, msg)) {
 						Template.Name = dialog.Text;
 						provider.Update (Template);
 					}
-					md.Destroy();
 				}
 				else {
 					Template.Name = dialog.Text;

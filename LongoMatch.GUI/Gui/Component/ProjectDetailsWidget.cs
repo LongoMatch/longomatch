@@ -30,6 +30,7 @@ using LongoMatch.Store;
 using LongoMatch.Store.Templates;
 using LongoMatch.Video.Utils;
 using Mono.Unix;
+using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
@@ -517,8 +518,7 @@ namespace LongoMatch.Gui.Component
 						fileEntry.Text = filename;
 					}
 					catch(Exception ex) {
-						MessagePopup.PopupMessage(this, MessageType.Error,
-						                          ex.Message);
+						MessagesHelpers.ErrorMessage (this, ex.Message);
 					}
 					finally {
 						md.Destroy();

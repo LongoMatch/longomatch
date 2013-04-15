@@ -30,6 +30,7 @@ using LongoMatch.Gui.Dialog;
 using LongoMatch.Interfaces;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
+using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
@@ -115,7 +116,7 @@ namespace LongoMatch.Gui.Component
 		{
 			Pixbuf shield;
 			
-			shield = Helpers.OpenImage((Gtk.Window)this.Toplevel);
+			shield = Helpers.Misc.OpenImage((Gtk.Window)this.Toplevel);
 			if (shield != null) {
 				Image img = new Image(shield);
 				img.Scale();
@@ -146,27 +147,24 @@ namespace LongoMatch.Gui.Component
 		
 		protected override void RemoveSelected (){
 			if(Project != null) {
-				MessageDialog dialog = new MessageDialog((Gtk.Window)this.Toplevel,DialogFlags.Modal,MessageType.Question,
-				                                         ButtonsType.YesNo,true,
-				                                         Catalog.GetString("You are about to delete a player and all " +
-				                                         	"its tags. Do you want to proceed?"));
-				if(dialog.Run() == (int)ResponseType.Yes) {
+				var msg = Catalog.GetString("You are about to delete a player and all " +
+				                            "its tags. Do you want to proceed?");
+				if (MessagesHelpers.QuestionMessage (this, msg)) {
 					try {
 						foreach(var player in selected)
 							Project.RemovePlayer (template, player);
 					} catch {
-						MessagePopup.PopupMessage(this,MessageType.Warning,
-						                          Catalog.GetString("A template needs at least one category"));
+						MessagesHelpers.WarningMessage (this,
+						                                Catalog.GetString("A template needs at least one category"));
 					}
 				}
-				dialog.Destroy();
 			} else {
 				try {
 					foreach(var player in selected)
 					Template.Remove(player);
 				} catch {
-					MessagePopup.PopupMessage(this,MessageType.Warning,
-					                          Catalog.GetString("A template needs at least one category"));
+					MessagesHelpers.WarningMessage (this,
+					                                Catalog.GetString("A template needs at least one category"));
 				}
 			}
 			base.RemoveSelected();

@@ -116,7 +116,7 @@ namespace LongoMatch.Gui.Component
 		{
 			Category tNode = (Category) model.GetValue(iter, 0);
 
-			(cell as Gtk.CellRendererText).CellBackgroundGdk = Helpers.ToGdkColor(tNode.Color);
+			(cell as Gtk.CellRendererText).CellBackgroundGdk = Helpers.Misc.ToGdkColor(tNode.Color);
 		}
 
 		private void RenderHotKey(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)

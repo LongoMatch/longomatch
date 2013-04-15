@@ -35,6 +35,7 @@ using LongoMatch.Store;
 using LongoMatch.Store.Templates;
 using LongoMatch.Video.Common;
 using LongoMatch.Gui.Component;
+using LongoMatch.Gui.Helpers;
 
 
 namespace LongoMatch.Gui
@@ -733,7 +734,7 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnMultimediaError(object o, string message)
 		{
-			MessagePopup.PopupMessage(this, MessageType.Error,
+			MessagesHelpers.ErrorMessage (this,
 				Catalog.GetString("The following error happened and" +
 				" the current project will be closed:")+"\n" + message);
 			EmitCloseOpenedProject(true);
@@ -926,7 +927,6 @@ namespace LongoMatch.Gui
 			if (KeyPressed != null)
 				KeyPressed(sender, key, modifier);
 		}
-
 		#endregion
 	}
 }

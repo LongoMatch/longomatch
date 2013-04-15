@@ -112,8 +112,10 @@ SOURCES = \
 	Gui/Dialog/VideoEditionProperties.cs \
 	Gui/Dialog/VideoConversionTool.cs \
 	Gui/Dialog/Win32CalendarDialog.cs \
+	Gui/Helpers/FileChooserHelper.cs \
+	Gui/Helpers/MessagesHelpers.cs \
+	Gui/Helpers/Misc.cs \
 	Gui/Popup/CalendarPopup.cs \
-	Gui/Popup/MessagePopup.cs \
 	Gui/TransparentDrawingArea.cs \
 	Gui/TreeView/CategoriesFilterTreeView.cs \
 	Gui/TreeView/CategoriesTreeView.cs \
@@ -128,7 +130,6 @@ SOURCES = \
 	Gui/TreeView/SubCategoriesTreeView.cs \
 	Gui/Cairo.cs \
 	Gui/GUIToolkit.cs \
-	Gui/Helpers.cs \
 	Gui/MainWindow.cs
 
 RESOURCES = \
