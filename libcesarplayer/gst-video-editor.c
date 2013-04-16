@@ -942,10 +942,6 @@ gst_video_editor_add_image_segment (GstVideoEditor * gve, gchar * file,
   GstState cur_state;
   GstElement *gnl_filesource = NULL;
   GstElement *imagesourcebin = NULL;
-  GstElement *filesource = NULL;
-  GstElement *decoder = NULL;
-  GstElement *colorspace = NULL;
-  GstElement *imagefreeze = NULL;
   GstElement *audiotestsrc = NULL;
   GstCaps *filter = NULL;
   gchar *element_name = NULL;
