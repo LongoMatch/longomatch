@@ -261,7 +261,7 @@ namespace LongoMatch.Gui.Component
 			} else if(o is Player) {
 				c.Background = "white";
 				c.CellBackground = "white";
-				c.Markup = String.Format("{0} ({1})", (o as Player).Name, modelFilter.IterNChildren(iter));
+				c.Markup = String.Format("{0} ({1})", (o as Player).ToString(), modelFilter.IterNChildren(iter));
 			} else if(o is Category) {
 				c.Background = "white";
 				c.CellBackground = "white";
