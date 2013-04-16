@@ -145,10 +145,10 @@ namespace LongoMatch.Services
 			
 			/* Add the new created play to the project and update the GUI*/
 			var play = openedProject.AddPlay(category, start, stop,miniature);
-			mainWindow.AddPlay(play);
 			/* Tag subcategories of the new play */
 			if (!Config.FastTagging)
 				LaunchPlayTagger(play, false);
+			mainWindow.AddPlay(play);
 			if (projectType == ProjectType.FileProject) {
 				player.Play();
 			}
