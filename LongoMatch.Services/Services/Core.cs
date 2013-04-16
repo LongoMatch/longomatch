@@ -151,9 +151,9 @@ namespace LongoMatch.Services
 			
 			eManager.OpenedProject = project;
 			eManager.OpenedProjectType = projectType;
-			
 			guManager.OpenedProject = project;
 			plManager.OpenedProject = project;
+			dbManager.OpenedProject = project;
 		}
 		
 		private static void SetupBaseDir() {

@@ -23,6 +23,7 @@ using Mono.Unix;
 
 using LongoMatch.Interfaces;
 using LongoMatch.Interfaces.GUI;
+using LongoMatch.Store;
 
 namespace LongoMatch.DB
 {
@@ -39,6 +40,11 @@ namespace LongoMatch.DB
 			this.guiToolkit = guiToolkit;
 			ConnectSignals ();
 			FindDBS();
+		}
+		
+		public Project OpenedProject {
+			get;
+			set;
 		}
 		
 		public void SetActiveByName (string name) {
@@ -106,7 +112,14 @@ namespace LongoMatch.DB
 
 		void ConnectSignals ()
 		{
-			guiToolkit.MainWindow.ManageDatabasesEvent += () => {guiToolkit.OpenDatabasesManager (this);};
+			guiToolkit.MainWindow.ManageDatabasesEvent += () => {
+				if (OpenedProject != null) {
+					var msg = Catalog.GetString("Close the current project to open the database manager");
+					guiToolkit.ErrorMessage (msg);
+				} else {
+					guiToolkit.OpenDatabasesManager (this);
+				}
+			};
 		}
 		
 		void FindDBS (){
