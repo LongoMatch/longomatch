@@ -489,16 +489,16 @@ namespace LongoMatch.Gui
 			//Console.WriteLine ("Current Time:{0}\n Length:{1}\n",currentTime, streamLength);
 			if(length != streamLength) {
 				length = streamLength;
-				slength = TimeString.MSecondsToSecondsString(length);
+				slength = TimeString.SecondsToMSecondsString(length);
 			}
 
 			if(InSegment()) {
 				currentTime -= segmentStartTime;
 				currentposition = (float)currentTime/(float)(segmentStopTime-segmentStartTime);
-				slength = TimeString.MSecondsToSecondsString(segmentStopTime-segmentStartTime);
+				slength = TimeString.MSecondsToMSecondsString(segmentStopTime-segmentStartTime);
 			}
 
-			timelabel.Text = TimeString.MSecondsToSecondsString(currentTime) + "/" + slength;
+			timelabel.Text = TimeString.MSecondsToMSecondsString(currentTime) + "/" + slength;
 			timescale.Value = currentposition;
 			if(Tick != null)
 				Tick(o, args.CurrentTime, args.StreamLength, args.CurrentPosition, args.Seekable);
