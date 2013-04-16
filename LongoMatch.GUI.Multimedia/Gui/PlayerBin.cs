@@ -489,7 +489,7 @@ namespace LongoMatch.Gui
 			//Console.WriteLine ("Current Time:{0}\n Length:{1}\n",currentTime, streamLength);
 			if(length != streamLength) {
 				length = streamLength;
-				slength = TimeString.SecondsToMSecondsString(length);
+				slength = TimeString.MSecondsToSecondsString(length);
 			}
 
 			if(InSegment()) {
