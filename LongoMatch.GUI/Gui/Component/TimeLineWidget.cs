@@ -26,6 +26,7 @@ using LongoMatch.Gui.Base;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
+using LongoMatch.Common;
 
 namespace LongoMatch.Gui.Component {
 
@@ -42,42 +43,41 @@ namespace LongoMatch.Gui.Component {
 		public TimeLineWidget(): base()
 		{
 		}
-
-		public Project Project {
-			set {
-				ResetGui();
-
-				if(value == null) {
-					categories = null;
-					tsList.Clear();
-					loaded = false;
-					return;
-				}
-				loaded = true;
-				categories = value.Categories;
-				tsList.Clear(); 
-				frames = value.Description.File.GetFrames();
-
-				cs.Categories = categories;
-				cs.Show();
-
-				tr.Frames = frames;
-				tr.FrameRate = value.Description.File.Fps;
-				tr.Show();
-
-				foreach(Category cat in  categories) {
-					List<Play> playsList = value.PlaysInCategory(cat);
-					TimeScale ts = new TimeScale(cat, playsList,frames);
-					tsList[cat] = ts;
-					ts.TimeNodeChanged += new TimeNodeChangedHandler(OnTimeNodeChanged);
-					ts.TimeNodeSelected += new PlaySelectedHandler(OnTimeNodeSelected);
-					ts.TimeNodeDeleted += new PlaysDeletedHandler(OnTimeNodeDeleted);
-					ts.NewMarkAtFrameEvent += new NewTagAtFrameHandler(OnNewMark);
-					TimelineBox.PackStart(ts,false,true,0);
-					ts.Show();
-				}
-				SetPixelRatio(3);
+		
+		public void SetProject (Project project, PlaysFilter filter) {
+			ResetGui();
+			
+			if(project == null) {
+				categories = null;
+				tsList.Clear();
+				loaded = false;
+				return;
 			}
+			loaded = true;
+			categories = project.Categories;
+			tsList.Clear(); 
+			frames = project.Description.File.GetFrames();
+			
+			cs.Categories = categories;
+			cs.Filter = filter;
+			cs.Show();
+			
+			tr.Frames = frames;
+			tr.FrameRate = project.Description.File.Fps;
+			tr.Show();
+			
+			foreach(Category cat in  categories) {
+				List<Play> playsList = project.PlaysInCategory(cat);
+				TimeScale ts = new TimeScale(cat, playsList, frames, filter);
+				tsList[cat] = ts;
+				ts.TimeNodeChanged += new TimeNodeChangedHandler(OnTimeNodeChanged);
+				ts.TimeNodeSelected += new PlaySelectedHandler(OnTimeNodeSelected);
+				ts.TimeNodeDeleted += new PlaysDeletedHandler(OnTimeNodeDeleted);
+				ts.NewMarkAtFrameEvent += new NewTagAtFrameHandler(OnNewMark);
+				TimelineBox.PackStart(ts,false,true,0);
+				ts.Show();
+			}
+			SetPixelRatio(3);
 		}
 
 		public void AddPlay(Play play) {

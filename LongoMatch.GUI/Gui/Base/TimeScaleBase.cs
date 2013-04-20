@@ -46,6 +46,7 @@ namespace LongoMatch.Gui.Base
 
 		Cairo.Color color;
 		List<T> list;
+		PlaysFilter filter;
 
 		T candidateTN;
 		bool candidateStart;
@@ -64,10 +65,11 @@ namespace LongoMatch.Gui.Base
 		protected string elementName = "";
 		protected int cursorFrame;
 
-		public TimeScaleBase(List<T> list, uint frames)
+		public TimeScaleBase(List<T> list, uint frames, PlaysFilter filter = null)
 		{
 			this.frames = frames;
 			this.list = list;
+			this.filter = filter;
 			this.color = new Cairo.Color(0, 0, 1);
 			this.color.A = ALPHA;
 			HeightRequest= SECTION_HEIGHT;
@@ -163,6 +165,10 @@ namespace LongoMatch.Gui.Base
 				g.Operator = Operator.Over;
 				
 				foreach(T tn in list) {
+					if (filter != null && !filter.IsVisible (tn)) {
+						continue;
+					}
+					
 					if(!tn.Equals(selected)) {
 						Cairo.Color borderColor = new Cairo.Color(color.R+0.1, color.G+0.1,color.B+0.1, 1);
 						CairoUtils.DrawRoundedRectangle(g,tn.StartFrame/pixelRatio,3,
@@ -209,6 +215,9 @@ namespace LongoMatch.Gui.Base
 
 		void DrawTimeNodesName() {
 			foreach(T tn in list) {
+				if (filter != null && !filter.IsVisible (tn)) {
+					continue;
+				}
 				layout.Width = Pango.Units.FromPixels((int)(tn.TotalFrames/pixelRatio));
 				layout.SetMarkup(tn.Name);
 				GdkWindow.DrawLayout(Style.TextGC(StateType.Normal),

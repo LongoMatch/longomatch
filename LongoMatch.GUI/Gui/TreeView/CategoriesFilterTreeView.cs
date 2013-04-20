@@ -64,8 +64,8 @@ namespace LongoMatch.Gui.Component
 			Model = store;
 		}
 		
-		protected override void UpdateSelection(TreeIter iter, bool active) {
-			TreeIter child;
+		void UpdateSelectionPriv(TreeIter iter, bool active, bool checkParents=true, bool recurse=true) {
+			TreeIter child, parent;
 			
 			object o = store.GetValue(iter, 0);
 			
@@ -78,13 +78,28 @@ namespace LongoMatch.Gui.Component
 			}
 			store.SetValue(iter, 1, active);
 			
-			/* Check/Uncheck all children */
-			store.IterChildren(out child, iter);
-			while (store.IterIsValid(child)) {
-				UpdateSelection(child, active);
-				store.IterNext(ref child);
+			/* Check its parents */
+			if (active && checkParents) {
+				if (store.IterParent(out parent, iter)) {
+					UpdateSelectionPriv (parent, active, true, false);
+				}
 			}
-			filter.Update();
+			
+			/* Check/Uncheck all children */
+			if (recurse) {
+				store.IterChildren(out child, iter);
+				while (store.IterIsValid(child)) {
+					UpdateSelectionPriv (child, active, false, true);
+					store.IterNext(ref child);
+				}
+			}
+			
+			if (recurse && checkParents)
+				filter.Update();
+		}
+		
+		protected override void UpdateSelection(TreeIter iter, bool active) {
+			UpdateSelectionPriv (iter, active, true, true);
 		}
  
 		protected override void RenderColumn (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)

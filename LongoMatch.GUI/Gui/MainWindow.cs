@@ -378,7 +378,7 @@ namespace LongoMatch.Gui
 				Title = System.IO.Path.GetFileNameWithoutExtension(desc.File.FilePath) +
 				        " - " + Constants.SOFTWARE_NAME;
 				playercapturer.LogoMode = false;
-				timeline.Project = project;
+				timeline.SetProject (project, filter);
 				guTimeline.Project = project;
 
 			} else {

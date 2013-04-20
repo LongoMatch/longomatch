@@ -34,7 +34,8 @@ namespace LongoMatch.Gui.Component
 		private const int LINE_WIDTH = 2;
 		private double scroll;
 		Pango.Layout layout;
-		Dictionary<Label, Gdk.Color> labelsDict;
+		Dictionary<Label, Category> labelsDict;
+		PlaysFilter filter;
 
 		[System.ComponentModel.Category("LongoMatch")]
 		[System.ComponentModel.ToolboxItem(true)]
@@ -43,14 +44,14 @@ namespace LongoMatch.Gui.Component
 			layout =  new Pango.Layout(PangoContext);
 			layout.Wrap = Pango.WrapMode.Char;
 			layout.Alignment = Pango.Alignment.Left;
-			labelsDict = new Dictionary<Label, Gdk.Color> ();
+			labelsDict = new Dictionary<Label, Category> ();
 		}
 
 		public List<string> Labels {
 			set {
 				labelsDict.Clear();
 				foreach (String label in value)
-					labelsDict.Add(new Label(label), Gdk.Color.Zero);
+					labelsDict.Add(new Label(label), null);
 			}
 		}
 		
@@ -58,7 +59,14 @@ namespace LongoMatch.Gui.Component
 			set {
 				labelsDict.Clear();
 				foreach (Category cat in value)
-					labelsDict.Add(new Label(cat.Name), Helpers.Misc.ToGdkColor(cat.Color));
+					labelsDict.Add(new Label(cat.Name), cat);
+			}
+		}
+		
+		public PlaysFilter Filter {
+			set {
+				filter = value;
+				filter.FilterUpdated += () => {QueueDraw();};
 			}
 		}
 
@@ -88,11 +96,24 @@ namespace LongoMatch.Gui.Component
 
 			using(Cairo.Context g = Gdk.CairoHelper.Create(win)) {
 				foreach(Label label in labelsDict.Keys) {
-					int y = LINE_WIDTH/2 + i * SECTION_HEIGHT - (int)Scroll;
+					Cairo.Color color;
+					Category cat;
+					int y;
+					
+					cat = labelsDict[label];
+					y = LINE_WIDTH/2 + i * SECTION_HEIGHT - (int)Scroll;
+					
+					if (cat != null) {
+						if (filter != null && !filter.VisibleCategories.Contains(cat)) {
+							continue;
+						}
+						color = CairoUtils.RGBToCairoColor(Helpers.Misc.ToGdkColor(cat.Color));
+					} else {
+						color = new Cairo.Color (0, 0, 0);
+					}
 					CairoUtils.DrawRoundedRectangle(g, 2, y + 3 , Allocation.Width - 3,
 					                                SECTION_HEIGHT - 3, SECTION_HEIGHT/7,
-					                                CairoUtils.RGBToCairoColor(labelsDict[label]),
-					                                CairoUtils.RGBToCairoColor(labelsDict[label]));
+					                                color, color);
 					DrawCairoText(label.Text, 0 + 3, y + SECTION_HEIGHT / 2 - 5);
 					i++;
 				}

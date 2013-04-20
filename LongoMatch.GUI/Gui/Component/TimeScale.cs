@@ -39,7 +39,7 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public class TimeScale : TimeScaleBase<Play>
 	{
-		private Category category;
+		Category category;
 		
 		public event NewTagAtFrameHandler NewMarkAtFrameEvent;
 		public event TimeNodeChangedHandler TimeNodeChanged;
@@ -47,10 +47,14 @@ namespace LongoMatch.Gui.Component
 		public event PlaysDeletedHandler TimeNodeDeleted;
 
 
-		public TimeScale(Category category, List<Play> list, uint frames): base(list, frames)
+		public TimeScale(Category category, List<Play> list, uint frames, PlaysFilter filter): base(list, frames, filter)
 		{
 			this.category = category;
 			elementName = Catalog.GetString("play");
+			filter.FilterUpdated += () => {
+				Visible = filter.VisibleCategories.Contains (category);
+				QueueDraw();
+			};
 		}
 
 		public void AddPlay(Play play) {
