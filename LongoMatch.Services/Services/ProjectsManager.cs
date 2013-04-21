@@ -372,8 +372,8 @@ namespace LongoMatch.Services
 				project.Description.File = null;
 				
 				guiToolkit.InfoMessage(
-					Catalog.GetString("You are opening a live project without any video file associated yet.") + 
-					"\n" + Catalog.GetString("Select a video file in the step."));
+					Catalog.GetString("You are opening a live project without any video file associated yet.") +
+					"\n" + Catalog.GetString("Select a video file in the next step."));
 				
 				project = guiToolkit.EditFakeProject(Core.DB, project, Core.TemplatesService);
 				if (project == null)
