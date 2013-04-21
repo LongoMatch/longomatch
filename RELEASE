@@ -9,13 +9,18 @@ all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
 * Features
-	* Add a new media discoverer based on GstDiscoverer
+	* Support for several database
+	* Databases manager
+	* Add filtering support in the timeline view
 
 * Bugs fixed
 
-	* Fix more deadlocks in the video conversion tool
-	* Fix name of exported project files with dates
-	* Fix exception in filter after reloading projects
+	* Add mseconds info in the player
+	* Add player's number in the list
+	* Increase weigth limit to 1000
+	* Update players after tagging a new play
+	* Fix DV support
+	* Fix setting files in fake live projects
 
 *Contributors to this Release:
 

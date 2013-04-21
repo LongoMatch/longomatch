@@ -1,3 +1,19 @@
+===== LongoMatch 0.18.10 "Primavera" =====
+
+	== Features ==
+	* Support for several database
+	* Databases manager
+	* Add filtering support in the timeline view
+
+	== Bugs fixed ==
+
+	* Add mseconds info in the player
+	* Add player's number in the list
+	* Increase weigth limit to 1000
+	* Update players after tagging a new play
+	* Fix DV support
+	* Fix setting files in fake live projects
+
 ===== LongoMatch 0.18.10 "EHL" =====
 
 	== Features ==
