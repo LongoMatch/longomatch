@@ -290,7 +290,7 @@ namespace LongoMatch.Gui.Component
 			var desc = project.Description;
 			/* In case the framerate changed, update each play with the new
 			 * framerate */
-			if (desc.File.Fps != mFile.Fps) {
+			if (desc.File != null && desc.File.Fps != mFile.Fps) {
 				foreach (Play play in project.AllPlays ()) {
 					play.Fps = mFile.Fps;
 				}
