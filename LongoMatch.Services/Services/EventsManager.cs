@@ -42,6 +42,7 @@ namespace LongoMatch.Services
 		Project openedProject;
 		ProjectType projectType;
 		Time startTime;
+		PlaysFilter filter;
 		
 		IGUIToolkit guiToolkit;
 		IMainWindow mainWindow;
@@ -58,16 +59,12 @@ namespace LongoMatch.Services
 			ConnectSignals();
 		}
 
-		public  Project OpenedProject {
-			set {
-				openedProject = value;
-			}
-		}
-
-		public ProjectType OpenedProjectType {
-			set {
-				projectType = value;
-			}
+		public void SetProject (Project project, ProjectType projectType,
+		                        PlaysFilter filter)
+		{
+			this.filter = filter;
+			this.openedProject = project;
+			this.projectType = projectType;
 		}
 
 		private void ConnectSignals() {
@@ -149,6 +146,7 @@ namespace LongoMatch.Services
 			if (!Config.FastTagging)
 				LaunchPlayTagger(play, false);
 			mainWindow.AddPlay(play);
+			filter.Update();
 			if (projectType == ProjectType.FileProject) {
 				player.Play();
 			}
@@ -232,6 +230,7 @@ namespace LongoMatch.Services
 			else if(tNode is Category) {
 				mainWindow.UpdateCategories(openedProject.Categories);
 			}
+			filter.Update();
 		}
 
 		protected virtual void OnPlaysDeleted(List<Play> plays)
@@ -244,6 +243,7 @@ namespace LongoMatch.Services
 				player.CloseActualSegment();
 				Core.DB.UpdateProject(openedProject);
 			}
+			filter.Update();
 		}
 
 		protected virtual void OnSegmentClosedEvent()

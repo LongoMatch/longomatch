@@ -71,6 +71,11 @@ namespace LongoMatch.Services
 			get;
 		}
 		
+		public PlaysFilter PlaysFilter {
+			get;
+			set;
+		}
+		
 		public ICapturer Capturer {
 			set;
 			get;
@@ -83,7 +88,7 @@ namespace LongoMatch.Services
 		
 		private void EmitProjectChanged() {
 			if (OpenedProjectChanged != null)
-				OpenedProjectChanged(OpenedProject, OpenedProjectType);
+				OpenedProjectChanged(OpenedProject, OpenedProjectType, PlaysFilter);
 		}
 		
 		private void SaveCaptureProject(Project project) {
@@ -221,8 +226,8 @@ namespace LongoMatch.Services
 
 			OpenedProject = project;
 			OpenedProjectType = projectType;
-			PlaysFilter filter = new PlaysFilter(project);
-			mainWindow.SetProject(project, projectType, props, filter);
+			PlaysFilter = new PlaysFilter(project);
+			mainWindow.SetProject(project, projectType, props, PlaysFilter);
 			EmitProjectChanged();
 			return true;
 		}

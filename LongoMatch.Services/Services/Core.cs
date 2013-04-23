@@ -142,15 +142,15 @@ namespace LongoMatch.Services
 			}
 		}
 		
-		private static void OnOpenedProjectChanged (Project project, ProjectType projectType) {
+		private static void OnOpenedProjectChanged (Project project, ProjectType projectType,
+		                                            PlaysFilter filter) {
 			if (project != null) {
 				hkManager.Categories=project.Categories;
 			} else {
 				hkManager.Categories=null;
 			}
 			
-			eManager.OpenedProject = project;
-			eManager.OpenedProjectType = projectType;
+			eManager.SetProject (project, projectType, filter);
 			guManager.OpenedProject = project;
 			plManager.OpenedProject = project;
 			dbManager.OpenedProject = project;
