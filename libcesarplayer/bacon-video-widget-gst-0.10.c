@@ -4634,6 +4634,10 @@ bacon_video_widget_new (int width, int height, BvwUseType type, GError ** err)
       g_warning ("Could not create element '%s'", DEFAULT_VIDEO_SINK);
       /* Try to fallback on ximagesink */
       video_sink = gst_element_factory_make ("ximagesink", "video-sink");
+    } else {
+#if defined(OSTYPE_OS_X)
+      g_object_set (video_sink, "check-runloop", FALSE, NULL);
+#endif
     }
 
   } else {
