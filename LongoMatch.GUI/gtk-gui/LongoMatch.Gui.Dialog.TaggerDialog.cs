@@ -4,13 +4,17 @@ namespace LongoMatch.Gui.Dialog
 {
 	public partial class TaggerDialog
 	{
-		private global::Gtk.HBox hbox1;
+		private global::Gtk.VBox vbox2;
+		private global::Gtk.HBox hbox;
 		private global::Gtk.Notebook tagsnotebook;
 		private global::LongoMatch.Gui.Component.TaggerWidget taggerwidget1;
 		private global::Gtk.Label label1;
 		private global::Gtk.Notebook playersnotebook;
 		private global::Gtk.VBox playersbox;
 		private global::Gtk.Label label2;
+		private global::Gtk.HBox poshbox;
+		private global::LongoMatch.Gui.Component.CoordinatesTagger fieldcoordinatestagger;
+		private global::LongoMatch.Gui.Component.CoordinatesTagger goalcoordinatestagger;
 		private global::Gtk.Button buttonOk;
 		
 		protected virtual void Build ()
@@ -26,10 +30,13 @@ namespace LongoMatch.Gui.Dialog
 			w1.Name = "dialog1_VBox";
 			w1.BorderWidth = ((uint)(2));
 			// Container child dialog1_VBox.Gtk.Box+BoxChild
-			this.hbox1 = new global::Gtk.HBox ();
-			this.hbox1.Name = "hbox1";
-			this.hbox1.Spacing = 6;
-			// Container child hbox1.Gtk.Box+BoxChild
+			this.vbox2 = new global::Gtk.VBox ();
+			this.vbox2.Name = "vbox2";
+			// Container child vbox2.Gtk.Box+BoxChild
+			this.hbox = new global::Gtk.HBox ();
+			this.hbox.Name = "hbox";
+			this.hbox.Spacing = 6;
+			// Container child hbox.Gtk.Box+BoxChild
 			this.tagsnotebook = new global::Gtk.Notebook ();
 			this.tagsnotebook.CanFocus = true;
 			this.tagsnotebook.Name = "tagsnotebook";
@@ -45,10 +52,10 @@ namespace LongoMatch.Gui.Dialog
 			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Tags");
 			this.tagsnotebook.SetTabLabel (this.taggerwidget1, this.label1);
 			this.label1.ShowAll ();
-			this.hbox1.Add (this.tagsnotebook);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.tagsnotebook]));
+			this.hbox.Add (this.tagsnotebook);
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox [this.tagsnotebook]));
 			w3.Position = 0;
-			// Container child hbox1.Gtk.Box+BoxChild
+			// Container child hbox.Gtk.Box+BoxChild
 			this.playersnotebook = new global::Gtk.Notebook ();
 			this.playersnotebook.CanFocus = true;
 			this.playersnotebook.Name = "playersnotebook";
@@ -64,18 +71,42 @@ namespace LongoMatch.Gui.Dialog
 			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("Players");
 			this.playersnotebook.SetTabLabel (this.playersbox, this.label2);
 			this.label2.ShowAll ();
-			this.hbox1.Add (this.playersnotebook);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.playersnotebook]));
+			this.hbox.Add (this.playersnotebook);
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.hbox [this.playersnotebook]));
 			w5.Position = 1;
-			w1.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(w1 [this.hbox1]));
+			this.vbox2.Add (this.hbox);
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox]));
 			w6.Position = 0;
+			w6.Expand = false;
+			// Container child vbox2.Gtk.Box+BoxChild
+			this.poshbox = new global::Gtk.HBox ();
+			this.poshbox.Name = "poshbox";
+			// Container child poshbox.Gtk.Box+BoxChild
+			this.fieldcoordinatestagger = new global::LongoMatch.Gui.Component.CoordinatesTagger ();
+			this.fieldcoordinatestagger.Events = ((global::Gdk.EventMask)(256));
+			this.fieldcoordinatestagger.Name = "fieldcoordinatestagger";
+			this.poshbox.Add (this.fieldcoordinatestagger);
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.poshbox [this.fieldcoordinatestagger]));
+			w7.Position = 0;
+			// Container child poshbox.Gtk.Box+BoxChild
+			this.goalcoordinatestagger = new global::LongoMatch.Gui.Component.CoordinatesTagger ();
+			this.goalcoordinatestagger.Events = ((global::Gdk.EventMask)(256));
+			this.goalcoordinatestagger.Name = "goalcoordinatestagger";
+			this.poshbox.Add (this.goalcoordinatestagger);
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.poshbox [this.goalcoordinatestagger]));
+			w8.Position = 1;
+			this.vbox2.Add (this.poshbox);
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.poshbox]));
+			w9.Position = 1;
+			w1.Add (this.vbox2);
+			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(w1 [this.vbox2]));
+			w10.Position = 0;
 			// Internal child LongoMatch.Gui.Dialog.TaggerDialog.ActionArea
-			global::Gtk.HButtonBox w7 = this.ActionArea;
-			w7.Name = "dialog1_ActionArea";
-			w7.Spacing = 6;
-			w7.BorderWidth = ((uint)(5));
-			w7.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
+			global::Gtk.HButtonBox w11 = this.ActionArea;
+			w11.Name = "dialog1_ActionArea";
+			w11.Spacing = 6;
+			w11.BorderWidth = ((uint)(5));
+			w11.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.buttonOk = new global::Gtk.Button ();
 			this.buttonOk.CanDefault = true;
@@ -85,14 +116,16 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonOk.UseUnderline = true;
 			this.buttonOk.Label = "gtk-ok";
 			this.AddActionWidget (this.buttonOk, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w8 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w7 [this.buttonOk]));
-			w8.Expand = false;
-			w8.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w12 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w11 [this.buttonOk]));
+			w12.Expand = false;
+			w12.Fill = false;
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.DefaultWidth = 636;
-			this.DefaultHeight = 278;
+			this.DefaultWidth = 644;
+			this.DefaultHeight = 569;
+			this.fieldcoordinatestagger.Hide ();
+			this.goalcoordinatestagger.Hide ();
 			this.Show ();
 		}
 	}

@@ -80,6 +80,7 @@ namespace LongoMatch.Gui.Component
 			this.vbox3.Add (this.table1);
 			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.table1]));
 			w6.Position = 1;
+			w6.Expand = false;
 			this.vbox2.Add (this.vbox3);
 			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.vbox3]));
 			w7.Position = 0;

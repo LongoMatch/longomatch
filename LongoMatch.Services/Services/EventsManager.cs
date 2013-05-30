@@ -200,8 +200,10 @@ namespace LongoMatch.Services
 		}
 
 		private void LaunchPlayTagger(Play play, bool showAllTags) {
-			guiToolkit.TagPlay(play, openedProject.LocalTeamTemplate,
-			                   openedProject.VisitorTeamTemplate, showAllTags);
+			guiToolkit.TagPlay(play, openedProject.Categories,
+			                   openedProject.LocalTeamTemplate,
+			                   openedProject.VisitorTeamTemplate,
+			                   showAllTags);
 		}
 
 		protected virtual void OnPlaySelected(Play play)

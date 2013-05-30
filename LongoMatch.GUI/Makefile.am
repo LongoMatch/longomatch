@@ -9,6 +9,7 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Base.TimelineWidgetBase.cs \
 	gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs \
+	gtk-gui/LongoMatch.Gui.Component.CoordinatesTagger.cs \
 	gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs \
 	gtk-gui/LongoMatch.Gui.Component.DrawingWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.GameUnitsEditor.cs \
@@ -61,6 +62,7 @@ SOURCES = \
 	Gui/Component/ButtonsWidget.cs \
 	Gui/Component/CategoriesTemplateEditor.cs \
 	Gui/Component/CategoryProperties.cs \
+	Gui/Component/CoordinatesTagger.cs \
 	Gui/Component/DrawingToolBox.cs \
 	Gui/Component/DrawingWidget.cs \
 	Gui/Component/GameUnitsEditor.cs \

@@ -33,10 +33,12 @@ namespace LongoMatch.Gui.Dialog
 	{
 		private TeamTemplate localTeamTemplate;
 		private TeamTemplate visitorTeamTemplate;
-		bool showAllSubcateogires;
 		
-		public TaggerDialog(Play play, TeamTemplate localTeamTemplate,
-		                    TeamTemplate visitorTeamTemplate, bool showAllSubcategories)
+		public TaggerDialog(Play play,
+		                    Categories categoriesTemplate,
+		                    TeamTemplate localTeamTemplate,
+		                    TeamTemplate visitorTeamTemplate,
+		                    bool showAllSubcategories)
 		{
 			this.Build();
 			
@@ -57,7 +59,7 @@ namespace LongoMatch.Gui.Dialog
 					AddTagSubcategory(tagcat, play.Tags);
 				} else if (subcat is PlayerSubCategory) {
 					playersnotebook.Visible = false;
-					hbox1.SetChildPacking(tagsnotebook, false, false, 0, Gtk.PackType.Start);
+					hbox.SetChildPacking(tagsnotebook, false, false, 0, Gtk.PackType.Start);
 					var tagcat = subcat as PlayerSubCategory;
 					AddPlayerSubcategory(tagcat, play.Players);
 				} else if (subcat is TeamSubCategory) {
@@ -65,6 +67,18 @@ namespace LongoMatch.Gui.Dialog
 					AddTeamSubcategory(tagcat, play.Teams,
 					                   localTeamTemplate.TeamName,
 					                   visitorTeamTemplate.TeamName);
+				}
+			}
+			
+			if (!play.Category.TagFieldPosition && !play.Category.TagGoalPosition) {
+				poshbox.Visible = false;
+				(vbox2[hbox] as Gtk.Box.BoxChild).Expand = true;
+			} else {
+				if (play.Category.TagFieldPosition) {
+					AddFieldPosTagger (categoriesTemplate, play);				
+				}
+				if (play.Category.TagGoalPosition) {
+					AddGoalPosTagger (categoriesTemplate, play);
 				}
 			}
 		}
@@ -95,6 +109,47 @@ namespace LongoMatch.Gui.Dialog
 			PlayersTaggerWidget widget = new PlayersTaggerWidget(subcat, local, visitor, tags);
 			widget.Show();
 			playersbox.PackStart(widget, true, true, 0);
+		}
+		
+		public void AddFieldPosTagger (Categories categoriesTemplate, Play play) {
+			List<Coordinates> coords = new List<Coordinates>();
+			fieldcoordinatestagger.Visible = true;
+			if (categoriesTemplate.FieldBackgroundImage != null) {
+				fieldcoordinatestagger.Background = categoriesTemplate.FieldBackgroundImage.Value;
+			} else {
+				fieldcoordinatestagger.Background = Gdk.Pixbuf.LoadFromResource (Constants.FIELD_BACKGROUND);
+			}
+			if (play.FieldPosition != null) {
+				coords.Add (play.FieldPosition);
+			} else {
+				Coordinates c = new Coordinates ();
+				c.Add (new Point(0, 0));
+				if (play.Category.FieldPositionIsDistance) {
+					c.Add (new Point (0, 10));
+				}
+				coords.Add (c);
+			}
+			fieldcoordinatestagger.Coordinates = coords;
+			fieldcoordinatestagger.Visible = true; 
+		}
+		
+		public void AddGoalPosTagger (Categories categoriesTemplate, Play play) {
+			List<Coordinates> coords = new List<Coordinates>();
+			goalcoordinatestagger.Visible = true;
+			if (categoriesTemplate.GoalBackgroundImage != null) {
+				goalcoordinatestagger.Background = categoriesTemplate.GoalBackgroundImage.Value;
+			} else {
+				goalcoordinatestagger.Background = Gdk.Pixbuf.LoadFromResource (Constants.GOAL_BACKGROUND);
+			}
+			if (play.GoalPosition != null) {
+				coords.Add (play.GoalPosition);
+			} else {
+				Coordinates c = new Coordinates ();
+				c.Add (new Point(0, 0));
+				coords.Add (c);
+			}
+			goalcoordinatestagger.Coordinates = coords; 
+			goalcoordinatestagger.Visible = true;
 		}
 
 	}

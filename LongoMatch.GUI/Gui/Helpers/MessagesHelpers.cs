@@ -52,7 +52,7 @@ namespace LongoMatch.Gui.Helpers
 			                                     MessageType.Question, ButtonsType.YesNo,
 			                                     question);
 				
-			md.Icon = Stetic.IconLoader.LoadIcon(md, "longomatch", IconSize.Button);
+			md.Icon =  Stetic.IconLoader.LoadIcon(md, "longomatch", IconSize.Button);
 			md.Title = title;
 			var res = md.Run();
 			md.Destroy();

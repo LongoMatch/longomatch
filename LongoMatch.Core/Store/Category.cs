@@ -45,6 +45,8 @@ namespace LongoMatch.Store
 		public Category() {
 			_UUID = System.Guid.NewGuid();
 			SubCategories = new List<ISubCategory>();
+			TagGoalPosition = false;
+			TagFieldPosition = true;
 		}
 
 		#region  Properties
@@ -94,7 +96,22 @@ namespace LongoMatch.Store
 			get;
 			set;
 		}
-
+		
+		public bool TagGoalPosition {
+			get;
+			set;
+		}
+		
+		public bool TagFieldPosition {
+			get;
+			set;
+		}
+		
+		public bool FieldPositionIsDistance {
+			get;
+			set;
+		}
+		
 		/// <summary>
 		/// Sort method string used for the UI
 		/// </summary>
@@ -139,6 +156,21 @@ namespace LongoMatch.Store
 				ColorHelper.ShortToByte((ushort)info.GetValue("red", typeof(ushort))),
 				ColorHelper.ShortToByte((ushort)info.GetValue("green", typeof(ushort))),
 				ColorHelper.ShortToByte((ushort)info.GetValue("blue", typeof(ushort))));
+			try {
+				TagFieldPosition = info.GetBoolean("tagfieldpos");
+			} catch {
+				TagFieldPosition = true;
+			}
+			try {
+				TagGoalPosition = info.GetBoolean("tagfieldgoal");
+			} catch {
+				TagGoalPosition = false;
+			}
+			try {
+				FieldPositionIsDistance = info.GetBoolean("fieldposisdist");
+			} catch {
+				FieldPositionIsDistance = false;
+			}
 		}
 
 		// this method is automatically called during serialization
@@ -155,6 +187,9 @@ namespace LongoMatch.Store
 			info.AddValue("green", ColorHelper.ByteToShort(Color.G));
 			info.AddValue("blue", ColorHelper.ByteToShort(Color.B));
 			info.AddValue("sort_method", SortMethod);
+			info.AddValue("tagfieldpos", TagFieldPosition);
+			info.AddValue("taggoalpos", TagGoalPosition);
+			info.AddValue("fieldposisdist", FieldPositionIsDistance);
 		}
 		#endregion
 		

@@ -194,8 +194,8 @@ namespace LongoMatch.Gui
 				sd.Destroy();
 		}
 		
-		public void TagPlay (Play play, TeamTemplate local, TeamTemplate visitor, bool showAllTags) {
-			TaggerDialog tg = new TaggerDialog(play, local, visitor, showAllTags);
+		public void TagPlay (Play play, Categories categories, TeamTemplate local, TeamTemplate visitor, bool showAllTags) {
+			TaggerDialog tg = new TaggerDialog(play, categories, local, visitor, showAllTags);
 			tg.TransientFor = mainWindow as Gtk.Window;
 			tg.Run();
 			tg.Destroy();

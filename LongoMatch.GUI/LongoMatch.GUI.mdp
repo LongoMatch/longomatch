@@ -163,6 +163,10 @@
     <File subtype="Code" buildaction="Compile" name="Gui/Helpers/Misc.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Helpers/FileChooserHelper.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Helpers/MessagesHelpers.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/CoordinatesTagger.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.CoordinatesTagger.cs" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/field_background.svg" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/goal_background.svg" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

@@ -17,7 +17,6 @@
 // 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace LongoMatch.Common
 {
@@ -52,6 +51,28 @@ namespace LongoMatch.Common
 			}
 			
 			return int.Parse(s);
+		}
+	}
+	
+	public class Point {
+		public Point (int x, int y) {
+			X = x;
+			Y = y;
+		}
+		
+		public int X {
+			get;
+			set;
+		}
+		
+		public int Y {
+			get;
+			set;
+		}
+		
+		public override string ToString ()
+		{
+			return string.Format ("[Point: X={0}, Y={1}]", X, Y);
 		}
 	}
 }

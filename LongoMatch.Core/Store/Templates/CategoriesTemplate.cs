@@ -26,6 +26,8 @@ using Mono.Unix;
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
 
+using Image = LongoMatch.Common.Image;
+
 namespace LongoMatch.Store.Templates
 {
 
@@ -66,7 +68,12 @@ namespace LongoMatch.Store.Templates
 			}
 		}
 		
-		public LongoMatch.Common.Image FieldBackgroundImage {
+		public Image FieldBackgroundImage {
+			get;
+			set;
+		}
+		
+		public Image GoalBackgroundImage {
 			get;
 			set;
 		}
