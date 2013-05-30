@@ -143,6 +143,8 @@ RESOURCES = \
 	$(top_srcdir)/images/stock_draw-freeform-line.png\
 	$(top_srcdir)/images/camera-video.png\
 	$(top_srcdir)/images/video.png \
+	$(top_srcdir)/images/field_background.svg \
+	$(top_srcdir)/images/goal_background.svg \
 	gtk-gui/objects.xml \
 	gtk-gui/gui.stetic
 
