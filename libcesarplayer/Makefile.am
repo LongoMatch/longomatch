@@ -63,10 +63,10 @@ EXTRA_DIST = \
 noinst_PROGRAMS = test-capturer test-encoder test-discoverer
 
 test_capturer_SOURCES = test-capturer.c
-test_capturer_LDADD =  libcesarplayer.la
+test_capturer_LDADD =  libcesarplayer.la $(CESARPLAYER_LIBS)
 
 test_encoder_SOURCES = test-encoder.c
-test_encoder_LDADD =  libcesarplayer.la
+test_encoder_LDADD =  libcesarplayer.la $(CESARPLAYER_LIBS)
 
 test_discoverer_SOURCES = test-discoverer.c
-test_discoverer_LDADD =  libcesarplayer.la
+test_discoverer_LDADD =  libcesarplayer.la $(CESARPLAYER_LIBS)
