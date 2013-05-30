@@ -123,11 +123,12 @@ namespace LongoMatch.Gui.Dialog
 				coords.Add (play.FieldPosition);
 			} else {
 				Coordinates c = new Coordinates ();
-				c.Add (new Point(0, 0));
+				c.Add (new Point(100, 100));
 				if (play.Category.FieldPositionIsDistance) {
-					c.Add (new Point (0, 10));
+					c.Add (new Point (300, 300));
 				}
 				coords.Add (c);
+				play.FieldPosition = c;
 			}
 			fieldcoordinatestagger.Coordinates = coords;
 			fieldcoordinatestagger.Visible = true; 
@@ -145,8 +146,9 @@ namespace LongoMatch.Gui.Dialog
 				coords.Add (play.GoalPosition);
 			} else {
 				Coordinates c = new Coordinates ();
-				c.Add (new Point(0, 0));
+				c.Add (new Point(100, 100));
 				coords.Add (c);
+				play.GoalPosition = c;
 			}
 			goalcoordinatestagger.Coordinates = coords; 
 			goalcoordinatestagger.Visible = true;
