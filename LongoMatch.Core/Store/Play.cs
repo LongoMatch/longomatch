@@ -42,10 +42,6 @@ namespace LongoMatch.Store
 			Tags = new StringTagStore();
 			Players = new PlayersTagStore(); 
 			Teams = new TeamsTagStore();
-			FieldPosition = new Coordinates ();
-			FieldPosition.Add (new Point (0, 0));
-			GoalPosition = new Coordinates ();
-			GoalPosition.Add (new Point (0, 0));
 			Fps = 25;
 		}
 		#endregion
