@@ -142,21 +142,18 @@ namespace LongoMatch.Common
 		}
 		
 		void UpdateFilters () {
+			UpdateVisiblePlayers ();
 			UpdateVisibleCategories ();
 			UpdateVisiblePlays ();
-			UpdateVisiblePlayers ();
 		}
 		
 		void UpdateVisiblePlayers () {
 			visiblePlayers = new List<Player>();
-			if (PlayersFilterEnabled) {
-				return;
-			}
-			
 			foreach (Player p in project.LocalTeamTemplate.Concat (project.VisitorTeamTemplate)) {
-				if (playersFilter.Contains (p)) {
-					visiblePlayers.Add (p);
+				if (PlayersFilterEnabled && ! playersFilter.Contains (p)) {
+					continue;
 				}
+				visiblePlayers.Add (p);
 			}
 		}
 		
