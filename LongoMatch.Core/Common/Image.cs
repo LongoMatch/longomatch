@@ -15,6 +15,7 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
+using System.Runtime.Serialization;
 
 namespace LongoMatch.Common
 {
@@ -28,7 +29,7 @@ namespace LongoMatch.Common
 #endif
 
 	[Serializable]
-	public class Image
+	public class Image: ISerializable
 	{
 		SImage image;
 		
@@ -49,6 +50,16 @@ namespace LongoMatch.Common
 		
 		public void Scale() {
 			Scale (Constants.THUMBNAIL_MAX_WIDTH, Constants.THUMBNAIL_MAX_HEIGHT);
+		}
+		
+		// this constructor is automatically called during deserialization
+		public Image (SerializationInfo info, StreamingContext context) {
+			image = Deserialize ((byte[]) info.GetValue ("pngbuf", typeof (byte[]))).Value;
+		}
+
+		// this method is automatically called during serialization
+		public void GetObjectData(SerializationInfo info, StreamingContext context) {
+			info.AddValue("pngbuf", Serialize());
 		}
 		
 		
