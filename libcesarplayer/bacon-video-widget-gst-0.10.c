@@ -122,15 +122,18 @@ enum
 };
 
 /* GstPlayFlags flags from playbin2 */
-typedef enum
-{
-  GST_PLAY_FLAGS_VIDEO = 0x01,
-  GST_PLAY_FLAGS_AUDIO = 0x02,
-  GST_PLAY_FLAGS_TEXT = 0x04,
-  GST_PLAY_FLAGS_VIS = 0x08,
-  GST_PLAY_FLAGS_SOFT_VOLUME = 0x10,
-  GST_PLAY_FLAGS_NATIVE_AUDIO = 0x20,
-  GST_PLAY_FLAGS_NATIVE_VIDEO = 0x40
+typedef enum {
+  GST_PLAY_FLAG_VIDEO         = (1 << 0),
+  GST_PLAY_FLAG_AUDIO         = (1 << 1),
+  GST_PLAY_FLAG_TEXT          = (1 << 2),
+  GST_PLAY_FLAG_VIS           = (1 << 3),
+  GST_PLAY_FLAG_SOFT_VOLUME   = (1 << 4),
+  GST_PLAY_FLAG_NATIVE_AUDIO  = (1 << 5),
+  GST_PLAY_FLAG_NATIVE_VIDEO  = (1 << 6),
+  GST_PLAY_FLAG_DOWNLOAD      = (1 << 7),
+  GST_PLAY_FLAG_BUFFERING     = (1 << 8),
+  GST_PLAY_FLAG_DEINTERLACE   = (1 << 9),
+  GST_PLAY_FLAG_SOFT_COLORBALANCE = (1 << 10)
 } GstPlayFlags;
 
 
@@ -1410,7 +1413,7 @@ parse_stream_info (BaconVideoWidget * bvw)
 
       /*gdk_window_hide (bvw->priv->video_window);*/
       /*GTK_WIDGET_SET_FLAGS (GTK_WIDGET (bvw), GTK_DOUBLE_BUFFERED);*/
-      /*flags &= ~GST_PLAY_FLAGS_VIS;*/
+      /*flags &= ~GST_PLAY_FLAG_VIS;*/
 
       /*g_object_set (bvw->priv->play, "flags", flags, NULL);*/
     }
@@ -1622,7 +1625,7 @@ bacon_video_widget_get_subtitle (BaconVideoWidget * bvw)
 
   g_object_get (bvw->priv->play, "flags", &flags, NULL);
 
-  if ((flags & GST_PLAY_FLAGS_TEXT) == 0)
+  if ((flags & GST_PLAY_FLAG_TEXT) == 0)
     return -2;
 
   g_object_get (G_OBJECT (bvw->priv->play), "current-text", &subtitle, NULL);
@@ -1650,10 +1653,10 @@ bacon_video_widget_set_subtitle (BaconVideoWidget * bvw, int subtitle)
   g_object_get (bvw->priv->play, "flags", &flags, NULL);
 
   if (subtitle == -2) {
-    flags &= ~GST_PLAY_FLAGS_TEXT;
+    flags &= ~GST_PLAY_FLAG_TEXT;
     subtitle = -1;
   } else {
-    flags |= GST_PLAY_FLAGS_TEXT;
+    flags |= GST_PLAY_FLAG_TEXT;
   }
 
   g_object_set (bvw->priv->play, "flags", flags, "current-text", subtitle,
@@ -2426,7 +2429,6 @@ bacon_video_widget_open (BaconVideoWidget * bvw,
     g_free (subtitle_uri);
     g_strfreev (uris);
   } else {
-
     g_object_set (bvw->priv->play, "uri", bvw->priv->mrl, NULL);
   }
 
@@ -4571,6 +4573,7 @@ bacon_video_widget_new (int width, int height, BvwUseType type, GError ** err)
   BaconVideoWidget *bvw;
   GstElement *audio_sink = NULL, *video_sink = NULL;
   gchar *version_str;
+  gint flags;
 
   version_str = gst_version_string ();
   GST_INFO ("Initialised %s", version_str);
@@ -4599,6 +4602,10 @@ bacon_video_widget_new (int width, int height, BvwUseType type, GError ** err)
     g_object_unref (bvw);
     return NULL;
   }
+
+  g_object_get (bvw->priv->play, "flags", &flags, NULL);
+  flags |= GST_PLAY_FLAG_DEINTERLACE;
+  g_object_set (bvw->priv->play, "flags", flags, NULL);
 
   bvw->priv->bus = gst_element_get_bus (bvw->priv->play);
   gst_bus_add_signal_watch (bvw->priv->bus);
