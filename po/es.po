@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: longomatch.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-04-21 19:16+0000\n"
-"PO-Revision-Date: 2013-04-25 18:07+0200\n"
+"POT-Creation-Date: 2013-06-01 10:45+0000\n"
+"PO-Revision-Date: 2013-06-05 18:25+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Generator: Gtranslator 2.91.5\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2118
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2121
 msgid ""
 "The requested audio output was not found. Please select another audio output "
 "in the Multimedia Systems Selector."
@@ -26,17 +26,17 @@ msgstr ""
 "No se encontró la salida de sonido solicitada. Seleccione otra salida de "
 "sonido en el Selector de sistemas multimedia."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2124
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2127
 msgid "Location not found."
 msgstr "Ubicación no encontrada."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2128
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2131
 msgid ""
 "Could not open location; you might not have permission to open the file."
 msgstr ""
 "No se pudo abrir la ubicación; quizá no tiene permiso para abrir el archivo."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2140
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2143
 msgid ""
 "The video output is in use by another application. Please close other video "
 "applications, or select another video output in the Multimedia Systems "
@@ -46,7 +46,7 @@ msgstr ""
 "aplicaciones de vídeo o seleccione otra salida de vídeo en el Selector de "
 "sistemas multimedia."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2147
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2150
 msgid ""
 "The audio output is in use by another application. Please select another "
 "audio output in the Multimedia Systems Selector. You may want to consider "
@@ -56,15 +56,15 @@ msgstr ""
 "de sonido en el Selector de sistemas multimedia. Quizá deba considerar usar "
 "un servidor de sonido."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2166
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2172
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2169
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2175
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgstr ""
 "La reproducción de esta película requiere un complemento %s que no está "
 "instalado."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2174
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2177
 #, c-format
 msgid ""
 "The playback of this movie requires the following decoders which are not "
@@ -77,42 +77,42 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2200
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2203
 msgid ""
 "Cannot play this file over the network. Try downloading it to disk first."
 msgstr ""
 "No se puede reproducir este archivo a través de la red. Intente descargarlo "
 "primero."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2275
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2278
 msgid "Media file could not be played."
 msgstr "No se pudo reproducir el archivo."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2417
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2420
 msgid "Failed to retrieve working directory"
 msgstr "Falló al obtener la carpeta de trabajo"
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:3930
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:3932
 msgid "Surround"
 msgstr "Envolvente"
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:3932
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:3934
 msgid "Mono"
 msgstr "Mono"
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:3934
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:3936
 msgid "Stereo"
 msgstr "Estéreo"
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4322
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4324
 msgid "Too old version of GStreamer installed."
 msgstr "Versión de GStreamer instalada muy antigua"
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4329
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4331
 msgid "Media contains no supported video streams."
 msgstr "El archivo no contiene flujos de vídeo soportados."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4596
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4599
 #, c-format
 msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
@@ -121,8 +121,8 @@ msgstr ""
 "Falló al crear el objeto de reproducción GStreamer. Compruebe su instalación "
 "de GStreamer."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4669
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4798
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4680
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4809
 #, c-format
 msgid ""
 "Failed to open video output. It may not be available. Please select another "
@@ -131,7 +131,7 @@ msgstr ""
 "Falló al abrir la salida de vídeo. Puede que no esté disponible. Seleccione "
 "otra salida de vídeo en el Selector de sistemas multimedia"
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4683
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4694
 #, c-format
 msgid ""
 "Could not find the video output. You may need to install additional "
@@ -142,7 +142,7 @@ msgstr ""
 "complementos adicionales de GStreamer, o seleccionar otra salida de vídeo en "
 "el Selector de sistemas multimedia."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4719
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4730
 #, c-format
 msgid ""
 "Failed to open audio output. You may not have permission to open the sound "
@@ -153,7 +153,7 @@ msgstr ""
 "dispositivo de sonido, o el servidor de sonido quizá no esté funcionando. "
 "Seleccione otra salida de sonido en el Selector de sistemas multimedia."
 
-#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4739
+#: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4750
 #, c-format
 msgid ""
 "Could not find the audio output. You may need to install additional "
@@ -261,35 +261,35 @@ msgstr "Envíe un informe de fallos "
 msgid "Keep original size"
 msgstr "Mantener tamaño original"
 
-#: ../LongoMatch.Core/Store/Category.cs:105
-#: ../LongoMatch.Core/Store/Category.cs:113
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:226
+#: ../LongoMatch.Core/Store/Category.cs:122
+#: ../LongoMatch.Core/Store/Category.cs:130
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:239
 #: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:72
 msgid "Sort by name"
 msgstr "Ordenar por nombre"
 
-#: ../LongoMatch.Core/Store/Category.cs:107
-#: ../LongoMatch.Core/Store/Category.cs:117
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:227
+#: ../LongoMatch.Core/Store/Category.cs:124
+#: ../LongoMatch.Core/Store/Category.cs:134
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:240
 #: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:73
 msgid "Sort by start time"
 msgstr "Ordenar por tiempo de inicio"
 
-#: ../LongoMatch.Core/Store/Category.cs:109
-#: ../LongoMatch.Core/Store/Category.cs:119
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:228
+#: ../LongoMatch.Core/Store/Category.cs:126
+#: ../LongoMatch.Core/Store/Category.cs:136
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:241
 #: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:74
 msgid "Sort by stop time"
 msgstr "Ordenar por tiempo de fin"
 
-#: ../LongoMatch.Core/Store/Category.cs:111
-#: ../LongoMatch.Core/Store/Category.cs:121
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:229
+#: ../LongoMatch.Core/Store/Category.cs:128
+#: ../LongoMatch.Core/Store/Category.cs:138
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:242
 #: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:75
 msgid "Sort by duration"
 msgstr "Ordenar por duración"
 
-#: ../LongoMatch.Core/Store/Category.cs:131
+#: ../LongoMatch.Core/Store/Category.cs:148
 msgid "name"
 msgstr "nombre"
 
@@ -297,7 +297,7 @@ msgstr "nombre"
 msgid "Not defined"
 msgstr "Sin definir"
 
-#: ../LongoMatch.Core/Store/Play.cs:213
+#: ../LongoMatch.Core/Store/Play.cs:218
 #: ../LongoMatch.Core/Store/SubCategory.cs:84
 #: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:50
 #: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:48
@@ -306,12 +306,12 @@ msgstr "Sin definir"
 msgid "Name"
 msgstr "Nombre"
 
-#: ../LongoMatch.Core/Store/Play.cs:214
+#: ../LongoMatch.Core/Store/Play.cs:219
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:140
 msgid "Start"
 msgstr "Inicio"
 
-#: ../LongoMatch.Core/Store/Play.cs:215
+#: ../LongoMatch.Core/Store/Play.cs:220
 msgid "Stop"
 msgstr "Fin"
 
@@ -356,15 +356,15 @@ msgstr "Selección de equipo"
 msgid "Coordinates"
 msgstr "Coordenadas"
 
-#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:83
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:90
 msgid "Local Team Players"
 msgstr "Plantilla del equipo local"
 
-#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:89
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:96
 msgid "Visitor Team Players"
 msgstr "Plantilla del equipo visitante"
 
-#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:95
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:102
 msgid "Period"
 msgstr "Período"
 
@@ -396,56 +396,70 @@ msgstr "Cancelar"
 msgid "Tag new play"
 msgstr "Etiquetar jugada nueva"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:84
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:136
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:97
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:161
 msgid "none"
 msgstr "ninguno"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:96
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:109
 msgid "Change"
 msgstr "Cambiar"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:114
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:127
 msgid "<b>Name:</b>"
 msgstr "<b>Nombre:</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:124
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:137
 msgid "<b>Color:</b>    "
 msgstr "<b>Color:</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:136
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:149
 msgid "<b>HotKey:</b>"
 msgstr "<b>Tecla rápida:</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:148
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:161
 msgid "<b>Lead time:</b>"
 msgstr "<b>Inicio:</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:160
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:173
 msgid "<b>Lag time:</b>"
 msgstr "<b>Fin:</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:174
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:187
 msgid "<b>Sort Method</b>"
 msgstr "<b>Método de ordenación</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:244
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:271
+msgid "Tag field position"
+msgstr "Posición del campo etiqueta"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:282
+msgid "Tag goal position"
+msgstr "Posición del campo objetivo"
+
+#. Trajectory
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:294
+#: ../LongoMatch.Services/Services/TemplatesService.cs:92
+msgid "Trajectory"
+msgstr "Trayectoria"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:335
 msgid "<b>Properties</b>"
 msgstr "<b>Propiedades</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:298
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:387
 msgid "<b>Subcategory name</b>"
 msgstr "<b>Nombre de subcategoría</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:321
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:410
 msgid "<b>Subcategory type</b>"
 msgstr "<b>Tipo de subcategoría</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:345
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:434
 msgid "_Add subcategory"
 msgstr "_Añadir subcategoría"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:364
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:453
 msgid "<b>Subcategories</b>"
 msgstr "<b>Subcategorías</b>"
 
@@ -685,17 +699,14 @@ msgid "<b>Team</b>"
 msgstr "<b>Equipo</b>"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:24
-#| msgid "Database Manager"
 msgid "Databases manager"
 msgstr "Gestor de bases de datos"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:84
-#| msgid "Select all"
 msgid "_Select DB"
 msgstr "_Seleccionar base de datos"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:111
-#| msgid "Delete"
 msgid "_Delete"
 msgstr "_Eliminar"
 
@@ -883,18 +894,18 @@ msgstr "Añadir etiqueta"
 msgid "<b>Tags</b>"
 msgstr "<b>Etiquetas</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:21
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:25
 msgid "Tag play"
 msgstr "Etiquetar jugada"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:45
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:80
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:241
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:52
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:83
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:266
 msgid "Tags"
 msgstr "Etiquetas"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:64
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:87
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:71
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:90
 msgid "Players"
 msgstr "Jugadores"
 
@@ -1157,7 +1168,6 @@ msgstr "Herramienta de conversión de vídeo"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:176
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:177
-#| msgid "Database Manager"
 msgid "Databases Manager"
 msgstr "Gestor de bases de datos"
 
@@ -1186,11 +1196,11 @@ msgstr "Borrar "
 msgid "Add new "
 msgstr "Añadir nueva "
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:46
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:53
 msgid "Categories"
 msgstr "Categorías"
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:79
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:104
 msgid ""
 "You are about to delete a category and all the plays added to this category. "
 "Do you want to proceed?"
@@ -1198,18 +1208,26 @@ msgstr ""
 "Está a punto de eliminar una categoría y todas las jugadas añadidas a la "
 "categoría. ¿Quiere continuar?"
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:86
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:93
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:111
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:118
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:158
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:167
 msgid "A template needs at least one category"
 msgstr "Una plantilla necesita, al menos, una categoría"
 
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:76
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:141
+msgid "Field background"
+msgstr "Fondo del campo"
+
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:144
+msgid "Goal background"
+msgstr "Fondo del objetivo"
+
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:79
 msgid "Create new..."
 msgstr "Crear nueva..."
 
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:210
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:235
 msgid ""
 "If you delete this subcategory you will looseall the tags associated with "
 "it. Do you want to proceed?"
@@ -1364,17 +1382,14 @@ msgid "Last backup"
 msgstr "Último respaldo"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:66
-#| msgid "Projects Search:"
 msgid "Projects count"
 msgstr "Conteo de proyectos"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:135
-#| msgid "Database Manager"
 msgid "Database name"
 msgstr "Nombre de la base de datos"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:140
-#| msgid "A template already exists with the name: "
 msgid "A database already exists with this name"
 msgstr "Ya existe una base de datos con este nombre"
 
@@ -1383,7 +1398,6 @@ msgid "This database is the active one and can't be deleted"
 msgstr "Esta base de datos es la activa y no se puede eliminar"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:165
-#| msgid "Do you really want to delete the template: "
 msgid "Do you really want to delete the database: "
 msgstr "¿Realmente quiere eliminar la base de datos?"
 
@@ -1521,7 +1535,6 @@ msgid "MP4 file"
 msgstr "Archivo MP4"
 
 #: ../LongoMatch.GUI/Gui/Helpers/MessagesHelpers.cs:95
-#| msgid "Add tag"
 msgid "Add"
 msgstr "Añadir"
 
@@ -1767,12 +1780,12 @@ msgid "Export project to CSV file"
 msgstr "Exportar proyecto a un archivo CSV"
 
 #: ../LongoMatch.Plugins/CSVExporter.cs:58
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:401
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:406
 msgid "Project exported successfully"
 msgstr "Proyecto exportado satisfactoriamente."
 
 #: ../LongoMatch.Plugins/CSVExporter.cs:60
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:403
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:408
 msgid "Error exporting project"
 msgstr "Error al exportar el proyecto"
 
@@ -1780,12 +1793,12 @@ msgstr "Error al exportar el proyecto"
 msgid "Close the current project to open the database manager"
 msgstr "Cierre el proyecto actual para abrir el gestor de bases de datos"
 
-#: ../LongoMatch.Services/Services/EventsManager.cs:133
+#: ../LongoMatch.Services/Services/EventsManager.cs:130
 msgid "You can't create a new play if the capturer is not recording."
 msgstr ""
 "No puede crear un nueva jugada si el dispositivo de captura no está grabando."
 
-#: ../LongoMatch.Services/Services/EventsManager.cs:190
+#: ../LongoMatch.Services/Services/EventsManager.cs:188
 msgid ""
 "The stop time is smaller than the start time. The play will not be added."
 msgstr ""
@@ -1821,11 +1834,11 @@ msgstr "listas de reproducción"
 msgid "New playlist"
 msgstr "Nueva lista de reproducción"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:113
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:118
 msgid "An error occured saving the project:\n"
 msgstr "Ocurrió un error al guardar el proyecto:\n"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:114
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:119
 msgid ""
 "The video file and a backup of the project has been saved. Try to import it "
 "later:\n"
@@ -1833,11 +1846,11 @@ msgstr ""
 "Se han guardado el archivo de vídeo y el respaldo del proyecto. Inténtelo "
 "importar más tarde:\n"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:142
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:147
 msgid "Error importing project:"
 msgstr "Error al importar el proyecto:"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:151
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:156
 msgid ""
 "This project doesn't have any file associated.\n"
 "Select one in the next window"
@@ -1845,31 +1858,31 @@ msgstr ""
 "Este proyecto no tiene ningún archivo asociado.\n"
 "Seleccione uno en la siguiente ventana"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:153
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:158
 msgid "Select a video file"
 msgstr "Seleccionar un archivo de vídeo"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:156
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:161
 msgid "Could not import project, you need a video file"
 msgstr "No se pudo importar el proyecto, necesita un archivo de vídeo"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:171
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:176
 msgid "A project already exists for the file:"
 msgstr "Un proyecto ya existe para este archivo:"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:173
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:178
 msgid "Do you want to overwrite it?"
 msgstr "¿Quiere sobreescribirlo?"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:181
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:186
 msgid "Project successfully imported."
 msgstr "Proyecto importado satisfactoriamente"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:192
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:197
 msgid "The file associated to this project doesn't exist."
 msgstr "El archivo asociado a este proyecto no existe."
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:193
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:198
 msgid ""
 "If the location of the file has changed try to edit it with the database "
 "manager."
@@ -1877,28 +1890,27 @@ msgstr ""
 "Si el archivo ha sido cambiado de sitio, intente editarlo con el gestor de "
 "proyectos"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:201
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:206
 msgid "An error occurred opening this project:"
 msgstr "Ocurrió un error al abrir este proyecto:"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:261
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:266
 msgid "Creating video thumbnails. This can take a while."
 msgstr "Creando las miniaturas del vídeo. Esto puede llevar un tiempo."
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:336
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:341
 msgid "No capture devices were found."
 msgstr "No se encontraron dispositivos de captura."
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:375
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:380
 msgid "You are opening a live project without any video file associated yet."
 msgstr "Está abriendo un proyecto «live» sin un archivo de vídeo asociado."
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:376
-#| msgid "Select a video file in the step."
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:381
 msgid "Select a video file in the next step."
 msgstr "Seleccione un archivo de vídeo en el siguiente paso."
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:391
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:396
 msgid "Save project"
 msgstr "Guardar proyecto"
 
@@ -1943,11 +1955,6 @@ msgstr "Plantilla del equipo visitante"
 #: ../LongoMatch.Services/Services/TemplatesService.cs:76
 msgid "All teams players"
 msgstr "Jugadores de ambos equipos"
-
-#. Trajectory
-#: ../LongoMatch.Services/Services/TemplatesService.cs:92
-msgid "Trajectory"
-msgstr "Trayectoria"
 
 #: ../LongoMatch.Services/Services/TemplatesService.cs:214
 #: ../LongoMatch.Services/Services/TemplatesService.cs:232
