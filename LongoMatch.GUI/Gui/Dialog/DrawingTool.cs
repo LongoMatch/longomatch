@@ -99,7 +99,7 @@ namespace LongoMatch.Gui.Dialog
 		{
 			string filename;
 			
-			filename = FileChooserHelper.OpenFile (this, Catalog.GetString("Save File as..."),
+			filename = FileChooserHelper.SaveFile (this, Catalog.GetString("Save File as..."),
 			                                       null, Config.SnapshotsDir, "PNG Images", new string[] {"*.png"});
 			if (filename != null) {
 				if(System.IO.Path.GetExtension(filename) != "png")
