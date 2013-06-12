@@ -219,6 +219,10 @@
         <signal name="TimeNodeChanged" />
         <signal name="TimeNodeSelected" />
         <signal name="TimeNodeDeleted" />
+        <signal name="PlayListNodeAdded" />
+        <signal name="TagPlay" />
+        <signal name="SnapshotSeries" />
+        <signal name="RenderPlaylist" />
       </itemgroup>
     </signals>
   </object>
@@ -279,7 +283,7 @@
         <signal name="PlayCategoryChanged" />
         <signal name="SnapshotSeriesEvent" />
         <signal name="TagPlay" />
-        <signal name="RenderPlaylistEvent" />
+        <signal name="RenderPlaylist" />
       </itemgroup>
     </signals>
   </object>

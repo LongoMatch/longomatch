@@ -280,15 +280,19 @@ namespace LongoMatch.Gui
 
 			/* Connect PlayListNodeAdded events */
 			playsSelection.PlayListNodeAdded += OnPlayListNodeAdded;
+			timeline.PlayListNodeAdded += OnPlayListNodeAdded;
 
 			/* Connect tags events */
 			playsSelection.TagPlay += EmitTagPlay;
+			timeline.TagPlay += EmitTagPlay;
 
 			/* Connect SnapshotSeries events */
 			playsSelection.SnapshotSeries += EmitSnapshotSeries;
+			timeline.SnapshotSeries += EmitSnapshotSeries;
 
 			playlist.RenderPlaylistEvent += EmitRenderPlaylist;
 			playsSelection.RenderPlaylist += EmitRenderPlaylist;
+			timeline.RenderPlaylist += EmitRenderPlaylist;
 			
 			renderingstatebar1.ManageJobs += (e, o) => {EmitManageJobs();};
 			

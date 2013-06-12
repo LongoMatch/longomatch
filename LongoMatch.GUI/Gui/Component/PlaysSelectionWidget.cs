@@ -140,7 +140,7 @@ namespace LongoMatch.Gui.Component
 			localPlayersList.SnapshotSeriesEvent += EmitSnapshotSeries;
 			visitorPlayersList.SnapshotSeriesEvent += EmitSnapshotSeries;
 
-			playsList.RenderPlaylistEvent += EmitRenderPlaylist;
+			playsList.RenderPlaylist += EmitRenderPlaylist;
 			localPlayersList.RenderPlaylistEvent += EmitRenderPlaylist;
 			visitorPlayersList.RenderPlaylistEvent += EmitRenderPlaylist;
 			

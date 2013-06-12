@@ -27,6 +27,7 @@ using LongoMatch.Handlers;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
 using LongoMatch.Common;
+using LongoMatch.Interfaces;
 
 namespace LongoMatch.Gui.Component {
 
@@ -37,6 +38,10 @@ namespace LongoMatch.Gui.Component {
 		public event PlaySelectedHandler TimeNodeSelected;
 		public event PlaysDeletedHandler TimeNodeDeleted;
 		public event NewTagAtFrameHandler NewMarkEvent;
+		public event PlayListNodeAddedHandler PlayListNodeAdded;
+		public event SnapshotSeriesHandler SnapshotSeries;
+		public event TagPlayHandler TagPlay;
+		public event RenderPlaylistHandler RenderPlaylist;
 
 		private Categories categories;
 
@@ -70,10 +75,14 @@ namespace LongoMatch.Gui.Component {
 				List<Play> playsList = project.PlaysInCategory(cat);
 				TimeScale ts = new TimeScale(cat, playsList, frames, filter);
 				tsList[cat] = ts;
-				ts.TimeNodeChanged += new TimeNodeChangedHandler(OnTimeNodeChanged);
-				ts.TimeNodeSelected += new PlaySelectedHandler(OnTimeNodeSelected);
-				ts.TimeNodeDeleted += new PlaysDeletedHandler(OnTimeNodeDeleted);
-				ts.NewMarkAtFrameEvent += new NewTagAtFrameHandler(OnNewMark);
+				ts.TimeNodeChanged += HandleTimeNodeChanged;
+				ts.TimeNodeSelected += HandleTimeNodeSelected;
+				ts.TimeNodeDeleted += HandleTimeNodeDeleted;
+				ts.NewMarkAtFrameEvent += HandleNewMark;
+				ts.TagPlay += HandleTagPlay;
+				ts.RenderPlaylist += HandleRenderPlaylist;
+				ts.SnapshotSeries += HandleSnapshotSeries;
+				ts.PlayListNodeAdded += HandlePlayListNodeAdded; 
 				TimelineBox.PackStart(ts,false,true,0);
 				ts.Show();
 			}
@@ -94,24 +103,49 @@ namespace LongoMatch.Gui.Component {
 			}
 		}
 		
-		protected virtual void OnNewMark(Category category, int frame) {
+		void HandleNewMark(Category category, int frame) {
 			if(NewMarkEvent != null)
 				NewMarkEvent(category,frame);
 		}
 
-		protected virtual void OnTimeNodeChanged(TimeNode tn, object val) {
+		void HandleTimeNodeChanged(TimeNode tn, object val) {
 			if(TimeNodeChanged != null)
 				TimeNodeChanged(tn,val);
 		}
 
-		protected virtual void OnTimeNodeSelected(Play tn) {
+		void HandleTimeNodeSelected(Play tn) {
 			if(TimeNodeSelected != null)
 				TimeNodeSelected(tn);
 		}
 		
-		protected virtual void OnTimeNodeDeleted(List<Play> plays) {
+		void HandleTimeNodeDeleted(List<Play> plays) {
 			if(TimeNodeDeleted != null)
 				TimeNodeDeleted(plays);
 		}
+		
+		void HandleTagPlay (Play play)
+		{
+			if (TagPlay != null)
+				TagPlay (play);
+		}
+
+		void HandlePlayListNodeAdded (Play play)
+		{
+			if (PlayListNodeAdded != null)
+				PlayListNodeAdded (play);
+		}
+
+		void HandleSnapshotSeries (Play play)
+		{
+			if (SnapshotSeries != null)
+				SnapshotSeries (play);
+		}
+
+		void HandleRenderPlaylist (IPlayList playlist)
+		{
+			if (RenderPlaylist != null)
+				RenderPlaylist (playlist);
+		}
+
 	}
 }

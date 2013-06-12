@@ -45,6 +45,10 @@ namespace LongoMatch.Gui.Component
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event PlaySelectedHandler TimeNodeSelected;
 		public event PlaysDeletedHandler TimeNodeDeleted;
+		public event PlayListNodeAddedHandler PlayListNodeAdded;
+		public event SnapshotSeriesHandler SnapshotSeries;
+		public event TagPlayHandler TagPlay;
+		public event RenderPlaylistHandler RenderPlaylist;
 
 
 		public TimeScale(Category category, List<Play> list, uint frames, PlaysFilter filter): base(list, frames, filter)
@@ -55,6 +59,32 @@ namespace LongoMatch.Gui.Component
 				Visible = filter.VisibleCategories.Contains (category);
 				QueueDraw();
 			};
+		}
+
+		override protected void ExpandMenu (List<Play> plays, Dictionary<Play, Menu> menusDict) {
+			foreach (Play play in plays) {
+				MenuItem tag, addPLN, snapshot, render;
+				Menu menu = menusDict[play];
+			
+				tag = new MenuItem(Catalog.GetString("Edit tags"));
+				addPLN = new MenuItem(Catalog.GetString("Add to playlist"));
+				render = new MenuItem(Catalog.GetString("Export to video file"));
+				snapshot = new MenuItem(Catalog.GetString("Export to PGN images"));
+				
+				tag.Activated += HandleTag;
+				addPLN.Activated += HandleAddPlayListNode;
+				render.Activated += HandleRender;
+				snapshot.Activated += HandleSnapshot;
+				
+				menu.Add (tag);
+				menu.Add (addPLN);
+				menu.Add (render);
+				menu.Add (snapshot);
+				menuToNodeDict.Add (tag, play);
+				menuToNodeDict.Add (addPLN, play);
+				menuToNodeDict.Add (render, play);
+				menuToNodeDict.Add (snapshot, play);
+			}
 		}
 
 		public void AddPlay(Play play) {
@@ -85,5 +115,29 @@ namespace LongoMatch.Gui.Component
 				NewMarkAtFrameEvent(category, cursorFrame);
 		}
 		
+		void HandleSnapshot (object sender, EventArgs e)
+		{
+			if (SnapshotSeries != null)
+				SnapshotSeries (menuToNodeDict[sender as MenuItem]);
+			
+		}
+
+		void HandleRender (object sender, EventArgs e)
+		{
+			
+		}
+
+		void HandleAddPlayListNode (object sender, EventArgs e)
+		{
+			if (PlayListNodeAdded != null)
+				PlayListNodeAdded (menuToNodeDict[sender as MenuItem]);
+			
+		}
+
+		void HandleTag (object sender, EventArgs e)
+		{
+			if (TagPlay != null)
+				TagPlay(menuToNodeDict[sender as MenuItem]);
+		}
 	}
 }

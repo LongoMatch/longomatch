@@ -45,7 +45,7 @@ namespace LongoMatch.Gui.Component
 		public event PlayCategoryChangedHandler PlayCategoryChanged;
 		public event SnapshotSeriesHandler SnapshotSeriesEvent;
 		public event TagPlayHandler TagPlay;
-		public event RenderPlaylistHandler RenderPlaylistEvent;
+		public event RenderPlaylistHandler RenderPlaylist;
 
 		ITemplatesService ts;
 
@@ -241,8 +241,8 @@ namespace LongoMatch.Gui.Component
 				                              project.Description.File, 1, true));
 			}
 			
-			if (RenderPlaylistEvent != null)
-				RenderPlaylistEvent(playlist);
+			if (RenderPlaylist != null)
+				RenderPlaylist (playlist);
 		}
 	}
 }

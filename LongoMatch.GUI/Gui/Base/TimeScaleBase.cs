@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Cairo;
 using Gdk;
 using Gtk;
@@ -58,10 +59,10 @@ namespace LongoMatch.Gui.Base
 		Menu deleteMenu;
 		Menu menu;
 		MenuItem delete;
-		Dictionary<MenuItem,T> dic;
 
 		Pango.Layout layout;
 		
+		protected Dictionary<MenuItem,T> menuToNodeDict;
 		protected string elementName = "";
 		protected int cursorFrame;
 
@@ -76,13 +77,11 @@ namespace LongoMatch.Gui.Base
 			Size((int)(frames/pixelRatio),SECTION_HEIGHT);
 			Events = EventMask.PointerMotionMask | EventMask.ButtonPressMask | EventMask.ButtonReleaseMask ;
 
-			dic = new Dictionary<MenuItem, T>();
+			menuToNodeDict = new Dictionary<MenuItem, T>();
 			
 			layout =  new Pango.Layout(PangoContext);
 			layout.Wrap = Pango.WrapMode.Char;
 			layout.Alignment = Pango.Alignment.Left;
-
-			SetMenu();
 		}
 
 		public uint PixelRatio {
@@ -137,19 +136,55 @@ namespace LongoMatch.Gui.Base
 		
 		abstract protected void AddNewTimeNode();
 		
-		void SetMenu() {
-			MenuItem newTimeNode;
-
+		virtual protected void ExpandMenu (List<T> timenodes, Dictionary<T, Menu> menusDict) {}
+		
+		void ShowMenu (List<T> timenodes) {
+			Menu menu;
+			Dictionary <T, Menu> menusDict;
+			
+			if (timenodes.Contains(SelectedTimeNode)) {
+				timenodes = timenodes.GetRange(0, 1);
+			}
+			
 			menu = new Menu();
-			delete = new MenuItem(Catalog.GetString("Delete ") + elementName);
+			menusDict = CreateCommonMenu (timenodes, menu);
+			ExpandMenu (timenodes, menusDict);
+			menu.ShowAll();
+			menu.Popup();
+		}
+		
+		Dictionary<T, Menu> CreateCommonMenu(List<T> timenodes, Menu menu) {
+			MenuItem newTimeNode;
+			Dictionary <T, Menu> menusDict;
+			
+			menusDict = new Dictionary<T, Menu>();
+			menuToNodeDict.Clear();
 			newTimeNode = new MenuItem(Catalog.GetString("Add new ") + elementName);
 
 			menu.Append(newTimeNode);
-			menu.Append(delete);
-
 			newTimeNode.Activated += new EventHandler(OnNewTimeNode);
 
-			menu.ShowAll();
+			if (timenodes.Count == 1) {
+				menusDict.Add (timenodes[0], menu);
+			} else {
+				foreach(T tn in timenodes) {
+					Menu catMenu = new Menu();
+					MenuItem catItem = new MenuItem(tn.Name);
+					menu.Append (catItem);
+					catItem.Submenu = catMenu;
+					menusDict.Add(tn, catMenu);
+				}
+			}
+			
+			foreach(T tn in timenodes) {
+				//We scan all the time Nodes looking for one matching the cursor selectcio
+				//And we add them to the delete menu
+				MenuItem del = new MenuItem(Catalog.GetString("Delete "));
+				del.Activated += new EventHandler(OnDelete);
+				menusDict[tn].Append(del);
+				menuToNodeDict.Add(del,tn);
+			}
+			return menusDict;
 		}
 		
 		void DrawTimeNodes(Gdk.Window win) {
@@ -226,22 +261,11 @@ namespace LongoMatch.Gui.Base
 		}
 
 		void ProcessButton3(double X) {
+			List<T> selected;
+			
 			cursorFrame =(int)(X*pixelRatio);
-			deleteMenu = new Menu();
-			delete.Submenu=deleteMenu;
-			dic.Clear();
-			foreach(T tn in list) {
-				//We scan all the time Nodes looking for one matching the cursor selectcio
-				//And we add them to the delete menu
-				if(tn.HasFrame(cursorFrame)) {
-					MenuItem del = new MenuItem(Catalog.GetString("Delete "+tn.Name));
-					del.Activated += new EventHandler(OnDelete);
-					deleteMenu.Append(del);
-					dic.Add(del,tn);
-				}
-			}
-			menu.ShowAll();
-			menu.Popup();
+			selected = list.Where (tn => tn.HasFrame (cursorFrame)).ToList();
+			ShowMenu(selected);
 		}
 
 		void ProcessButton1(EventButton evnt) {
@@ -289,7 +313,7 @@ namespace LongoMatch.Gui.Base
 
 		void OnDelete(object obj, EventArgs args) {
 			T tNode;
-			dic.TryGetValue((MenuItem)obj, out tNode);
+			menuToNodeDict.TryGetValue((MenuItem)obj, out tNode);
 			if(tNode != null) {
 				var list = new List<T>();
 				list.Add(tNode);
