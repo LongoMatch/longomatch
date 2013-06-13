@@ -73,7 +73,8 @@ namespace LongoMatch.Gui.Component {
 			
 			foreach(Category cat in  categories) {
 				List<Play> playsList = project.PlaysInCategory(cat);
-				TimeScale ts = new TimeScale(cat, playsList, frames, filter);
+				TimeScale ts = new TimeScale(cat, playsList, frames, filter,
+				                             project.Description.File);
 				tsList[cat] = ts;
 				ts.TimeNodeChanged += HandleTimeNodeChanged;
 				ts.TimeNodeSelected += HandleTimeNodeSelected;

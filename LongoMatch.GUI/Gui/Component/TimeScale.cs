@@ -40,6 +40,7 @@ namespace LongoMatch.Gui.Component
 	public class TimeScale : TimeScaleBase<Play>
 	{
 		Category category;
+		MediaFile mediaFile;
 		
 		public event NewTagAtFrameHandler NewMarkAtFrameEvent;
 		public event TimeNodeChangedHandler TimeNodeChanged;
@@ -51,9 +52,10 @@ namespace LongoMatch.Gui.Component
 		public event RenderPlaylistHandler RenderPlaylist;
 
 
-		public TimeScale(Category category, List<Play> list, uint frames, PlaysFilter filter): base(list, frames, filter)
+		public TimeScale(Category category, List<Play> list, uint frames, PlaysFilter filter, MediaFile mediaFile): base(list, frames, filter)
 		{
 			this.category = category;
+			this.mediaFile = mediaFile;
 			elementName = Catalog.GetString("play");
 			filter.FilterUpdated += () => {
 				Visible = filter.VisibleCategories.Contains (category);
@@ -124,6 +126,12 @@ namespace LongoMatch.Gui.Component
 
 		void HandleRender (object sender, EventArgs e)
 		{
+			if (RenderPlaylist != null) {
+				PlayList pl = new PlayList();
+				pl.Add (new PlayListPlay (menuToNodeDict[sender as MenuItem],
+				                          mediaFile, 1.0f, true));
+				RenderPlaylist (pl);
+			}
 			
 		}
 
