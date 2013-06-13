@@ -95,12 +95,13 @@ namespace LongoMatch.Video.Utils
 		
 		private int LaunchRemuxer () {
 			int ret = 1;
+			
 			ProcessStartInfo startInfo = new ProcessStartInfo();
 			startInfo.CreateNoWindow = true;
 			if (System.Environment.OSVersion.Platform != PlatformID.Win32NT) {
 				startInfo.UseShellExecute = false;
 			}
-			startInfo.FileName = "ffmpeg";
+			startInfo.FileName = "avconv";
 			startInfo.Arguments = String.Format("-i {0} -vcodec copy -acodec copy -y -sn {1} ",
 			                                    filepath, newFilepath);
 
