@@ -20,6 +20,7 @@ using System.Collections.Generic;
 
 namespace LongoMatch.Common
 {
+	[Serializable]
 	public class Coordinates: List<Point>
 	{
 		public Coordinates ()
@@ -54,6 +55,7 @@ namespace LongoMatch.Common
 		}
 	}
 	
+	[Serializable]
 	public class Point {
 		public Point (int x, int y) {
 			X = x;
