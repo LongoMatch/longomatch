@@ -68,6 +68,7 @@ namespace LongoMatch.Gui
 		private string filename = null;
 		protected VolumeWindow vwin;
 		bool readyToSeek = false;
+		Seeker seeker;
 
 
 		#region Constructors
@@ -94,6 +95,8 @@ namespace LongoMatch.Gui
 			seeksQueue [0] = -1;
 			seeksQueue [1] = -1;
 			detachbutton.Clicked += (sender, e) => EmitDetach();
+			seeker = new Seeker();
+			seeker.SeekEvent += HandleSeekEvent;
 		}
 
 		#endregion
@@ -310,12 +313,8 @@ namespace LongoMatch.Gui
 
 		public void SeekToPreviousFrame(bool in_segment) {
 			long currentTime = player.CurrentTime;
-			if(currentTime> segmentStartTime) {
-				if(player.Playing)
-					player.Pause();
-				player.SeekToPreviousFrame(GetRateFromScale(),in_segment);
-				if(SeekEvent != null)
-					SeekEvent(currentTime);
+			if (currentTime > segmentStartTime) {
+				seeker.Seek (SeekType.StepDown, GetRateFromScale(), in_segment);
 			}
 		}
 
@@ -438,13 +437,13 @@ namespace LongoMatch.Gui
 		private void SeekFromTimescale(double pos) {
 			if(InSegment()) {
 				long seekPos = segmentStartTime + (long)(pos*(segmentStopTime-segmentStartTime));
-				player.SeekInSegment(seekPos, GetRateFromScale());
-				timelabel.Text= TimeString.MSecondsToSecondsString(seekPos) + "/" +
-				                TimeString.MSecondsToSecondsString(segmentStopTime-segmentStartTime);
+				seeker.Seek (SeekType.Keyframe, GetRateFromScale(), true, seekPos);
+				timelabel.Text= TimeString.MSecondsToMSecondsString(seekPos) + "/" +
+				                TimeString.MSecondsToMSecondsString(segmentStopTime-segmentStartTime);
 			}
 			else {
-				player.Position = pos;
-				timelabel.Text= TimeString.MSecondsToSecondsString(player.CurrentTime) + "/" + slength;
+				seeker.Seek (SeekType.Keyframe, GetRateFromScale(), true, (int) (pos * length));
+				timelabel.Text= TimeString.MSecondsToMSecondsString(player.CurrentTime) + "/" + slength;
 				Rate = 1;
 			}
 		}
@@ -685,6 +684,27 @@ namespace LongoMatch.Gui
 			if(DrawFrame != null)
 				DrawFrame(currentTime);
 		}
+		
+		void HandleSeekEvent (SeekType type, float rate, bool inSegment, long start, long stop)
+		{
+			/* We only use it for backwards framestepping for now */
+			if (type == SeekType.StepDown || type == SeekType.StepUp) {
+				if(player.Playing)
+					player.Pause ();
+				if (type == SeekType.StepDown)
+					player.SeekToPreviousFrame (rate, inSegment);
+				else
+					player.SeekToNextFrame (rate, inSegment);
+				if (SeekEvent != null)
+					SeekEvent ((int)AccurateCurrentTime);
+			}
+			if (type == SeekType.Accurate || type == SeekType.Keyframe) {
+				player.SeekTime (start, rate, type == SeekType.Accurate);
+				if (SeekEvent != null)
+					SeekEvent ((int)start);
+			}
+		}
+
 		#endregion
 	}
 }

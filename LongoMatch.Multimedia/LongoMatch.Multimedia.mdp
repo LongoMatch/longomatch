@@ -62,6 +62,7 @@
     <File subtype="Directory" buildaction="Compile" name="Converter" />
     <File subtype="Code" buildaction="Compile" name="Converter/GstVideoConverter.cs" />
     <File subtype="Code" buildaction="Compile" name="Converter/ObjectManager.cs" />
+    <File subtype="Code" buildaction="Compile" name="Utils/Seeker.cs" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="libcesarplayer" />
