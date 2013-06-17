@@ -169,14 +169,106 @@ namespace LongoMatch
 				Save ();
 			}
 		}
+		
+		public static string Lang {
+			get {
+				return state.lang;
+			}
+			set {
+				state.lang = value;
+				Save ();
+			}
+		}
+		
+		public static VideoStandard CaptureVideoStandard {
+			get {
+				return state.captureVideoStandard;
+			}
+			set {
+				state.captureVideoStandard = value;
+				Save ();
+			}
+		}
+		
+		public static EncodingProfile CaptureEncodingProfile {
+			get {
+				return state.captureEncodingProfile;
+			}
+			set{
+				state.captureEncodingProfile = value;
+				Save ();
+				
+			}
+		}
+		
+		public static VideoStandard RenderVideoStandard {
+			get {
+				return state.renderVideoStandard;
+			}
+			set {
+				state.renderVideoStandard = value;
+				Save ();
+			}
+		}
+		
+		public static EncodingProfile RenderEncodingProfile {
+			get {
+				return state.renderEncodingProfile;
+			}
+			set{
+				state.renderEncodingProfile = value;
+				Save ();
+				
+			}
+		}
+		
+		public static EncodingQuality CaptureEncodingQuality {
+			get {
+				return state.captureEncodingQuality;
+			}
+			set{
+				state.captureEncodingQuality = value;
+				Save ();
+				
+			}
+		}
+			
+		public static EncodingQuality RenderEncodingQuality {
+			get {
+				return state.renderEncodingQuality;
+			}
+			set {
+				state.renderEncodingQuality = value;
+				Save ();
+			}
+		}
 		#endregion
 
 	}
 	
 	[Serializable]
 	public class ConfigState{
-		public bool fastTagging=false;
-		public string currentDatabase=Constants.DEFAULT_DB_NAME;
+		public bool fastTagging;
+		public string currentDatabase;
+		public string lang;
+		public VideoStandard captureVideoStandard;
+		public VideoStandard renderVideoStandard;
+		public EncodingProfile captureEncodingProfile;
+		public EncodingProfile renderEncodingProfile;
+		public EncodingQuality captureEncodingQuality;
+		public EncodingQuality renderEncodingQuality;
+		
+		public ConfigState () {
+			/* Set default values */
+			fastTagging = false;
+			currentDatabase = Constants.DEFAULT_DB_NAME;
+			lang = null;
+			captureVideoStandard = VideoStandards.P480;
+			captureEncodingProfile = EncodingProfiles.MP4;
+			captureEncodingQuality = EncodingQualities.Medium;
+			renderVideoStandard = VideoStandards.P720_16_9;
+			renderEncodingProfile = EncodingProfiles.MP4;
+			renderEncodingQuality = EncodingQualities.High;
+		}
 	}
 }
-
