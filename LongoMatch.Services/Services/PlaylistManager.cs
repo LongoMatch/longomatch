@@ -172,6 +172,8 @@ namespace LongoMatch.Services
 		protected virtual void OnRenderPlaylistEvent (IPlayList playlist)
 		{
 			List<EditionJob> jobs = guiToolkit.ConfigureRenderingJob(playlist);
+			if (jobs == null)
+				return;
 			foreach (Job job in jobs)
 				videoRenderer.AddJob(job);
 		}
