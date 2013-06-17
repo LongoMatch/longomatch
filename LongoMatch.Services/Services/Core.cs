@@ -49,14 +49,19 @@ namespace LongoMatch.Services
 
 			SetupBaseDir();
 
-			/* Init internationalization support */
-			Catalog.Init(Constants.SOFTWARE_NAME.ToLower(),Config.RelativeToPrefix("share/locale"));
-
 			/* Check default folders */
 			CheckDirs();
 			
 			/* Load user config */
 			Config.Load();
+			
+			if (Config.Lang != null) {
+				Environment.SetEnvironmentVariable ("LANG", Config.Lang);
+			}
+			
+			/* Init internationalization support */
+			Catalog.Init(Constants.SOFTWARE_NAME.ToLower(),Config.RelativeToPrefix("share/locale"));
+
 		}
 
 		public static void Start(IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit) {
