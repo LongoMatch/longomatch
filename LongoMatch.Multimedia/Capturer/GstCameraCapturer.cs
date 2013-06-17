@@ -89,17 +89,17 @@ namespace LongoMatch.Video.Capturer {
 			}
 		}
 
-		[GLib.Property("video_bitrate")]
-		public uint VideoBitrate {
+		[GLib.Property("video_quality")]
+		public uint VideoQuality {
 			get {
-				GLib.Value val = GetProperty("video_bitrate");
+				GLib.Value val = GetProperty("video_quality");
 				uint ret = (uint) val;
 				val.Dispose();
 				return ret;
 			}
 			set {
 				GLib.Value val = new GLib.Value(value);
-				SetProperty("video_bitrate", val);
+				SetProperty("video_quality", val);
 				val.Dispose();
 			}
 		}
@@ -119,17 +119,17 @@ namespace LongoMatch.Video.Capturer {
 			}
 		}
 
-		[GLib.Property("audio_bitrate")]
-		public uint AudioBitrate {
+		[GLib.Property("audio_quality")]
+		public uint AudioQuality {
 			get {
-				GLib.Value val = GetProperty("audio_bitrate");
+				GLib.Value val = GetProperty("audio_quality");
 				uint ret = (uint) val;
 				val.Dispose();
 				return ret;
 			}
 			set {
 				GLib.Value val = new GLib.Value(value);
-				SetProperty("audio_bitrate", val);
+				SetProperty("audio_quality", val);
 				val.Dispose();
 			}
 		}

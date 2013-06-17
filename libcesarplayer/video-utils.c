@@ -432,3 +432,145 @@ lgm_discover_uri (
 
   return ret;
 }
+
+GstElement * lgm_create_video_encoder (VideoEncoderType type, guint quality,
+    GQuark quark, GError ** err)
+{
+  GstElement * encoder = NULL;
+  gchar *name = NULL;
+
+  switch (type) {
+    case VIDEO_ENCODER_MPEG4:
+      encoder = gst_element_factory_make ("ffenc_mpeg4", "video-encoder");
+      g_object_set (encoder, "pass", 2,
+          "max-key-interval", -1,
+          "quantizer", (gfloat) quality * 30 / 100, NULL);
+      name = "FFmpeg mpeg4 video encoder";
+      break;
+
+    case VIDEO_ENCODER_XVID:
+      encoder = gst_element_factory_make ("xvidenc", "video-encoder");
+      g_object_set (encoder, "pass", 3,
+          "profile", 146, "max-key-interval", -1,
+          "quantizer", quality * 31 / 100, NULL);
+      name = "Xvid video encoder";
+      break;
+
+    case VIDEO_ENCODER_H264:
+      encoder = gst_element_factory_make ("x264enc", "video-encoder");
+      g_object_set (encoder, "key-int-max", 25, "pass", 5,
+          "speed-preset", 3,
+          "quantizer", quality * 50 / 100, NULL);
+      name = "X264 video encoder";
+      break;
+
+    case VIDEO_ENCODER_THEORA:
+      encoder = gst_element_factory_make ("theoraenc", "video-encoder");
+      g_object_set (encoder, "keyframe-auto", FALSE,
+          "keyframe-force", 25,
+          "quality", quality * 63 / 100, NULL);
+      name = "Theora video encoder";
+      break;
+
+    case VIDEO_ENCODER_VP8:
+    default:
+      encoder = gst_element_factory_make ("vp8enc", "video-encoder");
+      g_object_set (encoder, "speed", 2, "threads", 8,
+          "max-keyframe-distance", 25,
+          "quality", (gdouble) quality * 10 / 100, NULL);
+      name = "VP8 video encoder";
+      break;
+
+  }
+  if (!encoder) {
+    g_set_error (err,
+        quark,
+        GST_ERROR_PLUGIN_LOAD,
+        "Failed to create the %s element. "
+        "Please check your GStreamer installation.", name);
+    return NULL;
+  }
+
+  return encoder;
+}
+
+GstElement * lgm_create_audio_encoder (AudioEncoderType type, guint quality,
+    GQuark quark, GError ** err)
+{
+  GstElement *encoder = NULL;
+  gchar *name = NULL;
+
+  switch (type) {
+    case AUDIO_ENCODER_MP3:
+      encoder = gst_element_factory_make ("lamemp3enc", "audio-encoder");
+      g_object_set (encoder, "target", 0,
+          "quality", (gfloat) quality * 10 / 100, NULL);
+      name = "Mp3 audio encoder";
+      break;
+
+    case AUDIO_ENCODER_AAC:
+      encoder = gst_element_factory_make ("faac", "audio-encoder");
+      g_object_set (encoder, "bitrate", quality *  320000 / 100, NULL);
+      name = "AAC audio encoder";
+      break;
+
+    case AUDIO_ENCODER_VORBIS:
+    default:
+      encoder = gst_element_factory_make ("vorbisenc", "audio-encoder");
+      g_object_set (encoder, "quality", (gfloat) quality / 100, NULL);
+      name = "Vorbis audio encoder";
+      break;
+  }
+
+  if (!encoder) {
+    g_set_error (err,
+        quark,
+        GST_ERROR_PLUGIN_LOAD,
+        "Failed to create the %s element. "
+        "Please check your GStreamer installation.", name);
+    return NULL;
+  }
+
+  return encoder;
+}
+
+GstElement * lgm_create_muxer (VideoMuxerType type, GQuark quark, GError **err)
+{
+  GstElement *muxer = NULL;
+  gchar *name = NULL;
+
+  switch (type) {
+    case VIDEO_MUXER_OGG:
+      name = "OGG muxer";
+      muxer = gst_element_factory_make ("oggmux", "video-muxer");
+      break;
+    case VIDEO_MUXER_AVI:
+      name = "AVI muxer";
+      muxer = gst_element_factory_make ("avimux", "video-muxer");
+      break;
+    case VIDEO_MUXER_MATROSKA:
+      name = "Matroska muxer";
+      muxer = gst_element_factory_make ("matroskamux", "video-muxer");
+      break;
+    case VIDEO_MUXER_MP4:
+      name = "MP4 muxer";
+      muxer = gst_element_factory_make ("qtmux", "video-muxer");
+      break;
+    case VIDEO_MUXER_WEBM:
+    default:
+      name = "WebM muxer";
+      muxer = gst_element_factory_make ("webmmux", "video-muxer");
+      break;
+  }
+
+  if (!muxer) {
+    g_set_error (err,
+        quark,
+        GST_ERROR_PLUGIN_LOAD,
+        "Failed to create the %s element. "
+        "Please check your GStreamer installation.", name);
+    return muxer;
+  }
+
+  return muxer;
+}

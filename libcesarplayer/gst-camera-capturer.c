@@ -67,8 +67,8 @@ enum
   PROP_0,
   PROP_OUTPUT_HEIGHT,
   PROP_OUTPUT_WIDTH,
-  PROP_VIDEO_BITRATE,
-  PROP_AUDIO_BITRATE,
+  PROP_VIDEO_QUALITY,
+  PROP_AUDIO_QUALITY,
   PROP_AUDIO_ENABLED,
   PROP_OUTPUT_FILE,
   PROP_DEVICE_ID,
@@ -82,8 +82,8 @@ struct GstCameraCapturerPrivate
   gchar *device_id;
   guint output_height;
   guint output_width;
-  guint audio_bitrate;
-  guint video_bitrate;
+  guint audio_quality;
+  guint video_quality;
   gboolean audio_enabled;
   VideoEncoderType video_encoder_type;
   AudioEncoderType audio_encoder_type;
@@ -362,8 +362,8 @@ gst_camera_capturer_init (GstCameraCapturer * object)
 
   priv->output_height = 480;
   priv->output_width = 640;
-  priv->audio_bitrate = 128;
-  priv->video_bitrate = 5000;
+  priv->audio_quality = 50;
+  priv->video_quality = 50;
   priv->last_buffer = NULL;
   priv->expand_logo = TRUE;
   priv->current_recording_start_ts = GST_CLOCK_TIME_NONE;
@@ -437,20 +437,20 @@ gst_camera_capturer_finalize (GObject * object)
 }
 
 static void
-gst_camera_capturer_set_video_bit_rate (GstCameraCapturer * gcc, gint bitrate)
+gst_camera_capturer_set_video_quality (GstCameraCapturer * gcc, gint quality)
 {
-  gcc->priv->video_bitrate = bitrate;
-  GST_INFO_OBJECT (gcc, "Changed video bitrate to: %d",
-      gcc->priv->video_bitrate);
+  gcc->priv->video_quality = quality;
+  GST_INFO_OBJECT (gcc, "Changed video quality to: %d",
+      gcc->priv->video_quality);
 }
 
 static void
-gst_camera_capturer_set_audio_bit_rate (GstCameraCapturer * gcc, gint bitrate)
+gst_camera_capturer_set_audio_quality (GstCameraCapturer * gcc, gint quality)
 {
 
-  gcc->priv->audio_bitrate = bitrate;
-  GST_INFO_OBJECT (gcc, "Changed audio bitrate to: %d",
-      gcc->priv->audio_bitrate);
+  gcc->priv->audio_quality = quality;
+  GST_INFO_OBJECT (gcc, "Changed audio quality to: %d",
+      gcc->priv->audio_quality);
 }
 
 static void
@@ -492,11 +492,11 @@ gst_camera_capturer_set_property (GObject * object, guint property_id,
     case PROP_OUTPUT_WIDTH:
       gcc->priv->output_width = g_value_get_uint (value);
       break;
-    case PROP_VIDEO_BITRATE:
-      gst_camera_capturer_set_video_bit_rate (gcc, g_value_get_uint (value));
+    case PROP_VIDEO_QUALITY:
+      gst_camera_capturer_set_video_quality (gcc, g_value_get_uint (value));
       break;
-    case PROP_AUDIO_BITRATE:
-      gst_camera_capturer_set_audio_bit_rate (gcc, g_value_get_uint (value));
+    case PROP_AUDIO_QUALITY:
+      gst_camera_capturer_set_audio_quality (gcc, g_value_get_uint (value));
       break;
     case PROP_AUDIO_ENABLED:
       gst_camera_capturer_set_audio_enabled (gcc, g_value_get_boolean (value));
@@ -528,11 +528,11 @@ gst_camera_capturer_get_property (GObject * object, guint property_id,
     case PROP_OUTPUT_WIDTH:
       g_value_set_uint (value, gcc->priv->output_width);
       break;
-    case PROP_AUDIO_BITRATE:
-      g_value_set_uint (value, gcc->priv->audio_bitrate);
+    case PROP_AUDIO_QUALITY:
+      g_value_set_uint (value, gcc->priv->audio_quality);
       break;
-    case PROP_VIDEO_BITRATE:
-      g_value_set_uint (value, gcc->priv->video_bitrate);
+    case PROP_VIDEO_QUALITY:
+      g_value_set_uint (value, gcc->priv->video_quality);
       break;
     case PROP_AUDIO_ENABLED:
       g_value_set_boolean (value, gcc->priv->audio_enabled);
@@ -576,11 +576,11 @@ gst_camera_capturer_class_init (GstCameraCapturerClass * klass)
   g_object_class_install_property (object_class, PROP_OUTPUT_WIDTH,
       g_param_spec_uint ("output_width", NULL,
           NULL, 0, 5600, 720, G_PARAM_READWRITE));
-  g_object_class_install_property (object_class, PROP_VIDEO_BITRATE,
-      g_param_spec_uint ("video_bitrate", NULL,
+  g_object_class_install_property (object_class, PROP_VIDEO_QUALITY,
+      g_param_spec_uint ("video_quality", NULL,
           NULL, 100, G_MAXUINT, 1000, G_PARAM_READWRITE));
-  g_object_class_install_property (object_class, PROP_AUDIO_BITRATE,
-      g_param_spec_uint ("audio_bitrate", NULL,
+  g_object_class_install_property (object_class, PROP_AUDIO_QUALITY,
+      g_param_spec_uint ("audio_quality", NULL,
           NULL, 12, G_MAXUINT, 128, G_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_AUDIO_ENABLED,
       g_param_spec_boolean ("audio_enabled", NULL,
@@ -1434,72 +1434,19 @@ static gboolean
 gst_camera_capturer_create_video_encoder (GstCameraCapturer * gcc,
     VideoEncoderType type, GError ** err)
 {
-  gchar *name = NULL;
+  GstElement *encoder = NULL;
 
   g_return_val_if_fail (gcc != NULL, FALSE);
   g_return_val_if_fail (GST_IS_CAMERA_CAPTURER (gcc), FALSE);
 
-  switch (type) {
-    case VIDEO_ENCODER_MPEG4:
-      gcc->priv->video_enc =
-          gst_element_factory_make ("ffenc_mpeg4", "video-encoder");
-      g_object_set (gcc->priv->video_enc, "pass", 512,
-          "max-key-interval", -1, NULL);
-      name = "FFmpeg mpeg4 video encoder";
-      break;
-
-    case VIDEO_ENCODER_XVID:
-      gcc->priv->video_enc =
-          gst_element_factory_make ("xvidenc", "video-encoder");
-      g_object_set (gcc->priv->video_enc, "pass", 1,
-          "profile", 146, "max-key-interval", -1, NULL);
-      name = "Xvid video encoder";
-      break;
-
-    case VIDEO_ENCODER_H264:
-      gcc->priv->video_enc =
-          gst_element_factory_make ("x264enc", "video-encoder");
-      g_object_set (gcc->priv->video_enc, "key-int-max", 25, "pass", 17,
-          "speed-preset", 3, NULL);
-      name = "X264 video encoder";
-      break;
-
-    case VIDEO_ENCODER_THEORA:
-      gcc->priv->video_enc =
-          gst_element_factory_make ("theoraenc", "video-encoder");
-      g_object_set (gcc->priv->video_enc, "keyframe-auto", FALSE,
-          "keyframe-force", 25, NULL);
-      name = "Theora video encoder";
-      break;
-
-    case VIDEO_ENCODER_VP8:
-    default:
-      gcc->priv->video_enc =
-          gst_element_factory_make ("vp8enc", "video-encoder");
-      g_object_set (gcc->priv->video_enc, "speed", 2, "threads", 8,
-          "max-keyframe-distance", 25, NULL);
-      name = "VP8 video encoder";
-      break;
-
-  }
-  if (!gcc->priv->video_enc) {
-    g_set_error (err,
-        GCC_ERROR,
-        GST_ERROR_PLUGIN_LOAD,
-        "Failed to create the %s element. "
-        "Please check your GStreamer installation.", name);
+  encoder = lgm_create_video_encoder (type, gcc->priv->video_quality,
+      GCC_ERROR, err);
+  if (!encoder) {
     return FALSE;
   }
 
-  if (gcc->priv->video_encoder_type == VIDEO_ENCODER_MPEG4 ||
-      gcc->priv->video_encoder_type == VIDEO_ENCODER_XVID)
-    g_object_set (gcc->priv->video_enc, "bitrate", gcc->priv->video_bitrate * 1000, NULL);
-  else
-    g_object_set (gcc->priv->video_enc, "bitrate", gcc->priv->video_bitrate,
-        NULL);
-
-  GST_INFO_OBJECT(gcc, "Video encoder %s created", name);
   gcc->priv->video_encoder_type = type;
+  gcc->priv->video_enc = encoder;
   return TRUE;
 }
 
@@ -1507,49 +1454,19 @@ static gboolean
 gst_camera_capturer_create_audio_encoder (GstCameraCapturer * gcc,
     AudioEncoderType type, GError ** err)
 {
-  gchar *name = NULL;
+  GstElement *encoder = NULL;
 
   g_return_val_if_fail (gcc != NULL, FALSE);
   g_return_val_if_fail (GST_IS_CAMERA_CAPTURER (gcc), FALSE);
 
-  switch (type) {
-    case AUDIO_ENCODER_MP3:
-      gcc->priv->audio_enc =
-          gst_element_factory_make ("lamemp3enc", "audio-encoder");
-      g_object_set (gcc->priv->audio_enc, "target", 0, NULL);
-      name = "Mp3 audio encoder";
-      break;
-
-    case AUDIO_ENCODER_AAC:
-      gcc->priv->audio_enc = gst_element_factory_make ("faac", "audio-encoder");
-      name = "AAC audio encoder";
-      break;
-
-    case AUDIO_ENCODER_VORBIS:
-    default:
-      gcc->priv->audio_enc =
-          gst_element_factory_make ("vorbisenc", "audio-encoder");
-      name = "Vorbis audio encoder";
-      break;
-  }
-
-  if (!gcc->priv->audio_enc) {
-    g_set_error (err,
-        GCC_ERROR,
-        GST_ERROR_PLUGIN_LOAD,
-        "Failed to create the %s element. "
-        "Please check your GStreamer installation.", name);
+  encoder = lgm_create_audio_encoder (type, gcc->priv->audio_quality,
+      GCC_ERROR, err);
+  if (!encoder) {
     return FALSE;
   }
 
-  if (gcc->priv->audio_encoder_type == AUDIO_ENCODER_MP3)
-    g_object_set (gcc->priv->audio_enc, "bitrate", gcc->priv->audio_bitrate, NULL);
-  else
-    g_object_set (gcc->priv->audio_enc, "bitrate", 1000 * gcc->priv->audio_bitrate, NULL);
-
-  GST_INFO_OBJECT(gcc, "Audio encoder %s created", name);
-
   gcc->priv->audio_encoder_type = type;
+  gcc->priv->audio_enc = encoder;
   return TRUE;
 }
 
@@ -1557,46 +1474,17 @@ static gboolean
 gst_camera_capturer_create_video_muxer (GstCameraCapturer * gcc,
     VideoMuxerType type, GError ** err)
 {
-  gchar *name = NULL;
+  GstElement *muxer = NULL;
 
   g_return_val_if_fail (gcc != NULL, FALSE);
   g_return_val_if_fail (GST_IS_CAMERA_CAPTURER (gcc), FALSE);
 
-  switch (type) {
-    case VIDEO_MUXER_OGG:
-      name = "OGG muxer";
-      gcc->priv->muxer = gst_element_factory_make ("oggmux", "video-muxer");
-      break;
-    case VIDEO_MUXER_AVI:
-      name = "AVI muxer";
-      gcc->priv->muxer = gst_element_factory_make ("avimux", "video-muxer");
-      break;
-    case VIDEO_MUXER_MATROSKA:
-      name = "Matroska muxer";
-      gcc->priv->muxer =
-          gst_element_factory_make ("matroskamux", "video-muxer");
-      break;
-    case VIDEO_MUXER_MP4:
-      name = "MP4 muxer";
-      gcc->priv->muxer = gst_element_factory_make ("qtmux", "video-muxer");
-      break;
-    case VIDEO_MUXER_WEBM:
-    default:
-      name = "WebM muxer";
-      gcc->priv->muxer = gst_element_factory_make ("webmmux", "video-muxer");
-      break;
+  muxer = lgm_create_muxer (type, GCC_ERROR, err);
+  if (!muxer) {
+    return FALSE;
   }
-
-  if (!gcc->priv->muxer) {
-    g_set_error (err,
-        GCC_ERROR,
-        GST_ERROR_PLUGIN_LOAD,
-        "Failed to create the %s element. "
-        "Please check your GStreamer installation.", name);
-  }
-
-  GST_INFO_OBJECT(gcc, "Muxer %s created", name);
   gcc->priv->video_muxer_type = type;
+  gcc->priv->muxer = muxer;
   return TRUE;
 }
 

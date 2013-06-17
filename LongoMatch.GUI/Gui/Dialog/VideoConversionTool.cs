@@ -144,8 +144,9 @@ namespace LongoMatch.Gui.Dialog
 			sizecombobox.GetActiveIter(out iter);
 			std = (VideoStandard) stdStore.GetValue(iter, 1);
 			
-			encSettings = new EncodingSettings(std, EncodingProfiles.MP4, 25, 1, 4000,
-			                                   128, outputFile, 0);
+			encSettings = new EncodingSettings(std, EncodingProfiles.MP4,
+			                                   EncodingQualities.High,
+			                                   25, 1, outputFile, 0);
 			EncodingSettings = encSettings;
 			Respond (ResponseType.Ok);
 		}

@@ -33,8 +33,7 @@ namespace LongoMatch.Gui.Dialog
 	public partial class VideoEditionProperties : Gtk.Dialog
 	{
 		EncodingSettings encSettings;
-		ListStore stdStore;
-		ListStore encStore;
+		ListStore stdStore, encStore, qualStore;
 
 		#region Constructors
 		public VideoEditionProperties()
@@ -43,6 +42,7 @@ namespace LongoMatch.Gui.Dialog
 			encSettings = new EncodingSettings();
 			FillVideoStandards();
 			FillEncodingProfiles();
+			FillQualities();
 		}
 		#endregion
 
@@ -89,49 +89,48 @@ namespace LongoMatch.Gui.Dialog
 		#endregion
 
 		private void FillVideoStandards() {
+			int index = 0, active = 0;
 			stdStore = new ListStore(typeof(string), typeof (VideoStandard));
-			stdStore.AppendValues(VideoStandards.P240_4_3.Name, VideoStandards.P240_4_3);
-			stdStore.AppendValues(VideoStandards.P240_16_9.Name, VideoStandards.P240_16_9);
-			stdStore.AppendValues(VideoStandards.P480_4_3.Name, VideoStandards.P480_4_3);
-			stdStore.AppendValues(VideoStandards.P480_16_9.Name, VideoStandards.P480_16_9);
-			stdStore.AppendValues(VideoStandards.P720_4_3.Name, VideoStandards.P720_4_3);
-			stdStore.AppendValues(VideoStandards.P720_16_9.Name, VideoStandards.P720_16_9);
-			stdStore.AppendValues(VideoStandards.P1080_4_3.Name, VideoStandards.P1080_4_3);
-			stdStore.AppendValues(VideoStandards.P1080_16_9.Name, VideoStandards.P1080_16_9);
+			foreach (VideoStandard std in VideoStandards.Rendering) {
+				stdStore.AppendValues (std.Name, std);
+				if (std == Config.RenderVideoStandard)
+					active = index;
+				index ++;
+			} 
 			sizecombobox.Model = stdStore;
-			sizecombobox.Active = 2;
+			sizecombobox.Active = active;
 		}
 
 		private void FillEncodingProfiles() {
+			int index = 0, active = 0;
 			encStore = new ListStore(typeof(string), typeof (EncodingProfile));
-			encStore.AppendValues(EncodingProfiles.MP4.Name, EncodingProfiles.MP4);
-			encStore.AppendValues(EncodingProfiles.Avi.Name, EncodingProfiles.Avi);
-			encStore.AppendValues(EncodingProfiles.WebM.Name, EncodingProfiles.WebM);
+			foreach (EncodingProfile prof in EncodingProfiles.Render) {
+				encStore.AppendValues(prof.Name, prof);
+				if (prof == Config.RenderEncodingProfile)
+					active = index;
+				index++;
+			}
 			formatcombobox.Model = encStore;
-			formatcombobox.Active = 0;
+			formatcombobox.Active = active;
+		}
+		
+		private void FillQualities() {
+			int index = 0, active = 0;
+			qualStore = new ListStore(typeof(string), typeof (EncodingQuality));
+			foreach (EncodingQuality qual in EncodingQualities.All) {
+				qualStore.AppendValues(qual.Name, qual);
+				if (qual == Config.RenderEncodingQuality)
+					active = index;
+				index++;
+			}
+			qualitycombobox.Model = qualStore;
+			qualitycombobox.Active = active;
 		}
 		
 		protected virtual void OnButtonOkClicked(object sender, System.EventArgs e)
 		{
 			TreeIter iter;
 			
-			if(qualitycombobox.ActiveText == Catalog.GetString("Low")) {
-				encSettings.VideoBitrate = (uint) VideoQuality.Low;
-				encSettings.AudioBitrate = (uint) AudioQuality.Low;
-			}
-			else if(qualitycombobox.ActiveText == Catalog.GetString("Normal")) {
-				encSettings.VideoBitrate = (uint) VideoQuality.Normal;
-				encSettings.AudioBitrate =(uint)  AudioQuality.Normal;
-			}
-			else if(qualitycombobox.ActiveText == Catalog.GetString("Good")) {
-				encSettings.VideoBitrate =(uint)  VideoQuality.Good;
-				encSettings.AudioBitrate =(uint)  AudioQuality.Good;
-			}
-			else if(qualitycombobox.ActiveText == Catalog.GetString("Extra")) {
-				encSettings.VideoBitrate =(uint)  VideoQuality.Extra;
-				encSettings.AudioBitrate =(uint)  AudioQuality.Extra;
-			}
-
 			/* Get size info */
 			sizecombobox.GetActiveIter(out iter);
 			encSettings.VideoStandard = (VideoStandard) stdStore.GetValue(iter, 1);
@@ -139,6 +138,10 @@ namespace LongoMatch.Gui.Dialog
 			/* Get encoding profile info */
 			formatcombobox.GetActiveIter(out iter);
 			encSettings.EncodingProfile = (EncodingProfile) encStore.GetValue(iter, 1);
+			
+			/* Get quality info */
+			qualitycombobox.GetActiveIter(out iter);
+			encSettings.EncodingQuality = (EncodingQuality) qualStore.GetValue(iter, 1);
 			
 			encSettings.OutputFile = filelabel.Text;
 			

@@ -83,32 +83,32 @@ namespace LongoMatch.Video.Editor {
 			}
 		}
 
-		[GLib.Property("video_bitrate")]
-		public int VideoBitrate {
+		[GLib.Property("video_quality")]
+		public int VideoQuality {
 			get {
-				GLib.Value val = GetProperty("video_bitrate");
+				GLib.Value val = GetProperty("video_quality");
 				int ret = (int) val;
 				val.Dispose();
 				return ret;
 			}
 			set {
 				GLib.Value val = new GLib.Value(value);
-				SetProperty("video_bitrate", val);
+				SetProperty("video_quality", val);
 				val.Dispose();
 			}
 		}
 
 		[GLib.Property("audio_bitrate")]
-		public int AudioBitrate {
+		public int AudioQuality {
 			get {
-				GLib.Value val = GetProperty("audio_bitrate");
+				GLib.Value val = GetProperty("audio_quality");
 				int ret = (int) val;
 				val.Dispose();
 				return ret;
 			}
 			set {
 				GLib.Value val = new GLib.Value(value);
-				SetProperty("audio_bitrate", val);
+				SetProperty("audio_quality", val);
 				val.Dispose();
 			}
 		}
@@ -385,8 +385,8 @@ namespace LongoMatch.Video.Editor {
 				/* FIXME: This should only be possible with the editor in the NULL state.
 				 * For now keep this exact order setting the properties in the editor,
 				 * otherwise it won't work */
-				VideoBitrate = (int) value.VideoBitrate;
-				AudioBitrate = (int) value.AudioBitrate;
+				VideoQuality = (int) value.EncodingQuality.VideoQuality;
+				AudioQuality = (int) value.EncodingQuality.AudioQuality;
 				Height = (int) value.VideoStandard.Height;
 				Width = (int) value.VideoStandard.Width;
 				AudioEncoder = value.EncodingProfile.AudioEncoder;

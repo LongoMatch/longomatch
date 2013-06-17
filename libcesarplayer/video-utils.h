@@ -39,6 +39,7 @@
 #include <gdk/gdkquartz.h>
 #endif
 #include <gtk/gtk.h>
+#include "common.h"
 
 
 #ifdef WIN32
@@ -73,3 +74,9 @@ EXPORT GstDiscovererResult lgm_discover_uri (const gchar *uri, guint64 *duration
     guint *width, guint *height, guint *fps_n, guint *fps_d, guint *par_n,
     guint *par_d, gchar **container, gchar **video_codec, gchar **audio_codec,
     GError **err);
+EXPORT GstElement * lgm_create_video_encoder (VideoEncoderType type, guint quality,
+    GQuark quark, GError **err);
+EXPORT GstElement * lgm_create_audio_encoder (AudioEncoderType type, guint quality,
+    GQuark quark, GError **err);
+EXPORT GstElement * lgm_create_muxer (VideoMuxerType type,
+    GQuark quark, GError **err);

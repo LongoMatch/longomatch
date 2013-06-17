@@ -46,8 +46,8 @@ struct GstVideoEncoderPrivate
   GList *current_file;
   guint output_height;
   guint output_width;
-  guint audio_bitrate;
-  guint video_bitrate;
+  guint audio_quality;
+  guint video_quality;
   guint fps_n;
   guint fps_d;
   VideoEncoderType video_encoder_type;
@@ -104,8 +104,8 @@ gst_video_encoder_init (GstVideoEncoder * object)
 
   priv->output_height = 480;
   priv->output_width = 640;
-  priv->audio_bitrate = 128;
-  priv->video_bitrate = 5000;
+  priv->audio_quality = 50;
+  priv->video_quality = 50;
   priv->video_encoder_type = VIDEO_ENCODER_VP8;
   priv->audio_encoder_type = AUDIO_ENCODER_VORBIS;
   priv->video_muxer_type = VIDEO_MUXER_WEBM;
@@ -430,72 +430,19 @@ static gboolean
 gst_video_encoder_create_video_encoder (GstVideoEncoder * gve,
     VideoEncoderType type, GError ** err)
 {
-  gchar *name = NULL;
+  GstElement *encoder = NULL;
 
   g_return_val_if_fail (gve != NULL, FALSE);
   g_return_val_if_fail (GST_IS_VIDEO_ENCODER (gve), FALSE);
 
-  switch (type) {
-    case VIDEO_ENCODER_MPEG4:
-      gve->priv->video_enc =
-          gst_element_factory_make ("ffenc_mpeg4", "video-encoder");
-      g_object_set (gve->priv->video_enc, "pass", 512,
-          "max-key-interval", -1, NULL);
-      name = "FFmpeg mpeg4 video encoder";
-      break;
-
-    case VIDEO_ENCODER_XVID:
-      gve->priv->video_enc =
-          gst_element_factory_make ("xvidenc", "video-encoder");
-      g_object_set (gve->priv->video_enc, "pass", 1,
-          "profile", 146, "max-key-interval", -1, NULL);
-      name = "Xvid video encoder";
-      break;
-
-    case VIDEO_ENCODER_H264:
-      gve->priv->video_enc =
-          gst_element_factory_make ("x264enc", "video-encoder");
-      g_object_set (gve->priv->video_enc, "key-int-max", 25, "pass", 17,
-          "speed-preset", 3, NULL);
-      name = "X264 video encoder";
-      break;
-
-    case VIDEO_ENCODER_THEORA:
-      gve->priv->video_enc =
-          gst_element_factory_make ("theoraenc", "video-encoder");
-      g_object_set (gve->priv->video_enc, "keyframe-auto", FALSE,
-          "keyframe-force", 25, NULL);
-      name = "Theora video encoder";
-      break;
-
-    case VIDEO_ENCODER_VP8:
-    default:
-      gve->priv->video_enc =
-          gst_element_factory_make ("vp8enc", "video-encoder");
-      g_object_set (gve->priv->video_enc, "speed", 2, "threads", 8,
-          "max-keyframe-distance", 25, NULL);
-      name = "VP8 video encoder";
-      break;
-
-  }
-  if (!gve->priv->video_enc) {
-    g_set_error (err,
-        GVE_ERROR,
-        GST_ERROR_PLUGIN_LOAD,
-        "Failed to create the %s element. "
-        "Please check your GStreamer installation.", name);
+  encoder = lgm_create_video_encoder (type, gve->priv->video_quality,
+      GVE_ERROR, err);
+  if (!encoder) {
     return FALSE;
   }
 
-  if (gve->priv->video_encoder_type == VIDEO_ENCODER_MPEG4 ||
-      gve->priv->video_encoder_type == VIDEO_ENCODER_XVID)
-    g_object_set (gve->priv->video_enc, "bitrate", gve->priv->video_bitrate * 1000, NULL);
-  else
-    g_object_set (gve->priv->video_enc, "bitrate", gve->priv->video_bitrate,
-        NULL);
-
-  GST_INFO_OBJECT(gve, "Video encoder %s created", name);
   gve->priv->video_encoder_type = type;
+  gve->priv->video_enc = encoder;
   return TRUE;
 }
 
@@ -503,49 +450,19 @@ static gboolean
 gst_video_encoder_create_audio_encoder (GstVideoEncoder * gve,
     AudioEncoderType type, GError ** err)
 {
-  gchar *name = NULL;
+  GstElement *encoder = NULL;
 
   g_return_val_if_fail (gve != NULL, FALSE);
   g_return_val_if_fail (GST_IS_VIDEO_ENCODER (gve), FALSE);
 
-  switch (type) {
-    case AUDIO_ENCODER_MP3:
-      gve->priv->audio_enc =
-          gst_element_factory_make ("lamemp3enc", "audio-encoder");
-      g_object_set (gve->priv->audio_enc, "target", 0, NULL);
-      name = "Mp3 audio encoder";
-      break;
-
-    case AUDIO_ENCODER_AAC:
-      gve->priv->audio_enc = gst_element_factory_make ("faac", "audio-encoder");
-      name = "AAC audio encoder";
-      break;
-
-    case AUDIO_ENCODER_VORBIS:
-    default:
-      gve->priv->audio_enc =
-          gst_element_factory_make ("vorbisenc", "audio-encoder");
-      name = "Vorbis audio encoder";
-      break;
-  }
-
-  if (!gve->priv->audio_enc) {
-    g_set_error (err,
-        GVE_ERROR,
-        GST_ERROR_PLUGIN_LOAD,
-        "Failed to create the %s element. "
-        "Please check your GStreamer installation.", name);
+  encoder = lgm_create_audio_encoder (type, gve->priv->audio_quality,
+      GVE_ERROR, err);
+  if (!encoder) {
     return FALSE;
   }
 
-  if (gve->priv->audio_encoder_type == AUDIO_ENCODER_MP3)
-    g_object_set (gve->priv->audio_enc, "bitrate", gve->priv->audio_bitrate, NULL);
-  else
-    g_object_set (gve->priv->audio_enc, "bitrate", 1000 * gve->priv->audio_bitrate, NULL);
-
-  GST_INFO_OBJECT(gve, "Audio encoder %s created", name);
-
   gve->priv->audio_encoder_type = type;
+  gve->priv->audio_enc = encoder;
   return TRUE;
 }
 
@@ -553,46 +470,17 @@ static gboolean
 gst_video_encoder_create_video_muxer (GstVideoEncoder * gve,
     VideoMuxerType type, GError ** err)
 {
-  gchar *name = NULL;
+  GstElement *muxer = NULL;
 
   g_return_val_if_fail (gve != NULL, FALSE);
   g_return_val_if_fail (GST_IS_VIDEO_ENCODER (gve), FALSE);
 
-  switch (type) {
-    case VIDEO_MUXER_OGG:
-      name = "OGG muxer";
-      gve->priv->muxer = gst_element_factory_make ("oggmux", "video-muxer");
-      break;
-    case VIDEO_MUXER_AVI:
-      name = "AVI muxer";
-      gve->priv->muxer = gst_element_factory_make ("avimux", "video-muxer");
-      break;
-    case VIDEO_MUXER_MATROSKA:
-      name = "Matroska muxer";
-      gve->priv->muxer =
-          gst_element_factory_make ("matroskamux", "video-muxer");
-      break;
-    case VIDEO_MUXER_MP4:
-      name = "MP4 muxer";
-      gve->priv->muxer = gst_element_factory_make ("qtmux", "video-muxer");
-      break;
-    case VIDEO_MUXER_WEBM:
-    default:
-      name = "WebM muxer";
-      gve->priv->muxer = gst_element_factory_make ("webmmux", "video-muxer");
-      break;
+  muxer = lgm_create_muxer (type, GVE_ERROR, err);
+  if (!muxer) {
+    return FALSE;
   }
-
-  if (!gve->priv->muxer) {
-    g_set_error (err,
-        GVE_ERROR,
-        GST_ERROR_PLUGIN_LOAD,
-        "Failed to create the %s element. "
-        "Please check your GStreamer installation.", name);
-  }
-
-  GST_INFO_OBJECT(gve, "Muxer %s created", name);
   gve->priv->video_muxer_type = type;
+  gve->priv->muxer = muxer;
   return TRUE;
 }
 
@@ -769,14 +657,14 @@ gst_video_encoder_dump_graph (GstVideoEncoder * gve)
 void
 gst_video_encoder_set_encoding_format (GstVideoEncoder * gve,
     VideoEncoderType video_codec, AudioEncoderType audio_codec,
-    VideoMuxerType muxer, guint video_bitrate, guint audio_bitrate,
+    VideoMuxerType muxer, guint video_quality, guint audio_quality,
     guint width, guint height, guint fps_n, guint fps_d)
 {
   gve->priv->video_encoder_type = video_codec;
   gve->priv->audio_encoder_type = audio_codec;
   gve->priv->video_muxer_type = muxer;
-  gve->priv->video_bitrate = video_bitrate;
-  gve->priv->audio_bitrate = audio_bitrate;
+  gve->priv->video_quality = video_quality;
+  gve->priv->audio_quality = audio_quality;
   gve->priv->output_width = width;
   gve->priv->output_height = height;
   gve->priv->fps_n = fps_n;

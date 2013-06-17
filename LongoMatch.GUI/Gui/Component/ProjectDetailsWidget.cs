@@ -56,8 +56,7 @@ namespace LongoMatch.Gui.Component
 		ITemplatesService service;
 		ProjectType useType;
 		List<Device> videoDevices;
-		ListStore videoStandardList;
-		ListStore encProfileList;
+		ListStore videoStandardList, encProfileList, qualList;
 		private const string DV_SOURCE = "DV Source";
 		private const string GCONF_SOURCE = "GConf Source";
 
@@ -241,8 +240,6 @@ namespace LongoMatch.Gui.Component
 				CaptureSettings s = new CaptureSettings();
 				
 				encSettings.OutputFile = fileEntry.Text;
-				encSettings.AudioBitrate = (uint)audiobitratespinbutton.Value;
-				encSettings.VideoBitrate = (uint)videobitratespinbutton.Value;
 				if (useType == ProjectType.CaptureProject) {
 					s.CaptureSourceType = videoDevices[devicecombobox.Active].DeviceType;
 					s.DeviceID = videoDevices[devicecombobox.Active].ID;
@@ -251,8 +248,12 @@ namespace LongoMatch.Gui.Component
 					s.DeviceID = urientry.Text;
 				}
 				
+				/* Get quality info */
+				qualitycombobox.GetActiveIter(out iter);
+				encSettings.EncodingQuality = (EncodingQuality) qualList.GetValue(iter, 1);
+				
 				/* Get size info */
-				sizecombobox.GetActiveIter(out iter);
+				qualitycombobox.GetActiveIter(out iter);
 				encSettings.VideoStandard = (VideoStandard) videoStandardList.GetValue(iter, 1);
 			
 				/* Get encoding profile info */
@@ -422,25 +423,39 @@ namespace LongoMatch.Gui.Component
 		}
 
 		private void FillFormats() {
+			int index = 0, active = 0;
 			videoStandardList = new ListStore(typeof(string), typeof (VideoStandard));
-			videoStandardList.AppendValues(VideoStandards.Original.Name, VideoStandards.Original);
-			videoStandardList.AppendValues(VideoStandards.P240_4_3.Name, VideoStandards.P240_4_3);
-			videoStandardList.AppendValues(VideoStandards.P240_16_9.Name, VideoStandards.P240_16_9);
-			videoStandardList.AppendValues(VideoStandards.P480_4_3.Name, VideoStandards.P480_4_3);
-			videoStandardList.AppendValues(VideoStandards.P480_16_9.Name, VideoStandards.P480_16_9);
-			videoStandardList.AppendValues(VideoStandards.P720_4_3.Name, VideoStandards.P720_4_3);
-			videoStandardList.AppendValues(VideoStandards.P720_16_9.Name, VideoStandards.P720_16_9);
-			videoStandardList.AppendValues(VideoStandards.P1080_4_3.Name, VideoStandards.P1080_4_3);
-			videoStandardList.AppendValues(VideoStandards.P1080_16_9.Name, VideoStandards.P1080_16_9);
-			sizecombobox.Model = videoStandardList;
-			sizecombobox.Active = 0;
+			foreach (VideoStandard std in VideoStandards.Capture) {
+				videoStandardList.AppendValues (std.Name, std);
+				if (Config.CaptureVideoStandard == std)
+					active = index;
+				index ++;
+			}
+			qualitycombobox.Model = videoStandardList;
+			qualitycombobox.Active = active;
 
+			index = active = 0;
 			encProfileList = new ListStore(typeof(string), typeof (EncodingProfile));
-			encProfileList.AppendValues(EncodingProfiles.MP4.Name, EncodingProfiles.MP4);
-			encProfileList.AppendValues(EncodingProfiles.Avi.Name, EncodingProfiles.Avi);
-			encProfileList.AppendValues(EncodingProfiles.WebM.Name, EncodingProfiles.WebM);
+			foreach (EncodingProfile prof in EncodingProfiles.Capture) {
+				encProfileList.AppendValues(prof.Name, prof);
+				if (Config.CaptureEncodingProfile == prof)
+					active = index;
+				index ++;
+				
+			}
 			videoformatcombobox.Model = encProfileList;
-			videoformatcombobox.Active = 0;
+			videoformatcombobox.Active = active;
+			
+			index = active = 0;
+			qualList = new ListStore(typeof(string), typeof (EncodingQuality));
+			foreach (EncodingQuality qual in EncodingQualities.All) {
+				qualList.AppendValues(qual.Name, qual);
+				if (Config.CaptureEncodingQuality == qual)
+					active = index;
+				index ++;
+			}
+			qualitycombobox.Model = qualList;
+			qualitycombobox.Active = active;
 		}
 		
 		private void StartEditor(TemplateEditorDialog editor) {

@@ -66,12 +66,7 @@ namespace LongoMatch.Gui.Dialog
 			w2.Position = 0;
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.qualitycombobox = global::Gtk.ComboBox.NewText ();
-			this.qualitycombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Low"));
-			this.qualitycombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Normal"));
-			this.qualitycombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Good"));
-			this.qualitycombobox.AppendText (global::Mono.Unix.Catalog.GetString ("Extra"));
 			this.qualitycombobox.Name = "qualitycombobox";
-			this.qualitycombobox.Active = 1;
 			this.hbox2.Add (this.qualitycombobox);
 			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.qualitycombobox]));
 			w3.Position = 1;

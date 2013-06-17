@@ -48,12 +48,12 @@ namespace LongoMatch.Multimedia.Interfaces
 			set ;
 		}
 
-		uint VideoBitrate {
+		uint VideoQuality {
 			get;
 			set ;
 		}
 
-		uint AudioBitrate {
+		uint AudioQuality {
 			get ;
 			set ;
 		}

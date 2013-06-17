@@ -219,8 +219,8 @@ namespace LongoMatch.Gui
 			capturer.SetAudioEncoder(captureProps.EncodingSettings.EncodingProfile.AudioEncoder);
 			capturer.SetVideoMuxer(muxer);
 			capturer.SetSource(captureProps.CaptureSourceType);
-			capturer.VideoBitrate = captureProps.EncodingSettings.VideoBitrate;
-			capturer.AudioBitrate = captureProps.EncodingSettings.AudioBitrate;
+			capturer.VideoQuality = captureProps.EncodingSettings.EncodingQuality.VideoQuality;
+			capturer.AudioQuality = captureProps.EncodingSettings.EncodingQuality.AudioQuality;
 		}
 
 		protected virtual void OnRecbuttonClicked(object sender, System.EventArgs e)

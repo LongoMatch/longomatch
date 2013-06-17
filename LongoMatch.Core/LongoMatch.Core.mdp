@@ -104,6 +104,7 @@
     <File subtype="Code" buildaction="Compile" name="Interfaces/Multimedia/IVideoConverter.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/SysInfo.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/IDataBaseManager.cs" />
+    <File subtype="Code" buildaction="Compile" name="Common/EncodingQuality.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

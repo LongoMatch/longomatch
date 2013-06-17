@@ -22,24 +22,22 @@ namespace LongoMatch.Common
 	public struct EncodingSettings
 	{
 		public EncodingSettings(VideoStandard videoStandard, EncodingProfile encodingProfile,
-		                        uint fr_n, uint fr_d, uint videoBitrate, uint audioBitrate, 
+		                        EncodingQuality encodingQuality, uint fr_n, uint fr_d,
 		                        string outputFile, uint titleSize) {
 			VideoStandard = videoStandard;
 			EncodingProfile = encodingProfile;
+			EncodingQuality = encodingQuality;
 			Framerate_n = fr_n;
 			Framerate_d = fr_d;
-			AudioBitrate = audioBitrate;
-			VideoBitrate = videoBitrate;
 			OutputFile = outputFile;
 			TitleSize = titleSize;
 		}
 		
 		public VideoStandard VideoStandard;
 		public EncodingProfile EncodingProfile;
+		public EncodingQuality EncodingQuality;
 		public uint Framerate_n;
 		public uint Framerate_d;
-		public uint VideoBitrate;
-		public uint AudioBitrate;
 		public string OutputFile;
 		public uint TitleSize;
 	}

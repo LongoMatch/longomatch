@@ -17,21 +17,38 @@
 // 
 using System;
 using Mono.Unix;
+using System.Collections.Generic;
 
 namespace LongoMatch.Common
 {
 	[Serializable]
-	public struct VideoStandard
+	public class VideoStandard
 	{
+		public string Name;
+		public uint Height;
+		public uint Width;
+		
+		public VideoStandard() {}
+		
 		public VideoStandard(string name, uint height, uint width) {
 			Name = name;
 			Height = height;
 			Width = width;
 		}
 		
-		public string Name;
-		public uint Height;
-		public uint Width;
+		public override bool Equals (object obj)
+		{
+			VideoStandard vstd;
+			if (!(obj is VideoStandard))
+				return false;
+			vstd = (VideoStandard)obj;
+			return vstd.Name == Name && vstd.Height == Height && vstd.Width == Width;
+		}
+		
+		public override int GetHashCode ()
+		{
+			return String.Format ("{0}-{1}-{2}", Name, Width, Height).GetHashCode();
+		}
 	}
 	
 	public class VideoStandards {
@@ -48,6 +65,37 @@ namespace LongoMatch.Common
 		public static VideoStandard P720_16_9 = new VideoStandard("720p (16:9)", 720, 1280);
 		public static VideoStandard P1080_4_3 = new VideoStandard("1080p (4:3)", 1080, 1440);
 		public static VideoStandard P1080_16_9 = new VideoStandard("1080p (16:9)", 1080, 1920);
+		
+		public static List<VideoStandard> Rendering {
+			get {
+				List<VideoStandard> list = new List<VideoStandard>();
+				list.Add (P240_4_3);
+				list.Add (P240_16_9);
+				list.Add (P480_4_3);
+				list.Add (P480_16_9);
+				list.Add (P720_4_3);
+				list.Add (P720_16_9);
+				list.Add (P1080_4_3);
+				list.Add (P1080_16_9);
+				return list;
+			}
+		}
+		
+		public static List<VideoStandard> Capture {
+			get {
+				List<VideoStandard> list = new List<VideoStandard>();
+				list.Add (Original);
+				list.Add (P240_4_3);
+				list.Add (P240_16_9);
+				list.Add (P480_4_3);
+				list.Add (P480_16_9);
+				list.Add (P720_4_3);
+				list.Add (P720_16_9);
+				list.Add (P1080_4_3);
+				list.Add (P1080_16_9);
+				return list;
+			}
+		}
 	}
 	
 }

@@ -16,11 +16,22 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
+using System.Collections.Generic;
+
+
 namespace LongoMatch.Common
 {
 	[Serializable]
-	public struct EncodingProfile
+	public class EncodingProfile
 	{
+		public string Name;
+		public string Extension;
+		public VideoEncoderType VideoEncoder;
+		public AudioEncoderType AudioEncoder;
+		public VideoMuxerType Muxer;
+
+		public EncodingProfile () {}
+
 		public EncodingProfile(string name, string extension,
 		                       VideoEncoderType videoEncoder,
 		                       AudioEncoderType audioEncoder,
@@ -32,11 +43,24 @@ namespace LongoMatch.Common
 			Muxer = muxer;
 		}
 		
-		public string Name;
-		public string Extension;
-		public VideoEncoderType VideoEncoder;
-		public AudioEncoderType AudioEncoder;
-		public VideoMuxerType Muxer;
+		public override bool Equals (object obj)
+		{
+			EncodingProfile prof;
+			if (!(obj is EncodingProfile))
+				return false;
+			prof = (EncodingProfile)obj;
+			return prof.Name == Name &&
+				prof.Extension == Extension &&
+				prof.VideoEncoder == VideoEncoder &&
+				prof.AudioEncoder == AudioEncoder &&
+				prof.Muxer == Muxer;
+		}
+
+		public override int GetHashCode ()
+		{
+			return String.Format ("{0}-{1}-{2}-{3}-{4}", Name, Extension,
+			                      VideoEncoder, AudioEncoder, Muxer).GetHashCode();
+		}
 	}
 	
 	public class EncodingProfiles {
@@ -64,6 +88,25 @@ namespace LongoMatch.Common
 		                                                        VideoEncoderType.H264,
 		                                                        AudioEncoderType.Aac,
 		                                                        VideoMuxerType.Matroska);
+		
+		public static List<EncodingProfile> Capture {
+			get {
+				List<EncodingProfile> list = new List<EncodingProfile> ();
+				list.Add (MP4);
+				list.Add (Avi);
+				list.Add (WebM);
+				return list;
+			}
+		}
+		
+		public static List<EncodingProfile> Render {
+			get {
+				List<EncodingProfile> list = new List<EncodingProfile> ();
+				list.Add (MP4);
+				list.Add (Avi);
+				list.Add (WebM);
+				return list;
+			}
+		}
 	}
-	
 }

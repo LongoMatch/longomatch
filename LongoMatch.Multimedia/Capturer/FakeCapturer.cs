@@ -90,14 +90,14 @@ namespace LongoMatch.Video.Capturer
 			set {}
 		}
 
-		public uint VideoBitrate {
+		public uint VideoQuality {
 			get {
 				return 0;
 			}
 			set {}
 		}
 
-		public uint AudioBitrate {
+		public uint AudioQuality {
 			get {
 				return 0;
 			}
