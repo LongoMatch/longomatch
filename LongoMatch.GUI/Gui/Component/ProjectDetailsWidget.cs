@@ -31,6 +31,7 @@ using LongoMatch.Store.Templates;
 using LongoMatch.Video.Utils;
 using Mono.Unix;
 using LongoMatch.Gui.Helpers;
+using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
 {
@@ -253,11 +254,11 @@ namespace LongoMatch.Gui.Component
 				encSettings.EncodingQuality = (EncodingQuality) qualList.GetValue(iter, 1);
 				
 				/* Get size info */
-				qualitycombobox.GetActiveIter(out iter);
+				imagecombobox.GetActiveIter(out iter);
 				encSettings.VideoStandard = (VideoStandard) videoStandardList.GetValue(iter, 1);
 			
 				/* Get encoding profile info */
-				videoformatcombobox.GetActiveIter(out iter);
+				encodingcombobox.GetActiveIter(out iter);
 				encSettings.EncodingProfile = (EncodingProfile) encProfileList.GetValue(iter, 1);
 				
 				/* FIXME: Configure with the UI */
@@ -423,39 +424,9 @@ namespace LongoMatch.Gui.Component
 		}
 
 		private void FillFormats() {
-			int index = 0, active = 0;
-			videoStandardList = new ListStore(typeof(string), typeof (VideoStandard));
-			foreach (VideoStandard std in VideoStandards.Capture) {
-				videoStandardList.AppendValues (std.Name, std);
-				if (Config.CaptureVideoStandard == std)
-					active = index;
-				index ++;
-			}
-			qualitycombobox.Model = videoStandardList;
-			qualitycombobox.Active = active;
-
-			index = active = 0;
-			encProfileList = new ListStore(typeof(string), typeof (EncodingProfile));
-			foreach (EncodingProfile prof in EncodingProfiles.Capture) {
-				encProfileList.AppendValues(prof.Name, prof);
-				if (Config.CaptureEncodingProfile == prof)
-					active = index;
-				index ++;
-				
-			}
-			videoformatcombobox.Model = encProfileList;
-			videoformatcombobox.Active = active;
-			
-			index = active = 0;
-			qualList = new ListStore(typeof(string), typeof (EncodingQuality));
-			foreach (EncodingQuality qual in EncodingQualities.All) {
-				qualList.AppendValues(qual.Name, qual);
-				if (Config.CaptureEncodingQuality == qual)
-					active = index;
-				index ++;
-			}
-			qualitycombobox.Model = qualList;
-			qualitycombobox.Active = active;
+			videoStandardList = Misc.FillImageFormat (imagecombobox, Config.CaptureVideoStandard);
+			encProfileList = Misc.FillEncodingFormat (encodingcombobox, Config.CaptureEncodingProfile);
+			qualList = Misc.FillQuality (qualitycombobox, Config.CaptureEncodingQuality);
 		}
 		
 		private void StartEditor(TemplateEditorDialog editor) {

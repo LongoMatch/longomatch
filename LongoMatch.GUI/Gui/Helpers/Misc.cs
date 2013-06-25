@@ -92,6 +92,55 @@ namespace LongoMatch.Gui.Helpers
 				ColorHelper.ShortToByte(color.Green),
 				ColorHelper.ShortToByte(color.Blue));
 		}
+		
+		public static ListStore FillImageFormat (ComboBox formatBox, VideoStandard def) {
+			ListStore formatStore;
+			int index = 0, active = 0;
+			
+			formatStore = new ListStore(typeof(string), typeof (VideoStandard));
+			foreach (VideoStandard std in VideoStandards.Rendering) {
+				formatStore.AppendValues (std.Name, std);
+				if (std.Equals(def))
+					active = index;
+				index ++;
+			} 
+			formatBox.Model = formatStore;
+			formatBox.Active = active;
+			return formatStore;
+		}
+
+		public static ListStore FillEncodingFormat (ComboBox encodingBox, EncodingProfile def) {
+			ListStore encodingStore;
+			int index = 0, active = 0;
+			
+			encodingStore = new ListStore(typeof(string), typeof (EncodingProfile));
+			foreach (EncodingProfile prof in EncodingProfiles.Render) {
+				encodingStore.AppendValues(prof.Name, prof);
+				if (prof.Equals(def))
+					active = index;
+				index++;
+			}
+			encodingBox.Model = encodingStore;
+			encodingBox.Active = active;
+			return encodingStore;
+		}
+		
+		public static ListStore FillQuality (ComboBox qualityBox, EncodingQuality def) {
+			ListStore qualityStore;
+			int index = 0, active = 0;
+			
+			qualityStore = new ListStore(typeof(string), typeof (EncodingQuality));
+			foreach (EncodingQuality qual in EncodingQualities.All) {
+				qualityStore.AppendValues(qual.Name, qual);
+				if (qual.Equals(def)) {
+					active = index;
+				}
+				index++;
+			}
+			qualityBox.Model = qualityStore;
+			qualityBox.Active = active;
+			return qualityStore;
+		}
 	}
 }
 

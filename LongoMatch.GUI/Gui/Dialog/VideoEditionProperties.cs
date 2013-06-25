@@ -24,6 +24,8 @@ using Mono.Unix;
 using LongoMatch.Video.Editor;
 using LongoMatch.Video.Common;
 using LongoMatch.Common;
+using LongoMatch.Gui.Helpers;
+using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Dialog
 {
@@ -40,9 +42,9 @@ namespace LongoMatch.Gui.Dialog
 		{
 			this.Build();
 			encSettings = new EncodingSettings();
-			FillVideoStandards();
-			FillEncodingProfiles();
-			FillQualities();
+			stdStore = Misc.FillImageFormat (sizecombobox, Config.RenderVideoStandard);
+			encStore = Misc.FillEncodingFormat (formatcombobox, Config.RenderEncodingProfile);
+			qualStore = Misc.FillQuality (qualitycombobox, Config.RenderEncodingQuality);
 		}
 		#endregion
 
@@ -88,44 +90,6 @@ namespace LongoMatch.Gui.Dialog
 
 		#endregion
 
-		private void FillVideoStandards() {
-			int index = 0, active = 0;
-			stdStore = new ListStore(typeof(string), typeof (VideoStandard));
-			foreach (VideoStandard std in VideoStandards.Rendering) {
-				stdStore.AppendValues (std.Name, std);
-				if (std == Config.RenderVideoStandard)
-					active = index;
-				index ++;
-			} 
-			sizecombobox.Model = stdStore;
-			sizecombobox.Active = active;
-		}
-
-		private void FillEncodingProfiles() {
-			int index = 0, active = 0;
-			encStore = new ListStore(typeof(string), typeof (EncodingProfile));
-			foreach (EncodingProfile prof in EncodingProfiles.Render) {
-				encStore.AppendValues(prof.Name, prof);
-				if (prof == Config.RenderEncodingProfile)
-					active = index;
-				index++;
-			}
-			formatcombobox.Model = encStore;
-			formatcombobox.Active = active;
-		}
-		
-		private void FillQualities() {
-			int index = 0, active = 0;
-			qualStore = new ListStore(typeof(string), typeof (EncodingQuality));
-			foreach (EncodingQuality qual in EncodingQualities.All) {
-				qualStore.AppendValues(qual.Name, qual);
-				if (qual == Config.RenderEncodingQuality)
-					active = index;
-				index++;
-			}
-			qualitycombobox.Model = qualStore;
-			qualitycombobox.Active = active;
-		}
 		
 		protected virtual void OnButtonOkClicked(object sender, System.EventArgs e)
 		{
