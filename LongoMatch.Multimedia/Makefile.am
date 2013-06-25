@@ -27,6 +27,7 @@ SOURCES = \
 	Utils/IMetadataReader.cs \
 	Utils/MpegRemuxer.cs \
 	Utils/PreviewMediaFile.cs \
+	Utils/Seeker.cs \
 	Utils/TimeString.cs \
 	Utils/VideoDevice.cs \
 	MultimediaFactory.cs
