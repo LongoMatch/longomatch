@@ -14,6 +14,7 @@ SOURCES = \
 	Common/EncodingProfiles.cs \
 	Common/EncodingSettings.cs \
 	Common/Enums.cs \
+	Common/Gettext.cs \
 	Common/Image.cs \
 	Common/Job.cs \
 	Common/Log.cs \
