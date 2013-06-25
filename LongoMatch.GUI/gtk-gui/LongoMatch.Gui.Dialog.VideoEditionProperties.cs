@@ -60,7 +60,7 @@ namespace LongoMatch.Gui.Dialog
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
 			this.label1.Xalign = 0F;
-			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Video Quality:");
+			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Quality:");
 			this.hbox2.Add (this.label1);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.label1]));
 			w2.Position = 0;
@@ -84,7 +84,7 @@ namespace LongoMatch.Gui.Dialog
 			this.label2 = new global::Gtk.Label ();
 			this.label2.Name = "label2";
 			this.label2.Xalign = 0F;
-			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("Size: ");
+			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("Image format: ");
 			this.hbox4.Add (this.label2);
 			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.label2]));
 			w5.Position = 0;
@@ -108,7 +108,7 @@ namespace LongoMatch.Gui.Dialog
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
 			this.label3.Xalign = 0F;
-			this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("Ouput Format:");
+			this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("Encoding Format:");
 			this.hbox5.Add (this.label3);
 			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.hbox5 [this.label3]));
 			w8.Position = 0;

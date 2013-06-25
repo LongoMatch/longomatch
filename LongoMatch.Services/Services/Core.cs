@@ -103,13 +103,7 @@ namespace LongoMatch.Services
 		}
 
 		public static void BindEvents(IMainWindow mainWindow) {
-			/* Connect player events */
-			/* FIXME:
-			player.Prev += OnPrev;
-			player.Next += OnNext;
-			player.Tick += OnTick;
-			player.SegmentClosedEvent += OnSegmentClosedEvent;
-			player.DrawFrame += OnDrawFrame;*/
+			mainWindow.EditPreferencesEvent += () => {guiToolkit.OpenPreferencesEditor();};
 		}
 
 		public static void CheckDirs() {

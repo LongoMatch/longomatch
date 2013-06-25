@@ -43,11 +43,11 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Table table2;
 		private global::Gtk.Label device;
 		private global::Gtk.ComboBox devicecombobox;
+		private global::Gtk.ComboBox encodingcombobox;
+		private global::Gtk.ComboBox imagecombobox;
 		private global::Gtk.Label label2;
 		private global::Gtk.ComboBox qualitycombobox;
-		private global::Gtk.ComboBox sizecombobox1;
 		private global::Gtk.Label sizelabel;
-		private global::Gtk.ComboBox videoformatcombobox;
 		private global::Gtk.Label videoformatlabel;
 		private global::Gtk.Label GtkLabel5;
 		
@@ -426,11 +426,11 @@ namespace LongoMatch.Gui.Component
 			this.vbox2.Add (this.table1);
 			global::Gtk.Box.BoxChild w42 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.table1]));
 			w42.Position = 0;
+			w42.Expand = false;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.expander1 = new global::Gtk.Expander (null);
 			this.expander1.CanFocus = true;
 			this.expander1.Name = "expander1";
-			this.expander1.Expanded = true;
 			// Container child expander1.Gtk.Container+ContainerChild
 			this.table2 = new global::Gtk.Table (((uint)(4)), ((uint)(2)), false);
 			this.table2.Name = "table2";
@@ -453,59 +453,59 @@ namespace LongoMatch.Gui.Component
 			w44.RightAttach = ((uint)(2));
 			w44.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table2.Gtk.Table+TableChild
-			this.label2 = new global::Gtk.Label ();
-			this.label2.Name = "label2";
-			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("Quality:");
-			this.table2.Add (this.label2);
-			global::Gtk.Table.TableChild w45 = ((global::Gtk.Table.TableChild)(this.table2 [this.label2]));
-			w45.TopAttach = ((uint)(3));
-			w45.BottomAttach = ((uint)(4));
-			w45.XOptions = ((global::Gtk.AttachOptions)(4));
+			this.encodingcombobox = global::Gtk.ComboBox.NewText ();
+			this.encodingcombobox.Name = "encodingcombobox";
+			this.table2.Add (this.encodingcombobox);
+			global::Gtk.Table.TableChild w45 = ((global::Gtk.Table.TableChild)(this.table2 [this.encodingcombobox]));
+			w45.TopAttach = ((uint)(1));
+			w45.BottomAttach = ((uint)(2));
+			w45.LeftAttach = ((uint)(1));
+			w45.RightAttach = ((uint)(2));
 			w45.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table2.Gtk.Table+TableChild
-			this.qualitycombobox = global::Gtk.ComboBox.NewText ();
-			this.qualitycombobox.Name = "qualitycombobox";
-			this.table2.Add (this.qualitycombobox);
-			global::Gtk.Table.TableChild w46 = ((global::Gtk.Table.TableChild)(this.table2 [this.qualitycombobox]));
+			this.imagecombobox = global::Gtk.ComboBox.NewText ();
+			this.imagecombobox.Name = "imagecombobox";
+			this.table2.Add (this.imagecombobox);
+			global::Gtk.Table.TableChild w46 = ((global::Gtk.Table.TableChild)(this.table2 [this.imagecombobox]));
 			w46.TopAttach = ((uint)(2));
 			w46.BottomAttach = ((uint)(3));
 			w46.LeftAttach = ((uint)(1));
 			w46.RightAttach = ((uint)(2));
 			w46.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table2.Gtk.Table+TableChild
-			this.sizecombobox1 = global::Gtk.ComboBox.NewText ();
-			this.sizecombobox1.Name = "sizecombobox1";
-			this.table2.Add (this.sizecombobox1);
-			global::Gtk.Table.TableChild w47 = ((global::Gtk.Table.TableChild)(this.table2 [this.sizecombobox1]));
+			this.label2 = new global::Gtk.Label ();
+			this.label2.Name = "label2";
+			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("Quality:");
+			this.table2.Add (this.label2);
+			global::Gtk.Table.TableChild w47 = ((global::Gtk.Table.TableChild)(this.table2 [this.label2]));
 			w47.TopAttach = ((uint)(3));
 			w47.BottomAttach = ((uint)(4));
-			w47.LeftAttach = ((uint)(1));
-			w47.RightAttach = ((uint)(2));
+			w47.XOptions = ((global::Gtk.AttachOptions)(4));
 			w47.YOptions = ((global::Gtk.AttachOptions)(4));
+			// Container child table2.Gtk.Table+TableChild
+			this.qualitycombobox = global::Gtk.ComboBox.NewText ();
+			this.qualitycombobox.Name = "qualitycombobox";
+			this.table2.Add (this.qualitycombobox);
+			global::Gtk.Table.TableChild w48 = ((global::Gtk.Table.TableChild)(this.table2 [this.qualitycombobox]));
+			w48.TopAttach = ((uint)(3));
+			w48.BottomAttach = ((uint)(4));
+			w48.LeftAttach = ((uint)(1));
+			w48.RightAttach = ((uint)(2));
+			w48.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table2.Gtk.Table+TableChild
 			this.sizelabel = new global::Gtk.Label ();
 			this.sizelabel.Name = "sizelabel";
-			this.sizelabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Video Size:");
+			this.sizelabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Image format:");
 			this.table2.Add (this.sizelabel);
-			global::Gtk.Table.TableChild w48 = ((global::Gtk.Table.TableChild)(this.table2 [this.sizelabel]));
-			w48.TopAttach = ((uint)(2));
-			w48.BottomAttach = ((uint)(3));
-			w48.XOptions = ((global::Gtk.AttachOptions)(4));
-			w48.YOptions = ((global::Gtk.AttachOptions)(4));
-			// Container child table2.Gtk.Table+TableChild
-			this.videoformatcombobox = global::Gtk.ComboBox.NewText ();
-			this.videoformatcombobox.Name = "videoformatcombobox";
-			this.table2.Add (this.videoformatcombobox);
-			global::Gtk.Table.TableChild w49 = ((global::Gtk.Table.TableChild)(this.table2 [this.videoformatcombobox]));
-			w49.TopAttach = ((uint)(1));
-			w49.BottomAttach = ((uint)(2));
-			w49.LeftAttach = ((uint)(1));
-			w49.RightAttach = ((uint)(2));
+			global::Gtk.Table.TableChild w49 = ((global::Gtk.Table.TableChild)(this.table2 [this.sizelabel]));
+			w49.TopAttach = ((uint)(2));
+			w49.BottomAttach = ((uint)(3));
+			w49.XOptions = ((global::Gtk.AttachOptions)(4));
 			w49.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table2.Gtk.Table+TableChild
 			this.videoformatlabel = new global::Gtk.Label ();
 			this.videoformatlabel.Name = "videoformatlabel";
-			this.videoformatlabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Video Format:");
+			this.videoformatlabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Encoding format:");
 			this.table2.Add (this.videoformatlabel);
 			global::Gtk.Table.TableChild w50 = ((global::Gtk.Table.TableChild)(this.table2 [this.videoformatlabel]));
 			w50.TopAttach = ((uint)(1));
@@ -521,8 +521,6 @@ namespace LongoMatch.Gui.Component
 			this.vbox2.Add (this.expander1);
 			global::Gtk.Box.BoxChild w52 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.expander1]));
 			w52.Position = 1;
-			w52.Expand = false;
-			w52.Fill = false;
 			this.Add (this.vbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

@@ -379,4 +379,12 @@
     <itemgroups />
     <signals />
   </object>
+  <object type="LongoMatch.Gui.Component.GeneralPreferencesPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.VideoPreferencesPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
 </objects>

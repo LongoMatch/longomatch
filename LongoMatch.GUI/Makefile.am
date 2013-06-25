@@ -15,6 +15,7 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Component.GameUnitsEditor.cs \
 	gtk-gui/LongoMatch.Gui.Component.GameUnitsTagger.cs \
 	gtk-gui/LongoMatch.Gui.Component.GameUnitWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.GeneralPreferencesPanel.cs \
 	gtk-gui/LongoMatch.Gui.Component.NotesWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayersListTreeWidget.cs \
@@ -29,11 +30,13 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Component.StringTaggerWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TeamTaggerWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.BusyDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.EditCategoryDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.EditPlayerDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.PropertiesEditor.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.EntryDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.FramesCaptureProgressDialog.cs \
@@ -70,6 +73,7 @@ SOURCES = \
 	Gui/Component/GameUnitTimeScale.cs \
 	Gui/Component/GameUnitsTimelineWidget.cs \
 	Gui/Component/GameUnitWidget.cs \
+	Gui/Component/GeneralPreferencesPanel.cs \
 	Gui/Component/NotesWidget.cs \
 	Gui/Component/PlayerProperties.cs \
 	Gui/Component/PlayersListTreeWidget.cs \
@@ -89,6 +93,7 @@ SOURCES = \
 	Gui/Component/TimeLineWidget.cs \
 	Gui/Component/TimeReferenceWidget.cs \
 	Gui/Component/TimeScale.cs \
+	Gui/Component/VideoPreferencesPanel.cs \
 	Gui/Dialog/About.cs \
 	Gui/Dialog/BusyDialog.cs \
 	Gui/Dialog/DatabasesManager.cs \
@@ -103,6 +108,7 @@ SOURCES = \
 	Gui/Dialog/OpenProjectDialog.cs \
 	Gui/Dialog/ProjectSelectionDialog.cs \
 	Gui/Dialog/ProjectsManager.cs \
+	Gui/Dialog/PropertiesEditor.cs \
 	Gui/Dialog/RenderingJobsDialog.cs \
 	Gui/Dialog/ShortcutsHelpDialog.cs \
 	Gui/Dialog/SnapshotsDialog.cs \

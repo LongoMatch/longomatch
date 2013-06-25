@@ -85,6 +85,7 @@ namespace LongoMatch.Gui
 		public event ManageProjects ManageProjectsEvent;
 		public event ManageDatabases ManageDatabasesEvent;
 		public event ApplyCurrentRateHandler ApplyRateEvent;
+		public event EditPreferences EditPreferencesEvent;
 		
 		/* Game Units events */
 		public event GameUnitHandler GameUnitEvent;
@@ -319,6 +320,7 @@ namespace LongoMatch.Gui
 			TeamsTemplatesManagerAction.Activated += (o, e) => {EmitManageTeams();};
 			ProjectsManagerAction.Activated += (o, e) => {EmitManageProjects();};
 			DatabasesManagerAction.Activated +=  (o, e) => {EmitManageDatabases();};
+			PreferencesAction.Activated += (sender, e) => {EmitEditPreferences();};
 		}
 		
 		void DetachPlayer (bool detach) {
@@ -750,6 +752,13 @@ namespace LongoMatch.Gui
 		#endregion
 		
 		#region Events
+		
+		private void EmitEditPreferences ()
+		{
+			if (EditPreferencesEvent != null)
+				EditPreferencesEvent();
+		}
+		
 		private void EmitPlaySelected(Play play)
 		{
 			if (PlaySelectedEvent != null)

@@ -248,6 +248,14 @@ namespace LongoMatch.Gui
 			pm.Show();
 		}
 		
+		public void OpenPreferencesEditor()
+		{
+			PropertiesEditor pe = new PropertiesEditor();
+			pe.TransientFor = mainWindow as Gtk.Window;
+			pe.Run();
+			pe.Destroy();
+		}
+		
 		public void OpenDatabasesManager(IDataBaseManager manager)
 		{
 			DatabasesManager dm = new DatabasesManager (manager);

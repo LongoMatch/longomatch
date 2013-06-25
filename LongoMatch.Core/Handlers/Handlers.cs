@@ -64,6 +64,7 @@ namespace LongoMatch.Handlers
 	public delegate void ManageCategoriesHandler();
 	public delegate void ManageProjects();
 	public delegate void ManageDatabases();
+	public delegate void EditPreferences();
 	
 
 	/*Playlist Events*/
