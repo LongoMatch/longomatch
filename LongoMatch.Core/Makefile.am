@@ -13,6 +13,7 @@ SOURCES = \
 	Common/Device.cs \
 	Common/EncodingProfiles.cs \
 	Common/EncodingSettings.cs \
+	Common/EncodingQuality.cs \
 	Common/Enums.cs \
 	Common/Gettext.cs \
 	Common/Image.cs \
