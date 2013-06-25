@@ -274,8 +274,8 @@ namespace LongoMatch
 			fastTagging = false;
 			currentDatabase = Constants.DEFAULT_DB_NAME;
 			lang = null;
-			captureVideoStandard = VideoStandards.P480;
 			autoSave = false;
+			captureVideoStandard = VideoStandards.P480_16_9;
 			captureEncodingProfile = EncodingProfiles.MP4;
 			captureEncodingQuality = EncodingQualities.Medium;
 			renderVideoStandard = VideoStandards.P720_16_9;
