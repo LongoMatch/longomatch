@@ -19,16 +19,15 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using LongoMatch.Store;
-using LongoMatch.Handlers;
-using LongoMatch.Gui.Component;
-using LongoMatch.Gui;
 using Mono.Unix;
 
+using LongoMatch.Handlers;
+using LongoMatch.Gui;
+using LongoMatch.Gui.Component;
+using LongoMatch.Gui.Helpers;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
 using LongoMatch.Interfaces;
-using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Dialog
 {

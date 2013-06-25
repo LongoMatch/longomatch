@@ -56,10 +56,6 @@ namespace LongoMatch.Gui.Base
 		uint currentFrame;
 		T selected= default(T);
 		
-		Menu deleteMenu;
-		Menu menu;
-		MenuItem delete;
-
 		Pango.Layout layout;
 		
 		protected Dictionary<MenuItem,T> menuToNodeDict;

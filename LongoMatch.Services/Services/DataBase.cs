@@ -101,6 +101,7 @@ namespace LongoMatch.DB
 				File.Delete (DBFile);
 				return true;
 			} catch (Exception ex) {
+				Log.Exception (ex);
 				return false;
 			}
 		}
