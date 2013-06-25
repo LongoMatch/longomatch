@@ -72,10 +72,13 @@ namespace LongoMatch.Gui.Dialog
 			
 			if (!play.Category.TagFieldPosition && !play.Category.TagGoalPosition) {
 				poshbox.Visible = false;
-				(vbox2[hbox] as Gtk.Box.BoxChild).Expand = true;
+				(mainvbox[hbox] as Gtk.Box.BoxChild).Expand = true;
 			} else {
 				if (play.Category.TagFieldPosition) {
 					AddFieldPosTagger (categoriesTemplate, play);				
+				}
+				if (play.Category.TagHalfFieldPosition) {
+					AddHalfFieldPosTagger (categoriesTemplate, play);
 				}
 				if (play.Category.TagGoalPosition) {
 					AddGoalPosTagger (categoriesTemplate, play);
@@ -111,7 +114,30 @@ namespace LongoMatch.Gui.Dialog
 			playersbox.PackStart(widget, true, true, 0);
 		}
 		
-		public void AddFieldPosTagger (Categories categoriesTemplate, Play play) {
+		void AddHalfFieldPosTagger (Categories categoriesTemplate, Play play) {
+			List<Coordinates> coords = new List<Coordinates>();
+			halffieldcoordinatestagger.Visible = true;
+			if (categoriesTemplate.FieldBackgroundImage != null) {
+				halffieldcoordinatestagger.Background = categoriesTemplate.HalfFieldBackgroundImage.Value;
+			} else {
+				fieldcoordinatestagger.Background = Gdk.Pixbuf.LoadFromResource (Constants.HALF_FIELD_BACKGROUND);
+			}
+			if (play.HalfFieldPosition != null) {
+				coords.Add (play.HalfFieldPosition);
+			} else {
+				Coordinates c = new Coordinates ();
+				c.Add (new Point(100, 100));
+				if (play.Category.HalfFieldPositionIsDistance) {
+					c.Add (new Point (300, 300));
+				}
+				coords.Add (c);
+				play.HalfFieldPosition = c;
+			}
+			halffieldcoordinatestagger.Coordinates = coords;
+			halffieldcoordinatestagger.Visible = true;
+		}
+		
+		void AddFieldPosTagger (Categories categoriesTemplate, Play play) {
 			List<Coordinates> coords = new List<Coordinates>();
 			fieldcoordinatestagger.Visible = true;
 			if (categoriesTemplate.FieldBackgroundImage != null) {
@@ -134,7 +160,7 @@ namespace LongoMatch.Gui.Dialog
 			fieldcoordinatestagger.Visible = true; 
 		}
 		
-		public void AddGoalPosTagger (Categories categoriesTemplate, Play play) {
+		void AddGoalPosTagger (Categories categoriesTemplate, Play play) {
 			List<Coordinates> coords = new List<Coordinates>();
 			goalcoordinatestagger.Visible = true;
 			if (categoriesTemplate.GoalBackgroundImage != null) {

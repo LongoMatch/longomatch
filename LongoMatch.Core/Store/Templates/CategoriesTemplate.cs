@@ -73,6 +73,11 @@ namespace LongoMatch.Store.Templates
 			set;
 		}
 		
+		public Image HalfFieldBackgroundImage {
+			get;
+			set;
+		}
+		
 		public Image GoalBackgroundImage {
 			get;
 			set;

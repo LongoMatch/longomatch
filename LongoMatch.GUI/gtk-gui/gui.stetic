@@ -2411,88 +2411,189 @@ Sort by duration</property>
                         <property name="MemberName" />
                         <property name="Spacing">6</property>
                         <child>
-                          <widget class="Gtk.Table" id="table1">
+                          <widget class="Gtk.HBox" id="hbox1">
                             <property name="MemberName" />
-                            <property name="NRows">2</property>
-                            <property name="NColumns">2</property>
-                            <property name="Homogeneous">True</property>
-                            <property name="RowSpacing">6</property>
-                            <property name="ColumnSpacing">6</property>
+                            <property name="Spacing">6</property>
                             <child>
-                              <placeholder />
-                            </child>
-                            <child>
-                              <widget class="Gtk.CheckButton" id="tagfieldcheckbutton">
+                              <widget class="Gtk.Frame" id="frame5">
                                 <property name="MemberName" />
-                                <property name="CanFocus">True</property>
-                                <property name="Label" translatable="yes">Tag field position</property>
-                                <property name="Active">True</property>
-                                <property name="DrawIndicator">True</property>
-                                <property name="HasLabel">True</property>
-                                <property name="UseUnderline">True</property>
-                                <signal name="Clicked" handler="OnTagfieldcheckbuttonClicked" />
+                                <property name="ShadowType">None</property>
+                                <child>
+                                  <widget class="Gtk.Alignment" id="GtkAlignment7">
+                                    <property name="MemberName" />
+                                    <property name="Xalign">0</property>
+                                    <property name="Yalign">0</property>
+                                    <property name="LeftPadding">12</property>
+                                    <child>
+                                      <widget class="Gtk.VBox" id="vbox4">
+                                        <property name="MemberName" />
+                                        <property name="Spacing">6</property>
+                                        <child>
+                                          <widget class="Gtk.CheckButton" id="tagfieldcheckbutton">
+                                            <property name="MemberName" />
+                                            <property name="CanFocus">True</property>
+                                            <property name="Label" translatable="yes">Enable</property>
+                                            <property name="Active">True</property>
+                                            <property name="DrawIndicator">True</property>
+                                            <property name="HasLabel">True</property>
+                                            <property name="UseUnderline">True</property>
+                                            <signal name="Clicked" handler="OnTagfieldcheckbuttonClicked" />
+                                          </widget>
+                                          <packing>
+                                            <property name="Position">0</property>
+                                            <property name="AutoSize">True</property>
+                                            <property name="Expand">False</property>
+                                            <property name="Fill">False</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <widget class="Gtk.CheckButton" id="trajectorycheckbutton">
+                                            <property name="MemberName" />
+                                            <property name="CanFocus">True</property>
+                                            <property name="Label" translatable="yes">Trajectory</property>
+                                            <property name="DrawIndicator">True</property>
+                                            <property name="HasLabel">True</property>
+                                            <property name="UseUnderline">True</property>
+                                            <signal name="Clicked" handler="OnTrajectorycheckbuttonClicked" />
+                                          </widget>
+                                          <packing>
+                                            <property name="Position">1</property>
+                                            <property name="AutoSize">True</property>
+                                            <property name="Expand">False</property>
+                                            <property name="Fill">False</property>
+                                          </packing>
+                                        </child>
+                                      </widget>
+                                    </child>
+                                  </widget>
+                                </child>
+                                <child>
+                                  <widget class="Gtk.Label" id="GtkLabel9">
+                                    <property name="MemberName" />
+                                    <property name="LabelProp" translatable="yes">&lt;b&gt;Field position&lt;/b&gt;</property>
+                                    <property name="UseMarkup">True</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="type">label_item</property>
+                                  </packing>
+                                </child>
                               </widget>
                               <packing>
-                                <property name="AutoSize">True</property>
-                                <property name="YOptions">Fill</property>
-                                <property name="XExpand">True</property>
-                                <property name="XFill">True</property>
-                                <property name="XShrink">False</property>
-                                <property name="YExpand">False</property>
-                                <property name="YFill">True</property>
-                                <property name="YShrink">False</property>
+                                <property name="Position">0</property>
+                                <property name="AutoSize">False</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="Gtk.CheckButton" id="taggoalcheckbutton">
+                              <widget class="Gtk.Frame" id="frame6">
                                 <property name="MemberName" />
-                                <property name="CanFocus">True</property>
-                                <property name="Label" translatable="yes">Tag goal position</property>
-                                <property name="DrawIndicator">True</property>
-                                <property name="HasLabel">True</property>
-                                <property name="UseUnderline">True</property>
-                                <signal name="Clicked" handler="OnTaggoalcheckbuttonClicked" />
+                                <property name="ShadowType">None</property>
+                                <child>
+                                  <widget class="Gtk.Alignment" id="GtkAlignment8">
+                                    <property name="MemberName" />
+                                    <property name="Xalign">0</property>
+                                    <property name="Yalign">0</property>
+                                    <property name="LeftPadding">12</property>
+                                    <child>
+                                      <widget class="Gtk.VBox" id="vbox6">
+                                        <property name="MemberName" />
+                                        <property name="Spacing">6</property>
+                                        <child>
+                                          <widget class="Gtk.CheckButton" id="taghalffieldcheckbutton">
+                                            <property name="MemberName" />
+                                            <property name="CanFocus">True</property>
+                                            <property name="Label" translatable="yes">Enable</property>
+                                            <property name="DrawIndicator">True</property>
+                                            <property name="HasLabel">True</property>
+                                            <property name="UseUnderline">True</property>
+                                            <signal name="Clicked" handler="OnTaghalffieldcheckbuttonClicked" />
+                                          </widget>
+                                          <packing>
+                                            <property name="Position">0</property>
+                                            <property name="AutoSize">True</property>
+                                            <property name="Expand">False</property>
+                                            <property name="Fill">False</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <widget class="Gtk.CheckButton" id="trajectoryhalfcheckbutton">
+                                            <property name="MemberName" />
+                                            <property name="CanFocus">True</property>
+                                            <property name="Label" translatable="yes">Trajectory</property>
+                                            <property name="DrawIndicator">True</property>
+                                            <property name="HasLabel">True</property>
+                                            <property name="UseUnderline">True</property>
+                                            <signal name="Clicked" handler="OnTrajectoryhalffieldcheckbuttonClicked" />
+                                          </widget>
+                                          <packing>
+                                            <property name="Position">1</property>
+                                            <property name="AutoSize">True</property>
+                                            <property name="Expand">False</property>
+                                            <property name="Fill">False</property>
+                                          </packing>
+                                        </child>
+                                      </widget>
+                                    </child>
+                                  </widget>
+                                </child>
+                                <child>
+                                  <widget class="Gtk.Label" id="GtkLabel12">
+                                    <property name="MemberName" />
+                                    <property name="LabelProp" translatable="yes">&lt;b&gt;Field position&lt;/b&gt;</property>
+                                    <property name="UseMarkup">True</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="type">label_item</property>
+                                  </packing>
+                                </child>
                               </widget>
                               <packing>
-                                <property name="LeftAttach">1</property>
-                                <property name="RightAttach">2</property>
-                                <property name="AutoSize">True</property>
-                                <property name="YOptions">Fill</property>
-                                <property name="XExpand">True</property>
-                                <property name="XFill">True</property>
-                                <property name="XShrink">False</property>
-                                <property name="YExpand">False</property>
-                                <property name="YFill">True</property>
-                                <property name="YShrink">False</property>
+                                <property name="Position">1</property>
+                                <property name="AutoSize">False</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="Gtk.CheckButton" id="trajectorycheckbutton">
+                              <widget class="Gtk.Frame" id="frame7">
                                 <property name="MemberName" />
-                                <property name="CanFocus">True</property>
-                                <property name="Label" translatable="yes">Trajectory</property>
-                                <property name="DrawIndicator">True</property>
-                                <property name="HasLabel">True</property>
-                                <property name="UseUnderline">True</property>
-                                <signal name="Clicked" handler="OnTrajectorycheckbuttonClicked" />
+                                <property name="ShadowType">None</property>
+                                <child>
+                                  <widget class="Gtk.Alignment" id="GtkAlignment9">
+                                    <property name="MemberName" />
+                                    <property name="Xalign">0</property>
+                                    <property name="Yalign">0</property>
+                                    <property name="LeftPadding">12</property>
+                                    <child>
+                                      <widget class="Gtk.CheckButton" id="taggoalcheckbutton">
+                                        <property name="MemberName" />
+                                        <property name="CanFocus">True</property>
+                                        <property name="Label" translatable="yes">Tag goal position</property>
+                                        <property name="DrawIndicator">True</property>
+                                        <property name="HasLabel">True</property>
+                                        <property name="UseUnderline">True</property>
+                                        <signal name="Clicked" handler="OnTaggoalcheckbuttonClicked" />
+                                      </widget>
+                                    </child>
+                                  </widget>
+                                </child>
+                                <child>
+                                  <widget class="Gtk.Label" id="GtkLabel13">
+                                    <property name="MemberName" />
+                                    <property name="LabelProp" translatable="yes">&lt;b&gt;Goal Position&lt;/b&gt;</property>
+                                    <property name="UseMarkup">True</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="type">label_item</property>
+                                  </packing>
+                                </child>
                               </widget>
                               <packing>
-                                <property name="TopAttach">1</property>
-                                <property name="BottomAttach">2</property>
-                                <property name="AutoSize">True</property>
-                                <property name="YOptions">Fill</property>
-                                <property name="XExpand">True</property>
-                                <property name="XFill">True</property>
-                                <property name="XShrink">False</property>
-                                <property name="YExpand">False</property>
-                                <property name="YFill">True</property>
-                                <property name="YShrink">False</property>
+                                <property name="Position">2</property>
+                                <property name="AutoSize">False</property>
                               </packing>
                             </child>
                           </widget>
                           <packing>
                             <property name="Position">0</property>
-                            <property name="AutoSize">True</property>
+                            <property name="AutoSize">False</property>
                             <property name="Expand">False</property>
                             <property name="Fill">False</property>
                           </packing>
@@ -2500,7 +2601,7 @@ Sort by duration</property>
                         <child>
                           <widget class="Gtk.Table" id="table3">
                             <property name="MemberName" />
-                            <property name="NColumns">2</property>
+                            <property name="NColumns">3</property>
                             <property name="Homogeneous">True</property>
                             <property name="RowSpacing">6</property>
                             <property name="ColumnSpacing">6</property>
@@ -2521,6 +2622,23 @@ Sort by duration</property>
                             </child>
                             <child>
                               <widget class="LongoMatch.Gui.Component.CoordinatesTagger" id="goalcoordinatestagger">
+                                <property name="MemberName" />
+                                <property name="Events">ButtonPressMask</property>
+                              </widget>
+                              <packing>
+                                <property name="LeftAttach">2</property>
+                                <property name="RightAttach">3</property>
+                                <property name="AutoSize">True</property>
+                                <property name="XExpand">True</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">True</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="LongoMatch.Gui.Component.CoordinatesTagger" id="halffieldcoordinatestagger">
                                 <property name="MemberName" />
                                 <property name="Events">ButtonPressMask</property>
                               </widget>
@@ -2553,7 +2671,7 @@ Sort by duration</property>
               </widget>
             </child>
             <child>
-              <widget class="Gtk.Label" id="GtkLabel4">
+              <widget class="Gtk.Label" id="GtkLabel6">
                 <property name="MemberName" />
                 <property name="LabelProp" translatable="yes">&lt;b&gt;Properties&lt;/b&gt;</property>
                 <property name="UseMarkup">True</property>
@@ -2624,7 +2742,7 @@ Sort by duration</property>
                               </widget>
                             </child>
                             <child>
-                              <widget class="Gtk.Label" id="GtkLabel5">
+                              <widget class="Gtk.Label" id="GtkLabel7">
                                 <property name="MemberName" />
                                 <property name="LabelProp" translatable="yes">&lt;b&gt;Subcategory name&lt;/b&gt;</property>
                                 <property name="UseMarkup">True</property>
@@ -2662,7 +2780,7 @@ Sort by duration</property>
                               </widget>
                             </child>
                             <child>
-                              <widget class="Gtk.Label" id="GtkLabel6">
+                              <widget class="Gtk.Label" id="GtkLabel8">
                                 <property name="MemberName" />
                                 <property name="LabelProp" translatable="yes">&lt;b&gt;Subcategory type&lt;/b&gt;</property>
                                 <property name="UseMarkup">True</property>
@@ -2709,7 +2827,7 @@ Sort by duration</property>
               </widget>
             </child>
             <child>
-              <widget class="Gtk.Label" id="GtkLabel8">
+              <widget class="Gtk.Label" id="GtkLabel11">
                 <property name="MemberName" />
                 <property name="LabelProp" translatable="yes">&lt;b&gt;Subcategories&lt;/b&gt;</property>
                 <property name="UseMarkup">True</property>
@@ -5421,7 +5539,7 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
         <property name="MemberName" />
         <property name="BorderWidth">2</property>
         <child>
-          <widget class="Gtk.VBox" id="vbox2">
+          <widget class="Gtk.VBox" id="mainvbox">
             <property name="MemberName" />
             <child>
               <widget class="Gtk.HBox" id="hbox">
@@ -5510,13 +5628,24 @@ Show-&gt;&lt;b&gt; S&lt;/b&gt;
                   </packing>
                 </child>
                 <child>
-                  <widget class="LongoMatch.Gui.Component.CoordinatesTagger" id="goalcoordinatestagger">
+                  <widget class="LongoMatch.Gui.Component.CoordinatesTagger" id="halffieldcoordinatestagger">
                     <property name="MemberName" />
                     <property name="Visible">False</property>
                     <property name="Events">ButtonPressMask</property>
                   </widget>
                   <packing>
                     <property name="Position">1</property>
+                    <property name="AutoSize">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="LongoMatch.Gui.Component.CoordinatesTagger" id="goalcoordinatestagger">
+                    <property name="MemberName" />
+                    <property name="Visible">False</property>
+                    <property name="Events">ButtonPressMask</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">2</property>
                     <property name="AutoSize">True</property>
                   </packing>
                 </child>

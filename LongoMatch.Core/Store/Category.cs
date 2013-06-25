@@ -107,7 +107,17 @@ namespace LongoMatch.Store
 			set;
 		}
 		
+		public bool TagHalfFieldPosition {
+			get;
+			set;
+		}
+		
 		public bool FieldPositionIsDistance {
+			get;
+			set;
+		}
+		
+		public bool HalfFieldPositionIsDistance {
 			get;
 			set;
 		}
@@ -162,6 +172,11 @@ namespace LongoMatch.Store
 				TagFieldPosition = true;
 			}
 			try {
+				TagHalfFieldPosition = info.GetBoolean("taghalffieldpos");
+			} catch {
+				TagHalfFieldPosition = false;
+			}
+			try {
 				TagGoalPosition = info.GetBoolean("tagfieldgoal");
 			} catch {
 				TagGoalPosition = false;
@@ -170,6 +185,11 @@ namespace LongoMatch.Store
 				FieldPositionIsDistance = info.GetBoolean("fieldposisdist");
 			} catch {
 				FieldPositionIsDistance = false;
+			}
+			try {
+				HalfFieldPositionIsDistance = info.GetBoolean("halffieldposisdist");
+			} catch {
+				HalfFieldPositionIsDistance = false;
 			}
 		}
 
@@ -188,8 +208,10 @@ namespace LongoMatch.Store
 			info.AddValue("blue", ColorHelper.ByteToShort(Color.B));
 			info.AddValue("sort_method", SortMethod);
 			info.AddValue("tagfieldpos", TagFieldPosition);
+			info.AddValue("taghalffieldpos", TagHalfFieldPosition);
 			info.AddValue("taggoalpos", TagGoalPosition);
 			info.AddValue("fieldposisdist", FieldPositionIsDistance);
+			info.AddValue("halffieldposisdist", HalfFieldPositionIsDistance);
 		}
 		#endregion
 		

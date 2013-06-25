@@ -58,6 +58,7 @@ namespace LongoMatch.Gui.Component
 			lagtimebutton.ValueChanged += OnLagTimeChanged;
 			fieldcoordinatestagger.Background = Gdk.Pixbuf.LoadFromResource (Constants.FIELD_BACKGROUND);
 			goalcoordinatestagger.Background = Gdk.Pixbuf.LoadFromResource (Constants.GOAL_BACKGROUND);
+			halffieldcoordinatestagger.Background = Gdk.Pixbuf.LoadFromResource (Constants.HALF_FIELD_BACKGROUND);
 		}
 		
 		public bool CanChangeHotkey {
@@ -147,6 +148,18 @@ namespace LongoMatch.Gui.Component
 			}
 			fieldcoordinatestagger.Coordinates = coords;
 			trajectorycheckbutton.Active = cat.FieldPositionIsDistance;
+			
+			taghalffieldcheckbutton.Active = cat.TagHalfFieldPosition;
+			halffieldcoordinatestagger.Visible = cat.TagHalfFieldPosition;
+			coords = new List<Coordinates>();
+			c = new Coordinates();
+			c.Add (new Point (300, 300));
+			coords.Add (c);
+			if (cat.FieldPositionIsDistance) {
+				c.Add (new Point (400, 500));
+			}
+			halffieldcoordinatestagger.Coordinates = coords;
+			trajectoryhalfcheckbutton.Active = cat.HalfFieldPositionIsDistance;
 			
 			taggoalcheckbutton.Active = cat.TagGoalPosition;
 			coords = new List<Coordinates>();
@@ -281,10 +294,33 @@ namespace LongoMatch.Gui.Component
 			cat.TagGoalPosition = taggoalcheckbutton.Active;
 		}
 		
+		protected void OnTaghalffieldcheckbuttonClicked (object sender, EventArgs e)
+		{
+			halffieldcoordinatestagger.Visible = taghalffieldcheckbutton.Active;
+			cat.TagHalfFieldPosition = taghalffieldcheckbutton.Active;
+		}
+		
 		protected void OnTagfieldcheckbuttonClicked (object sender, EventArgs e)
 		{
 			fieldcoordinatestagger.Visible = tagfieldcheckbutton.Active;
 			cat.TagFieldPosition = tagfieldcheckbutton.Active;
+		}
+		
+		protected void OnTrajectoryhalffieldcheckbuttonClicked (object sender, EventArgs e)
+		{
+			List<Coordinates> coords;
+			Coordinates c;
+			
+			cat.HalfFieldPositionIsDistance = trajectoryhalfcheckbutton.Active;
+			
+			coords = new List<Coordinates>();
+			c = new Coordinates();
+			c.Add (new Point (300, 300));
+			coords.Add (c);
+			if (cat.HalfFieldPositionIsDistance) {
+				c.Add (new Point (400, 500));
+			}
+			halffieldcoordinatestagger.Coordinates = coords;
 		}
 		
 		protected void OnTrajectorycheckbuttonClicked (object sender, EventArgs e)

@@ -191,6 +191,11 @@ namespace LongoMatch.Store
 			get;
 			set;
 		}
+
+		public Coordinates HalfFieldPosition {
+			get;
+			set;
+		}
 		
 		public Coordinates GoalPosition {
 			get;

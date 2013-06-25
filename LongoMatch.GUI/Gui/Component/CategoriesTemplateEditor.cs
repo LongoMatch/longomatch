@@ -38,7 +38,7 @@ namespace LongoMatch.Gui.Component
 		CategoriesTreeView categoriestreeview;
 		List<HotKey> hkList;
 		GameUnitsEditor gameUnitsEditor;
-		Gtk.Image fieldImage, goalImage;
+		Gtk.Image fieldImage, halffieldImage, goalImage;
 		VBox box;
 		
 		ITemplatesService ts;
@@ -95,6 +95,14 @@ namespace LongoMatch.Gui.Component
 					img.Scale();
 					fieldImage.Pixbuf = img.Value; 
 				}
+				if (template.HalfFieldBackgroundImage != null) {
+					halffieldImage.Pixbuf = template.HalfFieldBackgroundImage.Value;
+				} else {
+					Image img = new Image (
+						Gdk.Pixbuf.LoadFromResource (Constants.HALF_FIELD_BACKGROUND));
+					img.Scale();
+					halffieldImage.Pixbuf = img.Value;
+				}
 				box.Sensitive = true;
 			}
 		}
@@ -134,13 +142,16 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		private void AddBackgroundsSelectionWidget () {
-			Gtk.Frame fframe, gframe;
-			EventBox febox, gebox;
+			Gtk.Frame fframe, gframe, hfframe;
+			EventBox febox, gebox, hfebox;
 			Image img;
 			
 			fframe = new Gtk.Frame("<b>" + Catalog.GetString("Field background") + "</b>");
 			(fframe.LabelWidget as Label).UseMarkup = true;
 			fframe.ShadowType = ShadowType.None;
+			hfframe = new Gtk.Frame("<b>" + Catalog.GetString("Half field background") + "</b>");
+			(hfframe.LabelWidget as Label).UseMarkup = true;
+			hfframe.ShadowType = ShadowType.None;
 			gframe = new Gtk.Frame("<b>" + Catalog.GetString("Goal background") + "</b>");
 			(gframe.LabelWidget as Label).UseMarkup = true;
 			gframe.ShadowType = ShadowType.None;
@@ -153,6 +164,14 @@ namespace LongoMatch.Gui.Component
 			img.Scale();
 			fieldImage.Pixbuf = img.Value; 
 			
+			hfebox = new EventBox();
+			hfebox.ButtonPressEvent += OnHalfFieldImageClicked;
+			halffieldImage = new Gtk.Image();
+			img = new Image (
+				Gdk.Pixbuf.LoadFromResource (Constants.HALF_FIELD_BACKGROUND));
+			img.Scale();
+			halffieldImage.Pixbuf = img.Value;
+			
 			gebox = new EventBox();
 			gebox.ButtonPressEvent += OnGoalImageClicked;			
 			goalImage = new Gtk.Image();
@@ -162,12 +181,15 @@ namespace LongoMatch.Gui.Component
 			goalImage.Pixbuf = img.Value;
 			
 			fframe.Add(febox);
+			hfframe.Add(hfebox);
 			gframe.Add(gebox);
 			febox.Add(fieldImage);
+			hfebox.Add(halffieldImage);
 			gebox.Add(goalImage);
 			
 			box = new VBox();
 			box.PackStart (fframe, false, false, 0);
+			box.PackStart (hfframe, false, false, 0);
 			box.PackStart (gframe, false, false, 0);
 			box.ShowAll();
 			box.Sensitive = false;
@@ -184,6 +206,19 @@ namespace LongoMatch.Gui.Component
 				img.Scale();
 				Template.GoalBackgroundImage = img; 
 				goalImage.Pixbuf = img.Value;
+			}
+		}
+		
+		protected virtual void OnHalfFieldImageClicked (object sender, EventArgs args)
+		{
+			Pixbuf background;
+			
+			background = Helpers.Misc.OpenImage((Gtk.Window)this.Toplevel);
+			if (background != null) {
+				Image img = new Image(background);
+				img.Scale();
+				Template.HalfFieldBackgroundImage = img;
+				halffieldImage.Pixbuf = img.Value;
 			}
 		}
 		

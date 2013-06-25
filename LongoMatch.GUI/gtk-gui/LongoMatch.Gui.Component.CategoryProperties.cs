@@ -24,14 +24,28 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Entry nameentry;
 		private global::Gtk.ComboBox sortmethodcombobox;
 		private global::Gtk.VBox vbox5;
-		private global::Gtk.Table table1;
+		private global::Gtk.HBox hbox1;
+		private global::Gtk.Frame frame5;
+		private global::Gtk.Alignment GtkAlignment7;
+		private global::Gtk.VBox vbox4;
 		private global::Gtk.CheckButton tagfieldcheckbutton;
-		private global::Gtk.CheckButton taggoalcheckbutton;
 		private global::Gtk.CheckButton trajectorycheckbutton;
+		private global::Gtk.Label GtkLabel9;
+		private global::Gtk.Frame frame6;
+		private global::Gtk.Alignment GtkAlignment8;
+		private global::Gtk.VBox vbox6;
+		private global::Gtk.CheckButton taghalffieldcheckbutton;
+		private global::Gtk.CheckButton trajectoryhalfcheckbutton;
+		private global::Gtk.Label GtkLabel12;
+		private global::Gtk.Frame frame7;
+		private global::Gtk.Alignment GtkAlignment9;
+		private global::Gtk.CheckButton taggoalcheckbutton;
+		private global::Gtk.Label GtkLabel13;
 		private global::Gtk.Table table3;
 		private global::LongoMatch.Gui.Component.CoordinatesTagger fieldcoordinatestagger;
 		private global::LongoMatch.Gui.Component.CoordinatesTagger goalcoordinatestagger;
-		private global::Gtk.Label GtkLabel4;
+		private global::LongoMatch.Gui.Component.CoordinatesTagger halffieldcoordinatestagger;
+		private global::Gtk.Label GtkLabel6;
 		private global::Gtk.Frame frame3;
 		private global::Gtk.Alignment GtkAlignment3;
 		private global::Gtk.VBox vbox1;
@@ -41,13 +55,13 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Frame frame1;
 		private global::Gtk.Alignment GtkAlignment4;
 		private global::Gtk.Entry subcatnameentry;
-		private global::Gtk.Label GtkLabel5;
+		private global::Gtk.Label GtkLabel7;
 		private global::Gtk.Frame frame2;
 		private global::Gtk.Alignment GtkAlignment5;
 		private global::Gtk.ComboBox subcatcombobox;
-		private global::Gtk.Label GtkLabel6;
-		private global::Gtk.Button addbutton;
 		private global::Gtk.Label GtkLabel8;
+		private global::Gtk.Button addbutton;
+		private global::Gtk.Label GtkLabel11;
 		
 		protected virtual void Build ()
 		{
@@ -260,52 +274,134 @@ namespace LongoMatch.Gui.Component
 			this.vbox5.Name = "vbox5";
 			this.vbox5.Spacing = 6;
 			// Container child vbox5.Gtk.Box+BoxChild
-			this.table1 = new global::Gtk.Table (((uint)(2)), ((uint)(2)), true);
-			this.table1.Name = "table1";
-			this.table1.RowSpacing = ((uint)(6));
-			this.table1.ColumnSpacing = ((uint)(6));
-			// Container child table1.Gtk.Table+TableChild
+			this.hbox1 = new global::Gtk.HBox ();
+			this.hbox1.Name = "hbox1";
+			this.hbox1.Spacing = 6;
+			// Container child hbox1.Gtk.Box+BoxChild
+			this.frame5 = new global::Gtk.Frame ();
+			this.frame5.Name = "frame5";
+			this.frame5.ShadowType = ((global::Gtk.ShadowType)(0));
+			// Container child frame5.Gtk.Container+ContainerChild
+			this.GtkAlignment7 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
+			this.GtkAlignment7.Name = "GtkAlignment7";
+			this.GtkAlignment7.LeftPadding = ((uint)(12));
+			// Container child GtkAlignment7.Gtk.Container+ContainerChild
+			this.vbox4 = new global::Gtk.VBox ();
+			this.vbox4.Name = "vbox4";
+			this.vbox4.Spacing = 6;
+			// Container child vbox4.Gtk.Box+BoxChild
 			this.tagfieldcheckbutton = new global::Gtk.CheckButton ();
 			this.tagfieldcheckbutton.CanFocus = true;
 			this.tagfieldcheckbutton.Name = "tagfieldcheckbutton";
-			this.tagfieldcheckbutton.Label = global::Mono.Unix.Catalog.GetString ("Tag field position");
+			this.tagfieldcheckbutton.Label = global::Mono.Unix.Catalog.GetString ("Enable");
 			this.tagfieldcheckbutton.Active = true;
 			this.tagfieldcheckbutton.DrawIndicator = true;
 			this.tagfieldcheckbutton.UseUnderline = true;
-			this.table1.Add (this.tagfieldcheckbutton);
-			global::Gtk.Table.TableChild w16 = ((global::Gtk.Table.TableChild)(this.table1 [this.tagfieldcheckbutton]));
-			w16.YOptions = ((global::Gtk.AttachOptions)(4));
-			// Container child table1.Gtk.Table+TableChild
-			this.taggoalcheckbutton = new global::Gtk.CheckButton ();
-			this.taggoalcheckbutton.CanFocus = true;
-			this.taggoalcheckbutton.Name = "taggoalcheckbutton";
-			this.taggoalcheckbutton.Label = global::Mono.Unix.Catalog.GetString ("Tag goal position");
-			this.taggoalcheckbutton.DrawIndicator = true;
-			this.taggoalcheckbutton.UseUnderline = true;
-			this.table1.Add (this.taggoalcheckbutton);
-			global::Gtk.Table.TableChild w17 = ((global::Gtk.Table.TableChild)(this.table1 [this.taggoalcheckbutton]));
-			w17.LeftAttach = ((uint)(1));
-			w17.RightAttach = ((uint)(2));
-			w17.YOptions = ((global::Gtk.AttachOptions)(4));
-			// Container child table1.Gtk.Table+TableChild
+			this.vbox4.Add (this.tagfieldcheckbutton);
+			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.tagfieldcheckbutton]));
+			w16.Position = 0;
+			w16.Expand = false;
+			w16.Fill = false;
+			// Container child vbox4.Gtk.Box+BoxChild
 			this.trajectorycheckbutton = new global::Gtk.CheckButton ();
 			this.trajectorycheckbutton.CanFocus = true;
 			this.trajectorycheckbutton.Name = "trajectorycheckbutton";
 			this.trajectorycheckbutton.Label = global::Mono.Unix.Catalog.GetString ("Trajectory");
 			this.trajectorycheckbutton.DrawIndicator = true;
 			this.trajectorycheckbutton.UseUnderline = true;
-			this.table1.Add (this.trajectorycheckbutton);
-			global::Gtk.Table.TableChild w18 = ((global::Gtk.Table.TableChild)(this.table1 [this.trajectorycheckbutton]));
-			w18.TopAttach = ((uint)(1));
-			w18.BottomAttach = ((uint)(2));
-			w18.YOptions = ((global::Gtk.AttachOptions)(4));
-			this.vbox5.Add (this.table1);
-			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.vbox5 [this.table1]));
-			w19.Position = 0;
-			w19.Expand = false;
-			w19.Fill = false;
+			this.vbox4.Add (this.trajectorycheckbutton);
+			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.trajectorycheckbutton]));
+			w17.Position = 1;
+			w17.Expand = false;
+			w17.Fill = false;
+			this.GtkAlignment7.Add (this.vbox4);
+			this.frame5.Add (this.GtkAlignment7);
+			this.GtkLabel9 = new global::Gtk.Label ();
+			this.GtkLabel9.Name = "GtkLabel9";
+			this.GtkLabel9.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Field position</b>");
+			this.GtkLabel9.UseMarkup = true;
+			this.frame5.LabelWidget = this.GtkLabel9;
+			this.hbox1.Add (this.frame5);
+			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.frame5]));
+			w20.Position = 0;
+			// Container child hbox1.Gtk.Box+BoxChild
+			this.frame6 = new global::Gtk.Frame ();
+			this.frame6.Name = "frame6";
+			this.frame6.ShadowType = ((global::Gtk.ShadowType)(0));
+			// Container child frame6.Gtk.Container+ContainerChild
+			this.GtkAlignment8 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
+			this.GtkAlignment8.Name = "GtkAlignment8";
+			this.GtkAlignment8.LeftPadding = ((uint)(12));
+			// Container child GtkAlignment8.Gtk.Container+ContainerChild
+			this.vbox6 = new global::Gtk.VBox ();
+			this.vbox6.Name = "vbox6";
+			this.vbox6.Spacing = 6;
+			// Container child vbox6.Gtk.Box+BoxChild
+			this.taghalffieldcheckbutton = new global::Gtk.CheckButton ();
+			this.taghalffieldcheckbutton.CanFocus = true;
+			this.taghalffieldcheckbutton.Name = "taghalffieldcheckbutton";
+			this.taghalffieldcheckbutton.Label = global::Mono.Unix.Catalog.GetString ("Enable");
+			this.taghalffieldcheckbutton.DrawIndicator = true;
+			this.taghalffieldcheckbutton.UseUnderline = true;
+			this.vbox6.Add (this.taghalffieldcheckbutton);
+			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.vbox6 [this.taghalffieldcheckbutton]));
+			w21.Position = 0;
+			w21.Expand = false;
+			w21.Fill = false;
+			// Container child vbox6.Gtk.Box+BoxChild
+			this.trajectoryhalfcheckbutton = new global::Gtk.CheckButton ();
+			this.trajectoryhalfcheckbutton.CanFocus = true;
+			this.trajectoryhalfcheckbutton.Name = "trajectoryhalfcheckbutton";
+			this.trajectoryhalfcheckbutton.Label = global::Mono.Unix.Catalog.GetString ("Trajectory");
+			this.trajectoryhalfcheckbutton.DrawIndicator = true;
+			this.trajectoryhalfcheckbutton.UseUnderline = true;
+			this.vbox6.Add (this.trajectoryhalfcheckbutton);
+			global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.vbox6 [this.trajectoryhalfcheckbutton]));
+			w22.Position = 1;
+			w22.Expand = false;
+			w22.Fill = false;
+			this.GtkAlignment8.Add (this.vbox6);
+			this.frame6.Add (this.GtkAlignment8);
+			this.GtkLabel12 = new global::Gtk.Label ();
+			this.GtkLabel12.Name = "GtkLabel12";
+			this.GtkLabel12.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Field position</b>");
+			this.GtkLabel12.UseMarkup = true;
+			this.frame6.LabelWidget = this.GtkLabel12;
+			this.hbox1.Add (this.frame6);
+			global::Gtk.Box.BoxChild w25 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.frame6]));
+			w25.Position = 1;
+			// Container child hbox1.Gtk.Box+BoxChild
+			this.frame7 = new global::Gtk.Frame ();
+			this.frame7.Name = "frame7";
+			this.frame7.ShadowType = ((global::Gtk.ShadowType)(0));
+			// Container child frame7.Gtk.Container+ContainerChild
+			this.GtkAlignment9 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
+			this.GtkAlignment9.Name = "GtkAlignment9";
+			this.GtkAlignment9.LeftPadding = ((uint)(12));
+			// Container child GtkAlignment9.Gtk.Container+ContainerChild
+			this.taggoalcheckbutton = new global::Gtk.CheckButton ();
+			this.taggoalcheckbutton.CanFocus = true;
+			this.taggoalcheckbutton.Name = "taggoalcheckbutton";
+			this.taggoalcheckbutton.Label = global::Mono.Unix.Catalog.GetString ("Tag goal position");
+			this.taggoalcheckbutton.DrawIndicator = true;
+			this.taggoalcheckbutton.UseUnderline = true;
+			this.GtkAlignment9.Add (this.taggoalcheckbutton);
+			this.frame7.Add (this.GtkAlignment9);
+			this.GtkLabel13 = new global::Gtk.Label ();
+			this.GtkLabel13.Name = "GtkLabel13";
+			this.GtkLabel13.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Goal Position</b>");
+			this.GtkLabel13.UseMarkup = true;
+			this.frame7.LabelWidget = this.GtkLabel13;
+			this.hbox1.Add (this.frame7);
+			global::Gtk.Box.BoxChild w28 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.frame7]));
+			w28.Position = 2;
+			this.vbox5.Add (this.hbox1);
+			global::Gtk.Box.BoxChild w29 = ((global::Gtk.Box.BoxChild)(this.vbox5 [this.hbox1]));
+			w29.Position = 0;
+			w29.Expand = false;
+			w29.Fill = false;
 			// Container child vbox5.Gtk.Box+BoxChild
-			this.table3 = new global::Gtk.Table (((uint)(1)), ((uint)(2)), true);
+			this.table3 = new global::Gtk.Table (((uint)(1)), ((uint)(3)), true);
 			this.table3.Name = "table3";
 			this.table3.RowSpacing = ((uint)(6));
 			this.table3.ColumnSpacing = ((uint)(6));
@@ -319,25 +415,33 @@ namespace LongoMatch.Gui.Component
 			this.goalcoordinatestagger.Events = ((global::Gdk.EventMask)(256));
 			this.goalcoordinatestagger.Name = "goalcoordinatestagger";
 			this.table3.Add (this.goalcoordinatestagger);
-			global::Gtk.Table.TableChild w21 = ((global::Gtk.Table.TableChild)(this.table3 [this.goalcoordinatestagger]));
-			w21.LeftAttach = ((uint)(1));
-			w21.RightAttach = ((uint)(2));
+			global::Gtk.Table.TableChild w31 = ((global::Gtk.Table.TableChild)(this.table3 [this.goalcoordinatestagger]));
+			w31.LeftAttach = ((uint)(2));
+			w31.RightAttach = ((uint)(3));
+			// Container child table3.Gtk.Table+TableChild
+			this.halffieldcoordinatestagger = new global::LongoMatch.Gui.Component.CoordinatesTagger ();
+			this.halffieldcoordinatestagger.Events = ((global::Gdk.EventMask)(256));
+			this.halffieldcoordinatestagger.Name = "halffieldcoordinatestagger";
+			this.table3.Add (this.halffieldcoordinatestagger);
+			global::Gtk.Table.TableChild w32 = ((global::Gtk.Table.TableChild)(this.table3 [this.halffieldcoordinatestagger]));
+			w32.LeftAttach = ((uint)(1));
+			w32.RightAttach = ((uint)(2));
 			this.vbox5.Add (this.table3);
-			global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.vbox5 [this.table3]));
-			w22.Position = 1;
+			global::Gtk.Box.BoxChild w33 = ((global::Gtk.Box.BoxChild)(this.vbox5 [this.table3]));
+			w33.Position = 1;
 			this.vbox3.Add (this.vbox5);
-			global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.vbox5]));
-			w23.Position = 1;
+			global::Gtk.Box.BoxChild w34 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.vbox5]));
+			w34.Position = 1;
 			this.GtkAlignment1.Add (this.vbox3);
 			this.frame4.Add (this.GtkAlignment1);
-			this.GtkLabel4 = new global::Gtk.Label ();
-			this.GtkLabel4.Name = "GtkLabel4";
-			this.GtkLabel4.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Properties</b>");
-			this.GtkLabel4.UseMarkup = true;
-			this.frame4.LabelWidget = this.GtkLabel4;
+			this.GtkLabel6 = new global::Gtk.Label ();
+			this.GtkLabel6.Name = "GtkLabel6";
+			this.GtkLabel6.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Properties</b>");
+			this.GtkLabel6.UseMarkup = true;
+			this.frame4.LabelWidget = this.GtkLabel6;
 			this.vbox2.Add (this.frame4);
-			global::Gtk.Box.BoxChild w26 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.frame4]));
-			w26.Position = 0;
+			global::Gtk.Box.BoxChild w37 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.frame4]));
+			w37.Position = 0;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.frame3 = new global::Gtk.Frame ();
 			this.frame3.Name = "frame3";
@@ -360,8 +464,8 @@ namespace LongoMatch.Gui.Component
 			this.subcategoriestreeview1.Name = "subcategoriestreeview1";
 			this.GtkScrolledWindow.Add (this.subcategoriestreeview1);
 			this.vbox1.Add (this.GtkScrolledWindow);
-			global::Gtk.Box.BoxChild w28 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.GtkScrolledWindow]));
-			w28.Position = 0;
+			global::Gtk.Box.BoxChild w39 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.GtkScrolledWindow]));
+			w39.Position = 0;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.hbox3 = new global::Gtk.HBox ();
 			this.hbox3.Name = "hbox3";
@@ -382,16 +486,16 @@ namespace LongoMatch.Gui.Component
 			this.subcatnameentry.InvisibleChar = '•';
 			this.GtkAlignment4.Add (this.subcatnameentry);
 			this.frame1.Add (this.GtkAlignment4);
-			this.GtkLabel5 = new global::Gtk.Label ();
-			this.GtkLabel5.Name = "GtkLabel5";
-			this.GtkLabel5.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Subcategory name</b>");
-			this.GtkLabel5.UseMarkup = true;
-			this.frame1.LabelWidget = this.GtkLabel5;
+			this.GtkLabel7 = new global::Gtk.Label ();
+			this.GtkLabel7.Name = "GtkLabel7";
+			this.GtkLabel7.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Subcategory name</b>");
+			this.GtkLabel7.UseMarkup = true;
+			this.frame1.LabelWidget = this.GtkLabel7;
 			this.hbox3.Add (this.frame1);
-			global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.frame1]));
-			w31.Position = 0;
-			w31.Expand = false;
-			w31.Fill = false;
+			global::Gtk.Box.BoxChild w42 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.frame1]));
+			w42.Position = 0;
+			w42.Expand = false;
+			w42.Fill = false;
 			// Container child hbox3.Gtk.Box+BoxChild
 			this.frame2 = new global::Gtk.Frame ();
 			this.frame2.Name = "frame2";
@@ -405,14 +509,14 @@ namespace LongoMatch.Gui.Component
 			this.subcatcombobox.Name = "subcatcombobox";
 			this.GtkAlignment5.Add (this.subcatcombobox);
 			this.frame2.Add (this.GtkAlignment5);
-			this.GtkLabel6 = new global::Gtk.Label ();
-			this.GtkLabel6.Name = "GtkLabel6";
-			this.GtkLabel6.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Subcategory type</b>");
-			this.GtkLabel6.UseMarkup = true;
-			this.frame2.LabelWidget = this.GtkLabel6;
+			this.GtkLabel8 = new global::Gtk.Label ();
+			this.GtkLabel8.Name = "GtkLabel8";
+			this.GtkLabel8.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Subcategory type</b>");
+			this.GtkLabel8.UseMarkup = true;
+			this.frame2.LabelWidget = this.GtkLabel8;
 			this.hbox3.Add (this.frame2);
-			global::Gtk.Box.BoxChild w34 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.frame2]));
-			w34.Position = 1;
+			global::Gtk.Box.BoxChild w45 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.frame2]));
+			w45.Position = 1;
 			// Container child hbox3.Gtk.Box+BoxChild
 			this.addbutton = new global::Gtk.Button ();
 			this.addbutton.TooltipMarkup = "Add this subcategory";
@@ -421,41 +525,41 @@ namespace LongoMatch.Gui.Component
 			this.addbutton.Name = "addbutton";
 			this.addbutton.UseUnderline = true;
 			// Container child addbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w35 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
+			global::Gtk.Alignment w46 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w36 = new global::Gtk.HBox ();
-			w36.Spacing = 2;
+			global::Gtk.HBox w47 = new global::Gtk.HBox ();
+			w47.Spacing = 2;
 			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w37 = new global::Gtk.Image ();
-			w37.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-add", global::Gtk.IconSize.Menu);
-			w36.Add (w37);
+			global::Gtk.Image w48 = new global::Gtk.Image ();
+			w48.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-add", global::Gtk.IconSize.Menu);
+			w47.Add (w48);
 			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w39 = new global::Gtk.Label ();
-			w39.LabelProp = global::Mono.Unix.Catalog.GetString ("_Add subcategory");
-			w39.UseUnderline = true;
-			w36.Add (w39);
-			w35.Add (w36);
-			this.addbutton.Add (w35);
+			global::Gtk.Label w50 = new global::Gtk.Label ();
+			w50.LabelProp = global::Mono.Unix.Catalog.GetString ("_Add subcategory");
+			w50.UseUnderline = true;
+			w47.Add (w50);
+			w46.Add (w47);
+			this.addbutton.Add (w46);
 			this.hbox3.Add (this.addbutton);
-			global::Gtk.Box.BoxChild w43 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.addbutton]));
-			w43.Position = 2;
-			w43.Expand = false;
-			w43.Fill = false;
+			global::Gtk.Box.BoxChild w54 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.addbutton]));
+			w54.Position = 2;
+			w54.Expand = false;
+			w54.Fill = false;
 			this.vbox1.Add (this.hbox3);
-			global::Gtk.Box.BoxChild w44 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hbox3]));
-			w44.Position = 1;
-			w44.Expand = false;
-			w44.Fill = false;
+			global::Gtk.Box.BoxChild w55 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hbox3]));
+			w55.Position = 1;
+			w55.Expand = false;
+			w55.Fill = false;
 			this.GtkAlignment3.Add (this.vbox1);
 			this.frame3.Add (this.GtkAlignment3);
-			this.GtkLabel8 = new global::Gtk.Label ();
-			this.GtkLabel8.Name = "GtkLabel8";
-			this.GtkLabel8.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Subcategories</b>");
-			this.GtkLabel8.UseMarkup = true;
-			this.frame3.LabelWidget = this.GtkLabel8;
+			this.GtkLabel11 = new global::Gtk.Label ();
+			this.GtkLabel11.Name = "GtkLabel11";
+			this.GtkLabel11.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Subcategories</b>");
+			this.GtkLabel11.UseMarkup = true;
+			this.frame3.LabelWidget = this.GtkLabel11;
 			this.vbox2.Add (this.frame3);
-			global::Gtk.Box.BoxChild w47 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.frame3]));
-			w47.Position = 1;
+			global::Gtk.Box.BoxChild w58 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.frame3]));
+			w58.Position = 1;
 			this.Add (this.vbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
@@ -465,9 +569,11 @@ namespace LongoMatch.Gui.Component
 			this.nameentry.Changed += new global::System.EventHandler (this.OnNameentryChanged);
 			this.changebuton.Clicked += new global::System.EventHandler (this.OnChangebutonClicked);
 			this.colorbutton1.ColorSet += new global::System.EventHandler (this.OnColorbutton1ColorSet);
-			this.trajectorycheckbutton.Clicked += new global::System.EventHandler (this.OnTrajectorycheckbuttonClicked);
-			this.taggoalcheckbutton.Clicked += new global::System.EventHandler (this.OnTaggoalcheckbuttonClicked);
 			this.tagfieldcheckbutton.Clicked += new global::System.EventHandler (this.OnTagfieldcheckbuttonClicked);
+			this.trajectorycheckbutton.Clicked += new global::System.EventHandler (this.OnTrajectorycheckbuttonClicked);
+			this.taghalffieldcheckbutton.Clicked += new global::System.EventHandler (this.OnTaghalffieldcheckbuttonClicked);
+			this.trajectoryhalfcheckbutton.Clicked += new global::System.EventHandler (this.OnTrajectoryhalffieldcheckbuttonClicked);
+			this.taggoalcheckbutton.Clicked += new global::System.EventHandler (this.OnTaggoalcheckbuttonClicked);
 			this.subcatcombobox.Changed += new global::System.EventHandler (this.OnSubcatcomboboxChanged);
 			this.addbutton.Clicked += new global::System.EventHandler (this.OnAddbuttonClicked);
 		}
