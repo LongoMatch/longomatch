@@ -56,7 +56,7 @@ namespace LongoMatch.Services
 			Config.Load();
 			
 			if (Config.Lang != null) {
-				Environment.SetEnvironmentVariable ("LANG", Config.Lang);
+				Environment.SetEnvironmentVariable ("LANGUAGE", Config.Lang);
 			}
 			
 			/* Init internationalization support */
