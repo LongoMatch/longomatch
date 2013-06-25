@@ -242,6 +242,16 @@ namespace LongoMatch
 				Save ();
 			}
 		}
+		
+		public static bool AutoSave {
+			get {
+				return state.autoSave;
+			}
+			set {
+				state.autoSave = value;
+				Save ();
+			}
+		}
 		#endregion
 
 	}
@@ -249,6 +259,7 @@ namespace LongoMatch
 	[Serializable]
 	public class ConfigState{
 		public bool fastTagging;
+		public bool autoSave;
 		public string currentDatabase;
 		public string lang;
 		public VideoStandard captureVideoStandard;
@@ -264,6 +275,7 @@ namespace LongoMatch
 			currentDatabase = Constants.DEFAULT_DB_NAME;
 			lang = null;
 			captureVideoStandard = VideoStandards.P480;
+			autoSave = false;
 			captureEncodingProfile = EncodingProfiles.MP4;
 			captureEncodingQuality = EncodingQualities.Medium;
 			renderVideoStandard = VideoStandards.P720_16_9;
