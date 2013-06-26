@@ -263,8 +263,8 @@ namespace LongoMatch.Gui.Component
 				encSettings.EncodingProfile = (EncodingProfile) encProfileList.GetValue(iter, 1);
 				
 				/* FIXME: Configure with the UI */
-				encSettings.Framerate_n = 25;
-				encSettings.Framerate_d = 1;
+				encSettings.Framerate_n = Config.FPS_N;
+				encSettings.Framerate_d = Config.FPS_D;
 				
 				s.EncodingSettings = encSettings;
 				return s;

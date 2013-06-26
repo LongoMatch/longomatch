@@ -252,6 +252,47 @@ namespace LongoMatch
 				Save ();
 			}
 		}
+		
+		public static bool OverlayTitle {
+			get {
+				return state.overlayTitle;
+			}
+			set {
+				state.overlayTitle = value;
+				Save ();
+			}
+		}
+		
+		public static bool EnableAudio {
+			get {
+				return state.enableAudio;
+			}
+			set {
+				state.enableAudio = value;
+				Save ();
+			}
+		}
+		
+		public static uint FPS_N {
+			get {
+				return state.fps_n;
+			}
+			set {
+				state.fps_n = value;
+				Save ();
+			}
+		}
+		
+		public static uint FPS_D {
+			get {
+				return state.fps_d;
+			}
+			set {
+				state.fps_d = value;
+				Save ();
+			}
+		}
+		
 		#endregion
 
 	}
@@ -262,12 +303,16 @@ namespace LongoMatch
 		public bool autoSave;
 		public string currentDatabase;
 		public string lang;
+		public uint fps_n;
+		public uint fps_d;
 		public VideoStandard captureVideoStandard;
 		public VideoStandard renderVideoStandard;
 		public EncodingProfile captureEncodingProfile;
 		public EncodingProfile renderEncodingProfile;
 		public EncodingQuality captureEncodingQuality;
 		public EncodingQuality renderEncodingQuality;
+		public bool overlayTitle;
+		public bool enableAudio;
 		
 		public ConfigState () {
 			/* Set default values */
@@ -281,6 +326,10 @@ namespace LongoMatch
 			renderVideoStandard = VideoStandards.P720_16_9;
 			renderEncodingProfile = EncodingProfiles.MP4;
 			renderEncodingQuality = EncodingQualities.High;
+			overlayTitle = true;
+			enableAudio = false;
+			fps_n = 25;
+			fps_d = 1;
 		}
 	}
 }

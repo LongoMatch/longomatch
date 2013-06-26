@@ -25,9 +25,18 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class VideoPreferencesPanel : Gtk.Bin
 	{
+		CheckButton overlayTitle, enableSound;
+		
 		public VideoPreferencesPanel ()
 		{
 			this.Build ();
+			
+			if (Config.FPS_N == 30000) {
+				fpscombobox.Active = 1;
+			} else {
+				fpscombobox.Active = 0;
+			}
+			fpscombobox.Changed += HandleFPSChanged;
 			Misc.FillImageFormat (renderimagecombo, Config.RenderVideoStandard);
 			Misc.FillEncodingFormat (renderenccombo, Config.RenderEncodingProfile);
 			Misc.FillQuality (renderqualcombo, Config.RenderEncodingQuality);
@@ -44,6 +53,35 @@ namespace LongoMatch.Gui.Component
 			
 			renderqualcombo.Changed += HandleQualityChanged;
 			captureimagecombo.Changed += HandleImageChanged;
+			
+			enableSound  = new CheckButton();
+			rendertable.Attach (enableSound, 1, 2, 3, 4,
+			               AttachOptions.Fill,
+			               AttachOptions.Fill, 0, 0);
+			enableSound.CanFocus = false;
+			enableSound.Show();
+			enableSound.Active = Config.EnableAudio;
+			enableSound.Toggled += (sender, e) => {Config.EnableAudio = enableSound.Active;};
+
+			overlayTitle  = new CheckButton();
+			rendertable.Attach (overlayTitle, 1, 2, 4, 5,
+			               AttachOptions.Fill,
+			               AttachOptions.Fill, 0, 0);
+			overlayTitle.CanFocus = false;
+			overlayTitle.Show();
+			overlayTitle.Active = Config.OverlayTitle;
+			overlayTitle.Toggled += (sender, e) => {Config.OverlayTitle = overlayTitle.Active;};
+		}
+
+		void HandleFPSChanged (object sender, EventArgs e)
+		{
+			if (fpscombobox.ActiveText == "25 fps") {
+				Config.FPS_N = 25;
+				Config.FPS_D = 1;
+			} else {
+				Config.FPS_N = 30000;
+				Config.FPS_D = 1001;
+			}
 		}
 
 		void HandleQualityChanged (object sender, EventArgs e)

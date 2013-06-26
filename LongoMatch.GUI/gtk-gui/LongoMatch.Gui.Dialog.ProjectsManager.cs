@@ -47,6 +47,7 @@ namespace LongoMatch.Gui.Dialog
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.hpaned1 = new global::Gtk.HPaned ();
 			this.hpaned1.CanFocus = true;
+			this.hpaned1.Name = "hpaned1";
 			this.hpaned1.Position = 349;
 			// Container child hpaned1.Gtk.Paned+PanedChild
 			this.projectlistwidget1 = new global::LongoMatch.Gui.Component.ProjectListWidget ();
