@@ -72,6 +72,7 @@ namespace LongoMatch
 					                                "the application will closed.\n\n Click \"No\" if you are " +
 					                                "completely sure this is the only instance running and you want to " +
 					                                "continue at your own risk."); 
+					Log.Exception (locked);
 					if (MessagesHelpers.QuestionMessage (null, msg)) {
 						return;
 					}
