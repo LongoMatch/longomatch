@@ -41,6 +41,7 @@ namespace LongoMatch.Gui.Component
 			autosavecb.CanFocus = false;
 			autosavecb.Show();
 			autosavecb.Active = Config.AutoSave;
+			autosavecb.Toggled += (sender, e) => {Config.AutoSave = autosavecb.Active;};
 		}
 		
 		void FillLangs () {
