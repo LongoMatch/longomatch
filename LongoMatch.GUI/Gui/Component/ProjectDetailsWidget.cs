@@ -446,16 +446,12 @@ namespace LongoMatch.Gui.Component
 			FileChooserDialog fChooser = null;
 
 			if(useType == ProjectType.CaptureProject || useType == ProjectType.URICaptureProject) {
-				fChooser = new FileChooserDialog(Catalog.GetString("Output file"),
-				                                 (Gtk.Window)this.Toplevel,
-				                                 FileChooserAction.Save,
-				                                 "gtk-cancel",ResponseType.Cancel,
-				                                 "gtk-save",ResponseType.Accept);
-				fChooser.SetCurrentFolder(Config.VideosDir);
-				fChooser.DoOverwriteConfirmation = true;
-				if(fChooser.Run() == (int)ResponseType.Accept)
-					fileEntry.Text = fChooser.Filename;
-				fChooser.Destroy();
+				string filename;
+				
+				filename = FileChooserHelper.SaveFile (this, Catalog.GetString("Output file"),
+				                                       "Capture.mp4", Config.VideosDir, "MP4",
+				                                       new string[] {".mp4"});
+				fileEntry.Text = System.IO.Path.ChangeExtension(filename, "mp4");
 
 			} else	{
 				fChooser = new FileChooserDialog(Catalog.GetString("Open file..."),
