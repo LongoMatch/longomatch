@@ -11,6 +11,7 @@ LongoMatch.Core/Common/Device.cs
 LongoMatch.Core/Common/EncodingProfiles.cs
 LongoMatch.Core/Common/EncodingSettings.cs
 LongoMatch.Core/Common/Enums.cs
+LongoMatch.Core/Common/Exceptions.cs
 LongoMatch.Core/Common/Image.cs
 LongoMatch.Core/Common/Job.cs
 LongoMatch.Core/Common/Log.cs
