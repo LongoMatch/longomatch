@@ -69,6 +69,7 @@ LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.DrawingWidget.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameUnitsEditor.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameUnitsTagger.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameUnitWidget.cs
+LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GeneralPreferencesPanel.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.NotesWidget.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayersListTreeWidget.cs
@@ -82,6 +83,7 @@ LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.RenderingStateBar.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.StringTaggerWidget.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TeamTaggerWidget.cs
+LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.BusyDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs
@@ -122,6 +124,7 @@ LongoMatch.GUI/Gui/Component/GameUnitsTagger.cs
 LongoMatch.GUI/Gui/Component/GameUnitsTimelineWidget.cs
 LongoMatch.GUI/Gui/Component/GameUnitTimeScale.cs
 LongoMatch.GUI/Gui/Component/GameUnitWidget.cs
+LongoMatch.GUI/Gui/Component/GeneralPreferencesPanel.cs
 LongoMatch.GUI/Gui/Component/NotesWidget.cs
 LongoMatch.GUI/Gui/Component/PlayerProperties.cs
 LongoMatch.GUI/Gui/Component/PlayersListTreeWidget.cs
@@ -154,6 +157,7 @@ LongoMatch.GUI/Gui/Dialog/NewProjectDialog.cs
 LongoMatch.GUI/Gui/Dialog/OpenProjectDialog.cs
 LongoMatch.GUI/Gui/Dialog/ProjectSelectionDialog.cs
 LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs
+LongoMatch.GUI/Gui/Dialog/PropertiesEditor.cs
 LongoMatch.GUI/Gui/Dialog/RenderingJobsDialog.cs
 LongoMatch.GUI/Gui/Dialog/ShortcutsHelpDialog.cs
 LongoMatch.GUI/Gui/Dialog/SnapshotsDialog.cs
@@ -162,12 +166,12 @@ LongoMatch.GUI/Gui/Dialog/TaggerDialog.cs
 LongoMatch.GUI/Gui/Dialog/TemplateEditorDialog.cs
 LongoMatch.GUI/Gui/Dialog/TemplatesManager.cs
 LongoMatch.GUI/Gui/Dialog/UpdateDialog.cs
-LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs
 LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs
+LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs
 LongoMatch.GUI/Gui/Dialog/Win32CalendarDialog.cs
+LongoMatch.GUI/Gui/GUIToolkit.cs
 LongoMatch.GUI/Gui/Helpers/MessagesHelpers.cs
 LongoMatch.GUI/Gui/Helpers/Misc.cs
-LongoMatch.GUI/Gui/GUIToolkit.cs
 LongoMatch.GUI/Gui/MainWindow.cs
 LongoMatch.GUI/Gui/Popup/CalendarPopup.cs
 LongoMatch.GUI/Gui/TransparentDrawingArea.cs
@@ -188,6 +192,7 @@ LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerCapturerBin.cs
 LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.VolumeWindow.cs
 LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs
 LongoMatch.GUI.Multimedia/Gui/PlayerBin.cs
+LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs
 LongoMatch.GUI.Multimedia/Gui/VolumeWindow.cs
 LongoMatch.Multimedia/Capturer/FakeCapturer.cs
 LongoMatch.Multimedia/Capturer/GstCameraCapturer.cs
@@ -203,11 +208,9 @@ LongoMatch.Multimedia/Interfaces/IPlayer.cs
 LongoMatch.Multimedia/MultimediaFactory.cs
 LongoMatch.Multimedia/Player/GstPlayer.cs
 LongoMatch.Multimedia/Player/ObjectManager.cs
-LongoMatch.Multimedia/Utils/Remuxer.cs
 LongoMatch.Multimedia/Utils/FramesCapturer.cs
 LongoMatch.Multimedia/Utils/GStreamer.cs
 LongoMatch.Multimedia/Utils/IMetadataReader.cs
-LongoMatch.Multimedia/Utils/MpegRemuxer.cs
 LongoMatch.Multimedia/Utils/PreviewMediaFile.cs
 LongoMatch.Multimedia/Utils/TimeString.cs
 LongoMatch.Multimedia/Utils/VideoDevice.cs
