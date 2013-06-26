@@ -31,7 +31,7 @@ namespace LongoMatch.Interfaces.Multimedia
 		
 		IFramesCapturer GetFramesCapturer();
 		
-		IRemuxer GetRemuxer(string inputFile, string outputFile, VideoMuxerType muxer);
+		IRemuxer GetRemuxer(MediaFile inputFile, string outputFile, VideoMuxerType muxer);
 		
 		MediaFile DiscoverFile(string path);
 		

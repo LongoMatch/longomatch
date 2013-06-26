@@ -283,7 +283,8 @@ namespace LongoMatch.Gui
 				}
 				
 				System.IO.File.Move (outFile, tmpFile);
-				Remuxer remuxer = new Remuxer(tmpFile, outFile, muxer);
+				Remuxer remuxer = new Remuxer(PreviewMediaFile.DiscoverFile(tmpFile),
+				                              outFile, muxer);
 				
 				/* Remuxing suceed, delete old file */
 				if (remuxer.Remux(this.Toplevel as Gtk.Window) == outFile) {

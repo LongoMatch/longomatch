@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
+using Mono.Unix;
 using LongoMatch.Common;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Popup;
@@ -29,9 +30,9 @@ using LongoMatch.Interfaces;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
 using LongoMatch.Video.Utils;
-using Mono.Unix;
 using LongoMatch.Gui.Helpers;
 using Misc = LongoMatch.Gui.Helpers.Misc;
+using LongoMatch.Multimedia.Utils;
 
 namespace LongoMatch.Gui.Component
 {
@@ -470,22 +471,6 @@ namespace LongoMatch.Gui.Component
 					string filename = fChooser.Filename;
 					fChooser.Destroy();
 					
-					if (MpegRemuxer.FileIsMpeg(filename) &&
-					    MpegRemuxer.AskForConversion(this.Toplevel as Gtk.Window)) {
-						var remux = new MpegRemuxer(filename);
-						var newFilename = remux.Remux(this.Toplevel as Gtk.Window);
-						if (newFilename != null)
-							filename = newFilename;
-					}
-					
-					if (AsfRemuxer.FileIsAsf(filename) &&
-					    MpegRemuxer.AskForConversion(this.Toplevel as Gtk.Window)) {
-						var remux = new AsfRemuxer(filename);
-						var newFilename = remux.Remux(this.Toplevel as Gtk.Window);
-						if (newFilename != null)
-							filename = newFilename;
-					}
-					
 					try {
 						md = new MessageDialog((Gtk.Window)this.Toplevel,
 						                       DialogFlags.Modal,
@@ -499,9 +484,17 @@ namespace LongoMatch.Gui.Component
 							throw new Exception(Catalog.GetString("This file doesn't contain a video stream."));
 						if(mFile.HasVideo && mFile.Length == 0)
 							throw new Exception(Catalog.GetString("This file contains a video stream but its length is 0."));
-
-
-						fileEntry.Text = filename;
+						if (GStreamer.FileNeedsRemux(mFile)) {
+							string q = Catalog.GetString("The file you are trying to load is not properly supported. " +
+							                             "Would you like to convert it into a more suitable format?");
+							if (MessagesHelpers.QuestionMessage (this, q)) {
+								var remux = new Remuxer(mFile);
+								var newFilename = remux.Remux(this.Toplevel as Gtk.Window);
+								if (newFilename != null)
+									mFile = PreviewMediaFile.DiscoverFile (newFilename);
+							}
+						}
+						fileEntry.Text = mFile.FilePath;
 					}
 					catch(Exception ex) {
 						MessagesHelpers.ErrorMessage (this, ex.Message);

@@ -20,12 +20,11 @@ SOURCES = \
 	Player/GstPlayer.cs \
 	Player/ObjectManager.cs \
 	Remuxer/GstRemuxer.cs \
+	Remuxer/MpegRemuxer.cs \
 	Remuxer/ObjectManager.cs \
-	Utils/Remuxer.cs \
 	Utils/FramesCapturer.cs \
 	Utils/GStreamer.cs \
 	Utils/IMetadataReader.cs \
-	Utils/MpegRemuxer.cs \
 	Utils/PreviewMediaFile.cs \
 	Utils/Seeker.cs \
 	Utils/TimeString.cs \

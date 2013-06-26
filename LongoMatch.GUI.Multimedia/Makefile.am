@@ -12,7 +12,8 @@ SOURCES = \
 	Gui/CapturerBin.cs \
 	Gui/PlayerBin.cs \
 	Gui/PlayerCapturerBin.cs \
-	Gui/VolumeWindow.cs
+	Gui/VolumeWindow.cs \
+	Gui/Utils/Remuxer.cs
 
 RESOURCES = \
 	gtk-gui/objects.xml \

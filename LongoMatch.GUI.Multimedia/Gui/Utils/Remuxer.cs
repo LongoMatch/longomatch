@@ -24,13 +24,14 @@ using Gtk;
 
 using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.Common;
+using LongoMatch.Store;
 
 namespace LongoMatch.Video.Utils
 {
 	public class Remuxer
 	{
-		string filepath;
-		string newFilepath;
+		MediaFile inputFile;
+		string outputFilepath;
 		Dialog dialog;
 		ProgressBar pb;
 		IRemuxer remuxer;
@@ -40,12 +41,19 @@ namespace LongoMatch.Video.Utils
 		VideoMuxerType muxer;
 		Window parent;
 		
-		public Remuxer (string filepath, string newFilepath, VideoMuxerType targetMuxer)
+		public Remuxer (MediaFile inputFile, string outputFilepath = null,
+		                VideoMuxerType muxer = VideoMuxerType.Mp4)
 		{
-			this.filepath = filepath;
-			this.newFilepath = newFilepath;
+			this.inputFile = inputFile;
+			this.muxer = muxer;
+			
+			if (outputFilepath != null) {
+				this.outputFilepath = outputFilepath;
+			} else {
+				this.outputFilepath = Path.ChangeExtension(inputFile.FilePath,
+				                                           GetExtension(muxer));
+			}
 			this.multimedia = new MultimediaFactory();
-			this.muxer = targetMuxer;
 		}
 		
 		public string Remux(Window parent) {
@@ -80,30 +88,34 @@ namespace LongoMatch.Video.Utils
 			pb.Pulse();
 			timeout = GLib.Timeout.Add (1000, new GLib.TimeoutHandler (Update));
 			
-			remuxer = multimedia.GetRemuxer(filepath, newFilepath, muxer);
+			remuxer = multimedia.GetRemuxer(inputFile, outputFilepath, muxer);
 			remuxer.Progress += HandleRemuxerProgress;
 			remuxer.Error += HandleRemuxerError;
 			remuxer.Start();
 			
 			/* Wait until the thread call Destroy on the dialog */
 			dialog.Run();
-			return cancelled ? null : newFilepath;
+			return cancelled ? null : outputFilepath;
 		}
-
-		void HandleRemuxerError (object o, string error)
-		{
-			Cancel();
+		
+		void Error (string error) {
 			MessageDialog md = new MessageDialog(parent, DialogFlags.Modal, MessageType.Error,
 			                                     ButtonsType.Ok,
 			                                     Catalog.GetString("Error remuxing file:" + "\n" + error));
 			md.Run();
 			md.Destroy();
+			Cancel();
+		}
+
+		void HandleRemuxerError (object o, string error)
+		{
+			Application.Invoke (delegate {Error (error);});
 		}
 
 		void HandleRemuxerProgress (float progress)
 		{
 			if (progress == 1) {
-				Stop ();
+				Application.Invoke (delegate {Stop ();});
 			}
 		}
 		
@@ -153,23 +165,5 @@ namespace LongoMatch.Video.Utils
 			
 			return ret;
 		}
-	}
-	
-	public class AsfRemuxer: Remuxer
-	{
-		static string[] EXTENSIONS = {"asf", "wmv"};
-		
-		public AsfRemuxer (string filepath): base(filepath,
-		                                          Path.ChangeExtension(filepath, GetExtension(VideoMuxerType.Matroska)),
-		                                          VideoMuxerType.Matroska)
-		{
-		}
-		
-		public static bool FileIsAsf(string filepath) {
-			string extension = Path.GetExtension(filepath).Replace(".", "").ToLower();
-			var extensions = new List<string> (AsfRemuxer.EXTENSIONS);
-			return extensions.Contains(extension);
-		}
-		
 	}
 }

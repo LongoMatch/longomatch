@@ -119,8 +119,14 @@ namespace LongoMatch.Video
 			}
 		}
 		
-		public IRemuxer GetRemuxer(string inputFile, string outputFile, VideoMuxerType muxer) {
-			return new GstRemuxer (inputFile, outputFile, muxer);
+		public IRemuxer GetRemuxer(MediaFile inputFile, string outputFile, VideoMuxerType muxer) {
+			if (inputFile.Container == GStreamer.MPEG1_PS ||
+			    inputFile.Container == GStreamer.MPEG2_PS ||
+			    inputFile.Container == GStreamer.MPEG2_TS) {
+				return new MpegRemuxer (inputFile.FilePath, outputFile);
+			} else {
+				return new GstRemuxer (inputFile.FilePath, outputFile, muxer);
+			}
 		}
 		
 		public MediaFile DiscoverFile (string file) {

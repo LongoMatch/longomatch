@@ -22,6 +22,7 @@ using Gtk;
 using LongoMatch.Video;
 using Mono.Unix;
 using LongoMatch.Common;
+using LongoMatch.Store;
 
 namespace LongoMatch.Multimedia.Utils
 {
@@ -34,6 +35,12 @@ namespace LongoMatch.Multimedia.Utils
 		static extern IntPtr gst_registry_lookup_feature (IntPtr raw, string name);
 		[DllImport("libgstreamer-0.10.dll") /* willfully unmapped */ ]
 		static extern void gst_object_unref (IntPtr raw);
+		
+		public const string MPEG1_PS = "MPEG-1 System Stream";
+		public const string MPEG2_PS = "MPEG-2 System Stream";
+		public const string MPEG2_TS = "MPEG-2 Transport Stream";
+		public const string ASF = "Advanced Streaming Format (ASF)";
+		public const string FLV = "Flash";
 		
 		private const string GST_DIRECTORY = ".gstreamer-0.10";
 		private const string REGISTRY_PATH = "registry.bin";
@@ -55,6 +62,14 @@ namespace LongoMatch.Multimedia.Utils
 				return false;
 			}
 			return true;
+		}
+		
+		public static bool FileNeedsRemux (MediaFile file) {
+			if (file.Container == MPEG1_PS || file.Container == MPEG2_PS ||
+			    file.Container == MPEG2_TS || file.Container == FLV ||
+			    file.Container == ASF)
+			    return true;
+			return false;
 		}
 		
 		private static void SetUpEnvironment () {
