@@ -351,6 +351,9 @@ gst_remuxer_have_type_cb (GstElement *typefind, guint prob,
   } else if (g_strrstr (mime, "video/x-ms-asf")) {
     GST_INFO_OBJECT (remuxer, "Using asfdemux as demuxer");
     demuxer = gst_element_factory_make ("asfdemux", NULL);
+  } else if (g_strrstr (mime, "video/x-flv")) {
+    GST_INFO_OBJECT (remuxer, "Using flvdemux as demuxer");
+    demuxer = gst_element_factory_make ("flvdemux", NULL);
   } else if (g_strrstr (mime, "video/x-matroska")) {
     GST_INFO_OBJECT (remuxer, "Using mastroskademux as demuxer");
     demuxer = gst_element_factory_make ("matroskademux", NULL);
