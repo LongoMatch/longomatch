@@ -8,4 +8,7 @@ DISTCLEANFILES =\
 	stock_draw-circle-unfilled.png \
 	stock_draw-line-45.png \
 	48x48/longomatch.svg \
-	scalable/longomatch.svg
+	scalable/longomatch.svg \
+	goal_background.svg \
+	field_background.svg \
+	half_field_background.svg
