@@ -59,6 +59,12 @@ namespace LongoMatch.Services
 			ConnectSignals();
 		}
 
+		void Save (Project project) {
+			if (Config.AutoSave) {
+				Core.DB.UpdateProject (project);
+			}
+		}
+		
 		public void SetProject (Project project, ProjectType projectType,
 		                        PlaysFilter filter)
 		{
@@ -150,9 +156,7 @@ namespace LongoMatch.Services
 			if (projectType == ProjectType.FileProject) {
 				player.Play();
 			}
-			if (Config.AutoSave) {
-				Core.DB.UpdateProject (openedProject);
-			}
+			Save (openedProject);
 		}
 
 		protected virtual void OnNewTagAtFrame(Category category, int frame) {
@@ -246,7 +250,7 @@ namespace LongoMatch.Services
 
 			if(projectType == ProjectType.FileProject) {
 				player.CloseActualSegment();
-				Core.DB.UpdateProject(openedProject);
+				Save (openedProject);
 			}
 			filter.Update();
 		}
@@ -291,7 +295,7 @@ namespace LongoMatch.Services
 			newplay.Notes = play.Notes;
 			newplay.Drawings = play.Drawings;
 			mainWindow.AddPlay(newplay);
-			Core.DB.UpdateProject (openedProject);
+			Save (openedProject);
 		}
 	}
 }
