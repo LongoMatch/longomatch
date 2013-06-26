@@ -8,11 +8,12 @@ namespace LongoMatch.Gui.Dialog
 		private global::Gtk.HBox hbox2;
 		private global::Gtk.HPaned hpaned1;
 		private global::LongoMatch.Gui.Component.ProjectListWidget projectlistwidget1;
-		private global::Gtk.VBox vbox2;
+		private global::Gtk.ScrolledWindow scrolledwindow3;
+		private global::Gtk.VBox vbox3;
 		private global::Gtk.Frame frame1;
 		private global::Gtk.Alignment GtkAlignment2;
 		private global::LongoMatch.Gui.Component.ProjectDetailsWidget projectdetails;
-		private global::Gtk.Label GtkLabel6;
+		private global::Gtk.Label GtkLabel7;
 		private global::Gtk.Button saveButton;
 		private global::Gtk.Button deleteButton;
 		private global::Gtk.Button exportbutton;
@@ -46,7 +47,6 @@ namespace LongoMatch.Gui.Dialog
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.hpaned1 = new global::Gtk.HPaned ();
 			this.hpaned1.CanFocus = true;
-			this.hpaned1.Name = "hpaned1";
 			this.hpaned1.Position = 349;
 			// Container child hpaned1.Gtk.Paned+PanedChild
 			this.projectlistwidget1 = new global::LongoMatch.Gui.Component.ProjectListWidget ();
@@ -56,10 +56,18 @@ namespace LongoMatch.Gui.Dialog
 			global::Gtk.Paned.PanedChild w2 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.projectlistwidget1]));
 			w2.Resize = false;
 			// Container child hpaned1.Gtk.Paned+PanedChild
-			this.vbox2 = new global::Gtk.VBox ();
-			this.vbox2.Name = "vbox2";
-			this.vbox2.Spacing = 6;
-			// Container child vbox2.Gtk.Box+BoxChild
+			this.scrolledwindow3 = new global::Gtk.ScrolledWindow ();
+			this.scrolledwindow3.CanFocus = true;
+			this.scrolledwindow3.Name = "scrolledwindow3";
+			this.scrolledwindow3.ShadowType = ((global::Gtk.ShadowType)(1));
+			// Container child scrolledwindow3.Gtk.Container+ContainerChild
+			global::Gtk.Viewport w3 = new global::Gtk.Viewport ();
+			w3.ShadowType = ((global::Gtk.ShadowType)(0));
+			// Container child GtkViewport.Gtk.Container+ContainerChild
+			this.vbox3 = new global::Gtk.VBox ();
+			this.vbox3.Name = "vbox3";
+			this.vbox3.Spacing = 6;
+			// Container child vbox3.Gtk.Box+BoxChild
 			this.frame1 = new global::Gtk.Frame ();
 			this.frame1.Name = "frame1";
 			this.frame1.ShadowType = ((global::Gtk.ShadowType)(0));
@@ -78,15 +86,15 @@ namespace LongoMatch.Gui.Dialog
 			this.projectdetails.Date = new global::System.DateTime (0);
 			this.GtkAlignment2.Add (this.projectdetails);
 			this.frame1.Add (this.GtkAlignment2);
-			this.GtkLabel6 = new global::Gtk.Label ();
-			this.GtkLabel6.Name = "GtkLabel6";
-			this.GtkLabel6.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Project Details</b>");
-			this.GtkLabel6.UseMarkup = true;
-			this.frame1.LabelWidget = this.GtkLabel6;
-			this.vbox2.Add (this.frame1);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.frame1]));
-			w5.Position = 0;
-			// Container child vbox2.Gtk.Box+BoxChild
+			this.GtkLabel7 = new global::Gtk.Label ();
+			this.GtkLabel7.Name = "GtkLabel7";
+			this.GtkLabel7.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Project Details</b>");
+			this.GtkLabel7.UseMarkup = true;
+			this.frame1.LabelWidget = this.GtkLabel7;
+			this.vbox3.Add (this.frame1);
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.frame1]));
+			w6.Position = 0;
+			// Container child vbox3.Gtk.Box+BoxChild
 			this.saveButton = new global::Gtk.Button ();
 			this.saveButton.TooltipMarkup = "Save the selected project";
 			this.saveButton.Sensitive = false;
@@ -95,12 +103,12 @@ namespace LongoMatch.Gui.Dialog
 			this.saveButton.UseStock = true;
 			this.saveButton.UseUnderline = true;
 			this.saveButton.Label = "gtk-save";
-			this.vbox2.Add (this.saveButton);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.saveButton]));
-			w6.Position = 1;
-			w6.Expand = false;
-			w6.Fill = false;
-			// Container child vbox2.Gtk.Box+BoxChild
+			this.vbox3.Add (this.saveButton);
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.saveButton]));
+			w7.Position = 1;
+			w7.Expand = false;
+			w7.Fill = false;
+			// Container child vbox3.Gtk.Box+BoxChild
 			this.deleteButton = new global::Gtk.Button ();
 			this.deleteButton.TooltipMarkup = "Delete the selected project";
 			this.deleteButton.Sensitive = false;
@@ -109,12 +117,12 @@ namespace LongoMatch.Gui.Dialog
 			this.deleteButton.UseStock = true;
 			this.deleteButton.UseUnderline = true;
 			this.deleteButton.Label = "gtk-delete";
-			this.vbox2.Add (this.deleteButton);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.deleteButton]));
-			w7.Position = 2;
-			w7.Expand = false;
-			w7.Fill = false;
-			// Container child vbox2.Gtk.Box+BoxChild
+			this.vbox3.Add (this.deleteButton);
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.deleteButton]));
+			w8.Position = 2;
+			w8.Expand = false;
+			w8.Fill = false;
+			// Container child vbox3.Gtk.Box+BoxChild
 			this.exportbutton = new global::Gtk.Button ();
 			this.exportbutton.TooltipMarkup = "Export the selected project to a file";
 			this.exportbutton.Sensitive = false;
@@ -122,51 +130,53 @@ namespace LongoMatch.Gui.Dialog
 			this.exportbutton.Name = "exportbutton";
 			this.exportbutton.UseUnderline = true;
 			// Container child exportbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w8 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
+			global::Gtk.Alignment w9 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w9 = new global::Gtk.HBox ();
-			w9.Spacing = 2;
+			global::Gtk.HBox w10 = new global::Gtk.HBox ();
+			w10.Spacing = 2;
 			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w10 = new global::Gtk.Image ();
-			w10.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "stock_export", global::Gtk.IconSize.Menu);
+			global::Gtk.Image w11 = new global::Gtk.Image ();
+			w11.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "stock_export", global::Gtk.IconSize.Menu);
+			w10.Add (w11);
+			// Container child GtkHBox.Gtk.Container+ContainerChild
+			global::Gtk.Label w13 = new global::Gtk.Label ();
+			w13.LabelProp = global::Mono.Unix.Catalog.GetString ("_Export");
+			w13.UseUnderline = true;
+			w10.Add (w13);
 			w9.Add (w10);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w12 = new global::Gtk.Label ();
-			w12.LabelProp = global::Mono.Unix.Catalog.GetString ("_Export");
-			w12.UseUnderline = true;
-			w9.Add (w12);
-			w8.Add (w9);
-			this.exportbutton.Add (w8);
-			this.vbox2.Add (this.exportbutton);
-			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.exportbutton]));
-			w16.Position = 3;
-			w16.Expand = false;
-			w16.Fill = false;
-			this.hpaned1.Add (this.vbox2);
+			this.exportbutton.Add (w9);
+			this.vbox3.Add (this.exportbutton);
+			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.exportbutton]));
+			w17.Position = 3;
+			w17.Expand = false;
+			w17.Fill = false;
+			w3.Add (this.vbox3);
+			this.scrolledwindow3.Add (w3);
+			this.hpaned1.Add (this.scrolledwindow3);
 			this.hbox2.Add (this.hpaned1);
-			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.hpaned1]));
-			w18.Position = 0;
+			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.hpaned1]));
+			w21.Position = 0;
 			this.dialog1_VBox1.Add (this.hbox2);
-			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.dialog1_VBox1 [this.hbox2]));
-			w19.Position = 0;
+			global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.dialog1_VBox1 [this.hbox2]));
+			w22.Position = 0;
 			// Container child dialog1_VBox1.Gtk.Box+BoxChild
 			this.hseparator3 = new global::Gtk.HSeparator ();
 			this.hseparator3.Name = "hseparator3";
 			this.dialog1_VBox1.Add (this.hseparator3);
-			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.dialog1_VBox1 [this.hseparator3]));
-			w20.PackType = ((global::Gtk.PackType)(1));
-			w20.Position = 1;
-			w20.Expand = false;
-			w20.Fill = false;
+			global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.dialog1_VBox1 [this.hseparator3]));
+			w23.PackType = ((global::Gtk.PackType)(1));
+			w23.Position = 1;
+			w23.Expand = false;
+			w23.Fill = false;
 			w1.Add (this.dialog1_VBox1);
-			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(w1 [this.dialog1_VBox1]));
-			w21.Position = 0;
+			global::Gtk.Box.BoxChild w24 = ((global::Gtk.Box.BoxChild)(w1 [this.dialog1_VBox1]));
+			w24.Position = 0;
 			// Internal child LongoMatch.Gui.Dialog.ProjectsManager.ActionArea
-			global::Gtk.HButtonBox w22 = this.ActionArea;
-			w22.Name = "dialog1_ActionArea";
-			w22.Spacing = 6;
-			w22.BorderWidth = ((uint)(5));
-			w22.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
+			global::Gtk.HButtonBox w25 = this.ActionArea;
+			w25.Name = "dialog1_ActionArea";
+			w25.Spacing = 6;
+			w25.BorderWidth = ((uint)(5));
+			w25.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.buttonOk = new global::Gtk.Button ();
 			this.buttonOk.CanDefault = true;
@@ -176,14 +186,14 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonOk.UseUnderline = true;
 			this.buttonOk.Label = "gtk-quit";
 			this.AddActionWidget (this.buttonOk, 0);
-			global::Gtk.ButtonBox.ButtonBoxChild w23 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w22 [this.buttonOk]));
-			w23.Expand = false;
-			w23.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w26 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w25 [this.buttonOk]));
+			w26.Expand = false;
+			w26.Fill = false;
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.DefaultWidth = 757;
-			this.DefaultHeight = 512;
+			this.DefaultWidth = 833;
+			this.DefaultHeight = 538;
 			this.Show ();
 			this.projectlistwidget1.ProjectsSelected += new global::LongoMatch.Handlers.ProjectsSelectedHandler (this.OnProjectlistwidget1ProjectsSelected);
 			this.projectdetails.EditedEvent += new global::System.EventHandler (this.OnProjectdetailsEditedEvent);

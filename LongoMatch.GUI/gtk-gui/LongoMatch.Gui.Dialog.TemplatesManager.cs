@@ -33,7 +33,6 @@ namespace LongoMatch.Gui.Dialog
 			// Container child dialog1_VBox.Gtk.Box+BoxChild
 			this.hpaned1 = new global::Gtk.HPaned ();
 			this.hpaned1.CanFocus = true;
-			this.hpaned1.Name = "hpaned1";
 			this.hpaned1.Position = 144;
 			// Container child hpaned1.Gtk.Paned+PanedChild
 			this.vbox2 = new global::Gtk.VBox ();

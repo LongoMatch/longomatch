@@ -1026,7 +1026,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.ProjectsManager" design-size="757 512">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.ProjectsManager" design-size="833 538">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Projects Manager</property>
     <property name="Icon">stock:longomatch Dialog</property>
@@ -1065,105 +1065,118 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="Gtk.VBox" id="vbox2">
+                      <widget class="Gtk.ScrolledWindow" id="scrolledwindow3">
                         <property name="MemberName" />
-                        <property name="Spacing">6</property>
+                        <property name="CanFocus">True</property>
+                        <property name="ShadowType">In</property>
                         <child>
-                          <widget class="Gtk.Frame" id="frame1">
+                          <widget class="Gtk.Viewport" id="GtkViewport">
                             <property name="MemberName" />
                             <property name="ShadowType">None</property>
                             <child>
-                              <widget class="Gtk.Alignment" id="GtkAlignment2">
+                              <widget class="Gtk.VBox" id="vbox3">
                                 <property name="MemberName" />
-                                <property name="Xalign">0</property>
-                                <property name="Yalign">0</property>
-                                <property name="LeftPadding">12</property>
+                                <property name="Spacing">6</property>
                                 <child>
-                                  <widget class="LongoMatch.Gui.Component.ProjectDetailsWidget" id="projectdetails">
+                                  <widget class="Gtk.Frame" id="frame1">
+                                    <property name="MemberName" />
+                                    <property name="ShadowType">None</property>
+                                    <child>
+                                      <widget class="Gtk.Alignment" id="GtkAlignment2">
+                                        <property name="MemberName" />
+                                        <property name="Xalign">0</property>
+                                        <property name="Yalign">0</property>
+                                        <property name="LeftPadding">12</property>
+                                        <child>
+                                          <widget class="LongoMatch.Gui.Component.ProjectDetailsWidget" id="projectdetails">
+                                            <property name="MemberName" />
+                                            <property name="Sensitive">False</property>
+                                            <property name="Events">ButtonPressMask</property>
+                                            <property name="Edited">False</property>
+                                            <property name="LocalGoals">0</property>
+                                            <property name="VisitorGoals">0</property>
+                                            <property name="Date">0</property>
+                                            <signal name="EditedEvent" handler="OnProjectdetailsEditedEvent" />
+                                          </widget>
+                                        </child>
+                                      </widget>
+                                    </child>
+                                    <child>
+                                      <widget class="Gtk.Label" id="GtkLabel7">
+                                        <property name="MemberName" />
+                                        <property name="LabelProp" translatable="yes">&lt;b&gt;Project Details&lt;/b&gt;</property>
+                                        <property name="UseMarkup">True</property>
+                                      </widget>
+                                      <packing>
+                                        <property name="type">label_item</property>
+                                      </packing>
+                                    </child>
+                                  </widget>
+                                  <packing>
+                                    <property name="Position">0</property>
+                                    <property name="AutoSize">False</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="Gtk.Button" id="saveButton">
                                     <property name="MemberName" />
                                     <property name="Sensitive">False</property>
-                                    <property name="Events">ButtonPressMask</property>
-                                    <property name="Edited">False</property>
-                                    <property name="LocalGoals">0</property>
-                                    <property name="VisitorGoals">0</property>
-                                    <property name="Date">0</property>
-                                    <signal name="EditedEvent" handler="OnProjectdetailsEditedEvent" />
+                                    <property name="Tooltip" translatable="yes">Save the selected project</property>
+                                    <property name="CanFocus">True</property>
+                                    <property name="UseStock">True</property>
+                                    <property name="Type">StockItem</property>
+                                    <property name="StockId">gtk-save</property>
+                                    <signal name="Pressed" handler="OnSaveButtonPressed" />
+                                    <property name="label">gtk-save</property>
                                   </widget>
+                                  <packing>
+                                    <property name="Position">1</property>
+                                    <property name="AutoSize">False</property>
+                                    <property name="Expand">False</property>
+                                    <property name="Fill">False</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="Gtk.Button" id="deleteButton">
+                                    <property name="MemberName" />
+                                    <property name="Sensitive">False</property>
+                                    <property name="Tooltip" translatable="yes">Delete the selected project</property>
+                                    <property name="CanFocus">True</property>
+                                    <property name="UseStock">True</property>
+                                    <property name="Type">StockItem</property>
+                                    <property name="StockId">gtk-delete</property>
+                                    <signal name="Pressed" handler="OnDeleteButtonPressed" />
+                                    <property name="label">gtk-delete</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="Position">2</property>
+                                    <property name="AutoSize">False</property>
+                                    <property name="Expand">False</property>
+                                    <property name="Fill">False</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="Gtk.Button" id="exportbutton">
+                                    <property name="MemberName" />
+                                    <property name="Sensitive">False</property>
+                                    <property name="Tooltip" translatable="yes">Export the selected project to a file</property>
+                                    <property name="CanFocus">True</property>
+                                    <property name="Type">TextAndIcon</property>
+                                    <property name="Icon">stock:stock_export Menu</property>
+                                    <property name="Label" translatable="yes">_Export</property>
+                                    <property name="UseUnderline">True</property>
+                                    <signal name="Clicked" handler="OnExportbuttonClicked" />
+                                  </widget>
+                                  <packing>
+                                    <property name="Position">3</property>
+                                    <property name="AutoSize">True</property>
+                                    <property name="Expand">False</property>
+                                    <property name="Fill">False</property>
+                                  </packing>
                                 </child>
                               </widget>
                             </child>
-                            <child>
-                              <widget class="Gtk.Label" id="GtkLabel6">
-                                <property name="MemberName" />
-                                <property name="LabelProp" translatable="yes">&lt;b&gt;Project Details&lt;/b&gt;</property>
-                                <property name="UseMarkup">True</property>
-                              </widget>
-                              <packing>
-                                <property name="type">label_item</property>
-                              </packing>
-                            </child>
                           </widget>
-                          <packing>
-                            <property name="Position">0</property>
-                            <property name="AutoSize">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Button" id="saveButton">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Save the selected project</property>
-                            <property name="CanFocus">True</property>
-                            <property name="UseStock">True</property>
-                            <property name="Type">StockItem</property>
-                            <property name="StockId">gtk-save</property>
-                            <signal name="Pressed" handler="OnSaveButtonPressed" />
-                            <property name="label">gtk-save</property>
-                          </widget>
-                          <packing>
-                            <property name="Position">1</property>
-                            <property name="AutoSize">False</property>
-                            <property name="Expand">False</property>
-                            <property name="Fill">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Button" id="deleteButton">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Delete the selected project</property>
-                            <property name="CanFocus">True</property>
-                            <property name="UseStock">True</property>
-                            <property name="Type">StockItem</property>
-                            <property name="StockId">gtk-delete</property>
-                            <signal name="Pressed" handler="OnDeleteButtonPressed" />
-                            <property name="label">gtk-delete</property>
-                          </widget>
-                          <packing>
-                            <property name="Position">2</property>
-                            <property name="AutoSize">False</property>
-                            <property name="Expand">False</property>
-                            <property name="Fill">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Button" id="exportbutton">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Export the selected project to a file</property>
-                            <property name="CanFocus">True</property>
-                            <property name="Type">TextAndIcon</property>
-                            <property name="Icon">stock:stock_export Menu</property>
-                            <property name="Label" translatable="yes">_Export</property>
-                            <property name="UseUnderline">True</property>
-                            <signal name="Clicked" handler="OnExportbuttonClicked" />
-                          </widget>
-                          <packing>
-                            <property name="Position">3</property>
-                            <property name="AutoSize">True</property>
-                            <property name="Expand">False</property>
-                            <property name="Fill">False</property>
-                          </packing>
                         </child>
                       </widget>
                     </child>
