@@ -451,55 +451,51 @@ namespace LongoMatch.Gui.Component
 				filename = FileChooserHelper.SaveFile (this, Catalog.GetString("Output file"),
 				                                       "Capture.mp4", Config.VideosDir, "MP4",
 				                                       new string[] {".mp4"});
-				fileEntry.Text = System.IO.Path.ChangeExtension(filename, "mp4");
+				if (filename != null)
+					fileEntry.Text = System.IO.Path.ChangeExtension(filename, "mp4");
 
 			} else	{
-				fChooser = new FileChooserDialog(Catalog.GetString("Open file..."),
-				                                 (Gtk.Window)this.Toplevel,
-				                                 FileChooserAction.Open,
-				                                 "gtk-cancel",ResponseType.Cancel,
-				                                 "gtk-open",ResponseType.Accept);
-
-				fChooser.SetCurrentFolder(System.Environment.GetFolderPath(Environment.SpecialFolder.Personal));
-
-				if(fChooser.Run() == (int)ResponseType.Accept) {
-					MessageDialog md=null;
-					string filename = fChooser.Filename;
-					fChooser.Destroy();
+				MessageDialog md=null;
+				string folder, filename;
+				
+				folder = System.Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+				filename = FileChooserHelper.OpenFile (this, Catalog.GetString("Open file"),
+				                                       null, folder, null, null);                             
+				if (filename == null)
+					return;
 					
-					try {
-						md = new MessageDialog((Gtk.Window)this.Toplevel,
-						                       DialogFlags.Modal,
-						                       MessageType.Info,
-						                       Gtk.ButtonsType.None,
-						                       Catalog.GetString("Analyzing video file:")+"\n"+filename);
-						md.Icon=Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Dialog);
-						md.Show();
-						mFile = PreviewMediaFile.DiscoverFile(filename);
-						if(!mFile.HasVideo || mFile.VideoCodec == "")
-							throw new Exception(Catalog.GetString("This file doesn't contain a video stream."));
-						if(mFile.HasVideo && mFile.Length == 0)
-							throw new Exception(Catalog.GetString("This file contains a video stream but its length is 0."));
-						if (GStreamer.FileNeedsRemux(mFile)) {
-							string q = Catalog.GetString("The file you are trying to load is not properly supported. " +
-							                             "Would you like to convert it into a more suitable format?");
-							if (MessagesHelpers.QuestionMessage (this, q)) {
-								var remux = new Remuxer(mFile);
-								var newFilename = remux.Remux(this.Toplevel as Gtk.Window);
-								if (newFilename != null)
-									mFile = PreviewMediaFile.DiscoverFile (newFilename);
-							}
+				try {
+					md = new MessageDialog((Gtk.Window)this.Toplevel,
+					                       DialogFlags.Modal,
+					                       MessageType.Info,
+					                       Gtk.ButtonsType.None,
+					                       Catalog.GetString("Analyzing video file:")+"\n"+filename);
+					md.Icon=Stetic.IconLoader.LoadIcon(this, "longomatch", Gtk.IconSize.Dialog);
+					md.Show();
+					
+					mFile = PreviewMediaFile.DiscoverFile(filename);
+					if(!mFile.HasVideo || mFile.VideoCodec == "")
+						throw new Exception(Catalog.GetString("This file doesn't contain a video stream."));
+					if(mFile.HasVideo && mFile.Length == 0)
+						throw new Exception(Catalog.GetString("This file contains a video stream but its length is 0."));
+					if (GStreamer.FileNeedsRemux(mFile)) {
+						string q = Catalog.GetString("The file you are trying to load is not properly supported. " +
+						                             "Would you like to convert it into a more suitable format?");
+						if (MessagesHelpers.QuestionMessage (this, q)) {
+							var remux = new Remuxer(mFile);
+							var newFilename = remux.Remux(this.Toplevel as Gtk.Window);
+							if (newFilename != null)
+								mFile = PreviewMediaFile.DiscoverFile (newFilename);
 						}
-						fileEntry.Text = mFile.FilePath;
 					}
-					catch(Exception ex) {
-						MessagesHelpers.ErrorMessage (this, ex.Message);
-					}
-					finally {
-						md.Destroy();
-					}
+					fileEntry.Text = mFile.FilePath;
 				}
-				fChooser.Destroy();
+				catch(Exception ex) {
+					MessagesHelpers.ErrorMessage (this, ex.Message);
+				}
+				finally {
+					md.Destroy();
+				}
 			}
 		}
 
