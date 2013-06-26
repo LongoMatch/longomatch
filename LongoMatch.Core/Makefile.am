@@ -15,6 +15,7 @@ SOURCES = \
 	Common/EncodingSettings.cs \
 	Common/EncodingQuality.cs \
 	Common/Enums.cs \
+	Common/Exceptions.cs \
 	Common/Gettext.cs \
 	Common/Image.cs \
 	Common/Job.cs \

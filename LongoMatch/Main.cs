@@ -65,7 +65,17 @@ namespace LongoMatch
 			    IMultimediaToolkit multimediaToolkit = new MultimediaFactory();
 			    manager.LoadExportProjectAddins(guiToolkit.MainWindow);
 			    manager.LoadImportProjectAddins(guiToolkit.MainWindow);
-				Core.Start(guiToolkit, multimediaToolkit);
+			    try {
+					Core.Start(guiToolkit, multimediaToolkit);
+			    } catch (DBLockedException locked) {
+					string msg = Catalog.GetString ("The database seems to be locked by another instance and " +
+					                                "the application will closed.\n\n Click \"No\" if you are " +
+					                                "completely sure this is the only instance running and you want to " +
+					                                "continue at your own risk."); 
+					if (MessagesHelpers.QuestionMessage (null, msg)) {
+						return;
+					}
+			    }
 				Application.Run();
 			} catch(Exception ex) {
 				ProcessExecutionError(ex);

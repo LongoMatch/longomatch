@@ -24,6 +24,7 @@ using System.IO;
 using System.Linq;
 using Db4objects.Db4o;
 using Db4objects.Db4o.Query;
+using Db4objects.Db4o.Ext;
 
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
@@ -136,25 +137,31 @@ namespace LongoMatch.DB
 		public bool Load() {
 			bool ret = false;
 			
-			Log.Debug ("Loading database file: " + DBFile);
-			/* Create a new DB if it doesn't exists yet */
-			if(!System.IO.File.Exists(DBFile)) {
-				Log.Debug ("File doesn't exists, creating a new one");
-				CreateNewDB();
-				ret = true;
-			}
-			
-			GetDBVersion();
-			GetBackupDate();
-			CheckDB();
 			try {
-				BackupDB();
-			} catch (Exception e) {
-				Log.Error("Error creating database backup");
-				Log.Exception(e);
+				Log.Debug ("Loading database file: " + DBFile);
+				/* Create a new DB if it doesn't exists yet */
+				if(!System.IO.File.Exists(DBFile)) {
+					Log.Debug ("File doesn't exists, creating a new one");
+					CreateNewDB();
+					ret = true;
+				}
+				
+				GetDBVersion();
+				GetBackupDate();
+				CheckDB();
+				try {
+					BackupDB();
+				} catch (Exception e) {
+					Log.Error("Error creating database backup");
+					Log.Exception(e);
+				}
+				count = GetAllProjects().Count;
+				ListObjects();
+			} catch (DatabaseFileLockedException locked) {
+				throw new DBLockedException (locked);
+			} catch (Db4oFatalException ex) {
+				throw new UnknownDBErrorException (ex);
 			}
-			count = GetAllProjects().Count;
-			ListObjects();
 			return ret;
 		}
 		
