@@ -759,12 +759,12 @@ msgstr "Calidad"
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:114
 #| msgid "Rendering"
 msgid "<b>Rendering</b>"
-msgstr "<b>Renderizando</b>"
+msgstr "<b>Renderizado</b>"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:196
 #| msgid "<b>Color</b>"
 msgid "<b>Capture</b>"
-msgstr "<b>Capturar</b>"
+msgstr "<b>Captura</b>"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:24
 msgid "Databases manager"
