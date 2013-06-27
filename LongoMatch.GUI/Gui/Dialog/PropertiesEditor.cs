@@ -45,14 +45,18 @@ namespace LongoMatch.Gui.Dialog
 		}
 
 		void AddPanels () {
-			AddPane (Catalog.GetString ("General"), "gtk-preferences",
+			AddPane (Catalog.GetString ("General"),
+			         Stetic.IconLoader.LoadIcon(this, "gtk-preferences", IconSize.Dialog),
 			         new GeneralPreferencesPanel());
-			AddPane (Catalog.GetString ("Video"), "gtk-media-record",
+			AddPane (Catalog.GetString ("Video"),
+			         Stetic.IconLoader.LoadIcon(this, "gtk-media-record", IconSize.Dialog),
 			         new VideoPreferencesPanel());
+			AddPane (Catalog.GetString ("Live analysis"),
+			         Gdk.Pixbuf.LoadFromResource ("camera-video.png"),
+			         new LiveAnalysisPreferences());
 		}
 		
-		void AddPane (string desc, string iconName, Widget pane) {
-			Pixbuf icon = Stetic.IconLoader.LoadIcon(this, iconName, IconSize.Dialog);
+		void AddPane (string desc, Pixbuf icon, Widget pane) {
 			prefsStore.AppendValues(icon, desc, pane);
 		}
 		

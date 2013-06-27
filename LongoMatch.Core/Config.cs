@@ -293,6 +293,35 @@ namespace LongoMatch
 			}
 		}
 		
+		public static bool AutoRenderPlaysInLive {
+			get {
+				return state.autorender;
+			}
+			set {
+				state.autorender = value;
+				Save ();
+			}
+		}
+		
+		public static string AutoRenderDir {
+			get {
+				return state.autorenderDir;
+			}
+			set {
+				state.autorenderDir = value;
+				Save ();
+			}
+		}
+		
+		public static bool ReviewPlaysInSameWindow {
+			get {
+				return state.reviewPlaysInSameWindow;
+			}
+			set {
+				state.reviewPlaysInSameWindow = value;
+				Save ();
+			}
+		}
 		#endregion
 
 	}
@@ -313,6 +342,9 @@ namespace LongoMatch
 		public EncodingQuality renderEncodingQuality;
 		public bool overlayTitle;
 		public bool enableAudio;
+		public bool autorender;
+		public string autorenderDir;
+		public bool reviewPlaysInSameWindow;
 		
 		public ConfigState () {
 			/* Set default values */
@@ -330,6 +362,9 @@ namespace LongoMatch
 			enableAudio = false;
 			fps_n = 25;
 			fps_d = 1;
+			autorender = false;
+			autorenderDir = null;
+			reviewPlaysInSameWindow = true;
 		}
 	}
 }

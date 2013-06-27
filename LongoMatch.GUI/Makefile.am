@@ -16,6 +16,7 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Component.GameUnitsTagger.cs \
 	gtk-gui/LongoMatch.Gui.Component.GameUnitWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.GeneralPreferencesPanel.cs \
+	gtk-gui/LongoMatch.Gui.Component.LiveAnalysisPreferences.cs \
 	gtk-gui/LongoMatch.Gui.Component.NotesWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayersListTreeWidget.cs \
@@ -74,6 +75,7 @@ SOURCES = \
 	Gui/Component/GameUnitsTimelineWidget.cs \
 	Gui/Component/GameUnitWidget.cs \
 	Gui/Component/GeneralPreferencesPanel.cs \
+	Gui/Component/LiveAnalysisPreferences.cs \
 	Gui/Component/NotesWidget.cs \
 	Gui/Component/PlayerProperties.cs \
 	Gui/Component/PlayersListTreeWidget.cs \
