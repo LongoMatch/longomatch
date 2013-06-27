@@ -7935,7 +7935,13 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
   </widget>
   <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.PropertiesEditor" design-size="604 353">
     <property name="MemberName" />
+    <property name="Title" translatable="yes">Preferences</property>
+    <property name="Icon">resource:logo.svg</property>
     <property name="WindowPosition">CenterOnParent</property>
+    <property name="Modal">True</property>
+    <property name="Gravity">Center</property>
+    <property name="SkipPagerHint">True</property>
+    <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
     <child internal-child="VBox">
