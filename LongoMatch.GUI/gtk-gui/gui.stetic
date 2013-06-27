@@ -7933,7 +7933,7 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.PropertiesEditor" design-size="604 353">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.PropertiesEditor" design-size="641 353">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Preferences</property>
     <property name="Icon">resource:logo.svg</property>
@@ -8446,7 +8446,7 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.LiveAnalysisPreferences" design-size="555 118">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.LiveAnalysisPreferences" design-size="588 118">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -8476,6 +8476,19 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
                     <property name="MemberName" />
                     <property name="Spacing">6</property>
                     <child>
+                      <widget class="Gtk.Label" id="dirlabel">
+                        <property name="MemberName" />
+                        <property name="LabelProp" translatable="yes" />
+                        <property name="Wrap">True</property>
+                        <property name="Ellipsize">Start</property>
+                        <property name="MaxWidthChars">20</property>
+                      </widget>
+                      <packing>
+                        <property name="Position">0</property>
+                        <property name="AutoSize">False</property>
+                      </packing>
+                    </child>
+                    <child>
                       <widget class="Gtk.Button" id="dirbutton">
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
@@ -8486,22 +8499,10 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
                         <property name="label">gtk-open</property>
                       </widget>
                       <packing>
-                        <property name="Position">0</property>
+                        <property name="Position">1</property>
                         <property name="AutoSize">True</property>
                         <property name="Expand">False</property>
                         <property name="Fill">False</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="Gtk.Label" id="dirlabel">
-                        <property name="MemberName" />
-                        <property name="Wrap">True</property>
-                        <property name="Ellipsize">Start</property>
-                        <property name="MaxWidthChars">20</property>
-                      </widget>
-                      <packing>
-                        <property name="Position">1</property>
-                        <property name="AutoSize">False</property>
                       </packing>
                     </child>
                   </widget>

@@ -7,8 +7,8 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.ScrolledWindow scrolledwindow1;
 		private global::Gtk.Table table1;
 		private global::Gtk.HBox hbox1;
-		private global::Gtk.Button dirbutton;
 		private global::Gtk.Label dirlabel;
+		private global::Gtk.Button dirbutton;
 		private global::Gtk.Label label1;
 		private global::Gtk.Label label3;
 		private global::Gtk.Label label4;
@@ -37,6 +37,16 @@ namespace LongoMatch.Gui.Component
 			this.hbox1.Name = "hbox1";
 			this.hbox1.Spacing = 6;
 			// Container child hbox1.Gtk.Box+BoxChild
+			this.dirlabel = new global::Gtk.Label ();
+			this.dirlabel.Name = "dirlabel";
+			this.dirlabel.LabelProp = "";
+			this.dirlabel.Wrap = true;
+			this.dirlabel.Ellipsize = ((global::Pango.EllipsizeMode)(1));
+			this.dirlabel.MaxWidthChars = 20;
+			this.hbox1.Add (this.dirlabel);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.dirlabel]));
+			w2.Position = 0;
+			// Container child hbox1.Gtk.Box+BoxChild
 			this.dirbutton = new global::Gtk.Button ();
 			this.dirbutton.CanFocus = true;
 			this.dirbutton.Name = "dirbutton";
@@ -44,19 +54,10 @@ namespace LongoMatch.Gui.Component
 			this.dirbutton.UseUnderline = true;
 			this.dirbutton.Label = "gtk-open";
 			this.hbox1.Add (this.dirbutton);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.dirbutton]));
-			w2.Position = 0;
-			w2.Expand = false;
-			w2.Fill = false;
-			// Container child hbox1.Gtk.Box+BoxChild
-			this.dirlabel = new global::Gtk.Label ();
-			this.dirlabel.Name = "dirlabel";
-			this.dirlabel.Wrap = true;
-			this.dirlabel.Ellipsize = ((global::Pango.EllipsizeMode)(1));
-			this.dirlabel.MaxWidthChars = 20;
-			this.hbox1.Add (this.dirlabel);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.dirlabel]));
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.dirbutton]));
 			w3.Position = 1;
+			w3.Expand = false;
+			w3.Fill = false;
 			this.table1.Add (this.hbox1);
 			global::Gtk.Table.TableChild w4 = ((global::Gtk.Table.TableChild)(this.table1 [this.hbox1]));
 			w4.TopAttach = ((uint)(1));
