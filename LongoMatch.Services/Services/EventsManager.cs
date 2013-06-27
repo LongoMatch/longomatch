@@ -26,6 +26,7 @@ using LongoMatch.Interfaces;
 using LongoMatch.Interfaces.GUI;
 using LongoMatch.Store;
 using Mono.Unix;
+using System.IO;
 
 namespace LongoMatch.Services
 {
@@ -48,10 +49,12 @@ namespace LongoMatch.Services
 		IMainWindow mainWindow;
 		IPlayer player;
 		ICapturer capturer;
+		IRenderingJobsManager renderer;
 
-		public EventsManager(IGUIToolkit guiToolkit)
+		public EventsManager(IGUIToolkit guiToolkit, IRenderingJobsManager renderer)
 		{
 			this.guiToolkit = guiToolkit;
+			this.renderer = renderer;
 			mainWindow = guiToolkit.MainWindow;
 			player = mainWindow.Player;
 			capturer = mainWindow.Capturer;
@@ -100,6 +103,35 @@ namespace LongoMatch.Services
 			player.DrawFrame += OnDrawFrame;
 		}
 
+		void RenderPlay (Project project, Play play, MediaFile file) {
+			PlayList playlist;
+			EncodingSettings settings;
+			EditionJob job;
+			string outputDir, outputFile;
+			
+			if (Config.AutoRenderDir == null ||
+			    !Directory.Exists (Config.AutoRenderDir)) {
+				outputDir = Config.VideosDir;
+			} else {
+				outputDir = Config.AutoRenderDir;
+			}
+			
+			outputFile = String.Format ("{0}-{0}.mp4", play.Category.Name, play.Name);
+			outputFile = Path.Combine (outputDir, project.Description.Title, outputFile);
+			try {
+				Directory.CreateDirectory (Path.GetDirectoryName (outputFile));
+				settings = EncodingSettings.DefaultRenderingSettings (outputFile);
+				playlist = new PlayList();
+				playlist.Add (new PlayListPlay (play, file, 1, true));
+			
+				job = new EditionJob (playlist, settings, Config.EnableAudio, Config.OverlayTitle); 
+				renderer.AddJob (job);
+			} catch (Exception ex) {
+				Log.Exception (ex);
+			}
+			
+		}
+		
 		private void ProcessNewTag(Category category,Time pos) {
 			Time length, startTime, stopTime, start, stop, fStart, fStop;
 
@@ -157,6 +189,13 @@ namespace LongoMatch.Services
 				player.Play();
 			}
 			Save (openedProject);
+			
+			if (projectType == ProjectType.CaptureProject ||
+			    projectType == ProjectType.URICaptureProject) {
+			    if (Config.AutoRenderPlaysInLive) {
+					RenderPlay (openedProject, play, openedProject.Description.File);
+				}
+			}
 		}
 
 		protected virtual void OnNewTagAtFrame(Category category, int frame) {

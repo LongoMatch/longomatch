@@ -40,6 +40,15 @@ namespace LongoMatch.Common
 		public uint Framerate_d;
 		public string OutputFile;
 		public uint TitleSize;
+		
+		
+		public static EncodingSettings DefaultRenderingSettings (string outputFilepath) {
+			return new EncodingSettings (Config.RenderVideoStandard,
+			                             Config.RenderEncodingProfile,
+			                             Config.RenderEncodingQuality,
+			                             Config.FPS_N, Config.FPS_D,
+			                             outputFilepath, 20);
+		}
 	}
 }
 

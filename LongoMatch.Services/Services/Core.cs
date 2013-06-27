@@ -82,16 +82,16 @@ namespace LongoMatch.Services
 			dbManager = new DataBaseManager (Config.DBDir, guiToolkit);
 			dbManager.SetActiveByName (Config.CurrentDatabase);
 			
+			/* Start the rendering jobs manager */
+			videoRenderer = new RenderingJobsManager(multimediaToolkit, guiToolkit);
+			
 			/* Start the events manager */
-			eManager = new EventsManager(guiToolkit);
-
+			eManager = new EventsManager(guiToolkit, videoRenderer);
+			
 			/* Start the hotkeys manager */
 			hkManager = new HotKeysManager(guiToolkit.MainWindow);
 			hkManager.newMarkEvent += eManager.OnNewTag;
 
-			/* Start the rendering jobs manager */
-			videoRenderer = new RenderingJobsManager(multimediaToolkit, guiToolkit);
-			
 			/* Start Game Units manager */
 			guManager = new GameUnitsManager(mainWindow, mainWindow.Player);
 			
