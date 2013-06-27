@@ -467,7 +467,7 @@ msgstr "Trayectoria"
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:321
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:367
 msgid "<b>Field position</b>"
-msgstr "<b>Posición del campo</b>"
+msgstr "<b>Posición de campo</b>"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:385
 msgid "Tag goal position"
@@ -475,7 +475,7 @@ msgstr "Posición del campo objetivo"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:392
 msgid "<b>Goal Position</b>"
-msgstr "<b>Posición del objetivo</b>"
+msgstr "<b>Posición de portería</b>"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:439
 msgid "<b>Properties</b>"
@@ -1275,7 +1275,7 @@ msgstr "Fondo del medio campo"
 
 #: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:155
 msgid "Goal background"
-msgstr "Fondo del objetivo"
+msgstr "Fondo de la portería"
 
 #: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:80
 msgid "Create new..."
