@@ -5,8 +5,9 @@ namespace LongoMatch.Gui
 	public partial class PlayerCapturerBin
 	{
 		private global::Gtk.VBox vbox2;
-		private global::LongoMatch.Gui.CapturerBin capturerbin;
+		private global::Gtk.HBox hbox4;
 		private global::LongoMatch.Gui.PlayerBin playerbin;
+		private global::LongoMatch.Gui.CapturerBin capturerbin;
 		private global::Gtk.Button backtolivebutton;
 		
 		protected virtual void Build ()
@@ -20,48 +21,55 @@ namespace LongoMatch.Gui
 			this.vbox2.Name = "vbox2";
 			this.vbox2.Spacing = 6;
 			// Container child vbox2.Gtk.Box+BoxChild
-			this.capturerbin = new global::LongoMatch.Gui.CapturerBin ();
-			this.capturerbin.Events = ((global::Gdk.EventMask)(256));
-			this.capturerbin.Name = "capturerbin";
-			this.vbox2.Add (this.capturerbin);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.capturerbin]));
-			w1.Position = 0;
-			// Container child vbox2.Gtk.Box+BoxChild
+			this.hbox4 = new global::Gtk.HBox ();
+			this.hbox4.Name = "hbox4";
+			this.hbox4.Spacing = 6;
+			// Container child hbox4.Gtk.Box+BoxChild
 			this.playerbin = new global::LongoMatch.Gui.PlayerBin ();
 			this.playerbin.Events = ((global::Gdk.EventMask)(256));
 			this.playerbin.Name = "playerbin";
 			this.playerbin.Rate = 0F;
 			this.playerbin.ExpandLogo = false;
 			this.playerbin.Detached = false;
-			this.vbox2.Add (this.playerbin);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.playerbin]));
+			this.hbox4.Add (this.playerbin);
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.playerbin]));
+			w1.Position = 0;
+			// Container child hbox4.Gtk.Box+BoxChild
+			this.capturerbin = new global::LongoMatch.Gui.CapturerBin ();
+			this.capturerbin.Events = ((global::Gdk.EventMask)(256));
+			this.capturerbin.Name = "capturerbin";
+			this.hbox4.Add (this.capturerbin);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox4 [this.capturerbin]));
 			w2.Position = 1;
+			this.vbox2.Add (this.hbox4);
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox4]));
+			w3.Position = 0;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.backtolivebutton = new global::Gtk.Button ();
 			this.backtolivebutton.CanFocus = true;
 			this.backtolivebutton.Name = "backtolivebutton";
 			this.backtolivebutton.UseUnderline = true;
 			// Container child backtolivebutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w3 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
+			global::Gtk.Alignment w4 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w4 = new global::Gtk.HBox ();
-			w4.Spacing = 2;
+			global::Gtk.HBox w5 = new global::Gtk.HBox ();
+			w5.Spacing = 2;
 			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w5 = new global::Gtk.Image ();
-			w5.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-goto-last", global::Gtk.IconSize.Menu);
+			global::Gtk.Image w6 = new global::Gtk.Image ();
+			w6.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-goto-last", global::Gtk.IconSize.Menu);
+			w5.Add (w6);
+			// Container child GtkHBox.Gtk.Container+ContainerChild
+			global::Gtk.Label w8 = new global::Gtk.Label ();
+			w8.LabelProp = global::Mono.Unix.Catalog.GetString ("Back To Live");
+			w8.UseUnderline = true;
+			w5.Add (w8);
 			w4.Add (w5);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w7 = new global::Gtk.Label ();
-			w7.LabelProp = global::Mono.Unix.Catalog.GetString ("Back To Live");
-			w7.UseUnderline = true;
-			w4.Add (w7);
-			w3.Add (w4);
-			this.backtolivebutton.Add (w3);
+			this.backtolivebutton.Add (w4);
 			this.vbox2.Add (this.backtolivebutton);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.backtolivebutton]));
-			w11.Position = 2;
-			w11.Expand = false;
-			w11.Fill = false;
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.backtolivebutton]));
+			w12.Position = 1;
+			w12.Expand = false;
+			w12.Fill = false;
 			this.Add (this.vbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

@@ -76,7 +76,10 @@ namespace LongoMatch.Gui
 		
 		public void ShowPlayer () {
 			playerbin.Visible = true;
-			capturerbin.Visible = false;
+			if (mode == PlayerOperationMode.PreviewCapturer && Config.ReviewPlaysInSameWindow)
+				capturerbin.Visible = true;
+			else
+				capturerbin.Visible = false;
 		}
 		
 		public void ShowCapturer () {
