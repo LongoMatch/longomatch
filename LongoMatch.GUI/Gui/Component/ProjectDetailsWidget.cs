@@ -443,14 +443,12 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnOpenbuttonClicked(object sender, System.EventArgs e)
 		{
-			FileChooserDialog fChooser = null;
-
 			if(useType == ProjectType.CaptureProject || useType == ProjectType.URICaptureProject) {
 				string filename;
 				
 				filename = FileChooserHelper.SaveFile (this, Catalog.GetString("Output file"),
 				                                       "Capture.mp4", Config.VideosDir, "MP4",
-				                                       new string[] {".mp4"});
+				                                       new string[] {"*.mp4"});
 				if (filename != null)
 					fileEntry.Text = System.IO.Path.ChangeExtension(filename, "mp4");
 
