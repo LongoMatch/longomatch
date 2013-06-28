@@ -71,6 +71,7 @@ LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameUnitsEditor.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameUnitsTagger.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameUnitWidget.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GeneralPreferencesPanel.cs
+LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.LiveAnalysisPreferences.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.NotesWidget.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayersListTreeWidget.cs
@@ -98,6 +99,7 @@ LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.NewProjectDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.OpenProjectDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs
+LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.PropertiesEditor.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs
@@ -126,6 +128,7 @@ LongoMatch.GUI/Gui/Component/GameUnitsTimelineWidget.cs
 LongoMatch.GUI/Gui/Component/GameUnitTimeScale.cs
 LongoMatch.GUI/Gui/Component/GameUnitWidget.cs
 LongoMatch.GUI/Gui/Component/GeneralPreferencesPanel.cs
+LongoMatch.GUI/Gui/Component/LiveAnalysisPreferences.cs
 LongoMatch.GUI/Gui/Component/NotesWidget.cs
 LongoMatch.GUI/Gui/Component/PlayerProperties.cs
 LongoMatch.GUI/Gui/Component/PlayersListTreeWidget.cs
