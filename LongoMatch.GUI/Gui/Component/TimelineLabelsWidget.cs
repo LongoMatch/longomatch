@@ -29,7 +29,7 @@ namespace LongoMatch.Gui.Component
 {
 	public class TimelineLabelsWidget: Gtk.DrawingArea
 	{
-		private const int SECTION_HEIGHT = 30;
+		private const int SECTION_HEIGHT = 25;
 		private const int SECTION_WIDTH = 100;
 		private const int LINE_WIDTH = 2;
 		private double scroll;

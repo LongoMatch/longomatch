@@ -39,8 +39,9 @@ namespace LongoMatch.Gui.Base
 	[System.ComponentModel.ToolboxItem(true)]
 	public abstract class TimeScaleBase<T>: Gtk.DrawingArea where T:ITimelineNode
 	{
-		const int SECTION_HEIGHT = 30;
+		const int SECTION_HEIGHT = 25;
 		const double ALPHA = 0.6;
+		const int MIN_CHAR_WIDTH = 50;
 
 		uint frames;
 		uint pixelRatio=10;
@@ -77,6 +78,7 @@ namespace LongoMatch.Gui.Base
 			
 			layout =  new Pango.Layout(PangoContext);
 			layout.Wrap = Pango.WrapMode.Char;
+			layout.Ellipsize = EllipsizeMode.End;
 			layout.Alignment = Pango.Alignment.Left;
 		}
 
@@ -246,13 +248,18 @@ namespace LongoMatch.Gui.Base
 
 		void DrawTimeNodesName() {
 			foreach(T tn in list) {
+				int width;
+				
 				if (filter != null && !filter.IsVisible (tn)) {
 					continue;
 				}
-				layout.Width = Pango.Units.FromPixels((int)(tn.TotalFrames/pixelRatio));
+				width = (int)(tn.TotalFrames/pixelRatio);
+				if (width < MIN_CHAR_WIDTH)
+					continue;
+				layout.Width = Pango.Units.FromPixels(width);
 				layout.SetMarkup(tn.Name);
 				GdkWindow.DrawLayout(Style.TextGC(StateType.Normal),
-					(int)(tn.StartFrame/pixelRatio)+2, 2, layout);
+					(int)(tn.StartFrame/pixelRatio) + 2, 2, layout);
 			}
 		}
 
