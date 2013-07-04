@@ -68,6 +68,11 @@ namespace LongoMatch.Store.Templates
 			}
 		}
 		
+		public List<string> GamePeriods {
+			get;
+			set;
+		}
+		
 		public Image FieldBackgroundImage {
 			get;
 			set;
@@ -103,16 +108,8 @@ namespace LongoMatch.Store.Templates
 				FastTag = true};
 			visitorplayers.Add(Team.VISITOR);	
 			
-			period = new TagSubCategory {
-				Name = Catalog.GetString("Period"),
-				AllowMultiple = false,
-				FastTag = true,
-			};
-			period.Add("1");
-			period.Add("2");
 			cat.SubCategories.Add(localplayers);
 			cat.SubCategories.Add(visitorplayers);
-			cat.SubCategories.Add(period);
 		}	
 		
 		public void AddDefaultItem (int index) {
@@ -138,8 +135,13 @@ namespace LongoMatch.Store.Templates
 		}
 
 		public static Categories DefaultTemplate(int count) {
+			List<string> periods = new List<string>();
 			Categories defaultTemplate = new Categories();
+			
 			defaultTemplate.FillDefaultTemplate(count);
+			periods.Add ("1");
+			periods.Add ("2");
+			defaultTemplate.GamePeriods = periods; 
 			return defaultTemplate;
 		}
 

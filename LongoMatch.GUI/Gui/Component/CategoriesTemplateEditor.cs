@@ -40,6 +40,8 @@ namespace LongoMatch.Gui.Component
 		GameUnitsEditor gameUnitsEditor;
 		Gtk.Image fieldImage, halffieldImage, goalImage;
 		VBox box;
+		Label periodsLabel;
+		Frame periodsFrame;
 		
 		ITemplatesService ts;
 
@@ -103,6 +105,12 @@ namespace LongoMatch.Gui.Component
 					img.Scale();
 					halffieldImage.Pixbuf = img.Value;
 				}
+				if (template.GamePeriods == null) {
+					periodsFrame.Visible = false;
+				} else {
+					periodsFrame.Visible = true;
+					periodsLabel.Text = String.Join (" - ", template.GamePeriods);
+				}
 				box.Sensitive = true;
 			}
 		}
@@ -144,6 +152,8 @@ namespace LongoMatch.Gui.Component
 		private void AddBackgroundsSelectionWidget () {
 			Gtk.Frame fframe, gframe, hfframe;
 			EventBox febox, gebox, hfebox;
+			HBox periodsBox;
+			Button periodsButton;
 			Image img;
 			
 			fframe = new Gtk.Frame("<b>" + Catalog.GetString("Field background") + "</b>");
@@ -155,6 +165,9 @@ namespace LongoMatch.Gui.Component
 			gframe = new Gtk.Frame("<b>" + Catalog.GetString("Goal background") + "</b>");
 			(gframe.LabelWidget as Label).UseMarkup = true;
 			gframe.ShadowType = ShadowType.None;
+			periodsFrame = new Frame("<b>" + Catalog.GetString ("Game periods") + "</b>");
+			(periodsFrame.LabelWidget as Label).UseMarkup = true;
+			periodsFrame.ShadowType = ShadowType.None;
 			
 			febox = new EventBox();
 			febox.ButtonPressEvent += OnFieldImageClicked;			
@@ -180,20 +193,48 @@ namespace LongoMatch.Gui.Component
 			img.Scale();
 			goalImage.Pixbuf = img.Value;
 			
+			periodsBox = new HBox ();
+			periodsButton = new Button ("gtk-edit");
+			periodsLabel = new Label ();
+			periodsBox.PackStart (periodsLabel);
+			periodsBox.PackStart (periodsButton);
+			periodsButton.Clicked += HandlePeriodsClicked;
+			
 			fframe.Add(febox);
 			hfframe.Add(hfebox);
 			gframe.Add(gebox);
 			febox.Add(fieldImage);
 			hfebox.Add(halffieldImage);
 			gebox.Add(goalImage);
+			periodsFrame.Add (periodsBox);
 			
 			box = new VBox();
 			box.PackStart (fframe, false, false, 0);
 			box.PackStart (hfframe, false, false, 0);
 			box.PackStart (gframe, false, false, 0);
+			box.PackStart (periodsFrame, false, false, 0);
 			box.ShowAll();
 			box.Sensitive = false;
 			AddUpperWidget(box);
+		}
+
+		void HandlePeriodsClicked (object sender, EventArgs e)
+		{
+			string res, desc;
+			List<string> periods;
+			
+			desc = Catalog.GetString ("Game periods") + " (eg: 1 2 ex1 ex2) ";
+			res = MessagesHelpers.QueryMessage (this, desc, "", String.Join (" ", Template.GamePeriods));
+			
+			periods = new List<string> (res.Split(' '));
+			if (periods.Count == 0) {
+				string msg = Catalog.GetString ("Invalid content. Periods must be separated by spaces " +
+				                                "(\"1 2 ex1 ex2\")");
+				MessagesHelpers.ErrorMessage (this, msg);
+			} else {
+				Template.GamePeriods = periods;
+				periodsLabel.Text = String.Join (" - " , periods);
+			}
 		}
 		
 		protected virtual void OnGoalImageClicked (object sender, EventArgs args)

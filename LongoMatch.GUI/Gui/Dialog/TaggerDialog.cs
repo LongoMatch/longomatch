@@ -31,8 +31,9 @@ namespace LongoMatch.Gui.Dialog
 
 	public partial class TaggerDialog : Gtk.Dialog
 	{
-		private TeamTemplate localTeamTemplate;
-		private TeamTemplate visitorTeamTemplate;
+		TeamTemplate localTeamTemplate;
+		TeamTemplate visitorTeamTemplate;
+		bool subcategoryAdded;
 		
 		public TaggerDialog(Play play,
 		                    Categories categoriesTemplate,
@@ -47,7 +48,9 @@ namespace LongoMatch.Gui.Dialog
 			this.localTeamTemplate = localTeamTemplate;
 			this.visitorTeamTemplate = visitorTeamTemplate;
 			
-			taggerwidget1.SetData(play, localTeamTemplate.TeamName, visitorTeamTemplate.TeamName);
+			taggerwidget1.SetData(categoriesTemplate, play,
+			                      localTeamTemplate.TeamName,
+			                      visitorTeamTemplate.TeamName);
 			playersnotebook.Visible = false;
 			
 			/* Iterate over all subcategories, adding a widget only for the FastTag ones */
@@ -84,6 +87,10 @@ namespace LongoMatch.Gui.Dialog
 					AddGoalPosTagger (categoriesTemplate, play);
 				}
 			}
+			
+			if (subcategoryAdded || playersnotebook.Visible) {
+				tagsnotebook.Visible = true;
+			}
 		}
 		
 		public void AddTeamSubcategory (TeamSubCategory subcat, TeamsTagStore tags,
@@ -95,8 +102,8 @@ namespace LongoMatch.Gui.Dialog
 		
 		public void AddTagSubcategory (TagSubCategory subcat, StringTagStore tags){
 			/* the notebook starts invisible */
-			tagsnotebook.Visible = true;
 			taggerwidget1.AddSubCategory(subcat, tags);
+			subcategoryAdded = true;
 		}
 		
 		public void AddPlayerSubcategory (PlayerSubCategory subcat, PlayersTagStore tags){

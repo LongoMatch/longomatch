@@ -172,6 +172,11 @@ namespace LongoMatch.Store
 			set;
 		}
 
+		public string GamePeriod {
+			get;
+			set;
+		}
+		
 		public StringTagStore Tags {
 			get;
 			set;

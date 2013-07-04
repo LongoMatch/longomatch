@@ -364,7 +364,7 @@ namespace LongoMatch.Gui.Component
 			this.frame6.Add (this.GtkAlignment8);
 			this.GtkLabel12 = new global::Gtk.Label ();
 			this.GtkLabel12.Name = "GtkLabel12";
-			this.GtkLabel12.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Field position</b>");
+			this.GtkLabel12.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Half field position</b>");
 			this.GtkLabel12.UseMarkup = true;
 			this.frame6.LabelWidget = this.GtkLabel12;
 			this.hbox1.Add (this.frame6);
@@ -382,7 +382,8 @@ namespace LongoMatch.Gui.Component
 			this.taggoalcheckbutton = new global::Gtk.CheckButton ();
 			this.taggoalcheckbutton.CanFocus = true;
 			this.taggoalcheckbutton.Name = "taggoalcheckbutton";
-			this.taggoalcheckbutton.Label = global::Mono.Unix.Catalog.GetString ("Tag goal position");
+			this.taggoalcheckbutton.Label = global::Mono.Unix.Catalog.GetString ("Enable");
+			this.taggoalcheckbutton.Active = true;
 			this.taggoalcheckbutton.DrawIndicator = true;
 			this.taggoalcheckbutton.UseUnderline = true;
 			this.GtkAlignment9.Add (this.taggoalcheckbutton);

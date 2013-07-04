@@ -40,14 +40,10 @@ namespace LongoMatch.Gui.Component
 			table1.NRows = 1;
 		}
 		
-		public void SetData (Play play, string localTeam, string visitorTeam) {
+		public void SetData (Categories categories, Play play, string localTeam, string visitorTeam) {
 			this.play = play;
-			localcheckbutton.Label = localTeam;
-			visitorcheckbutton.Label = visitorTeam;
-			localcheckbutton.Active = play.Team == Team.LOCAL || play.Team == Team.BOTH;
-			visitorcheckbutton.Active = play.Team == Team.VISITOR || play.Team == Team.BOTH;
-			localcheckbutton.Toggled += OnCheckbuttonToggled;
-			visitorcheckbutton.Toggled += OnCheckbuttonToggled;
+			SetTeams(play, localTeam, visitorTeam);
+			SetPeriod(categories.GamePeriods);
 		}
 		
 		public void AddSubCategory(TagSubCategory subcat, StringTagStore tags){
@@ -66,6 +62,51 @@ namespace LongoMatch.Gui.Component
 			table1.Attach(tagger,0, 1, table1.NRows-1, table1.NRows);
 			table1.NRows ++;
 			tagger.Show();
+		}
+		
+		void SetTeams (Play play, string localTeam, string visitorTeam) {
+			localcheckbutton.Label = localTeam;
+			visitorcheckbutton.Label = visitorTeam;
+			localcheckbutton.Active = play.Team == Team.LOCAL || play.Team == Team.BOTH;
+			visitorcheckbutton.Active = play.Team == Team.VISITOR || play.Team == Team.BOTH;
+			
+			localcheckbutton.Toggled += OnCheckbuttonToggled;
+			visitorcheckbutton.Toggled += OnCheckbuttonToggled;
+		}
+		
+		void SetPeriod (List<string> gamePeriods) {
+			RadioButton first = null, active = null;
+			
+			if (gamePeriods == null) {
+				periodframe.Visible = false;
+				return;
+			}
+			
+			foreach (string period in gamePeriods) {
+				RadioButton rb;
+				
+				if (first == null)
+					first = rb = new RadioButton (period);
+				else
+					rb = new RadioButton (first, period);
+					
+				if (play.GamePeriod == period) {
+					active = rb;
+				}
+				periodhbox.PackStart (rb);
+				rb.Data["period"] = period;
+				rb.Toggled += (sender, e) => {
+					RadioButton b = sender as RadioButton;
+					if (b.Active)
+						play.GamePeriod = b.Data["period"] as String;
+					};
+			}
+			if (active != null) {
+				active.Active = true;
+			} else {
+				first.Active = true;
+			}
+			periodhbox.ShowAll();
 		}
 		
 		protected void OnCheckbuttonToggled (object sender, System.EventArgs e)

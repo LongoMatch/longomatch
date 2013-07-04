@@ -79,7 +79,7 @@ namespace LongoMatch.Gui.Helpers
 			return ret;
 		}
 		
-		static public string QueryMessage (Widget sender, string key, string title=null) {
+		static public string QueryMessage (Widget sender, string key, string title=null, string value="") {
 			string ret = null;
 			Window parent;
 			
@@ -89,7 +89,7 @@ namespace LongoMatch.Gui.Helpers
 				parent = null;
 				
 			Label label = new Label(key);
-			Entry entry = new Entry("");
+			Entry entry = new Entry(value);
 			Gtk.Dialog dialog = new Gtk.Dialog (title, parent, DialogFlags.DestroyWithParent);
 			dialog.Modal = true;
             dialog.AddButton (Catalog.GetString("Add"), ResponseType.Ok);
