@@ -349,10 +349,12 @@ namespace LongoMatch.Gui
 					guTimeline.Visible = true;
 					gameunitstaggerwidget1.Visible = true;
 				}
+				videowidgetsbox.Visible = false;
 			} else {
 				ToggleAction action;
 				
 				Log.Debug("Attaching player again");
+				videowidgetsbox.Visible = true;
 				playercapturer.Reparent(this.videowidgetsbox);
 				playerWindow.Destroy();
 				
