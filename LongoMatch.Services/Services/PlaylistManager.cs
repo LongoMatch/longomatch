@@ -83,7 +83,6 @@ namespace LongoMatch.Services
 			/* Handle Add/Select/Rate events from other widgets */
 			mainWindow.PlayListNodeAddedEvent += OnPlayListNodeAdded;
 			mainWindow.PlayListNodeSelectedEvent += LoadPlaylistPlay;
-			mainWindow.ApplyRateEvent += (p) => {p.Rate = player.Rate;};
 			mainWindow.RenderPlaylistEvent += OnRenderPlaylistEvent;
 			
 			/* Handle Next/Prev from the player */
@@ -180,14 +179,7 @@ namespace LongoMatch.Services
 		
 		protected virtual void OnPlayListNodeAdded(Play play)
 		{
-			Add(new PlayListPlay {
-				MediaFile = OpenedProject.Description.File,
-				Drawings = play.Drawings,
-				Start = play.Start,
-				Stop = play.Stop,
-				Name = play.Name,
-				Rate = 1.0f,
-			});
+			Add(new PlayListPlay (play, OpenedProject.Description.File, true));
 		}
 		
 		protected virtual void OnSavePlaylist()

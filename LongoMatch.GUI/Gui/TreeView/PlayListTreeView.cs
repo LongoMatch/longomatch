@@ -36,15 +36,12 @@ namespace LongoMatch.Gui.Component
 	public class PlayListTreeView : Gtk.TreeView
 	{
 		Menu menu;
-		MenuItem setRate;
 		ListStore ls;
 		IPlayList playlist;
 		PlayListPlay loadedPlay = null; //The play currently loaded in the player
 		PlayListPlay selectedPlay = null; //The play selected in the tree
 		int preDragPos = 0;
 		TreeIter selectedIter;
-
-		public event ApplyCurrentRateHandler ApplyCurrentRate;
 
 
 		public PlayListTreeView() {
@@ -61,11 +58,7 @@ namespace LongoMatch.Gui.Component
 			MenuItem delete = new MenuItem(Catalog.GetString("Delete"));
 			delete.Activated += new EventHandler(OnDelete);
 			delete.Show();
-			setRate = new MenuItem(Catalog.GetString("Apply current play rate"));
-			setRate.Activated += new EventHandler(OnApplyRate);
-			setRate.Show();
 			menu.Append(title);
-			menu.Append(setRate);
 			menu.Append(delete);
 
 
@@ -104,7 +97,6 @@ namespace LongoMatch.Gui.Component
 					ListStore list = ((ListStore)Model);
 					Model.GetIter(out selectedIter,path);
 					selectedPlay = (PlayListPlay)(list.GetValue(selectedIter,0));
-					setRate.Sensitive = selectedPlay == loadedPlay;
 					menu.Popup();
 				}
 			}
@@ -126,11 +118,6 @@ namespace LongoMatch.Gui.Component
 			ListStore list = ((ListStore)Model);
 			playlist.Remove(selectedPlay);
 			list.Remove(ref selectedIter);
-		}
-
-		protected void OnApplyRate(object obj, EventArgs args) {
-			if(ApplyCurrentRate != null)
-				ApplyCurrentRate(selectedPlay);
 		}
 
 		private void RenderName(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)

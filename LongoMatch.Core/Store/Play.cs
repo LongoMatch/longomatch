@@ -43,6 +43,7 @@ namespace LongoMatch.Store
 			Players = new PlayersTagStore(); 
 			Teams = new TeamsTagStore();
 			Fps = 25;
+			PlaybackRate = 1.0;
 		}
 		#endregion
 
@@ -203,6 +204,11 @@ namespace LongoMatch.Store
 		}
 		
 		public Coordinates GoalPosition {
+			get;
+			set;
+		}
+		
+		public double PlaybackRate {
 			get;
 			set;
 		}

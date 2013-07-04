@@ -33,6 +33,7 @@ namespace LongoMatch.Handlers
 	public delegate void FramesProgressHandler(int actual, int total, Image frame);
 	public delegate void DrawFrameHandler(int time);
 	public delegate void EllpasedTimeHandler(int ellapsedTime);
+	public delegate void PlaybackRateChangedHandler (float rate);
 
 
 	public delegate void ErrorHandler(object o, string message);

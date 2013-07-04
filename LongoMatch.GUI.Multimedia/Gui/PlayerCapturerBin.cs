@@ -42,6 +42,7 @@ namespace LongoMatch.Gui
 		public event DrawFrameHandler DrawFrame;
 		public event SeekEventHandler SeekEvent;
 		public event DetachPlayerHandler Detach;
+		public event PlaybackRateChangedHandler PlaybackRateChanged;
 		
 		public enum PlayerOperationMode {
 			Player,
@@ -315,13 +316,13 @@ namespace LongoMatch.Gui
 			playerbin.UpdateSegmentStopTime (stop);
 		}
 		
-		public void SetStartStop (long start, long stop) {
+		public void SetStartStop (long start, long stop, float rate=1) {
 			if (mode == PlayerOperationMode.PreviewCapturer) {
 				backtolivebutton.Visible = true;
 				LoadBackgroundPlayer();
 				ShowPlayer ();
 			}
-			playerbin.SetStartStop (start, stop);
+			playerbin.SetStartStop (start, stop, rate);
 		}
 		
 		public void CloseActualSegment () {
@@ -399,6 +400,11 @@ namespace LongoMatch.Gui
 			playerbin.Detach += delegate (bool detach) {
 				if (Detach != null)
 					Detach (detach);
+			};
+			
+			playerbin.PlaybackRateChanged += (rate) => {
+				if (PlaybackRateChanged != null)
+					PlaybackRateChanged (rate);
 			};
 		}
 		

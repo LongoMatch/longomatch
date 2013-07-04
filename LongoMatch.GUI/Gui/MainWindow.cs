@@ -84,7 +84,6 @@ namespace LongoMatch.Gui
 		public event ManageCategoriesHandler ManageCategoriesEvent;
 		public event ManageProjects ManageProjectsEvent;
 		public event ManageDatabases ManageDatabasesEvent;
-		public event ApplyCurrentRateHandler ApplyRateEvent;
 		public event EditPreferences EditPreferencesEvent;
 		
 		/* Game Units events */
@@ -274,7 +273,6 @@ namespace LongoMatch.Gui
 
 			/* Connect playlist events */
 			playlist.PlayListNodeSelected += EmitPlayListNodeSelected;
-			playlist.ApplyCurrentRate += EmitApplyRate;
 			playlist.NewPlaylistEvent += EmitNewPlaylist;
 			playlist.OpenPlaylistEvent += EmitOpenPlaylist;
 			playlist.SavePlaylistEvent += EmitSavePlaylist;
@@ -825,11 +823,6 @@ namespace LongoMatch.Gui
 				RenderPlaylistEvent(playlist);
 		}
 		
-		private void EmitApplyRate(PlayListPlay plNode) {
-			if (ApplyRateEvent != null)
-				ApplyRateEvent (plNode);
-		}
-
 		private void EmitTagPlay(Play play) {
 			if (TagPlayEvent != null)
 				TagPlayEvent (play);

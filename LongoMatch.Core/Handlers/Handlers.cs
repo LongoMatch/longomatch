@@ -72,8 +72,6 @@ namespace LongoMatch.Handlers
 	public delegate void PlayListNodeAddedHandler(Play play);
 	/* A play list element is selected */
 	public delegate void PlayListNodeSelectedHandler(PlayListPlay play);
-	/* Save current playrate for a play list element */
-	public delegate void ApplyCurrentRateHandler(PlayListPlay play);
 	/* Open a playlist */
 	public delegate void OpenPlaylistHandler();
 	/* New a playlist */

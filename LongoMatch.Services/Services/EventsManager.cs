@@ -101,6 +101,7 @@ namespace LongoMatch.Services
 			player.Prev += OnPrev;
 			player.SegmentClosedEvent += OnSegmentClosedEvent;
 			player.DrawFrame += OnDrawFrame;
+			player.PlaybackRateChanged += HandlePlaybackRateChanged;
 		}
 
 		void RenderPlay (Project project, Play play, MediaFile file) {
@@ -122,7 +123,7 @@ namespace LongoMatch.Services
 				Directory.CreateDirectory (Path.GetDirectoryName (outputFile));
 				settings = EncodingSettings.DefaultRenderingSettings (outputFile);
 				playlist = new PlayList();
-				playlist.Add (new PlayListPlay (play, file, 1, true));
+				playlist.Add (new PlayListPlay (play, file, true));
 			
 				job = new EditionJob (playlist, settings, Config.EnableAudio, Config.OverlayTitle); 
 				renderer.AddJob (job);
@@ -252,11 +253,18 @@ namespace LongoMatch.Services
 			                   showAllTags);
 		}
 
+		void HandlePlaybackRateChanged (float rate)
+		{
+			if (selectedTimeNode != null) {
+				selectedTimeNode.Rate = rate;
+			}
+		}
+
 		protected virtual void OnPlaySelected(Play play)
 		{
 			Log.Debug("Play selected: " + play);
 			selectedTimeNode = play;
-			player.SetStartStop(play.Start.MSeconds,play.Stop.MSeconds);
+			player.SetStartStop(play.Start.MSeconds,play.Stop.MSeconds, play.Rate);
 			drawingManager.Play=play;
 			mainWindow.UpdateSelectedPlay(play);
 		}

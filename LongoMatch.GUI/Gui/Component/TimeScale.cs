@@ -129,7 +129,7 @@ namespace LongoMatch.Gui.Component
 			if (RenderPlaylist != null) {
 				PlayList pl = new PlayList();
 				pl.Add (new PlayListPlay (menuToNodeDict[sender as MenuItem],
-				                          mediaFile, 1.0f, true));
+				                          mediaFile, true));
 				RenderPlaylist (pl);
 			}
 			

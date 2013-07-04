@@ -94,7 +94,6 @@ namespace LongoMatch.Store.Templates
 	
 		public void AddDefaultSubcategories (Category cat) {
 			PlayerSubCategory localplayers, visitorplayers;
-			TagSubCategory period;
 			
 			localplayers = new PlayerSubCategory {
 				Name = Catalog.GetString("Local Team Players"),

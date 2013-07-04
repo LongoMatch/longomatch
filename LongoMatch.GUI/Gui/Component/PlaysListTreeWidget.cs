@@ -235,10 +235,11 @@ namespace LongoMatch.Gui.Component
 
 			foreach(var path in paths) {
 				TreeIter iter;
+				Play play;
 				
 				treeview.Model.GetIter(out iter, path);
-				playlist.Add(new PlayListPlay((Play)treeview.Model.GetValue(iter, 0),
-				                              project.Description.File, 1, true));
+				play = (Play)treeview.Model.GetValue(iter, 0);
+				playlist.Add (new PlayListPlay(play, project.Description.File, true));
 			}
 			
 			if (RenderPlaylist != null)

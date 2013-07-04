@@ -35,7 +35,6 @@ namespace LongoMatch.Gui.Component
 	public partial class PlayListWidget : Gtk.Bin, IPlaylistWidget
 	{
 		public event PlayListNodeSelectedHandler PlayListNodeSelected;
-		public event ApplyCurrentRateHandler ApplyCurrentRate;
 		public event OpenPlaylistHandler OpenPlaylistEvent;
 		public event NewPlaylistHandler NewPlaylistEvent;
 		public event SavePlaylistHandler SavePlaylistEvent;
@@ -48,7 +47,6 @@ namespace LongoMatch.Gui.Component
 			this.Build();
 			playlisttreeview1.Reorderable = true;
 			playlisttreeview1.RowActivated += OnPlaylisttreeview1RowActivated;
-			playlisttreeview1.ApplyCurrentRate += OnApplyRate;
 			savebutton.Sensitive = false;
 			newvideobutton.Sensitive = false;
 
@@ -102,11 +100,6 @@ namespace LongoMatch.Gui.Component
 				Model.GetIterFromString(out iter, args.Path.ToString());
 				PlayListNodeSelected(Model.GetValue(iter, 0) as PlayListPlay);
 			}
-		}
-		
-		protected virtual void OnApplyRate(PlayListPlay plNode) {
-			if(ApplyCurrentRate != null)
-				ApplyCurrentRate(plNode);
 		}
 		
 		protected virtual void OnSavebuttonClicked(object sender, System.EventArgs e)

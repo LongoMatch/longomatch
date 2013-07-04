@@ -27,6 +27,7 @@
         <signal name="DrawFrame" />
         <signal name="SeekEvent" />
         <signal name="Detach" />
+        <signal name="PlaybackRateChanged" />
       </itemgroup>
     </signals>
   </object>
@@ -50,6 +51,7 @@
         <signal name="DrawFrame" />
         <signal name="SeekEvent" />
         <signal name="Detach" />
+        <signal name="PlaybackRateChanged" />
       </itemgroup>
     </signals>
   </object>

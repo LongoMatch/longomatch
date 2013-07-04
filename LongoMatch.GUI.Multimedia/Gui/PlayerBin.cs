@@ -49,8 +49,10 @@ namespace LongoMatch.Gui
 		public event LongoMatch.Handlers.DrawFrameHandler DrawFrame;
 		public event SeekEventHandler SeekEvent;
 		public event DetachPlayerHandler Detach;
+		public event PlaybackRateChangedHandler PlaybackRateChanged;
 
 		private const int THUMBNAIL_MAX_WIDTH = 100;
+		const int SCALE_FPS = 25;
 		private LongoMatch.Video.Common.TickHandler tickHandler;
 		private LongoMatch.Multimedia.Interfaces.IPlayer player;
 		private long length=0;
@@ -63,6 +65,7 @@ namespace LongoMatch.Gui
 		private float rate=1;
 		private double previousVLevel = 1;
 		private bool muted=false;
+		bool emitRateScale = true;
 		private object[] pendingSeek=null; //{start,stop,rate}
 		//the player.mrl is diferent from the filename as it's an uri eg:file:///foo.avi
 		private string filename = null;
@@ -126,7 +129,7 @@ namespace LongoMatch.Gui
 				return rate;
 			}
 			set {
-				vscale1.Value = (int)(value*25);
+				SetScaleValue ((int)(value*SCALE_FPS));
 			}
 		}
 		
@@ -348,16 +351,16 @@ namespace LongoMatch.Gui
 				SeekEvent(stop);
 		}
 
-		public void SetStartStop(long start, long stop) {
+		public void SetStartStop(long start, long stop, float rate = 1) {
 			segmentStartTime = start;
 			segmentStopTime = stop;
 			closebutton.Show();
-			vscale1.Value = 25;
+			SetScaleValue ((int) (rate * SCALE_FPS));
 			if (readyToSeek) {
-				player.SegmentSeek(start, stop, GetRateFromScale());
+				player.SegmentSeek(start, stop, rate);
 				player.Play();
 			} else {
-				pendingSeek = new object[3] {start, stop, GetRateFromScale()};
+				pendingSeek = new object[3] {start, stop, rate};
 			}
 		}
 
@@ -365,7 +368,7 @@ namespace LongoMatch.Gui
 			closebutton.Hide();
 			segmentStartTime = 0;
 			segmentStopTime = 0;
-			vscale1.Value=25;
+			SetScaleValue (SCALE_FPS);
 			//timescale.Sensitive = true;
 			slength = TimeString.MSecondsToSecondsString(length);
 			SegmentClosedEvent();
@@ -386,15 +389,21 @@ namespace LongoMatch.Gui
 
 		#region Private methods
 
+		void SetScaleValue (int value) {
+			emitRateScale = false;
+			vscale1.Value = value;
+			emitRateScale = true;
+		}
+		
 		private float GetRateFromScale() {
 			VScale scale= vscale1;
 			double val = scale.Value;
 
-			if(val >25) {
-				val = val-25 ;
+			if(val >SCALE_FPS) {
+				val = val - SCALE_FPS ;
 			}
-			else if(val <=25) {
-				val = val/25;
+			else if(val <= SCALE_FPS) {
+				val = val / SCALE_FPS;
 			}
 			return (float)val;
 		}
@@ -604,15 +613,15 @@ namespace LongoMatch.Gui
 		protected virtual void OnVscale1FormatValue(object o, Gtk.FormatValueArgs args)
 		{
 			double val = args.Value;
-			if(val >25) {
-				val = val-25 ;
+			if(val > SCALE_FPS) {
+				val = val - SCALE_FPS ;
 				args.RetVal = val +"X";
 			}
-			else if(val ==25) {
+			else if(val == SCALE_FPS) {
 				args.RetVal = "1X";
 			}
-			else if(val <25) {
-				args.RetVal = "-"+val+"/25"+"X";
+			else if(val < SCALE_FPS) {
+				args.RetVal = "-"+val+"/"+SCALE_FPS+"X";
 			}
 		}
 
@@ -636,6 +645,9 @@ namespace LongoMatch.Gui
 			else
 				player.SetRate(val);
 			rate = val;
+			if (PlaybackRateChanged != null && emitRateScale) {
+				PlaybackRateChanged (rate);
+			}
 		}
 
 		protected virtual void OnVideoboxButtonPressEvent(object o, Gtk.ButtonPressEventArgs args)

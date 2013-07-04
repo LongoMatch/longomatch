@@ -11,9 +11,6 @@
   <object type="LongoMatch.Gui.Component.PlayListTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
     <itemgroups />
     <signals>
-      <itemgroup label="PlayListTreeView Signals">
-        <signal name="ApplyCurrentRate" />
-      </itemgroup>
     </signals>
   </object>
   <object type="LongoMatch.Gui.Component.CategoriesTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
@@ -76,7 +73,6 @@
     <signals>
       <itemgroup label="PlayListWidget Signals">
         <signal name="PlayListNodeSelected" />
-        <signal name="ApplyCurrentRate" />
         <signal name="OpenPlaylistEvent" />
         <signal name="NewPlaylistEvent" />
         <signal name="SavePlaylistEvent" />
@@ -349,6 +345,7 @@
         <signal name="DrawFrame" />
         <signal name="SeekEvent" />
         <signal name="Detach" />
+        <signal name="PlaybackRateChanged" />
       </itemgroup>
     </signals>
   </object>
@@ -372,6 +369,7 @@
         <signal name="DrawFrame" />
         <signal name="SeekEvent" />
         <signal name="Detach" />
+        <signal name="PlaybackRateChanged" />
       </itemgroup>
     </signals>
   </object>

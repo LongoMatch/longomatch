@@ -36,15 +36,15 @@ namespace LongoMatch.Store
 			Valid = true;
 		}
 		
-		public PlayListPlay(Play play, MediaFile mediaFile, float rate, bool valid)
+		public PlayListPlay(Play play, MediaFile mediaFile, bool valid)
 		{
 			Name = play.Name;
 			Start = play.Start;
 			Stop = play.Stop;
 			Miniature = play.Miniature;
 			Drawings = play.Drawings;
+			Rate = play.Rate;
 			MediaFile = mediaFile;
-			Rate = rate;
 			Valid = valid;
 		}
 		#endregion

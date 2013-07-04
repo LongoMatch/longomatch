@@ -32,6 +32,7 @@ namespace LongoMatch.Interfaces.GUI
 		event DrawFrameHandler DrawFrame;
 		event SeekEventHandler SeekEvent;
 		event DetachPlayerHandler Detach;
+		event PlaybackRateChangedHandler PlaybackRateChanged;
 		
 		long AccurateCurrentTime {get;}
 		int CurrentTime {get;}
@@ -68,7 +69,7 @@ namespace LongoMatch.Interfaces.GUI
 		void FramerateDown();
 		void UpdateSegmentStartTime(long start);
 		void UpdateSegmentStopTime(long stop);
-		void SetStartStop(long start, long stop);
+		void SetStartStop(long start, long stop, float rate=1);
 		void CloseActualSegment();
 		void SetSensitive();
 		void UnSensitive();
