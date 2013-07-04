@@ -44,6 +44,7 @@ namespace LongoMatch.Store.Templates
 	{
 		/* Database additions */
 		GameUnitsList gameUnits;
+		Version version;
 
 		/// <summary>
 		/// Creates a new template
@@ -52,6 +53,11 @@ namespace LongoMatch.Store.Templates
 		}
 
 		public string Name {
+			get;
+			set;
+		}
+		
+		public Version Version {
 			get;
 			set;
 		}
@@ -141,6 +147,7 @@ namespace LongoMatch.Store.Templates
 			periods.Add ("1");
 			periods.Add ("2");
 			defaultTemplate.GamePeriods = periods; 
+			defaultTemplate.Version = new Version (Constants.DB_MAYOR_VERSION, Constants.DB_MINOR_VERSION);
 			return defaultTemplate;
 		}
 

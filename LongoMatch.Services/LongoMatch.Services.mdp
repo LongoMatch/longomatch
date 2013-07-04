@@ -30,6 +30,7 @@
     <File subtype="Directory" buildaction="Compile" name=".." />
     <File subtype="Directory" buildaction="Compile" name="Services" />
     <File subtype="Code" buildaction="Compile" name="Services/DataBaseManager.cs" />
+    <File subtype="Code" buildaction="Compile" name="Services/MigrationsManager.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

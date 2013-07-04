@@ -24,6 +24,7 @@ using Mono.Unix;
 using LongoMatch.Interfaces;
 using LongoMatch.Interfaces.GUI;
 using LongoMatch.Store;
+using LongoMatch.Common;
 
 namespace LongoMatch.DB
 {
@@ -32,7 +33,7 @@ namespace LongoMatch.DB
 		string DBDir;
 		IGUIToolkit guiToolkit;
 		IDatabase activeDB;
-		const int SUPPORTED_MAJOR_VERSION = 2;
+		const int SUPPORTED_MAJOR_VERSION = Constants.DB_MAYOR_VERSION;
 		
 		public DataBaseManager (string DBDir, IGUIToolkit guiToolkit)
 		{
@@ -106,7 +107,7 @@ namespace LongoMatch.DB
 		
 		string Extension {
 			get {
-				return SUPPORTED_MAJOR_VERSION -1 + ".db";
+				return SUPPORTED_MAJOR_VERSION - 1 + ".db";
 			}
 		}
 

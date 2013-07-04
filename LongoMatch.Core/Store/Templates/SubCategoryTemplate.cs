@@ -29,10 +29,15 @@ namespace LongoMatch.Store.Templates
 	public class SubCategoryTemplate: TagSubCategory, ITemplate<string>
 	{
 
-		public SubCategoryTemplate() {}
-
-		public SubCategoryTemplate(IEnumerable<string> tags): base (tags) {}
+		public Version version;
 		
+		public SubCategoryTemplate() {
+		}
+
+		public Version Version {
+			get;
+			set;
+		}
 		public void AddDefaultItem (int index) {
 			throw new Exception("Not implemented yet");
 		}
@@ -46,7 +51,9 @@ namespace LongoMatch.Store.Templates
 		}
 		
 		public static SubCategoryTemplate DefaultTemplate (int not_used) {
-			return new SubCategoryTemplate();
+			SubCategoryTemplate template = new SubCategoryTemplate();
+			template.Version = new Version (Constants.DB_MAYOR_VERSION, Constants.DB_MINOR_VERSION);
+			return template;
 		}
 	}
 }

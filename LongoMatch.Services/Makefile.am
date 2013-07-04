@@ -10,6 +10,7 @@ SOURCES = \
 	Services/EventsManager.cs \
 	Services/GameUnitsManager.cs \
 	Services/HotKeysManager.cs \
+	Services/MigrationsManager.cs \
 	Services/PlaylistManager.cs \
 	Services/ProjectsManager.cs \
 	Services/TemplatesService.cs \

@@ -44,6 +44,8 @@ namespace LongoMatch.Interfaces
 		DateTime LastBackup {get;}
 		
 		int Count {get;}
+		
+		Version Version {get; set;}
 	}
 }
 

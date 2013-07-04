@@ -82,6 +82,10 @@ namespace LongoMatch.Services
 			dbManager = new DataBaseManager (Config.DBDir, guiToolkit);
 			dbManager.SetActiveByName (Config.CurrentDatabase);
 			
+			/* Start Migration */
+			MigrationsManager migration = new MigrationsManager(ts, dbManager);
+			migration.StartMigration();
+			
 			/* Start the rendering jobs manager */
 			videoRenderer = new RenderingJobsManager(multimediaToolkit, guiToolkit);
 			

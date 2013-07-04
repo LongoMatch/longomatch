@@ -47,8 +47,6 @@ namespace LongoMatch.DB
 		Version dbVersion;
 		BackupDate lastBackup;
 		int count;
-		const int MAYOR=2;
-		const int MINOR=0;
 		TimeSpan maxDaysWithoutBackup = new TimeSpan(5, 0, 0, 0);
 		
 		
@@ -72,6 +70,9 @@ namespace LongoMatch.DB
 		public Version Version {
 			get {
 				return dbVersion;
+			}
+			set {
+				UpdateVersion (value);
 			}
 		}
 		
@@ -347,7 +348,7 @@ namespace LongoMatch.DB
 			// Create new DB and add version and last backup date
 			IObjectContainer db = Db4oFactory.OpenFile(DBFile);
 			try {
-				dbVersion= new Version(MAYOR,MINOR);
+				dbVersion= new Version(Constants.DB_MAYOR_VERSION, Constants.DB_MINOR_VERSION);
 				lastBackup = new BackupDate { Date = DateTime.UtcNow};
 				db.Store(dbVersion);
 				db.Store(lastBackup);
@@ -361,7 +362,7 @@ namespace LongoMatch.DB
 		private void GetDBVersion () {
 			dbVersion = GetObject<Version>();
 			if (dbVersion == null)
-				dbVersion = new Version(MAYOR, MINOR);
+				dbVersion = new Version(Constants.DB_MAYOR_VERSION, Constants.DB_MINOR_VERSION);
 			Log.Information("DB version: "+ dbVersion.ToString());
 		}
 		
@@ -385,6 +386,23 @@ namespace LongoMatch.DB
 					db.Delete (date);
 				}
 				db.Store(lastBackup);
+			} finally {
+				db.Close();
+			}
+		}
+		
+		private void UpdateVersion (Version version) {
+			IObjectContainer db = Db4oFactory.OpenFile(DBFile);
+			try	{
+				IQuery query = db.Query();
+				query.Constrain(typeof(Version));
+				IObjectSet result = query.Execute();
+				while (result.HasNext()) {
+					Version v = result.Next() as Version;
+					db.Delete (v);
+				}
+				db.Store(version);
+				dbVersion = version;
 			} finally {
 				db.Close();
 			}
