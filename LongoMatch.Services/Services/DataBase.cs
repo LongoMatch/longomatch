@@ -160,7 +160,7 @@ namespace LongoMatch.DB
 				ListObjects();
 			} catch (DatabaseFileLockedException locked) {
 				throw new DBLockedException (locked);
-			} catch (Db4oFatalException ex) {
+			} catch (Db4oException ex) {
 				throw new UnknownDBErrorException (ex);
 			}
 			return ret;
