@@ -334,6 +334,7 @@ namespace LongoMatch.Gui
 			int response = npd.Run();
 			while(true) {
 				if(response != (int)ResponseType.Ok) {
+					project = null;
 					break;
 				} else if(npd.Project == null) {
 					InfoMessage(Catalog.GetString("Please, select a video file."));
