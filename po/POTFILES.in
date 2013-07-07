@@ -225,6 +225,7 @@ LongoMatch.Services/Services/DataBaseManager.cs
 LongoMatch.Services/Services/EventsManager.cs
 LongoMatch.Services/Services/GameUnitsManager.cs
 LongoMatch.Services/Services/HotKeysManager.cs
+LongoMatch.Services/Services/MigrationsManager.cs
 LongoMatch.Services/Services/PlaylistManager.cs
 LongoMatch.Services/Services/ProjectsManager.cs
 LongoMatch.Services/Services/RenderingJobsManager.cs
