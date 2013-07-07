@@ -1,4 +1,4 @@
-LongoMatch-0.18.10 "EHL"
+LongoMatch-0.18.12 "North Evo"
 -----------------------------
 
 The LongoMatch team is happy to announce the tenth release in the
@@ -9,18 +9,25 @@ all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
 * Features
-	* Support for several database
-	* Databases manager
-	* Add filtering support in the timeline view
+	* Support for positional tagging
+	* Auto export new tag in live analysis
+	* Several timeline enhancements
+	* Dual window for live analysis
+	* Remuxer for flv files
+	* New preferences editor
+	* Customizable UI language
+	* Configurable default encoding settings
+	* Configurable autosave projects
+	* Improve backwards frame stepping
 
 * Bugs fixed
 
-	* Add mseconds info in the player
-	* Add player's number in the list
-	* Increase weigth limit to 1000
-	* Update players after tagging a new play
-	* Fix DV support
-	* Fix setting files in fake live projects
+	* Players filtering
+	* Handle database errors gracefully
+	* Fix saving drawings for file
+	* Fix random crash in Windows with the video sink
+	* Fix crash in OS X with drawings
+	* Fix DAR in the video converter
 
 *Contributors to this Release:
 

@@ -1,4 +1,27 @@
-===== LongoMatch 0.18.10 "Primavera" =====
+===== LongoMatch 0.18.12 "North Evo" =====
+
+	== Features ==
+	* Support for positional tagging
+	* Auto export new tag in live analysis
+	* Several timeline enhancements
+	* Dual window for live analysis
+	* Remuxer for flv files
+	* New preferences editor
+	* Customizable UI language
+	* Configurable default encoding settings
+	* Configurable autosave projects
+	* Improve backwards frame stepping
+
+	== Bugs fixed ==
+
+	* Players filtering
+	* Handle database errors gracefully
+	* Fix saving drawings for file
+	* Fix random crash in Windows with the video sink
+	* Fix crash in OS X with drawings
+	* Fix DAR in the video converter
+
+===== LongoMatch 0.18.11 "Primavera" =====
 
 	== Features ==
 	* Support for several database
