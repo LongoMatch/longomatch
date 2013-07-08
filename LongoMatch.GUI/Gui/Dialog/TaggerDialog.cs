@@ -124,10 +124,10 @@ namespace LongoMatch.Gui.Dialog
 		void AddHalfFieldPosTagger (Categories categoriesTemplate, Play play) {
 			List<Coordinates> coords = new List<Coordinates>();
 			halffieldcoordinatestagger.Visible = true;
-			if (categoriesTemplate.FieldBackgroundImage != null) {
+			if (categoriesTemplate.HalfFieldBackgroundImage != null) {
 				halffieldcoordinatestagger.Background = categoriesTemplate.HalfFieldBackgroundImage.Value;
 			} else {
-				fieldcoordinatestagger.Background = Gdk.Pixbuf.LoadFromResource (Constants.HALF_FIELD_BACKGROUND);
+				halffieldcoordinatestagger.Background = Gdk.Pixbuf.LoadFromResource (Constants.HALF_FIELD_BACKGROUND);
 			}
 			if (play.HalfFieldPosition != null) {
 				coords.Add (play.HalfFieldPosition);
