@@ -212,8 +212,8 @@ namespace LongoMatch.Video.Converter {
 		                                                         VideoMuxerType muxer,
 		                                                         uint video_quality,
 		                                                         uint audio_quality,
-		                                                         uint height,
 		                                                         uint width,
+		                                                         uint height,
 		                                                         uint fps_n,
 		                                                         uint fps_d);
 		
@@ -225,8 +225,8 @@ namespace LongoMatch.Video.Converter {
 				                                       value.EncodingProfile.Muxer,
 				                                       value.EncodingQuality.VideoQuality,
 				                                       value.EncodingQuality.AudioQuality,
-				                                       value.VideoStandard.Height,
 				                                       value.VideoStandard.Width,
+				                                       value.VideoStandard.Height,
 				                                       value.Framerate_n,
 				                                       value.Framerate_d);
 			}
