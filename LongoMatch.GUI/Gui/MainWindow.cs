@@ -440,9 +440,9 @@ namespace LongoMatch.Gui
 			CloseProjectAction.Sensitive=sensitive;
 			TaggingViewAction.Sensitive = sensitive;
 			ManualTaggingViewAction.Sensitive = sensitive;
+			ExportProjectAction1.Sensitive = sensitive;
 			GameUnitsViewAction.Sensitive = sensitive2 && gameUnitsActionVisible;
 			TimelineViewAction.Sensitive = sensitive2;
-			ExportProjectAction1.Sensitive = sensitive2;
 			HideAllWidgetsAction.Sensitive=sensitive2;
 			SaveProjectAction.Sensitive = sensitive2;
 		}
