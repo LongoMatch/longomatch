@@ -12,10 +12,7 @@ namespace LongoMatch.Gui.Dialog
 		private global::Gtk.Notebook playersnotebook;
 		private global::Gtk.VBox playersbox;
 		private global::Gtk.Label label2;
-		private global::Gtk.HBox poshbox;
-		private global::LongoMatch.Gui.Component.CoordinatesTagger fieldcoordinatestagger;
-		private global::LongoMatch.Gui.Component.CoordinatesTagger halffieldcoordinatestagger;
-		private global::LongoMatch.Gui.Component.CoordinatesTagger goalcoordinatestagger;
+		private global::LongoMatch.Gui.Component.PlaysCoordinatesTagger coordstagger;
 		private global::Gtk.Button buttonOk;
 		
 		protected virtual void Build ()
@@ -80,41 +77,21 @@ namespace LongoMatch.Gui.Dialog
 			w6.Position = 0;
 			w6.Expand = false;
 			// Container child mainvbox.Gtk.Box+BoxChild
-			this.poshbox = new global::Gtk.HBox ();
-			this.poshbox.Name = "poshbox";
-			// Container child poshbox.Gtk.Box+BoxChild
-			this.fieldcoordinatestagger = new global::LongoMatch.Gui.Component.CoordinatesTagger ();
-			this.fieldcoordinatestagger.Events = ((global::Gdk.EventMask)(256));
-			this.fieldcoordinatestagger.Name = "fieldcoordinatestagger";
-			this.poshbox.Add (this.fieldcoordinatestagger);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.poshbox [this.fieldcoordinatestagger]));
-			w7.Position = 0;
-			// Container child poshbox.Gtk.Box+BoxChild
-			this.halffieldcoordinatestagger = new global::LongoMatch.Gui.Component.CoordinatesTagger ();
-			this.halffieldcoordinatestagger.Events = ((global::Gdk.EventMask)(256));
-			this.halffieldcoordinatestagger.Name = "halffieldcoordinatestagger";
-			this.poshbox.Add (this.halffieldcoordinatestagger);
-			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.poshbox [this.halffieldcoordinatestagger]));
-			w8.Position = 1;
-			// Container child poshbox.Gtk.Box+BoxChild
-			this.goalcoordinatestagger = new global::LongoMatch.Gui.Component.CoordinatesTagger ();
-			this.goalcoordinatestagger.Events = ((global::Gdk.EventMask)(256));
-			this.goalcoordinatestagger.Name = "goalcoordinatestagger";
-			this.poshbox.Add (this.goalcoordinatestagger);
-			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.poshbox [this.goalcoordinatestagger]));
-			w9.Position = 2;
-			this.mainvbox.Add (this.poshbox);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.mainvbox [this.poshbox]));
-			w10.Position = 1;
+			this.coordstagger = new global::LongoMatch.Gui.Component.PlaysCoordinatesTagger ();
+			this.coordstagger.Events = ((global::Gdk.EventMask)(256));
+			this.coordstagger.Name = "coordstagger";
+			this.mainvbox.Add (this.coordstagger);
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.mainvbox [this.coordstagger]));
+			w7.Position = 1;
 			w1.Add (this.mainvbox);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(w1 [this.mainvbox]));
-			w11.Position = 0;
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(w1 [this.mainvbox]));
+			w8.Position = 0;
 			// Internal child LongoMatch.Gui.Dialog.TaggerDialog.ActionArea
-			global::Gtk.HButtonBox w12 = this.ActionArea;
-			w12.Name = "dialog1_ActionArea";
-			w12.Spacing = 6;
-			w12.BorderWidth = ((uint)(5));
-			w12.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
+			global::Gtk.HButtonBox w9 = this.ActionArea;
+			w9.Name = "dialog1_ActionArea";
+			w9.Spacing = 6;
+			w9.BorderWidth = ((uint)(5));
+			w9.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.buttonOk = new global::Gtk.Button ();
 			this.buttonOk.CanDefault = true;
@@ -124,17 +101,14 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonOk.UseUnderline = true;
 			this.buttonOk.Label = "gtk-ok";
 			this.AddActionWidget (this.buttonOk, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w13 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w12 [this.buttonOk]));
-			w13.Expand = false;
-			w13.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w10 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w9 [this.buttonOk]));
+			w10.Expand = false;
+			w10.Fill = false;
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
 			this.DefaultWidth = 644;
 			this.DefaultHeight = 569;
-			this.fieldcoordinatestagger.Hide ();
-			this.halffieldcoordinatestagger.Hide ();
-			this.goalcoordinatestagger.Hide ();
 			this.Show ();
 		}
 	}

@@ -74,18 +74,10 @@ namespace LongoMatch.Gui.Dialog
 			}
 			
 			if (!play.Category.TagFieldPosition && !play.Category.TagGoalPosition) {
-				poshbox.Visible = false;
+				coordstagger.Visible = false;
 				(mainvbox[hbox] as Gtk.Box.BoxChild).Expand = true;
 			} else {
-				if (play.Category.TagFieldPosition) {
-					AddFieldPosTagger (categoriesTemplate, play);				
-				}
-				if (play.Category.TagHalfFieldPosition) {
-					AddHalfFieldPosTagger (categoriesTemplate, play);
-				}
-				if (play.Category.TagGoalPosition) {
-					AddGoalPosTagger (categoriesTemplate, play);
-				}
+				coordstagger.LoadPlay (play, categoriesTemplate);
 			}
 			
 			if (subcategoryAdded || playersnotebook.Visible) {
@@ -121,71 +113,6 @@ namespace LongoMatch.Gui.Dialog
 			playersbox.PackStart(widget, true, true, 0);
 		}
 		
-		void AddHalfFieldPosTagger (Categories categoriesTemplate, Play play) {
-			List<Coordinates> coords = new List<Coordinates>();
-			halffieldcoordinatestagger.Visible = true;
-			if (categoriesTemplate.HalfFieldBackgroundImage != null) {
-				halffieldcoordinatestagger.Background = categoriesTemplate.HalfFieldBackgroundImage.Value;
-			} else {
-				halffieldcoordinatestagger.Background = Gdk.Pixbuf.LoadFromResource (Constants.HALF_FIELD_BACKGROUND);
-			}
-			if (play.HalfFieldPosition != null) {
-				coords.Add (play.HalfFieldPosition);
-			} else {
-				Coordinates c = new Coordinates ();
-				c.Add (new Point(100, 100));
-				if (play.Category.HalfFieldPositionIsDistance) {
-					c.Add (new Point (300, 300));
-				}
-				coords.Add (c);
-				play.HalfFieldPosition = c;
-			}
-			halffieldcoordinatestagger.Coordinates = coords;
-			halffieldcoordinatestagger.Visible = true;
-		}
 		
-		void AddFieldPosTagger (Categories categoriesTemplate, Play play) {
-			List<Coordinates> coords = new List<Coordinates>();
-			fieldcoordinatestagger.Visible = true;
-			if (categoriesTemplate.FieldBackgroundImage != null) {
-				fieldcoordinatestagger.Background = categoriesTemplate.FieldBackgroundImage.Value;
-			} else {
-				fieldcoordinatestagger.Background = Gdk.Pixbuf.LoadFromResource (Constants.FIELD_BACKGROUND);
-			}
-			if (play.FieldPosition != null) {
-				coords.Add (play.FieldPosition);
-			} else {
-				Coordinates c = new Coordinates ();
-				c.Add (new Point(100, 100));
-				if (play.Category.FieldPositionIsDistance) {
-					c.Add (new Point (300, 300));
-				}
-				coords.Add (c);
-				play.FieldPosition = c;
-			}
-			fieldcoordinatestagger.Coordinates = coords;
-			fieldcoordinatestagger.Visible = true; 
-		}
-		
-		void AddGoalPosTagger (Categories categoriesTemplate, Play play) {
-			List<Coordinates> coords = new List<Coordinates>();
-			goalcoordinatestagger.Visible = true;
-			if (categoriesTemplate.GoalBackgroundImage != null) {
-				goalcoordinatestagger.Background = categoriesTemplate.GoalBackgroundImage.Value;
-			} else {
-				goalcoordinatestagger.Background = Gdk.Pixbuf.LoadFromResource (Constants.GOAL_BACKGROUND);
-			}
-			if (play.GoalPosition != null) {
-				coords.Add (play.GoalPosition);
-			} else {
-				Coordinates c = new Coordinates ();
-				c.Add (new Point(100, 100));
-				coords.Add (c);
-				play.GoalPosition = c;
-			}
-			goalcoordinatestagger.Coordinates = coords; 
-			goalcoordinatestagger.Visible = true;
-		}
-
 	}
 }

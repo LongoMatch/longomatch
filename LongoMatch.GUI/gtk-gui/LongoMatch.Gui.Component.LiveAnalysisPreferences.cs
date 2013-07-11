@@ -39,7 +39,6 @@ namespace LongoMatch.Gui.Component
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.dirlabel = new global::Gtk.Label ();
 			this.dirlabel.Name = "dirlabel";
-			this.dirlabel.LabelProp = "";
 			this.dirlabel.Wrap = true;
 			this.dirlabel.Ellipsize = ((global::Pango.EllipsizeMode)(1));
 			this.dirlabel.MaxWidthChars = 20;

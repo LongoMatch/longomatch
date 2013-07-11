@@ -22,6 +22,7 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Component.PlayersListTreeWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayersTaggerWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.PlaysCoordinatesTagger.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayersTagger.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlaysListTreeWidget.cs \
@@ -79,6 +80,7 @@ SOURCES = \
 	Gui/Component/NotesWidget.cs \
 	Gui/Component/PlayerProperties.cs \
 	Gui/Component/PlayersListTreeWidget.cs \
+	Gui/Component/PlaysCoordinatesTagger.cs \
 	Gui/Component/PlaysSelectionWidget.cs \
 	Gui/Component/PlayersTaggerWidget.cs \
 	Gui/Component/PlayersTagger.cs \

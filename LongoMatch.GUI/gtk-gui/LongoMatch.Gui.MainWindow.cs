@@ -52,8 +52,13 @@ namespace LongoMatch.Gui
 		private global::LongoMatch.Gui.PlayerCapturerBin playercapturer;
 		private global::LongoMatch.Gui.Component.ButtonsWidget buttonswidget;
 		private global::LongoMatch.Gui.Component.GameUnitsTagger gameunitstaggerwidget1;
-		private global::Gtk.VBox rightvbox;
+		private global::Gtk.HBox righthbox;
+		private global::Gtk.VBox tagsvbox;
+		private global::LongoMatch.Gui.Component.PlaysCoordinatesTagger postagger;
+		private global::Gtk.Frame notesframe;
+		private global::Gtk.Alignment GtkAlignment22;
 		private global::LongoMatch.Gui.Component.NotesWidget notes;
+		private global::Gtk.Label GtkLabel31;
 		private global::LongoMatch.Gui.Component.PlayListWidget playlist;
 		private global::Gtk.Statusbar statusbar1;
 		private global::LongoMatch.Gui.Component.RenderingStateBar renderingstatebar1;
@@ -140,12 +145,12 @@ namespace LongoMatch.Gui
 			this.ImportProjectAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Import Project");
 			w1.Add (this.ImportProjectAction, "<Control>i");
 			this.ManualTaggingViewAction = new global::Gtk.RadioAction ("ManualTaggingViewAction", global::Mono.Unix.Catalog.GetString ("Manual tagging view"), null, null, 0);
-			this.ManualTaggingViewAction.Group = this.TaggingViewAction.Group;
+			this.ManualTaggingViewAction.Group = this.TimelineViewAction.Group;
 			this.ManualTaggingViewAction.Sensitive = false;
 			this.ManualTaggingViewAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Free Capture Mode");
 			w1.Add (this.ManualTaggingViewAction, "<Control>f");
 			this.GameUnitsViewAction = new global::Gtk.RadioAction ("GameUnitsViewAction", global::Mono.Unix.Catalog.GetString ("Game units view"), null, null, 0);
-			this.GameUnitsViewAction.Group = this.TaggingViewAction.Group;
+			this.GameUnitsViewAction.Group = this.TimelineViewAction.Group;
 			this.GameUnitsViewAction.Sensitive = false;
 			this.GameUnitsViewAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Game units view");
 			w1.Add (this.GameUnitsViewAction, null);
@@ -213,7 +218,7 @@ namespace LongoMatch.Gui
 			this.hpaned = new global::Gtk.HPaned ();
 			this.hpaned.CanFocus = true;
 			this.hpaned.Name = "hpaned";
-			this.hpaned.Position = 276;
+			this.hpaned.Position = 243;
 			// Container child hpaned.Gtk.Paned+PanedChild
 			this.leftbox = new global::Gtk.VBox ();
 			this.leftbox.Name = "leftbox";
@@ -284,36 +289,62 @@ namespace LongoMatch.Gui
 			w11.Resize = false;
 			w11.Shrink = false;
 			// Container child hpaned1.Gtk.Paned+PanedChild
-			this.rightvbox = new global::Gtk.VBox ();
-			this.rightvbox.WidthRequest = 100;
-			this.rightvbox.Name = "rightvbox";
-			this.rightvbox.Spacing = 6;
-			// Container child rightvbox.Gtk.Box+BoxChild
+			this.righthbox = new global::Gtk.HBox ();
+			this.righthbox.Name = "righthbox";
+			this.righthbox.Spacing = 6;
+			// Container child righthbox.Gtk.Box+BoxChild
+			this.tagsvbox = new global::Gtk.VBox ();
+			this.tagsvbox.WidthRequest = 100;
+			this.tagsvbox.Name = "tagsvbox";
+			this.tagsvbox.Spacing = 6;
+			// Container child tagsvbox.Gtk.Box+BoxChild
+			this.postagger = new global::LongoMatch.Gui.Component.PlaysCoordinatesTagger ();
+			this.postagger.Events = ((global::Gdk.EventMask)(256));
+			this.postagger.Name = "postagger";
+			this.tagsvbox.Add (this.postagger);
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.tagsvbox [this.postagger]));
+			w12.Position = 0;
+			// Container child tagsvbox.Gtk.Box+BoxChild
+			this.notesframe = new global::Gtk.Frame ();
+			this.notesframe.Name = "notesframe";
+			this.notesframe.ShadowType = ((global::Gtk.ShadowType)(0));
+			// Container child notesframe.Gtk.Container+ContainerChild
+			this.GtkAlignment22 = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
+			this.GtkAlignment22.Name = "GtkAlignment22";
+			this.GtkAlignment22.LeftPadding = ((uint)(12));
+			// Container child GtkAlignment22.Gtk.Container+ContainerChild
 			this.notes = new global::LongoMatch.Gui.Component.NotesWidget ();
 			this.notes.Events = ((global::Gdk.EventMask)(256));
 			this.notes.Name = "notes";
-			this.rightvbox.Add (this.notes);
-			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.rightvbox [this.notes]));
-			w12.Position = 0;
-			// Container child rightvbox.Gtk.Box+BoxChild
+			this.GtkAlignment22.Add (this.notes);
+			this.notesframe.Add (this.GtkAlignment22);
+			this.GtkLabel31 = new global::Gtk.Label ();
+			this.GtkLabel31.Name = "GtkLabel31";
+			this.GtkLabel31.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Notes</b>");
+			this.GtkLabel31.UseMarkup = true;
+			this.notesframe.LabelWidget = this.GtkLabel31;
+			this.tagsvbox.Add (this.notesframe);
+			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.tagsvbox [this.notesframe]));
+			w15.Position = 1;
+			this.righthbox.Add (this.tagsvbox);
+			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.righthbox [this.tagsvbox]));
+			w16.Position = 0;
+			// Container child righthbox.Gtk.Box+BoxChild
 			this.playlist = new global::LongoMatch.Gui.Component.PlayListWidget ();
 			this.playlist.WidthRequest = 100;
 			this.playlist.Events = ((global::Gdk.EventMask)(256));
 			this.playlist.Name = "playlist";
-			this.rightvbox.Add (this.playlist);
-			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.rightvbox [this.playlist]));
-			w13.Position = 1;
-			this.hpaned1.Add (this.rightvbox);
-			global::Gtk.Paned.PanedChild w14 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.rightvbox]));
-			w14.Resize = false;
-			w14.Shrink = false;
+			this.righthbox.Add (this.playlist);
+			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.righthbox [this.playlist]));
+			w17.Position = 1;
+			this.hpaned1.Add (this.righthbox);
 			this.hpaned.Add (this.hpaned1);
-			global::Gtk.Paned.PanedChild w15 = ((global::Gtk.Paned.PanedChild)(this.hpaned [this.hpaned1]));
-			w15.Resize = false;
-			w15.Shrink = false;
+			global::Gtk.Paned.PanedChild w19 = ((global::Gtk.Paned.PanedChild)(this.hpaned [this.hpaned1]));
+			w19.Resize = false;
+			w19.Shrink = false;
 			this.vbox1.Add (this.hpaned);
-			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hpaned]));
-			w16.Position = 1;
+			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hpaned]));
+			w20.Position = 1;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.statusbar1 = new global::Gtk.Statusbar ();
 			this.statusbar1.Name = "statusbar1";
@@ -324,27 +355,27 @@ namespace LongoMatch.Gui
 			this.renderingstatebar1.Name = "renderingstatebar1";
 			this.renderingstatebar1.Fraction = 0;
 			this.statusbar1.Add (this.renderingstatebar1);
-			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.statusbar1 [this.renderingstatebar1]));
-			w17.Position = 2;
-			w17.Expand = false;
-			w17.Fill = false;
+			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.statusbar1 [this.renderingstatebar1]));
+			w21.Position = 2;
+			w21.Expand = false;
+			w21.Fill = false;
 			this.vbox1.Add (this.statusbar1);
-			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.statusbar1]));
-			w18.Position = 2;
-			w18.Expand = false;
-			w18.Fill = false;
+			global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.statusbar1]));
+			w22.Position = 2;
+			w22.Expand = false;
+			w22.Fill = false;
 			this.Add (this.vbox1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.DefaultWidth = 1342;
+			this.DefaultWidth = 1503;
 			this.DefaultHeight = 686;
 			this.leftbox.Hide ();
 			this.drawingtoolbox1.Hide ();
 			this.buttonswidget.Hide ();
-			this.notes.Hide ();
+			this.tagsvbox.Hide ();
 			this.playlist.Hide ();
-			this.rightvbox.Hide ();
+			this.righthbox.Hide ();
 			this.renderingstatebar1.Hide ();
 			this.Show ();
 			this.NewPojectAction.Activated += new global::System.EventHandler (this.OnNewActivated);

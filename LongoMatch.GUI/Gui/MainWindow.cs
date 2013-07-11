@@ -151,6 +151,7 @@ namespace LongoMatch.Gui
 			               false);
 			screen = Display.Default.DefaultScreen;
 			this.Resize(screen.Width * 80 / 100, screen.Height * 80 / 100);
+			postagger.SetMode (false);
 		}
 
 		#endregion
@@ -163,8 +164,10 @@ namespace LongoMatch.Gui
 		}
 		
 		public void UpdateSelectedPlay (Play play) {
+			selectedTimeNode = play;
 			timeline.SelectedTimeNode = play;
-			notes.Visible = true;
+			postagger.LoadPlay (play, openedProject.Categories, false);
+			SetTagsBoxVisibility (true);
 			notes.Play= play;
 		}
 
@@ -305,6 +308,7 @@ namespace LongoMatch.Gui
 			guTimeline.UnitChanged += EmitUnitChanged;
 			
 			playercapturer.Error += OnMultimediaError;
+			playercapturer.SegmentClosedEvent += OnSegmentClosedEvent;
 			
 			KeyPressEvent += (o, args) => (EmitKeyPressed(o, (int)args.Event.Key, (int)args.Event.State));
  		}
@@ -408,6 +412,28 @@ namespace LongoMatch.Gui
 			ShowWidgets();
 		}
 		
+		void SetPlaylistVisibility (bool visible) {
+			if (visible) {
+				righthbox.Visible = true;
+				playlist.Visible = true;
+			} else {
+				playlist.Visible = false;
+				if (!tagsvbox.Visible)
+					righthbox.Visible = false;
+			}
+		}
+		
+		void SetTagsBoxVisibility (bool visible) {
+			if (visible) {
+				righthbox.Visible = true;
+				tagsvbox.Visible = true;
+			} else {
+				tagsvbox.Visible = false;
+				if (!playlist.Visible)
+					righthbox.Visible = false;
+			}
+		}
+		
 		private void CloseCaptureProject() {
 			if(projectType == ProjectType.CaptureProject ||
 			   projectType == ProjectType.URICaptureProject) {
@@ -426,9 +452,8 @@ namespace LongoMatch.Gui
 			playercapturer.LogoMode = true;
 			ClearWidgets();
 			HideWidgets();
-			playlist.Visible = playlistVisible;
-			rightvbox.Visible = playlistVisible;
-			notes.Visible = false;
+			SetPlaylistVisibility (playlistVisible);
+			SetTagsBoxVisibility (false);
 			selectedTimeNode = null;
 			MakeActionsSensitive(false, projectType);
 			if (detachedPlayer)
@@ -462,7 +487,7 @@ namespace LongoMatch.Gui
 
 		private void HideWidgets() {
 			leftbox.Hide();
-			rightvbox.Hide();
+			SetTagsBoxVisibility (false);
 			buttonswidget.Hide();
 			timeline.Hide();
 			gameunitstaggerwidget1.Hide();
@@ -568,14 +593,8 @@ namespace LongoMatch.Gui
 		protected virtual void OnPlaylistActionToggled(object sender, System.EventArgs e)
 		{
 			bool visible = (sender as Gtk.ToggleAction).Active;
-			playlist.Visible=visible;
+			SetPlaylistVisibility (visible);
 			playsSelection.PlayListLoaded=visible;
-
-			if(!visible && !notes.Visible) {
-				rightvbox.Visible = false;
-			} else if(visible) {
-				rightvbox.Visible = true;
-			}
 		}
 
 		protected virtual void OnHideAllWidgetsActionToggled(object sender, System.EventArgs e)
@@ -594,10 +613,12 @@ namespace LongoMatch.Gui
 				gameunitstaggerwidget1.Visible = !action.Active && (GameUnitsViewAction.Active || 
 					TaggingViewAction.Active || ManualTaggingViewAction.Active);
 			}
-			if(action.Active)
-				rightvbox.Visible = false;
-			else if(!action.Active && (playlist.Visible || notes.Visible))
-				rightvbox.Visible = true;
+			if(action.Active) {
+				SetTagsBoxVisibility (false);
+			} else {
+				if (selectedTimeNode != null)
+					SetTagsBoxVisibility (true);
+			}
 		}
 
 		protected virtual void OnViewToggled(object sender, System.EventArgs e)
@@ -694,17 +715,16 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnTimeNodeSelected(Play play)
 		{
-			rightvbox.Visible=true;
+			SetTagsBoxVisibility (true);
 			if (PlaySelectedEvent != null)
 				PlaySelectedEvent(play);
 		}
 
 		protected virtual void OnSegmentClosedEvent()
 		{
-			if(!playlist.Visible)
-				rightvbox.Visible=false;
+			SetTagsBoxVisibility (false);
 			timeline.SelectedTimeNode = null;
-			notes.Visible = false;
+			selectedTimeNode = null;
 		}
 		
 		protected virtual void OnTick(object o, long currentTime, long streamLength,
