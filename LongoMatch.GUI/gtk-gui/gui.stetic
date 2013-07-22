@@ -4625,11 +4625,18 @@ No</property>
                 <property name="MemberName" />
                 <property name="Spacing">6</property>
                 <child>
-                  <widget class="Gtk.TreeView" id="treeview">
+                  <widget class="Gtk.ScrolledWindow" id="scrolledwindow2">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
-                    <signal name="RowActivated" handler="OnTreeviewRowActivated" />
-                    <signal name="CursorChanged" handler="OnTreeviewCursorChanged" />
+                    <property name="ShadowType">In</property>
+                    <child>
+                      <widget class="Gtk.TreeView" id="treeview">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <signal name="RowActivated" handler="OnTreeviewRowActivated" />
+                        <signal name="CursorChanged" handler="OnTreeviewCursorChanged" />
+                      </widget>
+                    </child>
                   </widget>
                   <packing>
                     <property name="Position">0</property>

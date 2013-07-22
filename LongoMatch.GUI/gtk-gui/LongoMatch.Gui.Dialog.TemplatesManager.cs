@@ -6,6 +6,7 @@ namespace LongoMatch.Gui.Dialog
 	{
 		private global::Gtk.HPaned hpaned1;
 		private global::Gtk.VBox vbox2;
+		private global::Gtk.ScrolledWindow scrolledwindow2;
 		private global::Gtk.TreeView treeview;
 		private global::Gtk.HBox hbox2;
 		private global::Gtk.Button newbutton;
@@ -40,12 +41,18 @@ namespace LongoMatch.Gui.Dialog
 			this.vbox2.Name = "vbox2";
 			this.vbox2.Spacing = 6;
 			// Container child vbox2.Gtk.Box+BoxChild
+			this.scrolledwindow2 = new global::Gtk.ScrolledWindow ();
+			this.scrolledwindow2.CanFocus = true;
+			this.scrolledwindow2.Name = "scrolledwindow2";
+			this.scrolledwindow2.ShadowType = ((global::Gtk.ShadowType)(1));
+			// Container child scrolledwindow2.Gtk.Container+ContainerChild
 			this.treeview = new global::Gtk.TreeView ();
 			this.treeview.CanFocus = true;
 			this.treeview.Name = "treeview";
-			this.vbox2.Add (this.treeview);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.treeview]));
-			w2.Position = 0;
+			this.scrolledwindow2.Add (this.treeview);
+			this.vbox2.Add (this.scrolledwindow2);
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.scrolledwindow2]));
+			w3.Position = 0;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.hbox2 = new global::Gtk.HBox ();
 			this.hbox2.Name = "hbox2";
@@ -57,24 +64,24 @@ namespace LongoMatch.Gui.Dialog
 			this.newbutton.Name = "newbutton";
 			this.newbutton.UseUnderline = true;
 			// Container child newbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w3 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
+			global::Gtk.Alignment w4 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w4 = new global::Gtk.HBox ();
-			w4.Spacing = 2;
+			global::Gtk.HBox w5 = new global::Gtk.HBox ();
+			w5.Spacing = 2;
 			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w5 = new global::Gtk.Image ();
-			w5.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-new", global::Gtk.IconSize.Button);
+			global::Gtk.Image w6 = new global::Gtk.Image ();
+			w6.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-new", global::Gtk.IconSize.Button);
+			w5.Add (w6);
+			// Container child GtkHBox.Gtk.Container+ContainerChild
+			global::Gtk.Label w8 = new global::Gtk.Label ();
+			w5.Add (w8);
 			w4.Add (w5);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w7 = new global::Gtk.Label ();
-			w4.Add (w7);
-			w3.Add (w4);
-			this.newbutton.Add (w3);
+			this.newbutton.Add (w4);
 			this.hbox2.Add (this.newbutton);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.newbutton]));
-			w11.Position = 0;
-			w11.Expand = false;
-			w11.Fill = false;
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.newbutton]));
+			w12.Position = 0;
+			w12.Expand = false;
+			w12.Fill = false;
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.deletebutton = new global::Gtk.Button ();
 			this.deletebutton.TooltipMarkup = "Delete this template";
@@ -83,24 +90,24 @@ namespace LongoMatch.Gui.Dialog
 			this.deletebutton.Name = "deletebutton";
 			this.deletebutton.UseUnderline = true;
 			// Container child deletebutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w12 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
+			global::Gtk.Alignment w13 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w13 = new global::Gtk.HBox ();
-			w13.Spacing = 2;
+			global::Gtk.HBox w14 = new global::Gtk.HBox ();
+			w14.Spacing = 2;
 			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w14 = new global::Gtk.Image ();
-			w14.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-delete", global::Gtk.IconSize.Button);
+			global::Gtk.Image w15 = new global::Gtk.Image ();
+			w15.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-delete", global::Gtk.IconSize.Button);
+			w14.Add (w15);
+			// Container child GtkHBox.Gtk.Container+ContainerChild
+			global::Gtk.Label w17 = new global::Gtk.Label ();
+			w14.Add (w17);
 			w13.Add (w14);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w16 = new global::Gtk.Label ();
-			w13.Add (w16);
-			w12.Add (w13);
-			this.deletebutton.Add (w12);
+			this.deletebutton.Add (w13);
 			this.hbox2.Add (this.deletebutton);
-			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.deletebutton]));
-			w20.Position = 1;
-			w20.Expand = false;
-			w20.Fill = false;
+			global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.deletebutton]));
+			w21.Position = 1;
+			w21.Expand = false;
+			w21.Fill = false;
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.savebutton = new global::Gtk.Button ();
 			this.savebutton.TooltipMarkup = "Save this template";
@@ -109,46 +116,46 @@ namespace LongoMatch.Gui.Dialog
 			this.savebutton.Name = "savebutton";
 			this.savebutton.UseUnderline = true;
 			// Container child savebutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w21 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
+			global::Gtk.Alignment w22 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w22 = new global::Gtk.HBox ();
-			w22.Spacing = 2;
+			global::Gtk.HBox w23 = new global::Gtk.HBox ();
+			w23.Spacing = 2;
 			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w23 = new global::Gtk.Image ();
-			w23.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-save", global::Gtk.IconSize.Button);
+			global::Gtk.Image w24 = new global::Gtk.Image ();
+			w24.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-save", global::Gtk.IconSize.Button);
+			w23.Add (w24);
+			// Container child GtkHBox.Gtk.Container+ContainerChild
+			global::Gtk.Label w26 = new global::Gtk.Label ();
+			w23.Add (w26);
 			w22.Add (w23);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w25 = new global::Gtk.Label ();
-			w22.Add (w25);
-			w21.Add (w22);
-			this.savebutton.Add (w21);
+			this.savebutton.Add (w22);
 			this.hbox2.Add (this.savebutton);
-			global::Gtk.Box.BoxChild w29 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.savebutton]));
-			w29.Position = 2;
-			w29.Expand = false;
-			w29.Fill = false;
-			this.vbox2.Add (this.hbox2);
-			global::Gtk.Box.BoxChild w30 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox2]));
-			w30.Position = 1;
+			global::Gtk.Box.BoxChild w30 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.savebutton]));
+			w30.Position = 2;
 			w30.Expand = false;
 			w30.Fill = false;
+			this.vbox2.Add (this.hbox2);
+			global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox2]));
+			w31.Position = 1;
+			w31.Expand = false;
+			w31.Fill = false;
 			this.hpaned1.Add (this.vbox2);
-			global::Gtk.Paned.PanedChild w31 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.vbox2]));
-			w31.Resize = false;
+			global::Gtk.Paned.PanedChild w32 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.vbox2]));
+			w32.Resize = false;
 			// Container child hpaned1.Gtk.Paned+PanedChild
 			this.templateditorbox = new global::Gtk.HBox ();
 			this.templateditorbox.Name = "templateditorbox";
 			this.templateditorbox.Spacing = 6;
 			this.hpaned1.Add (this.templateditorbox);
 			w1.Add (this.hpaned1);
-			global::Gtk.Box.BoxChild w33 = ((global::Gtk.Box.BoxChild)(w1 [this.hpaned1]));
-			w33.Position = 0;
+			global::Gtk.Box.BoxChild w34 = ((global::Gtk.Box.BoxChild)(w1 [this.hpaned1]));
+			w34.Position = 0;
 			// Internal child LongoMatch.Gui.Dialog.TemplatesManager.ActionArea
-			global::Gtk.HButtonBox w34 = this.ActionArea;
-			w34.Name = "dialog1_ActionArea";
-			w34.Spacing = 6;
-			w34.BorderWidth = ((uint)(5));
-			w34.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
+			global::Gtk.HButtonBox w35 = this.ActionArea;
+			w35.Name = "dialog1_ActionArea";
+			w35.Spacing = 6;
+			w35.BorderWidth = ((uint)(5));
+			w35.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.buttonOk = new global::Gtk.Button ();
 			this.buttonOk.CanDefault = true;
@@ -158,9 +165,9 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonOk.UseUnderline = true;
 			this.buttonOk.Label = "gtk-quit";
 			this.AddActionWidget (this.buttonOk, 0);
-			global::Gtk.ButtonBox.ButtonBoxChild w35 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w34 [this.buttonOk]));
-			w35.Expand = false;
-			w35.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w36 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w35 [this.buttonOk]));
+			w36.Expand = false;
+			w36.Fill = false;
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
