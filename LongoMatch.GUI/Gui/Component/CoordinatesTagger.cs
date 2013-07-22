@@ -51,6 +51,8 @@ namespace LongoMatch.Gui.Component
 			drawingarea.ButtonPressEvent += OnDrawingareaButtonPressEvent;
 			drawingarea.ButtonReleaseEvent += OnDrawingareaButtonReleaseEvent;
 			drawingarea.MotionNotifyEvent += OnDrawingareaMotionNotifyEvent;
+			HeightRequest = 100;
+			WidthRequest = 100;
 		}
 		
 		~CoordinatesTagger() {
