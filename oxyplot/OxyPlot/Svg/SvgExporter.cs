@@ -45,7 +45,7 @@ namespace OxyPlot
         /// <param name="height">The height (points).</param>
         /// <param name="isDocument">if set to <c>true</c>, the xml headers will be included (?xml and !DOCTYPE).</param>
         /// <param name="textMeasurer">The text measurer.</param>
-        public static void Export(PlotModel model, Stream stream, double width, double height, bool isDocument, IRenderContext textMeasurer)
+        public static void Export(PlotModel model, Stream stream, double width, double height, bool isDocument, ITextMeasurer textMeasurer)
         {
             using (var rc = new SvgRenderContext(stream, width, height, true, textMeasurer, model.Background))
             {

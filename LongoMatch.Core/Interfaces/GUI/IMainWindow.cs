@@ -65,6 +65,9 @@ namespace LongoMatch.Interfaces.GUI
 		event ManageDatabases ManageDatabasesEvent;
 		event EditPreferences EditPreferencesEvent;
 		
+		/* Stats */
+		event ShowProjectStats ShowProjectStatsEvent;
+		
 		/* Game Units events */
 		event GameUnitHandler GameUnitEvent;
 		event UnitChangedHandler UnitChanged;

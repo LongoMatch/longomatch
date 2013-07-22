@@ -1,44 +1,30 @@
 <objects attr-sync="on">
-  <object type="LongoMatch.Gui.Component.PlayerPropertiesTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
+  <object type="LongoMatch.Gui.Component.PlayersFilterTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
     <itemgroups />
-    <signals>
-      <itemgroup label="PlayerPropertiesTreeView Signals">
-        <signal name="PlayerClicked" />
-        <signal name="PlayersSelected" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.PlayListTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
-    <itemgroups />
-    <signals>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.CategoriesTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
-    <itemgroups />
-    <signals>
-      <itemgroup label="CategoriesTreeView Signals">
-        <signal name="CategoryClicked" />
-        <signal name="CategoriesSelected" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.TimeReferenceWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.DrawingArea">
-    <itemgroups>
-      <itemgroup label="TimeReferenceWidget Properties">
-        <property name="CurrentFrame" />
-        <property name="PixelRatio" />
-        <property name="Scroll" />
-        <property name="FrameRate" />
-      </itemgroup>
-    </itemgroups>
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.RenderingJobsTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
+  <object type="LongoMatch.Gui.Popup.TransparentDrawingArea" palette-category="General" allow-children="false" base-type="Gtk.Window">
     <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.ProjectDetailsWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="ProjectDetailsWidget Properties">
+        <property name="Edited" />
+        <property name="Season" />
+        <property name="Competition" />
+        <property name="LocalGoals" />
+        <property name="VisitorGoals" />
+        <property name="Date" />
+      </itemgroup>
+    </itemgroups>
     <signals>
+      <itemgroup label="ProjectDetailsWidget Signals">
+        <signal name="EditedEvent" />
+      </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.ButtonsWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.Gui.Component.ButtonsWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>
       <itemgroup label="ButtonsWidget Signals">
@@ -47,138 +33,6 @@
         <signal name="NewMarkStopEvent" />
       </itemgroup>
     </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.PlayersTaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.TeamTaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Popup.TransparentDrawingArea" palette-category="General" allow-children="false" base-type="Gtk.Window">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.NotesWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="NotesWidget Signals">
-        <signal name="TimeNodeChanged" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.PlayListWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="PlayListWidget Signals">
-        <signal name="PlayListNodeSelected" />
-        <signal name="OpenPlaylistEvent" />
-        <signal name="NewPlaylistEvent" />
-        <signal name="SavePlaylistEvent" />
-        <signal name="RenderPlaylistEvent" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.GameUnitsTagger" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="GameUnitsTagger Signals">
-        <signal name="GameUnitEvent" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.GameUnitsEditor" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.GameUnitWidget" palette-category="General" allow-children="false" base-type="Gtk.Frame">
-    <itemgroups />
-    <signals>
-      <itemgroup label="GameUnitWidget Signals">
-        <signal name="GameUnitEvent" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Base.TimeScaleBase" palette-category="LongoMatch" allow-children="false" base-type="Gtk.DrawingArea">
-    <itemgroups>
-      <itemgroup label="TimeScaleBase Properties">
-        <property name="PixelRatio" />
-        <property name="CurrentFrame" />
-      </itemgroup>
-    </itemgroups>
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Base.TemplatesEditorWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="ITemplateWidget Properties">
-        <property name="Edited" />
-        <property name="CanExport" />
-      </itemgroup>
-    </itemgroups>
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.GameUnitTimeScale" palette-category="LongoMatch" allow-children="false" base-type="Gtk.DrawingArea">
-    <itemgroups>
-    </itemgroups>
-    <signals>
-      <itemgroup label="GameUnitTimeScale Signals">
-        <signal name="UnitChanged" />
-        <signal name="UnitSelected" />
-        <signal name="UnitDeleted" />
-        <signal name="UnitAdded" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.RenderingStateBar" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="RenderingStateBar Properties">
-        <property name="Fraction" />
-      </itemgroup>
-    </itemgroups>
-    <signals>
-      <itemgroup label="RenderingStateBar Signals">
-        <signal name="Cancel" />
-        <signal name="ManageJobs" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.DrawingWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.ProjectListWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="ProjectListWidget Signals">
-        <signal name="ProjectsSelected" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.PlayerProperties" palette-category="General" allow-children="false" base-type="Gtk.Widget">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.TaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.PlayersTagger" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.SubCategoriesTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
-    <itemgroups />
-    <signals>
-      <itemgroup label="SubCategoriesTreeView Signals">
-        <signal name="SubCategoriesDeleted" />
-        <signal name="SubCategorySelected" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.CategoriesFilterTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
-    <itemgroups />
-    <signals />
   </object>
   <object type="LongoMatch.Gui.Component.DrawingToolBox" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
@@ -193,38 +47,37 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.PlayersFilterTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
+  <object type="LongoMatch.Gui.Component.NotesWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.TeamTemplateEditorWidget" palette-category="General" allow-children="false" base-type="LongoMatch.Gui.Base.TemplatesEditorBase">
-    <itemgroups>
-    </itemgroups>
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.StringTaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.TimeScale" palette-category="LongoMatch" allow-children="false" base-type="Gtk.DrawingArea">
-    <itemgroups>
-    </itemgroups>
     <signals>
-      <itemgroup label="TimeScale Signals">
-        <signal name="NewMarkAtFrameEvent" />
+      <itemgroup label="NotesWidget Signals">
         <signal name="TimeNodeChanged" />
-        <signal name="TimeNodeSelected" />
-        <signal name="TimeNodeDeleted" />
-        <signal name="PlayListNodeAdded" />
-        <signal name="TagPlay" />
-        <signal name="SnapshotSeries" />
-        <signal name="RenderPlaylist" />
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.PlaysTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
-    <itemgroups>
-    </itemgroups>
+  <object type="LongoMatch.Gui.Component.PlayerProperties" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.PlayersTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.PlayerPropertiesTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
+    <itemgroups />
+    <signals>
+      <itemgroup label="PlayerPropertiesTreeView Signals">
+        <signal name="PlayerClicked" />
+        <signal name="PlayersSelected" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.PlayListTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.PlaysTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
+    <itemgroups />
     <signals>
       <itemgroup label="PlaysTreeView Signals">
         <signal name="EditProperties" />
@@ -243,16 +96,199 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.CategoriesTemplateEditorWidget" palette-category="General" allow-children="false" base-type="LongoMatch.Gui.Base.TemplatesEditorBase">
+  <object type="LongoMatch.Gui.Component.PlayListWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="PlayListWidget Signals">
+        <signal name="PlayListNodeSelected" />
+        <signal name="OpenPlaylistEvent" />
+        <signal name="NewPlaylistEvent" />
+        <signal name="SavePlaylistEvent" />
+        <signal name="RenderPlaylistEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.ProjectListWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="ProjectListWidget Signals">
+        <signal name="ProjectsSelected" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.CategoriesTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
+    <itemgroups />
+    <signals>
+      <itemgroup label="CategoriesTreeView Signals">
+        <signal name="CategoryClicked" />
+        <signal name="CategoriesSelected" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.TimeScale" palette-category="General" allow-children="false" base-type="Gtk.DrawingArea">
+    <itemgroups />
+    <signals>
+      <itemgroup label="TimeScale Signals">
+        <signal name="NewMarkAtFrameEvent" />
+        <signal name="TimeNodeChanged" />
+        <signal name="TimeNodeSelected" />
+        <signal name="TimeNodeDeleted" />
+        <signal name="PlayListNodeAdded" />
+        <signal name="SnapshotSeries" />
+        <signal name="TagPlay" />
+        <signal name="RenderPlaylist" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.TimeReferenceWidget" palette-category="General" allow-children="false" base-type="Gtk.DrawingArea">
     <itemgroups>
+      <itemgroup label="TimeReferenceWidget Properties">
+        <property name="CurrentFrame" />
+        <property name="FrameRate" />
+        <property name="Scroll" />
+        <property name="PixelRatio" />
+      </itemgroup>
     </itemgroups>
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.PlayersTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
+  <object type="LongoMatch.Gui.Component.CategoryProperties" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="CategoryProperties Signals">
+        <signal name="HotKeyChanged" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.PlaysListTreeWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="PlaysListTreeWidget Signals">
+        <signal name="TimeNodeSelected" />
+        <signal name="TimeNodeChanged" />
+        <signal name="TimeNodeDeleted" />
+        <signal name="PlayListNodeAdded" />
+        <signal name="PlayCategoryChanged" />
+        <signal name="SnapshotSeriesEvent" />
+        <signal name="TagPlay" />
+        <signal name="RenderPlaylist" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.DrawingWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.TaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.SubCategoriesTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
+    <itemgroups />
+    <signals>
+      <itemgroup label="SubCategoriesTreeView Signals">
+        <signal name="SubCategoriesDeleted" />
+        <signal name="SubCategorySelected" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.PlayersTaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.StringTaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.TeamTaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.CategoriesTemplateEditorWidget" palette-category="General" allow-children="false" base-type="LongoMatch.Gui.Base.TemplatesEditorBase">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.TeamTemplateEditorWidget" palette-category="General" allow-children="false" base-type="LongoMatch.Gui.Base.TemplatesEditorBase">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.RenderingStateBar" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
+      <itemgroup label="IRenderingStateBar Properties">
+        <property name="Fraction" />
+      </itemgroup>
     </itemgroups>
     <signals>
+      <itemgroup label="IRenderingStateBar Signals">
+        <signal name="Cancel" />
+        <signal name="ManageJobs" />
+      </itemgroup>
     </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.RenderingJobsTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.GameUnitsEditor" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.GameUnitWidget" palette-category="General" allow-children="false" base-type="Gtk.Frame">
+    <itemgroups />
+    <signals>
+      <itemgroup label="GameUnitWidget Signals">
+        <signal name="GameUnitEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.GameUnitsTagger" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="GameUnitsTagger Signals">
+        <signal name="GameUnitEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Base.TimeScaleBase" palette-category="General" allow-children="false" base-type="Gtk.DrawingArea">
+    <itemgroups>
+      <itemgroup label="TimeScaleBase Properties">
+        <property name="PixelRatio" />
+        <property name="CurrentFrame" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Base.TemplatesEditorBase" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="TemplatesEditorBase Properties">
+        <property name="CanExport" />
+        <property name="Edited" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Base.TemplatesEditorWidget" palette-category="General" allow-children="false" base-type="LongoMatch.Gui.Base.TemplatesEditorBase">
+    <itemgroups>
+      <itemgroup label="ITemplateWidget Properties">
+        <property name="Edited" />
+        <property name="CanExport" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.GameUnitTimeScale" palette-category="General" allow-children="false" base-type="Gtk.DrawingArea">
+    <itemgroups />
+    <signals>
+      <itemgroup label="GameUnitTimeScale Signals">
+        <signal name="UnitChanged" />
+        <signal name="UnitSelected" />
+        <signal name="UnitDeleted" />
+        <signal name="UnitAdded" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.PlayersTagger" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
   </object>
   <object type="LongoMatch.Gui.Component.PlaysSelectionWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
@@ -268,53 +304,28 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.PlaysListTreeWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.Gui.Component.CategoriesFilterTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
     <itemgroups />
-    <signals>
-      <itemgroup label="PlaysListTreeWidget Signals">
-        <signal name="TimeNodeSelected" />
-        <signal name="TimeNodeChanged" />
-        <signal name="TimeNodeDeleted" />
-        <signal name="PlayListNodeAdded" />
-        <signal name="PlayCategoryChanged" />
-        <signal name="SnapshotSeriesEvent" />
-        <signal name="TagPlay" />
-        <signal name="RenderPlaylist" />
-      </itemgroup>
-    </signals>
+    <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.ProjectDetailsWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="ProjectDetailsWidget Properties">
-        <property name="Edited" />
-        <property name="Season" />
-        <property name="Competition" />
-        <property name="LocalGoals" />
-        <property name="VisitorGoals" />
-        <property name="Date" />
-      </itemgroup>
-    </itemgroups>
-    <signals>
-      <itemgroup label="ProjectDetailsWidget Signals">
-        <signal name="EditedEvent" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.CategoryProperties" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.Gui.Component.CoordinatesTagger" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
-    <signals>
-      <itemgroup label="CategoryProperties Signals">
-        <signal name="HotKeyChanged" />
-      </itemgroup>
-    </signals>
+    <signals />
   </object>
-  <object type="LongoMatch.Gui.Base.TemplatesEditorBase" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="TemplatesEditorBase Properties">
-        <property name="CanExport" />
-        <property name="Edited" />
-      </itemgroup>
-    </itemgroups>
+  <object type="LongoMatch.Gui.Component.GeneralPreferencesPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.VideoPreferencesPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.LiveAnalysisPreferences" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.PlaysCoordinatesTagger" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
     <signals />
   </object>
   <object type="LongoMatch.Gui.CapturerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
@@ -373,23 +384,23 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.CoordinatesTagger" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.Gui.Component.Stats.Plotter" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.GeneralPreferencesPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.Gui.Component.Stats.CategoryViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.VideoPreferencesPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.Gui.Component.Stats.SubCategoryViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.LiveAnalysisPreferences" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.Gui.Component.Stats.CategoriesViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.PlaysCoordinatesTagger" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.Gui.Component.GameViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
   </object>

@@ -33,6 +33,7 @@ using LongoMatch.Store;
 using LongoMatch.Store.Templates;
 using LongoMatch.Video.Utils;
 using LongoMatch.Gui.Helpers;
+using LongoMatch.Stats;
 
 namespace LongoMatch.Gui
 {
@@ -350,6 +351,14 @@ namespace LongoMatch.Gui
 				captureSettings = new CaptureSettings();
 			npd.Destroy();
 			return project;
+		}
+		
+		public void ShowProjectStats (Project project) {
+			StatsViewer dialog = new StatsViewer ();
+			dialog.LoadStats (project);
+			dialog.TransientFor = mainWindow as Gtk.Window;
+			dialog.Run();
+			dialog.Destroy();
 		}
 		
 	}

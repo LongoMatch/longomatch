@@ -24,6 +24,7 @@ using LongoMatch.Common;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
 using Image = LongoMatch.Common.Image;
+using LongoMatch.Stats;
 
 namespace LongoMatch.Interfaces.GUI
 {
@@ -63,6 +64,7 @@ namespace LongoMatch.Interfaces.GUI
 		Project NewFakeProject(IDatabase db, ITemplatesService ts);
 		Project NewFileProject(IDatabase db, ITemplatesService ts);
 		Project EditFakeProject(IDatabase db, Project project, ITemplatesService ts);
+		void ShowProjectStats(Project project);
 		
 		void OpenProjectsManager(Project openedProject, IDatabase db, ITemplatesService ts);
 		void OpenCategoriesTemplatesManager(ITemplatesService ts);

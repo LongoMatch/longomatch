@@ -30,10 +30,12 @@ namespace LongoMatch.Stats
 		List<PercentualStat> optionStats;
 		Dictionary<string, List<PlayersStats>> localPlayersStats;
 		Dictionary<string, List<PlayersStats>> visitorPlayersStats;
+		ISubCategory subcat;
 		
-		public SubCategoryStat (string name)
+		public SubCategoryStat (ISubCategory subcat)
 		{
-			Name = name;
+			Name = subcat.Name;
+			this.subcat = subcat;
 			optionStats = new List<PercentualStat>();
 			localPlayersStats = new Dictionary<string, List<PlayersStats>>(); 
 			visitorPlayersStats = new Dictionary<string, List<PlayersStats>>(); 
@@ -48,6 +50,12 @@ namespace LongoMatch.Stats
 		public List<PercentualStat> OptionStats {
 			get {
 				return optionStats; 
+			}
+		}
+		
+		public ISubCategory SubCategory {
+			get {
+				return subcat;
 			}
 		}
 		

@@ -77,6 +77,7 @@ namespace LongoMatch.Gui
 		public event CloseOpenendProjectHandler CloseOpenedProjectEvent;
 		public event ImportProjectHandler ImportProjectEvent;
 		public event ExportProjectHandler ExportProjectEvent;
+		public event ShowProjectStats ShowProjectStatsEvent;
 		
 		/* Managers */
 		public event ManageJobsHandler ManageJobsEvent; 
@@ -323,6 +324,7 @@ namespace LongoMatch.Gui
 			ProjectsManagerAction.Activated += (o, e) => {EmitManageProjects();};
 			DatabasesManagerAction.Activated +=  (o, e) => {EmitManageDatabases();};
 			PreferencesAction.Activated += (sender, e) => {EmitEditPreferences();};
+			ShowProjectStatsAction.Activated += (sender, e) => {EmitShowProjectStats();}; 
 		}
 		
 		void DetachPlayer (bool detach) {
@@ -577,6 +579,12 @@ namespace LongoMatch.Gui
 					ConvertVideoFilesEvent (converter.Files, converter.EncodingSettings);
 			}
 		}
+		
+		private void EmitShowProjectStats () {
+			if (ShowProjectStatsEvent != null)
+				ShowProjectStatsEvent (openedProject);
+		}
+
 		#endregion
 		
 		#region View

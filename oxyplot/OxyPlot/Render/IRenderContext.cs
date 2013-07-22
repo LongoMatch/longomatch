@@ -34,7 +34,7 @@ namespace OxyPlot
     /// <summary>
     /// Defines rendering functionality.
     /// </summary>
-    public interface IRenderContext
+    public interface IRenderContext: ITextMeasurer
     {
         /// <summary>
         /// Gets a value indicating whether the context renders to screen.
@@ -286,26 +286,6 @@ namespace OxyPlot
             OxySize? maxSize = null);
 
         /// <summary>
-        /// Measures the text.
-        /// </summary>
-        /// <param name="text">
-        /// The text.
-        /// </param>
-        /// <param name="fontFamily">
-        /// The font family.
-        /// </param>
-        /// <param name="fontSize">
-        /// Size of the font.
-        /// </param>
-        /// <param name="fontWeight">
-        /// The font weight.
-        /// </param>
-        /// <returns>
-        /// The text size.
-        /// </returns>
-        OxySize MeasureText(string text, string fontFamily = null, double fontSize = 10, double fontWeight = 500);
-
-        /// <summary>
         /// Sets the tool tip for the following items.
         /// </summary>
         /// <params>
@@ -396,5 +376,9 @@ namespace OxyPlot
         /// The dpi Y.
         /// </value>
         public double DpiY { get; set; }
+    }
+    
+    public interface ITextMeasurer {
+		OxySize MeasureText(string text, string fontFamily = null, double fontSize = 10, double fontWeight = 500);
     }
 }

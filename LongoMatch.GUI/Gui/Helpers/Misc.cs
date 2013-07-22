@@ -58,7 +58,7 @@ namespace LongoMatch.Gui.Helpers
 			return pimage;
 		}
 		
-		public static Pixbuf Scale(Pixbuf pixbuf, int max_width, int max_height) {
+		public static Pixbuf Scale(Pixbuf pixbuf, int max_width, int max_height, bool dispose=true) {
 			int ow,oh,h,w;
 
 			h = ow = pixbuf.Height;
@@ -75,7 +75,8 @@ namespace LongoMatch.Gui.Helpers
 				else
 					oh = (int)(ow / rate);
 				scalledPixbuf = pixbuf.ScaleSimple(ow,oh,Gdk.InterpType.Bilinear);
-				pixbuf.Dispose();
+				if (dispose)
+					pixbuf.Dispose();
 				return scalledPixbuf;
 			} else {
 				return pixbuf;

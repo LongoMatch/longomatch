@@ -17,6 +17,7 @@ LINK_GLIB = $(GLIBSHARP_LIBS)
 LINK_GTK = $(GTKSHARP_LIBS)
 LINK_GCONF = $(GCONFSHARP_LIBS)
 LINK_DB40 = $(DB4O_LIBS)
+LINK_OSXYPLOT = -r:$(DIR_BIN)/OxyPlotMono.dll
 LINK_LONGOMATCH_ADDINS = -r:$(DIR_BIN)/LongoMatch.Addins.dll
 LINK_LONGOMATCH_CORE = -r:$(DIR_BIN)/LongoMatch.dll
 LINK_LONGOMATCH_MULTIMEDIA = -r:$(DIR_BIN)/LongoMatch.Multimedia.dll
@@ -62,7 +63,8 @@ REF_DEP_LONGOMATCH_GUI = \
                      $(LINK_CAIRO) \
                      $(LINK_LONGOMATCH_CORE) \
                      $(LINK_LONGOMATCH_MULTIMEDIA) \
-                     $(LINK_LONGOMATCH_GUI_MULTIMEDIA)
+                     $(LINK_LONGOMATCH_GUI_MULTIMEDIA) \
+                     $(LINK_OSXYPLOT)
 
 REF_DEP_LONGOMATCH_SERVICES = \
                      $(LINK_MONO_POSIX) \

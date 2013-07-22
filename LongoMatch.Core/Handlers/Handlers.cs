@@ -140,4 +140,7 @@ namespace LongoMatch.Handlers
 	public delegate void FilterUpdatedHandler ();
 	
 	public delegate void DetachPlayerHandler (bool detach);
+	
+	/* Show project stats */
+	public delegate void ShowProjectStats(Project project);
 }

@@ -27,6 +27,7 @@ using LongoMatch.Interfaces.GUI;
 using LongoMatch.Store;
 using Mono.Unix;
 using System.IO;
+using LongoMatch.Stats;
 
 namespace LongoMatch.Services
 {
@@ -97,11 +98,18 @@ namespace LongoMatch.Services
 			/* Connect SnapshotSeries events */
 			mainWindow.SnapshotSeriesEvent += OnSnapshotSeries;
 			
+			mainWindow.ShowProjectStatsEvent += HandleShowProjectStatsEvent;
+			
 			/* Connect player events */
 			player.Prev += OnPrev;
 			player.SegmentClosedEvent += OnSegmentClosedEvent;
 			player.DrawFrame += OnDrawFrame;
 			player.PlaybackRateChanged += HandlePlaybackRateChanged;
+		}
+
+		void HandleShowProjectStatsEvent (Project project)
+		{
+			guiToolkit.ShowProjectStats (project);
 		}
 
 		void RenderPlay (Project project, Play play, MediaFile file) {

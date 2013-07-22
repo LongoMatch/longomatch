@@ -29,6 +29,11 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.RenderingStateBar.cs \
+	gtk-gui/LongoMatch.Gui.Component.GameViewer.cs \
+	gtk-gui/LongoMatch.Gui.Component.Stats.CategoriesViewer.cs \
+	gtk-gui/LongoMatch.Gui.Component.Stats.CategoryViewer.cs \
+	gtk-gui/LongoMatch.Gui.Component.Stats.Plotter.cs \
+	gtk-gui/LongoMatch.Gui.Component.Stats.SubCategoryViewer.cs \
 	gtk-gui/LongoMatch.Gui.Component.StringTaggerWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.TeamTaggerWidget.cs \
@@ -50,6 +55,7 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.ShortcutsHelpDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.SnapshotsDialog.cs \
+	gtk-gui/LongoMatch.Gui.Dialog.StatsViewer.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs \
 	gtk-gui/LongoMatch.Gui.Dialog.TemplateEditorDialog.cs \
@@ -89,6 +95,12 @@ SOURCES = \
 	Gui/Component/ProjectDetailsWidget.cs \
 	Gui/Component/ProjectListWidget.cs \
 	Gui/Component/RenderingStateBar.cs \
+	Gui/Component/Stats/CategoriesViewer.cs \
+	Gui/Component/Stats/CategoryViewer.cs \
+	Gui/Component/Stats/GameViewer.cs \
+	Gui/Component/Stats/PangoTextMeasurer.cs \
+	Gui/Component/Stats/Plotter.cs \
+	Gui/Component/Stats/SubcategoryViewer.cs \
 	Gui/Component/StringTaggerWidget.cs \
 	Gui/Component/TaggerWidget.cs \
 	Gui/Component/TeamTaggerWidget.cs \
@@ -116,6 +128,7 @@ SOURCES = \
 	Gui/Dialog/RenderingJobsDialog.cs \
 	Gui/Dialog/ShortcutsHelpDialog.cs \
 	Gui/Dialog/SnapshotsDialog.cs \
+	Gui/Dialog/StatsViewer.cs \
 	Gui/Dialog/SubCategoryTagsEditor.cs \
 	Gui/Dialog/TaggerDialog.cs \
 	Gui/Dialog/TemplateEditorDialog.cs \

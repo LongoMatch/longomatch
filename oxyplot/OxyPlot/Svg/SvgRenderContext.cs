@@ -58,7 +58,7 @@ namespace OxyPlot
         /// <param name="isDocument">Create an SVG document if set to <c>true</c>.</param>
         /// <param name="textMeasurer">The text measurer.</param>
         /// <param name="background">The background.</param>
-        public SvgRenderContext(Stream s, double width, double height, bool isDocument, IRenderContext textMeasurer, OxyColor background)
+        public SvgRenderContext(Stream s, double width, double height, bool isDocument, ITextMeasurer textMeasurer, OxyColor background)
         {
             if (textMeasurer == null)
             {
@@ -79,7 +79,7 @@ namespace OxyPlot
         /// <value>
         /// The text measurer.
         /// </value>
-        public IRenderContext TextMeasurer { get; set; }
+        public ITextMeasurer TextMeasurer { get; set; }
 
         /// <summary>
         /// Closes the svg writer.
@@ -221,11 +221,11 @@ namespace OxyPlot
             {
                 foreach (var line in lines)
                 {
+                   // p.X -= Math.Sin(rotate / 180.0 * Math.PI) * size.Height;
                     var size = this.MeasureText(line, fontFamily, fontSize, fontWeight);
+                    p.Y += Math.Cos(rotate / 180.0 * Math.PI) * size.Height;
                     this.w.WriteText(p, line, c, fontFamily, fontSize, fontWeight, rotate, halign, valign);
 
-                    p.X -= Math.Sin(rotate / 180.0 * Math.PI) * size.Height;
-                    p.Y += Math.Cos(rotate / 180.0 * Math.PI) * size.Height;
                 }
             }
         }

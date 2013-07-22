@@ -112,7 +112,7 @@ namespace LongoMatch.Stats
 				
 				plays = project.PlaysInCategory (cat);
 				CountPlaysInTeam(plays, out localTeamCount, out visitorTeamCount);
-				stats = new CategoryStats(cat.Name, plays.Count, localTeamCount, visitorTeamCount);
+				stats = new CategoryStats(cat, plays.Count, localTeamCount, visitorTeamCount);
 				catStats.Add (stats);
 				
 				foreach (ISubCategory subcat in cat.SubCategories) {
@@ -121,7 +121,7 @@ namespace LongoMatch.Stats
 					if (subcat is PlayerSubCategory)
 						continue;
 						
-					subcatStat = new SubCategoryStat(subcat.Name);
+					subcatStat = new SubCategoryStat(subcat);
 					stats.AddSubcatStat(subcatStat);
 					
 					 if (subcat is TagSubCategory) {

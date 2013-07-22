@@ -61,31 +61,58 @@ namespace LongoMatch.Gui.Component
 			ShowAll ();
 		}
 		
-		public void LoadPlay (Play play, Categories template, bool horizontal=true) {
+		public void LoadPlays (List<Play> plays, Categories template, bool horizontal=true) {
 			field.Visible = hfield.Visible = goal.Visible = false;
-			
-			if (play.Category.TagFieldPosition) {
-				AddFieldPosTagger (play, template);				
-			}
-			if (play.Category.TagHalfFieldPosition) {
-				AddHalfFieldPosTagger (play, template);
-			}
-			if (play.Category.TagGoalPosition) {
-				AddGoalPosTagger (play, template);
+			SetBackgrounds (template);
+			foreach (Play play in plays) {
+				AddPlay (play, false);
 			}
 		}
 		
-		void AddFieldPosTagger (Play play, Categories template) {
-			List<Coordinates> coords = new List<Coordinates>();
+		public void LoadPlay (Play play, Categories template, bool horizontal=true) {
+			field.Visible = hfield.Visible = goal.Visible = false;
 			
+			SetBackgrounds (template);
+			AddPlay (play, true);
+			
+		}
+
+		void SetBackgrounds (Categories template) {
 			if (template.FieldBackgroundImage != null) {
 				field.Background = template.FieldBackgroundImage.Value;
 			} else {
 				field.Background = Gdk.Pixbuf.LoadFromResource (Constants.FIELD_BACKGROUND);
 			}
+			if (template.HalfFieldBackgroundImage != null) {
+				hfield.Background = template.HalfFieldBackgroundImage.Value;
+			} else {
+				hfield.Background = Gdk.Pixbuf.LoadFromResource (Constants.HALF_FIELD_BACKGROUND);
+			}
+			if (template.GoalBackgroundImage != null) {
+				goal.Background = template.GoalBackgroundImage.Value;
+			} else {
+				goal.Background = Gdk.Pixbuf.LoadFromResource (Constants.GOAL_BACKGROUND);
+			}
+		}
+		
+		void AddPlay (Play play, bool fill) {
+			if (play.Category.TagFieldPosition) {
+				AddFieldPosTagger (play, fill);				
+			}
+			if (play.Category.TagHalfFieldPosition) {
+				AddHalfFieldPosTagger (play, fill);
+			}
+			if (play.Category.TagGoalPosition) {
+				AddGoalPosTagger (play, fill);
+			}
+		}
+		
+		void AddFieldPosTagger (Play play, bool fill) {
+			List<Coordinates> coords = new List<Coordinates>();
+			
 			if (play.FieldPosition != null) {
 				coords.Add (play.FieldPosition);
-			} else {
+			} else if (fill) {
 				Coordinates c = new Coordinates ();
 				c.Add (new Point(100, 100));
 				if (play.Category.FieldPositionIsDistance) {
@@ -93,22 +120,19 @@ namespace LongoMatch.Gui.Component
 				}
 				coords.Add (c);
 				play.FieldPosition = c;
+			} else {
+				return;
 			}
 			field.Coordinates = coords;
 			field.Visible = true;
 		}
 		
-		void AddHalfFieldPosTagger (Play play, Categories template) {
+		void AddHalfFieldPosTagger (Play play, bool fill) {
 			List<Coordinates> coords = new List<Coordinates>();
 			
-			if (template.HalfFieldBackgroundImage != null) {
-				hfield.Background = template.HalfFieldBackgroundImage.Value;
-			} else {
-				hfield.Background = Gdk.Pixbuf.LoadFromResource (Constants.HALF_FIELD_BACKGROUND);
-			}
 			if (play.HalfFieldPosition != null) {
 				coords.Add (play.HalfFieldPosition);
-			} else {
+			} else  if (fill) {
 				Coordinates c = new Coordinates ();
 				c.Add (new Point(100, 100));
 				if (play.Category.HalfFieldPositionIsDistance) {
@@ -116,26 +140,25 @@ namespace LongoMatch.Gui.Component
 				}
 				coords.Add (c);
 				play.HalfFieldPosition = c;
+			} else {
+				return;
 			}
 			hfield.Coordinates = coords;
 			hfield.Visible = true;
 		}
 		
-		void AddGoalPosTagger (Play play, Categories template) {
+		void AddGoalPosTagger (Play play, bool fill) {
 			List<Coordinates> coords = new List<Coordinates>();
 			
-			if (template.GoalBackgroundImage != null) {
-				goal.Background = template.GoalBackgroundImage.Value;
-			} else {
-				goal.Background = Gdk.Pixbuf.LoadFromResource (Constants.GOAL_BACKGROUND);
-			}
 			if (play.GoalPosition != null) {
 				coords.Add (play.GoalPosition);
-			} else {
+			} else if (fill) {
 				Coordinates c = new Coordinates ();
 				c.Add (new Point(100, 100));
 				coords.Add (c);
 				play.GoalPosition = c;
+			} else {
+				return;
 			}
 			goal.Coordinates = coords; 
 			goal.Visible = true;

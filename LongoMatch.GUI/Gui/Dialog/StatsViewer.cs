@@ -1,56 +1,38 @@
-// 
-//  Copyright (C) 2012 Andoni Morales Alastruey
-// 
+//
+//  Copyright (C) 2013 Andoni Morales Alastruey
+//
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation; either version 2 of the License, or
 //  (at your option) any later version.
-// 
+//
 //  This program is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 //  GNU General Public License for more details.
-//  
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
-// 
+//
 using System;
-using System.Collections.Generic;
-
-using LongoMatch.Interfaces;
+using LongoMatch.Stats;
 using LongoMatch.Store;
 
-namespace LongoMatch.Stats
+namespace LongoMatch.Gui.Dialog
 {
-	public class CategoryStats: Stat
+	public partial class StatsViewer : Gtk.Dialog
 	{
-		List <SubCategoryStat> subcatStats;
-		Category cat;
-		
-		public CategoryStats (Category cat, int totalCount, int localTeamCount, int visitorTeamCount):
-			base (cat.Name, totalCount, localTeamCount, visitorTeamCount)
+		public StatsViewer ()
 		{
-			subcatStats = new List<SubCategoryStat>();
-			this.cat = cat;
+			this.Build ();
 		}
 		
-		public List<SubCategoryStat> SubcategoriesStats {
-			get {
-				return subcatStats;
-			}
+		public void LoadStats (Project project) {
+			ProjectStats stats = new ProjectStats (project);
+			categoriesviewer.LoadStats (stats);
+			gameviewer.Project = project;
 		}
-		
-		public Category Category {
-			get {
-				return cat;
-			}
-		}
-		
-		public void AddSubcatStat (SubCategoryStat subcatStat) {
-			subcatStats.Add(subcatStat);
-		}
-		
 	}
 }
 
