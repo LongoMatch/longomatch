@@ -31,7 +31,7 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class CoordinatesTagger : Gtk.Bin
 	{
-		Surface source, coordsSource;
+		Surface source;
 		List<Coordinates> coordinatesList;
 		Coordinates selectedCoords;
 		Point selectedPoint;
@@ -40,8 +40,7 @@ namespace LongoMatch.Gui.Component
 		double xScale, yScale;
 		int yOffset, xOffset;
 		const double ARROW_DEGREES = 0.5;
-		const int ARROW_LENGHT = 15;
-		const int LINE_WIDTH = 20;
+		const int ARROW_LENGHT = 3, LINE_WIDTH = 3;
 						
 		public CoordinatesTagger ()
 		{
@@ -58,8 +57,6 @@ namespace LongoMatch.Gui.Component
 		~CoordinatesTagger() {
 			if (source != null)
 				source.Destroy();
-			if (coordsSource != null)
-				coordsSource.Destroy();
 		}
 
 		public Pixbuf Background {
@@ -72,7 +69,6 @@ namespace LongoMatch.Gui.Component
 					CairoHelper.SetSourcePixbuf(sourceCR,value,0,0);
 					sourceCR.Paint();
 				}
-				RedrawAllCoordinates ();
 				value.Dispose();
 				QueueDraw();
 			}
@@ -81,7 +77,6 @@ namespace LongoMatch.Gui.Component
 		public List<Coordinates> Coordinates {
 			set {
 				coordinatesList = value;
-				RedrawAllCoordinates ();
 				QueueDraw ();
 			}
 			get {
@@ -100,6 +95,11 @@ namespace LongoMatch.Gui.Component
 			point.Y = Math.Max (0, point.Y - yOffset);
 			point.X = Math.Min (sourceWidth, (int) (point.X / xScale));
 			point.Y = Math.Min (sourceHeight, (int) (point.Y / yScale));
+		}
+		
+		Point TranslateToDestCoords (Point point) {
+			return new Point ((int) (point.X * xScale),
+			                  (int) (point.Y * yScale));
 		}
 		
 		void FindNearestPoint (Point cursor, out Coordinates coords, out Point point) {
@@ -139,7 +139,7 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		void DrawPoint (Context c, Point location) {
-			c.Arc (location.X, location.Y, 20, 0, 2 * Math.PI);
+			c.Arc (location.X, location.Y, LINE_WIDTH, 0, 2 * Math.PI);
 			c.StrokePreserve();
 			c.Fill();
 		}
@@ -166,24 +166,23 @@ namespace LongoMatch.Gui.Component
 			SetContextProperties(context, coords == selectedCoords);
 			for (int i=0; i < coords.Count; i++) {
 				if (i != 0 && i == coords.Count - 1) {
-					DrawArrow (context, coords[i -1], coords [i]);
+					DrawArrow (context, TranslateToDestCoords(coords[i -1]),
+					           TranslateToDestCoords (coords [i]));
 				} else {
-					DrawPoint (context, coords[i]);
+					DrawPoint (context, TranslateToDestCoords (coords[i]));
 				}
 				if (i>0) {
-					DrawLine (context, coords[i-1], coords[i]);
+					DrawLine (context, TranslateToDestCoords(coords[i-1]),
+					          TranslateToDestCoords (coords[i]));
 				}
 			} 
 		}
 		
-		void RedrawAllCoordinates () {
-			coordsSource = new ImageSurface(Format.ARGB32, sourceWidth, sourceHeight);
-			using(Context ctx = new Context(coordsSource)) {
-				foreach (Coordinates c in Coordinates) {
-					if (c == selectedCoords)
-						continue;
-					DrawCoordinates (ctx, c);
-				}
+		void RedrawAllCoordinates (Context ctx) {
+			foreach (Coordinates c in Coordinates) {
+				if (c == selectedCoords)
+					continue;
+				DrawCoordinates (ctx, c);
 			}
 		}
 		
@@ -192,14 +191,12 @@ namespace LongoMatch.Gui.Component
 			FindNearestPoint (new Point((int) args.Event.X, (int) args.Event.Y),
 			                  out selectedCoords, out selectedPoint);
 
-			RedrawAllCoordinates ();
 			QueueDraw ();
 		}
 
 		protected virtual void OnDrawingareaButtonReleaseEvent(object o, Gtk.ButtonReleaseEventArgs args)
 		{
 			selectedCoords = null;
-			RedrawAllCoordinates ();
 			QueueDraw ();
 		}
 		
@@ -222,7 +219,7 @@ namespace LongoMatch.Gui.Component
 			double dar;
 			int w,h, destH, destW;
 			
-			if (coordsSource == null || source == null) {
+			if (source == null) {
 				return;
 			}
 			drawingarea.GdkWindow.Clear();
@@ -247,11 +244,12 @@ namespace LongoMatch.Gui.Component
 				xScale = (double) destW / sourceWidth;
 				yScale = (double) destH / sourceHeight;
 				
+				c.Save ();
 				c.Scale(xScale, yScale);
 				c.SetSourceSurface(source, 0, 0);
 				c.Paint();
-				c.SetSourceSurface(coordsSource, 0, 0);
-				c.Paint();
+				c.Restore();
+				RedrawAllCoordinates (c);
 				if (selectedCoords != null) {
 					DrawCoordinates (c, selectedCoords);
 				}
