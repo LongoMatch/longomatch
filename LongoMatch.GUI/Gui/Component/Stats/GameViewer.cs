@@ -231,13 +231,13 @@ namespace LongoMatch.Gui.Component
 				/* Home count */	
 				layout.Width = Pango.Units.FromPixels(COUNT_WIDTH);
 				layout.Alignment = Pango.Alignment.Right;
-				layout.SetMarkup(String.Format(count_tpl, stat.LocalTeamCount, localPercent * 100));
+				layout.SetMarkup(String.Format(count_tpl, stat.LocalTeamCount, (localPercent * 100).ToString("f2")));
 				GdkWindow.DrawLayout(Style.TextGC(StateType.Normal), lCenter - (COUNT_WIDTH + 3), 0, layout);
 				
 				/* Away count */	
 				layout.Width = Pango.Units.FromPixels(COUNT_WIDTH);
 				layout.Alignment = Pango.Alignment.Left;
-				layout.SetMarkup(String.Format(count_tpl, stat.VisitorTeamCount, visitorPercent * 100));
+				layout.SetMarkup(String.Format(count_tpl, stat.VisitorTeamCount, (visitorPercent * 100).ToString("f2")));
 				GdkWindow.DrawLayout(Style.TextGC(StateType.Normal), vCenter + 3, 0, layout);
 			}
 			
