@@ -19,6 +19,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using Gdk;
 
 using LongoMatch.Common;
 using LongoMatch.Gui.Component;
@@ -77,7 +78,10 @@ namespace LongoMatch.Gui.Dialog
 				coordstagger.Visible = false;
 				(mainvbox[hbox] as Gtk.Box.BoxChild).Expand = true;
 			} else {
-				coordstagger.LoadPlay (play, categoriesTemplate);
+				coordstagger.LoadBackgrounds (categoriesTemplate.FieldBackgroundImage,
+				                              categoriesTemplate.HalfFieldBackgroundImage,
+				                              categoriesTemplate.GoalBackgroundImage);
+				coordstagger.LoadPlay (play);
 			}
 			
 			if (subcategoryAdded || playersnotebook.Visible) {

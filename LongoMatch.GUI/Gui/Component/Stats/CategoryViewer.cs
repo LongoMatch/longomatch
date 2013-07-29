@@ -35,14 +35,19 @@ namespace LongoMatch.Gui.Component.Stats
 		public void LoadStats (CategoryStats stats) {
 			PlaysCoordinatesTagger tagger;
 			
-			tagger = new PlaysCoordinatesTagger();
-			vbox1.PackStart (tagger);
-			subcatViewers = new List<SubCategoryViewer>();
-						
 			foreach (Widget child in vbox1.AllChildren) {
 				vbox1.Remove (child);
 			}
 			
+			tagger = new PlaysCoordinatesTagger();
+			tagger.LoadBackgrounds (stats.Field, stats.HalfField, stats.Goal);
+			tagger.LoadFieldCoordinates (stats.FieldCoordinates);
+			tagger.LoadHalfFieldCoordinates (stats.HalfFieldCoordinates);
+			tagger.LoadGoalCoordinates (stats.GoalCoordinates);
+			tagger.CoordinatesSensitive = false;
+			vbox1.PackStart (tagger);
+			subcatViewers = new List<SubCategoryViewer>();
+						
 			foreach (SubCategoryStat st in stats.SubcategoriesStats) {
 				SubCategoryViewer subcatviewer = new SubCategoryViewer();
 				subcatviewer.LoadStats (st);

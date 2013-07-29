@@ -20,6 +20,7 @@ using System.Collections.Generic;
 
 using LongoMatch.Interfaces;
 using LongoMatch.Store;
+using LongoMatch.Common;
 
 namespace LongoMatch.Stats
 {
@@ -45,6 +46,54 @@ namespace LongoMatch.Stats
 			get {
 				return cat;
 			}
+		}
+		
+		public Image Field {
+			get; set;
+		}
+		
+		public Image HalfField {
+			get; set;
+		}
+		
+		public Image Goal {
+			get; set;
+		}
+		
+		public List<Coordinates> FieldCoordinates {
+			get; set;
+		}
+		
+		public List<Coordinates> HalfFieldCoordinates {
+			get; set;
+		}
+		
+		public List<Coordinates> GoalCoordinates {
+			get; set;
+		}
+		
+		public List<Coordinates> HomeFieldCoordinates {
+			get; set;
+		}
+		
+		public List<Coordinates> HomeHalfFieldCoordinates {
+			get; set;
+		}
+		
+		public List<Coordinates> HomeGoalCoordinates {
+			get; set;
+		}
+		
+		public List<Coordinates> AwayFieldCoordinates {
+			get; set;
+		}
+		
+		public List<Coordinates> AwayHalfFieldCoordinates {
+			get; set;
+		}
+		
+		public List<Coordinates> AwayGoalCoordinates {
+			get; set;
 		}
 		
 		public void AddSubcatStat (SubCategoryStat subcatStat) {

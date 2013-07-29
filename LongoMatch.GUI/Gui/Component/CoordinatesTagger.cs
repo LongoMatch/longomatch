@@ -52,15 +52,23 @@ namespace LongoMatch.Gui.Component
 			drawingarea.MotionNotifyEvent += OnDrawingareaMotionNotifyEvent;
 			HeightRequest = 100;
 			WidthRequest = 100;
+			Sensitive = true;
 		}
 		
 		~CoordinatesTagger() {
 			if (source != null)
 				source.Destroy();
 		}
+		
+		public new bool Sensitive {
+			get;
+			set;
+		}
 
 		public Pixbuf Background {
 			set {
+				if (value == null || value.Width == -1 || value.Height == -1)
+					return;
 				sourceWidth = value.Width;
 				sourceHeight = value.Height;
 				sourceDAR = (double) sourceWidth / sourceHeight;
@@ -188,6 +196,9 @@ namespace LongoMatch.Gui.Component
 		
 		protected virtual void OnDrawingareaButtonPressEvent(object o, Gtk.ButtonPressEventArgs args)
 		{
+			if (!Sensitive)
+				return;
+				
 			FindNearestPoint (new Point((int) args.Event.X, (int) args.Event.Y),
 			                  out selectedCoords, out selectedPoint);
 
@@ -196,6 +207,9 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnDrawingareaButtonReleaseEvent(object o, Gtk.ButtonReleaseEventArgs args)
 		{
+			if (!Sensitive)
+				return;
+				
 			selectedCoords = null;
 			QueueDraw ();
 		}
@@ -204,6 +218,9 @@ namespace LongoMatch.Gui.Component
 		{
 			Point point;
 			
+			if (!Sensitive)
+				return;
+				
 			if (selectedCoords == null) {
 				return;
 			}

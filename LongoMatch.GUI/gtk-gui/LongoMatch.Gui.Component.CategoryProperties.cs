@@ -408,21 +408,27 @@ namespace LongoMatch.Gui.Component
 			this.table3.ColumnSpacing = ((uint)(6));
 			// Container child table3.Gtk.Table+TableChild
 			this.fieldcoordinatestagger = new global::LongoMatch.Gui.Component.CoordinatesTagger ();
+			this.fieldcoordinatestagger.Sensitive = false;
 			this.fieldcoordinatestagger.Events = ((global::Gdk.EventMask)(256));
 			this.fieldcoordinatestagger.Name = "fieldcoordinatestagger";
+			this.fieldcoordinatestagger.Sensitive = false;
 			this.table3.Add (this.fieldcoordinatestagger);
 			// Container child table3.Gtk.Table+TableChild
 			this.goalcoordinatestagger = new global::LongoMatch.Gui.Component.CoordinatesTagger ();
+			this.goalcoordinatestagger.Sensitive = false;
 			this.goalcoordinatestagger.Events = ((global::Gdk.EventMask)(256));
 			this.goalcoordinatestagger.Name = "goalcoordinatestagger";
+			this.goalcoordinatestagger.Sensitive = false;
 			this.table3.Add (this.goalcoordinatestagger);
 			global::Gtk.Table.TableChild w31 = ((global::Gtk.Table.TableChild)(this.table3 [this.goalcoordinatestagger]));
 			w31.LeftAttach = ((uint)(2));
 			w31.RightAttach = ((uint)(3));
 			// Container child table3.Gtk.Table+TableChild
 			this.halffieldcoordinatestagger = new global::LongoMatch.Gui.Component.CoordinatesTagger ();
+			this.halffieldcoordinatestagger.Sensitive = false;
 			this.halffieldcoordinatestagger.Events = ((global::Gdk.EventMask)(256));
 			this.halffieldcoordinatestagger.Name = "halffieldcoordinatestagger";
+			this.halffieldcoordinatestagger.Sensitive = false;
 			this.table3.Add (this.halffieldcoordinatestagger);
 			global::Gtk.Table.TableChild w32 = ((global::Gtk.Table.TableChild)(this.table3 [this.halffieldcoordinatestagger]));
 			w32.LeftAttach = ((uint)(1));

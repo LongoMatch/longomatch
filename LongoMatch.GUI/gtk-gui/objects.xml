@@ -309,7 +309,11 @@
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.CoordinatesTagger" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
+    <itemgroups>
+      <itemgroup label="CoordinatesTagger Properties">
+        <property name="Sensitive" />
+      </itemgroup>
+    </itemgroups>
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.GeneralPreferencesPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">

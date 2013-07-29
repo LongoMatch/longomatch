@@ -4,6 +4,7 @@ namespace LongoMatch.Gui.Dialog
 {
 	public partial class TaggerDialog
 	{
+		private global::Gtk.ScrolledWindow scrolledwindow3;
 		private global::Gtk.VBox mainvbox;
 		private global::Gtk.HBox hbox;
 		private global::Gtk.Notebook tagsnotebook;
@@ -28,6 +29,14 @@ namespace LongoMatch.Gui.Dialog
 			w1.Name = "dialog1_VBox";
 			w1.BorderWidth = ((uint)(2));
 			// Container child dialog1_VBox.Gtk.Box+BoxChild
+			this.scrolledwindow3 = new global::Gtk.ScrolledWindow ();
+			this.scrolledwindow3.CanFocus = true;
+			this.scrolledwindow3.Name = "scrolledwindow3";
+			this.scrolledwindow3.ShadowType = ((global::Gtk.ShadowType)(1));
+			// Container child scrolledwindow3.Gtk.Container+ContainerChild
+			global::Gtk.Viewport w2 = new global::Gtk.Viewport ();
+			w2.ShadowType = ((global::Gtk.ShadowType)(0));
+			// Container child GtkViewport.Gtk.Container+ContainerChild
 			this.mainvbox = new global::Gtk.VBox ();
 			this.mainvbox.Name = "mainvbox";
 			// Container child mainvbox.Gtk.Box+BoxChild
@@ -51,8 +60,8 @@ namespace LongoMatch.Gui.Dialog
 			this.tagsnotebook.SetTabLabel (this.taggerwidget1, this.label1);
 			this.label1.ShowAll ();
 			this.hbox.Add (this.tagsnotebook);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox [this.tagsnotebook]));
-			w3.Position = 0;
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.hbox [this.tagsnotebook]));
+			w4.Position = 0;
 			// Container child hbox.Gtk.Box+BoxChild
 			this.playersnotebook = new global::Gtk.Notebook ();
 			this.playersnotebook.CanFocus = true;
@@ -70,28 +79,30 @@ namespace LongoMatch.Gui.Dialog
 			this.playersnotebook.SetTabLabel (this.playersbox, this.label2);
 			this.label2.ShowAll ();
 			this.hbox.Add (this.playersnotebook);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.hbox [this.playersnotebook]));
-			w5.Position = 1;
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.hbox [this.playersnotebook]));
+			w6.Position = 1;
 			this.mainvbox.Add (this.hbox);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.mainvbox [this.hbox]));
-			w6.Position = 0;
-			w6.Expand = false;
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.mainvbox [this.hbox]));
+			w7.Position = 0;
+			w7.Expand = false;
 			// Container child mainvbox.Gtk.Box+BoxChild
 			this.coordstagger = new global::LongoMatch.Gui.Component.PlaysCoordinatesTagger ();
 			this.coordstagger.Events = ((global::Gdk.EventMask)(256));
 			this.coordstagger.Name = "coordstagger";
 			this.mainvbox.Add (this.coordstagger);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.mainvbox [this.coordstagger]));
-			w7.Position = 1;
-			w1.Add (this.mainvbox);
-			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(w1 [this.mainvbox]));
-			w8.Position = 0;
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.mainvbox [this.coordstagger]));
+			w8.Position = 1;
+			w2.Add (this.mainvbox);
+			this.scrolledwindow3.Add (w2);
+			w1.Add (this.scrolledwindow3);
+			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(w1 [this.scrolledwindow3]));
+			w11.Position = 0;
 			// Internal child LongoMatch.Gui.Dialog.TaggerDialog.ActionArea
-			global::Gtk.HButtonBox w9 = this.ActionArea;
-			w9.Name = "dialog1_ActionArea";
-			w9.Spacing = 6;
-			w9.BorderWidth = ((uint)(5));
-			w9.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
+			global::Gtk.HButtonBox w12 = this.ActionArea;
+			w12.Name = "dialog1_ActionArea";
+			w12.Spacing = 6;
+			w12.BorderWidth = ((uint)(5));
+			w12.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.buttonOk = new global::Gtk.Button ();
 			this.buttonOk.CanDefault = true;
@@ -101,14 +112,14 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonOk.UseUnderline = true;
 			this.buttonOk.Label = "gtk-ok";
 			this.AddActionWidget (this.buttonOk, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w10 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w9 [this.buttonOk]));
-			w10.Expand = false;
-			w10.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w13 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w12 [this.buttonOk]));
+			w13.Expand = false;
+			w13.Fill = false;
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.DefaultWidth = 644;
-			this.DefaultHeight = 569;
+			this.DefaultWidth = 1073;
+			this.DefaultHeight = 709;
 			this.Show ();
 		}
 	}

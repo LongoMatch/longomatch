@@ -25,6 +25,7 @@ using LongoMatch.Store.Templates;
 using LongoMatch.Common;
 
 using Point = LongoMatch.Common.Point;
+using Image = LongoMatch.Common.Image;
 
 namespace LongoMatch.Gui.Component
 {
@@ -39,6 +40,14 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 			SetMode (true);
+		}
+		
+		public bool CoordinatesSensitive {
+			set {
+				field.Sensitive = value;
+				hfield.Sensitive = value;
+				goal.Sensitive = value;
+			}
 		}
 		
 		public void SetMode (bool horizontal) {
@@ -61,35 +70,40 @@ namespace LongoMatch.Gui.Component
 			ShowAll ();
 		}
 		
-		public void LoadPlays (List<Play> plays, Categories template, bool horizontal=true) {
+		public void LoadPlay (Play play, bool horizontal=true) {
 			field.Visible = hfield.Visible = goal.Visible = false;
-			SetBackgrounds (template);
-			foreach (Play play in plays) {
-				AddPlay (play, false);
-			}
+			
+			AddPlay (play, true);
 		}
 		
-		public void LoadPlay (Play play, Categories template, bool horizontal=true) {
-			field.Visible = hfield.Visible = goal.Visible = false;
-			
-			SetBackgrounds (template);
-			AddPlay (play, true);
-			
+		public void LoadFieldCoordinates (List<Coordinates> coords) {
+			field.Coordinates = coords;
+			field.Visible = coords.Count != 0;
 		}
 
-		void SetBackgrounds (Categories template) {
-			if (template.FieldBackgroundImage != null) {
-				field.Background = template.FieldBackgroundImage.Value;
+		public void LoadHalfFieldCoordinates (List<Coordinates> coords) {
+			hfield.Coordinates = coords;
+			hfield.Visible = coords.Count != 0;
+		}
+		
+		public void LoadGoalCoordinates (List<Coordinates> coords) {
+			goal.Coordinates = coords;
+			goal.Visible = coords.Count != 0;
+		}
+		
+		public void LoadBackgrounds (Image fieldImage, Image halfFieldImage, Image goalImage) {
+			if (fieldImage != null) {
+				field.Background = fieldImage.Value;
 			} else {
 				field.Background = Gdk.Pixbuf.LoadFromResource (Constants.FIELD_BACKGROUND);
 			}
-			if (template.HalfFieldBackgroundImage != null) {
-				hfield.Background = template.HalfFieldBackgroundImage.Value;
+			if (halfFieldImage != null) {
+				hfield.Background = halfFieldImage.Value;
 			} else {
 				hfield.Background = Gdk.Pixbuf.LoadFromResource (Constants.HALF_FIELD_BACKGROUND);
 			}
-			if (template.GoalBackgroundImage != null) {
-				goal.Background = template.GoalBackgroundImage.Value;
+			if (goalImage != null) {
+				goal.Background = goalImage.Value;
 			} else {
 				goal.Background = Gdk.Pixbuf.LoadFromResource (Constants.GOAL_BACKGROUND);
 			}

@@ -54,6 +54,7 @@ namespace LongoMatch.Gui.Component
 			this.topbox.Add (this.subcatscheckbutton);
 			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.topbox [this.subcatscheckbutton]));
 			w3.Position = 2;
+			w3.Fill = false;
 			// Container child topbox.Gtk.Box+BoxChild
 			this.awaylabel = new global::Gtk.Label ();
 			this.awaylabel.Name = "awaylabel";

@@ -93,26 +93,40 @@ namespace LongoMatch.Stats
 			}
 		}
 		
-		void CountPlaysInTeam (List<Play> plays, out int localTeamCount, out int visitorTeamCount) {
-			localTeamCount = plays.Where(p => p.Team == Team.LOCAL || p.Team == Team.BOTH).Count();
-			visitorTeamCount = plays.Where(p => p.Team == Team.VISITOR || p.Team == Team.BOTH).Count();
-		}
-		
 		void UpdateGameUnitsStats (Project project) {
 			guStats = new GameUnitsStats(project.GameUnits, (int)project.Description.File.Length);
 		}
 		
+		void CountPlaysInTeam (List<Play> plays, out int localTeamCount, out int visitorTeamCount) {
+			localTeamCount = plays.Where(p => p.Team == Team.LOCAL || p.Team == Team.BOTH).Count();
+			visitorTeamCount = plays.Where(p => p.Team == Team.VISITOR || p.Team == Team.BOTH).Count();
+		}
+
 		void UpdateStats (Project project) {
 			catStats.Clear();
 			
 			foreach (Category cat in project.Categories) {
 				CategoryStats stats;
-				List<Play> plays;
+				List<Play> plays, homePlays, awayPlays;
 				int localTeamCount, visitorTeamCount;
 				
 				plays = project.PlaysInCategory (cat);
-				CountPlaysInTeam(plays, out localTeamCount, out visitorTeamCount);
-				stats = new CategoryStats(cat, plays.Count, localTeamCount, visitorTeamCount);
+				homePlays =plays.Where(p => p.Team == Team.LOCAL || p.Team == Team.BOTH).ToList();
+				awayPlays =plays.Where(p => p.Team == Team.VISITOR || p.Team == Team.BOTH).ToList();
+				stats = new CategoryStats(cat, plays.Count, homePlays.Count(), awayPlays.Count());
+				/* Fill zonal tagging stats */
+				stats.Field = project.Categories.FieldBackgroundImage;
+				stats.HalfField = project.Categories.HalfFieldBackgroundImage;
+				stats.Goal = project.Categories.GoalBackgroundImage;
+				stats.FieldCoordinates = plays.Select (p => p.FieldPosition).ToList();
+				stats.HalfFieldCoordinates = plays.Select (p => p.HalfFieldPosition).ToList();
+				stats.GoalCoordinates = plays.Select (p => p.GoalPosition).ToList();
+				stats.HomeFieldCoordinates = homePlays.Select (p => p.FieldPosition).ToList();
+				stats.HomeHalfFieldCoordinates = homePlays.Select (p => p.HalfFieldPosition).ToList();
+				stats.HomeGoalCoordinates = homePlays.Select (p => p.GoalPosition).ToList();
+				stats.AwayFieldCoordinates = awayPlays.Select (p => p.FieldPosition).ToList();
+				stats.AwayHalfFieldCoordinates = awayPlays.Select (p => p.HalfFieldPosition).ToList();
+				stats.AwayGoalCoordinates = awayPlays.Select (p => p.GoalPosition).ToList();
 				catStats.Add (stats);
 				
 				foreach (ISubCategory subcat in cat.SubCategories) {
