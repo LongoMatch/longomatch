@@ -45,6 +45,7 @@ namespace LongoMatch.Store.Templates
 		/* Database additions */
 		GameUnitsList gameUnits;
 		Version version;
+		byte[] fieldImage, halfFieldImage, goalImage ;
 
 		/// <summary>
 		/// Creates a new template
@@ -80,18 +81,39 @@ namespace LongoMatch.Store.Templates
 		}
 		
 		public Image FieldBackgroundImage {
-			get;
-			set;
+			get {
+				if(fieldImage != null)
+					return Image.Deserialize(fieldImage);
+				else return null;
+			}
+			set {
+				if (value != null)
+					fieldImage = value.Serialize();
+			}
 		}
 		
 		public Image HalfFieldBackgroundImage {
-			get;
-			set;
+			get {
+				if(halfFieldImage != null)
+					return Image.Deserialize(halfFieldImage);
+				else return null;
+			}
+			set {
+				if (value != null)
+					halfFieldImage = value.Serialize();
+			}
 		}
 		
 		public Image GoalBackgroundImage {
-			get;
-			set;
+			get {
+				if(goalImage != null)
+					return Image.Deserialize(goalImage);
+				else return null;
+			}
+			set {
+				if (value != null)
+					goalImage = value.Serialize();
+			}
 		}
 		
 		public void Save(string filePath) {
