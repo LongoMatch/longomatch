@@ -33,7 +33,7 @@ namespace LongoMatch.Gui.Component.Stats
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class Plotter : Gtk.Bin
 	{
-		const double WIDTH = 800;
+		const double WIDTH = 700;
 		const double HEIGHT = 300;
 		GraphType graphType;
 		SubCategoryStat stats;
