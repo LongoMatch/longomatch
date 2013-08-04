@@ -39,7 +39,7 @@ namespace LongoMatch.Gui.Component.Stats
 			desc.Family = fontFamily;
 			desc.Size = (int) fontSize;
 			desc.Weight = PangoWeightFromDouble (fontWeight);
-			layout.SetText (text);
+			layout.SetMarkup (GLib.Markup.EscapeText (text));
 			layout.GetPixelSize (out width, out height);
 			size.Width = (double) width;
 			size.Height = (double) height;

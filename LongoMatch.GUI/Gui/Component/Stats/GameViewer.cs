@@ -112,14 +112,14 @@ namespace LongoMatch.Gui.Component
 			
 			foreach (CategoryStats cstat in stats.CategoriesStats) {
 				int width, height;
-				layout.SetText (cstat.Name);
+				layout.SetMarkup (GLib.Markup.EscapeText (cstat.Name));
 				layout.GetPixelSize (out width, out height);
 				if (width > normal) {
 					normal = width;
 				}
 				foreach (SubCategoryStat sstat in cstat.SubcategoriesStats) {
 					foreach (PercentualStat spstat in sstat.OptionStats) {
-						layout.SetText (String.Format ("{0}: {1}", cstat.Name, cstat.Name));
+						layout.SetMarkup (GLib.Markup.EscapeText (String.Format ("{0}: {1}", cstat.Name, sstat.Name)));
 						layout.GetPixelSize (out width, out height);
 						if (width > full) {
 							full = width;
@@ -164,7 +164,7 @@ namespace LongoMatch.Gui.Component
 				HeightRequest = 25;
 			} else {
 				if (subcat != null) {
-					name_tpl = subcat.Name + ": {0}";
+					name_tpl = GLib.Markup.EscapeText (subcat.Name) + ": {0}";
 				}
 				HeightRequest = 18;
 			}
@@ -225,7 +225,7 @@ namespace LongoMatch.Gui.Component
 				/* Category name */
 				layout.Width = Pango.Units.FromPixels(textSize);
 				layout.Alignment = Pango.Alignment.Center;
-				layout.SetMarkup(String.Format(name_tpl, stat.Name));
+				layout.SetMarkup(String.Format(name_tpl, GLib.Markup.EscapeText (stat.Name)));
 				GdkWindow.DrawLayout(Style.TextGC(StateType.Normal), center - textSize / 2, 0, layout);
 				
 				/* Home count */	

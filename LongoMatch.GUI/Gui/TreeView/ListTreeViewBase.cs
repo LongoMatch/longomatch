@@ -241,9 +241,9 @@ namespace LongoMatch.Gui.Component
 			 * We need to check if we are editing and only change it for the path that's currently beeing edited */
 			if(editing && Selection.IterIsSelected(iter)) {
 				if(o is Player)
-					c.Markup = (o as Player).Name;
+					c.Markup = GLib.Markup.EscapeText ((o as Player).Name);
 				else
-					c.Markup = (o as TimeNode).Name;
+					c.Markup = GLib.Markup.EscapeText ((o as TimeNode).Name);
 				return;
 			}
 
@@ -261,11 +261,13 @@ namespace LongoMatch.Gui.Component
 			} else if(o is Player) {
 				c.Background = "white";
 				c.CellBackground = "white";
-				c.Markup = String.Format("{0} ({1})", (o as Player).ToString(), modelFilter.IterNChildren(iter));
+				c.Markup = String.Format("{0} ({1})", GLib.Markup.EscapeText ((o as Player).ToString()),
+				                         modelFilter.IterNChildren(iter));
 			} else if(o is Category) {
 				c.Background = "white";
 				c.CellBackground = "white";
-				c.Markup = String.Format("{0} ({1})", (o as TimeNode).Name, modelFilter.IterNChildren(iter));
+				c.Markup = String.Format("{0} ({1})", GLib.Markup.EscapeText ((o as TimeNode).Name),
+				                         modelFilter.IterNChildren(iter));
 			}
 		}
 

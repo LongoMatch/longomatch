@@ -87,7 +87,7 @@ namespace LongoMatch.Gui.Component
 					uint col_left = (uint) i%table1.NColumns;
 					uint col_right = (uint) col_left+1 ;
 
-					l.Markup = cat.Name;
+					l.Markup = GLib.Markup.EscapeText (cat.Name);
 					l.Justify = Justification.Center;
 					l.Ellipsize = Pango.EllipsizeMode.Middle;
 					l.CanFocus = false;

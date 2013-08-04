@@ -76,7 +76,7 @@ namespace LongoMatch.Gui
 		private void RenderSubcat(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			var subcat = (ISubCategory)model.GetValue(iter, 0);
-			(cell as Gtk.CellRendererText).Markup = subcat.ToMarkupString();
+			(cell as Gtk.CellRendererText).Markup = GLib.Markup.EscapeText (subcat.ToMarkupString());
 		}
 		
 		private void SetMenu() {
