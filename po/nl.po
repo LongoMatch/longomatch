@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: longomatch master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-06-01 10:45+0000\n"
-"PO-Revision-Date: 2013-06-18 09:20+0100\n"
+"POT-Creation-Date: 2013-07-26 19:21+0000\n"
+"PO-Revision-Date: 2013-08-05 23:23+0100\n"
 "Last-Translator: Sarremans <amvandersar@hotmail.com>\n"
 "Language-Team: Dutch &lt;gnome-de@gnome.org&gt;\n"
 "Language: nl\n"
@@ -105,11 +105,11 @@ msgstr "Stereo"
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4324
 msgid "Too old version of GStreamer installed."
-msgstr "Er is een oude versie van GStreamer geïnstalleerd."
+msgstr "Er is een te oude versie van GStreamer geïnstalleerd."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4331
 msgid "Media contains no supported video streams."
-msgstr "Dit bestand bevat geen videostroom."
+msgstr "Media bevat geen ondersteunde videostroom."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4599
 #, c-format
@@ -117,7 +117,7 @@ msgid ""
 "Failed to create a GStreamer play object. Please check your GStreamer "
 "installation."
 msgstr ""
-"Een Gstreamer object te maken is mislukt. Controleer de GStremer installatie"
+"Een Gstreamer object te maken is mislukt. Controleer de GStremer installatie."
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4680
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:4809
@@ -232,7 +232,7 @@ msgid "0 seconds"
 msgstr "0 seconden"
 
 #: ../LongoMatch/longomatch.desktop.in.in.h:1
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:182
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:191
 msgid "LongoMatch"
 msgstr "LongoMatch"
 
@@ -244,51 +244,73 @@ msgstr "LongoMatch: De Digitale Coach"
 msgid "Sports video analysis tool for coaches"
 msgstr "Analyse van Sportvideos voor coaches"
 
-#: ../LongoMatch/Main.cs:102
+#: ../LongoMatch/Main.cs:71
+msgid ""
+"The database seems to be locked by another instance and the application will "
+"closed.\n"
+"\n"
+" Click \"No\" if you are completely sure this is the only instance running "
+"and you want to continue at your own risk."
+msgstr ""
+"Het databestand schijnt op slot te zitten door een andere activiteit en de "
+"toepassing wordt afgesloten\n"
+"Klik \"Nee\" als u geheel zeker bent dat dit de enige activiteit is die "
+"loopt en dat u door wil gaan op eigen risisco"
+
+#: ../LongoMatch/Main.cs:113
 msgid "The application has finished with an unexpected error."
 msgstr "De toepassing werd met een onverwachte fout afgesloten."
 
-#: ../LongoMatch/Main.cs:103
+#: ../LongoMatch/Main.cs:114
 msgid "A log has been saved at: "
 msgstr "Een registratie werd bewaard in: "
 
-#: ../LongoMatch/Main.cs:104
+#: ../LongoMatch/Main.cs:115
 msgid "Please, fill a bug report "
 msgstr "Alstublieft, vul een foutrapport in."
 
-#: ../LongoMatch.Core/Common/VideoStandards.cs:38
+#: ../LongoMatch.Core/Common/Exceptions.cs:26
+#| msgid "Database name"
+msgid "Database locked:"
+msgstr "Databestand op slot:"
+
+#: ../LongoMatch.Core/Common/Exceptions.cs:35
+msgid "Unknown database error:"
+msgstr "Onbekende fout in de database"
+
+#: ../LongoMatch.Core/Common/VideoStandards.cs:55
 msgid "Keep original size"
 msgstr "Originele grootte bewaren"
 
-#: ../LongoMatch.Core/Store/Category.cs:122
-#: ../LongoMatch.Core/Store/Category.cs:130
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:239
+#: ../LongoMatch.Core/Store/Category.cs:132
+#: ../LongoMatch.Core/Store/Category.cs:140
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:253
 #: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:72
 msgid "Sort by name"
 msgstr "Op naam sorteren"
 
-#: ../LongoMatch.Core/Store/Category.cs:124
 #: ../LongoMatch.Core/Store/Category.cs:134
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:240
+#: ../LongoMatch.Core/Store/Category.cs:144
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:254
 #: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:73
 msgid "Sort by start time"
 msgstr "Op starttijd sorteren"
 
-#: ../LongoMatch.Core/Store/Category.cs:126
 #: ../LongoMatch.Core/Store/Category.cs:136
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:241
+#: ../LongoMatch.Core/Store/Category.cs:146
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:255
 #: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:74
 msgid "Sort by stop time"
 msgstr "Op stoptijd sorteren"
 
-#: ../LongoMatch.Core/Store/Category.cs:128
 #: ../LongoMatch.Core/Store/Category.cs:138
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:242
+#: ../LongoMatch.Core/Store/Category.cs:148
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:256
 #: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:75
 msgid "Sort by duration"
 msgstr "Op duur sorteren"
 
-#: ../LongoMatch.Core/Store/Category.cs:148
+#: ../LongoMatch.Core/Store/Category.cs:158
 msgid "name"
 msgstr "Naam"
 
@@ -296,21 +318,21 @@ msgstr "Naam"
 msgid "Not defined"
 msgstr "Niet gedefinieerd"
 
-#: ../LongoMatch.Core/Store/Play.cs:218
+#: ../LongoMatch.Core/Store/Play.cs:234
 #: ../LongoMatch.Core/Store/SubCategory.cs:84
 #: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:50
 #: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:48
 #: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:52
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:73
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:66
 msgid "Name"
 msgstr "Naam"
 
-#: ../LongoMatch.Core/Store/Play.cs:219
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:140
+#: ../LongoMatch.Core/Store/Play.cs:235
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:127
 msgid "Start"
 msgstr "Start"
 
-#: ../LongoMatch.Core/Store/Play.cs:220
+#: ../LongoMatch.Core/Store/Play.cs:236
 msgid "Stop"
 msgstr "Stop"
 
@@ -320,11 +342,11 @@ msgstr "Het bestand dat u tracht te laden is geen geldig project"
 
 #: ../LongoMatch.Core/Store/SubCategory.cs:114
 msgid "Tags list"
-msgstr "Kenmerken"
+msgstr "Lijst markeringen"
 
 #: ../LongoMatch.Core/Store/SubCategory.cs:115
 msgid "Tags:"
-msgstr "Kenmerken:"
+msgstr "Markeringen:"
 
 #: ../LongoMatch.Core/Store/SubCategory.cs:136
 msgid "Local "
@@ -343,7 +365,7 @@ msgid "Teams:"
 msgstr "Teams:"
 
 #: ../LongoMatch.Core/Store/SubCategory.cs:156
-#: ../LongoMatch.Core/Store/Templates/TeamTemplate.cs:38
+#: ../LongoMatch.Core/Store/Templates/TeamTemplate.cs:39
 msgid "Team"
 msgstr "Team"
 
@@ -355,17 +377,13 @@ msgstr "Team Selectie"
 msgid "Coordinates"
 msgstr "Coördinaten"
 
-#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:90
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:105
 msgid "Local Team Players"
 msgstr "Sjabloon voor Thuis team"
 
-#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:96
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:111
 msgid "Visitor Team Players"
 msgstr "Sjabloon voor Bezoekend team "
-
-#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:102
-msgid "Period"
-msgstr "Periode"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Base.TemplatesEditorBase.cs:94
 msgid "New Before"
@@ -395,70 +413,84 @@ msgstr "Afbreken"
 msgid "Tag new play"
 msgstr "Nieuwe Spelsituatie markeren"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:97
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:161
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:111
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:174
 msgid "none"
 msgstr "niets"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:109
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:123
 msgid "Change"
 msgstr "Wijzigen"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:127
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:141
 msgid "<b>Name:</b>"
 msgstr "<b>Naam:</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:137
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:151
 msgid "<b>Color:</b>    "
 msgstr "<b>Kleur:</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:149
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:163
 msgid "<b>HotKey:</b>"
 msgstr "<b>Sneltoets:</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:161
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:175
 msgid "<b>Lead time:</b>"
-msgstr "<b>Tijdsduur voorsprong:<b>"
+msgstr "<b>Tijdsduur voorafgaand:<b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:173
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:187
 msgid "<b>Lag time:</b>"
 msgstr "<b>Tijd er na:</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:187
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:201
 msgid "<b>Sort Method</b>"
 msgstr "<b>Sorteermethode</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:271
-msgid "Tag field position"
-msgstr "Markeer veld position"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:282
-msgid "Tag goal position"
-msgstr "Markeer doel positie"
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:296
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:343
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:385
+msgid "Enable"
+msgstr "Inschakelen"
 
 #. Trajectory
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:294
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:309
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:355
 #: ../LongoMatch.Services/Services/TemplatesService.cs:92
 msgid "Trajectory"
 msgstr "baan van voorwerp"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:335
-msgid "<b>Properties</b>"
-msgstr "<b>Video Eigenschappen</b>"
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:321
+#| msgid "Tag field position"
+msgid "<b>Field position</b>"
+msgstr "<b>Veld positie</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:387
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:367
+#| msgid "Tag field position"
+msgid "<b>Half field position</b>"
+msgstr "<b>Half veld positie</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:393
+#| msgid "<b>Tools</b>"
+msgid "<b>Goal Position</b>"
+msgstr "<b>Doel Positie</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:440
+msgid "<b>Properties</b>"
+msgstr "<b>Eigenschappen</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:492
 msgid "<b>Subcategory name</b>"
 msgstr "<b>Naam subcatergorie</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:410
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:515
 msgid "<b>Subcategory type</b>"
 msgstr "<b>Subcategorie type</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:434
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:539
 msgid "_Add subcategory"
 msgstr "_Voeg subcategorie toe"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:453
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:558
 msgid "<b>Subcategories</b>"
 msgstr "<b>Subcategorieën</b>"
 
@@ -536,8 +568,34 @@ msgstr "Voeg wedstrijd eenheid toe"
 msgid "GtkButton"
 msgstr "GtkKnop"
 
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GeneralPreferencesPanel.cs:26
+msgid "Interface language:"
+msgstr "Taal van de interface"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GeneralPreferencesPanel.cs:33
+#| msgid "Save project"
+msgid "Autosave projects"
+msgstr "Project automatisch opslaan"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.LiveAnalysisPreferences.cs:71
+msgid "Review plays in the same window"
+msgstr "Bekijk spelsituaties in hetzelfde scherm"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.LiveAnalysisPreferences.cs:82
+#| msgid "Output file"
+msgid "Output directory"
+msgstr "Map voor opslag"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.LiveAnalysisPreferences.cs:93
+msgid ""
+"Render new plays automatically\n"
+"(Requires a powerful CPU)"
+msgstr ""
+"Bewerk nieuwe spelsituaties automatisch\n"
+"(Vereist een krachtige CPU)"
+
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:87
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:315
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:313
 msgid "_Calendar"
 msgstr "_Kalender"
 
@@ -579,7 +637,7 @@ msgstr "Nationaliteit"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:199
 msgid "Plays this match:"
-msgstr "Deze wedstrijd afspelen:"
+msgstr "Speelt in deze wedstrijd:"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs:248
 #: ../LongoMatch.GUI/Gui/Component/PlayerProperties.cs:163
@@ -622,67 +680,66 @@ msgstr "Activeer speler filters"
 msgid "  Filters  "
 msgstr "Filter toevoegen"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:88
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:86
 msgid "Competition:"
 msgstr "Competitie:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:130
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:128
 msgid "File:"
 msgstr "Bestand:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:262
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:260
 msgid "-"
 msgstr "-"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:335
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:333
 msgid "Visitor Team:"
 msgstr "Bezoekend team:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:345
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:343
 msgid "Score:"
 msgstr "Stand:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:355
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:353
 msgid "Date:"
 msgstr "Datum:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:365
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:363
 msgid "Local Team:"
 msgstr "Thuis team:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:373
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:371
 msgid "Categories Template:"
 msgstr "Categorie sjabloon:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:397
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:395
 msgid "Season:"
 msgstr "Seizoen:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:421
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:419
 msgid "URL:"
 msgstr "URL:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:443
-msgid "Audio Bitrate (kbps):"
-msgstr "Audio Bitrate (kbps):"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:469
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:442
 msgid "Device:"
 msgstr "Apparaat:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:497
-msgid "Video Size:"
-msgstr "Videogrootte:"
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:478
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:63
+#| msgid "Video Quality:"
+msgid "Quality:"
+msgstr "Kwaliteit:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:507
-msgid "Video Bitrate (kbps):"
-msgstr "Video-Bitrate (kbps):"
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:498
+#| msgid "Video Format:"
+msgid "Image format:"
+msgstr "Beeld formaat:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:544
-msgid "Video Format:"
-msgstr "Videoformaat:"
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:508
+msgid "Encoding format:"
+msgstr "Coderingsformaat:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:554
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs:518
 msgid "Video encoding  properties"
 msgstr "Video coderingseigenschappen"
 
@@ -694,22 +751,72 @@ msgstr "Project zoeken:"
 msgid "<b>GtkFrame</b>"
 msgstr "<b>GtkFrame</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs:67
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs:76
 msgid "<b>Team</b>"
 msgstr "<b>Team</b>"
 
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs:98
+#| msgid "<b>Properties</b>"
+msgid "<b>Period</b>"
+msgstr "<b>Periode</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:52
+#| msgid "<b>GtkFrame</b>"
+msgid "  <b>Framerate</b>"
+msgstr "<b>Framerate</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:59
+msgid "25 fps"
+msgstr "25 fps"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:60
+msgid "30 fps"
+msgstr "30 fps"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:90
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:243
+msgid "Image format"
+msgstr "Beeld formaat"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:99
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:233
+msgid "Encoding format"
+msgstr "Coderingsformaat"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:109
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:222
+#| msgid "Video Quality:"
+msgid "Quality"
+msgstr "Kwaliteit"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:120
+#| msgid "Enable Audio (Experimental)"
+msgid "Enable sound (experimental)"
+msgstr "Geluid activeren (experimenteel)"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:131
+msgid "Overlay title"
+msgstr "Titel overlapping"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:170
+#| msgid "Rendering"
+msgid "<b>Rendering</b>"
+msgstr "<b>Bewerken</b>"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:252
+#| msgid "<b>Color</b>"
+msgid "<b>Capture</b>"
+msgstr "<b>Opnemen</b>"
+
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:24
-#| msgid "Database Manager"
 msgid "Databases manager"
 msgstr "Databestandmanager"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:84
-#| msgid "Select all"
 msgid "_Select DB"
 msgstr "_Selecteer databestand"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs:111
-#| msgid "Delete"
 msgid "_Delete"
 msgstr "_Verwijderen"
 
@@ -722,7 +829,7 @@ msgid "_Add"
 msgstr "_Toevoegen"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs:20
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:136
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:142
 msgid "Drawing Tool"
 msgstr "Tekengereedschap"
 
@@ -823,22 +930,27 @@ msgstr "Live project op basis van simulatie opname-apparaat"
 
 #. Container child ipcamerabox.Gtk.Box+BoxChild
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectSelectionDialog.cs:134
-#| msgid "Live project using a capture device"
 msgid "Live project using an IP camera"
 msgstr "Live project op basis van een IP-camera"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs:27
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:85
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs:28
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:91
 msgid "Projects Manager"
 msgstr "Projectmanager"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs:83
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs:92
 msgid "<b>Project Details</b>"
 msgstr "<b>Projectdetails</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs:135
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.ProjectsManager.cs:144
 msgid "_Export"
 msgstr "_Exporteren"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.PropertiesEditor.cs:20
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:185
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:186
+msgid "Preferences"
+msgstr "Voorkeuren"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.RenderingJobsDialog.cs:67
 msgid "C_lear finished jobs"
@@ -870,7 +982,7 @@ msgstr "Als PNG-afbeelding exporteren"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:29
 msgid "Edit subcategory tags"
-msgstr "Aanpassen subcatergorie markers"
+msgstr "Aanpassen subcatergorie markeringen"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:54
 msgid "Quick tag"
@@ -890,7 +1002,7 @@ msgstr "Type Goal"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:141
 msgid "Penalty"
-msgstr "Strafcorner"
+msgstr "Straf"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:163
 msgid "Add tag"
@@ -900,18 +1012,18 @@ msgstr "Markering toevoegen"
 msgid "<b>Tags</b>"
 msgstr "<b>Markering</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:25
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:23
 msgid "Tag play"
 msgstr "Markeer een spelsituatie"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:52
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:83
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:266
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:50
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:84
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:279
 msgid "Tags"
 msgstr "Markeringen"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:71
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:90
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs:69
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:91
 msgid "Players"
 msgstr "Spelers"
 
@@ -920,7 +1032,7 @@ msgid "Categories Template"
 msgstr "Categoriesjabloon"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.TemplatesManager.cs:22
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:89
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:95
 msgid "Templates Manager"
 msgstr "Sjabloonmanager"
 
@@ -949,17 +1061,15 @@ msgid "label7"
 msgstr "label7"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:31
-#| msgid "Video Properties"
 msgid "Video converter tool"
 msgstr "Video conversie gereedschap"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:112
-#| msgid "Output file"
 msgid "Output size: "
 msgstr "Grootte uitvoer:"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs:134
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:180
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:175
 msgid "File name: "
 msgstr "Bestandnaam:"
 
@@ -967,52 +1077,28 @@ msgstr "Bestandnaam:"
 msgid "Video Properties"
 msgstr "Video Eigenschappen"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:63
-msgid "Video Quality:"
-msgstr "Videokwaliteit:"
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:87
+msgid "Image format: "
+msgstr "Beeld formaat"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:69
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:118
-msgid "Low"
-msgstr "Laag"
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:111
+#| msgid "Video Format:"
+msgid "Encoding Format:"
+msgstr "Coderingsformaat:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:70
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:122
-msgid "Normal"
-msgstr "Normaal"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:71
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:126
-msgid "Good"
-msgstr "Goed"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:72
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:130
-msgid "Extra"
-msgstr "Extra"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:92
-msgid "Size: "
-msgstr "Grootte:"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:116
-msgid "Ouput Format:"
-msgstr "Uitvoertype:"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:139
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:134
 msgid "Enable Title Overlay"
 msgstr "Titeloverlapping activeren"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:150
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:145
 msgid "Enable Audio (Experimental)"
 msgstr "Audio aktiveren (experimenteel)"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:165
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:160
 msgid "Split output in one file per playlist element"
 msgstr "Splits resultaat in één bestand per element uit de afspeellijst"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:223
-#| msgid "Subcategory name:"
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:218
 msgid "Directory name: "
 msgstr "Mappengroepsnaam:"
 
@@ -1020,168 +1106,170 @@ msgstr "Mappengroepsnaam:"
 msgid "Calendar"
 msgstr "Kalender"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:66
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:67
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:72
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:73
 msgid "_File"
 msgstr "_Bestand"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:69
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:70
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:75
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:76
 msgid "_New Project"
 msgstr "_Nieuw project"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:72
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:73
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:78
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:79
 msgid "_Open Project"
 msgstr "_Project openen"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:75
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:76
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:81
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:82
 msgid "_Quit"
 msgstr "_Beëindigen"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:78
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:80
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:84
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:86
 msgid "_Close Project"
 msgstr "_Project sluiten"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:82
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:83
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:88
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:89
 msgid "_Tools"
 msgstr "_Gereedschappen"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:86
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:92
 msgid "Database Manager"
 msgstr "Database manager"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:88
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:94
 msgid "Categories Templates Manager"
 msgstr "Categorie Sjabloon Manager"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:91
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:92
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:97
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:98
 msgid "_View"
 msgstr "_Weergave"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:94
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:95
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:100
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:101
 msgid "Full Screen"
 msgstr "Volledig scherm"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:97
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:98
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:103
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:104
 msgid "Playlist"
 msgstr "Afspeellijst"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:100
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:106
 msgid "Tagging view"
 msgstr "Markeringen scherm"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:103
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:109
 msgid "Capture Mode"
 msgstr "Opname modus"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:105
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:111
 msgid "Timeline view"
 msgstr "Tijdlijn scherm"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:108
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:114
 msgid "Analyze Mode"
 msgstr "Analyse modus"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:110
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:112
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:116
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:118
 msgid "_Save Project"
 msgstr "_Project  opslaan"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:114
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:115
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:132
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:133
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:120
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:121
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:138
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:139
 msgid "_Help"
 msgstr "_Help"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:117
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:118
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:123
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:124
 msgid "_About"
 msgstr "_Info"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:120
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:122
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:126
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:128
 msgid "Export Project To CSV File"
 msgstr "Project in een CSV-bestand exporteren"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:125
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:126
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:131
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:132
 msgid "Teams Templates Manager"
 msgstr "Teams Sjabloon Manager"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:128
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:130
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:134
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:136
 msgid "Hide All Widgets"
 msgstr "Alle Widgets verbergen"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:135
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:141
 msgid "_Drawing Tool"
 msgstr "_Tekengereedschap"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:138
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:139
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:144
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:145
 msgid "_Import Project"
 msgstr "_Project importeren"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:141
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:147
 msgid "Manual tagging view"
 msgstr "Handmatig markeer scherm"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:144
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:150
 msgid "Free Capture Mode"
 msgstr "Vrije opname modus"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:146
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:149
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:152
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:155
 msgid "Game units view"
 msgstr "Wedstrijd eenheden weergave"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:151
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:152
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:154
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:156
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:157
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:158
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:160
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:162
 msgid "Export Project"
 msgstr "Project exporteren"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:160
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:161
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:166
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:167
 msgid "Export to project file"
 msgstr "Exporteer naar projectbestand"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:163
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:164
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:169
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:170
 msgid "Shortcuts"
 msgstr "Sneltoets"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:166
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:167
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:172
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:173
 msgid "Import from file"
 msgstr "Importeren van bestand"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:169
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:171
-#| msgid "_Add subcategory"
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:175
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:177
 msgid "Tag subcategories"
 msgstr "Markeer subcategorie"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:173
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:174
-#| msgid "Video Properties"
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:179
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:180
 msgid "Video Converter Tool"
 msgstr "Video Conversie gereedschap"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:176
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:177
-#| msgid "Database Manager"
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:182
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:183
 msgid "Databases Manager"
 msgstr "Databestandmanager"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:323
+#| msgid "<b>HotKey:</b>"
+msgid "<b>Notes</b>"
+msgstr "<b>Notities</b>"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs:14
 msgid "TransparentDrawingArea"
@@ -1199,20 +1287,21 @@ msgstr "De sjabloonnaam is ongeldig."
 msgid "The template already exists. Do you want to overwrite it ?"
 msgstr "Het sjabloon bestaat al. Wilt u deze overschrijven?"
 
-#: ../LongoMatch.GUI/Gui/Base/TimeScaleBase.cs:144
-#: ../LongoMatch.GUI/Gui/Base/TimeScaleBase.cs:237
-msgid "Delete "
-msgstr "Verwijder"
-
-#: ../LongoMatch.GUI/Gui/Base/TimeScaleBase.cs:145
+#: ../LongoMatch.GUI/Gui/Base/TimeScaleBase.cs:160
 msgid "Add new "
 msgstr "Voeg nieuwe spelsituatie toe"
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:53
+#. We scan all the time Nodes looking for one matching the cursor selectcio
+#. And we add them to the delete menu
+#: ../LongoMatch.GUI/Gui/Base/TimeScaleBase.cs:180
+msgid "Delete "
+msgstr "Verwijder"
+
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:55
 msgid "Categories"
 msgstr "Categorie"
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:104
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:120
 msgid ""
 "You are about to delete a category and all the plays added to this category. "
 "Do you want to proceed?"
@@ -1220,26 +1309,42 @@ msgstr ""
 "U gaat nu een categorie en alle spelsituaties van deze categorie "
 "verwijderen. Wilt u hiermee doorgaan?"
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:111
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:118
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:127
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:134
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:158
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:167
 msgid "A template needs at least one category"
 msgstr "Een sjabloon vereist minimaal één categorie"
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:141
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:159
 msgid "Field background"
 msgstr "Veld achtergrond"
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:144
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:162
+#| msgid "Field background"
+msgid "Half field background"
+msgstr "Half veld achtergrond"
+
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:165
 msgid "Goal background"
 msgstr "Doel achtergrond"
 
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:79
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:168
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:226
+msgid "Game periods"
+msgstr "Wedstrijden periodes"
+
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:231
+msgid "Invalid content. Periods must be separated by spaces (\"1 2 ex1 ex2\")"
+msgstr ""
+"Onjuiste inhoud. Periodes moet gescheiden worden door spaties (\"1 2 ex1 "
+"ex2\")"
+
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:80
 msgid "Create new..."
 msgstr "Video maken..."
 
-#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:235
+#: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:248
 msgid ""
 "If you delete this subcategory you will looseall the tags associated with "
 "it. Do you want to proceed?"
@@ -1248,13 +1353,22 @@ msgstr ""
 "hieraan gekoppeld zijn. Wilt u hiermee doorgaan?"
 
 #: ../LongoMatch.GUI/Gui/Component/GameUnitTimeScale.cs:53
-#: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:53
+#: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:59
 msgid "play"
 msgstr "Spelsituatie"
 
 #: ../LongoMatch.GUI/Gui/Component/GameUnitWidget.cs:62
 msgid "Time: "
 msgstr "Tijd: "
+
+#: ../LongoMatch.GUI/Gui/Component/GeneralPreferencesPanel.cs:51
+msgid "Default"
+msgstr "Beginwaarde"
+
+#: ../LongoMatch.GUI/Gui/Component/LiveAnalysisPreferences.cs:58
+#| msgid "Select a HotKey"
+msgid "Select a folder"
+msgstr "Kies een map"
 
 #: ../LongoMatch.GUI/Gui/Component/PlayerProperties.cs:88
 #: ../LongoMatch.GUI/Gui/Helpers/Misc.cs:44
@@ -1285,38 +1399,48 @@ msgstr "Koppel speler filters los"
 msgid "Enable players filters"
 msgstr "Sta speler filters toe"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:372
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:375
 msgid "OS X Source"
 msgstr "GConf bron"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:374
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:377
 msgid "DirectShow Source"
 msgstr "DirectShow Bron"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:381
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:384
 msgid "Unknown"
 msgstr "Onbekend"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:462
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:449
 #: ../LongoMatch.Plugins/CSVExporter.cs:46
 msgid "Output file"
 msgstr "Uitvoer bestand"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:474
-msgid "Open file..."
-msgstr "Bestand openen..."
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:460
+#| msgid "Open file..."
+msgid "Open file"
+msgstr "Bestand openen"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:508
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:470
 msgid "Analyzing video file:"
 msgstr "Video bestand wordt geanalyseerd:"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:513
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:476
 msgid "This file doesn't contain a video stream."
 msgstr "Dit bestand bevat geen videostroom."
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:515
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:478
 msgid "This file contains a video stream but its length is 0."
 msgstr "Dit bestand bevat een videostroom, maar de lengte is 0."
+
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:480
+#: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:159
+msgid ""
+"The file you are trying to load is not properly supported. Would you like to "
+"convert it into a more suitable format?"
+msgstr ""
+"Het bestand dat u wilt laden wordt niet ondersteund. Wil je dit bestand  "
+"converteren naar een gebruikelijke bestandstype?"
 
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:53
 msgid "Filename"
@@ -1339,7 +1463,7 @@ msgid "Format"
 msgstr "Type"
 
 #: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:132
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:139
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:126
 msgid "Title"
 msgstr "Titel"
 
@@ -1386,6 +1510,27 @@ msgstr ""
 "U gaat nu een speler en al zijn kenmerken verwijderen. Wilt u hiermee "
 "doorgaan?"
 
+#: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:71
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:165
+#: ../LongoMatch.GUI/Gui/TreeView/SubCategoriesTreeView.cs:91
+msgid "Edit tags"
+msgstr "Markeringen bewerken"
+
+#: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:72
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:168
+msgid "Add to playlist"
+msgstr "Aan afspeellijst toevoegen"
+
+#: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:73
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:170
+msgid "Export to video file"
+msgstr "Exporteer naar video bestand"
+
+#: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:74
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:171
+msgid "Export to PGN images"
+msgstr "Als PGN-afbeelding exporteren"
+
 #: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:43
 msgid "Active database"
 msgstr "Actieve databestand"
@@ -1395,17 +1540,14 @@ msgid "Last backup"
 msgstr "Laatste backup"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:66
-#| msgid "Projects Search:"
 msgid "Projects count"
 msgstr "Projecten tellen:"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:135
-#| msgid "Database Manager"
 msgid "Database name"
 msgstr "Naam databestand"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:140
-#| msgid "A template already exists with the name: "
 msgid "A database already exists with this name"
 msgstr "Een databestand met deze naam bestaat al:"
 
@@ -1414,7 +1556,6 @@ msgid "This database is the active one and can't be deleted"
 msgstr "Dit databestand is actief en kan niet worden verwijderd"
 
 #: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:165
-#| msgid "Do you really want to delete the template: "
 msgid "Do you really want to delete the database: "
 msgstr "Wilt u werkelijk het databestand verwijderen: "
 
@@ -1430,7 +1571,7 @@ msgstr "Kan geen backup maken"
 msgid "Save File as..."
 msgstr "Sla bestand op als..."
 
-#: ../LongoMatch.GUI/Gui/Dialog/EditCategoryDialog.cs:70
+#: ../LongoMatch.GUI/Gui/Dialog/EditCategoryDialog.cs:69
 msgid "This hotkey is already in use."
 msgstr "Deze sneltoets is al in gebruik."
 
@@ -1469,6 +1610,19 @@ msgstr "Sluit dit eerst om te kunnen bewerken"
 #: ../LongoMatch.GUI/Gui/Dialog/ProjectsManager.cs:178
 msgid "Save Project"
 msgstr "Project opslaan"
+
+#: ../LongoMatch.GUI/Gui/Dialog/PropertiesEditor.cs:48
+msgid "General"
+msgstr "Algemeen"
+
+#: ../LongoMatch.GUI/Gui/Dialog/PropertiesEditor.cs:51
+#| msgid "Video Size:"
+msgid "Video"
+msgstr "Video"
+
+#: ../LongoMatch.GUI/Gui/Dialog/PropertiesEditor.cs:54
+msgid "Live analysis"
+msgstr "Live analyse"
 
 #: ../LongoMatch.GUI/Gui/Dialog/ShortcutsHelpDialog.cs:27
 msgid "Pause or play"
@@ -1526,23 +1680,12 @@ msgstr "U kunt het sjabloon 'default' niet verwijderen"
 msgid "Do you really want to delete the template: "
 msgstr "Wilt u werkelijk het sjabloon verwijderen: "
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:156
-msgid "Save Video As ..."
-msgstr "Bewaar video als ..."
-
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:194
-#| msgid "Output file"
-msgid "Output folder ..."
-msgstr "Map voor opslag ..."
-
 #: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:63
-#| msgid "Output file"
 msgid "Input files"
 msgstr "Invoer bestanden"
 
 #: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:83
 #: ../LongoMatch.GUI/Gui/Dialog/VideoConversionTool.cs:118
-#| msgid "Add new "
 msgid "Add file"
 msgstr "Voeg bestand toe"
 
@@ -1554,37 +1697,40 @@ msgstr "Fout bij toevoegen van bestanden"
 msgid "MP4 file"
 msgstr "MP4 bestand"
 
-#: ../LongoMatch.GUI/Gui/Helpers/MessagesHelpers.cs:95
-#| msgid "Add tag"
-msgid "Add"
-msgstr "Toevoegen"
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:122
+msgid "Save Video As ..."
+msgstr "Bewaar video als ..."
+
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:160
+msgid "Output folder ..."
+msgstr "Map voor opslag ..."
 
 #: ../LongoMatch.GUI/Gui/GUIToolkit.cs:128
 msgid "The playlist you want to render is empty."
 msgstr "De afspeellijst die u wilt 'renderen' is leeg!"
 
 #: ../LongoMatch.GUI/Gui/GUIToolkit.cs:137
-#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:331
+#: ../LongoMatch.GUI/Gui/GUIToolkit.cs:340
 msgid "Please, select a video file."
 msgstr "Kies a.u.b. een video bestand."
 
 #: ../LongoMatch.GUI/Gui/GUIToolkit.cs:140
-#| msgid "Please, select a video file."
 msgid "Please, select an output directory."
 msgstr "Kies a.u.b. een bestandsmap voor opslag."
+
+#: ../LongoMatch.GUI/Gui/Helpers/MessagesHelpers.cs:95
+msgid "Add"
+msgstr "Toevoegen"
 
 #: ../LongoMatch.GUI/Gui/MainWindow.cs:148
 msgid "Import file project"
 msgstr "Project importeren"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:481
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:512
 msgid "Do you want to close the current project?"
 msgstr "Wilt u het huidige project afsluiten?"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:738
-#| msgid ""
-#| "An error occured in the video capturer and the current project will be "
-#| "closed:"
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:764
 msgid "The following error happened and the current project will be closed:"
 msgstr "De volgende fout trad op en het huidige project wordt afgesloten:"
 
@@ -1631,13 +1777,8 @@ msgstr "Deselecteer alles"
 msgid "Edit name"
 msgstr "Naam bewerken"
 
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:165
-#: ../LongoMatch.GUI/Gui/TreeView/SubCategoriesTreeView.cs:91
-msgid "Edit tags"
-msgstr "Markeringen bewerken"
-
 #: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:166
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:61
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:58
 msgid "Delete"
 msgstr "Verwijderen"
 
@@ -1645,20 +1786,7 @@ msgstr "Verwijderen"
 msgid "Delete key frame"
 msgstr "Verwijder kernbeeld"
 
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:168
-msgid "Add to playlist"
-msgstr "Aan afspeellijst toevoegen"
-
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:170
-msgid "Export to video file"
-msgstr "Exporteer naar video bestand"
-
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:171
-msgid "Export to PGN images"
-msgstr "Als PGN-afbeelding exporteren"
-
 #: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:172
-#| msgid "Remove sub-category"
 msgid "Move to category"
 msgstr "Verplaats naar categorie"
 
@@ -1688,29 +1816,25 @@ msgstr "Positie"
 msgid "Number"
 msgstr "Nummer"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:58
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:116
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:55
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:108
 msgid "Edit Title"
 msgstr "Titel bewerken"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:64
-msgid "Apply current play rate"
-msgstr "Aktuele afspeelmodus gebruiken"
-
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:140
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:141
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:127
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:128
 msgid " sec"
 msgstr " sec"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:141
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:128
 msgid "Duration"
 msgstr "Duur"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:142
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:129
 msgid "Play Rate"
 msgstr "Afspeelmodus"
 
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:145
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:132
 msgid "File not found"
 msgstr "Bestand niet gevonden"
 
@@ -1738,12 +1862,11 @@ msgstr "Spring (s):"
 msgid "Time:"
 msgstr "Tijd:"
 
-#: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerCapturerBin.cs:55
+#: ../LongoMatch.GUI.Multimedia/gtk-gui/LongoMatch.Gui.PlayerCapturerBin.cs:63
 msgid "Back To Live"
 msgstr "Terug naar Live"
 
 #: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:136
-#| msgid "Do you want to close the current project?"
 msgid "Do you want to pause the recording?"
 msgstr "Wilt u het opnemen pauseren?"
 
@@ -1755,44 +1878,32 @@ msgstr ""
 "U gaat nu de huidige opname stoppen en beëindigen.\n"
 "Wilt u hiermee door gaan?"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:321
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:322
 msgid "Device disconnected. The capture will be paused"
 msgstr "Apparaat werd losgekoppeld. De opname wordt onderbroken."
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:330
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:331
 msgid "Device reconnected.Do you want to restart the capture?"
 msgstr "Het apparaat werd hernieuwd aangesloten. Wilt u de opname herstarten?"
+
+#. Create the dialog
+#: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:67
+msgid "Remuxing file..."
+msgstr "Bestand samengevoegd..."
+
+#: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:74
+msgid "Remuxing file, this might take while..."
+msgstr "Bestand samenstellen, dit kan enige tijd duren...."
+
+#: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:104
+msgid "Error remuxing file:\n"
+msgstr "Fout in samenstellen van bestand:\n"
 
 #: ../LongoMatch.Multimedia/Capturer/FakeCapturer.cs:88
 msgid "Fake live source"
 msgstr "Simulatie live bron"
 
-#. Create the dialog
-#: ../LongoMatch.Multimedia/Utils/Remuxer.cs:59
-#: ../LongoMatch.Multimedia/Utils/MpegRemuxer.cs:52
-msgid "Remuxing file..."
-msgstr "Bestand samengevoegd..."
-
-#: ../LongoMatch.Multimedia/Utils/Remuxer.cs:66
-#| msgid "Finalizing file. This can take a while"
-msgid "Remuxing file, this might take while..."
-msgstr "Bestand samenstellen, dit kan enige tijd duren...."
-
-#: ../LongoMatch.Multimedia/Utils/Remuxer.cs:98
-#| msgid "Remuxing file..."
-msgid "Error remuxing file:\n"
-msgstr "Fout in samenstellen van bestand:\n"
-
-#: ../LongoMatch.Multimedia/Utils/Remuxer.cs:147
-#: ../LongoMatch.Multimedia/Utils/MpegRemuxer.cs:145
-msgid ""
-"The file you are trying to load is not properly supported. Would you like to "
-"convert it into a more suitable format?"
-msgstr ""
-"Het bestand dat u wilt laden wordt niet ondersteund. Wil je dit bestand  "
-"converteren naar een gebruikelijke bestandstype?"
-
-#: ../LongoMatch.Multimedia/Utils/GStreamer.cs:112
+#: ../LongoMatch.Multimedia/Utils/GStreamer.cs:127
 msgid "An error has been detected in the current installation."
 msgstr "Een fout heeft plaatsgevonden in de huidige installatie."
 
@@ -1805,7 +1916,6 @@ msgid "Default device"
 msgstr "Standaard apparaat"
 
 #: ../LongoMatch.Plugins/CSVExporter.cs:38
-#| msgid "Export Project To CSV File"
 msgid "Export project to CSV file"
 msgstr "Exporteer project naar een CSV-bestand"
 
@@ -1819,19 +1929,23 @@ msgstr "Project werd succesvol opgeslagen."
 msgid "Error exporting project"
 msgstr "Fout bij het importeren van het project"
 
-#: ../LongoMatch.Services/Services/DataBaseManager.cs:117
+#: ../LongoMatch.Services/Services/DataBaseManager.cs:118
 msgid "Close the current project to open the database manager"
 msgstr "Sluit huidig project om databestandmanager te openen"
 
-#: ../LongoMatch.Services/Services/EventsManager.cs:130
+#: ../LongoMatch.Services/Services/EventsManager.cs:169
 msgid "You can't create a new play if the capturer is not recording."
 msgstr "U kunt geen nieuwe spelsituatie maken als de video-opnemer niet loopt."
 
-#: ../LongoMatch.Services/Services/EventsManager.cs:188
+#: ../LongoMatch.Services/Services/EventsManager.cs:235
 msgid ""
 "The stop time is smaller than the start time. The play will not be added."
 msgstr ""
 "De stoptijd ligt voor de starttijd. De spelsituatie wordt niet toegevoegd."
+
+#: ../LongoMatch.Services/Services/MigrationsManager.cs:137
+msgid "Period"
+msgstr "Periode"
 
 #: ../LongoMatch.Services/Services/PlaylistManager.cs:68
 msgid ""
@@ -1841,25 +1955,25 @@ msgstr ""
 "Het bestand dat u wilt laden is geen afspeellijst of is niet compatibel met "
 "de huidige versie"
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:99
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:98
 msgid "You have not loaded any playlist yet."
 msgstr "U hebt nog geen afspeellijst geladen"
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:110
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:109
 msgid "Please, close the opened project to play the playlist."
 msgstr ""
 "Sluit a.u.b. het geopende project om de afspeellijst te kunnen weergeven."
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:202
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:196
 msgid "Open playlist"
 msgstr "Afspeellijst openen"
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:203
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:214
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:197
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:208
 msgid "playlists"
 msgstr "Afspeellijst"
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:213
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:207
 msgid "New playlist"
 msgstr "Nieuwe afspeellijst"
 
@@ -1938,7 +2052,6 @@ msgstr ""
 "is."
 
 #: ../LongoMatch.Services/Services/ProjectsManager.cs:381
-#| msgid "Select a video file in the step."
 msgid "Select a video file in the next step."
 msgstr "Kies a.u.b. een video bestand in de volgende stap"
 
@@ -1949,10 +2062,9 @@ msgstr "Project opslaan"
 #: ../LongoMatch.Services/Services/RenderingJobsManager.cs:157
 #: ../LongoMatch.Services/Services/RenderingJobsManager.cs:188
 msgid "Error rendering job: "
-msgstr "Fout bij reproductieproec:"
+msgstr "Fout bij bewerkingsproces:"
 
 #: ../LongoMatch.Services/Services/RenderingJobsManager.cs:164
-#| msgid "An error has occurred in the video editor."
 msgid "An error has occurred in the video renderer."
 msgstr "Een fout heeft plaatsgevonden in de videobewerker. "
 
@@ -1994,6 +2106,36 @@ msgstr "Alle spelers van alle teams"
 msgid "A template already exists with the name: "
 msgstr "Een sjabloon met deze naam bestaat al:"
 
+#~ msgid "Tag goal position"
+#~ msgstr "Markeer doel positie"
+
+#~ msgid "Audio Bitrate (kbps):"
+#~ msgstr "Audio Bitrate (kbps):"
+
+#~ msgid "Video Bitrate (kbps):"
+#~ msgstr "Video-Bitrate (kbps):"
+
+#~ msgid "Low"
+#~ msgstr "Laag"
+
+#~ msgid "Normal"
+#~ msgstr "Normaal"
+
+#~ msgid "Good"
+#~ msgstr "Goed"
+
+#~ msgid "Extra"
+#~ msgstr "Extra"
+
+#~ msgid "Size: "
+#~ msgstr "Grootte:"
+
+#~ msgid "Ouput Format:"
+#~ msgstr "Uitvoertype:"
+
+#~ msgid "Apply current play rate"
+#~ msgstr "Aktuele afspeelmodus gebruiken"
+
 #~ msgid ""
 #~ "The actual project will be closed due to an error in the media player:"
 #~ msgstr ""
@@ -2001,10 +2143,6 @@ msgstr "Een sjabloon met deze naam bestaat al:"
 
 #~ msgid "Invalid video file:"
 #~ msgstr "Ongeldig video bestand:"
-
-#, fuzzy
-#~ msgid "default"
-#~ msgstr "Resultaat"
 
 #~ msgid "Local Team"
 #~ msgstr "Thuis Team"
