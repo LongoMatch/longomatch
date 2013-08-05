@@ -10,14 +10,20 @@ namespace LongoMatch.Gui.Dialog
 		private global::LongoMatch.Gui.Component.Stats.CategoriesViewer categoriesviewer;
 		private global::Gtk.Label label1;
 		private global::Gtk.Button buttonCancel;
-		private global::Gtk.Button buttonOk;
 		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
 			// Widget LongoMatch.Gui.Dialog.StatsViewer
 			this.Name = "LongoMatch.Gui.Dialog.StatsViewer";
-			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
+			this.Title = global::Mono.Unix.Catalog.GetString ("Stats");
+			this.Icon = global::Gdk.Pixbuf.LoadFromResource ("logo.svg");
+			this.WindowPosition = ((global::Gtk.WindowPosition)(3));
+			this.Modal = true;
+			this.DestroyWithParent = true;
+			this.Gravity = ((global::Gdk.Gravity)(5));
+			this.SkipPagerHint = true;
+			this.SkipTaskbarHint = true;
 			// Internal child LongoMatch.Gui.Dialog.StatsViewer.VBox
 			global::Gtk.VBox w1 = this.VBox;
 			w1.Name = "dialog1_VBox";
@@ -72,19 +78,6 @@ namespace LongoMatch.Gui.Dialog
 			global::Gtk.ButtonBox.ButtonBoxChild w6 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w5 [this.buttonCancel]));
 			w6.Expand = false;
 			w6.Fill = false;
-			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
-			this.buttonOk = new global::Gtk.Button ();
-			this.buttonOk.CanDefault = true;
-			this.buttonOk.CanFocus = true;
-			this.buttonOk.Name = "buttonOk";
-			this.buttonOk.UseStock = true;
-			this.buttonOk.UseUnderline = true;
-			this.buttonOk.Label = "gtk-ok";
-			this.AddActionWidget (this.buttonOk, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w7 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w5 [this.buttonOk]));
-			w7.Position = 1;
-			w7.Expand = false;
-			w7.Fill = false;
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
