@@ -77,7 +77,6 @@ namespace LongoMatch.Gui.Component
 					CairoHelper.SetSourcePixbuf(sourceCR,value,0,0);
 					sourceCR.Paint();
 				}
-				value.Dispose();
 				QueueDraw();
 			}
 		}
