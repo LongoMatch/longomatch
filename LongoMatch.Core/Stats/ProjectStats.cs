@@ -118,15 +118,15 @@ namespace LongoMatch.Stats
 				stats.Field = project.Categories.FieldBackgroundImage;
 				stats.HalfField = project.Categories.HalfFieldBackgroundImage;
 				stats.Goal = project.Categories.GoalBackgroundImage;
-				stats.FieldCoordinates = plays.Select (p => p.FieldPosition).ToList();
-				stats.HalfFieldCoordinates = plays.Select (p => p.HalfFieldPosition).ToList();
-				stats.GoalCoordinates = plays.Select (p => p.GoalPosition).ToList();
-				stats.HomeFieldCoordinates = homePlays.Select (p => p.FieldPosition).ToList();
-				stats.HomeHalfFieldCoordinates = homePlays.Select (p => p.HalfFieldPosition).ToList();
-				stats.HomeGoalCoordinates = homePlays.Select (p => p.GoalPosition).ToList();
-				stats.AwayFieldCoordinates = awayPlays.Select (p => p.FieldPosition).ToList();
-				stats.AwayHalfFieldCoordinates = awayPlays.Select (p => p.HalfFieldPosition).ToList();
-				stats.AwayGoalCoordinates = awayPlays.Select (p => p.GoalPosition).ToList();
+				stats.FieldCoordinates = plays.Select (p => p.FieldPosition).Where(p =>p != null).ToList();
+				stats.HalfFieldCoordinates = plays.Select (p => p.HalfFieldPosition).Where(p =>p != null).ToList();
+				stats.GoalCoordinates = plays.Select (p => p.GoalPosition).Where(p =>p != null).ToList();
+				stats.HomeFieldCoordinates = homePlays.Select (p => p.FieldPosition).Where(p =>p != null).ToList();
+				stats.HomeHalfFieldCoordinates = homePlays.Select (p => p.HalfFieldPosition).Where(p =>p != null).ToList();
+				stats.HomeGoalCoordinates = homePlays.Select (p => p.GoalPosition).Where(p =>p != null).ToList();
+				stats.AwayFieldCoordinates = awayPlays.Select (p => p.FieldPosition).Where(p =>p != null).ToList();
+				stats.AwayHalfFieldCoordinates = awayPlays.Select (p => p.HalfFieldPosition).Where(p =>p != null).ToList();
+				stats.AwayGoalCoordinates = awayPlays.Select (p => p.GoalPosition).Where(p =>p != null).ToList();
 				catStats.Add (stats);
 				
 				foreach (ISubCategory subcat in cat.SubCategories) {

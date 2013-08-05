@@ -46,18 +46,19 @@ namespace LongoMatch.Gui.Component.Stats
 			tagger.LoadGoalCoordinates (stats.GoalCoordinates);
 			tagger.CoordinatesSensitive = false;
 			vbox1.PackStart (tagger);
+			tagger.Show ();
+			
 			subcatViewers = new List<SubCategoryViewer>();
-						
 			foreach (SubCategoryStat st in stats.SubcategoriesStats) {
 				SubCategoryViewer subcatviewer = new SubCategoryViewer();
 				subcatviewer.LoadStats (st);
 				subcatViewers.Add (subcatviewer);
 				vbox1.PackStart (subcatviewer);
 				vbox1.PackStart (new HSeparator());
+				subcatviewer.Show ();
 			}
 			
-			tagger = new PlaysCoordinatesTagger ();
-			vbox1.ShowAll ();
+			vbox1.Show ();
 		}
 	}
 }

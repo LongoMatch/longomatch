@@ -67,7 +67,7 @@ namespace LongoMatch.Gui.Component
 			box.PackStart (hfield, true, true, 0);
 			box.PackStart (goal, true, true, 0);
 			mainbox.PackStart (box, true, true, 0);
-			ShowAll ();
+			box.Show ();
 		}
 		
 		public void LoadPlay (Play play, bool horizontal=true) {
