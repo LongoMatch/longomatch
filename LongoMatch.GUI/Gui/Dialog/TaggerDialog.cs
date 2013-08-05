@@ -78,9 +78,9 @@ namespace LongoMatch.Gui.Dialog
 				coordstagger.Visible = false;
 				(mainvbox[hbox] as Gtk.Box.BoxChild).Expand = true;
 			} else {
-				coordstagger.LoadBackgrounds (categoriesTemplate.FieldBackgroundImage,
-				                              categoriesTemplate.HalfFieldBackgroundImage,
-				                              categoriesTemplate.GoalBackgroundImage);
+				coordstagger.LoadBackgrounds (categoriesTemplate.FieldBackground,
+				                              categoriesTemplate.HalfFieldBackground,
+				                              categoriesTemplate.GoalBackground);
 				coordstagger.LoadPlay (play);
 			}
 			

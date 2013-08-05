@@ -167,9 +167,9 @@ namespace LongoMatch.Gui
 		public void UpdateSelectedPlay (Play play) {
 			selectedTimeNode = play;
 			timeline.SelectedTimeNode = play;
-			postagger.LoadBackgrounds (openedProject.Categories.FieldBackgroundImage,
-			                           openedProject.Categories.HalfFieldBackgroundImage,
-			                           openedProject.Categories.GoalBackgroundImage);
+			postagger.LoadBackgrounds (openedProject.Categories.FieldBackground,
+			                           openedProject.Categories.HalfFieldBackground,
+			                           openedProject.Categories.GoalBackground);
 			postagger.LoadPlay (play, false);
 			SetTagsBoxVisibility (true);
 			notes.Play= play;

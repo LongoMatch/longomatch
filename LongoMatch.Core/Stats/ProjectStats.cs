@@ -115,9 +115,9 @@ namespace LongoMatch.Stats
 				awayPlays =plays.Where(p => p.Team == Team.VISITOR || p.Team == Team.BOTH).ToList();
 				stats = new CategoryStats(cat, plays.Count, homePlays.Count(), awayPlays.Count());
 				/* Fill zonal tagging stats */
-				stats.Field = project.Categories.FieldBackgroundImage;
-				stats.HalfField = project.Categories.HalfFieldBackgroundImage;
-				stats.Goal = project.Categories.GoalBackgroundImage;
+				stats.Field = project.Categories.FieldBackground;
+				stats.HalfField = project.Categories.HalfFieldBackground;
+				stats.Goal = project.Categories.GoalBackground;
 				stats.FieldCoordinates = plays.Select (p => p.FieldPosition).Where(p =>p != null).ToList();
 				stats.HalfFieldCoordinates = plays.Select (p => p.HalfFieldPosition).Where(p =>p != null).ToList();
 				stats.GoalCoordinates = plays.Select (p => p.GoalPosition).Where(p =>p != null).ToList();

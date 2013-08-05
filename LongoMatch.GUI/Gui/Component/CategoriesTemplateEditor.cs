@@ -81,24 +81,24 @@ namespace LongoMatch.Gui.Component
 				categoriestreeview.Model = categoriesListStore;
 				ButtonsSensitive = false;
 				gameUnitsEditor.SetRootGameUnit(value.GameUnits);
-				if (template.GoalBackgroundImage != null) {
-					goalImage.Pixbuf = template.GoalBackgroundImage.Value;
+				if (template.GoalBackground != null) {
+					goalImage.Pixbuf = template.GoalBackground.Value;
 				} else {
 					Image img = new Image (
 						Gdk.Pixbuf.LoadFromResource (Constants.GOAL_BACKGROUND));
 					img.Scale();
 					goalImage.Pixbuf = img.Value; 
 				}
-				if (template.FieldBackgroundImage != null) {
-					fieldImage.Pixbuf = template.FieldBackgroundImage.Value;
+				if (template.FieldBackground != null) {
+					fieldImage.Pixbuf = template.FieldBackground.Value;
 				} else {
 					Image img = new Image (
 						Gdk.Pixbuf.LoadFromResource (Constants.FIELD_BACKGROUND));
 					img.Scale();
 					fieldImage.Pixbuf = img.Value; 
 				}
-				if (template.HalfFieldBackgroundImage != null) {
-					halffieldImage.Pixbuf = template.HalfFieldBackgroundImage.Value;
+				if (template.HalfFieldBackground != null) {
+					halffieldImage.Pixbuf = template.HalfFieldBackground.Value;
 				} else {
 					Image img = new Image (
 						Gdk.Pixbuf.LoadFromResource (Constants.HALF_FIELD_BACKGROUND));
@@ -245,7 +245,7 @@ namespace LongoMatch.Gui.Component
 			if (background != null) {
 				Image img = new Image(background);
 				img.Scale();
-				Template.GoalBackgroundImage = img; 
+				Template.GoalBackground = img; 
 				goalImage.Pixbuf = img.Value;
 			}
 		}
@@ -258,7 +258,7 @@ namespace LongoMatch.Gui.Component
 			if (background != null) {
 				Image img = new Image(background);
 				img.Scale();
-				Template.HalfFieldBackgroundImage = img;
+				Template.HalfFieldBackground = img;
 				halffieldImage.Pixbuf = img.Value;
 			}
 		}
@@ -271,7 +271,7 @@ namespace LongoMatch.Gui.Component
 			if (background != null) {
 				Image img = new Image(background);
 				img.Scale();
-				Template.FieldBackgroundImage = img; 
+				Template.FieldBackground = img; 
 				fieldImage.Pixbuf = img.Value;
 			}
 		}

@@ -80,7 +80,12 @@ namespace LongoMatch.Store.Templates
 			set;
 		}
 		
-		public Image FieldBackgroundImage {
+		/* Keep this for backwards compatiblity with 0.18.11 */
+		public Image FieldBackgroundImage {get;	set;}
+		public Image HalfFieldBackgroundImage {get; set;}
+		public Image GoalBackgroundImage {get; set;}
+
+		public Image FieldBackground {
 			get {
 				if(fieldImage != null)
 					return Image.Deserialize(fieldImage);
@@ -92,7 +97,7 @@ namespace LongoMatch.Store.Templates
 			}
 		}
 		
-		public Image HalfFieldBackgroundImage {
+		public Image HalfFieldBackground {
 			get {
 				if(halfFieldImage != null)
 					return Image.Deserialize(halfFieldImage);
@@ -104,7 +109,7 @@ namespace LongoMatch.Store.Templates
 			}
 		}
 		
-		public Image GoalBackgroundImage {
+		public Image GoalBackground {
 			get {
 				if(goalImage != null)
 					return Image.Deserialize(goalImage);
