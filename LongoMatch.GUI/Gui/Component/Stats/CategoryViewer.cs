@@ -31,8 +31,6 @@ namespace LongoMatch.Gui.Component.Stats
 		public CategoryViewer ()
 		{
 			this.Build ();
-			hometagger.CoordinatesSensitive = false;
-			awaytagger.CoordinatesSensitive = false;
 		}
 		
 		public void LoadStats (CategoryStats stats) {
@@ -40,6 +38,7 @@ namespace LongoMatch.Gui.Component.Stats
 			alltagger.LoadFieldCoordinates (stats.FieldCoordinates);
 			alltagger.LoadHalfFieldCoordinates (stats.HalfFieldCoordinates);
 			alltagger.LoadGoalCoordinates (stats.GoalCoordinates);
+			alltagger.CoordinatesSensitive = false;
 			allframe.Visible = stats.FieldCoordinates.Count + stats.HalfFieldCoordinates.Count +
 			    stats.GoalCoordinates.Count != 0;
 			    
@@ -47,6 +46,7 @@ namespace LongoMatch.Gui.Component.Stats
 			hometagger.LoadFieldCoordinates (stats.HomeFieldCoordinates);
 			hometagger.LoadHalfFieldCoordinates (stats.HomeHalfFieldCoordinates);
 			hometagger.LoadGoalCoordinates (stats.HomeGoalCoordinates);
+			hometagger.CoordinatesSensitive = false;
 			homeframe.Visible = stats.HomeFieldCoordinates.Count + stats.HomeHalfFieldCoordinates.Count +
 			    stats.HomeGoalCoordinates.Count != 0;
 			    
@@ -54,6 +54,7 @@ namespace LongoMatch.Gui.Component.Stats
 			awaytagger.LoadFieldCoordinates (stats.AwayFieldCoordinates);
 			awaytagger.LoadHalfFieldCoordinates (stats.AwayHalfFieldCoordinates);
 			awaytagger.LoadGoalCoordinates (stats.AwayGoalCoordinates);
+			awaytagger.CoordinatesSensitive = false;
 			awayframe.Visible = stats.AwayFieldCoordinates.Count + stats.AwayHalfFieldCoordinates.Count +
 			    stats.AwayGoalCoordinates.Count != 0;
 			
