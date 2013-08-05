@@ -6,6 +6,7 @@ SUBDIRS = \
 	build \
 	images \
 	libcesarplayer \
+	oxyplot \
 	LongoMatch.Core \
 	LongoMatch.Addins \
 	LongoMatch.Multimedia \

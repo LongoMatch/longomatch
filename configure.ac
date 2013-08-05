@@ -125,6 +125,8 @@ build/m4/shave/shave-libtool
 images/Makefile
 libcesarplayer/Makefile
 
+oxyplot/Makefile
+
 LongoMatch.Addins/Makefile
 LongoMatch.Core/Makefile
 LongoMatch.Multimedia/Makefile

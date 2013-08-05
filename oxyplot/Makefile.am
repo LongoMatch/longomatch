@@ -1,0 +1,10 @@
+ASSEMBLY = OxyPlot
+
+OXYPLOT_NET_ASSEMBLY = OxyPlotMono/obj/Debug/OxyPlotMono.dll
+
+$(OXYPLOT_NET_ASSEMBLY):
+	xbuild OxyPlotMono.sln
+
+all: $(OXYPLOT_NET_ASSEMBLY)
+
+CLEANFILES = $(OXYPLOT_NET_ASSEMBLY)
