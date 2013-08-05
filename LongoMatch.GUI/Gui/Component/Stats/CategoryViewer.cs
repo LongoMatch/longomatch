@@ -27,27 +27,40 @@ namespace LongoMatch.Gui.Component.Stats
 	public partial class CategoryViewer : Gtk.Bin
 	{
 		List<SubCategoryViewer> subcatViewers;
+		
 		public CategoryViewer ()
 		{
 			this.Build ();
+			hometagger.CoordinatesSensitive = false;
+			awaytagger.CoordinatesSensitive = false;
 		}
 		
 		public void LoadStats (CategoryStats stats) {
-			PlaysCoordinatesTagger tagger;
+			alltagger.LoadBackgrounds (stats.Field, stats.HalfField, stats.Goal);
+			alltagger.LoadFieldCoordinates (stats.FieldCoordinates);
+			alltagger.LoadHalfFieldCoordinates (stats.HalfFieldCoordinates);
+			alltagger.LoadGoalCoordinates (stats.GoalCoordinates);
+			allframe.Visible = stats.FieldCoordinates.Count + stats.HalfFieldCoordinates.Count +
+			    stats.GoalCoordinates.Count != 0;
+			    
+			hometagger.LoadBackgrounds (stats.Field, stats.HalfField, stats.Goal);
+			hometagger.LoadFieldCoordinates (stats.HomeFieldCoordinates);
+			hometagger.LoadHalfFieldCoordinates (stats.HomeHalfFieldCoordinates);
+			hometagger.LoadGoalCoordinates (stats.HomeGoalCoordinates);
+			homeframe.Visible = stats.HomeFieldCoordinates.Count + stats.HomeHalfFieldCoordinates.Count +
+			    stats.HomeGoalCoordinates.Count != 0;
+			    
+			awaytagger.LoadBackgrounds (stats.Field, stats.HalfField, stats.Goal);
+			awaytagger.LoadFieldCoordinates (stats.AwayFieldCoordinates);
+			awaytagger.LoadHalfFieldCoordinates (stats.AwayHalfFieldCoordinates);
+			awaytagger.LoadGoalCoordinates (stats.AwayGoalCoordinates);
+			awayframe.Visible = stats.AwayFieldCoordinates.Count + stats.AwayHalfFieldCoordinates.Count +
+			    stats.AwayGoalCoordinates.Count != 0;
 			
 			foreach (Widget child in vbox1.AllChildren) {
-				vbox1.Remove (child);
+				if (child is SubCategoryViewer || child is HSeparator)
+					vbox1.Remove (child);
 			}
-			
-			tagger = new PlaysCoordinatesTagger();
-			tagger.LoadBackgrounds (stats.Field, stats.HalfField, stats.Goal);
-			tagger.LoadFieldCoordinates (stats.FieldCoordinates);
-			tagger.LoadHalfFieldCoordinates (stats.HalfFieldCoordinates);
-			tagger.LoadGoalCoordinates (stats.GoalCoordinates);
-			tagger.CoordinatesSensitive = false;
-			vbox1.PackStart (tagger);
-			tagger.Show ();
-			
 			subcatViewers = new List<SubCategoryViewer>();
 			foreach (SubCategoryStat st in stats.SubcategoriesStats) {
 				SubCategoryViewer subcatviewer = new SubCategoryViewer();
@@ -57,8 +70,6 @@ namespace LongoMatch.Gui.Component.Stats
 				vbox1.PackStart (new HSeparator());
 				subcatviewer.Show ();
 			}
-			
-			vbox1.Show ();
 		}
 	}
 }

@@ -187,6 +187,7 @@ namespace LongoMatch.Gui
 			this.PreferencesAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Preferences");
 			w1.Add (this.PreferencesAction, null);
 			this.ShowProjectStatsAction = new global::Gtk.Action ("ShowProjectStatsAction", global::Mono.Unix.Catalog.GetString ("Show project stats"), null, null);
+			this.ShowProjectStatsAction.Sensitive = false;
 			this.ShowProjectStatsAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Show project stats");
 			w1.Add (this.ShowProjectStatsAction, null);
 			this.UIManager.InsertActionGroup (w1, 0);

@@ -471,6 +471,7 @@ namespace LongoMatch.Gui
 			TaggingViewAction.Sensitive = sensitive;
 			ManualTaggingViewAction.Sensitive = sensitive;
 			ExportProjectAction1.Sensitive = sensitive;
+			ShowProjectStatsAction.Sensitive = sensitive;
 			GameUnitsViewAction.Sensitive = sensitive2 && gameUnitsActionVisible;
 			TimelineViewAction.Sensitive = sensitive2;
 			HideAllWidgetsAction.Sensitive=sensitive2;
