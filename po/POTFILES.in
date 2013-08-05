@@ -83,6 +83,7 @@ LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.RenderingStateBar.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameViewer.cs
+LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.CategoryViewer.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.Plotter.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.SubCategoryViewer.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.StringTaggerWidget.cs
