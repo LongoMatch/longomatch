@@ -116,6 +116,11 @@ namespace LongoMatch.Gui.Component.Stats
 			ps.InsideLabelPosition = 0.8;
 			ps.AngleSpan = 360;
 			ps.StartAngle = 0;
+			if (team == Team.LOCAL) {
+				ps.Title = HomeName;
+			} else if (team == Team.VISITOR) {
+				ps.Title = AwayName;
+			}
             model.Series.Add(ps);
             return model;
 		}
