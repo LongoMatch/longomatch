@@ -74,7 +74,7 @@ namespace LongoMatch.Gui.Dialog
 				}
 			}
 			
-			if (!play.Category.TagFieldPosition && !play.Category.TagGoalPosition) {
+			if (!play.Category.TagFieldPosition && !play.Category.TagHalfFieldPosition && !play.Category.TagGoalPosition) {
 				coordstagger.Visible = false;
 				(mainvbox[hbox] as Gtk.Box.BoxChild).Expand = true;
 			} else {
