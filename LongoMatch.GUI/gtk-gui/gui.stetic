@@ -2016,6 +2016,7 @@
                 <child>
                   <widget class="Gtk.HBox" id="righthbox">
                     <property name="MemberName" />
+                    <property name="WidthRequest">100</property>
                     <property name="Visible">False</property>
                     <property name="Spacing">6</property>
                     <child>
@@ -2087,10 +2088,13 @@
                       </packing>
                     </child>
                   </widget>
+                  <packing>
+                    <property name="Resize">False</property>
+                    <property name="Shrink">False</property>
+                  </packing>
                 </child>
               </widget>
               <packing>
-                <property name="Resize">False</property>
                 <property name="Shrink">False</property>
               </packing>
             </child>
@@ -8846,7 +8850,6 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Label" translatable="yes">Histogram</property>
-                <property name="Active">True</property>
                 <property name="DrawIndicator">True</property>
                 <property name="HasLabel">True</property>
                 <property name="UseUnderline">True</property>

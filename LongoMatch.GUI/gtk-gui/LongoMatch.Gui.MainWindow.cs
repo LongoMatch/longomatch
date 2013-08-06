@@ -295,6 +295,7 @@ namespace LongoMatch.Gui
 			w11.Shrink = false;
 			// Container child hpaned1.Gtk.Paned+PanedChild
 			this.righthbox = new global::Gtk.HBox ();
+			this.righthbox.WidthRequest = 100;
 			this.righthbox.Name = "righthbox";
 			this.righthbox.Spacing = 6;
 			// Container child righthbox.Gtk.Box+BoxChild
@@ -343,9 +344,11 @@ namespace LongoMatch.Gui
 			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.righthbox [this.playlist]));
 			w17.Position = 1;
 			this.hpaned1.Add (this.righthbox);
+			global::Gtk.Paned.PanedChild w18 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.righthbox]));
+			w18.Resize = false;
+			w18.Shrink = false;
 			this.hpaned.Add (this.hpaned1);
 			global::Gtk.Paned.PanedChild w19 = ((global::Gtk.Paned.PanedChild)(this.hpaned [this.hpaned1]));
-			w19.Resize = false;
 			w19.Shrink = false;
 			this.vbox1.Add (this.hpaned);
 			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hpaned]));
