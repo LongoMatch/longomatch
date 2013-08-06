@@ -14,11 +14,11 @@ namespace LongoMatch.Gui.Component.Stats
 		private global::Gtk.Frame homeframe;
 		private global::Gtk.Alignment GtkAlignment;
 		private global::LongoMatch.Gui.Component.PlaysCoordinatesTagger hometagger;
-		private global::Gtk.Label GtkLabel;
+		private global::Gtk.Label homeLabel;
 		private global::Gtk.Frame awayframe;
 		private global::Gtk.Alignment GtkAlignment1;
 		private global::LongoMatch.Gui.Component.PlaysCoordinatesTagger awaytagger;
-		private global::Gtk.Label GtkLabel1;
+		private global::Gtk.Label awayLabel;
 		private global::Gtk.Label nodatalabel;
 		
 		protected virtual void Build ()
@@ -79,11 +79,11 @@ namespace LongoMatch.Gui.Component.Stats
 			this.hometagger.Name = "hometagger";
 			this.GtkAlignment.Add (this.hometagger);
 			this.homeframe.Add (this.GtkAlignment);
-			this.GtkLabel = new global::Gtk.Label ();
-			this.GtkLabel.Name = "GtkLabel";
-			this.GtkLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Home</b>");
-			this.GtkLabel.UseMarkup = true;
-			this.homeframe.LabelWidget = this.GtkLabel;
+			this.homeLabel = new global::Gtk.Label ();
+			this.homeLabel.Name = "homeLabel";
+			this.homeLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Home</b>");
+			this.homeLabel.UseMarkup = true;
+			this.homeframe.LabelWidget = this.homeLabel;
 			this.hbox1.Add (this.homeframe);
 			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.homeframe]));
 			w7.Position = 1;
@@ -101,11 +101,11 @@ namespace LongoMatch.Gui.Component.Stats
 			this.awaytagger.Name = "awaytagger";
 			this.GtkAlignment1.Add (this.awaytagger);
 			this.awayframe.Add (this.GtkAlignment1);
-			this.GtkLabel1 = new global::Gtk.Label ();
-			this.GtkLabel1.Name = "GtkLabel1";
-			this.GtkLabel1.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Away</b>");
-			this.GtkLabel1.UseMarkup = true;
-			this.awayframe.LabelWidget = this.GtkLabel1;
+			this.awayLabel = new global::Gtk.Label ();
+			this.awayLabel.Name = "awayLabel";
+			this.awayLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Away</b>");
+			this.awayLabel.UseMarkup = true;
+			this.awayframe.LabelWidget = this.awayLabel;
 			this.hbox1.Add (this.awayframe);
 			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.awayframe]));
 			w10.Position = 2;

@@ -45,6 +45,18 @@ namespace LongoMatch.Gui.Component.Stats
 			WidthRequest = (int) WIDTH;
 			pieradiobutton.Toggled += HandleToggled;
 			historadiobutton.Toggled += HandleToggled;
+			HomeName = Catalog.GetString ("Home");
+			AwayName = Catalog.GetString ("Away");
+		}
+		
+		public string HomeName {
+			get;
+			set;
+		}
+		
+		public string AwayName {
+			get;
+			set;
 		}
 
 		public void LoadPie (SubCategoryStat stats) {
@@ -78,10 +90,10 @@ namespace LongoMatch.Gui.Component.Stats
             
 			model.Series.Add(new ColumnSeries { Title = Catalog.GetString ("Total"), ItemsSource = stats.OptionStats,
 				ValueField = "TotalCount" });	
-			model.Series.Add(new ColumnSeries { Title = Catalog.GetString ("Home"), ItemsSource = stats.OptionStats,
-				ValueField = "LocalTeamCount" });	
-			model.Series.Add(new ColumnSeries { Title = Catalog.GetString ("Away"), ItemsSource = stats.OptionStats,
-				ValueField = "VisitorTeamCount" });	
+			model.Series.Add(new ColumnSeries { Title = HomeName, ItemsSource = stats.OptionStats,
+				ValueField = "LocalTeamCount", FillColor = new OxyColor {R=0xFF, G=0x33, B=0x0, A=0xFF}});	
+			model.Series.Add(new ColumnSeries { Title = AwayName, ItemsSource = stats.OptionStats,
+				ValueField = "VisitorTeamCount",  FillColor = new OxyColor {R=0, G=0x99, B=0xFF, A=0xFF} });	
             model.Axes.Add(categoryAxis);
             model.Axes.Add(valueAxis);
             return model;

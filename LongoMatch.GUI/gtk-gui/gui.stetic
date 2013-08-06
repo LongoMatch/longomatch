@@ -8768,7 +8768,7 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
                           </widget>
                         </child>
                         <child>
-                          <widget class="Gtk.Label" id="GtkLabel">
+                          <widget class="Gtk.Label" id="homeLabel">
                             <property name="MemberName" />
                             <property name="LabelProp" translatable="yes">&lt;b&gt;Home&lt;/b&gt;</property>
                             <property name="UseMarkup">True</property>
@@ -8802,7 +8802,7 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
                           </widget>
                         </child>
                         <child>
-                          <widget class="Gtk.Label" id="GtkLabel1">
+                          <widget class="Gtk.Label" id="awayLabel">
                             <property name="MemberName" />
                             <property name="LabelProp" translatable="yes">&lt;b&gt;Away&lt;/b&gt;</property>
                             <property name="UseMarkup">True</property>

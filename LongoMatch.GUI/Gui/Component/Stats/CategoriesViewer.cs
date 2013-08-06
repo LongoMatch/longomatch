@@ -50,6 +50,8 @@ namespace LongoMatch.Gui.Component.Stats
 			}
 			store.GetIterFirst(out iter);
 			treeview.Selection.SelectIter(iter);
+			categoryviewer1.HomeName = pstats.LocalTeam;
+			categoryviewer1.AwayName = pstats.VisitorTeam;
 			categoryviewer1.LoadStats (store.GetValue (iter, 0) as CategoryStats);
 		}
 		

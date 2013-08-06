@@ -389,11 +389,21 @@
     </signals>
   </object>
   <object type="LongoMatch.Gui.Component.Stats.Plotter" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
+    <itemgroups>
+      <itemgroup label="Plotter Properties">
+        <property name="HomeName" />
+        <property name="AwayName" />
+      </itemgroup>
+    </itemgroups>
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.Stats.CategoryViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
+    <itemgroups>
+      <itemgroup label="CategoryViewer Properties">
+        <property name="HomeName" />
+        <property name="AwayName" />
+      </itemgroup>
+    </itemgroups>
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.Stats.SubCategoryViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">

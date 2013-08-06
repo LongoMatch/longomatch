@@ -31,9 +31,17 @@ namespace LongoMatch.Gui.Component.Stats
 		public CategoryViewer ()
 		{
 			this.Build ();
+			HomeName = "Home";
+			AwayName = "Away";
 		}
 		
+		public string HomeName { get; set; }
+		public string AwayName { get; set; }
+		
 		public void LoadStats (CategoryStats stats) {
+			homeLabel.Text = HomeName;
+			awayLabel.Text = AwayName;
+			
 			alltagger.LoadBackgrounds (stats.Field, stats.HalfField, stats.Goal);
 			alltagger.LoadFieldCoordinates (stats.FieldCoordinates);
 			alltagger.LoadHalfFieldCoordinates (stats.HalfFieldCoordinates);
@@ -66,7 +74,7 @@ namespace LongoMatch.Gui.Component.Stats
 			nodatalabel.Visible = stats.SubcategoriesStats.Count == 0;
 			foreach (SubCategoryStat st in stats.SubcategoriesStats) {
 				SubCategoryViewer subcatviewer = new SubCategoryViewer();
-				subcatviewer.LoadStats (st);
+				subcatviewer.LoadStats (st, HomeName, AwayName);
 				subcatViewers.Add (subcatviewer);
 				vbox1.PackStart (subcatviewer);
 				vbox1.PackStart (new HSeparator());

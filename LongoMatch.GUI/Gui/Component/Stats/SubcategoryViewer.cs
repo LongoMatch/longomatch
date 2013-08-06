@@ -37,9 +37,14 @@ namespace LongoMatch.Gui.Component.Stats
 			treeview.AppendColumn (Catalog.GetString("Away"), new Gtk.CellRendererText (), "text", 3);
 		}
 		
-		public void LoadStats (SubCategoryStat stats) {
+		public void LoadStats (SubCategoryStat stats, string homeName, string awayName) {
 			store = new ListStore(typeof(string), typeof(string), typeof(string), typeof(string));
 			treeview.Model = store;
+			
+			treeview.Columns[2].Title = homeName;
+			treeview.Columns[3].Title = awayName;
+			plotter.HomeName = homeName;
+			plotter.AwayName = awayName;
 			
 			gtkframe.Markup = String.Format("<b> {0} </b>", stats.Name);
 			plotter.LoadHistogram (stats);
