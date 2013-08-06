@@ -73,9 +73,15 @@ namespace LongoMatch.Common
 		}
 
 		public static Cairo.Color RGBToCairoColor(Gdk.Color gdkColor) {
-			return   new Cairo.Color((double)(gdkColor.Red)/ushort.MaxValue,
-			                         (double)(gdkColor.Green)/ushort.MaxValue,
-			                         (double)(gdkColor.Blue)/ushort.MaxValue);
+			return new Cairo.Color (ColorHelper.ShortToDouble (gdkColor.Red),
+			                        ColorHelper.ShortToDouble (gdkColor.Green),
+			                        ColorHelper.ShortToDouble (gdkColor.Blue));
+		}
+		
+		public static Cairo.Color ColorFromRGB (byte r, byte g, byte b) {
+			return new Cairo.Color (ColorHelper.ByteToDouble (r),
+			                        ColorHelper.ByteToDouble (g),
+			                        ColorHelper.ByteToDouble (b));
 		}
 	}
 }

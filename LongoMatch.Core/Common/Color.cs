@@ -30,6 +30,14 @@ namespace LongoMatch.Common
 		static public byte ShortToByte (ushort val) {
 			return (byte) (((float)val) / ushort.MaxValue * byte.MaxValue);
 		}
+		
+		static public double ShortToDouble (ushort val) {
+			return (double) (val) / ushort.MaxValue;
+		}
+		
+		static public double ByteToDouble (byte val) {
+			return (double) (val) / byte.MaxValue;
+		}
 	}
 }
 

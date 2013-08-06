@@ -151,7 +151,8 @@ namespace LongoMatch.Gui.Component
 			/* For subcategories, parent is the parent Category */
 			this.stat = stat;
 			this.category = category;
-			Color = new Color(0, 200, 200);
+			HomeColor = CairoUtils.ColorFromRGB (0xFF, 0x33, 0);
+			AwayColor = CairoUtils.ColorFromRGB (0, 0x99, 0xFF);
 			layout =  new Pango.Layout(PangoContext);
 			layout.Wrap = Pango.WrapMode.Char;
 			layout.Alignment = Pango.Alignment.Center;
@@ -170,7 +171,12 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		Cairo.Color Color {
+		Cairo.Color HomeColor {
+			get;
+			set;
+		}
+		
+		Cairo.Color AwayColor {
 			get;
 			set;
 		}
@@ -217,10 +223,10 @@ namespace LongoMatch.Gui.Component
 				
 				/* Home bar */
 				CairoUtils.DrawRoundedRectangle (g, lCenter - localW, 0, localW, height, 0,
-				                                 Color, Color);
+				                                 HomeColor, HomeColor);
 				/* Away bar  */
 				CairoUtils.DrawRoundedRectangle (g, vCenter, 0, visitorW, height, 0,
-				                                 Color, Color);
+				                                 AwayColor, AwayColor);
 				                                 
 				/* Category name */
 				layout.Width = Pango.Units.FromPixels(textSize);
