@@ -144,7 +144,6 @@ LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs
 LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs
 LongoMatch.GUI/Gui/Component/ProjectListWidget.cs
 LongoMatch.GUI/Gui/Component/RenderingStateBar.cs
-LongoMatch.GUI/Gui/Component/Stats/PlayerViewer.cs
 LongoMatch.GUI/Gui/Component/Stats/Plotter.cs
 LongoMatch.GUI/Gui/Component/Stats/SubcategoryViewer.cs
 LongoMatch.GUI/Gui/Component/StringTaggerWidget.cs
