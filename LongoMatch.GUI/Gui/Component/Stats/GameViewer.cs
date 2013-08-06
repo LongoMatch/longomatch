@@ -112,7 +112,7 @@ namespace LongoMatch.Gui.Component
 			
 			foreach (CategoryStats cstat in stats.CategoriesStats) {
 				int width, height;
-				layout.SetMarkup (GLib.Markup.EscapeText (cstat.Name));
+				layout.SetMarkup (String.Format("<b>{0}</b>", GLib.Markup.EscapeText (cstat.Name)));
 				layout.GetPixelSize (out width, out height);
 				if (width > normal) {
 					normal = width;
