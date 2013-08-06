@@ -19,6 +19,7 @@ namespace LongoMatch.Gui.Component.Stats
 		private global::Gtk.Alignment GtkAlignment1;
 		private global::LongoMatch.Gui.Component.PlaysCoordinatesTagger awaytagger;
 		private global::Gtk.Label GtkLabel1;
+		private global::Gtk.Label nodatalabel;
 		
 		protected virtual void Build ()
 		{
@@ -111,6 +112,14 @@ namespace LongoMatch.Gui.Component.Stats
 			this.vbox1.Add (this.hbox1);
 			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hbox1]));
 			w11.Position = 0;
+			// Container child vbox1.Gtk.Box+BoxChild
+			this.nodatalabel = new global::Gtk.Label ();
+			this.nodatalabel.Name = "nodatalabel";
+			this.nodatalabel.LabelProp = global::Mono.Unix.Catalog.GetString ("No data available");
+			this.nodatalabel.Justify = ((global::Gtk.Justification)(2));
+			this.vbox1.Add (this.nodatalabel);
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.nodatalabel]));
+			w12.Position = 1;
 			w1.Add (this.vbox1);
 			this.scrolledwindow1.Add (w1);
 			this.Add (this.scrolledwindow1);

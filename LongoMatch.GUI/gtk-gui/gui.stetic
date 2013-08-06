@@ -8824,7 +8824,15 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
                   </packing>
                 </child>
                 <child>
-                  <placeholder />
+                  <widget class="Gtk.Label" id="nodatalabel">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">No data available</property>
+                    <property name="Justify">Center</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">False</property>
+                  </packing>
                 </child>
               </widget>
             </child>

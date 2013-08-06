@@ -63,6 +63,7 @@ namespace LongoMatch.Gui.Component.Stats
 					vbox1.Remove (child);
 			}
 			subcatViewers = new List<SubCategoryViewer>();
+			nodatalabel.Visible = stats.SubcategoriesStats.Count == 0;
 			foreach (SubCategoryStat st in stats.SubcategoriesStats) {
 				SubCategoryViewer subcatviewer = new SubCategoryViewer();
 				subcatviewer.LoadStats (st);
