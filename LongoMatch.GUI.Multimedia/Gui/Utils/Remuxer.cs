@@ -23,6 +23,7 @@ using GLib;
 using Gtk;
 
 using LongoMatch.Interfaces.Multimedia;
+using LongoMatch.Multimedia.Utils;
 using LongoMatch.Common;
 using LongoMatch.Store;
 
@@ -45,6 +46,8 @@ namespace LongoMatch.Video.Utils
 		                VideoMuxerType muxer = VideoMuxerType.Mp4)
 		{
 			this.inputFile = inputFile;
+			if (inputFile.Container == GStreamer.ASF)
+				muxer = VideoMuxerType.Matroska;
 			this.muxer = muxer;
 			
 			if (outputFilepath != null) {
