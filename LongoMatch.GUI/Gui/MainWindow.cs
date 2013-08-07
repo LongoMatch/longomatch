@@ -167,9 +167,6 @@ namespace LongoMatch.Gui
 		public void UpdateSelectedPlay (Play play) {
 			selectedTimeNode = play;
 			timeline.SelectedTimeNode = play;
-			postagger.LoadBackgrounds (openedProject.Categories.FieldBackground,
-			                           openedProject.Categories.HalfFieldBackground,
-			                           openedProject.Categories.GoalBackground);
 			postagger.LoadPlay (play, false);
 			SetTagsBoxVisibility (true);
 			notes.Play= play;
@@ -414,6 +411,9 @@ namespace LongoMatch.Gui
 			playsSelection.SetProject(project, isLive, filter);
 			buttonswidget.Categories = project.Categories;
 			MakeActionsSensitive(true,projectType);
+			postagger.LoadBackgrounds (openedProject.Categories.FieldBackground,
+			                           openedProject.Categories.HalfFieldBackground,
+			                           openedProject.Categories.GoalBackground);
 			ShowWidgets();
 		}
 		
