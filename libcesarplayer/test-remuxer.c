@@ -55,8 +55,7 @@ main (int argc, char *argv[])
     g_print("Usage: test-remuxer input_file output_file\n");
     return 1;
   }
-  remuxer = gst_remuxer_new (argv[1], argv[2], NULL);
-  gst_remuxer_start (remuxer);
+  remuxer = gst_remuxer_new (argv[1], argv[2], VIDEO_MUXER_MP4, NULL);
 
   loop = g_main_loop_new (NULL, FALSE);
 
@@ -65,6 +64,7 @@ main (int argc, char *argv[])
   g_signal_connect (remuxer, "error",
       G_CALLBACK (error_cb), loop);
 
+  gst_remuxer_start (remuxer);
   g_main_loop_run (loop);
 
   return 0;
