@@ -81,6 +81,18 @@ namespace LongoMatch.Stats
 			set;
 		}
 		
+		public Image Field {
+			get; set;
+		}
+		
+		public Image HalfField {
+			get; set;
+		}
+		
+		public Image Goal {
+			get; set;
+		}
+	
 		public List<CategoryStats> CategoriesStats {
 			get {
 				return catStats;
@@ -105,6 +117,10 @@ namespace LongoMatch.Stats
 		void UpdateStats (Project project) {
 			catStats.Clear();
 			
+			Field = project.Categories.FieldBackground;
+			HalfField = project.Categories.HalfFieldBackground;
+			Goal = project.Categories.GoalBackground;
+			
 			foreach (Category cat in project.Categories) {
 				CategoryStats stats;
 				List<Play> plays, homePlays, awayPlays;
@@ -115,9 +131,6 @@ namespace LongoMatch.Stats
 				awayPlays =plays.Where(p => p.Team == Team.VISITOR || p.Team == Team.BOTH).ToList();
 				stats = new CategoryStats(cat, plays.Count, homePlays.Count(), awayPlays.Count());
 				/* Fill zonal tagging stats */
-				stats.Field = project.Categories.FieldBackground;
-				stats.HalfField = project.Categories.HalfFieldBackground;
-				stats.Goal = project.Categories.GoalBackground;
 				stats.FieldCoordinates = plays.Select (p => p.FieldPosition).Where(p =>p != null).ToList();
 				stats.HalfFieldCoordinates = plays.Select (p => p.HalfFieldPosition).Where(p =>p != null).ToList();
 				stats.GoalCoordinates = plays.Select (p => p.GoalPosition).Where(p =>p != null).ToList();

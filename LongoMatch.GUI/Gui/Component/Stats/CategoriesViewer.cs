@@ -43,7 +43,6 @@ namespace LongoMatch.Gui.Component.Stats
 		
 		public void LoadStats (ProjectStats pstats) {
 			TreeIter iter;
-			CategoryStats st;
 			
 			store.Clear();
 			foreach (CategoryStats cstats in pstats.CategoriesStats) {
@@ -53,9 +52,8 @@ namespace LongoMatch.Gui.Component.Stats
 			treeview.Selection.SelectIter(iter);
 			categoryviewer1.HomeName = pstats.LocalTeam;
 			categoryviewer1.AwayName = pstats.VisitorTeam;
-			st = store.GetValue (iter, 0) as CategoryStats;
-			categoryviewer1.LoadBackgrounds (st.Field, st.HalfField, st.Goal);
-			categoryviewer1.LoadStats (st);
+			categoryviewer1.LoadBackgrounds (pstats.Field, pstats.HalfField, pstats.Goal);
+			categoryviewer1.LoadStats (store.GetValue (iter, 0) as CategoryStats);
 		}
 		
 		void HandleCursorChanged (object sender, EventArgs e)

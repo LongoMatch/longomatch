@@ -48,18 +48,6 @@ namespace LongoMatch.Stats
 			}
 		}
 		
-		public Image Field {
-			get; set;
-		}
-		
-		public Image HalfField {
-			get; set;
-		}
-		
-		public Image Goal {
-			get; set;
-		}
-		
 		public List<Coordinates> FieldCoordinates {
 			get; set;
 		}
