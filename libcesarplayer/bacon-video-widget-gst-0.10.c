@@ -4376,7 +4376,7 @@ bacon_video_widget_get_current_frame (BaconVideoWidget * bvw)
   /*{ */
   /*gst_element_get_state (bvw->priv->play, NULL, NULL, -1); */
   /*} */
-  gst_element_get_state (bvw->priv->play, NULL, NULL, -1);
+  gst_element_get_state (bvw->priv->play, NULL, NULL, 1 * GST_SECOND);
 
   /* no video info */
   if (!bvw->priv->video_width || !bvw->priv->video_height) {
