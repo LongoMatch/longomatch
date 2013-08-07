@@ -20,6 +20,7 @@ using Gtk;
 using LongoMatch.Stats;
 using System.Collections.Generic;
 using LongoMatch.Common;
+using Image = LongoMatch.Common.Image;
 
 namespace LongoMatch.Gui.Component.Stats
 {
@@ -34,23 +35,27 @@ namespace LongoMatch.Gui.Component.Stats
 			HomeName = "Home";
 			AwayName = "Away";
 		}
-		
+
 		public string HomeName { get; set; }
 		public string AwayName { get; set; }
 		
+		public void LoadBackgrounds (Image field, Image halfField, Image goal) {
+			alltagger.LoadBackgrounds (field, halfField, goal);
+			hometagger.LoadBackgrounds (field, halfField, goal);
+			awaytagger.LoadBackgrounds (field, halfField, goal);
+		}
+
 		public void LoadStats (CategoryStats stats) {
 			homeLabel.Text = HomeName;
 			awayLabel.Text = AwayName;
 			
-			alltagger.LoadBackgrounds (stats.Field, stats.HalfField, stats.Goal);
 			alltagger.LoadFieldCoordinates (stats.FieldCoordinates);
 			alltagger.LoadHalfFieldCoordinates (stats.HalfFieldCoordinates);
 			alltagger.LoadGoalCoordinates (stats.GoalCoordinates);
 			alltagger.CoordinatesSensitive = false;
 			allframe.Visible = stats.FieldCoordinates.Count + stats.HalfFieldCoordinates.Count +
 			    stats.GoalCoordinates.Count != 0;
-			    
-			hometagger.LoadBackgrounds (stats.Field, stats.HalfField, stats.Goal);
+			
 			hometagger.LoadFieldCoordinates (stats.HomeFieldCoordinates);
 			hometagger.LoadHalfFieldCoordinates (stats.HomeHalfFieldCoordinates);
 			hometagger.LoadGoalCoordinates (stats.HomeGoalCoordinates);
@@ -58,7 +63,6 @@ namespace LongoMatch.Gui.Component.Stats
 			homeframe.Visible = stats.HomeFieldCoordinates.Count + stats.HomeHalfFieldCoordinates.Count +
 			    stats.HomeGoalCoordinates.Count != 0;
 			    
-			awaytagger.LoadBackgrounds (stats.Field, stats.HalfField, stats.Goal);
 			awaytagger.LoadFieldCoordinates (stats.AwayFieldCoordinates);
 			awaytagger.LoadHalfFieldCoordinates (stats.AwayHalfFieldCoordinates);
 			awaytagger.LoadGoalCoordinates (stats.AwayGoalCoordinates);
