@@ -87,6 +87,10 @@ REF_DEP_LONGOMATCH = \
                      $(LINK_LONGOMATCH_SERVICES) \
                      $(LINK_LONGOMATCH_GUI)
 
+REF_DEP_OXYPLOT = \
+                     $(LINK_SYSTEM) \
+                     $(LINK_SYSTEM_CORE)
+
 
 DIR_BIN = $(top_builddir)/bin
 
