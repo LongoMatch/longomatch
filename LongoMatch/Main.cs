@@ -69,13 +69,9 @@ namespace LongoMatch
 					Core.Start(guiToolkit, multimediaToolkit);
 			    } catch (DBLockedException locked) {
 					string msg = Catalog.GetString ("The database seems to be locked by another instance and " +
-					                                "the application will closed.\n\n Click \"No\" if you are " +
-					                                "completely sure this is the only instance running and you want to " +
-					                                "continue at your own risk."); 
+					                                "the application will closed.");
 					Log.Exception (locked);
-					if (MessagesHelpers.QuestionMessage (null, msg)) {
-						return;
-					}
+					return;
 			    }
 				Application.Run();
 			} catch(Exception ex) {
