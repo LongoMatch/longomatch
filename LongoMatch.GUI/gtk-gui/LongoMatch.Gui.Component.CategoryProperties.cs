@@ -449,6 +449,8 @@ namespace LongoMatch.Gui.Component
 			this.vbox2.Add (this.frame4);
 			global::Gtk.Box.BoxChild w37 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.frame4]));
 			w37.Position = 0;
+			w37.Expand = false;
+			w37.Fill = false;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.frame3 = new global::Gtk.Frame ();
 			this.frame3.Name = "frame3";
