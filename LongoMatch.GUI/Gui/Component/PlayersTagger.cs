@@ -33,7 +33,7 @@ namespace LongoMatch.Gui.Component
 		PlayersTagStore players;
 		Dictionary<CheckButton, PlayerTag> checkButtonsDict;
 		RadioButton firstRB;
-		const uint DEFAULT_WIDTH = 6;
+		const uint DEFAULT_WIDTH = 5;
 		
 		public PlayersTagger ()
 		{
