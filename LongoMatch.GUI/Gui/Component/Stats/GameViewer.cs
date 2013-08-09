@@ -119,7 +119,7 @@ namespace LongoMatch.Gui.Component
 				}
 				foreach (SubCategoryStat sstat in cstat.SubcategoriesStats) {
 					foreach (PercentualStat spstat in sstat.OptionStats) {
-						layout.SetMarkup (GLib.Markup.EscapeText (String.Format ("{0}: {1}", cstat.Name, sstat.Name)));
+						layout.SetMarkup (GLib.Markup.EscapeText (String.Format ("{0}: {1}", sstat.Name, spstat.Name)));
 						layout.GetPixelSize (out width, out height);
 						if (width > full) {
 							full = width;
