@@ -458,9 +458,9 @@ GstElement * lgm_create_video_encoder (VideoEncoderType type, guint quality,
 
     case VIDEO_ENCODER_H264:
       encoder = gst_element_factory_make ("x264enc", "video-encoder");
-      g_object_set (encoder, "key-int-max", 25, "pass", 5,
+      g_object_set (encoder, "key-int-max", 25, "pass", 17,
           "speed-preset", 3,
-          "quantizer", quality * 50 / 100, NULL);
+          "bitrate", 4000 * quality / 100, NULL);
       name = "X264 video encoder";
       break;
 
