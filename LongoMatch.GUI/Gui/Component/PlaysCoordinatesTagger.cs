@@ -34,6 +34,7 @@ namespace LongoMatch.Gui.Component
 	{
 		
 		CoordinatesTagger field, hfield, goal;
+		Pixbuf fieldPixbuf, hFieldPixbuf, goalPixbuf;
 		Box box;
 		
 		public PlaysCoordinatesTagger ()
@@ -93,20 +94,23 @@ namespace LongoMatch.Gui.Component
 		
 		public void LoadBackgrounds (Image fieldImage, Image halfFieldImage, Image goalImage) {
 			if (fieldImage != null) {
-				field.Background = fieldImage.Value;
+				fieldPixbuf = fieldImage.Value;
 			} else {
-				field.Background = Gdk.Pixbuf.LoadFromResource (Constants.FIELD_BACKGROUND);
+				fieldPixbuf = Gdk.Pixbuf.LoadFromResource (Constants.FIELD_BACKGROUND);
 			}
+			field.Background = fieldPixbuf;
 			if (halfFieldImage != null) {
-				hfield.Background = halfFieldImage.Value;
+				hFieldPixbuf = halfFieldImage.Value;
 			} else {
-				hfield.Background = Gdk.Pixbuf.LoadFromResource (Constants.HALF_FIELD_BACKGROUND);
+				hFieldPixbuf = Gdk.Pixbuf.LoadFromResource (Constants.HALF_FIELD_BACKGROUND);
 			}
+			hfield.Background = hFieldPixbuf;
 			if (goalImage != null) {
-				goal.Background = goalImage.Value;
+				goalPixbuf = goalImage.Value;
 			} else {
-				goal.Background = Gdk.Pixbuf.LoadFromResource (Constants.GOAL_BACKGROUND);
+				goalPixbuf = Gdk.Pixbuf.LoadFromResource (Constants.GOAL_BACKGROUND);
 			}
+			goal.Background = goalPixbuf;
 		}
 		
 		void AddPlay (Play play, bool fill) {
@@ -128,9 +132,11 @@ namespace LongoMatch.Gui.Component
 				coords.Add (play.FieldPosition);
 			} else if (fill) {
 				Coordinates c = new Coordinates ();
-				c.Add (new Point(100, 100));
+				c.Add (new Point((int) (fieldPixbuf.Width * 0.25),
+				                 (int) (fieldPixbuf.Height * 0.25)));
 				if (play.Category.FieldPositionIsDistance) {
-					c.Add (new Point (300, 300));
+					c.Add (new Point((int) (fieldPixbuf.Width * 0.75),
+					                 (int) (fieldPixbuf.Height * 0.75)));
 				}
 				coords.Add (c);
 				play.FieldPosition = c;
@@ -148,9 +154,11 @@ namespace LongoMatch.Gui.Component
 				coords.Add (play.HalfFieldPosition);
 			} else  if (fill) {
 				Coordinates c = new Coordinates ();
-				c.Add (new Point(100, 100));
+				c.Add (new Point((int) (hFieldPixbuf.Width * 0.25),
+				                 (int) (hFieldPixbuf.Height * 0.25)));
 				if (play.Category.HalfFieldPositionIsDistance) {
-					c.Add (new Point (300, 300));
+					c.Add (new Point((int) (hFieldPixbuf.Width * 0.75),
+					                 (int) (hFieldPixbuf.Height * 0.75)));
 				}
 				coords.Add (c);
 				play.HalfFieldPosition = c;
@@ -168,7 +176,8 @@ namespace LongoMatch.Gui.Component
 				coords.Add (play.GoalPosition);
 			} else if (fill) {
 				Coordinates c = new Coordinates ();
-				c.Add (new Point(100, 100));
+				c.Add (new Point((int) (goalPixbuf.Width * 0.25),
+				                 (int) (goalPixbuf.Height * 0.25)));
 				coords.Add (c);
 				play.GoalPosition = c;
 			} else {
