@@ -1,3 +1,16 @@
+===== LongoMatch 0.18.13 "Lavapies" =====
+
+	== Features ==
+	* Add support for statistics
+
+	== Bugs fixed ==
+
+	* Fix ASF remuxing
+	* Fix display of names with special characters like '&'
+	* Fix backgrounds for zonal tagging
+	* Fix display of zonal widgets when tagging plays
+	* Make the H264 encoder fast again
+
 ===== LongoMatch 0.18.12 "North Evo" =====
 
 	== Features ==

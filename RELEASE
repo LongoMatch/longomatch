@@ -1,4 +1,4 @@
-LongoMatch-0.18.12 "North Evo"
+LongoMatch-0.18.13 "Lavapies"
 -----------------------------
 
 The LongoMatch team is happy to announce the tenth release in the
@@ -9,25 +9,14 @@ all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
 * Features
-	* Support for positional tagging
-	* Auto export new tag in live analysis
-	* Several timeline enhancements
-	* Dual window for live analysis
-	* Remuxer for flv files
-	* New preferences editor
-	* Customizable UI language
-	* Configurable default encoding settings
-	* Configurable autosave projects
-	* Improve backwards frame stepping
+	* Add support for statistics
 
 * Bugs fixed
-
-	* Players filtering
-	* Handle database errors gracefully
-	* Fix saving drawings for file
-	* Fix random crash in Windows with the video sink
-	* Fix crash in OS X with drawings
-	* Fix DAR in the video converter
+	* Fix ASF remuxing
+	* Fix display of names with special characters like '&'
+	* Fix backgrounds for zonal tagging
+	* Fix display of zonal widgets when tagging plays
+	* Make the H264 encoder fast again
 
 *Contributors to this Release:
 
