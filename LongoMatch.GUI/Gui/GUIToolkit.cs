@@ -359,6 +359,7 @@ namespace LongoMatch.Gui
 			dialog.TransientFor = mainWindow as Gtk.Window;
 			dialog.Run();
 			dialog.Destroy();
+			System.GC.Collect();
 		}
 		
 	}
