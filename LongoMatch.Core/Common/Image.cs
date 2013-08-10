@@ -29,7 +29,7 @@ namespace LongoMatch.Common
 #endif
 
 	[Serializable]
-	public class Image: ISerializable
+	public class Image: ISerializable, IDisposable
 	{
 		SImage image;
 		
