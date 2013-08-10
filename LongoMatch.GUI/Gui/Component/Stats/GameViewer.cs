@@ -130,6 +130,10 @@ namespace LongoMatch.Gui.Component
 			if (full < normal) {
 				full = normal;
 			}
+#if !OS_TYPE_LINUX
+			normal = (int) (normal * 1.3);
+			full = (int) (full * 1.3);
+#endif
 		}
 		
 		protected void OnSubcatscheckbuttonClicked (object sender, EventArgs e)
