@@ -26,7 +26,7 @@ using LongoMatch.Store.Templates;
 
 namespace LongoMatch.Stats
 {
-	public class ProjectStats
+	public class ProjectStats: IDisposable
 	{
 		List<CategoryStats> catStats;
 		GameUnitsStats guStats;
@@ -44,6 +44,15 @@ namespace LongoMatch.Stats
 			Results = String.Format("{0}-{1}", project.Description.LocalGoals, project.Description.VisitorGoals);
 			UpdateStats (project);
 			UpdateGameUnitsStats (project);
+		}
+		
+		public void Dispose () {
+			if (HalfField != null)
+				HalfField.Dispose ();
+			if (Field != null)
+				Field.Dispose ();
+			if (Goal != null)
+				Goal.Dispose ();
 		}
 		
 		public string ProjectName {

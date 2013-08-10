@@ -23,13 +23,24 @@ namespace LongoMatch.Gui.Dialog
 {
 	public partial class StatsViewer : Gtk.Dialog
 	{
+		ProjectStats stats;
+		
 		public StatsViewer ()
 		{
 			this.Build ();
 		}
 		
+		public override void Destroy ()
+		{
+			base.Destroy ();
+			if (stats != null)
+				stats.Dispose();
+		}
+		
 		public void LoadStats (Project project) {
-			ProjectStats stats = new ProjectStats (project);
+			if (stats != null)
+				stats.Dispose();
+			stats = new ProjectStats (project);
 			categoriesviewer.LoadStats (stats);
 			gameviewer.Project = project;
 		}
