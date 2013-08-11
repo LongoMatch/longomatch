@@ -147,7 +147,7 @@ namespace LongoMatch.Gui.Component
 		Stat stat, category;
 		Pango.Layout layout;
 		const double WIDTH_PERCENT = 0.8;
-		const int COUNT_WIDTH = 80;
+		const int COUNT_WIDTH = 120;
 		int textSize;
 		string name_tpl, count_tpl;
 		
