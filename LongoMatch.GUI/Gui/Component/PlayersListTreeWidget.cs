@@ -96,6 +96,7 @@ namespace LongoMatch.Gui.Component
 				}
 			}
 			playerstreeview.Model = team;
+			playerstreeview.Colors = true;
 			playerstreeview.Project = Project;
 		}
 
