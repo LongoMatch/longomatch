@@ -747,12 +747,12 @@ msgstr "<b>Todas</b>"
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.CategoryViewer.cs:84
 #| msgid "<b>HotKey:</b>"
 msgid "<b>Home</b>"
-msgstr "<b>Inicio</b>"
+msgstr "<b>Local</b>"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.CategoryViewer.cs:106
 #| msgid "<b>Team</b>"
 msgid "<b>Away</b>"
-msgstr "<b>Fuera</b>"
+msgstr "<b>Visitante</b>"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.CategoryViewer.cs:118
 msgid "No data available"
@@ -1528,12 +1528,12 @@ msgstr "Fecha"
 #: ../LongoMatch.GUI/Gui/Component/Stats/Plotter.cs:48
 #: ../LongoMatch.GUI/Gui/Component/Stats/SubcategoryViewer.cs:36
 msgid "Home"
-msgstr "Inicio"
+msgstr "Local"
 
 #: ../LongoMatch.GUI/Gui/Component/Stats/Plotter.cs:49
 #: ../LongoMatch.GUI/Gui/Component/Stats/SubcategoryViewer.cs:37
 msgid "Away"
-msgstr "Fuera"
+msgstr "Visitante"
 
 #: ../LongoMatch.GUI/Gui/Component/Stats/Plotter.cs:91
 msgid "Total"
