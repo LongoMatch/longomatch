@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: longomatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-08-10 10:24+0000\n"
-"PO-Revision-Date: 2013-08-10 12:38-0300\n"
+"POT-Creation-Date: 2013-08-12 11:38+0000\n"
+"PO-Revision-Date: 2013-08-13 22:38-0300\n"
 "Last-Translator: Enrico Nicoletto <liverig@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
@@ -252,26 +252,20 @@ msgstr "Ferramenta de análise de vídeo para treinadores de esportes"
 #: ../LongoMatch/Main.cs:71
 msgid ""
 "The database seems to be locked by another instance and the application will "
-"closed.\n"
-"\n"
-" Click \"No\" if you are completely sure this is the only instance running "
-"and you want to continue at your own risk."
+"closed."
 msgstr ""
-"O banco de dados parece estar bloqueado por outra instância e o aplicativo "
-"será fechado.\n"
-"\n"
-"Clique em \"Não\" se você está completamente certo de que esta é a única "
-"instância em execução e você quer continuar em seu próprio risco."
+"O banco de dados parece ter sido travado por outra instância e o aplicativo "
+"será fechado."
 
-#: ../LongoMatch/Main.cs:113
+#: ../LongoMatch/Main.cs:109
 msgid "The application has finished with an unexpected error."
 msgstr "O aplicativo foi finalizado com um erro inesperado."
 
-#: ../LongoMatch/Main.cs:114
+#: ../LongoMatch/Main.cs:110
 msgid "A log has been saved at: "
 msgstr "Um registro do erro foi salvo em: "
 
-#: ../LongoMatch/Main.cs:115
+#: ../LongoMatch/Main.cs:111
 msgid "Please, fill a bug report "
 msgstr "Por favor, relate o erro"
 
@@ -2165,6 +2159,19 @@ msgstr "Jogadores de todas equipes"
 #: ../LongoMatch.Services/Services/TemplatesService.cs:232
 msgid "A template already exists with the name: "
 msgstr "Um modelo já existe com o nome: "
+
+#~ msgid ""
+#~ "The database seems to be locked by another instance and the application "
+#~ "will closed.\n"
+#~ "\n"
+#~ " Click \"No\" if you are completely sure this is the only instance "
+#~ "running and you want to continue at your own risk."
+#~ msgstr ""
+#~ "O banco de dados parece estar bloqueado por outra instância e o "
+#~ "aplicativo será fechado.\n"
+#~ "\n"
+#~ "Clique em \"Não\" se você está completamente certo de que esta é a única "
+#~ "instância em execução e você quer continuar em seu próprio risco."
 
 #~ msgid "Audio Bitrate (kbps):"
 #~ msgstr "Taxa de transferência de áudio (kbps):"
