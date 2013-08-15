@@ -18,6 +18,9 @@
 using System;
 using System.IO;
 using Mono.Unix;
+#if OSTYPE_WINDOWS
+using System.Runtime.InteropServices;
+#endif
 
 using LongoMatch;
 using LongoMatch.DB;
@@ -41,6 +44,10 @@ namespace LongoMatch.Services
 		static RenderingJobsManager videoRenderer;
 		static IMainWindow mainWindow;
 		static IGUIToolkit guiToolkit;
+#if OSTYPE_WINDOWS
+		[DllImport("libglib-2.0-0.dll") /* willfully unmapped */ ]
+		static extern void g_setenv (String env, String val);
+#endif
 
 		public static void Init()
 		{
@@ -57,7 +64,9 @@ namespace LongoMatch.Services
 			
 			if (Config.Lang != null) {
 				Environment.SetEnvironmentVariable ("LANGUAGE", Config.Lang);
-				Environment.SetEnvironmentVariable ("LANG", Config.Lang);
+#if OSTYPE_WINDOWS
+				g_setenv ("LANGUAGE", Config.Lang);
+#endif
 			}
 			
 			/* Init internationalization support */
