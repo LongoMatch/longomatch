@@ -35,6 +35,7 @@ namespace LongoMatch.Gui.Component
 		public event PlaySelectedHandler PlaySelected;
 		public event PlayCategoryChangedHandler PlayCategoryChanged;
 		public event PlayListNodeAddedHandler PlayListNodeAdded;
+		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event SnapshotSeriesHandler SnapshotSeries;
 		public event RenderPlaylistHandler RenderPlaylist;
 		public event TagPlayHandler TagPlay;
@@ -131,6 +132,9 @@ namespace LongoMatch.Gui.Component
 			playsList.PlayListNodeAdded += EmitPlayListNodeAdded;
 			localPlayersList.PlayListNodeAdded += EmitPlayListNodeAdded;
 			visitorPlayersList.PlayListNodeAdded += EmitPlayListNodeAdded;
+			
+			/* Play name edited or Category name changed */
+			playsList.TimeNodeChanged += EmitTimeNodeChanged;
 
 			/* Connect tags events */
 			playsList.TagPlay += EmitTagPlay;
@@ -180,6 +184,12 @@ namespace LongoMatch.Gui.Component
 		{
 			if (PlayListNodeAdded != null)
 				PlayListNodeAdded(play);
+		}
+		
+		private void EmitTimeNodeChanged (TimeNode tn, object val)
+		{
+			if (TimeNodeChanged != null)
+				TimeNodeChanged(tn, val);
 		}
 		
 		protected virtual void EmitPlayCategoryChanged(Play play, Category cat)

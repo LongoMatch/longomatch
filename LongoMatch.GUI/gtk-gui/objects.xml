@@ -301,6 +301,7 @@
         <signal name="SnapshotSeries" />
         <signal name="RenderPlaylist" />
         <signal name="TagPlay" />
+        <signal name="TimeNodeChanged" />
       </itemgroup>
     </signals>
   </object>

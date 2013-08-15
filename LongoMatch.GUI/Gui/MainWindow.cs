@@ -272,6 +272,9 @@ namespace LongoMatch.Gui
 			playsSelection.PlaySelected += OnTimeNodeSelected;
 			timeline.TimeNodeSelected += OnTimeNodeSelected;
 			
+			/* Connect TimeNodeChangedEvent */
+			playsSelection.TimeNodeChanged += EmitTimeNodeChanged;
+
 			/* Connect PlayCategoryChanged events */
 			playsSelection.PlayCategoryChanged += EmitPlayCategoryChanged;
 
