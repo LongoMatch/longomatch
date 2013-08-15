@@ -94,6 +94,8 @@ namespace LongoMatch.Store.Templates
 			set {
 				if (value != null)
 					fieldImage = value.Serialize();
+				else
+					fieldImage = null;
 			}
 		}
 		
@@ -106,6 +108,8 @@ namespace LongoMatch.Store.Templates
 			set {
 				if (value != null)
 					halfFieldImage = value.Serialize();
+				else
+					halfFieldImage = null;
 			}
 		}
 		
@@ -118,6 +122,8 @@ namespace LongoMatch.Store.Templates
 			set {
 				if (value != null)
 					goalImage = value.Serialize();
+				else
+					goalImage = null;
 			}
 		}
 		

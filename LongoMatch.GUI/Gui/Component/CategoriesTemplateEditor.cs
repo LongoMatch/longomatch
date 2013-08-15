@@ -39,6 +39,7 @@ namespace LongoMatch.Gui.Component
 		List<HotKey> hkList;
 		GameUnitsEditor gameUnitsEditor;
 		Gtk.Image fieldImage, halffieldImage, goalImage;
+		Button fReset, hfReset, gReset;
 		VBox box;
 		Label periodsLabel;
 		Frame periodsFrame;
@@ -82,28 +83,19 @@ namespace LongoMatch.Gui.Component
 				ButtonsSensitive = false;
 				gameUnitsEditor.SetRootGameUnit(value.GameUnits);
 				if (template.GoalBackground != null) {
-					goalImage.Pixbuf = template.GoalBackground.Value;
+					SetGoalImage (template.GoalBackground.Value);
 				} else {
-					Image img = new Image (
-						Gdk.Pixbuf.LoadFromResource (Constants.GOAL_BACKGROUND));
-					img.Scale();
-					goalImage.Pixbuf = img.Value; 
+					SetGoalImage (null);
 				}
 				if (template.FieldBackground != null) {
-					fieldImage.Pixbuf = template.FieldBackground.Value;
+					SetFieldImage (template.FieldBackground.Value);
 				} else {
-					Image img = new Image (
-						Gdk.Pixbuf.LoadFromResource (Constants.FIELD_BACKGROUND));
-					img.Scale();
-					fieldImage.Pixbuf = img.Value; 
+					SetFieldImage (null);
 				}
 				if (template.HalfFieldBackground != null) {
-					halffieldImage.Pixbuf = template.HalfFieldBackground.Value;
+					SetHalfFieldImage (template.HalfFieldBackground.Value);
 				} else {
-					Image img = new Image (
-						Gdk.Pixbuf.LoadFromResource (Constants.HALF_FIELD_BACKGROUND));
-					img.Scale();
-					halffieldImage.Pixbuf = img.Value;
+					SetHalfFieldImage (null);
 				}
 				if (template.GamePeriods == null) {
 					periodsFrame.Visible = false;
@@ -152,9 +144,9 @@ namespace LongoMatch.Gui.Component
 		private void AddBackgroundsSelectionWidget () {
 			Gtk.Frame fframe, gframe, hfframe;
 			EventBox febox, gebox, hfebox;
+			HBox fieldBox, halfFieldBox, goalBox;
 			HBox periodsBox;
 			Button periodsButton;
-			Image img;
 			
 			fframe = new Gtk.Frame("<b>" + Catalog.GetString("Field background") + "</b>");
 			(fframe.LabelWidget as Label).UseMarkup = true;
@@ -170,28 +162,37 @@ namespace LongoMatch.Gui.Component
 			periodsFrame.ShadowType = ShadowType.None;
 			
 			febox = new EventBox();
+			fieldBox = new HBox ();
+			fReset = new Button (Catalog.GetString ("Reset"));
+			fReset.Clicked += (sender, e) => {
+				Template.FieldBackground = null;
+				SetFieldImage (null);
+				};
 			febox.ButtonPressEvent += OnFieldImageClicked;			
-			fieldImage = new Gtk.Image();
-			img = new Image (
-				Gdk.Pixbuf.LoadFromResource (Constants.FIELD_BACKGROUND));
-			img.Scale();
-			fieldImage.Pixbuf = img.Value; 
+			fieldImage = new Gtk.Image ();
+			SetFieldImage (null);
 			
 			hfebox = new EventBox();
+			halfFieldBox = new HBox ();
+			hfReset = new Button (Catalog.GetString ("Reset"));
+			hfReset.Clicked += (sender, e) => {
+				Template.HalfFieldBackground = null;
+				SetHalfFieldImage (null);
+				};
 			hfebox.ButtonPressEvent += OnHalfFieldImageClicked;
 			halffieldImage = new Gtk.Image();
-			img = new Image (
-				Gdk.Pixbuf.LoadFromResource (Constants.HALF_FIELD_BACKGROUND));
-			img.Scale();
-			halffieldImage.Pixbuf = img.Value;
+			SetHalfFieldImage (null);
 			
 			gebox = new EventBox();
+			goalBox = new HBox ();
+			gReset = new Button (Catalog.GetString ("Reset"));
+			gReset.Clicked += (sender, e) => {
+				Template.GoalBackground = null;
+				SetGoalImage (null);
+				};
 			gebox.ButtonPressEvent += OnGoalImageClicked;			
 			goalImage = new Gtk.Image();
-			img = new Image (
-				Gdk.Pixbuf.LoadFromResource (Constants.GOAL_BACKGROUND));
-			img.Scale();
-			goalImage.Pixbuf = img.Value;
+			SetGoalImage (null);
 			
 			periodsBox = new HBox ();
 			periodsButton = new Button ("gtk-edit");
@@ -200,12 +201,20 @@ namespace LongoMatch.Gui.Component
 			periodsBox.PackStart (periodsButton);
 			periodsButton.Clicked += HandlePeriodsClicked;
 			
-			fframe.Add(febox);
-			hfframe.Add(hfebox);
-			gframe.Add(gebox);
 			febox.Add(fieldImage);
 			hfebox.Add(halffieldImage);
 			gebox.Add(goalImage);
+			
+			fieldBox.PackStart(febox, true, true, 0);
+			fieldBox.PackStart(fReset, false, false, 0);
+			halfFieldBox.PackStart (hfebox, true, true, 0);
+			halfFieldBox.PackStart (hfReset, false, false, 0);
+			goalBox.PackStart (gebox, true, true, 0);
+			goalBox.PackStart (gReset, false, false, 0);
+			
+			fframe.Add(fieldBox);
+			hfframe.Add(halfFieldBox);
+			gframe.Add(goalBox);
 			periodsFrame.Add (periodsBox);
 			
 			box = new VBox();
@@ -237,16 +246,60 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
+		void SetFieldImage (Pixbuf pix) {
+			Image img;
+			
+			if (pix == null) {
+				img = new Image (
+					Gdk.Pixbuf.LoadFromResource (Constants.FIELD_BACKGROUND));
+				fReset.Visible = false;
+			} else {
+				img = new Image(pix);
+				fReset.Visible = true;
+			}
+			img.Scale ();
+			fieldImage.Pixbuf = img.Value;
+		}
+		
+		void SetHalfFieldImage (Pixbuf pix) {
+			Image img;
+			
+			if (pix == null) {
+				img = new Image (
+					Gdk.Pixbuf.LoadFromResource (Constants.HALF_FIELD_BACKGROUND));
+				hfReset.Visible = false;
+			} else {
+				img = new Image(pix);
+				hfReset.Visible = true;
+			}
+			img.Scale ();
+			halffieldImage.Pixbuf = img.Value;
+		}
+		
+		void SetGoalImage (Pixbuf pix) {
+			Image img;
+			
+			if (pix == null) {
+				img = new Image (
+					Gdk.Pixbuf.LoadFromResource (Constants.GOAL_BACKGROUND));
+				gReset.Visible = false;
+			} else {
+				img = new Image(pix);
+				gReset.Visible = true;
+			}
+			img.Scale ();
+			goalImage.Pixbuf = img.Value;
+		}
+		
 		protected virtual void OnGoalImageClicked (object sender, EventArgs args)
 		{
 			Pixbuf background;
 			
 			background = Helpers.Misc.OpenImage((Gtk.Window)this.Toplevel);
 			if (background != null) {
-				Image img = new Image(background);
-				img.Scale();
-				Template.GoalBackground = img; 
-				goalImage.Pixbuf = img.Value;
+				Template.GoalBackground = new Image (background);
+				SetGoalImage (background.Copy());
+				Edited = true;
 			}
 		}
 		
@@ -256,10 +309,9 @@ namespace LongoMatch.Gui.Component
 			
 			background = Helpers.Misc.OpenImage((Gtk.Window)this.Toplevel);
 			if (background != null) {
-				Image img = new Image(background);
-				img.Scale();
-				Template.HalfFieldBackground = img;
-				halffieldImage.Pixbuf = img.Value;
+				Template.HalfFieldBackground = new Image (background);
+				SetHalfFieldImage (background.Copy());
+				Edited = true;
 			}
 		}
 		
@@ -269,10 +321,9 @@ namespace LongoMatch.Gui.Component
 			
 			background = Helpers.Misc.OpenImage((Gtk.Window)this.Toplevel);
 			if (background != null) {
-				Image img = new Image(background);
-				img.Scale();
-				Template.FieldBackground = img; 
-				fieldImage.Pixbuf = img.Value;
+				Template.FieldBackground = new Image (background);
+				SetFieldImage (background.Copy());
+				Edited = true;
 			}
 		}
 		
