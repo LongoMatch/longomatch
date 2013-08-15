@@ -130,7 +130,7 @@ namespace LongoMatch.Gui.Component
 			if (full < normal) {
 				full = normal;
 			}
-#if !OS_TYPE_LINUX
+#if !OSTYPE_LINUX
 			normal = (int) (normal * 1.3);
 			full = (int) (full * 1.3);
 #endif

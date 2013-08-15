@@ -94,16 +94,16 @@ case "$host" in
   *-*-mingw*|*-*-cygwin*)
     ostype=Windows
     AC_DEFINE(OSTYPE_WINDOWS)
-    GMCS_FLAGS="$GMCS_FLAGS -define:OS_TYPE_WINDOWS"
+    GMCS_FLAGS="$GMCS_FLAGS -define:OSTYPE_WINDOWS"
     ;;
   *-*-darwin*)
     AC_DEFINE(OSTYPE_OS_X)
     ostype=OS_X
-    GMCS_FLAGS="$GMCS_FLAGS -define:OS_TYPE_OS_X"
+    GMCS_FLAGS="$GMCS_FLAGS -define:OSTYPE_OS_X"
     ;;
   *-*-linux*)
     AC_DEFINE(OSTYPE_LINUX)
-    GMCS_FLAGS="$GMCS_FLAGS -define:OS_TYPE_OS_LINUX"
+    GMCS_FLAGS="$GMCS_FLAGS -define:OSTYPE_OS_LINUX"
     ostype=Linux
     ;;
 esac
