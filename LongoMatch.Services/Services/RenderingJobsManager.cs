@@ -167,6 +167,7 @@ namespace LongoMatch.Services
 		
 		private void LoadEditionJob(EditionJob job) {
 			videoEditor = multimediaToolkit.GetVideoEditor();
+			videoEditor.EncodingSettings = job.EncodingSettings;
 			videoEditor.Progress += OnProgress;
 			
 			foreach(PlayListPlay segment in job.Playlist) {
@@ -175,9 +176,6 @@ namespace LongoMatch.Services
 			}
 			
 			try {
-				videoEditor.EncodingSettings = job.EncodingSettings;
-				videoEditor.EnableTitle = job.OverlayTitle;
-				videoEditor.EnableAudio = job.EnableAudio;
 				videoEditor.Start();
 			}
 			catch(Exception ex) {

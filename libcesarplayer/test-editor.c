@@ -45,6 +45,7 @@ error_cb (GstVideoEditor *remuxer, gchar *error, GstVideoEditor *editor)
 {
     g_print("ERROR: %s\n", error);
     g_main_loop_quit (loop);
+    return FALSE;
 }
 
 int
@@ -79,19 +80,9 @@ main (int argc, char *argv[])
   }
 
   editor = gst_video_editor_new (NULL);
-  gst_video_editor_set_audio_encoder (editor, &err, audio_encoder);
-  if (err != NULL)
-    goto error;
-  gst_video_editor_set_video_encoder (editor, &err, video_encoder);
-  if (err != NULL)
-    goto error;
-  g_object_set (editor, "output_file", output_file,
-      "width", 320, "height", 240, "enable-audio", FALSE,
-      "enable-title", TRUE, "video-bitrate", 1000, "audio-bitrate", 200000,
-      NULL);
-  gst_video_editor_set_video_muxer (editor, &err, video_muxer);
-  if (err != NULL)
-    goto error;
+  gst_video_editor_set_encoding_format (editor, output_file, video_encoder,
+      audio_encoder, video_muxer, 500, 128, 240, 180, 25, 1, TRUE, TRUE);
+
   gst_video_editor_add_segment (editor, input_file, start, stop,
       (gdouble) 1, "Test", TRUE);
 

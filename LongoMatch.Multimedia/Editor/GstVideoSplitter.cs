@@ -51,132 +51,6 @@ namespace LongoMatch.Video.Editor {
 			};
 		}
 
-		#region Properties
-
-		[GLib.Property("enable-audio")]
-		public bool EnableAudio {
-			get {
-				GLib.Value val = GetProperty("enable-audio");
-				bool ret = (bool) val;
-				val.Dispose();
-				return ret;
-			}
-			set {
-				GLib.Value val = new GLib.Value(value);
-				SetProperty("enable-audio", val);
-				val.Dispose();
-			}
-		}
-
-		[GLib.Property("enable-title")]
-		public bool EnableTitle {
-			get {
-				GLib.Value val = GetProperty("enable-title");
-				bool ret = (bool) val;
-				val.Dispose();
-				return ret;
-			}
-			set {
-				GLib.Value val = new GLib.Value(value);
-				SetProperty("enable-title", val);
-				val.Dispose();
-			}
-		}
-
-		[GLib.Property("video_quality")]
-		public int VideoQuality {
-			get {
-				GLib.Value val = GetProperty("video_quality");
-				int ret = (int) val;
-				val.Dispose();
-				return ret;
-			}
-			set {
-				GLib.Value val = new GLib.Value(value);
-				SetProperty("video_quality", val);
-				val.Dispose();
-			}
-		}
-
-		[GLib.Property("audio_bitrate")]
-		public int AudioQuality {
-			get {
-				GLib.Value val = GetProperty("audio_quality");
-				int ret = (int) val;
-				val.Dispose();
-				return ret;
-			}
-			set {
-				GLib.Value val = new GLib.Value(value);
-				SetProperty("audio_quality", val);
-				val.Dispose();
-			}
-		}
-
-		[GLib.Property("width")]
-		public int Width {
-			get {
-				GLib.Value val = GetProperty("width");
-				int ret = (int) val;
-				val.Dispose();
-				return ret;
-			}
-			set {
-				GLib.Value val = new GLib.Value(value);
-				SetProperty("width", val);
-				val.Dispose();
-			}
-		}
-
-		[GLib.Property("height")]
-		public int Height {
-			get {
-				GLib.Value val = GetProperty("height");
-				int ret = (int) val;
-				val.Dispose();
-				return ret;
-			}
-			set {
-				GLib.Value val = new GLib.Value(value);
-				SetProperty("height", val);
-				val.Dispose();
-			}
-		}
-
-		[GLib.Property("output_file")]
-		public string OutputFile {
-			get {
-				GLib.Value val = GetProperty("output_file");
-				string ret = (string) val;
-				val.Dispose();
-				return ret;
-			}
-			set {
-				GLib.Value val = new GLib.Value(value);
-				SetProperty("output_file", val);
-				val.Dispose();
-			}
-		}
-		
-		[GLib.Property("title-size")]
-		public int TitleSize {
-			get {
-				GLib.Value val = GetProperty("title-size");
-				int ret = (int) val;
-				val.Dispose();
-				return ret;
-			}
-			set {
-				GLib.Value val = new GLib.Value(value);
-				SetProperty("title-size", val);
-				val.Dispose();
-			}
-		}
-
-		#endregion
-
-
-
 		#region GSignals
 #pragma warning disable 0169
 		[GLib.CDeclCallback]
@@ -336,42 +210,6 @@ namespace LongoMatch.Video.Editor {
 		}
 
 		[DllImport("libcesarplayer.dll")]
-		static extern void gst_video_editor_set_video_encoder(IntPtr raw, out IntPtr error_ptr, int type);
-
-		public void SetVideoEncoder(out string error, VideoEncoderType codec) {
-			IntPtr error_ptr = IntPtr.Zero;
-			gst_video_editor_set_video_encoder(Handle,out error_ptr,(int)codec);
-			if(error_ptr != IntPtr.Zero)
-				error = GLib.Marshaller.Utf8PtrToString(error_ptr);
-			else
-				error = null;
-		}
-
-		[DllImport("libcesarplayer.dll")]
-		static extern void gst_video_editor_set_audio_encoder(IntPtr raw, out IntPtr error_ptr, int type);
-
-		public void SetAudioEncoder(out string error, AudioEncoderType codec) {
-			IntPtr error_ptr = IntPtr.Zero;
-			gst_video_editor_set_audio_encoder(Handle,out error_ptr,(int)codec);
-			if(error_ptr != IntPtr.Zero)
-				error = GLib.Marshaller.Utf8PtrToString(error_ptr);
-			else
-				error = null;
-		}
-
-		[DllImport("libcesarplayer.dll")]
-		static extern void gst_video_editor_set_video_muxer(IntPtr raw, out IntPtr error_ptr, int type);
-
-		public void SetVideoMuxer(out string error, VideoMuxerType muxer) {
-			IntPtr error_ptr = IntPtr.Zero;
-			gst_video_editor_set_video_muxer(Handle,out error_ptr,(int)muxer);
-			if(error_ptr != IntPtr.Zero)
-				error = GLib.Marshaller.Utf8PtrToString(error_ptr);
-			else
-				error = null;
-		}
-
-		[DllImport("libcesarplayer.dll")]
 		static extern void gst_video_editor_init_backend(out int argc, IntPtr argv);
 
 		public static int InitBackend(string argv) {
@@ -380,48 +218,36 @@ namespace LongoMatch.Video.Editor {
 			return argc;
 		}
 
-		public EncodingSettings EncodingSettings{
-			set{
-				/* FIXME: This should only be possible with the editor in the NULL state.
-				 * For now keep this exact order setting the properties in the editor,
-				 * otherwise it won't work */
-				VideoQuality = (int) value.EncodingQuality.VideoQuality;
-				AudioQuality = (int) value.EncodingQuality.AudioQuality;
-				Height = (int) value.VideoStandard.Height;
-				Width = (int) value.VideoStandard.Width;
-				AudioEncoder = value.EncodingProfile.AudioEncoder;
-				VideoEncoder = value.EncodingProfile.VideoEncoder;
-				OutputFile = value.OutputFile;
-				EnableAudio = false;
-				VideoMuxer = value.EncodingProfile.Muxer;
-				TitleSize = 14;
-			}
-		}
-
-		private AudioEncoderType AudioEncoder {
+		[DllImport("libcesarplayer.dll")]
+		static extern bool gst_video_editor_set_encoding_format(IntPtr raw,
+		                                                        string output_file,
+		                                                        VideoEncoderType video_codec,
+		                                                        AudioEncoderType audio_codec,
+		                                                        VideoMuxerType muxer,
+		                                                        uint video_quality,
+		                                                        uint audio_quality,
+		                                                        uint width,
+		                                                        uint height,
+		                                                        uint fps_n,
+		                                                        uint fps_d,
+		                                                        bool enable_audio,
+		                                                        bool enable_video);
+		
+		public EncodingSettings EncodingSettings {
 			set {
-				string error;
-				SetAudioEncoder(out error,value);
-				if(error != null)
-					throw new Exception(error);
-			}
-		}
-
-		private VideoEncoderType VideoEncoder {
-			set {
-				string error;
-				SetVideoEncoder(out error, value);
-				if(error != null)
-					throw new Exception(error);
-			}
-		}
-
-		private VideoMuxerType VideoMuxer {
-			set {
-				string error;
-				SetVideoMuxer(out error,value);
-				if(error != null)
-					throw new Exception(error);
+				gst_video_editor_set_encoding_format (Handle,
+				                                      value.OutputFile,
+				                                      value.EncodingProfile.VideoEncoder,
+				                                      value.EncodingProfile.AudioEncoder,
+				                                      value.EncodingProfile.Muxer,
+				                                      value.EncodingQuality.VideoQuality,
+				                                      value.EncodingQuality.AudioQuality,
+				                                      value.VideoStandard.Width,
+				                                      value.VideoStandard.Height,
+				                                      value.Framerate_n,
+				                                      value.Framerate_d,
+				                                      value.EnableAudio,
+				                                      value.EnableTitle);
 			}
 		}
 

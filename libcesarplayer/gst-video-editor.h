@@ -43,7 +43,8 @@ G_BEGIN_DECLS
 #define GST_IS_VIDEO_EDITOR(obj)          (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GST_TYPE_VIDEO_EDITOR))
 #define GST_IS_VIDEO_EDITOR_CLASS(klass)  (G_TYPE_CHECK_CLASS_TYPE ((klass), GST_TYPE_VIDEO_EDITOR))
 #define GST_VIDEO_EDITOR_GET_CLASS(obj)   (G_TYPE_INSTANCE_GET_CLASS ((obj), GST_TYPE_VIDEO_EDITOR, GstVideoEditorClass))
-#define GVC_ERROR gst_video_editor_error_quark ()
+#define GVE_ERROR gst_video_editor_error_quark ()
+
 typedef struct _GstVideoEditorClass GstVideoEditorClass;
 typedef struct _GstVideoEditor GstVideoEditor;
 typedef struct GstVideoEditorPrivate GstVideoEditorPrivate;
@@ -70,12 +71,20 @@ EXPORT void gst_video_editor_init_backend (int *argc, char ***argv);
 EXPORT GstVideoEditor *gst_video_editor_new (GError ** err);
 EXPORT void gst_video_editor_start (GstVideoEditor * gve);
 EXPORT void gst_video_editor_cancel (GstVideoEditor * gve);
-EXPORT void gst_video_editor_set_video_encoder (GstVideoEditor * gve,
-    gchar ** err, VideoEncoderType codec);
-EXPORT void gst_video_editor_set_audio_encoder (GstVideoEditor * gve,
-    gchar ** err, AudioEncoderType codec);
-EXPORT void gst_video_editor_set_video_muxer (GstVideoEditor * gve,
-    gchar ** err, VideoMuxerType codec);
+EXPORT void gst_video_editor_set_encoding_format              (GstVideoEditor * gve,
+                                                               gchar *output_file,
+                                                               VideoEncoderType video_codec,
+                                                               AudioEncoderType audio_codec,
+                                                               VideoMuxerType muxer,
+                                                               guint video_quality,
+                                                               guint audio_quality,
+                                                               guint height,
+                                                               guint width,
+                                                               guint fps_n,
+                                                               guint fps_d,
+                                                               gboolean enable_audio,
+                                                               gboolean enable_title
+                                                               );
 EXPORT void gst_video_editor_clear_segments_list (GstVideoEditor * gve);
 EXPORT void gst_video_editor_add_segment (GstVideoEditor * gve,
     gchar * file, gint64 start,
