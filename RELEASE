@@ -1,7 +1,7 @@
-LongoMatch-0.18.13 "Lavapies"
+LongoMatch-0.18.14 "La Paloma"
 -----------------------------
 
-The LongoMatch team is happy to announce the tenth release in the
+The LongoMatch team is happy to announce the fourteenth release in the
 stable 0.18 series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
@@ -9,14 +9,12 @@ all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
 * Features
-	* Add support for statistics
+	* Set category background colors in the players list
+	* Add option to reset background images
 
 * Bugs fixed
-	* Fix ASF remuxing
-	* Fix display of names with special characters like '&'
-	* Fix backgrounds for zonal tagging
-	* Fix display of zonal widgets when tagging plays
-	* Make the H264 encoder fast again
+	* Fix H264 encoder threading in Windows
+	* Fix changing language in Windows
 
 *Contributors to this Release:
 
