@@ -56,18 +56,6 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 
-		public bool EnableAudio {
-			get {
-				return audiocheckbutton.Active;
-			}
-		}
-
-		public bool TitleOverlay {
-			get {
-				return descriptioncheckbutton.Active;
-			}
-		}
-		
 		public String OutputDir {
 			get;
 			set;
@@ -113,6 +101,9 @@ namespace LongoMatch.Gui.Dialog
 			encSettings.Framerate_d = Config.FPS_D;
 			
 			encSettings.TitleSize = 20; 
+			
+			encSettings.EnableAudio = audiocheckbutton.Active;
+			encSettings.EnableTitle = descriptioncheckbutton.Active;
 			
 			Hide();
 		}

@@ -70,25 +70,12 @@ namespace LongoMatch.Common
 	
 	public class EditionJob: Job
 	{
-		public EditionJob (IPlayList playlist, EncodingSettings encSettings,
-		                   bool enableAudio = false, bool overlayTitle = false): base (encSettings)
+		public EditionJob (IPlayList playlist, EncodingSettings encSettings): base (encSettings)
 		{
 			Playlist = Cloner.Clone(playlist);
-			EnableAudio = enableAudio;
-			OverlayTitle = overlayTitle;
 		}
 		
 		public IPlayList Playlist{
-			get;
-			set;
-		}
-		
-		public bool EnableAudio {
-			get;
-			set;
-		}
-		
-		public bool OverlayTitle {
 			get;
 			set;
 		}

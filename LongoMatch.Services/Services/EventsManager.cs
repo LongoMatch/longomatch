@@ -133,7 +133,7 @@ namespace LongoMatch.Services
 				playlist = new PlayList();
 				playlist.Add (new PlayListPlay (play, file, true));
 			
-				job = new EditionJob (playlist, settings, Config.EnableAudio, Config.OverlayTitle); 
+				job = new EditionJob (playlist, settings);
 				renderer.AddJob (job);
 			} catch (Exception ex) {
 				Log.Exception (ex);

@@ -23,7 +23,8 @@ namespace LongoMatch.Common
 	{
 		public EncodingSettings(VideoStandard videoStandard, EncodingProfile encodingProfile,
 		                        EncodingQuality encodingQuality, uint fr_n, uint fr_d,
-		                        string outputFile, uint titleSize) {
+		                        string outputFile, bool enableAudio, bool enableTitle,
+		                        uint titleSize) {
 			VideoStandard = videoStandard;
 			EncodingProfile = encodingProfile;
 			EncodingQuality = encodingQuality;
@@ -31,6 +32,8 @@ namespace LongoMatch.Common
 			Framerate_d = fr_d;
 			OutputFile = outputFile;
 			TitleSize = titleSize;
+			EnableAudio = enableAudio;
+			EnableTitle = enableTitle;
 		}
 		
 		public VideoStandard VideoStandard;
@@ -40,6 +43,8 @@ namespace LongoMatch.Common
 		public uint Framerate_d;
 		public string OutputFile;
 		public uint TitleSize;
+		public bool EnableAudio;
+		public bool EnableTitle;
 		
 		
 		public static EncodingSettings DefaultRenderingSettings (string outputFilepath) {
@@ -47,7 +52,8 @@ namespace LongoMatch.Common
 			                             Config.RenderEncodingProfile,
 			                             Config.RenderEncodingQuality,
 			                             Config.FPS_N, Config.FPS_D,
-			                             outputFilepath, 20);
+			                             outputFilepath,
+			                             Config.EnableAudio, Config.OverlayTitle, 20);
 		}
 	}
 }

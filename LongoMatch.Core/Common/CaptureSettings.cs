@@ -33,7 +33,7 @@ namespace LongoMatch.Common
 			settings.EncodingSettings = new EncodingSettings(VideoStandards.P480_4_3,
 			                                                 EncodingProfiles.MP4,
 			                                                 EncodingQualities.Medium,
-			                                                 25, 1, "", 20);
+			                                                 25, 1, "", true, false, 20);
 			return settings;
 		}
 	}

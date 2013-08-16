@@ -146,7 +146,7 @@ namespace LongoMatch.Gui.Dialog
 			
 			encSettings = new EncodingSettings(std, EncodingProfiles.MP4,
 			                                   EncodingQualities.High,
-			                                   25, 1, outputFile, 0);
+			                                   25, 1, outputFile, true, false, 0);
 			EncodingSettings = encSettings;
 			Respond (ResponseType.Ok);
 		}
