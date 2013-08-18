@@ -177,7 +177,7 @@ namespace LongoMatch.Store
 				TagHalfFieldPosition = false;
 			}
 			try {
-				TagGoalPosition = info.GetBoolean("tagfieldgoal");
+				TagGoalPosition = info.GetBoolean("taggoalpos");
 			} catch {
 				TagGoalPosition = false;
 			}
