@@ -182,6 +182,7 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnEditProperties(TimeNode tNode, object val) {
 			EditCategoryDialog dialog = new EditCategoryDialog(ts);
 			dialog.Category = tNode as Category; 
+			dialog.Template = project.Categories;
 			dialog.Project = project;
 			dialog.Run();
 			dialog.Destroy();

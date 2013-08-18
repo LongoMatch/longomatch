@@ -50,6 +50,12 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 		
+		public Categories Template {
+			set {
+				timenodeproperties2.Template = value;
+			}
+		}
+		
 		public Project Project {
 			set {
 				timenodeproperties2.Project = value;

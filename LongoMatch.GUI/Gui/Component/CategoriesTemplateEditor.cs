@@ -134,6 +134,7 @@ namespace LongoMatch.Gui.Component
 		protected override void EditSelected() {
 			EditCategoryDialog dialog = new EditCategoryDialog(ts);
 			dialog.Category = selected[0];
+			dialog.Template = Template;
 			dialog.HotKeysList = hkList;
 			dialog.TransientFor = (Gtk.Window) Toplevel;
 			dialog.Run();

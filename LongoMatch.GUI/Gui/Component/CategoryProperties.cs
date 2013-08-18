@@ -121,6 +121,20 @@ namespace LongoMatch.Gui.Component
 			set;
 			get;
 		}
+		
+		public Categories Template {
+			set {
+				if (value.FieldBackground != null) {
+					fieldcoordinatestagger.Background = value.FieldBackground.Value;
+				}
+				if (value.HalfFieldBackground != null) {
+					halffieldcoordinatestagger.Background = value.HalfFieldBackground.Value;
+				}
+				if (value.GoalBackground != null) {
+					goalcoordinatestagger.Background = value.GoalBackground.Value;
+				}
+			}
+		}
 
 		private void  UpdateGui() {
 			ListStore list;
