@@ -35,15 +35,14 @@ namespace LongoMatch.Services
 {
 	public class Core
 	{
-		static TemplatesService ts;
 		static DataBaseManager dbManager;
 		static EventsManager eManager;
 		static HotKeysManager hkManager;
 		static GameUnitsManager guManager;
 		static PlaylistManager plManager;
 		static RenderingJobsManager videoRenderer;
-		static IMainWindow mainWindow;
 		static IGUIToolkit guiToolkit;
+		static ToolsManager toolsManager;
 #if OSTYPE_WINDOWS
 		[DllImport("libglib-2.0-0.dll") /* willfully unmapped */ ]
 		static extern void g_setenv (String env, String val);
@@ -76,18 +75,15 @@ namespace LongoMatch.Services
 
 		public static void Start(IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit) {
 			Core.guiToolkit = guiToolkit;
-			Core.mainWindow = guiToolkit.MainWindow;
-			StartServices(guiToolkit, multimediaToolkit);
-			BindEvents(Core.mainWindow);
+			StartServices (guiToolkit, multimediaToolkit);
+			BindEvents (guiToolkit.MainController);
 		}
 		
-		public static void StartServices(IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit){
+		public static void StartServices (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit){
 			ProjectsManager projectsManager;
+			TemplatesService ts;
 				
-			/* Start TemplatesService */
-			ts = new TemplatesService(Config.TemplatesDir);
-			Core.mainWindow.TemplatesService = ts;
-
+			ts = new TemplatesService (Config.TemplatesDir);
 			/* Start DB services */
 			dbManager = new DataBaseManager (Config.DBDir, guiToolkit);
 			dbManager.SetActiveByName (Config.CurrentDatabase);
@@ -99,25 +95,28 @@ namespace LongoMatch.Services
 			/* Start the rendering jobs manager */
 			videoRenderer = new RenderingJobsManager(multimediaToolkit, guiToolkit);
 			
+			projectsManager = new ProjectsManager(guiToolkit, multimediaToolkit, ts);
+			
+			/* State the tools manager */
+			toolsManager = new ToolsManager (guiToolkit, multimediaToolkit, projectsManager, ts);
+			
 			/* Start the events manager */
-			eManager = new EventsManager(guiToolkit, videoRenderer);
+			eManager = new EventsManager(guiToolkit, videoRenderer, projectsManager);
 			
 			/* Start the hotkeys manager */
-			hkManager = new HotKeysManager(guiToolkit.MainWindow);
+			hkManager = new HotKeysManager(projectsManager);
 			hkManager.newMarkEvent += eManager.OnNewTag;
 
 			/* Start Game Units manager */
-			guManager = new GameUnitsManager(mainWindow, mainWindow.Player);
+			guManager = new GameUnitsManager(projectsManager);
 			
 			/* Start playlists manager */
-			plManager = new PlaylistManager(guiToolkit, videoRenderer);
+			plManager = new PlaylistManager(guiToolkit, videoRenderer, projectsManager);
 			
-			projectsManager = new ProjectsManager(guiToolkit, multimediaToolkit);
-			projectsManager.OpenedProjectChanged += OnOpenedProjectChanged;
 		}
 
-		public static void BindEvents(IMainWindow mainWindow) {
-			mainWindow.EditPreferencesEvent += () => {guiToolkit.OpenPreferencesEditor();};
+		public static void BindEvents(IMainController mainController) {
+			mainController.QuitApplicationEvent += () => {guiToolkit.Quit();};
 		}
 
 		public static void CheckDirs() {
@@ -141,32 +140,6 @@ namespace LongoMatch.Services
 			get {
 				return dbManager.ActiveDB;
 			}
-		}
-		
-		public static TemplatesService TemplatesService {
-			get {
-				return ts;
-			}
-		}
-		
-		public static IGUIToolkit GUIToolkit {
-			get {
-				return guiToolkit;
-			}
-		}
-		
-		private static void OnOpenedProjectChanged (Project project, ProjectType projectType,
-		                                            PlaysFilter filter) {
-			if (project != null) {
-				hkManager.Categories=project.Categories;
-			} else {
-				hkManager.Categories=null;
-			}
-			
-			eManager.SetProject (project, projectType, filter);
-			guManager.OpenedProject = project;
-			plManager.OpenedProject = project;
-			dbManager.OpenedProject = project;
 		}
 		
 		private static void SetupBaseDir() {

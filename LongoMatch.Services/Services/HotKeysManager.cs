@@ -39,27 +39,32 @@ namespace LongoMatch.Services
 		
 		Dictionary<HotKey, Category> dic;
 		bool ignoreKeys;
+		IAnalysisWindow analysisWindow;
 		
-		public HotKeysManager(IMainWindow mainWindow)
+		public HotKeysManager(ProjectsManager pManager)
 		{
 			dic = new Dictionary<HotKey,Category>();
-			mainWindow.KeyPressed += KeyListener;
+			pManager.OpenedProjectChanged += HandleOpenedProjectChanged;
 		}
 
-		// Set the active Hotkeys for the current project
-		public Categories Categories {
-			set {
-				dic.Clear();
-				if(value == null) {
-					ignoreKeys = true;
-					return;
-				}
-				ignoreKeys = false;
-				foreach(Category cat in value) {
-					if(cat.HotKey.Defined &&
-					                !dic.ContainsKey(cat.HotKey))
-						dic.Add(cat.HotKey, cat);
-				}
+		void HandleOpenedProjectChanged (Project project, LongoMatch.Common.ProjectType projectType, LongoMatch.Common.PlaysFilter filter, IAnalysisWindow analysisWindow, IProjectOptionsController projectOptions)
+		{
+			if(project == null) {
+				ignoreKeys = true;
+				return;
+			}
+			
+			if (this.analysisWindow != analysisWindow) {
+				analysisWindow.KeyPressed += KeyListener;
+				this.analysisWindow = analysisWindow;
+			}
+			
+			dic.Clear();
+			ignoreKeys = false;
+			foreach(Category cat in project.Categories) {
+				if(cat.HotKey.Defined &&
+				   !dic.ContainsKey(cat.HotKey))
+					dic.Add(cat.HotKey, cat);
 			}
 		}
 

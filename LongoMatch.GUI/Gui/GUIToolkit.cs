@@ -40,7 +40,7 @@ namespace LongoMatch.Gui
 	public class GUIToolkit: IGUIToolkit
 	{
 		static GUIToolkit instance;
-		IMainWindow mainWindow;
+		MainWindow mainWindow;
 		
 		public GUIToolkit (Version version)
 		{
@@ -56,9 +56,15 @@ namespace LongoMatch.Gui
 			}
 		}
 		
-		public IMainWindow MainWindow{
+		public IMainController MainController {
 			get {
 				return mainWindow;
+			}
+		}
+		
+		public IRenderingStateBar RenderingStateBar {
+			get {
+				return mainWindow.RenderingStateBar;
 			}
 		}
 		
@@ -367,6 +373,23 @@ namespace LongoMatch.Gui
 			return remuxer.Remux (mainWindow as Gtk.Window);
 		}
 		
+		public void OpenProject (Project project, ProjectType projectType, 
+		                         CaptureSettings props, PlaysFilter filter,
+			                     out IAnalysisWindow analysisWindow,
+			                     out IProjectOptionsController projectOptionsController)
+		{
+			analysisWindow = mainWindow.SetProject (project, projectType, props, filter);
+			projectOptionsController = mainWindow;
+		}
+		
+		public void CloseProject ()
+		{
+			mainWindow.CloseProject ();
+		}
+		
+		public void Quit () {
+			Gtk.Application.Quit ();
+		}
 	}
 }
 

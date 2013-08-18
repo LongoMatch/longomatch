@@ -43,13 +43,13 @@ namespace LongoMatch.Services
 		{
 			this.guiToolkit = guiToolkit;
 			this.multimediaToolkit = multimediaToolkit; 
-			this.stateBar = guiToolkit.MainWindow.RenderingStateBar;
+			this.stateBar = guiToolkit.RenderingStateBar;
 			capturer = multimediaToolkit.GetFramesCapturer();
 			jobs = new List<Job>();
 			pendingJobs = new List<Job>();
 			stateBar.Cancel += (sender, e) => CancelCurrentJob();
 			stateBar.ManageJobs += (sender, e) => ManageJobs();
-			guiToolkit.MainWindow.ConvertVideoFilesEvent += delegate(List<MediaFile> inputFiles, EncodingSettings encSettings) {
+			guiToolkit.MainController.ConvertVideoFilesEvent += delegate(List<MediaFile> inputFiles, EncodingSettings encSettings) {
 				ConversionJob job = new ConversionJob(inputFiles, encSettings);
 				AddJob (job);
 			};; 

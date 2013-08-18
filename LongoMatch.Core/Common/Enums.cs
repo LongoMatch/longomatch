@@ -131,4 +131,11 @@ namespace LongoMatch.Common
 		VideoEdition,
 		VideoConversion
 	}
+	
+	public enum VideoAnalysisMode {
+		PredefinedTagging,
+		ManualTagging,
+		Timeline,
+		GameUnits,
+	}
 }

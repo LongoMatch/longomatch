@@ -452,4 +452,36 @@
       </itemgroup>
     </signals>
   </object>
+  <object type="LongoMatch.Gui.Component.AnalysisComponent" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="IAnalysisWindow Signals">
+        <signal name="NewTagEvent" />
+        <signal name="NewTagStartEvent" />
+        <signal name="NewTagStopEvent" />
+        <signal name="PlaySelectedEvent" />
+        <signal name="NewTagAtFrameEvent" />
+        <signal name="TagPlayEvent" />
+        <signal name="PlaysDeletedEvent" />
+        <signal name="TimeNodeChanged" />
+        <signal name="PlayCategoryChanged" />
+        <signal name="RenderPlaylistEvent" />
+        <signal name="PlayListNodeAddedEvent" />
+        <signal name="PlayListNodeSelectedEvent" />
+        <signal name="OpenPlaylistEvent" />
+        <signal name="NewPlaylistEvent" />
+        <signal name="SavePlaylistEvent" />
+        <signal name="SnapshotSeriesEvent" />
+        <signal name="GameUnitEvent" />
+        <signal name="UnitChanged" />
+        <signal name="UnitSelected" />
+        <signal name="UnitDeleted" />
+        <signal name="UnitAdded" />
+        <signal name="KeyPressed" />
+        <signal name="CloseOpenedProjectEvent" />
+        <signal name="NewTagCancelEvent" />
+        <signal name="DuplicatePlay" />
+      </itemgroup>
+    </signals>
+  </object>
 </objects>

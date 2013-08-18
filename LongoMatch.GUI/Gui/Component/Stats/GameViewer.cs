@@ -67,6 +67,7 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		void UpdateGui () {
+		
 			homelabel.Text = stats.LocalTeam;
 			awaylabel.Text = stats.VisitorTeam;
 			GetMaxSize(out catsMaxSize, out subcatsMaxSize);

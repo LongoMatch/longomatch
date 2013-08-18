@@ -43,26 +43,45 @@ namespace LongoMatch.Services
 		/* current project in use */
 		Project openedProject;
 		ProjectType projectType;
-		Time startTime;
 		PlaysFilter filter;
 		Dictionary<Category, Time> catsTime;
 		
 		IGUIToolkit guiToolkit;
-		IMainWindow mainWindow;
+		IAnalysisWindow analysisWindow;
+		IProjectOptionsController poController;
 		IPlayer player;
 		ICapturer capturer;
 		IRenderingJobsManager renderer;
 
-		public EventsManager(IGUIToolkit guiToolkit, IRenderingJobsManager renderer)
+		public EventsManager(IGUIToolkit guiToolkit, IRenderingJobsManager renderer,
+		                     ProjectsManager pManager)
 		{
 			this.guiToolkit = guiToolkit;
 			this.renderer = renderer;
-			mainWindow = guiToolkit.MainWindow;
-			player = mainWindow.Player;
-			capturer = mainWindow.Capturer;
-			drawingManager = new VideoDrawingsManager(player);
+			pManager.OpenedProjectChanged += HandleOpenedProjectChanged;
+			drawingManager = new VideoDrawingsManager(pManager);
 			catsTime = new Dictionary<Category, Time>();
-			ConnectSignals();
+		}
+
+		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
+		                                 PlaysFilter filter, IAnalysisWindow analysisWindow,
+		                                 IProjectOptionsController projectOptionsController)
+		{
+			this.openedProject = project;
+			this.projectType = projectType;
+			this.filter = filter;
+			catsTime.Clear ();
+			
+			if (project == null)
+				return;
+				
+			player = analysisWindow.Player;
+			capturer = analysisWindow.Capturer;
+			this.poController = projectOptionsController;
+			if (this.analysisWindow != analysisWindow) {
+				this.analysisWindow = analysisWindow;
+				ConnectSignals();
+			}
 		}
 
 		void Save (Project project) {
@@ -71,45 +90,42 @@ namespace LongoMatch.Services
 			}
 		}
 		
-		public void SetProject (Project project, ProjectType projectType,
-		                        PlaysFilter filter)
-		{
-			this.filter = filter;
-			this.openedProject = project;
-			this.projectType = projectType;
-			catsTime.Clear ();
-		}
-
 		private void ConnectSignals() {
 			/* Adding Handlers for each event */
 
 			/* Connect tagging related events */
-			mainWindow.NewTagEvent += OnNewTag;
-			mainWindow.NewTagStartEvent += OnNewPlayStart;
-			mainWindow.NewTagStopEvent += OnNewPlayStop;
-			mainWindow.NewTagCancelEvent += OnNewPlayCancel;
-			mainWindow.NewTagAtFrameEvent += OnNewTagAtFrame;
-			mainWindow.TimeNodeChanged += OnTimeNodeChanged;
-			mainWindow.PlaysDeletedEvent += OnPlaysDeleted;
-			mainWindow.PlaySelectedEvent += OnPlaySelected;
-			mainWindow.PlayCategoryChanged += OnPlayCategoryChanged;
-			mainWindow.DuplicatePlay += OnDuplicatePlay;
+			analysisWindow.NewTagEvent += OnNewTag;
+			analysisWindow.NewTagStartEvent += OnNewPlayStart;
+			analysisWindow.NewTagStopEvent += OnNewPlayStop;
+			analysisWindow.NewTagCancelEvent += OnNewPlayCancel;
+			analysisWindow.NewTagAtFrameEvent += OnNewTagAtFrame;
+			analysisWindow.TimeNodeChanged += OnTimeNodeChanged;
+			analysisWindow.PlaysDeletedEvent += OnPlaysDeleted;
+			analysisWindow.PlaySelectedEvent += OnPlaySelected;
+			analysisWindow.PlayCategoryChanged += OnPlayCategoryChanged;
+			analysisWindow.DuplicatePlay += OnDuplicatePlay;
 
 			/* Connect playlist events */
-			mainWindow.PlayListNodeSelectedEvent += (tn) => {selectedTimeNode = tn;};
+			analysisWindow.PlayListNodeSelectedEvent += (tn) => {selectedTimeNode = tn;};
 			/* Connect tags events */
-			mainWindow.TagPlayEvent += OnTagPlay;
+			analysisWindow.TagPlayEvent += OnTagPlay;
 
 			/* Connect SnapshotSeries events */
-			mainWindow.SnapshotSeriesEvent += OnSnapshotSeries;
+			analysisWindow.SnapshotSeriesEvent += OnSnapshotSeries;
 			
-			mainWindow.ShowProjectStatsEvent += HandleShowProjectStatsEvent;
+			poController.ShowProjectStatsEvent += HandleShowProjectStatsEvent;
+			poController.TagSubcategoriesChangedEvent += HandleTagSubcategoriesChangedEvent;
 			
 			/* Connect player events */
 			player.Prev += OnPrev;
 			player.SegmentClosedEvent += OnSegmentClosedEvent;
 			player.DrawFrame += OnDrawFrame;
 			player.PlaybackRateChanged += HandlePlaybackRateChanged;
+		}
+
+		void HandleTagSubcategoriesChangedEvent (bool tagsubcategories)
+		{
+			Config.FastTagging = !tagsubcategories;
 		}
 
 		void HandleShowProjectStatsEvent (Project project)
@@ -197,7 +213,7 @@ namespace LongoMatch.Services
 			/* Tag subcategories of the new play */
 			if (!Config.FastTagging)
 				LaunchPlayTagger(play, false);
-			mainWindow.AddPlay(play);
+			analysisWindow.AddPlay(play);
 			filter.Update();
 			if (projectType == ProjectType.FileProject) {
 				player.Play();
@@ -233,7 +249,8 @@ namespace LongoMatch.Services
 		}
 
 		public virtual void OnNewPlayStart (Category category) {
-			catsTime.Add (category, new Time {MSeconds = (int)player.CurrentTime});
+			Time startTime = new Time {MSeconds = (int)player.CurrentTime};
+			catsTime.Add (category, startTime);
 			Log.Debug("New play start time: " + startTime);
 		}
 		
@@ -294,7 +311,7 @@ namespace LongoMatch.Services
 			selectedTimeNode = play;
 			player.SetStartStop(play.Start.MSeconds,play.Stop.MSeconds, play.Rate);
 			drawingManager.Play=play;
-			mainWindow.UpdateSelectedPlay(play);
+			analysisWindow.UpdateSelectedPlay(play);
 		}
 
 		protected virtual void OnTimeNodeChanged(TimeNode tNode, object val)
@@ -312,7 +329,7 @@ namespace LongoMatch.Services
 				}
 			}
 			else if(tNode is Category) {
-				mainWindow.UpdateCategories(openedProject.Categories);
+				analysisWindow.UpdateCategories(openedProject.Categories);
 			}
 			filter.Update();
 		}
@@ -320,7 +337,7 @@ namespace LongoMatch.Services
 		protected virtual void OnPlaysDeleted(List<Play> plays)
 		{
 			Log.Debug(plays.Count + " plays deleted");
-			mainWindow.DeletePlays(plays);
+			analysisWindow.DeletePlays(plays);
 			openedProject.RemovePlays(plays);
 
 			if(projectType == ProjectType.FileProject) {
@@ -336,7 +353,7 @@ namespace LongoMatch.Services
 			/* The category is also serialized and desarialized */
 			copy.Category = play.Category;
 			openedProject.AddPlay (copy);
-			mainWindow.AddPlay (copy);
+			analysisWindow.AddPlay (copy);
 			filter.Update();
 		}
 
@@ -379,8 +396,9 @@ namespace LongoMatch.Services
 			newplay.Name = play.Name;
 			newplay.Notes = play.Notes;
 			newplay.Drawings = play.Drawings;
-			mainWindow.AddPlay(newplay);
+			analysisWindow.AddPlay(newplay);
 			Save (openedProject);
 		}
+		
 	}
 }

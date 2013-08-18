@@ -38,27 +38,23 @@ namespace LongoMatch.Services
 
 		IGUIToolkit guiToolkit;
 		IMultimediaToolkit multimediaToolkit;
-		IMainWindow mainWindow;
+		IMainController mainController;
+		IAnalysisWindow analysisWindow;
+		IProjectOptionsController projectOptionsController;
+		TemplatesService ts;
 		
-		public ProjectsManager(IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit) {
+		public ProjectsManager (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit,
+		                       TemplatesService ts) {
 			this.multimediaToolkit = multimediaToolkit;
 			this.guiToolkit = guiToolkit;
-			mainWindow = guiToolkit.MainWindow;
-			Player = mainWindow.Player;
-			Capturer = mainWindow.Capturer;
+			this.ts =ts;
+			mainController = guiToolkit.MainController;
 			ConnectSignals();
 		}
 
 		public void ConnectSignals() {
-			mainWindow.NewProjectEvent += NewProject;
-			mainWindow.OpenProjectEvent += OpenProject;
-			mainWindow.CloseOpenedProjectEvent += CloseOpenedProject;
-			mainWindow.SaveProjectEvent += SaveProject;
-			mainWindow.ImportProjectEvent += ImportProject;
-			mainWindow.ExportProjectEvent += ExportProject;
-			mainWindow.ManageProjectsEvent += OpenProjectsManager;
-			mainWindow.ManageCategoriesEvent += OpenCategoriesTemplatesManager;
-			mainWindow.ManageTeamsEvent += OpenTeamsTemplatesManager;
+			mainController.NewProjectEvent += NewProject;
+			mainController.OpenProjectEvent += OpenProject;
 		}
 		
 		public Project OpenedProject {
@@ -88,7 +84,8 @@ namespace LongoMatch.Services
 		
 		private void EmitProjectChanged() {
 			if (OpenedProjectChanged != null)
-				OpenedProjectChanged(OpenedProject, OpenedProjectType, PlaysFilter);
+				OpenedProjectChanged (OpenedProject, OpenedProjectType, PlaysFilter,
+				                      analysisWindow, projectOptionsController);
 		}
 		
 		void RemuxOutputFile (EncodingSettings settings) {
@@ -166,71 +163,21 @@ namespace LongoMatch.Services
 			SetProject(project, ProjectType.FileProject, new CaptureSettings());
 		}
 	
-		private void ImportProject(string name, string filterName, string filter,
-		                           Func<string, Project> importProject, bool requiresNewFile) {
-			Project project;
-			string fileName;
-
-			Log.Debug("Importing project");
-			/* Show a file chooser dialog to select the file to import */
-			fileName = guiToolkit.OpenFile(name, null, Config.HomeDir, filterName,
-			                               new string[] {filter});
-				
-			if(fileName == null)
-				return;
-
-			/* try to import the project and show a message error is the file
-			 * is not a valid project */
-			try {
-				project = importProject(fileName);
-			}
-			catch(Exception ex) {
-				guiToolkit.ErrorMessage(Catalog.GetString("Error importing project:") +
-					"\n"+ex.Message);
-				Log.Exception(ex);
-				return;
-			}
-
-			if (requiresNewFile) {
-				string videofile;
-				
-				guiToolkit.InfoMessage (Catalog.GetString("This project doesn't have any file associated.\n" +
-				                                          "Select one in the next window"));
-				videofile = guiToolkit.OpenFile(Catalog.GetString("Select a video file"), null,
-				                                                 Config.HomeDir, null, null);
-				if (videofile == null) {
-					guiToolkit.ErrorMessage (Catalog.GetString("Could not import project, you need a video file"));
-					return;
-				} else {
-					try {
-						project.Description.File = multimediaToolkit.DiscoverFile(videofile);
-					} catch (Exception ex) {
-						guiToolkit.ErrorMessage (ex.Message);
-						return;
-					}
-					CreateThumbnails (project);
-				}
-			}
-			
-			/* If the project exists ask if we want to overwrite it */
-			if(Core.DB.Exists(project)) {
-				var res = guiToolkit.QuestionMessage(Catalog.GetString("A project already exists for the file:") +
-					project.Description.File.FilePath+ "\n" +
-					Catalog.GetString("Do you want to overwrite it?"), null);
-				if(!res)
-					return;
-				Core.DB.UpdateProject(project);
-			} else {
-				Core.DB.AddProject(project);
-			}
-
-			guiToolkit.InfoMessage(Catalog.GetString("Project successfully imported."));
-		}
-	
 		private bool SetProject(Project project, ProjectType projectType, CaptureSettings props)
 		{
-			if(OpenedProject != null)
+			if (OpenedProject != null) {
 				CloseOpenedProject(true);
+			}
+				
+			PlaysFilter = new PlaysFilter(project);
+			guiToolkit.OpenProject (project, projectType, props, PlaysFilter,
+			                        out analysisWindow, out projectOptionsController);
+			Player = analysisWindow.Player;
+			Capturer = analysisWindow.Capturer;
+			projectOptionsController.CloseOpenedProjectEvent += () => {PromptCloseProject ();};
+			projectOptionsController.SaveProjectEvent += SaveProject;
+			OpenedProject = project;
+			OpenedProjectType = projectType;
 
 			if(projectType == ProjectType.FileProject) {
 				// Check if the file associated to the project exists
@@ -244,8 +191,9 @@ namespace LongoMatch.Services
 					Player.Open(project.Description.File.FilePath);
 				}
 				catch(Exception ex) {
+					Log.Exception (ex);
 					guiToolkit.ErrorMessage(Catalog.GetString("An error occurred opening this project:") + "\n" + ex.Message);
-					CloseOpenedProject(true);
+					CloseOpenedProject (false);
 					return false;
 				}
 
@@ -257,7 +205,7 @@ namespace LongoMatch.Services
 						Capturer.Type = CapturerType.Live;
 					} catch(Exception ex) {
 						guiToolkit.ErrorMessage(ex.Message);
-						CloseOpenedProject(false);
+						CloseOpenedProject (false);
 						return false;
 					}
 				} else
@@ -265,10 +213,6 @@ namespace LongoMatch.Services
 				Capturer.Run();
 			}
 
-			OpenedProject = project;
-			OpenedProjectType = projectType;
-			PlaysFilter = new PlaysFilter(project);
-			mainWindow.SetProject(project, projectType, props, PlaysFilter);
 			EmitProjectChanged();
 			return true;
 		}
@@ -300,34 +244,49 @@ namespace LongoMatch.Services
 			fChooser.Destroy();
 		}*/
 
-		private void CreateThumbnails(Project project) {
-			IFramesCapturer capturer;
-			IBusyDialog dialog;
+		private bool PromptCloseProject() {
+			int res;
+			//EndCaptureDialog dialog;
 
-			dialog = guiToolkit.BusyDialog(Catalog.GetString("Creating video thumbnails. This can take a while."));
-			dialog.Show();
-			dialog.Pulse();
+			if(OpenedProject == null)
+				return true;
 
-			/* Create all the thumbnails */
-			capturer = multimediaToolkit.GetFramesCapturer();
-			capturer.Open(project.Description.File.FilePath);
-			foreach(Play play in project.AllPlays()) {
-				try {
-					capturer.SeekTime(play.Start.MSeconds + ((play.Stop - play.Start).MSeconds/2),
-					                  true);
-					play.Miniature = capturer.GetCurrentFrame(Constants.THUMBNAIL_MAX_WIDTH,
-					                 Constants.THUMBNAIL_MAX_HEIGHT);
-					dialog.Pulse();
-
-				} catch (Exception ex) {
-					Log.Exception(ex);
+			if(OpenedProjectType == ProjectType.FileProject) {
+				bool ret;
+				ret = guiToolkit.QuestionMessage (
+					Catalog.GetString("Do you want to close the current project?"), null);
+				if (ret) {
+					CloseOpenedProject (true);
+					return true;
 				}
+				return false;
 			}
-			capturer.Dispose();
+
+			res = 0;
+			/* Capture project */
+			/*dialog = new EndCaptureDialog();
+			dialog.TransientFor = (Gtk.Window)this.Toplevel;
+			
+			res = dialog.Run();
 			dialog.Destroy();
+
+			/* Close project wihtout saving */
+			if(res == (int)EndCaptureResponse.Quit) {
+				CloseOpenedProject (false);
+				return true;
+			} else if(res == (int)EndCaptureResponse.Save) {
+				/* Close and save project */
+				CloseOpenedProject (true);
+				return true;
+			} else
+				/* Continue with the current project */
+				return false;
 		}
-		
-		private void CloseOpenedProject(bool save) {
+
+		private void CloseOpenedProject (bool save) {
+			if(OpenedProject == null)
+				return;
+				
 			if (save)
 				SaveProject(OpenedProject, OpenedProjectType);
 			
@@ -340,6 +299,7 @@ namespace LongoMatch.Services
 				OpenedProject.Clear();
 			OpenedProject = null;
 			OpenedProjectType = ProjectType.None;
+			guiToolkit.CloseProject ();
 			EmitProjectChanged();
 		}
 		
@@ -373,6 +333,10 @@ namespace LongoMatch.Services
 
 			Log.Debug("Creating new project");
 			
+			if (!PromptCloseProject ()) {
+				return;
+			}
+			
 			/* Show the project selection dialog */
 			projectType = guiToolkit.SelectNewProjectType();
 			
@@ -382,17 +346,15 @@ namespace LongoMatch.Services
 					guiToolkit.ErrorMessage(Catalog.GetString("No capture devices were found."));
 					return;
 				}
-				project = guiToolkit.NewCaptureProject(Core.DB, Core.TemplatesService, devices,
-					out captureSettings);
+				project = guiToolkit.NewCaptureProject(Core.DB, ts, devices, out captureSettings);
 			} else if (projectType == ProjectType.FakeCaptureProject) {
-				project = guiToolkit.NewFakeProject(Core.DB, Core.TemplatesService);
+				project = guiToolkit.NewFakeProject(Core.DB, ts);
 			} else if (projectType == ProjectType.FileProject) {
-				project = guiToolkit.NewFileProject(Core.DB, Core.TemplatesService);
+				project = guiToolkit.NewFileProject(Core.DB, ts);
 				if (project != null)
 					Core.DB.AddProject(project);
 			} else if (projectType == ProjectType.URICaptureProject) {
-				project = guiToolkit.NewURICaptureProject(Core.DB, Core.TemplatesService,
-				                                          out captureSettings);
+				project = guiToolkit.NewURICaptureProject(Core.DB, ts, out captureSettings);
 			} else {
 				project = null;
 			}
@@ -404,6 +366,10 @@ namespace LongoMatch.Services
 		protected void OpenProject() {
 			Project project = null;
 			ProjectDescription projectDescription = null;
+			
+			if (!PromptCloseProject ()) {
+				return;
+			}
 			
 			projectDescription = guiToolkit.SelectProject(Core.DB.GetAllProjects());
 			if (projectDescription == null)
@@ -421,50 +387,12 @@ namespace LongoMatch.Services
 					Catalog.GetString("You are opening a live project without any video file associated yet.") +
 					"\n" + Catalog.GetString("Select a video file in the next step."));
 				
-				project = guiToolkit.EditFakeProject(Core.DB, project, Core.TemplatesService);
+				project = guiToolkit.EditFakeProject(Core.DB, project, ts);
 				if (project == null)
 					return;
-				CreateThumbnails(project);
+				ToolsManager.CreateThumbnails(project, guiToolkit, multimediaToolkit.GetFramesCapturer());
 			}
 			SetProject(project, ProjectType.FileProject, new CaptureSettings());
 		}
-		
-		protected void ExportProject() {
-			if (OpenedProject == null) {
-				Log.Warning("Opened project is null and can't be exported");
-			}
-			
-			string filename = guiToolkit.SaveFile(Catalog.GetString("Save project"), null,
-				Config.HomeDir, Constants.PROJECT_NAME, new string[] {Constants.PROJECT_EXT});
-			
-			if (filename == null)
-				return;
-			
-			System.IO.Path.ChangeExtension(filename, Constants.PROJECT_EXT);
-			
-			try {
-				Project.Export(OpenedProject, filename);
-				guiToolkit.InfoMessage(Catalog.GetString("Project exported successfully"));
-			}catch (Exception ex) {
-				guiToolkit.ErrorMessage(Catalog.GetString("Error exporting project"));
-				Log.Exception(ex);
-			}
-		}
-		
-		protected void OpenCategoriesTemplatesManager()
-		{
-			guiToolkit.OpenCategoriesTemplatesManager (Core.TemplatesService);
-		}
-
-		protected void OpenTeamsTemplatesManager()
-		{
-			guiToolkit.OpenTeamsTemplatesManager (Core.TemplatesService.TeamTemplateProvider);
-		}
-		
-		protected void OpenProjectsManager()
-		{
-			guiToolkit.OpenProjectsManager(OpenedProject, Core.DB, Core.TemplatesService);
-		}
-
 	}
 }

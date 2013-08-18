@@ -48,7 +48,7 @@ namespace LongoMatch.Addins
 			}
 		}
 		
-		public void LoadExportProjectAddins(IMainWindow mainWindow) {
+		public void LoadExportProjectAddins(IMainController mainWindow) {
 			foreach (IExportProject exportProject in AddinManager.GetExtensionObjects<IExportProject> ()) {
 				try {
 					mainWindow.AddExportEntry(exportProject.GetMenuEntryName(), exportProject.GetMenuEntryShortName(),
@@ -60,7 +60,7 @@ namespace LongoMatch.Addins
 			}
 		}
 		
-		public void LoadImportProjectAddins(IMainWindow mainWindow) {
+		public void LoadImportProjectAddins(IMainController mainWindow) {
 			foreach (IImportProject importProject in AddinManager.GetExtensionObjects<IImportProject> ()) {
 				try{
 					mainWindow.AddImportEntry(importProject.GetMenuEntryName(), importProject.GetMenuEntryShortName(),

@@ -26,42 +26,40 @@ namespace LongoMatch.Services
 {
 	public class GameUnitsManager
 	{
-		IMainWindow mainWindow;
+		IAnalysisWindow analysisWindow;
 		IPlayer player;
 		Project openedProject;
 		Dictionary<GameUnit, Time> gameUnitsStarted;
 		ushort fps;
 		
-		
-		public GameUnitsManager (IMainWindow mainWindow, IPlayer player)
+		public GameUnitsManager (ProjectsManager pManager)
 		{
-			this.mainWindow = mainWindow;
-			this.player = player;
 			gameUnitsStarted = new Dictionary<GameUnit, Time>();
-			mainWindow.GameUnitEvent += HandleMainWindowGameUnitEvent;
-			mainWindow.UnitAdded += HandleUnitAdded;
-			mainWindow.UnitChanged += HandleUnitChanged;
-			mainWindow.UnitDeleted += HandleUnitDeleted;
-			mainWindow.UnitSelected += HandleUnitSelected;
+			pManager.OpenedProjectChanged += HandleOpenedProjectChanged;
 		}
 
-		public Project OpenedProject{
-			set {
-				openedProject = value;
-				gameUnitsStarted.Clear();
-				
-				if (openedProject == null)
-					return;
-				
-				fps = openedProject.Description.File.Fps;
-				mainWindow.UpdateGameUnits(value.GameUnits);
+		void HandleOpenedProjectChanged (Project project, ProjectType projectType, PlaysFilter filter,
+		                                 IAnalysisWindow analysisWindow, IProjectOptionsController projectOptions)
+		{
+			openedProject = project;
+			if (openedProject == null)
+				return;
+			
+			if (this.analysisWindow != analysisWindow) {
+				analysisWindow.GameUnitEvent += HandleMainWindowGameUnitEvent;
+				analysisWindow.UnitAdded += HandleUnitAdded;
+				analysisWindow.UnitChanged += HandleUnitChanged;
+				analysisWindow.UnitDeleted += HandleUnitDeleted;
+				analysisWindow.UnitSelected += HandleUnitSelected;
 			}
+			this.analysisWindow = analysisWindow;
+			this.player = analysisWindow.Player;
+			gameUnitsStarted.Clear();
+			
+			fps = openedProject.Description.File.Fps;
+			analysisWindow.UpdateGameUnits(openedProject.GameUnits);
 		}
-	
-		private void ConnectSignals() {
-			mainWindow.GameUnitEvent += HandleMainWindowGameUnitEvent;
-		}
-		
+
 		private void StartGameUnit(GameUnit gameUnit) {
 			if (gameUnitsStarted.ContainsKey(gameUnit)){
 				Log.Warning("Trying to start a game unit that was already started");

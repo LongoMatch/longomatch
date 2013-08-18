@@ -63,8 +63,8 @@ namespace LongoMatch
 				manager.LoadConfigModifierAddins();
 			    GUIToolkit guiToolkit = new GUIToolkit(version);
 			    IMultimediaToolkit multimediaToolkit = new MultimediaFactory();
-			    manager.LoadExportProjectAddins(guiToolkit.MainWindow);
-			    manager.LoadImportProjectAddins(guiToolkit.MainWindow);
+			    manager.LoadExportProjectAddins(guiToolkit.MainController);
+			    manager.LoadImportProjectAddins(guiToolkit.MainController);
 			    try {
 					Core.Start(guiToolkit, multimediaToolkit);
 			    } catch (DBLockedException locked) {

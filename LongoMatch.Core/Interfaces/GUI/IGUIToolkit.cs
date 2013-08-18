@@ -30,9 +30,12 @@ namespace LongoMatch.Interfaces.GUI
 {
 	public interface IGUIToolkit
 	{
-		IMainWindow MainWindow {get;}
+		IMainController MainController {get;}
+		IRenderingStateBar RenderingStateBar {get;}
 		Version Version {get;}
 	
+		void Quit ();
+		
 		/* Messages */
 		void InfoMessage(string message, Widget parent=null);
 		void WarningMessage(string message, Widget parent=null);
@@ -54,6 +57,12 @@ namespace LongoMatch.Interfaces.GUI
 		List<EditionJob> ConfigureRenderingJob (IPlayList playlist);
 		void ExportFrameSeries(Project openenedProject, Play play, string snapshotDir);
 		
+		void OpenProject (Project project, ProjectType projectType, 
+		                  CaptureSettings props, PlaysFilter filter,
+		                  out IAnalysisWindow analysisWindow,
+		                  out IProjectOptionsController projectOptionsController);
+		void CloseProject ();
+			                     
 		ProjectDescription SelectProject(List<ProjectDescription> projects);
 		ProjectType SelectNewProjectType();
 		

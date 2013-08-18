@@ -54,13 +54,15 @@ namespace LongoMatch.Handlers
 	
 	/* Project Events */
 	public delegate void SaveProjectHandler(Project project, ProjectType projectType);
-	public delegate void OpenedProjectChangedHandler(Project project, ProjectType projectType, PlaysFilter filter);
+	public delegate void OpenedProjectChangedHandler(Project project, ProjectType projectType, PlaysFilter filter,
+	                                                 IAnalysisWindow analysisWindow, IProjectOptionsController projectOptions);
 	public delegate void OpenProjectHandler();
-	public delegate void CloseOpenendProjectHandler(bool save);
+	public delegate void CloseOpenendProjectHandler();
 	public delegate void NewProjectHandler();
 	public delegate void ImportProjectHandler(string name, string filterName, string filter,
 	                                          Func <string, Project> importProjectFunc, bool requiresNewFile);
 	public delegate void ExportProjectHandler();
+	public delegate void QuitApplicationHandler ();
 	
 	/* GUI */
 	public delegate void ManageJobsHandler();
@@ -147,4 +149,10 @@ namespace LongoMatch.Handlers
 	
 	/* Show project stats */
 	public delegate void ShowProjectStats(Project project);
+	
+	public delegate void ShowFullScreenHandler (bool fullscreen);
+	public delegate void PlaylistVisibiltyHandler (bool visible);
+	public delegate void AnalysisWidgetsVisibilityHandler (bool visible);
+	public delegate void AnalysisModeChangedHandler (VideoAnalysisMode mode);
+	public delegate void TagSubcategoriesChangedHandler (bool tagsubcategories);
 }

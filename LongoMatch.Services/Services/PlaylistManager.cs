@@ -35,28 +35,37 @@ namespace LongoMatch.Services
 		IPlayList playlist;
 		IPlayer player;
 		IRenderingJobsManager videoRenderer;
+		IAnalysisWindow analysisWindow;
 		/* FIXME */
 		TimeNode selectedTimeNode;
 		
 		bool clockStarted;
 		Timer timeout;
+		Project openedProject;
 		
-		public PlaylistManager (IGUIToolkit guiToolkit, IRenderingJobsManager videoRenderer)
+		public PlaylistManager (IGUIToolkit guiToolkit, IRenderingJobsManager videoRenderer,
+		                        ProjectsManager pManager)
 		{
 			this.videoRenderer = videoRenderer;
 			this.guiToolkit = guiToolkit;
-			playlistWidget = guiToolkit.MainWindow.Playlist;
-			player = guiToolkit.MainWindow.Player;
-			BindEvents(guiToolkit.MainWindow, guiToolkit.MainWindow.Player);
+			pManager.OpenedProjectChanged += HandleOpenedProjectChanged;
+		}
+
+		void HandleOpenedProjectChanged (Project project, ProjectType projectType, PlaysFilter filter, IAnalysisWindow analysisWindow, IProjectOptionsController projectOptions)
+		{
+			openedProject = project;
+			if (project != null) {
+				playlistWidget = analysisWindow.Playlist;
+				player = analysisWindow.Player;
+				if (this.analysisWindow != analysisWindow) {
+					BindEvents(analysisWindow);
+					this.analysisWindow = analysisWindow;
+				}
+			}
 		}
 		
 		public void Stop() {
 			StopClock();
-		}
-		
-		public Project OpenedProject {
-			get;
-			set;
 		}
 		
 		public void Load(string filePath) {
@@ -70,24 +79,24 @@ namespace LongoMatch.Services
 			}
 		}
 		
-		private void BindEvents(IMainWindow mainWindow, IPlayer player) {
+		private void BindEvents(IAnalysisWindow analysisWindow) {
 			/* Track loaded element */
-			mainWindow.PlaySelectedEvent += (p) => {selectedTimeNode = p;};
-			player.SegmentClosedEvent += () => {selectedTimeNode = null;};
+			analysisWindow.PlaySelectedEvent += (p) => {selectedTimeNode = p;};
+			analysisWindow.Player.SegmentClosedEvent += () => {selectedTimeNode = null;};
 			
 			/* Handle New/Open/Save playlist */
-			mainWindow.OpenPlaylistEvent += OnOpenPlaylist;
-			mainWindow.NewPlaylistEvent += OnNewPlaylist;
-			mainWindow.SavePlaylistEvent += OnSavePlaylist;
+			analysisWindow.OpenPlaylistEvent += OnOpenPlaylist;
+			analysisWindow.NewPlaylistEvent += OnNewPlaylist;
+			analysisWindow.SavePlaylistEvent += OnSavePlaylist;
 			
 			/* Handle Add/Select/Rate events from other widgets */
-			mainWindow.PlayListNodeAddedEvent += OnPlayListNodeAdded;
-			mainWindow.PlayListNodeSelectedEvent += LoadPlaylistPlay;
-			mainWindow.RenderPlaylistEvent += OnRenderPlaylistEvent;
+			analysisWindow.PlayListNodeAddedEvent += OnPlayListNodeAdded;
+			analysisWindow.PlayListNodeSelectedEvent += LoadPlaylistPlay;
+			analysisWindow.RenderPlaylistEvent += OnRenderPlaylistEvent;
 			
 			/* Handle Next/Prev from the player */
-			player.Next += () => {Next();};
-			player.Prev += () => {
+			analysisWindow.Player.Next += () => {Next();};
+			analysisWindow.Player.Prev += () => {
 				if(selectedTimeNode is PlayListPlay)
 					Prev();
 			};
@@ -98,7 +107,7 @@ namespace LongoMatch.Services
 				guiToolkit.InfoMessage(Catalog.GetString("You have not loaded any playlist yet."));
 			} else {
 				foreach (Play p in plays) {
-					PlayListPlay pl = new PlayListPlay (p, OpenedProject.Description.File, true);
+					PlayListPlay pl = new PlayListPlay (p, openedProject.Description.File, true);
 					playlist.Add(pl);
 					playlistWidget.Add(pl);
 				}
@@ -107,7 +116,7 @@ namespace LongoMatch.Services
 		
 		private void LoadPlaylistPlay(PlayListPlay play)
 		{
-			if(OpenedProject != null) {
+			if(openedProject != null) {
 				guiToolkit.ErrorMessage(Catalog.GetString(
 					"Please, close the opened project to play the playlist."));
 				Stop();

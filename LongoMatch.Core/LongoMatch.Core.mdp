@@ -74,7 +74,7 @@
     <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IRenderingStateBar.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IPlayer.cs" />
     <File subtype="Code" buildaction="Compile" name="Handlers/Multimedia.cs" />
-    <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IMainWindow.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IAnalysisWindow.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/ICapturer.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IPlaylistWidget.cs" />
     <File subtype="Directory" buildaction="Compile" name="Interfaces" />
@@ -107,6 +107,8 @@
     <File subtype="Code" buildaction="Compile" name="Common/EncodingQuality.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Gettext.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Exceptions.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IMainController.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IProjectOptionsController.cs" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/field_background.svg" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/goal_background.svg" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/half_field_background.svg" />

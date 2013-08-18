@@ -37,13 +37,19 @@ namespace LongoMatch.Services
 		bool canStop;
 		Play loadedPlay;
 
-		public VideoDrawingsManager(IPlayer player)
+		public VideoDrawingsManager(ProjectsManager pManager)
 		{
-			this.player = player;
+			pManager.OpenedProjectChanged += HandleOpenedProjectChanged;
 		}
 
 		~ VideoDrawingsManager() {
 			StopClock();
+		}
+		
+		void HandleOpenedProjectChanged (Project project, ProjectType projectType, PlaysFilter filter,
+	                                 IAnalysisWindow analysisWindow, IProjectOptionsController projectOptions)
+		{
+			player = analysisWindow.Player;
 		}
 
 		public Play Play {
@@ -77,15 +83,19 @@ namespace LongoMatch.Services
 		}
 
 		private void ConnectSignals() {
-			player.PlayStateChanged += OnStateChanged;
-			player.SeekEvent += OnSeekEvent;
-			player.SegmentClosedEvent += OnSegmentCloseEvent;
+			if (player != null) {
+				player.PlayStateChanged += OnStateChanged;
+				player.SeekEvent += OnSeekEvent;
+				player.SegmentClosedEvent += OnSegmentCloseEvent;
+			}
 		}
 
 		private void DisconnectSignals() {
-			player.PlayStateChanged -= OnStateChanged;
-			player.SeekEvent -= OnSeekEvent;
-			player.SegmentClosedEvent -= OnSegmentCloseEvent;
+			if (player != null) {
+				player.PlayStateChanged -= OnStateChanged;
+				player.SeekEvent -= OnSeekEvent;
+				player.SegmentClosedEvent -= OnSegmentCloseEvent;
+			}
 		}
 
 		private int NextStopTime() {

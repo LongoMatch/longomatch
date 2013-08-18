@@ -42,72 +42,37 @@ namespace LongoMatch.Gui
 {
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(false)]
-	public partial class MainWindow : Gtk.Window, IMainWindow
+	public partial class MainWindow : Gtk.Window, IMainController, IProjectOptionsController
 	{
-	
-		/* Tags */
-		public event NewTagHandler NewTagEvent;
-		public event NewTagStartHandler NewTagStartEvent;
-		public event NewTagStopHandler NewTagStopEvent;
-		public event NewTagCancelHandler NewTagCancelEvent;
-		public event PlaySelectedHandler PlaySelectedEvent;
-		public event NewTagAtFrameHandler NewTagAtFrameEvent;
-		public event TagPlayHandler TagPlayEvent;
-		public event PlaysDeletedHandler PlaysDeletedEvent;
-		public event TimeNodeChangedHandler TimeNodeChanged;
-		public event PlayCategoryChangedHandler PlayCategoryChanged;
-		public event DuplicatePlayHandler DuplicatePlay;
-		
-		/* Playlist */
-		public event RenderPlaylistHandler RenderPlaylistEvent;
-		public event PlayListNodeAddedHandler PlayListNodeAddedEvent;
-		public event PlayListNodeSelectedHandler PlayListNodeSelectedEvent;
-		public event OpenPlaylistHandler OpenPlaylistEvent;
-		public event NewPlaylistHandler NewPlaylistEvent;
-		public event SavePlaylistHandler SavePlaylistEvent; 
-		
-		/* Video Converter */
-		public event ConvertVideoFilesHandler ConvertVideoFilesEvent;
-		
-		/* Snapshots */
-		public event SnapshotSeriesHandler SnapshotSeriesEvent;
-		
-		/* Projects */
-		public event SaveProjectHandler SaveProjectEvent;
+		/* IMainController */
 		public event NewProjectHandler NewProjectEvent;
 		public event OpenProjectHandler OpenProjectEvent;
-		public event CloseOpenendProjectHandler CloseOpenedProjectEvent;
 		public event ImportProjectHandler ImportProjectEvent;
 		public event ExportProjectHandler ExportProjectEvent;
-		public event ShowProjectStats ShowProjectStatsEvent;
+		public event QuitApplicationHandler QuitApplicationEvent;
 		
-		/* Managers */
 		public event ManageJobsHandler ManageJobsEvent; 
 		public event ManageTeamsHandler ManageTeamsEvent;
 		public event ManageCategoriesHandler ManageCategoriesEvent;
 		public event ManageProjects ManageProjectsEvent;
 		public event ManageDatabases ManageDatabasesEvent;
 		public event EditPreferences EditPreferencesEvent;
+		public event ConvertVideoFilesHandler ConvertVideoFilesEvent;
 		
-		/* Game Units events */
-		public event GameUnitHandler GameUnitEvent;
-		public event UnitChangedHandler UnitChanged;
-		public event UnitSelectedHandler UnitSelected;
-		public event UnitsDeletedHandler UnitDeleted;
-		public event UnitAddedHandler UnitAdded;
+		/* IProjectOptionsController */
+		public event SaveProjectHandler SaveProjectEvent;
+		public event CloseOpenendProjectHandler CloseOpenedProjectEvent;
+		public event ShowProjectStats ShowProjectStatsEvent;
+		public event ShowFullScreenHandler ShowFullScreenEvent;
+		public event PlaylistVisibiltyHandler PlaylistVisibilityEvent;
+		public event AnalysisWidgetsVisibilityHandler AnalysisWidgetsVisibilityEvent;
+		public event AnalysisModeChangedHandler AnalysisModeChangedEvent;
+		public event TagSubcategoriesChangedHandler TagSubcategoriesChangedEvent;
 		
-		public event KeyHandler KeyPressed;
-
-		private static Project openedProject;
-		private ProjectType projectType;
-		private TimeNode selectedTimeNode;		
-
-		TimeLineWidget timeline;
-		bool gameUnitsActionVisible;
-		GameUnitsTimelineWidget guTimeline;
 		IGUIToolkit guiToolKit;
-		Gtk.Window playerWindow;
-		bool detachedPlayer;
+		IAnalysisWindow analysisWindow;
+		Project openedProject;
+		ProjectType projectType;
 
 		#region Constructors
 		public MainWindow(IGUIToolkit guiToolkit) :
@@ -116,30 +81,11 @@ namespace LongoMatch.Gui
 			Screen screen;
 			
 			this.Build();
-			Title = Constants.SOFTWARE_NAME;
-
 			this.guiToolKit = guiToolkit;
-			
-			projectType = ProjectType.None;
-
-			timeline = new TimeLineWidget();
-			downbox.PackStart(timeline, true, true, 0);
-			
-			guTimeline = new GameUnitsTimelineWidget ();
-			downbox.PackStart(guTimeline, true, true, 0);
-			
+			Title = Constants.SOFTWARE_NAME;
 			TagSubcategoriesAction.Active = !Config.FastTagging;
+			projectType = ProjectType.None;
 			
-			playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
-			playercapturer.SetLogo(System.IO.Path.Combine(Config.ImagesDir,"background.png"));
-			playercapturer.LogoMode = true;
-			playercapturer.Tick += OnTick;
-			playercapturer.Detach += DetachPlayer;
-
-			playercapturer.Logo = System.IO.Path.Combine(Config.ImagesDir,"background.png");
-			playercapturer.CaptureFinished += (sender, e) => {CloseCaptureProject();};
-			
-			buttonswidget.Mode = TagMode.Predifined;
 			ConnectSignals();
 			ConnectMenuSignals();
 			
@@ -154,75 +100,16 @@ namespace LongoMatch.Gui
 			               false);
 			screen = Display.Default.DefaultScreen;
 			this.Resize(screen.Width * 80 / 100, screen.Height * 80 / 100);
-			postagger.SetMode (false);
+			analysisWindow = new AnalysisComponent();
 		}
 
 		#endregion
 		
 		#region Plubic Methods
-		public void AddPlay(Play play) {
-			playsSelection.AddPlay(play);
-			timeline.AddPlay(play);
-			timeline.QueueDraw();
-		}
-		
-		public void UpdateSelectedPlay (Play play) {
-			selectedTimeNode = play;
-			timeline.SelectedTimeNode = play;
-			postagger.LoadPlay (play, false);
-			SetTagsBoxVisibility (true);
-			notes.Play= play;
-		}
-
-		public void UpdateCategories (Categories categories) {
-			buttonswidget.Categories = openedProject.Categories;
-		}
-		
-		public void DeletePlays (List<Play> plays) {
-			playsSelection.RemovePlays(plays);
-			timeline.RemovePlays(plays);
-			timeline.QueueDraw();
-		}
-		
 		public IRenderingStateBar RenderingStateBar{
 			get {
 				return renderingstatebar1;
 			}
-		}
-		
-		public IPlayer Player{
-			get {
-				return playercapturer;
-			}
-		}
-		
-		public ICapturer Capturer{
-			get {
-				return playercapturer;
-			}
-		}
-		
-		public IPlaylistWidget Playlist{
-			get {
-				return playlist;
-			}
-		}
-		
-		public ITemplatesService TemplatesService {
-			set {
-				playsSelection.TemplatesService = value;
-			}
-		}
-		
-		public void UpdateGameUnits (GameUnitsList gameUnits) {
-			gameUnitsActionVisible = gameUnits != null && gameUnits.Count > 0;
-			GameUnitsViewAction.Sensitive = gameUnitsActionVisible;
-			if (gameUnits == null) {
-				gameunitstaggerwidget1.Visible = false;
-				return;
-			}
-			gameunitstaggerwidget1.Visible = true;
-			gameunitstaggerwidget1.GameUnits = gameUnits;
 		}
 		
 		public void AddExportEntry (string name, string shortName, Action<Project, IGUIToolkit> exportAction) {
@@ -243,6 +130,32 @@ namespace LongoMatch.Gui
 			item.Show();
 			(parent.Submenu as Menu).Append(item);
 		}
+		
+		public IAnalysisWindow SetProject(Project project, ProjectType projectType, CaptureSettings props, PlaysFilter filter)
+		{
+			ExportProjectAction1.Sensitive = true;
+			
+			openedProject = project;
+			if (projectType == ProjectType.FileProject) {
+				Title = System.IO.Path.GetFileNameWithoutExtension(
+					openedProject.Description.File.FilePath) + " - " + Constants.SOFTWARE_NAME;
+			} else {
+				Title = Constants.SOFTWARE_NAME;
+			}
+			MakeActionsSensitive(true, projectType);
+			analysisWindow.SetProject (project, projectType, props, filter);
+			(analysisWindow as Gtk.Widget).Show();
+			centralbox.PackStart (analysisWindow as Gtk.Widget, true, true, 0);
+			return analysisWindow;
+		}
+		
+		public void CloseProject () {
+			openedProject = null;
+			projectType = ProjectType.None;
+			centralbox.Remove (analysisWindow as Gtk.Widget);
+			ResetGUI ();
+		}
+		
 		#endregion
 		
 		#region Private Methods
@@ -255,77 +168,13 @@ namespace LongoMatch.Gui
 		
 		private void ConnectSignals() {
 			/* Adding Handlers for each event */
-
-			/* Connect new mark event */
-			buttonswidget.NewMarkEvent += EmitNewTag;;
-			buttonswidget.NewMarkStartEvent += EmitNewTagStart;
-			buttonswidget.NewMarkStopEvent += EmitNewTagStop;
-			buttonswidget.NewMarkCancelEvent += EmitNewTagCancel;
-			timeline.NewMarkEvent += EmitNewTagAtFrame;
-
-			/* Connect TimeNodeChanged events */
-			timeline.TimeNodeChanged += EmitTimeNodeChanged;
-			notes.TimeNodeChanged += EmitTimeNodeChanged;
-
-			/* Connect TimeNodeDeleted events */
-			playsSelection.PlaysDeleted += EmitPlaysDeleted;
-			timeline.TimeNodeDeleted += EmitPlaysDeleted;
-
-			/* Connect TimeNodeSelected events */
-			playsSelection.PlaySelected += OnTimeNodeSelected;
-			timeline.TimeNodeSelected += OnTimeNodeSelected;
-			
-			/* Connect TimeNodeChangedEvent */
-			playsSelection.TimeNodeChanged += EmitTimeNodeChanged;
-
-			/* Connect PlayCategoryChanged events */
-			playsSelection.PlayCategoryChanged += EmitPlayCategoryChanged;
-
-			/* Connect playlist events */
-			playlist.PlayListNodeSelected += EmitPlayListNodeSelected;
-			playlist.NewPlaylistEvent += EmitNewPlaylist;
-			playlist.OpenPlaylistEvent += EmitOpenPlaylist;
-			playlist.SavePlaylistEvent += EmitSavePlaylist;
-
-			/* Connect PlayListNodeAdded events */
-			playsSelection.PlayListNodeAdded += OnPlayListNodeAdded;
-			timeline.PlayListNodeAdded += OnPlayListNodeAdded;
-			
-			/* Connect duplicate plays */
-			playsSelection.DuplicatePlay += EmitDuplicatePlay;
-
-			/* Connect tags events */
-			playsSelection.TagPlay += EmitTagPlay;
-			timeline.TagPlay += EmitTagPlay;
-
-			/* Connect SnapshotSeries events */
-			playsSelection.SnapshotSeries += EmitSnapshotSeries;
-			timeline.SnapshotSeries += EmitSnapshotSeries;
-
-			playlist.RenderPlaylistEvent += EmitRenderPlaylist;
-			playsSelection.RenderPlaylist += EmitRenderPlaylist;
-			timeline.RenderPlaylist += EmitRenderPlaylist;
-			
 			renderingstatebar1.ManageJobs += (e, o) => {EmitManageJobs();};
-			
 			openAction.Activated += (sender, e) => {EmitSaveProject();};
-			
-			/* Game Units event */
-			gameunitstaggerwidget1.GameUnitEvent += EmitGameUnitEvent;
-			guTimeline.UnitAdded += EmitUnitAdded;;
-			guTimeline.UnitDeleted += EmitUnitDeleted;
-			guTimeline.UnitSelected += EmitUnitSelected;
-			guTimeline.UnitChanged += EmitUnitChanged;
-			
-			playercapturer.Error += OnMultimediaError;
-			playercapturer.SegmentClosedEvent += OnSegmentClosedEvent;
-			
-			KeyPressEvent += (o, args) => (EmitKeyPressed(o, (int)args.Event.Key, (int)args.Event.State));
  		}
 		
 		private void ConnectMenuSignals() {
 			SaveProjectAction.Activated += (o, e) => {EmitSaveProject();};
-			CloseProjectAction.Activated += (o, e) => {PromptCloseProject();};
+			CloseProjectAction.Activated += (o, e) => {EmitCloseOpenedProject ();};
 			ExportToProjectFileAction.Activated += (o, e) => {EmitExportProject();};
 			QuitAction.Activated += (o, e) => {CloseAndQuit();};
 			CategoriesTemplatesManagerAction.Activated += (o, e) => {EmitManageCategories();};
@@ -336,152 +185,9 @@ namespace LongoMatch.Gui
 			ShowProjectStatsAction.Activated += (sender, e) => {EmitShowProjectStats();}; 
 		}
 		
-		void DetachPlayer (bool detach) {
-			if (detach == detachedPlayer)
-				return;
-				
-			detachedPlayer = detach;
-			
-			if (detach) {
-				EventBox box;
-				Log.Debug("Detaching player");
-				
-				playerWindow = new Gtk.Window(Constants.SOFTWARE_NAME);
-				playerWindow.Icon = Stetic.IconLoader.LoadIcon(this, "longomatch", IconSize.Button);
-				playerWindow.DeleteEvent += (o, args) => DetachPlayer(false);
-				box = new EventBox();
-				
-				box.KeyPressEvent += (o, args) => OnKeyPressEvent(args.Event);
-				playerWindow.Add(box);
-				
-				box.Show();
-				playerWindow.Show();
-				
-				playercapturer.Reparent(box);
-				videowidgetsbox.Visible = false;
-				if (openedProject != null) {
-					buttonswidget.Visible = true;
-					timeline.Visible = true;
-					if (Config.UseGameUnits) {
-						guTimeline.Visible = true;
-						gameunitstaggerwidget1.Visible = true;
-					}
-				}
-			} else {
-				ToggleAction action;
-				
-				Log.Debug("Attaching player again");
-				videowidgetsbox.Visible = true;
-				playercapturer.Reparent(this.videowidgetsbox);
-				playerWindow.Destroy();
-				
-				if (ManualTaggingViewAction.Active)
-					action = ManualTaggingViewAction;
-				else if (TimelineViewAction.Active)
-					action = TimelineViewAction;
-				else if (GameUnitsViewAction.Active)
-					action = GameUnitsViewAction;
-				else
-					action = TaggingViewAction;
-				OnViewToggled(action, new EventArgs());
-			}
-			playercapturer.Detached = detach;
-		}
-
-		public void SetProject(Project project, ProjectType projectType, CaptureSettings props, PlaysFilter filter)
-		{
-			bool isLive = false;
-			
-			/* Update tabs labels */
-			var desc = project.Description;
-			
-			ExportProjectAction1.Sensitive = true;
-			
-			if(projectType == ProjectType.FileProject) {
-				Title = System.IO.Path.GetFileNameWithoutExtension(desc.File.FilePath) +
-				        " - " + Constants.SOFTWARE_NAME;
-				playercapturer.LogoMode = false;
-				timeline.SetProject (project, filter);
-				guTimeline.Project = project;
-
-			} else {
-				Title = Constants.SOFTWARE_NAME;
-				isLive = true;
-				if(projectType == ProjectType.FakeCaptureProject) {
-					playercapturer.Type = CapturerType.Fake;
-					playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Capturer;
-				} else {
-					playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.PreviewCapturer;
-				}
-			}
-			
-			if(projectType == ProjectType.FakeCaptureProject) {
-#if OS_TYPE_LINUX
-				/* This deadlocks in Windows and OS X */
-				(downbox[videowidgetsbox] as Box.BoxChild).Expand = false;
-#endif
-				(downbox[buttonswidget] as Box.BoxChild).Expand = true;
-			}
-			
-			openedProject = project;
-			this.projectType = projectType;
-			
-			filter.FilterUpdated += OnFilterUpdated;
-			playsSelection.SetProject(project, isLive, filter);
-			buttonswidget.Categories = project.Categories;
-			MakeActionsSensitive(true,projectType);
-			postagger.LoadBackgrounds (openedProject.Categories.FieldBackground,
-			                           openedProject.Categories.HalfFieldBackground,
-			                           openedProject.Categories.GoalBackground);
-			ShowWidgets();
-		}
-		
-		void SetPlaylistVisibility (bool visible) {
-			if (visible) {
-				righthbox.Visible = true;
-				playlist.Visible = true;
-			} else {
-				playlist.Visible = false;
-				if (!tagsvbox.Visible)
-					righthbox.Visible = false;
-			}
-		}
-		
-		void SetTagsBoxVisibility (bool visible) {
-			if (visible) {
-				righthbox.Visible = true;
-				tagsvbox.Visible = true;
-			} else {
-				tagsvbox.Visible = false;
-				if (!playlist.Visible)
-					righthbox.Visible = false;
-			}
-		}
-		
-		private void CloseCaptureProject() {
-			if(projectType == ProjectType.CaptureProject ||
-			   projectType == ProjectType.URICaptureProject) {
-				playercapturer.Close();
-				playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
-				EmitSaveProject();
-			} else if(projectType == ProjectType.FakeCaptureProject) {
-				EmitCloseOpenedProject(true);
-			}
-		}
-
 		private void ResetGUI() {
-			bool playlistVisible = playlist.Visible;
 			Title = Constants.SOFTWARE_NAME;
-			playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
-			playercapturer.LogoMode = true;
-			ClearWidgets();
-			HideWidgets();
-			SetPlaylistVisibility (playlistVisible);
-			SetTagsBoxVisibility (false);
-			selectedTimeNode = null;
 			MakeActionsSensitive(false, projectType);
-			if (detachedPlayer)
-				DetachPlayer(false);
 		}
 
 		private void MakeActionsSensitive(bool sensitive, ProjectType projectType) {
@@ -491,88 +197,24 @@ namespace LongoMatch.Gui
 			ManualTaggingViewAction.Sensitive = sensitive;
 			ExportProjectAction1.Sensitive = sensitive;
 			ShowProjectStatsAction.Sensitive = sensitive;
-			GameUnitsViewAction.Sensitive = sensitive2 && gameUnitsActionVisible;
+			//GameUnitsViewAction.Sensitive = sensitive2 && gameUnitsActionVisible;
 			TimelineViewAction.Sensitive = sensitive2;
 			HideAllWidgetsAction.Sensitive=sensitive2;
 			SaveProjectAction.Sensitive = sensitive2;
 		}
 
-		private void ShowWidgets() {
-			leftbox.Show();
-			if(TaggingViewAction.Active || ManualTaggingViewAction.Active) {
-				buttonswidget.Show();
-				gameunitstaggerwidget1.Show();
-			} else if (TimelineViewAction.Active) {
-				timeline.Show();
-			} else if (GameUnitsViewAction.Active) {
-				gameunitstaggerwidget1.Show();
-				guTimeline.Show();
-			}
-		}
-
-		private void HideWidgets() {
-			leftbox.Hide();
-			SetTagsBoxVisibility (false);
-			buttonswidget.Hide();
-			timeline.Hide();
-			gameunitstaggerwidget1.Hide();
-			guTimeline.Hide();
-		}
-
-		private void ClearWidgets() {
-			buttonswidget.Categories = null;
-			playsSelection.Clear();
-		}
-
-		private bool PromptCloseProject() {
-			int res;
-			EndCaptureDialog dialog;
-
-			if(openedProject == null)
-				return true;
-
-			if(projectType == ProjectType.FileProject) {
-				MessageDialog md = new MessageDialog(this, DialogFlags.Modal,
-				                                     MessageType.Question, ButtonsType.OkCancel,
-				                                     Catalog.GetString("Do you want to close the current project?"));
-				res = md.Run();
-				md.Destroy();
-				if(res == (int)ResponseType.Ok) {
-					EmitCloseOpenedProject(true);
-					return true;
-				}
-				return false;
-			}
-
-			/* Capture project */
-			dialog = new EndCaptureDialog(openedProject.Description.File.FilePath);
-			dialog.TransientFor = (Gtk.Window)this.Toplevel;
-			res = dialog.Run();
-			dialog.Destroy();
-			
-			/* Close project wihtout saving */
-			if(res == (int)EndCaptureResponse.Quit) {
-				EmitCloseOpenedProject(false);
-				(downbox[videowidgetsbox] as Box.BoxChild).Expand = true;
-				(downbox[buttonswidget] as Box.BoxChild).Expand = false;
-				return true;
-			} else if(res == (int)EndCaptureResponse.Save) {
-				/* Close and save project */
-				EmitCloseOpenedProject(true);
-				(downbox[videowidgetsbox] as Box.BoxChild).Expand = true;
-				(downbox[buttonswidget] as Box.BoxChild).Expand = false;
-				return true;
-			} else
-				/* Continue with the current project */
-				return false;
-		}
-
 		private void CloseAndQuit() {
-			if(!PromptCloseProject())
-				return;
-			EmitSaveProject();
-			playercapturer.Dispose();
-			Application.Quit();
+			EmitCloseOpenedProject ();
+			
+			if (openedProject == null && QuitApplicationEvent != null) {
+				QuitApplicationEvent ();
+			}
+		}
+		
+		protected override bool OnDeleteEvent (Event evnt)
+		{
+			CloseAndQuit ();
+			return true;
 		}
 		
 		#endregion
@@ -581,16 +223,14 @@ namespace LongoMatch.Gui
 		#region File
 		protected virtual void OnNewActivated(object sender, System.EventArgs e)
 		{
-			if(!PromptCloseProject())
-				return;
-			EmitNewProject();
+			if (NewProjectEvent != null)
+				NewProjectEvent();
 		}
 
 		protected virtual void OnOpenActivated(object sender, System.EventArgs e)
 		{
-			if(!PromptCloseProject())
-				return;
-			EmitOpenProject();
+			if(OpenProjectEvent != null)
+				OpenProjectEvent();
 		}
 		#endregion
 		
@@ -617,42 +257,26 @@ namespace LongoMatch.Gui
 		#region View
 		protected void OnTagSubcategoriesActionToggled (object sender, System.EventArgs e)
 		{
-			Config.FastTagging = !TagSubcategoriesAction.Active;
+			if (TagSubcategoriesChangedEvent != null)
+				TagSubcategoriesChangedEvent (TagSubcategoriesAction.Active);
 		}
 
 		protected virtual void OnFullScreenActionToggled(object sender, System.EventArgs e)
 		{
-			playercapturer.FullScreen = (sender as Gtk.ToggleAction).Active;
+			if (ShowFullScreenEvent != null)
+				ShowFullScreenEvent ((sender as Gtk.ToggleAction).Active);
 		}
 
 		protected virtual void OnPlaylistActionToggled(object sender, System.EventArgs e)
 		{
-			bool visible = (sender as Gtk.ToggleAction).Active;
-			SetPlaylistVisibility (visible);
-			playsSelection.PlayListLoaded=visible;
+			if (PlaylistVisibilityEvent != null)
+				PlaylistVisibilityEvent ((sender as Gtk.ToggleAction).Active);
 		}
 
 		protected virtual void OnHideAllWidgetsActionToggled(object sender, System.EventArgs e)
 		{
-			ToggleAction action = sender as ToggleAction;
-			
-			if(openedProject == null)
-				return;
-			
-			leftbox.Visible = !action.Active;
-			timeline.Visible = !action.Active && TimelineViewAction.Active;
-			buttonswidget.Visible = !action.Active &&
-				(TaggingViewAction.Active || ManualTaggingViewAction.Active);
-			if (Config.UseGameUnits) {
-				guTimeline.Visible = !action.Visible && GameUnitsViewAction.Active;
-				gameunitstaggerwidget1.Visible = !action.Active && (GameUnitsViewAction.Active || 
-					TaggingViewAction.Active || ManualTaggingViewAction.Active);
-			}
-			if(action.Active) {
-				SetTagsBoxVisibility (false);
-			} else {
-				if (selectedTimeNode != null)
-					SetTagsBoxVisibility (true);
+			if (AnalysisWidgetsVisibilityEvent != null) {
+				AnalysisWidgetsVisibilityEvent ((sender as ToggleAction).Active);
 			}
 		}
 
@@ -663,18 +287,25 @@ namespace LongoMatch.Gui
 			if (!action.Active)
 				return;
 			
-			buttonswidget.Visible = action == ManualTaggingViewAction || sender == TaggingViewAction;
-			timeline.Visible = action == TimelineViewAction;
-			if (Config.UseGameUnits) {
-				guTimeline.Visible = action == GameUnitsViewAction;
-				gameunitstaggerwidget1.Visible = buttonswidget.Visible || guTimeline.Visible;
+			if (AnalysisModeChangedEvent != null) {
+				VideoAnalysisMode mode;
+				
+				if (sender == ManualTaggingViewAction) {
+					mode = VideoAnalysisMode.ManualTagging;
+				} else if (sender == TaggingViewAction) {
+					mode = VideoAnalysisMode.PredefinedTagging;
+				} else if (sender ==  TimelineViewAction) {
+					mode = VideoAnalysisMode.Timeline;
+				} else if (sender == GameUnitsViewAction) {
+					mode = VideoAnalysisMode.GameUnits;
+				} else {
+					return;
+				}
+				AnalysisModeChangedEvent (mode);
 			}
-			if(action == ManualTaggingViewAction)
-				buttonswidget.Mode = TagMode.Free;
-			else
-				buttonswidget.Mode = TagMode.Predifined;
 		}
 		#endregion
+		
 		#region Help
 		protected virtual void OnHelpAction1Activated(object sender, System.EventArgs e)
 		{
@@ -700,113 +331,8 @@ namespace LongoMatch.Gui
 		}
 		
 		#endregion
-
-		protected override bool OnKeyPressEvent(EventKey evnt)
-		{
-			Gdk.Key key = evnt.Key;
-			Gdk.ModifierType modifier = evnt.State;
-			bool ret;
-
-			ret = base.OnKeyPressEvent(evnt);
-
-			if(openedProject == null && !playercapturer.Opened)
-				return ret;
-
-			if(projectType != ProjectType.CaptureProject &&
-			   projectType != ProjectType.URICaptureProject &&
-			   projectType != ProjectType.FakeCaptureProject) {
-				switch(key) {
-				case Constants.SEEK_FORWARD:
-					if(modifier == Constants.STEP)
-						playercapturer.StepForward();
-					else
-						playercapturer.SeekToNextFrame(selectedTimeNode != null);
-					break;
-				case Constants.SEEK_BACKWARD:
-					if(modifier == Constants.STEP)
-						playercapturer.StepBackward();
-					else
-						playercapturer.SeekToPreviousFrame(selectedTimeNode != null);
-					break;
-				case Constants.FRAMERATE_UP:
-					playercapturer.FramerateUp();
-					break;
-				case Constants.FRAMERATE_DOWN:
-					playercapturer.FramerateDown();
-					break;
-				case Constants.TOGGLE_PLAY:
-					playercapturer.TogglePlay();
-					break;
-				}
-			} else {
-				switch(key) {
-				case Constants.TOGGLE_PLAY:
-					playercapturer.TogglePause();
-					break;
-				}
-			}
-			return ret;
-		}
-
-		protected virtual void OnTimeNodeSelected(Play play)
-		{
-			SetTagsBoxVisibility (true);
-			if (PlaySelectedEvent != null)
-				PlaySelectedEvent(play);
-		}
-
-		protected virtual void OnSegmentClosedEvent()
-		{
-			SetTagsBoxVisibility (false);
-			timeline.SelectedTimeNode = null;
-			selectedTimeNode = null;
-		}
-		
-		protected virtual void OnTick(object o, long currentTime, long streamLength,
-			float currentPosition, bool seekable)
-		{
-			if(currentTime != 0 && timeline != null && openedProject != null) {
-				uint frame = (uint)(currentTime * openedProject.Description.File.Fps / 1000);
-				timeline.CurrentFrame = frame;
-				guTimeline.CurrentFrame = frame;
-			}
-			gameunitstaggerwidget1.CurrentTime = new Time{MSeconds = (int)currentTime};
-			buttonswidget.CurrentTime = new Time{MSeconds = (int)currentTime};
-		}
-		
-		protected virtual void OnUpdate(Version version, string URL) {
-			LongoMatch.Gui.Dialog.UpdateDialog updater = new LongoMatch.Gui.Dialog.UpdateDialog();
-			updater.Fill(version, URL);
-			updater.TransientFor = this;
-			updater.Run();
-			updater.Destroy();
-		}
-
-		protected virtual void OnDrawingToolActionToggled(object sender, System.EventArgs e)
-		{
-			drawingtoolbox1.Visible = DrawingToolAction.Active;
-			drawingtoolbox1.DrawingVisibility = DrawingToolAction.Active;
-		}
-
-		protected override bool OnDeleteEvent(Gdk.Event evnt)
-		{
-			CloseAndQuit();
-			return true;
-		}
-
-		protected virtual void OnMultimediaError(object o, string message)
-		{
-			MessagesHelpers.ErrorMessage (this,
-				Catalog.GetString("The following error happened and" +
-				" the current project will be closed:")+"\n" + message);
-			EmitCloseOpenedProject(true);
-		}
-		
-		protected virtual void OnFilterUpdated()
-		{
-		}
 		#endregion
-		
+
 		#region Events
 		
 		private void EmitEditPreferences ()
@@ -815,109 +341,20 @@ namespace LongoMatch.Gui
 				EditPreferencesEvent();
 		}
 		
-		private void EmitPlaySelected(Play play)
-		{
-			if (PlaySelectedEvent != null)
-				PlaySelectedEvent(play);
-		}
-
-		private void EmitTimeNodeChanged(TimeNode tNode, object val)
-		{
-			if (TimeNodeChanged != null)
-				TimeNodeChanged(tNode, val);
-		}
-
-		private void EmitPlaysDeleted(List<Play> plays)
-		{
-			if (PlaysDeletedEvent != null)
-				PlaysDeletedEvent(plays);
-		}
-		
-		protected virtual void EmitPlayCategoryChanged(Play play, Category cat)
-		{
-			if(PlayCategoryChanged != null)
-				PlayCategoryChanged(play, cat);
-		}
-
-		private void OnPlayListNodeAdded(List<Play> play)
-		{
-			if (PlayListNodeAddedEvent != null)
-				PlayListNodeAddedEvent(play);
-		}
-
-		private void EmitPlayListNodeSelected(PlayListPlay plNode)
-		{
-			if (PlayListNodeSelectedEvent != null)
-				PlayListNodeSelectedEvent(plNode);
-		}
-
-		private void EmitSnapshotSeries(Play play) {
-			if (SnapshotSeriesEvent != null)
-				SnapshotSeriesEvent (play);
-		}
-
-		private void EmitNewTagAtFrame(Category category, int frame) {
-			if (NewTagAtFrameEvent != null)
-				NewTagAtFrameEvent(category, frame);
-		}
-
-		private void EmitNewTag(Category category) {
-			if (NewTagEvent != null)
-				NewTagEvent(category);
-		}
-
-		private void EmitNewTagStart(Category category) {
-			if (NewTagStartEvent != null)
-				NewTagStartEvent (category);
-		}
-
-		private void EmitNewTagStop(Category category) {
-			if (NewTagStopEvent != null)
-				NewTagStopEvent (category);
-		}
-		
-		private void EmitNewTagCancel(Category category) {
-			if (NewTagCancelEvent != null)
-				NewTagCancelEvent (category);
-		}
-		
-		private void EmitRenderPlaylist(IPlayList playlist) {
-			if (RenderPlaylistEvent != null)
-				RenderPlaylistEvent(playlist);
-		}
-		
-		private void EmitTagPlay(Play play) {
-			if (TagPlayEvent != null)
-				TagPlayEvent (play);
-		}
-		
 		private void EmitSaveProject() {
 			if (SaveProjectEvent != null)
 				SaveProjectEvent(openedProject, projectType);
 		}
 		
-		private void EmitNewProject() {
-			if (NewProjectEvent != null)
-				NewProjectEvent();
-		}
-
-		private void EmitCloseOpenedProject(bool save) {
+		private void EmitCloseOpenedProject() {
 			if (CloseOpenedProjectEvent != null)
-				CloseOpenedProjectEvent(save);
-			openedProject = null;
-			projectType = ProjectType.None;
-			ResetGUI();
+				CloseOpenedProjectEvent ();
 		}
 		
 		private void EmitImportProject(string name, string filterName, string filter,
 		                               Func<string, Project> func, bool requiresNewFile) {
 			if (ImportProjectEvent != null)
 				ImportProjectEvent(name, filterName, filter, func, requiresNewFile);
-		}
-		
-		private void EmitOpenProject() {
-			if(OpenProjectEvent != null)
-				OpenProjectEvent();
 		}
 		
 		private void EmitExportProject() {
@@ -951,58 +388,6 @@ namespace LongoMatch.Gui
 			if (ManageDatabasesEvent != null)
 				ManageDatabasesEvent();
 		}
-		
-		private void EmitNewPlaylist() {
-			if (NewPlaylistEvent != null)
-				NewPlaylistEvent();
-		}
-		
-		private void EmitOpenPlaylist() {
-			if (OpenPlaylistEvent != null)
-				OpenPlaylistEvent();
-		}
-		
-		private void EmitSavePlaylist() {
-			if (SavePlaylistEvent != null)
-				SavePlaylistEvent();
-		}
-		
-		private void EmitGameUnitEvent(GameUnit gameUnit, GameUnitEventType eType) {
-			if (GameUnitEvent != null)
-				GameUnitEvent(gameUnit, eType);
-		}
-		
-		private void EmitUnitAdded(GameUnit gameUnit, int frame) {
-			if (UnitAdded != null)
-				UnitAdded(gameUnit, frame);
-		}
-		
-		private void EmitUnitDeleted(GameUnit gameUnit, List<TimelineNode> units) {
-			if (UnitDeleted != null)
-				UnitDeleted(gameUnit, units);
-		}
-		
-		private void EmitUnitSelected(GameUnit gameUnit, TimelineNode unit) {
-			if (UnitSelected != null)
-				UnitSelected(gameUnit, unit);
-		}
-		
-		private void EmitUnitChanged(GameUnit gameUnit, TimelineNode unit, Time time) {
-			if (UnitChanged != null)
-				UnitChanged(gameUnit, unit, time);
-		}
-		
-		private void EmitKeyPressed(object sender, int key, int modifier) {
-			if (KeyPressed != null)
-				KeyPressed(sender, key, modifier);
-		}
-		
-		void EmitDuplicatePlay (Play play)
-		{
-			if (DuplicatePlay != null)
-				DuplicatePlay (play);
-		}
-		
 		#endregion
 	}
 }

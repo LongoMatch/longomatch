@@ -117,7 +117,7 @@ namespace LongoMatch.DB
 
 		void ConnectSignals ()
 		{
-			guiToolkit.MainWindow.ManageDatabasesEvent += () => {
+			guiToolkit.MainController.ManageDatabasesEvent += () => {
 				if (OpenedProject != null) {
 					var msg = Catalog.GetString("Close the current project to open the database manager");
 					guiToolkit.ErrorMessage (msg);
