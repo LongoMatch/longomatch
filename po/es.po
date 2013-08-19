@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: longomatch.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-08-11 15:10+0000\n"
-"PO-Revision-Date: 2013-08-14 14:00+0200\n"
+"POT-Creation-Date: 2013-08-15 17:55+0000\n"
+"PO-Revision-Date: 2013-08-19 11:39+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -372,11 +372,11 @@ msgstr "Selección de equipo"
 msgid "Coordinates"
 msgstr "Coordenadas"
 
-#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:132
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:138
 msgid "Local Team Players"
 msgstr "Plantilla del equipo local"
 
-#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:138
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:144
 msgid "Visitor Team Players"
 msgstr "Plantilla del equipo visitante"
 
@@ -735,22 +735,18 @@ msgid "Projects Search:"
 msgstr "Búsqueda de proyectos:"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameViewer.cs:51
-#| msgid "Tag subcategories"
 msgid "Sub categories"
 msgstr "Subcategorías"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.CategoryViewer.cs:62
-#| msgid "<b>Tools</b>"
 msgid "<b>All</b>"
 msgstr "<b>Todas</b>"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.CategoryViewer.cs:84
-#| msgid "<b>HotKey:</b>"
 msgid "<b>Home</b>"
 msgstr "<b>Local</b>"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.CategoryViewer.cs:106
-#| msgid "<b>Team</b>"
 msgid "<b>Away</b>"
 msgstr "<b>Visitante</b>"
 
@@ -769,7 +765,6 @@ msgid "Pie chart"
 msgstr "Gráfico de tarta"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.SubCategoryViewer.cs:57
-#| msgid "<b>Team</b>"
 msgid "<b></b>"
 msgstr "<b></b>"
 
@@ -999,17 +994,14 @@ msgid "Export to PNG images"
 msgstr "Exportar a fotogramas PNG"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.StatsViewer.cs:19
-#| msgid "State"
 msgid "Stats"
 msgstr "Estadísticas"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.StatsViewer.cs:44
-#| msgid "Game Units"
 msgid "Game stats"
 msgstr "Estadísticas del juego"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.StatsViewer.cs:57
-#| msgid "Categories"
 msgid "Categories stats"
 msgstr "Estadísticas de las categorías"
 
@@ -1300,7 +1292,6 @@ msgstr "Gestor de bases de datos"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:189
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.MainWindow.cs:191
-#| msgid "Project statistics"
 msgid "Show project stats"
 msgstr "Mostrar las estadísticas del proyecto"
 
@@ -1334,11 +1325,11 @@ msgstr "Añadir nueva "
 msgid "Delete "
 msgstr "Borrar "
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:55
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:56
 msgid "Categories"
 msgstr "Categorías"
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:120
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:112
 msgid ""
 "You are about to delete a category and all the plays added to this category. "
 "Do you want to proceed?"
@@ -1346,31 +1337,37 @@ msgstr ""
 "Está a punto de eliminar una categoría y todas las jugadas añadidas a la "
 "categoría. ¿Quiere continuar?"
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:127
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:134
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:119
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:126
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:158
 #: ../LongoMatch.GUI/Gui/Component/TeamTemplateEditor.cs:167
 msgid "A template needs at least one category"
 msgstr "Una plantilla necesita, al menos, una categoría"
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:159
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:151
 msgid "Field background"
 msgstr "Fondo del campo"
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:162
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:154
 msgid "Half field background"
 msgstr "Fondo del medio campo"
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:165
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:157
 msgid "Goal background"
 msgstr "Fondo de la portería"
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:168
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:226
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:160
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:235
 msgid "Game periods"
 msgstr "Períodos de juego"
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:231
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:166
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:177
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:188
+msgid "Reset"
+msgstr "Reiniciar"
+
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:240
 msgid "Invalid content. Periods must be separated by spaces (\"1 2 ex1 ex2\")"
 msgstr ""
 "Contenido no válido. Los períodos se deben separar por espacios (\"1 2 ex1 "
@@ -1410,27 +1407,27 @@ msgstr "Seleccionar una carpeta"
 msgid "Choose an image"
 msgstr "Elegir una imagen"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:117
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:118
 msgid "Categories filter"
 msgstr "Filtro de categorías"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:118
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:119
 msgid "Players filter"
 msgstr "Filtro de jugadores"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:200
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:210
 msgid "Disable categories filters"
 msgstr "Desactivar filtro de categorías"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:202
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:212
 msgid "Enable categories filters"
 msgstr "Activar filtro de categorías"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:210
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:220
 msgid "Disable players filters"
 msgstr "Desactivar filtro de jugadores"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:212
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:222
 msgid "Enable players filters"
 msgstr "Activar filtro de jugadores"
 
@@ -1780,11 +1777,11 @@ msgstr "Añadir"
 msgid "Import file project"
 msgstr "Importar archivo de proyecto"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:518
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:521
 msgid "Do you want to close the current project?"
 msgstr "¿Quiere cerrar el proyecto actual?"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:776
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:779
 msgid "The following error happened and the current project will be closed:"
 msgstr "Ocurrió el siguiente error y se cerrará el proyecto actual:"
 
