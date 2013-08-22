@@ -1,13 +1,11 @@
-===== LongoMatch 0.18.14 "La paloma" =====
-
-	== Features ==
-	* Set category background colors in the players list
-	* Add option to reset background images
+===== LongoMatch 0.18.15 "Despedida" =====
 
 	== Bugs fixed ==
 
-	* Fix H264 encoder threading in Windows
-	* Fix changing language in Windows
+	* Fix import/export with old projects
+	* Fix error closing the game units editor
+	* Fix storage of the tag goal position option
+	* Set backround templates in the subcategories editor
 
 ===== LongoMatch 0.18.13 "Lavapies" =====
 

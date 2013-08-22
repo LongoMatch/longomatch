@@ -1,4 +1,4 @@
-LongoMatch-0.18.14 "La Paloma"
+LongoMatch-0.18.15 "Despedida"
 -----------------------------
 
 The LongoMatch team is happy to announce the fourteenth release in the
@@ -8,13 +8,11 @@ Due to its dependency on GStreamer, We strongly recommend to have
 all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
-* Features
-	* Set category background colors in the players list
-	* Add option to reset background images
-
 * Bugs fixed
-	* Fix H264 encoder threading in Windows
-	* Fix changing language in Windows
+	* Fix import/export with old projects
+	* Fix error closing the game units editor
+	* Fix storage of the tag goal position option
+	* Set backround templates in the subcategories editor
 
 *Contributors to this Release:
 
