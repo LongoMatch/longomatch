@@ -54,12 +54,20 @@ namespace LongoMatch.Common
 		
 		// this constructor is automatically called during deserialization
 		public Image (SerializationInfo info, StreamingContext context) {
-			image = Deserialize ((byte[]) info.GetValue ("pngbuf", typeof (byte[]))).Value;
+			try {
+				image = Deserialize ((byte[]) info.GetValue ("pngbuf", typeof (byte[]))).Value;
+			} catch {
+				image = null;
+			}
 		}
 
 		// this method is automatically called during serialization
 		public void GetObjectData(SerializationInfo info, StreamingContext context) {
-			info.AddValue("pngbuf", Serialize());
+			try {
+				info.AddValue("pngbuf", Serialize());
+			} catch  {
+				info.AddValue("pngbuf", null);
+			}
 		}
 		
 		
