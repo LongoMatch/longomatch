@@ -235,6 +235,8 @@ namespace LongoMatch.Gui.Component
 			
 			desc = Catalog.GetString ("Game periods") + " (eg: 1 2 ex1 ex2) ";
 			res = MessagesHelpers.QueryMessage (this, desc, "", String.Join (" ", Template.GamePeriods));
+			if (res == null)
+				return;
 			
 			periods = new List<string> (res.Split(' '));
 			if (periods.Count == 0) {
