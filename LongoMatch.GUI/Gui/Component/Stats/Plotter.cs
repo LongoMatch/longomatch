@@ -17,6 +17,7 @@
 //
 using System;
 using System.IO;
+using System.Linq;
 using Gdk;
 using Cairo;
 using OxyPlot;
@@ -82,6 +83,7 @@ namespace LongoMatch.Gui.Component.Stats
 			PlotModel model = new PlotModel ();
             CategoryAxis categoryAxis;
             LinearAxis valueAxis;
+            int maxCount;
             
 			valueAxis = new LinearAxis(AxisPosition.Left) { MinimumPadding = 0, AbsoluteMinimum = 0,
 				MinorStep = 1, MajorStep = 1, Minimum = 0};
@@ -96,6 +98,20 @@ namespace LongoMatch.Gui.Component.Stats
 				ValueField = "VisitorTeamCount",  FillColor = new OxyColor {R=0, G=0x99, B=0xFF, A=0xFF} });	
             model.Axes.Add(categoryAxis);
             model.Axes.Add(valueAxis);
+            
+			if (stats.OptionStats.Count != 0) {
+				maxCount = stats.OptionStats.Max (o => o.TotalCount);
+				if (maxCount > 10 && maxCount <= 50) {
+					valueAxis.MinorStep = 5;
+					valueAxis.MajorStep = 10;
+				} else if (maxCount > 50 && maxCount <= 100) {
+					valueAxis.MinorStep = 10;
+					valueAxis.MajorStep = 20;
+				} else if (maxCount > 100 ) {
+					valueAxis.MinorStep = 10;
+					valueAxis.MajorStep = 50;
+				}
+            }
             return model;
 		}
 		
