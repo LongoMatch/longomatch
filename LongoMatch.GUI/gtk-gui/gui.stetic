@@ -8703,11 +8703,38 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
             <property name="MemberName" />
             <property name="ShadowType">None</property>
             <child>
-              <widget class="Gtk.VBox" id="vbox1">
+              <widget class="Gtk.Notebook" id="notebook1">
                 <property name="MemberName" />
-                <property name="Spacing">6</property>
+                <property name="CanFocus">True</property>
+                <property name="CurrentPage">0</property>
                 <child>
-                  <widget class="Gtk.HBox" id="hbox1">
+                  <widget class="Gtk.VBox" id="vbox1">
+                    <property name="MemberName" />
+                    <property name="Spacing">6</property>
+                    <child>
+                      <widget class="Gtk.Label" id="nodatalabel">
+                        <property name="MemberName" />
+                        <property name="LabelProp" translatable="yes">No data available</property>
+                        <property name="Justify">Center</property>
+                      </widget>
+                      <packing>
+                        <property name="Position">0</property>
+                        <property name="AutoSize">False</property>
+                      </packing>
+                    </child>
+                  </widget>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="label1">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">Statistics</property>
+                  </widget>
+                  <packing>
+                    <property name="type">tab</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.VBox" id="vbox2">
                     <property name="MemberName" />
                     <property name="Spacing">6</property>
                     <child>
@@ -8723,6 +8750,7 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
                             <child>
                               <widget class="LongoMatch.Gui.Component.PlaysCoordinatesTagger" id="alltagger">
                                 <property name="MemberName" />
+                                <property name="HeightRequest">150</property>
                                 <property name="Events">ButtonPressMask</property>
                               </widget>
                             </child>
@@ -8742,6 +8770,7 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
                       <packing>
                         <property name="Position">0</property>
                         <property name="AutoSize">False</property>
+                        <property name="Expand">False</property>
                       </packing>
                     </child>
                     <child>
@@ -8757,6 +8786,7 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
                             <child>
                               <widget class="LongoMatch.Gui.Component.PlaysCoordinatesTagger" id="hometagger">
                                 <property name="MemberName" />
+                                <property name="HeightRequest">150</property>
                                 <property name="Events">ButtonPressMask</property>
                               </widget>
                             </child>
@@ -8776,6 +8806,7 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
                       <packing>
                         <property name="Position">1</property>
                         <property name="AutoSize">False</property>
+                        <property name="Expand">False</property>
                       </packing>
                     </child>
                     <child>
@@ -8791,6 +8822,7 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
                             <child>
                               <widget class="LongoMatch.Gui.Component.PlaysCoordinatesTagger" id="awaytagger">
                                 <property name="MemberName" />
+                                <property name="HeightRequest">150</property>
                                 <property name="Events">ButtonPressMask</property>
                               </widget>
                             </child>
@@ -8810,23 +8842,21 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
                       <packing>
                         <property name="Position">2</property>
                         <property name="AutoSize">False</property>
+                        <property name="Expand">False</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">True</property>
+                    <property name="Position">1</property>
                   </packing>
                 </child>
                 <child>
-                  <widget class="Gtk.Label" id="nodatalabel">
+                  <widget class="Gtk.Label" id="label2">
                     <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes">No data available</property>
-                    <property name="Justify">Center</property>
+                    <property name="LabelProp" translatable="yes">Zonal tagging</property>
                   </widget>
                   <packing>
-                    <property name="Position">1</property>
-                    <property name="AutoSize">False</property>
+                    <property name="type">tab</property>
                   </packing>
                 </child>
               </widget>

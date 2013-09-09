@@ -5,8 +5,11 @@ namespace LongoMatch.Gui.Component.Stats
 	public partial class CategoryViewer
 	{
 		private global::Gtk.ScrolledWindow scrolledwindow1;
+		private global::Gtk.Notebook notebook1;
 		private global::Gtk.VBox vbox1;
-		private global::Gtk.HBox hbox1;
+		private global::Gtk.Label nodatalabel;
+		private global::Gtk.Label label1;
+		private global::Gtk.VBox vbox2;
 		private global::Gtk.Frame allframe;
 		private global::Gtk.Alignment GtkAlignment2;
 		private global::LongoMatch.Gui.Component.PlaysCoordinatesTagger alltagger;
@@ -19,7 +22,7 @@ namespace LongoMatch.Gui.Component.Stats
 		private global::Gtk.Alignment GtkAlignment1;
 		private global::LongoMatch.Gui.Component.PlaysCoordinatesTagger awaytagger;
 		private global::Gtk.Label awayLabel;
-		private global::Gtk.Label nodatalabel;
+		private global::Gtk.Label label2;
 		
 		protected virtual void Build ()
 		{
@@ -36,14 +39,34 @@ namespace LongoMatch.Gui.Component.Stats
 			global::Gtk.Viewport w1 = new global::Gtk.Viewport ();
 			w1.ShadowType = ((global::Gtk.ShadowType)(0));
 			// Container child GtkViewport.Gtk.Container+ContainerChild
+			this.notebook1 = new global::Gtk.Notebook ();
+			this.notebook1.CanFocus = true;
+			this.notebook1.Name = "notebook1";
+			this.notebook1.CurrentPage = 0;
+			// Container child notebook1.Gtk.Notebook+NotebookChild
 			this.vbox1 = new global::Gtk.VBox ();
 			this.vbox1.Name = "vbox1";
 			this.vbox1.Spacing = 6;
 			// Container child vbox1.Gtk.Box+BoxChild
-			this.hbox1 = new global::Gtk.HBox ();
-			this.hbox1.Name = "hbox1";
-			this.hbox1.Spacing = 6;
-			// Container child hbox1.Gtk.Box+BoxChild
+			this.nodatalabel = new global::Gtk.Label ();
+			this.nodatalabel.Name = "nodatalabel";
+			this.nodatalabel.LabelProp = global::Mono.Unix.Catalog.GetString ("No data available");
+			this.nodatalabel.Justify = ((global::Gtk.Justification)(2));
+			this.vbox1.Add (this.nodatalabel);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.nodatalabel]));
+			w2.Position = 0;
+			this.notebook1.Add (this.vbox1);
+			// Notebook tab
+			this.label1 = new global::Gtk.Label ();
+			this.label1.Name = "label1";
+			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Statistics");
+			this.notebook1.SetTabLabel (this.vbox1, this.label1);
+			this.label1.ShowAll ();
+			// Container child notebook1.Gtk.Notebook+NotebookChild
+			this.vbox2 = new global::Gtk.VBox ();
+			this.vbox2.Name = "vbox2";
+			this.vbox2.Spacing = 6;
+			// Container child vbox2.Gtk.Box+BoxChild
 			this.allframe = new global::Gtk.Frame ();
 			this.allframe.Name = "allframe";
 			this.allframe.ShadowType = ((global::Gtk.ShadowType)(0));
@@ -53,6 +76,7 @@ namespace LongoMatch.Gui.Component.Stats
 			this.GtkAlignment2.LeftPadding = ((uint)(12));
 			// Container child GtkAlignment2.Gtk.Container+ContainerChild
 			this.alltagger = new global::LongoMatch.Gui.Component.PlaysCoordinatesTagger ();
+			this.alltagger.HeightRequest = 150;
 			this.alltagger.Events = ((global::Gdk.EventMask)(256));
 			this.alltagger.Name = "alltagger";
 			this.GtkAlignment2.Add (this.alltagger);
@@ -62,10 +86,11 @@ namespace LongoMatch.Gui.Component.Stats
 			this.GtkLabel2.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>All</b>");
 			this.GtkLabel2.UseMarkup = true;
 			this.allframe.LabelWidget = this.GtkLabel2;
-			this.hbox1.Add (this.allframe);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.allframe]));
-			w4.Position = 0;
-			// Container child hbox1.Gtk.Box+BoxChild
+			this.vbox2.Add (this.allframe);
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.allframe]));
+			w6.Position = 0;
+			w6.Expand = false;
+			// Container child vbox2.Gtk.Box+BoxChild
 			this.homeframe = new global::Gtk.Frame ();
 			this.homeframe.Name = "homeframe";
 			this.homeframe.ShadowType = ((global::Gtk.ShadowType)(0));
@@ -75,6 +100,7 @@ namespace LongoMatch.Gui.Component.Stats
 			this.GtkAlignment.LeftPadding = ((uint)(12));
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			this.hometagger = new global::LongoMatch.Gui.Component.PlaysCoordinatesTagger ();
+			this.hometagger.HeightRequest = 150;
 			this.hometagger.Events = ((global::Gdk.EventMask)(256));
 			this.hometagger.Name = "hometagger";
 			this.GtkAlignment.Add (this.hometagger);
@@ -84,10 +110,11 @@ namespace LongoMatch.Gui.Component.Stats
 			this.homeLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Home</b>");
 			this.homeLabel.UseMarkup = true;
 			this.homeframe.LabelWidget = this.homeLabel;
-			this.hbox1.Add (this.homeframe);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.homeframe]));
-			w7.Position = 1;
-			// Container child hbox1.Gtk.Box+BoxChild
+			this.vbox2.Add (this.homeframe);
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.homeframe]));
+			w9.Position = 1;
+			w9.Expand = false;
+			// Container child vbox2.Gtk.Box+BoxChild
 			this.awayframe = new global::Gtk.Frame ();
 			this.awayframe.Name = "awayframe";
 			this.awayframe.ShadowType = ((global::Gtk.ShadowType)(0));
@@ -97,6 +124,7 @@ namespace LongoMatch.Gui.Component.Stats
 			this.GtkAlignment1.LeftPadding = ((uint)(12));
 			// Container child GtkAlignment1.Gtk.Container+ContainerChild
 			this.awaytagger = new global::LongoMatch.Gui.Component.PlaysCoordinatesTagger ();
+			this.awaytagger.HeightRequest = 150;
 			this.awaytagger.Events = ((global::Gdk.EventMask)(256));
 			this.awaytagger.Name = "awaytagger";
 			this.GtkAlignment1.Add (this.awaytagger);
@@ -106,21 +134,20 @@ namespace LongoMatch.Gui.Component.Stats
 			this.awayLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>Away</b>");
 			this.awayLabel.UseMarkup = true;
 			this.awayframe.LabelWidget = this.awayLabel;
-			this.hbox1.Add (this.awayframe);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.awayframe]));
-			w10.Position = 2;
-			this.vbox1.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hbox1]));
-			w11.Position = 0;
-			// Container child vbox1.Gtk.Box+BoxChild
-			this.nodatalabel = new global::Gtk.Label ();
-			this.nodatalabel.Name = "nodatalabel";
-			this.nodatalabel.LabelProp = global::Mono.Unix.Catalog.GetString ("No data available");
-			this.nodatalabel.Justify = ((global::Gtk.Justification)(2));
-			this.vbox1.Add (this.nodatalabel);
-			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.nodatalabel]));
-			w12.Position = 1;
-			w1.Add (this.vbox1);
+			this.vbox2.Add (this.awayframe);
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.awayframe]));
+			w12.Position = 2;
+			w12.Expand = false;
+			this.notebook1.Add (this.vbox2);
+			global::Gtk.Notebook.NotebookChild w13 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.vbox2]));
+			w13.Position = 1;
+			// Notebook tab
+			this.label2 = new global::Gtk.Label ();
+			this.label2.Name = "label2";
+			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("Zonal tagging");
+			this.notebook1.SetTabLabel (this.vbox2, this.label2);
+			this.label2.ShowAll ();
+			w1.Add (this.notebook1);
 			this.scrolledwindow1.Add (w1);
 			this.Add (this.scrolledwindow1);
 			if ((this.Child != null)) {
