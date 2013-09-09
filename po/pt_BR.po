@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: longomatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-08-18 15:51+0000\n"
-"PO-Revision-Date: 2013-08-17 20:51-0300\n"
+"POT-Creation-Date: 2013-09-09 09:49+0000\n"
+"PO-Revision-Date: 2013-09-09 09:34-0300\n"
 "Last-Translator: Rafael Ferreira <rafael.f.f1@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
@@ -742,23 +742,31 @@ msgstr "Pesquisa de projetos:"
 msgid "Sub categories"
 msgstr "Subcategorias"
 
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.CategoryViewer.cs:53
+msgid "No data available"
+msgstr "Nenhum dado disponível"
+
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.CategoryViewer.cs:62
+msgid "Statistics"
+msgstr "Estatísticas"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.CategoryViewer.cs:86
 msgid "<b>All</b>"
 msgstr "<b>Todas</b>"
 
 # Adotei "Home" como "Em casa", contexto de jogo -- Enrico
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.CategoryViewer.cs:84
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.CategoryViewer.cs:110
 msgid "<b>Home</b>"
 msgstr "<b>Em casa</b>"
 
 # "Away" por ser oposto a "Home" adotado como "Fora de casa", contexto de jogo -- Enrico
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.CategoryViewer.cs:106
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.CategoryViewer.cs:134
 msgid "<b>Away</b>"
 msgstr "<b>Fora de casa</b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.CategoryViewer.cs:118
-msgid "No data available"
-msgstr "Nenhum dado disponível"
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.CategoryViewer.cs:147
+msgid "Zonal tagging"
+msgstr "Marcação por zona"
 
 #. Container child hbox4.Gtk.Box+BoxChild
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.Plotter.cs:31
@@ -1374,7 +1382,7 @@ msgstr "Períodos de jogo"
 msgid "Reset"
 msgstr "Reiniciar"
 
-#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:241
+#: ../LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs:243
 msgid "Invalid content. Periods must be separated by spaces (\"1 2 ex1 ex2\")"
 msgstr ""
 "Conteúdo inválido. Períodos podem ser separados por espaços (\"1 2 exemplo1 "
@@ -1530,17 +1538,17 @@ msgstr "Resultado"
 msgid "Date"
 msgstr "Data"
 
-#: ../LongoMatch.GUI/Gui/Component/Stats/Plotter.cs:48
+#: ../LongoMatch.GUI/Gui/Component/Stats/Plotter.cs:49
 #: ../LongoMatch.GUI/Gui/Component/Stats/SubcategoryViewer.cs:36
 msgid "Home"
 msgstr "Em casa"
 
-#: ../LongoMatch.GUI/Gui/Component/Stats/Plotter.cs:49
+#: ../LongoMatch.GUI/Gui/Component/Stats/Plotter.cs:50
 #: ../LongoMatch.GUI/Gui/Component/Stats/SubcategoryViewer.cs:37
 msgid "Away"
 msgstr "Fora de casa"
 
-#: ../LongoMatch.GUI/Gui/Component/Stats/Plotter.cs:91
+#: ../LongoMatch.GUI/Gui/Component/Stats/Plotter.cs:93
 msgid "Total"
 msgstr "Total"
 
