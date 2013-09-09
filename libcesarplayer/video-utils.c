@@ -442,9 +442,9 @@ GstElement * lgm_create_video_encoder (VideoEncoderType type, guint quality,
   switch (type) {
     case VIDEO_ENCODER_MPEG4:
       encoder = gst_element_factory_make ("ffenc_mpeg4", "video-encoder");
-      g_object_set (encoder, "pass", 2,
+      g_object_set (encoder, "pass", 512,
           "max-key-interval", -1,
-          "quantizer", (gfloat) quality * 30 / 100, NULL);
+          "bitrate", 4000000 / 100, NULL);
       name = "FFmpeg mpeg4 video encoder";
       break;
 
