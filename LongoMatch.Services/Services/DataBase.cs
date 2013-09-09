@@ -157,7 +157,6 @@ namespace LongoMatch.DB
 					Log.Exception(e);
 				}
 				count = GetAllProjects().Count;
-				ListObjects();
 			} catch (DatabaseFileLockedException locked) {
 				throw new DBLockedException (locked);
 			} catch (Db4oException ex) {
