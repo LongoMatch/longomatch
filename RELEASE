@@ -1,7 +1,7 @@
-LongoMatch-0.18.15 "Despedida"
+LongoMatch-0.18.16 "Amsterdam"
 -----------------------------
 
-The LongoMatch team is happy to announce the fourteenth release in the
+The LongoMatch team is happy to announce the sixteenth release in the
 stable 0.18 series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
@@ -9,10 +9,10 @@ all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
 * Bugs fixed
-	* Fix import/export with old projects
-	* Fix error closing the game units editor
-	* Fix storage of the tag goal position option
-	* Set backround templates in the subcategories editor
+	* Fix MPEG4 export quality for AVI
+	* Fix database startup time
+	* Show zonal tagging in a different tab
+	* Fix steps in histograms
 
 *Contributors to this Release:
 
