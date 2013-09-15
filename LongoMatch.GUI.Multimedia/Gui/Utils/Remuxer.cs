@@ -74,7 +74,7 @@ namespace LongoMatch.Video.Utils
 			
 			/* Add label and progress bar */
 			box = new VBox();
-			label = new Label(Catalog.GetString("Remuxing file, this might take while..."));
+			label = new Label(Catalog.GetString("Remuxing file, this might take a while..."));
 			box.PackStart(label);
 			pb = new ProgressBar();
 			box.PackStart(pb);
