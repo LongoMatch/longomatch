@@ -55,6 +55,11 @@ namespace LongoMatch.Video.Utils
 			} else {
 				this.outputFilepath = Path.ChangeExtension(inputFile.FilePath,
 				                                           GetExtension(muxer));
+				if (this.outputFilepath == inputFile.FilePath) {
+					this.outputFilepath = Path.ChangeExtension(inputFile.FilePath,
+					                                           "1." + GetExtension(muxer));
+				}
+
 			}
 			this.multimedia = new MultimediaFactory();
 		}
