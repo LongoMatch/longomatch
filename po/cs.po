@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: longomatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-09-09 08:09+0000\n"
-"PO-Revision-Date: 2013-09-11 09:33+0200\n"
+"POT-Creation-Date: 2013-09-15 10:43+0000\n"
+"PO-Revision-Date: 2013-09-16 19:10+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -1474,7 +1474,7 @@ msgid "This file contains a video stream but its length is 0."
 msgstr "Tento soubor obsahuje proud videa, ale jeho délka je 0."
 
 #: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:480
-#: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:162
+#: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:167
 msgid ""
 "The file you are trying to load is not properly supported. Would you like to "
 "convert it into a more suitable format?"
@@ -1946,15 +1946,15 @@ msgid "Device reconnected.Do you want to restart the capture?"
 msgstr "Zařízení je znovu připojeno. Chcete znovu spustit nahrávání?"
 
 #. Create the dialog
-#: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:70
+#: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:75
 msgid "Remuxing file..."
 msgstr "Opětovné multiplexování souboru…"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:77
-msgid "Remuxing file, this might take while..."
+#: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:82
+msgid "Remuxing file, this might take a while..."
 msgstr "Multiplexuje se soubor, to může chvíli trvat…"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:107
+#: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:112
 msgid "Error remuxing file:\n"
 msgstr "Chyba multiplexování souboru:\n"
 
