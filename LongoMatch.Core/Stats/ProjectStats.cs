@@ -30,10 +30,13 @@ namespace LongoMatch.Stats
 	{
 		List<CategoryStats> catStats;
 		GameUnitsStats guStats;
+		PlaysFilter filter;
+		Project project;
 		
 		public ProjectStats (Project project)
 		{
 			catStats = new List<CategoryStats>();
+			this.project = project;
 			
 			ProjectName = project.Description.Title;
 			Date = project.Description.MatchDate;
@@ -42,8 +45,8 @@ namespace LongoMatch.Stats
 			Competition = project.Description.Competition;
 			Season = project.Description.Season;
 			Results = String.Format("{0}-{1}", project.Description.LocalGoals, project.Description.VisitorGoals);
-			UpdateStats (project);
-			UpdateGameUnitsStats (project);
+			UpdateStats ();
+			UpdateGameUnitsStats ();
 		}
 		
 		public void Dispose () {
@@ -114,7 +117,14 @@ namespace LongoMatch.Stats
 			}
 		}
 		
-		void UpdateGameUnitsStats (Project project) {
+		public PlaysFilter Filter {
+			set {
+				filter = value;
+				UpdateStats ()
+			}
+		}
+		
+		void UpdateGameUnitsStats () {
 			guStats = new GameUnitsStats(project.GameUnits, (int)project.Description.File.Length);
 		}
 		
@@ -123,7 +133,7 @@ namespace LongoMatch.Stats
 			visitorTeamCount = plays.Where(p => p.Team == Team.VISITOR || p.Team == Team.BOTH).Count();
 		}
 
-		void UpdateStats (Project project) {
+		void UpdateStats () {
 			catStats.Clear();
 			
 			Field = project.Categories.FieldBackground;
@@ -135,7 +145,10 @@ namespace LongoMatch.Stats
 				List<Play> plays, homePlays, awayPlays;
 				int localTeamCount, visitorTeamCount;
 				
-				plays = project.PlaysInCategory (cat);
+				plays = project.PlaysInCategory (cat).Where;
+				if (filter != null) {
+					plays = plays.Where(p => filter.IsVisible (p));
+				}
 				homePlays =plays.Where(p => p.Team == Team.LOCAL || p.Team == Team.BOTH).ToList();
 				awayPlays =plays.Where(p => p.Team == Team.VISITOR || p.Team == Team.BOTH).ToList();
 				stats = new CategoryStats(cat, plays.Count, homePlays.Count(), awayPlays.Count());
