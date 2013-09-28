@@ -394,6 +394,7 @@
       <itemgroup label="Plotter Properties">
         <property name="HomeName" />
         <property name="AwayName" />
+        <property name="ShowTeams" />
       </itemgroup>
     </itemgroups>
     <signals />
@@ -416,6 +417,27 @@
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.GameViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.Stats.PlayersViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.Stats.PlayerCategoriesViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.Stats.PlayerCategoryViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+    </itemgroups>
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.Stats.PlayerSubcategoryViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.Stats.PlayerPlotter" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
   </object>

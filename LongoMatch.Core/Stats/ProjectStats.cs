@@ -120,7 +120,7 @@ namespace LongoMatch.Stats
 		public PlaysFilter Filter {
 			set {
 				filter = value;
-				UpdateStats ()
+				UpdateStats ();
 			}
 		}
 		
@@ -133,7 +133,7 @@ namespace LongoMatch.Stats
 			visitorTeamCount = plays.Where(p => p.Team == Team.VISITOR || p.Team == Team.BOTH).Count();
 		}
 
-		void UpdateStats () {
+		public void UpdateStats () {
 			catStats.Clear();
 			
 			Field = project.Categories.FieldBackground;
@@ -145,9 +145,9 @@ namespace LongoMatch.Stats
 				List<Play> plays, homePlays, awayPlays;
 				int localTeamCount, visitorTeamCount;
 				
-				plays = project.PlaysInCategory (cat).Where;
+				plays = project.PlaysInCategory (cat);
 				if (filter != null) {
-					plays = plays.Where(p => filter.IsVisible (p));
+					plays = plays.Where(p => filter.IsVisible (p)).ToList();
 				}
 				homePlays =plays.Where(p => p.Team == Team.LOCAL || p.Team == Team.BOTH).ToList();
 				awayPlays =plays.Where(p => p.Team == Team.VISITOR || p.Team == Team.BOTH).ToList();

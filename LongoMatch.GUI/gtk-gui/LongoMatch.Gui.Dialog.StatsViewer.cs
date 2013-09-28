@@ -8,7 +8,9 @@ namespace LongoMatch.Gui.Dialog
 		private global::LongoMatch.Gui.Component.GameViewer gameviewer;
 		private global::Gtk.Label label2;
 		private global::LongoMatch.Gui.Component.Stats.CategoriesViewer categoriesviewer;
-		private global::Gtk.Label label1;
+		private global::Gtk.Label label4;
+		private global::LongoMatch.Gui.Component.Stats.PlayersViewer playersviewer;
+		private global::Gtk.Label label5;
 		private global::Gtk.Button buttonCancel;
 		
 		protected virtual void Build ()
@@ -18,6 +20,7 @@ namespace LongoMatch.Gui.Dialog
 			this.Name = "LongoMatch.Gui.Dialog.StatsViewer";
 			this.Title = global::Mono.Unix.Catalog.GetString ("Stats");
 			this.Icon = global::Gdk.Pixbuf.LoadFromResource ("logo.svg");
+			this.TypeHint = ((global::Gdk.WindowTypeHint)(5));
 			this.WindowPosition = ((global::Gtk.WindowPosition)(3));
 			this.Modal = true;
 			this.DestroyWithParent = true;
@@ -32,7 +35,7 @@ namespace LongoMatch.Gui.Dialog
 			this.notebook1 = new global::Gtk.Notebook ();
 			this.notebook1.CanFocus = true;
 			this.notebook1.Name = "notebook1";
-			this.notebook1.CurrentPage = 0;
+			this.notebook1.CurrentPage = 2;
 			// Container child notebook1.Gtk.Notebook+NotebookChild
 			this.gameviewer = new global::LongoMatch.Gui.Component.GameViewer ();
 			this.gameviewer.Events = ((global::Gdk.EventMask)(256));
@@ -52,20 +55,33 @@ namespace LongoMatch.Gui.Dialog
 			global::Gtk.Notebook.NotebookChild w3 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.categoriesviewer]));
 			w3.Position = 1;
 			// Notebook tab
-			this.label1 = new global::Gtk.Label ();
-			this.label1.Name = "label1";
-			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Categories stats");
-			this.notebook1.SetTabLabel (this.categoriesviewer, this.label1);
-			this.label1.ShowAll ();
+			this.label4 = new global::Gtk.Label ();
+			this.label4.Name = "label4";
+			this.label4.LabelProp = global::Mono.Unix.Catalog.GetString ("Categories stats");
+			this.notebook1.SetTabLabel (this.categoriesviewer, this.label4);
+			this.label4.ShowAll ();
+			// Container child notebook1.Gtk.Notebook+NotebookChild
+			this.playersviewer = new global::LongoMatch.Gui.Component.Stats.PlayersViewer ();
+			this.playersviewer.Events = ((global::Gdk.EventMask)(256));
+			this.playersviewer.Name = "playersviewer";
+			this.notebook1.Add (this.playersviewer);
+			global::Gtk.Notebook.NotebookChild w4 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.playersviewer]));
+			w4.Position = 2;
+			// Notebook tab
+			this.label5 = new global::Gtk.Label ();
+			this.label5.Name = "label5";
+			this.label5.LabelProp = global::Mono.Unix.Catalog.GetString ("Players stats");
+			this.notebook1.SetTabLabel (this.playersviewer, this.label5);
+			this.label5.ShowAll ();
 			w1.Add (this.notebook1);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(w1 [this.notebook1]));
-			w4.Position = 0;
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(w1 [this.notebook1]));
+			w5.Position = 0;
 			// Internal child LongoMatch.Gui.Dialog.StatsViewer.ActionArea
-			global::Gtk.HButtonBox w5 = this.ActionArea;
-			w5.Name = "dialog1_ActionArea";
-			w5.Spacing = 10;
-			w5.BorderWidth = ((uint)(5));
-			w5.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
+			global::Gtk.HButtonBox w6 = this.ActionArea;
+			w6.Name = "dialog1_ActionArea";
+			w6.Spacing = 10;
+			w6.BorderWidth = ((uint)(5));
+			w6.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.buttonCancel = new global::Gtk.Button ();
 			this.buttonCancel.CanDefault = true;
@@ -75,9 +91,9 @@ namespace LongoMatch.Gui.Dialog
 			this.buttonCancel.UseUnderline = true;
 			this.buttonCancel.Label = "gtk-close";
 			this.AddActionWidget (this.buttonCancel, -7);
-			global::Gtk.ButtonBox.ButtonBoxChild w6 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w5 [this.buttonCancel]));
-			w6.Expand = false;
-			w6.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w7 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w6 [this.buttonCancel]));
+			w7.Expand = false;
+			w7.Fill = false;
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}

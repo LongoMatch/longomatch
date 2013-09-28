@@ -32,6 +32,9 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Component.GameViewer.cs \
 	gtk-gui/LongoMatch.Gui.Component.Stats.CategoriesViewer.cs \
 	gtk-gui/LongoMatch.Gui.Component.Stats.CategoryViewer.cs \
+	gtk-gui/LongoMatch.Gui.Component.Stats.PlayerCategoriesViewer.cs \
+	gtk-gui/LongoMatch.Gui.Component.Stats.PlayerCategoryViewer.cs \
+	gtk-gui/LongoMatch.Gui.Component.Stats.PlayerSubcategoryViewer.cs \
 	gtk-gui/LongoMatch.Gui.Component.Stats.Plotter.cs \
 	gtk-gui/LongoMatch.Gui.Component.Stats.SubCategoryViewer.cs \
 	gtk-gui/LongoMatch.Gui.Component.StringTaggerWidget.cs \
@@ -99,6 +102,9 @@ SOURCES = \
 	Gui/Component/Stats/CategoryViewer.cs \
 	Gui/Component/Stats/GameViewer.cs \
 	Gui/Component/Stats/PangoTextMeasurer.cs \
+	Gui/Component/Stats/PlayerCategoriesViewer.cs \
+	Gui/Component/Stats/PlayerCategoryViewer.cs \
+	Gui/Component/Stats/PlayerSubcategoryViewer.cs \
 	Gui/Component/Stats/Plotter.cs \
 	Gui/Component/Stats/SubcategoryViewer.cs \
 	Gui/Component/StringTaggerWidget.cs \

@@ -16,34 +16,38 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Stats;
-using LongoMatch.Store;
+using Gtk;
+using Mono.Unix;
 
-namespace LongoMatch.Gui.Dialog
+using LongoMatch.Stats;
+using LongoMatch.Common;
+
+namespace LongoMatch.Gui.Component.Stats
 {
-	public partial class StatsViewer : Gtk.Dialog
+	[System.ComponentModel.ToolboxItem(true)]
+	public partial class PlayerSubcategoryViewer : Gtk.Bin
 	{
-		ProjectStats stats;
+		ListStore store;
 		
-		public StatsViewer ()
+		public PlayerSubcategoryViewer ()
 		{
 			this.Build ();
+			treeview.AppendColumn (Catalog.GetString ("Name"), new Gtk.CellRendererText (), "text", 0);
+			treeview.AppendColumn (Catalog.GetString("Count"), new Gtk.CellRendererText (), "text", 1);
+			plotter.ShowTeams = false;
+			plotter.WidthRequest = 500;
 		}
 		
-		public override void Destroy ()
-		{
-			base.Destroy ();
-			if (stats != null)
-				stats.Dispose();
-		}
-		
-		public void LoadStats (Project project) {
-			if (stats != null)
-				stats.Dispose();
-			stats = new ProjectStats (project);
-			categoriesviewer.LoadStats (stats);
-			playersviewer.LoadProject (project);
-			gameviewer.Project = project;
+		public void LoadStats (SubCategoryStat stats) {
+			store = new ListStore(typeof(string), typeof(string));
+			treeview.Model = store;
+			
+			gtkframe.Markup = String.Format("<b> {0} </b>", stats.Name);
+			plotter.LoadHistogram (stats);
+			
+			foreach (PercentualStat st in stats.OptionStats) {
+				store.AppendValues (st.Name, st.TotalCount.ToString());
+			}
 		}
 	}
 }

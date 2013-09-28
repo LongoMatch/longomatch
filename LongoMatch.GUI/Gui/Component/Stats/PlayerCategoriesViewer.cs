@@ -17,20 +17,18 @@
 //
 using System;
 using Gtk;
-
 using LongoMatch.Stats;
 using LongoMatch.Store;
-using LongoMatch.Common;
 
 namespace LongoMatch.Gui.Component.Stats
 {
 	[System.ComponentModel.ToolboxItem(true)]
-	public partial class CategoriesViewer : Gtk.Bin
+	public partial class PlayerCategoriesViewer : Gtk.Bin
 	{
 		ListStore store;
 		ProjectStats pstats;
 		
-		public CategoriesViewer ()
+		public PlayerCategoriesViewer ()
 		{
 			this.Build ();
 			store = new ListStore(typeof(Category), typeof(string));
@@ -43,9 +41,7 @@ namespace LongoMatch.Gui.Component.Stats
 		}
 		
 		public void LoadStats (ProjectStats pstats) {
-			categoryviewer1.HomeName = pstats.LocalTeam;
-			categoryviewer1.AwayName = pstats.VisitorTeam;
-			categoryviewer1.LoadBackgrounds (pstats.Field, pstats.HalfField, pstats.Goal);
+			categoryviewer.LoadBackgrounds (pstats.Field, pstats.HalfField, pstats.Goal);
 			this.pstats = pstats;
 			ReloadStats();
 		}
@@ -70,7 +66,7 @@ namespace LongoMatch.Gui.Component.Stats
 				store.GetIterFirst(out iter);
 			}
 			treeview.Selection.SelectIter(iter);
-			categoryviewer1.LoadStats (store.GetValue (iter, 0) as CategoryStats);
+			categoryviewer.LoadStats (store.GetValue (iter, 0) as CategoryStats);
 		}
 		
 		void HandleCursorChanged (object sender, EventArgs e)
@@ -80,8 +76,8 @@ namespace LongoMatch.Gui.Component.Stats
 			
 			treeview.Selection.GetSelected(out iter);
 			stats = store.GetValue(iter, 0) as CategoryStats;
-			categoryviewer1.LoadStats (stats);
-		}
+			categoryviewer.LoadStats (stats);
+		}	
 	}
 }
 

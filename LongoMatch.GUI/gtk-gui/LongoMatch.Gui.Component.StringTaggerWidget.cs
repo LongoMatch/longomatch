@@ -26,8 +26,6 @@ namespace LongoMatch.Gui.Component
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			this.table = new global::Gtk.Table (((uint)(3)), ((uint)(3)), false);
 			this.table.Name = "table";
-			this.table.RowSpacing = ((uint)(6));
-			this.table.ColumnSpacing = ((uint)(6));
 			this.GtkAlignment.Add (this.table);
 			this.frame.Add (this.GtkAlignment);
 			this.titlelabel = new global::Gtk.Label ();

@@ -193,6 +193,14 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.StatsViewer.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/Stats/GameViewer.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.GameViewer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/Stats/PlayersViewer.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.Stats.PlayersViewer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/Stats/PlayerCategoriesViewer.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.Stats.PlayerCategoriesViewer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/Stats/PlayerCategoryViewer.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.Stats.PlayerCategoryViewer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/Stats/PlayerSubcategoryViewer.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.Stats.PlayerSubcategoryViewer.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

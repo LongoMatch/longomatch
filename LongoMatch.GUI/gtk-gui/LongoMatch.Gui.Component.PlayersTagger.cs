@@ -22,11 +22,10 @@ namespace LongoMatch.Gui.Component
 			// Container child vbox4.Gtk.Box+BoxChild
 			this.localtable = new global::Gtk.Table (((uint)(3)), ((uint)(3)), false);
 			this.localtable.Name = "localtable";
-			this.localtable.RowSpacing = ((uint)(6));
-			this.localtable.ColumnSpacing = ((uint)(6));
 			this.vbox4.Add (this.localtable);
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.localtable]));
 			w1.Position = 0;
+			w1.Expand = false;
 			// Container child vbox4.Gtk.Box+BoxChild
 			this.hseparator1 = new global::Gtk.HSeparator ();
 			this.hseparator1.Name = "hseparator1";
@@ -38,11 +37,10 @@ namespace LongoMatch.Gui.Component
 			// Container child vbox4.Gtk.Box+BoxChild
 			this.visitortable = new global::Gtk.Table (((uint)(3)), ((uint)(3)), false);
 			this.visitortable.Name = "visitortable";
-			this.visitortable.RowSpacing = ((uint)(6));
-			this.visitortable.ColumnSpacing = ((uint)(6));
 			this.vbox4.Add (this.visitortable);
 			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.visitortable]));
 			w3.Position = 2;
+			w3.Expand = false;
 			this.Add (this.vbox4);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

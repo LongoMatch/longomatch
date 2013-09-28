@@ -36,18 +36,33 @@ namespace LongoMatch.Gui.Component.Stats
 	{
 		const double WIDTH = 700;
 		const double HEIGHT = 300;
+		const double NO_TEAMS_WIDTH = 500;
 		GraphType graphType;
 		SubCategoryStat stats;
+		bool showTeams;
+		double graphWidth;
 		
 		public Plotter ()
 		{
 			this.Build ();
-			HeightRequest = (int) HEIGHT;
+			HeightRequest = (int) HEIGHT + 20;
 			WidthRequest = (int) WIDTH;
 			pieradiobutton.Toggled += HandleToggled;
 			historadiobutton.Toggled += HandleToggled;
 			HomeName = Catalog.GetString ("Home");
 			AwayName = Catalog.GetString ("Away");
+			ShowTeams = true;
+		}
+		
+		public bool ShowTeams {
+			protected get {
+				return showTeams;
+			}
+			set {
+				showTeams = value;
+				graphWidth = value ? WIDTH : NO_TEAMS_WIDTH;
+				WidthRequest = (int) graphWidth;
+			}
 		}
 		
 		public string HomeName {
@@ -92,10 +107,12 @@ namespace LongoMatch.Gui.Component.Stats
             
 			model.Series.Add(new ColumnSeries { Title = Catalog.GetString ("Total"), ItemsSource = stats.OptionStats,
 				ValueField = "TotalCount" });	
-			model.Series.Add(new ColumnSeries { Title = HomeName, ItemsSource = stats.OptionStats,
-				ValueField = "LocalTeamCount", FillColor = new OxyColor {R=0xFF, G=0x33, B=0x0, A=0xFF}});	
-			model.Series.Add(new ColumnSeries { Title = AwayName, ItemsSource = stats.OptionStats,
-				ValueField = "VisitorTeamCount",  FillColor = new OxyColor {R=0, G=0x99, B=0xFF, A=0xFF} });	
+			if (ShowTeams) {
+				model.Series.Add(new ColumnSeries { Title = HomeName, ItemsSource = stats.OptionStats,
+					ValueField = "LocalTeamCount", FillColor = new OxyColor {R=0xFF, G=0x33, B=0x0, A=0xFF}});	
+				model.Series.Add(new ColumnSeries { Title = AwayName, ItemsSource = stats.OptionStats,
+					ValueField = "VisitorTeamCount",  FillColor = new OxyColor {R=0, G=0x99, B=0xFF, A=0xFF} });	
+			}
             model.Axes.Add(categoryAxis);
             model.Axes.Add(valueAxis);
             
@@ -160,16 +177,20 @@ namespace LongoMatch.Gui.Component.Stats
 			
 			switch (graphType) {
 			case GraphType.Histogram:
-				imageall.Pixbuf = Load (GetHistogram (stats), WIDTH, HEIGHT);
+				imageall.Pixbuf = Load (GetHistogram (stats), graphWidth, HEIGHT);
 				imagehome.Visible = false;
 				imageaway.Visible = false;
 				break;
 			case GraphType.Pie:
-				imageall.Pixbuf = Load (GetPie (stats, Team.BOTH), WIDTH / 3, HEIGHT);
-				imagehome.Pixbuf = Load (GetPie (stats, Team.LOCAL), WIDTH / 3, HEIGHT);
-				imageaway.Pixbuf = Load (GetPie (stats, Team.VISITOR), WIDTH / 3, HEIGHT);
-				imagehome.Visible = true;
-				imageaway.Visible = true;
+				if (ShowTeams) {
+					imageall.Pixbuf = Load (GetPie (stats, Team.BOTH), graphWidth / 3, HEIGHT);
+					imagehome.Pixbuf = Load (GetPie (stats, Team.LOCAL), graphWidth / 3, HEIGHT);
+					imageaway.Pixbuf = Load (GetPie (stats, Team.VISITOR), graphWidth / 3, HEIGHT);
+				} else {
+					imageall.Pixbuf = Load (GetPie (stats, Team.BOTH), graphWidth, HEIGHT);
+				}
+				imagehome.Visible = ShowTeams;
+				imageaway.Visible = ShowTeams;
 				break;
 			}
 		}
