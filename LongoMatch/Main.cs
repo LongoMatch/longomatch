@@ -70,6 +70,7 @@ namespace LongoMatch
 			    } catch (DBLockedException locked) {
 					string msg = Catalog.GetString ("The database seems to be locked by another instance and " +
 					                                "the application will closed.");
+					guiToolkit.ErrorMessage (msg);
 					Log.Exception (locked);
 					return;
 			    }
