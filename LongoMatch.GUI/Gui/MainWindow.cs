@@ -352,13 +352,15 @@ namespace LongoMatch.Gui
 				playerWindow.Show();
 				
 				playercapturer.Reparent(box);
-				buttonswidget.Visible = true;
-				timeline.Visible = true;
-				if (Config.UseGameUnits) {
-					guTimeline.Visible = true;
-					gameunitstaggerwidget1.Visible = true;
-				}
 				videowidgetsbox.Visible = false;
+				if (openedProject != null) {
+					buttonswidget.Visible = true;
+					timeline.Visible = true;
+					if (Config.UseGameUnits) {
+						guTimeline.Visible = true;
+						gameunitstaggerwidget1.Visible = true;
+					}
+				}
 			} else {
 				ToggleAction action;
 				

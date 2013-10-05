@@ -280,7 +280,7 @@ namespace LongoMatch.Gui
 			segmentStopTime = stop;
 			player.LogoMode = false;
 			Rate = rate;
-			detachbutton.Sensitive = false;
+			detachbutton.Sensitive = true;
 		}
 
 		public void Close() {
