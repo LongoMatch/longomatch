@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: longomatch master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-09-15 10:43+0000\n"
-"PO-Revision-Date: 2013-09-20 23:29+0100\n"
+"POT-Creation-Date: 2013-10-05 18:03+0000\n"
+"PO-Revision-Date: 2013-10-06 18:52+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: ../libcesarplayer/bacon-video-widget-gst-0.10.c:2121
 msgid ""
@@ -258,15 +258,15 @@ msgstr ""
 "Podatkovna zbirka je najverjetneje zaklenjena z drugim programom. Ta "
 "primerek programa bo končan."
 
-#: ../LongoMatch/Main.cs:109
+#: ../LongoMatch/Main.cs:110
 msgid "The application has finished with an unexpected error."
 msgstr "Program je končal z nepričakovano napako."
 
-#: ../LongoMatch/Main.cs:110
+#: ../LongoMatch/Main.cs:111
 msgid "A log has been saved at: "
 msgstr "Dnevnik je shranjen v:"
 
-#: ../LongoMatch/Main.cs:111
+#: ../LongoMatch/Main.cs:112
 msgid "Please, fill a bug report "
 msgstr "Izpolnite poročilo o hrošču"
 
@@ -781,7 +781,7 @@ msgstr "Diagram pite"
 msgid "<b></b>"
 msgstr "<b></b>"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.StringTaggerWidget.cs:35
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.StringTaggerWidget.cs:33
 msgid "<b>GtkFrame</b>"
 msgstr "<b>GtkFrame</b>"
 
@@ -1008,17 +1008,21 @@ msgstr "Serija:"
 msgid "Export to PNG images"
 msgstr "Izvozi skico v PNG"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.StatsViewer.cs:19
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.StatsViewer.cs:21
 msgid "Stats"
 msgstr "Statistika"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.StatsViewer.cs:44
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.StatsViewer.cs:47
 msgid "Game stats"
 msgstr "Statistika igre"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.StatsViewer.cs:57
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.StatsViewer.cs:60
 msgid "Categories stats"
 msgstr "Statistika kategorij"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.StatsViewer.cs:73
+msgid "Players stats"
+msgstr "Statistika igralcev"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:29
 msgid "Edit subcategory tags"
@@ -1536,17 +1540,17 @@ msgstr "Rezultat"
 msgid "Date"
 msgstr "Datum"
 
-#: ../LongoMatch.GUI/Gui/Component/Stats/Plotter.cs:49
+#: ../LongoMatch.GUI/Gui/Component/Stats/Plotter.cs:52
 #: ../LongoMatch.GUI/Gui/Component/Stats/SubcategoryViewer.cs:36
 msgid "Home"
 msgstr "Osebna mapa"
 
-#: ../LongoMatch.GUI/Gui/Component/Stats/Plotter.cs:50
+#: ../LongoMatch.GUI/Gui/Component/Stats/Plotter.cs:53
 #: ../LongoMatch.GUI/Gui/Component/Stats/SubcategoryViewer.cs:37
 msgid "Away"
 msgstr "Odsotno"
 
-#: ../LongoMatch.GUI/Gui/Component/Stats/Plotter.cs:93
+#: ../LongoMatch.GUI/Gui/Component/Stats/Plotter.cs:108
 msgid "Total"
 msgstr "Skupaj"
 
@@ -1792,11 +1796,11 @@ msgstr "Dodaj"
 msgid "Import file project"
 msgstr "Uvozi datoteko projekta"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:521
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:523
 msgid "Do you want to close the current project?"
 msgstr "Ali zares želite zapreti trenutni projekt?"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:779
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:781
 msgid "The following error happened and the current project will be closed:"
 msgstr "Prišlo je do napake, zato bo projekt zaprt:"
 
@@ -1958,7 +1962,6 @@ msgid "Remuxing file..."
 msgstr "Ponovno zvijanje datoteke ..."
 
 #: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:82
-#| msgid "Remuxing file, this might take while..."
 msgid "Remuxing file, this might take a while..."
 msgstr "Ponovno zvijanje datoteke. Postopek je lahko dolgotrajen ..."
 
