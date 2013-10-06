@@ -297,7 +297,8 @@ namespace LongoMatch.Gui
 		}
 
 		protected virtual void OnTick(int ellapsedTime) {
-			timelabel.Text = "Time: " + TimeString.MSecondsToSecondsString(CurrentTime);
+			timelabel.Markup = String.Format("<span font=\"20px bold\">Time --> {0}</span> ", 
+			                               TimeString.MSecondsToSecondsString(CurrentTime));
 		}
 
 		protected virtual void OnError(object o, ErrorArgs args)

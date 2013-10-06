@@ -125,13 +125,12 @@ namespace LongoMatch.Gui
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.timelabel = new global::Gtk.Label ();
 			this.timelabel.Name = "timelabel";
-			this.timelabel.Xalign = 1F;
 			this.timelabel.LabelProp = "Time: 0:00:00";
+			this.timelabel.UseMarkup = true;
 			this.hbox2.Add (this.timelabel);
 			global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.timelabel]));
 			w31.PackType = ((global::Gtk.PackType)(1));
 			w31.Position = 1;
-			w31.Expand = false;
 			this.vbox1.Add (this.hbox2);
 			global::Gtk.Box.BoxChild w32 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hbox2]));
 			w32.Position = 2;

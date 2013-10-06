@@ -409,6 +409,11 @@ namespace LongoMatch.Gui
 				}
 			}
 			
+			if(projectType == ProjectType.FakeCaptureProject) {
+				(downbox[videowidgetsbox] as Box.BoxChild).Expand = false;
+				(downbox[buttonswidget] as Box.BoxChild).Expand = true;
+			}
+			
 			openedProject = project;
 			this.projectType = projectType;
 			
@@ -535,14 +540,18 @@ namespace LongoMatch.Gui
 			dialog.TransientFor = (Gtk.Window)this.Toplevel;
 			res = dialog.Run();
 			dialog.Destroy();
-
+			
 			/* Close project wihtout saving */
 			if(res == (int)EndCaptureResponse.Quit) {
 				EmitCloseOpenedProject(false);
+				(downbox[videowidgetsbox] as Box.BoxChild).Expand = true;
+				(downbox[buttonswidget] as Box.BoxChild).Expand = false;
 				return true;
 			} else if(res == (int)EndCaptureResponse.Save) {
 				/* Close and save project */
 				EmitCloseOpenedProject(true);
+				(downbox[videowidgetsbox] as Box.BoxChild).Expand = true;
+				(downbox[buttonswidget] as Box.BoxChild).Expand = false;
 				return true;
 			} else
 				/* Continue with the current project */
