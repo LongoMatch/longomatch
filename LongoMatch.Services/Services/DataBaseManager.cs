@@ -49,13 +49,14 @@ namespace LongoMatch.DB
 		}
 		
 		public void SetActiveByName (string name) {
-			foreach (DataBase db in Databases) {
-				if (db.Name == name) {
-					Log.Information ("Selecting active database " + db.Name);
-					ActiveDB = db;
-					return;
-				}
+			IDatabase db = Databases.Where(p => p.Name == name).First();
+			
+			if (db != null) {
+				Log.Information ("Selecting active database " + db.Name);
+				ActiveDB = db;
+				return;
 			}
+			
 			DataBase newdb = new DataBase(NameToFile (name));
 			Log.Information ("Creating new database " + newdb.Name);
 			Databases.Add (newdb);
@@ -102,7 +103,10 @@ namespace LongoMatch.DB
 		
 		string NameToFile (string name) {
 			return Path.Combine (DBDir, name + '.' + Extension);
-					
+		}
+		
+		string FileToName (string path) {
+			return Path.GetFileName(path).Replace("." + Extension, "");
 		}
 		
 		string Extension {
@@ -123,6 +127,65 @@ namespace LongoMatch.DB
 			};
 		}
 		
+		DataBase AddDatabase (string path) {
+			DataBase db = new DataBase (path);
+			if (db.Version.Major == SUPPORTED_MAJOR_VERSION) {
+				Log.Information ("Found new database " + db.Name);
+			}
+			return db;
+		}
+		
+		DataBase TryLoad (string path) {
+			DataBase db = null;
+			
+			try {
+				db = AddDatabase (path);
+			} catch (UnknownDBErrorException ex) {
+				string dbName = FileToName (path);
+				string backupFile = path + ".backup";
+				string errorDBDir = Path.Combine (DBDir, "error");
+				
+				Log.Exception (ex);
+				if (guiToolkit.QuestionMessage (String.Format (
+					Catalog.GetString ("The database {0} is corrupted, would you like to restore the last backup?"),
+					dbName), Catalog.GetString ("Database"), null)) {
+					try {
+						string errorDBFile = Path.Combine(errorDBDir,Path.GetFileName(path)); 
+						
+						if (!Directory.Exists(errorDBDir)){
+							Directory.CreateDirectory (errorDBDir);
+						}
+						if (File.Exists (errorDBFile)) {
+							File.Delete (errorDBFile);
+						}
+						File.Move (path, errorDBFile);
+						if (File.Exists (backupFile)) {
+							File.Move (backupFile, path);
+							db = AddDatabase (path);
+							db.Backup ();
+							guiToolkit.InfoMessage (Catalog.GetString ("Backup recovered successfully"));
+						} else {
+							guiToolkit.ErrorMessage (Catalog.GetString (
+								"Could not recover backup, this database will not be used"));
+						}
+					} catch (UnknownDBErrorException ex2) {
+						Log.Exception (ex2);
+						if (File.Exists (path)) {
+							string errorDBFileB = Path.Combine(errorDBDir,Path.GetFileName(backupFile)); 
+							
+							if (File.Exists (errorDBFileB)) {
+								File.Delete (errorDBFileB);
+							}
+							File.Move (path, errorDBFileB);
+						}
+						guiToolkit.ErrorMessage (Catalog.GetString (
+							"Could not recover backup, this database will not be used"));
+					}
+				}
+			}
+			return db;
+		}
+		
 		void FindDBS (){
 			Databases = new List<IDatabase>();
 			
@@ -130,14 +193,10 @@ namespace LongoMatch.DB
 				(f => f.EndsWith(Extension)).ToList();
 				
 			foreach (string p in paths) {
-				try {
-					DataBase db = new DataBase (p);
-					if (db.Version.Major == SUPPORTED_MAJOR_VERSION) {
-						Log.Information ("Found new database " + db.Name);
-						Databases.Add (db);
-					}
-				} catch (Exception ex) {
-					Log.Exception (ex);
+				DataBase db = TryLoad (p);
+				if (db != null) {
+					Databases.Add (db);
+					Log.Error ("Adding db " + db);
 				}
 			}
 		}
