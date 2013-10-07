@@ -1,5 +1,3 @@
-# Czech translation of longomatch.
-# Copyright (C) 2009, 2010 the author(s) of longomatch.
 # This file is distributed under the same license as the longomatch package.
 #
 # Pavel Bárta <BartyCok@email.cz>, 2009.
@@ -10,8 +8,8 @@ msgstr ""
 "Project-Id-Version: longomatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-09-15 10:43+0000\n"
-"PO-Revision-Date: 2013-09-16 19:10+0200\n"
+"POT-Creation-Date: 2013-10-06 22:30+0000\n"
+"PO-Revision-Date: 2013-10-07 22:14+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -255,15 +253,15 @@ msgid ""
 msgstr ""
 "Vypadá to, že databáze je uzamčena jinou instancí a aplikace bude zavřena."
 
-#: ../LongoMatch/Main.cs:109
+#: ../LongoMatch/Main.cs:110
 msgid "The application has finished with an unexpected error."
 msgstr "Program byl ukončen pro neočekávanou chybu."
 
-#: ../LongoMatch/Main.cs:110
+#: ../LongoMatch/Main.cs:111
 msgid "A log has been saved at: "
 msgstr "Protokol byl uložen do: "
 
-#: ../LongoMatch/Main.cs:111
+#: ../LongoMatch/Main.cs:112
 msgid "Please, fill a bug report "
 msgstr "Prosím vyplňte protokol chybového hlášení."
 
@@ -317,6 +315,7 @@ msgstr "Není definován"
 
 #: ../LongoMatch.Core/Store/Play.cs:234
 #: ../LongoMatch.Core/Store/SubCategory.cs:84
+#: ../LongoMatch.GUI/Gui/Component/Stats/PlayerSubcategoryViewer.cs:35
 #: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:50
 #: ../LongoMatch.GUI/Gui/TreeView/CategoriesTreeView.cs:48
 #: ../LongoMatch.GUI/Gui/TreeView/PlayerPropertiesTreeView.cs:52
@@ -764,6 +763,11 @@ msgstr "<b>Hosté</b>"
 msgid "Zonal tagging"
 msgstr "Zónové štítkování"
 
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.PlayerSubcategoryViewer.cs:57
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.SubCategoryViewer.cs:57
+msgid "<b></b>"
+msgstr "<b></b>"
+
 #. Container child hbox4.Gtk.Box+BoxChild
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.Plotter.cs:31
 msgid "Histogram"
@@ -774,11 +778,7 @@ msgstr "Histogram"
 msgid "Pie chart"
 msgstr "Koláčový graf"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.SubCategoryViewer.cs:57
-msgid "<b></b>"
-msgstr "<b></b>"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.StringTaggerWidget.cs:35
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.StringTaggerWidget.cs:33
 msgid "<b>GtkFrame</b>"
 msgstr "<b>Rámec GTK</b>"
 
@@ -1005,17 +1005,21 @@ msgstr "Název série:"
 msgid "Export to PNG images"
 msgstr "Export do obrázku PNG"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.StatsViewer.cs:19
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.StatsViewer.cs:21
 msgid "Stats"
 msgstr "Statistika"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.StatsViewer.cs:44
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.StatsViewer.cs:47
 msgid "Game stats"
 msgstr "Statistika hry"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.StatsViewer.cs:57
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.StatsViewer.cs:60
 msgid "Categories stats"
 msgstr "Statistika kategorií"
+
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.StatsViewer.cs:73
+msgid "Players stats"
+msgstr "Statistiky hráčů"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs:29
 msgid "Edit subcategory tags"
@@ -1531,23 +1535,24 @@ msgstr "Výsledek"
 msgid "Date"
 msgstr "Datum"
 
-#: ../LongoMatch.GUI/Gui/Component/Stats/Plotter.cs:49
+#: ../LongoMatch.GUI/Gui/Component/Stats/PlayerSubcategoryViewer.cs:36
+#: ../LongoMatch.GUI/Gui/Component/Stats/SubcategoryViewer.cs:34
+msgid "Count"
+msgstr "Počet"
+
+#: ../LongoMatch.GUI/Gui/Component/Stats/Plotter.cs:52
 #: ../LongoMatch.GUI/Gui/Component/Stats/SubcategoryViewer.cs:36
 msgid "Home"
 msgstr "Domácí"
 
-#: ../LongoMatch.GUI/Gui/Component/Stats/Plotter.cs:50
+#: ../LongoMatch.GUI/Gui/Component/Stats/Plotter.cs:53
 #: ../LongoMatch.GUI/Gui/Component/Stats/SubcategoryViewer.cs:37
 msgid "Away"
 msgstr "Hosté"
 
-#: ../LongoMatch.GUI/Gui/Component/Stats/Plotter.cs:93
+#: ../LongoMatch.GUI/Gui/Component/Stats/Plotter.cs:108
 msgid "Total"
 msgstr "Celkem"
-
-#: ../LongoMatch.GUI/Gui/Component/Stats/SubcategoryViewer.cs:34
-msgid "Count"
-msgstr "Počet"
 
 #: ../LongoMatch.GUI/Gui/Component/Stats/SubcategoryViewer.cs:35
 msgid "All"
@@ -1785,11 +1790,11 @@ msgstr "Přidat"
 msgid "Import file project"
 msgstr "Importovat soubor s projektem"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:521
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:528
 msgid "Do you want to close the current project?"
 msgstr "Chcete zavřít současný projekt?"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:779
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:790
 msgid "The following error happened and the current project will be closed:"
 msgstr "Vyskytla se následující chyba a současný projekt bude uzavřen:"
 
@@ -1937,11 +1942,11 @@ msgstr ""
 "Chystáte se zastavit a zakončit aktuální nahrávání.\n"
 "Opravdu to chcete provést?"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:322
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:323
 msgid "Device disconnected. The capture will be paused"
 msgstr "Zařízení je odpojeno. Nahrávání bude pozastaveno."
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:331
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:332
 msgid "Device reconnected.Do you want to restart the capture?"
 msgstr "Zařízení je znovu připojeno. Chcete znovu spustit nahrávání?"
 
@@ -1988,9 +1993,28 @@ msgstr "Projekt byl úspěšně exportován"
 msgid "Error exporting project"
 msgstr "Chyba při exportu projektu"
 
-#: ../LongoMatch.Services/Services/DataBaseManager.cs:118
+#: ../LongoMatch.Services/Services/DataBaseManager.cs:122
 msgid "Close the current project to open the database manager"
 msgstr "Aby se mohla otevřít správa databází, je třeba zavřít aktuální projekt"
+
+#: ../LongoMatch.Services/Services/DataBaseManager.cs:150
+#, csharp-format
+msgid ""
+"The database {0} is corrupted, would you like to restore the last backup?"
+msgstr "Databáze {0} je poškozená, přejete si ji obnovit z poslední zálohy?"
+
+#: ../LongoMatch.Services/Services/DataBaseManager.cs:151
+msgid "Database"
+msgstr "Databáze"
+
+#: ../LongoMatch.Services/Services/DataBaseManager.cs:166
+msgid "Backup recovered successfully"
+msgstr "Obnovení ze zálohy proběhlo úspěšně"
+
+#: ../LongoMatch.Services/Services/DataBaseManager.cs:169
+#: ../LongoMatch.Services/Services/DataBaseManager.cs:182
+msgid "Could not recover backup, this database will not be used"
+msgstr "Nelze provést obnovu ze zálohy, tato databáze nebude použita"
 
 #: ../LongoMatch.Services/Services/EventsManager.cs:177
 msgid "You can't create a new play if the capturer is not recording."
