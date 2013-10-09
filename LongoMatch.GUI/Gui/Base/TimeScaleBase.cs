@@ -46,7 +46,7 @@ namespace LongoMatch.Gui.Base
 		uint frames;
 		uint pixelRatio=10;
 
-		Cairo.Color color;
+		Cairo.Color aColor, bColor, cColor;
 		List<T> list;
 		PlaysFilter filter;
 
@@ -68,8 +68,12 @@ namespace LongoMatch.Gui.Base
 			this.frames = frames;
 			this.list = list;
 			this.filter = filter;
-			this.color = new Cairo.Color(0, 0, 1);
-			this.color.A = ALPHA;
+			this.aColor = new Cairo.Color(0, 0, 1);
+			this.aColor.A = ALPHA;
+			this.bColor = new Cairo.Color(1, 0, 0);
+			this.bColor.A = ALPHA;
+			this.cColor = new Cairo.Color(0, 1, 0);
+			this.cColor.A = ALPHA;
 			HeightRequest= SECTION_HEIGHT;
 			Size((int)(frames/pixelRatio),SECTION_HEIGHT);
 			Events = EventMask.PointerMotionMask | EventMask.ButtonPressMask | EventMask.ButtonReleaseMask ;
@@ -185,6 +189,20 @@ namespace LongoMatch.Gui.Base
 			return menusDict;
 		}
 		
+		Cairo.Color GetColor (ITimelineNode tn) {
+			if (tn is Play) {
+				Play play = tn as Play;
+				if (play.Team == Team.LOCAL) {
+					return aColor;
+				} else if (play.Team == Team.VISITOR) {
+					return bColor;
+				} else if (play.Team == Team.BOTH) {
+					return cColor;
+				}
+			}
+			return aColor;
+		}
+		
 		void DrawTimeNodes(Gdk.Window win) {
 			bool hasSelectedTimeNode=false;
 			
@@ -203,7 +221,8 @@ namespace LongoMatch.Gui.Base
 					}
 					
 					if(!tn.Equals(selected)) {
-						Cairo.Color borderColor = new Cairo.Color(color.R+0.1, color.G+0.1,color.B+0.1, 1);
+						Cairo.Color color = GetColor (tn);
+						Cairo.Color borderColor = new Cairo.Color(color.R+0.1, color.G+0.1, color.B+0.1, 1);
 						CairoUtils.DrawRoundedRectangle(g,tn.StartFrame/pixelRatio,3,
 							tn.TotalFrames/pixelRatio,height-6,
 							SECTION_HEIGHT/7, color, borderColor);
@@ -214,6 +233,7 @@ namespace LongoMatch.Gui.Base
 				}
 				//Then we draw the selected TimeNode over the others
 				if(hasSelectedTimeNode) {
+					Cairo.Color color = GetColor (selected);
 					Cairo.Color borderColor = new Cairo.Color(0, 0, 0, 1);
 					CairoUtils.DrawRoundedRectangle(g,selected.StartFrame/pixelRatio,3,
 						selected.TotalFrames/pixelRatio,height-6,
