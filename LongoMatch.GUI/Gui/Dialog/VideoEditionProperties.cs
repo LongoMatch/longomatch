@@ -45,6 +45,8 @@ namespace LongoMatch.Gui.Dialog
 			stdStore = Misc.FillImageFormat (sizecombobox, Config.RenderVideoStandard);
 			encStore = Misc.FillEncodingFormat (formatcombobox, Config.RenderEncodingProfile);
 			qualStore = Misc.FillQuality (qualitycombobox, Config.RenderEncodingQuality);
+			descriptioncheckbutton.Active = Config.OverlayTitle;
+			audiocheckbutton.Active = Config.EnableAudio;
 		}
 		#endregion
 
