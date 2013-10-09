@@ -3455,7 +3455,7 @@ new one.</property>
                   <widget class="Gtk.CheckButton" id="descriptioncheckbutton">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
-                    <property name="Label" translatable="yes">Enable Title Overlay</property>
+                    <property name="Label" translatable="yes">Enable title overlay</property>
                     <property name="Active">True</property>
                     <property name="DrawIndicator">True</property>
                     <property name="HasLabel">True</property>
@@ -3470,7 +3470,7 @@ new one.</property>
                   <widget class="Gtk.CheckButton" id="audiocheckbutton">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
-                    <property name="Label" translatable="yes">Enable Audio (Experimental)</property>
+                    <property name="Label" translatable="yes">Enable audio (Experimental)</property>
                     <property name="DrawIndicator">True</property>
                     <property name="HasLabel">True</property>
                     <property name="UseUnderline">True</property>
@@ -8253,7 +8253,7 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
                       <widget class="Gtk.Label" id="label8">
                         <property name="MemberName" />
                         <property name="Xalign">0</property>
-                        <property name="LabelProp" translatable="yes">Enable sound (experimental)</property>
+                        <property name="LabelProp" translatable="yes">Enable audio (experimental)</property>
                       </widget>
                       <packing>
                         <property name="TopAttach">3</property>
@@ -8273,7 +8273,7 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
                       <widget class="Gtk.Label" id="label9">
                         <property name="MemberName" />
                         <property name="Xalign">0</property>
-                        <property name="LabelProp" translatable="yes">Overlay title</property>
+                        <property name="LabelProp" translatable="yes">Enable title overlay</property>
                       </widget>
                       <packing>
                         <property name="TopAttach">4</property>

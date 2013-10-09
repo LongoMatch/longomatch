@@ -117,7 +117,7 @@ namespace LongoMatch.Gui.Component
 			this.label8 = new global::Gtk.Label ();
 			this.label8.Name = "label8";
 			this.label8.Xalign = 0F;
-			this.label8.LabelProp = global::Mono.Unix.Catalog.GetString ("Enable sound (experimental)");
+			this.label8.LabelProp = global::Mono.Unix.Catalog.GetString ("Enable audio (experimental)");
 			this.rendertable.Add (this.label8);
 			global::Gtk.Table.TableChild w7 = ((global::Gtk.Table.TableChild)(this.rendertable [this.label8]));
 			w7.TopAttach = ((uint)(3));
@@ -128,7 +128,7 @@ namespace LongoMatch.Gui.Component
 			this.label9 = new global::Gtk.Label ();
 			this.label9.Name = "label9";
 			this.label9.Xalign = 0F;
-			this.label9.LabelProp = global::Mono.Unix.Catalog.GetString ("Overlay title");
+			this.label9.LabelProp = global::Mono.Unix.Catalog.GetString ("Enable title overlay");
 			this.rendertable.Add (this.label9);
 			global::Gtk.Table.TableChild w8 = ((global::Gtk.Table.TableChild)(this.rendertable [this.label9]));
 			w8.TopAttach = ((uint)(4));

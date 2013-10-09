@@ -131,7 +131,7 @@ namespace LongoMatch.Gui.Dialog
 			this.descriptioncheckbutton = new global::Gtk.CheckButton ();
 			this.descriptioncheckbutton.CanFocus = true;
 			this.descriptioncheckbutton.Name = "descriptioncheckbutton";
-			this.descriptioncheckbutton.Label = global::Mono.Unix.Catalog.GetString ("Enable Title Overlay");
+			this.descriptioncheckbutton.Label = global::Mono.Unix.Catalog.GetString ("Enable title overlay");
 			this.descriptioncheckbutton.Active = true;
 			this.descriptioncheckbutton.DrawIndicator = true;
 			this.descriptioncheckbutton.UseUnderline = true;
@@ -142,7 +142,7 @@ namespace LongoMatch.Gui.Dialog
 			this.audiocheckbutton = new global::Gtk.CheckButton ();
 			this.audiocheckbutton.CanFocus = true;
 			this.audiocheckbutton.Name = "audiocheckbutton";
-			this.audiocheckbutton.Label = global::Mono.Unix.Catalog.GetString ("Enable Audio (Experimental)");
+			this.audiocheckbutton.Label = global::Mono.Unix.Catalog.GetString ("Enable audio (Experimental)");
 			this.audiocheckbutton.DrawIndicator = true;
 			this.audiocheckbutton.UseUnderline = true;
 			this.hbox6.Add (this.audiocheckbutton);
