@@ -399,8 +399,8 @@ namespace LongoMatch.Gui
 			VScale scale= vscale1;
 			double val = scale.Value;
 
-			if(val >SCALE_FPS) {
-				val = val - SCALE_FPS ;
+			if(val > SCALE_FPS) {
+				val = val + 1 - SCALE_FPS ;
 			}
 			else if(val <= SCALE_FPS) {
 				val = val / SCALE_FPS;
@@ -613,14 +613,10 @@ namespace LongoMatch.Gui
 		protected virtual void OnVscale1FormatValue(object o, Gtk.FormatValueArgs args)
 		{
 			double val = args.Value;
-			if(val > SCALE_FPS) {
-				val = val - SCALE_FPS ;
+			if(val >= SCALE_FPS) {
+				val = val + 1 - SCALE_FPS ;
 				args.RetVal = val +"X";
-			}
-			else if(val == SCALE_FPS) {
-				args.RetVal = "1X";
-			}
-			else if(val < SCALE_FPS) {
+			} else if(val < SCALE_FPS) {
 				args.RetVal = "-"+val+"/"+SCALE_FPS+"X";
 			}
 		}
