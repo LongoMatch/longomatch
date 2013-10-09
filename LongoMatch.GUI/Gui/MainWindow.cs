@@ -55,6 +55,7 @@ namespace LongoMatch.Gui
 		public event PlaysDeletedHandler PlaysDeletedEvent;
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event PlayCategoryChangedHandler PlayCategoryChanged;
+		public event DuplicatePlayHandler DuplicatePlay;
 		
 		/* Playlist */
 		public event RenderPlaylistHandler RenderPlaylistEvent;
@@ -287,6 +288,9 @@ namespace LongoMatch.Gui
 			/* Connect PlayListNodeAdded events */
 			playsSelection.PlayListNodeAdded += OnPlayListNodeAdded;
 			timeline.PlayListNodeAdded += OnPlayListNodeAdded;
+			
+			/* Connect duplicate plays */
+			playsSelection.DuplicatePlay += EmitDuplicatePlay;
 
 			/* Connect tags events */
 			playsSelection.TagPlay += EmitTagPlay;
@@ -981,6 +985,13 @@ namespace LongoMatch.Gui
 			if (KeyPressed != null)
 				KeyPressed(sender, key, modifier);
 		}
+		
+		void EmitDuplicatePlay (Play play)
+		{
+			if (DuplicatePlay != null)
+				DuplicatePlay (play);
+		}
+		
 		#endregion
 	}
 }

@@ -39,6 +39,7 @@ namespace LongoMatch.Gui.Component
 		public event SnapshotSeriesHandler SnapshotSeries;
 		public event RenderPlaylistHandler RenderPlaylist;
 		public event TagPlayHandler TagPlay;
+		public event DuplicatePlayHandler DuplicatePlay;
 		
 		Project project;
 		PlaysFilter filter;
@@ -133,6 +134,11 @@ namespace LongoMatch.Gui.Component
 			localPlayersList.PlayListNodeAdded += EmitPlayListNodeAdded;
 			visitorPlayersList.PlayListNodeAdded += EmitPlayListNodeAdded;
 			
+			/* Duplicate play */
+			playsList.DuplicatePlay += EmitDuplicatePlay;
+			localPlayersList.DuplicatePlay += EmitDuplicatePlay;
+			visitorPlayersList.DuplicatePlay += EmitDuplicatePlay;
+
 			/* Play name edited or Category name changed */
 			playsList.TimeNodeChanged += EmitTimeNodeChanged;
 
@@ -204,6 +210,12 @@ namespace LongoMatch.Gui.Component
 			UpdateTeamsModels();
 		}
 
+		private void EmitDuplicatePlay (Play play)
+		{
+			if (DuplicatePlay != null)
+				DuplicatePlay (play);
+		}
+		
 		protected void OnCategoriesFiltersbuttonClicked (object sender, System.EventArgs e)
 		{
 			if (catfiltersbutton.Active) {

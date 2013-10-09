@@ -47,6 +47,8 @@ namespace LongoMatch.Handlers
 	public delegate void TagPlayHandler(Play play);
 	/* Change the Play's category */
 	public delegate void PlayCategoryChangedHandler(Play play, Category cat);
+	/* DUplicate play */
+	public delegate void DuplicatePlayHandler (Play play);
 	
 	/* Project Events */
 	public delegate void SaveProjectHandler(Project project, ProjectType projectType);

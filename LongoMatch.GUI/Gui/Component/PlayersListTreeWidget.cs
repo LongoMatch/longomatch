@@ -38,6 +38,7 @@ namespace LongoMatch.Gui.Component
 		public event PlayListNodeAddedHandler PlayListNodeAdded;
 		public event SnapshotSeriesHandler SnapshotSeriesEvent;
 		public event RenderPlaylistHandler RenderPlaylistEvent;
+		public event DuplicatePlayHandler DuplicatePlay;
 
 		public PlayersListTreeWidget()
 		{
@@ -47,7 +48,7 @@ namespace LongoMatch.Gui.Component
 			playerstreeview.PlayListNodeAdded += OnPlayListNodeAdded;
 			playerstreeview.SnapshotSeriesEvent += OnSnapshotSeriesEvent;
 			playerstreeview.NewRenderingJob += OnNewRenderingJob;
-			
+			playerstreeview.DuplicatePlay += DuplicatePlay;
 		}
 		
 		public Project Project {

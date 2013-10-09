@@ -37,6 +37,7 @@ namespace LongoMatch.Interfaces.GUI
 		event PlaysDeletedHandler PlaysDeletedEvent;
 		event TimeNodeChangedHandler TimeNodeChanged;
 		event PlayCategoryChangedHandler PlayCategoryChanged;
+		event DuplicatePlayHandler DuplicatePlay;
 		
 		/* Playlist */
 		event RenderPlaylistHandler RenderPlaylistEvent;

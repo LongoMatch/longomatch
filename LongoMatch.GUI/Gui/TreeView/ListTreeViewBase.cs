@@ -36,7 +36,8 @@ namespace LongoMatch.Gui.Component
 	{
 		// Plays menu
 		protected Menu menu, catMenu;
-		protected MenuItem tag, delete, addPLN, deleteKeyFrame, snapshot, name, render, moveCat;
+		protected MenuItem tag, delete, addPLN, deleteKeyFrame, snapshot;
+		protected MenuItem name, render, moveCat, duplicate;
 
 		protected Gtk.CellRendererText nameCell;
 		protected Gtk.TreeViewColumn nameColumn;
@@ -56,6 +57,7 @@ namespace LongoMatch.Gui.Component
 		public event SnapshotSeriesHandler SnapshotSeriesEvent;
 		public event TagPlayHandler TagPlay;
 		public event EventHandler NewRenderingJob;
+		public event DuplicatePlayHandler DuplicatePlay;
 
 		public ListTreeViewBase()
 		{
@@ -163,6 +165,7 @@ namespace LongoMatch.Gui.Component
 
 			name = new MenuItem(Catalog.GetString("Edit name"));
 			tag = new MenuItem(Catalog.GetString("Edit tags"));
+			duplicate = new MenuItem(Catalog.GetString("Duplicate"));
 			delete = new MenuItem(Catalog.GetString("Delete"));
 			deleteKeyFrame = new MenuItem(Catalog.GetString("Delete key frame"));
 			addPLN = new MenuItem(Catalog.GetString("Add to playlist"));
@@ -175,6 +178,7 @@ namespace LongoMatch.Gui.Component
 			menu.Append(tag);
 			menu.Append(addPLN);
 			menu.Append(delete);
+			menu.Append(duplicate);
 			menu.Append(deleteKeyFrame);
 			menu.Append(render);
 			menu.Append(snapshot);
@@ -182,6 +186,7 @@ namespace LongoMatch.Gui.Component
 
 			name.Activated += OnEdit;
 			tag.Activated += OnTag;
+			duplicate.Activated += OnDuplicate;
 			addPLN.Activated += OnAdded;
 			delete.Activated += OnDeleted;
 			deleteKeyFrame.Activated += OnDeleteKeyFrame;
@@ -343,6 +348,12 @@ namespace LongoMatch.Gui.Component
 				// Refresh the thumbnails
 				QueueDraw();
 			}
+		}
+
+		void OnDuplicate (object sender, EventArgs e)
+		{
+			if (DuplicatePlay != null)
+				DuplicatePlay((Play)GetValueFromPath(Selection.GetSelectedRows()[0]));
 		}
 
 		protected virtual void OnEdit(object obj, EventArgs args) {

@@ -93,6 +93,7 @@
         <signal name="PlayListNodeAdded" />
         <signal name="SnapshotSeriesEvent" />
         <signal name="RenderPlaylistEvent" />
+        <signal name="DuplicatePlay" />
       </itemgroup>
     </signals>
   </object>
@@ -171,6 +172,7 @@
         <signal name="SnapshotSeriesEvent" />
         <signal name="TagPlay" />
         <signal name="RenderPlaylist" />
+        <signal name="DuplicatePlay" />
       </itemgroup>
     </signals>
   </object>
@@ -302,6 +304,7 @@
         <signal name="RenderPlaylist" />
         <signal name="TagPlay" />
         <signal name="TimeNodeChanged" />
+        <signal name="DuplicatePlay" />
       </itemgroup>
     </signals>
   </object>

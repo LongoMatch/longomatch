@@ -46,6 +46,7 @@ namespace LongoMatch.Gui.Component
 		public event SnapshotSeriesHandler SnapshotSeriesEvent;
 		public event TagPlayHandler TagPlay;
 		public event RenderPlaylistHandler RenderPlaylist;
+		public event DuplicatePlayHandler DuplicatePlay;
 
 		ITemplatesService ts;
 
@@ -63,6 +64,7 @@ namespace LongoMatch.Gui.Component
 			treeview.PlayCategoryChanged += OnPlayCategoryChanged;
 			treeview.TagPlay += OnTagPlay;
 			treeview.NewRenderingJob += OnNewRenderingJob;
+			treeview.DuplicatePlay += OnDuplicatePlay;
 		}
 		
 		public ITemplatesService TemplatesService
@@ -211,6 +213,12 @@ namespace LongoMatch.Gui.Component
 				PlayListNodeAdded(tNode);
 		}
 		
+		protected virtual void OnDuplicatePlay (Play play)
+		{
+			if (DuplicatePlay != null)
+				DuplicatePlay (play);
+		}
+
 		protected virtual void OnPlayCategoryChanged(Play play, Category cat)
 		{
 			if(PlayCategoryChanged != null)

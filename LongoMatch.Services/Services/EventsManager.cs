@@ -89,6 +89,7 @@ namespace LongoMatch.Services
 			mainWindow.PlaysDeletedEvent += OnPlaysDeleted;
 			mainWindow.PlaySelectedEvent += OnPlaySelected;
 			mainWindow.PlayCategoryChanged += OnPlayCategoryChanged;
+			mainWindow.DuplicatePlay += OnDuplicatePlay;
 
 			/* Connect playlist events */
 			mainWindow.PlayListNodeSelectedEvent += (tn) => {selectedTimeNode = tn;};
@@ -307,6 +308,16 @@ namespace LongoMatch.Services
 				player.CloseActualSegment();
 				Save (openedProject);
 			}
+			filter.Update();
+		}
+
+		void OnDuplicatePlay (Play play)
+		{
+			Play copy = Cloner.Clone (play);
+			/* The category is also serialized and desarialized */
+			copy.Category = play.Category;
+			openedProject.AddPlay (copy);
+			mainWindow.AddPlay (copy);
 			filter.Update();
 		}
 
