@@ -1,7 +1,7 @@
-LongoMatch-0.18.17 "TV"
+LongoMatch-0.18.18 "TV"
 -----------------------------
 
-The LongoMatch team is happy to announce the seventeenth release in the
+The LongoMatch team is happy to announce the eighteenth release in the
 stable 0.18 series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
@@ -9,17 +9,12 @@ all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
 * Features
-	* Add menu option to duplicate tags
-	* Differentiate tags with colors by team in the timeline
-	* Add players stats
-	* Use bigger buttons in the fake live analysis
-	* Support detaching the player with playlists
+	* Show time in fake project for easier match
+	* Remind last directory used to render
 
 * Bugs fixed
-	* Resize tagger dialog when it's bigger than the screen
-	* Respect config for the edition properties
-	* Handle corrupt databases
-	* Don't duplicate the 1x speed in the control bar
+	* Fix deadlock in OS X and Windows
+	* Fix exception when the output dir is not set
 
 *Contributors to this Release:
 

@@ -1,3 +1,15 @@
+===== LongoMatch 0.18.18 "ReTV" =====
+
+	== Features ==
+
+	* Show time in fake project for easier match
+	* Remind last directory used to render
+
+	== Bugs fixed ==
+
+	* Fix deadlock in OS X and Windows
+	* Fix exception when the output dir is not set
+
 ===== LongoMatch 0.18.17 "TV" =====
 
 	== Features ==
