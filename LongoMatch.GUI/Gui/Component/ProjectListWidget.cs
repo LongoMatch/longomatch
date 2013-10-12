@@ -23,6 +23,8 @@ using System.Collections.Generic;
 using System.IO;
 using Mono.Unix;
 using Gtk;
+
+using LongoMatch.Common;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
 using LongoMatch.Video.Utils;
@@ -135,7 +137,12 @@ namespace LongoMatch.Gui.Component
 			text = text +"\n"+"<b>"+Catalog.GetString("Season")+":</b>  " + project.Season;
 			text = text +"\n"+"<b>"+Catalog.GetString("Competition")+":</b>  " + project.Competition;
 			text = text +"\n"+"<b>"+Catalog.GetString("Result")+":</b>  " + project.LocalGoals+"-"+ project.VisitorGoals;
-			text = text +"\n"+"<b>"+Catalog.GetString("Date")+":</b>  " + project.MatchDate.ToShortDateString();
+			if (project.Title == Constants.FAKE_PROJECT) {
+				text = text +"\n"+"<b>"+Catalog.GetString("Date")+":</b>  " + project.LastModified.ToShortDateString() +
+					" " + project.LastModified.ToShortTimeString();
+			} else {
+				text = text +"\n"+"<b>"+Catalog.GetString("Date")+":</b>  " + project.MatchDate.ToShortDateString();
+			}
 
 			(cell as Gtk.CellRendererText).Markup = text;
 		}
