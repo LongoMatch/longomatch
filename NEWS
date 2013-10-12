@@ -1,3 +1,19 @@
+===== LongoMatch 0.18.17 "TV" =====
+
+	== Features ==
+	* Add menu option to duplicate tags
+	* Differentiate tags with colors by team in the timeline
+	* Add players stats
+	* Use bigger buttons in the fake live analysis
+	* Support detaching the player with playlists
+
+	== Bugs fixed ==
+
+	* Resize tagger dialog when it's bigger than the screen
+	* Respect config for the edition properties
+	* Handle corrupt databases
+	* Don't duplicate the 1x speed in the control bar
+
 ===== LongoMatch 0.18.16 "Amsterdam" =====
 
 	== Bugs fixed ==
