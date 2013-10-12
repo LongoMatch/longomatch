@@ -137,7 +137,7 @@ namespace LongoMatch.Gui
 				if (!vep.SplitFiles && vep.EncodingSettings.OutputFile == "") {
 					WarningMessage(Catalog.GetString("Please, select a video file."));
 					response=vep.Run();
-				} else if (vep.SplitFiles && vep.OutputDir == "") {
+				} else if (vep.SplitFiles && vep.OutputDir == null) {
 					WarningMessage(Catalog.GetString("Please, select an output directory."));
 					response=vep.Run();
 				} else {
