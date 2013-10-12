@@ -313,6 +313,16 @@ namespace LongoMatch
 			}
 		}
 		
+		public static string LastRenderDir {
+			get {
+				return state.lastRenderDir;
+			}
+			set {
+				state.lastRenderDir = value;
+				Save ();
+			}
+		}
+		
 		public static bool ReviewPlaysInSameWindow {
 			get {
 				return state.reviewPlaysInSameWindow;
@@ -345,6 +355,7 @@ namespace LongoMatch
 		public bool enableAudio;
 		public bool autorender;
 		public string autorenderDir;
+		public string lastRenderDir;
 		public bool reviewPlaysInSameWindow;
 		
 		public ConfigState () {
@@ -365,6 +376,7 @@ namespace LongoMatch
 			fps_d = 1;
 			autorender = false;
 			autorenderDir = null;
+			lastRenderDir = null;
 			reviewPlaysInSameWindow = true;
 		}
 	}

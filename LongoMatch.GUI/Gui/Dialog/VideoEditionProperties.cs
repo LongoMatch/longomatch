@@ -19,6 +19,7 @@
 //
 
 using System;
+using System.IO;
 using Gtk;
 using Mono.Unix;
 using LongoMatch.Video.Editor;
@@ -117,8 +118,12 @@ namespace LongoMatch.Gui.Dialog
 			                FileChooserAction.Save,
 			                "gtk-cancel",ResponseType.Cancel,
 			                "gtk-save",ResponseType.Accept);
-			fChooser.SetCurrentFolder(Config.VideosDir);
-			fChooser.CurrentName = "NewVideo."+GetExtension();
+			if (Directory.Exists (Config.LastRenderDir)) {
+				fChooser.SetCurrentFolder(Config.LastRenderDir);
+			} else {
+				fChooser.SetCurrentFolder(Config.VideosDir);
+			}
+			fChooser.CurrentName = "NewVideo."+ GetExtension();
 			fChooser.DoOverwriteConfirmation = true;
 			FileFilter filter = new FileFilter();
 			filter.Name = "Multimedia Files";
@@ -131,6 +136,7 @@ namespace LongoMatch.Gui.Dialog
 			fChooser.Filter = filter;
 			if(fChooser.Run() == (int)ResponseType.Accept) {
 				filelabel.Text = fChooser.Filename;
+				Config.LastRenderDir = System.IO.Path.GetDirectoryName (fChooser.Filename);
 			}
 			fChooser.Destroy();
 		}
@@ -155,11 +161,16 @@ namespace LongoMatch.Gui.Dialog
 			                FileChooserAction.SelectFolder,
 			                "gtk-cancel",ResponseType.Cancel,
 			                "gtk-open",ResponseType.Accept);
-			fChooser.SetCurrentFolder(Config.VideosDir);
+			if (Directory.Exists (Config.LastRenderDir)) {
+				fChooser.SetCurrentFolder(Config.LastRenderDir);
+			} else {
+				fChooser.SetCurrentFolder(Config.VideosDir);
+			}
 			fChooser.CurrentName = "Playlist";
 			if(fChooser.Run() == (int)ResponseType.Accept) {
 				dirlabel.Text = fChooser.Filename;
 				OutputDir = fChooser.Filename;
+				Config.LastRenderDir = OutputDir;
 			}
 			fChooser.Destroy();
 		}
