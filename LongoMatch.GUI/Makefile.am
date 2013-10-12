@@ -20,10 +20,10 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Component.NotesWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayersListTreeWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayersTaggerWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.PlaysCoordinatesTagger.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayersTagger.cs \
+	gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs \
+	gtk-gui/LongoMatch.Gui.Component.PlaysCoordinatesTagger.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlayListWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.PlaysListTreeWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.ProjectDetailsWidget.cs \
@@ -35,6 +35,7 @@ SOURCES = \
 	gtk-gui/LongoMatch.Gui.Component.Stats.PlayerCategoriesViewer.cs \
 	gtk-gui/LongoMatch.Gui.Component.Stats.PlayerCategoryViewer.cs \
 	gtk-gui/LongoMatch.Gui.Component.Stats.PlayerSubcategoryViewer.cs \
+	gtk-gui/LongoMatch.Gui.Component.Stats.PlayersViewer.cs \
 	gtk-gui/LongoMatch.Gui.Component.Stats.Plotter.cs \
 	gtk-gui/LongoMatch.Gui.Component.Stats.SubCategoryViewer.cs \
 	gtk-gui/LongoMatch.Gui.Component.StringTaggerWidget.cs \
@@ -105,6 +106,7 @@ SOURCES = \
 	Gui/Component/Stats/PlayerCategoriesViewer.cs \
 	Gui/Component/Stats/PlayerCategoryViewer.cs \
 	Gui/Component/Stats/PlayerSubcategoryViewer.cs \
+	Gui/Component/Stats/PlayersViewer.cs \
 	Gui/Component/Stats/Plotter.cs \
 	Gui/Component/Stats/SubcategoryViewer.cs \
 	Gui/Component/StringTaggerWidget.cs \
