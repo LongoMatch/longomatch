@@ -282,7 +282,21 @@ namespace LongoMatch.Gui
 					tmpFile = tmpFile + ".tmp";
 				}
 				
-				System.IO.File.Move (outFile, tmpFile);
+				try {
+					System.IO.File.Move (outFile, tmpFile);
+				} catch (Exception ex) {
+					/* Try to fix "Sharing violation on path" in windows
+					 * wait a bit more until the file lock is released */
+					Log.Exception (ex);
+					System.Threading.Thread.Sleep (5 * 1000);
+					try {
+						System.IO.File.Move (outFile, tmpFile);
+					} catch (Exception ex2) {
+						Log.Exception (ex2);
+						/* It failed again, just skip remuxing */
+						return;
+					}
+				}
 				Remuxer remuxer = new Remuxer(PreviewMediaFile.DiscoverFile(tmpFile),
 				                              outFile, muxer);
 				
