@@ -103,7 +103,7 @@ case "$host" in
     ;;
   *-*-linux*)
     AC_DEFINE(OSTYPE_LINUX)
-    GMCS_FLAGS="$GMCS_FLAGS -define:OSTYPE_OS_LINUX"
+    GMCS_FLAGS="$GMCS_FLAGS -define:OSTYPE_LINUX"
     ostype=Linux
     ;;
 esac
