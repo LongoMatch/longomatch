@@ -440,8 +440,4 @@
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.Stats.PlayerPlotter" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
 </objects>
