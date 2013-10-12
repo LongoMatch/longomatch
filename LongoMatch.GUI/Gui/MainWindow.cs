@@ -414,7 +414,10 @@ namespace LongoMatch.Gui
 			}
 			
 			if(projectType == ProjectType.FakeCaptureProject) {
+#if OS_TYPE_LINUX
+				/* This deadlocks in Windows and OS X */
 				(downbox[videowidgetsbox] as Box.BoxChild).Expand = false;
+#endif
 				(downbox[buttonswidget] as Box.BoxChild).Expand = true;
 			}
 			
