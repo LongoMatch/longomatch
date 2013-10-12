@@ -20,6 +20,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Gdk;
+using Gtk;
 
 using LongoMatch.Common;
 using LongoMatch.Gui.Component;
@@ -35,6 +36,7 @@ namespace LongoMatch.Gui.Dialog
 		TeamTemplate localTeamTemplate;
 		TeamTemplate visitorTeamTemplate;
 		bool subcategoryAdded;
+		bool firstExpose;
 		
 		public TaggerDialog(Play play,
 		                    Categories categoriesTemplate,
@@ -44,6 +46,7 @@ namespace LongoMatch.Gui.Dialog
 		{
 			this.Build();
 			
+			firstExpose = false;
 			tagsnotebook.Visible = false;
 			
 			this.localTeamTemplate = localTeamTemplate;
@@ -117,6 +120,38 @@ namespace LongoMatch.Gui.Dialog
 			playersbox.PackStart(widget, true, true, 0);
 		}
 		
-		
+		protected override bool OnExposeEvent (EventExpose evnt)
+		{
+			bool ret = base.OnExposeEvent (evnt);
+			
+			Console.WriteLine ("Expose");
+			
+			if (!firstExpose) {
+				Screen screen = Display.Default.DefaultScreen;
+				int width, height, newWidth, newHeight;
+				
+				width = newWidth = Requisition.Width;
+				height = newHeight = Requisition.Height;
+				
+				if (width + 20 > screen.Width) {
+					newWidth = screen.Width - 20;
+				}
+				if (height + 20 > screen.Height) {
+					newHeight = screen.Height - 20;
+				}
+				
+				if (newWidth != width || newHeight != height) {
+					ScrolledWindow win = new ScrolledWindow();
+					VBox.Remove(mainvbox);
+					win.AddWithViewport (mainvbox);
+					win.Show ();
+					VBox.PackStart (win, true, true, 0);
+					this.Resize (newWidth, newHeight);
+					this.SetPosition (Gtk.WindowPosition.CenterOnParent);
+				}
+				firstExpose = true;
+			}
+			return ret;
+		}
 	}
 }
