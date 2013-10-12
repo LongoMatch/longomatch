@@ -124,8 +124,6 @@ namespace LongoMatch.Gui.Dialog
 		{
 			bool ret = base.OnExposeEvent (evnt);
 			
-			Console.WriteLine ("Expose");
-			
 			if (!firstExpose) {
 				Screen screen = Display.Default.DefaultScreen;
 				int width, height, newWidth, newHeight;
