@@ -49,12 +49,12 @@ namespace LongoMatch.DB
 		}
 		
 		public void SetActiveByName (string name) {
-			IDatabase db = Databases.Where(p => p.Name == name).First();
-			
-			if (db != null) {
-				Log.Information ("Selecting active database " + db.Name);
-				ActiveDB = db;
-				return;
+			foreach (DataBase db in Databases) {
+				if (db.Name == name) {
+					Log.Information ("Selecting active database " + db.Name);
+					ActiveDB = db;
+					return;
+				}
 			}
 			
 			DataBase newdb = new DataBase(NameToFile (name));
