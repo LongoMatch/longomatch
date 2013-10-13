@@ -1,3 +1,7 @@
+===== LongoMatch 0.18.19 "ReReTV" =====
+
+	* Fix exception in startup when no Database exists
+
 ===== LongoMatch 0.18.18 "ReTV" =====
 
 	== Features ==

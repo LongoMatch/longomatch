@@ -1,4 +1,4 @@
-LongoMatch-0.18.18 "TV"
+LongoMatch-0.18.19 "ReReTV"
 -----------------------------
 
 The LongoMatch team is happy to announce the eighteenth release in the
@@ -8,13 +8,8 @@ Due to its dependency on GStreamer, We strongly recommend to have
 all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
-* Features
-	* Show time in fake project for easier match
-	* Remind last directory used to render
-
 * Bugs fixed
-	* Fix deadlock in OS X and Windows
-	* Fix exception when the output dir is not set
+	* Fix exception in startup when no database exists
 
 *Contributors to this Release:
 
