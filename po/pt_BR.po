@@ -11,9 +11,9 @@ msgstr ""
 "Project-Id-Version: longomatch\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-10-07 20:15+0000\n"
-"PO-Revision-Date: 2013-10-09 02:12-0300\n"
-"Last-Translator: Rafael Ferreira <rafael.f.f1@gmail.com>\n"
+"POT-Creation-Date: 2013-10-13 00:28+0000\n"
+"PO-Revision-Date: 2013-10-12 21:21-0300\n"
+"Last-Translator: Enrico Nicoletto <liverig@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -824,12 +824,13 @@ msgid "Quality"
 msgstr "Qualidade"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:120
-msgid "Enable sound (experimental)"
-msgstr "Ativar áudio (experimental)"
+msgid "Enable audio (experimental)"
+msgstr "Habilitar áudio (experimental)"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:131
-msgid "Overlay title"
-msgstr "Sobreposição de título"
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:134
+msgid "Enable title overlay"
+msgstr "Habilitar sobreposição de título"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:170
 msgid "<b>Rendering</b>"
@@ -1131,13 +1132,9 @@ msgstr "Formato da imagem:"
 msgid "Encoding Format:"
 msgstr "Formato de codificação:"
 
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:134
-msgid "Enable Title Overlay"
-msgstr "Habilitar sobreposição de título"
-
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:145
-msgid "Enable Audio (Experimental)"
-msgstr "Ativar áudio (experimental)"
+msgid "Enable audio (Experimental)"
+msgstr "Habilitar áudio (experimental)"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:160
 msgid "Split output in one file per playlist element"
@@ -1336,13 +1333,13 @@ msgstr "O nome do modelo está vazio."
 msgid "The template already exists. Do you want to overwrite it ?"
 msgstr "O modelo já existe. Você deseja sobrescrevê-lo?"
 
-#: ../LongoMatch.GUI/Gui/Base/TimeScaleBase.cs:160
+#: ../LongoMatch.GUI/Gui/Base/TimeScaleBase.cs:164
 msgid "Add new "
 msgstr "Adicionar novo"
 
 #. We scan all the time Nodes looking for one matching the cursor selectcio
 #. And we add them to the delete menu
-#: ../LongoMatch.GUI/Gui/Base/TimeScaleBase.cs:180
+#: ../LongoMatch.GUI/Gui/Base/TimeScaleBase.cs:184
 msgid "Delete "
 msgstr "Excluir"
 
@@ -1429,27 +1426,27 @@ msgstr "Selecionar uma pasta"
 msgid "Choose an image"
 msgstr "Escolha uma imagem"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:118
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:119
 msgid "Categories filter"
 msgstr "Filtro de categorias"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:119
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:120
 msgid "Players filter"
 msgstr "Filtro de jogadores"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:210
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:222
 msgid "Disable categories filters"
 msgstr "Desabilitar filtros de categorias"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:212
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:224
 msgid "Enable categories filters"
 msgstr "Habilitar filtros de categorias"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:220
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:232
 msgid "Disable players filters"
 msgstr "Desabilitar filtros de jogadores"
 
-#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:222
+#: ../LongoMatch.GUI/Gui/Component/PlaysSelectionWidget.cs:234
 msgid "Enable players filters"
 msgstr "Habilitar filtros de jogadores"
 
@@ -1495,52 +1492,53 @@ msgstr ""
 "O arquivo que você está tentando carregar não tem suporte apropriado. Você "
 "gostaria de convertê-lo para um formato mais adequado?"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:53
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:55
 msgid "Filename"
 msgstr "Nome do arquivo"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:118
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:120
 msgid "File length"
 msgstr "Comprimento do arquivo"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:120
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:122
 msgid "Video codec"
 msgstr "Codec de vídeo"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:121
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:123
 msgid "Audio codec"
 msgstr "Codec de áudio"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:122
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:124
 msgid "Format"
 msgstr "Formato"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:132
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:134
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:126
 msgid "Title"
 msgstr "Título"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:133
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:135
 msgid "Local team"
 msgstr "Equipe local"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:134
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:136
 msgid "Visitor team"
 msgstr "Equipe visitante"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:135
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:137
 msgid "Season"
 msgstr "Temporada"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:136
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:138
 msgid "Competition"
 msgstr "Competição"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:137
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:139
 msgid "Result"
 msgstr "Resultado"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:138
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:141
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:144
 msgid "Date"
 msgstr "Data"
 
@@ -1587,23 +1585,23 @@ msgstr ""
 "deseja continuar?"
 
 #: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:71
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:165
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:167
 #: ../LongoMatch.GUI/Gui/TreeView/SubCategoriesTreeView.cs:91
 msgid "Edit tags"
 msgstr "Editar etiquetas"
 
 #: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:72
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:168
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:171
 msgid "Add to playlist"
 msgstr "Adicionar à lista de reprodução"
 
 #: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:73
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:170
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:173
 msgid "Export to video file"
 msgstr "Exportar para arquivo de vídeo"
 
 #: ../LongoMatch.GUI/Gui/Component/TimeScale.cs:74
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:171
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:174
 msgid "Export to PGN images"
 msgstr "Exportar para imagens PGN"
 
@@ -1772,11 +1770,11 @@ msgstr "Erro ao adicionar arquivos:"
 msgid "MP4 file"
 msgstr "Arquivo MP4"
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:113
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:116
 msgid "Save Video As ..."
 msgstr "Salvar vídeo como..."
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:151
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:159
 msgid "Output folder ..."
 msgstr "Pasta de saída ..."
 
@@ -1797,15 +1795,15 @@ msgstr "Por favor, selecione um diretório de saída."
 msgid "Add"
 msgstr "Adicionar"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:149
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:150
 msgid "Import file project"
 msgstr "Importar projeto de arquivo"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:528
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:535
 msgid "Do you want to close the current project?"
 msgstr "Você deseja fechar o projeto atual?"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:790
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:797
 msgid "The following error happened and the current project will be closed:"
 msgstr "O seguinte erro ocorreu e o projeto atual será fechado:"
 
@@ -1846,26 +1844,30 @@ msgstr "Selecionar todos"
 msgid "Unselect all"
 msgstr "Desselecionar todas"
 
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:164
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:166
 #: ../LongoMatch.GUI/Gui/TreeView/PlayersTreeView.cs:56
 #: ../LongoMatch.GUI/Gui/TreeView/PlaysTreeView.cs:70
 msgid "Edit name"
 msgstr "Editar nome"
 
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:166
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:168
+msgid "Duplicate"
+msgstr "Duplicar"
+
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:169
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:58
 msgid "Delete"
 msgstr "Excluir"
 
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:167
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:170
 msgid "Delete key frame"
 msgstr "Exclui o quadro-chave"
 
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:172
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:175
 msgid "Move to category"
 msgstr "Mover para categoria"
 
-#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:336
+#: ../LongoMatch.GUI/Gui/TreeView/ListTreeViewBase.cs:341
 msgid "Do you want to delete the key frame for this play?"
 msgstr "Você deseja apagar o quadro-chave para este jogo?"
 
@@ -1953,11 +1955,11 @@ msgstr ""
 "Você irá parar e terminar a captura atual.\n"
 "Você deseja continuar?"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:323
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:337
 msgid "Device disconnected. The capture will be paused"
 msgstr "Dispositivo desconectado. A captura será interrompida"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:332
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:346
 msgid "Device reconnected.Do you want to restart the capture?"
 msgstr "Dispositivo reconectado. Você deseja reiniciar a captura?"
 
@@ -2030,11 +2032,11 @@ msgid "Could not recover backup, this database will not be used"
 msgstr ""
 "Não foi possível recuperar o backup; este banco de dados não será usado"
 
-#: ../LongoMatch.Services/Services/EventsManager.cs:177
+#: ../LongoMatch.Services/Services/EventsManager.cs:178
 msgid "You can't create a new play if the capturer is not recording."
 msgstr "Você não pode criar um novo jogo se a captura não está gravando."
 
-#: ../LongoMatch.Services/Services/EventsManager.cs:243
+#: ../LongoMatch.Services/Services/EventsManager.cs:244
 msgid ""
 "The stop time is smaller than the start time. The play will not be added."
 msgstr ""
@@ -2202,6 +2204,12 @@ msgstr "Jogadores de todas equipes"
 #: ../LongoMatch.Services/Services/TemplatesService.cs:232
 msgid "A template already exists with the name: "
 msgstr "Um modelo já existe com o nome: "
+
+#~ msgid "Enable sound (experimental)"
+#~ msgstr "Ativar áudio (experimental)"
+
+#~ msgid "Overlay title"
+#~ msgstr "Sobreposição de título"
 
 #~ msgid ""
 #~ "The database seems to be locked by another instance and the application "
