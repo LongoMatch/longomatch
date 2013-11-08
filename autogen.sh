@@ -19,7 +19,6 @@ ORIGDIR=`pwd`
 cd $srcdir
 TEST_TYPE=-f
 aclocalinclude="-I build/m4/shamrock -I build/m4/shave $ACLOCAL_FLAGS"
-conf_flags="--enable-maintainer-mode"
 
 #test $TEST_TYPE $FILE || {
 #        echo "You must run this script in the top-level $PROJECT directory"
