@@ -7,12 +7,15 @@ Makefile.include~
 NEWS~
 README~
 RELEASE~
+bin
+compile
 config.guess
 config.log
 config.status
 config.sub
 configure.ac~
 depcomp
+env
 libtool
 longomatch-0.15.0.tar.gz
 ltmain.sh
@@ -42,6 +45,7 @@ LongoMatch/Makefile.in
 LongoMatch/longomatch
 LongoMatch/longomatch.desktop
 LongoMatch/share/
+LongoMatch.Multimedia/LongoMatch.Multimedia.dll.config
 Makefile.in
 aclocal.m4
 configure
