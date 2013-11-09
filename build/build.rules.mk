@@ -66,7 +66,7 @@ $(ASSEMBLY_FILE).mdb: $(ASSEMBLY_FILE)
 
 $(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(DEP_LINK)
 	@mkdir -p $(top_builddir)/bin
-	$(MCS) \
+	$(AM_V_GEN) $(MCS) \
 		$(GMCS_FLAGS) \
 		$(ASSEMBLY_BUILD_FLAGS) \
 		-nowarn:0278 -nowarn:0078 $$warn -unsafe \
