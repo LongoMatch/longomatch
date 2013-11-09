@@ -1,57 +1,19 @@
-#! /bin/sh
+#!/bin/sh
+# Run this to generate all the initial makefiles, etc.
 
-PROJECT=LongoMatch
-FILE=
-CONFIGURE=configure.ac
+test -n "$srcdir" || srcdir=`dirname "$0"`
+test -n "$srcdir" || srcdir=.
 
-: ${AUTOCONF=autoconf}
-: ${AUTOHEADER=autoheader}
-: ${AUTOMAKE=automake}
-: ${LIBTOOLIZE=libtoolize}
-: ${INTLTOOLIZE=intltoolize}
-: ${ACLOCAL=aclocal}
-: ${LIBTOOL=libtool}
+olddir=`pwd`
+cd "$srcdir"
 
-srcdir=`dirname $0`
-test -z "$srcdir" && srcdir=.
-
-ORIGDIR=`pwd`
-cd $srcdir
-TEST_TYPE=-f
-aclocalinclude="-I build/m4/shamrock $ACLOCAL_FLAGS"
-
-#test $TEST_TYPE $FILE || {
-#        echo "You must run this script in the top-level $PROJECT directory"
-#        exit 1
-#}
-
-if test -z "$*"; then
-        echo "I am going to run ./configure with no arguments - if you wish "
-        echo "to pass any to it, please specify them on the $0 command line."
+AUTORECONF=`which autoreconf`
+if test -z $AUTORECONF; then
+	echo "*** No autoreconf found, please install it ***"
+	exit 1
+else
+	ACLOCAL="aclocal $ACLOCAL_FLAGS" autoreconf --force --install || exit $?
 fi
 
-case $CC in
-*xlc | *xlc\ * | *lcc | *lcc\ *) am_opt=--include-deps;;
-esac
-
-(grep "^AM_PROG_LIBTOOL" $CONFIGURE >/dev/null) && {
-    echo "Running $LIBTOOLIZE ..."
-    $LIBTOOLIZE --force --copy --automake
-}
-
-(grep "^IT_PROG_INTLTOOL" $CONFIGURE >/dev/null) && {
-    echo "Running $INTLTOOLIZE ..."
-    $INTLTOOLIZE --force --copy --automake
-}
-
-echo "Running $ACLOCAL $aclocalinclude ..."
-$ACLOCAL $aclocalinclude
-
-echo "Running $AUTOMAKE --gnu $am_opt ..."
-$AUTOMAKE --add-missing --gnu $am_opt
-
-echo "Running $AUTOCONF ..."
-$AUTOCONF
-
-echo Running $srcdir/configure $conf_flags "$@" ...
-$srcdir/configure  $conf_flags "$@" \
+cd "$olddir"
+test -n "$NOCONFIGURE" || "$srcdir/configure" "$@"

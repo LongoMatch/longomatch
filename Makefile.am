@@ -2,6 +2,8 @@ EXTRA_DIST =\
 		expansions.m4 \
 		env.in
 
+ACLOCAL_AMFLAGS = -I build/m4 -I build/m4/shamrock
+
 SUBDIRS = \
 	build \
 	images \
