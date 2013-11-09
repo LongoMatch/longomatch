@@ -15,5 +15,13 @@ else
 	ACLOCAL="aclocal $ACLOCAL_FLAGS" autoreconf --force --install || exit $?
 fi
 
+INTLTOOLIZE=`which intltoolize`
+if test -z $INTLTOOLIZE; then
+	echo "*** No intltoolize found, please install it ***"
+	exit 1
+else
+	intltoolize || exit $?
+fi
+
 cd "$olddir"
 test -n "$NOCONFIGURE" || "$srcdir/configure" "$@"
