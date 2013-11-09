@@ -18,7 +18,7 @@ test -z "$srcdir" && srcdir=.
 ORIGDIR=`pwd`
 cd $srcdir
 TEST_TYPE=-f
-aclocalinclude="-I build/m4/shamrock -I build/m4/shave $ACLOCAL_FLAGS"
+aclocalinclude="-I build/m4/shamrock $ACLOCAL_FLAGS"
 
 #test $TEST_TYPE $FILE || {
 #        echo "You must run this script in the top-level $PROJECT directory"

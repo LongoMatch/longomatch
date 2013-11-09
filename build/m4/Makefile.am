@@ -1,6 +1,4 @@
 EXTRA_DIST = \
-	$(srcdir)/shamrock/*.m4 \
-	$(srcdir)/shave/*.m4 \
-	$(srcdir)/shave/*.in
+	$(srcdir)/shamrock/*.m4
 MAINTAINERCLEANFILES = Makefile.in
 

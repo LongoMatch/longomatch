@@ -6,7 +6,7 @@ AM_INIT_AUTOMAKE([foreign])
 AM_MAINTAINER_MODE
 
 AC_CONFIG_MACRO_DIR([build/m4])
-AC_SUBST([ACLOCAL_AMFLAGS], ["-I build/m4/shamrock -I build/m4/shave \${ACLOCAL_FLAGS}"])
+AC_SUBST([ACLOCAL_AMFLAGS], ["-I build/m4/shamrock \${ACLOCAL_FLAGS}"])
 
 AC_PROG_CC
 
@@ -81,8 +81,6 @@ PKG_CHECK_MODULES(CESARPLAYER, [gtk+-2.0 >= 2.8 gdk-2.0 gio-2.0 glib-2.0 gstream
 AC_SUBST(CESARPLAYER_CFLAGS)
 AC_SUBST(CESARPLAYER_LIBS)
 
-#SHAVE_INIT([build/m4/shave], [enable])
-
 AC_MSG_CHECKING([for the OS type])
 ostype=""
 
@@ -119,8 +117,6 @@ Makefile
 
 build/Makefile
 build/m4/Makefile
-build/m4/shave/shave
-build/m4/shave/shave-libtool
 
 images/Makefile
 libcesarplayer/Makefile
