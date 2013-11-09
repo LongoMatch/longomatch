@@ -4,7 +4,7 @@ AC_PREREQ([2.54])
 AC_INIT([LongoMatch], [0.18.19])
 AM_INIT_AUTOMAKE([1.11 foreign])
 AM_SILENT_RULES([yes])
-AM_MAINTAINER_MODE
+AM_MAINTAINER_MODE([enable])
 
 AC_CONFIG_MACRO_DIR([build/m4])
 AC_SUBST([ACLOCAL_AMFLAGS], ["-I build/m4/shamrock \${ACLOCAL_FLAGS}"])
