@@ -26,9 +26,10 @@ namespace LongoMatch.Gui.Dialog
 	public partial class EndCaptureDialog : Gtk.Dialog
 	{
 
-		public EndCaptureDialog()
+		public EndCaptureDialog(string filepath)
 		{
 			this.Build();
+			savebutton.Visible = System.IO.File.Exists (filepath);
 		}
 
 		protected virtual void OnQuit(object sender, System.EventArgs e)

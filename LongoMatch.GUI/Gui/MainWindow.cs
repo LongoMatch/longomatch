@@ -543,7 +543,7 @@ namespace LongoMatch.Gui
 			}
 
 			/* Capture project */
-			dialog = new EndCaptureDialog();
+			dialog = new EndCaptureDialog(openedProject.Description.File.FilePath);
 			dialog.TransientFor = (Gtk.Window)this.Toplevel;
 			res = dialog.Run();
 			dialog.Destroy();
