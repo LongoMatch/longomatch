@@ -113,6 +113,7 @@ namespace LongoMatch.Services
 				string projectFile = DateTime.Now.ToString().Replace("-", "_");
 				projectFile = projectFile.Replace(":", "_");
 				projectFile = projectFile.Replace(" ", "_");
+				projectFile = projectFile.Replace("/", "_");
 				projectFile = filePath + "_" + projectFile;
 				Project.Export(OpenedProject, projectFile);
 				guiToolkit.ErrorMessage(Catalog.GetString("An error occured saving the project:\n")+ex.Message+ "\n\n"+
