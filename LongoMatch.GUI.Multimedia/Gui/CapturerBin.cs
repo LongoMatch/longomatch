@@ -111,6 +111,8 @@ namespace LongoMatch.Gui
 		public CaptureSettings CaptureProperties {
 			set {
 				captureProps = value;
+			} get {
+				return captureProps;
 			}
 		}
 
@@ -261,55 +263,11 @@ namespace LongoMatch.Gui
 				pausebutton.Visible = false;
 				stopbutton.Visible = false;
 			
-				if (capturerType == CapturerType.Live)	
-					RemuxOutputFile (captureProps.EncodingSettings);
-				
 				if(CaptureFinished != null)
 					CaptureFinished(this, new EventArgs());
 			}
 		}
 		
-		void RemuxOutputFile (EncodingSettings settings) {
-			VideoMuxerType muxer;
-				
-			/* We need to remux to the original format */
-			muxer = settings.EncodingProfile.Muxer;
-			if (muxer == VideoMuxerType.Avi || muxer == VideoMuxerType.Mp4) {
-				string outFile = settings.OutputFile;
-				string tmpFile = settings.OutputFile;
-				
-				while (System.IO.File.Exists (tmpFile)) {
-					tmpFile = tmpFile + ".tmp";
-				}
-				
-				try {
-					System.IO.File.Move (outFile, tmpFile);
-				} catch (Exception ex) {
-					/* Try to fix "Sharing violation on path" in windows
-					 * wait a bit more until the file lock is released */
-					Log.Exception (ex);
-					System.Threading.Thread.Sleep (5 * 1000);
-					try {
-						System.IO.File.Move (outFile, tmpFile);
-					} catch (Exception ex2) {
-						Log.Exception (ex2);
-						/* It failed again, just skip remuxing */
-						return;
-					}
-				}
-				Remuxer remuxer = new Remuxer(PreviewMediaFile.DiscoverFile(tmpFile),
-				                              outFile, muxer);
-				
-				/* Remuxing suceed, delete old file */
-				if (remuxer.Remux(this.Toplevel as Gtk.Window) == outFile) {
-					System.IO.File.Delete (tmpFile);
-				} else {
-					System.IO.File.Delete (outFile);
-					System.IO.File.Move (tmpFile, outFile);
-				}
-			}
-		}
-
 		protected virtual void OnTick(int ellapsedTime) {
 			timelabel.Markup = String.Format("<span font=\"20px bold\">Time --> {0}</span> ", 
 			                               TimeString.MSecondsToSecondsString(CurrentTime));

@@ -91,16 +91,56 @@ namespace LongoMatch.Services
 				OpenedProjectChanged(OpenedProject, OpenedProjectType, PlaysFilter);
 		}
 		
+		void RemuxOutputFile (EncodingSettings settings) {
+			VideoMuxerType muxer;
+				
+			/* We need to remux to the original format */
+			muxer = settings.EncodingProfile.Muxer;
+			if (muxer == VideoMuxerType.Avi || muxer == VideoMuxerType.Mp4) {
+				string outFile = settings.OutputFile;
+				string tmpFile = settings.OutputFile;
+				
+				while (System.IO.File.Exists (tmpFile)) {
+					tmpFile = tmpFile + ".tmp";
+				}
+				
+				Log.Debug ("Remuxing file tmp: " + tmpFile + " out: " + outFile);
+				
+				try {
+					System.IO.File.Move (outFile, tmpFile);
+				} catch (Exception ex) {
+					/* Try to fix "Sharing violation on path" in windows
+					 * wait a bit more until the file lock is released */
+					Log.Exception (ex);
+					System.Threading.Thread.Sleep (5 * 1000);
+					try {
+						System.IO.File.Move (outFile, tmpFile);
+					} catch (Exception ex2) {
+						Log.Exception (ex2);
+						/* It failed again, just skip remuxing */
+						return;
+					}
+				}
+				
+				/* Remuxing suceed, delete old file */
+				if (guiToolkit.RemuxFile (tmpFile, outFile, muxer) == outFile) {
+					System.IO.File.Delete (tmpFile);
+				} else {
+					System.IO.File.Delete (outFile);
+					System.IO.File.Move (tmpFile, outFile);
+				}
+			}
+		}
+
 		private void SaveCaptureProject(Project project) {
 			string filePath = project.Description.File.FilePath;
 
-			Log.Debug ("Saving capture project: " + project);
-			
-			/* FIXME: Show message */
-			//guiToolkit.InfoMessage(Catalog.GetString("Loading newly created project..."));
-
 			/* scan the new file to build a new PreviewMediaFile with all the metadata */
 			try {
+				Log.Debug ("Saving capture project: " + project);
+			
+				RemuxOutputFile (Capturer.CaptureProperties.EncodingSettings);
+			
 				Log.Debug("Reloading saved file: " + filePath);
 				project.Description.File = multimediaToolkit.DiscoverFile(filePath);
 				foreach (Play play in project.AllPlays ()) {

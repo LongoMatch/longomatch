@@ -31,7 +31,7 @@ namespace LongoMatch.Interfaces.GUI
 		string Logo {set;}
 		int CurrentTime {get;}
 		bool Capturing {get;}
-		CaptureSettings CaptureProperties {set;}
+		CaptureSettings CaptureProperties {set; get;}
 		Image CurrentMiniatureFrame {get;}
 
 		void Start();

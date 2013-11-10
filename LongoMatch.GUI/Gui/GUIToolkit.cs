@@ -361,6 +361,12 @@ namespace LongoMatch.Gui
 			System.GC.Collect();
 		}
 		
+		public string RemuxFile (string inputFile, string outputFile, VideoMuxerType muxer) {
+			Remuxer remuxer = new Remuxer (PreviewMediaFile.DiscoverFile(inputFile),
+			                               outputFile, muxer);
+			return remuxer.Remux (mainWindow as Gtk.Window);
+		}
+		
 	}
 }
 

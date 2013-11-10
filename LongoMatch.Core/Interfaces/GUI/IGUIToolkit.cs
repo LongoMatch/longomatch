@@ -76,6 +76,8 @@ namespace LongoMatch.Interfaces.GUI
 		
 		void TagPlay(Play play, Categories categories, TeamTemplate local, TeamTemplate visitor, bool showAllTags);
 		void DrawingTool(Image pixbuf, Play play, int stopTime);
+		
+		string RemuxFile (string filePath, string outputFile, VideoMuxerType muxer);
 	}
 }
 

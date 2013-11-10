@@ -137,6 +137,8 @@ namespace LongoMatch.Gui
 			set {
 				captureSettings = value;
 				capturerbin.CaptureProperties = value;
+			} get {
+				return captureSettings;
 			}
 		}
 		
