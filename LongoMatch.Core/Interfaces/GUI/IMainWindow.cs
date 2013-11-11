@@ -31,6 +31,7 @@ namespace LongoMatch.Interfaces.GUI
 		event NewTagHandler NewTagEvent;
 		event NewTagStartHandler NewTagStartEvent;
 		event NewTagStopHandler NewTagStopEvent;
+		event NewTagCancelHandler NewTagCancelEvent;
 		event PlaySelectedHandler PlaySelectedEvent;
 		event NewTagAtFrameHandler NewTagAtFrameEvent;
 		event TagPlayHandler TagPlayEvent;

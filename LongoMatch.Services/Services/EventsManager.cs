@@ -45,6 +45,7 @@ namespace LongoMatch.Services
 		ProjectType projectType;
 		Time startTime;
 		PlaysFilter filter;
+		Dictionary<Category, Time> catsTime;
 		
 		IGUIToolkit guiToolkit;
 		IMainWindow mainWindow;
@@ -60,6 +61,7 @@ namespace LongoMatch.Services
 			player = mainWindow.Player;
 			capturer = mainWindow.Capturer;
 			drawingManager = new VideoDrawingsManager(player);
+			catsTime = new Dictionary<Category, Time>();
 			ConnectSignals();
 		}
 
@@ -75,6 +77,7 @@ namespace LongoMatch.Services
 			this.filter = filter;
 			this.openedProject = project;
 			this.projectType = projectType;
+			catsTime.Clear ();
 		}
 
 		private void ConnectSignals() {
@@ -84,6 +87,7 @@ namespace LongoMatch.Services
 			mainWindow.NewTagEvent += OnNewTag;
 			mainWindow.NewTagStartEvent += OnNewPlayStart;
 			mainWindow.NewTagStopEvent += OnNewPlayStop;
+			mainWindow.NewTagCancelEvent += OnNewPlayCancel;
 			mainWindow.NewTagAtFrameEvent += OnNewTagAtFrame;
 			mainWindow.TimeNodeChanged += OnTimeNodeChanged;
 			mainWindow.PlaysDeletedEvent += OnPlaysDeleted;
@@ -228,14 +232,22 @@ namespace LongoMatch.Services
 			ProcessNewTag(category,pos);
 		}
 
-		public virtual void OnNewPlayStart() {
-			startTime = new Time {MSeconds = (int)player.CurrentTime};
+		public virtual void OnNewPlayStart (Category category) {
+			catsTime.Add (category, new Time {MSeconds = (int)player.CurrentTime});
 			Log.Debug("New play start time: " + startTime);
 		}
-
+		
 		public virtual void OnNewPlayStop(Category category) {
 			int diff;
-			Time stopTime = new Time {MSeconds = (int)player.CurrentTime};
+			Time startTime, stopTime;
+			
+			if (!catsTime.ContainsKey (category)) {
+				Log.Error ("Can't add new play, no start time for this play");
+				return;
+			}
+			startTime = catsTime[category];
+			catsTime.Remove (category);
+			stopTime = new Time {MSeconds = (int)player.CurrentTime};
 
 			Log.Debug("New play stop time: " + stopTime);
 			diff = stopTime.MSeconds - startTime.MSeconds;
@@ -253,6 +265,13 @@ namespace LongoMatch.Services
 					stopTime = stopTime + correction;
 			}
 			AddNewPlay(startTime, stopTime, category);
+		}
+		
+		public virtual void OnNewPlayCancel (Category category) {
+			try {
+				catsTime.Remove (category);
+			} catch {
+			}
 		}
 
 		private void LaunchPlayTagger(Play play, bool showAllTags) {

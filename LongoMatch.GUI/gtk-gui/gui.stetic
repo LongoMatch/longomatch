@@ -919,38 +919,6 @@
         <property name="MemberName" />
         <property name="Spacing">6</property>
         <child>
-          <widget class="Gtk.Button" id="cancelbutton">
-            <property name="MemberName" />
-            <property name="Visible">False</property>
-            <property name="Type">TextOnly</property>
-            <property name="Label" translatable="yes">Cancel</property>
-            <property name="UseUnderline">True</property>
-            <signal name="Clicked" handler="OnCancelbuttonClicked" />
-          </widget>
-          <packing>
-            <property name="Position">0</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Button" id="starttagbutton">
-            <property name="MemberName" />
-            <property name="Visible">False</property>
-            <property name="Type">TextOnly</property>
-            <property name="Label" translatable="yes">Tag new play</property>
-            <property name="UseUnderline">True</property>
-            <signal name="Clicked" handler="OnStartTagClicked" />
-          </widget>
-          <packing>
-            <property name="Position">1</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
-        <child>
           <widget class="Gtk.Table" id="table1">
             <property name="MemberName" />
             <property name="NRows">5</property>
@@ -1019,7 +987,7 @@
             </child>
           </widget>
           <packing>
-            <property name="Position">2</property>
+            <property name="Position">0</property>
             <property name="AutoSize">True</property>
           </packing>
         </child>
@@ -8876,6 +8844,7 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Label" translatable="yes">Histogram</property>
+                <property name="Active">True</property>
                 <property name="DrawIndicator">True</property>
                 <property name="HasLabel">True</property>
                 <property name="UseUnderline">True</property>
@@ -9437,6 +9406,34 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
           </widget>
           <packing>
             <property name="type">label_item</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.ButtonTagger" design-size="204 43">
+    <property name="MemberName" />
+    <property name="Visible">False</property>
+    <child>
+      <widget class="Gtk.HBox" id="buttonbox">
+        <property name="MemberName" />
+        <child>
+          <placeholder />
+        </child>
+        <child>
+          <widget class="Gtk.Button" id="cancelbutton">
+            <property name="MemberName" />
+            <property name="Type">TextAndIcon</property>
+            <property name="Icon">stock:gtk-cancel Menu</property>
+            <property name="Label" translatable="yes" />
+            <property name="UseUnderline">True</property>
+          </widget>
+          <packing>
+            <property name="PackType">End</property>
+            <property name="Position">1</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
           </packing>
         </child>
       </widget>

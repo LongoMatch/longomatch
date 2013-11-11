@@ -34,9 +34,11 @@ namespace LongoMatch.Handlers
 	/* A new play needs to be create for a specific category at the current play time */
 	public delegate void NewTagHandler(Category category);
 	/* Signal the start time to tag a new play */
-	public delegate void NewTagStartHandler();
+	public delegate void NewTagStartHandler (Category category);
 	/* Signal the stop time to tag a new play */
 	public delegate void NewTagStopHandler(Category category);
+	/* Signal cancellation of tag */
+	public delegate void NewTagCancelHandler(Category category);
 	/* A new play needs to be created at a defined frame */
 	public delegate void NewTagAtFrameHandler(Category category,int frame);
 	//A play was edited

@@ -49,6 +49,7 @@ namespace LongoMatch.Gui
 		public event NewTagHandler NewTagEvent;
 		public event NewTagStartHandler NewTagStartEvent;
 		public event NewTagStopHandler NewTagStopEvent;
+		public event NewTagCancelHandler NewTagCancelEvent;
 		public event PlaySelectedHandler PlaySelectedEvent;
 		public event NewTagAtFrameHandler NewTagAtFrameEvent;
 		public event TagPlayHandler TagPlayEvent;
@@ -259,6 +260,7 @@ namespace LongoMatch.Gui
 			buttonswidget.NewMarkEvent += EmitNewTag;;
 			buttonswidget.NewMarkStartEvent += EmitNewTagStart;
 			buttonswidget.NewMarkStopEvent += EmitNewTagStop;
+			buttonswidget.NewMarkCancelEvent += EmitNewTagCancel;
 			timeline.NewMarkEvent += EmitNewTagAtFrame;
 
 			/* Connect TimeNodeChanged events */
@@ -769,6 +771,7 @@ namespace LongoMatch.Gui
 				guTimeline.CurrentFrame = frame;
 			}
 			gameunitstaggerwidget1.CurrentTime = new Time{MSeconds = (int)currentTime};
+			buttonswidget.CurrentTime = new Time{MSeconds = (int)currentTime};
 		}
 		
 		protected virtual void OnUpdate(Version version, string URL) {
@@ -863,14 +866,19 @@ namespace LongoMatch.Gui
 				NewTagEvent(category);
 		}
 
-		private void EmitNewTagStart() {
+		private void EmitNewTagStart(Category category) {
 			if (NewTagStartEvent != null)
-				NewTagStartEvent ();
+				NewTagStartEvent (category);
 		}
 
 		private void EmitNewTagStop(Category category) {
 			if (NewTagStopEvent != null)
 				NewTagStopEvent (category);
+		}
+		
+		private void EmitNewTagCancel(Category category) {
+			if (NewTagCancelEvent != null)
+				NewTagCancelEvent (category);
 		}
 		
 		private void EmitRenderPlaylist(IPlayList playlist) {

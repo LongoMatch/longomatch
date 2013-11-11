@@ -31,6 +31,7 @@
         <signal name="NewMarkEvent" />
         <signal name="NewMarkStartEvent" />
         <signal name="NewMarkStopEvent" />
+        <signal name="NewMarkCancelEvent" />
       </itemgroup>
     </signals>
   </object>
@@ -439,5 +440,16 @@
   <object type="LongoMatch.Gui.Component.Stats.PlayerSubcategoryViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.ButtonTagger" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="ButtonTagger Signals">
+        <signal name="NewTag" />
+        <signal name="NewTagStart" />
+        <signal name="NewTagStop" />
+        <signal name="NewTagCancel" />
+      </itemgroup>
+    </signals>
   </object>
 </objects>
