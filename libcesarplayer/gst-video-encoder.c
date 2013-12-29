@@ -75,6 +75,7 @@ struct GstVideoEncoderPrivate
   GstPad *audio_pad;
   GstClockTime total_duration;
   guint update_id;
+  guint64 last_buf_ts;
 };
 
 static GObjectClass *parent_class = NULL;
@@ -208,6 +209,13 @@ gst_video_encoder_error_quark (void)
   return q;
 }
 
+static gboolean
+gve_on_buffer_cb (GstPad *pad, GstBuffer *buf, GstVideoEncoder *gve)
+{
+  gve->priv->last_buf_ts = g_get_monotonic_time ();
+  return TRUE;
+}
+
 static void
 gst_video_encoder_create_encoder_bin (GstVideoEncoder *gve)
 {
@@ -216,7 +224,7 @@ gst_video_encoder_create_encoder_bin (GstVideoEncoder *gve)
   GstElement *aqueue, *vqueue;
   GstElement *v_identity, *a_identity;
   GstCaps *video_caps, *audio_caps, *h264_caps;
-  GstPad *v_sink_pad, *a_sink_pad;
+  GstPad *v_sink_pad, *a_sink_pad, *pad;
 
   GST_INFO_OBJECT (gve, "Creating encoder bin");
   gve->priv->encoder_bin = gst_bin_new ("encoder_bin");
@@ -303,6 +311,12 @@ gst_video_encoder_create_encoder_bin (GstVideoEncoder *gve)
       gst_ghost_pad_new ("audio", a_sink_pad));
   gst_object_unref (GST_OBJECT (v_sink_pad));
   gst_object_unref (GST_OBJECT (a_sink_pad));
+
+  /* Add a pad probe to detect deadlock as EOS are not sent correctly by some
+   * muxers such as mpegpsdemux */
+  pad = gst_element_get_static_pad (gve->priv->filesink, "sink");
+  gst_pad_add_buffer_probe (pad, (GCallback) gve_on_buffer_cb, gve);
+  gst_object_unref (pad);
 
   gst_bin_add (GST_BIN (gve->priv->main_pipeline), gve->priv->encoder_bin);
   GST_INFO_OBJECT (gve, "Encoder bin created successfully");
@@ -591,6 +605,10 @@ gst_video_encoder_query_timeout (GstVideoEncoder * gve)
   g_signal_emit (gve, gve_signals[SIGNAL_PERCENT_COMPLETED], 0,
       MIN (0.99, (gfloat) pos / (gfloat) gve->priv->total_duration));
 
+  if (g_get_monotonic_time () - gve->priv->last_buf_ts > 4 * 1000000) {
+    g_idle_add ((GSourceFunc)gst_video_encoder_select_next_file, gve);
+  }
+
   return TRUE;
 }
 
@@ -627,6 +645,7 @@ gst_video_encoder_start (GstVideoEncoder * gve)
   GST_INFO_OBJECT(gve, "Starting encoding");
   g_signal_emit (gve, gve_signals[SIGNAL_PERCENT_COMPLETED], 0, (gfloat) 0);
   gst_video_encoder_initialize (gve);
+  gve->priv->last_buf_ts = g_get_monotonic_time ();
   gve->priv->update_id =
       g_timeout_add (100, (GSourceFunc) gst_video_encoder_query_timeout, gve);
 
