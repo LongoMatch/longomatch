@@ -160,6 +160,10 @@ gst_nle_source_dispose (GObject * object)
     g_list_free_full (nlesrc->queue, (GDestroyNotify) gst_nle_source_item_free);
     nlesrc->queue = NULL;
   }
+  if (nlesrc->decoder != NULL) {
+    gst_element_set_state (nlesrc->decoder, GST_STATE_NULL);
+    nlesrc->decoder = NULL;
+  }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -653,6 +657,7 @@ gst_nle_source_change_state (GstElement * element, GstStateChange transition)
       if (nlesrc->decoder) {
         gst_element_set_state (nlesrc->decoder, GST_STATE_NULL);
         gst_object_unref (nlesrc->decoder);
+        nlesrc->decoder = NULL;
       }
     default:
       break;

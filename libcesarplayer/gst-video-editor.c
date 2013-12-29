@@ -79,15 +79,11 @@ struct GstVideoEditorPrivate
   /* Video */
   GstElement *identity;
   GstElement *ffmpegcolorspace;
-  GstElement *capsfilter;
   GstElement *queue;
   GstElement *video_encoder;
 
   /* Audio */
   GstElement *audioidentity;
-  GstElement *audioconvert;
-  GstElement *audioresample;
-  GstElement *audiocapsfilter;
   GstElement *audioqueue;
   GstElement *audioencoder;
 
@@ -271,8 +267,8 @@ gve_create_video_encode_bin (GstVideoEditor * gve)
   gst_element_add_pad (GST_ELEMENT (gve->priv->vencode_bin),
       gst_ghost_pad_new ("src", srcpad));
 
-  g_object_unref (srcpad);
-  g_object_unref (sinkpad);
+  gst_object_unref (srcpad);
+  gst_object_unref (sinkpad);
 }
 
 static void
@@ -323,8 +319,8 @@ gve_create_audio_encode_bin (GstVideoEditor * gve)
   gst_element_add_pad (GST_ELEMENT (gve->priv->aencode_bin),
       gst_ghost_pad_new ("src", srcpad));
 
-  g_object_unref (srcpad);
-  g_object_unref (sinkpad);
+  gst_object_unref (srcpad);
+  gst_object_unref (sinkpad);
 }
 
 /* =========================================== */
@@ -353,14 +349,13 @@ new_decoded_pad_cb (GstElement * object, GstPad * pad, gpointer user_data)
     videopad = gst_element_get_static_pad (gve->priv->vencode_bin, "sink");
     /* only link once */
     if (GST_PAD_IS_LINKED (videopad)) {
-      g_object_unref (videopad);
-      gst_caps_unref (caps);
+      gst_object_unref (videopad);
       return;
     }
     /* link 'n play */
     GST_INFO ("Found video stream...%" GST_PTR_FORMAT, caps);
     gst_pad_link (pad, videopad);
-    g_object_unref (videopad);
+    gst_object_unref (videopad);
   }
 
   else if (g_strrstr (gst_structure_get_name (str), "audio")
@@ -368,17 +363,14 @@ new_decoded_pad_cb (GstElement * object, GstPad * pad, gpointer user_data)
     audiopad = gst_element_get_static_pad (gve->priv->aencode_bin, "sink");
     /* only link once */
     if (GST_PAD_IS_LINKED (audiopad)) {
-      g_object_unref (audiopad);
-      gst_caps_unref (caps);
+      gst_object_unref (audiopad);
       return;
     }
     /* link 'n play */
     GST_INFO ("Found audio stream...%" GST_PTR_FORMAT, caps);
     gst_pad_link (pad, audiopad);
-    g_object_unref (audiopad);
+    gst_object_unref (audiopad);
   }
-
-  gst_caps_unref (caps);
 }
 
 static void
