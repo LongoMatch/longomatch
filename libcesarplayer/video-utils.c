@@ -503,21 +503,20 @@ GstElement * lgm_create_audio_encoder (AudioEncoderType type, guint quality,
   switch (type) {
     case AUDIO_ENCODER_MP3:
       encoder = gst_element_factory_make ("lamemp3enc", "audio-encoder");
-      g_object_set (encoder, "target", 0,
-          "quality", (gfloat) quality * 10 / 100, NULL);
+      g_object_set (encoder, "target", 0, "quality", (gfloat)4, NULL);
       name = "Mp3 audio encoder";
       break;
 
     case AUDIO_ENCODER_AAC:
       encoder = gst_element_factory_make ("faac", "audio-encoder");
-      g_object_set (encoder, "bitrate", quality *  320000 / 100, NULL);
+      g_object_set (encoder, "bitrate", 128000, NULL);
       name = "AAC audio encoder";
       break;
 
     case AUDIO_ENCODER_VORBIS:
     default:
       encoder = gst_element_factory_make ("vorbisenc", "audio-encoder");
-      g_object_set (encoder, "quality", (gfloat) quality / 100, NULL);
+      g_object_set (encoder, "quality", 0.3, NULL);
       name = "Vorbis audio encoder";
       break;
   }
