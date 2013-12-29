@@ -261,8 +261,9 @@ gst_nle_source_update_overlay_title (GstNleSource * nlesrc)
   g_object_set (G_OBJECT (nlesrc->textoverlay), "text", item->title, NULL);
 
   length = g_utf8_strlen (item->title, -1);
-  if (length * nlesrc->title_size > nlesrc->width) {
-    gst_nle_source_apply_title_size (nlesrc, nlesrc->width / length - 1);
+  length *= 2;
+  if (length * nlesrc->title_size > nlesrc->height) {
+    gst_nle_source_apply_title_size (nlesrc, nlesrc->height / length - 1);
   } else {
     gst_nle_source_apply_title_size (nlesrc, nlesrc->title_size);
   }
