@@ -231,9 +231,7 @@ namespace LongoMatch.Store
 		
 		public override string ToString()
 		{
-			return  "<b>"+Catalog.GetString("Name")+": </b>"+Name+"\n"+
-			        "<b>"+Catalog.GetString("Start")+": </b>"+Start.ToMSecondsString()+"\n"+
-			        "<b>"+Catalog.GetString("Stop")+": </b>"+Stop.ToMSecondsString();
+			return  Name + "\n" + Start.ToMSecondsString() + " - " + Stop.ToMSecondsString();
 		}
 		#endregion
 	}
