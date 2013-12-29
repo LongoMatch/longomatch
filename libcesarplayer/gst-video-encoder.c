@@ -247,7 +247,10 @@ gst_video_encoder_create_encoder_bin (GstVideoEncoder *gve)
 
   /* Increase audio queue size for h264 encoding as the encoder queues 2 seconds
    * of video */
-  g_object_set (aqueue, "max-size-time", 5 * GST_SECOND, NULL);
+  g_object_set (aqueue, "max-size-bytes", 0, "max-size-buffers", 0,
+      "max-size-time", 5 * GST_SECOND, NULL);
+  g_object_set (vqueue, "max-size-bytes", 0, "max-size-buffers", 0,
+      "max-size-time", 5 * GST_SECOND, NULL);
 
   /* Set caps for the encoding resolution */
   video_caps = gst_caps_new_simple ("video/x-raw-yuv", NULL);
@@ -284,7 +287,7 @@ gst_video_encoder_create_encoder_bin (GstVideoEncoder *gve)
 
   gst_bin_add_many(GST_BIN(gve->priv->encoder_bin), v_identity,  colorspace1,
       deinterlace, videoscale, framerate, colorspace2,
-      vqueue, gve->priv->video_enc, gve->priv->muxer, gve->priv->filesink,
+      gve->priv->video_enc, vqueue, gve->priv->muxer, gve->priv->filesink,
       a_identity, audioconvert, audioresample, gve->priv->audio_enc, aqueue, NULL);
 
   gst_element_link_many(v_identity, colorspace1, deinterlace, framerate,
