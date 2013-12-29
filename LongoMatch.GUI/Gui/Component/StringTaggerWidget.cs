@@ -31,7 +31,7 @@ namespace LongoMatch.Gui.Component
 		StringTagStore tags;
 		RadioButton firstRB;
 		uint count;
-		const uint BUTTONS_PER_ROW = 3;
+		const uint BUTTONS_PER_ROW = 5;
 		TagSubCategory subcategory;
 		
 		public StringTaggerWidget (TagSubCategory subcategory, StringTagStore tags)
@@ -40,7 +40,7 @@ namespace LongoMatch.Gui.Component
 			this.subcategory = subcategory;
 			this.tags = tags;
 			count = 0;
-			table.NColumns = 3;
+			table.NColumns = 5;
 			PopulateGui();
 			UpdateTags();
 		}
@@ -81,6 +81,7 @@ namespace LongoMatch.Gui.Component
 			} else {
 				button = new CheckButton(tag.Value);
 			}
+			button.WidthRequest = 120;
 			
 			button.Toggled += delegate(object sender, EventArgs e) {
 				if (button.Active) {
