@@ -36,6 +36,7 @@ namespace LongoMatch.Video.Editor {
 		static extern unsafe IntPtr gst_video_editor_new(out IntPtr err);
 
 		public event LongoMatch.Handlers.ProgressHandler Progress;
+		public event LongoMatch.Handlers.ErrorHandler Error;
 
 		public unsafe GstVideoSplitter() : base(IntPtr.Zero)
 		{
@@ -48,6 +49,10 @@ namespace LongoMatch.Video.Editor {
 			PercentCompleted += delegate(object o, PercentCompletedArgs args) {
 				if(Progress!= null)
 					Progress(args.Percent);
+			};
+			InternalError += delegate(object o, ErrorArgs args) {
+				if (Error != null)
+					Error (o, args.Message);
 			};
 		}
 
@@ -91,7 +96,7 @@ namespace LongoMatch.Video.Editor {
 		}
 
 		[GLib.Signal("error")]
-		public event ErrorHandler Error {
+		public event ErrorHandler InternalError {
 			add {
 				GLib.Signal sig = GLib.Signal.Lookup(this, "error", typeof(ErrorArgs));
 				sig.AddDelegate(value);

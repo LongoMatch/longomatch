@@ -29,6 +29,7 @@ namespace LongoMatch.Interfaces.Multimedia
 	public interface IVideoEditor
 	{
 		event ProgressHandler Progress;
+		event ErrorHandler Error;
 
 		EncodingSettings EncodingSettings{
 			set;

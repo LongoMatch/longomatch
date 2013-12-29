@@ -114,6 +114,7 @@ namespace LongoMatch.Services
 			
 			if (job is EditionJob) {
 				videoEditor.Progress -= OnProgress;
+				videoEditor.Error -= OnError;
 				videoEditor.Cancel();
 			} else {
 				videoConverter.Progress -= OnProgress;
@@ -158,17 +159,11 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void OnError (object o, string message)
-		{
-			Log.Error("Error rendering job: ", currentJob.Name);
-			guiToolkit.ErrorMessage(Catalog.GetString("An error has occurred in the video renderer.")
-			                        + " " + Catalog.GetString("Please, try again."));
-		}
-		
 		private void LoadEditionJob(EditionJob job) {
 			videoEditor = multimediaToolkit.GetVideoEditor();
 			videoEditor.EncodingSettings = job.EncodingSettings;
 			videoEditor.Progress += OnProgress;
+			videoEditor.Error += OnError;
 			
 			foreach(PlayListPlay segment in job.Playlist) {
 				if (!ProcessSegment(segment))
@@ -277,6 +272,14 @@ namespace LongoMatch.Services
 			} catch {}
 		}
 		
+		void HandleError () {
+			Log.Debug ("Job finished with errors");
+			guiToolkit.ErrorMessage(Catalog.GetString("An error has occurred in the video editor.")
+			                        +Catalog.GetString("Please, try again."));
+			currentJob.State = JobState.Error;
+			CloseAndNext();
+		}
+		
 		private void MainLoopOnProgress (float progress) {
 			if(progress > (float)EditorState.START && progress <= (float)EditorState.FINISHED
 			   && progress > stateBar.Fraction) {
@@ -309,12 +312,13 @@ namespace LongoMatch.Services
 			}
 
 			else if(progress == (float)EditorState.ERROR) {
-				Log.Debug ("Job finished with errors");
-				guiToolkit.ErrorMessage(Catalog.GetString("An error has occurred in the video editor.")
-				                          +Catalog.GetString("Please, try again."));
-				currentJob.State = JobState.Error;
-				CloseAndNext();
+				HandleError ();
 			}
+		}
+		
+		protected void OnError (object o, string message)
+		{
+			HandleError ();
 		}
 		
 		protected void OnProgress(float progress)
