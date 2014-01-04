@@ -55,11 +55,6 @@ namespace LongoMatch.Gui.Component
 			Sensitive = true;
 		}
 		
-		~CoordinatesTagger() {
-			if (source != null)
-				source.Destroy();
-		}
-		
 		public new bool Sensitive {
 			get;
 			set;
@@ -191,6 +186,13 @@ namespace LongoMatch.Gui.Component
 					continue;
 				DrawCoordinates (ctx, c);
 			}
+		}
+		
+		protected override void OnDestroyed ()
+		{
+			base.OnDestroyed ();
+			if (source != null)
+				source.Destroy();
 		}
 		
 		protected virtual void OnDrawingareaButtonPressEvent(object o, Gtk.ButtonPressEventArgs args)

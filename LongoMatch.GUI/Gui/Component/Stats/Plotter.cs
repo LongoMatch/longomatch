@@ -207,6 +207,17 @@ namespace LongoMatch.Gui.Component.Stats
 			}
 		}
 		
+		protected override void OnDestroyed ()
+		{
+			base.OnDestroyed ();
+			if (imageall != null)
+				imageall.Destroy();
+			if (imageaway != null)
+				imageaway.Destroy();
+			if (imagehome != null)
+				imagehome.Destroy();
+		}
+		
 		protected enum GraphType {
 			Histogram,
 			Pie,

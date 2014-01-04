@@ -56,6 +56,7 @@ namespace LongoMatch.Stats
 				Field.Dispose ();
 			if (Goal != null)
 				Goal.Dispose ();
+			catStats.Clear ();
 		}
 		
 		public string ProjectName {

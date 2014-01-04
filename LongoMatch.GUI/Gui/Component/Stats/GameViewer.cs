@@ -42,12 +42,10 @@ namespace LongoMatch.Gui.Component
 			this.Build ();
 		}
 		
-		public Project Project {
-			set {
-				stats = new ProjectStats (value);
-				project = value;
-				UpdateGui();				
-			}
+		public void LoadProject (Project project, ProjectStats stats) {
+			this.stats = stats;
+			this.project = project;
+			UpdateGui();				
 		}
 		
 		void UpdateSubcatsVisibility () {

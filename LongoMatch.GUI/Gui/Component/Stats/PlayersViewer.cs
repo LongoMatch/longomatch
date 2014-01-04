@@ -46,11 +46,11 @@ namespace LongoMatch.Gui.Component.Stats
 			treeview1.EnableTreeLines = false;
 		}
 		
-		public void LoadProject (Project project) {
+		public void LoadProject (Project project, ProjectStats stats) {
 			TreeIter first;
 			
 			store.Clear();
-			pstats =  new ProjectStats (project);
+			pstats = stats;
 			filter = new PlaysFilter (project);
 			filter.PlayersFilterEnabled = true;
 			pstats.Filter = filter;

@@ -186,6 +186,17 @@ namespace LongoMatch.Gui.Component
 			goal.Coordinates = coords; 
 			goal.Visible = true;
 		}
+		
+		protected override void OnDestroyed ()
+		{
+			base.OnDestroyed ();
+			if (fieldPixbuf != null)
+				fieldPixbuf.Dispose();
+			if (hFieldPixbuf != null)
+				hFieldPixbuf.Dispose();
+			if (goalPixbuf != null)
+				goalPixbuf.Dispose();
+		}
 	}
 }
 
