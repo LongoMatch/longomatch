@@ -327,6 +327,23 @@ gst_nle_source_push_buffer (GstNleSource * nlesrc, GstBuffer * buf,
   }
 }
 
+static GstBuffer *
+gst_nle_source_audio_silence_buf (GstNleSource *nlesrc, guint64 start,
+    guint64 duration)
+{
+  GstBuffer *buf;
+  GstCaps *caps;
+
+  buf = gst_buffer_new_and_alloc (BITS_PER_SAMPLE / 8 * duration / GST_SECOND);
+  memset (GST_BUFFER_DATA (buf), '\0', GST_BUFFER_SIZE (buf));
+  GST_BUFFER_TIMESTAMP (buf) = start;
+  GST_BUFFER_DURATION (buf) = duration;
+  caps = gst_nle_source_get_audio_caps (nlesrc);
+  gst_buffer_set_caps (buf, caps);
+  gst_caps_unref (caps);
+  return buf;
+}
+
 static void
 gst_nle_source_no_more_pads (GstElement * element, GstNleSource * nlesrc)
 {
@@ -335,9 +352,7 @@ gst_nle_source_no_more_pads (GstElement * element, GstNleSource * nlesrc)
   if (nlesrc->with_audio && !nlesrc->audio_linked) {
     GstBuffer *buf;
     GstNleSrcItem *item;
-    GstCaps *caps;
     guint64 duration;
-    guint bps = BITS_PER_SAMPLE / 8;
 
     GST_INFO_OBJECT (nlesrc, "Pushing dummy audio buffer");
 
@@ -350,14 +365,19 @@ gst_nle_source_no_more_pads (GstElement * element, GstNleSource * nlesrc)
     }
     item = (GstNleSrcItem *) g_list_nth_data (nlesrc->queue, nlesrc->index);
     duration = item->duration / item->rate;
-    buf = gst_buffer_new_and_alloc (bps * duration / GST_SECOND);
-    /* Generate silence */
-    memset (GST_BUFFER_DATA (buf), 0, GST_BUFFER_SIZE (buf));
-    GST_BUFFER_TIMESTAMP (buf) = item->start;
-    caps = gst_nle_source_get_audio_caps (nlesrc);
-    gst_buffer_set_caps (buf, caps);
-    gst_caps_unref (caps);
 
+    /* Push the start buffer and last 2 ones and let audiorate fill the gap */
+    buf = gst_nle_source_audio_silence_buf (nlesrc, item->start, 20 * GST_MSECOND);
+    gst_nle_source_push_buffer (nlesrc, buf, TRUE);
+
+    buf = gst_nle_source_audio_silence_buf (nlesrc,
+        item->start + duration - 40 * GST_MSECOND,
+        20 * GST_MSECOND);
+    gst_nle_source_push_buffer (nlesrc, buf, TRUE);
+
+    buf = gst_nle_source_audio_silence_buf (nlesrc,
+        item->start + duration - 20 * GST_MSECOND,
+        20 * GST_MSECOND);
     gst_nle_source_push_buffer (nlesrc, buf, TRUE);
   }
 }
