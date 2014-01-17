@@ -444,7 +444,7 @@ GstElement * lgm_create_video_encoder (VideoEncoderType type, guint quality,
       encoder = gst_element_factory_make ("ffenc_mpeg4", "video-encoder");
       g_object_set (encoder, "pass", 512,
           "max-key-interval", -1,
-          "bitrate", 4000000 * quality / 100, NULL);
+          "bitrate", quality * 1000 , NULL);
       name = "FFmpeg mpeg4 video encoder";
       break;
 
@@ -452,7 +452,7 @@ GstElement * lgm_create_video_encoder (VideoEncoderType type, guint quality,
       encoder = gst_element_factory_make ("xvidenc", "video-encoder");
       g_object_set (encoder, "pass", 3,
           "profile", 146, "max-key-interval", -1,
-          "quantizer", quality * 31 / 100, NULL);
+          "bitrate", quality * 1000, NULL);
       name = "Xvid video encoder";
       break;
 
@@ -460,7 +460,7 @@ GstElement * lgm_create_video_encoder (VideoEncoderType type, guint quality,
       encoder = gst_element_factory_make ("x264enc", "video-encoder");
       g_object_set (encoder, "key-int-max", 25, "pass", 17,
           "speed-preset", 3,
-          "bitrate", 4000 * quality / 100, NULL);
+          "bitrate", quality, NULL);
       name = "X264 video encoder";
       break;
 
@@ -468,7 +468,7 @@ GstElement * lgm_create_video_encoder (VideoEncoderType type, guint quality,
       encoder = gst_element_factory_make ("theoraenc", "video-encoder");
       g_object_set (encoder, "keyframe-auto", FALSE,
           "keyframe-force", 25,
-          "quality", quality * 63 / 100, NULL);
+          "bitrate", quality, NULL);
       name = "Theora video encoder";
       break;
 
@@ -477,7 +477,7 @@ GstElement * lgm_create_video_encoder (VideoEncoderType type, guint quality,
       encoder = gst_element_factory_make ("vp8enc", "video-encoder");
       g_object_set (encoder, "speed", 2, "threads", 8,
           "max-keyframe-distance", 25,
-          "quality", (gdouble) quality * 10 / 100, NULL);
+          "bitrate", (gdouble) quality * 1000, NULL);
       name = "VP8 video encoder";
       break;
 
