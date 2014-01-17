@@ -253,8 +253,7 @@ namespace LongoMatch.Gui.Component
 			Image img;
 			
 			if (pix == null) {
-				img = new Image (
-					Gdk.Pixbuf.LoadFromResource (Constants.FIELD_BACKGROUND));
+				img = Config.FieldBackground;
 				fReset.Visible = false;
 			} else {
 				img = new Image(pix);
@@ -268,8 +267,7 @@ namespace LongoMatch.Gui.Component
 			Image img;
 			
 			if (pix == null) {
-				img = new Image (
-					Gdk.Pixbuf.LoadFromResource (Constants.HALF_FIELD_BACKGROUND));
+				img = Config.HalfFieldBackground;
 				hfReset.Visible = false;
 			} else {
 				img = new Image(pix);
@@ -283,8 +281,7 @@ namespace LongoMatch.Gui.Component
 			Image img;
 			
 			if (pix == null) {
-				img = new Image (
-					Gdk.Pixbuf.LoadFromResource (Constants.GOAL_BACKGROUND));
+				img = Config.GoalBackground;
 				gReset.Visible = false;
 			} else {
 				img = new Image(pix);

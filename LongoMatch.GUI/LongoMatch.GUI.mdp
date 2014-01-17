@@ -165,15 +165,12 @@
     <File subtype="Code" buildaction="Compile" name="Gui/Helpers/MessagesHelpers.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/CoordinatesTagger.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.CoordinatesTagger.cs" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/field_background.svg" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/goal_background.svg" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/GeneralPreferencesPanel.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.GeneralPreferencesPanel.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/PropertiesEditor.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.PropertiesEditor.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/VideoPreferencesPanel.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/half_field_background.svg" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/LiveAnalysisPreferences.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.LiveAnalysisPreferences.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/PlaysCoordinatesTagger.cs" />

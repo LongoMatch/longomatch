@@ -56,9 +56,9 @@ namespace LongoMatch.Gui.Component
 			subcategoriestreeview1.SubCategorySelected += OnSubcategorySelected;
 			leadtimebutton.ValueChanged += OnLeadTimeChanged;;
 			lagtimebutton.ValueChanged += OnLagTimeChanged;
-			fieldcoordinatestagger.Background = Gdk.Pixbuf.LoadFromResource (Constants.FIELD_BACKGROUND);
-			goalcoordinatestagger.Background = Gdk.Pixbuf.LoadFromResource (Constants.GOAL_BACKGROUND);
-			halffieldcoordinatestagger.Background = Gdk.Pixbuf.LoadFromResource (Constants.HALF_FIELD_BACKGROUND);
+			fieldcoordinatestagger.Background = Config.FieldBackground.Value;
+			goalcoordinatestagger.Background = Config.HalfFieldBackground.Value;
+			halffieldcoordinatestagger.Background = Config.GoalBackground.Value;
 		}
 		
 		public bool CanChangeHotkey {

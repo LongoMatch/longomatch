@@ -79,6 +79,9 @@ SOURCES = \
 	Store/Time.cs \
 	Store/TimeNode.cs
 
-RESOURCES =
+RESOURCES = \
+	$(top_srcdir)/images/field_background.svg \
+	$(top_srcdir)/images/half_field_background.svg \
+	$(top_srcdir)/images/goal_background.svg
 
 include $(top_srcdir)/build/build.mk

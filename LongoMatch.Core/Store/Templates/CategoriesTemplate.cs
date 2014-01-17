@@ -51,6 +51,9 @@ namespace LongoMatch.Store.Templates
 		/// Creates a new template
 		/// </summary>
 		public Categories() {
+			FieldBackground = Config.FieldBackground;
+			HalfFieldBackground = Config.HalfFieldBackground;
+			GoalBackground = Config.GoalBackground;
 		}
 
 		public string Name {
@@ -92,8 +95,12 @@ namespace LongoMatch.Store.Templates
 				else return null;
 			}
 			set {
-				if (value != null)
+				if (value != null) {
+					if (value.Width > 500) {
+						value.Scale (500, 500);
+					}
 					fieldImage = value.Serialize();
+				}
 				else
 					fieldImage = null;
 			}
@@ -106,8 +113,12 @@ namespace LongoMatch.Store.Templates
 				else return null;
 			}
 			set {
-				if (value != null)
+				if (value != null) {
+					if (value.Width > 500) {
+						value.Scale (500, 500);
+					}
 					halfFieldImage = value.Serialize();
+				}
 				else
 					halfFieldImage = null;
 			}
@@ -120,8 +131,12 @@ namespace LongoMatch.Store.Templates
 				else return null;
 			}
 			set {
-				if (value != null)
+				if (value != null) {
+					if (value.Width > 500) {
+						value.Scale (500, 500);
+					}
 					goalImage = value.Serialize();
+				}
 				else
 					goalImage = null;
 			}

@@ -96,19 +96,19 @@ namespace LongoMatch.Gui.Component
 			if (fieldImage != null) {
 				fieldPixbuf = fieldImage.Value;
 			} else {
-				fieldPixbuf = Gdk.Pixbuf.LoadFromResource (Constants.FIELD_BACKGROUND);
+				fieldPixbuf = Config.FieldBackground.Value;
 			}
 			field.Background = fieldPixbuf;
 			if (halfFieldImage != null) {
 				hFieldPixbuf = halfFieldImage.Value;
 			} else {
-				hFieldPixbuf = Gdk.Pixbuf.LoadFromResource (Constants.HALF_FIELD_BACKGROUND);
+				hFieldPixbuf = Config.HalfFieldBackground.Value;
 			}
 			hfield.Background = hFieldPixbuf;
 			if (goalImage != null) {
 				goalPixbuf = goalImage.Value;
 			} else {
-				goalPixbuf = Gdk.Pixbuf.LoadFromResource (Constants.GOAL_BACKGROUND);
+				goalPixbuf = Config.GoalBackground.Value;
 			}
 			goal.Background = goalPixbuf;
 		}
