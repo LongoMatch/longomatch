@@ -1,17 +1,27 @@
-LongoMatch-0.18.19 "ReReTV"
+LongoMatch-0.20.0 "Knee"
 -----------------------------
 
-The LongoMatch team is happy to announce the eighteenth release in the
-stable 0.18 series.
+The LongoMatch team is happy to announce the first release in the
+stable 0.20 series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
 all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
 * Bugs fixed
+	* Add a new encoding quality
+	* Use smaller images for the position tagging backgrounds
+	* Improve memory management for the stats GUI
+	* Make plays description shorter
+	* Fix segfault with long titles
+	* Rework tagger UI to make it fit better in the screen
+	* Handle video editor errors correctly
+	* Use a custom non linear editor instead of gnonlin
+	* Fix transcoding of VOB files
+	* Add support for timers in tagging buttons
+	* Fix errors closing projects without anything recorded
+	* Fix path with dates '/' for exported projects
 	* Fix exception in startup when no database exists
-
-*Contributors to this Release:
 
   * LongoMatch:
 	Andoni Morales Alastruey <ylatuya@gmail.com>
@@ -29,7 +39,7 @@ experience.
 
 * Download
   LongoMatch source tarballs are available on gnome FTP:
-   http://ftp.gnome.org/pub/GNOME/sources/longomatch/0.18/
+   http://ftp.gnome.org/pub/GNOME/sources/longomatch/0.20/
 
   See the website for distribution-specific packages.
 

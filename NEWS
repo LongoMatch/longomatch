@@ -1,3 +1,20 @@
+===== LongoMatch 0.20.0 "Knee" =====
+
+	== Bugs fixed ==
+
+	* Add a new encoding quality
+	* Use smaller images for the position tagging backgrounds
+	* Improve memory management for the stats GUI
+	* Make plays description shorter
+	* Fix segfault with long titles
+	* Rework tagger UI to make it fit better in the screen
+	* Handle video editor errors correctly
+	* Use a custom non linear editor instead of gnonlin
+	* Fix transcoding of VOB files
+	* Add support for timers in tagging buttons
+	* Fix errors closing projects without anything recorded
+	* Fix path with dates '/' for exported projects
+
 ===== LongoMatch 0.18.19 "ReReTV" =====
 
 	* Fix exception in startup when no Database exists
