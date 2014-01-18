@@ -513,6 +513,8 @@ namespace LongoMatch.DB
 				new_width = image.Width;
 				foreach (Coordinates c in coords) {
 					float scale = (float) new_width / old_width;
+					if (c == null)
+						continue;
 					foreach (Point p in c) {
 						p.X = (int) (p.X * scale);
 						p.Y = (int) (p.Y * scale);
