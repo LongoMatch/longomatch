@@ -1,3 +1,10 @@
+===== LongoMatch 0.20.1 "Create" =====
+
+	== Bugs fixed ==
+
+	* Fix segfault migrating positions in old projects
+	* Fix display of stats
+
 ===== LongoMatch 0.20.0 "Knee" =====
 
 	== Bugs fixed ==
