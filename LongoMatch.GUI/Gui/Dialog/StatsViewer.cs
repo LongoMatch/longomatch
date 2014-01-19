@@ -42,8 +42,9 @@ namespace LongoMatch.Gui.Dialog
 				stats.Dispose();
 			stats = new ProjectStats (project);
 			categoriesviewer.LoadStats (stats);
-			playersviewer.LoadProject (project, stats);
 			gameviewer.LoadProject (project, stats);
+			/* Player stats are filtered */
+			playersviewer.LoadProject (project, new ProjectStats (project));
 		}
 	}
 }
