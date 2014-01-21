@@ -57,8 +57,8 @@ namespace LongoMatch.Gui.Component
 			leadtimebutton.ValueChanged += OnLeadTimeChanged;;
 			lagtimebutton.ValueChanged += OnLagTimeChanged;
 			fieldcoordinatestagger.Background = Config.FieldBackground.Value;
-			goalcoordinatestagger.Background = Config.HalfFieldBackground.Value;
-			halffieldcoordinatestagger.Background = Config.GoalBackground.Value;
+			halffieldcoordinatestagger.Background = Config.HalfFieldBackground.Value;
+			goalcoordinatestagger.Background = Config.GoalBackground.Value;
 		}
 		
 		public bool CanChangeHotkey {
