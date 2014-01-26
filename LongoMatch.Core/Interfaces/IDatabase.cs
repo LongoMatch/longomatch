@@ -27,11 +27,11 @@ namespace LongoMatch.Interfaces
 
 		Project GetProject(Guid id);
 		
-		void AddProject(Project project);
+		bool AddProject(Project project);
 		
-		void RemoveProject(Guid id);
+		bool RemoveProject(Guid id);
 		
-		void UpdateProject(Project project);
+		bool UpdateProject(Project project);
 		
 		bool Exists(Project project);
 		

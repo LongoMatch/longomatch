@@ -104,7 +104,7 @@ Xavier Queralt Mateu (ca)";
 		public const string HALF_FIELD_BACKGROUND = "half_field_background.svg";
 		public const string GOAL_BACKGROUND = "goal_background.svg";
 		
-		public const int DB_MAYOR_VERSION = 2;
+		public const int DB_MAYOR_VERSION = 3;
 		public const int DB_MINOR_VERSION = 1;
 	}
 }

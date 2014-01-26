@@ -14,7 +14,6 @@
     </Configuration>
   </Configurations>
   <Contents>
-    <File subtype="Code" buildaction="Compile" name="Services/DataBase.cs" />
     <File subtype="Code" buildaction="Compile" name="Services/TemplatesService.cs" />
     <File subtype="Code" buildaction="Compile" name="Services/RenderingJobsManager.cs" />
     <File subtype="Code" buildaction="Compile" name="Services/Core.cs" />
@@ -32,6 +31,7 @@
     <File subtype="Code" buildaction="Compile" name="Services/DataBaseManager.cs" />
     <File subtype="Code" buildaction="Compile" name="Services/MigrationsManager.cs" />
     <File subtype="Code" buildaction="Compile" name="Services/ToolsManager.cs" />
+    <File subtype="Code" buildaction="Compile" name="Services/FileDB.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

@@ -18,77 +18,256 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
 using LongoMatch.Store;
 
-namespace LongoMatch.Services
+namespace LongoMatch.DB
 {
-	public class FileDB: IDatabase
+	public class DataBase: IDatabase
 	{
-		const string DESC = "desc";
-		const string PROJECTS = "projects";
+		LiteDB projectsDB;
+		string dbDirPath;
+		string dbPath;
+		string dbName;
+		TimeSpan maxDaysWithoutBackup = new TimeSpan(5, 0, 0, 0);
 		
-		string desc_path;
-		string project_path;
-		
-		public FileDB (string filename)
+		public DataBase (string dbDirPath)
 		{
-			desc_path = Path.Combine(filename, DESC);
-			project_path = Path.Combine(filename, PROJECTS);
+			dbName = Path.GetFileNameWithoutExtension (dbDirPath);
+			dbPath = Path.Combine (dbDirPath, Path.GetFileName (dbDirPath));
+			this.dbDirPath = dbDirPath;
 			
-			if (!Directory.Exists(desc_path))
-				Directory.CreateDirectory(desc_path);
-			if (!Directory.Exists(project_path))
-				Directory.CreateDirectory(project_path);
-			
+			if (!Directory.Exists(dbDirPath)) {
+				Directory.CreateDirectory(dbDirPath);
+			}
+			if (File.Exists(dbDirPath)) {
+				try {
+					projectsDB = SerializableObject.Load<LiteDB> (dbDirPath);
+				}
+				catch  (Exception e){
+					Log.Exception (e);
+				}
+			}
+			if (projectsDB == null) {
+				ReloadDB ();
+			}
+			DateTime now = DateTime.UtcNow;
+			if (projectsDB.LastBackup + maxDaysWithoutBackup  < now) {
+				Backup ();
+			}
 		}
+				
+		/// <value>
+		/// The database version
+		/// </value>
+		public Version Version {
+			get {
+				return projectsDB.Version;
+			}
+			set {
+				projectsDB.Version = value;
+			}
+		}
+		
+		public string Name {
+			get {
+				return dbName;
+			}
+		}
+		
+		public DateTime LastBackup {
+			get {
+				return projectsDB.LastBackup;
+			}
+		}
+		
+		public int Count {
+			get {
+				return projectsDB.Projects.Count;
+			}
+		}
+		
+		public bool Exists (Project project) {
+			bool ret = false;
+			if (projectsDB.ProjectsDict.ContainsKey (project.UUID)) {
+				if (File.Exists (Path.Combine (dbDirPath, project.UUID.ToString()))) {
+					ret = true;
+				}
+			}
+			return ret;
+		}
+		
+		public bool Backup () {
+			DirectoryInfo backupDir, dbDir;
+			FileInfo[] files;
+			
+			dbDir = new DirectoryInfo (dbDirPath);
+			backupDir = new DirectoryInfo (dbDirPath + ".backup");
+			try {
+				if (backupDir.Exists) {
+					backupDir.Delete ();
+				}
+				backupDir.Create ();
+				files = dbDir.GetFiles ();
+				foreach (FileInfo file in files)
+				{
+					string temppath = Path.Combine (backupDir.FullName, file.Name);
+					file.CopyTo (temppath, false);
+				}
+				projectsDB.LastBackup = DateTime.Now;
+				projectsDB.Save ();
+				return true;
+			} catch (Exception ex) {
+				return false;
+			}
+		}
+		
+		public bool Delete () {
+			try {
+				Directory.Delete (dbDirPath, true);
+				return true;
+			} catch (Exception ex) {
+				Log.Exception (ex);
+				return false;
+			}
+		}
+		
 		
 		public List<ProjectDescription> GetAllProjects() {
-			List<ProjectDescription> list = new List<ProjectDescription>();
-			foreach (string path in Directory.GetFiles(desc_path)) {
-				if (File.Exists(Path.Combine(project_path, Path.GetFileName(path))))
-					list.Add(SerializableObject.Load<ProjectDescription>(path));
-			}
-			return list;
+			return projectsDB.Projects;
 		}
 
-		public Project GetProject(Guid id) {
-			string path = Path.Combine(project_path, id.ToString());
-			if (File.Exists(path))
-				return SerializableObject.Load<Project>(path);
+		public Project GetProject (Guid id) {
+			try {
+				string projectFile = Path.Combine (dbDirPath, id.ToString());
+				if (File.Exists (projectFile)) {
+					return SerializableObject.Load<Project> (projectFile);
+				}
+			} catch (Exception ex) {
+				Log.Exception (ex);
+			}
 			return null;
 		}
 		
-		public void AddProject(Project project){
-			string path = Path.Combine(project_path, project.UUID.ToString());
+		public bool AddProject(Project project){
+			string projectFile;
 			
+			try {
+				projectFile = Path.Combine (dbDirPath, project.UUID.ToString());
+				project.Description.LastModified = DateTime.Now;
+				projectsDB.Add (project.Description);
+				try {
+					if (File.Exists(projectFile))
+						File.Delete(projectFile);
+					SerializableObject.Save(project, projectFile);
+				} catch (Exception ex) {
+					Log.Exception (ex);
+					projectsDB.Delete (project.Description.UUID);
+				}
+				return true;
+			} catch (Exception ex) {
+				Log.Exception (ex);
+				return false;
+			}
+		}
+		
+		public bool RemoveProject(Guid id) {
+			string projectFile;
+			
+			projectFile = Path.Combine (dbDirPath, id.ToString());
+			try {
+				if (File.Exists (projectFile)) {
+					File.Delete (projectFile);
+				}
+				projectsDB.Delete (id);	
+				return true;
+			} catch (Exception ex) {
+				Log.Exception (ex);
+				return false;
+			}
+		}
+		
+		public bool UpdateProject (Project project) {
 			project.Description.LastModified = DateTime.Now;
-			if (File.Exists(path))
-				File.Delete(path);
-			SerializableObject.Save(project, path);
-			SerializableObject.Save(project.Description, Path.Combine(desc_path, project.UUID.ToString()));
+			return AddProject (project);
 		}
 		
-		public void RemoveProject(Guid id) {
-			string path = Path.Combine(project_path, id.ToString());
-			if (File.Exists(path))
-				File.Delete(path);
-				
-			path = Path.Combine(desc_path, id.ToString());
-			if (File.Exists(path))
-				File.Delete(path);
+		void ReloadDB () {
+			projectsDB = new LiteDB (dbPath);
+			DirectoryInfo dbDir = new DirectoryInfo (dbDirPath);
+			foreach (FileInfo file in dbDir.GetFiles ()) {
+				if (file.FullName == dbPath) {
+					continue;
+				}
+				try {
+					Project project = SerializableObject.Load<Project> (file.FullName);
+					projectsDB.Add (project.Description);
+				} catch (Exception ex) {
+					Log.Exception (ex);
+				}
+			}
+			projectsDB.Save ();
 		}
 		
-		public void UpdateProject(Project project) {
-			project.Description.LastModified = DateTime.Now;
-			AddProject(project);
+	}
+	
+	[Serializable]
+	class LiteDB
+	{
+		string dbPath;
+		
+		public LiteDB (string dbPath) {
+			this.dbPath = dbPath;
+			ProjectsDict = new Dictionary <Guid, ProjectDescription>();
+			Version = new System.Version (Constants.DB_MAYOR_VERSION,
+			                              Constants.DB_MINOR_VERSION);
+			LastBackup = DateTime.Now;
 		}
 		
-		public bool Exists(Project project) {
-			return File.Exists(Path.Combine(desc_path, project.UUID.ToString())) &&
-				File.Exists(Path.Combine(project_path, project.UUID.ToString()));
+		public LiteDB () { }
+		
+		public Version Version {get; set;}
+		
+		public Dictionary<Guid, ProjectDescription> ProjectsDict {get; set;}
+		
+		public DateTime LastBackup {get; set;}
+		
+		public List<ProjectDescription> Projects {
+			get {
+				return ProjectsDict.Select (d => d.Value).ToList();
+			}
+		}
+		
+		public bool Add (ProjectDescription desc) {
+			if (ProjectsDict.ContainsKey (desc.UUID)) {
+				ProjectsDict[desc.UUID] = desc;
+			} else {
+				ProjectsDict.Add (desc.UUID, desc);
+			}
+			return Save ();
+		}
+		
+		public bool Delete (Guid uuid) {
+			if (ProjectsDict.ContainsKey (uuid)) {
+				ProjectsDict.Remove (uuid);
+				return Save ();
+			}
+			return false;
+		}
+		
+		public bool Save () {
+			bool ret = false;
+			
+			try {
+				SerializableObject.Save (this, dbPath);
+				ret = true;
+			} catch (Exception ex) {
+				Log.Exception (ex);
+			}
+			return ret;
 		}
 	}
 }
