@@ -73,7 +73,7 @@ namespace LongoMatch.Common
 			if(!System.IO.File.Exists(filePath))
 				pl = new PlayList();
 			else
-				pl = SerializableObject.Load<PlayList>(filePath);
+				pl = SerializableObject.LoadSafe<PlayList>(filePath);
 			pl.Filename = filename;
 			return pl; 
 		}

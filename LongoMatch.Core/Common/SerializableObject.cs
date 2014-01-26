@@ -73,6 +73,19 @@ namespace LongoMatch.Common
 				return Load<T> (stream, type);
 			}
 		}
+		
+		public static T LoadSafe<T>(string filepath) {
+		
+			Stream stream = new FileStream (filepath, FileMode.Open,
+			                               FileAccess.Read, FileShare.Read);
+			using (stream) {
+				try {
+					return Load<T> (stream, SerializationType.Binary);
+				} catch {
+					return Load<T> (stream, SerializationType.Xml);
+				}
+			}
+		}
 	}
 }
 

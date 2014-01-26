@@ -184,7 +184,7 @@ namespace LongoMatch.Store.Templates
 		}
 
 		public static Categories Load(string filePath) {
-			return SerializableObject.Load<Categories>(filePath);
+			return SerializableObject.LoadSafe<Categories>(filePath);
 		}
 
 		public static Categories DefaultTemplate(int count) {

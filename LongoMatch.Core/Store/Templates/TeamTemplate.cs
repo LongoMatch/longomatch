@@ -87,7 +87,7 @@ namespace LongoMatch.Store.Templates
 		}
 
 		public static TeamTemplate Load(string filePath) {
-			return SerializableObject.Load<TeamTemplate>(filePath);
+			return SerializableObject.LoadSafe<TeamTemplate>(filePath);
 		}
 
 		public static TeamTemplate DefaultTemplate(int playersCount) {
