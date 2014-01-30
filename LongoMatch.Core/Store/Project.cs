@@ -81,7 +81,9 @@ namespace LongoMatch.Store
 				return description;
 			}
 			set {
-				value.UUID = UUID;
+				if (value != null) {
+					value.UUID = UUID;
+				}
 				description = value;
 			}
 		}

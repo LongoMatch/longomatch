@@ -61,7 +61,10 @@ namespace LongoMatch.Store.Templates
 					return Image.Deserialize(thumbnailBuf);
 				else return null;
 			} set {
-				thumbnailBuf = value.Serialize();
+				if (value == null)
+					thumbnailBuf = null;
+				else
+					thumbnailBuf = value.Serialize();
 			}
 		}
 		

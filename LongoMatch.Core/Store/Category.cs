@@ -159,39 +159,39 @@ namespace LongoMatch.Store
 		// this constructor is automatically called during deserialization
 		public Category(SerializationInfo info, StreamingContext context) {
 			_UUID = (Guid)info.GetValue("uuid", typeof(Guid));
-			Name = info.GetString("name");
+			Name = (string) info.GetValue("name", typeof(string));
 			Start = (Time)info.GetValue("start", typeof(Time));
 			Stop = (Time)info.GetValue("stop", typeof(Time));
 			HotKey = (HotKey)info.GetValue("hotkey", typeof(HotKey));
 			SubCategories = (List<ISubCategory>)info.GetValue("subcategories", typeof(List<ISubCategory>));
-			Position = info.GetInt32("position");
+			Position = (Int32) info.GetValue("position", typeof (Int32));
 			SortMethod = (SortMethodType)info.GetValue("sort_method", typeof(SortMethodType));
 			Color = Color.FromArgb(
 				ColorHelper.ShortToByte((ushort)info.GetValue("red", typeof(ushort))),
 				ColorHelper.ShortToByte((ushort)info.GetValue("green", typeof(ushort))),
 				ColorHelper.ShortToByte((ushort)info.GetValue("blue", typeof(ushort))));
 			try {
-				TagFieldPosition = info.GetBoolean("tagfieldpos");
+				TagFieldPosition = (bool) info.GetValue("tagfieldpos", typeof (bool));
 			} catch {
 				TagFieldPosition = true;
 			}
 			try {
-				TagHalfFieldPosition = info.GetBoolean("taghalffieldpos");
+				TagHalfFieldPosition =(bool) info.GetValue("taghalffieldpos", typeof (bool));
 			} catch {
 				TagHalfFieldPosition = false;
 			}
 			try {
-				TagGoalPosition = info.GetBoolean("taggoalpos");
+				TagGoalPosition = (bool) info.GetValue("taggoalpos", typeof (bool));
 			} catch {
 				TagGoalPosition = false;
 			}
 			try {
-				FieldPositionIsDistance = info.GetBoolean("fieldposisdist");
+				FieldPositionIsDistance =(bool) info.GetValue("fieldposisdist", typeof (bool));
 			} catch {
 				FieldPositionIsDistance = false;
 			}
 			try {
-				HalfFieldPositionIsDistance = info.GetBoolean("halffieldposisdist");
+				HalfFieldPositionIsDistance =(bool) info.GetValue("halffieldposisdist", typeof (bool));
 			} catch {
 				HalfFieldPositionIsDistance = false;
 			}

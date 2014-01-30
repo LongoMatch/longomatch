@@ -37,7 +37,7 @@ namespace LongoMatch.Common
 				return false;
 			
 			for (int i=0; i<Count; i++) {
-				if (c[i].X != this[i].X || c[i].Y != this[i].X)
+				if (c[i] != this[i])
 					return false;
 			}
 			return true;
@@ -75,6 +75,20 @@ namespace LongoMatch.Common
 		public override string ToString ()
 		{
 			return string.Format ("[Point: X={0}, Y={1}]", X, Y);
+		}
+		
+		public override bool Equals (object obj)
+		{
+			Point p = obj as Point;
+			if (p == null)
+				return false;
+				
+			return p.X == X && p.Y == Y;
+		}
+		
+		public override int GetHashCode ()
+		{
+			return (X.ToString() + "-" + Y.ToString()).GetHashCode();
 		}
 	}
 }

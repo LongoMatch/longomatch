@@ -43,9 +43,9 @@ namespace LongoMatch.DB
 			if (!Directory.Exists(dbDirPath)) {
 				Directory.CreateDirectory(dbDirPath);
 			}
-			if (File.Exists(dbDirPath)) {
+			if (File.Exists(dbPath)) {
 				try {
-					projectsDB = SerializableObject.Load<LiteDB> (dbDirPath);
+					projectsDB = SerializableObject.Load<LiteDB> (dbPath);
 				}
 				catch  (Exception e){
 					Log.Exception (e);
@@ -182,8 +182,7 @@ namespace LongoMatch.DB
 				if (File.Exists (projectFile)) {
 					File.Delete (projectFile);
 				}
-				projectsDB.Delete (id);	
-				return true;
+				return projectsDB.Delete (id);
 			} catch (Exception ex) {
 				Log.Exception (ex);
 				return false;
