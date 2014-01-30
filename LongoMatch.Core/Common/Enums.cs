@@ -21,6 +21,12 @@ using System;
 namespace LongoMatch.Common
 {
 
+	public enum SerializationType {
+		Binary,
+		Xml,
+		Json
+	}
+		
 
 	public enum ProjectType {
 		CaptureProject,

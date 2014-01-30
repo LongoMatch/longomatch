@@ -17,6 +17,7 @@
 //
 
 using System;
+using Newtonsoft.Json;
 using LongoMatch.Store;
 
 namespace LongoMatch.Store
@@ -39,6 +40,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Title of the project
 		/// </summary>
+		[JsonIgnore]
 		public String Title {
 			get {
 				if (File == null)
@@ -115,6 +117,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// String representing the video format like "widhtxheight@fps"
 		/// </summary>
+		[JsonIgnore]
 		public String Format {
 			get {
 				if (File == null)

@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mono.Unix;
+using Newtonsoft.Json;
 
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
@@ -40,6 +41,7 @@ namespace LongoMatch.Store
 	/// Goal category to extends its tags.
 	/// </summary>
 	[Serializable]
+	[JsonObject]
 	public class SubCategory<T>: List<T>, ISubCategory
 	{
 

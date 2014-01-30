@@ -24,6 +24,7 @@ using System.Linq;
 using Mono.Unix;
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Store
 {
@@ -78,6 +79,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Start frame number
 		/// </summary>
+		[JsonIgnore]
 		public uint StartFrame {
 			get {
 				return (uint)(Start.MSeconds * Fps / 1000);
@@ -90,6 +92,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Stop frame number
 		/// </summary>
+		[JsonIgnore]
 		public uint StopFrame {
 			get {
 				return (uint)(Stop.MSeconds * Fps / 1000);
@@ -102,6 +105,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Get the key frame number if this play as key frame drawing or 0
 		/// </summary>
+		[JsonIgnore]
 		public uint KeyFrame {
 			get {
 				if(HasDrawings)
@@ -127,6 +131,7 @@ namespace LongoMatch.Store
 		}
 
 		/* FIXME: Keep this until we support multiple drawings */
+		[JsonIgnore]
 		public Drawing KeyFrameDrawing {
 			get {
 				if(Drawings.Count > 0)
@@ -144,6 +149,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Get wether the play has at least a frame drawing
 		/// </summary>
+		[JsonIgnore]
 		public bool HasDrawings {
 			get {
 				return Drawings.Count > 0;
@@ -153,6 +159,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Central frame number using (stopFrame-startFrame)/2
 		/// </summary>
+		[JsonIgnore]
 		public uint CentralFrame {
 			get {
 				return StopFrame-((TotalFrames)/2);
@@ -162,6 +169,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Number of frames inside the play's boundaries
 		/// </summary>
+		[JsonIgnore]
 		public uint TotalFrames {
 			get {
 				return StopFrame-StartFrame;

@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using Newtonsoft.Json;
 
 using Mono.Unix;
 using LongoMatch.Common;
@@ -40,6 +41,7 @@ namespace LongoMatch.Store.Templates
 	/// The <see cref="LongoMatch.DB.Project"/> must handle all the changes
 	/// </summary>
 	[Serializable]
+	[JsonObject]
 	public class Categories: List<Category>, ITemplate, ITemplate<Category>
 	{
 		/* Database additions */
@@ -84,8 +86,11 @@ namespace LongoMatch.Store.Templates
 		}
 		
 		/* Keep this for backwards compatiblity with 0.18.11 */
+		[JsonIgnore]
 		public Image FieldBackgroundImage {get;	set;}
+		[JsonIgnore]
 		public Image HalfFieldBackgroundImage {get; set;}
+		[JsonIgnore]
 		public Image GoalBackgroundImage {get; set;}
 
 		public Image FieldBackground {

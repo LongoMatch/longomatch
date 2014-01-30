@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using LongoMatch.Store;
 
 namespace LongoMatch.Store
@@ -66,6 +67,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Duration (stop_time - start_time)
 		/// </summary>
+		[JsonIgnore]
 		public Time Duration {
 			get {
 				return Stop-Start;

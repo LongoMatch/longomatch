@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mono.Unix;
+using Newtonsoft.Json;
 
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
@@ -27,7 +28,7 @@ using LongoMatch.Interfaces;
 namespace LongoMatch.Store.Templates
 {
 	[Serializable]
-
+	[JsonObject]
 	public class TeamTemplate: List<Player>, ITemplate<Player>
 	{
 		private byte[] thumbnailBuf;

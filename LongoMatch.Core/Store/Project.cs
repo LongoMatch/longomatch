@@ -22,12 +22,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
+using Mono.Unix;
 
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
-using Mono.Unix;
 
 namespace LongoMatch.Store
 {
@@ -47,8 +48,10 @@ namespace LongoMatch.Store
 	public class Project : IComparable
 	{
 
+		[JsonProperty ("UUID")]
 		readonly Guid _UUID;
 		ProjectDescription description;
+		[JsonProperty ("Timeline")]
 		List<Play> timeline;
 
 		#region Constructors
@@ -66,6 +69,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Unique ID for the project
 		/// </summary>
+		[JsonIgnore]
 		public Guid UUID {
 			get {
 				return _UUID;
@@ -115,6 +119,7 @@ namespace LongoMatch.Store
 			}
 		}
 		
+		[JsonIgnore]
 		public IEnumerable<IGrouping<Category, Play>> PlaysGroupedByCategory {
 			get {
 				return timeline.GroupBy(play => play.Category);

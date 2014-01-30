@@ -23,6 +23,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Mono.Unix;
+using Newtonsoft.Json;
 
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
@@ -38,6 +39,7 @@ namespace LongoMatch.Store
 	public class Category:TimeNode, ISerializable
 	{
 
+		[JsonProperty ("UUID")]
 		private Guid _UUID;
 
 		#region Constructors
@@ -54,6 +56,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Unique ID for this category
 		/// </summary>
+		[JsonIgnore]
 		public Guid UUID {
 			get {
 				return _UUID;
@@ -125,6 +128,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Sort method string used for the UI
 		/// </summary>
+		[JsonIgnore]
 		public string SortMethodString {
 			get {
 				switch(SortMethod) {

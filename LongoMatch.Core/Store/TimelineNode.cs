@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
+using Newtonsoft.Json;
 using LongoMatch.Interfaces;
 
 namespace LongoMatch.Store
@@ -42,6 +43,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Start frame number
 		/// </summary>
+		[JsonIgnore]
 		public uint StartFrame {
 			get {
 				return (uint)(Start.MSeconds * Fps / 1000);
@@ -54,6 +56,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Stop frame number
 		/// </summary>
+		[JsonIgnore]
 		public uint StopFrame {
 			get {
 				return (uint)(Stop.MSeconds * Fps / 1000);
@@ -74,6 +77,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Central frame number using (stopFrame-startFrame)/2
 		/// </summary>
+		[JsonIgnore]
 		public uint CentralFrame {
 			get {
 				return StopFrame-((TotalFrames)/2);
@@ -83,6 +87,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Number of frames inside the play's boundaries
 		/// </summary>
+		[JsonIgnore]
 		public uint TotalFrames {
 			get {
 				return StopFrame-StartFrame;

@@ -33,7 +33,7 @@ namespace LongoMatch
 			if (File.Exists(Config.ConfigFile)) {
 				Log.Information ("Loading config from " + Config.ConfigFile);
 				try {
-					state = SerializableObject.Load<ConfigState>(Config.ConfigFile, SerializableObject.SerializationType.Xml);
+					state = SerializableObject.LoadSafe<ConfigState>(Config.ConfigFile);
 				} catch (Exception ex) {
 					Log.Error ("Error loading config");
 					Log.Exception (ex);
@@ -49,7 +49,7 @@ namespace LongoMatch
 		
 		public static void Save () {
 			try {
-				SerializableObject.Save(state, Config.ConfigFile, SerializableObject.SerializationType.Xml); 
+				SerializableObject.Save(state, Config.ConfigFile); 
 			} catch (Exception ex) {
 				Log.Error ("Errro saving config");
 				Log.Exception (ex);

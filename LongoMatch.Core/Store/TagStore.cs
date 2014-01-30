@@ -18,6 +18,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
+
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
 using LongoMatch.Store;
@@ -25,6 +27,7 @@ using LongoMatch.Store;
 namespace LongoMatch.Store
 {
 	[Serializable]
+	[JsonObject (MemberSerialization = MemberSerialization.OptIn)]
 	public class TagsStore<T, W> where T:ITag<W>
 	{
 		protected List<T> tagsList;
@@ -33,6 +36,7 @@ namespace LongoMatch.Store
 			tagsList = new List<T>();
 		}
 		
+		[JsonProperty ("Tags")]
 		public List<T> Tags {
 			get{
 				return tagsList;
