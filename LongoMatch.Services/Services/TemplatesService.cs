@@ -35,7 +35,6 @@ namespace LongoMatch.Services
 		private Dictionary<Type, ITemplateProvider> dict;
 		private List<PlayerSubCategory> playerSubcatList;
 		private List<TeamSubCategory> teamSubcatList;
-		private List<CoordinatesSubCategory> coordinatesSubcatList;
 		
 		public TemplatesService (string basePath)
 		{
@@ -46,8 +45,6 @@ namespace LongoMatch.Services
 			CheckDefaultTemplates();
 			CreateDefaultPlayerSubCategories();
 			CreateDefaultTeamSubCategories();
-			CreateDefaultCoordinatesSubCategories();
-			
 		}
 		
 		private void CheckDefaultTemplates () {
@@ -79,20 +76,6 @@ namespace LongoMatch.Services
 			playerSubcatList.Add(subcat);
 		}
 		
-		private void CreateDefaultCoordinatesSubCategories () {
-			CoordinatesSubCategory subcat;
-			
-			coordinatesSubcatList = new List<CoordinatesSubCategory>();
-			
-			/* Position */
-			subcat = new CoordinatesSubCategory {Name=Catalog.GetString("Position"), FastTag=true, NumCoordinates=1};
-			coordinatesSubcatList.Add(subcat);
-
-			/* Trajectory */
-			subcat = new CoordinatesSubCategory {Name=Catalog.GetString("Trajectory"), FastTag=true, NumCoordinates=2};
-			coordinatesSubcatList.Add(subcat);
-		}
-
 		private void CreateDefaultTeamSubCategories () {
 			teamSubcatList = new List<TeamSubCategory>();
 			teamSubcatList.Add(new TeamSubCategory());
@@ -131,12 +114,6 @@ namespace LongoMatch.Services
 		public List<TeamSubCategory> TeamSubcategories {
 			get{
 				return teamSubcatList;
-			}
-		}
-		
-		public List<CoordinatesSubCategory> CoordinatesSubcategories {
-			get{
-				return coordinatesSubcatList;
 			}
 		}
 	}

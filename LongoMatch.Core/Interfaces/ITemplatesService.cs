@@ -35,8 +35,6 @@ namespace LongoMatch.Interfaces
 		List<PlayerSubCategory> PlayerSubcategories {get;}
 		
 		List<TeamSubCategory> TeamSubcategories {get;}
-		
-		List<CoordinatesSubCategory> CoordinatesSubcategories {get;}
 	}
 }
 

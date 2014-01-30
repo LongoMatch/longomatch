@@ -70,11 +70,10 @@ namespace LongoMatch.Gui.Component
 		
 		public void LoadSubcategories(ITemplatesService ts) {
 			subcategoriesProvider = ts.SubCategoriesTemplateProvider;
-			LoadSubcategories(ts.PlayerSubcategories, ts.CoordinatesSubcategories);
+			LoadSubcategories(ts.PlayerSubcategories);
 		}
 		
-		private void LoadSubcategories(List<PlayerSubCategory> playerSubcategories,
-		                               List<CoordinatesSubCategory> coordinatesSubcategories) {
+		private void LoadSubcategories(List<PlayerSubCategory> playerSubcategories) {
 			model = new ListStore(typeof(string), typeof(ISubCategory));
 			
 			model.AppendValues(Catalog.GetString("Create new..."), "");
@@ -92,13 +91,6 @@ namespace LongoMatch.Gui.Component
 				                                 subcat.Name),
 				                   subcat);
 			}
-			/*foreach (CoordinatesSubCategory subcat in coordinatesSubcategories) {
-				Log.Debug("Adding coordinates subcategory: ", subcat.Name);
-				model.AppendValues(String.Format("[{0}] {1}", 
-				                                 Catalog.GetString("Coordinates"),
-				                                 subcat.Name),
-				                   subcat);
-			}*/
 			
 			subcatcombobox.Model = model;
 			var cell = new CellRendererText();
