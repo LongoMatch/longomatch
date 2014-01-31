@@ -135,6 +135,8 @@ namespace Tests.Services
 			Assert.IsTrue (File.Exists (Path.Combine (dbdir, p1.UUID.ToString())));
 			Assert.IsTrue (db.AddProject (p1));
 			Assert.AreEqual (db.Count, 1);
+			db = new DataBase (dbdir);
+			Assert.AreEqual (db.Count, 1);
 		}
 		
 		[Test()]
@@ -151,6 +153,8 @@ namespace Tests.Services
 			Assert.IsFalse (File.Exists (Path.Combine (dbdir, p1.UUID.ToString())));
 			Assert.AreEqual (db.Count, 0);
 			Assert.IsFalse (db.RemoveProject (p1.UUID));
+			db = new DataBase (dbdir);
+			Assert.AreEqual (db.Count, 0);
 		}
 		
 		[Test()]
