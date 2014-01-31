@@ -434,6 +434,8 @@ gst_video_encoder_select_next_file (GstVideoEncoder *gve)
     gst_video_encoder_create_source (gve, (gchar *) gve->priv->current_file->data);
   } else {
     GST_INFO_OBJECT (gve, "No more files, sending EOS");
+    g_source_remove (gve->priv->update_id);
+    gve->priv->update_id = 0;
     /* Enlarge queues to avoid deadlocks */
     g_object_set (gve->priv->aqueue, "max-size-time", 0,
         "max-size-bytes", 0, "max-size-buffers", 0, NULL);
