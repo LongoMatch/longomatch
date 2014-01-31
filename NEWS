@@ -1,3 +1,10 @@
+===== LongoMatch 0.20.2 "Ita" =====
+
+	== Bugs fixed ==
+
+	* Fix order of background images in the categories template
+	* Fix segfault using the encoder
+
 ===== LongoMatch 0.20.1 "Create" =====
 
 	== Bugs fixed ==
