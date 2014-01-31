@@ -117,6 +117,11 @@ gst_video_encoder_finalize (GObject * object)
 {
   GstVideoEncoder *gve = (GstVideoEncoder *) object;
 
+  if (gve->priv->update_id != 0) {
+    g_source_remove (gve->priv->update_id);
+    gve->priv->update_id = 0;
+  }
+
   GST_DEBUG_OBJECT (gve, "Finalizing.");
   if (gve->priv->bus) {
     /* make bus drop all messages to make sure none of our callbacks is ever
@@ -146,11 +151,6 @@ gst_video_encoder_finalize (GObject * object)
     gst_element_set_state (gve->priv->main_pipeline, GST_STATE_NULL);
     gst_object_unref (gve->priv->main_pipeline);
     gve->priv->main_pipeline = NULL;
-  }
-
-  if (gve->priv->update_id != 0) {
-    g_source_remove (gve->priv->update_id);
-    gve->priv->update_id = 0;
   }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -434,8 +434,10 @@ gst_video_encoder_select_next_file (GstVideoEncoder *gve)
     gst_video_encoder_create_source (gve, (gchar *) gve->priv->current_file->data);
   } else {
     GST_INFO_OBJECT (gve, "No more files, sending EOS");
-    g_source_remove (gve->priv->update_id);
-    gve->priv->update_id = 0;
+    if (gve->priv->update_id != 0) {
+      g_source_remove (gve->priv->update_id);
+      gve->priv->update_id = 0;
+    }
     /* Enlarge queues to avoid deadlocks */
     g_object_set (gve->priv->aqueue, "max-size-time", 0,
         "max-size-bytes", 0, "max-size-buffers", 0, NULL);
