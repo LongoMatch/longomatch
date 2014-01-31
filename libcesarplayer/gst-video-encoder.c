@@ -137,7 +137,7 @@ gst_video_encoder_finalize (GObject * object)
 
   if (gve->priv->input_files) {
     g_list_foreach (gve->priv->input_files, (GFunc) g_free, NULL);
-    g_free (gve->priv->input_files);
+    g_list_free (gve->priv->input_files);
     gve->priv->input_files = NULL;
   }
 
