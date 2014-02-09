@@ -79,8 +79,8 @@ namespace LongoMatch.Gui.Component
 				Config.FPS_N = 25;
 				Config.FPS_D = 1;
 			} else {
-				Config.FPS_N = 30000;
-				Config.FPS_D = 1001;
+				Config.FPS_N = 30;
+				Config.FPS_D = 1;
 			}
 		}
 
