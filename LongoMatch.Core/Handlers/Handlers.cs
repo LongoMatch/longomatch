@@ -56,9 +56,11 @@ namespace LongoMatch.Handlers
 	public delegate void SaveProjectHandler(Project project, ProjectType projectType);
 	public delegate void OpenedProjectChangedHandler(Project project, ProjectType projectType, PlaysFilter filter,
 	                                                 IAnalysisWindow analysisWindow, IProjectOptionsController projectOptions);
+	public delegate void OpenProjectIDHandler(Guid project_id);
 	public delegate void OpenProjectHandler();
 	public delegate void CloseOpenendProjectHandler();
 	public delegate void NewProjectHandler();
+	public delegate void OpenNewProjectHandler(Project project, ProjectType projectType, CaptureSettings captureSettings);
 	public delegate void ImportProjectHandler(string name, string filterName, string filter,
 	                                          Func <string, Project> importProjectFunc, bool requiresNewFile);
 	public delegate void ExportProjectHandler();
@@ -131,6 +133,7 @@ namespace LongoMatch.Handlers
 	
 	/* A list of projects have been selected */
 	public delegate void ProjectsSelectedHandler(List<ProjectDescription> projects);
+	public delegate void ProjectSelectedHandler(ProjectDescription project);
 	
 	/* Start/Stop/Cancel game units */
 	public delegate void GameUnitHandler(GameUnit gameUnit, GameUnitEventType eType);
@@ -155,4 +158,6 @@ namespace LongoMatch.Handlers
 	public delegate void AnalysisWidgetsVisibilityHandler (bool visible);
 	public delegate void AnalysisModeChangedHandler (VideoAnalysisMode mode);
 	public delegate void TagSubcategoriesChangedHandler (bool tagsubcategories);
+	
+	public delegate void BackEventHandle ();
 }

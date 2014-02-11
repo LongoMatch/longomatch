@@ -48,7 +48,6 @@ namespace LongoMatch.Gui.Dialog
 			this.fromfileradiobutton = new global::Gtk.RadioButton (global::Mono.Unix.Catalog.GetString ("New project using a video file"));
 			this.fromfileradiobutton.CanFocus = true;
 			this.fromfileradiobutton.Name = "fromfileradiobutton";
-			this.fromfileradiobutton.Active = true;
 			this.fromfileradiobutton.DrawIndicator = true;
 			this.fromfileradiobutton.UseUnderline = true;
 			this.fromfileradiobutton.FocusOnClick = false;

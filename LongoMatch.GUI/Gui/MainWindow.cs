@@ -36,6 +36,8 @@ using LongoMatch.Store.Templates;
 using LongoMatch.Video.Common;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Helpers;
+using LongoMatch.Gui.Panel;
+using LongoMatch.Interfaces.Multimedia;
 
 
 namespace LongoMatch.Gui
@@ -46,7 +48,9 @@ namespace LongoMatch.Gui
 	{
 		/* IMainController */
 		public event NewProjectHandler NewProjectEvent;
+		public event OpenNewProjectHandler OpenNewProjectEvent;
 		public event OpenProjectHandler OpenProjectEvent;
+		public event OpenProjectIDHandler OpenProjectIDEvent;
 		public event ImportProjectHandler ImportProjectEvent;
 		public event ExportProjectHandler ExportProjectEvent;
 		public event QuitApplicationHandler QuitApplicationEvent;
@@ -82,6 +86,8 @@ namespace LongoMatch.Gui
 			
 			this.Build();
 			this.guiToolKit = guiToolkit;
+			welcomepanel1.Bind (this);
+			
 			Title = Constants.SOFTWARE_NAME;
 			TagSubcategoriesAction.Active = !Config.FastTagging;
 			projectType = ProjectType.None;
@@ -109,6 +115,21 @@ namespace LongoMatch.Gui
 		public IRenderingStateBar RenderingStateBar{
 			get {
 				return renderingstatebar1;
+			}
+		}
+		
+		public void SetPanel (Widget panel) {
+			if (panel == null) {
+				ResetGUI ();
+			} else {
+				foreach (Widget widget in centralbox.AllChildren) {
+					if (widget != welcomepanel1) {
+						centralbox.Remove (widget);
+					}
+				}
+				panel.Show();
+				centralbox.PackStart (panel, true, true, 0);
+				welcomepanel1.Hide ();
 			}
 		}
 		
@@ -144,8 +165,7 @@ namespace LongoMatch.Gui
 			}
 			MakeActionsSensitive(true, projectType);
 			analysisWindow.SetProject (project, projectType, props, filter);
-			(analysisWindow as Gtk.Widget).Show();
-			centralbox.PackStart (analysisWindow as Gtk.Widget, true, true, 0);
+			SetPanel (analysisWindow as Widget);
 			return analysisWindow;
 		}
 		
@@ -156,6 +176,21 @@ namespace LongoMatch.Gui
 			ResetGUI ();
 		}
 		
+		public void SelectProject (List<ProjectDescription> projects) {
+			OpenProjectPanel panel  = new OpenProjectPanel ();
+			panel.Projects = projects;
+			panel.BackEvent += ResetGUI;
+			panel.OpenProjectEvent += EmitOpenProjectID;
+			SetPanel (panel);
+		}
+		
+		public void CreateNewProject (ITemplatesService tps, IMultimediaToolkit mtoolkit, Project project) {
+			NewProjectPanel panel = new NewProjectPanel (tps, guiToolKit, mtoolkit, project);
+			panel.CancelEvent += ResetGUI;
+			panel.OpenNewProjectEvent += EmitOpenNewProject;
+			SetPanel (panel);
+		}
+
 		#endregion
 		
 		#region Private Methods
@@ -188,6 +223,12 @@ namespace LongoMatch.Gui
 		private void ResetGUI() {
 			Title = Constants.SOFTWARE_NAME;
 			MakeActionsSensitive(false, projectType);
+			foreach (Widget widget in centralbox.AllChildren) {
+				if (widget != welcomepanel1) {
+					centralbox.Remove (widget);
+				}
+			}
+			welcomepanel1.Show ();
 		}
 
 		private void MakeActionsSensitive(bool sensitive, ProjectType projectType) {
@@ -223,14 +264,12 @@ namespace LongoMatch.Gui
 		#region File
 		protected virtual void OnNewActivated(object sender, System.EventArgs e)
 		{
-			if (NewProjectEvent != null)
-				NewProjectEvent();
+			EmitNewProject();
 		}
 
 		protected virtual void OnOpenActivated(object sender, System.EventArgs e)
 		{
-			if(OpenProjectEvent != null)
-				OpenProjectEvent();
+			EmitOpenProject();
 		}
 		#endregion
 		
@@ -335,59 +374,83 @@ namespace LongoMatch.Gui
 
 		#region Events
 		
-		private void EmitEditPreferences ()
+		public void EmitNewProject () {
+			if (NewProjectEvent != null)
+				NewProjectEvent();
+		}
+		
+		public void EmitOpenProject () {
+			if(OpenProjectEvent != null)
+				OpenProjectEvent();
+		}
+				
+		public void EmitEditPreferences ()
 		{
 			if (EditPreferencesEvent != null)
 				EditPreferencesEvent();
 		}
 		
-		private void EmitSaveProject() {
-			if (SaveProjectEvent != null)
-				SaveProjectEvent(openedProject, projectType);
-		}
-		
-		private void EmitCloseOpenedProject() {
-			if (CloseOpenedProjectEvent != null)
-				CloseOpenedProjectEvent ();
-		}
-		
-		private void EmitImportProject(string name, string filterName, string filter,
-		                               Func<string, Project> func, bool requiresNewFile) {
-			if (ImportProjectEvent != null)
-				ImportProjectEvent(name, filterName, filter, func, requiresNewFile);
-		}
-		
-		private void EmitExportProject() {
-			if(ExportProjectEvent != null)
-				ExportProjectEvent();
-		}
-		
-		private void EmitManageJobs() {
+		public void EmitManageJobs() {
 			if(ManageJobsEvent != null)
 				ManageJobsEvent();
 		}
 		
-		private void EmitManageTeams() {
+		public void EmitManageTeams() {
 			if(ManageTeamsEvent != null)
 				ManageTeamsEvent();
 		}
 		
-		private void EmitManageCategories() {
-			if(ManageCategoriesEvent != null)
-				ManageCategoriesEvent();
-		}
-		
-		private void EmitManageProjects()
+		public void EmitManageProjects()
 		{
 			if (ManageProjectsEvent != null)
 				ManageProjectsEvent();
 		}
 		
-		private void EmitManageDatabases()
+		public void EmitManageDatabases()
 		{
 			if (ManageDatabasesEvent != null)
 				ManageDatabasesEvent();
 		}
+		
+		public void EmitManageCategories() {
+			if(ManageCategoriesEvent != null)
+				ManageCategoriesEvent();
+		}
+		
+		void EmitSaveProject() {
+			if (SaveProjectEvent != null)
+				SaveProjectEvent(openedProject, projectType);
+		}
+		
+		void EmitCloseOpenedProject() {
+			if (CloseOpenedProjectEvent != null)
+				CloseOpenedProjectEvent ();
+		}
+		
+		void EmitImportProject(string name, string filterName, string filter,
+		                               Func<string, Project> func, bool requiresNewFile) {
+			if (ImportProjectEvent != null)
+				ImportProjectEvent(name, filterName, filter, func, requiresNewFile);
+		}
+		
+		void EmitExportProject() {
+			if(ExportProjectEvent != null)
+				ExportProjectEvent();
+		}
+		
+		void EmitOpenProjectID (Guid projectID ) {
+			if (OpenProjectIDEvent != null) {
+				OpenProjectIDEvent (projectID);
+			}
+		}
+		
+		void EmitOpenNewProject (Project project, ProjectType projectType, CaptureSettings captureSettings)
+		{
+			if (OpenNewProjectEvent != null) {
+				OpenNewProjectEvent (project, projectType, captureSettings);
+			}
+		}
+		
 		#endregion
 	}
 }

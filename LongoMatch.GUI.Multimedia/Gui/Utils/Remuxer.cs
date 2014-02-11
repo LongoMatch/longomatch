@@ -61,7 +61,7 @@ namespace LongoMatch.Video.Utils
 				}
 
 			}
-			this.multimedia = new MultimediaFactory();
+			this.multimedia = new MultimediaToolkit();
 		}
 		
 		public string Remux(Window parent) {

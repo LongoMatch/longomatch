@@ -58,6 +58,7 @@ namespace LongoMatch.Gui.Component
 			this.circlebutton = new global::Gtk.RadioButton ("");
 			this.circlebutton.CanFocus = true;
 			this.circlebutton.Name = "circlebutton";
+			this.circlebutton.Active = true;
 			this.circlebutton.DrawIndicator = false;
 			this.circlebutton.UseUnderline = true;
 			this.circlebutton.Group = new global::GLib.SList (global::System.IntPtr.Zero);

@@ -29,6 +29,7 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.PlayerCapturerBin.cs" />
     <File subtype="Directory" buildaction="Compile" name="Gui/Utils" />
     <File subtype="Code" buildaction="Compile" name="Gui/Utils/Remuxer.cs" />
+    <File subtype="Code" buildaction="Compile" name="MultimediaToolkit.cs" />
   </Contents>
   <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="Makefile.am" RelativeConfigureInPath="../">
     <BuildFilesVar Name="FILES" />

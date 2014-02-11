@@ -63,7 +63,7 @@ namespace LongoMatch.Gui
 				/* Close any previous instance of the capturer */
 				Close();
 
-				MultimediaFactory factory = new MultimediaFactory();
+				MultimediaToolkit factory = new MultimediaToolkit();
 				capturer = factory.GetCapturer(value);
 				capturer.EllapsedTime += OnTick;
 				if(value != CapturerType.Fake) {

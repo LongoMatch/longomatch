@@ -55,6 +55,8 @@ namespace LongoMatch.Services
 		public void ConnectSignals() {
 			mainController.NewProjectEvent += NewProject;
 			mainController.OpenProjectEvent += OpenProject;
+			mainController.OpenProjectIDEvent += OpenProjectID;
+			mainController.OpenNewProjectEvent += OpenNewProject;
 		}
 		
 		public Project OpenedProject {
@@ -327,55 +329,33 @@ namespace LongoMatch.Services
 		}
 		
 		protected virtual void NewProject() {
-			Project project;
-			ProjectType projectType;
-			CaptureSettings captureSettings = new CaptureSettings();
-
 			Log.Debug("Creating new project");
 			
 			if (!PromptCloseProject ()) {
 				return;
 			}
 			
-			/* Show the project selection dialog */
-			projectType = guiToolkit.SelectNewProjectType();
-			
-			if(projectType == ProjectType.CaptureProject) {
-				List<Device> devices = multimediaToolkit.VideoDevices;
-				if(devices.Count == 0) {
-					guiToolkit.ErrorMessage(Catalog.GetString("No capture devices were found."));
-					return;
-				}
-				project = guiToolkit.NewCaptureProject(Core.DB, ts, devices, out captureSettings);
-			} else if (projectType == ProjectType.FakeCaptureProject) {
-				project = guiToolkit.NewFakeProject(Core.DB, ts);
-			} else if (projectType == ProjectType.FileProject) {
-				project = guiToolkit.NewFileProject(Core.DB, ts);
-				if (project != null)
-					Core.DB.AddProject(project);
-			} else if (projectType == ProjectType.URICaptureProject) {
-				project = guiToolkit.NewURICaptureProject(Core.DB, ts, out captureSettings);
-			} else {
-				project = null;
-			}
-			
+			guiToolkit.CreateNewProject (ts, multimediaToolkit);
+		}
+		
+		protected void OpenNewProject (Project project, ProjectType projectType,
+		                               CaptureSettings captureSettings)
+		{
 			if (project != null)
 				SetProject(project, projectType, captureSettings);
 		}
 		
 		protected void OpenProject() {
-			Project project = null;
-			ProjectDescription projectDescription = null;
-			
 			if (!PromptCloseProject ()) {
 				return;
 			}
+			guiToolkit.SelectProject(Core.DB.GetAllProjects());
+		}
+		
+		protected void OpenProjectID (Guid projectID) {
+			Project project = null;
 			
-			projectDescription = guiToolkit.SelectProject(Core.DB.GetAllProjects());
-			if (projectDescription == null)
-				return;
-
-			project = Core.DB.GetProject(projectDescription.UUID);
+			project = Core.DB.GetProject(projectID);
 
 			if (project.Description.File.FilePath == Constants.FAKE_PROJECT) {
 				/* If it's a fake live project prompt for a video file and
@@ -387,7 +367,7 @@ namespace LongoMatch.Services
 					Catalog.GetString("You are opening a live project without any video file associated yet.") +
 					"\n" + Catalog.GetString("Select a video file in the next step."));
 				
-				project = guiToolkit.EditFakeProject(Core.DB, project, ts);
+				guiToolkit.CreateNewProject (ts, multimediaToolkit, project);
 				if (project == null)
 					return;
 				ToolsManager.CreateThumbnails(project, guiToolkit, multimediaToolkit.GetFramesCapturer());

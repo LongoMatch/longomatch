@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Mono.Unix;
 using Gtk;
 
@@ -39,114 +40,86 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class ProjectListWidget : Gtk.Bin
 	{
-
-		private Gtk.ListStore projectsListStore;
-		private List<ProjectDescription> projectsList;
-		private TreeModelFilter filter;
 		public event ProjectsSelectedHandler ProjectsSelected;
-
+		public event ProjectSelectedHandler ProjectSelected;
+		
+		const int COL_DISPLAY_NAME = 0;
+		const int COL_PIXBUF = 1;
+		const int COL_PROJECT_DESCRIPTION = 2;
+		TreeModelFilter filter;
+		List<ProjectDescription> projects;
+		ListStore store;
 
 		public ProjectListWidget()
 		{
 			this.Build();
-			projectsListStore = new Gtk.ListStore(typeof(Project));
-
-			Gtk.TreeViewColumn fileDescriptionColumn = new Gtk.TreeViewColumn();
-			fileDescriptionColumn.Title = Catalog.GetString("Filename");
-			Gtk.CellRendererText filenameCell = new Gtk.CellRendererText();
-			Gtk.CellRendererText filePropertiesCell = new Gtk.CellRendererText();
-			Gtk.CellRendererPixbuf miniatureCell = new Gtk.CellRendererPixbuf();
-			fileDescriptionColumn.PackStart(miniatureCell,false);
-			fileDescriptionColumn.PackStart(filenameCell, true);
-			fileDescriptionColumn.PackStart(filePropertiesCell, true);
-
-			fileDescriptionColumn.SetCellDataFunc(filenameCell, new Gtk.TreeCellDataFunc(RenderName));
-			fileDescriptionColumn.SetCellDataFunc(filePropertiesCell, new Gtk.TreeCellDataFunc(RenderProperties));
-			fileDescriptionColumn.SetCellDataFunc(miniatureCell, new Gtk.TreeCellDataFunc(RenderPixbuf));
-
-			treeview.AppendColumn(fileDescriptionColumn);
-			treeview.EnableGridLines = TreeViewGridLines.Horizontal;
-			treeview.HeadersVisible = false;
+			
+			//GtkGlue.EntrySetIcon (filterEntry, GtkGlue.EntryIconPosition.Secondary, "gtk-clear");
+			store = CreateStore ();
+			iconview.TextColumn = COL_DISPLAY_NAME;
+			iconview.PixbufColumn = COL_PIXBUF;
+			iconview.SelectionChanged += OnSelectionChanged;
+			iconview.ItemActivated += HandleItemActivated;
+			iconview.ItemWidth = 200;
 		}
 
 		public SelectionMode SelectionMode {
 			set {
-				treeview.Selection.Mode = value;
+				iconview.SelectionMode = value;
+			}
+		}
+		
+		public void Fill (List<ProjectDescription> projects)
+		{
+			this.projects = projects;
+			store.Clear ();
+			foreach (ProjectDescription pdesc in projects)
+			{
+				store.AppendValues (Describe (pdesc), pdesc.File.Preview.Value, pdesc);
 			}
 		}
 
 		public void RemoveProjects(List<ProjectDescription> projects) {
-			/* FIXME: to delete projects from the treeview we need to remove the filter
-			 * and clear everything, otherwise we have seen several crashes trying
-			 * to render cells with an invalid iter. It's not very performant, but
-			 * it's safe. */
-			treeview.Model = projectsListStore;
-			projectsListStore.Clear();
-			foreach(ProjectDescription project in projects)
-				projectsList.Remove(project);
-			Fill(projectsList);
-		}
-
-		public void Fill(List<ProjectDescription> projects) {
-			projectsList = projects;
-			projectsList.Sort();
-			projectsListStore.Clear();
-			foreach(ProjectDescription project in projectsList) {
-				projectsListStore.AppendValues(project);
+			foreach (ProjectDescription project in projects) {
+				this.projects.Remove(project);
 			}
-			filter = new Gtk.TreeModelFilter(projectsListStore, null);
-			filter.VisibleFunc = new Gtk.TreeModelFilterVisibleFunc(FilterTree);
-			treeview.Model = filter;
-			treeview.Selection.Mode = SelectionMode.Multiple;
-			treeview.Selection.Changed += OnSelectionChanged;
+			Fill (this.projects);
 		}
 
 		public void ClearSearch() {
 			filterEntry.Text="";
 		}
-
-		private void RenderPixbuf(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
+		
+		string Describe (ProjectDescription project) {
+			string ret;
+			
+			ret = project.Title;
+			ret += String.Format ("\n {0} - {1} ({2}-{3})", project.LocalName,
+			                      project.VisitorName, project.LocalGoals,
+			                      project.VisitorGoals);
+			ret += "\n" + project.Format;
+			return ret;
+		}
+		
+		ListStore CreateStore ()
 		{
-			ProjectDescription project = (ProjectDescription) model.GetValue(iter, 0);
-
-			(cell as Gtk.CellRendererPixbuf).Pixbuf= project.File.Preview != null ? project.File.Preview.Value : null;
+			store = new ListStore (typeof (string), typeof (Gdk.Pixbuf), typeof (ProjectDescription));
+			store.DefaultSortFunc = SortFunc;
+			store.SetSortColumnId (COL_DISPLAY_NAME, SortType.Ascending);
+			filter = new Gtk.TreeModelFilter (store, null);
+			filter.VisibleFunc = new Gtk.TreeModelFilterVisibleFunc (FilterTree);
+			iconview.Model = filter;
+			return store;
 		}
 
-		private void RenderProperties(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
+		int SortFunc (TreeModel model, TreeIter a, TreeIter b)
 		{
-			string text;
-			ProjectDescription project = (ProjectDescription) model.GetValue(iter, 0);
-
-			text = "\n"+"\n"+"\n"+"<b>"+Catalog.GetString("File length")+":</b>  " +
-			       (new Time {MSeconds = (int)project.File.Length}).ToSecondsString();
-			text = text +"\n"+"<b>"+Catalog.GetString("Video codec")+":</b>  " + project.File.VideoCodec;
-			text = text +"\n"+"<b>"+Catalog.GetString("Audio codec")+":</b>  " + project.File.AudioCodec;
-			text = text +"\n"+"<b>"+Catalog.GetString("Format")+":</b>  " + project.Format;
-
-			(cell as Gtk.CellRendererText).Markup = text;
+			ProjectDescription pa = (ProjectDescription) model.GetValue (a, COL_PROJECT_DESCRIPTION);
+			ProjectDescription pb = (ProjectDescription) model.GetValue (b, COL_PROJECT_DESCRIPTION);
+			
+			return (int) (pa.LastModified.Ticks - pb.LastModified.Ticks);
 		}
-
-		private void RenderName(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
-		{
-			string text;
-			ProjectDescription project = (ProjectDescription) model.GetValue(iter, 0);
-
-			text = "<b>"+Catalog.GetString("Title")+":</b>  " + GLib.Markup.EscapeText (project.Title);
-			text = text +"\n"+"<b>"+Catalog.GetString("Local team")+":</b>  " + GLib.Markup.EscapeText (project.LocalName);
-			text = text +"\n"+"<b>"+Catalog.GetString("Visitor team")+":</b>  " + GLib.Markup.EscapeText (project.VisitorName);
-			text = text +"\n"+"<b>"+Catalog.GetString("Season")+":</b>  " + GLib.Markup.EscapeText (project.Season);
-			text = text +"\n"+"<b>"+Catalog.GetString("Competition")+":</b>  " + GLib.Markup.EscapeText (project.Competition);
-			text = text +"\n"+"<b>"+Catalog.GetString("Result")+":</b>  " + project.LocalGoals+"-"+ project.VisitorGoals;
-			if (project.Title == Constants.FAKE_PROJECT) {
-				text = text +"\n"+"<b>"+Catalog.GetString("Date")+":</b>  " + project.LastModified.ToShortDateString() +
-					" " + project.LastModified.ToShortTimeString();
-			} else {
-				text = text +"\n"+"<b>"+Catalog.GetString("Date")+":</b>  " + project.MatchDate.ToShortDateString();
-			}
-
-			(cell as Gtk.CellRendererText).Markup = text;
-		}
-
+		
 		protected virtual void OnFilterentryChanged(object sender, System.EventArgs e)
 		{
 			filter.Refilter();
@@ -154,7 +127,7 @@ namespace LongoMatch.Gui.Component
 
 		private bool FilterTree(Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			ProjectDescription project =(ProjectDescription) model.GetValue(iter, 0);
+			ProjectDescription project =(ProjectDescription) model.GetValue(iter, COL_PROJECT_DESCRIPTION);
 
 			if(project == null)
 				return true;
@@ -181,15 +154,30 @@ namespace LongoMatch.Gui.Component
 			List<ProjectDescription> list;
 			TreePath[] pathArray;
 
-			list = new List<ProjectDescription>();
-			pathArray = treeview.Selection.GetSelectedRows();
-
-			for(int i=0; i< pathArray.Length; i++) {
-				treeview.Model.GetIterFromString(out iter, pathArray[i].ToString());
-				list.Add((ProjectDescription) treeview.Model.GetValue(iter, 0));
+			if(ProjectsSelected != null) {
+				list = new List<ProjectDescription>();
+				pathArray = iconview.SelectedItems;
+				
+				for(int i=0; i< pathArray.Length; i++) {
+					iconview.Model.GetIterFromString (out iter, pathArray[i].ToString());
+					list.Add ((ProjectDescription) iconview.Model.GetValue (iter, COL_PROJECT_DESCRIPTION));
+				}
+				ProjectsSelected (list);
 			}
-			if(ProjectsSelected != null)
-				ProjectsSelected(list);
+		}
+
+		void HandleItemActivated (object o, ItemActivatedArgs args)
+		{
+			TreeIter iter;
+			ProjectDescription pdesc;
+			
+			if (ProjectSelected != null) {
+				iconview.Model.GetIter (out iter, args.Path);
+				pdesc = iconview.Model.GetValue (iter, COL_PROJECT_DESCRIPTION) as ProjectDescription;
+				if (pdesc != null) {
+					ProjectSelected (pdesc);
+				}
+			}
 		}
 	}
 }

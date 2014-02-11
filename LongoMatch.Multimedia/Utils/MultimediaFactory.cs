@@ -38,8 +38,7 @@ using LongoMatch.Video.Common;
 namespace LongoMatch.Video
 {
 
-
-	public class MultimediaFactory: IMultimediaToolkit
+	public class MultimediaFactory
 	{
 
 		OperatingSystem oS;
@@ -137,6 +136,10 @@ namespace LongoMatch.Video
 			get {
 				return VideoDevice.ListVideoDevices();
 			}
+		}
+		
+		public bool FileNeedsRemux (MediaFile file) {
+			return GStreamer.FileNeedsRemux (file);
 		}
 		
 		[DllImport("libgstreamer-0.10.dll")]

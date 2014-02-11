@@ -202,6 +202,19 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.ButtonTagger.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/AnalysisComponent.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.AnalysisComponent.cs" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/background.svg" />
+    <File subtype="Directory" buildaction="Compile" name="Gui/Panel" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Panel/WelcomePanel.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Panel.WelcomePanel.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/BackgroundWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.BackgroundWidget.cs" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/background.png" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Panel/OpenProjectPanel.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Panel.OpenProjectPanel.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Panel/NewProjectPanel.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Panel.NewProjectPanel.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/TeamPlayersSelection.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.TeamPlayersSelection.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

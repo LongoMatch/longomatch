@@ -62,7 +62,7 @@ namespace LongoMatch
 				AddinsManager manager = new AddinsManager(Config.PluginsConfigDir, Config.PluginsDir);
 				manager.LoadConfigModifierAddins();
 			    GUIToolkit guiToolkit = new GUIToolkit(version);
-			    IMultimediaToolkit multimediaToolkit = new MultimediaFactory();
+			    IMultimediaToolkit multimediaToolkit = new MultimediaToolkit();
 			    manager.LoadExportProjectAddins(guiToolkit.MainController);
 			    manager.LoadImportProjectAddins(guiToolkit.MainController);
 			    try {

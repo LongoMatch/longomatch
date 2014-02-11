@@ -15,7 +15,8 @@ namespace LongoMatch.Gui.Dialog
 			this.Name = "LongoMatch.Gui.Dialog.BusyDialog";
 			this.Title = "";
 			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "longomatch", global::Gtk.IconSize.Menu);
-			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
+			this.TypeHint = ((global::Gdk.WindowTypeHint)(1));
+			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
 			this.Modal = true;
 			this.Resizable = false;
 			this.AllowGrow = false;

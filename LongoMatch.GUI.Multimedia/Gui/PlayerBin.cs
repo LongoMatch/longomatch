@@ -413,10 +413,10 @@ namespace LongoMatch.Gui
 		}
 
 		private void PlayerInit() {
-			MultimediaFactory factory;
+			MultimediaToolkit factory;
 			Widget playerWidget;
 
-			factory= new MultimediaFactory();
+			factory= new MultimediaToolkit();
 			player = factory.GetPlayer(320,280);
 
 			tickHandler = new LongoMatch.Video.Common.TickHandler(OnTick);

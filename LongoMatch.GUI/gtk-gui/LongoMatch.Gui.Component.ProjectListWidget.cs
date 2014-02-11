@@ -9,7 +9,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Label filterlabel;
 		private global::Gtk.Entry filterEntry;
 		private global::Gtk.ScrolledWindow scrolledwindow2;
-		private global::Gtk.TreeView treeview;
+		private global::Gtk.IconView iconview;
 		
 		protected virtual void Build ()
 		{
@@ -53,10 +53,10 @@ namespace LongoMatch.Gui.Component
 			this.scrolledwindow2.CanFocus = true;
 			this.scrolledwindow2.Name = "scrolledwindow2";
 			// Container child scrolledwindow2.Gtk.Container+ContainerChild
-			this.treeview = new global::Gtk.TreeView ();
-			this.treeview.CanFocus = true;
-			this.treeview.Name = "treeview";
-			this.scrolledwindow2.Add (this.treeview);
+			this.iconview = new global::Gtk.IconView ();
+			this.iconview.CanFocus = true;
+			this.iconview.Name = "iconview";
+			this.scrolledwindow2.Add (this.iconview);
 			this.vbox2.Add (this.scrolledwindow2);
 			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.scrolledwindow2]));
 			w5.Position = 1;

@@ -25,6 +25,7 @@ using LongoMatch.Store;
 using LongoMatch.Store.Templates;
 using Image = LongoMatch.Common.Image;
 using LongoMatch.Stats;
+using LongoMatch.Interfaces.Multimedia;
 
 namespace LongoMatch.Interfaces.GUI
 {
@@ -52,7 +53,7 @@ namespace LongoMatch.Interfaces.GUI
 		string SelectFolder(string title, string defaultName, string defaultFolder,
 			string filterName, string[] extensionFilter);
 			
-		IBusyDialog BusyDialog(string message);
+		IBusyDialog BusyDialog(string message, object parent=null);
 			
 		List<EditionJob> ConfigureRenderingJob (IPlayList playlist);
 		void ExportFrameSeries(Project openenedProject, Play play, string snapshotDir);
@@ -63,16 +64,10 @@ namespace LongoMatch.Interfaces.GUI
 		                  out IProjectOptionsController projectOptionsController);
 		void CloseProject ();
 			                     
-		ProjectDescription SelectProject(List<ProjectDescription> projects);
-		ProjectType SelectNewProjectType();
+		void SelectProject(List<ProjectDescription> projects);
 		
-		Project NewCaptureProject(IDatabase db, ITemplatesService ts,
-			List<LongoMatch.Common.Device> devices, out CaptureSettings captureSettings);
-		Project NewURICaptureProject(IDatabase db, ITemplatesService ts,
-			out CaptureSettings captureSettings);
-		Project NewFakeProject(IDatabase db, ITemplatesService ts);
-		Project NewFileProject(IDatabase db, ITemplatesService ts);
-		Project EditFakeProject(IDatabase db, Project project, ITemplatesService ts);
+		void CreateNewProject (ITemplatesService tps, IMultimediaToolkit toolit, Project project=null);
+		
 		void ShowProjectStats(Project project);
 		
 		void OpenProjectsManager(Project openedProject, IDatabase db, ITemplatesService ts);

@@ -36,6 +36,10 @@ namespace LongoMatch.Interfaces.Multimedia
 		MediaFile DiscoverFile(string path);
 		
 		List<Device> VideoDevices {get;}
+		
+		bool FileNeedsRemux (MediaFile file);
+		
+		string RemuxFile (MediaFile file, object parent);
 	}
 }
 

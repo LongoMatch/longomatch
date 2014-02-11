@@ -25,7 +25,9 @@ namespace LongoMatch.Interfaces.GUI
 	{
 		/* Projects */
 		event NewProjectHandler NewProjectEvent;
+		event OpenNewProjectHandler OpenNewProjectEvent;
 		event OpenProjectHandler OpenProjectEvent;
+		event OpenProjectIDHandler OpenProjectIDEvent;
 		event ImportProjectHandler ImportProjectEvent;
 		event ExportProjectHandler ExportProjectEvent;
 		event QuitApplicationHandler QuitApplicationEvent;

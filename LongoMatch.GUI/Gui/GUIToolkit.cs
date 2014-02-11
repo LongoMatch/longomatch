@@ -34,6 +34,8 @@ using LongoMatch.Store.Templates;
 using LongoMatch.Video.Utils;
 using LongoMatch.Gui.Helpers;
 using LongoMatch.Stats;
+using LongoMatch.Gui.Panel;
+using LongoMatch.Interfaces.Multimedia;
 
 namespace LongoMatch.Gui
 {
@@ -131,6 +133,7 @@ namespace LongoMatch.Gui
 			List<EditionJob> jobs = new List<EditionJob>();
 			int response;
 			
+			Log.Information ("Configure rendering job");
 			if (playlist.Count == 0) {
 				WarningMessage(Catalog.GetString("The playlist you want to render is empty."));
 				return null;
@@ -178,7 +181,7 @@ namespace LongoMatch.Gui
 			string seriesName;
 			string outDir;
 
-
+			Log.Information ("Export frame series");
 			sd= new SnapshotsDialog();
 			sd.TransientFor= mainWindow as Gtk.Window;
 			sd.Play = play.Name;
@@ -202,6 +205,7 @@ namespace LongoMatch.Gui
 		
 		public void TagPlay (Play play, Categories categories, TeamTemplate local, TeamTemplate visitor, bool showAllTags) {
 			TaggerDialog tg = new TaggerDialog(play, categories, local, visitor, showAllTags);
+			Log.Information ("Tag play");
 			tg.TransientFor = mainWindow as Gtk.Window;
 			tg.Run();
 			tg.Destroy();
@@ -210,6 +214,7 @@ namespace LongoMatch.Gui
 		public void DrawingTool (Image image, Play play, int stopTime) {
 			DrawingTool dialog = new DrawingTool();
 
+			Log.Information ("Drawing tool");
 			dialog.Image = image.Value;
 			if (play != null)
 				dialog.SetPlay(play, stopTime);
@@ -219,22 +224,16 @@ namespace LongoMatch.Gui
 			dialog.Destroy();	
 		}
 		
-		public ProjectDescription SelectProject(List<ProjectDescription> projects) {
-			ProjectDescription project = null;
-			OpenProjectDialog opd = new OpenProjectDialog();
-			
-			opd.Fill(projects);	
-			opd.TransientFor = mainWindow as Gtk.Window;
-			if(opd.Run() == (int)ResponseType.Ok)
-				project = opd.SelectedProject;
-			opd.Destroy();
-			return project;
+		public void SelectProject(List<ProjectDescription> projects) {
+			Log.Information ("Select project");
+			mainWindow.SelectProject (projects);
 		}
 		
 		public void OpenCategoriesTemplatesManager(ITemplatesService ts)
 		{
 			var tManager = new TemplatesManager<Categories, Category> (ts.CategoriesTemplateProvider,
 			                                                           new CategoriesTemplateEditorWidget(ts));
+			Log.Information ("Open sports templates manager");
 			tManager.TransientFor = mainWindow as Gtk.Window;
 			tManager.Show();
 		}
@@ -243,6 +242,7 @@ namespace LongoMatch.Gui
 		{
 			var tManager = new TemplatesManager<TeamTemplate, Player> (teamProvider,
 			                                                           new TeamTemplateEditorWidget(teamProvider));
+			Log.Information ("Open teams templates manager");
 			tManager.TransientFor = mainWindow as Gtk.Window;
 			tManager.Show();
 		}
@@ -250,6 +250,7 @@ namespace LongoMatch.Gui
 		public void OpenProjectsManager(Project openedProject, IDatabase db, ITemplatesService ts)
 		{
 			Gui.Dialog.ProjectsManager pm = new Gui.Dialog.ProjectsManager(openedProject, db, ts);
+			Log.Information ("Open projects manager");
 			pm.TransientFor = mainWindow as Gtk.Window;
 			pm.Show();
 		}
@@ -257,6 +258,7 @@ namespace LongoMatch.Gui
 		public void OpenPreferencesEditor()
 		{
 			PropertiesEditor pe = new PropertiesEditor();
+			Log.Information ("Open preferences");
 			pe.TransientFor = mainWindow as Gtk.Window;
 			pe.Run();
 			pe.Destroy();
@@ -265,6 +267,7 @@ namespace LongoMatch.Gui
 		public void OpenDatabasesManager(IDataBaseManager manager)
 		{
 			DatabasesManager dm = new DatabasesManager (manager);
+			Log.Information ("Open db manager");
 			dm.TransientFor = mainWindow as Gtk.Window;
 			dm.Run();
 			dm.Destroy();
@@ -272,93 +275,31 @@ namespace LongoMatch.Gui
 		
 		public void ManageJobs(IRenderingJobsManager manager) {
 			RenderingJobsDialog dialog = new RenderingJobsDialog(manager);
+			Log.Information ("Manage jobs");
 			dialog.TransientFor = mainWindow as Gtk.Window;
 			dialog.Run();
 			dialog.Destroy();
 		}
 		
-		public ProjectType SelectNewProjectType () {
-			ProjectSelectionDialog psd;
-			int response;
-
-			psd = new ProjectSelectionDialog();
-			psd.TransientFor = mainWindow as Gtk.Window;;
-			response = psd.Run();
-			psd.Destroy();
-			if(response != (int)ResponseType.Ok)
-				return ProjectType.None;
-			return psd.ProjectType;
-		}
-		
-		public Project NewCaptureProject(IDatabase db, ITemplatesService ts,
-			List<LongoMatch.Common.Device> devices, out CaptureSettings captureSettings)
-		{
-			return NewProject(db, null, ProjectType.CaptureProject, ts, devices, out captureSettings);
-		}
-		
-		public Project NewURICaptureProject(IDatabase db, ITemplatesService ts,
-		                                    out CaptureSettings captureSettings)
-		{
-			return NewProject(db, null, ProjectType.URICaptureProject, ts, null, out captureSettings);
-		}
-		
-		public Project NewFakeProject(IDatabase db, ITemplatesService ts) {
-			CaptureSettings captureSettings = new CaptureSettings();
-			return NewProject(db, null, ProjectType.FakeCaptureProject, ts, null, out captureSettings);
-		}
-		
-		public Project NewFileProject(IDatabase db, ITemplatesService ts) {
-			CaptureSettings captureSettings = new CaptureSettings();
-			return NewProject(db, null, ProjectType.FileProject, ts, null, out captureSettings);
-		}
-		
-		public Project EditFakeProject(IDatabase db, Project project, ITemplatesService ts) {
-			CaptureSettings captureSettings = new CaptureSettings();
-			return NewProject(db, project, ProjectType.EditProject, ts, null, out captureSettings);
-		}
-		
-		public IBusyDialog BusyDialog(string message) {
+		public IBusyDialog BusyDialog(string message, object parent=null) {
 			BusyDialog dialog;
 
 			dialog = new BusyDialog();
-			dialog.TransientFor = mainWindow as Gtk.Window;
+			if (parent != null) {
+				dialog.TransientFor = (parent as Widget).Toplevel as Gtk.Window;
+			} else {
+				dialog.TransientFor = mainWindow as Gtk.Window;
+			}
 			dialog.Message = message; 
 			return dialog;
 		}
 		
-		Project NewProject(IDatabase db, Project project, ProjectType type,
-			ITemplatesService tps, List<LongoMatch.Common.Device> devices, out CaptureSettings captureSettings)
-		{
-			NewProjectDialog npd = new NewProjectDialog();
-			
-			npd.TransientFor = mainWindow as Gtk.Window;
-			npd.Use = type;
-			npd.TemplatesService = tps;
-			npd.Project = project;
-			if(type == ProjectType.CaptureProject)
-				npd.Devices = devices;
-			int response = npd.Run();
-			while(true) {
-				if(response != (int)ResponseType.Ok) {
-					project = null;
-					break;
-				} else if(npd.Project == null) {
-					InfoMessage(Catalog.GetString("Please, select a video file."));
-					response=npd.Run();
-				} else {
-					project = npd.Project;
-					break;
-				}
-			}	
-			if (type == ProjectType.CaptureProject || type == ProjectType.URICaptureProject)
-				captureSettings = npd.CaptureSettings;
-			else
-				captureSettings = new CaptureSettings();
-			npd.Destroy();
-			return project;
+		public void CreateNewProject(ITemplatesService tps, IMultimediaToolkit toolkit, Project project=null) {
+			mainWindow.CreateNewProject (tps, toolkit, project);
 		}
 		
 		public void ShowProjectStats (Project project) {
+			Log.Information ("Show project stats");
 			StatsViewer dialog = new StatsViewer ();
 			dialog.LoadStats (project);
 			dialog.TransientFor = mainWindow as Gtk.Window;
@@ -368,6 +309,7 @@ namespace LongoMatch.Gui
 		}
 		
 		public string RemuxFile (string inputFile, string outputFile, VideoMuxerType muxer) {
+			Log.Information ("Remux file");
 			Remuxer remuxer = new Remuxer (PreviewMediaFile.DiscoverFile(inputFile),
 			                               outputFile, muxer);
 			return remuxer.Remux (mainWindow as Gtk.Window);
@@ -378,16 +320,19 @@ namespace LongoMatch.Gui
 			                     out IAnalysisWindow analysisWindow,
 			                     out IProjectOptionsController projectOptionsController)
 		{
+			Log.Information ("Open project");
 			analysisWindow = mainWindow.SetProject (project, projectType, props, filter);
 			projectOptionsController = mainWindow;
 		}
 		
 		public void CloseProject ()
 		{
+			Log.Information ("Close project");
 			mainWindow.CloseProject ();
 		}
 		
 		public void Quit () {
+			Log.Information ("Quit application");
 			Gtk.Application.Quit ();
 		}
 	}

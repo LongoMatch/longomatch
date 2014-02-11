@@ -115,6 +115,7 @@
     <signals>
       <itemgroup label="ProjectListWidget Signals">
         <signal name="ProjectsSelected" />
+        <signal name="ProjectSelected" />
       </itemgroup>
     </signals>
   </object>
@@ -483,5 +484,35 @@
         <signal name="DuplicatePlay" />
       </itemgroup>
     </signals>
+  </object>
+  <object type="LongoMatch.Gui.Panel.WelcomePanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.BackgroundWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Panel.OpenProjectPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="OpenProjectPanel Signals">
+        <signal name="OpenProjectEvent" />
+        <signal name="BackEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Panel.NewProjectPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="NewProjectPanel Signals">
+        <signal name="CancelEvent" />
+        <signal name="OpenNewProjectEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.TeamPlayersSelection" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
   </object>
 </objects>
