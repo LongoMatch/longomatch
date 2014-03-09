@@ -143,7 +143,7 @@ namespace LongoMatch.Stats
 			
 			foreach (Category cat in project.Categories) {
 				CategoryStats stats;
-				List<Play> plays, homePlays, awayPlays;
+				List<Play> plays, homePlays, awayPlays, untagged;
 				int localTeamCount, visitorTeamCount;
 				
 				plays = project.PlaysInCategory (cat);
@@ -152,7 +152,14 @@ namespace LongoMatch.Stats
 				}
 				homePlays =plays.Where(p => p.Team == Team.LOCAL || p.Team == Team.BOTH).ToList();
 				awayPlays =plays.Where(p => p.Team == Team.VISITOR || p.Team == Team.BOTH).ToList();
+				
+				/* Get the plays where the team is not tagged but we have at least one player from a team tagged */
+				untagged = plays.Where (p=> p.Team ==  Team.NONE).ToList();
+				homePlays.AddRange (untagged.Where (p => p.Players.Tags.Where (pt => project.LocalTeamTemplate.Contains(pt.Value)).Count() != 0).ToList());
+				awayPlays.AddRange (untagged.Where (p => p.Players.Tags.Where (pt => project.VisitorTeamTemplate.Contains(pt.Value)).Count() != 0).ToList());
+				
 				stats = new CategoryStats(cat, plays.Count, homePlays.Count(), awayPlays.Count());
+				
 				/* Fill zonal tagging stats */
 				stats.FieldCoordinates = plays.Select (p => p.FieldPosition).Where(p =>p != null).ToList();
 				stats.HalfFieldCoordinates = plays.Select (p => p.HalfFieldPosition).Where(p =>p != null).ToList();
