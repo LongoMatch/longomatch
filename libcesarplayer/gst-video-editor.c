@@ -244,7 +244,7 @@ gve_create_video_encode_bin (GstVideoEditor * gve)
 
   g_object_set (G_OBJECT (gve->priv->identity), "single-segment", TRUE, NULL);
   g_object_set (G_OBJECT (gve->priv->queue), "max-size-bytes", 4 * 1000 * 1000,
-      "max-size-buffers", 0, "max-size-time", 0, NULL);
+      "max-size-buffers", 0, "max-size-time", (guint64) 0, NULL);
 
   /*Add and link elements */
   gst_bin_add_many (GST_BIN (gve->priv->vencode_bin),
@@ -297,7 +297,8 @@ gve_create_audio_encode_bin (GstVideoEditor * gve)
   g_object_set (G_OBJECT (gve->priv->audioidentity), "single-segment", TRUE,
       NULL);
   g_object_set (G_OBJECT (gve->priv->audioqueue), "max-size-bytes",
-      4 * 1000 * 1000, "max-size-buffers", 0, "max-size-time", 0, NULL);
+      4 * 1000 * 1000, "max-size-buffers", 0, "max-size-time", (guint64) 0,
+      NULL);
 
   /*Add and link elements */
   gst_bin_add_many (GST_BIN (gve->priv->aencode_bin),
