@@ -131,11 +131,11 @@ namespace LongoMatch.Gui.Component
 			string text;
 			ProjectDescription project = (ProjectDescription) model.GetValue(iter, 0);
 
-			text = "<b>"+Catalog.GetString("Title")+":</b>  " + project.Title;
-			text = text +"\n"+"<b>"+Catalog.GetString("Local team")+":</b>  " + project.LocalName;
-			text = text +"\n"+"<b>"+Catalog.GetString("Visitor team")+":</b>  " + project.VisitorName;
-			text = text +"\n"+"<b>"+Catalog.GetString("Season")+":</b>  " + project.Season;
-			text = text +"\n"+"<b>"+Catalog.GetString("Competition")+":</b>  " + project.Competition;
+			text = "<b>"+Catalog.GetString("Title")+":</b>  " + GLib.Markup.EscapeText (project.Title);
+			text = text +"\n"+"<b>"+Catalog.GetString("Local team")+":</b>  " + GLib.Markup.EscapeText (project.LocalName);
+			text = text +"\n"+"<b>"+Catalog.GetString("Visitor team")+":</b>  " + GLib.Markup.EscapeText (project.VisitorName);
+			text = text +"\n"+"<b>"+Catalog.GetString("Season")+":</b>  " + GLib.Markup.EscapeText (project.Season);
+			text = text +"\n"+"<b>"+Catalog.GetString("Competition")+":</b>  " + GLib.Markup.EscapeText (project.Competition);
 			text = text +"\n"+"<b>"+Catalog.GetString("Result")+":</b>  " + project.LocalGoals+"-"+ project.VisitorGoals;
 			if (project.Title == Constants.FAKE_PROJECT) {
 				text = text +"\n"+"<b>"+Catalog.GetString("Date")+":</b>  " + project.LastModified.ToShortDateString() +

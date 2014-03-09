@@ -262,7 +262,7 @@ namespace LongoMatch.Gui.Component
 					c.Background = "white";
 					c.CellBackground = "white";
 				}
-				c.Markup = mtn.ToString();
+				c.Markup = GLib.Markup.EscapeText (mtn.ToString());
 			} else if(o is Player) {
 				c.Background = "white";
 				c.CellBackground = "white";

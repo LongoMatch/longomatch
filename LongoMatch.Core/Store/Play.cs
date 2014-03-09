@@ -231,7 +231,7 @@ namespace LongoMatch.Store
 		
 		public override string ToString()
 		{
-			return  Name + "\n" + Start.ToMSecondsString() + " - " + Stop.ToMSecondsString();
+			return Name + "\n" + Start.ToMSecondsString() + " - " + Stop.ToMSecondsString();
 		}
 		#endregion
 	}
