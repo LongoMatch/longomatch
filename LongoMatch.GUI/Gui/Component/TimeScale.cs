@@ -137,8 +137,11 @@ namespace LongoMatch.Gui.Component
 
 		void HandleAddPlayListNode (object sender, EventArgs e)
 		{
-			if (PlayListNodeAdded != null)
-				PlayListNodeAdded (menuToNodeDict[sender as MenuItem]);
+			if (PlayListNodeAdded != null) {
+				List<Play> list = new List<Play>();
+				list.Add (menuToNodeDict[sender as MenuItem]);
+				PlayListNodeAdded (list);
+			}
 			
 		}
 

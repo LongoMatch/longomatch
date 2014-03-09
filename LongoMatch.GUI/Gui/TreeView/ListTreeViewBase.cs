@@ -366,11 +366,13 @@ namespace LongoMatch.Gui.Component
 
 		protected void OnAdded(object obj, EventArgs args) {
 			if(PlayListNodeAdded != null) {
+				List<Play> list = new List<Play>();
 				TreePath[] paths = Selection.GetSelectedRows();
 				for(int i=0; i<paths.Length; i++) {
 					Play tNode = (Play)GetValueFromPath(paths[i]);
-					PlayListNodeAdded(tNode);
+					list.Add (tNode);
 				}
+				PlayListNodeAdded(list);
 			}
 		}
 

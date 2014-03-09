@@ -186,10 +186,10 @@ namespace LongoMatch.Gui.Component
 				RenderPlaylist(playlist);
 		}
 		
-		private void EmitPlayListNodeAdded(Play play)
+		private void EmitPlayListNodeAdded(List<Play> plays)
 		{
 			if (PlayListNodeAdded != null)
-				PlayListNodeAdded(play);
+				PlayListNodeAdded(plays);
 		}
 		
 		private void EmitTimeNodeChanged (TimeNode tn, object val)

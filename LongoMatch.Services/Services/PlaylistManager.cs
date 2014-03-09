@@ -93,12 +93,15 @@ namespace LongoMatch.Services
 			};
 		}
 		
-		private void Add(PlayListPlay plNode) {
+		private void Add(List<Play> plays) {
 			if (playlist == null) {
 				guiToolkit.InfoMessage(Catalog.GetString("You have not loaded any playlist yet."));
 			} else {
-				playlist.Add(plNode);
-				playlistWidget.Add(plNode);
+				foreach (Play p in plays) {
+					PlayListPlay pl = new PlayListPlay (p, OpenedProject.Description.File, true);
+					playlist.Add(pl);
+					playlistWidget.Add(pl);
+				}
 			}
 		}
 		
@@ -177,9 +180,9 @@ namespace LongoMatch.Services
 				videoRenderer.AddJob(job);
 		}
 		
-		protected virtual void OnPlayListNodeAdded(Play play)
+		protected virtual void OnPlayListNodeAdded(List<Play> plays)
 		{
-			Add(new PlayListPlay (play, OpenedProject.Description.File, true));
+			Add (plays);
 		}
 		
 		protected virtual void OnSavePlaylist()

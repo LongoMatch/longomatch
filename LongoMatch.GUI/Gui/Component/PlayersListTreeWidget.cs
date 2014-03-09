@@ -128,10 +128,10 @@ namespace LongoMatch.Gui.Component
 				TimeNodeChanged(tNode, val);
 		}
 
-		protected virtual void OnPlayListNodeAdded(Play tNode)
+		protected virtual void OnPlayListNodeAdded(List<Play> plays)
 		{
 			if(PlayListNodeAdded != null)
-				PlayListNodeAdded(tNode);
+				PlayListNodeAdded(plays);
 		}
 		
 		protected virtual void OnNewRenderingJob (object sender, EventArgs args)

@@ -839,7 +839,7 @@ namespace LongoMatch.Gui
 				PlayCategoryChanged(play, cat);
 		}
 
-		private void OnPlayListNodeAdded(Play play)
+		private void OnPlayListNodeAdded(List<Play> play)
 		{
 			if (PlayListNodeAddedEvent != null)
 				PlayListNodeAddedEvent(play);

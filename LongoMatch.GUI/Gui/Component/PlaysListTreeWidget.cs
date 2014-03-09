@@ -207,10 +207,10 @@ namespace LongoMatch.Gui.Component
 				TimeNodeDeleted(plays);
 		}
 
-		protected virtual void OnPlayListNodeAdded(Play tNode)
+		protected virtual void OnPlayListNodeAdded(List<Play> plays)
 		{
 			if(PlayListNodeAdded != null)
-				PlayListNodeAdded(tNode);
+				PlayListNodeAdded(plays);
 		}
 		
 		protected virtual void OnDuplicatePlay (Play play)

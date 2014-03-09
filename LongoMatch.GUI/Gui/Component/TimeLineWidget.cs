@@ -130,10 +130,10 @@ namespace LongoMatch.Gui.Component {
 				TagPlay (play);
 		}
 
-		void HandlePlayListNodeAdded (Play play)
+		void HandlePlayListNodeAdded (List<Play> plays)
 		{
 			if (PlayListNodeAdded != null)
-				PlayListNodeAdded (play);
+				PlayListNodeAdded (plays);
 		}
 
 		void HandleSnapshotSeries (Play play)

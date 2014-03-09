@@ -73,7 +73,7 @@ namespace LongoMatch.Handlers
 
 	/*Playlist Events*/
 	/* Add the a play to the opened playlist */
-	public delegate void PlayListNodeAddedHandler(Play play);
+	public delegate void PlayListNodeAddedHandler(List<Play> play);
 	/* A play list element is selected */
 	public delegate void PlayListNodeSelectedHandler(PlayListPlay play);
 	/* Open a playlist */
