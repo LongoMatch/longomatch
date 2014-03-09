@@ -1,3 +1,11 @@
+===== LongoMatch 0.20.3 "BCN" =====
+
+	== Bugs fixed ==
+
+	* Fix exporting clips at 30fps
+	* Account in stats plays without teams tagged
+	* Fix escaping of some strings
+
 ===== LongoMatch 0.20.2 "Ita" =====
 
 	== Bugs fixed ==

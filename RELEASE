@@ -1,7 +1,7 @@
-LongoMatch-0.20.2 "Ita"
+LongoMatch-0.20.3 "BCN"
 -----------------------------
 
-The LongoMatch team is happy to announce the second release in the
+The LongoMatch team is happy to announce the third release in the
 stable 0.20 series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
@@ -9,8 +9,9 @@ all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
 * Bugs fixed
-	* Fix order of background images in the categories template
-	* Fix segfault using the encoder
+	* Fix exporting clips at 30fps
+	* Account in stats plays without teams tagged
+	* Fix escaping of some strings
 
   * LongoMatch:
 	Andoni Morales Alastruey <ylatuya@gmail.com>
