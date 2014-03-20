@@ -53,9 +53,9 @@ namespace LongoMatch.Store
 				if (value == null)
 					thumbnailBuf = null;
 				else {
-					if (value.Height > Constants.THUMBNAIL_MAX_HEIGHT ||
-					    value.Width > Constants.THUMBNAIL_MAX_WIDTH) {
-						value.Scale(Constants.THUMBNAIL_MAX_WIDTH, Constants.THUMBNAIL_MAX_HEIGHT);
+					if (value.Height > Constants.MAX_THUMBNAIL_SIZE ||
+					    value.Width > Constants.MAX_THUMBNAIL_SIZE) {
+						value.Scale(Constants.MAX_THUMBNAIL_SIZE, Constants.MAX_THUMBNAIL_SIZE);
 					}
 					thumbnailBuf = value.Serialize();
 				}

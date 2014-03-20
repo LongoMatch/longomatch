@@ -49,7 +49,7 @@ namespace LongoMatch.Common
 		}
 		
 		public void Scale() {
-			Scale (Constants.THUMBNAIL_MAX_WIDTH, Constants.THUMBNAIL_MAX_HEIGHT);
+			Scale (Constants.MAX_THUMBNAIL_SIZE, Constants.MAX_THUMBNAIL_SIZE);
 		}
 		
 		// this constructor is automatically called during deserialization

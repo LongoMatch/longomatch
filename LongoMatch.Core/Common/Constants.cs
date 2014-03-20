@@ -71,10 +71,6 @@ Pavel Bárta (cs)
 Petr Kovar (cs)
 Xavier Queralt Mateu (ca)";
 
-		public const int THUMBNAIL_MAX_WIDTH = 100;
-
-		public const int THUMBNAIL_MAX_HEIGHT = 100;
-
 		public const string WEBSITE = "http://www.longomatch.ylatuya.es";
 
 		public const string MANUAL = "http://www.longomatch.ylatuya.es/documentation/manual.html";
@@ -107,5 +103,9 @@ Xavier Queralt Mateu (ca)";
 		
 		public const int DB_MAYOR_VERSION = 3;
 		public const int DB_MINOR_VERSION = 1;
+
+		public const int MAX_PLAYER_ICON_SIZE = 100;
+		public const int MAX_SHIELD_ICON_SIZE = 100;
+		public const int MAX_THUMBNAIL_SIZE = 100;
 	}
 }

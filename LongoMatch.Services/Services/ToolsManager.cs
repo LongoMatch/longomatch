@@ -156,8 +156,9 @@ namespace LongoMatch.Services {
 				try {
 					capturer.SeekTime(play.Start.MSeconds + ((play.Stop - play.Start).MSeconds/2),
 					                  true);
-					play.Miniature = capturer.GetCurrentFrame(Constants.THUMBNAIL_MAX_WIDTH,
-					                 Constants.THUMBNAIL_MAX_HEIGHT);
+					play.Miniature = capturer.GetCurrentFrame (
+						Constants.MAX_THUMBNAIL_SIZE,
+						Constants.MAX_THUMBNAIL_SIZE);
 					dialog.Pulse();
 
 				} catch (Exception ex) {
