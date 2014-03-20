@@ -49,6 +49,7 @@ namespace LongoMatch.Gui.Component
 		TreeModelFilter filter;
 		List<ProjectDescription> projects;
 		ListStore store;
+		bool swallowSignals;
 
 		public ProjectListWidget()
 		{
@@ -71,12 +72,14 @@ namespace LongoMatch.Gui.Component
 		
 		public void Fill (List<ProjectDescription> projects)
 		{
+			swallowSignals = true;
 			this.projects = projects;
 			store.Clear ();
 			foreach (ProjectDescription pdesc in projects)
 			{
 				store.AppendValues (Describe (pdesc), pdesc.File.Preview.Value, pdesc);
 			}
+			swallowSignals = false;
 		}
 
 		public void RemoveProjects(List<ProjectDescription> projects) {
@@ -153,6 +156,9 @@ namespace LongoMatch.Gui.Component
 			TreeIter iter;
 			List<ProjectDescription> list;
 			TreePath[] pathArray;
+			
+			if (swallowSignals)
+				return;
 
 			if(ProjectsSelected != null) {
 				list = new List<ProjectDescription>();
@@ -171,6 +177,9 @@ namespace LongoMatch.Gui.Component
 			TreeIter iter;
 			ProjectDescription pdesc;
 			
+			if (swallowSignals)
+				return;
+
 			if (ProjectSelected != null) {
 				iconview.Model.GetIter (out iter, args.Path);
 				pdesc = iconview.Model.GetValue (iter, COL_PROJECT_DESCRIPTION) as ProjectDescription;
