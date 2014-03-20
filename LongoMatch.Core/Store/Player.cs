@@ -119,6 +119,17 @@ namespace LongoMatch.Store
 			set;
 		}
 		
+		/// <summary>
+		/// Gets or sets the player e-mail.
+		/// </summary>
+		/// <value>
+		/// The e-mail.
+		/// </value>
+		public string Mail {
+			get;
+			set;
+		}
+		
 		public override string ToString ()
 		{
 			return String.Format("{0} - {1}", Number, Name);
