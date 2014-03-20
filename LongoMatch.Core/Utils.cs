@@ -29,7 +29,7 @@ namespace LongoMatch.Utils
 			IBusyDialog busy;
 			MediaFile mediaFile = null;
 			IGUIToolkit gui = Config.GUIToolkit;
-			IMultimediaToolkit multimedia = Config.MultimediaToolkit;
+			IMultimediaToolkit multimedia = Config.MultimediaToolkit; 
 			string folder, filename;
 			
 			
@@ -60,6 +60,7 @@ namespace LongoMatch.Utils
 				}
 			}
 			catch(Exception ex) {
+				busy.Destroy ();
 				gui.ErrorMessage (ex.Message, parent as Gtk.Window);
 				return null;
 			}
