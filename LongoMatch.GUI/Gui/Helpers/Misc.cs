@@ -36,7 +36,8 @@ namespace LongoMatch.Gui.Helpers
 			return filter;
 		}
 
-		public static Pixbuf OpenImage(Gtk.Window toplevel) {
+		public static Pixbuf OpenImage(Widget widget) {
+			Gtk.Window toplevel = widget.Toplevel as Gtk.Window;
 			Pixbuf pimage = null;
 			StreamReader file;
 			FileChooserDialog fChooser;
