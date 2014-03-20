@@ -38,7 +38,7 @@ namespace LongoMatch.Store.Templates
 			get;
 			set;
 		}
-		public void AddDefaultItem (int index) {
+		public string AddDefaultItem (int index) {
 			throw new Exception("Not implemented yet");
 		}
 

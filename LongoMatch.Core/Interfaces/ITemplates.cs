@@ -29,7 +29,7 @@ namespace LongoMatch.Interfaces
 	}
 	
 	public interface ITemplate<T>: ITemplate, IList<T> {
-		void AddDefaultItem (int index);
+		T AddDefaultItem (int index);
 	}
 	
 	public interface ITemplateProvider

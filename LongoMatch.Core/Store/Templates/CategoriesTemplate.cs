@@ -170,7 +170,7 @@ namespace LongoMatch.Store.Templates
 			cat.SubCategories.Add(visitorplayers);
 		}	
 		
-		public void AddDefaultItem (int index) {
+		public Category AddDefaultItem (int index) {
 			Color c = Color.FromArgb(255, 0, 0);
 			HotKey h = new HotKey();
 			
@@ -186,6 +186,7 @@ namespace LongoMatch.Store.Templates
 			};
 			AddDefaultSubcategories(cat);
 			Insert(index, cat);
+			return cat;
 		}
 
 		public static Categories Load(string filePath) {
