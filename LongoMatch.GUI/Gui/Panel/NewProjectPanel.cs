@@ -40,9 +40,9 @@ using Device = LongoMatch.Common.Device;
 namespace LongoMatch.Gui.Panel
 {
 	[System.ComponentModel.ToolboxItem(true)]
-	public partial class NewProjectPanel : Gtk.Bin
+	public partial class NewProjectPanel : Gtk.Bin, IPanel
 	{
-		public event BackEventHandle CancelEvent;
+		public event BackEventHandle BackEvent;
 		public event OpenNewProjectHandler OpenNewProjectEvent;
 		
 		const int PROJECT_TYPE = 0;
@@ -317,8 +317,8 @@ namespace LongoMatch.Gui.Panel
 		void HandleBackClicked (object sender, EventArgs e)
 		{
 			if (notebook1.Page == PROJECT_TYPE) {
-				if (CancelEvent != null) {
-					CancelEvent ();
+				if (BackEvent != null) {
+					BackEvent ();
 				}
 			} else {
 				notebook1.Page --;

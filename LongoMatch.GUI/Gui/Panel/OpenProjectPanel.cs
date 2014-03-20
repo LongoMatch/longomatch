@@ -21,11 +21,12 @@ using Gtk;
 using LongoMatch.Handlers;
 using LongoMatch.Gui;
 using LongoMatch.Store;
+using LongoMatch.Interfaces.GUI;
 
 namespace LongoMatch.Gui.Panel
 {
 	[System.ComponentModel.ToolboxItem(true)]
-	public partial class OpenProjectPanel : Gtk.Bin
+	public partial class OpenProjectPanel : Gtk.Bin, IPanel
 	{
 		public event OpenProjectIDHandler OpenProjectEvent;
 		public event BackEventHandle BackEvent;

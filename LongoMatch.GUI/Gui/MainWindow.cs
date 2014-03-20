@@ -128,6 +128,9 @@ namespace LongoMatch.Gui
 					}
 				}
 				panel.Show();
+				if (panel is IPanel) {
+					(panel as IPanel).BackEvent += ResetGUI;
+				}
 				centralbox.PackStart (panel, true, true, 0);
 				welcomepanel1.Hide ();
 			}
@@ -179,7 +182,6 @@ namespace LongoMatch.Gui
 		public void SelectProject (List<ProjectDescription> projects) {
 			OpenProjectPanel panel  = new OpenProjectPanel ();
 			panel.Projects = projects;
-			panel.BackEvent += ResetGUI;
 			panel.OpenProjectEvent += EmitOpenProjectID;
 			SetPanel (panel);
 		}
