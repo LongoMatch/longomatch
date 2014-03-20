@@ -66,17 +66,17 @@ namespace LongoMatch.Interfaces.GUI
 			                     
 		void SelectProject(List<ProjectDescription> projects);
 		
-		void CreateNewProject (ITemplatesService tps, IMultimediaToolkit toolit, Project project=null);
+		void CreateNewProject (Project project=null);
 		
-		void ShowProjectStats(Project project);
+		void ShowProjectStats (Project project);
 		
-		void OpenProjectsManager(Project openedProject, IDatabase db, ITemplatesService ts);
-		void OpenCategoriesTemplatesManager(ITemplatesService ts);
-		void OpenTeamsTemplatesManager(ITeamTemplatesProvider tp);
-		void OpenDatabasesManager(IDataBaseManager dm);
-		void OpenPreferencesEditor();
+		void OpenProjectsManager (Project openedProject);
+		void OpenCategoriesTemplatesManager ();
+		void OpenTeamsTemplatesManager ();
+		void OpenDatabasesManager ();
+		void OpenPreferencesEditor ();
 		
-		void ManageJobs(IRenderingJobsManager manager);
+		void ManageJobs ();
 		
 		void TagPlay(Play play, Categories categories, TeamTemplate local, TeamTemplate visitor, bool showAllTags);
 		void DrawingTool(Image pixbuf, Play play, int stopTime);

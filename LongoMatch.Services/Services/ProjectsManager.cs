@@ -27,6 +27,7 @@ using LongoMatch.Interfaces.GUI;
 using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
+using LongoMatch.Interfaces;
 
 namespace LongoMatch.Services
 {
@@ -42,6 +43,7 @@ namespace LongoMatch.Services
 		IAnalysisWindow analysisWindow;
 		IProjectOptionsController projectOptionsController;
 		TemplatesService ts;
+		IDatabase DB;
 		
 		public ProjectsManager (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit,
 		                       TemplatesService ts) {
@@ -49,6 +51,7 @@ namespace LongoMatch.Services
 			this.guiToolkit = guiToolkit;
 			this.ts =ts;
 			mainController = guiToolkit.MainController;
+			DB = Config.DatabaseManager.ActiveDB;
 			ConnectSignals();
 		}
 
@@ -145,7 +148,7 @@ namespace LongoMatch.Services
 				foreach (Play play in project.AllPlays ()) {
 					play.Fps = project.Description.File.Fps;
 				}
-				Core.DB.AddProject(project);
+				DB.AddProject(project);
 			} catch(Exception ex) {
 				Log.Exception(ex);
 				Log.Debug ("Backing up project to file");
@@ -312,13 +315,13 @@ namespace LongoMatch.Services
 			
 			if(projectType == ProjectType.FileProject) {
 				try {
-					Core.DB.UpdateProject(project);
+					DB.UpdateProject(project);
 				} catch(Exception e) {
 					Log.Exception(e);
 				}
 			} else if (projectType == ProjectType.FakeCaptureProject) {
 				try {
-					Core.DB.AddProject(project);
+					DB.AddProject(project);
 				} catch (Exception e) {
 					Log.Exception(e);
 				}
@@ -335,7 +338,7 @@ namespace LongoMatch.Services
 				return;
 			}
 			
-			guiToolkit.CreateNewProject (ts, multimediaToolkit);
+			guiToolkit.CreateNewProject ();
 		}
 		
 		protected void OpenNewProject (Project project, ProjectType projectType,
@@ -349,13 +352,13 @@ namespace LongoMatch.Services
 			if (!PromptCloseProject ()) {
 				return;
 			}
-			guiToolkit.SelectProject(Core.DB.GetAllProjects());
+			guiToolkit.SelectProject(DB.GetAllProjects());
 		}
 		
 		protected void OpenProjectID (Guid projectID) {
 			Project project = null;
 			
-			project = Core.DB.GetProject(projectID);
+			project = DB.GetProject(projectID);
 
 			if (project.Description.File.FilePath == Constants.FAKE_PROJECT) {
 				/* If it's a fake live project prompt for a video file and
@@ -367,7 +370,7 @@ namespace LongoMatch.Services
 					Catalog.GetString("You are opening a live project without any video file associated yet.") +
 					"\n" + Catalog.GetString("Select a video file in the next step."));
 				
-				guiToolkit.CreateNewProject (ts, multimediaToolkit, project);
+				guiToolkit.CreateNewProject (project);
 				if (project == null)
 					return;
 				ToolsManager.CreateThumbnails(project, guiToolkit, multimediaToolkit.GetFramesCapturer());

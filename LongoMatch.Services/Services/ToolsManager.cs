@@ -22,6 +22,7 @@ using LongoMatch.Interfaces.GUI;
 using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.Store;
 using LongoMatch.Common;
+using LongoMatch.Interfaces;
 
 namespace LongoMatch.Services {
 
@@ -48,13 +49,13 @@ namespace LongoMatch.Services {
 				guiToolkit.OpenPreferencesEditor();
 			};
 			guiToolkit.MainController.ManageCategoriesEvent += () => {
-				guiToolkit.OpenCategoriesTemplatesManager (this.templatesService);
+				guiToolkit.OpenCategoriesTemplatesManager ();
 			};
 			guiToolkit.MainController.ManageTeamsEvent += () => {
-				guiToolkit.OpenTeamsTemplatesManager (this.templatesService.TeamTemplateProvider);
+				guiToolkit.OpenTeamsTemplatesManager ();
 			};
 			guiToolkit.MainController.ManageProjectsEvent += () => {
-				guiToolkit.OpenProjectsManager(this.openedProject, Core.DB, templatesService);
+				guiToolkit.OpenProjectsManager(this.openedProject);
 			};
 			
 			guiToolkit.MainController.ImportProjectEvent += ImportProject;
@@ -87,6 +88,7 @@ namespace LongoMatch.Services {
 		                           Func<string, Project> importProject, bool requiresNewFile) {
 			Project project;
 			string fileName;
+			IDatabase DB = Config.DatabaseManager.ActiveDB;
 
 			Log.Debug("Importing project");
 			/* Show a file chooser dialog to select the file to import */
@@ -130,15 +132,15 @@ namespace LongoMatch.Services {
 			}
 			
 			/* If the project exists ask if we want to overwrite it */
-			if (Core.DB.Exists (project)) {
+			if (DB.Exists (project)) {
 				var res = guiToolkit.QuestionMessage (Catalog.GetString ("A project already exists for the file:") +
 				                                      project.Description.File.FilePath+ "\n" +
 				                                      Catalog.GetString ("Do you want to overwrite it?"), null);
 				if(!res)
 					return;
-				Core.DB.UpdateProject(project);
+				DB.UpdateProject(project);
 			} else {
-				Core.DB.AddProject(project);
+				DB.AddProject(project);
 			}
 			guiToolkit.InfoMessage(Catalog.GetString("Project successfully imported."));
 		}

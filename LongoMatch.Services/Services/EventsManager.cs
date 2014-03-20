@@ -86,7 +86,7 @@ namespace LongoMatch.Services
 
 		void Save (Project project) {
 			if (Config.AutoSave) {
-				Core.DB.UpdateProject (project);
+				Config.DatabaseManager.ActiveDB.UpdateProject (project);
 			}
 		}
 		

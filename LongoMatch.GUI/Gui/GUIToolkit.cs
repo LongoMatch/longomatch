@@ -229,30 +229,25 @@ namespace LongoMatch.Gui
 			mainWindow.SelectProject (projects);
 		}
 		
-		public void OpenCategoriesTemplatesManager(ITemplatesService ts)
+		public void OpenCategoriesTemplatesManager()
 		{
-			var tManager = new TemplatesManager<Categories, Category> (ts.CategoriesTemplateProvider,
-			                                                           new CategoriesTemplateEditorWidget(ts));
+			SportsTemplatesPanel panel = new SportsTemplatesPanel ();
 			Log.Information ("Open sports templates manager");
-			tManager.TransientFor = mainWindow as Gtk.Window;
-			tManager.Show();
+			mainWindow.SetPanel (panel);
 		}
 
-		public void OpenTeamsTemplatesManager(ITeamTemplatesProvider teamProvider)
+		public void OpenTeamsTemplatesManager()
 		{
-			var tManager = new TemplatesManager<TeamTemplate, Player> (teamProvider,
-			                                                           new TeamTemplateEditorWidget(teamProvider));
+			TeamsTemplatesPanel panel = new TeamsTemplatesPanel ();
 			Log.Information ("Open teams templates manager");
-			tManager.TransientFor = mainWindow as Gtk.Window;
-			tManager.Show();
+			mainWindow.SetPanel (panel);
 		}
 		
-		public void OpenProjectsManager(Project openedProject, IDatabase db, ITemplatesService ts)
+		public void OpenProjectsManager(Project openedProject)
 		{
-			Gui.Dialog.ProjectsManager pm = new Gui.Dialog.ProjectsManager(openedProject, db, ts);
+			ProjectsManagerPanel panel = new ProjectsManagerPanel (openedProject);
 			Log.Information ("Open projects manager");
-			pm.TransientFor = mainWindow as Gtk.Window;
-			pm.Show();
+			mainWindow.SetPanel (panel);
 		}
 		
 		public void OpenPreferencesEditor()
@@ -264,17 +259,17 @@ namespace LongoMatch.Gui
 			pe.Destroy();
 		}
 		
-		public void OpenDatabasesManager(IDataBaseManager manager)
+		public void OpenDatabasesManager()
 		{
-			DatabasesManager dm = new DatabasesManager (manager);
+			DatabasesManager dm = new DatabasesManager ();
 			Log.Information ("Open db manager");
 			dm.TransientFor = mainWindow as Gtk.Window;
 			dm.Run();
 			dm.Destroy();
 		}
 		
-		public void ManageJobs(IRenderingJobsManager manager) {
-			RenderingJobsDialog dialog = new RenderingJobsDialog(manager);
+		public void ManageJobs() {
+			RenderingJobsDialog dialog = new RenderingJobsDialog ();
 			Log.Information ("Manage jobs");
 			dialog.TransientFor = mainWindow as Gtk.Window;
 			dialog.Run();
@@ -294,8 +289,8 @@ namespace LongoMatch.Gui
 			return dialog;
 		}
 		
-		public void CreateNewProject(ITemplatesService tps, IMultimediaToolkit toolkit, Project project=null) {
-			mainWindow.CreateNewProject (tps, toolkit, project);
+		public void CreateNewProject(Project project=null) {
+			mainWindow.CreateNewProject (project);
 		}
 		
 		public void ShowProjectStats (Project project) {

@@ -50,7 +50,6 @@ namespace LongoMatch.Gui.Panel
 		
 		Project project;
 		ProjectType projectType;
-		ITemplatesService tps;
 		List<Device> videoDevices;
 		ListStore videoStandardList, encProfileList, qualList;
 		CalendarPopup cp;
@@ -60,13 +59,11 @@ namespace LongoMatch.Gui.Panel
 		IGUIToolkit gtoolkit;
 		Color red;
 		
-		public NewProjectPanel (ITemplatesService tps, IGUIToolkit gtoolkit,
-		                        IMultimediaToolkit mtoolkit, Project project)
+		public NewProjectPanel (Project project)
 		{
 			this.Build ();
-			this.tps = tps;
-			this.mtoolkit = mtoolkit;
-			this.gtoolkit = gtoolkit;
+			this.mtoolkit = Config.MultimediaToolkit;
+			this.gtoolkit = Config.GUIToolkit;
 			notebook1.ShowTabs = false;
 			notebook1.ShowBorder = false;
 			backgroundwidget.Background = Gdk.Pixbuf.LoadFromResource (Constants.BACKGROUND).RotateSimple (Gdk.PixbufRotation.Counterclockwise);
@@ -81,8 +78,8 @@ namespace LongoMatch.Gui.Panel
 				notebook1.Page = 1;
 				this.project = project;
 			}
-			localteamplayersselection.TemplatesProvider = tps.TeamTemplateProvider;
-			awayteamplayersselection.TemplatesProvider = tps.TeamTemplateProvider;
+			localteamplayersselection.TemplatesProvider = Config.TeamTemplatesProvider;
+			awayteamplayersselection.TemplatesProvider = Config.TeamTemplatesProvider;
 			ConnectSignals ();
 			FillProjectDetails ();
 			FillCategories ();
@@ -125,7 +122,7 @@ namespace LongoMatch.Gui.Panel
 			int i=0;
 			int index = 0;
 
-			foreach(string template in tps.CategoriesTemplateProvider.TemplatesNames) {
+			foreach (string template in Config.CategoriesTemplatesProvider.TemplatesNames) {
 				tagscombobox.AppendText(template);
 				if(template == "default")
 					index = i;
@@ -217,7 +214,7 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleOpenbuttonClicked(object sender, System.EventArgs e)
 		{
-			mediaFile = Open.OpenFile (gtoolkit, mtoolkit, this);
+			mediaFile = Open.OpenFile (this);
 			if (mediaFile != null) {
 				fileEntry.Text = mediaFile.FilePath;
 			}
@@ -270,7 +267,7 @@ namespace LongoMatch.Gui.Panel
 				}
 			}
 			p = new Project ();
-			p.Categories = tps.CategoriesTemplateProvider.Load(tagscombobox.ActiveText);
+			p.Categories = Config.CategoriesTemplatesProvider.Load(tagscombobox.ActiveText);
 			p.LocalTeamTemplate = localteamplayersselection.Template;
 			p.VisitorTeamTemplate = awayteamplayersselection.Template;
 			p.Description = new ProjectDescription ();

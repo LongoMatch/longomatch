@@ -25,9 +25,11 @@ namespace LongoMatch.Utils
 {
 	public class Open
 	{
-		public static MediaFile OpenFile (IGUIToolkit gui, IMultimediaToolkit multimedia, object parent) {
+		public static MediaFile OpenFile (object parent) {
 			IBusyDialog busy;
 			MediaFile mediaFile = null;
+			IGUIToolkit gui = Config.GUIToolkit;
+			IMultimediaToolkit multimedia = Config.MultimediaToolkit;
 			string folder, filename;
 			
 			

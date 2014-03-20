@@ -41,7 +41,6 @@ namespace LongoMatch.Services
 		static GameUnitsManager guManager;
 		static PlaylistManager plManager;
 		static RenderingJobsManager videoRenderer;
-		static IGUIToolkit guiToolkit;
 		static ToolsManager toolsManager;
 #if OSTYPE_WINDOWS
 		[DllImport("libglib-2.0-0.dll") /* willfully unmapped */ ]
@@ -74,7 +73,8 @@ namespace LongoMatch.Services
 		}
 
 		public static void Start(IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit) {
-			Core.guiToolkit = guiToolkit;
+			Config.MultimediaToolkit = multimediaToolkit;
+			Config.GUIToolkit= guiToolkit;
 			StartServices (guiToolkit, multimediaToolkit);
 			BindEvents (guiToolkit.MainController);
 		}
@@ -84,9 +84,13 @@ namespace LongoMatch.Services
 			TemplatesService ts;
 				
 			ts = new TemplatesService (Config.TemplatesDir);
+			Config.TeamTemplatesProvider = ts.TeamTemplateProvider;
+			Config.CategoriesTemplatesProvider = ts.CategoriesTemplateProvider;
+
 			/* Start DB services */
 			dbManager = new DataBaseManager (Config.DBDir, guiToolkit);
 			dbManager.SetActiveByName (Config.CurrentDatabase);
+			Config.DatabaseManager = dbManager;
 			
 			/* Start Migration */
 			MigrationsManager migration = new MigrationsManager(ts, dbManager);
@@ -94,6 +98,7 @@ namespace LongoMatch.Services
 			
 			/* Start the rendering jobs manager */
 			videoRenderer = new RenderingJobsManager(multimediaToolkit, guiToolkit);
+			Config.RenderingJobsManger = videoRenderer;
 			
 			projectsManager = new ProjectsManager(guiToolkit, multimediaToolkit, ts);
 			
@@ -111,12 +116,11 @@ namespace LongoMatch.Services
 			guManager = new GameUnitsManager(projectsManager);
 			
 			/* Start playlists manager */
-			plManager = new PlaylistManager(guiToolkit, videoRenderer, projectsManager);
-			
+			plManager = new PlaylistManager(Config.GUIToolkit, videoRenderer, projectsManager);
 		}
 
 		public static void BindEvents(IMainController mainController) {
-			mainController.QuitApplicationEvent += () => {guiToolkit.Quit();};
+			mainController.QuitApplicationEvent += () => {Config.GUIToolkit.Quit();};
 		}
 
 		public static void CheckDirs() {
@@ -136,12 +140,6 @@ namespace LongoMatch.Services
 				System.IO.Directory.CreateDirectory(Config.TempVideosDir);
 		}
 
-		public static IDatabase DB {
-			get {
-				return dbManager.ActiveDB;
-			}
-		}
-		
 		private static void SetupBaseDir() {
 			string home;
 			

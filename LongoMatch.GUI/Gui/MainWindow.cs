@@ -184,9 +184,8 @@ namespace LongoMatch.Gui
 			SetPanel (panel);
 		}
 		
-		public void CreateNewProject (ITemplatesService tps, IMultimediaToolkit mtoolkit, Project project) {
-			NewProjectPanel panel = new NewProjectPanel (tps, guiToolKit, mtoolkit, project);
-			panel.CancelEvent += ResetGUI;
+		public void CreateNewProject (Project project) {
+			NewProjectPanel panel = new NewProjectPanel (project);
 			panel.OpenNewProjectEvent += EmitOpenNewProject;
 			SetPanel (panel);
 		}

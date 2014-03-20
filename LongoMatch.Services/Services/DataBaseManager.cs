@@ -122,7 +122,7 @@ namespace LongoMatch.DB
 					var msg = Catalog.GetString("Close the current project to open the database manager");
 					guiToolkit.ErrorMessage (msg);
 				} else {
-					guiToolkit.OpenDatabasesManager (this);
+					guiToolkit.OpenDatabasesManager ();
 				}
 			};
 		}

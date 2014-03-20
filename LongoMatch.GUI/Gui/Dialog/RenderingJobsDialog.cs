@@ -29,10 +29,10 @@ namespace LongoMatch.Gui.Dialog
 	{
 		IRenderingJobsManager manager;
 		
-		public RenderingJobsDialog (IRenderingJobsManager manager)
+		public RenderingJobsDialog ()
 		{
 			this.Build ();
-			this.manager = manager;
+			this.manager = Config.RenderingJobsManger;
 			UpdateModel();
 			cancelbutton.Clicked += OnCancelbuttonClicked;
 			clearbutton.Clicked += OnClearbuttonClicked;

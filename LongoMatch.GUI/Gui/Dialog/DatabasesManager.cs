@@ -30,10 +30,10 @@ namespace LongoMatch.Gui.Dialog
 		IDataBaseManager manager;
 		ListStore store;
 			
-		public DatabasesManager (IDataBaseManager manager)
+		public DatabasesManager ()
 		{
 			this.Build ();
-			this.manager = manager;
+			this.manager = Config.DatabaseManager;
 			ActiveDB = manager.ActiveDB;
 			SetTreeView ();
 		}

@@ -19,6 +19,9 @@ using System;
 using System.IO;
 
 using LongoMatch.Common;
+using LongoMatch.Interfaces;
+using LongoMatch.Interfaces.GUI;
+using LongoMatch.Interfaces.Multimedia;
 
 namespace LongoMatch
 {
@@ -27,6 +30,15 @@ namespace LongoMatch
 		public static string homeDirectory;
 		public static string baseDirectory;
 		public static string configDirectory;
+		
+		/* State */
+		public static IGUIToolkit GUIToolkit;
+		public static IMultimediaToolkit MultimediaToolkit;
+		public static ITeamTemplatesProvider TeamTemplatesProvider;
+		public static ICategoriesTemplatesProvider CategoriesTemplatesProvider;
+		public static IDataBaseManager DatabaseManager;
+		public static IRenderingJobsManager RenderingJobsManger;
+
 		static ConfigState state;
 		
 		public static void Load () {

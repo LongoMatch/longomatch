@@ -135,7 +135,7 @@ namespace LongoMatch.Services
 		}
 		
 		protected void ManageJobs() {
-			guiToolkit.ManageJobs(this);
+			guiToolkit.ManageJobs ();
 		}
 		
 		private void LoadConversionJob (ConversionJob job) {
