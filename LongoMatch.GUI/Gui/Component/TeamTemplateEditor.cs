@@ -1,173 +1,311 @@
-// 
-//  Copyright (C) 2011 Andoni Morales Alastruey
-// 
+//
+//  Copyright (C) 2014 Andoni Morales Alastruey
+//
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation; either version 2 of the License, or
 //  (at your option) any later version.
-// 
+//
 //  This program is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 //  GNU General Public License for more details.
-//  
+//
 //  You should have received a copy of the GNU General Public License
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
-// 
-
+//
 using System;
 using System.Collections.Generic;
-using Gdk;
 using Gtk;
+using Gdk;
+using LongoMatch.Store.Templates;
+using LongoMatch.Store;
 using Mono.Unix;
-using Stetic;
 
 using Image = LongoMatch.Common.Image;
 using LongoMatch.Common;
-using LongoMatch.Gui.Base;
+using LongoMatch.Gui.Popup;
 using LongoMatch.Gui.Dialog;
-using LongoMatch.Interfaces;
-using LongoMatch.Store;
-using LongoMatch.Store.Templates;
-using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
-	public class TeamTemplateEditorWidget: TemplatesEditorWidget<TeamTemplate, Player>
-	{	
-		PlayerPropertiesTreeView treeview;
-		Entry teamentry;
-		Gtk.Image shieldImage;
-		VBox box;
+	[System.ComponentModel.ToolboxItem(true)]
+	public partial class TeamTemplateEditor : Gtk.Bin
+	{
+	
+		enum Columns {
+			Desc,
+			Photo,
+			Tooltip,
+			Player,
+			NumCols,
+		}
+	
+		ListStore players;
+		Player loadedPlayer;
+		List<Player> selectedPlayers;
+		TreeIter loadedPlayerIter;
+		TeamTemplate template;
+		CalendarPopup cp;
+		Win32CalendarDialog win32CP;
+		bool edited;
 		
-		public TeamTemplateEditorWidget (ITemplateProvider<TeamTemplate, Player> provider): base(provider) {
-			treeview = new PlayerPropertiesTreeView(); 
-			treeview.PlayerClicked += this.OnPlayerClicked;
-			treeview.PlayersSelected += this.OnPlayersSelected;
-			FirstPageName = Catalog.GetString("Teams players");
-			AddTreeView(treeview);
-			AddTeamNamesWidget();
+		public TeamTemplateEditor ()
+		{
+			this.Build ();
+			
+			players = new ListStore (typeof(string), typeof(Pixbuf), typeof(string), typeof(Player));
+
+			playersiconview.Model = players;
+			playersiconview.Reorderable = true;
+			playersiconview.TextColumn = (int) Columns.Desc;
+			playersiconview.PixbufColumn = (int) Columns.Photo;
+			playersiconview.SelectionMode = SelectionMode.Multiple;
+			playersiconview.SelectionChanged += HandlePlayersSelectionChanged;;
+			playersiconview.KeyPressEvent += HandleKeyPressEvent;
+			
+			ConnectSignals ();
 		}
 		
-		public override  TeamTemplate Template {
-			get {
-				return template;
+		void ConnectSignals () {
+			newplayerbutton.Clicked += HandleNewPlayerClicked;
+			savebutton.Clicked += HandleSaveTemplateClicked;
+			deletebutton.Clicked += HandleDeletePlayerClicked;
+			
+			shieldeventbox.ButtonPressEvent += HandleShieldButtonPressEvent;
+			playereventbox.ButtonPressEvent += HandlePlayerButtonPressEvent;
+			
+			teamnameentry.Changed += HandleEntryChanged;
+			nameentry.Changed += HandleEntryChanged;
+			positionentry.Changed += HandleEntryChanged;
+			numberspinbutton.Changed += HandleEntryChanged;
+			heightspinbutton.Changed += HandleEntryChanged;
+			weightspinbutton.Changed += HandleEntryChanged;
+			nationalityentry.Changed += HandleEntryChanged;
+			mailentry.Changed += HandleEntryChanged;
+			
+			if(Environment.OSVersion.Platform != PlatformID.Win32NT) {
+				cp = new CalendarPopup();
+				cp.Hide();
+				cp.DateSelectedEvent += (selectedDate) => {
+					bdaylabel.Text = selectedDate.ToShortDateString();
+					edited = true;
+				};
 			}
-			set {
-				template= value;
-				Edited = false;
-				Gtk.TreeStore playersListStore = new Gtk.TreeStore(typeof(Player));
-				foreach(Player player in template)
-					playersListStore.AppendValues(player);
-				treeview.Model=playersListStore;
-				teamentry.Text = template.TeamName;
-				if (template.Shield != null) {
-					shieldImage.Pixbuf = template.Shield.Value;
-				}
-				box.Sensitive = true;
+			datebutton.Clicked += HandleCalendarbuttonClicked; 
+			
+			Edited = false;
+		}
+
+		void HandleEntryChanged (object sender, EventArgs e)
+		{
+			if (sender == teamnameentry) {
+				template.TeamName = (sender as Entry).Text;
+			} else if (sender == nameentry) {
+				loadedPlayer.Name = (sender as Entry).Text;
+			} else if (sender == positionentry) {
+				loadedPlayer.Position = (sender as Entry).Text;
+			} else if (sender == numberspinbutton) {
+				loadedPlayer.Number = (sender as SpinButton).ValueAsInt;
+			} else if (sender == heightspinbutton) {
+				loadedPlayer.Height = (sender as SpinButton).ValueAsInt;
+			} else if (sender == weightspinbutton) {
+				loadedPlayer.Weight = (sender as SpinButton).ValueAsInt;
+			} else if (sender == nationalityentry) {
+				loadedPlayer.Nationality = (sender as Entry).Text;
+			} else if (sender == mailentry) {
+				loadedPlayer.Mail = (sender as Entry).Text;
 			}
-		}
-		
-		private void AddTeamNamesWidget () {
-			Gtk.Frame sframe, tframe;
-			EventBox ebox;
-			
-			sframe = new Gtk.Frame("<b>" + Catalog.GetString("Shield") + "</b>");
-			(sframe.LabelWidget as Label).UseMarkup = true;
-			sframe.ShadowType = ShadowType.None;
-			tframe = new Gtk.Frame("<b>" + Catalog.GetString("Team Name") + "</b>");
-			(tframe.LabelWidget as Label).UseMarkup = true;
-			tframe.ShadowType = ShadowType.None;
-			
-			ebox = new EventBox();
-			ebox.ButtonPressEvent += OnImageClicked;
-			
-			shieldImage = new Gtk.Image();
-			shieldImage.Pixbuf = IconLoader.LoadIcon(this, "gtk-execute", IconSize.Dialog);
-			box = new VBox();
-			
-			teamentry = new Entry ();
-			teamentry.Changed += delegate(object sender, EventArgs e) {
-				Template.TeamName = teamentry.Text;
-			};
-			
-			sframe.Add(ebox);
-			ebox.Add(shieldImage);
-			tframe.Add(teamentry);
-			
-			box.PackStart (sframe, false, false, 0);
-			box.PackStart (tframe, false, false, 0);
-			box.ShowAll();
-			box.Sensitive = false;
-			AddUpperWidget(box);
-		}
-		
-		protected override void EditSelected() {
-			LongoMatch.Gui.Dialog.EditPlayerDialog dialog = new LongoMatch.Gui.Dialog.EditPlayerDialog();
-			dialog.Player=selected[0];
-			dialog.TransientFor = (Gtk.Window) Toplevel;
-			dialog.Run();
-			dialog.Destroy();
 			Edited = true;
 		}
-		
-		protected virtual void OnImageClicked (object sender, EventArgs args)
-		{
-			Pixbuf shield;
-			
-			shield = Helpers.Misc.OpenImage((Gtk.Window)this.Toplevel);
-			if (shield != null) {
-				Image img = new Image(shield);
-				img.Scale();
-				Template.Shield = img; 
-				shieldImage.Pixbuf = img.Value;
-			}
-		}
 
-		protected virtual void OnPlayerClicked(Player player)
-		{
-			selected = new List<Player>();
-			selected.Add(player);
-			EditSelected();
-		}
-
-		protected virtual void OnPlayersSelected(List<Player> players)
-		{
-			selected = players;
-			
-			if(selected.Count == 0) {
-				ButtonsSensitive = false;
-			} else if(selected.Count == 1) {
-				ButtonsSensitive = true;
-			} else {
-				MultipleSelection();
+		public TeamTemplate  Team {
+			set {
+				template = value;
+				
+				players.Clear ();
+				foreach (Player p in value) {
+					AddPlayer (p);
+				}
+				if (template.Shield != null) {
+					shieldimage.Pixbuf = template.Shield.Value;
+				} else {
+					shieldimage.Pixbuf = Gdk.Pixbuf.LoadFromResource ("logo.svg");
+				}
+				teamnameentry.Text = template.TeamName;
+				Edited = false;
 			}
 		}
 		
-		protected override void RemoveSelected (){
-			if(Project != null) {
-				var msg = Catalog.GetString("You are about to delete a player and all " +
-				                            "its tags. Do you want to proceed?");
-				if (MessagesHelpers.QuestionMessage (this, msg)) {
-					try {
-						foreach(var player in selected)
-							Project.RemovePlayer (template, player);
-					} catch {
-						MessagesHelpers.WarningMessage (this,
-						                                Catalog.GetString("A template needs at least one category"));
-					}
-				}
+		public bool Edited {
+			get {
+				return edited;
+			}
+			protected set {
+				edited = value;
+				savebutton.Sensitive = edited;
+			}
+		}
+		
+		void LoadPlayer (Player p) {
+			loadedPlayer = p;
+			nameentry.Text = p.Name;
+			positionentry.Text = p.Name;
+			numberspinbutton.Value = p.Number;
+			heightspinbutton.Value = p.Height;
+			weightspinbutton.Value = p.Weight;
+			nationalityentry.Text = p.Number.ToString();
+			bdaylabel.Text = p.Birthday.ToShortDateString();
+			playerimage.Pixbuf = PlayerPhoto (p);
+		}
+		
+		Pixbuf PlayerPhoto (Player p) {
+			Pixbuf playerImage;
+				
+			if (p.Photo != null) {
+				playerImage = p.Photo.Value;
 			} else {
-				try {
-					foreach(var player in selected)
-					Template.Remove(player);
-				} catch {
-					MessagesHelpers.WarningMessage (this,
-					                                Catalog.GetString("A template needs at least one category"));
+				playerImage = Stetic.IconLoader.LoadIcon (this, "stock_person", IconSize.Dialog);
+			}
+			return playerImage;
+		}
+		
+		TreeIter AddPlayer (Player p) {
+			return players.AppendValues (String.Format("{0} #{1}", p.Name, p.Number),
+			                             PlayerPhoto (p), p.Number.ToString(), p);
+		}
+		
+		void PlayersSelected (List<Player> players) {
+			playerframe.Sensitive = players.Count == 1;
+			
+			selectedPlayers = players;
+			deletebutton.Sensitive = players.Count != 0;
+			playerframe.Sensitive = players.Count != 0;
+			if (players.Count == 1) {
+				LoadPlayer (players[0]);
+			} else {
+				loadedPlayer = null;
+			}
+		}
+		
+		void DeleteSelectedPlayers () {
+			if (selectedPlayers.Count == 0) {
+				return;
+			}
+			
+			foreach (Player p in selectedPlayers) {
+				string msg = Catalog.GetString ("Do you want to delete player: ") + p.Name;
+				if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
+					template.Remove (p);
+					Edited = true;
 				}
 			}
-			base.RemoveSelected();
+			Team = template;
 		}
+		
+		void HandlePlayersSelectionChanged (object sender, EventArgs e)
+		{
+			TreeIter iter;
+			List<Player> list;
+			TreePath[] pathArray;
+			
+			list = new List<Player>();
+			pathArray = playersiconview.SelectedItems;
+				
+			for(int i=0; i< pathArray.Length; i++) {
+				Player player;
+				
+				playersiconview.Model.GetIterFromString (out iter, pathArray[i].ToString());
+				player = playersiconview.Model.GetValue (iter, (int)Columns.Player) as Player; 
+				list.Add (player);
+				if (i== 0) {
+					loadedPlayerIter = iter;
+				}
+			}
+			PlayersSelected (list);
+		}
+		
+		void HandleSaveTemplateClicked (object sender, EventArgs e)
+		{
+			if (template != null) {
+				Config.TeamTemplatesProvider.Update (template);			
+				Edited = false;
+			}
+		}
+
+		void HandleNewPlayerClicked (object sender, EventArgs e)
+		{
+			TreeIter iter;
+			Player p;
+			
+			p = template.AddDefaultItem (template.Count);
+			iter = AddPlayer (p);
+			playersiconview.SelectPath (playersiconview.Model.GetPath (iter));
+			Edited = true;
+		}
+
+		void HandleDeletePlayerClicked (object sender, EventArgs e)
+		{
+			DeleteSelectedPlayers ();
+		}
+		
+		void HandleKeyPressEvent (object o, KeyPressEventArgs args)
+		{
+			if (args.Event.Key == Gdk.Key.Delete) {
+				DeleteSelectedPlayers ();
+			}
+		}
+
+		void HandlePlayerButtonPressEvent (object o, ButtonPressEventArgs args)
+		{
+			Image player = new Image (Helpers.Misc.OpenImage (this));
+			if (player == null) {
+				return;
+			}
+			
+			player.Scale (Constants.MAX_PLAYER_ICON_SIZE, Constants.MAX_PLAYER_ICON_SIZE); 
+			if (player != null && loadedPlayer != null) {
+				playerimage.Pixbuf = player.Value;
+				loadedPlayer.Photo = player;
+				playersiconview.Model.SetValue (loadedPlayerIter, (int) Columns.Photo,
+				                                playerimage.Pixbuf);
+				Edited = true;
+			}
+		}
+
+		void HandleShieldButtonPressEvent (object o, ButtonPressEventArgs args)
+		{
+			Image shield = new Image (Helpers.Misc.OpenImage (this));
+			if (shield == null) {
+				return;
+			}
+			
+			shield.Scale (Constants.MAX_SHIELD_ICON_SIZE, Constants.MAX_SHIELD_ICON_SIZE); 
+			if (shield != null)
+			{
+				shieldimage.Pixbuf = shield.Value;
+				template.Shield = shield;
+				Edited = true;
+			}
+		}
+
+		void HandleCalendarbuttonClicked(object sender, System.EventArgs e)
+		{
+			if(Environment.OSVersion.Platform == PlatformID.Win32NT) {
+				win32CP = new Win32CalendarDialog();
+				win32CP.TransientFor = (Gtk.Window)this.Toplevel;
+				win32CP.Run();
+				bdaylabel.Text = win32CP.getSelectedDate().ToShortDateString();
+				Edited = true;
+				win32CP.Destroy();
+			}
+			else {
+				cp.TransientFor=(Gtk.Window)this.Toplevel;
+				cp.Show();
+			}
+		}
+
 	}
 }
+

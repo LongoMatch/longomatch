@@ -179,7 +179,7 @@ namespace LongoMatch.Gui.Component
 			
 			if (swallowSignals)
 				return;
-
+				
 			if (ProjectSelected != null) {
 				iconview.Model.GetIter (out iter, args.Path);
 				pdesc = iconview.Model.GetValue (iter, COL_PROJECT_DESCRIPTION) as ProjectDescription;

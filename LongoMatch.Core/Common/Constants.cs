@@ -103,7 +103,7 @@ Xavier Queralt Mateu (ca)";
 		
 		public const int DB_MAYOR_VERSION = 3;
 		public const int DB_MINOR_VERSION = 1;
-
+		
 		public const int MAX_PLAYER_ICON_SIZE = 100;
 		public const int MAX_SHIELD_ICON_SIZE = 100;
 		public const int MAX_THUMBNAIL_SIZE = 100;

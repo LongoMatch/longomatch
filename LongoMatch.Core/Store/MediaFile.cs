@@ -211,9 +211,10 @@ namespace LongoMatch.Store
 				return desc;
 			}
 		}
-
+		
 		public uint GetFrames() {
 			return (uint)(Fps*Length/1000);
 		}
+		
 	}
 }

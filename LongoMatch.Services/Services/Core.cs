@@ -118,7 +118,7 @@ namespace LongoMatch.Services
 			/* Start playlists manager */
 			plManager = new PlaylistManager(Config.GUIToolkit, videoRenderer, projectsManager);
 		}
-
+			
 		public static void BindEvents(IMainController mainController) {
 			mainController.QuitApplicationEvent += () => {Config.GUIToolkit.Quit();};
 		}

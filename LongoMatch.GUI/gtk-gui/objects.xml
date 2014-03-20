@@ -7,23 +7,6 @@
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.ProjectDetailsWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="ProjectDetailsWidget Properties">
-        <property name="Edited" />
-        <property name="Season" />
-        <property name="Competition" />
-        <property name="LocalGoals" />
-        <property name="VisitorGoals" />
-        <property name="Date" />
-      </itemgroup>
-    </itemgroups>
-    <signals>
-      <itemgroup label="ProjectDetailsWidget Signals">
-        <signal name="EditedEvent" />
-      </itemgroup>
-    </signals>
-  </object>
   <object type="LongoMatch.Gui.Component.ButtonsWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>
@@ -207,14 +190,6 @@
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.CategoriesTemplateEditorWidget" palette-category="General" allow-children="false" base-type="LongoMatch.Gui.Base.TemplatesEditorBase">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.TeamTemplateEditorWidget" palette-category="General" allow-children="false" base-type="LongoMatch.Gui.Base.TemplatesEditorBase">
-    <itemgroups />
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Component.RenderingStateBar" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="IRenderingStateBar Properties">
@@ -257,24 +232,6 @@
       <itemgroup label="TimeScaleBase Properties">
         <property name="PixelRatio" />
         <property name="CurrentFrame" />
-      </itemgroup>
-    </itemgroups>
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Base.TemplatesEditorBase" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="TemplatesEditorBase Properties">
-        <property name="CanExport" />
-        <property name="Edited" />
-      </itemgroup>
-    </itemgroups>
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Base.TemplatesEditorWidget" palette-category="General" allow-children="false" base-type="LongoMatch.Gui.Base.TemplatesEditorBase">
-    <itemgroups>
-      <itemgroup label="ITemplateWidget Properties">
-        <property name="Edited" />
-        <property name="CanExport" />
       </itemgroup>
     </itemgroups>
     <signals />
@@ -506,12 +463,40 @@
     <itemgroups />
     <signals>
       <itemgroup label="NewProjectPanel Signals">
-        <signal name="CancelEvent" />
         <signal name="OpenNewProjectEvent" />
+        <signal name="BackEvent" />
       </itemgroup>
     </signals>
   </object>
   <object type="LongoMatch.Gui.Component.TeamPlayersSelection" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Panel.TeamsTemplatesPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="TeamsTemplatesPanel Signals">
+        <signal name="BackEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.TeamTemplateEditor" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="TeamTemplateEditor Properties">
+        <property name="Edited" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Panel.ProjectsManagerPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="IPanel Signals">
+        <signal name="BackEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Panel.SportsTemplatesPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
   </object>
