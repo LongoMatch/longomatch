@@ -8660,6 +8660,17 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
           </packing>
         </child>
         <child>
+          <widget class="Gtk.HSeparator" id="hseparator1">
+            <property name="MemberName" />
+          </widget>
+          <packing>
+            <property name="Position">1</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
           <widget class="Gtk.HButtonBox" id="hbuttonbox3">
             <property name="MemberName" />
             <property name="Size">1</property>
