@@ -39,10 +39,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.PlayerProperties" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Component.PlayersTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
     <itemgroups />
     <signals />
