@@ -36,20 +36,10 @@ namespace LongoMatch.Gui.Component
 		private const int THUMBNAIL_MAX_HEIGHT = 50;
 
 		private Player player;
-		private CalendarPopup cp;
 
 		public PlayerProperties()
 		{
 			this.Build();
-			//HACK:The calendar dialog does not respond on win32
-			if(Environment.OSVersion.Platform != PlatformID.Win32NT) {
-				cp = new CalendarPopup();
-				cp.Hide();
-				cp.DateSelectedEvent += delegate(DateTime selectedDate) {
-					Player.Birthday = selectedDate;
-					bdaylabel.Text = selectedDate.ToShortDateString();
-				};
-			}
 		}
 
 		public Player Player {

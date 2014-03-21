@@ -34,9 +34,8 @@
     <File subtype="Code" buildaction="Compile" name="Gui/TreeView/PlaysTreeView.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/SnapshotsDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/UpdateDialog.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/Win32CalendarDialog.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/CalendarDialog.cs" />
     <File subtype="Directory" buildaction="Compile" name="Gui/Popup" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Popup/CalendarPopup.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/PlayersListTreeWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/PlayListWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/ProjectListWidget.cs" />
@@ -57,7 +56,6 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/generated.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.ProjectListWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlaysListTreeWidget.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Popup.CalendarPopup.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.MainWindow.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs" />
@@ -71,7 +69,6 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlayerProperties.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlayersListTreeWidget.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.Win32CalendarDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.EditCategoryDialog.cs" />
@@ -203,6 +200,7 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Panel.ProjectsManagerPanel.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Panel/SportsTemplatesPanel.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Panel.SportsTemplatesPanel.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.CalendarDialog.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

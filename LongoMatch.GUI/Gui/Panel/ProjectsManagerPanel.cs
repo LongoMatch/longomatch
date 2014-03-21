@@ -61,6 +61,7 @@ namespace LongoMatch.Gui.Panel
 			savebutton.Clicked += HandleSaveClicked;
 			exportbutton.Clicked += HandleExportClicked;
 			deletebutton.Clicked += HandleDeleteClicked;
+			calendarbutton.Clicked += HandleCalendarClicked;
 			notebook1.Page = 0;
 		}
 
@@ -165,6 +166,15 @@ namespace LongoMatch.Gui.Panel
 					new string[] {Constants.PROJECT_EXT});
 				SerializableObject.Save(loadedProject, filename);
 			}			
+		}
+
+		void HandleCalendarClicked (object sender, EventArgs e)
+		{
+			DateTime date;
+			
+			date = gkit.SelectDate (loadedProject.Description.MatchDate, this);
+			loadedProject.Description.MatchDate = date;
+			datelabel.Text = date.ToShortDateString ();
 		}
 
 		void HandleDeleteClicked (object sender, EventArgs e)

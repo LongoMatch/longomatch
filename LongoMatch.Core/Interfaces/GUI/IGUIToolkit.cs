@@ -82,6 +82,9 @@ namespace LongoMatch.Interfaces.GUI
 		void DrawingTool(Image pixbuf, Play play, int stopTime);
 		
 		string RemuxFile (string filePath, string outputFile, VideoMuxerType muxer);
+		
+		DateTime SelectDate (DateTime date, object widget);
+		
 	}
 }
 

@@ -326,6 +326,15 @@ namespace LongoMatch.Gui
 			mainWindow.CloseProject ();
 		}
 		
+		public DateTime SelectDate (DateTime date, object widget) {
+			CalendarDialog dialog = new CalendarDialog (date);
+			dialog.TransientFor = (widget as Widget).Toplevel as Gtk.Window;
+			dialog.Run();
+			date = dialog.Date;
+			dialog.Destroy ();
+			return date;
+		}
+		
 		public void Quit () {
 			Log.Information ("Quit application");
 			Gtk.Application.Quit ();

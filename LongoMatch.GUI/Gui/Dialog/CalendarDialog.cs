@@ -22,20 +22,25 @@ using Gtk;
 namespace LongoMatch.Gui.Dialog
 {
 
-
-	public partial class Win32CalendarDialog : Gtk.Dialog
+	public partial class CalendarDialog : Gtk.Dialog
 	{
 		DateTime selectedDate;
 
-		public Win32CalendarDialog()
+		public CalendarDialog (DateTime date)
 		{
 			this.Build();
+			SkipPagerHint = true;
+			SkipTaskbarHint = true;
+			Decorated = false;
+			Modal = true;
+			calendar1.Date = date;
 		}
 
-		public DateTime getSelectedDate() {
-			return selectedDate;
+		public DateTime Date {
+			get {
+				return selectedDate;
+			}
 		}
-
 
 		protected virtual void OnCalendar1DaySelectedDoubleClick(object sender, System.EventArgs e)
 		{

@@ -47,8 +47,6 @@ namespace LongoMatch.Gui.Component
 		List<Player> selectedPlayers;
 		TreeIter loadedPlayerIter;
 		TeamTemplate template;
-		CalendarPopup cp;
-		Win32CalendarDialog win32CP;
 		bool edited;
 		
 		public TeamTemplateEditor ()
@@ -85,14 +83,6 @@ namespace LongoMatch.Gui.Component
 			nationalityentry.Changed += HandleEntryChanged;
 			mailentry.Changed += HandleEntryChanged;
 			
-			if(Environment.OSVersion.Platform != PlatformID.Win32NT) {
-				cp = new CalendarPopup();
-				cp.Hide();
-				cp.DateSelectedEvent += (selectedDate) => {
-					bdaylabel.Text = selectedDate.ToShortDateString();
-					edited = true;
-				};
-			}
 			datebutton.Clicked += HandleCalendarbuttonClicked; 
 			
 			Edited = false;
@@ -292,20 +282,9 @@ namespace LongoMatch.Gui.Component
 
 		void HandleCalendarbuttonClicked(object sender, System.EventArgs e)
 		{
-			if(Environment.OSVersion.Platform == PlatformID.Win32NT) {
-				win32CP = new Win32CalendarDialog();
-				win32CP.TransientFor = (Gtk.Window)this.Toplevel;
-				win32CP.Run();
-				bdaylabel.Text = win32CP.getSelectedDate().ToShortDateString();
-				Edited = true;
-				win32CP.Destroy();
-			}
-			else {
-				cp.TransientFor=(Gtk.Window)this.Toplevel;
-				cp.Show();
-			}
+			loadedPlayer.Birthday = Config.GUIToolkit.SelectDate (loadedPlayer.Birthday, this);
+			bdaylabel.Text = loadedPlayer.Birthday.ToShortDateString ();
 		}
-
 	}
 }
 

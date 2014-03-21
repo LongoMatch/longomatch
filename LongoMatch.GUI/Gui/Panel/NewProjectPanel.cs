@@ -52,8 +52,6 @@ namespace LongoMatch.Gui.Panel
 		ProjectType projectType;
 		List<Device> videoDevices;
 		ListStore videoStandardList, encProfileList, qualList;
-		CalendarPopup cp;
-		Win32CalendarDialog win32CP;
 		MediaFile mediaFile;
 		IMultimediaToolkit mtoolkit;
 		IGUIToolkit gtoolkit;
@@ -94,13 +92,6 @@ namespace LongoMatch.Gui.Panel
 		}
 		
 		void ConnectSignals () {
-			if(Environment.OSVersion.Platform != PlatformID.Win32NT) {
-				cp = new CalendarPopup();
-				cp.Hide();
-				cp.DateSelectedEvent += (selectedDate) => {
-					dateEntry.Text = selectedDate.ToShortDateString();};
-			}
-			
 			calendarbutton.Clicked += HandleCalendarbuttonClicked; 
 			openbutton.Clicked += HandleOpenbuttonClicked;
 			savebutton.Clicked += HandleSavebuttonClicked;
@@ -187,17 +178,7 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleCalendarbuttonClicked(object sender, System.EventArgs e)
 		{
-			if(Environment.OSVersion.Platform == PlatformID.Win32NT) {
-				win32CP = new Win32CalendarDialog();
-				win32CP.TransientFor = (Gtk.Window)this.Toplevel;
-				win32CP.Run();
-				dateEntry.Text = win32CP.getSelectedDate().ToShortDateString();
-				win32CP.Destroy();
-			}
-			else {
-				cp.TransientFor=(Gtk.Window)this.Toplevel;
-				cp.Show();
-			}
+			dateEntry.Text = Config.GUIToolkit.SelectDate (project.Description.MatchDate, this).ToShortDateString ();
 		}
 
 		void HandleSavebuttonClicked(object sender, System.EventArgs e)
