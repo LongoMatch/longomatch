@@ -38,10 +38,7 @@ namespace LongoMatch.Services
 		static DataBaseManager dbManager;
 		static EventsManager eManager;
 		static HotKeysManager hkManager;
-		static GameUnitsManager guManager;
-		static PlaylistManager plManager;
 		static RenderingJobsManager videoRenderer;
-		static ToolsManager toolsManager;
 #if OSTYPE_WINDOWS
 		[DllImport("libglib-2.0-0.dll") /* willfully unmapped */ ]
 		static extern void g_setenv (String env, String val);
@@ -81,6 +78,9 @@ namespace LongoMatch.Services
 		
 		public static void StartServices (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit){
 			ProjectsManager projectsManager;
+			GameUnitsManager guManager;
+			PlaylistManager plManager;
+			ToolsManager toolsManager;
 			TemplatesService ts;
 				
 			ts = new TemplatesService (Config.TemplatesDir);
@@ -97,7 +97,7 @@ namespace LongoMatch.Services
 			migration.StartMigration();
 			
 			/* Start the rendering jobs manager */
-			videoRenderer = new RenderingJobsManager(multimediaToolkit, guiToolkit);
+			videoRenderer = new RenderingJobsManager (multimediaToolkit, guiToolkit);
 			Config.RenderingJobsManger = videoRenderer;
 			
 			projectsManager = new ProjectsManager(guiToolkit, multimediaToolkit, ts);
@@ -106,10 +106,10 @@ namespace LongoMatch.Services
 			toolsManager = new ToolsManager (guiToolkit, multimediaToolkit, projectsManager, ts);
 			
 			/* Start the events manager */
-			eManager = new EventsManager(guiToolkit, videoRenderer, projectsManager);
+			eManager = new EventsManager (guiToolkit, videoRenderer, projectsManager);
 			
 			/* Start the hotkeys manager */
-			hkManager = new HotKeysManager(projectsManager);
+			hkManager = new HotKeysManager (projectsManager);
 			hkManager.newMarkEvent += eManager.OnNewTag;
 
 			/* Start Game Units manager */
