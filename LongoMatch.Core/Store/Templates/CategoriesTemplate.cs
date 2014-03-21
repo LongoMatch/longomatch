@@ -85,6 +85,13 @@ namespace LongoMatch.Store.Templates
 			set;
 		}
 		
+		public Image Image {
+			get;
+			set;
+		}
+		
+
+		
 		/* Keep this for backwards compatiblity with 0.18.11 */
 		[JsonIgnore]
 		public Image FieldBackgroundImage {get;	set;}

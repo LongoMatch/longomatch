@@ -27,6 +27,7 @@ using Newtonsoft.Json;
 
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
+using Image = LongoMatch.Common.Image;
 
 namespace LongoMatch.Store
 {
