@@ -141,7 +141,7 @@ namespace LongoMatch.Gui.Component
 		void LoadPlayer (Player p) {
 			loadedPlayer = p;
 			nameentry.Text = p.Name;
-			positionentry.Text = p.Name;
+			positionentry.Text = p.Position;
 			numberspinbutton.Value = p.Number;
 			heightspinbutton.Value = p.Height;
 			weightspinbutton.Value = p.Weight;
