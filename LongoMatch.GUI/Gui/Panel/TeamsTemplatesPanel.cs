@@ -46,12 +46,6 @@ namespace LongoMatch.Gui.Panel
 		
 		ITeamTemplatesProvider provider;
 		
-		 enum Page {
-			NewTeam,
-			Team,
-			Player
-		 }
-		 
 		public TeamsTemplatesPanel ()
 		{
 			this.Build ();
