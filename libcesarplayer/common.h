@@ -34,8 +34,8 @@
 
 /*Default video/audio source*/
 #if defined(OSTYPE_WINDOWS)
-#define DVVIDEOSRC "dshowvideosrc"
-#define SYSVIDEOSRC "dshowvideosrc"
+#define DVVIDEOSRC "ksvideosrc"
+#define SYSVIDEOSRC "ksvideosrc"
 #define AUDIOSRC "dshowaudiosrc"
 #elif defined(OSTYPE_OS_X)
 #define DVVIDEOSRC "osxvideosrc"
