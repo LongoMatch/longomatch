@@ -252,11 +252,14 @@ namespace LongoMatch.Gui.Component
 
 		void HandlePlayerButtonPressEvent (object o, ButtonPressEventArgs args)
 		{
-			Image player = new Image (Helpers.Misc.OpenImage (this));
-			if (player == null) {
+			Image player;
+			Pixbuf pix = Helpers.Misc.OpenImage (this);
+			
+			if (pix == null) {
 				return;
 			}
 			
+			player = new Image (pix);
 			player.Scale (Constants.MAX_PLAYER_ICON_SIZE, Constants.MAX_PLAYER_ICON_SIZE); 
 			if (player != null && loadedPlayer != null) {
 				playerimage.Pixbuf = player.Value;
@@ -269,11 +272,14 @@ namespace LongoMatch.Gui.Component
 
 		void HandleShieldButtonPressEvent (object o, ButtonPressEventArgs args)
 		{
-			Image shield = new Image (Helpers.Misc.OpenImage (this));
-			if (shield == null) {
+			Image shield;
+			Pixbuf pix = Helpers.Misc.OpenImage (this);
+			
+			if (pix == null) {
 				return;
 			}
 			
+			shield = new Image (pix);
 			shield.Scale (Constants.MAX_SHIELD_ICON_SIZE, Constants.MAX_SHIELD_ICON_SIZE); 
 			if (shield != null)
 			{
