@@ -482,7 +482,11 @@
         <property name="Edited" />
       </itemgroup>
     </itemgroups>
-    <signals />
+    <signals>
+      <itemgroup label="TeamTemplateEditor Signals">
+        <signal name="TemplateSaved" />
+      </itemgroup>
+    </signals>
   </object>
   <object type="LongoMatch.Gui.Panel.ProjectsManagerPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />

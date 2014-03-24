@@ -33,6 +33,7 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class TeamTemplateEditor : Gtk.Bin
 	{
+		public event EventHandler TemplateSaved;
 	
 		enum Columns {
 			Desc,
@@ -222,6 +223,8 @@ namespace LongoMatch.Gui.Component
 				Config.TeamTemplatesProvider.Update (template);			
 				Edited = false;
 			}
+			if (TemplateSaved != null)
+				TemplateSaved (this, null);
 		}
 
 		void HandleNewPlayerClicked (object sender, EventArgs e)

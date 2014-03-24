@@ -43,6 +43,7 @@ namespace LongoMatch.Gui.Panel
 		ListStore teams;
 		List<string> selectedTeams;
 		TeamTemplate loadedTeam;
+		Dictionary<string, TreeIter> itersDict;
 		
 		ITeamTemplatesProvider provider;
 		
@@ -52,6 +53,7 @@ namespace LongoMatch.Gui.Panel
 			provider = Config.TeamTemplatesProvider;
 			
 			teams = new ListStore (typeof(Pixbuf), typeof(string), typeof (string));
+			itersDict = new Dictionary<string, TreeIter>();
 			
 			teamstreeview.Model = teams;
 			teamstreeview.Model = teams;
@@ -72,6 +74,7 @@ namespace LongoMatch.Gui.Panel
 			selectedTeams = new List<string>();
 			newteam.Clicked += HandleNewTeamClicked;
 			deleteteambutton.Clicked += HandleDeleteTeamClicked;
+			teamtemplateeditor1.TemplateSaved += (s, e) => {SaveLoadedTeam ();};
 			
 			backbutton.Clicked += (sender, o) => {
 				if (BackEvent != null)
@@ -86,6 +89,7 @@ namespace LongoMatch.Gui.Panel
 			bool first = true;
 			
 			teams.Clear ();
+			itersDict.Clear ();
 			foreach (TeamTemplate template in provider.Templates) {
 				Pixbuf img;
 				TreeIter iter;
@@ -96,6 +100,7 @@ namespace LongoMatch.Gui.Panel
 					img = Gdk.Pixbuf.LoadFromResource ("logo.svg");
 					
 				iter = teams.AppendValues (img, template.Name, template.TeamName);
+				itersDict.Add (template.Name, iter);
 				if (first || template.Name == templateName) {
 					templateIter = iter;
 				}
@@ -107,14 +112,26 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 		
+		void SaveLoadedTeam () {
+			if (loadedTeam == null)
+				return;
+
+			provider.Update (loadedTeam);
+			/* The shield might have changed, update it just in case */
+			teamstreeview.Model.SetValue (itersDict[loadedTeam.Name], 0,
+			                              loadedTeam.Shield.Value);
+		}
+		
 		void LoadTeam (string teamName) {
-			if (loadedTeam != null && teamtemplateeditor1.Edited) {
-				string msg = Catalog.GetString ("Do you want to save the current template");
-			    if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
-					provider.Update (loadedTeam);
-			    } else {
-					return;
-			    }
+			if (loadedTeam != null) {
+				if (teamtemplateeditor1.Edited) {
+					string msg = Catalog.GetString ("Do you want to save the current template");
+					if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
+						SaveLoadedTeam ();
+					} else {
+						return;
+					}
+				}
 			}
 			
 			try  {
