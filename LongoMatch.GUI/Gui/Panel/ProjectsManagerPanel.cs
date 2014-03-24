@@ -61,6 +61,7 @@ namespace LongoMatch.Gui.Panel
 			savebutton.Clicked += HandleSaveClicked;
 			exportbutton.Clicked += HandleExportClicked;
 			deletebutton.Clicked += HandleDeleteClicked;
+			templatebutton.Clicked += HandleTeamTemplateClicked;
 			calendarbutton.Clicked += HandleCalendarClicked;
 			notebook1.Page = 0;
 		}
@@ -175,6 +176,10 @@ namespace LongoMatch.Gui.Panel
 			date = gkit.SelectDate (loadedProject.Description.MatchDate, this);
 			loadedProject.Description.MatchDate = date;
 			datelabel.Text = date.ToShortDateString ();
+		}
+		
+		void HandleTeamTemplateClicked (object sender, EventArgs e)
+		{
 		}
 
 		void HandleDeleteClicked (object sender, EventArgs e)
