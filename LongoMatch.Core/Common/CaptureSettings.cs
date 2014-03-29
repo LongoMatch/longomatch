@@ -25,6 +25,7 @@ namespace LongoMatch.Common
 	{
 		public CaptureSourceType CaptureSourceType;
 		public string DeviceID;
+		public string SourceElement;
 		public EncodingSettings EncodingSettings;
 
 		public static CaptureSettings DefaultSettings() {

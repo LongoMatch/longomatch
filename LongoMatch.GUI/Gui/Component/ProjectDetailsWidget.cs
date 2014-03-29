@@ -59,8 +59,6 @@ namespace LongoMatch.Gui.Component
 		ProjectType useType;
 		List<Device> videoDevices;
 		ListStore videoStandardList, encProfileList, qualList;
-		private const string DV_SOURCE = "DV Source";
-		private const string GCONF_SOURCE = "GConf Source";
 
 
 		public ProjectDetailsWidget()
@@ -245,6 +243,7 @@ namespace LongoMatch.Gui.Component
 				if (useType == ProjectType.CaptureProject) {
 					s.CaptureSourceType = videoDevices[devicecombobox.Active].DeviceType;
 					s.DeviceID = videoDevices[devicecombobox.Active].ID;
+					s.SourceElement = videoDevices[devicecombobox.Active].SourceElement;
 				} else if (useType == ProjectType.URICaptureProject) {
 					s.CaptureSourceType = CaptureSourceType.URI;
 					s.DeviceID = urientry.Text;
@@ -369,20 +368,7 @@ namespace LongoMatch.Gui.Component
 			videoDevices = devices;
 
 			foreach(Device device in devices) {
-				string deviceElement;
-				string deviceName;
-				if(Environment.OSVersion.Platform == PlatformID.MacOSX) {
-					deviceElement = Catalog.GetString("OS X Source");
-				} else if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
-					deviceElement = Catalog.GetString("DirectShow Source");
-				} else {
-					if(device.DeviceType == CaptureSourceType.DV)
-						deviceElement = Catalog.GetString(DV_SOURCE);
-					else
-						deviceElement = Catalog.GetString(GCONF_SOURCE);
-				}
-				deviceName = (device.ID == "") ? Catalog.GetString("Unknown"): device.ID;
-				devicecombobox.AppendText(deviceName + " ("+deviceElement+")");
+				devicecombobox.AppendText(device.Desc);
 				devicecombobox.Active = 0;
 			}
 		}

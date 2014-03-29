@@ -47,5 +47,16 @@ namespace LongoMatch.Common
 			get;
 			set;
 		}
+		
+		public string SourceElement {
+			get;
+			set;
+		}
+		
+		public string Desc  {
+			get {
+				return String.Format("{0} ({1})", ID, SourceElement);
+			}
+		}
 	}
 }

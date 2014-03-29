@@ -89,6 +89,7 @@ struct GstCameraCapturerPrivate
   AudioEncoderType audio_encoder_type;
   VideoMuxerType video_muxer_type;
   CaptureSourceType source_type;
+  gchar *source_element_name;
 
   /*Video input info */
   gint video_width;             /* Movie width */
@@ -119,7 +120,6 @@ struct GstCameraCapturerPrivate
   GstElement *filesink;
   GstElement* video_appsrc;
   GstElement* audio_appsrc;
-  const gchar *source_element_name;
 
   /* Recording */
   gboolean is_recording;
@@ -378,6 +378,7 @@ gst_camera_capturer_init (GstCameraCapturer * object)
   priv->audio_encoder_type = AUDIO_ENCODER_VORBIS;
   priv->video_muxer_type = VIDEO_MUXER_WEBM;
   priv->source_type = CAPTURE_SOURCE_TYPE_SYSTEM;
+  priv->source_element_name = SYSVIDEOSRC;
 
   gtk_widget_add_events (GTK_WIDGET (object),
       GDK_POINTER_MOTION_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK
@@ -411,6 +412,11 @@ gst_camera_capturer_finalize (GObject * object)
   if (gcc->priv->output_file) {
     g_free (gcc->priv->output_file);
     gcc->priv->output_file = NULL;
+  }
+
+  if (gcc->priv->source_element_name) {
+    g_free (gcc->priv->source_element_name);
+    gcc->priv->source_element_name = NULL;
   }
 
   if (gcc->priv->device_id) {
@@ -1356,7 +1362,6 @@ gst_camera_capturer_create_video_source (GstCameraCapturer * gcc,
     CaptureSourceType type, GError ** err)
 {
   GstElement *typefind;
-  const gchar *source_desc = "";
   gchar *source_str;
   gchar *filter = "";
 
@@ -1366,13 +1371,9 @@ gst_camera_capturer_create_video_source (GstCameraCapturer * gcc,
   switch (type) {
     case CAPTURE_SOURCE_TYPE_DV:
       GST_INFO_OBJECT(gcc, "Creating dv video source");
-      source_desc = DVVIDEOSRC;
-      gcc->priv->source_element_name = source_desc;
       break;
     case CAPTURE_SOURCE_TYPE_SYSTEM:
       GST_INFO_OBJECT(gcc, "Creating system video source");
-      source_desc = SYSVIDEOSRC;
-      gcc->priv->source_element_name = source_desc;
       break;
     case CAPTURE_SOURCE_TYPE_URI:
       /* We don't use any source element for URI's, just a uridecodebin element
@@ -1384,8 +1385,7 @@ gst_camera_capturer_create_video_source (GstCameraCapturer * gcc,
       return TRUE;
     case CAPTURE_SOURCE_TYPE_FILE:
       GST_INFO_OBJECT(gcc, "Creating file video source");
-      source_desc = "filesrc";
-      gcc->priv->source_element_name = source_desc;
+      gcc->priv->source_element_name = g_strdup ("filesrc");
       break;
     default:
       g_assert_not_reached();
@@ -1397,10 +1397,11 @@ gst_camera_capturer_create_video_source (GstCameraCapturer * gcc,
     source_str = g_strdup_printf("%s device-name=\"%s\" name=source ! "
         "video/x-raw-yuv; video/x-raw-rgb; "
         "video/x-dv, systemstream=(boolean)True "
-        "! typefind name=typefind", source_desc, gcc->priv->device_id);
+        "! typefind name=typefind", gcc->priv->source_element_name,
+        gcc->priv->device_id);
   } else {
     source_str = g_strdup_printf("%s name=source %s ! typefind name=typefind",
-        source_desc, filter);
+        gcc->priv->source_element_name, filter);
   }
 
   GST_INFO_OBJECT(gcc, "Created video source %s", source_str);
@@ -1411,7 +1412,8 @@ gst_camera_capturer_create_video_source (GstCameraCapturer * gcc,
         GCC_ERROR,
         GST_ERROR_PLUGIN_LOAD,
         "Failed to create the %s element. "
-        "Please check your GStreamer installation.", source_desc);
+        "Please check your GStreamer installation.",
+        gcc->priv->source_element_name);
     return FALSE;
   }
 
@@ -1422,7 +1424,7 @@ gst_camera_capturer_create_video_source (GstCameraCapturer * gcc,
 
   gst_camera_capturer_update_device_id(gcc);
 
-  GST_INFO_OBJECT(gcc, "Created video source %s", source_desc);
+  GST_INFO_OBJECT(gcc, "Created video source %s", gcc->priv->source_element_name);
 
   gst_object_unref (gcc->priv->source);
   gst_object_unref (typefind);
@@ -1717,7 +1719,7 @@ gcc_get_video_stream_info (GstCameraCapturer * gcc)
  * **************************************************/
 
 GList *
-gst_camera_capturer_enum_devices (gchar * device_name)
+gst_camera_capturer_enum_devices (const gchar * device_name)
 {
   GstElement *device;
   GstPropertyProbe *probe;
@@ -1743,7 +1745,7 @@ gst_camera_capturer_enum_devices (gchar * device_name)
   else
     prop_name = "device-name";
 
-  va = gst_property_probe_get_values_name (probe, prop_name);
+  va = gst_property_probe_probe_and_get_values_name (probe, prop_name);
   if (!va)
     goto finish;
 
@@ -1768,15 +1770,15 @@ finish:
 }
 
 GList *
-gst_camera_capturer_enum_video_devices (void)
+gst_camera_capturer_enum_video_devices (const gchar *device)
 {
-  return gst_camera_capturer_enum_devices (DVVIDEOSRC);
+  return gst_camera_capturer_enum_devices (device);
 }
 
 GList *
-gst_camera_capturer_enum_audio_devices (void)
+gst_camera_capturer_enum_audio_devices (const gchar *device)
 {
-  return gst_camera_capturer_enum_devices (AUDIOSRC);
+  return gst_camera_capturer_enum_devices (device);
 }
 
 /*******************************************
@@ -1841,12 +1843,14 @@ gst_camera_capturer_toggle_pause (GstCameraCapturer * gcc)
 }
 
 void
-gst_camera_capturer_set_source (GstCameraCapturer * gcc, CaptureSourceType source)
+gst_camera_capturer_set_source (GstCameraCapturer * gcc, CaptureSourceType source,
+    const gchar *source_element_name)
 {
   g_return_if_fail (gcc != NULL);
   g_return_if_fail (GST_IS_CAMERA_CAPTURER (gcc));
 
   gcc->priv->source_type = source;
+  gcc->priv->source_element_name = g_strdup (source_element_name);
 }
 
 void

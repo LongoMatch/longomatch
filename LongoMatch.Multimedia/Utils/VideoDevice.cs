@@ -27,31 +27,25 @@ namespace LongoMatch.Multimedia.Utils
 {
 	public class VideoDevice
 	{
-		
+#if OSTYPE_DARWIN
+		static string[] devices = new string[1] {"osxvideosrc"};	 
+#elif OSTYPE_WINDOWS
+		static string[] devices = new string[2] {"dshowvideosrc", "ksvideosrc"};	 
+#else 
+		static string[] devices = new string[2] {"v4l2src", "dv1394src"};	 
+#endif
+
 		static public List<Device> ListVideoDevices() {
 			List<Device> devicesList  = new List<Device>();
 
-			/* Generate the list of devices, on the supported platforms
-			 * and extra DV device for the dv1394src element and the default
-			 * OS source for all of them */
-			foreach(string devName in GstCameraCapturer.VideoDevices) {
-				CaptureSourceType source;
-
-				if(Environment.OSVersion.Platform == PlatformID.Unix)
-					source = CaptureSourceType.DV;
-				else
-					source = CaptureSourceType.System;
-
-				devicesList.Add(new Device {
-					ID = devName,
-					DeviceType = source,
-				});
-			}
-			if(Environment.OSVersion.Platform != PlatformID.Win32NT) {
-				devicesList.Add(new Device {
-					ID = Catalog.GetString("Default device"),
-					DeviceType = CaptureSourceType.System
-				});
+			foreach (string source in devices) {
+				foreach (string devname in GstCameraCapturer.ListVideoDevices (source)) {
+					devicesList.Add(new Device {
+						ID = devname,
+						DeviceType = CaptureSourceType.System,
+						SourceElement = source,
+					});
+				}
 			}
 			return devicesList;
 		}

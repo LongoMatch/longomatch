@@ -73,12 +73,12 @@ EXPORT void gst_camera_capturer_close (GstCameraCapturer * gcc);
 EXPORT void gst_camera_capturer_start (GstCameraCapturer * gcc);
 EXPORT void gst_camera_capturer_toggle_pause (GstCameraCapturer * gcc);
 EXPORT void gst_camera_capturer_stop (GstCameraCapturer * gcc);
-EXPORT void gst_camera_capturer_set_source (GstCameraCapturer * gcc, CaptureSourceType source);
+EXPORT void gst_camera_capturer_set_source (GstCameraCapturer * gcc, CaptureSourceType source, const gchar *source_element);
 EXPORT void gst_camera_capturer_set_video_encoder (GstCameraCapturer * gcc, VideoEncoderType encoder);
 EXPORT void gst_camera_capturer_set_audio_encoder (GstCameraCapturer * gcc, AudioEncoderType encoder);
 EXPORT void gst_camera_capturer_set_video_muxer (GstCameraCapturer * gcc, VideoMuxerType muxer);
-EXPORT GList *gst_camera_capturer_enum_audio_devices (void);
-EXPORT GList *gst_camera_capturer_enum_video_devices (void);
+EXPORT GList *gst_camera_capturer_enum_audio_devices (const gchar *device);
+EXPORT GList *gst_camera_capturer_enum_video_devices (const gchar *device);
 EXPORT GdkPixbuf *gst_camera_capturer_get_current_frame (GstCameraCapturer
     * gcc);
 EXPORT void gst_camera_capturer_unref_pixbuf (GdkPixbuf * pixbuf);

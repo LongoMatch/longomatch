@@ -220,7 +220,7 @@ namespace LongoMatch.Gui
 			capturer.SetVideoEncoder(captureProps.EncodingSettings.EncodingProfile.VideoEncoder);
 			capturer.SetAudioEncoder(captureProps.EncodingSettings.EncodingProfile.AudioEncoder);
 			capturer.SetVideoMuxer(muxer);
-			capturer.SetSource(captureProps.CaptureSourceType);
+			capturer.SetSource(captureProps.CaptureSourceType, captureProps.SourceElement);
 			capturer.VideoQuality = captureProps.EncodingSettings.EncodingQuality.VideoQuality;
 			capturer.AudioQuality = captureProps.EncodingSettings.EncodingQuality.AudioQuality;
 		}

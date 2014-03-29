@@ -78,10 +78,7 @@ main (int argc, char *argv[])
   gst_camera_capturer_init_backend (&argc, &argv);
   gvc = gst_camera_capturer_new ("test", &error);
 
-  g_print("JANDER             %d\n", atoi(argv[2]));
-  g_print("JANDER             %d\n", atoi(argv[3]));
-  g_print("JANDER             %d\n", atoi(argv[1]));
-  gst_camera_capturer_set_source (gvc, atoi(argv[2]));
+  gst_camera_capturer_set_source (gvc, atoi(argv[2]), SYSVIDEOSRC);
   gst_camera_capturer_set_video_encoder (gvc, VIDEO_ENCODER_H264);
   gst_camera_capturer_set_audio_encoder (gvc, AUDIO_ENCODER_AAC);
   gst_camera_capturer_set_video_muxer (gvc, VIDEO_MUXER_MP4);
