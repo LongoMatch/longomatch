@@ -19,6 +19,7 @@
 //
 
 using System;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Store
 {
@@ -32,6 +33,7 @@ namespace LongoMatch.Store
 	{
 		private const int MS = 1000000 ;
 		public const int SECONDS_TO_TIME = 1000;
+		public const int TIME_TO_NSECONDS = 1000000;
 
 		#region Constructors
 		public Time() {
@@ -53,13 +55,27 @@ namespace LongoMatch.Store
 
 		/// <summary>
 		/// Time in seconds
-		/// </summary>
+		/// </summary>		
+		[JsonIgnore]
 		public int Seconds {
 			get {
 				return MSeconds/SECONDS_TO_TIME;
 			}
 			set {
 				MSeconds = value * SECONDS_TO_TIME;
+			}
+		}
+		
+		/// <summary>
+		/// Time in nano seconds
+		/// </summary>		
+		[JsonIgnore]
+		public long NSeconds {
+			get {
+				return  (long)MSeconds * TIME_TO_NSECONDS;
+			}
+			set {
+				MSeconds = (int) (value / TIME_TO_NSECONDS);
 			}
 		}
 		#endregion
@@ -159,6 +175,10 @@ namespace LongoMatch.Store
 		
 		public static Time operator *(Time t1, double t2) {
 			return new Time {MSeconds = (int) (t1.MSeconds * t2)};
+		}
+		
+		public static Time operator /(Time t1, int t2) {
+			return new Time {MSeconds = (int) (t1.MSeconds / t2)};
 		}
 		#endregion
 	}

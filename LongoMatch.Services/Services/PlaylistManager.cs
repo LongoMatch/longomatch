@@ -124,8 +124,7 @@ namespace LongoMatch.Services
 			}
 			
 			StartClock();
-			player.SetPlayListElement(play.MediaFile.FilePath, play.Start.MSeconds,
-			                          play.Stop.MSeconds, play.Rate, playlist.HasNext());
+			player.LoadPlayListPlay (play, playlist.HasNext());
 			selectedTimeNode = play;
 			playlist.SetActive (play);
 			playlistWidget.SetActivePlay(play, playlist.GetCurrentIndex());
@@ -148,15 +147,14 @@ namespace LongoMatch.Services
 
 		private void Prev() {
 			/* Select the previous element if we haven't played 500ms */
-			if ((player.AccurateCurrentTime - selectedTimeNode.Start.MSeconds) < 500) {
+			if ((player.CurrentTime - selectedTimeNode.Start).MSeconds < 500) {
 				if (playlist.HasPrev()) {
 					var play = playlist.Prev();
 					LoadPlaylistPlay(play);
 				}
 			} else {
 				/* Seek to the beginning of the segment */
-				player.SeekTo(selectedTimeNode.Start.MSeconds,true);
-				player.Rate = selectedTimeNode.Rate;
+				player.Seek (selectedTimeNode.Start, true);
 			}
 		}
 		
@@ -175,7 +173,7 @@ namespace LongoMatch.Services
 		}
 
 		private void CheckStopTime(object self) {
-			if(player.AccurateCurrentTime >= selectedTimeNode.Stop.MSeconds-200)
+			if(player.CurrentTime >= selectedTimeNode.Stop - new Time  {MSeconds=200})
 				Next();
 			return;
 		}

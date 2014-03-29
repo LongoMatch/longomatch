@@ -19,8 +19,8 @@
 //
 
 using System;
-using Gtk;
 using LongoMatch.Video.Common;
+using LongoMatch.Store;
 using Image = LongoMatch.Common.Image;
 
 
@@ -33,109 +33,27 @@ namespace LongoMatch.Multimedia.Interfaces
 		event         System.EventHandler Eos;
 		event         StateChangeHandler StateChange;
 		event         TickHandler Tick;
-		event         System.EventHandler GotDuration;
-		event         System.EventHandler SegmentDone;
 		event         System.EventHandler ReadyToSeek;
 
+		Time StreamLength {get;}
+		Time CurrentTime {get;}
+		double Position {get;set;}
+		double Volume {get;set;}
+		bool Playing {get;}
+		double Rate {set;}
+		IntPtr WindowHandle {set;}
 
-		long StreamLength {
-			get;
-		}
-
-
-
-		long CurrentTime {
-			get;
-
-		}
-
-		double Position {
-			get;
-			set;
-
-		}
-
-		bool LogoMode {
-			get;
-			set;
-		}
-
-		bool DrawingMode {
-			set;
-		}
-
-		Image DrawingPixbuf {
-			set;
-		}
-
-		bool ExpandLogo {
-			get;
-			set;
-		}
-
-		double Volume {
-			get;
-			set;
-		}
-
-		bool Playing {
-			get;
-		}
-
-		string Logo {
-			set;
-		}
-
-		Image LogoPixbuf {
-			set;
-		}
-
-		long AccurateCurrentTime {
-			get;
-		}
-
-		bool SeekTime(long time,float rate, bool accurate);
-
-		bool Play();
-
-		bool Open(string mrl);
-
-		bool SetRate(float rate);
-
-		bool SetRateInSegment(float rate, long stopTime);
-
-
-
+		bool Open (string mrl);
+		void Play();
 		void TogglePlay();
-
 		void Pause();
-
 		void Stop();
-
 		void Close();
-
-
+		bool Seek (Time time, bool accurate);
+		bool SeekToNextFrame();
+		bool SeekToPreviousFrame();
+		Image GetCurrentFrame (int width=-1, int height=-1);
+		void Expose ();
 		void Dispose();
-
-		bool SegmentSeek(long start, long stop,float rate);
-
-		bool SeekInSegment(long pos,float rate);
-
-		bool NewFileSeek(long start, long stop,float rate);
-
-		bool SegmentStartUpdate(long start,float rate);
-
-		bool SegmentStopUpdate(long stop,float rate);
-
-		bool SeekToNextFrame(float rate,bool in_segment);
-
-		bool SeekToPreviousFrame(float rate,bool in_segment);
-
-		Image GetCurrentFrame(int outwidth, int outheight);
-
-		Image GetCurrentFrame();
-
-		void CancelProgramedStop();
-
 	}
 }

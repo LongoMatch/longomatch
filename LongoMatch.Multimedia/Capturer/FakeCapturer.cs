@@ -22,13 +22,14 @@ using GLib;
 using LongoMatch.Common;
 using LongoMatch.Multimedia.Interfaces;
 using LongoMatch.Video.Common;
-using Gdk;
+using LongoMatch.Store;
+using Image = LongoMatch.Common.Image;
 
 namespace LongoMatch.Video.Capturer
 {
 
 
-	public class FakeCapturer : Gtk.Bin, ICapturer
+	public class FakeCapturer : ICapturer
 	{
 		public event EllpasedTimeHandler EllapsedTime;
 		public event ErrorHandler Error;
@@ -44,11 +45,19 @@ namespace LongoMatch.Video.Capturer
 					EllapsedTime(ellapsedTime);
 			};
 		}
+		
 
-		public int CurrentTime {
+		public Time CurrentTime {
 			get {
-				return timer.CurrentTime;
+				return new Time (timer.CurrentTime);
 			}
+		}
+
+		public void Configure (CaptureSettings settings, IntPtr window_handle) {
+		}
+		
+		public void Dispose () {
+			Stop ();
 		}
 
 		public void Run() {
@@ -104,7 +113,7 @@ namespace LongoMatch.Video.Capturer
 			set {}
 		}
 
-		public Pixbuf CurrentFrame {
+		public Image CurrentFrame {
 			get {
 				return null;
 			}

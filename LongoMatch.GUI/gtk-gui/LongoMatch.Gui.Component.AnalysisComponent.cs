@@ -75,8 +75,6 @@ namespace LongoMatch.Gui.Component
 			this.playercapturer.Events = ((global::Gdk.EventMask)(256));
 			this.playercapturer.Name = "playercapturer";
 			this.playercapturer.Detached = false;
-			this.playercapturer.ExpandLogo = false;
-			this.playercapturer.Rate = 0F;
 			this.videowidgetsbox.Add (this.playercapturer);
 			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.videowidgetsbox [this.playercapturer]));
 			w4.Position = 1;

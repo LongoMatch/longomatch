@@ -20,12 +20,12 @@
 
 using System;
 using System.Threading;
-using Gtk;
 
 using LongoMatch.Common;
 using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.Video;
 using LongoMatch.Video.Common;
+using LongoMatch.Store;
 
 namespace LongoMatch.Video.Utils
 {
@@ -34,8 +34,8 @@ namespace LongoMatch.Video.Utils
 	public class FramesSeriesCapturer
 	{
 		IFramesCapturer capturer;
-		long start;
-		long stop;
+		Time start;
+		Time stop;
 		uint interval;
 		int totalFrames;
 		string seriesName;
@@ -46,7 +46,7 @@ namespace LongoMatch.Video.Utils
 
 		public event LongoMatch.Handlers.FramesProgressHandler Progress;
 
-		public FramesSeriesCapturer(string videoFile,long start, long stop, uint interval, string outputDir)
+		public FramesSeriesCapturer(string videoFile, Time start, Time stop, uint interval, string outputDir)
 		{
 			MultimediaFactory mf= new MultimediaFactory();
 			this.capturer=mf.GetFramesCapturer();
@@ -56,7 +56,7 @@ namespace LongoMatch.Video.Utils
 			this.interval = interval;
 			this.outputDir = outputDir;
 			this.seriesName = System.IO.Path.GetFileName(outputDir);
-			this.totalFrames = (int)Math.Floor((double)((stop - start) / interval))+1;
+			this.totalFrames = (int)Math.Floor((double)((stop - start).MSeconds / interval))+1;
 		}
 
 		public void Cancel() {
@@ -69,20 +69,21 @@ namespace LongoMatch.Video.Utils
 		}
 
 		public void CaptureFrames() {
-			long pos;
+			Time pos;
 			LongoMatch.Common.Image frame;
 			int i = 0;
 
 			System.IO.Directory.CreateDirectory(outputDir);
 
 			pos = start;
-			if(Progress != null)
-				Application.Invoke(delegate {
-				Progress(0,totalFrames,null);
-			});
+			if(Progress != null) {
+				GtkHelpers.CallFromAppThread (delegate {
+					Progress(0,totalFrames,null);
+				});
+			}
 			while(pos <= stop) {
 				if(!cancel) {
-					capturer.SeekTime(pos,true);
+					capturer.Seek (pos, true);
 					capturer.Pause();
 					frame = capturer.GetCurrentFrame();
 					if(frame != null) {
@@ -90,11 +91,12 @@ namespace LongoMatch.Video.Utils
 						frame.Scale(THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT);
 					}
 
-					if(Progress != null)
-						Application.Invoke(delegate {
-						Progress(i+1, totalFrames, frame);
-					});
-					pos += interval;
+					if(Progress != null) {
+						GtkHelpers.CallFromAppThread (delegate {
+							Progress(i+1, totalFrames, frame);
+						});
+					}
+					pos.MSeconds += (int) interval;
 					i++;
 				}
 				else {

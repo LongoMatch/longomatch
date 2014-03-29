@@ -19,7 +19,6 @@
     <File subtype="Code" buildaction="Compile" name="Services/Core.cs" />
     <File subtype="Code" buildaction="Compile" name="Services/HotKeysManager.cs" />
     <File subtype="Code" buildaction="Compile" name="Services/EventsManager.cs" />
-    <File subtype="Code" buildaction="Compile" name="Services/VideoDrawingsManager.cs" />
     <File subtype="Code" buildaction="Compile" name="Services/PlaylistManager.cs" />
     <File subtype="Code" buildaction="Compile" name="Services/ProjectsManager.cs" />
     <File subtype="Directory" buildaction="Compile" name="." />

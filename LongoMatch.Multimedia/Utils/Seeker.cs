@@ -17,6 +17,7 @@
 //
 using System;
 using LongoMatch.Video.Common;
+using LongoMatch.Store;
 
 namespace LongoMatch.Video.Utils
 {
@@ -26,9 +27,8 @@ namespace LongoMatch.Video.Utils
 		
 		uint timeout;
 		int pendingSeekId;
-		long start, stop;
+		Time start;
 		float rate;
-		bool inSegment;
 		SeekType seekType;
 		
 		public Seeker (uint timeoutMS=80)
@@ -38,27 +38,24 @@ namespace LongoMatch.Video.Utils
 			seekType = SeekType.None;
 		}
 		
-		public void Seek (SeekType seekType, float rate=1, bool inSegment=false, long start=0, long stop=0)
+		public void Seek (SeekType seekType, Time start=null, float rate=1)
 		{
 			this.seekType = seekType;
 			this.start = start;
-			this.stop = stop;
 			this.rate = rate;
-			this.inSegment = inSegment;
 			
 			if (pendingSeekId != -1)
 				return;
 			
 			HandleSeekTimeout ();
 			pendingSeekId = (int) GLib.Timeout.Add (timeout, HandleSeekTimeout);
-			
 		}
 		
 		public bool HandleSeekTimeout () {
 			pendingSeekId = -1;
 			if (seekType != SeekType.None) {
 				if (SeekEvent != null) {
-					SeekEvent (seekType, rate, inSegment, start, stop);
+					SeekEvent (seekType, start, rate);
 				}
 				seekType = SeekType.None;
 			}

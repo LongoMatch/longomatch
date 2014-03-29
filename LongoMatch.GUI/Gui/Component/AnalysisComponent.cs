@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using Gdk;
 using Gtk;
 using LongoMatch.Gui.Helpers;
-using Mono.Posix;
+using Mono.Unix;
 
 namespace LongoMatch.Gui.Component
 {
@@ -91,8 +91,6 @@ namespace LongoMatch.Gui.Component
 			downbox.PackStart(guTimeline, true, true, 0);
 			
 			playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
-			playercapturer.SetLogo(System.IO.Path.Combine(Config.ImagesDir,"background.png"));
-			playercapturer.LogoMode = true;
 			playercapturer.Tick += OnTick;
 			playercapturer.Detach += DetachPlayer;
 			playercapturer.Logo = System.IO.Path.Combine(Config.ImagesDir,"background.png");
@@ -347,18 +345,13 @@ namespace LongoMatch.Gui.Component
 		{
 			bool isLive = false;
 			
-			/* Update tabs labels */
-			var desc = project.Description;
-			
 			if(projectType == ProjectType.FileProject) {
-				playercapturer.LogoMode = false;
 				timeline.SetProject (project, filter);
 				guTimeline.Project = project;
-
+				playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
 			} else {
 				isLive = true;
 				if(projectType == ProjectType.FakeCaptureProject) {
-					playercapturer.Type = CapturerType.Fake;
 					playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Capturer;
 				} else {
 					playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.PreviewCapturer;
@@ -410,7 +403,6 @@ namespace LongoMatch.Gui.Component
 		private void ResetGUI() {
 			bool playlistVisible = playlist.Visible;
 			playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
-			playercapturer.LogoMode = true;
 			ClearWidgets();
 			HideWidgets();
 			SetPlaylistVisibility (playlistVisible);
@@ -467,13 +459,13 @@ namespace LongoMatch.Gui.Component
 					if(modifier == Constants.STEP)
 						playercapturer.StepForward();
 					else
-						playercapturer.SeekToNextFrame(selectedTimeNode != null);
+						playercapturer.SeekToNextFrame();
 					break;
 				case Constants.SEEK_BACKWARD:
 					if(modifier == Constants.STEP)
 						playercapturer.StepBackward();
 					else
-						playercapturer.SeekToPreviousFrame(selectedTimeNode != null);
+						playercapturer.SeekToPreviousFrame();
 					break;
 				case Constants.FRAMERATE_UP:
 					playercapturer.FramerateUp();
@@ -509,15 +501,15 @@ namespace LongoMatch.Gui.Component
 			selectedTimeNode = null;
 		}
 		
-		protected virtual void OnTick(object o, long currentTime, long streamLength,
-			float currentPosition, bool seekable)
+		protected virtual void OnTick (object o, Time currentTime, Time streamLength,
+			double currentPosition)
 		{
-			if(currentTime != 0 && timeline != null && openedProject != null) {
-				uint frame = (uint)(currentTime * openedProject.Description.File.Fps / 1000);
+			if (currentTime.MSeconds != 0 && timeline != null && openedProject != null) {
+				uint frame = (uint) (currentTime .MSeconds * openedProject.Description.File.Fps / 1000);
 				timeline.CurrentFrame = frame;
 				guTimeline.CurrentFrame = frame;
 			}
-			gameunitstaggerwidget1.CurrentTime = new Time{MSeconds = (int)currentTime};
+			gameunitstaggerwidget1.CurrentTime = currentTime;
 		}
 		
 		protected virtual void OnMultimediaError(object o, string message)

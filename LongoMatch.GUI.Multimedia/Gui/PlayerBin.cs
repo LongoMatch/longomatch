@@ -31,6 +31,8 @@ using LongoMatch.Video;
 using LongoMatch.Video.Common;
 using LongoMatch.Video.Player;
 using LongoMatch.Video.Utils;
+using LongoMatch.Store;
+
 
 namespace LongoMatch.Gui
 {
@@ -39,6 +41,10 @@ namespace LongoMatch.Gui
 
 	public partial class PlayerBin : Gtk.Bin, LongoMatch.Interfaces.GUI.IPlayer
 	{
+		struct Segment {
+			public Time Start;
+			public Time Stop;
+		}	
 
 		public event SegmentClosedHandler SegmentClosedEvent;
 		public event LongoMatch.Handlers.TickHandler Tick;
@@ -51,41 +57,34 @@ namespace LongoMatch.Gui
 		public event DetachPlayerHandler Detach;
 		public event PlaybackRateChangedHandler PlaybackRateChanged;
 
-		private const int THUMBNAIL_MAX_WIDTH = 100;
+		const int THUMBNAIL_MAX_WIDTH = 100;
 		const int SCALE_FPS = 25;
-		private LongoMatch.Video.Common.TickHandler tickHandler;
-		private LongoMatch.Multimedia.Interfaces.IPlayer player;
-		private long length=0;
-		private string slength;
-		private long segmentStartTime;
-		private long segmentStopTime;
-		private bool seeking=false;
-		private double[] seeksQueue;
-		private bool IsPlayingPrevState = false;
-		private float rate=1;
-		private double previousVLevel = 1;
-		private bool muted=false;
-		bool emitRateScale = true;
-		private object[] pendingSeek=null; //{start,stop,rate}
-		//the player.mrl is diferent from the filename as it's an uri eg:file:///foo.avi
-		private string filename = null;
+		LongoMatch.Video.Common.TickHandler tickHandler;
+		LongoMatch.Multimedia.Interfaces.IPlayer player;
+		Time length;
+		bool seeking, IsPlayingPrevState, muted, emitRateScale, readyToSeek;
+		string filename;
+		double previousVLevel = 1;
+		double[] seeksQueue;
+		object[] pendingSeek; //{start,stop,rate}
 		protected VolumeWindow vwin;
-		bool readyToSeek = false;
 		Seeker seeker;
+		Segment segment;
 
 
 		#region Constructors
 		public PlayerBin()
 		{
 			this.Build();
-			PlayerInit();
 			vwin = new VolumeWindow();
 			vwin.VolumeChanged += new VolumeChangedHandler(OnVolumeChanged);
+			tickHandler = new LongoMatch.Video.Common.TickHandler(OnTick);
 			controlsbox.Visible = false;
 			UnSensitive();
 			timescale.Adjustment.PageIncrement = 0.01;
 			timescale.Adjustment.StepIncrement = 0.0001;
 			playbutton.CanFocus = false;
+			pausebutton.CanFocus = false;
 			prevbutton.CanFocus = false;
 			nextbutton.CanFocus = false;
 			jumpspinbutton.CanFocus = false;
@@ -100,39 +99,28 @@ namespace LongoMatch.Gui
 			detachbutton.Clicked += (sender, e) => EmitDetach();
 			seeker = new Seeker();
 			seeker.SeekEvent += HandleSeekEvent;
+			segment.Start = new Time(-1);
+			segment.Stop = new Time(int.MaxValue);
+			
+			CreatePlayer ();
 		}
 
 		#endregion
 
 		#region Properties
 
-		public long AccurateCurrentTime {
+		public Time CurrentTime {
 			get {
-				return player.AccurateCurrentTime;
+				return player.CurrentTime;
 			}
 		}
 
-		public int CurrentTime {
-			get {
-				return (int) player.CurrentTime;
-			}
-		}
-
-		public long StreamLength {
+		public Time StreamLength {
 			get {
 				return player.StreamLength;
 			}
 		}
 
-		public float Rate {
-			get {
-				return rate;
-			}
-			set {
-				SetScaleValue ((int)(value*SCALE_FPS));
-			}
-		}
-		
 		public bool SeekingEnabled {
 			set {
 				timescale.Sensitive = value;
@@ -160,39 +148,6 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public Image LogoPixbuf {
-			set {
-				player.LogoPixbuf = value;
-			}
-		}
-
-		public bool DrawingMode {
-			set {
-				player.DrawingMode= value;
-			}
-		}
-
-		public Image DrawingPixbuf {
-			set {
-				player.DrawingPixbuf=value;
-			}
-		}
-
-		public bool LogoMode {
-			set {
-				player.LogoMode = value;
-			}
-		}
-
-		public bool ExpandLogo {
-			get {
-				return player.ExpandLogo;
-			}
-			set {
-				player.ExpandLogo = value;
-			}
-		}
-
 		public bool Opened {
 			get {
 				return filename != null;
@@ -213,27 +168,27 @@ namespace LongoMatch.Gui
 
 		#region Public methods
 
-		public void Open(string mrl) {
-			filename = mrl;
+		public void Open(string filename) {
 			ResetGui();
-			CloseActualSegment();
-			try {
-				player.Open(mrl);
-			}
-			catch {
-				//We handle this error async
+			CloseSegment();
+			if (filename != this.filename) {
+				readyToSeek = false;
+				this.filename = filename;
+				try {
+					player.Open(filename);
+				}
+				catch (Exception ex) {
+					Log.Exception (ex);
+					//We handle this error async
+				}
+			} else {
+				player.Seek (new Time (0), true);
 			}
 			detachbutton.Sensitive = true;
-			readyToSeek = false;
 		}
 
 		public void Play() {
 			player.Play();
-			float val = GetRateFromScale();
-			if(segmentStartTime == 0 && segmentStopTime==0)
-				player.SetRate(val);
-			else
-				player.SetRateInSegment(val,segmentStopTime);
 		}
 
 		public void Pause() {
@@ -247,40 +202,30 @@ namespace LongoMatch.Gui
 				Play();
 		}
 
-		public void SetLogo(string filename) {
-			player.Logo=filename;
-		}
-
 		public void ResetGui() {
 			closebutton.Hide();
 			SetSensitive();
 			timescale.Value=0;
 			timelabel.Text="";
 			SeekingEnabled = true;
-			player.CancelProgramedStop();
+			seeking=false;
+			IsPlayingPrevState = false;
+			muted=false;
+			emitRateScale = true;
+			readyToSeek = false;
 		}
 
-		public void SetPlayListElement(string fileName,long start, long stop, float rate, bool hasNext) {
+		public void LoadPlayListPlay (PlayListPlay play, bool hasNext) {
 			if(hasNext)
 				nextbutton.Sensitive = true;
 			else
 				nextbutton.Sensitive = false;
 
-			if(fileName != filename) {
-				Open(fileName);
-				//Wait until the pipeline is prerolled and ready to seek
-				pendingSeek = new object[3] {start,stop,rate};
-			}
-			else {
-			 player.SegmentSeek(start,stop,rate);
-			 player.Play();
-			}
-
-			segmentStartTime = start;
-			segmentStopTime = stop;
-			player.LogoMode = false;
-			Rate = rate;
-			detachbutton.Sensitive = true;
+			LoadSegment (play.MediaFile.FilePath, play.Start, play.Stop, play.Rate);
+		}
+		
+		public void LoadPlay (string filename, Play play) {
+			LoadSegment (filename, play.Start, play.Stop, play.Rate);
 		}
 
 		public void Close() {
@@ -290,34 +235,23 @@ namespace LongoMatch.Gui
 			UnSensitive();
 		}
 
-		public void SeekTo(long time, bool accurate) {
-			player.SeekTime(time,1,accurate);
+		public void Seek (Time time, bool accurate) {
+			player.Seek (time, accurate);
 			if(SeekEvent != null)
-				SeekEvent(time);
+				SeekEvent (time);
 		}
 
-		public void SeekInSegment(long pos) {
-			player.SeekInSegment(pos, GetRateFromScale());
-			if(SeekEvent != null)
-				SeekEvent(pos);
-		}
-
-		public void SeekToNextFrame(bool in_segment) {
-			int currentTime = (int)player.CurrentTime;
-			if(segmentStopTime==0 | currentTime < segmentStopTime) {
-				if(player.Playing)
-					player.Pause();
-				player.SeekToNextFrame(GetRateFromScale(), in_segment);
+		public void SeekToNextFrame () {
+			if (player.CurrentTime < segment.Stop) {
+				player.SeekToNextFrame ();
 				if(SeekEvent != null)
-					SeekEvent(currentTime);
+					SeekEvent (player.CurrentTime);
 			}
-
 		}
 
-		public void SeekToPreviousFrame(bool in_segment) {
-			long currentTime = player.CurrentTime;
-			if (currentTime > segmentStartTime) {
-				seeker.Seek (SeekType.StepDown, GetRateFromScale(), in_segment);
+		public void SeekToPreviousFrame () {
+			if (player.CurrentTime > segment.Start) {
+				seeker.Seek (SeekType.StepDown);
 			}
 		}
 
@@ -337,42 +271,13 @@ namespace LongoMatch.Gui
 			vscale1.Adjustment.Value -= vscale1.Adjustment.StepIncrement;
 		}
 
-		public void UpdateSegmentStartTime(long start) {
-			segmentStartTime = start;
-			player.SegmentStartUpdate(start, GetRateFromScale());
-			if(SeekEvent != null)
-				SeekEvent(start);
-		}
-
-		public void UpdateSegmentStopTime(long stop) {
-			segmentStopTime = stop;
-			player.SegmentStopUpdate(stop, GetRateFromScale());
-			if(SeekEvent != null)
-				SeekEvent(stop);
-		}
-
-		public void SetStartStop(long start, long stop, float rate = 1) {
-			segmentStartTime = start;
-			segmentStopTime = stop;
-			closebutton.Show();
-			SetScaleValue ((int) (rate * SCALE_FPS));
-			if (readyToSeek) {
-				player.SegmentSeek(start, stop, rate);
-				player.Play();
-			} else {
-				pendingSeek = new object[3] {start, stop, rate};
-			}
-		}
-
-		public void CloseActualSegment() {
+		public void CloseSegment() {
 			closebutton.Hide();
-			segmentStartTime = 0;
-			segmentStopTime = 0;
+			segment.Start = new Time (-1);
+			segment.Stop = new Time (int.MaxValue);
 			SetScaleValue (SCALE_FPS);
 			//timescale.Sensitive = true;
-			slength = TimeString.MSecondsToSecondsString(length);
 			SegmentClosedEvent();
-			player.CancelProgramedStop();
 		}
 
 		public void SetSensitive() {
@@ -389,13 +294,36 @@ namespace LongoMatch.Gui
 
 		#region Private methods
 
+		bool SegmentLoaded {
+			get {
+				return segment.Start.MSeconds != -1;
+			}
+		}
+		
+		void LoadSegment (string filename, Time start, Time stop, float rate = 1) {
+			Open (filename);
+			segment.Start = start;
+			segment.Stop = stop;
+			rate = rate == 0 ? 1 : rate;
+			closebutton.Show();
+			if (readyToSeek) {
+				SetScaleValue ((int) (rate * SCALE_FPS));
+				player.Rate = (double) rate;
+				player.Seek (start, true);
+				player.Play ();
+			} else {
+				pendingSeek = new object[3] {start, stop, rate};
+			}
+		}
+
+
 		void SetScaleValue (int value) {
 			emitRateScale = false;
 			vscale1.Value = value;
 			emitRateScale = true;
 		}
 		
-		private float GetRateFromScale() {
+		float GetRateFromScale() {
 			VScale scale= vscale1;
 			double val = scale.Value;
 
@@ -408,52 +336,25 @@ namespace LongoMatch.Gui
 			return (float)val;
 		}
 
-		private bool InSegment() {
-			return  !(segmentStopTime == 0 && segmentStartTime ==0) ;
+		void Jump (int jump) {
+			Time pos = CurrentTime + (jump * 1000);
+			if (pos.MSeconds < 0)
+				pos.MSeconds = 0;
+			Log.Debug (String.Format("Stepping {0} seconds from {1} to {2}", jump, CurrentTime, pos));
+			Seek (pos, true);
 		}
 
-		private void PlayerInit() {
-			MultimediaToolkit factory;
-			Widget playerWidget;
-
-			factory= new MultimediaToolkit();
-			player = factory.GetPlayer(320,280);
-
-			tickHandler = new LongoMatch.Video.Common.TickHandler(OnTick);
-			player.Tick += tickHandler;
-			player.StateChange += OnStateChanged;
-			player.Eos += OnEndOfStream;
-			player.Error += OnError;
-			player.ReadyToSeek += OnReadyToSeek;
-
-			playerWidget = (Widget)player;
-			playerWidget.ButtonPressEvent += OnVideoboxButtonPressEvent;
-			playerWidget.ScrollEvent += OnVideoboxScrollEvent;
-			playerWidget.Show();
-			videobox.Add(playerWidget);
-
-		}
-		
-		void Jump(int jump) {
-			long pos = Math.Max(CurrentTime + (jump * 1000), 0);
-			Log.Debug(String.Format("Stepping {0} seconds from {1} to {2}", jump, CurrentTime, pos));
-			if (InSegment())
-				SeekInSegment(pos);
-			else
-				SeekTo(pos, true);
-		}
-
-		private void SeekFromTimescale(double pos) {
-			if(InSegment()) {
-				long seekPos = segmentStartTime + (long)(pos*(segmentStopTime-segmentStartTime));
-				seeker.Seek (SeekType.Keyframe, GetRateFromScale(), true, seekPos);
-				timelabel.Text= TimeString.MSecondsToMSecondsString(seekPos) + "/" +
-				                TimeString.MSecondsToMSecondsString(segmentStopTime-segmentStartTime);
+		void SeekFromTimescale (double pos) {
+			if(SegmentLoaded) {
+				Time duration = segment.Stop - segment.Start;
+				Time seekPos = segment.Start + duration * pos;
+				seeker.Seek (SeekType.Keyframe, seekPos);
+				timelabel.Text = seekPos.ToMSecondsString() + "/" + duration.ToMSecondsString();
 			}
 			else {
-				seeker.Seek (SeekType.Keyframe, GetRateFromScale(), true, (int) (pos * length));
-				timelabel.Text= TimeString.MSecondsToMSecondsString(player.CurrentTime) + "/" + slength;
-				Rate = 1;
+				seeker.Seek (SeekType.Keyframe, length * pos);
+				timelabel.Text = player.CurrentTime.ToMSecondsString () + "/" +
+					length.ToMSecondsString();
 			}
 		}
 		
@@ -462,10 +363,34 @@ namespace LongoMatch.Gui
 				Detach(!Detached);
 		}
 		
+		void CreatePlayer ()
+		{
+			MultimediaToolkit factory = new MultimediaToolkit();
+			videodrawingarea.DoubleBuffered = false;
+			player = factory.GetPlayer ();
+
+			player.Tick += OnTick;
+			player.StateChange += OnStateChanged;
+			player.Eos += OnEndOfStream;
+			player.Error += OnError;
+			player.ReadyToSeek += OnReadyToSeek;
+
+			videoeventbox.ButtonPressEvent += OnVideoboxButtonPressEvent;
+			videoeventbox.ScrollEvent += OnVideoboxScrollEvent;
+			videodrawingarea.Realized += HandleRealized;
+			videodrawingarea.ExposeEvent += HandleExposeEvent;
+			videodrawingarea.CanFocus = false;
+		}
+
 		#endregion
 
 		#region Callbacks
-		protected virtual void OnStateChanged(object o, StateChangeArgs args) {
+		void HandleExposeEvent (object o, ExposeEventArgs args)
+		{
+			player.Expose();
+		}
+		
+		void OnStateChanged(object o, StateChangeArgs args) {
 			if(args.Playing) {
 				playbutton.Hide();
 				pausebutton.Show();
@@ -478,42 +403,47 @@ namespace LongoMatch.Gui
 				PlayStateChanged(this,args.Playing);
 		}
 
-		protected void OnReadyToSeek(object o, EventArgs args) {
+		void OnReadyToSeek(object o, EventArgs args) {
 			readyToSeek = true;
 			if(pendingSeek != null) {
-				player.SegmentSeek((long)pendingSeek[0],
-				                   (long)pendingSeek[1],
-				                   (float)pendingSeek[2]);
+				player.Rate = (float) pendingSeek [2];
+				player.Seek ((Time)pendingSeek[0], true);
 				player.Play();
 				pendingSeek = null;
 			}
 		}
 
-		protected virtual void OnTick(object o,TickArgs args) {
-			long currentTime = args.CurrentTime;
-			float currentposition = args.CurrentPosition;
-			long streamLength = args.StreamLength;
+		void OnTick (object o, TickArgs args) {
+			Time currentTime = args.CurrentTime;
+			Time streamLength = args.StreamLength;
+			double currentposition = args.CurrentPosition;
+			string slength;
 
-			//Console.WriteLine ("Current Time:{0}\n Length:{1}\n",currentTime, streamLength);
-			if(length != streamLength) {
+			if (length != streamLength) {
 				length = streamLength;
-				slength = TimeString.MSecondsToSecondsString(length);
 			}
 
-			if(InSegment()) {
-				currentTime -= segmentStartTime;
-				currentposition = (float)currentTime/(float)(segmentStopTime-segmentStartTime);
-				slength = TimeString.MSecondsToMSecondsString(segmentStopTime-segmentStartTime);
+			if (SegmentLoaded) {
+				Time duration = segment.Stop - segment.Start;
+				if (currentTime > segment.Stop) {
+					player.Pause ();
+				}
+				currentTime -= segment.Start;
+				currentposition = (float)currentTime.MSeconds/(float)(duration.MSeconds);
+				slength = duration.ToMSecondsString();
+				
+			} else {
+				slength = length.ToMSecondsString ();
 			}
 
-			timelabel.Text = TimeString.MSecondsToMSecondsString(currentTime) + "/" + slength;
+			timelabel.Text = currentTime.ToMSecondsString() + "/" + slength;
 			timescale.Value = currentposition;
-			if(Tick != null)
-				Tick(o, args.CurrentTime, args.StreamLength, args.CurrentPosition, args.Seekable);
+			if (Tick != null)
+				Tick (o, currentTime, streamLength, currentposition);
 
 		}
 
-		protected virtual void OnTimescaleAdjustBounds(object o, Gtk.AdjustBoundsArgs args)
+		void OnTimescaleAdjustBounds(object o, Gtk.AdjustBoundsArgs args)
 		{
 			double pos;
 
@@ -533,7 +463,7 @@ namespace LongoMatch.Gui
 			SeekFromTimescale(pos);
 		}
 
-		protected virtual void OnTimescaleValueChanged(object sender, System.EventArgs e)
+		void OnTimescaleValueChanged(object sender, System.EventArgs e)
 		{
 			if(seeking) {
 				/* Releasing the timescale always report value different from the real one.
@@ -546,28 +476,23 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		protected virtual void OnPlaybuttonClicked(object sender, System.EventArgs e)
+		void OnPlaybuttonClicked(object sender, System.EventArgs e)
 		{
 			Play();
 		}
 
-		protected virtual void OnStopbuttonClicked(object sender, System.EventArgs e)
-		{
-			player.SeekTime(segmentStartTime,1,true);
-		}
-
-		protected virtual void OnVolumebuttonClicked(object sender, System.EventArgs e)
+		void OnVolumebuttonClicked(object sender, System.EventArgs e)
 		{
 			vwin.SetLevel(player.Volume);
 			vwin.Show();
 		}
 
-		protected virtual void OnDestroyEvent(object o, Gtk.DestroyEventArgs args)
+		void OnDestroyEvent(object o, Gtk.DestroyEventArgs args)
 		{
 			player.Dispose();
 		}
 
-		protected virtual void OnVolumeChanged(double level) {
+		void OnVolumeChanged(double level) {
 			player.Volume = level;
 			if(level == 0)
 				muted = true;
@@ -575,42 +500,42 @@ namespace LongoMatch.Gui
 				muted = false;
 		}
 
-		protected virtual void OnPausebuttonClicked(object sender, System.EventArgs e)
+		void OnPausebuttonClicked(object sender, System.EventArgs e)
 		{
 			player.Pause();
 		}
 
-		protected virtual void OnEndOfStream(object o, EventArgs args) {
-			player.SeekInSegment(0, GetRateFromScale());
+		void OnEndOfStream(object o, EventArgs args) {
+			player.Seek (new Time (0), true);
 			player.Pause();
 		}
 
-
-		protected virtual void OnError(object o, ErrorArgs args) {
+		void OnError(object o, ErrorArgs args) {
 			if(Error != null)
 				Error(o, args.Message);
 		}
 
-		protected virtual void OnClosebuttonClicked(object sender, System.EventArgs e)
+		void OnClosebuttonClicked(object sender, System.EventArgs e)
 		{
-			CloseActualSegment();
+			CloseSegment();
+			player.Play ();
 		}
 
-		protected virtual void OnPrevbuttonClicked(object sender, System.EventArgs e)
+		void OnPrevbuttonClicked(object sender, System.EventArgs e)
 		{
-			if (InSegment())
-				SeekInSegment (segmentStartTime);
+			if (segment.Start.MSeconds > 0)
+				Seek (segment.Start, true);
 			if(Prev != null)
 				Prev();
 		}
 
-		protected virtual void OnNextbuttonClicked(object sender, System.EventArgs e)
+		void OnNextbuttonClicked(object sender, System.EventArgs e)
 		{
 			if(Next != null)
 				Next();
 		}
 
-		protected virtual void OnVscale1FormatValue(object o, Gtk.FormatValueArgs args)
+		void OnVscale1FormatValue(object o, Gtk.FormatValueArgs args)
 		{
 			double val = args.Value;
 			if(val >= SCALE_FPS) {
@@ -621,7 +546,7 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		protected virtual void OnVscale1ValueChanged(object sender, System.EventArgs e)
+		void OnVscale1ValueChanged(object sender, System.EventArgs e)
 		{
 			float val = GetRateFromScale();
 
@@ -635,18 +560,13 @@ namespace LongoMatch.Gui
 			else if(val ==1)
 				player.Volume = previousVLevel;
 
-			if(InSegment()) {
-				player.SetRateInSegment(val,segmentStopTime);
-			}
-			else
-				player.SetRate(val);
-			rate = val;
+			player.Rate = val;
 			if (PlaybackRateChanged != null && emitRateScale) {
-				PlaybackRateChanged (rate);
+				PlaybackRateChanged (val);
 			}
 		}
 
-		protected virtual void OnVideoboxButtonPressEvent(object o, Gtk.ButtonPressEventArgs args)
+		void OnVideoboxButtonPressEvent(object o, Gtk.ButtonPressEventArgs args)
 		{
 			if(filename == null)
 				return;
@@ -660,14 +580,14 @@ namespace LongoMatch.Gui
 				Pause();
 		}
 
-		protected virtual void OnVideoboxScrollEvent(object o, Gtk.ScrollEventArgs args)
+		void OnVideoboxScrollEvent(object o, Gtk.ScrollEventArgs args)
 		{
 			switch(args.Event.Direction) {
 			case ScrollDirection.Down:
-				SeekToPreviousFrame(InSegment());
+				SeekToPreviousFrame ();
 				break;
 			case ScrollDirection.Up:
-				SeekToNextFrame(InSegment());
+				SeekToNextFrame ();
 				break;
 			case ScrollDirection.Left:
 				StepBackward();
@@ -678,38 +598,35 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		protected virtual void OnDrawButtonClicked(object sender, System.EventArgs e)
+		void OnDrawButtonClicked(object sender, System.EventArgs e)
 		{
-			int currentTime;
-
-			currentTime = (int)AccurateCurrentTime;
-			// If the player has reached the end of the segment the current time
-			// will be unseekable and it's not possible to get a frame at this
-			// instant. If we exceed the segment stop time, decrease in a
-			// milisecond the position.
-			if(InSegment() && currentTime >= segmentStopTime)
-				currentTime -= 1;
 			if(DrawFrame != null)
-				DrawFrame(currentTime);
+				DrawFrame (CurrentTime);
 		}
 		
-		void HandleSeekEvent (SeekType type, float rate, bool inSegment, long start, long stop)
+		void HandleRealized (object sender, EventArgs e)
+		{
+			player.WindowHandle = GtkHelpers.GetWindowHandle (videodrawingarea.GdkWindow);
+		}
+		
+		void HandleSeekEvent (SeekType type, Time start, float rate)
 		{
 			/* We only use it for backwards framestepping for now */
 			if (type == SeekType.StepDown || type == SeekType.StepUp) {
 				if(player.Playing)
 					player.Pause ();
 				if (type == SeekType.StepDown)
-					player.SeekToPreviousFrame (rate, inSegment);
+					player.SeekToPreviousFrame ();
 				else
-					player.SeekToNextFrame (rate, inSegment);
+					player.SeekToNextFrame ();
 				if (SeekEvent != null)
-					SeekEvent ((int)AccurateCurrentTime);
+					SeekEvent (CurrentTime);
 			}
 			if (type == SeekType.Accurate || type == SeekType.Keyframe) {
-				player.SeekTime (start, rate, type == SeekType.Accurate);
+				player.Rate = (double) rate;
+				player.Seek (start, type == SeekType.Accurate);
 				if (SeekEvent != null)
-					SeekEvent ((int)start);
+					SeekEvent (start);
 			}
 		}
 

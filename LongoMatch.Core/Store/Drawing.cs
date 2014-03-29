@@ -18,6 +18,7 @@
 
 using System;
 using System.Drawing.Imaging;
+using Newtonsoft.Json;
 
 using LongoMatch.Common;
 
@@ -57,6 +58,23 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Render time of the drawing
 		/// </summary>
+		public Time Render {
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Time to pause the playback and display the drawing
+		/// </summary>
+		public Time Pause {
+			set;
+			get;
+		}
+		
+		/// <summary>
+		/// Render time of the drawing
+		/// </summary>
+		[JsonIgnore]
 		public int RenderTime {
 			get;
 			set;
@@ -65,6 +83,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Time to pause the playback and display the drawing
 		/// </summary>
+		[JsonIgnore]
 		public int PauseTime {
 			set;
 			get;

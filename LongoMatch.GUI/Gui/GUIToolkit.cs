@@ -192,8 +192,7 @@ namespace LongoMatch.Gui
 				sd.Destroy();
 				outDir = System.IO.Path.Combine(snapshotsDir, seriesName);
 				var fsc = new FramesSeriesCapturer(openedProject.Description.File.FilePath,
-				                               play.Start.MSeconds, play.Stop.MSeconds,
-				                               interval, outDir);
+				                               play.Start, play.Stop, interval, outDir);
 				var fcpd = new FramesCaptureProgressDialog(fsc);
 				fcpd.TransientFor = mainWindow as Gtk.Window;
 				fcpd.Run();
@@ -211,13 +210,13 @@ namespace LongoMatch.Gui
 			tg.Destroy();
 		}
 
-		public void DrawingTool (Image image, Play play, int stopTime) {
+		public void DrawingTool (Image image, Play play, Time stopTime) {
 			DrawingTool dialog = new DrawingTool();
 
 			Log.Information ("Drawing tool");
 			dialog.Image = image.Value;
 			if (play != null)
-				dialog.SetPlay(play, stopTime);
+				dialog.SetPlay (play, stopTime);
 			dialog.TransientFor = mainWindow as Gtk.Window;
 			image.Dispose();
 			dialog.Run();
@@ -333,6 +332,15 @@ namespace LongoMatch.Gui
 			date = dialog.Date;
 			dialog.Destroy ();
 			return date;
+		}
+		
+		public EndCaptureResponse EndCapture (string filepath) {
+			int res;
+			EndCaptureDialog dialog = new EndCaptureDialog (filepath);
+			dialog.TransientFor = mainWindow.Toplevel as Gtk.Window;
+			res = dialog.Run();
+			dialog.Destroy();
+			return (EndCaptureResponse)res;
 		}
 		
 		public void Quit () {

@@ -15,8 +15,6 @@
   </Configurations>
   <Contents>
     <File subtype="Directory" buildaction="Nothing" name="." />
-    <File subtype="Code" buildaction="Nothing" name="bacon-video-widget.h" />
-    <File subtype="Code" buildaction="Compile" name="bacon-video-widget-gst-0.10.c" />
     <File subtype="Code" buildaction="Nothing" name="common.h" />
     <File subtype="Code" buildaction="Compile" name="gst-camera-capturer.c" />
     <File subtype="Code" buildaction="Nothing" name="gst-camera-capturer.h" />
@@ -37,6 +35,10 @@
     <File subtype="Code" buildaction="Nothing" name="gst-remuxer.h" />
     <File subtype="Code" buildaction="Compile" name="gst-video-encoder.c" />
     <File subtype="Code" buildaction="Nothing" name="gst-video-encoder.h" />
+    <File subtype="Code" buildaction="Nothing" name="lgm-video-player.h" />
+    <File subtype="Code" buildaction="Compile" name="lgm-video-player.c" />
+    <File subtype="Code" buildaction="Compile" name="gst-nle-source.c" />
+    <File subtype="Code" buildaction="Nothing" name="gst-nle-source.h" />
   </Contents>
   <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="Makefile.am" IsAutotoolsProject="True" RelativeConfigureInPath=".">
     <BuildFilesVar />

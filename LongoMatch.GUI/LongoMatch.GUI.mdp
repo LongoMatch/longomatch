@@ -134,10 +134,6 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.VideoConversionTool.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/DatabasesManager.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.DatabasesManager.cs" />
-    <File subtype="Directory" buildaction="Compile" name="Gui/Helpers" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Helpers/Misc.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Helpers/FileChooserHelper.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Helpers/MessagesHelpers.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/CoordinatesTagger.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.CoordinatesTagger.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/GeneralPreferencesPanel.cs" />
@@ -181,7 +177,6 @@
     <File subtype="Directory" buildaction="Compile" name="Gui/Panel" />
     <File subtype="Code" buildaction="Compile" name="Gui/Panel/WelcomePanel.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Panel.WelcomePanel.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Component/BackgroundWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.BackgroundWidget.cs" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/background.png" />
     <File subtype="Code" buildaction="Compile" name="Gui/Panel/OpenProjectPanel.cs" />
@@ -201,6 +196,8 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.CalendarDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/AnalysisTemplateEditor.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.AnalysisTemplateEditor.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Gui/Helpers" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/BackgroundWidget.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
@@ -217,6 +214,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <ProjectReference type="Project" localcopy="True" refto="OxyPlotMono" />
+    <ProjectReference type="Project" localcopy="True" refto="LongoMatch.GUI.Helpers" />
   </References>
   <LanguageParameters ApplicationIcon="." CodePage="65001" ctype="CSharpProjectParameters" />
 </Project>

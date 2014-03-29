@@ -21,6 +21,7 @@
 using System;
 
 using LongoMatch.Common;
+using LongoMatch.Store;
 
 namespace LongoMatch.Interfaces.Multimedia
 {
@@ -28,11 +29,10 @@ namespace LongoMatch.Interfaces.Multimedia
 
 	public interface IFramesCapturer
 	{
-		bool Open(string mrl);
-		bool SeekTime(long time, bool accurate);
-		void Pause();
+		bool Open (string uri);
+		bool Seek (Time time, bool accurate);
+		void Pause ();
 		void Dispose();
-		Image GetCurrentFrame(int outwidth, int outheight);
-		Image GetCurrentFrame();
+		Image GetCurrentFrame (int outwidth=-1, int outheight=-1);
 	}
 }

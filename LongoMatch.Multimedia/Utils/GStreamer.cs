@@ -18,7 +18,6 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using Gtk;
 using LongoMatch.Video;
 using Mono.Unix;
 using LongoMatch.Common;
@@ -58,7 +57,6 @@ namespace LongoMatch.Multimedia.Utils
 				return true;
 			
 			if (!CheckBasicPlugins()) {
-				HandleInstallationError();
 				return false;
 			}
 			return true;
@@ -120,17 +118,6 @@ namespace LongoMatch.Multimedia.Utils
 			return ret;
 		}
 		
-		private static void HandleInstallationError () {
-			File.Delete(GetRegistryPath());
-			MessageDialog md = new MessageDialog(null, DialogFlags.Modal,
-			                                     MessageType.Error, ButtonsType.Ok,
-			                                     Catalog.GetString("An error has been detected in the current " +
-			                                                       "installation.") + "\n" +
-			                                     Catalog.GetString(String.Format ("Try restarting {0} and contact with" +
-			                                      	"the development team if the problem persists.", Constants.SOFTWARE_NAME)));
-			md.Run();
-			md.Destroy();
-		}
 	}
 }
 

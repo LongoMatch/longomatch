@@ -29,7 +29,7 @@ main (int argc, char *argv[])
   gchar *uri;
   GError *err = NULL;
 
-  init_backend (0, NULL);
+  lgm_init_backend (0, NULL);
 
   if (argc != 2) {
     g_print("Usage: test-discoverer file_uri\n");

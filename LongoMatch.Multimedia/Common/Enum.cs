@@ -66,9 +66,7 @@ namespace LongoMatch.Video.Common
 
 	public enum PlayerUseType {
 		Video,
-		Audio,
 		Capture,
-		Metadata,
 	}
 
 	public enum VideoProperty {

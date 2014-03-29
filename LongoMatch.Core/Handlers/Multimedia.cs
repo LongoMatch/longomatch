@@ -19,26 +19,27 @@
 using System;
 
 using LongoMatch.Common;
+using LongoMatch.Store;
 
 namespace LongoMatch.Handlers
 {
 	public delegate void PlayListSegmentDoneHandler();
 	public delegate void SegmentClosedHandler();
 	public delegate void SegmentDoneHandler();
-	public delegate void SeekEventHandler(long pos);
+	public delegate void SeekEventHandler(Time pos);
 	public delegate void VolumeChangedHandler(double level);
 	public delegate void NextButtonClickedHandler();
 	public delegate void PrevButtonClickedHandler();
 	public delegate void ProgressHandler(float progress);
 	public delegate void FramesProgressHandler(int actual, int total, Image frame);
-	public delegate void DrawFrameHandler(int time);
-	public delegate void EllpasedTimeHandler(int ellapsedTime);
+	public delegate void DrawFrameHandler(Time time);
+	public delegate void EllpasedTimeHandler(Time ellapsedTime);
 	public delegate void PlaybackRateChangedHandler (float rate);
 
 
 	public delegate void ErrorHandler(object o, string message);
 	public delegate void PercentCompletedHandler(object o, float percent);
 	public delegate void StateChangeHandler(object o, bool playing);
-	public delegate void TickHandler(object o, long currentTime, long streamLength,
-		float currentPosition, bool seekable);
+	public delegate void TickHandler(object o, Time currentTime, Time streamLength,
+		double currentPosition);
 }

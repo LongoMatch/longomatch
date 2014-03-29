@@ -37,17 +37,6 @@
 #include "video-utils.h"
 
 
-/* gtk+/gnome */
-#include <gdk/gdk.h>
-#if defined (GDK_WINDOWING_X11)
-#include <gdk/gdkx.h>
-#elif defined (GDK_WINDOWING_WIN32)
-#include <gdk/gdkwin32.h>
-#elif defined (GDK_WINDOWING_QUARTZ)
-#include <gdk/gdkquartz.h>
-#endif
-#include <gtk/gtk.h>
-
 GST_DEBUG_CATEGORY (_cesarplayer_gst_debug_cat);
 #define GST_CAT_DEFAULT _cesarplayer_gst_debug_cat
 
@@ -59,19 +48,6 @@ enum
   SIGNAL_STATE_CHANGED,
   SIGNAL_DEVICE_CHANGE,
   LAST_SIGNAL
-};
-
-/* Properties */
-enum
-{
-  PROP_0,
-  PROP_OUTPUT_HEIGHT,
-  PROP_OUTPUT_WIDTH,
-  PROP_VIDEO_QUALITY,
-  PROP_AUDIO_QUALITY,
-  PROP_AUDIO_ENABLED,
-  PROP_OUTPUT_FILE,
-  PROP_DEVICE_ID,
 };
 
 struct GstCameraCapturerPrivate
@@ -94,13 +70,8 @@ struct GstCameraCapturerPrivate
   /*Video input info */
   gint video_width;             /* Movie width */
   gint video_height;            /* Movie height */
-  const GValue *movie_par;      /* Movie pixel aspect ratio */
-  gint video_width_pixels;      /* Scaled movie width */
-  gint video_height_pixels;     /* Scaled movie height */
   gint video_fps_n;
   gint video_fps_d;
-  gboolean media_has_video;
-  gboolean media_has_audio;
 
   /* Snapshots */
   GstBuffer *last_buffer;
@@ -131,16 +102,11 @@ struct GstCameraCapturerPrivate
   GstClockTime current_recording_start_ts;
   GstClockTime last_video_buf_ts;
   GstClockTime last_audio_buf_ts;
-  GMutex *recording_lock;
+  GMutex recording_lock;
 
   /*Overlay */
   GstXOverlay *xoverlay;        /* protect with lock */
   guintptr window_handle;
-
-  /*Videobox */
-  gboolean logo_mode;
-  GdkPixbuf *logo_pixbuf;
-  gboolean expand_logo;
 
   /*GStreamer bus */
   GstBus *bus;
@@ -157,191 +123,12 @@ static int gcc_signals[LAST_SIGNAL] = { 0 };
 static void gcc_error_msg (GstCameraCapturer * gcc, GstMessage * msg);
 static void gcc_bus_message_cb (GstBus * bus, GstMessage * message,
     gpointer data);
-static void gst_camera_capturer_get_property (GObject * object,
-    guint property_id, GValue * value, GParamSpec * pspec);
-static void gst_camera_capturer_set_property (GObject * object,
-    guint property_id, const GValue * value, GParamSpec * pspec);
 static void gcc_element_msg_sync (GstBus * bus, GstMessage * msg,
     gpointer data);
-static int gcc_get_video_stream_info (GstCameraCapturer * gcc);
+static gboolean gcc_get_video_stream_info (GstPad *pad, GstPad *peer,
+    GstCameraCapturer * gcc);
 
-G_DEFINE_TYPE (GstCameraCapturer, gst_camera_capturer, GTK_TYPE_DRAWING_AREA);
-
-/***********************************
-*
-*           GTK Widget
-*
-************************************/
-
-static gboolean
-gst_camera_capturer_configure_event (GtkWidget * widget,
-    GdkEventConfigure * event, GstCameraCapturer * gcc)
-{
-  GstXOverlay *xoverlay = NULL;
-
-  g_return_val_if_fail (gcc != NULL, FALSE);
-  g_return_val_if_fail (GST_IS_CAMERA_CAPTURER (gcc), FALSE);
-
-  xoverlay = gcc->priv->xoverlay;
-
-  if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay)) {
-    gst_x_overlay_expose (xoverlay);
-  }
-
-  return FALSE;
-}
-
-static void
-gst_camera_capturer_realize_event (GtkWidget * widget)
-{
-  GstCameraCapturer *gcc = GST_CAMERA_CAPTURER (widget);
-  GdkWindow *window = gtk_widget_get_window (widget);
-
-  if (!gdk_window_ensure_native (window))
-    g_error ("Couldn't create native window needed for GstXOverlay!");
-
-  /* Connect to configure event on the top level window */
-  g_signal_connect (G_OBJECT (gtk_widget_get_toplevel (widget)),
-      "configure-event", G_CALLBACK (gst_camera_capturer_configure_event), gcc);
-
-  gcc->priv->window_handle = gst_get_window_handle (window);
-}
-
-static gboolean
-gst_camera_capturer_expose_event (GtkWidget * widget, GdkEventExpose * event)
-{
-  GstCameraCapturer *gcc = GST_CAMERA_CAPTURER (widget);
-  GstXOverlay *xoverlay;
-  gboolean draw_logo;
-  GdkWindow *win;
-
-  if (event && event->count > 0)
-    return TRUE;
-
-  if (event == NULL)
-    return TRUE;
-
-  xoverlay = gcc->priv->xoverlay;
-  if (xoverlay != NULL) {
-    gst_object_ref (xoverlay);
-    gst_set_window_handle (xoverlay, gcc->priv->window_handle);
-  }
-
-  win = gtk_widget_get_window (widget);
-
-  /* if there's only audio and no visualisation, draw the logo as well */
-  draw_logo = gcc->priv->media_has_audio && !gcc->priv->media_has_video;
-
-  if (gcc->priv->logo_mode || draw_logo) {
-    /* Start with a nice black canvas */
-    gdk_draw_rectangle (win, gtk_widget_get_style (widget)->black_gc, TRUE, 0,
-        0, widget->allocation.width, widget->allocation.height);
-
-    if (gcc->priv->logo_pixbuf != NULL) {
-      GdkPixbuf *frame;
-      /*GdkPixbuf *drawing;*/
-      guchar *pixels;
-      int rowstride;
-      gint width, height, alloc_width, alloc_height, logo_x, logo_y;
-      gfloat ratio;
-
-      /* Checking if allocated space is smaller than our logo */
-
-
-      width = gdk_pixbuf_get_width (gcc->priv->logo_pixbuf);
-      height = gdk_pixbuf_get_height (gcc->priv->logo_pixbuf);
-      alloc_width = widget->allocation.width;
-      alloc_height = widget->allocation.height;
-
-      if ((gfloat) alloc_width / width > (gfloat) alloc_height / height) {
-        ratio = (gfloat) alloc_height / height;
-      } else {
-        ratio = (gfloat) alloc_width / width;
-      }
-
-      width *= ratio;
-      height *= ratio;
-
-      logo_x = (alloc_width / 2) - (width / 2);
-      logo_y = (alloc_height / 2) - (height / 2);
-
-
-      /* Drawing our frame */
-
-      if (gcc->priv->expand_logo) { // && !gcc->priv->drawing_mode) {
-        /* Scaling to available space */
-
-        frame = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
-            FALSE, 8, widget->allocation.width, widget->allocation.height);
-
-        gdk_pixbuf_composite (gcc->priv->logo_pixbuf,
-            frame,
-            0, 0,
-            alloc_width, alloc_height,
-            logo_x, logo_y, ratio, ratio, GDK_INTERP_BILINEAR, 255);
-
-        rowstride = gdk_pixbuf_get_rowstride (frame);
-
-        pixels = gdk_pixbuf_get_pixels (frame) +
-            rowstride * event->area.y + event->area.x * 3;
-
-        gdk_draw_rgb_image_dithalign (widget->window,
-            widget->style->black_gc,
-            event->area.x, event->area.y,
-            event->area.width,
-            event->area.height,
-            GDK_RGB_DITHER_NORMAL, pixels,
-            rowstride, event->area.x, event->area.y);
-
-        g_object_unref (frame);
-      } else {
-        if (width <= 1 || height <= 1) {
-          if (xoverlay != NULL)
-            gst_object_unref (xoverlay);
-          gdk_window_end_paint (win);
-          return TRUE;
-        }
-
-        frame = gdk_pixbuf_scale_simple (gcc->priv->logo_pixbuf,
-            width, height, GDK_INTERP_BILINEAR);
-        gdk_draw_pixbuf (win, gtk_widget_get_style (widget)->fg_gc[0],
-            frame, 0, 0, logo_x, logo_y, width, height,
-            GDK_RGB_DITHER_NONE, 0, 0);
-
-        /*if (gcc->priv->drawing_mode && bvw->priv->drawing_pixbuf != NULL) {*/
-          /*drawing =*/
-              /*gdk_pixbuf_scale_simple (gcc->priv->drawing_pixbuf, width,*/
-              /*height, GDK_INTERP_BILINEAR);*/
-          /*gdk_draw_pixbuf (win,*/
-              /*gtk_widget_get_style (widget)->fg_gc[0],*/
-              /*drawing, 0, 0, logo_x, logo_y, width,*/
-              /*height, GDK_RGB_DITHER_NONE, 0, 0);*/
-          /*g_object_unref (drawing);*/
-        /*}*/
-
-        g_object_unref (frame);
-      }
-    } else if (win) {
-      /* No pixbuf, just draw a black background then */
-      gdk_window_clear_area (win,
-          0, 0, widget->allocation.width, widget->allocation.height);
-    }
-  } else {
-    /* no logo, pass the expose to gst */
-    if (xoverlay != NULL && GST_IS_X_OVERLAY (xoverlay)){
-      gst_x_overlay_expose (xoverlay);
-    }
-    else {
-      /* No xoverlay to expose yet */
-      gdk_window_clear_area (win,
-          0, 0, widget->allocation.width, widget->allocation.height);
-    }
-  }
-  if (xoverlay != NULL)
-    gst_object_unref (xoverlay);
-
-  return TRUE;
-}
+G_DEFINE_TYPE (GstCameraCapturer, gst_camera_capturer, G_TYPE_OBJECT);
 
 /***********************************
 *
@@ -357,35 +144,24 @@ gst_camera_capturer_init (GstCameraCapturer * object)
       G_TYPE_INSTANCE_GET_PRIVATE (object, GST_TYPE_CAMERA_CAPTURER,
       GstCameraCapturerPrivate);
 
-  GTK_WIDGET_SET_FLAGS (GTK_WIDGET (object), GTK_CAN_FOCUS);
-  GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (object), GTK_DOUBLE_BUFFERED);
-
   priv->output_height = 480;
   priv->output_width = 640;
   priv->audio_quality = 50;
   priv->video_quality = 50;
   priv->last_buffer = NULL;
-  priv->expand_logo = TRUE;
   priv->current_recording_start_ts = GST_CLOCK_TIME_NONE;
   priv->accum_recorded_ts = GST_CLOCK_TIME_NONE;
   priv->last_accum_recorded_ts = GST_CLOCK_TIME_NONE;
   priv->last_video_buf_ts = GST_CLOCK_TIME_NONE;
   priv->last_audio_buf_ts = GST_CLOCK_TIME_NONE;
   priv->is_recording = FALSE;
-  priv->recording_lock = g_mutex_new();
+  g_mutex_init (&priv->recording_lock);
 
   priv->video_encoder_type = VIDEO_ENCODER_VP8;
   priv->audio_encoder_type = AUDIO_ENCODER_VORBIS;
   priv->video_muxer_type = VIDEO_MUXER_WEBM;
   priv->source_type = CAPTURE_SOURCE_TYPE_SYSTEM;
   priv->source_element_name = SYSVIDEOSRC;
-
-  gtk_widget_add_events (GTK_WIDGET (object),
-      GDK_POINTER_MOTION_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK
-      | GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);
-
-  g_signal_connect (GTK_WIDGET (object), "realize",
-      G_CALLBACK (gst_camera_capturer_realize_event), NULL);
 }
 
 void
@@ -424,13 +200,15 @@ gst_camera_capturer_finalize (GObject * object)
     gcc->priv->device_id = NULL;
   }
 
-  if (gcc->priv->logo_pixbuf) {
-    g_object_unref (gcc->priv->logo_pixbuf);
-    gcc->priv->logo_pixbuf = NULL;
+  if (gcc->priv->last_buffer != NULL) {
+    gst_buffer_unref (gcc->priv->last_buffer);
+    gcc->priv->last_buffer = NULL;
   }
 
-  if (gcc->priv->last_buffer != NULL)
-    gst_buffer_unref (gcc->priv->last_buffer);
+  if (gcc->priv->xoverlay != NULL) {
+    gst_object_unref (gcc->priv->xoverlay);
+    gcc->priv->xoverlay = NULL;
+  }
 
   if (gcc->priv->main_pipeline != NULL
       && GST_IS_ELEMENT (gcc->priv->main_pipeline)) {
@@ -439,163 +217,23 @@ gst_camera_capturer_finalize (GObject * object)
     gcc->priv->main_pipeline = NULL;
   }
 
+  g_mutex_clear (&gcc->priv->recording_lock);
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static void
-gst_camera_capturer_set_video_quality (GstCameraCapturer * gcc, gint quality)
-{
-  gcc->priv->video_quality = quality;
-  GST_INFO_OBJECT (gcc, "Changed video quality to: %d",
-      gcc->priv->video_quality);
-}
-
-static void
-gst_camera_capturer_set_audio_quality (GstCameraCapturer * gcc, gint quality)
-{
-
-  gcc->priv->audio_quality = quality;
-  GST_INFO_OBJECT (gcc, "Changed audio quality to: %d",
-      gcc->priv->audio_quality);
-}
-
-static void
-gst_camera_capturer_set_audio_enabled (GstCameraCapturer * gcc,
-    gboolean enabled)
-{
-  gcc->priv->audio_enabled = enabled;
-  GST_INFO_OBJECT (gcc, "Audio is %s", enabled ? "enabled": "disabled");
-}
-
-static void
-gst_camera_capturer_set_output_file (GstCameraCapturer * gcc,
-    const gchar * file)
-{
-  gcc->priv->output_file = g_strdup (file);
-  GST_INFO_OBJECT (gcc, "Changed output filename to: %s", file);
-}
-
-static void
-gst_camera_capturer_set_device_id (GstCameraCapturer * gcc,
-    const gchar * device_id)
-{
-  gcc->priv->device_id = g_strdup (device_id);
-  GST_INFO_OBJECT (gcc, "Changed device id/name to: %s", gcc->priv->device_id);
-}
-
-static void
-gst_camera_capturer_set_property (GObject * object, guint property_id,
-    const GValue * value, GParamSpec * pspec)
-{
-  GstCameraCapturer *gcc;
-
-  gcc = GST_CAMERA_CAPTURER (object);
-
-  switch (property_id) {
-    case PROP_OUTPUT_HEIGHT:
-      gcc->priv->output_height = g_value_get_uint (value);
-      break;
-    case PROP_OUTPUT_WIDTH:
-      gcc->priv->output_width = g_value_get_uint (value);
-      break;
-    case PROP_VIDEO_QUALITY:
-      gst_camera_capturer_set_video_quality (gcc, g_value_get_uint (value));
-      break;
-    case PROP_AUDIO_QUALITY:
-      gst_camera_capturer_set_audio_quality (gcc, g_value_get_uint (value));
-      break;
-    case PROP_AUDIO_ENABLED:
-      gst_camera_capturer_set_audio_enabled (gcc, g_value_get_boolean (value));
-      break;
-    case PROP_OUTPUT_FILE:
-      gst_camera_capturer_set_output_file (gcc, g_value_get_string (value));
-      break;
-    case PROP_DEVICE_ID:
-      gst_camera_capturer_set_device_id (gcc, g_value_get_string (value));
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-  }
-}
-
-static void
-gst_camera_capturer_get_property (GObject * object, guint property_id,
-    GValue * value, GParamSpec * pspec)
-{
-  GstCameraCapturer *gcc;
-
-  gcc = GST_CAMERA_CAPTURER (object);
-
-  switch (property_id) {
-    case PROP_OUTPUT_HEIGHT:
-      g_value_set_uint (value, gcc->priv->output_height);
-      break;
-    case PROP_OUTPUT_WIDTH:
-      g_value_set_uint (value, gcc->priv->output_width);
-      break;
-    case PROP_AUDIO_QUALITY:
-      g_value_set_uint (value, gcc->priv->audio_quality);
-      break;
-    case PROP_VIDEO_QUALITY:
-      g_value_set_uint (value, gcc->priv->video_quality);
-      break;
-    case PROP_AUDIO_ENABLED:
-      g_value_set_boolean (value, gcc->priv->audio_enabled);
-      break;
-    case PROP_OUTPUT_FILE:
-      g_value_set_string (value, gcc->priv->output_file);
-      break;
-    case PROP_DEVICE_ID:
-      g_value_set_string (value, gcc->priv->device_id);
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-  }
 }
 
 static void
 gst_camera_capturer_class_init (GstCameraCapturerClass * klass)
 {
   GObjectClass *object_class;
-  GtkWidgetClass *widget_class;
 
   object_class = (GObjectClass *) klass;
-  widget_class = (GtkWidgetClass *) klass;
   parent_class = g_type_class_peek_parent (klass);
 
   g_type_class_add_private (object_class, sizeof (GstCameraCapturerPrivate));
 
-  /* GtkWidget */
-  widget_class->expose_event = gst_camera_capturer_expose_event;
-
   /* GObject */
-  object_class->set_property = gst_camera_capturer_set_property;
-  object_class->get_property = gst_camera_capturer_get_property;
   object_class->finalize = gst_camera_capturer_finalize;
-
-  /* Properties */
-  g_object_class_install_property (object_class, PROP_OUTPUT_HEIGHT,
-      g_param_spec_uint ("output_height", NULL,
-          NULL, 0, 5600, 576, G_PARAM_READWRITE));
-  g_object_class_install_property (object_class, PROP_OUTPUT_WIDTH,
-      g_param_spec_uint ("output_width", NULL,
-          NULL, 0, 5600, 720, G_PARAM_READWRITE));
-  g_object_class_install_property (object_class, PROP_VIDEO_QUALITY,
-      g_param_spec_uint ("video_quality", NULL,
-          NULL, 100, G_MAXUINT, 1000, G_PARAM_READWRITE));
-  g_object_class_install_property (object_class, PROP_AUDIO_QUALITY,
-      g_param_spec_uint ("audio_quality", NULL,
-          NULL, 12, G_MAXUINT, 128, G_PARAM_READWRITE));
-  g_object_class_install_property (object_class, PROP_AUDIO_ENABLED,
-      g_param_spec_boolean ("audio_enabled", NULL,
-          NULL, FALSE, G_PARAM_READWRITE));
-  g_object_class_install_property (object_class, PROP_OUTPUT_FILE,
-      g_param_spec_string ("output_file", NULL,
-          NULL, FALSE, G_PARAM_READWRITE));
-  g_object_class_install_property (object_class, PROP_DEVICE_ID,
-      g_param_spec_string ("device_id", NULL, NULL, FALSE, G_PARAM_READWRITE));
 
   /* Signals */
   gcc_signals[SIGNAL_ERROR] =
@@ -627,12 +265,6 @@ gst_camera_capturer_class_init (GstCameraCapturerClass * klass)
 *
 ************************************/
 
-void
-gst_camera_capturer_init_backend (int *argc, char ***argv)
-{
-  gst_init (argc, argv);
-}
-
 GQuark
 gst_camera_capturer_error_quark (void)
 {
@@ -642,23 +274,6 @@ gst_camera_capturer_error_quark (void)
     q = g_quark_from_static_string ("gcc-error-quark");
   }
   return q;
-}
-
-gboolean
-gst_camera_capture_videosrc_buffer_probe (GstPad * pad, GstBuffer * buf,
-    gpointer data)
-{
-  GstCameraCapturer *gcc = GST_CAMERA_CAPTURER (data);
-
-  if (gcc->priv->last_buffer) {
-    gst_buffer_unref (gcc->priv->last_buffer);
-    gcc->priv->last_buffer = NULL;
-  }
-
-  gst_buffer_ref (buf);
-  gcc->priv->last_buffer = buf;
-
-  return TRUE;
 }
 
 static void
@@ -982,7 +597,7 @@ gst_camera_capturer_encoding_retimestamper (GstCameraCapturer *gcc,
   GstClockTime buf_ts, new_buf_ts, duration;
   GstBuffer *enc_buf;
 
-  g_mutex_lock(gcc->priv->recording_lock);
+  g_mutex_lock (&gcc->priv->recording_lock);
 
   if (!gcc->priv->is_recording) {
     /* Drop buffers if we are not recording */
@@ -1059,7 +674,7 @@ gst_camera_capturer_encoding_retimestamper (GstCameraCapturer *gcc,
 
 done:
   {
-    g_mutex_unlock(gcc->priv->recording_lock);
+    g_mutex_unlock (&gcc->priv->recording_lock);
     return TRUE;
   }
 }
@@ -1136,7 +751,6 @@ gst_camera_capturer_create_decoder_bin (GstCameraCapturer *gcc)
   v_prev_queue_pad = gst_element_get_static_pad(v_prev_queue, "src");
   gst_pad_add_buffer_probe(v_prev_queue_pad, (GCallback) gst_camera_capturer_video_encoding_probe, gcc);
   gst_object_unref(v_prev_queue_pad);
-
   if (gcc->priv->audio_enabled) {
     GstElement *a_queue, *a_prev_queue;
     GstPad *a_dec_pad, *a_queue_pad, *a_prev_queue_pad;
@@ -1241,10 +855,10 @@ gst_camera_capturer_link_preview (GstCameraCapturer *gcc)
 static gboolean
 cb_last_buffer (GstPad *pad, GstBuffer *buf, GstCameraCapturer *gcc){
   if (buf != NULL) {
-    if (gcc->priv->last_buffer != NULL)
-      gst_buffer_unref(buf);
-    gst_buffer_ref(buf);
-    gcc->priv->last_buffer = buf;
+    if (gcc->priv->last_buffer != NULL) {
+      gst_buffer_unref(gcc->priv->last_buffer);
+    }
+    gcc->priv->last_buffer =  gst_buffer_ref(buf);
   }
   return TRUE;
 }
@@ -1276,6 +890,8 @@ gst_camera_capturer_create_preview(GstCameraCapturer *gcc)
   g_signal_connect (v_decoder, "pad-added", G_CALLBACK (cb_new_prev_pad), video_bin);
 
   video_pad = gst_element_get_static_pad(video_bin, "sink");
+  g_signal_connect (video_pad, "notify::caps",
+      G_CALLBACK (gcc_get_video_stream_info), gcc);
   gst_pad_add_buffer_probe (video_pad, (GCallback) cb_last_buffer, gcc);
   gst_object_unref(video_pad);
 
@@ -1589,10 +1205,6 @@ gcc_bus_message_cb (GstBus * bus, GstMessage * message, gpointer data)
       /* we only care about playbin (pipeline) state changes */
       if (GST_MESSAGE_SRC (message) != GST_OBJECT (gcc->priv->main_pipeline))
         break;
-
-      if (old_state == GST_STATE_PAUSED && new_state == GST_STATE_PLAYING) {
-        gcc_get_video_stream_info (gcc);
-      }
     }
 
     case GST_MESSAGE_ELEMENT:
@@ -1676,24 +1288,21 @@ gcc_element_msg_sync (GstBus * bus, GstMessage * msg, gpointer data)
     g_return_if_fail (gcc->priv->window_handle != 0);
 
     g_object_set (GST_ELEMENT (gcc->priv->xoverlay), "force-aspect-ratio", TRUE, NULL);
-    gst_set_window_handle (gcc->priv->xoverlay, gcc->priv->window_handle);
-    gtk_widget_queue_draw (GTK_WIDGET(gcc));
+    lgm_set_window_handle (gcc->priv->xoverlay, gcc->priv->window_handle);
   }
 }
 
-static int
-gcc_get_video_stream_info (GstCameraCapturer * gcc)
+static gboolean
+gcc_get_video_stream_info (GstPad *pad, GstPad *peer, GstCameraCapturer * gcc)
 {
-  GstPad *sourcepad;
-  GstCaps *caps;
   GstStructure *s;
+  GstCaps *caps;
 
-  sourcepad = gst_element_get_pad (gcc->priv->decoder_bin, "video");
-  caps = gst_pad_get_negotiated_caps (sourcepad);
+  caps = gst_pad_get_negotiated_caps (pad);
 
   if (!(caps)) {
     GST_WARNING_OBJECT (gcc, "Could not get stream info");
-    return -1;
+    return FALSE;
   }
 
   /* Get the source caps */
@@ -1705,11 +1314,9 @@ gcc_get_video_stream_info (GstCameraCapturer * gcc)
             (s, "framerate", &gcc->priv->video_fps_n, &gcc->priv->video_fps_d)
             && gst_structure_get_int (s, "width", &gcc->priv->video_width)
             && gst_structure_get_int (s, "height", &gcc->priv->video_height)))
-      return -1;
-    /* Get the source PAR if available */
-    gcc->priv->movie_par = gst_structure_get_value (s, "pixel-aspect-ratio");
+      return FALSE;
   }
-  return 1;
+  return FALSE;
 }
 
 /*****************************************************
@@ -1769,6 +1376,13 @@ finish:
   }
 }
 
+
+/*******************************************
+ *
+ *         Public methods
+ *
+ * ****************************************/
+
 GList *
 gst_camera_capturer_enum_video_devices (const gchar *device)
 {
@@ -1780,12 +1394,6 @@ gst_camera_capturer_enum_audio_devices (const gchar *device)
 {
   return gst_camera_capturer_enum_devices (device);
 }
-
-/*******************************************
- *
- *         Public methods
- *
- * ****************************************/
 
 void
 gst_camera_capturer_run (GstCameraCapturer * gcc)
@@ -1805,6 +1413,10 @@ gst_camera_capturer_close (GstCameraCapturer * gcc)
 
   gst_element_set_state (gcc->priv->main_pipeline, GST_STATE_NULL);
   gst_element_get_state (gcc->priv->main_pipeline, NULL, NULL, -1);
+  if (gcc->priv->xoverlay != NULL) {
+    gst_object_unref (gcc->priv->xoverlay);
+    gcc->priv->xoverlay = NULL;
+  }
 }
 
 void
@@ -1814,13 +1426,13 @@ gst_camera_capturer_start (GstCameraCapturer * gcc)
   g_return_if_fail (GST_IS_CAMERA_CAPTURER (gcc));
 
   GST_INFO_OBJECT(gcc, "Started capture");
-  g_mutex_lock(gcc->priv->recording_lock);
+  g_mutex_lock (&gcc->priv->recording_lock);
   if (!gcc->priv->is_recording && gcc->priv->accum_recorded_ts == GST_CLOCK_TIME_NONE) {
     gcc->priv->accum_recorded_ts = 0;
     gcc->priv->is_recording = TRUE;
     gst_camera_capturer_link_encoder_bin (gcc);
   }
-  g_mutex_unlock(gcc->priv->recording_lock);
+  g_mutex_unlock (&gcc->priv->recording_lock);
 }
 
 void
@@ -1829,7 +1441,7 @@ gst_camera_capturer_toggle_pause (GstCameraCapturer * gcc)
   g_return_if_fail (gcc != NULL);
   g_return_if_fail (GST_IS_CAMERA_CAPTURER (gcc));
 
-  g_mutex_lock(gcc->priv->recording_lock);
+  g_mutex_lock (&gcc->priv->recording_lock);
   if (!gcc->priv->is_recording) {
     gcc->priv->current_recording_start_ts = GST_CLOCK_TIME_NONE;
     gcc->priv->is_recording = TRUE;
@@ -1837,62 +1449,9 @@ gst_camera_capturer_toggle_pause (GstCameraCapturer * gcc)
     gcc->priv->is_recording = FALSE;
     gcc->priv->video_synced = FALSE;
   }
-  g_mutex_unlock(gcc->priv->recording_lock);
+  g_mutex_unlock (&gcc->priv->recording_lock);
 
   GST_INFO_OBJECT(gcc, "Capture state changed to %s", gcc->priv->is_recording ? "recording": "paused");
-}
-
-void
-gst_camera_capturer_set_source (GstCameraCapturer * gcc, CaptureSourceType source,
-    const gchar *source_element_name)
-{
-  g_return_if_fail (gcc != NULL);
-  g_return_if_fail (GST_IS_CAMERA_CAPTURER (gcc));
-
-  gcc->priv->source_type = source;
-  gcc->priv->source_element_name = g_strdup (source_element_name);
-}
-
-void
-gst_camera_capturer_set_video_encoder (GstCameraCapturer * gcc, VideoEncoderType encoder)
-{
-  g_return_if_fail (gcc != NULL);
-  g_return_if_fail (GST_IS_CAMERA_CAPTURER (gcc));
-
-  gcc->priv->video_encoder_type = encoder;
-}
-
-void
-gst_camera_capturer_set_audio_encoder (GstCameraCapturer * gcc, AudioEncoderType encoder)
-{
-  g_return_if_fail (gcc != NULL);
-  g_return_if_fail (GST_IS_CAMERA_CAPTURER (gcc));
-
-  gcc->priv->audio_encoder_type = encoder;
-}
-
-void
-gst_camera_capturer_set_video_muxer (GstCameraCapturer * gcc, VideoMuxerType muxer)
-{
-  g_return_if_fail (gcc != NULL);
-  g_return_if_fail (GST_IS_CAMERA_CAPTURER (gcc));
-
-  gcc->priv->video_muxer_type = muxer;
-}
-
-gboolean
-gst_camera_capturer_can_get_frames (GstCameraCapturer * gcc, GError ** error)
-{
-  g_return_val_if_fail (gcc != NULL, FALSE);
-  g_return_val_if_fail (GST_IS_CAMERA_CAPTURER (gcc), FALSE);
-
-  /* check for video */
-  if (!gcc->priv->media_has_video) {
-    g_set_error_literal (error, GCC_ERROR, GST_ERROR_GENERIC,
-        "Media contains no supported video streams.");
-    return FALSE;
-  }
-  return TRUE;
 }
 
 static void
@@ -2025,25 +1584,47 @@ gst_camera_capturer_stop (GstCameraCapturer * gcc)
 #endif
 
   GST_INFO_OBJECT(gcc, "Closing capture");
-  g_mutex_lock(gcc->priv->recording_lock);
+  g_mutex_lock (&gcc->priv->recording_lock);
   gcc->priv->closing_recording = TRUE;
   gcc->priv->is_recording = FALSE;
-  g_mutex_unlock(gcc->priv->recording_lock);
+  g_mutex_unlock (&gcc->priv->recording_lock);
 
   gcc_encoder_send_event(gcc, gst_event_new_eos());
 }
 
+void
+gst_camera_capturer_configure (GstCameraCapturer *gcc,
+    const gchar * filename, CaptureSourceType source,
+    const gchar *source_element, const gchar *device_id,
+    VideoEncoderType video_encoder, AudioEncoderType audio_encoder,
+    VideoMuxerType muxer, guint video_bitrate, guint audio_bitrate,
+    guint record_audio, guint output_width, guint output_height,
+    guintptr window_handle)
+{
+  gcc->priv->output_file = g_strdup (filename);
+  gcc->priv->source_type = source;
+  gcc->priv->device_id = g_strdup (device_id);
+  gcc->priv->source_element_name = g_strdup (source_element);
+  gcc->priv->video_encoder_type = video_encoder;
+  gcc->priv->audio_encoder_type = audio_encoder;
+  gcc->priv->video_muxer_type = muxer;
+  gcc->priv->video_quality = video_bitrate;
+  gcc->priv->audio_quality = audio_bitrate;
+  gcc->priv->audio_enabled = record_audio;
+  gcc->priv->output_height = output_height;
+  gcc->priv->output_width = output_width;
+  gcc->priv->window_handle = window_handle;
+}
+
 GstCameraCapturer *
-gst_camera_capturer_new (gchar * filename, GError ** err)
+gst_camera_capturer_new (GError ** err)
 {
   GstCameraCapturer *gcc = NULL;
 
-#ifndef GST_DISABLE_GST_INFO
   if (_cesarplayer_gst_debug_cat == NULL) {
     GST_DEBUG_CATEGORY_INIT (_cesarplayer_gst_debug_cat, "longomatch", 0,
         "LongoMatch GStreamer Backend");
   }
-#endif
 
   gcc = g_object_new (GST_TYPE_CAMERA_CAPTURER, NULL);
 

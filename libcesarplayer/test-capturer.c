@@ -21,7 +21,18 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "gst-camera-capturer.h"
+#include "video-utils.h"
+#if defined (GDK_WINDOWING_X11)
+#include <gdk/gdkx.h>
+#elif defined (GDK_WINDOWING_WIN32)
+#include <gdk/gdkwin32.h>
+#elif defined (GDK_WINDOWING_QUARTZ)
+#include <gdk/gdkquartz.h>
+#endif
 
+static GtkWidget *recbutton, *stopbutton;
+static int sargc;
+static char **sargv;
 
 static void
 rec_clicked_cb (GtkButton *b, GstCameraCapturer *gcc)
@@ -35,10 +46,29 @@ stop_clicked (GtkButton *b, GstCameraCapturer *gcc)
   gst_camera_capturer_stop (gcc);
 }
 
-void
-create_window (GstCameraCapturer * gvc)
+static void
+on_realized_cb (GtkWidget *video)
 {
-  GtkWidget *window, *recbutton, *stopbutton, *vbox, *hbox;
+  GstCameraCapturer *gvc;
+  guintptr window;
+  GError *error = NULL;
+
+  window = lgm_get_window_handle (gtk_widget_get_window (video));
+
+  gvc = gst_camera_capturer_new (&error);
+  gst_camera_capturer_configure (gvc, sargv[1], CAPTURE_SOURCE_TYPE_SYSTEM,
+      sargv[2], sargv[3], VIDEO_ENCODER_H264, AUDIO_ENCODER_AAC, VIDEO_MUXER_MP4,
+      1000, 100, FALSE, 320, 240, window);
+  gst_camera_capturer_run(gvc);
+  g_signal_connect (G_OBJECT (recbutton), "clicked",
+      G_CALLBACK (rec_clicked_cb), gvc);
+  g_signal_connect (G_OBJECT (stopbutton), "clicked",
+      G_CALLBACK (stop_clicked), gvc);
+}
+void
+create_window (void)
+{
+  GtkWidget *window, *vbox, *hbox, *video;
 
   /* Create a new window */
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
@@ -47,46 +77,34 @@ create_window (GstCameraCapturer * gvc)
   hbox = gtk_hbox_new (TRUE, 0);
   recbutton = gtk_button_new_from_stock ("gtk-rec");
   stopbutton = gtk_button_new_from_stock ("gtk-stop");
+  video = gtk_drawing_area_new ();
+  GTK_WIDGET_UNSET_FLAGS (video, GTK_DOUBLE_BUFFERED);
 
   gtk_container_add (GTK_CONTAINER (window), GTK_WIDGET (vbox));
-  gtk_box_pack_start (GTK_BOX(vbox), GTK_WIDGET (gvc), TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX(vbox), GTK_WIDGET (video), TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX(vbox), GTK_WIDGET (hbox), FALSE, FALSE, 0);
   gtk_box_pack_start(GTK_BOX(hbox), recbutton, TRUE, TRUE, 0);
   gtk_box_pack_start(GTK_BOX(hbox), stopbutton, TRUE, TRUE, 0);
+  g_signal_connect (video, "realize", G_CALLBACK (on_realized_cb), NULL);
   gtk_widget_show_all (window);
-
-  g_signal_connect (G_OBJECT (recbutton), "clicked",
-      G_CALLBACK (rec_clicked_cb), gvc);
-  g_signal_connect (G_OBJECT (stopbutton), "clicked",
-      G_CALLBACK (stop_clicked), gvc);
 }
 
 
-int
-main (int argc, char *argv[])
-{
-  GstCameraCapturer *gvc;
-  GError *error = NULL;
 
+int
+main (int argc, char **argv)
+{
   if (argc != 4) {
     g_print("Usage: test-encoder output_file device_type device-id\n");
     return 1;
   }
   gtk_init (&argc, &argv);
+  sargc = argc;
+  sargv = argv;
 
   /*Create GstVideoCapturer */
-  gst_camera_capturer_init_backend (&argc, &argv);
-  gvc = gst_camera_capturer_new ("test", &error);
-
-  gst_camera_capturer_set_source (gvc, atoi(argv[2]), SYSVIDEOSRC);
-  gst_camera_capturer_set_video_encoder (gvc, VIDEO_ENCODER_H264);
-  gst_camera_capturer_set_audio_encoder (gvc, AUDIO_ENCODER_AAC);
-  gst_camera_capturer_set_video_muxer (gvc, VIDEO_MUXER_MP4);
-  g_object_set (gvc, "device-id", argv[3], NULL);
-  g_object_set (gvc, "output_file", argv[1], NULL);
-
-  create_window (gvc);
-  gst_camera_capturer_run(gvc);
+  lgm_init_backend (argc, argv);
+  create_window ();
   gtk_main ();
 
   return 0;

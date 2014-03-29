@@ -25,11 +25,13 @@ using Image = LongoMatch.Common.Image;
 using LongoMatch.Common;
 using LongoMatch.Handlers;
 using LongoMatch.Interfaces.GUI;
+using LongoMatch.Gui.Helpers;
 using LongoMatch.Video;
 using LongoMatch.Video.Common;
 using LongoMatch.Video.Capturer;
 using LongoMatch.Video.Utils;
 using Mono.Unix;
+using LongoMatch.Store;
 
 namespace LongoMatch.Gui
 {
@@ -42,46 +44,26 @@ namespace LongoMatch.Gui
 		public event EventHandler CaptureFinished;
 		public event LongoMatch.Handlers.ErrorHandler Error;
 
-		private Image logopix;
-		private CaptureSettings captureProps;
-		private CapturerType capturerType;
-		private bool captureStarted;
-		private bool capturing;
-		private const int THUMBNAIL_MAX_WIDTH = 100;
-
+		Image logopix;
+		CaptureSettings settings;
+		CapturerType type;
+		bool captureStarted, capturing, delayStart;
 		LongoMatch.Multimedia.Interfaces.ICapturer capturer;
 
 		public CapturerBin()
 		{
 			this.Build();
-			captureProps = CaptureSettings.DefaultSettings();
-			Type = CapturerType.Fake;
-		}
-
-		public CapturerType Type {
-			set {
-				/* Close any previous instance of the capturer */
-				Close();
-
-				MultimediaToolkit factory = new MultimediaToolkit();
-				capturer = factory.GetCapturer(value);
-				capturer.EllapsedTime += OnTick;
-				if(value != CapturerType.Fake) {
-					capturer.Error += OnError;
-					capturer.DeviceChange += OnDeviceChange;
-					capturerhbox.Add((Widget)capturer);
-					(capturer as Widget).Visible = true;
-					capturerhbox.Visible = true;
-					logodrawingarea.Visible = false;
+			recbutton.Clicked += OnRecbuttonClicked;
+			pausebutton.Clicked += OnPausebuttonClicked;
+			stopbutton.Clicked += OnStopbuttonClicked;
+			videodrawingarea.CanFocus = false;
+			
+			videodrawingarea.Realized += (sender, e) => {
+				if (delayStart) {
+					Configure ();
+					capturer.Run ();
 				}
-				else {
-					logodrawingarea.Visible = true;
-					capturerhbox.Visible = false;
-				}
-				SetProperties();
-				capturerType = value;
-			}
-
+			};
 		}
 
 		public string Logo {
@@ -94,10 +76,10 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public int CurrentTime {
+		public Time CurrentTime {
 			get {
 				if(capturer == null)
-					return -1;
+					return new Time (-1);
 				return capturer.CurrentTime;
 			}
 		}
@@ -107,12 +89,10 @@ namespace LongoMatch.Gui
 				return capturing;
 			}
 		}
-
-		public CaptureSettings CaptureProperties {
-			set {
-				captureProps = value;
-			} get {
-				return captureProps;
+		
+		public CaptureSettings CaptureSettings {
+			get {
+				return settings;
 			}
 		}
 
@@ -133,12 +113,8 @@ namespace LongoMatch.Gui
 				return;
 
 			if (capturing) {
-				MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel, DialogFlags.Modal,
-				                                     MessageType.Question, ButtonsType.YesNo,
-				                                     Catalog.GetString("Do you want to pause the recording?"));
-				var res = md.Run();
-				md.Destroy();
-				if(res == (int)ResponseType.No) {
+				string msg = Catalog.GetString("Do you want to pause the recording?");
+				if (!MessagesHelpers.QuestionMessage (this, msg)) {
 					return;
 				}
 			}				
@@ -148,19 +124,29 @@ namespace LongoMatch.Gui
 			capturer.TogglePause();
 		}
 
-		public void Stop() {
-			if(capturer != null) {
-				capturing = false;
-				capturer.Stop();
-				capturer.Close();
+		public void Run (CapturerType type, CaptureSettings settings) {
+			/* Close any previous instance of the capturer */
+			Close ();
+
+			MultimediaToolkit factory = new MultimediaToolkit();
+			capturer = factory.GetCapturer(type);
+			capturer.EllapsedTime += OnTick;
+			this.settings = settings;
+			if (type != CapturerType.Live) {
+				capturer.Error += OnError;
+				capturer.DeviceChange += OnDeviceChange;
+				videodrawingarea.DoubleBuffered = true;
+			} else {
+				videodrawingarea.DoubleBuffered = false;
+			}
+			if (videodrawingarea.IsRealized) {
+				Configure();
+				capturer.Run();
+			} else {
+				delayStart = true;
 			}
 		}
-
-		public void Run() {
-			if(capturer != null)
-				capturer.Run();
-		}
-
+		
 		public void Close() {
 			/* resetting common properties */
 			pausebutton.Visible = false;
@@ -177,14 +163,15 @@ namespace LongoMatch.Gui
 			try {
 				capturer.Stop();
 				capturer.Close();
-				if(capturerType == CapturerType.Live) {
+				if (type == CapturerType.Live) {
 					/* release and dispose live capturer */
 					capturer.Error -= OnError;
-					capturer.DeviceChange += OnDeviceChange;
-					capturerhbox.Remove(capturer as Gtk.Widget);
+					capturer.DeviceChange -= OnDeviceChange;
 					capturer.Dispose();
 				}
-			} catch(Exception) {}
+			} catch(Exception ex) {
+				Log.Exception (ex);
+			}
 			capturer = null;
 		}
 
@@ -193,36 +180,31 @@ namespace LongoMatch.Gui
 				if(capturer == null)
 					return null;
 
-				Image image = new Image(capturer.CurrentFrame);
+				Image image = capturer.CurrentFrame;
 
 				if(image.Value == null)
 					return null;
-				image.Scale(THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_WIDTH);
+				image.Scale (Constants.MAX_THUMBNAIL_SIZE, Constants.MAX_THUMBNAIL_SIZE);
 				return image;
 			}
 		}
 
-		private void SetProperties() {
+		void Configure () {
 			VideoMuxerType muxer;
+			IntPtr windowHandle;
 			
 			if(capturer == null)
 				return;
 			
 			/* We need to use Matroska for live replay and remux when the capture is done */
-			muxer = captureProps.EncodingSettings.EncodingProfile.Muxer;
-			if (muxer == VideoMuxerType.Avi || muxer == VideoMuxerType.Mp4)
-				muxer = VideoMuxerType.Matroska;
+			muxer = settings.EncodingSettings.EncodingProfile.Muxer;
+			if (muxer == VideoMuxerType.Avi || muxer == VideoMuxerType.Mp4) {
+				settings.EncodingSettings.EncodingProfile.Muxer = VideoMuxerType.Matroska;
+			}
 				
-			capturer.DeviceID = captureProps.DeviceID;
-			capturer.OutputFile = captureProps.EncodingSettings.OutputFile;
-			capturer.OutputHeight = captureProps.EncodingSettings.VideoStandard.Height;
-			capturer.OutputWidth = captureProps.EncodingSettings.VideoStandard.Width;
-			capturer.SetVideoEncoder(captureProps.EncodingSettings.EncodingProfile.VideoEncoder);
-			capturer.SetAudioEncoder(captureProps.EncodingSettings.EncodingProfile.AudioEncoder);
-			capturer.SetVideoMuxer(muxer);
-			capturer.SetSource(captureProps.CaptureSourceType, captureProps.SourceElement);
-			capturer.VideoQuality = captureProps.EncodingSettings.EncodingQuality.VideoQuality;
-			capturer.AudioQuality = captureProps.EncodingSettings.EncodingQuality.AudioQuality;
+			windowHandle = GtkHelpers.GetWindowHandle (videodrawingarea.GdkWindow);
+			capturer.Configure (settings, windowHandle); 
+			delayStart = false;
 		}
 
 		protected virtual void OnRecbuttonClicked(object sender, System.EventArgs e)
@@ -247,18 +229,14 @@ namespace LongoMatch.Gui
 
 		protected virtual void OnStopbuttonClicked(object sender, System.EventArgs e)
 		{
-			int res;
+			string msg;
 
 			if(capturer == null)
 				return;
 
-			MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel, DialogFlags.Modal, MessageType.Question, ButtonsType.YesNo,
-			                                     Catalog.GetString("You are going to stop and finish the current capture."+"\n"+
-			                                                     "Do you want to proceed?"));
-			res = md.Run();
-			md.Destroy();
-			if(res == (int)ResponseType.Yes) {
-				Stop();
+			msg = Catalog.GetString("Do you want to stop and finish the current capture?");
+			if (MessagesHelpers.QuestionMessage (this, msg, null)) {
+				Close();
 				recbutton.Visible = true;
 				pausebutton.Visible = false;
 				stopbutton.Visible = false;
@@ -270,44 +248,35 @@ namespace LongoMatch.Gui
 		
 		protected virtual void OnTick(int ellapsedTime) {
 			timelabel.Markup = String.Format("<span font=\"20px bold\">Time --> {0}</span> ", 
-			                               TimeString.MSecondsToSecondsString(CurrentTime));
+			                                 CurrentTime.ToSecondsString());
 		}
 
 		protected virtual void OnError(object o, ErrorArgs args)
 		{
 			if(Error != null)
 				Error(o, args.Message);
-
 			Close();
 		}
 
 		protected virtual void OnDeviceChange(object o, DeviceChangeArgs args)
 		{
+			string msg;
 			/* device disconnected, pause capture */
 			if(args.DeviceChange == -1) {
 				if(capturing)
 					TogglePause();
 
 				recbutton.Sensitive = false;
-
-				MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel, DialogFlags.Modal,
-				                                     MessageType.Question, ButtonsType.Ok,
-				                                     Catalog.GetString("Device disconnected. " +
-				                                                     "The capture will be paused"));
-				md.Icon=Stetic.IconLoader.LoadIcon(md, "longomatch", Gtk.IconSize.Dialog);
-				md.Run();
-				md.Destroy();
+				msg = Catalog.GetString("Device disconnected. " +
+				                        "The capture will be paused");
+				MessagesHelpers.WarningMessage (this, msg);
 			} else {
 				recbutton.Sensitive = true;
-				MessageDialog md = new MessageDialog((Gtk.Window)this.Toplevel, DialogFlags.Modal,
-				                                     MessageType.Question, ButtonsType.YesNo,
-				                                     Catalog.GetString("Device reconnected." +
-				                                                     "Do you want to restart the capture?"));
-				md.Icon=Stetic.IconLoader.LoadIcon(md, "longomatch", Gtk.IconSize.Dialog);
-				if(md.Run() == (int)ResponseType.Yes) {
-					TogglePause();
+				msg = Catalog.GetString("Device reconnected." +
+				                        "Do you want to restart the capture?");
+				if (MessagesHelpers.QuestionMessage (this, msg, null)) {
+					TogglePause ();
 				}
-				md.Destroy();
 			}
 		}
 
@@ -323,11 +292,11 @@ namespace LongoMatch.Gui
 			
 			logo = logopix.Value;
 
-			win = logodrawingarea.GdkWindow;
+			win = videodrawingarea.GdkWindow;
 			width = logo.Width;
 			height = logo.Height;
-			allocWidth = logodrawingarea.Allocation.Width;
-			allocHeight = logodrawingarea.Allocation.Height;
+			allocWidth = videodrawingarea.Allocation.Width;
+			allocHeight = videodrawingarea.Allocation.Height;
 
 			/* Checking if allocated space is smaller than our logo */
 			if((float) allocWidth / width > (float) allocHeight / height) {

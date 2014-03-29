@@ -32,12 +32,8 @@ using LongoMatch.Stats;
 namespace LongoMatch.Services
 {
 
-
 	public class EventsManager
 	{
-
-		private VideoDrawingsManager drawingManager;
-
 		/* Current play loaded. null if no play is loaded */
 		TimeNode selectedTimeNode=null;
 		/* current project in use */
@@ -59,7 +55,6 @@ namespace LongoMatch.Services
 			this.guiToolkit = guiToolkit;
 			this.renderer = renderer;
 			pManager.OpenedProjectChanged += HandleOpenedProjectChanged;
-			drawingManager = new VideoDrawingsManager(pManager);
 			catsTime = new Dictionary<Category, Time>();
 		}
 
@@ -181,7 +176,7 @@ namespace LongoMatch.Services
 			   projectType == ProjectType.URICaptureProject) {
 				fStop = stop;
 			} else {
-				length = new Time {MSeconds = (int)player.StreamLength};
+				length = player.StreamLength;
 				fStop = (stop > length) ? length: stop;
 			}
 			AddNewPlay(fStart, fStop, category);
@@ -230,8 +225,8 @@ namespace LongoMatch.Services
 
 		protected virtual void OnNewTagAtFrame(Category category, int frame) {
 			Time pos = new Time { MSeconds = frame*1000/openedProject.Description.File.Fps};
-			player.CloseActualSegment();
-			player.SeekTo((long)pos.MSeconds, true);
+			player.CloseSegment();
+			player.Seek (pos, true);
 			ProcessNewTag(category,pos);
 		}
 
@@ -241,15 +236,15 @@ namespace LongoMatch.Services
 			if(projectType == ProjectType.FakeCaptureProject ||
 			   projectType == ProjectType.CaptureProject ||
 			   projectType == ProjectType.URICaptureProject) {
-				pos =  new Time { MSeconds = (int)capturer.CurrentTime};
+				pos =  capturer.CurrentTime;
 			} else {
-				pos = new Time {MSeconds = (int)player.CurrentTime};
+				pos = player.CurrentTime;
 			}
 			ProcessNewTag(category,pos);
 		}
 
 		public virtual void OnNewPlayStart (Category category) {
-			Time startTime = new Time {MSeconds = (int)player.CurrentTime};
+			Time startTime = player.CurrentTime;
 			catsTime.Add (category, startTime);
 			Log.Debug("New play start time: " + startTime);
 		}
@@ -264,7 +259,7 @@ namespace LongoMatch.Services
 			}
 			startTime = catsTime[category];
 			catsTime.Remove (category);
-			stopTime = new Time {MSeconds = (int)player.CurrentTime};
+			stopTime = player.CurrentTime;
 
 			Log.Debug("New play stop time: " + stopTime);
 			diff = stopTime.MSeconds - startTime.MSeconds;
@@ -309,8 +304,7 @@ namespace LongoMatch.Services
 		{
 			Log.Debug("Play selected: " + play);
 			selectedTimeNode = play;
-			player.SetStartStop(play.Start.MSeconds,play.Stop.MSeconds, play.Rate);
-			drawingManager.Play=play;
+			player.LoadPlay (openedProject.Description.File.FilePath, play);
 			analysisWindow.UpdateSelectedPlay(play);
 		}
 
@@ -321,12 +315,7 @@ namespace LongoMatch.Services
 				if(tNode != selectedTimeNode)
 					OnPlaySelected((Play)tNode);
 				Time pos = (Time)val;
-				if(pos == tNode.Start) {
-					player.UpdateSegmentStartTime(pos.MSeconds);
-				}
-				else {
-					player.UpdateSegmentStopTime(pos.MSeconds);
-				}
+				player.Seek (pos, true);
 			}
 			else if(tNode is Category) {
 				analysisWindow.UpdateCategories(openedProject.Categories);
@@ -341,7 +330,7 @@ namespace LongoMatch.Services
 			openedProject.RemovePlays(plays);
 
 			if(projectType == ProjectType.FileProject) {
-				player.CloseActualSegment();
+				player.CloseSegment ();
 				Save (openedProject);
 			}
 			filter.Update();
@@ -373,14 +362,14 @@ namespace LongoMatch.Services
 
 		protected virtual void OnTimeline2PositionChanged(Time pos)
 		{
-			player.SeekInSegment(pos.MSeconds);
+			player.Seek (pos, false);
 		}
 
-		protected virtual void OnDrawFrame(int time) {
+		protected virtual void OnDrawFrame (Time time) {
 			Image pixbuf = null;
 			player.Pause();
 			pixbuf = player.CurrentFrame;
-			guiToolkit.DrawingTool(pixbuf, selectedTimeNode as Play, time);
+			guiToolkit.DrawingTool (pixbuf, selectedTimeNode as Play, time);
 		}
 
 		protected virtual void OnTagPlay(Play play) {

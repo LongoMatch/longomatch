@@ -264,13 +264,24 @@ namespace LongoMatch.Gui.Panel
 			encSettings = new EncodingSettings();
 			captureSettings = new CaptureSettings();
 				
-			encSettings.OutputFile = fileEntry.Text;
+			encSettings.OutputFile = outfileEntry.Text;
+			
+			if (p.Description.File == null) {
+				p.Description.File = new MediaFile ();
+				p.Description.File.Fps = (ushort) (Config.FPS_N / Config.FPS_D);
+				p.Description.File.FilePath = outfileEntry.Text;
+			}
 			if (projectType == ProjectType.CaptureProject) {
-				captureSettings.CaptureSourceType = videoDevices[devicecombobox.Active].DeviceType;
-				captureSettings.DeviceID = videoDevices[devicecombobox.Active].ID;
+				Device device = videoDevices[devicecombobox.Active];
+				captureSettings.CaptureSourceType = device.DeviceType;
+				captureSettings.DeviceID = device.ID;
+				captureSettings.SourceElement = device.SourceElement;
 			} else if (projectType == ProjectType.URICaptureProject) {
 				captureSettings.CaptureSourceType = CaptureSourceType.URI;
 				captureSettings.DeviceID = urientry.Text;
+			}else if (projectType == ProjectType.FakeCaptureProject) {
+				captureSettings.CaptureSourceType = CaptureSourceType.None;
+				p.Description.File.FilePath = Constants.FAKE_PROJECT;
 			}
 				
 			/* Get quality info */

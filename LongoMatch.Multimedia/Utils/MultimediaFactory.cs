@@ -41,64 +41,20 @@ namespace LongoMatch.Video
 	public class MultimediaFactory
 	{
 
-		OperatingSystem oS;
-
 		public MultimediaFactory()
 		{
-			oS = Environment.OSVersion;
 		}
 
-		public IPlayer GetPlayer(int width, int height) {
-			switch(oS.Platform) {
-			case PlatformID.Unix:
-				return new GstPlayer(width,height,PlayerUseType.Video);
-
-			case PlatformID.Win32NT:
-				return new GstPlayer(width,height,PlayerUseType.Video);
-
-			default:
-				return new GstPlayer(width,height,PlayerUseType.Video);
-			}
-		}
-
-		public IMetadataReader GetMetadataReader() {
-
-			switch(oS.Platform) {
-			case PlatformID.Unix:
-				return new GstPlayer(1,1,PlayerUseType.Metadata);
-
-			case PlatformID.Win32NT:
-				return new GstPlayer(1,1,PlayerUseType.Metadata);
-
-			default:
-				return new GstPlayer(1,1,PlayerUseType.Metadata);
-			}
+		public IPlayer GetPlayer () {
+			return new GstPlayer (PlayerUseType.Video);
 		}
 
 		public IFramesCapturer GetFramesCapturer() {
-			switch(oS.Platform) {
-			case PlatformID.Unix:
-				return new GstPlayer(1,1,PlayerUseType.Capture);
-
-			case PlatformID.Win32NT:
-				return new GstPlayer(1,1,PlayerUseType.Capture);
-
-			default:
-				return new GstPlayer(1,1,PlayerUseType.Capture);
-			}
+			return new GstPlayer (PlayerUseType.Capture);
 		}
 
 		public IVideoEditor GetVideoEditor() {
-			switch(oS.Platform) {
-			case PlatformID.Unix:
-				return new GstVideoSplitter();
-
-			case PlatformID.Win32NT:
-				return new GstVideoSplitter();
-
-			default:
-				return new GstVideoSplitter();
-			}
+			return new GstVideoSplitter();
 		}
 
 		public IVideoConverter GetVideoConverter(string filename) {

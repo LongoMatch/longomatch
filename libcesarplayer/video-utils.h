@@ -31,13 +31,6 @@
 #include <gst/interfaces/xoverlay.h>
 #include <gst/pbutils/pbutils.h>
 #include <gdk/gdk.h>
-#if defined (GDK_WINDOWING_X11)
-#include <gdk/gdkx.h>
-#elif defined (GDK_WINDOWING_WIN32)
-#include <gdk/gdkwin32.h>
-#elif defined (GDK_WINDOWING_QUARTZ)
-#include <gdk/gdkquartz.h>
-#endif
 #include <gtk/gtk.h>
 #include "common.h"
 
@@ -48,27 +41,11 @@
 #define EXPORT
 #endif
 
-#define TOTEM_OBJECT_HAS_SIGNAL(obj, name) (g_signal_lookup (name, g_type_from_name (G_OBJECT_TYPE_NAME (obj))) != 0)
-
-void totem_gdk_window_set_invisible_cursor (GdkWindow * window);
-void totem_gdk_window_set_waiting_cursor (GdkWindow * window);
-
-gboolean totem_display_is_local (void);
-
-char *totem_time_to_string (gint64 msecs);
-gint64 totem_string_to_time (const char *time_string);
-char *totem_time_to_string_text (gint64 msecs);
-
-void totem_widget_set_preferred_size (GtkWidget * widget, gint width,
-    gint height);
-gboolean totem_ratio_fits_screen (GdkWindow * window, int video_width,
-    int video_height, gfloat ratio);
-
-EXPORT void init_backend (int argc, char **argv);
-guintptr gst_get_window_handle (GdkWindow *window);
-void gst_set_window_handle (GstXOverlay *overlay, guintptr window_handle);
-void init_debug();
-gchar * lgm_filename_to_uri (const gchar *filena);
+EXPORT void lgm_init_backend (int argc, char **argv);
+EXPORT guintptr lgm_get_window_handle (GdkWindow *window);
+EXPORT void lgm_set_window_handle (GstXOverlay *overlay, guintptr window_handle);
+EXPORT void lgm_init_debug();
+EXPORT gchar * lgm_filename_to_uri (const gchar *filena);
 
 EXPORT GstDiscovererResult lgm_discover_uri (const gchar *uri, guint64 *duration,
     guint *width, guint *height, guint *fps_n, guint *fps_d, guint *par_n,

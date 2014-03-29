@@ -31,8 +31,8 @@ pkglib_LTLIBRARIES = \
 libcesarplayer_la_SOURCES = \
 	$(BVWMARSHALFILES) \
 	common.h\
-	bacon-video-widget.h\
-	bacon-video-widget-gst-0.10.c\
+	lgm-video-player.h\
+	lgm-video-player.c\
 	gstscreenshot.c \
 	gstscreenshot.h \
 	gst-camera-capturer.c\

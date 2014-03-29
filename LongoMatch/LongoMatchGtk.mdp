@@ -33,5 +33,6 @@
     <ProjectReference type="Project" localcopy="True" refto="LongoMatch.Core" />
     <ProjectReference type="Project" localcopy="True" refto="LongoMatch.Addins" />
     <ProjectReference type="Project" localcopy="True" refto="LongoMatch.GUI.Multimedia" />
+    <ProjectReference type="Project" localcopy="True" refto="LongoMatch.GUI.Helpers" />
   </References>
 </Project>

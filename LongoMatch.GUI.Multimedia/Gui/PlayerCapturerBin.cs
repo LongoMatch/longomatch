@@ -20,6 +20,7 @@ using System;
 using LongoMatch.Handlers;
 using LongoMatch.Interfaces.GUI;
 using LongoMatch.Common;
+using LongoMatch.Store;
 
 namespace LongoMatch.Gui
 {
@@ -51,7 +52,6 @@ namespace LongoMatch.Gui
 		}
 		
 		PlayerOperationMode mode;
-		CaptureSettings captureSettings;
 		bool backLoaded = false;
 		
 		public PlayerCapturerBin ()
@@ -64,7 +64,6 @@ namespace LongoMatch.Gui
 			set {
 				mode = value;
 				if (mode == PlayerOperationMode.Player) {
-					playerbin.ExpandLogo = true;
 					ShowPlayer();
 				} else {
 					ShowCapturer();
@@ -89,7 +88,7 @@ namespace LongoMatch.Gui
 		}
 		
 #region Common
-		public int CurrentTime {
+		public Time CurrentTime {
 			get {
 				if (mode == PlayerOperationMode.Player)
 					return playerbin.CurrentTime;
@@ -115,30 +114,21 @@ namespace LongoMatch.Gui
 #endregion
 
 #region Capturer
-		public CapturerType Type {
-			set {
-				capturerbin.Type = value;
-			}
-		}
-		
 		public string Logo {
 			set {
 				capturerbin.Logo = value;
 			}
 		}
 		
-		public bool Capturing {
+		public CaptureSettings CaptureSettings {
 			get {
-				return capturerbin.Capturing;
+				return capturerbin.CaptureSettings;
 			}
 		}
 		
-		public CaptureSettings CaptureProperties {
-			set {
-				captureSettings = value;
-				capturerbin.CaptureProperties = value;
-			} get {
-				return captureSettings;
+		public bool Capturing {
+			get {
+				return capturerbin.Capturing;
 			}
 		}
 		
@@ -150,12 +140,8 @@ namespace LongoMatch.Gui
 			capturerbin.TogglePause ();
 		}
 		
-		public void Stop () {
-			capturerbin.Stop ();
-		}
-		
-		public void Run () {
-			capturerbin.Run ();
+		public void Run (CapturerType type, CaptureSettings settings) {
+			capturerbin.Run (type, settings);
 		}
 #endregion
 		
@@ -177,13 +163,7 @@ namespace LongoMatch.Gui
 			}
 		}
 		
-		public long AccurateCurrentTime {
-			get {
-				return playerbin.AccurateCurrentTime;
-			}
-		}
-		
-		public long StreamLength {
+		public Time StreamLength {
 			get {
 				return playerbin.StreamLength;
 			}
@@ -192,40 +172,6 @@ namespace LongoMatch.Gui
 		public Image CurrentFrame {
 			get {
 				return playerbin.CurrentFrame;
-			}
-		}
-		
-		public Image LogoPixbuf {
-			set {
-				playerbin.LogoPixbuf = value;
-			}
-		}
-		
-		public Image DrawingPixbuf {
-			set {
-				playerbin.DrawingPixbuf = value;
-			}
-		}
-		
-		public bool DrawingMode {
-			set {
-				playerbin.DrawingMode = value;
-			}
-		}
-		
-		public bool LogoMode {
-			set {
-				playerbin.LogoMode = value;
-			}
-		}
-		
-		public bool ExpandLogo {
-			set {
-				playerbin.ExpandLogo = value;
-			}
-			
-			get {
-				return playerbin.ExpandLogo;
 			}
 		}
 		
@@ -241,15 +187,6 @@ namespace LongoMatch.Gui
 			}
 		}
 		
-		public float Rate {
-			get {
-				return playerbin.Rate;
-			}
-			set {
-				playerbin.Rate = value;
-			}
-		}
-
 		public void Open (string mrl) {
 			playerbin.Open (mrl);
 		}
@@ -266,32 +203,33 @@ namespace LongoMatch.Gui
 			playerbin.TogglePlay ();
 		}
 		
-		public void SetLogo (string filename) {
-			playerbin.SetLogo (filename);
-		}
-		
 		public void ResetGui () {
 			playerbin.ResetGui ();
 		}
 		
-		public void SetPlayListElement (string fileName,long start, long stop, float rate, bool hasNext) {
-			playerbin.SetPlayListElement (fileName, start, stop, rate, hasNext);
+		public void LoadPlayListPlay (PlayListPlay play, bool hasNext) {
+			playerbin.LoadPlayListPlay (play, hasNext);
 		}
 		
-		public void SeekTo (long time, bool accurate) {
-			playerbin.SeekTo (time, accurate);
+		public void LoadPlay (string filename, Play play) {
+			if (mode == PlayerOperationMode.PreviewCapturer) {
+				backtolivebutton.Visible = true;
+				ShowPlayer ();
+				LoadBackgroundPlayer(filename);
+			}
+			playerbin.LoadPlay (filename, play);
 		}
 		
-		public void SeekInSegment (long pos) {
-			playerbin.SeekInSegment (pos);
+		public void Seek (Time time, bool accurate) {
+			playerbin.Seek (time, accurate);
 		}
 		
-		public void SeekToNextFrame (bool in_segment) {
-			playerbin.SeekToNextFrame (in_segment);
+		public void SeekToNextFrame () {
+			playerbin.SeekToNextFrame ();
 		}
 		
-		public void SeekToPreviousFrame (bool in_segment) {
-			playerbin.SeekToPreviousFrame (in_segment);
+		public void SeekToPreviousFrame () {
+			playerbin.SeekToPreviousFrame ();
 		}
 		
 		public void StepForward () {
@@ -310,25 +248,8 @@ namespace LongoMatch.Gui
 			playerbin.FramerateDown ();
 		}
 		
-		public void UpdateSegmentStartTime (long start) {
-			playerbin.UpdateSegmentStartTime (start);
-		}
-		
-		public void UpdateSegmentStopTime (long stop) {
-			playerbin.UpdateSegmentStopTime (stop);
-		}
-		
-		public void SetStartStop (long start, long stop, float rate=1) {
-			if (mode == PlayerOperationMode.PreviewCapturer) {
-				backtolivebutton.Visible = true;
-				LoadBackgroundPlayer();
-				ShowPlayer ();
-			}
-			playerbin.SetStartStop (start, stop, rate);
-		}
-		
-		public void CloseActualSegment () {
-			playerbin.CloseActualSegment ();
+		public void CloseSegment () {
+			playerbin.CloseSegment ();
 		}
 		
 		public void SetSensitive () {
@@ -368,10 +289,9 @@ namespace LongoMatch.Gui
 					SegmentClosedEvent ();
 			};
 			
-			playerbin.Tick += delegate (object o, long currentTime, long streamLength,
-			                            float currentPosition, bool seekable) {
+			playerbin.Tick += delegate (object o, Time t, Time s, double p) {
 				if (Tick != null)
-					Tick (o, currentTime, streamLength, currentPosition, seekable);
+					Tick (o, t, s, p);
 			};
 			
 			playerbin.PlayStateChanged += delegate (object sender, bool playing) {
@@ -389,12 +309,12 @@ namespace LongoMatch.Gui
 					Prev ();
 			};
 			
-			playerbin.DrawFrame += delegate (int time) {
+			playerbin.DrawFrame += delegate (Time time) {
 				if (DrawFrame != null)
 					DrawFrame (time);
 			};
 			
-			playerbin.SeekEvent += delegate (long pos) {
+			playerbin.SeekEvent += delegate (Time pos) {
 				if (SeekEvent != null)
 					SeekEvent (pos);
 			};
@@ -410,20 +330,16 @@ namespace LongoMatch.Gui
 			};
 		}
 		
-		void LoadBackgroundPlayer () {
+		void LoadBackgroundPlayer (string filename) {
 			if (backLoaded)
 				return;
 				
-			if (mode == PlayerOperationMode.PreviewCapturer) {
-				/* The output video file is now created, it's time to 
+			/* The output video file is now created, it's time to 
 				 * load it in the player */
-				playerbin.SetSensitive ();
-				playerbin.Open (captureSettings.EncodingSettings.OutputFile);
-				playerbin.LogoMode = false;
-				playerbin.SeekingEnabled = false;
-				Log.Debug ("Loading encoded file in the backround player");
-				backLoaded = true;
-			}
+			playerbin.Open (filename);
+			playerbin.SeekingEnabled = false;
+			Log.Debug ("Loading encoded file in the backround player");
+			backLoaded = true;
 		}
 	}
 }

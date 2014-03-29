@@ -29,6 +29,7 @@
       <Entry build="True" name="LongoMatch.Plugins" configuration="Debug" />
       <Entry build="True" name="OxyPlotMono" configuration="Debug" />
       <Entry build="True" name="Tests" configuration="Debug" />
+      <Entry build="True" name="LongoMatch.GUI.Helpers" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="LongoMatch.GUI" configuration="Release" />
@@ -42,6 +43,7 @@
       <Entry build="True" name="LongoMatch.Plugins" configuration="Release" />
       <Entry build="True" name="OxyPlotMono" configuration="Release" />
       <Entry build="True" name="Tests" configuration="Release" />
+      <Entry build="True" name="LongoMatch.GUI.Helpers" configuration="Release" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="LongoMatchGtk" single="True">
@@ -56,6 +58,7 @@
     <Execute type="None" entry="LongoMatch.Plugins" />
     <Execute type="None" entry="OxyPlotMono" />
     <Execute type="None" entry="Tests" />
+    <Execute type="None" entry="LongoMatch.GUI.Helpers" />
   </StartMode>
   <Entries>
     <Entry filename="LongoMatch.GUI/LongoMatch.GUI.mdp" />
@@ -69,5 +72,6 @@
     <Entry filename="LongoMatch.Plugins/LongoMatch.Plugins.mdp" />
     <Entry filename="oxyplot/OxyPlotMono/OxyPlotMono.csproj" />
     <Entry filename="Tests/Tests.mdp" />
+    <Entry filename="LongoMatch.GUI.Helpers/LongoMatch.GUI.Helpers.mdp" />
   </Entries>
 </Combine>

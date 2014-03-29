@@ -79,12 +79,14 @@ namespace LongoMatch.Interfaces.GUI
 		void ManageJobs ();
 		
 		void TagPlay(Play play, Categories categories, TeamTemplate local, TeamTemplate visitor, bool showAllTags);
-		void DrawingTool(Image pixbuf, Play play, int stopTime);
+		void DrawingTool(Image pixbuf, Play play, Time stopTime);
 		
 		string RemuxFile (string filePath, string outputFile, VideoMuxerType muxer);
 		
 		DateTime SelectDate (DateTime date, object widget);
 		
+		EndCaptureResponse EndCapture (string filepath);
+
 	}
 }
 

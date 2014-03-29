@@ -17,7 +17,8 @@
 //
 
 using System;
-using Gdk;
+using LongoMatch.Store;
+using LongoMatch.Common;
 
 namespace LongoMatch.Video.Common
 {
@@ -31,7 +32,7 @@ namespace LongoMatch.Video.Common
 	public delegate void StateChangeHandler(object o, StateChangeArgs args);
 	public delegate void TickHandler(object o, TickArgs args);
 	public delegate void DeviceChangeHandler(object o, DeviceChangeArgs args);
-	public delegate void SeekHandler (SeekType type, float rate, bool inSegment, long start, long stop);
+	public delegate void SeekHandler (SeekType type, Time start, float rate);
 
 
 
@@ -62,27 +63,21 @@ namespace LongoMatch.Video.Common
 	}
 
 	public class TickArgs : GLib.SignalArgs {
-		public long CurrentTime {
+		public Time CurrentTime {
 			get {
-				return (long) Args[0];
+				return new Time {NSeconds = (long) Args[0]};
 			}
 		}
 
-		public long StreamLength {
+		public Time StreamLength {
 			get {
-				return (long) Args[1];
+				return new Time {NSeconds = (long) Args[1]};
 			}
 		}
 
-		public float CurrentPosition {
+		public double CurrentPosition {
 			get {
-				return (float) Args[2];
-			}
-		}
-
-		public bool Seekable {
-			get {
-				return (bool) Args[3];
+				return (double) Args[2];
 			}
 		}
 	}

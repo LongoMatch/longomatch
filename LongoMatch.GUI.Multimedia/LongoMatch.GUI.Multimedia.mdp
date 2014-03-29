@@ -30,6 +30,7 @@
     <File subtype="Directory" buildaction="Compile" name="Gui/Utils" />
     <File subtype="Code" buildaction="Compile" name="Gui/Utils/Remuxer.cs" />
     <File subtype="Code" buildaction="Compile" name="MultimediaToolkit.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Utils/FramesCapturer.cs" />
   </Contents>
   <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="Makefile.am" RelativeConfigureInPath="../">
     <BuildFilesVar Name="FILES" />
@@ -49,6 +50,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <ProjectReference type="Project" localcopy="True" refto="LongoMatch.GUI.Helpers" />
   </References>
   <LanguageParameters ApplicationIcon="." CodePage="65001" ctype="CSharpProjectParameters" />
 </Project>

@@ -156,7 +156,7 @@ namespace LongoMatch.Services {
 			capturer.Open(project.Description.File.FilePath);
 			foreach(Play play in project.AllPlays()) {
 				try {
-					capturer.SeekTime(play.Start.MSeconds + ((play.Stop - play.Start).MSeconds/2),
+					capturer.Seek (play.Start + ((play.Stop - play.Start) / 2),
 					                  true);
 					play.Miniature = capturer.GetCurrentFrame (
 						Constants.MAX_THUMBNAIL_SIZE,

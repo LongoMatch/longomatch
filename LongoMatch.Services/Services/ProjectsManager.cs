@@ -42,14 +42,12 @@ namespace LongoMatch.Services
 		IMainController mainController;
 		IAnalysisWindow analysisWindow;
 		IProjectOptionsController projectOptionsController;
-		TemplatesService ts;
 		IDatabase DB;
 		
 		public ProjectsManager (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit,
 		                       TemplatesService ts) {
 			this.multimediaToolkit = multimediaToolkit;
 			this.guiToolkit = guiToolkit;
-			this.ts =ts;
 			mainController = guiToolkit.MainController;
 			DB = Config.DatabaseManager.ActiveDB;
 			ConnectSignals();
@@ -87,7 +85,7 @@ namespace LongoMatch.Services
 			set;
 		}
 		
-		private void EmitProjectChanged() {
+		void EmitProjectChanged() {
 			if (OpenedProjectChanged != null)
 				OpenedProjectChanged (OpenedProject, OpenedProjectType, PlaysFilter,
 				                      analysisWindow, projectOptionsController);
@@ -134,14 +132,15 @@ namespace LongoMatch.Services
 			}
 		}
 
-		private void SaveCaptureProject(Project project) {
+		void SaveCaptureProject(Project project) {
+			Guid projectID = project.UUID;
 			string filePath = project.Description.File.FilePath;
 
 			/* scan the new file to build a new PreviewMediaFile with all the metadata */
 			try {
-				Log.Debug ("Saving capture project: " + project);
+				Log.Debug ("Saving capture project: " + project.UUID);
 			
-				RemuxOutputFile (Capturer.CaptureProperties.EncodingSettings);
+				RemuxOutputFile (Capturer.CaptureSettings.EncodingSettings);
 			
 				Log.Debug("Reloading saved file: " + filePath);
 				project.Description.File = multimediaToolkit.DiscoverFile(filePath);
@@ -163,24 +162,35 @@ namespace LongoMatch.Services
 					"saved. Try to import it later:\n")+
 					filePath+"\n"+projectFile);
 			}
-			/* we need to set the opened project to null to avoid calling again CloseOpendProject() */
-			OpenedProject = null;
-			SetProject(project, ProjectType.FileProject, new CaptureSettings());
+			CloseOpenedProject (false);
+			OpenProjectID (projectID);
 		}
 	
 		private bool SetProject(Project project, ProjectType projectType, CaptureSettings props)
 		{
+			IAnalysisWindow newAnalysiswindow;
+			IProjectOptionsController newController;
+			
 			if (OpenedProject != null) {
 				CloseOpenedProject(true);
 			}
+			
+			Log.Debug ("Loading project " + project.UUID + " " + projectType);
 				
 			PlaysFilter = new PlaysFilter(project);
 			guiToolkit.OpenProject (project, projectType, props, PlaysFilter,
-			                        out analysisWindow, out projectOptionsController);
-			Player = analysisWindow.Player;
-			Capturer = analysisWindow.Capturer;
-			projectOptionsController.CloseOpenedProjectEvent += () => {PromptCloseProject ();};
-			projectOptionsController.SaveProjectEvent += SaveProject;
+			                        out newAnalysiswindow, out newController);
+			Player = newAnalysiswindow.Player;
+			Capturer = newAnalysiswindow.Capturer;
+			if (newAnalysiswindow != analysisWindow) {
+				analysisWindow = newAnalysiswindow;
+				analysisWindow.CloseOpenedProjectEvent += () => {SaveCaptureProject (OpenedProject);};
+			}
+			if (newController != projectOptionsController) {
+				projectOptionsController = newController;
+				projectOptionsController.CloseOpenedProjectEvent += () => {PromptCloseProject ();};
+				projectOptionsController.SaveProjectEvent += SaveProject;
+			}
 			OpenedProject = project;
 			OpenedProjectType = projectType;
 
@@ -203,19 +213,20 @@ namespace LongoMatch.Services
 				}
 
 			} else {
+				CapturerType type;
 				if(projectType == ProjectType.CaptureProject ||
 				   projectType == ProjectType.URICaptureProject) {
-					Capturer.CaptureProperties = props;
-					try {
-						Capturer.Type = CapturerType.Live;
-					} catch(Exception ex) {
-						guiToolkit.ErrorMessage(ex.Message);
-						CloseOpenedProject (false);
-						return false;
-					}
-				} else
-					Capturer.Type = CapturerType.Fake;
-				Capturer.Run();
+					type = CapturerType.Live;
+				} else {
+					type = CapturerType.Fake;
+				}
+				try {
+					Capturer.Run(type, props);
+				} catch(Exception ex) {
+					guiToolkit.ErrorMessage(ex.Message);
+					CloseOpenedProject (false);
+					return false;
+				}
 			}
 
 			EmitProjectChanged();
@@ -250,9 +261,6 @@ namespace LongoMatch.Services
 		}*/
 
 		private bool PromptCloseProject() {
-			int res;
-			//EndCaptureDialog dialog;
-
 			if(OpenedProject == null)
 				return true;
 
@@ -265,27 +273,25 @@ namespace LongoMatch.Services
 					return true;
 				}
 				return false;
+			} else {
+				EndCaptureResponse res;
+				
+				res = guiToolkit.EndCapture (OpenedProject.Description.File.FilePath);
+
+				/* Close project wihtout saving */
+				if (res == EndCaptureResponse.Quit) {
+					CloseOpenedProject (false);
+					return true;
+				} else if(res == EndCaptureResponse.Save) {
+					/* Close and save project */
+					CloseOpenedProject (true);
+					return true;
+				} else {
+					/* Continue with the current project */
+					return false;
+				}
 			}
 
-			res = 0;
-			/* Capture project */
-			/*dialog = new EndCaptureDialog();
-			dialog.TransientFor = (Gtk.Window)this.Toplevel;
-			
-			res = dialog.Run();
-			dialog.Destroy();
-
-			/* Close project wihtout saving */
-			if(res == (int)EndCaptureResponse.Quit) {
-				CloseOpenedProject (false);
-				return true;
-			} else if(res == (int)EndCaptureResponse.Save) {
-				/* Close and save project */
-				CloseOpenedProject (true);
-				return true;
-			} else
-				/* Continue with the current project */
-				return false;
 		}
 
 		private void CloseOpenedProject (bool save) {
@@ -295,6 +301,7 @@ namespace LongoMatch.Services
 			if (save)
 				SaveProject(OpenedProject, OpenedProjectType);
 			
+			Log.Debug ("Closing project " + OpenedProject.UUID);
 			if(OpenedProjectType != ProjectType.FileProject)
 				Capturer.Close();
 			else

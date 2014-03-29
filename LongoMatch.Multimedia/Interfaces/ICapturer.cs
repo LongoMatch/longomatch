@@ -21,7 +21,8 @@
 using System;
 using LongoMatch.Common;
 using LongoMatch.Video.Common;
-using Gdk;
+using LongoMatch.Store;
+using Image = LongoMatch.Common.Image;
 
 namespace LongoMatch.Multimedia.Interfaces
 {
@@ -33,51 +34,15 @@ namespace LongoMatch.Multimedia.Interfaces
 		event ErrorHandler Error;
 		event DeviceChangeHandler DeviceChange;
 
-		uint OutputWidth {
-			get ;
-			set ;
-		}
+		void Configure (CaptureSettings settings, IntPtr window_handle);
 
-		uint OutputHeight {
-			get;
-			set ;
-		}
-
-		string OutputFile {
-			get ;
-			set ;
-		}
-
-		uint VideoQuality {
-			get;
-			set ;
-		}
-
-		uint AudioQuality {
-			get ;
-			set ;
-		}
-
-		int CurrentTime {
+		Time CurrentTime {
 			get ;
 		}
 
-		Pixbuf CurrentFrame {
+		Image CurrentFrame {
 			get;
 		}
-
-		string DeviceID {
-			set;
-			get;
-		}
-
-		bool SetVideoEncoder(VideoEncoderType type);
-
-		bool SetAudioEncoder(AudioEncoderType type);
-
-		bool SetVideoMuxer(VideoMuxerType type);
-
-		bool SetSource(CaptureSourceType type, string sourceElement);
 
 		void TogglePause();
 

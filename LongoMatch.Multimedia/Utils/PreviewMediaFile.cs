@@ -26,7 +26,6 @@ using LongoMatch.Video;
 using LongoMatch.Video.Common;
 using LongoMatch.Video.Player;
 using Mono.Unix;
-using Gdk;
 using GLib;
 
 namespace LongoMatch.Video.Utils
@@ -83,7 +82,7 @@ namespace LongoMatch.Video.Utils
 					factory = new MultimediaFactory ();
 					thumbnailer = factory.GetFramesCapturer();
 					thumbnailer.Open(filePath);
-					thumbnailer.SeekTime(1000,false);
+					thumbnailer.Seek (new Time {Seconds = 2}, false);
 					preview = thumbnailer.GetCurrentFrame(THUMBNAIL_MAX_WIDTH,THUMBNAIL_MAX_HEIGHT);
 					thumbnailer.Dispose();
 				}

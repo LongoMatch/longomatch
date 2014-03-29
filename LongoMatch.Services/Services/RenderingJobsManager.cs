@@ -223,7 +223,7 @@ namespace LongoMatch.Services
 			string path = System.IO.Path.GetTempFileName().Replace(@"\", @"\\");
 			
 			capturer.Open(filename);
-			capturer.SeekTime(drawing.RenderTime, true);
+			capturer.Seek (drawing.Render, true);
 			frame = capturer.GetCurrentFrame();
 			final_image = Image.Composite(frame, drawing.Pixbuf);
 			final_image.Save(path);

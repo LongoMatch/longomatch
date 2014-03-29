@@ -64,7 +64,7 @@ namespace LongoMatch.Services
 			if (gameUnitsStarted.ContainsKey(gameUnit)){
 				Log.Warning("Trying to start a game unit that was already started");
 			} else {
-				gameUnitsStarted.Add(gameUnit, new Time{MSeconds=(int)player.CurrentTime});
+				gameUnitsStarted.Add(gameUnit, player.CurrentTime);
 			}
 		}
 		
@@ -87,7 +87,7 @@ namespace LongoMatch.Services
 			}
 			
 			start = gameUnitsStarted[gameUnit];
-			stop = new Time{MSeconds=(int)player.CurrentTime};
+			stop = player.CurrentTime;
 			timeInfo = new TimelineNode {Name=gameUnit.Name, Fps=fps, Start=start, Stop=stop};
 			
 			gameUnit.Add(timeInfo);
@@ -120,7 +120,7 @@ namespace LongoMatch.Services
 		void HandleUnitSelected (GameUnit gameUnit, TimelineNode unit)
 		{
 			unit.Selected = true;
-			player.SetStartStop(unit.Start.MSeconds, unit.Stop.MSeconds);
+			//player.SetStartStop(unit.Start.MSeconds, unit.Stop.MSeconds);
 		}
 
 		void HandleUnitDeleted (GameUnit gameUnit, List<TimelineNode> units)
@@ -131,9 +131,9 @@ namespace LongoMatch.Services
 
 		void HandleUnitChanged (GameUnit gameUnit, TimelineNode unit, Time time)
 		{
-			player.CloseActualSegment();
+			//player.CloseActualSegment();
 			player.Pause();
-			player.SeekTo(time.MSeconds, true);
+			//player.SeekTo(time.MSeconds, true);
 		}
 
 		void HandleUnitAdded (GameUnit gameUnit, int frame)

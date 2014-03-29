@@ -18,6 +18,7 @@
 using System;
 using LongoMatch.Common;
 using LongoMatch.Handlers;
+using LongoMatch.Store;
 
 namespace LongoMatch.Interfaces.GUI
 {
@@ -34,45 +35,29 @@ namespace LongoMatch.Interfaces.GUI
 		event DetachPlayerHandler Detach;
 		event PlaybackRateChangedHandler PlaybackRateChanged;
 		
-		long AccurateCurrentTime {get;}
-		int CurrentTime {get;}
-		long StreamLength {get;}
-		
+		Time CurrentTime {get;}
+		Time StreamLength {get;}
 		Image CurrentMiniatureFrame {get;}
 		Image CurrentFrame {get;}
-		Image LogoPixbuf {set;}
-		Image DrawingPixbuf {set;}
-		bool DrawingMode {set;}
-		bool LogoMode {set;}
-		bool ExpandLogo {set; get;}
 		bool Opened {get;}
-		bool FullScreen {set;}
-		float Rate {get;set;}
 		bool Detached {get;set;}
 		bool SeekingEnabled {set;}
+		bool Sensitive {set; get;}
 
-		void Open(string mrl);
-		void Play();
-		void Pause();
-		void TogglePlay();
-		void SetLogo(string filename);
-		void ResetGui();
-		void SetPlayListElement(string fileName,long start, long stop, float rate, bool hasNext);
+		void Open (string mrl);
 		void Close();
-		void SeekTo(long time, bool accurate);
-		void SeekInSegment(long pos);
-		void SeekToNextFrame(bool in_segment);
-		void SeekToPreviousFrame(bool in_segment);
+		void Play ();
+		void Pause ();
+		void TogglePlay ();
+		void ResetGui();
+		void Seek (Time time, bool accurate);
 		void StepForward();
 		void StepBackward();
 		void FramerateUp();
 		void FramerateDown();
-		void UpdateSegmentStartTime(long start);
-		void UpdateSegmentStopTime(long stop);
-		void SetStartStop(long start, long stop, float rate=1);
-		void CloseActualSegment();
-		void SetSensitive();
-		void UnSensitive();
+		void LoadPlay (string fileName, Play play);
+		void LoadPlayListPlay (PlayListPlay play, bool hasNext);
+		void CloseSegment();
 	}
 }
 
