@@ -1,17 +1,18 @@
-LongoMatch-0.20.3 "BCN"
+LongoMatch-0.20.4 "Vamp"
 -----------------------------
 
-The LongoMatch team is happy to announce the third release in the
+The LongoMatch team is happy to announce the fourth release in the
 stable 0.20 series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
 all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
+* Features
+	* Add another source element on window
+
 * Bugs fixed
-	* Fix exporting clips at 30fps
-	* Account in stats plays without teams tagged
-	* Fix escaping of some strings
+	* Fix video conversion of some clips
 
   * LongoMatch:
 	Andoni Morales Alastruey <ylatuya@gmail.com>
