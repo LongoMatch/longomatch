@@ -27,12 +27,12 @@ namespace LongoMatch.Multimedia.Utils
 {
 	public class VideoDevice
 	{
-#if OSTYPE_DARWIN
-		static string[] devices = new string[1] {"osxvideosrc"};	 
+#if OSTYPE_OS_X
+		static string[] devices = new string[1] {"osxvideosrc"};
 #elif OSTYPE_WINDOWS
-		static string[] devices = new string[2] {"dshowvideosrc", "ksvideosrc"};	 
+		static string[] devices = new string[2] {"dshowvideosrc", "ksvideosrc"};
 #else 
-		static string[] devices = new string[2] {"v4l2src", "dv1394src"};	 
+		static string[] devices = new string[2] {"v4l2src", "dv1394src"};
 #endif
 
 		static public List<Device> ListVideoDevices() {
