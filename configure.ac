@@ -136,6 +136,7 @@ LongoMatch/Makefile
 LongoMatch/longomatch
 LongoMatch/longomatch.desktop.in
 LongoMatch/AssemblyInfo.cs
+tools/deb-pkg.sh
 
 po/Makefile.in
 ])
