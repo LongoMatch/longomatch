@@ -284,6 +284,9 @@ gst_nle_source_push_buffer (GstNleSource * nlesrc, GstBuffer * buf,
 
   item = (GstNleSrcItem *) g_list_nth_data (nlesrc->queue, nlesrc->index);
   buf_ts = GST_BUFFER_TIMESTAMP (buf);
+  if (buf_ts < item->start) {
+    return GST_FLOW_OK;
+  }
   buf_rel_ts = buf_ts - item->start;
 
   g_mutex_lock (&nlesrc->stream_lock);
