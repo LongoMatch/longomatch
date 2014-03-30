@@ -1,3 +1,9 @@
+===== LongoMatch 0.20.5 "Pasta" =====
+
+	== Bugs fixed ==
+
+	* Fix random lock in video rendering
+
 ===== LongoMatch 0.20.4 "Vamp" =====
 
 	== Features ==

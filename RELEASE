@@ -1,18 +1,16 @@
-LongoMatch-0.20.4 "Vamp"
+LongoMatch-0.20.5 "Pasta"
 -----------------------------
 
-The LongoMatch team is happy to announce the fourth release in the
+The LongoMatch team is happy to announce the fifth release in the
 stable 0.20 series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
 all official latest gstreamer libraries and plugins installed for the best user
 experience.
 
-* Features
-	* Add another source element on window
 
 * Bugs fixed
-	* Fix video conversion of some clips
+	* Fix random lock in video rendering
 
   * LongoMatch:
 	Andoni Morales Alastruey <ylatuya@gmail.com>
