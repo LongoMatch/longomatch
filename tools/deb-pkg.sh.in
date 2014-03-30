@@ -9,7 +9,8 @@ then
   exit 1
 fi
 
-BUILD_DIR=`pwd`"/build"
+ORIG_DIR="`pwd`"
+BUILD_DIR="$ORIG_DIR/build"
 PKG_NAME=@PACKAGE@
 PKG_VERSION=@VERSION@
 DEB_VERSION=$1
@@ -22,6 +23,7 @@ package () {
 	ORIG=$RELEASE~$DEB_RELEASE.orig.tar.gz 	# longomatch-x.y.z~karmicw.orig.tar.gz
 	DEST=$RELEASE~$DEB_RELEASE  		# longomatch-x.y.z~karmicw
 
+	cd $ORIG_DIR
 	mkdir -p $BUILD_DIR
 	echo "Copy $TARBALL to $BUILD_DIR/$ORIG"
 	cp $TARBALL $BUILD_DIR/$ORIG
@@ -44,5 +46,5 @@ package () {
 }
 
 for dist in saucy quantal precise raring; do
-	package ($dist)
+	package $dist
 done
