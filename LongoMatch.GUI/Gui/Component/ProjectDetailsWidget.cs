@@ -335,6 +335,15 @@ namespace LongoMatch.Gui.Component
 						MatchDate = Date
 					};
 
+					if (Categories.FieldBackground == null) {
+						Categories.FieldBackground =Config.FieldBackground;
+					}
+					if (Categories.HalfFieldBackground == null) {
+						Categories.HalfFieldBackground = Config.HalfFieldBackground;
+					}
+					if (Categories.GoalBackground == null) {
+						Categories.GoalBackground = Config.GoalBackground;
+					}
 					return new Project {
 						Description = desc,
 						Categories = Categories,

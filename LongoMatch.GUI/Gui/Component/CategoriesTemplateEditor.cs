@@ -166,8 +166,8 @@ namespace LongoMatch.Gui.Component
 			fieldBox = new HBox ();
 			fReset = new Button (Catalog.GetString ("Reset"));
 			fReset.Clicked += (sender, e) => {
-				Template.FieldBackground = null;
-				SetFieldImage (null);
+				Template.FieldBackground = Config.FieldBackground;
+				SetFieldImage (Template.FieldBackground.Value);
 				};
 			febox.ButtonPressEvent += OnFieldImageClicked;			
 			fieldImage = new Gtk.Image ();
@@ -177,8 +177,8 @@ namespace LongoMatch.Gui.Component
 			halfFieldBox = new HBox ();
 			hfReset = new Button (Catalog.GetString ("Reset"));
 			hfReset.Clicked += (sender, e) => {
-				Template.HalfFieldBackground = null;
-				SetHalfFieldImage (null);
+				Template.HalfFieldBackground = Config.HalfFieldBackground;
+				SetHalfFieldImage (Template.HalfFieldBackground.Value);
 				};
 			hfebox.ButtonPressEvent += OnHalfFieldImageClicked;
 			halffieldImage = new Gtk.Image();
@@ -188,8 +188,8 @@ namespace LongoMatch.Gui.Component
 			goalBox = new HBox ();
 			gReset = new Button (Catalog.GetString ("Reset"));
 			gReset.Clicked += (sender, e) => {
-				Template.GoalBackground = null;
-				SetGoalImage (null);
+				Template.GoalBackground = Config.GoalBackground;
+				SetGoalImage (Template.GoalBackground.Value);
 				};
 			gebox.ButtonPressEvent += OnGoalImageClicked;			
 			goalImage = new Gtk.Image();
