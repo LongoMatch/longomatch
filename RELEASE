@@ -1,7 +1,7 @@
-LongoMatch-0.20.6 "Pasta2"
+LongoMatch-0.20.7 "Franela"
 -----------------------------
 
-The LongoMatch team is happy to announce the sixth release in the
+The LongoMatch team is happy to announce the seventh release in the
 stable 0.20 series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
@@ -10,7 +10,8 @@ experience.
 
 
 * Bugs fixed
-	* Fix random lock in video rendering
+	* Fix deadlock cancelling rendering operations
+	* Fix x264enc when running from non-writable place
 
   * LongoMatch:
 	Andoni Morales Alastruey <ylatuya@gmail.com>

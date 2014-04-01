@@ -1,3 +1,10 @@
+===== LongoMatch 0.20.7 "Franela" =====
+
+	== Bugs fixed ==
+
+	* Fix deadlock cancelling rendering operations
+	* Fix x264enc when running from non-writable place
+
 ===== LongoMatch 0.20.6 "Pasta2" =====
 
 	== Bugs fixed ==
