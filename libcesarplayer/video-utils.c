@@ -456,13 +456,17 @@ GstElement * lgm_create_video_encoder (VideoEncoderType type, guint quality,
       name = "Xvid video encoder";
       break;
 
-    case VIDEO_ENCODER_H264:
+    case VIDEO_ENCODER_H264: {
+      gchar *stats_file = g_build_path (G_DIR_SEPARATOR_S, g_get_tmp_dir(),
+          "x264.log", NULL);
       encoder = gst_element_factory_make ("x264enc", "video-encoder");
       g_object_set (encoder, "key-int-max", 25, "pass", 17,
-          "speed-preset", 3,
+          "speed-preset", 3, "stats-file", stats_file,
           "bitrate", quality, NULL);
+      g_free (stats_file),
       name = "X264 video encoder";
       break;
+    }
 
     case VIDEO_ENCODER_THEORA:
       encoder = gst_element_factory_make ("theoraenc", "video-encoder");
