@@ -5,7 +5,7 @@ The LongoMatch team is happy to announce the seventh release in the
 stable 0.20 series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
-all official latest gstreamer libraries and plugins installed for the best user
+all official latest GStreamer libraries and plugins installed for the best user
 experience.
 
 
@@ -35,10 +35,10 @@ experience.
 
 * Information and Feedback
 
- * Information for users and developers can be found on the LongoMatch website :
-  http://www.longomatch.ylatuya.es/
+ * Information for users and developers can be found on the LongoMatch website:
+  http://longomatch.org
 
  * Bugs and Features Requests
-  http://bugzilla.gnome.org/enter_bug.cgi?product=longomatch
+  https://bugzilla.gnome.org/enter_bug.cgi?product=longomatch
 
 

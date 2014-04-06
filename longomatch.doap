@@ -5,8 +5,10 @@
          xmlns="http://usefulinc.com/ns/doap#">
 
   <name xml:lang="en">longomatch</name>
-  <shortdesc xml:lang="en">Sports video analysis sofware to tag, review and edit important segments or plays of a game </shortdesc>
-  <homepage rdf:resource="http://www.longomatch.ylatuya.es" />
+  <shortdesc xml:lang="en">Sports video analysis software to tag, review and edit important segments or plays of a game</shortdesc>
+  <homepage rdf:resource="http://longomatch.org" />
+  <download-page rdf:resource="http://download.gnome.org/sources/longomatch/" />
+  <bug-database rdf:resource="https://bugzilla.gnome.org/browse.cgi?product=longomatch" />
 
   <maintainer>
     <foaf:Person>
