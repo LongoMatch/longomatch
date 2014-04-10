@@ -509,4 +509,12 @@
     <itemgroups />
     <signals />
   </object>
+  <object type="LongoMatch.Gui.Panel.PreferencesPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="IPanel Signals">
+        <signal name="BackEvent" />
+      </itemgroup>
+    </signals>
+  </object>
 </objects>

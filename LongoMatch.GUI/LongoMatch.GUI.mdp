@@ -34,7 +34,6 @@
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/SnapshotsDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/UpdateDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/CalendarDialog.cs" />
-    <File subtype="Directory" buildaction="Compile" name="Gui/Popup" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/PlayersListTreeWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/PlayListWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/ProjectListWidget.cs" />
@@ -138,8 +137,6 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.CoordinatesTagger.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/GeneralPreferencesPanel.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.GeneralPreferencesPanel.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/PropertiesEditor.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.PropertiesEditor.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/VideoPreferencesPanel.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/LiveAnalysisPreferences.cs" />
@@ -196,8 +193,9 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.CalendarDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/AnalysisTemplateEditor.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.AnalysisTemplateEditor.cs" />
-    <File subtype="Directory" buildaction="Compile" name="Gui/Helpers" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/BackgroundWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Panel/PreferencesPanel.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Panel.PreferencesPanel.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

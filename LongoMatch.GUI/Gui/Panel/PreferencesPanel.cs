@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2013 Andoni Morales Alastruey
+//  Copyright (C) 2014 Andoni Morales Alastruey
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,25 +16,28 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using Gtk;
-using Gdk;
+using LongoMatch.Interfaces.GUI;
+using LongoMatch.Handlers;
 using Mono.Unix;
-
+using Gtk;
 using LongoMatch.Gui.Component;
+using Gdk;
 
-namespace LongoMatch.Gui.Dialog
+namespace LongoMatch.Gui.Panel
 {
-	public partial class PropertiesEditor : Gtk.Dialog
+	[System.ComponentModel.ToolboxItem(true)]
+	public partial class PreferencesPanel : Gtk.Bin, IPanel
 	{
+		public event BackEventHandle BackEvent;
 		Widget selectedPanel;
 		ListStore prefsStore;
 		
-		public PropertiesEditor ()
+		public PreferencesPanel ()
 		{
 			this.Build ();
-			prefsStore = new ListStore(typeof(Gdk.Pixbuf), typeof(string), typeof(Widget));
-			treeview.AppendColumn ("Icon", new Gtk.CellRendererPixbuf (), "pixbuf", 0);  
-			treeview.AppendColumn ("Desc", new Gtk.CellRendererText (), "text", 1);
+			prefsStore = new ListStore(typeof(Pixbuf), typeof(string), typeof(Widget));
+			treeview.AppendColumn ("Icon", new CellRendererPixbuf (), "pixbuf", 0);  
+			treeview.AppendColumn ("Desc", new CellRendererText (), "text", 1);
 			treeview.CursorChanged += HandleCursorChanged;
 			treeview.Model = prefsStore;
 			treeview.HeadersVisible = false;
@@ -42,8 +45,13 @@ namespace LongoMatch.Gui.Dialog
 			treeview.EnableTreeLines = false;
 			AddPanels ();
 			treeview.SetCursor (new TreePath("0"), null, false);
+			backbutton.Clicked += (e, s) => {
+				if (BackEvent != null) {
+					BackEvent ();
+				};
+			};
 		}
-
+		
 		void AddPanels () {
 			AddPane (Catalog.GetString ("General"),
 			         Stetic.IconLoader.LoadIcon(this, "gtk-preferences", IconSize.Dialog),
@@ -52,7 +60,7 @@ namespace LongoMatch.Gui.Dialog
 			         Stetic.IconLoader.LoadIcon(this, "gtk-media-record", IconSize.Dialog),
 			         new VideoPreferencesPanel());
 			AddPane (Catalog.GetString ("Live analysis"),
-			         Gdk.Pixbuf.LoadFromResource ("camera-video.png"),
+			         Pixbuf.LoadFromResource ("camera-video.png"),
 			         new LiveAnalysisPreferences());
 		}
 		

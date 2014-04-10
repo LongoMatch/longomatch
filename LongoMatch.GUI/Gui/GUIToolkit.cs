@@ -251,11 +251,9 @@ namespace LongoMatch.Gui
 		
 		public void OpenPreferencesEditor()
 		{
-			PropertiesEditor pe = new PropertiesEditor();
+			PreferencesPanel panel = new PreferencesPanel ();
 			Log.Information ("Open preferences");
-			pe.TransientFor = mainWindow as Gtk.Window;
-			pe.Run();
-			pe.Destroy();
+			mainWindow.SetPanel (panel);
 		}
 		
 		public void OpenDatabasesManager()
