@@ -130,8 +130,7 @@ namespace LongoMatch.Gui
 			/* Close any previous instance of the capturer */
 			Close ();
 
-			MultimediaToolkit factory = new MultimediaToolkit();
-			capturer = factory.GetCapturer(type);
+			capturer = Config.MultimediaToolkit.GetCapturer(type);
 			capturer.EllapsedTime += OnTick;
 			this.settings = settings;
 			if (type != CapturerType.Live) {

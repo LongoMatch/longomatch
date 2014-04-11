@@ -25,6 +25,10 @@ namespace LongoMatch.Interfaces.Multimedia
 {
 	public interface IMultimediaToolkit
 	{
+		void Register (int priority, Type interfac, Type elementType);
+
+		IPlayer GetPlayer();
+
 		IVideoEditor GetVideoEditor();
 		
 		IVideoConverter GetVideoConverter (string filename);
@@ -32,6 +36,8 @@ namespace LongoMatch.Interfaces.Multimedia
 		IFramesCapturer GetFramesCapturer();
 		
 		IRemuxer GetRemuxer(MediaFile inputFile, string outputFile, VideoMuxerType muxer);
+		
+		ICapturer GetCapturer(CapturerType type);
 		
 		MediaFile DiscoverFile(string path);
 		

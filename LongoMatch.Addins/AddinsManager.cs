@@ -23,6 +23,7 @@ using LongoMatch;
 using LongoMatch.Addins.ExtensionPoints;
 using LongoMatch.Interfaces.GUI;
 using LongoMatch.Store;
+using LongoMatch.Interfaces.Multimedia;
 
 [assembly:AddinRoot ("LongoMatch", "1.0")]
 
@@ -67,6 +68,17 @@ namespace LongoMatch.Addins
 					                          importProject.GetFilterName(), importProject.GetFilter(), importProject.ImportProject, true);
 				} catch (Exception ex) {
 					Log.Error ("Error adding import entry");
+					Log.Exception (ex);
+				}
+			}
+		}
+		
+		public void LoadMultimediaBackendsAddins(IMultimediaToolkit mtoolkit) {
+			foreach (IMultimediaBackend backend in AddinManager.GetExtensionObjects<IMultimediaBackend> ()) {
+				try{
+					backend.RegisterElements (mtoolkit);
+				} catch (Exception ex) {
+					Log.Error ("Error registering multimedia backend");
 					Log.Exception (ex);
 				}
 			}

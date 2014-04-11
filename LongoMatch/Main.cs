@@ -61,10 +61,12 @@ namespace LongoMatch
 			try {
 				AddinsManager manager = new AddinsManager(Config.PluginsConfigDir, Config.PluginsDir);
 				manager.LoadConfigModifierAddins();
-			    GUIToolkit guiToolkit = new GUIToolkit(version);
 			    IMultimediaToolkit multimediaToolkit = new MultimediaToolkit();
+			    Config.MultimediaToolkit = multimediaToolkit;
+			    GUIToolkit guiToolkit = new GUIToolkit(version);
 			    manager.LoadExportProjectAddins(guiToolkit.MainController);
 			    manager.LoadImportProjectAddins(guiToolkit.MainController);
+			    manager.LoadMultimediaBackendsAddins(multimediaToolkit);
 			    try {
 					Core.Start(guiToolkit, multimediaToolkit);
 			    } catch (DBLockedException locked) {

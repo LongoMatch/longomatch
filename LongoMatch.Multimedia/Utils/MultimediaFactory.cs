@@ -19,12 +19,12 @@
 //
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 using LongoMatch.Common;
 using LongoMatch.Interfaces.Multimedia;
-using LongoMatch.Multimedia.Interfaces;
 using LongoMatch.Multimedia.Utils;
 using LongoMatch.Store;
 using LongoMatch.Video.Capturer;
@@ -40,35 +40,49 @@ namespace LongoMatch.Video
 
 	public class MultimediaFactory
 	{
+		Dictionary<Type, List<BackendElement>> elements;
 
 		public MultimediaFactory()
 		{
+			elements = new Dictionary<Type, List<BackendElement>>();
+			/* Register default elements */
+			Register (0, typeof (IPlayer), typeof (GstPlayer));
+			Register (0, typeof (IFramesCapturer), typeof (GstPlayer));
+			Register (0, typeof (IVideoConverter), typeof (GstVideoConverter));
+			Register (0, typeof (IVideoEditor), typeof (GstVideoSplitter));
+			Register (0, typeof (IRemuxer), typeof (GstRemuxer));
+			Register (0, typeof (ICapturer), typeof (GstCameraCapturer));
+		}
+		
+		public void Register (int priority, Type interfac, Type elementType) {
+			if (!elements.ContainsKey (interfac)) {
+				elements[interfac] = new List<BackendElement> ();
+			}
+			elements[interfac].Add (new BackendElement(elementType, priority));
 		}
 
 		public IPlayer GetPlayer () {
-			return new GstPlayer (PlayerUseType.Video);
+			return GetDefaultElement<IPlayer> (typeof (IPlayer),
+			                                    PlayerUseType.Video);
 		}
 
 		public IFramesCapturer GetFramesCapturer() {
-			return new GstPlayer (PlayerUseType.Capture);
+			return GetDefaultElement<IFramesCapturer> (typeof (IFramesCapturer),
+			                                            PlayerUseType.Capture);
 		}
 
 		public IVideoEditor GetVideoEditor() {
-			return new GstVideoSplitter();
+			return GetDefaultElement<IVideoEditor> (typeof (IVideoEditor));
 		}
 
 		public IVideoConverter GetVideoConverter(string filename) {
-			return new GstVideoConverter (filename);
+			return GetDefaultElement<IVideoConverter> (typeof (IVideoConverter));
 		}
 
 		public ICapturer GetCapturer(CapturerType type) {
 			switch(type) {
-			case CapturerType.Fake:
-				return new FakeCapturer();
-
 			case CapturerType.Live:
-				return new GstCameraCapturer("test.avi");
-
+				return GetDefaultElement<ICapturer> (typeof (ICapturer), "test.avi");
 			default:
 				return new FakeCapturer();
 			}
@@ -80,7 +94,9 @@ namespace LongoMatch.Video
 			    inputFile.Container == GStreamer.MPEG2_TS) {
 				return new MpegRemuxer (inputFile.FilePath, outputFile);
 			} else {
-				return new GstRemuxer (inputFile.FilePath, outputFile, muxer);
+				return GetDefaultElement<IRemuxer> (typeof (IRemuxer),
+				                                    inputFile.FilePath,
+				                                    outputFile, muxer);
 			}
 		}
 		
@@ -102,6 +118,26 @@ namespace LongoMatch.Video
 		static extern void gst_init (int argc, string argv);
 		public static void InitBackend() {
 			gst_init(0, "");
+		}
+		
+		T GetDefaultElement<T>(Type interfac, params object[] args) {
+			Type elementType;
+			
+			if (!elements.ContainsKey (interfac)) {
+				throw new Exception (String.Format ("No {0} available in the multimedia backend", interfac));
+			}
+			elementType = elements[interfac].OrderByDescending (e => e.priority).First().type;
+			return (T)Activator.CreateInstance(elementType, args);
+		}
+		
+		internal class BackendElement {
+			public Type type;
+			public int priority;
+			
+			public BackendElement (Type type, int priority) {
+				this.type = type;
+				this.priority = priority;
+			}
 		}
 	}
 }

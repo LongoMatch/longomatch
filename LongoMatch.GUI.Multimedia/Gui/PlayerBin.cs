@@ -366,9 +366,8 @@ namespace LongoMatch.Gui
 		
 		void CreatePlayer ()
 		{
-			MultimediaToolkit factory = new MultimediaToolkit();
 			videodrawingarea.DoubleBuffered = false;
-			player = factory.GetPlayer ();
+			player = Config.MultimediaToolkit.GetPlayer ();
 
 			player.Tick += OnTick;
 			player.StateChange += OnStateChanged;
