@@ -26,13 +26,13 @@ namespace LongoMatch.Video.Common
 	public delegate void ProgressHandler(float progress);
 	public delegate void FramesProgressHandler(int actual, int total, Image frame);
 	public delegate void DrawFrameHandler(int time);
-	public delegate void EllpasedTimeHandler(int ellapsedTime);
-	public delegate void ErrorHandler(object o, ErrorArgs args);
-	public delegate void PercentCompletedHandler(object o, PercentCompletedArgs args);
-	public delegate void StateChangeHandler(object o, StateChangeArgs args);
-	public delegate void TickHandler(object o, TickArgs args);
-	public delegate void DeviceChangeHandler(object o, DeviceChangeArgs args);
 	public delegate void SeekHandler (SeekType type, Time start, float rate);
+
+	public delegate void GlibErrorHandler(object o, ErrorArgs args);
+	public delegate void GlibPercentCompletedHandler(object o, PercentCompletedArgs args);
+	public delegate void GlibStateChangeHandler(object o, StateChangeArgs args);
+	public delegate void GlibTickHandler(object o, TickArgs args);
+	public delegate void GlibDeviceChangeHandler(object o, DeviceChangeArgs args);
 
 
 

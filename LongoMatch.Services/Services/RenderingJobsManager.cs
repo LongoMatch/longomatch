@@ -316,7 +316,7 @@ namespace LongoMatch.Services
 			}
 		}
 		
-		protected void OnError (object o, string message)
+		protected void OnError (string message)
 		{
 			HandleError ();
 		}

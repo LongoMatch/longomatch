@@ -33,7 +33,7 @@ namespace LongoMatch.Services
 		IGUIToolkit guiToolkit;
 		IPlaylistWidget playlistWidget;
 		IPlayList playlist;
-		IPlayer player;
+		IPlayerBin player;
 		IRenderingJobsManager videoRenderer;
 		IAnalysisWindow analysisWindow;
 		/* FIXME */

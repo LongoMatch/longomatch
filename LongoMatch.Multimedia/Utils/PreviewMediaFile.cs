@@ -20,7 +20,6 @@ using System;
 using System.Runtime.InteropServices;
 
 using LongoMatch.Interfaces.Multimedia;
-using LongoMatch.Multimedia.Interfaces;
 using LongoMatch.Store;
 using LongoMatch.Video;
 using LongoMatch.Video.Common;

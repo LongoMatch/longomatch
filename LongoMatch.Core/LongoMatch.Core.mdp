@@ -72,10 +72,10 @@
     <File subtype="Code" buildaction="Compile" name="Interfaces/ITimelineNode.cs" />
     <File subtype="Directory" buildaction="Compile" name="Interfaces/GUI" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IRenderingStateBar.cs" />
-    <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IPlayer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IPlayerBin.cs" />
     <File subtype="Code" buildaction="Compile" name="Handlers/Multimedia.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IAnalysisWindow.cs" />
-    <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/ICapturer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/ICapturerBin.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IPlaylistWidget.cs" />
     <File subtype="Directory" buildaction="Compile" name="Interfaces" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IGUIToolkit.cs" />
@@ -114,6 +114,8 @@
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/half_field_background.svg" />
     <File subtype="Code" buildaction="Compile" name="Utils.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IPanel.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/Multimedia/ICapturer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/Multimedia/IPlayer.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

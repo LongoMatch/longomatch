@@ -52,7 +52,7 @@ namespace LongoMatch.Video.Editor {
 			};
 			InternalError += delegate(object o, ErrorArgs args) {
 				if (Error != null)
-					Error (o, args.Message);
+					Error (args.Message);
 			};
 		}
 
@@ -96,7 +96,7 @@ namespace LongoMatch.Video.Editor {
 		}
 
 		[GLib.Signal("error")]
-		public event ErrorHandler InternalError {
+		public event GlibErrorHandler InternalError {
 			add {
 				GLib.Signal sig = GLib.Signal.Lookup(this, "error", typeof(ErrorArgs));
 				sig.AddDelegate(value);
@@ -146,7 +146,7 @@ namespace LongoMatch.Video.Editor {
 		}
 
 		[GLib.Signal("percent_completed")]
-		public event PercentCompletedHandler PercentCompleted {
+		public event GlibPercentCompletedHandler PercentCompleted {
 			add {
 				GLib.Signal sig = GLib.Signal.Lookup(this, "percent_completed", typeof(PercentCompletedArgs));
 				sig.AddDelegate(value);

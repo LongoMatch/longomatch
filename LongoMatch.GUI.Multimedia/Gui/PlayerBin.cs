@@ -26,12 +26,13 @@ using System.Runtime.InteropServices;
 using Image = LongoMatch.Common.Image;
 using LongoMatch.Handlers;
 using LongoMatch.Interfaces.GUI;
-using LongoMatch.Multimedia.Interfaces;
+using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.Video;
 using LongoMatch.Video.Common;
 using LongoMatch.Video.Player;
 using LongoMatch.Video.Utils;
 using LongoMatch.Store;
+using LongoMatch.Multimedia.Utils;
 
 
 namespace LongoMatch.Gui
@@ -39,7 +40,7 @@ namespace LongoMatch.Gui
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 
-	public partial class PlayerBin : Gtk.Bin, LongoMatch.Interfaces.GUI.IPlayer
+	public partial class PlayerBin : Gtk.Bin, LongoMatch.Interfaces.GUI.IPlayerBin
 	{
 		struct Segment {
 			public Time Start;
@@ -59,8 +60,8 @@ namespace LongoMatch.Gui
 
 		const int THUMBNAIL_MAX_WIDTH = 100;
 		const int SCALE_FPS = 25;
-		LongoMatch.Video.Common.TickHandler tickHandler;
-		LongoMatch.Multimedia.Interfaces.IPlayer player;
+		TickHandler tickHandler;
+		IPlayer player;
 		Time length;
 		bool seeking, IsPlayingPrevState, muted, emitRateScale, readyToSeek;
 		string filename;
@@ -78,7 +79,7 @@ namespace LongoMatch.Gui
 			this.Build();
 			vwin = new VolumeWindow();
 			vwin.VolumeChanged += new VolumeChangedHandler(OnVolumeChanged);
-			tickHandler = new LongoMatch.Video.Common.TickHandler(OnTick);
+			tickHandler = new TickHandler(OnTick);
 			controlsbox.Visible = false;
 			UnSensitive();
 			timescale.Adjustment.PageIncrement = 0.01;
@@ -385,13 +386,13 @@ namespace LongoMatch.Gui
 		#endregion
 
 		#region Callbacks
-		void HandleExposeEvent (object o, ExposeEventArgs args)
+		void HandleExposeEvent (object sender, ExposeEventArgs args)
 		{
 			player.Expose();
 		}
 		
-		void OnStateChanged(object o, StateChangeArgs args) {
-			if(args.Playing) {
+		void OnStateChanged(bool playing) {
+			if(playing) {
 				playbutton.Hide();
 				pausebutton.Show();
 			}
@@ -400,10 +401,10 @@ namespace LongoMatch.Gui
 				pausebutton.Hide();
 			}
 			if(PlayStateChanged != null)
-				PlayStateChanged(this,args.Playing);
+				PlayStateChanged(playing);
 		}
 
-		void OnReadyToSeek(object o, EventArgs args) {
+		void OnReadyToSeek() {
 			readyToSeek = true;
 			if(pendingSeek != null) {
 				player.Rate = (float) pendingSeek [2];
@@ -413,10 +414,7 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		void OnTick (object o, TickArgs args) {
-			Time currentTime = args.CurrentTime;
-			Time streamLength = args.StreamLength;
-			double currentposition = args.CurrentPosition;
+		void OnTick (Time currentTime, Time streamLength, double currentPosition) {
 			string slength;
 
 			if (length != streamLength) {
@@ -429,7 +427,7 @@ namespace LongoMatch.Gui
 					player.Pause ();
 				}
 				currentTime -= segment.Start;
-				currentposition = (float)currentTime.MSeconds/(float)(duration.MSeconds);
+				currentPosition = (float)currentTime.MSeconds/(float)(duration.MSeconds);
 				slength = duration.ToMSecondsString();
 				
 			} else {
@@ -437,9 +435,9 @@ namespace LongoMatch.Gui
 			}
 
 			timelabel.Text = currentTime.ToMSecondsString() + "/" + slength;
-			timescale.Value = currentposition;
+			timescale.Value = currentPosition;
 			if (Tick != null)
-				Tick (o, currentTime, streamLength, currentposition);
+				Tick (currentTime, streamLength, currentPosition);
 
 		}
 
@@ -510,9 +508,9 @@ namespace LongoMatch.Gui
 			player.Pause();
 		}
 
-		void OnError(object o, ErrorArgs args) {
+		void OnError(string message) {
 			if(Error != null)
-				Error(o, args.Message);
+				Error(message);
 		}
 
 		void OnClosebuttonClicked(object sender, System.EventArgs e)

@@ -25,6 +25,7 @@ using Image = LongoMatch.Common.Image;
 using LongoMatch.Common;
 using LongoMatch.Handlers;
 using LongoMatch.Interfaces.GUI;
+using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.Gui.Helpers;
 using LongoMatch.Video;
 using LongoMatch.Video.Common;
@@ -32,6 +33,7 @@ using LongoMatch.Video.Capturer;
 using LongoMatch.Video.Utils;
 using Mono.Unix;
 using LongoMatch.Store;
+using LongoMatch.Multimedia.Utils;
 
 namespace LongoMatch.Gui
 {
@@ -39,16 +41,16 @@ namespace LongoMatch.Gui
 
 	[System.ComponentModel.Category("CesarPlayer")]
 	[System.ComponentModel.ToolboxItem(true)]
-	public partial class CapturerBin : Gtk.Bin, ICapturer
+	public partial class CapturerBin : Gtk.Bin, ICapturerBin
 	{
 		public event EventHandler CaptureFinished;
-		public event LongoMatch.Handlers.ErrorHandler Error;
+		public event ErrorHandler Error;
 
 		Image logopix;
 		CaptureSettings settings;
 		CapturerType type;
 		bool captureStarted, capturing, delayStart;
-		LongoMatch.Multimedia.Interfaces.ICapturer capturer;
+		ICapturer capturer;
 
 		public CapturerBin()
 		{
@@ -154,7 +156,7 @@ namespace LongoMatch.Gui
 			recbutton.Visible = true;
 			captureStarted = false;
 			capturing = false;
-			OnTick(0);
+			OnTick(new Time (0));
 
 			if(capturer == null)
 				return;
@@ -246,23 +248,23 @@ namespace LongoMatch.Gui
 			}
 		}
 		
-		protected virtual void OnTick(int ellapsedTime) {
+		protected virtual void OnTick(Time ellapsedTime) {
 			timelabel.Markup = String.Format("<span font=\"20px bold\">Time --> {0}</span> ", 
 			                                 CurrentTime.ToSecondsString());
 		}
 
-		protected virtual void OnError(object o, ErrorArgs args)
+		protected virtual void OnError(string message)
 		{
 			if(Error != null)
-				Error(o, args.Message);
+				Error(message);
 			Close();
 		}
 
-		protected virtual void OnDeviceChange(object o, DeviceChangeArgs args)
+		protected virtual void OnDeviceChange(int deviceID)
 		{
 			string msg;
 			/* device disconnected, pause capture */
-			if(args.DeviceChange == -1) {
+			if(deviceID == -1) {
 				if(capturing)
 					TogglePause();
 

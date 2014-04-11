@@ -14,8 +14,6 @@
     </Configuration>
   </Configurations>
   <Contents>
-    <File subtype="Code" buildaction="Compile" name="Player/GstPlayer.cs" />
-    <File subtype="Code" buildaction="Compile" name="Player/ObjectManager.cs" />
     <File subtype="Code" buildaction="Compile" name="Editor/GstVideoSplitter.cs" />
     <File subtype="Code" buildaction="Compile" name="Editor/VideoSegment.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Constants.cs" />
@@ -39,17 +37,11 @@
     <File subtype="Directory" buildaction="Compile" name="Common" />
     <File subtype="Directory" buildaction="Compile" name="Common" />
     <File subtype="Directory" buildaction="Compile" name="Utils" />
-    <File subtype="Directory" buildaction="Compile" name="Player" />
     <File subtype="Directory" buildaction="Compile" name="Editor" />
     <File subtype="Directory" buildaction="Compile" name="Capturer" />
     <File subtype="Directory" buildaction="Compile" name="Utils" />
-    <File subtype="Directory" buildaction="Compile" name="Interfaces" />
-    <File subtype="Code" buildaction="Compile" name="Interfaces/ICapturer.cs" />
-    <File subtype="Code" buildaction="Compile" name="Interfaces/IPlayer.cs" />
     <File subtype="Code" buildaction="Compile" name="Utils/VideoDevice.cs" />
     <File subtype="Code" buildaction="Compile" name="Utils/GStreamer.cs" />
-    <File subtype="Directory" buildaction="Compile" name="Interfaces" />
-    <File subtype="Directory" buildaction="Compile" name="Interfaces" />
     <File subtype="Directory" buildaction="Compile" name="Interfaces" />
     <File subtype="Code" buildaction="Compile" name="Common/Handlers.cs" />
     <File subtype="Directory" buildaction="Compile" name="Remuxer" />
@@ -64,6 +56,9 @@
     <File subtype="Code" buildaction="EmbedAsResource" name="gtk-gui/gui.stetic" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/generated.cs" />
     <File subtype="Code" buildaction="Compile" name="Utils/GtkHelpers.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Player" />
+    <File subtype="Code" buildaction="Compile" name="Player/GstPlayer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Player/ObjectManager.cs" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="libcesarplayer" />

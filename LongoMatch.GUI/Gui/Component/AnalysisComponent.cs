@@ -107,13 +107,13 @@ namespace LongoMatch.Gui.Component
 			postagger.SetMode (false);
 		}
 		
-		public IPlayer Player{
+		public IPlayerBin Player{
 			get {
 				return playercapturer;
 			}
 		}
 		
-		public ICapturer Capturer{
+		public ICapturerBin Capturer{
 			get {
 				return playercapturer;
 			}
@@ -501,7 +501,7 @@ namespace LongoMatch.Gui.Component
 			selectedTimeNode = null;
 		}
 		
-		protected virtual void OnTick (object o, Time currentTime, Time streamLength,
+		protected virtual void OnTick (Time currentTime, Time streamLength,
 			double currentPosition)
 		{
 			if (currentTime.MSeconds != 0 && timeline != null && openedProject != null) {
@@ -512,7 +512,7 @@ namespace LongoMatch.Gui.Component
 			gameunitstaggerwidget1.CurrentTime = currentTime;
 		}
 		
-		protected virtual void OnMultimediaError(object o, string message)
+		protected virtual void OnMultimediaError(string message)
 		{
 			MessagesHelpers.ErrorMessage (this,
 				Catalog.GetString("The following error happened and" +

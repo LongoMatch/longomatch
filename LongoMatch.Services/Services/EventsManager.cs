@@ -45,8 +45,8 @@ namespace LongoMatch.Services
 		IGUIToolkit guiToolkit;
 		IAnalysisWindow analysisWindow;
 		IProjectOptionsController poController;
-		IPlayer player;
-		ICapturer capturer;
+		IPlayerBin player;
+		ICapturerBin capturer;
 		IRenderingJobsManager renderer;
 
 		public EventsManager(IGUIToolkit guiToolkit, IRenderingJobsManager renderer,

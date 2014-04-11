@@ -23,7 +23,7 @@ using LongoMatch.Store;
 
 namespace LongoMatch.Interfaces.GUI
 {
-	public interface ICapturer
+	public interface ICapturerBin
 	{
 		event EventHandler CaptureFinished;
 		event ErrorHandler Error;

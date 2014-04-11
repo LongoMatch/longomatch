@@ -26,6 +26,7 @@ using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.Video;
 using LongoMatch.Video.Common;
 using LongoMatch.Store;
+using LongoMatch.Multimedia.Utils;
 
 namespace LongoMatch.Video.Utils
 {

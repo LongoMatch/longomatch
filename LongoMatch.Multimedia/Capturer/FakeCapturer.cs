@@ -20,10 +20,10 @@ using System;
 using Mono.Unix;
 using GLib;
 using LongoMatch.Common;
-using LongoMatch.Multimedia.Interfaces;
-using LongoMatch.Video.Common;
+using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.Store;
 using Image = LongoMatch.Common.Image;
+using LongoMatch.Handlers;
 
 namespace LongoMatch.Video.Capturer
 {
@@ -40,12 +40,11 @@ namespace LongoMatch.Video.Capturer
 		public FakeCapturer(): base()
 		{
 			timer = new LiveSourceTimer();
-			timer.EllapsedTime += delegate(int ellapsedTime) {
+			timer.EllapsedTime += delegate(Time ellapsedTime) {
 				if(EllapsedTime!= null)
 					EllapsedTime(ellapsedTime);
 			};
 		}
-		
 
 		public Time CurrentTime {
 			get {

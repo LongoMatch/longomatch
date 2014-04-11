@@ -75,12 +75,12 @@ namespace LongoMatch.Services
 			set;
 		}
 		
-		public ICapturer Capturer {
+		public ICapturerBin Capturer {
 			set;
 			get;
 		}
 		
-		public IPlayer Player {
+		public IPlayerBin Player {
 			get;
 			set;
 		}

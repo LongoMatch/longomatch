@@ -26,7 +26,7 @@ namespace LongoMatch.Gui
 {
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
-	public partial class PlayerCapturerBin : Gtk.Bin, IPlayer, ICapturer
+	public partial class PlayerCapturerBin : Gtk.Bin, IPlayerBin, ICapturerBin
 	{	
 		/* Common events */
 		public event ErrorHandler Error;
@@ -274,14 +274,14 @@ namespace LongoMatch.Gui
 					CaptureFinished (sender, e);
 			};
 			
-			capturerbin.Error += delegate(object sender, string message) {
+			capturerbin.Error += delegate(string message) {
 				if (Error != null)
-					Error (sender, message);
+					Error (message);
 			};
 			
-			playerbin.Error += delegate(object sender, string message) {
+			playerbin.Error += delegate(string message) {
 				if (Error != null)
-					Error (sender, message);
+					Error (message);
 			};
 			
 			playerbin.SegmentClosedEvent += delegate () {
@@ -289,14 +289,14 @@ namespace LongoMatch.Gui
 					SegmentClosedEvent ();
 			};
 			
-			playerbin.Tick += delegate (object o, Time t, Time s, double p) {
+			playerbin.Tick += delegate (Time t, Time s, double p) {
 				if (Tick != null)
-					Tick (o, t, s, p);
+					Tick (t, s, p);
 			};
 			
-			playerbin.PlayStateChanged += delegate (object sender, bool playing) {
+			playerbin.PlayStateChanged += delegate (bool playing) {
 				if (PlayStateChanged != null)
-					PlayStateChanged (sender, playing);
+					PlayStateChanged (playing);
 			};
 			
 			playerbin.Next += delegate () {

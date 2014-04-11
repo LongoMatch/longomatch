@@ -19,12 +19,12 @@
 //
 
 using System;
-using LongoMatch.Video.Common;
 using LongoMatch.Store;
+using LongoMatch.Handlers;
 using Image = LongoMatch.Common.Image;
 
 
-namespace LongoMatch.Multimedia.Interfaces
+namespace LongoMatch.Interfaces.Multimedia
 {
 	public interface IPlayer
 	{
@@ -33,7 +33,7 @@ namespace LongoMatch.Multimedia.Interfaces
 		event         System.EventHandler Eos;
 		event         StateChangeHandler StateChange;
 		event         TickHandler Tick;
-		event         System.EventHandler ReadyToSeek;
+		event         ReadyToSeekHandler ReadyToSeek;
 
 		Time StreamLength {get;}
 		Time CurrentTime {get;}

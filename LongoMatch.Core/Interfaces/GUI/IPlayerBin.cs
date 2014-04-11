@@ -22,7 +22,7 @@ using LongoMatch.Store;
 
 namespace LongoMatch.Interfaces.GUI
 {
-	public interface IPlayer
+	public interface IPlayerBin
 	{
 		event SegmentClosedHandler SegmentClosedEvent;
 		event TickHandler Tick;

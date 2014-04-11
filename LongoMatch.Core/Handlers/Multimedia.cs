@@ -35,11 +35,12 @@ namespace LongoMatch.Handlers
 	public delegate void DrawFrameHandler(Time time);
 	public delegate void EllpasedTimeHandler(Time ellapsedTime);
 	public delegate void PlaybackRateChangedHandler (float rate);
-
-
-	public delegate void ErrorHandler(object o, string message);
-	public delegate void PercentCompletedHandler(object o, float percent);
-	public delegate void StateChangeHandler(object o, bool playing);
-	public delegate void TickHandler(object o, Time currentTime, Time streamLength,
-		double currentPosition);
+	
+	public delegate void DeviceChangeHandler(int deviceID);
+	public delegate void ErrorHandler(string message);
+	public delegate void PercentCompletedHandler(float percent);
+	public delegate void StateChangeHandler(bool playing);
+	public delegate void TickHandler(Time currentTime, Time streamLength, double currentPosition);
+	public delegate void EosHandler();
+	public delegate void ReadyToSeekHandler();
 }

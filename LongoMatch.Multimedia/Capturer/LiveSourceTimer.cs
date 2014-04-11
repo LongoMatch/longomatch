@@ -18,6 +18,8 @@
 
 using System;
 using LongoMatch.Video.Common;
+using LongoMatch.Handlers;
+using LongoMatch.Store;
 
 
 namespace LongoMatch.Video.Capturer
@@ -80,7 +82,7 @@ namespace LongoMatch.Video.Capturer
 
 		protected virtual bool OnTick() {
 			if(EllapsedTime != null)
-				EllapsedTime(CurrentTime);
+				EllapsedTime(new Time (CurrentTime));
 			return true;
 		}
 	}

@@ -58,7 +58,7 @@ namespace LongoMatch.Video.Converter {
 			};
 			InternalError += delegate(object o, ErrorArgs args) {
 				if (Error != null)
-					Error (o, args.Message);
+					Error (args.Message);
 			};
 		}
 
@@ -76,7 +76,7 @@ namespace LongoMatch.Video.Converter {
 
 				args.Args = new object[1];
 				args.Args[0] = GLib.Marshaller.Utf8PtrToString(arg1);
-				ErrorHandler handler = (ErrorHandler) sig.Handler;
+				GlibErrorHandler handler = (GlibErrorHandler) sig.Handler;
 				handler(GLib.Object.GetObject(arg0), args);
 			} catch(Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException(e, false);
@@ -121,7 +121,7 @@ namespace LongoMatch.Video.Converter {
 		}
 
 		[GLib.Signal("error")]
-		public event ErrorHandler InternalError {
+		public event GlibErrorHandler InternalError {
 			add {
 				GLib.Signal sig = GLib.Signal.Lookup(this, "error", new ErrorSignalDelegate(ErrorSignalCallback));
 				sig.AddDelegate(value);
@@ -170,7 +170,7 @@ namespace LongoMatch.Video.Converter {
 		}
 
 		[GLib.Signal("percent_completed")]
-		public event PercentCompletedHandler PercentCompleted {
+		public event GlibPercentCompletedHandler PercentCompleted {
 			add {
 				GLib.Signal sig = GLib.Signal.Lookup(this, "percent_completed", typeof(PercentCompletedArgs));
 				sig.AddDelegate(value);

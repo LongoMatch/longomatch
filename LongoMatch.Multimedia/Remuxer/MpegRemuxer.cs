@@ -26,6 +26,7 @@ using LongoMatch.Store;
 using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.Handlers;
 using LongoMatch.Video.Utils;
+using LongoMatch.Multimedia.Utils;
 
 namespace LongoMatch.Video.Remuxer
 {
@@ -93,7 +94,7 @@ namespace LongoMatch.Video.Remuxer
 			if (ret != 0) {
 				if (Error != null) {
 					GtkHelpers.CallFromAppThread (delegate {
-						Error (this, "Unkown error");});
+						Error ("Unkown error");});
 				}
 			} else {
 				if (Progress != null) {

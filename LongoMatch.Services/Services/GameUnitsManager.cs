@@ -27,7 +27,7 @@ namespace LongoMatch.Services
 	public class GameUnitsManager
 	{
 		IAnalysisWindow analysisWindow;
-		IPlayer player;
+		IPlayerBin player;
 		Project openedProject;
 		Dictionary<GameUnit, Time> gameUnitsStarted;
 		ushort fps;

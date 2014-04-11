@@ -76,8 +76,8 @@ namespace LongoMatch.Interfaces.GUI
 		bool PlaylistVisible {set;}
 		VideoAnalysisMode AnalysisMode {set;}
 		
-		IPlayer Player{get;}
-		ICapturer Capturer{get;}
+		IPlayerBin Player{get;}
+		ICapturerBin Capturer{get;}
 		IPlaylistWidget Playlist{get;}
 		ITemplatesService TemplatesService{set;}
 	}

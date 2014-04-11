@@ -24,9 +24,10 @@ using Mono.Unix;
 using GLib;
 
 using LongoMatch.Common;
-using LongoMatch.Multimedia.Interfaces;
+using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.Video.Common;
 using LongoMatch.Store;
+using LongoMatch.Handlers;
 
 namespace LongoMatch.Video.Capturer {
 
@@ -36,6 +37,8 @@ namespace LongoMatch.Video.Capturer {
 	public  class GstCameraCapturer : GLib.Object, ICapturer {
 
 		public event EllpasedTimeHandler EllapsedTime;
+		public event ErrorHandler Error;
+		public event DeviceChangeHandler DeviceChange;
 
 		private LiveSourceTimer timer;
 
@@ -79,9 +82,21 @@ namespace LongoMatch.Video.Capturer {
 			if(error != IntPtr.Zero) throw new GLib.GException(error);
 
 			timer = new LiveSourceTimer();
-			timer.EllapsedTime += delegate(int ellapsedTime) {
-				if(EllapsedTime!= null)
-					EllapsedTime(ellapsedTime);
+			timer.EllapsedTime += delegate(Time ellapsedTime) {
+				if(EllapsedTime != null)
+					EllapsedTime (ellapsedTime);
+			};
+			
+			this.GlibError += (o, args) => {
+				if (Error != null) {
+					Error (args.Message);
+				}
+			};
+			
+			this.GlibDeviceChange += (o, args) => {
+				if (DeviceChange != null) {
+					DeviceChange (args.DeviceChange);
+				}
 			};
 		}
 
@@ -99,7 +114,7 @@ namespace LongoMatch.Video.Capturer {
 
 				args.Args = new object[1];
 				args.Args[0] = GLib.Marshaller.Utf8PtrToString(arg1);
-				ErrorHandler handler = (ErrorHandler) sig.Handler;
+				GlibErrorHandler handler = (GlibErrorHandler) sig.Handler;
 				handler(GLib.Object.GetObject(arg0), args);
 			} catch(Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException(e, false);
@@ -144,7 +159,7 @@ namespace LongoMatch.Video.Capturer {
 		}
 
 		[GLib.Signal("error")]
-		public event ErrorHandler Error {
+		public event GlibErrorHandler GlibError {
 			add {
 				GLib.Signal sig = GLib.Signal.Lookup(this, "error", new ErrorSignalDelegate(ErrorSignalCallback));
 				sig.AddDelegate(value);
@@ -168,7 +183,7 @@ namespace LongoMatch.Video.Capturer {
 
 				args.Args = new object[1];
 				args.Args[0] = arg1;
-				DeviceChangeHandler handler = (DeviceChangeHandler) sig.Handler;
+				GlibDeviceChangeHandler handler = (GlibDeviceChangeHandler) sig.Handler;
 				handler(GLib.Object.GetObject(arg0), args);
 			} catch(Exception e) {
 				GLib.ExceptionManager.RaiseUnhandledException(e, false);
@@ -213,7 +228,7 @@ namespace LongoMatch.Video.Capturer {
 		}
 
 		[GLib.Signal("device_change")]
-		public event DeviceChangeHandler DeviceChange {
+		public event GlibDeviceChangeHandler GlibDeviceChange {
 			add {
 				GLib.Signal sig = GLib.Signal.Lookup(this, "device_change", new DeviceChangeSignalDelegate(DeviceChangeSignalCallback));
 				sig.AddDelegate(value);

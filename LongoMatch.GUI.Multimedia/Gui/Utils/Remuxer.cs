@@ -115,7 +115,7 @@ namespace LongoMatch.Video.Utils
 			Cancel();
 		}
 
-		void HandleRemuxerError (object o, string error)
+		void HandleRemuxerError (string error)
 		{
 			Application.Invoke (delegate {Error (error);});
 		}
