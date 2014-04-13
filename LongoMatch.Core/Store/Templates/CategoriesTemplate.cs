@@ -28,6 +28,7 @@ using LongoMatch.Common;
 using LongoMatch.Interfaces;
 
 using Image = LongoMatch.Common.Image;
+using Color = System.Drawing.Color;
 
 namespace LongoMatch.Store.Templates
 {

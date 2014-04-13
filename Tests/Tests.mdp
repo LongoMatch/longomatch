@@ -34,6 +34,17 @@
     <File subtype="Directory" buildaction="Compile" name="Services" />
     <File subtype="Code" buildaction="Compile" name="Services/TestDatabase.cs" />
     <File subtype="Code" buildaction="Compile" name="Services/TestDatabasesManager.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Core/Drawables" />
+    <File subtype="Code" buildaction="Compile" name="Core/Drawables/TestLine.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/Drawables/TestCross.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/Drawables/TestRectangle.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/Drawables/TestQuadrilateral.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/Drawables/TestEllipse.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/Drawables/TestText.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/Drawables/TestAngle.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/Drawables/TestMultipoints.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/Drawables/TestDrawable.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/Drawables/TestCircle.cs" />
     <File subtype="Code" buildaction="Compile" name="Core/TestColor.cs" />
   </Contents>
   <References>

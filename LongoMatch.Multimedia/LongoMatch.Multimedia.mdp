@@ -42,7 +42,6 @@
     <File subtype="Directory" buildaction="Compile" name="Utils" />
     <File subtype="Code" buildaction="Compile" name="Utils/VideoDevice.cs" />
     <File subtype="Code" buildaction="Compile" name="Utils/GStreamer.cs" />
-    <File subtype="Directory" buildaction="Compile" name="Interfaces" />
     <File subtype="Code" buildaction="Compile" name="Common/Handlers.cs" />
     <File subtype="Directory" buildaction="Compile" name="Remuxer" />
     <File subtype="Code" buildaction="Compile" name="Remuxer/GstRemuxer.cs" />

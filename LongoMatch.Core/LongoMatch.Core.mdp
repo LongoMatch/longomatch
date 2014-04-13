@@ -116,6 +116,18 @@
     <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IPanel.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/Multimedia/ICapturer.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/Multimedia/IPlayer.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Store/Drawables" />
+    <File subtype="Code" buildaction="Compile" name="Store/Drawables/Quadrilateral.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/Drawables/Ellipse.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/Drawables/Line.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/Drawables/Text.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/Drawables/MultiPoints.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/Drawables/Drawable.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/Drawables/Cross.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/Drawables/Rectangle.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/Drawables/Selection.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/Drawables/Angle.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/Drawables/Circle.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
@@ -126,5 +138,6 @@
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <ProjectReference type="Gac" localcopy="False" refto="Newtonsoft.Json, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b9a188c8922137c6" />
+    <ProjectReference type="Gac" localcopy="True" refto="nunit.framework" />
   </References>
 </Project>

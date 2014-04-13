@@ -84,11 +84,11 @@ namespace LongoMatch.Gui.Helpers
 			}
 		}
 		
-		public static Color ToGdkColor(System.Drawing.Color color) {
-			return new Color(color.R, color.G, color.B);
+		public static Gdk.Color ToGdkColor(System.Drawing.Color color) {
+			return new Gdk.Color(color.R, color.G, color.B);
 		}
 		
-		public static System.Drawing.Color ToDrawingColor(Color color) {
+		public static System.Drawing.Color ToDrawingColor(Gdk.Color color) {
 			return System.Drawing.Color.FromArgb(
 				ColorHelper.ShortToByte(color.Red),
 				ColorHelper.ShortToByte(color.Green),

@@ -75,7 +75,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// A color to identify plays in this category
 		/// </summary>
-		public  Color Color {
+		public  System.Drawing.Color Color {
 			get;
 			set;
 		}

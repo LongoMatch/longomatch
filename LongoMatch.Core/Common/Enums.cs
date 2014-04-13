@@ -144,4 +144,36 @@ namespace LongoMatch.Common
 		Timeline,
 		GameUnits,
 	}
+	
+	public enum SelectionPosition {
+		TopLeft,
+		TopRight,
+		BottomLeft,
+		BottomRight,
+		Left,
+		Right,
+		Top,
+		Bottom,
+		LineStart,
+		LineStop,
+		AngleStart,
+		AngleStop,
+		AngleCenter,
+		CircleBorder,
+		All,
+		None,
+	}
+	
+	public enum LineStyle {
+		Normal,
+		Dashed,
+		Pointed
+	}
+	
+	public enum LineType {
+		Simple,
+		Arrow,
+		DoubleArrow,
+		Rounded
+	}
 }
