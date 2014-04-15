@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: longomatch.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=longomatch&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-10-12 13:36+0000\n"
+"POT-Creation-Date: 2014-03-29 13:34+0000\n"
 "PO-Revision-Date: 2013-10-15 17:08+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
@@ -313,7 +313,10 @@ msgstr "nombre"
 msgid "Not defined"
 msgstr "Sin definir"
 
-#: ../LongoMatch.Core/Store/Play.cs:234
+#: ../LongoMatch.Core/Store/Project.cs:263
+msgid "The file you are trying to load is not a valid project"
+msgstr "El archivo que intenta cargar no es un proyecto válido."
+
 #: ../LongoMatch.Core/Store/SubCategory.cs:84
 #: ../LongoMatch.GUI/Gui/Component/Stats/PlayerSubcategoryViewer.cs:35
 #: ../LongoMatch.GUI/Gui/Dialog/DatabasesManager.cs:50
@@ -322,19 +325,6 @@ msgstr "Sin definir"
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:66
 msgid "Name"
 msgstr "Nombre"
-
-#: ../LongoMatch.Core/Store/Play.cs:235
-#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:127
-msgid "Start"
-msgstr "Inicio"
-
-#: ../LongoMatch.Core/Store/Play.cs:236
-msgid "Stop"
-msgstr "Fin"
-
-#: ../LongoMatch.Core/Store/Project.cs:263
-msgid "The file you are trying to load is not a valid project"
-msgstr "El archivo que intenta cargar no es un proyecto válido."
 
 #: ../LongoMatch.Core/Store/SubCategory.cs:114
 msgid "Tags list"
@@ -373,11 +363,11 @@ msgstr "Selección de equipo"
 msgid "Coordinates"
 msgstr "Coordenadas"
 
-#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:138
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:153
 msgid "Local Team Players"
 msgstr "Plantilla del equipo local"
 
-#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:144
+#: ../LongoMatch.Core/Store/Templates/CategoriesTemplate.cs:159
 msgid "Visitor Team Players"
 msgstr "Plantilla del equipo visitante"
 
@@ -400,14 +390,6 @@ msgstr "Editar"
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Base.TemplatesEditorBase.cs:205
 msgid "Export"
 msgstr "Exportar"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs:26
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs:36
-msgid "Tag new play"
-msgstr "Etiquetar jugada nueva"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs:111
 #: ../LongoMatch.GUI/Gui/Component/CategoryProperties.cs:188
@@ -774,7 +756,7 @@ msgid "Histogram"
 msgstr "Histograma"
 
 #. Container child hbox4.Gtk.Box+BoxChild
-#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.Plotter.cs:41
+#: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.Stats.Plotter.cs:42
 msgid "Pie chart"
 msgstr "Gráfico de tarta"
 
@@ -818,13 +800,11 @@ msgid "Quality"
 msgstr "Calidad"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:120
-#| msgid "Enable Audio (Experimental)"
 msgid "Enable audio (experimental)"
 msgstr "Activar sonido (experimental)"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.VideoPreferencesPanel.cs:131
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:134
-#| msgid "Enable Title Overlay"
 msgid "Enable title overlay"
 msgstr "Activar la sobreimpresión del título"
 
@@ -1128,7 +1108,6 @@ msgid "Encoding Format:"
 msgstr "Formato de codificación:"
 
 #: ../LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Dialog.VideoEditionProperties.cs:145
-#| msgid "Enable Audio (Experimental)"
 msgid "Enable audio (Experimental)"
 msgstr "Activar sonido (experimental)"
 
@@ -1327,7 +1306,7 @@ msgstr "El nombre de la plantilla está vacío."
 
 #: ../LongoMatch.GUI/Gui/Base/TemplatesEditorBase.cs:184
 msgid "The template already exists. Do you want to overwrite it ?"
-msgstr "La plantilla ya existe. ¿Quiere sobreescribirla?"
+msgstr "La plantilla ya existe. ¿Quiere sobrescribirla?"
 
 #: ../LongoMatch.GUI/Gui/Base/TimeScaleBase.cs:164
 msgid "Add new "
@@ -1445,40 +1424,28 @@ msgstr "Desactivar filtro de jugadores"
 msgid "Enable players filters"
 msgstr "Activar filtro de jugadores"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:375
-msgid "OS X Source"
-msgstr "Origen OS X"
-
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:377
-msgid "DirectShow Source"
-msgstr "Origen «DirectShow»"
-
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:384
-msgid "Unknown"
-msgstr "Desconocido"
-
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:449
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:435
 #: ../LongoMatch.Plugins/CSVExporter.cs:46
 msgid "Output file"
 msgstr "Archivo de salida"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:460
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:446
 msgid "Open file"
 msgstr "Abrir archivo"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:470
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:456
 msgid "Analyzing video file:"
 msgstr "Analizando archivo de vídeo:"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:476
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:462
 msgid "This file doesn't contain a video stream."
 msgstr "Este archivo no contiene un flujo de vídeo."
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:478
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:464
 msgid "This file contains a video stream but its length is 0."
 msgstr "Este archivo contiene un flujo de vídeo pero su longitud es 0."
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:480
+#: ../LongoMatch.GUI/Gui/Component/ProjectDetailsWidget.cs:466
 #: ../LongoMatch.GUI.Multimedia/Gui/Utils/Remuxer.cs:167
 msgid ""
 "The file you are trying to load is not properly supported. Would you like to "
@@ -1487,52 +1454,53 @@ msgstr ""
 "El archivo que intenta cargar no está soportado adecuadamente. ¿Quiere "
 "convertirlo a un formato más adecuado?"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:53
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:55
 msgid "Filename"
 msgstr "Nombre de archivo"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:118
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:120
 msgid "File length"
 msgstr "Longitud del archivo"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:120
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:122
 msgid "Video codec"
 msgstr "Códec de vídeo"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:121
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:123
 msgid "Audio codec"
 msgstr "Códec de audio"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:122
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:124
 msgid "Format"
 msgstr "Formato"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:132
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:134
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:126
 msgid "Title"
 msgstr "Título"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:133
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:135
 msgid "Local team"
 msgstr "Equipo local"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:134
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:136
 msgid "Visitor team"
 msgstr "Equipo visitante"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:135
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:137
 msgid "Season"
 msgstr "Temporada"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:136
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:138
 msgid "Competition"
 msgstr "Competición"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:137
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:139
 msgid "Result"
 msgstr "Resultado"
 
-#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:138
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:141
+#: ../LongoMatch.GUI/Gui/Component/ProjectListWidget.cs:144
 msgid "Date"
 msgstr "Fecha"
 
@@ -1763,11 +1731,11 @@ msgstr "Error al añadir los archivos:"
 msgid "MP4 file"
 msgstr "Archivo MP4"
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:115
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:116
 msgid "Save Video As ..."
 msgstr "Guardar vídeo como…"
 
-#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:153
+#: ../LongoMatch.GUI/Gui/Dialog/VideoEditionProperties.cs:159
 msgid "Output folder ..."
 msgstr "Carpeta de salida…"
 
@@ -1788,15 +1756,15 @@ msgstr "Seleccione una carpeta de salida"
 msgid "Add"
 msgstr "Añadir"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:150
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:151
 msgid "Import file project"
 msgstr "Importar archivo de proyecto"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:532
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:537
 msgid "Do you want to close the current project?"
 msgstr "¿Quiere cerrar el proyecto actual?"
 
-#: ../LongoMatch.GUI/Gui/MainWindow.cs:794
+#: ../LongoMatch.GUI/Gui/MainWindow.cs:800
 msgid "The following error happened and the current project will be closed:"
 msgstr "Ocurrió el siguiente error y se cerrará el proyecto actual:"
 
@@ -1892,6 +1860,10 @@ msgid "Edit Title"
 msgstr "Editar título"
 
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:127
+msgid "Start"
+msgstr "Inicio"
+
+#: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:127
 #: ../LongoMatch.GUI/Gui/TreeView/PlayListTreeView.cs:128
 msgid " sec"
 msgstr " seg"
@@ -1936,11 +1908,11 @@ msgstr "Tiempo:"
 msgid "Back To Live"
 msgstr "Volver al directo"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:136
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:138
 msgid "Do you want to pause the recording?"
 msgstr "¿Quiere pausar la grabación?"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:254
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:256
 msgid ""
 "You are going to stop and finish the current capture.\n"
 "Do you want to proceed?"
@@ -1948,11 +1920,11 @@ msgstr ""
 "Está a punto de detener y finalizar la captura actual.\n"
 "¿Quiere continuar?"
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:323
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:295
 msgid "Device disconnected. The capture will be paused"
 msgstr "Dispositivo desconectado. Se pausará la captura."
 
-#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:332
+#: ../LongoMatch.GUI.Multimedia/Gui/CapturerBin.cs:304
 msgid "Device reconnected.Do you want to restart the capture?"
 msgstr "Dispositivo reconectado. ¿Quiere reiniciar la captura?"
 
@@ -1981,21 +1953,17 @@ msgstr "Se ha detectado un error en la instalación actual."
 msgid "Could not parse file:"
 msgstr "No se pudo analizar el archivo:"
 
-#: ../LongoMatch.Multimedia/Utils/VideoDevice.cs:52
-msgid "Default device"
-msgstr "Dispositivo predeterminado"
-
 #: ../LongoMatch.Plugins/CSVExporter.cs:38
 msgid "Export project to CSV file"
 msgstr "Exportar proyecto a un archivo CSV"
 
 #: ../LongoMatch.Plugins/CSVExporter.cs:58
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:406
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:447
 msgid "Project exported successfully"
 msgstr "Proyecto exportado satisfactoriamente."
 
 #: ../LongoMatch.Plugins/CSVExporter.cs:60
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:408
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:449
 msgid "Error exporting project"
 msgstr "Error al exportar el proyecto"
 
@@ -2025,12 +1993,12 @@ msgid "Could not recover backup, this database will not be used"
 msgstr ""
 "No se pudo recuperar la copia de seguridad, no se usará esta base de datos."
 
-#: ../LongoMatch.Services/Services/EventsManager.cs:178
+#: ../LongoMatch.Services/Services/EventsManager.cs:182
 msgid "You can't create a new play if the capturer is not recording."
 msgstr ""
 "No puede crear un nueva jugada si el dispositivo de captura no está grabando."
 
-#: ../LongoMatch.Services/Services/EventsManager.cs:244
+#: ../LongoMatch.Services/Services/EventsManager.cs:256
 msgid ""
 "The stop time is smaller than the start time. The play will not be added."
 msgstr ""
@@ -2053,28 +2021,28 @@ msgstr ""
 msgid "You have not loaded any playlist yet."
 msgstr "Todavía no ha cargado ninguna lista de reproducción."
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:109
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:112
 msgid "Please, close the opened project to play the playlist."
 msgstr "Cierre el proyecto actual para reproducir la lista de reproducción."
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:196
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:199
 msgid "Open playlist"
 msgstr "Abrir lista de reproducción"
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:197
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:208
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:200
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:211
 msgid "playlists"
 msgstr "listas de reproducción"
 
-#: ../LongoMatch.Services/Services/PlaylistManager.cs:207
+#: ../LongoMatch.Services/Services/PlaylistManager.cs:210
 msgid "New playlist"
 msgstr "Nueva lista de reproducción"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:118
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:159
 msgid "An error occured saving the project:\n"
 msgstr "Ocurrió un error al guardar el proyecto:\n"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:119
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:160
 msgid ""
 "The video file and a backup of the project has been saved. Try to import it "
 "later:\n"
@@ -2082,11 +2050,11 @@ msgstr ""
 "Se han guardado el archivo de vídeo y el respaldo del proyecto. Inténtelo "
 "importar más tarde:\n"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:147
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:188
 msgid "Error importing project:"
 msgstr "Error al importar el proyecto:"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:156
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:197
 msgid ""
 "This project doesn't have any file associated.\n"
 "Select one in the next window"
@@ -2094,31 +2062,31 @@ msgstr ""
 "Este proyecto no tiene ningún archivo asociado.\n"
 "Seleccione uno en la siguiente ventana"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:158
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:199
 msgid "Select a video file"
 msgstr "Seleccionar un archivo de vídeo"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:161
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:202
 msgid "Could not import project, you need a video file"
 msgstr "No se pudo importar el proyecto, necesita un archivo de vídeo"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:176
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:217
 msgid "A project already exists for the file:"
 msgstr "Un proyecto ya existe para este archivo:"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:178
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:219
 msgid "Do you want to overwrite it?"
-msgstr "¿Quiere sobreescribirlo?"
+msgstr "¿Quiere sobrescribirlo?"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:186
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:227
 msgid "Project successfully imported."
 msgstr "Proyecto importado satisfactoriamente"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:197
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:238
 msgid "The file associated to this project doesn't exist."
 msgstr "El archivo asociado a este proyecto no existe."
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:198
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:239
 msgid ""
 "If the location of the file has changed try to edit it with the database "
 "manager."
@@ -2126,59 +2094,54 @@ msgstr ""
 "Si el archivo ha sido cambiado de sitio, intente editarlo con el gestor de "
 "proyectos"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:206
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:247
 msgid "An error occurred opening this project:"
 msgstr "Ocurrió un error al abrir este proyecto:"
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:266
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:307
 msgid "Creating video thumbnails. This can take a while."
 msgstr "Creando las miniaturas del vídeo. Esto puede llevar un tiempo."
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:341
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:382
 msgid "No capture devices were found."
 msgstr "No se encontraron dispositivos de captura."
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:380
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:421
 msgid "You are opening a live project without any video file associated yet."
 msgstr "Está abriendo un proyecto «live» sin un archivo de vídeo asociado."
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:381
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:422
 msgid "Select a video file in the next step."
 msgstr "Seleccione un archivo de vídeo en el siguiente paso."
 
-#: ../LongoMatch.Services/Services/ProjectsManager.cs:396
+#: ../LongoMatch.Services/Services/ProjectsManager.cs:437
 msgid "Save project"
 msgstr "Guardar proyecto"
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:157
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:186
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:158
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:181
 msgid "Error rendering job: "
 msgstr "Error al renderizar el trabajo: "
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:164
-msgid "An error has occurred in the video renderer."
-msgstr "Ocurrió un error en el renderizador de vídeo."
-
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:165
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:314
-msgid "Please, try again."
-msgstr "Inténtelo de nuevo."
-
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:265
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:260
 msgid "Rendering"
 msgstr "Renderizando"
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:270
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:265
 msgid "Rendering queue"
 msgstr "Cola de renderizado"
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:271
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:266
 msgid "Pending"
 msgstr "Pendiente"
 
-#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:313
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:277
 msgid "An error has occurred in the video editor."
 msgstr "Ocurrió un error en el editor de vídeo."
+
+#: ../LongoMatch.Services/Services/RenderingJobsManager.cs:278
+msgid "Please, try again."
+msgstr "Inténtelo de nuevo."
 
 #: ../LongoMatch.Services/Services/TemplatesService.cs:64
 msgid "Local team players"
@@ -2196,6 +2159,30 @@ msgstr "Jugadores de ambos equipos"
 #: ../LongoMatch.Services/Services/TemplatesService.cs:232
 msgid "A template already exists with the name: "
 msgstr "Ya existe una plantilla con el nombre: "
+
+#~ msgid "Stop"
+#~ msgstr "Fin"
+
+#~ msgid "Cancel"
+#~ msgstr "Cancelar"
+
+#~ msgid "Tag new play"
+#~ msgstr "Etiquetar jugada nueva"
+
+#~ msgid "OS X Source"
+#~ msgstr "Origen OS X"
+
+#~ msgid "DirectShow Source"
+#~ msgstr "Origen «DirectShow»"
+
+#~ msgid "Unknown"
+#~ msgstr "Desconocido"
+
+#~ msgid "Default device"
+#~ msgstr "Dispositivo predeterminado"
+
+#~ msgid "An error has occurred in the video renderer."
+#~ msgstr "Ocurrió un error en el renderizador de vídeo."
 
 #~ msgid "Enable sound (experimental)"
 #~ msgstr "Activar sonido (experimental)"
