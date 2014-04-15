@@ -43,6 +43,38 @@ namespace Tests.Core
 			Point p2 = new Point (1, 2);
 			Assert.AreEqual (p1, p2);
 		}
+		
+		[Test()]
+		public void TestDistance ()
+		{
+			Point p1 = new Point (5, 5);
+			Point p2 = new Point (0, 0);
+			
+			Assert.AreEqual (Math.Sqrt (50), p1.Distance (p2));
+			
+			p2 = new Point (5, 10);
+			Assert.AreEqual (5, p1.Distance (p2));
+			p1 = new Point (2, 10); 
+			Assert.AreEqual (3, p1.Distance (p2));
+		}
+		
+		[Test()]
+		public void TestNormalize ()
+		{
+			Point p1 = new Point (3, 5);
+			Point p2 = p1.Normalize (100, 100);
+			Assert.AreEqual ((double)p1.X / 100, p2.X);
+			Assert.AreEqual ((double)p1.Y / 100, p2.Y);
+		}
+		
+		[Test()]
+		public void TestDenormalize ()
+		{
+			Point p1 = new Point (0.2, 0.5);
+			Point p2 = p1.Denormalize (100, 100);
+			Assert.AreEqual ((double)p1.X * 100, p2.X);
+			Assert.AreEqual ((double)p1.Y * 100, p2.Y);
+		}
 
 	}
 }

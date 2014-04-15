@@ -55,54 +55,5 @@ namespace LongoMatch.Common
 		}
 	}
 	
-	[Serializable]
-	public class Point {
-
-		public Point (double x, double y) {
-			X = x;
-			Y = y;
-		}
-		
-		public double X {
-			get;
-			set;
-		}
-		
-		public double Y {
-			get;
-			set;
-		}
-		
-		public double Distance (Point p) {
-			return Math.Sqrt (Math.Pow (this.X - p.X, 2) - Math.Pow (this.Y - Y, 2));
-		}
-
-		public override string ToString ()
-		{
-			return string.Format ("[Point: X={0}, Y={1}]", X, Y);
-		}
-		
-		public override bool Equals (object obj)
-		{
-			Point p = obj as Point;
-			if (p == null)
-				return false;
-				
-			return p.X == X && p.Y == Y;
-		}
-		
-		public override int GetHashCode ()
-		{
-			return (X.ToString() + "-" + Y.ToString()).GetHashCode();
-		}
-		
-		public static bool operator < (Point p1, Point p2) {
-			return p1.X < p2.X && p1.Y < p2.Y;
-		}
-		
-		public static bool operator > (Point p1, Point p2) {
-			return p1.X > p2.X && p1.Y > p2.Y;
-		}
-	}
 }
 

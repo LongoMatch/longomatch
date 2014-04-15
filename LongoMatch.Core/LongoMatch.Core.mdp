@@ -100,7 +100,6 @@
     <File subtype="Code" buildaction="Compile" name="Stats/GameUnitsStats.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/PlaysFilter.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/Multimedia/IRemuxer.cs" />
-    <File subtype="Code" buildaction="Compile" name="Common/Coordinates.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/Multimedia/IVideoConverter.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/SysInfo.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/IDataBaseManager.cs" />
@@ -127,6 +126,8 @@
     <File subtype="Code" buildaction="Compile" name="Store/Drawables/Rectangle.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Drawables/Selection.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Drawables/Angle.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/Coordinates.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/Point.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Drawables/Circle.cs" />
   </Contents>
   <References>
