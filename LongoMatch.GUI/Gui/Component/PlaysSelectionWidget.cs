@@ -107,6 +107,18 @@ namespace LongoMatch.Gui.Component
 		}
 		#endregion
 		
+		void DisableFocus (Container w) {
+			w.CanFocus = false;
+			foreach (Widget child in w.AllChildren) {
+				Console.WriteLine (child);
+				if (child is Container) {
+					DisableFocus (child as Container);
+				} else {
+					child.CanFocus = false;
+				}
+			}
+		}
+
 		void AddFilters() {
 			ScrolledWindow s1 = new ScrolledWindow();
 			ScrolledWindow s2 = new ScrolledWindow();
