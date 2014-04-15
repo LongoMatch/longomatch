@@ -23,6 +23,7 @@ using Newtonsoft.Json;
 using LongoMatch.Common;
 using LongoMatch.Store;
 using System.IO;
+using Color = System.Drawing.Color;
 
 namespace Tests.Core
 {

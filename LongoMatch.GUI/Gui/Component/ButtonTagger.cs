@@ -22,6 +22,7 @@ using Gdk;
 using LongoMatch.Common;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
+using Color = Gdk.Color;
 
 namespace LongoMatch.Gui.Component
 {

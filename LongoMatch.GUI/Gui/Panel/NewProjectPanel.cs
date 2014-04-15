@@ -36,6 +36,7 @@ using LongoMatch.Utils;
 using LongoMatch.Interfaces.GUI;
 
 using Device = LongoMatch.Common.Device;
+using Color = Gdk.Color;
 
 namespace LongoMatch.Gui.Panel
 {

@@ -19,9 +19,54 @@ using System;
 
 namespace LongoMatch.Common
 {
+	public class Color
+	{
+		public Color (short r, short g, short b, short a)
+		{
+			R = r;
+			G = g;
+			B = b;
+			A = a;
+		}
+		
+		public short R {
+			get;
+			set;
+		}
+		
+		public short G {
+			get;
+			set;
+		}
+		
+		public short B {
+			get;
+			set;
+		}
+		
+		public short A {
+			get;
+			set;
+		}
+		
+		public override bool Equals (object obj)
+		{
+			Color c = obj as Color;
+			if (c == null) {
+				return false;
+			}
+			return c.R == R && c.G == G && c.B == B && c.A == A;
+		}
+		
+		public override int GetHashCode ()
+		{
+			return (Int32)R<<24 | (Int32)G<<16 | (Int32)B<<8 | (Int32)A;
+		}
+	}
+
 	public class ColorHelper
 	{
-		
+	
 		static public ushort ByteToShort (Byte val) {
 			var ret = (ushort) (((float)val) / byte.MaxValue * ushort.MaxValue);
 			return ret;

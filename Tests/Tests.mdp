@@ -34,6 +34,7 @@
     <File subtype="Directory" buildaction="Compile" name="Services" />
     <File subtype="Code" buildaction="Compile" name="Services/TestDatabase.cs" />
     <File subtype="Code" buildaction="Compile" name="Services/TestDatabasesManager.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/TestColor.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="False" refto="nunit.core, Version=2.6.0.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />

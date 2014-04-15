@@ -22,11 +22,12 @@ using Gdk;
 using Gtk;
 using Mono.Unix;
 
-using Image = LongoMatch.Common.Image;
 using LongoMatch.Common;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
 using LongoMatch.Gui.Helpers;
+using Image = LongoMatch.Common.Image;
+using Color = Gdk.Color;
 
 namespace LongoMatch.Gui.Component
 {
