@@ -114,6 +114,7 @@ namespace LongoMatch.Gui.Component
 				if (child is Container) {
 					DisableFocus (child as Container);
 				} else {
+					if (!(child is TreeView))
 					child.CanFocus = false;
 				}
 			}
