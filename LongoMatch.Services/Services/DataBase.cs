@@ -150,13 +150,13 @@ namespace LongoMatch.DB
 				GetDBVersion();
 				GetBackupDate();
 				CheckDB();
+				count = GetAllProjects().Count;
 				try {
 					BackupDB();
 				} catch (Exception e) {
 					Log.Error("Error creating database backup");
 					Log.Exception(e);
 				}
-				count = GetAllProjects().Count;
 			} catch (DatabaseFileLockedException locked) {
 				throw new DBLockedException (locked);
 			} catch (Db4oException ex) {
@@ -193,6 +193,8 @@ namespace LongoMatch.DB
 						Log.Exception(e);
 					}
 				}
+			} catch (Exception ex) {
+				Log.Exception (ex);
 			}
 			finally
 			{
