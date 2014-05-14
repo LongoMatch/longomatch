@@ -169,23 +169,8 @@ namespace LongoMatch.Gui
 
 		#region Public methods
 
-		public void Open(string filename) {
-			ResetGui();
-			CloseSegment();
-			if (filename != this.filename) {
-				readyToSeek = false;
-				this.filename = filename;
-				try {
-					player.Open(filename);
-				}
-				catch (Exception ex) {
-					Log.Exception (ex);
-					//We handle this error async
-				}
-			} else {
-				player.Seek (new Time (0), true);
-			}
-			detachbutton.Sensitive = true;
+		public void Open (string filename) {
+			Open (filename, true);
 		}
 
 		public void Play() {
@@ -213,7 +198,6 @@ namespace LongoMatch.Gui
 			IsPlayingPrevState = false;
 			muted=false;
 			emitRateScale = true;
-			readyToSeek = false;
 		}
 
 		public void LoadPlayListPlay (PlayListPlay play, bool hasNext) {
@@ -295,6 +279,26 @@ namespace LongoMatch.Gui
 
 		#region Private methods
 
+		public void Open(string filename, bool seek) {
+			ResetGui();
+			CloseSegment();
+			if (filename != this.filename) {
+				readyToSeek = false;
+				this.filename = filename;
+				try {
+					Log.Debug ("Openning new file " + filename);
+					player.Open(filename);
+				}
+				catch (Exception ex) {
+					Log.Exception (ex);
+					//We handle this error async
+				}
+			} else if (seek) {
+				player.Seek (new Time (0), true);
+			}
+			detachbutton.Sensitive = true;
+		}
+
 		bool SegmentLoaded {
 			get {
 				return segment.Start.MSeconds != -1;
@@ -302,17 +306,22 @@ namespace LongoMatch.Gui
 		}
 		
 		void LoadSegment (string filename, Time start, Time stop, float rate = 1) {
-			Open (filename);
+			Log.Debug (String.Format ("Loading player segment {0} {1} {2} {3}",
+			           filename, start, stop, rate));
+			Open (filename, false);
 			segment.Start = start;
 			segment.Stop = stop;
 			rate = rate == 0 ? 1 : rate;
 			closebutton.Show();
 			if (readyToSeek) {
+				Log.Debug ("Player is ready to seek, seeking to " +
+				           start.ToMSecondsString());
 				SetScaleValue ((int) (rate * SCALE_FPS));
 				player.Rate = (double) rate;
 				player.Seek (start, true);
 				player.Play ();
 			} else {
+				Log.Debug ("Delaying seek until player is ready");
 				pendingSeek = new object[3] {start, stop, rate};
 			}
 		}
