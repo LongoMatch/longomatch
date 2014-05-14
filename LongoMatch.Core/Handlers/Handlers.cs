@@ -91,7 +91,7 @@ namespace LongoMatch.Handlers
 	/* Draw tool changed */
 	public delegate void DrawToolChangedHandler(DrawTool drawTool);
 	/* Paint color changed */
-	public delegate void ColorChangedHandler(System.Drawing.Color color);
+	public delegate void ColorChangedHandler(Color color);
 	/* Paint line width changed */
 	public delegate void LineWidthChangedHandler(int width);
 	/* Toggle widget visibility */

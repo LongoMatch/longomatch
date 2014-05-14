@@ -221,7 +221,7 @@ namespace LongoMatch.Gui.Component
 		protected virtual void OnColorbutton1ColorSet(object sender, System.EventArgs e)
 		{
 			if(cat != null)
-				cat.Color= Helpers.Misc.ToDrawingColor(colorbutton1.Color);
+				cat.Color= Helpers.Misc.ToLgmColor(colorbutton1.Color);
 		}
 
 		protected virtual void OnLeadTimeChanged(object sender, System.EventArgs e)

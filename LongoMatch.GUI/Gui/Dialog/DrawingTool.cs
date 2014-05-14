@@ -70,7 +70,7 @@ namespace LongoMatch.Gui.Dialog
 			drawingwidget1.LineWidth = width;
 		}
 
-		protected virtual void OnDrawingtoolbox1ColorChanged(System.Drawing.Color color)
+		protected virtual void OnDrawingtoolbox1ColorChanged (LongoMatch.Common.Color color)
 		{
 			drawingwidget1.LineColor = Helpers.Misc.ToGdkColor(color);
 		}
@@ -113,7 +113,7 @@ namespace LongoMatch.Gui.Dialog
 			string tempFile = System.IO.Path.GetTempFileName();
 			drawingwidget1.SaveDrawings(tempFile);
 			Pixbuf frame = new Pixbuf(tempFile);
-			play.KeyFrameDrawing = new Drawing { Pixbuf= new Image(frame), Render = stopTime};
+			play.KeyFrameDrawing = new LongoMatch.Store.Drawing { Pixbuf= new Image(frame), Render = stopTime};
 			drawingwidget1.SaveAll(tempFile);
 			frame.Dispose();
 			play.Miniature = new Image(new Pixbuf(tempFile));

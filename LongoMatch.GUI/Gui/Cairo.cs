@@ -17,6 +17,7 @@
 //
 using System;
 using Cairo;
+using LongoMatch.Gui.Helpers;
 
 
 namespace LongoMatch.Common
@@ -73,15 +74,15 @@ namespace LongoMatch.Common
 		}
 
 		public static Cairo.Color RGBToCairoColor(Gdk.Color gdkColor) {
-			return new Cairo.Color (ColorHelper.ShortToDouble (gdkColor.Red),
-			                        ColorHelper.ShortToDouble (gdkColor.Green),
-			                        ColorHelper.ShortToDouble (gdkColor.Blue));
+			return new Cairo.Color (Misc.ShortToDouble (gdkColor.Red),
+			                        Misc.ShortToDouble (gdkColor.Green),
+			                        Misc.ShortToDouble (gdkColor.Blue));
 		}
 		
 		public static Cairo.Color ColorFromRGB (byte r, byte g, byte b) {
-			return new Cairo.Color (ColorHelper.ByteToDouble (r),
-			                        ColorHelper.ByteToDouble (g),
-			                        ColorHelper.ByteToDouble (b));
+			return new Cairo.Color (Misc.ByteToDouble (r),
+			                        Misc.ByteToDouble (g),
+			                        Misc.ByteToDouble (b));
 		}
 	}
 }

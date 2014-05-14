@@ -16,14 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Drawing;
 using NUnit.Framework;
 using Newtonsoft.Json;
 
 using LongoMatch.Common;
 using LongoMatch.Store;
 using System.IO;
-using Color = System.Drawing.Color;
 
 namespace Tests.Core
 {
@@ -39,7 +37,7 @@ namespace Tests.Core
 			StreamReader reader;
 			
 			cat = new Category();
-			cat.Color = Color.AliceBlue;
+			cat.Color = new Color (255, 0, 0);
  			cat.HotKey = new HotKey {Key=2, Modifier=4};
 			cat.Name = "test";
 			cat.Position = 2;
@@ -78,9 +76,9 @@ namespace Tests.Core
 			Assert.AreEqual (cat.FieldPositionIsDistance, newcat.FieldPositionIsDistance);
 			Assert.AreEqual (cat.HalfFieldPositionIsDistance, newcat.HalfFieldPositionIsDistance);
 			Assert.AreEqual (cat.HotKey, newcat.HotKey);
-			Assert.AreEqual (newcat.Color.R, Color.AliceBlue.R);
-			Assert.AreEqual (newcat.Color.G, Color.AliceBlue.G);
-			Assert.AreEqual (newcat.Color.B, Color.AliceBlue.B);
+			Assert.AreEqual (255, newcat.Color.R);
+			Assert.AreEqual (0, newcat.Color.G);
+			Assert.AreEqual (0, newcat.Color.B);
 			Assert.AreEqual (newcat.SubCategories.Count, 1);
 			Assert.AreEqual (newcat.SubCategories[0].Name, "TestSubcat");
 		}

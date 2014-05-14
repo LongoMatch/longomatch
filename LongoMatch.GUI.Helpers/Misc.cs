@@ -22,6 +22,8 @@ using Gdk;
 using Mono.Unix;
 
 using LongoMatch.Common;
+using LColor = LongoMatch.Common.Color; 
+using Color = Gdk.Color;
 
 namespace LongoMatch.Gui.Helpers
 {
@@ -84,15 +86,25 @@ namespace LongoMatch.Gui.Helpers
 			}
 		}
 		
-		public static Gdk.Color ToGdkColor(System.Drawing.Color color) {
-			return new Gdk.Color(color.R, color.G, color.B);
+		static public byte ShortToByte (ushort val) {
+			return (byte) (((float)val) / ushort.MaxValue * byte.MaxValue);
 		}
 		
-		public static System.Drawing.Color ToDrawingColor(Gdk.Color color) {
-			return System.Drawing.Color.FromArgb(
-				ColorHelper.ShortToByte(color.Red),
-				ColorHelper.ShortToByte(color.Green),
-				ColorHelper.ShortToByte(color.Blue));
+		static public double ShortToDouble (ushort val) {
+			return (double) (val) / ushort.MaxValue;
+		}
+		
+		static public double ByteToDouble (byte val) {
+			return (double) (val) / byte.MaxValue;
+		}
+
+		public static Color ToGdkColor(LColor color) {
+			return new Color (ShortToByte (color.R), ShortToByte (color.G),
+			                  ShortToByte (color.G));
+		}
+		
+		public static LColor ToLgmColor(Color color) {
+			return new LColor (color.Red, color.Green, color.Blue);
 		}
 		
 		public static ListStore FillImageFormat (ComboBox formatBox, VideoStandard def) {

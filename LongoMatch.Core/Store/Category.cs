@@ -19,7 +19,6 @@
 //
 
 using System;
-using System.Drawing;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Mono.Unix;
@@ -75,7 +74,7 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// A color to identify plays in this category
 		/// </summary>
-		public  System.Drawing.Color Color {
+		public  Color Color {
 			get;
 			set;
 		}
@@ -167,10 +166,9 @@ namespace LongoMatch.Store
 			SubCategories = (List<ISubCategory>)info.GetValue("subcategories", typeof(List<ISubCategory>));
 			Position = (Int32) info.GetValue("position", typeof (Int32));
 			SortMethod = (SortMethodType)info.GetValue("sort_method", typeof(SortMethodType));
-			Color = Color.FromArgb(
-				ColorHelper.ShortToByte((ushort)info.GetValue("red", typeof(ushort))),
-				ColorHelper.ShortToByte((ushort)info.GetValue("green", typeof(ushort))),
-				ColorHelper.ShortToByte((ushort)info.GetValue("blue", typeof(ushort))));
+			Color = new Color ((ushort)info.GetValue("red", typeof(ushort)),
+			                   (ushort)info.GetValue("green", typeof(ushort)),
+			                   (ushort)info.GetValue("blue", typeof(ushort)));
 			try {
 				TagFieldPosition = (bool) info.GetValue("tagfieldpos", typeof (bool));
 			} catch {
@@ -208,9 +206,9 @@ namespace LongoMatch.Store
 			info.AddValue("position", Position);
 			info.AddValue("subcategories", SubCategories);
 			/* Convert to ushort for backward compatibility */
-			info.AddValue("red", ColorHelper.ByteToShort(Color.R));
-			info.AddValue("green", ColorHelper.ByteToShort(Color.G));
-			info.AddValue("blue", ColorHelper.ByteToShort(Color.B));
+			info.AddValue("red", Color.R);
+			info.AddValue("green", Color.G);
+			info.AddValue("blue", Color.B);
 			info.AddValue("sort_method", SortMethod);
 			info.AddValue("tagfieldpos", TagFieldPosition);
 			info.AddValue("taghalffieldpos", TagHalfFieldPosition);

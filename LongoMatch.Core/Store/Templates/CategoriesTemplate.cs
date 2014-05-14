@@ -19,7 +19,6 @@
 //
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using Newtonsoft.Json;
 
@@ -28,7 +27,6 @@ using LongoMatch.Common;
 using LongoMatch.Interfaces;
 
 using Image = LongoMatch.Common.Image;
-using Color = System.Drawing.Color;
 
 namespace LongoMatch.Store.Templates
 {
@@ -179,7 +177,7 @@ namespace LongoMatch.Store.Templates
 		}	
 		
 		public Category AddDefaultItem (int index) {
-			Color c = Color.FromArgb(255, 0, 0);
+			Color c = new Color (255, 0, 0);
 			HotKey h = new HotKey();
 			
 			
