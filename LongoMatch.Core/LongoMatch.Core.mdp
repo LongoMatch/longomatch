@@ -129,6 +129,13 @@
     <File subtype="Code" buildaction="Compile" name="Store/Coordinates.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Point.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Drawables/Circle.cs" />
+    <File subtype="Code" buildaction="Compile" name="Common/Area.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Interfaces/Drawing" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/Drawing/IDrawingToolkit.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/Drawing/IWidget.cs" />
+    <File subtype="Code" buildaction="Compile" name="Handlers/Drawing.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/Drawing/IDrawable.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/Drawing/ICanvasObject.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

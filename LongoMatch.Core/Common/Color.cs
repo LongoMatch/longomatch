@@ -21,7 +21,7 @@ namespace LongoMatch.Common
 {
 	public class Color
 	{
-		public Color (short r, short g, short b, short a)
+		public Color (ushort r, ushort g, ushort b, ushort a=ushort.MaxValue)
 		{
 			R = r;
 			G = g;
@@ -29,22 +29,22 @@ namespace LongoMatch.Common
 			A = a;
 		}
 		
-		public short R {
+		public ushort R {
 			get;
 			set;
 		}
 		
-		public short G {
+		public ushort G {
 			get;
 			set;
 		}
 		
-		public short B {
+		public ushort B {
 			get;
 			set;
 		}
 		
-		public short A {
+		public ushort A {
 			get;
 			set;
 		}
@@ -62,27 +62,20 @@ namespace LongoMatch.Common
 		{
 			return (Int32)R<<24 | (Int32)G<<16 | (Int32)B<<8 | (Int32)A;
 		}
-	}
-
-	public class ColorHelper
-	{
-	
-		static public ushort ByteToShort (Byte val) {
+		
+		static public ushort ByteToUShort (Byte val) {
 			var ret = (ushort) (((float)val) / byte.MaxValue * ushort.MaxValue);
 			return ret;
 		}
-		
-		static public byte ShortToByte (ushort val) {
-			return (byte) (((float)val) / ushort.MaxValue * byte.MaxValue);
+
+		static Color ColorFromRGB (byte r, byte g, byte b) {
+			return new Color (ByteToUShort (r), ByteToUShort (g), ByteToUShort (b));
 		}
 		
-		static public double ShortToDouble (ushort val) {
-			return (double) (val) / ushort.MaxValue;
-		}
 		
-		static public double ByteToDouble (byte val) {
-			return (double) (val) / byte.MaxValue;
-		}
+		static public Color Black = new Color (0, 0, 0);
+		static public Color White = new Color (ushort.MaxValue, ushort.MaxValue, ushort.MaxValue);
+		static public Color Grey = ColorFromRGB (190, 190, 190);
 	}
 }
 

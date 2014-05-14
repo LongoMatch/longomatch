@@ -176,4 +176,36 @@ namespace LongoMatch.Common
 		DoubleArrow,
 		Rounded
 	}
+	
+	public enum FontSlant {
+		Italic,
+		Normal,
+		Oblique,
+	}
+	
+	public enum FontWeight {
+		Normal,
+		Bold
+	}
+	
+	public enum ButtonType {
+		None,
+		Left,
+		Center,
+		Right
+	}
+	
+	public enum ButtonModifier {
+		None,
+		Shift,
+		Control
+	}
+	
+	public enum CursorType {
+		Arrow,
+		DoubleArrow,
+		Selection,
+		Cross,
+	}
 }
+
