@@ -55,7 +55,7 @@ namespace LongoMatch.Services
 		{
 			openedProject = project;
 			if (project != null) {
-				playlistWidget = analysisWindow.Playlist;
+				//playlistWidget = analysisWindow.Playlist;
 				player = analysisWindow.Player;
 				if (this.analysisWindow != analysisWindow) {
 					BindEvents(analysisWindow);

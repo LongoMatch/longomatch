@@ -38,10 +38,7 @@
     <File subtype="Code" buildaction="Compile" name="Gui/Component/PlayListWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/ProjectListWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/TreeView/CategoriesTreeView.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Component/TimeLineWidget.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Component/TimeScale.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/VideoEditionProperties.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Component/TimeReferenceWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/CategoryProperties.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/PlaysListTreeWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/DrawingWidget.cs" />
@@ -76,7 +73,6 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.BusyDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/TreeView/ListTreeViewBase.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Component/TimelineLabelsWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/TreeView/SubCategoriesTreeView.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/SubCategoryTagsEditor.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs" />
@@ -108,13 +104,7 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.GameUnitWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/GameUnitsTagger.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.GameUnitsTagger.cs" />
-    <File subtype="Directory" buildaction="Compile" name="Gui/Base" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Base/TimeScaleBase.cs" />
     <File subtype="Directory" buildaction="Compile" name="Gui/Component" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Component/GameUnitTimeScale.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Base/TimelineWidgetBase.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Base.TimelineWidgetBase.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Component/GameUnitsTimelineWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/GUIToolkit.cs" />
     <File subtype="Directory" buildaction="Compile" name="." />
     <File subtype="Directory" buildaction="Compile" name=".." />
@@ -196,6 +186,8 @@
     <File subtype="Code" buildaction="Compile" name="Gui/Component/BackgroundWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Panel/PreferencesPanel.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Panel.PreferencesPanel.cs" />
+    <File subtype="Code" buildaction="Compile" name="Gui/Component/Timeline.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.Timeline.cs" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
@@ -213,6 +205,8 @@
     <ProjectReference type="Gac" localcopy="True" refto="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <ProjectReference type="Project" localcopy="True" refto="OxyPlotMono" />
     <ProjectReference type="Project" localcopy="True" refto="LongoMatch.GUI.Helpers" />
+    <ProjectReference type="Project" localcopy="True" refto="LongoMatch.Drawing" />
+    <ProjectReference type="Project" localcopy="True" refto="LongoMatch.Drawing.Cairo" />
   </References>
   <LanguageParameters ApplicationIcon="." CodePage="65001" ctype="CSharpProjectParameters" />
 </Project>

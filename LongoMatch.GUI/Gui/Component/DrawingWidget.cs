@@ -22,6 +22,8 @@ using Gtk;
 using Cairo;
 using LongoMatch.Common;
 
+using CursorType = Gdk.CursorType;
+
 
 namespace LongoMatch.Gui.Component
 {

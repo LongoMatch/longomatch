@@ -107,32 +107,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.TimeScale" palette-category="General" allow-children="false" base-type="Gtk.DrawingArea">
-    <itemgroups />
-    <signals>
-      <itemgroup label="TimeScale Signals">
-        <signal name="NewMarkAtFrameEvent" />
-        <signal name="TimeNodeChanged" />
-        <signal name="TimeNodeSelected" />
-        <signal name="TimeNodeDeleted" />
-        <signal name="PlayListNodeAdded" />
-        <signal name="SnapshotSeries" />
-        <signal name="TagPlay" />
-        <signal name="RenderPlaylist" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.TimeReferenceWidget" palette-category="General" allow-children="false" base-type="Gtk.DrawingArea">
-    <itemgroups>
-      <itemgroup label="TimeReferenceWidget Properties">
-        <property name="CurrentFrame" />
-        <property name="FrameRate" />
-        <property name="Scroll" />
-        <property name="PixelRatio" />
-      </itemgroup>
-    </itemgroups>
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Component.CategoryProperties" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>
@@ -235,26 +209,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Base.TimeScaleBase" palette-category="General" allow-children="false" base-type="Gtk.DrawingArea">
-    <itemgroups>
-      <itemgroup label="TimeScaleBase Properties">
-        <property name="PixelRatio" />
-        <property name="CurrentFrame" />
-      </itemgroup>
-    </itemgroups>
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.GameUnitTimeScale" palette-category="General" allow-children="false" base-type="Gtk.DrawingArea">
-    <itemgroups />
-    <signals>
-      <itemgroup label="GameUnitTimeScale Signals">
-        <signal name="UnitChanged" />
-        <signal name="UnitSelected" />
-        <signal name="UnitDeleted" />
-        <signal name="UnitAdded" />
-      </itemgroup>
-    </signals>
-  </object>
   <object type="LongoMatch.Gui.Component.PlayersTagger" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
@@ -344,7 +298,6 @@
         <signal name="NewTagStopEvent" />
         <signal name="NewTagCancelEvent" />
         <signal name="PlaySelectedEvent" />
-        <signal name="NewTagAtFrameEvent" />
         <signal name="TagPlayEvent" />
         <signal name="PlaysDeletedEvent" />
         <signal name="TimeNodeChanged" />
@@ -363,6 +316,7 @@
         <signal name="UnitDeleted" />
         <signal name="UnitAdded" />
         <signal name="KeyPressed" />
+        <signal name="NewTagAtPosEvent" />
       </itemgroup>
     </signals>
   </object>
@@ -514,6 +468,21 @@
     <signals>
       <itemgroup label="IPanel Signals">
         <signal name="BackEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.Timeline" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="Timeline Signals">
+        <signal name="TimeNodeChanged" />
+        <signal name="TimeNodeSelected" />
+        <signal name="TimeNodeDeleted" />
+        <signal name="PlayListNodeAdded" />
+        <signal name="SnapshotSeries" />
+        <signal name="TagPlay" />
+        <signal name="RenderPlaylist" />
+        <signal name="NewTagAtPosEvent" />
       </itemgroup>
     </signals>
   </object>

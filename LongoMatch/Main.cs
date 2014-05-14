@@ -35,6 +35,7 @@ using LongoMatch.Video;
 using LongoMatch.Multimedia;
 using LongoMatch.Multimedia.Utils;
 using LongoMatch.Gui.Helpers;
+using LongoMatch.Drawing.Cairo;
 
 namespace LongoMatch
 
@@ -61,6 +62,7 @@ namespace LongoMatch
 			try {
 				AddinsManager manager = new AddinsManager(Config.PluginsConfigDir, Config.PluginsDir);
 				manager.LoadConfigModifierAddins();
+			    Config.DrawingToolkit = new CairoBackend ();
 			    IMultimediaToolkit multimediaToolkit = new MultimediaToolkit();
 			    Config.MultimediaToolkit = multimediaToolkit;
 			    GUIToolkit guiToolkit = new GUIToolkit(version);

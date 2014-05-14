@@ -52,8 +52,6 @@
     <File subtype="Code" buildaction="Compile" name="Utils/Seeker.cs" />
     <File subtype="Code" buildaction="Compile" name="Remuxer/MpegRemuxer.cs" />
     <File subtype="Code" buildaction="Compile" name="Utils/MultimediaFactory.cs" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="gtk-gui/gui.stetic" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/generated.cs" />
     <File subtype="Code" buildaction="Compile" name="Utils/GtkHelpers.cs" />
     <File subtype="Directory" buildaction="Compile" name="Player" />
     <File subtype="Code" buildaction="Compile" name="Player/GstPlayer.cs" />

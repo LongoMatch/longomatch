@@ -93,7 +93,7 @@ namespace LongoMatch.Services
 			analysisWindow.NewTagStartEvent += OnNewPlayStart;
 			analysisWindow.NewTagStopEvent += OnNewPlayStop;
 			analysisWindow.NewTagCancelEvent += OnNewPlayCancel;
-			analysisWindow.NewTagAtFrameEvent += OnNewTagAtFrame;
+			analysisWindow.NewTagAtPosEvent += OnNewTagAtPos;
 			analysisWindow.TimeNodeChanged += OnTimeNodeChanged;
 			analysisWindow.PlaysDeletedEvent += OnPlaysDeleted;
 			analysisWindow.PlaySelectedEvent += OnPlaySelected;
@@ -223,8 +223,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		protected virtual void OnNewTagAtFrame(Category category, int frame) {
-			Time pos = new Time { MSeconds = frame*1000/openedProject.Description.File.Fps};
+		protected virtual void OnNewTagAtPos (Category category, Time pos) {
 			player.CloseSegment();
 			player.Seek (pos, true);
 			ProcessNewTag(category,pos);

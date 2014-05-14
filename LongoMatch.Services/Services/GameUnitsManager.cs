@@ -57,7 +57,6 @@ namespace LongoMatch.Services
 			gameUnitsStarted.Clear();
 			
 			fps = openedProject.Description.File.Fps;
-			analysisWindow.UpdateGameUnits(openedProject.GameUnits);
 		}
 
 		private void StartGameUnit(GameUnit gameUnit) {

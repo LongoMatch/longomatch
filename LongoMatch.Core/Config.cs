@@ -34,6 +34,7 @@ namespace LongoMatch
 		/* State */
 		public static IGUIToolkit GUIToolkit;
 		public static IMultimediaToolkit MultimediaToolkit;
+		public static IDrawingToolkit DrawingToolkit;
 		public static ITeamTemplatesProvider TeamTemplatesProvider;
 		public static ICategoriesTemplatesProvider CategoriesTemplatesProvider;
 		public static IDataBaseManager DatabaseManager;

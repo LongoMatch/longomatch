@@ -42,7 +42,7 @@ namespace LongoMatch.Gui.Component
 		public event NewTagStopHandler NewTagStopEvent;
 		public event NewTagCancelHandler NewTagCancelEvent;
 		public event PlaySelectedHandler PlaySelectedEvent;
-		public event NewTagAtFrameHandler NewTagAtFrameEvent;
+		public event NewTagAtPosHandler NewTagAtPosEvent;
 		public event TagPlayHandler TagPlayEvent;
 		public event PlaysDeletedHandler PlaysDeletedEvent;
 		public event TimeNodeChangedHandler TimeNodeChanged;
@@ -72,10 +72,7 @@ namespace LongoMatch.Gui.Component
 		static Project openedProject;
 		ProjectType projectType;
 		TimeNode selectedTimeNode;		
-		TimeLineWidget timeline;
-		bool gameUnitsActionVisible, detachedPlayer;
-		GameUnitsTimelineWidget guTimeline;
-		IGUIToolkit guiToolKit;
+		bool detachedPlayer;
 		Gtk.Window playerWindow;
 		VideoAnalysisMode analysisMode;
 		
@@ -84,12 +81,6 @@ namespace LongoMatch.Gui.Component
 			this.Build ();
 			projectType = ProjectType.None;
 
-			timeline = new TimeLineWidget();
-			downbox.PackStart(timeline, true, true, 0);
-			
-			guTimeline = new GameUnitsTimelineWidget ();
-			downbox.PackStart(guTimeline, true, true, 0);
-			
 			playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
 			playercapturer.Tick += OnTick;
 			playercapturer.Detach += DetachPlayer;
@@ -121,7 +112,7 @@ namespace LongoMatch.Gui.Component
 		
 		public IPlaylistWidget Playlist{
 			get {
-				return playlist;
+				return null;
 			}
 		}
 		
@@ -146,13 +137,6 @@ namespace LongoMatch.Gui.Component
 				timeline.Visible = value && AnalysisMode == VideoAnalysisMode.Timeline;
 				buttonswidget.Visible = value && (AnalysisMode == VideoAnalysisMode.ManualTagging ||
 				                                  AnalysisMode == VideoAnalysisMode.PredefinedTagging);
-				if (Config.UseGameUnits) {
-					guTimeline.Visible = value && AnalysisMode == VideoAnalysisMode.GameUnits;
-					gameunitstaggerwidget1.Visible = value && (
-						AnalysisMode == VideoAnalysisMode.GameUnits ||
-						AnalysisMode == VideoAnalysisMode.PredefinedTagging ||
-						AnalysisMode == VideoAnalysisMode.ManualTagging);
-				}
 				if(value) {
 					SetTagsBoxVisibility (false);
 				} else {
@@ -162,28 +146,17 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		public bool PlaylistVisible {
-			set {
-				SetPlaylistVisibility (value);
-				playsSelection.PlayListLoaded = value;
-			}
-		}
-		
 		public VideoAnalysisMode AnalysisMode {
 			set {
 				buttonswidget.Visible = (value == VideoAnalysisMode.ManualTagging) ||
 					(value == VideoAnalysisMode.PredefinedTagging);
 				timeline.Visible = value == VideoAnalysisMode.Timeline;
-				if (Config.UseGameUnits) {
-					guTimeline.Visible = value == VideoAnalysisMode.GameUnits;
-					gameunitstaggerwidget1.Visible = buttonswidget.Visible || guTimeline.Visible;
-				}
 				if(value == VideoAnalysisMode.ManualTagging)
 					buttonswidget.Mode = TagMode.Free;
 				else if (value == VideoAnalysisMode.ManualTagging)
 					buttonswidget.Mode = TagMode.Predifined;
 				analysisMode = value;
-				
+				timeline.Visible = true;
 			}
 			protected get {
 				return analysisMode;
@@ -214,17 +187,6 @@ namespace LongoMatch.Gui.Component
 			timeline.QueueDraw();
 		}
 		
-		public void UpdateGameUnits (GameUnitsList gameUnits) {
-			gameUnitsActionVisible = gameUnits != null && gameUnits.Count > 0;
-			//GameUnitsViewAction.Sensitive = gameUnitsActionVisible;
-			if (gameUnits == null) {
-				gameunitstaggerwidget1.Visible = false;
-				return;
-			}
-			gameunitstaggerwidget1.Visible = true;
-			gameunitstaggerwidget1.GameUnits = gameUnits;
-		}
-		
 		private void ConnectSignals() {
 			/* Adding Handlers for each event */
 
@@ -234,7 +196,7 @@ namespace LongoMatch.Gui.Component
 			
 			buttonswidget.NewMarkStopEvent += EmitNewTagStop;
 			buttonswidget.NewMarkCancelEvent += EmitNewTagCancel;
-			timeline.NewMarkEvent += EmitNewTagAtFrame;
+			timeline.NewTagAtPosEvent += EmitNewTagAtPos;
 
 			/* Connect TimeNodeChanged events */
 			timeline.TimeNodeChanged += EmitTimeNodeChanged;
@@ -255,10 +217,10 @@ namespace LongoMatch.Gui.Component
 			playsSelection.PlayCategoryChanged += EmitPlayCategoryChanged;
 
 			/* Connect playlist events */
-			playlist.PlayListNodeSelected += EmitPlayListNodeSelected;
-			playlist.NewPlaylistEvent += EmitNewPlaylist;
-			playlist.OpenPlaylistEvent += EmitOpenPlaylist;
-			playlist.SavePlaylistEvent += EmitSavePlaylist;
+//			playlist.PlayListNodeSelected += EmitPlayListNodeSelected;
+//			playlist.NewPlaylistEvent += EmitNewPlaylist;
+//			playlist.OpenPlaylistEvent += EmitOpenPlaylist;
+//			playlist.SavePlaylistEvent += EmitSavePlaylist;
 
 			/* Connect PlayListNodeAdded events */
 			playsSelection.PlayListNodeAdded += OnPlayListNodeAdded;
@@ -275,16 +237,8 @@ namespace LongoMatch.Gui.Component
 			playsSelection.SnapshotSeries += EmitSnapshotSeries;
 			timeline.SnapshotSeries += EmitSnapshotSeries;
 
-			playlist.RenderPlaylistEvent += EmitRenderPlaylist;
 			playsSelection.RenderPlaylist += EmitRenderPlaylist;
 			timeline.RenderPlaylist += EmitRenderPlaylist;
-			
-			/* Game Units event */
-			gameunitstaggerwidget1.GameUnitEvent += EmitGameUnitEvent;
-			guTimeline.UnitAdded += EmitUnitAdded;;
-			guTimeline.UnitDeleted += EmitUnitDeleted;
-			guTimeline.UnitSelected += EmitUnitSelected;
-			guTimeline.UnitChanged += EmitUnitChanged;
 			
 			playercapturer.Error += OnMultimediaError;
 			playercapturer.SegmentClosedEvent += OnSegmentClosedEvent;
@@ -318,10 +272,6 @@ namespace LongoMatch.Gui.Component
 				if (openedProject != null) {
 					buttonswidget.Visible = true;
 					timeline.Visible = true;
-					if (Config.UseGameUnits) {
-						guTimeline.Visible = true;
-						gameunitstaggerwidget1.Visible = true;
-					}
 				}
 			} else {
 				Log.Debug("Attaching player again");
@@ -347,7 +297,6 @@ namespace LongoMatch.Gui.Component
 			
 			if(projectType == ProjectType.FileProject) {
 				timeline.SetProject (project, filter);
-				guTimeline.Project = project;
 				playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
 			} else {
 				isLive = true;
@@ -378,34 +327,19 @@ namespace LongoMatch.Gui.Component
 			ShowWidgets();
 		}
 		
-		void SetPlaylistVisibility (bool visible) {
-			if (visible) {
-				righthbox.Visible = true;
-				playlist.Visible = true;
-			} else {
-				playlist.Visible = false;
-				if (!tagsvbox.Visible)
-					righthbox.Visible = false;
-			}
-		}
-		
 		void SetTagsBoxVisibility (bool visible) {
 			if (visible) {
 				righthbox.Visible = true;
 				tagsvbox.Visible = true;
 			} else {
 				tagsvbox.Visible = false;
-				if (!playlist.Visible)
-					righthbox.Visible = false;
 			}
 		}
 		
 		private void ResetGUI() {
-			bool playlistVisible = playlist.Visible;
 			playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
 			ClearWidgets();
 			HideWidgets();
-			SetPlaylistVisibility (playlistVisible);
 			SetTagsBoxVisibility (false);
 			selectedTimeNode = null;
 			if (detachedPlayer)
@@ -417,12 +351,8 @@ namespace LongoMatch.Gui.Component
 			if(analysisMode == VideoAnalysisMode.ManualTagging ||
 			   analysisMode == VideoAnalysisMode.PredefinedTagging) {
 				buttonswidget.Show();
-				gameunitstaggerwidget1.Show();
 			} else if (analysisMode == VideoAnalysisMode.Timeline) {
 				timeline.Show();
-			} else if (analysisMode == VideoAnalysisMode.GameUnits) {
-				gameunitstaggerwidget1.Show();
-				guTimeline.Show();
 			}
 		}
 
@@ -431,8 +361,6 @@ namespace LongoMatch.Gui.Component
 			SetTagsBoxVisibility (false);
 			buttonswidget.Hide();
 			timeline.Hide();
-			gameunitstaggerwidget1.Hide();
-			guTimeline.Hide();
 		}
 
 		private void ClearWidgets() {
@@ -505,11 +433,8 @@ namespace LongoMatch.Gui.Component
 			double currentPosition)
 		{
 			if (currentTime.MSeconds != 0 && timeline != null && openedProject != null) {
-				uint frame = (uint) (currentTime .MSeconds * openedProject.Description.File.Fps / 1000);
-				timeline.CurrentFrame = frame;
-				guTimeline.CurrentFrame = frame;
+				timeline.CurrentTime = currentTime;
 			}
-			gameunitstaggerwidget1.CurrentTime = currentTime;
 		}
 		
 		protected virtual void OnMultimediaError(string message)
@@ -566,9 +491,9 @@ namespace LongoMatch.Gui.Component
 				SnapshotSeriesEvent (play);
 		}
 
-		private void EmitNewTagAtFrame(Category category, int frame) {
-			if (NewTagAtFrameEvent != null)
-				NewTagAtFrameEvent(category, frame);
+		private void EmitNewTagAtPos(Category category, Time pos) {
+			if (NewTagAtPosEvent != null)
+				NewTagAtPosEvent(category, pos);
 		}
 
 		private void EmitNewTag(Category category) {

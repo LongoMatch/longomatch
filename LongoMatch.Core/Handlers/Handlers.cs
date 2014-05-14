@@ -40,7 +40,7 @@ namespace LongoMatch.Handlers
 	/* Signal cancellation of tag */
 	public delegate void NewTagCancelHandler(Category category);
 	/* A new play needs to be created at a defined frame */
-	public delegate void NewTagAtFrameHandler(Category category,int frame);
+	public delegate void NewTagAtPosHandler(Category category, Time position);
 	//A play was edited
 	public delegate void TimeNodeChangedHandler(TimeNode tNode, object val);
 	/* A list of plays needs to be deleted */
@@ -159,5 +159,7 @@ namespace LongoMatch.Handlers
 	public delegate void AnalysisModeChangedHandler (VideoAnalysisMode mode);
 	public delegate void TagSubcategoriesChangedHandler (bool tagsubcategories);
 	
+	public delegate void ShowTimelineMenuHandler (List<Play> plays, Category cat, Time time);
+
 	public delegate void BackEventHandle ();
 }

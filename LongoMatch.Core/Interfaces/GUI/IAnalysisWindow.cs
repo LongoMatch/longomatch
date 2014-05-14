@@ -29,11 +29,11 @@ namespace LongoMatch.Interfaces.GUI
 	{	
 		/* Tags */
 		event NewTagHandler NewTagEvent;
+		event NewTagAtPosHandler NewTagAtPosEvent;
 		event NewTagStartHandler NewTagStartEvent;
 		event NewTagStopHandler NewTagStopEvent;
 		event NewTagCancelHandler NewTagCancelEvent;
 		event PlaySelectedHandler PlaySelectedEvent;
-		event NewTagAtFrameHandler NewTagAtFrameEvent;
 		event TagPlayHandler TagPlayEvent;
 		event PlaysDeletedHandler PlaysDeletedEvent;
 		event TimeNodeChangedHandler TimeNodeChanged;
@@ -69,17 +69,15 @@ namespace LongoMatch.Interfaces.GUI
 		void UpdateSelectedPlay (Play play);
 		void UpdateCategories (Categories categories);
 		void DeletePlays (List<Play> plays);
-		void UpdateGameUnits (GameUnitsList gameUnits);
 		
 		bool Fullscreen {set;}
 		bool WidgetsVisible {set;}
-		bool PlaylistVisible {set;}
 		VideoAnalysisMode AnalysisMode {set;}
 		
 		IPlayerBin Player{get;}
 		ICapturerBin Capturer{get;}
-		IPlaylistWidget Playlist{get;}
 		ITemplatesService TemplatesService{set;}
+		IPlaylistWidget Playlist {get;}
 	}
 }
 
