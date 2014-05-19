@@ -263,7 +263,7 @@
         <property name="DrawAsRadio">False</property>
         <property name="Active">False</property>
         <property name="Value">0</property>
-        <property name="Group">group1</property>
+        <property name="Group">codingmode</property>
         <signal name="Toggled" handler="OnViewToggled" />
       </action>
       <action id="TimelineViewAction">
@@ -275,7 +275,7 @@
         <property name="DrawAsRadio">False</property>
         <property name="Active">True</property>
         <property name="Value">0</property>
-        <property name="Group">group1</property>
+        <property name="Group">codingmode</property>
         <signal name="Toggled" handler="OnViewToggled" />
       </action>
       <action id="SaveProjectAction">
@@ -341,7 +341,7 @@
         <property name="DrawAsRadio">False</property>
         <property name="Active">False</property>
         <property name="Value">0</property>
-        <property name="Group">group1</property>
+        <property name="Group">codingmode</property>
         <signal name="Toggled" handler="OnViewToggled" />
       </action>
       <action id="GameUnitsViewAction">
@@ -352,7 +352,7 @@
         <property name="DrawAsRadio">False</property>
         <property name="Active">False</property>
         <property name="Value">0</property>
-        <property name="Group">group1</property>
+        <property name="Group">codingmode</property>
         <signal name="Toggled" handler="OnViewToggled" />
       </action>
       <action id="ExportProjectAction">
@@ -6467,6 +6467,7 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
     </child>
   </widget>
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.AnalysisComponent" design-size="1524 648">
+    <action-group name="Default" />
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -6478,22 +6479,11 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
           <widget class="Gtk.HPaned" id="hpaned">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="Position">290</property>
+            <property name="Position">261</property>
             <child>
-              <widget class="Gtk.VBox" id="leftbox">
+              <widget class="LongoMatch.Gui.Component.PlaysSelectionWidget" id="playsSelection">
                 <property name="MemberName" />
-                <property name="Visible">False</property>
-                <property name="Spacing">6</property>
-                <child>
-                  <widget class="LongoMatch.Gui.Component.PlaysSelectionWidget" id="playsSelection">
-                    <property name="MemberName" />
-                    <property name="Events">ButtonPressMask</property>
-                  </widget>
-                  <packing>
-                    <property name="Position">0</property>
-                    <property name="AutoSize">True</property>
-                  </packing>
-                </child>
+                <property name="Events">ButtonPressMask</property>
               </widget>
               <packing>
                 <property name="Resize">False</property>
@@ -6503,7 +6493,7 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
               <widget class="Gtk.HPaned" id="hpaned1">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Position">1015</property>
+                <property name="Position">1046</property>
                 <child>
                   <widget class="Gtk.VBox" id="downbox">
                     <property name="MemberName" />
@@ -6614,30 +6604,9 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
           </packing>
         </child>
         <child>
-          <widget class="Gtk.HBox" id="hbox7">
+          <widget class="LongoMatch.Gui.Component.CodingWidget" id="codingwidget">
             <property name="MemberName" />
-            <property name="Spacing">6</property>
-            <child>
-              <widget class="LongoMatch.Gui.Component.ButtonsWidget" id="buttonswidget">
-                <property name="MemberName" />
-                <property name="Visible">False</property>
-                <property name="Events">ButtonPressMask</property>
-              </widget>
-              <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">True</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="LongoMatch.Gui.Component.Timeline" id="timeline">
-                <property name="MemberName" />
-                <property name="Events">ButtonPressMask</property>
-              </widget>
-              <packing>
-                <property name="Position">1</property>
-                <property name="AutoSize">True</property>
-              </packing>
-            </child>
+            <property name="Events">ButtonPressMask</property>
           </widget>
         </child>
       </widget>
@@ -10106,34 +10075,32 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
         <property name="MemberName" />
         <property name="Spacing">6</property>
         <child>
-          <widget class="Gtk.VBox" id="vbox2">
+          <widget class="Gtk.VBox" id="vbox4">
             <property name="MemberName" />
             <property name="Spacing">6</property>
             <child>
-              <placeholder />
-            </child>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <widget class="Gtk.VButtonBox" id="vbuttonbox1">
+              <widget class="Gtk.HBox" id="hbox2">
                 <property name="MemberName" />
-                <property name="Size">4</property>
+                <property name="HeightRequest">30</property>
+                <property name="Spacing">6</property>
                 <child>
-                  <widget class="Gtk.Button" id="button7">
+                  <widget class="Gtk.HScale" id="hscale1">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
-                    <property name="Type">TextOnly</property>
-                    <property name="Label" translatable="yes">GtkButton</property>
-                    <property name="UseUnderline">True</property>
+                    <property name="Upper">100</property>
+                    <property name="PageIncrement">10</property>
+                    <property name="StepIncrement">1</property>
+                    <property name="DrawValue">True</property>
+                    <property name="Digits">0</property>
+                    <property name="ValuePos">Top</property>
                   </widget>
                   <packing>
-                    <property name="Expand">False</property>
-                    <property name="Fill">False</property>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">True</property>
                   </packing>
                 </child>
                 <child>
-                  <widget class="Gtk.Button" id="button6">
+                  <widget class="Gtk.Button" id="button1">
                     <property name="MemberName" />
                     <property name="CanFocus">True</property>
                     <property name="Type">TextOnly</property>
@@ -10142,61 +10109,10 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
                   </widget>
                   <packing>
                     <property name="Position">1</property>
+                    <property name="AutoSize">True</property>
                     <property name="Expand">False</property>
                     <property name="Fill">False</property>
                   </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.Button" id="button8">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Type">TextOnly</property>
-                    <property name="Label" translatable="yes">GtkButton</property>
-                    <property name="UseUnderline">True</property>
-                  </widget>
-                  <packing>
-                    <property name="Position">2</property>
-                    <property name="Expand">False</property>
-                    <property name="Fill">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.Button" id="button9">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Type">TextOnly</property>
-                    <property name="Label" translatable="yes">GtkButton</property>
-                    <property name="UseUnderline">True</property>
-                  </widget>
-                  <packing>
-                    <property name="Position">3</property>
-                    <property name="Expand">False</property>
-                    <property name="Fill">False</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">2</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-          </widget>
-          <packing>
-            <property name="Position">0</property>
-            <property name="AutoSize">True</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.VBox" id="vbox4">
-            <property name="MemberName" />
-            <property name="Spacing">6</property>
-            <child>
-              <widget class="Gtk.Alignment" id="alignment1">
-                <property name="MemberName" />
-                <child>
-                  <placeholder />
                 </child>
               </widget>
               <packing>
@@ -10217,7 +10133,7 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
             </child>
           </widget>
           <packing>
-            <property name="Position">1</property>
+            <property name="Position">0</property>
             <property name="AutoSize">False</property>
             <property name="Expand">False</property>
             <property name="Fill">False</property>
@@ -10262,7 +10178,121 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
             </child>
           </widget>
           <packing>
-            <property name="Position">2</property>
+            <property name="Position">1</property>
+            <property name="AutoSize">True</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.CodingWidget" design-size="673 300">
+    <action-group name="Default">
+      <action id="timelineMode">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-justify-fill</property>
+        <property name="Tooltip" translatable="yes">Timeline view</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">codingmode</property>
+      </action>
+      <action id="autoTaggingMode">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-select-color</property>
+        <property name="Tooltip" translatable="yes">Automatic tagging view</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">True</property>
+        <property name="Value">0</property>
+        <property name="Group">codingmode</property>
+      </action>
+      <action id="zoomFitAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-zoom-fit</property>
+      </action>
+    </action-group>
+    <action-group name="Timeline" />
+    <property name="MemberName" />
+    <property name="Visible">False</property>
+    <child>
+      <widget class="Gtk.VBox" id="vbox2">
+        <property name="MemberName" />
+        <property name="Spacing">6</property>
+        <child>
+          <widget class="Gtk.HBox" id="hbox1">
+            <property name="MemberName" />
+            <property name="Spacing">6</property>
+            <child>
+              <widget class="Gtk.Toolbar" id="codingtoolbar">
+                <property name="MemberName" />
+                <property name="ShowArrow">False</property>
+                <node name="codingtoolbar" type="Toolbar">
+                  <node type="Toolitem" action="autoTaggingMode" />
+                  <node type="Toolitem" action="timelineMode" />
+                </node>
+              </widget>
+              <packing>
+                <property name="Position">0</property>
+                <property name="AutoSize">False</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Toolbar" id="timelinetoolbar">
+                <property name="MemberName" />
+                <property name="ShowArrow">False</property>
+                <node name="timelinetoolbar" type="Toolbar">
+                  <node type="Toolitem" action="zoomFitAction" />
+                </node>
+              </widget>
+              <packing>
+                <property name="Position">1</property>
+                <property name="AutoSize">False</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <placeholder />
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">0</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.HBox" id="hbox2">
+            <property name="MemberName" />
+            <property name="Spacing">6</property>
+            <child>
+              <widget class="LongoMatch.Gui.Component.ButtonsWidget" id="buttonswidget">
+                <property name="MemberName" />
+                <property name="Events">ButtonPressMask</property>
+              </widget>
+              <packing>
+                <property name="Position">0</property>
+                <property name="AutoSize">True</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="LongoMatch.Gui.Component.Timeline" id="timeline">
+                <property name="MemberName" />
+                <property name="Events">ButtonPressMask</property>
+              </widget>
+              <packing>
+                <property name="Position">1</property>
+                <property name="AutoSize">True</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">1</property>
             <property name="AutoSize">True</property>
           </packing>
         </child>

@@ -39,7 +39,6 @@ namespace LongoMatch.Gui.Component
 		public event NewTagStopHandler NewMarkStopEvent;
 		public event NewTagCancelHandler NewMarkCancelEvent;
 
-		Categories categories;
 		TagMode tagMode;
 		Dictionary<ButtonTagger, Category> buttonsDic;
 
@@ -48,6 +47,13 @@ namespace LongoMatch.Gui.Component
 			this.Build();
 			buttonsDic = new Dictionary<ButtonTagger, Category>();
 			Mode = TagMode.Predifined;
+		}
+		
+		public Project Project {
+			set {
+				if (value != null)
+					UpdateCategories (value.Categories);
+			}
 		}
 
 		public TagMode Mode {
@@ -66,58 +72,56 @@ namespace LongoMatch.Gui.Component
 				}
 			}
 		}
+		
+		public void UpdateCategories (Categories categories) {
+			foreach(Widget w in table1.AllChildren) {
+				table1.Remove(w);
+				w.Destroy();
+			}
+			
+			if (categories == null)
+				return;
 
-		public Categories Categories {
-			set {
-				foreach(Widget w in table1.AllChildren) {
-					table1.Remove(w);
-					w.Destroy();
-				}
-				categories = value;
-				if(value == null)
-					return;
-
-				buttonsDic.Clear();
-				int sectionsCount = value.Count;
-
-				table1.NColumns =(uint) 10;
-				table1.NRows =(uint)(sectionsCount/10);
-
-				for(int i=0; i<sectionsCount; i++) {
-					Category cat = value[i];
-					ButtonTagger b = new ButtonTagger (cat);
+			buttonsDic.Clear();
+			int sectionsCount = categories.Count;
+			
+			table1.NColumns =(uint) 10;
+			table1.NRows =(uint)(sectionsCount/10);
+			
+			for(int i=0; i<sectionsCount; i++) {
+				Category cat = categories[i];
+				ButtonTagger b = new ButtonTagger (cat);
 					b.NewTag += (category) => {
-						if (NewMarkEvent != null) {
-							NewMarkEvent (category);
-						}
-					};
-					b.NewTagStart += (category) => {
-						if (NewMarkStartEvent != null) {
-							NewMarkStartEvent (category);
-						}
-					};
-					b.NewTagStop += (category) => {
-						if (NewMarkStopEvent != null) {
-							NewMarkStopEvent (category);
-						}
-					};
-					b.NewTagCancel += (category) => {
-						if (NewMarkCancelEvent != null) {
-							NewMarkCancelEvent (category);
-						}
-					};
-					b.Mode = tagMode;
-
-					uint row_top =(uint)(i/table1.NColumns);
-					uint row_bottom = (uint) row_top+1 ;
-					uint col_left = (uint) i%table1.NColumns;
-					uint col_right = (uint) col_left+1 ;
-
-					table1.Attach(b,col_left,col_right,row_top,row_bottom);
-
-					buttonsDic.Add(b, cat);
-					b.Show();
-				}
+					if (NewMarkEvent != null) {
+						NewMarkEvent (category);
+					}
+				};
+				b.NewTagStart += (category) => {
+					if (NewMarkStartEvent != null) {
+						NewMarkStartEvent (category);
+					}
+				};
+				b.NewTagStop += (category) => {
+					if (NewMarkStopEvent != null) {
+						NewMarkStopEvent (category);
+					}
+				};
+				b.NewTagCancel += (category) => {
+					if (NewMarkCancelEvent != null) {
+						NewMarkCancelEvent (category);
+					}
+				};
+				b.Mode = tagMode;
+				
+				uint row_top =(uint)(i/table1.NColumns);
+				uint row_bottom = (uint) row_top+1 ;
+				uint col_left = (uint) i%table1.NColumns;
+				uint col_right = (uint) col_left+1 ;
+				
+				table1.Attach(b,col_left,col_right,row_top,row_bottom);
+				
+				buttonsDic.Add(b, cat);
+				b.Show();
 			}
 		}
 	}

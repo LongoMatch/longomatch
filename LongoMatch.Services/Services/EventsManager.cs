@@ -317,7 +317,7 @@ namespace LongoMatch.Services
 				player.Seek (pos, true);
 			}
 			else if(tNode is Category) {
-				analysisWindow.UpdateCategories(openedProject.Categories);
+				analysisWindow.UpdateCategories();
 			}
 			filter.Update();
 		}

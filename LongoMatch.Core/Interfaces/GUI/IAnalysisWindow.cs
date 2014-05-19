@@ -67,11 +67,10 @@ namespace LongoMatch.Interfaces.GUI
 		void CloseOpenedProject ();
 		void AddPlay(Play play);
 		void UpdateSelectedPlay (Play play);
-		void UpdateCategories (Categories categories);
+		void UpdateCategories ();
 		void DeletePlays (List<Play> plays);
 		
 		bool Fullscreen {set;}
-		bool WidgetsVisible {set;}
 		VideoAnalysisMode AnalysisMode {set;}
 		
 		IPlayerBin Player{get;}

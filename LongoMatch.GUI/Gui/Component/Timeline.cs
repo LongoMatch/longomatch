@@ -56,7 +56,7 @@ namespace LongoMatch.Gui.Component
 			this.labels = new CategoriesLabels (new WidgetWrapper (labelsarea));
 			timerulearea.HeightRequest = TIMERULE_HEIGHT;
 			labelsarea.WidthRequest = LongoMatch.Drawing.Common.CATEGORY_WIDTH;
-			alignment1.HeightRequest = TIMERULE_HEIGHT;
+			hbox1.HeightRequest = TIMERULE_HEIGHT;
 			scrolledwindow1.Vadjustment.ValueChanged += HandleScrollEvent;
 			scrolledwindow1.Hadjustment.ValueChanged += HandleScrollEvent;
 		}

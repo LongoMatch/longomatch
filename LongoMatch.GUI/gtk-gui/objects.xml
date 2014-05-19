@@ -486,4 +486,9 @@
       </itemgroup>
     </signals>
   </object>
+  <object type="LongoMatch.Gui.Component.CodingWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+    </signals>
+  </object>
 </objects>

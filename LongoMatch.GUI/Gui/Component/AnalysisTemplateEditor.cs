@@ -35,7 +35,7 @@ namespace LongoMatch.Gui.Component
 
 		public Categories Template {
 			set {
-				buttonswidget.Categories = value;
+				buttonswidget.UpdateCategories (value);
 			}
 		}
 		

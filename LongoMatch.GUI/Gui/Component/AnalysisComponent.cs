@@ -71,7 +71,6 @@ namespace LongoMatch.Gui.Component
 
 		static Project openedProject;
 		ProjectType projectType;
-		TimeNode selectedTimeNode;		
 		bool detachedPlayer;
 		Gtk.Window playerWindow;
 		VideoAnalysisMode analysisMode;
@@ -80,6 +79,7 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 			projectType = ProjectType.None;
+			playsSelection.Visible = true;
 
 			playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
 			playercapturer.Tick += OnTick;
@@ -87,11 +87,8 @@ namespace LongoMatch.Gui.Component
 			playercapturer.Logo = System.IO.Path.Combine(Config.ImagesDir,"background.png");
 			playercapturer.CaptureFinished += (sender, e) => {
 				EmitCloseOpenedProject();
-				(downbox[videowidgetsbox] as Box.BoxChild).Expand = true;
-				(downbox[buttonswidget] as Box.BoxChild).Expand = false;
 			};
 			
-			buttonswidget.Mode = TagMode.Predifined;
 			ConnectSignals();
 			AnalysisMode = VideoAnalysisMode.PredefinedTagging;
 			
@@ -128,93 +125,46 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		public bool WidgetsVisible {
-			set {
-				if(openedProject == null)
-					return;
-			
-				leftbox.Visible = value;
-				timeline.Visible = value && AnalysisMode == VideoAnalysisMode.Timeline;
-				buttonswidget.Visible = value && (AnalysisMode == VideoAnalysisMode.ManualTagging ||
-				                                  AnalysisMode == VideoAnalysisMode.PredefinedTagging);
-				if(value) {
-					SetTagsBoxVisibility (false);
-				} else {
-					if (selectedTimeNode != null)
-						SetTagsBoxVisibility (true);
-				}
-			}
-		}
-		
 		public VideoAnalysisMode AnalysisMode {
 			set {
-				buttonswidget.Visible = (value == VideoAnalysisMode.ManualTagging) ||
-					(value == VideoAnalysisMode.PredefinedTagging);
-				timeline.Visible = value == VideoAnalysisMode.Timeline;
-				if(value == VideoAnalysisMode.ManualTagging)
-					buttonswidget.Mode = TagMode.Free;
-				else if (value == VideoAnalysisMode.ManualTagging)
-					buttonswidget.Mode = TagMode.Predifined;
-				analysisMode = value;
-				timeline.Visible = true;
-			}
-			protected get {
-				return analysisMode;
+				codingwidget.AnalysisMode = value;
 			}
 		}
 		
 		public void AddPlay(Play play) {
 			playsSelection.AddPlay(play);
-			timeline.AddPlay(play);
-			timeline.QueueDraw();
+			codingwidget.AddPlay (play);
 		}
 		
 		public void UpdateSelectedPlay (Play play) {
-			selectedTimeNode = play;
-			timeline.SelectedTimeNode = play;
+			codingwidget.SelectedPlay = play;
 			postagger.LoadPlay (play, false);
-			SetTagsBoxVisibility (true);
 			notes.Play= play;
 		}
 
-		public void UpdateCategories (Categories categories) {
-			buttonswidget.Categories = openedProject.Categories;
+		public void UpdateCategories () {
+			codingwidget.UpdateCategories ();
 		}
 		
 		public void DeletePlays (List<Play> plays) {
 			playsSelection.RemovePlays(plays);
-			timeline.RemovePlays(plays);
-			timeline.QueueDraw();
+			codingwidget.DeletePlays (plays);
 		}
 		
 		private void ConnectSignals() {
 			/* Adding Handlers for each event */
 
-			/* Connect new mark event */
-			buttonswidget.NewMarkEvent += EmitNewTag;;
-			buttonswidget.NewMarkStartEvent += EmitNewTagStart;
-			
-			buttonswidget.NewMarkStopEvent += EmitNewTagStop;
-			buttonswidget.NewMarkCancelEvent += EmitNewTagCancel;
-			timeline.NewTagAtPosEvent += EmitNewTagAtPos;
-
-			/* Connect TimeNodeChanged events */
-			timeline.TimeNodeChanged += EmitTimeNodeChanged;
 			notes.TimeNodeChanged += EmitTimeNodeChanged;
 
-			/* Connect TimeNodeDeleted events */
 			playsSelection.PlaysDeleted += EmitPlaysDeleted;
-			timeline.TimeNodeDeleted += EmitPlaysDeleted;
-
-			/* Connect TimeNodeSelected events */
-			playsSelection.PlaySelected += OnTimeNodeSelected;
-			timeline.TimeNodeSelected += OnTimeNodeSelected;
-			
-			/* Connect TimeNodeChangedEvent */
+			playsSelection.PlaySelected += EmitPlaySelected;
 			playsSelection.TimeNodeChanged += EmitTimeNodeChanged;
-
-			/* Connect PlayCategoryChanged events */
 			playsSelection.PlayCategoryChanged += EmitPlayCategoryChanged;
+			playsSelection.PlayListNodeAdded += EmitPlayListNodeAdded;
+			playsSelection.DuplicatePlay += EmitDuplicatePlay;
+			playsSelection.TagPlay += EmitTagPlay;
+			playsSelection.SnapshotSeries += EmitSnapshotSeries;
+			playsSelection.RenderPlaylist += EmitRenderPlaylist;
 
 			/* Connect playlist events */
 //			playlist.PlayListNodeSelected += EmitPlayListNodeSelected;
@@ -222,24 +172,6 @@ namespace LongoMatch.Gui.Component
 //			playlist.OpenPlaylistEvent += EmitOpenPlaylist;
 //			playlist.SavePlaylistEvent += EmitSavePlaylist;
 
-			/* Connect PlayListNodeAdded events */
-			playsSelection.PlayListNodeAdded += OnPlayListNodeAdded;
-			timeline.PlayListNodeAdded += OnPlayListNodeAdded;
-
-			/* Connect duplicate plays */
-			playsSelection.DuplicatePlay += EmitDuplicatePlay;
-
-			/* Connect tags events */
-			playsSelection.TagPlay += EmitTagPlay;
-			timeline.TagPlay += EmitTagPlay;
-
-			/* Connect SnapshotSeries events */
-			playsSelection.SnapshotSeries += EmitSnapshotSeries;
-			timeline.SnapshotSeries += EmitSnapshotSeries;
-
-			playsSelection.RenderPlaylist += EmitRenderPlaylist;
-			timeline.RenderPlaylist += EmitRenderPlaylist;
-			
 			playercapturer.Error += OnMultimediaError;
 			playercapturer.SegmentClosedEvent += OnSegmentClosedEvent;
 			
@@ -269,10 +201,6 @@ namespace LongoMatch.Gui.Component
 				
 				playercapturer.Reparent(box);
 				videowidgetsbox.Visible = false;
-				if (openedProject != null) {
-					buttonswidget.Visible = true;
-					timeline.Visible = true;
-				}
 			} else {
 				Log.Debug("Attaching player again");
 				videowidgetsbox.Visible = true;
@@ -296,7 +224,6 @@ namespace LongoMatch.Gui.Component
 			bool isLive = false;
 			
 			if(projectType == ProjectType.FileProject) {
-				timeline.SetProject (project, filter);
 				playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
 			} else {
 				isLive = true;
@@ -307,64 +234,98 @@ namespace LongoMatch.Gui.Component
 				}
 			}
 			
-			if(projectType == ProjectType.FakeCaptureProject) {
-#if OS_TYPE_LINUX
-				/* This deadlocks in Windows and OS X */
-				(downbox[videowidgetsbox] as Box.BoxChild).Expand = false;
-#endif
-				(downbox[buttonswidget] as Box.BoxChild).Expand = true;
-			}
+// FIXME
+//			if(projectType == ProjectType.FakeCaptureProject) {
+//#if OS_TYPE_LINUX
+//				/* This deadlocks in Windows and OS X */
+//				(downbox[videowidgetsbox] as Box.BoxChild).Expand = false;
+//#endif
+//				(downbox[buttonswidget] as Box.BoxChild).Expand = true;
+//			}
 			
 			openedProject = project;
 			this.projectType = projectType;
 			
-			playsSelection.SetProject(project, isLive, filter);
-			buttonswidget.Categories = project.Categories;
-			ShowWidgets ();
+			codingwidget.SetProject (project, isLive, filter, this);
+			playsSelection.SetProject (project, isLive, filter);
 			postagger.LoadBackgrounds (openedProject.Categories.FieldBackground,
 			                           openedProject.Categories.HalfFieldBackground,
 			                           openedProject.Categories.GoalBackground);
-			ShowWidgets();
 		}
 		
-		void SetTagsBoxVisibility (bool visible) {
-			if (visible) {
-				righthbox.Visible = true;
-				tagsvbox.Visible = true;
-			} else {
-				tagsvbox.Visible = false;
-			}
+		public void EmitNewTagAtPos(Category category, Time pos) {
+			if (NewTagAtPosEvent != null)
+				NewTagAtPosEvent(category, pos);
+		}
+
+		public void EmitNewTag(Category category) {
+			if (NewTagEvent != null)
+				NewTagEvent(category);
+		}
+
+		public void EmitNewTagStart(Category category) {
+			if (NewTagStartEvent != null)
+				NewTagStartEvent (category);
+		}
+
+		public void EmitNewTagStop(Category category) {
+			if (NewTagStopEvent != null)
+				NewTagStopEvent (category);
 		}
 		
-		private void ResetGUI() {
+		public void EmitNewTagCancel(Category category) {
+			if (NewTagCancelEvent != null)
+				NewTagCancelEvent (category);
+		}
+		
+		public void EmitTimeNodeChanged(TimeNode tNode, object val)
+		{
+			if (TimeNodeChanged != null)
+				TimeNodeChanged(tNode, val);
+		}
+
+		public void EmitPlayListNodeAdded(List<Play> plays)
+		{
+			if (PlayListNodeAddedEvent != null)
+				PlayListNodeAddedEvent(plays);
+		}
+		
+		public void EmitTagPlay(Play play) {
+			if (TagPlayEvent != null)
+				TagPlayEvent (play);
+		}
+		
+		public void EmitSnapshotSeries(Play play) {
+			if (SnapshotSeriesEvent != null)
+				SnapshotSeriesEvent (play);
+		}
+
+		public void EmitRenderPlaylist(IPlayList playlist) {
+			if (RenderPlaylistEvent != null)
+				RenderPlaylistEvent(playlist);
+		}
+		
+		public void EmitPlaySelected(Play play)
+		{
+			if (PlaySelectedEvent != null)
+				PlaySelectedEvent(play);
+		}
+
+		public void EmitPlaysDeleted(List<Play> plays)
+		{
+			if (PlaysDeletedEvent != null)
+				PlaysDeletedEvent(plays);
+		}
+		
+		
+		void ResetGUI() {
 			playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
 			ClearWidgets();
-			HideWidgets();
-			SetTagsBoxVisibility (false);
-			selectedTimeNode = null;
 			if (detachedPlayer)
 				DetachPlayer(false);
 		}
 		
-		private void ShowWidgets() {
-			leftbox.Show();
-			if(analysisMode == VideoAnalysisMode.ManualTagging ||
-			   analysisMode == VideoAnalysisMode.PredefinedTagging) {
-				buttonswidget.Show();
-			} else if (analysisMode == VideoAnalysisMode.Timeline) {
-				timeline.Show();
-			}
-		}
-
-		private void HideWidgets() {
-			leftbox.Hide();
-			SetTagsBoxVisibility (false);
-			buttonswidget.Hide();
-			timeline.Hide();
-		}
-
-		private void ClearWidgets() {
-			buttonswidget.Categories = null;
+		void ClearWidgets() {
 			playsSelection.Clear();
 		}
 		
@@ -415,29 +376,20 @@ namespace LongoMatch.Gui.Component
 			return ret;
 		}
 
-		protected virtual void OnTimeNodeSelected(Play play)
+		void OnSegmentClosedEvent()
 		{
-			SetTagsBoxVisibility (true);
-			if (PlaySelectedEvent != null)
-				PlaySelectedEvent(play);
-		}
-
-		protected virtual void OnSegmentClosedEvent()
-		{
-			SetTagsBoxVisibility (false);
-			timeline.SelectedTimeNode = null;
-			selectedTimeNode = null;
+			codingwidget.SelectedPlay = null;
 		}
 		
-		protected virtual void OnTick (Time currentTime, Time streamLength,
+		void OnTick (Time currentTime, Time streamLength,
 			double currentPosition)
 		{
-			if (currentTime.MSeconds != 0 && timeline != null && openedProject != null) {
-				timeline.CurrentTime = currentTime;
-			}
+			//if (currentTime.MSeconds != 0 && timeline != null && openedProject != null) {
+			//	timeline.CurrentTime = currentTime;
+			//}
 		}
 		
-		protected virtual void OnMultimediaError(string message)
+		void OnMultimediaError(string message)
 		{
 			MessagesHelpers.ErrorMessage (this,
 				Catalog.GetString("The following error happened and" +
@@ -445,128 +397,39 @@ namespace LongoMatch.Gui.Component
 			EmitCloseOpenedProject ();
 		}
 		
-		private void EmitCloseOpenedProject () {
+		void EmitCloseOpenedProject () {
 			if (CloseOpenedProjectEvent != null)
 				CloseOpenedProjectEvent ();
 		}
 		
-		private void EmitPlaySelected(Play play)
-		{
-			if (PlaySelectedEvent != null)
-				PlaySelectedEvent(play);
-		}
-
-		private void EmitTimeNodeChanged(TimeNode tNode, object val)
-		{
-			if (TimeNodeChanged != null)
-				TimeNodeChanged(tNode, val);
-		}
-
-		private void EmitPlaysDeleted(List<Play> plays)
-		{
-			if (PlaysDeletedEvent != null)
-				PlaysDeletedEvent(plays);
-		}
-		
-		protected virtual void EmitPlayCategoryChanged(Play play, Category cat)
+		void EmitPlayCategoryChanged(Play play, Category cat)
 		{
 			if(PlayCategoryChanged != null)
 				PlayCategoryChanged(play, cat);
 		}
 
-		private void OnPlayListNodeAdded(List<Play> plays)
-		{
-			if (PlayListNodeAddedEvent != null)
-				PlayListNodeAddedEvent(plays);
-		}
-
-		private void EmitPlayListNodeSelected(PlayListPlay plNode)
+		void EmitPlayListNodeSelected(PlayListPlay plNode)
 		{
 			if (PlayListNodeSelectedEvent != null)
 				PlayListNodeSelectedEvent(plNode);
 		}
 
-		private void EmitSnapshotSeries(Play play) {
-			if (SnapshotSeriesEvent != null)
-				SnapshotSeriesEvent (play);
-		}
-
-		private void EmitNewTagAtPos(Category category, Time pos) {
-			if (NewTagAtPosEvent != null)
-				NewTagAtPosEvent(category, pos);
-		}
-
-		private void EmitNewTag(Category category) {
-			if (NewTagEvent != null)
-				NewTagEvent(category);
-		}
-
-		private void EmitNewTagStart(Category category) {
-			if (NewTagStartEvent != null)
-				NewTagStartEvent (category);
-		}
-
-		private void EmitNewTagStop(Category category) {
-			if (NewTagStopEvent != null)
-				NewTagStopEvent (category);
-		}
-		
-		private void EmitNewTagCancel(Category category) {
-			if (NewTagCancelEvent != null)
-				NewTagCancelEvent (category);
-		}
-		
-		private void EmitRenderPlaylist(IPlayList playlist) {
-			if (RenderPlaylistEvent != null)
-				RenderPlaylistEvent(playlist);
-		}
-		
-		private void EmitTagPlay(Play play) {
-			if (TagPlayEvent != null)
-				TagPlayEvent (play);
-		}
-		
-		private void EmitNewPlaylist() {
+		void EmitNewPlaylist() {
 			if (NewPlaylistEvent != null)
 				NewPlaylistEvent();
 		}
 		
-		private void EmitOpenPlaylist() {
+		void EmitOpenPlaylist() {
 			if (OpenPlaylistEvent != null)
 				OpenPlaylistEvent();
 		}
 		
-		private void EmitSavePlaylist() {
+		void EmitSavePlaylist() {
 			if (SavePlaylistEvent != null)
 				SavePlaylistEvent();
 		}
 		
-		private void EmitGameUnitEvent(GameUnit gameUnit, GameUnitEventType eType) {
-			if (GameUnitEvent != null)
-				GameUnitEvent(gameUnit, eType);
-		}
-		
-		private void EmitUnitAdded(GameUnit gameUnit, int frame) {
-			if (UnitAdded != null)
-				UnitAdded(gameUnit, frame);
-		}
-		
-		private void EmitUnitDeleted(GameUnit gameUnit, List<TimelineNode> units) {
-			if (UnitDeleted != null)
-				UnitDeleted(gameUnit, units);
-		}
-		
-		private void EmitUnitSelected(GameUnit gameUnit, TimelineNode unit) {
-			if (UnitSelected != null)
-				UnitSelected(gameUnit, unit);
-		}
-		
-		private void EmitUnitChanged(GameUnit gameUnit, TimelineNode unit, Time time) {
-			if (UnitChanged != null)
-				UnitChanged(gameUnit, unit, time);
-		}
-		
-		private void EmitKeyPressed(object sender, int key, int modifier) {
+		void EmitKeyPressed(object sender, int key, int modifier) {
 			if (KeyPressed != null)
 				KeyPressed(sender, key, modifier);
 		}
