@@ -78,7 +78,7 @@ namespace LongoMatch.Drawing.CanvasObject
 			if (Selected) {
 				tk.StrokeColor = Common.PLAY_OBJECT_SELECTED_COLOR;
 			} else {
-				tk.StrokeColor = Common.PLAY_OBJECT_UNSELECTED_COLOR;
+				tk.StrokeColor = Play.Category.Color;
 			}
 			tk.LineWidth = 2;
 			tk.DrawRoundedRectangle (new Point (StartX, OffsetY),

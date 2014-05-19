@@ -30,9 +30,8 @@ namespace LongoMatch.Interfaces.Drawing
 		
 		double Width {get;set;}
 		double Height {get;set;}
-		void QueueDraw ();
-		void Redraw (Area area = null);
-		void Redraw (ICanvasObject obj);
+		void ReDraw (Area area = null);
+		void ReDraw (IDrawable drawable);
 		void SetCursor (CursorType type);
 	}
 }

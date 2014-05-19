@@ -47,7 +47,7 @@ namespace LongoMatch.Drawing.CanvasObject
 			double y = offset.Y - Scroll;
 			tk.Begin();
 			tk.FillColor = category.Color;
-			tk.StrokeColor = Common.TEXT_COLOR;
+			tk.StrokeColor = category.Color;
 			tk.DrawRoundedRectangle (new Point(0, y + 1), width, height - 1, 3);  
 			tk.FillColor = Common.TEXT_COLOR;
 			tk.StrokeColor = Common.TEXT_COLOR;

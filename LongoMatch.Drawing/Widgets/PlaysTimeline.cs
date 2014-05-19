@@ -134,14 +134,14 @@ namespace LongoMatch.Drawing.Widgets
 		void RedrawSelection (Selection sel)
 		{
 			PlayObject po = sel.Drawable as PlayObject;
-			widget.Redraw (categories[po.Play.Category]);
+			widget.ReDraw (categories[po.Play.Category]);
 		}		
 		
 		void ClearSelection () {
 			foreach (Selection sel in selectionList) {
 				PlayObject po = sel.Drawable as PlayObject;
 				po.Selected = false;
-				widget.Redraw (po);
+				widget.ReDraw (po);
 			}
 			selectionList.Clear ();
 		}
@@ -160,7 +160,7 @@ namespace LongoMatch.Drawing.Widgets
 					TimeNodeSelected (po.Play);
 				}
 			}
-			widget.Redraw (po);
+			widget.ReDraw (po);
 		}
 		
 		void HandleLeftButton (Point coords, ButtonModifier modif) {

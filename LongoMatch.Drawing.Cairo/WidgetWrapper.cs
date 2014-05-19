@@ -69,26 +69,22 @@ namespace LongoMatch.Drawing.Cairo
 			}
 		}
 		
-		public void QueueDraw () {
-			widget.QueueDraw ();
+		public void ReDraw (Area area = null) {
+			if (area == null) {
+				Gdk.Region region = widget.GdkWindow.ClipRegion;
+				widget.GdkWindow.InvalidateRegion(region,true);
+			} else {
+				widget.GdkWindow.InvalidateRect (
+					new Gdk.Rectangle ((int)area.Start.X, (int)area.Start.Y,
+				                   (int)area.Width, (int)area.Height),
+					true);
+			}
+			widget.GdkWindow.ProcessUpdates(true);
 		}
 		
-		public void Redraw (Area area) {
-			if (DrawEvent != null) {
-				using (Context c = CairoHelper.Create (widget.GdkWindow)) {
-					if (area == null) {
-						area = new Area (new Point (0, 0), Width, Height);
-					}
-					DrawEvent (c, area);
-				}
-			}
-		}
-		
-		public void Redraw (ICanvasObject obj) {
-			using (Context c = CairoHelper.Create (widget.GdkWindow)) {
-				Config.DrawingToolkit.Context = c;
-				obj.Draw (Config.DrawingToolkit, new Area (new Point (0, 0), Width, Height));
-			}
+		public void ReDraw (IDrawable drawable) {
+			/* FIXME: get region from drawable */
+			ReDraw ();
 		}
 		
 		public void SetCursor (CursorType type) {
@@ -113,7 +109,18 @@ namespace LongoMatch.Drawing.Cairo
 			}
 			widget.GdkWindow.Cursor = new Cursor (gtype);
 		}
-
+		
+		void Draw (Area area) {
+			if (DrawEvent != null) {
+				using (Context c = CairoHelper.Create (widget.GdkWindow)) {
+					if (area == null) {
+						area = new Area (new Point (0, 0), Width, Height);
+					}
+					DrawEvent (c, area);
+				}
+			}
+		}
+		
 		ButtonType ParseButtonType (uint button) {
 			ButtonType bt;
 			
@@ -190,7 +197,7 @@ namespace LongoMatch.Drawing.Cairo
 			
 			r = args.Event.Area;
 			a = new Area (new Point (r.X, r.Y), r.Width, r.Height);
-			Redraw (a);
+			Draw (a);
 		}
 	}
 }
