@@ -70,7 +70,7 @@ namespace LongoMatch.Drawing.Widgets
 			tk.StrokeColor = Common.TIMELINE_LINE_COLOR;
 			tk.LineWidth = Common.TIMELINE_LINE_WIDTH;
 			tk.DrawLine (new Point (0, height), new Point (width, height));
-			
+		
 			/* Draw big lines each 10 * secondsPerPixel */
 			for(int i=0; i <= Duration.Seconds / SecondsPerPixel; i += TIME_SPACING) {
 				double pos = i - Scroll;
@@ -94,6 +94,7 @@ namespace LongoMatch.Drawing.Widgets
 			
 			/* Draw position triangle */
 			tpos = Common.TimeToPos (CurrentTime, SecondsPerPixel);
+			tpos -= Scroll;
 			tk.FillColor = Common.TIMELINE_LINE_COLOR;
 			tk.DrawTriangle (new Point (tpos, widget.Height), 8,
 			                 BIG_LINE_HEIGHT, SelectionPosition.Bottom);
