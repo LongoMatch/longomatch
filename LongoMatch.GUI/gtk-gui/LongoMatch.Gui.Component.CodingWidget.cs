@@ -11,7 +11,6 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.VBox vbox2;
 		private global::Gtk.HBox hbox1;
 		private global::Gtk.Toolbar codingtoolbar;
-		private global::Gtk.Toolbar timelinetoolbar;
 		private global::Gtk.HBox hbox2;
 		private global::LongoMatch.Gui.Component.ButtonsWidget buttonswidget;
 		private global::LongoMatch.Gui.Component.Timeline timeline;
@@ -53,21 +52,11 @@ namespace LongoMatch.Gui.Component
 			w4.Position = 0;
 			w4.Expand = false;
 			w4.Fill = false;
-			// Container child hbox1.Gtk.Box+BoxChild
-			this.UIManager.AddUiFromString ("<ui><toolbar name='timelinetoolbar'><toolitem name='zoomFitAction' action='zoomFitAction'/></toolbar></ui>");
-			this.timelinetoolbar = ((global::Gtk.Toolbar)(this.UIManager.GetWidget ("/timelinetoolbar")));
-			this.timelinetoolbar.Name = "timelinetoolbar";
-			this.timelinetoolbar.ShowArrow = false;
-			this.hbox1.Add (this.timelinetoolbar);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.timelinetoolbar]));
-			w5.Position = 1;
+			this.vbox2.Add (this.hbox1);
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox1]));
+			w5.Position = 0;
 			w5.Expand = false;
 			w5.Fill = false;
-			this.vbox2.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox1]));
-			w6.Position = 0;
-			w6.Expand = false;
-			w6.Fill = false;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.hbox2 = new global::Gtk.HBox ();
 			this.hbox2.Name = "hbox2";
@@ -77,18 +66,18 @@ namespace LongoMatch.Gui.Component
 			this.buttonswidget.Events = ((global::Gdk.EventMask)(256));
 			this.buttonswidget.Name = "buttonswidget";
 			this.hbox2.Add (this.buttonswidget);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.buttonswidget]));
-			w7.Position = 0;
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.buttonswidget]));
+			w6.Position = 0;
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.timeline = new global::LongoMatch.Gui.Component.Timeline ();
 			this.timeline.Events = ((global::Gdk.EventMask)(256));
 			this.timeline.Name = "timeline";
 			this.hbox2.Add (this.timeline);
-			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.timeline]));
-			w8.Position = 1;
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.timeline]));
+			w7.Position = 1;
 			this.vbox2.Add (this.hbox2);
-			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox2]));
-			w9.Position = 1;
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox2]));
+			w8.Position = 1;
 			this.Add (this.vbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

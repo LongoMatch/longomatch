@@ -55,6 +55,8 @@ namespace LongoMatch.Gui.Component
 			this.timerule = new Timerule (new WidgetWrapper (timerulearea));
 			this.timeline = new PlaysTimeline (new WidgetWrapper(timelinearea));
 			this.labels = new CategoriesLabels (new WidgetWrapper (labelsarea));
+			focusbutton.CanFocus = false;
+			focusscale.CanFocus = false;
 			timerulearea.HeightRequest = TIMERULE_HEIGHT;
 			labelsarea.WidthRequest = LongoMatch.Drawing.Common.CATEGORY_WIDTH;
 			hbox1.HeightRequest = TIMERULE_HEIGHT;
