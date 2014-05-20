@@ -135,15 +135,33 @@ namespace LongoMatch.Drawing.Cairo
 			context.Stroke();
 		}
 		
-		public void DrawTriangle (Point corner, double width, double height) {
-			double x, y;
+		public void DrawTriangle (Point corner, double width, double height,
+		                          SelectionPosition position) {
+			double x1, y1, x2, y2, x3, y3;
+
+			x1 = corner.X;
+			y1 = corner.Y;
 			
-			x = corner.X;
-			y = corner.Y;
+			switch (position) {
+			case SelectionPosition.Top:
+				x2 = x1 + width/2;
+				y2 = y1 + height;
+				x3 = x1 - width/2;
+				y3 = y1 + height;
+				break;
+			case SelectionPosition.Bottom:
+			default:
+				x2 = x1 + width/2;
+				y2 = y1 - height;
+				x3 = x1 - width/2;
+				y3 = y1 - height;
+				break;
+			}
+			
 			context.Color = strokeColor;
-			context.MoveTo (x, y);
-			context.LineTo (x + width/2, y + height);
-			context.LineTo (x - width/2, y - height);
+			context.MoveTo (x1, y1);
+			context.LineTo (x2, y2);
+			context.LineTo (x3, y3);
 			context.ClosePath();
 			context.StrokePreserve ();
 			context.Color = fillColor;

@@ -35,7 +35,8 @@ namespace LongoMatch.Interfaces
 		void Begin();
 		void End();
 		void DrawLine (Point start, Point stop);
-		void DrawTriangle (Point corner, double width, double height);
+		void DrawTriangle (Point corner, double width, double height,
+		                   SelectionPosition orientation);
 		void DrawRectangle (Point start, double width, double height);
 		void DrawRoundedRectangle (Point start, double width, double height, double radius);
 		void DrawArea (List<Point> vertices);
