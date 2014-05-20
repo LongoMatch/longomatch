@@ -35,7 +35,7 @@ namespace LongoMatch.Services
 	public class EventsManager
 	{
 		/* Current play loaded. null if no play is loaded */
-		TimeNode selectedTimeNode=null;
+		TimeNode loadedPlay=null;
 		/* current project in use */
 		Project openedProject;
 		ProjectType projectType;
@@ -101,7 +101,7 @@ namespace LongoMatch.Services
 			analysisWindow.DuplicatePlay += OnDuplicatePlay;
 
 			/* Connect playlist events */
-			analysisWindow.PlayListNodeSelectedEvent += (tn) => {selectedTimeNode = tn;};
+			analysisWindow.PlayListNodeSelectedEvent += (tn) => {loadedPlay = tn;};
 			/* Connect tags events */
 			analysisWindow.TagPlayEvent += OnTagPlay;
 
@@ -155,6 +155,16 @@ namespace LongoMatch.Services
 				Log.Exception (ex);
 			}
 			
+		}
+		
+		void LoadPlay (Play play, Time seekTime, bool playing) {
+			player.LoadPlay (openedProject.Description.File.FilePath, play,
+			                 seekTime, playing);
+			analysisWindow.UpdateSelectedPlay(play);
+			loadedPlay = play;
+			if (playing) {
+				player.Play ();
+			}
 		}
 		
 		private void ProcessNewTag(Category category,Time pos) {
@@ -223,13 +233,13 @@ namespace LongoMatch.Services
 			}
 		}
 
-		protected virtual void OnNewTagAtPos (Category category, Time pos) {
+		void OnNewTagAtPos (Category category, Time pos) {
 			player.CloseSegment();
 			player.Seek (pos, true);
 			ProcessNewTag(category,pos);
 		}
 
-		public virtual void OnNewTag(Category category) {
+		public void OnNewTag(Category category) {
 			Time pos;
 
 			if(projectType == ProjectType.FakeCaptureProject ||
@@ -242,13 +252,13 @@ namespace LongoMatch.Services
 			ProcessNewTag(category,pos);
 		}
 
-		public virtual void OnNewPlayStart (Category category) {
+		void OnNewPlayStart (Category category) {
 			Time startTime = player.CurrentTime;
 			catsTime.Add (category, startTime);
 			Log.Debug("New play start time: " + startTime);
 		}
 		
-		public virtual void OnNewPlayStop(Category category) {
+		void OnNewPlayStop(Category category) {
 			int diff;
 			Time startTime, stopTime;
 			
@@ -278,14 +288,14 @@ namespace LongoMatch.Services
 			AddNewPlay(startTime, stopTime, category);
 		}
 		
-		public virtual void OnNewPlayCancel (Category category) {
+		void OnNewPlayCancel (Category category) {
 			try {
 				catsTime.Remove (category);
 			} catch {
 			}
 		}
 
-		private void LaunchPlayTagger(Play play, bool showAllTags) {
+		void LaunchPlayTagger(Play play, bool showAllTags) {
 			guiToolkit.TagPlay(play, openedProject.Categories,
 			                   openedProject.LocalTeamTemplate,
 			                   openedProject.VisitorTeamTemplate,
@@ -294,27 +304,21 @@ namespace LongoMatch.Services
 
 		void HandlePlaybackRateChanged (float rate)
 		{
-			if (selectedTimeNode != null) {
-				selectedTimeNode.Rate = rate;
+			if (loadedPlay != null) {
+				loadedPlay.Rate = rate;
 			}
 		}
 
-		protected virtual void OnPlaySelected(Play play)
+		void OnPlaySelected(Play play)
 		{
-			Log.Debug("Play selected: " + play);
-			selectedTimeNode = play;
-			player.LoadPlay (openedProject.Description.File.FilePath, play);
-			analysisWindow.UpdateSelectedPlay(play);
+			LoadPlay (play, play.Start, true);
 		}
 
 		protected virtual void OnTimeNodeChanged(TimeNode tNode, object val)
 		{
 			/* FIXME: Tricky, create a new handler for categories */
 			if(tNode is Play && val is Time) {
-				if(tNode != selectedTimeNode)
-					OnPlaySelected((Play)tNode);
-				Time pos = (Time)val;
-				player.Seek (pos, true);
+				LoadPlay (tNode as Play, val as Time, false);
 			}
 			else if(tNode is Category) {
 				analysisWindow.UpdateCategories();
@@ -347,7 +351,7 @@ namespace LongoMatch.Services
 
 		protected virtual void OnSegmentClosedEvent()
 		{
-			selectedTimeNode = null;
+			loadedPlay = null;
 		}
 
 		protected virtual void OnSnapshotSeries(Play play) {
@@ -368,7 +372,7 @@ namespace LongoMatch.Services
 			Image pixbuf = null;
 			player.Pause();
 			pixbuf = player.CurrentFrame;
-			guiToolkit.DrawingTool (pixbuf, selectedTimeNode as Play, time);
+			guiToolkit.DrawingTool (pixbuf, loadedPlay as Play, time);
 		}
 
 		protected virtual void OnTagPlay(Play play) {

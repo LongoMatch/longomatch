@@ -67,7 +67,7 @@ namespace LongoMatch.Gui
 		string filename;
 		double previousVLevel = 1;
 		double[] seeksQueue;
-		object[] pendingSeek; //{start,stop,rate}
+		object[] pendingSeek; //{seekTime, rate, playing}
 		protected VolumeWindow vwin;
 		Seeker seeker;
 		Segment segment;
@@ -78,7 +78,7 @@ namespace LongoMatch.Gui
 		{
 			this.Build();
 			vwin = new VolumeWindow();
-			vwin.VolumeChanged += new VolumeChangedHandler(OnVolumeChanged);
+			ConnectSignals ();
 			tickHandler = new TickHandler(OnTick);
 			controlsbox.Visible = false;
 			UnSensitive();
@@ -206,13 +206,14 @@ namespace LongoMatch.Gui
 			else
 				nextbutton.Sensitive = false;
 
-			LoadSegment (play.MediaFile.FilePath, play.Start, play.Stop, play.Rate);
+			LoadSegment (play.MediaFile.FilePath, play.Start, play.Stop,
+			             play.Start, true, play.Rate);
 		}
 		
-		public void LoadPlay (string filename, Play play) {
-			LoadSegment (filename, play.Start, play.Stop, play.Rate);
+		public void LoadPlay (string filename, Play play, Time seekTime, bool playing) {
+			LoadSegment (filename, play.Start, play.Stop, seekTime, playing, play.Rate);
 		}
-
+		
 		public void Close() {
 			player.Close();
 			filename = null;
@@ -305,10 +306,27 @@ namespace LongoMatch.Gui
 			}
 		}
 		
-		void LoadSegment (string filename, Time start, Time stop, float rate = 1) {
-			Log.Debug (String.Format ("Loading player segment {0} {1} {2} {3}",
-			           filename, start, stop, rate));
-			Open (filename, false);
+		void ConnectSignals () {
+			vwin.VolumeChanged += new VolumeChangedHandler(OnVolumeChanged);
+			closebutton.Clicked += OnClosebuttonClicked;
+			prevbutton.Clicked += OnPrevbuttonClicked;
+			nextbutton.Clicked += OnNextbuttonClicked;
+			playbutton.Clicked += OnPlaybuttonClicked;
+			pausebutton.Clicked += OnPausebuttonClicked;
+			drawbutton.Clicked += OnDrawButtonClicked;
+			timescale.ValueChanged += OnTimescaleValueChanged;
+			timescale.AdjustBounds += OnTimescaleAdjustBounds;
+		}
+		
+		void LoadSegment (string filename, Time start, Time stop, Time seekTime,
+		                  bool playing, float rate = 1) {
+			Log.Debug (String.Format ("Update player segment {0} {1} {2}",
+			                          start.ToMSecondsString(),
+			                          stop.ToMSecondsString(), rate));
+			if (filename != this.filename) {
+				Open (filename, false);
+			}
+			player.Pause();
 			segment.Start = start;
 			segment.Stop = stop;
 			rate = rate == 0 ? 1 : rate;
@@ -318,11 +336,13 @@ namespace LongoMatch.Gui
 				           start.ToMSecondsString());
 				SetScaleValue ((int) (rate * SCALE_FPS));
 				player.Rate = (double) rate;
-				player.Seek (start, true);
-				player.Play ();
+				player.Seek (seekTime, true);
+				if (playing) {
+					player.Play ();
+				}
 			} else {
 				Log.Debug ("Delaying seek until player is ready");
-				pendingSeek = new object[3] {start, stop, rate};
+				pendingSeek = new object[3] {seekTime, rate, playing};
 			}
 		}
 
@@ -415,9 +435,11 @@ namespace LongoMatch.Gui
 		void OnReadyToSeek() {
 			readyToSeek = true;
 			if(pendingSeek != null) {
-				player.Rate = (float) pendingSeek [2];
+				player.Rate = (float) pendingSeek [1];
 				player.Seek ((Time)pendingSeek[0], true);
-				player.Play();
+				if ((bool)pendingSeek[2]) {
+					player.Play();
+				}
 				pendingSeek = null;
 			}
 		}
@@ -430,20 +452,24 @@ namespace LongoMatch.Gui
 			}
 
 			if (SegmentLoaded) {
-				Time duration = segment.Stop - segment.Start;
+				Time dur, ct;
+				double cp;
+
+				dur = segment.Stop - segment.Start;
 				if (currentTime > segment.Stop) {
 					player.Pause ();
 				}
-				currentTime -= segment.Start;
-				currentPosition = (float)currentTime.MSeconds/(float)(duration.MSeconds);
-				slength = duration.ToMSecondsString();
-				
+				ct = currentTime - segment.Start;
+				cp = (float)ct.MSeconds/(float)(dur.MSeconds);
+				slength = dur.ToMSecondsString();
+				timelabel.Text = ct.ToMSecondsString() + "/" + slength;
+				timescale.Value = cp;
 			} else {
 				slength = length.ToMSecondsString ();
+				timelabel.Text = currentTime.ToMSecondsString() + "/" + slength;
+				timescale.Value = currentPosition;
 			}
 
-			timelabel.Text = currentTime.ToMSecondsString() + "/" + slength;
-			timescale.Value = currentPosition;
 			if (Tick != null)
 				Tick (currentTime, streamLength, currentPosition);
 

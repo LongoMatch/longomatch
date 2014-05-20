@@ -55,7 +55,7 @@ namespace LongoMatch.Interfaces.GUI
 		void StepBackward();
 		void FramerateUp();
 		void FramerateDown();
-		void LoadPlay (string fileName, Play play);
+		void LoadPlay (string fileName, Play play, Time seekTime, bool playing);
 		void LoadPlayListPlay (PlayListPlay play, bool hasNext);
 		void CloseSegment();
 	}

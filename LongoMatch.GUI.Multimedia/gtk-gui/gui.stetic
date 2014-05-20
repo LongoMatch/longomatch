@@ -152,8 +152,6 @@
                     <property name="DrawValue">True</property>
                     <property name="Digits">0</property>
                     <property name="ValuePos">Bottom</property>
-                    <signal name="FormatValue" handler="OnVscale1FormatValue" />
-                    <signal name="ValueChanged" handler="OnVscale1ValueChanged" />
                   </widget>
                   <packing>
                     <property name="Position">0</property>
@@ -191,7 +189,6 @@
                     <property name="Icon">stock:gtk-close Dnd</property>
                     <property name="Label" translatable="yes" />
                     <property name="UseUnderline">True</property>
-                    <signal name="Clicked" handler="OnClosebuttonClicked" />
                   </widget>
                   <packing>
                     <property name="Position">0</property>
@@ -208,7 +205,6 @@
                     <property name="Label" translatable="yes" />
                     <property name="UseUnderline">True</property>
                     <property name="Relief">None</property>
-                    <signal name="Clicked" handler="OnDrawButtonClicked" />
                   </widget>
                   <packing>
                     <property name="Position">1</property>
@@ -225,7 +221,6 @@
                     <property name="Label" translatable="yes" />
                     <property name="UseUnderline">True</property>
                     <property name="Relief">None</property>
-                    <signal name="Clicked" handler="OnPlaybuttonClicked" />
                   </widget>
                   <packing>
                     <property name="Position">2</property>
@@ -242,7 +237,6 @@
                     <property name="Label" translatable="yes" />
                     <property name="UseUnderline">True</property>
                     <property name="Relief">None</property>
-                    <signal name="Clicked" handler="OnPausebuttonClicked" />
                   </widget>
                   <packing>
                     <property name="Position">3</property>
@@ -260,7 +254,6 @@
                     <property name="Label" translatable="yes" />
                     <property name="UseUnderline">True</property>
                     <property name="Relief">None</property>
-                    <signal name="Clicked" handler="OnPrevbuttonClicked" />
                   </widget>
                   <packing>
                     <property name="Position">4</property>
@@ -279,7 +272,6 @@
                     <property name="Label" translatable="yes" />
                     <property name="UseUnderline">True</property>
                     <property name="Relief">None</property>
-                    <signal name="Clicked" handler="OnNextbuttonClicked" />
                   </widget>
                   <packing>
                     <property name="Position">5</property>
@@ -362,8 +354,6 @@
                 <property name="DrawValue">False</property>
                 <property name="Digits">0</property>
                 <property name="ValuePos">Top</property>
-                <signal name="ValueChanged" handler="OnTimescaleValueChanged" />
-                <signal name="AdjustBounds" handler="OnTimescaleAdjustBounds" />
               </widget>
               <packing>
                 <property name="Position">3</property>
@@ -388,7 +378,6 @@
                 <property name="Label" translatable="yes" />
                 <property name="UseUnderline">True</property>
                 <property name="Relief">None</property>
-                <signal name="Clicked" handler="OnVolumebuttonClicked" />
               </widget>
               <packing>
                 <property name="Position">5</property>

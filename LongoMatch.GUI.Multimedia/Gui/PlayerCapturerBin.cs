@@ -211,13 +211,13 @@ namespace LongoMatch.Gui
 			playerbin.LoadPlayListPlay (play, hasNext);
 		}
 		
-		public void LoadPlay (string filename, Play play) {
+		public void LoadPlay (string filename, Play play, Time seekTime, bool playing) {
 			if (mode == PlayerOperationMode.PreviewCapturer) {
 				backtolivebutton.Visible = true;
 				ShowPlayer ();
 				LoadBackgroundPlayer(filename);
 			}
-			playerbin.LoadPlay (filename, play);
+			playerbin.LoadPlay (filename, play, seekTime, playing);
 		}
 		
 		public void Seek (Time time, bool accurate) {

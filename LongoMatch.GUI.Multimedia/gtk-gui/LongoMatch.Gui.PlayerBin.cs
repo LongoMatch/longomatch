@@ -386,17 +386,6 @@ namespace LongoMatch.Gui
 			this.nextbutton.Hide ();
 			this.controlsbox.Hide ();
 			this.Show ();
-			this.vscale1.FormatValue += new global::Gtk.FormatValueHandler (this.OnVscale1FormatValue);
-			this.vscale1.ValueChanged += new global::System.EventHandler (this.OnVscale1ValueChanged);
-			this.closebutton.Clicked += new global::System.EventHandler (this.OnClosebuttonClicked);
-			this.drawbutton.Clicked += new global::System.EventHandler (this.OnDrawButtonClicked);
-			this.playbutton.Clicked += new global::System.EventHandler (this.OnPlaybuttonClicked);
-			this.pausebutton.Clicked += new global::System.EventHandler (this.OnPausebuttonClicked);
-			this.prevbutton.Clicked += new global::System.EventHandler (this.OnPrevbuttonClicked);
-			this.nextbutton.Clicked += new global::System.EventHandler (this.OnNextbuttonClicked);
-			this.timescale.ValueChanged += new global::System.EventHandler (this.OnTimescaleValueChanged);
-			this.timescale.AdjustBounds += new global::Gtk.AdjustBoundsHandler (this.OnTimescaleAdjustBounds);
-			this.volumebutton.Clicked += new global::System.EventHandler (this.OnVolumebuttonClicked);
 		}
 	}
 }
