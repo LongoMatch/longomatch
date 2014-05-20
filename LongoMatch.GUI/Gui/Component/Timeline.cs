@@ -57,6 +57,9 @@ namespace LongoMatch.Gui.Component
 			this.labels = new CategoriesLabels (new WidgetWrapper (labelsarea));
 			focusbutton.CanFocus = false;
 			focusscale.CanFocus = false;
+			focusscale.Adjustment.Lower = 0;
+			focusscale.Adjustment.Upper = 16;
+			focusscale.ValueChanged += HandleValueChanged;
 			timerulearea.HeightRequest = TIMERULE_HEIGHT;
 			labelsarea.WidthRequest = LongoMatch.Drawing.Common.CATEGORY_WIDTH;
 			hbox1.HeightRequest = TIMERULE_HEIGHT;
@@ -90,6 +93,7 @@ namespace LongoMatch.Gui.Component
 				return;
 			}
 			
+			focusscale.Value = 10;
 			timerule.Duration = new Time ((int)project.Description.File.Length);
 			labels.Project = project;
 
@@ -109,7 +113,7 @@ namespace LongoMatch.Gui.Component
 			QueueDraw ();
 		}
 		
-		protected virtual void HandleScrollEvent(object sender, System.EventArgs args)
+		void HandleScrollEvent(object sender, System.EventArgs args)
 		{
 			if(sender == scrolledwindow1.Vadjustment)
 				labels.Scroll = scrolledwindow1.Vadjustment.Value;
@@ -118,6 +122,24 @@ namespace LongoMatch.Gui.Component
 			QueueDraw ();
 		}
 
+		void HandleValueChanged (object sender, EventArgs e)
+		{
+			double secondsPer100Pixels, value;
+			
+			value = Math.Round (focusscale.Value);
+			if (value == 0) {
+				secondsPer100Pixels = 1;
+			} else if (value <= 6) {
+				secondsPer100Pixels = value * 10;
+			} else {
+				secondsPer100Pixels = (value - 5) * 60;
+			}
+
+			timerule.SecondsPerPixel = secondsPer100Pixels / 100 ;
+			timeline.SecondsPerPixel = secondsPer100Pixels / 100;
+			QueueDraw ();
+		}
+		
 		void HandleShowMenu (List<Play> plays, Category cat, Time time)
 		{
 			Menu menu;
