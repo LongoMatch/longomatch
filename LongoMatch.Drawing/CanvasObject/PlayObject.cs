@@ -26,6 +26,7 @@ namespace LongoMatch.Drawing.CanvasObject
 {
 	public class PlayObject: ICanvasSelectableObject
 	{
+		const int MAX_TIME_SPAN=1000;
 		
 		public PlayObject (Play play)
 		{
@@ -103,15 +104,23 @@ namespace LongoMatch.Drawing.CanvasObject
 		}
 		
 		public void Move (Selection sel, Point p, Point start) {
+			Time newTime = Common.PosToTime (p, SecondsPerPixel);
+			
 			switch (sel.Position) {
 			case SelectionPosition.Left: {
-				if (p.X < StopX)
-					Play.Start = Common.PosToTime (p, SecondsPerPixel);
+				if (newTime.MSeconds + MAX_TIME_SPAN > Play.Stop.MSeconds) {
+					Play.Start.MSeconds = Play.Stop.MSeconds - MAX_TIME_SPAN;
+				} else {
+					Play.Start = newTime;
+				}
 				break;
 			}
 			case SelectionPosition.Right: {
-				if (p.X > StartX)
-					Play.Stop = Common.PosToTime (p, SecondsPerPixel);
+				if (newTime.MSeconds - MAX_TIME_SPAN < Play.Start.MSeconds) {
+					Play.Stop.MSeconds = Play.Start.MSeconds + MAX_TIME_SPAN;
+				} else {
+					Play.Stop = newTime;
+				}
 				break;
 			}
 			}

@@ -44,7 +44,7 @@ namespace LongoMatch.Drawing.Widgets
 
 		Project project;
 		double secondsPerPixel;
-		int duration;
+		Time duration;
 		uint lastTime;
 		bool moving;
 		List<Selection> selectionList;
@@ -65,7 +65,7 @@ namespace LongoMatch.Drawing.Widgets
 			this.project = project;
 			Objects.Clear();
 			categories.Clear();
-			duration = new Time ((int)project.Description.File.Length).Seconds; 
+			duration= new Time ((int)project.Description.File.Length); 
 			widget.Height = project.Categories.Count * Common.CATEGORY_HEIGHT;
 			FillCanvas ();
 			filter.FilterUpdated += () => {
@@ -104,7 +104,7 @@ namespace LongoMatch.Drawing.Widgets
 		}
 		
 		void Update () {
-			double width = duration / SecondsPerPixel;
+			double width = duration.Seconds / SecondsPerPixel;
 			widget.Width = width;
 			foreach (object o in Objects) {
 				CategoryTimeline tl = o as CategoryTimeline;
@@ -206,23 +206,32 @@ namespace LongoMatch.Drawing.Widgets
 		void HandleMotionEvent (Point coords)
 		{
 			Selection sel;
+			Play play;
+			Time newTime, moveTime;
 
 			if (!moving)
 				return;
 			
 			sel = selectionList[0];
+			play = (sel.Drawable as PlayObject).Play;
+			newTime = Common.PosToTime (coords, SecondsPerPixel);
+
+			if (coords.X < 0) {
+				coords.X = 0;
+			} else if (newTime > duration) {
+				coords.X = Common.TimeToPos (duration, SecondsPerPixel);
+			}
+			if (sel.Position == SelectionPosition.Right) {
+				moveTime = play.Stop;
+			} else {
+				moveTime = play.Start;
+			}
+			
 			sel.Drawable.Move (sel, coords, start);  
 			RedrawSelection (selectionList[0]);
+
 			if (TimeNodeChanged != null) {
-				Time time;
-				Play play = (sel.Drawable as PlayObject).Play;
-				
-				if (sel.Position == SelectionPosition.Left) {
-					time = play.Start;
-				} else {
-					time = play.Stop;
-				}
-				TimeNodeChanged (play, time);
+				TimeNodeChanged (play, moveTime);
 			}
 		}
 
