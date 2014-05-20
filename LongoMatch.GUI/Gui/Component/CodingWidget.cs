@@ -73,7 +73,13 @@ namespace LongoMatch.Gui.Component
 		public void DeletePlays (List<Play> plays) {
 			timeline.RemovePlays(plays);
 		}
-		
+
+		public Time CurrentTime {
+			set {
+				timeline.CurrentTime = value;
+			}
+		}		
+
 		public Play SelectedPlay {
 			set {
 				timeline.SelectedTimeNode = value;

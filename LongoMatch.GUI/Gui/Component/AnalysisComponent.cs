@@ -384,9 +384,9 @@ namespace LongoMatch.Gui.Component
 		void OnTick (Time currentTime, Time streamLength,
 			double currentPosition)
 		{
-			//if (currentTime.MSeconds != 0 && timeline != null && openedProject != null) {
-			//	timeline.CurrentTime = currentTime;
-			//}
+			if (currentTime.MSeconds != 0 && codingwidget != null && openedProject != null) {
+				codingwidget.CurrentTime = currentTime;
+			}
 		}
 		
 		void OnMultimediaError(string message)

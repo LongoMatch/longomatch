@@ -47,6 +47,7 @@ namespace LongoMatch.Gui.Component
 		Timerule timerule;
 		CategoriesLabels labels;
 		MediaFile projectFile;
+		DateTime lastUpdate;
 
 		public Timeline ()
 		{
@@ -59,6 +60,7 @@ namespace LongoMatch.Gui.Component
 			hbox1.HeightRequest = TIMERULE_HEIGHT;
 			scrolledwindow1.Vadjustment.ValueChanged += HandleScrollEvent;
 			scrolledwindow1.Hadjustment.ValueChanged += HandleScrollEvent;
+			lastUpdate = DateTime.Now;
 		}
 		
 		public TimeNode SelectedTimeNode {
@@ -68,7 +70,13 @@ namespace LongoMatch.Gui.Component
 		
 		public Time CurrentTime {
 			set {
-				timeline.CurrentTime = value;
+				DateTime now = DateTime.Now;
+				if ((now - lastUpdate).TotalMilliseconds > 100) {
+					timeline.CurrentTime = value;
+					timerule.CurrentTime = value;
+					QueueDraw ();
+					lastUpdate = now;
+				}
 			}
 		}
 		

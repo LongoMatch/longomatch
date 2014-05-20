@@ -36,6 +36,7 @@ namespace LongoMatch.Drawing.CanvasObject
 			this.background = background;
 			this.plays = new List<PlayObject> ();
 			SecondsPerPixel = 0.1;
+			CurrentTime = new Time (0);
 			OffsetY  = offsetY;
 			foreach (Play p in plays) {
 				AddPlay (p);
@@ -52,6 +53,11 @@ namespace LongoMatch.Drawing.CanvasObject
 			protected get {
 				return secondsPerPixel;
 			}
+		}
+		
+		public Time CurrentTime {
+			set;
+			protected get;
 		}
 		
 		public double Width {
@@ -81,7 +87,9 @@ namespace LongoMatch.Drawing.CanvasObject
 		}
 
 		public void Draw (IDrawingToolkit tk, Area area) {
+			double position;
 			List<PlayObject> selected = new List<PlayObject>();
+
 			tk.Begin ();
 			tk.FillColor = background;
 			tk.StrokeColor = background;
@@ -98,6 +106,14 @@ namespace LongoMatch.Drawing.CanvasObject
 			foreach (PlayObject p in selected) {
 				p.Draw (tk, area);
 			}
+			
+			tk.FillColor = Common.TIMELINE_LINE_COLOR;
+			tk.StrokeColor = Common.TIMELINE_LINE_COLOR;
+			tk.LineWidth = Common.TIMELINE_LINE_WIDTH;
+			position = Common.TimeToPos (CurrentTime, secondsPerPixel);
+			tk.DrawLine (new Point (position, OffsetY),
+			             new Point (position, OffsetY + Common.CATEGORY_HEIGHT));
+			
 			tk.End();
 		}
 		

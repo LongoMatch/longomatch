@@ -32,6 +32,7 @@ namespace LongoMatch.Drawing.Widgets
 		public Timerule (IWidget widget):base (widget)
 		{
 			SecondsPerPixel = 0.1;
+			CurrentTime = new Time (0);
 		}
 		
 		public double Scroll {
@@ -44,7 +45,7 @@ namespace LongoMatch.Drawing.Widgets
 			protected get;
 		}
 
-		public Time Position {
+		public Time CurrentTime {
 			get;
 			set;
 		}
@@ -58,6 +59,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			double height = widget.Height;
 			double width = widget.Width;
+			double tpos;
 
 			tk.Context = context;
 			tk.Begin ();
@@ -89,6 +91,13 @@ namespace LongoMatch.Drawing.Widgets
 				tk.DrawLine (new Point (pos, height),
 				             new Point (pos, height - SMALL_LINE_HEIGHT));
 			}
+			
+			/* Draw position triangle */
+			tpos = Common.TimeToPos (CurrentTime, SecondsPerPixel);
+			tk.FillColor = Common.TIMELINE_LINE_COLOR;
+			tk.DrawTriangle (new Point (tpos, widget.Height), 8,
+			                 BIG_LINE_HEIGHT, SelectionPosition.Bottom);
+
 			tk.End ();
 			tk.Context = null;
 		}

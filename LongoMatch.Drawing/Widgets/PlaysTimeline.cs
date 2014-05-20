@@ -76,6 +76,9 @@ namespace LongoMatch.Drawing.Widgets
 		
 		public Time CurrentTime {
 			set {
+				foreach (CategoryTimeline tl in categories.Values) {
+					tl.CurrentTime = value;
+				}
 			}
 		}
 		

@@ -20,7 +20,6 @@ using System.Collections.Generic;
 using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Interfaces;
 using LongoMatch.Common;
-using LongoMatch.Interfaces.Drawing;
 
 namespace LongoMatch.Drawing
 {
