@@ -26,7 +26,7 @@ namespace LongoMatch.Utils
 	public class Open
 	{
 		public static MediaFile OpenFile (object parent) {
-			IBusyDialog busy;
+			IBusyDialog busy = null;
 			MediaFile mediaFile = null;
 			IGUIToolkit gui = Config.GUIToolkit;
 			IMultimediaToolkit multimedia = Config.MultimediaToolkit; 
@@ -53,7 +53,7 @@ namespace LongoMatch.Utils
 					string q = Catalog.GetString("The file you are trying to load is not properly supported. " +
 						                             "Would you like to convert it into a more suitable format?");
 					if (gui.QuestionMessage (q, Catalog.GetString ("Convert"), null)) {
-						string newFilename = multimedia.RemuxFile (mediaFile, parent as Gtk.Window);
+						string newFilename = multimedia.RemuxFile (mediaFile, parent);
 						if (newFilename != null)
 							mediaFile = multimedia.DiscoverFile (newFilename);
 					}
@@ -61,7 +61,7 @@ namespace LongoMatch.Utils
 			}
 			catch(Exception ex) {
 				busy.Destroy ();
-				gui.ErrorMessage (ex.Message, parent as Gtk.Window);
+				gui.ErrorMessage (ex.Message, parent);
 				return null;
 			}
 			

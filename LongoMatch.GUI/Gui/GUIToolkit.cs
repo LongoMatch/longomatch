@@ -75,28 +75,28 @@ namespace LongoMatch.Gui
 			set;
 		}
 		
-		public void InfoMessage(string message, Widget parent=null) {
+		public void InfoMessage(string message, object parent=null) {
 			if (parent == null)
 				parent = mainWindow as Widget;
-			MessagesHelpers.InfoMessage(parent, message);
+			MessagesHelpers.InfoMessage(parent as Widget, message);
 		}
 		
-		public void ErrorMessage(string message, Widget parent=null) {
+		public void ErrorMessage(string message, object parent=null) {
 			if (parent == null)
 				parent = mainWindow as Widget;
-			MessagesHelpers.ErrorMessage (parent, message);
+			MessagesHelpers.ErrorMessage (parent as Widget, message);
 		}
 		
-		public void WarningMessage(string message, Widget parent=null) {
+		public void WarningMessage(string message, object parent=null) {
 			if (parent == null)
 				parent = mainWindow as Widget;
-			MessagesHelpers.WarningMessage (parent, message);
+			MessagesHelpers.WarningMessage (parent as Widget, message);
 		}
 		
-		public bool QuestionMessage(string question, string title, Widget parent=null) {
+		public bool QuestionMessage(string question, string title, object parent=null) {
 			if (parent == null)
 				parent = mainWindow as Widget;
-			return MessagesHelpers.QuestionMessage (parent, question, title);
+			return MessagesHelpers.QuestionMessage (parent as Widget, question, title);
 		}
 		
 		public string SaveFile(string title, string defaultName, string defaultFolder,

@@ -38,10 +38,10 @@ namespace LongoMatch.Interfaces.GUI
 		void Quit ();
 		
 		/* Messages */
-		void InfoMessage(string message, Widget parent=null);
-		void WarningMessage(string message, Widget parent=null);
-		void ErrorMessage(string message, Widget parent=null);
-		bool QuestionMessage(string message, string title, Widget parent=null);
+		void InfoMessage(string message, object parent=null);
+		void WarningMessage(string message, object parent=null);
+		void ErrorMessage(string message, object parent=null);
+		bool QuestionMessage(string message, string title, object parent=null);
 		
 		/* Files/Folders IO */
 		string SaveFile(string title, string defaultName, string defaultFolder,
