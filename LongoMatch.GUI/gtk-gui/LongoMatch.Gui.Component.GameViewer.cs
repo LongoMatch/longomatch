@@ -13,7 +13,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Image awayimage;
 		private global::Gtk.ScrolledWindow scrolledwindow1;
 		private global::Gtk.VBox cstatsbox;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

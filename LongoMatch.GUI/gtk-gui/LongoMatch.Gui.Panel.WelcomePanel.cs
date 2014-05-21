@@ -17,7 +17,7 @@ namespace LongoMatch.Gui.Panel
 		private global::Gtk.Button projectsbutton;
 		private global::Gtk.Button sportsbutton;
 		private global::Gtk.Button teamsbutton;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

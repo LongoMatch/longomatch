@@ -7,11 +7,9 @@
   <import>
     <widget-library name="../../bin/LongoMatch.GUI.Multimedia.dll" />
     <widget-library name="../../bin/LongoMatch.Multimedia.dll" />
-    <widget-library name="../../bin/LongoMatch.dll" />
     <widget-library name="../../bin/LongoMatch.GUI.Helpers.dll" />
-    <widget-library name="../../LongoMatch.Drawing/bin/Debug/LongoMatch.Drawing.dll" />
-    <widget-library name="../../bin/LongoMatch.Gui.dll" internal="true" />
     <widget-library name="../../LongoMatch.Drawing.Cairo/bin/Debug/LongoMatch.Drawing.Cairo.dll" />
+    <widget-library name="../../bin/LongoMatch.Gui.dll" internal="true" />
   </import>
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.ProjectListWidget" design-size="572 300">
     <property name="MemberName" />
@@ -10185,7 +10183,6 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
     </child>
   </widget>
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.CodingWidget" design-size="673 300">
-    <action-group name="Timeline" />
     <action-group name="Default">
       <action id="timelineMode">
         <property name="Type">Radio</property>
@@ -10213,6 +10210,7 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
         <property name="StockId">gtk-zoom-fit</property>
       </action>
     </action-group>
+    <action-group name="Timeline" />
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>

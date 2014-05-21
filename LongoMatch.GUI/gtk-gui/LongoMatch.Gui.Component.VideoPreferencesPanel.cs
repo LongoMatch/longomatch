@@ -30,7 +30,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Label label5;
 		private global::Gtk.Label label6;
 		private global::Gtk.Label GtkLabel1;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

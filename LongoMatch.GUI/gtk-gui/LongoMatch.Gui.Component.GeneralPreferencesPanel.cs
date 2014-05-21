@@ -8,7 +8,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Label label1;
 		private global::Gtk.Label label2;
 		private global::Gtk.ComboBox langcombobox;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

@@ -20,7 +20,7 @@ namespace LongoMatch.Gui.Panel
 		private global::Gtk.HSeparator hseparator1;
 		private global::Gtk.HButtonBox hbuttonbox3;
 		private global::Gtk.Button backbutton;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

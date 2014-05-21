@@ -11,7 +11,7 @@ namespace LongoMatch.Gui.Component.Stats
 		private global::Gtk.TreeView treeview;
 		private global::LongoMatch.Gui.Component.Stats.Plotter plotter;
 		private global::Gtk.Label gtkframe;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

@@ -23,7 +23,7 @@ namespace LongoMatch.Gui.Component.Stats
 		private global::LongoMatch.Gui.Component.PlaysCoordinatesTagger awaytagger;
 		private global::Gtk.Label awayLabel;
 		private global::Gtk.Label label2;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

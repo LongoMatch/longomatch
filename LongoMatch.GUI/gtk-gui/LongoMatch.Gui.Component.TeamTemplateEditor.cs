@@ -49,7 +49,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Button savebutton;
 		private global::Gtk.Button newplayerbutton;
 		private global::Gtk.Button deletebutton;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

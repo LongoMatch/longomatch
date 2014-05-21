@@ -12,7 +12,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Button button486;
 		private global::Gtk.Button button485;
 		private global::Gtk.Button button484;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

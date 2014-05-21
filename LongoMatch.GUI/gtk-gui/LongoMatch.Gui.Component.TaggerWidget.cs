@@ -18,7 +18,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.HBox periodhbox;
 		private global::Gtk.Label PeriodLabel;
 		private global::Gtk.Table table1;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

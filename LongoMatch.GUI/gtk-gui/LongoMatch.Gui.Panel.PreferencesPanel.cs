@@ -12,7 +12,7 @@ namespace LongoMatch.Gui.Panel
 		private global::Gtk.VBox propsvbox;
 		private global::Gtk.HButtonBox hbuttonbox2;
 		private global::Gtk.Button backbutton;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

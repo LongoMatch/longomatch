@@ -58,7 +58,7 @@ namespace LongoMatch.Gui.Panel
 		private global::Gtk.Label label3;
 		private global::Gtk.HButtonBox hbuttonbox3;
 		private global::Gtk.Button backbutton;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

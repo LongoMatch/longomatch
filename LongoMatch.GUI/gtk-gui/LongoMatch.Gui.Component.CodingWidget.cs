@@ -14,7 +14,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.HBox hbox2;
 		private global::LongoMatch.Gui.Component.ButtonsWidget buttonswidget;
 		private global::LongoMatch.Gui.Component.Timeline timeline;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

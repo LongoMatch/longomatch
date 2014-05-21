@@ -81,7 +81,7 @@ namespace LongoMatch.Gui.Panel
 		private global::Gtk.Button backbutton;
 		private global::Gtk.Button nextbutton;
 		private global::Gtk.Button createbutton;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

@@ -20,7 +20,7 @@ namespace LongoMatch.Gui.Component
 		private global::LongoMatch.Gui.Component.NotesWidget notes;
 		private global::Gtk.Label GtkLabel31;
 		private global::LongoMatch.Gui.Component.CodingWidget codingwidget;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

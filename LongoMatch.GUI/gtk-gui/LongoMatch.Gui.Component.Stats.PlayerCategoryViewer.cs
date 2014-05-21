@@ -6,7 +6,7 @@ namespace LongoMatch.Gui.Component.Stats
 	{
 		private global::Gtk.VBox vbox1;
 		private global::LongoMatch.Gui.Component.PlaysCoordinatesTagger tagger;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

@@ -11,7 +11,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.ComboBox teamscombobox;
 		private global::Gtk.ScrolledWindow GtkScrolledWindow;
 		private global::Gtk.IconView playersiconview;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

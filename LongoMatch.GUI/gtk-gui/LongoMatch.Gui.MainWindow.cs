@@ -46,7 +46,7 @@ namespace LongoMatch.Gui
 		private global::LongoMatch.Gui.Panel.WelcomePanel welcomepanel1;
 		private global::Gtk.Statusbar statusbar1;
 		private global::LongoMatch.Gui.Component.RenderingStateBar renderingstatebar1;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -126,12 +126,12 @@ namespace LongoMatch.Gui
 			this.ImportProjectAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Import Project");
 			w1.Add (this.ImportProjectAction, "<Control>i");
 			this.ManualTaggingViewAction = new global::Gtk.RadioAction ("ManualTaggingViewAction", global::Mono.Unix.Catalog.GetString ("Manual tagging view"), null, null, 0);
-			this.ManualTaggingViewAction.Group = this.TaggingViewAction.Group;
+			this.ManualTaggingViewAction.Group = this.TimelineViewAction.Group;
 			this.ManualTaggingViewAction.Sensitive = false;
 			this.ManualTaggingViewAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Free Capture Mode");
 			w1.Add (this.ManualTaggingViewAction, "<Control>f");
 			this.GameUnitsViewAction = new global::Gtk.RadioAction ("GameUnitsViewAction", global::Mono.Unix.Catalog.GetString ("Game units view"), null, null, 0);
-			this.GameUnitsViewAction.Group = this.ManualTaggingViewAction.Group;
+			this.GameUnitsViewAction.Group = this.TimelineViewAction.Group;
 			this.GameUnitsViewAction.Sensitive = false;
 			this.GameUnitsViewAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Game units view");
 			w1.Add (this.GameUnitsViewAction, null);

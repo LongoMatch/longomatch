@@ -12,7 +12,7 @@ namespace LongoMatch.Gui.Dialog
 		private global::LongoMatch.Gui.Component.Stats.PlayersViewer playersviewer;
 		private global::Gtk.Label label5;
 		private global::Gtk.Button buttonCancel;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

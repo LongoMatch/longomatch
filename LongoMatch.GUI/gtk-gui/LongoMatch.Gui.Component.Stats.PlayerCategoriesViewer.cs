@@ -9,7 +9,7 @@ namespace LongoMatch.Gui.Component.Stats
 		private global::Gtk.TreeView treeview;
 		private global::Gtk.ScrolledWindow scrolledwindow3;
 		private global::LongoMatch.Gui.Component.Stats.PlayerCategoryViewer categoryviewer;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

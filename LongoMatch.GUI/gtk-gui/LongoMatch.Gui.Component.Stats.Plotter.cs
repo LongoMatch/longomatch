@@ -12,7 +12,7 @@ namespace LongoMatch.Gui.Component.Stats
 		private global::Gtk.Image imageall;
 		private global::Gtk.Image imagehome;
 		private global::Gtk.Image imageaway;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

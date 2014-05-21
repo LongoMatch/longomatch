@@ -14,7 +14,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.DrawingArea timerulearea;
 		private global::Gtk.ScrolledWindow scrolledwindow1;
 		private global::Gtk.DrawingArea timelinearea;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

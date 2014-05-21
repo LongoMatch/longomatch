@@ -5,7 +5,7 @@ namespace LongoMatch.Gui.Component
 	public partial class CoordinatesTagger
 	{
 		private global::Gtk.DrawingArea drawingarea;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

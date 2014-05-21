@@ -5,7 +5,7 @@ namespace LongoMatch.Gui.Component
 	public partial class PlaysCoordinatesTagger
 	{
 		private global::Gtk.VBox mainbox;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

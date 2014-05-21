@@ -19,7 +19,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.ToggleButton catfiltersbutton;
 		private global::Gtk.ToggleButton playersfiltersbutton;
 		private global::Gtk.Label label2;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

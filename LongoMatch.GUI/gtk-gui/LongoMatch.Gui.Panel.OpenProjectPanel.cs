@@ -8,7 +8,7 @@ namespace LongoMatch.Gui.Panel
 		private global::LongoMatch.Gui.Component.ProjectListWidget projectlistwidget;
 		private global::Gtk.HButtonBox hbuttonbox;
 		private global::Gtk.Button backbutton;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

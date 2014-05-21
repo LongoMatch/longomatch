@@ -14,7 +14,7 @@ namespace LongoMatch.Gui.Dialog
 		private global::Gtk.Label label2;
 		private global::LongoMatch.Gui.Component.PlaysCoordinatesTagger coordstagger;
 		private global::Gtk.Button buttonOk;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
