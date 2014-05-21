@@ -36,20 +36,20 @@ namespace LongoMatch.Drawing.CanvasObject
 			this.background = background;
 			this.plays = new List<PlayObject> ();
 			Visible = true;
-			SecondsPerPixel = 0.1;
 			CurrentTime = new Time (0);
 			OffsetY  = offsetY;
 			foreach (Play p in plays) {
 				AddPlay (p);
 			}
+			SecondsPerPixel = 0.1;
 		}
 		
 		public double SecondsPerPixel {
 			set {
+				secondsPerPixel = value;
 				foreach (PlayObject po in plays) {
 					po.SecondsPerPixel = secondsPerPixel;
 				}
-				secondsPerPixel = value;
 			}
 			protected get {
 				return secondsPerPixel;
