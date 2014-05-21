@@ -42,14 +42,15 @@ namespace LongoMatch.Gui.Component
 		public event RenderPlaylistHandler RenderPlaylist;
 		
 		const int TIMERULE_HEIGHT = 30;
+		const uint TIMEOUT_MS = 100;
 		
 		PlaysTimeline timeline;
 		Timerule timerule;
 		CategoriesLabels labels;
 		MediaFile projectFile;
-		DateTime lastUpdate;
 		double secondsPerPixel;
-		Time currentTime;
+		uint timeoutID;
+		Time currentTime, nextCurrentTime;
 
 		public Timeline ()
 		{
@@ -68,7 +69,7 @@ namespace LongoMatch.Gui.Component
 			hbox1.HeightRequest = TIMERULE_HEIGHT;
 			scrolledwindow1.Vadjustment.ValueChanged += HandleScrollEvent;
 			scrolledwindow1.Hadjustment.ValueChanged += HandleScrollEvent;
-			lastUpdate = DateTime.Now;
+			timeoutID = 0;
 		}
 		
 		public TimeNode SelectedTimeNode {
@@ -78,14 +79,7 @@ namespace LongoMatch.Gui.Component
 		
 		public Time CurrentTime {
 			set {
-				DateTime now = DateTime.Now;
-				this.currentTime = value;
-				if ((now - lastUpdate).TotalMilliseconds > 100) {
-					timeline.CurrentTime = value;
-					timerule.CurrentTime = value;
-					QueueDraw ();
-					lastUpdate = now;
-				}
+				nextCurrentTime = value;
 			}
 			protected get {
 				return currentTime;
@@ -97,9 +91,16 @@ namespace LongoMatch.Gui.Component
 			labels.LoadProject (project, filter);
 			
 			if(project == null) {
+				if (timeoutID != 0) {
+					GLib.Source.Remove (timeoutID);
+					timeoutID = 0;
+				}
 				return;
 			}
 			
+			if (timeoutID == 0) {
+				timeoutID = GLib.Timeout.Add (TIMEOUT_MS, UpdateTime);
+			}
 			focusscale.Value = 6;
 			projectFile = project.Description.File;
 			timerule.Duration = new Time ((int)project.Description.File.Length);
@@ -118,6 +119,16 @@ namespace LongoMatch.Gui.Component
 		public void RemovePlays(List<Play> plays) {
 			timeline.RemovePlays (plays);
 			QueueDraw ();
+		}
+		
+		bool UpdateTime () {
+			if (nextCurrentTime != currentTime) {
+				currentTime = nextCurrentTime;
+				timeline.CurrentTime = currentTime;
+				timerule.CurrentTime = currentTime;
+				QueueDraw ();
+			}
+			return true;
 		}
 		
 		void HandleScrollEvent(object sender, System.EventArgs args)
