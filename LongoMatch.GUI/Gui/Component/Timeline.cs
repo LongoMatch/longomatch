@@ -48,6 +48,8 @@ namespace LongoMatch.Gui.Component
 		CategoriesLabels labels;
 		MediaFile projectFile;
 		DateTime lastUpdate;
+		double secondsPerPixel;
+		Time currentTime;
 
 		public Timeline ()
 		{
@@ -56,9 +58,10 @@ namespace LongoMatch.Gui.Component
 			this.timeline = new PlaysTimeline (new WidgetWrapper(timelinearea));
 			this.labels = new CategoriesLabels (new WidgetWrapper (labelsarea));
 			focusbutton.CanFocus = false;
+			focusbutton.Clicked += HandleFocusClicked;
 			focusscale.CanFocus = false;
 			focusscale.Adjustment.Lower = 0;
-			focusscale.Adjustment.Upper = 16;
+			focusscale.Adjustment.Upper = 12;
 			focusscale.ValueChanged += HandleValueChanged;
 			timerulearea.HeightRequest = TIMERULE_HEIGHT;
 			labelsarea.WidthRequest = LongoMatch.Drawing.Common.CATEGORY_WIDTH;
@@ -76,6 +79,7 @@ namespace LongoMatch.Gui.Component
 		public Time CurrentTime {
 			set {
 				DateTime now = DateTime.Now;
+				this.currentTime = value;
 				if ((now - lastUpdate).TotalMilliseconds > 100) {
 					timeline.CurrentTime = value;
 					timerule.CurrentTime = value;
@@ -83,19 +87,22 @@ namespace LongoMatch.Gui.Component
 					lastUpdate = now;
 				}
 			}
+			protected get {
+				return currentTime;
+			}
 		}
 		
 		public void SetProject (Project project, PlaysFilter filter) {
 			timeline.LoadProject (project, filter);
-			projectFile = project.Description.File;
+			labels.LoadProject (project, filter);
 			
 			if(project == null) {
 				return;
 			}
 			
-			focusscale.Value = 10;
+			focusscale.Value = 6;
+			projectFile = project.Description.File;
 			timerule.Duration = new Time ((int)project.Description.File.Length);
-			labels.Project = project;
 
 			timeline.TimeNodeChanged += HandleTimeNodeChanged;
 			timeline.TimeNodeSelected += HandleTimeNodeSelected;
@@ -122,6 +129,15 @@ namespace LongoMatch.Gui.Component
 			QueueDraw ();
 		}
 
+		void HandleFocusClicked (object sender, EventArgs e)
+		{
+			double pos = CurrentTime.Seconds / secondsPerPixel;
+			double maxPos = timelinearea.Allocation.Width - scrolledwindow1.Allocation.Width;
+			
+			pos = Math.Min (pos, maxPos);
+			scrolledwindow1.Hadjustment.Value = pos;
+		}
+
 		void HandleValueChanged (object sender, EventArgs e)
 		{
 			double secondsPer100Pixels, value;
@@ -135,8 +151,9 @@ namespace LongoMatch.Gui.Component
 				secondsPer100Pixels = (value - 5) * 60;
 			}
 
-			timerule.SecondsPerPixel = secondsPer100Pixels / 100 ;
-			timeline.SecondsPerPixel = secondsPer100Pixels / 100;
+			secondsPerPixel = secondsPer100Pixels / 100 ;
+			timerule.SecondsPerPixel = secondsPerPixel;
+			timeline.SecondsPerPixel = secondsPerPixel;
 			QueueDraw ();
 		}
 		

@@ -26,6 +26,7 @@ namespace LongoMatch.Interfaces.Drawing
 	public interface ICanvasObject
 	{
 		void Draw (IDrawingToolkit tk, Area area);
+		bool Visible {set; get;}
 	}
 	
 	public interface ICanvasSelectableObject: ICanvasObject, IDrawable

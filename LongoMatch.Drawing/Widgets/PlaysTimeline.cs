@@ -43,6 +43,7 @@ namespace LongoMatch.Drawing.Widgets
 		public event ShowTimelineMenuHandler ShowMenu;
 
 		Project project;
+		PlaysFilter playsFilter;
 		double secondsPerPixel;
 		Time duration;
 		uint lastTime;
@@ -67,11 +68,9 @@ namespace LongoMatch.Drawing.Widgets
 			categories.Clear();
 			duration= new Time ((int)project.Description.File.Length); 
 			widget.Height = project.Categories.Count * Common.CATEGORY_HEIGHT;
+			playsFilter = filter;
 			FillCanvas ();
-			filter.FilterUpdated += () => {
-				//Visible = filter.VisibleCategories.Contains (category);
-				//QueueDraw();
-			};	
+			filter.FilterUpdated += UpdateVisibleCategories;
 		}
 		
 		public Time CurrentTime {
@@ -106,8 +105,7 @@ namespace LongoMatch.Drawing.Widgets
 		void Update () {
 			double width = duration.Seconds / SecondsPerPixel;
 			widget.Width = width;
-			foreach (object o in Objects) {
-				CategoryTimeline tl = o as CategoryTimeline;
+			foreach (CategoryTimeline tl in categories.Values) {
 				tl.Width = width;
 				tl.SecondsPerPixel = SecondsPerPixel;
 			}
@@ -131,9 +129,25 @@ namespace LongoMatch.Drawing.Widgets
 				categories[cat] = tl;
 				Objects.Add (tl);
 			}
+			UpdateVisibleCategories ();
 			Update ();
 		}
 		
+		void UpdateVisibleCategories () {
+			int i=0;
+			foreach (Category cat in categories.Keys) {
+				CategoryTimeline timeline = categories[cat];
+				if (playsFilter.VisibleCategories.Contains (cat)) {
+					timeline.OffsetY = i * Common.CATEGORY_HEIGHT;
+					timeline.Visible = true;
+					i++;
+				} else {
+					timeline.Visible = false;
+				}
+			}
+			widget.ReDraw ();
+		}
+
 		void RedrawSelection (Selection sel)
 		{
 			PlayObject po = sel.Drawable as PlayObject;

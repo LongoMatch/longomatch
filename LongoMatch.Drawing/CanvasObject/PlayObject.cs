@@ -24,7 +24,7 @@ using LongoMatch.Store.Drawables;
 
 namespace LongoMatch.Drawing.CanvasObject
 {
-	public class PlayObject: ICanvasSelectableObject
+	public class PlayObject: BaseCanvasObject, ICanvasSelectableObject
 	{
 		const int MAX_TIME_SPAN=1000;
 		
@@ -72,7 +72,7 @@ namespace LongoMatch.Drawing.CanvasObject
 			}
 		}
 		
-		public void Draw (IDrawingToolkit tk, Area area) {
+		public override void Draw (IDrawingToolkit tk, Area area) {
 			Color c = Play.Category.Color;
 			tk.Begin ();
 			tk.FillColor = new Color (c.R, c.G, c.B, (ushort) (0.8 * ushort.MaxValue));

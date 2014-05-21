@@ -25,7 +25,7 @@ using LongoMatch.Store.Drawables;
 
 namespace LongoMatch.Drawing.CanvasObject
 {
-	public class CategoryTimeline: ICanvasSelectableObject
+	public class CategoryTimeline: BaseCanvasObject, ICanvasSelectableObject
 	{
 		Color background;
 		List<PlayObject> plays;
@@ -35,6 +35,7 @@ namespace LongoMatch.Drawing.CanvasObject
 		{
 			this.background = background;
 			this.plays = new List<PlayObject> ();
+			Visible = true;
 			SecondsPerPixel = 0.1;
 			CurrentTime = new Time (0);
 			OffsetY  = offsetY;
@@ -86,9 +87,11 @@ namespace LongoMatch.Drawing.CanvasObject
 			plays.RemoveAll (po => po.Play == play);
 		}
 
-		public void Draw (IDrawingToolkit tk, Area area) {
+		public override void Draw (IDrawingToolkit tk, Area area) {
 			double position;
-			List<PlayObject> selected = new List<PlayObject>();
+			List<PlayObject> selected;
+			
+			selected = new List<PlayObject>();
 
 			tk.Begin ();
 			tk.FillColor = background;

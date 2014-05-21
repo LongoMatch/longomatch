@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Collections.Generic;
 using LongoMatch.Store;
 using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Common;
@@ -26,9 +27,12 @@ namespace LongoMatch.Drawing.Widgets
 	public class CategoriesLabels: Canvas
 	{
 		Project project;
+		PlaysFilter filter;
+		Dictionary<Category, CategoryLabel> categories;
 
 		public CategoriesLabels (IWidget widget): base (widget)
 		{
+			categories = new Dictionary<Category, CategoryLabel>();
 		}
 		
 		public double Scroll {
@@ -40,34 +44,51 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 		
-		public Project Project {
-			set {
-				Objects.Clear ();
-				project = value;
-				if (project != null)
-					FillCanvas ();
+		public void LoadProject (Project project, PlaysFilter filter) {
+			Objects.Clear ();
+			this.project = project;
+			this.filter = filter;
+			if (project != null) {
+				FillCanvas ();
+				UpdateVisibleCategories ();
+				filter.FilterUpdated += UpdateVisibleCategories;
 			}
 		}
 		
 		void FillCanvas () {
-			Point offset;
+			int i = 0;
 			
 			widget.Width = Common.CATEGORY_WIDTH;
-			
-			offset = new Point (0, 0);
 			
 			/* Start from bottom to top  with categories */
 			foreach (Category cat in project.Categories) {
 				CategoryLabel l;
-				Point cOffset;
 				
 				/* Add the category label */
-				cOffset = new Point (offset.X, offset.Y);
 				l = new CategoryLabel (cat, Common.CATEGORY_WIDTH,
-				                       Common.CATEGORY_HEIGHT, cOffset);
+				                       Common.CATEGORY_HEIGHT,
+				                       i * Common.CATEGORY_HEIGHT);
+				categories[cat] = l;
 				Objects.Add (l);
-				offset.Y += Common.CATEGORY_HEIGHT;
+				i++;
 			}
+		}
+		
+		void UpdateVisibleCategories () {
+			int i = 0;
+
+			foreach (Category cat in categories.Keys) {
+				CategoryLabel label = categories[cat];
+
+				if (filter.VisibleCategories.Contains (cat)) {
+					label.OffsetY = i * Common.CATEGORY_HEIGHT;
+					label.Visible = true;
+					i++;
+				} else {
+					label.Visible = false;
+				}
+			}
+			widget.ReDraw ();
 		}
 	}
 }

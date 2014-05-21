@@ -70,6 +70,9 @@ namespace LongoMatch.Drawing.Cairo
 		}
 		
 		public void ReDraw (Area area = null) {
+			if (widget.GdkWindow == null) {
+				return;
+			}
 			if (area == null) {
 				Gdk.Region region = widget.GdkWindow.ClipRegion;
 				widget.GdkWindow.InvalidateRegion(region,true);

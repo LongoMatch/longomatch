@@ -23,28 +23,34 @@ using LongoMatch.Common;
 
 namespace LongoMatch.Drawing.CanvasObject
 {
-	public class CategoryLabel: ICanvasObject
+	public class CategoryLabel: BaseCanvasObject, ICanvasObject
 	{
 		Category category;
 		double width, height;
-		Point offset;
 
 		public CategoryLabel (Category category, double width, double height,
-		                      Point offset)
+		                      double offsetY)
 		{
 			this.category = category;
 			this.height = height;
 			this.width = width;
-			this.offset = offset;
+			OffsetY = offsetY;
 		}
 		
 		public double Scroll {
 			get;
 			set;
 		}
-
-		public void Draw (IDrawingToolkit tk, Area area) {
-			double y = offset.Y - Scroll;
+		
+		public double OffsetY {
+			set;
+			protected get;
+		}
+		
+		public override void Draw (IDrawingToolkit tk, Area area) {
+			double y;
+			
+			y = OffsetY - Scroll;
 			tk.Begin();
 			tk.FillColor = category.Color;
 			tk.StrokeColor = category.Color;

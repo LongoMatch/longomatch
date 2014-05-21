@@ -54,7 +54,9 @@ namespace LongoMatch.Drawing
 		protected virtual void HandleDraw (object context, Area area) {
 			tk.Context = context;
 			foreach (ICanvasObject o in Objects) {
-				o.Draw (tk, area);
+				if (o.Visible) {
+					o.Draw (tk, area);
+				}
 			}
 			tk.Context = null;
 		}
