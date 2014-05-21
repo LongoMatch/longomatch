@@ -184,7 +184,12 @@ namespace LongoMatch.Services
 			Capturer = newAnalysiswindow.Capturer;
 			if (newAnalysiswindow != analysisWindow) {
 				analysisWindow = newAnalysiswindow;
-				analysisWindow.CloseOpenedProjectEvent += () => {SaveCaptureProject (OpenedProject);};
+				analysisWindow.CloseOpenedProjectEvent += () => {
+					if (projectType == ProjectType.FileProject) {
+						CloseOpenedProject (false);
+					} else {
+						SaveCaptureProject (OpenedProject);}
+					};
 			}
 			if (newController != projectOptionsController) {
 				projectOptionsController = newController;
