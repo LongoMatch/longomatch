@@ -38,6 +38,11 @@ namespace LongoMatch.Drawing.CanvasObject
 			set;
 		}
 		
+		public Time MaxTime {
+			set;
+			protected get;
+		}
+		
 		public double OffsetY {
 			get;
 			set;
@@ -46,11 +51,6 @@ namespace LongoMatch.Drawing.CanvasObject
 		public double SecondsPerPixel {
 			set;
 			protected get;
-		}
-		
-		public bool Selected {
-			set;
-			get;
 		}
 		
 		double StartX {
@@ -105,7 +105,14 @@ namespace LongoMatch.Drawing.CanvasObject
 		
 		public void Move (Selection sel, Point p, Point start) {
 			Time newTime = Common.PosToTime (p, SecondsPerPixel);
-			
+
+			if (p.X < 0) {
+				p.X = 0;
+			} else if (newTime > MaxTime) {
+				p.X = Common.TimeToPos (MaxTime, SecondsPerPixel);
+			}
+			newTime = Common.PosToTime (p, SecondsPerPixel);
+
 			switch (sel.Position) {
 			case SelectionPosition.Left: {
 				if (newTime.MSeconds + MAX_TIME_SPAN > Play.Stop.MSeconds) {

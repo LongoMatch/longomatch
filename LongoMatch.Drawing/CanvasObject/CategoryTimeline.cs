@@ -30,11 +30,13 @@ namespace LongoMatch.Drawing.CanvasObject
 		Color background;
 		List<PlayObject> plays;
 		double secondsPerPixel;
+		Time maxTime;
 		
-		public CategoryTimeline (List<Play> plays, double offsetY, Color background)
+		public CategoryTimeline (List<Play> plays, Time maxTime, double offsetY, Color background)
 		{
 			this.background = background;
 			this.plays = new List<PlayObject> ();
+			this.maxTime = maxTime;
 			Visible = true;
 			CurrentTime = new Time (0);
 			OffsetY  = offsetY;
@@ -68,18 +70,14 @@ namespace LongoMatch.Drawing.CanvasObject
 		
 		public double OffsetY {
 			set;
-			protected get;
-		}
-		
-		public bool Selected {
 			get;
-			set;
 		}
 		
 		public void AddPlay (Play play) {
 			PlayObject po = new PlayObject (play);
 			po.OffsetY = OffsetY;
 			po.SecondsPerPixel = SecondsPerPixel;
+			po.MaxTime = maxTime;
 			plays.Add (po);
 		}
 		
