@@ -35,31 +35,25 @@ namespace LongoMatch.Drawing.Widgets
 	 *  cat3    ----    ----
 	 */
 	 
-	public class PlaysTimeline: Canvas
+	public class PlaysTimeline: SelectionCanvas
 	{
 	
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event PlaySelectedHandler TimeNodeSelected;
-		public event ShowTimelineMenuHandler ShowMenu;
+		public event ShowTimelineMenuHandler ShowMenuEvent;
 
 		Project project;
 		PlaysFilter playsFilter;
 		double secondsPerPixel;
 		Time duration;
-		uint lastTime;
-		bool moving;
-		List<Selection> selectionList;
-		Point start;
 		Dictionary<Category, CategoryTimeline> categories;
 		
 		public PlaysTimeline (IWidget widget): base(widget)
 		{
 			categories = new Dictionary<Category, CategoryTimeline> ();
 			secondsPerPixel = 0.1;
-			widget.ButtonPressEvent += HandleButtonPressEvent;
-			widget.ButtonReleasedEvent += HandleButtonReleasedEvent;
-			widget.MotionEvent += HandleMotionEvent;
-			selectionList = new List<Selection> ();
+			Accuracy = Common.TIMELINE_ACCURACY;
+			MultipleSelection = true;
 		}
 
 		public void LoadProject (Project project, PlaysFilter filter) {
@@ -98,7 +92,7 @@ namespace LongoMatch.Drawing.Widgets
 		public void RemovePlays(List<Play> plays) {
 			foreach (Play p in plays) {
 				categories[p.Category].RemovePlay (p);
-				selectionList.RemoveAll (s => (s.Drawable as PlayObject).Play == p);
+				Selections.RemoveAll (s => (s.Drawable as PlayObject).Play == p);
 			}
 		}
 		
@@ -125,7 +119,7 @@ namespace LongoMatch.Drawing.Widgets
 				
 				cat = project.Categories[i];
 				tl = new CategoryTimeline (project.PlaysInCategory (cat),
-				                           i * Common.CATEGORY_HEIGHT, c);
+				                           duration, i * Common.CATEGORY_HEIGHT, c);
 				categories[cat] = tl;
 				Objects.Add (tl);
 			}
@@ -154,120 +148,55 @@ namespace LongoMatch.Drawing.Widgets
 			widget.ReDraw (categories[po.Play.Category]);
 		}		
 		
-		void ClearSelection () {
-			foreach (Selection sel in selectionList) {
-				PlayObject po = sel.Drawable as PlayObject;
-				po.Selected = false;
-				widget.ReDraw (po);
-			}
-			selectionList.Clear ();
-		}
-		
-		void UpdateSelection (Selection sel) {
+		protected override void ItemSelected (Selection sel) {
 			PlayObject po = sel.Drawable as PlayObject;
-			Selection seldup = selectionList.FirstOrDefault (s => s.Drawable == sel.Drawable);
-			
-			if (seldup != null) {
-				po.Selected = false;
-				selectionList.Remove (seldup);
-			} else {
-				po.Selected = true;
-				selectionList.Add (sel);
-				if (TimeNodeSelected != null) {
-					TimeNodeSelected (po.Play);
-				}
+			if (TimeNodeSelected != null) {
+				TimeNodeSelected (po.Play);
 			}
-			widget.ReDraw (po);
 		}
 		
-		void HandleLeftButton (Point coords, ButtonModifier modif) {
-			Selection sel = null;
+		protected override void StartMove (Selection sel) {
+			if (sel.Position != SelectionPosition.All) {
+				widget.SetCursor (CursorType.DoubleArrow);
+			}
+		}
+		
+		protected override void StopMove () {
+			widget.SetCursor (CursorType.Arrow);
+		}
 
-			foreach (CategoryTimeline tl in categories.Values) {
-				sel = tl.GetSelection (coords, Common.TIMELINE_ACCURACY);
-				if (sel != null) {
+		protected override void ShowMenu (Point coords) {
+			Category cat = null;
+			List<Play> plays = Selections.Select (p => (p.Drawable as PlayObject).Play).ToList();
+			
+			foreach (Category c in categories.Keys) {
+				CategoryTimeline tl = categories[c];
+				if (!tl.Visible)
+					continue;
+				if (coords.Y >= tl.OffsetY && coords.Y < tl.OffsetY + Common.CATEGORY_HEIGHT) {
+					cat = c;
 					break;
 				}
 			}
-
-			if (modif == ButtonModifier.Control || modif == ButtonModifier.Shift) {
-				if (sel != null) {
-					UpdateSelection (sel);
-				}
-			} else {
-				ClearSelection ();
-				if (sel == null) {
-					return;
-				}
-				UpdateSelection (sel);
-				start = coords;
-				if (sel.Position != SelectionPosition.All) {
-					widget.SetCursor (CursorType.DoubleArrow);
-					moving = true;
-				}
-			}
-		}
-		
-		void HandleRightButton (Point coords) {
-			List<Play> plays = selectionList.Select (p => (p.Drawable as PlayObject).Play).ToList();
 			
-			if (ShowMenu != null) {
-				ShowMenu (plays, null,
+			if (cat != null && ShowMenuEvent != null) {
+				ShowMenuEvent (plays, cat,
 				          Common.PosToTime (coords, SecondsPerPixel));
 			}
 		}
-
-		void HandleMotionEvent (Point coords)
-		{
-			Selection sel;
-			Play play;
-			Time newTime, moveTime;
-
-			if (!moving)
-				return;
-			
-			sel = selectionList[0];
-			play = (sel.Drawable as PlayObject).Play;
-			newTime = Common.PosToTime (coords, SecondsPerPixel);
-
-			if (coords.X < 0) {
-				coords.X = 0;
-			} else if (newTime > duration) {
-				coords.X = Common.TimeToPos (duration, SecondsPerPixel);
-			}
-			if (sel.Position == SelectionPosition.Right) {
-				moveTime = play.Stop;
-			} else {
-				moveTime = play.Start;
-			}
-			
-			sel.Drawable.Move (sel, coords, start);  
-			RedrawSelection (selectionList[0]);
-
+		
+		protected override void SelectionMoved (Selection sel) {
 			if (TimeNodeChanged != null) {
+				Time moveTime;
+				Play play = (sel.Drawable as PlayObject).Play;
+
+				if (sel.Position == SelectionPosition.Right) {
+					moveTime = play.Stop;
+				} else {
+					moveTime = play.Start;
+				}
 				TimeNodeChanged (play, moveTime);
 			}
-		}
-
-		void HandleButtonReleasedEvent (Point coords, ButtonType type, ButtonModifier modifier)
-		{
-			if (type == ButtonType.Left) {
-				widget.SetCursor (CursorType.Arrow);
-				moving = false;
-			}
-		}
-
-		void HandleButtonPressEvent (Point coords, uint time, ButtonType type, ButtonModifier modifier)
-		{
-			if (time - lastTime < 500) {
-				return;
-			}
-			if (type == ButtonType.Left) {
-				HandleLeftButton (coords, modifier);
-			} else if (type == ButtonType.Right) {
-				HandleRightButton (coords);
-			}
-			lastTime = time;
 		}
 	}
 }
