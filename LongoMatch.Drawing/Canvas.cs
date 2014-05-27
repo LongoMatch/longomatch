@@ -73,6 +73,8 @@ namespace LongoMatch.Drawing
 		
 		public SelectionCanvas (IWidget widget): base (widget) {
 			Selections = new List<Selection>();
+			SelectionMode = MultiSelectionMode.Single;
+			
 			widget.ButtonPressEvent += HandleButtonPressEvent;
 			widget.ButtonReleasedEvent += HandleButtonReleasedEvent;
 			widget.MotionEvent += HandleMotionEvent;
@@ -83,7 +85,7 @@ namespace LongoMatch.Drawing
 			set;
 		}
 		
-		public bool MultipleSelection {
+		public MultiSelectionMode SelectionMode {
 			get;
 			set;
 		}
@@ -134,8 +136,11 @@ namespace LongoMatch.Drawing
 				}
 			}
 
-			if (MultipleSelection && (modif == ButtonModifier.Control ||
-			                          modif == ButtonModifier.Shift)) {
+			if ((SelectionMode == MultiSelectionMode.Multiple) ||
+			    (SelectionMode == MultiSelectionMode.MultipleWithModifier &&
+			    (modif == ButtonModifier.Control ||
+			    modif == ButtonModifier.Shift)))
+			{
 				if (sel != null) {
 					sel.Position = SelectionPosition.All;
 					UpdateSelection (sel);

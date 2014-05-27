@@ -53,7 +53,7 @@ namespace LongoMatch.Drawing.Widgets
 			categories = new Dictionary<Category, CategoryTimeline> ();
 			secondsPerPixel = 0.1;
 			Accuracy = Common.TIMELINE_ACCURACY;
-			MultipleSelection = true;
+			SelectionMode = MultiSelectionMode.MultipleWithModifier;
 		}
 
 		public void LoadProject (Project project, PlaysFilter filter) {
