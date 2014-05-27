@@ -75,7 +75,12 @@ namespace LongoMatch.Common
 		
 		static public Color Black = new Color (0, 0, 0);
 		static public Color White = new Color (ushort.MaxValue, ushort.MaxValue, ushort.MaxValue);
-		static public Color Grey = ColorFromRGB (190, 190, 190);
+		static public Color Red = new Color (ushort.MaxValue, 0, 0);
+		static public Color Green = new Color (0, ushort.MaxValue, 0);
+		static public Color Blue = new Color (0, 0, ushort.MaxValue);
+		static public Color Grey1 = ColorFromRGB (190, 190, 190);
+		static public Color Grey2 = ColorFromRGB (32, 32, 32);
+		static public Color Green1 = ColorFromRGB (99,192,56);
 	}
 }
 
