@@ -31,6 +31,7 @@ namespace LongoMatch.Interfaces
 		string FontFamily {set;}
 		FontSlant FontSlant {set;}
 		FontWeight FontWeight {set;}
+		int FontSize {set;}
 		
 		void Begin();
 		void End();
