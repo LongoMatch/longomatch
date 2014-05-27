@@ -38,6 +38,12 @@ namespace LongoMatch.Store.Templates
 		
 		public TeamTemplate() {
 			TeamName = Catalog.GetString("Team");
+			if (PlayingPlayers == 0) {
+				PlayingPlayers = 11;
+			}
+			if (Formation == null) {
+				Formation = new List<int>(new int[] {1, 4, 3, 3});
+			}
 		}
 
 		public String Name {
@@ -66,6 +72,16 @@ namespace LongoMatch.Store.Templates
 				else
 					thumbnailBuf = value.Serialize();
 			}
+		}
+		
+		public int PlayingPlayers {
+			get;
+			set;
+		} 
+		
+		public List<int> Formation {
+			get;
+			set;
 		}
 		
 		public List<Player> PlayingPlayersList {
