@@ -52,6 +52,18 @@ namespace LongoMatch.Common
 			Scale (Constants.MAX_THUMBNAIL_SIZE, Constants.MAX_THUMBNAIL_SIZE);
 		}
 		
+		public void ScaleFactor (int destWidth, int destHeight,
+		                         out double scaleX, out double scaleY,
+		                         out Point offset) {
+			int oWidth = 0;
+			int oHeight = 0;
+			
+			ComputeScale (Width, Height, destWidth, destHeight, out oWidth, out oHeight);
+			scaleX = (double) oWidth / Width;
+			scaleY = (double) oHeight / Height;
+			offset = new Point ((destWidth - oWidth) / 2, (destHeight - oHeight) / 2);
+		}
+		
 		// this constructor is automatically called during deserialization
 		public Image (SerializationInfo info, StreamingContext context) {
 			try {
@@ -165,11 +177,13 @@ namespace LongoMatch.Common
 
 			if(inWidth > maxOutWidth || inHeight > maxOutHeight) {
 				double par = (double)inWidth /(double)inHeight;
+				double outPar = (double)maxOutWidth /(double)maxOutHeight;
 				
-				if(inHeight>inWidth)
-					outWidth = (int)(outHeight * par);
-				else
-					outHeight = (int)(outWidth / par);
+				if (outPar > par) {
+					outWidth = Math.Min (maxOutWidth, (int)(outHeight * par));
+				} else {
+					outHeight = Math.Min (maxOutHeight, (int)(outWidth / par));
+				}
 			}
 		} 
 	}
