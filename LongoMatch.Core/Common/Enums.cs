@@ -207,5 +207,11 @@ namespace LongoMatch.Common
 		Selection,
 		Cross,
 	}
+	
+	public enum MultiSelectionMode {
+		Single,
+		Multiple,
+		MultipleWithModifier,
+	}
 }
 
