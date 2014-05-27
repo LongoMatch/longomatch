@@ -44,16 +44,6 @@ namespace LongoMatch.Drawing
 			set;
 		}
 		
-		public double Width {
-			get;
-			set;
-		}
-		
-		public double Height {
-			get;
-			set;
-		}
-		
 		protected virtual void HandleDraw (object context, Area area) {
 			tk.Context = context;
 			for (int i=Objects.Count - 1; i >= 0; i--) {
@@ -99,10 +89,10 @@ namespace LongoMatch.Drawing
 		protected abstract void StartMove (Selection sel);
 		protected abstract void SelectionMoved (Selection sel);
 		protected abstract void StopMove ();
-		protected abstract void ItemSelected (Selection sel);
+		protected abstract void SelectionChanged (List<Selection> sel);
 		protected abstract void ShowMenu (Point coords);
 		
-		void ClearSelection () {
+		public void ClearSelection () {
 			foreach (Selection sel in Selections) {
 				ICanvasSelectableObject po = sel.Drawable as ICanvasSelectableObject;
 				po.Selected = false;
@@ -111,17 +101,18 @@ namespace LongoMatch.Drawing
 			Selections.Clear ();
 		}
 		
-		void UpdateSelection (Selection sel) {
+		protected void UpdateSelection (Selection sel) {
 			ICanvasSelectableObject so = sel.Drawable as ICanvasSelectableObject;
 			Selection seldup = Selections.FirstOrDefault (s => s.Drawable == sel.Drawable);
 			
 			if (seldup != null) {
 				so.Selected = false;
 				Selections.Remove (seldup);
+				SelectionChanged (Selections);
 			} else {
 				so.Selected = true;
 				Selections.Add (sel);
-				ItemSelected (sel);
+				SelectionChanged (Selections);
 			}
 			widget.ReDraw (so);
 		}

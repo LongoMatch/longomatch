@@ -148,10 +148,12 @@ namespace LongoMatch.Drawing.Widgets
 			widget.ReDraw (categories[po.Play.Category]);
 		}		
 		
-		protected override void ItemSelected (Selection sel) {
-			PlayObject po = sel.Drawable as PlayObject;
-			if (TimeNodeSelected != null) {
-				TimeNodeSelected (po.Play);
+		protected override void SelectionChanged (List<Selection> selections) {
+			if (selections.Count > 0) {
+				PlayObject po = selections.Last().Drawable as PlayObject;
+				if (TimeNodeSelected != null) {
+					TimeNodeSelected (po.Play);
+				}
 			}
 		}
 		
