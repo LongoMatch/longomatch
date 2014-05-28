@@ -94,6 +94,7 @@ namespace LongoMatch.Common
 					return Load<T> (stream, SerializationType.Json);
 				} catch (Exception e) {
 					Log.Exception (e);
+					stream.Seek (0, SeekOrigin.Begin);
 					return Load<T> (stream, SerializationType.Binary);
 				}
 			}
