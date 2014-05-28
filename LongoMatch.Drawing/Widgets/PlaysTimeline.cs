@@ -114,7 +114,7 @@ namespace LongoMatch.Drawing.Widgets
 				if (i % 2 == 0) {
 					c = Color.White;
 				} else {
-					c = Color.Grey;
+					c = Color.Grey1;
 				}
 				
 				cat = project.Categories[i];
