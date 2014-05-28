@@ -175,15 +175,13 @@ namespace LongoMatch.Common
 			outWidth = maxOutWidth;
 			outHeight = maxOutHeight;
 
-			if(inWidth > maxOutWidth || inHeight > maxOutHeight) {
-				double par = (double)inWidth /(double)inHeight;
-				double outPar = (double)maxOutWidth /(double)maxOutHeight;
+			double par = (double)inWidth /(double)inHeight;
+			double outPar = (double)maxOutWidth /(double)maxOutHeight;
 				
-				if (outPar > par) {
-					outWidth = Math.Min (maxOutWidth, (int)(outHeight * par));
-				} else {
-					outHeight = Math.Min (maxOutHeight, (int)(outWidth / par));
-				}
+			if (outPar > par) {
+				outWidth = Math.Min (maxOutWidth, (int)(outHeight * par));
+			} else {
+				outHeight = Math.Min (maxOutHeight, (int)(outWidth / par));
 			}
 		} 
 	}
