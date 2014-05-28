@@ -31,7 +31,12 @@ namespace LongoMatch.Drawing
 		public static Color TIMELINE_LINE_COLOR = Color.Black;
 		public static Color TIMERULE_BACKGROUND = Color.White;
 		public static Color PLAY_OBJECT_SELECTED_COLOR = Color.Black;
-		public static Color PLAY_OBJECT_UNSELECTED_COLOR = Color.Grey;
+		public static Color PLAY_OBJECT_UNSELECTED_COLOR = Color.Grey1;
+		public static Color PLAYER_SELECTED_COLOR = Color.Green1;
+		public static Color PLAYER_UNSELECTED_COLOR = Color.Grey2;
+		public static Color PLAYER_PLAYING_COLOR = Color.Green;
+		public static Color PLAYER_NOT_PLAYING_COLOR = Color.Red;
+
 		public const int TIMELINE_LINE_WIDTH = 1;
 		
 		public static double TimeToPos (Time time, double secondsPerPixel) {
