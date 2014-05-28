@@ -33,7 +33,7 @@ namespace LongoMatch.Common
 	public class SerializableObject
 	{
 		public static void Save<T>(T obj, Stream stream,
-		                           SerializationType type=SerializationType.Binary) {
+		                           SerializationType type=SerializationType.Json) {
 			switch (type) {
 			case SerializationType.Binary:
 				BinaryFormatter formatter = new  BinaryFormatter();
@@ -52,7 +52,7 @@ namespace LongoMatch.Common
 		}
 		
 		public static void Save<T>(T obj, string filepath,
-		                           SerializationType type=SerializationType.Binary) {
+		                           SerializationType type=SerializationType.Json) {
 			Stream stream = new FileStream(filepath, FileMode.Create, FileAccess.Write, FileShare.None);
 			using (stream) {
 				Save<T> (obj, stream, type);
@@ -61,7 +61,7 @@ namespace LongoMatch.Common
 		}
 
 		public static T Load<T>(Stream stream,
-		                        SerializationType type=SerializationType.Binary) {
+		                        SerializationType type=SerializationType.Json) {
 			switch (type) {
 			case SerializationType.Binary:
 				BinaryFormatter formatter = new BinaryFormatter();
@@ -78,7 +78,7 @@ namespace LongoMatch.Common
 		}
 		
 		public static T Load<T>(string filepath,
-		                        SerializationType type=SerializationType.Binary) {
+		                        SerializationType type=SerializationType.Json) {
 			Stream stream = new FileStream(filepath, FileMode.Open, FileAccess.Read, FileShare.Read);
 			using (stream) {
 				return Load<T> (stream, type);
@@ -91,9 +91,10 @@ namespace LongoMatch.Common
 			                               FileAccess.Read, FileShare.Read);
 			using (stream) {
 				try {
+					return Load<T> (stream, SerializationType.Json);
+				} catch (Exception e) {
+					Log.Exception (e);
 					return Load<T> (stream, SerializationType.Binary);
-				} catch {
-					return Load<T> (stream, SerializationType.Xml);
 				}
 			}
 		}
