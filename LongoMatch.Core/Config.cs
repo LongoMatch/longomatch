@@ -37,6 +37,8 @@ namespace LongoMatch
 		public static IDrawingToolkit DrawingToolkit;
 		public static ITeamTemplatesProvider TeamTemplatesProvider;
 		public static ICategoriesTemplatesProvider CategoriesTemplatesProvider;
+		public static ISubcategoriesTemplatesProvider SubcategoriesTemplatesProvider;
+
 		public static IDataBaseManager DatabaseManager;
 		public static IRenderingJobsManager RenderingJobsManger;
 

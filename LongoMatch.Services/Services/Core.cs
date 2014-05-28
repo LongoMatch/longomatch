@@ -86,6 +86,7 @@ namespace LongoMatch.Services
 			ts = new TemplatesService (Config.TemplatesDir);
 			Config.TeamTemplatesProvider = ts.TeamTemplateProvider;
 			Config.CategoriesTemplatesProvider = ts.CategoriesTemplateProvider;
+			Config.SubcategoriesTemplatesProvider = ts.SubCategoriesTemplateProvider;
 
 			/* Start DB services */
 			dbManager = new DataBaseManager (Config.DBDir, guiToolkit);

@@ -68,9 +68,9 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		public void LoadSubcategories(ITemplatesService ts) {
-			subcategoriesProvider = ts.SubCategoriesTemplateProvider;
-			LoadSubcategories(ts.PlayerSubcategories);
+		public void LoadSubcategories() {
+			subcategoriesProvider = Config.SubcategoriesTemplatesProvider;
+			LoadSubcategories();
 		}
 		
 		private void LoadSubcategories(List<PlayerSubCategory> playerSubcategories) {

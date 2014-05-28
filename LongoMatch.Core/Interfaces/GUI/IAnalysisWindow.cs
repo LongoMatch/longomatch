@@ -75,7 +75,6 @@ namespace LongoMatch.Interfaces.GUI
 		
 		IPlayerBin Player{get;}
 		ICapturerBin Capturer{get;}
-		ITemplatesService TemplatesService{set;}
 		IPlaylistWidget Playlist {get;}
 	}
 }

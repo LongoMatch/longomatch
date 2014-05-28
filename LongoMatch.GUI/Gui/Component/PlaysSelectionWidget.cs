@@ -90,12 +90,6 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		public ITemplatesService TemplatesService {
-			set {
-				playsList.TemplatesService = value;
-			}
-		}
-		
 		public void AddPlay(Play play) {
 			playsList.AddPlay(play);
 			UpdateTeamsModels();

@@ -113,12 +113,6 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		public ITemplatesService TemplatesService {
-			set {
-				playsSelection.TemplatesService = value;
-			}
-		}
-		
 		public bool Fullscreen {
 			set {
 				playercapturer.FullScreen = value;

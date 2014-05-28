@@ -48,8 +48,6 @@ namespace LongoMatch.Gui.Component
 		public event RenderPlaylistHandler RenderPlaylist;
 		public event DuplicatePlayHandler DuplicatePlay;
 
-		ITemplatesService ts;
-
 		private Project project;
 
 		public PlaysListTreeWidget()
@@ -65,13 +63,6 @@ namespace LongoMatch.Gui.Component
 			treeview.TagPlay += OnTagPlay;
 			treeview.NewRenderingJob += OnNewRenderingJob;
 			treeview.DuplicatePlay += OnDuplicatePlay;
-		}
-		
-		public ITemplatesService TemplatesService
-		{
-			set {
-				ts = value;
-			}
 		}
 		
 		public PlaysFilter Filter {
@@ -182,7 +173,7 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		protected virtual void OnEditProperties(TimeNode tNode, object val) {
-			EditCategoryDialog dialog = new EditCategoryDialog(ts);
+			EditCategoryDialog dialog = new EditCategoryDialog();
 			dialog.Category = tNode as Category; 
 			dialog.Template = project.Categories;
 			dialog.Project = project;
