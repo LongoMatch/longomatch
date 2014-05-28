@@ -117,8 +117,10 @@ namespace LongoMatch.Gui.Panel
 
 			provider.Update (loadedTeam);
 			/* The shield might have changed, update it just in case */
-			teamstreeview.Model.SetValue (itersDict[loadedTeam.Name], 0,
-			                              loadedTeam.Shield.Value);
+			if (loadedTeam.Shield != null) {
+				teamstreeview.Model.SetValue (itersDict[loadedTeam.Name], 0,
+				                              loadedTeam.Shield.Value);
+			}
 		}
 		
 		void LoadTeam (string teamName) {
@@ -218,7 +220,7 @@ namespace LongoMatch.Gui.Panel
 					team = TeamTemplate.DefaultTemplate (dialog.Count);
 					team.TeamName = dialog.Text;
 					team.Name = dialog.Text;
-					provider.Save (team);
+					provider.Update (team);
 				}
 				Load (dialog.Text);
 			}
