@@ -17,7 +17,6 @@
 //
 
 using System;
-using System.Drawing.Imaging;
 using Newtonsoft.Json;
 
 using LongoMatch.Common;
