@@ -177,7 +177,7 @@ namespace LongoMatch.Store.Templates
 		}	
 		
 		public Category AddDefaultItem (int index) {
-			Color c = new Color (255, 0, 0);
+			Color c = Color.Red;
 			HotKey h = new HotKey();
 			
 			

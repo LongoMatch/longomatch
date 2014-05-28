@@ -86,10 +86,6 @@ namespace LongoMatch.Gui.Helpers
 			}
 		}
 		
-		static public byte ShortToByte (ushort val) {
-			return (byte) (((float)val) / ushort.MaxValue * byte.MaxValue);
-		}
-		
 		static public double ShortToDouble (ushort val) {
 			return (double) (val) / ushort.MaxValue;
 		}
@@ -99,12 +95,11 @@ namespace LongoMatch.Gui.Helpers
 		}
 
 		public static Color ToGdkColor(LColor color) {
-			return new Color (ShortToByte (color.R), ShortToByte (color.G),
-			                  ShortToByte (color.G));
+			return new Color (color.R, color.G, color.G);
 		}
 		
 		public static LColor ToLgmColor(Color color) {
-			return new LColor (color.Red, color.Green, color.Blue);
+			return LColor.ColorFromUShort (color.Red, color.Green, color.Red);
 		}
 		
 		public static ListStore FillImageFormat (ComboBox formatBox, VideoStandard def) {

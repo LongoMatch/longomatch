@@ -21,7 +21,7 @@ namespace LongoMatch.Common
 {
 	public class Color
 	{
-		public Color (ushort r, ushort g, ushort b, ushort a=ushort.MaxValue)
+		public Color (byte r, byte g, byte b, byte a=byte.MaxValue)
 		{
 			R = r;
 			G = g;
@@ -29,22 +29,22 @@ namespace LongoMatch.Common
 			A = a;
 		}
 		
-		public ushort R {
+		public byte R {
 			get;
 			set;
 		}
 		
-		public ushort G {
+		public byte G {
 			get;
 			set;
 		}
 		
-		public ushort B {
+		public byte B {
 			get;
 			set;
 		}
 		
-		public ushort A {
+		public byte A {
 			get;
 			set;
 		}
@@ -63,26 +63,25 @@ namespace LongoMatch.Common
 			return (Int32)R<<24 | (Int32)G<<16 | (Int32)B<<8 | (Int32)A;
 		}
 		
-		static public ushort ByteToUShort (Byte val) {
-			var ret = (ushort) (((float)val) / byte.MaxValue * ushort.MaxValue);
-			return ret;
-		}
-
-		static Color ColorFromRGB (byte r, byte g, byte b) {
-			return new Color (ByteToUShort (r), ByteToUShort (g), ByteToUShort (b));
+		static public byte UShortToByte (ushort val) {
+			return (byte) (((float)val) / ushort.MaxValue * byte.MaxValue);
 		}
 		
+		static public Color ColorFromUShort (ushort r, ushort g, ushort b, ushort a = ushort.MaxValue) {
+			return new Color (UShortToByte (r), UShortToByte (g),
+			                  UShortToByte (b), UShortToByte (a));
+		}
 		
 		static public Color Black = new Color (0, 0, 0);
-		static public Color White = new Color (ushort.MaxValue, ushort.MaxValue, ushort.MaxValue);
-		static public Color Red = new Color (ushort.MaxValue, 0, 0);
-		static public Color Green = new Color (0, ushort.MaxValue, 0);
-		static public Color Blue = new Color (0, 0, ushort.MaxValue);
-		static public Color Grey1 = ColorFromRGB (190, 190, 190);
-		static public Color Grey2 = ColorFromRGB (32, 32, 32);
-		static public Color Green1 = ColorFromRGB (99,192,56);
-		static public Color Red1 = ColorFromRGB (255, 51, 0);
-		static public Color Blue1 = ColorFromRGB (0, 153, 255);
+		static public Color White = new Color (255, 255, 255);
+		static public Color Red = new Color (255, 0, 0);
+		static public Color Green = new Color (0, 255, 0);
+		static public Color Blue = new Color (0, 0, 255);
+		static public Color Grey1 = new Color (190, 190, 190);
+		static public Color Grey2 = new Color (32, 32, 32);
+		static public Color Green1 = new Color (99,192,56);
+		static public Color Red1 = new Color (255, 51, 0);
+		static public Color Blue1 = new Color (0, 153, 255);
 	}
 }
 

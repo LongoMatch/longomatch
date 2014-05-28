@@ -75,7 +75,7 @@ namespace LongoMatch.Drawing.CanvasObject
 		public override void Draw (IDrawingToolkit tk, Area area) {
 			Color c = Play.Category.Color;
 			tk.Begin ();
-			tk.FillColor = new Color (c.R, c.G, c.B, (ushort) (0.8 * ushort.MaxValue));
+			tk.FillColor = new Color (c.R, c.G, c.B, (byte) (0.8 * byte.MaxValue));
 			if (Selected) {
 				tk.StrokeColor = Common.PLAY_OBJECT_SELECTED_COLOR;
 			} else {
