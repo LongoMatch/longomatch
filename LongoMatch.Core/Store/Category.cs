@@ -166,7 +166,7 @@ namespace LongoMatch.Store
 			SubCategories = (List<ISubCategory>)info.GetValue("subcategories", typeof(List<ISubCategory>));
 			Position = (Int32) info.GetValue("position", typeof (Int32));
 			SortMethod = (SortMethodType)info.GetValue("sort_method", typeof(SortMethodType));
-			Color = new Color ((ushort)info.GetValue("red", typeof(ushort)),
+			Color = Color.ColorFromUShort ((ushort)info.GetValue("red", typeof(ushort)),
 			                   (ushort)info.GetValue("green", typeof(ushort)),
 			                   (ushort)info.GetValue("blue", typeof(ushort)));
 			try {
