@@ -107,5 +107,8 @@ Xavier Queralt Mateu (ca)";
 		public const int MAX_PLAYER_ICON_SIZE = 100;
 		public const int MAX_SHIELD_ICON_SIZE = 100;
 		public const int MAX_THUMBNAIL_SIZE = 100;
+		
+		public static Color HOME_COLOR = Color.Red1;
+		public static Color AWAY_COLOR = Color.Blue1;
 	}
 }

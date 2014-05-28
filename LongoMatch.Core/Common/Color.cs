@@ -81,6 +81,8 @@ namespace LongoMatch.Common
 		static public Color Grey1 = ColorFromRGB (190, 190, 190);
 		static public Color Grey2 = ColorFromRGB (32, 32, 32);
 		static public Color Green1 = ColorFromRGB (99,192,56);
+		static public Color Red1 = ColorFromRGB (255, 51, 0);
+		static public Color Blue1 = ColorFromRGB (0, 153, 255);
 	}
 }
 
