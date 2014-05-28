@@ -107,7 +107,7 @@ namespace LongoMatch.Gui.Component
 
 			timeline.TimeNodeChanged += HandleTimeNodeChanged;
 			timeline.TimeNodeSelected += HandleTimeNodeSelected;
-			timeline.ShowMenu += HandleShowMenu;
+			timeline.ShowMenuEvent += HandleShowMenu;
 			QueueDraw ();
 		}
 
@@ -175,7 +175,8 @@ namespace LongoMatch.Gui.Component
 			
 			menu = new Menu();
 
-			newPlay = new MenuItem(Catalog.GetString("Add new play"));
+			newPlay = new MenuItem(String.Format ("{0} in {1}",
+			                       Catalog.GetString("Add new play"), cat.Name));
 			menu.Append(newPlay);
 			newPlay.Activated += (sender, e) => {EmitNewPlay (cat, time);};
 
