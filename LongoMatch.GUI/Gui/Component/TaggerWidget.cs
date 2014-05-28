@@ -57,11 +57,11 @@ namespace LongoMatch.Gui.Component
 		
 		public void AddTeamSubCategory(TeamSubCategory subcat, TeamsTagStore tags,
 		                               string localTeam, string visitorTeam){
-			TeamTaggerWidget tagger = new TeamTaggerWidget(subcat, tags,
-			                                               localTeam, visitorTeam);
-			table1.Attach(tagger,0, 1, table1.NRows-1, table1.NRows);
-			table1.NRows ++;
-			tagger.Show();
+//			TeamTaggerWidget tagger = new TeamTaggerWidget(subcat, tags,
+//			                                               localTeam, visitorTeam);
+//			table1.Attach(tagger,0, 1, table1.NRows-1, table1.NRows);
+//			table1.NRows ++;
+//			tagger.Show();
 		}
 		
 		void SetTeams (Play play, string localTeam, string visitorTeam) {

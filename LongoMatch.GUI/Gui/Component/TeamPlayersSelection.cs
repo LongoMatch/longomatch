@@ -21,6 +21,8 @@ using LongoMatch.Interfaces;
 using LongoMatch.Store.Templates;
 using LongoMatch.Store;
 using Gdk;
+using LongoMatch.Drawing.Widgets;
+using LongoMatch.Drawing.Cairo;
 
 namespace LongoMatch.Gui.Component
 {
@@ -32,39 +34,12 @@ namespace LongoMatch.Gui.Component
 		TeamTemplate template;
 		ListStore teams, players;
 		
-		enum Columns {
-			Desc,
-			Number,
-			Playing,
-			Photo,
-			Player,
-			NumCols,
-		}
-		
 		public TeamPlayersSelection ()
 		{
-			CellRendererToggle togglerenderer;
-			CellRendererText textrenderer;
-			
 			this.Build ();
 			teams = new ListStore (typeof(string));
-			players = new ListStore (typeof(string), typeof(string), typeof(bool), typeof(Pixbuf), typeof(Player));
 			teamscombobox.Model = teams;
-			playersiconview.Model = players;
 			teamscombobox.Changed += HandleChanged;
-			
-			togglerenderer = new CellRendererToggle ();
-			togglerenderer.Radio = false;
-			togglerenderer.Toggled += HandleToggled;
-			textrenderer = new CellRendererText ();
-			playersiconview.PixbufColumn = (int) Columns.Photo;
-			playersiconview.TooltipColumn = (int) Columns.Desc;
-			playersiconview.PackEnd (textrenderer, false);
-			playersiconview.PackEnd (togglerenderer, false);
-			playersiconview.SetAttributes (togglerenderer, "active", Columns.Playing);
-			playersiconview.SetAttributes (textrenderer, "text", Columns.Number);
-			playersiconview.Orientation = Orientation.Horizontal;
-			playersiconview.SelectionMode = SelectionMode.None;
 		}
 
 		public ITeamTemplatesProvider TemplatesProvider {
@@ -91,35 +66,13 @@ namespace LongoMatch.Gui.Component
 					shieldimage.Pixbuf = template.Shield.Value;
 				}
 				namelabel.Text = template.TeamName;
-				players.Clear ();
-				foreach (Player p in template) {
-					Pixbuf playerImage;
-					
-					if (p.Photo != null) {
-						playerImage = p.Photo.Value;
-					} else {
-						playerImage = Stetic.IconLoader.LoadIcon (this, "stock_person", IconSize.Dialog);
-					}
-					players.AppendValues (String.Format("{0} {1}", p.Name, p.Number),
-					                      p.Number.ToString(), p.Playing, playerImage, p);
-				}
+				//teamtaggerwidget.Team = template;	
 			}
 		}
 		
 		void HandleChanged (object sender, EventArgs e)
 		{
 			Load (teamscombobox.ActiveText);
-		}
-		
-		void HandleToggled (object o, ToggledArgs args)
-		{
-			Player player;
-			TreeIter iter;
-			
-			playersiconview.Model.GetIterFromString (out iter, args.Path);
-			player = playersiconview.Model.GetValue (iter, (int) Columns.Player) as Player;
-			player.Playing = !(o as CellRendererToggle).Active;
-			playersiconview.Model.SetValue (iter, (int) Columns.Playing, player.Playing);
 		}
 	}
 }

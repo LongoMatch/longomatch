@@ -156,10 +156,6 @@
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.TeamTaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Component.TeamTemplateEditor" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="TeamTemplateEditor Properties">
@@ -368,10 +364,6 @@
         <signal name="OpenNewProjectEvent" />
       </itemgroup>
     </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.TeamPlayersSelection" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
   </object>
   <object type="LongoMatch.Gui.Panel.TeamsTemplatesPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />

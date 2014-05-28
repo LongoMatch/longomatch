@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Gtk;
 using Gdk;
@@ -24,9 +25,12 @@ using LongoMatch.Store;
 using Mono.Unix;
 
 using Image = LongoMatch.Common.Image;
+using Color = LongoMatch.Common.Color;
 using LongoMatch.Common;
 using LongoMatch.Gui.Popup;
 using LongoMatch.Gui.Dialog;
+using LongoMatch.Drawing.Widgets;
+using LongoMatch.Drawing.Cairo;
 
 namespace LongoMatch.Gui.Component
 {
@@ -35,36 +39,47 @@ namespace LongoMatch.Gui.Component
 	{
 		public event EventHandler TemplateSaved;
 	
-		enum Columns {
-			Desc,
-			Photo,
-			Tooltip,
-			Player,
-			NumCols,
-		}
-	
-		ListStore players;
 		Player loadedPlayer;
-		List<Player> selectedPlayers;
-		TreeIter loadedPlayerIter;
 		TeamTemplate template;
-		bool edited;
+		bool edited, ignoreChanges;
+		List<Player> selectedPlayers;
+		TeamTagger teamtagger;
+		bool inSubs;
 		
 		public TeamTemplateEditor ()
 		{
 			this.Build ();
-			
-			players = new ListStore (typeof(string), typeof(Pixbuf), typeof(string), typeof(Player));
-
-			playersiconview.Model = players;
-			playersiconview.Reorderable = true;
-			playersiconview.TextColumn = (int) Columns.Desc;
-			playersiconview.PixbufColumn = (int) Columns.Photo;
-			playersiconview.SelectionMode = SelectionMode.Multiple;
-			playersiconview.SelectionChanged += HandlePlayersSelectionChanged;;
-			playersiconview.KeyPressEvent += HandleKeyPressEvent;
-			
+			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea));
+			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
 			ConnectSignals ();
+		}
+
+		public bool Edited {
+			get {
+				return edited;
+			}
+			protected set {
+				edited = value;
+				savebutton.Sensitive = edited;
+			}
+		}
+		
+		public TeamTemplate  Team {
+			set {
+				template = value;
+				subsbutton.Active = false;
+				ignoreChanges = true;
+				if (template.Shield != null) {
+					shieldimage.Pixbuf = template.Shield.Value;
+				} else {
+					shieldimage.Pixbuf = Gdk.Pixbuf.LoadFromResource ("logo.svg");
+				}
+				teamnameentry.Text = template.TeamName;
+				FillFormation ();
+				teamtagger.LoadTeams (template, null, null);
+				ignoreChanges = false;
+				Edited = false;
+			}
 		}
 		
 		void ConnectSignals () {
@@ -84,13 +99,21 @@ namespace LongoMatch.Gui.Component
 			nationalityentry.Changed += HandleEntryChanged;
 			mailentry.Changed += HandleEntryChanged;
 			
+			applybutton.Clicked += (s,e) => {ParseTactics();}; 
+			tacticsentry.Activated += (s, e) => {ParseTactics();};
+			
 			datebutton.Clicked += HandleCalendarbuttonClicked; 
+			
+			subsbutton.Clicked += HandleSubsClicked;
 			
 			Edited = false;
 		}
 
 		void HandleEntryChanged (object sender, EventArgs e)
 		{
+			if (ignoreChanges == true)
+				return;
+
 			if (sender == teamnameentry) {
 				template.TeamName = (sender as Entry).Text;
 			} else if (sender == nameentry) {
@@ -109,34 +132,12 @@ namespace LongoMatch.Gui.Component
 				loadedPlayer.Mail = (sender as Entry).Text;
 			}
 			Edited = true;
+			drawingarea.QueueDraw ();
 		}
 
-		public TeamTemplate  Team {
-			set {
-				template = value;
-				
-				players.Clear ();
-				foreach (Player p in value) {
-					AddPlayer (p);
-				}
-				if (template.Shield != null) {
-					shieldimage.Pixbuf = template.Shield.Value;
-				} else {
-					shieldimage.Pixbuf = Gdk.Pixbuf.LoadFromResource ("logo.svg");
-				}
-				teamnameentry.Text = template.TeamName;
-				Edited = false;
-			}
-		}
-		
-		public bool Edited {
-			get {
-				return edited;
-			}
-			protected set {
-				edited = value;
-				savebutton.Sensitive = edited;
-			}
+		void FillFormation () {
+			tacticsentry.Text = template.FormationStr;
+			nplayerslabel.Text = template.PlayingPlayers.ToString();
 		}
 		
 		void LoadPlayer (Player p) {
@@ -151,6 +152,18 @@ namespace LongoMatch.Gui.Component
 			playerimage.Pixbuf = PlayerPhoto (p);
 		}
 		
+		void ParseTactics () {
+			try {
+				template.FormationStr = tacticsentry.Text;
+				teamtagger.Reload ();
+				Edited = true;
+			} catch {
+				Config.GUIToolkit.ErrorMessage (
+					Catalog.GetString ("Could not parse tactics string"));
+			}
+			FillFormation ();
+		}
+		
 		Pixbuf PlayerPhoto (Player p) {
 			Pixbuf playerImage;
 				
@@ -162,21 +175,26 @@ namespace LongoMatch.Gui.Component
 			return playerImage;
 		}
 		
-		TreeIter AddPlayer (Player p) {
-			return players.AppendValues (String.Format("{0} #{1}", p.Name, p.Number),
-			                             PlayerPhoto (p), p.Number.ToString(), p);
-		}
-		
 		void PlayersSelected (List<Player> players) {
-			playerframe.Sensitive = players.Count == 1;
-			
-			selectedPlayers = players;
-			deletebutton.Sensitive = players.Count != 0;
-			playerframe.Sensitive = players.Count != 0;
-			if (players.Count == 1) {
-				LoadPlayer (players[0]);
+			if (inSubs) {
+				if (players.Count == 2) {
+					ExtensionMethods.Swap (template, template.IndexOf (players[0]),
+					                       template.IndexOf (players[1]));
+					teamtagger.ClearSelection ();
+					teamtagger.Reload ();
+					Edited = true;
+				}
+				return;
 			} else {
-				loadedPlayer = null;
+				playerframe.Sensitive = players.Count == 1;
+				selectedPlayers = players;
+				deletebutton.Sensitive = players.Count != 0;
+				playerframe.Sensitive = players.Count != 0;
+				if (players.Count == 1) {
+					LoadPlayer (players[0]);
+				} else {
+					loadedPlayer = null;
+				}
 			}
 		}
 		
@@ -195,26 +213,21 @@ namespace LongoMatch.Gui.Component
 			Team = template;
 		}
 		
-		void HandlePlayersSelectionChanged (object sender, EventArgs e)
+		void HandleSubsClicked (object sender, EventArgs e)
 		{
-			TreeIter iter;
-			List<Player> list;
-			TreePath[] pathArray;
-			
-			list = new List<Player>();
-			pathArray = playersiconview.SelectedItems;
-				
-			for(int i=0; i< pathArray.Length; i++) {
-				Player player;
-				
-				playersiconview.Model.GetIterFromString (out iter, pathArray[i].ToString());
-				player = playersiconview.Model.GetValue (iter, (int)Columns.Player) as Player; 
-				list.Add (player);
-				if (i== 0) {
-					loadedPlayerIter = iter;
-				}
+			inSubs = subsbutton.Active;
+			teamtagger.ClearSelection ();
+			if (inSubs) {
+				teamtagger.SelectionMode = MultiSelectionMode.Multiple;
+			} else {
+				teamtagger.SelectionMode = MultiSelectionMode.MultipleWithModifier;
 			}
-			PlayersSelected (list);
+			warninglabel.Visible = inSubs;
+		}
+
+		void HandlePlayersSelectionChangedEvent (List<Player> players)
+		{
+			PlayersSelected (players);
 		}
 		
 		void HandleSaveTemplateClicked (object sender, EventArgs e)
@@ -229,12 +242,9 @@ namespace LongoMatch.Gui.Component
 
 		void HandleNewPlayerClicked (object sender, EventArgs e)
 		{
-			TreeIter iter;
-			Player p;
-			
-			p = template.AddDefaultItem (template.Count);
-			iter = AddPlayer (p);
-			playersiconview.SelectPath (playersiconview.Model.GetPath (iter));
+			Player p = template.AddDefaultItem (template.Count);
+			teamtagger.Reload ();
+			teamtagger.Select (p);
 			Edited = true;
 		}
 
@@ -264,8 +274,7 @@ namespace LongoMatch.Gui.Component
 			if (player != null && loadedPlayer != null) {
 				playerimage.Pixbuf = player.Value;
 				loadedPlayer.Photo = player;
-				playersiconview.Model.SetValue (loadedPlayerIter, (int) Columns.Photo,
-				                                playerimage.Pixbuf);
+				teamtagger.Reload ();
 				Edited = true;
 			}
 		}

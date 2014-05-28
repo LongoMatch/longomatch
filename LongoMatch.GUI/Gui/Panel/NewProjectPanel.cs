@@ -37,6 +37,8 @@ using LongoMatch.Interfaces.GUI;
 
 using Device = LongoMatch.Common.Device;
 using Color = Gdk.Color;
+using LongoMatch.Drawing.Widgets;
+using LongoMatch.Drawing.Cairo;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -52,11 +54,14 @@ namespace LongoMatch.Gui.Panel
 		Project project;
 		ProjectType projectType;
 		List<Device> videoDevices;
-		ListStore videoStandardList, encProfileList, qualList;
+		ListStore teams, videoStandardList, encProfileList, qualList;
 		MediaFile mediaFile;
 		IMultimediaToolkit mtoolkit;
 		IGUIToolkit gtoolkit;
 		Color red;
+		TeamTemplate hometemplate, awaytemplate;
+		Categories analysisTemplate;
+		TeamTagger teamtagger;
 		
 		public NewProjectPanel (Project project)
 		{
@@ -77,19 +82,40 @@ namespace LongoMatch.Gui.Panel
 				notebook1.Page = 1;
 				this.project = project;
 			}
-			localteamplayersselection.TemplatesProvider = Config.TeamTemplatesProvider;
-			awayteamplayersselection.TemplatesProvider = Config.TeamTemplatesProvider;
+			
 			ConnectSignals ();
 			FillProjectDetails ();
 			FillCategories ();
 			FillFormats ();
 			FillDevices (mtoolkit.VideoDevices);
+			LoadTeams ();
 			Color.Parse ("red", ref red);
 			outputfilelabel.ModifyFg (StateType.Normal, red);
 			Color.Parse ("red", ref red);
 			urilabel.ModifyFg (StateType.Normal, red);
 			Color.Parse ("red", ref red);
 			filelabel.ModifyFg (StateType.Normal, red);
+		}
+		
+		void LoadTeams () {
+			drawingarea1.HeightRequest = 200;
+			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea1));
+			teams = new ListStore (typeof(string));
+
+			teamtagger.HomeColor = Constants.HOME_COLOR;
+			teamtagger.AwayColor = Constants.AWAY_COLOR;
+
+			foreach (string name in Config.TeamTemplatesProvider.TemplatesNames) {
+				teams.AppendValues (name);
+			}
+			hometeamscombobox.Model = teams;
+			hometeamscombobox.Changed += (sender, e) => {
+				LoadTemplate (hometeamscombobox.ActiveText, Team.LOCAL);};
+			awayteamscombobox.Model = teams;
+			awayteamscombobox.Changed += (sender, e) => {
+				LoadTemplate (awayteamscombobox.ActiveText, Team.VISITOR);};
+			hometeamscombobox.Active = 0;
+			awayteamscombobox.Active = 0;
 		}
 		
 		void ConnectSignals () {
@@ -100,12 +126,13 @@ namespace LongoMatch.Gui.Panel
 			fileEntry.Changed += HandleEntryChanged;
 			outfileEntry.Changed += HandleEntryChanged;
 			createbutton.Clicked += HandleCreateProject;
+			tagscombobox.Changed += HandleSportsTemplateChanged;
 		}
 
 		void FillProjectDetails () {
 			seasonentry.Text = project.Description.Season;
 			competitionentry.Text = project.Description.Competition;
-			dateEntry.Text = project.Description.MatchDate.ToShortDateString();
+			datelabel.Text = project.Description.MatchDate.ToShortDateString();
 			localSpinButton.Value = project.Description.LocalGoals;
 			visitorSpinButton.Value = project.Description.VisitorGoals;
 		}
@@ -176,10 +203,37 @@ namespace LongoMatch.Gui.Panel
 				devicecombobox.Active = 0;
 			}
 		}
-
+		
+		
+		public void LoadTemplate (string name, Team team) {
+			TeamTemplate template;
+			if (name != null) {
+				template = Config.TeamTemplatesProvider.Load (name);
+				if (team == Team.LOCAL) {
+					if (template.Shield != null) {
+						homeshieldimage.Pixbuf = template.Shield.Value;
+					} else {
+						homeshieldimage.Pixbuf = Gdk.Pixbuf.LoadFromResource ("logo.svg");						
+					}
+					homelabel.Text = template.TeamName;
+					hometemplate = template;
+				} else {
+					if (template.Shield != null) {
+						awayshieldimage.Pixbuf = template.Shield.Value;
+					} else {
+						awayshieldimage.Pixbuf = Gdk.Pixbuf.LoadFromResource ("logo.svg");						
+					}
+					awaylabel.Text = template.TeamName;
+					awaytemplate = template;
+				}
+				teamtagger.LoadTeams (hometemplate, awaytemplate,
+				                      analysisTemplate.FieldBackground);
+			}
+		}
+		
 		void HandleCalendarbuttonClicked(object sender, System.EventArgs e)
 		{
-			dateEntry.Text = Config.GUIToolkit.SelectDate (project.Description.MatchDate, this).ToShortDateString ();
+			datelabel.Text = Config.GUIToolkit.SelectDate (project.Description.MatchDate, this).ToShortDateString ();
 		}
 
 		void HandleSavebuttonClicked(object sender, System.EventArgs e)
@@ -222,6 +276,11 @@ namespace LongoMatch.Gui.Panel
 			QueueDraw ();
 		}
 
+		void HandleSportsTemplateChanged (object sender, EventArgs e)
+		{
+			analysisTemplate = Config.CategoriesTemplatesProvider.Load(tagscombobox.ActiveText);
+		}
+
 		void HandleCreateProject (object sender, EventArgs e)
 		{
 			CaptureSettings captureSettings;
@@ -249,15 +308,15 @@ namespace LongoMatch.Gui.Panel
 				}
 			}
 			p = new Project ();
-			p.Categories = Config.CategoriesTemplatesProvider.Load(tagscombobox.ActiveText);
-			p.LocalTeamTemplate = localteamplayersselection.Template;
-			p.VisitorTeamTemplate = awayteamplayersselection.Template;
+			p.Categories = analysisTemplate;
+			p.LocalTeamTemplate = hometemplate;
+			p.VisitorTeamTemplate = awaytemplate;
 			p.Description = new ProjectDescription ();
 			p.Description.Competition = competitionentry.Text;
 			p.Description.File = mediaFile;
 			p.Description.LocalGoals = (int) localSpinButton.Value;
 			p.Description.VisitorGoals = (int) visitorSpinButton.Value;
-			p.Description.MatchDate = DateTime.Parse (dateEntry.Text);
+			p.Description.MatchDate = DateTime.Parse (datelabel.Text);
 			p.Description.Season = seasonentry.Text;
 			p.Description.LocalName = p.LocalTeamTemplate.TeamName;
 			p.Description.VisitorName = p.VisitorTeamTemplate.TeamName;
