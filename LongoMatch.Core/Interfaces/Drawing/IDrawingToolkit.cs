@@ -45,7 +45,7 @@ namespace LongoMatch.Interfaces
 		void DrawCircle (Point center, double radius);
 		void DrawEllipse (Point center, double axisX, double axisY);
 		void DrawText (Point point, double width, double height, string text);
-		void DrawImage (Point start, double width, double height, Image image); 
+		void DrawImage (Point start, double width, double height, Image image, bool scale); 
 	}
 }
 

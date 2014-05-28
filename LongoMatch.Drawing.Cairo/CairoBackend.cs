@@ -27,6 +27,8 @@ using LFontSlant = LongoMatch.Common.FontSlant;
 using LFontWeight = LongoMatch.Common.FontWeight;
 using FontSlant = Cairo.FontSlant;
 using FontWeight = Cairo.FontWeight;
+using Image = LongoMatch.Common.Image;
+using Gdk;
 
 namespace LongoMatch.Drawing.Cairo
 {
@@ -239,7 +241,23 @@ namespace LongoMatch.Drawing.Cairo
 			context.ShowText (text);
 		}
 		
-		public void DrawImage (Point start, double width, double height, Image image) {
+		public void DrawImage (Point start, double width, double height, Image image, bool scale) {
+			double scaleX, scaleY;
+			Point offset;
+			
+			if (scale) {
+				image.ScaleFactor ((int) width, (int) height, out scaleX, out scaleY, out offset);
+			} else {
+				offset = new Point (0, 0);
+				scaleX = width / image.Width;
+				scaleY = height / image.Height;
+			}
+			context.Save ();
+			context.Translate (start.X + offset.X, start.Y + offset.Y);
+			context.Scale (scaleX, scaleY);
+			CairoHelper.SetSourcePixbuf (context, image.Value, 0, 0);
+			context.Paint ();
+			context.Restore ();
 		}
 
 		public void DrawEllipse (Point center, double axisX, double axisY) {
