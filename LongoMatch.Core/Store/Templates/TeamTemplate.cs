@@ -38,11 +38,8 @@ namespace LongoMatch.Store.Templates
 		
 		public TeamTemplate() {
 			TeamName = Catalog.GetString("Team");
-			if (PlayingPlayers == 0) {
-				PlayingPlayers = 11;
-			}
 			if (Formation == null) {
-				Formation = new List<int>(new int[] {1, 4, 3, 3});
+				FormationStr = "1-4-3-3";
 			}
 		}
 
@@ -76,14 +73,37 @@ namespace LongoMatch.Store.Templates
 		
 		public int PlayingPlayers {
 			get;
-			set;
+			protected set;
 		} 
 		
-		public List<int> Formation {
+		public int[] Formation {
 			get;
 			set;
 		}
 		
+		[JsonIgnore]
+		public string FormationStr {
+			set {
+				string[] elements = value.Split('-');
+				int[] tactics = new int[elements.Length];
+				int index = 0;
+				foreach (string s in elements) {
+					try {
+						tactics[index] = int.Parse (s);
+						index ++;
+					} catch {
+						throw new FormatException ();
+					}
+				}
+				PlayingPlayers = tactics.Sum();
+				Formation = tactics;
+			}
+			get {
+				return String.Join ("-", Formation);
+			}
+		}
+		
+		[JsonIgnore]
 		public List<Player> PlayingPlayersList {
 			get {
 				return this.Where(p=>p.Playing).Select(p=>p).ToList();
