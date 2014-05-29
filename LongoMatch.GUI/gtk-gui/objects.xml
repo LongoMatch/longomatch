@@ -1,8 +1,4 @@
 <objects attr-sync="on">
-  <object type="LongoMatch.Gui.Component.Stats.SubCategoryViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Popup.TransparentDrawingArea" palette-category="General" allow-children="false" base-type="Gtk.Window">
     <itemgroups />
     <signals />
@@ -139,6 +135,10 @@
     <itemgroups />
     <signals />
   </object>
+  <object type="LongoMatch.Gui.Component.BackgroundWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
   <object type="LongoMatch.Gui.SubCategoriesTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
     <itemgroups />
     <signals>
@@ -155,18 +155,6 @@
   <object type="LongoMatch.Gui.Component.StringTaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.TeamTemplateEditor" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="TeamTemplateEditor Properties">
-        <property name="Edited" />
-      </itemgroup>
-    </itemgroups>
-    <signals>
-      <itemgroup label="TeamTemplateEditor Signals">
-        <signal name="TemplateSaved" />
-      </itemgroup>
-    </signals>
   </object>
   <object type="LongoMatch.Gui.Component.RenderingStateBar" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
@@ -276,6 +264,10 @@
     </itemgroups>
     <signals />
   </object>
+  <object type="LongoMatch.Gui.Component.Stats.SubCategoryViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
   <object type="LongoMatch.Gui.Component.Stats.CategoriesViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
@@ -283,38 +275,6 @@
   <object type="LongoMatch.Gui.Component.GameViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.AnalysisComponent" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="IAnalysisWindow Signals">
-        <signal name="CloseOpenedProjectEvent" />
-        <signal name="NewTagEvent" />
-        <signal name="NewTagStartEvent" />
-        <signal name="NewTagStopEvent" />
-        <signal name="NewTagCancelEvent" />
-        <signal name="PlaySelectedEvent" />
-        <signal name="TagPlayEvent" />
-        <signal name="PlaysDeletedEvent" />
-        <signal name="TimeNodeChanged" />
-        <signal name="PlayCategoryChanged" />
-        <signal name="DuplicatePlay" />
-        <signal name="RenderPlaylistEvent" />
-        <signal name="PlayListNodeAddedEvent" />
-        <signal name="PlayListNodeSelectedEvent" />
-        <signal name="OpenPlaylistEvent" />
-        <signal name="NewPlaylistEvent" />
-        <signal name="SavePlaylistEvent" />
-        <signal name="SnapshotSeriesEvent" />
-        <signal name="GameUnitEvent" />
-        <signal name="UnitChanged" />
-        <signal name="UnitSelected" />
-        <signal name="UnitDeleted" />
-        <signal name="UnitAdded" />
-        <signal name="KeyPressed" />
-        <signal name="NewTagAtPosEvent" />
-      </itemgroup>
-    </signals>
   </object>
   <object type="LongoMatch.Gui.Component.Stats.PlayersViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
@@ -340,6 +300,38 @@
         <signal name="NewTagStart" />
         <signal name="NewTagStop" />
         <signal name="NewTagCancel" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.AnalysisComponent" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="IAnalysisWindow Signals">
+        <signal name="CloseOpenedProjectEvent" />
+        <signal name="NewTagEvent" />
+        <signal name="NewTagStartEvent" />
+        <signal name="NewTagStopEvent" />
+        <signal name="NewTagCancelEvent" />
+        <signal name="PlaySelectedEvent" />
+        <signal name="NewTagAtPosEvent" />
+        <signal name="TagPlayEvent" />
+        <signal name="PlaysDeletedEvent" />
+        <signal name="TimeNodeChanged" />
+        <signal name="PlayCategoryChanged" />
+        <signal name="DuplicatePlay" />
+        <signal name="RenderPlaylistEvent" />
+        <signal name="PlayListNodeAddedEvent" />
+        <signal name="PlayListNodeSelectedEvent" />
+        <signal name="OpenPlaylistEvent" />
+        <signal name="NewPlaylistEvent" />
+        <signal name="SavePlaylistEvent" />
+        <signal name="SnapshotSeriesEvent" />
+        <signal name="GameUnitEvent" />
+        <signal name="UnitChanged" />
+        <signal name="UnitSelected" />
+        <signal name="UnitDeleted" />
+        <signal name="UnitAdded" />
+        <signal name="KeyPressed" />
       </itemgroup>
     </signals>
   </object>
@@ -373,6 +365,18 @@
       </itemgroup>
     </signals>
   </object>
+  <object type="LongoMatch.Gui.Component.TeamTemplateEditor" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="TeamTemplateEditor Properties">
+        <property name="Edited" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="TeamTemplateEditor Signals">
+        <signal name="TemplateSaved" />
+      </itemgroup>
+    </signals>
+  </object>
   <object type="LongoMatch.Gui.Panel.ProjectsManagerPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>
@@ -397,64 +401,6 @@
     </itemgroups>
     <signals />
   </object>
-  <object type="LongoMatch.Gui.CapturerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="ICapturer Signals">
-        <signal name="CaptureFinished" />
-        <signal name="Error" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.PlayerCapturerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="IPlayer Properties">
-        <property name="Detached" />
-        <property name="Sensitive" />
-      </itemgroup>
-    </itemgroups>
-    <signals>
-      <itemgroup label="ICapturer Signals">
-        <signal name="Error" />
-        <signal name="CaptureFinished" />
-        <signal name="SegmentClosedEvent" />
-        <signal name="Tick" />
-        <signal name="PlayStateChanged" />
-        <signal name="Next" />
-        <signal name="Prev" />
-        <signal name="DrawFrame" />
-        <signal name="SeekEvent" />
-        <signal name="Detach" />
-        <signal name="PlaybackRateChanged" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.PlayerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="IPlayer Properties">
-        <property name="Detached" />
-        <property name="Sensitive" />
-      </itemgroup>
-    </itemgroups>
-    <signals>
-      <itemgroup label="IPlayer Signals">
-        <signal name="SegmentClosedEvent" />
-        <signal name="Tick" />
-        <signal name="Error" />
-        <signal name="PlayStateChanged" />
-        <signal name="Next" />
-        <signal name="Prev" />
-        <signal name="DrawFrame" />
-        <signal name="SeekEvent" />
-        <signal name="Detach" />
-        <signal name="PlaybackRateChanged" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.BackgroundWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Panel.PreferencesPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>
@@ -470,17 +416,70 @@
         <signal name="TimeNodeChanged" />
         <signal name="TimeNodeSelected" />
         <signal name="TimeNodeDeleted" />
+        <signal name="NewTagAtPosEvent" />
         <signal name="PlayListNodeAdded" />
         <signal name="SnapshotSeries" />
         <signal name="TagPlay" />
         <signal name="RenderPlaylist" />
-        <signal name="NewTagAtPosEvent" />
       </itemgroup>
     </signals>
   </object>
   <object type="LongoMatch.Gui.Component.CodingWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.CapturerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
     <signals>
+      <itemgroup label="ICapturerBin Signals">
+        <signal name="CaptureFinished" />
+        <signal name="Error" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.PlayerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="IPlayerBin Properties">
+        <property name="Detached" />
+        <property name="Sensitive" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="IPlayerBin Signals">
+        <signal name="SegmentClosedEvent" />
+        <signal name="Tick" />
+        <signal name="Error" />
+        <signal name="PlayStateChanged" />
+        <signal name="Next" />
+        <signal name="Prev" />
+        <signal name="DrawFrame" />
+        <signal name="SeekEvent" />
+        <signal name="Detach" />
+        <signal name="PlaybackRateChanged" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.PlayerCapturerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="IPlayerBin Properties">
+        <property name="Detached" />
+        <property name="Sensitive" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="ICapturerBin Signals">
+        <signal name="Error" />
+        <signal name="CaptureFinished" />
+        <signal name="SegmentClosedEvent" />
+        <signal name="Tick" />
+        <signal name="PlayStateChanged" />
+        <signal name="Next" />
+        <signal name="Prev" />
+        <signal name="DrawFrame" />
+        <signal name="SeekEvent" />
+        <signal name="Detach" />
+        <signal name="PlaybackRateChanged" />
+      </itemgroup>
     </signals>
   </object>
 </objects>

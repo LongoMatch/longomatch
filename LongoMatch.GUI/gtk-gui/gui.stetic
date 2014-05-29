@@ -5205,12 +5205,6 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
           <placeholder />
         </child>
         <child>
-          <placeholder />
-        </child>
-        <child>
-          <placeholder />
-        </child>
-        <child>
           <widget class="Gtk.Label" id="label1">
             <property name="MemberName" />
             <property name="LabelProp" translatable="yes">Interface language:</property>
@@ -6060,6 +6054,7 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Label" translatable="yes">Histogram</property>
+                <property name="Active">True</property>
                 <property name="DrawIndicator">True</property>
                 <property name="HasLabel">True</property>
                 <property name="UseUnderline">True</property>
@@ -7101,6 +7096,7 @@ Defining &lt;b&gt; Game Units &lt;/b&gt; will help you during the analysis to in
                             <property name="MemberName" />
                             <property name="CanFocus">True</property>
                             <property name="Label" translatable="yes">New project using a video file</property>
+                            <property name="Active">True</property>
                             <property name="DrawIndicator">True</property>
                             <property name="HasLabel">True</property>
                             <property name="UseUnderline">True</property>
@@ -10281,6 +10277,7 @@ Click 2 players to swap them</property>
     </child>
   </widget>
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.CodingWidget" design-size="673 300">
+    <action-group name="Timeline" />
     <action-group name="Default">
       <action id="timelineMode">
         <property name="Type">Radio</property>
@@ -10308,7 +10305,6 @@ Click 2 players to swap them</property>
         <property name="StockId">gtk-zoom-fit</property>
       </action>
     </action-group>
-    <action-group name="Timeline" />
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
