@@ -29,6 +29,8 @@ namespace LongoMatch.Gui.Helpers
 {
 	public class Misc
 	{
+		public static string lastFilename;
+		
 		public static FileFilter GetFileFilter() {
 			FileFilter filter = new FileFilter();
 			filter.Name = "Images";
@@ -43,16 +45,25 @@ namespace LongoMatch.Gui.Helpers
 			Pixbuf pimage = null;
 			StreamReader file;
 			FileChooserDialog fChooser;
+			string lastDir;
+			
+			 if (lastFilename != null) {
+				lastDir = Path.GetDirectoryName (lastFilename);
+			 } else {
+				lastDir = Config.HomeDir;
+			 }
 			
 			fChooser = new FileChooserDialog(Catalog.GetString("Choose an image"),
 			                                 toplevel, FileChooserAction.Open,
 			                                 "gtk-cancel",ResponseType.Cancel,
 			                                 "gtk-open",ResponseType.Accept);
 			fChooser.AddFilter(GetFileFilter());
+			fChooser.SetCurrentFolder (lastDir);
 			if(fChooser.Run() == (int)ResponseType.Accept)	{
 				// For Win32 compatibility we need to open the image file
 				// using a StreamReader. Gdk.Pixbuf(string filePath) uses GLib to open the
 				// input file and doesn't support Win32 files path encoding
+				lastFilename = fChooser.Filename;
 				file = new StreamReader(fChooser.Filename);
 				pimage= new Gdk.Pixbuf(file.BaseStream);
 				file.Close();
