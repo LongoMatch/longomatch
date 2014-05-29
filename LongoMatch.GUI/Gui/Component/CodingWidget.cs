@@ -20,6 +20,8 @@ using LongoMatch.Handlers;
 using LongoMatch.Store;
 using LongoMatch.Common;
 using System.Collections.Generic;
+using LongoMatch.Drawing.Widgets;
+using LongoMatch.Drawing.Cairo;
 
 namespace LongoMatch.Gui.Component
 {
@@ -28,6 +30,7 @@ namespace LongoMatch.Gui.Component
 	{
 		AnalysisComponent parent;
 		VideoAnalysisMode analysisMode;
+		TeamTagger teamtagger;
 		Project project;
 		
 		public CodingWidget ()
@@ -48,6 +51,13 @@ namespace LongoMatch.Gui.Component
 
 			autoTaggingMode.Toggled += HandleViewToggled;
 			autoTaggingMode.Active = true;
+			
+			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea1));
+			teamtagger.HomeColor = Constants.HOME_COLOR;
+			teamtagger.AwayColor = Constants.AWAY_COLOR;
+
+			drawingarea1.HeightRequest = 200;
+			drawingarea1.WidthRequest = 300;
 		}
 		
 		public void SetProject (Project project, bool isLive, PlaysFilter filter,
@@ -58,6 +68,8 @@ namespace LongoMatch.Gui.Component
 			timeline.Visible = false;
 			buttonswidget.Visible = true;
 			buttonswidget.Project = project;
+			teamtagger.LoadTeams (project.LocalTeamTemplate, project.VisitorTeamTemplate,
+			                      project.Categories.FieldBackground);
 			timeline.SetProject (project, filter);
 		}
 		
@@ -94,6 +106,7 @@ namespace LongoMatch.Gui.Component
 			set {
 				buttonswidget.Visible = (value == VideoAnalysisMode.ManualTagging) ||
 					(value == VideoAnalysisMode.PredefinedTagging);
+				drawingarea1.Visible = buttonswidget.Visible;
 				timeline.Visible = value == VideoAnalysisMode.Timeline;
 				if(value == VideoAnalysisMode.ManualTagging)
 					buttonswidget.Mode = TagMode.Free;

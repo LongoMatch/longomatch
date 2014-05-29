@@ -12,6 +12,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.HBox hbox1;
 		private global::Gtk.Toolbar codingtoolbar;
 		private global::Gtk.HBox hbox2;
+		private global::Gtk.DrawingArea drawingarea1;
 		private global::LongoMatch.Gui.Component.ButtonsWidget buttonswidget;
 		private global::LongoMatch.Gui.Component.Timeline timeline;
 
@@ -62,22 +63,28 @@ namespace LongoMatch.Gui.Component
 			this.hbox2.Name = "hbox2";
 			this.hbox2.Spacing = 6;
 			// Container child hbox2.Gtk.Box+BoxChild
+			this.drawingarea1 = new global::Gtk.DrawingArea ();
+			this.drawingarea1.Name = "drawingarea1";
+			this.hbox2.Add (this.drawingarea1);
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.drawingarea1]));
+			w6.Position = 0;
+			// Container child hbox2.Gtk.Box+BoxChild
 			this.buttonswidget = new global::LongoMatch.Gui.Component.ButtonsWidget ();
 			this.buttonswidget.Events = ((global::Gdk.EventMask)(256));
 			this.buttonswidget.Name = "buttonswidget";
 			this.hbox2.Add (this.buttonswidget);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.buttonswidget]));
-			w6.Position = 0;
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.buttonswidget]));
+			w7.Position = 1;
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.timeline = new global::LongoMatch.Gui.Component.Timeline ();
 			this.timeline.Events = ((global::Gdk.EventMask)(256));
 			this.timeline.Name = "timeline";
 			this.hbox2.Add (this.timeline);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.timeline]));
-			w7.Position = 1;
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.timeline]));
+			w8.Position = 2;
 			this.vbox2.Add (this.hbox2);
-			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox2]));
-			w8.Position = 1;
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox2]));
+			w9.Position = 1;
 			this.Add (this.vbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
