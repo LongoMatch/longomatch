@@ -116,6 +116,7 @@ namespace LongoMatch.Gui.Panel
 				LoadTemplate (awayteamscombobox.ActiveText, Team.VISITOR);};
 			hometeamscombobox.Active = 0;
 			awayteamscombobox.Active = 0;
+			teamtagger.SubstitutionsMode = true;
 		}
 		
 		void ConnectSignals () {

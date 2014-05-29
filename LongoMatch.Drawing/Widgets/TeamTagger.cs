@@ -42,11 +42,14 @@ namespace LongoMatch.Drawing.Widgets
 		double currentWidth, currentHeight, scaleX, scaleY;
 		Point offset;
 		double backgroundWidth;
+		MultiSelectionMode prevMode;
+		bool inSubs;
 
 		public TeamTagger (IWidget widget): base (widget)
 		{
 			Accuracy = 0;
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
+			SubstitutionsMode = false;
 			HomeColor = Common.PLAYER_UNSELECTED_COLOR;
 			AwayColor = Common.PLAYER_UNSELECTED_COLOR;
 		}
@@ -67,6 +70,51 @@ namespace LongoMatch.Drawing.Widgets
 			this.background = background;
 			Resize ();
 		}
+		
+		public bool SubstitutionsMode {
+			set {
+				if (value) {
+					prevMode = SelectionMode;
+					SelectionMode = MultiSelectionMode.Multiple;
+					ClearSelection ();
+				} else {
+					SelectionMode = prevMode;
+				}
+				inSubs = value;
+			}
+			get {
+				return inSubs;
+			}
+		}
+		public void Select (Player p) {
+			ClearSelection ();
+			if (p != null) {
+				ICanvasObject co = Objects.LastOrDefault (pl => (pl as PlayerObject).Player == p);
+				PlayerObject po = co as PlayerObject;
+				if (po != null) {
+					UpdateSelection (new Selection (po, SelectionPosition.All));
+				}
+			}
+			widget.ReDraw ();
+		}
+		
+		public void Reload () {
+			Objects.Clear();
+			if (homeTeam != null) {
+				LoadTeam (homeTeam, Team.LOCAL);
+			}
+			if (awayTeam != null) {
+				LoadTeam (awayTeam, Team.VISITOR);
+			}
+			widget.ReDraw ();
+		}
+		
+		int NTeams {
+			get {
+				return awayTeam == null ? 1 : 2;
+			}
+		}
+		
 		
 		void LoadTeam (TeamTemplate template, Team team) {
 			int index = 0;
@@ -129,35 +177,6 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 		
-		public void Select (Player p) {
-			ClearSelection ();
-			if (p != null) {
-				ICanvasObject co = Objects.LastOrDefault (pl => (pl as PlayerObject).Player == p);
-				PlayerObject po = co as PlayerObject;
-				if (po != null) {
-					UpdateSelection (new Selection (po, SelectionPosition.All));
-				}
-			}
-			widget.ReDraw ();
-		}
-		
-		public void Reload () {
-			Objects.Clear();
-			if (homeTeam != null) {
-				LoadTeam (homeTeam, Team.LOCAL);
-			}
-			if (awayTeam != null) {
-				LoadTeam (awayTeam, Team.VISITOR);
-			}
-			widget.ReDraw ();
-		}
-		
-		int NTeams {
-			get {
-				return awayTeam == null ? 1 : 2;
-			}
-		}
-		
 		void Resize () {
 			currentWidth = widget.Width;
 			currentHeight = widget.Height;
@@ -171,9 +190,35 @@ namespace LongoMatch.Drawing.Widgets
 		}
 		
 		protected override void SelectionChanged (List<Selection> selections) {
-			if (PlayersSelectionChangedEvent != null) {
-				PlayersSelectionChangedEvent (
-					selections.Select (s => (s.Drawable as PlayerObject).Player).ToList());
+			List<Player> players;
+			
+			players = selections.Select (s => (s.Drawable as PlayerObject).Player).ToList();
+
+			if (SubstitutionsMode) {
+				bool subsDone = false;
+				if (homeTeam != null) {
+					List<Player> hplayers = players.Where (p => homeTeam.Contains (p)).ToList();
+					if (hplayers.Count == 2) {
+						homeTeam.Swap (hplayers[0], hplayers[1]);
+						subsDone = true;
+					}
+				}
+				if (awayTeam != null) {
+					List<Player> aplayers = players.Where (p => awayTeam.Contains (p)).ToList();
+					if (aplayers.Count == 2) {
+						awayTeam.Swap (aplayers[0], aplayers[1]);
+						subsDone = true;
+					}
+				}
+				if (subsDone) {
+					ClearSelection ();
+					Reload ();
+					widget.ReDraw ();
+				}
+			} else {
+				if (PlayersSelectionChangedEvent != null) {
+					PlayersSelectionChangedEvent (players);
+				}
 			}
 		}
 		

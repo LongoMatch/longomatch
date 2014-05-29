@@ -44,7 +44,6 @@ namespace LongoMatch.Gui.Component
 		bool edited, ignoreChanges;
 		List<Player> selectedPlayers;
 		TeamTagger teamtagger;
-		bool inSubs;
 		
 		public TeamTemplateEditor ()
 		{
@@ -176,25 +175,14 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		void PlayersSelected (List<Player> players) {
-			if (inSubs) {
-				if (players.Count == 2) {
-					ExtensionMethods.Swap (template, template.IndexOf (players[0]),
-					                       template.IndexOf (players[1]));
-					teamtagger.ClearSelection ();
-					teamtagger.Reload ();
-					Edited = true;
-				}
-				return;
+			playerframe.Sensitive = players.Count == 1;
+			selectedPlayers = players;
+			deletebutton.Sensitive = players.Count != 0;
+			playerframe.Sensitive = players.Count != 0;
+			if (players.Count == 1) {
+				LoadPlayer (players[0]);
 			} else {
-				playerframe.Sensitive = players.Count == 1;
-				selectedPlayers = players;
-				deletebutton.Sensitive = players.Count != 0;
-				playerframe.Sensitive = players.Count != 0;
-				if (players.Count == 1) {
-					LoadPlayer (players[0]);
-				} else {
-					loadedPlayer = null;
-				}
+				loadedPlayer = null;
 			}
 		}
 		
@@ -215,14 +203,8 @@ namespace LongoMatch.Gui.Component
 		
 		void HandleSubsClicked (object sender, EventArgs e)
 		{
-			inSubs = subsbutton.Active;
-			teamtagger.ClearSelection ();
-			if (inSubs) {
-				teamtagger.SelectionMode = MultiSelectionMode.Multiple;
-			} else {
-				teamtagger.SelectionMode = MultiSelectionMode.MultipleWithModifier;
-			}
-			warninglabel.Visible = inSubs;
+			teamtagger.SubstitutionsMode = subsbutton.Active;
+			warninglabel.Visible = subsbutton.Active;
 		}
 
 		void HandlePlayersSelectionChangedEvent (List<Player> players)
