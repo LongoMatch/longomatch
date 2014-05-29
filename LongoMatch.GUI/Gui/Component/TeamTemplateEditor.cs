@@ -175,6 +175,7 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		void PlayersSelected (List<Player> players) {
+			ignoreChanges = true;
 			playerframe.Sensitive = players.Count == 1;
 			selectedPlayers = players;
 			deletebutton.Sensitive = players.Count != 0;
@@ -184,6 +185,7 @@ namespace LongoMatch.Gui.Component
 			} else {
 				loadedPlayer = null;
 			}
+			ignoreChanges = false;
 		}
 		
 		void DeleteSelectedPlayers () {
