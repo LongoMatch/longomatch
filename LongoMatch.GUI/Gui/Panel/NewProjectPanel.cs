@@ -280,6 +280,9 @@ namespace LongoMatch.Gui.Panel
 		void HandleSportsTemplateChanged (object sender, EventArgs e)
 		{
 			analysisTemplate = Config.CategoriesTemplatesProvider.Load(tagscombobox.ActiveText);
+			if (teamtagger != null) {
+				teamtagger.LoadTeams (hometemplate, awaytemplate, analysisTemplate.FieldBackground);
+			}
 		}
 
 		void HandleCreateProject (object sender, EventArgs e)
