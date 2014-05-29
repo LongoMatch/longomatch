@@ -76,6 +76,7 @@ namespace LongoMatch.Gui.Panel
 			teamtemplateeditor1.TemplateSaved += (s, e) => {SaveLoadedTeam ();};
 			
 			backbutton.Clicked += (sender, o) => {
+				PromptSave ();
 				if (BackEvent != null)
 					BackEvent();
 			};
@@ -123,17 +124,19 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 		
-		void LoadTeam (string teamName) {
+		void PromptSave () {
 			if (loadedTeam != null) {
 				if (teamtemplateeditor1.Edited) {
 					string msg = Catalog.GetString ("Do you want to save the current template");
 					if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
 						SaveLoadedTeam ();
-					} else {
-						return;
 					}
 				}
 			}
+		}
+		
+		void LoadTeam (string teamName) {
+			PromptSave ();
 			
 			try  {
 				loadedTeam = provider.Load (teamName);
