@@ -22,8 +22,12 @@ namespace LongoMatch.Common
 {
 	public static class ExtensionMethods
 	{
-		public static void Swap<T>(this List<T> list, int index1, int index2)
+		public static void Swap<T>(this List<T> list, T e1, T e2)
 		{
+			int index1, index2;
+			
+			index1 = list.IndexOf (e1);
+			index2 = list.IndexOf (e2);
 			T temp = list[index1];
 			list[index1] = list[index2];
 			list[index2] = temp;
