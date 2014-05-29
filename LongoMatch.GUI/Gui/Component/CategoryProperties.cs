@@ -70,7 +70,7 @@ namespace LongoMatch.Gui.Component
 		
 		public void LoadSubcategories() {
 			subcategoriesProvider = Config.SubcategoriesTemplatesProvider;
-			LoadSubcategories();
+			LoadSubcategories(null);
 		}
 		
 		private void LoadSubcategories(List<PlayerSubCategory> playerSubcategories) {
@@ -84,12 +84,14 @@ namespace LongoMatch.Gui.Component
 				                                 subcat.Name),
 				                   subcat);
 			}
-			foreach (PlayerSubCategory subcat in playerSubcategories) {
-				Log.Debug("Adding player subcategory: ", subcat.Name);
-				model.AppendValues(String.Format("[{0}] {1}", 
-				                                 Catalog.GetString("Players"),
-				                                 subcat.Name),
-				                   subcat);
+			if (playerSubcategories != null) {
+				foreach (PlayerSubCategory subcat in playerSubcategories) {
+					Log.Debug("Adding player subcategory: ", subcat.Name);
+					model.AppendValues(String.Format("[{0}] {1}", 
+					                                 Catalog.GetString("Players"),
+					                                 subcat.Name),
+					                   subcat);
+				}
 			}
 			
 			subcatcombobox.Model = model;
