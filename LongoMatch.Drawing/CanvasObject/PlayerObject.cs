@@ -34,6 +34,7 @@ namespace LongoMatch.Drawing.CanvasObject
 			DrawPhoto = true;
 			SelectedColor = Common.PLAYER_SELECTED_COLOR;
 			UnSelectedColor = Common.PLAYER_UNSELECTED_COLOR;
+			IconSize = PlayersIconSize.Medium;
 		}
 		
 		public Player Player  {
@@ -46,14 +47,9 @@ namespace LongoMatch.Drawing.CanvasObject
 			set;
 		}
 		
-		public double Width {
-			get;
+		public PlayersIconSize IconSize {
 			set;
-		}
-		
-		public double Height {
 			get;
-			set;
 		}
 		
 		public bool DrawPhoto {
@@ -69,6 +65,18 @@ namespace LongoMatch.Drawing.CanvasObject
 		public Color UnSelectedColor {
 			get;
 			set;
+		}
+		
+		int Width {
+			get {
+				return (int)IconSize;
+			}
+		}
+
+		int Height {
+			get {
+				return (int)IconSize;
+			}
 		}
 		
 		public Selection GetSelection (Point point, double precision) {
@@ -104,14 +112,19 @@ namespace LongoMatch.Drawing.CanvasObject
 			tk.LineWidth = 5;
 			tk.DrawRoundedRectangle (position, Width, Height, 5);
 			
-			if (!DrawPhoto || Player.Photo == null) {
+			if (!DrawPhoto || Player.Photo == null || IconSize < PlayersIconSize.Medium) {
 				tk.FillColor = Color.White;
 				tk.StrokeColor = Color.White;
-				tk.FontSize = 30;
+				tk.FontSize = Width / 2;
 				tk.FontWeight = FontWeight.Bold;
-				tk.DrawText (position, Width, Height - 20, Player.Number.ToString());
-				tk.FontSize = 8;
-				tk.DrawText (new Point (position.X, position.Y + Height - 20), Width, 20, Player.Name);
+				/* Only draw player number for the smaller size */
+				if (IconSize > PlayersIconSize.Small) {
+					tk.DrawText (position, Width, Height - 20, Player.Number.ToString());
+					tk.FontSize = 8;
+					tk.DrawText (new Point (position.X, position.Y + Height - 20), Width, 20, Player.Name);
+				} else {
+					tk.DrawText (position, Width, Height, Player.Number.ToString());
+				}
 			} else {
 				tk.FillColor = Color.Black;
 				tk.StrokeColor = Color.Black;

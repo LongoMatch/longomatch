@@ -213,5 +213,13 @@ namespace LongoMatch.Common
 		Multiple,
 		MultipleWithModifier,
 	}
+	
+	public enum PlayersIconSize {
+		Smallest = 20,
+		Small = 30,
+		Medium = 40,
+		Large = 50,
+		ExtraLarge = 60
+	}
 }
 

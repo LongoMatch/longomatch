@@ -34,9 +34,6 @@ namespace LongoMatch.Drawing.Widgets
 		public event PlayersPropertiesHandler PlayersSelectionChangedEvent;
 		public event PlayersPropertiesHandler ShowMenuEvent;
 
-		const int PLAYER_WIDTH = 60;
-		const int PLAYER_HEIGHT = 60;
-		const int BENCH_WIDTH = PLAYER_WIDTH * 2;
 		TeamTemplate homeTeam, awayTeam;
 		Image background;
 		double currentWidth, currentHeight, scaleX, scaleY;
@@ -52,6 +49,8 @@ namespace LongoMatch.Drawing.Widgets
 			SubstitutionsMode = false;
 			HomeColor = Common.PLAYER_UNSELECTED_COLOR;
 			AwayColor = Common.PLAYER_UNSELECTED_COLOR;
+			PlayersPorRowInBench = 2;
+			BenchIconSize = PlayersIconSize.Small;
 		}
 		
 		public Color HomeColor {
@@ -60,6 +59,16 @@ namespace LongoMatch.Drawing.Widgets
 		}
 		
 		public Color AwayColor {
+			get;
+			set;
+		}
+		
+		public int PlayersPorRowInBench {
+			get;
+			set;
+		}
+		
+		public PlayersIconSize BenchIconSize {
 			get;
 			set;
 		}
@@ -115,6 +124,11 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 		
+		int BenchWidth {
+			get {
+				return PlayersPorRowInBench * (int)BenchIconSize;
+			}
+		}
 		
 		void LoadTeam (TeamTemplate template, Team team) {
 			int index = 0;
@@ -124,10 +138,10 @@ namespace LongoMatch.Drawing.Widgets
 			width = backgroundWidth / NTeams;
 			colWidth = width / template.Formation.Length;
 			if (team == Team.LOCAL) {
-				offsetX = BENCH_WIDTH;
+				offsetX = BenchWidth;
 				color = HomeColor;
 			} else {
-				offsetX = currentWidth - BENCH_WIDTH;
+				offsetX = currentWidth - BenchWidth;
 				color = AwayColor;
 			}
 			
@@ -148,8 +162,7 @@ namespace LongoMatch.Drawing.Widgets
 				for (int row=0; row < template.Formation[col]; row ++) {
 					Point p = new Point (colX, rowHeight * row + rowHeight / 2);
 					PlayerObject po = new PlayerObject (template [index], p);
-					po.Width = PLAYER_WIDTH;
-					po.Height = PLAYER_HEIGHT;
+					po.IconSize = PlayersIconSize.Large;
 					po.UnSelectedColor = color;
 					Objects.Add (po);
 					index ++;
@@ -162,16 +175,16 @@ namespace LongoMatch.Drawing.Widgets
 				PlayerObject po;
 				double x, y;
 				int reli = i - index;
+				int size = (int)BenchIconSize;
 				
-				x = PLAYER_WIDTH * (reli % 2) + PLAYER_WIDTH / 2;
-				y = PLAYER_HEIGHT * (reli / 2) + PLAYER_HEIGHT / 2;
+				x = size * (reli % PlayersPorRowInBench) + size / 2;
+				y = size * (reli / PlayersPorRowInBench) + size / 2;
 				if (team == Team.VISITOR) {
-					x += BENCH_WIDTH + backgroundWidth;
+					x += BenchWidth + backgroundWidth;
 				}
 				                     
 				po = new PlayerObject (template [i], new Point (x, y));
-				po.Width = PLAYER_WIDTH;
-				po.Height = PLAYER_HEIGHT;
+				po.IconSize = PlayersIconSize.Small;
 				po.UnSelectedColor = color;
 				Objects.Add (po);
 			}
@@ -180,7 +193,7 @@ namespace LongoMatch.Drawing.Widgets
 		void Resize () {
 			currentWidth = widget.Width;
 			currentHeight = widget.Height;
-			backgroundWidth = currentWidth - BENCH_WIDTH * NTeams;
+			backgroundWidth = currentWidth - BenchWidth * NTeams;
 			
 			if (background != null) {
 				background.ScaleFactor ((int) backgroundWidth, (int) currentHeight,
@@ -249,7 +262,7 @@ namespace LongoMatch.Drawing.Widgets
 
 			/* Background */
 			if (background != null) {
-				tk.DrawImage (new Point (BENCH_WIDTH, 0), backgroundWidth, currentHeight,
+				tk.DrawImage (new Point (BenchWidth, 0), backgroundWidth, currentHeight,
 				              background, false);
 			}
 			
