@@ -206,9 +206,9 @@ namespace LongoMatch.Store
 			info.AddValue("position", Position);
 			info.AddValue("subcategories", SubCategories);
 			/* Convert to ushort for backward compatibility */
-			info.AddValue("red", Color.R);
-			info.AddValue("green", Color.G);
-			info.AddValue("blue", Color.B);
+			info.AddValue("red", (ushort) Color.R);
+			info.AddValue("green", (ushort) Color.G);
+			info.AddValue("blue", (ushort) Color.B);
 			info.AddValue("sort_method", SortMethod);
 			info.AddValue("tagfieldpos", TagFieldPosition);
 			info.AddValue("taghalffieldpos", TagHalfFieldPosition);
