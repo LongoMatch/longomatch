@@ -144,7 +144,7 @@ namespace LongoMatch.Gui.Panel
 
 			foreach (string template in Config.CategoriesTemplatesProvider.TemplatesNames) {
 				tagscombobox.AppendText(template);
-				if(template == "default")
+				if (template == Config.DefaultTemplate)
 					index = i;
 				i++;
 			}

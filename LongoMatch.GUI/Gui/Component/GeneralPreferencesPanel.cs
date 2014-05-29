@@ -28,12 +28,14 @@ namespace LongoMatch.Gui.Component
 	{
 	
 		ListStore langsStore;
+		ListStore templates;
 		CheckButton autosavecb;
 		
 		public GeneralPreferencesPanel ()
 		{
 			this.Build ();
 			FillLangs();
+			FillTemplates ();
 			autosavecb  = new CheckButton();
 			table1.Attach (autosavecb, 1, 2, 1, 2,
 			               AttachOptions.Shrink,
@@ -60,6 +62,25 @@ namespace LongoMatch.Gui.Component
 			langcombobox.Model = langsStore;
 			langcombobox.Active = active;
 			langcombobox.Changed += HandleChanged;
+		}
+
+		void FillTemplates () {
+			int i = 0, active = -1;
+			templates = new ListStore (typeof(string));
+
+			foreach (string name in Config.CategoriesTemplatesProvider.TemplatesNames) {
+				if (name == Config.DefaultTemplate) {
+					active = i;
+				}
+				templates.AppendValues (name);
+				i++;
+			}
+			templatescombobox.Model = templates;
+			if (active != -1) {
+				templatescombobox.Active = active;
+			}
+			templatescombobox.Changed += (sender, e) => {
+				Config.DefaultTemplate = templatescombobox.ActiveText;};
 		}
 
 		void HandleChanged (object sender, EventArgs e)

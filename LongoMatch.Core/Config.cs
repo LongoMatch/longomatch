@@ -366,6 +366,15 @@ namespace LongoMatch
 			}
 		}
 		
+		public static string DefaultTemplate {
+			get {
+				return state.defaultTemplate;
+			}
+			set {
+				state.defaultTemplate = value;
+				Save ();
+			}
+		}
 		#endregion
 
 	}
@@ -390,6 +399,7 @@ namespace LongoMatch
 		public string autorenderDir;
 		public string lastRenderDir;
 		public bool reviewPlaysInSameWindow;
+		public string defaultTemplate;
 		
 		public ConfigState () {
 			/* Set default values */
@@ -411,6 +421,7 @@ namespace LongoMatch
 			autorenderDir = null;
 			lastRenderDir = null;
 			reviewPlaysInSameWindow = true;
+			defaultTemplate = null;
 		}
 	}
 }

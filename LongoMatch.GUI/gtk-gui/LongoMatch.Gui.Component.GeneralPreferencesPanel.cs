@@ -7,7 +7,9 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.Table table1;
 		private global::Gtk.Label label1;
 		private global::Gtk.Label label2;
+		private global::Gtk.Label label3;
 		private global::Gtk.ComboBox langcombobox;
+		private global::Gtk.ComboBox templatescombobox;
 
 		protected virtual void Build ()
 		{
@@ -37,13 +39,34 @@ namespace LongoMatch.Gui.Component
 			w2.BottomAttach = ((uint)(2));
 			w2.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
+			this.label3 = new global::Gtk.Label ();
+			this.label3.Name = "label3";
+			this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("Default analysis template");
+			this.table1.Add (this.label3);
+			global::Gtk.Table.TableChild w3 = ((global::Gtk.Table.TableChild)(this.table1 [this.label3]));
+			w3.TopAttach = ((uint)(2));
+			w3.BottomAttach = ((uint)(3));
+			w3.XOptions = ((global::Gtk.AttachOptions)(4));
+			w3.YOptions = ((global::Gtk.AttachOptions)(4));
+			// Container child table1.Gtk.Table+TableChild
 			this.langcombobox = global::Gtk.ComboBox.NewText ();
 			this.langcombobox.Name = "langcombobox";
 			this.table1.Add (this.langcombobox);
-			global::Gtk.Table.TableChild w3 = ((global::Gtk.Table.TableChild)(this.table1 [this.langcombobox]));
-			w3.LeftAttach = ((uint)(1));
-			w3.RightAttach = ((uint)(2));
-			w3.YOptions = ((global::Gtk.AttachOptions)(4));
+			global::Gtk.Table.TableChild w4 = ((global::Gtk.Table.TableChild)(this.table1 [this.langcombobox]));
+			w4.LeftAttach = ((uint)(1));
+			w4.RightAttach = ((uint)(2));
+			w4.YOptions = ((global::Gtk.AttachOptions)(4));
+			// Container child table1.Gtk.Table+TableChild
+			this.templatescombobox = global::Gtk.ComboBox.NewText ();
+			this.templatescombobox.Name = "templatescombobox";
+			this.table1.Add (this.templatescombobox);
+			global::Gtk.Table.TableChild w5 = ((global::Gtk.Table.TableChild)(this.table1 [this.templatescombobox]));
+			w5.TopAttach = ((uint)(2));
+			w5.BottomAttach = ((uint)(3));
+			w5.LeftAttach = ((uint)(1));
+			w5.RightAttach = ((uint)(2));
+			w5.XOptions = ((global::Gtk.AttachOptions)(4));
+			w5.YOptions = ((global::Gtk.AttachOptions)(4));
 			this.Add (this.table1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
