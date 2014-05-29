@@ -20,9 +20,8 @@ using System.Collections.Generic;
 using Cairo;
 using LongoMatch.Interfaces;
 using LongoMatch.Common;
-using LColor = LongoMatch.Common.Color;
+using Color = LongoMatch.Common.Color;
 using Point = LongoMatch.Common.Point;
-using Color = Cairo.Color;
 using LFontSlant = LongoMatch.Common.FontSlant;
 using LFontWeight = LongoMatch.Common.FontWeight;
 using FontSlant = Cairo.FontSlant;
@@ -43,8 +42,8 @@ namespace LongoMatch.Drawing.Cairo
 		public CairoBackend ()
 		{
 			Translation = new Point (0, 0);
-			StrokeColor = new LColor (0, 0, 0, 0);
-			FillColor = new LColor (0, 0, 0, 0);
+			StrokeColor = Color.Black;
+			FillColor = Color.Black;
 			LineWidth = 2;
 			FontSize = 12;
 			FontFamily = "Verdana";
@@ -68,15 +67,15 @@ namespace LongoMatch.Drawing.Cairo
 			protected get;
 		}
 		
-		public LColor StrokeColor {
+		public Color StrokeColor {
 			set {
-				strokeColor = ColorToCairoColor (value);
+				strokeColor = value;
 			}
 		}
 		
-		public LColor FillColor {
+		public Color FillColor {
 			set {
-				fillColor = ColorToCairoColor (value);
+				fillColor = value;
 			}
 		}
 		
@@ -130,7 +129,7 @@ namespace LongoMatch.Drawing.Cairo
 		}
 		
 		public void DrawLine (Point start, Point stop) {
-			context.Color = strokeColor;
+			SetColor (strokeColor);
 			context.LineWidth = LineWidth;
 			context.MoveTo (start.X, start.Y);
 			context.LineTo (stop.X, stop.Y);
@@ -160,13 +159,13 @@ namespace LongoMatch.Drawing.Cairo
 				break;
 			}
 			
-			context.Color = strokeColor;
+			SetColor (strokeColor);
 			context.MoveTo (x1, y1);
 			context.LineTo (x2, y2);
 			context.LineTo (x3, y3);
 			context.ClosePath();
 			context.StrokePreserve ();
-			context.Color = fillColor;
+			SetColor (fillColor);
 			context.Fill();
 		}
 		
@@ -230,7 +229,7 @@ namespace LongoMatch.Drawing.Cairo
 			FontExtents fextents;
 			double x, y;
 			
-			context.Color = strokeColor;
+			SetColor (strokeColor);
 			context.SelectFontFace (FontFamily, fSlant, fWeight);
 			context.SetFontSize (FontSize);
 			extents = context.TextExtents (text);
@@ -267,17 +266,17 @@ namespace LongoMatch.Drawing.Cairo
 			context.LineCap = LineCap.Round;
 			context.LineJoin = LineJoin.Round;
 			context.LineWidth = LineWidth;
-			context.Color = strokeColor;
+			SetColor (strokeColor);
 			context.StrokePreserve();
-			context.Color = fillColor;
+			SetColor (fillColor);
 			context.Fill();
 		}
 		
-		Color ColorToCairoColor (LColor color) {
-			return new Color ((double) color.R / ushort.MaxValue,
-			                  (double) color.G / ushort.MaxValue,
-			                  (double) color.B / ushort.MaxValue,
-			                  (double) color.A / ushort.MaxValue);
+		void SetColor (Color color) {
+			context.SetSourceRGBA ((double) color.R / byte.MaxValue,
+			                       (double) color.G / byte.MaxValue,
+			                       (double) color.B / byte.MaxValue,
+			                       (double) color.A / byte.MaxValue);
 		}
 		
 	}
