@@ -125,13 +125,14 @@ namespace LongoMatch.Gui.Component
 				timeline.Visible = value && AnalysisMode == VideoAnalysisMode.Timeline;
 				buttonswidget.Visible = value && (AnalysisMode == VideoAnalysisMode.ManualTagging ||
 				                                  AnalysisMode == VideoAnalysisMode.PredefinedTagging);
-
+				drawingarea1.Visible = buttonswidget.Visible;
 			}
 		}
 		
 		void HandleViewToggled (object sender, EventArgs e)
 		{
 			buttonswidget.Visible = autoTaggingMode.Active;
+			drawingarea1.Visible = buttonswidget.Visible;
 			timeline.Visible = timelineMode.Active;
 		}
 	}

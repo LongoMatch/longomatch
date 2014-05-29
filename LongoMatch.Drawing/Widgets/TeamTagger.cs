@@ -37,9 +37,10 @@ namespace LongoMatch.Drawing.Widgets
 		TeamTemplate homeTeam, awayTeam;
 		Image background;
 		double currentWidth, currentHeight, scaleX, scaleY;
-		Point offset;
 		double backgroundWidth;
+		Point offset;
 		MultiSelectionMode prevMode;
+		PlayersIconSize iconSize;
 		bool inSubs;
 
 		public TeamTagger (IWidget widget): base (widget)
@@ -130,10 +131,30 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 		
+		PlayersIconSize BestIconSize (int[] formation) {
+			double width = backgroundWidth / NTeams;
+			double optWidth = width / formation.Count();
+			double optHeight = currentHeight / formation.Max();
+			double size = Math.Min (optWidth, optHeight);
+
+			if (size < (int) PlayersIconSize.Small) {
+				return PlayersIconSize.Smallest;
+			} else if (size < (int) PlayersIconSize.Medium) {
+				return PlayersIconSize.Small;
+			} else if (size < (int) PlayersIconSize.Large) {
+				return PlayersIconSize.Medium;
+			} else if (size < (int) PlayersIconSize.ExtraLarge) {
+				return PlayersIconSize.Large;
+			} else {
+				return PlayersIconSize.ExtraLarge;
+			}
+		}
+
 		void LoadTeam (TeamTemplate template, Team team) {
 			int index = 0;
 			double width, colWidth, offsetX;
 			Color color;
+			PlayersIconSize size = BestIconSize (template.Formation);
 
 			width = backgroundWidth / NTeams;
 			colWidth = width / template.Formation.Length;
@@ -162,7 +183,7 @@ namespace LongoMatch.Drawing.Widgets
 				for (int row=0; row < template.Formation[col]; row ++) {
 					Point p = new Point (colX, rowHeight * row + rowHeight / 2);
 					PlayerObject po = new PlayerObject (template [index], p);
-					po.IconSize = PlayersIconSize.Large;
+					po.IconSize = size;
 					po.UnSelectedColor = color;
 					Objects.Add (po);
 					index ++;
@@ -171,14 +192,15 @@ namespace LongoMatch.Drawing.Widgets
 				}
 			}
 			
+			/* Substitution players */
 			for (int i = index; i < template.Count; i++) {
 				PlayerObject po;
 				double x, y;
 				int reli = i - index;
-				int size = (int)BenchIconSize;
+				int s = (int)BenchIconSize;
 				
-				x = size * (reli % PlayersPorRowInBench) + size / 2;
-				y = size * (reli / PlayersPorRowInBench) + size / 2;
+				x = s * (reli % PlayersPorRowInBench) + s / 2;
+				y = s * (reli / PlayersPorRowInBench) + s / 2;
 				if (team == Team.VISITOR) {
 					x += BenchWidth + backgroundWidth;
 				}
