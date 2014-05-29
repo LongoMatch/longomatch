@@ -159,6 +159,7 @@ namespace LongoMatch.Gui
 		{
 			ExportProjectAction1.Sensitive = true;
 			
+			this.projectType = projectType;
 			openedProject = project;
 			if (projectType == ProjectType.FileProject) {
 				Title = System.IO.Path.GetFileNameWithoutExtension(
