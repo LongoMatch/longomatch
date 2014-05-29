@@ -129,7 +129,11 @@ namespace LongoMatch.Store.Templates
 		}
 
 		public static TeamTemplate Load(string filePath) {
-			return SerializableObject.LoadSafe<TeamTemplate>(filePath);
+			TeamTemplate template = SerializableObject.LoadSafe<TeamTemplate>(filePath);
+			if (template.Formation == null) {
+				template.FormationStr = "1-4-3-3";
+			}
+			return template;
 		}
 
 		public static TeamTemplate DefaultTemplate(int playersCount) {
