@@ -158,22 +158,15 @@ namespace LongoMatch.Store.Templates
 		}
 	
 		public void AddDefaultSubcategories (Category cat) {
-			PlayerSubCategory localplayers, visitorplayers;
+			TagSubCategory resultsubcat;
 			
-			localplayers = new PlayerSubCategory {
-				Name = Catalog.GetString("Local Team Players"),
-				AllowMultiple = true,
-				FastTag = true};
-			localplayers.Add(Team.LOCAL);
-			
-			visitorplayers = new PlayerSubCategory {
-				Name = Catalog.GetString("Visitor Team Players"),
-				AllowMultiple = true,
-				FastTag = true};
-			visitorplayers.Add(Team.VISITOR);	
-			
-			cat.SubCategories.Add(localplayers);
-			cat.SubCategories.Add(visitorplayers);
+			resultsubcat = new TagSubCategory {
+				Name = Catalog.GetString ("Outcome"),
+				AllowMultiple = false,
+			};
+			resultsubcat.Add (Catalog.GetString ("Success"));
+			resultsubcat.Add (Catalog.GetString ("Failure"));
+			cat.SubCategories.Add(resultsubcat);
 		}	
 		
 		public Category AddDefaultItem (int index) {
