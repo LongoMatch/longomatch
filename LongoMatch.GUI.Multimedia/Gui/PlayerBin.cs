@@ -165,6 +165,13 @@ namespace LongoMatch.Gui
 			get;
 			set;
 		}
+		
+		public bool ShowControls {
+			set {
+				controlsbox.Visible = value;
+				vscale1.Visible = value;
+			}
+		}
 		#endregion
 
 		#region Public methods
