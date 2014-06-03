@@ -61,6 +61,8 @@ namespace LongoMatch.Store
 			Categories = new Categories();
 			LocalTeamTemplate = new TeamTemplate();
 			VisitorTeamTemplate = new TeamTemplate();
+			Timers = new List<Timer> ();
+			Periods = new List<Period> ();
 		}
 		#endregion
 
@@ -112,6 +114,18 @@ namespace LongoMatch.Store
 			set;
 		}
 		
+		public List<Period> Periods {
+			get;
+			set;
+		}
+		
+		public List<Timer> Timers {
+			get;
+			set;
+		}
+		
+		[JsonIgnore]
+		[Obsolete("Game units have been replaced with timers")]
 		public GameUnitsList  GameUnits {
 			set {
 				Categories.GameUnits = value;
@@ -138,6 +152,8 @@ namespace LongoMatch.Store
 			Categories.Clear();
 			VisitorTeamTemplate.Clear();
 			LocalTeamTemplate.Clear();
+			Periods.Clear();
+			Timers.Clear();
 		}
 
 
