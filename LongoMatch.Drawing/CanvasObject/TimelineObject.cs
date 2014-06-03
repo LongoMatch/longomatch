@@ -25,32 +25,29 @@ using LongoMatch.Store.Drawables;
 
 namespace LongoMatch.Drawing.CanvasObject
 {
-	public class CategoryTimeline: BaseCanvasObject, ICanvasSelectableObject
+	public abstract class TimelineObject: BaseCanvasObject, ICanvasSelectableObject
 	{
 		Color background;
-		List<PlayObject> plays;
+		List<TimeNodeObject> nodes;
 		double secondsPerPixel;
-		Time maxTime;
+		protected Time maxTime;
 		
-		public CategoryTimeline (List<Play> plays, Time maxTime, double offsetY, Color background)
+		public TimelineObject (Time maxTime, double offsetY, Color background)
 		{
 			this.background = background;
-			this.plays = new List<PlayObject> ();
+			this.nodes = new List<TimeNodeObject> ();
 			this.maxTime = maxTime;
 			Visible = true;
 			CurrentTime = new Time (0);
 			OffsetY  = offsetY;
-			foreach (Play p in plays) {
-				AddPlay (p);
-			}
 			SecondsPerPixel = 0.1;
 		}
 		
 		public double SecondsPerPixel {
 			set {
 				secondsPerPixel = value;
-				foreach (PlayObject po in plays) {
-					po.SecondsPerPixel = secondsPerPixel;
+				foreach (TimeNodeObject to in nodes) {
+					to.SecondsPerPixel = secondsPerPixel;
 				}
 			}
 			protected get {
@@ -73,23 +70,19 @@ namespace LongoMatch.Drawing.CanvasObject
 			get;
 		}
 		
-		public void AddPlay (Play play) {
-			PlayObject po = new PlayObject (play);
-			po.OffsetY = OffsetY;
-			po.SecondsPerPixel = SecondsPerPixel;
-			po.MaxTime = maxTime;
-			plays.Add (po);
+		public void AddNode (TimeNodeObject o) {
+			nodes.Add (o);
 		}
 		
-		public void RemovePlay (Play play) {
-			plays.RemoveAll (po => po.Play == play);
+		public void RemoveNode (TimeNode node) {
+			nodes.RemoveAll (po => po.TimeNode == node);
 		}
 
 		public override void Draw (IDrawingToolkit tk, Area area) {
 			double position;
-			List<PlayObject> selected;
+			List<TimeNodeObject> selected;
 			
-			selected = new List<PlayObject>();
+			selected = new List<TimeNodeObject>();
 
 			tk.Begin ();
 			tk.FillColor = background;
@@ -97,14 +90,14 @@ namespace LongoMatch.Drawing.CanvasObject
 			tk.LineWidth = 1;
 			tk.DrawRectangle (new Point (0, OffsetY), Width,
 			                  Common.CATEGORY_HEIGHT);
-			foreach (PlayObject p in plays) {
+			foreach (TimeNodeObject p in nodes) {
 				if (p.Selected) {
 					selected.Add (p);
 					continue;
 				}
 				p.Draw (tk, area);
 			}
-			foreach (PlayObject p in selected) {
+			foreach (TimeNodeObject p in selected) {
 				p.Draw (tk, area);
 			}
 			
@@ -122,7 +115,7 @@ namespace LongoMatch.Drawing.CanvasObject
 			Selection selection = null;
 
 			if (point.Y >= OffsetY && point.Y < OffsetY + Common.CATEGORY_HEIGHT) {
-				foreach (PlayObject po in plays) {
+				foreach (TimeNodeObject po in nodes) {
 					Selection tmp;
 					tmp = po.GetSelection (point, precision);
 					if (tmp == null) {
@@ -147,6 +140,43 @@ namespace LongoMatch.Drawing.CanvasObject
 		
 		public void Move (Selection s, Point p, Point start) {
 			s.Drawable.Move (s, p, start);
+		}
+	}
+	
+	public class CategoryTimeline: TimelineObject {
+
+		public CategoryTimeline (List<Play> plays, Time maxTime, double offsetY, Color background):
+			base (maxTime, offsetY, background)
+		{
+			foreach (Play p in plays) {
+				AddPlay (p);
+			}
+		}
+		
+		public void AddPlay (Play play){
+			PlayObject po = new PlayObject (play);
+			po.OffsetY = OffsetY;
+			po.SecondsPerPixel = SecondsPerPixel;
+			po.MaxTime = maxTime;
+			AddNode (po);
+		}
+
+	}
+	
+	public class TimerTimeline: TimelineObject {
+
+		public TimerTimeline (List<Timer> timers, Time maxTime, double offsetY, Color background):
+			base (maxTime, offsetY, background)
+		{
+			foreach (Timer t in timers) {
+				foreach (TimeNode tn in t.Nodes) {
+					TimeNodeObject to = new TimeNodeObject (tn);
+					to.OffsetY = OffsetY;
+					to.SecondsPerPixel = SecondsPerPixel;
+					to.MaxTime = maxTime;
+					AddNode (to);
+				}
+			}
 		}
 	}
 }

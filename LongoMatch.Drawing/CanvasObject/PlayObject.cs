@@ -24,51 +24,15 @@ using LongoMatch.Store.Drawables;
 
 namespace LongoMatch.Drawing.CanvasObject
 {
-	public class PlayObject: BaseCanvasObject, ICanvasSelectableObject
+	public class PlayObject: TimeNodeObject
 	{
-		const int MAX_TIME_SPAN=1000;
-		
-		public PlayObject (Play play)
+		public PlayObject (Play play):base (play)
 		{
-			Play = play;
 		}
 		
 		public Play Play {
-			get;
-			set;
-		}
-		
-		public Time MaxTime {
-			set;
-			protected get;
-		}
-		
-		public double OffsetY {
-			get;
-			set;
-		}
-		
-		public double SecondsPerPixel {
-			set;
-			protected get;
-		}
-		
-		double StartX {
 			get {
-				return Common.TimeToPos (Play.Start, SecondsPerPixel);
-			}
-		}
-		
-		double StopX {
-			get {
-				return Common.TimeToPos (Play.Stop, SecondsPerPixel);
-			}
-		}
-		
-		double CenterX {
-			get {
-				return Common.TimeToPos (Play.Start + Play.Duration / 2,
-				                         SecondsPerPixel);
+				return TimeNode as Play;
 			}
 		}
 		
@@ -86,51 +50,6 @@ namespace LongoMatch.Drawing.CanvasObject
 			                  Common.TimeToPos (Play.Duration, SecondsPerPixel),
 			                  Common.CATEGORY_HEIGHT, 2);
 			tk.End ();
-		}
-		
-		public Selection GetSelection (Point point, double precision) {
-			double accuracy;
-			if (point.Y >= OffsetY && point.Y < OffsetY + Common.CATEGORY_HEIGHT) {
-				if (Drawable.MatchAxis (point.X, StartX, precision, out accuracy)) {
-					return new Selection (this, SelectionPosition.Left, accuracy);
-				} else if (Drawable.MatchAxis (point.X, StopX, precision, out accuracy)) {
-					return new Selection (this, SelectionPosition.Right, accuracy);
-				} else if (point.X > StartX && point.X < StopX) {
-					return new Selection (this, SelectionPosition.All,
-					                      Math.Abs (CenterX - point.X));
-				}
-			}
-			return null;
-		}
-		
-		public void Move (Selection sel, Point p, Point start) {
-			Time newTime = Common.PosToTime (p, SecondsPerPixel);
-
-			if (p.X < 0) {
-				p.X = 0;
-			} else if (newTime > MaxTime) {
-				p.X = Common.TimeToPos (MaxTime, SecondsPerPixel);
-			}
-			newTime = Common.PosToTime (p, SecondsPerPixel);
-
-			switch (sel.Position) {
-			case SelectionPosition.Left: {
-				if (newTime.MSeconds + MAX_TIME_SPAN > Play.Stop.MSeconds) {
-					Play.Start.MSeconds = Play.Stop.MSeconds - MAX_TIME_SPAN;
-				} else {
-					Play.Start = newTime;
-				}
-				break;
-			}
-			case SelectionPosition.Right: {
-				if (newTime.MSeconds - MAX_TIME_SPAN < Play.Start.MSeconds) {
-					Play.Stop.MSeconds = Play.Start.MSeconds + MAX_TIME_SPAN;
-				} else {
-					Play.Stop = newTime;
-				}
-				break;
-			}
-			}
 		}
 	}
 }

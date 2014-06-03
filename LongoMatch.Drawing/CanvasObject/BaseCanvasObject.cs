@@ -16,53 +16,30 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Store;
 using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Interfaces;
 using LongoMatch.Common;
 
 namespace LongoMatch.Drawing.CanvasObject
 {
-	public class CategoryLabel: BaseCanvasObject, ICanvasObject
+	public abstract class BaseCanvasObject: ICanvasObject
 	{
-		Category category;
-		double width, height;
-
-		public CategoryLabel (Category category, double width, double height,
-		                      double offsetY)
+		public BaseCanvasObject ()
 		{
-			this.category = category;
-			this.height = height;
-			this.width = width;
-			OffsetY = offsetY;
+			Visible = true;
 		}
 		
-		public double Scroll {
+		public bool Visible {
 			get;
 			set;
 		}
 		
-		public double OffsetY {
+		public bool Selected {
 			set;
-			protected get;
+			get;
 		}
 		
-		public override void Draw (IDrawingToolkit tk, Area area) {
-			double y;
-			
-			y = OffsetY - Scroll;
-			tk.Begin();
-			tk.FillColor = category.Color;
-			tk.StrokeColor = category.Color;
-			tk.FontSlant = FontSlant.Normal;
-			tk.FontSize = 12;
-			tk.DrawRoundedRectangle (new Point(0, y + 1), width, height - 1, 3);  
-			tk.FillColor = Common.TEXT_COLOR;
-			tk.StrokeColor = Common.TEXT_COLOR;
-			tk.DrawText (new Point (0, y), width, height,
-			             category.Name);
-			tk.End();
-		}
+		public abstract void Draw (IDrawingToolkit tk, Area area);
 	}
 }
 

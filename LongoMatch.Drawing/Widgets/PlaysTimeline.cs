@@ -27,13 +27,6 @@ using LongoMatch.Store.Drawables;
 
 namespace LongoMatch.Drawing.Widgets
 {
-	/*      Widget schematic
-	 *
-	 *  time |___|___|___|___|__|
-	 *  cat1    ---     -- -
-	 *  cat2 --  -------  --
-	 *  cat3    ----    ----
-	 */
 	 
 	public class PlaysTimeline: SelectionCanvas
 	{
@@ -91,7 +84,7 @@ namespace LongoMatch.Drawing.Widgets
 
 		public void RemovePlays(List<Play> plays) {
 			foreach (Play p in plays) {
-				categories[p.Category].RemovePlay (p);
+				categories[p.Category].RemoveNode (p);
 				Selections.RemoveAll (s => (s.Drawable as PlayObject).Play == p);
 			}
 		}
@@ -99,7 +92,7 @@ namespace LongoMatch.Drawing.Widgets
 		void Update () {
 			double width = duration.Seconds / SecondsPerPixel;
 			widget.Width = width;
-			foreach (CategoryTimeline tl in categories.Values) {
+			foreach (TimelineObject tl in categories.Values) {
 				tl.Width = width;
 				tl.SecondsPerPixel = SecondsPerPixel;
 			}
@@ -130,7 +123,7 @@ namespace LongoMatch.Drawing.Widgets
 		void UpdateVisibleCategories () {
 			int i=0;
 			foreach (Category cat in categories.Keys) {
-				CategoryTimeline timeline = categories[cat];
+				TimelineObject timeline = categories[cat];
 				if (playsFilter.VisibleCategories.Contains (cat)) {
 					timeline.OffsetY = i * Common.CATEGORY_HEIGHT;
 					timeline.Visible = true;
@@ -172,7 +165,7 @@ namespace LongoMatch.Drawing.Widgets
 			List<Play> plays = Selections.Select (p => (p.Drawable as PlayObject).Play).ToList();
 			
 			foreach (Category c in categories.Keys) {
-				CategoryTimeline tl = categories[c];
+				TimelineObject tl = categories[c];
 				if (!tl.Visible)
 					continue;
 				if (coords.Y >= tl.OffsetY && coords.Y < tl.OffsetY + Common.CATEGORY_HEIGHT) {

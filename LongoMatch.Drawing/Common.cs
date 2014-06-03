@@ -26,6 +26,9 @@ namespace LongoMatch.Drawing
 		public const int CATEGORY_HEIGHT = 20;
 		public const int CATEGORY_WIDTH = 150;
 		public const int CATEGORY_H_SPACE = 5;
+		public const int TIMER_HEIGHT = 20;
+		public static int TIMERULE_HEIGHT = 30;
+
 		public const double TIMELINE_ACCURACY = 5;
 		public static Color TEXT_COLOR = Color.Black;
 		public static Color TIMELINE_LINE_COLOR = Color.Black;
@@ -36,6 +39,8 @@ namespace LongoMatch.Drawing
 		public static Color PLAYER_UNSELECTED_COLOR = Color.Grey2;
 		public static Color PLAYER_PLAYING_COLOR = Color.Green;
 		public static Color PLAYER_NOT_PLAYING_COLOR = Color.Red;
+		public static Color TIMER_UNSELECTED_COLOR = Color.Blue1;
+		public static Color TIMER_SELECTED_COLOR = Color.Red1;
 
 		public const int TIMELINE_LINE_WIDTH = 1;
 		

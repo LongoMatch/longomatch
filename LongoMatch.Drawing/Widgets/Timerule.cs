@@ -60,6 +60,10 @@ namespace LongoMatch.Drawing.Widgets
 			double height = widget.Height;
 			double width = widget.Width;
 			double tpos;
+			
+			if (Duration == null) {
+				return;
+			}
 
 			tk.Context = context;
 			tk.Begin ();
@@ -69,6 +73,8 @@ namespace LongoMatch.Drawing.Widgets
 			
 			tk.StrokeColor = Common.TIMELINE_LINE_COLOR;
 			tk.LineWidth = Common.TIMELINE_LINE_WIDTH;
+			tk.FontSlant = FontSlant.Normal;
+			tk.FontSize = 12;
 			tk.DrawLine (new Point (0, height), new Point (width, height));
 		
 			/* Draw big lines each 10 * secondsPerPixel */
