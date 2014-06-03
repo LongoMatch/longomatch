@@ -270,7 +270,8 @@ namespace LongoMatch.Gui
 			segment.Stop = new Time (int.MaxValue);
 			SetScaleValue (SCALE_FPS);
 			//timescale.Sensitive = true;
-			SegmentClosedEvent();
+			if (SegmentClosedEvent != null)
+				SegmentClosedEvent();
 		}
 
 		public void SetSensitive() {
@@ -287,7 +288,7 @@ namespace LongoMatch.Gui
 
 		#region Private methods
 
-		public void Open(string filename, bool seek) {
+		void Open(string filename, bool seek) {
 			ResetGui();
 			CloseSegment();
 			if (filename != this.filename) {
