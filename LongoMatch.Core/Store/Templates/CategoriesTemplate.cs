@@ -189,7 +189,13 @@ namespace LongoMatch.Store.Templates
 		}
 
 		public static Categories Load(string filePath) {
-			return SerializableObject.LoadSafe<Categories>(filePath);
+			Categories cat = SerializableObject.LoadSafe<Categories>(filePath);
+			if (cat.GamePeriods == null) {
+				cat.GamePeriods = new List<string>();
+				cat.GamePeriods.Add ("1");
+				cat.GamePeriods.Add ("2");
+			}
+			return cat;
 		}
 
 		public static Categories DefaultTemplate(int count) {
