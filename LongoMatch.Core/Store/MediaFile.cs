@@ -87,6 +87,12 @@ namespace LongoMatch.Store
 			}
 		}
 
+		public Time Duration {
+			get {
+				return new Time ((int) length);
+			}
+		}
+
 		public long Length {
 			get {
 				return this.length;
