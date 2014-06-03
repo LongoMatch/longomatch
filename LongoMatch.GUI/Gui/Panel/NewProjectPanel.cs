@@ -50,9 +50,12 @@ namespace LongoMatch.Gui.Panel
 		
 		const int PROJECT_TYPE = 0;
 		const int PROJECT_DETAILS = 1;
+		const int PROJECT_PERIODS = 2;
 		
 		Project project;
 		ProjectType projectType;
+		CaptureSettings captureSettings;
+		EncodingSettings encSettings;
 		List<Device> videoDevices;
 		ListStore teams, videoStandardList, encProfileList, qualList;
 		MediaFile mediaFile;
@@ -76,15 +79,14 @@ namespace LongoMatch.Gui.Panel
 			backbutton.Clicked += HandleBackClicked;
 			if (project == null) {
 				notebook1.Page = 0;
-				this.project = new Project {Description = new ProjectDescription ()};
-				this.project.Description.MatchDate = DateTime.Now;
+				datelabel.Text = DateTime.Now.ToShortDateString();
 			} else {
 				notebook1.Page = 1;
+				FillProjectDetails ();
 				this.project = project;
 			}
 			
 			ConnectSignals ();
-			FillProjectDetails ();
 			FillCategories ();
 			FillFormats ();
 			FillDevices (mtoolkit.VideoDevices);
@@ -232,6 +234,88 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 		
+		bool CreateProject () {
+			TreeIter iter;
+			
+			if (project != null) {
+				return true;
+			}
+			
+			if (projectType == ProjectType.FileProject) {
+				if (fileEntry.Text == "") {
+					gtoolkit.WarningMessage (Catalog.GetString ("No input video file"));
+					return false;
+				}
+			}
+			if (projectType == ProjectType.CaptureProject ||
+			    projectType == ProjectType.URICaptureProject) {
+				if (outfileEntry.Text == "") {
+					gtoolkit.WarningMessage (Catalog.GetString ("No output video file"));
+					return false;
+				}
+			}
+			if (projectType == ProjectType.URICaptureProject) {
+				if (urientry.Text == "") {
+					gtoolkit.WarningMessage (Catalog.GetString ("No input URI"));
+					return false;
+				}
+			}
+			project = new Project ();
+			project.Categories = analysisTemplate;
+			project.LocalTeamTemplate = hometemplate;
+			project.VisitorTeamTemplate = awaytemplate;
+			project.Description = new ProjectDescription ();
+			project.Description.Competition = competitionentry.Text;
+			project.Description.File = mediaFile;
+			project.Description.LocalGoals = (int) localSpinButton.Value;
+			project.Description.VisitorGoals = (int) visitorSpinButton.Value;
+			project.Description.MatchDate = DateTime.Parse (datelabel.Text);
+			project.Description.Season = seasonentry.Text;
+			project.Description.LocalName = project.LocalTeamTemplate.TeamName;
+			project.Description.VisitorName = project.VisitorTeamTemplate.TeamName;
+			
+			encSettings = new EncodingSettings();
+			captureSettings = new CaptureSettings();
+				
+			encSettings.OutputFile = outfileEntry.Text;
+			
+			if (project.Description.File == null) {
+				project.Description.File = new MediaFile ();
+				project.Description.File.Fps = (ushort) (Config.FPS_N / Config.FPS_D);
+				project.Description.File.FilePath = outfileEntry.Text;
+			}
+			if (projectType == ProjectType.CaptureProject) {
+				Device device = videoDevices[devicecombobox.Active];
+				captureSettings.CaptureSourceType = device.DeviceType;
+				captureSettings.DeviceID = device.ID;
+				captureSettings.SourceElement = device.SourceElement;
+			} else if (projectType == ProjectType.URICaptureProject) {
+				captureSettings.CaptureSourceType = CaptureSourceType.URI;
+				captureSettings.DeviceID = urientry.Text;
+			}else if (projectType == ProjectType.FakeCaptureProject) {
+				captureSettings.CaptureSourceType = CaptureSourceType.None;
+				project.Description.File.FilePath = Constants.FAKE_PROJECT;
+			}
+				
+			/* Get quality info */
+			qualitycombobox.GetActiveIter(out iter);
+			encSettings.EncodingQuality = (EncodingQuality) qualList.GetValue(iter, 1);
+			
+			/* Get size info */
+			imagecombobox.GetActiveIter(out iter);
+			encSettings.VideoStandard = (VideoStandard) videoStandardList.GetValue(iter, 1);
+			
+			/* Get encoding profile info */
+			encodingcombobox.GetActiveIter(out iter);
+			encSettings.EncodingProfile = (EncodingProfile) encProfileList.GetValue(iter, 1);
+			
+			encSettings.Framerate_n = Config.FPS_N;
+			encSettings.Framerate_d = Config.FPS_D;
+			
+			captureSettings.EncodingSettings = encSettings;
+			return true;
+		}
+		
 		void HandleCalendarbuttonClicked(object sender, System.EventArgs e)
 		{
 			datelabel.Text = Config.GUIToolkit.SelectDate (project.Description.MatchDate, this).ToShortDateString ();
@@ -287,86 +371,10 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleCreateProject (object sender, EventArgs e)
 		{
-			CaptureSettings captureSettings;
-			EncodingSettings encSettings;
-			TreeIter iter;
-			Project p;
-			
-			if (projectType == ProjectType.FileProject) {
-				if (fileEntry.Text == "") {
-					gtoolkit.WarningMessage (Catalog.GetString ("No input video file"));
-					return;
+			if (CreateProject ()) {
+				if (OpenNewProjectEvent != null) {
+					OpenNewProjectEvent (project , projectType, captureSettings);
 				}
-			}
-			if (projectType == ProjectType.CaptureProject ||
-			    projectType == ProjectType.URICaptureProject) {
-				if (outfileEntry.Text == "") {
-					gtoolkit.WarningMessage (Catalog.GetString ("No output video file"));
-					return;
-				}
-			}
-			if (projectType == ProjectType.URICaptureProject) {
-				if (urientry.Text == "") {
-					gtoolkit.WarningMessage (Catalog.GetString ("No input URI"));
-					return;
-				}
-			}
-			p = new Project ();
-			p.Categories = analysisTemplate;
-			p.LocalTeamTemplate = hometemplate;
-			p.VisitorTeamTemplate = awaytemplate;
-			p.Description = new ProjectDescription ();
-			p.Description.Competition = competitionentry.Text;
-			p.Description.File = mediaFile;
-			p.Description.LocalGoals = (int) localSpinButton.Value;
-			p.Description.VisitorGoals = (int) visitorSpinButton.Value;
-			p.Description.MatchDate = DateTime.Parse (datelabel.Text);
-			p.Description.Season = seasonentry.Text;
-			p.Description.LocalName = p.LocalTeamTemplate.TeamName;
-			p.Description.VisitorName = p.VisitorTeamTemplate.TeamName;
-			
-			encSettings = new EncodingSettings();
-			captureSettings = new CaptureSettings();
-				
-			encSettings.OutputFile = outfileEntry.Text;
-			
-			if (p.Description.File == null) {
-				p.Description.File = new MediaFile ();
-				p.Description.File.Fps = (ushort) (Config.FPS_N / Config.FPS_D);
-				p.Description.File.FilePath = outfileEntry.Text;
-			}
-			if (projectType == ProjectType.CaptureProject) {
-				Device device = videoDevices[devicecombobox.Active];
-				captureSettings.CaptureSourceType = device.DeviceType;
-				captureSettings.DeviceID = device.ID;
-				captureSettings.SourceElement = device.SourceElement;
-			} else if (projectType == ProjectType.URICaptureProject) {
-				captureSettings.CaptureSourceType = CaptureSourceType.URI;
-				captureSettings.DeviceID = urientry.Text;
-			}else if (projectType == ProjectType.FakeCaptureProject) {
-				captureSettings.CaptureSourceType = CaptureSourceType.None;
-				p.Description.File.FilePath = Constants.FAKE_PROJECT;
-			}
-				
-			/* Get quality info */
-			qualitycombobox.GetActiveIter(out iter);
-			encSettings.EncodingQuality = (EncodingQuality) qualList.GetValue(iter, 1);
-			
-			/* Get size info */
-			imagecombobox.GetActiveIter(out iter);
-			encSettings.VideoStandard = (VideoStandard) videoStandardList.GetValue(iter, 1);
-			
-			/* Get encoding profile info */
-			encodingcombobox.GetActiveIter(out iter);
-			encSettings.EncodingProfile = (EncodingProfile) encProfileList.GetValue(iter, 1);
-			
-			encSettings.Framerate_n = Config.FPS_N;
-			encSettings.Framerate_d = Config.FPS_D;
-			
-			captureSettings.EncodingSettings = encSettings;
-				
-			if (OpenNewProjectEvent != null) {
-				OpenNewProjectEvent (p, projectType, captureSettings);
 			}
 		}
 
@@ -388,8 +396,25 @@ namespace LongoMatch.Gui.Panel
 			if (notebook1.Page == PROJECT_TYPE) {
 				SetProjectType ();	
 			}
-			notebook1.Page ++;
 			if (notebook1.Page == PROJECT_DETAILS) {
+				if (!CreateProject ()) {
+					return;
+				}
+			}
+
+			notebook1.Page ++;
+
+			if (notebook1.Page == PROJECT_DETAILS) {
+				switch (projectType) {
+				case ProjectType.CaptureProject:
+				case ProjectType.FakeCaptureProject:
+				case ProjectType.URICaptureProject:
+					nextbutton.Visible = false;
+					createbutton.Visible = true;
+					break;
+				}
+			} else if (notebook1.Page == PROJECT_PERIODS) {
+				projectperiods1.Project = project;
 				nextbutton.Visible = false;
 				createbutton.Visible = true;
 			}

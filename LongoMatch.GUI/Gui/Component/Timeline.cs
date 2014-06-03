@@ -41,7 +41,6 @@ namespace LongoMatch.Gui.Component
 		public event TagPlayHandler TagPlay;
 		public event RenderPlaylistHandler RenderPlaylist;
 		
-		const int TIMERULE_HEIGHT = 30;
 		const uint TIMEOUT_MS = 100;
 		
 		PlaysTimeline timeline;
@@ -64,9 +63,9 @@ namespace LongoMatch.Gui.Component
 			focusscale.Adjustment.Lower = 0;
 			focusscale.Adjustment.Upper = 12;
 			focusscale.ValueChanged += HandleValueChanged;
-			timerulearea.HeightRequest = TIMERULE_HEIGHT;
+			timerulearea.HeightRequest = LongoMatch.Drawing.Common.TIMERULE_HEIGHT;
 			labelsarea.WidthRequest = LongoMatch.Drawing.Common.CATEGORY_WIDTH;
-			hbox1.HeightRequest = TIMERULE_HEIGHT;
+			hbox1.HeightRequest = LongoMatch.Drawing.Common.TIMERULE_HEIGHT;
 			scrolledwindow1.Vadjustment.ValueChanged += HandleScrollEvent;
 			scrolledwindow1.Hadjustment.ValueChanged += HandleScrollEvent;
 			timeoutID = 0;

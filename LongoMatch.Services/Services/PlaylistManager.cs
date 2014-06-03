@@ -25,6 +25,8 @@ using LongoMatch.Store;
 using LongoMatch.Common;
 using Mono.Unix;
 
+using Timer = System.Threading.Timer;
+
 
 namespace LongoMatch.Services
 {
