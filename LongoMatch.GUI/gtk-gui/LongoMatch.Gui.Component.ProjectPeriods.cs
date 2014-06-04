@@ -7,6 +7,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.VBox vbox2;
 		private global::LongoMatch.Gui.PlayerBin playerbin2;
 		private global::Gtk.DrawingArea drawingarea1;
+		private global::Gtk.ScrolledWindow scrolledwindow2;
 		private global::Gtk.DrawingArea drawingarea2;
 		private global::Gtk.Label synclabel;
 
@@ -35,22 +36,34 @@ namespace LongoMatch.Gui.Component
 			w2.Position = 1;
 			w2.Expand = false;
 			// Container child vbox2.Gtk.Box+BoxChild
+			this.scrolledwindow2 = new global::Gtk.ScrolledWindow ();
+			this.scrolledwindow2.HeightRequest = 50;
+			this.scrolledwindow2.CanFocus = true;
+			this.scrolledwindow2.Name = "scrolledwindow2";
+			this.scrolledwindow2.ShadowType = ((global::Gtk.ShadowType)(1));
+			// Container child scrolledwindow2.Gtk.Container+ContainerChild
+			global::Gtk.Viewport w3 = new global::Gtk.Viewport ();
+			w3.ShadowType = ((global::Gtk.ShadowType)(0));
+			// Container child GtkViewport.Gtk.Container+ContainerChild
 			this.drawingarea2 = new global::Gtk.DrawingArea ();
 			this.drawingarea2.Name = "drawingarea2";
-			this.vbox2.Add (this.drawingarea2);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.drawingarea2]));
-			w3.Position = 2;
-			w3.Expand = false;
+			w3.Add (this.drawingarea2);
+			this.scrolledwindow2.Add (w3);
+			this.vbox2.Add (this.scrolledwindow2);
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.scrolledwindow2]));
+			w6.Position = 2;
+			w6.Expand = false;
+			w6.Fill = false;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.synclabel = new global::Gtk.Label ();
 			this.synclabel.Name = "synclabel";
 			this.synclabel.UseMarkup = true;
 			this.vbox2.Add (this.synclabel);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.synclabel]));
-			w4.PackType = ((global::Gtk.PackType)(1));
-			w4.Position = 3;
-			w4.Expand = false;
-			w4.Fill = false;
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.synclabel]));
+			w7.PackType = ((global::Gtk.PackType)(1));
+			w7.Position = 3;
+			w7.Expand = false;
+			w7.Fill = false;
 			this.Add (this.vbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
