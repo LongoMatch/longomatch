@@ -47,9 +47,11 @@ namespace LongoMatch.Store
 			}
 		}
 		
-		public void Start (Time start) {
+		public void Start (Time start, string name = null) {
+			if (name == null)
+				name = Name;
 			Stop (start);
-			TimeNode tn = new TimeNode {Name = Name, Start = start};
+			TimeNode tn = new TimeNode {Name = name, Start = start};
 			Nodes.Add (tn);
 		}
 		
