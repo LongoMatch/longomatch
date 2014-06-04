@@ -46,7 +46,6 @@ namespace LongoMatch.Gui.Panel
 	public partial class NewProjectPanel : Gtk.Bin, IPanel
 	{
 		public event BackEventHandle BackEvent;
-		public event OpenNewProjectHandler OpenNewProjectEvent;
 		
 		const int PROJECT_TYPE = 0;
 		const int PROJECT_DETAILS = 1;
@@ -372,9 +371,7 @@ namespace LongoMatch.Gui.Panel
 		void HandleCreateProject (object sender, EventArgs e)
 		{
 			if (CreateProject ()) {
-				if (OpenNewProjectEvent != null) {
-					OpenNewProjectEvent (project , projectType, captureSettings);
-				}
+				Config.EventsBroker.EmitOpenNewProject (project, projectType, captureSettings);
 			}
 		}
 

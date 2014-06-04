@@ -63,6 +63,7 @@ namespace LongoMatch
 				AddinsManager manager = new AddinsManager(Config.PluginsConfigDir, Config.PluginsDir);
 				manager.LoadConfigModifierAddins();
 			    Config.DrawingToolkit = new CairoBackend ();
+			    Config.EventsBroker = new EventsBroker ();
 			    IMultimediaToolkit multimediaToolkit = new MultimediaToolkit();
 			    Config.MultimediaToolkit = multimediaToolkit;
 			    GUIToolkit guiToolkit = new GUIToolkit(version);

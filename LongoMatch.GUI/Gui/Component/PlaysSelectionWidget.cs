@@ -31,16 +31,6 @@ namespace LongoMatch.Gui.Component
 	public partial class PlaysSelectionWidget : Gtk.Bin
 	{
 	
-		public event PlaysDeletedHandler PlaysDeleted;
-		public event PlaySelectedHandler PlaySelected;
-		public event PlayCategoryChangedHandler PlayCategoryChanged;
-		public event PlayListNodeAddedHandler PlayListNodeAdded;
-		public event TimeNodeChangedHandler TimeNodeChanged;
-		public event SnapshotSeriesHandler SnapshotSeries;
-		public event RenderPlaylistHandler RenderPlaylist;
-		public event TagPlayHandler TagPlay;
-		public event DuplicatePlayHandler DuplicatePlay;
-		
 		Project project;
 		PlaysFilter filter;
 		PlayersFilterTreeView playersfilter;
@@ -52,7 +42,7 @@ namespace LongoMatch.Gui.Component
 			localPlayersList.Team = Team.LOCAL;
 			visitorPlayersList.Team = Team.VISITOR;
 			AddFilters();
-			ConnectSignals();
+			Config.EventsBroker.TagPlay += (Play play) => {UpdateTeamsModels();};
 		}
 		
 		#region Plubic Methods
@@ -128,99 +118,9 @@ namespace LongoMatch.Gui.Component
 			filtersnotebook.ShowAll();
 		}
 		
-		private void ConnectSignals() {
-			playsList.TimeNodeDeleted += EmitPlaysDeleted;
-
-			/* Connect TimeNodeSelected events */
-			playsList.TimeNodeSelected += EmitPlaySelected;
-			localPlayersList.TimeNodeSelected += EmitPlaySelected;
-			visitorPlayersList.TimeNodeSelected += EmitPlaySelected;
-
-			/* Connect PlayListNodeAdded events */
-			playsList.PlayListNodeAdded += EmitPlayListNodeAdded;
-			localPlayersList.PlayListNodeAdded += EmitPlayListNodeAdded;
-			visitorPlayersList.PlayListNodeAdded += EmitPlayListNodeAdded;
-			
-			/* Duplicate play */
-			playsList.DuplicatePlay += EmitDuplicatePlay;
-			localPlayersList.DuplicatePlay += EmitDuplicatePlay;
-			visitorPlayersList.DuplicatePlay += EmitDuplicatePlay;
-
-			/* Play name edited or Category name changed */
-			playsList.TimeNodeChanged += EmitTimeNodeChanged;
-
-			/* Connect tags events */
-			playsList.TagPlay += EmitTagPlay;
-
-			/* Connect SnapshotSeries events */
-			playsList.SnapshotSeriesEvent += EmitSnapshotSeries;
-			localPlayersList.SnapshotSeriesEvent += EmitSnapshotSeries;
-			visitorPlayersList.SnapshotSeriesEvent += EmitSnapshotSeries;
-
-			playsList.RenderPlaylist += EmitRenderPlaylist;
-			localPlayersList.RenderPlaylistEvent += EmitRenderPlaylist;
-			visitorPlayersList.RenderPlaylistEvent += EmitRenderPlaylist;
-			
-			/* Connect PlayCategoryChanged events */
-			playsList.PlayCategoryChanged += EmitPlayCategoryChanged;
- 		}
- 		
 		private void UpdateTeamsModels() {
 			localPlayersList.SetTeam(project.LocalTeamTemplate, project.AllPlays());
 			visitorPlayersList.SetTeam(project.VisitorTeamTemplate, project.AllPlays());
-		}
-		
-		private void EmitPlaysDeleted(List<Play> plays)
-		{
-			if (PlaysDeleted != null)
-				PlaysDeleted(plays);
-		}
-		
-		private void EmitPlaySelected(Play play)
-		{
-			if (PlaySelected != null)
-				PlaySelected(play);
-		}
-		
-		private void EmitSnapshotSeries(Play play)
-		{
-			if (SnapshotSeries != null)
-				SnapshotSeries(play);
-		}
-		
-		private void EmitRenderPlaylist(IPlayList playlist) {
-			if (RenderPlaylist != null)
-				RenderPlaylist(playlist);
-		}
-		
-		private void EmitPlayListNodeAdded(List<Play> plays)
-		{
-			if (PlayListNodeAdded != null)
-				PlayListNodeAdded(plays);
-		}
-		
-		private void EmitTimeNodeChanged (TimeNode tn, object val)
-		{
-			if (TimeNodeChanged != null)
-				TimeNodeChanged(tn, val);
-		}
-		
-		protected virtual void EmitPlayCategoryChanged(Play play, Category cat)
-		{
-			if(PlayCategoryChanged != null)
-				PlayCategoryChanged(play, cat);
-		}
-		
-		private void EmitTagPlay(Play play) {
-			if (TagPlay != null)
-				TagPlay (play);
-			UpdateTeamsModels();
-		}
-
-		private void EmitDuplicatePlay (Play play)
-		{
-			if (DuplicatePlay != null)
-				DuplicatePlay (play);
 		}
 		
 		protected void OnCategoriesFiltersbuttonClicked (object sender, System.EventArgs e)

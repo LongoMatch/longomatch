@@ -19,6 +19,9 @@
 //
 //
 using System.Collections.Generic;
+using LongoMatch.Common;
+
+
 #if HAVE_GTK
 using Gtk;
 using Gdk;
@@ -39,24 +42,20 @@ namespace LongoMatch.Services
 		
 		Dictionary<HotKey, Category> dic;
 		bool ignoreKeys;
-		IAnalysisWindow analysisWindow;
 		
-		public HotKeysManager(ProjectsManager pManager)
+		public HotKeysManager()
 		{
 			dic = new Dictionary<HotKey,Category>();
-			pManager.OpenedProjectChanged += HandleOpenedProjectChanged;
+			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
+			Config.EventsBroker.KeyPressed += KeyListener;
 		}
 
-		void HandleOpenedProjectChanged (Project project, LongoMatch.Common.ProjectType projectType, LongoMatch.Common.PlaysFilter filter, IAnalysisWindow analysisWindow, IProjectOptionsController projectOptions)
+		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
+		                                 PlaysFilter filter, IAnalysisWindow analysisWindow)
 		{
 			if(project == null) {
 				ignoreKeys = true;
 				return;
-			}
-			
-			if (this.analysisWindow != analysisWindow) {
-				analysisWindow.KeyPressed += KeyListener;
-				this.analysisWindow = analysisWindow;
 			}
 			
 			dic.Clear();

@@ -309,12 +309,10 @@ namespace LongoMatch.Gui
 		
 		public void OpenProject (Project project, ProjectType projectType, 
 		                         CaptureSettings props, PlaysFilter filter,
-			                     out IAnalysisWindow analysisWindow,
-			                     out IProjectOptionsController projectOptionsController)
+			                     out IAnalysisWindow analysisWindow)
 		{
 			Log.Information ("Open project");
 			analysisWindow = mainWindow.SetProject (project, projectType, props, filter);
-			projectOptionsController = mainWindow;
 		}
 		
 		public void CloseProject ()

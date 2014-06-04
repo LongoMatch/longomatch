@@ -28,7 +28,6 @@ namespace LongoMatch.Gui.Panel
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class OpenProjectPanel : Gtk.Bin, IPanel
 	{
-		public event OpenProjectIDHandler OpenProjectEvent;
 		public event BackEventHandle BackEvent;
 
 		public OpenProjectPanel ()
@@ -54,8 +53,7 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleProjectSelected (ProjectDescription project)
 		{
-			if (OpenProjectEvent != null)
-				OpenProjectEvent (project.UUID);
+			Config.EventsBroker.EmitOpenProjectID  (project.UUID);
 		}
 	}
 }

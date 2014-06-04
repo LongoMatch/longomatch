@@ -32,15 +32,6 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class Timeline : Gtk.Bin
 	{
-		public event TimeNodeChangedHandler TimeNodeChanged;
-		public event PlaySelectedHandler TimeNodeSelected;
-		public event PlaysDeletedHandler TimeNodeDeleted;
-		public event NewTagAtPosHandler NewTagAtPosEvent;
-		public event PlayListNodeAddedHandler PlayListNodeAdded;
-		public event SnapshotSeriesHandler SnapshotSeries;
-		public event TagPlayHandler TagPlay;
-		public event RenderPlaylistHandler RenderPlaylist;
-		
 		const uint TIMEOUT_MS = 100;
 		
 		PlaysTimeline timeline;
@@ -103,9 +94,6 @@ namespace LongoMatch.Gui.Component
 			focusscale.Value = 6;
 			projectFile = project.Description.File;
 			timerule.Duration = new Time ((int)project.Description.File.Length);
-
-			timeline.TimeNodeChanged += HandleTimeNodeChanged;
-			timeline.TimeNodeSelected += HandleTimeNodeSelected;
 			timeline.ShowMenuEvent += HandleShowMenu;
 			QueueDraw ();
 		}
@@ -177,25 +165,25 @@ namespace LongoMatch.Gui.Component
 			newPlay = new MenuItem(String.Format ("{0} in {1}",
 			                       Catalog.GetString("Add new play"), cat.Name));
 			menu.Append(newPlay);
-			newPlay.Activated += (sender, e) => {EmitNewPlay (cat, time);};
+			newPlay.Activated += (sender, e) => Config.EventsBroker.EmitNewTagAtPos (cat, time);
 
 			if (plays != null) {
 				if (plays.Count == 1) {
 					tag = new MenuItem(Catalog.GetString("Edit tags"));
 					snapshot = new MenuItem(Catalog.GetString("Export to PGN images"));
-					tag.Activated += (sender, e) => EmitTagPlay (plays[0]);
-					snapshot.Activated += (sender, e) => EmitSnapshotSeries (plays[0]);
+					tag.Activated += (sender, e) => Config.EventsBroker.EmitTagPlay (plays[0]);
+					snapshot.Activated += (sender, e) => Config.EventsBroker.EmitSnapshotSeries (plays[0]);
 					menu.Add (tag);
 					menu.Add (snapshot);
 				}
 				if (plays.Count > 0 ) {
 					del = new MenuItem (String.Format ("{0} ({1})",
 					                    Catalog.GetString("Delete"), plays.Count));
-					del.Activated += (sender, e) => EmitDelete (plays);
+					del.Activated += (sender, e) => Config.EventsBroker.EmitPlaysDeleted (plays);
 					menu.Add (del);
 					addPLN = new MenuItem (String.Format ("{0} ({1})",
 					                       Catalog.GetString("Add to playlist"), plays.Count));
-					addPLN.Activated += (sender, e) => EmitAddToPlaylist (plays);
+					addPLN.Activated += (sender, e) => Config.EventsBroker.EmitPlayListNodeAdded (plays);
 					menu.Add (addPLN);
 					render = new MenuItem (String.Format ("{0} ({1})",
 					                       Catalog.GetString("Export to video file"), plays.Count));
@@ -207,57 +195,13 @@ namespace LongoMatch.Gui.Component
 			menu.Popup();
 		}
 
-		void EmitTagPlay (Play play)
-		{
-			if (TagPlay != null) {
-				TagPlay (play);
-			}
-		}
-		
-		void EmitSnapshotSeries (Play play)
-		{
-			if (SnapshotSeries != null)
-				SnapshotSeries (play);
-		}
-
-		void EmitNewPlay (Category cat, Time time)
-		{
-			if (NewTagAtPosEvent != null)
-				NewTagAtPosEvent (cat, time);
-		}
-		
-		void EmitDelete (List<Play> plays)
-		{
-			if (TimeNodeDeleted != null) {
-				TimeNodeDeleted (plays);
-			}
-		}
-		
 		void EmitRenderPlaylist (List<Play> plays)
 		{
-			if (RenderPlaylist != null) {
-				PlayList pl = new PlayList();
-				foreach (Play p in plays) {
-					pl.Add (new PlayListPlay (p, projectFile, true));
-				}
-				RenderPlaylist (pl);
+			PlayList pl = new PlayList();
+			foreach (Play p in plays) {
+				pl.Add (new PlayListPlay (p, projectFile, true));
 			}
-		}
-		
-		void EmitAddToPlaylist (List<Play> plays) {
-			if (PlayListNodeAdded != null) {
-				PlayListNodeAdded (plays);
-			}
-		}
-		
-		void HandleTimeNodeChanged(TimeNode tn, object val) {
-			if(TimeNodeChanged != null)
-				TimeNodeChanged(tn,val);
-		}
-
-		void HandleTimeNodeSelected(Play tn) {
-			if(TimeNodeSelected != null)
-				TimeNodeSelected(tn);
+			Config.EventsBroker.EmitRenderPlaylist (pl);
 		}
 	}
 }

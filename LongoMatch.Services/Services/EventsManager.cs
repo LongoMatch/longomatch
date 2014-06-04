@@ -44,23 +44,20 @@ namespace LongoMatch.Services
 		
 		IGUIToolkit guiToolkit;
 		IAnalysisWindow analysisWindow;
-		IProjectOptionsController poController;
 		IPlayerBin player;
 		ICapturerBin capturer;
 		IRenderingJobsManager renderer;
 
-		public EventsManager(IGUIToolkit guiToolkit, IRenderingJobsManager renderer,
-		                     ProjectsManager pManager)
+		public EventsManager(IGUIToolkit guiToolkit, IRenderingJobsManager renderer)
 		{
 			this.guiToolkit = guiToolkit;
 			this.renderer = renderer;
-			pManager.OpenedProjectChanged += HandleOpenedProjectChanged;
+			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
 			catsTime = new Dictionary<Category, Time>();
 		}
 
 		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
-		                                 PlaysFilter filter, IAnalysisWindow analysisWindow,
-		                                 IProjectOptionsController projectOptionsController)
+		                                 PlaysFilter filter, IAnalysisWindow analysisWindow)
 		{
 			this.openedProject = project;
 			this.projectType = projectType;
@@ -72,7 +69,6 @@ namespace LongoMatch.Services
 				
 			player = analysisWindow.Player;
 			capturer = analysisWindow.Capturer;
-			this.poController = projectOptionsController;
 			if (this.analysisWindow != analysisWindow) {
 				this.analysisWindow = analysisWindow;
 				ConnectSignals();
@@ -86,30 +82,22 @@ namespace LongoMatch.Services
 		}
 		
 		private void ConnectSignals() {
-			/* Adding Handlers for each event */
-
-			/* Connect tagging related events */
-			analysisWindow.NewTagEvent += OnNewTag;
-			analysisWindow.NewTagStartEvent += OnNewPlayStart;
-			analysisWindow.NewTagStopEvent += OnNewPlayStop;
-			analysisWindow.NewTagCancelEvent += OnNewPlayCancel;
-			analysisWindow.NewTagAtPosEvent += OnNewTagAtPos;
-			analysisWindow.TimeNodeChanged += OnTimeNodeChanged;
-			analysisWindow.PlaysDeletedEvent += OnPlaysDeleted;
-			analysisWindow.PlaySelectedEvent += OnPlaySelected;
-			analysisWindow.PlayCategoryChanged += OnPlayCategoryChanged;
-			analysisWindow.DuplicatePlay += OnDuplicatePlay;
-
-			/* Connect playlist events */
-			analysisWindow.PlayListNodeSelectedEvent += (tn) => {loadedPlay = tn;};
-			/* Connect tags events */
-			analysisWindow.TagPlayEvent += OnTagPlay;
-
-			/* Connect SnapshotSeries events */
-			analysisWindow.SnapshotSeriesEvent += OnSnapshotSeries;
+			Config.EventsBroker.NewTagEvent += OnNewTag;
+			Config.EventsBroker.NewTagStartEvent += OnNewPlayStart;
+			Config.EventsBroker.NewTagStopEvent += OnNewPlayStop;
+			Config.EventsBroker.NewTagCancelEvent += OnNewPlayCancel;
+			Config.EventsBroker.NewTagAtPosEvent += OnNewTagAtPos;
+			Config.EventsBroker.TimeNodeChanged += OnTimeNodeChanged;
+			Config.EventsBroker.PlaysDeleted += OnPlaysDeleted;
+			Config.EventsBroker.PlaySelected += OnPlaySelected;
+			Config.EventsBroker.PlayCategoryChanged += OnPlayCategoryChanged;
+			Config.EventsBroker.DuplicatePlay += OnDuplicatePlay;
+			Config.EventsBroker.PlayListNodeSelectedEvent += (tn) => {loadedPlay = tn;};
+			Config.EventsBroker.TagPlay += OnTagPlay;
+			Config.EventsBroker.SnapshotSeries += OnSnapshotSeries;
 			
-			poController.ShowProjectStatsEvent += HandleShowProjectStatsEvent;
-			poController.TagSubcategoriesChangedEvent += HandleTagSubcategoriesChangedEvent;
+			Config.EventsBroker.ShowProjectStatsEvent += HandleShowProjectStatsEvent;
+			Config.EventsBroker.TagSubcategoriesChangedEvent += HandleTagSubcategoriesChangedEvent;
 			
 			/* Connect player events */
 			player.Prev += OnPrev;

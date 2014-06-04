@@ -60,8 +60,7 @@ namespace LongoMatch.Interfaces.GUI
 		
 		void OpenProject (Project project, ProjectType projectType, 
 		                  CaptureSettings props, PlaysFilter filter,
-		                  out IAnalysisWindow analysisWindow,
-		                  out IProjectOptionsController projectOptionsController);
+		                  out IAnalysisWindow analysisWindow);
 		void CloseProject ();
 			                     
 		void SelectProject(List<ProjectDescription> projects);

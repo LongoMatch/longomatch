@@ -34,11 +34,6 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class ButtonsWidget : Gtk.Bin
 	{
-		public event NewTagHandler NewMarkEvent;
-		public event NewTagStartHandler NewMarkStartEvent;
-		public event NewTagStopHandler NewMarkStopEvent;
-		public event NewTagCancelHandler NewMarkCancelEvent;
-
 		TagMode tagMode;
 		Dictionary<ButtonTagger, Category> buttonsDic;
 
@@ -92,24 +87,16 @@ namespace LongoMatch.Gui.Component
 				Category cat = categories[i];
 				ButtonTagger b = new ButtonTagger (cat);
 					b.NewTag += (category) => {
-					if (NewMarkEvent != null) {
-						NewMarkEvent (category);
-					}
+					Config.EventsBroker.EmitNewTag (category);
 				};
 				b.NewTagStart += (category) => {
-					if (NewMarkStartEvent != null) {
-						NewMarkStartEvent (category);
-					}
+					Config.EventsBroker.EmitNewTagStart (category);
 				};
 				b.NewTagStop += (category) => {
-					if (NewMarkStopEvent != null) {
-						NewMarkStopEvent (category);
-					}
+					Config.EventsBroker.EmitNewTagStop (category);
 				};
 				b.NewTagCancel += (category) => {
-					if (NewMarkCancelEvent != null) {
-						NewMarkCancelEvent (category);
-					}
+					Config.EventsBroker.EmitNewTagCancel (category);
 				};
 				b.Mode = tagMode;
 				

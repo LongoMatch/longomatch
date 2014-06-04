@@ -38,31 +38,13 @@ namespace LongoMatch.Gui.Component
 	public partial class PlaysListTreeWidget : Gtk.Bin
 	{
 
-		public event PlaySelectedHandler TimeNodeSelected;
-		public event TimeNodeChangedHandler TimeNodeChanged;
-		public event PlaysDeletedHandler TimeNodeDeleted;
-		public event PlayListNodeAddedHandler PlayListNodeAdded;
-		public event PlayCategoryChangedHandler PlayCategoryChanged;
-		public event SnapshotSeriesHandler SnapshotSeriesEvent;
-		public event TagPlayHandler TagPlay;
-		public event RenderPlaylistHandler RenderPlaylist;
-		public event DuplicatePlayHandler DuplicatePlay;
-
 		private Project project;
 
 		public PlaysListTreeWidget()
 		{
 			this.Build();
-			treeview.TimeNodeChanged += OnTimeNodeChanged;
-			treeview.TimeNodeSelected += OnTimeNodeSelected;
-			treeview.TimeNodeDeleted += OnTimeNodeDeleted;
-			treeview.PlayListNodeAdded += OnPlayListNodeAdded;
-			treeview.SnapshotSeriesEvent += OnSnapshotSeriesEvent;
 			treeview.EditProperties += OnEditProperties;
-			treeview.PlayCategoryChanged += OnPlayCategoryChanged;
-			treeview.TagPlay += OnTagPlay;
 			treeview.NewRenderingJob += OnNewRenderingJob;
-			treeview.DuplicatePlay += OnDuplicatePlay;
 		}
 		
 		public PlaysFilter Filter {
@@ -179,55 +161,9 @@ namespace LongoMatch.Gui.Component
 			dialog.Project = project;
 			dialog.Run();
 			dialog.Destroy();
-			if(TimeNodeChanged != null)
-				TimeNodeChanged(tNode, tNode.Name);
+			Config.EventsBroker.EmitTimeNodeChanged (tNode, tNode.Name);
 		}
 
-		protected virtual void OnTimeNodeChanged(TimeNode tNode,object val) {
-			if(TimeNodeChanged != null)
-				TimeNodeChanged(tNode,val);
-		}
-
-		protected virtual void OnTimeNodeSelected(Play tNode) {
-			if(TimeNodeSelected != null)
-				TimeNodeSelected(tNode);
-		}
-
-		protected virtual void OnTimeNodeDeleted(List<Play> plays) {
-			if(TimeNodeDeleted != null)
-				TimeNodeDeleted(plays);
-		}
-
-		protected virtual void OnPlayListNodeAdded(List<Play> plays)
-		{
-			if(PlayListNodeAdded != null)
-				PlayListNodeAdded(plays);
-		}
-		
-		protected virtual void OnDuplicatePlay (Play play)
-		{
-			if (DuplicatePlay != null)
-				DuplicatePlay (play);
-		}
-
-		protected virtual void OnPlayCategoryChanged(Play play, Category cat)
-		{
-			if(PlayCategoryChanged != null)
-				PlayCategoryChanged(play, cat);
-		}
-
-		protected virtual void OnSnapshotSeriesEvent(LongoMatch.Store.Play tNode)
-		{
-			if(SnapshotSeriesEvent != null)
-				SnapshotSeriesEvent(tNode);
-		}
-
-		protected virtual void OnTagPlay(LongoMatch.Store.Play tNode)
-		{
-			if(TagPlay != null)
-				TagPlay(tNode);
-		}
-		
 		protected virtual void OnNewRenderingJob (object sender, EventArgs args)
 		{
 			PlayList playlist = new PlayList();
@@ -242,8 +178,7 @@ namespace LongoMatch.Gui.Component
 				playlist.Add (new PlayListPlay(play, project.Description.File, true));
 			}
 			
-			if (RenderPlaylist != null)
-				RenderPlaylist (playlist);
+			Config.EventsBroker.EmitRenderPlaylist (playlist);
 		}
 	}
 }

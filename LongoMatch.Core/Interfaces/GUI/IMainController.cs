@@ -23,30 +23,9 @@ namespace LongoMatch.Interfaces.GUI
 {
 	public interface IMainController
 	{
-		/* Projects */
-		event NewProjectHandler NewProjectEvent;
-		event OpenNewProjectHandler OpenNewProjectEvent;
-		event OpenProjectHandler OpenProjectEvent;
-		event OpenProjectIDHandler OpenProjectIDEvent;
-		event ImportProjectHandler ImportProjectEvent;
-		event ExportProjectHandler ExportProjectEvent;
-		event QuitApplicationHandler QuitApplicationEvent;
-		
-		/* Managers */
-		event ManageJobsHandler ManageJobsEvent; 
-		event ManageTeamsHandler ManageTeamsEvent;
-		event ManageCategoriesHandler ManageCategoriesEvent;
-		event ManageProjects ManageProjectsEvent;
-		event ManageDatabases ManageDatabasesEvent;
-		event EditPreferences EditPreferencesEvent;
-		
-		/* Convert Video Files */
-		event ConvertVideoFilesHandler ConvertVideoFilesEvent;
-		
 		void AddExportEntry (string name, string shortName, Action<Project, IGUIToolkit> exportAction);
 		void AddImportEntry (string name, string shortName, string filterName,
 		                     string filter, Func<string, Project> importFunc,
 		                     bool requiresNewFile);
 	}
 }
-

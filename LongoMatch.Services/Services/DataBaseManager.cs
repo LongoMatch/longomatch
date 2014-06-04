@@ -39,7 +39,7 @@ namespace LongoMatch.DB
 		{
 			this.DBDir = DBDir;
 			this.guiToolkit = guiToolkit;
-			ConnectSignals ();
+			Config.EventsBroker.ManageDatabasesEvent += HandleManageDatabase;
 			FindDBS();
 		}
 		
@@ -115,16 +115,14 @@ namespace LongoMatch.DB
 			}
 		}
 
-		void ConnectSignals ()
+		void HandleManageDatabase ()
 		{
-			guiToolkit.MainController.ManageDatabasesEvent += () => {
-				if (OpenedProject != null) {
-					var msg = Catalog.GetString("Close the current project to open the database manager");
-					guiToolkit.ErrorMessage (msg);
-				} else {
-					guiToolkit.OpenDatabasesManager ();
-				}
-			};
+			if (OpenedProject != null) {
+				var msg = Catalog.GetString("Close the current project to open the database manager");
+				guiToolkit.ErrorMessage (msg);
+			} else {
+				guiToolkit.OpenDatabasesManager ();
+			}
 		}
 		
 		void FindDBS (){

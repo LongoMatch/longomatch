@@ -28,16 +28,23 @@ namespace LongoMatch.Gui.Panel
 		{
 			this.Build ();
 			backgroundwidget.Background = Gdk.Pixbuf.LoadFromResource (Constants.BACKGROUND);
+			Bind ();
 		}
 		
-		public void Bind (MainWindow window)
+		void Bind ()
 		{
-			openbutton.Clicked += (sender, e) => {window.EmitOpenProject ();};
-			newbutton.Clicked += (sender, e) => {window.EmitNewProject ();};
-			teamsbutton.Clicked += (sender, e) => {window.EmitManageTeams ();};
-			sportsbutton.Clicked += (sender, e) => {window.EmitManageCategories ();};
-		    preferencesbutton.Clicked += (sender, e) => {window.EmitEditPreferences ();};
-		    projectsbutton.Clicked += (sender, e) =>  {window.EmitManageProjects ();};
+			openbutton.Clicked += (sender, e) => {
+				Config.EventsBroker.EmitOpenProject ();};
+			newbutton.Clicked += (sender, e) => {
+				Config.EventsBroker.EmitNewProject ();};
+			teamsbutton.Clicked += (sender, e) => {
+				Config.EventsBroker.EmitManageTeams ();};
+			sportsbutton.Clicked += (sender, e) => {
+				Config.EventsBroker.EmitManageCategories ();};
+		    preferencesbutton.Clicked += (sender, e) => {
+				Config.EventsBroker.EmitEditPreferences ();};
+		    projectsbutton.Clicked += (sender, e) =>  {
+				Config.EventsBroker.EmitManageProjects ();};
 		}
 	}
 }

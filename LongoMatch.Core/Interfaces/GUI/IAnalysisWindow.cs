@@ -27,42 +27,6 @@ namespace LongoMatch.Interfaces.GUI
 {
 	public interface IAnalysisWindow
 	{	
-		/* Tags */
-		event NewTagHandler NewTagEvent;
-		event NewTagAtPosHandler NewTagAtPosEvent;
-		event NewTagStartHandler NewTagStartEvent;
-		event NewTagStopHandler NewTagStopEvent;
-		event NewTagCancelHandler NewTagCancelEvent;
-		event PlaySelectedHandler PlaySelectedEvent;
-		event TagPlayHandler TagPlayEvent;
-		event PlaysDeletedHandler PlaysDeletedEvent;
-		event TimeNodeChangedHandler TimeNodeChanged;
-		event PlayCategoryChangedHandler PlayCategoryChanged;
-		event DuplicatePlayHandler DuplicatePlay;
-		
-		/* Playlist */
-		event RenderPlaylistHandler RenderPlaylistEvent;
-		event PlayListNodeAddedHandler PlayListNodeAddedEvent;
-		event PlayListNodeSelectedHandler PlayListNodeSelectedEvent;
-		event OpenPlaylistHandler OpenPlaylistEvent;
-		event NewPlaylistHandler NewPlaylistEvent;
-		event SavePlaylistHandler SavePlaylistEvent; 
-		
-		/* Snapshots */
-		event SnapshotSeriesHandler SnapshotSeriesEvent;
-		
-		/* Game Units events */
-		event GameUnitHandler GameUnitEvent;
-		event UnitChangedHandler UnitChanged;
-		event UnitSelectedHandler UnitSelected;
-		event UnitsDeletedHandler UnitDeleted;
-		event UnitAddedHandler UnitAdded;
-		
-		/* Error handling */
-		event CloseOpenendProjectHandler CloseOpenedProjectEvent;
-		
-		event KeyHandler KeyPressed;
-		
 		void SetProject(Project project, ProjectType projectType, CaptureSettings props, PlaysFilter filter);
 		void CloseOpenedProject ();
 		void AddPlay(Play play);

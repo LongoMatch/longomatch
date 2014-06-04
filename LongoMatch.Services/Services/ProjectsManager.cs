@@ -35,13 +35,10 @@ namespace LongoMatch.Services
 
 	public class ProjectsManager
 	{
-		public event OpenedProjectChangedHandler OpenedProjectChanged;
-
 		IGUIToolkit guiToolkit;
 		IMultimediaToolkit multimediaToolkit;
 		IMainController mainController;
 		IAnalysisWindow analysisWindow;
-		IProjectOptionsController projectOptionsController;
 		IDatabase DB;
 		
 		public ProjectsManager (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit,
@@ -54,12 +51,14 @@ namespace LongoMatch.Services
 		}
 
 		public void ConnectSignals() {
-			mainController.NewProjectEvent += NewProject;
-			mainController.OpenProjectEvent += OpenProject;
-			mainController.OpenProjectIDEvent += OpenProjectID;
-			mainController.OpenNewProjectEvent += OpenNewProject;
+			Config.EventsBroker.NewProjectEvent += NewProject;
+			Config.EventsBroker.OpenProjectEvent += OpenProject;
+			Config.EventsBroker.OpenProjectIDEvent += OpenProjectID;
+			Config.EventsBroker.OpenNewProjectEvent += OpenNewProject;
+			Config.EventsBroker.CloseOpenedProjectEvent += () => PromptCloseProject();
+			Config.EventsBroker.SaveProjectEvent += SaveProject;
 		}
-		
+
 		public Project OpenedProject {
 			set;
 			get;
@@ -86,9 +85,8 @@ namespace LongoMatch.Services
 		}
 		
 		void EmitProjectChanged() {
-			if (OpenedProjectChanged != null)
-				OpenedProjectChanged (OpenedProject, OpenedProjectType, PlaysFilter,
-				                      analysisWindow, projectOptionsController);
+			Config.EventsBroker.EmitOpenedProjectChanged (OpenedProject, OpenedProjectType,
+			                                              PlaysFilter, analysisWindow);
 		}
 		
 		void RemuxOutputFile (EncodingSettings settings) {
@@ -166,11 +164,8 @@ namespace LongoMatch.Services
 			OpenProjectID (projectID);
 		}
 	
-		private bool SetProject(Project project, ProjectType projectType, CaptureSettings props)
+		bool SetProject(Project project, ProjectType projectType, CaptureSettings props)
 		{
-			IAnalysisWindow newAnalysiswindow;
-			IProjectOptionsController newController;
-			
 			if (OpenedProject != null) {
 				CloseOpenedProject(true);
 			}
@@ -179,23 +174,9 @@ namespace LongoMatch.Services
 				
 			PlaysFilter = new PlaysFilter(project);
 			guiToolkit.OpenProject (project, projectType, props, PlaysFilter,
-			                        out newAnalysiswindow, out newController);
-			Player = newAnalysiswindow.Player;
-			Capturer = newAnalysiswindow.Capturer;
-			if (newAnalysiswindow != analysisWindow) {
-				analysisWindow = newAnalysiswindow;
-				analysisWindow.CloseOpenedProjectEvent += () => {
-					if (projectType == ProjectType.FileProject) {
-						CloseOpenedProject (false);
-					} else {
-						SaveCaptureProject (OpenedProject);}
-					};
-			}
-			if (newController != projectOptionsController) {
-				projectOptionsController = newController;
-				projectOptionsController.CloseOpenedProjectEvent += () => {PromptCloseProject ();};
-				projectOptionsController.SaveProjectEvent += SaveProject;
-			}
+			                        out analysisWindow);
+			Player = analysisWindow.Player;
+			Capturer = analysisWindow.Capturer;
 			OpenedProject = project;
 			OpenedProjectType = projectType;
 
@@ -265,7 +246,7 @@ namespace LongoMatch.Services
 			fChooser.Destroy();
 		}*/
 
-		private bool PromptCloseProject() {
+		bool PromptCloseProject() {
 			if(OpenedProject == null)
 				return true;
 
@@ -296,10 +277,9 @@ namespace LongoMatch.Services
 					return false;
 				}
 			}
-
 		}
 
-		private void CloseOpenedProject (bool save) {
+		void CloseOpenedProject (bool save) {
 			if(OpenedProject == null)
 				return;
 				
@@ -353,21 +333,21 @@ namespace LongoMatch.Services
 			guiToolkit.CreateNewProject ();
 		}
 		
-		protected void OpenNewProject (Project project, ProjectType projectType,
+		void OpenNewProject (Project project, ProjectType projectType,
 		                               CaptureSettings captureSettings)
 		{
 			if (project != null)
 				SetProject(project, projectType, captureSettings);
 		}
 		
-		protected void OpenProject() {
+		void OpenProject() {
 			if (!PromptCloseProject ()) {
 				return;
 			}
 			guiToolkit.SelectProject(DB.GetAllProjects());
 		}
 		
-		protected void OpenProjectID (Guid projectID) {
+		void OpenProjectID (Guid projectID) {
 			Project project = null;
 			
 			project = DB.GetProject(projectID);

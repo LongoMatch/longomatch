@@ -28,7 +28,6 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class CodingWidget : Gtk.Bin
 	{
-		AnalysisComponent parent;
 		VideoAnalysisMode analysisMode;
 		TeamTagger teamtagger;
 		Project project;
@@ -36,18 +35,6 @@ namespace LongoMatch.Gui.Component
 		public CodingWidget ()
 		{
 			this.Build ();
-			buttonswidget.NewMarkEvent += (c) => parent.EmitNewTag (c);
-			buttonswidget.NewMarkStartEvent += (c) => parent.EmitNewTagStart (c);
-			buttonswidget.NewMarkStopEvent += (c) => parent.EmitNewTagStop (c);
-			buttonswidget.NewMarkCancelEvent += (c) => parent.EmitNewTagCancel (c);
-			timeline.NewTagAtPosEvent += (c, p) => parent.EmitNewTagAtPos (c, p);
-			timeline.TimeNodeChanged += (t, v) => parent.EmitTimeNodeChanged (t, v);
-			timeline.PlayListNodeAdded += (p) => parent.EmitPlayListNodeAdded (p);
-			timeline.TagPlay += (p) => parent.EmitTagPlay (p);
-			timeline.SnapshotSeries += (t) => parent.EmitSnapshotSeries (t);
-			timeline.RenderPlaylist += (p) => parent.EmitRenderPlaylist (p);
-			timeline.TimeNodeDeleted += (p) => parent.EmitPlaysDeleted (p);
-			timeline.TimeNodeSelected += (p) => parent.EmitPlaySelected (p);
 
 			autoTaggingMode.Toggled += HandleViewToggled;
 			autoTaggingMode.Active = true;
@@ -60,9 +47,7 @@ namespace LongoMatch.Gui.Component
 			drawingarea1.WidthRequest = 300;
 		}
 		
-		public void SetProject (Project project, bool isLive, PlaysFilter filter,
-		                        AnalysisComponent parent) {
-			this.parent = parent;
+		public void SetProject (Project project, bool isLive, PlaysFilter filter) {
 			this.project = project;	
 			autoTaggingMode.Active = true;
 			timeline.Visible = false;

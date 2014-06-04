@@ -33,42 +33,6 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class AnalysisComponent : Gtk.Bin, IAnalysisWindow
 	{
-		/* Error handling */
-		public event CloseOpenendProjectHandler CloseOpenedProjectEvent;
-		
-		/* Tags */
-		public event NewTagHandler NewTagEvent;
-		public event NewTagStartHandler NewTagStartEvent;
-		public event NewTagStopHandler NewTagStopEvent;
-		public event NewTagCancelHandler NewTagCancelEvent;
-		public event PlaySelectedHandler PlaySelectedEvent;
-		public event NewTagAtPosHandler NewTagAtPosEvent;
-		public event TagPlayHandler TagPlayEvent;
-		public event PlaysDeletedHandler PlaysDeletedEvent;
-		public event TimeNodeChangedHandler TimeNodeChanged;
-		public event PlayCategoryChangedHandler PlayCategoryChanged;
-		public event DuplicatePlayHandler DuplicatePlay;
-		
-		/* Playlist */
-		public event RenderPlaylistHandler RenderPlaylistEvent;
-		public event PlayListNodeAddedHandler PlayListNodeAddedEvent;
-		public event PlayListNodeSelectedHandler PlayListNodeSelectedEvent;
-		public event OpenPlaylistHandler OpenPlaylistEvent;
-		public event NewPlaylistHandler NewPlaylistEvent;
-		public event SavePlaylistHandler SavePlaylistEvent; 
-		
-		/* Snapshots */
-		public event SnapshotSeriesHandler SnapshotSeriesEvent;
-		
-		/* Game Units events */
-		public event GameUnitHandler GameUnitEvent;
-		public event UnitChangedHandler UnitChanged;
-		public event UnitSelectedHandler UnitSelected;
-		public event UnitsDeletedHandler UnitDeleted;
-		public event UnitAddedHandler UnitAdded;
-		
-		public event KeyHandler KeyPressed;
-
 		static Project openedProject;
 		ProjectType projectType;
 		bool detachedPlayer;
@@ -86,7 +50,7 @@ namespace LongoMatch.Gui.Component
 			playercapturer.Detach += DetachPlayer;
 			playercapturer.Logo = System.IO.Path.Combine(Config.ImagesDir,"background.png");
 			playercapturer.CaptureFinished += (sender, e) => {
-				EmitCloseOpenedProject();
+				Config.EventsBroker.EmitCloseOpenedProject();
 			};
 			
 			ConnectSignals();
@@ -146,30 +110,11 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		private void ConnectSignals() {
-			/* Adding Handlers for each event */
-
-			notes.TimeNodeChanged += EmitTimeNodeChanged;
-
-			playsSelection.PlaysDeleted += EmitPlaysDeleted;
-			playsSelection.PlaySelected += EmitPlaySelected;
-			playsSelection.TimeNodeChanged += EmitTimeNodeChanged;
-			playsSelection.PlayCategoryChanged += EmitPlayCategoryChanged;
-			playsSelection.PlayListNodeAdded += EmitPlayListNodeAdded;
-			playsSelection.DuplicatePlay += EmitDuplicatePlay;
-			playsSelection.TagPlay += EmitTagPlay;
-			playsSelection.SnapshotSeries += EmitSnapshotSeries;
-			playsSelection.RenderPlaylist += EmitRenderPlaylist;
-
-			/* Connect playlist events */
-//			playlist.PlayListNodeSelected += EmitPlayListNodeSelected;
-//			playlist.NewPlaylistEvent += EmitNewPlaylist;
-//			playlist.OpenPlaylistEvent += EmitOpenPlaylist;
-//			playlist.SavePlaylistEvent += EmitSavePlaylist;
-
 			playercapturer.Error += OnMultimediaError;
 			playercapturer.SegmentClosedEvent += OnSegmentClosedEvent;
 			
-			KeyPressEvent += (o, args) => (EmitKeyPressed(o, (int)args.Event.Key, (int)args.Event.State));
+			KeyPressEvent += (o, args) => (
+				Config.EventsBroker.EmitKeyPressed(o, (int)args.Event.Key, (int)args.Event.State));
  		}
  		
 		void DetachPlayer (bool detach) {
@@ -240,77 +185,12 @@ namespace LongoMatch.Gui.Component
 			openedProject = project;
 			this.projectType = projectType;
 			
-			codingwidget.SetProject (project, isLive, filter, this);
+			codingwidget.SetProject (project, isLive, filter);
 			playsSelection.SetProject (project, isLive, filter);
 			postagger.LoadBackgrounds (openedProject.Categories.FieldBackground,
 			                           openedProject.Categories.HalfFieldBackground,
 			                           openedProject.Categories.GoalBackground);
 		}
-		
-		public void EmitNewTagAtPos(Category category, Time pos) {
-			if (NewTagAtPosEvent != null)
-				NewTagAtPosEvent(category, pos);
-		}
-
-		public void EmitNewTag(Category category) {
-			if (NewTagEvent != null)
-				NewTagEvent(category);
-		}
-
-		public void EmitNewTagStart(Category category) {
-			if (NewTagStartEvent != null)
-				NewTagStartEvent (category);
-		}
-
-		public void EmitNewTagStop(Category category) {
-			if (NewTagStopEvent != null)
-				NewTagStopEvent (category);
-		}
-		
-		public void EmitNewTagCancel(Category category) {
-			if (NewTagCancelEvent != null)
-				NewTagCancelEvent (category);
-		}
-		
-		public void EmitTimeNodeChanged(TimeNode tNode, object val)
-		{
-			if (TimeNodeChanged != null)
-				TimeNodeChanged(tNode, val);
-		}
-
-		public void EmitPlayListNodeAdded(List<Play> plays)
-		{
-			if (PlayListNodeAddedEvent != null)
-				PlayListNodeAddedEvent(plays);
-		}
-		
-		public void EmitTagPlay(Play play) {
-			if (TagPlayEvent != null)
-				TagPlayEvent (play);
-		}
-		
-		public void EmitSnapshotSeries(Play play) {
-			if (SnapshotSeriesEvent != null)
-				SnapshotSeriesEvent (play);
-		}
-
-		public void EmitRenderPlaylist(IPlayList playlist) {
-			if (RenderPlaylistEvent != null)
-				RenderPlaylistEvent(playlist);
-		}
-		
-		public void EmitPlaySelected(Play play)
-		{
-			if (PlaySelectedEvent != null)
-				PlaySelectedEvent(play);
-		}
-
-		public void EmitPlaysDeleted(List<Play> plays)
-		{
-			if (PlaysDeletedEvent != null)
-				PlaysDeletedEvent(plays);
-		}
-		
 		
 		void ResetGUI() {
 			playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
@@ -388,50 +268,7 @@ namespace LongoMatch.Gui.Component
 			MessagesHelpers.ErrorMessage (this,
 				Catalog.GetString("The following error happened and" +
 				" the current project will be closed:")+"\n" + message);
-			EmitCloseOpenedProject ();
-		}
-		
-		void EmitCloseOpenedProject () {
-			if (CloseOpenedProjectEvent != null)
-				CloseOpenedProjectEvent ();
-		}
-		
-		void EmitPlayCategoryChanged(Play play, Category cat)
-		{
-			if(PlayCategoryChanged != null)
-				PlayCategoryChanged(play, cat);
-		}
-
-		void EmitPlayListNodeSelected(PlayListPlay plNode)
-		{
-			if (PlayListNodeSelectedEvent != null)
-				PlayListNodeSelectedEvent(plNode);
-		}
-
-		void EmitNewPlaylist() {
-			if (NewPlaylistEvent != null)
-				NewPlaylistEvent();
-		}
-		
-		void EmitOpenPlaylist() {
-			if (OpenPlaylistEvent != null)
-				OpenPlaylistEvent();
-		}
-		
-		void EmitSavePlaylist() {
-			if (SavePlaylistEvent != null)
-				SavePlaylistEvent();
-		}
-		
-		void EmitKeyPressed(object sender, int key, int modifier) {
-			if (KeyPressed != null)
-				KeyPressed(sender, key, modifier);
-		}
-
-		void EmitDuplicatePlay (Play play)
-		{
-			if (DuplicatePlay != null)
-				DuplicatePlay (play);
+			Config.EventsBroker.EmitCloseOpenedProject ();
 		}
 	}
 }

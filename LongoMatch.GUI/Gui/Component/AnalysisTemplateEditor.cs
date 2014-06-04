@@ -29,7 +29,7 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 			buttonswidget.Mode = LongoMatch.Common.TagMode.Predifined;
-			buttonswidget.NewMarkEvent += HandleNewMarkEvent;
+			//buttonswidget.NewMarkEvent += HandleNewMarkEvent;
 			categoryproperties.Visible = false;
 		}
 

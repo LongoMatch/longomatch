@@ -33,22 +33,10 @@ namespace LongoMatch.Gui.Component
 	public partial class PlayersListTreeWidget : Gtk.Bin
 	{
 
-		public event PlaySelectedHandler TimeNodeSelected;
-		public event TimeNodeChangedHandler TimeNodeChanged;
-		public event PlayListNodeAddedHandler PlayListNodeAdded;
-		public event SnapshotSeriesHandler SnapshotSeriesEvent;
-		public event RenderPlaylistHandler RenderPlaylistEvent;
-		public event DuplicatePlayHandler DuplicatePlay;
-
 		public PlayersListTreeWidget()
 		{
 			this.Build();
-			playerstreeview.TimeNodeChanged += OnTimeNodeChanged;
-			playerstreeview.TimeNodeSelected += OnTimeNodeSelected;
-			playerstreeview.PlayListNodeAdded += OnPlayListNodeAdded;
-			playerstreeview.SnapshotSeriesEvent += OnSnapshotSeriesEvent;
 			playerstreeview.NewRenderingJob += OnNewRenderingJob;
-			playerstreeview.DuplicatePlay += DuplicatePlay;
 		}
 		
 		public Project Project {
@@ -111,29 +99,6 @@ namespace LongoMatch.Gui.Component
 			playerstreeview.Model = null;
 		}
 
-		protected virtual void OnTimeNodeSelected(Play tNode) {
-			if(TimeNodeSelected != null)
-				TimeNodeSelected(tNode);
-		}
-
-		protected virtual void OnSnapshotSeriesEvent(Play tNode)
-		{
-			if(SnapshotSeriesEvent != null)
-				SnapshotSeriesEvent(tNode);
-		}
-
-		protected virtual void OnTimeNodeChanged(TimeNode tNode, object val)
-		{
-			if(TimeNodeChanged != null)
-				TimeNodeChanged(tNode, val);
-		}
-
-		protected virtual void OnPlayListNodeAdded(List<Play> plays)
-		{
-			if(PlayListNodeAdded != null)
-				PlayListNodeAdded(plays);
-		}
-		
 		protected virtual void OnNewRenderingJob (object sender, EventArgs args)
 		{
 			PlayList playlist = new PlayList();
@@ -148,8 +113,7 @@ namespace LongoMatch.Gui.Component
 				playlist.Add(new PlayListPlay(play, Project.Description.File, true));
 			}
 			
-			if (RenderPlaylistEvent != null)
-				RenderPlaylistEvent(playlist);
+			Config.EventsBroker.EmitRenderPlaylist (playlist);
 		}
 
 	}

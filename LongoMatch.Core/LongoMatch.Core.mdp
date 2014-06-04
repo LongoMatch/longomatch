@@ -107,7 +107,6 @@
     <File subtype="Code" buildaction="Compile" name="Common/Gettext.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Exceptions.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IMainController.cs" />
-    <File subtype="Code" buildaction="Compile" name="Interfaces/GUI/IProjectOptionsController.cs" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/field_background.svg" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/goal_background.svg" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/half_field_background.svg" />
@@ -139,6 +138,7 @@
     <File subtype="Code" buildaction="Compile" name="Common/ExtensionMethods.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Timer.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Period.cs" />
+    <File subtype="Code" buildaction="Compile" name="Common/EventsBroker.cs" />
   </Contents>
   <References>
     <ProjectReference type="Package" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

@@ -50,15 +50,7 @@ namespace LongoMatch.Gui.Component
 		PlaysFilter filter;
 		Dictionary<MenuItem, Category> catsDict;
 
-		public event TimeNodeChangedHandler TimeNodeChanged;
-		public event PlaySelectedHandler TimeNodeSelected;
-		public event PlaysDeletedHandler TimeNodeDeleted;
-		public event PlayListNodeAddedHandler PlayListNodeAdded;
-		public event PlayCategoryChangedHandler PlayCategoryChanged;
-		public event SnapshotSeriesHandler SnapshotSeriesEvent;
-		public event TagPlayHandler TagPlay;
 		public event EventHandler NewRenderingJob;
-		public event DuplicatePlayHandler DuplicatePlay;
 
 		public ListTreeViewBase()
 		{
@@ -156,11 +148,6 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		protected void EmitTimeNodeChanged(TimeNode tn, object o) {
-			if(TimeNodeChanged != null)
-				TimeNodeChanged(tn, o);
-		}
-
 		protected void SetMenu() {
 			menu = new Menu();
 
@@ -195,6 +182,12 @@ namespace LongoMatch.Gui.Component
 			snapshot.Activated += OnSnapshot;
 			menu.ShowAll();
 		}
+		
+		protected Play SelectedPlay {
+			get {
+				return GetValueFromPath(Selection.GetSelectedRows()[0]) as Play;
+			}
+		}
 
 		protected void MultiSelectMenu(bool enabled) {
 			name.Sensitive = !enabled;
@@ -208,11 +201,6 @@ namespace LongoMatch.Gui.Component
 			return modelFilter.GetValue(iter,0);
 		}
 		
-		protected void EmitTimeNodeChanged(TimeNode tNode) {
-			if (TimeNodeChanged != null)
-				TimeNodeChanged(tNode, tNode.Name);
-		}
-
 		protected void RenderMiniature(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
 			var item = model.GetValue(iter, 0);
@@ -294,7 +282,8 @@ namespace LongoMatch.Gui.Component
 
 			if(item is TimeNode) {
 				(item as TimeNode).Name = args.NewText;
-				EmitTimeNodeChanged((item as TimeNode), args.NewText);
+				Config.EventsBroker.EmitTimeNodeChanged (
+					(item as TimeNode), args.NewText);
 			} else if(item is Player) {
 				(item as Player).Name = args.NewText;
 			}
@@ -312,8 +301,7 @@ namespace LongoMatch.Gui.Component
 			if(!(item is Play))
 				return;
 
-			if(TimeNodeSelected != null)
-				this.TimeNodeSelected(item as Play);
+			Config.EventsBroker.EmitPlaySelected (item as Play);
 		}
 
 		protected void OnDeleted(object obj, EventArgs args) {
@@ -334,8 +322,8 @@ namespace LongoMatch.Gui.Component
 				TreeIter iter = iters[i];
 				Model.Remove(ref iter);
 			}
-			if(TimeNodeDeleted != null)
-				TimeNodeDeleted(playsList);
+			
+			Config.EventsBroker.EmitPlaysDeleted (playsList);
 		}
 
 		protected void OnDeleteKeyFrame(object obj, EventArgs args) {
@@ -353,8 +341,7 @@ namespace LongoMatch.Gui.Component
 
 		void OnDuplicate (object sender, EventArgs e)
 		{
-			if (DuplicatePlay != null)
-				DuplicatePlay((Play)GetValueFromPath(Selection.GetSelectedRows()[0]));
+			Config.EventsBroker.EmitDuplicatePlay (SelectedPlay);
 		}
 
 		protected virtual void OnEdit(object obj, EventArgs args) {
@@ -366,26 +353,22 @@ namespace LongoMatch.Gui.Component
 		}
 
 		protected void OnAdded(object obj, EventArgs args) {
-			if(PlayListNodeAdded != null) {
-				List<Play> list = new List<Play>();
-				TreePath[] paths = Selection.GetSelectedRows();
-				for(int i=0; i<paths.Length; i++) {
-					Play tNode = (Play)GetValueFromPath(paths[i]);
-					list.Add (tNode);
-				}
-				PlayListNodeAdded(list);
+			List<Play> list = new List<Play>();
+			TreePath[] paths = Selection.GetSelectedRows();
+			for(int i=0; i<paths.Length; i++) {
+				Play tNode = (Play)GetValueFromPath(paths[i]);
+				list.Add (tNode);
 			}
+			Config.EventsBroker.EmitPlayListNodeAdded (list);
 		}
 
 		protected void OnTag(object obj, EventArgs args) {
-			if(TagPlay != null)
-				TagPlay((Play)GetValueFromPath(Selection.GetSelectedRows()[0]));
+			Config.EventsBroker.EmitTagPlay (SelectedPlay);
 			Refilter();
 		}
 
 		protected void OnSnapshot(object obj, EventArgs args) {
-			if(SnapshotSeriesEvent != null)
-				SnapshotSeriesEvent((Play)GetValueFromPath(Selection.GetSelectedRows()[0]));
+			Config.EventsBroker.EmitSnapshotSeries (SelectedPlay);
 		}
 		
 		protected void OnRender(object obj, EventArgs args) {
@@ -394,9 +377,8 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		protected void OnCatChanged(object obj, EventArgs args) {
-			if (PlayCategoryChanged != null)
-				PlayCategoryChanged((Play)GetValueFromPath(Selection.GetSelectedRows()[0]),
-				                    catsDict[obj as MenuItem]);
+			Config.EventsBroker.EmitPlayCategoryChanged (SelectedPlay,
+			                                             catsDict[obj as MenuItem]);
 		}
 
 		protected void OnFilterUpdated() {

@@ -35,35 +35,37 @@ namespace LongoMatch.Services {
 		IMultimediaToolkit multimediaToolkit;
 		
 		public ToolsManager (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit,
-		                     ProjectsManager projectsManager,
 		                     TemplatesService templatesService)
 		{
 			this.guiToolkit = guiToolkit;
 			this.multimediaToolkit = multimediaToolkit;
 			this.templatesService = templatesService;
-			projectsManager.OpenedProjectChanged += (project, projectType, filter, analysisWindow, projectOptions) => {
-				this.openedProject = project;
+			Config.EventsBroker.OpenedProjectChanged += (pr, pt, f, a) => {
+				this.openedProject = pr;
 			};
 			
-			guiToolkit.MainController.EditPreferencesEvent += () => {
+			Config.EventsBroker.EditPreferencesEvent += () => {
 				guiToolkit.OpenPreferencesEditor();
 			};
-			guiToolkit.MainController.ManageCategoriesEvent += () => {
+			
+			Config.EventsBroker.ManageCategoriesEvent += () => {
 				guiToolkit.OpenCategoriesTemplatesManager ();
 			};
-			guiToolkit.MainController.ManageTeamsEvent += () => {
+			
+			Config.EventsBroker.ManageTeamsEvent += () => {
 				guiToolkit.OpenTeamsTemplatesManager ();
 			};
-			guiToolkit.MainController.ManageProjectsEvent += () => {
+			
+			Config.EventsBroker.ManageProjectsEvent += () => {
 				guiToolkit.OpenProjectsManager(this.openedProject);
 			};
 			
-			guiToolkit.MainController.ImportProjectEvent += ImportProject;
-			guiToolkit.MainController.ExportProjectEvent += ExportProject;
+			Config.EventsBroker.ImportProjectEvent += ImportProject;
+			Config.EventsBroker.ExportProjectEvent += ExportProject;
 		}
 		
-		void ExportProject() {
-			if (openedProject == null) {
+		void ExportProject (Project project) {
+			if (project == null) {
 				Log.Warning("Opened project is null and can't be exported");
 			}
 			
@@ -76,7 +78,7 @@ namespace LongoMatch.Services {
 			System.IO.Path.ChangeExtension (filename, Constants.PROJECT_EXT);
 			
 			try {
-				Project.Export (openedProject, filename);
+				Project.Export (project, filename);
 				guiToolkit.InfoMessage (Catalog.GetString("Project exported successfully"));
 			} catch (Exception ex) {
 				guiToolkit.ErrorMessage (Catalog.GetString("Error exporting project"));

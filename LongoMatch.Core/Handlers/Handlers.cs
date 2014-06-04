@@ -55,7 +55,7 @@ namespace LongoMatch.Handlers
 	/* Project Events */
 	public delegate void SaveProjectHandler(Project project, ProjectType projectType);
 	public delegate void OpenedProjectChangedHandler(Project project, ProjectType projectType, PlaysFilter filter,
-	                                                 IAnalysisWindow analysisWindow, IProjectOptionsController projectOptions);
+	                                                 IAnalysisWindow analysisWindow);
 	public delegate void OpenProjectIDHandler(Guid project_id);
 	public delegate void OpenProjectHandler();
 	public delegate void CloseOpenendProjectHandler();
@@ -63,7 +63,7 @@ namespace LongoMatch.Handlers
 	public delegate void OpenNewProjectHandler(Project project, ProjectType projectType, CaptureSettings captureSettings);
 	public delegate void ImportProjectHandler(string name, string filterName, string filter,
 	                                          Func <string, Project> importProjectFunc, bool requiresNewFile);
-	public delegate void ExportProjectHandler();
+	public delegate void ExportProjectHandler (Project project);
 	public delegate void QuitApplicationHandler ();
 	
 	/* GUI */

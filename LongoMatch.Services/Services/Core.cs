@@ -72,13 +72,12 @@ namespace LongoMatch.Services
 		public static void Start(IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit) {
 			Config.MultimediaToolkit = multimediaToolkit;
 			Config.GUIToolkit= guiToolkit;
+			Config.EventsBroker.QuitApplicationEvent += () => Config.GUIToolkit.Quit ();
 			StartServices (guiToolkit, multimediaToolkit);
-			BindEvents (guiToolkit.MainController);
 		}
 		
 		public static void StartServices (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit){
 			ProjectsManager projectsManager;
-			GameUnitsManager guManager;
 			PlaylistManager plManager;
 			ToolsManager toolsManager;
 			TemplatesService ts;
@@ -104,26 +103,19 @@ namespace LongoMatch.Services
 			projectsManager = new ProjectsManager(guiToolkit, multimediaToolkit, ts);
 			
 			/* State the tools manager */
-			toolsManager = new ToolsManager (guiToolkit, multimediaToolkit, projectsManager, ts);
+			toolsManager = new ToolsManager (guiToolkit, multimediaToolkit, ts);
 			
 			/* Start the events manager */
-			eManager = new EventsManager (guiToolkit, videoRenderer, projectsManager);
+			eManager = new EventsManager (guiToolkit, videoRenderer);
 			
 			/* Start the hotkeys manager */
-			hkManager = new HotKeysManager (projectsManager);
+			hkManager = new HotKeysManager ();
 			hkManager.newMarkEvent += eManager.OnNewTag;
 
-			/* Start Game Units manager */
-			guManager = new GameUnitsManager(projectsManager);
-			
 			/* Start playlists manager */
-			plManager = new PlaylistManager(Config.GUIToolkit, videoRenderer, projectsManager);
+			plManager = new PlaylistManager(Config.GUIToolkit, videoRenderer);
 		}
 			
-		public static void BindEvents(IMainController mainController) {
-			mainController.QuitApplicationEvent += () => {Config.GUIToolkit.Quit();};
-		}
-
 		public static void CheckDirs() {
 			if(!System.IO.Directory.Exists(Config.HomeDir))
 				System.IO.Directory.CreateDirectory(Config.HomeDir);

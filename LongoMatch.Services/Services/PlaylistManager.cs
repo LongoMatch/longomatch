@@ -45,19 +45,18 @@ namespace LongoMatch.Services
 		Timer timeout;
 		Project openedProject;
 		
-		public PlaylistManager (IGUIToolkit guiToolkit, IRenderingJobsManager videoRenderer,
-		                        ProjectsManager pManager)
+		public PlaylistManager (IGUIToolkit guiToolkit, IRenderingJobsManager videoRenderer)
 		{
 			this.videoRenderer = videoRenderer;
 			this.guiToolkit = guiToolkit;
-			pManager.OpenedProjectChanged += HandleOpenedProjectChanged;
+			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
 		}
 
-		void HandleOpenedProjectChanged (Project project, ProjectType projectType, PlaysFilter filter, IAnalysisWindow analysisWindow, IProjectOptionsController projectOptions)
+		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
+		                                 PlaysFilter filter, IAnalysisWindow analysisWindow)
 		{
 			openedProject = project;
 			if (project != null) {
-				//playlistWidget = analysisWindow.Playlist;
 				player = analysisWindow.Player;
 				if (this.analysisWindow != analysisWindow) {
 					BindEvents(analysisWindow);
@@ -82,21 +81,16 @@ namespace LongoMatch.Services
 		}
 		
 		private void BindEvents(IAnalysisWindow analysisWindow) {
-			/* Track loaded element */
-			analysisWindow.PlaySelectedEvent += (p) => {selectedTimeNode = p;};
-			analysisWindow.Player.SegmentClosedEvent += () => {selectedTimeNode = null;};
-			
-			/* Handle New/Open/Save playlist */
-			analysisWindow.OpenPlaylistEvent += OnOpenPlaylist;
-			analysisWindow.NewPlaylistEvent += OnNewPlaylist;
-			analysisWindow.SavePlaylistEvent += OnSavePlaylist;
-			
-			/* Handle Add/Select/Rate events from other widgets */
-			analysisWindow.PlayListNodeAddedEvent += OnPlayListNodeAdded;
-			analysisWindow.PlayListNodeSelectedEvent += LoadPlaylistPlay;
-			analysisWindow.RenderPlaylistEvent += OnRenderPlaylistEvent;
+			Config.EventsBroker.PlaySelected += (p) => {selectedTimeNode = p;};
+			Config.EventsBroker.OpenPlaylistEvent += OnOpenPlaylist;
+			Config.EventsBroker.NewPlaylistEvent += OnNewPlaylist;
+			Config.EventsBroker.SavePlaylistEvent += OnSavePlaylist;
+			Config.EventsBroker.PlayListNodeAddedEvent += OnPlayListNodeAdded;
+			Config.EventsBroker.PlayListNodeSelectedEvent += LoadPlaylistPlay;
+			Config.EventsBroker.RenderPlaylistEvent += OnRenderPlaylistEvent;
 			
 			/* Handle Next/Prev from the player */
+			analysisWindow.Player.SegmentClosedEvent += () => {selectedTimeNode = null;};
 			analysisWindow.Player.Next += () => {Next();};
 			analysisWindow.Player.Prev += () => {
 				if(selectedTimeNode is PlayListPlay)

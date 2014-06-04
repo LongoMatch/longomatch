@@ -30,7 +30,6 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class NotesWidget : Gtk.Bin
 	{
-		public event TimeNodeChangedHandler TimeNodeChanged;
 		TextBuffer buf;
 		Play play;
 
@@ -68,8 +67,7 @@ namespace LongoMatch.Gui.Component
 		{
 			if(play != null) {
 				play.Notes=Notes;
-				if(TimeNodeChanged != null)
-					TimeNodeChanged(play,null);
+				Config.EventsBroker.EmitTimeNodeChanged (play, null);
 				savebutton.Sensitive = false;
 			}
 		}

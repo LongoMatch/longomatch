@@ -190,14 +190,12 @@
         <property name="Label" translatable="yes">_New Project</property>
         <property name="ShortLabel" translatable="yes">_New Project</property>
         <property name="StockId">gtk-new</property>
-        <signal name="Activated" handler="OnNewActivated" />
       </action>
       <action id="openAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_Open Project</property>
         <property name="ShortLabel" translatable="yes">_Open Project</property>
         <property name="StockId">gtk-open</property>
-        <signal name="Activated" handler="OnOpenActivated" />
       </action>
       <action id="QuitAction">
         <property name="Type">Action</property>
@@ -241,40 +239,6 @@
         <property name="StockId">gtk-fullscreen</property>
         <property name="DrawAsRadio">False</property>
         <property name="Active">False</property>
-        <signal name="Toggled" handler="OnFullScreenActionToggled" />
-      </action>
-      <action id="PlaylistAction">
-        <property name="Type">Toggle</property>
-        <property name="Accelerator">&lt;Control&gt;p</property>
-        <property name="Label" translatable="yes">Playlist</property>
-        <property name="ShortLabel" translatable="yes">Playlist</property>
-        <property name="DrawAsRadio">False</property>
-        <property name="Active">False</property>
-        <signal name="Toggled" handler="OnPlaylistActionToggled" />
-      </action>
-      <action id="TaggingViewAction">
-        <property name="Type">Radio</property>
-        <property name="Accelerator">&lt;Control&gt;c</property>
-        <property name="Label" translatable="yes">Tagging view</property>
-        <property name="Sensitive">False</property>
-        <property name="ShortLabel" translatable="yes">Capture Mode</property>
-        <property name="DrawAsRadio">False</property>
-        <property name="Active">False</property>
-        <property name="Value">0</property>
-        <property name="Group">codingmode</property>
-        <signal name="Toggled" handler="OnViewToggled" />
-      </action>
-      <action id="TimelineViewAction">
-        <property name="Type">Radio</property>
-        <property name="Accelerator">&lt;Control&gt;a</property>
-        <property name="Label" translatable="yes">Timeline view</property>
-        <property name="Sensitive">False</property>
-        <property name="ShortLabel" translatable="yes">Analyze Mode</property>
-        <property name="DrawAsRadio">False</property>
-        <property name="Active">True</property>
-        <property name="Value">0</property>
-        <property name="Group">codingmode</property>
-        <signal name="Toggled" handler="OnViewToggled" />
       </action>
       <action id="SaveProjectAction">
         <property name="Type">Action</property>
@@ -307,15 +271,6 @@
         <property name="Label" translatable="yes">Teams Templates Manager</property>
         <property name="ShortLabel" translatable="yes">Teams Templates Manager</property>
       </action>
-      <action id="HideAllWidgetsAction">
-        <property name="Type">Toggle</property>
-        <property name="Label" translatable="yes">Hide All Widgets</property>
-        <property name="Sensitive">False</property>
-        <property name="ShortLabel" translatable="yes">Hide All Widgets</property>
-        <property name="DrawAsRadio">False</property>
-        <property name="Active">False</property>
-        <signal name="Toggled" handler="OnHideAllWidgetsActionToggled" />
-      </action>
       <action id="HelpAction1">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_Help</property>
@@ -329,29 +284,6 @@
         <property name="Label" translatable="yes">_Import Project</property>
         <property name="ShortLabel" translatable="yes">_Import Project</property>
         <property name="StockId">stock-import</property>
-      </action>
-      <action id="ManualTaggingViewAction">
-        <property name="Type">Radio</property>
-        <property name="Accelerator">&lt;Control&gt;f</property>
-        <property name="Label" translatable="yes">Manual tagging view</property>
-        <property name="Sensitive">False</property>
-        <property name="ShortLabel" translatable="yes">Free Capture Mode</property>
-        <property name="DrawAsRadio">False</property>
-        <property name="Active">False</property>
-        <property name="Value">0</property>
-        <property name="Group">codingmode</property>
-        <signal name="Toggled" handler="OnViewToggled" />
-      </action>
-      <action id="GameUnitsViewAction">
-        <property name="Type">Radio</property>
-        <property name="Label" translatable="yes">Game units view</property>
-        <property name="Sensitive">False</property>
-        <property name="ShortLabel" translatable="yes">Game units view</property>
-        <property name="DrawAsRadio">False</property>
-        <property name="Active">False</property>
-        <property name="Value">0</property>
-        <property name="Group">codingmode</property>
-        <signal name="Toggled" handler="OnViewToggled" />
       </action>
       <action id="ExportProjectAction">
         <property name="Type">Action</property>
@@ -391,7 +323,6 @@
         <property name="ShortLabel" translatable="yes">Tag subcategories</property>
         <property name="DrawAsRadio">False</property>
         <property name="Active">True</property>
-        <signal name="Toggled" handler="OnTagSubcategoriesActionToggled" />
       </action>
       <action id="VideoConverterToolAction">
         <property name="Type">Action</property>
@@ -460,15 +391,8 @@
                   </node>
                   <node type="Menu" action="ViewAction">
                     <node type="Menuitem" action="FullScreenAction" />
-                    <node type="Menuitem" action="HideAllWidgetsAction" />
-                    <node type="Separator" />
-                    <node type="Menuitem" action="PlaylistAction" />
                     <node type="Separator" />
                     <node type="Menuitem" action="TagSubcategoriesAction" />
-                    <node type="Menuitem" action="TaggingViewAction" />
-                    <node type="Menuitem" action="ManualTaggingViewAction" />
-                    <node type="Menuitem" action="TimelineViewAction" />
-                    <node type="Menuitem" action="GameUnitsViewAction" />
                   </node>
                   <node type="Menu" action="HelpAction">
                     <node type="Menuitem" action="AboutAction" />

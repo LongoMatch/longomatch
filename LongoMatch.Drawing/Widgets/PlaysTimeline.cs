@@ -31,8 +31,6 @@ namespace LongoMatch.Drawing.Widgets
 	public class PlaysTimeline: SelectionCanvas
 	{
 	
-		public event TimeNodeChangedHandler TimeNodeChanged;
-		public event PlaySelectedHandler TimeNodeSelected;
 		public event ShowTimelineMenuHandler ShowMenuEvent;
 
 		Project project;
@@ -144,9 +142,7 @@ namespace LongoMatch.Drawing.Widgets
 		protected override void SelectionChanged (List<Selection> selections) {
 			if (selections.Count > 0) {
 				PlayObject po = selections.Last().Drawable as PlayObject;
-				if (TimeNodeSelected != null) {
-					TimeNodeSelected (po.Play);
-				}
+				Config.EventsBroker.EmitPlaySelected (po.Play);
 			}
 		}
 		
@@ -181,17 +177,15 @@ namespace LongoMatch.Drawing.Widgets
 		}
 		
 		protected override void SelectionMoved (Selection sel) {
-			if (TimeNodeChanged != null) {
-				Time moveTime;
-				Play play = (sel.Drawable as PlayObject).Play;
-
-				if (sel.Position == SelectionPosition.Right) {
-					moveTime = play.Stop;
-				} else {
-					moveTime = play.Start;
-				}
-				TimeNodeChanged (play, moveTime);
+			Time moveTime;
+			Play play = (sel.Drawable as PlayObject).Play;
+			
+			if (sel.Position == SelectionPosition.Right) {
+				moveTime = play.Stop;
+			} else {
+				moveTime = play.Start;
 			}
+			Config.EventsBroker.EmitTimeNodeChanged (play, moveTime);
 		}
 	}
 }

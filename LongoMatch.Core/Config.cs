@@ -38,6 +38,7 @@ namespace LongoMatch
 		public static ITeamTemplatesProvider TeamTemplatesProvider;
 		public static ICategoriesTemplatesProvider CategoriesTemplatesProvider;
 		public static ISubcategoriesTemplatesProvider SubcategoriesTemplatesProvider;
+		public static EventsBroker EventsBroker;
 
 		public static IDataBaseManager DatabaseManager;
 		public static IRenderingJobsManager RenderingJobsManger;

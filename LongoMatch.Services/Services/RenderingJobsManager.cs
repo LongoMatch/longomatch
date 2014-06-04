@@ -49,7 +49,7 @@ namespace LongoMatch.Services
 			pendingJobs = new List<Job>();
 			stateBar.Cancel += (sender, e) => CancelCurrentJob();
 			stateBar.ManageJobs += (sender, e) => ManageJobs();
-			guiToolkit.MainController.ConvertVideoFilesEvent += delegate(List<MediaFile> inputFiles, EncodingSettings encSettings) {
+			Config.EventsBroker.ConvertVideoFilesEvent += (inputFiles, encSettings) => {
 				ConversionJob job = new ConversionJob(inputFiles, encSettings);
 				AddJob (job);
 			};; 
