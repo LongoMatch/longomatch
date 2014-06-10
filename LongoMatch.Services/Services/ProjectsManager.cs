@@ -180,7 +180,18 @@ namespace LongoMatch.Services
 			Capturer = analysisWindow.Capturer;
 			OpenedProject = project;
 			OpenedProjectType = projectType;
-
+		
+			if (Player != null) {
+				Player.Tick += Config.EventsBroker.EmitTick;
+				Player.Error += HandleMultimediaError;
+				Player.SegmentClosedEvent += Config.EventsBroker.EmitSegmentClosed;
+			}
+			if (Capturer != null) {
+				Capturer.CaptureFinished += (sender, e) => Config.EventsBroker.EmitCloseOpenedProject();
+				if (Capturer != Player)
+					Capturer.Error += HandleMultimediaError;
+			}
+			
 			if(projectType == ProjectType.FileProject) {
 				// Check if the file associated to the project exists
 				if(!File.Exists(project.Description.File.FilePath)) {
@@ -199,16 +210,10 @@ namespace LongoMatch.Services
 					return false;
 				}
 
-			} else {
-				CapturerType type;
-				if(projectType == ProjectType.CaptureProject ||
-				   projectType == ProjectType.URICaptureProject) {
-					type = CapturerType.Live;
-				} else {
-					type = CapturerType.Fake;
-				}
+			} else if (projectType == ProjectType.CaptureProject ||
+			           projectType == ProjectType.URICaptureProject) {
 				try {
-					Capturer.Run(type, props);
+					Capturer.Run (CapturerType.Live, props);
 				} catch(Exception ex) {
 					guiToolkit.ErrorMessage(ex.Message);
 					CloseOpenedProject (false);
@@ -219,7 +224,7 @@ namespace LongoMatch.Services
 			EmitProjectChanged();
 			return true;
 		}
-	
+
 		/*
 		public static void ExportToCSV(Project project) {
 			FileChooserDialog fChooser;

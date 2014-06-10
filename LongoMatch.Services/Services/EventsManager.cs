@@ -100,10 +100,12 @@ namespace LongoMatch.Services
 			Config.EventsBroker.TagSubcategoriesChangedEvent += HandleTagSubcategoriesChangedEvent;
 			
 			/* Connect player events */
-			player.Prev += OnPrev;
-			player.SegmentClosedEvent += OnSegmentClosedEvent;
-			player.DrawFrame += OnDrawFrame;
-			player.PlaybackRateChanged += HandlePlaybackRateChanged;
+			if (player != null) {
+				player.Prev += OnPrev;
+				player.SegmentClosedEvent += OnSegmentClosedEvent;
+				player.DrawFrame += OnDrawFrame;
+				player.PlaybackRateChanged += HandlePlaybackRateChanged;
+			}
 		}
 
 		void HandleTagSubcategoriesChangedEvent (bool tagsubcategories)
@@ -221,6 +223,9 @@ namespace LongoMatch.Services
 		}
 
 		void OnNewTagAtPos (Category category, Time pos) {
+			if (openedProject == null)
+				return;
+
 			player.CloseSegment();
 			player.Seek (pos, true);
 			ProcessNewTag(category,pos);
@@ -228,6 +233,9 @@ namespace LongoMatch.Services
 
 		public void OnNewTag(Category category) {
 			Time pos;
+			
+			if (openedProject == null)
+				return;
 
 			if(projectType == ProjectType.FakeCaptureProject ||
 			   projectType == ProjectType.CaptureProject ||
