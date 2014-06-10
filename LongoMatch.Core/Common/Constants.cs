@@ -76,17 +76,17 @@ Xavier Queralt Mateu (ca)";
 		public const string MANUAL = "http://www.longomatch.ylatuya.es/documentation/manual.html";
 
 #if HAVE_GTK
-		public const ModifierType STEP = Gdk.ModifierType.ShiftMask;
+		public const int STEP = (int) Gdk.ModifierType.ShiftMask;
 
-		public const Key SEEK_BACKWARD = Gdk.Key.Left;
+		public const int SEEK_BACKWARD = (int) Gdk.Key.Left;
 
-		public const Key SEEK_FORWARD = Gdk.Key.Right;
+		public const int SEEK_FORWARD = (int) Gdk.Key.Right;
 
-		public const Key FRAMERATE_UP = Gdk.Key.Up;
+		public const int FRAMERATE_UP = (int) Gdk.Key.Up;
 
-		public const Key FRAMERATE_DOWN = Gdk.Key.Down;
+		public const int FRAMERATE_DOWN = (int) Gdk.Key.Down;
 
-		public const Key TOGGLE_PLAY = Gdk.Key.space;
+		public const int TOGGLE_PLAY = (int) Gdk.Key.space;
 #endif
 
 		public const string TEMPLATES_DIR = "templates";
