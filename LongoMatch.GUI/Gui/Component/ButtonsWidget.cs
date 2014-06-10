@@ -36,6 +36,7 @@ namespace LongoMatch.Gui.Component
 	{
 		TagMode tagMode;
 		Dictionary<ButtonTagger, Category> buttonsDic;
+		const int N_COLUMNS = 5;
 
 		public ButtonsWidget()
 		{
@@ -80,8 +81,8 @@ namespace LongoMatch.Gui.Component
 			buttonsDic.Clear();
 			int sectionsCount = categories.Count;
 			
-			table1.NColumns =(uint) 10;
-			table1.NRows =(uint)(sectionsCount/10);
+			table1.NColumns =(uint) N_COLUMNS;
+			table1.NRows =(uint)(sectionsCount/N_COLUMNS);
 			
 			for(int i=0; i<sectionsCount; i++) {
 				Category cat = categories[i];
