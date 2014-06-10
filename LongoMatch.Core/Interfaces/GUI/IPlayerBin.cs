@@ -53,6 +53,8 @@ namespace LongoMatch.Interfaces.GUI
 		void Seek (Time time, bool accurate);
 		void StepForward();
 		void StepBackward();
+		void SeekToNextFrame();
+		void SeekToPreviousFrame();
 		void FramerateUp();
 		void FramerateDown();
 		void LoadPlay (string fileName, Play play, Time seekTime, bool playing);
