@@ -17,6 +17,8 @@
 //
 using System;
 using LongoMatch.Store.Templates;
+using LongoMatch.Common;
+using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
@@ -51,12 +53,18 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		void HandleNewMarkEvent (LongoMatch.Store.Category category)
+		void HandleCategorySelected (LongoMatch.Store.Category category)
 		{
 			categoryproperties.Visible = true;
 			categoryproperties.Category = category;
 		}
 		
+		void HandleSaveClicked (object sender, EventArgs e)
+		{
+			if (template != null) {
+				Config.CategoriesTemplatesProvider.Update (template);
+			}
+		}
 	}
 }
 
