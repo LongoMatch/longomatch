@@ -104,13 +104,13 @@ namespace LongoMatch.Gui.Helpers
 		static public double ByteToDouble (byte val) {
 			return (double) (val) / byte.MaxValue;
 		}
-
+		
 		public static Color ToGdkColor(LColor color) {
-			return new Color (color.R, color.G, color.G);
+			return new Color (color.R, color.G, color.B);
 		}
 		
 		public static LColor ToLgmColor(Color color) {
-			return LColor.ColorFromUShort (color.Red, color.Green, color.Red);
+			return LColor.ColorFromUShort (color.Red, color.Green, color.Blue);
 		}
 		
 		public static ListStore FillImageFormat (ComboBox formatBox, VideoStandard def) {
