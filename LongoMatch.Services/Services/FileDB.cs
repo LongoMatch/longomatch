@@ -46,6 +46,7 @@ namespace LongoMatch.DB
 			if (File.Exists(dbPath)) {
 				try {
 					projectsDB = SerializableObject.Load<LiteDB> (dbPath);
+					projectsDB.DBPath = dbPath;
 				}
 				catch  (Exception e){
 					Log.Exception (e);
@@ -216,10 +217,9 @@ namespace LongoMatch.DB
 	[Serializable]
 	class LiteDB
 	{
-		string dbPath;
 		
 		public LiteDB (string dbPath) {
-			this.dbPath = dbPath;
+			DBPath = dbPath;
 			ProjectsDict = new Dictionary <Guid, ProjectDescription>();
 			Version = new System.Version (Constants.DB_MAYOR_VERSION,
 			                              Constants.DB_MINOR_VERSION);
@@ -227,6 +227,11 @@ namespace LongoMatch.DB
 		}
 		
 		public LiteDB () { }
+		
+		public string DBPath {
+			get;
+			set;
+		}
 		
 		public Version Version {get; set;}
 		
@@ -261,7 +266,7 @@ namespace LongoMatch.DB
 			bool ret = false;
 			
 			try {
-				SerializableObject.Save (this, dbPath);
+				SerializableObject.Save (this, DBPath);
 				ret = true;
 			} catch (Exception ex) {
 				Log.Exception (ex);
