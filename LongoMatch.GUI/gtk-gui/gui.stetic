@@ -9966,44 +9966,17 @@ Click 2 players to swap them</property>
         <child>
           <widget class="Gtk.HButtonBox" id="hbuttonbox2">
             <property name="MemberName" />
-            <property name="Size">3</property>
+            <property name="Size">1</property>
             <child>
-              <widget class="Gtk.Button" id="button486">
+              <widget class="Gtk.Button" id="savebutton">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Type">TextOnly</property>
-                <property name="Label" translatable="yes">GtkButton</property>
+                <property name="Type">TextAndIcon</property>
+                <property name="Icon">stock:gtk-save Dialog</property>
+                <property name="Label" translatable="yes">Save</property>
                 <property name="UseUnderline">True</property>
               </widget>
               <packing>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.Button" id="button485">
-                <property name="MemberName" />
-                <property name="CanFocus">True</property>
-                <property name="Type">TextOnly</property>
-                <property name="Label" translatable="yes">GtkButton</property>
-                <property name="UseUnderline">True</property>
-              </widget>
-              <packing>
-                <property name="Position">1</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.Button" id="button484">
-                <property name="MemberName" />
-                <property name="CanFocus">True</property>
-                <property name="Type">TextOnly</property>
-                <property name="Label" translatable="yes">GtkButton</property>
-                <property name="UseUnderline">True</property>
-              </widget>
-              <packing>
-                <property name="Position">2</property>
                 <property name="Expand">False</property>
                 <property name="Fill">False</property>
               </packing>
@@ -10219,7 +10192,6 @@ Click 2 players to swap them</property>
     </child>
   </widget>
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.CodingWidget" design-size="673 300">
-    <action-group name="Timeline" />
     <action-group name="Default">
       <action id="timelineMode">
         <property name="Type">Radio</property>
@@ -10247,6 +10219,7 @@ Click 2 players to swap them</property>
         <property name="StockId">gtk-zoom-fit</property>
       </action>
     </action-group>
+    <action-group name="Timeline" />
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>

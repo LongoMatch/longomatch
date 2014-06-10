@@ -22,17 +22,17 @@ namespace LongoMatch.Gui.Component
 			// Widget LongoMatch.Gui.Component.CodingWidget
 			Stetic.BinContainer w1 = global::Stetic.BinContainer.Attach (this);
 			this.UIManager = new global::Gtk.UIManager ();
-			global::Gtk.ActionGroup w2 = new global::Gtk.ActionGroup ("Timeline");
-			this.UIManager.InsertActionGroup (w2, 0);
-			global::Gtk.ActionGroup w3 = new global::Gtk.ActionGroup ("Default");
+			global::Gtk.ActionGroup w2 = new global::Gtk.ActionGroup ("Default");
 			this.timelineMode = new global::Gtk.RadioAction ("timelineMode", null, global::Mono.Unix.Catalog.GetString ("Timeline view"), "gtk-justify-fill", 0);
 			this.timelineMode.Group = new global::GLib.SList (global::System.IntPtr.Zero);
-			w3.Add (this.timelineMode, null);
+			w2.Add (this.timelineMode, null);
 			this.autoTaggingMode = new global::Gtk.RadioAction ("autoTaggingMode", null, global::Mono.Unix.Catalog.GetString ("Automatic tagging view"), "gtk-select-color", 0);
 			this.autoTaggingMode.Group = this.timelineMode.Group;
-			w3.Add (this.autoTaggingMode, null);
+			w2.Add (this.autoTaggingMode, null);
 			this.zoomFitAction = new global::Gtk.Action ("zoomFitAction", null, null, "gtk-zoom-fit");
-			w3.Add (this.zoomFitAction, null);
+			w2.Add (this.zoomFitAction, null);
+			this.UIManager.InsertActionGroup (w2, 0);
+			global::Gtk.ActionGroup w3 = new global::Gtk.ActionGroup ("Timeline");
 			this.UIManager.InsertActionGroup (w3, 1);
 			this.Name = "LongoMatch.Gui.Component.CodingWidget";
 			// Container child LongoMatch.Gui.Component.CodingWidget.Gtk.Container+ContainerChild

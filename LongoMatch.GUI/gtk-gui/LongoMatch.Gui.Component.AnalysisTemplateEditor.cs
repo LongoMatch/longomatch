@@ -9,9 +9,7 @@ namespace LongoMatch.Gui.Component
 		private global::LongoMatch.Gui.Component.ButtonsWidget buttonswidget;
 		private global::LongoMatch.Gui.Component.CategoryProperties categoryproperties;
 		private global::Gtk.HButtonBox hbuttonbox2;
-		private global::Gtk.Button button486;
-		private global::Gtk.Button button485;
-		private global::Gtk.Button button484;
+		private global::Gtk.Button savebutton;
 
 		protected virtual void Build ()
 		{
@@ -50,41 +48,34 @@ namespace LongoMatch.Gui.Component
 			this.hbuttonbox2 = new global::Gtk.HButtonBox ();
 			this.hbuttonbox2.Name = "hbuttonbox2";
 			// Container child hbuttonbox2.Gtk.ButtonBox+ButtonBoxChild
-			this.button486 = new global::Gtk.Button ();
-			this.button486.CanFocus = true;
-			this.button486.Name = "button486";
-			this.button486.UseUnderline = true;
-			this.button486.Label = global::Mono.Unix.Catalog.GetString ("GtkButton");
-			this.hbuttonbox2.Add (this.button486);
-			global::Gtk.ButtonBox.ButtonBoxChild w4 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox2 [this.button486]));
-			w4.Expand = false;
-			w4.Fill = false;
-			// Container child hbuttonbox2.Gtk.ButtonBox+ButtonBoxChild
-			this.button485 = new global::Gtk.Button ();
-			this.button485.CanFocus = true;
-			this.button485.Name = "button485";
-			this.button485.UseUnderline = true;
-			this.button485.Label = global::Mono.Unix.Catalog.GetString ("GtkButton");
-			this.hbuttonbox2.Add (this.button485);
-			global::Gtk.ButtonBox.ButtonBoxChild w5 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox2 [this.button485]));
-			w5.Position = 1;
-			w5.Expand = false;
-			w5.Fill = false;
-			// Container child hbuttonbox2.Gtk.ButtonBox+ButtonBoxChild
-			this.button484 = new global::Gtk.Button ();
-			this.button484.CanFocus = true;
-			this.button484.Name = "button484";
-			this.button484.UseUnderline = true;
-			this.button484.Label = global::Mono.Unix.Catalog.GetString ("GtkButton");
-			this.hbuttonbox2.Add (this.button484);
-			global::Gtk.ButtonBox.ButtonBoxChild w6 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox2 [this.button484]));
-			w6.Position = 2;
-			w6.Expand = false;
-			w6.Fill = false;
+			this.savebutton = new global::Gtk.Button ();
+			this.savebutton.CanFocus = true;
+			this.savebutton.Name = "savebutton";
+			this.savebutton.UseUnderline = true;
+			// Container child savebutton.Gtk.Container+ContainerChild
+			global::Gtk.Alignment w4 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
+			// Container child GtkAlignment.Gtk.Container+ContainerChild
+			global::Gtk.HBox w5 = new global::Gtk.HBox ();
+			w5.Spacing = 2;
+			// Container child GtkHBox.Gtk.Container+ContainerChild
+			global::Gtk.Image w6 = new global::Gtk.Image ();
+			w6.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-save", global::Gtk.IconSize.Dialog);
+			w5.Add (w6);
+			// Container child GtkHBox.Gtk.Container+ContainerChild
+			global::Gtk.Label w8 = new global::Gtk.Label ();
+			w8.LabelProp = global::Mono.Unix.Catalog.GetString ("Save");
+			w8.UseUnderline = true;
+			w5.Add (w8);
+			w4.Add (w5);
+			this.savebutton.Add (w4);
+			this.hbuttonbox2.Add (this.savebutton);
+			global::Gtk.ButtonBox.ButtonBoxChild w12 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox2 [this.savebutton]));
+			w12.Expand = false;
+			w12.Fill = false;
 			this.vbox2.Add (this.hbuttonbox2);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbuttonbox2]));
-			w7.Position = 1;
-			w7.Expand = false;
+			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbuttonbox2]));
+			w13.Position = 1;
+			w13.Expand = false;
 			this.Add (this.vbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

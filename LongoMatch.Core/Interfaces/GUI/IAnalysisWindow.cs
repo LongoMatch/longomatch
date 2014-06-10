@@ -30,12 +30,10 @@ namespace LongoMatch.Interfaces.GUI
 		void SetProject(Project project, ProjectType projectType, CaptureSettings props, PlaysFilter filter);
 		void CloseOpenedProject ();
 		void AddPlay(Play play);
-		void UpdateSelectedPlay (Play play);
 		void UpdateCategories ();
 		void DeletePlays (List<Play> plays);
 		
 		bool Fullscreen {set;}
-		VideoAnalysisMode AnalysisMode {set;}
 		
 		IPlayerBin Player{get;}
 		ICapturerBin Capturer{get;}

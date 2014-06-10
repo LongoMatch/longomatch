@@ -37,7 +37,6 @@ namespace LongoMatch.Gui.Component
 		ProjectType projectType;
 		bool detachedPlayer;
 		Gtk.Window playerWindow;
-		VideoAnalysisMode analysisMode;
 		
 		public AnalysisComponent ()
 		{
@@ -46,16 +45,7 @@ namespace LongoMatch.Gui.Component
 			playsSelection.Visible = true;
 
 			playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
-			playercapturer.Tick += OnTick;
-			playercapturer.Detach += DetachPlayer;
-			playercapturer.Logo = System.IO.Path.Combine(Config.ImagesDir,"background.png");
-			playercapturer.CaptureFinished += (sender, e) => {
-				Config.EventsBroker.EmitCloseOpenedProject();
-			};
-			
 			ConnectSignals();
-			AnalysisMode = VideoAnalysisMode.PredefinedTagging;
-			
 			postagger.SetMode (false);
 		}
 		
@@ -83,23 +73,11 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		public VideoAnalysisMode AnalysisMode {
-			set {
-				codingwidget.AnalysisMode = value;
-			}
-		}
-		
 		public void AddPlay(Play play) {
 			playsSelection.AddPlay(play);
 			codingwidget.AddPlay (play);
 		}
 		
-		public void UpdateSelectedPlay (Play play) {
-			codingwidget.SelectedPlay = play;
-			postagger.LoadPlay (play, false);
-			notes.Play= play;
-		}
-
 		public void UpdateCategories () {
 			codingwidget.UpdateCategories ();
 		}
@@ -110,9 +88,7 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		private void ConnectSignals() {
-			playercapturer.Error += OnMultimediaError;
-			playercapturer.SegmentClosedEvent += OnSegmentClosedEvent;
-			
+			playercapturer.Detach += DetachPlayer;
 			KeyPressEvent += (o, args) => (
 				Config.EventsBroker.EmitKeyPressed(o, (int)args.Event.Key, (int)args.Event.State));
  		}
@@ -145,8 +121,6 @@ namespace LongoMatch.Gui.Component
 				videowidgetsbox.Visible = true;
 				playercapturer.Reparent(this.videowidgetsbox);
 				playerWindow.Destroy();
-				
-				AnalysisMode = analysisMode;
 			}
 			playercapturer.Detached = detach;
 		}
@@ -154,36 +128,23 @@ namespace LongoMatch.Gui.Component
 		public void CloseOpenedProject () {
 			openedProject = null;
 			projectType = ProjectType.None;
-			ResetGUI ();
-			return;
+			if (detachedPlayer)
+				DetachPlayer(false);
+			ClearWidgets();
 		}
 		
 		public void SetProject(Project project, ProjectType projectType, CaptureSettings props, PlaysFilter filter)
 		{
 			bool isLive = false;
 			
-			if(projectType == ProjectType.FileProject) {
-				playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
-			} else {
-				isLive = true;
-				if(projectType == ProjectType.FakeCaptureProject) {
-					playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Capturer;
-				} else {
-					playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.PreviewCapturer;
-				}
-			}
-			
-// FIXME
-//			if(projectType == ProjectType.FakeCaptureProject) {
-//#if OS_TYPE_LINUX
-//				/* This deadlocks in Windows and OS X */
-//				(downbox[videowidgetsbox] as Box.BoxChild).Expand = false;
-//#endif
-//				(downbox[buttonswidget] as Box.BoxChild).Expand = true;
-//			}
-			
 			openedProject = project;
 			this.projectType = projectType;
+			
+			if(projectType == ProjectType.FakeCaptureProject) {
+				CreateCodingUI ();
+			} else {
+				CreatePreviewUI ();
+			}
 			
 			codingwidget.SetProject (project, isLive, filter);
 			playsSelection.SetProject (project, isLive, filter);
@@ -192,84 +153,91 @@ namespace LongoMatch.Gui.Component
 			                           openedProject.Categories.GoalBackground);
 		}
 		
-		void ResetGUI() {
-			playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
-			ClearWidgets();
-			if (detachedPlayer)
-				DetachPlayer(false);
+		void CreateCodingUI () {
+			HPaned centralpane, rightpane;
+			VBox vbox;
+			PeriodsRecoder periodsrecorder;
+			
+			ClearWidgets ();
+
+			centralpane = new HPaned();
+			rightpane = new HPaned ();
+			vbox = new VBox ();
+			
+			playsSelection = new PlaysSelectionWidget ();
+			codingwidget = new CodingWidget();
+			postagger = new PlaysCoordinatesTagger();
+			periodsrecorder = new PeriodsRecoder ();
+			playercapturer = null;
+			
+			centralpane.Show ();
+			rightpane.Show ();
+			vbox.Show();
+			playsSelection.Show ();
+			codingwidget.Show ();
+			postagger.Show ();
+			periodsrecorder.Show ();
+			
+			centralpane.Pack1 (playsSelection, true, true);
+			centralpane.Pack2 (rightpane, true, true);
+			rightpane.Pack1 (vbox, true, true);
+			rightpane.Pack2 (postagger, true, true);
+			vbox.PackStart (periodsrecorder, false, true, 0);
+			vbox.PackEnd (codingwidget, true, true, 0);
+			Add (centralpane);
+		}
+
+		void CreatePreviewUI () {
+			VPaned centralpane;
+			HPaned uppane, rightpane;
+			
+			ClearWidgets ();
+
+			centralpane = new VPaned();
+			uppane = new HPaned ();
+			rightpane = new HPaned();
+			
+			playsSelection = new PlaysSelectionWidget ();
+			codingwidget = new CodingWidget();
+			postagger = new PlaysCoordinatesTagger();
+			playercapturer = new PlayerCapturerBin ();
+			if(projectType == ProjectType.FileProject) {
+				playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
+			} else {
+				playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.PreviewCapturer;
+			}
+			
+			centralpane.Show ();
+			uppane.Show ();
+			rightpane.Show ();
+			playsSelection.Show ();
+			codingwidget.Show ();
+			postagger.Show ();
+			playercapturer.Show ();
+			
+			centralpane.Pack1 (uppane, true, true);
+			centralpane.Pack2 (codingwidget, true, true);
+			uppane.Pack1 (playsSelection, true, true);
+			uppane.Pack2 (rightpane, true, true);
+			rightpane.Pack1 (playercapturer, true, true);
+			rightpane.Pack2 (postagger, true, true);
+			Add (centralpane);
 		}
 		
 		void ClearWidgets() {
-			playsSelection.Clear();
-		}
-		
-		protected override bool OnKeyPressEvent(EventKey evnt)
-		{
-			Gdk.Key key = evnt.Key;
-			Gdk.ModifierType modifier = evnt.State;
-			bool ret;
-
-			ret = base.OnKeyPressEvent(evnt);
-
-			if(openedProject == null && !playercapturer.Opened)
-				return ret;
-
-			if(projectType != ProjectType.CaptureProject &&
-			   projectType != ProjectType.URICaptureProject &&
-			   projectType != ProjectType.FakeCaptureProject) {
-				switch(key) {
-				case Constants.SEEK_FORWARD:
-					if(modifier == Constants.STEP)
-						playercapturer.StepForward();
-					else
-						playercapturer.SeekToNextFrame();
-					break;
-				case Constants.SEEK_BACKWARD:
-					if(modifier == Constants.STEP)
-						playercapturer.StepBackward();
-					else
-						playercapturer.SeekToPreviousFrame();
-					break;
-				case Constants.FRAMERATE_UP:
-					playercapturer.FramerateUp();
-					break;
-				case Constants.FRAMERATE_DOWN:
-					playercapturer.FramerateDown();
-					break;
-				case Constants.TOGGLE_PLAY:
-					playercapturer.TogglePlay();
-					break;
-				}
-			} else {
-				switch(key) {
-				case Constants.TOGGLE_PLAY:
-					playercapturer.TogglePause();
-					break;
-				}
-			}
-			return ret;
-		}
-
-		void OnSegmentClosedEvent()
-		{
-			codingwidget.SelectedPlay = null;
-		}
-		
-		void OnTick (Time currentTime, Time streamLength,
-			double currentPosition)
-		{
-			if (currentTime.MSeconds != 0 && codingwidget != null && openedProject != null) {
-				codingwidget.CurrentTime = currentTime;
+			if (Children.Length == 1) 
+				Children[0].Destroy();
+			if (playsSelection != null)
+				playsSelection.Destroy();
+			if (codingwidget != null)
+				codingwidget.Destroy();
+			if (postagger != null)
+				postagger.Destroy();
+			if (playercapturer != null) {
+				playercapturer.Destroy();
 			}
 		}
 		
-		void OnMultimediaError(string message)
-		{
-			MessagesHelpers.ErrorMessage (this,
-				Catalog.GetString("The following error happened and" +
-				" the current project will be closed:")+"\n" + message);
-			Config.EventsBroker.EmitCloseOpenedProject ();
-		}
 	}
 }
 
