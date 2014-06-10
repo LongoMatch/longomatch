@@ -94,6 +94,8 @@ namespace LongoMatch.Gui
 			timescale.CanFocus = false;
 			vscale1.CanFocus = false;
 			drawbutton.CanFocus = false;
+			videoeventbox.CanFocus = true;
+			videodrawingarea.CanFocus = true;
 			seeksQueue = new double[2];
 			seeksQueue [0] = -1;
 			seeksQueue [1] = -1;
