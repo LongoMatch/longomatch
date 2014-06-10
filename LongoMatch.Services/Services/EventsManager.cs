@@ -148,7 +148,6 @@ namespace LongoMatch.Services
 		void LoadPlay (Play play, Time seekTime, bool playing) {
 			player.LoadPlay (openedProject.Description.File.FilePath, play,
 			                 seekTime, playing);
-			analysisWindow.UpdateSelectedPlay(play);
 			loadedPlay = play;
 			if (playing) {
 				player.Play ();
@@ -288,6 +287,7 @@ namespace LongoMatch.Services
 			                   openedProject.LocalTeamTemplate,
 			                   openedProject.VisitorTeamTemplate,
 			                   showAllTags);
+			Config.EventsBroker.EmitTeamTagsChanged ();
 		}
 
 		void HandlePlaybackRateChanged (float rate)

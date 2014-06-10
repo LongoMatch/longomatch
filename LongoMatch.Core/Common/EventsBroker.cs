@@ -38,12 +38,12 @@ namespace LongoMatch.Common
 		public event PlayListNodeAddedHandler PlayListNodeAdded;
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event SnapshotSeriesHandler SnapshotSeries;
-		public event RenderPlaylistHandler RenderPlaylist;
 		public event TagPlayHandler TagPlay;
 		public event DuplicatePlayHandler DuplicatePlay;
+		public event TeamsTagsChangedHandler TeamTagsChanged;
 		
 		/* Playlist */
-		public event RenderPlaylistHandler RenderPlaylistEvent;
+		public event RenderPlaylistHandler RenderPlaylist;
 		public event PlayListNodeAddedHandler PlayListNodeAddedEvent;
 		public event PlayListNodeSelectedHandler PlayListNodeSelectedEvent;
 		public event OpenPlaylistHandler OpenPlaylistEvent;
@@ -59,8 +59,6 @@ namespace LongoMatch.Common
 		public event ShowFullScreenHandler ShowFullScreenEvent;
 		public event ShowProjectStats ShowProjectStatsEvent;
 		public event TagSubcategoriesChangedHandler TagSubcategoriesChangedEvent;
-		
-		/* Main controller */
 		
 		/* IMainController */
 		public event NewProjectHandler NewProjectEvent;
@@ -79,6 +77,10 @@ namespace LongoMatch.Common
 		public event ConvertVideoFilesHandler ConvertVideoFilesEvent;
 		
 		public event OpenedProjectChangedHandler OpenedProjectChanged;
+		
+		public event TickHandler Tick;
+		public event ErrorHandler MultimediaError;
+		public event SegmentClosedHandler SegmentClosed;
 		
 		
 		public EventsBroker ()
@@ -293,6 +295,27 @@ namespace LongoMatch.Common
 		{
 			if (OpenedProjectChanged != null) {
 				OpenedProjectChanged (project, projectType, filter, analysisWindow);
+			}
+		}
+
+		public void EmitTick (Time currentTime, Time streamLength, double currentPosition)
+		{
+			if (Tick != null) {
+				Tick (currentTime, streamLength, currentPosition);
+			}
+		}
+		
+		public void EmitSegmentClosed ()
+		{
+			if (SegmentClosed != null) {
+				SegmentClosed ();
+			}
+		}
+		
+		public void EmitTeamTagsChanged ()
+		{
+			if (TeamTagsChanged != null) {
+				TeamTagsChanged ();
 			}
 		}
 	}

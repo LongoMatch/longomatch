@@ -52,6 +52,8 @@ namespace LongoMatch.Handlers
 	/* DUplicate play */
 	public delegate void DuplicatePlayHandler (Play play);
 	
+	public delegate void TeamsTagsChangedHandler ();
+	
 	/* Project Events */
 	public delegate void SaveProjectHandler(Project project, ProjectType projectType);
 	public delegate void OpenedProjectChangedHandler(Project project, ProjectType projectType, PlaysFilter filter,

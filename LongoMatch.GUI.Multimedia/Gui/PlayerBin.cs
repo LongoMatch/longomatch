@@ -222,6 +222,7 @@ namespace LongoMatch.Gui
 		}
 		
 		public void Close() {
+			player.Tick -= tickHandler;
 			player.Close();
 			filename = null;
 			timescale.Value = 0;
@@ -324,6 +325,11 @@ namespace LongoMatch.Gui
 			drawbutton.Clicked += OnDrawButtonClicked;
 			timescale.ValueChanged += OnTimescaleValueChanged;
 			timescale.AdjustBounds += OnTimescaleAdjustBounds;
+			vscale1.FormatValue += OnVscale1FormatValue;
+			vscale1.ValueChanged += OnVscale1ValueChanged;
+			drawbutton.Clicked += OnDrawButtonClicked;
+			volumebutton.Clicked += OnVolumebuttonClicked;
+
 		}
 		
 		void LoadSegment (string filename, Time start, Time stop, Time seekTime,

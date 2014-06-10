@@ -41,6 +41,7 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 			SetMode (true);
+			Config.EventsBroker.PlaySelected += (play) => LoadPlay (play, false);
 		}
 		
 		public bool CoordinatesSensitive {

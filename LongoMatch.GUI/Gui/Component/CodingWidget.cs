@@ -45,6 +45,9 @@ namespace LongoMatch.Gui.Component
 
 			drawingarea1.HeightRequest = 200;
 			drawingarea1.WidthRequest = 300;
+			
+			Config.EventsBroker.Tick += (t, l, p) => timeline.CurrentTime = t;
+			Config.EventsBroker.PlaySelected += (play) => timeline.SelectedTimeNode = play;
 		}
 		
 		public void SetProject (Project project, bool isLive, PlaysFilter filter) {
@@ -71,18 +74,6 @@ namespace LongoMatch.Gui.Component
 			timeline.RemovePlays(plays);
 		}
 
-		public Time CurrentTime {
-			set {
-				timeline.CurrentTime = value;
-			}
-		}		
-
-		public Play SelectedPlay {
-			set {
-				timeline.SelectedTimeNode = value;
-			}
-		}
-		
 		public void UpdateCategories () {
 			buttonswidget.Project = project;
 		}

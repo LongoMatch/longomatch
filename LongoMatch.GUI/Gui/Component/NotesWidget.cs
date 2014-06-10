@@ -38,6 +38,7 @@ namespace LongoMatch.Gui.Component
 			this.Build();
 			this.buf = textview1.Buffer;
 			buf.Changed += new EventHandler(OnEdition);
+			Config.EventsBroker.PlaySelected += (play) => {Play = play;};
 
 		}
 

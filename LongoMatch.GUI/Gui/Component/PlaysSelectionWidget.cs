@@ -42,7 +42,7 @@ namespace LongoMatch.Gui.Component
 			localPlayersList.Team = Team.LOCAL;
 			visitorPlayersList.Team = Team.VISITOR;
 			AddFilters();
-			Config.EventsBroker.TagPlay += (Play play) => {UpdateTeamsModels();};
+			Config.EventsBroker.TeamTagsChanged += UpdateTeamsModels;
 		}
 		
 		#region Plubic Methods
@@ -70,6 +70,7 @@ namespace LongoMatch.Gui.Component
 			playsList.Project = null;
 			localPlayersList.Clear();
 			visitorPlayersList.Clear();
+			Config.EventsBroker.TeamTagsChanged -= UpdateTeamsModels;
 		}
 		
 		public bool PlayListLoaded {

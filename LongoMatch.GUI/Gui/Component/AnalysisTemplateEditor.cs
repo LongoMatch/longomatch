@@ -24,17 +24,20 @@ namespace LongoMatch.Gui.Component
 	public partial class AnalysisTemplateEditor : Gtk.Bin
 	{
 		bool edited;
+		Categories template;
 
 		public AnalysisTemplateEditor ()
 		{
 			this.Build ();
 			buttonswidget.Mode = LongoMatch.Common.TagMode.Predifined;
-			//buttonswidget.NewMarkEvent += HandleNewMarkEvent;
+			Config.EventsBroker.NewTagEvent += HandleCategorySelected;
 			categoryproperties.Visible = false;
+			savebutton.Clicked += HandleSaveClicked;
 		}
 
 		public Categories Template {
 			set {
+				template = value;
 				buttonswidget.UpdateCategories (value);
 			}
 		}
