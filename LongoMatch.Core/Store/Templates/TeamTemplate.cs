@@ -28,21 +28,30 @@ using LongoMatch.Interfaces;
 namespace LongoMatch.Store.Templates
 {
 	[Serializable]
-	[JsonObject]
-	public class TeamTemplate: List<Player>, ITemplate<Player>
+	public class TeamTemplate: ITemplate<Player>
 	{
-		private byte[] thumbnailBuf;
 		private const int MAX_WIDTH=100;
 		private const int MAX_HEIGHT=100;
-		Version version;
 		
-		public TeamTemplate() {
+		public TeamTemplate () {
 			TeamName = Catalog.GetString("Team");
 			if (Formation == null) {
 				FormationStr = "1-4-3-3";
 			}
+			ID = Guid.NewGuid();
+			List = new List<Player>();
 		}
-
+		
+		public Guid ID {
+			get;
+			set;
+		}
+		
+		public List<Player> List {
+			get;
+			set;
+		}
+		
 		public String Name {
 			get;
 			set;
@@ -53,27 +62,16 @@ namespace LongoMatch.Store.Templates
 			set;
 		}
 		
-		public Version Version {
+		public Image Shield {
 			get;
 			set;
 		}
 		
-		public Image Shield {
-			get {
-				if(thumbnailBuf != null)
-					return Image.Deserialize(thumbnailBuf);
-				else return null;
-			} set {
-				if (value == null)
-					thumbnailBuf = null;
-				else
-					thumbnailBuf = value.Serialize();
-			}
-		}
-		
+		[JsonIgnore]
 		public int PlayingPlayers {
-			get;
-			protected set;
+			get {
+				return Formation.Sum();
+			}
 		} 
 		
 		public int[] Formation {
@@ -95,7 +93,6 @@ namespace LongoMatch.Store.Templates
 						throw new FormatException ();
 					}
 				}
-				PlayingPlayers = tactics.Sum();
 				Formation = tactics;
 			}
 			get {
@@ -106,12 +103,12 @@ namespace LongoMatch.Store.Templates
 		[JsonIgnore]
 		public List<Player> PlayingPlayersList {
 			get {
-				return this.Where(p=>p.Playing).Select(p=>p).ToList();
+				return List.Where(p=>p.Playing).Select(p=>p).ToList();
 			}
 		}
 
 		public void Save(string filePath) {
-			SerializableObject.Save(this, filePath);
+			Serializer.Save(this, filePath);
 		}
 		
 		public Player AddDefaultItem (int i) {
@@ -124,12 +121,12 @@ namespace LongoMatch.Store.Templates
 				Position = "",
 				Photo = null,
 				Playing = true,};
-			Insert (i, p);
+			List.Insert (i, p);
 			return p;
 		}
 
 		public static TeamTemplate Load(string filePath) {
-			TeamTemplate template = SerializableObject.LoadSafe<TeamTemplate>(filePath);
+			TeamTemplate template = Serializer.LoadSafe<TeamTemplate>(filePath);
 			if (template.Formation == null) {
 				template.FormationStr = "1-4-3-3";
 			}
@@ -142,11 +139,10 @@ namespace LongoMatch.Store.Templates
 			return defaultTemplate;
 		}
 
-		private void FillDefaultTemplate(int playersCount) {
-			Clear();
+		void FillDefaultTemplate(int playersCount) {
+			List.Clear();
 			for(int i=1; i<=playersCount; i++)
 				AddDefaultItem(i-1);
-			version = new Version (Constants.DB_MAYOR_VERSION, Constants.DB_MINOR_VERSION);
 		}
 	}
 }

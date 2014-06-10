@@ -120,8 +120,10 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		private void UpdateTeamsModels() {
-			localPlayersList.SetTeam(project.LocalTeamTemplate, project.AllPlays());
-			visitorPlayersList.SetTeam(project.VisitorTeamTemplate, project.AllPlays());
+			if (project == null)
+				return;
+			localPlayersList.SetTeam(project.LocalTeamTemplate, project.Timeline);
+			visitorPlayersList.SetTeam(project.VisitorTeamTemplate, project.Timeline);
 		}
 		
 		protected void OnCategoriesFiltersbuttonClicked (object sender, System.EventArgs e)

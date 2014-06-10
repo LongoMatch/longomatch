@@ -145,7 +145,7 @@ namespace LongoMatch.Services
 			videoConverter.Error += OnError;
 			
 			foreach(MediaFile file in job.InputFiles) {
-				videoConverter.AddFile (file.FilePath, file.Length);
+				videoConverter.AddFile (file.FilePath, file.Duration.MSeconds);
 			}
 			
 			try {
@@ -193,17 +193,17 @@ namespace LongoMatch.Services
 				
 				videoEditor.AddSegment(segment.MediaFile.FilePath,
 				                       segment.Start.MSeconds,
-				                       drawing.RenderTime - segment.Start.MSeconds,
+				                       drawing.Render.MSeconds - segment.Start.MSeconds,
 				                       segment.Rate,
 				                       segment.Name,
 				                       segment.MediaFile.HasAudio);
 				videoEditor.AddImageSegment(image_path,
-				                            drawing.RenderTime,
-				                            drawing.PauseTime,
+				                            drawing.Render.MSeconds,
+				                            drawing.Pause.MSeconds,
 				                            segment.Name);
 				videoEditor.AddSegment(segment.MediaFile.FilePath,
-				                       drawing.RenderTime,
-				                       segment.Stop.MSeconds - drawing.RenderTime,
+				                       drawing.Render.MSeconds,
+				                       segment.Stop.MSeconds - drawing.Render.MSeconds,
 				                       segment.Rate,
 				                       segment.Name,
 				                       segment.MediaFile.HasAudio);

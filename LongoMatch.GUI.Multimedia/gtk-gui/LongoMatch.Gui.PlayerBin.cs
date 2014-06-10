@@ -29,7 +29,7 @@ namespace LongoMatch.Gui
 		private global::Gtk.Label timelabel;
 		private global::Gtk.Button volumebutton;
 		private global::Gtk.Button detachbutton;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
@@ -61,6 +61,7 @@ namespace LongoMatch.Gui
 			this.videoeventbox.Name = "videoeventbox";
 			// Container child videoeventbox.Gtk.Container+ContainerChild
 			this.videodrawingarea = new global::Gtk.DrawingArea ();
+			this.videodrawingarea.CanFocus = true;
 			this.videodrawingarea.Name = "videodrawingarea";
 			this.videoeventbox.Add (this.videodrawingarea);
 			this.hbox2.Add (this.videoeventbox);

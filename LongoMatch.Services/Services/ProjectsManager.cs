@@ -132,18 +132,18 @@ namespace LongoMatch.Services
 		}
 
 		void SaveCaptureProject(Project project) {
-			Guid projectID = project.UUID;
+			Guid projectID = project.ID;
 			string filePath = project.Description.File.FilePath;
 
 			/* scan the new file to build a new PreviewMediaFile with all the metadata */
 			try {
-				Log.Debug ("Saving capture project: " + project.UUID);
+				Log.Debug ("Saving capture project: " + project.ID);
 			
 				RemuxOutputFile (Capturer.CaptureSettings.EncodingSettings);
 			
 				Log.Debug("Reloading saved file: " + filePath);
 				project.Description.File = multimediaToolkit.DiscoverFile(filePath);
-				foreach (Play play in project.AllPlays ()) {
+				foreach (Play play in project.Timeline) {
 					play.Fps = project.Description.File.Fps;
 				}
 				DB.AddProject(project);
@@ -171,7 +171,7 @@ namespace LongoMatch.Services
 				CloseOpenedProject(true);
 			}
 			
-			Log.Debug ("Loading project " + project.UUID + " " + projectType);
+			Log.Debug ("Loading project " + project.ID + " " + projectType);
 				
 			PlaysFilter = new PlaysFilter(project);
 			guiToolkit.OpenProject (project, projectType, props, PlaysFilter,
@@ -292,7 +292,7 @@ namespace LongoMatch.Services
 			if (save)
 				SaveProject(OpenedProject, OpenedProjectType);
 			
-			Log.Debug ("Closing project " + OpenedProject.UUID);
+			Log.Debug ("Closing project " + OpenedProject.ID);
 			if(OpenedProjectType != ProjectType.FileProject)
 				Capturer.Close();
 			else

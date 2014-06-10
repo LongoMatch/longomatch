@@ -58,23 +58,8 @@ namespace Tests.Core
 			player.Photo = null;
 			Assert.AreEqual (player.Photo, null);
 			/* FIXME: test with real image */
-			player.Photo = new DummyImage ("test");
+			player.Photo = null;
 			Utils.CheckSerialization (player);
-		}
-	}
-	[Serializable]
-	public class DummyImage: Image
-	{
-		string text;
-		
-		public DummyImage (string text): base (null)
-		{
-			this.text = text;
-		}
-		
-		public byte[] Serialize  () {
-			Console.WriteLine ("SER");
-			return new byte[] {byte.Parse ("1")};
 		}
 	}
 }

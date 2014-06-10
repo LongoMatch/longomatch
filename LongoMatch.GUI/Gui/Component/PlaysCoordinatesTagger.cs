@@ -74,7 +74,6 @@ namespace LongoMatch.Gui.Component
 		
 		public void LoadPlay (Play play, bool horizontal=true) {
 			field.Visible = hfield.Visible = goal.Visible = false;
-			
 			AddPlay (play, true);
 		}
 		
@@ -133,10 +132,10 @@ namespace LongoMatch.Gui.Component
 				coords.Add (play.FieldPosition);
 			} else if (fill) {
 				Coordinates c = new Coordinates ();
-				c.Add (new Point((int) (fieldPixbuf.Width * 0.25),
+				c.Points.Add (new Point((int) (fieldPixbuf.Width * 0.25),
 				                 (int) (fieldPixbuf.Height * 0.25)));
 				if (play.Category.FieldPositionIsDistance) {
-					c.Add (new Point((int) (fieldPixbuf.Width * 0.75),
+					c.Points.Add (new Point((int) (fieldPixbuf.Width * 0.75),
 					                 (int) (fieldPixbuf.Height * 0.75)));
 				}
 				coords.Add (c);
@@ -155,10 +154,10 @@ namespace LongoMatch.Gui.Component
 				coords.Add (play.HalfFieldPosition);
 			} else  if (fill) {
 				Coordinates c = new Coordinates ();
-				c.Add (new Point((int) (hFieldPixbuf.Width * 0.25),
+				c.Points.Add (new Point((int) (hFieldPixbuf.Width * 0.25),
 				                 (int) (hFieldPixbuf.Height * 0.25)));
 				if (play.Category.HalfFieldPositionIsDistance) {
-					c.Add (new Point((int) (hFieldPixbuf.Width * 0.75),
+					c.Points.Add (new Point((int) (hFieldPixbuf.Width * 0.75),
 					                 (int) (hFieldPixbuf.Height * 0.75)));
 				}
 				coords.Add (c);
@@ -177,7 +176,7 @@ namespace LongoMatch.Gui.Component
 				coords.Add (play.GoalPosition);
 			} else if (fill) {
 				Coordinates c = new Coordinates ();
-				c.Add (new Point((int) (goalPixbuf.Width * 0.25),
+				c.Points.Add (new Point((int) (goalPixbuf.Width * 0.25),
 				                 (int) (goalPixbuf.Height * 0.25)));
 				coords.Add (c);
 				play.GoalPosition = c;

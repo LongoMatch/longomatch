@@ -30,21 +30,6 @@ namespace LongoMatch.Store
 	[Serializable]
 	public class MediaFile
 	{
-
-		string filePath;
-		long length; // In MSeconds
-		ushort fps;
-		bool hasAudio;
-		bool hasVideo;
-		string container;
-		string videoCodec;
-		string audioCodec;
-		uint videoHeight;
-		uint videoWidth;
-		double par;
-		byte[] thumbnailBuf;
-
-
 		public MediaFile() {}
 
 		public MediaFile(string filePath,
@@ -60,147 +45,78 @@ namespace LongoMatch.Store
 		                 double par,
 		                 Image preview)
 		{
-			this.filePath = filePath;
-			this.length = length;
-			this.hasAudio = hasAudio;
-			this.hasVideo = hasVideo;
-			this.container = container;
-			this.videoCodec = videoCodec;
-			this.audioCodec = audioCodec;
-			this.videoHeight = videoHeight;
-			this.videoWidth = videoWidth;
-			if(fps == 0)
-				//For audio Files
-				this.fps=25;
-			else
-				this.fps = fps;
-			this.Preview = preview;
+			FilePath = filePath;
+			Duration = new Time ((int)length);
+			HasAudio = hasAudio;
+			HasVideo = hasVideo;
+			Container = container;
+			VideoCodec = videoCodec;
+			AudioCodec = audioCodec;
+			VideoHeight = videoHeight;
+			VideoWidth = videoWidth;
+			Fps = fps;
+			Preview = preview;
 			Par = par;
 		}
 
 		public string FilePath {
-			get {
-				return this.filePath;
-			}
-			set {
-				this.filePath = value;
-			}
+			get;
+			set;
 		}
 
 		public Time Duration {
-			get {
-				return new Time ((int) length);
-			}
-		}
-
-		public long Length {
-			get {
-				return this.length;
-			}
-			set {
-				this.length = value;
-			}
+			get;
+			set;
 		}
 
 		public bool HasVideo {
-			get {
-				return this.hasVideo;
-			}
-			set {
-				this.hasVideo = value;
-			}
+			get;
+			set;
 		}
 
 		public bool HasAudio {
-			get {
-				return this.hasAudio;
-			}
-			set {
-				this.hasAudio = value;
-			}
+			get;
+			set;
 		}
 		
 		public string Container {
-			get {
-				return this.container;
-			}
-			set {
-				this.container = value;
-			}
+			get;
+			set;
 		}
 
 		public string VideoCodec {
-			get {
-				return this.videoCodec;
-			}
-			set {
-				this.videoCodec = value;
-			}
+			get;
+			set;
 		}
 
 		public string AudioCodec {
-			get {
-				return this.audioCodec;
-			}
-			set {
-				this.audioCodec = value;
-			}
+			get;
+			set;
 		}
 
 		public uint VideoWidth {
-			get {
-				return this.videoWidth;
-			}
-			set {
-				this.videoWidth= value;
-			}
+			get;
+			set;
 		}
 
 		public uint VideoHeight {
-			get {
-				return this.videoHeight;
-			}
-			set {
-				this.videoHeight= value;
-			}
+			get;
+			set;
 		}
 
 		public ushort Fps {
-			get {
-				return this.fps;
-			}
-			set {
-				if(value == 0)
-					//For audio Files
-					this.fps=25;
-				else
-					this.fps = value;
-			}
+			get;
+			set;
 		}
 		
 		public double Par {
-			get {
-				if (par == 0)
-					return 1;
-				return par;
-			}
-			set {
-				par = value;
-			}
+			get;
+			set;
 		}
 		
 		public Image Preview {
-			get {
-				if(thumbnailBuf != null)
-					return Image.Deserialize(thumbnailBuf);
-				return null;
-			}
-			set {
-				if(value != null) {
-					thumbnailBuf = value.Serialize();
-				} else
-					thumbnailBuf = null;
-			}
+			get;
+			set;
 		}
 		
 		[JsonIgnore]
@@ -209,18 +125,12 @@ namespace LongoMatch.Store
 				string desc = String.Format ("<b>File path</b>: {0}\n", FilePath);
 				desc += String.Format ("<b>Format</b>: {0}x{1} @ {2}fps\n", VideoWidth,
 				                       VideoHeight, Fps);
-				desc += String.Format ("<b>Duration</b>: {0}\n",
-				                       new Time {MSeconds=(int)Length}.ToSecondsString());
+				desc += String.Format ("<b>Duration</b>: {0}\n", Duration.ToSecondsString ());
 				desc += String.Format ("<b>Video Codec</b>: {0}\n", VideoCodec);
 				desc += String.Format ("<b>Audio Codec</b>: {0}\n", AudioCodec);
 				desc += String.Format ("<b>Container</b>: {0}\n", Container);
 				return desc;
 			}
 		}
-		
-		public uint GetFrames() {
-			return (uint)(Fps*Length/1000);
-		}
-		
 	}
 }

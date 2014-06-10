@@ -27,6 +27,8 @@ using LongoMatch.Interfaces;
 using System.Reflection;
 using LongoMatch.Store.Templates;
 using Newtonsoft.Json.Converters;
+using LongoMatch.Store;
+using System.Globalization;
 
 namespace LongoMatch.Common
 {
@@ -106,54 +108,84 @@ namespace LongoMatch.Common
 				settings.Formatting = Formatting.Indented;
 				settings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
 				settings.TypeNameHandling = TypeNameHandling.Objects;
-				settings.ContractResolver = new ListObjectContractResolver ();
+				//settings.ContractResolver = new ListObjectContractResolver ();
 				settings.Converters.Add (new VersionConverter ());
 				return settings;
 			}
 		}
 	}
 	
-	public class ListObjectContractResolver : DefaultContractResolver
+	public class LongoMatchConverter : JsonConverter
 	{
-		/* To serialize/desarialize List objects by including private fields
-		 * _size and _items */
-		public ListObjectContractResolver()
+		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
 		{
-		}
-		
-		protected override IList<JsonProperty> CreateProperties (Type type, MemberSerialization memberSerialization)
-		{
-			IList<JsonProperty> props = new List<JsonProperty>();
-			
-			props = base.CreateProperties (type, memberSerialization);
-			if (typeof(ISubCategory).IsAssignableFrom (type) ||
-			    type == typeof(Categories) ||
-			    type == typeof(TeamTemplate) ||
-			    type == typeof(SubCategoryTemplate))
-			{
-				JsonProperty itprop;
-				BindingFlags flags;
-				
-				props = props.Where (p => p.PropertyName != "Count").ToList();
-				flags =  base.DefaultMembersSearchFlags;
-				IList<JsonProperty> allprops = new List<JsonProperty>();
-				base.DefaultMembersSearchFlags = flags | System.Reflection.BindingFlags.NonPublic;
-				allprops = base.CreateProperties (type, MemberSerialization.Fields);
-				base.DefaultMembersSearchFlags = flags;
-				itprop = allprops.FirstOrDefault (p => p.PropertyName == "_items");
-				if (itprop != null) {
-					props.Add (itprop);
+			if (value is Time) {
+				Time time = value as Time;
+				if (time != null) {
+					writer.WriteValue(time.MSeconds);
 				}
-				itprop = allprops.FirstOrDefault (p => p.PropertyName == "_size");
-				if (itprop != null) {
-					props.Add (itprop);
+			} else if (value is Color) {
+				Color color = value as Color;
+				if (color != null) {
+					writer.WriteValue(String.Format ("#{0}{1}{2}{3}",
+					                                 color.R.ToString ("X2"),
+					                                 color.G.ToString ("X2"),
+					                                 color.B.ToString ("X2"),
+					                                 color.A.ToString ("X2")));
+				}
+			} else if (value is Image) {
+				Image image = value as Image;
+				if (image != null) {
+					writer.WriteValue(image.Serialize());
+				}
+			} else if (value is HotKey) {
+				HotKey hotkey = value as HotKey;
+				if (hotkey != null) {
+					writer.WriteValue(String.Format ("{0} {1}", hotkey.Key, hotkey.Modifier));
+				}
+			} else if (value is Point) {
+				Point p = value as Point;
+				if (p != null) {
+					writer.WriteValue(String.Format ("{0} {1}", p.DX, p.DY));
 				}
 			}
-			
-			return props;
+		}
+
+		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+		{
+			if (reader.Value != null) {
+				if (objectType == typeof (Time)) {
+					Int64 t = (Int64) reader.Value;
+					return new Time((int)t);
+				} else if (objectType == typeof (Color)) {
+					string rgbStr = (string) reader.Value;
+					return new Color(Byte.Parse (rgbStr.Substring(1,2), NumberStyles.HexNumber),
+					                 Byte.Parse (rgbStr.Substring(3,2), NumberStyles.HexNumber),
+					                 Byte.Parse (rgbStr.Substring(5,2), NumberStyles.HexNumber),
+					                 Byte.Parse (rgbStr.Substring(7,2), NumberStyles.HexNumber));
+				} else if (objectType == typeof (Image)) {
+					byte[] buf = Convert.FromBase64String ((string)reader.Value); 
+					return Image.Deserialize (buf);
+				} else if (objectType == typeof (HotKey)) {
+					string[] hk = ((string)reader.Value).Split (' '); 
+					return new HotKey {Key = int.Parse(hk[0]), Modifier = int.Parse(hk[1])};
+				} else if (objectType == typeof (Point)) {
+					string[] ps = ((string)reader.Value).Split (' '); 
+					return new Point (double.Parse(ps[0]), double.Parse(ps[1]));
+				}
+			}
+			return null;
+		}
+		
+		public override bool CanConvert(Type objectType)
+		{
+			return (
+				objectType == typeof(Time) ||
+				objectType == typeof(Color) ||
+				objectType == typeof(HotKey) ||
+				objectType == typeof(Image));
 		}
 	}
-
 
 }
 

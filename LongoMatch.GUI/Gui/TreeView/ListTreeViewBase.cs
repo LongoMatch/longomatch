@@ -119,7 +119,7 @@ namespace LongoMatch.Gui.Component
 					return;
 				catsDict = new Dictionary<MenuItem, Category>();
 				catMenu = new Menu();
-				foreach (Category cat in value.Categories) {
+				foreach (Category cat in value.Categories.List) {
 					var item = new MenuItem (cat.Name);
 					catMenu.Append (item);
 					catsDict.Add(item, cat);

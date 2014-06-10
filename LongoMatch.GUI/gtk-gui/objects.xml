@@ -99,10 +99,6 @@
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.TaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Component.BackgroundWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
@@ -115,14 +111,6 @@
         <signal name="SubCategorySelected" />
       </itemgroup>
     </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.PlayersTaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.StringTaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
   </object>
   <object type="LongoMatch.Gui.Component.RenderingStateBar" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
@@ -138,30 +126,6 @@
     </signals>
   </object>
   <object type="LongoMatch.Gui.Component.RenderingJobsTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.GameUnitsEditor" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.GameUnitWidget" palette-category="General" allow-children="false" base-type="Gtk.Frame">
-    <itemgroups />
-    <signals>
-      <itemgroup label="GameUnitWidget Signals">
-        <signal name="GameUnitEvent" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.GameUnitsTagger" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="GameUnitsTagger Signals">
-        <signal name="GameUnitEvent" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.PlayersTagger" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
   </object>
@@ -404,5 +368,41 @@
         <signal name="PlaybackRateChanged" />
       </itemgroup>
     </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.PlayersTaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.StringTaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.GameUnitsEditor" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.GameUnitsTagger" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="GameUnitsTagger Signals">
+        <signal name="GameUnitEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.GameUnitWidget" palette-category="General" allow-children="false" base-type="Gtk.Frame">
+    <itemgroups />
+    <signals>
+      <itemgroup label="GameUnitWidget Signals">
+        <signal name="GameUnitEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.PlayersTagger" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.TaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
   </object>
 </objects>

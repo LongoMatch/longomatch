@@ -30,27 +30,27 @@ namespace Tests
 		
 		public static T SerializeDeserialize<T> (T obj) {
 			var stream = new MemoryStream ();
-			SerializableObject.Save (obj, stream, SerializationType.Json);
+			Serializer.Save (obj, stream, SerializationType.Json);
 			stream.Seek (0, SeekOrigin.Begin);
 			var jsonString = new StreamReader(stream).ReadToEnd();
 			Console.WriteLine (jsonString);
 			stream.Seek(0, SeekOrigin.Begin);
 			
-			return SerializableObject.Load<T>(stream, SerializationType.Json);
+			return Serializer.Load<T>(stream, SerializationType.Json);
 		}
 		 
 		public static void CheckSerialization<T> (T obj) {
 			var stream = new MemoryStream ();
-			SerializableObject.Save (obj, stream, SerializationType.Json);
+			Serializer.Save (obj, stream, SerializationType.Json);
 			stream.Seek (0, SeekOrigin.Begin);
 			var jsonString = new StreamReader(stream).ReadToEnd();
 			Console.WriteLine (jsonString);
 			stream.Seek(0, SeekOrigin.Begin);
 			
-			var newobj = SerializableObject.Load<T>(stream, SerializationType.Json);
+			var newobj = Serializer.Load<T>(stream, SerializationType.Json);
 			
 			stream = new MemoryStream ();
-			SerializableObject.Save (newobj, stream, SerializationType.Json);
+			Serializer.Save (newobj, stream, SerializationType.Json);
 			stream.Seek(0, SeekOrigin.Begin);
 			var newJsonString = new StreamReader(stream).ReadToEnd();
 			Console.WriteLine (newJsonString);

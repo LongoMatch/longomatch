@@ -18,6 +18,8 @@
 
 using System;
 using LongoMatch.Common;
+using Newtonsoft.Json;
+using LongoMatch.Interfaces;
 
 namespace LongoMatch.Store
 {
@@ -25,21 +27,38 @@ namespace LongoMatch.Store
 	/// Player of a team
 	/// </summary>
 	[Serializable]
-	public class Player
+	public class Player: IIDObject
 	{
-		private byte[] photo;
 
 		#region Constructors
 		public Player()
 		{
+			ID = Guid.NewGuid ();
 		}
+		
 		#endregion
 
 		#region Properties
+		
+		public Guid ID {
+			get;
+			set;
+		}
+		
 		/// <summary>
 		/// My name
 		/// </summary>
 		public string Name {
+			get;
+			set;
+		}
+		
+		public string FirstName {
+			get;
+			set;
+		}
+		
+		public string NickName {
 			get;
 			set;
 		}
@@ -64,18 +83,8 @@ namespace LongoMatch.Store
 		/// My photo
 		/// </summary>
 		public Image Photo {
-			get {
-				if(photo != null)
-					return Image.Deserialize(photo);
-				else
-					return null;
-			}
-			set {
-				if(value != null)
-					photo = value.Serialize();
-				else
-					photo = null;
-			}
+			get;
+			set;
 		}
 
 		/// <summary>

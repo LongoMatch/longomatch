@@ -50,21 +50,21 @@ namespace Tests.Core
 			cat.TagHalfFieldPosition = true;
 			cat.FieldPositionIsDistance = true;
 			cat.HalfFieldPositionIsDistance = false;
-			cat.SubCategories = new System.Collections.Generic.List<LongoMatch.Interfaces.ISubCategory>();
-			cat.SubCategories.Add (new TagSubCategory {Name="TestSubcat"});
+			cat.SubCategories = new System.Collections.Generic.List<SubCategory>();
+			cat.SubCategories.Add (new SubCategory {Name="TestSubcat"});
 			
 			Utils.CheckSerialization (cat);
 			
 			stream = new MemoryStream ();
-			SerializableObject.Save (cat, stream, SerializationType.Json);
+			Serializer.Save (cat, stream, SerializationType.Json);
 			stream.Seek (0, SeekOrigin.Begin);
 			reader = new StreamReader (stream);
 			jsonString = reader.ReadToEnd();
 			Assert.False (jsonString.Contains ("SortMethodString"));
 			stream.Seek (0, SeekOrigin.Begin);
-			Category newcat = SerializableObject.Load<Category> (stream, SerializationType.Json);
+			Category newcat = Serializer.Load<Category> (stream, SerializationType.Json);
 			
-			Assert.AreEqual (cat.UUID, newcat.UUID);
+			Assert.AreEqual (cat.ID, newcat.ID);
 			Assert.AreEqual (cat.Name, newcat.Name);
 			Assert.AreEqual (cat.Position, newcat.Position);
 			Assert.AreEqual (cat.SortMethod, newcat.SortMethod);
@@ -81,6 +81,15 @@ namespace Tests.Core
 			Assert.AreEqual (0, newcat.Color.B);
 			Assert.AreEqual (newcat.SubCategories.Count, 1);
 			Assert.AreEqual (newcat.SubCategories[0].Name, "TestSubcat");
+		}
+		
+		[Test()]
+		public void TestNullList ()
+		{
+			Category cat = new Category();
+			Assert.AreNotEqual (cat.SubCategories, null);
+			Category newcat = Utils.SerializeDeserialize (cat);
+			Assert.AreNotEqual (newcat.SubCategories, null);
 		}
 		
 		public static void Main (string [] args)

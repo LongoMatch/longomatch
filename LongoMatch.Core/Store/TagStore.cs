@@ -27,83 +27,58 @@ using LongoMatch.Store;
 namespace LongoMatch.Store
 {
 	[Serializable]
-	[JsonObject (MemberSerialization = MemberSerialization.OptIn)]
-	public class TagsStore<T, W> where T:ITag<W>
+	public class TagsStore
 	{
-		protected List<T> tagsList;
-		
 		public TagsStore(){
-			tagsList = new List<T>();
+			Tags = new List<Tag>();
 		}
 		
-		[JsonProperty ("Tags")]
-		public List<T> Tags {
-			get{
-				return tagsList;
-			}
-			set {
-				tagsList = value;
-			}
+		public List<Tag> Tags {
+			get;
+			set;
 		}
 		
-		public void Add(T tag) {
+		public void Add(Tag tag) {
 			Log.Debug(String.Format("Adding tag {0} with subcategory{1}", tag, tag.SubCategory));
-			tagsList.Add(tag);
+			Tags.Add(tag);
 		}
 		
-		public void Remove(T tag) {
+		public void Remove(Tag tag) {
 			try {
-				tagsList.Remove (tag);
+				Tags.Remove (tag);
 			} catch (Exception e) {
 				Log.Warning("Error removing tag " + tag.ToString());
 				Log.Exception(e);
 			}
 		}
 		
-		public bool Contains(T tag) {
-			return tagsList.Contains(tag);
+		public bool Contains(Tag tag) {
+			return Tags.Contains(tag);
 		}
 		
-		public void RemoveBySubcategory(ISubCategory subcat) {
-			tagsList.RemoveAll(t => t.SubCategory == subcat);
+		public void RemoveBySubcategory(SubCategory subcat) {
+			Tags.RemoveAll(t => t.SubCategory == subcat);
 		}
 		
-		public List<T> AllUniqueElements {
+		[JsonIgnore]
+		public List<Tag> AllUniqueElements {
 			get {
-				return (from tag in tagsList
+				return (from tag in Tags
 				        group tag by tag into g
 				        select g.Key).ToList();
 			}
 		}
 		
-		public List<T> GetTags(ISubCategory subCategory) {
-			return (from tag in tagsList
+		public List<Tag> GetTags(SubCategory subCategory) {
+			return (from tag in Tags
 			        where tag.SubCategory.Equals(subCategory)
 			        select tag).ToList();
 		}
 		
-		public List<W> GetTagsValues() {
-			return (from tag in tagsList
+		public List<string> GetTagsValues() {
+			return (from tag in Tags
 			        select tag.Value).ToList();
 		}
 	}
-	
-	[Serializable]
-	public class StringTagStore: TagsStore<StringTag, string> {}
-	
-	[Serializable]
-	public class PlayersTagStore: TagsStore<PlayerTag, Player> {
-		
-		public void RemoveByPlayer(Player player) {
-			tagsList.RemoveAll(t => t.Value == player);
-		}
-		
-	}
-	
-	[Serializable]
-	public class TeamsTagStore: TagsStore<TeamTag, Team> {}
-	
-	[Serializable]
-	public class CoordinatesTagStore: TagsStore<CoordinatesTag, Coordinates> {}
 }
 

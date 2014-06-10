@@ -34,22 +34,27 @@ namespace LongoMatch.Store
 	/// </summary>
 
 	[Serializable]
-	public class  Play : PixbufTimeNode, ITimelineNode
+	public class  Play : PixbufTimeNode, ITimelineNode, IIDObject
 	{
 
 		#region Constructors
 		public Play() {
 			Drawings = new List<Drawing>();
-			Tags = new StringTagStore();
-			Players = new PlayersTagStore(); 
-			Teams = new TeamsTagStore();
+			Players = new List<Player> ();
+			Tags = new List<Tag>();
 			Fps = 25;
 			PlaybackRate = 1.0;
+			ID = Guid.NewGuid ();
 		}
 		#endregion
 
 		#region Properties
 
+		public Guid ID {
+			get;
+			set;
+		}
+		
 		/// <summary>
 		/// Category in which this play is tagged
 		/// </summary>
@@ -86,31 +91,6 @@ namespace LongoMatch.Store
 			}
 			set {
 				Start = new Time {MSeconds = (int)(1000 * value / Fps)};
-			}
-		}
-
-		/// <summary>
-		/// Stop frame number
-		/// </summary>
-		[JsonIgnore]
-		public uint StopFrame {
-			get {
-				return (uint)(Stop.MSeconds * Fps / 1000);
-			}
-			set {
-				Stop = new Time {MSeconds = (int)(1000 * value / Fps)};
-			}
-		}
-
-		/// <summary>
-		/// Get the key frame number if this play as key frame drawing or 0
-		/// </summary>
-		[JsonIgnore]
-		public uint KeyFrame {
-			get {
-				if(HasDrawings)
-					return (uint) KeyFrameDrawing.RenderTime * Fps / 1000;
-				else return 0;
 			}
 		}
 
@@ -156,24 +136,9 @@ namespace LongoMatch.Store
 			}
 		}
 
-		/// <summary>
-		/// Central frame number using (stopFrame-startFrame)/2
-		/// </summary>
-		[JsonIgnore]
-		public uint CentralFrame {
-			get {
-				return StopFrame-((TotalFrames)/2);
-			}
-		}
-
-		/// <summary>
-		/// Number of frames inside the play's boundaries
-		/// </summary>
-		[JsonIgnore]
-		public uint TotalFrames {
-			get {
-				return StopFrame-StartFrame;
-			}
+		public List<Player> Players {
+			get;
+			set;
 		}
 		
 		public Team Team {
@@ -181,24 +146,16 @@ namespace LongoMatch.Store
 			set;
 		}
 
-		public string GamePeriod {
+		public List<Tag> Tags {
 			get;
 			set;
 		}
 		
-		public StringTagStore Tags {
-			get;
-			set;
-		}
-		
-		public PlayersTagStore Players {
-			get;
-			set;
-		}
-		
-		public TeamsTagStore Teams {
-			get;
-			set;
+		[JsonIgnore]
+		public TagsStore TagsStore {
+			get {
+				return new TagsStore {Tags=Tags};
+			}
 		}
 		
 		public Coordinates FieldPosition {
@@ -224,19 +181,6 @@ namespace LongoMatch.Store
 		#endregion
 
 		#region Public methods
-		/// <summary>
-		/// Check if the frame number is inside the play boundaries
-		/// </summary>
-		/// <param name="frame">
-		/// A <see cref="System.Int32"/> with the frame number
-		/// </param>
-		/// <returns>
-		/// A <see cref="System.Boolean"/>
-		/// </returns>
-		public bool HasFrame(int frame) {
-			return (frame>=StartFrame && frame<StopFrame);
-		}
-		
 		public override string ToString()
 		{
 			return Name + "\n" + Start.ToMSecondsString() + " - " + Stop.ToMSecondsString();

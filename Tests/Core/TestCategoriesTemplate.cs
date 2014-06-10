@@ -35,26 +35,25 @@ namespace Tests.Core
 			Utils.CheckSerialization (cat);
 			
 			cat.Name = "test";
-			cat.Version = new Version (1, 2);
 			cat.GamePeriods = new List<string> ();
 			cat.GamePeriods.Add ("1");
 			cat.GamePeriods.Add ("2");
-			cat.Add ( new Category {Name = "cat1"});
-			cat.Add ( new Category {Name = "cat2"});
-			cat.Add ( new Category {Name = "cat3"});
+			cat.List.Add ( new Category {Name = "cat1"});
+			cat.List.Add ( new Category {Name = "cat2"});
+			cat.List.Add ( new Category {Name = "cat3"});
 			
 			Utils.CheckSerialization (cat);
 			
 			Categories newcat = Utils.SerializeDeserialize (cat);
+			Assert.AreEqual (cat.ID, newcat.ID);
 			Assert.AreEqual (cat.Name, newcat.Name);
-			Assert.AreEqual (cat.Version, newcat.Version);
 			Assert.AreEqual (cat.GamePeriods.Count, newcat.GamePeriods.Count);
 			Assert.AreEqual (cat.GamePeriods[0], newcat.GamePeriods[0]);
 			Assert.AreEqual (cat.GamePeriods[1], newcat.GamePeriods[1]);
-			Assert.AreEqual (cat.Count, newcat.Count);
-			Assert.AreEqual (cat[0].UUID, newcat[0].UUID);
-			Assert.AreEqual (cat[1].UUID, newcat[1].UUID);
-			Assert.AreEqual (cat[2].UUID, newcat[2].UUID);
+			Assert.AreEqual (cat.List.Count, newcat.List.Count);
+			Assert.AreEqual (cat.List[0].ID, newcat.List[0].ID);
+			Assert.AreEqual (cat.List[1].ID, newcat.List[1].ID);
+			Assert.AreEqual (cat.List[2].ID, newcat.List[2].ID);
 		}
 	}
 }

@@ -30,7 +30,6 @@
     <File subtype="Code" buildaction="Compile" name="Core/TestTimeNode.cs" />
     <File subtype="Code" buildaction="Compile" name="Core/TestCategoriesTemplate.cs" />
     <File subtype="Code" buildaction="Compile" name="Core/TestTeamTemplate.cs" />
-    <File subtype="Code" buildaction="Compile" name="Core/TestSubcategoriesTemplate.cs" />
     <File subtype="Directory" buildaction="Compile" name="Services" />
     <File subtype="Code" buildaction="Compile" name="Services/TestDatabase.cs" />
     <File subtype="Code" buildaction="Compile" name="Services/TestDatabasesManager.cs" />
@@ -46,15 +45,18 @@
     <File subtype="Code" buildaction="Compile" name="Core/Drawables/TestDrawable.cs" />
     <File subtype="Code" buildaction="Compile" name="Core/Drawables/TestCircle.cs" />
     <File subtype="Code" buildaction="Compile" name="Core/TestColor.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/TestTime.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/TestImage.cs" />
   </Contents>
   <References>
-    <ProjectReference type="Gac" localcopy="False" refto="nunit.core, Version=2.6.0.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
-    <ProjectReference type="Gac" localcopy="False" refto="nunit.framework, Version=2.6.0.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
-    <ProjectReference specificVersion="False" type="Gac" localcopy="False" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Package" localcopy="False" refto="nunit.core, Version=2.6.0.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+    <ProjectReference type="Package" localcopy="False" refto="nunit.framework, Version=2.6.0.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+    <ProjectReference type="Package" specificVersion="False" localcopy="False" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Project" localcopy="True" refto="LongoMatch.Core" />
-    <ProjectReference type="Gac" localcopy="False" refto="Newtonsoft.Json, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b9a188c8922137c6" />
-    <ProjectReference specificVersion="False" type="Gac" localcopy="False" refto="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <ProjectReference specificVersion="False" type="Gac" localcopy="False" refto="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Package" localcopy="False" refto="Newtonsoft.Json, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b9a188c8922137c6" />
+    <ProjectReference type="Package" specificVersion="False" localcopy="False" refto="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <ProjectReference type="Package" specificVersion="False" localcopy="False" refto="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Project" localcopy="True" refto="LongoMatch.Services" />
+    <ProjectReference type="Package" localcopy="False" refto="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </References>
 </Project>

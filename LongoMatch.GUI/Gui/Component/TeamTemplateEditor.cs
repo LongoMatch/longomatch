@@ -196,7 +196,7 @@ namespace LongoMatch.Gui.Component
 			foreach (Player p in selectedPlayers) {
 				string msg = Catalog.GetString ("Do you want to delete player: ") + p.Name;
 				if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
-					template.Remove (p);
+					template.List.Remove (p);
 					Edited = true;
 				}
 			}
@@ -226,7 +226,7 @@ namespace LongoMatch.Gui.Component
 
 		void HandleNewPlayerClicked (object sender, EventArgs e)
 		{
-			Player p = template.AddDefaultItem (template.Count);
+			Player p = template.AddDefaultItem (template.List.Count);
 			teamtagger.Reload ();
 			teamtagger.Select (p);
 			Edited = true;

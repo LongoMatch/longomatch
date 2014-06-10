@@ -79,13 +79,13 @@ namespace LongoMatch.Gui.Component
 				return;
 
 			buttonsDic.Clear();
-			int sectionsCount = categories.Count;
+			int sectionsCount = categories.List.Count;
 			
 			table1.NColumns =(uint) N_COLUMNS;
 			table1.NRows =(uint)(sectionsCount/N_COLUMNS);
 			
 			for(int i=0; i<sectionsCount; i++) {
-				Category cat = categories[i];
+				Category cat = categories.List[i];
 				ButtonTagger b = new ButtonTagger (cat);
 					b.NewTag += (category) => {
 					Config.EventsBroker.EmitNewTag (category);

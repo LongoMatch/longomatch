@@ -66,7 +66,7 @@ namespace LongoMatch.Gui.Component.Stats
 			TreeIter teamIter;
 			
 			teamIter = store.AppendValues (tpl.TeamName, null);
-			foreach (Player p in tpl) {
+			foreach (Player p in tpl.List) {
 				store.AppendValues (teamIter, p.Name, p);
 				filter.FilterPlayer (p);
 			}

@@ -19,7 +19,6 @@
     <File subtype="Code" buildaction="Compile" name="Common/Constants.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Enums.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Log.cs" />
-    <File subtype="Code" buildaction="Compile" name="Common/SerializableObject.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Category.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Drawing.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/HotKey.cs" />
@@ -35,10 +34,7 @@
     <File subtype="Code" buildaction="Compile" name="Store/Time.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/TimeNode.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Templates/CategoriesTemplate.cs" />
-    <File subtype="Code" buildaction="Compile" name="Store/Templates/SubCategoryTemplate.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Templates/TeamTemplate.cs" />
-    <File subtype="Code" buildaction="Compile" name="Interfaces/ISubCategory.cs" />
-    <File subtype="Code" buildaction="Compile" name="Interfaces/ITag.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/ITemplates.cs" />
     <File subtype="Directory" buildaction="Compile" name="." />
     <File subtype="Directory" buildaction="Compile" name="Common" />
@@ -66,8 +62,6 @@
     <File subtype="Code" buildaction="Compile" name="Config.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/ITemplatesService.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/IDatabase.cs" />
-    <File subtype="Code" buildaction="Compile" name="Store/GameUnit.cs" />
-    <File subtype="Code" buildaction="Compile" name="Store/GameUnitsList.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/TimelineNode.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/ITimelineNode.cs" />
     <File subtype="Directory" buildaction="Compile" name="Interfaces/GUI" />
@@ -96,8 +90,6 @@
     <File subtype="Code" buildaction="Compile" name="Stats/Stat.cs" />
     <File subtype="Code" buildaction="Compile" name="Stats/SubCategoryStat.cs" />
     <File subtype="Code" buildaction="Compile" name="Stats/PlayersStats.cs" />
-    <File subtype="Code" buildaction="Compile" name="Stats/GameUnitStats.cs" />
-    <File subtype="Code" buildaction="Compile" name="Stats/GameUnitsStats.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/PlaysFilter.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/Multimedia/IRemuxer.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/Multimedia/IVideoConverter.cs" />
@@ -139,6 +131,11 @@
     <File subtype="Code" buildaction="Compile" name="Store/Timer.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Period.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/EventsBroker.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Store" />
+    <File subtype="Directory" buildaction="Compile" name="Store" />
+    <File subtype="Directory" buildaction="Compile" name="Store" />
+    <File subtype="Code" buildaction="Compile" name="Common/Serializer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/IIDObject.cs" />
   </Contents>
   <References>
     <ProjectReference type="Package" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

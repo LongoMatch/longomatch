@@ -61,7 +61,7 @@ namespace LongoMatch.Drawing.Widgets
 			widget.Width = Common.CATEGORY_WIDTH;
 			
 			/* Start from bottom to top  with categories */
-			foreach (Category cat in project.Categories) {
+			foreach (Category cat in project.Categories.List) {
 				CategoryLabel l;
 				
 				/* Add the category label */

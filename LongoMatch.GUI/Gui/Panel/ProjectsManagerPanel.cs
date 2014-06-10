@@ -147,7 +147,7 @@ namespace LongoMatch.Gui.Panel
 			
 			selectedProjects = projects;
 			if (projects.Count == 1) {
-				LoadProject (DB.GetProject (projects[0].UUID));
+				LoadProject (DB.GetProject (projects[0].ID));
 			}
 		}
 		
@@ -165,7 +165,7 @@ namespace LongoMatch.Gui.Panel
 					Catalog.GetString("Export project"),
 					null, Config.HomeDir, Constants.PROJECT_NAME,
 					new string[] {Constants.PROJECT_EXT});
-				SerializableObject.Save(loadedProject, filename);
+				Serializer.Save(loadedProject, filename);
 			}			
 		}
 
@@ -199,7 +199,7 @@ namespace LongoMatch.Gui.Panel
 				}
 				string msg = Catalog.GetString ("Do you really want to delete:") + "\n" + selectedProject.Title;
 				if (MessagesHelpers.QuestionMessage (this, msg)) {
-					DB.RemoveProject (selectedProject.UUID);
+					DB.RemoveProject (selectedProject.ID);
 					deletedProjects.Add (selectedProject);
 				}
 			}

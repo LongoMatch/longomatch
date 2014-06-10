@@ -58,36 +58,36 @@ namespace Tests.Core
 			Project newp = Utils.SerializeDeserialize (p);
 			Assert.AreEqual (newp.CompareTo (p), 0);
 			Assert.AreEqual (newp.Description.CompareTo (p.Description), 0);
-			Assert.AreEqual (newp.AllPlays().Count, p.AllPlays().Count);
+			Assert.AreEqual (newp.Timeline.Count, p.Timeline.Count);
 		}
 		
 		[Test ()]
 		public void TestPlaysGrouping () {
 			Project p = CreateProject ();
-			p.AddPlay (p.Categories[0], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories[0], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories[1], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories[2], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories[2], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories[2], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories[6], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Categories.List[0], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Categories.List[0], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Categories.List[1], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Categories.List[2], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Categories.List[2], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Categories.List[2], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Categories.List[6], new Time (1000), new Time (2000), null);
 			
 			IEnumerable<IGrouping<Category, Play>> g = p.PlaysGroupedByCategory;
 			Assert.AreEqual (g.Count(), 4);
 			IGrouping<Category, Play> gr = g.ElementAt (0);
-			Assert.AreEqual (gr.Key, p.Categories[0]);
+			Assert.AreEqual (gr.Key, p.Categories.List[0]);
 			Assert.AreEqual (gr.Count(), 2);
 			
 			gr = g.ElementAt (1);
-			Assert.AreEqual (gr.Key, p.Categories[1]);
+			Assert.AreEqual (gr.Key, p.Categories.List[1]);
 			Assert.AreEqual (gr.Count(), 1);
 			
 			gr = g.ElementAt (2);
-			Assert.AreEqual (gr.Key, p.Categories[2]);
+			Assert.AreEqual (gr.Key, p.Categories.List[2]);
 			Assert.AreEqual (gr.Count(), 3);
 			
 			gr = g.ElementAt (3);
-			Assert.AreEqual (gr.Key, p.Categories[6]);
+			Assert.AreEqual (gr.Key, p.Categories.List[6]);
 			Assert.AreEqual (gr.Count(), 1);
 		}
 		
@@ -99,14 +99,14 @@ namespace Tests.Core
 		[Test ()]
 		public void TestAddPlay () {
 			Project p = CreateProject ();
-			p.AddPlay (p.Categories[0], new Time (1000), new Time (2000), null);
-			Assert.AreEqual (p.AllPlays().Count, 1);
-			p.AddPlay (p.Categories[0], new Time (1000), new Time (2000), null);
-			Assert.AreEqual (p.AllPlays().Count, 2);
+			p.AddPlay (p.Categories.List[0], new Time (1000), new Time (2000), null);
+			Assert.AreEqual (p.Timeline.Count, 1);
+			p.AddPlay (p.Categories.List[0], new Time (1000), new Time (2000), null);
+			Assert.AreEqual (p.Timeline.Count, 2);
 			p.AddPlay (new Play());
-			Assert.AreEqual (p.AllPlays().Count, 3);
+			Assert.AreEqual (p.Timeline.Count, 3);
 			p.AddPlay (new Play());
-			Assert.AreEqual (p.AllPlays().Count, 4);
+			Assert.AreEqual (p.Timeline.Count, 4);
 		}
 		
 		[Test ()]
@@ -124,44 +124,43 @@ namespace Tests.Core
 			plays.Add(p1);
 			plays.Add(p2);
 			p.RemovePlays (plays);
-			Assert.AreEqual (p.AllPlays().Count, 1);
-			Assert.AreEqual (p.AllPlays()[0], p3);
+			Assert.AreEqual (p.Timeline.Count, 1);
+			Assert.AreEqual (p.Timeline[0], p3);
 		}
 
 		[Test ()] 
 		public void TestRemoveCategory () {
 			Project p = CreateProject ();
-			p.AddPlay (p.Categories[0], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories[0], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories[0], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories[2], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories[3], new Time (1000), new Time (2000), null);
-			p.RemoveCategory(p.Categories[0]);
-			Assert.AreEqual(p.AllPlays().Count, 2);
-			Assert.AreEqual(p.Categories.Count, 9);
-			p.RemoveCategory(p.Categories[0]);
-			p.RemoveCategory(p.Categories[0]);
-			p.RemoveCategory(p.Categories[0]);
-			p.RemoveCategory(p.Categories[0]);
-			p.RemoveCategory(p.Categories[0]);
-			p.RemoveCategory(p.Categories[0]);
-			p.RemoveCategory(p.Categories[0]);
-			p.RemoveCategory(p.Categories[0]);
+			p.AddPlay (p.Categories.List[0], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Categories.List[0], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Categories.List[0], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Categories.List[2], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Categories.List[3], new Time (1000), new Time (2000), null);
+			p.RemoveCategory(p.Categories.List[0]);
+			Assert.AreEqual(p.Timeline.Count, 2);
+			Assert.AreEqual(p.Categories.List.Count, 9);
+			p.RemoveCategory(p.Categories.List[0]);
+			p.RemoveCategory(p.Categories.List[0]);
+			p.RemoveCategory(p.Categories.List[0]);
+			p.RemoveCategory(p.Categories.List[0]);
+			p.RemoveCategory(p.Categories.List[0]);
+			p.RemoveCategory(p.Categories.List[0]);
+			p.RemoveCategory(p.Categories.List[0]);
+			p.RemoveCategory(p.Categories.List[0]);
 			Assert.Throws<Exception>(
-				delegate {p.RemoveCategory(p.Categories[0]);});
+				delegate {p.RemoveCategory(p.Categories.List[0]);});
 		}
 		
 		[Test ()] 
 		public void TestRemovePlayer () {
 			Play play = new Play();
 			Project project = CreateProject ();
-			Player player = project.LocalTeamTemplate[0];
-			PlayerTag tag = new PlayerTag {Value=player};
-			play.Players.Add (tag);
+			Player player = project.LocalTeamTemplate.List[0];
+			play.Players.Add (player);
 			project.AddPlay (play);
 			project.RemovePlayer (project.LocalTeamTemplate, player);
-			Assert.AreEqual (project.LocalTeamTemplate.Count, 9);
-			Assert.IsFalse (play.Players.Contains (tag));
+			Assert.AreEqual (project.LocalTeamTemplate.List.Count, 9);
+			Assert.IsFalse (play.Players.Contains (player));
 		}
 		
 		[Test ()] 
@@ -172,15 +171,15 @@ namespace Tests.Core
 		[Test ()] 
 		public void TestPlaysInCategory () {
 			Project p = CreateProject ();
-			p.AddPlay (p.Categories[0], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories[0], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories[0], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories[2], new Time (1000), new Time (2000), null);
-			p.AddPlay (p.Categories[3], new Time (1000), new Time (2000), null);
-			Assert.AreEqual (p.PlaysInCategory (p.Categories[0]).Count, 3);
-			Assert.AreEqual (p.PlaysInCategory (p.Categories[1]).Count, 0);
-			Assert.AreEqual (p.PlaysInCategory (p.Categories[2]).Count, 1);
-			Assert.AreEqual (p.PlaysInCategory (p.Categories[3]).Count, 1);
+			p.AddPlay (p.Categories.List[0], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Categories.List[0], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Categories.List[0], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Categories.List[2], new Time (1000), new Time (2000), null);
+			p.AddPlay (p.Categories.List[3], new Time (1000), new Time (2000), null);
+			Assert.AreEqual (p.PlaysInCategory (p.Categories.List[0]).Count, 3);
+			Assert.AreEqual (p.PlaysInCategory (p.Categories.List[1]).Count, 0);
+			Assert.AreEqual (p.PlaysInCategory (p.Categories.List[2]).Count, 1);
+			Assert.AreEqual (p.PlaysInCategory (p.Categories.List[3]).Count, 1);
 		}
 
 		[Test ()] 

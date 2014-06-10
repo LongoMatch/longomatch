@@ -76,7 +76,7 @@ namespace LongoMatch.Plugins
 		}
 		
 		public void Export() {
-			foreach (Category cat in project.Categories) {
+			foreach (Category cat in project.Categories.List) {
 				ExportCategory (cat);
 			}
 			File.WriteAllLines(filename, output);
@@ -91,24 +91,14 @@ namespace LongoMatch.Plugins
 			
 			/* Write Headers for this category */
 			headers = "Name;Start;Stop;Team";
-			foreach (ISubCategory subcat in cat.SubCategories) {
-				TagSubCategory ts = subcat as TagSubCategory;
-				if (ts == null)
+			foreach (SubCategory subcat in cat.SubCategories) {
+				if (subcat == null)
 					continue;
 					
-				foreach (string desc in ts.ElementsDesc()) {
-					headers += String.Format (";{0}:{1}", ts.Name, desc);
+				foreach (string desc in subcat.Options) {
+					headers += String.Format (";{0}:{1}", subcat.Name, desc);
 				}
 			}
-			
-			/* Players subcategories */
-			foreach (ISubCategory subcat in cat.SubCategories) {
-				PlayerSubCategory ps = subcat as PlayerSubCategory;
-				if (ps == null)
-					continue;
-				headers += ";" + ps.Name;
-			}
-			output.Add (headers);
 			
 			foreach (Play play in plays.OrderBy(p=>p.Start)) {
 				string line;
@@ -119,28 +109,16 @@ namespace LongoMatch.Plugins
 				                         play.Team);
 				
 				/* Strings Tags */
-				foreach (ISubCategory subcat in cat.SubCategories) {
-					TagSubCategory ts = subcat as TagSubCategory;
-					if (ts == null)
+				foreach (SubCategory subcat in cat.SubCategories) {
+					if (subcat == null)
 						continue;
 					
-					foreach (string desc in ts.ElementsDesc()) {
-						StringTag t = new StringTag{SubCategory=subcat, Value = desc};
+					foreach (string desc in subcat.Options) {
+						Tag t = new Tag{SubCategory=subcat, Value = desc};
 						line += ";" + (play.Tags.Contains(t) ? "1" : "0");
 					}
 				}
 				
-				/* Player Tags */
-				foreach (ISubCategory subcat in cat.SubCategories) {
-					PlayerSubCategory ps = subcat as PlayerSubCategory;
-					if (ps == null)
-						continue;
-					
-					line += ";";
-					foreach (PlayerTag p in play.Players.GetTags (ps)) {
-						line += p.Value.Name + " ";
-					}
-				}
 				output.Add (line);
 			}
 			output.Add("");

@@ -156,7 +156,7 @@ namespace LongoMatch.Services {
 
 			/* Create all the thumbnails */
 			capturer.Open(project.Description.File.FilePath);
-			foreach(Play play in project.AllPlays()) {
+			foreach(Play play in project.Timeline) {
 				try {
 					capturer.Seek (play.Start + ((play.Stop - play.Start) / 2),
 					                  true);

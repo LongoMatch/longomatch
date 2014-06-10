@@ -40,13 +40,8 @@ namespace LongoMatch.Store.Templates
 	/// The <see cref="LongoMatch.DB.Project"/> must handle all the changes
 	/// </summary>
 	[Serializable]
-	[JsonObject]
-	public class Categories: List<Category>, ITemplate, ITemplate<Category>
+	public class Categories: ITemplate, ITemplate<Category>
 	{
-		/* Database additions */
-		GameUnitsList gameUnits;
-		Version version;
-		byte[] fieldImage, halfFieldImage, goalImage ;
 
 		/// <summary>
 		/// Creates a new template
@@ -55,28 +50,23 @@ namespace LongoMatch.Store.Templates
 			FieldBackground = Config.FieldBackground;
 			HalfFieldBackground = Config.HalfFieldBackground;
 			GoalBackground = Config.GoalBackground;
+			ID = Guid.NewGuid ();
+			List = new List<Category>();
+		}
+		
+		public Guid ID {
+			get;
+			set;
+		}
+		
+		public List<Category> List {
+			get;
+			set;
 		}
 
 		public string Name {
 			get;
 			set;
-		}
-		
-		public Version Version {
-			get;
-			set;
-		}
-		
-		public GameUnitsList GameUnits {
-			set {
-				gameUnits = value;
-			}
-			get {
-				if (gameUnits == null) {
-					gameUnits = new GameUnitsList();
-				}
-				return gameUnits;
-			}
 		}
 		
 		public List<string> GamePeriods {
@@ -89,90 +79,40 @@ namespace LongoMatch.Store.Templates
 			set;
 		}
 		
-
-		
-		/* Keep this for backwards compatiblity with 0.18.11 */
-		[JsonIgnore]
-		public Image FieldBackgroundImage {get;	set;}
-		[JsonIgnore]
-		public Image HalfFieldBackgroundImage {get; set;}
-		[JsonIgnore]
-		public Image GoalBackgroundImage {get; set;}
-
 		public Image FieldBackground {
-			get {
-				if(fieldImage != null)
-					return Image.Deserialize(fieldImage);
-				else return null;
-			}
-			set {
-				if (value != null) {
-					if (value.Width > 500) {
-						value.Scale (500, 500);
-					}
-					fieldImage = value.Serialize();
-				}
-				else
-					fieldImage = null;
-			}
+			get;
+			set;
 		}
 		
 		public Image HalfFieldBackground {
-			get {
-				if(halfFieldImage != null)
-					return Image.Deserialize(halfFieldImage);
-				else return null;
-			}
-			set {
-				if (value != null) {
-					if (value.Width > 500) {
-						value.Scale (500, 500);
-					}
-					halfFieldImage = value.Serialize();
-				}
-				else
-					halfFieldImage = null;
-			}
+			get;
+			set;
 		}
 		
 		public Image GoalBackground {
-			get {
-				if(goalImage != null)
-					return Image.Deserialize(goalImage);
-				else return null;
-			}
-			set {
-				if (value != null) {
-					if (value.Width > 500) {
-						value.Scale (500, 500);
-					}
-					goalImage = value.Serialize();
-				}
-				else
-					goalImage = null;
-			}
+			get;
+			set;
 		}
 		
 		public void Save(string filePath) {
-			SerializableObject.Save(this, filePath);
+			Serializer.Save(this, filePath);
 		}
 	
 		public void AddDefaultSubcategories (Category cat) {
-			TagSubCategory resultsubcat;
+			SubCategory resultsubcat;
 			
-			resultsubcat = new TagSubCategory {
+			resultsubcat = new SubCategory {
 				Name = Catalog.GetString ("Outcome"),
 				AllowMultiple = false,
 			};
-			resultsubcat.Add (Catalog.GetString ("Success"));
-			resultsubcat.Add (Catalog.GetString ("Failure"));
+			resultsubcat.Options.Add (Catalog.GetString ("Success"));
+			resultsubcat.Options.Add (Catalog.GetString ("Failure"));
 			cat.SubCategories.Add(resultsubcat);
 		}	
 		
 		public Category AddDefaultItem (int index) {
 			Color c = Color.Red;
 			HotKey h = new HotKey();
-			
 			
 			Category cat =  new Category {
 				Name = "Category " + index,
@@ -184,12 +124,12 @@ namespace LongoMatch.Store.Templates
 				Position = index-1,
 			};
 			AddDefaultSubcategories(cat);
-			Insert(index, cat);
+			List.Insert(index, cat);
 			return cat;
 		}
 
 		public static Categories Load(string filePath) {
-			Categories cat = SerializableObject.LoadSafe<Categories>(filePath);
+			Categories cat = Serializer.LoadSafe<Categories>(filePath);
 			if (cat.GamePeriods == null) {
 				cat.GamePeriods = new List<string>();
 				cat.GamePeriods.Add ("1");
@@ -206,7 +146,6 @@ namespace LongoMatch.Store.Templates
 			periods.Add ("1");
 			periods.Add ("2");
 			defaultTemplate.GamePeriods = periods; 
-			defaultTemplate.Version = new Version (Constants.DB_MAYOR_VERSION, Constants.DB_MINOR_VERSION);
 			return defaultTemplate;
 		}
 

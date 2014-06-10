@@ -30,9 +30,9 @@ namespace LongoMatch.Common
 			
 			Stream s = new MemoryStream();
 			using (s) {
-				SerializableObject.Save<T>(source, s, SerializationType.Binary);
+				Serializer.Save<T>(source, s, SerializationType.Binary);
 				s.Seek(0, SeekOrigin.Begin);
-				return SerializableObject.Load<T>(s, SerializationType.Binary);
+				return Serializer.Load<T>(s, SerializationType.Binary);
 			}
 		}
 	}

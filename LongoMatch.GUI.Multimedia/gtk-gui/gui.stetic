@@ -6,7 +6,6 @@
   </configuration>
   <import>
     <widget-library name="../../bin/LongoMatch.Multimedia.dll" />
-    <widget-library name="../../bin/LongoMatch.dll" />
     <widget-library name="../../bin/LongoMatch.GUI.Helpers.dll" />
     <widget-library name="../../bin/LongoMatch.GUI.Multimedia.dll" internal="true" />
   </import>
@@ -103,6 +102,7 @@
                             <child>
                               <widget class="Gtk.DrawingArea" id="videodrawingarea">
                                 <property name="MemberName" />
+                                <property name="CanFocus">True</property>
                               </widget>
                             </child>
                           </widget>

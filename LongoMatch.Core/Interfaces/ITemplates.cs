@@ -22,13 +22,14 @@ using LongoMatch.Store.Templates;
 	
 namespace LongoMatch.Interfaces
 {
-	public interface ITemplate
+	public interface ITemplate: IIDObject
 	{
 		void Save (string filename);
 		string Name {get; set;}
 	}
 	
-	public interface ITemplate<T>: ITemplate, IList<T> {
+	public interface ITemplate<T>: ITemplate {
+		List<T> List {get;set;}
 		T AddDefaultItem (int index);
 	}
 	
@@ -50,19 +51,7 @@ namespace LongoMatch.Interfaces
 		void Update (ITemplate<U> template);
 	}
 	
-	public interface ITemplateWidget<T, U> where T: ITemplate<U>
-	{
-		T Template {get; set;}
-		bool Edited {get; set;}
-		bool CanExport {get; set;}
-		Project Project {get; set;}
-	}
-	
 	public interface ICategoriesTemplatesProvider: ITemplateProvider<Categories, Category> {}
 	public interface ITeamTemplatesProvider: ITemplateProvider<TeamTemplate, Player> {}
-	public interface ISubcategoriesTemplatesProvider: ITemplateProvider<SubCategoryTemplate, string> {} 
-	
-	public interface ICategoriesTemplatesEditor: ITemplateWidget<Categories, Category> {}
-	public interface ITeamTemplatesEditor: ITemplateWidget<TeamTemplate, Player> {}
 }
 

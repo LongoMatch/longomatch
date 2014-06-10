@@ -21,11 +21,13 @@ using System.Collections.Generic;
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
 using LongoMatch.Store;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Store.Templates
 {
 
 	[Serializable]
+	[JsonObject]
 	public class SubCategoryTemplate: TagSubCategory, ITemplate<string>
 	{
 

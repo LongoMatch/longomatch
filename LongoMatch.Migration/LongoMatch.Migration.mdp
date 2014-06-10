@@ -1,0 +1,89 @@
+<Project name="LongoMatch.Migration" fileversion="2.0" DefaultNamespace="LongoMatch.Migration" language="C#" targetFramework="4.0" ctype="DotNetProject">
+  <Configurations active="Release">
+    <Configuration name="Debug" ctype="DotNetProjectConfiguration">
+      <Output directory="bin/Debug" assembly="LongoMatch" />
+      <Build debugmode="True" target="WinExe" />
+      <Execution consolepause="False" runwithwarnings="True" runtime="MsNet" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" definesymbols="DEBUG;HAVE_GTK" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+    <Configuration name="Release" ctype="DotNetProjectConfiguration">
+      <Output directory="bin/Release" assembly="LongoMatch" />
+      <Build debugmode="True" target="WinExe" />
+      <Execution consolepause="False" runwithwarnings="True" runtime="MsNet" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" definesymbols="HAVE_GTK" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+  </Configurations>
+  <Contents>
+    <File subtype="Code" buildaction="EmbedAsResource" name="gtk-gui/gui.stetic" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/generated.cs" />
+    <File subtype="Code" buildaction="Compile" name="MainWindow.cs" />
+    <File subtype="Code" buildaction="Compile" name="gtk-gui/MainWindow.cs" />
+    <File subtype="Code" buildaction="Compile" name="Program.cs" />
+    <File subtype="Code" buildaction="Compile" name="Properties/AssemblyInfo.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Core" />
+    <File subtype="Code" buildaction="Compile" name="Core/Category.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/Player.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/ProjectDescription.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/Timer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/MediaFile.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/Project.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/Period.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/TimelineNode.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/GameUnit.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/Drawing.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/Point.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/Coordinates.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/Time.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/TimeNode.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/PixbufTimeNode.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/TagStore.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/SubCategory.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/Play.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/HotKey.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/PlayListPlay.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/Tag.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/GameUnitsList.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Core/Templates" />
+    <File subtype="Code" buildaction="Compile" name="Core/Templates/TeamTemplate.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/Templates/CategoriesTemplate.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Core/Interfaces" />
+    <File subtype="Code" buildaction="Compile" name="Core/Interfaces/ITemplates.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/Interfaces/ISubCategory.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/Interfaces/ITag.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Common" />
+    <File subtype="Code" buildaction="Compile" name="Common/Color.cs" />
+    <File subtype="Code" buildaction="Compile" name="Common/Image.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/Interfaces/ITimelineNode.cs" />
+    <File subtype="Code" buildaction="Compile" name="Common/Enums.cs" />
+    <File subtype="Code" buildaction="Compile" name="Common/Log.cs" />
+    <File subtype="Code" buildaction="Compile" name="Common/Constants.cs" />
+    <File subtype="Code" buildaction="Compile" name="Common/SerializableObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="Common/ConsoleCrayon.cs" />
+    <File subtype="Code" buildaction="Compile" name="Common/Config.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Tests" />
+    <File subtype="Code" buildaction="Compile" name="Tests/CateogiresTest.cs" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="Data/default.lct" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="Data/default.ltt" />
+    <File subtype="Code" buildaction="Compile" name="Core/Templates/SubCategoryTemplate.cs" />
+    <File subtype="Code" buildaction="Compile" name="Tests/TestTeam.cs" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="Data/project.lgm" />
+    <File subtype="Code" buildaction="Compile" name="Converter.cs" />
+    <File subtype="Code" buildaction="Compile" name="Tests/TestProject.cs" />
+    <File subtype="Code" buildaction="Compile" name="DataBase.cs" />
+  </Contents>
+  <References>
+    <ProjectReference type="Package" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Package" specificVersion="False" localcopy="True" refto="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Package" specificVersion="False" localcopy="True" refto="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Package" specificVersion="False" localcopy="True" refto="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Package" specificVersion="False" localcopy="True" refto="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Package" specificVersion="False" localcopy="True" refto="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Package" localcopy="True" refto="Mono.Posix, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+    <ProjectReference type="Package" localcopy="False" refto="Newtonsoft.Json, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b9a188c8922137c6" />
+    <ProjectReference type="Package" specificVersion="False" localcopy="False" refto="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Package" specificVersion="False" localcopy="False" refto="System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Package" localcopy="False" refto="Db4objects.Db4o, Version=8.0.184.15484, Culture=neutral, PublicKeyToken=6199cd4f203aa8eb" />
+    <ProjectReference type="Package" specificVersion="False" localcopy="False" refto="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <ProjectReference type="Package" localcopy="False" refto="nunit.framework, Version=2.6.0.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+  </References>
+</Project>

@@ -37,7 +37,6 @@ namespace LongoMatch
 		public static IDrawingToolkit DrawingToolkit;
 		public static ITeamTemplatesProvider TeamTemplatesProvider;
 		public static ICategoriesTemplatesProvider CategoriesTemplatesProvider;
-		public static ISubcategoriesTemplatesProvider SubcategoriesTemplatesProvider;
 		public static EventsBroker EventsBroker;
 
 		public static IDataBaseManager DatabaseManager;
@@ -49,7 +48,7 @@ namespace LongoMatch
 			if (File.Exists(Config.ConfigFile)) {
 				Log.Information ("Loading config from " + Config.ConfigFile);
 				try {
-					state = SerializableObject.LoadSafe<ConfigState>(Config.ConfigFile);
+					state = Serializer.LoadSafe<ConfigState>(Config.ConfigFile);
 				} catch (Exception ex) {
 					Log.Error ("Error loading config");
 					Log.Exception (ex);
@@ -65,7 +64,7 @@ namespace LongoMatch
 		
 		public static void Save () {
 			try {
-				SerializableObject.Save(state, Config.ConfigFile); 
+				Serializer.Save(state, Config.ConfigFile); 
 			} catch (Exception ex) {
 				Log.Error ("Errro saving config");
 				Log.Exception (ex);
@@ -152,7 +151,19 @@ namespace LongoMatch
 
 		public static string DBDir {
 			get {
-				return Path.Combine(configDirectory, "db");
+				return Path.Combine(homeDirectory, "db");
+			}
+		}
+
+		public static string AnalysisDir {
+			get {
+				return Path.Combine(DBDir, "analysis");
+			}
+			
+		}
+		public static string TeamsDir {
+			get {
+				return Path.Combine(DBDir, "teams");
 			}
 		}
 		

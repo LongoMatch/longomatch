@@ -27,31 +27,24 @@ namespace LongoMatch.Store
 {
 
 	[Serializable]
-	public class Tag<T>: ITag<T>
+	public class Tag
 	{
 		public Tag() {
 		}
 		
-		public ISubCategory SubCategory {
+		public SubCategory SubCategory {
 			set;
 			get;
 		}
 		
-		public T Value {
+		public string Value {
 			get;
 			set;
 		}
 		
-	}
-
-	[Serializable]
-	public class StringTag: Tag<string>
-	{
-		public StringTag() {}
-		
 		public override bool Equals (object obj)
 		{
-			StringTag tag = obj as StringTag;
+			Tag tag = obj as Tag;
             if (tag == null)
 				return false;
 			return Value.Equals (tag.Value) && SubCategory.Equals(tag.SubCategory);
@@ -59,64 +52,11 @@ namespace LongoMatch.Store
 		
 		public override int GetHashCode ()
 		{
-			return Value.GetHashCode ();
-		}
-	}
-
-	[Serializable]
-	public class PlayerTag: Tag<Player>
-	{
-		public PlayerTag() {}
-		
-		public override bool Equals (object obj)
-		{
-			PlayerTag tag = obj as PlayerTag;
-            if (tag == null)
-				return false;
-			return Value.Equals (tag.Value) && SubCategory.Equals(tag.SubCategory) ;
-		}
-		
-		public override int GetHashCode ()
-		{
-			return Value.GetHashCode ();
-		}
-	}
-
-	[Serializable]
-	public class TeamTag: Tag<Team>
-	{
-		public TeamTag() {}
-		
-		public override bool Equals (object obj)
-		{
-			TeamTag tag = obj as TeamTag;
-            if (tag == null)
-				return false;
-			return Value.Equals (tag.Value) && SubCategory.Equals(tag.SubCategory);
-		}
-		
-		public override int GetHashCode ()
-		{
-			return Value.GetHashCode ();
-		}
-	}
-	
-	[Serializable]
-	public class CoordinatesTag: Tag<Coordinates>
-	{
-		public CoordinatesTag() {}
-		
-		public override bool Equals (object obj)
-		{
-			CoordinatesTag tag = obj as CoordinatesTag;
-            if (tag == null)
-				return false;
-			return Value.Equals (tag.Value) && SubCategory.Equals(tag.SubCategory);
-		}
-		
-		public override int GetHashCode ()
-		{
-			return Value.GetHashCode ();
+			if (Value != null) {
+				return Value.GetHashCode ();
+			} else {
+				return base.GetHashCode ();
+			}
 		}
 	}
 }

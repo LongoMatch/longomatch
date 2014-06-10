@@ -47,17 +47,15 @@ namespace LongoMatch.Gui.Component
 		protected override void FillTree () {
 			store = new TreeStore (typeof (object), typeof (bool));
 			
-			foreach (Category cat in  categories) {
+			foreach (Category cat in  categories.List) {
 				TreeIter catIter;
 				
 				catIter = store.AppendValues(cat, filter.VisibleCategories.Contains(cat));
 				foreach (var subcat in cat.SubCategories) {
 					TreeIter subcatIter;
-					if (subcat is TagSubCategory) {
-						subcatIter = store.AppendValues(catIter, subcat, true);
-						foreach (string desc in subcat.ElementsDesc()) {
-							store.AppendValues(subcatIter, new StringObject{Value=desc, SubCategory=subcat, Category=cat}, true);
-						}
+					subcatIter = store.AppendValues(catIter, subcat, true);
+					foreach (string desc in subcat.Options) {
+						store.AppendValues(subcatIter, new StringObject{Value=desc, SubCategory=subcat, Category=cat}, true);
 					}
 				}
 			}
@@ -111,8 +109,8 @@ namespace LongoMatch.Gui.Component
 				Category cat = obj as Category;
 				text = cat.Name;
 			}
-			else if (obj is ISubCategory) {
-				ISubCategory subCat = obj as ISubCategory;
+			else if (obj is SubCategory) {
+				SubCategory subCat = obj as SubCategory;
 				text = subCat.Name;
 			}
 			else if (obj is StringObject){
@@ -136,7 +134,7 @@ namespace LongoMatch.Gui.Component
 	class StringObject
 	{
 		public string Value {get;set;}
-		public ISubCategory SubCategory {get;set;}
+		public SubCategory SubCategory {get;set;}
 		public Category Category {get;set;}
 	}
 }

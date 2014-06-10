@@ -18,11 +18,13 @@
 
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Common
 {
 	
 	[Serializable]
+	[JsonConverter (typeof (LongoMatchConverter))]
 	public class Point {
 
 		public Point (double x, double y) {

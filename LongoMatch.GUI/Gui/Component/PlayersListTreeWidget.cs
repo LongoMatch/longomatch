@@ -69,7 +69,7 @@ namespace LongoMatch.Gui.Component
 			Log.Debug("Updating teams models with template:" + template);
 			team = new TreeStore(typeof(object));
 
-			foreach(var player in template) {
+			foreach(var player in template.List) {
 				/* Add a root in the tree with the option name */
 				var iter = team.AppendValues(player);
 				playersDict.Add(player, iter);
@@ -77,9 +77,9 @@ namespace LongoMatch.Gui.Component
 			}
 			
 			foreach (var play in plays) {
-				foreach (var player in play.Players.AllUniqueElements) {
-					if (playersDict.ContainsKey(player.Value)) {
-						team.AppendValues(playersDict[player.Value], new object[1] {play});
+				foreach (var player in play.Players) {
+					if (playersDict.ContainsKey(player)) {
+						team.AppendValues(playersDict[player], new object[1] {play});
 						Log.Debug("Adding new play to player: " + player);
 					}
 				}

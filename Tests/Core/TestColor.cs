@@ -27,7 +27,7 @@ namespace Tests.Core
 		[Test()]
 		public void TestSerialization ()
 		{
-			Color c = new Color (1, 2, 3, 4);
+			Color c = new Color (255, 10, 255, 10);
 			
 			Utils.CheckSerialization (c);
 			Color c1 = Utils.SerializeDeserialize (c);

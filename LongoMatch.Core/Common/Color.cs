@@ -16,9 +16,11 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Common
 {
+	[JsonConverter (typeof (LongoMatchConverter))]
 	public class Color
 	{
 		public Color (byte r, byte g, byte b, byte a=byte.MaxValue)

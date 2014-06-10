@@ -43,8 +43,6 @@
     <File subtype="Code" buildaction="Compile" name="Gui/Component/PlaysListTreeWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/DrawingWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/DrawingTool.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Component/TaggerWidget.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/TaggerDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/EndCaptureDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/BusyDialog.cs" />
     <File subtype="Code" buildaction="EmbedAsResource" name="gtk-gui/gui.stetic" />
@@ -68,18 +66,10 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.EditCategoryDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.DrawingWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.TaggerWidget.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.TaggerDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.BusyDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/TreeView/ListTreeViewBase.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/TreeView/SubCategoriesTreeView.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Dialog/SubCategoryTagsEditor.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.SubCategoryTagsEditor.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Component/PlayersTaggerWidget.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlayersTaggerWidget.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Component/StringTaggerWidget.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.StringTaggerWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/RenderingStateBar.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.RenderingStateBar.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/TreeView/RenderingJobsTreeView.cs" />
@@ -96,20 +86,12 @@
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/stock_draw-rectangle-unfilled.png" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/video.png" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/camera-video.png" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Component/GameUnitsEditor.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.GameUnitsEditor.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Component/GameUnitWidget.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.GameUnitWidget.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Component/GameUnitsTagger.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.GameUnitsTagger.cs" />
     <File subtype="Directory" buildaction="Compile" name="Gui/Component" />
     <File subtype="Code" buildaction="Compile" name="Gui/GUIToolkit.cs" />
     <File subtype="Directory" buildaction="Compile" name="." />
     <File subtype="Directory" buildaction="Compile" name=".." />
     <File subtype="Directory" buildaction="Compile" name="Gui" />
     <File subtype="Code" buildaction="Compile" name="Gui/Cairo.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Component/PlayersTagger.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlayersTagger.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlaysSelectionWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/PlaysSelectionWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/TreeView/PlayersFilterTreeView.cs" />

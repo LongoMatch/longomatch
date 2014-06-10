@@ -38,13 +38,13 @@ namespace LongoMatch.Gui
 		private Menu menu;
 		private Gtk.Action edit;
 		private TreeIter selectedIter;
-		private ISubCategory selectedSubcat;
+		private SubCategory selectedSubcat;
 		
 		public SubCategoriesTreeView ()
 		{	
 			this.HeadersVisible = false;
 
-			ListStore ls = new ListStore(typeof(ISubCategory));
+			ListStore ls = new ListStore(typeof(SubCategory));
 			this.Model = ls;
 
 			TreeViewColumn subcatColumn = new Gtk.TreeViewColumn();
@@ -64,7 +64,7 @@ namespace LongoMatch.Gui
 
 		protected void OnRemove(object obj, EventArgs args) {
 			/* FIXME: Support multiselection for multideletion */
-			List<ISubCategory> l = new List<ISubCategory>();
+			List<SubCategory> l = new List<SubCategory>();
 				
 			if (this.SubCategoriesDeleted != null) {
 				l.Add(selectedSubcat);
@@ -75,7 +75,7 @@ namespace LongoMatch.Gui
 		
 		private void RenderSubcat(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
 		{
-			var subcat = (ISubCategory)model.GetValue(iter, 0);
+			var subcat = (SubCategory)model.GetValue(iter, 0);
 			(cell as Gtk.CellRendererText).Markup = GLib.Markup.EscapeText (subcat.ToMarkupString());
 		}
 		
@@ -121,8 +121,8 @@ namespace LongoMatch.Gui
 				GetPathAtPos((int)evnt.X,(int)evnt.Y,out path);
 				if(path!=null) {
 					Model.GetIter(out selectedIter,path);
-					selectedSubcat = (ISubCategory) Model.GetValue(selectedIter, 0);
-					edit.Sensitive = selectedSubcat is TagSubCategory;
+					selectedSubcat = (SubCategory) Model.GetValue(selectedIter, 0);
+					edit.Sensitive = selectedSubcat is SubCategory;
 					menu.Popup();
 				}
 			}

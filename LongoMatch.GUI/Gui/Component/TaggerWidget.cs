@@ -46,22 +46,13 @@ namespace LongoMatch.Gui.Component
 			SetPeriod(categories.GamePeriods);
 		}
 		
-		public void AddSubCategory(TagSubCategory subcat, StringTagStore tags){
-			if (subcat.Count == 0)
+		public void AddSubCategory(SubCategory subcat, TagsStore tags){
+			if (subcat.Options.Count == 0)
 				return;
 			StringTaggerWidget tagger = new StringTaggerWidget(subcat, tags);
 			table1.Attach(tagger,0, 1, table1.NRows-1, table1.NRows);
 			table1.NRows ++;
 			tagger.Show();
-		}
-		
-		public void AddTeamSubCategory(TeamSubCategory subcat, TeamsTagStore tags,
-		                               string localTeam, string visitorTeam){
-//			TeamTaggerWidget tagger = new TeamTaggerWidget(subcat, tags,
-//			                                               localTeam, visitorTeam);
-//			table1.Attach(tagger,0, 1, table1.NRows-1, table1.NRows);
-//			table1.NRows ++;
-//			tagger.Show();
 		}
 		
 		void SetTeams (Play play, string localTeam, string visitorTeam) {

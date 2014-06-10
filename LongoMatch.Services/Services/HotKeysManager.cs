@@ -60,7 +60,7 @@ namespace LongoMatch.Services
 			
 			dic.Clear();
 			ignoreKeys = false;
-			foreach(Category cat in project.Categories) {
+			foreach(Category cat in project.Categories.List) {
 				if(cat.HotKey.Defined &&
 				   !dic.ContainsKey(cat.HotKey))
 					dic.Add(cat.HotKey, cat);

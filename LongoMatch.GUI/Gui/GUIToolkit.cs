@@ -203,11 +203,6 @@ namespace LongoMatch.Gui
 		}
 		
 		public void TagPlay (Play play, Categories categories, TeamTemplate local, TeamTemplate visitor, bool showAllTags) {
-			TaggerDialog tg = new TaggerDialog(play, categories, local, visitor, showAllTags);
-			Log.Information ("Tag play");
-			tg.TransientFor = mainWindow as Gtk.Window;
-			tg.Run();
-			tg.Destroy();
 		}
 
 		public void DrawingTool (Image image, Play play, Time stopTime) {

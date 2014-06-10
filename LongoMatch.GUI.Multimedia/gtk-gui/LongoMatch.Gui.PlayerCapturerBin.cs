@@ -9,7 +9,7 @@ namespace LongoMatch.Gui
 		private global::LongoMatch.Gui.PlayerBin playerbin;
 		private global::LongoMatch.Gui.CapturerBin capturerbin;
 		private global::Gtk.Button backtolivebutton;
-		
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);

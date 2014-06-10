@@ -29,59 +29,26 @@ namespace Tests.Core
 	public class TestSubCategory
 	{
 		[Test()]
-		public void TestTagSubcategoryProps ()
-		{
-			string tag1="tag1", tag2="tag2";
-			List<string> elementsDesc;
-			TagSubCategory subcat = new TagSubCategory {Name="Test",
-				AllowMultiple = true, FastTag = true};
-				
-			subcat.Add (tag1);
-			subcat.Add (tag2);
-			elementsDesc = subcat.ElementsDesc ();
-			Assert.AreEqual (elementsDesc.Count, 2);
-			Assert.AreEqual (elementsDesc[0], tag1);
-			Assert.AreEqual (elementsDesc[1], tag2);
-		}
-		
-		
-		[Test()]
 		public void TestTagSubcategorySerialization ()
 		{
 			string tag1="tag1", tag2="tag2";
 			List<string> elementsDesc;
 			MemoryStream stream;
-			TagSubCategory subcat, newsubcat;
+			SubCategory subcat, newsubcat;
 			
-			subcat = new TagSubCategory {Name="Test",
-				AllowMultiple = true, FastTag = true};
-			subcat.Add (tag1);
-			subcat.Add (tag2);
+			subcat = new SubCategory {Name="Test",
+				AllowMultiple = true};
+			subcat.Options.Add (tag1);
+			subcat.Options.Add (tag2);
 			
 			Utils.CheckSerialization (subcat);
-			
-			stream = new MemoryStream ();
-			SerializableObject.Save (subcat, stream, SerializationType.Json);
-			stream.Seek (0, SeekOrigin.Begin);
-			var reader = new StreamReader (stream);
-			var jsonString = reader.ReadToEnd();
-			Console.WriteLine (jsonString);
-			/* Count property is removed */
-			Assert.False (jsonString.Contains ("Count"));
-			Assert.True (jsonString.Contains ("_items"));
-			Assert.True (jsonString.Contains ("_size"));
-			stream.Seek (0, SeekOrigin.Begin);
+			newsubcat = Utils.SerializeDeserialize (subcat);
 
-			newsubcat = SerializableObject.Load<TagSubCategory> (stream, SerializationType.Json);
-			
 			Assert.AreEqual (subcat.Name, newsubcat.Name);
 			Assert.AreEqual (subcat.AllowMultiple, newsubcat.AllowMultiple);
-			Assert.AreEqual (subcat.Count, newsubcat.Count);
-			Assert.AreEqual (subcat.FastTag, newsubcat.FastTag);
-			elementsDesc = newsubcat.ElementsDesc ();
-			Assert.AreEqual (elementsDesc.Count, 2);
-			Assert.AreEqual (elementsDesc[0], tag1);
-			Assert.AreEqual (elementsDesc[1], tag2);
+			Assert.AreEqual (subcat.Options.Count, newsubcat.Options.Count);
+			Assert.AreEqual (subcat.Options[0], newsubcat.Options[0]);
+			Assert.AreEqual (subcat.Options[1], newsubcat.Options[1]);
 		}
 	}
 }

@@ -29,12 +29,12 @@ namespace Tests.Core
 		public void TestSerialization ()
 		{
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
-			                              "aac", 320, 240, 1.3, new Image (null));
+			                              "aac", 320, 240, 1.3, null);
 			Utils.CheckSerialization (mf);
 			
 			MediaFile newmf = Utils.SerializeDeserialize (mf);
 			Assert.AreEqual (mf.FilePath, newmf.FilePath);
-			Assert.AreEqual (mf.Length, newmf.Length);
+			Assert.AreEqual (mf.Duration, newmf.Duration);
 			Assert.AreEqual (mf.Fps, newmf.Fps);
 			Assert.AreEqual (mf.HasAudio, newmf.HasAudio);
 			Assert.AreEqual (mf.HasVideo, newmf.HasVideo);
@@ -51,8 +51,7 @@ namespace Tests.Core
 		public void TestGetFrames ()
 		{
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
-			                              "aac", 320, 240, 1.3, new Image (null));
-			Assert.AreEqual (mf.GetFrames(), 850);
+			                              "aac", 320, 240, 1.3, null);
 		}
 	}
 }

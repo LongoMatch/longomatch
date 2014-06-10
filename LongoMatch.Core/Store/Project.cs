@@ -45,19 +45,14 @@ namespace LongoMatch.Store
 	/// </summary>
 	///
 	[Serializable]
-	public class Project : IComparable
+	public class Project : IComparable, IIDObject
 	{
-
-		[JsonProperty ("UUID")]
-		readonly Guid _UUID;
 		ProjectDescription description;
-		[JsonProperty ("Timeline")]
-		List<Play> timeline;
 
 		#region Constructors
 		public Project() {
-			_UUID = System.Guid.NewGuid();
-			timeline = new List<Play>();
+			ID = System.Guid.NewGuid();
+			Timeline = new List<Play>();
 			Categories = new Categories();
 			LocalTeamTemplate = new TeamTemplate();
 			VisitorTeamTemplate = new TeamTemplate();
@@ -71,11 +66,14 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// Unique ID for the project
 		/// </summary>
-		[JsonIgnore]
-		public Guid UUID {
-			get {
-				return _UUID;
-			}
+		public Guid ID {
+			get;
+			set;
+		}
+		
+		public List<Play> Timeline {
+			get;
+			set;
 		}
 		
 		public ProjectDescription Description {
@@ -84,7 +82,7 @@ namespace LongoMatch.Store
 			}
 			set {
 				if (value != null) {
-					value.UUID = UUID;
+					value.ID = ID;
 				}
 				description = value;
 			}
@@ -93,6 +91,7 @@ namespace LongoMatch.Store
 		/// <value>
 		/// Categories template
 		/// </value>
+		[JsonProperty(Order = -10)]
 		public Categories Categories {
 			get;
 			set;
@@ -101,6 +100,7 @@ namespace LongoMatch.Store
 		/// <value>
 		/// Local team template
 		/// </value>
+		[JsonProperty(Order = -9)]
 		public TeamTemplate LocalTeamTemplate {
 			get;
 			set;
@@ -109,6 +109,7 @@ namespace LongoMatch.Store
 		/// <value>
 		/// Visitor team template
 		/// </value>
+		[JsonProperty(Order = -8)]
 		public TeamTemplate VisitorTeamTemplate {
 			get;
 			set;
@@ -125,20 +126,9 @@ namespace LongoMatch.Store
 		}
 		
 		[JsonIgnore]
-		[Obsolete("Game units have been replaced with timers")]
-		public GameUnitsList  GameUnits {
-			set {
-				Categories.GameUnits = value;
-			}
-			get {
-				return Categories.GameUnits;
-			}
-		}
-		
-		[JsonIgnore]
 		public IEnumerable<IGrouping<Category, Play>> PlaysGroupedByCategory {
 			get {
-				return timeline.GroupBy(play => play.Category);
+				return Timeline.GroupBy(play => play.Category);
 			}
 		}
 		#endregion
@@ -148,10 +138,10 @@ namespace LongoMatch.Store
 		/// Frees all the project's resources helping the GC
 		/// </summary>
 		public void Clear() {
-			timeline.Clear();
-			Categories.Clear();
-			VisitorTeamTemplate.Clear();
-			LocalTeamTemplate.Clear();
+			Timeline.Clear();
+			Categories.List.Clear();
+			VisitorTeamTemplate.List.Clear();
+			LocalTeamTemplate.List.Clear();
 			Periods.Clear();
 			Timers.Clear();
 		}
@@ -188,12 +178,12 @@ namespace LongoMatch.Store
 				Miniature = miniature,
 				Fps = Description.File.Fps,
 			};
-			timeline.Add(play);
+			Timeline.Add(play);
 			return play;
 		}
 		
 		public void AddPlay (Play play) {
-			timeline.Add(play);
+			Timeline.Add(play);
 		}
 		
 		/// <summary>
@@ -207,7 +197,7 @@ namespace LongoMatch.Store
 		/// </param>
 		public void RemovePlays(List<Play> plays) {
 			foreach(Play play in plays)
-				timeline.Remove(play);
+				Timeline.Remove(play);
 		}
 
 		/// <summary>
@@ -217,56 +207,47 @@ namespace LongoMatch.Store
 		/// A <see cref="System.Int32"/>: category index
 		/// </param>
 		public void RemoveCategory(Category category) {
-			if(Categories.Count == 1)
+			if(Categories.List.Count == 1)
 				throw new Exception("You can't remove the last Category");
-			Categories.Remove(category);
+			Categories.List.Remove(category);
 
-			timeline.RemoveAll(p => p.Category.UUID == category.UUID);
+			Timeline.RemoveAll(p => p.Category.ID == category.ID);
 		}
 		
 		public void RemovePlayer(TeamTemplate template, Player player) {
-			if(template.Count == 1)
+			if(template.List.Count == 1)
 				throw new Exception("You can't remove the last Player");
-			template.Remove(player);
-			foreach (var play in timeline) {
-				play.Players.RemoveByPlayer(player);
+			template.List.Remove(player);
+			foreach (var play in Timeline) {
+				play.Players.RemoveAll (p => p == player);
 			}
 		}
 		
-		public void DeleteSubcategoryTags(Category cat, List<ISubCategory> subcategories) {
-			foreach (var play in timeline.Where(p => p.Category == cat)) {
+		public void DeleteSubcategoryTags(Category cat, List<SubCategory> subcategories) {
+			foreach (var play in Timeline.Where(p => p.Category == cat)) {
 				foreach (var subcat in subcategories) {
 					Log.Error(play.Name);
-					if (subcat is TagSubCategory)
-						play.Tags.RemoveBySubcategory(subcat);
-					else if (subcat is TeamSubCategory)
-						play.Teams.RemoveBySubcategory(subcat);
-					else if (subcat is PlayerSubCategory)
-						play.Players.RemoveBySubcategory(subcat);
+					if (subcat is SubCategory)
+						play.TagsStore.RemoveBySubcategory(subcat);
 				}
 			}
 		}
 
 		public List<Play> PlaysInCategory(Category category) {
-			return timeline.Where(p => p.Category.UUID == category.UUID).ToList();
+			return Timeline.Where(p => p.Category.ID == category.ID).ToList();
 		}
-
-		public List<Play> AllPlays() {
-			return timeline;
-		}
-
 
 		public bool Equals(Project project) {
 			if(project == null)
 				return false;
 			else
-				return UUID == project.UUID;
+				return ID == project.ID;
 		}
 
 		public int CompareTo(object obj) {
 			if(obj is Project) {
 				Project project = (Project) obj;
-				return UUID.CompareTo(project.UUID);
+				return ID.CompareTo(project.ID);
 			}
 			else
 				throw new ArgumentException("object is not a Project and cannot be compared");
@@ -274,12 +255,12 @@ namespace LongoMatch.Store
 
 		public static void Export(Project project, string file) {
 			file = Path.ChangeExtension(file, Constants.PROJECT_EXT);
-			SerializableObject.Save(project, file);
+			Serializer.Save(project, file);
 		}
 
 		public static Project Import(string file) {
 			try {
-				return SerializableObject.Load<Project>(file);
+				return Serializer.Load<Project>(file);
 			}
 			catch  (Exception e){
 				Log.Exception (e);

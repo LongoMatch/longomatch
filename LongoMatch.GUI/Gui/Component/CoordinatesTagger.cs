@@ -111,7 +111,7 @@ namespace LongoMatch.Gui.Component
 			
 			TranslateToOriginCoords (cursor);
 			foreach (Coordinates c in Coordinates) {
-				foreach (Point p in c) {
+				foreach (Point p in c.Points) {
 					double dist = Distance (cursor, p);
 					if (dist < minDistance) {
 						minDistance = dist;
@@ -166,16 +166,16 @@ namespace LongoMatch.Gui.Component
 		
 		void DrawCoordinates (Context context, Coordinates coords) {
 			SetContextProperties(context, coords == selectedCoords);
-			for (int i=0; i < coords.Count; i++) {
-				if (i != 0 && i == coords.Count - 1) {
-					DrawArrow (context, TranslateToDestCoords(coords[i -1]),
-					           TranslateToDestCoords (coords [i]));
+			for (int i=0; i < coords.Points.Count; i++) {
+				if (i != 0 && i == coords.Points.Count - 1) {
+					DrawArrow (context, TranslateToDestCoords(coords.Points[i -1]),
+					           TranslateToDestCoords (coords.Points [i]));
 				} else {
-					DrawPoint (context, TranslateToDestCoords (coords[i]));
+					DrawPoint (context, TranslateToDestCoords (coords.Points[i]));
 				}
 				if (i>0) {
-					DrawLine (context, TranslateToDestCoords(coords[i-1]),
-					          TranslateToDestCoords (coords[i]));
+					DrawLine (context, TranslateToDestCoords(coords.Points[i-1]),
+					          TranslateToDestCoords (coords.Points[i]));
 				}
 			} 
 		}

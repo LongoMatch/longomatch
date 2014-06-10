@@ -45,7 +45,7 @@ namespace LongoMatch.DB
 			}
 			if (File.Exists(dbPath)) {
 				try {
-					projectsDB = SerializableObject.Load<LiteDB> (dbPath);
+					projectsDB = Serializer.Load<LiteDB> (dbPath);
 					projectsDB.DBPath = dbPath;
 				}
 				catch  (Exception e){
@@ -93,8 +93,8 @@ namespace LongoMatch.DB
 		
 		public bool Exists (Project project) {
 			bool ret = false;
-			if (projectsDB.ProjectsDict.ContainsKey (project.UUID)) {
-				if (File.Exists (Path.Combine (dbDirPath, project.UUID.ToString()))) {
+			if (projectsDB.ProjectsDict.ContainsKey (project.ID)) {
+				if (File.Exists (Path.Combine (dbDirPath, project.ID.ToString()))) {
 					ret = true;
 				}
 			}
@@ -145,7 +145,7 @@ namespace LongoMatch.DB
 			try {
 				string projectFile = Path.Combine (dbDirPath, id.ToString());
 				if (File.Exists (projectFile)) {
-					return SerializableObject.Load<Project> (projectFile);
+					return Serializer.Load<Project> (projectFile);
 				}
 			} catch (Exception ex) {
 				Log.Exception (ex);
@@ -157,16 +157,16 @@ namespace LongoMatch.DB
 			string projectFile;
 			
 			try {
-				projectFile = Path.Combine (dbDirPath, project.UUID.ToString());
+				projectFile = Path.Combine (dbDirPath, project.ID.ToString());
 				project.Description.LastModified = DateTime.Now;
 				projectsDB.Add (project.Description);
 				try {
 					if (File.Exists(projectFile))
 						File.Delete(projectFile);
-					SerializableObject.Save(project, projectFile);
+					Serializer.Save(project, projectFile);
 				} catch (Exception ex) {
 					Log.Exception (ex);
-					projectsDB.Delete (project.Description.UUID);
+					projectsDB.Delete (project.Description.ID);
 				}
 				return true;
 			} catch (Exception ex) {
@@ -203,7 +203,7 @@ namespace LongoMatch.DB
 					continue;
 				}
 				try {
-					Project project = SerializableObject.Load<Project> (file.FullName);
+					Project project = Serializer.Load<Project> (file.FullName);
 					projectsDB.Add (project.Description);
 				} catch (Exception ex) {
 					Log.Exception (ex);
@@ -246,10 +246,10 @@ namespace LongoMatch.DB
 		}
 		
 		public bool Add (ProjectDescription desc) {
-			if (ProjectsDict.ContainsKey (desc.UUID)) {
-				ProjectsDict[desc.UUID] = desc;
+			if (ProjectsDict.ContainsKey (desc.ID)) {
+				ProjectsDict[desc.ID] = desc;
 			} else {
-				ProjectsDict.Add (desc.UUID, desc);
+				ProjectsDict.Add (desc.ID, desc);
 			}
 			return Save ();
 		}
@@ -266,7 +266,7 @@ namespace LongoMatch.DB
 			bool ret = false;
 			
 			try {
-				SerializableObject.Save (this, DBPath);
+				Serializer.Save (this, DBPath);
 				ret = true;
 			} catch (Exception ex) {
 				Log.Exception (ex);

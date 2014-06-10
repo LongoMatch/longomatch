@@ -31,40 +31,40 @@ namespace Tests.Core
 			Coordinates coords = new Coordinates();
 			Point p1 = new Point (1, 2);
 			Point p2 = new Point (3, 4);
-			coords.Add(p1);
-			coords.Add(p2);
+			coords.Points.Add(p1);
+			coords.Points.Add(p2);
 			
 			Utils.CheckSerialization(coords);
 			Coordinates newcoords = Utils.SerializeDeserialize(coords);
 			
-			Assert.AreEqual (coords.Count, newcoords.Count);
-			Assert.AreEqual (coords[0].X, newcoords[0].X);
-			Assert.AreEqual (coords[1].X, newcoords[1].X);
-			Assert.AreEqual (coords[0].Y, newcoords[0].Y);
-			Assert.AreEqual (coords[1].Y, newcoords[1].Y);
+			Assert.AreEqual (coords.Points.Count, newcoords.Points.Count);
+			Assert.AreEqual (coords.Points[0].X, newcoords.Points[0].X);
+			Assert.AreEqual (coords.Points[1].X, newcoords.Points[1].X);
+			Assert.AreEqual (coords.Points[0].Y, newcoords.Points[0].Y);
+			Assert.AreEqual (coords.Points[1].Y, newcoords.Points[1].Y);
 		}
 		
 		[Test()]
 		public void TestEqual ()
 		{
 			Coordinates coords = new Coordinates();
-			coords.Add(new Point (1, 2));
-			coords.Add(new Point (3, 4));
+			coords.Points.Add(new Point (1, 2));
+			coords.Points.Add(new Point (3, 4));
 			
 			Coordinates coords2 = new Coordinates();
-			coords2.Add (new Point (1, 2));
-			coords2.Add (new Point (3, 4));
+			coords2.Points.Add (new Point (1, 2));
+			coords2.Points.Add (new Point (3, 4));
 			
 			Assert.AreEqual (coords, coords2);
 			
 			/* Different number of elements */
-			coords2.Add (new Point (1, 2));
+			coords2.Points.Add (new Point (1, 2));
 			Assert.AreNotEqual (coords, coords2);
 			
 			/* Same number of elements but different points */
 			coords2 = new Coordinates();
-			coords2.Add (new Point (1, 1));
-			coords2.Add (new Point (3, 4));
+			coords2.Points.Add (new Point (1, 1));
+			coords2.Points.Add (new Point (3, 4));
 			Assert.AreNotEqual (coords, coords2);
 		}
 	}

@@ -53,7 +53,7 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleProjectSelected (ProjectDescription project)
 		{
-			Config.EventsBroker.EmitOpenProjectID  (project.UUID);
+			Config.EventsBroker.EmitOpenProjectID  (project.ID);
 		}
 	}
 }

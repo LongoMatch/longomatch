@@ -22,7 +22,7 @@ namespace LongoMatch.Interfaces
 {
 	public interface ITag<T>
 	{
-		ISubCategory SubCategory {set;get;}
+		SubCategory SubCategory {set;get;}
 		T Value {set;get;}
 	}
 }

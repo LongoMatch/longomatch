@@ -54,6 +54,7 @@ namespace LongoMatch.Services
 			this.renderer = renderer;
 			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
 			catsTime = new Dictionary<Category, Time>();
+			ConnectSignals ();
 		}
 
 		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
@@ -67,12 +68,25 @@ namespace LongoMatch.Services
 			if (project == null)
 				return;
 				
+			if (player != null) {
+				Console.WriteLine ("Disconnecting");
+				player.Prev -= OnPrev;
+				player.SegmentClosedEvent -= OnSegmentClosedEvent;
+				player.DrawFrame -= OnDrawFrame;
+				player.PlaybackRateChanged -= HandlePlaybackRateChanged;
+			}
+
 			player = analysisWindow.Player;
 			capturer = analysisWindow.Capturer;
-			if (this.analysisWindow != analysisWindow) {
-				this.analysisWindow = analysisWindow;
-				ConnectSignals();
+			
+			if (player != null) {
+				Console.WriteLine ("Connecting");
+				player.Prev += OnPrev;
+				player.SegmentClosedEvent += OnSegmentClosedEvent;
+				player.DrawFrame += OnDrawFrame;
+				player.PlaybackRateChanged += HandlePlaybackRateChanged;
 			}
+
 		}
 
 		void Save (Project project) {
@@ -98,14 +112,6 @@ namespace LongoMatch.Services
 			
 			Config.EventsBroker.ShowProjectStatsEvent += HandleShowProjectStatsEvent;
 			Config.EventsBroker.TagSubcategoriesChangedEvent += HandleTagSubcategoriesChangedEvent;
-			
-			/* Connect player events */
-			if (player != null) {
-				player.Prev += OnPrev;
-				player.SegmentClosedEvent += OnSegmentClosedEvent;
-				player.DrawFrame += OnDrawFrame;
-				player.PlaybackRateChanged += HandlePlaybackRateChanged;
-			}
 		}
 
 		void HandleTagSubcategoriesChangedEvent (bool tagsubcategories)
@@ -338,6 +344,7 @@ namespace LongoMatch.Services
 		void OnDuplicatePlay (Play play)
 		{
 			Play copy = Cloner.Clone (play);
+			copy.ID = Guid.NewGuid();
 			/* The category is also serialized and desarialized */
 			copy.Category = play.Category;
 			openedProject.AddPlay (copy);

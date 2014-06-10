@@ -47,7 +47,7 @@ namespace LongoMatch.Utils
 
 				if(!mediaFile.HasVideo || mediaFile.VideoCodec == "")
 					throw new Exception(Catalog.GetString("This file doesn't contain a video stream."));
-				if(mediaFile.HasVideo && mediaFile.Length == 0)
+				if(mediaFile.HasVideo && mediaFile.Duration.MSeconds == 0)
 					throw new Exception(Catalog.GetString("This file contains a video stream but its length is 0."));
 				if (multimedia.FileNeedsRemux (mediaFile)) {
 					string q = Catalog.GetString("The file you are trying to load is not properly supported. " +

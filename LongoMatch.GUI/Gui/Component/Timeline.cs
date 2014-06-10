@@ -93,7 +93,7 @@ namespace LongoMatch.Gui.Component
 			}
 			focusscale.Value = 6;
 			projectFile = project.Description.File;
-			timerule.Duration = new Time ((int)project.Description.File.Length);
+			timerule.Duration = project.Description.File.Duration;
 			timeline.ShowMenuEvent += HandleShowMenu;
 			QueueDraw ();
 		}

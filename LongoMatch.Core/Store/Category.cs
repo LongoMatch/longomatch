@@ -36,31 +36,26 @@ namespace LongoMatch.Store
 	/// tagged in this category
 	/// </summary>
 	[Serializable]
-	public class Category:TimeNode, ISerializable
+	public class Category:TimeNode, IIDObject
 	{
 
-		[JsonProperty ("UUID")]
-		private Guid _UUID;
-
 		#region Constructors
-		#endregion
 		public Category() {
-			_UUID = System.Guid.NewGuid();
-			SubCategories = new List<ISubCategory>();
+			ID = System.Guid.NewGuid();
+			SubCategories = new List<SubCategory>();
 			TagGoalPosition = false;
 			TagFieldPosition = true;
 		}
+		#endregion
 
 		#region  Properties
 
 		/// <summary>
 		/// Unique ID for this category
 		/// </summary>
-		[JsonIgnore]
-		public Guid UUID {
-			get {
-				return _UUID;
-			}
+		public Guid ID {
+			get;
+			set;
 		}
 
 		/// <summary>
@@ -95,7 +90,7 @@ namespace LongoMatch.Store
 			set;
 		}
 
-		public List<ISubCategory> SubCategories {
+		public List<SubCategory> SubCategories {
 			get;
 			set;
 		}
@@ -154,67 +149,6 @@ namespace LongoMatch.Store
 				else
 					SortMethod = SortMethodType.SortByName;
 			}
-		}
-
-		// this constructor is automatically called during deserialization
-		public Category(SerializationInfo info, StreamingContext context) {
-			_UUID = (Guid)info.GetValue("uuid", typeof(Guid));
-			Name = (string) info.GetValue("name", typeof(string));
-			Start = (Time)info.GetValue("start", typeof(Time));
-			Stop = (Time)info.GetValue("stop", typeof(Time));
-			HotKey = (HotKey)info.GetValue("hotkey", typeof(HotKey));
-			SubCategories = (List<ISubCategory>)info.GetValue("subcategories", typeof(List<ISubCategory>));
-			Position = (Int32) info.GetValue("position", typeof (Int32));
-			SortMethod = (SortMethodType)info.GetValue("sort_method", typeof(SortMethodType));
-			Color = Color.ColorFromUShort ((ushort)info.GetValue("red", typeof(ushort)),
-			                   (ushort)info.GetValue("green", typeof(ushort)),
-			                   (ushort)info.GetValue("blue", typeof(ushort)));
-			try {
-				TagFieldPosition = (bool) info.GetValue("tagfieldpos", typeof (bool));
-			} catch {
-				TagFieldPosition = true;
-			}
-			try {
-				TagHalfFieldPosition =(bool) info.GetValue("taghalffieldpos", typeof (bool));
-			} catch {
-				TagHalfFieldPosition = false;
-			}
-			try {
-				TagGoalPosition = (bool) info.GetValue("taggoalpos", typeof (bool));
-			} catch {
-				TagGoalPosition = false;
-			}
-			try {
-				FieldPositionIsDistance =(bool) info.GetValue("fieldposisdist", typeof (bool));
-			} catch {
-				FieldPositionIsDistance = false;
-			}
-			try {
-				HalfFieldPositionIsDistance =(bool) info.GetValue("halffieldposisdist", typeof (bool));
-			} catch {
-				HalfFieldPositionIsDistance = false;
-			}
-		}
-
-		// this method is automatically called during serialization
-		public void GetObjectData(SerializationInfo info, StreamingContext context) {
-			info.AddValue("uuid", UUID);
-			info.AddValue("name", Name);
-			info.AddValue("start", Start);
-			info.AddValue("stop", Stop);
-			info.AddValue("hotkey", HotKey);
-			info.AddValue("position", Position);
-			info.AddValue("subcategories", SubCategories);
-			/* Convert to ushort for backward compatibility */
-			info.AddValue("red", (ushort) Color.R);
-			info.AddValue("green", (ushort) Color.G);
-			info.AddValue("blue", (ushort) Color.B);
-			info.AddValue("sort_method", SortMethod);
-			info.AddValue("tagfieldpos", TagFieldPosition);
-			info.AddValue("taghalffieldpos", TagHalfFieldPosition);
-			info.AddValue("taggoalpos", TagGoalPosition);
-			info.AddValue("fieldposisdist", FieldPositionIsDistance);
-			info.AddValue("halffieldposisdist", HalfFieldPositionIsDistance);
 		}
 		#endregion
 		

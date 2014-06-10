@@ -45,7 +45,7 @@ namespace Tests.Core
 			
 			ProjectDescription newpd = Utils.SerializeDeserialize(pd);
 			Assert.AreEqual (pd.CompareTo (newpd), 0);
-			Assert.AreEqual (pd.UUID, newpd.UUID);
+			Assert.AreEqual (pd.ID, newpd.ID);
 		}
 	}
 }

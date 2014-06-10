@@ -46,7 +46,6 @@ namespace LongoMatch.Gui.Component
 		public event HotKeyChangeHandler HotKeyChanged;
 
 		private Category cat;
-		private ISubcategoriesTemplatesProvider subcategoriesProvider;
 		private ListStore model;
 
 		public CategoryProperties()
@@ -68,39 +67,6 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		public void LoadSubcategories() {
-			subcategoriesProvider = Config.SubcategoriesTemplatesProvider;
-			LoadSubcategories(null);
-		}
-		
-		private void LoadSubcategories(List<PlayerSubCategory> playerSubcategories) {
-			model = new ListStore(typeof(string), typeof(ISubCategory));
-			
-			model.AppendValues(Catalog.GetString("Create new..."), "");
-			foreach (TagSubCategory subcat in subcategoriesProvider.Templates) {
-				Log.Debug("Adding tag subcategory: ", subcat.Name);
-				model.AppendValues(String.Format("[{0}] {1}", 
-				                                 Catalog.GetString("Tags"),
-				                                 subcat.Name),
-				                   subcat);
-			}
-			if (playerSubcategories != null) {
-				foreach (PlayerSubCategory subcat in playerSubcategories) {
-					Log.Debug("Adding player subcategory: ", subcat.Name);
-					model.AppendValues(String.Format("[{0}] {1}", 
-					                                 Catalog.GetString("Players"),
-					                                 subcat.Name),
-					                   subcat);
-				}
-			}
-			
-			subcatcombobox.Model = model;
-			var cell = new CellRendererText();
-			subcatcombobox.PackStart(cell, true);
-			subcatcombobox.AddAttribute(cell, "text", 0);
-			subcatcombobox.Active = 1;
-		}
-			
 		public Category Category {
 			set {
 				cat = value;
@@ -149,10 +115,10 @@ namespace LongoMatch.Gui.Component
 			fieldcoordinatestagger.Visible = cat.TagFieldPosition;
 			coords = new List<Coordinates>();
 			c = new Coordinates();
-			c.Add (new Point (300, 300));
+			c.Points.Add (new Point (300, 300));
 			coords.Add (c);
 			if (cat.FieldPositionIsDistance) {
-				c.Add (new Point (400, 500));
+				c.Points.Add (new Point (400, 500));
 			}
 			fieldcoordinatestagger.Coordinates = coords;
 			trajectorycheckbutton.Active = cat.FieldPositionIsDistance;
@@ -161,10 +127,10 @@ namespace LongoMatch.Gui.Component
 			halffieldcoordinatestagger.Visible = cat.TagHalfFieldPosition;
 			coords = new List<Coordinates>();
 			c = new Coordinates();
-			c.Add (new Point (300, 300));
+			c.Points.Add (new Point (300, 300));
 			coords.Add (c);
 			if (cat.FieldPositionIsDistance) {
-				c.Add (new Point (400, 500));
+				c.Points.Add (new Point (400, 500));
 			}
 			halffieldcoordinatestagger.Coordinates = coords;
 			trajectoryhalfcheckbutton.Active = cat.HalfFieldPositionIsDistance;
@@ -172,7 +138,7 @@ namespace LongoMatch.Gui.Component
 			taggoalcheckbutton.Active = cat.TagGoalPosition;
 			coords = new List<Coordinates>();
 			c = new Coordinates();
-			c.Add (new Point (100, 100));
+			c.Points.Add (new Point (100, 100));
 			coords.Add (c);
 			goalcoordinatestagger.Coordinates = coords;
 			goalcoordinatestagger.Visible = cat.TagGoalPosition;
@@ -183,7 +149,7 @@ namespace LongoMatch.Gui.Component
 			
 			list = subcategoriestreeview1.Model as ListStore;
 			list.Clear();
-			foreach (ISubCategory subcat in cat.SubCategories)
+			foreach (SubCategory subcat in cat.SubCategories)
 				list.AppendValues(subcat);
 		}
 		
@@ -192,18 +158,19 @@ namespace LongoMatch.Gui.Component
 			(cell as Gtk.CellRendererText).Markup =(string)model.GetValue(iter, 0);
 		}
 		
-		private TagSubCategory EditSubCategoryTags (TagSubCategory template, bool checkName){
-			SubCategoryTagsEditor se =  new SubCategoryTagsEditor(template, subcategoriesProvider.TemplatesNames);
-			
-			se.CheckName = checkName;
-			int ret = se.Run();
-			
-			var t = se.Template; 
-			se.Destroy();
-			
-			if (ret != (int)ResponseType.Ok)
-				return null;
-			return t;
+		private SubCategory EditSubCategoryTags (SubCategory template, bool checkName){
+			return null;
+//			SubCategoryTagsEditor se =  new SubCategoryTagsEditor(template, subcategoriesProvider.TemplatesNames);
+//			
+//			se.CheckName = checkName;
+//			int ret = se.Run();
+//			
+//			var t = se.Template; 
+//			se.Destroy();
+//			
+//			if (ret != (int)ResponseType.Ok)
+//				return null;
+//			return t;
 		}
 
 		protected virtual void OnChangebutonClicked(object sender, System.EventArgs e)
@@ -246,11 +213,11 @@ namespace LongoMatch.Gui.Component
 			cat.SortMethodString = sortmethodcombobox.ActiveText;
 		}
 		
-		protected virtual void OnSubcategorySelected(ISubCategory subcat) {
-			EditSubCategoryTags((TagSubCategory)subcat, false);
+		protected virtual void OnSubcategorySelected(SubCategory subcat) {
+			EditSubCategoryTags((SubCategory)subcat, false);
 		}
 		
-		protected virtual void OnSubcategoriesDeleted (List<ISubCategory> subcats)
+		protected virtual void OnSubcategoriesDeleted (List<SubCategory> subcats)
 		{
 			if (Project != null) {
 				var msg = Catalog.GetString("If you delete this subcategory you will loose" +
@@ -269,7 +236,7 @@ namespace LongoMatch.Gui.Component
 			
 			subcatcombobox.GetActiveIter(out iter);
 			ListStore list = subcategoriestreeview1.Model as ListStore;
-			var subcat = Cloner.Clone((ISubCategory)model.GetValue(iter, 1));
+			var subcat = Cloner.Clone((SubCategory)model.GetValue(iter, 1));
 			subcat.Name = subcatnameentry.Text;
 			Category.SubCategories.Add(subcat);
 			list.AppendValues(subcat);
@@ -277,23 +244,6 @@ namespace LongoMatch.Gui.Component
 		
 		protected virtual void OnSubcatcomboboxChanged (object sender, System.EventArgs e)
 		{
-			TreeIter iter;
-			
-			if (subcatcombobox.Active == 0) {
-				var template = EditSubCategoryTags(new SubCategoryTemplate(), true) as SubCategoryTemplate;
-				if (template == null || template.Count == 0)
-					return;
-				
-				model.AppendValues(String.Format("[{0}] {1}",Catalog.GetString("Tags"), template.Name),
-				                   template);
-				subcategoriesProvider.Save(template);
-				subcatcombobox.Active = 1;
-				return;
-			}
-			
-			subcatcombobox.GetActiveIter(out iter);
-			subcatnameentry.Text = (model.GetValue(iter, 1) as ISubCategory).Name;
-			addbutton.Sensitive = true;
 		}
 		
 		protected void OnTaggoalcheckbuttonClicked (object sender, EventArgs e)
@@ -323,10 +273,10 @@ namespace LongoMatch.Gui.Component
 			
 			coords = new List<Coordinates>();
 			c = new Coordinates();
-			c.Add (new Point (300, 300));
+			c.Points.Add (new Point (300, 300));
 			coords.Add (c);
 			if (cat.HalfFieldPositionIsDistance) {
-				c.Add (new Point (400, 500));
+				c.Points.Add (new Point (400, 500));
 			}
 			halffieldcoordinatestagger.Coordinates = coords;
 		}
@@ -340,10 +290,10 @@ namespace LongoMatch.Gui.Component
 			
 			coords = new List<Coordinates>();
 			c = new Coordinates();
-			c.Add (new Point (300, 300));
+			c.Points.Add (new Point (300, 300));
 			coords.Add (c);
 			if (cat.FieldPositionIsDistance) {
-				c.Add (new Point (400, 500));
+				c.Points.Add (new Point (400, 500));
 			}
 			fieldcoordinatestagger.Coordinates = coords;
 		}

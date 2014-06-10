@@ -26,15 +26,9 @@ namespace LongoMatch.Interfaces
 	{
 		ITemplateProvider<T, U> GetTemplateProvider<T, U>() where T: ITemplate<U>;
 		
-		ISubcategoriesTemplatesProvider SubCategoriesTemplateProvider {get;}
-		
 		ITeamTemplatesProvider TeamTemplateProvider {get;}
 		
 		ICategoriesTemplatesProvider CategoriesTemplateProvider {get;}
-		
-		List<PlayerSubCategory> PlayerSubcategories {get;}
-		
-		List<TeamSubCategory> TeamSubcategories {get;}
 	}
 }
 

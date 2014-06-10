@@ -119,8 +119,8 @@ namespace Tests.Services
 			ProjectDescription pd1 = new ProjectDescription ();
 			Project p1 = new Project {Description = pd1};
 			db.AddProject (p1);
-			Project p2 = db.GetProject (p1.UUID);
-			Assert.AreEqual (p1.UUID, p2.UUID);
+			Project p2 = db.GetProject (p1.ID);
+			Assert.AreEqual (p1.ID, p2.ID);
 			Assert.IsNull (db.GetProject (new Guid()));
 		}
 		
@@ -132,7 +132,7 @@ namespace Tests.Services
 			ProjectDescription pd1 = new ProjectDescription ();
 			Project p1 = new Project {Description = pd1};
 			Assert.IsTrue (db.AddProject (p1));
-			Assert.IsTrue (File.Exists (Path.Combine (dbdir, p1.UUID.ToString())));
+			Assert.IsTrue (File.Exists (Path.Combine (dbdir, p1.ID.ToString())));
 			Assert.IsTrue (db.AddProject (p1));
 			Assert.AreEqual (db.Count, 1);
 			db = new DataBase (dbdir);
@@ -147,12 +147,12 @@ namespace Tests.Services
 			ProjectDescription pd1 = new ProjectDescription ();
 			Project p1 = new Project {Description = pd1};
 			Assert.IsTrue (db.AddProject (p1));
-			Assert.IsTrue (File.Exists (Path.Combine (dbdir, p1.UUID.ToString())));
+			Assert.IsTrue (File.Exists (Path.Combine (dbdir, p1.ID.ToString())));
 			Assert.AreEqual (db.Count, 1);
-			Assert.IsTrue (db.RemoveProject (p1.UUID));
-			Assert.IsFalse (File.Exists (Path.Combine (dbdir, p1.UUID.ToString())));
+			Assert.IsTrue (db.RemoveProject (p1.ID));
+			Assert.IsFalse (File.Exists (Path.Combine (dbdir, p1.ID.ToString())));
 			Assert.AreEqual (db.Count, 0);
-			Assert.IsFalse (db.RemoveProject (p1.UUID));
+			Assert.IsFalse (db.RemoveProject (p1.ID));
 			db = new DataBase (dbdir);
 			Assert.AreEqual (db.Count, 0);
 		}

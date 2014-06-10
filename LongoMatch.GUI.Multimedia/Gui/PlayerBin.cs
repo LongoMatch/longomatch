@@ -258,7 +258,7 @@ namespace LongoMatch.Gui
 		public void StepBackward() {
 			Jump(-(int)jumpspinbutton.Value);
 		}
-
+		
 		public void FramerateUp() {
 			vscale1.Adjustment.Value += vscale1.Adjustment.StepIncrement;
 		}
@@ -326,9 +326,9 @@ namespace LongoMatch.Gui
 			pausebutton.Clicked += OnPausebuttonClicked;
 			drawbutton.Clicked += OnDrawButtonClicked;
 			timescale.ValueChanged += OnTimescaleValueChanged;
-			timescale.AdjustBounds += OnTimescaleAdjustBounds;
+			timescale.AdjustBounds += OnTimescaleAdjustBounds;			
 			vscale1.FormatValue += OnVscale1FormatValue;
-			vscale1.ValueChanged += OnVscale1ValueChanged;
+            vscale1.ValueChanged += OnVscale1ValueChanged;
 			drawbutton.Clicked += OnDrawButtonClicked;
 			volumebutton.Clicked += OnVolumebuttonClicked;
 

@@ -92,32 +92,10 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 		
-		public void AddTeamSubcategory (TeamSubCategory subcat, TeamsTagStore tags,
-		                                string localTeam, string visitorTeam){
-			/* the notebook starts invisible */
-			tagsnotebook.Visible = true;
-			taggerwidget1.AddTeamSubCategory(subcat, tags, localTeam, visitorTeam);
-		}
-		
-		public void AddTagSubcategory (TagSubCategory subcat, StringTagStore tags){
+		public void AddTagSubcategory (SubCategory subcat, TagsStore tags){
 			/* the notebook starts invisible */
 			taggerwidget1.AddSubCategory(subcat, tags);
 			subcategoryAdded = true;
-		}
-		
-		public void AddPlayerSubcategory (PlayerSubCategory subcat, PlayersTagStore tags){
-			TeamTemplate local=null, visitor=null;
-			
-			/* the notebook starts invisible */
-			playersnotebook.Visible = true;
-			if (subcat.Contains(Team.LOCAL))
-				local = localTeamTemplate;
-			if (subcat.Contains(Team.VISITOR))
-				visitor = visitorTeamTemplate;
-			
-			PlayersTaggerWidget widget = new PlayersTaggerWidget(subcat, local, visitor, tags);
-			widget.Show();
-			playersbox.PackStart(widget, true, true, 0);
 		}
 		
 		protected override bool OnExposeEvent (EventExpose evnt)

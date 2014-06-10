@@ -41,7 +41,7 @@ namespace LongoMatch.Gui.Dialog
 		{
 			this.Build();
 			timenodeproperties2.HotKeyChanged += OnHotKeyChanged;
-			timenodeproperties2.LoadSubcategories();
+//			timenodeproperties2.LoadSubcategories();
 		}
 
 		public Category Category {

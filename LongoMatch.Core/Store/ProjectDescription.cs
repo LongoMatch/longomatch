@@ -19,6 +19,7 @@
 using System;
 using Newtonsoft.Json;
 using LongoMatch.Store;
+using LongoMatch.Interfaces;
 
 namespace LongoMatch.Store
 {
@@ -27,12 +28,12 @@ namespace LongoMatch.Store
 	/// Describes a project in LongoMatch.
 	/// </summary>
 	[Serializable]
-	public class ProjectDescription :  IComparable
+	public class ProjectDescription :  IComparable, IIDObject
 	{
 		/// <summary>
 		/// Unique ID of the parent project
 		/// </summary>
-		public Guid UUID {
+		public Guid ID {
 			get;
 			set;
 		}
@@ -72,7 +73,22 @@ namespace LongoMatch.Store
 			get;
 			set;
 		}
+		
+		public string Category {
+			get;
+			set;
+		}
 
+		public string Group {
+			get;
+			set;
+		}
+		
+		public string Phase {
+			get;
+			set;
+		}
+		
 		/// <summary>
 		/// Name of the local team
 		/// </summary>
@@ -113,7 +129,7 @@ namespace LongoMatch.Store
 			get;
 			set;
 		}
-
+		
 		/// <summary>
 		/// String representing the video format like "widhtxheight@fps"
 		/// </summary>
@@ -137,7 +153,7 @@ namespace LongoMatch.Store
 				ProjectDescription project = (ProjectDescription) obj;
 				
 				if (File == null || project.File == null)
-					return UUID.CompareTo(project.UUID);
+					return ID.CompareTo(project.ID);
 				return this.File.FilePath.CompareTo(project.File.FilePath);
 			}
 			else

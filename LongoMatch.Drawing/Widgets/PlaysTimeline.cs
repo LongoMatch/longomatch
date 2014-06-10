@@ -51,8 +51,8 @@ namespace LongoMatch.Drawing.Widgets
 			this.project = project;
 			Objects.Clear();
 			categories.Clear();
-			duration= new Time ((int)project.Description.File.Length); 
-			widget.Height = project.Categories.Count * Common.CATEGORY_HEIGHT;
+			duration = project.Description.File.Duration;
+			widget.Height = project.Categories.List.Count * Common.CATEGORY_HEIGHT;
 			playsFilter = filter;
 			FillCanvas ();
 			filter.FilterUpdated += UpdateVisibleCategories;
@@ -97,7 +97,7 @@ namespace LongoMatch.Drawing.Widgets
 		}
 		
 		void FillCanvas () {
-			for (int i=0; i<project.Categories.Count; i++) {
+			for (int i=0; i<project.Categories.List.Count; i++) {
 				Category cat;
 				CategoryTimeline tl;
 				Color c;
@@ -108,7 +108,7 @@ namespace LongoMatch.Drawing.Widgets
 					c = Color.Grey1;
 				}
 				
-				cat = project.Categories[i];
+				cat = project.Categories.List[i];
 				tl = new CategoryTimeline (project.PlaysInCategory (cat),
 				                           duration, i * Common.CATEGORY_HEIGHT, c);
 				categories[cat] = tl;

@@ -33,18 +33,14 @@ namespace LongoMatch.Services
 	public class TemplatesService: ITemplatesService
 	{
 		private Dictionary<Type, ITemplateProvider> dict;
-		private List<PlayerSubCategory> playerSubcatList;
-		private List<TeamSubCategory> teamSubcatList;
 		
-		public TemplatesService (string basePath)
+		public TemplatesService ()
 		{
 			dict = new Dictionary<Type, ITemplateProvider>();
-			dict.Add(typeof(SubCategoryTemplate), new SubCategoriesTemplatesProvider(basePath));
-			dict.Add(typeof(TeamTemplate), new TeamTemplatesProvider(basePath));
-			dict.Add(typeof(Categories), new CategoriesTemplatesProvider (basePath));
+			dict.Add(typeof(TeamTemplate),
+			         new TeamTemplatesProvider(Config.TeamsDir));
+			dict.Add(typeof(Categories), new CategoriesTemplatesProvider (Config.AnalysisDir));
 			CheckDefaultTemplates();
-			CreateDefaultPlayerSubCategories();
-			CreateDefaultTeamSubCategories();
 		}
 		
 		private void CheckDefaultTemplates () {
@@ -52,45 +48,10 @@ namespace LongoMatch.Services
 				t.CheckDefaultTemplate();
 		}
 		
-		private void CreateDefaultPlayerSubCategories () {
-			PlayerSubCategory subcat;
-			
-			/* Local team players */
-			playerSubcatList = new List<PlayerSubCategory>();
-			subcat = new PlayerSubCategory{
-				Name=Catalog.GetString("Local team players"), AllowMultiple=true, FastTag=true};
-			subcat.Add(Team.LOCAL);
-			playerSubcatList.Add(subcat);
-
-			/* Visitor team players */
-			subcat = new PlayerSubCategory{
-				Name=Catalog.GetString("Visitor team players"), AllowMultiple=true, FastTag=true};
-			subcat.Add(Team.VISITOR);
-			playerSubcatList.Add(subcat);
-			
-			/* Local and Visitor team players */
-			subcat = new PlayerSubCategory{
-				Name=Catalog.GetString("All teams players"), AllowMultiple=true, FastTag=true};
-			subcat.Add(Team.LOCAL);
-			subcat.Add(Team.VISITOR);
-			playerSubcatList.Add(subcat);
-		}
-		
-		private void CreateDefaultTeamSubCategories () {
-			teamSubcatList = new List<TeamSubCategory>();
-			teamSubcatList.Add(new TeamSubCategory());
-		}
-		
 		public ITemplateProvider<T, U> GetTemplateProvider<T, U>() where T: ITemplate<U> {
 			if (dict.ContainsKey(typeof(T)))
 				return (ITemplateProvider<T, U>)dict[typeof(T)];
 			return null;
-		}
-		
-		public ISubcategoriesTemplatesProvider SubCategoriesTemplateProvider {
-			get {
-				return (ISubcategoriesTemplatesProvider) dict[typeof(SubCategoryTemplate)]; 
-			}
 		}
 		
 		public ITeamTemplatesProvider TeamTemplateProvider {
@@ -102,18 +63,6 @@ namespace LongoMatch.Services
 		public ICategoriesTemplatesProvider CategoriesTemplateProvider {
 			get {
 				return (ICategoriesTemplatesProvider) dict[typeof(Categories)]; 
-			}
-		}
-		
-		public List<PlayerSubCategory> PlayerSubcategories {
-			get{
-				return playerSubcatList;
-			}
-		}
-		
-		public List<TeamSubCategory> TeamSubcategories {
-			get{
-				return teamSubcatList;
 			}
 		}
 	}
@@ -246,10 +195,4 @@ namespace LongoMatch.Services
 		public CategoriesTemplatesProvider (string basePath): base (basePath, Constants.CAT_TEMPLATE_EXT) {}
 		 
 	}
-	
-	public class SubCategoriesTemplatesProvider : TemplatesProvider<SubCategoryTemplate, string>, ISubcategoriesTemplatesProvider
-	{
-		public SubCategoriesTemplatesProvider (string basePath): base (basePath, Constants.SUBCAT_TEMPLATE_EXT) {}
-		 
-	} 
 }

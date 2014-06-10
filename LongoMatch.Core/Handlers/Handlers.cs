@@ -126,8 +126,8 @@ namespace LongoMatch.Handlers
 	public delegate void CategoriesHandler(List<Category> categoriesList);
 	
 	/* Edit Subcategory properties */
-	public delegate void SubCategoryHandler(ISubCategory subcat);
-	public delegate void SubCategoriesHandler(List<ISubCategory> subcat);
+	public delegate void SubCategoryHandler(SubCategory subcat);
+	public delegate void SubCategoriesHandler(List<SubCategory> subcat);
 
 	/* Edit player properties */
 	public delegate void PlayerPropertiesHandler(Player player);
@@ -136,14 +136,6 @@ namespace LongoMatch.Handlers
 	/* A list of projects have been selected */
 	public delegate void ProjectsSelectedHandler(List<ProjectDescription> projects);
 	public delegate void ProjectSelectedHandler(ProjectDescription project);
-	
-	/* Start/Stop/Cancel game units */
-	public delegate void GameUnitHandler(GameUnit gameUnit, GameUnitEventType eType);
-	
-	public delegate void UnitChangedHandler (GameUnit gameUnit, TimelineNode unit, Time time);
-	public delegate void UnitSelectedHandler (GameUnit gameUnit, TimelineNode unit);
-	public delegate void UnitAddedHandler (GameUnit gameUnit, int frame);
-	public delegate void UnitsDeletedHandler (GameUnit gameUnit, List<TimelineNode> unit);
 	
 	public delegate void KeyHandler (object sender, int key, int modifier);
 

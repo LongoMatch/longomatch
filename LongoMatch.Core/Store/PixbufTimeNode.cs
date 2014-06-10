@@ -33,35 +33,15 @@ namespace LongoMatch.Store
 	[Serializable]
 	public class PixbufTimeNode : TimeNode
 	{
-		private byte[] thumbnailBuf;
-		
-		#region Contructors
 		public PixbufTimeNode() {
 		}
-		#endregion
 
-		#region Properties
 		/// <summary>
 		/// Segment thumbnail
 		/// </summary>
 		public Image Miniature {
-			get {
-				if(thumbnailBuf != null)
-					return Image.Deserialize(thumbnailBuf);
-				else return null;
-			} set {
-				if (value == null)
-					thumbnailBuf = null;
-				else {
-					if (value.Height > Constants.MAX_THUMBNAIL_SIZE ||
-					    value.Width > Constants.MAX_THUMBNAIL_SIZE) {
-						value.Scale(Constants.MAX_THUMBNAIL_SIZE, Constants.MAX_THUMBNAIL_SIZE);
-					}
-					thumbnailBuf = value.Serialize();
-				}
-			}
+			get;
+			set;
 		}
-		
-		#endregion
 	}
 }

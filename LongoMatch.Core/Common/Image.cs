@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Common
 {
@@ -29,6 +30,7 @@ namespace LongoMatch.Common
 #endif
 
 	[Serializable]
+	[JsonConverter (typeof(LongoMatchConverter))]
 	public class Image: ISerializable, IDisposable
 	{
 		SImage image;
@@ -84,7 +86,7 @@ namespace LongoMatch.Common
 		
 		
 #if HAVE_GTK
-		public byte[] Serialize () {
+		public virtual byte[] Serialize () {
 			if (image == null)
 				return null;
 			return image.SaveToBuffer("png");

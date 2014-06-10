@@ -28,19 +28,19 @@ namespace Tests.Core
 	[TestFixture()]
 	public class TagStore
 	{
-		StringTag tag1, tag2, tag3, tag4;
-		SubCategory<string> subcat1, subcat2, subcat3;
-		StringTagStore store;
+		Tag tag1, tag2, tag3, tag4;
+		SubCategory subcat1, subcat2, subcat3;
+		TagsStore store;
 		
 		void FillStore () {
-			store = new StringTagStore ();
-			subcat1 = new SubCategory<string> {Name = "subcat1"};
-			subcat2 = new SubCategory<string> {Name = "subcat2"};
-			subcat3 = new SubCategory<string> {Name = "subcat3"};
-			tag1 = new StringTag {SubCategory=subcat1, Value="tag1"};
-			tag2 = new StringTag {SubCategory=subcat1, Value="tag2"};
-			tag3 = new StringTag {SubCategory=subcat2, Value="tag3"};
-			tag4 = new StringTag {SubCategory=subcat3, Value="tag4"};
+			store = new TagsStore ();
+			subcat1 = new SubCategory {Name = "subcat1"};
+			subcat2 = new SubCategory {Name = "subcat2"};
+			subcat3 = new SubCategory {Name = "subcat3"};
+			tag1 = new Tag {SubCategory=subcat1, Value="tag1"};
+			tag2 = new Tag {SubCategory=subcat1, Value="tag2"};
+			tag3 = new Tag {SubCategory=subcat2, Value="tag3"};
+			tag4 = new Tag {SubCategory=subcat3, Value="tag4"};
 			store.Add (tag1);
 			store.Add (tag2);
 			store.Add (tag3);
@@ -79,7 +79,7 @@ namespace Tests.Core
 			FillStore ();
 			
 			Assert.AreEqual (store.AllUniqueElements.Count, 4);
-			var tag = new StringTag {SubCategory=subcat1, Value="tag1"};
+			var tag = new Tag {SubCategory=subcat1, Value="tag1"};
 			store.Add (tag);
 			Assert.AreEqual (store.AllUniqueElements.Count, 4);
 		}
@@ -104,24 +104,6 @@ namespace Tests.Core
 			Assert.AreEqual (values[1], "tag2");
 			Assert.AreEqual (values[2], "tag3");
 			Assert.AreEqual (values[3], "tag4");
-		}
-		
-		[Test()]
-		public void TestRemoveByPlayer ()
-		{
-			var store = new PlayersTagStore ();
-			var subcat1 = new SubCategory<string> {Name = "subcat1"};
-			var player1 = new Player ();
-			var player2 = new Player ();
-			var tag1 = new PlayerTag {SubCategory=subcat1, Value=player1};
-			var tag2 = new PlayerTag {SubCategory=subcat1, Value=player2};
-			store.Add (tag1);
-			store.Add (tag2);
-			
-			store.RemoveByPlayer (player1);
-			Assert.AreEqual (store.Tags.Count, 1);
-			store.RemoveByPlayer (player2);
-			Assert.AreEqual (store.Tags.Count, 0);
 		}
 		
 		[Test()]

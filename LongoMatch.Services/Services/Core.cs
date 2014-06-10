@@ -82,19 +82,14 @@ namespace LongoMatch.Services
 			ToolsManager toolsManager;
 			TemplatesService ts;
 				
-			ts = new TemplatesService (Config.TemplatesDir);
+			ts = new TemplatesService ();
 			Config.TeamTemplatesProvider = ts.TeamTemplateProvider;
 			Config.CategoriesTemplatesProvider = ts.CategoriesTemplateProvider;
-			Config.SubcategoriesTemplatesProvider = ts.SubCategoriesTemplateProvider;
 
 			/* Start DB services */
 			dbManager = new DataBaseManager (Config.DBDir, guiToolkit);
 			dbManager.SetActiveByName (Config.CurrentDatabase);
 			Config.DatabaseManager = dbManager;
-			
-			/* Start Migration */
-			MigrationsManager migration = new MigrationsManager(ts, dbManager);
-			migration.StartMigration();
 			
 			/* Start the rendering jobs manager */
 			videoRenderer = new RenderingJobsManager (multimediaToolkit, guiToolkit);

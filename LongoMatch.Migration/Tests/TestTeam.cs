@@ -15,39 +15,32 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using NUnit.Framework;
-using LongoMatch.Common;
-using LongoMatch.Store;
+using System;
+using System.Reflection;
+using System.IO;
 using LongoMatch.Store.Templates;
-using System.Collections.Generic;
+using LongoMatch.Common;
 
-namespace Tests.Core
+namespace LongoMatch.Migration.Tests
 {
 	[TestFixture()]
-	public class TestSubcategoriesTemplate
+	public class TestTeam
 	{
 		[Test()]
-		public void TestSerialization ()
+		public void TestCase ()
 		{
-			string tag1="tag1", tag2="tag2";
-			SubCategoryTemplate t = new SubCategoryTemplate {Name="Test",
-				AllowMultiple = true, FastTag = true};
-				
-			Utils.CheckSerialization (t);
-			t.Add (tag1);
-			t.Add (tag2);
-			Utils.CheckSerialization (t);
+			var assembly = Assembly.GetExecutingAssembly();
+			var resourceName = "default.ltt";
 			
-			SubCategoryTemplate newt = Utils.SerializeDeserialize (t);
-			Assert.AreEqual (t.Name, newt.Name);
-			Assert.AreEqual (t.AllowMultiple, newt.AllowMultiple);
-			Assert.AreEqual (t.Count, newt.Count);
-			Assert.AreEqual (t.FastTag, newt.FastTag);
-			Assert.AreEqual (t.Count, 2);
-			Assert.AreEqual (t[0], tag1);
-			Assert.AreEqual (t[1], tag2);
-		
+			using (Stream stream = assembly.GetManifestResourceStream(resourceName)) {
+				TeamTemplate template = SerializableObject.Load<TeamTemplate> (stream, SerializationType.Binary);
+				var cstream = new MemoryStream ();
+				SerializableObject.Save (template, cstream, SerializationType.Json);
+				cstream.Seek (0, SeekOrigin.Begin);
+				var jsonString = new StreamReader(cstream).ReadToEnd();
+				Console.WriteLine (jsonString);
+			}
 		}
 	}
 }

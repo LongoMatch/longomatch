@@ -94,7 +94,7 @@ namespace LongoMatch.Gui.Component
 					TreeIter team;
 					filter.FilterPlayer(player);
 					/* Uncheck the team check button */
-					if (local.Contains(player))
+					if (local.List.Contains(player))
 						team = localIter;
 					else
 						team = visitorIter;

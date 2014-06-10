@@ -27,7 +27,6 @@ namespace LongoMatch.Store
 	[Serializable]
 	public class Drawing
 	{
-		private byte[] drawingBuf;
 		private const int DEFAULT_PAUSE_TIME = 5000;
 
 		/// <summary>
@@ -37,21 +36,15 @@ namespace LongoMatch.Store
 		/// which stop time is stored in a int value
 		/// </summary>
 		public Drawing() {
-			PauseTime = DEFAULT_PAUSE_TIME;
+			Pause = new Time (DEFAULT_PAUSE_TIME);
 		}
 
 		/// <summary>
 		/// Pixbuf with the drawing
 		/// </summary>
 		public Image Pixbuf {
-			get {
-				if(drawingBuf != null)
-					return Image.Deserialize(drawingBuf);
-				else return null;
-			}
-			set {
-				drawingBuf = value.Serialize();
-			}
+			get;
+			set;
 		}
 
 		/// <summary>
@@ -66,24 +59,6 @@ namespace LongoMatch.Store
 		/// Time to pause the playback and display the drawing
 		/// </summary>
 		public Time Pause {
-			set;
-			get;
-		}
-		
-		/// <summary>
-		/// Render time of the drawing
-		/// </summary>
-		[JsonIgnore]
-		public int RenderTime {
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Time to pause the playback and display the drawing
-		/// </summary>
-		[JsonIgnore]
-		public int PauseTime {
 			set;
 			get;
 		}

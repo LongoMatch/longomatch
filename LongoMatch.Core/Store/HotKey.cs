@@ -24,6 +24,10 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Mono.Unix;
+using Newtonsoft.Json;
+using LongoMatch.Common;
+
+
 #if HAVE_GTK
 using Gdk;
 #endif
@@ -37,19 +41,17 @@ namespace LongoMatch.Store
 	/// 'key' and 'modifier' are set to -1 when it's initialized
 	/// </summary>
 	[Serializable]
+	[JsonConverter (typeof (LongoMatchConverter))]
 	public class HotKey : IEquatable<HotKey>
 	{
-		private int key;
-		private int modifier;
-
 		#region Constructors
 		/// <summary>
 		/// Creates a new undefined HotKey
 		/// </summary>
 		public HotKey()
 		{
-			this.key = -1;
-			this.modifier = -1;
+			Key = -1;
+			Modifier = -1;
 		}
 		#endregion
 
@@ -58,49 +60,55 @@ namespace LongoMatch.Store
 		/// Gdk Key
 		/// </summary>
 		public int Key {
-			get {
-				return key;
-			}
-			set {
-				key = value;
-			}
+			get;
+			set;
 		}
 
 		/// <summary>
 		/// Key modifier. Only Alt and Shift can be used
 		/// </summary>
 		public int Modifier {
-			get {
-				return modifier;
-			}
-			set {
-				modifier = value;
-			}
+			get;
+			set;
 		}
 
 		/// <summary>
 		/// Get whether the hotkey is defined or not
 		/// </summary>
+		[JsonIgnore]
 		public Boolean Defined {
 			get {
-				return (key!=-1 && modifier != -1);
+				return (Key!=-1 && Modifier != -1);
 			}
 		}
 		#endregion
 
 		#region Public Methods
-		public bool Equals(HotKey hotkeyComp) {
+		public bool Equals (HotKey hotkeyComp) {
+			if (hotkeyComp == null)
+				return false;
 			return (this.Key == hotkeyComp.Key && this.Modifier == hotkeyComp.Modifier);
 		}
 		#endregion
 
 		#region Operators
-		static public bool operator == (HotKey hk1, HotKey hk2) {
-			return hk1.Equals(hk2);
+		static public bool operator == (HotKey a, HotKey b) {
+			// If both are null, or both are same instance, return true.
+			if (System.Object.ReferenceEquals(a, b))
+			{
+				return true;
+			}
+
+			// If one is null, but not both, return false.
+			if (((object)a == null) || ((object)b == null))
+			{
+				return false;
+			}
+			return a.Equals(b);
 		}
 
-		static public bool operator != (HotKey hk1, HotKey hk2) {
-			return !hk1.Equals(hk2);
+		static public bool operator != (HotKey a, HotKey b) {
+			return !(a == b);
 		}
 		#endregion
 
@@ -117,7 +125,7 @@ namespace LongoMatch.Store
 
 		public override int GetHashCode()
 		{
-			return key ^ modifier;
+			return Key ^ Modifier;
 		}
 
 		public override string ToString()

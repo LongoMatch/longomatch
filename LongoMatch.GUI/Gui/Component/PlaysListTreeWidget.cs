@@ -133,7 +133,7 @@ namespace LongoMatch.Gui.Component
 			Dictionary<Category, TreeIter> itersDic = new Dictionary<Category, TreeIter>();
 			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore(typeof(Play));
 
-			foreach(Category cat in project.Categories) {
+			foreach(Category cat in project.Categories.List) {
 				Gtk.TreeIter iter = dataFileListStore.AppendValues(cat);
 				itersDic.Add(cat, iter);
 			}
@@ -151,7 +151,7 @@ namespace LongoMatch.Gui.Component
 		}
 
 		private string CategoryPath(Category cat) {
-			return project.Categories.IndexOf(cat).ToString();
+			return project.Categories.List.IndexOf(cat).ToString();
 		}
 		
 		protected virtual void OnEditProperties(TimeNode tNode, object val) {

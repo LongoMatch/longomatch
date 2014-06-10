@@ -170,7 +170,7 @@ namespace LongoMatch.Drawing.Widgets
 			for (int col=0; col < template.Formation.Length; col ++) {
 				double colX, rowHeight;
 				
-				if (template.Count == index)
+				if (template.List.Count == index)
 					break;
 
 				if (team == Team.LOCAL) {
@@ -182,18 +182,18 @@ namespace LongoMatch.Drawing.Widgets
 
 				for (int row=0; row < template.Formation[col]; row ++) {
 					Point p = new Point (colX, rowHeight * row + rowHeight / 2);
-					PlayerObject po = new PlayerObject (template [index], p);
+					PlayerObject po = new PlayerObject (template.List [index], p);
 					po.IconSize = size;
 					po.UnSelectedColor = color;
 					Objects.Add (po);
 					index ++;
-					if (template.Count == index)
+					if (template.List.Count == index)
 						break;
 				}
 			}
 			
 			/* Substitution players */
-			for (int i = index; i < template.Count; i++) {
+			for (int i = index; i < template.List.Count; i++) {
 				PlayerObject po;
 				double x, y;
 				int reli = i - index;
@@ -205,7 +205,7 @@ namespace LongoMatch.Drawing.Widgets
 					x += BenchWidth + backgroundWidth;
 				}
 				                     
-				po = new PlayerObject (template [i], new Point (x, y));
+				po = new PlayerObject (template.List [i], new Point (x, y));
 				po.IconSize = PlayersIconSize.Small;
 				po.UnSelectedColor = color;
 				Objects.Add (po);
@@ -232,16 +232,16 @@ namespace LongoMatch.Drawing.Widgets
 			if (SubstitutionsMode) {
 				bool subsDone = false;
 				if (homeTeam != null) {
-					List<Player> hplayers = players.Where (p => homeTeam.Contains (p)).ToList();
+					List<Player> hplayers = players.Where (p => homeTeam.List.Contains (p)).ToList();
 					if (hplayers.Count == 2) {
-						homeTeam.Swap (hplayers[0], hplayers[1]);
+						homeTeam.List.Swap (hplayers[0], hplayers[1]);
 						subsDone = true;
 					}
 				}
 				if (awayTeam != null) {
-					List<Player> aplayers = players.Where (p => awayTeam.Contains (p)).ToList();
+					List<Player> aplayers = players.Where (p => awayTeam.List.Contains (p)).ToList();
 					if (aplayers.Count == 2) {
-						awayTeam.Swap (aplayers[0], aplayers[1]);
+						awayTeam.List.Swap (aplayers[0], aplayers[1]);
 						subsDone = true;
 					}
 				}

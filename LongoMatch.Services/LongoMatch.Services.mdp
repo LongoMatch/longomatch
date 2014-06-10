@@ -27,7 +27,6 @@
     <File subtype="Directory" buildaction="Compile" name=".." />
     <File subtype="Directory" buildaction="Compile" name="Services" />
     <File subtype="Code" buildaction="Compile" name="Services/DataBaseManager.cs" />
-    <File subtype="Code" buildaction="Compile" name="Services/MigrationsManager.cs" />
     <File subtype="Code" buildaction="Compile" name="Services/ToolsManager.cs" />
     <File subtype="Code" buildaction="Compile" name="Services/FileDB.cs" />
   </Contents>

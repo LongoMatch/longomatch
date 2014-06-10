@@ -34,24 +34,23 @@ namespace Tests.Core
 			Utils.CheckSerialization(t);
 			
 			t.Name = "test";
-			t.Version = new Version (1, 2);
 			t.TeamName = "team";
-			t.Add (new Player {Name="P1"});
-			t.Add (new Player {Name="P2"});
-			t.Add (new Player {Name="P3"});
+			t.List.Add (new Player {Name="P1"});
+			t.List.Add (new Player {Name="P2"});
+			t.List.Add (new Player {Name="P3"});
 			
 			
 			Utils.CheckSerialization (t);
 			
 			TeamTemplate newt = Utils.SerializeDeserialize(t);
 			
+			Assert.AreEqual (t.ID, newt.ID);
 			Assert.AreEqual (t.Name, newt.Name);
-			Assert.AreEqual (t.Version, newt.Version);
 			Assert.AreEqual (t.TeamName, newt.TeamName);
-			Assert.AreEqual (t.Count, newt.Count);
-			Assert.AreEqual (t[0].Name, newt[0].Name);
-			Assert.AreEqual (t[1].Name, newt[1].Name);
-			Assert.AreEqual (t[2].Name, newt[2].Name);
+			Assert.AreEqual (t.List.Count, newt.List.Count);
+			Assert.AreEqual (t.List[0].Name, newt.List[0].Name);
+			Assert.AreEqual (t.List[1].Name, newt.List[1].Name);
+			Assert.AreEqual (t.List[2].Name, newt.List[2].Name);
 		}
 		
 		
@@ -62,7 +61,6 @@ namespace Tests.Core
 			Player p1, p2, p3;
 			
 			t.Name = "test";
-			t.Version = new Version (1, 2);
 			t.TeamName = "team";
 			
 			Assert.AreEqual (t.PlayingPlayersList.Count, 0);
@@ -70,11 +68,11 @@ namespace Tests.Core
 			p1 = new Player {Name="P1", Playing = true};
 			p2 = new Player {Name="P2", Playing = false};
 			p3 = new Player {Name="P3", Playing = true};
-			t.Add (p1);
+			t.List.Add (p1);
 			Assert.AreEqual (t.PlayingPlayersList.Count, 1);
-			t.Add (p2);
+			t.List.Add (p2);
 			Assert.AreEqual (t.PlayingPlayersList.Count, 1);
-			t.Add (p3);
+			t.List.Add (p3);
 			Assert.AreEqual (t.PlayingPlayersList.Count, 2);
 			Assert.AreEqual (t.PlayingPlayersList[0], p1);
 			Assert.AreEqual (t.PlayingPlayersList[1], p3);
@@ -85,10 +83,21 @@ namespace Tests.Core
 		{
 			TeamTemplate t = TeamTemplate.DefaultTemplate (10);
 			
-			Assert.AreEqual (t.Count, 10);
+			Assert.AreEqual (t.List.Count, 10);
 			t.AddDefaultItem (8);
-			Assert.AreEqual (t.Count, 11);
+			Assert.AreEqual (t.List.Count, 11);
 		}
 		
+		[Test()]
+		public void TestFormation ()
+		{
+			TeamTemplate t = TeamTemplate.DefaultTemplate (1);
+			t.FormationStr = "1-2-3-4";
+			Assert.AreEqual (t.Formation.Length, 4);
+			Assert.AreEqual (t.Formation[0], 1);
+			Assert.AreEqual (t.Formation[1], 2);
+			Assert.AreEqual (t.Formation[2], 3);
+			Assert.AreEqual (t.Formation[3], 4);
+		}
 	}
 }

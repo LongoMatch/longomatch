@@ -25,14 +25,8 @@ namespace LongoMatch.Interfaces
 		string Name {get;set;}
 		Time Start {get;set;}
 		Time Stop {get;set;}
-		uint StartFrame {get; set;}
-		uint StopFrame {get; set;}
 		bool Selected {get; set;}
-		uint CentralFrame {get;}
-		uint TotalFrames {get;}
-		uint KeyFrame {get;}
 		bool HasDrawings {get;}
-		bool HasFrame(int frame);
 	}
 }
 

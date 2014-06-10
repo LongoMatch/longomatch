@@ -18,6 +18,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Store
 {
@@ -28,6 +29,7 @@ namespace LongoMatch.Store
 		{
 		}
 		
+		[JsonIgnore]
 		public TimeNode PeriodNode {
 			get {
 				return new TimeNode {Name=Name,

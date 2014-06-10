@@ -21,10 +21,17 @@ using System.Collections.Generic;
 namespace LongoMatch.Common
 {
 	[Serializable]
-	public class Coordinates: List<Point>
+	public class Coordinates
 	{
+		
 		public Coordinates ()
 		{
+			Points = new List<Point> ();
+		}
+		
+		public List<Point> Points {
+			get;
+			set;
 		}
 		
 		public override bool Equals (object obj)
@@ -33,11 +40,11 @@ namespace LongoMatch.Common
             if (c == null)
 				return false;
 				
-			if (c.Count != Count)
+			if (c.Points.Count != Points.Count)
 				return false;
 			
-			for (int i=0; i<Count; i++) {
-				if (c[i] != this[i])
+			for (int i=0; i < Points.Count; i++) {
+				if (!c.Points[i].Equals (Points[i]))
 					return false;
 			}
 			return true;
@@ -47,8 +54,12 @@ namespace LongoMatch.Common
 		{
 			string s = "";
 			
-			for (int i=0; i<Count; i++) {
-				s += this[i].X.ToString() +  this[i].Y.ToString();
+			if (Points.Count == 0) {
+				return base.GetHashCode ();
+			}
+			
+			for (int i=0; i < Points.Count; i++) {
+				s += this.Points[i].X.ToString() +  this.Points[i].Y.ToString();
 			}
 			
 			return int.Parse(s);

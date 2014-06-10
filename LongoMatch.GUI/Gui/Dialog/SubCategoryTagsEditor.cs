@@ -26,12 +26,12 @@ namespace LongoMatch.Gui.Dialog
 {
 	public partial class SubCategoryTagsEditor : Gtk.Dialog
 	{
-		private TagSubCategory template;
+		private SubCategory template;
 		private Dictionary<string, Widget>  tagsDict;
 		private List<string> templates;
 		private Color templateExistsColor;
 		
-		public SubCategoryTagsEditor (TagSubCategory template, List<string> templates)
+		public SubCategoryTagsEditor (SubCategory template, List<string> templates)
 		{
 			this.Build ();
 			Gdk.Color.Parse("red", ref templateExistsColor);
@@ -45,7 +45,7 @@ namespace LongoMatch.Gui.Dialog
 			Template = template;
 		}
 		
-		public TagSubCategory Template {
+		public SubCategory Template {
 			set{
 				template = value;
 				nameentry.Text = template.Name;
