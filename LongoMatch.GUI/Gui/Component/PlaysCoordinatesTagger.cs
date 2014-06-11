@@ -41,9 +41,9 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 			SetMode (true);
-			Config.EventsBroker.PlaySelected += (play) => LoadPlay (play, false);
+			Config.EventsBroker.PlaySelected += HandlePlaySelected;
 		}
-		
+
 		public bool CoordinatesSensitive {
 			set {
 				field.Sensitive = value;
@@ -187,9 +187,15 @@ namespace LongoMatch.Gui.Component
 			goal.Visible = true;
 		}
 		
+		void HandlePlaySelected (Play play)
+		{
+			LoadPlay (play, false);
+		}
+		
 		protected override void OnDestroyed ()
 		{
 			base.OnDestroyed ();
+			Config.EventsBroker.PlaySelected -= HandlePlaySelected;
 			if (fieldPixbuf != null)
 				fieldPixbuf.Dispose();
 			if (hFieldPixbuf != null)

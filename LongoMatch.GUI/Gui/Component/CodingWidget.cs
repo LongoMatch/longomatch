@@ -46,10 +46,17 @@ namespace LongoMatch.Gui.Component
 			drawingarea1.HeightRequest = 200;
 			drawingarea1.WidthRequest = 300;
 			
-			Config.EventsBroker.Tick += (t, l, p) => timeline.CurrentTime = t;
-			Config.EventsBroker.PlaySelected += (play) => timeline.SelectedTimeNode = play;
+			Config.EventsBroker.Tick += HandleTick;
+			Config.EventsBroker.PlaySelected += HandlePlaySelected;
 		}
 		
+		protected override void OnDestroyed ()
+		{
+			Config.EventsBroker.Tick -= HandleTick;
+			Config.EventsBroker.PlaySelected -= HandlePlaySelected;
+			base.OnDestroyed ();
+		}
+
 		public void SetProject (Project project, bool isLive, PlaysFilter filter) {
 			this.project = project;	
 			autoTaggingMode.Active = true;
@@ -110,6 +117,16 @@ namespace LongoMatch.Gui.Component
 			buttonswidget.Visible = autoTaggingMode.Active;
 			drawingarea1.Visible = buttonswidget.Visible;
 			timeline.Visible = timelineMode.Active;
+		}
+		
+		void HandlePlaySelected (Play play)
+		{
+			timeline.SelectedTimeNode = play;
+		}
+
+		void HandleTick (Time currentTime, Time streamLength, double currentPosition)
+		{
+			timeline.CurrentTime = currentTime;
 		}
 	}
 

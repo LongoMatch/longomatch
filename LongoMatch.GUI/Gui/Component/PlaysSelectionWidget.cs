@@ -67,10 +67,10 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		public void Clear() {
+			Config.EventsBroker.TeamTagsChanged -= UpdateTeamsModels;
 			playsList.Project = null;
 			localPlayersList.Clear();
 			visitorPlayersList.Clear();
-			Config.EventsBroker.TeamTagsChanged -= UpdateTeamsModels;
 		}
 		
 		public bool PlayListLoaded {

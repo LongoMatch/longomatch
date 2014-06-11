@@ -32,11 +32,10 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 			buttonswidget.Mode = LongoMatch.Common.TagMode.Predifined;
-			Config.EventsBroker.NewTagEvent += HandleCategorySelected;
 			categoryproperties.Visible = false;
 			savebutton.Clicked += HandleSaveClicked;
 		}
-
+		
 		public Categories Template {
 			set {
 				template = value;

@@ -325,12 +325,11 @@ namespace LongoMatch.Gui
 			playbutton.Clicked += OnPlaybuttonClicked;
 			pausebutton.Clicked += OnPausebuttonClicked;
 			drawbutton.Clicked += OnDrawButtonClicked;
+			volumebutton.Clicked += OnVolumebuttonClicked;
 			timescale.ValueChanged += OnTimescaleValueChanged;
 			timescale.AdjustBounds += OnTimescaleAdjustBounds;			
 			vscale1.FormatValue += OnVscale1FormatValue;
             vscale1.ValueChanged += OnVscale1ValueChanged;
-			drawbutton.Clicked += OnDrawButtonClicked;
-			volumebutton.Clicked += OnVolumebuttonClicked;
 
 		}
 		
