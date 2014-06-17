@@ -34,14 +34,14 @@ namespace LongoMatch.Drawing.Cairo
 	public class CairoBackend: IDrawingToolkit
 	{
 		Context context;
-		Color strokeColor;
-		Color fillColor;
-		FontSlant fSlant;
-		FontWeight fWeight;
+		Color savedStrokeColor, savedFillColor;
+		FontSlant fSlant, savedFSlant;
+		FontWeight fWeight, savedFWeight;
+		int savedLineWidth, savedFontSize;
+		string savedFontFamily;
 		
 		public CairoBackend ()
 		{
-			Translation = new Point (0, 0);
 			StrokeColor = Color.Black;
 			FillColor = Color.Black;
 			LineWidth = 2;
@@ -62,21 +62,14 @@ namespace LongoMatch.Drawing.Cairo
 			protected get;
 		}
 		
-		public Point Translation {
+		public Color StrokeColor {
 			set;
 			protected get;
 		}
 		
-		public Color StrokeColor {
-			set {
-				strokeColor = value;
-			}
-		}
-		
 		public Color FillColor {
-			set {
-				fillColor = value;
-			}
+			set;
+			protected get;
 		}
 		
 		public string FontFamily {
@@ -120,16 +113,34 @@ namespace LongoMatch.Drawing.Cairo
 		}
 		
 		public void Begin() {
+			savedStrokeColor = StrokeColor;
+			savedFillColor = FillColor;
+			savedFSlant = fSlant;
+			savedFWeight = fWeight;
+			savedLineWidth = LineWidth;
+			savedFontSize = FontSize;
+			savedFontFamily = FontFamily;
 			context.Save ();
-			context.Translate (Translation.X, Translation.Y);
+		}
+		
+		public void TranslateAndScale (Point translation, Point scale) {
+			context.Translate (translation.X, translation.Y);
+			context.Scale (scale.X, scale.Y);
 		}
 		
 		public void End() {
 			context.Restore ();
+			StrokeColor = savedStrokeColor;
+			FillColor = savedFillColor;
+			fSlant = savedFSlant;
+			fWeight = savedFWeight;
+			LineWidth = savedLineWidth;
+			FontSize = savedFontSize;
+			FontFamily = savedFontFamily;
 		}
 		
 		public void DrawLine (Point start, Point stop) {
-			SetColor (strokeColor);
+			SetColor (StrokeColor);
 			context.LineWidth = LineWidth;
 			context.MoveTo (start.X, start.Y);
 			context.LineTo (stop.X, stop.Y);
@@ -159,13 +170,13 @@ namespace LongoMatch.Drawing.Cairo
 				break;
 			}
 			
-			SetColor (strokeColor);
+			SetColor (StrokeColor);
 			context.MoveTo (x1, y1);
 			context.LineTo (x2, y2);
 			context.LineTo (x3, y3);
 			context.ClosePath();
 			context.StrokePreserve ();
-			SetColor (fillColor);
+			SetColor (FillColor);
 			context.Fill();
 		}
 		
@@ -229,7 +240,7 @@ namespace LongoMatch.Drawing.Cairo
 			FontExtents fextents;
 			double x, y;
 			
-			SetColor (strokeColor);
+			SetColor (StrokeColor);
 			context.SelectFontFace (FontFamily, fSlant, fWeight);
 			context.SetFontSize (FontSize);
 			extents = context.TextExtents (text);
@@ -240,6 +251,11 @@ namespace LongoMatch.Drawing.Cairo
 			context.ShowText (text);
 		}
 		
+		public void DrawImage (Image image) {
+			CairoHelper.SetSourcePixbuf (context, image.Value, 0, 0);
+			context.Paint ();
+		}
+
 		public void DrawImage (Point start, double width, double height, Image image, bool scale) {
 			double scaleX, scaleY;
 			Point offset;
@@ -266,9 +282,9 @@ namespace LongoMatch.Drawing.Cairo
 			context.LineCap = LineCap.Round;
 			context.LineJoin = LineJoin.Round;
 			context.LineWidth = LineWidth;
-			SetColor (strokeColor);
+			SetColor (StrokeColor);
 			context.StrokePreserve();
-			SetColor (fillColor);
+			SetColor (FillColor);
 			context.Fill();
 		}
 		
