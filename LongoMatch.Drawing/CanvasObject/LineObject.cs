@@ -16,51 +16,33 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Interfaces.Drawing;
-using LongoMatch.Interfaces;
 using LongoMatch.Common;
 using LongoMatch.Store.Drawables;
+using LongoMatch.Interfaces.Drawing;
+using LongoMatch.Interfaces;
 
 namespace LongoMatch.Drawing.CanvasObject
 {
-	public abstract class BaseCanvasObject: ICanvasObject
+	public class LineObject: BaseCanvasDrawableObject<Line>, ICanvasSelectableObject
 	{
-		public BaseCanvasObject ()
+		public LineObject (Point start, Point stop, LineType type, LineStyle stile,
+		                   Color color, int width)
 		{
-			Visible = true;
+			Drawable = new Line (start, stop, type, stile);
+			Drawable.FillColor = color;
+			Drawable.StrokeColor = color;
+			Drawable.LineWidth = width;
 		}
 		
-		public bool Visible {
-			get;
-			set;
+		public override void Draw (IDrawingToolkit tk, Area area) {
+			tk.Begin ();
+			tk.FillColor = Drawable.FillColor;
+			tk.StrokeColor = Drawable.StrokeColor;
+			tk.LineWidth = Drawable.LineWidth;
+			tk.DrawLine (Drawable.Start, Drawable.Stop);
+			tk.End ();
 		}
-		
-		public bool Selected {
-			set;
-			get;
-		}
-		
-		public abstract void Draw (IDrawingToolkit tk, Area area);
-	}
-	
-	public abstract class BaseCanvasDrawableObject<T>: BaseCanvasObject where T:Drawable
-	{
-		public T Drawable {
-			get;
-			set;
-		}
-		
-		public Canvas Parent {
-			get;
-			set;
-		}
-		
-		public Selection GetSelection (Point point, double precision) {
-			return Drawable.GetSelection (point, precision);
-		}
-		
-		public void Move (Selection s, Point p, Point start) {
-			Drawable.Move (s, p, start);
-		}
+
 	}
 }
+
