@@ -36,8 +36,10 @@ namespace LongoMatch.Drawing.Cairo
 		public event ButtonPressedHandler ButtonPressEvent;
 		public event ButtonReleasedHandler ButtonReleasedEvent;
 		public event MotionHandler MotionEvent;
+		public event LongoMatch.Handlers.Drawing.SizeChangedHandler SizeChangedEvent;
 
 		DrawingArea widget;
+		int currentWidth, currentHeight;
 		
 		public WidgetWrapper (DrawingArea widget)
 		{
@@ -53,7 +55,7 @@ namespace LongoMatch.Drawing.Cairo
 
 		public double Width {
 			get {
-				return widget.Allocation.Width;
+				return currentWidth;
 			}
 			set {
 				widget.WidthRequest = (int) value;
@@ -62,7 +64,7 @@ namespace LongoMatch.Drawing.Cairo
 
 		public double Height {
 			get {
-				return widget.Allocation.Height;
+				return currentHeight;
 			}
 			set {
 				widget.HeightRequest = (int) value;
@@ -197,6 +199,15 @@ namespace LongoMatch.Drawing.Cairo
 		{
 			Rectangle r;
 			Area a;
+			bool size_changed;
+			
+			size_changed = widget.Allocation.Height != currentHeight;
+			size_changed |= widget.Allocation.Width != currentWidth;
+			currentWidth = widget.Allocation.Width;
+			currentHeight = widget.Allocation.Height;
+			if (size_changed && SizeChangedEvent != null) {
+				SizeChangedEvent ();
+			}
 			
 			r = args.Event.Area;
 			a = new Area (new Point (r.X, r.Y), r.Width, r.Height);
