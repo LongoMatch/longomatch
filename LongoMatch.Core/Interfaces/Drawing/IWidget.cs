@@ -27,6 +27,7 @@ namespace LongoMatch.Interfaces.Drawing
 		event ButtonPressedHandler ButtonPressEvent;
 		event ButtonReleasedHandler ButtonReleasedEvent;
 		event MotionHandler MotionEvent;
+		event SizeChangedHandler SizeChangedEvent;
 		
 		double Width {get;set;}
 		double Height {get;set;}

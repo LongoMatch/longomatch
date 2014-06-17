@@ -33,7 +33,7 @@ namespace LongoMatch.Store.Drawables
 			set;
 		}
 		
-		public uint StrokeSize {
+		public int LineWidth {
 			get;
 			set;
 		}

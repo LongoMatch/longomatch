@@ -27,7 +27,6 @@ namespace LongoMatch.Interfaces
 		int LineWidth {set;}
 		Color StrokeColor {set;}
 		Color FillColor {set;}
-		Point Translation {set;}
 		string FontFamily {set;}
 		FontSlant FontSlant {set;}
 		FontWeight FontWeight {set;}
@@ -35,6 +34,7 @@ namespace LongoMatch.Interfaces
 		
 		void Begin();
 		void End();
+		void TranslateAndScale (Point translation, Point scale);
 		void DrawLine (Point start, Point stop);
 		void DrawTriangle (Point corner, double width, double height,
 		                   SelectionPosition orientation);
@@ -45,6 +45,7 @@ namespace LongoMatch.Interfaces
 		void DrawCircle (Point center, double radius);
 		void DrawEllipse (Point center, double axisX, double axisY);
 		void DrawText (Point point, double width, double height, string text);
+		void DrawImage (Image image); 
 		void DrawImage (Point start, double width, double height, Image image, bool scale); 
 	}
 }
