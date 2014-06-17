@@ -211,7 +211,43 @@ namespace LongoMatch.Drawing
 			}
 			lastTime = time;
 		}
+	}
+	
+	public abstract class BackgroundCanvas: SelectionCanvas
+	{
+
+		Image background;
+
+		public BackgroundCanvas (IWidget widget): base (widget) {
+			widget.SizeChangedEvent += HandleSizeChangedEvent;;
+		}
+
+		public Image Background {
+			set {
+				background = value;
+				HandleSizeChangedEvent ();
+			}
+			get {
+				return background;
+			}
+		}
 		
+		protected virtual void HandleSizeChangedEvent ()
+		{
+			if (background != null) {
+				background.ScaleFactor ((int) widget.Width, (int) widget.Height, out scaleX,
+				                        out scaleY, out translation);
+			}
+		}
+		
+		protected override void HandleDraw (object context, Area area)
+		{
+			tk.Context = context;
+			tk.Begin ();
+			tk.TranslateAndScale (translation, new Point (scaleX, scaleY));
+			tk.DrawImage (Background);
+			tk.End ();
+			base.HandleDraw (context, area);
+		}
 	}
 }
-
