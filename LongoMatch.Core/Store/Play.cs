@@ -181,6 +181,36 @@ namespace LongoMatch.Store
 		#endregion
 
 		#region Public methods
+		
+		public Coordinates CoordinatesInFieldPosition (FieldPositionType pos) {
+			switch (pos) {
+			case FieldPositionType.Field:
+				return FieldPosition;
+			case FieldPositionType.HalfField:
+				return HalfFieldPosition;
+			case FieldPositionType.Goal:
+				return GoalPosition;
+			}
+			return null;
+		}
+		
+		public void UpdateCoordinates (FieldPositionType pos, List<Point> points) {
+			Coordinates co = new Coordinates ();
+			co.Points = points;
+			
+			switch (pos) {
+			case FieldPositionType.Field:
+				FieldPosition = co;
+				break;
+			case FieldPositionType.HalfField:
+				HalfFieldPosition = co;
+				break;
+			case FieldPositionType.Goal:
+				GoalPosition = co;
+				break;
+			}
+		}
+		
 		public override string ToString()
 		{
 			return Name + "\n" + Start.ToMSecondsString() + " - " + Stop.ToMSecondsString();

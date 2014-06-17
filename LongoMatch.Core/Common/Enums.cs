@@ -221,5 +221,11 @@ namespace LongoMatch.Common
 		Large = 50,
 		ExtraLarge = 60
 	}
+	
+	public enum FieldPositionType {
+		Field,
+		HalfField,
+		Goal
+	}
 }
 

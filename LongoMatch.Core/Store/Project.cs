@@ -236,7 +236,19 @@ namespace LongoMatch.Store
 		public List<Play> PlaysInCategory(Category category) {
 			return Timeline.Where(p => p.Category.ID == category.ID).ToList();
 		}
-
+		
+		public Image GetBackground (FieldPositionType pos) {
+			switch (pos) {
+			case FieldPositionType.Field:
+				return Categories.FieldBackground;
+			case FieldPositionType.HalfField:
+				return Categories.HalfFieldBackground;
+			case FieldPositionType.Goal:
+				return Categories.GoalBackground;
+			}
+			return null;
+		}
+		
 		public bool Equals(Project project) {
 			if(project == null)
 				return false;
