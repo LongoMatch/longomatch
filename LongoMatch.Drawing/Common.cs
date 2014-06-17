@@ -27,7 +27,11 @@ namespace LongoMatch.Drawing
 		public const int CATEGORY_WIDTH = 150;
 		public const int CATEGORY_H_SPACE = 5;
 		public const int TIMER_HEIGHT = 20;
-		public static int TIMERULE_HEIGHT = 30;
+		public const int TIMERULE_HEIGHT = 30;
+
+		public const int TAGGER_POINT_SIZE = 5;
+		public const int TAGGER_LINE_WIDTH = 3;
+		public static Color TAGGER_POINT_COLOR = Color.Blue1;
 
 		public const double TIMELINE_ACCURACY = 5;
 		public static Color TEXT_COLOR = Color.Black;
