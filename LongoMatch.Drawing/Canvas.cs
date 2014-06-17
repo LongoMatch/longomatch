@@ -70,7 +70,7 @@ namespace LongoMatch.Drawing
 		}
 	}
 	
-	public abstract class SelectionCanvas: Canvas
+	public class SelectionCanvas: Canvas
 	{
 		protected bool moving;
 		protected Point start; 
@@ -79,6 +79,7 @@ namespace LongoMatch.Drawing
 		public SelectionCanvas (IWidget widget): base (widget) {
 			Selections = new List<Selection>();
 			SelectionMode = MultiSelectionMode.Single;
+			Accuracy = 1;
 			
 			widget.ButtonPressEvent += HandleButtonPressEvent;
 			widget.ButtonReleasedEvent += HandleButtonReleasedEvent;
@@ -100,11 +101,20 @@ namespace LongoMatch.Drawing
 			set;
 		}
 		
-		protected abstract void StartMove (Selection sel);
-		protected abstract void SelectionMoved (Selection sel);
-		protected abstract void StopMove ();
-		protected abstract void SelectionChanged (List<Selection> sel);
-		protected abstract void ShowMenu (Point coords);
+		protected virtual void StartMove (Selection sel) {
+		}
+		
+		protected virtual void SelectionMoved (Selection sel) {
+		}
+		
+		protected virtual void StopMove () {
+		}
+		
+		protected virtual void SelectionChanged (List<Selection> sel) {
+		}
+		
+		protected virtual void ShowMenu (Point coords) {
+		}
 		
 		public void ClearSelection () {
 			foreach (Selection sel in Selections) {
@@ -131,7 +141,7 @@ namespace LongoMatch.Drawing
 			widget.ReDraw (so);
 		}
 		
-		protected virtual void HandleLeftButton (Point coords, ButtonModifier modif) {
+		void HandleLeftButton (Point coords, ButtonModifier modif) {
 			Selection sel = null;
 
 			foreach (object o in Objects) {
@@ -163,7 +173,7 @@ namespace LongoMatch.Drawing
 			}
 		}
 		
-		protected virtual void HandleRightButton (Point coords, ButtonModifier modif) {
+		void HandleRightButton (Point coords, ButtonModifier modif) {
 			ShowMenu (coords);
 		}
 		
@@ -174,6 +184,7 @@ namespace LongoMatch.Drawing
 			if (!moving)
 				return;
 			
+			coords = ToUserCoords (coords); 
 			sel = Selections[0];
 			sel.Drawable.Move (sel, coords, start);  
 			widget.ReDraw (sel.Drawable);
@@ -192,6 +203,7 @@ namespace LongoMatch.Drawing
 			if (time - lastTime < 500) {
 				return;
 			}
+			coords = ToUserCoords (coords); 
 			if (type == ButtonType.Left) {
 				HandleLeftButton (coords, modifier);
 			} else if (type == ButtonType.Right) {
