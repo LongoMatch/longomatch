@@ -154,6 +154,7 @@ namespace LongoMatch.Handlers
 	public delegate void TagSubcategoriesChangedHandler (bool tagsubcategories);
 	
 	public delegate void ShowTimelineMenuHandler (List<Play> plays, Category cat, Time time);
+	public delegate void ShowTaggerMenuHandler (List<Play> plays);
 
 	public delegate void BackEventHandle ();
 }
