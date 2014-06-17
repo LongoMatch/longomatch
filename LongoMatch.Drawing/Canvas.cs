@@ -30,6 +30,8 @@ namespace LongoMatch.Drawing
 	{
 		protected IDrawingToolkit tk;
 		protected IWidget widget;
+		protected double scaleX, scaleY;
+		protected Point translation;
 		
 		public Canvas (IWidget widget)
 		{
@@ -37,6 +39,9 @@ namespace LongoMatch.Drawing
 			tk = Config.DrawingToolkit;
 			Objects = new List<ICanvasObject>();
 			widget.DrawEvent += HandleDraw;
+			scaleX = 1;
+			scaleY = 1;
+			translation = new Point (0, 0);
 		}
 		
 		public List<ICanvasObject> Objects {
@@ -44,14 +49,23 @@ namespace LongoMatch.Drawing
 			set;
 		}
 		
+		protected Point ToUserCoords (Point p) {
+			return new Point ((p.X - translation.X) / scaleX,
+			                  (p.Y - translation.Y) / scaleY);
+		
+		}
+		
 		protected virtual void HandleDraw (object context, Area area) {
 			tk.Context = context;
+			tk.TranslateAndScale (translation, new Point (scaleX, scaleY));
+			tk.Begin ();
 			for (int i=Objects.Count - 1; i >= 0; i--) {
 				ICanvasObject o = Objects[i];
 				if (o.Visible) {
 					o.Draw (tk, area);
 				}
 			}
+			tk.End ();
 			tk.Context = null;
 		}
 	}
