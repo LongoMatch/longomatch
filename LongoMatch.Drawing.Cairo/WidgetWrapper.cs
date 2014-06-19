@@ -36,12 +36,14 @@ namespace LongoMatch.Drawing.Cairo
 		public event ButtonPressedHandler ButtonPressEvent;
 		public event ButtonReleasedHandler ButtonReleasedEvent;
 		public event MotionHandler MotionEvent;
+		public event ShowTooltipHandler ShowTooltipEvent;
 		public event LongoMatch.Handlers.Drawing.SizeChangedHandler SizeChangedEvent;
 
 		DrawingArea widget;
 		int currentWidth, currentHeight;
+		double lastX, lastY;
 		bool canMove;
-		uint timerID;
+		uint moveTimerID, hoverTimerID;
 		
 		public WidgetWrapper (DrawingArea widget)
 		{
@@ -94,6 +96,11 @@ namespace LongoMatch.Drawing.Cairo
 			ReDraw ();
 		}
 		
+		public void ShowTooltip (string text) {
+			widget.HasTooltip = true;
+			widget.TooltipText = text;
+		}
+
 		public void SetCursor (CursorType type) {
 			GCursorType gtype;
 			
@@ -167,22 +174,40 @@ namespace LongoMatch.Drawing.Cairo
 		
 		bool ReadyToMove () {
 			canMove = true;
+			moveTimerID = 0;
 			return false;
-			timerID = 0;
+		}
+		
+		bool EmitShowTooltip () {
+			if (ShowTooltipEvent != null) {
+				ShowTooltipEvent (new Point (lastX, lastY));
+			}
+			hoverTimerID = 0;
+			return false;
 		}
 
 		void HandleMotionNotifyEvent (object o, MotionNotifyEventArgs args)
 		{
+			if (hoverTimerID != 0){
+				GLib.Source.Remove (hoverTimerID);
+				hoverTimerID = 0;
+			}
+			hoverTimerID = GLib.Timeout.Add (100, EmitShowTooltip);
+			widget.HasTooltip = false;
+			
+			lastX = args.Event.X;
+			lastY = args.Event.Y;
+
 			if (MotionEvent != null && canMove) {
-				MotionEvent (new Point (args.Event.X, args.Event.Y));
+				MotionEvent (new Point (lastX, lastY));
 			}
 		}
 
 		void HandleButtonReleaseEvent (object o, ButtonReleaseEventArgs args)
 		{
-			if (timerID != 0) {
-				GLib.Source.Remove (timerID);
-				timerID = 0;
+			if (moveTimerID != 0) {
+				GLib.Source.Remove (moveTimerID);
+				moveTimerID = 0;
 			}
 			
 			if (ButtonReleasedEvent != null) {
@@ -201,7 +226,7 @@ namespace LongoMatch.Drawing.Cairo
 			 * should be ignored. Start moving only when the button has been
 			 * pressed for more than 200ms */
 			canMove = false;
-			timerID = GLib.Timeout.Add (200, ReadyToMove);
+			moveTimerID = GLib.Timeout.Add (200, ReadyToMove);
 			if (ButtonPressEvent != null) {
 				ButtonType bt;
 				ButtonModifier bm;

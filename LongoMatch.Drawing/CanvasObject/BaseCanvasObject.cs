@@ -30,6 +30,11 @@ namespace LongoMatch.Drawing.CanvasObject
 			Visible = true;
 		}
 		
+		public virtual string Description {
+			get;
+			set;
+		}
+		
 		public bool Visible {
 			get;
 			set;

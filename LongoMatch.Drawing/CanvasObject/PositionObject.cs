@@ -36,6 +36,15 @@ namespace LongoMatch.Drawing.CanvasObject
 			Height = height;
 		}
 		
+		public override string Description {
+			get {
+				if (Play != null) {
+					return Play.Name;
+				}
+				return null;
+			}
+		}
+
 		public int Width {
 			get;
 			set;

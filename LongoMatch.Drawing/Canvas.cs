@@ -84,6 +84,7 @@ namespace LongoMatch.Drawing
 			widget.ButtonPressEvent += HandleButtonPressEvent;
 			widget.ButtonReleasedEvent += HandleButtonReleasedEvent;
 			widget.MotionEvent += HandleMotionEvent;
+			widget.ShowTooltipEvent += HandleShowTooltipEvent;
 		}
 		
 		public double Accuracy {
@@ -145,24 +146,40 @@ namespace LongoMatch.Drawing
 			}
 			widget.ReDraw (so);
 		}
-		
-		void HandleLeftButton (Point coords, ButtonModifier modif) {
+
+		Selection GetSelection (Point coords)
+		{
 			Selection sel = null;
 
-			/* Try with the selected item first */
-			if (Selections.Count > 0) {
-				sel = Selections.LastOrDefault().Drawable.GetSelection (coords, Accuracy);
+			/* Try with the selected item first */if (Selections.Count > 0) {
+				sel = Selections.LastOrDefault ().Drawable.GetSelection (coords, Accuracy);
 			}
-			
 			if (sel == null) {
-				foreach (object o in Objects) {
-					ICanvasSelectableObject co = o as ICanvasSelectableObject;
+				foreach (ICanvasSelectableObject co in Objects) {
 					sel = co.GetSelection (coords, Accuracy);
 					if (sel != null) {
 						break;
 					}
 				}
 			}
+			return sel;
+		}
+		
+		void HandleShowTooltipEvent (Point coords)
+		{
+			Selection sel = GetSelection (ToUserCoords (coords)); 
+			if (sel != null) {
+				ICanvasObject co = sel.Drawable as ICanvasObject;
+				if (co.Description != null) {
+					widget.ShowTooltip (co.Description);
+				}
+			}
+		}
+		
+		void HandleLeftButton (Point coords, ButtonModifier modif) {
+			Selection sel;
+			
+			sel = GetSelection (coords);
 
 			if ((SelectionMode == MultiSelectionMode.Multiple) ||
 			    (SelectionMode == MultiSelectionMode.MultipleWithModifier &&

@@ -28,12 +28,14 @@ namespace LongoMatch.Interfaces.Drawing
 		event ButtonReleasedHandler ButtonReleasedEvent;
 		event MotionHandler MotionEvent;
 		event SizeChangedHandler SizeChangedEvent;
+		event ShowTooltipHandler ShowTooltipEvent;
 		
 		double Width {get;set;}
 		double Height {get;set;}
 		void ReDraw (Area area = null);
 		void ReDraw (IDrawable drawable);
 		void SetCursor (CursorType type);
+		void ShowTooltip (string text);
 	}
 }
 

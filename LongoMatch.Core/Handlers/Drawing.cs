@@ -24,6 +24,7 @@ namespace LongoMatch.Handlers.Drawing
 	public delegate void ButtonPressedHandler (Point coords, uint time, ButtonType type, ButtonModifier modifier);
 	public delegate void ButtonReleasedHandler (Point coords, ButtonType type, ButtonModifier modifier);
 	public delegate void MotionHandler (Point coords);
+	public delegate void ShowTooltipHandler (Point coords);
 	public delegate void SizeChangedHandler ();
 }
 

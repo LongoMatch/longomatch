@@ -30,6 +30,12 @@ namespace LongoMatch.Drawing.CanvasObject
 		{
 		}
 		
+		public override string Description {
+			get {
+				return Play.Name;
+			}
+		}
+
 		public Play Play {
 			get {
 				return TimeNode as Play;
