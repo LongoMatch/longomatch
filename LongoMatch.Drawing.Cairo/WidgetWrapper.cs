@@ -40,6 +40,8 @@ namespace LongoMatch.Drawing.Cairo
 
 		DrawingArea widget;
 		int currentWidth, currentHeight;
+		bool canMove;
+		uint timerID;
 		
 		public WidgetWrapper (DrawingArea widget)
 		{
@@ -162,16 +164,27 @@ namespace LongoMatch.Drawing.Cairo
 			}
 			return bm;
 		}
+		
+		bool ReadyToMove () {
+			canMove = true;
+			return false;
+			timerID = 0;
+		}
 
 		void HandleMotionNotifyEvent (object o, MotionNotifyEventArgs args)
 		{
-			if (MotionEvent != null) {
+			if (MotionEvent != null && canMove) {
 				MotionEvent (new Point (args.Event.X, args.Event.Y));
 			}
 		}
 
 		void HandleButtonReleaseEvent (object o, ButtonReleaseEventArgs args)
 		{
+			if (timerID != 0) {
+				GLib.Source.Remove (timerID);
+				timerID = 0;
+			}
+			
 			if (ButtonReleasedEvent != null) {
 				ButtonType bt;
 				ButtonModifier bm;
@@ -184,6 +197,11 @@ namespace LongoMatch.Drawing.Cairo
 
 		void HandleButtonPressEvent (object o, ButtonPressEventArgs args)
 		{
+			/* Fast button clicks sometimes produced a small move that
+			 * should be ignored. Start moving only when the button has been
+			 * pressed for more than 200ms */
+			canMove = false;
+			timerID = GLib.Timeout.Add (200, ReadyToMove);
 			if (ButtonPressEvent != null) {
 				ButtonType bt;
 				ButtonModifier bm;
