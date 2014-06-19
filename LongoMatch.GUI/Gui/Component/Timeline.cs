@@ -42,6 +42,7 @@ namespace LongoMatch.Gui.Component
 		double secondsPerPixel;
 		uint timeoutID;
 		Time currentTime, nextCurrentTime;
+		PlaysMenu menu;
 
 		public Timeline ()
 		{
@@ -61,6 +62,7 @@ namespace LongoMatch.Gui.Component
 			scrolledwindow1.Vadjustment.ValueChanged += HandleScrollEvent;
 			scrolledwindow1.Hadjustment.ValueChanged += HandleScrollEvent;
 			timeoutID = 0;
+			menu = new PlaysMenu ();
 		}
 		
 		public TimeNode SelectedTimeNode {
@@ -158,51 +160,7 @@ namespace LongoMatch.Gui.Component
 		
 		void HandleShowMenu (List<Play> plays, Category cat, Time time)
 		{
-			Menu menu;
-			MenuItem newPlay, del, tag, addPLN, snapshot, render;
-			
-			menu = new Menu();
-
-			newPlay = new MenuItem(String.Format ("{0} in {1}",
-			                       Catalog.GetString("Add new play"), cat.Name));
-			menu.Append(newPlay);
-			newPlay.Activated += (sender, e) => Config.EventsBroker.EmitNewTagAtPos (cat, time);
-
-			if (plays != null) {
-				if (plays.Count == 1) {
-					tag = new MenuItem(Catalog.GetString("Edit tags"));
-					snapshot = new MenuItem(Catalog.GetString("Export to PGN images"));
-					tag.Activated += (sender, e) => Config.EventsBroker.EmitTagPlay (plays[0]);
-					snapshot.Activated += (sender, e) => Config.EventsBroker.EmitSnapshotSeries (plays[0]);
-					menu.Add (tag);
-					menu.Add (snapshot);
-				}
-				if (plays.Count > 0 ) {
-					del = new MenuItem (String.Format ("{0} ({1})",
-					                    Catalog.GetString("Delete"), plays.Count));
-					del.Activated += (sender, e) => Config.EventsBroker.EmitPlaysDeleted (plays);
-					menu.Add (del);
-					addPLN = new MenuItem (String.Format ("{0} ({1})",
-					                       Catalog.GetString("Add to playlist"), plays.Count));
-					addPLN.Activated += (sender, e) => Config.EventsBroker.EmitPlayListNodeAdded (plays);
-					menu.Add (addPLN);
-					render = new MenuItem (String.Format ("{0} ({1})",
-					                       Catalog.GetString("Export to video file"), plays.Count));
-					render.Activated += (sender, e) => EmitRenderPlaylist (plays);
-					menu.Add (render);
-				}
-			}
-			menu.ShowAll();
-			menu.Popup();
-		}
-
-		void EmitRenderPlaylist (List<Play> plays)
-		{
-			PlayList pl = new PlayList();
-			foreach (Play p in plays) {
-				pl.Add (new PlayListPlay (p, projectFile, true));
-			}
-			Config.EventsBroker.EmitRenderPlaylist (pl);
+			menu.ShowMenu (plays, cat, time, projectFile);
 		}
 	}
 }
