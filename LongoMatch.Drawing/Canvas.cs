@@ -231,7 +231,7 @@ namespace LongoMatch.Drawing
 		Image background;
 
 		public BackgroundCanvas (IWidget widget): base (widget) {
-			widget.SizeChangedEvent += HandleSizeChangedEvent;;
+			widget.SizeChangedEvent += HandleSizeChangedEvent;
 		}
 
 		public Image Background {
@@ -254,11 +254,13 @@ namespace LongoMatch.Drawing
 		
 		protected override void HandleDraw (object context, Area area)
 		{
-			tk.Context = context;
-			tk.Begin ();
-			tk.TranslateAndScale (translation, new Point (scaleX, scaleY));
-			tk.DrawImage (Background);
-			tk.End ();
+			if (Background != null) {
+				tk.Context = context;
+				tk.Begin ();
+				tk.TranslateAndScale (translation, new Point (scaleX, scaleY));
+				tk.DrawImage (Background);
+				tk.End ();
+			}
 			base.HandleDraw (context, area);
 		}
 	}
