@@ -122,6 +122,10 @@ namespace LongoMatch.Drawing
 				po.Selected = false;
 				widget.ReDraw (po);
 			}
+			foreach (ICanvasSelectableObject cso in Objects) {
+				cso.Selected = false;
+			}
+			widget.ReDraw ();
 			Selections.Clear ();
 		}
 		
