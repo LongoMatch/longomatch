@@ -44,13 +44,13 @@ namespace Tests.Core.Drawables
 			Color c1, c2;
 			c1 = new Color (1, 2, 3, 2);
 			c2 = new Color (1, 5, 6, 3);
-			DrawableImp d = new DrawableImp {StrokeColor=c1, StrokeSize=30, FillColor=c2};
+			DrawableImp d = new DrawableImp {StrokeColor=c1, LineWidth=30, FillColor=c2};
 			
 			Utils.CheckSerialization (d);
 			Drawable newD = Utils.SerializeDeserialize (d);
 			
 			Assert.AreEqual (d.FillColor, newD.FillColor);
-			Assert.AreEqual (d.StrokeSize, newD.StrokeSize);
+			Assert.AreEqual (d.LineWidth, newD.LineWidth);
 			Assert.AreEqual (d.StrokeColor, newD.StrokeColor);
 		}
 	}
