@@ -202,7 +202,17 @@ namespace LongoMatch.Gui
 				sd.Destroy();
 		}
 		
-		public void TagPlay (Play play, Categories categories, TeamTemplate local, TeamTemplate visitor, bool showAllTags) {
+		public void TagPlay (Play play, Project project) {
+			Gtk.Dialog d = new Gtk.Dialog (Catalog.GetString ("Tag field positions"), mainWindow,
+			                               DialogFlags.Modal | DialogFlags.DestroyWithParent,
+			                               Gtk.Stock.Ok, ResponseType.Ok);
+			PlaysCoordinatesTagger tagger = new PlaysCoordinatesTagger ();
+			tagger.LoadBackgrounds (project);
+			tagger.LoadPlay (play);
+			tagger.ShowAll ();
+			d.VBox.PackStart (tagger, true, true, 0);
+			d.Run();
+			d.Destroy();
 		}
 
 		public void DrawingTool (Image image, Play play, Time stopTime) {

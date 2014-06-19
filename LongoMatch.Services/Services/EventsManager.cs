@@ -69,18 +69,17 @@ namespace LongoMatch.Services
 				return;
 				
 			if (player != null) {
-				Console.WriteLine ("Disconnecting");
 				player.Prev -= OnPrev;
 				player.SegmentClosedEvent -= OnSegmentClosedEvent;
 				player.DrawFrame -= OnDrawFrame;
 				player.PlaybackRateChanged -= HandlePlaybackRateChanged;
 			}
 
+			this.analysisWindow = analysisWindow;
 			player = analysisWindow.Player;
 			capturer = analysisWindow.Capturer;
 			
 			if (player != null) {
-				Console.WriteLine ("Connecting");
 				player.Prev += OnPrev;
 				player.SegmentClosedEvent += OnSegmentClosedEvent;
 				player.DrawFrame += OnDrawFrame;
@@ -107,7 +106,6 @@ namespace LongoMatch.Services
 			Config.EventsBroker.PlayCategoryChanged += OnPlayCategoryChanged;
 			Config.EventsBroker.DuplicatePlay += OnDuplicatePlay;
 			Config.EventsBroker.PlayListNodeSelectedEvent += (tn) => {loadedPlay = tn;};
-			Config.EventsBroker.TagPlay += OnTagPlay;
 			Config.EventsBroker.SnapshotSeries += OnSnapshotSeries;
 			
 			Config.EventsBroker.ShowProjectStatsEvent += HandleShowProjectStatsEvent;
@@ -212,7 +210,7 @@ namespace LongoMatch.Services
 			var play = openedProject.AddPlay(category, start, stop,miniature);
 			/* Tag subcategories of the new play */
 			if (!Config.FastTagging)
-				LaunchPlayTagger(play, false);
+				guiToolkit.TagPlay (play, openedProject);
 			analysisWindow.AddPlay(play);
 			filter.Update();
 			if (projectType == ProjectType.FileProject) {
@@ -296,14 +294,6 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void LaunchPlayTagger(Play play, bool showAllTags) {
-			guiToolkit.TagPlay(play, openedProject.Categories,
-			                   openedProject.LocalTeamTemplate,
-			                   openedProject.VisitorTeamTemplate,
-			                   showAllTags);
-			Config.EventsBroker.EmitTeamTagsChanged ();
-		}
-
 		void HandlePlaybackRateChanged (float rate)
 		{
 			if (loadedPlay != null) {
@@ -378,10 +368,6 @@ namespace LongoMatch.Services
 			guiToolkit.DrawingTool (pixbuf, loadedPlay as Play, time);
 		}
 
-		protected virtual void OnTagPlay(Play play) {
-			LaunchPlayTagger(play, true);
-		}
-		
 		protected virtual void OnPlayCategoryChanged(Play play, Category cat)
 		{
 			List<Play> plays = new List<Play>();
