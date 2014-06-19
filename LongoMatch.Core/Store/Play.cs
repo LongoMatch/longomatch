@@ -182,6 +182,34 @@ namespace LongoMatch.Store
 
 		#region Public methods
 		
+		public void AddDefaultPositions () {
+			if (Category.TagFieldPosition) {
+				if (FieldPosition == null) {
+					FieldPosition = new Coordinates ();
+					FieldPosition.Points.Add (new Point (0.5, 0.5));
+				}
+				if (Category.FieldPositionIsDistance) {
+					FieldPosition.Points.Add (new Point (0.5, 0.1));
+				}
+			}
+			if (Category.TagHalfFieldPosition) {
+				if (HalfFieldPosition == null) {
+					HalfFieldPosition = new Coordinates ();
+					HalfFieldPosition.Points.Add (new Point (0.5, 0.5));
+				}
+				if (Category.HalfFieldPositionIsDistance) {
+					HalfFieldPosition.Points.Add (new Point (0.5, 0.1));
+				}
+			}
+			
+			if (Category.TagGoalPosition) {
+				if (GoalPosition == null) {
+					GoalPosition = new Coordinates ();
+					GoalPosition.Points.Add (new Point (0.5, 0.5));
+				}
+			}
+		}
+		
 		public Coordinates CoordinatesInFieldPosition (FieldPositionType pos) {
 			switch (pos) {
 			case FieldPositionType.Field:
