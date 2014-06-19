@@ -144,11 +144,18 @@ namespace LongoMatch.Drawing
 		void HandleLeftButton (Point coords, ButtonModifier modif) {
 			Selection sel = null;
 
-			foreach (object o in Objects) {
-				ICanvasSelectableObject co = o as ICanvasSelectableObject;
-				sel = co.GetSelection (coords, Accuracy);
-				if (sel != null) {
-					break;
+			/* Try with the selected item first */
+			if (Selections.Count > 0) {
+				sel = Selections.LastOrDefault().Drawable.GetSelection (coords, Accuracy);
+			}
+			
+			if (sel == null) {
+				foreach (object o in Objects) {
+					ICanvasSelectableObject co = o as ICanvasSelectableObject;
+					sel = co.GetSelection (coords, Accuracy);
+					if (sel != null) {
+						break;
+					}
 				}
 			}
 
