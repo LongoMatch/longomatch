@@ -31,11 +31,13 @@ namespace LongoMatch.Drawing.Widgets
 	{
 	
 		public event ShowTaggerMenuHandler ShowMenuEvent;
-		List<Play> plays;
+		Play playSelected;
 
 		public PositionTagger (IWidget widget): base (widget)
 		{
 			Accuracy = Common.TAGGER_POINT_SIZE + 3;
+			EmitSignals = true;
+			SelectionMode = MultiSelectionMode.MultipleWithModifier;
 		}
 		
 		public PositionTagger (IWidget widget, List<Play> plays, Image background, FieldPositionType position): base (widget)
@@ -45,12 +47,31 @@ namespace LongoMatch.Drawing.Widgets
 			FieldPosition = position;
 		}
 		
-		FieldPositionType FieldPosition {
+		public FieldPositionType FieldPosition {
+			get;
+			set;
+		}
+
+		public bool EmitSignals {
 			get;
 			set;
 		}
 		
 		public void SelectPlay (Play play) {
+			PositionObject po;
+			
+			if (play == playSelected) {
+				playSelected = null;
+				return;
+			}
+			playSelected = null;
+			ClearSelection ();
+			var tpo = Objects.FirstOrDefault (o => (o as PositionObject).Play == play);
+			if (tpo != null) {
+				po = tpo as PositionObject;
+				po.Selected = true;
+				widget.ReDraw ();
+			}
 		}
 		
 		public List<Point> Points {
@@ -62,26 +83,38 @@ namespace LongoMatch.Drawing.Widgets
 		
 		public List<Play> Plays {
 			set {
-				plays = value;
+				Objects.Clear ();
 				foreach (Play p in value) {
-					Coordinates coords = p.CoordinatesInFieldPosition (FieldPosition);
-					
-					Objects.Clear ();
-					if (coords == null)
-						continue;
-					
-					PositionObject po = new PositionObject (coords.Points,
-					                                        Background.Width, Background.Height);
-					po.Play = p;
-					Objects.Add (po);
+					AddPlay (p);
 				}
 			}
+		}
+		
+		public void AddPlay(Play play) {
+			PositionObject po;
+			Coordinates coords;
+			
+			coords = play.CoordinatesInFieldPosition (FieldPosition);
+			if (coords == null)
+				return;
+			
+			po = new PositionObject (coords.Points, Background.Width,
+			                         Background.Height);
+			po.Play = play;
+			Objects.Add (po);
+		}
+
+		public void RemovePlays(List<Play> plays) {
+			Objects.RemoveAll (o => plays.Contains((o as PositionObject).Play));
 		}
 
 		protected override void SelectionChanged (List<Selection> selections) {
 			if (selections.Count > 0) {
 				Play p = (selections.Last().Drawable as PositionObject).Play;
-				Config.EventsBroker.EmitPlaySelected (p);
+				playSelected = p;
+				if (EmitSignals) {
+					Config.EventsBroker.EmitPlaySelected (p);
+				}
 			}
 		}
 		
