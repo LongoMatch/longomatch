@@ -60,7 +60,6 @@ namespace LongoMatch.Gui
 
 		const int THUMBNAIL_MAX_WIDTH = 100;
 		const int SCALE_FPS = 25;
-		TickHandler tickHandler;
 		IPlayer player;
 		Time length;
 		bool seeking, IsPlayingPrevState, muted, emitRateScale, readyToSeek;
@@ -79,7 +78,6 @@ namespace LongoMatch.Gui
 			this.Build();
 			vwin = new VolumeWindow();
 			ConnectSignals ();
-			tickHandler = new TickHandler(OnTick);
 			controlsbox.Visible = false;
 			UnSensitive();
 			timescale.Adjustment.PageIncrement = 0.01;
@@ -224,7 +222,7 @@ namespace LongoMatch.Gui
 		}
 		
 		public void Close() {
-			player.Tick -= tickHandler;
+			player.Tick -= OnTick;
 			player.Close();
 			filename = null;
 			timescale.Value = 0;
@@ -413,7 +411,7 @@ namespace LongoMatch.Gui
 			videodrawingarea.DoubleBuffered = false;
 			player = Config.MultimediaToolkit.GetPlayer ();
 
-			player.Tick += OnTick;
+			player.Tick +=  OnTick;
 			player.StateChange += OnStateChanged;
 			player.Eos += OnEndOfStream;
 			player.Error += OnError;
@@ -482,7 +480,9 @@ namespace LongoMatch.Gui
 			} else {
 				slength = length.ToMSecondsString ();
 				timelabel.Text = currentTime.ToMSecondsString() + "/" + slength;
-				timescale.Value = currentPosition;
+				if (timescale.Visible) {
+					timescale.Value = currentPosition;
+				}
 			}
 
 			if (Tick != null)
@@ -497,7 +497,7 @@ namespace LongoMatch.Gui
 			if(!seeking) {
 				seeking = true;
 				IsPlayingPrevState = player.Playing;
-				player.Tick -= tickHandler;
+				player.Tick -= OnTick;
 				player.Pause();
 				seeksQueue [0] = -1;
 				seeksQueue [1] = -1;
@@ -517,7 +517,7 @@ namespace LongoMatch.Gui
 				 * We need to cache previous position and seek again to the this position */
 				SeekFromTimescale(seeksQueue[0] != -1 ? seeksQueue[0] : seeksQueue[1]);
 				seeking=false;
-				player.Tick += tickHandler;
+				player.Tick += OnTick;
 				if(IsPlayingPrevState)
 					player.Play();
 			}
