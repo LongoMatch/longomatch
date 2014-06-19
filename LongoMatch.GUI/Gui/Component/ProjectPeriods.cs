@@ -41,9 +41,10 @@ namespace LongoMatch.Gui.Component
 			drawingarea1.HeightRequest = LongoMatch.Drawing.Common.TIMERULE_HEIGHT;
 			drawingarea2.HeightRequest = LongoMatch.Drawing.Common.TIMER_HEIGHT;
 			timersTimenline.TimeNodeChanged += HandleTimeNodeChanged;
-			synclabel.Markup = String.Format ("{0} {1} {2}", "<b>⬆  ",
+			scrolledwindow2.Hadjustment.ValueChanged += HandleValueChanged;
+			synclabel.Markup = String.Format ("{0} {1} {2}", "<b>⬇  ",
 			                                Catalog.GetString ("Synchronize the game periods"),
-			                                "  ⬆</b>");
+			                                "  ⬇</b>");
 		}
 
 		public Project Project {
@@ -88,6 +89,12 @@ namespace LongoMatch.Gui.Component
 			Time time = val as Time;
 			playerbin2.Pause ();
 			playerbin2.Seek (time, true);
+		}
+
+		void HandleValueChanged (object sender, EventArgs e)
+		{
+			timerule.Scroll = scrolledwindow2.Hadjustment.Value;
+			drawingarea1.QueueDraw ();
 		}
 
 	}
