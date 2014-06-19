@@ -129,17 +129,18 @@ namespace LongoMatch.Drawing
 			Selections.Clear ();
 		}
 		
-		protected void UpdateSelection (Selection sel) {
+		protected void UpdateSelection (Selection sel, bool notify=true) {
 			ICanvasSelectableObject so = sel.Drawable as ICanvasSelectableObject;
 			Selection seldup = Selections.FirstOrDefault (s => s.Drawable == sel.Drawable);
 			
 			if (seldup != null) {
 				so.Selected = false;
 				Selections.Remove (seldup);
-				SelectionChanged (Selections);
 			} else {
 				so.Selected = true;
 				Selections.Add (sel);
+			}
+			if (notify) {
 				SelectionChanged (Selections);
 			}
 			widget.ReDraw (so);
