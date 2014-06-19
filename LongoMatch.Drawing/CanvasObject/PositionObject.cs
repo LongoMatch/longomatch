@@ -100,7 +100,10 @@ namespace LongoMatch.Drawing.CanvasObject
 		}
 		
 		public override void Draw (IDrawingToolkit tk, Area area) {
-			Color color;
+			Color color, scolor;
+			double relSize;
+			
+			 relSize = Math.Max (1, (double) Width / 200);
 			
 			tk.Begin ();
 			if (Play != null) {
@@ -108,12 +111,18 @@ namespace LongoMatch.Drawing.CanvasObject
 			} else {
 				color = Common.TAGGER_POINT_COLOR;
 			}
-			tk.FillColor = color;
-			tk.StrokeColor = color;
-			tk.LineWidth = 2;
+			scolor = color;
 			
-			tk.DrawCircle (Start, Common.TAGGER_POINT_SIZE);
+			if (Selected) {
+				scolor = Common.TAGGER_SELECTION_COLOR;
+				color = Common.TAGGER_SELECTION_COLOR;
+			}
+			tk.FillColor = color;
+			tk.StrokeColor = scolor;
+			tk.LineWidth = (int) relSize;
+			tk.DrawCircle (Start, (int) relSize * 2);
 			if (Points.Count == 2) {
+				tk.LineWidth = (int) relSize * 2;
 				tk.DrawLine (Start, Stop);
 			}
 			tk.End ();

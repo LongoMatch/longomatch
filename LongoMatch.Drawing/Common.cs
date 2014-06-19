@@ -32,6 +32,7 @@ namespace LongoMatch.Drawing
 		public const int TAGGER_POINT_SIZE = 5;
 		public const int TAGGER_LINE_WIDTH = 3;
 		public static Color TAGGER_POINT_COLOR = Color.Blue1;
+		public static Color TAGGER_SELECTION_COLOR = Color.Grey1;
 
 		public const double TIMELINE_ACCURACY = 5;
 		public static Color TEXT_COLOR = Color.Black;
