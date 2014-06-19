@@ -50,6 +50,7 @@ namespace LongoMatch.Gui
 		IAnalysisWindow analysisWindow;
 		Project openedProject;
 		ProjectType projectType;
+		Widget currentPanel;
 
 		#region Constructors
 		public MainWindow(IGUIToolkit guiToolkit) :
@@ -75,7 +76,6 @@ namespace LongoMatch.Gui
 			               false);
 			screen = Display.Default.DefaultScreen;
 			this.Resize(screen.Width * 80 / 100, screen.Height * 80 / 100);
-			analysisWindow = new AnalysisComponent();
 		}
 
 		#endregion
@@ -91,11 +91,8 @@ namespace LongoMatch.Gui
 			if (panel == null) {
 				ResetGUI ();
 			} else {
-				foreach (Widget widget in centralbox.AllChildren) {
-					if (widget != welcomepanel1) {
-						centralbox.Remove (widget);
-					}
-				}
+				RemovePanel ();
+				currentPanel = panel;
 				panel.Show();
 				if (panel is IPanel) {
 					(panel as IPanel).BackEvent += ResetGUI;
@@ -139,6 +136,7 @@ namespace LongoMatch.Gui
 				Title = Constants.SOFTWARE_NAME;
 			}
 			MakeActionsSensitive(true, projectType);
+			analysisWindow = new AnalysisComponent();
 			analysisWindow.SetProject (project, projectType, props, filter);
 			SetPanel (analysisWindow as Widget);
 			return analysisWindow;
@@ -147,7 +145,8 @@ namespace LongoMatch.Gui
 		public void CloseProject () {
 			openedProject = null;
 			projectType = ProjectType.None;
-			centralbox.Remove (analysisWindow as Gtk.Widget);
+			(analysisWindow as Gtk.Widget).Destroy();
+			analysisWindow = null;
 			ResetGUI ();
 		}
 		
@@ -209,14 +208,22 @@ namespace LongoMatch.Gui
 			};
 		}
 		
+		void RemovePanel () {
+			if (currentPanel != null) {
+				if (currentPanel is IPanel) {
+					(currentPanel as IPanel).BackEvent -= ResetGUI;
+				}
+				currentPanel.Destroy ();
+				currentPanel.Dispose();
+				System.GC.Collect();
+			}
+			currentPanel = null;
+		}
+		
 		private void ResetGUI() {
 			Title = Constants.SOFTWARE_NAME;
 			MakeActionsSensitive(false, projectType);
-			foreach (Widget widget in centralbox.AllChildren) {
-				if (widget != welcomepanel1) {
-					centralbox.Remove (widget);
-				}
-			}
+			RemovePanel ();
 			welcomepanel1.Show ();
 		}
 
