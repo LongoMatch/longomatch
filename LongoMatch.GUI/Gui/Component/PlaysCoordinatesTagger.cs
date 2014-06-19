@@ -26,6 +26,7 @@ using LongoMatch.Common;
 
 using Point = LongoMatch.Common.Point;
 using Image = LongoMatch.Common.Image;
+using LongoMatch.Stats;
 
 namespace LongoMatch.Gui.Component
 {
@@ -33,175 +34,46 @@ namespace LongoMatch.Gui.Component
 	public partial class PlaysCoordinatesTagger : Gtk.Bin
 	{
 		
-		CoordinatesTagger field, hfield, goal;
-		Pixbuf fieldPixbuf, hFieldPixbuf, goalPixbuf;
-		Box box;
-		
 		public PlaysCoordinatesTagger ()
 		{
 			this.Build ();
-			SetMode (true);
-			Config.EventsBroker.PlaySelected += HandlePlaySelected;
+			HeightRequest = 300;
+			WidthRequest = 500;
+			field.Tagger.EmitSignals = false;
+			hfield.Tagger.EmitSignals = false;
+			goal.Tagger.EmitSignals = false;
 		}
 
-		public bool CoordinatesSensitive {
-			set {
-				field.Sensitive = value;
-				hfield.Sensitive = value;
-				goal.Sensitive = value;
-			}
+		public void LoadBackgrounds (Project project) {
+			field.Tagger.Background = project.GetBackground (FieldPositionType.Field);
+			hfield.Tagger.Background = project.GetBackground (FieldPositionType.HalfField);
+			goal.Tagger.Background = project.GetBackground (FieldPositionType.Goal);
 		}
 		
-		public void SetMode (bool horizontal) {
-			if (box != null) {
-				mainbox.Remove (box);
-				box.Destroy();
-			}
-			if (horizontal) {
-				box = new HBox ();
-			} else {
-				box = new VBox ();
-			}
-			field = new CoordinatesTagger ();
-			hfield = new CoordinatesTagger ();
-			goal = new CoordinatesTagger ();
-			box.PackStart (field, true, true, 0);
-			box.PackStart (hfield, true, true, 0);
-			box.PackStart (goal, true, true, 0);
-			mainbox.PackStart (box, true, true, 0);
-			box.Show ();
+		public void LoadStats (CategoryStats stats) {
 		}
 		
-		public void LoadPlay (Play play, bool horizontal=true) {
-			field.Visible = hfield.Visible = goal.Visible = false;
-			AddPlay (play, true);
-		}
-		
-		public void LoadFieldCoordinates (List<Coordinates> coords) {
-			field.Coordinates = coords;
-			field.Visible = coords.Count != 0;
-		}
-
-		public void LoadHalfFieldCoordinates (List<Coordinates> coords) {
-			hfield.Coordinates = coords;
-			hfield.Visible = coords.Count != 0;
-		}
-		
-		public void LoadGoalCoordinates (List<Coordinates> coords) {
-			goal.Coordinates = coords;
-			goal.Visible = coords.Count != 0;
-		}
-		
-		public void LoadBackgrounds (Image fieldImage, Image halfFieldImage, Image goalImage) {
-			if (fieldImage != null) {
-				fieldPixbuf = fieldImage.Value;
-			} else {
-				fieldPixbuf = Config.FieldBackground.Value;
-			}
-			field.Background = fieldPixbuf;
-			if (halfFieldImage != null) {
-				hFieldPixbuf = halfFieldImage.Value;
-			} else {
-				hFieldPixbuf = Config.HalfFieldBackground.Value;
-			}
-			hfield.Background = hFieldPixbuf;
-			if (goalImage != null) {
-				goalPixbuf = goalImage.Value;
-			} else {
-				goalPixbuf = Config.GoalBackground.Value;
-			}
-			goal.Background = goalPixbuf;
-		}
-		
-		void AddPlay (Play play, bool fill) {
-			if (play.Category.TagFieldPosition) {
-				AddFieldPosTagger (play, fill);				
-			}
-			if (play.Category.TagHalfFieldPosition) {
-				AddHalfFieldPosTagger (play, fill);
-			}
-			if (play.Category.TagGoalPosition) {
-				AddGoalPosTagger (play, fill);
-			}
-		}
-		
-		void AddFieldPosTagger (Play play, bool fill) {
-			List<Coordinates> coords = new List<Coordinates>();
+		public void LoadPlay (Play play) {
+			field.Visible = play.Category.TagFieldPosition;
+			hfield.Visible = play.Category.TagHalfFieldPosition;
+			goal.Visible = play.Category.TagGoalPosition;
 			
+			play.AddDefaultPositions ();
+
 			if (play.FieldPosition != null) {
-				coords.Add (play.FieldPosition);
-			} else if (fill) {
-				Coordinates c = new Coordinates ();
-				c.Points.Add (new Point((int) (fieldPixbuf.Width * 0.25),
-				                 (int) (fieldPixbuf.Height * 0.25)));
-				if (play.Category.FieldPositionIsDistance) {
-					c.Points.Add (new Point((int) (fieldPixbuf.Width * 0.75),
-					                 (int) (fieldPixbuf.Height * 0.75)));
-				}
-				coords.Add (c);
-				play.FieldPosition = c;
-			} else {
-				return;
+				field.Tagger.Points = play.FieldPosition.Points;
 			}
-			field.Coordinates = coords;
-			field.Visible = true;
-		}
-		
-		void AddHalfFieldPosTagger (Play play, bool fill) {
-			List<Coordinates> coords = new List<Coordinates>();
-			
 			if (play.HalfFieldPosition != null) {
-				coords.Add (play.HalfFieldPosition);
-			} else  if (fill) {
-				Coordinates c = new Coordinates ();
-				c.Points.Add (new Point((int) (hFieldPixbuf.Width * 0.25),
-				                 (int) (hFieldPixbuf.Height * 0.25)));
-				if (play.Category.HalfFieldPositionIsDistance) {
-					c.Points.Add (new Point((int) (hFieldPixbuf.Width * 0.75),
-					                 (int) (hFieldPixbuf.Height * 0.75)));
-				}
-				coords.Add (c);
-				play.HalfFieldPosition = c;
-			} else {
-				return;
+				hfield.Tagger.Points = play.HalfFieldPosition.Points;
 			}
-			hfield.Coordinates = coords;
-			hfield.Visible = true;
-		}
-		
-		void AddGoalPosTagger (Play play, bool fill) {
-			List<Coordinates> coords = new List<Coordinates>();
-			
-			if (play.GoalPosition != null) {
-				coords.Add (play.GoalPosition);
-			} else if (fill) {
-				Coordinates c = new Coordinates ();
-				c.Points.Add (new Point((int) (goalPixbuf.Width * 0.25),
-				                 (int) (goalPixbuf.Height * 0.25)));
-				coords.Add (c);
-				play.GoalPosition = c;
-			} else {
-				return;
+			if (play.GoalPosition != null ) {
+				goal.Tagger.Points = play.GoalPosition.Points;
 			}
-			goal.Coordinates = coords; 
-			goal.Visible = true;
-		}
-		
-		void HandlePlaySelected (Play play)
-		{
-			LoadPlay (play, false);
 		}
 		
 		protected override void OnDestroyed ()
 		{
 			base.OnDestroyed ();
-			Config.EventsBroker.PlaySelected -= HandlePlaySelected;
-			if (fieldPixbuf != null)
-				fieldPixbuf.Dispose();
-			if (hFieldPixbuf != null)
-				hFieldPixbuf.Dispose();
-			if (goalPixbuf != null)
-				goalPixbuf.Dispose();
 		}
 	}
 }

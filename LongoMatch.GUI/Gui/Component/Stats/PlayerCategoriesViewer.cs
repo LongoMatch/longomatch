@@ -40,8 +40,8 @@ namespace LongoMatch.Gui.Component.Stats
 			treeview.EnableTreeLines = false;
 		}
 		
-		public void LoadStats (ProjectStats pstats) {
-			categoryviewer.LoadBackgrounds (pstats.Field, pstats.HalfField, pstats.Goal);
+		public void LoadStats (ProjectStats pstats, Project project) {
+			categoryviewer.LoadBackgrounds (project);
 			this.pstats = pstats;
 			ReloadStats();
 		}

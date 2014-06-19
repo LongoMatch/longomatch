@@ -143,9 +143,6 @@
   </object>
   <object type="LongoMatch.Gui.Component.CoordinatesTagger" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
-      <itemgroup label="CoordinatesTagger Properties">
-        <property name="Sensitive" />
-      </itemgroup>
     </itemgroups>
     <signals />
   </object>
@@ -369,39 +366,7 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.PlayersTaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.StringTaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.GameUnitsEditor" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.GameUnitsTagger" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="GameUnitsTagger Signals">
-        <signal name="GameUnitEvent" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.GameUnitWidget" palette-category="General" allow-children="false" base-type="Gtk.Frame">
-    <itemgroups />
-    <signals>
-      <itemgroup label="GameUnitWidget Signals">
-        <signal name="GameUnitEvent" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.PlayersTagger" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.TaggerWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.Gui.Component.PlaysPositionViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
   </object>

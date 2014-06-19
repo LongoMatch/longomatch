@@ -37,29 +37,13 @@ namespace LongoMatch.Gui.Dialog
 	{
 		private List<HotKey> hkList;
 
-		public EditCategoryDialog()
+		public EditCategoryDialog(Project project, Category cat)
 		{
 			this.Build();
+			timenodeproperties2.Template = project.Categories;
+			timenodeproperties2.Category = cat;
+			timenodeproperties2.Project = project;
 			timenodeproperties2.HotKeyChanged += OnHotKeyChanged;
-//			timenodeproperties2.LoadSubcategories();
-		}
-
-		public Category Category {
-			set {
-				timenodeproperties2.Category = value;
-			}
-		}
-		
-		public Categories Template {
-			set {
-				timenodeproperties2.Template = value;
-			}
-		}
-		
-		public Project Project {
-			set {
-				timenodeproperties2.Project = value;
-			}
 		}
 
 		public List<HotKey> HotKeysList {

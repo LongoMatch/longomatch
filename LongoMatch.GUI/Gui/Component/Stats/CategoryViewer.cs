@@ -21,6 +21,7 @@ using LongoMatch.Stats;
 using System.Collections.Generic;
 using LongoMatch.Common;
 using Image = LongoMatch.Common.Image;
+using LongoMatch.Store;
 
 namespace LongoMatch.Gui.Component.Stats
 {
@@ -39,34 +40,25 @@ namespace LongoMatch.Gui.Component.Stats
 		public string HomeName { get; set; }
 		public string AwayName { get; set; }
 		
-		public void LoadBackgrounds (Image field, Image halfField, Image goal) {
-			alltagger.LoadBackgrounds (field, halfField, goal);
-			hometagger.LoadBackgrounds (field, halfField, goal);
-			awaytagger.LoadBackgrounds (field, halfField, goal);
+		public void LoadBackgrounds (Project project) {
+			alltagger.LoadBackgrounds (project);
+			hometagger.LoadBackgrounds (project);
+			awaytagger.LoadBackgrounds (project);
 		}
 
 		public void LoadStats (CategoryStats stats) {
 			homeLabel.Text = HomeName;
 			awayLabel.Text = AwayName;
 			
-			alltagger.LoadFieldCoordinates (stats.FieldCoordinates);
-			alltagger.LoadHalfFieldCoordinates (stats.HalfFieldCoordinates);
-			alltagger.LoadGoalCoordinates (stats.GoalCoordinates);
-			alltagger.CoordinatesSensitive = false;
+			alltagger.LoadStats (stats);
 			allframe.Visible = stats.FieldCoordinates.Count + stats.HalfFieldCoordinates.Count +
 			    stats.GoalCoordinates.Count != 0;
 			
-			hometagger.LoadFieldCoordinates (stats.HomeFieldCoordinates);
-			hometagger.LoadHalfFieldCoordinates (stats.HomeHalfFieldCoordinates);
-			hometagger.LoadGoalCoordinates (stats.HomeGoalCoordinates);
-			hometagger.CoordinatesSensitive = false;
+			hometagger.LoadStats (stats);
 			homeframe.Visible = stats.HomeFieldCoordinates.Count + stats.HomeHalfFieldCoordinates.Count +
 			    stats.HomeGoalCoordinates.Count != 0;
 			    
-			awaytagger.LoadFieldCoordinates (stats.AwayFieldCoordinates);
-			awaytagger.LoadHalfFieldCoordinates (stats.AwayHalfFieldCoordinates);
-			awaytagger.LoadGoalCoordinates (stats.AwayGoalCoordinates);
-			awaytagger.CoordinatesSensitive = false;
+			awaytagger.LoadStats (stats);
 			awayframe.Visible = stats.AwayFieldCoordinates.Count + stats.AwayHalfFieldCoordinates.Count +
 			    stats.AwayGoalCoordinates.Count != 0;
 			

@@ -8,6 +8,8 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.RadioAction timelineMode;
 		private global::Gtk.RadioAction autoTaggingMode;
 		private global::Gtk.Action zoomFitAction;
+		private global::Gtk.RadioAction convertAction;
+		private global::Gtk.RadioAction positionMode;
 		private global::Gtk.VBox vbox2;
 		private global::Gtk.HBox hbox1;
 		private global::Gtk.Toolbar codingtoolbar;
@@ -15,6 +17,7 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.DrawingArea drawingarea1;
 		private global::LongoMatch.Gui.Component.ButtonsWidget buttonswidget;
 		private global::LongoMatch.Gui.Component.Timeline timeline;
+		private global::LongoMatch.Gui.Component.PlaysPositionViewer playspositionviewer1;
 
 		protected virtual void Build ()
 		{
@@ -31,8 +34,14 @@ namespace LongoMatch.Gui.Component
 			w2.Add (this.autoTaggingMode, null);
 			this.zoomFitAction = new global::Gtk.Action ("zoomFitAction", null, null, "gtk-zoom-fit");
 			w2.Add (this.zoomFitAction, null);
+			this.convertAction = new global::Gtk.RadioAction ("convertAction", null, null, "gtk-convert", 0);
+			this.convertAction.Group = this.autoTaggingMode.Group;
+			w2.Add (this.convertAction, null);
 			this.UIManager.InsertActionGroup (w2, 0);
 			global::Gtk.ActionGroup w3 = new global::Gtk.ActionGroup ("Timeline");
+			this.positionMode = new global::Gtk.RadioAction ("positionMode", null, null, "gtk-justify-fill", 0);
+			this.positionMode.Group = this.convertAction.Group;
+			w3.Add (this.positionMode, null);
 			this.UIManager.InsertActionGroup (w3, 1);
 			this.Name = "LongoMatch.Gui.Component.CodingWidget";
 			// Container child LongoMatch.Gui.Component.CodingWidget.Gtk.Container+ContainerChild
@@ -44,7 +53,7 @@ namespace LongoMatch.Gui.Component
 			this.hbox1.Name = "hbox1";
 			this.hbox1.Spacing = 6;
 			// Container child hbox1.Gtk.Box+BoxChild
-			this.UIManager.AddUiFromString ("<ui><toolbar name='codingtoolbar'><toolitem name='autoTaggingMode' action='autoTaggingMode'/><toolitem name='timelineMode' action='timelineMode'/></toolbar></ui>");
+			this.UIManager.AddUiFromString ("<ui><toolbar name='codingtoolbar'><toolitem name='autoTaggingMode' action='autoTaggingMode'/><toolitem name='timelineMode' action='timelineMode'/><toolitem name='positionMode' action='positionMode'/></toolbar></ui>");
 			this.codingtoolbar = ((global::Gtk.Toolbar)(this.UIManager.GetWidget ("/codingtoolbar")));
 			this.codingtoolbar.Name = "codingtoolbar";
 			this.codingtoolbar.ShowArrow = false;
@@ -82,9 +91,16 @@ namespace LongoMatch.Gui.Component
 			this.hbox2.Add (this.timeline);
 			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.timeline]));
 			w8.Position = 2;
+			// Container child hbox2.Gtk.Box+BoxChild
+			this.playspositionviewer1 = new global::LongoMatch.Gui.Component.PlaysPositionViewer ();
+			this.playspositionviewer1.Events = ((global::Gdk.EventMask)(256));
+			this.playspositionviewer1.Name = "playspositionviewer1";
+			this.hbox2.Add (this.playspositionviewer1);
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.playspositionviewer1]));
+			w9.Position = 3;
 			this.vbox2.Add (this.hbox2);
-			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox2]));
-			w9.Position = 1;
+			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox2]));
+			w10.Position = 1;
 			this.Add (this.vbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

@@ -73,7 +73,7 @@ namespace LongoMatch.Gui.Panel
 			Load (null);
 			
 		}
-
+		
 		void Load (string templateName) {
 			TreeIter templateIter = TreeIter.Zero;
 			bool first = true;

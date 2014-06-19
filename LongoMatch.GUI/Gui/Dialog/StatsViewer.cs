@@ -41,7 +41,7 @@ namespace LongoMatch.Gui.Dialog
 			if (stats != null)
 				stats.Dispose();
 			stats = new ProjectStats (project);
-			categoriesviewer.LoadStats (stats);
+			categoriesviewer.LoadStats (stats, project);
 			gameviewer.LoadProject (project, stats);
 			/* Player stats are filtered */
 			playersviewer.LoadProject (project, new ProjectStats (project));

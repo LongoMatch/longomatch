@@ -14,7 +14,6 @@ namespace LongoMatch.Gui.Component
 		private global::LongoMatch.Gui.PlayerCapturerBin playercapturer;
 		private global::Gtk.HBox righthbox;
 		private global::Gtk.VBox tagsvbox;
-		private global::LongoMatch.Gui.Component.PlaysCoordinatesTagger postagger;
 		private global::Gtk.Frame notesframe;
 		private global::Gtk.Alignment GtkAlignment22;
 		private global::LongoMatch.Gui.Component.NotesWidget notes;
@@ -86,13 +85,6 @@ namespace LongoMatch.Gui.Component
 			this.tagsvbox.Name = "tagsvbox";
 			this.tagsvbox.Spacing = 6;
 			// Container child tagsvbox.Gtk.Box+BoxChild
-			this.postagger = new global::LongoMatch.Gui.Component.PlaysCoordinatesTagger ();
-			this.postagger.Events = ((global::Gdk.EventMask)(256));
-			this.postagger.Name = "postagger";
-			this.tagsvbox.Add (this.postagger);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.tagsvbox [this.postagger]));
-			w7.Position = 0;
-			// Container child tagsvbox.Gtk.Box+BoxChild
 			this.notesframe = new global::Gtk.Frame ();
 			this.notesframe.Name = "notesframe";
 			this.notesframe.ShadowType = ((global::Gtk.ShadowType)(0));
@@ -112,21 +104,21 @@ namespace LongoMatch.Gui.Component
 			this.GtkLabel31.UseMarkup = true;
 			this.notesframe.LabelWidget = this.GtkLabel31;
 			this.tagsvbox.Add (this.notesframe);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.tagsvbox [this.notesframe]));
-			w10.Position = 1;
+			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.tagsvbox [this.notesframe]));
+			w9.Position = 0;
 			this.righthbox.Add (this.tagsvbox);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.righthbox [this.tagsvbox]));
-			w11.Position = 0;
+			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.righthbox [this.tagsvbox]));
+			w10.Position = 0;
 			this.hpaned1.Add (this.righthbox);
-			global::Gtk.Paned.PanedChild w12 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.righthbox]));
-			w12.Resize = false;
-			w12.Shrink = false;
+			global::Gtk.Paned.PanedChild w11 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.righthbox]));
+			w11.Resize = false;
+			w11.Shrink = false;
 			this.hpaned.Add (this.hpaned1);
-			global::Gtk.Paned.PanedChild w13 = ((global::Gtk.Paned.PanedChild)(this.hpaned [this.hpaned1]));
-			w13.Shrink = false;
+			global::Gtk.Paned.PanedChild w12 = ((global::Gtk.Paned.PanedChild)(this.hpaned [this.hpaned1]));
+			w12.Shrink = false;
 			this.vpaned1.Add (this.hpaned);
-			global::Gtk.Paned.PanedChild w14 = ((global::Gtk.Paned.PanedChild)(this.vpaned1 [this.hpaned]));
-			w14.Resize = false;
+			global::Gtk.Paned.PanedChild w13 = ((global::Gtk.Paned.PanedChild)(this.vpaned1 [this.hpaned]));
+			w13.Resize = false;
 			// Container child vpaned1.Gtk.Paned+PanedChild
 			this.codingwidget = new global::LongoMatch.Gui.Component.CodingWidget ();
 			this.codingwidget.Events = ((global::Gdk.EventMask)(256));

@@ -22,6 +22,7 @@ using Gtk;
 using LongoMatch.Common;
 using LongoMatch.Stats;
 using Image = LongoMatch.Common.Image;
+using LongoMatch.Store;
 
 namespace LongoMatch.Gui.Component.Stats
 {
@@ -33,15 +34,12 @@ namespace LongoMatch.Gui.Component.Stats
 			this.Build ();
 		}
 
-		public void LoadBackgrounds (Image field, Image halfField, Image goal) {
-			tagger.LoadBackgrounds (field, halfField, goal);
+		public void LoadBackgrounds (Project project) {
+			tagger.LoadBackgrounds (project);
 		}
 
 		public void LoadStats (CategoryStats stats) {
-			tagger.LoadFieldCoordinates (stats.FieldCoordinates);
-			tagger.LoadHalfFieldCoordinates (stats.HalfFieldCoordinates);
-			tagger.LoadGoalCoordinates (stats.GoalCoordinates);
-			tagger.CoordinatesSensitive = false;
+			tagger.LoadStats (stats);
 			
 			foreach (Widget child in vbox1.AllChildren) {
 				if (!(child is PlaysCoordinatesTagger))

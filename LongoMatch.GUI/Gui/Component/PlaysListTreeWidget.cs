@@ -155,10 +155,7 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		protected virtual void OnEditProperties(TimeNode tNode, object val) {
-			EditCategoryDialog dialog = new EditCategoryDialog();
-			dialog.Category = tNode as Category; 
-			dialog.Template = project.Categories;
-			dialog.Project = project;
+			EditCategoryDialog dialog = new EditCategoryDialog(project, tNode as Category);
 			dialog.Run();
 			dialog.Destroy();
 			Config.EventsBroker.EmitTimeNodeChanged (tNode, tNode.Name);

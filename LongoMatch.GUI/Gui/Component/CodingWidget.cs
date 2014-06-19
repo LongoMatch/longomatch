@@ -36,7 +36,9 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 
-			autoTaggingMode.Toggled += HandleViewToggled;
+			autoTaggingMode.Activated += HandleViewToggled;
+			timelineMode.Activated += HandleViewToggled;
+			positionMode.Activated += HandleViewToggled;
 			autoTaggingMode.Active = true;
 			
 			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea1));
@@ -45,6 +47,8 @@ namespace LongoMatch.Gui.Component
 
 			drawingarea1.HeightRequest = 200;
 			drawingarea1.WidthRequest = 300;
+			timeline.HeightRequest = 200;
+			playspositionviewer1.HeightRequest = 200;
 			
 			Config.EventsBroker.Tick += HandleTick;
 			Config.EventsBroker.PlaySelected += HandlePlaySelected;
@@ -54,6 +58,9 @@ namespace LongoMatch.Gui.Component
 		{
 			Config.EventsBroker.Tick -= HandleTick;
 			Config.EventsBroker.PlaySelected -= HandlePlaySelected;
+			buttonswidget.Destroy ();
+			timeline.Destroy ();
+			playspositionviewer1.Destroy ();
 			base.OnDestroyed ();
 		}
 
@@ -66,6 +73,7 @@ namespace LongoMatch.Gui.Component
 			teamtagger.LoadTeams (project.LocalTeamTemplate, project.VisitorTeamTemplate,
 			                      project.Categories.FieldBackground);
 			timeline.SetProject (project, filter);
+			playspositionviewer1.LoadProject (project);
 		}
 		
 		public AnalysisComponent AnalysisComponentParent {
@@ -75,10 +83,12 @@ namespace LongoMatch.Gui.Component
 		
 		public void AddPlay(Play play) {
 			timeline.AddPlay(play);
+			playspositionviewer1.AddPlay (play);
 		}
 		
 		public void DeletePlays (List<Play> plays) {
 			timeline.RemovePlays(plays);
+			playspositionviewer1.RemovePlays (plays);
 		}
 
 		public void UpdateCategories () {
@@ -117,6 +127,7 @@ namespace LongoMatch.Gui.Component
 			buttonswidget.Visible = autoTaggingMode.Active;
 			drawingarea1.Visible = buttonswidget.Visible;
 			timeline.Visible = timelineMode.Active;
+			playspositionviewer1.Visible = positionMode.Active;
 		}
 		
 		void HandlePlaySelected (Play play)

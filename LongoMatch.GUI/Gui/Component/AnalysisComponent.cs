@@ -46,7 +46,6 @@ namespace LongoMatch.Gui.Component
 
 			playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
 			ConnectSignals();
-			postagger.SetMode (false);
 		}
 		
 		public IPlayerBin Player{
@@ -148,9 +147,6 @@ namespace LongoMatch.Gui.Component
 			
 			codingwidget.SetProject (project, isLive, filter);
 			playsSelection.SetProject (project, isLive, filter);
-			postagger.LoadBackgrounds (openedProject.Categories.FieldBackground,
-			                           openedProject.Categories.HalfFieldBackground,
-			                           openedProject.Categories.GoalBackground);
 		}
 		
 		void CreateCodingUI () {
@@ -166,7 +162,6 @@ namespace LongoMatch.Gui.Component
 			
 			playsSelection = new PlaysSelectionWidget ();
 			codingwidget = new CodingWidget();
-			postagger = new PlaysCoordinatesTagger();
 			periodsrecorder = new PeriodsRecoder ();
 			playercapturer = null;
 			
@@ -175,13 +170,11 @@ namespace LongoMatch.Gui.Component
 			vbox.Show();
 			playsSelection.Show ();
 			codingwidget.Show ();
-			postagger.Show ();
 			periodsrecorder.Show ();
 			
 			centralpane.Pack1 (playsSelection, true, true);
 			centralpane.Pack2 (rightpane, true, true);
 			rightpane.Pack1 (vbox, true, true);
-			rightpane.Pack2 (postagger, true, true);
 			vbox.PackStart (periodsrecorder, false, true, 0);
 			vbox.PackEnd (codingwidget, true, true, 0);
 			Add (centralpane);
@@ -199,7 +192,6 @@ namespace LongoMatch.Gui.Component
 			
 			playsSelection = new PlaysSelectionWidget ();
 			codingwidget = new CodingWidget();
-			postagger = new PlaysCoordinatesTagger();
 			playercapturer = new PlayerCapturerBin ();
 			if(projectType == ProjectType.FileProject) {
 				playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
@@ -212,7 +204,6 @@ namespace LongoMatch.Gui.Component
 			rightpane.Show ();
 			playsSelection.Show ();
 			codingwidget.Show ();
-			postagger.Show ();
 			playercapturer.Show ();
 			
 			centralpane.Pack1 (uppane, true, true);
@@ -220,7 +211,6 @@ namespace LongoMatch.Gui.Component
 			uppane.Pack1 (playsSelection, true, true);
 			uppane.Pack2 (rightpane, true, true);
 			rightpane.Pack1 (playercapturer, true, true);
-			rightpane.Pack2 (postagger, true, true);
 			Add (centralpane);
 		}
 		
@@ -231,8 +221,6 @@ namespace LongoMatch.Gui.Component
 				playsSelection.Destroy();
 			if (codingwidget != null)
 				codingwidget.Destroy();
-			if (postagger != null)
-				postagger.Destroy();
 			if (playercapturer != null) {
 				playercapturer.Destroy();
 			}

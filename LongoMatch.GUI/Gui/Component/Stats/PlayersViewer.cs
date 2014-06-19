@@ -54,7 +54,7 @@ namespace LongoMatch.Gui.Component.Stats
 			filter = new PlaysFilter (project);
 			filter.PlayersFilterEnabled = true;
 			pstats.Filter = filter;
-			categoriesviewer.LoadStats (pstats);
+			categoriesviewer.LoadStats (pstats, project);
 			AddTeam (project.LocalTeamTemplate, project.Categories);
 			AddTeam (project.VisitorTeamTemplate, project.Categories);
 			filter.Update();

@@ -45,19 +45,26 @@ namespace LongoMatch.Gui.Component
 
 		public event HotKeyChangeHandler HotKeyChanged;
 
-		private Category cat;
-		private ListStore model;
+		Category cat;
+		ListStore model;
+		CoordinatesTagger fieldcoordinatestagger;
+		CoordinatesTagger halffieldcoordinatestagger;
+		CoordinatesTagger goalcoordinatestagger;
 
 		public CategoryProperties()
 		{
 			this.Build();
+			vbox2.Sensitive = false;
 			subcategoriestreeview1.SubCategoriesDeleted += OnSubcategoriesDeleted;
 			subcategoriestreeview1.SubCategorySelected += OnSubcategorySelected;
 			leadtimebutton.ValueChanged += OnLeadTimeChanged;;
 			lagtimebutton.ValueChanged += OnLagTimeChanged;
-			fieldcoordinatestagger.Background = Config.FieldBackground.Value;
-			halffieldcoordinatestagger.Background = Config.HalfFieldBackground.Value;
-			goalcoordinatestagger.Background = Config.GoalBackground.Value;
+			fieldcoordinatestagger = new CoordinatesTagger ();
+			halffieldcoordinatestagger = new CoordinatesTagger ();
+			goalcoordinatestagger = new CoordinatesTagger ();
+			table1.Attach (fieldcoordinatestagger, 0, 1, 0, 1);
+			table1.Attach (halffieldcoordinatestagger, 1, 2, 0, 1);
+			table1.Attach (goalcoordinatestagger, 2, 3, 0, 1);
 		}
 		
 		public bool CanChangeHotkey {
@@ -70,6 +77,7 @@ namespace LongoMatch.Gui.Component
 		public Category Category {
 			set {
 				cat = value;
+				vbox2.Sensitive = true;
 				UpdateGui();
 			}
 			get {
@@ -84,22 +92,14 @@ namespace LongoMatch.Gui.Component
 		
 		public Categories Template {
 			set {
-				if (value.FieldBackground != null) {
-					fieldcoordinatestagger.Background = value.FieldBackground.Value;
-				}
-				if (value.HalfFieldBackground != null) {
-					halffieldcoordinatestagger.Background = value.HalfFieldBackground.Value;
-				}
-				if (value.GoalBackground != null) {
-					goalcoordinatestagger.Background = value.GoalBackground.Value;
-				}
+				fieldcoordinatestagger.Tagger.Background = value.FieldBackground;
+				halffieldcoordinatestagger.Tagger.Background = value.HalfFieldBackground;
+				goalcoordinatestagger.Tagger.Background = value.GoalBackground;
 			}
 		}
 
 		private void  UpdateGui() {
 			ListStore list;
-			List<Coordinates> coords;
-			Coordinates c;
 			
 			if(cat == null)
 				return;
@@ -113,34 +113,16 @@ namespace LongoMatch.Gui.Component
 			
 			tagfieldcheckbutton.Active = cat.TagFieldPosition;
 			fieldcoordinatestagger.Visible = cat.TagFieldPosition;
-			coords = new List<Coordinates>();
-			c = new Coordinates();
-			c.Points.Add (new Point (300, 300));
-			coords.Add (c);
-			if (cat.FieldPositionIsDistance) {
-				c.Points.Add (new Point (400, 500));
-			}
-			fieldcoordinatestagger.Coordinates = coords;
+			UpdatePosition (FieldPositionType.Field);
 			trajectorycheckbutton.Active = cat.FieldPositionIsDistance;
 			
 			taghalffieldcheckbutton.Active = cat.TagHalfFieldPosition;
 			halffieldcoordinatestagger.Visible = cat.TagHalfFieldPosition;
-			coords = new List<Coordinates>();
-			c = new Coordinates();
-			c.Points.Add (new Point (300, 300));
-			coords.Add (c);
-			if (cat.FieldPositionIsDistance) {
-				c.Points.Add (new Point (400, 500));
-			}
-			halffieldcoordinatestagger.Coordinates = coords;
+			UpdatePosition (FieldPositionType.HalfField);
 			trajectoryhalfcheckbutton.Active = cat.HalfFieldPositionIsDistance;
 			
 			taggoalcheckbutton.Active = cat.TagGoalPosition;
-			coords = new List<Coordinates>();
-			c = new Coordinates();
-			c.Points.Add (new Point (100, 100));
-			coords.Add (c);
-			goalcoordinatestagger.Coordinates = coords;
+			UpdatePosition (FieldPositionType.Goal);
 			goalcoordinatestagger.Visible = cat.TagGoalPosition;
 			
 			if(cat.HotKey.Defined)
@@ -151,6 +133,34 @@ namespace LongoMatch.Gui.Component
 			list.Clear();
 			foreach (SubCategory subcat in cat.SubCategories)
 				list.AppendValues(subcat);
+		}
+		
+		void UpdatePosition (FieldPositionType position) {
+			CoordinatesTagger tagger;
+			List<Point> points;
+			bool isDistance;
+			
+			switch (position) {
+			case FieldPositionType.Field:
+				tagger = fieldcoordinatestagger;
+				isDistance = cat.FieldPositionIsDistance;
+				break;
+			case FieldPositionType.HalfField:
+				tagger = halffieldcoordinatestagger;
+				isDistance = cat.HalfFieldPositionIsDistance;
+				break;
+			default:
+			case FieldPositionType.Goal:
+				tagger = goalcoordinatestagger;
+				isDistance = false;
+				break;
+			}
+			points = new List<Point> ();
+			points.Add (new Point (0.5, 0.5));
+			if (isDistance) {
+				points.Add (new Point (0.5, 0.1));
+			}
+			tagger.Tagger.Points = points;
 		}
 		
 		private void RenderSubcat(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
@@ -266,36 +276,14 @@ namespace LongoMatch.Gui.Component
 		
 		protected void OnTrajectoryhalffieldcheckbuttonClicked (object sender, EventArgs e)
 		{
-			List<Coordinates> coords;
-			Coordinates c;
-			
 			cat.HalfFieldPositionIsDistance = trajectoryhalfcheckbutton.Active;
-			
-			coords = new List<Coordinates>();
-			c = new Coordinates();
-			c.Points.Add (new Point (300, 300));
-			coords.Add (c);
-			if (cat.HalfFieldPositionIsDistance) {
-				c.Points.Add (new Point (400, 500));
-			}
-			halffieldcoordinatestagger.Coordinates = coords;
+			UpdatePosition (FieldPositionType.HalfField);
 		}
 		
 		protected void OnTrajectorycheckbuttonClicked (object sender, EventArgs e)
 		{
-			List<Coordinates> coords;
-			Coordinates c;
-			
 			cat.FieldPositionIsDistance = trajectorycheckbutton.Active;
-			
-			coords = new List<Coordinates>();
-			c = new Coordinates();
-			c.Points.Add (new Point (300, 300));
-			coords.Add (c);
-			if (cat.FieldPositionIsDistance) {
-				c.Points.Add (new Point (400, 500));
-			}
-			fieldcoordinatestagger.Coordinates = coords;
+			UpdatePosition (FieldPositionType.Field);
 		}
 	}
 }

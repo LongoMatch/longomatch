@@ -42,10 +42,10 @@ namespace LongoMatch.Gui.Component.Stats
 			treeview.EnableTreeLines = false;
 		}
 		
-		public void LoadStats (ProjectStats pstats) {
+		public void LoadStats (ProjectStats pstats, Project project) {
 			categoryviewer1.HomeName = pstats.LocalTeam;
 			categoryviewer1.AwayName = pstats.VisitorTeam;
-			categoryviewer1.LoadBackgrounds (pstats.Field, pstats.HalfField, pstats.Goal);
+			categoryviewer1.LoadBackgrounds (project);
 			this.pstats = pstats;
 			ReloadStats();
 		}

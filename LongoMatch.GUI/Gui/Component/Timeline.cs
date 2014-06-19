@@ -26,6 +26,7 @@ using LongoMatch.Drawing.Cairo;
 using LongoMatch.Drawing;
 using Gtk;
 using Mono.Unix;
+using LongoMatch.Gui.Menus;
 
 namespace LongoMatch.Gui.Component
 {
