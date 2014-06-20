@@ -174,6 +174,7 @@ namespace LongoMatch.Drawing.CanvasObject
 					to.OffsetY = OffsetY;
 					to.SecondsPerPixel = SecondsPerPixel;
 					to.MaxTime = maxTime;
+					to.SelectWhole = false;
 					AddNode (to);
 				}
 			}

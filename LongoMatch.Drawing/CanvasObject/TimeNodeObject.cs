@@ -31,9 +31,15 @@ namespace LongoMatch.Drawing.CanvasObject
 		public TimeNodeObject (TimeNode node)
 		{
 			TimeNode = node;
+			SelectWhole = true;
 		}
 		
 		public TimeNode TimeNode {
+			get;
+			set;
+		}
+		
+		public bool SelectWhole {
 			get;
 			set;
 		}
@@ -79,7 +85,7 @@ namespace LongoMatch.Drawing.CanvasObject
 					return new Selection (this, SelectionPosition.Left, accuracy);
 				} else if (Drawable.MatchAxis (point.X, StopX, precision, out accuracy)) {
 					return new Selection (this, SelectionPosition.Right, accuracy);
-				} else if (point.X > StartX && point.X < StopX) {
+				} else if (SelectWhole && point.X > StartX && point.X < StopX) {
 					return new Selection (this, SelectionPosition.All,
 					                      Math.Abs (CenterX - point.X));
 				}
