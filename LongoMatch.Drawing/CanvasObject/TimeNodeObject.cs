@@ -138,7 +138,7 @@ namespace LongoMatch.Drawing.CanvasObject
 			tk.LineWidth = 4;
 			
 			mid = OffsetY + Common.CATEGORY_HEIGHT / 2;
-			bottom = OffsetY + Common.CATEGORY_HEIGHT / 2;
+			bottom = OffsetY + Common.CATEGORY_HEIGHT;
 			stop = Common.TimeToPos (TimeNode.Stop, SecondsPerPixel);
 			
 			tk.DrawLine (new Point (StartX, OffsetY),
