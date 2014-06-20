@@ -29,11 +29,13 @@ namespace LongoMatch.Gui.Component
 	{
 		TimersTimeline timersTimenline;
 		Timerule timerule;
-		
+		Time duration;
 		
 		public ProjectPeriods ()
 		{
 			this.Build ();
+			zoominbutton.Clicked += HandleZooomActivated;
+			zoomoutbutton.Clicked += HandleZooomActivated;
 			playerbin2.Tick += HandleTick;
 			playerbin2.ShowControls = false;
 			timerule = new Timerule (new WidgetWrapper (drawingarea1));
@@ -49,7 +51,7 @@ namespace LongoMatch.Gui.Component
 
 		public Project Project {
 			set {
-				Time start, duration, pDuration;
+				Time start, pDuration;
 				List<string> gamePeriods;
 				
 				playerbin2.ShowControls = false;
@@ -63,6 +65,7 @@ namespace LongoMatch.Gui.Component
 				gamePeriods = value.Categories.GamePeriods;
 				
 				timerule.Duration = duration;
+				SetZoom ();
 				playerbin2.Open (value.Description.File.FilePath);
 
 				foreach (string s in gamePeriods) {
@@ -73,6 +76,15 @@ namespace LongoMatch.Gui.Component
 					start += pDuration;
 				}
 				timersTimenline.LoadTimers (timers, duration, false);
+			}
+		}
+		
+		void SetZoom () {
+			if (duration != null) {
+				double spp = (double) duration.Seconds / drawingarea1.Allocation.Width;
+				int secondsPerPixel = (int) Math.Ceiling (spp);
+				timerule.SecondsPerPixel = secondsPerPixel;
+				timersTimenline.SecondsPerPixel = secondsPerPixel;
 			}
 		}
 		
@@ -96,7 +108,19 @@ namespace LongoMatch.Gui.Component
 			timerule.Scroll = scrolledwindow2.Hadjustment.Value;
 			drawingarea1.QueueDraw ();
 		}
-
+		
+		void HandleZooomActivated (object sender, EventArgs e)
+		{
+			if (sender == zoomoutbutton) {
+				timerule.SecondsPerPixel ++;
+				timersTimenline.SecondsPerPixel ++;
+			} else {
+				timerule.SecondsPerPixel = Math.Max (1, timerule.SecondsPerPixel - 1);
+				timersTimenline.SecondsPerPixel = Math.Max (1, timersTimenline.SecondsPerPixel - 1);
+			}
+			drawingarea1.QueueDraw();
+			drawingarea2.QueueDraw();
+		}
 	}
 }
 
