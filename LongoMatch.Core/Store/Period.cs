@@ -32,10 +32,15 @@ namespace LongoMatch.Store
 		[JsonIgnore]
 		public TimeNode PeriodNode {
 			get {
+				Time start, stop;
+				
+				start = new Time (Nodes.Min (tn => tn.Start.MSeconds));
+				stop = new Time (Nodes.Max (tn => tn.Stop != null ? tn.Stop.MSeconds : 0));
+				if (stop.MSeconds == 0) {
+					stop = null;
+				}
 				return new TimeNode {Name=Name,
-					Start = new Time (Nodes.Min (tn => tn.Start.MSeconds)),
-					Stop = new Time (Nodes.Max (tn => tn.Stop.MSeconds)),
-				};
+					Start = start, Stop = stop};
 			}
 			set {
 				foreach (TimeNode tn in Nodes) {
