@@ -31,6 +31,7 @@ namespace LongoMatch.Gui.Component
 		VideoAnalysisMode analysisMode;
 		TeamTagger teamtagger;
 		Project project;
+		ProjectType projectType;
 		
 		public CodingWidget ()
 		{
@@ -64,62 +65,41 @@ namespace LongoMatch.Gui.Component
 			base.OnDestroyed ();
 		}
 
-		public void SetProject (Project project, bool isLive, PlaysFilter filter) {
+		public void SetProject (Project project, ProjectType projectType, PlaysFilter filter) {
 			this.project = project;	
+			this.projectType = projectType;
 			autoTaggingMode.Active = true;
-			timeline.Visible = false;
 			buttonswidget.Visible = true;
+			timeline.Visible = false;
+			playspositionviewer1.Visible = false;
 			buttonswidget.Project = project;
 			teamtagger.LoadTeams (project.LocalTeamTemplate, project.VisitorTeamTemplate,
 			                      project.Categories.FieldBackground);
-			timeline.SetProject (project, filter);
+			if (projectType != ProjectType.FileProject) {
+				timelineMode.Visible = false;
+			} else {
+				timelineMode.Visible = true;
+				timeline.SetProject (project, filter);
+			}
 			playspositionviewer1.LoadProject (project);
 		}
 		
-		public AnalysisComponent AnalysisComponentParent {
-			set;
-			protected get;
-		}
-		
 		public void AddPlay(Play play) {
-			timeline.AddPlay(play);
+			if (projectType == ProjectType.FileProject) {
+				timeline.AddPlay(play);
+			}
 			playspositionviewer1.AddPlay (play);
 		}
 		
 		public void DeletePlays (List<Play> plays) {
-			timeline.RemovePlays(plays);
+			if (projectType == ProjectType.FileProject) {
+				timeline.RemovePlays(plays);
+			}
 			playspositionviewer1.RemovePlays (plays);
 		}
 
 		public void UpdateCategories () {
 			buttonswidget.Project = project;
-		}
-		
-		public VideoAnalysisMode AnalysisMode {
-			set {
-				buttonswidget.Visible = (value == VideoAnalysisMode.ManualTagging) ||
-					(value == VideoAnalysisMode.PredefinedTagging);
-				drawingarea1.Visible = buttonswidget.Visible;
-				timeline.Visible = value == VideoAnalysisMode.Timeline;
-				if(value == VideoAnalysisMode.ManualTagging)
-					buttonswidget.Mode = TagMode.Free;
-				else if (value == VideoAnalysisMode.ManualTagging)
-					buttonswidget.Mode = TagMode.Predifined;
-				analysisMode = value;
-				timeline.Visible = true;
-			}
-			protected get {
-				return analysisMode;
-			}
-		}
-		
-		public bool WidgetsVisible {
-			set {
-				timeline.Visible = value && AnalysisMode == VideoAnalysisMode.Timeline;
-				buttonswidget.Visible = value && (AnalysisMode == VideoAnalysisMode.ManualTagging ||
-				                                  AnalysisMode == VideoAnalysisMode.PredefinedTagging);
-				drawingarea1.Visible = buttonswidget.Visible;
-			}
 		}
 		
 		void HandleViewToggled (object sender, EventArgs e)

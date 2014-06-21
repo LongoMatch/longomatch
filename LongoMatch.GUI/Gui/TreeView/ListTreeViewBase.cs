@@ -43,7 +43,6 @@ namespace LongoMatch.Gui.Component
 		protected Gtk.CellRendererText nameCell;
 		protected Gtk.TreeViewColumn nameColumn;
 		protected bool editing;
-		protected bool projectIsLive;
 		protected bool enableCategoryMove = false;
 		
 		TreeModelFilter modelFilter;
@@ -60,7 +59,6 @@ namespace LongoMatch.Gui.Component
 			HeadersVisible = false;
 
 			SetMenu();
-			ProjectIsLive = false;
 			PlayListLoaded = false;
 
 			nameColumn = new Gtk.TreeViewColumn();
@@ -76,14 +74,6 @@ namespace LongoMatch.Gui.Component
 
 			AppendColumn(nameColumn);
 
-		}
-
-		public bool ProjectIsLive {
-			set {
-				projectIsLive = value;
-				addPLN.Visible = !projectIsLive;
-				snapshot.Visible = !projectIsLive;
-			}
 		}
 
 		public bool Colors {

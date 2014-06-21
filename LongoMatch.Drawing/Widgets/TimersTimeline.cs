@@ -27,7 +27,11 @@ namespace LongoMatch.Drawing.Widgets
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
 		}
 
-		public void LoadTimers (List<Timer> timers, Time duration, bool splitTimers) {
+		public void LoadPeriods (List<Period> periods, Time duration) {
+			LoadTimers (periods.Select (p => p as Timer).ToList(), duration, false);
+		}
+
+		public void LoadTimers (List<Timer> timers, Time duration, bool splitTimers = true) {
 			Objects.Clear();
 			this.timers = new Dictionary<Timer, TimerTimeline>();
 			this.duration = duration;

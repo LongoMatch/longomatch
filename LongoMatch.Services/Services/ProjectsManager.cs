@@ -161,8 +161,6 @@ namespace LongoMatch.Services
 					"saved. Try to import it later:\n")+
 					filePath+"\n"+projectFile);
 			}
-			CloseOpenedProject (false);
-			OpenProjectID (projectID);
 		}
 	
 		bool SetProject(Project project, ProjectType projectType, CaptureSettings props)
@@ -187,7 +185,12 @@ namespace LongoMatch.Services
 				Player.SegmentClosedEvent += Config.EventsBroker.EmitSegmentClosed;
 			}
 			if (Capturer != null) {
-				Capturer.CaptureFinished += (sender, e) => Config.EventsBroker.EmitCloseOpenedProject();
+				Capturer.CaptureFinished += (close) => {
+					CloseOpenedProject (!close);
+					if (!close) {
+						OpenProjectID (project.ID);
+					}
+				};
 				if (Capturer != Player)
 					Capturer.Error += HandleMultimediaError;
 			}
@@ -289,14 +292,16 @@ namespace LongoMatch.Services
 			if(OpenedProject == null)
 				return;
 				
+			Log.Debug ("Closing project " + OpenedProject.ID);
+			if(OpenedProjectType != ProjectType.FileProject) {
+				Capturer.Stop();
+				Capturer.Close();
+			} else {
+				Player.Close();
+			}
+
 			if (save)
 				SaveProject(OpenedProject, OpenedProjectType);
-			
-			Log.Debug ("Closing project " + OpenedProject.ID);
-			if(OpenedProjectType != ProjectType.FileProject)
-				Capturer.Close();
-			else
-				Player.Close();
 
 			if(OpenedProject != null)
 				OpenedProject.Clear();
@@ -421,9 +426,6 @@ namespace LongoMatch.Services
 				if (Capturer == null)
 					return;
 				switch(key) {
-				case Constants.TOGGLE_PLAY:
-					Capturer.TogglePause();
-					break;
 				}
 			}
 		}

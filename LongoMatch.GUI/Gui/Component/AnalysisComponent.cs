@@ -134,8 +134,6 @@ namespace LongoMatch.Gui.Component
 		
 		public void SetProject(Project project, ProjectType projectType, CaptureSettings props, PlaysFilter filter)
 		{
-			bool isLive = false;
-			
 			openedProject = project;
 			this.projectType = projectType;
 			
@@ -145,8 +143,8 @@ namespace LongoMatch.Gui.Component
 				CreatePreviewUI ();
 			}
 			
-			codingwidget.SetProject (project, isLive, filter);
-			playsSelection.SetProject (project, isLive, filter);
+			codingwidget.SetProject (project, projectType, filter);
+			playsSelection.SetProject (project, filter);
 		}
 		
 		void CreateCodingUI () {
@@ -197,6 +195,8 @@ namespace LongoMatch.Gui.Component
 				playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
 			} else {
 				playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.PreviewCapturer;
+				playercapturer.PeriodsNames = openedProject.Categories.GamePeriods;
+				playercapturer.PeriodsTimers = openedProject.Periods;
 			}
 			
 			centralpane.Show ();

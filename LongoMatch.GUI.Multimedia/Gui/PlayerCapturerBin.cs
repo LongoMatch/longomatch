@@ -21,6 +21,7 @@ using LongoMatch.Handlers;
 using LongoMatch.Interfaces.GUI;
 using LongoMatch.Common;
 using LongoMatch.Store;
+using System.Collections.Generic;
 
 namespace LongoMatch.Gui
 {
@@ -32,7 +33,7 @@ namespace LongoMatch.Gui
 		public event ErrorHandler Error;
 		
 		/* Capturer events */
-		public event EventHandler CaptureFinished;
+		public event CaptureFinishedHandler CaptureFinished;
 		
 		/* Player Events */
 		public event SegmentClosedHandler SegmentClosedEvent;
@@ -114,12 +115,6 @@ namespace LongoMatch.Gui
 #endregion
 
 #region Capturer
-		public string Logo {
-			set {
-				capturerbin.Logo = value;
-			}
-		}
-		
 		public CaptureSettings CaptureSettings {
 			get {
 				return capturerbin.CaptureSettings;
@@ -132,12 +127,28 @@ namespace LongoMatch.Gui
 			}
 		}
 		
-		public void Start () {
-			capturerbin.Start ();
+		public List<string> PeriodsNames {
+			set {
+				capturerbin.PeriodsNames = value;
+			}
 		}
 		
-		public void TogglePause () {
-			capturerbin.TogglePause ();
+		public List<Period> PeriodsTimers {
+			set {
+				capturerbin.Periods = value;
+			}
+		}
+
+		public void StartPeriod () {
+			capturerbin.StartPeriod ();
+		}
+		
+		public void StopPeriod () {
+			capturerbin.StopPeriod ();
+		}
+		
+		public void Stop () {
+			capturerbin.Stop ();
 		}
 		
 		public void Run (CapturerType type, CaptureSettings settings) {
@@ -269,9 +280,9 @@ namespace LongoMatch.Gui
 		}
 		
 		void ConnectSignals () {
-			capturerbin.CaptureFinished += delegate(object sender, EventArgs e) {
+			capturerbin.CaptureFinished += (bool close) => {
 				if (CaptureFinished != null)
-					CaptureFinished (sender, e);
+					CaptureFinished (close);
 			};
 			
 			capturerbin.Error += delegate(string message) {

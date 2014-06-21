@@ -7,10 +7,14 @@ namespace LongoMatch.Gui
 		private global::Gtk.VBox vbox1;
 		private global::Gtk.DrawingArea videodrawingarea;
 		private global::Gtk.HBox hbox2;
+		private global::Gtk.Frame frame1;
+		private global::Gtk.Alignment GtkAlignment;
 		private global::Gtk.HBox buttonsbox;
 		private global::Gtk.Button recbutton;
-		private global::Gtk.Button pausebutton;
 		private global::Gtk.Button stopbutton;
+		private global::Gtk.Button finishbutton;
+		private global::Gtk.Button cancelbutton;
+		private global::Gtk.Label GtkLabel3;
 		private global::Gtk.Label timelabel;
 
 		protected virtual void Build ()
@@ -34,12 +38,20 @@ namespace LongoMatch.Gui
 			this.hbox2.Name = "hbox2";
 			this.hbox2.Spacing = 6;
 			// Container child hbox2.Gtk.Box+BoxChild
+			this.frame1 = new global::Gtk.Frame ();
+			this.frame1.Name = "frame1";
+			this.frame1.ShadowType = ((global::Gtk.ShadowType)(0));
+			// Container child frame1.Gtk.Container+ContainerChild
+			this.GtkAlignment = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
+			this.GtkAlignment.Name = "GtkAlignment";
+			this.GtkAlignment.LeftPadding = ((uint)(12));
+			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			this.buttonsbox = new global::Gtk.HBox ();
 			this.buttonsbox.Name = "buttonsbox";
 			this.buttonsbox.Spacing = 6;
 			// Container child buttonsbox.Gtk.Box+BoxChild
 			this.recbutton = new global::Gtk.Button ();
-			this.recbutton.TooltipMarkup = "Start or continue capture";
+			this.recbutton.TooltipMarkup = "Start capturing new period";
 			this.recbutton.Name = "recbutton";
 			this.recbutton.UseUnderline = true;
 			// Container child recbutton.Gtk.Container+ContainerChild
@@ -62,78 +74,108 @@ namespace LongoMatch.Gui
 			w10.Expand = false;
 			w10.Fill = false;
 			// Container child buttonsbox.Gtk.Box+BoxChild
-			this.pausebutton = new global::Gtk.Button ();
-			this.pausebutton.TooltipMarkup = "Pause capture";
-			this.pausebutton.Name = "pausebutton";
-			this.pausebutton.UseUnderline = true;
-			// Container child pausebutton.Gtk.Container+ContainerChild
+			this.stopbutton = new global::Gtk.Button ();
+			this.stopbutton.TooltipMarkup = "Stop capturing current period";
+			this.stopbutton.Name = "stopbutton";
+			this.stopbutton.UseUnderline = true;
+			// Container child stopbutton.Gtk.Container+ContainerChild
 			global::Gtk.Alignment w11 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			global::Gtk.HBox w12 = new global::Gtk.HBox ();
 			w12.Spacing = 2;
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Image w13 = new global::Gtk.Image ();
-			w13.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-media-pause", global::Gtk.IconSize.Dialog);
+			w13.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-media-stop", global::Gtk.IconSize.Dialog);
 			w12.Add (w13);
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Label w15 = new global::Gtk.Label ();
 			w12.Add (w15);
 			w11.Add (w12);
-			this.pausebutton.Add (w11);
-			this.buttonsbox.Add (this.pausebutton);
-			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.buttonsbox [this.pausebutton]));
+			this.stopbutton.Add (w11);
+			this.buttonsbox.Add (this.stopbutton);
+			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.buttonsbox [this.stopbutton]));
 			w19.Position = 1;
 			w19.Expand = false;
 			w19.Fill = false;
 			// Container child buttonsbox.Gtk.Box+BoxChild
-			this.stopbutton = new global::Gtk.Button ();
-			this.stopbutton.TooltipMarkup = "Stop and close capture";
-			this.stopbutton.Name = "stopbutton";
-			this.stopbutton.UseUnderline = true;
-			// Container child stopbutton.Gtk.Container+ContainerChild
+			this.finishbutton = new global::Gtk.Button ();
+			this.finishbutton.TooltipMarkup = "End capture";
+			this.finishbutton.Name = "finishbutton";
+			this.finishbutton.UseUnderline = true;
+			// Container child finishbutton.Gtk.Container+ContainerChild
 			global::Gtk.Alignment w20 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
 			global::Gtk.HBox w21 = new global::Gtk.HBox ();
 			w21.Spacing = 2;
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Image w22 = new global::Gtk.Image ();
-			w22.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-media-stop", global::Gtk.IconSize.Dialog);
+			w22.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-ok", global::Gtk.IconSize.Dialog);
 			w21.Add (w22);
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Label w24 = new global::Gtk.Label ();
 			w21.Add (w24);
 			w20.Add (w21);
-			this.stopbutton.Add (w20);
-			this.buttonsbox.Add (this.stopbutton);
-			global::Gtk.Box.BoxChild w28 = ((global::Gtk.Box.BoxChild)(this.buttonsbox [this.stopbutton]));
+			this.finishbutton.Add (w20);
+			this.buttonsbox.Add (this.finishbutton);
+			global::Gtk.Box.BoxChild w28 = ((global::Gtk.Box.BoxChild)(this.buttonsbox [this.finishbutton]));
 			w28.Position = 2;
 			w28.Expand = false;
 			w28.Fill = false;
-			this.hbox2.Add (this.buttonsbox);
-			global::Gtk.Box.BoxChild w29 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.buttonsbox]));
-			w29.Position = 0;
-			w29.Expand = false;
-			w29.Fill = false;
+			// Container child buttonsbox.Gtk.Box+BoxChild
+			this.cancelbutton = new global::Gtk.Button ();
+			this.cancelbutton.TooltipMarkup = "Close current capture";
+			this.cancelbutton.CanFocus = true;
+			this.cancelbutton.Name = "cancelbutton";
+			this.cancelbutton.UseUnderline = true;
+			// Container child cancelbutton.Gtk.Container+ContainerChild
+			global::Gtk.Alignment w29 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
+			// Container child GtkAlignment.Gtk.Container+ContainerChild
+			global::Gtk.HBox w30 = new global::Gtk.HBox ();
+			w30.Spacing = 2;
+			// Container child GtkHBox.Gtk.Container+ContainerChild
+			global::Gtk.Image w31 = new global::Gtk.Image ();
+			w31.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-stop", global::Gtk.IconSize.Dialog);
+			w30.Add (w31);
+			// Container child GtkHBox.Gtk.Container+ContainerChild
+			global::Gtk.Label w33 = new global::Gtk.Label ();
+			w30.Add (w33);
+			w29.Add (w30);
+			this.cancelbutton.Add (w29);
+			this.buttonsbox.Add (this.cancelbutton);
+			global::Gtk.Box.BoxChild w37 = ((global::Gtk.Box.BoxChild)(this.buttonsbox [this.cancelbutton]));
+			w37.Position = 3;
+			w37.Expand = false;
+			w37.Fill = false;
+			this.GtkAlignment.Add (this.buttonsbox);
+			this.frame1.Add (this.GtkAlignment);
+			this.GtkLabel3 = new global::Gtk.Label ();
+			this.GtkLabel3.Name = "GtkLabel3";
+			this.GtkLabel3.UseMarkup = true;
+			this.frame1.LabelWidget = this.GtkLabel3;
+			this.hbox2.Add (this.frame1);
+			global::Gtk.Box.BoxChild w40 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.frame1]));
+			w40.Position = 0;
+			w40.Expand = false;
+			w40.Fill = false;
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.timelabel = new global::Gtk.Label ();
 			this.timelabel.Name = "timelabel";
 			this.timelabel.LabelProp = "Time: 0:00:00";
 			this.timelabel.UseMarkup = true;
 			this.hbox2.Add (this.timelabel);
-			global::Gtk.Box.BoxChild w30 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.timelabel]));
-			w30.PackType = ((global::Gtk.PackType)(1));
-			w30.Position = 1;
+			global::Gtk.Box.BoxChild w41 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.timelabel]));
+			w41.PackType = ((global::Gtk.PackType)(1));
+			w41.Position = 1;
 			this.vbox1.Add (this.hbox2);
-			global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hbox2]));
-			w31.Position = 1;
-			w31.Expand = false;
-			w31.Fill = false;
+			global::Gtk.Box.BoxChild w42 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hbox2]));
+			w42.Position = 1;
+			w42.Expand = false;
 			this.Add (this.vbox1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
-			this.pausebutton.Hide ();
 			this.stopbutton.Hide ();
+			this.finishbutton.Hide ();
 			this.Show ();
 		}
 	}

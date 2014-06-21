@@ -20,23 +20,25 @@ using System;
 using LongoMatch.Common;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
+using System.Collections.Generic;
 
 namespace LongoMatch.Interfaces.GUI
 {
 	public interface ICapturerBin
 	{
-		event EventHandler CaptureFinished;
+		event CaptureFinishedHandler CaptureFinished;
 		event ErrorHandler Error;
 		
-		string Logo {set;}
 		Time CurrentTime {get;}
 		bool Capturing {get;}
 		Image CurrentMiniatureFrame {get;}
 		CaptureSettings CaptureSettings {get;}
+		List<string> PeriodsNames {set;}
 
 		void Run (CapturerType type, CaptureSettings settings);
-		void Start();
-		void TogglePause();
+		void StartPeriod();
+		void StopPeriod();
+		void Stop();
 		void Close();
 	}
 }

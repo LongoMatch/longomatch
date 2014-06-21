@@ -6052,6 +6052,7 @@ You can continue with the current capture, cancel it or save your project.
                             <property name="MemberName" />
                             <property name="CanFocus">True</property>
                             <property name="Label" translatable="yes">New project using a video file</property>
+                            <property name="Active">True</property>
                             <property name="DrawIndicator">True</property>
                             <property name="HasLabel">True</property>
                             <property name="UseUnderline">True</property>
@@ -9258,6 +9259,17 @@ Click 2 players to swap them</property>
     </child>
   </widget>
   <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.CodingWidget" design-size="673 300">
+    <action-group name="Timeline">
+      <action id="positionMode">
+        <property name="Type">Radio</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-justify-fill</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <property name="Value">0</property>
+        <property name="Group">codingmode</property>
+      </action>
+    </action-group>
     <action-group name="Default">
       <action id="timelineMode">
         <property name="Type">Radio</property>
@@ -9288,17 +9300,6 @@ Click 2 players to swap them</property>
         <property name="Type">Radio</property>
         <property name="Label" translatable="yes" />
         <property name="StockId">gtk-convert</property>
-        <property name="DrawAsRadio">False</property>
-        <property name="Active">False</property>
-        <property name="Value">0</property>
-        <property name="Group">codingmode</property>
-      </action>
-    </action-group>
-    <action-group name="Timeline">
-      <action id="positionMode">
-        <property name="Type">Radio</property>
-        <property name="Label" translatable="yes" />
-        <property name="StockId">gtk-justify-fill</property>
         <property name="DrawAsRadio">False</property>
         <property name="Active">False</property>
         <property name="Value">0</property>

@@ -50,12 +50,6 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public bool ProjectIsLive {
-			set {
-				playerstreeview.ProjectIsLive = value;
-			}
-		}
-		
 		public PlaysFilter Filter {
 			set{
 				playerstreeview.Filter = value;

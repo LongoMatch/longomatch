@@ -34,6 +34,7 @@ using LongoMatch.Video.Utils;
 using Mono.Unix;
 using LongoMatch.Store;
 using LongoMatch.Multimedia.Utils;
+using System.Collections.Generic;
 
 namespace LongoMatch.Gui
 {
@@ -43,41 +44,34 @@ namespace LongoMatch.Gui
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class CapturerBin : Gtk.Bin, ICapturerBin
 	{
-		public event EventHandler CaptureFinished;
+		public event CaptureFinishedHandler CaptureFinished;
 		public event ErrorHandler Error;
 
-		Image logopix;
 		CaptureSettings settings;
 		CapturerType type;
-		bool captureStarted, capturing, delayStart;
+		bool delayStart;
 		ICapturer capturer;
+		int periodIndex;
+		Period currentPeriod;
+		Time ellapsedTime;
+		List<string> periods;
 
 		public CapturerBin()
 		{
 			this.Build();
-			recbutton.Clicked += OnRecbuttonClicked;
-			pausebutton.Clicked += OnPausebuttonClicked;
-			stopbutton.Clicked += OnStopbuttonClicked;
+			recbutton.Visible = false;
+			stopbutton.Visible = false;
+			finishbutton.Visible = false;
+			cancelbutton.Visible = true;
 			videodrawingarea.CanFocus = false;
-			
-			videodrawingarea.Realized += (sender, e) => {
-				if (delayStart) {
-					Configure ();
-					capturer.Run ();
-				}
-			};
+			ConnectSignals ();
 		}
 
-		public string Logo {
-			set {
-				try {
-					this.logopix = new Image(new Gdk.Pixbuf(value));
-				} catch {
-					/* FIXME: Add log */
-				}
-			}
+		public bool Capturing {
+			get;
+			protected set;
 		}
-
+		
 		public Time CurrentTime {
 			get {
 				if(capturer == null)
@@ -86,44 +80,87 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		public bool Capturing {
-			get {
-				return capturing;
-			}
-		}
-		
 		public CaptureSettings CaptureSettings {
 			get {
 				return settings;
 			}
 		}
-
-		public void Start() {
-			if(capturer == null)
-				return;
-
-			capturing = true;
-			captureStarted = true;
-			recbutton.Visible = false;
-			pausebutton.Visible = true;
-			stopbutton.Visible = true;
-			capturer.Start();
+		
+		public List<string> PeriodsNames {
+			set {
+				periods = value;
+				UpdateLabel (value[0]);
+			}
+			get {
+				return periods;
+			}
+		}
+		
+		public List<Period> Periods {
+			set;
+			get;
 		}
 
-		public void TogglePause() {
+		public void StartPeriod () {
 			if(capturer == null)
 				return;
+				
+			if (currentPeriod != null) {
+				throw new Exception ("Period already started");
+			}
 
-			if (capturing) {
-				string msg = Catalog.GetString("Do you want to pause the recording?");
-				if (!MessagesHelpers.QuestionMessage (this, msg)) {
-					return;
-				}
-			}				
-			capturing = !capturing;
-			recbutton.Visible = !capturing;
-			pausebutton.Visible = capturing;
-			capturer.TogglePause();
+			currentPeriod = new Period {Name = periods[periodIndex]};
+			currentPeriod.Start (ellapsedTime);
+			Log.Information (String.Format ("Start new period {0} at {1}",
+			                                currentPeriod.Name, ellapsedTime.ToSecondsString()));
+			Capturing = true;
+			recbutton.Visible = false;
+			stopbutton.Visible = true;
+			finishbutton.Visible = true;
+			if (Periods.Count == 0) {
+				capturer.Start ();
+			} else {
+				capturer.TogglePause ();
+			}
+			if (periodIndex + 1 == periods.Count) {
+				stopbutton.Visible = false;
+			}
+			UpdateLabel (currentPeriod.Name);
+			Periods.Add (currentPeriod);
+		}
+		
+		public void StopPeriod () {
+			string msg;
+			
+			msg = Catalog.GetString ("Do you want to stop the current period?");
+			
+			if (!MessagesHelpers.QuestionMessage (this, msg)) {
+				return;
+			}
+			if (currentPeriod == null) {
+				throw new Exception ("Period not started");
+			}
+			
+			Log.Information (String.Format ("Stop period {0} at {1}",
+			                                currentPeriod.Name, ellapsedTime.ToSecondsString()));
+			periodIndex ++;
+			Capturing = false;
+			capturer.TogglePause ();
+			currentPeriod.Stop (ellapsedTime);
+			UpdateLabel (periods[periodIndex]);
+			currentPeriod = null;
+			recbutton.Visible = true;
+			stopbutton.Visible = false;
+		}
+		
+		public void Stop () {
+			if (currentPeriod != null) {
+				Log.Information (String.Format ("Stop period {0} at {1}",
+				                                currentPeriod.Name, ellapsedTime.ToSecondsString()));
+				currentPeriod.Stop (ellapsedTime);
+			}
+			Log.Information ("Stop capture");
+			capturer.Stop ();
 		}
 
 		public void Run (CapturerType type, CaptureSettings settings) {
@@ -146,15 +183,17 @@ namespace LongoMatch.Gui
 			} else {
 				delayStart = true;
 			}
+			Periods = new List<Period> ();
 		}
-		
+
 		public void Close() {
+			bool stop = Capturing;
+
 			/* resetting common properties */
-			pausebutton.Visible = false;
 			stopbutton.Visible = false;
-			recbutton.Visible = true;
-			captureStarted = false;
-			capturing = false;
+			finishbutton.Visible = false;
+			recbutton.Visible = false;
+			Capturing = false;
 			OnTick(new Time (0));
 
 			if(capturer == null)
@@ -162,7 +201,9 @@ namespace LongoMatch.Gui
 
 			/* stopping and closing capturer */
 			try {
-				capturer.Stop();
+				if (Capturing) {
+					capturer.Stop();
+				}
 				capturer.Close();
 				if (type == CapturerType.Live) {
 					/* release and dispose live capturer */
@@ -190,6 +231,40 @@ namespace LongoMatch.Gui
 			}
 		}
 
+		void ConnectSignals ()
+		{
+			recbutton.Clicked += (sender, e) => StartPeriod ();
+			stopbutton.Clicked += (sender, e) => StopPeriod ();
+			finishbutton.Clicked += (sender, e) =>  {
+				string msg = Catalog.GetString ("Do you want to finish the current capture?");
+			
+				if (!MessagesHelpers.QuestionMessage (this, msg)) {
+					return;
+				}
+				if (CaptureFinished != null)
+					CaptureFinished (false);
+			};
+			cancelbutton.Clicked += (sender, e) =>  {
+				if (CaptureFinished != null)
+					CaptureFinished (true);
+			};
+			videodrawingarea.Realized += (sender, e) =>  {
+				if (delayStart) {
+					Configure ();
+					capturer.Run ();
+				}
+			};
+		}
+
+		void UpdateLabel (string name) {
+			frame1.Label = Catalog.GetString ("Period") + " " + name;
+		}
+		
+		string FormatTime (Period period, Time time) {
+			return String.Format ("{0} {1}: {2}  ", Catalog.GetString ("Period"),
+			                      period.Name, time.ToSecondsString ());
+		}
+		
 		void Configure () {
 			VideoMuxerType muxer;
 			IntPtr windowHandle;
@@ -197,6 +272,7 @@ namespace LongoMatch.Gui
 			if(capturer == null)
 				return;
 			
+			recbutton.Visible = true;
 			/* We need to use Matroska for live replay and remux when the capture is done */
 			muxer = settings.EncodingSettings.EncodingProfile.Muxer;
 			if (muxer == VideoMuxerType.Avi || muxer == VideoMuxerType.Mp4) {
@@ -208,64 +284,38 @@ namespace LongoMatch.Gui
 			delayStart = false;
 		}
 
-		protected virtual void OnRecbuttonClicked(object sender, System.EventArgs e)
-		{
-			if(capturer == null)
-				return;
-
-			if(captureStarted == true) {
-				if(capturing)
-					return;
-				TogglePause();
-			}
-			else
-				Start();
-		}
-
-		protected virtual void OnPausebuttonClicked(object sender, System.EventArgs e)
-		{
-			if(capturer != null && capturing)
-				TogglePause();
-		}
-
-		protected virtual void OnStopbuttonClicked(object sender, System.EventArgs e)
-		{
-			string msg;
-
-			if(capturer == null)
-				return;
-
-			msg = Catalog.GetString("Do you want to stop and finish the current capture?");
-			if (MessagesHelpers.QuestionMessage (this, msg, null)) {
-				Close();
-				recbutton.Visible = true;
-				pausebutton.Visible = false;
-				stopbutton.Visible = false;
-			
-				if(CaptureFinished != null)
-					CaptureFinished(this, new EventArgs());
-			}
-		}
-		
-		protected virtual void OnTick(Time ellapsedTime) {
-			timelabel.Markup = String.Format("<span font=\"20px bold\">Time --> {0}</span> ", 
-			                                 CurrentTime.ToSecondsString());
-		}
-
-		protected virtual void OnError(string message)
+		void OnError (string message)
 		{
 			if(Error != null)
 				Error(message);
-			Close();
+		}
+		
+		void OnTick(Time ellapsedTime) {
+			string text = "";
+			Time duration = new Time (0);
+
+			this.ellapsedTime = ellapsedTime;
+			
+			foreach (Period period in Periods) {
+				TimeNode tn = period.PeriodNode;
+				if (tn.Stop != null) {
+					text += FormatTime (period, tn.Duration);
+					duration += tn.Duration;
+				} else {
+					text += FormatTime (period, ellapsedTime - duration);
+					break;
+				}
+ 			}
+			timelabel.Markup = String.Format("<span font=\"30px bold\">{0}</span> ",  text);
 		}
 
-		protected virtual void OnDeviceChange(int deviceID)
+		void OnDeviceChange(int deviceID)
 		{
 			string msg;
 			/* device disconnected, pause capture */
 			if(deviceID == -1) {
-				if(capturing)
-					TogglePause();
+				if(Capturing)
+					capturer.TogglePause();
 
 				recbutton.Sensitive = false;
 				msg = Catalog.GetString("Device disconnected. " +
@@ -276,51 +326,9 @@ namespace LongoMatch.Gui
 				msg = Catalog.GetString("Device reconnected." +
 				                        "Do you want to restart the capture?");
 				if (MessagesHelpers.QuestionMessage (this, msg, null)) {
-					TogglePause ();
+					capturer.TogglePause();
 				}
 			}
-		}
-
-		protected virtual void OnLogodrawingareaExposeEvent(object o, Gtk.ExposeEventArgs args)
-		{
-			Gdk.Window win;
-			Gdk.Pixbuf logo, frame;
-			int width, height, allocWidth, allocHeight, logoX, logoY;
-			float ratio;
-
-			if(logopix == null)
-				return;
-			
-			logo = logopix.Value;
-
-			win = videodrawingarea.GdkWindow;
-			width = logo.Width;
-			height = logo.Height;
-			allocWidth = videodrawingarea.Allocation.Width;
-			allocHeight = videodrawingarea.Allocation.Height;
-
-			/* Checking if allocated space is smaller than our logo */
-			if((float) allocWidth / width > (float) allocHeight / height) {
-				ratio = (float) allocHeight / height;
-			} else {
-				ratio = (float) allocWidth / width;
-			}
-			width = (int)(width * ratio);
-			height = (int)(height * ratio);
-
-			logoX = (allocWidth / 2) - (width / 2);
-			logoY = (allocHeight / 2) - (height / 2);
-
-			/* Drawing our frame */
-			frame = new Gdk.Pixbuf(Gdk.Colorspace.Rgb, false, 8, allocWidth, allocHeight);
-			logo.Composite(frame, 0, 0, allocWidth, allocHeight, logoX, logoY,
-			                  ratio, ratio, Gdk.InterpType.Bilinear, 255);
-
-			win.DrawPixbuf(this.Style.BlackGC, frame, 0, 0,
-			               0, 0, allocWidth, allocHeight,
-			               Gdk.RgbDither.Normal, 0, 0);
-			frame.Dispose();
-			return;
 		}
 	}
 }

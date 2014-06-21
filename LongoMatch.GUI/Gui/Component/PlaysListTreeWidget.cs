@@ -103,12 +103,6 @@ namespace LongoMatch.Gui.Component
 			treeview.Selection.SelectIter(playIter);
 		}
 
-		public bool ProjectIsLive {
-			set {
-				treeview.ProjectIsLive = value;
-			}
-		}
-
 		public Project Project {
 			set {
 				project = value;

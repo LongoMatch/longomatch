@@ -47,12 +47,9 @@ namespace LongoMatch.Gui.Component
 		
 		#region Plubic Methods
 		
-		public void SetProject(Project project, bool isLive, PlaysFilter filter) {
+		public void SetProject(Project project, PlaysFilter filter) {
 			this.project = project;
 			this.filter = filter;
-			playsList.ProjectIsLive = isLive;
-			localPlayersList.ProjectIsLive = isLive;
-			visitorPlayersList.ProjectIsLive = isLive;
 			playsList.Filter = filter;
 			localPlayersList.Filter = filter;
 			visitorPlayersList.Filter = filter;

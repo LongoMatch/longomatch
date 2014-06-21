@@ -1,6 +1,10 @@
 <objects attr-sync="on">
   <object type="LongoMatch.Gui.CapturerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
+    <itemgroups>
+      <itemgroup label="CapturerBin Properties">
+        <property name="Capturing" />
+      </itemgroup>
+    </itemgroups>
     <signals>
       <itemgroup label="ICapturerBin Signals">
         <signal name="CaptureFinished" />

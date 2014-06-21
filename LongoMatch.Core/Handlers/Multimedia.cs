@@ -37,6 +37,7 @@ namespace LongoMatch.Handlers
 	public delegate void PlaybackRateChangedHandler (float rate);
 	
 	public delegate void DeviceChangeHandler(int deviceID);
+	public delegate void CaptureFinishedHandler (bool close);
 	public delegate void ErrorHandler(string message);
 	public delegate void PercentCompletedHandler(float percent);
 	public delegate void StateChangeHandler(bool playing);
