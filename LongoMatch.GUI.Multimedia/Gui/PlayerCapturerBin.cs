@@ -152,15 +152,6 @@ namespace LongoMatch.Gui
 			}
 		}
 		
-		public bool Detached {
-			set {
-				playerbin.Detached = value;
-			}
-			get {
-				return playerbin.Detached;
-			}
-		}
-		
 		public Time StreamLength {
 			get {
 				return playerbin.StreamLength;

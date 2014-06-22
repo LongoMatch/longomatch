@@ -145,11 +145,6 @@ namespace LongoMatch.Gui
 			}
 		}
 		
-		public bool Detached {
-			get;
-			set;
-		}
-		
 		public bool ShowControls {
 			set {
 				controlsbox.Visible = value;

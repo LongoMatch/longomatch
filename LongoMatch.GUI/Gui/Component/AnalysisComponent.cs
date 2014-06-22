@@ -43,6 +43,7 @@ namespace LongoMatch.Gui.Component
 			this.Build ();
 			projectType = ProjectType.None;
 			playsSelection.Visible = true;
+			detachedPlayer = false;
 
 			playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
 			ConnectSignals();
@@ -91,13 +92,9 @@ namespace LongoMatch.Gui.Component
 				Config.EventsBroker.EmitKeyPressed(o, (int)args.Event.Key, (int)args.Event.State));
  		}
  		
-		void DetachPlayer (bool detach) {
-			if (detach == detachedPlayer)
-				return;
-				
-			detachedPlayer = detach;
-			
-			if (detach) {
+		public void DetachPlayer () {
+			playercapturer.Pause();
+			if (!detachedPlayer) {
 				EventBox box;
 				Log.Debug("Detaching player");
 				
@@ -120,14 +117,15 @@ namespace LongoMatch.Gui.Component
 				playercapturer.Reparent(this.videowidgetsbox);
 				playerWindow.Destroy();
 			}
-			playercapturer.Detached = detach;
+			playercapturer.Play();
+			detachedPlayer = !detachedPlayer;
 		}
 		
 		public void CloseOpenedProject () {
 			openedProject = null;
 			projectType = ProjectType.None;
 			if (detachedPlayer)
-				DetachPlayer(false);
+				DetachPlayer();
 			ClearWidgets();
 		}
 		
@@ -146,33 +144,48 @@ namespace LongoMatch.Gui.Component
 			playsSelection.SetProject (project, filter);
 		}
 		
+		void CreateCommonUI () {
+			videowidgetsbox = new HBox ();
+			playsSelection = new PlaysSelectionWidget ();
+			codingwidget = new CodingWidget();
+			playercapturer = new PlayerCapturerBin ();
+			if (projectType == ProjectType.FileProject) {
+				playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
+			} else {
+				if (projectType == ProjectType.FakeCaptureProject) {
+					playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.FakeCapturer;
+				} else {
+					playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.PreviewCapturer;
+				}
+				playercapturer.PeriodsNames = openedProject.Categories.GamePeriods;
+				playercapturer.PeriodsTimers = openedProject.Periods;
+			}
+			playsSelection.Show ();
+			codingwidget.Show ();
+			playercapturer.Show ();
+			videowidgetsbox.Show();
+		}
+		
 		void CreateCodingUI () {
 			HPaned centralpane, rightpane;
 			VBox vbox;
-			PeriodsRecoder periodsrecorder;
 			
 			ClearWidgets ();
 
 			centralpane = new HPaned();
 			rightpane = new HPaned ();
 			vbox = new VBox ();
-			
-			playsSelection = new PlaysSelectionWidget ();
-			codingwidget = new CodingWidget();
-			periodsrecorder = new PeriodsRecoder ();
-			playercapturer = null;
-			
 			centralpane.Show ();
 			rightpane.Show ();
 			vbox.Show();
-			playsSelection.Show ();
-			codingwidget.Show ();
-			periodsrecorder.Show ();
+			
+			CreateCommonUI ();
 			
 			centralpane.Pack1 (playsSelection, true, true);
 			centralpane.Pack2 (rightpane, true, true);
 			rightpane.Pack1 (vbox, true, true);
-			vbox.PackStart (periodsrecorder, false, true, 0);
+			videowidgetsbox.Add (playercapturer);
+			vbox.PackStart (videowidgetsbox, false, true, 0);
 			vbox.PackEnd (codingwidget, true, true, 0);
 			Add (centralpane);
 		}
@@ -186,30 +199,18 @@ namespace LongoMatch.Gui.Component
 			centralpane = new VPaned();
 			uppane = new HPaned ();
 			rightpane = new HPaned();
-			
-			playsSelection = new PlaysSelectionWidget ();
-			codingwidget = new CodingWidget();
-			playercapturer = new PlayerCapturerBin ();
-			if(projectType == ProjectType.FileProject) {
-				playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
-			} else {
-				playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.PreviewCapturer;
-				playercapturer.PeriodsNames = openedProject.Categories.GamePeriods;
-				playercapturer.PeriodsTimers = openedProject.Periods;
-			}
-			
 			centralpane.Show ();
 			uppane.Show ();
 			rightpane.Show ();
-			playsSelection.Show ();
-			codingwidget.Show ();
-			playercapturer.Show ();
+			
+			CreateCommonUI ();
 			
 			centralpane.Pack1 (uppane, true, true);
 			centralpane.Pack2 (codingwidget, true, true);
 			uppane.Pack1 (playsSelection, true, true);
 			uppane.Pack2 (rightpane, true, true);
-			rightpane.Pack1 (playercapturer, true, true);
+			videowidgetsbox.Add (playercapturer);
+			rightpane.Pack1 (videowidgetsbox, true, true);
 			Add (centralpane);
 		}
 		

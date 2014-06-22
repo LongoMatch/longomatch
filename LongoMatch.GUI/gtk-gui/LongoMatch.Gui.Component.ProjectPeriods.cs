@@ -29,7 +29,6 @@ namespace LongoMatch.Gui.Component
 			this.playerbin2 = new global::LongoMatch.Gui.PlayerBin ();
 			this.playerbin2.Events = ((global::Gdk.EventMask)(256));
 			this.playerbin2.Name = "playerbin2";
-			this.playerbin2.Detached = false;
 			this.vbox2.Add (this.playerbin2);
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.playerbin2]));
 			w1.Position = 0;
