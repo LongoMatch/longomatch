@@ -94,6 +94,9 @@ namespace LongoMatch.Gui.Component
 				this.projects.Remove(project);
 			}
 			Fill (this.projects);
+			if (ProjectsSelected != null) {
+				ProjectsSelected (new List<ProjectDescription> ());
+			}
 		}
 
 		public void ClearSearch() {
