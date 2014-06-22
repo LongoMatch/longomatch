@@ -58,6 +58,9 @@ namespace LongoMatch.Services
 			Config.EventsBroker.CloseOpenedProjectEvent += () => PromptCloseProject();
 			Config.EventsBroker.SaveProjectEvent += SaveProject;
 			Config.EventsBroker.KeyPressed += HandleKeyPressed;
+			Config.EventsBroker.CaptureError += HandleCaptureError;
+			Config.EventsBroker.CaptureFinished += HandleCaptureFinished;
+			Config.EventsBroker.MultimediaError += HandleMultimediaError;
 		}
 
 		public Project OpenedProject {
@@ -180,19 +183,6 @@ namespace LongoMatch.Services
 			OpenedProjectType = projectType;
 		
 			if (Player != null) {
-				Player.Tick += Config.EventsBroker.EmitTick;
-				Player.Error += HandleMultimediaError;
-				Player.SegmentClosedEvent += Config.EventsBroker.EmitSegmentClosed;
-			}
-			if (Capturer != null) {
-				Capturer.CaptureFinished += (close) => {
-					CloseOpenedProject (!close);
-					if (!close) {
-						OpenProjectID (project.ID);
-					}
-				};
-				if (Capturer != Player)
-					Capturer.Error += HandleMultimediaError;
 			}
 			
 			if(projectType == ProjectType.FileProject) {
@@ -386,6 +376,23 @@ namespace LongoMatch.Services
 			guiToolkit.ErrorMessage (Catalog.GetString("The following error happened and" +
 				" the current project will be closed:")+"\n" + message);
 			CloseOpenedProject (true);
+		}
+
+		void HandleCaptureFinished (bool close)
+		{
+			Guid id = OpenedProject.ID;
+			ProjectType type = OpenedProjectType;
+			CloseOpenedProject (!close);
+			if (!close && type != ProjectType.FakeCaptureProject) {
+				OpenProjectID (id);
+			}
+		}
+
+		void HandleCaptureError (string message)
+		{
+			guiToolkit.ErrorMessage (Catalog.GetString("The following error happened and" +
+				" the current capture will be closed:")+"\n" + message);
+			HandleCaptureFinished (false);
 		}
 		
 		void HandleKeyPressed (object sender, int key, int modifier)

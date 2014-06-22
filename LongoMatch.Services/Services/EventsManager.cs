@@ -52,7 +52,6 @@ namespace LongoMatch.Services
 		{
 			this.guiToolkit = guiToolkit;
 			this.renderer = renderer;
-			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
 			catsTime = new Dictionary<Category, Time>();
 			ConnectSignals ();
 		}
@@ -68,24 +67,9 @@ namespace LongoMatch.Services
 			if (project == null)
 				return;
 				
-			if (player != null) {
-				player.Prev -= OnPrev;
-				player.SegmentClosedEvent -= OnSegmentClosedEvent;
-				player.DrawFrame -= OnDrawFrame;
-				player.PlaybackRateChanged -= HandlePlaybackRateChanged;
-			}
-
 			this.analysisWindow = analysisWindow;
 			player = analysisWindow.Player;
 			capturer = analysisWindow.Capturer;
-			
-			if (player != null) {
-				player.Prev += OnPrev;
-				player.SegmentClosedEvent += OnSegmentClosedEvent;
-				player.DrawFrame += OnDrawFrame;
-				player.PlaybackRateChanged += HandlePlaybackRateChanged;
-			}
-
 		}
 
 		void Save (Project project) {
@@ -110,6 +94,19 @@ namespace LongoMatch.Services
 			
 			Config.EventsBroker.ShowProjectStatsEvent += HandleShowProjectStatsEvent;
 			Config.EventsBroker.TagSubcategoriesChangedEvent += HandleTagSubcategoriesChangedEvent;
+			
+			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
+
+			Config.EventsBroker.SegmentClosed += OnSegmentClosedEvent;
+			Config.EventsBroker.Prev += OnPrev;
+			Config.EventsBroker.DrawFrame += OnDrawFrame;
+			Config.EventsBroker.PlaybackRateChanged += HandlePlaybackRateChanged;
+			Config.EventsBroker.Detach += HandleDetach;
+		}
+
+		void HandleDetach ()
+		{
+			analysisWindow.DetachPlayer ();
 		}
 
 		void HandleTagSubcategoriesChangedEvent (bool tagsubcategories)

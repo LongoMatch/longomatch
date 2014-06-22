@@ -24,23 +24,14 @@ namespace LongoMatch.Interfaces.GUI
 {
 	public interface IPlayerBin
 	{
-		event SegmentClosedHandler SegmentClosedEvent;
-		event TickHandler Tick;
-		event ErrorHandler Error;
 		event StateChangeHandler PlayStateChanged;
-		event NextButtonClickedHandler Next;
-		event PrevButtonClickedHandler Prev;
-		event DrawFrameHandler DrawFrame;
 		event SeekEventHandler SeekEvent;
-		event DetachPlayerHandler Detach;
-		event PlaybackRateChangedHandler PlaybackRateChanged;
 		
 		Time CurrentTime {get;}
 		Time StreamLength {get;}
 		Image CurrentMiniatureFrame {get;}
 		Image CurrentFrame {get;}
 		bool Opened {get;}
-		bool Detached {get;set;}
 		bool SeekingEnabled {set;}
 		bool Sensitive {set; get;}
 

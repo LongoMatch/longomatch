@@ -89,15 +89,11 @@ namespace LongoMatch.Services
 			Config.EventsBroker.PlayListNodeSelectedEvent += LoadPlaylistPlay;
 			Config.EventsBroker.RenderPlaylist += OnRenderPlaylistEvent;
 			Config.EventsBroker.SegmentClosed += () => {selectedTimeNode = null;};
-			
-			/* Handle Next/Prev from the player */
-			if (analysisWindow.Player != null) {
-				analysisWindow.Player.Next += () => {Next();};
-				analysisWindow.Player.Prev += () => {
-					if(selectedTimeNode is PlayListPlay)
-						Prev();
-				};
-			}
+			Config.EventsBroker.Next += () => {Next ();};
+			Config.EventsBroker.Prev += () => {
+				if(selectedTimeNode is PlayListPlay)
+					Prev();
+			};
 		}
 		
 		private void Add(List<Play> plays) {

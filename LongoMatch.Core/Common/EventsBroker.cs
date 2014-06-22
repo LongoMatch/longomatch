@@ -78,9 +78,18 @@ namespace LongoMatch.Common
 		
 		public event OpenedProjectChangedHandler OpenedProjectChanged;
 		
+		/* Player and Capturer */
 		public event TickHandler Tick;
 		public event ErrorHandler MultimediaError;
+		public event ErrorHandler CaptureError;
+		public event CaptureFinishedHandler CaptureFinished;
 		public event SegmentClosedHandler SegmentClosed;
+		public event NextButtonClickedHandler Next;
+		public event PrevButtonClickedHandler Prev;
+		public event DrawFrameHandler DrawFrame;
+		public event DetachPlayerHandler Detach;
+		public event PlaybackRateChangedHandler PlaybackRateChanged;
+
 		
 		
 		public EventsBroker ()
@@ -316,6 +325,62 @@ namespace LongoMatch.Common
 		{
 			if (TeamTagsChanged != null) {
 				TeamTagsChanged ();
+			}
+		}
+		
+		public void EmitCaptureFinished (bool close)
+		{
+			if (CaptureFinished != null) {
+				CaptureFinished (close);
+			}
+		}
+		
+		public void EmitCaptureError (string message)
+		{
+			if (CaptureError != null) {
+				CaptureError (message);
+			}
+		}
+
+		public void EmitMultimediaError (string message)
+		{
+			if (MultimediaError != null) {
+				MultimediaError (message);
+			}
+		}
+
+		public void EmitDetach ()
+		{
+			if (Detach != null) {
+				Detach ();
+			}
+		}
+		
+		public void EmitNext ()
+		{
+			if (Next != null) {
+				Next ();
+			}
+		}
+		
+		public void EmitPrev ()
+		{
+			if (Prev != null) {
+				Prev ();
+			}
+		}
+
+		public void EmitDrawFrame (Time currentTime)
+		{
+			if (DrawFrame != null) {
+				DrawFrame (currentTime);
+			}
+		}
+
+		public void EmitPlaybackRateChanged (float val)
+		{
+			if (PlaybackRateChanged != null) {
+				PlaybackRateChanged (val);
 			}
 		}
 	}

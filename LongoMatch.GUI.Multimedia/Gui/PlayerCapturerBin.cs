@@ -29,22 +29,9 @@ namespace LongoMatch.Gui
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class PlayerCapturerBin : Gtk.Bin, IPlayerBin, ICapturerBin
 	{	
-		/* Common events */
-		public event ErrorHandler Error;
-		
-		/* Capturer events */
-		public event CaptureFinishedHandler CaptureFinished;
-		
 		/* Player Events */
-		public event SegmentClosedHandler SegmentClosedEvent;
-		public event TickHandler Tick;
 		public event StateChangeHandler PlayStateChanged;
-		public event NextButtonClickedHandler Next;
-		public event PrevButtonClickedHandler Prev;
-		public event DrawFrameHandler DrawFrame;
 		public event SeekEventHandler SeekEvent;
-		public event DetachPlayerHandler Detach;
-		public event PlaybackRateChangedHandler PlaybackRateChanged;
 		
 		public enum PlayerOperationMode {
 			Player,
@@ -280,49 +267,9 @@ namespace LongoMatch.Gui
 		}
 		
 		void ConnectSignals () {
-			capturerbin.CaptureFinished += (bool close) => {
-				if (CaptureFinished != null)
-					CaptureFinished (close);
-			};
-			
-			capturerbin.Error += delegate(string message) {
-				if (Error != null)
-					Error (message);
-			};
-			
-			playerbin.Error += delegate(string message) {
-				if (Error != null)
-					Error (message);
-			};
-			
-			playerbin.SegmentClosedEvent += delegate () {
-				if (SegmentClosedEvent != null)
-					SegmentClosedEvent ();
-			};
-			
-			playerbin.Tick += delegate (Time t, Time s, double p) {
-				if (Tick != null)
-					Tick (t, s, p);
-			};
-			
 			playerbin.PlayStateChanged += delegate (bool playing) {
 				if (PlayStateChanged != null)
 					PlayStateChanged (playing);
-			};
-			
-			playerbin.Next += delegate () {
-				if (Next != null)
-					Next ();
-			};
-			
-			playerbin.Prev += delegate () {
-				if (Prev != null)
-					Prev ();
-			};
-			
-			playerbin.DrawFrame += delegate (Time time) {
-				if (DrawFrame != null)
-					DrawFrame (time);
 			};
 			
 			playerbin.SeekEvent += delegate (Time pos) {
@@ -330,15 +277,6 @@ namespace LongoMatch.Gui
 					SeekEvent (pos);
 			};
 			
-			playerbin.Detach += delegate (bool detach) {
-				if (Detach != null)
-					Detach (detach);
-			};
-			
-			playerbin.PlaybackRateChanged += (rate) => {
-				if (PlaybackRateChanged != null)
-					PlaybackRateChanged (rate);
-			};
 		}
 		
 		void LoadBackgroundPlayer (string filename) {

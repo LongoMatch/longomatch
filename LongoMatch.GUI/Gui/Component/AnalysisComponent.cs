@@ -87,7 +87,6 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		private void ConnectSignals() {
-			playercapturer.Detach += DetachPlayer;
 			KeyPressEvent += (o, args) => (
 				Config.EventsBroker.EmitKeyPressed(o, (int)args.Event.Key, (int)args.Event.State));
  		}
@@ -104,7 +103,7 @@ namespace LongoMatch.Gui.Component
 				
 				playerWindow = new Gtk.Window(Constants.SOFTWARE_NAME);
 				playerWindow.Icon = Stetic.IconLoader.LoadIcon(this, "longomatch", IconSize.Button);
-				playerWindow.DeleteEvent += (o, args) => DetachPlayer(false);
+				playerWindow.DeleteEvent += (o, args) => DetachPlayer();
 				box = new EventBox();
 				
 				box.KeyPressEvent += (o, args) => OnKeyPressEvent(args.Event);

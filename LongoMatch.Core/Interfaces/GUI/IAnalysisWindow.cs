@@ -32,6 +32,7 @@ namespace LongoMatch.Interfaces.GUI
 		void AddPlay(Play play);
 		void UpdateCategories ();
 		void DeletePlays (List<Play> plays);
+		void DetachPlayer ();
 		
 		bool Fullscreen {set;}
 		

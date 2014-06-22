@@ -26,9 +26,6 @@ namespace LongoMatch.Interfaces.GUI
 {
 	public interface ICapturerBin
 	{
-		event CaptureFinishedHandler CaptureFinished;
-		event ErrorHandler Error;
-		
 		Time CurrentTime {get;}
 		bool Capturing {get;}
 		Image CurrentMiniatureFrame {get;}

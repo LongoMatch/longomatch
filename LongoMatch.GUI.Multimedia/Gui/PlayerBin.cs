@@ -47,16 +47,10 @@ namespace LongoMatch.Gui
 			public Time Stop;
 		}	
 
-		public event SegmentClosedHandler SegmentClosedEvent;
-		public event LongoMatch.Handlers.TickHandler Tick;
-		public event LongoMatch.Handlers.ErrorHandler Error;
+
+		public event TickHandler Tick;
 		public event LongoMatch.Handlers.StateChangeHandler PlayStateChanged;
-		public event NextButtonClickedHandler Next;
-		public event PrevButtonClickedHandler Prev;
-		public event LongoMatch.Handlers.DrawFrameHandler DrawFrame;
 		public event SeekEventHandler SeekEvent;
-		public event DetachPlayerHandler Detach;
-		public event PlaybackRateChangedHandler PlaybackRateChanged;
 
 		const int THUMBNAIL_MAX_WIDTH = 100;
 		const int SCALE_FPS = 25;
@@ -97,7 +91,7 @@ namespace LongoMatch.Gui
 			seeksQueue = new double[2];
 			seeksQueue [0] = -1;
 			seeksQueue [1] = -1;
-			detachbutton.Clicked += (sender, e) => EmitDetach();
+			detachbutton.Clicked += (sender, e) => Config.EventsBroker.EmitDetach ();
 			seeker = new Seeker();
 			seeker.SeekEvent += HandleSeekEvent;
 			segment.Start = new Time(-1);
@@ -271,8 +265,7 @@ namespace LongoMatch.Gui
 			segment.Stop = new Time (int.MaxValue);
 			SetScaleValue (SCALE_FPS);
 			//timescale.Sensitive = true;
-			if (SegmentClosedEvent != null)
-				SegmentClosedEvent();
+			Config.EventsBroker.EmitSegmentClosed ();
 		}
 
 		public void SetSensitive() {
@@ -401,20 +394,15 @@ namespace LongoMatch.Gui
 			}
 		}
 		
-		void EmitDetach () {
-			if (Detach != null)
-				Detach(!Detached);
-		}
-		
 		void CreatePlayer ()
 		{
 			videodrawingarea.DoubleBuffered = false;
 			player = Config.MultimediaToolkit.GetPlayer ();
 
-			player.Tick +=  OnTick;
+			player.Tick += OnTick;
+			player.Error += Config.EventsBroker.EmitMultimediaError;
 			player.StateChange += OnStateChanged;
 			player.Eos += OnEndOfStream;
-			player.Error += OnError;
 			player.ReadyToSeek += OnReadyToSeek;
 
 			videoeventbox.ButtonPressEvent += OnVideoboxButtonPressEvent;
@@ -485,9 +473,11 @@ namespace LongoMatch.Gui
 				}
 			}
 
-			if (Tick != null)
+			if (Tick != null) {
 				Tick (currentTime, streamLength, currentPosition);
-
+			}
+			
+			Config.EventsBroker.EmitTick (currentTime, streamLength, currentPosition);
 		}
 
 		void OnTimescaleAdjustBounds(object o, Gtk.AdjustBoundsArgs args)
@@ -558,8 +548,7 @@ namespace LongoMatch.Gui
 		}
 
 		void OnError(string message) {
-			if(Error != null)
-				Error(message);
+			Config.EventsBroker.EmitMultimediaError (message);
 		}
 
 		void OnClosebuttonClicked(object sender, System.EventArgs e)
@@ -572,14 +561,12 @@ namespace LongoMatch.Gui
 		{
 			if (segment.Start.MSeconds > 0)
 				Seek (segment.Start, true);
-			if(Prev != null)
-				Prev();
+			Config.EventsBroker.EmitPrev();
 		}
 
 		void OnNextbuttonClicked(object sender, System.EventArgs e)
 		{
-			if(Next != null)
-				Next();
+			Config.EventsBroker.EmitNext();
 		}
 
 		void OnVscale1FormatValue(object o, Gtk.FormatValueArgs args)
@@ -608,8 +595,8 @@ namespace LongoMatch.Gui
 				player.Volume = previousVLevel;
 
 			player.Rate = val;
-			if (PlaybackRateChanged != null && emitRateScale) {
-				PlaybackRateChanged (val);
+			if (emitRateScale) {
+				Config.EventsBroker.EmitPlaybackRateChanged (val);
 			}
 		}
 
@@ -647,8 +634,7 @@ namespace LongoMatch.Gui
 
 		void OnDrawButtonClicked(object sender, System.EventArgs e)
 		{
-			if(DrawFrame != null)
-				DrawFrame (CurrentTime);
+			Config.EventsBroker.EmitDrawFrame (CurrentTime);
 		}
 		
 		void HandleRealized (object sender, EventArgs e)

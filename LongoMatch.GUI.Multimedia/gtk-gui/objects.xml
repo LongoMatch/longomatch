@@ -6,54 +6,32 @@
       </itemgroup>
     </itemgroups>
     <signals>
-      <itemgroup label="ICapturerBin Signals">
-        <signal name="CaptureFinished" />
-        <signal name="Error" />
-      </itemgroup>
     </signals>
   </object>
   <object type="LongoMatch.Gui.PlayerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="IPlayerBin Properties">
-        <property name="Detached" />
         <property name="Sensitive" />
       </itemgroup>
     </itemgroups>
     <signals>
       <itemgroup label="IPlayerBin Signals">
-        <signal name="SegmentClosedEvent" />
-        <signal name="Tick" />
-        <signal name="Error" />
         <signal name="PlayStateChanged" />
-        <signal name="Next" />
-        <signal name="Prev" />
-        <signal name="DrawFrame" />
         <signal name="SeekEvent" />
-        <signal name="Detach" />
-        <signal name="PlaybackRateChanged" />
+        <signal name="Tick" />
       </itemgroup>
     </signals>
   </object>
   <object type="LongoMatch.Gui.PlayerCapturerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="IPlayerBin Properties">
-        <property name="Detached" />
         <property name="Sensitive" />
       </itemgroup>
     </itemgroups>
     <signals>
       <itemgroup label="ICapturerBin Signals">
-        <signal name="Error" />
-        <signal name="CaptureFinished" />
-        <signal name="SegmentClosedEvent" />
-        <signal name="Tick" />
         <signal name="PlayStateChanged" />
-        <signal name="Next" />
-        <signal name="Prev" />
-        <signal name="DrawFrame" />
         <signal name="SeekEvent" />
-        <signal name="Detach" />
-        <signal name="PlaybackRateChanged" />
       </itemgroup>
     </signals>
   </object>

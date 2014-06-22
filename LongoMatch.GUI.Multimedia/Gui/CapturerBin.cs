@@ -44,9 +44,6 @@ namespace LongoMatch.Gui
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class CapturerBin : Gtk.Bin, ICapturerBin
 	{
-		public event CaptureFinishedHandler CaptureFinished;
-		public event ErrorHandler Error;
-
 		CaptureSettings settings;
 		CapturerType type;
 		bool delayStart;
@@ -237,17 +234,12 @@ namespace LongoMatch.Gui
 			stopbutton.Clicked += (sender, e) => StopPeriod ();
 			finishbutton.Clicked += (sender, e) =>  {
 				string msg = Catalog.GetString ("Do you want to finish the current capture?");
-			
 				if (!MessagesHelpers.QuestionMessage (this, msg)) {
 					return;
 				}
-				if (CaptureFinished != null)
-					CaptureFinished (false);
+				Config.EventsBroker.EmitCaptureFinished (false);
 			};
-			cancelbutton.Clicked += (sender, e) =>  {
-				if (CaptureFinished != null)
-					CaptureFinished (true);
-			};
+			cancelbutton.Clicked += (sender, e) => Config.EventsBroker.EmitCaptureFinished (true);
 			videodrawingarea.Realized += (sender, e) =>  {
 				if (delayStart) {
 					Configure ();
@@ -284,12 +276,6 @@ namespace LongoMatch.Gui
 			delayStart = false;
 		}
 
-		void OnError (string message)
-		{
-			if(Error != null)
-				Error(message);
-		}
-		
 		void OnTick(Time ellapsedTime) {
 			string text = "";
 			Time duration = new Time (0);
@@ -307,6 +293,10 @@ namespace LongoMatch.Gui
 				}
  			}
 			timelabel.Markup = String.Format("<span font=\"30px bold\">{0}</span> ",  text);
+		}
+		
+		void OnError (string message) {
+			Config.EventsBroker.EmitCaptureError (message);
 		}
 
 		void OnDeviceChange(int deviceID)
