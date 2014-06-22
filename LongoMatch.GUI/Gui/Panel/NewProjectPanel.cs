@@ -81,8 +81,8 @@ namespace LongoMatch.Gui.Panel
 				datelabel.Text = DateTime.Now.ToShortDateString();
 			} else {
 				notebook1.Page = 1;
-				FillProjectDetails ();
 				this.project = project;
+				FillProjectDetails ();
 			}
 			
 			ConnectSignals ();
