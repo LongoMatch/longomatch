@@ -204,10 +204,12 @@ namespace LongoMatch.Services
 				}
 
 			} else if (projectType == ProjectType.CaptureProject ||
-			           projectType == ProjectType.URICaptureProject) {
+			           projectType == ProjectType.URICaptureProject ||
+			           projectType == ProjectType.FakeCaptureProject) {
 				try {
-					Capturer.Run (CapturerType.Live, props);
+					Capturer.Run (props);
 				} catch(Exception ex) {
+					Log.Exception (ex);
 					guiToolkit.ErrorMessage(ex.Message);
 					CloseOpenedProject (false);
 					return false;
@@ -357,16 +359,7 @@ namespace LongoMatch.Services
 				/* If it's a fake live project prompt for a video file and
 				 * create a new PreviewMediaFile for this project and recreate the thumbnails */
 				Log.Debug ("Importing fake live project");
-				project.Description.File = null;
-				
-				guiToolkit.InfoMessage(
-					Catalog.GetString("You are opening a live project without any video file associated yet.") +
-					"\n" + Catalog.GetString("Select a video file in the next step."));
-				
-				guiToolkit.CreateNewProject (project);
-				if (project == null)
-					return;
-				ToolsManager.CreateThumbnails(project, guiToolkit, multimediaToolkit.GetFramesCapturer());
+				ToolsManager.AddVideoFile (project);
 			}
 			SetProject(project, ProjectType.FileProject, new CaptureSettings());
 		}

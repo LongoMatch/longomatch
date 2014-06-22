@@ -36,6 +36,7 @@ namespace LongoMatch.Gui
 		public enum PlayerOperationMode {
 			Player,
 			Capturer,
+			FakeCapturer,
 			PreviewCapturer,
 		}
 		
@@ -54,6 +55,11 @@ namespace LongoMatch.Gui
 				if (mode == PlayerOperationMode.Player) {
 					ShowPlayer();
 				} else {
+					if (value == PlayerOperationMode.FakeCapturer) {
+						capturerbin.Mode = CapturerType.Fake;
+					} else {
+						capturerbin.Mode = CapturerType.Live;
+					}
 					ShowCapturer();
 				}
 				backtolivebutton.Visible = false;
@@ -138,8 +144,8 @@ namespace LongoMatch.Gui
 			capturerbin.Stop ();
 		}
 		
-		public void Run (CapturerType type, CaptureSettings settings) {
-			capturerbin.Run (type, settings);
+		public void Run (CaptureSettings settings) {
+			capturerbin.Run (settings);
 		}
 #endregion
 		

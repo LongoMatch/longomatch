@@ -63,7 +63,59 @@ namespace LongoMatch.Services {
 			Config.EventsBroker.ImportProjectEvent += ImportProject;
 			Config.EventsBroker.ExportProjectEvent += ExportProject;
 		}
+
+		public static void AddVideoFile (Project project)
+		{
+			string videofile;
+			IGUIToolkit guiToolkit = Config.GUIToolkit;
+			IMultimediaToolkit multimediaToolkit = Config.MultimediaToolkit;
+
+			guiToolkit.InfoMessage (Catalog.GetString ("This project doesn't have any file associated.\n" +
+			                                           "Select one in the next window"));
+			videofile = guiToolkit.OpenFile (Catalog.GetString ("Select a video file"), null,
+			                                 Config.HomeDir, null, null);
+			if (videofile == null) {
+				guiToolkit.ErrorMessage (Catalog.GetString ("Could not import project, you need a video file"));
+				return;
+			}
+			else {
+				try {
+					project.Description.File = multimediaToolkit.DiscoverFile (videofile);
+				}
+				catch (Exception ex) {
+					guiToolkit.ErrorMessage (ex.Message);
+					return;
+				}
+				CreateThumbnails (project, guiToolkit, multimediaToolkit.GetFramesCapturer ());
+			}
+		}
 		
+		public static void CreateThumbnails(Project project, IGUIToolkit guiToolkit, IFramesCapturer capturer) {
+			IBusyDialog dialog;
+
+			dialog = guiToolkit.BusyDialog(Catalog.GetString("Creating video thumbnails. This can take a while."));
+			dialog.Show();
+			dialog.Pulse();
+
+			/* Create all the thumbnails */
+			capturer.Open(project.Description.File.FilePath);
+			foreach(Play play in project.Timeline) {
+				try {
+					capturer.Seek (play.Start + ((play.Stop - play.Start) / 2),
+					                  true);
+					play.Miniature = capturer.GetCurrentFrame (
+						Constants.MAX_THUMBNAIL_SIZE,
+						Constants.MAX_THUMBNAIL_SIZE);
+					dialog.Pulse();
+
+				} catch (Exception ex) {
+					Log.Exception(ex);
+				}
+			}
+			capturer.Dispose();
+			dialog.Destroy();
+		}
+
 		void ExportProject (Project project) {
 			if (project == null) {
 				Log.Warning("Opened project is null and can't be exported");
@@ -113,24 +165,7 @@ namespace LongoMatch.Services {
 			}
 
 			if (requiresNewFile) {
-				string videofile;
-				
-				guiToolkit.InfoMessage (Catalog.GetString ("This project doesn't have any file associated.\n" +
-				                                           "Select one in the next window"));
-				videofile = guiToolkit.OpenFile (Catalog.GetString ("Select a video file"), null,
-				                                 Config.HomeDir, null, null);
-				if (videofile == null) {
-					guiToolkit.ErrorMessage (Catalog.GetString ("Could not import project, you need a video file"));
-					return;
-				} else {
-					try {
-						project.Description.File = multimediaToolkit.DiscoverFile (videofile);
-					} catch (Exception ex) {
-						guiToolkit.ErrorMessage (ex.Message);
-						return;
-					}
-					CreateThumbnails (project, guiToolkit, multimediaToolkit.GetFramesCapturer());
-				}
+				AddVideoFile (project);
 			}
 			
 			/* If the project exists ask if we want to overwrite it */
@@ -147,31 +182,6 @@ namespace LongoMatch.Services {
 			guiToolkit.InfoMessage(Catalog.GetString("Project successfully imported."));
 		}
 		
-		public static void CreateThumbnails(Project project, IGUIToolkit guiToolkit, IFramesCapturer capturer) {
-			IBusyDialog dialog;
-
-			dialog = guiToolkit.BusyDialog(Catalog.GetString("Creating video thumbnails. This can take a while."));
-			dialog.Show();
-			dialog.Pulse();
-
-			/* Create all the thumbnails */
-			capturer.Open(project.Description.File.FilePath);
-			foreach(Play play in project.Timeline) {
-				try {
-					capturer.Seek (play.Start + ((play.Stop - play.Start) / 2),
-					                  true);
-					play.Miniature = capturer.GetCurrentFrame (
-						Constants.MAX_THUMBNAIL_SIZE,
-						Constants.MAX_THUMBNAIL_SIZE);
-					dialog.Pulse();
-
-				} catch (Exception ex) {
-					Log.Exception(ex);
-				}
-			}
-			capturer.Dispose();
-			dialog.Destroy();
-		}
 	}
 }
 

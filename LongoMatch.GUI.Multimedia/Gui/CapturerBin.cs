@@ -63,8 +63,17 @@ namespace LongoMatch.Gui
 			LongoMatch.Gui.Helpers.Misc.DisableFocus (vbox1);
 			videodrawingarea.CanFocus = true;
 			ConnectSignals ();
+			ellapsedTime = new Time (0);
 		}
-
+		
+		public CapturerType Mode {
+			set {
+				type = value;
+				videodrawingarea.Visible = value == CapturerType.Live;
+			}
+			
+		}
+		
 		public bool Capturing {
 			get;
 			protected set;
@@ -161,7 +170,7 @@ namespace LongoMatch.Gui
 			capturer.Stop ();
 		}
 
-		public void Run (CapturerType type, CaptureSettings settings) {
+		public void Run (CaptureSettings settings) {
 			/* Close any previous instance of the capturer */
 			Close ();
 
@@ -175,7 +184,7 @@ namespace LongoMatch.Gui
 			} else {
 				videodrawingarea.DoubleBuffered = false;
 			}
-			if (videodrawingarea.IsRealized) {
+			if (type == CapturerType.Fake || videodrawingarea.IsRealized) {
 				Configure();
 				capturer.Run();
 			} else {
@@ -192,7 +201,6 @@ namespace LongoMatch.Gui
 			finishbutton.Visible = false;
 			recbutton.Visible = false;
 			Capturing = false;
-			OnTick(new Time (0));
 
 			if(capturer == null)
 				return;
@@ -260,7 +268,7 @@ namespace LongoMatch.Gui
 		
 		void Configure () {
 			VideoMuxerType muxer;
-			IntPtr windowHandle;
+			IntPtr windowHandle = IntPtr.Zero;
 			
 			if(capturer == null)
 				return;
@@ -272,7 +280,9 @@ namespace LongoMatch.Gui
 				settings.EncodingSettings.EncodingProfile.Muxer = VideoMuxerType.Matroska;
 			}
 				
-			windowHandle = GtkHelpers.GetWindowHandle (videodrawingarea.GdkWindow);
+			if (type == CapturerType.Live) {
+				windowHandle = GtkHelpers.GetWindowHandle (videodrawingarea.GdkWindow);
+			}
 			capturer.Configure (settings, windowHandle); 
 			delayStart = false;
 		}

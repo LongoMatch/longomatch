@@ -32,7 +32,7 @@ namespace LongoMatch.Interfaces.GUI
 		CaptureSettings CaptureSettings {get;}
 		List<string> PeriodsNames {set;}
 
-		void Run (CapturerType type, CaptureSettings settings);
+		void Run (CaptureSettings settings);
 		void StartPeriod();
 		void StopPeriod();
 		void Stop();
