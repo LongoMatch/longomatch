@@ -79,7 +79,12 @@ namespace LongoMatch.Gui.Panel
 			datelabel.Text = pd.MatchDate.ToShortDateString ();
 			templatelabel.Text = project.Categories.Name;
 			
-			fileimage.Pixbuf = f.Preview.Value;
+			if (f.Preview != null) {
+				fileimage.Pixbuf = f.Preview.Value;
+			} else {
+				fileimage.Pixbuf = Stetic.IconLoader.LoadIcon (this, Gtk.Stock.Harddisk,
+				                                               IconSize.Dialog);
+			}
 			medialabel.Markup = f.Description;
 			
 			homelabel.Text = lt.TeamName;

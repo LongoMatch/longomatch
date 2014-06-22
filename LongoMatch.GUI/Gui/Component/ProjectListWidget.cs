@@ -29,6 +29,7 @@ using LongoMatch.Common;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
 using LongoMatch.Video.Utils;
+using Gdk;
 
 
 
@@ -72,12 +73,18 @@ namespace LongoMatch.Gui.Component
 		
 		public void Fill (List<ProjectDescription> projects)
 		{
+			Pixbuf image;
 			swallowSignals = true;
 			this.projects = projects;
 			store.Clear ();
 			foreach (ProjectDescription pdesc in projects)
 			{
-				store.AppendValues (Describe (pdesc), pdesc.File.Preview.Value, pdesc);
+				if (pdesc.File.Preview != null) {
+					image = pdesc.File.Preview.Value;
+				} else  {
+					image = Stetic.IconLoader.LoadIcon (this, Gtk.Stock.Harddisk, IconSize.Dialog);
+				}
+				store.AppendValues (Describe (pdesc), image, pdesc);
 			}
 			swallowSignals = false;
 		}
