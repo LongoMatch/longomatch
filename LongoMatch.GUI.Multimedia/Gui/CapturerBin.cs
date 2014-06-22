@@ -60,7 +60,8 @@ namespace LongoMatch.Gui
 			stopbutton.Visible = false;
 			finishbutton.Visible = false;
 			cancelbutton.Visible = true;
-			videodrawingarea.CanFocus = false;
+			LongoMatch.Gui.Helpers.Misc.DisableFocus (vbox1);
+			videodrawingarea.CanFocus = true;
 			ConnectSignals ();
 		}
 

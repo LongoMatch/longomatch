@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
+using System.Linq;
 using System.IO;
 using Gtk;
 using Gdk;
@@ -24,6 +25,7 @@ using Mono.Unix;
 using LongoMatch.Common;
 using LColor = LongoMatch.Common.Color; 
 using Color = Gdk.Color;
+using System.Collections.Generic;
 
 namespace LongoMatch.Gui.Helpers
 {
@@ -188,6 +190,19 @@ namespace LongoMatch.Gui.Helpers
 						pmap.DrawLine (gc, (sz / 4), (sz / 4), ((sz - 1) - (sz / 4)), ((sz - 1) - (sz / 4)));
 						pmap.DrawLine (gc, ((sz - 1) - (sz / 4)), (sz / 4), (sz / 4), ((sz - 1) - (sz / 4)));
 						return Gdk.Pixbuf.FromDrawable (pmap, pmap.Colormap, 0, 0, 0, 0, sz, sz);
+					}
+				}
+			}
+		}
+		
+		public static void DisableFocus (Container w, params Type[] skipTypes) {
+			w.CanFocus = false;
+			foreach (Widget child in w.AllChildren) {
+				if (child is Container) {
+					DisableFocus (child as Container);
+				} else {
+					if (!skipTypes.Contains (child.GetType())) {
+						child.CanFocus = false;
 					}
 				}
 			}

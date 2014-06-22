@@ -22,6 +22,7 @@ using LongoMatch.Common;
 using System.Collections.Generic;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Drawing.Cairo;
+using LongoMatch.Gui.Helpers;
 
 namespace LongoMatch.Gui.Component
 {
@@ -53,6 +54,7 @@ namespace LongoMatch.Gui.Component
 			
 			Config.EventsBroker.Tick += HandleTick;
 			Config.EventsBroker.PlaySelected += HandlePlaySelected;
+			Misc.DisableFocus (vbox2);
 		}
 		
 		protected override void OnDestroyed ()

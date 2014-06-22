@@ -76,17 +76,7 @@ namespace LongoMatch.Gui
 			UnSensitive();
 			timescale.Adjustment.PageIncrement = 0.01;
 			timescale.Adjustment.StepIncrement = 0.0001;
-			playbutton.CanFocus = false;
-			pausebutton.CanFocus = false;
-			prevbutton.CanFocus = false;
-			nextbutton.CanFocus = false;
-			jumpspinbutton.CanFocus = false;
-			detachbutton.CanFocus = false;
-			volumebutton.CanFocus = false;
-			timescale.CanFocus = false;
-			vscale1.CanFocus = false;
-			drawbutton.CanFocus = false;
-			videoeventbox.CanFocus = true;
+			LongoMatch.Gui.Helpers.Misc.DisableFocus (vbox3);
 			videodrawingarea.CanFocus = true;
 			seeksQueue = new double[2];
 			seeksQueue [0] = -1;
