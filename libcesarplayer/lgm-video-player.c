@@ -602,6 +602,7 @@ lgm_video_player_seek_to_next_frame (LgmVideoPlayer * lvp)
 
   GST_DEBUG ("Seeking to next frame");
 
+  lgm_video_player_pause (lvp);
   pos = lgm_video_player_get_current_time (lvp);
   if (pos == 0)
     return FALSE;
