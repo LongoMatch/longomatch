@@ -133,6 +133,7 @@ namespace LongoMatch.Drawing.CanvasObject
 			if (Points.Count == 2) {
 				tk.LineWidth = (int) relSize * 2;
 				tk.DrawLine (Start, Stop);
+				tk.DrawArrow (Start, Stop, 10, 0.3, true);
 			}
 			tk.End ();
 		}
