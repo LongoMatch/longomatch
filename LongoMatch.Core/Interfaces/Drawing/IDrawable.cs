@@ -21,11 +21,17 @@ using LongoMatch.Common;
 
 namespace LongoMatch.Interfaces.Drawing
 {
-	public interface IDrawable
+	public interface IMovableObject
 	{
 		bool Selected {get;set;}
 		Selection GetSelection (Point point, double precision);
 		void Move (Selection s, Point dst, Point start);
+	}
+	
+	public interface IBlackboardObject: IMovableObject
+	{
+		Area Area {get;}
+		void Reorder ();
 	}
 }
 

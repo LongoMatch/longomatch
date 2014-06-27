@@ -39,7 +39,7 @@ namespace LongoMatch.Common
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event SnapshotSeriesHandler SnapshotSeries;
 		public event TagPlayHandler TagPlay;
-		public event DuplicatePlayHandler DuplicatePlay;
+		public event DuplicatePlaysHandler DuplicatePlays;
 		public event TeamsTagsChangedHandler TeamTagsChanged;
 		
 		/* Playlist */
@@ -168,10 +168,10 @@ namespace LongoMatch.Common
 				TagPlay (play);
 		}
 
-		public void EmitDuplicatePlay (Play play)
+		public void EmitDuplicatePlay (List<Play> plays)
 		{
-			if (DuplicatePlay != null)
-				DuplicatePlay (play);
+			if (DuplicatePlays != null)
+				DuplicatePlays (plays);
 		}
 		
 		public void EmitNewPlaylist() {
@@ -370,10 +370,10 @@ namespace LongoMatch.Common
 			}
 		}
 
-		public void EmitDrawFrame (Time currentTime)
+		public void EmitDrawFrame (Play play, int drawingIndex)
 		{
 			if (DrawFrame != null) {
-				DrawFrame (currentTime);
+				DrawFrame (play, drawingIndex);
 			}
 		}
 

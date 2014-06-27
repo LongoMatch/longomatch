@@ -25,7 +25,7 @@ using LongoMatch.Store.Drawables;
 
 namespace LongoMatch.Drawing.CanvasObject
 {
-	public abstract class TimelineObject: BaseCanvasObject, ICanvasSelectableObject
+	public abstract class TimelineObject: CanvasObject, ICanvasSelectableObject
 	{
 		Color background;
 		List<TimeNodeObject> nodes;
@@ -121,14 +121,12 @@ namespace LongoMatch.Drawing.CanvasObject
 					if (tmp == null) {
 						continue;
 					}
-					if (tmp.Position != SelectionPosition.None) {
-						if (tmp.Accuracy == 0) {
-							selection = tmp;
-							break;
-						}
-						if (selection == null || tmp.Accuracy < selection.Accuracy) {
-							selection = tmp;
-						}
+					if (tmp.Accuracy == 0) {
+						selection = tmp;
+						break;
+					}
+					if (selection == null || tmp.Accuracy < selection.Accuracy) {
+						selection = tmp;
 					}
 				}
 			}

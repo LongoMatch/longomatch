@@ -27,7 +27,9 @@ using LFontWeight = LongoMatch.Common.FontWeight;
 using FontSlant = Cairo.FontSlant;
 using FontWeight = Cairo.FontWeight;
 using Image = LongoMatch.Common.Image;
+using LineStyle = LongoMatch.Common.LineStyle;
 using Gdk;
+using LongoMatch.Interfaces.Drawing;
 
 namespace LongoMatch.Drawing.Cairo
 {
@@ -38,7 +40,10 @@ namespace LongoMatch.Drawing.Cairo
 		FontSlant fSlant, savedFSlant;
 		FontWeight fWeight, savedFWeight;
 		int savedLineWidth, savedFontSize;
+		bool savedClear;
+		LineStyle savedLineStyle;
 		string savedFontFamily;
+		bool disableScalling;
 		
 		public CairoBackend ()
 		{
@@ -49,6 +54,8 @@ namespace LongoMatch.Drawing.Cairo
 			FontFamily = "Verdana";
 			FontWeight = LFontWeight.Normal;
 			FontSlant = LFontSlant.Normal;
+			LineStyle = LineStyle.Normal;
+			Clear = false;
 		}
 		
 		public object Context {
@@ -112,6 +119,20 @@ namespace LongoMatch.Drawing.Cairo
 			}
 		}
 		
+		public LineStyle LineStyle {
+			get;
+			set;
+		}
+		
+		public bool Clear {
+			get;
+			set;
+		}
+		
+		public ISurface CreateSurface (int width, int height, Image image=null) {
+			return new Surface (width, height, image);
+		}
+		
 		public void Begin() {
 			savedStrokeColor = StrokeColor;
 			savedFillColor = FillColor;
@@ -120,16 +141,21 @@ namespace LongoMatch.Drawing.Cairo
 			savedLineWidth = LineWidth;
 			savedFontSize = FontSize;
 			savedFontFamily = FontFamily;
+			savedLineStyle = LineStyle;
+			savedClear = Clear;
 			context.Save ();
 		}
 		
 		public void TranslateAndScale (Point translation, Point scale) {
-			context.Translate (translation.X, translation.Y);
-			context.Scale (scale.X, scale.Y);
+			if (!disableScalling) {
+				context.Translate (translation.X, translation.Y);
+				context.Scale (scale.X, scale.Y);
+			}
 		}
 		
 		public void End() {
 			context.Restore ();
+			Clear = savedClear;
 			StrokeColor = savedStrokeColor;
 			FillColor = savedFillColor;
 			fSlant = savedFSlant;
@@ -137,14 +163,14 @@ namespace LongoMatch.Drawing.Cairo
 			LineWidth = savedLineWidth;
 			FontSize = savedFontSize;
 			FontFamily = savedFontFamily;
+			LineStyle = savedLineStyle;
 		}
 		
 		public void DrawLine (Point start, Point stop) {
-			SetColor (StrokeColor);
 			context.LineWidth = LineWidth;
 			context.MoveTo (start.X, start.Y);
 			context.LineTo (stop.X, stop.Y);
-			context.Stroke();
+			StrokeAndFill ();
 		}
 		
 		public void DrawTriangle (Point corner, double width, double height,
@@ -175,13 +201,11 @@ namespace LongoMatch.Drawing.Cairo
 			context.LineTo (x2, y2);
 			context.LineTo (x3, y3);
 			context.ClosePath();
-			context.StrokePreserve ();
-			SetColor (FillColor);
-			context.Fill();
+			StrokeAndFill ();
 		}
 		
-		public void DrawArea (List<Point> vertices) {
-			for (int i=0; i < vertices.Count - 1; i++) {
+		public void DrawArea (params Point[] vertices) {
+			for (int i=0; i < vertices.Length - 1; i++) {
 				double x1, y1, x2, y2;
 				
 				x1 = vertices[i].X;
@@ -197,8 +221,7 @@ namespace LongoMatch.Drawing.Cairo
 		}
 		
 		public void DrawRectangle (Point start, double width, double height) {
-			context.Rectangle (new PointD (start.X + LineWidth / 2, start.Y + LineWidth / 2),
-			                   width - LineWidth, height - LineWidth);
+			context.Rectangle (start.X, start.Y, width, height);
 			StrokeAndFill ();
 		}
 		
@@ -226,7 +249,6 @@ namespace LongoMatch.Drawing.Cairo
 		}
 
 		public void DrawCircle (Point center, double radius) {
-			context.MoveTo (center.X, center.Y);
 			context.Arc (center.X, center.Y, radius, 0, 2 * Math.PI);
 			StrokeAndFill ();
 		}
@@ -240,6 +262,9 @@ namespace LongoMatch.Drawing.Cairo
 			FontExtents fextents;
 			double x, y;
 			
+			if (text == null) {
+				return;
+			}
 			SetColor (StrokeColor);
 			context.SelectFontFace (FontFamily, fSlant, fWeight);
 			context.SetFontSize (FontSize);
@@ -249,6 +274,7 @@ namespace LongoMatch.Drawing.Cairo
 			y = point.Y + height / 2 - (extents.Height / 2 + extents.YBearing);
 			context.MoveTo (x, y);
 			context.ShowText (text);
+			StrokeAndFill ();
 		}
 		
 		public void DrawImage (Image image) {
@@ -276,9 +302,89 @@ namespace LongoMatch.Drawing.Cairo
 		}
 
 		public void DrawEllipse (Point center, double axisX, double axisY) {
+			double max = Math.Max (axisX, axisY);
+			context.Save ();
+			context.Translate (center.X, center.Y);
+			context.Scale (axisX / max, axisY / max);
+			context.Arc (0, 0, max, 0, 2 * Math.PI);
+			StrokeAndFill ();
+			context.Restore ();
 		}
 		
+		public void DrawArrow(Point start, Point stop, int lenght, double radians, bool closed) {
+			double vx1,vy1,vx2,vy2;
+			double angle = Math.Atan2(stop.Y - start.Y, stop.X - start.X) + Math.PI;
+
+			vx1 = stop.X + (lenght + LineWidth) * Math.Cos(angle - radians);
+			vy1 = stop.Y + (lenght + LineWidth) * Math.Sin(angle - radians);
+			vx2 = stop.X + (lenght + LineWidth) * Math.Cos(angle + radians);
+			vy2 = stop.Y + (lenght + LineWidth) * Math.Sin(angle + radians);
+
+			context.MoveTo(stop.X, stop.Y);
+			context.LineTo(vx1, vy1);
+			if (!closed) {
+				context.MoveTo(stop.X, stop.Y);
+				context.LineTo(vx2,vy2);
+			} else {
+				context.LineTo(vx2,vy2);
+				context.ClosePath ();
+			}
+			StrokeAndFill();
+		}
+
+		public void DrawSurface (ISurface surface) {
+			context.SetSourceSurface (surface.Value as ImageSurface, 0, 0);
+			context.Paint ();
+		}
+		
+		public Image Copy (ICanvas canvas, double width, double height) {
+			Image img;
+			Pixmap pm;
+			
+			pm = new Pixmap (null, (int) width, (int) height, 24);
+			disableScalling = true;
+			using(Context c = CairoHelper.Create (pm)) {
+				context = c;
+				canvas.Draw (context, new Area (new Point (0, 0), width, height));
+			}
+			img = new Image (Gdk.Pixbuf.FromDrawable (pm, Colormap.System, 0, 0, 0, 0,
+			                                          (int) width, (int)height));
+			disableScalling = false;
+			context = null;
+			return img;
+		}
+
+		public void Save (ICanvas canvas, double width, double height, string filename) {
+			ImageSurface pngSurface = new ImageSurface(Format.ARGB32, (int) width, (int) height);
+			disableScalling = true;
+			using(Context c = new Context(pngSurface)) {
+				context = c;
+				canvas.Draw (context, new Area (new Point (0, 0), width, height));
+			}
+			pngSurface.WriteToPng(filename);
+			disableScalling = false;
+			context = null;
+			pngSurface.Dispose ();
+		}
+
+		void SetDash() {
+			switch (LineStyle) {
+			case LineStyle.Normal:
+				context.SetDash(new double[] {}, 0);
+				break;	
+			default:
+				context.SetDash(new double[] {10, 10}, 10);
+				break;
+			}
+		}
+
 		void StrokeAndFill () {
+			SetDash ();
+			if (Clear) {
+				context.Operator = Operator.Clear;
+			} else {
+				context.Operator = Operator.Over;
+			}
 			context.LineCap = LineCap.Round;
 			context.LineJoin = LineJoin.Round;
 			context.LineWidth = LineWidth;
@@ -289,10 +395,14 @@ namespace LongoMatch.Drawing.Cairo
 		}
 		
 		void SetColor (Color color) {
-			context.SetSourceRGBA ((double) color.R / byte.MaxValue,
-			                       (double) color.G / byte.MaxValue,
-			                       (double) color.B / byte.MaxValue,
-			                       (double) color.A / byte.MaxValue);
+			if (color != null) {
+				context.SetSourceRGBA ((double) color.R / byte.MaxValue,
+				                       (double) color.G / byte.MaxValue,
+				                       (double) color.B / byte.MaxValue,
+				                       (double) color.A / byte.MaxValue);
+			} else {
+				context.SetSourceRGBA (0, 0, 0, 0);
+			}
 		}
 		
 	}

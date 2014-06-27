@@ -111,8 +111,8 @@ namespace LongoMatch.Gui.Helpers
 			return new Color (color.R, color.G, color.B);
 		}
 		
-		public static LColor ToLgmColor(Color color) {
-			return LColor.ColorFromUShort (color.Red, color.Green, color.Blue);
+		public static LColor ToLgmColor(Color color, ushort alpha = ushort.MaxValue) {
+			return LColor.ColorFromUShort (color.Red, color.Green, color.Blue, alpha);
 		}
 		
 		public static ListStore FillImageFormat (ComboBox formatBox, VideoStandard def) {

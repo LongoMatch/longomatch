@@ -51,15 +51,15 @@ namespace Tests.Core.Drawables
 			Assert.AreEqual (height, r.Height);
 			Assert.AreEqual (width, r.Width);
 			p2 = new Point (2, 10);
-			Assert.AreEqual (p2, r.BottomLeft);
-			p2.X += width; 
-			Assert.AreEqual (p2, r.BottomRight);
-			p2.Y += height; 
-			Assert.AreEqual (p2, r.TopRight);
-			p2.X = 2;
 			Assert.AreEqual (p2, r.TopLeft);
-			p2.X = r.BottomLeft.X + width / 2;
-			p2.Y = r.BottomLeft.Y + height / 2;
+			p2.X += width; 
+			Assert.AreEqual (p2, r.TopRight);
+			p2.Y += height; 
+			Assert.AreEqual (p2, r.BottomRight);
+			p2.X = 2;
+			Assert.AreEqual (p2, r.BottomLeft);
+			p2.X = r.TopLeft.X + width / 2;
+			p2.Y = r.TopLeft.Y + height / 2;
 			Assert.AreEqual (p2, r.Center);
 		}
 		
@@ -78,13 +78,13 @@ namespace Tests.Core.Drawables
 			Assert.AreEqual (SelectionPosition.Left, s.Position);
 			p2 = new Point (15, 30);
 			s = r.GetSelection (p2, 0);
-			Assert.AreEqual (SelectionPosition.Top, s.Position);
+			Assert.AreEqual (SelectionPosition.Bottom, s.Position);
 			p2 = new Point (32, 12);
 			s = r.GetSelection (p2, 0);
 			Assert.AreEqual (SelectionPosition.Right, s.Position);
 			p2 = new Point (30, 10);
 			s = r.GetSelection (p2, 0);
-			Assert.AreEqual (SelectionPosition.Bottom, s.Position);
+			Assert.AreEqual (SelectionPosition.Top, s.Position);
 		}
 		
 		[Test()]
@@ -99,19 +99,19 @@ namespace Tests.Core.Drawables
 			r1 = new Rectangle (p1, width, height);
 			
 			p2 = new Point (1, 1);
-			r1.Move (SelectionPosition.BottomLeft, p2, null);
+			r1.Move (SelectionPosition.TopLeft, p2, null);
 			CompareRect (r1, p2, 9, 9);
 			
 			p2 = new Point (9, 8);
-			r1.Move (SelectionPosition.TopRight, p2, null);
+			r1.Move (SelectionPosition.BottomRight, p2, null);
 			CompareRect (r1, new Point (1, 1), 8, 7);
 			
 			p2 = new Point (11, 2);
-			r1.Move (SelectionPosition.BottomRight, p2, null);
+			r1.Move (SelectionPosition.TopRight, p2, null);
 			CompareRect (r1, new Point (1, 2), 10, 6);
 			
 			p2 = new Point (2, 9);
-			r1.Move (SelectionPosition.TopLeft, p2, null);
+			r1.Move (SelectionPosition.BottomLeft, p2, null);
 			CompareRect (r1, new Point (2, 2), 9, 7);
 			
 			/* Move borders */
@@ -123,11 +123,11 @@ namespace Tests.Core.Drawables
 			CompareRect (r1, new Point (3, 0), 7, 10);
 			
 			p2 = new Point (5, 11);
-			r1.Move (SelectionPosition.Top, p2, null);
+			r1.Move (SelectionPosition.Bottom, p2, null);
 			CompareRect (r1, new Point (3, 0), 7, 11);
 			
 			p2 = new Point (6, 2);
-			r1.Move (SelectionPosition.Bottom, p2, null);
+			r1.Move (SelectionPosition.Top, p2, null);
 			CompareRect (r1, new Point (3, 2), 7, 9);
 			
 			p2 = new Point (8, 11);

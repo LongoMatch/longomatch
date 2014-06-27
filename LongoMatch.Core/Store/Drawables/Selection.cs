@@ -23,14 +23,14 @@ namespace LongoMatch.Store.Drawables
 {
 	public class Selection
 	{
-		public Selection (IDrawable drawable, SelectionPosition selpos, double accuracy=0)
+		public Selection (IMovableObject drawable, SelectionPosition selpos, double accuracy=0)
 		{
 			Drawable = drawable;
 			Position = selpos;
 			Accuracy = accuracy;
 		}
 		
-		public IDrawable Drawable {
+		public IMovableObject Drawable {
 			get;
 			set;
 		}

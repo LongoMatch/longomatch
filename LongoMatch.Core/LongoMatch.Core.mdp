@@ -20,7 +20,6 @@
     <File subtype="Code" buildaction="Compile" name="Common/Enums.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Log.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Category.cs" />
-    <File subtype="Code" buildaction="Compile" name="Store/Drawing.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/HotKey.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/PixbufTimeNode.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Play.cs" />
@@ -110,7 +109,6 @@
     <File subtype="Code" buildaction="Compile" name="Store/Drawables/Quadrilateral.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Drawables/Ellipse.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Drawables/Line.cs" />
-    <File subtype="Code" buildaction="Compile" name="Store/Drawables/Text.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Drawables/MultiPoints.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Drawables/Drawable.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Drawables/Cross.cs" />
@@ -119,14 +117,13 @@
     <File subtype="Code" buildaction="Compile" name="Store/Drawables/Angle.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Coordinates.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Point.cs" />
-    <File subtype="Code" buildaction="Compile" name="Store/Drawables/Circle.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/Area.cs" />
     <File subtype="Directory" buildaction="Compile" name="Interfaces/Drawing" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/Drawing/IDrawingToolkit.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/Drawing/IWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Handlers/Drawing.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/Drawing/IDrawable.cs" />
-    <File subtype="Code" buildaction="Compile" name="Interfaces/Drawing/ICanvasObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/Drawing/ICanvas.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/ExtensionMethods.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Timer.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Period.cs" />
@@ -136,6 +133,10 @@
     <File subtype="Directory" buildaction="Compile" name="Store" />
     <File subtype="Code" buildaction="Compile" name="Common/Serializer.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/IIDObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/FrameDrawing.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Store/Drawables" />
+    <File subtype="Code" buildaction="Compile" name="Store/Drawables/Text.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/Drawables/Counter.cs" />
   </Contents>
   <References>
     <ProjectReference type="Package" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

@@ -7,19 +7,6 @@
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.DrawingToolBox" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="DrawingToolBox Signals">
-        <signal name="LineWidthChanged" />
-        <signal name="DrawToolChanged" />
-        <signal name="ColorChanged" />
-        <signal name="VisibilityChanged" />
-        <signal name="ClearDrawing" />
-        <signal name="TransparencyChanged" />
-      </itemgroup>
-    </signals>
-  </object>
   <object type="LongoMatch.Gui.Component.NotesWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
@@ -95,14 +82,6 @@
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.DrawingWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.BackgroundWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.SubCategoriesTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
     <itemgroups />
     <signals>
@@ -142,8 +121,7 @@
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.CoordinatesTagger" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-    </itemgroups>
+    <itemgroups />
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.GeneralPreferencesPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
@@ -225,6 +203,10 @@
     <signals />
   </object>
   <object type="LongoMatch.Gui.Panel.WelcomePanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.BackgroundWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
   </object>
@@ -312,14 +294,17 @@
     <itemgroups />
     <signals />
   </object>
+  <object type="LongoMatch.Gui.Component.PlaysPositionViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
   <object type="LongoMatch.Gui.CapturerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="CapturerBin Properties">
         <property name="Capturing" />
       </itemgroup>
     </itemgroups>
-    <signals>
-    </signals>
+    <signals />
   </object>
   <object type="LongoMatch.Gui.PlayerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
@@ -328,7 +313,7 @@
       </itemgroup>
     </itemgroups>
     <signals>
-      <itemgroup label="IPlayerBin Signals">
+      <itemgroup label="PlayerBin Signals">
         <signal name="Tick" />
         <signal name="PlayStateChanged" />
         <signal name="SeekEvent" />
@@ -342,14 +327,10 @@
       </itemgroup>
     </itemgroups>
     <signals>
-      <itemgroup label="ICapturerBin Signals">
+      <itemgroup label="IPlayerBin Signals">
         <signal name="PlayStateChanged" />
         <signal name="SeekEvent" />
       </itemgroup>
     </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.PlaysPositionViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
   </object>
 </objects>

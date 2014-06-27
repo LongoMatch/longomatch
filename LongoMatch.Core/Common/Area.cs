@@ -43,6 +43,34 @@ namespace LongoMatch.Common
 			get;
 			set;
 		}
+		
+		public Point Center {
+			get {
+				return new Point (Start.X + Width / 2, Start.Y + Height / 2);
+			}
+		}
+		
+		public Point[] Vertices {
+			get {
+				return new Point[] {
+					new Point (Start.X, Start.Y),
+					new Point (Start.X + Width, Start.Y),
+					new Point (Start.X + Width, Start.Y + Height),
+					new Point (Start.X, Start.Y + Height)};
+			}
+		}
+
+		public Point[] VerticesCenter {
+			get {
+				Point [] points = Vertices;
+
+				points[0].X += Width / 2;
+				points[1].Y += Height / 2;
+				points[2].X = points[0].X;
+				points[3].Y = points[1].Y;
+				return points;
+			}
+		}
 	}
 }
 

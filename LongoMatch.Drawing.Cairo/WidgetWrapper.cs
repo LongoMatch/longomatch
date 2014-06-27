@@ -48,9 +48,9 @@ namespace LongoMatch.Drawing.Cairo
 		public WidgetWrapper (DrawingArea widget)
 		{
 			this.widget = widget;
-			widget.Events |= EventMask.PointerMotionMask;
-			widget.Events |= EventMask.ButtonPressMask;
-			widget.Events |= EventMask.ButtonReleaseMask ;
+			widget.AddEvents ((int)EventMask.PointerMotionMask);
+			widget.AddEvents ((int)EventMask.ButtonPressMask);
+			widget.AddEvents ((int)EventMask.ButtonReleaseMask);
 			widget.ExposeEvent += HandleExposeEvent;
 			widget.ButtonPressEvent += HandleButtonPressEvent;
 			widget.ButtonReleaseEvent += HandleButtonReleaseEvent;
@@ -91,7 +91,7 @@ namespace LongoMatch.Drawing.Cairo
 			widget.GdkWindow.ProcessUpdates(true);
 		}
 		
-		public void ReDraw (IDrawable drawable) {
+		public void ReDraw (IMovableObject drawable) {
 			/* FIXME: get region from drawable */
 			ReDraw ();
 		}
@@ -103,7 +103,6 @@ namespace LongoMatch.Drawing.Cairo
 
 		public void SetCursor (CursorType type) {
 			GCursorType gtype;
-			
 			switch (type) {
 			case CursorType.Arrow:
 				gtype = GCursorType.Arrow;
@@ -122,6 +121,53 @@ namespace LongoMatch.Drawing.Cairo
 				break;
 			}
 			widget.GdkWindow.Cursor = new Cursor (gtype);
+		}
+
+		public void SetCursorForTool (DrawTool tool) {
+			string cursor;
+			
+			switch (tool) {
+			case DrawTool.Line:
+				cursor = "arrow";
+				break;
+			case DrawTool.Cross:
+				cursor = "cross";
+				break;
+			case DrawTool.Text:
+				cursor = "text";
+				break;
+			case DrawTool.Counter:
+				cursor = "number";
+				break;
+			case DrawTool.Ellipse:
+			case DrawTool.CircleArea:
+				cursor = "ellipse";
+				break;
+			case DrawTool.Rectangle:
+			case DrawTool.RectangleArea:
+				cursor = "rect";
+				break;
+			case DrawTool.Angle:
+				cursor = "angle";
+				break;
+			case DrawTool.Pen:
+				cursor = "freehand";
+				break;
+			case DrawTool.Eraser:
+				cursor = "eraser";
+				break;
+			case DrawTool.Selection:
+			default:
+				cursor = null;
+				break;
+			}
+			if (cursor == null) {
+				widget.GdkWindow.Cursor = null;
+			} else {
+				Cursor c = new Cursor (widget.Display,
+				                       Gdk.Pixbuf.LoadFromResource (cursor), 0, 0);
+				widget.GdkWindow.Cursor = c;
+			}
 		}
 		
 		void Draw (Area area) {

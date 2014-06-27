@@ -20,12 +20,14 @@ using System;
 using Newtonsoft.Json;
 
 using LongoMatch.Common;
+using System.Collections.Generic;
+using LongoMatch.Store.Drawables;
 
 namespace LongoMatch.Store
 {
 
 	[Serializable]
-	public class Drawing
+	public class FrameDrawing
 	{
 		private const int DEFAULT_PAUSE_TIME = 5000;
 
@@ -35,14 +37,20 @@ namespace LongoMatch.Store
 		/// are used by {@MediaTimeNodes} to store the key frame drawing
 		/// which stop time is stored in a int value
 		/// </summary>
-		public Drawing() {
+		public FrameDrawing() {
 			Pause = new Time (DEFAULT_PAUSE_TIME);
+			Drawables = new List<Drawable> ();
+		}
+		
+		public Image Freehand {
+			get;
+			set;
 		}
 
 		/// <summary>
-		/// Pixbuf with the drawing
+		/// List of Drawable objects in the canvas
 		/// </summary>
-		public Image Pixbuf {
+		public List<Drawable> Drawables {
 			get;
 			set;
 		}

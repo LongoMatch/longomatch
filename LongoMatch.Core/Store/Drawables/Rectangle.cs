@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using LongoMatch.Common;
 using Newtonsoft.Json;
 
@@ -29,10 +30,10 @@ namespace LongoMatch.Store.Drawables
 		
 		public Rectangle (Point origin, double width, double height)
 		{
-			BottomLeft = origin;
-			BottomRight = new Point (origin.X + width, origin.Y);
-			TopLeft = new Point (origin.X, origin.Y + height);
-			TopRight = new Point (origin.X + width, origin.Y + height);
+			TopLeft = origin;
+			TopRight = new Point (origin.X + width, origin.Y);
+			BottomLeft = new Point (origin.X, origin.Y + height);
+			BottomRight = new Point (origin.X + width, origin.Y + height);
 		}
 		
 		[JsonIgnore]
@@ -45,15 +46,27 @@ namespace LongoMatch.Store.Drawables
 		[JsonIgnore]
 		public double Height {
 			get {
-				return TopLeft.Y - BottomLeft.Y;
+				return BottomLeft.Y - TopLeft.Y;
 			}
 		}
 		
 		[JsonIgnore]
 		public Point Center {
 			get {
-				return new Point (BottomLeft.X + Width / 2, BottomLeft.Y + Height / 2);
+				return new Point (TopLeft.X + Width / 2, TopLeft.Y + Height / 2);
 			}
+		}
+		
+		
+		
+		public override void Reorder () {
+			Point [] array = new Point[] {TopLeft, TopRight, BottomLeft, BottomRight};
+			
+			array = array.OrderBy (p=> p.X).ThenBy (p=> p.Y).ToArray();
+			TopLeft = array[0];
+			BottomLeft = array[1];
+			TopRight = array[2];
+			BottomRight = array[3];
 		}
 		
 		public override Selection GetSelection (Point p, double pr=0.05) {
@@ -61,6 +74,8 @@ namespace LongoMatch.Store.Drawables
 			double d;
 			
 			selection = base.GetSelection (p, pr);
+			if (selection == null)
+				return selection;
 			
 			if (selection.Position == SelectionPosition.All) {
 				if (MatchAxis (p.X, TopLeft.X, pr, out d)) {
@@ -111,8 +126,7 @@ namespace LongoMatch.Store.Drawables
 				TopRight.X = p.X;
 				break;
 			case SelectionPosition.All:
-				Center.X += p.X - moveStart.X;
-				Center.Y += p.Y - moveStart.Y;
+				base.Move (sel, p, moveStart);
 				break;
 			}
 		}

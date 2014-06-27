@@ -18,20 +18,32 @@
 using System;
 using LongoMatch.Common;
 using System.Collections.Generic;
+using LongoMatch.Interfaces.Drawing;
 
 namespace LongoMatch.Interfaces
 {
+
+	public interface ISurface:IDisposable  {
+		Image Copy ();
+		object Value {get;}
+		object Context {get;}
+	}
+	
 	public interface IDrawingToolkit
 	{
 		object Context {set;}
 		int LineWidth {set;}
+		bool Clear {set;}
 		Color StrokeColor {set;}
 		Color FillColor {set;}
 		string FontFamily {set;}
 		FontSlant FontSlant {set;}
 		FontWeight FontWeight {set;}
 		int FontSize {set;}
+		LineStyle LineStyle {set;}
 		
+		ISurface CreateSurface (int width, int height, Image image=null);
+		void DrawSurface (ISurface surface);
 		void Begin();
 		void End();
 		void TranslateAndScale (Point translation, Point scale);
@@ -40,13 +52,16 @@ namespace LongoMatch.Interfaces
 		                   SelectionPosition orientation);
 		void DrawRectangle (Point start, double width, double height);
 		void DrawRoundedRectangle (Point start, double width, double height, double radius);
-		void DrawArea (List<Point> vertices);
+		void DrawArea (params Point[] vertices);
 		void DrawPoint (Point point);
 		void DrawCircle (Point center, double radius);
 		void DrawEllipse (Point center, double axisX, double axisY);
 		void DrawText (Point point, double width, double height, string text);
 		void DrawImage (Image image); 
 		void DrawImage (Point start, double width, double height, Image image, bool scale); 
+		void DrawArrow(Point start, Point stop, int lenght, double degrees, bool closed);
+		void Save (ICanvas canvas, double width, double height, string filename);
+		Image Copy (ICanvas canvas, double width, double height);
 	}
 }
 

@@ -68,7 +68,7 @@ namespace LongoMatch.Store.Drawables
 			} else if (p.Distance (Center) < pr) {
 				return new Selection (this, SelectionPosition.AngleCenter, p.Distance (Center));
 			} else {
-				return new Selection (this, SelectionPosition.None);
+				return null;
 			}
 		}
 		

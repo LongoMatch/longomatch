@@ -88,7 +88,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.PlaysDeleted += OnPlaysDeleted;
 			Config.EventsBroker.PlaySelected += OnPlaySelected;
 			Config.EventsBroker.PlayCategoryChanged += OnPlayCategoryChanged;
-			Config.EventsBroker.DuplicatePlay += OnDuplicatePlay;
+			Config.EventsBroker.DuplicatePlays += OnDuplicatePlays;
 			Config.EventsBroker.PlayListNodeSelectedEvent += (tn) => {loadedPlay = tn;};
 			Config.EventsBroker.SnapshotSeries += OnSnapshotSeries;
 			
@@ -328,14 +328,16 @@ namespace LongoMatch.Services
 			filter.Update();
 		}
 
-		void OnDuplicatePlay (Play play)
+		void OnDuplicatePlays (List<Play> plays)
 		{
-			Play copy = Cloner.Clone (play);
-			copy.ID = Guid.NewGuid();
-			/* The category is also serialized and desarialized */
-			copy.Category = play.Category;
-			openedProject.AddPlay (copy);
-			analysisWindow.AddPlay (copy);
+			foreach (Play play in plays) {
+				Play copy = Cloner.Clone (play);
+				copy.ID = Guid.NewGuid();
+				/* The category is also serialized and desarialized */
+				copy.Category = play.Category;
+				openedProject.AddPlay (copy);
+				analysisWindow.AddPlay (copy);
+			}
 			filter.Update();
 		}
 
@@ -358,11 +360,20 @@ namespace LongoMatch.Services
 			player.Seek (pos, false);
 		}
 
-		protected virtual void OnDrawFrame (Time time) {
-			Image pixbuf = null;
+		protected virtual void OnDrawFrame (Play play, int drawingIndex) {
+			Image pixbuf;
 			player.Pause();
 			pixbuf = player.CurrentFrame;
-			guiToolkit.DrawingTool (pixbuf, loadedPlay as Play, time);
+			if (play == null) {
+				play = loadedPlay as Play;
+			}
+			if (play != null && drawingIndex == -1) {
+				FrameDrawing drawing = new FrameDrawing ();
+				drawing.Render = player.CurrentTime;
+				play.Drawings.Add (drawing);
+				drawingIndex = play.Drawings.Count - 1;
+			}
+			guiToolkit.DrawingTool (pixbuf, play, drawingIndex);
 		}
 
 		protected virtual void OnPlayCategoryChanged(Play play, Category cat)

@@ -619,7 +619,7 @@ namespace LongoMatch.Gui
 
 		void OnDrawButtonClicked(object sender, System.EventArgs e)
 		{
-			Config.EventsBroker.EmitDrawFrame (CurrentTime);
+			Config.EventsBroker.EmitDrawFrame (null, -1);
 		}
 		
 		void HandleRealized (object sender, EventArgs e)

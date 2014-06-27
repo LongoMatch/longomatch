@@ -27,11 +27,12 @@ namespace LongoMatch.Store.Drawables
 		{
 		}
 
-		public Ellipse (Point center, double axisX, double axisY)
+		public Ellipse (Point center, double axisX, double axisY, string text = null)
 		{
 			Center = center;
 			AxisX = axisX;
 			AxisY = axisY;
+			Text = text;
 		}
 		
 		public Point Center {
@@ -45,6 +46,16 @@ namespace LongoMatch.Store.Drawables
 		}
 		
 		public double AxisY {
+			get;
+			set;
+		}
+		
+		public string Text  {
+			get;
+			set;
+		}
+
+		public Color TextColor {
 			get;
 			set;
 		}
@@ -70,15 +81,28 @@ namespace LongoMatch.Store.Drawables
 			}
 		}
 		
+		[JsonIgnore]
 		public Point Right {
 			get {
 				return new Point (Center.X + AxisX, Center.Y);
+			}
+		}
+		
+		[JsonIgnore]
+		public override Area Area {
+			get {
+				return new Area (new Point (Center.X - AxisX, Center.Y - AxisY),
+				                 AxisX * 2, AxisY * 2);
 			}
 		}
 
 		public override Selection GetSelection (Point p, double pr=0.05) {
 			double d;
 			
+			if (Selected) {
+				return base.GetSelection (p, pr);
+			}
+
 			if (MatchPoint (Top, p, pr, out d)) {
 				return new Selection (this, SelectionPosition.Top, d);
 			} else if (MatchPoint (Bottom, p, pr, out d)) {
@@ -94,7 +118,7 @@ namespace LongoMatch.Store.Drawables
 				if ((a + b) <= 1) {
 					return new Selection (this, SelectionPosition.All, p.Distance (Center));
 				} else {
-					return new Selection (this, SelectionPosition.None);
+					return null;
 				}
 			}
 		}
@@ -109,6 +133,14 @@ namespace LongoMatch.Store.Drawables
 			case SelectionPosition.Left:
 			case SelectionPosition.Right: {
 				AxisX = Math.Abs (p.X - Center.X);
+				break;
+			}
+			case SelectionPosition.TopLeft:
+			case SelectionPosition.TopRight:
+			case SelectionPosition.BottomLeft:
+			case SelectionPosition.BottomRight: {
+				AxisX = Math.Abs (p.X - Center.X);
+				AxisY = Math.Abs (p.Y - Center.Y);
 				break;
 			}
 			case SelectionPosition.All: {

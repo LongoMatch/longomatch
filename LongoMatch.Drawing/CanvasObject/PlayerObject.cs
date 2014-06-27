@@ -25,7 +25,7 @@ using LongoMatch.Drawing.Widgets;
 
 namespace LongoMatch.Drawing.CanvasObject
 {
-	public class PlayerObject: BaseCanvasObject, ICanvasSelectableObject
+	public class PlayerObject: CanvasObject, ICanvasSelectableObject
 	{
 		public PlayerObject (Player player, Point position)
 		{

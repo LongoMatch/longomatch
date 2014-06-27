@@ -22,7 +22,6 @@
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/EntryDialog.cs" />
     <File subtype="Directory" buildaction="Compile" name="Gui/Component" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/ButtonsWidget.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Component/DrawingToolBox.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/NotesWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/FramesCaptureProgressDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/HotKeySelectorDialog.cs" />
@@ -41,7 +40,6 @@
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/VideoEditionProperties.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/CategoryProperties.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/PlaysListTreeWidget.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Component/DrawingWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/DrawingTool.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/EndCaptureDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/BusyDialog.cs" />
@@ -62,9 +60,7 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.PlayersListTreeWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.DrawingToolBox.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.EditCategoryDialog.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.DrawingWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.DrawingTool.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.EndCaptureDialog.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.BusyDialog.cs" />
@@ -79,11 +75,6 @@
     <File subtype="Directory" buildaction="Compile" name="." />
     <File subtype="Code" buildaction="Compile" name="Gui/Dialog/About.cs" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/logo.svg" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/stock_draw-circle-unfilled.png" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/stock_draw-freeform-line.png" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/stock_draw-line-45.png" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/stock_draw-line-ends-with-arrow.png" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/stock_draw-rectangle-unfilled.png" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/video.png" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/camera-video.png" />
     <File subtype="Directory" buildaction="Compile" name="Gui/Component" />
@@ -177,6 +168,23 @@
     <File subtype="Directory" buildaction="Compile" name="Gui/Menu" />
     <File subtype="Code" buildaction="Compile" name="Gui/Menu/PlaysMenu.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/GtkGlue.cs" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/draw-arrow.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/draw-circle-unfilled.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/draw-cross.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/draw-ellipse.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/draw-eraser.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/draw-freehand.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/draw-number.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/draw-pointer.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/draw-rectangle.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/draw-rectangle-unfilled.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/draw-text.png" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/dash-line.svg" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/line.svg" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/line-double-dot.svg" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/line-dot.svg" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/line-double-arrow.svg" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/line-arrow.svg" />
   </Contents>
   <References>
     <ProjectReference type="Package" localcopy="True" refto="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

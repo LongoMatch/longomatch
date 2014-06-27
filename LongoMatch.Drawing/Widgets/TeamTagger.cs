@@ -257,12 +257,6 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 		
-		protected override void StartMove (Selection sel) {
-		}
-		
-		protected override void StopMove () {
-		}
-
 		protected override void ShowMenu (Point coords) {
 			if (ShowMenuEvent != null && Selections.Count > 0){
 				ShowMenuEvent (
@@ -270,10 +264,7 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 		
-		protected override void SelectionMoved (Selection sel) {
-		}
-
-		protected override void HandleDraw (object context, Area area)
+		public override void Draw (object context, Area area)
 		{
 			if (currentWidth != widget.Width || currentHeight != widget.Height) {
 				Resize ();
@@ -289,7 +280,7 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			
 			tk.End ();
-			base.HandleDraw (context, area);
+			base.Draw (context, area);
 		}
 	}
 }

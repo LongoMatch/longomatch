@@ -23,6 +23,12 @@ using LongoMatch.Interfaces.Drawing;
 
 namespace LongoMatch.Interfaces.Drawing
 {
+
+	public interface ICanvas
+	{
+		 void Draw (object context, Area area);
+	}
+	
 	public interface ICanvasObject
 	{
 		void Draw (IDrawingToolkit tk, Area area);
@@ -30,8 +36,16 @@ namespace LongoMatch.Interfaces.Drawing
 		string Description {set; get;}
 	}
 	
-	public interface ICanvasSelectableObject: ICanvasObject, IDrawable
+	public interface ICanvasSelectableObject: ICanvasObject, IMovableObject
 	{
+	}
+	
+	public interface ICanvasDrawableObject: ICanvasSelectableObject
+	{
+		IBlackboardObject IDrawableObject {
+			get;
+			set;
+		}
 	}
 }
 

@@ -94,9 +94,9 @@ namespace Tests.Core.Drawables
 			Assert.AreEqual (SelectionPosition.All, s.Position);
 			
 			s = m.GetSelection (new Point (0, 5), 1);
-			Assert.AreEqual (SelectionPosition.None, s.Position);
+			Assert.IsNull (s);
 			s = m.GetSelection (new Point (5, 12), 1);
-			Assert.AreEqual (SelectionPosition.None, s.Position);
+			Assert.IsNull (s);
 		}
 	}
 }

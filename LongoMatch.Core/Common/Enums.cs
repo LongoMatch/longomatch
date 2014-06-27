@@ -100,16 +100,19 @@ namespace LongoMatch.Common
 	}
 	
 	public enum DrawTool {
-		PEN,
-		LINE,
-		DASHED_LINE,
-		CIRCLE,
-		DASHED_CIRCLE,
-		RECTANGLE,
-		DASHED_RECTANGLE,
-		CROSS,
-		DASHED_CROSS,
-		ERASER
+		Pen,
+		Line,
+		Ellipse,
+		Rectangle,
+		Angle,
+		Cross,
+		Eraser,
+		Selection,
+		RectangleArea,
+		CircleArea,
+		Player,
+		Text,
+		Counter,
 	}
 	
 	public enum CaptureSourceType {
@@ -161,7 +164,6 @@ namespace LongoMatch.Common
 		AngleCenter,
 		CircleBorder,
 		All,
-		None,
 	}
 	
 	public enum LineStyle {
@@ -174,7 +176,8 @@ namespace LongoMatch.Common
 		Simple,
 		Arrow,
 		DoubleArrow,
-		Rounded
+		Dot,
+		DoubleDot
 	}
 	
 	public enum FontSlant {

@@ -23,7 +23,7 @@ using LongoMatch.Common;
 
 namespace LongoMatch.Drawing.CanvasObject
 {
-	public class CategoryLabel: BaseCanvasObject, ICanvasObject
+	public class CategoryLabel: CanvasObject, ICanvasObject
 	{
 		Category category;
 		double width, height;

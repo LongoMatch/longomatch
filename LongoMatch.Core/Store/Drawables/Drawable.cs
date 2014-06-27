@@ -22,7 +22,7 @@ using LongoMatch.Interfaces.Drawing;
 
 namespace LongoMatch.Store.Drawables
 {
-	public abstract class Drawable: IDrawable
+	public abstract class Drawable: IBlackboardObject
 	{
 		public Drawable ()
 		{
@@ -48,7 +48,59 @@ namespace LongoMatch.Store.Drawables
 			set;
 		}
 		
-		public abstract Selection GetSelection (Point point, double precision);
+		public LineStyle Style{
+			get;
+			set;
+		}
+		
+		public virtual Area Area {
+			get;
+			protected set;
+		}
+		
+		public virtual void Reorder () {
+		}
+		
+		public virtual Selection GetSelection (Point point, double pr) {
+			Point[] vertices;
+			double d;
+			
+			if (Area == null) {
+				return null;
+			}
+
+			if ((point.X < Area.Start.X - pr) ||
+			    (point.X > Area.Start.X + Area.Width + pr) ||
+			    (point.Y < Area.Start.Y - pr) ||
+			    (point.Y > Area.Start.Y + Area.Height + pr)) {
+				return null;
+			} 
+			
+			/* Check vertices */
+			vertices = Area.Vertices;
+			if (MatchPoint (vertices[0], point, pr, out d)) {
+				return new Selection (this, SelectionPosition.TopLeft, d);
+			} else if (MatchPoint (vertices[1], point, pr, out d)) {
+				return new Selection (this, SelectionPosition.TopRight, d);
+			} else if (MatchPoint (vertices[2], point, pr, out d)) {
+				return new Selection (this, SelectionPosition.BottomRight, d);
+			} else if (MatchPoint (vertices[3], point, pr, out d)) {
+				return new Selection (this, SelectionPosition.BottomLeft, d);
+			}
+			
+			vertices = Area.VerticesCenter;
+			if (MatchPoint (vertices[0], point, pr, out d)) {
+				return new Selection (this, SelectionPosition.Top, d);
+			} else if (MatchPoint (vertices[1], point, pr, out d)) {
+				return new Selection (this, SelectionPosition.Right, d);
+			} else if (MatchPoint (vertices[2], point, pr, out d)) {
+				return new Selection (this, SelectionPosition.Bottom, d);
+			} else if (MatchPoint (vertices[3], point, pr, out d)) {
+				return new Selection (this, SelectionPosition.Left, d);
+			}
+			
+			return new Selection (this, SelectionPosition.All, point.Distance (Area.Center));
+		}
 
 		public abstract void Move (Selection s, Point dst, Point start);
 		

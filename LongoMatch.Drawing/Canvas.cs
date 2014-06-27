@@ -26,7 +26,7 @@ using LongoMatch.Drawing.CanvasObject;
 
 namespace LongoMatch.Drawing
 {
-	public class Canvas
+	public class Canvas: ICanvas
 	{
 		protected IDrawingToolkit tk;
 		protected IWidget widget;
@@ -38,7 +38,7 @@ namespace LongoMatch.Drawing
 			this.widget = widget;
 			tk = Config.DrawingToolkit;
 			Objects = new List<ICanvasObject>();
-			widget.DrawEvent += HandleDraw;
+			widget.DrawEvent += Draw;
 			scaleX = 1;
 			scaleY = 1;
 			translation = new Point (0, 0);
@@ -55,7 +55,7 @@ namespace LongoMatch.Drawing
 		
 		}
 		
-		protected virtual void HandleDraw (object context, Area area) {
+		public virtual void Draw (object context, Area area) {
 			tk.Context = context;
 			tk.TranslateAndScale (translation, new Point (scaleX, scaleY));
 			tk.Begin ();
@@ -80,6 +80,7 @@ namespace LongoMatch.Drawing
 			Selections = new List<Selection>();
 			SelectionMode = MultiSelectionMode.Single;
 			Accuracy = 1;
+			MoveWithoutSelection = false;
 			
 			widget.ButtonPressEvent += HandleButtonPressEvent;
 			widget.ButtonReleasedEvent += HandleButtonReleasedEvent;
@@ -97,6 +98,11 @@ namespace LongoMatch.Drawing
 			set;
 		}
 		
+		protected bool MoveWithoutSelection {
+			get;
+			set;
+		}
+		
 		protected List<Selection> Selections {
 			get;
 			set;
@@ -105,6 +111,9 @@ namespace LongoMatch.Drawing
 		protected virtual void StartMove (Selection sel) {
 		}
 		
+		protected virtual void CursorMoved (Point coords) {
+		}
+
 		protected virtual void SelectionMoved (Selection sel) {
 		}
 		
@@ -131,8 +140,19 @@ namespace LongoMatch.Drawing
 		}
 		
 		protected void UpdateSelection (Selection sel, bool notify=true) {
-			ICanvasSelectableObject so = sel.Drawable as ICanvasSelectableObject;
-			Selection seldup = Selections.FirstOrDefault (s => s.Drawable == sel.Drawable);
+			ICanvasSelectableObject so;
+			Selection seldup;
+
+			if (sel == null) {
+				ClearSelection ();
+				if (notify) {
+					SelectionChanged (Selections);
+				}
+				return;
+			}
+			
+			so = sel.Drawable as ICanvasSelectableObject;
+			seldup = Selections.FirstOrDefault (s => s.Drawable == sel.Drawable);
 			
 			if (seldup != null) {
 				so.Selected = false;
@@ -170,13 +190,13 @@ namespace LongoMatch.Drawing
 			Selection sel = GetSelection (ToUserCoords (coords)); 
 			if (sel != null) {
 				ICanvasObject co = sel.Drawable as ICanvasObject;
-				if (co.Description != null) {
+				if (co != null && co.Description != null) {
 					widget.ShowTooltip (co.Description);
 				}
 			}
 		}
 		
-		void HandleLeftButton (Point coords, ButtonModifier modif) {
+		protected virtual void HandleLeftButton (Point coords, ButtonModifier modif) {
 			Selection sel;
 			
 			sel = GetSelection (coords);
@@ -192,33 +212,32 @@ namespace LongoMatch.Drawing
 				}
 			} else {
 				ClearSelection ();
-				if (sel == null) {
-					return;
-				}
-				moving = true;
 				start = coords;
 				UpdateSelection (sel);
 				StartMove (sel);
+				moving = Selections.Count > 0;
 			}
 		}
 		
-		void HandleRightButton (Point coords, ButtonModifier modif) {
+		protected virtual void HandleRightButton (Point coords, ButtonModifier modif) {
 			ShowMenu (coords);
 		}
 		
-		void HandleMotionEvent (Point coords)
+		protected virtual void HandleMotionEvent (Point coords)
 		{
 			Selection sel;
 
-			if (!moving)
-				return;
-			
-			coords = ToUserCoords (coords); 
-			sel = Selections[0];
-			sel.Drawable.Move (sel, coords, start);  
-			widget.ReDraw (sel.Drawable);
-			SelectionMoved (sel);
-			start = coords;
+			coords = ToUserCoords (coords);
+			if (Selections.Count == 0) {
+				CursorMoved (coords);
+				start = coords;
+			} else if (moving) {
+				sel = Selections[0];
+				sel.Drawable.Move (sel, coords, start);  
+				widget.ReDraw (sel.Drawable);
+				SelectionMoved (sel);
+				start = coords;
+			}
 		}
 
 		void HandleButtonReleasedEvent (Point coords, ButtonType type, ButtonModifier modifier)
@@ -269,7 +288,7 @@ namespace LongoMatch.Drawing
 			}
 		}
 		
-		protected override void HandleDraw (object context, Area area)
+		public override void Draw (object context, Area area)
 		{
 			if (Background != null) {
 				tk.Context = context;
@@ -278,7 +297,7 @@ namespace LongoMatch.Drawing
 				tk.DrawImage (Background);
 				tk.End ();
 			}
-			base.HandleDraw (context, area);
+			base.Draw (context, area);
 		}
 	}
 }

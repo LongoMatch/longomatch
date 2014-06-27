@@ -17,55 +17,34 @@
 //
 using System;
 using LongoMatch.Interfaces.Drawing;
-using LongoMatch.Interfaces;
-using LongoMatch.Common;
 using LongoMatch.Store.Drawables;
+using LongoMatch.Common;
+using LongoMatch.Interfaces;
 
 namespace LongoMatch.Drawing.CanvasObject
 {
-	public abstract class BaseCanvasObject: ICanvasObject
+	public class EllipseObject: CanvasDrawableObject<Ellipse>, ICanvasSelectableObject
 	{
-		public BaseCanvasObject ()
+
+		public EllipseObject ()
 		{
-			Visible = true;
 		}
 		
-		public virtual string Description {
-			get;
-			set;
+		public EllipseObject (Ellipse ellipse)
+		{
+			Drawable = ellipse;
 		}
 		
-		public bool Visible {
-			get;
-			set;
-		}
-		
-		public bool Selected {
-			set;
-			get;
-		}
-		
-		public abstract void Draw (IDrawingToolkit tk, Area area);
-	}
-	
-	public abstract class BaseCanvasDrawableObject<T>: BaseCanvasObject where T:Drawable
-	{
-		public T Drawable {
-			get;
-			set;
-		}
-		
-		public Canvas Parent {
-			get;
-			set;
-		}
-		
-		public Selection GetSelection (Point point, double precision) {
-			return Drawable.GetSelection (point, precision);
-		}
-		
-		public void Move (Selection s, Point p, Point start) {
-			Drawable.Move (s, p, start);
+		public override void Draw (IDrawingToolkit tk, Area area) {
+			tk.Begin ();
+			tk.FillColor = Drawable.FillColor;
+			tk.StrokeColor = Drawable.StrokeColor;
+			tk.LineWidth = Drawable.LineWidth;
+			tk.LineStyle = Drawable.Style;
+			tk.DrawEllipse (Drawable.Center, Drawable.AxisX, Drawable.AxisY);
+			DrawSelectionArea (tk);
+			tk.End ();
 		}
 	}
 }
+

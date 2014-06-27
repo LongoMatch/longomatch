@@ -48,7 +48,7 @@ namespace LongoMatch.Store.Drawables
 		public override Selection GetSelection (Point p, double pr)
 		{
 			Selection s = base.GetSelection (p, pr);
-			if (s.Position != SelectionPosition.None) {
+			if (s != null) {
 				s.Position = SelectionPosition.All;
 			}
 			return s;

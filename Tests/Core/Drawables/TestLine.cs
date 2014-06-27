@@ -66,7 +66,7 @@ namespace Tests.Core.Drawables
 			/* None */
 			p3 = new Point (10, 5);
 			s = line.GetSelection (p3, 1);
-			Assert.AreEqual (SelectionPosition.None, s.Position);
+			Assert.IsNull (s);
 			
 			/* Start */
 			p3 = new Point (0, 5);
@@ -105,7 +105,7 @@ namespace Tests.Core.Drawables
 
 			p3 = new Point (0, 3);
 			s = line.GetSelection (p3, 1);
-			Assert.AreEqual (SelectionPosition.None, s.Position);
+			Assert.IsNull (s);
 			
 			p3 = new Point (2.5, 2.5);
 			s = line.GetSelection (p3, 1);

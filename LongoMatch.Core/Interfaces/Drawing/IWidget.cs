@@ -33,8 +33,9 @@ namespace LongoMatch.Interfaces.Drawing
 		double Width {get;set;}
 		double Height {get;set;}
 		void ReDraw (Area area = null);
-		void ReDraw (IDrawable drawable);
+		void ReDraw (IMovableObject drawable);
 		void SetCursor (CursorType type);
+		void SetCursorForTool (DrawTool tool);
 		void ShowTooltip (string text);
 	}
 }

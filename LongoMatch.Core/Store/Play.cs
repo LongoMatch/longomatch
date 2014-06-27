@@ -39,7 +39,7 @@ namespace LongoMatch.Store
 
 		#region Constructors
 		public Play() {
-			Drawings = new List<Drawing>();
+			Drawings = new List<FrameDrawing>();
 			Players = new List<Player> ();
 			Tags = new List<Tag>();
 			Fps = 25;
@@ -105,14 +105,14 @@ namespace LongoMatch.Store
 		/// <summary>
 		/// List of drawings for this play
 		/// </summary>
-		public List<Drawing> Drawings {
+		public List<FrameDrawing> Drawings {
 			get;
 			set;
 		}
 
 		/* FIXME: Keep this until we support multiple drawings */
 		[JsonIgnore]
-		public Drawing KeyFrameDrawing {
+		public FrameDrawing KeyFrameDrawing {
 			get {
 				if(Drawings.Count > 0)
 					return Drawings.First();

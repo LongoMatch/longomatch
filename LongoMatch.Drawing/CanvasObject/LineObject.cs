@@ -23,15 +23,15 @@ using LongoMatch.Interfaces;
 
 namespace LongoMatch.Drawing.CanvasObject
 {
-	public class LineObject: BaseCanvasDrawableObject<Line>, ICanvasSelectableObject
+	public class LineObject: CanvasDrawableObject<Line>, ICanvasSelectableObject
 	{
-		public LineObject (Point start, Point stop, LineType type, LineStyle stile,
-		                   Color color, int width)
+		public LineObject ()
 		{
-			Drawable = new Line (start, stop, type, stile);
-			Drawable.FillColor = color;
-			Drawable.StrokeColor = color;
-			Drawable.LineWidth = width;
+		}
+		
+		public LineObject (Line line)
+		{
+			Drawable = line;
 		}
 		
 		public override void Draw (IDrawingToolkit tk, Area area) {
@@ -39,7 +39,28 @@ namespace LongoMatch.Drawing.CanvasObject
 			tk.FillColor = Drawable.FillColor;
 			tk.StrokeColor = Drawable.StrokeColor;
 			tk.LineWidth = Drawable.LineWidth;
+			tk.LineStyle = Drawable.Style;
 			tk.DrawLine (Drawable.Start, Drawable.Stop);
+			tk.LineStyle = LineStyle.Normal;
+			if (Drawable.Type == LineType.Arrow ||
+			    Drawable.Type == LineType.DoubleArrow) {
+				tk.DrawArrow (Drawable.Start, Drawable.Stop, 10, 0.3, true);
+			}
+			if (Drawable.Type == LineType.DoubleArrow) {
+				tk.DrawArrow (Drawable.Stop, Drawable.Start, 10, 0.3, true);
+			}
+			if (Drawable.Type == LineType.Dot ||
+			    Drawable.Type == LineType.DoubleDot) {
+			    tk.DrawPoint (Drawable.Stop);
+			}
+			if (Drawable.Type == LineType.DoubleDot) {
+			    tk.DrawPoint (Drawable.Start);
+			}
+			
+			if (Selected) {
+				DrawCornerSelection (tk, Drawable.Start);
+				DrawCornerSelection (tk, Drawable.Stop);
+			}
 			tk.End ();
 		}
 

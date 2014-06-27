@@ -153,6 +153,9 @@ namespace LongoMatch.Drawing.Widgets
 		}
 		
 		protected override void StartMove (Selection sel) {
+			if (sel == null)
+				return;
+
 			if (sel.Position != SelectionPosition.All) {
 				widget.SetCursor (CursorType.DoubleArrow);
 			}

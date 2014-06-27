@@ -83,10 +83,10 @@ namespace LongoMatch.Drawing.Widgets
 			Update ();
 		}
 		
-		protected override void SelectionChanged (List<Selection> selections) {
-		}
-		
 		protected override void StartMove (Selection sel) {
+			if (sel == null)
+				return;
+
 			if (sel.Position != SelectionPosition.All) {
 				widget.SetCursor (CursorType.DoubleArrow);
 			}
@@ -96,9 +96,6 @@ namespace LongoMatch.Drawing.Widgets
 			widget.SetCursor (CursorType.Arrow);
 		}
 
-		protected override void ShowMenu (Point coords) {
-		}
-		
 		protected override void SelectionMoved (Selection sel) {
 			if (TimeNodeChanged != null) {
 				Time moveTime;

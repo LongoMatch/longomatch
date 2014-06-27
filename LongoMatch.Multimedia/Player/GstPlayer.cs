@@ -461,14 +461,19 @@ namespace LongoMatch.Video.Player {
 		}
 
 		public Image GetCurrentFrame (int outwidth=-1, int outheight=-1) {
-			IntPtr raw_ret = lgm_video_player_get_current_frame (Handle);
-			Gdk.Pixbuf unmanaged = GLib.Object.GetObject(raw_ret) as Gdk.Pixbuf;
+			Gdk.Pixbuf managed, unmanaged;
+			IntPtr raw_ret;
+			int h, w;
+			double rate;
+			
+			raw_ret = lgm_video_player_get_current_frame (Handle);
+			unmanaged = GLib.Object.GetObject(raw_ret) as Gdk.Pixbuf;
 			if(unmanaged == null)
 				return null;
-			Gdk.Pixbuf managed;
-			int h = unmanaged.Height;
-			int w = unmanaged.Width;
-			double rate = (double)w/(double)h;
+
+			h = unmanaged.Height;
+			w = unmanaged.Width;
+			rate = (double)w/(double)h;
 			if(outwidth == -1 || outheight == -1) {
 				outwidth = w;
 				outheight = h;
@@ -477,6 +482,7 @@ namespace LongoMatch.Video.Player {
 			} else {
 				outheight = (int)(outwidth/rate);
 			}
+
 			managed = unmanaged.ScaleSimple(outwidth,outheight,Gdk.InterpType.Bilinear);
 			unmanaged.Dispose();
 			lgm_video_player_unref_pixbuf (raw_ret);

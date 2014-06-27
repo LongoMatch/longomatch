@@ -46,6 +46,8 @@ namespace LongoMatch.Drawing
 		public static Color PLAYER_NOT_PLAYING_COLOR = Color.Red;
 		public static Color TIMER_UNSELECTED_COLOR = Color.Blue1;
 		public static Color TIMER_SELECTED_COLOR = Color.Red1;
+		public static Color SELECTION_INDICATOR_COLOR = Color.Blue1;
+		public static Color SELECTION_AREA_COLOR = Color.Grey1;
 
 		public const int TIMELINE_LINE_WIDTH = 1;
 		

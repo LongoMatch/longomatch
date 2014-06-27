@@ -21,6 +21,7 @@ using Newtonsoft.Json;
 namespace LongoMatch.Common
 {
 	[JsonConverter (typeof (LongoMatchConverter))]
+	[Serializable]
 	public class Color
 	{
 		public Color (byte r, byte g, byte b, byte a=byte.MaxValue)
@@ -51,6 +52,10 @@ namespace LongoMatch.Common
 			set;
 		}
 		
+		public Color Copy () {
+			return new Color (R, G, B, A);
+		}
+		
 		public override bool Equals (object obj)
 		{
 			Color c = obj as Color;
@@ -67,6 +72,10 @@ namespace LongoMatch.Common
 		
 		static public byte UShortToByte (ushort val) {
 			return (byte) (((float)val) / ushort.MaxValue * byte.MaxValue);
+		}
+
+		static public ushort ByteToUShort (byte val) {
+			return (ushort) ((float)val / byte.MaxValue * ushort.MaxValue);
 		}
 		
 		static public Color ColorFromUShort (ushort r, ushort g, ushort b, ushort a = ushort.MaxValue) {

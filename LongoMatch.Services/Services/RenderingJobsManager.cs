@@ -188,7 +188,7 @@ namespace LongoMatch.Services
 			
 			Log.Debug(String.Format("Adding segment with {0} drawings", segment.Drawings.Count));
 			if (segment.Drawings.Count >= 1) {
-				Drawing drawing = segment.Drawings[0];
+				FrameDrawing drawing = segment.Drawings[0];
 				string image_path = CreateStillImage(segment.MediaFile.FilePath, drawing);
 				
 				videoEditor.AddSegment(segment.MediaFile.FilePath,
@@ -218,15 +218,15 @@ namespace LongoMatch.Services
 			return true;
 		}
 		
-		private string CreateStillImage(string filename, Drawing drawing) {
+		private string CreateStillImage(string filename, FrameDrawing drawing) {
 			Image frame, final_image;
 			string path = System.IO.Path.GetTempFileName().Replace(@"\", @"\\");
 			
 			capturer.Open(filename);
 			capturer.Seek (drawing.Render, true);
 			frame = capturer.GetCurrentFrame();
-			final_image = Image.Composite(frame, drawing.Pixbuf);
-			final_image.Save(path);
+			//final_image = Image.Composite(frame, drawing.Pixbuf);
+			//final_image.Save(path);
 			return path;
 		}
 		

@@ -50,11 +50,6 @@ namespace LongoMatch.Store.Drawables
 			set;
 		}
 		
-		public LineStyle Style{
-			get;
-			set;
-		}
-		
 		[JsonIgnore]
 		public Point Center {
 			get {
@@ -65,7 +60,7 @@ namespace LongoMatch.Store.Drawables
 		
 		public override Selection GetSelection (Point p, double pr=0.05) {
 			double d;
-			
+		
 			if (MatchPoint (Start, p, pr, out d)) {
 				return new Selection (this, SelectionPosition.LineStart, d);
 			} else if (MatchPoint (Stop, p, pr, out d)) {
@@ -78,7 +73,7 @@ namespace LongoMatch.Store.Drawables
 				miny = Math.Min (Start.Y, Stop.Y) - pr;
 				maxy = Math.Max (Start.Y, Stop.Y) + pr;
 				if (p.X < minx || p.X > maxx || p.Y < miny || p.Y > maxy) {
-					return new Selection (this, SelectionPosition.None);
+					return null;
 				}
 				if (Start.X == Stop.X) {
 					d = p.Distance (new Point (Start.X, p.Y));
@@ -95,13 +90,13 @@ namespace LongoMatch.Store.Drawables
 				if (d  < pr) {
 					return new Selection (this, SelectionPosition.All, d);
 				} else {
-					return new Selection (this, SelectionPosition.None, 0);
+					return null;
 				}
 			}
 		}
 		
 		public override void Move (Selection sel, Point p, Point moveStart) {
-			switch (sel.Position) {
+						switch (sel.Position) {
 			case SelectionPosition.LineStart:
 				Start = p;
 				break;

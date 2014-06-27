@@ -16,20 +16,43 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using Newtonsoft.Json;
 using LongoMatch.Common;
 
 namespace LongoMatch.Store.Drawables
 {
-	public class Cross: Line
+	public class Cross: Drawable
 	{
 		public Cross ()
 		{
 		}
 		
-		public Cross (Point start, Point stop, LineType type, LineStyle style):
-			base (start, stop, type, style)
+		public Cross (Point start, Point stop, LineStyle style)
 		{
+			Start = start;
+			Stop = stop;
+			Style = style;
+		}
+		
+		public Point Start {
+			set;
+			get;
+		}
+		
+		public Point Stop {
+			set;
+			get;
+		}
+		
+		[JsonIgnore]
+		public override Area Area {
+			get {
+				Point tl = new Point (Math.Min (Start.X, Stop.X),
+				                      Math.Min (Start.Y, Stop.Y));
+				return new Area (tl, Math.Abs (Start.X - Stop.X),
+				                 Math.Abs (Start.Y - Stop.Y));
+			}
 		}
 		
 		[JsonIgnore]
@@ -46,36 +69,72 @@ namespace LongoMatch.Store.Drawables
 			}
 		}
 		
+		public override void Reorder ()
+		{
+			Point [] array = new Point[] {Start, Stop, StartI, StopI};
+			
+			array = array.OrderBy (p=> p.X).ThenBy (p=> p.Y).ToArray();
+			Start = array[0];
+			Stop = array[3];
+		}
+		
 		public override Selection GetSelection (Point p, double pr=0.05) {
 			double d;
+			Selection sel;
+			
+			if (Selected) {
+				return base.GetSelection (p, pr);
+			}
 			
 			if (MatchPoint (Start, p, pr, out d)) {
 				return new Selection (this, SelectionPosition.TopLeft, d);
+			} else if (MatchPoint (StopI, p, pr, out d)) {
+				return new Selection (this, SelectionPosition.BottomRight, d);
 			} else if (MatchPoint (StartI, p, pr, out d)) {
 				return new Selection (this, SelectionPosition.TopRight, d);
-			} else if (MatchPoint (Stop, p, pr, out d)) {
-				return new Selection (this, SelectionPosition.BottomRight, d);
 			} else if (MatchPoint (StopI, p, pr, out d)) {
 				return new Selection (this, SelectionPosition.BottomLeft, d);
 			} else {
-				double slope = (Start.Y - Stop.Y) / (Start.X - Stop.Y);
-				double yi = Start.Y / (slope * Start.X);
-				d = Math.Abs (p.Y / (slope * p.X) - yi);
-				if (d < pr) {
-					return new Selection (this, SelectionPosition.All, d);
-				} else {
-					return new Selection (this, SelectionPosition.None, d);
+				Line aline = new Line {Start = Start, Stop = Stop};
+				sel = aline.GetSelection (p, pr);
+				if (sel == null) {
+					Line bline = new Line {Start = StartI, Stop = StopI};
+					sel = bline.GetSelection (p, pr);
 				}
+				if (sel != null) {
+					sel.Drawable = this;
+				}
+				return sel;
 			}
 		}
 		
 		public override void Move (Selection sel, Point p, Point moveStart) {
-			switch (sel.Position) {
+						switch (sel.Position) {
 			case SelectionPosition.TopLeft:
 				Start = p;
 				break;
 			case SelectionPosition.BottomRight:
 				Stop = p;
+				break;
+			case SelectionPosition.TopRight:
+				Start.Y = p.Y;
+				Stop.X = p.X;
+				break;
+			case SelectionPosition.BottomLeft:
+				Start.X = p.X;
+				Stop.Y = p.Y;
+				break;
+			case SelectionPosition.Top:
+				Start.Y = p.Y;
+				break;
+			case SelectionPosition.Bottom:
+				Stop.Y = p.Y;
+				break;
+			case SelectionPosition.Left:
+				Start.X = p.X;
+				break;
+			case SelectionPosition.Right:
+				Stop.X = p.X;
 				break;
 			case SelectionPosition.All:
 				Start.X += p.X - moveStart.X;

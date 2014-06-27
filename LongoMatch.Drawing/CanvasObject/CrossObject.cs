@@ -16,29 +16,34 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Store.Drawables;
-using LongoMatch.Common;
+using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Interfaces;
+using LongoMatch.Common;
 
 namespace LongoMatch.Drawing.CanvasObject
 {
-	public class PointObject: BaseCanvasDrawableObject<Circle>, ICanvasSelectableObject
+	public class CrossObject: CanvasDrawableObject<Cross>, ICanvasSelectableObject
 	{
-
-		public PointObject (Point center, double radius, Color color)
+		public CrossObject ()
 		{
-			Drawable = new Circle (center, radius);
-			Drawable.FillColor = color;
-			Drawable.StrokeColor = color;
-			Drawable.LineWidth = 1;
+		}
+		
+		public CrossObject (Cross cross)
+		{
+			Drawable = cross;
 		}
 		
 		public override void Draw (IDrawingToolkit tk, Area area) {
+			tk.Begin ();
 			tk.FillColor = Drawable.FillColor;
 			tk.StrokeColor = Drawable.StrokeColor;
 			tk.LineWidth = Drawable.LineWidth;
-			tk.DrawCircle (Drawable.Center, Drawable.Radius);
+			tk.LineStyle = Drawable.Style;
+			tk.DrawLine (Drawable.Start, Drawable.Stop);
+			tk.DrawLine (Drawable.StartI, Drawable.StopI);
+			DrawSelectionArea (tk);
+			tk.End ();
 		}
 	}
 }

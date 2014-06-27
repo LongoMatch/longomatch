@@ -51,10 +51,10 @@ namespace Tests.Core.Drawables
 			Quadrilateral q;
 			Selection s;
 			
-			bl = new Point (1, 1);
-			br = new Point (10, 4);
-			tl = new Point (3, 20);
-			tr = new Point (12, 15);
+			tl = new Point (1, 1);
+			tr = new Point (10, 4);
+			bl = new Point (3, 20);
+			br = new Point (12, 15);
 			q = new Quadrilateral (tl, tr, bl, br);
 			
 			s = q.GetSelection (bl, 1);
@@ -71,13 +71,13 @@ namespace Tests.Core.Drawables
 			 *  1,1    12, 1
 			 */ 
 			s = q.GetSelection (new Point (0, 1), 0.5);
-			Assert.AreEqual (SelectionPosition.None, s.Position);
+			Assert.IsNull (s);
 			s = q.GetSelection (new Point (1, 21), 0.5);
-			Assert.AreEqual (SelectionPosition.None, s.Position);
+			Assert.IsNull (s);
 			s = q.GetSelection (new Point (13, 5), 0.5);
-			Assert.AreEqual (SelectionPosition.None, s.Position);
+			Assert.IsNull (s);
 			s = q.GetSelection (new Point (4, 0), 0.5);
-			Assert.AreEqual (SelectionPosition.None, s.Position);
+			Assert.IsNull (s);
 			
 			s = q.GetSelection (new Point (4, 5), 0);
 			Assert.AreEqual (SelectionPosition.All, s.Position);

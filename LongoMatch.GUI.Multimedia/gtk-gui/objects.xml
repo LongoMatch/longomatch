@@ -5,8 +5,7 @@
         <property name="Capturing" />
       </itemgroup>
     </itemgroups>
-    <signals>
-    </signals>
+    <signals />
   </object>
   <object type="LongoMatch.Gui.PlayerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
@@ -15,10 +14,10 @@
       </itemgroup>
     </itemgroups>
     <signals>
-      <itemgroup label="IPlayerBin Signals">
+      <itemgroup label="PlayerBin Signals">
+        <signal name="Tick" />
         <signal name="PlayStateChanged" />
         <signal name="SeekEvent" />
-        <signal name="Tick" />
       </itemgroup>
     </signals>
   </object>
@@ -29,7 +28,7 @@
       </itemgroup>
     </itemgroups>
     <signals>
-      <itemgroup label="ICapturerBin Signals">
+      <itemgroup label="IPlayerBin Signals">
         <signal name="PlayStateChanged" />
         <signal name="SeekEvent" />
       </itemgroup>

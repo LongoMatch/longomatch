@@ -26,7 +26,7 @@ using System.Collections.Generic;
 namespace LongoMatch.Drawing.CanvasObject
 {
 
-	public class PositionObject:  BaseCanvasObject, ICanvasSelectableObject
+	public class PositionObject:  CanvasObject, ICanvasSelectableObject
 	{
 
 		public PositionObject (List<Point> points, int width, int height)

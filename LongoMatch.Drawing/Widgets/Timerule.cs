@@ -55,7 +55,7 @@ namespace LongoMatch.Drawing.Widgets
 			get;
 		}
 		
-		protected override void HandleDraw (object context, Area area)
+		public override void Draw (object context, Area area)
 		{
 			double height = widget.Height;
 			double width = widget.Width;

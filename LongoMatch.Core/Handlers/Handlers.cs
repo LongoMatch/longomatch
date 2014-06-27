@@ -24,6 +24,8 @@ using LongoMatch.Interfaces;
 using LongoMatch.Interfaces.GUI;
 using LongoMatch.Store;
 using LongoMatch.Common;
+using LongoMatch.Store.Drawables;
+using LongoMatch.Interfaces.Drawing;
 
 namespace LongoMatch.Handlers
 {
@@ -50,7 +52,7 @@ namespace LongoMatch.Handlers
 	/* Change the Play's category */
 	public delegate void PlayCategoryChangedHandler(Play play, Category cat);
 	/* DUplicate play */
-	public delegate void DuplicatePlayHandler (Play play);
+	public delegate void DuplicatePlaysHandler (List<Play> plays);
 	
 	public delegate void TeamsTagsChangedHandler ();
 	
@@ -89,20 +91,6 @@ namespace LongoMatch.Handlers
 	/* Save a playlist */
 	public delegate void SavePlaylistHandler();
 
-	/* Drawing events */
-	/* Draw tool changed */
-	public delegate void DrawToolChangedHandler(DrawTool drawTool);
-	/* Paint color changed */
-	public delegate void ColorChangedHandler(Color color);
-	/* Paint line width changed */
-	public delegate void LineWidthChangedHandler(int width);
-	/* Toggle widget visibility */
-	public delegate void VisibilityChangedHandler(bool visible);
-	/* Clear drawings */
-	public delegate void ClearDrawingHandler();
-	/* Transparency value changed */
-	public delegate void TransparencyChangedHandler(double transparency);
-	
 	/* The position of the stream has changed */
 	public delegate void PositionChangedHandler(Time pos);
 	
@@ -155,6 +143,9 @@ namespace LongoMatch.Handlers
 	
 	public delegate void ShowTimelineMenuHandler (List<Play> plays, Category cat, Time time);
 	public delegate void ShowTaggerMenuHandler (List<Play> plays);
+	public delegate void ShowDrawToolMenuHandler (IBlackboardObject drawable);
+	public delegate void ConfigureDrawingObjectHandler (IBlackboardObject drawable);
+	public delegate void DrawableChangedHandler (IBlackboardObject drawable);
 
 	public delegate void BackEventHandle ();
 }

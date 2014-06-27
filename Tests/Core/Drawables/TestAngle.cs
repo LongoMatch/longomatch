@@ -69,7 +69,7 @@ namespace Tests.Core.Drawables
 			
 			p = new Point (5, 5);
 			s = a.GetSelection (p, 0.5);
-			Assert.AreEqual (SelectionPosition.None, s.Position);
+			Assert.IsNull (s);
 		}
 		
 		[Test()]

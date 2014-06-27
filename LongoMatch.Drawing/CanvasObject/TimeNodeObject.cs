@@ -24,7 +24,7 @@ using LongoMatch.Store.Drawables;
 
 namespace LongoMatch.Drawing.CanvasObject
 {
-	public class TimeNodeObject: BaseCanvasObject, ICanvasSelectableObject
+	public class TimeNodeObject: CanvasObject, ICanvasSelectableObject
 	{
 		const int MAX_TIME_SPAN=1000;
 		

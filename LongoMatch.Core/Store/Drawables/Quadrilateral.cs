@@ -54,6 +54,18 @@ namespace LongoMatch.Store.Drawables
 			set;
 		}
 		
+		public override Area Area {
+			get {
+				double xmin, xmax, ymin, ymax;
+			
+				/* Create a rectangle that wraps the quadrilateral */
+				xmin = Math.Min (BottomLeft.X, TopLeft.X);
+				xmax = Math.Max (BottomRight.X, TopRight.X);
+				ymin = Math.Min (TopLeft.Y, TopRight.Y);
+				ymax = Math.Max (BottomLeft.Y, BottomRight.Y);
+				return new Area (new Point (xmin, ymin), xmax - xmin, ymax - ymin);
+			}
+		}
 		public override Selection GetSelection (Point p, double pr) {
 			double xmin, xmax, ymin, ymax;
 			double d;
@@ -61,11 +73,11 @@ namespace LongoMatch.Store.Drawables
 			/* Create a rectangle that wraps the quadrilateral */
 			xmin = Math.Min (BottomLeft.X, TopLeft.X) - pr;
 			xmax = Math.Max (BottomRight.X, TopRight.X) + pr;
-			ymin = Math.Min (BottomLeft.Y, BottomRight.Y) - pr;
-			ymax = Math.Max (TopLeft.Y, TopRight.Y) + pr;
+			ymin = Math.Min (TopLeft.Y, TopRight.Y) - pr;
+			ymax = Math.Max (BottomLeft.Y, BottomRight.Y) + pr;
 			
-			if (p.X > xmax || p.X < xmin || p.Y < ymin || p.Y > ymax) {
-				return new Selection (this, SelectionPosition.None, 0);
+			if ((p.X > xmax || p.X < xmin || p.Y < ymin || p.Y > ymax)) {
+				return null;
 			} else if (MatchPoint (TopLeft, p, pr, out d)) {
 				return new Selection (this, SelectionPosition.TopLeft, d);
 			} else if (MatchPoint (TopRight, p, pr, out d)) {
