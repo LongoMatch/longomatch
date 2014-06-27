@@ -28,6 +28,7 @@ namespace LongoMatch.Gui.Component
 	{
 	
 		PlaysMenu menu;
+		MediaFile file;
 
 		public PlaysPositionViewer ()
 		{
@@ -45,6 +46,7 @@ namespace LongoMatch.Gui.Component
 
 		public void LoadProject (Project project) {
 			if (project != null) {
+				file = project.Description.File;
 				field.Tagger.Background = project.GetBackground (FieldPositionType.Field);
 				hfield.Tagger.Background = project.GetBackground (FieldPositionType.HalfField);
 				goal.Tagger.Background = project.GetBackground (FieldPositionType.Goal);
@@ -87,7 +89,7 @@ namespace LongoMatch.Gui.Component
 			if (plays == null || plays.Count == 0) {
 				return;
 			}
-			menu.ShowMenu (plays);
+			menu.ShowMenu (plays, file);
 		}
 
 		protected override void OnDestroyed ()

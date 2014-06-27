@@ -160,7 +160,7 @@ namespace LongoMatch.Gui.Component
 		
 		void HandleShowMenu (List<Play> plays, Category cat, Time time)
 		{
-			menu.ShowMenu (plays, cat, time, projectFile);
+			menu.ShowTimelineMenu (plays, cat, time, projectFile);
 		}
 	}
 }

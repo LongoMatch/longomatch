@@ -83,12 +83,6 @@ namespace LongoMatch.Gui.Component
 			playerstreeview.Project = Project;
 		}
 
-		public bool PlayListLoaded {
-			set {
-				playerstreeview.PlayListLoaded=value;
-			}
-		}
-
 		public void Clear() {
 			playerstreeview.Model = null;
 		}

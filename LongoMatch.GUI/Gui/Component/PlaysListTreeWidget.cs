@@ -117,12 +117,6 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		public bool PlayListLoaded {
-			set {
-				treeview.PlayListLoaded=value;
-			}
-		}
-		
 		private TreeStore GetModel(Project project){
 			Dictionary<Category, TreeIter> itersDic = new Dictionary<Category, TreeIter>();
 			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore(typeof(Play));

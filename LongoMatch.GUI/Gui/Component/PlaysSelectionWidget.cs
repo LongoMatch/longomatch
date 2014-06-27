@@ -70,14 +70,6 @@ namespace LongoMatch.Gui.Component
 			visitorPlayersList.Clear();
 		}
 		
-		public bool PlayListLoaded {
-			set {
-				playsList.PlayListLoaded = value;
-				localPlayersList.PlayListLoaded = value;
-				visitorPlayersList.PlayListLoaded = value;
-			}
-		}
-		
 		public void AddPlay(Play play) {
 			playsList.AddPlay(play);
 			UpdateTeamsModels();

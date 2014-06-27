@@ -35,8 +35,6 @@ namespace LongoMatch.Gui.Component
 
 		public PlayersTreeView() {
 			this.Team = Team.LOCAL;
-			tag.Visible = false;
-			delete.Visible = false;
 			SetPlayersMenu();
 		}
 
@@ -114,16 +112,13 @@ namespace LongoMatch.Gui.Component
 				if(paths.Length == 1) {
 					TimeNode selectedTimeNode = GetValueFromPath(paths[0]) as TimeNode;
 					if(selectedTimeNode is Play) {
-						deleteKeyFrame.Sensitive = (selectedTimeNode as Play).HasDrawings;
-						MultiSelectMenu(false);
-						menu.Popup();
+						ShowMenu ();
 					} else {
 						playersMenu.Popup();
 					}
 				}
 				else if(paths.Length > 1) {
-					MultiSelectMenu(true);
-					menu.Popup();
+					ShowMenu ();
 				}
 			}
 			else

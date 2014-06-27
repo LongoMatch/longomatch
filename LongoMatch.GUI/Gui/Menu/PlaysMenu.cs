@@ -28,7 +28,9 @@ namespace LongoMatch.Gui.Menus
 	public class PlaysMenu: Gtk.Menu
 	{
 	
-		MenuItem newPlay, del, tag, addPLN, snapshot, render;
+		public event EventHandler EditNameEvent;
+
+		MenuItem edit, newPlay, del, addPLN, snapshot, render, duplicate, moveCat;
 		List<Play> plays;
 		Category cat;
 		Time time;
@@ -40,12 +42,24 @@ namespace LongoMatch.Gui.Menus
 			CreateMenu ();
 		}
 		
-		public void ShowMenu (List<Play> plays) {
-			ShowMenu (plays, null, null, null);
+		public void ShowListMenu (List<Play> plays, MediaFile projectFile,
+		                          List<Category> categories) {
+			ShowMenu (plays, null, null, null, categories, true);
+		}
+
+		public void ShowMenu (List<Play> plays, MediaFile projectFile) {
+			ShowMenu (plays, null, null, projectFile, null, false);
 		}
 		
-		public void ShowMenu (List<Play> plays, Category cat, Time time,
-		                      MediaFile projectFile) {
+		public void ShowTimelineMenu (List<Play> plays, Category cat, Time time,
+		                              MediaFile projectFile)
+		{
+			ShowMenu (plays, cat, time, projectFile, null, false);
+		}
+		
+		private void ShowMenu (List<Play> plays, Category cat, Time time,
+		                       MediaFile projectFile, List<Category> categories,
+		                       bool editableName) {
 			this.plays = plays;
 			this.cat = cat;
 			this.time = time;
@@ -62,11 +76,13 @@ namespace LongoMatch.Gui.Menus
 			if (plays == null)
 				plays = new List<Play> ();
 			
-			tag.Visible = plays.Count == 1;
+			edit.Visible = editableName;
 			snapshot.Visible = plays.Count == 1;
-			del.Visible = plays.Count > 0;;
-			addPLN.Visible = plays.Count > 0;;
-			render.Visible = plays.Count > 0;;
+			moveCat.Visible = plays.Count == 1 && categories != null;
+			del.Visible = plays.Count > 0;
+			addPLN.Visible = plays.Count > 0;
+			render.Visible = plays.Count > 0;
+			duplicate.Visible = plays.Count > 0;
 
 			if (plays.Count > 0 ) {
 				string label = String.Format ("{0} ({1})",Catalog.GetString("Delete"), plays.Count);
@@ -75,7 +91,25 @@ namespace LongoMatch.Gui.Menus
 				GtkGlue.MenuItemSetLabel (addPLN, label);
 				label = String.Format ("{0} ({1})", Catalog.GetString("Export to video file"), plays.Count);
 				GtkGlue.MenuItemSetLabel (render, label);
+				label = String.Format ("{0} ({1})", Catalog.GetString("Duplicate "), plays.Count);
+				GtkGlue.MenuItemSetLabel (duplicate, label);
 			}
+			
+			if (moveCat.Visible) {
+				Menu catMenu = new Menu();
+				foreach (Category c in categories) {
+					if (plays[0].Category == c)
+						continue;
+					var item = new MenuItem (c.Name);
+					catMenu.Append (item);
+					item.Activated += (sender, e) => {
+						Config.EventsBroker.EmitPlayCategoryChanged (plays[0], c);
+					}; 
+				}
+				catMenu.ShowAll();
+				moveCat.Submenu = catMenu;
+			}
+			
 			Popup();
 		}
 		
@@ -84,18 +118,25 @@ namespace LongoMatch.Gui.Menus
 			Add (newPlay);
 			newPlay.Activated += HandleNePlayActivated;
 
-			tag = new MenuItem(Catalog.GetString("Edit tags"));
-			tag.Activated += (sender, e) => Config.EventsBroker.EmitTagPlay (plays[0]);
-			Add (tag);
-			
-			snapshot = new MenuItem(Catalog.GetString("Export to PGN images"));
-			snapshot.Activated += (sender, e) => Config.EventsBroker.EmitSnapshotSeries (plays[0]);
-			Add (snapshot);
+			edit = new MenuItem (Catalog.GetString ("Edit name"));
+			edit.Activated += (sender, e) => {
+				if (EditNameEvent != null) {
+					EditNameEvent (this, null);
+				}
+			};
+			Add (edit);
+
+			moveCat = new MenuItem (Catalog.GetString ("Move to"));
+			Add (moveCat);
 
 			del = new MenuItem ("");
 			del.Activated += (sender, e) => Config.EventsBroker.EmitPlaysDeleted (plays);
 			Add (del);
 			
+			duplicate = new MenuItem ("");
+			duplicate.Activated += (sender, e) => Config.EventsBroker.EmitDuplicatePlay (plays);
+			Add (duplicate);
+
 			addPLN = new MenuItem ("");
 			addPLN.Activated += (sender, e) => Config.EventsBroker.EmitPlayListNodeAdded (plays);
 			Add (addPLN);
@@ -103,6 +144,11 @@ namespace LongoMatch.Gui.Menus
 			render = new MenuItem ("");
 			render.Activated += (sender, e) => EmitRenderPlaylist (plays);
 			Add (render);
+			
+			snapshot = new MenuItem(Catalog.GetString("Export to PGN images"));
+			snapshot.Activated += (sender, e) => Config.EventsBroker.EmitSnapshotSeries (plays[0]);
+			Add (snapshot);
+
 			ShowAll ();
 		}
 

@@ -17,6 +17,7 @@
 //
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Gdk;
 using Gtk;
@@ -28,6 +29,7 @@ using LongoMatch.Store;
 using LongoMatch.Gui.Helpers;
 using Image = LongoMatch.Common.Image;
 using Color = Gdk.Color;
+using LongoMatch.Gui.Menus;
 
 namespace LongoMatch.Gui.Component
 {
@@ -35,15 +37,11 @@ namespace LongoMatch.Gui.Component
 
 	public abstract class ListTreeViewBase:TreeView
 	{
-		// Plays menu
-		protected Menu menu, catMenu;
-		protected MenuItem tag, delete, addPLN, deleteKeyFrame, snapshot;
-		protected MenuItem name, render, moveCat, duplicate;
-
 		protected Gtk.CellRendererText nameCell;
 		protected Gtk.TreeViewColumn nameColumn;
 		protected bool editing;
 		protected bool enableCategoryMove = false;
+		protected PlaysMenu playsMenu;
 		
 		TreeModelFilter modelFilter;
 		PlaysFilter filter;
@@ -58,9 +56,6 @@ namespace LongoMatch.Gui.Component
 			RowActivated += new RowActivatedHandler(OnTreeviewRowActivated);
 			HeadersVisible = false;
 
-			SetMenu();
-			PlayListLoaded = false;
-
 			nameColumn = new Gtk.TreeViewColumn();
 			nameColumn.Title = "Name";
 			nameCell = new Gtk.CellRendererText();
@@ -72,6 +67,8 @@ namespace LongoMatch.Gui.Component
 			nameColumn.SetCellDataFunc(miniatureCell, new Gtk.TreeCellDataFunc(RenderMiniature));
 			nameColumn.SetCellDataFunc(nameCell, new Gtk.TreeCellDataFunc(RenderName));
 
+			playsMenu = new PlaysMenu ();
+			playsMenu.EditNameEvent += OnEdit;
 			AppendColumn(nameColumn);
 
 		}
@@ -79,12 +76,6 @@ namespace LongoMatch.Gui.Component
 		public bool Colors {
 			get;
 			set;
-		}
-
-		public bool PlayListLoaded {
-			set {
-				addPLN.Sensitive = value;
-			}
 		}
 
 		public PlaysFilter Filter {
@@ -104,20 +95,8 @@ namespace LongoMatch.Gui.Component
 		}
 
 		public Project Project {
-			set {
-				if (!enableCategoryMove)
-					return;
-				catsDict = new Dictionary<MenuItem, Category>();
-				catMenu = new Menu();
-				foreach (Category cat in value.Categories.List) {
-					var item = new MenuItem (cat.Name);
-					catMenu.Append (item);
-					catsDict.Add(item, cat);
-					item.Activated += OnCatChanged; 
-				}
-				catMenu.ShowAll();
-				moveCat.Submenu = catMenu;
-			}
+			set;
+			protected get;
 		}
 		
 		new public TreeStore Model {
@@ -138,51 +117,22 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		protected void SetMenu() {
-			menu = new Menu();
-
-			name = new MenuItem(Catalog.GetString("Edit name"));
-			tag = new MenuItem(Catalog.GetString("Edit tags"));
-			duplicate = new MenuItem(Catalog.GetString("Duplicate"));
-			delete = new MenuItem(Catalog.GetString("Delete"));
-			deleteKeyFrame = new MenuItem(Catalog.GetString("Delete key frame"));
-			addPLN = new MenuItem(Catalog.GetString("Add to playlist"));
-			addPLN.Sensitive=false;
-			render = new MenuItem(Catalog.GetString("Export to video file"));
-			snapshot = new MenuItem(Catalog.GetString("Export to PGN images"));
-			moveCat = new MenuItem(Catalog.GetString("Move to category"));
-			
-			menu.Append(name);
-			menu.Append(tag);
-			menu.Append(addPLN);
-			menu.Append(delete);
-			menu.Append(duplicate);
-			menu.Append(deleteKeyFrame);
-			menu.Append(render);
-			menu.Append(snapshot);
-			menu.Append(moveCat);
-
-			name.Activated += OnEdit;
-			tag.Activated += OnTag;
-			duplicate.Activated += OnDuplicate;
-			addPLN.Activated += OnAdded;
-			delete.Activated += OnDeleted;
-			deleteKeyFrame.Activated += OnDeleteKeyFrame;
-			render.Activated += OnRender;
-			snapshot.Activated += OnSnapshot;
-			menu.ShowAll();
-		}
-		
 		protected Play SelectedPlay {
 			get {
 				return GetValueFromPath(Selection.GetSelectedRows()[0]) as Play;
 			}
 		}
-
-		protected void MultiSelectMenu(bool enabled) {
-			name.Sensitive = !enabled;
-			snapshot.Sensitive = !enabled;
-			tag.Sensitive = !enabled;
+		
+		protected List<Play> SelectedPlays {
+			get {
+				return Selection.GetSelectedRows().Select (
+					p => GetValueFromPath(p) as Play).ToList ();
+			}
+		}
+		
+		protected void ShowMenu () {
+			playsMenu.ShowListMenu (SelectedPlays, Project.Description.File,
+			                        Project.Categories.List);
 		}
 
 		protected object GetValueFromPath(TreePath path) {
@@ -294,81 +244,12 @@ namespace LongoMatch.Gui.Component
 			Config.EventsBroker.EmitPlaySelected (item as Play);
 		}
 
-		protected void OnDeleted(object obj, EventArgs args) {
-			List <Play> playsList = new List<Play>();
-			List <TreeIter> iters = new List<TreeIter>();
-			TreePath[] paths = Selection.GetSelectedRows();
-
-			/* Get the iter for all of the paths first, because the path changes
-			 * each time a row is deleted */
-			foreach(var path in paths) {
-				TreeIter iter;
-				modelFilter.GetIter(out iter, path);
-				playsList.Add((Play)modelFilter.GetValue(iter, 0));
-				iters.Add(iter);
-			}
-			/* Delete all the iters now */
-			for(int i=0; i< iters.Count; i++) {
-				TreeIter iter = iters[i];
-				Model.Remove(ref iter);
-			}
-			
-			Config.EventsBroker.EmitPlaysDeleted (playsList);
-		}
-
-		protected void OnDeleteKeyFrame(object obj, EventArgs args) {
-			var msg = Catalog.GetString("Do you want to delete the key frame for this play?");
-			if (MessagesHelpers.QuestionMessage (Toplevel, msg)) {
-				TreePath[] paths = Selection.GetSelectedRows();
-				for(int i=0; i<paths.Length; i++) {
-					Play tNode = (Play)GetValueFromPath(paths[i]);
-					tNode.Drawings.Clear();
-				}
-				// Refresh the thumbnails
-				QueueDraw();
-			}
-		}
-
-		void OnDuplicate (object sender, EventArgs e)
-		{
-			Config.EventsBroker.EmitDuplicatePlay (SelectedPlay);
-		}
-
-		protected virtual void OnEdit(object obj, EventArgs args) {
+		protected virtual void OnEdit (object obj, EventArgs args) {
 			TreePath[] paths = Selection.GetSelectedRows();
 
 			editing = true;
 			nameCell.Editable = true;
 			SetCursor(paths[0],  nameColumn, true);
-		}
-
-		protected void OnAdded(object obj, EventArgs args) {
-			List<Play> list = new List<Play>();
-			TreePath[] paths = Selection.GetSelectedRows();
-			for(int i=0; i<paths.Length; i++) {
-				Play tNode = (Play)GetValueFromPath(paths[i]);
-				list.Add (tNode);
-			}
-			Config.EventsBroker.EmitPlayListNodeAdded (list);
-		}
-
-		protected void OnTag(object obj, EventArgs args) {
-			Config.EventsBroker.EmitTagPlay (SelectedPlay);
-			Refilter();
-		}
-
-		protected void OnSnapshot(object obj, EventArgs args) {
-			Config.EventsBroker.EmitSnapshotSeries (SelectedPlay);
-		}
-		
-		protected void OnRender(object obj, EventArgs args) {
-			if (NewRenderingJob != null)
-				NewRenderingJob(this, null);
-		}
-		
-		protected void OnCatChanged(object obj, EventArgs args) {
-			Config.EventsBroker.EmitPlayCategoryChanged (SelectedPlay,
-			                                             catsDict[obj as MenuItem]);
 		}
 
 		protected void OnFilterUpdated() {
