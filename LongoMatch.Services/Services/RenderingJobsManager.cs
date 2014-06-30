@@ -183,38 +183,26 @@ namespace LongoMatch.Services
 		}
 		
 		private bool ProcessSegment(PlayListPlay segment) {
+			Time lastTS;
+
 			if(!segment.Valid)
 				return false;
 			
 			Log.Debug(String.Format("Adding segment with {0} drawings", segment.Drawings.Count));
-			if (segment.Drawings.Count >= 1) {
-				FrameDrawing drawing = segment.Drawings[0];
-				string image_path = CreateStillImage(segment.MediaFile.FilePath, drawing);
-				
-				videoEditor.AddSegment(segment.MediaFile.FilePath,
-				                       segment.Start.MSeconds,
-				                       drawing.Render.MSeconds - segment.Start.MSeconds,
-				                       segment.Rate,
-				                       segment.Name,
-				                       segment.MediaFile.HasAudio);
-				videoEditor.AddImageSegment(image_path,
-				                            drawing.Render.MSeconds,
-				                            drawing.Pause.MSeconds,
-				                            segment.Name);
-				videoEditor.AddSegment(segment.MediaFile.FilePath,
-				                       drawing.Render.MSeconds,
-				                       segment.Stop.MSeconds - drawing.Render.MSeconds,
-				                       segment.Rate,
-				                       segment.Name,
-				                       segment.MediaFile.HasAudio);
-			} else {
-				videoEditor.AddSegment(segment.MediaFile.FilePath,
-				                       segment.Start.MSeconds,
-				                       segment.Duration.MSeconds,
-				                       segment.Rate,
-				                       segment.Name,
-				                       segment.MediaFile.HasAudio);
+			
+			lastTS = segment.Start;
+			foreach (FrameDrawing fd in segment.Drawings) {
+				string image_path = CreateStillImage (segment.MediaFile.FilePath, fd);
+				videoEditor.AddSegment(segment.MediaFile.FilePath, lastTS.MSeconds,
+				                       fd.Render.MSeconds - lastTS.MSeconds,
+				                       segment.Rate, segment.Name, segment.MediaFile.HasAudio);
+				videoEditor.AddImageSegment(image_path, fd.Render.MSeconds,
+				                           fd.Pause.MSeconds, segment.Name);
+				lastTS = fd.Render;
 			}
+			videoEditor.AddSegment(segment.MediaFile.FilePath, lastTS.MSeconds,
+			                       segment.Stop.MSeconds - lastTS.MSeconds,
+			                       segment.Rate, segment.Name, segment.MediaFile.HasAudio);
 			return true;
 		}
 		
@@ -225,8 +213,8 @@ namespace LongoMatch.Services
 			capturer.Open(filename);
 			capturer.Seek (drawing.Render, true);
 			frame = capturer.GetCurrentFrame();
-			//final_image = Image.Composite(frame, drawing.Pixbuf);
-			//final_image.Save(path);
+			final_image = Drawing.Utils.RenderFrameDrawingToImage (Config.DrawingToolkit, frame, drawing);
+			final_image.Save(path);
 			return path;
 		}
 		

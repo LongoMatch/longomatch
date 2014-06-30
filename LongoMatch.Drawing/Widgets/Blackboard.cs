@@ -144,13 +144,9 @@ namespace LongoMatch.Drawing.Widgets
 		}
 		
 		ICanvasSelectableObject Add (IBlackboardObject drawable) {
-			string objecttype = String.Format ("LongoMatch.Drawing.CanvasObject.{0}Object",
-			                                   drawable.GetType().ToString().Split('.').Last());
-			ObjectHandle handle = Activator.CreateInstance(null, objecttype);
-			ICanvasDrawableObject d = (ICanvasDrawableObject) handle.Unwrap();
-			d.IDrawableObject = drawable;
-			Objects.Add (d);
-			return d;
+			ICanvasSelectableObject cso = Utils.CanvasFromDrawableObject (drawable);
+			Objects.Add (cso);
+			return cso;
 		}
 		
 		protected override void StartMove (Selection sel)
