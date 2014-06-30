@@ -53,6 +53,7 @@ namespace LongoMatch.Drawing.Widgets
 		
 		public FrameDrawing Drawing {
 			set {
+				Clear (false);
 				drawing = value;
 				foreach (IBlackboardObject d in value.Drawables) {
 					Add (d);
@@ -115,12 +116,19 @@ namespace LongoMatch.Drawing.Widgets
 			widget.ReDraw ();
 		}
 		
-		public void Clear () {
+		public void Clear (bool resetDrawing = true) {
 			ClearSelection ();
-			drawing.Drawables.Clear ();
 			Objects.Clear ();
-			backbuffer.Dispose ();
-			backbuffer = tk.CreateSurface (Background.Width, Background.Height);
+			if (drawing != null && resetDrawing) {
+				drawing.Drawables.Clear ();
+			}
+			if (backbuffer != null) {
+				using (IContext c = backbuffer.Context) {
+					tk.Context = c;
+					tk.Clear (new Color (0, 0, 0, 0));
+					tk.Context = null;
+				};
+			}
 			widget.ReDraw ();
 		}
 		
@@ -250,10 +258,12 @@ namespace LongoMatch.Drawing.Widgets
 		
 		protected override void SelectionChanged (System.Collections.Generic.List<Selection> sel)
 		{
-			if (sel != null && sel.Count > 0 && DrawableChangedEvent != null) {
-				DrawableChangedEvent ((sel[0].Drawable as ICanvasDrawableObject).IDrawableObject);
-			} else {
-				DrawableChangedEvent (null);
+			if (DrawableChangedEvent != null) {
+				if (sel != null && sel.Count > 0) {
+					DrawableChangedEvent ((sel[0].Drawable as ICanvasDrawableObject).IDrawableObject);
+				} else {
+					DrawableChangedEvent (null);
+				}
 			}
 		}
 
@@ -272,25 +282,32 @@ namespace LongoMatch.Drawing.Widgets
 		protected override void CursorMoved (Point coords)
 		{
 			if (handdrawing) {
-				tk.Context = backbuffer.Context;
-				tk.Begin ();
-				tk.LineStyle = LineStyle.Normal;
-				tk.LineWidth = LineWidth;
-				if (tool == DrawTool.Eraser) {
-					tk.StrokeColor = tk.FillColor = new Color (0, 0, 0, 255);
-					tk.LineWidth = LineWidth * 4;
-					tk.Clear = true;
-				} else {
-					tk.StrokeColor = tk.FillColor = Color;
+				using (IContext c = backbuffer.Context) {
+					tk.Context = c;
+					tk.Begin ();
+					tk.LineStyle = LineStyle.Normal;
+					tk.LineWidth = LineWidth;
+					if (tool == DrawTool.Eraser) {
+						tk.StrokeColor = tk.FillColor = new Color (0, 0, 0, 255);
+						tk.LineWidth = LineWidth * 4;
+						tk.ClearOperation = true;
+					} else {
+						tk.StrokeColor = tk.FillColor = Color;
+					}
+					tk.DrawLine (start, coords);
+					tk.End ();
 				}
-				tk.DrawLine (start, coords);
-				tk.End ();
 				widget.ReDraw();
 			}
 		}
 		
 		public override void Draw (IContext context, Area area)
 		{
+			tk.Context = context;
+			tk.Begin ();
+			tk.Clear (Color.Black);
+			tk.End ();
+			
 			base.Draw (context, area);
 			if (backbuffer != null) {
 				tk.Context = context;
