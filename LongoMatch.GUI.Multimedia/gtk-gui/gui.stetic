@@ -8,6 +8,7 @@
     <widget-library name="../../bin/LongoMatch.Multimedia.dll" />
     <widget-library name="../../bin/LongoMatch.GUI.Helpers.dll" />
     <widget-library name="../../bin/LongoMatch.GUI.Multimedia.dll" internal="true" />
+    <widget-library name="../../LongoMatch.Drawing.Cairo/bin/Debug/LongoMatch.Drawing.Cairo.dll" />
   </import>
   <widget class="Gtk.Window" id="LongoMatch.Gui.VolumeWindow" design-size="31 204">
     <property name="MemberName" />
@@ -93,26 +94,33 @@
                     <property name="MemberName" />
                     <property name="Spacing">6</property>
                     <child>
-                      <widget class="Gtk.HBox" id="hbox2">
+                      <widget class="Gtk.EventBox" id="videoeventbox">
                         <property name="MemberName" />
-                        <property name="Spacing">6</property>
                         <child>
-                          <widget class="Gtk.EventBox" id="videoeventbox">
+                          <widget class="Gtk.HBox" id="hbox2">
                             <property name="MemberName" />
+                            <property name="Spacing">6</property>
                             <child>
                               <widget class="Gtk.DrawingArea" id="videodrawingarea">
                                 <property name="MemberName" />
                                 <property name="CanFocus">True</property>
                               </widget>
+                              <packing>
+                                <property name="Position">0</property>
+                                <property name="AutoSize">True</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.DrawingArea" id="blackboarddrawingarea">
+                                <property name="MemberName" />
+                                <property name="Visible">False</property>
+                              </widget>
+                              <packing>
+                                <property name="Position">1</property>
+                                <property name="AutoSize">True</property>
+                              </packing>
                             </child>
                           </widget>
-                          <packing>
-                            <property name="Position">0</property>
-                            <property name="AutoSize">True</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <placeholder />
                         </child>
                       </widget>
                       <packing>

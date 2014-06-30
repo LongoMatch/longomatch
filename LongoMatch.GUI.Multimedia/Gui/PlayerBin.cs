@@ -18,6 +18,7 @@
 //
 //
 using System;
+using System.Linq;
 using Gtk;
 using Gdk;
 using Mono.Unix;
@@ -33,6 +34,8 @@ using LongoMatch.Video.Player;
 using LongoMatch.Video.Utils;
 using LongoMatch.Store;
 using LongoMatch.Multimedia.Utils;
+using LongoMatch.Drawing.Widgets;
+using LongoMatch.Drawing.Cairo;
 
 
 namespace LongoMatch.Gui
@@ -55,7 +58,8 @@ namespace LongoMatch.Gui
 		const int THUMBNAIL_MAX_WIDTH = 100;
 		const int SCALE_FPS = 25;
 		IPlayer player;
-		Time length;
+		Play loadedPlay;
+		Time length, lastTime;
 		bool seeking, IsPlayingPrevState, muted, emitRateScale, readyToSeek;
 		string filename;
 		double previousVLevel = 1;
@@ -64,6 +68,7 @@ namespace LongoMatch.Gui
 		protected VolumeWindow vwin;
 		Seeker seeker;
 		Segment segment;
+		Blackboard blackboard;
 
 
 		#region Constructors
@@ -72,6 +77,7 @@ namespace LongoMatch.Gui
 			this.Build();
 			vwin = new VolumeWindow();
 			ConnectSignals ();
+			blackboard = new Blackboard (new WidgetWrapper (blackboarddrawingarea));
 			controlsbox.Visible = false;
 			UnSensitive();
 			timescale.Adjustment.PageIncrement = 0.01;
@@ -86,6 +92,7 @@ namespace LongoMatch.Gui
 			seeker.SeekEvent += HandleSeekEvent;
 			segment.Start = new Time(-1);
 			segment.Stop = new Time(int.MaxValue);
+			lastTime = new Time (0);
 			
 			CreatePlayer ();
 		}
@@ -160,6 +167,7 @@ namespace LongoMatch.Gui
 		}
 
 		public void Play() {
+			DrawingsVisible = false;
 			player.Play();
 		}
 
@@ -184,6 +192,8 @@ namespace LongoMatch.Gui
 			IsPlayingPrevState = false;
 			muted=false;
 			emitRateScale = true;
+			videodrawingarea.Visible = true;
+			blackboarddrawingarea.Visible = false;
 		}
 
 		public void LoadPlayListPlay (PlayListPlay play, bool hasNext) {
@@ -197,6 +207,7 @@ namespace LongoMatch.Gui
 		}
 		
 		public void LoadPlay (string filename, Play play, Time seekTime, bool playing) {
+			loadedPlay = play;
 			LoadSegment (filename, play.Start, play.Stop, seekTime, playing, play.Rate);
 		}
 		
@@ -209,12 +220,14 @@ namespace LongoMatch.Gui
 		}
 
 		public void Seek (Time time, bool accurate) {
+			DrawingsVisible = false;
 			player.Seek (time, accurate);
 			if(SeekEvent != null)
 				SeekEvent (time);
 		}
 
 		public void SeekToNextFrame () {
+			DrawingsVisible = false;
 			if (player.CurrentTime < segment.Stop) {
 				player.SeekToNextFrame ();
 				if(SeekEvent != null)
@@ -223,24 +236,29 @@ namespace LongoMatch.Gui
 		}
 
 		public void SeekToPreviousFrame () {
+			DrawingsVisible = false;
 			if (player.CurrentTime > segment.Start) {
 				seeker.Seek (SeekType.StepDown);
 			}
 		}
 
 		public void StepForward() {
+			DrawingsVisible = false;
 			Jump((int)jumpspinbutton.Value);
 		}
 
 		public void StepBackward() {
+			DrawingsVisible = false;
 			Jump(-(int)jumpspinbutton.Value);
 		}
 		
 		public void FramerateUp() {
+			DrawingsVisible = false;
 			vscale1.Adjustment.Value += vscale1.Adjustment.StepIncrement;
 		}
 
 		public void FramerateDown() {
+			DrawingsVisible = false;
 			vscale1.Adjustment.Value -= vscale1.Adjustment.StepIncrement;
 		}
 
@@ -250,6 +268,7 @@ namespace LongoMatch.Gui
 			segment.Stop = new Time (int.MaxValue);
 			SetScaleValue (SCALE_FPS);
 			//timescale.Sensitive = true;
+			loadedPlay = null;
 			Config.EventsBroker.EmitSegmentClosed ();
 		}
 
@@ -267,6 +286,13 @@ namespace LongoMatch.Gui
 
 		#region Private methods
 
+		bool DrawingsVisible {
+			set {
+				videodrawingarea.Visible = !value;
+				blackboarddrawingarea.Visible = value;
+			}
+		}
+		
 		void Open(string filename, bool seek) {
 			ResetGui();
 			CloseSegment();
@@ -317,7 +343,7 @@ namespace LongoMatch.Gui
 			if (filename != this.filename) {
 				Open (filename, false);
 			}
-			player.Pause();
+			Pause ();
 			segment.Start = start;
 			segment.Stop = stop;
 			rate = rate == 0 ? 1 : rate;
@@ -329,7 +355,7 @@ namespace LongoMatch.Gui
 				player.Rate = (double) rate;
 				player.Seek (seekTime, true);
 				if (playing) {
-					player.Play ();
+					Play ();
 				}
 			} else {
 				Log.Debug ("Delaying seek until player is ready");
@@ -337,6 +363,17 @@ namespace LongoMatch.Gui
 			}
 		}
 
+		void LoadDrawing (FrameDrawing drawing) {
+			Pause ();
+			player.Tick -= OnTick;
+			player.Seek (drawing.Render, true);
+			player.Tick += OnTick;
+			blackboard.Background = player.GetCurrentFrame () ;
+			blackboard.Drawing = drawing;
+			DrawingsVisible = true;
+			blackboarddrawingarea.QueueDraw ();
+			videodrawingarea.Visible = false;
+		}
 
 		void SetScaleValue (int value) {
 			emitRateScale = false;
@@ -362,6 +399,7 @@ namespace LongoMatch.Gui
 			if (pos.MSeconds < 0)
 				pos.MSeconds = 0;
 			Log.Debug (String.Format("Stepping {0} seconds from {1} to {2}", jump, CurrentTime, pos));
+			DrawingsVisible = false;
 			Seek (pos, true);
 		}
 
@@ -369,7 +407,7 @@ namespace LongoMatch.Gui
 			if(SegmentLoaded) {
 				Time duration = segment.Stop - segment.Start;
 				Time seekPos = segment.Start + duration * pos;
-				seeker.Seek (SeekType.Keyframe, seekPos);
+				seeker.Seek (SeekType.Accurate, seekPos);
 				timelabel.Text = seekPos.ToMSecondsString() + "/" + duration.ToMSecondsString();
 			}
 			else {
@@ -424,7 +462,7 @@ namespace LongoMatch.Gui
 				player.Rate = (float) pendingSeek [1];
 				player.Seek ((Time)pendingSeek[0], true);
 				if ((bool)pendingSeek[2]) {
-					player.Play();
+					Play();
 				}
 				pendingSeek = null;
 			}
@@ -443,13 +481,19 @@ namespace LongoMatch.Gui
 
 				dur = segment.Stop - segment.Start;
 				if (currentTime > segment.Stop) {
-					player.Pause ();
+					Pause();
 				}
 				ct = currentTime - segment.Start;
 				cp = (float)ct.MSeconds/(float)(dur.MSeconds);
 				slength = dur.ToMSecondsString();
 				timelabel.Text = ct.ToMSecondsString() + "/" + slength;
 				timescale.Value = cp;
+				if (loadedPlay != null && loadedPlay.Drawings.Count > 0) {
+					FrameDrawing fd = loadedPlay.Drawings.FirstOrDefault (f => f.Render > lastTime &&  f.Render <= currentTime);
+					if (fd != null) {
+						LoadDrawing (fd);
+					}
+				}
 			} else {
 				slength = length.ToMSecondsString ();
 				timelabel.Text = currentTime.ToMSecondsString() + "/" + slength;
@@ -457,6 +501,7 @@ namespace LongoMatch.Gui
 					timescale.Value = currentPosition;
 				}
 			}
+			lastTime = currentTime;
 
 			if (Tick != null) {
 				Tick (currentTime, streamLength, currentPosition);
@@ -473,7 +518,7 @@ namespace LongoMatch.Gui
 				seeking = true;
 				IsPlayingPrevState = player.Playing;
 				player.Tick -= OnTick;
-				player.Pause();
+				Pause ();
 				seeksQueue [0] = -1;
 				seeksQueue [1] = -1;
 			}
@@ -494,7 +539,7 @@ namespace LongoMatch.Gui
 				seeking=false;
 				player.Tick += OnTick;
 				if(IsPlayingPrevState)
-					player.Play();
+					Play ();
 			}
 		}
 
@@ -524,12 +569,12 @@ namespace LongoMatch.Gui
 
 		void OnPausebuttonClicked(object sender, System.EventArgs e)
 		{
-			player.Pause();
+			Pause ();
 		}
 
 		void OnEndOfStream(object o, EventArgs args) {
 			player.Seek (new Time (0), true);
-			player.Pause();
+			Pause ();
 		}
 
 		void OnError(string message) {
@@ -539,7 +584,7 @@ namespace LongoMatch.Gui
 		void OnClosebuttonClicked(object sender, System.EventArgs e)
 		{
 			CloseSegment();
-			player.Play ();
+			Play ();
 		}
 
 		void OnPrevbuttonClicked(object sender, System.EventArgs e)
@@ -629,10 +674,11 @@ namespace LongoMatch.Gui
 		
 		void HandleSeekEvent (SeekType type, Time start, float rate)
 		{
+			DrawingsVisible = false;
 			/* We only use it for backwards framestepping for now */
 			if (type == SeekType.StepDown || type == SeekType.StepUp) {
 				if(player.Playing)
-					player.Pause ();
+					Pause ();
 				if (type == SeekType.StepDown)
 					player.SeekToPreviousFrame ();
 				else
