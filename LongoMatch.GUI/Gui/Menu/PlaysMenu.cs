@@ -45,7 +45,7 @@ namespace LongoMatch.Gui.Menus
 		
 		public void ShowListMenu (List<Play> plays, MediaFile projectFile,
 		                          List<Category> categories) {
-			ShowMenu (plays, null, null, null, categories, true);
+			ShowMenu (plays, null, null, projectFile, categories, true);
 		}
 
 		public void ShowMenu (List<Play> plays, MediaFile projectFile) {
