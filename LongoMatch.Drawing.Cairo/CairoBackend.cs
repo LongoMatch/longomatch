@@ -137,6 +137,7 @@ namespace LongoMatch.Drawing.Cairo
 			SetColor (color);
 			CContext.Operator = Operator.Source;
 			CContext.Paint ();
+			CContext.Operator = Operator.Over;
 		}
 		
 		public void Begin() {
