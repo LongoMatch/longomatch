@@ -9185,17 +9185,48 @@ Click 2 players to swap them</property>
         <child>
           <widget class="Gtk.HButtonBox" id="hbuttonbox2">
             <property name="MemberName" />
-            <property name="Size">1</property>
+            <property name="Size">3</property>
+            <property name="LayoutStyle">Spread</property>
             <child>
               <widget class="Gtk.Button" id="savebutton">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="Type">TextAndIcon</property>
                 <property name="Icon">stock:gtk-save Dialog</property>
-                <property name="Label" translatable="yes">Save</property>
+                <property name="Label" translatable="yes">Save template</property>
                 <property name="UseUnderline">True</property>
               </widget>
               <packing>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Button" id="newbutton">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="Type">TextAndIcon</property>
+                <property name="Icon">stock:gtk-add Dialog</property>
+                <property name="Label" translatable="yes">New category</property>
+                <property name="UseUnderline">True</property>
+              </widget>
+              <packing>
+                <property name="Position">1</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Button" id="deletebutton">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="Type">TextAndIcon</property>
+                <property name="Icon">stock:gtk-delete Dialog</property>
+                <property name="Label" translatable="yes">Delete category</property>
+                <property name="UseUnderline">True</property>
+              </widget>
+              <packing>
+                <property name="Position">2</property>
                 <property name="Expand">False</property>
                 <property name="Fill">False</property>
               </packing>

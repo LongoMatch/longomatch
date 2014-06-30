@@ -19,6 +19,8 @@ using System;
 using LongoMatch.Store.Templates;
 using LongoMatch.Common;
 using LongoMatch.Gui.Helpers;
+using LongoMatch.Store;
+using Mono.Unix;
 
 namespace LongoMatch.Gui.Component
 {
@@ -27,19 +29,28 @@ namespace LongoMatch.Gui.Component
 	{
 		bool edited;
 		Categories template;
+		Category selectedCategory;
 
 		public AnalysisTemplateEditor ()
 		{
 			this.Build ();
 			buttonswidget.Mode = LongoMatch.Common.TagMode.Predifined;
+			buttonswidget.CategorySelected += HandleCategorySelected;
 			categoryproperties.Visible = false;
 			savebutton.Clicked += HandleSaveClicked;
+			deletebutton.Sensitive = false;
+			newbutton.Sensitive = false;
+			newbutton.Clicked += HandleNewClicked;
+			deletebutton.Clicked += HandleDeleteClicked;
 		}
-		
+
 		public Categories Template {
 			set {
 				template = value;
+				categoryproperties.Template = value;
+				newbutton.Sensitive = true;
 				buttonswidget.UpdateCategories (value);
+				Edited = false;
 			}
 		}
 		
@@ -52,10 +63,30 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		void HandleCategorySelected (LongoMatch.Store.Category category)
+		void HandleDeleteClicked (object sender, EventArgs e)
+		{
+			string msg = Catalog.GetString ("Do you want to delete: ") +
+				selectedCategory.Name + "?";
+			if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
+				template.List.Remove (selectedCategory);
+				buttonswidget.UpdateCategories (template);
+				Edited = true;
+			}
+		}
+
+		void HandleNewClicked (object sender, EventArgs e)
+		{
+			template.AddDefaultItem (template.List.Count);
+			buttonswidget.UpdateCategories (template);
+			Edited = true;
+		}
+		
+		void HandleCategorySelected (Category category)
 		{
 			categoryproperties.Visible = true;
+			deletebutton.Sensitive = true;
 			categoryproperties.Category = category;
+			selectedCategory = category;
 		}
 		
 		void HandleSaveClicked (object sender, EventArgs e)

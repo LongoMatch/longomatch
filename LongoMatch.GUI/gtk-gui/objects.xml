@@ -5,7 +5,11 @@
   </object>
   <object type="LongoMatch.Gui.Component.ButtonsWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
-    <signals />
+    <signals>
+      <itemgroup label="ButtonsWidget Signals">
+        <signal name="CategorySelected" />
+      </itemgroup>
+    </signals>
   </object>
   <object type="LongoMatch.Gui.Component.NotesWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />

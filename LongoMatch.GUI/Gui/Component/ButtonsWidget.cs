@@ -34,6 +34,7 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class ButtonsWidget : Gtk.Bin
 	{
+		public event NewTagHandler CategorySelected;
 		TagMode tagMode;
 		Dictionary<ButtonTagger, Category> buttonsDic;
 		const int N_COLUMNS = 5;
@@ -89,6 +90,9 @@ namespace LongoMatch.Gui.Component
 				ButtonTagger b = new ButtonTagger (cat);
 					b.NewTag += (category) => {
 					Config.EventsBroker.EmitNewTag (category);
+					if (CategorySelected != null) {
+						CategorySelected (category);
+					}
 				};
 				b.NewTagStart += (category) => {
 					Config.EventsBroker.EmitNewTagStart (category);

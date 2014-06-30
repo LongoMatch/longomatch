@@ -56,6 +56,12 @@ namespace LongoMatch.Gui.Dialog
 				playersspinbutton.Value = value;
 			}
 		}
+		
+		public string CountText {
+			set {
+				playerslabel.Text = value;
+			}
+		}
 
 		public bool ShowCount {
 			set {

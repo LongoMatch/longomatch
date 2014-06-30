@@ -165,6 +165,7 @@ namespace LongoMatch.Gui.Panel
 			dialog.TransientFor = (Gtk.Window)this.Toplevel;
 			dialog.ShowCount = true;
 			dialog.Text = Catalog.GetString("New team");
+			dialog.CountText = Catalog.GetString ("Categories:");
 			dialog.AvailableTemplates = provider.TemplatesNames;
 			
 			while (dialog.Run() == (int)ResponseType.Ok) {
