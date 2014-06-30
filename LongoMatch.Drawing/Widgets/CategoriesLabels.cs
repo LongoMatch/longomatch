@@ -58,16 +58,16 @@ namespace LongoMatch.Drawing.Widgets
 		void FillCanvas () {
 			int i = 0;
 			
-			widget.Width = Common.CATEGORY_WIDTH;
+			widget.Width = Constants.CATEGORY_WIDTH;
 			
 			/* Start from bottom to top  with categories */
 			foreach (Category cat in project.Categories.List) {
 				CategoryLabel l;
 				
 				/* Add the category label */
-				l = new CategoryLabel (cat, Common.CATEGORY_WIDTH,
-				                       Common.CATEGORY_HEIGHT,
-				                       i * Common.CATEGORY_HEIGHT);
+				l = new CategoryLabel (cat, Constants.CATEGORY_WIDTH,
+				                       Constants.CATEGORY_HEIGHT,
+				                       i * Constants.CATEGORY_HEIGHT);
 				categories[cat] = l;
 				Objects.Add (l);
 				i++;
@@ -81,7 +81,7 @@ namespace LongoMatch.Drawing.Widgets
 				CategoryLabel label = categories[cat];
 
 				if (filter.VisibleCategories.Contains (cat)) {
-					label.OffsetY = i * Common.CATEGORY_HEIGHT;
+					label.OffsetY = i * Constants.CATEGORY_HEIGHT;
 					label.Visible = true;
 					i++;
 				} else {

@@ -35,7 +35,7 @@ namespace LongoMatch.Drawing.Widgets
 
 		public PositionTagger (IWidget widget): base (widget)
 		{
-			Accuracy = Common.TAGGER_POINT_SIZE + 3;
+			Accuracy = Constants.TAGGER_POINT_SIZE + 3;
 			EmitSignals = true;
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
 		}

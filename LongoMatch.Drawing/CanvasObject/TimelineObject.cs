@@ -89,7 +89,7 @@ namespace LongoMatch.Drawing.CanvasObject
 			tk.StrokeColor = background;
 			tk.LineWidth = 1;
 			tk.DrawRectangle (new Point (0, OffsetY), Width,
-			                  Common.CATEGORY_HEIGHT);
+			                  Constants.CATEGORY_HEIGHT);
 			foreach (TimeNodeObject p in nodes) {
 				if (p.Selected) {
 					selected.Add (p);
@@ -101,12 +101,12 @@ namespace LongoMatch.Drawing.CanvasObject
 				p.Draw (tk, area);
 			}
 			
-			tk.FillColor = Common.TIMELINE_LINE_COLOR;
-			tk.StrokeColor = Common.TIMELINE_LINE_COLOR;
-			tk.LineWidth = Common.TIMELINE_LINE_WIDTH;
-			position = Common.TimeToPos (CurrentTime, secondsPerPixel);
+			tk.FillColor = Constants.TIMELINE_LINE_COLOR;
+			tk.StrokeColor = Constants.TIMELINE_LINE_COLOR;
+			tk.LineWidth = Constants.TIMELINE_LINE_WIDTH;
+			position = Utils.TimeToPos (CurrentTime, secondsPerPixel);
 			tk.DrawLine (new Point (position, OffsetY),
-			             new Point (position, OffsetY + Common.CATEGORY_HEIGHT));
+			             new Point (position, OffsetY + Constants.CATEGORY_HEIGHT));
 			
 			tk.End();
 		}
@@ -114,7 +114,7 @@ namespace LongoMatch.Drawing.CanvasObject
 		public Selection GetSelection (Point point, double precision) {
 			Selection selection = null;
 
-			if (point.Y >= OffsetY && point.Y < OffsetY + Common.CATEGORY_HEIGHT) {
+			if (point.Y >= OffsetY && point.Y < OffsetY + Constants.CATEGORY_HEIGHT) {
 				foreach (TimeNodeObject po in nodes) {
 					Selection tmp;
 					tmp = po.GetSelection (point, precision);

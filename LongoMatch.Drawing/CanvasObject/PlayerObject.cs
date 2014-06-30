@@ -32,8 +32,8 @@ namespace LongoMatch.Drawing.CanvasObject
 			Player = player;
 			Position = position;
 			DrawPhoto = true;
-			SelectedColor = Common.PLAYER_SELECTED_COLOR;
-			UnSelectedColor = Common.PLAYER_UNSELECTED_COLOR;
+			SelectedColor = Constants.PLAYER_SELECTED_COLOR;
+			UnSelectedColor = Constants.PLAYER_UNSELECTED_COLOR;
 			IconSize = PlayersIconSize.Medium;
 		}
 		

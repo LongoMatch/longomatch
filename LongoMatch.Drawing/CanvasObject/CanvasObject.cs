@@ -90,14 +90,14 @@ namespace LongoMatch.Drawing.CanvasObject
 
 		protected void DrawCornerSelection (IDrawingToolkit tk, Point p)
 		{
-			tk.StrokeColor = tk.FillColor = Common.SELECTION_INDICATOR_COLOR;
+			tk.StrokeColor = tk.FillColor = Constants.SELECTION_INDICATOR_COLOR;
 			tk.LineStyle = LineStyle.Normal;
 			tk.DrawRectangle (new Point (p.X - 3, p.Y - 3), 6, 6);
 		}
 
 		protected void DrawCenterSelection (IDrawingToolkit tk, Point p)
 		{
-			tk.StrokeColor = tk.FillColor = Common.SELECTION_INDICATOR_COLOR;
+			tk.StrokeColor = tk.FillColor = Constants.SELECTION_INDICATOR_COLOR;
 			tk.LineStyle = LineStyle.Normal;
 			tk.DrawCircle (p, 3);
 		}
@@ -109,8 +109,8 @@ namespace LongoMatch.Drawing.CanvasObject
 			if (!Selected || area == null) {
 				return;
 			}
-			tk.StrokeColor = Common.SELECTION_INDICATOR_COLOR;
-			tk.StrokeColor = Common.SELECTION_AREA_COLOR;
+			tk.StrokeColor = Constants.SELECTION_INDICATOR_COLOR;
+			tk.StrokeColor = Constants.SELECTION_AREA_COLOR;
 			tk.FillColor = null;
 			tk.LineStyle = LineStyle.Dashed;
 			tk.LineWidth = 1;

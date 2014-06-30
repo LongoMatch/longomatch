@@ -47,14 +47,14 @@ namespace LongoMatch.Drawing.CanvasObject
 			tk.Begin ();
 			tk.FillColor = new Color (c.R, c.G, c.B, (byte) (0.8 * byte.MaxValue));
 			if (Selected) {
-				tk.StrokeColor = Common.PLAY_OBJECT_SELECTED_COLOR;
+				tk.StrokeColor = Constants.PLAY_OBJECT_SELECTED_COLOR;
 			} else {
 				tk.StrokeColor = Play.Category.Color;
 			}
 			tk.LineWidth = 2;
 			tk.DrawRoundedRectangle (new Point (StartX, OffsetY),
-			                  Common.TimeToPos (Play.Duration, SecondsPerPixel),
-			                  Common.CATEGORY_HEIGHT, 2);
+			                  Utils.TimeToPos (Play.Duration, SecondsPerPixel),
+			                  Constants.CATEGORY_HEIGHT, 2);
 			tk.End ();
 		}
 	}

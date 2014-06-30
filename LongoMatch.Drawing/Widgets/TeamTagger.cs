@@ -48,8 +48,8 @@ namespace LongoMatch.Drawing.Widgets
 			Accuracy = 0;
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
 			SubstitutionsMode = false;
-			HomeColor = Common.PLAYER_UNSELECTED_COLOR;
-			AwayColor = Common.PLAYER_UNSELECTED_COLOR;
+			HomeColor = Constants.PLAYER_UNSELECTED_COLOR;
+			AwayColor = Constants.PLAYER_UNSELECTED_COLOR;
 			PlayersPorRowInBench = 2;
 			BenchIconSize = PlayersIconSize.Small;
 		}

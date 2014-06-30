@@ -118,13 +118,13 @@ namespace LongoMatch.Drawing.CanvasObject
 			if (Play != null) {
 				color = Play.Category.Color;
 			} else {
-				color = Common.TAGGER_POINT_COLOR;
+				color = Constants.TAGGER_POINT_COLOR;
 			}
 			scolor = color;
 			
 			if (Selected) {
-				scolor = Common.TAGGER_SELECTION_COLOR;
-				color = Common.TAGGER_SELECTION_COLOR;
+				scolor = Constants.TAGGER_SELECTION_COLOR;
+				color = Constants.TAGGER_SELECTION_COLOR;
 			}
 			tk.FillColor = color;
 			tk.StrokeColor = scolor;

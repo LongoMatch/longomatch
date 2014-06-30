@@ -18,10 +18,11 @@
 using System;
 using LongoMatch.Store;
 using LongoMatch.Common;
+using LongoMatch.Interfaces.Drawing;
 
 namespace LongoMatch.Drawing
 {
-	public class Common
+	public class Constants
 	{
 		public const int CATEGORY_HEIGHT = 20;
 		public const int CATEGORY_WIDTH = 150;
@@ -51,13 +52,6 @@ namespace LongoMatch.Drawing
 
 		public const int TIMELINE_LINE_WIDTH = 1;
 		
-		public static double TimeToPos (Time time, double secondsPerPixel) {
-			return (double)time.MSeconds / 1000 / secondsPerPixel;
-		}
-		
-		public static Time PosToTime (Point p, double secondsPerPixel) {
-			return new Time ((int) (p.X * 1000 * secondsPerPixel));
-		}
 	}
 }
 

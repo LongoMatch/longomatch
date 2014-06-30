@@ -23,7 +23,7 @@ namespace LongoMatch.Drawing.Widgets
 		public TimersTimeline (IWidget widget): base(widget)
 		{
 			secondsPerPixel = 0.1;
-			Accuracy = Common.TIMELINE_ACCURACY;
+			Accuracy = Constants.TIMELINE_ACCURACY;
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
 		}
 
@@ -71,14 +71,14 @@ namespace LongoMatch.Drawing.Widgets
 		
 		void FillCanvas (List<Timer> timers, bool splitTimers) {
 			if (!splitTimers) {
-				widget.Height = Common.TIMER_HEIGHT;
+				widget.Height = Constants.TIMER_HEIGHT;
 				TimerTimeline tl = new TimerTimeline (timers, duration, 0, Color.White);
 				foreach (Timer t in timers) {
 					this.timers[t] = tl;
 				}
 				Objects.Add (tl);
 			} else {
-				widget.Height = timers.Count * Common.TIMER_HEIGHT;
+				widget.Height = timers.Count * Constants.TIMER_HEIGHT;
 			}
 			Update ();
 		}

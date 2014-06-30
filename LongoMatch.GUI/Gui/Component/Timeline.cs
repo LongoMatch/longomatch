@@ -56,9 +56,9 @@ namespace LongoMatch.Gui.Component
 			focusscale.Adjustment.Lower = 0;
 			focusscale.Adjustment.Upper = 12;
 			focusscale.ValueChanged += HandleValueChanged;
-			timerulearea.HeightRequest = LongoMatch.Drawing.Common.TIMERULE_HEIGHT;
-			labelsarea.WidthRequest = LongoMatch.Drawing.Common.CATEGORY_WIDTH;
-			hbox1.HeightRequest = LongoMatch.Drawing.Common.TIMERULE_HEIGHT;
+			timerulearea.HeightRequest = LongoMatch.Drawing.Constants.TIMERULE_HEIGHT;
+			labelsarea.WidthRequest = LongoMatch.Drawing.Constants.CATEGORY_WIDTH;
+			hbox1.HeightRequest = LongoMatch.Drawing.Constants.TIMERULE_HEIGHT;
 			scrolledwindow1.Vadjustment.ValueChanged += HandleScrollEvent;
 			scrolledwindow1.Hadjustment.ValueChanged += HandleScrollEvent;
 			timeoutID = 0;

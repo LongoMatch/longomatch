@@ -40,8 +40,8 @@ namespace LongoMatch.Gui.Component
 			playerbin2.ShowControls = false;
 			timerule = new Timerule (new WidgetWrapper (drawingarea1));
 			timersTimenline = new TimersTimeline (new WidgetWrapper (drawingarea2));
-			drawingarea1.HeightRequest = LongoMatch.Drawing.Common.TIMERULE_HEIGHT;
-			drawingarea2.HeightRequest = LongoMatch.Drawing.Common.TIMER_HEIGHT;
+			drawingarea1.HeightRequest = LongoMatch.Drawing.Constants.TIMERULE_HEIGHT;
+			drawingarea2.HeightRequest = LongoMatch.Drawing.Constants.TIMER_HEIGHT;
 			timersTimenline.TimeNodeChanged += HandleTimeNodeChanged;
 			scrolledwindow2.Hadjustment.ValueChanged += HandleValueChanged;
 			synclabel.Markup = String.Format ("{0} {1} {2}", "<b>⬇  ",

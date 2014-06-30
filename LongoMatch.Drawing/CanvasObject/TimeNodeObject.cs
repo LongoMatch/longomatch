@@ -61,26 +61,26 @@ namespace LongoMatch.Drawing.CanvasObject
 		
 		protected double StartX {
 			get {
-				return Common.TimeToPos (TimeNode.Start, SecondsPerPixel);
+				return Utils.TimeToPos (TimeNode.Start, SecondsPerPixel);
 			}
 		}
 		
 		protected double StopX {
 			get {
-				return Common.TimeToPos (TimeNode.Stop, SecondsPerPixel);
+				return Utils.TimeToPos (TimeNode.Stop, SecondsPerPixel);
 			}
 		}
 		
 		protected double CenterX {
 			get {
-				return Common.TimeToPos (TimeNode.Start + TimeNode.Duration / 2,
-				                         SecondsPerPixel);
+				return Utils.TimeToPos (TimeNode.Start + TimeNode.Duration / 2,
+				                        SecondsPerPixel);
 			}
 		}
 		
 		public Selection GetSelection (Point point, double precision) {
 			double accuracy;
-			if (point.Y >= OffsetY && point.Y < OffsetY + Common.CATEGORY_HEIGHT) {
+			if (point.Y >= OffsetY && point.Y < OffsetY + Constants.CATEGORY_HEIGHT) {
 				if (Drawable.MatchAxis (point.X, StartX, precision, out accuracy)) {
 					return new Selection (this, SelectionPosition.Left, accuracy);
 				} else if (Drawable.MatchAxis (point.X, StopX, precision, out accuracy)) {
@@ -94,14 +94,14 @@ namespace LongoMatch.Drawing.CanvasObject
 		}
 		
 		public void Move (Selection sel, Point p, Point start) {
-			Time newTime = Common.PosToTime (p, SecondsPerPixel);
+			Time newTime = Utils.PosToTime (p, SecondsPerPixel);
 
 			if (p.X < 0) {
 				p.X = 0;
 			} else if (newTime > MaxTime) {
-				p.X = Common.TimeToPos (MaxTime, SecondsPerPixel);
+				p.X = Utils.TimeToPos (MaxTime, SecondsPerPixel);
 			}
-			newTime = Common.PosToTime (p, SecondsPerPixel);
+			newTime = Utils.PosToTime (p, SecondsPerPixel);
 
 			switch (sel.Position) {
 			case SelectionPosition.Left: {
@@ -129,17 +129,17 @@ namespace LongoMatch.Drawing.CanvasObject
 
 			tk.Begin ();
 			if (Selected) {
-				c = Common.TIMER_SELECTED_COLOR;
+				c = Constants.TIMER_SELECTED_COLOR;
 			} else {
-				c = Common.TIMER_UNSELECTED_COLOR;
+				c = Constants.TIMER_UNSELECTED_COLOR;
 			}
 			tk.FillColor = c;
 			tk.StrokeColor = c;
 			tk.LineWidth = 4;
 			
-			mid = OffsetY + Common.CATEGORY_HEIGHT / 2;
-			bottom = OffsetY + Common.CATEGORY_HEIGHT;
-			stop = Common.TimeToPos (TimeNode.Stop, SecondsPerPixel);
+			mid = OffsetY + Constants.CATEGORY_HEIGHT / 2;
+			bottom = OffsetY + Constants.CATEGORY_HEIGHT;
+			stop = Utils.TimeToPos (TimeNode.Stop, SecondsPerPixel);
 			
 			tk.DrawLine (new Point (StartX, OffsetY),
 			             new Point (StartX, bottom));
@@ -149,7 +149,7 @@ namespace LongoMatch.Drawing.CanvasObject
 			             new Point (stop, bottom));
 			tk.FontSize = 20;
 			tk.DrawText (new Point (StartX, OffsetY), stop - StartX,
-			             Common.CATEGORY_HEIGHT - 4, TimeNode.Name);
+			             Constants.CATEGORY_HEIGHT - 4, TimeNode.Name);
 			             
 			tk.End ();
 		}

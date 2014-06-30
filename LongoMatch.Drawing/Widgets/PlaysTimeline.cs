@@ -43,7 +43,7 @@ namespace LongoMatch.Drawing.Widgets
 		{
 			categories = new Dictionary<Category, CategoryTimeline> ();
 			secondsPerPixel = 0.1;
-			Accuracy = Common.TIMELINE_ACCURACY;
+			Accuracy = Constants.TIMELINE_ACCURACY;
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
 			widget.ShowTooltipEvent += HandleShowTooltipEvent;
 		}
@@ -53,7 +53,7 @@ namespace LongoMatch.Drawing.Widgets
 			Objects.Clear();
 			categories.Clear();
 			duration = project.Description.File.Duration;
-			widget.Height = project.Categories.List.Count * Common.CATEGORY_HEIGHT;
+			widget.Height = project.Categories.List.Count * Constants.CATEGORY_HEIGHT;
 			playsFilter = filter;
 			FillCanvas ();
 			filter.FilterUpdated += UpdateVisibleCategories;
@@ -111,7 +111,7 @@ namespace LongoMatch.Drawing.Widgets
 				
 				cat = project.Categories.List[i];
 				tl = new CategoryTimeline (project.PlaysInCategory (cat),
-				                           duration, i * Common.CATEGORY_HEIGHT, c);
+				                           duration, i * Constants.CATEGORY_HEIGHT, c);
 				categories[cat] = tl;
 				Objects.Add (tl);
 			}
@@ -124,7 +124,7 @@ namespace LongoMatch.Drawing.Widgets
 			foreach (Category cat in categories.Keys) {
 				TimelineObject timeline = categories[cat];
 				if (playsFilter.VisibleCategories.Contains (cat)) {
-					timeline.OffsetY = i * Common.CATEGORY_HEIGHT;
+					timeline.OffsetY = i * Constants.CATEGORY_HEIGHT;
 					timeline.Visible = true;
 					i++;
 				} else {
@@ -173,7 +173,7 @@ namespace LongoMatch.Drawing.Widgets
 				TimelineObject tl = categories[c];
 				if (!tl.Visible)
 					continue;
-				if (coords.Y >= tl.OffsetY && coords.Y < tl.OffsetY + Common.CATEGORY_HEIGHT) {
+				if (coords.Y >= tl.OffsetY && coords.Y < tl.OffsetY + Constants.CATEGORY_HEIGHT) {
 					cat = c;
 					break;
 				}
@@ -181,7 +181,7 @@ namespace LongoMatch.Drawing.Widgets
 			
 			if (cat != null && ShowMenuEvent != null) {
 				ShowMenuEvent (plays, cat,
-				          Common.PosToTime (coords, SecondsPerPixel));
+				          Utils.PosToTime (coords, SecondsPerPixel));
 			}
 		}
 		

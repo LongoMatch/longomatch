@@ -57,8 +57,8 @@ namespace LongoMatch.Drawing.CanvasObject
 			tk.FontSlant = FontSlant.Normal;
 			tk.FontSize = 12;
 			tk.DrawRoundedRectangle (new Point(0, y + 1), width, height - 1, 3);  
-			tk.FillColor = Common.TEXT_COLOR;
-			tk.StrokeColor = Common.TEXT_COLOR;
+			tk.FillColor = Constants.TEXT_COLOR;
+			tk.StrokeColor = Constants.TEXT_COLOR;
 			tk.DrawText (new Point (0, y), width, height,
 			             category.Name);
 			tk.End();

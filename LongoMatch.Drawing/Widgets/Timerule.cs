@@ -68,12 +68,12 @@ namespace LongoMatch.Drawing.Widgets
 
 			tk.Context = context;
 			tk.Begin ();
-			tk.FillColor = Common.TIMERULE_BACKGROUND;
-			tk.StrokeColor = Common.TIMERULE_BACKGROUND;
+			tk.FillColor = Constants.TIMERULE_BACKGROUND;
+			tk.StrokeColor = Constants.TIMERULE_BACKGROUND;
 			tk.DrawRectangle (new Point(0, 0), width, height);
 			
-			tk.StrokeColor = Common.TIMELINE_LINE_COLOR;
-			tk.LineWidth = Common.TIMELINE_LINE_WIDTH;
+			tk.StrokeColor = Constants.TIMELINE_LINE_COLOR;
+			tk.LineWidth = Constants.TIMELINE_LINE_WIDTH;
 			tk.FontSlant = FontSlant.Normal;
 			tk.FontSize = 12;
 			tk.DrawLine (new Point (0, height), new Point (width, height));
@@ -100,9 +100,9 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			
 			/* Draw position triangle */
-			tpos = Common.TimeToPos (CurrentTime, SecondsPerPixel);
+			tpos = Utils.TimeToPos (CurrentTime, SecondsPerPixel);
 			tpos -= Scroll;
-			tk.FillColor = Common.TIMELINE_LINE_COLOR;
+			tk.FillColor = Constants.TIMELINE_LINE_COLOR;
 			tk.DrawTriangle (new Point (tpos, widget.Height), 8,
 			                 BIG_LINE_HEIGHT, SelectionPosition.Bottom);
 

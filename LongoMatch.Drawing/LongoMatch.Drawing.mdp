@@ -23,7 +23,7 @@
     <File subtype="Code" buildaction="Compile" name="Widgets/Timerule.cs" />
     <File subtype="Code" buildaction="Compile" name="Widgets/CategoriesLabels.cs" />
     <File subtype="Code" buildaction="Compile" name="CanvasObject/PlayObject.cs" />
-    <File subtype="Code" buildaction="Compile" name="Common.cs" />
+    <File subtype="Code" buildaction="Compile" name="Constants.cs" />
     <File subtype="Code" buildaction="Compile" name="Widgets/PlaysTimeline.cs" />
     <File subtype="Code" buildaction="Compile" name="CanvasObject/TimelineObject.cs" />
     <File subtype="Code" buildaction="Compile" name="CanvasObject/CanvasObject.cs" />
@@ -42,6 +42,7 @@
     <File subtype="Code" buildaction="Compile" name="CanvasObject/EllipseObject.cs" />
     <File subtype="Code" buildaction="Compile" name="CanvasObject/TextObject.cs" />
     <File subtype="Code" buildaction="Compile" name="CanvasObject/CounterObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="Utils.cs" />
   </Contents>
   <References>
     <ProjectReference type="Package" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
