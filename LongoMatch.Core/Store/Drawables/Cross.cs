@@ -22,6 +22,7 @@ using LongoMatch.Common;
 
 namespace LongoMatch.Store.Drawables
 {
+	[Serializable]
 	public class Cross: Drawable
 	{
 		public Cross ()

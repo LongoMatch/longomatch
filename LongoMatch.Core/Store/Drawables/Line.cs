@@ -21,8 +21,10 @@ using Newtonsoft.Json;
 
 namespace LongoMatch.Store.Drawables
 {
+	[Serializable]
 	public class Line: Drawable
 	{
+		
 		public Line ()
 		{
 		}

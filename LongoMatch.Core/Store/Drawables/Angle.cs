@@ -21,6 +21,7 @@ using LongoMatch.Common;
 
 namespace LongoMatch.Store.Drawables
 {
+	[Serializable]
 	public class Angle: Drawable
 	{
 		public Angle ()

@@ -20,6 +20,7 @@ using LongoMatch.Common;
 
 namespace LongoMatch.Store.Drawables
 {
+	[Serializable]
 	public class Quadrilateral: Drawable
 	{
 		public Quadrilateral ()

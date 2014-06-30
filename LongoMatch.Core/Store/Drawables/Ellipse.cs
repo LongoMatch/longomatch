@@ -21,8 +21,10 @@ using LongoMatch.Common;
 
 namespace LongoMatch.Store.Drawables
 {
+	[Serializable]
 	public class Ellipse: Drawable
 	{
+		
 		public Ellipse ()
 		{
 		}

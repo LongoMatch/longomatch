@@ -21,6 +21,7 @@ using LongoMatch.Interfaces.Drawing;
 
 namespace LongoMatch.Store.Drawables
 {
+	[Serializable]
 	public class Selection
 	{
 		public Selection (IMovableObject drawable, SelectionPosition selpos, double accuracy=0)

@@ -22,6 +22,7 @@ using LongoMatch.Interfaces.Drawing;
 
 namespace LongoMatch.Store.Drawables
 {
+	[Serializable]
 	public abstract class Drawable: IBlackboardObject
 	{
 		public Drawable ()

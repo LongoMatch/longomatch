@@ -20,8 +20,12 @@ using LongoMatch.Common;
 
 namespace LongoMatch.Store.Drawables
 {
+	[Serializable]
 	public class Counter: Ellipse
 	{
+		public Counter () {
+		}
+		
 		public Counter (Point center, double axisX, double axisY, int count):
 			base (center, axisX, axisY)
 		{

@@ -20,6 +20,7 @@ using LongoMatch.Common;
 
 namespace LongoMatch.Common
 {
+	[Serializable]
 	public class Area
 	{
 		public Area (Point start, double width, double height)
