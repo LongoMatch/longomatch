@@ -141,6 +141,10 @@ namespace LongoMatch.Services
 				                                       "the name: ") + filename);
 			}
 			
+			if (!Directory.Exists (Path.GetDirectoryName (filename))) {
+				Directory.CreateDirectory (Path.GetDirectoryName (filename));
+			}
+			
 			/* Don't cach the Exception here to chain it up */
 			template.Save(filename);
 		}
