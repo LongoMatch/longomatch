@@ -78,7 +78,7 @@ namespace LongoMatch.Interfaces.GUI
 		void ManageJobs ();
 		
 		void TagPlay (Play play, Project project);
-		void DrawingTool(Image pixbuf, Play play, int drawingIndex);
+		void DrawingTool(Image pixbuf, Play play, FrameDrawing drawing);
 		
 		string RemuxFile (string filePath, string outputFile, VideoMuxerType muxer);
 		

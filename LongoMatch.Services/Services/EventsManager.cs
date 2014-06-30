@@ -355,25 +355,25 @@ namespace LongoMatch.Services
 		{
 		}
 
-		protected virtual void OnTimeline2PositionChanged(Time pos)
-		{
-			player.Seek (pos, false);
-		}
-
 		protected virtual void OnDrawFrame (Play play, int drawingIndex) {
 			Image pixbuf;
+			FrameDrawing drawing = null;
+
 			player.Pause();
-			pixbuf = player.CurrentFrame;
 			if (play == null) {
 				play = loadedPlay as Play;
 			}
-			if (play != null && drawingIndex == -1) {
-				FrameDrawing drawing = new FrameDrawing ();
-				drawing.Render = player.CurrentTime;
-				play.Drawings.Add (drawing);
-				drawingIndex = play.Drawings.Count - 1;
+			if (play != null) {
+				if (drawingIndex == -1) {
+					drawing = new FrameDrawing ();
+					drawing.Render = player.CurrentTime;
+				} else {
+					drawing = play.Drawings[drawingIndex];
+				}
+				player.Seek (drawing.Render, true);
 			}
-			guiToolkit.DrawingTool (pixbuf, play, drawingIndex);
+			pixbuf = player.CurrentFrame;
+			guiToolkit.DrawingTool (pixbuf, play, drawing);
 		}
 
 		protected virtual void OnPlayCategoryChanged(Play play, Category cat)

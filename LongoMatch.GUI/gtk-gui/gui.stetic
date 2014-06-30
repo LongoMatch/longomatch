@@ -3204,7 +3204,6 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                     <property name="Icon">stock:gtk-save Menu</property>
                     <property name="Label" translatable="yes">Save to Project</property>
                     <property name="UseUnderline">True</property>
-                    <signal name="Clicked" handler="OnSavetoprojectbuttonClicked" />
                   </widget>
                   <packing>
                     <property name="PackType">End</property>
@@ -3222,7 +3221,6 @@ Hotkeys with a single key are also allowed with Ctrl+key.</property>
                     <property name="Icon">stock:gtk-save Menu</property>
                     <property name="Label" translatable="yes">Save to File</property>
                     <property name="UseUnderline">True</property>
-                    <signal name="Clicked" handler="OnSavebuttonClicked" />
                   </widget>
                   <packing>
                     <property name="PackType">End</property>

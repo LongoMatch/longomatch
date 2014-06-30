@@ -42,11 +42,12 @@ namespace LongoMatch.Gui.Dialog
 		Blackboard blackboard;
 		FrameDrawing drawing;
 		Drawable selectedDrawable;
-		int drawingIndex;
 
 		public DrawingTool()
 		{
 			this.Build();
+			savebutton.Clicked += OnSavebuttonClicked;
+			savetoprojectbutton.Clicked += OnSavetoprojectbuttonClicked;
 			blackboard = new Blackboard(new WidgetWrapper (drawingarea));
 			blackboard.ConfigureObjectEvent += HandleConfigureObjectEvent;
 			blackboard.ShowMenuEvent += HandleShowMenuEvent;
@@ -268,12 +269,11 @@ namespace LongoMatch.Gui.Dialog
 			}
 		}
 		
-		public void LoadPlay (Play play, Image frame, int drawingIndex) {
+		public void LoadPlay (Play play, Image frame, FrameDrawing drawing) {
 			this.play = play;
-			this.drawingIndex = drawingIndex;
+			this.drawing = drawing;
 			blackboard.Background = frame;
 			savetoprojectbutton.Visible = true;
-			drawing = play.Drawings [drawingIndex].Clone ();
 			blackboard.Drawing = drawing;
 		}
 		
@@ -299,7 +299,9 @@ namespace LongoMatch.Gui.Dialog
 
 		void OnSavetoprojectbuttonClicked(object sender, System.EventArgs e)
 		{
-			play.Drawings[drawingIndex] = drawing;
+			if (!play.Drawings.Contains (drawing)) {
+				play.Drawings.Add (drawing);
+			}
 			play.Miniature = blackboard.Save ();
 			play.Miniature.Scale (Constants.MAX_THUMBNAIL_SIZE,
 			                      Constants.MAX_THUMBNAIL_SIZE);

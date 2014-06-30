@@ -30,7 +30,8 @@ namespace LongoMatch.Gui.Menus
 	
 		public event EventHandler EditNameEvent;
 
-		MenuItem edit, newPlay, del, addPLN, snapshot, render, duplicate, moveCat;
+		MenuItem edit, newPlay, del, addPLN, snapshot, render;
+		MenuItem duplicate, moveCat, drawings;
 		List<Play> plays;
 		Category cat;
 		Time time;
@@ -79,6 +80,7 @@ namespace LongoMatch.Gui.Menus
 			edit.Visible = editableName;
 			snapshot.Visible = plays.Count == 1;
 			moveCat.Visible = plays.Count == 1 && categories != null;
+			drawings.Visible = plays.Count == 1 && plays[0].Drawings.Count > 0;
 			del.Visible = plays.Count > 0;
 			addPLN.Visible = plays.Count > 0;
 			render.Visible = plays.Count > 0;
@@ -110,6 +112,31 @@ namespace LongoMatch.Gui.Menus
 				moveCat.Submenu = catMenu;
 			}
 			
+			if (drawings.Visible) {
+				Menu drawingsMenu = new Menu();
+				for (int i=0; i < plays[0].Drawings.Count; i++) {
+					int index = i;
+					MenuItem drawingItem = new MenuItem (Catalog.GetString ("Drawing ") + (i + 1));
+					MenuItem editItem = new MenuItem (Catalog.GetString ("Edit"));
+					MenuItem deleteItem = new MenuItem (Catalog.GetString ("Delete"));
+					Menu drawingMenu = new Menu();
+
+					drawingsMenu.Append (drawingItem);
+					drawingMenu.Append  (editItem);
+					drawingMenu.Append (deleteItem);
+					editItem.Activated += (sender, e) => {
+						Config.EventsBroker.EmitDrawFrame (plays[0], index);
+					}; 
+					deleteItem.Activated += (sender, e) => {
+						plays[0].Drawings.RemoveAt (index);
+					}; 
+					drawingItem.Submenu = drawingMenu;
+					drawingMenu.ShowAll ();
+				}
+				drawingsMenu.ShowAll();
+				drawings.Submenu = drawingsMenu;
+			}
+			
 			Popup();
 		}
 		
@@ -136,6 +163,9 @@ namespace LongoMatch.Gui.Menus
 			duplicate = new MenuItem ("");
 			duplicate.Activated += (sender, e) => Config.EventsBroker.EmitDuplicatePlay (plays);
 			Add (duplicate);
+
+			drawings = new MenuItem (Catalog.GetString ("Drawings"));
+			Add (drawings);
 
 			addPLN = new MenuItem ("");
 			addPLN.Activated += (sender, e) => Config.EventsBroker.EmitPlayListNodeAdded (plays);

@@ -215,7 +215,7 @@ namespace LongoMatch.Gui
 			d.Destroy();
 		}
 
-		public void DrawingTool (Image image, Play play, int drawingIndex) {
+		public void DrawingTool (Image image, Play play, FrameDrawing drawing) {
 			DrawingTool dialog = new DrawingTool();
 			dialog.Show ();
 
@@ -223,7 +223,7 @@ namespace LongoMatch.Gui
 			if (play == null) {
 				dialog.LoadFrame (image);
 			} else {
-				dialog.LoadPlay (play, image, drawingIndex);
+				dialog.LoadPlay (play, image, drawing);
 			}
 			dialog.TransientFor = mainWindow as Gtk.Window;
 			dialog.Run();

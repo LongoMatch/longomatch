@@ -622,8 +622,6 @@ namespace LongoMatch.Gui.Dialog
 			this.savetoprojectbutton.Hide ();
 			this.closebutton.Hide ();
 			this.Show ();
-			this.savebutton.Clicked += new global::System.EventHandler (this.OnSavebuttonClicked);
-			this.savetoprojectbutton.Clicked += new global::System.EventHandler (this.OnSavetoprojectbuttonClicked);
 		}
 	}
 }
