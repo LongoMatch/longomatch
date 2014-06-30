@@ -17,10 +17,11 @@
 //
 using System;
 using LongoMatch.Common;
+using LongoMatch.Interfaces.Drawing;
 
 namespace LongoMatch.Handlers.Drawing
 {
-	public delegate void DrawingHandler (object context, Area area);
+	public delegate void DrawingHandler (IContext context, Area area);
 	public delegate void ButtonPressedHandler (Point coords, uint time, ButtonType type, ButtonModifier modifier);
 	public delegate void ButtonReleasedHandler (Point coords, ButtonType type, ButtonModifier modifier);
 	public delegate void MotionHandler (Point coords);

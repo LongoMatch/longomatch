@@ -55,7 +55,7 @@ namespace LongoMatch.Drawing
 		
 		}
 		
-		public virtual void Draw (object context, Area area) {
+		public virtual void Draw (IContext context, Area area) {
 			tk.Context = context;
 			tk.TranslateAndScale (translation, new Point (scaleX, scaleY));
 			tk.Begin ();
@@ -288,7 +288,7 @@ namespace LongoMatch.Drawing
 			}
 		}
 		
-		public override void Draw (object context, Area area)
+		public override void Draw (IContext context, Area area)
 		{
 			if (Background != null) {
 				tk.Context = context;

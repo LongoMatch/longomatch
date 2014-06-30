@@ -22,6 +22,7 @@ using LongoMatch.Common;
 using LongoMatch.Interfaces;
 using LongoMatch.Interfaces.GUI;
 using LongoMatch.Interfaces.Multimedia;
+using LongoMatch.Interfaces.Drawing;
 
 namespace LongoMatch
 {

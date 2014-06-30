@@ -264,7 +264,7 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 		
-		public override void Draw (object context, Area area)
+		public override void Draw (IContext context, Area area)
 		{
 			if (currentWidth != widget.Width || currentHeight != widget.Height) {
 				Resize ();

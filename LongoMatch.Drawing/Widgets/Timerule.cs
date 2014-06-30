@@ -19,6 +19,7 @@ using System;
 using LongoMatch.Store;
 using LongoMatch.Common;
 using LongoMatch.Interfaces.Drawing;
+using LongoMatch.Interfaces;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -55,7 +56,7 @@ namespace LongoMatch.Drawing.Widgets
 			get;
 		}
 		
-		public override void Draw (object context, Area area)
+		public override void Draw (IContext context, Area area)
 		{
 			double height = widget.Height;
 			double width = widget.Width;

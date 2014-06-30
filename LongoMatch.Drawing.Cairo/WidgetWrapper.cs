@@ -172,7 +172,7 @@ namespace LongoMatch.Drawing.Cairo
 		
 		void Draw (Area area) {
 			if (DrawEvent != null) {
-				using (Context c = CairoHelper.Create (widget.GdkWindow)) {
+				using (CairoContext c = new CairoContext (widget.GdkWindow)) {
 					if (area == null) {
 						area = new Area (new Point (0, 0), Width, Height);
 					}

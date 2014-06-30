@@ -18,22 +18,25 @@
 using System;
 using LongoMatch.Common;
 using System.Collections.Generic;
-using LongoMatch.Interfaces.Drawing;
 
-namespace LongoMatch.Interfaces
+namespace LongoMatch.Interfaces.Drawing
 {
 
+	public interface IContext:IDisposable {
+		object Value {get;}
+	}
+	
 	public interface ISurface:IDisposable  {
 		Image Copy ();
 		object Value {get;}
-		object Context {get;}
+		IContext Context {get;}
 	}
 	
 	public interface IDrawingToolkit
 	{
-		object Context {set;}
+		IContext Context {set;}
 		int LineWidth {set;}
-		bool Clear {set;}
+		bool ClearOperation {set;}
 		Color StrokeColor {set;}
 		Color FillColor {set;}
 		string FontFamily {set;}
@@ -46,6 +49,7 @@ namespace LongoMatch.Interfaces
 		void DrawSurface (ISurface surface);
 		void Begin();
 		void End();
+		void Clear (Color color);
 		void TranslateAndScale (Point translation, Point scale);
 		void DrawLine (Point start, Point stop);
 		void DrawTriangle (Point corner, double width, double height,

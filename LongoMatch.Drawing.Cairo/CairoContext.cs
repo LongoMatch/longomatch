@@ -16,35 +16,36 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Interfaces;
-using LongoMatch.Common;
-using LongoMatch.Store.Drawables;
+using Gdk;
+using Cairo;
 using LongoMatch.Interfaces.Drawing;
 
-namespace LongoMatch.Interfaces.Drawing
+namespace LongoMatch.Drawing.Cairo
 {
+	public class CairoContext: IContext
+	{
+		public CairoContext (Window window)
+		{
+			Value = CairoHelper.Create (window);
+		}
 
-	public interface ICanvas
-	{
-		 void Draw (IContext context, Area area);
-	}
-	
-	public interface ICanvasObject
-	{
-		void Draw (IDrawingToolkit tk, Area area);
-		bool Visible {set; get;}
-		string Description {set; get;}
-	}
-	
-	public interface ICanvasSelectableObject: ICanvasObject, IMovableObject
-	{
-	}
-	
-	public interface ICanvasDrawableObject: ICanvasSelectableObject
-	{
-		IBlackboardObject IDrawableObject {
+		public CairoContext (global::Cairo.Surface surface)
+		{
+			Value = new Context (surface);
+		}
+
+		public CairoContext (Context context)
+		{
+			Value = context;
+		}
+		
+		public object Value {
 			get;
-			set;
+			protected set;
+		}
+		
+		public void Dispose () {
+			(Value as Context).Dispose();
 		}
 	}
 }

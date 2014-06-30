@@ -17,7 +17,7 @@
 //
 using System;
 using Cairo;
-using LongoMatch.Interfaces;
+using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Common;
 
 namespace LongoMatch.Drawing.Cairo
@@ -43,9 +43,9 @@ namespace LongoMatch.Drawing.Cairo
 			}
 		}
 		
-		public object Context {
+		public IContext Context {
 			get {
-				return new Context (surface);
+				return new CairoContext (surface);
 			}
 		}
 		
