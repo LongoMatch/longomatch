@@ -83,7 +83,6 @@ namespace LongoMatch.Common
 		public event ErrorHandler MultimediaError;
 		public event ErrorHandler CaptureError;
 		public event CaptureFinishedHandler CaptureFinished;
-		public event SegmentClosedHandler SegmentClosed;
 		public event NextButtonClickedHandler Next;
 		public event PrevButtonClickedHandler Prev;
 		public event DrawFrameHandler DrawFrame;
@@ -311,13 +310,6 @@ namespace LongoMatch.Common
 		{
 			if (Tick != null) {
 				Tick (currentTime, streamLength, currentPosition);
-			}
-		}
-		
-		public void EmitSegmentClosed ()
-		{
-			if (SegmentClosed != null) {
-				SegmentClosed ();
 			}
 		}
 		

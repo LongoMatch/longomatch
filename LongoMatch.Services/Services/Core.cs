@@ -105,7 +105,6 @@ namespace LongoMatch.Services
 			
 			/* Start the hotkeys manager */
 			hkManager = new HotKeysManager ();
-			hkManager.newMarkEvent += eManager.OnNewTag;
 
 			/* Start playlists manager */
 			plManager = new PlaylistManager(Config.GUIToolkit, videoRenderer);

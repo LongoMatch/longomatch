@@ -88,7 +88,6 @@ namespace LongoMatch.Services
 			Config.EventsBroker.PlayListNodeAddedEvent += OnPlayListNodeAdded;
 			Config.EventsBroker.PlayListNodeSelectedEvent += LoadPlaylistPlay;
 			Config.EventsBroker.RenderPlaylist += OnRenderPlaylistEvent;
-			Config.EventsBroker.SegmentClosed += () => {selectedTimeNode = null;};
 			Config.EventsBroker.Next += () => {Next ();};
 			Config.EventsBroker.Prev += () => {
 				if(selectedTimeNode is PlayListPlay)

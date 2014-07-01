@@ -269,7 +269,7 @@ namespace LongoMatch.Gui
 			SetScaleValue (SCALE_FPS);
 			//timescale.Sensitive = true;
 			loadedPlay = null;
-			Config.EventsBroker.EmitSegmentClosed ();
+			Config.EventsBroker.EmitPlaySelected (null);
 		}
 
 		public void SetSensitive() {

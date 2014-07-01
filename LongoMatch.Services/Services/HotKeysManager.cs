@@ -38,8 +38,6 @@ namespace LongoMatch.Services
 
 	public class HotKeysManager
 	{
-		public event NewTagHandler newMarkEvent;
-		
 		Dictionary<HotKey, Category> dic;
 		bool ignoreKeys;
 		
@@ -78,9 +76,7 @@ namespace LongoMatch.Services
 			hotkey.Key= key;
 			hotkey.Modifier= (int) ((ModifierType)state & (ModifierType.Mod1Mask | ModifierType.Mod5Mask | ModifierType.ShiftMask));
 			if(dic.TryGetValue(hotkey, out cat)) {
-				if(newMarkEvent != null) {
-					newMarkEvent(cat);
-				}
+				Config.EventsBroker.EmitNewTag (cat);
 #endif
 			}
 		}

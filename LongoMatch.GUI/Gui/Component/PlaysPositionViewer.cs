@@ -40,7 +40,6 @@ namespace LongoMatch.Gui.Component
 			hfield.Tagger.ShowMenuEvent += HandleShowMenuEvent;
 			goal.Tagger.ShowMenuEvent += HandleShowMenuEvent;
 			Config.EventsBroker.PlaySelected += HandlePlaySelected;
-			Config.EventsBroker.SegmentClosed += HandleSegmentClosed;
 			menu = new PlaysMenu ();
 		}
 
@@ -72,16 +71,15 @@ namespace LongoMatch.Gui.Component
 		
 		void HandlePlaySelected (Play play)
 		{
-			field.Tagger.SelectPlay (play);
-			hfield.Tagger.SelectPlay (play);
-			goal.Tagger.SelectPlay (play);
-		}
-
-		void HandleSegmentClosed ()
-		{
-			field.Tagger.ClearSelection ();
-			hfield.Tagger.ClearSelection ();
-			goal.Tagger.ClearSelection ();
+			if (play != null) {
+				field.Tagger.SelectPlay (play);
+				hfield.Tagger.SelectPlay (play);
+				goal.Tagger.SelectPlay (play);
+			} else {
+				field.Tagger.ClearSelection ();
+				hfield.Tagger.ClearSelection ();
+				goal.Tagger.ClearSelection ();
+			}
 		}
 
 		void HandleShowMenuEvent (System.Collections.Generic.List<Play> plays)

@@ -97,7 +97,6 @@ namespace LongoMatch.Services
 			
 			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
 
-			Config.EventsBroker.SegmentClosed += OnSegmentClosedEvent;
 			Config.EventsBroker.Prev += OnPrev;
 			Config.EventsBroker.DrawFrame += OnDrawFrame;
 			Config.EventsBroker.PlaybackRateChanged += HandlePlaybackRateChanged;
@@ -300,7 +299,11 @@ namespace LongoMatch.Services
 
 		void OnPlaySelected(Play play)
 		{
-			LoadPlay (play, play.Start, true);
+			if (play != null) {
+				LoadPlay (play, play.Start, true);
+			} else {
+				loadedPlay = null;
+			}
 		}
 
 		protected virtual void OnTimeNodeChanged(TimeNode tNode, object val)
@@ -339,11 +342,6 @@ namespace LongoMatch.Services
 				analysisWindow.AddPlay (copy);
 			}
 			filter.Update();
-		}
-
-		protected virtual void OnSegmentClosedEvent()
-		{
-			loadedPlay = null;
 		}
 
 		protected virtual void OnSnapshotSeries(Play play) {
