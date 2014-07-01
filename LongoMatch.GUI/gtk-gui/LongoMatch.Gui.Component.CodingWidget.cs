@@ -40,7 +40,7 @@ namespace LongoMatch.Gui.Component
 			this.UIManager.InsertActionGroup (w2, 0);
 			global::Gtk.ActionGroup w3 = new global::Gtk.ActionGroup ("Timeline");
 			this.positionMode = new global::Gtk.RadioAction ("positionMode", null, null, "gtk-justify-fill", 0);
-			this.positionMode.Group = this.convertAction.Group;
+			this.positionMode.Group = this.autoTaggingMode.Group;
 			w3.Add (this.positionMode, null);
 			this.UIManager.InsertActionGroup (w3, 1);
 			this.Name = "LongoMatch.Gui.Component.CodingWidget";

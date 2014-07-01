@@ -21,6 +21,7 @@ using LongoMatch.Common;
 using LongoMatch.Gui.Helpers;
 using LongoMatch.Store;
 using Mono.Unix;
+using System.Collections.Generic;
 
 namespace LongoMatch.Gui.Component
 {
@@ -35,7 +36,7 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 			buttonswidget.Mode = LongoMatch.Common.TagMode.Predifined;
-			buttonswidget.CategorySelected += HandleCategorySelected;
+			buttonswidget.NewTagEvent += HandleCategorySelected;
 			categoryproperties.Visible = false;
 			savebutton.Clicked += HandleSaveClicked;
 			deletebutton.Sensitive = false;
@@ -81,7 +82,7 @@ namespace LongoMatch.Gui.Component
 			Edited = true;
 		}
 		
-		void HandleCategorySelected (Category category)
+		void HandleCategorySelected (Category category, List<Player> players)
 		{
 			categoryproperties.Visible = true;
 			deletebutton.Sensitive = true;

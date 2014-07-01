@@ -100,9 +100,9 @@ namespace LongoMatch.Common
 				NewTagAtPosEvent(category, pos);
 		}
 
-		public void EmitNewTag(Category category) {
+		public void EmitNewTag(Category category, List<Player> players = null) {
 			if (NewTagEvent != null)
-				NewTagEvent(category);
+				NewTagEvent(category, players);
 		}
 
 		public void EmitNewTagStart(Category category) {

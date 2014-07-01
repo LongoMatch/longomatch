@@ -7,7 +7,10 @@
     <itemgroups />
     <signals>
       <itemgroup label="ButtonsWidget Signals">
-        <signal name="CategorySelected" />
+        <signal name="NewTagEvent" />
+        <signal name="NewTagStartEvent" />
+        <signal name="NewTagStopEvent" />
+        <signal name="NewTagCancelEvent" />
       </itemgroup>
     </signals>
   </object>

@@ -33,6 +33,8 @@ namespace LongoMatch.Gui.Component
 		TeamTagger teamtagger;
 		Project project;
 		ProjectType projectType;
+		List<Player> selectedPlayers;
+		Play loadedPlay;
 		
 		public CodingWidget ()
 		{
@@ -46,6 +48,8 @@ namespace LongoMatch.Gui.Component
 			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea1));
 			teamtagger.HomeColor = Constants.HOME_COLOR;
 			teamtagger.AwayColor = Constants.AWAY_COLOR;
+			teamtagger.SelectionMode = MultiSelectionMode.Multiple;
+			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
 
 			drawingarea1.HeightRequest = 200;
 			drawingarea1.WidthRequest = 300;
@@ -55,8 +59,10 @@ namespace LongoMatch.Gui.Component
 			Config.EventsBroker.Tick += HandleTick;
 			Config.EventsBroker.PlaySelected += HandlePlaySelected;
 			Misc.DisableFocus (vbox2);
+			
+			buttonswidget.NewTagEvent += HandleNewTagEvent;
 		}
-		
+
 		protected override void OnDestroyed ()
 		{
 			Config.EventsBroker.Tick -= HandleTick;
@@ -114,12 +120,34 @@ namespace LongoMatch.Gui.Component
 		
 		void HandlePlaySelected (Play play)
 		{
+			loadedPlay = play;
 			timeline.SelectedTimeNode = play;
+			if (play != null) {
+				teamtagger.Select (play.Players);
+			} else {
+				teamtagger.ClearSelection ();
+			}
 		}
 
 		void HandleTick (Time currentTime, Time streamLength, double currentPosition)
 		{
 			timeline.CurrentTime = currentTime;
+		}
+
+		void HandleNewTagEvent (Category category, List<Player> players)
+		{
+			Config.EventsBroker.EmitNewTag (category, selectedPlayers);
+			teamtagger.ClearSelection ();
+		}
+
+		void HandlePlayersSelectionChangedEvent (List<Player> players)
+		{
+			if (loadedPlay != null) {
+				loadedPlay.Players = players;
+				Config.EventsBroker.EmitTeamTagsChanged ();
+			} else {
+				selectedPlayers = players;
+			}
 		}
 	}
 

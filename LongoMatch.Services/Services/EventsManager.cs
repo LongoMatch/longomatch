@@ -156,7 +156,7 @@ namespace LongoMatch.Services
 			}
 		}
 		
-		private void ProcessNewTag(Category category,Time pos) {
+		private void ProcessNewTag(Category category,Time pos, List<Player> players) {
 			Time length, startTime, stopTime, start, stop, fStart, fStop;
 
 			if(player == null || openedProject == null)
@@ -178,10 +178,10 @@ namespace LongoMatch.Services
 				length = player.StreamLength;
 				fStop = (stop > length) ? length: stop;
 			}
-			AddNewPlay(fStart, fStop, category);
+			AddNewPlay(fStart, fStop, category, players);
 		}
 
-		private void AddNewPlay(Time start, Time stop, Category category) {
+		private void AddNewPlay(Time start, Time stop, Category category, List<Player> players) {
 			Image miniature;
 
 			Log.Debug(String.Format("New play created start:{0} stop:{1} category:{2}",
@@ -204,6 +204,9 @@ namespace LongoMatch.Services
 			
 			/* Add the new created play to the project and update the GUI*/
 			var play = openedProject.AddPlay(category, start, stop,miniature);
+			if (players != null) {
+				play.Players = players;
+			}
 			/* Tag subcategories of the new play */
 			if (!Config.FastTagging)
 				guiToolkit.TagPlay (play, openedProject);
@@ -228,10 +231,10 @@ namespace LongoMatch.Services
 
 			player.CloseSegment();
 			player.Seek (pos, true);
-			ProcessNewTag(category,pos);
+			ProcessNewTag(category,pos, null);
 		}
 
-		public void OnNewTag(Category category) {
+		public void OnNewTag(Category category, List<Player> players) {
 			Time pos;
 			
 			if (openedProject == null)
@@ -244,7 +247,7 @@ namespace LongoMatch.Services
 			} else {
 				pos = player.CurrentTime;
 			}
-			ProcessNewTag(category,pos);
+			ProcessNewTag(category,pos, players);
 		}
 
 		void OnNewPlayStart (Category category) {
@@ -280,7 +283,7 @@ namespace LongoMatch.Services
 				else
 					stopTime = stopTime + correction;
 			}
-			AddNewPlay(startTime, stopTime, category);
+			AddNewPlay(startTime, stopTime, category, null);
 		}
 		
 		void OnNewPlayCancel (Category category) {

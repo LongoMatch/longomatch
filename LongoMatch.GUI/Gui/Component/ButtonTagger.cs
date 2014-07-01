@@ -119,7 +119,7 @@ namespace LongoMatch.Gui.Component
 		
 		void EmitNewTag () {
 			if (NewTag != null)
-				NewTag (category);
+				NewTag (category, null);
 		}
 		
 		void OnButtonClicked (object sender, EventArgs args)

@@ -96,15 +96,20 @@ namespace LongoMatch.Drawing.Widgets
 				return inSubs;
 			}
 		}
-		public void Select (Player p) {
+
+		public void Select (List<Player> players) {
 			ClearSelection ();
-			if (p != null) {
-				ICanvasObject co = Objects.LastOrDefault (pl => (pl as PlayerObject).Player == p);
-				PlayerObject po = co as PlayerObject;
-				if (po != null) {
-					UpdateSelection (new Selection (po, SelectionPosition.All));
+			if (players != null) {
+				foreach (Player p in players) {
+					SelectPlayer (p);
 				}
 			}
+			widget.ReDraw ();
+		}
+
+		public void Select (Player p) {
+			ClearSelection ();
+			SelectPlayer (p);
 			widget.ReDraw ();
 		}
 		
@@ -128,6 +133,17 @@ namespace LongoMatch.Drawing.Widgets
 		int BenchWidth {
 			get {
 				return PlayersPorRowInBench * (int)BenchIconSize;
+			}
+		}
+		
+		void SelectPlayer (Player p)
+		{
+			if (p != null) {
+				ICanvasObject co = Objects.LastOrDefault (pl => (pl as PlayerObject).Player.ID == p.ID);
+				PlayerObject po = co as PlayerObject;
+				if (po != null) {
+					UpdateSelection (new Selection (po, SelectionPosition.All));
+				}
 			}
 		}
 		
