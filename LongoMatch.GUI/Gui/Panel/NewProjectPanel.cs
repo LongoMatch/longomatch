@@ -32,7 +32,6 @@ using LongoMatch.Gui.Popup;
 using LongoMatch.Gui.Dialog;
 using LongoMatch.Gui.Helpers;
 using LongoMatch.Video.Utils;
-using LongoMatch.Utils;
 using LongoMatch.Interfaces.GUI;
 
 using Device = LongoMatch.Common.Device;
@@ -349,7 +348,7 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleOpenbuttonClicked(object sender, System.EventArgs e)
 		{
-			mediaFile = Open.OpenFile (this);
+			mediaFile = Misc.OpenFile (this);
 			if (mediaFile != null) {
 				fileEntry.Text = mediaFile.FilePath;
 			}

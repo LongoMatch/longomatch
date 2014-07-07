@@ -106,7 +106,7 @@ namespace LongoMatch.Gui.Panel
 		
 		void HandleFileClicked (object sender, EventArgs e)
 		{
-			MediaFile file= Utils.Open.OpenFile (this);
+			MediaFile file= LongoMatch.Gui.Helpers.Misc.OpenFile (this);
 			if (file != null) {
 				loadedProject.Description.File = file;
 				fileimage.Pixbuf = file.Preview.Value;
