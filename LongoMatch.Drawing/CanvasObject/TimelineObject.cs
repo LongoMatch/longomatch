@@ -130,9 +130,6 @@ namespace LongoMatch.Drawing.CanvasObject
 					}
 				}
 			}
-			if (selection != null) {
-				(selection.Drawable as ICanvasSelectableObject).Selected = true;
-			}
 			return selection;
 		}
 		

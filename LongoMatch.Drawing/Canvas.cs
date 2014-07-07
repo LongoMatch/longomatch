@@ -171,7 +171,8 @@ namespace LongoMatch.Drawing
 		{
 			Selection sel = null;
 
-			/* Try with the selected item first */if (Selections.Count > 0) {
+			/* Try with the selected item first */
+			if (Selections.Count > 0) {
 				sel = Selections.LastOrDefault ().Drawable.GetSelection (coords, Accuracy);
 			}
 			if (sel == null) {
