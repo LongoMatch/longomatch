@@ -101,7 +101,7 @@ namespace LongoMatch.Drawing.Widgets
 			ClearSelection ();
 			if (players != null) {
 				foreach (Player p in players) {
-					SelectPlayer (p);
+					SelectPlayer (p, false);
 				}
 			}
 			widget.ReDraw ();
@@ -109,7 +109,7 @@ namespace LongoMatch.Drawing.Widgets
 
 		public void Select (Player p) {
 			ClearSelection ();
-			SelectPlayer (p);
+			SelectPlayer (p, false);
 			widget.ReDraw ();
 		}
 		
@@ -136,13 +136,13 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 		
-		void SelectPlayer (Player p)
+		void SelectPlayer (Player p, bool notify=true)
 		{
 			if (p != null) {
 				ICanvasObject co = Objects.LastOrDefault (pl => (pl as PlayerObject).Player.ID == p.ID);
 				PlayerObject po = co as PlayerObject;
 				if (po != null) {
-					UpdateSelection (new Selection (po, SelectionPosition.All));
+					UpdateSelection (new Selection (po, SelectionPosition.All), notify);
 				}
 			}
 		}
