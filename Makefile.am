@@ -12,11 +12,15 @@ SUBDIRS = \
 	LongoMatch.Core \
 	LongoMatch.Addins \
 	LongoMatch.Multimedia \
+	LongoMatch.Drawing \
+	LongoMatch.Drawing.Cairo \
+	LongoMatch.GUI.Helpers \
 	LongoMatch.GUI.Multimedia \
 	LongoMatch.GUI \
 	LongoMatch.Plugins \
 	LongoMatch.Services \
 	LongoMatch \
+	LongoMatch.Migration \
 	po
 
 DISTCLEANFILES = 	intltool-extract\

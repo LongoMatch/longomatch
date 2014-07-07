@@ -2,8 +2,7 @@ ASSEMBLY = LongoMatchGtk
 TARGET = exe
 LINK = $(REF_DEP_LONGOMATCH)
 
-SOURCES = \
-	AssemblyInfo.cs \
+SOURCES = AssemblyInfo.cs \
 	Main.cs
 
 IMAGES = $(top_srcdir)/images/logo.svg \

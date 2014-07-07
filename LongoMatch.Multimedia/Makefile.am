@@ -3,8 +3,7 @@ TARGET = library
 
 LINK = $(REF_DEP_LONGOMATCH_MULTIMEDIA)
 
-SOURCES = \
-	Capturer/FakeCapturer.cs \
+SOURCES = Capturer/FakeCapturer.cs \
 	Capturer/GstCameraCapturer.cs \
 	Capturer/LiveSourceTimer.cs \
 	Capturer/ObjectManager.cs \
@@ -13,23 +12,21 @@ SOURCES = \
 	Common/Handlers.cs \
 	Converter/GstVideoConverter.cs \
 	Converter/ObjectManager.cs \
-	Editor/VideoSegment.cs \
 	Editor/GstVideoSplitter.cs \
-	Interfaces/ICapturer.cs \
-	Interfaces/IPlayer.cs \
+	Editor/VideoSegment.cs \
 	Player/GstPlayer.cs \
 	Player/ObjectManager.cs \
 	Remuxer/GstRemuxer.cs \
 	Remuxer/MpegRemuxer.cs \
 	Remuxer/ObjectManager.cs \
-	Utils/FramesCapturer.cs \
 	Utils/GStreamer.cs \
+	Utils/GtkHelpers.cs \
 	Utils/IMetadataReader.cs \
+	Utils/MultimediaFactory.cs \
 	Utils/PreviewMediaFile.cs \
 	Utils/Seeker.cs \
 	Utils/TimeString.cs \
-	Utils/VideoDevice.cs \
-	MultimediaFactory.cs
+	Utils/VideoDevice.cs
 
 DLLCONFIG = LongoMatch.Multimedia.dll.config
 

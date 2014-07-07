@@ -17,12 +17,16 @@ LINK_GLIB = $(GLIBSHARP_LIBS)
 LINK_GTK = $(GTKSHARP_LIBS)
 LINK_GCONF = $(GCONFSHARP_LIBS)
 LINK_DB40 = $(DB4O_LIBS)
+LINK_JSON = $(JSON_LIBS)
 LINK_OSXYPLOT = -r:$(DIR_BIN)/OxyPlotMono.dll
 LINK_LONGOMATCH_ADDINS = -r:$(DIR_BIN)/LongoMatch.Addins.dll
 LINK_LONGOMATCH_CORE = -r:$(DIR_BIN)/LongoMatch.dll
 LINK_LONGOMATCH_MULTIMEDIA = -r:$(DIR_BIN)/LongoMatch.Multimedia.dll
 LINK_LONGOMATCH_GUI_MULTIMEDIA = -r:$(DIR_BIN)/LongoMatch.GUI.Multimedia.dll
 LINK_LONGOMATCH_GUI = -r:$(DIR_BIN)/LongoMatch.GUI.dll
+LINK_LONGOMATCH_GUI_HELPERS = -r:$(DIR_BIN)/LongoMatch.GUI.Helpers.dll
+LINK_LONGOMATCH_DRAWING = -r:$(DIR_BIN)/LongoMatch.Drawing.dll
+LINK_LONGOMATCH_DRAWING_CAIRO = -r:$(DIR_BIN)/LongoMatch.Drawing.Cairo.dll
 LINK_LONGOMATCH_SERVICES = -r:$(DIR_BIN)/LongoMatch.Services.dll
 
 
@@ -40,6 +44,7 @@ REF_DEP_LONGOMATCH_CORE = \
                      $(LINK_SYSTEM_DRAWING) \
                      $(LINK_MONO_POSIX) \
                      $(LINK_GLIB) \
+                     $(LINK_JSON) \
                      $(LINK_GTK)
 
 REF_DEP_LONGOMATCH_MULTIMEDIA = \
@@ -53,7 +58,20 @@ REF_DEP_LONGOMATCH_GUI_MULTIMEDIA = \
                      $(LINK_GLIB) \
                      $(LINK_GTK) \
                      $(LINK_LONGOMATCH_CORE) \
-                     $(LINK_LONGOMATCH_MULTIMEDIA)
+                     $(LINK_LONGOMATCH_MULTIMEDIA) \
+                     $(LINK_LONGOMATCH_GUI_HELPERS) \
+                     $(LINK_LONGOMATCH_DRAWING) \
+                     $(LINK_LONGOMATCH_DRAWING_CAIRO)
+
+REF_DEP_LONGOMATCH_GUI_HELPERS = \
+                     $(LINK_SYSTEM_DRAWING) \
+                     $(LINK_SYSTEM_CORE) \
+                     $(LINK_MONO_POSIX) \
+                     $(LINK_GLIB) \
+                     $(LINK_GTK) \
+                     $(LINK_ATK) \
+                     $(LINK_CAIRO) \
+                     $(LINK_LONGOMATCH_CORE)
 
 REF_DEP_LONGOMATCH_GUI = \
                      $(LINK_SYSTEM_DRAWING) \
@@ -64,7 +82,23 @@ REF_DEP_LONGOMATCH_GUI = \
                      $(LINK_LONGOMATCH_CORE) \
                      $(LINK_LONGOMATCH_MULTIMEDIA) \
                      $(LINK_LONGOMATCH_GUI_MULTIMEDIA) \
+                     $(LINK_LONGOMATCH_GUI_HELPERS) \
+                     $(LINK_LONGOMATCH_DRAWING) \
+                     $(LINK_LONGOMATCH_DRAWING_CAIRO) \
                      $(LINK_OSXYPLOT)
+
+REF_DEP_LONGOMATCH_DRAWING = \
+                     $(LINK_SYSTEM) \
+                     $(LINK_SYSTEM_CORE) \
+                     $(LINK_LONGOMATCH_CORE)
+
+REF_DEP_LONGOMATCH_DRAWING_CAIRO = \
+                     $(LINK_SYSTEM) \
+                     $(LINK_GTK) \
+                     $(LINK_ATK) \
+                     $(LINK_GDK) \
+                     $(LINK_CAIRO) \
+                     $(LINK_LONGOMATCH_CORE)
 
 REF_DEP_LONGOMATCH_SERVICES = \
                      $(LINK_MONO_POSIX) \
@@ -73,9 +107,8 @@ REF_DEP_LONGOMATCH_SERVICES = \
                      $(LINK_GTK) \
                      $(LINK_CAIRO) \
                      $(LINK_LONGOMATCH_CORE) \
-                     $(LINK_LONGOMATCH_MULTIMEDIA) \
-                     $(LINK_LONGOMATCH_GUI) \
-                     $(LINK_LONGOMATCH_GUI_MULTIMEDIA)
+                     $(LINK_LONGOMATCH_ADDINS) \
+                     $(LINK_LONGOMATCH_DRAWING)
 
 REF_DEP_LONGOMATCH = \
                      $(LINK_MONO_POSIX) \
@@ -83,9 +116,25 @@ REF_DEP_LONGOMATCH = \
                      $(LINK_GTK) \
                      $(LINK_LONGOMATCH_ADDINS) \
                      $(LINK_LONGOMATCH_CORE) \
+                     $(LINK_LONGOMATCH_DRAWING_CAIRO) \
+                     $(LINK_LONGOMATCH_GUI) \
+                     $(LINK_LONGOMATCH_GUI_HELPERS) \
+                     $(LINK_LONGOMATCH_GUI_MULTIMEDIA) \
                      $(LINK_LONGOMATCH_MULTIMEDIA) \
-                     $(LINK_LONGOMATCH_SERVICES) \
-                     $(LINK_LONGOMATCH_GUI)
+                     $(LINK_LONGOMATCH_SERVICES)
+
+REF_DEP_LONGOMATCH_MIGRATION = \
+                     $(LINK_SYSTEM) \
+                     $(LINK_SYSTEM_CORE) \
+                     $(LINK_SYSTEM_DRAWING) \
+                     $(LINK_DB4O) \
+                     $(LINK_MONO_POSIX) \
+                     $(LINK_GLIB) \
+                     $(LINK_GTK) \
+                     $(LINK_ATK) \
+                     $(LINK_GDK) \
+                     $(LINK_DB40) \
+                     $(LINK_JSON)
 
 REF_DEP_OXYPLOT = \
                      $(LINK_SYSTEM) \

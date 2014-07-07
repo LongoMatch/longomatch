@@ -3,21 +3,20 @@ TARGET = library
 
 LINK = $(REF_DEP_LONGOMATCH_GUI_MULTIMEDIA)
 
-SOURCES = \
-	gtk-gui/generated.cs \
+SOURCES = Gui/CapturerBin.cs \
+	Gui/PlayerBin.cs \
+	Gui/PlayerCapturerBin.cs \
+	Gui/Utils/FramesCapturer.cs \
+	Gui/Utils/Remuxer.cs \
+	Gui/VolumeWindow.cs \
+	MultimediaToolkit.cs \
 	gtk-gui/LongoMatch.Gui.CapturerBin.cs \
 	gtk-gui/LongoMatch.Gui.PlayerBin.cs \
 	gtk-gui/LongoMatch.Gui.PlayerCapturerBin.cs \
 	gtk-gui/LongoMatch.Gui.VolumeWindow.cs \
-	Gui/CapturerBin.cs \
-	Gui/PlayerBin.cs \
-	Gui/PlayerCapturerBin.cs \
-	Gui/VolumeWindow.cs \
-	Gui/Utils/Remuxer.cs
+	gtk-gui/generated.cs
 
-RESOURCES = \
-	gtk-gui/objects.xml \
-	gtk-gui/gui.stetic
+RESOURCES = gtk-gui/gui.stetic
 
 include $(top_srcdir)/build/build.mk
 

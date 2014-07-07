@@ -3,85 +3,108 @@ TARGET = library
 
 LINK = $(REF_DEP_LONGOMATCH_CORE)
 
-SOURCES = \
+SOURCES = Common/Area.cs \
 	Common/CaptureSettings.cs \
 	Common/Cloner.cs \
 	Common/Color.cs \
 	Common/ConsoleCrayon.cs \
 	Common/Constants.cs \
-	Common/Coordinates.cs \
 	Common/Device.cs \
 	Common/EncodingProfiles.cs \
-	Common/EncodingSettings.cs \
 	Common/EncodingQuality.cs \
+	Common/EncodingSettings.cs \
 	Common/Enums.cs \
+	Common/EventsBroker.cs \
 	Common/Exceptions.cs \
+	Common/ExtensionMethods.cs \
 	Common/Gettext.cs \
 	Common/Image.cs \
 	Common/Job.cs \
 	Common/Log.cs \
 	Common/PlayList.cs \
 	Common/PlaysFilter.cs \
-	Common/SerializableObject.cs \
+	Common/Serializer.cs \
 	Common/SysInfo.cs \
 	Common/VideoStandards.cs \
 	Config.cs \
+	Handlers/Drawing.cs \
 	Handlers/Handlers.cs \
 	Handlers/Multimedia.cs \
+	Interfaces/Drawing/ICanvas.cs \
+	Interfaces/Drawing/IDrawable.cs \
+	Interfaces/Drawing/IDrawingToolkit.cs \
+	Interfaces/Drawing/IWidget.cs \
+	Interfaces/GUI/IAnalysisWindow.cs \
 	Interfaces/GUI/IBusyDialog.cs \
-	Interfaces/GUI/ICapturer.cs \
+	Interfaces/GUI/ICapturerBin.cs \
 	Interfaces/GUI/IGUIToolkit.cs \
-	Interfaces/GUI/IMainWindow.cs \
-	Interfaces/GUI/IPlayer.cs \
+	Interfaces/GUI/IMainController.cs \
+	Interfaces/GUI/IPanel.cs \
+	Interfaces/GUI/IPlayerBin.cs \
 	Interfaces/GUI/IPlaylistWidget.cs \
 	Interfaces/GUI/IRenderingStateBar.cs \
-	Interfaces/Multimedia/IFramesCapturer.cs \
-	Interfaces/Multimedia/IMultimediaToolkit.cs \
-	Interfaces/Multimedia/IRemuxer.cs \
-	Interfaces/Multimedia/IVideoConverter.cs \
-	Interfaces/Multimedia/IVideoEditor.cs \
-	Interfaces/IDatabase.cs \
 	Interfaces/IDataBaseManager.cs \
+	Interfaces/IDatabase.cs \
+	Interfaces/IIDObject.cs \
 	Interfaces/IPlayList.cs \
+	Interfaces/IProjectsImporter.cs \
 	Interfaces/IRenderingJobsManager.cs \
-	Interfaces/ISubCategory.cs \
-	Interfaces/ITag.cs \
 	Interfaces/ITemplates.cs \
 	Interfaces/ITemplatesService.cs \
 	Interfaces/ITimelineNode.cs \
+	Interfaces/Multimedia/ICapturer.cs \
+	Interfaces/Multimedia/IFramesCapturer.cs \
+	Interfaces/Multimedia/IMultimediaToolkit.cs \
+	Interfaces/Multimedia/IPlayer.cs \
+	Interfaces/Multimedia/IRemuxer.cs \
+	Interfaces/Multimedia/IVideoConverter.cs \
+	Interfaces/Multimedia/IVideoEditor.cs \
 	Stats/CategoryStats.cs \
-	Stats/GameUnitStats.cs \
-	Stats/GameUnitsStats.cs \
 	Stats/PercentualStat.cs \
 	Stats/PlayersStats.cs \
 	Stats/ProjectStats.cs \
 	Stats/Stat.cs \
 	Stats/SubCategoryStat.cs \
 	Store/Category.cs \
-	Store/Drawing.cs \
-	Store/GameUnit.cs \
-	Store/GameUnitsList.cs \
-	Store/TimelineNode.cs \
+	Store/Coordinates.cs \
+	Store/Drawables/Angle.cs \
+	Store/Drawables/Counter.cs \
+	Store/Drawables/Cross.cs \
+	Store/Drawables/Drawable.cs \
+	Store/Drawables/Ellipse.cs \
+	Store/Drawables/Line.cs \
+	Store/Drawables/MultiPoints.cs \
+	Store/Drawables/Quadrilateral.cs \
+	Store/Drawables/Rectangle.cs \
+	Store/Drawables/Selection.cs \
+	Store/Drawables/Text.cs \
+	Store/FrameDrawing.cs \
 	Store/HotKey.cs \
 	Store/MediaFile.cs \
+	Store/PenaltyCard.cs \
+	Store/PenaltyCardEvent.cs \
+	Store/Period.cs \
 	Store/PixbufTimeNode.cs \
 	Store/Play.cs \
-	Store/Player.cs \
 	Store/PlayListPlay.cs \
+	Store/Player.cs \
+	Store/Point.cs \
 	Store/Project.cs \
 	Store/ProjectDescription.cs \
+	Store/Score.cs \
+	Store/ScoreEvent.cs \
 	Store/SubCategory.cs \
 	Store/Tag.cs \
 	Store/TagStore.cs \
 	Store/Templates/CategoriesTemplate.cs \
-	Store/Templates/SubCategoryTemplate.cs \
 	Store/Templates/TeamTemplate.cs \
 	Store/Time.cs \
-	Store/TimeNode.cs
+	Store/TimeNode.cs \
+	Store/TimelineNode.cs \
+	Store/Timer.cs
 
-RESOURCES = \
-	$(top_srcdir)/images/field_background.svg \
-	$(top_srcdir)/images/half_field_background.svg \
-	$(top_srcdir)/images/goal_background.svg
+RESOURCES = $(top_srcdir)/images/field_background.svg \
+	$(top_srcdir)/images/goal_background.svg \
+	$(top_srcdir)/images/half_field_background.svg
 
 include $(top_srcdir)/build/build.mk

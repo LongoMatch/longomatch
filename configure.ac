@@ -72,6 +72,8 @@ PKG_CHECK_MODULES([GLIBSHARP], [glib-sharp-2.0])
 AC_SUBST(GLIBSHARP_LIBS)
 PKG_CHECK_MODULES([GTKSHARP], [gtk-sharp-2.0])
 AC_SUBST(GTKSHARP_LIBS)
+PKG_CHECK_MODULES([JSON], [newtonsoft-json])
+AC_SUBST(JSON_LIBS)
 PKG_CHECK_MODULES([DB4O], [db4o])
 AC_SUBST(DB4O_LIBS)
 PKG_CHECK_MODULES([MONO_ADDINS], [mono-addins])
@@ -126,8 +128,12 @@ oxyplot/Makefile
 
 LongoMatch.Addins/Makefile
 LongoMatch.Core/Makefile
+LongoMatch.Drawing/Makefile
+LongoMatch.Drawing.Cairo/Makefile
+LongoMatch.Migration/Makefile
 LongoMatch.Multimedia/Makefile
 LongoMatch.Multimedia/LongoMatch.Multimedia.dll.config
+LongoMatch.GUI.Helpers/Makefile
 LongoMatch.GUI.Multimedia/Makefile
 LongoMatch.GUI/Makefile
 LongoMatch.Plugins/Makefile
