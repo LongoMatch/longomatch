@@ -22,15 +22,6 @@
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.PlayerPropertiesTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
-    <itemgroups />
-    <signals>
-      <itemgroup label="PlayerPropertiesTreeView Signals">
-        <signal name="PlayerClicked" />
-        <signal name="PlayersSelected" />
-      </itemgroup>
-    </signals>
-  </object>
   <object type="LongoMatch.Gui.Component.PlayListTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
     <itemgroups />
     <signals />
@@ -65,15 +56,6 @@
       <itemgroup label="ProjectListWidget Signals">
         <signal name="ProjectsSelected" />
         <signal name="ProjectSelected" />
-      </itemgroup>
-    </signals>
-  </object>
-  <object type="LongoMatch.Gui.Component.CategoriesTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
-    <itemgroups />
-    <signals>
-      <itemgroup label="CategoriesTreeView Signals">
-        <signal name="CategoryClicked" />
-        <signal name="CategoriesSelected" />
       </itemgroup>
     </signals>
   </object>
@@ -304,6 +286,24 @@
   <object type="LongoMatch.Gui.Component.PlaysPositionViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
+  </object>
+  <object type="LongoMatch.Gui.Component.PlayerPropertiesTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
+    <itemgroups />
+    <signals>
+      <itemgroup label="PlayerPropertiesTreeView Signals">
+        <signal name="PlayerClicked" />
+        <signal name="PlayersSelected" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.CategoriesTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
+    <itemgroups />
+    <signals>
+      <itemgroup label="CategoriesTreeView Signals">
+        <signal name="CategoryClicked" />
+        <signal name="CategoriesSelected" />
+      </itemgroup>
+    </signals>
   </object>
   <object type="LongoMatch.Gui.CapturerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>

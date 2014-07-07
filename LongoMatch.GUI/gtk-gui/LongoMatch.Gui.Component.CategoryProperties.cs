@@ -291,7 +291,6 @@ namespace LongoMatch.Gui.Component
 			this.tagfieldcheckbutton.CanFocus = true;
 			this.tagfieldcheckbutton.Name = "tagfieldcheckbutton";
 			this.tagfieldcheckbutton.Label = global::Mono.Unix.Catalog.GetString ("Enable");
-			this.tagfieldcheckbutton.Active = true;
 			this.tagfieldcheckbutton.DrawIndicator = true;
 			this.tagfieldcheckbutton.UseUnderline = true;
 			this.vbox4.Add (this.tagfieldcheckbutton);
@@ -380,7 +379,6 @@ namespace LongoMatch.Gui.Component
 			this.taggoalcheckbutton.CanFocus = true;
 			this.taggoalcheckbutton.Name = "taggoalcheckbutton";
 			this.taggoalcheckbutton.Label = global::Mono.Unix.Catalog.GetString ("Enable");
-			this.taggoalcheckbutton.Active = true;
 			this.taggoalcheckbutton.DrawIndicator = true;
 			this.taggoalcheckbutton.UseUnderline = true;
 			this.GtkAlignment9.Add (this.taggoalcheckbutton);

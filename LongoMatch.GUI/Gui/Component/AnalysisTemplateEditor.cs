@@ -22,6 +22,7 @@ using LongoMatch.Gui.Helpers;
 using LongoMatch.Store;
 using Mono.Unix;
 using System.Collections.Generic;
+using Gdk;
 
 namespace LongoMatch.Gui.Component
 {
@@ -43,6 +44,9 @@ namespace LongoMatch.Gui.Component
 			newbutton.Sensitive = false;
 			newbutton.Clicked += HandleNewClicked;
 			deletebutton.Clicked += HandleDeleteClicked;
+			fieldeventbox.ButtonPressEvent += HandleFieldButtonPressEvent;
+			hfieldeventbox.ButtonPressEvent += HandleFieldButtonPressEvent;
+			goaleventbox.ButtonPressEvent += HandleFieldButtonPressEvent;
 		}
 
 		public Categories Template {
@@ -51,6 +55,9 @@ namespace LongoMatch.Gui.Component
 				categoryproperties.Template = value;
 				newbutton.Sensitive = true;
 				buttonswidget.UpdateCategories (value);
+				fieldimage.Pixbuf = value.FieldBackground.Scale (50, 50).Value;
+				hfieldimage.Pixbuf = value.HalfFieldBackground.Scale (50, 50).Value;
+				goalimage.Pixbuf = value.GoalBackground.Scale (50, 50).Value;
 				Edited = false;
 			}
 		}
@@ -94,6 +101,30 @@ namespace LongoMatch.Gui.Component
 		{
 			if (template != null) {
 				Config.CategoriesTemplatesProvider.Update (template);
+			}
+		}
+		
+		void HandleFieldButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
+		{
+			LongoMatch.Common.Image background;
+			Pixbuf pix = Helpers.Misc.OpenImage (this);
+			
+			if (pix == null) {
+				return;
+			}
+			
+			background = new LongoMatch.Common.Image (pix);
+			background.ScaleInplace (Constants.MAX_BACKGROUND_WIDTH,
+			                         Constants.MAX_BACKGROUND_HEIGHT);
+			if (o == fieldeventbox) {
+				template.FieldBackground = background;
+				fieldimage.Pixbuf = background.Scale (50, 50).Value;
+			} else if (o == hfieldeventbox) {
+				template.HalfFieldBackground = background;
+				hfieldimage.Pixbuf = background.Scale (50, 50).Value;
+			} else if (o == goaleventbox) {
+				template.GoalBackground = background;
+				goalimage.Pixbuf = background.Scale (50, 50).Value;
 			}
 		}
 	}
