@@ -58,6 +58,8 @@ namespace LongoMatch.Store
 			VisitorTeamTemplate = new TeamTemplate();
 			Timers = new List<Timer> ();
 			Periods = new List<Period> ();
+			ScoreTimeline = new List<ScoreEvent>();
+			PenaltyCardsTimeline = new List<PenaltyCardEvent> ();
 		}
 		#endregion
 
@@ -72,6 +74,16 @@ namespace LongoMatch.Store
 		}
 		
 		public List<Play> Timeline {
+			get;
+			set;
+		}
+		
+		public List<ScoreEvent> ScoreTimeline {
+			get;
+			set;
+		}
+		
+		public List<PenaltyCardEvent> PenaltyCardsTimeline {
 			get;
 			set;
 		}
@@ -234,6 +246,33 @@ namespace LongoMatch.Store
 
 		public List<Play> PlaysInCategory(Category category) {
 			return Timeline.Where(p => p.Category.ID == category.ID).ToList();
+		}
+
+		public int GetScore (Team team) {
+			return ScoreTimeline.Where (s => PlayTaggedTeam (s) == team).Sum(s => s.Score.Points); 
+		}
+		
+		public Team PlayTaggedTeam (Play play) {
+			bool home=false, away=false;
+			
+			if (play.Team == Team.LOCAL || play.Team == Team.BOTH ||
+			    play.Players.Count (p => LocalTeamTemplate.List.Contains (p)) > 0) {
+				home = true;
+			}
+			if (play.Team == Team.VISITOR || play.Team == Team.BOTH ||
+			    play.Players.Count (p => VisitorTeamTemplate.List.Contains (p)) > 0) {
+				away = true;
+			}
+			
+			if (away && home) {
+				return Team.BOTH;
+			} else if (home) {
+				return Team.LOCAL;
+			} else if (away) {
+				return Team.VISITOR;
+			} else {
+				return Team.NONE;
+			}
 		}
 		
 		public Image GetBackground (FieldPositionType pos) {

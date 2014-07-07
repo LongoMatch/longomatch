@@ -52,6 +52,8 @@ namespace LongoMatch.Store.Templates
 			GoalBackground = Config.GoalBackground;
 			ID = Guid.NewGuid ();
 			List = new List<Category>();
+			Scores = new List<Score> ();
+			PenaltyCards = new List<PenaltyCard> ();
 		}
 		
 		public Guid ID {
@@ -70,6 +72,16 @@ namespace LongoMatch.Store.Templates
 		}
 		
 		public List<string> GamePeriods {
+			get;
+			set;
+		}
+		
+		public List<Score> Scores {
+			get;
+			set;
+		}
+		
+		public List<PenaltyCard> PenaltyCards {
 			get;
 			set;
 		}

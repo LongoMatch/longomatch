@@ -230,5 +230,11 @@ namespace LongoMatch.Common
 		HalfField,
 		Goal
 	}
+	
+	public enum CardShape {
+		Rectangle,
+		Triangle,
+		Circle
+	}
 }
 

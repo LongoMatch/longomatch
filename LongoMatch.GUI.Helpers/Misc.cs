@@ -26,6 +26,9 @@ using LongoMatch.Common;
 using LColor = LongoMatch.Common.Color; 
 using Color = Gdk.Color;
 using System.Collections.Generic;
+using LongoMatch.Store;
+using LongoMatch.Interfaces.GUI;
+using LongoMatch.Interfaces.Multimedia;
 
 namespace LongoMatch.Gui.Helpers
 {
@@ -206,6 +209,49 @@ namespace LongoMatch.Gui.Helpers
 					}
 				}
 			}
+		}
+		
+		public static MediaFile OpenFile (object parent) {
+			IBusyDialog busy = null;
+			MediaFile mediaFile = null;
+			IGUIToolkit gui = Config.GUIToolkit;
+			IMultimediaToolkit multimedia = Config.MultimediaToolkit; 
+			string folder, filename;
+			
+			
+			folder = System.Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+			filename = gui.OpenFile (Catalog.GetString("Open file"), null, folder);                             
+			if (filename == null)
+					return null;
+			
+			try {
+				busy = gui.BusyDialog (Catalog.GetString("Analyzing video file:")+"\n"+filename,
+				                       parent);
+				busy.Show ();
+				mediaFile = multimedia.DiscoverFile (filename);
+				busy.Destroy ();
+
+				if(!mediaFile.HasVideo || mediaFile.VideoCodec == "")
+					throw new Exception(Catalog.GetString("This file doesn't contain a video stream."));
+				if(mediaFile.HasVideo && mediaFile.Duration.MSeconds == 0)
+					throw new Exception(Catalog.GetString("This file contains a video stream but its length is 0."));
+				if (multimedia.FileNeedsRemux (mediaFile)) {
+					string q = Catalog.GetString("The file you are trying to load is not properly supported. " +
+						                             "Would you like to convert it into a more suitable format?");
+					if (gui.QuestionMessage (q, Catalog.GetString ("Convert"), null)) {
+						string newFilename = multimedia.RemuxFile (mediaFile, parent);
+						if (newFilename != null)
+							mediaFile = multimedia.DiscoverFile (newFilename);
+					}
+				}
+			}
+			catch(Exception ex) {
+				busy.Destroy ();
+				gui.ErrorMessage (ex.Message, parent);
+				return null;
+			}
+			
+			return mediaFile;
 		}
 	}
 }

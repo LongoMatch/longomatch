@@ -32,7 +32,6 @@
       <Entry build="True" name="LongoMatch.GUI.Helpers" configuration="Debug" />
       <Entry build="True" name="LongoMatch.Drawing" configuration="Debug" />
       <Entry build="True" name="LongoMatch.Drawing.Cairo" configuration="Debug" />
-      <Entry build="True" name="LongoMatch.Addins.RFEBM" configuration="Debug" />
       <Entry build="True" name="LongoMatch.Migration" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
@@ -50,7 +49,6 @@
       <Entry build="True" name="LongoMatch.GUI.Helpers" configuration="Release" />
       <Entry build="True" name="LongoMatch.Drawing" configuration="Release" />
       <Entry build="True" name="LongoMatch.Drawing.Cairo" configuration="Release" />
-      <Entry build="True" name="LongoMatch.Addins.RFEBM" configuration="Release" />
       <Entry build="True" name="LongoMatch.Migration" configuration="Release" />
     </Configuration>
   </Configurations>
@@ -69,7 +67,6 @@
     <Execute type="None" entry="LongoMatch.GUI.Helpers" />
     <Execute type="None" entry="LongoMatch.Drawing" />
     <Execute type="None" entry="LongoMatch.Drawing.Cairo" />
-    <Execute type="None" entry="LongoMatch.Addins.RFEBM" />
     <Execute type="None" entry="LongoMatch.Migration" />
   </StartMode>
   <Entries>
@@ -87,7 +84,6 @@
     <Entry filename="LongoMatch.GUI.Helpers/LongoMatch.GUI.Helpers.mdp" />
     <Entry filename="LongoMatch.Drawing/LongoMatch.Drawing.mdp" />
     <Entry filename="LongoMatch.Drawing.Cairo/LongoMatch.Drawing.Cairo.mdp" />
-    <Entry filename="LongoMatch.Addins.RFEBM/LongoMatch.Addins.RFEBM.mdp" />
     <Entry filename="LongoMatch.Migration/LongoMatch.Migration.mdp" />
   </Entries>
 </Combine>
