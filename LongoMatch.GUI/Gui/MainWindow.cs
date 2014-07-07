@@ -68,12 +68,6 @@ namespace LongoMatch.Gui
 			ConnectSignals();
 			ConnectMenuSignals();
 			
-			MenuItem parent = ImportProjectActionMenu;
-			parent.Submenu = new Menu();
-			AddImportEntry(Catalog.GetString("Import file project"), "ImportFileProject",
-			               Constants.PROJECT_NAME + " (" + Constants.PROJECT_EXT + ")",
-			               "*" + Constants.PROJECT_EXT, Project.Import,
-			               false);
 			screen = Display.Default.DefaultScreen;
 			this.Resize(screen.Width * 80 / 100, screen.Height * 80 / 100);
 		}
@@ -107,18 +101,6 @@ namespace LongoMatch.Gui
 			
 			MenuItem item = new MenuItem(name);
 			item.Activated += (sender, e) => (exportAction(openedProject, guiToolKit));
-			item.Show();
-			(parent.Submenu as Menu).Append(item);
-		}
-		
-		public void AddImportEntry (string name, string shortName, string filterName,
-		                            string filter, Func<string, Project> importFunc,
-		                            bool requiresNewFile) {
-			MenuItem parent = ImportProjectActionMenu;
-			MenuItem item = new MenuItem(name);
-			item.Activated += (sender, e) => (
-				Config.EventsBroker.EmitImportProject (name, filterName, filter,
-			                                       importFunc, requiresNewFile));
 			item.Show();
 			(parent.Submenu as Menu).Append(item);
 		}
@@ -205,6 +187,9 @@ namespace LongoMatch.Gui
 			};
 			TagSubcategoriesAction.Activated += (sender, e) => {
 				Config.EventsBroker.EmitTagSubcategories (TagSubcategoriesAction.Active);
+			};
+			ImportProjectAction.Activated += (sender, e) => {
+				Config.EventsBroker.EmitImportProject ();
 			};
 		}
 		

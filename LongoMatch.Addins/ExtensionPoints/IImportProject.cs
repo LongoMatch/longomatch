@@ -26,10 +26,9 @@ namespace LongoMatch.Addins.ExtensionPoints
 	[TypeExtensionPoint]
 	public interface IImportProject
 	{
-		string GetMenuEntryName();
-		string GetMenuEntryShortName();
-		string GetFilterName();
-		string GetFilter();
+		string FilterName {get;}
+		string[] FilterExtensions {get;}
+		bool NeedsEdition {get;}
 		Project ImportProject(string filename);
 	}
 }

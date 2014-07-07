@@ -29,6 +29,7 @@
     <File subtype="Code" buildaction="Compile" name="Services/DataBaseManager.cs" />
     <File subtype="Code" buildaction="Compile" name="Services/ToolsManager.cs" />
     <File subtype="Code" buildaction="Compile" name="Services/FileDB.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Services" />
   </Contents>
   <References>
     <ProjectReference type="Package" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
@@ -38,5 +39,6 @@
     <ProjectReference type="Package" specificVersion="False" localcopy="False" refto="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Package" localcopy="False" refto="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Project" localcopy="True" refto="LongoMatch.Drawing" />
+    <ProjectReference type="Project" localcopy="True" refto="LongoMatch.Addins" />
   </References>
 </Project>

@@ -65,10 +65,10 @@ namespace LongoMatch.Handlers
 	public delegate void CloseOpenendProjectHandler();
 	public delegate void NewProjectHandler();
 	public delegate void OpenNewProjectHandler(Project project, ProjectType projectType, CaptureSettings captureSettings);
-	public delegate void ImportProjectHandler(string name, string filterName, string filter,
-	                                          Func <string, Project> importProjectFunc, bool requiresNewFile);
+	public delegate void ImportProjectHandler ();
 	public delegate void ExportProjectHandler (Project project);
 	public delegate void QuitApplicationHandler ();
+	public delegate void CreateThumbnailsHandler (Project project);
 	
 	/* GUI */
 	public delegate void ManageJobsHandler();

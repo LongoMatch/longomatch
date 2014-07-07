@@ -114,7 +114,7 @@ namespace LongoMatch.Gui
 		}
 		
 		public string OpenFile(string title, string defaultName, string defaultFolder,
-			string filterName, string[] extensionFilter)
+			string filterName = null, string[] extensionFilter = null)
 		{
 			return FileChooserHelper.OpenFile (mainWindow as Widget, title, defaultName,
 			                                   defaultFolder, filterName, extensionFilter);

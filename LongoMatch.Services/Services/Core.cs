@@ -39,6 +39,7 @@ namespace LongoMatch.Services
 		static EventsManager eManager;
 		static HotKeysManager hkManager;
 		static RenderingJobsManager videoRenderer;
+		public static IProjectsImporter ProjectsImporter;
 #if OSTYPE_WINDOWS
 		[DllImport("libglib-2.0-0.dll") /* willfully unmapped */ ]
 		static extern void g_setenv (String env, String val);
@@ -99,6 +100,7 @@ namespace LongoMatch.Services
 			
 			/* State the tools manager */
 			toolsManager = new ToolsManager (guiToolkit, multimediaToolkit, ts);
+			ProjectsImporter = toolsManager;
 			
 			/* Start the events manager */
 			eManager = new EventsManager (guiToolkit, videoRenderer);

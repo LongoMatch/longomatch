@@ -370,7 +370,7 @@
                     <node type="Menuitem" action="SaveProjectAction" />
                     <node type="Menuitem" action="CloseProjectAction" />
                     <node type="Separator" />
-                    <node type="Menu" action="ImportProjectAction" />
+                    <node type="Menuitem" action="ImportProjectAction" />
                     <node type="Separator" />
                     <node type="Menuitem" action="PreferencesAction" />
                     <node type="Separator" />

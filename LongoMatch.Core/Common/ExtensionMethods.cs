@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace LongoMatch.Common
@@ -31,6 +32,15 @@ namespace LongoMatch.Common
 			T temp = list[index1];
 			list[index1] = list[index2];
 			list[index2] = temp;
+		}
+		
+		public static T[] Merge<T>(this List<T[]> list) {
+			var res = new List<T>();
+			
+			foreach (T[] t in list) {
+				res.AddRange (t);
+			}
+			return res.ToArray ();
 		}
 	}
 }

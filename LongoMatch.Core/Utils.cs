@@ -34,7 +34,7 @@ namespace LongoMatch.Utils
 			
 			
 			folder = System.Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-			filename = gui.OpenFile (Catalog.GetString("Open file"), null, folder, null, null);                             
+			filename = gui.OpenFile (Catalog.GetString("Open file"), null, folder);                             
 			if (filename == null)
 					return null;
 			

@@ -24,13 +24,15 @@ using LongoMatch.Addins.ExtensionPoints;
 using LongoMatch.Interfaces.GUI;
 using LongoMatch.Store;
 using LongoMatch.Interfaces.Multimedia;
+using System.Collections.Generic;
+using LongoMatch.Interfaces;
 
 [assembly:AddinRoot ("LongoMatch", "1.0")]
 
 namespace LongoMatch.Addins
 {
-	public class AddinsManager
-	{
+	public class AddinsManager {
+	
 		public AddinsManager (string configPath, string searchPath)
 		{
 			Log.Information("Initializing addins at path: " + searchPath);
@@ -61,15 +63,12 @@ namespace LongoMatch.Addins
 			}
 		}
 		
-		public void LoadImportProjectAddins(IMainController mainWindow) {
+		public void LoadImportProjectAddins(IProjectsImporter importer) {
 			foreach (IImportProject importProject in AddinManager.GetExtensionObjects<IImportProject> ()) {
-				try{
-					mainWindow.AddImportEntry(importProject.GetMenuEntryName(), importProject.GetMenuEntryShortName(),
-					                          importProject.GetFilterName(), importProject.GetFilter(), importProject.ImportProject, true);
-				} catch (Exception ex) {
-					Log.Error ("Error adding import entry");
-					Log.Exception (ex);
-				}
+				importer.RegisterImporter (new Func<string, Project> (importProject.ImportProject),
+				                           importProject.FilterName,
+				                           importProject.FilterExtensions,
+				                           importProject.NeedsEdition);
 			}
 		}
 		

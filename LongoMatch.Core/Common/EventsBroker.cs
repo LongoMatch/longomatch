@@ -77,6 +77,7 @@ namespace LongoMatch.Common
 		public event ConvertVideoFilesHandler ConvertVideoFilesEvent;
 		
 		public event OpenedProjectChangedHandler OpenedProjectChanged;
+		public event CreateThumbnailsHandler CreateThumbnailsEvent;
 		
 		/* Player and Capturer */
 		public event TickHandler Tick;
@@ -263,10 +264,9 @@ namespace LongoMatch.Common
 				ManageCategoriesEvent();
 		}
 		
-		public void EmitImportProject(string name, string filterName, string filter,
-		                               Func<string, Project> func, bool requiresNewFile) {
+		public void EmitImportProject () {
 			if (ImportProjectEvent != null)
-				ImportProjectEvent(name, filterName, filter, func, requiresNewFile);
+				ImportProjectEvent ();
 		}
 		
 		public void EmitExportProject (Project project) {
@@ -373,6 +373,12 @@ namespace LongoMatch.Common
 		{
 			if (PlaybackRateChanged != null) {
 				PlaybackRateChanged (val);
+			}
+		}
+		
+		public void EmitCreateThumbnails (Project project) {
+			if (CreateThumbnailsEvent != null) {
+				CreateThumbnailsEvent (project);
 			}
 		}
 	}

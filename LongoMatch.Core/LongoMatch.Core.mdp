@@ -137,6 +137,8 @@
     <File subtype="Directory" buildaction="Compile" name="Store/Drawables" />
     <File subtype="Code" buildaction="Compile" name="Store/Drawables/Text.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Drawables/Counter.cs" />
+    <File subtype="Directory" buildaction="Compile" name="Interfaces" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/IProjectsImporter.cs" />
   </Contents>
   <References>
     <ProjectReference type="Package" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

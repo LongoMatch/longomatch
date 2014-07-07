@@ -68,7 +68,6 @@ namespace LongoMatch
 			    Config.MultimediaToolkit = multimediaToolkit;
 			    GUIToolkit guiToolkit = new GUIToolkit(version);
 			    manager.LoadExportProjectAddins(guiToolkit.MainController);
-			    manager.LoadImportProjectAddins(guiToolkit.MainController);
 			    manager.LoadMultimediaBackendsAddins(multimediaToolkit);
 			    try {
 					Core.Start(guiToolkit, multimediaToolkit);
@@ -79,6 +78,7 @@ namespace LongoMatch
 					Log.Exception (locked);
 					return;
 			    }
+			    manager.LoadImportProjectAddins(Core.ProjectsImporter);
 				Application.Run();
 			} catch(Exception ex) {
 				ProcessExecutionError(ex);

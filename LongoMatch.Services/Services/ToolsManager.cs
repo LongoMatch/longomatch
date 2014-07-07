@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using Mono.Unix;
 
 using LongoMatch.Interfaces.GUI;
@@ -23,16 +24,20 @@ using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.Store;
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
+using LongoMatch.Addins;
+using System.Collections.Generic;
+using System.IO;
 
 namespace LongoMatch.Services {
 
-	public class ToolsManager
+	public class ToolsManager: IProjectsImporter 
 	{
 		
 		TemplatesService templatesService;
 		Project openedProject;
 		IGUIToolkit guiToolkit;
 		IMultimediaToolkit multimediaToolkit;
+		AddinsManager addinsManager;
 		
 		public ToolsManager (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit,
 		                     TemplatesService templatesService)
@@ -40,6 +45,11 @@ namespace LongoMatch.Services {
 			this.guiToolkit = guiToolkit;
 			this.multimediaToolkit = multimediaToolkit;
 			this.templatesService = templatesService;
+			ProjectImporters = new List<ProjectImporter> ();
+			
+			RegisterImporter (Project.Import, Constants.PROJECT_NAME,
+			                  new string[] {Constants.PROJECT_EXT}, false);
+
 			Config.EventsBroker.OpenedProjectChanged += (pr, pt, f, a) => {
 				this.openedProject = pr;
 			};
@@ -60,10 +70,22 @@ namespace LongoMatch.Services {
 				guiToolkit.OpenProjectsManager(this.openedProject);
 			};
 			
-			Config.EventsBroker.ImportProjectEvent += ImportProject;
 			Config.EventsBroker.ExportProjectEvent += ExportProject;
+			Config.EventsBroker.ImportProjectEvent += ImportProject;
+			Config.EventsBroker.CreateThumbnailsEvent += CreateThumbnails;
 		}
 
+		public void RegisterImporter (Func<string, Project> importFunction,
+		                              string filterName, string[] extensions, 
+		                              bool needsEdition) {
+			ProjectImporter importer = new ProjectImporter {
+				ImportFunction=importFunction,
+				FilterName=filterName,
+				Extensions=extensions,
+				NeedsEdition=needsEdition};
+			ProjectImporters.Add (importer);
+		}
+		
 		public static void AddVideoFile (Project project)
 		{
 			string videofile;
@@ -73,7 +95,7 @@ namespace LongoMatch.Services {
 			guiToolkit.InfoMessage (Catalog.GetString ("This project doesn't have any file associated.\n" +
 			                                           "Select one in the next window"));
 			videofile = guiToolkit.OpenFile (Catalog.GetString ("Select a video file"), null,
-			                                 Config.HomeDir, null, null);
+			                                 Config.HomeDir);
 			if (videofile == null) {
 				guiToolkit.ErrorMessage (Catalog.GetString ("Could not import project, you need a video file"));
 				return;
@@ -86,18 +108,20 @@ namespace LongoMatch.Services {
 					guiToolkit.ErrorMessage (ex.Message);
 					return;
 				}
-				CreateThumbnails (project, guiToolkit, multimediaToolkit.GetFramesCapturer ());
+				CreateThumbnails (project);
 			}
 		}
 		
-		public static void CreateThumbnails(Project project, IGUIToolkit guiToolkit, IFramesCapturer capturer) {
+		public static void CreateThumbnails(Project project) {
 			IBusyDialog dialog;
+			IFramesCapturer capturer;
 
-			dialog = guiToolkit.BusyDialog(Catalog.GetString("Creating video thumbnails. This can take a while."));
+			dialog = Config.GUIToolkit.BusyDialog(Catalog.GetString("Creating video thumbnails. This can take a while."));
 			dialog.Show();
 			dialog.Pulse();
 
 			/* Create all the thumbnails */
+			capturer = Config.MultimediaToolkit.GetFramesCapturer ();
 			capturer.Open(project.Description.File.FilePath);
 			foreach(Play play in project.Timeline) {
 				try {
@@ -115,6 +139,11 @@ namespace LongoMatch.Services {
 			capturer.Dispose();
 			dialog.Destroy();
 		}
+
+		List<ProjectImporter> ProjectImporters {
+			get;
+			set;
+		} 
 
 		void ExportProject (Project project) {
 			if (project == null) {
@@ -138,16 +167,20 @@ namespace LongoMatch.Services {
 			}
 		}
 		
-		private void ImportProject(string name, string filterName, string filter,
-		                           Func<string, Project> importProject, bool requiresNewFile) {
+		void ImportProject () {
 			Project project;
-			string fileName;
+			ProjectImporter importer;
+			string fileName, filterName;
+			string[] extensions;
 			IDatabase DB = Config.DatabaseManager.ActiveDB;
-
+			
+			
 			Log.Debug("Importing project");
+			filterName = String.Join ("\n", ProjectImporters.Select (p => p.FilterName));
+			extensions =ExtensionMethods.Merge (ProjectImporters.Select (p => p.Extensions).ToList()); 
 			/* Show a file chooser dialog to select the file to import */
-			fileName = guiToolkit.OpenFile(name, null, Config.HomeDir, filterName,
-			                               new string[] {filter});
+			fileName = guiToolkit.OpenFile (Catalog.GetString ("Import project"), null, Config.HomeDir,
+			                                filterName, extensions);
 				
 			if(fileName == null)
 				return;
@@ -155,7 +188,13 @@ namespace LongoMatch.Services {
 			/* try to import the project and show a message error is the file
 			 * is not a valid project */
 			try {
-				project = importProject (fileName);
+				string extension = "*" + Path.GetExtension (fileName);
+				importer = ProjectImporters.Where (p => p.Extensions.Contains (extension)).FirstOrDefault ();
+				if (importer != null) {
+					project = importer.ImportFunction (fileName);
+				} else {
+					throw new Exception (Catalog.GetString ("Plugin not found"));
+				}
 			}
 			catch(Exception ex) {
 				guiToolkit.ErrorMessage (Catalog.GetString ("Error importing project:") +
@@ -164,24 +203,52 @@ namespace LongoMatch.Services {
 				return;
 			}
 
-			if (requiresNewFile) {
-				AddVideoFile (project);
-			}
-			
-			/* If the project exists ask if we want to overwrite it */
-			if (DB.Exists (project)) {
-				var res = guiToolkit.QuestionMessage (Catalog.GetString ("A project already exists for the file:") +
-				                                      project.Description.File.FilePath+ "\n" +
-				                                      Catalog.GetString ("Do you want to overwrite it?"), null);
-				if(!res)
-					return;
-				DB.UpdateProject(project);
+			if (importer.NeedsEdition) {
+				Config.EventsBroker.EmitNewProject (project);
 			} else {
-				DB.AddProject(project);
+				if (project.Description.File == null ||
+				    !File.Exists (project.Description.File.FilePath)) {
+					AddVideoFile (project);
+				}
+				/* If the project exists ask if we want to overwrite it */
+				if (DB.Exists (project)) {
+					var res = guiToolkit.QuestionMessage (Catalog.GetString ("A project already exists for the file:") +
+					                                      project.Description.File.FilePath+ "\n" +
+					                                      Catalog.GetString ("Do you want to overwrite it?"), null);
+					if(!res)
+						return;
+					DB.UpdateProject(project);
+				} else {
+					DB.AddProject (project);
+				}
+				Config.EventsBroker.EmitOpenProjectID (project.ID);
 			}
-			guiToolkit.InfoMessage(Catalog.GetString("Project successfully imported."));
 		}
 		
+	}
+	
+	public class ProjectImporter
+	{
+		public Func<string, Project> ImportFunction {
+			get;
+			set;
+		}
+		
+		public string [] Extensions {
+			get;
+			set;
+		}
+		
+		public string FilterName {
+			get;
+			set;
+		}
+		
+		public bool NeedsEdition {
+			get;
+			set;
+		}
+	
 	}
 }
 

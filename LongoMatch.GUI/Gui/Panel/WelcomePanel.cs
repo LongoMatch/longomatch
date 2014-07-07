@@ -36,7 +36,7 @@ namespace LongoMatch.Gui.Panel
 			openbutton.Clicked += (sender, e) => {
 				Config.EventsBroker.EmitOpenProject ();};
 			newbutton.Clicked += (sender, e) => {
-				Config.EventsBroker.EmitNewProject ();};
+				Config.EventsBroker.EmitNewProject (null);};
 			teamsbutton.Clicked += (sender, e) => {
 				Config.EventsBroker.EmitManageTeams ();};
 			sportsbutton.Clicked += (sender, e) => {
@@ -45,6 +45,8 @@ namespace LongoMatch.Gui.Panel
 				Config.EventsBroker.EmitEditPreferences ();};
 		    projectsbutton.Clicked += (sender, e) =>  {
 				Config.EventsBroker.EmitManageProjects ();};
+			importbutton.Clicked += (sender, e) =>  {
+				Config.EventsBroker.EmitImportProject ();};
 		}
 	}
 }
