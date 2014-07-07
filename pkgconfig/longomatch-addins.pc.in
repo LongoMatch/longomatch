@@ -1,0 +1,9 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+longomatchdir=@libdir@/@PACKAGE@
+
+Name: LongoMatch.Addins
+Description: LongoMatch addins framework for .NET
+Version: @VERSION@
+Libs: -r:${longomatchdir}/LongoMatch.Addins.dll -r:${longomatchdir}/LongoMatch.Core.dll

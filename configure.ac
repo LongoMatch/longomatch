@@ -125,6 +125,8 @@ images/Makefile
 libcesarplayer/Makefile
 
 oxyplot/Makefile
+pkgconfig/Makefile
+pkgconfig/longomatch-addins.pc
 
 LongoMatch.Addins/Makefile
 LongoMatch.Core/Makefile

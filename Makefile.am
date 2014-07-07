@@ -7,6 +7,7 @@ ACLOCAL_AMFLAGS = -I build/m4 -I build/m4/shamrock
 SUBDIRS = \
 	build \
 	images \
+	pkgconfig \
 	libcesarplayer \
 	oxyplot \
 	LongoMatch.Core \
