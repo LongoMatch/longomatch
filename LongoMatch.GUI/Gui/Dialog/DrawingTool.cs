@@ -303,8 +303,8 @@ namespace LongoMatch.Gui.Dialog
 				play.Drawings.Add (drawing);
 			}
 			play.Miniature = blackboard.Save ();
-			play.Miniature.Scale (Constants.MAX_THUMBNAIL_SIZE,
-			                      Constants.MAX_THUMBNAIL_SIZE);
+			play.Miniature.ScaleInplace (Constants.MAX_THUMBNAIL_SIZE,
+			                             Constants.MAX_THUMBNAIL_SIZE);
 			drawing = null;
 			Respond (ResponseType.Accept);
 		}

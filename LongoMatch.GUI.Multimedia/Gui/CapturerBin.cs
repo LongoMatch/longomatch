@@ -232,7 +232,7 @@ namespace LongoMatch.Gui
 
 				if(image.Value == null)
 					return null;
-				image.Scale (Constants.MAX_THUMBNAIL_SIZE, Constants.MAX_THUMBNAIL_SIZE);
+				image.ScaleInplace (Constants.MAX_THUMBNAIL_SIZE, Constants.MAX_THUMBNAIL_SIZE);
 				return image;
 			}
 		}

@@ -89,7 +89,7 @@ namespace LongoMatch.Video.Utils
 					frame = capturer.GetCurrentFrame();
 					if(frame != null) {
 						frame.Save(System.IO.Path.Combine(outputDir,seriesName+"_" + i +".png"));
-						frame.Scale(THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT);
+						frame.ScaleInplace(THUMBNAIL_MAX_WIDTH, THUMBNAIL_MAX_HEIGHT);
 					}
 
 					if(Progress != null) {

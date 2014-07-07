@@ -254,7 +254,8 @@ namespace LongoMatch.Gui.Component
 			}
 			
 			player = new Image (pix);
-			player.Scale (Constants.MAX_PLAYER_ICON_SIZE, Constants.MAX_PLAYER_ICON_SIZE); 
+			player.ScaleInplace (Constants.MAX_PLAYER_ICON_SIZE,
+			                     Constants.MAX_PLAYER_ICON_SIZE); 
 			if (player != null && loadedPlayer != null) {
 				playerimage.Pixbuf = player.Value;
 				loadedPlayer.Photo = player;
@@ -273,7 +274,8 @@ namespace LongoMatch.Gui.Component
 			}
 			
 			shield = new Image (pix);
-			shield.Scale (Constants.MAX_SHIELD_ICON_SIZE, Constants.MAX_SHIELD_ICON_SIZE); 
+			shield.ScaleInplace (Constants.MAX_SHIELD_ICON_SIZE,
+			                     Constants.MAX_SHIELD_ICON_SIZE); 
 			if (shield != null)
 			{
 				shieldimage.Pixbuf = shield.Value;

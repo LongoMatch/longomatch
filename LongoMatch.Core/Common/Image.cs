@@ -50,8 +50,8 @@ namespace LongoMatch.Common
 			image.Dispose();
 		}
 		
-		public void Scale() {
-			Scale (Constants.MAX_THUMBNAIL_SIZE, Constants.MAX_THUMBNAIL_SIZE);
+		public void ScaleInplace() {
+			ScaleInplace (Constants.MAX_THUMBNAIL_SIZE, Constants.MAX_THUMBNAIL_SIZE);
 		}
 		
 		public void ScaleFactor (int destWidth, int destHeight,
@@ -96,12 +96,14 @@ namespace LongoMatch.Common
 			return new Image(new SImage(ser));
 		}
 		
-		public void Scale(int maxWidth, int maxHeight) {
+		public Image Scale(int maxWidth, int maxHeight) {
+			return new Image (Scale (image, maxWidth, maxHeight));
+		}
+		
+		public void ScaleInplace(int maxWidth, int maxHeight) {
 			SImage scalled;
-			int width, height;
 			
-			ComputeScale(image.Width, image.Height, maxWidth, maxHeight, out width, out height);
-			scalled= image.ScaleSimple(width, height, Gdk.InterpType.Bilinear);	
+			scalled = Scale (image, maxWidth, maxHeight);
 			image.Dispose();
 			image = scalled;
 		}
@@ -130,6 +132,13 @@ namespace LongoMatch.Common
 			image2.Value.Composite(dest, 0, 0, image2.Width, image2.Height, 0, 0, 1, 1,
 			                       Gdk.InterpType.Bilinear, 255);
 			return new Image(dest);
+		}
+		
+		SImage Scale (SImage pix, int maxWidth, int maxHeight) {
+			int width, height;
+			
+			ComputeScale(pix.Width, pix.Height, maxWidth, maxHeight, out width, out height);
+			return pix.ScaleSimple(width, height, Gdk.InterpType.Bilinear);	
 		}
 		
 #else
