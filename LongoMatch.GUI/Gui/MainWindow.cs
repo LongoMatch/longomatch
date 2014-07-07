@@ -183,7 +183,7 @@ namespace LongoMatch.Gui
 				Config.EventsBroker.EmitSaveProject (openedProject, projectType);
 				Config.EventsBroker.EmitOpenProject ();};
 			NewPojectAction.Activated += (sender, e) => {
-				Config.EventsBroker.EmitNewProject ();
+				Config.EventsBroker.EmitNewProject (null);
 			};
 			TagSubcategoriesAction.Activated += (sender, e) => {
 				Config.EventsBroker.EmitTagSubcategories (TagSubcategoriesAction.Active);

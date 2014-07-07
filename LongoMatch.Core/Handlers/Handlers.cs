@@ -63,7 +63,7 @@ namespace LongoMatch.Handlers
 	public delegate void OpenProjectIDHandler(Guid project_id);
 	public delegate void OpenProjectHandler();
 	public delegate void CloseOpenendProjectHandler();
-	public delegate void NewProjectHandler();
+	public delegate void NewProjectHandler(Project project);
 	public delegate void OpenNewProjectHandler(Project project, ProjectType projectType, CaptureSettings captureSettings);
 	public delegate void ImportProjectHandler ();
 	public delegate void ExportProjectHandler (Project project);

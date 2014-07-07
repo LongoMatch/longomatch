@@ -221,9 +221,9 @@ namespace LongoMatch.Common
 				SaveProjectEvent (project, projectType);
 		}
 		
-		public void EmitNewProject () {
+		public void EmitNewProject (Project project) {
 			if (NewProjectEvent != null)
-				NewProjectEvent();
+				NewProjectEvent(project);
 		}
 		
 		public void EmitOpenProject () {

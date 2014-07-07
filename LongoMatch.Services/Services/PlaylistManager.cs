@@ -37,7 +37,6 @@ namespace LongoMatch.Services
 		IPlayList playlist;
 		IPlayerBin player;
 		IRenderingJobsManager videoRenderer;
-		IAnalysisWindow analysisWindow;
 		/* FIXME */
 		TimeNode selectedTimeNode;
 		
@@ -49,7 +48,7 @@ namespace LongoMatch.Services
 		{
 			this.videoRenderer = videoRenderer;
 			this.guiToolkit = guiToolkit;
-			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
+			BindEvents();
 		}
 
 		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
@@ -58,10 +57,6 @@ namespace LongoMatch.Services
 			openedProject = project;
 			if (project != null) {
 				player = analysisWindow.Player;
-				if (this.analysisWindow != analysisWindow) {
-					BindEvents(analysisWindow);
-					this.analysisWindow = analysisWindow;
-				}
 			}
 		}
 		
@@ -80,7 +75,8 @@ namespace LongoMatch.Services
 			}
 		}
 		
-		private void BindEvents(IAnalysisWindow analysisWindow) {
+		private void BindEvents() {
+			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
 			Config.EventsBroker.PlaySelected += (p) => {selectedTimeNode = p;};
 			Config.EventsBroker.OpenPlaylistEvent += OnOpenPlaylist;
 			Config.EventsBroker.NewPlaylistEvent += OnNewPlaylist;

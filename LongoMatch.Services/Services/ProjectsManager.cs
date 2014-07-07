@@ -326,14 +326,14 @@ namespace LongoMatch.Services
 			}
 		}
 		
-		protected virtual void NewProject() {
+		protected virtual void NewProject(Project project) {
 			Log.Debug("Creating new project");
 			
 			if (!PromptCloseProject ()) {
 				return;
 			}
 			
-			guiToolkit.CreateNewProject ();
+			guiToolkit.CreateNewProject (project);
 		}
 		
 		void OpenNewProject (Project project, ProjectType projectType,

@@ -76,20 +76,20 @@ namespace LongoMatch.Gui.Panel
 			backgroundwidget.WidthRequest = 200;
 			nextbutton.Clicked += HandleNextClicked;
 			backbutton.Clicked += HandleBackClicked;
+			ConnectSignals ();
+			FillCategories ();
+			FillFormats ();
+			FillDevices (mtoolkit.VideoDevices);
+			LoadTeams ();
 			if (project == null) {
 				notebook1.Page = 0;
 				datelabel.Text = DateTime.Now.ToShortDateString();
 			} else {
 				notebook1.Page = 1;
 				this.project = project;
+				projectType = ProjectType.EditProject;
 				FillProjectDetails ();
 			}
-			
-			ConnectSignals ();
-			FillCategories ();
-			FillFormats ();
-			FillDevices (mtoolkit.VideoDevices);
-			LoadTeams ();
 			Color.Parse ("red", ref red);
 			outputfilelabel.ModifyFg (StateType.Normal, red);
 			Color.Parse ("red", ref red);
@@ -137,6 +137,14 @@ namespace LongoMatch.Gui.Panel
 			datelabel.Text = project.Description.MatchDate.ToShortDateString();
 			localSpinButton.Value = project.Description.LocalGoals;
 			visitorSpinButton.Value = project.Description.VisitorGoals;
+			hometeamscombobox.Sensitive = false;
+			awayteamscombobox.Sensitive = false;
+			tagscombobox.Visible = false;
+			label9.Visible = false;
+			filetable.Visible = true;
+			analysisTemplate = project.Categories;
+			LoadTemplate (project.LocalTeamTemplate, Team.LOCAL);
+			LoadTemplate (project.VisitorTeamTemplate, Team.VISITOR);
 		}
 		
 		void FillCategories() {
@@ -207,45 +215,52 @@ namespace LongoMatch.Gui.Panel
 		}
 		
 		
-		public void LoadTemplate (string name, Team team) {
+		void LoadTemplate (string name, Team team) {
 			TeamTemplate template;
 			if (name != null) {
 				template = Config.TeamTemplatesProvider.Load (name);
-				if (team == Team.LOCAL) {
-					if (template.Shield != null) {
-						homeshieldimage.Pixbuf = template.Shield.Value;
-					} else {
-						homeshieldimage.Pixbuf = Gdk.Pixbuf.LoadFromResource ("logo.svg");						
-					}
-					homelabel.Text = template.TeamName;
-					hometemplate = template;
-				} else {
-					if (template.Shield != null) {
-						awayshieldimage.Pixbuf = template.Shield.Value;
-					} else {
-						awayshieldimage.Pixbuf = Gdk.Pixbuf.LoadFromResource ("logo.svg");						
-					}
-					awaylabel.Text = template.TeamName;
-					awaytemplate = template;
-				}
-				teamtagger.LoadTeams (hometemplate, awaytemplate,
-				                      analysisTemplate.FieldBackground);
+				LoadTemplate (template, team);
 			}
+		}
+		
+		void LoadTemplate (TeamTemplate template, Team team) {
+			if (team == Team.LOCAL) {
+				if (template.Shield != null) {
+					homeshieldimage.Pixbuf = template.Shield.Value;
+				} else {
+					homeshieldimage.Pixbuf = Gdk.Pixbuf.LoadFromResource ("logo.svg");						
+				}
+				homelabel.Text = template.TeamName;
+				hometemplate = template;
+			} else {
+				if (template.Shield != null) {
+					awayshieldimage.Pixbuf = template.Shield.Value;
+				} else {
+					awayshieldimage.Pixbuf = Gdk.Pixbuf.LoadFromResource ("logo.svg");						
+				}
+				awaylabel.Text = template.TeamName;
+				awaytemplate = template;
+			}
+			teamtagger.LoadTeams (hometemplate, awaytemplate,
+			                      analysisTemplate.FieldBackground);
 		}
 		
 		bool CreateProject () {
 			TreeIter iter;
 			
-			if (project != null) {
-				return true;
-			}
-			
-			if (projectType == ProjectType.FileProject) {
+			if (projectType == ProjectType.FileProject ||
+			    projectType == ProjectType.EditProject) {
 				if (fileEntry.Text == "") {
 					gtoolkit.WarningMessage (Catalog.GetString ("No input video file"));
 					return false;
 				}
 			}
+
+			if (project != null) {
+				project.Description.File = mediaFile;
+				return true;
+			}
+			
 			if (projectType == ProjectType.CaptureProject ||
 			    projectType == ProjectType.URICaptureProject) {
 				if (outfileEntry.Text == "") {
@@ -371,6 +386,10 @@ namespace LongoMatch.Gui.Panel
 		void HandleCreateProject (object sender, EventArgs e)
 		{
 			if (CreateProject ()) {
+				if (projectType == ProjectType.EditProject) {
+					projectType = ProjectType.FileProject;
+					Config.EventsBroker.EmitCreateThumbnails (project);
+				}
 				Config.EventsBroker.EmitOpenNewProject (project, projectType, captureSettings);
 			}
 		}
