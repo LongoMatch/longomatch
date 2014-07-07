@@ -28,7 +28,7 @@ using LongoMatch.Interfaces;
 
 namespace LongoMatch.Drawing.Widgets
 {
-	public class Blackboard: BackgroundCanvas
+	public class Blackboard: BackgroundCanvas, IDisposable
 	{
 	
 		public event ShowDrawToolMenuHandler ShowMenuEvent;
@@ -50,6 +50,19 @@ namespace LongoMatch.Drawing.Widgets
 			tool = DrawTool.Selection;
 			
 		}
+
+		public void Dispose(){
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		protected virtual void Dispose(bool disposing){
+			if (disposing) {
+				if (backbuffer != null)
+					backbuffer.Dispose();
+					backbuffer = null;
+			}
+		}	
 		
 		public FrameDrawing Drawing {
 			set {

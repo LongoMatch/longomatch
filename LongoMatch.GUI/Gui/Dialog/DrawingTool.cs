@@ -88,6 +88,12 @@ namespace LongoMatch.Gui.Dialog
 			FillLineType ();
 		}
 		
+		public override void Destroy ()
+		{
+			blackboard.Dispose();
+			base.Destroy ();
+		}
+		
 		void FillLineStyle () {
 			ListStore formatStore;
 			CellRendererPixbuf renderer = new CellRendererPixbuf();
