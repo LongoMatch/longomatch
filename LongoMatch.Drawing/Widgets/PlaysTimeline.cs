@@ -45,7 +45,6 @@ namespace LongoMatch.Drawing.Widgets
 			secondsPerPixel = 0.1;
 			Accuracy = Constants.TIMELINE_ACCURACY;
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
-			widget.ShowTooltipEvent += HandleShowTooltipEvent;
 		}
 
 		public void LoadProject (Project project, PlaysFilter filter) {
@@ -140,11 +139,6 @@ namespace LongoMatch.Drawing.Widgets
 			widget.ReDraw (categories[po.Play.Category]);
 		}		
 		
-		void HandleShowTooltipEvent (Point coords)
-		{
-			
-		}
-
 		protected override void SelectionChanged (List<Selection> selections) {
 			if (selections.Count > 0) {
 				PlayObject po = selections.Last().Drawable as PlayObject;
