@@ -33,7 +33,6 @@ namespace Tests.Core
 			
 			play.Category = cat1;
 			play.Notes = "notes";
-			play.Fps = 30;
 			play.Selected = true;
 			play.Team = LongoMatch.Common.Team.LOCAL;
 			play.FieldPosition = new Coordinates();

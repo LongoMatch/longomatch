@@ -176,7 +176,6 @@ namespace LongoMatch.Store
 				Category = category,
 				Notes = "",
 				Miniature = miniature,
-				Fps = Description.File.Fps,
 			};
 			Timeline.Add(play);
 			return play;

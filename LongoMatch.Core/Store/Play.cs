@@ -42,7 +42,6 @@ namespace LongoMatch.Store
 			Drawings = new List<FrameDrawing>();
 			Players = new List<Player> ();
 			Tags = new List<Tag>();
-			Fps = 25;
 			PlaybackRate = 1.0;
 			ID = Guid.NewGuid ();
 		}
@@ -69,29 +68,6 @@ namespace LongoMatch.Store
 		public string Notes {
 			get;
 			set;
-		}
-
-		/// <summary>
-		/// Video framerate in frames per second. This value is taken from the
-		/// video file properties and used to translate from seconds
-		/// to frames: second 100 is equivalent to frame 100*fps
-		/// </summary>
-		public uint Fps {
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Start frame number
-		/// </summary>
-		[JsonIgnore]
-		public uint StartFrame {
-			get {
-				return (uint)(Start.MSeconds * Fps / 1000);
-			}
-			set {
-				Start = new Time {MSeconds = (int)(1000 * value / Fps)};
-			}
 		}
 
 		/// <summary>
