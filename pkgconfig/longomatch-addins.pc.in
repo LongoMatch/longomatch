@@ -6,4 +6,5 @@ longomatchdir=@libdir@/@PACKAGE@
 Name: LongoMatch.Addins
 Description: LongoMatch addins framework for .NET
 Version: @VERSION@
-Libs: -r:${longomatchdir}/LongoMatch.Addins.dll -r:${longomatchdir}/LongoMatch.Core.dll
+Requires: mono-addins longomatch-core
+Libs: -r:${longomatchdir}/LongoMatch.Addins.dll

@@ -1,4 +1,6 @@
-pcfiles = longomatch-addins.pc longomatch-core.pc
+pcfiles = \
+	longomatch-addins.pc \
+	longomatch-core.pc
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = $(pcfiles)
