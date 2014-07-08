@@ -68,3 +68,6 @@ po/*pot
 po/POTFILES
 po/stamp-it
 po/.intltool-merge-cache
+tools/deb-pkg.sh
+*test-results/
+*.pc
