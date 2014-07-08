@@ -162,4 +162,8 @@ RESOURCES = gtk-gui/gui.stetic \
 	$(top_srcdir)/images/tools/line-double-arrow.svg \
 	$(top_srcdir)/images/tools/line-arrow.svg
 
+DLLCONFIG = LongoMatch.GUI.dll.config
+
 include $(top_srcdir)/build/build.mk
+
+EXTRA_DIST += LongoMatch.GUI.dll.config
