@@ -1,13 +1,13 @@
 <Project name="LongoMatch.Core" fileversion="2.0" DefaultNamespace="LongoMatch.Core" language="C#" targetFramework="4.0" ctype="DotNetProject">
   <Configurations active="Release">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="../bin" assembly="LongoMatch" />
+      <Output directory="../bin" assembly="LongoMatch.Core" />
       <Build debugmode="True" target="Library" />
       <Execution consolepause="False" runwithwarnings="True" runtime="MsNet" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" definesymbols="DEBUG HAVE_GTK" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
-      <Output directory="../bin" assembly="LongoMatch" />
+      <Output directory="../bin" assembly="LongoMatch.Core" />
       <Build debugmode="False" target="Library" />
       <Execution consolepause="False" runwithwarnings="True" runtime="MsNet" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" definesymbols="HAVE_GTK" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />

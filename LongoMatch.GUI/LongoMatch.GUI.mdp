@@ -1,13 +1,13 @@
 <Project name="LongoMatch.GUI" fileversion="2.0" DefaultNamespace="LongoMatch" language="C#" targetFramework="4.0" ctype="DotNetProject">
   <Configurations active="Release">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="../bin" assembly="LongoMatch.Gui" assemblyKeyFile="/home/andoni/Proyectos/longomatch/LongoMatch/." />
+      <Output directory="../bin" assembly="LongoMatch.GUI" assemblyKeyFile="/home/andoni/Proyectos/longomatch/LongoMatch/." />
       <Build debugmode="True" target="Library" />
       <Execution consolepause="True" runwithwarnings="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
-      <Output directory="../bin" assembly="LongoMatch.Gui" assemblyKeyFile="/home/andoni/Proyectos/LongoMatch/LongoMatch.GUI/." />
+      <Output directory="../bin" assembly="LongoMatch.GUI" assemblyKeyFile="/home/andoni/Proyectos/LongoMatch/LongoMatch.GUI/." />
       <Build debugmode="True" target="Library" />
       <Execution consolepause="True" runwithwarnings="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="3" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
