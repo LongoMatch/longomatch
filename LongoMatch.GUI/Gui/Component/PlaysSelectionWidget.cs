@@ -122,7 +122,6 @@ namespace LongoMatch.Gui.Component
 			} else {
 				catfiltersbutton.Label = Catalog.GetString("Enable categories filters");
 			}
-			filter.CategoriesFilterEnabled = catfiltersbutton.Active;
 		}
 		
 		protected void OnPlayersFiltersbuttonClicked (object sender, System.EventArgs e)
@@ -132,7 +131,6 @@ namespace LongoMatch.Gui.Component
 			} else {
 				playersfiltersbutton.Label = Catalog.GetString("Enable players filters");
 			}
-			filter.PlayersFilterEnabled = playersfiltersbutton.Active;
 		}
 	}
 }

@@ -80,19 +80,19 @@ namespace LongoMatch.Gui.Component
 				
 				while (store.IterIsValid(child)) {
 					Player childPlayer = (Player) store.GetValue(child, 0);
-					if (active)
-						filter.UnFilterPlayer(childPlayer);
-					else
-						filter.FilterPlayer(childPlayer);
+//					if (active)
+//						filter.UnFilterPlayer(childPlayer);
+//					else
+//						filter.FilterPlayer(childPlayer);
 					store.SetValue(child, 1, active);
 					store.IterNext(ref child);
 				}
 			} else {
 				if (active) {
-					filter.UnFilterPlayer(player);
+					//filter.UnFilterPlayer(player);
 				} else {
 					TreeIter team;
-					filter.FilterPlayer(player);
+					//filter.FilterPlayer(player);
 					/* Uncheck the team check button */
 					if (local.List.Contains(player))
 						team = localIter;

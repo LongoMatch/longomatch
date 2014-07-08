@@ -52,7 +52,6 @@ namespace LongoMatch.Gui.Component.Stats
 			store.Clear();
 			pstats = stats;
 			filter = new PlaysFilter (project);
-			filter.PlayersFilterEnabled = true;
 			pstats.Filter = filter;
 			categoriesviewer.LoadStats (pstats, project);
 			AddTeam (project.LocalTeamTemplate, project.Categories);
@@ -66,23 +65,15 @@ namespace LongoMatch.Gui.Component.Stats
 			TreeIter teamIter;
 			
 			teamIter = store.AppendValues (tpl.TeamName, null);
-			foreach (Player p in tpl.List) {
-				store.AppendValues (teamIter, p.Name, p);
-				filter.FilterPlayer (p);
-			}
 		}
 		
 		void HandleCursorChanged (object sender, EventArgs e)
 		{
 			TreeIter iter;
 			
-			if (current != null)
-				filter.FilterPlayer (current);
-			
 			treeview1.Selection.GetSelected(out iter);
 			current = store.GetValue(iter, 1) as Player;
 			if (current != null) {
-				filter.UnFilterPlayer (current);
 				filter.Update();
 				pstats.UpdateStats ();
 				categoriesviewer.ReloadStats ();

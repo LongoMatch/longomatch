@@ -44,6 +44,7 @@
     <File subtype="Code" buildaction="Compile" name="Core/TestColor.cs" />
     <File subtype="Code" buildaction="Compile" name="Core/TestTime.cs" />
     <File subtype="Code" buildaction="Compile" name="Core/TestImage.cs" />
+    <File subtype="Code" buildaction="Compile" name="Core/TestPlaysFilter.cs" />
   </Contents>
   <References>
     <ProjectReference type="Package" localcopy="False" refto="nunit.core, Version=2.6.0.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />

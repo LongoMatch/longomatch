@@ -31,13 +31,9 @@ namespace LongoMatch.Common
 		
 		public event FilterUpdatedHandler FilterUpdated;
 		
-		bool playersFiltered, categoriesFiltered;
 		Dictionary<Category, List<Tag>> categoriesFilter;
 		List<Player> playersFilter;
 		Project project;
-		List<Category> visibleCategories;
-		List<Play> visiblePlays;
-		List<Player> visiblePlayers;
 		
 		public PlaysFilter (Project project)
 		{
@@ -48,78 +44,92 @@ namespace LongoMatch.Common
 			UpdateFilters();
 		}
 		
-		public bool PlayersFilterEnabled {
-			get {
-				return  playersFiltered;
-			}
-			set {
-				playersFiltered = value;
-				Update();
-			}
+		public List<Category> VisibleCategories {
+			get;
+			protected set;
 		}
 		
-		public bool CategoriesFilterEnabled {
-			get {
-				return  categoriesFiltered;
+		public List<Player> VisiblePlayers {
+			get;
+			protected set;
+		}
+		
+		public List<Play> VisiblePlays {
+			get;
+			protected set;
+		}
+		
+		public void ClearCategoriesFilter (bool update=true) {
+			categoriesFilter.Clear();
+			if (update)
+				Update ();
+		}
+		
+		public void ClearPlayersFilter (bool update=true) {
+			playersFilter.Clear();
+			if (update)
+				Update ();
+		}
+
+		public void ClearAll (bool update=true) {
+			ClearCategoriesFilter(false);
+			ClearPlayersFilter(false);
+			if (update)
+				Update ();
+		}
+				
+		public void FilterPlayer (Player player, bool visible) {
+			if (visible) {
+				if (!playersFilter.Contains(player))
+					playersFilter.Add(player);
+			} else {
+				if (playersFilter.Contains(player))
+					playersFilter.Remove(player);
 			}
-			set {
-				categoriesFiltered = value;
-				Update();
+			Update();
+		}
+		
+		public void FilterCategory (Category cat, bool visible) {
+			if (visible) {
+				if (!categoriesFilter.ContainsKey (cat))
+					categoriesFilter[cat] = new List<Tag> ();
+			} else {
+				if (categoriesFilter.ContainsKey (cat))
+					categoriesFilter.Remove (cat);
 			}
+			Update();
+		}
+
+		public void FilterCategoryTag (Category cat, Tag tag, bool visible) {
+			List<Tag> tags;
+
+			if (visible) {
+				FilterCategory (cat, true);
+				tags = categoriesFilter[cat];
+				if (!tags.Contains (tag))
+					tags.Add (tag);
+			} else {
+				if (categoriesFilter.ContainsKey(cat)) {
+					tags = categoriesFilter[cat];
+					if (tags.Contains (tag))
+						tags.Remove (tag);
+				}
+			}
+			Update();
+		}
+		
+		public bool IsVisible(object o) {
+			if (o is Player) {
+				return VisiblePlayers.Contains(o as Player);
+			} else if (o is Play) {
+				return VisiblePlays.Contains (o as Play);
+			}
+			return true;
 		}
 		
 		public void Update () {
 			UpdateFilters();
 			EmitFilterUpdated();
-		}
-		
-		public void ClearCategoriesFilter () {
-			categoriesFilter.Clear();
-			foreach (Category cat in project.Categories.List) {
-			}
-		}
-		
-		public void ClearPlayersFilter () {
-			playersFilter.Clear();
-			foreach (var player in project.LocalTeamTemplate.List)
-				playersFilter.Add(player);
-			foreach (var player in project.VisitorTeamTemplate.List)
-				playersFilter.Add(player);
-		}
-
-		public void ClearAll () {
-			ClearCategoriesFilter();
-			ClearPlayersFilter();
-		}
-				
-		public void FilterPlayer (Player player) {
-			playersFilter.Remove(player);
-		}
-		
-		public void UnFilterPlayer(Player player) {
-			if (!playersFilter.Contains(player))
-				playersFilter.Add(player);
-		}
-		
-		public List<Category> VisibleCategories {
-			get {
-				return visibleCategories;
-			}
-		}
-		
-		public List<Player> VisiblePlayers {
-			get {
-				return visiblePlayers;
-			}
-		}
-		
-		public bool IsVisible(object o) {
-			if (o is Player) {
-				return visiblePlayers.Contains(o as Player);
-			} else if (o is Play) {
-				return visiblePlays.Contains (o as Play);
-			}
-			return true;
 		}
 		
 		void UpdateFilters () {
@@ -129,44 +139,47 @@ namespace LongoMatch.Common
 		}
 		
 		void UpdateVisiblePlayers () {
-			visiblePlayers = new List<Player>();
-			foreach (Player p in project.LocalTeamTemplate.List.Concat (project.VisitorTeamTemplate.List)) {
-				if (PlayersFilterEnabled && ! playersFilter.Contains (p)) {
-					continue;
-				}
-				visiblePlayers.Add (p);
+			if (playersFilter.Count == 0) {
+				VisiblePlayers = project.LocalTeamTemplate.List.Concat (project.VisitorTeamTemplate.List).ToList();
+			} else {
+				VisiblePlayers = playersFilter.ToList();
 			}
 		}
 		
 		void UpdateVisibleCategories () {
-			visibleCategories = new List<Category>();
-			foreach (var c in categoriesFilter.Keys) {
-				bool visible = false;
-				if (!CategoriesFilterEnabled) {
-					visible = true;
-				} else {
-					foreach (var subcat in categoriesFilter[c]) {
-					}
-				}
-				if (visible)
-					visibleCategories.Add (c);
+			if (categoriesFilter.Count == 0) {
+				VisibleCategories = project.Categories.List.ToList();
+			} else {
+				VisibleCategories = categoriesFilter.Keys.ToList();
 			}
 		}
 		
 		void UpdateVisiblePlays () {
 			bool cat_match=true, player_match=true;
-			visiblePlays = new List<Play>();
+			VisiblePlays = new List<Play>();
 				
 			foreach (Play play in project.Timeline) {
-				if (CategoriesFilterEnabled) {
-					cat_match = false;
+				cat_match = false;
+				if (VisibleCategories.Contains (play.Category)) {
+					cat_match = true;
+					if (categoriesFilter.ContainsKey (play.Category)) {
+						List<Tag> tags = categoriesFilter[play.Category];
+						if (tags.Count == 0 || tags.Intersect (play.Tags).Count() > 0) {
+							cat_match = true;
+						} else {
+							cat_match = false;
+						}
+					}
 				}
-				
-				if (PlayersFilterEnabled)
+
+				if (play.Players.Count == 0 && VisiblePlayers.Count == 
+				    project.LocalTeamTemplate.List.Count + project.VisitorTeamTemplate.List.Count) {
+					player_match = true;
+				} else {
 					player_match = VisiblePlayers.Intersect(play.Players).Count() != 0;
-				
+				}
 				if (player_match && cat_match) {
-					visiblePlays.Add (play);
+					VisiblePlays.Add (play);
 				}
 			}
 		}
