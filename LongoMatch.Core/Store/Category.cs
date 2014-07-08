@@ -42,7 +42,7 @@ namespace LongoMatch.Store
 		#region Constructors
 		public Category() {
 			ID = System.Guid.NewGuid();
-			SubCategories = new List<SubCategory>();
+			Tags = new List<Tag>();
 			TagGoalPosition = false;
 			TagFieldPosition = true;
 		}
@@ -90,7 +90,7 @@ namespace LongoMatch.Store
 			set;
 		}
 
-		public List<SubCategory> SubCategories {
+		public List<Tag> Tags  {
 			get;
 			set;
 		}

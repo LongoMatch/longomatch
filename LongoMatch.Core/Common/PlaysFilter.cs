@@ -32,7 +32,7 @@ namespace LongoMatch.Common
 		public event FilterUpdatedHandler FilterUpdated;
 		
 		bool playersFiltered, categoriesFiltered;
-		Dictionary<Category, List<SubCategoryTags>> categoriesFilter;
+		Dictionary<Category, List<Tag>> categoriesFilter;
 		List<Player> playersFilter;
 		Project project;
 		List<Category> visibleCategories;
@@ -42,7 +42,7 @@ namespace LongoMatch.Common
 		public PlaysFilter (Project project)
 		{
 			this.project = project;
-			categoriesFilter = new Dictionary<Category, List<SubCategoryTags>>();
+			categoriesFilter = new Dictionary<Category, List<Tag>>();
 			playersFilter = new List<Player>(); 
 			ClearAll();
 			UpdateFilters();
@@ -76,14 +76,6 @@ namespace LongoMatch.Common
 		public void ClearCategoriesFilter () {
 			categoriesFilter.Clear();
 			foreach (Category cat in project.Categories.List) {
-				List<SubCategoryTags> list = new List<SubCategoryTags>(); 
-				categoriesFilter.Add(cat, list);
-				foreach (SubCategory subcat in cat.SubCategories) {
-					SubCategoryTags subcatTags = new SubCategoryTags{SubCategory = subcat};
-					list.Add(subcatTags);
-					foreach (string option in subcat.Options)
-						subcatTags.Add (option);
-				}
 			}
 		}
 		
@@ -107,15 +99,6 @@ namespace LongoMatch.Common
 		public void UnFilterPlayer(Player player) {
 			if (!playersFilter.Contains(player))
 				playersFilter.Add(player);
-		}
-		
-		public void FilterSubCategory (Category cat, SubCategory subcat, string option, bool filtered) {
-			SubCategoryTags tsub = categoriesFilter[cat].Find(s => s.SubCategory == subcat);
-			if (filtered) {
-				tsub.Add(option);
-			} else {
-				tsub.Remove(option);
-			}
 		}
 		
 		public List<Category> VisibleCategories {
@@ -163,8 +146,6 @@ namespace LongoMatch.Common
 					visible = true;
 				} else {
 					foreach (var subcat in categoriesFilter[c]) {
-						if (subcat.Count != 0)
-							visible = true;
 					}
 				}
 				if (visible)
@@ -179,25 +160,6 @@ namespace LongoMatch.Common
 			foreach (Play play in project.Timeline) {
 				if (CategoriesFilterEnabled) {
 					cat_match = false;
-					foreach (var subcat in categoriesFilter[play.Category]) {
-						bool match = false;
-						foreach (var option in subcat) {
-							Tag tag = new Tag{SubCategory=subcat.SubCategory, Value=option};
-							if (play.Tags.Contains(tag)) {
-								match = true;
-								break;
-							}
-						}
-						/* A single match in a subcategory is not enough as we want to filter
-						 * all plays that have Period=1 and Type=Stroke. So if there is a match
-						 * for Period we want a match for Type too */
-						if (!match && subcat.Count != 0) {
-							cat_match = false;
-							break;
-						}
-						if (match)
-							cat_match = true;
-					}
 				}
 				
 				if (PlayersFilterEnabled)
@@ -212,13 +174,6 @@ namespace LongoMatch.Common
 		void EmitFilterUpdated () {
 			if (FilterUpdated != null)
 				FilterUpdated ();
-		}
-	}
-	
-	class SubCategoryTags: List<string> {
-		public SubCategory SubCategory {
-			get;
-			set;
 		}
 	}
 }

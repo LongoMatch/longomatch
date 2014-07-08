@@ -127,13 +127,6 @@ namespace LongoMatch.Store
 			set;
 		}
 		
-		[JsonIgnore]
-		public TagsStore TagsStore {
-			get {
-				return new TagsStore {Tags=Tags};
-			}
-		}
-		
 		public Coordinates FieldPosition {
 			get;
 			set;

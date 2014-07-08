@@ -106,6 +106,7 @@ Xavier Queralt Mateu (ca)";
 		public const string LINE_DOUBLE_ARROW = "line-double-arrow.svg";
 		public const string LINE_DOT = "line-dot.svg";
 		public const string LINE_DOUBLE_DOT = "line-double-dot.svg";
+		public const string COMMON_TAG = "LGM_COMMON";
 		
 		public const int DB_MAYOR_VERSION = 3;
 		public const int DB_MINOR_VERSION = 1;

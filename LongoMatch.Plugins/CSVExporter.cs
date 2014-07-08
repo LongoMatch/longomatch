@@ -91,13 +91,8 @@ namespace LongoMatch.Plugins
 			
 			/* Write Headers for this category */
 			headers = "Name;Start;Stop;Team";
-			foreach (SubCategory subcat in cat.SubCategories) {
-				if (subcat == null)
-					continue;
-					
-				foreach (string desc in subcat.Options) {
-					headers += String.Format (";{0}:{1}", subcat.Name, desc);
-				}
+			foreach (Tag tag in cat.Tags) {
+				headers += String.Format (";{0}", tag.Value);
 			}
 			
 			foreach (Play play in plays.OrderBy(p=>p.Start)) {
@@ -109,14 +104,8 @@ namespace LongoMatch.Plugins
 				                         play.Team);
 				
 				/* Strings Tags */
-				foreach (SubCategory subcat in cat.SubCategories) {
-					if (subcat == null)
-						continue;
-					
-					foreach (string desc in subcat.Options) {
-						Tag t = new Tag{SubCategory=subcat, Value = desc};
-						line += ";" + (play.Tags.Contains(t) ? "1" : "0");
-					}
+				foreach (Tag tag in cat.Tags) {
+					line += ";" + (play.Tags.Contains(tag) ? "1" : "0");
 				}
 				
 				output.Add (line);

@@ -132,7 +132,6 @@ namespace LongoMatch.Gui.Dialog
 			this.descriptioncheckbutton.CanFocus = true;
 			this.descriptioncheckbutton.Name = "descriptioncheckbutton";
 			this.descriptioncheckbutton.Label = global::Mono.Unix.Catalog.GetString ("Enable title overlay");
-			this.descriptioncheckbutton.Active = true;
 			this.descriptioncheckbutton.DrawIndicator = true;
 			this.descriptioncheckbutton.UseUnderline = true;
 			this.hbox6.Add (this.descriptioncheckbutton);

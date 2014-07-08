@@ -51,13 +51,6 @@ namespace LongoMatch.Gui.Component
 				TreeIter catIter;
 				
 				catIter = store.AppendValues(cat, filter.VisibleCategories.Contains(cat));
-				foreach (var subcat in cat.SubCategories) {
-					TreeIter subcatIter;
-					subcatIter = store.AppendValues(catIter, subcat, true);
-					foreach (string desc in subcat.Options) {
-						store.AppendValues(subcatIter, new StringObject{Value=desc, SubCategory=subcat, Category=cat}, true);
-					}
-				}
 			}
 			Model = store;
 		}
@@ -69,8 +62,6 @@ namespace LongoMatch.Gui.Component
 			
 			if (o is StringObject) {
 				StringObject so = o as StringObject;
-				
-				filter.FilterSubCategory(so.Category, so.SubCategory, so.Value, active);
 			} else {
 				/* don't do anything here and let the children do the filtering */
 			}
@@ -109,10 +100,6 @@ namespace LongoMatch.Gui.Component
 				Category cat = obj as Category;
 				text = cat.Name;
 			}
-			else if (obj is SubCategory) {
-				SubCategory subCat = obj as SubCategory;
-				text = subCat.Name;
-			}
 			else if (obj is StringObject){
 				text = (obj as StringObject).Value;
 			}
@@ -134,7 +121,6 @@ namespace LongoMatch.Gui.Component
 	class StringObject
 	{
 		public string Value {get;set;}
-		public SubCategory SubCategory {get;set;}
 		public Category Category {get;set;}
 	}
 }

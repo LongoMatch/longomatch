@@ -54,9 +54,6 @@ namespace LongoMatch.Gui.Component
 		public CategoryProperties()
 		{
 			this.Build();
-			vbox2.Sensitive = false;
-			subcategoriestreeview1.SubCategoriesDeleted += OnSubcategoriesDeleted;
-			subcategoriestreeview1.SubCategorySelected += OnSubcategorySelected;
 			leadtimebutton.ValueChanged += OnLeadTimeChanged;;
 			lagtimebutton.ValueChanged += OnLagTimeChanged;
 			fieldcoordinatestagger = new CoordinatesTagger ();
@@ -77,7 +74,6 @@ namespace LongoMatch.Gui.Component
 		public Category Category {
 			set {
 				cat = value;
-				vbox2.Sensitive = true;
 				UpdateGui();
 			}
 			get {
@@ -128,11 +124,6 @@ namespace LongoMatch.Gui.Component
 			if(cat.HotKey.Defined)
 				hotKeyLabel.Text = cat.HotKey.ToString();
 			else hotKeyLabel.Text = Catalog.GetString("none");
-			
-			list = subcategoriestreeview1.Model as ListStore;
-			list.Clear();
-			foreach (SubCategory subcat in cat.SubCategories)
-				list.AppendValues(subcat);
 		}
 		
 		void UpdatePosition (FieldPositionType position) {
@@ -163,26 +154,6 @@ namespace LongoMatch.Gui.Component
 			tagger.Tagger.Points = points;
 		}
 		
-		private void RenderSubcat(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
-		{
-			(cell as Gtk.CellRendererText).Markup =(string)model.GetValue(iter, 0);
-		}
-		
-		private SubCategory EditSubCategoryTags (SubCategory template, bool checkName){
-			return null;
-//			SubCategoryTagsEditor se =  new SubCategoryTagsEditor(template, subcategoriesProvider.TemplatesNames);
-//			
-//			se.CheckName = checkName;
-//			int ret = se.Run();
-//			
-//			var t = se.Template; 
-//			se.Destroy();
-//			
-//			if (ret != (int)ResponseType.Ok)
-//				return null;
-//			return t;
-		}
-
 		protected virtual void OnChangebutonClicked(object sender, System.EventArgs e)
 		{
 			HotKeySelectorDialog dialog = new HotKeySelectorDialog();
@@ -223,36 +194,7 @@ namespace LongoMatch.Gui.Component
 			cat.SortMethodString = sortmethodcombobox.ActiveText;
 		}
 		
-		protected virtual void OnSubcategorySelected(SubCategory subcat) {
-			EditSubCategoryTags((SubCategory)subcat, false);
-		}
-		
-		protected virtual void OnSubcategoriesDeleted (List<SubCategory> subcats)
-		{
-			if (Project != null) {
-				var msg = Catalog.GetString("If you delete this subcategory you will loose" +
-				                            "all the tags associated with it. Do you want to proceed?");
-				if (!MessagesHelpers.QuestionMessage (this, msg)) {
-					return;
-				}
-				Project.DeleteSubcategoryTags(Category, subcats);
-			}
-			Category.SubCategories.RemoveAll(s => subcats.Contains(s));
-		}
-		
 		protected virtual void OnAddbuttonClicked (object sender, System.EventArgs e)
-		{
-			TreeIter iter;
-			
-			subcatcombobox.GetActiveIter(out iter);
-			ListStore list = subcategoriestreeview1.Model as ListStore;
-			var subcat = Cloner.Clone((SubCategory)model.GetValue(iter, 1));
-			subcat.Name = subcatnameentry.Text;
-			Category.SubCategories.Add(subcat);
-			list.AppendValues(subcat);
-		}
-		
-		protected virtual void OnSubcatcomboboxChanged (object sender, System.EventArgs e)
 		{
 		}
 		

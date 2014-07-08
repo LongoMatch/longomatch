@@ -77,7 +77,6 @@ SOURCES = Gui/Cairo.cs \
 	Gui/TreeView/PlayersTreeView.cs \
 	Gui/TreeView/PlaysTreeView.cs \
 	Gui/TreeView/RenderingJobsTreeView.cs \
-	Gui/TreeView/SubCategoriesTreeView.cs \
 	gtk-gui/LongoMatch.Gui.Component.AnalysisComponent.cs \
 	gtk-gui/LongoMatch.Gui.Component.AnalysisTemplateEditor.cs \
 	gtk-gui/LongoMatch.Gui.Component.BackgroundWidget.cs \

@@ -27,9 +27,6 @@
     <File subtype="Code" buildaction="Compile" name="Store/PlayListPlay.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Project.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/ProjectDescription.cs" />
-    <File subtype="Code" buildaction="Compile" name="Store/SubCategory.cs" />
-    <File subtype="Code" buildaction="Compile" name="Store/Tag.cs" />
-    <File subtype="Code" buildaction="Compile" name="Store/TagStore.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Time.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/TimeNode.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Templates/CategoriesTemplate.cs" />
@@ -87,7 +84,6 @@
     <File subtype="Code" buildaction="Compile" name="Stats/CategoryStats.cs" />
     <File subtype="Code" buildaction="Compile" name="Stats/PercentualStat.cs" />
     <File subtype="Code" buildaction="Compile" name="Stats/Stat.cs" />
-    <File subtype="Code" buildaction="Compile" name="Stats/SubCategoryStat.cs" />
     <File subtype="Code" buildaction="Compile" name="Stats/PlayersStats.cs" />
     <File subtype="Code" buildaction="Compile" name="Common/PlaysFilter.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/Multimedia/IRemuxer.cs" />
@@ -142,6 +138,8 @@
     <File subtype="Code" buildaction="Compile" name="Store/ScoreEvent.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/PenaltyCard.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/PenaltyCardEvent.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/Tag.cs" />
+    <File subtype="Code" buildaction="Compile" name="Stats/SubCategoryStat.cs" />
   </Contents>
   <References>
     <ProjectReference type="Package" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

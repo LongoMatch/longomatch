@@ -54,6 +54,7 @@ namespace LongoMatch.Store.Templates
 			List = new List<Category>();
 			Scores = new List<Score> ();
 			PenaltyCards = new List<PenaltyCard> ();
+			CommonTags = new List<Tag>();
 		}
 		
 		public Guid ID {
@@ -62,6 +63,11 @@ namespace LongoMatch.Store.Templates
 		}
 		
 		public List<Category> List {
+			get;
+			set;
+		}
+		
+		public List<Tag> CommonTags {
 			get;
 			set;
 		}
@@ -110,16 +116,9 @@ namespace LongoMatch.Store.Templates
 			Serializer.Save(this, filePath);
 		}
 	
-		public void AddDefaultSubcategories (Category cat) {
-			SubCategory resultsubcat;
-			
-			resultsubcat = new SubCategory {
-				Name = Catalog.GetString ("Outcome"),
-				AllowMultiple = false,
-			};
-			resultsubcat.Options.Add (Catalog.GetString ("Success"));
-			resultsubcat.Options.Add (Catalog.GetString ("Failure"));
-			cat.SubCategories.Add(resultsubcat);
+		public void AddDefaultTags (Category cat) {
+			cat.Tags.Add (new Tag (Catalog.GetString ("Good")));
+			cat.Tags.Add (new Tag (Catalog.GetString ("Bad")));
 		}	
 		
 		public Category AddDefaultItem (int index) {
@@ -135,7 +134,7 @@ namespace LongoMatch.Store.Templates
 				HotKey = h,
 				Position = index-1,
 			};
-			AddDefaultSubcategories(cat);
+			AddDefaultTags(cat);
 			List.Insert(index, cat);
 			return cat;
 		}
@@ -152,13 +151,21 @@ namespace LongoMatch.Store.Templates
 
 		public static Categories DefaultTemplate(int count) {
 			List<string> periods = new List<string>();
-			Categories defaultTemplate = new Categories();
+			Categories template = new Categories();
 			
-			defaultTemplate.FillDefaultTemplate(count);
+			template.FillDefaultTemplate(count);
 			periods.Add ("1");
 			periods.Add ("2");
-			defaultTemplate.GamePeriods = periods; 
-			return defaultTemplate;
+			template.GamePeriods = periods; 
+			template.CommonTags.Add (new Tag (Catalog.GetString ("Attack"),
+			                                  Constants.COMMON_TAG));
+			template.CommonTags.Add (new Tag (Catalog.GetString ("Defense"),
+			                                  Constants.COMMON_TAG));
+			template.PenaltyCards.Add (new PenaltyCard (Catalog.GetString ("Red"),
+			                                            Color.Red, CardShape.Rectangle));
+			template.PenaltyCards.Add (new PenaltyCard (Catalog.GetString ("Yellow"),
+			                                            Color.Yellow, CardShape.Rectangle));
+			return template;
 		}
 
 		private void FillDefaultTemplate(int count) {

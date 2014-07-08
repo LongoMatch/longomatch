@@ -163,24 +163,6 @@ namespace LongoMatch.Stats
 				stats.AwayHalfFieldCoordinates = awayPlays.Select (p => p.HalfFieldPosition).Where(p =>p != null).ToList();
 				stats.AwayGoalCoordinates = awayPlays.Select (p => p.GoalPosition).Where(p =>p != null).ToList();
 				catStats.Add (stats);
-				
-				foreach (SubCategory subcat in cat.SubCategories) {
-					SubCategoryStat subcatStat;
-					
-					subcatStat = new SubCategoryStat(subcat);
-					stats.AddSubcatStat(subcatStat);
-					
-					foreach (string option in  subcat.Options) {
-						List<Play> subcatPlays;
-						Tag tag;
-						
-						tag = new Tag{SubCategory=subcat, Value=option};
-						subcatPlays = plays.Where(p => p.TagsStore.Tags.Contains(tag)).ToList();
-						GetSubcategoryStats(subcatPlays, subcatStat, option,
-						                    stats.TotalCount, out localTeamCount, out visitorTeamCount);
-						GetPlayersStats(project, subcatPlays, option, subcatStat, cat);
-					}
-				}
 			}
 		}
 		

@@ -29,10 +29,12 @@ namespace LongoMatch.Store
 	[Serializable]
 	public class Tag
 	{
-		public Tag() {
+		public Tag (string value, string grp="") {
+			Group = grp;
+			Value = value;
 		}
 		
-		public SubCategory SubCategory {
+		public string Group {
 			set;
 			get;
 		}
@@ -47,13 +49,13 @@ namespace LongoMatch.Store
 			Tag tag = obj as Tag;
             if (tag == null)
 				return false;
-			return Value.Equals (tag.Value) && SubCategory.Equals(tag.SubCategory);
+			return Value == tag.Value && Group == tag.Group;
 		}
 		
 		public override int GetHashCode ()
 		{
-			if (Value != null) {
-				return Value.GetHashCode ();
+			if (Value != null && Group != null) {
+				return (Value + Group).GetHashCode ();
 			} else {
 				return base.GetHashCode ();
 			}

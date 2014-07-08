@@ -47,7 +47,7 @@ namespace Tests.Core
 			play.Stop = new Time(2000);
 			play.Rate = 2.3f;
 			
-			play.Tags.Add(new Tag {Value = "test"});
+			play.Tags.Add(new Tag ("test"));
 			return play;
 		}
 		
@@ -62,7 +62,6 @@ namespace Tests.Core
 			
 			Assert.AreEqual (p.Category.ID, newp.Category.ID);
 			Assert.AreEqual (p.Notes, newp.Notes);
-			Assert.AreEqual (p.Fps, newp.Fps);
 			Assert.AreEqual (p.Team, newp.Team);
 			Assert.AreEqual (p.FieldPosition, newp.FieldPosition);
 			Assert.AreEqual (p.HalfFieldPosition, newp.HalfFieldPosition);

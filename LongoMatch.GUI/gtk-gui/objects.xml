@@ -71,15 +71,6 @@
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.SubCategoriesTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
-    <itemgroups />
-    <signals>
-      <itemgroup label="SubCategoriesTreeView Signals">
-        <signal name="SubCategoriesDeleted" />
-        <signal name="SubCategorySelected" />
-      </itemgroup>
-    </signals>
-  </object>
   <object type="LongoMatch.Gui.Component.RenderingStateBar" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="IRenderingStateBar Properties">
@@ -146,10 +137,6 @@
         <property name="AwayName" />
       </itemgroup>
     </itemgroups>
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.Stats.SubCategoryViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.Stats.CategoriesViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
@@ -304,6 +291,14 @@
         <signal name="CategoriesSelected" />
       </itemgroup>
     </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.Stats.SubCategoryViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.SubCategoriesTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
+    <itemgroups />
+    <signals />
   </object>
   <object type="LongoMatch.Gui.CapturerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>

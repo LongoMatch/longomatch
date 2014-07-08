@@ -93,9 +93,7 @@ SOURCES = Common/Area.cs \
 	Store/ProjectDescription.cs \
 	Store/Score.cs \
 	Store/ScoreEvent.cs \
-	Store/SubCategory.cs \
 	Store/Tag.cs \
-	Store/TagStore.cs \
 	Store/Templates/CategoriesTemplate.cs \
 	Store/Templates/TeamTemplate.cs \
 	Store/Time.cs \

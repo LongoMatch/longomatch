@@ -113,10 +113,6 @@ namespace LongoMatch.Handlers
 	public delegate void CategoryHandler(Category category);
 	public delegate void CategoriesHandler(List<Category> categoriesList);
 	
-	/* Edit Subcategory properties */
-	public delegate void SubCategoryHandler(SubCategory subcat);
-	public delegate void SubCategoriesHandler(List<SubCategory> subcat);
-
 	/* Edit player properties */
 	public delegate void PlayerPropertiesHandler(Player player);
 	public delegate void PlayersPropertiesHandler(List<Player> players);

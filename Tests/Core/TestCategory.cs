@@ -22,6 +22,7 @@ using Newtonsoft.Json;
 using LongoMatch.Common;
 using LongoMatch.Store;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Tests.Core
 {
@@ -44,14 +45,13 @@ namespace Tests.Core
 			cat.SortMethod = SortMethodType.SortByDuration;
 			cat.Start = new Time (3000);
 			cat.Stop = new Time (4000);
-			cat.SubCategories = null;
+			cat.Tags = new List<Tag>();
+			cat.Tags.Add (new Tag ("foo", "bar"));
 			cat.TagFieldPosition = true;
 			cat.TagGoalPosition = true;
 			cat.TagHalfFieldPosition = true;
 			cat.FieldPositionIsDistance = true;
 			cat.HalfFieldPositionIsDistance = false;
-			cat.SubCategories = new System.Collections.Generic.List<SubCategory>();
-			cat.SubCategories.Add (new SubCategory {Name="TestSubcat"});
 			
 			Utils.CheckSerialization (cat);
 			
@@ -79,17 +79,9 @@ namespace Tests.Core
 			Assert.AreEqual (255, newcat.Color.R);
 			Assert.AreEqual (0, newcat.Color.G);
 			Assert.AreEqual (0, newcat.Color.B);
-			Assert.AreEqual (newcat.SubCategories.Count, 1);
-			Assert.AreEqual (newcat.SubCategories[0].Name, "TestSubcat");
-		}
-		
-		[Test()]
-		public void TestNullList ()
-		{
-			Category cat = new Category();
-			Assert.AreNotEqual (cat.SubCategories, null);
-			Category newcat = Utils.SerializeDeserialize (cat);
-			Assert.AreNotEqual (newcat.SubCategories, null);
+			Assert.AreEqual (newcat.Tags.Count, 1);
+			Assert.AreEqual (newcat.Tags[0].Value, "foo");
+			Assert.AreEqual (newcat.Tags[0].Group, "bar");
 		}
 		
 		public static void Main (string [] args)

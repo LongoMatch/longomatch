@@ -234,16 +234,6 @@ namespace LongoMatch.Store
 			}
 		}
 		
-		public void DeleteSubcategoryTags(Category cat, List<SubCategory> subcategories) {
-			foreach (var play in Timeline.Where(p => p.Category == cat)) {
-				foreach (var subcat in subcategories) {
-					Log.Error(play.Name);
-					if (subcat is SubCategory)
-						play.TagsStore.RemoveBySubcategory(subcat);
-				}
-			}
-		}
-
 		public List<Play> PlaysInCategory(Category category) {
 			return Timeline.Where(p => p.Category.ID == category.ID).ToList();
 		}
