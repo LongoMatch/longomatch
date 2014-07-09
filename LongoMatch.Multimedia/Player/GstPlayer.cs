@@ -434,15 +434,6 @@ namespace LongoMatch.Video.Player {
 			lgm_video_player_pause (Handle);
 		}
 
-		public void  TogglePlay() {
-			if(!this.Playing) {
-				this.Play();
-			}
-			else {
-				this.Pause();
-			}
-		}
-
 		public void Stop() {
 			lgm_video_player_stop (Handle);
 		}

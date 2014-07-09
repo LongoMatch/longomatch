@@ -45,7 +45,6 @@ namespace LongoMatch.Interfaces.Multimedia
 
 		bool Open (string mrl);
 		void Play();
-		void TogglePlay();
 		void Pause();
 		void Stop();
 		void Close();
