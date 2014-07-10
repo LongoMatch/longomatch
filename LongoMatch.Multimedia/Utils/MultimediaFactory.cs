@@ -47,7 +47,7 @@ namespace LongoMatch.Video
 			elements = new Dictionary<Type, List<BackendElement>>();
 			/* Register default elements */
 			Register (0, typeof (IPlayer), typeof (GstPlayer));
-			Register (0, typeof (IFramesCapturer), typeof (GstPlayer));
+			Register (0, typeof (IFramesCapturer), typeof (GstFramesCapturer));
 			Register (0, typeof (IVideoConverter), typeof (GstVideoConverter));
 			Register (0, typeof (IVideoEditor), typeof (GstVideoSplitter));
 			Register (0, typeof (IRemuxer), typeof (GstRemuxer));
@@ -62,13 +62,11 @@ namespace LongoMatch.Video
 		}
 
 		public IPlayer GetPlayer () {
-			return GetDefaultElement<IPlayer> (typeof (IPlayer),
-			                                    PlayerUseType.Video);
+			return GetDefaultElement<IPlayer> (typeof (IPlayer));
 		}
 
 		public IFramesCapturer GetFramesCapturer() {
-			return GetDefaultElement<IFramesCapturer> (typeof (IFramesCapturer),
-			                                            PlayerUseType.Capture);
+			return GetDefaultElement<IFramesCapturer> (typeof (IFramesCapturer));
 		}
 
 		public IVideoEditor GetVideoEditor() {
