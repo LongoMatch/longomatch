@@ -37,7 +37,6 @@ namespace LongoMatch.Interfaces.Multimedia
 
 		Time StreamLength {get;}
 		Time CurrentTime {get;}
-		double Position {get;set;}
 		double Volume {get;set;}
 		bool Playing {get;}
 		double Rate {set;}

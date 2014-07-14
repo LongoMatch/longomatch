@@ -384,16 +384,6 @@ namespace LongoMatch.Video.Player {
 			}
 		}
 
-		public double Position {
-			get  {
-				return lgm_video_player_get_position (Handle);
-			}
-			set {
-				Seek (value);
-			}
-
-		}
-		
 		public double Volume {
 			get {
 				return lgm_video_player_get_volume (Handle);
