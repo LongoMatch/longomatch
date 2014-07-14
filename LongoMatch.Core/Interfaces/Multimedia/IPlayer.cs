@@ -32,7 +32,6 @@ namespace LongoMatch.Interfaces.Multimedia
 		event         ErrorHandler Error;
 		event         System.EventHandler Eos;
 		event         StateChangeHandler StateChange;
-		event         TickHandler Tick;
 		event         ReadyToSeekHandler ReadyToSeek;
 
 		Time StreamLength {get;}

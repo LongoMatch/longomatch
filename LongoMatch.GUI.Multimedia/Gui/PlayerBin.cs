@@ -69,6 +69,8 @@ namespace LongoMatch.Gui
 		Seeker seeker;
 		Segment segment;
 		Blackboard blackboard;
+		uint timeout;
+		bool ignoreTick;
 
 
 		#region Constructors
@@ -93,6 +95,7 @@ namespace LongoMatch.Gui
 			segment.Start = new Time(-1);
 			segment.Stop = new Time(int.MaxValue);
 			lastTime = new Time (0);
+			length = new Time (0);
 			
 			CreatePlayer ();
 		}
@@ -100,7 +103,8 @@ namespace LongoMatch.Gui
 		#endregion
 		protected override void OnDestroyed ()
 		{
-			player.Dispose();
+			player.Dispose ();
+			blackboard.Dispose ();
 			base.OnDestroyed ();
 		}
 
@@ -168,6 +172,7 @@ namespace LongoMatch.Gui
 		#region Public methods
 
 		public void Open (string filename) {
+			timeout = GLib.Timeout.Add (20, OnTick);
 			Open (filename, true);
 		}
 
@@ -217,7 +222,10 @@ namespace LongoMatch.Gui
 		}
 		
 		public void Close() {
-			player.Tick -= OnTick;
+			if (timeout != 0) {
+				GLib.Source.Remove (timeout);
+				timeout = 0;
+			}
 			player.Close();
 			filename = null;
 			timescale.Value = 0;
@@ -370,9 +378,9 @@ namespace LongoMatch.Gui
 
 		void LoadDrawing (FrameDrawing drawing) {
 			Pause ();
-			player.Tick -= OnTick;
+			ignoreTick = true;
 			player.Seek (drawing.Render, true);
-			player.Tick += OnTick;
+			ignoreTick = false;
 			blackboard.Background = player.GetCurrentFrame () ;
 			blackboard.Drawing = drawing;
 			DrawingsVisible = true;
@@ -427,7 +435,6 @@ namespace LongoMatch.Gui
 			videodrawingarea.DoubleBuffered = false;
 			player = Config.MultimediaToolkit.GetPlayer ();
 
-			player.Tick += OnTick;
 			player.Error += Config.EventsBroker.EmitMultimediaError;
 			player.StateChange += OnStateChanged;
 			player.Eos += OnEndOfStream;
@@ -463,6 +470,7 @@ namespace LongoMatch.Gui
 
 		void OnReadyToSeek() {
 			readyToSeek = true;
+			length = player.StreamLength;
 			if(pendingSeek != null) {
 				player.Rate = (float) pendingSeek [1];
 				player.Seek ((Time)pendingSeek[0], true);
@@ -473,13 +481,15 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		void OnTick (Time currentTime, Time streamLength, double currentPosition) {
+		bool OnTick () {
 			string slength;
+			Time currentTime;
 
-			if (length != streamLength) {
-				length = streamLength;
+			if (ignoreTick) {
+				return true;
 			}
 
+			currentTime = CurrentTime;
 			if (SegmentLoaded) {
 				Time dur, ct;
 				double cp;
@@ -503,16 +513,17 @@ namespace LongoMatch.Gui
 				slength = length.ToMSecondsString ();
 				timelabel.Text = currentTime.ToMSecondsString() + "/" + slength;
 				if (timescale.Visible) {
-					timescale.Value = currentPosition;
+					timescale.Value = (double) currentTime.MSeconds / length.MSeconds;
 				}
 			}
 			lastTime = currentTime;
 
 			if (Tick != null) {
-				Tick (currentTime, streamLength, currentPosition);
+				Tick (currentTime);
 			}
 			
-			Config.EventsBroker.EmitTick (currentTime, streamLength, currentPosition);
+			Config.EventsBroker.EmitTick (currentTime);
+			return true;
 		}
 
 		void OnTimescaleAdjustBounds(object o, Gtk.AdjustBoundsArgs args)
@@ -522,7 +533,7 @@ namespace LongoMatch.Gui
 			if(!seeking) {
 				seeking = true;
 				IsPlayingPrevState = player.Playing;
-				player.Tick -= OnTick;
+				ignoreTick = true;
 				Pause ();
 				seeksQueue [0] = -1;
 				seeksQueue [1] = -1;
@@ -542,7 +553,7 @@ namespace LongoMatch.Gui
 				 * We need to cache previous position and seek again to the this position */
 				SeekFromTimescale(seeksQueue[0] != -1 ? seeksQueue[0] : seeksQueue[1]);
 				seeking=false;
-				player.Tick += OnTick;
+				ignoreTick = false;
 				if(IsPlayingPrevState)
 					Play ();
 			}

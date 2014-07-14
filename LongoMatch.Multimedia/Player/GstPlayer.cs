@@ -105,11 +105,6 @@ namespace LongoMatch.Video.Player {
 					StateChange (args.Playing);
 			};
 			
-			this.GlibTick += (o, args) =>  {
-				if (Tick != null)
-					Tick (args.CurrentTime, args.StreamLength, args.CurrentPosition);
-			};
-			
 			this.GlibReadyToSeek += (sender, e) => {
 				if (ReadyToSeek != null)
 					ReadyToSeek ();

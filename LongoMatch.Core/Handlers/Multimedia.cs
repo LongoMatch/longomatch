@@ -41,7 +41,7 @@ namespace LongoMatch.Handlers
 	public delegate void ErrorHandler(string message);
 	public delegate void PercentCompletedHandler(float percent);
 	public delegate void StateChangeHandler(bool playing);
-	public delegate void TickHandler(Time currentTime, Time streamLength, double currentPosition);
+	public delegate void TickHandler(Time currentTime);
 	public delegate void EosHandler();
 	public delegate void ReadyToSeekHandler();
 }

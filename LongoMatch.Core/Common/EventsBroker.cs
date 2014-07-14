@@ -306,10 +306,10 @@ namespace LongoMatch.Common
 			}
 		}
 
-		public void EmitTick (Time currentTime, Time streamLength, double currentPosition)
+		public void EmitTick (Time currentTime)
 		{
 			if (Tick != null) {
-				Tick (currentTime, streamLength, currentPosition);
+				Tick (currentTime);
 			}
 		}
 		

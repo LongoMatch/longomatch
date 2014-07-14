@@ -95,7 +95,7 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		void HandleTick (Time currentTime, Time streamLength, double currentPosition)
+		void HandleTick (Time currentTime)
 		{
 			timerule.CurrentTime = currentTime;
 			timersTimenline.CurrentTime = currentTime;
