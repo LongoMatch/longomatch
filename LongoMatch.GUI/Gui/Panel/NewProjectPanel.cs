@@ -97,6 +97,12 @@ namespace LongoMatch.Gui.Panel
 			filelabel.ModifyFg (StateType.Normal, red);
 		}
 		
+		protected override void OnDestroyed ()
+		{
+			projectperiods1.Destroy ();
+			base.OnDestroyed ();
+		}
+		
 		void LoadTeams () {
 			drawingarea1.HeightRequest = 200;
 			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea1));

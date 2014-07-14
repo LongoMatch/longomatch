@@ -49,6 +49,13 @@ namespace LongoMatch.Gui
 			ConnectSignals();
 		}
 		
+		protected override void OnDestroyed ()
+		{
+			playerbin.Destroy ();
+			capturerbin.Destroy ();
+			base.OnDestroyed ();
+		}
+		
 		public PlayerOperationMode Mode {
 			set {
 				mode = value;

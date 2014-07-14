@@ -98,6 +98,11 @@ namespace LongoMatch.Gui
 		}
 
 		#endregion
+		protected override void OnDestroyed ()
+		{
+			player.Dispose();
+			base.OnDestroyed ();
+		}
 
 		#region Properties
 
@@ -552,11 +557,6 @@ namespace LongoMatch.Gui
 		{
 			vwin.SetLevel(player.Volume);
 			vwin.Show();
-		}
-
-		void OnDestroyEvent(object o, Gtk.DestroyEventArgs args)
-		{
-			player.Dispose();
 		}
 
 		void OnVolumeChanged(double level) {

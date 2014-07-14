@@ -48,6 +48,12 @@ namespace LongoMatch.Gui.Component
 			                                Catalog.GetString ("Synchronize the game periods"),
 			                                "  ⬇</b>");
 		}
+		
+		protected override void OnDestroyed ()
+		{
+			playerbin2.Destroy ();
+			base.OnDestroyed ();
+		}
 
 		public Project Project {
 			set {

@@ -49,6 +49,12 @@ namespace LongoMatch.Gui.Component
 			ConnectSignals();
 		}
 		
+		protected override void OnDestroyed ()
+		{
+			playercapturer.Destroy ();
+			base.OnDestroyed ();
+		}
+		
 		public IPlayerBin Player{
 			get {
 				return playercapturer;
