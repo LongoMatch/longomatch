@@ -103,6 +103,10 @@ namespace LongoMatch.Gui
 		#endregion
 		protected override void OnDestroyed ()
 		{
+			if (timeout != 0) {
+				GLib.Source.Remove (timeout);
+				timeout = 0;
+			}
 			player.Dispose ();
 			blackboard.Dispose ();
 			base.OnDestroyed ();
