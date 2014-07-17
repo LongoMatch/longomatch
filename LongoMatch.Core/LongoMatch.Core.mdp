@@ -140,6 +140,8 @@
     <File subtype="Code" buildaction="Compile" name="Store/PenaltyCardEvent.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Tag.cs" />
     <File subtype="Code" buildaction="Compile" name="Stats/SubCategoryStat.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/TaggerButton.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/TagButton.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/Multimedia/IDiscoverer.cs" />
   </Contents>
   <References>
