@@ -144,6 +144,9 @@ lgm_error_msg (LgmVideoPlayer * lvp, GstMessage * msg)
 static void
 lgm_reconfigure_tick_timeout (LgmVideoPlayer * lvp, guint msecs)
 {
+  /* Tick timeouts are not used anymore */
+  return;
+
   if (lvp->priv->update_id != 0) {
     g_source_remove (lvp->priv->update_id);
     lvp->priv->update_id = 0;

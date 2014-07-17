@@ -103,10 +103,7 @@ namespace LongoMatch.Gui
 		#endregion
 		protected override void OnDestroyed ()
 		{
-			if (timeout != 0) {
-				GLib.Source.Remove (timeout);
-				timeout = 0;
-			}
+			ReconfigureTimeout (0);
 			player.Dispose ();
 			blackboard.Dispose ();
 			base.OnDestroyed ();
@@ -176,7 +173,6 @@ namespace LongoMatch.Gui
 		#region Public methods
 
 		public void Open (string filename) {
-			timeout = GLib.Timeout.Add (20, OnTick);
 			Open (filename, true);
 		}
 
@@ -226,10 +222,7 @@ namespace LongoMatch.Gui
 		}
 		
 		public void Close() {
-			if (timeout != 0) {
-				GLib.Source.Remove (timeout);
-				timeout = 0;
-			}
+			ReconfigureTimeout (0);
 			player.Close();
 			filename = null;
 			timescale.Value = 0;
@@ -450,6 +443,16 @@ namespace LongoMatch.Gui
 			videodrawingarea.ExposeEvent += HandleExposeEvent;
 			videodrawingarea.CanFocus = false;
 		}
+		
+		void ReconfigureTimeout (uint mseconds) {
+			if (timeout != 0) {
+				GLib.Source.Remove (timeout);
+				timeout = 0;
+			}
+			if (mseconds != 0) {
+				timeout = GLib.Timeout.Add (mseconds, OnTick);
+			}
+		}
 
 		#endregion
 
@@ -461,10 +464,12 @@ namespace LongoMatch.Gui
 		
 		void OnStateChanged(bool playing) {
 			if(playing) {
+				ReconfigureTimeout (20);
 				playbutton.Hide();
 				pausebutton.Show();
 			}
 			else {
+				ReconfigureTimeout (0);
 				playbutton.Show();
 				pausebutton.Hide();
 			}
