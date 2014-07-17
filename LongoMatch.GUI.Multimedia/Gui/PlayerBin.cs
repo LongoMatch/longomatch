@@ -488,6 +488,7 @@ namespace LongoMatch.Gui
 				}
 				pendingSeek = null;
 			}
+			OnTick ();
 		}
 
 		bool OnTick () {
