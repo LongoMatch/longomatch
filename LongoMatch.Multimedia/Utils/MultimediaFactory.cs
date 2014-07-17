@@ -52,6 +52,7 @@ namespace LongoMatch.Video
 			Register (0, typeof (IVideoEditor), typeof (GstVideoSplitter));
 			Register (0, typeof (IRemuxer), typeof (GstRemuxer));
 			Register (0, typeof (ICapturer), typeof (GstCameraCapturer));
+			Register (0, typeof (IDiscoverer), typeof (GstDiscoverer));
 		}
 		
 		public void Register (int priority, Type interfac, Type elementType) {
@@ -77,6 +78,10 @@ namespace LongoMatch.Video
 			return GetDefaultElement<IVideoConverter> (typeof (IVideoConverter));
 		}
 
+		public IDiscoverer GetDiscoverer () {
+			return GetDefaultElement<IDiscoverer> (typeof (IDiscoverer));
+		}
+		
 		public ICapturer GetCapturer(CapturerType type) {
 			switch(type) {
 			case CapturerType.Live:
@@ -98,8 +103,8 @@ namespace LongoMatch.Video
 			}
 		}
 		
-		public MediaFile DiscoverFile (string file) {
-			return PreviewMediaFile.DiscoverFile(file);
+		public MediaFile DiscoverFile (string file, bool takeScreenshot = true) {
+			return GetDiscoverer().DiscoverFile (file, takeScreenshot);
 		}	
 		
 		public List<Device> VideoDevices {

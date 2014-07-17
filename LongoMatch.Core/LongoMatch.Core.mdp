@@ -140,6 +140,7 @@
     <File subtype="Code" buildaction="Compile" name="Store/PenaltyCardEvent.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Tag.cs" />
     <File subtype="Code" buildaction="Compile" name="Stats/SubCategoryStat.cs" />
+    <File subtype="Code" buildaction="Compile" name="Interfaces/Multimedia/IDiscoverer.cs" />
   </Contents>
   <References>
     <ProjectReference type="Package" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

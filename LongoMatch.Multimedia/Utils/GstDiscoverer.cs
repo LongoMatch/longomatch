@@ -29,9 +29,7 @@ using GLib;
 
 namespace LongoMatch.Video.Utils
 {
-
-	[Serializable]
-	public class PreviewMediaFile
+	public class GstDiscoverer: IDiscoverer
 	{
 		const int THUMBNAIL_MAX_HEIGHT=72;
 		const int THUMBNAIL_MAX_WIDTH=96;
@@ -46,7 +44,7 @@ namespace LongoMatch.Video.Utils
 		                                           out IntPtr audio_codec,
 		                                           out IntPtr err);
 		
-		public static MediaFile DiscoverFile(string filePath, bool takeScreenshot = true) {
+		public MediaFile DiscoverFile (string filePath, bool takeScreenshot = true) {
 			long duration = 0;
 			uint width, height, fps_n, fps_d, par_n, par_d, ret, fps = 0;
 			string container, audio_codec, video_codec;

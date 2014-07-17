@@ -309,7 +309,7 @@ namespace LongoMatch.Gui
 		
 		public string RemuxFile (string inputFile, string outputFile, VideoMuxerType muxer) {
 			Log.Information ("Remux file");
-			Remuxer remuxer = new Remuxer (PreviewMediaFile.DiscoverFile(inputFile),
+			Remuxer remuxer = new Remuxer (Config.MultimediaToolkit.DiscoverFile (inputFile),
 			                               outputFile, muxer);
 			return remuxer.Remux (mainWindow as Gtk.Window);
 		}

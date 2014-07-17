@@ -53,6 +53,7 @@ SOURCES = Common/Area.cs \
 	Interfaces/ITemplatesService.cs \
 	Interfaces/ITimelineNode.cs \
 	Interfaces/Multimedia/ICapturer.cs \
+	Interfaces/Multimedia/IDiscoverer.cs \
 	Interfaces/Multimedia/IFramesCapturer.cs \
 	Interfaces/Multimedia/IMultimediaToolkit.cs \
 	Interfaces/Multimedia/IPlayer.cs \

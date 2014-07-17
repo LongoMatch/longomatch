@@ -25,8 +25,7 @@
     <File subtype="Code" buildaction="Compile" name="Capturer/LiveSourceTimer.cs" />
     <File subtype="Directory" buildaction="Compile" name="Utils" />
     <File subtype="Code" buildaction="Compile" name="Utils/TimeString.cs" />
-    <File subtype="Code" buildaction="Compile" name="Utils/IMetadataReader.cs" />
-    <File subtype="Code" buildaction="Compile" name="Utils/PreviewMediaFile.cs" />
+    <File subtype="Code" buildaction="Compile" name="Utils/GstDiscoverer.cs" />
     <File subtype="Directory" buildaction="Compile" name="Utils" />
     <File subtype="Directory" buildaction="Compile" name="Common" />
     <File subtype="Directory" buildaction="Compile" name="Common" />

@@ -21,9 +21,8 @@ SOURCES = Capturer/FakeCapturer.cs \
 	Remuxer/ObjectManager.cs \
 	Utils/GStreamer.cs \
 	Utils/GtkHelpers.cs \
-	Utils/IMetadataReader.cs \
+	Utils/GstDiscoverer.cs \
 	Utils/MultimediaFactory.cs \
-	Utils/PreviewMediaFile.cs \
 	Utils/Seeker.cs \
 	Utils/TimeString.cs \
 	Utils/VideoDevice.cs

@@ -66,7 +66,7 @@ namespace LongoMatch.Gui.Dialog
 			mediaFileCol.SetCellDataFunc(mediaFileCell, new TreeCellDataFunc(RenderMediaFile));
 			treeview1.AppendColumn(mediaFileCol);
 			
-			store = new ListStore(typeof(PreviewMediaFile));
+			store = new ListStore(typeof(MediaFile));
 			treeview1.Model = store;
 		}
 		
@@ -86,7 +86,7 @@ namespace LongoMatch.Gui.Dialog
 			List<string> errors = new List<string>();
 			foreach (string path in paths) {
 				try {
-					MediaFile file = PreviewMediaFile.DiscoverFile(path, false);
+					MediaFile file = Config.MultimediaToolkit.DiscoverFile(path, false);
 					store.AppendValues (file);
 					Files.Add (file);
 				} catch (Exception) {
