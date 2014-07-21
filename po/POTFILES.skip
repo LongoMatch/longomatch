@@ -1,9 +1,4 @@
-win32/deps/themes/Cleanice/gtk-2.0/index.theme.in
-libcesarplayer/src/bacon-video-widget-gst-0.10.c
-libcesarplayer/src/video-utils.c
-LongoMatch/Time/DrawingsList.cs
 LongoMatch/longomatch.desktop.in
-LongoMatch/gtk-gui/LongoMatch.Gui.Dialog.Migrator.cs
 LongoMatch.Addins.COE/ExcelExporter.cs
 LongoMatch.Addins.COE/GameUnitsStatsSheet.cs
 LongoMatch.Addins.COE/GameUnitsStatsSheetFull.cs
