@@ -27,6 +27,7 @@ using LongoMatch.Video;
 using LongoMatch.Video.Common;
 using LongoMatch.Store;
 using LongoMatch.Multimedia.Utils;
+using Gtk;
 
 namespace LongoMatch.Video.Utils
 {
@@ -78,7 +79,7 @@ namespace LongoMatch.Video.Utils
 
 			pos = start;
 			if(Progress != null) {
-				GtkHelpers.CallFromAppThread (delegate {
+				Application.Invoke (delegate {
 					Progress(0,totalFrames,null);
 				});
 			}
@@ -93,7 +94,7 @@ namespace LongoMatch.Video.Utils
 					}
 
 					if(Progress != null) {
-						GtkHelpers.CallFromAppThread (delegate {
+						Application.Invoke (delegate {
 							Progress(i+1, totalFrames, frame);
 						});
 					}

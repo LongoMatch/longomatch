@@ -90,16 +90,13 @@ namespace LongoMatch.Video.Remuxer
 				ret = LaunchRemuxer ();
 			}
 			
-			/* FIXME: not called from main thread */
 			if (ret != 0) {
 				if (Error != null) {
-					GtkHelpers.CallFromAppThread (delegate {
-						Error ("Unkown error");});
+					Error ("Unkown error");
 				}
 			} else {
 				if (Progress != null) {
-					GtkHelpers.CallFromAppThread (delegate {
-						Progress (1);});
+					Progress (1);
 				}
 			}
 		}

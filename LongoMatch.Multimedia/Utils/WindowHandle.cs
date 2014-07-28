@@ -17,19 +17,14 @@
 //
 using System;
 using System.Runtime.InteropServices;
-using Gtk;
 
 namespace LongoMatch.Multimedia.Utils
 {
-	public class GtkHelpers
+	public class WindowHandle
 	{
 		[DllImport("libcesarplayer.dll")]
 		static extern IntPtr lgm_get_window_handle (IntPtr window);
 
-		public static void CallFromAppThread (EventHandler del) {
-			Application.Invoke (del);
-		}
-		
 		public static IntPtr GetWindowHandle (Gdk.Window window) {
 			return lgm_get_window_handle (window.Handle);
 		}

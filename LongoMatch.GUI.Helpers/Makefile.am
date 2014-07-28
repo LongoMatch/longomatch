@@ -8,6 +8,6 @@ SOURCES = FileChooserHelper.cs \
 	MessagesHelpers.cs \
 	Misc.cs
 
-RESOURCES =
+RESOURCES = 
 
 include $(top_srcdir)/build/build.mk

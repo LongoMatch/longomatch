@@ -51,10 +51,10 @@
     <File subtype="Code" buildaction="Compile" name="Utils/Seeker.cs" />
     <File subtype="Code" buildaction="Compile" name="Remuxer/MpegRemuxer.cs" />
     <File subtype="Code" buildaction="Compile" name="Utils/MultimediaFactory.cs" />
-    <File subtype="Code" buildaction="Compile" name="Utils/GtkHelpers.cs" />
     <File subtype="Directory" buildaction="Compile" name="Player" />
     <File subtype="Code" buildaction="Compile" name="Player/GstPlayer.cs" />
     <File subtype="Code" buildaction="Compile" name="Player/ObjectManager.cs" />
+    <File subtype="Code" buildaction="Compile" name="Utils/WindowHandle.cs" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="libcesarplayer" />
@@ -62,8 +62,7 @@
     <ProjectReference type="Project" localcopy="True" refto="LongoMatch.Core" />
     <ProjectReference type="Package" localcopy="True" refto="Mono.Posix, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <ProjectReference type="Package" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-    <ProjectReference type="Package" localcopy="False" refto="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <ProjectReference type="Package" localcopy="True" refto="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Package" specificVersion="False" localcopy="False" refto="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Package" localcopy="False" refto="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </References>
 </Project>

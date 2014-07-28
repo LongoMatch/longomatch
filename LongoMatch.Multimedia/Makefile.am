@@ -20,12 +20,12 @@ SOURCES = Capturer/FakeCapturer.cs \
 	Remuxer/MpegRemuxer.cs \
 	Remuxer/ObjectManager.cs \
 	Utils/GStreamer.cs \
-	Utils/GtkHelpers.cs \
 	Utils/GstDiscoverer.cs \
 	Utils/MultimediaFactory.cs \
 	Utils/Seeker.cs \
 	Utils/TimeString.cs \
-	Utils/VideoDevice.cs
+	Utils/VideoDevice.cs \
+	Utils/WindowHandle.cs
 
 DLLCONFIG = LongoMatch.Multimedia.dll.config
 

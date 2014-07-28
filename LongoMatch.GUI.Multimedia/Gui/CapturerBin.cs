@@ -281,10 +281,30 @@ namespace LongoMatch.Gui
 			}
 				
 			if (type == CapturerType.Live) {
-				windowHandle = GtkHelpers.GetWindowHandle (videodrawingarea.GdkWindow);
+				windowHandle = WindowHandle.GetWindowHandle (videodrawingarea.GdkWindow);
 			}
 			capturer.Configure (settings, windowHandle); 
 			delayStart = false;
+		}
+
+		void DeviceChanged (int deviceID)
+		{
+			string msg;
+			/* device disconnected, pause capture */
+			if (deviceID == -1) {
+				if (Capturing)
+					capturer.TogglePause ();
+				recbutton.Sensitive = false;
+				msg = Catalog.GetString ("Device disconnected. " + "The capture will be paused");
+				MessagesHelpers.WarningMessage (this, msg);
+			}
+			else {
+				recbutton.Sensitive = true;
+				msg = Catalog.GetString ("Device reconnected." + "Do you want to restart the capture?");
+				if (MessagesHelpers.QuestionMessage (this, msg, null)) {
+					capturer.TogglePause ();
+				}
+			}
 		}
 
 		void OnTick(Time ellapsedTime) {
@@ -307,29 +327,16 @@ namespace LongoMatch.Gui
 		}
 		
 		void OnError (string message) {
-			Config.EventsBroker.EmitCaptureError (message);
+			Application.Invoke (delegate {
+				Config.EventsBroker.EmitCaptureError (message);
+			});
 		}
 
 		void OnDeviceChange(int deviceID)
 		{
-			string msg;
-			/* device disconnected, pause capture */
-			if(deviceID == -1) {
-				if(Capturing)
-					capturer.TogglePause();
-
-				recbutton.Sensitive = false;
-				msg = Catalog.GetString("Device disconnected. " +
-				                        "The capture will be paused");
-				MessagesHelpers.WarningMessage (this, msg);
-			} else {
-				recbutton.Sensitive = true;
-				msg = Catalog.GetString("Device reconnected." +
-				                        "Do you want to restart the capture?");
-				if (MessagesHelpers.QuestionMessage (this, msg, null)) {
-					capturer.TogglePause();
-				}
-			}
+			Application.Invoke (delegate {
+				DeviceChanged (deviceID);
+			});
 		}
 	}
 }

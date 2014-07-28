@@ -432,11 +432,10 @@ namespace LongoMatch.Gui
 			videodrawingarea.DoubleBuffered = false;
 			player = Config.MultimediaToolkit.GetPlayer ();
 
-			player.Error += Config.EventsBroker.EmitMultimediaError;
+			player.Error += OnError;
 			player.StateChange += OnStateChanged;
 			player.Eos += OnEndOfStream;
 			player.ReadyToSeek += OnReadyToSeek;
-
 			videoeventbox.ButtonPressEvent += OnVideoboxButtonPressEvent;
 			videoeventbox.ScrollEvent += OnVideoboxScrollEvent;
 			videodrawingarea.Realized += HandleRealized;
@@ -454,6 +453,37 @@ namespace LongoMatch.Gui
 			}
 		}
 
+		void StateChanged (bool playing)
+		{
+			if (playing) {
+				ReconfigureTimeout (20);
+				playbutton.Hide ();
+				pausebutton.Show ();
+			}
+			else {
+				ReconfigureTimeout (0);
+				playbutton.Show ();
+				pausebutton.Hide ();
+			}
+			if (PlayStateChanged != null)
+				PlayStateChanged (playing);
+		}
+
+		void ReadyToSeek ()
+		{
+			readyToSeek = true;
+			length = player.StreamLength;
+			if (pendingSeek != null) {
+				player.Rate = (float)pendingSeek [1];
+				player.Seek ((Time)pendingSeek [0], true);
+				if ((bool)pendingSeek [2]) {
+					Play ();
+				}
+				pendingSeek = null;
+			}
+			OnTick ();
+		}
+
 		#endregion
 
 		#region Callbacks
@@ -463,32 +493,13 @@ namespace LongoMatch.Gui
 		}
 		
 		void OnStateChanged(bool playing) {
-			if(playing) {
-				ReconfigureTimeout (20);
-				playbutton.Hide();
-				pausebutton.Show();
-			}
-			else {
-				ReconfigureTimeout (0);
-				playbutton.Show();
-				pausebutton.Hide();
-			}
-			if(PlayStateChanged != null)
-				PlayStateChanged(playing);
+			Application.Invoke (delegate {
+				StateChanged (playing);});
 		}
 
 		void OnReadyToSeek() {
-			readyToSeek = true;
-			length = player.StreamLength;
-			if(pendingSeek != null) {
-				player.Rate = (float) pendingSeek [1];
-				player.Seek ((Time)pendingSeek[0], true);
-				if ((bool)pendingSeek[2]) {
-					Play();
-				}
-				pendingSeek = null;
-			}
-			OnTick ();
+			Application.Invoke (delegate {
+				ReadyToSeek ();});
 		}
 
 		bool OnTick () {
@@ -593,13 +604,17 @@ namespace LongoMatch.Gui
 			Pause ();
 		}
 
-		void OnEndOfStream(object o, EventArgs args) {
-			player.Seek (new Time (0), true);
-			Pause ();
+		void OnEndOfStream (object o, EventArgs args) {
+			Application.Invoke (delegate {
+				player.Seek (new Time (0), true);
+				Pause ();
+			});
 		}
 
 		void OnError(string message) {
-			Config.EventsBroker.EmitMultimediaError (message);
+			Application.Invoke (delegate {
+				Config.EventsBroker.EmitMultimediaError (message);
+			});
 		}
 
 		void OnClosebuttonClicked(object sender, System.EventArgs e)
@@ -690,7 +705,7 @@ namespace LongoMatch.Gui
 		
 		void HandleRealized (object sender, EventArgs e)
 		{
-			player.WindowHandle = GtkHelpers.GetWindowHandle (videodrawingarea.GdkWindow);
+			player.WindowHandle = WindowHandle.GetWindowHandle (videodrawingarea.GdkWindow);
 		}
 		
 		void HandleSeekEvent (SeekType type, Time start, float rate)
