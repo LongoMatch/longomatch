@@ -7,7 +7,7 @@
       <MessageStyle LineAlign="0" />
     </ChangeLogPolicy>
     <TextStylePolicy FileWidth="120" TabWidth="4" inheritsSet="Mono" inheritsScope="text/plain" />
-    <TextStylePolicy FileWidth="120" TabWidth="4" inheritsSet="Mono" inheritsScope="text/plain" scope="text/plain" />
+    <TextStylePolicy FileWidth="120" TabsToSpaces="False" EolMarker="Unix" inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/plain" />
     <TextStylePolicy inheritsSet="null" scope="application/octet-stream" />
     <TextStylePolicy TabWidth="2" EolMarker="Unix" inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-c++hdr" />
     <TextStylePolicy inheritsSet="null" scope="text/x-csharp" />
@@ -15,6 +15,7 @@
     <TextStylePolicy inheritsSet="null" scope="application/xml" />
     <TextStylePolicy TabWidth="2" inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-csrc" />
     <TextStylePolicy inheritsSet="null" scope="application/x-desktop" />
+    <TextStylePolicy inheritsSet="null" scope="text/x-chdr" />
   </Policies>
   <Configurations active="Release">
     <Configuration name="Debug" ctype="CombineConfiguration">
