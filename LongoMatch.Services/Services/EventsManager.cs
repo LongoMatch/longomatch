@@ -131,7 +131,7 @@ namespace LongoMatch.Services
 				outputDir = Config.AutoRenderDir;
 			}
 			
-			outputFile = String.Format ("{0}-{0}.mp4", play.Category.Name, play.Name);
+			outputFile = String.Format ("{0}-{1}.mp4", play.Category.Name, play.Name);
 			outputFile = Path.Combine (outputDir, project.Description.Title, outputFile);
 			try {
 				Directory.CreateDirectory (Path.GetDirectoryName (outputFile));
