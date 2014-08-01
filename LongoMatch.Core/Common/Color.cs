@@ -94,6 +94,53 @@ namespace LongoMatch.Common
 		static public Color Red1 = new Color (255, 51, 0);
 		static public Color Blue1 = new Color (0, 153, 255);
 		static public Color Yellow = new Color (255, 255, 0);
+
+	}
+
+
+	public class YCbCrColor {
+
+		public YCbCrColor (byte y, byte cb, byte cr) {
+			Y = y;
+			Cb = cb;
+			Cr = cr;
+		}
+
+		public byte Y {
+			get;
+			set;
+		}
+
+		public byte Cb {
+			get;
+			set;
+		}
+
+		public byte Cr {
+			get;
+			set;
+		}
+
+		public static YCbCrColor YCbCrFromColor (Color c) {
+			byte Y, Cb, Cr;
+
+			Y = (byte) (16 + 0.257 * c.R + 0.504 * c.G + 0.098 * c.B);
+			Cb = (byte) (128 - 0.148 * c.R - 0.291 * c.G + 0.439 * c.B);
+			Cr = (byte) (128 + 0.439 * c.R - 0.396 * c.G - 0.071 * c.B);
+			return new YCbCrColor (Y, Cb, Cr);
+		}
+
+		public static Color ColorFromYCbCr (YCbCrColor c) {
+			double r, g, b;
+
+			r = (1.164 * (c.Y - 16) + 1.596 * (c.Cr - 128));
+			g = (1.164 * (c.Y - 16) - 0.392 * (c.Cb - 128) - 0.813 * (c.Cr - 128));
+			b = (1.164 * (c.Y - 16) + 2.017 * (c.Cb - 128));
+
+			return new Color (
+				(byte) Math.Max(0, Math.Min (r, 255)),
+				(byte) Math.Max(0, Math.Min (g, 255)),
+				(byte) Math.Max(0, Math.Min (b, 255)));
+		}
 	}
 }
-
