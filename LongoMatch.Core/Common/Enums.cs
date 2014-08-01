@@ -237,5 +237,11 @@ namespace LongoMatch.Common
 		Triangle,
 		Circle
 	}
+	
+	public enum FitMode {
+		Fill,
+		Fit,
+		Original
+	}
 }
 
