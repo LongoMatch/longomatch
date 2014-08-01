@@ -55,16 +55,37 @@ namespace LongoMatch.Common
 		}
 		
 		public void ScaleFactor (int destWidth, int destHeight,
-		                         out double scaleX, out double scaleY,
-		                         out Point offset) {
+		                         out double scaleX, out double scaleY, out Point offset) {
+			ScaleFactor (Width, Height, destWidth, destHeight, out scaleX, out scaleY, out offset);
+		}
+		
+		public static void ScaleFactor (int imgWidth, int imgHeight, int destWidth, int destHeight,
+		                                out double scaleX, out double scaleY, out Point offset)
+		{
 			int oWidth = 0;
 			int oHeight = 0;
 			
-			ComputeScale (Width, Height, destWidth, destHeight, out oWidth, out oHeight);
-			scaleX = (double) oWidth / Width;
-			scaleY = (double) oHeight / Height;
+			ComputeScale (imgWidth, imgHeight, destWidth, destHeight, out oWidth, out oHeight);
+			scaleX = (double) oWidth / imgWidth;
+			scaleY = (double) oHeight / imgHeight;
 			offset = new Point ((destWidth - oWidth) / 2, (destHeight - oHeight) / 2);
 		}
+		
+		public static void ComputeScale (int inWidth, int inHeight, int maxOutWidth, int maxOutHeight,
+		                                 out int outWidth, out int outHeight)
+		{
+			outWidth = maxOutWidth;
+			outHeight = maxOutHeight;
+
+			double par = (double)inWidth /(double)inHeight;
+			double outPar = (double)maxOutWidth /(double)maxOutHeight;
+				
+			if (outPar > par) {
+				outWidth = Math.Min (maxOutWidth, (int)(outHeight * par));
+			} else {
+				outHeight = Math.Min (maxOutHeight, (int)(outWidth / par));
+			}
+		} 
 		
 		// this constructor is automatically called during deserialization
 		public Image (SerializationInfo info, StreamingContext context) {
@@ -181,20 +202,6 @@ namespace LongoMatch.Common
 		}
 #endif
 
-		private void ComputeScale (int inWidth, int inHeight, int maxOutWidth, int maxOutHeight, out int outWidth, out int outHeight)
-		{
-			outWidth = maxOutWidth;
-			outHeight = maxOutHeight;
-
-			double par = (double)inWidth /(double)inHeight;
-			double outPar = (double)maxOutWidth /(double)maxOutHeight;
-				
-			if (outPar > par) {
-				outWidth = Math.Min (maxOutWidth, (int)(outHeight * par));
-			} else {
-				outHeight = Math.Min (maxOutHeight, (int)(outWidth / par));
-			}
-		} 
 	}
 }
 
