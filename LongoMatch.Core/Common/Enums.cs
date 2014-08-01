@@ -50,7 +50,8 @@ namespace LongoMatch.Common
 
 	public enum TagMode {
 		Predifined,
-		Free
+		Free,
+		Edit
 	}
 
 	public enum SortMethodType {
