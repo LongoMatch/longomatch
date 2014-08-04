@@ -91,6 +91,7 @@ namespace LongoMatch.Drawing
 			SelectionMode = MultiSelectionMode.Single;
 			Accuracy = 1;
 			MoveWithoutSelection = false;
+			ObjectsCanMove = true;
 			
 			widget.ButtonPressEvent += HandleButtonPressEvent;
 			widget.ButtonReleasedEvent += HandleButtonReleasedEvent;
@@ -114,6 +115,11 @@ namespace LongoMatch.Drawing
 		}
 		
 		protected List<Selection> Selections {
+			get;
+			set;
+		}
+		
+		protected bool ObjectsCanMove {
 			get;
 			set;
 		}
@@ -231,11 +237,16 @@ namespace LongoMatch.Drawing
 				start = coords;
 				UpdateSelection (sel);
 				StartMove (sel);
-				moving = Selections.Count > 0;
+				moving = Selections.Count > 0 && ObjectsCanMove;
 			}
+			widget.ReDraw ();
 		}
 		
 		protected virtual void HandleRightButton (Point coords, ButtonModifier modif) {
+			if (Selections.Count <= 1) {
+				ClearSelection ();
+				UpdateSelection (GetSelection (coords));
+			}
 			ShowMenu (coords);
 		}
 		
