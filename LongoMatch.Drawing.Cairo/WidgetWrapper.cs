@@ -51,6 +51,7 @@ namespace LongoMatch.Drawing.Cairo
 			widget.AddEvents ((int)EventMask.PointerMotionMask);
 			widget.AddEvents ((int)EventMask.ButtonPressMask);
 			widget.AddEvents ((int)EventMask.ButtonReleaseMask);
+			widget.AddEvents ((int)EventMask.KeyPressMask);
 			widget.ExposeEvent += HandleExposeEvent;
 			widget.ButtonPressEvent += HandleButtonPressEvent;
 			widget.ButtonReleaseEvent += HandleButtonReleaseEvent;
