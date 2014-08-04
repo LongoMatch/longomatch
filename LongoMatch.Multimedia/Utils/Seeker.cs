@@ -15,29 +15,28 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
-using LongoMatch.Video.Common;
 using LongoMatch.Store;
+using LongoMatch.Video.Common;
 
 namespace LongoMatch.Video.Utils
 {
 	public class Seeker
 	{
 		public event SeekHandler SeekEvent;
-		
+
 		uint timeout;
 		int pendingSeekId;
 		Time start;
 		float rate;
 		SeekType seekType;
-		
+
 		public Seeker (uint timeoutMS=80)
 		{
 			timeout = timeoutMS;
 			pendingSeekId = -1;
 			seekType = SeekType.None;
 		}
-		
+
 		public void Seek (SeekType seekType, Time start=null, float rate=1)
 		{
 			this.seekType = seekType;
@@ -48,10 +47,11 @@ namespace LongoMatch.Video.Utils
 				return;
 			
 			HandleSeekTimeout ();
-			pendingSeekId = (int) GLib.Timeout.Add (timeout, HandleSeekTimeout);
+			pendingSeekId = (int)GLib.Timeout.Add (timeout, HandleSeekTimeout);
 		}
-		
-		public bool HandleSeekTimeout () {
+
+		public bool HandleSeekTimeout ()
+		{
 			pendingSeekId = -1;
 			if (seekType != SeekType.None) {
 				if (SeekEvent != null) {

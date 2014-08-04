@@ -15,34 +15,30 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-
 using System;
-using Mono.Unix;
-using GLib;
 using LongoMatch.Common;
+using LongoMatch.Handlers;
 using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.Store;
+using Mono.Unix;
 using Image = LongoMatch.Common.Image;
-using LongoMatch.Handlers;
 
 namespace LongoMatch.Video.Capturer
 {
-
-
 	public class FakeCapturer : ICapturer
 	{
 		public event EllpasedTimeHandler EllapsedTime;
 		public event ErrorHandler Error;
 		public event DeviceChangeHandler DeviceChange;
 
-		private LiveSourceTimer timer;
+		LiveSourceTimer timer;
 
-		public FakeCapturer(): base()
+		public FakeCapturer ()
 		{
-			timer = new LiveSourceTimer();
+			timer = new LiveSourceTimer ();
 			timer.EllapsedTime += delegate(Time ellapsedTime) {
-				if(EllapsedTime!= null)
-					EllapsedTime(ellapsedTime);
+				if (EllapsedTime != null)
+					EllapsedTime (ellapsedTime);
 			};
 		}
 
@@ -52,29 +48,36 @@ namespace LongoMatch.Video.Capturer
 			}
 		}
 
-		public void Configure (CaptureSettings settings, IntPtr window_handle) {
+		public void Configure (CaptureSettings settings, IntPtr window_handle)
+		{
 		}
-		
-		public void Dispose () {
+
+		public void Dispose ()
+		{
 			Stop ();
 		}
 
-		public void Run() {
+		public void Run ()
+		{
 		}
 
-		public void Close() {
+		public void Close ()
+		{
 		}
 
-		public void Start() {
-			timer.Start();
+		public void Start ()
+		{
+			timer.Start ();
 		}
 
-		public void Stop() {
-			timer.Stop();
+		public void Stop ()
+		{
+			timer.Stop ();
 		}
 
-		public void TogglePause() {
-			timer.TogglePause();
+		public void TogglePause ()
+		{
+			timer.TogglePause ();
 		}
 
 		public uint OutputWidth {
@@ -86,35 +89,35 @@ namespace LongoMatch.Video.Capturer
 
 		public uint OutputHeight {
 			get {
-				return 0;
+ return 0;
 			}
 			set {}
 		}
 
 		public string OutputFile {
 			get {
-				return Catalog.GetString("Fake live source");
+ return Catalog.GetString ("Fake live source");
 			}
 			set {}
 		}
 
 		public uint VideoQuality {
 			get {
-				return 0;
+ return 0;
 			}
 			set {}
 		}
 
 		public uint AudioQuality {
 			get {
-				return 0;
+ return 0;
 			}
 			set {}
 		}
 
 		public Image CurrentFrame {
 			get {
-				return null;
+ return null;
 			}
 		}
 
@@ -125,19 +128,23 @@ namespace LongoMatch.Video.Capturer
 			set {}
 		}
 
-		public bool SetVideoEncoder(VideoEncoderType type) {
+		public bool SetVideoEncoder (VideoEncoderType type)
+		{
+ return true;
+		}
+
+		public bool SetAudioEncoder (AudioEncoderType type)
+		{
 			return true;
 		}
 
-		public bool SetAudioEncoder(AudioEncoderType type) {
+		public bool SetVideoMuxer (VideoMuxerType type)
+		{
 			return true;
 		}
 
-		public bool SetVideoMuxer(VideoMuxerType type) {
-			return true;
-		}
-
-		public bool SetSource(CaptureSourceType type, string sourceElement) {
+		public bool SetSource (CaptureSourceType type, string sourceElement)
+		{
 			return true;
 		}
 	}

@@ -17,20 +17,18 @@
 // 
 using System;
 using System.IO;
-using Mono.Unix;
-#if OSTYPE_WINDOWS
-using System.Runtime.InteropServices;
-#endif
-
 using LongoMatch;
 using LongoMatch.DB;
 using LongoMatch.Common;
+using LongoMatch.Interfaces;
 using LongoMatch.Interfaces.GUI;
 using LongoMatch.Interfaces.Multimedia;
-using LongoMatch.Store;
-using LongoMatch.Interfaces;
+using Mono.Unix;
 
+#if OSTYPE_WINDOWS
+using System.Runtime.InteropServices;
 
+#endif
 namespace LongoMatch.Services
 {
 	public class Core
@@ -40,23 +38,34 @@ namespace LongoMatch.Services
 		static HotKeysManager hkManager;
 		static RenderingJobsManager videoRenderer;
 		public static IProjectsImporter ProjectsImporter;
-#if OSTYPE_WINDOWS
+		#if OSTYPE_WINDOWS
 		[DllImport("libglib-2.0-0.dll") /* willfully unmapped */ ]
 		static extern void g_setenv (String env, String val);
-#endif
 
-		public static void Init()
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		#endif
+		public static void Init ()
 		{
 			Log.Debugging = Debugging;
-			Log.Information("Starting " + Constants.SOFTWARE_NAME);
+			Log.Information ("Starting " + Constants.SOFTWARE_NAME);
 
-			SetupBaseDir();
+			SetupBaseDir ();
 
 			/* Check default folders */
-			CheckDirs();
+			CheckDirs ();
 			
 			/* Load user config */
-			Config.Load();
+			Config.Load ();
 			
 			if (Config.Lang != null) {
 				Environment.SetEnvironmentVariable ("LANGUAGE", Config.Lang);
@@ -66,18 +75,20 @@ namespace LongoMatch.Services
 			}
 			
 			/* Init internationalization support */
-			Catalog.Init(Constants.SOFTWARE_NAME.ToLower(),Config.RelativeToPrefix("share/locale"));
+			Catalog.Init (Constants.SOFTWARE_NAME.ToLower (), Config.RelativeToPrefix ("share/locale"));
 
 		}
 
-		public static void Start(IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit) {
+		public static void Start (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit)
+		{
 			Config.MultimediaToolkit = multimediaToolkit;
-			Config.GUIToolkit= guiToolkit;
+			Config.GUIToolkit = guiToolkit;
 			Config.EventsBroker.QuitApplicationEvent += () => Config.GUIToolkit.Quit ();
 			StartServices (guiToolkit, multimediaToolkit);
 		}
-		
-		public static void StartServices (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit){
+
+		public static void StartServices (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit)
+		{
 			ProjectsManager projectsManager;
 			PlaylistManager plManager;
 			ToolsManager toolsManager;
@@ -96,7 +107,7 @@ namespace LongoMatch.Services
 			videoRenderer = new RenderingJobsManager (multimediaToolkit, guiToolkit);
 			Config.RenderingJobsManger = videoRenderer;
 			
-			projectsManager = new ProjectsManager(guiToolkit, multimediaToolkit, ts);
+			projectsManager = new ProjectsManager (guiToolkit, multimediaToolkit, ts);
 			
 			/* State the tools manager */
 			toolsManager = new ToolsManager (guiToolkit, multimediaToolkit, ts);
@@ -109,56 +120,59 @@ namespace LongoMatch.Services
 			hkManager = new HotKeysManager ();
 
 			/* Start playlists manager */
-			plManager = new PlaylistManager(Config.GUIToolkit, videoRenderer);
-		}
-			
-		public static void CheckDirs() {
-			if(!System.IO.Directory.Exists(Config.HomeDir))
-				System.IO.Directory.CreateDirectory(Config.HomeDir);
-			if(!System.IO.Directory.Exists(Config.TemplatesDir))
-				System.IO.Directory.CreateDirectory(Config.TemplatesDir);
-			if(!System.IO.Directory.Exists(Config.SnapshotsDir))
-				System.IO.Directory.CreateDirectory(Config.SnapshotsDir);
-			if(!System.IO.Directory.Exists(Config.PlayListDir))
-				System.IO.Directory.CreateDirectory(Config.PlayListDir);
-			if(!System.IO.Directory.Exists(Config.DBDir))
-				System.IO.Directory.CreateDirectory(Config.DBDir);
-			if(!System.IO.Directory.Exists(Config.VideosDir))
-				System.IO.Directory.CreateDirectory(Config.VideosDir);
-			if(!System.IO.Directory.Exists(Config.TempVideosDir))
-				System.IO.Directory.CreateDirectory(Config.TempVideosDir);
+			plManager = new PlaylistManager (Config.GUIToolkit, videoRenderer);
 		}
 
-		private static void SetupBaseDir() {
+		public static void CheckDirs ()
+		{
+			if (!System.IO.Directory.Exists (Config.HomeDir))
+				System.IO.Directory.CreateDirectory (Config.HomeDir);
+			if (!System.IO.Directory.Exists (Config.TemplatesDir))
+				System.IO.Directory.CreateDirectory (Config.TemplatesDir);
+			if (!System.IO.Directory.Exists (Config.SnapshotsDir))
+				System.IO.Directory.CreateDirectory (Config.SnapshotsDir);
+			if (!System.IO.Directory.Exists (Config.PlayListDir))
+				System.IO.Directory.CreateDirectory (Config.PlayListDir);
+			if (!System.IO.Directory.Exists (Config.DBDir))
+				System.IO.Directory.CreateDirectory (Config.DBDir);
+			if (!System.IO.Directory.Exists (Config.VideosDir))
+				System.IO.Directory.CreateDirectory (Config.VideosDir);
+			if (!System.IO.Directory.Exists (Config.TempVideosDir))
+				System.IO.Directory.CreateDirectory (Config.TempVideosDir);
+		}
+
+		private static void SetupBaseDir ()
+		{
 			string home;
 			
-			Config.baseDirectory = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"../");
-			if (!System.IO.Directory.Exists(System.IO.Path.Combine(Config.baseDirectory, "share", Constants.SOFTWARE_NAME))) {
-				Config.baseDirectory = System.IO.Path.Combine(Config.baseDirectory, "../");
+			Config.baseDirectory = System.IO.Path.Combine (System.AppDomain.CurrentDomain.BaseDirectory, "../");
+			if (!System.IO.Directory.Exists (System.IO.Path.Combine (Config.baseDirectory, "share", Constants.SOFTWARE_NAME))) {
+				Config.baseDirectory = System.IO.Path.Combine (Config.baseDirectory, "../");
 			}
-			if (!System.IO.Directory.Exists(System.IO.Path.Combine(Config.baseDirectory, "share", Constants.SOFTWARE_NAME)))
-				Log.Warning("Prefix directory not found");
+			if (!System.IO.Directory.Exists (System.IO.Path.Combine (Config.baseDirectory, "share", Constants.SOFTWARE_NAME)))
+				Log.Warning ("Prefix directory not found");
 			
 			/* Check for the magic file PORTABLE to check if it's a portable version
 			 * and the config goes in the same folder as the binaries */
-			if (File.Exists(System.IO.Path.Combine(Config.baseDirectory, Constants.PORTABLE_FILE)))
+			if (File.Exists (System.IO.Path.Combine (Config.baseDirectory, Constants.PORTABLE_FILE)))
 				home = Config.baseDirectory;
 			else
-				home = System.Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+				home = System.Environment.GetFolderPath (Environment.SpecialFolder.Personal);
 			
-			Config.homeDirectory = System.IO.Path.Combine(home,Constants.SOFTWARE_NAME);
+			Config.homeDirectory = System.IO.Path.Combine (home, Constants.SOFTWARE_NAME);
 			if (Environment.OSVersion.Platform == PlatformID.Win32NT)
 				Config.configDirectory = Config.homeDirectory;
 			else
-				Config.configDirectory = System.IO.Path.Combine(home,"." +
-					Constants.SOFTWARE_NAME.ToLower());
+				Config.configDirectory = System.IO.Path.Combine (home, "." +
+					Constants.SOFTWARE_NAME.ToLower ());
 		}
 
-		private static bool? debugging = null;	
+		private static bool? debugging = null;
+
 		public static bool Debugging {
 			get {
-				if(debugging == null) {
-					debugging = EnvironmentIsSet("LGM_DEBUG");
+				if (debugging == null) {
+					debugging = EnvironmentIsSet ("LGM_DEBUG");
 				}
 				return debugging.Value;
 			}
@@ -168,10 +182,9 @@ namespace LongoMatch.Services
 			}
 		}
 
-		public static bool EnvironmentIsSet(string env)
+		public static bool EnvironmentIsSet (string env)
 		{
-			return !String.IsNullOrEmpty(Environment.GetEnvironmentVariable(env));
+			return !String.IsNullOrEmpty (Environment.GetEnvironmentVariable (env));
 		}
-		
 	}
 }

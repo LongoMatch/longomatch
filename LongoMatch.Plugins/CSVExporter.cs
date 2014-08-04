@@ -17,10 +17,9 @@
 // 
 using System;
 using System.Collections.Generic;
-using System.Linq; 
+using System.Linq;
 using Mono.Addins;
 using Mono.Unix;
-
 using LongoMatch.Addins.ExtensionPoints;
 using LongoMatch.Interfaces.GUI;
 using LongoMatch.Store;
@@ -29,64 +28,69 @@ using LongoMatch.Interfaces;
 
 namespace LongoMatch.Plugins
 {
-
 	[Extension]
 	public class CSVExporter:IExportProject
 	{
-		public string GetMenuEntryName () {
-			Log.Information("Registering new export entry");
-			return Catalog.GetString("Export project to CSV file");
+		public string GetMenuEntryName ()
+		{
+			Log.Information ("Registering new export entry");
+			return Catalog.GetString ("Export project to CSV file");
 		}
-		
-		public string GetMenuEntryShortName () {
+
+		public string GetMenuEntryShortName ()
+		{
 			return "CSVExport";
 		}
-		
-		public void ExportProject (Project project, IGUIToolkit guiToolkit) {
-			string filename = guiToolkit.SaveFile(Catalog.GetString("Output file"), null,
-			                                      Config.HomeDir, "CSV",
-			                                      new string[] {".csv"});
+
+		public void ExportProject (Project project, IGUIToolkit guiToolkit)
+		{
+			string filename = guiToolkit.SaveFile (Catalog.GetString ("Output file"), null,
+			                                       Config.HomeDir, "CSV",
+			                                       new string[] { ".csv" });
 			
 			if (filename == null)
 				return;
 			
-			filename = System.IO.Path.ChangeExtension(filename, ".csv");
+			filename = System.IO.Path.ChangeExtension (filename, ".csv");
 			
 			try {
-				ProjectToCSV exporter = new ProjectToCSV(project, filename);
-				exporter.Export();
-				guiToolkit.InfoMessage(Catalog.GetString("Project exported successfully"));
-			}catch (Exception ex) {
-				guiToolkit.ErrorMessage(Catalog.GetString("Error exporting project"));
-				Log.Exception(ex);
+				ProjectToCSV exporter = new ProjectToCSV (project, filename);
+				exporter.Export ();
+				guiToolkit.InfoMessage (Catalog.GetString ("Project exported successfully"));
+			} catch (Exception ex) {
+				guiToolkit.ErrorMessage (Catalog.GetString ("Error exporting project"));
+				Log.Exception (ex);
 			}
 		}
 	}
-	
+
 	class ProjectToCSV
 	{
 		Project project;
 		string filename;
 		List<string> output;
-		
-		public ProjectToCSV(Project project, string filename) {
+
+		public ProjectToCSV (Project project, string filename)
+		{
 			this.project = project;
 			this.filename = filename;
-			output = new List<string>();
+			output = new List<string> ();
 		}
-		
-		public void Export() {
+
+		public void Export ()
+		{
 			foreach (Category cat in project.Categories.List) {
 				ExportCategory (cat);
 			}
-			File.WriteAllLines(filename, output);
+			File.WriteAllLines (filename, output);
 		}
-		
-		void ExportCategory (Category cat) {
+
+		void ExportCategory (Category cat)
+		{
 			string headers;
 			List<Play> plays;
 			
-			output.Add("CATEGORY: " + cat.Name);
+			output.Add ("CATEGORY: " + cat.Name);
 			plays = project.PlaysInCategory (cat);
 			
 			/* Write Headers for this category */
@@ -98,19 +102,19 @@ namespace LongoMatch.Plugins
 			foreach (Play play in plays.OrderBy(p=>p.Start)) {
 				string line;
 				
-				line = String.Format("{0};{1};{2};{3}", play.Name,
-				                         play.Start.ToMSecondsString(),
-				                         play.Stop.ToMSecondsString(),
-				                         play.Team);
+				line = String.Format ("{0};{1};{2};{3}", play.Name,
+				                      play.Start.ToMSecondsString (),
+				                      play.Stop.ToMSecondsString (),
+				                      play.Team);
 				
 				/* Strings Tags */
 				foreach (Tag tag in cat.Tags) {
-					line += ";" + (play.Tags.Contains(tag) ? "1" : "0");
+					line += ";" + (play.Tags.Contains (tag) ? "1" : "0");
 				}
 				
 				output.Add (line);
 			}
-			output.Add("");
+			output.Add ("");
 		}
 	}
 }

@@ -17,31 +17,26 @@
 //Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
-
 using System;
 using System.Collections.Generic;
 using LongoMatch.Common;
-using LongoMatch.Handlers;
 using LongoMatch.Interfaces;
 using LongoMatch.Interfaces.GUI;
 using LongoMatch.Store;
 using Mono.Unix;
 using System.IO;
-using LongoMatch.Stats;
 using LongoMatch.Interfaces.Multimedia;
 
 namespace LongoMatch.Services
 {
-
 	public class EventsManager
 	{
 		/* Current play loaded. null if no play is loaded */
-		TimeNode loadedPlay=null;
+		TimeNode loadedPlay = null;
 		/* current project in use */
 		Project openedProject;
 		ProjectType projectType;
 		PlaysFilter filter;
-		
 		IGUIToolkit guiToolkit;
 		IAnalysisWindow analysisWindow;
 		IPlayerBin player;
@@ -49,7 +44,7 @@ namespace LongoMatch.Services
 		IFramesCapturer framesCapturer;
 		IRenderingJobsManager renderer;
 
-		public EventsManager(IGUIToolkit guiToolkit, IRenderingJobsManager renderer)
+		public EventsManager (IGUIToolkit guiToolkit, IRenderingJobsManager renderer)
 		{
 			this.guiToolkit = guiToolkit;
 			this.renderer = renderer;
@@ -73,20 +68,23 @@ namespace LongoMatch.Services
 			capturer = analysisWindow.Capturer;
 		}
 
-		void Save (Project project) {
+		void Save (Project project)
+		{
 			if (Config.AutoSave) {
 				Config.DatabaseManager.ActiveDB.UpdateProject (project);
 			}
 		}
-		
-		private void ConnectSignals() {
+
+		private void ConnectSignals ()
+		{
 			Config.EventsBroker.NewTagEvent += OnNewTag;
 			Config.EventsBroker.TimeNodeChanged += OnTimeNodeChanged;
 			Config.EventsBroker.PlaysDeleted += OnPlaysDeleted;
 			Config.EventsBroker.PlaySelected += OnPlaySelected;
 			Config.EventsBroker.PlayCategoryChanged += OnPlayCategoryChanged;
 			Config.EventsBroker.DuplicatePlays += OnDuplicatePlays;
-			Config.EventsBroker.PlayListNodeSelectedEvent += (tn) => {loadedPlay = tn;};
+			Config.EventsBroker.PlayListNodeSelectedEvent += (tn) => {
+				loadedPlay = tn;};
 			Config.EventsBroker.SnapshotSeries += OnSnapshotSeries;
 			
 			Config.EventsBroker.ShowProjectStatsEvent += HandleShowProjectStatsEvent;
@@ -115,14 +113,15 @@ namespace LongoMatch.Services
 			guiToolkit.ShowProjectStats (project);
 		}
 
-		void RenderPlay (Project project, Play play, MediaFile file) {
+		void RenderPlay (Project project, Play play, MediaFile file)
+		{
 			PlayList playlist;
 			EncodingSettings settings;
 			EditionJob job;
 			string outputDir, outputFile;
 			
 			if (Config.AutoRenderDir == null ||
-			    !Directory.Exists (Config.AutoRenderDir)) {
+				!Directory.Exists (Config.AutoRenderDir)) {
 				outputDir = Config.VideosDir;
 			} else {
 				outputDir = Config.AutoRenderDir;
@@ -133,7 +132,7 @@ namespace LongoMatch.Services
 			try {
 				Directory.CreateDirectory (Path.GetDirectoryName (outputFile));
 				settings = EncodingSettings.DefaultRenderingSettings (outputFile);
-				playlist = new PlayList();
+				playlist = new PlayList ();
 				playlist.Add (new PlayListPlay (play, file, true));
 			
 				job = new EditionJob (playlist, settings);
@@ -143,8 +142,9 @@ namespace LongoMatch.Services
 			}
 			
 		}
-		
-		void LoadPlay (Play play, Time seekTime, bool playing) {
+
+		void LoadPlay (Play play, Time seekTime, bool playing)
+		{
 			player.LoadPlay (openedProject.Description.File.FilePath, play,
 			                 seekTime, playing);
 			loadedPlay = play;
@@ -152,28 +152,30 @@ namespace LongoMatch.Services
 				player.Play ();
 			}
 		}
-		
-		private Image CaptureFrame (Time tagtime) {
+
+		private Image CaptureFrame (Time tagtime)
+		{
 			Image frame = null;
 
 			/* Get the current frame and get a thumbnail from it */
-			if(projectType == ProjectType.CaptureProject ||
-			   projectType == ProjectType.URICaptureProject) {
+			if (projectType == ProjectType.CaptureProject ||
+				projectType == ProjectType.URICaptureProject) {
 				frame = capturer.CurrentMiniatureFrame;
-			} else if(projectType == ProjectType.FileProject) {
+			} else if (projectType == ProjectType.FileProject) {
 				framesCapturer.Seek (tagtime, true);
 				frame = player.CurrentMiniatureFrame;
 			}
 			return frame;
 		}
-		
+
 		private void AddNewPlay (Category category, Time start, Time stop, List<Player> players,
-		                         List<Tag> tags, Image miniature) {
-			Log.Debug(String.Format("New play created start:{0} stop:{1} category:{2}",
-									start, stop, category));
+		                         List<Tag> tags, Image miniature)
+		{
+			Log.Debug (String.Format ("New play created start:{0} stop:{1} category:{2}",
+			                          start, stop, category));
 			
 			/* Add the new created play to the project and update the GUI*/
-			var play = openedProject.AddPlay (category, start, stop,miniature);
+			var play = openedProject.AddPlay (category, start, stop, miniature);
 			if (players != null) {
 				play.Players = players;
 			}
@@ -184,23 +186,24 @@ namespace LongoMatch.Services
 			/* Tag subcategories of the new play */
 			if (!Config.FastTagging)
 				guiToolkit.TagPlay (play, openedProject);
-			analysisWindow.AddPlay(play);
-			filter.Update();
+			analysisWindow.AddPlay (play);
+			filter.Update ();
 			if (projectType == ProjectType.FileProject) {
-				player.Play();
+				player.Play ();
 			}
 			Save (openedProject);
 			
 			if (projectType == ProjectType.CaptureProject ||
-			    projectType == ProjectType.URICaptureProject) {
-			    if (Config.AutoRenderPlaysInLive) {
+				projectType == ProjectType.URICaptureProject) {
+				if (Config.AutoRenderPlaysInLive) {
 					RenderPlay (openedProject, play, openedProject.Description.File);
 				}
 			}
 		}
 
 		public void OnNewTag (TaggerButton tagger, List<Player> players, List<Tag> tags,
-		                      Time start, Time stop) {
+		                      Time start, Time stop)
+		{
 			Image frame;
 
 			if (player == null || openedProject == null)
@@ -211,10 +214,10 @@ namespace LongoMatch.Services
 				stop.MSeconds = Math.Min (player.StreamLength.MSeconds, stop.MSeconds);
 			}
 			
-			if(projectType == ProjectType.CaptureProject ||
-			   projectType == ProjectType.URICaptureProject) {
-				if(!capturer.Capturing) {
-					guiToolkit.WarningMessage (Catalog.GetString("Video capture is stopped"));
+			if (projectType == ProjectType.CaptureProject ||
+				projectType == ProjectType.URICaptureProject) {
+				if (!capturer.Capturing) {
+					guiToolkit.WarningMessage (Catalog.GetString ("Video capture is stopped"));
 					return;
 				}
 			}
@@ -231,7 +234,7 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void OnPlaySelected(Play play)
+		void OnPlaySelected (Play play)
 		{
 			if (play != null) {
 				LoadPlay (play, play.Start, true);
@@ -240,58 +243,59 @@ namespace LongoMatch.Services
 			}
 		}
 
-		protected virtual void OnTimeNodeChanged(TimeNode tNode, object val)
+		protected virtual void OnTimeNodeChanged (TimeNode tNode, object val)
 		{
 			/* FIXME: Tricky, create a new handler for categories */
-			if(tNode is Play && val is Time) {
+			if (tNode is Play && val is Time) {
 				LoadPlay (tNode as Play, val as Time, false);
+			} else if (tNode is Category) {
+				analysisWindow.UpdateCategories ();
 			}
-			else if(tNode is Category) {
-				analysisWindow.UpdateCategories();
-			}
-			filter.Update();
+			filter.Update ();
 		}
 
-		protected virtual void OnPlaysDeleted(List<Play> plays)
+		protected virtual void OnPlaysDeleted (List<Play> plays)
 		{
-			Log.Debug(plays.Count + " plays deleted");
-			analysisWindow.DeletePlays(plays);
-			openedProject.RemovePlays(plays);
+			Log.Debug (plays.Count + " plays deleted");
+			analysisWindow.DeletePlays (plays);
+			openedProject.RemovePlays (plays);
 
-			if(projectType == ProjectType.FileProject) {
+			if (projectType == ProjectType.FileProject) {
 				player.CloseSegment ();
 				Save (openedProject);
 			}
-			filter.Update();
+			filter.Update ();
 		}
 
 		void OnDuplicatePlays (List<Play> plays)
 		{
 			foreach (Play play in plays) {
 				Play copy = Cloner.Clone (play);
-				copy.ID = Guid.NewGuid();
+				copy.ID = Guid.NewGuid ();
 				/* The category is also serialized and desarialized */
 				copy.Category = play.Category;
 				openedProject.AddPlay (copy);
 				analysisWindow.AddPlay (copy);
 			}
-			filter.Update();
+			filter.Update ();
 		}
 
-		protected virtual void OnSnapshotSeries(Play play) {
-			player.Pause();
-			guiToolkit.ExportFrameSeries(openedProject, play, Config.SnapshotsDir);
+		protected virtual void OnSnapshotSeries (Play play)
+		{
+			player.Pause ();
+			guiToolkit.ExportFrameSeries (openedProject, play, Config.SnapshotsDir);
 		}
-		
-		protected virtual void OnPrev()
+
+		protected virtual void OnPrev ()
 		{
 		}
 
-		protected virtual void OnDrawFrame (Play play, int drawingIndex) {
+		protected virtual void OnDrawFrame (Play play, int drawingIndex)
+		{
 			Image pixbuf;
 			FrameDrawing drawing = null;
 
-			player.Pause();
+			player.Pause ();
 			if (play == null) {
 				play = loadedPlay as Play;
 			}
@@ -300,7 +304,7 @@ namespace LongoMatch.Services
 					drawing = new FrameDrawing ();
 					drawing.Render = player.CurrentTime;
 				} else {
-					drawing = play.Drawings[drawingIndex];
+					drawing = play.Drawings [drawingIndex];
 				}
 				player.Seek (drawing.Render, true);
 			}
@@ -308,18 +312,17 @@ namespace LongoMatch.Services
 			guiToolkit.DrawingTool (pixbuf, play, drawing);
 		}
 
-		protected virtual void OnPlayCategoryChanged(Play play, Category cat)
+		protected virtual void OnPlayCategoryChanged (Play play, Category cat)
 		{
-			List<Play> plays = new List<Play>();
-			plays.Add(play);
-			OnPlaysDeleted(plays);
-			var newplay = openedProject.AddPlay(cat, play.Start, play.Stop, play.Miniature);
+			List<Play> plays = new List<Play> ();
+			plays.Add (play);
+			OnPlaysDeleted (plays);
+			var newplay = openedProject.AddPlay (cat, play.Start, play.Stop, play.Miniature);
 			newplay.Name = play.Name;
 			newplay.Notes = play.Notes;
 			newplay.Drawings = play.Drawings;
-			analysisWindow.AddPlay(newplay);
+			analysisWindow.AddPlay (newplay);
 			Save (openedProject);
 		}
-		
 	}
 }

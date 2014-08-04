@@ -15,79 +15,74 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-
-using System;
 using LongoMatch.Store;
 using LongoMatch.Common;
 
 namespace LongoMatch.Video.Common
 {
-
-	public delegate void ProgressHandler(float progress);
-	public delegate void FramesProgressHandler(int actual, int total, Image frame);
-	public delegate void DrawFrameHandler(int time);
-	public delegate void SeekHandler (SeekType type, Time start, float rate);
-
-	public delegate void GlibErrorHandler(object o, ErrorArgs args);
-	public delegate void GlibPercentCompletedHandler(object o, PercentCompletedArgs args);
-	public delegate void GlibStateChangeHandler(object o, StateChangeArgs args);
-	public delegate void GlibTickHandler(object o, TickArgs args);
-	public delegate void GlibDeviceChangeHandler(object o, DeviceChangeArgs args);
-
-
-
-	public class ErrorArgs : GLib.SignalArgs {
+	public delegate void ProgressHandler (float progress);
+	public delegate void FramesProgressHandler (int actual,int total,Image frame);
+	public delegate void DrawFrameHandler (int time);
+	public delegate void SeekHandler (SeekType type,Time start,float rate);
+	public delegate void GlibErrorHandler (object o,ErrorArgs args);
+	public delegate void GlibPercentCompletedHandler (object o,PercentCompletedArgs args);
+	public delegate void GlibStateChangeHandler (object o,StateChangeArgs args);
+	public delegate void GlibTickHandler (object o,TickArgs args);
+	public delegate void GlibDeviceChangeHandler (object o,DeviceChangeArgs args);
+	public class ErrorArgs : GLib.SignalArgs
+	{
 		public string Message {
 			get {
-				return (string) Args[0];
+				return (string)Args [0];
 			}
 		}
-
 	}
 
-	public class PercentCompletedArgs : GLib.SignalArgs {
+	public class PercentCompletedArgs : GLib.SignalArgs
+	{
 		public float Percent {
 			get {
-				return (float) Args[0];
+				return (float)Args [0];
 			}
 		}
-
 	}
 
-	public class StateChangeArgs : GLib.SignalArgs {
+	public class StateChangeArgs : GLib.SignalArgs
+	{
 		public bool Playing {
 			get {
-				return (bool) Args[0];
+				return (bool)Args [0];
 			}
 		}
 	}
 
-	public class TickArgs : GLib.SignalArgs {
+	public class TickArgs : GLib.SignalArgs
+	{
 		public Time CurrentTime {
 			get {
-				return new Time {NSeconds = (long) Args[0]};
+				return new Time { NSeconds = (long) Args[0] };
 			}
 		}
 
 		public Time StreamLength {
 			get {
-				return new Time {NSeconds = (long) Args[1]};
+				return new Time { NSeconds = (long) Args[1] };
 			}
 		}
 
 		public double CurrentPosition {
 			get {
-				return (double) Args[2];
+				return (double)Args [2];
 			}
 		}
 	}
 
-	public class DeviceChangeArgs : GLib.SignalArgs {
+	public class DeviceChangeArgs : GLib.SignalArgs
+	{
 		public int DeviceChange {
 			get {
-				return (int) Args[0];
+				return (int)Args [0];
 			}
 		}
-
 	}
 }

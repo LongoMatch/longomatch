@@ -16,17 +16,11 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
-using Mono.Unix;
-using GLib;
-using LongoMatch.Store;
-using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.Handlers;
-using LongoMatch.Video.Utils;
-using LongoMatch.Multimedia.Utils;
+using LongoMatch.Interfaces.Multimedia;
 
 namespace LongoMatch.Video.Remuxer
 {
@@ -34,59 +28,63 @@ namespace LongoMatch.Video.Remuxer
 	{
 		public event ErrorHandler Error;
 		public event ProgressHandler Progress;
+
 		const string FORMAT = "mp4";
 		const string BACKUP_FORMAT = "mkv";
 		string inputFilepath;
 		string outputFilepath;
 		System.Threading.Thread remuxThread;
-		
+
 		public MpegRemuxer (string inputFilepath, string outputFilepath)
 		{
 			this.inputFilepath = inputFilepath;
 			this.outputFilepath = outputFilepath;
 		}
-		
-		public void Start() {
-			remuxThread = new System.Threading.Thread(new ThreadStart(RemuxTask));
-			remuxThread.Start();
+
+		public void Start ()
+		{
+			remuxThread = new System.Threading.Thread (new ThreadStart (RemuxTask));
+			remuxThread.Start ();
 		}
-		
-		public void Cancel() {
+
+		public void Cancel ()
+		{
 			if (remuxThread.IsAlive)
-				remuxThread.Interrupt();
+				remuxThread.Interrupt ();
 			try {
 				File.Delete (this.outputFilepath);
 			} catch {
 			}
 		}
-		
-		private int LaunchRemuxer () {
+
+		private int LaunchRemuxer ()
+		{
 			int ret = 1;
 			
-			ProcessStartInfo startInfo = new ProcessStartInfo();
+			ProcessStartInfo startInfo = new ProcessStartInfo ();
 			startInfo.CreateNoWindow = true;
 			if (System.Environment.OSVersion.Platform != PlatformID.Win32NT) {
 				startInfo.UseShellExecute = false;
 			}
 			startInfo.FileName = "avconv";
-			startInfo.Arguments = String.Format("-i {0} -vcodec copy -acodec copy -y -sn {1} ",
+			startInfo.Arguments = String.Format ("-i {0} -vcodec copy -acodec copy -y -sn {1} ",
 			                                    inputFilepath, outputFilepath);
 
-			using (System.Diagnostics.Process exeProcess = System.Diagnostics.Process.Start(startInfo))
-			{
-				exeProcess.WaitForExit();
+			using (System.Diagnostics.Process exeProcess = System.Diagnostics.Process.Start(startInfo)) {
+				exeProcess.WaitForExit ();
 				ret = exeProcess.ExitCode;
 			}
 			return ret;
 		}
-		
-		private void RemuxTask(){
+
+		private void RemuxTask ()
+		{
 			int ret;
 			ret = LaunchRemuxer ();
 			if (ret != 0) {
 				/* Try with the backup format instead */
 				System.IO.File.Delete (outputFilepath);
-				outputFilepath = Path.ChangeExtension(inputFilepath, BACKUP_FORMAT);
+				outputFilepath = Path.ChangeExtension (inputFilepath, BACKUP_FORMAT);
 				ret = LaunchRemuxer ();
 			}
 			

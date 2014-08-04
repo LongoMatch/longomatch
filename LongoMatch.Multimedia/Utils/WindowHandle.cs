@@ -25,7 +25,8 @@ namespace LongoMatch.Multimedia.Utils
 		[DllImport("libcesarplayer.dll")]
 		static extern IntPtr lgm_get_window_handle (IntPtr window);
 
-		public static IntPtr GetWindowHandle (Gdk.Window window) {
+		public static IntPtr GetWindowHandle (Gdk.Window window)
+		{
 			return lgm_get_window_handle (window.Handle);
 		}
 	}

@@ -17,21 +17,18 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
-
 using System;
 
 namespace LongoMatch.Video.Utils
 {
-
-
 	public class TimeString
 	{
 
-		public TimeString()
+		public TimeString ()
 		{
 		}
 
-		public  static string SecondsToString(long time)
+		public  static string SecondsToString (long time)
 		{
 			long _h, _m, _s;
 
@@ -39,45 +36,47 @@ namespace LongoMatch.Video.Utils
 			_m = ((time % 3600) / 60);
 			_s = ((time % 3600) % 60);
 
-			if(_h > 0)
-				return String.Format("{0}:{1}:{2}", _h, _m.ToString("d2"),
-				                     _s.ToString("d2"));
+			if (_h > 0)
+				return String.Format ("{0}:{1}:{2}", _h, _m.ToString ("d2"),
+				                      _s.ToString ("d2"));
 
-			return String.Format("{0}:{1}", _m, _s.ToString("d2"));
+			return String.Format ("{0}:{1}", _m, _s.ToString ("d2"));
 		}
-		public  static string MSecondsToMSecondsString(long time)
+
+		public  static string MSecondsToMSecondsString (long time)
 		{
-			long _h, _m, _s,_ms,_time;
+			long _h, _m, _s, _ms, _time;
 			_time = time / 1000;
 			_h = (_time / 3600);
 			_m = ((_time % 3600) / 60);
 			_s = ((_time % 3600) % 60);
-			_ms = ((time % 3600000)%60000)%1000;
+			_ms = ((time % 3600000) % 60000) % 1000;
 
-			if(_h > 0)
-				return String.Format("{0}:{1}:{2},{3}", _h, _m.ToString("d2"),
-				                     _s.ToString("d2"),_ms.ToString("d3"));
+			if (_h > 0)
+				return String.Format ("{0}:{1}:{2},{3}", _h, _m.ToString ("d2"),
+				                      _s.ToString ("d2"), _ms.ToString ("d3"));
 
-			return String.Format("{0}:{1},{2}", _m, _s.ToString("d2"),_ms.ToString("d3"));
+			return String.Format ("{0}:{1},{2}", _m, _s.ToString ("d2"), _ms.ToString ("d3"));
 		}
-		public  static string MSecondsToSecondsString(long time)
+
+		public  static string MSecondsToSecondsString (long time)
 		{
-			long _h, _m, _s,_time;
+			long _h, _m, _s, _time;
 			_time = time / 1000;
 			_h = (_time / 3600);
 			_m = ((_time % 3600) / 60);
 			_s = ((_time % 3600) % 60);
 
-			if(_h > 0)
-				return String.Format("{0}:{1}:{2}", _h, _m.ToString("d2"),
-				                     _s.ToString("d2"));
+			if (_h > 0)
+				return String.Format ("{0}:{1}:{2}", _h, _m.ToString ("d2"),
+				                      _s.ToString ("d2"));
 
-			return String.Format("{0}:{1}", _m, _s.ToString("d2"));
-		}
-		public static string FileName(string filename) {
-			return System.IO.Path.GetFileName(filename);
+			return String.Format ("{0}:{1}", _m, _s.ToString ("d2"));
 		}
 
-
+		public static string FileName (string filename)
+		{
+			return System.IO.Path.GetFileName (filename);
+		}
 	}
 }

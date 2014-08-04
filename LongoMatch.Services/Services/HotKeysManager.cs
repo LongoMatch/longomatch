@@ -20,30 +20,24 @@
 //
 using System.Collections.Generic;
 using LongoMatch.Common;
-
-
-#if HAVE_GTK
-using Gtk;
-using Gdk;
-#endif
-
 using LongoMatch.Interfaces.GUI;
 using LongoMatch.Store;
-using LongoMatch.Store.Templates;
-using LongoMatch.Handlers;
 
+#if HAVE_GTK
+using Gdk;
+using Gtk;
+
+#endif
 namespace LongoMatch.Services
 {
-
-
 	public class HotKeysManager
 	{
 		Dictionary<HotKey, Category> dic;
 		bool ignoreKeys;
-		
-		public HotKeysManager()
+
+		public HotKeysManager ()
 		{
-			dic = new Dictionary<HotKey,Category>();
+			dic = new Dictionary<HotKey,Category> ();
 			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
 			Config.EventsBroker.KeyPressed += KeyListener;
 		}
@@ -51,31 +45,32 @@ namespace LongoMatch.Services
 		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
 		                                 PlaysFilter filter, IAnalysisWindow analysisWindow)
 		{
-			if(project == null) {
+			if (project == null) {
 				ignoreKeys = true;
 				return;
 			}
 			
-			dic.Clear();
+			dic.Clear ();
 			ignoreKeys = false;
-			foreach(Category cat in project.Categories.CategoriesList) {
-				if(cat.HotKey.Defined &&
-				   !dic.ContainsKey(cat.HotKey))
-					dic.Add(cat.HotKey, cat);
+			foreach (Category cat in project.Categories.CategoriesList) {
+				if (cat.HotKey.Defined &&
+					!dic.ContainsKey (cat.HotKey))
+					dic.Add (cat.HotKey, cat);
 			}
 		}
 
-		public void KeyListener(object sender, int key, int state) {
+		public void KeyListener (object sender, int key, int state)
+		{
 			if (ignoreKeys)
 				return;
 			
 #if HAVE_GTK
 			Category cat = null;
-			HotKey hotkey = new HotKey();
+			HotKey hotkey = new HotKey ();
 
-			hotkey.Key= key;
-			hotkey.Modifier= (int) ((ModifierType)state & (ModifierType.Mod1Mask | ModifierType.Mod5Mask | ModifierType.ShiftMask));
-			if(dic.TryGetValue(hotkey, out cat)) {
+			hotkey.Key = key;
+			hotkey.Modifier = (int)((ModifierType)state & (ModifierType.Mod1Mask | ModifierType.Mod5Mask | ModifierType.ShiftMask));
+			if (dic.TryGetValue (hotkey, out cat)) {
 				Config.EventsBroker.EmitNewTag (cat);
 #endif
 			}

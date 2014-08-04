@@ -16,13 +16,10 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 
-using System;
-
 namespace LongoMatch.Video.Common
 {
-
-
-	public enum Error {
+	public enum Error
+	{
 		AudioPlugin,
 		NoPluginForFile,
 		VideoPlugin,
@@ -47,8 +44,8 @@ namespace LongoMatch.Video.Common
 		EmptyFile,
 	}
 
-
-	public enum VideoQuality {
+	public enum VideoQuality
+	{
 		Low = 1000,
 		Normal = 3000,
 		Good = 5000,
@@ -64,19 +61,22 @@ namespace LongoMatch.Video.Common
 		copy,
 	}
 
-	public enum PlayerUseType {
+	public enum PlayerUseType
+	{
 		Video,
 		Capture,
 	}
 
-	public enum VideoProperty {
+	public enum VideoProperty
+	{
 		Brightness,
 		Contrast,
 		Saturation,
 		Hue,
 	}
 
-	public enum AspectRatio {
+	public enum AspectRatio
+	{
 		Auto,
 		Square,
 		Fourbythree,
@@ -84,7 +84,8 @@ namespace LongoMatch.Video.Common
 		Dvb,
 	}
 
-	public enum AudioOutType {
+	public enum AudioOutType
+	{
 		Stereo,
 		Channel4,
 		Channel41,
@@ -93,7 +94,8 @@ namespace LongoMatch.Video.Common
 		Ac3passthru,
 	}
 
-	public enum MetadataType {
+	public enum MetadataType
+	{
 		Title,
 		Artist,
 		Year,
@@ -116,7 +118,8 @@ namespace LongoMatch.Video.Common
 		Par,
 	}
 
-	public enum SeekType {
+	public enum SeekType
+	{
 		Keyframe,
 		Accurate,
 		StepUp,

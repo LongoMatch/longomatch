@@ -15,24 +15,17 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-
 using System;
-using System.Collections.Generic;
 using System.IO;
-using Mono.Unix;
-
 using LongoMatch.Common;
-using LongoMatch.Handlers;
+using LongoMatch.Interfaces;
 using LongoMatch.Interfaces.GUI;
 using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.Store;
-using LongoMatch.Store.Templates;
-using LongoMatch.Interfaces;
+using Mono.Unix;
 
 namespace LongoMatch.Services
 {
-
-
 	public class ProjectsManager
 	{
 		IGUIToolkit guiToolkit;
@@ -40,22 +33,24 @@ namespace LongoMatch.Services
 		IMainController mainController;
 		IAnalysisWindow analysisWindow;
 		IDatabase DB;
-		
+
 		public ProjectsManager (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit,
-		                       TemplatesService ts) {
+		                        TemplatesService ts)
+		{
 			this.multimediaToolkit = multimediaToolkit;
 			this.guiToolkit = guiToolkit;
 			mainController = guiToolkit.MainController;
 			DB = Config.DatabaseManager.ActiveDB;
-			ConnectSignals();
+			ConnectSignals ();
 		}
 
-		public void ConnectSignals() {
+		public void ConnectSignals ()
+		{
 			Config.EventsBroker.NewProjectEvent += NewProject;
 			Config.EventsBroker.OpenProjectEvent += OpenProject;
 			Config.EventsBroker.OpenProjectIDEvent += OpenProjectID;
 			Config.EventsBroker.OpenNewProjectEvent += OpenNewProject;
-			Config.EventsBroker.CloseOpenedProjectEvent += () => PromptCloseProject();
+			Config.EventsBroker.CloseOpenedProjectEvent += () => PromptCloseProject ();
 			Config.EventsBroker.SaveProjectEvent += SaveProject;
 			Config.EventsBroker.KeyPressed += HandleKeyPressed;
 			Config.EventsBroker.CaptureError += HandleCaptureError;
@@ -67,33 +62,35 @@ namespace LongoMatch.Services
 			set;
 			get;
 		}
-		
+
 		public ProjectType OpenedProjectType {
 			set;
 			get;
 		}
-		
+
 		public PlaysFilter PlaysFilter {
 			get;
 			set;
 		}
-		
+
 		public ICapturerBin Capturer {
 			set;
 			get;
 		}
-		
+
 		public IPlayerBin Player {
 			get;
 			set;
 		}
-		
-		void EmitProjectChanged() {
+
+		void EmitProjectChanged ()
+		{
 			Config.EventsBroker.EmitOpenedProjectChanged (OpenedProject, OpenedProjectType,
 			                                              PlaysFilter, analysisWindow);
 		}
-		
-		void RemuxOutputFile (EncodingSettings settings) {
+
+		void RemuxOutputFile (EncodingSettings settings)
+		{
 			VideoMuxerType muxer;
 				
 			/* We need to remux to the original format */
@@ -134,7 +131,8 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void SaveCaptureProject(Project project) {
+		void SaveCaptureProject (Project project)
+		{
 			Guid projectID = project.ID;
 			string filePath = project.Description.File.FilePath;
 
@@ -144,34 +142,34 @@ namespace LongoMatch.Services
 			
 				RemuxOutputFile (Capturer.CaptureSettings.EncodingSettings);
 			
-				Log.Debug("Reloading saved file: " + filePath);
+				Log.Debug ("Reloading saved file: " + filePath);
 				project.Description.File = multimediaToolkit.DiscoverFile (filePath);
-				DB.AddProject(project);
-			} catch(Exception ex) {
-				Log.Exception(ex);
+				DB.AddProject (project);
+			} catch (Exception ex) {
+				Log.Exception (ex);
 				Log.Debug ("Backing up project to file");
-				string projectFile = DateTime.Now.ToString().Replace("-", "_");
-				projectFile = projectFile.Replace(":", "_");
-				projectFile = projectFile.Replace(" ", "_");
-				projectFile = projectFile.Replace("/", "_");
+				string projectFile = DateTime.Now.ToString ().Replace ("-", "_");
+				projectFile = projectFile.Replace (":", "_");
+				projectFile = projectFile.Replace (" ", "_");
+				projectFile = projectFile.Replace ("/", "_");
 				projectFile = filePath + "_" + projectFile;
-				Project.Export(OpenedProject, projectFile);
-				guiToolkit.ErrorMessage(Catalog.GetString("An error occured saving the project:\n")+ex.Message+ "\n\n"+
-					Catalog.GetString("The video file and a backup of the project has been "+
-					"saved. Try to import it later:\n")+
-					filePath+"\n"+projectFile);
+				Project.Export (OpenedProject, projectFile);
+				guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message + "\n\n" +
+					Catalog.GetString ("The video file and a backup of the project has been " +
+					"saved. Try to import it later:\n") +
+					filePath + "\n" + projectFile);
 			}
 		}
-	
-		bool SetProject(Project project, ProjectType projectType, CaptureSettings props)
+
+		bool SetProject (Project project, ProjectType projectType, CaptureSettings props)
 		{
 			if (OpenedProject != null) {
-				CloseOpenedProject(true);
+				CloseOpenedProject (true);
 			}
 			
 			Log.Debug ("Loading project " + project.ID + " " + projectType);
 				
-			PlaysFilter = new PlaysFilter(project);
+			PlaysFilter = new PlaysFilter (project);
 			guiToolkit.OpenProject (project, projectType, props, PlaysFilter,
 			                        out analysisWindow);
 			Player = analysisWindow.Player;
@@ -182,41 +180,39 @@ namespace LongoMatch.Services
 			if (Player != null) {
 			}
 			
-			if(projectType == ProjectType.FileProject) {
+			if (projectType == ProjectType.FileProject) {
 				// Check if the file associated to the project exists
-				if(!File.Exists(project.Description.File.FilePath)) {
-					guiToolkit.WarningMessage(Catalog.GetString("The file associated to this project doesn't exist.") + "\n"
-						+ Catalog.GetString("If the location of the file has changed try to edit it with the database manager."));
-					CloseOpenedProject(true);
+				if (!File.Exists (project.Description.File.FilePath)) {
+					guiToolkit.WarningMessage (Catalog.GetString ("The file associated to this project doesn't exist.") + "\n"
+						+ Catalog.GetString ("If the location of the file has changed try to edit it with the database manager."));
+					CloseOpenedProject (true);
 					return false;
 				}
 				try {
-					Player.Open(project.Description.File.FilePath);
-				}
-				catch(Exception ex) {
+					Player.Open (project.Description.File.FilePath);
+				} catch (Exception ex) {
 					Log.Exception (ex);
-					guiToolkit.ErrorMessage(Catalog.GetString("An error occurred opening this project:") + "\n" + ex.Message);
+					guiToolkit.ErrorMessage (Catalog.GetString ("An error occurred opening this project:") + "\n" + ex.Message);
 					CloseOpenedProject (false);
 					return false;
 				}
 
 			} else if (projectType == ProjectType.CaptureProject ||
-			           projectType == ProjectType.URICaptureProject ||
-			           projectType == ProjectType.FakeCaptureProject) {
+				projectType == ProjectType.URICaptureProject ||
+				projectType == ProjectType.FakeCaptureProject) {
 				try {
 					Capturer.Run (props);
-				} catch(Exception ex) {
+				} catch (Exception ex) {
 					Log.Exception (ex);
-					guiToolkit.ErrorMessage(ex.Message);
+					guiToolkit.ErrorMessage (ex.Message);
 					CloseOpenedProject (false);
 					return false;
 				}
 			}
 
-			EmitProjectChanged();
+			EmitProjectChanged ();
 			return true;
 		}
-
 		/*
 		public static void ExportToCSV(Project project) {
 			FileChooserDialog fChooser;
@@ -243,15 +239,15 @@ namespace LongoMatch.Services
 			}
 			fChooser.Destroy();
 		}*/
-
-		bool PromptCloseProject() {
-			if(OpenedProject == null)
+		bool PromptCloseProject ()
+		{
+			if (OpenedProject == null)
 				return true;
 
-			if(OpenedProjectType == ProjectType.FileProject) {
+			if (OpenedProjectType == ProjectType.FileProject) {
 				bool ret;
 				ret = guiToolkit.QuestionMessage (
-					Catalog.GetString("Do you want to close the current project?"), null);
+					Catalog.GetString ("Do you want to close the current project?"), null);
 				if (ret) {
 					CloseOpenedProject (true);
 					return true;
@@ -266,7 +262,7 @@ namespace LongoMatch.Services
 				if (res == EndCaptureResponse.Quit) {
 					CloseOpenedProject (false);
 					return true;
-				} else if(res == EndCaptureResponse.Save) {
+				} else if (res == EndCaptureResponse.Save) {
 					/* Close and save project */
 					CloseOpenedProject (true);
 					return true;
@@ -277,54 +273,57 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void CloseOpenedProject (bool save) {
-			if(OpenedProject == null)
+		void CloseOpenedProject (bool save)
+		{
+			if (OpenedProject == null)
 				return;
 				
 			Log.Debug ("Closing project " + OpenedProject.ID);
-			if(OpenedProjectType != ProjectType.FileProject) {
-				Capturer.Stop();
-				Capturer.Close();
+			if (OpenedProjectType != ProjectType.FileProject) {
+				Capturer.Stop ();
+				Capturer.Close ();
 			} else {
-				Player.Close();
+				Player.Close ();
 			}
 
 			if (save)
-				SaveProject(OpenedProject, OpenedProjectType);
+				SaveProject (OpenedProject, OpenedProjectType);
 
-			if(OpenedProject != null)
-				OpenedProject.Clear();
+			if (OpenedProject != null)
+				OpenedProject.Clear ();
 			OpenedProject = null;
 			OpenedProjectType = ProjectType.None;
 			guiToolkit.CloseProject ();
-			EmitProjectChanged();
+			EmitProjectChanged ();
 		}
-		
-		protected virtual void SaveProject(Project project, ProjectType projectType) {
-			Log.Debug(String.Format("Saving project {0} type: {1}", project, projectType));
+
+		protected virtual void SaveProject (Project project, ProjectType projectType)
+		{
+			Log.Debug (String.Format ("Saving project {0} type: {1}", project, projectType));
 			if (project == null)
 				return;
 			
-			if(projectType == ProjectType.FileProject) {
+			if (projectType == ProjectType.FileProject) {
 				try {
-					DB.UpdateProject(project);
-				} catch(Exception e) {
-					Log.Exception(e);
+					DB.UpdateProject (project);
+				} catch (Exception e) {
+					Log.Exception (e);
 				}
 			} else if (projectType == ProjectType.FakeCaptureProject) {
 				try {
-					DB.AddProject(project);
+					DB.AddProject (project);
 				} catch (Exception e) {
-					Log.Exception(e);
+					Log.Exception (e);
 				}
 			} else if (projectType == ProjectType.CaptureProject ||
-			           projectType == ProjectType.URICaptureProject) {
-				SaveCaptureProject(project);
+				projectType == ProjectType.URICaptureProject) {
+				SaveCaptureProject (project);
 			}
 		}
-		
-		protected virtual void NewProject(Project project) {
-			Log.Debug("Creating new project");
+
+		protected virtual void NewProject (Project project)
+		{
+			Log.Debug ("Creating new project");
 			
 			if (!PromptCloseProject ()) {
 				return;
@@ -332,25 +331,27 @@ namespace LongoMatch.Services
 			
 			guiToolkit.CreateNewProject (project);
 		}
-		
+
 		void OpenNewProject (Project project, ProjectType projectType,
-		                               CaptureSettings captureSettings)
+		                     CaptureSettings captureSettings)
 		{
 			if (project != null)
-				SetProject(project, projectType, captureSettings);
+				SetProject (project, projectType, captureSettings);
 		}
-		
-		void OpenProject() {
+
+		void OpenProject ()
+		{
 			if (!PromptCloseProject ()) {
 				return;
 			}
-			guiToolkit.SelectProject(DB.GetAllProjects());
+			guiToolkit.SelectProject (DB.GetAllProjects ());
 		}
-		
-		void OpenProjectID (Guid projectID) {
+
+		void OpenProjectID (Guid projectID)
+		{
 			Project project = null;
 			
-			project = DB.GetProject(projectID);
+			project = DB.GetProject (projectID);
 
 			if (project.Description.File.FilePath == Constants.FAKE_PROJECT) {
 				/* If it's a fake live project prompt for a video file and
@@ -358,13 +359,13 @@ namespace LongoMatch.Services
 				Log.Debug ("Importing fake live project");
 				ToolsManager.AddVideoFile (project);
 			}
-			SetProject(project, ProjectType.FileProject, new CaptureSettings());
+			SetProject (project, ProjectType.FileProject, new CaptureSettings ());
 		}
 
 		void HandleMultimediaError (string message)
 		{
-			guiToolkit.ErrorMessage (Catalog.GetString("The following error happened and" +
-				" the current project will be closed:")+"\n" + message);
+			guiToolkit.ErrorMessage (Catalog.GetString ("The following error happened and" +
+				" the current project will be closed:") + "\n" + message);
 			CloseOpenedProject (true);
 		}
 
@@ -380,49 +381,49 @@ namespace LongoMatch.Services
 
 		void HandleCaptureError (string message)
 		{
-			guiToolkit.ErrorMessage (Catalog.GetString("The following error happened and" +
-				" the current capture will be closed:")+"\n" + message);
+			guiToolkit.ErrorMessage (Catalog.GetString ("The following error happened and" +
+				" the current capture will be closed:") + "\n" + message);
 			HandleCaptureFinished (false);
 		}
-		
+
 		void HandleKeyPressed (object sender, int key, int modifier)
 		{
-			if(OpenedProject == null)
+			if (OpenedProject == null)
 				return;
 
-			if(OpenedProjectType != ProjectType.CaptureProject &&
-			   OpenedProjectType != ProjectType.URICaptureProject &&
-			   OpenedProjectType != ProjectType.FakeCaptureProject) {
+			if (OpenedProjectType != ProjectType.CaptureProject &&
+				OpenedProjectType != ProjectType.URICaptureProject &&
+				OpenedProjectType != ProjectType.FakeCaptureProject) {
 				if (Player == null)
 					return;
 
-				switch(key) {
+				switch (key) {
 				case Constants.SEEK_FORWARD:
-					if(modifier == Constants.STEP)
-						Player.StepForward();
+					if (modifier == Constants.STEP)
+						Player.StepForward ();
 					else
-						Player.SeekToNextFrame();
+						Player.SeekToNextFrame ();
 					break;
 				case Constants.SEEK_BACKWARD:
-					if(modifier == Constants.STEP)
-						Player.StepBackward();
+					if (modifier == Constants.STEP)
+						Player.StepBackward ();
 					else
-						Player.SeekToPreviousFrame();
+						Player.SeekToPreviousFrame ();
 					break;
 				case Constants.FRAMERATE_UP:
-					Player.FramerateUp();
+					Player.FramerateUp ();
 					break;
 				case Constants.FRAMERATE_DOWN:
-					Player.FramerateDown();
+					Player.FramerateDown ();
 					break;
 				case Constants.TOGGLE_PLAY:
-					Player.TogglePlay();
+					Player.TogglePlay ();
 					break;
 				}
 			} else {
 				if (Capturer == null)
 					return;
-				switch(key) {
+				switch (key) {
 				}
 			}
 		}

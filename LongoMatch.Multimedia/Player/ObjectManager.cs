@@ -16,22 +16,21 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
-
-
-namespace LongoMatch.GtkSharp.Video {
-
-	public class ObjectManager {
+namespace LongoMatch.GtkSharp.Video
+{
+	public class ObjectManager
+	{
 
 		static bool initialized = false;
 		// Call this method from the appropriate module init function.
-		public static void Initialize()
+		public static void Initialize ()
 		{
-			if(initialized)
+			if (initialized)
 				return;
 
 			initialized = true;
 
-			GLib.GType.Register(LongoMatch.Video.Player.GstPlayer.GType, typeof(LongoMatch.Video.Player.GstPlayer));
+			GLib.GType.Register (LongoMatch.Video.Player.GstPlayer.GType, typeof(LongoMatch.Video.Player.GstPlayer));
 
 		}
 	}

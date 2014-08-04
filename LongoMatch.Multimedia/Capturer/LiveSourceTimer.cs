@@ -15,74 +15,72 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-
 using System;
-using LongoMatch.Video.Common;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
 
-
 namespace LongoMatch.Video.Capturer
 {
-
-
 	public class LiveSourceTimer
 	{
 		public event EllpasedTimeHandler EllapsedTime;
 
-		private DateTime lastStart;
-		private TimeSpan ellapsed;
-		private bool playing;
-		private bool started;
-		private uint timerID;
+		DateTime lastStart;
+		TimeSpan ellapsed;
+		bool playing;
+		bool started;
+		uint timerID;
 
-		public LiveSourceTimer()
+		public LiveSourceTimer ()
 		{
 			lastStart = DateTime.Now;
-			ellapsed = new TimeSpan(0,0,0);
+			ellapsed = new TimeSpan (0, 0, 0);
 			playing = false;
 			started = false;
 		}
 
 		public int CurrentTime {
 			get {
-				if(!started)
+				if (!started)
 					return 0;
-				else if(playing)
+				else if (playing)
 					return (int)(ellapsed + (DateTime.Now - lastStart)).TotalMilliseconds;
 				else
 					return (int)ellapsed.TotalMilliseconds;
 			}
 		}
 
-		public void TogglePause() {
-			if(!started)
+		public void TogglePause ()
+		{
+			if (!started)
 				return;
 
-			if(playing) {
+			if (playing) {
 				playing = false;
 				ellapsed += DateTime.Now - lastStart;
-			}
-			else {
+			} else {
 				playing = true;
 				lastStart = DateTime.Now;
 			}
 		}
 
-		public void Start() {
-			timerID = GLib.Timeout.Add(100, OnTick);
+		public void Start ()
+		{
+			timerID = GLib.Timeout.Add (100, OnTick);
 			lastStart = DateTime.Now;
 			playing = true;
 			started = true;
 		}
 
-		public void Stop() {
-			GLib.Source.Remove(timerID);
+		public void Stop ()
+		{
+			GLib.Source.Remove (timerID);
 		}
 
-		protected virtual bool OnTick() {
-			if(EllapsedTime != null)
-				EllapsedTime(new Time (CurrentTime));
+		protected virtual bool OnTick ()
+		{
+			if (EllapsedTime != null)
+				EllapsedTime (new Time (CurrentTime));
 			return true;
 		}
 	}

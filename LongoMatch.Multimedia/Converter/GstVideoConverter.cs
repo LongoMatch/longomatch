@@ -15,17 +15,12 @@
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
+using LongoMatch.Common;
 
 namespace LongoMatch.Video.Converter {
 
 	using System;
-	using System.Collections;
-	using System.Collections.Generic;
 	using System.Runtime.InteropServices;
-	using Mono.Unix;
-	
-	using LongoMatch.Interfaces;
-	using LongoMatch.Common;
 	using LongoMatch.Interfaces.Multimedia;
 	using LongoMatch.Video.Common;
 	

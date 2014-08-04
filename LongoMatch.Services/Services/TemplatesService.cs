@@ -19,126 +19,130 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using Mono.Unix;
-
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
-
+using Mono.Unix;
 
 namespace LongoMatch.Services
 {
-
 	public class TemplatesService: ITemplatesService
 	{
 		private Dictionary<Type, ITemplateProvider> dict;
-		
+
 		public TemplatesService ()
 		{
-			dict = new Dictionary<Type, ITemplateProvider>();
-			dict.Add(typeof(TeamTemplate),
-			         new TeamTemplatesProvider(Config.TeamsDir));
-			dict.Add(typeof(Categories), new CategoriesTemplatesProvider (Config.AnalysisDir));
-			CheckDefaultTemplates();
+			dict = new Dictionary<Type, ITemplateProvider> ();
+			dict.Add (typeof(TeamTemplate),
+			         new TeamTemplatesProvider (Config.TeamsDir));
+			dict.Add (typeof(Categories), new CategoriesTemplatesProvider (Config.AnalysisDir));
+			CheckDefaultTemplates ();
 		}
-		
-		private void CheckDefaultTemplates () {
+
+		private void CheckDefaultTemplates ()
+		{
 			foreach (ITemplateProvider t in dict.Values)
-				t.CheckDefaultTemplate();
+				t.CheckDefaultTemplate ();
 		}
-		
-		public ITemplateProvider<T, U> GetTemplateProvider<T, U>() where T: ITemplate<U> {
-			if (dict.ContainsKey(typeof(T)))
-				return (ITemplateProvider<T, U>)dict[typeof(T)];
+
+		public ITemplateProvider<T, U> GetTemplateProvider<T, U> () where T: ITemplate<U>
+		{
+			if (dict.ContainsKey (typeof(T)))
+				return (ITemplateProvider<T, U>)dict [typeof(T)];
 			return null;
 		}
-		
+
 		public ITeamTemplatesProvider TeamTemplateProvider {
 			get {
-				return (ITeamTemplatesProvider) dict[typeof(TeamTemplate)]; 
+				return (ITeamTemplatesProvider)dict [typeof(TeamTemplate)]; 
 			}
 		}
 
 		public ICategoriesTemplatesProvider CategoriesTemplateProvider {
 			get {
-				return (ICategoriesTemplatesProvider) dict[typeof(Categories)]; 
+				return (ICategoriesTemplatesProvider)dict [typeof(Categories)]; 
 			}
 		}
 	}
-	
+
 	public class TemplatesProvider<T, U>: ITemplateProvider<T, U> where T: ITemplate<U>
 	{
 		readonly string basePath;
 		readonly string extension;
 		readonly MethodInfo methodLoad;
 		readonly MethodInfo methodDefaultTemplate;
-		
+
 		public TemplatesProvider (string basePath, string extension)
 		{
 			this.basePath = basePath;
 			this.extension = extension;
-			methodLoad = typeof(T).GetMethod("Load");
-			methodDefaultTemplate = typeof(T).GetMethod("DefaultTemplate");
+			methodLoad = typeof(T).GetMethod ("Load");
+			methodDefaultTemplate = typeof(T).GetMethod ("DefaultTemplate");
 		}
-		
-		private string GetPath(string templateName) {
-			return System.IO.Path.Combine(basePath, templateName) + extension;
+
+		private string GetPath (string templateName)
+		{
+			return System.IO.Path.Combine (basePath, templateName) + extension;
 		}
-		
-		public void CheckDefaultTemplate() {
+
+		public void CheckDefaultTemplate ()
+		{
 			string path;
 			
-			path = GetPath("default");
-			if(!File.Exists(path)) {
-				Create("default", 20);
+			path = GetPath ("default");
+			if (!File.Exists (path)) {
+				Create ("default", 20);
 			}
 		}
-		
-		public bool Exists (string name) {
-			return File.Exists(GetPath(name));
+
+		public bool Exists (string name)
+		{
+			return File.Exists (GetPath (name));
 		}
-		
-		public List<T> Templates{
-			get{
-				List<T> templates = new List<T>();
+
+		public List<T> Templates {
+			get {
+				List<T> templates = new List<T> ();
 				
 				foreach (string file in TemplatesNames) {
 					try {
-						templates.Add(Load(file));
+						templates.Add (Load (file));
 					} catch (Exception ex) {
-						Log.Exception(ex);
+						Log.Exception (ex);
 					}
 				}
 				return templates;
 			}
 		}
-		
-		public List<string> TemplatesNames{
-			get{
-				List<string> l = new List<string>();
+
+		public List<string> TemplatesNames {
+			get {
+				List<string> l = new List<string> ();
 				foreach (string path in Directory.GetFiles (basePath, "*" + extension)) {
-					l.Add (Path.GetFileNameWithoutExtension(path));
+					l.Add (Path.GetFileNameWithoutExtension (path));
 				}
 				return l;
 			}
 		}
-		
-		public T Load (string name) {
-			Log.Information("Loading template " +  name);
-			var template = (T)methodLoad.Invoke(null, new object[] {GetPath(name)});
+
+		public T Load (string name)
+		{
+			Log.Information ("Loading template " + name);
+			var template = (T)methodLoad.Invoke (null, new object[] { GetPath(name) });
 			template.Name = name;
 			return template;
 		}
-		
-		public void Save (ITemplate<U> template) {
-			string filename =  GetPath(template.Name);
+
+		public void Save (ITemplate<U> template)
+		{
+			string filename = GetPath (template.Name);
 			
-			Log.Information("Saving template " + filename);
+			Log.Information ("Saving template " + filename);
 			
-			if (File.Exists(filename)) {
-				throw new Exception (Catalog.GetString("A template already exists with " +
-				                                       "the name: ") + filename);
+			if (File.Exists (filename)) {
+				throw new Exception (Catalog.GetString ("A template already exists with " +
+					"the name: ") + filename);
 			}
 			
 			if (!Directory.Exists (Path.GetDirectoryName (filename))) {
@@ -146,57 +150,63 @@ namespace LongoMatch.Services
 			}
 			
 			/* Don't cach the Exception here to chain it up */
-			template.Save(filename);
+			template.Save (filename);
 		}
-		
-		public void Update (ITemplate<U> template) {
-			string filename =  GetPath(template.Name);
+
+		public void Update (ITemplate<U> template)
+		{
+			string filename = GetPath (template.Name);
 			
-			Log.Information("Updating template " + filename);
+			Log.Information ("Updating template " + filename);
 			/* Don't cach the Exception here to chain it up */
-			template.Save(filename);
+			template.Save (filename);
 		}
-		
-		public void Copy(string orig, string copy) {
-			if (File.Exists(copy)) {
-				throw new Exception (Catalog.GetString("A template already exists with " +
-				                                       "the name: ") + copy);
+
+		public void Copy (string orig, string copy)
+		{
+			if (File.Exists (copy)) {
+				throw new Exception (Catalog.GetString ("A template already exists with " +
+					"the name: ") + copy);
 			}
 			
-			Log.Information(String.Format("Copying template {0} to {1}", orig, copy));
-			File.Copy (GetPath(orig) , GetPath(copy));
+			Log.Information (String.Format ("Copying template {0} to {1}", orig, copy));
+			File.Copy (GetPath (orig), GetPath (copy));
 		}
-		
-		public void Delete (string templateName) {
+
+		public void Delete (string templateName)
+		{
 			try {
-				Log.Information("Deleting template " + templateName);
-				File.Delete (GetPath(templateName));
+				Log.Information ("Deleting template " + templateName);
+				File.Delete (GetPath (templateName));
 			} catch (Exception ex) {
 				Log.Exception (ex);
 			}
 		}
-		
-		public void Create (string templateName, params object[] list) {
+
+		public void Create (string templateName, params object[] list)
+		{
 			/* Some templates don't need a count as a parameter but we include
 			 * so that all of them match the same signature */
 			if (list.Length == 0)
-				list = new object[] {0};
-			Log.Information(String.Format("Creating default {0} template", typeof(T)));
-			ITemplate<U> t =(ITemplate<U>)methodDefaultTemplate.Invoke(null, list);
+				list = new object[] { 0 };
+			Log.Information (String.Format ("Creating default {0} template", typeof(T)));
+			ITemplate<U> t = (ITemplate<U>)methodDefaultTemplate.Invoke (null, list);
 			t.Name = templateName;
-			Save(t);
+			Save (t);
 		}
 	}
-	
+
 	public class TeamTemplatesProvider: TemplatesProvider<TeamTemplate, Player>, ITeamTemplatesProvider
 	{
-		public TeamTemplatesProvider (string basePath): base (basePath, Constants.TEAMS_TEMPLATE_EXT) {}
-		 
-	} 
-	
+		public TeamTemplatesProvider (string basePath): base (basePath, Constants.TEAMS_TEMPLATE_EXT)
+		{
+		}
+	}
+
 	public class CategoriesTemplatesProvider : TemplatesProvider<Categories, TaggerButton>, ICategoriesTemplatesProvider
 	{
-		public CategoriesTemplatesProvider (string basePath): base (basePath, Constants.CAT_TEMPLATE_EXT) {}
-		 
+		public CategoriesTemplatesProvider (string basePath): base (basePath, Constants.CAT_TEMPLATE_EXT)
+		{
+		}
 	}
 }

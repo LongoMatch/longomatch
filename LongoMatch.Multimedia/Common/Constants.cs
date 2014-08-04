@@ -16,12 +16,10 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 
-using System;
-
 namespace LongoMatch.Video.Common
 {
-
-	class VideoConstants {
+	class VideoConstants
+	{
 		public const string DV1394SRC_PROP = "guid";
 		public const string DSHOWVIDEOSINK_PROP = "device-name";
 	}

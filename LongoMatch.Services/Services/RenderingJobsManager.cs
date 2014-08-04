@@ -17,13 +17,12 @@
 // 
 using System;
 using System.Collections.Generic;
-using Mono.Unix;
-
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
 using LongoMatch.Interfaces.GUI;
 using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.Store;
+using Mono.Unix;
 
 namespace LongoMatch.Services
 {
@@ -38,278 +37,294 @@ namespace LongoMatch.Services
 		IRenderingStateBar stateBar;
 		IMultimediaToolkit multimediaToolkit;
 		IGUIToolkit guiToolkit;
-		
+
 		public RenderingJobsManager (IMultimediaToolkit multimediaToolkit, IGUIToolkit guiToolkit)
 		{
 			this.guiToolkit = guiToolkit;
 			this.multimediaToolkit = multimediaToolkit; 
 			this.stateBar = guiToolkit.RenderingStateBar;
-			capturer = multimediaToolkit.GetFramesCapturer();
-			jobs = new List<Job>();
-			pendingJobs = new List<Job>();
-			stateBar.Cancel += (sender, e) => CancelCurrentJob();
-			stateBar.ManageJobs += (sender, e) => ManageJobs();
+			capturer = multimediaToolkit.GetFramesCapturer ();
+			jobs = new List<Job> ();
+			pendingJobs = new List<Job> ();
+			stateBar.Cancel += (sender, e) => CancelCurrentJob ();
+			stateBar.ManageJobs += (sender, e) => ManageJobs ();
 			Config.EventsBroker.ConvertVideoFilesEvent += (inputFiles, encSettings) => {
-				ConversionJob job = new ConversionJob(inputFiles, encSettings);
+				ConversionJob job = new ConversionJob (inputFiles, encSettings);
 				AddJob (job);
-			};; 
+			};
+			; 
 		}
-		
+
 		public List<Job> Jobs {
 			get {
 				return jobs;
 			}
 		}
-		
-		public void AddJob(Job job) {
+
+		public void AddJob (Job job)
+		{
 			if (job == null)
 				return;
-			jobs.Add(job);
-			pendingJobs.Add(job);
-			UpdateJobsStatus();
+			jobs.Add (job);
+			pendingJobs.Add (job);
+			UpdateJobsStatus ();
 			if (pendingJobs.Count == 1)
-				StartNextJob();
+				StartNextJob ();
 		}
-		
-		public void RetryJobs(List<Job> retryJobs) {
+
+		public void RetryJobs (List<Job> retryJobs)
+		{
 			foreach (Job job in retryJobs) {
-				if (!jobs.Contains(job))
+				if (!jobs.Contains (job))
 					return;
-				if (!pendingJobs.Contains(job)) {
+				if (!pendingJobs.Contains (job)) {
 					job.State = JobState.NotStarted;
-					jobs.Remove(job);
-					jobs.Add(job);
-					pendingJobs.Add(job);
-					UpdateJobsStatus();
+					jobs.Remove (job);
+					jobs.Add (job);
+					pendingJobs.Add (job);
+					UpdateJobsStatus ();
 				}
 			}
 		}
-		
-		public void DeleteJob(Job job) {
+
+		public void DeleteJob (Job job)
+		{
 			job.State = JobState.Cancelled;
-			CancelJob(job);
+			CancelJob (job);
 		}
-		
-		public void ClearDoneJobs() {
-			jobs.RemoveAll(j => j.State == JobState.Finished);
+
+		public void ClearDoneJobs ()
+		{
+			jobs.RemoveAll (j => j.State == JobState.Finished);
 		}
-		
-		public void CancelJobs(List<Job> cancelJobs) {
-			foreach (Job job in cancelJobs){
+
+		public void CancelJobs (List<Job> cancelJobs)
+		{
+			foreach (Job job in cancelJobs) {
 				job.State = JobState.Cancelled;
-				pendingJobs.Remove(job);
+				pendingJobs.Remove (job);
 			}
 			
-			if (cancelJobs.Contains(currentJob))
-				CancelCurrentJob();
+			if (cancelJobs.Contains (currentJob))
+				CancelCurrentJob ();
 		}
-		
-		public void CancelCurrentJob () {
-			CancelJob(currentJob);
+
+		public void CancelCurrentJob ()
+		{
+			CancelJob (currentJob);
 		}
-		
-		public void CancelJob(Job job) {
+
+		public void CancelJob (Job job)
+		{
 			if (currentJob != job) 
 				return;
 			
 			if (job is EditionJob) {
 				videoEditor.Progress -= OnProgress;
 				videoEditor.Error -= OnError;
-				videoEditor.Cancel();
+				videoEditor.Cancel ();
 			} else {
 				videoConverter.Progress -= OnProgress;
 				videoConverter.Error -= OnError;
-				videoConverter.Cancel();
+				videoConverter.Cancel ();
 			}
 			job.State = JobState.Cancelled;
-			RemoveCurrentFromPending();
-			UpdateJobsStatus();
-			StartNextJob();
+			RemoveCurrentFromPending ();
+			UpdateJobsStatus ();
+			StartNextJob ();
 		}
-		
-		public void CancelAllJobs() {
+
+		public void CancelAllJobs ()
+		{
 			foreach (Job job in pendingJobs)
 				job.State = JobState.Cancelled;
-			pendingJobs.Clear();
-			CancelJob(currentJob);
+			pendingJobs.Clear ();
+			CancelJob (currentJob);
 		}
-		
-		protected void ManageJobs() {
+
+		protected void ManageJobs ()
+		{
 			guiToolkit.ManageJobs ();
 		}
-		
-		private void LoadConversionJob (ConversionJob job) {
-			videoConverter = multimediaToolkit.GetVideoConverter(job.EncodingSettings.OutputFile);
+
+		private void LoadConversionJob (ConversionJob job)
+		{
+			videoConverter = multimediaToolkit.GetVideoConverter (job.EncodingSettings.OutputFile);
 			videoConverter.Progress += OnProgress;
 			videoConverter.EncodingSettings = job.EncodingSettings;
 			videoConverter.Error += OnError;
 			
-			foreach(MediaFile file in job.InputFiles) {
+			foreach (MediaFile file in job.InputFiles) {
 				videoConverter.AddFile (file.FilePath, file.Duration.MSeconds);
 			}
 			
 			try {
-				videoConverter.Start();
-			} catch(Exception ex) {
-				videoConverter.Cancel();
+				videoConverter.Start ();
+			} catch (Exception ex) {
+				videoConverter.Cancel ();
 				job.State = JobState.Error;
-				Log.Exception(ex);
-				Log.Error("Error rendering job: ", job.Name);
-				guiToolkit.ErrorMessage (Catalog.GetString("Error rendering job: ") + ex.Message);
+				Log.Exception (ex);
+				Log.Error ("Error rendering job: ", job.Name);
+				guiToolkit.ErrorMessage (Catalog.GetString ("Error rendering job: ") + ex.Message);
 			}
 		}
 
-		private void LoadEditionJob(EditionJob job) {
-			videoEditor = multimediaToolkit.GetVideoEditor();
+		private void LoadEditionJob (EditionJob job)
+		{
+			videoEditor = multimediaToolkit.GetVideoEditor ();
 			videoEditor.EncodingSettings = job.EncodingSettings;
 			videoEditor.Progress += OnProgress;
 			videoEditor.Error += OnError;
 			
-			foreach(PlayListPlay segment in job.Playlist) {
-				if (!ProcessSegment(segment))
+			foreach (PlayListPlay segment in job.Playlist) {
+				if (!ProcessSegment (segment))
 					continue;
 			}
 			
 			try {
-				videoEditor.Start();
-			}
-			catch(Exception ex) {
-				videoEditor.Cancel();
+				videoEditor.Start ();
+			} catch (Exception ex) {
+				videoEditor.Cancel ();
 				job.State = JobState.Error;
-				Log.Exception(ex);
-				Log.Error("Error rendering job: ", job.Name);
-				guiToolkit.ErrorMessage (Catalog.GetString("Error rendering job: ") + ex.Message);
+				Log.Exception (ex);
+				Log.Error ("Error rendering job: ", job.Name);
+				guiToolkit.ErrorMessage (Catalog.GetString ("Error rendering job: ") + ex.Message);
 			}
 		}
-		
-		private bool ProcessSegment(PlayListPlay segment) {
+
+		private bool ProcessSegment (PlayListPlay segment)
+		{
 			Time lastTS;
 
-			if(!segment.Valid)
+			if (!segment.Valid)
 				return false;
 			
-			Log.Debug(String.Format("Adding segment with {0} drawings", segment.Drawings.Count));
+			Log.Debug (String.Format ("Adding segment with {0} drawings", segment.Drawings.Count));
 			
 			lastTS = segment.Start;
 			foreach (FrameDrawing fd in segment.Drawings) {
 				string image_path = CreateStillImage (segment.MediaFile.FilePath, fd);
-				videoEditor.AddSegment(segment.MediaFile.FilePath, lastTS.MSeconds,
+				videoEditor.AddSegment (segment.MediaFile.FilePath, lastTS.MSeconds,
 				                       fd.Render.MSeconds - lastTS.MSeconds,
 				                       segment.Rate, segment.Name, segment.MediaFile.HasAudio);
-				videoEditor.AddImageSegment(image_path, fd.Render.MSeconds,
-				                           fd.Pause.MSeconds, segment.Name);
+				videoEditor.AddImageSegment (image_path, fd.Render.MSeconds,
+				                            fd.Pause.MSeconds, segment.Name);
 				lastTS = fd.Render;
 			}
-			videoEditor.AddSegment(segment.MediaFile.FilePath, lastTS.MSeconds,
+			videoEditor.AddSegment (segment.MediaFile.FilePath, lastTS.MSeconds,
 			                       segment.Stop.MSeconds - lastTS.MSeconds,
 			                       segment.Rate, segment.Name, segment.MediaFile.HasAudio);
 			return true;
 		}
-		
-		private string CreateStillImage(string filename, FrameDrawing drawing) {
+
+		private string CreateStillImage (string filename, FrameDrawing drawing)
+		{
 			Image frame, final_image;
-			string path = System.IO.Path.GetTempFileName().Replace(@"\", @"\\");
+			string path = System.IO.Path.GetTempFileName ().Replace (@"\", @"\\");
 			
-			capturer.Open(filename);
+			capturer.Open (filename);
 			capturer.Seek (drawing.Render, true);
-			frame = capturer.GetCurrentFrame();
+			frame = capturer.GetCurrentFrame ();
 			final_image = Drawing.Utils.RenderFrameDrawingToImage (Config.DrawingToolkit, frame, drawing);
-			final_image.Save(path);
+			final_image.Save (path);
 			return path;
 		}
-		
-		private void CloseAndNext() {
-			RemoveCurrentFromPending();
-			UpdateJobsStatus();
-			StartNextJob();
+
+		private void CloseAndNext ()
+		{
+			RemoveCurrentFromPending ();
+			UpdateJobsStatus ();
+			StartNextJob ();
 		}
-		
-		private void ResetGui() {
+
+		private void ResetGui ()
+		{
 			stateBar.ProgressText = "";
 			stateBar.JobRunning = false;
 		}
-		
-		private void StartNextJob() {
+
+		private void StartNextJob ()
+		{
 			if (pendingJobs.Count == 0) {
-				ResetGui();
+				ResetGui ();
 				return;
 			}
 			
-			currentJob = pendingJobs[0];
+			currentJob = pendingJobs [0];
 			if (currentJob is EditionJob) {
-				LoadEditionJob(currentJob as EditionJob);
+				LoadEditionJob (currentJob as EditionJob);
 			} else {
-				LoadConversionJob(currentJob as ConversionJob);
+				LoadConversionJob (currentJob as ConversionJob);
 			}
 		}
-		
-		private void UpdateProgress(float progress) {
+
+		private void UpdateProgress (float progress)
+		{
 			stateBar.Fraction = progress;
-			stateBar.ProgressText = String.Format("{0}... {1:0.0}%", Catalog.GetString("Rendering"),
-			                              progress * 100);
+			stateBar.ProgressText = String.Format ("{0}... {1:0.0}%", Catalog.GetString ("Rendering"),
+			                                      progress * 100);
 		}
-		
-		private void UpdateJobsStatus() {
-			stateBar.Text = String.Format("{0} ({1} {2})", Catalog.GetString("Rendering queue"),
-			                              pendingJobs.Count, Catalog.GetString("Pending"));
+
+		private void UpdateJobsStatus ()
+		{
+			stateBar.Text = String.Format ("{0} ({1} {2})", Catalog.GetString ("Rendering queue"),
+			                              pendingJobs.Count, Catalog.GetString ("Pending"));
 		}
-		
-		private void RemoveCurrentFromPending () {
+
+		private void RemoveCurrentFromPending ()
+		{
 			try {
-				pendingJobs.Remove(currentJob);
-			} catch {}
+				pendingJobs.Remove (currentJob);
+			} catch {
+			}
 		}
-		
-		void HandleError () {
+
+		void HandleError ()
+		{
 			Log.Debug ("Job finished with errors");
-			guiToolkit.ErrorMessage(Catalog.GetString("An error has occurred in the video editor.")
-			                        +Catalog.GetString("Please, try again."));
+			guiToolkit.ErrorMessage (Catalog.GetString ("An error has occurred in the video editor.")
+				+ Catalog.GetString ("Please, try again."));
 			currentJob.State = JobState.Error;
-			CloseAndNext();
+			CloseAndNext ();
 		}
-		
-		private void MainLoopOnProgress (float progress) {
-			if(progress > (float)EditorState.START && progress <= (float)EditorState.FINISHED
-			   && progress > stateBar.Fraction) {
-				UpdateProgress(progress);
+
+		private void MainLoopOnProgress (float progress)
+		{
+			if (progress > (float)EditorState.START && progress <= (float)EditorState.FINISHED
+				&& progress > stateBar.Fraction) {
+				UpdateProgress (progress);
 			}
 
-			if(progress == (float)EditorState.CANCELED) {
+			if (progress == (float)EditorState.CANCELED) {
 				Log.Debug ("Job was cancelled");
 				currentJob.State = JobState.Cancelled;
-				CloseAndNext();
-			}
-
-			else if(progress == (float)EditorState.START) {
+				CloseAndNext ();
+			} else if (progress == (float)EditorState.START) {
 				Log.Debug ("Job started");
 				currentJob.State = JobState.Running;
 				stateBar.JobRunning = true;
-				UpdateProgress(progress);
-			}
-
-			else if(progress == (float)EditorState.FINISHED) {
+				UpdateProgress (progress);
+			} else if (progress == (float)EditorState.FINISHED) {
 				Log.Debug ("Job finished successfully");
 				if (currentJob is EditionJob) {
 					videoEditor.Progress -= OnProgress;
 				} else {
 					videoConverter.Progress -= OnProgress;
 				}
-				UpdateProgress(progress);
+				UpdateProgress (progress);
 				currentJob.State = JobState.Finished;
-				CloseAndNext();
-			}
-
-			else if(progress == (float)EditorState.ERROR) {
+				CloseAndNext ();
+			} else if (progress == (float)EditorState.ERROR) {
 				HandleError ();
 			}
 		}
-		
+
 		protected void OnError (string message)
 		{
 			HandleError ();
 		}
-		
-		protected void OnProgress(float progress)
+
+		protected void OnProgress (float progress)
 		{
 			MainLoopOnProgress (progress);
 		}

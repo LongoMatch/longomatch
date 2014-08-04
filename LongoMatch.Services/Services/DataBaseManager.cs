@@ -20,7 +20,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Mono.Unix;
-
 using LongoMatch.Interfaces;
 using LongoMatch.Interfaces.GUI;
 using LongoMatch.Store;
@@ -34,21 +33,22 @@ namespace LongoMatch.DB
 		IGUIToolkit guiToolkit;
 		IDatabase activeDB;
 		const int SUPPORTED_MAJOR_VERSION = Constants.DB_MAYOR_VERSION;
-		
+
 		public DataBaseManager (string DBDir, IGUIToolkit guiToolkit)
 		{
 			this.DBDir = DBDir;
 			this.guiToolkit = guiToolkit;
 			Config.EventsBroker.ManageDatabasesEvent += HandleManageDatabase;
-			FindDBS();
+			FindDBS ();
 		}
-		
+
 		public Project OpenedProject {
 			get;
 			set;
 		}
-		
-		public void SetActiveByName (string name) {
+
+		public void SetActiveByName (string name)
+		{
 			foreach (IDatabase db in Databases) {
 				if (db.Name == name) {
 					Log.Information ("Selecting active database " + db.Name);
@@ -57,18 +57,19 @@ namespace LongoMatch.DB
 				}
 			}
 			
-			IDatabase newdb = new DataBase(NameToFile (name));
+			IDatabase newdb = new DataBase (NameToFile (name));
 			Log.Information ("Creating new database " + newdb.Name);
 			Databases.Add (newdb);
 			ActiveDB = newdb;
 		}
-		
-		public IDatabase Add (string name) {
-			if (Databases.Where(db => db.Name == name).Count() != 0) {
-				throw new Exception("A database with the same name already exists");
+
+		public IDatabase Add (string name)
+		{
+			if (Databases.Where (db => db.Name == name).Count () != 0) {
+				throw new Exception ("A database with the same name already exists");
 			}
 			try {
-				IDatabase newdb = new DataBase(NameToFile (name));
+				IDatabase newdb = new DataBase (NameToFile (name));
 				Log.Information ("Creating new database " + newdb.Name);
 				Databases.Add (newdb);
 				return newdb;
@@ -77,38 +78,42 @@ namespace LongoMatch.DB
 				return null;
 			}
 		}
-		
-		public bool Delete (IDatabase db) {
+
+		public bool Delete (IDatabase db)
+		{
 			/* Leave at least one database */
 			if (Databases.Count < 2) {
 				return false;
 			}
 			return db.Delete ();
 		}
-		
+
 		public IDatabase ActiveDB {
 			get {
 				return activeDB;
-			} set {
+			}
+			set {
 				activeDB = value;
 				Config.CurrentDatabase = value.Name;
-				Config.Save();
+				Config.Save ();
 			}
 		}
-		
+
 		public List<IDatabase> Databases {
 			get;
 			set;
 		}
-		
-		string NameToFile (string name) {
+
+		string NameToFile (string name)
+		{
 			return Path.Combine (DBDir, name + '.' + Extension);
 		}
-		
-		string FileToName (string path) {
-			return Path.GetFileName(path).Replace("." + Extension, "");
+
+		string FileToName (string path)
+		{
+			return Path.GetFileName (path).Replace ("." + Extension, "");
 		}
-		
+
 		string Extension {
 			get {
 				return "ldb";
@@ -118,15 +123,16 @@ namespace LongoMatch.DB
 		void HandleManageDatabase ()
 		{
 			if (OpenedProject != null) {
-				var msg = Catalog.GetString("Close the current project to open the database manager");
+				var msg = Catalog.GetString ("Close the current project to open the database manager");
 				guiToolkit.ErrorMessage (msg);
 			} else {
 				guiToolkit.OpenDatabasesManager ();
 			}
 		}
-		
-		void FindDBS (){
-			Databases = new List<IDatabase>();
+
+		void FindDBS ()
+		{
+			Databases = new List<IDatabase> ();
 			DirectoryInfo dbdir = new DirectoryInfo (DBDir);
 			
 			foreach (DirectoryInfo subdir in dbdir.GetDirectories()) {
