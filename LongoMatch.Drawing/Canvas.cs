@@ -57,12 +57,21 @@ namespace LongoMatch.Drawing
 		
 		public virtual void Draw (IContext context, Area area) {
 			tk.Context = context;
-			tk.TranslateAndScale (translation, new Point (scaleX, scaleY));
 			tk.Begin ();
-			for (int i=Objects.Count - 1; i >= 0; i--) {
-				ICanvasObject o = Objects[i];
-				if (o.Visible) {
-					o.Draw (tk, area);
+			tk.TranslateAndScale (translation, new Point (scaleX, scaleY));
+			foreach (ICanvasObject co in Objects) {
+				if (co is ICanvasSelectableObject) {
+					if ((co as ICanvasSelectableObject).Selected) {
+						continue;
+					}
+				}
+				if (co.Visible) {
+					co.Draw (tk, area);
+				}
+			}
+			foreach (ICanvasSelectableObject co in Objects.OfType<ICanvasSelectableObject>()) {
+				if (co.Selected && co.Visible) {
+					co.Draw (tk, area);
 				}
 			}
 			tk.End ();
