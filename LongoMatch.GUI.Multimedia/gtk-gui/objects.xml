@@ -1,2 +1,37 @@
 <objects attr-sync="on">
+  <object type="LongoMatch.Gui.CapturerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="CapturerBin Properties">
+        <property name="Capturing" />
+      </itemgroup>
+    </itemgroups>
+    <signals />
+  </object>
+  <object type="LongoMatch.Gui.PlayerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="IPlayerBin Properties">
+        <property name="Sensitive" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="PlayerBin Signals">
+        <signal name="Tick" />
+        <signal name="PlayStateChanged" />
+        <signal name="SeekEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.PlayerCapturerBin" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="IPlayerBin Properties">
+        <property name="Sensitive" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="IPlayerBin Signals">
+        <signal name="PlayStateChanged" />
+        <signal name="SeekEvent" />
+      </itemgroup>
+    </signals>
+  </object>
 </objects>
