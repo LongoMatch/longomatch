@@ -10,7 +10,7 @@ LongoMatch.Core/Store/MediaFile.cs
 LongoMatch.Core/Store/Project.cs
 LongoMatch.Core/Store/Templates/CategoriesTemplate.cs
 LongoMatch.Core/Store/Templates/TeamTemplate.cs
-LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.AnalysisTemplateEditor.cs
+LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Component.GameViewer.cs
@@ -51,6 +51,7 @@ LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.TeamsTemplatesPanel.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Panel.WelcomePanel.cs
 LongoMatch.GUI/gtk-gui/LongoMatch.Gui.Popup.TransparentDrawingArea.cs
 LongoMatch.GUI/Gui/Component/AnalysisTemplateEditor.cs
+LongoMatch.GUI/Gui/Component/ButtonsWidget.cs
 LongoMatch.GUI/Gui/Component/CategoriesTemplateEditor.cs
 LongoMatch.GUI/Gui/Component/CategoryProperties.cs
 LongoMatch.GUI/Gui/Component/GameUnitWidget.cs
