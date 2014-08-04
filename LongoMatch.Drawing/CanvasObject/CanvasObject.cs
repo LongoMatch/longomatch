@@ -15,9 +15,7 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using LongoMatch.Interfaces.Drawing;
-using LongoMatch.Interfaces;
 using LongoMatch.Common;
 using LongoMatch.Store.Drawables;
 
@@ -25,29 +23,37 @@ namespace LongoMatch.Drawing.CanvasObject
 {
 	public abstract class CanvasObject: ICanvasObject
 	{
-		public CanvasObject ()
+		protected CanvasObject ()
 		{
 			Visible = true;
 		}
-		
+
 		public virtual string Description {
 			get;
 			set;
 		}
-		
+
 		public bool Visible {
 			get;
 			set;
 		}
-		
+
 		public virtual bool Selected {
 			set;
 			get;
 		}
-		
+
+		public virtual void ClickPressed (Point p)
+		{
+		}
+
+		public virtual void ClickReleased ()
+		{
+		}
+
 		public abstract void Draw (IDrawingToolkit tk, Area area);
 	}
-	
+
 	public abstract class CanvasDrawableObject<T>: CanvasObject, ICanvasDrawableObject where T: IBlackboardObject
 	{
 		
@@ -56,15 +62,15 @@ namespace LongoMatch.Drawing.CanvasObject
 				return Drawable;
 			}
 			set {
-				Drawable = (T) value;
+				Drawable = (T)value;
 			}
 		}
-		
+
 		public T Drawable {
 			get;
 			set;
 		}
-		
+
 		public override bool Selected {
 			get {
 				return Drawable.Selected;
@@ -73,16 +79,18 @@ namespace LongoMatch.Drawing.CanvasObject
 				Drawable.Selected = value;
 			}
 		}
-		
-		public Selection GetSelection (Point point, double precision) {
+
+		public Selection GetSelection (Point point, double precision)
+		{
 			Selection sel = Drawable.GetSelection (point, precision);
 			if (sel != null) {
 				sel.Drawable = this;
 			}
 			return sel;
 		}
-		
-		public void Move (Selection s, Point p, Point start) {
+
+		public void Move (Selection s, Point p, Point start)
+		{
 			s.Drawable = Drawable;
 			Drawable.Move (s, p, start);
 			s.Drawable = this;
@@ -101,8 +109,9 @@ namespace LongoMatch.Drawing.CanvasObject
 			tk.LineStyle = LineStyle.Normal;
 			tk.DrawCircle (p, 3);
 		}
-		
-		protected void DrawSelectionArea (IDrawingToolkit tk) {
+
+		protected void DrawSelectionArea (IDrawingToolkit tk)
+		{
 			Area area;
 			
 			area = Drawable.Area;
@@ -122,6 +131,5 @@ namespace LongoMatch.Drawing.CanvasObject
 				DrawCenterSelection (tk, p);
 			}
 		}
-
 	}
 }
