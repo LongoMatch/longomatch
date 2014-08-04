@@ -151,6 +151,10 @@ namespace LongoMatch.Store
 
 		#region Public methods
 		
+		public string TagsDescription () {
+			return String.Join ("-", Tags.Select (t => t.Value));
+		}
+
 		public void AddDefaultPositions () {
 			if (Category.TagFieldPosition) {
 				if (FieldPosition == null) {
@@ -210,7 +214,10 @@ namespace LongoMatch.Store
 		
 		public override string ToString()
 		{
-			return Name + "\n" + Start.ToMSecondsString() + " - " + Stop.ToMSecondsString();
+			return 
+				Name + "\n" +
+				TagsDescription () + "\n" +
+				Start.ToMSecondsString() + " - " + Stop.ToMSecondsString();
 		}
 		#endregion
 	}
