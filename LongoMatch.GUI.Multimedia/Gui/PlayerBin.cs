@@ -414,17 +414,21 @@ namespace LongoMatch.Gui
 		}
 
 		void SeekFromTimescale (double pos) {
+			Time seekPos, duration;
+			SeekType seekType;
+
 			if(SegmentLoaded) {
-				Time duration = segment.Stop - segment.Start;
-				Time seekPos = segment.Start + duration * pos;
-				seeker.Seek (SeekType.Accurate, seekPos);
-				timelabel.Text = seekPos.ToMSecondsString() + "/" + duration.ToMSecondsString();
+				duration = segment.Stop - segment.Start;
+				seekPos = segment.Start + duration * pos;
+				seekType = SeekType.Accurate;
 			}
 			else {
-				seeker.Seek (SeekType.Keyframe, length * pos);
-				timelabel.Text = player.CurrentTime.ToMSecondsString () + "/" +
-					length.ToMSecondsString();
+				duration = length;
+				seekPos = length * pos;
+				seekType = SeekType.Keyframe;
 			}
+			seeker.Seek (seekType, seekPos);
+			timelabel.Text = seekPos.ToMSecondsString() + "/" + duration.ToMSecondsString();
 		}
 		
 		void CreatePlayer ()
@@ -453,7 +457,7 @@ namespace LongoMatch.Gui
 			}
 		}
 
-		void StateChanged (bool playing)
+		void DoStateChanged (bool playing)
 		{
 			if (playing) {
 				ReconfigureTimeout (20);
@@ -494,7 +498,7 @@ namespace LongoMatch.Gui
 		
 		void OnStateChanged(bool playing) {
 			Application.Invoke (delegate {
-				StateChanged (playing);});
+				DoStateChanged (playing);});
 		}
 
 		void OnReadyToSeek() {
