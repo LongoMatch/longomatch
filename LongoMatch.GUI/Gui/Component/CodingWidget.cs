@@ -16,10 +16,11 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Collections.Generic;
+using Gtk;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
 using LongoMatch.Common;
-using System.Collections.Generic;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Drawing.Cairo;
 using LongoMatch.Gui.Helpers;
@@ -29,7 +30,6 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class CodingWidget : Gtk.Bin
 	{
-		VideoAnalysisMode analysisMode;
 		TeamTagger teamtagger;
 		Project project;
 		ProjectType projectType;
@@ -39,28 +39,32 @@ namespace LongoMatch.Gui.Component
 		public CodingWidget ()
 		{
 			this.Build ();
+			
+			notebook.ShowTabs = false;
+			notebook.ShowBorder = false;
 
 			autoTaggingMode.Activated += HandleViewToggled;
 			timelineMode.Activated += HandleViewToggled;
 			positionMode.Activated += HandleViewToggled;
 			autoTaggingMode.Active = true;
 			
-			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea1));
+			teamtagger = new TeamTagger (new WidgetWrapper (teamsdrawingarea));
 			teamtagger.HomeColor = Constants.HOME_COLOR;
 			teamtagger.AwayColor = Constants.AWAY_COLOR;
 			teamtagger.SelectionMode = MultiSelectionMode.Multiple;
 			teamtagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
 
-			drawingarea1.HeightRequest = 200;
-			drawingarea1.WidthRequest = 300;
+			teamsdrawingarea.HeightRequest = 200;
+			teamsdrawingarea.WidthRequest = 300;
 			timeline.HeightRequest = 200;
 			playspositionviewer1.HeightRequest = 200;
 			
 			Config.EventsBroker.Tick += HandleTick;
 			Config.EventsBroker.PlaySelected += HandlePlaySelected;
-			Misc.DisableFocus (vbox2);
+			LongoMatch.Gui.Helpers.Misc.DisableFocus (vbox);
 			
-			buttonswidget.NewTagEvent += HandleNewTagEvent;
+			//buttonswidget.NewTagEvent += HandleNewTagEvent;
+			buttonswidget.Mode = TagMode.Free;
 		}
 
 		protected override void OnDestroyed ()
@@ -78,9 +82,9 @@ namespace LongoMatch.Gui.Component
 			this.projectType = projectType;
 			autoTaggingMode.Active = true;
 			buttonswidget.Visible = true;
-			timeline.Visible = false;
-			playspositionviewer1.Visible = false;
-			buttonswidget.Project = project;
+			if (project != null) {
+				buttonswidget.Template = project.Categories;
+			}
 			teamtagger.LoadTeams (project.LocalTeamTemplate, project.VisitorTeamTemplate,
 			                      project.Categories.FieldBackground);
 			if (projectType != ProjectType.FileProject) {
@@ -107,15 +111,21 @@ namespace LongoMatch.Gui.Component
 		}
 
 		public void UpdateCategories () {
-			buttonswidget.Project = project;
+			buttonswidget.Refresh ();
 		}
 		
 		void HandleViewToggled (object sender, EventArgs e)
 		{
-			buttonswidget.Visible = autoTaggingMode.Active;
-			drawingarea1.Visible = buttonswidget.Visible;
-			timeline.Visible = timelineMode.Active;
-			playspositionviewer1.Visible = positionMode.Active;
+			if (!(sender as RadioAction).Active) {
+				return;
+			}
+			if (autoTaggingMode.Active) {
+				notebook.Page = 0;
+			} else if (timelineMode.Active) {
+				notebook.Page = 1;
+			} else if (positionMode.Active) {
+				notebook.CurrentPage = 2;
+			}
 		}
 		
 		void HandlePlaySelected (Play play)

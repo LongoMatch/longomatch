@@ -29,13 +29,14 @@ namespace LongoMatch.Drawing.CanvasObject
 		public CounterObject ()
 		{
 		}
-		
+
 		public CounterObject (Counter counter)
 		{
 			Drawable = counter;
 		}
-		
-		public override void Draw (IDrawingToolkit tk, Area area) {
+
+		public override void Draw (IDrawingToolkit tk, Area area)
+		{
 			Area darea;
 			
 			darea = Drawable.Area;
@@ -46,7 +47,7 @@ namespace LongoMatch.Drawing.CanvasObject
 			tk.DrawEllipse (Drawable.Center, Drawable.AxisX, Drawable.AxisY);
 			tk.StrokeColor = Drawable.TextColor;
 			tk.DrawText (darea.Start, darea.Width, darea.Height,
-			             Drawable.Count.ToString());
+			             Drawable.Count.ToString ());
 			DrawSelectionArea (tk);
 			tk.End ();
 		}

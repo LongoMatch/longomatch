@@ -28,10 +28,6 @@ namespace LongoMatch.Common
 	{
 	
 		public event NewTagHandler NewTagEvent;
-		public event NewTagAtPosHandler NewTagAtPosEvent;
-		public event NewTagStartHandler NewTagStartEvent;
-		public event NewTagStopHandler NewTagStopEvent;
-		public event NewTagCancelHandler NewTagCancelEvent;
 		public event PlaysDeletedHandler PlaysDeleted;
 		public event PlaySelectedHandler PlaySelected;
 		public event PlayCategoryChangedHandler PlayCategoryChanged;
@@ -96,32 +92,12 @@ namespace LongoMatch.Common
 		{
 		}
 		
-		public void EmitNewTagAtPos(Category category, Time pos) {
-			if (NewTagAtPosEvent != null)
-				NewTagAtPosEvent(category, pos);
-		}
-
-		public void EmitNewTag(Category category, List<Player> players = null) {
+		public void EmitNewTag (TaggerButton tagger, List<Player> players = null, List<Tag> tags = null,
+		                        Time start = null, Time stop = null) {
 			if (NewTagEvent != null)
-				NewTagEvent(category, players);
+				NewTagEvent (tagger, players, tags, start, stop);
 		}
 
-		public void EmitNewTagStart(Category category) {
-			if (NewTagStartEvent != null)
-				NewTagStartEvent (category);
-		}
-
-		public void EmitNewTagStop(Category category) {
-			if (NewTagStopEvent != null)
-				NewTagStopEvent (category);
-		}
-		
-		public void EmitNewTagCancel(Category category) {
-			if (NewTagCancelEvent != null)
-				NewTagCancelEvent (category);
-		}
-		
-		
 		public void EmitPlaysDeleted(List<Play> plays)
 		{
 			if (PlaysDeleted != null)

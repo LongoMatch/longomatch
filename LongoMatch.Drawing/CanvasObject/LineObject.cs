@@ -28,13 +28,14 @@ namespace LongoMatch.Drawing.CanvasObject
 		public LineObject ()
 		{
 		}
-		
+
 		public LineObject (Line line)
 		{
 			Drawable = line;
 		}
-		
-		public override void Draw (IDrawingToolkit tk, Area area) {
+
+		public override void Draw (IDrawingToolkit tk, Area area)
+		{
 			tk.Begin ();
 			tk.FillColor = Drawable.FillColor;
 			tk.StrokeColor = Drawable.StrokeColor;
@@ -43,18 +44,18 @@ namespace LongoMatch.Drawing.CanvasObject
 			tk.DrawLine (Drawable.Start, Drawable.Stop);
 			tk.LineStyle = LineStyle.Normal;
 			if (Drawable.Type == LineType.Arrow ||
-			    Drawable.Type == LineType.DoubleArrow) {
+				Drawable.Type == LineType.DoubleArrow) {
 				tk.DrawArrow (Drawable.Start, Drawable.Stop, 10, 0.3, true);
 			}
 			if (Drawable.Type == LineType.DoubleArrow) {
 				tk.DrawArrow (Drawable.Stop, Drawable.Start, 10, 0.3, true);
 			}
 			if (Drawable.Type == LineType.Dot ||
-			    Drawable.Type == LineType.DoubleDot) {
-			    tk.DrawPoint (Drawable.Stop);
+				Drawable.Type == LineType.DoubleDot) {
+				tk.DrawPoint (Drawable.Stop);
 			}
 			if (Drawable.Type == LineType.DoubleDot) {
-			    tk.DrawPoint (Drawable.Start);
+				tk.DrawPoint (Drawable.Start);
 			}
 			
 			if (Selected) {
@@ -63,7 +64,6 @@ namespace LongoMatch.Drawing.CanvasObject
 			}
 			tk.End ();
 		}
-
 	}
 }
 

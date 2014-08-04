@@ -17,10 +17,11 @@
 //
 using System;
 using LongoMatch.Common;
+using LongoMatch.Interfaces;
 
 namespace LongoMatch.Store
 {
-	public class PenaltyCard
+	public class PenaltyCard: EventButton
 	{
 		public PenaltyCard ()
 		{
@@ -33,21 +34,10 @@ namespace LongoMatch.Store
 			Shape = shape;
 		}
 
-		public string Name {
-			get;
-			set;
-		}
-		
-		public Color Color {
-			get;
-			set;
-		}
-		
 		public CardShape Shape {
 			get;
 			set;
 		}
-		
 	}
 }
 

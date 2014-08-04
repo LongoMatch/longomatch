@@ -218,10 +218,9 @@ namespace LongoMatch.Store
 		/// A <see cref="System.Int32"/>: category index
 		/// </param>
 		public void RemoveCategory(Category category) {
-			if(Categories.List.Count == 1)
+			if(Categories.CategoriesList.Count == 1)
 				throw new Exception("You can't remove the last Category");
 			Categories.List.Remove(category);
-
 			Timeline.RemoveAll(p => p.Category.ID == category.ID);
 		}
 		

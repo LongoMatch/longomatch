@@ -10,14 +10,19 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.RadioAction autoTaggingMode;
 		private global::Gtk.Action zoomFitAction;
 		private global::Gtk.RadioAction convertAction;
-		private global::Gtk.VBox vbox2;
+		private global::Gtk.VBox vbox;
 		private global::Gtk.HBox hbox1;
 		private global::Gtk.Toolbar codingtoolbar;
-		private global::Gtk.HBox hbox2;
-		private global::Gtk.DrawingArea drawingarea1;
+		private global::Gtk.Notebook notebook;
+		private global::Gtk.HPaned hpaned1;
+		private global::Gtk.DrawingArea teamsdrawingarea;
+		private global::Gtk.HBox hbox5;
 		private global::LongoMatch.Gui.Component.ButtonsWidget buttonswidget;
+		private global::Gtk.Label label18;
 		private global::LongoMatch.Gui.Component.Timeline timeline;
+		private global::Gtk.Label label21;
 		private global::LongoMatch.Gui.Component.PlaysPositionViewer playspositionviewer1;
+		private global::Gtk.Label label19;
 
 		protected virtual void Build ()
 		{
@@ -45,10 +50,10 @@ namespace LongoMatch.Gui.Component
 			this.UIManager.InsertActionGroup (w3, 1);
 			this.Name = "LongoMatch.Gui.Component.CodingWidget";
 			// Container child LongoMatch.Gui.Component.CodingWidget.Gtk.Container+ContainerChild
-			this.vbox2 = new global::Gtk.VBox ();
-			this.vbox2.Name = "vbox2";
-			this.vbox2.Spacing = 6;
-			// Container child vbox2.Gtk.Box+BoxChild
+			this.vbox = new global::Gtk.VBox ();
+			this.vbox.Name = "vbox";
+			this.vbox.Spacing = 6;
+			// Container child vbox.Gtk.Box+BoxChild
 			this.hbox1 = new global::Gtk.HBox ();
 			this.hbox1.Name = "hbox1";
 			this.hbox1.Spacing = 6;
@@ -62,46 +67,77 @@ namespace LongoMatch.Gui.Component
 			w4.Position = 0;
 			w4.Expand = false;
 			w4.Fill = false;
-			this.vbox2.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox1]));
+			this.vbox.Add (this.hbox1);
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox [this.hbox1]));
 			w5.Position = 0;
 			w5.Expand = false;
 			w5.Fill = false;
-			// Container child vbox2.Gtk.Box+BoxChild
-			this.hbox2 = new global::Gtk.HBox ();
-			this.hbox2.Name = "hbox2";
-			this.hbox2.Spacing = 6;
-			// Container child hbox2.Gtk.Box+BoxChild
-			this.drawingarea1 = new global::Gtk.DrawingArea ();
-			this.drawingarea1.Name = "drawingarea1";
-			this.hbox2.Add (this.drawingarea1);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.drawingarea1]));
-			w6.Position = 0;
-			// Container child hbox2.Gtk.Box+BoxChild
+			// Container child vbox.Gtk.Box+BoxChild
+			this.notebook = new global::Gtk.Notebook ();
+			this.notebook.CanFocus = true;
+			this.notebook.Name = "notebook";
+			this.notebook.CurrentPage = 2;
+			// Container child notebook.Gtk.Notebook+NotebookChild
+			this.hpaned1 = new global::Gtk.HPaned ();
+			this.hpaned1.CanFocus = true;
+			this.hpaned1.Name = "hpaned1";
+			this.hpaned1.Position = 276;
+			// Container child hpaned1.Gtk.Paned+PanedChild
+			this.teamsdrawingarea = new global::Gtk.DrawingArea ();
+			this.teamsdrawingarea.Name = "teamsdrawingarea";
+			this.hpaned1.Add (this.teamsdrawingarea);
+			global::Gtk.Paned.PanedChild w6 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.teamsdrawingarea]));
+			w6.Resize = false;
+			// Container child hpaned1.Gtk.Paned+PanedChild
+			this.hbox5 = new global::Gtk.HBox ();
+			this.hbox5.Name = "hbox5";
+			this.hbox5.Spacing = 6;
+			// Container child hbox5.Gtk.Box+BoxChild
 			this.buttonswidget = new global::LongoMatch.Gui.Component.ButtonsWidget ();
 			this.buttonswidget.Events = ((global::Gdk.EventMask)(256));
 			this.buttonswidget.Name = "buttonswidget";
-			this.hbox2.Add (this.buttonswidget);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.buttonswidget]));
-			w7.Position = 1;
-			// Container child hbox2.Gtk.Box+BoxChild
+			this.buttonswidget.Edited = false;
+			this.hbox5.Add (this.buttonswidget);
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox5 [this.buttonswidget]));
+			w7.Position = 0;
+			this.hpaned1.Add (this.hbox5);
+			this.notebook.Add (this.hpaned1);
+			// Notebook tab
+			this.label18 = new global::Gtk.Label ();
+			this.label18.Name = "label18";
+			this.label18.LabelProp = global::Mono.Unix.Catalog.GetString ("page2");
+			this.notebook.SetTabLabel (this.hpaned1, this.label18);
+			this.label18.ShowAll ();
+			// Container child notebook.Gtk.Notebook+NotebookChild
 			this.timeline = new global::LongoMatch.Gui.Component.Timeline ();
 			this.timeline.Events = ((global::Gdk.EventMask)(256));
 			this.timeline.Name = "timeline";
-			this.hbox2.Add (this.timeline);
-			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.timeline]));
-			w8.Position = 2;
-			// Container child hbox2.Gtk.Box+BoxChild
+			this.notebook.Add (this.timeline);
+			global::Gtk.Notebook.NotebookChild w10 = ((global::Gtk.Notebook.NotebookChild)(this.notebook [this.timeline]));
+			w10.Position = 1;
+			// Notebook tab
+			this.label21 = new global::Gtk.Label ();
+			this.label21.Name = "label21";
+			this.label21.LabelProp = global::Mono.Unix.Catalog.GetString ("page1");
+			this.notebook.SetTabLabel (this.timeline, this.label21);
+			this.label21.ShowAll ();
+			// Container child notebook.Gtk.Notebook+NotebookChild
 			this.playspositionviewer1 = new global::LongoMatch.Gui.Component.PlaysPositionViewer ();
 			this.playspositionviewer1.Events = ((global::Gdk.EventMask)(256));
 			this.playspositionviewer1.Name = "playspositionviewer1";
-			this.hbox2.Add (this.playspositionviewer1);
-			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.playspositionviewer1]));
-			w9.Position = 3;
-			this.vbox2.Add (this.hbox2);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox2]));
-			w10.Position = 1;
-			this.Add (this.vbox2);
+			this.notebook.Add (this.playspositionviewer1);
+			global::Gtk.Notebook.NotebookChild w11 = ((global::Gtk.Notebook.NotebookChild)(this.notebook [this.playspositionviewer1]));
+			w11.Position = 2;
+			// Notebook tab
+			this.label19 = new global::Gtk.Label ();
+			this.label19.Name = "label19";
+			this.label19.LabelProp = global::Mono.Unix.Catalog.GetString ("page3");
+			this.notebook.SetTabLabel (this.playspositionviewer1, this.label19);
+			this.label19.ShowAll ();
+			this.vbox.Add (this.notebook);
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox [this.notebook]));
+			w12.Position = 1;
+			this.Add (this.vbox);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}

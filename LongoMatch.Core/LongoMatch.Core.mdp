@@ -143,6 +143,8 @@
     <File subtype="Code" buildaction="Compile" name="Store/TaggerButton.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/TagButton.cs" />
     <File subtype="Code" buildaction="Compile" name="Interfaces/Multimedia/IDiscoverer.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/TaggerButton.cs" />
+    <File subtype="Code" buildaction="Compile" name="Store/TagButton.cs" />
   </Contents>
   <References>
     <ProjectReference type="Package" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

@@ -47,7 +47,7 @@ namespace LongoMatch.Gui.Component
 		protected override void FillTree () {
 			store = new TreeStore (typeof (object), typeof (bool));
 			
-			foreach (Category cat in  categories.List) {
+			foreach (Category cat in  categories.CategoriesList) {
 				TreeIter catIter;
 				
 				catIter = store.AppendValues(cat, filter.VisibleCategories.Contains(cat));

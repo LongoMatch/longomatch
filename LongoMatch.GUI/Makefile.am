@@ -5,9 +5,7 @@ LINK = $(REF_DEP_LONGOMATCH_GUI)
 
 SOURCES = Gui/Cairo.cs \
 	Gui/Component/AnalysisComponent.cs \
-	Gui/Component/AnalysisTemplateEditor.cs \
 	Gui/Component/BackgroundWidget.cs \
-	Gui/Component/ButtonTagger.cs \
 	Gui/Component/ButtonsWidget.cs \
 	Gui/Component/CategoryProperties.cs \
 	Gui/Component/CodingWidget.cs \
@@ -78,9 +76,7 @@ SOURCES = Gui/Cairo.cs \
 	Gui/TreeView/PlaysTreeView.cs \
 	Gui/TreeView/RenderingJobsTreeView.cs \
 	gtk-gui/LongoMatch.Gui.Component.AnalysisComponent.cs \
-	gtk-gui/LongoMatch.Gui.Component.AnalysisTemplateEditor.cs \
 	gtk-gui/LongoMatch.Gui.Component.BackgroundWidget.cs \
-	gtk-gui/LongoMatch.Gui.Component.ButtonTagger.cs \
 	gtk-gui/LongoMatch.Gui.Component.ButtonsWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs \
 	gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs \

@@ -29,12 +29,11 @@ namespace LongoMatch.Drawing
 		public const int CATEGORY_H_SPACE = 5;
 		public const int TIMER_HEIGHT = 20;
 		public const int TIMERULE_HEIGHT = 30;
-
 		public const int TAGGER_POINT_SIZE = 5;
 		public const int TAGGER_LINE_WIDTH = 3;
 		public static Color TAGGER_POINT_COLOR = Color.Blue1;
 		public static Color TAGGER_SELECTION_COLOR = Color.Grey1;
-
+		public const int CATEGORY_TPL_GRID = 10;
 		public const double TIMELINE_ACCURACY = 5;
 		public static Color TEXT_COLOR = Color.Black;
 		public static Color TIMELINE_LINE_COLOR = Color.Black;
@@ -49,9 +48,7 @@ namespace LongoMatch.Drawing
 		public static Color TIMER_SELECTED_COLOR = Color.Red1;
 		public static Color SELECTION_INDICATOR_COLOR = Color.Blue1;
 		public static Color SELECTION_AREA_COLOR = Color.Grey1;
-
 		public const int TIMELINE_LINE_WIDTH = 1;
-		
 	}
 }
 

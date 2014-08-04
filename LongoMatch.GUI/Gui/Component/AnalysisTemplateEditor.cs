@@ -31,33 +31,18 @@ namespace LongoMatch.Gui.Component
 	{
 		bool edited;
 		Categories template;
-		Category selectedCategory;
 
 		public AnalysisTemplateEditor ()
 		{
 			this.Build ();
-			buttonswidget.Mode = LongoMatch.Common.TagMode.Predifined;
-			buttonswidget.NewTagEvent += HandleCategorySelected;
-			categoryproperties.Visible = false;
+			buttonswidget.Mode = TagMode.Edit;
 			savebutton.Clicked += HandleSaveClicked;
-			deletebutton.Sensitive = false;
-			newbutton.Sensitive = false;
-			newbutton.Clicked += HandleNewClicked;
-			deletebutton.Clicked += HandleDeleteClicked;
-			fieldeventbox.ButtonPressEvent += HandleFieldButtonPressEvent;
-			hfieldeventbox.ButtonPressEvent += HandleFieldButtonPressEvent;
-			goaleventbox.ButtonPressEvent += HandleFieldButtonPressEvent;
 		}
 
 		public Categories Template {
 			set {
 				template = value;
-				categoryproperties.Template = value;
-				newbutton.Sensitive = true;
-				buttonswidget.UpdateCategories (value);
-				fieldimage.Pixbuf = value.FieldBackground.Scale (50, 50).Value;
-				hfieldimage.Pixbuf = value.HalfFieldBackground.Scale (50, 50).Value;
-				goalimage.Pixbuf = value.GoalBackground.Scale (50, 50).Value;
+				buttonswidget.Template = value;
 				Edited = false;
 			}
 		}
@@ -67,34 +52,8 @@ namespace LongoMatch.Gui.Component
 				edited = value;
 			}
 			get {
-				return edited;
+				return buttonswidget.Edited;
 			}
-		}
-		
-		void HandleDeleteClicked (object sender, EventArgs e)
-		{
-			string msg = Catalog.GetString ("Do you want to delete: ") +
-				selectedCategory.Name + "?";
-			if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
-				template.List.Remove (selectedCategory);
-				buttonswidget.UpdateCategories (template);
-				Edited = true;
-			}
-		}
-
-		void HandleNewClicked (object sender, EventArgs e)
-		{
-			template.AddDefaultItem (template.List.Count);
-			buttonswidget.UpdateCategories (template);
-			Edited = true;
-		}
-		
-		void HandleCategorySelected (Category category, List<Player> players)
-		{
-			categoryproperties.Visible = true;
-			deletebutton.Sensitive = true;
-			categoryproperties.Category = category;
-			selectedCategory = category;
 		}
 		
 		void HandleSaveClicked (object sender, EventArgs e)
@@ -104,29 +63,6 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 		
-		void HandleFieldButtonPressEvent (object o, Gtk.ButtonPressEventArgs args)
-		{
-			LongoMatch.Common.Image background;
-			Pixbuf pix = Helpers.Misc.OpenImage (this);
-			
-			if (pix == null) {
-				return;
-			}
-			
-			background = new LongoMatch.Common.Image (pix);
-			background.ScaleInplace (Constants.MAX_BACKGROUND_WIDTH,
-			                         Constants.MAX_BACKGROUND_HEIGHT);
-			if (o == fieldeventbox) {
-				template.FieldBackground = background;
-				fieldimage.Pixbuf = background.Scale (50, 50).Value;
-			} else if (o == hfieldeventbox) {
-				template.HalfFieldBackground = background;
-				hfieldimage.Pixbuf = background.Scale (50, 50).Value;
-			} else if (o == goaleventbox) {
-				template.GoalBackground = background;
-				goalimage.Pixbuf = background.Scale (50, 50).Value;
-			}
-		}
 	}
 }
 

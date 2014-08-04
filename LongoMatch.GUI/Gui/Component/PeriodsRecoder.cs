@@ -58,7 +58,7 @@ namespace LongoMatch.Gui.Component
 		void HandleStopClicked (object sender, EventArgs e)
 		{
 			GLib.Source.Remove (timeoutID);
-			Period.Stop (CurrentTime);
+			Period.StopTimer (CurrentTime);
 			
 			startbutton.Visible = false;
 			stopbutton.Visible = true;
@@ -76,7 +76,7 @@ namespace LongoMatch.Gui.Component
 			} else {
 				periodName = (currentPeriod + 1).ToString ();
 			}
-			Period.Start (new Time (0), periodName);
+			Period.StartTimer (new Time (0), periodName);
 			currentPeriodStart = DateTime.UtcNow;
 			timeoutID = GLib.Timeout.Add (200, UpdateTime);
 		}

@@ -41,7 +41,6 @@ namespace Tests.Core
 			cat.Color = new Color (255, 0, 0);
  			cat.HotKey = new HotKey {Key=2, Modifier=4};
 			cat.Name = "test";
-			cat.Position = 2;
 			cat.SortMethod = SortMethodType.SortByDuration;
 			cat.Start = new Time (3000);
 			cat.Stop = new Time (4000);

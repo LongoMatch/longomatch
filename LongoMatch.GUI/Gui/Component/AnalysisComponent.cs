@@ -37,15 +37,17 @@ namespace LongoMatch.Gui.Component
 		ProjectType projectType;
 		bool detachedPlayer;
 		Gtk.Window playerWindow;
+		PlaysSelectionWidget playsSelection;
+		PlayerCapturerBin playercapturer;
+		CodingWidget codingwidget;
+		HBox videowidgetsbox;
 		
 		public AnalysisComponent ()
 		{
 			this.Build ();
 			projectType = ProjectType.None;
-			playsSelection.Visible = true;
 			detachedPlayer = false;
 
-			playercapturer.Mode = PlayerCapturerBin.PlayerOperationMode.Player;
 			ConnectSignals();
 		}
 		

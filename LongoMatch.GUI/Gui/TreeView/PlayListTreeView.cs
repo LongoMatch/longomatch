@@ -87,7 +87,7 @@ namespace LongoMatch.Gui.Component
 		{
 		}
 
-		protected override bool OnButtonPressEvent(EventButton evnt)
+		protected override bool OnButtonPressEvent(Gdk.EventButton evnt)
 		{
 			if((evnt.Type == EventType.ButtonPress) && (evnt.Button == 3))
 			{
@@ -148,7 +148,6 @@ namespace LongoMatch.Gui.Component
 			Model.GetIter(out selectedIter, Selection.GetSelectedRows()[0]);
 			selectedPlay = (PlayListPlay) Model.GetValue(selectedIter, 0);
 			preDragPos = Model.GetPath(selectedIter).Indices[0];
-			Console.WriteLine (Model.GetPath(selectedIter));
 			base.OnDragBegin (context);
 		}
 		

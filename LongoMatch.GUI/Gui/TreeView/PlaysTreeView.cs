@@ -35,7 +35,7 @@ namespace LongoMatch.Gui.Component
 	public class PlaysTreeView : ListTreeViewBase
 	{
 		
-		public event TimeNodeChangedHandler EditProperties;
+		public event CategoryChangedHandler EditProperties;
 
 		//Categories menu
 		Menu categoriesMenu;
@@ -112,7 +112,7 @@ namespace LongoMatch.Gui.Component
 			sortByStop.Activated += OnSortActivated;
 			sortByDuration.Activated += OnSortActivated;
 			editProp.Activated += delegate(object sender, EventArgs e) {
-				EditProperties(GetValueFromPath(Selection.GetSelectedRows()[0]) as Category, null);
+				EditProperties(GetValueFromPath(Selection.GetSelectedRows()[0]) as Category);
 			};
 		}
 
@@ -218,7 +218,7 @@ namespace LongoMatch.Gui.Component
 			Model.SetSortFunc(0, SortFunction);
 		}
 
-		override protected bool OnButtonPressEvent(EventButton evnt)
+		override protected bool OnButtonPressEvent(Gdk.EventButton evnt)
 		{
 			TreePath[] paths = Selection.GetSelectedRows();
 
@@ -234,11 +234,10 @@ namespace LongoMatch.Gui.Component
 
 				if(paths.Length == 1) {
 					TimeNode selectedTimeNode = GetValueFromPath(paths[0]) as TimeNode;
-					if(selectedTimeNode is Play) {
+					if (selectedTimeNode != null) {
 						ShowMenu ();
-					}
-					else {
-						SetupSortMenu((selectedTimeNode as Category).SortMethod);
+					} else {
+						SetupSortMenu((GetValueFromPath(paths[0]) as Category).SortMethod);
 						categoriesMenu.Popup();
 					}
 				}

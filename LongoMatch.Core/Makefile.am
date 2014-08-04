@@ -95,6 +95,10 @@ SOURCES = Common/Area.cs \
 	Store/Score.cs \
 	Store/ScoreEvent.cs \
 	Store/Tag.cs \
+	Store/TagButton.cs \
+	Store/TagButton.cs \
+	Store/TaggerButton.cs \
+	Store/TaggerButton.cs \
 	Store/Templates/CategoriesTemplate.cs \
 	Store/Templates/TeamTemplate.cs \
 	Store/Time.cs \

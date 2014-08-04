@@ -34,6 +34,7 @@ namespace LongoMatch.Drawing.Widgets
 		public event ShowDrawToolMenuHandler ShowMenuEvent;
 		public event ConfigureDrawingObjectHandler ConfigureObjectEvent;
 		public event DrawableChangedHandler DrawableChangedEvent;
+
 		DrawTool tool;
 		FrameDrawing drawing;
 		ISurface backbuffer;
@@ -48,22 +49,23 @@ namespace LongoMatch.Drawing.Widgets
 			LineStyle = LineStyle.Normal;
 			LineType = LineType.Arrow;
 			tool = DrawTool.Selection;
-			
 		}
 
-		public void Dispose(){
-			Dispose(true);
-			GC.SuppressFinalize(this);
+		public void Dispose ()
+		{
+			Dispose (true);
+			GC.SuppressFinalize (this);
 		}
 
-		protected virtual void Dispose(bool disposing){
+		protected virtual void Dispose (bool disposing)
+		{
 			if (disposing) {
 				if (backbuffer != null)
-					backbuffer.Dispose();
-					backbuffer = null;
+					backbuffer.Dispose ();
+				backbuffer = null;
 			}
-		}	
-		
+		}
+
 		public FrameDrawing Drawing {
 			set {
 				Clear (false);
@@ -71,7 +73,7 @@ namespace LongoMatch.Drawing.Widgets
 				foreach (IBlackboardObject d in value.Drawables) {
 					Add (d);
 				}
-				if (backbuffer !=  null) {
+				if (backbuffer != null) {
 					backbuffer.Dispose ();
 				}
 				backbuffer = tk.CreateSurface (Background.Width, Background.Height,
@@ -83,12 +85,12 @@ namespace LongoMatch.Drawing.Widgets
 			get;
 			set;
 		}
-		
+
 		public Color TextColor {
 			get;
 			set;
 		}
-		
+
 		public Color TextBackgroundColor {
 			get;
 			set;
@@ -98,7 +100,7 @@ namespace LongoMatch.Drawing.Widgets
 			get;
 			set;
 		}
-		
+
 		public LineType LineType {
 			get;
 			set;
@@ -108,7 +110,7 @@ namespace LongoMatch.Drawing.Widgets
 			get;
 			set;
 		}
-		
+
 		public DrawTool Tool {
 			get {
 				return tool;
@@ -118,8 +120,9 @@ namespace LongoMatch.Drawing.Widgets
 				widget.SetCursorForTool (tool);
 			}
 		}
-		
-		public void DeleteSelection () {
+
+		public void DeleteSelection ()
+		{
 			foreach (ICanvasDrawableObject o in Selections.Select (s => s.Drawable)) {
 				Objects.Remove (o);
 				drawing.Drawables.Remove ((Drawable)o.IDrawableObject);
@@ -128,8 +131,9 @@ namespace LongoMatch.Drawing.Widgets
 			UpdateCounters ();
 			widget.ReDraw ();
 		}
-		
-		public void Clear (bool resetDrawing = true) {
+
+		public void Clear (bool resetDrawing = true)
+		{
 			ClearSelection ();
 			Objects.Clear ();
 			if (drawing != null && resetDrawing) {
@@ -140,28 +144,32 @@ namespace LongoMatch.Drawing.Widgets
 					tk.Context = c;
 					tk.Clear (new Color (0, 0, 0, 0));
 					tk.Context = null;
-				};
+				}
+				;
 			}
 			widget.ReDraw ();
 		}
-		
-		public Image Save () {
+
+		public Image Save ()
+		{
 			ClearSelection ();
-			drawing.Freehand = backbuffer.Copy();
+			drawing.Freehand = backbuffer.Copy ();
 			return tk.Copy (this, Background.Width, Background.Height);
 		}
 
-		public void Save (string filename) {
+		public void Save (string filename)
+		{
 			ClearSelection ();
 			tk.Save (this, Background.Width, Background.Height, filename);
 		}
-		
-		ICanvasSelectableObject Add (IBlackboardObject drawable) {
+
+		ICanvasSelectableObject Add (IBlackboardObject drawable)
+		{
 			ICanvasSelectableObject cso = Utils.CanvasFromDrawableObject (drawable);
 			Objects.Add (cso);
 			return cso;
 		}
-		
+
 		protected override void StartMove (Selection sel)
 		{
 			Drawable drawable = null;
@@ -174,7 +182,7 @@ namespace LongoMatch.Drawing.Widgets
 			switch (Tool) {
 			case DrawTool.Line:
 				drawable = new Line (start, new Point (start.X + 1, start.Y + 1),
-				                   LineType, LineStyle);
+				                     LineType, LineStyle);
 				drawable.FillColor = Color;
 				pos = SelectionPosition.LineStop;
 				break;
@@ -190,37 +198,38 @@ namespace LongoMatch.Drawing.Widgets
 				break;
 			case DrawTool.CircleArea:
 				drawable = new Ellipse (start, 2, 2);
-				drawable.FillColor = Color.Copy();
+				drawable.FillColor = Color.Copy ();
 				drawable.FillColor.A = byte.MaxValue / 2;
 				break;
 			case DrawTool.RectangleArea:
 				drawable = new Rectangle (start, 2, 2);
-				drawable.FillColor = Color.Copy();
+				drawable.FillColor = Color.Copy ();
 				drawable.FillColor.A = byte.MaxValue / 2;
 				break;
 			case DrawTool.Counter:
 				drawable = new Counter (start, 10, 10, 0);
-				drawable.FillColor = Color.Copy();
+				drawable.FillColor = Color.Copy ();
 				drawable.FillColor.A = byte.MaxValue / 2;
 				(drawable as Counter).TextColor = Color.Grey2;
 				resize = false;
 				break;
-			case DrawTool.Text: {
-				Text text = new Text (start, 1, 20, "");
-				if (ConfigureObjectEvent != null) {
-					ConfigureObjectEvent (text);
+			case DrawTool.Text:
+				{
+					Text text = new Text (start, 1, 20, "");
+					if (ConfigureObjectEvent != null) {
+						ConfigureObjectEvent (text);
+					}
+					if (text.Value == null) {
+						return;
+					}
+					text.TopRight.X += text.Value.Length * 12;
+					text.BottomRight.X += text.Value.Length * 12;
+					text.TextColor = TextColor.Copy ();
+					text.FillColor = text.StrokeColor = TextBackgroundColor.Copy ();
+					resize = copycolor = false;
+					drawable = text;
+					break;
 				}
-				if (text.Value == null) {
-					return;
-				}
-				text.TopRight.X += text.Value.Length * 12;
-				text.BottomRight.X += text.Value.Length * 12;
-				text.TextColor = TextColor.Copy();
-				text.FillColor = text.StrokeColor = TextBackgroundColor.Copy();
-				resize = copycolor = false;
-				drawable = text;
-				break;
-			}
 			case DrawTool.Pen: 
 			case DrawTool.Eraser: 
 				handdrawing = true;
@@ -246,16 +255,16 @@ namespace LongoMatch.Drawing.Widgets
 				widget.ReDraw ();
 			}
 		}
-		
+
 		protected override void StopMove ()
 		{
-			Selection sel = Selections.FirstOrDefault();
+			Selection sel = Selections.FirstOrDefault ();
 			if (sel != null) {
-				(sel.Drawable as ICanvasDrawableObject).IDrawableObject.Reorder();
+				(sel.Drawable as ICanvasDrawableObject).IDrawableObject.Reorder ();
 			}
 			handdrawing = false;
 		}
-		
+
 		protected override void ShowMenu (Point coords)
 		{
 			Selection sel = Selections.FirstOrDefault ();
@@ -264,19 +273,20 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			
 		}
-		
+
 		protected override void SelectionChanged (System.Collections.Generic.List<Selection> sel)
 		{
 			if (DrawableChangedEvent != null) {
 				if (sel != null && sel.Count > 0) {
-					DrawableChangedEvent ((sel[0].Drawable as ICanvasDrawableObject).IDrawableObject);
+					DrawableChangedEvent ((sel [0].Drawable as ICanvasDrawableObject).IDrawableObject);
 				} else {
 					DrawableChangedEvent (null);
 				}
 			}
 		}
 
-		void UpdateCounters () {
+		void UpdateCounters ()
+		{
 			int index = 1;
 			
 			foreach (IBlackboardObject bo in
@@ -287,7 +297,7 @@ namespace LongoMatch.Drawing.Widgets
 				}
 			}
 		}
-		
+
 		protected override void CursorMoved (Point coords)
 		{
 			if (handdrawing) {
@@ -306,10 +316,10 @@ namespace LongoMatch.Drawing.Widgets
 					tk.DrawLine (start, coords);
 					tk.End ();
 				}
-				widget.ReDraw();
+				widget.ReDraw ();
 			}
 		}
-		
+
 		public override void Draw (IContext context, Area area)
 		{
 			tk.Context = context;
@@ -321,6 +331,7 @@ namespace LongoMatch.Drawing.Widgets
 			if (backbuffer != null) {
 				tk.Context = context;
 				tk.Begin ();
+				tk.TranslateAndScale (translation, new Point (scaleX, scaleY));
 				tk.DrawSurface (backbuffer);
 				tk.End ();
 			}

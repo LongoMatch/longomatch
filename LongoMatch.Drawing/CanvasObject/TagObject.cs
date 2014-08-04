@@ -16,9 +16,40 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using LongoMatch.Interfaces.Drawing;
+using LongoMatch.Common;
+using LongoMatch.Interfaces;
+using LongoMatch.Store;
 
-namespace LongoMatch.Drawing
+namespace LongoMatch.Drawing.CanvasObject
 {
+	public class TagObject: TaggerObject
+	{
+		public TagObject (TagButton tagger): base (tagger)
+		{
+			TagButton = tagger;
+			Toggle = true;
+		}
 
+		public TagButton TagButton {
+			get;
+			set;
+		}
+
+		public override void Draw (IDrawingToolkit tk, Area area)
+		{
+			tk.Begin ();
+			
+			/* Draw Rectangle */
+			DrawButton (tk);
+			
+			/* Draw header */
+			tk.LineWidth = 2;
+			tk.StrokeColor = TagButton.TextColor;
+			tk.FillColor = TagButton.TextColor;
+			tk.DrawText (Position, TagButton.Width, TagButton.Height, TagButton.Name);
+			DrawSelectionArea (tk);
+			tk.End ();
+		}
+	}
 }
-

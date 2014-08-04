@@ -28,6 +28,7 @@ using LongoMatch.Store;
 using Mono.Unix;
 using System.IO;
 using LongoMatch.Stats;
+using LongoMatch.Interfaces.Multimedia;
 
 namespace LongoMatch.Services
 {
@@ -40,19 +41,19 @@ namespace LongoMatch.Services
 		Project openedProject;
 		ProjectType projectType;
 		PlaysFilter filter;
-		Dictionary<Category, Time> catsTime;
 		
 		IGUIToolkit guiToolkit;
 		IAnalysisWindow analysisWindow;
 		IPlayerBin player;
 		ICapturerBin capturer;
+		IFramesCapturer framesCapturer;
 		IRenderingJobsManager renderer;
 
 		public EventsManager(IGUIToolkit guiToolkit, IRenderingJobsManager renderer)
 		{
 			this.guiToolkit = guiToolkit;
 			this.renderer = renderer;
-			catsTime = new Dictionary<Category, Time>();
+			framesCapturer = Config.MultimediaToolkit.GetFramesCapturer ();
 			ConnectSignals ();
 		}
 
@@ -62,11 +63,11 @@ namespace LongoMatch.Services
 			this.openedProject = project;
 			this.projectType = projectType;
 			this.filter = filter;
-			catsTime.Clear ();
 			
 			if (project == null)
 				return;
 				
+			framesCapturer.Open (openedProject.Description.File.FilePath);
 			this.analysisWindow = analysisWindow;
 			player = analysisWindow.Player;
 			capturer = analysisWindow.Capturer;
@@ -80,10 +81,6 @@ namespace LongoMatch.Services
 		
 		private void ConnectSignals() {
 			Config.EventsBroker.NewTagEvent += OnNewTag;
-			Config.EventsBroker.NewTagStartEvent += OnNewPlayStart;
-			Config.EventsBroker.NewTagStopEvent += OnNewPlayStop;
-			Config.EventsBroker.NewTagCancelEvent += OnNewPlayCancel;
-			Config.EventsBroker.NewTagAtPosEvent += OnNewTagAtPos;
 			Config.EventsBroker.TimeNodeChanged += OnTimeNodeChanged;
 			Config.EventsBroker.PlaysDeleted += OnPlaysDeleted;
 			Config.EventsBroker.PlaySelected += OnPlaySelected;
@@ -156,57 +153,34 @@ namespace LongoMatch.Services
 			}
 		}
 		
-		private void ProcessNewTag(Category category,Time pos, List<Player> players) {
-			Time length, startTime, stopTime, start, stop, fStart, fStop;
+		private Image CaptureFrame (Time tagtime) {
+			Image frame = null;
 
-			if(player == null || openedProject == null)
-				return;
-
-			/* Get the default lead and lag time for the category */
-			startTime = category.Start;
-			stopTime = category.Stop;
-			/* Calculate boundaries of the segment */
-			start = pos - startTime;
-			stop = pos + stopTime;
-			fStart = (start < new Time {MSeconds =0}) ? new Time {MSeconds = 0} : start;
-
-			if(projectType == ProjectType.FakeCaptureProject ||
-			   projectType == ProjectType.CaptureProject ||
+			/* Get the current frame and get a thumbnail from it */
+			if(projectType == ProjectType.CaptureProject ||
 			   projectType == ProjectType.URICaptureProject) {
-				fStop = stop;
-			} else {
-				length = player.StreamLength;
-				fStop = (stop > length) ? length: stop;
+				frame = capturer.CurrentMiniatureFrame;
+			} else if(projectType == ProjectType.FileProject) {
+				framesCapturer.Seek (tagtime, true);
+				frame = player.CurrentMiniatureFrame;
 			}
-			AddNewPlay(fStart, fStop, category, players);
+			return frame;
 		}
-
-		private void AddNewPlay(Time start, Time stop, Category category, List<Player> players) {
-			Image miniature;
-
+		
+		private void AddNewPlay (Category category, Time start, Time stop, List<Player> players,
+		                         List<Tag> tags, Image miniature) {
 			Log.Debug(String.Format("New play created start:{0} stop:{1} category:{2}",
 									start, stop, category));
-			/* Get the current frame and get a thumbnail from it */
-			if(projectType == ProjectType.CaptureProject || projectType == ProjectType.URICaptureProject) {
-				if(!capturer.Capturing) {
-					guiToolkit.InfoMessage(Catalog.GetString("You can't create a new play if the capturer "+
-						"is not recording."));
-					return;
-				}
-				miniature = capturer.CurrentMiniatureFrame;
-			}
-			else if(projectType == ProjectType.FileProject) {
-				miniature = player.CurrentMiniatureFrame;
-				player.Pause();
-			}
-			else
-				miniature = null;
 			
 			/* Add the new created play to the project and update the GUI*/
-			var play = openedProject.AddPlay(category, start, stop,miniature);
+			var play = openedProject.AddPlay (category, start, stop,miniature);
 			if (players != null) {
 				play.Players = players;
 			}
+			if (tags != null) {
+				play.Tags = tags;
+			}
+
 			/* Tag subcategories of the new play */
 			if (!Config.FastTagging)
 				guiToolkit.TagPlay (play, openedProject);
@@ -225,71 +199,28 @@ namespace LongoMatch.Services
 			}
 		}
 
-		void OnNewTagAtPos (Category category, Time pos) {
-			if (openedProject == null)
+		public void OnNewTag (TaggerButton tagger, List<Player> players, List<Tag> tags,
+		                      Time start, Time stop) {
+			Image frame;
+
+			if (player == null || openedProject == null)
 				return;
-
-			player.CloseSegment();
-			player.Seek (pos, true);
-			ProcessNewTag(category,pos, null);
-		}
-
-		public void OnNewTag(Category category, List<Player> players) {
-			Time pos;
 			
-			if (openedProject == null)
-				return;
-
-			if(projectType == ProjectType.FakeCaptureProject ||
-			   projectType == ProjectType.CaptureProject ||
+			start.MSeconds = Math.Max (0, start.MSeconds);
+			if (projectType == ProjectType.FileProject) {
+				stop.MSeconds = Math.Min (player.StreamLength.MSeconds, stop.MSeconds);
+			}
+			
+			if(projectType == ProjectType.CaptureProject ||
 			   projectType == ProjectType.URICaptureProject) {
-				pos =  capturer.CurrentTime;
-			} else {
-				pos = player.CurrentTime;
+				if(!capturer.Capturing) {
+					guiToolkit.WarningMessage (Catalog.GetString("Video capture is stopped"));
+					return;
+				}
 			}
-			ProcessNewTag(category,pos, players);
-		}
-
-		void OnNewPlayStart (Category category) {
-			Time startTime = player.CurrentTime;
-			catsTime.Add (category, startTime);
-			Log.Debug("New play start time: " + startTime);
-		}
-		
-		void OnNewPlayStop(Category category) {
-			int diff;
-			Time startTime, stopTime;
-			
-			if (!catsTime.ContainsKey (category)) {
-				Log.Error ("Can't add new play, no start time for this play");
-				return;
-			}
-			startTime = catsTime[category];
-			catsTime.Remove (category);
-			stopTime = player.CurrentTime;
-
-			Log.Debug("New play stop time: " + stopTime);
-			diff = stopTime.MSeconds - startTime.MSeconds;
-
-			if(diff < 0) {
-				guiToolkit.WarningMessage(Catalog.GetString("The stop time is smaller than the start time. "+
-					"The play will not be added."));
-				return;
-			}
-			if(diff < 500) {
-				int correction = 500 - diff;
-				if(startTime.MSeconds - correction > 0)
-					startTime = startTime - correction;
-				else
-					stopTime = stopTime + correction;
-			}
-			AddNewPlay(startTime, stopTime, category, null);
-		}
-		
-		void OnNewPlayCancel (Category category) {
-			try {
-				catsTime.Remove (category);
-			} catch {
+			frame = CaptureFrame (start);
+			if (tagger is Category) {
+				AddNewPlay (tagger as Category, start, stop, players, tags, frame);
 			}
 		}
 

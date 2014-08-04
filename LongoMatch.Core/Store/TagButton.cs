@@ -16,35 +16,25 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Store.Drawables;
-using LongoMatch.Interfaces.Drawing;
-using LongoMatch.Interfaces;
-using LongoMatch.Common;
 
-namespace LongoMatch.Drawing.CanvasObject
+namespace LongoMatch.Store
 {
-	public class RectangleObject: CanvasDrawableObject<Rectangle>, ICanvasSelectableObject
+	[Serializable]
+	public class TagButton: TaggerButton
 	{
-		public RectangleObject ()
+		public TagButton ()
 		{
 		}
-
-		public RectangleObject (Rectangle rectangle)
+		
+		public TagButton (Tag tag)
 		{
-			Drawable = rectangle;
+			Tag = tag;
+			Name = tag.Value;
 		}
-
-		public override void Draw (IDrawingToolkit tk, Area area)
-		{
-			tk.Begin ();
-			tk.FillColor = Drawable.FillColor;
-			tk.StrokeColor = Drawable.StrokeColor;
-			tk.LineWidth = Drawable.LineWidth;
-			tk.LineStyle = Drawable.Style;
-			tk.DrawRectangle (Drawable.TopLeft, Drawable.Width, Drawable.Height);
-			DrawSelectionArea (tk);
-			tk.End ();
+		
+		public Tag Tag {
+			get;
+			set;
 		}
 	}
 }
-

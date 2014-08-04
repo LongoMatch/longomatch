@@ -26,6 +26,7 @@ using Gdk;
 using Mono.Unix;
 using LongoMatch.Gui.Helpers;
 using LongoMatch.Gui.Dialog;
+using LongoMatch.Common;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -58,20 +59,21 @@ namespace LongoMatch.Gui.Panel
 			
 			teamsvbox.WidthRequest = 280;
 			
-			//teamtemplateeditor1.Visible = false;
+			buttonswidget.Sensitive = false;
+			buttonswidget.Mode = TagMode.Edit;
 			newteam.Visible = true;
 			deleteteambutton.Visible = false;
 			
 			selectedTemplate = new List<string>();
 			newteam.Clicked += HandleNewTeamClicked;
 			deleteteambutton.Clicked += HandleDeleteTeamClicked;
+			savebutton.Clicked += (sender, e) => Save ();
 			
 			backbutton.Clicked += (sender, o) => {
 				if (BackEvent != null)
 					BackEvent();
 			};
 			Load (null);
-			
 		}
 		
 		void Load (string templateName) {
@@ -100,19 +102,21 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 		
-		void LoadTemplate (string templateName) {
-			if (loadedTemplate != null && analysistemplateeditor.Edited) {
+		void Save () {
+			if (loadedTemplate != null && buttonswidget.Edited) {
 				string msg = Catalog.GetString ("Do you want to save the current template");
 			    if (Config.GUIToolkit.QuestionMessage (msg, null, this)) {
 					provider.Update (loadedTemplate);
-			    } else {
-					return;
 			    }
 			}
+		}
+		
+		void LoadTemplate (string templateName) {
+			Save ();
 			
-			try  {
+			try {
 				loadedTemplate = provider.Load (templateName);
-				analysistemplateeditor.Template = loadedTemplate;
+				buttonswidget.Template = loadedTemplate;
 			} catch (Exception ex) {
 				Log.Exception (ex);
 				GUIToolkit.Instance.ErrorMessage (Catalog.GetString ("Could not load template"));
@@ -134,7 +138,7 @@ namespace LongoMatch.Gui.Panel
 			}
 			
 			deleteteambutton.Visible = selectedTemplate.Count >= 1;
-			analysistemplateeditor.Visible = true;
+			buttonswidget.Sensitive = true;
 			
 			if (selectedTemplate.Count == 1) {
 				LoadTemplate (selectedTemplate[0]);

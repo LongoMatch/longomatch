@@ -148,7 +148,7 @@ namespace LongoMatch.Common
 		
 		void UpdateVisibleCategories () {
 			if (categoriesFilter.Count == 0) {
-				VisibleCategories = project.Categories.List.ToList();
+				VisibleCategories = project.Categories.CategoriesList;
 			} else {
 				VisibleCategories = categoriesFilter.Keys.ToList();
 			}

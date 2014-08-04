@@ -16,11 +16,13 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using LongoMatch.Interfaces;
+using LongoMatch.Common;
 
 namespace LongoMatch.Store
 {
 	[Serializable]
-	public class Score
+	public class Score: EventButton
 	{
 		public Score ()
 		{
@@ -30,11 +32,6 @@ namespace LongoMatch.Store
 		{
 			Name = name;
 			Points = points;
-		}
-		
-		public string Name {
-			get;
-			set;
 		}
 		
 		public int Points {

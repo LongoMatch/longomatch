@@ -28,13 +28,14 @@ namespace LongoMatch.Drawing.CanvasObject
 		public CrossObject ()
 		{
 		}
-		
+
 		public CrossObject (Cross cross)
 		{
 			Drawable = cross;
 		}
-		
-		public override void Draw (IDrawingToolkit tk, Area area) {
+
+		public override void Draw (IDrawingToolkit tk, Area area)
+		{
 			tk.Begin ();
 			tk.FillColor = Drawable.FillColor;
 			tk.StrokeColor = Drawable.StrokeColor;

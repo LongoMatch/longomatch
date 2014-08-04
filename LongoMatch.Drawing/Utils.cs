@@ -27,24 +27,47 @@ namespace LongoMatch.Drawing
 {
 	public class Utils
 	{
-		public static double TimeToPos (Time time, double secondsPerPixel) {
+		public static double Round (double n, int multiple)
+		{
+			if (n % multiple > multiple / 2) {
+				return RoundUp (n, multiple);
+			} else {
+				return RoundDown (n, multiple);
+			}
+		}
+
+		public static double RoundUp (double n, int multiple)
+		{
+			return  (multiple - n % multiple) + n;
+		}
+
+		public static double RoundDown (double n, int multiple)
+		{
+			return n - n % multiple; 
+		}
+
+		public static double TimeToPos (Time time, double secondsPerPixel)
+		{
 			return (double)time.MSeconds / 1000 / secondsPerPixel;
 		}
-		
-		public static Time PosToTime (Point p, double secondsPerPixel) {
-			return new Time ((int) (p.X * 1000 * secondsPerPixel));
+
+		public static Time PosToTime (Point p, double secondsPerPixel)
+		{
+			return new Time ((int)(p.X * 1000 * secondsPerPixel));
 		}
-		
-		public static ICanvasSelectableObject CanvasFromDrawableObject (IBlackboardObject drawable) {
+
+		public static ICanvasSelectableObject CanvasFromDrawableObject (IBlackboardObject drawable)
+		{
 			string objecttype = String.Format ("LongoMatch.Drawing.CanvasObject.{0}Object",
-			                                   drawable.GetType().ToString().Split('.').Last());
-			ObjectHandle handle = Activator.CreateInstance(null, objecttype);
-			ICanvasDrawableObject d = (ICanvasDrawableObject) handle.Unwrap();
+			                                   drawable.GetType ().ToString ().Split ('.').Last ());
+			ObjectHandle handle = Activator.CreateInstance (null, objecttype);
+			ICanvasDrawableObject d = (ICanvasDrawableObject)handle.Unwrap ();
 			d.IDrawableObject = drawable;
 			return d;
 		}
 
-		public static Image RenderFrameDrawingToImage (IDrawingToolkit tk, Image image, FrameDrawing fd) {
+		public static Image RenderFrameDrawingToImage (IDrawingToolkit tk, Image image, FrameDrawing fd)
+		{
 			Image img;
 			ISurface surface;
 			

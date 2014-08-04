@@ -29,13 +29,14 @@ namespace LongoMatch.Drawing.CanvasObject
 		public EllipseObject ()
 		{
 		}
-		
+
 		public EllipseObject (Ellipse ellipse)
 		{
 			Drawable = ellipse;
 		}
-		
-		public override void Draw (IDrawingToolkit tk, Area area) {
+
+		public override void Draw (IDrawingToolkit tk, Area area)
+		{
 			tk.Begin ();
 			tk.FillColor = Drawable.FillColor;
 			tk.StrokeColor = Drawable.StrokeColor;

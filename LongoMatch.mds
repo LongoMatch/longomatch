@@ -34,6 +34,7 @@
       <Entry build="True" name="LongoMatch.Drawing" configuration="Debug" />
       <Entry build="True" name="LongoMatch.Drawing.Cairo" configuration="Debug" />
       <Entry build="True" name="LongoMatch.Migration" configuration="Debug" />
+      <Entry build="True" name="OneplayLongomatch" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="LongoMatch.GUI" configuration="Release" />
@@ -51,6 +52,7 @@
       <Entry build="True" name="LongoMatch.Drawing" configuration="Release" />
       <Entry build="True" name="LongoMatch.Drawing.Cairo" configuration="Release" />
       <Entry build="True" name="LongoMatch.Migration" configuration="Release" />
+      <Entry build="True" name="OneplayLongomatch" configuration="Release" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="LongoMatchGtk" single="True">
@@ -69,6 +71,7 @@
     <Execute type="None" entry="LongoMatch.Drawing" />
     <Execute type="None" entry="LongoMatch.Drawing.Cairo" />
     <Execute type="None" entry="LongoMatch.Migration" />
+    <Execute type="None" entry="OneplayLongomatch" />
   </StartMode>
   <Entries>
     <Entry filename="LongoMatch.GUI/LongoMatch.GUI.mdp" />

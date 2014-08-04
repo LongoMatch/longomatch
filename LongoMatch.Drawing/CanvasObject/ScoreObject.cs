@@ -16,32 +16,37 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Store.Drawables;
 using LongoMatch.Interfaces.Drawing;
-using LongoMatch.Interfaces;
 using LongoMatch.Common;
+using LongoMatch.Interfaces;
+using LongoMatch.Store;
 
 namespace LongoMatch.Drawing.CanvasObject
 {
-	public class RectangleObject: CanvasDrawableObject<Rectangle>, ICanvasSelectableObject
+	public class ScoreObject: TaggerObject
 	{
-		public RectangleObject ()
+		public ScoreObject (Score score): base (score)
 		{
+			Score = score;
 		}
 
-		public RectangleObject (Rectangle rectangle)
-		{
-			Drawable = rectangle;
+		public Score Score {
+			get;
+			set;
 		}
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
 			tk.Begin ();
-			tk.FillColor = Drawable.FillColor;
-			tk.StrokeColor = Drawable.StrokeColor;
-			tk.LineWidth = Drawable.LineWidth;
-			tk.LineStyle = Drawable.Style;
-			tk.DrawRectangle (Drawable.TopLeft, Drawable.Width, Drawable.Height);
+	
+			/* Draw Rectangle */
+			DrawButton (tk);
+			
+			/* Draw header */
+			tk.LineWidth = 2;
+			tk.StrokeColor = Score.TextColor;
+			tk.FillColor = Score.TextColor;
+			tk.DrawText (Position, Score.Width, Score.Height, Score.Name);
 			DrawSelectionArea (tk);
 			tk.End ();
 		}

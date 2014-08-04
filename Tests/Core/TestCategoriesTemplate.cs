@@ -51,9 +51,9 @@ namespace Tests.Core
 			Assert.AreEqual (cat.GamePeriods[0], newcat.GamePeriods[0]);
 			Assert.AreEqual (cat.GamePeriods[1], newcat.GamePeriods[1]);
 			Assert.AreEqual (cat.List.Count, newcat.List.Count);
-			Assert.AreEqual (cat.List[0].ID, newcat.List[0].ID);
-			Assert.AreEqual (cat.List[1].ID, newcat.List[1].ID);
-			Assert.AreEqual (cat.List[2].ID, newcat.List[2].ID);
+			Assert.AreEqual (cat.CategoriesList[0].ID, newcat.CategoriesList[0].ID);
+			Assert.AreEqual (cat.CategoriesList[1].ID, newcat.CategoriesList[1].ID);
+			Assert.AreEqual (cat.CategoriesList[2].ID, newcat.CategoriesList[2].ID);
 		}
 	}
 }

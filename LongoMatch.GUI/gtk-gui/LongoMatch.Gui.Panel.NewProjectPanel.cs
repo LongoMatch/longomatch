@@ -113,7 +113,7 @@ namespace LongoMatch.Gui.Panel
 			this.notebook1 = new global::Gtk.Notebook ();
 			this.notebook1.CanFocus = true;
 			this.notebook1.Name = "notebook1";
-			this.notebook1.CurrentPage = 1;
+			this.notebook1.CurrentPage = 2;
 			this.notebook1.ShowBorder = false;
 			this.notebook1.Scrollable = true;
 			// Container child notebook1.Gtk.Notebook+NotebookChild
@@ -148,7 +148,6 @@ namespace LongoMatch.Gui.Panel
 			this.fromfileradiobutton = new global::Gtk.RadioButton (global::Mono.Unix.Catalog.GetString ("New project using a video file"));
 			this.fromfileradiobutton.CanFocus = true;
 			this.fromfileradiobutton.Name = "fromfileradiobutton";
-			this.fromfileradiobutton.Active = true;
 			this.fromfileradiobutton.DrawIndicator = true;
 			this.fromfileradiobutton.UseUnderline = true;
 			this.fromfileradiobutton.FocusOnClick = false;

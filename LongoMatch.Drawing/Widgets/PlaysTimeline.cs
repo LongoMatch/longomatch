@@ -27,7 +27,6 @@ using LongoMatch.Store.Drawables;
 
 namespace LongoMatch.Drawing.Widgets
 {
-	 
 	public class PlaysTimeline: SelectionCanvas
 	{
 	
@@ -38,7 +37,7 @@ namespace LongoMatch.Drawing.Widgets
 		double secondsPerPixel;
 		Time duration;
 		Dictionary<Category, CategoryTimeline> categories;
-		
+
 		public PlaysTimeline (IWidget widget): base(widget)
 		{
 			categories = new Dictionary<Category, CategoryTimeline> ();
@@ -47,17 +46,18 @@ namespace LongoMatch.Drawing.Widgets
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
 		}
 
-		public void LoadProject (Project project, PlaysFilter filter) {
+		public void LoadProject (Project project, PlaysFilter filter)
+		{
 			this.project = project;
-			Objects.Clear();
-			categories.Clear();
+			Objects.Clear ();
+			categories.Clear ();
 			duration = project.Description.File.Duration;
 			widget.Height = project.Categories.List.Count * Constants.CATEGORY_HEIGHT;
 			playsFilter = filter;
 			FillCanvas ();
 			filter.FilterUpdated += UpdateVisibleCategories;
 		}
-		
+
 		public Time CurrentTime {
 			set {
 				foreach (CategoryTimeline tl in categories.Values) {
@@ -65,7 +65,7 @@ namespace LongoMatch.Drawing.Widgets
 				}
 			}
 		}
-		
+
 		public double SecondsPerPixel {
 			set {
 				secondsPerPixel = value;
@@ -75,19 +75,22 @@ namespace LongoMatch.Drawing.Widgets
 				return secondsPerPixel;
 			}
 		}
-		
-		public void AddPlay(Play play) {
-			categories[play.Category].AddPlay (play);
+
+		public void AddPlay (Play play)
+		{
+			categories [play.Category].AddPlay (play);
 		}
 
-		public void RemovePlays(List<Play> plays) {
+		public void RemovePlays (List<Play> plays)
+		{
 			foreach (Play p in plays) {
-				categories[p.Category].RemoveNode (p);
+				categories [p.Category].RemoveNode (p);
 				Selections.RemoveAll (s => (s.Drawable as PlayObject).Play == p);
 			}
 		}
-		
-		void Update () {
+
+		void Update ()
+		{
 			double width = duration.Seconds / SecondsPerPixel;
 			widget.Width = width + 10;
 			foreach (TimelineObject tl in categories.Values) {
@@ -95,9 +98,10 @@ namespace LongoMatch.Drawing.Widgets
 				tl.SecondsPerPixel = SecondsPerPixel;
 			}
 		}
-		
-		void FillCanvas () {
-			for (int i=0; i<project.Categories.List.Count; i++) {
+
+		void FillCanvas ()
+		{
+			for (int i=0; i<project.Categories.CategoriesList.Count; i++) {
 				Category cat;
 				CategoryTimeline tl;
 				Color c;
@@ -108,20 +112,21 @@ namespace LongoMatch.Drawing.Widgets
 					c = Color.Grey1;
 				}
 				
-				cat = project.Categories.List[i];
+				cat = project.Categories.CategoriesList [i];
 				tl = new CategoryTimeline (project.PlaysInCategory (cat),
 				                           duration, i * Constants.CATEGORY_HEIGHT, c);
-				categories[cat] = tl;
+				categories [cat] = tl;
 				Objects.Add (tl);
 			}
 			UpdateVisibleCategories ();
 			Update ();
 		}
-		
-		void UpdateVisibleCategories () {
-			int i=0;
+
+		void UpdateVisibleCategories ()
+		{
+			int i = 0;
 			foreach (Category cat in categories.Keys) {
-				TimelineObject timeline = categories[cat];
+				TimelineObject timeline = categories [cat];
 				if (playsFilter.VisibleCategories.Contains (cat)) {
 					timeline.OffsetY = i * Constants.CATEGORY_HEIGHT;
 					timeline.Visible = true;
@@ -136,17 +141,19 @@ namespace LongoMatch.Drawing.Widgets
 		void RedrawSelection (Selection sel)
 		{
 			PlayObject po = sel.Drawable as PlayObject;
-			widget.ReDraw (categories[po.Play.Category]);
-		}		
-		
-		protected override void SelectionChanged (List<Selection> selections) {
+			widget.ReDraw (categories [po.Play.Category]);
+		}
+
+		protected override void SelectionChanged (List<Selection> selections)
+		{
 			if (selections.Count > 0) {
-				PlayObject po = selections.Last().Drawable as PlayObject;
+				PlayObject po = selections.Last ().Drawable as PlayObject;
 				Config.EventsBroker.EmitPlaySelected (po.Play);
 			}
 		}
-		
-		protected override void StartMove (Selection sel) {
+
+		protected override void StartMove (Selection sel)
+		{
 			if (sel == null)
 				return;
 
@@ -154,17 +161,19 @@ namespace LongoMatch.Drawing.Widgets
 				widget.SetCursor (CursorType.DoubleArrow);
 			}
 		}
-		
-		protected override void StopMove () {
+
+		protected override void StopMove ()
+		{
 			widget.SetCursor (CursorType.Arrow);
 		}
 
-		protected override void ShowMenu (Point coords) {
+		protected override void ShowMenu (Point coords)
+		{
 			Category cat = null;
-			List<Play> plays = Selections.Select (p => (p.Drawable as PlayObject).Play).ToList();
+			List<Play> plays = Selections.Select (p => (p.Drawable as PlayObject).Play).ToList ();
 			
 			foreach (Category c in categories.Keys) {
-				TimelineObject tl = categories[c];
+				TimelineObject tl = categories [c];
 				if (!tl.Visible)
 					continue;
 				if (coords.Y >= tl.OffsetY && coords.Y < tl.OffsetY + Constants.CATEGORY_HEIGHT) {
@@ -175,11 +184,12 @@ namespace LongoMatch.Drawing.Widgets
 			
 			if (cat != null && ShowMenuEvent != null) {
 				ShowMenuEvent (plays, cat,
-				          Utils.PosToTime (coords, SecondsPerPixel));
+				               Utils.PosToTime (coords, SecondsPerPixel));
 			}
 		}
-		
-		protected override void SelectionMoved (Selection sel) {
+
+		protected override void SelectionMoved (Selection sel)
+		{
 			Time moveTime;
 			Play play = (sel.Drawable as PlayObject).Play;
 			

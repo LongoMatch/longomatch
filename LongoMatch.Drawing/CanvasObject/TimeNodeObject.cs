@@ -26,59 +26,60 @@ namespace LongoMatch.Drawing.CanvasObject
 {
 	public class TimeNodeObject: CanvasObject, ICanvasSelectableObject
 	{
-		const int MAX_TIME_SPAN=1000;
-		
+		const int MAX_TIME_SPAN = 1000;
+
 		public TimeNodeObject (TimeNode node)
 		{
 			TimeNode = node;
 			SelectWhole = true;
 		}
-		
+
 		public TimeNode TimeNode {
 			get;
 			set;
 		}
-		
+
 		public bool SelectWhole {
 			get;
 			set;
 		}
-		
+
 		public Time MaxTime {
 			set;
 			protected get;
 		}
-		
+
 		public double OffsetY {
 			get;
 			set;
 		}
-		
+
 		public double SecondsPerPixel {
 			set;
 			protected get;
 		}
-		
+
 		protected double StartX {
 			get {
 				return Utils.TimeToPos (TimeNode.Start, SecondsPerPixel);
 			}
 		}
-		
+
 		protected double StopX {
 			get {
 				return Utils.TimeToPos (TimeNode.Stop, SecondsPerPixel);
 			}
 		}
-		
+
 		protected double CenterX {
 			get {
 				return Utils.TimeToPos (TimeNode.Start + TimeNode.Duration / 2,
 				                        SecondsPerPixel);
 			}
 		}
-		
-		public Selection GetSelection (Point point, double precision) {
+
+		public Selection GetSelection (Point point, double precision)
+		{
 			double accuracy;
 			if (point.Y >= OffsetY && point.Y < OffsetY + Constants.CATEGORY_HEIGHT) {
 				if (Drawable.MatchAxis (point.X, StartX, precision, out accuracy)) {
@@ -92,8 +93,9 @@ namespace LongoMatch.Drawing.CanvasObject
 			}
 			return null;
 		}
-		
-		public void Move (Selection sel, Point p, Point start) {
+
+		public void Move (Selection sel, Point p, Point start)
+		{
 			Time newTime = Utils.PosToTime (p, SecondsPerPixel);
 
 			if (p.X < 0) {
@@ -104,26 +106,29 @@ namespace LongoMatch.Drawing.CanvasObject
 			newTime = Utils.PosToTime (p, SecondsPerPixel);
 
 			switch (sel.Position) {
-			case SelectionPosition.Left: {
-				if (newTime.MSeconds + MAX_TIME_SPAN > TimeNode.Stop.MSeconds) {
-					TimeNode.Start.MSeconds = TimeNode.Stop.MSeconds - MAX_TIME_SPAN;
-				} else {
-					TimeNode.Start = newTime;
+			case SelectionPosition.Left:
+				{
+					if (newTime.MSeconds + MAX_TIME_SPAN > TimeNode.Stop.MSeconds) {
+						TimeNode.Start.MSeconds = TimeNode.Stop.MSeconds - MAX_TIME_SPAN;
+					} else {
+						TimeNode.Start = newTime;
+					}
+					break;
 				}
-				break;
-			}
-			case SelectionPosition.Right: {
-				if (newTime.MSeconds - MAX_TIME_SPAN < TimeNode.Start.MSeconds) {
-					TimeNode.Stop.MSeconds = TimeNode.Start.MSeconds + MAX_TIME_SPAN;
-				} else {
-					TimeNode.Stop = newTime;
+			case SelectionPosition.Right:
+				{
+					if (newTime.MSeconds - MAX_TIME_SPAN < TimeNode.Start.MSeconds) {
+						TimeNode.Stop.MSeconds = TimeNode.Start.MSeconds + MAX_TIME_SPAN;
+					} else {
+						TimeNode.Stop = newTime;
+					}
+					break;
 				}
-				break;
-			}
 			}
 		}
-		
-		public override void Draw (IDrawingToolkit tk, Area area) {
+
+		public override void Draw (IDrawingToolkit tk, Area area)
+		{
 			double mid, bottom, stop;
 			Color c;
 
@@ -153,6 +158,5 @@ namespace LongoMatch.Drawing.CanvasObject
 			             
 			tk.End ();
 		}
-		
 	}
 }

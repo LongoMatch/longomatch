@@ -25,7 +25,6 @@ using System.Collections.Generic;
 
 namespace LongoMatch.Drawing.CanvasObject
 {
-
 	public class PositionObject:  CanvasObject, ICanvasSelectableObject
 	{
 
@@ -35,7 +34,7 @@ namespace LongoMatch.Drawing.CanvasObject
 			Width = width;
 			Height = height;
 		}
-		
+
 		public override string Description {
 			get {
 				if (Play != null) {
@@ -49,41 +48,40 @@ namespace LongoMatch.Drawing.CanvasObject
 			get;
 			set;
 		}
-		
+
 		public int Height {
 			get;
 			set;
 		}
-		
+
 		public Play Play {
 			get;
 			set;
 		}
-		
+
 		public List<Point> Points {
 			get;
 			set;
 		}
-		
+
 		Point Start {
 			get {
-				return Points[0].Denormalize (Width, Height);
-			}
-			set{
-				Points[0] = value.Normalize (Width, Height);
-			}
-		}
-		
-		Point Stop {
-			get {
-				return Points[1].Denormalize (Width, Height);
+				return Points [0].Denormalize (Width, Height);
 			}
 			set {
-				Points[1] = value.Normalize (Width, Height);
+				Points [0] = value.Normalize (Width, Height);
 			}
 		}
-		
-		
+
+		Point Stop {
+			get {
+				return Points [1].Denormalize (Width, Height);
+			}
+			set {
+				Points [1] = value.Normalize (Width, Height);
+			}
+		}
+
 		public Selection GetSelection (Point point, double precision)
 		{
 			if (point.Distance (Start) < precision) {
@@ -93,7 +91,7 @@ namespace LongoMatch.Drawing.CanvasObject
 			}
 			return null;
 		}
-		
+
 		public void Move (Selection sel, Point p, Point start)
 		{
 			switch (sel.Position) {
@@ -107,12 +105,13 @@ namespace LongoMatch.Drawing.CanvasObject
 				throw new Exception ("Unsupported move for circle:  " + sel.Position);
 			}
 		}
-		
-		public override void Draw (IDrawingToolkit tk, Area area) {
+
+		public override void Draw (IDrawingToolkit tk, Area area)
+		{
 			Color color, scolor;
 			double relSize;
 			
-			 relSize = Math.Max (1, (double) Width / 200);
+			relSize = Math.Max (1, (double)Width / 200);
 			
 			tk.Begin ();
 			if (Play != null) {
@@ -128,10 +127,10 @@ namespace LongoMatch.Drawing.CanvasObject
 			}
 			tk.FillColor = color;
 			tk.StrokeColor = scolor;
-			tk.LineWidth = (int) relSize;
-			tk.DrawCircle (Start, (int) relSize * 2);
+			tk.LineWidth = (int)relSize;
+			tk.DrawCircle (Start, (int)relSize * 2);
 			if (Points.Count == 2) {
-				tk.LineWidth = (int) relSize * 2;
+				tk.LineWidth = (int)relSize * 2;
 				tk.DrawLine (Start, Stop);
 				tk.DrawArrow (Start, Stop, 10, 0.3, true);
 			}

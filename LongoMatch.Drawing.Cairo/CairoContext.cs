@@ -15,7 +15,6 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using Gdk;
 using Cairo;
 using LongoMatch.Interfaces.Drawing;
@@ -38,14 +37,15 @@ namespace LongoMatch.Drawing.Cairo
 		{
 			Value = context;
 		}
-		
+
 		public object Value {
 			get;
 			protected set;
 		}
-		
-		public void Dispose () {
-			(Value as Context).Dispose();
+
+		public void Dispose ()
+		{
+			(Value as Context).Dispose ();
 		}
 	}
 }

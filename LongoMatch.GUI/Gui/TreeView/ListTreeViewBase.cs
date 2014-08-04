@@ -132,7 +132,7 @@ namespace LongoMatch.Gui.Component
 		
 		protected void ShowMenu () {
 			playsMenu.ShowListMenu (SelectedPlays, Project.Description.File,
-			                        Project.Categories.List);
+			                        Project.Categories.CategoriesList);
 		}
 
 		protected object GetValueFromPath(TreePath path) {
@@ -200,7 +200,7 @@ namespace LongoMatch.Gui.Component
 			} else if(o is Category) {
 				c.Background = "white";
 				c.CellBackground = "white";
-				c.Markup = String.Format("{0} ({1})", GLib.Markup.EscapeText ((o as TimeNode).Name),
+				c.Markup = String.Format("{0} ({1})", GLib.Markup.EscapeText ((o as Category).Name),
 				                         modelFilter.IterNChildren(iter));
 			}
 		}

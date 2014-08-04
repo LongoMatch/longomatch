@@ -5,12 +5,7 @@ namespace LongoMatch.Gui.Component
 	public partial class AnalysisComponent
 	{
 		private global::Gtk.UIManager UIManager;
-		private global::Gtk.VPaned vpaned1;
-		private global::Gtk.HPaned hpaned;
-		private global::LongoMatch.Gui.Component.PlaysSelectionWidget playsSelection;
-		private global::Gtk.HBox videowidgetsbox;
-		private global::LongoMatch.Gui.PlayerCapturerBin playercapturer;
-		private global::LongoMatch.Gui.Component.CodingWidget codingwidget;
+		private global::Gtk.HBox hbox1;
 
 		protected virtual void Build ()
 		{
@@ -22,43 +17,10 @@ namespace LongoMatch.Gui.Component
 			this.UIManager.InsertActionGroup (w2, 0);
 			this.Name = "LongoMatch.Gui.Component.AnalysisComponent";
 			// Container child LongoMatch.Gui.Component.AnalysisComponent.Gtk.Container+ContainerChild
-			this.vpaned1 = new global::Gtk.VPaned ();
-			this.vpaned1.CanFocus = true;
-			this.vpaned1.Name = "vpaned1";
-			this.vpaned1.Position = 438;
-			// Container child vpaned1.Gtk.Paned+PanedChild
-			this.hpaned = new global::Gtk.HPaned ();
-			this.hpaned.CanFocus = true;
-			this.hpaned.Name = "hpaned";
-			this.hpaned.Position = 261;
-			// Container child hpaned.Gtk.Paned+PanedChild
-			this.playsSelection = new global::LongoMatch.Gui.Component.PlaysSelectionWidget ();
-			this.playsSelection.Events = ((global::Gdk.EventMask)(256));
-			this.playsSelection.Name = "playsSelection";
-			this.hpaned.Add (this.playsSelection);
-			global::Gtk.Paned.PanedChild w3 = ((global::Gtk.Paned.PanedChild)(this.hpaned [this.playsSelection]));
-			w3.Resize = false;
-			// Container child hpaned.Gtk.Paned+PanedChild
-			this.videowidgetsbox = new global::Gtk.HBox ();
-			this.videowidgetsbox.Name = "videowidgetsbox";
-			this.videowidgetsbox.Spacing = 6;
-			// Container child videowidgetsbox.Gtk.Box+BoxChild
-			this.playercapturer = new global::LongoMatch.Gui.PlayerCapturerBin ();
-			this.playercapturer.Events = ((global::Gdk.EventMask)(256));
-			this.playercapturer.Name = "playercapturer";
-			this.videowidgetsbox.Add (this.playercapturer);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.videowidgetsbox [this.playercapturer]));
-			w4.Position = 0;
-			this.hpaned.Add (this.videowidgetsbox);
-			this.vpaned1.Add (this.hpaned);
-			global::Gtk.Paned.PanedChild w6 = ((global::Gtk.Paned.PanedChild)(this.vpaned1 [this.hpaned]));
-			w6.Resize = false;
-			// Container child vpaned1.Gtk.Paned+PanedChild
-			this.codingwidget = new global::LongoMatch.Gui.Component.CodingWidget ();
-			this.codingwidget.Events = ((global::Gdk.EventMask)(256));
-			this.codingwidget.Name = "codingwidget";
-			this.vpaned1.Add (this.codingwidget);
-			this.Add (this.vpaned1);
+			this.hbox1 = new global::Gtk.HBox ();
+			this.hbox1.Name = "hbox1";
+			this.hbox1.Spacing = 6;
+			this.Add (this.hbox1);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}

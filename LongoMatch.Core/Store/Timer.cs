@@ -20,19 +20,16 @@ using System.Linq;
 using LongoMatch.Store;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using LongoMatch.Interfaces;
+using LongoMatch.Common;
 
 namespace LongoMatch.Store
 {
-	public class Timer
+	public class Timer: TaggerButton
 	{
 		public Timer ()
 		{
 			Nodes = new List<TimeNode>();
-		}
-		
-		public string Name {
-			get;
-			set;
 		}
 		
 		public List<TimeNode> Nodes {
@@ -47,19 +44,32 @@ namespace LongoMatch.Store
 			}
 		}
 		
-		public void Start (Time start, string name = null) {
+		public TimeNode StartTimer (Time start, string name = null) {
+			TimeNode tn;
+
 			if (name == null)
 				name = Name;
-			Stop (start);
-			TimeNode tn = new TimeNode {Name = name, Start = start};
+			StopTimer (start);
+			tn = new TimeNode {Name = name, Start = start};
 			Nodes.Add (tn);
+			return tn;
 		}
 		
-		public void Stop (Time stop) {
+		public void StopTimer (Time stop) {
 			if (Nodes.Count > 0) {
 				TimeNode last = Nodes.Last ();
 				if (last.Stop == null) {
 					last.Stop = stop;
+				}
+			}
+			Nodes.OrderBy (tn => tn.Start.MSeconds);
+		}
+		
+		public void CancelTimer () {
+			if (Nodes.Count > 0) {
+				TimeNode last = Nodes.Last ();
+				if (last.Stop == null) {
+					Nodes.Remove (last);
 				}
 			}
 		}

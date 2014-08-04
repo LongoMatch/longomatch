@@ -30,7 +30,6 @@ namespace LongoMatch.Interfaces
 	
 	public interface ITemplate<T>: ITemplate {
 		List<T> List {get;set;}
-		T AddDefaultItem (int index);
 	}
 	
 	public interface ITemplateProvider
@@ -51,7 +50,7 @@ namespace LongoMatch.Interfaces
 		void Update (ITemplate<U> template);
 	}
 	
-	public interface ICategoriesTemplatesProvider: ITemplateProvider<Categories, Category> {}
+	public interface ICategoriesTemplatesProvider: ITemplateProvider<Categories, TaggerButton> {}
 	public interface ITeamTemplatesProvider: ITemplateProvider<TeamTemplate, Player> {}
 }
 

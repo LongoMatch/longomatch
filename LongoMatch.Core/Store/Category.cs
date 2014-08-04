@@ -36,7 +36,7 @@ namespace LongoMatch.Store
 	/// tagged in this category
 	/// </summary>
 	[Serializable]
-	public class Category:TimeNode, IIDObject
+	public class Category:TaggerButton, IIDObject
 	{
 
 		#region Constructors
@@ -45,6 +45,14 @@ namespace LongoMatch.Store
 			Tags = new List<Tag>();
 			TagGoalPosition = false;
 			TagFieldPosition = true;
+			Position = new Point (0, 0);
+			ShowSubcategories = true;
+			TagsPerRow = 2;
+			Color = Color.Red;
+			TextColor = Color.Grey2;
+			TagMode = TagMode.Predifined;
+			Width = 30;
+			Height = 20;
 		}
 		#endregion
 
@@ -66,14 +74,6 @@ namespace LongoMatch.Store
 			set;
 		}
 
-		/// <summary>
-		/// A color to identify plays in this category
-		/// </summary>
-		public  Color Color {
-			get;
-			set;
-		}
-
 		//// <summary>
 		/// Sort method used to sort plays for this category
 		/// </summary>
@@ -82,15 +82,17 @@ namespace LongoMatch.Store
 			set;
 		}
 
-		/// <summary>
-		/// Position of the category in the list of categories
-		/// </summary>
-		public int Position {
+		public List<Tag> Tags  {
 			get;
 			set;
 		}
-
-		public List<Tag> Tags  {
+		
+		public bool ShowSubcategories {
+			get;
+			set;
+		}
+		
+		public int TagsPerRow {
 			get;
 			set;
 		}

@@ -35,12 +35,12 @@ namespace LongoMatch.Drawing.Widgets
 			SecondsPerPixel = 0.1;
 			CurrentTime = new Time (0);
 		}
-		
+
 		public double Scroll {
 			set;
 			protected get;
 		}
-		
+
 		public Time Duration {
 			set;
 			protected get;
@@ -50,12 +50,12 @@ namespace LongoMatch.Drawing.Widgets
 			get;
 			set;
 		}
-		
+
 		public double SecondsPerPixel {
 			set;
 			get;
 		}
-		
+
 		public override void Draw (IContext context, Area area)
 		{
 			double height = widget.Height;
@@ -70,7 +70,7 @@ namespace LongoMatch.Drawing.Widgets
 			tk.Begin ();
 			tk.FillColor = Constants.TIMERULE_BACKGROUND;
 			tk.StrokeColor = Constants.TIMERULE_BACKGROUND;
-			tk.DrawRectangle (new Point(0, 0), width, height);
+			tk.DrawRectangle (new Point (0, 0), width, height);
 			
 			tk.StrokeColor = Constants.TIMELINE_LINE_COLOR;
 			tk.LineWidth = Constants.TIMELINE_LINE_WIDTH;
@@ -79,16 +79,16 @@ namespace LongoMatch.Drawing.Widgets
 			tk.DrawLine (new Point (0, height), new Point (width, height));
 		
 			/* Draw big lines each 10 * secondsPerPixel */
-			for(int i=0; i <= Duration.Seconds / SecondsPerPixel; i += TIME_SPACING) {
+			for (int i=0; i <= Duration.Seconds / SecondsPerPixel; i += TIME_SPACING) {
 				double pos = i - Scroll;
 				tk.DrawLine (new Point (pos, height),
 				             new Point (pos, height - BIG_LINE_HEIGHT));
-				tk.DrawText (new Point (pos - TEXT_WIDTH/2, 0), TEXT_WIDTH, height - BIG_LINE_HEIGHT - 4,
-				             new Time {Seconds = (int) (i * SecondsPerPixel)}.ToSecondsString());
+				tk.DrawText (new Point (pos - TEXT_WIDTH / 2, 0), TEXT_WIDTH, height - BIG_LINE_HEIGHT - 4,
+				             new Time { Seconds = (int) (i * SecondsPerPixel) }.ToSecondsString ());
 			}
 			
 			/* Draw small lines each 1 * secondsPerPixel */
-			for(int i=0; i<= Duration.Seconds / SecondsPerPixel; i+= TIME_SPACING / 10) {
+			for (int i=0; i<= Duration.Seconds / SecondsPerPixel; i+= TIME_SPACING / 10) {
 				double pos;
 				
 				if (i % TIME_SPACING == 0)

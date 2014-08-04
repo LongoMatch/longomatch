@@ -184,7 +184,7 @@ namespace LongoMatch.Gui.Menus
 
 		void HandleNePlayActivated (object sender, EventArgs e)
 		{
-			Config.EventsBroker.EmitNewTagAtPos (cat, time);
+			Config.EventsBroker.EmitNewTag (cat, null, null, time - cat.Start, time + cat.Stop);
 		}
 		
 		void EmitRenderPlaylist (List<Play> plays)

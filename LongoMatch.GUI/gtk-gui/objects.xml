@@ -4,13 +4,14 @@
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.ButtonsWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
+    <itemgroups>
+      <itemgroup label="ButtonsWidget Properties">
+        <property name="Edited" />
+      </itemgroup>
+    </itemgroups>
     <signals>
       <itemgroup label="ButtonsWidget Signals">
         <signal name="NewTagEvent" />
-        <signal name="NewTagStartEvent" />
-        <signal name="NewTagStopEvent" />
-        <signal name="NewTagCancelEvent" />
       </itemgroup>
     </signals>
   </object>
@@ -60,10 +61,15 @@
     </signals>
   </object>
   <object type="LongoMatch.Gui.Component.CategoryProperties" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
+    <itemgroups>
+      <itemgroup label="CategoryProperties Properties">
+        <property name="Edited" />
+      </itemgroup>
+    </itemgroups>
     <signals>
       <itemgroup label="CategoryProperties Signals">
         <signal name="HotKeyChanged" />
+        <signal name="EditedEvent" />
       </itemgroup>
     </signals>
   </object>
@@ -163,17 +169,6 @@
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.ButtonTagger" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals>
-      <itemgroup label="ButtonTagger Signals">
-        <signal name="NewTag" />
-        <signal name="NewTagStart" />
-        <signal name="NewTagStop" />
-        <signal name="NewTagCancel" />
-      </itemgroup>
-    </signals>
-  </object>
   <object type="LongoMatch.Gui.Component.AnalysisComponent" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
@@ -238,14 +233,6 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.AnalysisTemplateEditor" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="AnalysisTemplateEditor Properties">
-        <property name="Edited" />
-      </itemgroup>
-    </itemgroups>
-    <signals />
-  </object>
   <object type="LongoMatch.Gui.Panel.PreferencesPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>
@@ -293,10 +280,6 @@
     </signals>
   </object>
   <object type="LongoMatch.Gui.Component.Stats.SubCategoryViewer" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.SubCategoriesTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
     <itemgroups />
     <signals />
   </object>

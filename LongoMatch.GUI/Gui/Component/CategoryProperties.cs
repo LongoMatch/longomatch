@@ -44,36 +44,74 @@ namespace LongoMatch.Gui.Component
 	{
 
 		public event HotKeyChangeHandler HotKeyChanged;
+		public event EventHandler EditedEvent;
+		SizeGroup sizegroup;
 
+		TaggerButton tagger;
 		Category cat;
-		ListStore model;
-		CoordinatesTagger fieldcoordinatestagger;
-		CoordinatesTagger halffieldcoordinatestagger;
-		CoordinatesTagger goalcoordinatestagger;
+		PenaltyCard card;
+		Score score;
+		Time lastLeadTime;
+		bool edited, ignore;
 
 		public CategoryProperties()
 		{
 			this.Build();
-			leadtimebutton.ValueChanged += OnLeadTimeChanged;;
-			lagtimebutton.ValueChanged += OnLagTimeChanged;
-			fieldcoordinatestagger = new CoordinatesTagger ();
-			halffieldcoordinatestagger = new CoordinatesTagger ();
-			goalcoordinatestagger = new CoordinatesTagger ();
-			table1.Attach (fieldcoordinatestagger, 0, 1, 0, 1);
-			table1.Attach (halffieldcoordinatestagger, 1, 2, 0, 1);
-			table1.Attach (goalcoordinatestagger, 2, 3, 0, 1);
+			nameentry.Changed += HandleNameentryChanged;
+			colorbutton1.ColorSet += HandleColorSet;
+			colorbutton2.ColorSet += HandleColorSet;
+			tagmodecombobox.Changed += HandleTagModeChanged;
+			tagscheckbutton.Toggled += HandleTagsToggled;
+			tprbutton.ValueChanged += HandleTagsPerRowValueChanged;
+			leadtimebutton.ValueChanged += HandleLeadTimeChanged;
+			lagtimebutton.ValueChanged += HandleLagTimeChanged;
+			changebuton.Clicked += HandleChangeHotkey;
+			sortmethodcombobox.Changed += HandleSortMethodChanged;
+			fieldcombobox.Changed += HandlePositionChanged;
+			hfieldcombobox.Changed += HandlePositionChanged;
+			goalcombobox.Changed += HandlePositionChanged;
+			shapecombobox.Changed += HandleShapeChanged;
+			pointsbutton.Changed += HandlePointsChanged;
+			sizegroup = new SizeGroup (SizeGroupMode.Horizontal);
+			sizegroup.IgnoreHidden = false;
+			foreach (Widget w in vbox3.Children) {
+				foreach (Widget t in (w as Table).Children) {
+					if (!(t is Label)) {
+						sizegroup.AddWidget (t);
+					}
+				}
+			}
+			CanChangeHotkey = true;
 		}
-		
+
+		public bool Edited {
+			set {
+				edited = value;
+				if (!ignore && EditedEvent != null) {
+					EditedEvent (this, null);
+				}
+			}
+			get {
+				return edited;
+			}
+		}
+
 		public bool CanChangeHotkey {
 			set {
 				if (value == true)
 					changebuton.Sensitive = true;
 			}
 		}
-		
-		public Category Category {
+
+		public TaggerButton Tagger {
 			set {
-				cat = value;
+				tagger = value;
+				cat = value as Category;
+				card = value as PenaltyCard;
+				score = value as Score;
+				cattable.Visible = cat != null;
+				scoretable.Visible = score != null;
+				cardtable.Visible = card != null;
 				UpdateGui();
 			}
 			get {
@@ -86,75 +124,64 @@ namespace LongoMatch.Gui.Component
 			get;
 		}
 		
-		public Categories Template {
-			set {
-				fieldcoordinatestagger.Tagger.Background = value.FieldBackground;
-				halffieldcoordinatestagger.Tagger.Background = value.HalfFieldBackground;
-				goalcoordinatestagger.Tagger.Background = value.GoalBackground;
+		void SetPositionCombo (ComboBox box, bool tagField, bool asTrayectory) {
+			if (!tagField) {
+				box.Active = 0;
+			} else if (!asTrayectory) {
+				box.Active = 1;
+			} else {
+				box.Active = 2;
+			}
+			Edited = true;
+		}
+		
+		void ReadPositionCombo (ComboBox box, out bool tagField, out bool asTrayectory) {
+			if (box.Active == 0) {
+				tagField = true;
+				asTrayectory = false;
+			} else if (box.Active == 1) {
+				tagField = true;
+				asTrayectory = true;
+			} else {
+				tagField = false;
+				asTrayectory = false;
 			}
 		}
-
+		
 		private void  UpdateGui() {
-			ListStore list;
-			
-			if(cat == null)
-				return;
-				
-			nameentry.Text = cat.Name;
-				
-			leadtimebutton.Value = cat.Start.Seconds;
-			lagtimebutton.Value = cat.Stop.Seconds;
-			colorbutton1.Color = Helpers.Misc.ToGdkColor(cat.Color);
-			sortmethodcombobox.Active = (int)cat.SortMethod;
-			
-			tagfieldcheckbutton.Active = cat.TagFieldPosition;
-			fieldcoordinatestagger.Visible = cat.TagFieldPosition;
-			UpdatePosition (FieldPositionType.Field);
-			trajectorycheckbutton.Active = cat.FieldPositionIsDistance;
-			
-			taghalffieldcheckbutton.Active = cat.TagHalfFieldPosition;
-			halffieldcoordinatestagger.Visible = cat.TagHalfFieldPosition;
-			UpdatePosition (FieldPositionType.HalfField);
-			trajectoryhalfcheckbutton.Active = cat.HalfFieldPositionIsDistance;
-			
-			taggoalcheckbutton.Active = cat.TagGoalPosition;
-			UpdatePosition (FieldPositionType.Goal);
-			goalcoordinatestagger.Visible = cat.TagGoalPosition;
-			
-			if(cat.HotKey.Defined)
-				hotKeyLabel.Text = cat.HotKey.ToString();
-			else hotKeyLabel.Text = Catalog.GetString("none");
+			ignore = true;
+			if (tagger != null) {
+				nameentry.Text = tagger.Name;
+				colorbutton1.Color = Helpers.Misc.ToGdkColor(tagger.Color);
+				colorbutton2.Color = Helpers.Misc.ToGdkColor(tagger.TextColor);
+				lastLeadTime = tagger.Start;
+				tagmodecombobox.Active = (int)tagger.TagMode;
+				leadtimebutton.Value = tagger.Start.Seconds;
+				lagtimebutton.Value = tagger.Stop.Seconds;
+			}
+			if(cat != null) {
+				tagscheckbutton.Active = cat.ShowSubcategories;
+				tprbutton.Value = cat.TagsPerRow;
+				sortmethodcombobox.Active = (int)cat.SortMethod;
+				SetPositionCombo (fieldcombobox, cat.TagFieldPosition, cat.FieldPositionIsDistance);
+				SetPositionCombo (hfieldcombobox, cat.TagHalfFieldPosition, cat.HalfFieldPositionIsDistance);
+				SetPositionCombo (goalcombobox, cat.TagGoalPosition, false);
+				if(cat.HotKey.Defined)
+					hotKeyLabel.Text = cat.HotKey.ToString();
+				else
+					hotKeyLabel.Text = Catalog.GetString("none");
+			}
+			if (score != null) {
+				pointsbutton.Value = score.Points;
+			}
+			if (card != null) {
+				shapecombobox.Active = (int) card.Shape;
+			}
+			ignore = false;
+			Edited = false;
 		}
 		
-		void UpdatePosition (FieldPositionType position) {
-			CoordinatesTagger tagger;
-			List<Point> points;
-			bool isDistance;
-			
-			switch (position) {
-			case FieldPositionType.Field:
-				tagger = fieldcoordinatestagger;
-				isDistance = cat.FieldPositionIsDistance;
-				break;
-			case FieldPositionType.HalfField:
-				tagger = halffieldcoordinatestagger;
-				isDistance = cat.HalfFieldPositionIsDistance;
-				break;
-			default:
-			case FieldPositionType.Goal:
-				tagger = goalcoordinatestagger;
-				isDistance = false;
-				break;
-			}
-			points = new List<Point> ();
-			points.Add (new Point (0.5, 0.5));
-			if (isDistance) {
-				points.Add (new Point (0.5, 0.1));
-			}
-			tagger.Tagger.Points = points;
-		}
-		
-		protected virtual void OnChangebutonClicked(object sender, System.EventArgs e)
+		void HandleChangeHotkey(object sender, System.EventArgs e)
 		{
 			HotKeySelectorDialog dialog = new HotKeySelectorDialog();
 			dialog.TransientFor=(Gtk.Window)this.Toplevel;
@@ -166,66 +193,98 @@ namespace LongoMatch.Gui.Component
 			dialog.Destroy();
 			if(HotKeyChanged != null)
 				HotKeyChanged(prevHotKey,cat);
+			Edited = true;
 		}
 
-		protected virtual void OnColorbutton1ColorSet(object sender, System.EventArgs e)
+		void HandlePositionChanged (object sender, EventArgs e)
 		{
-			if(cat != null)
-				cat.Color= Helpers.Misc.ToLgmColor(colorbutton1.Color);
+			bool tag = false, trayectory = false;
+			
+			ReadPositionCombo (sender as ComboBox, out tag, out trayectory);
+			if (sender == fieldcombobox) {
+				cat.TagFieldPosition = tag;
+				cat.FieldPositionIsDistance = trayectory;
+			} else if (sender == hfieldcombobox) {
+				cat.TagHalfFieldPosition = tag;
+				cat.HalfFieldPositionIsDistance = trayectory;
+			} else {
+				cat.TagGoalPosition = tag;
+			}
+			Edited = true;
 		}
 
-		protected virtual void OnLeadTimeChanged(object sender, System.EventArgs e)
+		void HandleTagsPerRowValueChanged (object sender, EventArgs e)
 		{
-			cat.Start = new Time{Seconds=(int)leadtimebutton.Value};
+			cat.TagsPerRow = tprbutton.ValueAsInt;
+			Edited = true;
 		}
-
-		protected virtual void OnLagTimeChanged(object sender, System.EventArgs e)
+		
+		void HandleTagsToggled (object sender, EventArgs e)
 		{
-			cat.Stop = new Time{Seconds=(int)lagtimebutton.Value};
+			cat.ShowSubcategories = tagscheckbutton.Active;
+			Edited = true;
 		}
 
-		protected virtual void OnNameentryChanged(object sender, System.EventArgs e)
+		void HandleTagModeChanged (object sender, EventArgs e)
 		{
-			cat.Name = nameentry.Text;
+			tagger.TagMode = (TagMode) tagmodecombobox.Active;
+			if (tagger.TagMode == TagMode.Predifined) {
+				lagtimebutton.Sensitive = true;
+				leadtimebutton.Value = lastLeadTime.Seconds;
+			} else {
+				lagtimebutton.Sensitive = false;
+				lastLeadTime = tagger.Start;
+				leadtimebutton.Value = 0;
+			}
+			Edited = true;
+		}
+		
+		void HandleColorSet (object sender, EventArgs e)
+		{
+			LongoMatch.Common.Color c = Helpers.Misc.ToLgmColor((sender as ColorButton).Color);
+			if (sender == colorbutton1) {
+				tagger.Color = c;
+			} else {
+				tagger.TextColor = c;
+			}
+			Edited = true;
+		}
+		
+		void HandleLeadTimeChanged(object sender, System.EventArgs e)
+		{
+			tagger.Start = new Time{Seconds=(int)leadtimebutton.Value};
+			Edited = true;
 		}
 
-		protected virtual void OnSortmethodcomboboxChanged(object sender, System.EventArgs e)
+		void HandleLagTimeChanged(object sender, System.EventArgs e)
+		{
+			tagger.Stop = new Time{Seconds=(int)lagtimebutton.Value};
+			Edited = true;
+		}
+
+		void HandleNameentryChanged(object sender, System.EventArgs e)
+		{
+			tagger.Name = nameentry.Text;
+			Edited = true;
+		}
+
+		void HandleSortMethodChanged(object sender, System.EventArgs e)
 		{
 			cat.SortMethodString = sortmethodcombobox.ActiveText;
+			Edited = true;
 		}
 		
-		protected virtual void OnAddbuttonClicked (object sender, System.EventArgs e)
+		void HandleShapeChanged (object sender, EventArgs e)
 		{
+			card.Shape = (CardShape) shapecombobox.Active;
+			Edited = true;
 		}
 		
-		protected void OnTaggoalcheckbuttonClicked (object sender, EventArgs e)
+		void HandlePointsChanged (object sender, EventArgs e)
 		{
-			goalcoordinatestagger.Visible = taggoalcheckbutton.Active;
-			cat.TagGoalPosition = taggoalcheckbutton.Active;
+			score.Points = pointsbutton.ValueAsInt;
+			Edited = true;
 		}
-		
-		protected void OnTaghalffieldcheckbuttonClicked (object sender, EventArgs e)
-		{
-			halffieldcoordinatestagger.Visible = taghalffieldcheckbutton.Active;
-			cat.TagHalfFieldPosition = taghalffieldcheckbutton.Active;
-		}
-		
-		protected void OnTagfieldcheckbuttonClicked (object sender, EventArgs e)
-		{
-			fieldcoordinatestagger.Visible = tagfieldcheckbutton.Active;
-			cat.TagFieldPosition = tagfieldcheckbutton.Active;
-		}
-		
-		protected void OnTrajectoryhalffieldcheckbuttonClicked (object sender, EventArgs e)
-		{
-			cat.HalfFieldPositionIsDistance = trajectoryhalfcheckbutton.Active;
-			UpdatePosition (FieldPositionType.HalfField);
-		}
-		
-		protected void OnTrajectorycheckbuttonClicked (object sender, EventArgs e)
-		{
-			cat.FieldPositionIsDistance = trajectorycheckbutton.Active;
-			UpdatePosition (FieldPositionType.Field);
-		}
+
 	}
 }

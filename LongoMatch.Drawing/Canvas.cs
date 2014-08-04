@@ -32,30 +32,32 @@ namespace LongoMatch.Drawing
 		protected IWidget widget;
 		protected double scaleX, scaleY;
 		protected Point translation;
-		
+
 		public Canvas (IWidget widget)
 		{
 			this.widget = widget;
 			tk = Config.DrawingToolkit;
-			Objects = new List<ICanvasObject>();
+			Objects = new List<ICanvasObject> ();
 			widget.DrawEvent += Draw;
 			scaleX = 1;
 			scaleY = 1;
 			translation = new Point (0, 0);
 		}
-		
+
 		public List<ICanvasObject> Objects {
 			get;
 			set;
 		}
-		
-		protected Point ToUserCoords (Point p) {
+
+		protected Point ToUserCoords (Point p)
+		{
 			return new Point ((p.X - translation.X) / scaleX,
 			                  (p.Y - translation.Y) / scaleY);
 		
 		}
-		
-		public virtual void Draw (IContext context, Area area) {
+
+		public virtual void Draw (IContext context, Area area)
+		{
 			tk.Context = context;
 			tk.Begin ();
 			tk.TranslateAndScale (translation, new Point (scaleX, scaleY));
@@ -78,16 +80,17 @@ namespace LongoMatch.Drawing
 			tk.Context = null;
 		}
 	}
-	
+
 	public class SelectionCanvas: Canvas
 	{
 		protected bool moving;
-		protected Point start; 
+		protected Point start;
 		uint lastTime;
 		Selection clickedSel;
-		
-		public SelectionCanvas (IWidget widget): base (widget) {
-			Selections = new List<Selection>();
+
+		public SelectionCanvas (IWidget widget): base (widget)
+		{
+			Selections = new List<Selection> ();
 			SelectionMode = MultiSelectionMode.Single;
 			Accuracy = 1;
 			MoveWithoutSelection = false;
@@ -98,51 +101,58 @@ namespace LongoMatch.Drawing
 			widget.MotionEvent += HandleMotionEvent;
 			widget.ShowTooltipEvent += HandleShowTooltipEvent;
 		}
-		
+
 		public double Accuracy {
 			get;
 			set;
 		}
-		
+
 		public MultiSelectionMode SelectionMode {
 			get;
 			set;
 		}
-		
+
 		protected bool MoveWithoutSelection {
 			get;
 			set;
 		}
-		
+
 		protected List<Selection> Selections {
 			get;
 			set;
 		}
-		
+
 		protected bool ObjectsCanMove {
 			get;
 			set;
 		}
-		
-		protected virtual void StartMove (Selection sel) {
-		}
-		
-		protected virtual void CursorMoved (Point coords) {
+
+		protected virtual void StartMove (Selection sel)
+		{
 		}
 
-		protected virtual void SelectionMoved (Selection sel) {
+		protected virtual void CursorMoved (Point coords)
+		{
 		}
-		
-		protected virtual void StopMove () {
+
+		protected virtual void SelectionMoved (Selection sel)
+		{
 		}
-		
-		protected virtual void SelectionChanged (List<Selection> sel) {
+
+		protected virtual void StopMove ()
+		{
 		}
-		
-		protected virtual void ShowMenu (Point coords) {
+
+		protected virtual void SelectionChanged (List<Selection> sel)
+		{
 		}
-		
-		public void ClearSelection () {
+
+		protected virtual void ShowMenu (Point coords)
+		{
+		}
+
+		public void ClearSelection ()
+		{
 			foreach (Selection sel in Selections) {
 				ICanvasSelectableObject po = sel.Drawable as ICanvasSelectableObject;
 				po.Selected = false;
@@ -154,8 +164,9 @@ namespace LongoMatch.Drawing
 			widget.ReDraw ();
 			Selections.Clear ();
 		}
-		
-		protected void UpdateSelection (Selection sel, bool notify=true) {
+
+		protected void UpdateSelection (Selection sel, bool notify=true)
+		{
 			ICanvasSelectableObject so;
 			Selection seldup;
 
@@ -201,7 +212,7 @@ namespace LongoMatch.Drawing
 			}
 			return sel;
 		}
-		
+
 		void HandleShowTooltipEvent (Point coords)
 		{
 			Selection sel = GetSelection (ToUserCoords (coords)); 
@@ -212,8 +223,9 @@ namespace LongoMatch.Drawing
 				}
 			}
 		}
-		
-		protected virtual void HandleLeftButton (Point coords, ButtonModifier modif) {
+
+		protected virtual void HandleLeftButton (Point coords, ButtonModifier modif)
+		{
 			Selection sel;
 			
 			sel = GetSelection (coords);
@@ -224,10 +236,9 @@ namespace LongoMatch.Drawing
 			}
 
 			if ((SelectionMode == MultiSelectionMode.Multiple) ||
-			    (SelectionMode == MultiSelectionMode.MultipleWithModifier &&
-			    (modif == ButtonModifier.Control ||
-			    modif == ButtonModifier.Shift)))
-			{
+				(SelectionMode == MultiSelectionMode.MultipleWithModifier &&
+				(modif == ButtonModifier.Control ||
+				modif == ButtonModifier.Shift))) {
 				if (sel != null) {
 					sel.Position = SelectionPosition.All;
 					UpdateSelection (sel);
@@ -241,15 +252,16 @@ namespace LongoMatch.Drawing
 			}
 			widget.ReDraw ();
 		}
-		
-		protected virtual void HandleRightButton (Point coords, ButtonModifier modif) {
+
+		protected virtual void HandleRightButton (Point coords, ButtonModifier modif)
+		{
 			if (Selections.Count <= 1) {
 				ClearSelection ();
 				UpdateSelection (GetSelection (coords));
 			}
 			ShowMenu (coords);
 		}
-		
+
 		protected virtual void HandleMotionEvent (Point coords)
 		{
 			Selection sel;
@@ -259,7 +271,7 @@ namespace LongoMatch.Drawing
 				CursorMoved (coords);
 				start = coords;
 			} else if (moving) {
-				sel = Selections[0];
+				sel = Selections [0];
 				sel.Drawable.Move (sel, coords, start);  
 				widget.ReDraw (sel.Drawable);
 				SelectionMoved (sel);
@@ -293,13 +305,14 @@ namespace LongoMatch.Drawing
 			lastTime = time;
 		}
 	}
-	
+
 	public abstract class BackgroundCanvas: SelectionCanvas
 	{
 
 		Image background;
 
-		public BackgroundCanvas (IWidget widget): base (widget) {
+		public BackgroundCanvas (IWidget widget): base (widget)
+		{
 			widget.SizeChangedEvent += HandleSizeChangedEvent;
 		}
 
@@ -312,15 +325,15 @@ namespace LongoMatch.Drawing
 				return background;
 			}
 		}
-		
+
 		protected virtual void HandleSizeChangedEvent ()
 		{
 			if (background != null) {
-				background.ScaleFactor ((int) widget.Width, (int) widget.Height, out scaleX,
+				background.ScaleFactor ((int)widget.Width, (int)widget.Height, out scaleX,
 				                        out scaleY, out translation);
 			}
 		}
-		
+
 		public override void Draw (IContext context, Area area)
 		{
 			if (Background != null) {

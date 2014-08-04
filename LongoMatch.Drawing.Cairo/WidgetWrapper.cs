@@ -15,14 +15,11 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using Gtk;
 using Gdk;
-using Cairo;
 using LongoMatch.Common;
 using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Handlers.Drawing;
-
 using Rectangle = Gdk.Rectangle;
 using Point = LongoMatch.Common.Point;
 using CursorType = LongoMatch.Common.CursorType;
@@ -44,7 +41,7 @@ namespace LongoMatch.Drawing.Cairo
 		double lastX, lastY;
 		bool canMove;
 		uint moveTimerID, hoverTimerID;
-		
+
 		public WidgetWrapper (DrawingArea widget)
 		{
 			this.widget = widget;
@@ -63,7 +60,7 @@ namespace LongoMatch.Drawing.Cairo
 				return currentWidth;
 			}
 			set {
-				widget.WidthRequest = (int) value;
+				widget.WidthRequest = (int)value;
 			}
 		}
 
@@ -72,37 +69,41 @@ namespace LongoMatch.Drawing.Cairo
 				return currentHeight;
 			}
 			set {
-				widget.HeightRequest = (int) value;
+				widget.HeightRequest = (int)value;
 			}
 		}
-		
-		public void ReDraw (Area area = null) {
+
+		public void ReDraw (Area area = null)
+		{
 			if (widget.GdkWindow == null) {
 				return;
 			}
 			if (area == null) {
 				Gdk.Region region = widget.GdkWindow.ClipRegion;
-				widget.GdkWindow.InvalidateRegion(region,true);
+				widget.GdkWindow.InvalidateRegion (region, true);
 			} else {
 				widget.GdkWindow.InvalidateRect (
 					new Gdk.Rectangle ((int)area.Start.X, (int)area.Start.Y,
-				                   (int)area.Width, (int)area.Height),
+				                    (int)area.Width, (int)area.Height),
 					true);
 			}
-			widget.GdkWindow.ProcessUpdates(true);
+			widget.GdkWindow.ProcessUpdates (true);
 		}
-		
-		public void ReDraw (IMovableObject drawable) {
+
+		public void ReDraw (IMovableObject drawable)
+		{
 			/* FIXME: get region from drawable */
 			ReDraw ();
 		}
-		
-		public void ShowTooltip (string text) {
+
+		public void ShowTooltip (string text)
+		{
 			widget.HasTooltip = true;
 			widget.TooltipText = text;
 		}
 
-		public void SetCursor (CursorType type) {
+		public void SetCursor (CursorType type)
+		{
 			GCursorType gtype;
 			switch (type) {
 			case CursorType.Arrow:
@@ -124,7 +125,8 @@ namespace LongoMatch.Drawing.Cairo
 			widget.GdkWindow.Cursor = new Cursor (gtype);
 		}
 
-		public void SetCursorForTool (DrawTool tool) {
+		public void SetCursorForTool (DrawTool tool)
+		{
 			string cursor;
 			
 			switch (tool) {
@@ -170,8 +172,9 @@ namespace LongoMatch.Drawing.Cairo
 				widget.GdkWindow.Cursor = c;
 			}
 		}
-		
-		void Draw (Area area) {
+
+		void Draw (Area area)
+		{
 			if (DrawEvent != null) {
 				using (CairoContext c = new CairoContext (widget.GdkWindow)) {
 					if (area == null) {
@@ -181,8 +184,9 @@ namespace LongoMatch.Drawing.Cairo
 				}
 			}
 		}
-		
-		ButtonType ParseButtonType (uint button) {
+
+		ButtonType ParseButtonType (uint button)
+		{
 			ButtonType bt;
 			
 			switch (button) {
@@ -201,8 +205,9 @@ namespace LongoMatch.Drawing.Cairo
 			}
 			return bt;
 		}
-		
-		ButtonModifier ParseButtonModifier (ModifierType modifier) {
+
+		ButtonModifier ParseButtonModifier (ModifierType modifier)
+		{
 			ButtonModifier bm;
 			
 			switch (modifier) {
@@ -218,14 +223,16 @@ namespace LongoMatch.Drawing.Cairo
 			}
 			return bm;
 		}
-		
-		bool ReadyToMove () {
+
+		bool ReadyToMove ()
+		{
 			canMove = true;
 			moveTimerID = 0;
 			return false;
 		}
-		
-		bool EmitShowTooltip () {
+
+		bool EmitShowTooltip ()
+		{
 			if (ShowTooltipEvent != null) {
 				ShowTooltipEvent (new Point (lastX, lastY));
 			}
@@ -235,7 +242,7 @@ namespace LongoMatch.Drawing.Cairo
 
 		void HandleMotionNotifyEvent (object o, MotionNotifyEventArgs args)
 		{
-			if (hoverTimerID != 0){
+			if (hoverTimerID != 0) {
 				GLib.Source.Remove (hoverTimerID);
 				hoverTimerID = 0;
 			}
@@ -284,7 +291,7 @@ namespace LongoMatch.Drawing.Cairo
 				                  args.Event.Time, bt, bm);
 			}
 		}
-		
+
 		void HandleExposeEvent (object o, ExposeEventArgs args)
 		{
 			Rectangle r;

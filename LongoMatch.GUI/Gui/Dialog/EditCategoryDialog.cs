@@ -37,11 +37,10 @@ namespace LongoMatch.Gui.Dialog
 	{
 		private List<HotKey> hkList;
 
-		public EditCategoryDialog(Project project, Category cat)
+		public EditCategoryDialog(Project project, TaggerButton tagger)
 		{
 			this.Build();
-			timenodeproperties2.Template = project.Categories;
-			timenodeproperties2.Category = cat;
+			timenodeproperties2.Tagger = tagger;
 			timenodeproperties2.Project = project;
 			timenodeproperties2.HotKeyChanged += OnHotKeyChanged;
 		}
@@ -58,7 +57,7 @@ namespace LongoMatch.Gui.Dialog
 				MessagesHelpers.WarningMessage(this,
 				                               Catalog.GetString("This hotkey is already in use."));
 				category.HotKey=prevHotKey;
-				timenodeproperties2.Category = category; //Update Gui
+				timenodeproperties2.Tagger = category; //Update Gui
 			}
 			else if(category.HotKey.Defined) {
 				hkList.Remove(prevHotKey);

@@ -194,7 +194,7 @@ namespace LongoMatch.Services
 		 
 	} 
 	
-	public class CategoriesTemplatesProvider : TemplatesProvider<Categories, Category>, ICategoriesTemplatesProvider
+	public class CategoriesTemplatesProvider : TemplatesProvider<Categories, TaggerButton>, ICategoriesTemplatesProvider
 	{
 		public CategoriesTemplatesProvider (string basePath): base (basePath, Constants.CAT_TEMPLATE_EXT) {}
 		 

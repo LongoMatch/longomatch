@@ -36,11 +36,10 @@ namespace LongoMatch.Drawing.Widgets
 
 		TeamTemplate homeTeam, awayTeam;
 		Image background;
-		double currentWidth, currentHeight, scaleX, scaleY;
+		double currentWidth, currentHeight;
 		double backgroundWidth;
 		Point offset;
 		MultiSelectionMode prevMode;
-		PlayersIconSize iconSize;
 		bool inSubs;
 
 		public TeamTagger (IWidget widget): base (widget)
@@ -53,34 +52,35 @@ namespace LongoMatch.Drawing.Widgets
 			PlayersPorRowInBench = 2;
 			BenchIconSize = PlayersIconSize.Small;
 		}
-		
+
 		public Color HomeColor {
 			get;
 			set;
 		}
-		
+
 		public Color AwayColor {
 			get;
 			set;
 		}
-		
+
 		public int PlayersPorRowInBench {
 			get;
 			set;
 		}
-		
+
 		public PlayersIconSize BenchIconSize {
 			get;
 			set;
 		}
-		
-		public void LoadTeams (TeamTemplate homeTeam, TeamTemplate awayTeam, Image background) {
+
+		public void LoadTeams (TeamTemplate homeTeam, TeamTemplate awayTeam, Image background)
+		{
 			this.homeTeam = homeTeam;
 			this.awayTeam = awayTeam;
 			this.background = background;
 			Resize ();
 		}
-		
+
 		public bool SubstitutionsMode {
 			set {
 				if (value) {
@@ -97,7 +97,8 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		public void Select (List<Player> players) {
+		public void Select (List<Player> players)
+		{
 			ClearSelection ();
 			if (players != null) {
 				foreach (Player p in players) {
@@ -107,14 +108,16 @@ namespace LongoMatch.Drawing.Widgets
 			widget.ReDraw ();
 		}
 
-		public void Select (Player p) {
+		public void Select (Player p)
+		{
 			ClearSelection ();
 			SelectPlayer (p, false);
 			widget.ReDraw ();
 		}
-		
-		public void Reload () {
-			Objects.Clear();
+
+		public void Reload ()
+		{
+			Objects.Clear ();
 			if (homeTeam != null) {
 				LoadTeam (homeTeam, Team.LOCAL);
 			}
@@ -123,19 +126,19 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			widget.ReDraw ();
 		}
-		
+
 		int NTeams {
 			get {
 				return awayTeam == null ? 1 : 2;
 			}
 		}
-		
+
 		int BenchWidth {
 			get {
 				return PlayersPorRowInBench * (int)BenchIconSize;
 			}
 		}
-		
+
 		void SelectPlayer (Player p, bool notify=true)
 		{
 			if (p != null) {
@@ -146,27 +149,29 @@ namespace LongoMatch.Drawing.Widgets
 				}
 			}
 		}
-		
-		PlayersIconSize BestIconSize (int[] formation) {
+
+		PlayersIconSize BestIconSize (int[] formation)
+		{
 			double width = backgroundWidth / NTeams;
-			double optWidth = width / formation.Count();
-			double optHeight = currentHeight / formation.Max();
+			double optWidth = width / formation.Count ();
+			double optHeight = currentHeight / formation.Max ();
 			double size = Math.Min (optWidth, optHeight);
 
-			if (size < (int) PlayersIconSize.Small) {
+			if (size < (int)PlayersIconSize.Small) {
 				return PlayersIconSize.Smallest;
-			} else if (size < (int) PlayersIconSize.Medium) {
+			} else if (size < (int)PlayersIconSize.Medium) {
 				return PlayersIconSize.Small;
-			} else if (size < (int) PlayersIconSize.Large) {
+			} else if (size < (int)PlayersIconSize.Large) {
 				return PlayersIconSize.Medium;
-			} else if (size < (int) PlayersIconSize.ExtraLarge) {
+			} else if (size < (int)PlayersIconSize.ExtraLarge) {
 				return PlayersIconSize.Large;
 			} else {
 				return PlayersIconSize.ExtraLarge;
 			}
 		}
 
-		void LoadTeam (TeamTemplate template, Team team) {
+		void LoadTeam (TeamTemplate template, Team team)
+		{
 			int index = 0;
 			double width, colWidth, offsetX;
 			Color color;
@@ -194,7 +199,7 @@ namespace LongoMatch.Drawing.Widgets
 				} else {
 					colX = offsetX - colWidth * col - colWidth / 2;
 				}
-				rowHeight = currentHeight / template.Formation[col];
+				rowHeight = currentHeight / template.Formation [col];
 
 				for (int row=0; row < template.Formation[col]; row ++) {
 					Point p = new Point (colX, rowHeight * row + rowHeight / 2);
@@ -227,37 +232,39 @@ namespace LongoMatch.Drawing.Widgets
 				Objects.Add (po);
 			}
 		}
-		
-		void Resize () {
+
+		void Resize ()
+		{
 			currentWidth = widget.Width;
 			currentHeight = widget.Height;
 			backgroundWidth = currentWidth - BenchWidth * NTeams;
 			
 			if (background != null) {
-				background.ScaleFactor ((int) backgroundWidth, (int) currentHeight,
+				background.ScaleFactor ((int)backgroundWidth, (int)currentHeight,
 				                        out scaleX, out scaleY, out offset);
 			}
 			Reload ();
 		}
-		
-		protected override void SelectionChanged (List<Selection> selections) {
+
+		protected override void SelectionChanged (List<Selection> selections)
+		{
 			List<Player> players;
 			
-			players = selections.Select (s => (s.Drawable as PlayerObject).Player).ToList();
+			players = selections.Select (s => (s.Drawable as PlayerObject).Player).ToList ();
 
 			if (SubstitutionsMode) {
 				bool subsDone = false;
 				if (homeTeam != null) {
-					List<Player> hplayers = players.Where (p => homeTeam.List.Contains (p)).ToList();
+					List<Player> hplayers = players.Where (p => homeTeam.List.Contains (p)).ToList ();
 					if (hplayers.Count == 2) {
-						homeTeam.List.Swap (hplayers[0], hplayers[1]);
+						homeTeam.List.Swap (hplayers [0], hplayers [1]);
 						subsDone = true;
 					}
 				}
 				if (awayTeam != null) {
-					List<Player> aplayers = players.Where (p => awayTeam.List.Contains (p)).ToList();
+					List<Player> aplayers = players.Where (p => awayTeam.List.Contains (p)).ToList ();
 					if (aplayers.Count == 2) {
-						awayTeam.List.Swap (aplayers[0], aplayers[1]);
+						awayTeam.List.Swap (aplayers [0], aplayers [1]);
 						subsDone = true;
 					}
 				}
@@ -272,14 +279,15 @@ namespace LongoMatch.Drawing.Widgets
 				}
 			}
 		}
-		
-		protected override void ShowMenu (Point coords) {
-			if (ShowMenuEvent != null && Selections.Count > 0){
+
+		protected override void ShowMenu (Point coords)
+		{
+			if (ShowMenuEvent != null && Selections.Count > 0) {
 				ShowMenuEvent (
-					Selections.Select (s => (s.Drawable as PlayerObject).Player).ToList());
+					Selections.Select (s => (s.Drawable as PlayerObject).Player).ToList ());
 			}
 		}
-		
+
 		public override void Draw (IContext context, Area area)
 		{
 			if (currentWidth != widget.Width || currentHeight != widget.Height) {

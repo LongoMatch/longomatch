@@ -34,17 +34,10 @@ namespace LongoMatch.Handlers
 	/* A Play was selected */
 	public delegate void PlaySelectedHandler(Play play);
 	/* A new play needs to be create for a specific category at the current play time */
-	public delegate void NewTagHandler(Category category, List<Player> plays);
-	/* Signal the start time to tag a new play */
-	public delegate void NewTagStartHandler (Category category);
-	/* Signal the stop time to tag a new play */
-	public delegate void NewTagStopHandler(Category category);
-	/* Signal cancellation of tag */
-	public delegate void NewTagCancelHandler(Category category);
-	/* A new play needs to be created at a defined frame */
-	public delegate void NewTagAtPosHandler(Category category, Time position);
+	public delegate void NewTagHandler (TaggerButton tagger, List<Player> plays, List<Tag> tags, Time start, Time stop);
 	//A play was edited
 	public delegate void TimeNodeChangedHandler(TimeNode tNode, object val);
+	public delegate void CategoryChangedHandler(Category cat);
 	/* A list of plays needs to be deleted */
 	public delegate void PlaysDeletedHandler(List<Play> plays);
 	/* Tag a play */
@@ -53,6 +46,15 @@ namespace LongoMatch.Handlers
 	public delegate void PlayCategoryChangedHandler(Play play, Category cat);
 	/* DUplicate play */
 	public delegate void DuplicatePlaysHandler (List<Play> plays);
+	/* Category Selected */
+	public delegate void TaggersSelectedHandler (List<TaggerButton> taggerbuttons);
+	public delegate void TaggerSelectedHandler (TaggerButton taggerbutton);
+	public delegate void ShowButtonsTaggerMenuHandler (TaggerButton taggerbutton, Tag tag);
+	
+	/* Penalty Card */
+	public delegate void PenaltyCardHandler (PenaltyCard card);
+	/* Score */
+	public delegate void ScoreHandler (Score score);
 	
 	public delegate void TeamsTagsChangedHandler ();
 	

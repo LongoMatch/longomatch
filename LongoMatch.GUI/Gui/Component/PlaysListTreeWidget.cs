@@ -121,7 +121,7 @@ namespace LongoMatch.Gui.Component
 			Dictionary<Category, TreeIter> itersDic = new Dictionary<Category, TreeIter>();
 			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore(typeof(Play));
 
-			foreach(Category cat in project.Categories.List) {
+			foreach(Category cat in project.Categories.CategoriesList) {
 				Gtk.TreeIter iter = dataFileListStore.AppendValues(cat);
 				itersDic.Add(cat, iter);
 			}
@@ -139,14 +139,13 @@ namespace LongoMatch.Gui.Component
 		}
 
 		private string CategoryPath(Category cat) {
-			return project.Categories.List.IndexOf(cat).ToString();
+			return project.Categories.CategoriesList.IndexOf(cat).ToString();
 		}
 		
-		protected virtual void OnEditProperties(TimeNode tNode, object val) {
-			EditCategoryDialog dialog = new EditCategoryDialog(project, tNode as Category);
+		protected virtual void OnEditProperties(Category cat) {
+			EditCategoryDialog dialog = new EditCategoryDialog(project, cat);
 			dialog.Run();
 			dialog.Destroy();
-			Config.EventsBroker.EmitTimeNodeChanged (tNode, tNode.Name);
 		}
 
 		protected virtual void OnNewRenderingJob (object sender, EventArgs args)

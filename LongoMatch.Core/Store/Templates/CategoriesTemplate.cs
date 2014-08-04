@@ -40,9 +40,12 @@ namespace LongoMatch.Store.Templates
 	/// The <see cref="LongoMatch.DB.Project"/> must handle all the changes
 	/// </summary>
 	[Serializable]
-	public class Categories: ITemplate, ITemplate<Category>
+	public class Categories: ITemplate<TaggerButton>
 	{
 
+		const int CAT_WIDTH = 120;
+		const int CAT_HEIGHT = 80;
+		
 		/// <summary>
 		/// Creates a new template
 		/// </summary>
@@ -51,10 +54,7 @@ namespace LongoMatch.Store.Templates
 			HalfFieldBackground = Config.HalfFieldBackground;
 			GoalBackground = Config.GoalBackground;
 			ID = Guid.NewGuid ();
-			List = new List<Category>();
-			Scores = new List<Score> ();
-			PenaltyCards = new List<PenaltyCard> ();
-			CommonTags = new List<Tag>();
+			List = new List<TaggerButton>();
 		}
 		
 		public Guid ID {
@@ -62,32 +62,17 @@ namespace LongoMatch.Store.Templates
 			set;
 		}
 		
-		public List<Category> List {
+		public List<TaggerButton> List {
 			get;
 			set;
 		}
 		
-		public List<Tag> CommonTags {
-			get;
-			set;
-		}
-
 		public string Name {
 			get;
 			set;
 		}
 		
 		public List<string> GamePeriods {
-			get;
-			set;
-		}
-		
-		public List<Score> Scores {
-			get;
-			set;
-		}
-		
-		public List<PenaltyCard> PenaltyCards {
 			get;
 			set;
 		}
@@ -112,6 +97,55 @@ namespace LongoMatch.Store.Templates
 			set;
 		}
 		
+		[JsonIgnore]
+		public List<Score> Scores {
+			get {
+				return List.OfType<Score>().ToList();
+			}
+		}
+		
+		[JsonIgnore]
+		public List<PenaltyCard> PenaltyCards {
+			get {
+				return List.OfType<PenaltyCard>().ToList();
+			}
+		}
+		
+		[JsonIgnore]
+		public List<Timer> Timers {
+			get {
+				return List.OfType<Timer>().ToList();
+			}
+		}
+		
+		[JsonIgnore]
+		public List<Category> CategoriesList {
+			get {
+				return List.OfType<Category>().ToList();
+			}
+		}
+		
+		[JsonIgnore]
+		public List<TagButton> CommonTags {
+			get {
+				return List.OfType<TagButton>().ToList();
+			}
+		}
+
+		[JsonIgnore]
+		public int CanvasWidth {
+			get {
+				return (int) List.Max (c => c.Position.X + c.Width);
+			}
+		}
+		
+		[JsonIgnore]
+		public int CanvasHeight {
+			get {
+				return (int) List.Max (c => c.Position.Y + c.Height);
+			}
+		}
+		
 		public void Save(string filePath) {
 			Serializer.Save(this, filePath);
 		}
@@ -132,7 +166,11 @@ namespace LongoMatch.Store.Templates
 				Stop = new Time {Seconds = 10},
 				SortMethod = SortMethodType.SortByStartTime,
 				HotKey = h,
-				Position = index-1,
+				/* Leave the first row for the timers and score */
+				Position = new Point (10 + (index % 7) * (CAT_WIDTH + 10),
+				                      10 + (index / 7 + 1) * (CAT_HEIGHT + 10)),
+				Width = CAT_WIDTH,
+				Height = CAT_HEIGHT,
 			};
 			AddDefaultTags(cat);
 			List.Insert(index, cat);
@@ -150,6 +188,10 @@ namespace LongoMatch.Store.Templates
 		}
 
 		public static Categories DefaultTemplate(int count) {
+			Score score;
+			Timer timer;
+			PenaltyCard card;
+			TagButton tag;
 			List<string> periods = new List<string>();
 			Categories template = new Categories();
 			
@@ -157,14 +199,37 @@ namespace LongoMatch.Store.Templates
 			periods.Add ("1");
 			periods.Add ("2");
 			template.GamePeriods = periods; 
-			template.CommonTags.Add (new Tag (Catalog.GetString ("Attack"),
-			                                  Constants.COMMON_TAG));
-			template.CommonTags.Add (new Tag (Catalog.GetString ("Defense"),
-			                                  Constants.COMMON_TAG));
-			template.PenaltyCards.Add (new PenaltyCard (Catalog.GetString ("Red"),
-			                                            Color.Red, CardShape.Rectangle));
-			template.PenaltyCards.Add (new PenaltyCard (Catalog.GetString ("Yellow"),
-			                                            Color.Yellow, CardShape.Rectangle));
+			tag = new TagButton (new Tag (Catalog.GetString ("Attack"),
+			                              Constants.COMMON_TAG));
+			tag.Position = new Point (10, 10);
+			template.List.Add (tag);
+			
+			tag = new TagButton (new Tag (Catalog.GetString ("Defense"),
+			                              Constants.COMMON_TAG));
+			tag.Position = new Point (10 + (10 + CAT_WIDTH) * 1, 10);
+			template.List.Add (tag);
+
+			card = new PenaltyCard (Catalog.GetString ("Red"),
+			                        Color.Red, CardShape.Rectangle);
+			card.Position = new Point (10 + (10 + CAT_WIDTH) * 2, 10);
+			template.List.Add (card);
+
+			card = new PenaltyCard (Catalog.GetString ("Yellow"),
+			                        Color.Yellow, CardShape.Rectangle);
+			card.Position = new Point (10 + (10 + CAT_WIDTH) * 3, 10);
+			template.List.Add (card);
+			
+			score = new Score (Catalog.GetString ("Field goal"), 1);
+			score.Position = new Point (10 + (10 + CAT_WIDTH) * 4, 10);
+			template.List.Add (score);
+			
+			score = new Score (Catalog.GetString ("Penalty goal"), 1);
+			score.Position = new Point (10 + (10 + CAT_WIDTH) * 5, 10);
+			template.List.Add (score);
+			
+			timer = new Timer {Name = Catalog.GetString ("Ball playing")};
+			timer.Position = new Point (10 + (10 + CAT_WIDTH) * 6, 10);
+			template.List.Add (timer);
 			return template;
 		}
 

@@ -28,13 +28,14 @@ namespace LongoMatch.Drawing.CanvasObject
 		public QuadrilateralObject ()
 		{
 		}
-		
+
 		public QuadrilateralObject (Quadrilateral quadrilateral)
 		{
 			Drawable = quadrilateral;
 		}
-		
-		public override void Draw (IDrawingToolkit tk, Area area) {
+
+		public override void Draw (IDrawingToolkit tk, Area area)
+		{
 			tk.Begin ();
 			tk.FillColor = Drawable.FillColor;
 			tk.StrokeColor = Drawable.StrokeColor;

@@ -31,7 +31,7 @@ namespace LongoMatch.Drawing.CanvasObject
 		List<TimeNodeObject> nodes;
 		double secondsPerPixel;
 		protected Time maxTime;
-		
+
 		public TimelineObject (Time maxTime, double offsetY, Color background)
 		{
 			this.background = background;
@@ -39,10 +39,10 @@ namespace LongoMatch.Drawing.CanvasObject
 			this.maxTime = maxTime;
 			Visible = true;
 			CurrentTime = new Time (0);
-			OffsetY  = offsetY;
+			OffsetY = offsetY;
 			SecondsPerPixel = 0.1;
 		}
-		
+
 		public double SecondsPerPixel {
 			set {
 				secondsPerPixel = value;
@@ -54,35 +54,38 @@ namespace LongoMatch.Drawing.CanvasObject
 				return secondsPerPixel;
 			}
 		}
-		
+
 		public Time CurrentTime {
 			set;
 			protected get;
 		}
-		
+
 		public double Width {
 			set;
 			protected get;
 		}
-		
+
 		public double OffsetY {
 			set;
 			get;
 		}
-		
-		public void AddNode (TimeNodeObject o) {
+
+		public void AddNode (TimeNodeObject o)
+		{
 			nodes.Add (o);
 		}
-		
-		public void RemoveNode (TimeNode node) {
+
+		public void RemoveNode (TimeNode node)
+		{
 			nodes.RemoveAll (po => po.TimeNode == node);
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area) {
+		public override void Draw (IDrawingToolkit tk, Area area)
+		{
 			double position;
 			List<TimeNodeObject> selected;
 			
-			selected = new List<TimeNodeObject>();
+			selected = new List<TimeNodeObject> ();
 
 			tk.Begin ();
 			tk.FillColor = background;
@@ -108,10 +111,11 @@ namespace LongoMatch.Drawing.CanvasObject
 			tk.DrawLine (new Point (position, OffsetY),
 			             new Point (position, OffsetY + Constants.CATEGORY_HEIGHT));
 			
-			tk.End();
+			tk.End ();
 		}
-		
-		public Selection GetSelection (Point point, double precision) {
+
+		public Selection GetSelection (Point point, double precision)
+		{
 			Selection selection = null;
 
 			if (point.Y >= OffsetY && point.Y < OffsetY + Constants.CATEGORY_HEIGHT) {
@@ -132,13 +136,15 @@ namespace LongoMatch.Drawing.CanvasObject
 			}
 			return selection;
 		}
-		
-		public void Move (Selection s, Point p, Point start) {
+
+		public void Move (Selection s, Point p, Point start)
+		{
 			s.Drawable.Move (s, p, start);
 		}
 	}
-	
-	public class CategoryTimeline: TimelineObject {
+
+	public class CategoryTimeline: TimelineObject
+	{
 
 		public CategoryTimeline (List<Play> plays, Time maxTime, double offsetY, Color background):
 			base (maxTime, offsetY, background)
@@ -147,18 +153,19 @@ namespace LongoMatch.Drawing.CanvasObject
 				AddPlay (p);
 			}
 		}
-		
-		public void AddPlay (Play play){
+
+		public void AddPlay (Play play)
+		{
 			PlayObject po = new PlayObject (play);
 			po.OffsetY = OffsetY;
 			po.SecondsPerPixel = SecondsPerPixel;
 			po.MaxTime = maxTime;
 			AddNode (po);
 		}
-
 	}
-	
-	public class TimerTimeline: TimelineObject {
+
+	public class TimerTimeline: TimelineObject
+	{
 
 		public TimerTimeline (List<Timer> timers, Time maxTime, double offsetY, Color background):
 			base (maxTime, offsetY, background)

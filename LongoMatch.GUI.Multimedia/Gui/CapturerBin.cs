@@ -117,7 +117,7 @@ namespace LongoMatch.Gui
 			}
 
 			currentPeriod = new Period {Name = periods[periodIndex]};
-			currentPeriod.Start (ellapsedTime);
+			currentPeriod.StartTimer (ellapsedTime);
 			Log.Information (String.Format ("Start new period {0} at {1}",
 			                                currentPeriod.Name, ellapsedTime.ToSecondsString()));
 			Capturing = true;
@@ -153,7 +153,7 @@ namespace LongoMatch.Gui
 			periodIndex ++;
 			Capturing = false;
 			capturer.TogglePause ();
-			currentPeriod.Stop (ellapsedTime);
+			currentPeriod.StopTimer (ellapsedTime);
 			UpdateLabel (periods[periodIndex]);
 			currentPeriod = null;
 			recbutton.Visible = true;
@@ -164,7 +164,7 @@ namespace LongoMatch.Gui
 			if (currentPeriod != null) {
 				Log.Information (String.Format ("Stop period {0} at {1}",
 				                                currentPeriod.Name, ellapsedTime.ToSecondsString()));
-				currentPeriod.Stop (ellapsedTime);
+				currentPeriod.StopTimer (ellapsedTime);
 			}
 			Log.Information ("Stop capture");
 			capturer.Stop ();

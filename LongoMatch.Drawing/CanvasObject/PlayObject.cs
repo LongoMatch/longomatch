@@ -29,7 +29,7 @@ namespace LongoMatch.Drawing.CanvasObject
 		public PlayObject (Play play):base (play)
 		{
 		}
-		
+
 		public override string Description {
 			get {
 				return Play.Name;
@@ -41,11 +41,12 @@ namespace LongoMatch.Drawing.CanvasObject
 				return TimeNode as Play;
 			}
 		}
-		
-		public override void Draw (IDrawingToolkit tk, Area area) {
+
+		public override void Draw (IDrawingToolkit tk, Area area)
+		{
 			Color c = Play.Category.Color;
 			tk.Begin ();
-			tk.FillColor = new Color (c.R, c.G, c.B, (byte) (0.8 * byte.MaxValue));
+			tk.FillColor = new Color (c.R, c.G, c.B, (byte)(0.8 * byte.MaxValue));
 			if (Selected) {
 				tk.StrokeColor = Constants.PLAY_OBJECT_SELECTED_COLOR;
 			} else {
@@ -53,8 +54,8 @@ namespace LongoMatch.Drawing.CanvasObject
 			}
 			tk.LineWidth = 2;
 			tk.DrawRoundedRectangle (new Point (StartX, OffsetY),
-			                  Utils.TimeToPos (Play.Duration, SecondsPerPixel),
-			                  Constants.CATEGORY_HEIGHT, 2);
+			                         Utils.TimeToPos (Play.Duration, SecondsPerPixel),
+			                         Constants.CATEGORY_HEIGHT, 2);
 			tk.End ();
 		}
 	}

@@ -24,6 +24,7 @@ namespace LongoMatch.Gui.Dialog
 			this.timenodeproperties2 = new global::LongoMatch.Gui.Component.CategoryProperties ();
 			this.timenodeproperties2.Events = ((global::Gdk.EventMask)(256));
 			this.timenodeproperties2.Name = "timenodeproperties2";
+			this.timenodeproperties2.Edited = false;
 			w1.Add (this.timenodeproperties2);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(w1 [this.timenodeproperties2]));
 			w2.Position = 0;

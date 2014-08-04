@@ -95,7 +95,7 @@ namespace LongoMatch.Gui.Component
 			Model.SetSortFunc(0, SortFunction);
 		}
 
-		override protected bool OnButtonPressEvent(EventButton evnt)
+		override protected bool OnButtonPressEvent(Gdk.EventButton evnt)
 		{
 			TreePath[] paths = Selection.GetSelectedRows();
 

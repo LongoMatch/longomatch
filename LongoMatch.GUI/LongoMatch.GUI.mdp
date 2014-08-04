@@ -126,8 +126,6 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.Stats.PlayerCategoryViewer.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/Stats/PlayerSubcategoryViewer.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.Stats.PlayerSubcategoryViewer.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Component/ButtonTagger.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.ButtonTagger.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/AnalysisComponent.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.AnalysisComponent.cs" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/background.svg" />
@@ -149,8 +147,6 @@
     <File subtype="Code" buildaction="Compile" name="Gui/Panel/SportsTemplatesPanel.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Panel.SportsTemplatesPanel.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Dialog.CalendarDialog.cs" />
-    <File subtype="Code" buildaction="Compile" name="Gui/Component/AnalysisTemplateEditor.cs" />
-    <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.AnalysisTemplateEditor.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/BackgroundWidget.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Panel/PreferencesPanel.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Panel.PreferencesPanel.cs" />

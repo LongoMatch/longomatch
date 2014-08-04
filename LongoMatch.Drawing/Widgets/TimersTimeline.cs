@@ -13,13 +13,11 @@ namespace LongoMatch.Drawing.Widgets
 	{
 	
 		public event TimeNodeChangedHandler TimeNodeChanged;
-		public event PlaySelectedHandler TimeNodeSelected;
-		public event ShowTimelineMenuHandler ShowMenuEvent;
 
 		double secondsPerPixel;
 		Time duration;
 		Dictionary <Timer, TimerTimeline> timers;
-		
+
 		public TimersTimeline (IWidget widget): base(widget)
 		{
 			secondsPerPixel = 0.1;
@@ -27,17 +25,19 @@ namespace LongoMatch.Drawing.Widgets
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
 		}
 
-		public void LoadPeriods (List<Period> periods, Time duration) {
-			LoadTimers (periods.Select (p => p as Timer).ToList(), duration, false);
+		public void LoadPeriods (List<Period> periods, Time duration)
+		{
+			LoadTimers (periods.Select (p => p as Timer).ToList (), duration, false);
 		}
 
-		public void LoadTimers (List<Timer> timers, Time duration, bool splitTimers = true) {
-			Objects.Clear();
-			this.timers = new Dictionary<Timer, TimerTimeline>();
+		public void LoadTimers (List<Timer> timers, Time duration, bool splitTimers = true)
+		{
+			Objects.Clear ();
+			this.timers = new Dictionary<Timer, TimerTimeline> ();
 			this.duration = duration;
 			FillCanvas (timers, splitTimers);
 		}
-		
+
 		public Time CurrentTime {
 			set {
 				foreach (TimerTimeline tl in timers.Values) {
@@ -45,7 +45,7 @@ namespace LongoMatch.Drawing.Widgets
 				}
 			}
 		}
-		
+
 		public double SecondsPerPixel {
 			set {
 				secondsPerPixel = value;
@@ -55,8 +55,9 @@ namespace LongoMatch.Drawing.Widgets
 				return secondsPerPixel;
 			}
 		}
-		
-		void Update () {
+
+		void Update ()
+		{
 			double width;
 
 			if (duration == null)
@@ -68,13 +69,14 @@ namespace LongoMatch.Drawing.Widgets
 				tl.SecondsPerPixel = SecondsPerPixel;
 			}
 		}
-		
-		void FillCanvas (List<Timer> timers, bool splitTimers) {
+
+		void FillCanvas (List<Timer> timers, bool splitTimers)
+		{
 			if (!splitTimers) {
 				widget.Height = Constants.TIMER_HEIGHT;
 				TimerTimeline tl = new TimerTimeline (timers, duration, 0, Color.White);
 				foreach (Timer t in timers) {
-					this.timers[t] = tl;
+					this.timers [t] = tl;
 				}
 				Objects.Add (tl);
 			} else {
@@ -82,8 +84,9 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			Update ();
 		}
-		
-		protected override void StartMove (Selection sel) {
+
+		protected override void StartMove (Selection sel)
+		{
 			if (sel == null)
 				return;
 
@@ -91,12 +94,14 @@ namespace LongoMatch.Drawing.Widgets
 				widget.SetCursor (CursorType.DoubleArrow);
 			}
 		}
-		
-		protected override void StopMove () {
+
+		protected override void StopMove ()
+		{
 			widget.SetCursor (CursorType.Arrow);
 		}
 
-		protected override void SelectionMoved (Selection sel) {
+		protected override void SelectionMoved (Selection sel)
+		{
 			if (TimeNodeChanged != null) {
 				Time moveTime;
 				TimeNode tn = (sel.Drawable as TimeNodeObject).TimeNode;

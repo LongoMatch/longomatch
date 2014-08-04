@@ -32,9 +32,9 @@ namespace LongoMatch.Drawing.Widgets
 
 		public CategoriesLabels (IWidget widget): base (widget)
 		{
-			categories = new Dictionary<Category, CategoryLabel>();
+			categories = new Dictionary<Category, CategoryLabel> ();
 		}
-		
+
 		public double Scroll {
 			set {
 				foreach (var o in Objects) {
@@ -43,8 +43,9 @@ namespace LongoMatch.Drawing.Widgets
 				}
 			}
 		}
-		
-		public void LoadProject (Project project, PlaysFilter filter) {
+
+		public void LoadProject (Project project, PlaysFilter filter)
+		{
 			Objects.Clear ();
 			this.project = project;
 			this.filter = filter;
@@ -54,31 +55,33 @@ namespace LongoMatch.Drawing.Widgets
 				filter.FilterUpdated += UpdateVisibleCategories;
 			}
 		}
-		
-		void FillCanvas () {
+
+		void FillCanvas ()
+		{
 			int i = 0;
 			
 			widget.Width = Constants.CATEGORY_WIDTH;
 			
 			/* Start from bottom to top  with categories */
-			foreach (Category cat in project.Categories.List) {
+			foreach (Category cat in project.Categories.CategoriesList) {
 				CategoryLabel l;
 				
 				/* Add the category label */
 				l = new CategoryLabel (cat, Constants.CATEGORY_WIDTH,
 				                       Constants.CATEGORY_HEIGHT,
 				                       i * Constants.CATEGORY_HEIGHT);
-				categories[cat] = l;
+				categories [cat] = l;
 				Objects.Add (l);
 				i++;
 			}
 		}
-		
-		void UpdateVisibleCategories () {
+
+		void UpdateVisibleCategories ()
+		{
 			int i = 0;
 
 			foreach (Category cat in categories.Keys) {
-				CategoryLabel label = categories[cat];
+				CategoryLabel label = categories [cat];
 
 				if (filter.VisibleCategories.Contains (cat)) {
 					label.OffsetY = i * Constants.CATEGORY_HEIGHT;
