@@ -66,7 +66,7 @@ namespace LongoMatch.Drawing
 			return d;
 		}
 
-		public static Image RenderFrameDrawingToImage (IDrawingToolkit tk, Image image, FrameDrawing fd)
+		protected static Image RenderFrameDrawing (IDrawingToolkit tk, int width, int height, FrameDrawing fd, Image image)
 		{
 			Image img;
 			ISurface surface;
@@ -83,6 +83,16 @@ namespace LongoMatch.Drawing
 			img = surface.Copy ();
 			surface.Dispose ();
 			return img;
+		}
+		
+		public static Image RenderFrameDrawing (IDrawingToolkit tk, int width, int height, FrameDrawing fd)
+		{
+			return RenderFrameDrawing (tk, width, height, fd, null);
+		}
+		
+		public static Image RenderFrameDrawingToImage (IDrawingToolkit tk, Image image, FrameDrawing fd)
+		{
+			return RenderFrameDrawing (tk, image.Width, image.Height, fd, image);
 		}
 	}
 }

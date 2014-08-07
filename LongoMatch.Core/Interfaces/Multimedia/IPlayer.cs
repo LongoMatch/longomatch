@@ -26,7 +26,7 @@ using Image = LongoMatch.Common.Image;
 
 namespace LongoMatch.Interfaces.Multimedia
 {
-	public interface IPlayer
+	public interface IPlayer: IDisposable
 	{
 		// Events
 		event         ErrorHandler Error;
@@ -51,6 +51,5 @@ namespace LongoMatch.Interfaces.Multimedia
 		bool SeekToPreviousFrame();
 		Image GetCurrentFrame (int width=-1, int height=-1);
 		void Expose ();
-		void Dispose();
 	}
 }

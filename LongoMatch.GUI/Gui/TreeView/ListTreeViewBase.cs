@@ -131,8 +131,7 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		protected void ShowMenu () {
-			playsMenu.ShowListMenu (SelectedPlays, Project.Description.File,
-			                        Project.Categories.CategoriesList);
+			playsMenu.ShowListMenu (Project, SelectedPlays);
 		}
 
 		protected object GetValueFromPath(TreePath path) {
@@ -177,7 +176,7 @@ namespace LongoMatch.Gui.Component
 				if(o is Player)
 					c.Markup = GLib.Markup.EscapeText ((o as Player).Name);
 				else
-					c.Markup = GLib.Markup.EscapeText ((o as TimeNode).Name);
+					c.Markup = GLib.Markup.EscapeText ((o as Category).Name);
 				return;
 			}
 

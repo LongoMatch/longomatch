@@ -1561,27 +1561,12 @@ Circle</property>
                     <property name="MemberName" />
                     <property name="Spacing">6</property>
                     <child>
-                      <widget class="Gtk.Label" id="label1">
-                        <property name="MemberName" />
-                        <property name="LabelProp" translatable="yes">Load a playlist
-or create a 
-new one.</property>
-                      </widget>
-                      <packing>
-                        <property name="Position">0</property>
-                        <property name="AutoSize">True</property>
-                        <property name="Expand">False</property>
-                        <property name="Fill">False</property>
-                      </packing>
-                    </child>
-                    <child>
                       <widget class="LongoMatch.Gui.Component.PlayListTreeView" id="playlisttreeview1">
                         <property name="MemberName" />
-                        <property name="Sensitive">False</property>
                         <property name="CanFocus">True</property>
                       </widget>
                       <packing>
-                        <property name="Position">1</property>
+                        <property name="Position">0</property>
                         <property name="AutoSize">False</property>
                       </packing>
                     </child>
@@ -1617,38 +1602,6 @@ new one.</property>
               </packing>
             </child>
             <child>
-              <widget class="Gtk.Button" id="openbutton">
-                <property name="MemberName" />
-                <property name="Tooltip" translatable="yes">Open a playlist</property>
-                <property name="CanFocus">True</property>
-                <property name="Type">TextAndIcon</property>
-                <property name="Icon">stock:gtk-open Button</property>
-                <property name="Label" translatable="yes" />
-                <property name="UseUnderline">True</property>
-                <signal name="Clicked" handler="OnOpenbuttonClicked" />
-              </widget>
-              <packing>
-                <property name="Position">1</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.Button" id="savebutton">
-                <property name="MemberName" />
-                <property name="Tooltip" translatable="yes">Save the playlist</property>
-                <property name="CanFocus">True</property>
-                <property name="Type">TextAndIcon</property>
-                <property name="Icon">stock:gtk-save Button</property>
-                <property name="Label" translatable="yes" />
-                <property name="UseUnderline">True</property>
-                <signal name="Clicked" handler="OnSavebuttonClicked" />
-              </widget>
-              <packing>
-                <property name="Position">2</property>
-                <property name="AutoSize">False</property>
-              </packing>
-            </child>
-            <child>
               <widget class="Gtk.Button" id="newvideobutton">
                 <property name="MemberName" />
                 <property name="Tooltip" translatable="yes">Export the playlist to new video file</property>
@@ -1660,7 +1613,7 @@ new one.</property>
                 <signal name="Clicked" handler="OnNewvideobuttonClicked" />
               </widget>
               <packing>
-                <property name="Position">3</property>
+                <property name="Position">1</property>
                 <property name="AutoSize">False</property>
               </packing>
             </child>
@@ -3989,7 +3942,7 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.PlaysSelectionWidget" design-size="568 495">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.PlaysSelectionWidget" design-size="567 495">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -4071,6 +4024,26 @@ You can continue with the current capture, cancel it or save your project.
               </packing>
             </child>
             <child>
+              <widget class="LongoMatch.Gui.Component.PlayListWidget" id="playlistwidget">
+                <property name="MemberName" />
+                <property name="WidthRequest">100</property>
+                <property name="Events">ButtonPressMask</property>
+              </widget>
+              <packing>
+                <property name="Position">1</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="label3">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">Playlists</property>
+                <property name="Angle">90</property>
+              </widget>
+              <packing>
+                <property name="type">tab</property>
+              </packing>
+            </child>
+            <child>
               <widget class="Gtk.VBox" id="vbox2">
                 <property name="MemberName" />
                 <property name="Spacing">6</property>
@@ -4128,7 +4101,7 @@ You can continue with the current capture, cancel it or save your project.
                 </child>
               </widget>
               <packing>
-                <property name="Position">1</property>
+                <property name="Position">2</property>
               </packing>
             </child>
             <child>
@@ -9241,7 +9214,7 @@ Click 2 players to swap them</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Panel.SportsTemplatesPanel" design-size="1242 783">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Panel.SportsTemplatesPanel" design-size="1372 783">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>

@@ -19,6 +19,7 @@ using System;
 using LongoMatch.Handlers;
 using System.Collections.Generic;
 using LongoMatch.Store;
+using LongoMatch.Store.Playlists;
 using LongoMatch.Interfaces;
 using LongoMatch.Interfaces.GUI;
 
@@ -31,7 +32,6 @@ namespace LongoMatch.Common
 		public event PlaysDeletedHandler PlaysDeleted;
 		public event PlaySelectedHandler PlaySelected;
 		public event PlayCategoryChangedHandler PlayCategoryChanged;
-		public event PlayListNodeAddedHandler PlayListNodeAdded;
 		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event SnapshotSeriesHandler SnapshotSeries;
 		public event TagPlayHandler TagPlay;
@@ -40,12 +40,12 @@ namespace LongoMatch.Common
 		
 		/* Playlist */
 		public event RenderPlaylistHandler RenderPlaylist;
-		public event PlayListNodeAddedHandler PlayListNodeAddedEvent;
-		public event PlayListNodeSelectedHandler PlayListNodeSelectedEvent;
-		public event OpenPlaylistHandler OpenPlaylistEvent;
+		public event AddPlaylistElementHandler AddPlaylistElementEvent;
+		public event PlaylistElementSelectedHandler PlaylistElementSelectedEvent;
 		public event NewPlaylistHandler NewPlaylistEvent;
-		public event SavePlaylistHandler SavePlaylistEvent; 
-		
+		public event NextPlaylistElementHandler NextPlaylistElementEvent;
+		public event PreviousPlaylistElementHandler PreviousPlaylistElementEvent;
+		public event PlaylistsChangedHandler PlaylistsChangedEvent;
 		
 		public event KeyHandler KeyPressed;
 		
@@ -80,20 +80,12 @@ namespace LongoMatch.Common
 		public event ErrorHandler MultimediaError;
 		public event ErrorHandler CaptureError;
 		public event CaptureFinishedHandler CaptureFinished;
-		public event NextButtonClickedHandler Next;
-		public event PrevButtonClickedHandler Prev;
 		public event DrawFrameHandler DrawFrame;
 		public event DetachPlayerHandler Detach;
 		public event PlaybackRateChangedHandler PlaybackRateChanged;
 
-		
-		
-		public EventsBroker ()
-		{
-		}
-		
-		public void EmitNewTag (TaggerButton tagger, List<Player> players = null, List<Tag> tags = null,
-		                        Time start = null, Time stop = null) {
+		public void EmitNewTag (TaggerButton tagger, List<Player> players = null,
+		                        List<Tag> tags = null, Time start = null, Time stop = null) {
 			if (NewTagEvent != null)
 				NewTagEvent (tagger, players, tags, start, stop);
 		}
@@ -116,15 +108,28 @@ namespace LongoMatch.Common
 				SnapshotSeries(play);
 		}
 		
-		public void EmitRenderPlaylist(IPlayList playlist) {
+		public void EmitRenderPlaylist(Playlist playlist) {
 			if (RenderPlaylist != null)
 				RenderPlaylist(playlist);
 		}
 		
-		public void EmitPlayListNodeAdded(List<Play> plays)
+		public void EmitNewPlaylist (Project project)
 		{
-			if (PlayListNodeAdded != null)
-				PlayListNodeAdded(plays);
+			if (NewPlaylistEvent != null) {
+				NewPlaylistEvent (project);
+			}
+		}
+		
+		public void EmitAddPlaylistElement (Playlist playlist, List<IPlaylistElement> plays)
+		{
+			if (AddPlaylistElementEvent != null)
+				AddPlaylistElementEvent (playlist, plays);
+		}
+		
+		public void EmitPlaylistElementSelected (Playlist playlist, IPlaylistElement element)
+		{
+			if (PlaylistElementSelectedEvent != null)
+				PlaylistElementSelectedEvent (playlist, element);
 		}
 		
 		public void EmitTimeNodeChanged (TimeNode tn, object val)
@@ -148,21 +153,6 @@ namespace LongoMatch.Common
 		{
 			if (DuplicatePlays != null)
 				DuplicatePlays (plays);
-		}
-		
-		public void EmitNewPlaylist() {
-			if (NewPlaylistEvent != null)
-				NewPlaylistEvent();
-		}
-		
-		public void EmitOpenPlaylist() {
-			if (OpenPlaylistEvent != null)
-				OpenPlaylistEvent();
-		}
-		
-		public void EmitSavePlaylist() {
-			if (SavePlaylistEvent != null)
-				SavePlaylistEvent();
 		}
 		
 		public void EmitKeyPressed(object sender, int key, int modifier) {
@@ -324,17 +314,17 @@ namespace LongoMatch.Common
 			}
 		}
 		
-		public void EmitNext ()
+		public void EmitNextPlaylistElement (Playlist playlist)
 		{
-			if (Next != null) {
-				Next ();
+			if (NextPlaylistElementEvent != null) {
+				NextPlaylistElementEvent (playlist);
 			}
 		}
 		
-		public void EmitPrev ()
+		public void EmitPreviousPlaylistElement (Playlist playlist)
 		{
-			if (Prev != null) {
-				Prev ();
+			if (PreviousPlaylistElementEvent != null) {
+				PreviousPlaylistElementEvent (playlist);
 			}
 		}
 
@@ -356,6 +346,11 @@ namespace LongoMatch.Common
 			if (CreateThumbnailsEvent != null) {
 				CreateThumbnailsEvent (project);
 			}
+		}
+		
+		public void EmitPlaylistsChanged (object sender) {
+			if (PlaylistsChangedEvent != null)
+				PlaylistsChangedEvent (sender);
 		}
 	}
 }

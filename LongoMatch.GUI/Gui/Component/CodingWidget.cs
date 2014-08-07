@@ -31,7 +31,6 @@ namespace LongoMatch.Gui.Component
 	public partial class CodingWidget : Gtk.Bin
 	{
 		TeamTagger teamtagger;
-		Project project;
 		ProjectType projectType;
 		List<Player> selectedPlayers;
 		Play loadedPlay;
@@ -78,7 +77,6 @@ namespace LongoMatch.Gui.Component
 		}
 
 		public void SetProject (Project project, ProjectType projectType, PlaysFilter filter) {
-			this.project = project;	
 			this.projectType = projectType;
 			autoTaggingMode.Active = true;
 			buttonswidget.Visible = true;

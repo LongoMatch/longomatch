@@ -19,23 +19,18 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Gtk;
-using Gdk;
-using Mono.Unix;
-
-using Image = LongoMatch.Common.Image;
 using LongoMatch.Common;
-using LongoMatch.Interfaces;
+using LongoMatch.Gui.Helpers;
 using LongoMatch.Interfaces.GUI;
+using LongoMatch.Store;
+using LongoMatch.Store.Playlists;
+using LongoMatch.Video.Utils;
+using Mono.Unix;
 using LongoMatch.Gui.Component;
 using LongoMatch.Gui.Dialog;
-using LongoMatch.Gui.Popup;
-using LongoMatch.Store;
-using LongoMatch.Store.Templates;
-using LongoMatch.Video.Utils;
-using LongoMatch.Gui.Helpers;
-using LongoMatch.Stats;
 using LongoMatch.Gui.Panel;
-using LongoMatch.Interfaces.Multimedia;
+using Image = LongoMatch.Common.Image;
+using LongoMatch.Interfaces;
 
 namespace LongoMatch.Gui
 {
@@ -93,10 +88,18 @@ namespace LongoMatch.Gui
 			MessagesHelpers.WarningMessage (parent as Widget, message);
 		}
 		
-		public bool QuestionMessage(string question, string title, object parent=null) {
+		public bool QuestionMessage (string question, string title, object parent=null)
+		{
 			if (parent == null)
 				parent = mainWindow as Widget;
 			return MessagesHelpers.QuestionMessage (parent as Widget, question, title);
+		}
+		
+		public string QueryMessage (string key, string title=null, string value="", object parent=null)
+		{
+			if (parent == null)
+				parent = mainWindow;
+			return MessagesHelpers.QueryMessage (parent as Widget, key, title, value);
 		}
 		
 		public string SaveFile(string title, string defaultName, string defaultFolder,
@@ -127,44 +130,54 @@ namespace LongoMatch.Gui
 			                                    defaultFolder, filterName, extensionFilter);
 		}
 		
-		public List<EditionJob> ConfigureRenderingJob (IPlayList playlist)
+		public List<EditionJob> ConfigureRenderingJob (Playlist playlist)
 		{
 			VideoEditionProperties vep;
-			List<EditionJob> jobs = new List<EditionJob>();
+			List<EditionJob> jobs = new List<EditionJob> ();
 			int response;
 			
 			Log.Information ("Configure rendering job");
-			if (playlist.Count == 0) {
-				WarningMessage(Catalog.GetString("The playlist you want to render is empty."));
+			if (playlist.Elements.Count == 0) {
+				WarningMessage (Catalog.GetString ("The playlist you want to render is empty."));
 				return null;
 			}
 
-			vep = new VideoEditionProperties();
+			vep = new VideoEditionProperties ();
 			vep.TransientFor = mainWindow as Gtk.Window;
-			response = vep.Run();
-			while(response == (int)ResponseType.Ok) {
+			response = vep.Run ();
+			while (response == (int)ResponseType.Ok) {
 				if (!vep.SplitFiles && vep.EncodingSettings.OutputFile == "") {
-					WarningMessage(Catalog.GetString("Please, select a video file."));
-					response=vep.Run();
+					WarningMessage (Catalog.GetString ("Please, select a video file."));
+					response = vep.Run ();
 				} else if (vep.SplitFiles && vep.OutputDir == null) {
-					WarningMessage(Catalog.GetString("Please, select an output directory."));
-					response=vep.Run();
+					WarningMessage (Catalog.GetString ("Please, select an output directory."));
+					response = vep.Run ();
 				} else {
 					break;
 				}
 			}
-			if(response ==(int)ResponseType.Ok) {
+			if (response == (int)ResponseType.Ok) {
 				if (!vep.SplitFiles) {
-					jobs.Add(new EditionJob(playlist, vep.EncodingSettings));
+					jobs.Add (new EditionJob (playlist, vep.EncodingSettings));
 				} else {
 					int i = 0;
-					foreach (PlayListPlay play in playlist) {
-						EncodingSettings settings = vep.EncodingSettings;
-						PlayList pl = new PlayList();
-						string filename = String.Format ("{0}-{1}.{2}", i.ToString("d4"), play.Name,
-						                                 settings.EncodingProfile.Extension);
+					foreach (IPlaylistElement play in playlist.Elements) {
+						EncodingSettings settings;
+						Playlist pl;
+						string name, ext, filename;
+
+						settings = vep.EncodingSettings;
+						pl = new Playlist ();
+						if (play is PlaylistPlayElement) {
+							name = (play as PlaylistPlayElement).Play.Name;
+							ext = settings.EncodingProfile.Extension;
+						} else {
+							name = "image";
+							ext = "png";
+						}
+						filename = String.Format ("{0}-{1}.{2}", i.ToString("d4"), name, ext);
 						
-						pl.Add(play);
+						pl.Elements.Add(play);
 						settings.OutputFile = Path.Combine (vep.OutputDir, filename);
 						jobs.Add(new EditionJob(pl, settings));
 						i++;

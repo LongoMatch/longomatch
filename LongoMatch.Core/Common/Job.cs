@@ -19,8 +19,8 @@ using System;
 using System.Collections.Generic;
 
 using LongoMatch.Common;
-using LongoMatch.Interfaces;
 using LongoMatch.Store;
+using LongoMatch.Store.Playlists;
 
 namespace LongoMatch.Common
 {
@@ -70,12 +70,12 @@ namespace LongoMatch.Common
 	
 	public class EditionJob: Job
 	{
-		public EditionJob (IPlayList playlist, EncodingSettings encSettings): base (encSettings)
+		public EditionJob (Playlist playlist, EncodingSettings encSettings): base (encSettings)
 		{
 			Playlist = Cloner.Clone(playlist);
 		}
 		
-		public IPlayList Playlist{
+		public Playlist Playlist{
 			get;
 			set;
 		}

@@ -7,12 +7,9 @@ namespace LongoMatch.Gui.Component
 		private global::Gtk.VBox vbox2;
 		private global::Gtk.ScrolledWindow scrolledwindow1;
 		private global::Gtk.VBox vbox1;
-		private global::Gtk.Label label1;
 		private global::LongoMatch.Gui.Component.PlayListTreeView playlisttreeview1;
 		private global::Gtk.HBox hbox2;
 		private global::Gtk.Button newbutton;
-		private global::Gtk.Button openbutton;
-		private global::Gtk.Button savebutton;
 		private global::Gtk.Button newvideobutton;
 
 		protected virtual void Build ()
@@ -39,27 +36,17 @@ namespace LongoMatch.Gui.Component
 			this.vbox1.Name = "vbox1";
 			this.vbox1.Spacing = 6;
 			// Container child vbox1.Gtk.Box+BoxChild
-			this.label1 = new global::Gtk.Label ();
-			this.label1.Name = "label1";
-			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Load a playlist\nor create a \nnew one.");
-			this.vbox1.Add (this.label1);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.label1]));
-			w2.Position = 0;
-			w2.Expand = false;
-			w2.Fill = false;
-			// Container child vbox1.Gtk.Box+BoxChild
 			this.playlisttreeview1 = new global::LongoMatch.Gui.Component.PlayListTreeView ();
-			this.playlisttreeview1.Sensitive = false;
 			this.playlisttreeview1.CanFocus = true;
 			this.playlisttreeview1.Name = "playlisttreeview1";
 			this.vbox1.Add (this.playlisttreeview1);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.playlisttreeview1]));
-			w3.Position = 1;
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.playlisttreeview1]));
+			w2.Position = 0;
 			w1.Add (this.vbox1);
 			this.scrolledwindow1.Add (w1);
 			this.vbox2.Add (this.scrolledwindow1);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.scrolledwindow1]));
-			w6.Position = 0;
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.scrolledwindow1]));
+			w5.Position = 0;
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.hbox2 = new global::Gtk.HBox ();
 			this.hbox2.Name = "hbox2";
@@ -72,68 +59,22 @@ namespace LongoMatch.Gui.Component
 			this.newbutton.Name = "newbutton";
 			this.newbutton.UseUnderline = true;
 			// Container child newbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w7 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
+			global::Gtk.Alignment w6 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w8 = new global::Gtk.HBox ();
-			w8.Spacing = 2;
+			global::Gtk.HBox w7 = new global::Gtk.HBox ();
+			w7.Spacing = 2;
 			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w9 = new global::Gtk.Image ();
-			w9.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-new", global::Gtk.IconSize.Button);
-			w8.Add (w9);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w11 = new global::Gtk.Label ();
-			w8.Add (w11);
+			global::Gtk.Image w8 = new global::Gtk.Image ();
+			w8.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-new", global::Gtk.IconSize.Button);
 			w7.Add (w8);
-			this.newbutton.Add (w7);
+			// Container child GtkHBox.Gtk.Container+ContainerChild
+			global::Gtk.Label w10 = new global::Gtk.Label ();
+			w7.Add (w10);
+			w6.Add (w7);
+			this.newbutton.Add (w6);
 			this.hbox2.Add (this.newbutton);
-			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.newbutton]));
-			w15.Position = 0;
-			// Container child hbox2.Gtk.Box+BoxChild
-			this.openbutton = new global::Gtk.Button ();
-			this.openbutton.TooltipMarkup = "Open a playlist";
-			this.openbutton.CanFocus = true;
-			this.openbutton.Name = "openbutton";
-			this.openbutton.UseUnderline = true;
-			// Container child openbutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w16 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w17 = new global::Gtk.HBox ();
-			w17.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w18 = new global::Gtk.Image ();
-			w18.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-open", global::Gtk.IconSize.Button);
-			w17.Add (w18);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w20 = new global::Gtk.Label ();
-			w17.Add (w20);
-			w16.Add (w17);
-			this.openbutton.Add (w16);
-			this.hbox2.Add (this.openbutton);
-			global::Gtk.Box.BoxChild w24 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.openbutton]));
-			w24.Position = 1;
-			// Container child hbox2.Gtk.Box+BoxChild
-			this.savebutton = new global::Gtk.Button ();
-			this.savebutton.TooltipMarkup = "Save the playlist";
-			this.savebutton.CanFocus = true;
-			this.savebutton.Name = "savebutton";
-			this.savebutton.UseUnderline = true;
-			// Container child savebutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w25 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
-			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w26 = new global::Gtk.HBox ();
-			w26.Spacing = 2;
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w27 = new global::Gtk.Image ();
-			w27.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-save", global::Gtk.IconSize.Button);
-			w26.Add (w27);
-			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w29 = new global::Gtk.Label ();
-			w26.Add (w29);
-			w25.Add (w26);
-			this.savebutton.Add (w25);
-			this.hbox2.Add (this.savebutton);
-			global::Gtk.Box.BoxChild w33 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.savebutton]));
-			w33.Position = 2;
+			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.newbutton]));
+			w14.Position = 0;
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.newvideobutton = new global::Gtk.Button ();
 			this.newvideobutton.TooltipMarkup = "Export the playlist to new video file";
@@ -141,35 +82,33 @@ namespace LongoMatch.Gui.Component
 			this.newvideobutton.Name = "newvideobutton";
 			this.newvideobutton.UseUnderline = true;
 			// Container child newvideobutton.Gtk.Container+ContainerChild
-			global::Gtk.Alignment w34 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
+			global::Gtk.Alignment w15 = new global::Gtk.Alignment (0.5F, 0.5F, 0F, 0F);
 			// Container child GtkAlignment.Gtk.Container+ContainerChild
-			global::Gtk.HBox w35 = new global::Gtk.HBox ();
-			w35.Spacing = 2;
+			global::Gtk.HBox w16 = new global::Gtk.HBox ();
+			w16.Spacing = 2;
 			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Image w36 = new global::Gtk.Image ();
-			w36.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-media-record", global::Gtk.IconSize.Button);
-			w35.Add (w36);
+			global::Gtk.Image w17 = new global::Gtk.Image ();
+			w17.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-media-record", global::Gtk.IconSize.Button);
+			w16.Add (w17);
 			// Container child GtkHBox.Gtk.Container+ContainerChild
-			global::Gtk.Label w38 = new global::Gtk.Label ();
-			w35.Add (w38);
-			w34.Add (w35);
-			this.newvideobutton.Add (w34);
+			global::Gtk.Label w19 = new global::Gtk.Label ();
+			w16.Add (w19);
+			w15.Add (w16);
+			this.newvideobutton.Add (w15);
 			this.hbox2.Add (this.newvideobutton);
-			global::Gtk.Box.BoxChild w42 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.newvideobutton]));
-			w42.Position = 3;
+			global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.newvideobutton]));
+			w23.Position = 1;
 			this.vbox2.Add (this.hbox2);
-			global::Gtk.Box.BoxChild w43 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox2]));
-			w43.Position = 1;
-			w43.Expand = false;
-			w43.Fill = false;
+			global::Gtk.Box.BoxChild w24 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox2]));
+			w24.Position = 1;
+			w24.Expand = false;
+			w24.Fill = false;
 			this.Add (this.vbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}
 			this.Show ();
 			this.newbutton.Clicked += new global::System.EventHandler (this.OnNewbuttonClicked);
-			this.openbutton.Clicked += new global::System.EventHandler (this.OnOpenbuttonClicked);
-			this.savebutton.Clicked += new global::System.EventHandler (this.OnSavebuttonClicked);
 			this.newvideobutton.Clicked += new global::System.EventHandler (this.OnNewvideobuttonClicked);
 		}
 	}

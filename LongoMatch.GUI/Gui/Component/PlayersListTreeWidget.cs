@@ -22,6 +22,7 @@ using Gtk;
 using LongoMatch.Common;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
+using LongoMatch.Store.Playlists;
 using LongoMatch.Store.Templates;
 
 
@@ -89,16 +90,17 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnNewRenderingJob (object sender, EventArgs args)
 		{
-			PlayList playlist = new PlayList();
+			Playlist playlist = new Playlist();
 			TreePath[] paths = playerstreeview.Selection.GetSelectedRows();
 
 			foreach(var path in paths) {
 				TreeIter iter;
-				Play play;
+				PlaylistPlayElement element;
 				
 				playerstreeview.Model.GetIter(out iter, path);
-				play = (Play)playerstreeview.Model.GetValue(iter, 0);
-				playlist.Add(new PlayListPlay(play, Project.Description.File, true));
+				element = new PlaylistPlayElement (playerstreeview.Model.GetValue(iter, 0) as Play,
+				                                   Project.Description.File);
+				playlist.Elements.Add (element);
 			}
 			
 			Config.EventsBroker.EmitRenderPlaylist (playlist);

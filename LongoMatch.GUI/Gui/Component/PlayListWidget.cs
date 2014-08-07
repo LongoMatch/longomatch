@@ -17,113 +17,102 @@
 //Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //
-
-using System;
+using System.Linq;
+using System.Collections.Generic;
 using Gtk;
 using LongoMatch.Common;
 using LongoMatch.Handlers;
-using LongoMatch.Store;
 using LongoMatch.Interfaces;
-using LongoMatch.Interfaces.GUI;
-
+using LongoMatch.Store.Playlists;
+using LongoMatch.Store;
+using Mono.Unix;
 
 namespace LongoMatch.Gui.Component
 {
-
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
-	public partial class PlayListWidget : Gtk.Bin, IPlaylistWidget
+	public partial class PlayListWidget : Gtk.Bin
 	{
-		public event PlayListNodeSelectedHandler PlayListNodeSelected;
-		public event OpenPlaylistHandler OpenPlaylistEvent;
-		public event NewPlaylistHandler NewPlaylistEvent;
-		public event SavePlaylistHandler SavePlaylistEvent;
-		public event RenderPlaylistHandler RenderPlaylistEvent;
-		
-		IPlayList playlist;
-		
-		public PlayListWidget()
+		Project project;
+
+		public PlayListWidget ()
 		{
-			this.Build();
+			this.Build ();
 			playlisttreeview1.Reorderable = true;
-			playlisttreeview1.RowActivated += OnPlaylisttreeview1RowActivated;
-			savebutton.Sensitive = false;
-			newvideobutton.Sensitive = false;
-
+			playlisttreeview1.RowActivated += HandleRowActivated;
 			newbutton.CanFocus = false;
-			openbutton.CanFocus = false;
-			savebutton.CanFocus = false;
 			newvideobutton.CanFocus = false;
+			Config.EventsBroker.PlaylistsChangedEvent += HandlePlaylistsChangedEvent;
+			Config.EventsBroker.PlaylistElementSelectedEvent += HandlePlaylistElementSelectedEvent;
 		}
 
-		public void Load(IPlayList playlist) {
-			this.playlist = playlist;
-			label1.Visible = false;
-			newvideobutton.Show();
-			playlisttreeview1.PlayList = playlist;
-			playlisttreeview1.Sensitive = true;
-			savebutton.Sensitive = true;
-			newvideobutton.Sensitive = true;
-			Model = GetModel(playlist);
+		protected override void OnDestroyed ()
+		{
+			Config.EventsBroker.PlaylistsChangedEvent -= HandlePlaylistsChangedEvent;
+			Config.EventsBroker.PlaylistElementSelectedEvent -= HandlePlaylistElementSelectedEvent;
+			base.OnDestroyed ();
 		}
 
-		public ListStore Model {
+		void HandlePlaylistsChangedEvent (object sender)
+		{
+			if (sender != playlisttreeview1)
+				playlisttreeview1.Reload ();
+		}
+
+		void HandlePlaylistElementSelectedEvent (Playlist playlist, IPlaylistElement element)
+		{
+			playlisttreeview1.QueueDraw ();
+		}
+
+		void HandleRowActivated (object o, RowActivatedArgs args)
+		{
+				TreeIter iter;
+				Playlist playlist;
+				IPlaylistElement element;
+				
+				playlisttreeview1.Model.GetIterFromString (out iter, args.Path.ToString ());
+				var el = playlisttreeview1.Model.GetValue (iter, 0);
+				if (el is Playlist) {
+					playlist = el as Playlist;
+					element = playlist.Elements.FirstOrDefault ();
+				} else {
+					TreeIter parent;
+					playlisttreeview1.Model.IterParent (out parent, iter);
+					playlist = playlisttreeview1.Model.GetValue (parent, 0) as Playlist;
+					element = el as IPlaylistElement;
+				}
+			Config.EventsBroker.EmitPlaylistElementSelected (playlist, element);
+		}
+
+		public Project Project {
 			set {
-				playlisttreeview1.Model = value;
+				project = value;
+				playlisttreeview1.Project = value;
 			}
 			get {
-				return (ListStore)playlisttreeview1.Model;
+				return project;
 			}
 		}
 
-		public void Add(PlayListPlay plNode) {
-			Model.AppendValues(plNode);
+		protected virtual void OnNewbuttonClicked (object sender, System.EventArgs e)
+		{
+			Config.EventsBroker.EmitNewPlaylist (Project);
 		}
-		
-		public void SetActivePlay (PlayListPlay plNode, int index) {
-			playlisttreeview1.Selection.SelectPath(new TreePath(index.ToString()));
-			playlisttreeview1.LoadedPlay = plNode;
-		}
-		
-		ListStore GetModel(IPlayList playlist) {
-			ListStore listStore = new ListStore(typeof(PlayListPlay));
-			foreach(PlayListPlay plNode in playlist) {
-				listStore.AppendValues(plNode);
+
+		protected virtual void OnNewvideobuttonClicked (object sender, System.EventArgs ea)
+		{
+			Menu menu;
+
+			menu = new Menu ();
+			foreach (Playlist playlist in Project.Playlists) {
+				MenuItem plmenu = new MenuItem (playlist.Name);
+				plmenu.Activated += (s, e) => {
+					Config.EventsBroker.EmitRenderPlaylist (playlist);
+				};
+				menu.Append (plmenu);
 			}
-			return listStore;
-		}
-
-		protected virtual void OnPlaylisttreeview1RowActivated(object o, Gtk.RowActivatedArgs args)
-		{
-			if (PlayListNodeSelected != null) {
-				TreeIter iter;
-				Model.GetIterFromString(out iter, args.Path.ToString());
-				PlayListNodeSelected(Model.GetValue(iter, 0) as PlayListPlay);
-			}
-		}
-		
-		protected virtual void OnSavebuttonClicked(object sender, System.EventArgs e)
-		{
-			if (SavePlaylistEvent != null)
-				SavePlaylistEvent();
-		}
-
-		protected virtual void OnOpenbuttonClicked(object sender, System.EventArgs e)
-		{
-			if (OpenPlaylistEvent != null)
-				OpenPlaylistEvent();
-		}
-
-		protected virtual void OnNewbuttonClicked(object sender, System.EventArgs e)
-		{
-			if (NewPlaylistEvent != null)
-				NewPlaylistEvent();
-		}
-		
-		protected virtual void OnNewvideobuttonClicked(object sender, System.EventArgs e)
-		{
-			if (RenderPlaylistEvent != null)
-				RenderPlaylistEvent((PlayList)playlist);
+			menu.ShowAll ();
+			menu.Popup ();
 		}
 	}
 }

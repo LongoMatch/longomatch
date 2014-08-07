@@ -43,6 +43,7 @@ namespace LongoMatch.Gui.Component
 		uint timeoutID;
 		Time currentTime, nextCurrentTime;
 		PlaysMenu menu;
+		Project project;
 
 		public Timeline ()
 		{
@@ -80,9 +81,10 @@ namespace LongoMatch.Gui.Component
 		}
 		
 		public void SetProject (Project project, PlaysFilter filter) {
+			this.project = project;
 			timeline.LoadProject (project, filter);
 			labels.LoadProject (project, filter);
-			
+
 			if(project == null) {
 				if (timeoutID != 0) {
 					GLib.Source.Remove (timeoutID);
@@ -160,7 +162,7 @@ namespace LongoMatch.Gui.Component
 		
 		void HandleShowMenu (List<Play> plays, Category cat, Time time)
 		{
-			menu.ShowTimelineMenu (plays, cat, time, projectFile);
+			menu.ShowTimelineMenu (project, plays, cat, time);
 		}
 	}
 }

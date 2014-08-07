@@ -28,6 +28,7 @@ using Mono.Unix;
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
 using LongoMatch.Store;
+using LongoMatch.Store.Playlists;
 using LongoMatch.Store.Templates;
 
 namespace LongoMatch.Store
@@ -60,6 +61,7 @@ namespace LongoMatch.Store
 			Periods = new List<Period> ();
 			ScoreTimeline = new List<ScoreEvent>();
 			PenaltyCardsTimeline = new List<PenaltyCardEvent> ();
+			Playlists = new List<Playlist> ();
 		}
 		#endregion
 
@@ -133,6 +135,11 @@ namespace LongoMatch.Store
 		}
 		
 		public List<Timer> Timers {
+			get;
+			set;
+		}
+		
+		public List<Playlist> Playlists {
 			get;
 			set;
 		}

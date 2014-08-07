@@ -20,12 +20,12 @@
 
 using System;
 using System.Collections.Generic;
+using LongoMatch.Common;
 using LongoMatch.Interfaces;
+using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Interfaces.GUI;
 using LongoMatch.Store;
-using LongoMatch.Common;
-using LongoMatch.Store.Drawables;
-using LongoMatch.Interfaces.Drawing;
+using LongoMatch.Store.Playlists;
 
 namespace LongoMatch.Handlers
 {
@@ -82,26 +82,24 @@ namespace LongoMatch.Handlers
 	
 
 	/*Playlist Events*/
-	/* Add the a play to the opened playlist */
-	public delegate void PlayListNodeAddedHandler(List<Play> play);
+	/* Create a new playlist */
+	public delegate Playlist NewPlaylistHandler (Project project);
+	/* Add a new rendering job */
+	public delegate void RenderPlaylistHandler(Playlist playlist);
 	/* A play list element is selected */
-	public delegate void PlayListNodeSelectedHandler(PlayListPlay play);
-	/* Open a playlist */
-	public delegate void OpenPlaylistHandler();
-	/* New a playlist */
-	public delegate void NewPlaylistHandler();
-	/* Save a playlist */
-	public delegate void SavePlaylistHandler();
+	public delegate void PlaylistElementSelectedHandler (Playlist playlist, IPlaylistElement element);
+	/* Add a play to a playlist */
+	public delegate void AddPlaylistElementHandler (Playlist playlist, List<IPlaylistElement> element);
+	/* Play next playlist element */
+	public delegate void NextPlaylistElementHandler (Playlist playlist);
+	/* Play previous playlist element */
+	public delegate void PreviousPlaylistElementHandler (Playlist playlist);
+	/* Playlists have been edited */
+	public delegate void PlaylistsChangedHandler (object sender);
 
-	/* The position of the stream has changed */
-	public delegate void PositionChangedHandler(Time pos);
-	
 	/* Create snapshots for a play */
 	public delegate void SnapshotSeriesHandler(Play tNode);
 	
-	/* Add a new rendering job */
-	public delegate void RenderPlaylistHandler(IPlayList playlist);
-	 
 	/* Convert a video file */
 	public delegate void ConvertVideoFilesHandler (List<MediaFile> inputFiles, EncodingSettings encSettings);
 	

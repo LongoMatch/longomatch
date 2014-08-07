@@ -23,6 +23,7 @@ using LongoMatch.Interfaces.GUI;
 using LongoMatch.Interfaces.Multimedia;
 using LongoMatch.Store;
 using Mono.Unix;
+using LongoMatch.Store.Playlists;
 
 namespace LongoMatch.Services
 {
@@ -176,9 +177,14 @@ namespace LongoMatch.Services
 			videoEditor.Progress += OnProgress;
 			videoEditor.Error += OnError;
 			
-			foreach (PlayListPlay segment in job.Playlist) {
-				if (!ProcessSegment (segment))
-					continue;
+			foreach (IPlaylistElement segment in job.Playlist.Elements) {
+				if (segment is PlaylistPlayElement) {
+					ProcessPlay (segment as PlaylistPlayElement);
+				} else if (segment is PlaylistImage) {
+					ProcessImage (segment as PlaylistImage);
+				} else if (segment is PlaylistDrawing) {
+					ProcessDrawing (segment as PlaylistDrawing);
+				}
 			}
 			
 			try {
@@ -192,28 +198,51 @@ namespace LongoMatch.Services
 			}
 		}
 
-		private bool ProcessSegment (PlayListPlay segment)
+		void ProcessImage (Image image, Time duration) {
+			string path = System.IO.Path.GetTempFileName ().Replace (@"\", @"\\");
+			image.Save (path);
+			videoEditor.AddImageSegment (path, 0, duration.MSeconds, "");
+		}
+
+		void ProcessImage (PlaylistImage image)
+		{
+			Log.Debug (String.Format ("Adding still image with duration {0}s",
+			                          image.Duration));
+			ProcessImage (image.Image, image.Duration);
+		}
+		
+		void ProcessDrawing (PlaylistDrawing drawing)
+		{
+			Image img;
+			
+			Log.Debug (String.Format ("Adding still drawing with duration {0}s",
+			                          drawing.Duration));
+			img = Drawing.Utils.RenderFrameDrawing (Config.DrawingToolkit, drawing.Width,
+			                                        drawing.Height, drawing.Drawing);
+			ProcessImage (img, drawing.Duration);
+		}
+
+		bool ProcessPlay (PlaylistPlayElement element)
 		{
 			Time lastTS;
+			Play play;
 
-			if (!segment.Valid)
-				return false;
+			play = element.Play;
+			Log.Debug (String.Format ("Adding segment with {0} drawings", play.Drawings.Count));
 			
-			Log.Debug (String.Format ("Adding segment with {0} drawings", segment.Drawings.Count));
-			
-			lastTS = segment.Start;
-			foreach (FrameDrawing fd in segment.Drawings) {
-				string image_path = CreateStillImage (segment.MediaFile.FilePath, fd);
-				videoEditor.AddSegment (segment.MediaFile.FilePath, lastTS.MSeconds,
+			lastTS = play.Start;
+			foreach (FrameDrawing fd in play.Drawings) {
+				string image_path = CreateStillImage (element.File.FilePath, fd);
+				videoEditor.AddSegment (element.File.FilePath, lastTS.MSeconds,
 				                       fd.Render.MSeconds - lastTS.MSeconds,
-				                       segment.Rate, segment.Name, segment.MediaFile.HasAudio);
+				                       element.Rate, play.Name, element.File.HasAudio);
 				videoEditor.AddImageSegment (image_path, fd.Render.MSeconds,
-				                            fd.Pause.MSeconds, segment.Name);
+				                            fd.Pause.MSeconds, play.Name);
 				lastTS = fd.Render;
 			}
-			videoEditor.AddSegment (segment.MediaFile.FilePath, lastTS.MSeconds,
-			                       segment.Stop.MSeconds - lastTS.MSeconds,
-			                       segment.Rate, segment.Name, segment.MediaFile.HasAudio);
+			videoEditor.AddSegment (element.File.FilePath, lastTS.MSeconds,
+			                       play.Stop.MSeconds - lastTS.MSeconds,
+			                       element.Rate, play.Name, element.File.HasAudio);
 			return true;
 		}
 

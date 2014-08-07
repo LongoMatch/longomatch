@@ -22,6 +22,8 @@ using LongoMatch.Interfaces.GUI;
 using LongoMatch.Common;
 using LongoMatch.Store;
 using System.Collections.Generic;
+using LongoMatch.Interfaces;
+using LongoMatch.Store.Playlists;
 
 namespace LongoMatch.Gui
 {
@@ -209,17 +211,17 @@ namespace LongoMatch.Gui
 			playerbin.ResetGui ();
 		}
 		
-		public void LoadPlayListPlay (PlayListPlay play, bool hasNext) {
-			playerbin.LoadPlayListPlay (play, hasNext);
+		public void LoadPlayListPlay (Playlist playlist, IPlaylistElement play) {
+			playerbin.LoadPlayListPlay (playlist, play);
 		}
 		
-		public void LoadPlay (string filename, Play play, Time seekTime, bool playing) {
+		public void LoadPlay (MediaFile file, Play play, Time seekTime, bool playing) {
 			if (mode == PlayerOperationMode.PreviewCapturer) {
 				backtolivebutton.Visible = true;
 				ShowPlayer ();
-				LoadBackgroundPlayer(filename);
+				LoadBackgroundPlayer(file);
 			}
-			playerbin.LoadPlay (filename, play, seekTime, playing);
+			playerbin.LoadPlay (file, play, seekTime, playing);
 		}
 		
 		public void Seek (Time time, bool accurate) {
@@ -283,13 +285,13 @@ namespace LongoMatch.Gui
 			
 		}
 		
-		void LoadBackgroundPlayer (string filename) {
+		void LoadBackgroundPlayer (MediaFile file) {
 			if (backLoaded)
 				return;
 				
 			/* The output video file is now created, it's time to 
 				 * load it in the player */
-			playerbin.Open (filename);
+			playerbin.Open (file.FilePath);
 			playerbin.SeekingEnabled = false;
 			Log.Debug ("Loading encoded file in the backround player");
 			backLoaded = true;

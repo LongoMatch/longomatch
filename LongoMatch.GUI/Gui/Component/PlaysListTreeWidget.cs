@@ -28,6 +28,7 @@ using LongoMatch.Interfaces;
 using LongoMatch.Store;
 using LongoMatch.Store.Templates;
 using LongoMatch.Common;
+using LongoMatch.Store.Playlists;
 
 namespace LongoMatch.Gui.Component
 {
@@ -38,7 +39,7 @@ namespace LongoMatch.Gui.Component
 	public partial class PlaysListTreeWidget : Gtk.Bin
 	{
 
-		private Project project;
+		Project project;
 
 		public PlaysListTreeWidget()
 		{
@@ -106,14 +107,16 @@ namespace LongoMatch.Gui.Component
 		public Project Project {
 			set {
 				project = value;
-				if(project != null) {
-					treeview.Model = GetModel(project);
+				if (project != null) {
+					treeview.Model = GetModel (project);
 					treeview.Colors = true;
 					treeview.Project = value;
-				}
-				else {
+				} else {
 					treeview.Model = null;
 				}
+			}
+			get {
+				return project;
 			}
 		}
 
@@ -150,16 +153,20 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnNewRenderingJob (object sender, EventArgs args)
 		{
-			PlayList playlist = new PlayList();
-			TreePath[] paths = treeview.Selection.GetSelectedRows();
+			Playlist playlist;
+			TreePath[] paths;
+
+			playlist = new Playlist();
+			paths = treeview.Selection.GetSelectedRows();
 
 			foreach(var path in paths) {
 				TreeIter iter;
-				Play play;
+				PlaylistPlayElement element;
 				
 				treeview.Model.GetIter(out iter, path);
-				play = (Play)treeview.Model.GetValue(iter, 0);
-				playlist.Add (new PlayListPlay(play, project.Description.File, true));
+				element = new PlaylistPlayElement (treeview.Model.GetValue(iter, 0) as Play,
+				                                   project.Description.File);
+				playlist.Elements.Add (element);
 			}
 			
 			Config.EventsBroker.EmitRenderPlaylist (playlist);

@@ -21,7 +21,6 @@ SOURCES = Common/Area.cs \
 	Common/Image.cs \
 	Common/Job.cs \
 	Common/Log.cs \
-	Common/PlayList.cs \
 	Common/PlaysFilter.cs \
 	Common/Serializer.cs \
 	Common/SysInfo.cs \
@@ -41,12 +40,11 @@ SOURCES = Common/Area.cs \
 	Interfaces/GUI/IMainController.cs \
 	Interfaces/GUI/IPanel.cs \
 	Interfaces/GUI/IPlayerBin.cs \
-	Interfaces/GUI/IPlaylistWidget.cs \
 	Interfaces/GUI/IRenderingStateBar.cs \
 	Interfaces/IDataBaseManager.cs \
 	Interfaces/IDatabase.cs \
 	Interfaces/IIDObject.cs \
-	Interfaces/IPlayList.cs \
+	Interfaces/IPlaylistElement.cs \
 	Interfaces/IProjectsImporter.cs \
 	Interfaces/IRenderingJobsManager.cs \
 	Interfaces/ITemplates.cs \
@@ -87,8 +85,11 @@ SOURCES = Common/Area.cs \
 	Store/Period.cs \
 	Store/PixbufTimeNode.cs \
 	Store/Play.cs \
-	Store/PlayListPlay.cs \
 	Store/Player.cs \
+	Store/Playlists/Playlist.cs \
+	Store/Playlists/PlaylistDrawing.cs \
+	Store/Playlists/PlaylistImage.cs \
+	Store/Playlists/PlaylistPlayElement.cs \
 	Store/Point.cs \
 	Store/Project.cs \
 	Store/ProjectDescription.cs \
@@ -96,8 +97,6 @@ SOURCES = Common/Area.cs \
 	Store/ScoreEvent.cs \
 	Store/Tag.cs \
 	Store/TagButton.cs \
-	Store/TagButton.cs \
-	Store/TaggerButton.cs \
 	Store/TaggerButton.cs \
 	Store/Templates/CategoriesTemplate.cs \
 	Store/Templates/TeamTemplate.cs \

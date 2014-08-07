@@ -22,7 +22,7 @@ using System.Collections.Generic;
 using LongoMatch.Interfaces;
 using LongoMatch.Common;
 using LongoMatch.Store;
-using LongoMatch.Store.Templates;
+using LongoMatch.Store.Playlists;
 using Image = LongoMatch.Common.Image;
 using LongoMatch.Stats;
 using LongoMatch.Interfaces.Multimedia;
@@ -42,6 +42,7 @@ namespace LongoMatch.Interfaces.GUI
 		void WarningMessage(string message, object parent=null);
 		void ErrorMessage(string message, object parent=null);
 		bool QuestionMessage(string message, string title, object parent=null);
+		string QueryMessage (string key, string title=null, string value="", object parent=null);
 		
 		/* Files/Folders IO */
 		string SaveFile(string title, string defaultName, string defaultFolder,
@@ -55,7 +56,7 @@ namespace LongoMatch.Interfaces.GUI
 			
 		IBusyDialog BusyDialog(string message, object parent=null);
 			
-		List<EditionJob> ConfigureRenderingJob (IPlayList playlist);
+		List<EditionJob> ConfigureRenderingJob (Playlist playlist);
 		void ExportFrameSeries(Project openenedProject, Play play, string snapshotDir);
 		
 		void OpenProject (Project project, ProjectType projectType, 

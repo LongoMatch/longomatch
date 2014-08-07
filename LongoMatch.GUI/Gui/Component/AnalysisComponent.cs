@@ -15,18 +15,11 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
-using LongoMatch.Interfaces.GUI;
-using LongoMatch.Handlers;
-using LongoMatch.Common;
-using LongoMatch.Store;
-using LongoMatch.Interfaces;
-using LongoMatch.Store.Templates;
 using System.Collections.Generic;
-using Gdk;
 using Gtk;
-using LongoMatch.Gui.Helpers;
-using Mono.Unix;
+using LongoMatch.Common;
+using LongoMatch.Interfaces.GUI;
+using LongoMatch.Store;
 
 namespace LongoMatch.Gui.Component
 {
@@ -66,12 +59,6 @@ namespace LongoMatch.Gui.Component
 		public ICapturerBin Capturer{
 			get {
 				return playercapturer;
-			}
-		}
-		
-		public IPlaylistWidget Playlist{
-			get {
-				return null;
 			}
 		}
 		

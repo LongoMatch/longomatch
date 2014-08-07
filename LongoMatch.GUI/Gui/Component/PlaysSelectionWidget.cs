@@ -43,6 +43,18 @@ namespace LongoMatch.Gui.Component
 			visitorPlayersList.Team = Team.VISITOR;
 			AddFilters();
 			Config.EventsBroker.TeamTagsChanged += UpdateTeamsModels;
+			notebook1.Page = 0;
+			notebook2.Page = 0;
+		}
+		
+		protected override void OnDestroyed ()
+		{
+			Config.EventsBroker.TeamTagsChanged -= UpdateTeamsModels;
+			playsList.Project = null;
+			localPlayersList.Clear();
+			visitorPlayersList.Clear();
+			playsList1.Destroy ();
+			base.OnDestroyed ();
 		}
 		
 		#region Plubic Methods
@@ -58,16 +70,10 @@ namespace LongoMatch.Gui.Component
 			playsList.Project=project;
 			visitorPlayersList.Project = project;
 			localPlayersList.Project = project;
+			playlistwidget.Project = project;
 			visitorPlaysList.LabelProp = project.VisitorTeamTemplate.TeamName;
 			localPlaysList.LabelProp = project.LocalTeamTemplate.TeamName;
 			UpdateTeamsModels();
-		}
-		
-		public void Clear() {
-			Config.EventsBroker.TeamTagsChanged -= UpdateTeamsModels;
-			playsList.Project = null;
-			localPlayersList.Clear();
-			visitorPlayersList.Clear();
 		}
 		
 		public void AddPlay(Play play) {

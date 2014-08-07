@@ -19,6 +19,7 @@ using System;
 using LongoMatch.Common;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
+using LongoMatch.Store.Playlists;
 
 namespace LongoMatch.Interfaces.GUI
 {
@@ -48,8 +49,8 @@ namespace LongoMatch.Interfaces.GUI
 		void SeekToPreviousFrame();
 		void FramerateUp();
 		void FramerateDown();
-		void LoadPlay (string fileName, Play play, Time seekTime, bool playing);
-		void LoadPlayListPlay (PlayListPlay play, bool hasNext);
+		void LoadPlay (MediaFile file, Play play, Time seekTime, bool playing);
+		void LoadPlayListPlay (Playlist playlist, IPlaylistElement play);
 		void CloseSegment();
 	}
 }

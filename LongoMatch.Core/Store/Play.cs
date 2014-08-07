@@ -42,7 +42,7 @@ namespace LongoMatch.Store
 			Drawings = new List<FrameDrawing>();
 			Players = new List<Player> ();
 			Tags = new List<Tag>();
-			PlaybackRate = 1.0;
+			Rate = 1.0f;
 			ID = Guid.NewGuid ();
 		}
 		#endregion
@@ -142,11 +142,15 @@ namespace LongoMatch.Store
 			set;
 		}
 		
-		public double PlaybackRate {
-			get;
-			set;
+		[JsonIgnore]
+		public string Description {
+			get {
+				return 
+					Name + "\n" +
+						TagsDescription () + "\n" +
+						Start.ToMSecondsString() + " - " + Stop.ToMSecondsString();
+			}
 		}
-		
 		#endregion
 
 		#region Public methods
@@ -214,10 +218,7 @@ namespace LongoMatch.Store
 		
 		public override string ToString()
 		{
-			return 
-				Name + "\n" +
-				TagsDescription () + "\n" +
-				Start.ToMSecondsString() + " - " + Stop.ToMSecondsString();
+			return Description;
 		}
 		#endregion
 	}

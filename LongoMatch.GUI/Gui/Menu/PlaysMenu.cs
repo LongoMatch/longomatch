@@ -16,12 +16,13 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Gtk;
+using LongoMatch.Interfaces;
 using LongoMatch.Store;
-using LongoMatch.Handlers;
+using LongoMatch.Store.Playlists;
 using Mono.Unix;
-using LongoMatch.Common;
 
 namespace LongoMatch.Gui.Menus
 {
@@ -35,7 +36,7 @@ namespace LongoMatch.Gui.Menus
 		List<Play> plays;
 		Category cat;
 		Time time;
-		MediaFile projectFile;
+		Project project;
 	
 		
 		public PlaysMenu ()
@@ -43,31 +44,29 @@ namespace LongoMatch.Gui.Menus
 			CreateMenu ();
 		}
 		
-		public void ShowListMenu (List<Play> plays, MediaFile projectFile,
-		                          List<Category> categories) {
-			ShowMenu (plays, null, null, projectFile, categories, true);
+		public void ShowListMenu (Project project, List<Play> plays) {
+			ShowMenu (project, plays, null, null, project.Categories.CategoriesList, true);
 		}
 
-		public void ShowMenu (List<Play> plays, MediaFile projectFile) {
-			ShowMenu (plays, null, null, projectFile, null, false);
+		public void ShowMenu (Project project, List<Play> plays) {
+			ShowMenu (project, plays, null, null, null, false);
 		}
 		
-		public void ShowTimelineMenu (List<Play> plays, Category cat, Time time,
-		                              MediaFile projectFile)
+		public void ShowTimelineMenu (Project project, List<Play> plays, Category cat, Time time)
 		{
-			ShowMenu (plays, cat, time, projectFile, null, false);
+			ShowMenu (project, plays, cat, time, null, false);
 		}
 		
-		private void ShowMenu (List<Play> plays, Category cat, Time time,
-		                       MediaFile projectFile, List<Category> categories,
-		                       bool editableName) {
+		private void ShowMenu (Project project, List<Play> plays, Category cat, Time time,
+		                     List<Category> categories, bool editableName)
+		{
 			this.plays = plays;
 			this.cat = cat;
 			this.time = time;
-			this.projectFile = projectFile;
+			this.project = project;
 
 			if (cat != null) {
-				string label = String.Format ("{0} in {1}", Catalog.GetString("Add new play"), cat.Name);
+				string label = String.Format ("{0} in {1}", Catalog.GetString ("Add new play"), cat.Name);
 				GtkGlue.MenuItemSetLabel (newPlay, label); 
 				newPlay.Visible = true;
 			} else {
@@ -80,63 +79,90 @@ namespace LongoMatch.Gui.Menus
 			edit.Visible = editableName;
 			snapshot.Visible = plays.Count == 1;
 			moveCat.Visible = plays.Count == 1 && categories != null;
-			drawings.Visible = plays.Count == 1 && plays[0].Drawings.Count > 0;
+			drawings.Visible = plays.Count == 1 && plays [0].Drawings.Count > 0;
 			del.Visible = plays.Count > 0;
 			addPLN.Visible = plays.Count > 0;
 			render.Visible = plays.Count > 0;
 			duplicate.Visible = plays.Count > 0;
 
-			if (plays.Count > 0 ) {
-				string label = String.Format ("{0} ({1})",Catalog.GetString("Delete"), plays.Count);
+			if (plays.Count > 0) {
+				string label = String.Format ("{0} ({1})", Catalog.GetString ("Delete"), plays.Count);
 				GtkGlue.MenuItemSetLabel (del, label);
-				label = String.Format ("{0} ({1})",Catalog.GetString("Add to playlist"), plays.Count);
+				label = String.Format ("{0} ({1})", Catalog.GetString ("Add to playlist"), plays.Count);
 				GtkGlue.MenuItemSetLabel (addPLN, label);
-				label = String.Format ("{0} ({1})", Catalog.GetString("Export to video file"), plays.Count);
+				label = String.Format ("{0} ({1})", Catalog.GetString ("Export to video file"), plays.Count);
 				GtkGlue.MenuItemSetLabel (render, label);
-				label = String.Format ("{0} ({1})", Catalog.GetString("Duplicate "), plays.Count);
+				label = String.Format ("{0} ({1})", Catalog.GetString ("Duplicate "), plays.Count);
 				GtkGlue.MenuItemSetLabel (duplicate, label);
 			}
 			
 			if (moveCat.Visible) {
-				Menu catMenu = new Menu();
+				Menu catMenu = new Menu ();
 				foreach (Category c in categories) {
-					if (plays[0].Category == c)
+					if (plays [0].Category == c)
 						continue;
 					var item = new MenuItem (c.Name);
 					catMenu.Append (item);
 					item.Activated += (sender, e) => {
-						Config.EventsBroker.EmitPlayCategoryChanged (plays[0], c);
+						Config.EventsBroker.EmitPlayCategoryChanged (plays [0], c);
 					}; 
 				}
-				catMenu.ShowAll();
+				catMenu.ShowAll ();
 				moveCat.Submenu = catMenu;
 			}
 			
 			if (drawings.Visible) {
-				Menu drawingsMenu = new Menu();
+				Menu drawingsMenu = new Menu ();
 				for (int i=0; i < plays[0].Drawings.Count; i++) {
 					int index = i;
 					MenuItem drawingItem = new MenuItem (Catalog.GetString ("Drawing ") + (i + 1));
 					MenuItem editItem = new MenuItem (Catalog.GetString ("Edit"));
 					MenuItem deleteItem = new MenuItem (Catalog.GetString ("Delete"));
-					Menu drawingMenu = new Menu();
+					Menu drawingMenu = new Menu ();
 
 					drawingsMenu.Append (drawingItem);
-					drawingMenu.Append  (editItem);
+					drawingMenu.Append (editItem);
 					drawingMenu.Append (deleteItem);
 					editItem.Activated += (sender, e) => {
-						Config.EventsBroker.EmitDrawFrame (plays[0], index);
+						Config.EventsBroker.EmitDrawFrame (plays [0], index);
 					}; 
 					deleteItem.Activated += (sender, e) => {
-						plays[0].Drawings.RemoveAt (index);
+						plays [0].Drawings.RemoveAt (index);
 					}; 
 					drawingItem.Submenu = drawingMenu;
 					drawingMenu.ShowAll ();
 				}
-				drawingsMenu.ShowAll();
+				drawingsMenu.ShowAll ();
 				drawings.Submenu = drawingsMenu;
 			}
 			
+			if (project.Playlists != null) {
+				Menu plMenu = new Menu ();
+				MenuItem item;
+
+				foreach (Playlist pl in project.Playlists) {
+					 item = new MenuItem (pl.Name);
+					plMenu.Append (item);
+					item.Activated += (sender, e) => {
+						IEnumerable<IPlaylistElement> elements;
+						
+						elements = plays.Select (p => new PlaylistPlayElement (p, project.Description.File));
+						Config.EventsBroker.EmitAddPlaylistElement (pl, elements.ToList());
+					}; 
+				}
+				
+				item = new MenuItem (Catalog.GetString ("Create new playlist..."));
+				plMenu.Append (item);
+				item.Activated += (sender, e) => {
+					IEnumerable<IPlaylistElement> elements;
+					elements = plays.Select (p => new PlaylistPlayElement (p, project.Description.File));
+					Config.EventsBroker.EmitAddPlaylistElement (null, elements.ToList());
+				}; 
+				
+				plMenu.ShowAll ();
+				addPLN.Submenu = plMenu;
+			}
+
 			Popup();
 		}
 		
@@ -167,8 +193,7 @@ namespace LongoMatch.Gui.Menus
 			drawings = new MenuItem (Catalog.GetString ("Drawings"));
 			Add (drawings);
 
-			addPLN = new MenuItem ("");
-			addPLN.Activated += (sender, e) => Config.EventsBroker.EmitPlayListNodeAdded (plays);
+			addPLN = new MenuItem ("Add to playlist");
 			Add (addPLN);
 			
 			render = new MenuItem ("");
@@ -189,9 +214,9 @@ namespace LongoMatch.Gui.Menus
 		
 		void EmitRenderPlaylist (List<Play> plays)
 		{
-			PlayList pl = new PlayList();
+			Playlist pl = new Playlist();
 			foreach (Play p in plays) {
-				pl.Add (new PlayListPlay (p, projectFile, true));
+				pl.Elements.Add (new PlaylistPlayElement (p, project.Description.File));
 			}
 			Config.EventsBroker.EmitRenderPlaylist (pl);
 		}

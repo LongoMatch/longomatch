@@ -50,6 +50,7 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build();
 			tagger = new PlaysTagger (new WidgetWrapper (drawingarea1));
+			tagger.FitMode = FitMode.Original;
 			tagger.TaggersSelectedEvent += HandleTaggersSelectedEvent;
 			tagger.ShowMenuEvent += HandleShowMenuEvent;
 			tagger.NewTagEvent += HandleNewTagEvent;

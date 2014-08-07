@@ -26,6 +26,7 @@ using LongoMatch.Store;
 using Mono.Unix;
 using System.IO;
 using LongoMatch.Interfaces.Multimedia;
+using LongoMatch.Store.Playlists;
 
 namespace LongoMatch.Services
 {
@@ -83,8 +84,8 @@ namespace LongoMatch.Services
 			Config.EventsBroker.PlaySelected += OnPlaySelected;
 			Config.EventsBroker.PlayCategoryChanged += OnPlayCategoryChanged;
 			Config.EventsBroker.DuplicatePlays += OnDuplicatePlays;
-			Config.EventsBroker.PlayListNodeSelectedEvent += (tn) => {
-				loadedPlay = tn;};
+			//Config.EventsBroker.PlayListNodeSelectedEvent += (tn) => {
+			//	loadedPlay = tn;};
 			Config.EventsBroker.SnapshotSeries += OnSnapshotSeries;
 			
 			Config.EventsBroker.ShowProjectStatsEvent += HandleShowProjectStatsEvent;
@@ -92,7 +93,6 @@ namespace LongoMatch.Services
 			
 			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
 
-			Config.EventsBroker.Prev += OnPrev;
 			Config.EventsBroker.DrawFrame += OnDrawFrame;
 			Config.EventsBroker.PlaybackRateChanged += HandlePlaybackRateChanged;
 			Config.EventsBroker.Detach += HandleDetach;
@@ -115,7 +115,7 @@ namespace LongoMatch.Services
 
 		void RenderPlay (Project project, Play play, MediaFile file)
 		{
-			PlayList playlist;
+			Playlist playlist;
 			EncodingSettings settings;
 			EditionJob job;
 			string outputDir, outputFile;
@@ -130,11 +130,14 @@ namespace LongoMatch.Services
 			outputFile = String.Format ("{0}-{1}.mp4", play.Category.Name, play.Name);
 			outputFile = Path.Combine (outputDir, project.Description.Title, outputFile);
 			try {
+				PlaylistPlayElement element;
+				
 				Directory.CreateDirectory (Path.GetDirectoryName (outputFile));
 				settings = EncodingSettings.DefaultRenderingSettings (outputFile);
-				playlist = new PlayList ();
-				playlist.Add (new PlayListPlay (play, file, true));
-			
+				playlist = new Playlist ();
+				element = new PlaylistPlayElement (play);
+				element.File = file;
+				playlist.Elements.Add (element);
 				job = new EditionJob (playlist, settings);
 				renderer.AddJob (job);
 			} catch (Exception ex) {
@@ -145,7 +148,7 @@ namespace LongoMatch.Services
 
 		void LoadPlay (Play play, Time seekTime, bool playing)
 		{
-			player.LoadPlay (openedProject.Description.File.FilePath, play,
+			player.LoadPlay (openedProject.Description.File, play,
 			                 seekTime, playing);
 			loadedPlay = play;
 			if (playing) {
@@ -284,10 +287,6 @@ namespace LongoMatch.Services
 		{
 			player.Pause ();
 			guiToolkit.ExportFrameSeries (openedProject, play, Config.SnapshotsDir);
-		}
-
-		protected virtual void OnPrev ()
-		{
 		}
 
 		protected virtual void OnDrawFrame (Play play, int drawingIndex)

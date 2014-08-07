@@ -21,151 +21,303 @@ using System;
 using Gtk;
 using Gdk;
 using Mono.Unix;
-using LongoMatch.Store;
 using LongoMatch.Common;
 using LongoMatch.Handlers;
+using LongoMatch.Store.Playlists;
 using LongoMatch.Interfaces;
 using LongoMatch.Gui.Dialog;
+using LongoMatch.Store;
 
 namespace LongoMatch.Gui.Component
 {
-
-
 	[System.ComponentModel.Category("LongoMatch")]
 	[System.ComponentModel.ToolboxItem(true)]
 	public class PlayListTreeView : Gtk.TreeView
 	{
-		Menu menu;
-		ListStore ls;
-		IPlayList playlist;
-		PlayListPlay loadedPlay = null; //The play currently loaded in the player
-		PlayListPlay selectedPlay = null; //The play selected in the tree
-		int preDragPos = 0;
+		Project project;
+		Playlist selectedPlaylist;
+		IPlaylistElement selectedElement;
 		TreeIter selectedIter;
+		Playlist dragSourcePlaylist;
+		IPlaylistElement dragSourceElement;
 
-
-		public PlayListTreeView() {
-
-			this.HeadersVisible = false;
-
-			ls = new ListStore(typeof(PlayListPlay));
-			this.Model = ls;
-
-			menu = new Menu();
-			MenuItem title = new MenuItem(Catalog.GetString("Edit Title"));
-			title.Activated += new EventHandler(OnTitle);
-			title.Show();
-			MenuItem delete = new MenuItem(Catalog.GetString("Delete"));
-			delete.Activated += new EventHandler(OnDelete);
-			delete.Show();
-			menu.Append(title);
-			menu.Append(delete);
-
-
-			Gtk.TreeViewColumn nameColumn = new Gtk.TreeViewColumn();
-			nameColumn.Title = Catalog.GetString("Name");
-			Gtk.CellRendererText nameCell = new Gtk.CellRendererText();
-			nameColumn.PackStart(nameCell, true);
-			nameColumn.SetCellDataFunc(nameCell, new Gtk.TreeCellDataFunc(RenderName));
-			this.AppendColumn(nameColumn);
+		public PlayListTreeView ()
+		{
+			HeadersVisible = false;
+			EnableGridLines = TreeViewGridLines.None;
+			EnableTreeLines = false;
+			
+			TreeViewColumn imageColumn = new TreeViewColumn ();
+			imageColumn.Title = Catalog.GetString ("Image");
+			CellRendererPixbuf imageCell = new CellRendererPixbuf ();
+			imageColumn.PackStart (imageCell, true);
+			imageColumn.SetCellDataFunc (imageCell, new TreeCellDataFunc (RenderImage));
+			AppendColumn (imageColumn);
+			
+			TreeViewColumn nameColumn = new TreeViewColumn ();
+			nameColumn.Title = Catalog.GetString ("Name");
+			CellRendererText nameCell = new CellRendererText ();
+			nameColumn.PackStart (nameCell, true);
+			nameColumn.SetCellDataFunc (nameCell, new TreeCellDataFunc (RenderName));
+			AppendColumn (nameColumn);
 		}
 
-		public IPlayList PlayList {
+		public Project Project {
 			set {
-				this.playlist = value;
+				project = value;
+				Reload ();
+			}
+			get {
+				return project;
 			}
 		}
 
-		public PlayListPlay LoadedPlay {
-			set {
-				loadedPlay = value;
-				this.QueueDraw();
-			}
-		}
-
-		~PlayListTreeView()
+		public void Reload ()
 		{
-		}
-
-		protected override bool OnButtonPressEvent(Gdk.EventButton evnt)
-		{
-			if((evnt.Type == EventType.ButtonPress) && (evnt.Button == 3))
-			{
-				TreePath path;
-				GetPathAtPos((int)evnt.X,(int)evnt.Y,out path);
-				if(path!=null) {
-					ListStore list = ((ListStore)Model);
-					Model.GetIter(out selectedIter,path);
-					selectedPlay = (PlayListPlay)(list.GetValue(selectedIter,0));
-					menu.Popup();
+			TreeIter iter;
+			TreeStore store = new TreeStore (typeof(object));
+			
+			if (project != null) {
+				foreach (Playlist playlist in project.Playlists) {
+					iter = store.AppendValues (playlist);
+					foreach (IPlaylistElement el in playlist.Elements) {
+						store.AppendValues (iter, el);
+					}
 				}
 			}
-			return base.OnButtonPressEvent(evnt);
+			Model = store;
 		}
 
-		protected void OnTitle(object o, EventArgs args) {
-			EntryDialog ed = new EntryDialog();
-			ed.Title = Catalog.GetString("Edit Title");
-			ed.Text = selectedPlay.Name;
-			if(ed.Run() == (int)ResponseType.Ok) {
-				selectedPlay.Name = ed.Text;
-				this.QueueDraw();
-			}
-			ed.Destroy();
-		}
-
-		protected void OnDelete(object obj, EventArgs args) {
-			ListStore list = ((ListStore)Model);
-			playlist.Remove(selectedPlay);
-			list.Remove(ref selectedIter);
-		}
-
-		private void RenderName(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
+		void RenderName (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
 		{
-			PlayListPlay tNode = (PlayListPlay) model.GetValue(iter, 0);
-			(cell as Gtk.CellRendererText).Text = 	Catalog.GetString("Title")+": "+tNode.Name +"\n"+
-			                                        Catalog.GetString("Start")+": "+tNode.Start.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
-			                                        Catalog.GetString("Duration")+": "+tNode.Duration.ToMSecondsString()+Catalog.GetString(" sec")+"\n"+
-			                                        Catalog.GetString("Play Rate")+": "+tNode.Rate.ToString();
-			if(!tNode.Valid) {
-				(cell as Gtk.CellRendererText).Foreground = "red";
-				(cell as Gtk.CellRendererText).Text += "\n"+Catalog.GetString("File not found")+": "+tNode.MediaFile.FilePath;
-			}
-			else if(tNode == loadedPlay)
-				(cell as Gtk.CellRendererText).Foreground = "blue";
-			else
+			var obj = model.GetValue (iter, 0);
+			
+			if (obj is IPlaylistElement) {
+				IPlaylistElement ple = obj as IPlaylistElement;
+				(cell as Gtk.CellRendererText).Text = ple.Description;
+				if (ple.Selected) {
+					(cell as Gtk.CellRendererText).Foreground = "blue";
+				} else {
+					(cell as Gtk.CellRendererText).Foreground = "black";
+				}
+			} else {
+				(cell as Gtk.CellRendererText).Text = (obj as Playlist).Name;
 				(cell as Gtk.CellRendererText).Foreground = "black";
-
+			}
 		}
 
-		protected override bool OnKeyPressEvent(Gdk.EventKey evnt)
+		void RenderImage (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
+		{
+			var obj = model.GetValue (iter, 0);
+			
+			if (obj is IPlaylistElement) {
+				IPlaylistElement ple = obj as IPlaylistElement;
+				(cell as CellRendererPixbuf).Pixbuf = ple.Miniature.Value;
+			} else {
+				(cell as CellRendererPixbuf).Pixbuf = null;
+			}
+		}
+
+		void ShowPlaylistElementMenu (Playlist playlist, IPlaylistElement element)
+		{
+			Menu menu;
+			MenuItem edit, delete;
+
+			menu = new Menu ();
+
+			delete = new MenuItem (Catalog.GetString ("Delete"));
+			delete.Activated += (sender, e) => {
+				project.Playlists.Remove (playlist);
+				(Model as TreeStore).Remove (ref selectedIter);
+				Config.EventsBroker.EmitPlaylistsChanged (this);
+			};
+			menu.Append (delete);
+			
+			if (element is PlaylistPlayElement) {
+				PlaylistPlayElement pl = element as PlaylistPlayElement;
+				edit = new MenuItem (Catalog.GetString ("Edit"));
+				edit.Activated += (sender, e) => {
+					string name = Config.GUIToolkit.QueryMessage (Catalog.GetString ("Name:"), null,
+					                                             pl.Title);
+					if (!String.IsNullOrEmpty (name)) {
+						pl.Title = name; 
+					}
+				};
+				menu.Append (edit);
+			}
+			
+			menu.ShowAll ();
+			menu.Popup ();
+		}
+
+		void ShowPlaylistMenu (Playlist playlist)
+		{
+			Menu menu;
+			MenuItem delete, render;
+
+			menu = new Menu ();
+
+			delete = new MenuItem (Catalog.GetString ("Delete"));
+			delete.Activated += (sender, e) => {
+				project.Playlists.Remove (playlist);
+				(Model as TreeStore).Remove (ref selectedIter);
+				Config.EventsBroker.EmitPlaylistsChanged (this);
+			};
+			menu.Append (delete);
+			
+			render = new MenuItem (Catalog.GetString ("Render"));
+			render.Activated += (sender, e) => {
+				Config.EventsBroker.EmitRenderPlaylist (playlist);
+			};
+			menu.Append (render);
+			
+			menu.ShowAll ();
+			menu.Popup ();
+		}
+
+		protected override bool OnButtonPressEvent (Gdk.EventButton evnt)
+		{
+			if ((evnt.Type == EventType.ButtonPress) && (evnt.Button == 3)) {
+				TreePath path;
+				GetPathAtPos ((int)evnt.X, (int)evnt.Y, out path);
+				if (path != null) {
+					Model.GetIter (out selectedIter, path);
+					object el = Model.GetValue (selectedIter, 0);
+					if (el is Playlist) {
+						ShowPlaylistMenu (el as Playlist);
+					} else {
+						TreeIter parent;
+						Model.IterParent (out parent, selectedIter);
+						Playlist playlist = Model.GetValue (parent, 0) as Playlist;
+						ShowPlaylistElementMenu (playlist, el as IPlaylistElement);
+					}
+				}
+			}
+			return base.OnButtonPressEvent (evnt);
+		}
+
+		protected void OnTitle (object o, EventArgs args)
+		{
+			PlaylistPlayElement ple;
+			EntryDialog ed;
+			
+			ple = selectedElement as PlaylistPlayElement;
+			ed = new EntryDialog ();
+			ed.Title = Catalog.GetString ("Edit Title");
+			ed.Text = ple.Title;
+			if (ed.Run () == (int)ResponseType.Ok) {
+				ple.Title = ed.Text;
+				this.QueueDraw ();
+			}
+			ed.Destroy ();
+		}
+
+		protected void OnDelete (object obj, EventArgs args)
+		{
+			selectedPlaylist.Remove (selectedElement);
+			(Model as TreeStore).Remove (ref selectedIter);
+		}
+
+		protected override bool OnKeyPressEvent (EventKey evnt)
 		{
 			return false;
 		}
-		
-		protected override void OnDragBegin (DragContext context)
+
+		void FillElementAndPlaylist (TreeIter iter, out Playlist playlist, out IPlaylistElement element)
 		{
-			Model.GetIter(out selectedIter, Selection.GetSelectedRows()[0]);
-			selectedPlay = (PlayListPlay) Model.GetValue(selectedIter, 0);
-			preDragPos = Model.GetPath(selectedIter).Indices[0];
-			base.OnDragBegin (context);
+			TreeIter parent;
+
+			var obj = Model.GetValue (iter, 0);
+			if (obj is IPlaylistElement) {
+				Model.IterParent (out parent, selectedIter);
+				element = obj as IPlaylistElement;
+				playlist = Model.GetValue (parent, 0) as Playlist;
+			} else {
+				element = null;
+				playlist = obj as Playlist;
+			}
 		}
-		
-		protected override void OnDragEnd (DragContext context)
+
+		protected override void OnDragDataReceived (DragContext context, int x, int y, SelectionData selection, uint info, uint time)
 		{
 			TreeIter iter;
-			int postDragPos = -1;
-			
-			Model.GetIterFirst (out iter);
-			do {
-				if (Model.GetValue (iter, 0) == selectedPlay) {
-					postDragPos = Model.GetPath (iter).Indices[0];
-					break;
+			TreePath path;
+			TreeViewDropPosition pos;
+			Playlist destPlaylist;
+			IPlaylistElement destElement;
+
+			if (GetDestRowAtPos (x, y, out path, out pos)) {
+				Model.GetIter (out iter, path);
+				FillElementAndPlaylist (iter, out destPlaylist, out destElement);
+				
+				/* Moving playlists */
+				if (dragSourceElement == null) {
+					project.Playlists.Remove (dragSourcePlaylist);
+					project.Playlists.Insert (path.Indices [0], dragSourcePlaylist);
+				} else {
+					dragSourcePlaylist.Elements.Remove (dragSourceElement);
+					destPlaylist.Elements.Insert (path.Indices [1], dragSourceElement);
 				}
-			} while (Model.IterNext(ref iter));
+				
+				if (pos == TreeViewDropPosition.Before ||
+					pos == TreeViewDropPosition.IntoOrBefore) {
+					(Model as TreeStore).MoveBefore (selectedIter, iter);
+				} else {
+					(Model as TreeStore).MoveAfter (selectedIter, iter);
+				}
+			}
+			Gtk.Drag.Finish (context, true, false, time);
+		}
+
+		void DisableDragInto (TreePath path, DragContext context, uint time, TreeViewDropPosition pos)
+		{
+			if (pos == TreeViewDropPosition.IntoOrAfter) {
+				pos = TreeViewDropPosition.After;
+			} else if (pos == TreeViewDropPosition.IntoOrBefore) {
+				pos = TreeViewDropPosition.Before;
+			}
+			SetDragDestRow (path, pos);
+			Gdk.Drag.Status (context, context.SuggestedAction, time);
+		}
+
+		protected override bool OnDragMotion (DragContext context, int x, int y, uint time)
+		{
+			TreePath path;
+			TreeViewDropPosition pos;
+			TreeIter iter;
 			
-			playlist.Reorder(preDragPos, postDragPos);
-			base.OnDragEnd (context);
+			if (GetDestRowAtPos (x, y, out path, out pos)) {
+				Model.GetIter (out iter, path);
+				var el = Model.GetValue (iter, 0);
+
+				/* Drag a playlist*/
+				if (dragSourceElement == null) {
+					if (el is Playlist) {
+						DisableDragInto (path, context, time, pos);
+						return true;
+					} else {
+						return false;
+					}
+				}
+				/* Drag an element */
+				else {
+					if (el is IPlaylistElement) {
+						DisableDragInto (path, context, time, pos);
+						return true;
+					} else {
+						return false;
+					}
+				}
+			}
+			return false;
+		}
+
+		protected override void OnDragBegin (DragContext context)
+		{
+			Selection.GetSelected (out selectedIter);
+			FillElementAndPlaylist (selectedIter, out dragSourcePlaylist,
+			                        out dragSourceElement);
+			base.OnDragBegin (context);
 		}
 	}
 }
