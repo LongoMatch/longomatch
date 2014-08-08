@@ -45,15 +45,9 @@ SOURCES = Common/Color.cs \
 	MainWindow.cs \
 	Program.cs \
 	Properties/AssemblyInfo.cs \
-	Tests/CateogiresTest.cs \
-	Tests/TestProject.cs \
-	Tests/TestTeam.cs \
 	gtk-gui/MainWindow.cs \
 	gtk-gui/generated.cs
 
-RESOURCES = gtk-gui/gui.stetic \
-	Data/default.lct \
-	Data/default.ltt \
-	Data/project.lgm
+RESOURCES = gtk-gui/gui.stetic
 
 include $(top_srcdir)/build/build.mk
