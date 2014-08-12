@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="80px" height="80px" viewBox="0 0 80 80" enable-background="new 0 0 80 80" xml:space="preserve">
+<ellipse fill="#151A20" cx="39.917" cy="40" rx="34.917" ry="35"/>
+<ellipse fill="#3B3B3C" cx="39.917" cy="40" rx="25.917" ry="25.979"/>
+<linearGradient id="prelight_1_" gradientUnits="userSpaceOnUse" x1="39.9175" y1="65.9785" x2="39.9175" y2="14.022">
+	<stop  offset="0" style="stop-color:#3B3B3C"/>
+	<stop  offset="1" style="stop-color:#585859"/>
+</linearGradient>
+<ellipse id="prelight" display="none" fill="url(#prelight_1_)" cx="39.917" cy="40" rx="25.917" ry="25.979"/>
+<linearGradient id="pessed_1_" gradientUnits="userSpaceOnUse" x1="39.9175" y1="65.9785" x2="39.9175" y2="14.022">
+	<stop  offset="0" style="stop-color:#585859"/>
+	<stop  offset="0.0323" style="stop-color:#515152"/>
+	<stop  offset="0.1224" style="stop-color:#454546"/>
+	<stop  offset="0.2414" style="stop-color:#3D3D3E"/>
+	<stop  offset="0.5" style="stop-color:#3B3B3C"/>
+	<stop  offset="0.7884" style="stop-color:#3D3D3E"/>
+	<stop  offset="0.8922" style="stop-color:#444445"/>
+	<stop  offset="0.966" style="stop-color:#4F4F50"/>
+	<stop  offset="1" style="stop-color:#585859"/>
+</linearGradient>
+<ellipse id="pessed" display="none" fill="url(#pessed_1_)" cx="39.917" cy="40" rx="25.917" ry="25.979"/>
+<g id="categories_1_">
+	<path fill="#6A6A6A" d="M55.984,42.449L51.985,26.45c-0.243-0.854-1.033-1.449-1.922-1.449H30.066
+		c-0.891,0-1.681,0.597-1.922,1.449l-4.002,16.005c-0.05,0.183-0.076,0.366-0.076,0.546v8.998c0,1.492,0.928,3,3,3h25.999
+		c1.492,0,2.999-0.928,2.999-3v-8.998C56.062,42.818,56.036,42.633,55.984,42.449z M46.682,43.001c-0.379,0-0.726,0.213-0.896,0.552
+		l-1.724,3.446h-7.999l-1.725-3.446c-0.169-0.339-0.515-0.552-0.894-0.552h-5.38l3.508-14h16.983l3.507,14H46.682z"/>
+	<polygon fill="#6A6A6A" points="47.064,31.001 33.065,31.001 32.665,33 47.465,33 	"/>
+	<polygon fill="#6A6A6A" points="31.065,41 49.063,41 48.663,38.999 31.465,38.999 	"/>
+	<polygon fill="#6A6A6A" points="47.863,35.001 32.264,35.001 31.865,37 48.264,37 	"/>
+</g>
+</svg>

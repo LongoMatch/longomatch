@@ -1,0 +1,79 @@
+# Our icon theme
+gtk-icon-theme-name = "longomatch"
+
+gtk-icon-sizes = "gtk-menu=13,13:gtk-small-toolbar=24,24:gtk-large-toolbar=24,24:gtk-dnd=80,80:gtk-dialog=80,80"
+gtk-toolbar-icon-size = small-toolbar
+
+gtk-color-scheme = "base_color:#262626\nfg_color:#6a6a6a\ntooltip_fg_color:#000000\nselected_bg_color:#5ab160\nselected_fg_color:#262626\ntext_color:#6a6a6a\nbg_color:#262626\ntooltip_bg_color:#F5F5B5"
+
+
+# disable images in buttons. i've only seen ugly delphi apps use this feature.
+gtk-button-images = 0
+
+# enable/disable images in menus. most "stock" microsoft apps don't use these, except sparingly.
+# the office apps use them heavily, though.
+gtk-menu-images = 1
+
+# use the win32 button ordering instead of the GNOME HIG one, where applicable
+gtk-alternative-button-order = 1
+
+style "longomatch-default"
+{
+  GtkWidget::interior-focus = 1
+  GtkOptionMenu::indicator-size = { 9, 5 }
+  GtkOptionMenu::indicator-spacing = { 7, 5, 2, 2 }
+  GtkSpinButton::shadow-type = in
+
+  # Owen and I disagree that these should be themable
+  #GtkUIManager::add-tearoffs = 0
+  #GtkComboBox::add-tearoffs = 0
+  
+  GtkComboBox::appears-as-list = 1
+  GtkComboBox::focus-on-click = 1
+  
+  GOComboBox::add_tearoffs = 0
+
+  GtkTreeView::allow-rules = 0
+  GtkTreeView::expander-size = 12
+  
+  GtkToolbar::shadow-type = GTK_SHADOW_NONE
+
+  GtkButton::default_border         = {0, 0, 0, 0}
+  GtkButton::default_outside_border = {0, 0, 0, 0}
+  GtkButton::default_spacing        = 0
+  GtkButton::focus-line-width       = 0
+  GtkButton::focus-padding          = 2
+
+  xthickness = 0
+  ythickness = 0
+
+  fg[NORMAL]        = @fg_color
+  fg[ACTIVE]        = @fg_color
+  fg[PRELIGHT]      = @fg_color
+  fg[INSENSITIVE]   = darker (@bg_color)
+
+  bg[NORMAL]        = @bg_color
+  bg[ACTIVE]        = @bg_color
+  bg[PRELIGHT]      = @selected_bg_color
+  bg[SELECTED]      = @selected_bg_color
+  bg[INSENSITIVE]   = darker (@bg_color)
+
+  text[NORMAL]      = @text_color
+  text[ACTIVE]      = @text_color
+  text[PRELIGHT]    = @text_color
+  text[SELECTED]    = @text_color
+  text[INSENSITIVE] = darker (@bg_color)
+
+  font_name = "Ubuntu"
+
+  # we should make this change on per OS basis as this will make the preferences look native
+  engine "clearlooks"
+  {
+  }
+}
+
+class "GtkWidget" style "longomatch-default"
+
+# Configure font and rounded icons for the welcome page
+include "welcome.rc"
+widget "welcomepanel" style "longomatch-welcome"
