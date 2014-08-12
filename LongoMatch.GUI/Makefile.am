@@ -137,7 +137,6 @@ RESOURCES = gtk-gui/gui.stetic \
 	$(top_srcdir)/images/logo.svg \
 	$(top_srcdir)/images/video.png \
 	$(top_srcdir)/images/camera-video.png \
-	$(top_srcdir)/images/background.svg \
 	$(top_srcdir)/images/background.png \
 	$(top_srcdir)/images/tools/draw-arrow.png \
 	$(top_srcdir)/images/tools/draw-circle-unfilled.png \
@@ -155,7 +154,9 @@ RESOURCES = gtk-gui/gui.stetic \
 	$(top_srcdir)/images/tools/line-double-dot.svg \
 	$(top_srcdir)/images/tools/line-dot.svg \
 	$(top_srcdir)/images/tools/line-double-arrow.svg \
-	$(top_srcdir)/images/tools/line-arrow.svg
+	$(top_srcdir)/images/tools/line-arrow.svg \
+	$(top_srcdir)/data/images/longomatch-light-bg.svg \
+	$(top_srcdir)/data/images/longomatch-dark-bg.svg
 
 DLLCONFIG = LongoMatch.GUI.dll.config
 

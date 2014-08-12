@@ -38,10 +38,9 @@ namespace LongoMatch
 		
 		public static void Main (string[] args)
 		{
-			/* Init Gtk */
-			Application.Init ();
-			
 			Core.Init ();
+
+			InitGtk ();
 
 			/* Init GStreamer */
 			GStreamer.Init ();
@@ -75,6 +74,35 @@ namespace LongoMatch
 			} catch (Exception ex) {
 				ProcessExecutionError (ex);
 			}
+		}
+
+		static void InitGtk ()
+		{
+			string dataDir, gtkRC, iconsDir, styleConf;
+			IconTheme theme;
+			
+			if (Environment.GetEnvironmentVariable ("LGM_UNINSTALLED") != null) {
+				dataDir = "../data";
+			} else {
+				dataDir = Path.Combine (Config.baseDirectory, "share",
+				                        Constants.SOFTWARE_NAME.ToLower ());
+			}
+			
+			gtkRC = Path.Combine (dataDir, "theme", "gtk-2.0", "gtkrc");
+			if (File.Exists (gtkRC)) {
+				Rc.AddDefaultFile (gtkRC);
+			}
+			
+			styleConf = Path.Combine (dataDir, "theme", "longomatch-dark.json");
+			Config.Style = StyleConf.Load (styleConf);
+
+			Application.Init ();
+
+			iconsDir = Path.Combine (dataDir, "icons");
+			if (Directory.Exists (iconsDir)) {
+				IconTheme.Default.PrependSearchPath (iconsDir);
+			}
+			
 		}
 
 		private static void OnException (GLib.UnhandledExceptionArgs args)

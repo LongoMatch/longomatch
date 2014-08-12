@@ -6,6 +6,7 @@ ACLOCAL_AMFLAGS = -I build/m4 -I build/m4/shamrock
 
 SUBDIRS = \
 	build \
+	data \
 	images \
 	pkgconfig \
 	libcesarplayer \

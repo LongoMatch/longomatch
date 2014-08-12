@@ -148,6 +148,11 @@ LongoMatch/longomatch.desktop.in
 LongoMatch/AssemblyInfo.cs
 tools/deb-pkg.sh
 
+data/Makefile
+data/icons/Makefile
+data/images/Makefile
+data/theme/Makefile
+
 po/Makefile.in
 ])
 

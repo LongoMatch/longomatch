@@ -149,6 +149,7 @@
     <File subtype="Code" buildaction="Compile" name="Store/Playlists/PlaylistPlayElement.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Playlists/PlaylistDrawing.cs" />
     <File subtype="Code" buildaction="Compile" name="Store/Playlists/PlaylistImage.cs" />
+    <File subtype="Code" buildaction="Compile" name="StyleConf.cs" />
   </Contents>
   <References>
     <ProjectReference type="Package" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

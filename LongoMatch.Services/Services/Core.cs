@@ -141,7 +141,7 @@ namespace LongoMatch.Services
 				System.IO.Directory.CreateDirectory (Config.TempVideosDir);
 		}
 
-		private static void SetupBaseDir ()
+		static void SetupBaseDir ()
 		{
 			string home;
 			
@@ -167,7 +167,7 @@ namespace LongoMatch.Services
 					Constants.SOFTWARE_NAME.ToLower ());
 		}
 
-		private static bool? debugging = null;
+		static bool? debugging = null;
 
 		public static bool Debugging {
 			get {

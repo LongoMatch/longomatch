@@ -103,7 +103,8 @@ SOURCES = Common/Area.cs \
 	Store/Time.cs \
 	Store/TimeNode.cs \
 	Store/TimelineNode.cs \
-	Store/Timer.cs
+	Store/Timer.cs \
+	StyleConf.cs
 
 RESOURCES = $(top_srcdir)/images/field_background.svg \
 	$(top_srcdir)/images/goal_background.svg \

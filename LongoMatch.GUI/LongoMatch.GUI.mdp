@@ -128,7 +128,6 @@
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.Stats.PlayerSubcategoryViewer.cs" />
     <File subtype="Code" buildaction="Compile" name="Gui/Component/AnalysisComponent.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Component.AnalysisComponent.cs" />
-    <File subtype="Code" buildaction="EmbedAsResource" name="../images/background.svg" />
     <File subtype="Directory" buildaction="Compile" name="Gui/Panel" />
     <File subtype="Code" buildaction="Compile" name="Gui/Panel/WelcomePanel.cs" />
     <File subtype="Code" buildaction="Compile" name="gtk-gui/LongoMatch.Gui.Panel.WelcomePanel.cs" />
@@ -181,6 +180,8 @@
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/line-double-arrow.svg" />
     <File subtype="Code" buildaction="EmbedAsResource" name="../images/tools/line-arrow.svg" />
     <File subtype="Code" buildaction="Nothing" name="LongoMatch.GUI.dll.config" copyToOutputDirectory="PreserveNewest" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../data/images/longomatch-light-bg.svg" />
+    <File subtype="Code" buildaction="EmbedAsResource" name="../data/images/longomatch-dark-bg.svg" />
   </Contents>
   <References>
     <ProjectReference type="Package" localcopy="True" refto="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
