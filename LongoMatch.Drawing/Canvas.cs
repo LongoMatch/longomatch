@@ -93,6 +93,7 @@ namespace LongoMatch.Drawing
 			Selections = new List<Selection> ();
 			SelectionMode = MultiSelectionMode.Single;
 			Accuracy = 1;
+			ClickRepeatMS = 100;
 			MoveWithoutSelection = false;
 			ObjectsCanMove = true;
 			
@@ -102,6 +103,11 @@ namespace LongoMatch.Drawing
 			widget.ShowTooltipEvent += HandleShowTooltipEvent;
 		}
 
+		public int ClickRepeatMS {
+			get;
+			set;
+		}
+		
 		public double Accuracy {
 			get;
 			set;
@@ -293,7 +299,7 @@ namespace LongoMatch.Drawing
 
 		void HandleButtonPressEvent (Point coords, uint time, ButtonType type, ButtonModifier modifier)
 		{
-			if (time - lastTime < 500) {
+			if (time - lastTime < ClickRepeatMS) {
 				return;
 			}
 			coords = ToUserCoords (coords); 

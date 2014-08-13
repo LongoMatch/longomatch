@@ -45,6 +45,7 @@ namespace LongoMatch.Drawing.Cairo
 		public WidgetWrapper (DrawingArea widget)
 		{
 			this.widget = widget;
+			MoveWaitMS = 200;
 			widget.AddEvents ((int)EventMask.PointerMotionMask);
 			widget.AddEvents ((int)EventMask.ButtonPressMask);
 			widget.AddEvents ((int)EventMask.ButtonReleaseMask);
@@ -55,6 +56,11 @@ namespace LongoMatch.Drawing.Cairo
 			widget.MotionNotifyEvent += HandleMotionNotifyEvent;
 		}
 
+		public uint MoveWaitMS {
+			get;
+			set;
+		}
+		
 		public double Width {
 			get {
 				return currentWidth;
@@ -280,7 +286,7 @@ namespace LongoMatch.Drawing.Cairo
 			 * should be ignored. Start moving only when the button has been
 			 * pressed for more than 200ms */
 			canMove = false;
-			moveTimerID = GLib.Timeout.Add (200, ReadyToMove);
+			moveTimerID = GLib.Timeout.Add (MoveWaitMS, ReadyToMove);
 			if (ButtonPressEvent != null) {
 				ButtonType bt;
 				ButtonModifier bm;
