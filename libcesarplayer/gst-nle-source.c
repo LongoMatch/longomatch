@@ -644,7 +644,8 @@ gst_nle_source_next (GstNleSource * nlesrc)
   GST_DEBUG_OBJECT (nlesrc, "Start ts:%" GST_TIME_FORMAT,
       GST_TIME_ARGS (nlesrc->start_ts));
   gst_element_set_state (nlesrc->decoder, GST_STATE_PLAYING);
-  ret = gst_element_get_state (nlesrc->decoder, &state, NULL, 2 * GST_SECOND);
+  ret = gst_element_get_state (nlesrc->decoder, &state,
+      NULL, 5 * GST_SECOND);
   if (ret == GST_STATE_CHANGE_FAILURE) {
     GST_WARNING_OBJECT (nlesrc, "Error changing state, selecting next item.");
     gst_nle_source_check_eos (nlesrc);
