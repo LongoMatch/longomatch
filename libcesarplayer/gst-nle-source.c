@@ -284,7 +284,12 @@ gst_nle_source_push_buffer (GstNleSource * nlesrc, GstBuffer * buf,
 
   item = (GstNleSrcItem *) g_list_nth_data (nlesrc->queue, nlesrc->index);
   buf_ts = GST_BUFFER_TIMESTAMP (buf);
+
   if (buf_ts < item->start) {
+    GST_LOG_OBJECT (nlesrc, "Discard early %s buffer with ts: %"
+      GST_TIME_FORMAT" start: %" GST_TIME_FORMAT, is_audio ? "audio" : "video",
+      GST_TIME_ARGS (buf_ts), GST_TIME_ARGS (item->start));
+    gst_buffer_unref (buf);
     return GST_FLOW_OK;
   }
   buf_rel_ts = buf_ts - item->start;
