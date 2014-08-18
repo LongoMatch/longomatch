@@ -6273,7 +6273,7 @@ You can continue with the current capture, cancel it or save your project.
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Panel.NewProjectPanel" design-size="1182 340">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Panel.NewProjectPanel" design-size="1182 438">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>

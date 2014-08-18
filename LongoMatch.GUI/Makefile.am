@@ -10,6 +10,7 @@ SOURCES = Gui/Cairo.cs \
 	Gui/Component/CategoryProperties.cs \
 	Gui/Component/CodingWidget.cs \
 	Gui/Component/CoordinatesTagger.cs \
+	Gui/Component/DatePicker.cs \
 	Gui/Component/GeneralPreferencesPanel.cs \
 	Gui/Component/LiveAnalysisPreferences.cs \
 	Gui/Component/MediaFileChooser.cs \
@@ -83,6 +84,7 @@ SOURCES = Gui/Cairo.cs \
 	gtk-gui/LongoMatch.Gui.Component.CategoryProperties.cs \
 	gtk-gui/LongoMatch.Gui.Component.CodingWidget.cs \
 	gtk-gui/LongoMatch.Gui.Component.CoordinatesTagger.cs \
+	gtk-gui/LongoMatch.Gui.Component.DatePicker.cs \
 	gtk-gui/LongoMatch.Gui.Component.GameViewer.cs \
 	gtk-gui/LongoMatch.Gui.Component.GeneralPreferencesPanel.cs \
 	gtk-gui/LongoMatch.Gui.Component.LiveAnalysisPreferences.cs \

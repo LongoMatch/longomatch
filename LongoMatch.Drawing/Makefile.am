@@ -5,29 +5,29 @@ TARGET = library
 LINK = $(REF_DEP_LONGOMATCH_DRAWING)
 
 SOURCES = Canvas.cs \
-	CanvasObject/BenchObject.cs \
-	CanvasObject/CanvasObject.cs \
-	CanvasObject/CardObject.cs \
-	CanvasObject/CategoryLabel.cs \
-	CanvasObject/CategoryObject.cs \
-	CanvasObject/CounterObject.cs \
-	CanvasObject/CrossObject.cs \
-	CanvasObject/EllipseObject.cs \
-	CanvasObject/FieldObject.cs \
-	CanvasObject/LineObject.cs \
-	CanvasObject/PlayObject.cs \
-	CanvasObject/PlayerObject.cs \
-	CanvasObject/PlayersTaggerObject.cs \
-	CanvasObject/PositionObject.cs \
-	CanvasObject/QuadrilateralObject.cs \
-	CanvasObject/RectangleObject.cs \
-	CanvasObject/ScoreObject.cs \
-	CanvasObject/TagObject.cs \
-	CanvasObject/TaggerObject.cs \
-	CanvasObject/TextObject.cs \
-	CanvasObject/TimeNodeObject.cs \
-	CanvasObject/TimelineObject.cs \
-	CanvasObject/TimerObject.cs \
+	CanvasObjects/BenchObject.cs \
+	CanvasObjects/CanvasObject.cs \
+	CanvasObjects/CardObject.cs \
+	CanvasObjects/CategoryLabel.cs \
+	CanvasObjects/CategoryObject.cs \
+	CanvasObjects/CounterObject.cs \
+	CanvasObjects/CrossObject.cs \
+	CanvasObjects/EllipseObject.cs \
+	CanvasObjects/FieldObject.cs \
+	CanvasObjects/LineObject.cs \
+	CanvasObjects/PlayObject.cs \
+	CanvasObjects/PlayerObject.cs \
+	CanvasObjects/PlayersTaggerObject.cs \
+	CanvasObjects/PositionObject.cs \
+	CanvasObjects/QuadrilateralObject.cs \
+	CanvasObjects/RectangleObject.cs \
+	CanvasObjects/ScoreObject.cs \
+	CanvasObjects/TagObject.cs \
+	CanvasObjects/TaggerObject.cs \
+	CanvasObjects/TextObject.cs \
+	CanvasObjects/TimeNodeObject.cs \
+	CanvasObjects/TimelineObject.cs \
+	CanvasObjects/TimerObject.cs \
 	Constants.cs \
 	Utils.cs \
 	Widgets/Blackboard.cs \

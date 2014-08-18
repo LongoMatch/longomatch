@@ -15,51 +15,39 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using LongoMatch.Store;
+using System;
 using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Common;
+using LongoMatch.Interfaces;
+using LongoMatch.Store;
 
-namespace LongoMatch.Drawing.CanvasObject
+namespace LongoMatch.Drawing.CanvasObjects
 {
-	public class CategoryLabel: CanvasObject, ICanvasObject
+	public class ScoreObject: TaggerObject
 	{
-		Category category;
-		double width, height;
-
-		public CategoryLabel (Category category, double width, double height,
-		                            double offsetY)
+		public ScoreObject (Score score): base (score)
 		{
-			this.category = category;
-			this.height = height;
-			this.width = width;
-			OffsetY = offsetY;
+			Score = score;
 		}
 
-		public double Scroll {
+		public Score Score {
 			get;
 			set;
 		}
 
-		public double OffsetY {
-			set;
-			protected get;
-		}
-
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
-			double y;
-			
-			y = OffsetY - Scroll;
 			tk.Begin ();
-			tk.FillColor = category.Color;
-			tk.StrokeColor = category.Color;
-			tk.FontSlant = FontSlant.Normal;
-			tk.FontSize = 12;
-			tk.DrawRoundedRectangle (new Point (0, y + 1), width, height - 1, 3);  
-			tk.FillColor = Constants.TEXT_COLOR;
-			tk.StrokeColor = Constants.TEXT_COLOR;
-			tk.DrawText (new Point (0, y), width, height,
-			                      category.Name);
+	
+			/* Draw Rectangle */
+			DrawButton (tk);
+			
+			/* Draw header */
+			tk.LineWidth = 2;
+			tk.StrokeColor = Score.TextColor;
+			tk.FillColor = Score.TextColor;
+			tk.DrawText (Position, Score.Width, Score.Height, Score.Name);
+			DrawSelectionArea (tk);
 			tk.End ();
 		}
 	}

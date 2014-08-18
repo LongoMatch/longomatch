@@ -19,7 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Store;
-using LongoMatch.Drawing.CanvasObject;
+using LongoMatch.Drawing.CanvasObjects;
 using LongoMatch.Common;
 using LongoMatch.Handlers;
 using LongoMatch.Interfaces.Drawing;

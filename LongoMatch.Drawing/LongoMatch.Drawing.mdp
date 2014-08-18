@@ -14,44 +14,44 @@
     </Configuration>
   </Configurations>
   <Contents>
-    <File subtype="Directory" buildaction="Compile" name="CanvasObject" />
+    <File subtype="Directory" buildaction="Compile" name="CanvasObjects" />
     <File subtype="Code" buildaction="Compile" name="Canvas.cs" />
-    <File subtype="Directory" buildaction="Compile" name="CanvasObject" />
+    <File subtype="Directory" buildaction="Compile" name="CanvasObjects" />
     <File subtype="Directory" buildaction="Compile" name="Widgets" />
-    <File subtype="Code" buildaction="Compile" name="CanvasObject/CategoryLabel.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObjects/CategoryLabel.cs" />
     <File subtype="Code" buildaction="Compile" name="Widgets/Timerule.cs" />
     <File subtype="Code" buildaction="Compile" name="Widgets/CategoriesLabels.cs" />
-    <File subtype="Code" buildaction="Compile" name="CanvasObject/PlayObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObjects/PlayObject.cs" />
     <File subtype="Code" buildaction="Compile" name="Constants.cs" />
     <File subtype="Code" buildaction="Compile" name="Widgets/PlaysTimeline.cs" />
-    <File subtype="Code" buildaction="Compile" name="CanvasObject/TimelineObject.cs" />
-    <File subtype="Code" buildaction="Compile" name="CanvasObject/CanvasObject.cs" />
-    <File subtype="Code" buildaction="Compile" name="CanvasObject/PlayerObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObjects/TimelineObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObjects/CanvasObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObjects/PlayerObject.cs" />
     <File subtype="Code" buildaction="Compile" name="Widgets/TeamTagger.cs" />
-    <File subtype="Code" buildaction="Compile" name="CanvasObject/TimeNodeObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObjects/TimeNodeObject.cs" />
     <File subtype="Code" buildaction="Compile" name="Widgets/TimersTimeline.cs" />
     <File subtype="Code" buildaction="Compile" name="Widgets/PositionTagger.cs" />
-    <File subtype="Code" buildaction="Compile" name="CanvasObject/PositionObject.cs" />
-    <File subtype="Code" buildaction="Compile" name="CanvasObject/LineObject.cs" />
-    <File subtype="Directory" buildaction="Compile" name="CanvasObject" />
-    <File subtype="Code" buildaction="Compile" name="CanvasObject/CrossObject.cs" />
-    <File subtype="Code" buildaction="Compile" name="CanvasObject/RectangleObject.cs" />
-    <File subtype="Code" buildaction="Compile" name="CanvasObject/QuadrilateralObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObjects/PositionObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObjects/LineObject.cs" />
+    <File subtype="Directory" buildaction="Compile" name="CanvasObjects" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObjects/CrossObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObjects/RectangleObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObjects/QuadrilateralObject.cs" />
     <File subtype="Code" buildaction="Compile" name="Widgets/Blackboard.cs" />
-    <File subtype="Code" buildaction="Compile" name="CanvasObject/EllipseObject.cs" />
-    <File subtype="Code" buildaction="Compile" name="CanvasObject/TextObject.cs" />
-    <File subtype="Code" buildaction="Compile" name="CanvasObject/CounterObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObjects/EllipseObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObjects/TextObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObjects/CounterObject.cs" />
     <File subtype="Code" buildaction="Compile" name="Utils.cs" />
-    <File subtype="Code" buildaction="Compile" name="CanvasObject/CategoryObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObjects/CategoryObject.cs" />
     <File subtype="Code" buildaction="Compile" name="Widgets/PlaysTagger.cs" />
-    <File subtype="Code" buildaction="Compile" name="CanvasObject/TaggerObject.cs" />
-    <File subtype="Code" buildaction="Compile" name="CanvasObject/ScoreObject.cs" />
-    <File subtype="Code" buildaction="Compile" name="CanvasObject/CardObject.cs" />
-    <File subtype="Code" buildaction="Compile" name="CanvasObject/TimerObject.cs" />
-    <File subtype="Code" buildaction="Compile" name="CanvasObject/TagObject.cs" />
-    <File subtype="Code" buildaction="Compile" name="CanvasObject/BenchObject.cs" />
-    <File subtype="Code" buildaction="Compile" name="CanvasObject/FieldObject.cs" />
-    <File subtype="Code" buildaction="Compile" name="CanvasObject/PlayersTaggerObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObjects/TaggerObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObjects/ScoreObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObjects/CardObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObjects/TimerObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObjects/TagObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObjects/BenchObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObjects/FieldObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObjects/PlayersTaggerObject.cs" />
   </Contents>
   <References>
     <ProjectReference type="Package" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

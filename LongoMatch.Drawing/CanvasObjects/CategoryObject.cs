@@ -22,7 +22,7 @@ using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Store;
 using LongoMatch.Store.Drawables;
 
-namespace LongoMatch.Drawing.CanvasObject
+namespace LongoMatch.Drawing.CanvasObjects
 {
 	public class CategoryObject: TaggerObject
 	{
@@ -97,7 +97,7 @@ namespace LongoMatch.Drawing.CanvasObject
 			}
 		}
 
-		public override void ClickPressed (Point p)
+		public override void ClickPressed (Point p, ButtonModifier modif)
 		{
 			foreach (Rectangle rect in rects.Keys) {
 				Selection subsel = rect.GetSelection (p, 0);

@@ -22,7 +22,7 @@ using LongoMatch.Interfaces;
 using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Store;
 
-namespace LongoMatch.Drawing.CanvasObject
+namespace LongoMatch.Drawing.CanvasObjects
 {
 	public class TimerObject: TaggerObject
 	{

@@ -119,6 +119,7 @@ namespace LongoMatch.Gui.Panel
 			
 			drawingarea.HeightRequest = 200;
 			teamtagger = new TeamTagger (new WidgetWrapper (drawingarea));
+			teamtagger.SubstitutionMode = true;
 			teams = Config.TeamTemplatesProvider.Templates;
 			hometeamscombobox.Load (teams, false);
 			hometeamscombobox.Changed += (sender, e) => {
@@ -231,9 +232,9 @@ namespace LongoMatch.Gui.Panel
 		
 		void LoadTemplate (TeamTemplate template, Team team) {
 			if (team == Team.LOCAL) {
-				hometemplate = template;
+				hometemplate = Cloner.Clone (template);
 			} else {
-				awaytemplate = template;
+				awaytemplate = Cloner.Clone (template);
 			}
 			teamtagger.LoadTeams (hometemplate, awaytemplate,
 			                      analysisTemplate.FieldBackground);

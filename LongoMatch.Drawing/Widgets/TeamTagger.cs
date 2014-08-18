@@ -22,7 +22,7 @@ using LongoMatch.Common;
 using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Store.Drawables;
 using LongoMatch.Store.Templates;
-using LongoMatch.Drawing.CanvasObject;
+using LongoMatch.Drawing.CanvasObjects;
 using LongoMatch.Store;
 using LongoMatch.Handlers;
 
@@ -31,7 +31,7 @@ namespace LongoMatch.Drawing.Widgets
 	public class TeamTagger: SelectionCanvas
 	{
 	
-		public event PlayersPropertiesHandler PlayersSelectionChangedEvent;
+		public event PlayersSelectionChangedHandler PlayersSelectionChangedEvent;
 		public event PlayersPropertiesHandler ShowMenuEvent;
 
 		PlayersTaggerObject tagger;
@@ -45,6 +45,9 @@ namespace LongoMatch.Drawing.Widgets
 			SelectionMode = MultiSelectionMode.MultipleWithModifier;
 			widget.SizeChangedEvent += HandleSizeChangedEvent;
 			tagger = new PlayersTaggerObject ();
+			tagger.PlayersSubstitutionEvent += HandlePlayersSubstitutionEvent;
+			tagger.PlayersSelectionChangedEvent += HandlePlayersSelectionChangedEvent;
+			ObjectsCanMove = false;
 			Objects.Add (tagger);
 		}
 
@@ -53,22 +56,48 @@ namespace LongoMatch.Drawing.Widgets
 			tagger.LoadTeams (homeTeam, awayTeam, background);
 			widget.ReDraw ();
 		}
-
-		public void Reload ()
-		{
+		
+		public void Reload () {
+			tagger.Reload ();
 		}
 
+		public bool SubstitutionMode {
+			set {
+				tagger.SubstitutionMode = value;
+			}
+		}
+		
 		public void Select (Player p) {
 		}
 		
 		protected override void ShowMenu (Point coords)
 		{
+			Selection sel = tagger.GetSelection (coords, 0);
+			
+			if (sel != null && ShowMenuEvent != null) {
+				PlayerObject po = sel.Drawable as PlayerObject;
+				ShowMenuEvent (new List<Player> {po.Player});
+			}
 		}
 
 		void HandleSizeChangedEvent ()
 		{
 			tagger.Width = widget.Width;
 			tagger.Height = widget.Height;
+		}
+		
+		void HandlePlayersSubstitutionEvent (Player p1, Player p2, TeamTemplate team)
+		{
+			team.List.Swap (p1, p2);
+			tagger.Substitute (p1, p2, team);
+			widget.ReDraw ();
+		}
+
+		void HandlePlayersSelectionChangedEvent (List<Player> players)
+		{
+			if (PlayersSelectionChangedEvent != null) {
+				PlayersSelectionChangedEvent (players);
+			}
 		}
 	}
 }

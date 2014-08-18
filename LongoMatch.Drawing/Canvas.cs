@@ -22,7 +22,7 @@ using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Interfaces;
 using LongoMatch.Common;
 using LongoMatch.Store.Drawables;
-using LongoMatch.Drawing.CanvasObject;
+using LongoMatch.Drawing.CanvasObjects;
 
 namespace LongoMatch.Drawing
 {
@@ -238,7 +238,7 @@ namespace LongoMatch.Drawing
 			
 			clickedSel = sel;
 			if (sel != null) {
-				(sel.Drawable as ICanvasSelectableObject).ClickPressed (coords);
+				(sel.Drawable as ICanvasObject).ClickPressed (coords, modif);
 			}
 
 			if ((SelectionMode == MultiSelectionMode.Multiple) ||

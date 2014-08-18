@@ -22,7 +22,7 @@ using System.Collections.Generic;
 using LongoMatch.Common;
 using LongoMatch.Store.Drawables;
 
-namespace LongoMatch.Drawing.CanvasObject
+namespace LongoMatch.Drawing.CanvasObjects
 {
 	public class FieldObject: CanvasObject, ICanvasSelectableObject
 	{

@@ -22,7 +22,7 @@ using LongoMatch.Interfaces;
 using LongoMatch.Common;
 using LongoMatch.Store.Drawables;
 
-namespace LongoMatch.Drawing.CanvasObject
+namespace LongoMatch.Drawing.CanvasObjects
 {
 	public class TimeNodeObject: CanvasObject, ICanvasSelectableObject
 	{

@@ -16,37 +16,46 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Store.Drawables;
+using LongoMatch.Store;
 using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Interfaces;
 using LongoMatch.Common;
+using LongoMatch.Store.Drawables;
 
-namespace LongoMatch.Drawing.CanvasObject
+namespace LongoMatch.Drawing.CanvasObjects
 {
-	public class TextObject: CanvasDrawableObject<Text>, ICanvasSelectableObject
+	public class PlayObject: TimeNodeObject
 	{
-		public TextObject ()
+		public PlayObject (Play play):base (play)
 		{
 		}
 
-		public TextObject (Text text)
-		{
-			Drawable = text;
+		public override string Description {
+			get {
+				return Play.Name;
+			}
+		}
+
+		public Play Play {
+			get {
+				return TimeNode as Play;
+			}
 		}
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
+			Color c = Play.Category.Color;
 			tk.Begin ();
-			tk.FillColor = Drawable.FillColor;
-			tk.StrokeColor = Drawable.StrokeColor;
-			tk.LineWidth = Drawable.LineWidth;
-			tk.DrawRectangle (Drawable.TopLeft, Drawable.Width, Drawable.Height);
-			tk.DrawArea (Drawable.TopLeft, Drawable.TopRight,
-			             Drawable.BottomRight, Drawable.BottomLeft);
-			tk.StrokeColor = Drawable.TextColor;
-			tk.DrawText (Drawable.TopLeft, Drawable.Width, Drawable.Height,
-			             Drawable.Value);
-			DrawSelectionArea (tk);
+			tk.FillColor = new Color (c.R, c.G, c.B, (byte)(0.8 * byte.MaxValue));
+			if (Selected) {
+				tk.StrokeColor = Constants.PLAY_OBJECT_SELECTED_COLOR;
+			} else {
+				tk.StrokeColor = Play.Category.Color;
+			}
+			tk.LineWidth = 2;
+			tk.DrawRoundedRectangle (new Point (StartX, OffsetY),
+			                         Utils.TimeToPos (Play.Duration, SecondsPerPixel),
+			                         Constants.CATEGORY_HEIGHT, 2);
 			tk.End ();
 		}
 	}

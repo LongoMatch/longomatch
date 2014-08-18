@@ -16,46 +16,34 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Store;
+using LongoMatch.Store.Drawables;
 using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Interfaces;
 using LongoMatch.Common;
-using LongoMatch.Store.Drawables;
 
-namespace LongoMatch.Drawing.CanvasObject
+namespace LongoMatch.Drawing.CanvasObjects
 {
-	public class PlayObject: TimeNodeObject
+	public class CrossObject: CanvasDrawableObject<Cross>, ICanvasSelectableObject
 	{
-		public PlayObject (Play play):base (play)
+		public CrossObject ()
 		{
 		}
 
-		public override string Description {
-			get {
-				return Play.Name;
-			}
-		}
-
-		public Play Play {
-			get {
-				return TimeNode as Play;
-			}
+		public CrossObject (Cross cross)
+		{
+			Drawable = cross;
 		}
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
-			Color c = Play.Category.Color;
 			tk.Begin ();
-			tk.FillColor = new Color (c.R, c.G, c.B, (byte)(0.8 * byte.MaxValue));
-			if (Selected) {
-				tk.StrokeColor = Constants.PLAY_OBJECT_SELECTED_COLOR;
-			} else {
-				tk.StrokeColor = Play.Category.Color;
-			}
-			tk.LineWidth = 2;
-			tk.DrawRoundedRectangle (new Point (StartX, OffsetY),
-			                         Utils.TimeToPos (Play.Duration, SecondsPerPixel),
-			                         Constants.CATEGORY_HEIGHT, 2);
+			tk.FillColor = Drawable.FillColor;
+			tk.StrokeColor = Drawable.StrokeColor;
+			tk.LineWidth = Drawable.LineWidth;
+			tk.LineStyle = Drawable.Style;
+			tk.DrawLine (Drawable.Start, Drawable.Stop);
+			tk.DrawLine (Drawable.StartI, Drawable.StopI);
+			DrawSelectionArea (tk);
 			tk.End ();
 		}
 	}

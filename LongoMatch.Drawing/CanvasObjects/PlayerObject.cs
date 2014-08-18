@@ -23,9 +23,9 @@ using LongoMatch.Common;
 using LongoMatch.Store.Drawables;
 using LongoMatch.Drawing.Widgets;
 
-namespace LongoMatch.Drawing.CanvasObject
+namespace LongoMatch.Drawing.CanvasObjects
 {
-	public class PlayerObject: CanvasObject, ICanvasSelectableObject
+	public class PlayerObject: CanvasButtonObject, ICanvasSelectableObject
 	{
 		public PlayerObject ()
 		{
@@ -46,6 +46,7 @@ namespace LongoMatch.Drawing.CanvasObject
 			DrawPhoto = true;
 			Color = Constants.PLAYER_SELECTED_COLOR;
 			Size = (int)PlayersIconSize.Medium;
+			Toggle = true;
 		}
 
 		public Player Player {
@@ -84,6 +85,11 @@ namespace LongoMatch.Drawing.CanvasObject
 				return Size;
 			}
 		}
+		
+		public Team Team {
+			get;
+			set;
+		}
 
 		public Selection GetSelection (Point point, double precision)
 		{
@@ -107,11 +113,6 @@ namespace LongoMatch.Drawing.CanvasObject
 			double numberWidth, numberHeight;
 			double size, scale;
 
-			if (Position == null) {
-				Console.WriteLine (Player.Name + Player.Number);
-				return;
-			}
-			
 			zero = new Point (0, 0);
 			size = Config.Style.PlayerSize;
 			scale = Width / size; 
@@ -164,7 +165,7 @@ namespace LongoMatch.Drawing.CanvasObject
 			tk.DrawText (p, numberWidth, numberHeight, Player.Number.ToString ());
 			
 			/* Selection line */
-			if (Selected) {
+			if (Active) {
 				tk.LineStyle = LineStyle.Normal;
 				tk.LineWidth = Config.Style.PlayerBorder;
 				tk.FillColor = null;

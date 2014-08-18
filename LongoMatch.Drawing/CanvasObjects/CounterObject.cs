@@ -21,7 +21,7 @@ using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Interfaces;
 using LongoMatch.Common;
 
-namespace LongoMatch.Drawing.CanvasObject
+namespace LongoMatch.Drawing.CanvasObjects
 {
 	public class CounterObject: CanvasDrawableObject<Counter>, ICanvasSelectableObject
 	{

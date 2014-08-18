@@ -21,7 +21,7 @@ using System.Runtime.Remoting;
 using LongoMatch.Common;
 using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Store;
-using LongoMatch.Drawing.CanvasObject;
+using LongoMatch.Drawing.CanvasObjects;
 using LongoMatch.Store.Drawables;
 using LongoMatch.Handlers;
 using LongoMatch.Interfaces;

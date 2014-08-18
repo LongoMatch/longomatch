@@ -23,7 +23,7 @@ using LongoMatch.Store;
 using LongoMatch.Interfaces;
 using System.Collections.Generic;
 
-namespace LongoMatch.Drawing.CanvasObject
+namespace LongoMatch.Drawing.CanvasObjects
 {
 	public class PositionObject:  CanvasObject, ICanvasSelectableObject
 	{

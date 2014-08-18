@@ -32,6 +32,7 @@ namespace LongoMatch.Common
 		public const int WelcomeIconsPerRow = 3;
 		public const int WelcomeTextHeight = 20;
 		public const int WelcomeMinWidthBorder = 30;
+
 		public const int NewHeaderHeight = 60;
 		public const int NewHeaderSpacing = 10;
 		public const int NewEntryWidth = 150;

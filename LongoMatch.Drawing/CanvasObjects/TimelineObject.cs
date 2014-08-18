@@ -23,7 +23,7 @@ using LongoMatch.Interfaces;
 using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Store.Drawables;
 
-namespace LongoMatch.Drawing.CanvasObject
+namespace LongoMatch.Drawing.CanvasObjects
 {
 	public abstract class TimelineObject: CanvasObject, ICanvasSelectableObject
 	{

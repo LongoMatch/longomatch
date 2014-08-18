@@ -21,7 +21,7 @@ using LongoMatch.Common;
 using System.Collections.Generic;
 using LongoMatch.Store.Drawables;
 
-namespace LongoMatch.Drawing.CanvasObject
+namespace LongoMatch.Drawing.CanvasObjects
 {
 	public class BenchObject: CanvasObject, ICanvasSelectableObject
 	{

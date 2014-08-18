@@ -23,17 +23,14 @@ using LongoMatch.Store.Drawables;
 using LongoMatch.Store;
 using LongoMatch.Handlers;
 
-namespace LongoMatch.Drawing.CanvasObject
+namespace LongoMatch.Drawing.CanvasObjects
 {
-	public delegate void TaggerObjectHandler (TaggerObject to);
-	public abstract class TaggerObject: CanvasObject, ICanvasSelectableObject
+	public abstract class TaggerObject: CanvasButtonObject, ICanvasSelectableObject 
 	{
-		public event TaggerObjectHandler TaggerClickedEvent;
 
 		public TaggerObject (TaggerButton tagger)
 		{
 			Tagger = tagger;
-			Toggle = false;
 		}
 
 		public TaggerButton Tagger {
@@ -72,39 +69,9 @@ namespace LongoMatch.Drawing.CanvasObject
 			}
 		}
 
-		public bool Toggle {
-			get;
-			set;
-		}
-
-		public bool Active {
-			get;
-			set;
-		}
-
 		public Time Start {
 			get;
 			set;
-		}
-
-		public override void ClickPressed (Point p)
-		{
-			Active = !Active;
-		}
-
-		protected void EmitClickEvent ()
-		{
-			if (TaggerClickedEvent != null) {
-				TaggerClickedEvent (this);
-			}
-		}
-
-		public override void ClickReleased ()
-		{
-			if (!Toggle) {
-				Active = !Active;
-			}
-			EmitClickEvent ();
 		}
 
 		public virtual Selection GetSelection (Point p, double precision)

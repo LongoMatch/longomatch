@@ -16,21 +16,22 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Common;
 using LongoMatch.Interfaces.Drawing;
+using LongoMatch.Common;
+using LongoMatch.Interfaces;
 using LongoMatch.Store;
 
-namespace LongoMatch.Drawing.CanvasObject
+namespace LongoMatch.Drawing.CanvasObjects
 {
-	public class CardObject: TaggerObject
+	public class TagObject: TaggerObject
 	{
-
-		public CardObject (PenaltyCard card): base (card)
+		public TagObject (TagButton tagger): base (tagger)
 		{
-			Card = card;
+			TagButton = tagger;
+			Toggle = true;
 		}
 
-		public PenaltyCard Card {
+		public TagButton TagButton {
 			get;
 			set;
 		}
@@ -38,34 +39,17 @@ namespace LongoMatch.Drawing.CanvasObject
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
 			tk.Begin ();
-
+			
 			/* Draw Rectangle */
-			tk.FillColor = Color;
-			tk.StrokeColor = Color;
-			tk.LineWidth = 0;
-			switch (Card.Shape) {
-			case CardShape.Rectangle:
-				tk.DrawRoundedRectangle (Card.Position, Card.Width, Card.Height, 3);
-				break;
-			case CardShape.Circle:
-				tk.DrawCircle (new Point (Card.Position.X + Card.Width / 2,
-				                          Card.Position.Y + Card.Height / 2),
-				               Math.Min (Card.Width, Card.Height) / 2);
-				break;
-			case CardShape.Triangle:
-				tk.DrawTriangle (new Point (Card.Position.X + Card.Width / 2, Card.Position.Y),
-				                 Card.Width, Card.Height, SelectionPosition.Top);
-				break;
-			}
-
+			DrawButton (tk);
+			
 			/* Draw header */
 			tk.LineWidth = 2;
-			tk.StrokeColor = Color.Grey2;
-			tk.FillColor = Color.Grey2;
-			tk.DrawText (Position, Card.Width, Card.Height, Card.Name);
+			tk.StrokeColor = TagButton.TextColor;
+			tk.FillColor = TagButton.TextColor;
+			tk.DrawText (Position, TagButton.Width, TagButton.Height, TagButton.Name);
 			DrawSelectionArea (tk);
 			tk.End ();
 		}
 	}
 }
-

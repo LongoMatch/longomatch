@@ -19,10 +19,13 @@ using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Common;
 using LongoMatch.Store.Drawables;
 
-namespace LongoMatch.Drawing.CanvasObject
+namespace LongoMatch.Drawing.CanvasObjects
 {
 	public abstract class CanvasObject: ICanvasObject
 	{
+		public delegate void CanvasHandler (CanvasObject co);
+		public event CanvasHandler ClickedEvent;
+
 		protected CanvasObject ()
 		{
 			Visible = true;
@@ -43,7 +46,7 @@ namespace LongoMatch.Drawing.CanvasObject
 			get;
 		}
 
-		public virtual void ClickPressed (Point p)
+		public virtual void ClickPressed (Point p, ButtonModifier modif)
 		{
 		}
 
@@ -51,9 +54,42 @@ namespace LongoMatch.Drawing.CanvasObject
 		{
 		}
 
+		protected void EmitClickEvent ()
+		{
+			if (ClickedEvent != null) {
+				ClickedEvent (this);
+			}
+		}
+
 		public abstract void Draw (IDrawingToolkit tk, Area area);
 	}
 
+	public abstract class CanvasButtonObject: CanvasObject {
+	
+		public bool Toggle {
+			get;
+			set;
+		}
+
+		public bool Active {
+			get;
+			set;
+		}
+
+		public override void ClickPressed (Point p, ButtonModifier modif)
+		{
+			Active = !Active;
+		}
+
+		public override void ClickReleased ()
+		{
+			if (!Toggle) {
+				Active = !Active;
+			}
+			EmitClickEvent ();
+		}
+	}
+	
 	public abstract class CanvasDrawableObject<T>: CanvasObject, ICanvasDrawableObject where T: IBlackboardObject
 	{
 		

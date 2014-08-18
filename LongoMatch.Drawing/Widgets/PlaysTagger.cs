@@ -20,7 +20,7 @@ using System.Linq;
 using LongoMatch.Store.Templates;
 using System.Collections.Generic;
 using LongoMatch.Common;
-using LongoMatch.Drawing.CanvasObject;
+using LongoMatch.Drawing.CanvasObjects;
 using LongoMatch.Handlers;
 using LongoMatch.Store;
 using LongoMatch.Store.Drawables;
@@ -190,14 +190,14 @@ namespace LongoMatch.Drawing.Widgets
 			Objects.Clear ();
 			foreach (TagButton tag in template.CommonTags) {
 				TagObject to = new TagObject (tag);
-				to.TaggerClickedEvent += HandleTaggerClickedEvent;
+				to.ClickedEvent += HandleTaggerClickedEvent;
 				to.Mode = TagMode;
 				Objects.Add (to);
 			}
 			
 			foreach (Category cat in template.CategoriesList) {
 				CategoryObject co = new CategoryObject (cat);
-				co.TaggerClickedEvent += HandleTaggerClickedEvent;
+				co.ClickedEvent += HandleTaggerClickedEvent;
 				co.Mode = TagMode;
 				co.AddTag = AddTag;
 				Objects.Add (co);
@@ -205,20 +205,20 @@ namespace LongoMatch.Drawing.Widgets
 
 			foreach (PenaltyCard c in template.PenaltyCards) {
 				CardObject co = new CardObject (c);
-				co.TaggerClickedEvent += HandleTaggerClickedEvent;
+				co.ClickedEvent += HandleTaggerClickedEvent;
 				co.Mode = TagMode;
 				Objects.Add (co);
 			}
 			foreach (Score s in template.Scores) {
 				ScoreObject co = new ScoreObject (s);
-				co.TaggerClickedEvent += HandleTaggerClickedEvent;
+				co.ClickedEvent += HandleTaggerClickedEvent;
 				co.Mode = TagMode;
 				Objects.Add (co);
 			}
 
 			foreach (Timer t in template.Timers) {
 				TimerObject to = new TimerObject (t);
-				to.TaggerClickedEvent += HandleTaggerClickedEvent;
+				to.ClickedEvent += HandleTaggerClickedEvent;
 				to.Mode = TagMode;
 				Objects.Add (to);
 			}
@@ -244,11 +244,13 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		void HandleTaggerClickedEvent (TaggerObject tagger)
+		void HandleTaggerClickedEvent (CanvasObject co)
 		{
+			TaggerObject tagger;
 			Time start = null, stop = null;
 			List<Tag> tags = null;
 			
+			tagger = co as TaggerObject;
 			if (NewTagEvent == null || tagger is TimerObject ||
 				tagger is TagObject) {
 				return;

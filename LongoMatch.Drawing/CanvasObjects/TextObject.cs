@@ -16,23 +16,22 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Store.Drawables;
-using LongoMatch.Common;
+using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Interfaces;
+using LongoMatch.Common;
 
-namespace LongoMatch.Drawing.CanvasObject
+namespace LongoMatch.Drawing.CanvasObjects
 {
-	public class EllipseObject: CanvasDrawableObject<Ellipse>, ICanvasSelectableObject
+	public class TextObject: CanvasDrawableObject<Text>, ICanvasSelectableObject
 	{
-
-		public EllipseObject ()
+		public TextObject ()
 		{
 		}
 
-		public EllipseObject (Ellipse ellipse)
+		public TextObject (Text text)
 		{
-			Drawable = ellipse;
+			Drawable = text;
 		}
 
 		public override void Draw (IDrawingToolkit tk, Area area)
@@ -41,8 +40,12 @@ namespace LongoMatch.Drawing.CanvasObject
 			tk.FillColor = Drawable.FillColor;
 			tk.StrokeColor = Drawable.StrokeColor;
 			tk.LineWidth = Drawable.LineWidth;
-			tk.LineStyle = Drawable.Style;
-			tk.DrawEllipse (Drawable.Center, Drawable.AxisX, Drawable.AxisY);
+			tk.DrawRectangle (Drawable.TopLeft, Drawable.Width, Drawable.Height);
+			tk.DrawArea (Drawable.TopLeft, Drawable.TopRight,
+			             Drawable.BottomRight, Drawable.BottomLeft);
+			tk.StrokeColor = Drawable.TextColor;
+			tk.DrawText (Drawable.TopLeft, Drawable.Width, Drawable.Height,
+			             Drawable.Value);
 			DrawSelectionArea (tk);
 			tk.End ();
 		}

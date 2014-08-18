@@ -16,22 +16,23 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Store.Drawables;
 using LongoMatch.Interfaces.Drawing;
-using LongoMatch.Interfaces;
+using LongoMatch.Store.Drawables;
 using LongoMatch.Common;
+using LongoMatch.Interfaces;
 
-namespace LongoMatch.Drawing.CanvasObject
+namespace LongoMatch.Drawing.CanvasObjects
 {
-	public class CrossObject: CanvasDrawableObject<Cross>, ICanvasSelectableObject
+	public class EllipseObject: CanvasDrawableObject<Ellipse>, ICanvasSelectableObject
 	{
-		public CrossObject ()
+
+		public EllipseObject ()
 		{
 		}
 
-		public CrossObject (Cross cross)
+		public EllipseObject (Ellipse ellipse)
 		{
-			Drawable = cross;
+			Drawable = ellipse;
 		}
 
 		public override void Draw (IDrawingToolkit tk, Area area)
@@ -41,8 +42,7 @@ namespace LongoMatch.Drawing.CanvasObject
 			tk.StrokeColor = Drawable.StrokeColor;
 			tk.LineWidth = Drawable.LineWidth;
 			tk.LineStyle = Drawable.Style;
-			tk.DrawLine (Drawable.Start, Drawable.Stop);
-			tk.DrawLine (Drawable.StartI, Drawable.StopI);
+			tk.DrawEllipse (Drawable.Center, Drawable.AxisX, Drawable.AxisY);
 			DrawSelectionArea (tk);
 			tk.End ();
 		}

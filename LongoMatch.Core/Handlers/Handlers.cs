@@ -26,6 +26,7 @@ using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Interfaces.GUI;
 using LongoMatch.Store;
 using LongoMatch.Store.Playlists;
+using LongoMatch.Store.Templates;
 
 namespace LongoMatch.Handlers
 {
@@ -116,6 +117,10 @@ namespace LongoMatch.Handlers
 	/* Edit player properties */
 	public delegate void PlayerPropertiesHandler(Player player);
 	public delegate void PlayersPropertiesHandler(List<Player> players);
+	
+	/* Players selection */
+	public delegate void PlayersSubstitutionHandler (Player p1, Player p2, TeamTemplate team);
+	public delegate void PlayersSelectionChangedHandler (List<Player> players);
 	
 	/* A list of projects have been selected */
 	public delegate void ProjectsSelectedHandler(List<ProjectDescription> projects);

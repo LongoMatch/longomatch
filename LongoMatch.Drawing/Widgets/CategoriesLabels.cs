@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using LongoMatch.Store;
 using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Common;
-using LongoMatch.Drawing.CanvasObject;
+using LongoMatch.Drawing.CanvasObjects;
 
 namespace LongoMatch.Drawing.Widgets
 {

@@ -17,37 +17,31 @@
 //
 using System;
 using LongoMatch.Interfaces.Drawing;
+using LongoMatch.Store.Drawables;
 using LongoMatch.Common;
 using LongoMatch.Interfaces;
-using LongoMatch.Store;
 
-namespace LongoMatch.Drawing.CanvasObject
+namespace LongoMatch.Drawing.CanvasObjects
 {
-	public class ScoreObject: TaggerObject
+	public class QuadrilateralObject: CanvasDrawableObject<Quadrilateral>, ICanvasSelectableObject
 	{
-		public ScoreObject (Score score): base (score)
+		public QuadrilateralObject ()
 		{
-			Score = score;
 		}
 
-		public Score Score {
-			get;
-			set;
+		public QuadrilateralObject (Quadrilateral quadrilateral)
+		{
+			Drawable = quadrilateral;
 		}
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
 			tk.Begin ();
-	
-			/* Draw Rectangle */
-			DrawButton (tk);
-			
-			/* Draw header */
-			tk.LineWidth = 2;
-			tk.StrokeColor = Score.TextColor;
-			tk.FillColor = Score.TextColor;
-			tk.DrawText (Position, Score.Width, Score.Height, Score.Name);
-			DrawSelectionArea (tk);
+			tk.FillColor = Drawable.FillColor;
+			tk.StrokeColor = Drawable.StrokeColor;
+			tk.LineWidth = Drawable.LineWidth;
+			tk.DrawArea (Drawable.TopLeft, Drawable.TopRight,
+			             Drawable.BottomRight, Drawable.BottomLeft);
 			tk.End ();
 		}
 	}

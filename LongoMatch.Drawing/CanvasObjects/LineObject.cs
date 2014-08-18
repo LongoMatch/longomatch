@@ -21,7 +21,7 @@ using LongoMatch.Store.Drawables;
 using LongoMatch.Interfaces.Drawing;
 using LongoMatch.Interfaces;
 
-namespace LongoMatch.Drawing.CanvasObject
+namespace LongoMatch.Drawing.CanvasObjects
 {
 	public class LineObject: CanvasDrawableObject<Line>, ICanvasSelectableObject
 	{

@@ -34,7 +34,7 @@ namespace LongoMatch.Interfaces.Drawing
 		void Draw (IDrawingToolkit tk, Area area);
 		bool Visible {set; get;}
 		string Description {set; get;}
-		void ClickPressed (Point p);
+		void ClickPressed (Point p, ButtonModifier modif);
 		void ClickReleased ();
 	}
 	
