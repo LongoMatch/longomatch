@@ -102,7 +102,7 @@ namespace LongoMatch.Gui.Panel
 		
 		void ApplyStyle () {
 			centerbox.WidthRequest = StyleConf.NewTeamsComboWidth * 2 + StyleConf.NewTeamsSpacing;
-			newheaderbox.HeightRequest = StyleConf.NewHeaderHeight;
+			headerhbox.HeightRequest = StyleConf.NewHeaderHeight;
 			notebook1.BorderWidth = StyleConf.NewHeaderSpacing;
 			lefttable.RowSpacing = filetable.RowSpacing =
 				outputfiletable.RowSpacing = righttable.RowSpacing = StyleConf.NewTableHSpacing;
