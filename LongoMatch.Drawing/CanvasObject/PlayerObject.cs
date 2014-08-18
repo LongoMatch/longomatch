@@ -27,19 +27,30 @@ namespace LongoMatch.Drawing.CanvasObject
 {
 	public class PlayerObject: CanvasObject, ICanvasSelectableObject
 	{
-		public PlayerObject (Player player, Point position)
+		public PlayerObject ()
+		{
+			Init ();
+		}
+		
+		public PlayerObject (Player player, Point position = null)
 		{
 			Player = player;
-			Position = position;
+			Init (position);
+		}
+		
+		void Init (Point pos = null) {
+			if (pos == null) {
+				pos = new Point (0, 0);
+			}
+			Position = pos;
 			DrawPhoto = true;
-			SelectedColor = Constants.PLAYER_SELECTED_COLOR;
-			UnSelectedColor = Constants.PLAYER_UNSELECTED_COLOR;
-			IconSize = PlayersIconSize.Medium;
+			Color = Constants.PLAYER_SELECTED_COLOR;
+			Size = (int)PlayersIconSize.Medium;
 		}
 
 		public Player Player {
 			get;
-			protected set;
+			set;
 		}
 
 		public Point Position {
@@ -47,7 +58,7 @@ namespace LongoMatch.Drawing.CanvasObject
 			set;
 		}
 
-		public PlayersIconSize IconSize {
+		public int Size {
 			set;
 			get;
 		}
@@ -57,25 +68,20 @@ namespace LongoMatch.Drawing.CanvasObject
 			set;
 		}
 
-		public Color SelectedColor {
-			get;
-			set;
-		}
-
-		public Color UnSelectedColor {
+		public Color Color {
 			get;
 			set;
 		}
 
 		int Width {
 			get {
-				return (int)IconSize;
+				return Size;
 			}
 		}
 
 		int Height {
 			get {
-				return (int)IconSize;
+				return Size;
 			}
 		}
 
@@ -97,46 +103,75 @@ namespace LongoMatch.Drawing.CanvasObject
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
-			Color background, line;
-			Point position = new Point (Position.X - Width / 2, Position.Y - Height / 2);
+			Point zero, p;
+			double numberWidth, numberHeight;
+			double size, scale;
+
+			if (Position == null) {
+				Console.WriteLine (Player.Name + Player.Number);
+				return;
+			}
+			
+			zero = new Point (0, 0);
+			size = Config.Style.PlayerSize;
+			scale = Width / size; 
 			
 			tk.Begin ();
-			
-			/* Background */
-			if (Selected) {
-				background = SelectedColor;
-				line = SelectedColor;
-			} else {
-				background = UnSelectedColor;
-				line = UnSelectedColor;
-			}
-			tk.StrokeColor = line;
-			tk.FillColor = background;
-			tk.LineWidth = 5;
-			tk.DrawRoundedRectangle (position, Width, Height, 5);
-			
-			if (!DrawPhoto || Player.Photo == null || IconSize < PlayersIconSize.Medium) {
-				tk.FillColor = Color.White;
-				tk.StrokeColor = Color.White;
-				tk.FontSize = Width / 2;
-				tk.FontWeight = FontWeight.Bold;
-				/* Only draw player number for the smaller size */
-				if (IconSize > PlayersIconSize.Small) {
-					tk.DrawText (position, Width, Height - 20, Player.Number.ToString ());
-					tk.FontSize = 8;
-					tk.DrawText (new Point (position.X, position.Y + Height - 20), Width, 20, Player.Name);
-				} else {
-					tk.DrawText (position, Width, Height, Player.Number.ToString ());
-				}
-			} else {
-				tk.FillColor = Color.Black;
-				tk.StrokeColor = Color.Black;
-				tk.DrawImage (position, Width, Height, Player.Photo, true);
-				tk.FontSize = 16;
-				tk.FontWeight = FontWeight.Bold;
-				tk.DrawText (new Point (position.X, position.Y + Height - 20), Width, 20, Player.Number.ToString ());
-			}
+			tk.TranslateAndScale (Position - new Point (Size / 2, Size / 2),
+			                      new Point (scale, scale));
 
+			/* Background */
+			tk.LineStyle = LineStyle.Normal;
+			tk.LineWidth = Config.Style.PlayerBorder;
+			tk.FillColor = Config.Style.PaletteBackgroundDark;
+			tk.StrokeColor = Config.Style.PaletteBackgroundDark;
+			tk.DrawRoundedRectangle (zero, size, size, Config.Style.PlayerRadius);
+			
+			if (!DrawPhoto || Player.Photo == null) {
+				numberHeight = size;
+				numberWidth = Config.Style.PlayerNumberWidth;
+				p = new Point (Config.Style.PlayerNumberOffset, 0);
+			} else {
+				/* Image */
+				tk.DrawImage (zero, size, size, Player.Photo, true);
+				numberHeight = Config.Style.PlayerNumberHeight;
+				numberWidth = Config.Style.PlayerNumberWidth;
+				p = new Point (Config.Style.PlayerNumberOffset, size - numberHeight);
+			}
+			
+			/* Draw background */
+			tk.FillColor = Color;
+			tk.StrokeColor = Color;
+			tk.LineWidth = 0;
+			tk.DrawRoundedRectangle (p, numberWidth, numberHeight, Config.Style.PlayerRadius);
+				
+			/* Draw bottom Line */
+			tk.StrokeColor = Color;
+			tk.FillColor = Color;
+			tk.LineWidth = Config.Style.PlayerBorder;
+			tk.DrawRoundedRectangle (new Point (0, size - Config.Style.PlayerTeamLineWidth),
+			                         size, Config.Style.PlayerTeamLineWidth + 1, 2);
+			
+			/* Draw number */
+			tk.FillColor = Color.White;
+			tk.StrokeColor = Color.White;
+			tk.FontWeight = FontWeight.Normal;
+			if (Player.Number >= 100) {
+				tk.FontSize = (int)(size / 4);
+			} else {
+				tk.FontSize = (int)(size / 3);
+			}
+			tk.DrawText (p, numberWidth, numberHeight, Player.Number.ToString ());
+			
+			/* Selection line */
+			if (Selected) {
+				tk.LineStyle = LineStyle.Normal;
+				tk.LineWidth = Config.Style.PlayerBorder;
+				tk.FillColor = null;
+				tk.StrokeColor = Config.Style.PaletteActive;
+				tk.DrawRoundedRectangle (zero, size + 1, size + 1, Config.Style.PlayerRadius);
+			}
+			
 			tk.End ();
 		}
 	}

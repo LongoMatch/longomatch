@@ -235,8 +235,7 @@ namespace LongoMatch.Drawing.Cairo
 
 		public void DrawRectangle (Point start, double width, double height)
 		{
-			CContext.Rectangle (start.X, start.Y, width, height);
-			StrokeAndFill ();
+			DrawRoundedRectangle (start, width, height, 0);
 		}
 
 		static public double ByteToDouble (byte val)
@@ -280,8 +279,8 @@ namespace LongoMatch.Drawing.Cairo
 			
 			x = start.X + LineWidth / 2;
 			y = start.Y + LineWidth / 2;
-			height -= LineWidth / 2;
-			width -= LineWidth / 2;
+			height -= LineWidth;
+			width -= LineWidth;
 
 			if ((radius > height / 2) || (radius > width / 2))
 				radius = Math.Min (height / 2, width / 2);

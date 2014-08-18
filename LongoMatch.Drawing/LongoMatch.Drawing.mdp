@@ -49,6 +49,9 @@
     <File subtype="Code" buildaction="Compile" name="CanvasObject/CardObject.cs" />
     <File subtype="Code" buildaction="Compile" name="CanvasObject/TimerObject.cs" />
     <File subtype="Code" buildaction="Compile" name="CanvasObject/TagObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObject/BenchObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObject/FieldObject.cs" />
+    <File subtype="Code" buildaction="Compile" name="CanvasObject/PlayersTaggerObject.cs" />
   </Contents>
   <References>
     <ProjectReference type="Package" localcopy="True" refto="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

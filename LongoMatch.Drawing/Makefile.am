@@ -5,6 +5,7 @@ TARGET = library
 LINK = $(REF_DEP_LONGOMATCH_DRAWING)
 
 SOURCES = Canvas.cs \
+	CanvasObject/BenchObject.cs \
 	CanvasObject/CanvasObject.cs \
 	CanvasObject/CardObject.cs \
 	CanvasObject/CategoryLabel.cs \
@@ -12,9 +13,11 @@ SOURCES = Canvas.cs \
 	CanvasObject/CounterObject.cs \
 	CanvasObject/CrossObject.cs \
 	CanvasObject/EllipseObject.cs \
+	CanvasObject/FieldObject.cs \
 	CanvasObject/LineObject.cs \
 	CanvasObject/PlayObject.cs \
 	CanvasObject/PlayerObject.cs \
+	CanvasObject/PlayersTaggerObject.cs \
 	CanvasObject/PositionObject.cs \
 	CanvasObject/QuadrilateralObject.cs \
 	CanvasObject/RectangleObject.cs \

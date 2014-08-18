@@ -94,6 +94,13 @@ namespace LongoMatch.Drawing
 		{
 			return RenderFrameDrawing (tk, image.Width, image.Height, fd, image);
 		}
+		
+		public static Point ToUserCoords (Point p, Point offset, double scaleX, double scaleY)
+		{
+			return new Point ((p.X - offset.X) / scaleX,
+			                  (p.Y - offset.Y) / scaleY);
+		
+		}
 	}
 }
 
