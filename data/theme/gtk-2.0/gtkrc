@@ -4,11 +4,8 @@ gtk-icon-theme-name = "longomatch"
 gtk-icon-sizes = "gtk-menu=13,13:gtk-small-toolbar=24,24:gtk-large-toolbar=24,24:gtk-dnd=80,80:gtk-dialog=80,80"
 gtk-toolbar-icon-size = small-toolbar
 
-gtk-color-scheme = "base_color:#262626\nfg_color:#6a6a6a\ntooltip_fg_color:#000000\nselected_bg_color:#5ab160\nselected_fg_color:#262626\ntext_color:#6a6a6a\nbg_color:#262626\ntooltip_bg_color:#F5F5B5"
+gtk-color-scheme = "bg_color:#252627\nbg_light_color:#3b3b3b\nbg_dark_color:#151a20\nselected_color:#f3f3f3\nactive_color:#50b44d\ntool_color:#c42527\nbase_color:#6a6a6a\ntext_color:#f6f6f6"
 
-
-# disable images in buttons. i've only seen ugly delphi apps use this feature.
-gtk-button-images = 0
 
 # enable/disable images in menus. most "stock" microsoft apps don't use these, except sparingly.
 # the office apps use them heavily, though.
@@ -24,45 +21,42 @@ style "longomatch-default"
   GtkOptionMenu::indicator-spacing = { 7, 5, 2, 2 }
   GtkSpinButton::shadow-type = in
 
-  # Owen and I disagree that these should be themable
-  #GtkUIManager::add-tearoffs = 0
-  #GtkComboBox::add-tearoffs = 0
-  
   GtkComboBox::appears-as-list = 1
   GtkComboBox::focus-on-click = 1
-  
+
   GOComboBox::add_tearoffs = 0
 
   GtkTreeView::allow-rules = 0
   GtkTreeView::expander-size = 12
-  
+
   GtkToolbar::shadow-type = GTK_SHADOW_NONE
 
-  GtkButton::default_border         = {0, 0, 0, 0}
-  GtkButton::default_outside_border = {0, 0, 0, 0}
-  GtkButton::default_spacing        = 0
-  GtkButton::focus-line-width       = 0
-  GtkButton::focus-padding          = 2
+  GtkButton::focus-line-width = 0
+  GtkButton::focus-on-click = 0
 
-  xthickness = 0
-  ythickness = 0
+  GtkButton::focus-line-width = 0
+  GtkButton::focus-on-click = 0
 
-  fg[NORMAL]        = @fg_color
-  fg[ACTIVE]        = @fg_color
-  fg[PRELIGHT]      = @fg_color
-  fg[INSENSITIVE]   = darker (@bg_color)
+  #xthickness = 0
+  #ythickness = 0
+
+  fg[NORMAL]        = @base_color
+  fg[ACTIVE]        = @base_color
+  fg[PRELIGHT]      = @base_color
+  fg[INSENSITIVE]   = darker (@base_color)
 
   bg[NORMAL]        = @bg_color
   bg[ACTIVE]        = @bg_color
-  bg[PRELIGHT]      = @selected_bg_color
-  bg[SELECTED]      = @selected_bg_color
+  bg[PRELIGHT]      = @active_color
+  bg[SELECTED]      = @active_color
   bg[INSENSITIVE]   = darker (@bg_color)
 
-  text[NORMAL]      = @text_color
-  text[ACTIVE]      = @text_color
-  text[PRELIGHT]    = @text_color
-  text[SELECTED]    = @text_color
-  text[INSENSITIVE] = darker (@bg_color)
+
+  text[NORMAL]      = @base_color
+  text[ACTIVE]      = @base_color
+  text[PRELIGHT]    = @base_color
+  text[SELECTED]    = @base_color
+  text[INSENSITIVE] = darker (@base_color)
 
   font_name = "Ubuntu"
 
@@ -72,8 +66,257 @@ style "longomatch-default"
   }
 }
 
-class "GtkWidget" style "longomatch-default"
+style "longomatch-rounded-button" = "longomatch-default"
+{
+  font_name = "Ubuntu 14"
 
-# Configure font and rounded icons for the welcome page
-include "welcome.rc"
-widget "welcomepanel" style "longomatch-welcome"
+  engine "pixmap"
+  {
+    image
+    {
+      function  = BOX
+      state     = NORMAL
+      file      = "Buttons/button-rounded-default.svg"
+      border    = { 4, 4, 4, 4 }
+      stretch   = TRUE
+    }
+    image
+    {
+      function   = BOX
+      state      = PRELIGHT
+      file       = "Buttons/button-rounded-prelight.svg"
+      border     = { 4, 4, 4, 4 }
+      stretch    = TRUE
+    }
+    image
+    {
+      function   = BOX
+      state      = ACTIVE
+      file       = "Buttons/button-rounded-pressed.svg"
+      border     = { 4, 4, 4, 4 }
+      stretch    = TRUE
+    }
+    image
+    {
+      function   = BOX
+      state      = INSENSITIVE
+      file       = "Buttons/button-rounded-default.svg"
+      border     = { 4, 4, 4, 4 }
+      stretch    = TRUE
+    }
+  }
+}
+
+style "longomatch-rect-button" = "longomatch-default"
+{
+  engine "pixmap"
+  {
+    image
+    {
+      function  = BOX
+      state     = NORMAL
+      file      = "Buttons/button-rect-default.svg"
+      border    = { 4, 4, 4, 4 }
+      stretch   = TRUE
+    }
+    image
+    {
+      function   = BOX
+      state      = PRELIGHT
+      file       = "Buttons/button-rect-prelight.svg"
+      border     = { 4, 4, 4, 4 }
+      stretch    = TRUE
+    }
+    image
+    {
+      function   = BOX
+      state      = ACTIVE
+      file       = "Buttons/button-rect-pressed.svg"
+      border     = { 4, 4, 4, 4 }
+      stretch    = TRUE
+    }
+    image
+    {
+      function   = BOX
+      state      = INSENSITIVE
+      file       = "Buttons/button-rect-default.svg"
+      border     = { 4, 4, 4, 4 }
+      stretch    = TRUE
+    }
+  }
+}
+
+style "longomatch-entry" = "longomatch-default" {
+
+  font = "Ubuntu 12"
+  xthickness = 2
+  ythickness = 2
+
+  base[NORMAL]        = @bg_dark_color
+  base[INSENSITIVE]   = darker (@bg_dark_color)
+
+  text[NORMAL]      = @text_color
+  text[INSENSITIVE] = darker (@text_color)
+
+  engine "clearlooks"
+  {
+    radius = 1.0
+  }
+}
+
+style "longomatch-teams-combo" = "longomatch-default" {
+
+  font = "Ubuntu 16"
+  xthickness = 2
+  ythickness = 2
+
+  base[NORMAL]        = @bg_light_color
+  bg[NORMAL]        = @bg_light_color
+
+  fg[NORMAL]      = "#ffffff"
+  text[NORMAL]      = "#ffffff"
+  text[INSENSITIVE] = darker (@text_color)
+}
+
+style "longomatch-header" {
+  font = "Ubuntu 25"
+
+  base[NORMAL]      = @bg_light_color
+  bg[NORMAL]        = @bg_light_color
+  text[NORMAL]      = @base_color
+}
+
+style "longomatch-filechooser-entry"
+{
+   base[NORMAL] = @bg_color
+   base[INSENSITIVE] = @bg_color
+
+   xthickness = 15
+   ythickness = 4
+
+   engine "pixmap"
+   {
+     image
+     {
+       function  = SHADOW
+       detail    = "entry"
+       state     = NORMAL
+       shadow    = IN
+       file      = "Entry/file-input-left.png"
+       border    = { 15, 4, 15, 15 }
+       stretch   = TRUE
+     }
+     image
+     {
+       function        = FLAT_BOX
+       detail          = "entry_bg"
+       state           = NORMAL
+       overlay_file    = "Entry/filechooser-entry-fill.png"
+       overlay_border  = { 0, 0, 0, 0 }
+       overlay_stretch = TRUE
+     }
+   }
+}
+
+style "longomatch-filechooser-button"
+{
+   ythickness = 4
+   engine "pixmap"
+   {
+    image
+    {
+      function  = BOX
+      state     = NORMAL
+      file      = "Buttons/filechooser-default.png"
+      border    = { 4, 4, 4, 4 }
+      stretch   = TRUE
+    }
+    image
+    {
+      function   = BOX
+      state      = PRELIGHT
+      file       = "Buttons/filechooser-prelight.png"
+      border     = { 4, 4, 4, 4 }
+      stretch    = TRUE
+    }
+    image
+    {
+      function   = BOX
+      state      = ACTIVE
+      file       = "Buttons/filechooser-pressed.png"
+      border     = { 4, 4, 4, 4 }
+      stretch    = TRUE
+    }
+    image
+    {
+      function   = BOX
+      state      = INSENSITIVE
+      file       = "Buttons/filechooser-default.png"
+      border     = { 4, 4, 4, 4 }
+      stretch    = TRUE
+    }
+   }
+}
+
+style "longomatch-combobox" {
+
+  font = "Ubuntu 12"
+  xthickness = 2
+  ythickness = 2
+
+  base[NORMAL]        = @bg_dark_color
+  base[INSENSITIVE]   = darker (@bg_dark_color)
+
+  text[NORMAL]      = @text_color
+  text[INSENSITIVE] = darker (@text_color)
+
+  engine "clearlooks"
+  {
+    radius = 1.0
+  }
+   base[NORMAL] = @bg_color
+   base[INSENSITIVE] = @bg_color
+
+   xthickness = 15
+   ythickness = 4
+
+   engine "pixmap"
+   {
+     image
+     {
+       function  = SHADOW
+       detail    = "entry"
+       state     = NORMAL
+       shadow    = IN
+       file      = "Entry/file-input-left.png"
+       border    = { 15, 4, 15, 15 }
+       stretch   = TRUE
+     }
+     image
+     {
+       function        = FLAT_BOX
+       detail          = "entry_bg"
+       state           = NORMAL
+       overlay_file    = "Entry/filechooser-entry-fill.png"
+       overlay_border  = { 0, 0, 0, 0 }
+       overlay_stretch = TRUE
+     }
+   }
+}
+
+
+class "GtkWidget"                                style "longomatch-default"
+class "GtkEntry"                                 style "longomatch-entry"
+widget_class "*<GtkComboBox>"                    style "longomatch-combobox"
+#widget_class "*<GtkComboBox>*<GtkButton>"        style "longomatch-combobox-button"
+#widget_class "*<GtkComboBox>*<GtkEntry>"         style "longomatch-combobox-entry"
+
+widget "*roundedbutton*" style "longomatch-rounded-button"
+widget "*rectbutton*" style "longomatch-rect-button"
+widget "*headereventbox" style "longomatch-header"
+widget "*teamscombobox*" style "longomatch-teams-combo"
+widget "*mediafilechooser*entry*" style "longomatch-filechooser-entry"
+widget "*datepicker*button*" style "longomatch-filechooser-button"
+widget "*datepicker*entry*" style "longomatch-filechooser-entry"
+widget "*mediafilechooser*button*" style "longomatch-filechooser-button"
+
