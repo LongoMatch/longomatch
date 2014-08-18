@@ -19,7 +19,7 @@ namespace LongoMatch.Gui.Panel
 		private global::Gtk.Frame frame4;
 		private global::Gtk.Alignment GtkAlignment7;
 		private global::Gtk.ScrolledWindow GtkScrolledWindow1;
-		private global::Gtk.TreeView teamstreeview;
+		private global::Gtk.TreeView teamtemplatestreeview;
 		private global::Gtk.Label GtkLabel7;
 		private global::Gtk.VSeparator vseparator2;
 		private global::LongoMatch.Gui.Component.TeamTemplateEditor teamtemplateeditor1;
@@ -203,10 +203,10 @@ namespace LongoMatch.Gui.Panel
 			this.GtkScrolledWindow1.Name = "GtkScrolledWindow1";
 			this.GtkScrolledWindow1.ShadowType = ((global::Gtk.ShadowType)(1));
 			// Container child GtkScrolledWindow1.Gtk.Container+ContainerChild
-			this.teamstreeview = new global::Gtk.TreeView ();
-			this.teamstreeview.CanFocus = true;
-			this.teamstreeview.Name = "teamstreeview";
-			this.GtkScrolledWindow1.Add (this.teamstreeview);
+			this.teamtemplatestreeview = new global::Gtk.TreeView ();
+			this.teamtemplatestreeview.CanFocus = true;
+			this.teamtemplatestreeview.Name = "teamtemplatestreeview";
+			this.GtkScrolledWindow1.Add (this.teamtemplatestreeview);
 			this.GtkAlignment7.Add (this.GtkScrolledWindow1);
 			this.frame4.Add (this.GtkAlignment7);
 			this.GtkLabel7 = new global::Gtk.Label ();

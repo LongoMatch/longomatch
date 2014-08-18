@@ -186,6 +186,22 @@ style "longomatch-header" {
   text[NORMAL]      = @base_color
 }
 
+style "longomatch-templates-treeview" {
+  # Background color
+  base[NORMAL]       = "#151a20"
+  # Line color when active (default)
+  base[ACTIVE]       = "#50b44d"
+  # Line color when selected
+  base[SELECTED]       = "#50b44d"
+  text[NORMAL]       = "#f6f6f6"
+  text[SELECTED]     = "#f6f6f6"
+  text[ACTIVE]     = "#f6f6f6"
+
+  # We can also customize odd/even row colors
+  #GtkTreeView::odd_row_color      = "#5f5f5f"
+  #GtkTreeView::even_row_color     = "#828282"
+}
+ 
 style "longomatch-filechooser-entry"
 {
    base[NORMAL] = @bg_color
@@ -314,6 +330,7 @@ widget_class "*<GtkComboBox>"                    style "longomatch-combobox"
 widget "*roundedbutton*" style "longomatch-rounded-button"
 widget "*rectbutton*" style "longomatch-rect-button"
 widget "*headereventbox" style "longomatch-header"
+widget "*templatestreeview" style "longomatch-templates-treeview"
 widget "*teamscombobox*" style "longomatch-teams-combo"
 widget "*mediafilechooser*entry*" style "longomatch-filechooser-entry"
 widget "*datepicker*button*" style "longomatch-filechooser-button"

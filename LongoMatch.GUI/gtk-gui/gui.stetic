@@ -7409,7 +7409,7 @@ You can continue with the current capture, cancel it or save your project.
                             <property name="MemberName" />
                             <property name="ShadowType">In</property>
                             <child>
-                              <widget class="Gtk.TreeView" id="teamstreeview">
+                              <widget class="Gtk.TreeView" id="teamtemplatestreeview">
                                 <property name="MemberName" />
                                 <property name="CanFocus">True</property>
                                 <property name="ShowScrollbars">True</property>
@@ -9081,7 +9081,7 @@ You can continue with the current capture, cancel it or save your project.
                             <property name="MemberName" />
                             <property name="ShadowType">In</property>
                             <child>
-                              <widget class="Gtk.TreeView" id="templatestreeview">
+                              <widget class="Gtk.TreeView" id="sporttemplatestreeview">
                                 <property name="MemberName" />
                                 <property name="CanFocus">True</property>
                                 <property name="ShowScrollbars">True</property>

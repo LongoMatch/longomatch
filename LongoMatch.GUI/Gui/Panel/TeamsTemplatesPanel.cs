@@ -55,15 +55,15 @@ namespace LongoMatch.Gui.Panel
 			teams = new ListStore (typeof(Pixbuf), typeof(string), typeof (string));
 			itersDict = new Dictionary<string, TreeIter>();
 			
-			teamstreeview.Model = teams;
-			teamstreeview.Model = teams;
-			teamstreeview.HeadersVisible = false;
-			teamstreeview.AppendColumn ("Icon", new CellRendererPixbuf (), "pixbuf", 0); 
-			teamstreeview.AppendColumn ("Text", new CellRendererText (), "text", 1); 
-			teamstreeview.SearchColumn = 1;
-			teamstreeview.TooltipColumn = 2;
-			teamstreeview.EnableGridLines = TreeViewGridLines.None;
-			teamstreeview.CursorChanged += HandleSelectionChanged;
+			teamtemplatestreeview.Model = teams;
+			teamtemplatestreeview.Model = teams;
+			teamtemplatestreeview.HeadersVisible = false;
+			teamtemplatestreeview.AppendColumn ("Icon", new CellRendererPixbuf (), "pixbuf", 0); 
+			teamtemplatestreeview.AppendColumn ("Text", new CellRendererText (), "text", 1); 
+			teamtemplatestreeview.SearchColumn = 1;
+			teamtemplatestreeview.TooltipColumn = 2;
+			teamtemplatestreeview.EnableGridLines = TreeViewGridLines.None;
+			teamtemplatestreeview.CursorChanged += HandleSelectionChanged;
 			
 			teamsvbox.WidthRequest = 280;
 			
@@ -111,7 +111,7 @@ namespace LongoMatch.Gui.Panel
 				first = false;
 			}
 			if (teams.IterIsValid (templateIter)) {
-				teamstreeview.Selection.SelectIter (templateIter);
+				teamtemplatestreeview.Selection.SelectIter (templateIter);
 				HandleSelectionChanged (null, null);
 			}
 		}
@@ -123,7 +123,7 @@ namespace LongoMatch.Gui.Panel
 			provider.Update (loadedTeam);
 			/* The shield might have changed, update it just in case */
 			if (loadedTeam.Shield != null) {
-				teamstreeview.Model.SetValue (itersDict[loadedTeam.Name], 0,
+				teamtemplatestreeview.Model.SetValue (itersDict[loadedTeam.Name], 0,
 				                              loadedTeam.Shield.Value);
 			}
 		}
@@ -159,10 +159,10 @@ namespace LongoMatch.Gui.Panel
 			
 			selectedTeams.Clear ();
 
-			pathArray = teamstreeview.Selection.GetSelectedRows ();
+			pathArray = teamtemplatestreeview.Selection.GetSelectedRows ();
 			for(int i=0; i< pathArray.Length; i++) {
-				teamstreeview.Model.GetIterFromString (out iter, pathArray[i].ToString());
-				selectedTeams.Add (teamstreeview.Model.GetValue (iter, 1) as string);
+				teamtemplatestreeview.Model.GetIterFromString (out iter, pathArray[i].ToString());
+				selectedTeams.Add (teamtemplatestreeview.Model.GetValue (iter, 1) as string);
 			}
 			
 			deleteteamteamplatebutton.Visible = selectedTeams.Count >= 1;

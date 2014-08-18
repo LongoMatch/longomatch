@@ -49,14 +49,14 @@ namespace LongoMatch.Gui.Panel
 			
 			templates = new ListStore (typeof(Pixbuf), typeof(string));
 			
-			templatestreeview.Model = templates;
-			templatestreeview.Model = templates;
-			templatestreeview.HeadersVisible = false;
-			templatestreeview.AppendColumn ("Icon", new CellRendererPixbuf (), "pixbuf", 0); 
-			templatestreeview.AppendColumn ("Text", new CellRendererText (), "text", 1); 
-			templatestreeview.SearchColumn = 1;
-			templatestreeview.EnableGridLines = TreeViewGridLines.None;
-			templatestreeview.CursorChanged += HandleSelectionChanged;
+			sporttemplatestreeview.Model = templates;
+			sporttemplatestreeview.Model = templates;
+			sporttemplatestreeview.HeadersVisible = false;
+			sporttemplatestreeview.AppendColumn ("Icon", new CellRendererPixbuf (), "pixbuf", 0); 
+			sporttemplatestreeview.AppendColumn ("Text", new CellRendererText (), "text", 1); 
+			sporttemplatestreeview.SearchColumn = 1;
+			sporttemplatestreeview.EnableGridLines = TreeViewGridLines.None;
+			sporttemplatestreeview.CursorChanged += HandleSelectionChanged;
 			
 			templatesvbox.WidthRequest = 280;
 			
@@ -97,7 +97,7 @@ namespace LongoMatch.Gui.Panel
 				first = false;
 			}
 			if (templates.IterIsValid (templateIter)) {
-				templatestreeview.Selection.SelectIter (templateIter);
+				sporttemplatestreeview.Selection.SelectIter (templateIter);
 				HandleSelectionChanged (null, null);
 			}
 		}
@@ -131,10 +131,10 @@ namespace LongoMatch.Gui.Panel
 			
 			selectedTemplate.Clear ();
 
-			pathArray = templatestreeview.Selection.GetSelectedRows ();
+			pathArray = sporttemplatestreeview.Selection.GetSelectedRows ();
 			for(int i=0; i< pathArray.Length; i++) {
-				templatestreeview.Model.GetIterFromString (out iter, pathArray[i].ToString());
-				selectedTemplate.Add (templatestreeview.Model.GetValue (iter, 1) as string);
+				sporttemplatestreeview.Model.GetIterFromString (out iter, pathArray[i].ToString());
+				selectedTemplate.Add (sporttemplatestreeview.Model.GetValue (iter, 1) as string);
 			}
 			
 			deletetemplatebutton.Visible = selectedTemplate.Count >= 1;
