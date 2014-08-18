@@ -120,12 +120,10 @@ namespace LongoMatch.Gui.Panel
 			w15.Spacing = 2;
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Image w16 = new global::Gtk.Image ();
-			w16.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-add", global::Gtk.IconSize.SmallToolbar);
+			w16.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-template-add", global::Gtk.IconSize.SmallToolbar);
 			w15.Add (w16);
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Label w18 = new global::Gtk.Label ();
-			w18.LabelProp = global::Mono.Unix.Catalog.GetString ("_Add");
-			w18.UseUnderline = true;
 			w15.Add (w18);
 			w14.Add (w15);
 			this.newteamtemplatebutton.Add (w14);
@@ -145,12 +143,10 @@ namespace LongoMatch.Gui.Panel
 			w24.Spacing = 2;
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Image w25 = new global::Gtk.Image ();
-			w25.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-remove", global::Gtk.IconSize.SmallToolbar);
+			w25.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-template-delete", global::Gtk.IconSize.SmallToolbar);
 			w24.Add (w25);
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Label w27 = new global::Gtk.Label ();
-			w27.LabelProp = global::Mono.Unix.Catalog.GetString ("_Remove");
-			w27.UseUnderline = true;
 			w24.Add (w27);
 			w23.Add (w24);
 			this.deleteteamteamplatebutton.Add (w23);
@@ -171,12 +167,10 @@ namespace LongoMatch.Gui.Panel
 			w33.Spacing = 2;
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Image w34 = new global::Gtk.Image ();
-			w34.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-save", global::Gtk.IconSize.SmallToolbar);
+			w34.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "longomatch-template-save", global::Gtk.IconSize.SmallToolbar);
 			w33.Add (w34);
 			// Container child GtkHBox.Gtk.Container+ContainerChild
 			global::Gtk.Label w36 = new global::Gtk.Label ();
-			w36.LabelProp = global::Mono.Unix.Catalog.GetString ("_Save");
-			w36.UseUnderline = true;
 			w33.Add (w36);
 			w32.Add (w33);
 			this.saveteamtemplatebutton.Add (w32);

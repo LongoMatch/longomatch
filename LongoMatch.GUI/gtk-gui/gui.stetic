@@ -7347,8 +7347,8 @@ You can continue with the current capture, cancel it or save your project.
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
                         <property name="Type">TextAndIcon</property>
-                        <property name="Icon">stock:gtk-add SmallToolbar</property>
-                        <property name="Label" translatable="yes">_Add</property>
+                        <property name="Icon">stock:longomatch-template-add SmallToolbar</property>
+                        <property name="Label" translatable="yes" />
                         <property name="UseUnderline">True</property>
                       </widget>
                       <packing>
@@ -7361,8 +7361,8 @@ You can continue with the current capture, cancel it or save your project.
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
                         <property name="Type">TextAndIcon</property>
-                        <property name="Icon">stock:gtk-remove SmallToolbar</property>
-                        <property name="Label" translatable="yes">_Remove</property>
+                        <property name="Icon">stock:longomatch-template-delete SmallToolbar</property>
+                        <property name="Label" translatable="yes" />
                         <property name="UseUnderline">True</property>
                       </widget>
                       <packing>
@@ -7376,8 +7376,8 @@ You can continue with the current capture, cancel it or save your project.
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
                         <property name="Type">TextAndIcon</property>
-                        <property name="Icon">stock:gtk-save SmallToolbar</property>
-                        <property name="Label" translatable="yes">_Save</property>
+                        <property name="Icon">stock:longomatch-template-save SmallToolbar</property>
+                        <property name="Label" translatable="yes" />
                         <property name="UseUnderline">True</property>
                       </widget>
                       <packing>
