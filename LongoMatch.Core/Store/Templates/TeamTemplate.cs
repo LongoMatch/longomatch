@@ -107,6 +107,26 @@ namespace LongoMatch.Store.Templates
 			}
 		}
 
+		[JsonIgnore]
+		public List<Player> StartingPlayersList {
+			get {
+				int count = Math.Min (PlayingPlayers, List.Count);
+				return List.GetRange (0, count);
+			}
+		}
+
+		[JsonIgnore]
+		public List<Player> BenchPlayersList {
+			get {
+				int playing = PlayingPlayers;
+				if (List.Count > playing) {
+					return List.GetRange (playing, List.Count - playing);
+				} else {
+					return new List<Player> ();
+				}
+			}
+		}
+
 		public void Save(string filePath) {
 			Serializer.Save(this, filePath);
 		}

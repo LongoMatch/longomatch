@@ -41,7 +41,7 @@ namespace Tests.Core
 			play.HalfFieldPosition.Points.Add (new Point (4,5));
 			play.GoalPosition = new Coordinates ();
 			play.GoalPosition.Points.Add (new Point (6, 7));
-			play.PlaybackRate = 1.5f;
+			play.Rate = 1.5f;
 			play.Name = "Play";
 			play.Start = new Time(1000);
 			play.Stop = new Time(2000);
@@ -66,12 +66,11 @@ namespace Tests.Core
 			Assert.AreEqual (p.FieldPosition, newp.FieldPosition);
 			Assert.AreEqual (p.HalfFieldPosition, newp.HalfFieldPosition);
 			Assert.AreEqual (p.GoalPosition, newp.GoalPosition);
-			Assert.AreEqual (p.PlaybackRate, newp.PlaybackRate);
+			Assert.AreEqual (p.Rate, newp.Rate);
 			Assert.AreEqual (p.Name, newp.Name);
 			Assert.AreEqual (p.Start, newp.Start);
 			Assert.AreEqual (p.Stop, newp.Stop);
 			Assert.AreEqual (p.Rate, newp.Rate);
-			Assert.AreEqual (p.PlaybackRate, newp.PlaybackRate);
 		}
 	}
 }

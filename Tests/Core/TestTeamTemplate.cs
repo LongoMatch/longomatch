@@ -99,5 +99,25 @@ namespace Tests.Core
 			Assert.AreEqual (t.Formation[2], 3);
 			Assert.AreEqual (t.Formation[3], 4);
 		}
+		
+		[Test()]
+		public void TestBenchPlayers ()
+		{
+			TeamTemplate t = TeamTemplate.DefaultTemplate (15);
+			t.FormationStr = "1-2-3-4";
+			Assert.AreEqual (5, t.BenchPlayersList.Count);
+			Assert.AreEqual (t.List[10], t.BenchPlayersList[0]);
+			Assert.AreEqual (t.List[14], t.BenchPlayersList[4]);
+		}
+		
+		[Test()]
+		public void TestStartingPlayers ()
+		{
+			TeamTemplate t = TeamTemplate.DefaultTemplate (15);
+			t.FormationStr = "1-2-3-4";
+			Assert.AreEqual (10, t.StartingPlayersList.Count);
+			Assert.AreEqual (t.List[0], t.StartingPlayersList[0]);
+			Assert.AreEqual (t.List[9], t.StartingPlayersList[9]);
+		}
 	}
 }
